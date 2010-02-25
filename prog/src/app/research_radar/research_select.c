@@ -100,15 +100,16 @@ struct _RESEARCH_SELECT_WORK
 // □LAYER 4 シーケンス動作
 //----------------------------------------------------------------------------------------------
 // シーケンス処理
-static void Main_SETUP      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
-static void Main_KEY_WAIT   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
-static void Main_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
-static void Main_TO_CONFIRM ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_TO_CONFIRM
-static void Main_CONFIRM    ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
-static void Main_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_TO_KEY_WAIT
-static void Main_DETERMINE  ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
-static void Main_FADE_OUT   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
-static void Main_CLEAN_UP   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP
+static void Main_SETUP        ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
+static void Main_STANDBY      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
+static void Main_KEY_WAIT     ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
+static void Main_SCROLL_WAIT  ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
+static void Main_CONFIRM      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
+static void Main_DETERMINE    ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
+static void Main_FADE_IN      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
+static void Main_FADE_OUT     ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
+static void Main_PALETTE_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
+static void Main_CLEAN_UP     ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP
 
 // シーケンス制御
 static void CountUpSeqCount( RESEARCH_SELECT_WORK* work ); // シーケンスカウンタを更新する
@@ -119,26 +120,28 @@ static void SetSequence   ( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ next
 static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result ); // 画面終了結果を設定する
 
 // シーケンス初期化処理
-static void InitSequence_SETUP      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
-static void InitSequence_KEY_WAIT   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
-static void InitSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
-static void InitSequence_TO_CONFIRM ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_TO_CONFIRM
-static void InitSequence_CONFIRM    ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
-static void InitSequence_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_TO_KEY_WAIT
-static void InitSequence_DETERMINE  ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
-static void InitSequence_FADE_OUT   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
-static void InitSequence_CLEAN_UP   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP
+static void InitSequence_SETUP        ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
+static void InitSequence_STANDBY      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
+static void InitSequence_KEY_WAIT     ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
+static void InitSequence_SCROLL_WAIT  ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
+static void InitSequence_CONFIRM      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
+static void InitSequence_DETERMINE    ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
+static void InitSequence_FADE_IN      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
+static void InitSequence_FADE_OUT     ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
+static void InitSequence_PALETTE_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
+static void InitSequence_CLEAN_UP     ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP
 
 // シーケンス終了処理
-static void FinishSequence_SETUP      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
-static void FinishSequence_KEY_WAIT   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
-static void FinishSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
-static void FinishSequence_TO_CONFIRM ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_TO_CONFIRM
-static void FinishSequence_CONFIRM    ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
-static void FinishSequence_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_TO_KEY_WAIT
-static void FinishSequence_DETERMINE  ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
-static void FinishSequence_FADE_OUT   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
-static void FinishSequence_CLEAN_UP   ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP
+static void FinishSequence_SETUP        ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
+static void FinishSequence_STANDBY      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
+static void FinishSequence_KEY_WAIT     ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
+static void FinishSequence_SCROLL_WAIT  ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
+static void FinishSequence_CONFIRM      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
+static void FinishSequence_DETERMINE    ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
+static void FinishSequence_FADE_IN      ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
+static void FinishSequence_FADE_OUT     ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
+static void FinishSequence_PALETTE_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
+static void FinishSequence_CLEAN_UP     ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP
 
 // VBlankタスク
 static void VBlankFunc( GFL_TCB* tcb, void* wk );  // VBlank中の処理
@@ -373,13 +376,14 @@ RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work )
   switch( work->seq )
   {
   case RESEARCH_SELECT_SEQ_SETUP:        Main_SETUP( work );        break;
+  case RESEARCH_SELECT_SEQ_STANDBY:      Main_STANDBY( work );      break;
   case RESEARCH_SELECT_SEQ_KEY_WAIT:     Main_KEY_WAIT( work );     break;
   case RESEARCH_SELECT_SEQ_SCROLL_WAIT:  Main_SCROLL_WAIT( work );  break;
-  case RESEARCH_SELECT_SEQ_TO_CONFIRM:   Main_TO_CONFIRM( work );   break;
   case RESEARCH_SELECT_SEQ_CONFIRM:      Main_CONFIRM( work );      break;
-  case RESEARCH_SELECT_SEQ_TO_KEY_WAIT:  Main_TO_KEY_WAIT( work );  break;
   case RESEARCH_SELECT_SEQ_DETERMINE:    Main_DETERMINE( work );    break;
+  case RESEARCH_SELECT_SEQ_FADE_IN:      Main_FADE_IN( work );      break;
   case RESEARCH_SELECT_SEQ_FADE_OUT:     Main_FADE_OUT( work );     break;
+  case RESEARCH_SELECT_SEQ_PALETTE_RESET:Main_PALETTE_RESET( work );break;
   case RESEARCH_SELECT_SEQ_CLEAN_UP:     Main_CLEAN_UP( work );     break;
   case RESEARCH_SELECT_SEQ_FINISH:       return work->result;
   default:  GF_ASSERT(0);
@@ -449,15 +453,54 @@ static void Main_SETUP( RESEARCH_SELECT_WORK* work )
   // VBkankタスク登録
   RegisterVBlankTask( work );
 
-  // 画面フェードイン
-  GFL_FADE_SetMasterBrightReq(
-      GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0);
-
   // 次のシーケンスをセット
-  SetNextSequence( work, RESEARCH_SELECT_SEQ_KEY_WAIT ); 
+  SetNextSequence( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT ); 
+  SetNextSequence( work, RESEARCH_SELECT_SEQ_FADE_IN ); 
+  SetNextSequence( work, RESEARCH_SELECT_SEQ_STANDBY ); 
 
   // シーケンス終了
   FinishCurrentSequence( work );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 最初のキー入力待ちシーケンス ( RESEARCH_SELECT_SEQ_STANDBY ) の処理
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void Main_STANDBY( RESEARCH_SELECT_WORK* work )
+{
+  int trg;
+  int touchedAreaIdx;
+  BOOL select = FALSE;
+
+  trg            = GFL_UI_KEY_GetTrg();
+  touchedAreaIdx = GFL_UI_TP_HitTrg( work->topicTouchHitTable );
+
+  //--------------------
+  // 十字キー or A or B
+  if( (trg & PAD_KEY_UP) ||
+      (trg & PAD_KEY_DOWN) ||
+      (trg & PAD_KEY_LEFT) ||
+      (trg & PAD_KEY_RIGHT) ||
+      (trg & PAD_BUTTON_A) || 
+      (trg & PAD_BUTTON_B) ) {
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
+    FinishCurrentSequence( work );
+  }
+
+  if( (TOPIC_TOUCH_AREA_TOPIC_0 <= touchedAreaIdx) && (touchedAreaIdx <= TOPIC_TOUCH_AREA_TOPIC_9) ) {
+    MoveTopicCursorDirect( work, touchedAreaIdx ); // カーソル移動
+    select = SelectTopic( work );                  // 調査項目を選択
+  } 
+
+  // 最大数の調査項目を選択
+  if( (select == TRUE) && (work->selectedTopicNum == SELECT_TOPIC_MAX_NUM) ) {
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_CONFIRM );
+    FinishCurrentSequence( work );
+    // --> 調査項目確認シーケンスへ
+  }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -479,23 +522,26 @@ static void Main_KEY_WAIT( RESEARCH_SELECT_WORK* work )
   if( trg & PAD_KEY_UP ) {
     MoveTopicCursorUp( work );
     SetNextSequence( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT );
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
     FinishCurrentSequence( work );
-    // --> スクロール待ちシーケンスへ
+    return;
   }
 
   if( trg & PAD_KEY_DOWN ) {
     MoveTopicCursorDown( work );
     SetNextSequence( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT );
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
     FinishCurrentSequence( work );
-    // --> スクロール待ちシーケンスへ
+    return;
   } 
 
   if( trg & PAD_BUTTON_B ) {
     PMSND_PlaySE( SEQ_SE_CANCEL1 );      // キャンセル音
     SetNextSequence( work, RESEARCH_SELECT_SEQ_FADE_OUT );
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
     SetNextSequence( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
-    // --> 後片付けシーケンスへ
+    return;
   }
 
   if( trg & PAD_BUTTON_A ) {
@@ -509,9 +555,8 @@ static void Main_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 
   // 最大数の調査項目を選択
   if( (select == TRUE) && (work->selectedTopicNum == SELECT_TOPIC_MAX_NUM) ) {
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_TO_CONFIRM );
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_CONFIRM );
     FinishCurrentSequence( work );
-    // --> 調査項目確認シーケンスへ
   }
 }
 
@@ -534,25 +579,8 @@ static void Main_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
   // スクロール終了
   if( IsTopicScrollEnd(work) ) {
     FinishTopicScroll( work );
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
     FinishCurrentSequence( work );
   }
-}
-
-//----------------------------------------------------------------------------------------------
-/**
- * @brief 調査項目確定の確認シーケンスへの準備シーケンス ( RESEARCH_SELECT_SEQ_TO_CONFIRM ) の処理
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static void Main_TO_CONFIRM( RESEARCH_SELECT_WORK* work )
-{
-  // パレットフェードが完了
-  if( IsPaletteFadeEnd( work ) ) {
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_CONFIRM );
-    FinishCurrentSequence( work );
-  } 
 }
 
 //----------------------------------------------------------------------------------------------
@@ -580,28 +608,14 @@ static void Main_CONFIRM( RESEARCH_SELECT_WORK* work )
   if( (trg & PAD_BUTTON_A) || (touchedAreaIdx == MENU_TOUCH_AREA_OK_BUTTON) ) {
     SetNextSequence( work, MenuItemNextSequence[ work->menuCursorPos ] );
     FinishCurrentSequence( work );
+    return;
   } 
 
   if( (trg & PAD_BUTTON_B) || (touchedAreaIdx == MENU_TOUCH_AREA_CANCEL_BUTTON) ) {
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_TO_KEY_WAIT );
-    FinishCurrentSequence( work );
-  }
-}
-
-//----------------------------------------------------------------------------------------------
-/**
- * @brief キー入力待ちへ戻るシーケンス ( RESEARCH_SELECT_SEQ_TO_KEY_WAIT ) の処理
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static void Main_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work )
-{
-  // パレットフェードが完了
-  if( IsPaletteFadeEnd( work ) ) {
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
     SetNextSequence( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
     FinishCurrentSequence( work );
-  } 
+  }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -616,6 +630,7 @@ static void Main_DETERMINE( RESEARCH_SELECT_WORK* work )
   // 一定時間が経過
   if( SEQ_DETERMINE_WAIT_FRAMES <= work->seqCount ) {
     SetNextSequence( work, RESEARCH_SELECT_SEQ_FADE_OUT );
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
     SetNextSequence( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
   } 
@@ -623,7 +638,22 @@ static void Main_DETERMINE( RESEARCH_SELECT_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief 調査項目確定シーケンス ( RESEARCH_SELECT_SEQ_FADE_OUT ) の処理
+ * @brief フェードイン シーケンス ( RESEARCH_SELECT_SEQ_FADE_IN ) の処理
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void Main_FADE_IN( RESEARCH_SELECT_WORK* work )
+{
+  // フェードが終了
+  if( GFL_FADE_CheckFade() == FALSE ) {
+    FinishCurrentSequence( work );
+  } 
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief フェードアウト シーケンス ( RESEARCH_SELECT_SEQ_FADE_OUT ) の処理
  *
  * @param work
  */
@@ -634,6 +664,21 @@ static void Main_FADE_OUT( RESEARCH_SELECT_WORK* work )
   if( GFL_FADE_CheckFade() == FALSE ) {
     FinishCurrentSequence( work );
   } 
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief パレット復帰シーケンス ( RESEARCH_SELECT_SEQ_PALETTE_RESET ) の処理
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void Main_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
+{
+  // パレットフェード完了
+  if( IsPaletteFadeEnd( work ) ) {
+    FinishCurrentSequence( work );
+  }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -700,16 +745,17 @@ static void CountUpSeqCount( RESEARCH_SELECT_WORK* work )
   // 最大値を決定
   switch( work->seq )
   {
-  case RESEARCH_SELECT_SEQ_SETUP:        maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:     maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:  maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_TO_CONFIRM:   maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_CONFIRM:      maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_TO_KEY_WAIT:  maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:    maxCount = SEQ_DETERMINE_WAIT_FRAMES; break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:     maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:     maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_FINISH:       maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_SETUP:         maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_STANDBY:       maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_KEY_WAIT:      maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:   maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_CONFIRM:       maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_DETERMINE:     maxCount = SEQ_DETERMINE_WAIT_FRAMES; break;
+  case RESEARCH_SELECT_SEQ_FADE_IN:       maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_FADE_OUT:      maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_PALETTE_RESET: maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_CLEAN_UP:      maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_FINISH:        maxCount = 0xffffffff; break;
   default: GF_ASSERT(0);
   }
 
@@ -813,16 +859,17 @@ static void SetSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq
   // シーケンスの終了処理
   switch( work->seq )
   {
-  case RESEARCH_SELECT_SEQ_SETUP:        FinishSequence_SETUP( work );       break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:     FinishSequence_KEY_WAIT( work );    break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:  FinishSequence_SCROLL_WAIT( work ); break;
-  case RESEARCH_SELECT_SEQ_TO_CONFIRM:   FinishSequence_TO_CONFIRM( work );  break;
-  case RESEARCH_SELECT_SEQ_CONFIRM:      FinishSequence_CONFIRM( work );     break;
-  case RESEARCH_SELECT_SEQ_TO_KEY_WAIT:  FinishSequence_TO_KEY_WAIT( work ); break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:    FinishSequence_DETERMINE( work );   break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:     FinishSequence_FADE_OUT( work );    break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:     FinishSequence_CLEAN_UP( work );    break;
-  case RESEARCH_SELECT_SEQ_FINISH:                                           break;
+  case RESEARCH_SELECT_SEQ_SETUP:         FinishSequence_SETUP( work );         break;
+  case RESEARCH_SELECT_SEQ_STANDBY:       FinishSequence_STANDBY( work );       break;
+  case RESEARCH_SELECT_SEQ_KEY_WAIT:      FinishSequence_KEY_WAIT( work );      break;
+  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:   FinishSequence_SCROLL_WAIT( work );   break;
+  case RESEARCH_SELECT_SEQ_CONFIRM:       FinishSequence_CONFIRM( work );       break;
+  case RESEARCH_SELECT_SEQ_DETERMINE:     FinishSequence_DETERMINE( work );     break;
+  case RESEARCH_SELECT_SEQ_FADE_IN:       FinishSequence_FADE_IN( work );       break;
+  case RESEARCH_SELECT_SEQ_FADE_OUT:      FinishSequence_FADE_OUT( work );      break;
+  case RESEARCH_SELECT_SEQ_PALETTE_RESET: FinishSequence_PALETTE_RESET( work ); break;
+  case RESEARCH_SELECT_SEQ_CLEAN_UP:      FinishSequence_CLEAN_UP( work );      break;
+  case RESEARCH_SELECT_SEQ_FINISH:        break;
   default:  GF_ASSERT(0);
   }
 
@@ -834,16 +881,17 @@ static void SetSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq
   // シーケンスの初期化処理
   switch( nextSeq )
   {
-  case RESEARCH_SELECT_SEQ_SETUP:        InitSequence_SETUP( work );       break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:     InitSequence_KEY_WAIT( work );    break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:  InitSequence_SCROLL_WAIT( work ); break;
-  case RESEARCH_SELECT_SEQ_TO_CONFIRM:   InitSequence_TO_CONFIRM( work );  break;
-  case RESEARCH_SELECT_SEQ_CONFIRM:      InitSequence_CONFIRM( work );     break;
-  case RESEARCH_SELECT_SEQ_TO_KEY_WAIT:  InitSequence_TO_KEY_WAIT( work ); break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:    InitSequence_DETERMINE( work );   break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:     InitSequence_FADE_OUT( work );    break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:     InitSequence_CLEAN_UP( work );    break;
-  case RESEARCH_SELECT_SEQ_FINISH:                                         break;
+  case RESEARCH_SELECT_SEQ_SETUP:         InitSequence_SETUP( work );         break;
+  case RESEARCH_SELECT_SEQ_STANDBY:       InitSequence_STANDBY( work );       break;
+  case RESEARCH_SELECT_SEQ_KEY_WAIT:      InitSequence_KEY_WAIT( work );      break;
+  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:   InitSequence_SCROLL_WAIT( work );   break;
+  case RESEARCH_SELECT_SEQ_CONFIRM:       InitSequence_CONFIRM( work );       break;
+  case RESEARCH_SELECT_SEQ_DETERMINE:     InitSequence_DETERMINE( work );     break;
+  case RESEARCH_SELECT_SEQ_FADE_IN:       InitSequence_FADE_IN( work );       break;
+  case RESEARCH_SELECT_SEQ_FADE_OUT:      InitSequence_FADE_OUT( work );      break;
+  case RESEARCH_SELECT_SEQ_PALETTE_RESET: InitSequence_PALETTE_RESET( work ); break;
+  case RESEARCH_SELECT_SEQ_CLEAN_UP:      InitSequence_CLEAN_UP( work );      break;
+  case RESEARCH_SELECT_SEQ_FINISH:        break;
   default:  GF_ASSERT(0);
   }
 
@@ -851,16 +899,17 @@ static void SetSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: set seq ==> " );
   switch( nextSeq )
   {
-  case RESEARCH_SELECT_SEQ_SETUP:        OS_TFPrintf( PRINT_TARGET, "SETUP\n" );       break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:     OS_TFPrintf( PRINT_TARGET, "KEY_WAIT\n" );    break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:  OS_TFPrintf( PRINT_TARGET, "SCROLL_WAIT\n" ); break;
-  case RESEARCH_SELECT_SEQ_TO_CONFIRM:   OS_TFPrintf( PRINT_TARGET, "TO_CONFIRM\n" );  break;
-  case RESEARCH_SELECT_SEQ_CONFIRM:      OS_TFPrintf( PRINT_TARGET, "CONFIRM\n" );     break;
-  case RESEARCH_SELECT_SEQ_TO_KEY_WAIT:  OS_TFPrintf( PRINT_TARGET, "TO_KEY_WAIT\n" ); break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:    OS_TFPrintf( PRINT_TARGET, "DETERMINE\n" );   break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:     OS_TFPrintf( PRINT_TARGET, "FADE_OUT\n" );    break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:     OS_TFPrintf( PRINT_TARGET, "CLEAN_UP\n" );    break;
-  case RESEARCH_SELECT_SEQ_FINISH:       OS_TFPrintf( PRINT_TARGET, "FINISH\n" );      break;
+  case RESEARCH_SELECT_SEQ_SETUP:         OS_TFPrintf( PRINT_TARGET, "SETUP\n" );         break;
+  case RESEARCH_SELECT_SEQ_STANDBY:       OS_TFPrintf( PRINT_TARGET, "STANDBY\n" );       break;
+  case RESEARCH_SELECT_SEQ_KEY_WAIT:      OS_TFPrintf( PRINT_TARGET, "KEY_WAIT\n" );      break;
+  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:   OS_TFPrintf( PRINT_TARGET, "SCROLL_WAIT\n" );   break;
+  case RESEARCH_SELECT_SEQ_CONFIRM:       OS_TFPrintf( PRINT_TARGET, "CONFIRM\n" );       break;
+  case RESEARCH_SELECT_SEQ_DETERMINE:     OS_TFPrintf( PRINT_TARGET, "DETERMINE\n" );     break;
+  case RESEARCH_SELECT_SEQ_FADE_IN:       OS_TFPrintf( PRINT_TARGET, "FADE_IN\n" );       break;
+  case RESEARCH_SELECT_SEQ_FADE_OUT:      OS_TFPrintf( PRINT_TARGET, "FADE_OUT\n" );      break;
+  case RESEARCH_SELECT_SEQ_PALETTE_RESET: OS_TFPrintf( PRINT_TARGET, "PALETTE_RESET\n" ); break;
+  case RESEARCH_SELECT_SEQ_CLEAN_UP:      OS_TFPrintf( PRINT_TARGET, "CLEAN_UP\n" );      break;
+  case RESEARCH_SELECT_SEQ_FINISH:        OS_TFPrintf( PRINT_TARGET, "FINISH\n" );        break;
   default:  GF_ASSERT(0);
   }
 }
@@ -880,6 +929,21 @@ static void InitSequence_SETUP( RESEARCH_SELECT_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
+ * @brief シーケンスを初期化する ( ==> RESEARCH_SELECT_SEQ_STANDBY )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void InitSequence_STANDBY( RESEARCH_SELECT_WORK* work )
+{
+  SetTopicCursorOff( work ); // カーソルが乗っていない状態にする
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq STANDBY\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
  * @brief シーケンスを初期化する ( ==> RESEARCH_SELECT_SEQ_KEY_WAIT )
  *
  * @param work
@@ -887,6 +951,8 @@ static void InitSequence_SETUP( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void InitSequence_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 {
+  SetTopicCursorOn( work ); // カーソルが乗っている状態にする
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq KEY_WAIT\n" );
 }
@@ -900,24 +966,10 @@ static void InitSequence_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void InitSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
 {
+  TopicCursorScrollStart( work );  // スクロール開始
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq SCROLL_WAIT\n" );
-}
-
-//----------------------------------------------------------------------------------------------
-/**
- * @brief シーケンスを初期化する ( ==> RESEARCH_SELECT_SEQ_TO_CONFIRM )
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static void InitSequence_TO_CONFIRM ( RESEARCH_SELECT_WORK* work )
-{
-  // パレットフェードアウト開始
-  StartPaletteFadeOut( work );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq TO_CONFIRM\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -937,30 +989,11 @@ static void InitSequence_CONFIRM( RESEARCH_SELECT_WORK* work )
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, TRUE );
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, TRUE );
 
+  // パレットフェードアウト開始
+  StartPaletteFadeOut( work );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq CONFIRM\n" );
-}
-
-//----------------------------------------------------------------------------------------------
-/**
- * @brief シーケンスを初期化する ( ==> RESEARCH_SELECT_SEQ_TO_KEY_WAIT )
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static void InitSequence_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work )
-{ 
-  // 確認メッセージと選択項目を消去
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, FALSE );
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, FALSE );
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, FALSE );
-
-  // パレットフェードイン開始
-  StartPaletteFadeIn( work );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq TO_KEY_WAIT" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -989,6 +1022,23 @@ static void InitSequence_DETERMINE( RESEARCH_SELECT_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
+ * @brief シーケンスを初期化する ( ==> RESEARCH_SELECT_SEQ_FADE_IN )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void InitSequence_FADE_IN( RESEARCH_SELECT_WORK* work )
+{
+  // フェードイン開始
+  GFL_FADE_SetMasterBrightReq(
+      GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0);
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq FADE IN\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
  * @brief シーケンスを初期化する ( ==> RESEARCH_SELECT_SEQ_FADE_OUT )
  *
  * @param work
@@ -1002,6 +1052,22 @@ static void InitSequence_FADE_OUT( RESEARCH_SELECT_WORK* work )
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq FADE OUT\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief シーケンスを初期化する ( ==> RESEARCH_SELECT_SEQ_PALETTE_RESET )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void InitSequence_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
+{
+  // パレットのフェードインを開始する
+  StartPaletteFadeIn( work );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq PALETTE_RESET\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1032,6 +1098,19 @@ static void FinishSequence_SETUP( RESEARCH_SELECT_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
+ * @brief シーケンス終了処理 ( ==> RESEARCH_SELECT_SEQ_STANDBY )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void FinishSequence_STANDBY( RESEARCH_SELECT_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq STANDBY\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
  * @brief シーケンス終了処理 ( ==> RESEARCH_SELECT_SEQ_KEY_WAIT )
  *
  * @param work
@@ -1058,22 +1137,6 @@ static void FinishSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief シーケンス終了処理 ( ==> RESEARCH_SELECT_SEQ_TO_CONFIRM )
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static void FinishSequence_TO_CONFIRM ( RESEARCH_SELECT_WORK* work )
-{
-  // パレットフェードアウト開始
-  StartPaletteFadeOut( work );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq TO_CONFIRM\n" );
-}
-
-//----------------------------------------------------------------------------------------------
-/**
  * @brief シーケンス終了処理 ( ==> RESEARCH_SELECT_SEQ_CONFIRM )
  *
  * @param work
@@ -1081,21 +1144,13 @@ static void FinishSequence_TO_CONFIRM ( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void FinishSequence_CONFIRM( RESEARCH_SELECT_WORK* work )
 {
+  // 確認メッセージと選択項目を消去
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, FALSE );
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, FALSE );
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, FALSE );
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq CONFIRM\n" );
-}
-
-//----------------------------------------------------------------------------------------------
-/**
- * @brief シーケンス終了処理 ( ==> RESEARCH_SELECT_SEQ_TO_KEY_WAIT )
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static void FinishSequence_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work )
-{ 
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq TO_KEY_WAIT" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1106,9 +1161,22 @@ static void FinishSequence_TO_KEY_WAIT( RESEARCH_SELECT_WORK* work )
  */
 //----------------------------------------------------------------------------------------------
 static void FinishSequence_DETERMINE( RESEARCH_SELECT_WORK* work )
-{
+{ 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq DETERMINE\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief シーケンス終了処理 ( ==> RESEARCH_SELECT_SEQ_FADE_IN )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void FinishSequence_FADE_IN( RESEARCH_SELECT_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq FADE_IN\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1122,6 +1190,19 @@ static void FinishSequence_FADE_OUT( RESEARCH_SELECT_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq FADE_OUT\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief シーケンス終了処理 ( ==> RESEARCH_SELECT_SEQ_PALETTE_RESET )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void FinishSequence_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq PALETTE_RESET\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1201,7 +1282,6 @@ static void MoveTopicCursorUp( RESEARCH_SELECT_WORK* work )
 {
   SetTopicCursorOff( work );         // 移動前の項目を元に戻す
   SetTopicCursorNextPos( work, -1 ); // 移動先を設定
-  TopicCursorScrollStart( work );    // スクロール開始
   PMSND_PlaySE( SEQ_SE_SELECT1 );    // カーソル移動音
 }
 
@@ -1216,7 +1296,6 @@ static void MoveTopicCursorDown( RESEARCH_SELECT_WORK* work )
 {
   SetTopicCursorOff( work );         // 移動前の項目を元に戻す
   SetTopicCursorNextPos( work, 1 );  // 移動先を設定
-  TopicCursorScrollStart( work );    // スクロール開始
   PMSND_PlaySE( SEQ_SE_SELECT1 );    // カーソル移動音
 }
 
@@ -3511,7 +3590,7 @@ static void StartPaletteFadeIn( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static BOOL IsPaletteFadeEnd( RESEARCH_SELECT_WORK* work )
 {
-  return PaletteFadeCheck( work->paletteFadeSystem );
+  return (PaletteFadeCheck( work->paletteFadeSystem ) == 0);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -3565,16 +3644,17 @@ static void DebugPrint_seqQueue( const RESEARCH_SELECT_WORK* work )
     
     switch( value )
     {
-    case RESEARCH_SELECT_SEQ_SETUP:        OS_TFPrintf( PRINT_TARGET, "SETUP \n" );       break;
-    case RESEARCH_SELECT_SEQ_KEY_WAIT:     OS_TFPrintf( PRINT_TARGET, "KEY_WAIT \n" );    break;
-    case RESEARCH_SELECT_SEQ_SCROLL_WAIT:  OS_TFPrintf( PRINT_TARGET, "SCROLL_WAIT \n" ); break;
-    case RESEARCH_SELECT_SEQ_TO_CONFIRM:   OS_TFPrintf( PRINT_TARGET, "TO_CONFIRM \n" );  break;
-    case RESEARCH_SELECT_SEQ_CONFIRM:      OS_TFPrintf( PRINT_TARGET, "CONFIRM \n" );     break;
-    case RESEARCH_SELECT_SEQ_TO_KEY_WAIT:  OS_TFPrintf( PRINT_TARGET, "TO_KEY_WAIT \n" ); break;
-    case RESEARCH_SELECT_SEQ_DETERMINE:    OS_TFPrintf( PRINT_TARGET, "DETERMINE \n" );   break;
-    case RESEARCH_SELECT_SEQ_FADE_OUT:     OS_TFPrintf( PRINT_TARGET, "FADE_OUT \n" );   break;
-    case RESEARCH_SELECT_SEQ_CLEAN_UP:     OS_TFPrintf( PRINT_TARGET, "CLEAN_UP \n" );    break;
-    case RESEARCH_SELECT_SEQ_FINISH:       OS_TFPrintf( PRINT_TARGET, "FINISH \n" );      break;
+    case RESEARCH_SELECT_SEQ_SETUP:         OS_TFPrintf( PRINT_TARGET, "SETUP " );         break;
+    case RESEARCH_SELECT_SEQ_STANDBY:       OS_TFPrintf( PRINT_TARGET, "STANDBY " );       break;
+    case RESEARCH_SELECT_SEQ_KEY_WAIT:      OS_TFPrintf( PRINT_TARGET, "KEY_WAIT " );      break;
+    case RESEARCH_SELECT_SEQ_SCROLL_WAIT:   OS_TFPrintf( PRINT_TARGET, "SCROLL_WAIT " );   break;
+    case RESEARCH_SELECT_SEQ_CONFIRM:       OS_TFPrintf( PRINT_TARGET, "CONFIRM " );       break;
+    case RESEARCH_SELECT_SEQ_DETERMINE:     OS_TFPrintf( PRINT_TARGET, "DETERMINE " );     break;
+    case RESEARCH_SELECT_SEQ_FADE_IN:       OS_TFPrintf( PRINT_TARGET, "FADE_IN " );       break;
+    case RESEARCH_SELECT_SEQ_FADE_OUT:      OS_TFPrintf( PRINT_TARGET, "FADE_OUT " );      break;
+    case RESEARCH_SELECT_SEQ_PALETTE_RESET: OS_TFPrintf( PRINT_TARGET, "PELETTE_RESET " ); break;
+    case RESEARCH_SELECT_SEQ_CLEAN_UP:      OS_TFPrintf( PRINT_TARGET, "CLEAN_UP " );      break;
+    case RESEARCH_SELECT_SEQ_FINISH:        OS_TFPrintf( PRINT_TARGET, "FINISH " );        break;
     default: GF_ASSERT(0);
     }
   }

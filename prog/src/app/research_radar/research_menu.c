@@ -66,10 +66,11 @@ struct _RESEARCH_MENU_WORK
 // ■非公開関数
 //==============================================================================================
 // シーケンス処理
-static void Main_SETUP   ( RESEARCH_MENU_WORK* work );
-static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work );
-static void Main_FADE_OUT( RESEARCH_MENU_WORK* work );
-static void Main_CLEAN_UP( RESEARCH_MENU_WORK* work );
+static void Main_SETUP   ( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_SETUP
+static void Main_STAND_BY( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_STAND_BY
+static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_WAIT
+static void Main_FADE_OUT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_FADE_OUT
+static void Main_CLEAN_UP( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_CLEAN_UP
 
 // シーケンス制御
 static void CountUpSeqCount( RESEARCH_MENU_WORK* work ); // シーケンスカウンタを更新する
@@ -80,16 +81,18 @@ static void SetSequence( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq ); 
 static void SetResult( RESEARCH_MENU_WORK* work, RESEARCH_MENU_RESULT result ); // 画面終了結果を設定する
 
 // シーケンス初期化処理
-static void InitSequence_SETUP   ( RESEARCH_MENU_WORK* work );
-static void InitSequence_KEY_WAIT( RESEARCH_MENU_WORK* work );
-static void InitSequence_FADE_OUT( RESEARCH_MENU_WORK* work );
-static void InitSequence_CLEAN_UP( RESEARCH_MENU_WORK* work );
+static void InitSequence_SETUP   ( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_SETUP
+static void InitSequence_STAND_BY( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_STAND_BY
+static void InitSequence_KEY_WAIT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_WAIT
+static void InitSequence_FADE_OUT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_FADE_OUT
+static void InitSequence_CLEAN_UP( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_CLEAN_UP
 
 // シーケンス終了処理
-static void FinishSequence_SETUP   ( RESEARCH_MENU_WORK* work );
-static void FinishSequence_KEY_WAIT( RESEARCH_MENU_WORK* work );
-static void FinishSequence_FADE_OUT( RESEARCH_MENU_WORK* work );
-static void FinishSequence_CLEAN_UP( RESEARCH_MENU_WORK* work );
+static void FinishSequence_SETUP   ( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_SETUP
+static void FinishSequence_STAND_BY( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_STAND_BY
+static void FinishSequence_KEY_WAIT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_WAIT
+static void FinishSequence_FADE_OUT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_FADE_OUT
+static void FinishSequence_CLEAN_UP( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_CLEAN_UP
 
 // データ更新
 static void CheckNewEntry( RESEARCH_MENU_WORK* work );
@@ -246,6 +249,7 @@ RESEARCH_MENU_RESULT ResearchMenuMain( RESEARCH_MENU_WORK* work )
   switch( work->seq )
   {
   case RESEARCH_MENU_SEQ_SETUP:     Main_SETUP   ( work );  break;
+  case RESEARCH_MENU_SEQ_STAND_BY:  Main_STAND_BY( work );  break;
   case RESEARCH_MENU_SEQ_KEY_WAIT:  Main_KEY_WAIT( work );  break;
   case RESEARCH_MENU_SEQ_FADE_OUT:  Main_FADE_OUT( work );  break;
   case RESEARCH_MENU_SEQ_CLEAN_UP:  Main_CLEAN_UP( work );  break;
@@ -303,18 +307,71 @@ static void Main_SETUP( RESEARCH_MENU_WORK* work )
   CreateClactUnits( work );
   CreateClactWorks( work );
 
-  // 初期カーソル位置のメニュー項目を選択状態にする
-  MenuItemSwitchOn( work->cursorPos );
-
   // 画面フェードイン
   GFL_FADE_SetMasterBrightReq(
       GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0);
 
   // 次のシーケンスをセット
-  SetNextSequence( work, RESEARCH_MENU_SEQ_KEY_WAIT ); 
+  SetNextSequence( work, RESEARCH_MENU_SEQ_STAND_BY ); 
 
   // シーケンス終了
   FinishCurrentSequence( work );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 準備シーケンス ( RESEARCH_MENU_SEQ_STAND_BY ) の処理
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
+{
+  int trg;
+  int touchedAreaIdx;
+
+  trg            = GFL_UI_KEY_GetTrg();
+  touchedAreaIdx = GFL_UI_TP_HitTrg( work->touchHitTable );
+
+  //--------------------
+  // 十字キー or A or B
+  if( (trg & PAD_KEY_UP) ||
+      (trg & PAD_KEY_DOWN) ||
+      (trg & PAD_KEY_LEFT) ||
+      (trg & PAD_KEY_RIGHT) ||
+      (trg & PAD_BUTTON_A) || 
+      (trg & PAD_BUTTON_B) ) {
+    SetNextSequence( work, RESEARCH_MENU_SEQ_KEY_WAIT );
+    FinishCurrentSequence( work );
+  }
+
+  //-------------------------------------
+  //「調査内容を変更する」ボタンをタッチ
+  if( touchedAreaIdx == TOUCH_AREA_CHANGE_BUTTON ) {
+    PMSND_PlaySE( SEQ_SE_DECIDE1 );                    // 決定音
+    SetResult( work, RESEARCH_MENU_RESULT_TO_SELECT ); // 画面終了結果を決定
+    SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
+    SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
+    FinishCurrentSequence( work );
+    return;
+  }
+  //-------------------------------------
+  //「調査報告を確認する」ボタンをタッチ
+  if( touchedAreaIdx == TOUCH_AREA_CHECK_BUTTON ) {
+    MoveCursorDown( work );
+    PMSND_PlaySE( SEQ_SE_DECIDE1 );                    // 決定音
+    SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK );  // 画面終了結果を決定
+    SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
+    SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
+    FinishCurrentSequence( work );
+    return;
+  }
+
+  //------------------
+  // L ボタン (DEBUG)
+  if( trg & PAD_BUTTON_L ) {
+    DEBUG_GAMEBEACON_Set_NewEntry();
+  }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -456,6 +513,7 @@ static void CountUpSeqCount( RESEARCH_MENU_WORK* work )
   switch( work->seq )
   {
   case RESEARCH_MENU_SEQ_SETUP:     maxCount = 0xffffffff;  break;
+  case RESEARCH_MENU_SEQ_STAND_BY:  maxCount = 0xffffffff;  break;
   case RESEARCH_MENU_SEQ_KEY_WAIT:  maxCount = 0xffffffff;  break;
   case RESEARCH_MENU_SEQ_FADE_OUT:  maxCount = 0xffffffff;  break;
   case RESEARCH_MENU_SEQ_CLEAN_UP:  maxCount = 0xffffffff;  break;
@@ -543,6 +601,7 @@ static void SetSequence( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq )
   switch( work->seq )
   {
   case RESEARCH_MENU_SEQ_SETUP:    FinishSequence_SETUP( work );     break;
+  case RESEARCH_MENU_SEQ_STAND_BY: FinishSequence_STAND_BY( work );  break;
   case RESEARCH_MENU_SEQ_KEY_WAIT: FinishSequence_KEY_WAIT( work );  break;
   case RESEARCH_MENU_SEQ_FADE_OUT: FinishSequence_FADE_OUT( work );  break;
   case RESEARCH_MENU_SEQ_CLEAN_UP: FinishSequence_CLEAN_UP( work );  break;
@@ -559,6 +618,7 @@ static void SetSequence( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq )
   switch( nextSeq )
   {
   case RESEARCH_MENU_SEQ_SETUP:    InitSequence_SETUP( work );     break;
+  case RESEARCH_MENU_SEQ_STAND_BY: InitSequence_STAND_BY( work );  break;
   case RESEARCH_MENU_SEQ_KEY_WAIT: InitSequence_KEY_WAIT( work );  break;
   case RESEARCH_MENU_SEQ_FADE_OUT: InitSequence_FADE_OUT( work );  break;
   case RESEARCH_MENU_SEQ_CLEAN_UP: InitSequence_CLEAN_UP( work );  break;
@@ -571,6 +631,7 @@ static void SetSequence( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq )
   switch( nextSeq )
   {
   case RESEARCH_MENU_SEQ_SETUP:    OS_TFPrintf( PRINT_TARGET, "SETUP" );     break;
+  case RESEARCH_MENU_SEQ_STAND_BY: OS_TFPrintf( PRINT_TARGET, "STAND_BY" );  break;
   case RESEARCH_MENU_SEQ_KEY_WAIT: OS_TFPrintf( PRINT_TARGET, "KEY_WAIT" );  break;
   case RESEARCH_MENU_SEQ_FADE_OUT: OS_TFPrintf( PRINT_TARGET, "FADE_OUT" );  break;
   case RESEARCH_MENU_SEQ_CLEAN_UP: OS_TFPrintf( PRINT_TARGET, "CLEAN_UP" );  break;
@@ -595,6 +656,19 @@ static void InitSequence_SETUP( RESEARCH_MENU_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
+ * @brief 最初のキー待ちシーケンス ( RESEARCH_MENU_SEQ_STAND_BY ) の初期化処理
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void InitSequence_STAND_BY( RESEARCH_MENU_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init seq STAND_BY\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
  * @brief キー入力待ちシーケンス ( RESEARCH_MENU_SEQ_KEY_WAIT ) の初期化処理
  *
  * @param work
@@ -602,6 +676,9 @@ static void InitSequence_SETUP( RESEARCH_MENU_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void InitSequence_KEY_WAIT( RESEARCH_MENU_WORK* work )
 {
+  // カーソル位置のメニュー項目を選択状態にする
+  MenuItemSwitchOn( work->cursorPos );
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init seq KEY_WAIT\n" );
 }
@@ -647,6 +724,22 @@ static void FinishSequence_SETUP( RESEARCH_MENU_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: finish seq SETUP\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief 最初のキー入力待ちシーケンス ( RESEARCH_MENU_SEQ_STAND_BY ) の初期化処理
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void FinishSequence_STAND_BY( RESEARCH_MENU_WORK* work )
+{
+  // カーソル位置のメニュー項目を選択状態にする
+  MenuItemSwitchOn( work->cursorPos );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: finish seq STAND_BY\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1907,6 +2000,7 @@ static void DebugPrint_seqQueue( const RESEARCH_MENU_WORK* work )
     switch( value )
     {
     case RESEARCH_MENU_SEQ_SETUP:     OS_TFPrintf( PRINT_TARGET, "SETUP " );    break;
+    case RESEARCH_MENU_SEQ_STAND_BY:  OS_TFPrintf( PRINT_TARGET, "STAND_BY " );    break;
     case RESEARCH_MENU_SEQ_KEY_WAIT:  OS_TFPrintf( PRINT_TARGET, "KEY-WAIT " ); break;
     case RESEARCH_MENU_SEQ_FADE_OUT:  OS_TFPrintf( PRINT_TARGET, "FADE_OUT " ); break;
     case RESEARCH_MENU_SEQ_CLEAN_UP:  OS_TFPrintf( PRINT_TARGET, "CLEAN-UP " ); break;

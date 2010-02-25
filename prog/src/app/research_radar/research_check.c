@@ -1225,9 +1225,16 @@ static void MoveMenuCursorUp( RESEARCH_CHECK_WORK* work )
   // カーソル移動
   ShiftMenuCursorPos( work, -1 );
 
-  //「ただいま ちょうさちゅう」なら、回答の位置をスキップする
-  if( ( work->cursorPos == MENU_ITEM_ANSWER ) && 
-      ( GetCountOfQuestion(work) == 0 ) ) { ShiftMenuCursorPos( work, -1 ); }
+  // カーソルが「回答」の位置にある場合
+  if( work->cursorPos == MENU_ITEM_ANSWER )
+  {
+    if( work->analyzeFlag == FALSE ) { // 未解析
+      ShiftMenuCursorPos( work, -1 ); 
+    }
+    else if( GetCountOfQuestion(work) == 0 ) { //「ただいま ちょうさちゅう」
+      ShiftMenuCursorPos( work, -1 ); 
+    }
+  }
 
   // 表示を更新
   SetMenuCursorOn( work );      // カーソルが乗っている状態にする
@@ -1255,9 +1262,16 @@ static void MoveMenuCursorDown( RESEARCH_CHECK_WORK* work )
   // カーソル移動
   ShiftMenuCursorPos( work, 1 );
 
-  //「ただいま ちょうさちゅう」なら、質問の位置をスキップする
-  if( ( work->cursorPos == MENU_ITEM_ANSWER ) && 
-      ( GetCountOfQuestion(work) == 0 ) ) { ShiftMenuCursorPos( work, 1 ); }
+  // カーソルが「回答」の位置にある場合
+  if( work->cursorPos == MENU_ITEM_ANSWER )
+  {
+    if( work->analyzeFlag == FALSE ) { // 未解析
+      ShiftMenuCursorPos( work, 1 ); 
+    }
+    else if( GetCountOfQuestion(work) == 0 ) { //「ただいま ちょうさちゅう」
+      ShiftMenuCursorPos( work, 1 ); 
+    }
+  }
 
   // 表示を更新
   SetMenuCursorOn( work );      // カーソルが乗っている状態にする
@@ -1691,6 +1705,9 @@ static void UpdateMainBG_WINDOW( RESEARCH_CHECK_WORK* work )
   }
   else if( GetCountOfQuestion( work ) == 0 ) {
     datID = NARC_research_radar_graphic_bgd_graphbtn1_NSCR; //「ただいま ちょうさちゅう」
+  }
+  else if( work->analyzeFlag == FALSE ) {
+    datID = NARC_research_radar_graphic_bgd_graphbtn1_NSCR; // 未解析
   }
   else {
     datID = NARC_research_radar_graphic_bgd_graphbtn2_NSCR; // 通常表示
