@@ -70,10 +70,11 @@ palpark_main:
       _BALLOONWIN_CLOSE()
       IF $SCWK_ANSWER == 0 THEN          //ＤＳある
         //DSiの通信機能はＯＮになってるか？
-        $SCWK_ANSWER = TRUE   //@todo
-        IF $SCWK_ANSWER != TRUE THEN
-          //システムメッセージ
-          
+        _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
+        //FALSEのとき、無線通信は使えない
+        IF $SCWK_ANSWER == FALSE THEN
+        	//共通メッセージ呼び出し
+          _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
           _CALL see_you
         ELSE
           _CALL save        //output:SCWK_ANSWER
@@ -236,14 +237,17 @@ player_in_anm:
   _OBJ_ANIME( R15R0301_PARK, anm_doc_work1 )
 	_OBJ_ANIME_WAIT()
 
-  //マシン起動SE
   //アニメセットアップ
   _BMODEL_ANIME_CREATE( anmID, SCR_BMID_PPMACHINE, 10, 3 )
+  //マシン起動SE
+  _SE_PLAY( SEQ_SE_FLD_125 )
   //マシンアニメ
 	_BMODEL_ANIME_SET( anmID, SCR_BMANM_PPM_MOV )
 	_BMODEL_ANIME_WAIT( anmID )
   //マシンループアニメ
 	_BMODEL_ANIME_LOOP_SET( anmID, SCR_BMANM_PPM_LOOP )
+  //起動ＳＥ待ち
+  _SE_WAIT()
 
   //博士所定位置に戻るアニメ
   _OBJ_ANIME( R15R0301_PARK, anm_doc_work2 )
