@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-16T17:58:28"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T13:04:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1539" top="219" right="2244" bottom="839" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,18 +292,18 @@
 	</lock>
 
 
-	<row id="msg_c03p14_girl4_01">
+	<row id="msg_c03p14_girl4_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♀
-・12月ロム用仮メッセージ</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">ポケモンも　ひとも　いつかは
 うんめいの　あいてに　であうんだって！▼
 けっこん　した　おねえちゃんが
 そういってたから　しんじてるの！</language>
-		<language name="JPN_KANJI" width="256">ポケモンも　ひとも　いつかは
-うんめいの　あいてに　であうんだって！▼
-けっこん　した　おねえちゃんが
-そういってたから　しんじてるの！</language>
+		<language name="JPN_KANJI" width="256">ポケモンも　人も　いつかは
+運命の　相手に　出会うんだって！▼
+結婚した　おねえちゃんが
+そういってたから　信じてるの！</language>
 	</row>
 
 	<flowchart-group-list>

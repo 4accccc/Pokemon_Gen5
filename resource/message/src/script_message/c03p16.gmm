@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T16:31:11"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T13:06:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -299,12 +299,12 @@
 ・いいえ→cabinguide_06</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
-		<language name="JPN" width="256">けしき　ウキウキ　しょうぶ　ワクワク
+		<language name="JPN" width="256">けしきウキウキ　しょうぶワクワク
 ロイヤルイッシュごうへ　ようこそ！[BE:01:ページ切り替え（クリア）]
 じょうせんりょうは
 １０００えん　になります[BE:00:ページ切り替え（行送り）]
 ごじょうせんに　なりますか？</language>
-		<language name="JPN_KANJI" width="256">景色　ウキウキ　勝負で　ワクワク
+		<language name="JPN_KANJI" width="256">景色ウキウキ　勝負ワクワク
 ロイヤルイッシュ号へ　ようこそ！[BE:01:ページ切り替え（クリア）]
 乗船料は　１０００円　になります
 ご乗船に　なりますか？</language>
@@ -350,8 +350,7 @@
 		<comment>説明を受けた場合のみに表示</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
-		<language name="JPN" width="256">ふねの　じょうせんりょうは
-１０００えん　になります[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">じょうせんりょうは　１０００えん　です
 ごじょうせんに　なりますか？</language>
 		<language name="JPN_KANJI" width="256">乗船料は　１０００円　になります
 ご乗船に　なりますか？</language>
@@ -486,7 +485,7 @@ C03R0801へマップ移動</comment>
 ふさわしい　ふねに　なりますよう[BE:01:ページ切り替え（クリア）]
 こころを　こめて
 じゅんび　しています</language>
-		<language name="JPN_KANJI" width="256">この　船は　準備中　です[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">この船は　準備中　です[BE:01:ページ切り替え（クリア）]
 最強の　ポケモントレーナーに
 ふさわしい　船に　なりますよう[BE:01:ページ切り替え（クリア）]
 心を　こめて
