@@ -279,6 +279,9 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	//ライバルストッパー終了
 	$WK_SCENE_T02 = 1	
 	
+	//博士にバニシュフラグセット
+	_FLAG_SET( FV_T02PC0101_HAKASE )
+	
 	//ライバルストッパー解除
 	_FLAG_SET( FV_T02_RIVAL )
 	_FLAG_SET( FV_T02_HAKASE )
