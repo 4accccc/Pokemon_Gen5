@@ -674,14 +674,10 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
     {
       BtlCompetitor  competitor = BTL_MAIN_GetCompetitor( wk->mainModule );
-      const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
       if( competitor == BTL_COMPETITOR_DEMO_CAPTURE ){
         BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_ARARAGI );
-      }
-      else if( MyStatus_GetMySex(status) == PM_MALE ){
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_MALE );
       }else{
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_FEMALE );
+        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2 );
       }
       (*seq)++;
     }
@@ -848,13 +844,8 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
   case 7:
 //    if( !BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE_MINE ) )
     {
-      const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
       statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
-      if( MyStatus_GetMySex(status) == PM_MALE ){
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_MALE );
-      }else{
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_FEMALE );
-      }
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2 );
       (*seq)++;
     }
     break;
@@ -1413,11 +1404,13 @@ static BOOL btlinEffSub_OpponentTrainerIn2( BTLV_SCU* wk, int* seq, u8 clientID_
     {
       u16 trType;
 
-      subwk->vpos_1 = BTLV_MCSS_POS_TR_BB;
+      subwk->vpos_1 = BTLV_MCSS_POS_TR_B;
       subwk->vpos_2 = BTLV_MCSS_POS_TR_D;
 
       trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID_1 );
       BTLV_EFFECT_SetTrainer( trType, subwk->vpos_1, 0, 0, 0 );
+      trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID_2 );
+      BTLV_EFFECT_SetTrainer( trType, subwk->vpos_2, 0, 0, 0 );
 
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
       (*seq)++;
@@ -1836,13 +1829,7 @@ static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq )
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
-
-      if( MyStatus_GetMySex(status) == PM_MALE ){
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_MALE );
-      }else{
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_FEMALE );
-      }
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2 );
       (*seq)++;
     }
     break;
@@ -1935,13 +1922,7 @@ static BOOL btlinEffSub_MyPokeIn_Solo( BTLV_SCU* wk, int* seq, u8 clientID )
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
-
-      if( MyStatus_GetMySex(status) == PM_MALE ){
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_MALE );
-      }else{
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_FEMALE );
-      }
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2 );
       (*seq)++;
     }
     break;
@@ -2034,13 +2015,7 @@ static BOOL btlinEffSub_MyPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_1, u8 
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
-
-      if( MyStatus_GetMySex(status) == PM_MALE ){
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_MALE );
-      }else{
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_FEMALE );
-      }
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2 );
       (*seq)++;
     }
     break;
@@ -2136,12 +2111,7 @@ static BOOL btlinEff_MyPokeInTriple( BTLV_SCU* wk, int* seq )
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
-      if( MyStatus_GetMySex(status) == PM_MALE ){
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_MALE );
-      }else{
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_FEMALE );
-      }
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2 );
       (*seq)++;
     }
     break;
