@@ -141,3 +141,4 @@
 "nsbmdfiles/kemuri_event.nsbmd"
 "nsbmdfiles/kemuri_event2.nsbmd"
 "nsbmdfiles/cabin_door.nsbmd"
+"nsbmdfiles/cabin_door_r.nsbmd"
