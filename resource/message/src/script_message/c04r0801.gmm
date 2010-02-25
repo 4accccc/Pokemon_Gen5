@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T18:16:09"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T12:00:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1377" top="165" right="2081" bottom="785" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,48 +294,14 @@
 
 	<row id="msg_c04r0801_infomationw_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・クリア前
-・話かけたとき</comment>
+・仮メッセージ
+・このゲートでのストッパーは不要！</comment>
 		<attribute name="キャラ指定">INFORMATIONW
 受付嬢</attribute>
-		<language name="JPN" width="256">ああ！　そちらへは
-バッジを　８こ　もち▼
-さらに　ポケモンリーグで
-みとめられて　いないと▽
-すすめない　きまり　なんです</language>
-		<language name="JPN_KANJI" width="256">ああ！　そちら方面へは
-バッジを　８個　持ち▼
-さらに　ポケモンリーグで
-認められて　いないと▽
-進めない　決まり　なんです</language>
-	</row>
-
-	<row id="msg_c04r0801_infomationw_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・クリア前
-・pos起動（GRIDX=14、GRIDZ=4~8）
-　メッセージ表示後、一歩左に戻す</comment>
-		<attribute name="キャラ指定">INFORMATIONW
-受付嬢</attribute>
-		<language name="JPN" width="256">ああ！　そちらへは
-バッジを　８こ　もち▼
-さらに　ポケモンリーグで
-みとめられて　いないと▽
-すすめない　きまり　なんです▼</language>
-		<language name="JPN_KANJI" width="256">ああ！　そちら方面へは
-バッジを　８個　持ち▼
-さらに　ポケモンリーグで
-認められて　いないと▽
-進めない　決まり　なんです▼</language>
-	</row>
-
-	<row id="msg_c04r0801_infomationw_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・クリア後</comment>
-		<attribute name="キャラ指定">INFORMATIONW
-受付嬢</attribute>
-		<language name="JPN" width="256">このさき　ワンダーブリッジです！</language>
-		<language name="JPN_KANJI" width="256">この先　ワンダーブリッジです！</language>
+		<language name="JPN" width="256">このさき　１６ばんどうろ
+そして　ワンダーブリッジです！</language>
+		<language name="JPN_KANJI" width="256">この先　１６番道路
+そして　ワンダーブリッジです！</language>
 	</row>
 
 	<row id="msg_c04r0801_elitew_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
