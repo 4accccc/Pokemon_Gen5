@@ -14,6 +14,7 @@
 #include "system\pms_word.h"
 #include "system\bmp_cursor.h"
 #include "system\bmp_winframe.h"
+#include "system\bgwinfrm.h"
 #include "system\touch_subwindow.h"
 #include "print\printsys.h"
 #include "print\wordset.h"
@@ -207,7 +208,10 @@ struct _PMSIV_EDIT {
   u16        scroll_y_per_line[192];
 #endif
 
+  BGWINFRM_WORK*    bgwinfrm_work;
 };
+
+#define BGWINFRM_INDEX (0)
 
 
 //==============================================================
@@ -285,7 +289,9 @@ PMSIV_EDIT*  PMSIV_EDIT_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, 
     }
   }
 #endif
-	
+	 
+  wk->bgwinfrm_work = BGWINFRM_Create( BGWINFRM_TRANS_NORMAL, 1, HEAPID_PMS_INPUT_VIEW );
+  
   return wk;
 }
 //------------------------------------------------------------------
@@ -298,6 +304,8 @@ PMSIV_EDIT*  PMSIV_EDIT_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, 
 //------------------------------------------------------------------
 void PMSIV_EDIT_Delete( PMSIV_EDIT* wk )
 {
+  BGWINFRM_Exit( wk->bgwinfrm_work );
+
   if( wk->vblank_task )
   {
 		GFL_TCB_DeleteTask( wk->vblank_task );
@@ -440,6 +448,23 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 
 	// PMSIV_EDIT_UpdateEditArea で単語数が確定するので、その後に。
 	setup_obj( wk );
+
+  BGWINFRM_Add(
+      wk->bgwinfrm_work,
+      BGWINFRM_INDEX,
+      FRM_MAIN_EDITAREA,
+      32,
+      6 );
+  BGWINFRM_FrameSetArcHandle(
+      wk->bgwinfrm_work,
+      BGWINFRM_INDEX,
+      p_handle,
+      NARC_pmsi_pms_bg_main0_NSCR,
+      FALSE );
+
+  BGWINFRM_FramePut( wk->bgwinfrm_work, BGWINFRM_INDEX, 0, 0 );
+  BGWINFRM_BmpWinOn( wk->bgwinfrm_work, 0, wk->win_edit[0] );  // wk->bgwinfrm_workの左上を原点としてオフセットして書き込んでくれる
+  BGWINFRM_FrameOn( wk->bgwinfrm_work, BGWINFRM_INDEX );
 }
 
 static void pmsiv_edit_hblank(GFL_TCB *, void *vwork)
@@ -472,6 +497,7 @@ static void pmsiv_edit_hblank(GFL_TCB *, void *vwork)
 		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,0);
 	}
 */
+/*
   if( vc >= 192 )
   {
     if( !wk->hblank_up_scroll_finish )
@@ -488,6 +514,7 @@ static void pmsiv_edit_hblank(GFL_TCB *, void *vwork)
       wk->hblank_down_scroll_finish = TRUE;
     }
   }
+*/
 }
 
 static void pmsiv_edit_vblank(GFL_TCB* tcb, void* work)
@@ -631,6 +658,10 @@ int PMSIV_EDIT_ScrollWait( PMSIV_EDIT* wk)
     DC_FlushRange( (void *)wk->scroll_y_per_line[i], sizeof(u16)*192 );
   }
 #endif
+
+  GFL_BG_FillScreen( FRM_MAIN_EDITAREA, 0x0000, 0, 0, 32, 6, GFL_BG_SCRWRT_PALIN );  // 前のを消してから次のを書く
+  BGWINFRM_FramePut( wk->bgwinfrm_work, BGWINFRM_INDEX, 0, -wk->main_scr/8 );
+  BGWINFRM_FrameOn( wk->bgwinfrm_work, BGWINFRM_INDEX );
 
 	return FALSE;
 }
