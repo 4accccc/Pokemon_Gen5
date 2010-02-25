@@ -587,7 +587,9 @@ static void _changePokemonStatusDispAuto(POKEMON_TRADE_WORK* pWork,int sel)
   POKEMON_PARAM* pp = pWork->GTSSelectPP[1-(sel/GTS_NEGO_POKESLT_MAX)][sel%GTS_NEGO_POKESLT_MAX]; //‚³‚©‚³‚Ü‚É‚·‚é
 
   if(POKEMONTRADE_IsInPokemonRecvPoke(pp)){
-    POKETRADE_MESSAGE_ChangePokemonStatusDisp(pWork,pp);
+//    pWork->pokemonselectno
+    int mcssno = 1-(sel/GTS_NEGO_POKESLT_MAX);
+    POKETRADE_MESSAGE_ChangePokemonStatusDisp(pWork, pp, mcssno);
   }
 }
 
@@ -652,6 +654,7 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
 
   if(_pokemonStatusKeyLoop(pWork)){
     PMSND_PlaySystemSE(POKETRADESE_CUR);
+    POKEMONTRADE_StartPokeSelectSixButton(pWork,pWork->pokemonselectno);
     _changePokemonStatusDispAuto(pWork,pWork->pokemonselectno);
   }
 
@@ -669,7 +672,6 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
     GFL_BG_SetVisible( GFL_BG_FRAME3_M , FALSE );
 
     POKETRADE_MESSAGE_ResetPokemonStatusMessage(pWork);
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S , FALSE );
     {
       ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
       GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,

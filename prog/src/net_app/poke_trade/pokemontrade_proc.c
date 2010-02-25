@@ -146,7 +146,7 @@ BOOL POKEMONTRADE_IsInPokemonRecvPoke(POKEMON_PARAM* pp)
 }
 
 //ともだちのボックス数
-BOOL POKEMONTRADE_GetFriendBoxNum(POKEMON_TRADE_WORK* pWork)
+int POKEMONTRADE_GetFriendBoxNum(POKEMON_TRADE_WORK* pWork)
 {
   return pWork->friendBoxNum;
 }
@@ -1019,7 +1019,7 @@ static void _changePokemonStatusDispAuto(POKEMON_TRADE_WORK* pWork,int sel)
   }
   {
     POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, pWork->pokemonselectno);
-    POKETRADE_MESSAGE_ChangePokemonStatusDisp(pWork,pp);
+    POKETRADE_MESSAGE_ChangePokemonStatusDisp(pWork,pp, pWork->pokemonselectno );
   }
 }
 
