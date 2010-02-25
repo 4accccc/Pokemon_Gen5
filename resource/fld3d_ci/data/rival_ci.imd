@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-02-25T10:36:13" source="rival_ci01.mb"/>
+	<create user="unno" host="W00199" date="2010-02-25T20:39:56" source="rival_ci01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2010-02-25T10:36:13" source="rival_ci01.mb"/>
+<original_create user="unno" host="W00199" date="2010-02-25T20:39:56" source="rival_ci01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -691,16 +691,16 @@
 			c000 fc0f f00c 000c c000 fc0f f00c 000c
 			c000 fc0f f00c 000c 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 cffc cf00 000c 0000 cffc cf00 000c
-			0000 cffc cf00 000c 0000 cffc cf00 000c
+			0000 cffc cf00 000c 0000 cffc cf00 220c
+			0022 cffc cf00 200c 0222 cffc cf00 000c
 			0000 cffc cf00 000c 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0cc0 cc00 0000 0000 0cc0 cc00 0000
-			0000 0cc0 cc00 0000 0000 0cc0 cc00 0000
+			0000 0cc0 cc00 0000 0000 0cc0 cc00 0200
+			0020 0cc0 cc00 2000 0200 0cc0 cc00 0000
 			0000 0cc0 cc00 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 2200
+			0022 0000 0000 2000 0222 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
