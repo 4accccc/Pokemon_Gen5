@@ -33,6 +33,8 @@
 #include "union_comm_command.h"
 #include "net_app/guru2.h"
 #include "net_app/oekaki.h"
+#include "sound/pm_sndsys.h"
+#include "field/field_sound.h"
 
 
 //==============================================================================
@@ -503,6 +505,9 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
     _SEQ_START_BEFORE_TIMING_WAIT,
     _SEQ_MINIGAME_PROC,
     _SEQ_MINIGAME_PROC_WAIT,
+    
+    _SEQ_BGM_FADE,
+    _SEQ_APP_FREE,
 
     _SEQ_FIELD_OPEN,
     _SEQ_FADEIN,
@@ -626,6 +631,23 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
       break;
     }
 
+    if(situ->play_category == UNION_PLAY_CATEGORY_GURUGURU){
+      u16 snd_index = FSND_GetFieldBGM(unisys->uniparent->game_data, ZONE_ID_UNION);
+      PMSND_PlayNextBGM( snd_index, FSND_FADE_SHORT, FSND_FADE_NORMAL );
+      *seq = _SEQ_BGM_FADE;
+    }
+    else{
+      *seq = _SEQ_APP_FREE;
+    }
+    break;
+  
+  case _SEQ_BGM_FADE:
+    if(PMSND_CheckFadeOnBGM() == TRUE){
+      *seq = _SEQ_APP_FREE;
+    }
+    break;
+
+  case _SEQ_APP_FREE:
     UnionAppSystem_FreeAppWork(unisys->alloc.uniapp);
     unisys->alloc.uniapp = NULL;
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( union_app ) );
