@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T20:17:27"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T13:01:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1413" top="182" right="2118" bottom="802" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -293,6 +293,7 @@
 
 
 	<row id="msg_c03p09_iceline_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂：アイスイベント</comment>
 		<language name="JPN" width="256">いよいよ　たべられる！
 ならんだかいが　あったぜ！</language>
 		<language name="JPN_KANJI" width="256">いよいよ　食べられる！
@@ -300,6 +301,7 @@
 	</row>
 
 	<row id="msg_c03p09_iceline_02" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>♀：アイスイベント</comment>
 		<language name="JPN" width="256">これを　あじわいたくて　はるばる
 カラクサタウンから　きちゃいました！</language>
 		<language name="JPN_KANJI" width="256">これを　味わいたくて　はるばる
@@ -307,6 +309,7 @@
 	</row>
 
 	<row id="msg_c03p09_iceline_03" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>♀：アイスイベント</comment>
 		<language name="JPN" width="256">ここのー　スィーツー！
 チョーにんき　なんだよー！！</language>
 		<language name="JPN_KANJI" width="256">ここのー　スィーツー！
@@ -314,6 +317,7 @@
 	</row>
 
 	<row id="msg_c03p09_iceline_04" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>♀：アイスイベント</comment>
 		<language name="JPN" width="256">さすが　わだいの　おみせ！
 こんなに　こんでるなんて　すごい！</language>
 		<language name="JPN_KANJI" width="256">さすが　話題の　お店！
@@ -321,7 +325,7 @@
 	</row>
 
 	<row id="msg_c03p09_iceline_05a" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
+		<comment>♂：アイスイベント
 ・火曜日
 ・はい/いいえの選択肢
 　はい→iceline_05b
@@ -337,7 +341,7 @@
 	</row>
 
 	<row id="msg_c03p09_iceline_05b" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
+		<comment>♂：アイスイベント
 ・火曜日
 ・はい選択時</comment>
 		<language name="JPN" width="256">そうかー
@@ -351,7 +355,7 @@
 	</row>
 
 	<row id="msg_c03p09_iceline_05c" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
+		<comment>♂：アイスイベント
 ・火曜日
 ・いいえ選択時</comment>
 		<language name="JPN" width="256">そうかー　こんでるしな▼
@@ -365,7 +369,7 @@
 	</row>
 
 	<row id="msg_c03p09_iceline_05d" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
+		<comment>♂：アイスイベント
 ・火曜日
 ・購入済み</comment>
 		<language name="JPN" width="256">うん？　ここでは
@@ -381,7 +385,7 @@
 	</row>
 
 	<row id="msg_c03p09_iceline_05e" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
+		<comment>♂：アイスイベント
 ・火曜日以外</comment>
 		<language name="JPN" width="256">うん？　ここでは
 いま　シウンシティで　わだいの▽
@@ -473,12 +477,20 @@
 暖かくなれば　また来てください！</language>
 	</row>
 
-	<row id="msg_c03p09_sign1_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03p09_sign1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>アトリエの看板
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">看板</attribute>
-		<language name="JPN" width="256">アトリエ</language>
-		<language name="JPN_KANJI" width="256">アトリエ</language>
+		<language name="JPN" width="256">アトリエ　ヒウン</language>
+		<language name="JPN_KANJI" width="256">アトリエ　ヒウン</language>
+	</row>
+
+	<row id="msg_c03p09_sign2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>アイス屋の看板
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">看板</attribute>
+		<language name="JPN" width="256">ヒウンめいぶつ　ヒウンアイス</language>
+		<language name="JPN_KANJI" width="256">ヒウン名物　ヒウンアイス</language>
 	</row>
 
 	<row id="msg_c03p09_businessman1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
