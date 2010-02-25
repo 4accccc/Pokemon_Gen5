@@ -27,7 +27,12 @@ _EVENT_DATA_END
 /*						POSイベント						*/
 /************************************************************/
 EVENT_START	ev_pos_n01r0201_guide_01
+
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
 	
+	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ )
+
 	//？？？『少しの間 おまえの自由をいただく！』
 	_PLAINWIN_MSG_DOWN( msg_n01r0201_ninja_01 )
 	_MSGWIN_CLOSE()
@@ -35,9 +40,19 @@ EVENT_START	ev_pos_n01r0201_guide_01
 	//主人公：回復部屋の前へ移動
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01 )
 	_OBJ_ANIME_WAIT()
-	
+
+	SWITCH $LWK_POSZ
+	CASE 14 THEN
+		_OBJ_ADD_EX( 21, 14, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+	CASE 15 THEN
+		_OBJ_ADD_EX( 21, 15, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+	CASE 16 THEN
+		_OBJ_ADD_EX( 21, 16, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+	CASE 17 THEN
+		_OBJ_ADD_EX( 21, 17, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+	ENDSWITCH
+
 	//ダークトリニティ登場【仮】表示する演出が未定
-	_OBJ_ADD_EX( 21, 13, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
 	
