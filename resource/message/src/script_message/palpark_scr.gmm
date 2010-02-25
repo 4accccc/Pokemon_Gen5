@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-24T17:51:21"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-25T15:54:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="150" top="188" right="855" bottom="816" maximized="no" rayout="Vertical2">
+	<dialog left="509" top="176" right="1214" bottom="804" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="606" top="232" right="1079" bottom="630" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -419,13 +419,32 @@ BOXに6匹以上の空きがある</comment>
 
 	<row id="msg_palpark_score_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ハイスコアメッセージ1</comment>
-		<language name="JPN" width="256">レベル１だね！</language>
-		<language name="JPN_KANJI" width="256">レベル１だね！</language>
+		<language name="JPN" width="256">さすが　でんどういりの　トレーナーだ！
+ポケシフターが　みごとに　うごいている！▼
+……だが　[1:00:トレーナー名:3]くん！▼
+ボクのめは　ごまかせないッ！
+[1:00:トレーナー名:3]くんは　まだ　ちからを▽
+かくしているだろう！▼
+きみほどの　トレーナーなら　もっともっと
+つかいこなせるはずだ！▼</language>
+		<language name="JPN_KANJI" width="256">さすが　殿堂入りの　トレーナーだ！
+ポケシフターが　見事に　動いている！▼
+……だが　[1:00:トレーナー名:3]くん！▼
+ボクの目は　ごまかせないッ！
+[1:00:トレーナー名:3]君は　まだ　力を▽
+隠しているだろう！▼
+きみほどの　トレーナーなら　もっともっと
+使いこなせるはずだ！▼</language>
 	</row>
 
 	<row id="msg_palpark_score_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ハイスコアメッセージ２</comment>
-		<language name="JPN" width="256">レベル２だね！</language>
+		<language name="JPN" width="256">ぬほっ！
+ポケシフターが　あざやかに
+うごいているッ！
+[1:00:トレーナー名:3]くん！
+きみは　ジーニアスだ！　てんさいだ！
+</language>
 		<language name="JPN_KANJI" width="256">レベル２だね！</language>
 	</row>
 
@@ -449,8 +468,18 @@ BOXに6匹以上の空きがある</comment>
 
 	<row id="msg_palpark_score_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ハイスコアメッセージ６</comment>
-		<language name="JPN" width="256">レベル６だね！</language>
-		<language name="JPN_KANJI" width="256">レベル６だね！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:3]くん！▼
+やはり　ぼくのかんは　ただしかった！
+きみは　ジーニアスだ！　てんさいだッ！▼
+これほど　ポケシフターを
+プロフェッショナルに　あつかえる　ものは▽
+もう　きみ　いがいに　いないだろう！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:3]くん！▼
+やはり　ぼくの勘は　正しかった！
+きみは　ジーニアスだ！　天才だッ！▼
+これほど　ポケシフターを
+プロフェッショナルに　扱える　ものは▽
+もう　きみ　以外に　いないだろう！▼</language>
 	</row>
 
 	<row id="msg_palpark_11">
@@ -463,18 +492,22 @@ BOXに6匹以上の空きがある</comment>
 
 	<row id="msg_palpark_12">
 		<comment>パルパークでポケモンを1匹も捕まえられなかった場合</comment>
-		<language name="JPN" width="256">ノーゥ　ざんねん！　ポケモンは
-つかまえられなかった　みたいだね</language>
-		<language name="JPN_KANJI" width="256">ノーゥ　残念！　ポケモンは
-捕まえられなかった　みたいだね</language>
+		<language name="JPN" width="256">ノゥ　ザンンネーン！　ポケモンは
+つかまえられなかった　みたいだね▼</language>
+		<language name="JPN_KANJI" width="256">ノーゥ　ザンネーン！　ポケモンは
+捕まえられなかった　みたいだね▼</language>
 	</row>
 
 	<row id="msg_palpark_13">
 		<comment>通信エラーのときのメッセージ</comment>
 		<language name="JPN" width="256">ぬぐっ！
-つうしんエラーが　おきたみたいだ！▼</language>
+つうしんエラーが　おきたみたいだ！▼
+ざんねんだが　もういちど
+やりなおして　みてくれ！▼</language>
 		<language name="JPN_KANJI" width="256">ぬぐっ！
-通信エラーが　起きたみたいだ！▼</language>
+通信エラーが　起きたみたいだ！▼
+残念だが　もう一度
+やり直して　みてくれ！▼</language>
 	</row>
 
 	<row id="msg_palpark_first_01">
@@ -629,7 +662,7 @@ msg_palpark_first_19に続く</comment>
 れきしを　うごかす　だいじっけんに
 さんか　しないかね！？▼
 ここの　そうちは　ポケシフターと　いって▼
-エネルギー　パーティクルを▽
+エネルギー　パーティクルを
 イヴォークしつつ▼
 
 ＤＳという……▼
@@ -655,7 +688,7 @@ msg_palpark_first_19に続く</comment>
 歴史を　動かす　大実験に
 参加　しないかね！？▼
 ここの　装置は　ポケシフターと　言って▼
-エネルギー　パーティクルを▽
+エネルギー　パーティクルを
 イヴォークしつつ▼
 
 ＤＳという……▼
