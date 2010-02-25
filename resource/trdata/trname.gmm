@@ -876,8 +876,8 @@
 	</row>
 
 	<row id="elitew_03">
-		<language name="JPN" width="216">リョウ</language>
-		<language name="JPN_KANJI" width="216">リョウ</language>
+		<language name="JPN" width="216">タクヤ</language>
+		<language name="JPN_KANJI" width="216">タクヤ</language>
 	</row>
 
 	<row id="elitew_04">
@@ -891,13 +891,13 @@
 	</row>
 
 	<row id="elitem_02">
-		<language name="JPN" width="216">タクヤ</language>
-		<language name="JPN_KANJI" width="216">タクヤ</language>
+		<language name="JPN" width="216">ユウキ</language>
+		<language name="JPN_KANJI" width="216">ユウキ</language>
 	</row>
 
 	<row id="elitem_03">
-		<language name="JPN" width="216">ユウキ</language>
-		<language name="JPN_KANJI" width="216">ユウキ</language>
+		<language name="JPN" width="216">リョウ</language>
+		<language name="JPN_KANJI" width="216">リョウ</language>
 	</row>
 
 	<row id="elitem_04">
@@ -1146,8 +1146,8 @@
 	</row>
 
 	<row id="backpackerw_03">
-		<language name="JPN" width="216">ミチコ</language>
-		<language name="JPN_KANJI" width="216">ミチコ</language>
+		<language name="JPN" width="216">ユウホ</language>
+		<language name="JPN_KANJI" width="216">ユウホ</language>
 	</row>
 
 	<row id="backpackerw_04">
@@ -1345,7 +1345,7 @@
 		<language name="JPN_KANJI" width="216">コウダイ</language>
 	</row>
 
-	<row id="mount_03">
+	<row id="mount_05">
 		<language name="JPN" width="216">ノボル</language>
 		<language name="JPN_KANJI" width="216">ノボル</language>
 	</row>
@@ -1585,7 +1585,7 @@
 		<language name="JPN_KANJI" width="216">フジオ</language>
 	</row>
 
-	<row id="mount_05">
+	<row id="mount_03">
 		<language name="JPN" width="216">ガクト</language>
 		<language name="JPN_KANJI" width="216">ガクト</language>
 	</row>
@@ -1821,8 +1821,8 @@
 	</row>
 
 	<row id="backpackerm_07">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">シロウ</language>
+		<language name="JPN_KANJI" width="216">シロウ</language>
 	</row>
 
 	<row id="worker2_16">
@@ -2376,13 +2376,13 @@
 	</row>
 
 	<row id="kindergartenw_03">
-		<language name="JPN" width="216">ハルカ</language>
-		<language name="JPN_KANJI" width="216">ハルカ</language>
+		<language name="JPN" width="216">チサエ</language>
+		<language name="JPN_KANJI" width="216">チサエ</language>
 	</row>
 
 	<row id="kindergartenm_04">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">テルキ</language>
+		<language name="JPN_KANJI" width="216">テルキ</language>
 	</row>
 
 	<row id="rival_13">
@@ -2853,6 +2853,11 @@
 	<row id="support_09">
 		<language name="JPN" width="216">ベル</language>
 		<language name="JPN_KANJI" width="216">ベル</language>
+	</row>
+
+	<row id="boss_07">
+		<language name="JPN" width="216">Ｎ</language>
+		<language name="JPN_KANJI" width="216">Ｎ</language>
 	</row>
 
 	<flowchart-group-list>

@@ -205,7 +205,7 @@
 #define	TRID_BASEBALL_02   ( 192 ) 
 #define	TRID_MOUNT_01   ( 193 ) 
 #define	TRID_MOUNT_02   ( 194 ) 
-#define	TRID_MOUNT_03   ( 195 ) 
+#define	TRID_MOUNT_05   ( 195 ) 
 #define	TRID_JUGGLING_02   ( 196 ) 
 #define	TRID_JUGGLING_03   ( 197 ) 
 #define	TRID_JUGGLING_04   ( 198 ) 
@@ -253,7 +253,7 @@
 #define	TRID_SCIENTISTM_05   ( 240 ) 
 #define	TRID_WORKER2_15   ( 241 ) 
 #define	TRID_MOUNT_04   ( 242 ) 
-#define	TRID_MOUNT_05   ( 243 ) 
+#define	TRID_MOUNT_03   ( 243 ) 
 #define	TRID_ELITEW_06   ( 244 ) 
 #define	TRID_ELITEW_07   ( 245 ) 
 #define	TRID_ELITEM_06   ( 246 ) 
@@ -507,7 +507,8 @@
 #define	TRID_SUPPORT_07   ( 494 ) 
 #define	TRID_SUPPORT_08   ( 495 ) 
 #define	TRID_SUPPORT_09   ( 496 ) 
-#define TRID_MAX  ( 497 )
+#define	TRID_BOSS_07   ( 497 ) 
+#define TRID_MAX  ( 498 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
