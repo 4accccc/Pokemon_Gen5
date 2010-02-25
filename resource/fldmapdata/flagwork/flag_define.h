@@ -200,7 +200,7 @@
 #define FE_LEGEND3_BATTLE                  184 /* 0x00b8 伝説ポケモン：アラミスと戦った */
 #define FE_C09_FORBIDDEN                   185 /* 0x00b9 ポケモンリーグ立ち入り禁止状態フラグ。Ｎ城出現&#xff5e;チャンプ復帰まで */
 #define FE_ZUKAN_GRADEUP                   186 /* 0x00ba 全国図鑑入手可能フラグ（地方を全て「見た」にするか、ゲームクリアでセット） */
-		/* not used   187(0x00bb) */
+#define FE_C01_ITEMGET_01                  187 /* 0x00bb C01サンヨウシティ：釣り人のアイテム入手フラグ */
 		/* not used   188(0x00bc) */
 		/* not used   189(0x00bd) */
 		/* not used   190(0x00be) */
