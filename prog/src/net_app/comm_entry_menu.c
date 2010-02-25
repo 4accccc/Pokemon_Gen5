@@ -953,7 +953,6 @@ static void _SendUpdate_Parent(COMM_ENTRY_MENU_PTR em)
       if(CemSend_MemberInfo(&em->member_info, send_bit, em->mp_mode) == TRUE){
         em->update_member_info = FALSE;
         em->member_info_sending = TRUE;
-        OS_TPrintf("aaa 0 %d, %d\n", em->update_member_info, em->member_info_sending);
       }
     }
   }
@@ -1703,12 +1702,10 @@ static void _Req_SendMemberInfo(COMM_ENTRY_MENU_PTR em)
     //巨大データの為、既に送信リクエストがかかっている場合は、
     //送信中である、という事を考慮して予約という形でリクエストをかけておく
     em->update_member_info_reserve = TRUE;
-    OS_TPrintf("aaa 5 %d, %d\n", em->update_member_info, em->member_info_sending);
   }
   else{
     em->update_member_info = TRUE;
     em->update_member_info_reserve = FALSE;
-    OS_TPrintf("aaa 6 %d, %d\n", em->update_member_info, em->member_info_sending);
   }
 }
 
@@ -1725,7 +1722,6 @@ void CommEntyrMenu_MemberInfoReserveUpdate(COMM_ENTRY_MENU_PTR em)
   em->member_info_sending = FALSE;
   em->update_member_info = em->update_member_info_reserve;
   em->update_member_info_reserve = FALSE;
-  OS_TPrintf("aaa 1 %d, %d\n", em->update_member_info, em->member_info_sending);
 }
 
 //==================================================================
