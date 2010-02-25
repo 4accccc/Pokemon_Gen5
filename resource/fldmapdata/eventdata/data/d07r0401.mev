@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/18 12:55:13
+#save date:2010/02/25 21:58:54
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d07r0401.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,69 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d07r0401.wms
 #hold event type:
 1
 #hold event number:
+2
+#event number: 0
+#type
+1
+#ID name
+TR_WORKER2_06
+#OBJ CODE Number
+WORKMAN2
+#MOVE CODE Number
+MV_HIDE_GRND
+#EVENT TYPE Number
+EV_TYPE_TRAINER_EYEALL
+#Flag Name
 0
+#Event Script Name
+SCRID_TRID_WORKER2_06
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 -88
+#event number: 1
+#type
+1
+#ID name
+TR_KARATE_02
+#OBJ CODE Number
+FIGHTERM
+#MOVE CODE Number
+MV_RTDRLU       
+#EVENT TYPE Number
+EV_TYPE_TRAINER_SPIN_STOP_R
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_KARATE_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+2
+#Parameter 1 Number
+3
+#Parameter 2 Number
+0
+#Move Limit X Number
+6
+#Move Limit Z Number
+6
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+520 0 120
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

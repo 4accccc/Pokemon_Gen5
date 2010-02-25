@@ -17,8 +17,9 @@
 #ifndef ZONE_D07R0201_EVC_H
 #define ZONE_D07R0201_EVC_H
 
-#define DUMMY_OBJ_GRND                     0
-#define DUMMY_OBJ_GRND_2                   1
+#define TR_WORKER2_07                      0
+#define TR_MOUNT_04                        1
+#define TR_BATTLEG_02                      2
 
 #endif //ZONE_D07R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

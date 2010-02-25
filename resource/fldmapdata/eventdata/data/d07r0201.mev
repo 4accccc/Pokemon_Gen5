@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/24 11:46:04
+#save date:2010/02/25 22:09:30
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d07r0201.wms
 #SECTION START:OBJ_EVENT
@@ -9,26 +9,26 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d07r0201.wms
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #type
 1
 #ID name
-DUMMY_OBJ_GRND
+TR_WORKER2_07
 #OBJ CODE Number
-HIDEGROUND
+WORKMAN2
 #MOVE CODE Number
-MV_DMY
+MV_DIR_RND
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_WORKER2_07
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
-0
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -40,26 +40,26 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 0 -600
+552 0 104
 #event number: 1
 #type
 1
 #ID name
-DUMMY_OBJ_GRND_2
+TR_MOUNT_04
 #OBJ CODE Number
-WORKMAN2
+MOUNTMAN
 #MOVE CODE Number
-MV_HIDE_GRND
+MV_RND_DR
 #EVENT TYPE Number
-EV_TYPE_TRAINER_EYEALL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_TRID_TANPAN_01
+SCRID_TRID_MOUNT_04
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-1
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -71,7 +71,38 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 0 -648
+424 0 -680
+#event number: 2
+#type
+1
+#ID name
+TR_BATTLEG_02
+#OBJ CODE Number
+FIGHTERW
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_TRAINER_KYORO
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BATTLEG_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+2
+#Parameter 1 Number
+1
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+6
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+696 0 -424
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

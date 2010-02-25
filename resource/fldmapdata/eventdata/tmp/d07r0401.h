@@ -16,6 +16,8 @@
 #ifndef ZONE_D07R0401_EVC_H
 #define ZONE_D07R0401_EVC_H
 
+#define TR_WORKER2_06                      0
+#define TR_KARATE_02                       1
 
 #endif //ZONE_D07R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d07r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
