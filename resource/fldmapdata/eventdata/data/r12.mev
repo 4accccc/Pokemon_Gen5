@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/09 12:02:22
+#save date:2010/02/25 19:48:33
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r12.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,193 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r12.wms
 #hold event type:
 1
 #hold event number:
+6
+#event number: 0
+#type
+1
+#ID name
+TR_FANW_10
+#OBJ CODE Number
+WOMAN2
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
 0
+#Event Script Name
+SCRID_TRID_FANW_10
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+216 0 -104
+#event number: 1
+#type
+1
+#ID name
+TR_FANW_10_2
+#OBJ CODE Number
+WOMAN2
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_FANW_10_2
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+200 0 -104
+#event number: 2
+#type
+1
+#ID name
+TR_SCHOOLB_06
+#OBJ CODE Number
+BOY3
+#MOVE CODE Number
+MV_SPIN_L
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_SCHOOLB_06
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+392 48 8
+#event number: 3
+#type
+1
+#ID name
+TR_SCHOOLG_06
+#OBJ CODE Number
+GIRL3
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_TRAINER_KYORO
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_SCHOOLG_06
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+1
+#Parameter 1 Number
+2
+#Parameter 2 Number
+0
+#Move Limit X Number
+8
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+392 0 -168
+#event number: 4
+#type
+1
+#ID name
+TR_BREEDERM_03
+#OBJ CODE Number
+BREEDERM
+#MOVE CODE Number
+MV_RND_UL
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BREEDERM_03
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+600 0 -56
+#event number: 5
+#type
+1
+#ID name
+TR_BREEDERW_03
+#OBJ CODE Number
+BREEDERW
+#MOVE CODE Number
+MV_DIR_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BREEDERW_03
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+232 32 104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
