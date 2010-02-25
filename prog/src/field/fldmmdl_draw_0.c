@@ -1468,23 +1468,28 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
   status = MMDL_GetDrawStatus( mmdl );
   dir = blact_GetDrawDir( mmdl );
-
+  
+  if( status >= DRAW_STA_SHIN_MU_MAX ){
+    OS_Printf( "MMDL ƒVƒ“ƒ€ ‘Î‰žo—ˆ‚È‚¢•`‰æƒXƒe[ƒ^ƒX‚ª—ˆ‚Ä‚¢‚Ü‚·\n" );
+    status = DRAW_STA_SHIN_MU_STOP;
+  }
+  
   if( status != anmcnt->set_anm_status ){
     anmcnt->set_anm_dir = dir;
     anmcnt->set_anm_status = status;
     anm_id = status;
     
-    if( status == DRAW_STA_STOP ){ //’âŽ~Œn‚Í•ûŒüØ‚è‘Ö‚¦
+    if( status == DRAW_STA_SHIN_MU_STOP ){ //’âŽ~Œn‚Í•ûŒüØ‚è‘Ö‚¦
       anm_id = status + dir;
     }
-
+    
     GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
     GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );
     init_flag = TRUE;
   }else if( dir != anmcnt->set_anm_dir ){
     anmcnt->set_anm_dir = dir;
 
-    if( anmcnt->set_anm_status == DRAW_STA_STOP ){ //’âŽ~Œn‚Í•ûŒüØ‚è‘Ö‚¦
+    if( anmcnt->set_anm_status == DRAW_STA_SHIN_MU_STOP ){ //’âŽ~Œn
       anm_id = status + dir;
       GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
       GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );

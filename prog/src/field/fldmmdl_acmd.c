@@ -4295,16 +4295,51 @@ static int AC_ShinMuHoeru( MMDL * mmdl )
 
 //--------------------------------------------------------------
 /**
- * AC_SHIN_MU_FLY_L
+ * AC_SHIN_MU_FLY_L 0
  * @param	mmdl	MMDL *
  * @retval	int		TRUE=Ä‹N
  */
 //--------------------------------------------------------------
-static int AC_ShinMuFlyLeft( MMDL * mmdl )
+static int AC_ShinMuFlyLeft0( MMDL * mmdl )
 {
-	AcWalkWorkInit( mmdl, DIR_LEFT,
-      GRID_VALUE_SPEED_4, GRID_FRAME_4, DRAW_STA_SHIN_MU_HOERU );
+	AC_WALK_WORK *work;
+	
+	work = MMDL_InitMoveCmdWork( mmdl, AC_WALK_WORK_SIZE );
+	work->draw_state = DRAW_STA_SHIN_MU_FLY;
+	work->wait = GRID_FRAME_4;
+	work->dir = DIR_LEFT;
+	work->val = GRID_VALUE_SPEED_4;
+	
+	MMDL_UpdateGridPosDir( mmdl, work->dir );
+	MMDL_SetDrawStatus( mmdl, work->draw_state );
+	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_SHIN_MU_FLY_L 1
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=Ä‹N
+ */
+//--------------------------------------------------------------
+static int AC_ShinMuFlyLeft1( MMDL * mmdl )
+{
+	AC_WALK_WORK *work;
+	
+	work = MMDL_GetMoveCmdWork( mmdl );
+	MMDL_AddVectorPosDir( mmdl, work->dir, work->val );
+  MMDL_UpdateCurrentHeight( mmdl );
+	
+	work->wait--;
+	
+	if( work->wait > 0 ){
+		return( FALSE );
+	}
+	
+	MMDL_UpdateGridPosCurrent( mmdl );
+	MMDL_IncAcmdSeq( mmdl );
+	return( FALSE );
 }
 
 //--------------------------------------------------------------
@@ -6123,8 +6158,8 @@ int (* const DATA_AC_ShinMuHoeru_Tbl[])( MMDL * ) =
 //--------------------------------------------------------------
 int (* const DATA_AC_ShinMuFlyLeft_Tbl[])( MMDL * ) =
 {
-  AC_ShinMuFlyLeft,
-	AC_Walk_1,
+  AC_ShinMuFlyLeft0,
+  AC_ShinMuFlyLeft1,
 	AC_End,
 };
 

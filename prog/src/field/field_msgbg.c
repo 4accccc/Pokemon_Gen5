@@ -132,8 +132,10 @@ struct _TAG_FLDMSGPRINT
 //--------------------------------------------------------------
 struct _TAG_FLDMSGBG
 {
-	HEAPID heapID;
+	HEAPID heapID; //u16
 	u16 bgFrame;
+  
+  u16 bgFrameBld;
 	u16 deriveWin_plttNo;
   
 	GFL_FONT *fontHandle;
@@ -382,8 +384,10 @@ FLDMSGBG * FLDMSGBG_Create( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
 	
 	fmb = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDMSGBG) );
 	fmb->heapID = heapID;
+  
 //	fmb->bgFrame = BGFRAME_ERROR;
 	fmb->bgFrame = FLDMSGBG_BGFRAME;
+  fmb->bgFrameBld = FLDMSGBG_BGFRAME_BLD;
 	fmb->g3Dcamera = g3Dcamera;
   
   {	//font
@@ -2360,6 +2364,20 @@ BOOL FLDSYSWIN_STREAM_Print( FLDSYSWIN_STREAM *sysWin )
 
 //--------------------------------------------------------------
 /**
+ * FLDSYSWIN_STREAM システムウィンドウ カーソル表示のみ
+ * @param sysWin FLDSYSWIN_STREAM*
+ * @retval BOOL TRUE=表示終了,FALSE=表示中
+ */
+//--------------------------------------------------------------
+void FLDSYSWIN_WriteKeyWaitCursor( FLDSYSWIN_STREAM *sysWin )
+{
+  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
+  keyCursor_Write( &sysWin->cursor_work, bmp, 0x0f );
+  sysWin->flag_cursor = CURSOR_FLAG_WRITE;
+}
+
+//--------------------------------------------------------------
+/**
  * FLDSYSWIN_STREAM システムウィンドウ追加 会話ウィンドウタイプ
  * @param fmb FLDMSGBG*
  * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
@@ -2779,6 +2797,22 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
 
 //--------------------------------------------------------------
 /**
+ * FLDTALKMSGWIN 吹き出しウィンドウ キー待ちカーソルのみ表示
+ * @param tmsg FLDTALKMSGWIN
+ * @retval BOOL TRUE=表示終了,FALSE=表示中
+ */
+//--------------------------------------------------------------
+void FLDTALKMSGWIN_WriteKeyWaitCursor( FLDTALKMSGWIN *tmsg )
+{
+  GFL_BMPWIN *twin_bmp = TALKMSGWIN_GetBmpWin(
+    tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
+  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
+  keyCursor_Write( &tmsg->cursor_work, bmp, 0x0f );
+  tmsg->flag_cursor = CURSOR_FLAG_WRITE;
+}
+
+//--------------------------------------------------------------
+/**
  * FLDTALKMSGWIN 吹き出しウィンドウ キー待ちカーソル表示フラグセット
  * @param tmsg FLDTALKMSGWIN
  * @param flag TRUE=表示 FALSE=非表示
@@ -3123,6 +3157,20 @@ BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin )
   }
   
   return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDPLAINMSGWIN プレーンウィンドウ キー待ちカーソルのみ描画
+ * @param plnwin FLDTALKMSGWIN
+ * @retval BOOL TRUE=表示終了,FALSE=表示中
+ */
+//--------------------------------------------------------------
+void FLDPLAINMSGWIN_WriteKeyWaitCursor( FLDPLAINMSGWIN *plnwin )
+{
+  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
+  keyCursor_Write( &plnwin->cursor_work, bmp, 0x0f );
+  plnwin->flag_cursor = CURSOR_FLAG_WRITE;
 }
 
 //--------------------------------------------------------------
