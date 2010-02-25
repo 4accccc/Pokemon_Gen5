@@ -677,7 +677,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
       if( competitor == BTL_COMPETITOR_DEMO_CAPTURE ){
         BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_ARARAGI );
       }else{
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2 );
+        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_SOLO );
       }
       (*seq)++;
     }
@@ -845,7 +845,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
 //    if( !BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE_MINE ) )
     {
       statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
-      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2 );
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_SOLO );
       (*seq)++;
     }
     break;
@@ -1829,7 +1829,7 @@ static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq )
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2 );
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_SOLO );
       (*seq)++;
     }
     break;
@@ -1922,7 +1922,7 @@ static BOOL btlinEffSub_MyPokeIn_Solo( BTLV_SCU* wk, int* seq, u8 clientID )
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2 );
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_SOLO );
       (*seq)++;
     }
     break;
@@ -2015,7 +2015,7 @@ static BOOL btlinEffSub_MyPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_1, u8 
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2 );
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_TAG );
       (*seq)++;
     }
     break;
@@ -2111,7 +2111,7 @@ static BOOL btlinEff_MyPokeInTriple( BTLV_SCU* wk, int* seq )
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2 );
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_SOLO );
       (*seq)++;
     }
     break;
