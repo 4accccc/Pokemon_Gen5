@@ -15,19 +15,19 @@
 #define R13_ROCK_02                        1
 #define R13_TREE_01                        2
 #define R13_TREE_02                        3
-#define R13_GIRL2_01                       4
-#define R13_BOY2_01                        5
-#define R13_AMBRELLA_01                    6
-#define R13_FIGHTERM_01                    7
-#define R13_FUTAGO_01                      8
-#define R13_FUTAGO_01_2                    9
-#define R13_GENTLEMAN_01                  10
-#define R13_LADY_01                       11
-#define R13_MIDDLEMAN_01                  12
-#define R13_FISHING_01                    13
-#define R13_FISHING_02                    14
-#define R13_FISHING_03                    15
-#define R13_FISHING_04                    16
+#define TR_MINI_08                         4
+#define TR_TANPAN_13                       5
+#define TR_PARASOL_06                      6
+#define TR_KARATE_10                       7
+#define TR_FUTAGO_04                       8
+#define TR_FUTAGO_04_2                     9
+#define TR_GENTLE_03                      10
+#define TR_MADAM_03                       11
+#define TR_ARTIST_03                      12
+#define TR_FISHING_07                     13
+#define TR_FISHING_08                     14
+#define TR_FISHING_09                     15
+#define TR_FISHING_10                     16
 
 #endif //ZONE_R13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
