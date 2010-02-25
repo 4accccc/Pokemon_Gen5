@@ -11,6 +11,10 @@
 #ifndef ZONE_R11_EVC_H
 #define ZONE_R11_EVC_H
 
+#define TR_BACKPACKERM_09                  0
+#define TR_BACKPACKERW_08                  1
+#define TR_RANGERM_07                      2
+#define TR_RANGERW_07                      3
 
 #endif //ZONE_R11_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r11.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
