@@ -31,14 +31,20 @@
  */
 //------------------------------------------------------
 enum  PMS_TYPE {
+  // ユーザが選べるタイプ
   PMS_TYPE_MAIL,      ///< メールあいさつ
   PMS_TYPE_BATTLE_READY,  ///< 対戦開始前
   PMS_TYPE_BATTLE_WON,  ///< 対戦勝ったとき
   PMS_TYPE_BATTLE_LOST, ///< 対戦負けた時
   PMS_TYPE_UNION,     ///< ユニオンあいさつ
 
+  PMS_TYPE_USER_MAX,  // ユーザが選べるタイプ数
 
-  PMS_TYPE_MAX,
+  // ユーザが選べないタイプ
+  PMS_TYPE_PECULIAR      = PMS_TYPE_USER_MAX,
+  PMS_TYPE_SYSTEM,
+
+  PMS_TYPE_MAX        // ユーザが選べるタイプ数+ユーザが選べないタイプ数,
 };
 
 //------------------------------------------------------
@@ -129,6 +135,19 @@ extern void PMSDAT_Clear( PMS_DATA* pms );
  */
 //------------------------------------------------------------------
 extern void PMSDAT_Init( PMS_DATA* pms, u32 sentence_type );
+
+//------------------------------------------------------------------
+/**
+ * 文章は指定、タグは空で初期化する
+ *
+ * @param   pms	          	簡易文章構造体へのポインタ
+ * @param   sentence_type	  PMS_TYPE	
+ * @param   sentence_id	  	gmmの各文章のID(例pmss_mail_01)
+ *
+ */
+//------------------------------------------------------------------
+extern void PMSDAT_InitAndSetSentence( PMS_DATA* pms, u32 sentence_type, u32 sentence_id );
+
 
 //------------------------------------------------------------------
 /**

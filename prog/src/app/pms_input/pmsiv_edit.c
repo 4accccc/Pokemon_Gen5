@@ -706,7 +706,8 @@ static void setup_pal_datas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 //-----------------------------------------------------------------------------
 static void update_editarea_palette( PMSIV_EDIT* wk )
 {
-	if( PMSI_GetInputMode(wk->mwk) == PMSI_MODE_SENTENCE )
+	if(    PMSI_GetInputMode(wk->mwk) == PMSI_MODE_SENTENCE 
+      && PMSI_GetSentenceType(wk->mwk) < PMS_TYPE_USER_MAX )
 	{
 		int pal = 1 + PMSI_GetSentenceType(wk->mwk);
 

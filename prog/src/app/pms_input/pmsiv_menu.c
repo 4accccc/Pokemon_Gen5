@@ -406,7 +406,7 @@ void PMSIV_MENU_SetupWordWin( PMSIV_MENU* wk )
 //-----------------------------------------------------------------------------
 void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk )
 {
-  static const u8 iconIdx[PMS_TYPE_MAX] = 
+  static const u8 iconIdx[PMS_TYPE_USER_MAX] = 
   {
     MENU_CLWKICON_EDIT_MAIL,
     MENU_CLWKICON_EDIT_BTL_READY,
@@ -420,7 +420,7 @@ void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk )
 
   type = PMSI_GetSentenceType( wk->mwk );
 
-  for( i=0; i<PMS_TYPE_MAX; i++ )
+  for( i=0; i<PMS_TYPE_USER_MAX; i++ )
   {
     BOOL is_on = ( i == type );
 

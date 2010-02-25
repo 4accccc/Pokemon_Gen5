@@ -53,7 +53,8 @@ static const u16 SentenceDatID[PMS_TYPE_MAX] = {
 	NARC_message_pmss_won_dat,
 	NARC_message_pmss_lost_dat,
 	NARC_message_pmss_union_dat,
-
+	NARC_message_pmss_peculiar_dat,
+	NARC_message_pmss_system_dat,
 };
 
 static const u8 SentenceIdMax[PMS_TYPE_MAX] =  // 本当は決め打ち手打ち入力ではなく GFL_MSG_GetStrCount を利用したいところだが
@@ -63,6 +64,8 @@ static const u8 SentenceIdMax[PMS_TYPE_MAX] =  // 本当は決め打ち手打ち入力ではな
   20,
   20,
   20,
+  20,
+  2,
 };
 
 
@@ -118,6 +121,23 @@ void PMSDAT_Init( PMS_DATA* pms, u32 sentence_type )
 
 //------------------------------------------------------------------
 /**
+ * 文章は指定、タグは空で初期化する
+ *
+ * @param   pms	          	簡易文章構造体へのポインタ
+ * @param   sentence_type	  PMS_TYPE	
+ * @param   sentence_id	  	gmmの各文章のID(例pmss_mail_01)
+ *
+ */
+//------------------------------------------------------------------
+void PMSDAT_InitAndSetSentence( PMS_DATA* pms, u32 sentence_type, u32 sentence_id )
+{
+  PMSDAT_Init( pms, sentence_type );
+  PMSDAT_SetSentence( pms, sentence_type, sentence_id );
+}
+
+
+//------------------------------------------------------------------
+/**
  * ユニオンルームデフォルトあいさつとして初期化する
  *
  * @param   pms		簡易文章構造体へのポインタ
@@ -129,7 +149,7 @@ void PMSDAT_SetupDefaultUnionMessage( PMS_DATA* pms )
 	//PMSDAT_Init( pms, PMS_TYPE_UNION );
 	//pms->sentence_id = pmss_union_06;
 	
-  PMSDAT_Init( pms, PMS_TYPE_MAIL );  // ユニオンルームに　はいりました！
+  PMSDAT_Init( pms, PMS_TYPE_MAIL );  // ユニオンルームにはいりました！
   pms->sentence_id = pmss_mail_01;    // が、なくなってしまったので、緊急仮対応
   pms->word[0] = PMSW_GetWordNumberByGmmID( NARC_message_pms_word08_dat, pms_word08_48 );
 }

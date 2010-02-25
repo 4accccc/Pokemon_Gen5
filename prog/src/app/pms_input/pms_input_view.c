@@ -621,7 +621,8 @@ GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &bank_data, HEAPID_PMS_INPU
   cwk->vwk->explain_bmpwin_trans_req = FALSE;
 
   // 上画面説明欄に表示するメッセージのウィンドウ
-  if( PMSI_GetLockFlag( cwk->mwk ) )
+  if(    PMSI_GetLockFlag( cwk->mwk ) 
+      || PMSI_GetInputMode( cwk->mwk ) != PMSI_MODE_SENTENCE )
   {
     set_explain_message( cwk, PMSIV_EXPLAIN_MSG_EDIT_PECULIAR );
   }
@@ -1248,7 +1249,8 @@ static void Cmd_CategoryToEditArea( GFL_TCB *tcb, void* wk_adrs )
     PMSIV_EDIT_ScrollSet( vwk->edit_wk,1);
 
     // 上画面説明欄に表示するメッセージのウィンドウ
-    if( PMSI_GetLockFlag( wk->mwk ) )
+    if(    PMSI_GetLockFlag( wk->mwk )
+        || PMSI_GetInputMode( wk->mwk ) != PMSI_MODE_SENTENCE )
     {
       set_explain_message( wk, PMSIV_EXPLAIN_MSG_EDIT_PECULIAR );
     }
@@ -1465,7 +1467,8 @@ static void Cmd_WordWinToEditArea( GFL_TCB *tcb, void* wk_adrs )
 			PMSIV_CATEGORY_StartFadeIn( vwk->category_wk );
 
       // 上画面説明欄に表示するメッセージのウィンドウ
-      if( PMSI_GetLockFlag( wk->mwk ) )
+      if(    PMSI_GetLockFlag( wk->mwk ) 
+          || PMSI_GetInputMode( wk->mwk ) != PMSI_MODE_SENTENCE )
       {
         set_explain_message( wk, PMSIV_EXPLAIN_MSG_EDIT_PECULIAR );
       }

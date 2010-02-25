@@ -1049,7 +1049,7 @@ static void PMSSelect_BG_PlateTrans( PMS_SELECT_BG_WORK* wk, u8 view_pos_id, u32
   // 選択色
   if( is_select )
   {
-    sentence_type = PMS_TYPE_MAX;
+    sentence_type = PMS_TYPE_USER_MAX;
   }
 
   // パレット指定

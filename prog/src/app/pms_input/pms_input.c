@@ -555,7 +555,7 @@ static void sentence_increment( SENTENCE_WORK* s_wk, PMS_DATA* pms )
 	{
 		s_wk->sentence_id = 0;
 		s_wk->sentence_type++;
-		if( s_wk->sentence_type >= PMS_TYPE_MAX )
+		if( s_wk->sentence_type >= PMS_TYPE_USER_MAX )
 		{
 			s_wk->sentence_type = 0;
 		}
@@ -573,7 +573,7 @@ static void sentence_decrement( SENTENCE_WORK* s_wk, PMS_DATA* pms )
 		s_wk->sentence_type--;
 		if( s_wk->sentence_type < 0 )
 		{
-			s_wk->sentence_type = (PMS_TYPE_MAX - 1);
+			s_wk->sentence_type = (PMS_TYPE_USER_MAX - 1);
 		}
 		s_wk->sentence_id_max = PMSDAT_GetSentenceIdMax( s_wk->sentence_type );
 		s_wk->sentence_id = (s_wk->sentence_id_max - 1);
@@ -595,7 +595,7 @@ static void sentence_decrement( SENTENCE_WORK* s_wk, PMS_DATA* pms )
 //-----------------------------------------------------------------------------
 static void sentence_change_type( SENTENCE_WORK* s_wk, PMS_DATA* pms, enum PMS_TYPE type )
 {
-  GF_ASSERT( type < PMS_TYPE_MAX );
+  GF_ASSERT( type < PMS_TYPE_USER_MAX );
 
 	s_wk->sentence_id = 0;
   s_wk->sentence_type = type;
@@ -1048,7 +1048,7 @@ static int edit_sentence_check_flipbtn( PMS_INPUT_WORK* wk )
     idx = tpx / TPED_SBTN_SX;
     idx -= 1;
       
-    if( idx >= 0 && idx < PMS_TYPE_MAX )
+    if( idx >= 0 && idx < PMS_TYPE_USER_MAX )
     {
       HOSAKA_Printf("tp flipbtn=%d \n", idx);
       return idx;

@@ -240,7 +240,7 @@ STRBUF * GDS_Profile_GetSelfIntroduction(const GDS_PROFILE_PTR gpp, PMS_DATA *pm
 	
 	if(gpp->message_flag == MESSAGE_FLAG_NORMAL){
 		*pms_dest = gpp->self_introduction;
-		if(pms_dest->sentence_type >= PMS_TYPE_MAX){
+		if(pms_dest->sentence_type >= PMS_TYPE_USER_MAX){
 			error_flg++;
 		}
 		else if(pms_dest->sentence_id > pmss_union_20){

@@ -43,6 +43,25 @@ enum PMSI_GUIDANCE {
 	PMSI_GUIDANCE_BATTLE_LOST,	///< 負けたときコメント
 	PMSI_GUIDANCE_TREND,		///< 流行語
 };
+// PMSI_GUIDANCE は、ユーザに選んでもらう文は何かの説明メッセージを決めるだけのもの。
+// ユーザの入力できる文を制限するものではない。
+// 例
+// ことばをえらんでね！
+// たいせんまえのことばをかんがえよう
+// かったときのきめゼリフをかんがえよう
+// まけたときのいいわけをかんがえよう
+// はやっているものは？
+// resource/message/src/pms/pms_input.gmm
+// info00
+// ～
+// info04
+// 2010年2月25日現在、使われていないので
+// PMSI_PARAM_Create の guidance_type には PMSI_GUIDANCE_DEFAULT をいれておけばよい。
+
+// 定型文のタイプを決めるのは
+// prog/include/system/pms_data.h
+// PMS_TYPE
+// である。
 
 
 //------------------------------------------------------

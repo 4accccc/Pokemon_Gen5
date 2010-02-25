@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-02-23T12:58:11"/>
+	<create user="kawada_koji" host="W00215" date="2010-02-25T12:56:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -343,16 +343,6 @@
 [1:1C:簡易会話単語:1]</language>
 		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]
 [1:1C:簡易会話単語:1]</language>
-	</row>
-
-	<row id="pmss_system_03">
-		<language name="JPN" width="216">よろしく</language>
-		<language name="JPN_KANJI" width="216">よろしく</language>
-	</row>
-
-	<row id="pmss_system_04">
-		<language name="JPN" width="216">ユニオンルームに　はいりました！</language>
-		<language name="JPN_KANJI" width="216">ユニオンルームに　はいりました！</language>
 	</row>
 
 	<flowchart-group-list>

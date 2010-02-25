@@ -473,15 +473,18 @@ static BOOL TESTMODE_ITEM_SelectPmsDirect( TESTMODE_WORK *work , const int idx )
 }
 
 // 簡易会話 固定
+#include "msg\msg_pmss_peculiar.h"
 static BOOL TESTMODE_ITEM_SelectPmsPeculiar( TESTMODE_WORK *work , const int idx )
 {
 #ifndef TESTMODE_PMS_USE_PROC
   PMS_DATA data;
   PMSI_PARAM* pmsi;
 
-  PMSDAT_Init( &data, 0 );
-  //pmsi = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, &data, TRUE, SaveControl_GetPointer(), GFL_HEAPID_APP );  // デコ文字OK
-  pmsi = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, &data, FALSE, SaveControl_GetPointer(), GFL_HEAPID_APP );  // デコ文字禁止
+  //PMSDAT_Init( &data, PMS_TYPE_PECULIAR );  // 固有の0番目の定型文で、タグは空で初期化される
+  //PMSDAT_SetSentence( &data, PMS_TYPE_PECULIAR, pmss_peculiar_08 );  // 固有の7番目の定型文にする(タグに対しては何もされない)
+  PMSDAT_InitAndSetSentence( &data, PMS_TYPE_PECULIAR, pmss_peculiar_08 );  // 固有の7番目の定型文で、タグは空で初期化する
+  pmsi = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, &data, TRUE, SaveControl_GetPointer(), GFL_HEAPID_APP );  // デコ文字OK
+  //pmsi = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, &data, FALSE, SaveControl_GetPointer(), GFL_HEAPID_APP );  // デコ文字禁止
 
 	TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(pmsinput), &ProcData_PMSInput, pmsi );
 
