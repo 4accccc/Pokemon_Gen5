@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T17:34:40"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T14:19:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1423" top="388" right="2128" bottom="969" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -317,6 +317,130 @@
 買っておけば　よかった！▼
 さっき　捕まえたい
 ポケモンが　飛びだしてきたのに！</language>
+	</row>
+
+	<row id="msg_c02r0701_girl1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・choice0
+　choice1
+　choice2を表示
+・選択後はgirl1_02表示</comment>
+		<attribute name="キャラ指定">GIRL1</attribute>
+		<language name="JPN" width="256">ねぇねぇ　きみ▼
+あそぶなら
+いえのそと　か　いえのなか▽
+どっちが　すき？</language>
+		<language name="JPN_KANJI" width="256">ねぇねぇ　きみ▼
+遊ぶなら　家の外と　家の中
+どっちが　好き？</language>
+	</row>
+
+	<row id="msg_c02r0701_girl1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・choice3
+　choice4
+　choice2を表示
+・選択後はgirl1_03表示</comment>
+		<attribute name="キャラ指定">GIRL1</attribute>
+		<language name="JPN" width="256">そっかそっか　うんうん▼
+じゃあ　きみは
+みんなが　しっていることと▽
+だれも　しらないような　こと▽
+どっちが　きになる？</language>
+		<language name="JPN_KANJI" width="256">そっかそっか　うんうん▼
+じゃあ　きみは
+みんなが　知っていることと▽
+誰も　知らないような　こと▽
+どっちが　気になる？</language>
+	</row>
+
+	<row id="msg_c02r0701_girl1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けて選択肢に応じてメッセージ分岐</comment>
+		<attribute name="キャラ指定">GIRL1</attribute>
+		<language name="JPN" width="256">へぇ　そうなんだぁ▼</language>
+		<language name="JPN_KANJI" width="256">へぇ　そうなんだぁ▼</language>
+	</row>
+
+	<row id="msg_c02r0701_girl1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・どちらかの質問で
+　choice2（どちらでもない）を選択した場合</comment>
+		<attribute name="キャラ指定">GIRL1</attribute>
+		<language name="JPN" width="256">きみって　いがいと
+じょうしきじん　なんだね</language>
+		<language name="JPN_KANJI" width="256">きみって　意外と
+常識人　なんだね</language>
+	</row>
+
+	<row id="msg_c02r0701_girl1_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・そと＆みんながしってる時の性格</comment>
+		<attribute name="キャラ指定">GIRL1</attribute>
+		<language name="JPN" width="256">きみって　けっこう
+かっぱつ　なんだね</language>
+		<language name="JPN_KANJI" width="256">きみって　結構
+活発　なんだね</language>
+	</row>
+
+	<row id="msg_c02r0701_girl1_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・そと＆だれもしらない時の性格</comment>
+		<attribute name="キャラ指定">GIRL1</attribute>
+		<language name="JPN" width="256">きみって　すごく
+こうきしんが　つよいんだね</language>
+		<language name="JPN_KANJI" width="256">きみって　すごく
+好奇心が　強いんだね</language>
+	</row>
+
+	<row id="msg_c02r0701_girl1_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・なか＆みんながしってる時の性格</comment>
+		<attribute name="キャラ指定">GIRL1</attribute>
+		<language name="JPN" width="256">きみって　けっこう
+おっとり　しているんだね</language>
+		<language name="JPN_KANJI" width="256">きみって　結構
+おっとり　しているんだね</language>
+	</row>
+
+	<row id="msg_c02r0701_girl1_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・なか＆だれもしらない時の性格</comment>
+		<attribute name="キャラ指定">GIRL1</attribute>
+		<language name="JPN" width="256">きみって　なかなか
+マニアック　なんだね</language>
+		<language name="JPN_KANJI" width="256">きみって　なかなか
+マニアック　なんだね</language>
+	</row>
+
+	<row id="msg_c02r0701_choice0" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">いえのそと</language>
+		<language name="JPN_KANJI" width="256">家の外</language>
+	</row>
+
+	<row id="msg_c02r0701_choice1" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">いえのなか</language>
+		<language name="JPN_KANJI" width="256">家の中</language>
+	</row>
+
+	<row id="msg_c02r0701_choice2" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">どちらでもない</language>
+		<language name="JPN_KANJI" width="256">どちらでもない</language>
+	</row>
+
+	<row id="msg_c02r0701_choice3" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">みんなが　しってること</language>
+		<language name="JPN_KANJI" width="256">みんなが知ってること</language>
+	</row>
+
+	<row id="msg_c02r0701_choice4" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">だれも　しらないこと</language>
+		<language name="JPN_KANJI" width="256">だれも知らないこと</language>
 	</row>
 
 	<flowchart-group-list>
