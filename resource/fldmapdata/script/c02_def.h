@@ -20,5 +20,6 @@
 #define SCRID_C02_SUPPORT_02 (13)
 #define SCRID_C02_LEADER02_02 (14)
 #define SCRID_BG_C02_SIGN2_01 (15)
+#define SCRID_BG_C02_SIGN3_01 (16)
 
 #endif //_C02_DEF_H_
