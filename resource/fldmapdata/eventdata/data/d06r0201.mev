@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/24 15:38:03
+#save date:2010/02/25 18:47:01
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06r0201.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06r0201.wms
 #hold event type:
 1
 #hold event number:
-9
+10
 #event number: 0
 #type
 1
@@ -289,6 +289,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 536 0 184
+#event number: 9
+#type
+1
+#ID name
+TR_DOCTOR_01
+#OBJ CODE Number
+DOCTOR
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_DOCTOR_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+536 16 -72
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -350,7 +381,7 @@ EXIT_TYPE_STAIRS
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-664 0 -536
+728 0 -536
 #size
 1 3
 #event number: 2
@@ -384,7 +415,7 @@ EXIT_TYPE_STAIRS
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-488 0 120
+408 0 120
 #size
 1 1
 #Map Event List Data End
