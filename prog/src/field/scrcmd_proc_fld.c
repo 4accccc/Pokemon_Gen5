@@ -44,6 +44,8 @@
 #include "c_gear/event_cgearget.h"
 #include "savedata/c_gear_data.h" //
 
+#include "net_app/wifi_earth.h" // Earth_Demo_proc_data
+
 // ボックスプロセスデータとコールバック関数
 static void callback_BoxProc( void* work );
 
@@ -190,5 +192,31 @@ VMCMD_RESULT EvCmdCallCGearGetDemo( VMHANDLE *core, void *wk )
   SCRIPT_CallEvent( sc, CGEARGET_EVENT_Start( gsys ) );
   return VMCMD_RESULT_SUSPEND;
 }
+
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   ジオネット呼び出し
+ * @param core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCallGeonet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK * sc = SCRCMD_WORK_GetScriptWork( work );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  GMEVENT * event;
+  event = EVENT_FieldSubProc( gsys, fieldmap, FS_OVERLAY_ID( geonet ), &Earth_Demo_proc_data, gamedata );
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
 
 

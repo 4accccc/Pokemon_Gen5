@@ -33,3 +33,5 @@ extern VMCMD_RESULT EvCmdGameClearDemo( VMHANDLE *core, void *wk );
 //--------------------------------------------------------------
 extern VMCMD_RESULT EvCmdCallCGearGetDemo( VMHANDLE *core, void *wk );
 
+///ジオネット呼び出し
+extern VMCMD_RESULT EvCmdCallGeonet( VMHANDLE *core, void *wk );

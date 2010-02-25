@@ -602,7 +602,7 @@
   DEF_CMD( EvCmdCallMailBoxProc, EV_SEQ_CALL_MAILBOX_PROC )
   NO_CMD()
 
-  NO_CMD()
+  DEF_CMD( EvCmdCallGeonet, EV_SEQ_CALL_GEONET_PROC )
   NO_CMD()
   NO_CMD()
   NO_CMD()

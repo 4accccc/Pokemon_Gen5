@@ -26,6 +26,7 @@ _EVENT_DATA    ev_recover_pokecen
 _EVENT_DATA    ev_pokecen_elevator_in
 _EVENT_DATA    ev_pokecen_elevator_out
 _EVENT_DATA    ev_pokecen_elevator_out_continue
+_EVENT_DATA    ev_geonet
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -592,4 +593,12 @@ _ANIME_LABEL    anm_pc_woman_move_default_pos
 _ANIME_LABEL    anm_player_return_strait
   _ANIME_DATA   AC_WALK_D_16F, 4
   _ANIME_DATA   ACMD_END,0
+
+/**************************************************************/
+/*    ジオネット呼び出し                                      */
+/**************************************************************/
+EVENT_START    ev_geonet
+  _TALK_START_SE_PLAY()
+  _CALL_GEONET_PROC()
+EVENT_END
 
