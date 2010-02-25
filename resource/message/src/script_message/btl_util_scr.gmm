@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-02-25T23:17:01"/>
+	<create user="shimoyamada" host="W00184" date="2010-02-26T01:27:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+	<dialog left="1024" top="377" right="1729" bottom="1005" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -399,15 +399,13 @@
 
 	<row id="msg_btl_util_party_ng_subway01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>バトルサブウェイ・シングルバトル</comment>
-		<language name="JPN" width="256">おきゃくさま！[BE:01:ページ切り替え（クリア）]
-さんかできる　ポケモンが
+		<language name="JPN" width="256">さんかできる　ポケモンが
 ３ひき　いません！[BE:01:ページ切り替え（クリア）]
 さんかするには　しゅるいの　ちがう
 ポケモンを　３ひき　よういし[BE:00:ページ切り替え（行送り）]
 もたせる　どうぐも　すべて[BE:00:ページ切り替え（行送り）]
 ちがう　どうぐに　してください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">お客さま！[BE:01:ページ切り替え（クリア）]
-参加できる　ポケモンが
+		<language name="JPN_KANJI" width="256">参加できる　ポケモンが
 ３匹　いません！[BE:01:ページ切り替え（クリア）]
 参加するには　種類の　違う
 ポケモンを　３匹　用意し[BE:00:ページ切り替え（行送り）]
@@ -417,15 +415,13 @@
 
 	<row id="msg_btl_util_party_ng_subway02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>バトルサブウェイ・ダブルバトル</comment>
-		<language name="JPN" width="256">おきゃくさま！[BE:01:ページ切り替え（クリア）]
-さんかできる　ポケモンが
+		<language name="JPN" width="256">さんかできる　ポケモンが
 ４ひき　いません！[BE:01:ページ切り替え（クリア）]
 さんかするには　しゅるいの　ちがう
 ポケモンを　４ひき　よういし[BE:00:ページ切り替え（行送り）]
 もたせる　どうぐも　すべて[BE:00:ページ切り替え（行送り）]
 ちがう　どうぐに　してください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">お客さま！[BE:01:ページ切り替え（クリア）]
-参加できる　ポケモンが
+		<language name="JPN_KANJI" width="256">参加できる　ポケモンが
 ４匹　いません！[BE:01:ページ切り替え（クリア）]
 参加するには　種類の　違う
 ポケモンを　４匹　用意し[BE:00:ページ切り替え（行送り）]
@@ -435,15 +431,13 @@
 
 	<row id="msg_btl_util_party_ng_subway03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチ・マルチバトル</comment>
-		<language name="JPN" width="256">おきゃくさま！[BE:01:ページ切り替え（クリア）]
-さんかできる　ポケモンが
+		<language name="JPN" width="256">さんかできる　ポケモンが
 ２ひき　いません！[BE:01:ページ切り替え（クリア）]
 さんかするには　しゅるいの　ちがう
 ポケモンを　２ひき　よういし[BE:00:ページ切り替え（行送り）]
 もたせる　どうぐも　すべて[BE:00:ページ切り替え（行送り）]
 ちがう　どうぐに　してください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">お客さま！[BE:01:ページ切り替え（クリア）]
-参加できる　ポケモンが
+		<language name="JPN_KANJI" width="256">参加できる　ポケモンが
 ２匹　いません！[BE:01:ページ切り替え（クリア）]
 参加するには　種類の　違う
 ポケモンを　２匹　用意し[BE:00:ページ切り替え（行送り）]

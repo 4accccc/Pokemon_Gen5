@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-02-25T23:17:04"/>
+	<create user="shimoyamada" host="W00184" date="2010-02-26T03:11:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1567" top="278" right="2272" bottom="745" maximized="no" rayout="Vertical2">
+	<dialog left="1547" top="428" right="2252" bottom="1056" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -308,8 +308,10 @@
 ・やめる
 　→msg_wifi_club_</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">ようこそ！▼</language>
-		<language name="JPN_KANJI" width="256">ようこそ！▼</language>
+		<language name="JPN" width="256">グローバルターミナルへ
+ようこそ！▼</language>
+		<language name="JPN_KANJI" width="256">グローバルターミナルへ
+ようこそ！▼</language>
 	</row>
 
 	<row id="msg_wifi_counter_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -359,28 +361,26 @@ Wi-Fi P2P接続画面へ</comment>
 		<comment>msg_wifi_club_01_01での選択肢の
 「せつめいを　きく」選択時</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">Ｗｉ－Ｆｉコネクション　では
-ともだちてちょうに　とうろくした▽
-ひと　どうしで　ポケモンこうかんや▽
-つうしんたいせんを　たのしめます▼
-ここでの　つうしんたいせんは
-シングルと　ダブルの　２しゅるいで▼
-それぞれに　「フリー」「レベル５０」
-「レベル１００」を　えらべます▼
-「レベル５０」や「レベル１００」では
-さんかした　ポケモン　すべてが▽
-そのレベルに　そろえられます▼</language>
-		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉコネクション　では
-ともだちてちょうに　登録した▽
-人　同士で　ポケモン交換や▽
-通信対戦を　楽しめます▼
-ここでの　通信対戦は
-シングルと　ダブルの　２種類で▼
-それぞれに　「フリー」「レベル５０」
-「レベル１００」を　選べます▼
-「レベル５０」や「レベル１００」では
-参加した　ポケモン　すべてが▽
-そのレベルに　そろえられます▼</language>
+		<language name="JPN" width="256">グローバルターミナルでは
+みしらぬひとと[BE:00:ページ切り替え（行送り）]
+つうしんで　たいせんや　こうかんが[BE:00:ページ切り替え（行送り）]
+できます[BE:01:ページ切り替え（クリア）]
+また　みしらぬひとが
+アップロードした[BE:00:ページ切り替え（行送り）]
+ミュージカルショットや[BE:00:ページ切り替え（行送り）]
+バトルビデオを　ダウンロードしたり[BE:01:ページ切り替え（クリア）]
+じぶんで　アップロードすることも
+できます[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">グローバルターミナルでは
+見知らぬ人と[BE:00:ページ切り替え（行送り）]
+通信で　対戦や　交換が[BE:00:ページ切り替え（行送り）]
+できます[BE:01:ページ切り替え（クリア）]
+また　見知らぬ人が
+アップロードした[BE:00:ページ切り替え（行送り）]
+ミュージカルショットや[BE:00:ページ切り替え（行送り）]
+バトルビデオを　ダウンロードしたり[BE:01:ページ切り替え（クリア）]
+自分で　アップロードすることも
+できます[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_counter_err01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -421,8 +421,8 @@ C-Gear入手前</comment>
 	<row id="msg_wifi_counter_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>msg_wifi_club_01_01での選択肢</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">グローバルターミナル</language>
-		<language name="JPN_KANJI" width="256">グローバルターミナル</language>
+		<language name="JPN" width="256">（かり）</language>
+		<language name="JPN_KANJI" width="256">（仮）</language>
 	</row>
 
 	<row id="msg_wifi_counter_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -791,14 +791,20 @@ C-Gear入手前</comment>
 	<row id="msg_rndmatch_02_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
-		<language name="JPN" width="256">ランダムマッチでは　せかいじゅうの　ひとと
-たいせんが　できます[BE:01:ページ切り替え（クリア）]
-レーティングと　フリーの　２つの
-モードで　あそべます[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ランダムマッチでは　世界中の　人と
-対戦が　できます[BE:01:ページ切り替え（クリア）]
-レーティングと　フリーの　２つの
-モードで　遊べます[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ランダムマッチでは
+とおくにいる　みしらぬひとと[BE:00:ページ切り替え（行送り）]
+つうしんで　たいせんが　できます[BE:01:ページ切り替え（クリア）]
+５つの　たいせんの　ルールと[BE:01:ページ切り替え（クリア）]
+フリーと　レーティングの
+２つの　モードで[BE:00:ページ切り替え（行送り）]
+さんかする　グループが　わかれます[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ランダムマッチでは
+遠くにいる　見知らぬ人と[BE:00:ページ切り替え（行送り）]
+通信で　対戦が　できます[BE:01:ページ切り替え（クリア）]
+５つの　対戦　ルールと[BE:01:ページ切り替え（クリア）]
+フリーと　レーティングの
+２つの　モードで[BE:00:ページ切り替え（行送り）]
+参加する　グループが　わかれます[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_02_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -818,15 +824,15 @@ C-Gear入手前</comment>
 	<row id="msg_rndmatch_02_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
-		<language name="JPN" width="256">レーティングモード　について</language>
-		<language name="JPN_KANJI" width="256">レーティングモード　について</language>
+		<language name="JPN" width="256">フリーモード　について</language>
+		<language name="JPN_KANJI" width="256">フリーモード　について</language>
 	</row>
 
 	<row id="msg_rndmatch_02_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
-		<language name="JPN" width="256">フリーモード　について</language>
-		<language name="JPN_KANJI" width="256">フリーモード　について</language>
+		<language name="JPN" width="256">レーティングモード　について</language>
+		<language name="JPN_KANJI" width="256">レーティングモード　について</language>
 	</row>
 
 	<row id="msg_rndmatch_02_win04" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -839,28 +845,76 @@ C-Gear入手前</comment>
 	<row id="msg_rndmatch_02_exp01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
-		<language name="JPN" width="256">ランダムマッチの
-せつめいが　はいります……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ランダムマッチの
-せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ランダムマッチの　たいせんは
+シングル　ダブル　トリプル[BE:00:ページ切り替え（行送り）]
+ローテーション　シューターの[BE:00:ページ切り替え（行送り）]
+５つの　バトルと[BE:01:ページ切り替え（クリア）]
+フリーと　レーティングの
+２つの　モードが　あります[BE:01:ページ切り替え（クリア）]
+フリーモードは　だれでも
+さんか　できます[BE:01:ページ切り替え（クリア）]
+レーティングモードは
+ＧＰＦに　とうろく　しないと[BE:00:ページ切り替え（行送り）]
+さんか　できません[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ランダムマッチの　対戦は
+シングル　ダブル　トリプル[BE:00:ページ切り替え（行送り）]
+ローテーション　シューターの[BE:00:ページ切り替え（行送り）]
+５つの　バトルと[BE:01:ページ切り替え（クリア）]
+フリーと　レーティングの
+２つの　モードが　あります[BE:01:ページ切り替え（クリア）]
+フリーモードは　だれでも
+参加　できます[BE:01:ページ切り替え（クリア）]
+レーティングモードは
+ＧＰＦに　登録　しないと[BE:00:ページ切り替え（行送り）]
+参加　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_02_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
-		<language name="JPN" width="256">レーティングモードの
-せつめいが　はいります……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">レーティングモードの
-せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">フリーモードは
+とおくにいる　ひとと[BE:00:ページ切り替え（行送り）]
+てがるに　たいせんする　モードです[BE:01:ページ切り替え（クリア）]
+ポケモンを　そだてたら
+きがるに　ちょうせん　してください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">フリーモードは
+遠くにいる人と[BE:00:ページ切り替え（行送り）]
+手軽に　対戦する　モードです[BE:01:ページ切り替え（クリア）]
+ポケモンを　育てたら
+気軽に　挑戦　してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_02_exp03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
-		<language name="JPN" width="256">フリーモードの
-せつめいが　はいります……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">フリーモードの
-せつめいが　はいる　よてい　です[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">レーティングモードは
+ＧＰＦに　とうろくすると[BE:00:ページ切り替え（行送り）]
+さんかできる　モードです[BE:01:ページ切り替え（クリア）]
+つうしんを　つなげたとき
+レーティングの　ちかい　ひとと[BE:00:ページ切り替え（行送り）]
+あたりやすく　なります[BE:01:ページ切り替え（クリア）]
+レーティングは
+１５００から　スタートします[BE:01:ページ切り替え（クリア）]
+たいせんに　かつと　あがり
+まけると　さがるので[BE:01:ページ切り替え（クリア）]
+レーティング　たかい　ほど
+つよいことに　なります[BE:01:ページ切り替え（クリア）]
+ぜひ　ちょうせんして
+いまの　レベルを　たしかめてください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">レーティングモードは
+ＧＰＦに　登録すると[BE:00:ページ切り替え（行送り）]
+参加できる　モードです[BE:01:ページ切り替え（クリア）]
+通信を　つなげたとき
+レーティングの　近い人と[BE:00:ページ切り替え（行送り）]
+当たり　やすくなります[BE:01:ページ切り替え（クリア）]
+レーティングは
+１５００から　スタートします[BE:01:ページ切り替え（クリア）]
+対戦に　勝つと　上がり
+負けると　下がるので[BE:01:ページ切り替え（クリア）]
+レーティングが　高いほど
+強いことに　なります[BE:01:ページ切り替え（クリア）]
+ぜひ　挑戦して
+今の　レベルを　確かめてください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -1097,7 +1151,7 @@ C-Gear入手前</comment>
 サポートシューターを　使って[BE:00:ページ切り替え（行送り）]
 トリプルバトルを　行います[BE:01:ページ切り替え（クリア）]
 戦うまえに　相手と　自分の[BE:00:ページ切り替え（行送り）]
-てもち　ポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
+手持ち　ポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
 ６匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
 連れていく　ポケモンは　すべて　違う
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
@@ -1120,7 +1174,7 @@ C-Gear入手前</comment>
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">てもち</language>
-		<language name="JPN_KANJI" width="256">てもち</language>
+		<language name="JPN_KANJI" width="256">手持ち</language>
 	</row>
 
 	<row id="msg_rndmatch_05_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
