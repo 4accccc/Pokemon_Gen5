@@ -210,6 +210,10 @@ EVENT_START ev_c11r0101_pos01
   //シーンワークで分岐
   $talk = TRUE
 
+  //ゲートＳＥ
+  _SE_PLAY( SEQ_SE_FLD_124 )
+  _SE_WAIT()
+
   //ガードマン下向く
   _OBJ_ANIME( UN_ENTRANCE_POLICEMAN_01, anm_step_dir_down)
   _OBJ_ANIME_WAIT()
