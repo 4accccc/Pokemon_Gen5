@@ -1192,6 +1192,7 @@ static void DrawTsurePoke_Draw( MMDL *mmdl )
     }
     
     TsurePoke_SetAnmAndOffset( mmdl, work, dir );
+//    IWASAWA_Printf( "anm_frm = %d, offs = %d\n", GFL_BBDACT_GetAnimeFrmIdx( actSys, work->actID ), work->offs_frame);
     
     MMDL_GetDrawVectorPos( mmdl, &pos );
     
