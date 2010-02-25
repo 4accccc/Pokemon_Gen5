@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T22:17:07"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T14:30:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1445" top="305" right="2150" bottom="933" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,9 +292,9 @@
 	</lock>
 
 
-	<row id="msg_c03r1201_businessman1_01">
+	<row id="msg_c03r1201_businessman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
 		<language name="JPN" width="256">なにか　あたらしい　ビジネス
@@ -303,9 +303,9 @@
 始めたいと　考えてるが……</language>
 	</row>
 
-	<row id="msg_c03r1201_businessman2_01">
+	<row id="msg_c03r1201_businessman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
 		<language name="JPN" width="256">がいこくから　きて　おもうけど
