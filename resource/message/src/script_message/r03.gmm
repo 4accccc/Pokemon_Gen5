@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T22:43:16"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T15:22:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -813,15 +813,17 @@
 
 	<row id="msg_r03_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ちょっぴり
+おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
 ポケモンが　しんか　しそうなとき
-ビーボタンを　おすと[BE:00:ページ切り替え（行送り）]
-おどろいて　しんかを　やめます！[BE:01:ページ切り替え（クリア）]
+Ｂボタンを　おすと[BE:01:ページ切り替え（クリア）]
+おどろいて　しんかを　やめます！
 これを　しんかキャンセルと　いいます</language>
-		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ちょっぴり
+お得な　掲示板！[BE:01:ページ切り替え（クリア）]
 ポケモンが　進化　しそうなとき
-ビーボタンを　押すと[BE:00:ページ切り替え（行送り）]
-驚いて　進化を　やめます！[BE:01:ページ切り替え（クリア）]
+Ｂボタンを　押すと[BE:01:ページ切り替え（クリア）]
+驚いて　進化を　やめます！
 これを　進化キャンセルと　いいます</language>
 	</row>
 
