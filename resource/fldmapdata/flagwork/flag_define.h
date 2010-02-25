@@ -199,7 +199,7 @@
 #define FE_LEGEND2_BATTLE                  183 /* 0x00b7 伝説ポケモン：ポルトスと戦った */
 #define FE_LEGEND3_BATTLE                  184 /* 0x00b8 伝説ポケモン：アラミスと戦った */
 #define FE_C09_FORBIDDEN                   185 /* 0x00b9 ポケモンリーグ立ち入り禁止状態フラグ。Ｎ城出現&#xff5e;チャンプ復帰まで */
-		/* not used   186(0x00ba) */
+#define FE_ZUKAN_GRADEUP                   186 /* 0x00ba 全国図鑑入手可能フラグ（地方を全て「見た」にするか、ゲームクリアでセット） */
 		/* not used   187(0x00bb) */
 		/* not used   188(0x00bc) */
 		/* not used   189(0x00bd) */

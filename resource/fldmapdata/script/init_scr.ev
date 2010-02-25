@@ -253,6 +253,9 @@ INIT_EVENT_START  ev_init_gameclear_script
   //Ｎの城移動用のワープＮＰＣを非表示
   _FLAG_SET( FV_C09R0701_WARPMAN )
 
+  //全国図鑑の入手可能フラグをセット
+  _FLAG_SET( FE_ZUKAN_GRADEUP )
+
 }
 INIT_EVENT_END
 
