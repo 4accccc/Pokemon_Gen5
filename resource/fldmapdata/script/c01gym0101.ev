@@ -518,6 +518,13 @@ _ANIME_LABEL	anm_dento_cornchange
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//	共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /*         ジムリーダーコーン（画面右）  戦闘前             */
@@ -547,6 +554,10 @@ EVENT_START		ev_c01gym0101_leader1b_01
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 12, 1, 5, DIR_UP )
+				_OBJ_ANIME( C01GYM0101_LEADER1A_01, anm_dir_d )
+				_OBJ_ANIME( C01GYM0101_LEADER1B_01, anm_dir_d )
+				_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_dir_d )
+				_OBJ_ANIME_WAIT()
 				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 			ELSE
 				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
@@ -607,8 +618,8 @@ EVENT_START		ev_c01gym0101_leader1b_01
 			_FLAG_SET( FV_D01R0101_GIRL_01 )
 			
 			//トレーナーフラグセット
-			_TRAINER_FLAG_SET( TR_WAITER_01 )
-			_TRAINER_FLAG_SET( TR_WAITRESS_01 )
+			_TRAINER_FLAG_SET( TRID_WAITER_01 )
+			_TRAINER_FLAG_SET( TRID_WAITRESS_01 )
 
 			//========================================//
 
@@ -672,6 +683,10 @@ EVENT_START		ev_c01gym0101_leader1a_01
 			//敗戦チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_OBJ_ANIME( C01GYM0101_LEADER1A_01, anm_dir_d )
+				_OBJ_ANIME( C01GYM0101_LEADER1B_01, anm_dir_d )
+				_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_dir_d )
+				_OBJ_ANIME_WAIT()
 				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 12, 1, 5, DIR_UP )
 				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 			ELSE
@@ -733,8 +748,8 @@ EVENT_START		ev_c01gym0101_leader1a_01
 			_FLAG_SET( FV_D01R0101_GIRL_01 )
 			
 			//トレーナーフラグセット
-			_TRAINER_FLAG_SET( TR_WAITER_01 )
-			_TRAINER_FLAG_SET( TR_WAITRESS_01 )
+			_TRAINER_FLAG_SET( TRID_WAITER_01 )
+			_TRAINER_FLAG_SET( TRID_WAITRESS_01 )
 			
 			//========================================//
 			
@@ -806,6 +821,10 @@ EVENT_START		ev_c01gym0101_leader1c_01
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 12, 1, 5, DIR_UP )
+				_OBJ_ANIME( C01GYM0101_LEADER1A_01, anm_dir_d )
+				_OBJ_ANIME( C01GYM0101_LEADER1B_01, anm_dir_d )
+				_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_dir_d )
+				_OBJ_ANIME_WAIT()
 				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 			ELSE
 				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
@@ -859,8 +878,8 @@ EVENT_START		ev_c01gym0101_leader1c_01
 			_FLAG_SET( FV_D01R0101_GIRL_01 )
 
 			//トレーナーフラグセット
-			_TRAINER_FLAG_SET( TR_WAITER_01 )
-			_TRAINER_FLAG_SET( TR_WAITRESS_01 )
+			_TRAINER_FLAG_SET( TRID_WAITER_01 )
+			_TRAINER_FLAG_SET( TRID_WAITRESS_01 )
 
 			//========================================//
 

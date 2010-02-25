@@ -276,8 +276,8 @@ ev_leader3_btl:
 	$WK_SCENE_C03P07 = 2
 
 	//トレーナーフラグセット
-	_TRAINER_FLAG_SET( TR_JUGGLING_02 )
-	_TRAINER_FLAG_SET( TR_JUGGLING_04 )
+	_TRAINER_FLAG_SET( TRID_JUGGLING_02 )
+	_TRAINER_FLAG_SET( TRID_JUGGLING_04 )
 
 	//================================================//
 

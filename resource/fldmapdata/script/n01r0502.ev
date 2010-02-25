@@ -367,10 +367,6 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_04_01w, msg_n01r0502_boss_04_01b, N01R0502_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 
-	//Ｎ：その場足踏み
-	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_last3 )
-	_OBJ_ANIME_WAIT()
-
 	//おいで　シン！/ム！
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_05w, msg_n01r0502_boss_05b, N01R0502_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
@@ -562,7 +558,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	_MSGWIN_CLOSE()
 	
 	//シン（ム）が自機の方を見る
-	_OBJ_ANIME( N01R0502_WKOBJCODE01_01, anm_package_dir )
+	_OBJ_ANIME( N01R0502_WKOBJCODE01_01, anm_legend_turn )
 	_OBJ_ANIME_WAIT()
 	
 	//シンと　ムは……　もとは　ひとつの　いのち
@@ -630,7 +626,10 @@ _ANIME_LABEL	anm_n_back
 /************************************************************/
 EVENT_START		ev_n01r0502_wkobjcode00_01
 _TALK_OBJ_START()
-	
+
+_OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_legend_hoeru )
+_OBJ_ANIME_WAIT()
+
 	//WHITE版の場合
 {
 	DEFINE_LOCAL	LWK_ROM
@@ -651,6 +650,10 @@ EVENT_END
 /************************************************************/
 EVENT_START		ev_n01r0502_wkobjcode01_01
 _TALK_OBJ_START()
+
+_OBJ_ANIME( N01R0502_WKOBJCODE01_01, anm_legend_hoeru )
+_OBJ_ANIME_WAIT()
+
 	//WHITE版の場合
 {
 	DEFINE_LOCAL	LWK_ROM
@@ -721,9 +724,19 @@ _TALK_OBJ_START()
 			
 		ENDIF
 }
-
-
 EVENT_END
+
+//--------------------------------------------------------------------
+//		シンとム専用のアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_legend_hoeru
+	_ANIME_DATA	AC_SHIN_MU_HOERU,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_legend_turn
+	_ANIME_DATA	AC_SHIN_MU_TURN,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /************************************************************/
 /*	ラストシーン											*/
