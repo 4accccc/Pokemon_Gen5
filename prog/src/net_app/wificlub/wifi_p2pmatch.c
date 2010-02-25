@@ -975,6 +975,9 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerMachineNoregParent, //WIFIP2PMATCH_PLAYERMACHINE_NOREG_PARENT
   _playerMachineBattleDecide, //WIFIP2PMATCH_PLAYERMACHINE_BATTLE_DECIDE
   _childModeConnect, //WIFIP2PMATCH_MODE_CHILD_CONNECT
+  _playerDirectNoregParent1, //WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT1
+  _playerDirectNoregParent2, //WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT2
+  _playerDirectInit1Next, //WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1
 };
 
 #define _MAXNUM   (2)         // 最大接続人数
@@ -2103,7 +2106,7 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
     if(wk->pParentWork->btalk){  //話しかけ接続時
       _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_UNIONMATCH);
        WifiP2PMatch_FriendListInit2( wk, seq );
-      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT1);
+      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1);
     }
     else{  //相手と切断
       GFL_NET_StateWifiMatchEnd(TRUE);  // マッチングを切る
@@ -2920,6 +2923,7 @@ static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
 
   //MACアドレスをリセットしておく
   WIFI_STATUS_ResetVChatMac(wk->pMatch);
+  wk->DirectMacSet = 0;
   
   // 今の状態を書き込む
   MCVSys_ReWrite( wk, HEAPID_WIFIP2PMATCH );
@@ -3244,7 +3248,13 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
 
   }
 
-  {
+
+  if( wk->DirectModeNo!=0){
+    if(!WIFI_STATUS_IsVChatMac(wk->pMatch, WifiFriendMatchStatusGet( wk->DirectModeNo-1 ))){
+        wk->DirectModeNo=0;
+    }
+  }
+  else{
     int j;
     for(j = 0; j < WIFIP2PMATCH_MEMBER_MAX ; j++){
       int n = GFUser_GetPublicRand0(WIFIP2PMATCH_MEMBER_MAX);  //いつも若い順になら無いように乱数検査
@@ -3267,16 +3277,17 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
   // 友達からこちらに接続してきたときの処理
   checkMatch = _checkParentConnect(wk);
   if( (0 !=  checkMatch) && (wk->preConnect != -1) ){ // 接続してきた
-    NET_PRINT("接続\n");
-    Snd_SePlay(_SE_OFFER);
+    NET_PRINT("接続 %d\n",wk->DirectModeNo);
+    Snd_SePlay(_SE_OFFER);   //@todoユニオンルームでよばれたSE
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_INIT);
     return seq;
   }
   if((wk->preConnect == -1) && (GFL_NET_DWC_IsNewPlayer() != -1)){  // 通常のコネクト開始
     wk->preConnect = GFL_NET_DWC_IsNewPlayer();
     _friendNameExpand(wk, wk->preConnect);
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_043, FALSE);
-
+    if(wk->DirectMacSet==0){
+      WifiP2PMatchMessagePrint(wk, msg_wifilobby_043, FALSE);
+    }
     // ボイスチャット設定
     GFL_NET_DWC_SetVChat(WIFI_STATUS_GetVChatStatus( wk->pMatch ));// ボイスチャットとBGM音量の関係を整理 tomoya takahashi
     NET_PRINT( "Connect VCHAT set\n" );
@@ -3412,6 +3423,7 @@ static int _callGameInit( WIFIP2PMATCH_WORK *wk, int seq )
         u8 callcount = WIFI_STATUS_GetCallCounter(WifiFriendMatchStatusGet( n ));
         wk->pParentWork->matchno[n] = callcount;   //前回マッチングした時のno
       }
+      wk->DirectModeNo = wk->friendNo;
       return seq;
     }
   }
@@ -3501,6 +3513,7 @@ static int WifiP2PMatch_VCTConnectInit2( WIFIP2PMATCH_WORK *wk, int seq )       
     EndMessageWindowOff(wk);
     // VCT接続開始 + 接続MACは消去
     WIFI_STATUS_ResetVChatMac(wk->pMatch);
+    wk->DirectMacSet = 0;
     _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_VCT);  // VCT中になる
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT);
     WifiList_SetLastPlayDate( wk->pList, wk->friendNo - 1); // 最後に遊んだ日付は、VCTがつながったときに設定する
@@ -4421,6 +4434,7 @@ static BOOL _playerDirectConnectStart( WIFIP2PMATCH_WORK *wk )
         WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
         GF_ASSERT( wk->timeWaitWork == NULL );
         wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
+        wk->DirectMacSet = friendNo;
 
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
         
@@ -4925,12 +4939,10 @@ static int _parentModeCallMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
   mySt = _WifiMyStatusGet( wk, wk->pMatch );
   targetSt = _WifiMyStatusGet( wk,p_status );
   myvchat = WIFI_STATUS_GetVChatStatus( wk->pMatch );
-
-//  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
-
-  _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
-  WifiP2PMatchMessagePrint(wk, msg_wifilobby_008, FALSE);
-  //   CommInfoInitialize(wk->pSaveData,NULL);   //Info初期化  //@@OO
+  if(wk->DirectMacSet==0){
+    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_008, FALSE);
+  }
   CommCommandWFP2PMF_MatchStartInitialize(wk);
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
   wk->timer = 30;
@@ -5029,7 +5041,7 @@ static int _parentModeCallMenuYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 
     if(wk->timer==0){
       if(GFL_NET_HANDLE_IsNegotiation(GFL_NET_HANDLE_GetCurrentHandle())){
-        //@@OO                CommToolTempDataReset();
+
 
 
         GFL_STD_MemClear(&wk->matchGameMode,sizeof(wk->matchGameMode));

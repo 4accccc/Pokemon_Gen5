@@ -57,6 +57,44 @@
 #define WIFIP2PMATCH_CORNER_MESSAGE_END_WAIT	( 60 )
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // 文字パネルの遷移用
 enum{
   WIFIP2PMATCH_MODE_INIT  = 0,
@@ -173,6 +211,10 @@ enum{
   WIFIP2PMATCH_PLAYERMACHINE_NOREG_PARENT,
   WIFIP2PMATCH_PLAYERMACHINE_BATTLE_DECIDE,
   WIFIP2PMATCH_MODE_CHILD_CONNECT,
+  WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT1,
+  WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT2,
+  WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1,
+  
 };
 
 
@@ -408,7 +450,7 @@ struct _WIFIP2PMATCH_WORK{
 	u16 brightness_reset;	// _retryでマスター輝度をVBlankでリセットするため
 	u16 friend_num;			// P2Pmatch画面初期化タイミングの友達数
  	u16 directmode;			// 直接会話中のゲームモード
-
+  
   u32 talkwin_m2;
   u32 menuwin_m2;
   u32 menuwin_m1;
@@ -418,6 +460,8 @@ struct _WIFIP2PMATCH_WORK{
   u16 battleShooter;  //バトルのシューター
   REGULATION_PRINT_MSG* rpm;  // レギュレーションプリントメッセージ
   REGULATION* pRegulation;
+  u8 DirectModeNo;    // ダイレクトにはなしかけられている場合、話してきたやつのNO
+  u8 DirectMacSet;  //話しかける為のMACをセットした人
 };
 
 //通信関連の関数

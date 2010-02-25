@@ -49,10 +49,11 @@ static int _playerMachineInit1( WIFIP2PMATCH_WORK *wk, int seq )
         return seq;
       }
     }
-    command = WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START;  //Ç±Ç±Ç©ÇÁDIRECTÇ∆Ç®Ç»Ç∂
-    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_DIRECT_COMMAND,1,&command);
+
+  //  command = WIFIP2PMATCH_PLAYERDIRECT_BATTLE_DECIDE;  //Ç±Ç±Ç©ÇÁDIRECTÇ∆Ç®Ç»Ç∂  ÉåÉMÉÖÉåÅ[ÉVÉáÉìÇëóÇÈÇ∆Ç±ÇÎ
+  //  GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_DIRECT_COMMAND,1,&command);
     
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_DECIDE);
   }
   else{
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);

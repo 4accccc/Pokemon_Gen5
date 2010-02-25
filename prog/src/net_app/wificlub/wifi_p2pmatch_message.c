@@ -1355,7 +1355,7 @@ static void _battleCustomSelectMenu( WIFIP2PMATCH_WORK *wk )
   _parentCustomInfoMenuList[2].str_id = msg_wifilobby_1030 + (1-wk->battleShooter);
 
   _modeSelectMenuBase(wk, &_parentCustomMenuListHeader, _parentCustomInfoMenuList,
-                      elementof(_parentCustomInfoMenuList), _MENUTYPE_BATTLE_CUSTOM,28);
+                      elementof(_parentCustomInfoMenuList), _MENUTYPE_BATTLE_CUSTOM, 30);
 }
 
 //----------------------------------------------------------------------------
@@ -1411,7 +1411,7 @@ static void _battleShooterSelectMenu( WIFIP2PMATCH_WORK *wk )
 
   
   _modeSelectMenuBase(wk, &_parentInfoBattleMenuListHeader, _parentShooterInfoMenuList,
-                      elementof(_parentShooterInfoMenuList), _MENUTYPE_BATTLE_SHOOTER,18);
+                      elementof(_parentShooterInfoMenuList), _MENUTYPE_BATTLE_SHOOTER,20);
 }
 
 
@@ -1468,10 +1468,10 @@ static void _Menu_RegulationSetup(WIFIP2PMATCH_WORK* wk, u32 fail_bit, BOOL shoo
   wk->SysMsgWin= GFL_BMPWIN_Create(  GFL_BG_FRAME2_M,
     REGWINDOW_WIN_PX, REGWINDOW_WIN_PY,
     REGWINDOW_WIN_SX, REGWINDOW_WIN_SY,
-    COMM_MESFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+    MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
 
 //  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
-//                                0x20*COMM_MESFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
+   //                             0x20*MCV_SYSFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
 
   // システムウインドウ枠描画
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->SysMsgWin), WINCLR_COL(FBMP_COL_WHITE) );
@@ -1480,7 +1480,8 @@ static void _Menu_RegulationSetup(WIFIP2PMATCH_WORK* wk, u32 fail_bit, BOOL shoo
   BmpWinFrame_Write( wk->SysMsgWin, WINDOW_TRANS_ON_V,
                      GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), COMM_MESFONT_PAL );
 
-
+  GFL_FONTSYS_SetDefaultColor();
+  
   wk->rpm = PokeRegulation_CreatePrintMsg( wk->pRegulation, wk->WordSet, HEAPID_WIFIP2PMATCH, shooter_type);
 
   if(regwin_type == REGWIN_TYPE_RULE){

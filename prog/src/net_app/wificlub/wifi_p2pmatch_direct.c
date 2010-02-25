@@ -3,6 +3,42 @@
 
 
 
+
+//------------------------------------------------------------------
+/**
+ * @brief   まず子機が申し込みを受けるかどうか選択 ２回目は台詞が違う WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+static int _playerDirectInit1Next( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  int gmmno,gmmidx;
+  u16 friendNo,status,gamemode;
+  WIFI_STATUS* p_status;
+  MCR_MOVEOBJ* p_player;
+  MCR_MOVEOBJ* p_npc;
+  u32 way;
+
+  wk->pParentWork->btalk = TRUE;  //ダイレクト
+
+  OS_TPrintf("_playerDirectInit1Next %d\n",wk->friendNo);
+  
+  GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(),FALSE);  //接続禁止
+  if(!GFL_NET_IsParentMachine()){
+    _friendNameExpand(wk,  wk->friendNo - 1);
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1011, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT2);
+  }
+  else{
+    _friendNameExpand(wk,  wk->friendNo - 1);
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+  }
+  return seq;
+}
+
+
 //------------------------------------------------------------------
 /**
  * @brief   まず子機が申し込みを受けるかどうか選択 WIFIP2PMATCH_PLAYERDIRECT_INIT1
@@ -412,6 +448,7 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
 
 
   WIFI_STATUS_ResetVChatMac(wk->pMatch);
+  wk->DirectMacSet = 0;
   status = WIFI_STATUS_PLAYING;
 
   switch(wk->directmode){
@@ -819,6 +856,7 @@ static int _playerDirectBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
   if(!_regulationCheck(wk)){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT);
+    return seq;
   }
 
 
@@ -845,19 +883,43 @@ static int _playerDirectBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
  */
 //------------------------------------------------------------------
 
-
 static int _playerDirectNoregParent( WIFIP2PMATCH_WORK *wk, int seq )
 {
+  u32 fail_bit;
+
   if(!WifiP2PMatchMessageEndCheck(wk)){
     return seq;
   }
+  EndMessageWindowOff(wk);
+
+  _CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit );
+  _Menu_RegulationSetup(wk, fail_bit, 1-wk->battleShooter , REGWIN_TYPE_NG_TEMOTI);
+
+  _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT1);
+  return seq;
+}
+
+static int _playerDirectNoregParent1( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  u32 fail_bit;
+  if(GFL_UI_KEY_GetTrg()){
+    _CheckRegulation_BBox(wk->pRegulation, wk->pGameData, &fail_bit );
+    _Menu_RegulationSetup(wk, fail_bit, 1-wk->battleShooter , REGWIN_TYPE_NG_BBOX);
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT2);
+  }
+  return seq;
+}
+
+
+static int _playerDirectNoregParent2( WIFIP2PMATCH_WORK *wk, int seq )
+{  
   if(GFL_UI_KEY_GetTrg()){
     EndMessageWindowOff(wk);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
   }
   return seq;
- 
 }
+
 
 
 static int _playerDirectBattleWatch( WIFIP2PMATCH_WORK *wk, int seq )
@@ -1122,6 +1184,7 @@ static int _playerDirectBattleStart6( WIFIP2PMATCH_WORK *wk, int seq )
   u32 status,gamemode;
   
   WIFI_STATUS_ResetVChatMac(wk->pMatch);
+  wk->DirectMacSet = 0;
   status = WIFI_STATUS_PLAYING;
 
   NET_PRINT("regch %d %d %d\n",wk->battleMode,wk->battleRule,wk->battleShooter);

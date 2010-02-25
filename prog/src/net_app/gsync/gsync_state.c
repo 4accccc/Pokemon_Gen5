@@ -881,12 +881,12 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
     }
   }
   else{
-#if PM_DEBUG
+#if 0  //OHNODEBUG‚É‚à‚Á‚Ä‚¢‚©‚È‚¢‚Æ
     pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, 1234, NULL);
     _pWork=pWork;
     pWork->trayno=0;
     pWork->indexno=0;
-    pWork->pSaveData = SaveControl_GetPointer();
+//    pWork->pSaveData = SaveControl_GetPointer();
     pWork->pBox = BOX_DAT_InitManager(pWork->heapID,SaveControl_GetPointer());
 
     {
