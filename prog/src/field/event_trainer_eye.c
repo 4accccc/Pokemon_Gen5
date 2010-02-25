@@ -821,13 +821,9 @@ static int eyeMeetMove_AcmdEnd( EV_EYEMEET_MOVE_WORK *work )
 {
   MMDL_EndAcmd( work->mmdl );
 
-#if 0 //pl null ゴーストジム用特殊処理
-  if( GYM_GimmickCodeCheck(work->fsys, FLD_GIMMICK_GHOST_GYM) == FALSE 
-      || GYM_PlGhostGymTrainerMoveCodeChange(work->fsys,work->fldobj) == FALSE ){
-    FieldOBJ_MoveCodeChange( work->fldobj, MV_DMY );
-  }
-#endif
-  
+  //戦闘終了後からは移動しないように、動作コードをMV_DMYにする
+  MMDL_ChangeMoveCode( work->mmdl, MV_DMY );
+ 
   work->seq_no = SEQNO_TRMOVE_END;
   return( TRUE );
 }
