@@ -939,7 +939,6 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
         const u8 idx  = idxX + idxY*MB_SEL_POKE_BOX_X_NUM;
         
         
-        OS_TFPrintf(2,"[%d:%d:][%d:%d:]\n",tpx,tpy,idxX,idxY);
         if( idxX >= 0 && idxX < MB_SEL_POKE_BOX_X_NUM &&
             idxY >= 0 && idxY < MB_SEL_POKE_BOX_Y_NUM )
         {

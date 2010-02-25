@@ -88,6 +88,7 @@ struct _WIFILOGIN_YESNO_WORK
 struct _WIFILOGIN_MESSAGE_WORK {
   u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
   u32 bgchar2S;  //SystemMsg
+  u32 bgchar3S;  //YesNoWin
 
   GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
   GFL_BUTTON_MAN* pButton;
@@ -144,6 +145,7 @@ WIFILOGIN_MESSAGE_WORK* WIFILOGIN_MESSAGE_Init(HEAPID id,int msg_dat, WIFILOGIN_
 
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan( WifiLogin_Message_GetTextFrame( pWork->display ), _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
   pWork->bgchar2S = BmpWinFrame_GraphicSetAreaMan(WifiLogin_Message_GetSysFrame( pWork->display ), _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+  pWork->bgchar3S = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME3_M, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
 	
   {
     PALTYPE paltype;
@@ -177,6 +179,10 @@ void WIFILOGIN_MESSAGE_End(WIFILOGIN_MESSAGE_WORK* pWork)
   GFL_BG_FreeCharacterArea(WifiLogin_Message_GetSysFrame( pWork->display ),
                           GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2S),
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar2S));
+
+  GFL_BG_FreeCharacterArea(GFL_BG_FRAME3_M,
+                          GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar3S),
+                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar3S));
 
 
   GFL_FONTSYS_SetDefaultColor();
@@ -551,7 +557,7 @@ static u8 WifiLogin_Message_GetSysFrame( WIFILOGIN_DISPLAY display )
 #define	FLD_YESNO_WIN_PX	( 24 )
 #define	FLD_YESNO_WIN_PY	( 13 )
 static const BMPWIN_YESNO_DAT _yesNoBmpDat = {
-  GFL_BG_FRAME2_M, FLD_YESNO_WIN_PX, FLD_YESNO_WIN_PY,
+  GFL_BG_FRAME3_M, FLD_YESNO_WIN_PX, FLD_YESNO_WIN_PY,
   _BUTTON_MSG_PAL, 0
 };
 
@@ -559,7 +565,7 @@ static const BMPWIN_YESNO_DAT _yesNoBmpDat = {
 static BMPMENU_WORK * WIFILOGIN_MESSAGE_YesNoWinCreate(WIFILOGIN_MESSAGE_WORK* pWork)
 {
   BMPWIN_YESNO_DAT  dat = _yesNoBmpDat;
-  dat.chrnum  = GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2S);
+  dat.chrnum  = GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar3S);
   return BmpMenu_YesNoSelectInit( &_yesNoBmpDat, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2S),
                              _BUTTON_WIN_PAL, 0, pWork->heapID );
 }

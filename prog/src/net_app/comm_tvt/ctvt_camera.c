@@ -305,15 +305,6 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
       }
     }
 
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
-    {
-      static u8 befBit = 0;
-      if( befBit != camWork->isUpdateBit )
-      {
-        OS_TFPrintf(2,"[%d]-?[%d]\n",befBit,camWork->isUpdateBit);
-      }
-    }
-    
     for( i=0;i<CTVT_MEMBER_NUM;i++ )
     {
       if( camWork->isUpdateBit & (1<<i) )

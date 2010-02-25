@@ -984,7 +984,7 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
 
   if( befState != mbpState )
   {
-    OS_TFPrintf(2,"MBState[%d]->[%d]\n",befState,mbpState);
+    //OS_TFPrintf(2,"MBState[%d]->[%d]\n",befState,mbpState);
     befState = mbpState;
   }
 

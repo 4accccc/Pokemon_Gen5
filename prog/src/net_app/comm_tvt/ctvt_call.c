@@ -188,6 +188,7 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
 static void CTVT_CALL_UpdateBar( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork );
 static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , CTVT_CALL_BAR_WORK *barWork , const u8 idx );
 static void CTVT_CALL_UpdateBarPosFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , CTVT_CALL_BAR_WORK *barWork , const u8 idx );
+static void CTVT_CALL_UpdateBarMenu( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork );
 
 static const BOOL CTVT_CALL_CheckRegistFriendData( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , const STRCODE *name , const u32 id , const u32 sex );
 static void CTVT_CALL_DispMessage( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , const u16 msgId );
@@ -840,86 +841,7 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
         //文字表示の更新
         if( isUpdate == TRUE )
         {
-          u8 i;
-          u8 checkNum = 0;
-          const HEAPID heapId = COMM_TVT_GetHeapId( work );
-          GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
-          APP_TASKMENU_RES *taskRes = COMM_TVT_GetTaskMenuRes( work );
-          for( i=0;i<3;i++ )
-          {
-            if( callWork->checkIdx[i] != CTVT_CALL_INVALID_NO )
-            {
-              checkNum++;
-            }
-          }
-          
-          if( callWork->checkIdxParent != CTVT_CALL_INVALID_NO )
-          {
-            if( callWork->barState != CCBS_JOIN_PARENT )
-            {
-              APP_TASKMENU_ITEMWORK initWork = {0};
-
-              GFL_BMPWIN_ClearTransWindow_VBlank( callWork->msgWin );
-              BmpWinFrame_Clear( callWork->msgWin , WINDOW_TRANS_ON_V );
-
-              if( callWork->barMenuWork != NULL )
-              {
-                APP_TASKMENU_WIN_Delete( callWork->barMenuWork );
-                callWork->barMenuWork = NULL;
-              }
-              
-              initWork.str = GFL_MSG_CreateString( msgHandle , COMM_TVT_CALL_06 );
-              initWork.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
-              initWork.type = APP_TASKMENU_WIN_TYPE_NORMAL;
-              
-              callWork->barMenuWork = APP_TASKMENU_WIN_Create( taskRes , &initWork , 0 , 21 , 21 , heapId );
-              
-              GFL_STR_DeleteBuffer( initWork.str );
-
-              callWork->barState = CCBS_JOIN_PARENT;
-            }
-          }
-          else
-          if( checkNum > 0 )
-          {
-            if( callWork->barState != CCBS_CALL_CHILD )
-            {
-              APP_TASKMENU_ITEMWORK initWork = {0};
-
-              GFL_BMPWIN_ClearTransWindow_VBlank( callWork->msgWin );
-              BmpWinFrame_Clear( callWork->msgWin , WINDOW_TRANS_ON_V );
-
-              if( callWork->barMenuWork != NULL )
-              {
-                APP_TASKMENU_WIN_Delete( callWork->barMenuWork );
-                callWork->barMenuWork = NULL;
-              }
-              
-              initWork.str = GFL_MSG_CreateString( msgHandle , COMM_TVT_CALL_05 );
-              initWork.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
-              initWork.type = APP_TASKMENU_WIN_TYPE_NORMAL;
-              
-              callWork->barMenuWork = APP_TASKMENU_WIN_Create( taskRes , &initWork , 0 , 21 , 21 , heapId );
-              
-              GFL_STR_DeleteBuffer( initWork.str );
-
-              callWork->barState = CCBS_CALL_CHILD;
-            }
-          }
-          else
-          {
-            if( callWork->barState != CCBS_NONE )
-            {
-              if( callWork->barMenuWork != NULL )
-              {
-                APP_TASKMENU_WIN_Delete( callWork->barMenuWork );
-                callWork->barMenuWork = NULL;
-              }
-
-              CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
-              callWork->barState = CCBS_NONE;
-            }
-          }
+          CTVT_CALL_UpdateBarMenu( work , callWork );
         }
         
       }
@@ -1013,6 +935,7 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
 {
   int i;  //負になるかも
   BOOL isUpdate = FALSE;
+  BOOL isUpdateBar = FALSE;
   CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
   if( CTVT_COMM_IsInitNet( work , commWork ) == FALSE )
   {
@@ -1210,14 +1133,24 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         if( callWork->checkIdx[j] == i )
         {
           callWork->checkIdx[j] = CTVT_CALL_INVALID_NO;
+          isUpdateBar = TRUE;
         }
+      }
+      if( callWork->checkIdxParent == i )
+      {
+        callWork->checkIdxParent = CTVT_CALL_INVALID_NO;
+        isUpdateBar = TRUE;
       }
 
       i--;
       isUpdate = TRUE;
     }
   }
-  
+  if( isUpdateBar == TRUE &&
+      callWork->state == CCS_MAIN )
+  {
+    CTVT_CALL_UpdateBarMenu( work , callWork );
+  }
   
   if( isUpdate == TRUE )
   {
@@ -1253,7 +1186,6 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
 //--------------------------------------------------------------
 //	バー更新
 //--------------------------------------------------------------
-
 static void CTVT_CALL_UpdateBar( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 {
   u8 i;
@@ -1459,6 +1391,93 @@ static void CTVT_CALL_UpdateBarPosFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *ca
     
   }
 }
+//--------------------------------------------------------------
+//	バーメニュー更新
+//--------------------------------------------------------------
+static void CTVT_CALL_UpdateBarMenu( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
+{
+
+  u8 i;
+  u8 checkNum = 0;
+  const HEAPID heapId = COMM_TVT_GetHeapId( work );
+  GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
+  APP_TASKMENU_RES *taskRes = COMM_TVT_GetTaskMenuRes( work );
+  for( i=0;i<3;i++ )
+  {
+    if( callWork->checkIdx[i] != CTVT_CALL_INVALID_NO )
+    {
+      checkNum++;
+    }
+  }
+  
+  if( callWork->checkIdxParent != CTVT_CALL_INVALID_NO )
+  {
+    if( callWork->barState != CCBS_JOIN_PARENT )
+    {
+      APP_TASKMENU_ITEMWORK initWork = {0};
+
+      GFL_BMPWIN_ClearTransWindow_VBlank( callWork->msgWin );
+      BmpWinFrame_Clear( callWork->msgWin , WINDOW_TRANS_ON_V );
+
+      if( callWork->barMenuWork != NULL )
+      {
+        APP_TASKMENU_WIN_Delete( callWork->barMenuWork );
+        callWork->barMenuWork = NULL;
+      }
+      
+      initWork.str = GFL_MSG_CreateString( msgHandle , COMM_TVT_CALL_06 );
+      initWork.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+      initWork.type = APP_TASKMENU_WIN_TYPE_NORMAL;
+      
+      callWork->barMenuWork = APP_TASKMENU_WIN_Create( taskRes , &initWork , 0 , 21 , 21 , heapId );
+      
+      GFL_STR_DeleteBuffer( initWork.str );
+
+      callWork->barState = CCBS_JOIN_PARENT;
+    }
+  }
+  else
+  if( checkNum > 0 )
+  {
+    if( callWork->barState != CCBS_CALL_CHILD )
+    {
+      APP_TASKMENU_ITEMWORK initWork = {0};
+
+      GFL_BMPWIN_ClearTransWindow_VBlank( callWork->msgWin );
+      BmpWinFrame_Clear( callWork->msgWin , WINDOW_TRANS_ON_V );
+
+      if( callWork->barMenuWork != NULL )
+      {
+        APP_TASKMENU_WIN_Delete( callWork->barMenuWork );
+        callWork->barMenuWork = NULL;
+      }
+      
+      initWork.str = GFL_MSG_CreateString( msgHandle , COMM_TVT_CALL_05 );
+      initWork.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+      initWork.type = APP_TASKMENU_WIN_TYPE_NORMAL;
+      
+      callWork->barMenuWork = APP_TASKMENU_WIN_Create( taskRes , &initWork , 0 , 21 , 21 , heapId );
+      
+      GFL_STR_DeleteBuffer( initWork.str );
+
+      callWork->barState = CCBS_CALL_CHILD;
+    }
+  }
+  else
+  {
+    if( callWork->barState != CCBS_NONE )
+    {
+      if( callWork->barMenuWork != NULL )
+      {
+        APP_TASKMENU_WIN_Delete( callWork->barMenuWork );
+        callWork->barMenuWork = NULL;
+      }
+
+      CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
+      callWork->barState = CCBS_NONE;
+    }
+  }  
+}
 
 static const BOOL CTVT_CALL_CheckRegistFriendData( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , const STRCODE *name , const u32 id , const u32 sex )
 {
@@ -1467,7 +1486,7 @@ static const BOOL CTVT_CALL_CheckRegistFriendData( COMM_TVT_WORK *work , CTVT_CA
   WIFI_LIST *wifiList = GAMEDATA_GetWiFiList( initWork->gameData );
   
 #if PM_DEBUG
-  //if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
   {
     return TRUE;
   }
