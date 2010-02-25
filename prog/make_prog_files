@@ -409,7 +409,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/fld_btl_inst_tool.c \
 				field/c_gear/event_cgearget.c \
         field/trial_house_st.c \
-		field/report_event.c
+        field/ev_time.c \
+		    field/report_event.c
 
 # wifiプログラム
 #===> SRCS_OVERLAY_DEV_WIFILIB
@@ -478,7 +479,6 @@ SRCS_OVERLAY_UNION_ROOM = net_app/union/union_chara.c \
 # event_mapchange内でfield_procが生成される前に使用される処理
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_FIELD_INIT		=	field/event_mapchange.c \
-        field/ev_time.c \
         field/field_wfbc_data_local.c \
         field/scrcmd_wfbc.c \
         system/el_scoreboard.c
