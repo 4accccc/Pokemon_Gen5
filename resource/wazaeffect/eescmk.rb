@@ -529,6 +529,7 @@ end
 	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/particle/wazaeffect/spa_def.h\n")
 	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "prog/arc/wazaeffect/waza_eff_gra_def.h\n")
 	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "resource/wazaeffect/btlv_effect_def.h\n")
+	fp_w.print("\t.include	" + ARGV[ ARGV_INC_DIR ] + "resource/wazaeffect/wazadata_def.h\n")
 
   seq_cnt.times{ |cnt|
 		inc_headers[ cnt ].size.times { |inc|
