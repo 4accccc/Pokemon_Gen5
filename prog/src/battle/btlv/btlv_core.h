@@ -257,7 +257,7 @@ extern BOOL BTLV_ACT_DamageEffectSingle_Wait( BTLV_CORE* wk );
  * @param   pokeID    ëŒè€Ç∆Ç»ÇÈÉ|ÉPÉÇÉìIDîzóÒ
  */
 //=============================================================================================
-extern void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAff affifnity, const u8* pokeID, WazaID waza );
+extern void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAffAbout affAbout, const u8* pokeID, WazaID waza );
 extern BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk );
 
 

@@ -292,7 +292,7 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
   switch( *seq ){
   case 0:
     setup_core( core, core->heapID );
-    { 
+    {
       BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParamBtl( core->mainModule, core->heapID );
       BTLV_EFFECT_Init( besp, core->smallFontHandle, core->heapID );
       GFL_HEAP_FreeMemory( besp );
@@ -353,7 +353,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
   switch( *seq ){
   case 0:
     setup_core( core, core->heapID );
-    { 
+    {
       BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParamBtl( core->mainModule, core->heapID );
       BTLV_EFFECT_Init( besp, core->smallFontHandle, core->heapID );
       GFL_HEAP_FreeMemory( besp );
@@ -1423,16 +1423,16 @@ typedef struct {
   u8  pokePos[ BTL_POS_MAX ];
   u8  pokeCnt;
   u16 seq;
-  BtlTypeAff       affinity;
+  BtlTypeAffAbout  affAbout;
   WazaID           wazaID;
 }DMG_PLURAL_ACT_WORK;
 
 
-void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAff affinity, const u8* pokeID, WazaID wazaID )
+void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAffAbout affAbout, const u8* pokeID, WazaID wazaID )
 {
   DMG_PLURAL_ACT_WORK* subwk = getGenericWork(wk, sizeof(DMG_PLURAL_ACT_WORK));
 
-  subwk->affinity = affinity;
+  subwk->affAbout = affAbout;
   subwk->pokeCnt = pokeCnt;
   subwk->wazaID = wazaID;
   subwk->seq = 0;
@@ -1461,17 +1461,17 @@ BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk )
         BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->pokePos[i], subwk->wazaID );
       }
 
-      if( subwk->affinity < BTL_TYPEAFF_100 )
+      if( subwk->affAbout == BTL_TYPEAFF_ABOUT_ADVANTAGE )
       {
-        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
-        BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
-        PMSND_PlaySE( SEQ_SE_KOUKA_L );
-      }
-      else if( subwk->affinity > BTL_TYPEAFF_100 )
-      {
-        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
-        BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+//        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
+//        BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
         PMSND_PlaySE( SEQ_SE_KOUKA_H );
+      }
+      else if( subwk->affAbout == BTL_TYPEAFF_ABOUT_DISADVANTAGE )
+      {
+//        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
+//        BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+        PMSND_PlaySE( SEQ_SE_KOUKA_L );
       }
       else
       {

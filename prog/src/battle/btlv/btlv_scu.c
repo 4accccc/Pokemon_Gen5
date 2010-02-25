@@ -728,9 +728,11 @@ static u16 GetWildSingleEncountStrID( BTLV_SCU* wk )
     return BTL_STRID_STD_Encount_Wild_Move;
   }
   if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_LEGEND) ){
+    TAYA_Printf("話しかけエンカウント\n");
     return BTL_STRID_STD_Encount_Wild_Talk;
   }
   if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_SYMBOL) ){
+    TAYA_Printf("シンボルエンカウント\n");
     return BTL_STRID_STD_Encount_Wild_Symbol;
   }
   return BTL_STRID_STD_Encount_Wild1;

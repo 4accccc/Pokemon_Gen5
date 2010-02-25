@@ -3157,7 +3157,7 @@ static BOOL scProc_ACT_WazaDmg_Plural( BTL_CLIENT* wk, int* seq, const int* args
   case 0:
   {
     u16               poke_cnt  = args[0];
-    BtlTypeAff        aff       = args[1];
+    BtlTypeAffAbout   aff_about = args[1];
     WazaID            waza      = args[2];
 
     u8 pokeID[ BTL_POS_MAX ];
@@ -3165,7 +3165,7 @@ static BOOL scProc_ACT_WazaDmg_Plural( BTL_CLIENT* wk, int* seq, const int* args
     for(i=0; i<poke_cnt; ++i){
       pokeID[i] = SCQUE_READ_ArgOnly( wk->cmdQue );
     }
-    BTLV_ACT_DamageEffectPlural_Start( wk->viewCore, poke_cnt, aff, pokeID, waza );
+    BTLV_ACT_DamageEffectPlural_Start( wk->viewCore, poke_cnt, aff_about, pokeID, waza );
     (*seq)++;
   }
   break;
