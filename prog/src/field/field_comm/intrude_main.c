@@ -487,20 +487,12 @@ void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INT
     if(ZONEDATA_IsPalace(target_status->zone_id) == TRUE && ZONEDATA_IsPalace(mine_st->zone_id) == TRUE){
       target_status->player_pack.vanish = FALSE;
     }
-    else if(target_status->palace_area == PALACE_AREA_NO_NULL){
-      //相手プレイヤーは表フィールドにいる
-      if(mine_st->palace_area == net_id){ //侵入先が相手のROMなので表示
-        target_status->player_pack.vanish = FALSE;
-      }
-      else{ //侵入先が相手のROMでないなら非表示
-        target_status->player_pack.vanish = TRUE;
-      }
-    }
     else if(target_status->palace_area == mine_st->palace_area){
-      //お互い裏フィールドの場合は同じ侵入先なら表示
+      //同じROM内にいる
       target_status->player_pack.vanish = FALSE;
     }
-    else{ //お互い裏フィールドだが侵入先が違うので非表示
+    else{
+      //違うROMにいる
       target_status->player_pack.vanish = TRUE;
     }
   }
