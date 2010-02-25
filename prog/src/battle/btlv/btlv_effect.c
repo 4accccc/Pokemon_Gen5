@@ -153,17 +153,10 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* 
   int i;
   u16 tr_type[ 4 ];
 
-  for( i = BTL_CLIENTID_SA_PLAYER ; i <= BTL_CLIENTID_SA_ENEMY2 ; i++ )
-  { 
-    if( BTL_MAIN_IsClientNPC( mainModule, i ) == FALSE )
-    { 
-      tr_type[ i ] = BTL_MAIN_GetClientTrainerType( mainModule, i );
-    }
-    else
-    { 
-      tr_type[ i ] = TRTYPE_NONE;
-    }
-  }
+  tr_type[ 0 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetPlayerClientID( mainModule ) );
+  tr_type[ 1 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetEnemyClientID( mainModule, 0 ) );
+  tr_type[ 2 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetFriendCleintID( mainModule ) );
+  tr_type[ 3 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetEnemyClientID( mainModule, 1 ) );
 
   return BTLV_EFFECT_MakeSetUpParam( BTL_MAIN_GetRule( mainModule ), BTL_MAIN_GetFieldSituation( mainModule ),
                                      BTL_MAIN_IsMultiMode( mainModule ), tr_type, heapID );
@@ -531,7 +524,14 @@ void  BTLV_EFFECT_DelPokemon( int position )
 //============================================================================================
 BOOL  BTLV_EFFECT_CheckExist( int position )
 {
-  return BTLV_MCSS_CheckExist( bew->bmw, position );
+  if( position < BTLV_MCSS_POS_MAX )
+  { 
+    return BTLV_MCSS_CheckExist( bew->bmw, position );
+  }
+  else
+  {
+    return( bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] != BTLV_EFFECT_TRAINER_INDEX_NONE );
+  }
 }
 
 //============================================================================================

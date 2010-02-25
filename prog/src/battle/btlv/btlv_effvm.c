@@ -263,6 +263,7 @@ static VMCMD_RESULT VMEC_CONTROL_MODE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_IF( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_MCSS_POS_CHECK( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SET_WORK( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_GET_WORK( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_MIGAWARI( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_HENSHIN( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_NAKIGOE( VMHANDLE *vmh, void *context_work );
@@ -270,6 +271,7 @@ static VMCMD_RESULT VMEC_BALL_MODE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_BALLOBJ_SET( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_CALL( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_RETURN( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_JUMP( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PAUSE( VMHANDLE *vmh, void *context_work );
 
 static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work );
@@ -410,6 +412,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_IF,
   VMEC_MCSS_POS_CHECK,
   VMEC_SET_WORK,
+  VMEC_GET_WORK,
   VMEC_MIGAWARI,
   VMEC_HENSHIN,
   VMEC_NAKIGOE,
@@ -417,6 +420,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_BALLOBJ_SET,
   VMEC_CALL,
   VMEC_RETURN,
+  VMEC_JUMP,
   VMEC_PAUSE,
 
   VMEC_SEQ_END,
@@ -1831,6 +1835,10 @@ static VMCMD_RESULT VMEC_TRAINER_SET( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_TRAINER_SET\n");
 #endif DEBUG_OS_PRINT
 
+  if( index == BTLEFF_TRTYPE_FROM_WORK )
+  { 
+    index = bevw->sequence_work;
+  }
   BTLV_EFFECT_SetTrainer( index, position , pos_x, pos_y, pos_z );
 
   return bevw->control_mode;
@@ -2768,6 +2776,27 @@ static VMCMD_RESULT VMEC_SET_WORK( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
+ * @brief	指定されたワークから値をゲット
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_GET_WORK( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_GET_WORK:\n");
+#endif DEBUG_OS_PRINT
+
+  bevw->sequence_work = EFFVM_GetWork( bevw, ( int )VMGetU32( vmh ) );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
  * @brief	みがわり処理
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
@@ -3026,6 +3055,28 @@ static VMCMD_RESULT VMEC_RETURN( VMHANDLE *vmh, void *context_work )
   bevw->sequence_work = bevw->push_sequence_work[ bevw->call_count ];
 
   VMCMD_Return( vmh );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief ジャンプ
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_JUMP( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int adrs  = ( int )VMGetU32( vmh );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_JUMP\n");
+#endif DEBUG_OS_PRINT
+
+  VMCMD_Jump( vmh, vmh->adrs + adrs );
 
   return bevw->control_mode;
 }
@@ -4176,6 +4227,8 @@ static  void  EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag )
 
   MTX_MultVec43( &emit_pos, &beemw->mtx43, &emit_pos );
 
+  //OS_Printf( "pos_x:%x pos_y:%x pos_z:%x\n", emit_pos.x, emit_pos.y, emit_pos.z );
+
   GFL_PTC_SetEmitterPosition( emit, &emit_pos );
 }
 
@@ -4420,6 +4473,15 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
     break;
   case BTLEFF_WORK_ATTACK_JUMP:
     ret = BTLV_MCSS_GetNoJump( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos );
+    break;
+  case BTLEFF_WORK_MULTI:
+    ret = BTLV_EFFECT_GetMulti();
+    break;
+  case BTLEFF_WORK_TRTYPE_A:
+  case BTLEFF_WORK_TRTYPE_B:
+  case BTLEFF_WORK_TRTYPE_C:
+  case BTLEFF_WORK_TRTYPE_D:
+    ret = BTLV_EFFECT_GetTrType( param - BTLEFF_WORK_TRTYPE_A );
     break;
   default:
     //未知のパラメータです

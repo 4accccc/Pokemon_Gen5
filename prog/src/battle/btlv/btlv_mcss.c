@@ -193,9 +193,9 @@ static  const VecFx32 trainer_pos_table[]={
   { 0, 0x0666, FX_F32_TO_FX32( -12.0 ) }, //Ç®ñ~ÇÃè„
   //{ FX_F32_TO_FX32(  4.5f - 4.200f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( -25.0f ) },           //POS_TR_BB
   { FX_F32_TO_FX32( -3.5f + 3.500f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   8.5f ) },           //POS_TR_A
-  { FX_F32_TO_FX32(  6.0f - 4.200f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(  -9.0f ) },           //POS_TR_B
+  { 0x000026cd, 0x0666, FX_F32_TO_FX32( -12.0 ) }, //Ç®ñ~ÇÃè„
   { FX_F32_TO_FX32( -0.5f + 3.845f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   9.0f ) },           //POS_TR_C
-  { FX_F32_TO_FX32(  2.0f - 4.964f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( -11.0f ) },           //POS_TR_D
+  { 0xffffdccd, 0x0666, FX_F32_TO_FX32( -12.0 ) }, //Ç®ñ~ÇÃè„
 };
 
 //============================================================================================
@@ -237,9 +237,9 @@ static  const fx32 trainer_scale_table[]={
   0x1030,   //POS_TR_AA
   0x1300,   //POS_TR_BB
   0x0f00,   //POS_TR_A
-  0x10e0,   //POS_TR_B
+  0x1300,   //POS_TR_B
   0x0d00,   //POS_TR_C
-  0x1320,   //POS_TR_D
+  0x1300,   //POS_TR_D
 };
 
 //============================================================================================
