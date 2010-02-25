@@ -18,9 +18,8 @@
 #define TR_RANGERM_04                      4
 #define TR_RANGERW_04                      5
 #define TR_TANPAN_08                       6
-#define R07_TREE_01                        7
-#define R07_FIGHTREW_01                    8
-#define R07_CHAMPION_01                    9
+#define R07_FIGHTREW_01                    7
+#define R07_CHAMPION_01                    8
 
 #endif //ZONE_R07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
