@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T16:33:43"/>
+	<create user="matsushima" host="W00181" date="2010-02-25T20:55:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1501" top="240" right="2206" bottom="860" maximized="no" rayout="Vertical2">
+	<dialog left="75" top="92" right="780" bottom="737" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="796" top="425" right="1269" bottom="823" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,47 +292,270 @@
 	</lock>
 
 
-	<row id="msg_c03r0401_boy1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・ゾロアイベント用
-・仮メッセージ</comment>
+	<row id="msg_c03r0401_boy1_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●ゾロアイベント発生前
+
+・ポジション（GRIDX = 4/GRIDZ = 6）</comment>
 		<attribute name="キャラ指定">BOY1</attribute>
-		<language name="JPN" width="256">やあ！　はじめまして！</language>
-		<language name="JPN_KANJI" width="256">やあ！　はじめまして！</language>
+		<language name="JPN" width="256">…　…　…　…</language>
+		<language name="JPN_KANJI" width="256">…　…　…　…</language>
 	</row>
 
-	<row id="msg_c03r0401_girl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
-		<language name="JPN" width="256">あなた　ゾロアって
-ポケモン　ごぞんじ？</language>
-		<language name="JPN_KANJI" width="256">あなた　ゾロアって
-ポケモン　ごぞんじ？</language>
+	<row id="msg_c03r0401_girl1_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>●ゾロアイベント発生前
+・話し掛けると主人公を向いて、セリフ。
+・ポジション（GRIDX = 5/GRIDZ = 6）
+
+・セレビィチェック
+●手持ちにセレビィがいる場合
+　→msg_c03r0401_girl1_06
+●手持ちにセレビィがいない場合
+　→msg_c03r0401_girl1_02</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">ひとりで　さみしそうだったから
+いっしょに　いて　あげるの！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ひとりで　さみしそうだったから
+いっしょに　いて　あげるの！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03r0401_girl1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・ポケモン図鑑にゾロアが登録されていないとき
+	<row id="msg_c03r0401_girl1_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>●ゾロアイベント発生前
+
+・男の子（ゾロア）に向いてから、セリフ。
+
+・図鑑チェック
+●ゾロア登録済み
+　→msg_c03r0401_girl1_04
+●ゾロア未登録
+　→msg_c03r0401_girl1_03</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">おはなしの　つづきを　してあげるね！[BE:01:ページ切り替え（クリア）]
+…　…　…　…
+ひとりぼっちに　なった　ゾロアは[BE:00:ページ切り替え（行送り）]
+おかあさんを　さがしまわりました…[BE:00:ページ切り替え（行送り）]
+あんた　ゾロアって　みたことある？
+ほら　こんな　ポケモンなのよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おはなしの　つづきを　してあげるね！[BE:01:ページ切り替え（クリア）]
+…　…　…　…
+ひとりぼっちに　なった　ゾロアは[BE:00:ページ切り替え（行送り）]
+おかあさんを　さがしまわりました…[BE:00:ページ切り替え（行送り）]
+あんた　ゾロアって　みたことある？
+ほら　こんな　ポケモンなのよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>●ゾロアイベント発生前
+・主人公に向いてから、セリフ。
+
 ・メッセージ表示後
 　画面中央にウインドウをだしゾロアを表示
 ・あわせてポケモン図鑑に「みた」登録
-・続けて</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
-		<language name="JPN" width="256">あなた　ゾロアって
-ポケモン　ごぞんじ？▼</language>
-		<language name="JPN_KANJI" width="256">あなた　ゾロアって
-ポケモン　ごぞんじ？▼</language>
+
+・男の子（ゾロア）に向いてから、
+msg_c03r0401_girl1_04</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">ゾロアは　ひとを　ばかす　ちからを
+もってるんだって！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ゾロアは　ひとを　ばかす　ちからを
+もってるんだって！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03r0401_girl1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・girl1_02表示後＋ゾロアイベント発生しないとき</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
-		<language name="JPN" width="256">なんでも　ひとを　ばかす
-ポケモンらしいの！　ほんとかな？</language>
-		<language name="JPN_KANJI" width="256">なんでも　ひとを　ばかす
-ポケモンらしいの！　ほんとかな？</language>
+	<row id="msg_c03r0401_girl1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">ばかされたら　こわいけど
+あたし　ゾロアって　すきよ！[BE:00:ページ切り替え（行送り）]
+だって　かわいいんだもん！[BE:01:ページ切り替え（クリア）]
+……あら？
+あんたが　なんで　あかくなるのよ！</language>
+		<language name="JPN_KANJI" width="256">ばかされたら　こわいけど
+あたし　ゾロアって　すきよ！[BE:00:ページ切り替え（行送り）]
+だって　かわいいんだもん！[BE:01:ページ切り替え（クリア）]
+……あら？
+あんたが　なんで　あかくなるのよ！</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●ゾロアイベント発生前
+・繰り返しのセリフ。</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">ズイウンシティは　ひろくて
+ぐるぐる　めが　まわっちゃうよ[BE:00:ページ切り替え（行送り）]
+あたしだって　まいごに　なるわ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ズイウンシティは　ひろくて
+ぐるぐる　めが　まわっちゃうよ[BE:00:ページ切り替え（行送り）]
+あたしだって　まいごに　なるわ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_06_1" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●セレビィが手持ちにいる場合のセリフ
+※主人公が男</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">このコ　まいごなの！
+さみしそうだから　おにいちゃんも[BE:00:ページ切り替え（行送り）]
+おはなしして　あげて！</language>
+		<language name="JPN_KANJI" width="256">このコ　まいごなの！
+さみしそうだから　おにいちゃんも[BE:00:ページ切り替え（行送り）]
+おはなしして　あげて！</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_06_2" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●セレビィが手持ちにいる場合のセリフ
+※主人公が女</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">このコ　まいごなの！
+さみしそうだから　おねえちゃんも[BE:00:ページ切り替え（行送り）]
+おはなしして　あげて！</language>
+		<language name="JPN_KANJI" width="256">このコ　まいごなの！
+さみしそうだから　おねえちゃんも[BE:00:ページ切り替え（行送り）]
+おはなしして　あげて！</language>
+	</row>
+
+	<row id="msg_c03r0401_boy1_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●ゾロアイベント発生
+・手持ちにセレビィがいる場合のセリフ。
+・男の子（ゾロア）は飛び跳ねて、鳴く。
+
+※男の子からゾロアに姿を変えた後も、
+このＩＤを使用します。</comment>
+		<attribute name="キャラ指定">BOY1</attribute>
+		<language name="JPN" width="256">きゅおーーんっ！</language>
+		<language name="JPN_KANJI" width="256">きゅおーーんっ！</language>
+	</row>
+
+	<row id="msg_c03r0401_celebi_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>・ボールから出てきたあと、飛び跳ねて鳴く。</comment>
+		<attribute name="キャラ指定">セレビィ</attribute>
+		<language name="JPN" width="256">るるらららっ！</language>
+		<language name="JPN_KANJI" width="256">るるらららっ！</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●ゾロアイベント
+・ゾロアに向いてから、２回飛び跳ねて、セリフ。
+
+●手持ち、ボックスの空きチェック
+●空きがある場合
+　→msg_c03r0401_girl1_08
+●空きが無い場合
+　→msg_c03r0401_girl1_10</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">ゾロアが　ばけてたんだ！
+すごい　すごーい！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ゾロアが　ばけてたんだ！
+すごい　すごーい！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●手持ちかボックスに空きがある場合のセリフ
+・主人公に向いてから、セリフ。</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">ゾロアと　セレビィは
+すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
+セレビィと　いっしょに
+つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ゾロアと　セレビィは
+すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
+セレビィと　いっしょに
+つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0401_narrator_01">
+		<comment>・「はい／いいえ」選択肢
+
+●「はい」の場合
+　→バッグ画面に切り替わる。
+　　・ボールが選ばれたらイベントが進行します。
+　　→msg_c03r0401_girl1_09へ。
+　　・ボールが選ばれなかった場合は、
+　　この選択肢に戻ります。
+●「いいえ」の場合
+　→msg_c03r0401_girl1_11</comment>
+		<attribute name="キャラ指定">ナレーション</attribute>
+		<language name="JPN" width="256">ゾロアを　なかまにしますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ゾロアを　なかまにしますか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0401_narrator_02">
+		<comment>・手持ちに入ったときのメッセージ。</comment>
+		<attribute name="キャラ指定">ナレーション</attribute>
+		<language name="JPN" width="256">ゾロアが　なかまに　くわわった！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ゾロアが　なかまに　くわわった！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0401_narrator_03">
+		<comment>・ボックスに転送されたときのメッセージ。</comment>
+		<attribute name="キャラ指定">ナレーション</attribute>
+		<language name="JPN" width="256">ゾロアは　あいている　ボックスに
+てんそうされた！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ゾロアは　あいている　ボックスに
+てんそうされた！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>・セリフ後、少女は去ります。</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">ともだちと　いっしょになれて
+よかったね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだちと　いっしょになれて
+よかったね！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_10_1" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●手持ち、ボックス共に空きが無い場合のセリフ
+※主人公が男</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">ゾロアと　セレビィは
+すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
+セレビィと　いっしょに
+つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+……でも　おにいちゃん
+ゾロアを　なかまに　できるの？[BE:00:ページ切り替え（行送り）]
+ちょっと　しんぱいに　なっちゃった</language>
+		<language name="JPN_KANJI" width="256">ゾロアと　セレビィは
+すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
+セレビィと　いっしょに
+つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+……でも　おにいちゃん
+ゾロアを　なかまに　できるの？[BE:00:ページ切り替え（行送り）]
+ちょっと　しんぱいに　なっちゃった</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_10_2" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●手持ち、ボックス共に空きが無い場合のセリフ
+※主人公が女</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">ゾロアと　セレビィは
+すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
+セレビィと　いっしょに
+つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+……でも　おねえちゃん
+ゾロアを　なかまに　できるの？[BE:00:ページ切り替え（行送り）]
+ちょっと　しんぱいに　なっちゃった</language>
+		<language name="JPN_KANJI" width="256">ゾロアと　セレビィは
+すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
+セレビィと　いっしょに
+つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+……でも　おねえちゃん
+ゾロアを　なかまに　できるの？[BE:00:ページ切り替え（行送り）]
+ちょっと　しんぱいに　なっちゃった</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_11" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●「いいえ」の場合のセリフ</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">つれていって　あげないんだ…
+このコ　さみしそうだよ…</language>
+		<language name="JPN_KANJI" width="256">つれていって　あげないんだ…
+このコ　さみしそうだよ…</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_12" text-color="#000000,,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●イベント中
+・ゾロアの姿になっている状態で、
+女の子に話し掛けたときのセリフ。</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">ゾロアが　まってるよ！</language>
+		<language name="JPN_KANJI" width="256">ゾロアが　まってるよ！</language>
 	</row>
 
 	<flowchart-group-list>
