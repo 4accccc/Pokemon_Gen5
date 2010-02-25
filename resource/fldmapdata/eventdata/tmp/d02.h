@@ -14,6 +14,10 @@
 #define TR_TANPAN_09                       2
 #define TR_TANPAN_10                       3
 #define TR_KARATE_03                       4
+#define D02_FLD_ITEM_01                    5
+#define D02_FLD_ITEM_02                    6
+#define D02_FLD_ITEM_03                    7
+#define D02_FLD_ITEM_04                    8
 
 #endif //ZONE_D02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

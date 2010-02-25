@@ -19,6 +19,7 @@
 #define D08R0101_NONE_03                   6
 #define D08R0101_NONE_04                   7
 #define D08R0101_HAKAIM_01                 8
+#define D08R0101_FLD_ITEM_01               9
 
 #endif //ZONE_D08R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d08r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

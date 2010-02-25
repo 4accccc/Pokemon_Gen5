@@ -31,6 +31,10 @@
 #define TR_ESPM_04                        17
 #define TR_BACKPACKERM_06                 18
 #define TR_ESPM_05                        19
+#define D03R0101_FLD_ITEM_03              20
+#define D03R0101_FLD_ITEM_04              21
+#define D03R0101_FLD_ITEM_05              22
+#define D03R0101_FLD_ITEM_06              23
 
 #endif //ZONE_D03R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

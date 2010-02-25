@@ -22,6 +22,8 @@
 #define TR_WORKER2_05                      1
 #define TR_DOCTOR_02                       2
 #define TR_MOUNT_05                        3
+#define D07R0301_FLD_ITEM_01               4
+#define D07R0301_FLD_ITEM_02               5
 
 #endif //ZONE_D07R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -19,6 +19,8 @@
 #define TR_HEADS_01                        4
 #define TR_HEADS_02                        5
 #define TR_BADTEAM_01_2                    6
+#define R09_FLD_ITEM_01                    7
+#define R09_FLD_ITEM_02                    8
 
 #endif //ZONE_R09_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r09.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

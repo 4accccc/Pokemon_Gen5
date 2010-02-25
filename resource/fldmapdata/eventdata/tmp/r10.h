@@ -19,6 +19,9 @@
 #define TR_VETERANM_01                     6
 #define TR_VETERANW_01                     7
 #define R10_SUPPORT_01                     8
+#define R010_FLD_ITEM_01                   9
+#define R10_FLD_ITEM_02                   10
+#define R010_FLD_ITEM_03                  11
 
 #endif //ZONE_R10_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r10.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

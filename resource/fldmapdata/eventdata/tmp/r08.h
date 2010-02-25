@@ -16,6 +16,8 @@
 #define TR_PARASOL_04                      3
 #define TR_PARASOL_03                      4
 #define TR_RANGERW_05                      5
+#define R08_FLD_ITEM_01                    6
+#define R08_FLD_ITEM_02                    7
 
 #endif //ZONE_R08_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

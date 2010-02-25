@@ -20,6 +20,7 @@
 #define TR_WORKER2_07                      0
 #define TR_MOUNT_04                        1
 #define TR_BATTLEG_02                      2
+#define D07R0201_FLD_ITEM_01               3
 
 #endif //ZONE_D07R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d07r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
