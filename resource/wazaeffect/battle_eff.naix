@@ -49,17 +49,19 @@ enum {
 	NARC_battle_eff_se_024_bin = 35,
 	NARC_battle_eff_se_025_bin = 36,
 	NARC_battle_eff_se_026_bin = 37,
-	NARC_battle_eff_se_030_bin = 38,
-	NARC_battle_eff_se_031_bin = 39,
-	NARC_battle_eff_se_032_bin = 40,
-	NARC_battle_eff_se_033_bin = 41,
-	NARC_battle_eff_se_034_bin = 42,
-	NARC_battle_eff_se_035_bin = 43,
-	NARC_battle_eff_se_036_bin = 44,
-	NARC_battle_eff_se_037_bin = 45,
-	NARC_battle_eff_se_038_bin = 46,
-	NARC_battle_eff_se_039_bin = 47,
-	NARC_battle_eff_se_040_bin = 48
+	NARC_battle_eff_se_027_bin = 38,
+	NARC_battle_eff_se_028_bin = 39,
+	NARC_battle_eff_se_030_bin = 40,
+	NARC_battle_eff_se_031_bin = 41,
+	NARC_battle_eff_se_032_bin = 42,
+	NARC_battle_eff_se_033_bin = 43,
+	NARC_battle_eff_se_034_bin = 44,
+	NARC_battle_eff_se_035_bin = 45,
+	NARC_battle_eff_se_036_bin = 46,
+	NARC_battle_eff_se_037_bin = 47,
+	NARC_battle_eff_se_038_bin = 48,
+	NARC_battle_eff_se_039_bin = 49,
+	NARC_battle_eff_se_040_bin = 50
 };
 
 /* NARC_BATTLE_EFF_NAIX_ */
