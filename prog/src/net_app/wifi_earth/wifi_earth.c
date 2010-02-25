@@ -41,6 +41,7 @@
 #include "wifi_earth_place.naix"
 #include "wifi_earth.naix"
 #include "msg/msg_wifi_earth_guide.h"
+#include "msg/msg_wifi_place_msg_world.h"
 
 typedef struct Vec2DS32_tag{
 	s32 x;
@@ -714,7 +715,7 @@ static GFL_PROC_RESULT Earth_Demo_Init(GFL_PROC * proc, int * seq, void * pwk, v
 	}
 #ifdef PM_DEBUG
 	// Ｌボタンをおしていると入力情報をクリアした上で世界から入力できる
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
 		WIFI_RegistratonInit( wk->gamedata );
 		wk->Japan_ROM_mode = FALSE;
 	}
@@ -781,7 +782,7 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 		(*seq) != EARTHDEMO_SEQ_MOVE_EARTH && 
 		(*seq) != EARTHDEMO_SEQ_MOVE_CAMERA )
 	{	
-		if( GFL_UI_TP_GetTrg() ){	wk->cont = PAD_BUTTON_A; }
+		if( GFL_UI_TP_GetTrg() ){	wk->trg = PAD_BUTTON_A; }
 	}
 
 	switch(*seq){
@@ -886,7 +887,7 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 			switch(list_result){
 			case 0:		//「はい」
 				if(wk->Japan_ROM_mode == TRUE){
-					//wk->my_nation_tmp = country103;	//日本語版限定処理（国入力スキップ）
+					wk->my_nation_tmp = country103;	//日本語版限定処理（国入力スキップ）
 					*seq = EARTHDEMO_SEQ_REGISTRATIONLIST_AREA;	//地域別登録リスト選択へ
 				}else{
 					*seq = EARTHDEMO_SEQ_REGISTRATIONLIST_NATION;//国別登録リスト選択へ
@@ -1804,7 +1805,7 @@ static BOOL Earth_MsgPrint( EARTH_DEMO_WORK * wk,u32 msgID,int button_mode )
 																						0, 0,										// u16 x, y
 																						wk->msgstr,							// STRBUF*
 																						wk->fontHandle,					// GFL_FONT*
-																						1/*MSGSPEED_GetWait()*/,			// int
+																						MSGSPEED_GetWait(),			// int
 																						wk->tcbl,								// GFL_TCBLSYS*
 																						0,											// u32 tcbpri
 																						wk->heapID,							// HEAPID
@@ -1834,11 +1835,13 @@ static BOOL Earth_MsgPrint( EARTH_DEMO_WORK * wk,u32 msgID,int button_mode )
 
 	case MSGWAIT:
 		//終了
-		GFL_STR_DeleteBuffer(wk->msgstr);
-		PRINTSYS_PrintStreamDelete(wk->printStream);
+		if((button_mode != A_BUTTON_WAIT)||(wk->trg & PAD_BUTTON_A)){
+			GFL_STR_DeleteBuffer(wk->msgstr);
+			PRINTSYS_PrintStreamDelete(wk->printStream);
 
-		wk->msgseq = MSGSET;
-		result = TRUE;
+			wk->msgseq = MSGSET;
+			result = TRUE;
+		}
 		break;
 	}
 	return result;
@@ -2243,27 +2246,31 @@ static void EarthDataInit( EARTH_DEMO_WORK * wk )
 //----------------------------------
 //カメラ初期化
 //----------------------------------
+static const VecFx32	target_pos = { 
+	INIT_CAMERA_TARGET_XVAL, INIT_CAMERA_TARGET_YVAL, INIT_CAMERA_TARGET_ZVAL 
+};
+static const VecFx32	camera_pos = {
+	INIT_CAMERA_POS_XVAL, INIT_CAMERA_POS_YVAL, INIT_CAMERA_POS_ZVAL 
+};
+
 static void EarthCameraInit( EARTH_DEMO_WORK * wk )
 {
-	VecFx32	target_pos = 
-		{ INIT_CAMERA_TARGET_XVAL, INIT_CAMERA_TARGET_YVAL, INIT_CAMERA_TARGET_ZVAL };
-	VecFx32	camera_pos =
-		{ INIT_CAMERA_POS_XVAL, INIT_CAMERA_POS_YVAL, INIT_CAMERA_POS_ZVAL };
-	fx32 near = INIT_CAMERA_CLIP_NEAR;
-	fx32 far = INIT_CAMERA_CLIP_FAR;
-
   wk->g3Dcamera = GFL_G3D_CAMERA_CreateDefault( &camera_pos, &target_pos, wk->heapID );
-
-	GFL_G3D_CAMERA_SetfovySin( wk->g3Dcamera, FX_SinIdx( INIT_CAMERA_PERSPWAY ) );
-	GFL_G3D_CAMERA_SetfovyCos( wk->g3Dcamera, FX_CosIdx( INIT_CAMERA_PERSPWAY ) );
-	GFL_G3D_CAMERA_SetNear( wk->g3Dcamera, &near );
-	GFL_G3D_CAMERA_SetFar( wk->g3Dcamera, &far );
-
   GFL_G3D_CAMERA_Switching(wk->g3Dcamera);
 }
 
 static void EarthCameraStart( EARTH_DEMO_WORK * wk )
 {
+	fx32 near = INIT_CAMERA_CLIP_NEAR;
+	fx32 far = INIT_CAMERA_CLIP_FAR;
+
+	GFL_G3D_CAMERA_SetPos( wk->g3Dcamera, &camera_pos );
+	GFL_G3D_CAMERA_SetTarget( wk->g3Dcamera, &target_pos );
+	GFL_G3D_CAMERA_SetfovySin( wk->g3Dcamera, FX_SinIdx( INIT_CAMERA_PERSPWAY ) );
+	GFL_G3D_CAMERA_SetfovyCos( wk->g3Dcamera, FX_CosIdx( INIT_CAMERA_PERSPWAY ) );
+	GFL_G3D_CAMERA_SetNear( wk->g3Dcamera, &near );
+	GFL_G3D_CAMERA_SetFar( wk->g3Dcamera, &far );
+
 	if(wk->earth_mode == JAPAN_MODE){
 		//カメラ距離フラグ初期化（開始時は近距離）
 		wk->camera_status = CAMERA_NEAR;
@@ -2447,8 +2454,6 @@ static BOOL Earth3D_CameraMoveNearFar( EARTH_DEMO_WORK * wk )
 	distance = VEC_Mag(&vec);		// 距離取得
 	VEC_Normalize(&vec, &vec);	// 方向単位ベクトル取得
 
-	//distance = GFC_GetCameraDistance(wk->camera_p);
-
 	switch(wk->camera_status){
 
 	case CAMERA_NEAR://近づく
@@ -2475,7 +2480,7 @@ static BOOL Earth3D_CameraMoveNearFar( EARTH_DEMO_WORK * wk )
 	}
 	VEC_MultAdd(distance, &vec, &camTarget, &camPos);	
 	GFL_G3D_CAMERA_SetPos( wk->g3Dcamera, &camPos );
-	//GFC_SetCameraDistance(distance,wk->camera_p);
+
 	return result;
 }
 
