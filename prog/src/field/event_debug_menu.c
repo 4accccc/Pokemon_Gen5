@@ -169,6 +169,7 @@ static BOOL debugMenuCallProc_DebugSecretItem( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_SetBtlBox( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_ChangeName( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static BOOL debugMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk );
 
@@ -278,7 +279,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_MAKE_EGG,   debugMenuCallProc_MakeEgg },          //タマゴ作成
   { DEBUG_FIELD_MAKE_UNDATA,   debugMenuCallProc_DebugMakeUNData }, //国連データ作成
   { DEBUG_FIELD_MYSTERY_00, debugMenuCallProc_MakeMysteryCardList },//ふしぎなおくりものカード作成
-  { DEBUG_FIELD_STR41, debugMenuCallProc_SetBtlBox },  //不正チェックを通るポケモンを作成
+  { DEBUG_FIELD_STR63, debugMenuCallProc_SetBtlBox },  //不正チェックを通るポケモンを作成
+  { DEBUG_FIELD_STR64, debugMenuCallProc_ChangeName },  //主人公名を再設定
 
   { DEBUG_FIELD_TITLE_06, (void*)BMPMENULIST_LABEL },       //○つうしん
   { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },      //WIFIクラブ
@@ -2530,6 +2532,112 @@ static BOOL debugMenuCallProc_SetBtlBox( DEBUG_MENU_EVENT_WORK *wk )
 #endif
   return( FALSE );
 }
+//======================================================================
+//  デバッグメニュー 主人公名前設定
+//======================================================================
+FS_EXTERN_OVERLAY(namein);
+//-------------------------------------
+/// デバッグ主人公名変更
+//=====================================
+typedef struct
+{
+  GAMESYS_WORK    *p_gamesys;
+  GMEVENT         *p_event;
+  FIELDMAP_WORK *p_field;
+  NAMEIN_PARAM   *p_param;
+  STRBUF          *p_default_str;
+} DEBUG_CHANGENAME_EVENT_WORK;
+//-------------------------------------
+///   PROTOTYPE
+//=====================================
+static GMEVENT_RESULT debugEvnetChangeName( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+//--------------------------------------------------------------
+/**
+ * @brief   主人公名前を再設定する
+ * @param   wk DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_ChangeName( DEBUG_MENU_EVENT_WORK *p_wk )
+{ 
+  GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
+  GMEVENT       *p_event    = p_wk->gmEvent;
+  FIELDMAP_WORK *p_field  = p_wk->fieldWork;
+  DEBUG_CHANGENAME_EVENT_WORK  *p_ev_wk;
+  MYSTATUS      *p_mystatus  = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(p_gamesys) );
+
+  //イヴェント
+  GMEVENT_Change( p_event, debugEvnetChangeName, sizeof(DEBUG_CHANGENAME_EVENT_WORK) );
+  p_ev_wk = GMEVENT_GetEventWork( p_event );
+  GFL_STD_MemClear( p_ev_wk, sizeof(DEBUG_CHANGENAME_EVENT_WORK) );
+
+  //ワーク設定
+  p_ev_wk->p_gamesys  = p_gamesys;
+  p_ev_wk->p_event    = p_event;
+  p_ev_wk->p_field    = p_field;
+
+  //デフォルト名
+  p_ev_wk->p_default_str  = MyStatus_CreateNameString(p_mystatus, HEAPID_PROC);
+
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(namein) );
+  //名前入力ワーク設定
+  p_ev_wk->p_param  = NAMEIN_AllocParam( HEAPID_PROC, NAMEIN_MYNAME, MyStatus_GetMySex(p_mystatus), 0, NAMEIN_PERSON_LENGTH, p_ev_wk->p_default_str );
+
+  return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  主人公名前再設定イベント
+ *
+ *  @param  GMEVENT *event  GMEVENT
+ *  @param  *seq            シーケンス
+ *  @param  *work           ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT debugEvnetChangeName( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CALL_PROC,
+    SEQ_PROC_END,
+    SEQ_EXIT,
+  };
+
+  DEBUG_CHANGENAME_EVENT_WORK  *p_wk = p_wk_adrs;
+
+  switch(*p_seq )
+  {
+  case SEQ_CALL_PROC:
+    GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
+        NO_OVERLAY_ID, &NameInputProcData, p_wk->p_param ) );
+    *p_seq  = SEQ_PROC_END;
+    break;
+
+  case SEQ_PROC_END:
+    if( !NAMEIN_IsCancel( p_wk->p_param ) )
+    { 
+      MYSTATUS      *p_mystatus  = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(p_wk->p_gamesys) );
+      NAMEIN_CopyStr( p_wk->p_param, p_wk->p_default_str );
+      MyStatus_SetMyNameFromString(p_mystatus, p_wk->p_default_str );
+    }
+
+    *p_seq  = SEQ_EXIT;
+    break;
+
+
+  case SEQ_EXIT:
+    NAMEIN_FreeParam( p_wk->p_param );
+    GFL_STR_DeleteBuffer( p_wk->p_default_str );
+
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE ;
+}
+
 
 
 //======================================================================

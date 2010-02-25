@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2010-02-24T20:43:18"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-02-25T12:14:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1370,6 +1370,16 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_GEONET">
 		<language name="JPN" width="160">ジオネットよびだし</language>
 		<language name="JPN_KANJI" width="160">ジオネット呼び出し</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR63">
+		<language name="JPN" width="160">ふせいつうかポケセット</language>
+		<language name="JPN_KANJI" width="160">不正通過ポケセット</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR64">
+		<language name="JPN" width="160">なまえへんこう</language>
+		<language name="JPN_KANJI" width="160">名前変更</language>
 	</row>
 
 	<flowchart-group-list>
