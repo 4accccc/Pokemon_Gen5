@@ -23,6 +23,10 @@
 #define D06R0101_FLD_ITEM_02               7
 #define D06R0101_FLD_ITEM_03               8
 #define D06R0101_FLD_ITEM_04               9
+#define TR_SCIENTISTM_05                  10
+#define TR_ELITEM_03                      11
+#define TR_SCIENTISTW_03                  12
+#define TR_ELITEW_01                      13
 
 #endif //ZONE_D06R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d06r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

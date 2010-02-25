@@ -21,6 +21,7 @@
 #define TR_HAKAIM1_18                      6
 #define TR_HAKAIM1_19                      7
 #define TR_HAKAIM1_20                      8
+#define TR_DOCTOR_01                       9
 
 #endif //ZONE_D06R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d06r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
