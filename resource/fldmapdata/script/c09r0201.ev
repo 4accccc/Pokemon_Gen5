@@ -277,6 +277,19 @@ EVENT_START	ev_pos_c09r0201_enter_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
 	_OBJ_ANIME_WAIT()
 	
+	//ドアが出てくるSE
+	_SE_PLAY( SEQ_SE_FLD_60 )
+	//ドアが地面下から出てくる
+	_BMODEL_ANIME_SET( BM_ANIME_ID1, SCR_BMANM_DOOR_OPEN )
+	//ドアのアニメ待ち
+	_BMODEL_ANIME_WAIT( BM_ANIME_ID1 )
+	_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
+	_SE_WAIT()
+	
+	//主人公：上へ進む２
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_02 )
+	_OBJ_ANIME_WAIT()
+	
 	//炎があがるＳＥを再生
 	_SE_PLAY( SEQ_SE_FLD_104 )
 	_SE_PLAY( SEQ_SE_FLD_104 )
@@ -285,26 +298,13 @@ EVENT_START	ev_pos_c09r0201_enter_01
 	_BMODEL_ANIME_CREATE( BM_ANIME_ID2, SCR_BMID_EVENT, 16, 8 )
 	//炎がつく
 	_BMODEL_ANIME_SET( BM_ANIME_ID2, 1 )
-	//ドアが地面下から出てくる
-	_BMODEL_ANIME_SET( BM_ANIME_ID1, SCR_BMANM_DOOR_OPEN )
-	
 	//炎点火のアニメ待ち
 	_BMODEL_ANIME_WAIT( BM_ANIME_ID2 )
 	_BMODEL_ANIME_DELETE( BM_ANIME_ID2 )
 	
 	//四天王横にある炎のアニメをループ再生
 	_BMODEL_DIRECT_ANIME_SET_LOOP( SCR_BMID_EVENT, 16, 8 )
-	
 	_SE_WAIT()
-	
-	//ドアのアニメ待ち
-	_BMODEL_ANIME_WAIT( BM_ANIME_ID1 )
-	_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
-	
-	
-	//主人公：上へ進む２
-//	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_02 )
-//	_OBJ_ANIME_WAIT()
 	
 	//頂上に移動した
 	$LOCALWORK0 = 1
@@ -316,14 +316,14 @@ EVENT_END
 //主人公：上へ進む１
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ply_move_01
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //主人公：上へ進む２
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ply_move_02
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 

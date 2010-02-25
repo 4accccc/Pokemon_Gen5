@@ -603,8 +603,6 @@ EVENT_START	ev_pos_r05_h02demo_01
 	//TVT着信音を再生
 	_SE_PLAY( SEQ_SE_SYS_35 )
 	_SE_WAIT()
-	_SE_PLAY( SEQ_SE_SYS_35 )
-	_SE_WAIT()
 	
 	//カミツレ：上を向く
 	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_u )
