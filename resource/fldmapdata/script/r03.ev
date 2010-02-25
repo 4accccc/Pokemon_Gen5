@@ -35,9 +35,10 @@ _EVENT_DATA    ev_bg_r03_board_01
 _EVENT_DATA    ev_bg_r03_board_02
 _EVENT_DATA    ev_bg_r03_board_03
 _EVENT_DATA    ev_init_r03
-_EVENT_DATA    ev_pos_r03_babygirl1_01
+_EVENT_DATA    ev_pos_r03_futago_01
 _EVENT_DATA    ev_r03_rival_03
 _EVENT_DATA    ev_pos_r03_sodateya_egg		//タマゴ発見を教えてくれるPOSイベント
+_EVENT_DATA    ev_r03_futago_02
 _EVENT_DATA_END
 
 /************************************************************/
@@ -47,9 +48,19 @@ INIT_EVENT_START	ev_init_r03
 	
 
 	//誘拐イベントワークの値によってサポートの位置を変更する
+	
+	//クリア時
 	IF $WK_SCENE_R03_PLASMA == 4 THEN
 		_OBJ_POS_CHANGE( R03_SUPPORT_01, 715, 0, 566, DIR_UP )
 		_OBJ_POS_CHANGE( R03_BABYGIRL_02, 717, 0, 566, DIR_UP )
+	
+	//初期状態
+	ELSIF $WK_SCENE_R03_PLASMA == 0 THEN
+		
+	//発生後
+	ELSIF $WK_SCENE_R03_PLASMA < 4 THEN
+		_OBJ_POS_CHANGE( R03_SUPPORT_01, 719, 0, 563, DIR_LEFT )
+		_OBJ_POS_CHANGE( R03_BABYGIRL_02, 719, 0, 564, DIR_UP )
 	ELSE
 	
 	ENDIF
@@ -59,7 +70,7 @@ INIT_EVENT_END
 /**************************************************************/
 /*  R03 POSでふたごちゃんストッパー*/
 /**************************************************************/
-EVENT_START   ev_pos_r03_babygirl1_01
+EVENT_START   ev_pos_r03_futago_01
 	
 	//手持ちポケモンカウント
 	DEFINE_LOCAL LCW_POKECOUNT
@@ -68,10 +79,10 @@ EVENT_START   ev_pos_r03_babygirl1_01
 	//戦えるポケモンが１匹しかいない
 	IF $LCW_POKECOUNT < 2 THEN
 	
-		_OBJ_ANIME(TR_FUTAGO_01,anm_babygirl1_stop_01)
+		_OBJ_ANIME(R03_FUTAGO_01,anm_babygirl1_stop_01)
 		_OBJ_ANIME_WAIT()
 		
-		_BALLOONWIN_OBJMSG(msg_r03_futago_02,TR_FUTAGO_01)
+		_BALLOONWIN_OBJMSG(msg_r03_futago_02,R03_FUTAGO_01)
 		_BALLOONWIN_CLOSE()
 		
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_stoper_player_return01)
@@ -86,6 +97,25 @@ EVENT_START   ev_pos_r03_babygirl1_01
 		
 		//======================================//
 	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  R03 ふたごちゃん話しかけダブルバトル*/
+/**************************************************************/
+EVENT_START   ev_r03_futago_02
+	
+	_TALK_OBJ_START()
+	
+	//戦闘処理
+	_TRAINER_BTL_SET( TRID_FUTAGO_01, 0 )
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
 	ENDIF
 
 EVENT_END
@@ -305,7 +335,7 @@ EVENT_START   ev_pos_r03_rival_01
 	_OBJ_DEL(R03_RIVAL_01)
 	
 	//洞窟前のRIVALを表示
-	_FLAG_SET(FV_R03_RIVAL_03)
+	//_FLAG_SET(FV_R03_RIVAL_03)
 	
 	//夢の跡地のSUPPORTを非表示
 	_FLAG_SET(FV_D01R0101_SUPPORT_01)
@@ -1009,7 +1039,7 @@ _ANIME_LABEL	 anm_kusa_rival_02_01
 
 _ANIME_LABEL	 anm_kusa_rival_02_01z581
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -1018,7 +1048,7 @@ _ANIME_LABEL	 anm_kusa_rival_02_01z581
 
 _ANIME_LABEL	 anm_kusa_rival_02_01z583
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -1026,7 +1056,7 @@ _ANIME_LABEL	 anm_kusa_rival_02_01z583
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_kusa_rival_02_02
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -1034,7 +1064,7 @@ _ANIME_LABEL	 anm_kusa_rival_02_02
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_kusa_rival_02_03
-		_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------

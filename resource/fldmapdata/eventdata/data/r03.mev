@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/23 16:18:32
+#save date:2010/02/25 20:06:20
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03.wms
 #SECTION START:OBJ_EVENT
@@ -45,17 +45,17 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_FUTAGO_01_2
+R03_FUTAGO_01_2
 #OBJ CODE Number
 BABYGIRL1
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_TRID_FUTAGO_01
+SCRID_R03_FUTAGO_02
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -76,17 +76,17 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_FUTAGO_01
+R03_FUTAGO_01
 #OBJ CODE Number
 BABYGIRL1
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_TRID_FUTAGO_01_2
+SCRID_R03_FUTAGO_02
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -1039,9 +1039,9 @@ EVENTDATA_POSTYPE_GRID
 4 1
 #event number: 8
 #Pos Event Label
-SCRID_POS_R03_BABYGIRL1_01
+POS_R03_FUTAGO_01
 #Pos Script Name
-SCRID_POS_R03_BABYGIRL1_01
+SCRID_POS_R03_FUTAGO_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
