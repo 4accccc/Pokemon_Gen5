@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-03T11:53:03"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T17:35:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,14 +307,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1544" top="118" right="2244" bottom="738" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="525"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="538"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="692"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -379,10 +379,10 @@
 ・みた数が
 　0～14匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">みた　かずが
-０ひき～１４ひき</language>
-		<language name="JPN_KANJI" width="256">みた　数が
-０匹～１４匹</language>
+		<language name="JPN" width="256">ポケモンと　であうなら
+とにかく　くさむらに　はいらないとね</language>
+		<language name="JPN_KANJI" width="256">ポケモンと　出会うなら
+とにかく　草むらに　入らないとね</language>
 	</row>
 
 	<row id="msg_hyouka_i01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -390,10 +390,10 @@
 ・みた数が
 　15～24匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">みた　かずが
-１５ひき～２４ひき</language>
-		<language name="JPN_KANJI" width="256">みた　数が
-１５匹～２４匹</language>
+		<language name="JPN" width="256">すこしは　ポケモンずかん　らしく
+なってきたわね！　いい　かんじよ！</language>
+		<language name="JPN_KANJI" width="256">すこしは　ポケモン図鑑　らしく
+なってきたわね！　いい　感じよ！</language>
 	</row>
 
 	<row id="msg_hyouka_i02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -401,10 +401,10 @@
 ・みた数が
 　25～39匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">みた　かずが
-２５ひき～３９ひき</language>
-		<language name="JPN_KANJI" width="256">みた　数が
-２５匹～３９匹</language>
+		<language name="JPN" width="256">みつけにくい　ポケモンも　いるから
+あきらめずに　くさむらを　あるいてね</language>
+		<language name="JPN_KANJI" width="256">みつけにくい　ポケモンも　いるから
+あきらめずに　草むらを　歩いてね</language>
 	</row>
 
 	<row id="msg_hyouka_i03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -412,10 +412,14 @@
 ・みた数が
 　40～59匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">みた　かずが
-４０ひき～５９ひき</language>
-		<language name="JPN_KANJI" width="256">みた　数が
-４０匹～５９匹</language>
+		<language name="JPN" width="256">きまった　ほらあなにしか　いない
+ポケモンも　いるのよ！▼
+とおりぬけた　ほらあなを
+もういちど　さがすのも　いいかもね</language>
+		<language name="JPN_KANJI" width="256">決まった　洞穴にしか　いない
+ポケモンも　いるのよ！▼
+通り抜けた　洞穴を
+もう一度　探すのも　いいかもね</language>
 	</row>
 
 	<row id="msg_hyouka_i04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -423,10 +427,14 @@
 ・みた数が
 　60～89匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">みた　かずが
-６０ひき～８９ひき</language>
-		<language name="JPN_KANJI" width="256">みた　数が
-６０匹～８９匹</language>
+		<language name="JPN" width="256">あちこちにいる　トレーナーも
+さまざまな　ポケモンを　もっているわ▼
+かれらと　しょうぶすることで
+ポケモンずかんも　うまっていくわね！</language>
+		<language name="JPN_KANJI" width="256">あちこちにいる　トレーナーも
+さまざまな　ポケモンを　持っているわ▼
+彼らと　勝負することで
+ポケモン図鑑も　埋まっていくわね！</language>
 	</row>
 
 	<row id="msg_hyouka_i05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -434,10 +442,12 @@
 ・みた数が
 　90～114匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">みた　かずが
-９０ひき～１１４ひき</language>
-		<language name="JPN_KANJI" width="256">みた　数が
-９０匹～１１４匹</language>
+		<language name="JPN" width="256">だいぶ　ページが　うまってきたわね▼
+ポケモンずかんを　みかえせば
+たびの　おもいでも　よみがえるかも！</language>
+		<language name="JPN_KANJI" width="256">だいぶ　ページが　埋まってきたわね▼
+ポケモン図鑑を　見返せば
+旅の　記憶も　よみがえるかも！</language>
 	</row>
 
 	<row id="msg_hyouka_i06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -445,10 +455,12 @@
 ・みた数が
 　115～134匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">みた　かずが
-１１５～１３４ひき</language>
-		<language name="JPN_KANJI" width="256">みた　数が
-１１５～１３４匹</language>
+		<language name="JPN" width="256">１００を　こえる　ポケモン……▼
+それぞれに　ちがった　とくちょうで
+みていて　うれしくなっちゃうわ！</language>
+		<language name="JPN_KANJI" width="256">１００を　超える　ポケモン……▼
+それぞれに　違った　特徴で
+みていて　うれしくなっちゃうわ！</language>
 	</row>
 
 	<row id="msg_hyouka_i07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -456,10 +468,10 @@
 ・みた数が
 　135～144匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">みた　かずが
-１３５ひき～１４４ひき</language>
-		<language name="JPN_KANJI" width="256">みた　数が
-１３５匹～１４４匹</language>
+		<language name="JPN" width="256">だいぶ　りっぱな　ポケモンずかんね！
+あとひといきで　ページが　うまりそう</language>
+		<language name="JPN_KANJI" width="256">だいぶ　立派な　ポケモン図鑑ね！
+あとひといきで　ページが　埋まりそう</language>
 	</row>
 
 	<row id="msg_hyouka_i08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -467,10 +479,12 @@
 ・みた数が
 　145～149匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">みた　かずが
-１４５ひき～１４９ひき</language>
-		<language name="JPN_KANJI" width="256">みた　数が
-１４５匹～１４９匹</language>
+		<language name="JPN" width="256">すばらしい　ポケモンずかんね！
+もうすこしで　かんせい　しそう！▼
+おねがいして　ほんとうに　よかった！</language>
+		<language name="JPN_KANJI" width="256">すばらしい　ポケモン図鑑ね！
+もうすこしで　完成しそう！▼
+お願いして　本当に　よかった！</language>
 	</row>
 
 	<row id="msg_hyouka_i09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -478,10 +492,12 @@
 ・みた数が
 　150匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">みた　かずが
-１５０ひき！</language>
-		<language name="JPN_KANJI" width="256">みた　数が
-１５０匹！</language>
+		<language name="JPN" width="256">すごい！　すごいわ！▼
+イッシュちほう　すべての
+ポケモンと　であったのね！</language>
+		<language name="JPN_KANJI" width="256">すごい！　すごいわ！▼
+イッシュ地方　すべての
+ポケモンと　出会ったのね！</language>
 	</row>
 
 	<row id="msg_hyouka_i10" back-color="#00ff00,,,,,#00ff00,,,,,,,,,,,,,">
@@ -588,10 +604,12 @@
 ・捕まえた数が
 　150匹</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
-		<language name="JPN" width="256">つかまえた　かずが
-１５０ひき！</language>
-		<language name="JPN_KANJI" width="256">捕まえた　数が
-１５０匹！</language>
+		<language name="JPN" width="256">すごい！　すごいわ！▼
+イッシュちほう　すべての
+ポケモンを　つかまえたのね！</language>
+		<language name="JPN_KANJI" width="256">すごい！　すごいわ！▼
+イッシュちほう　すべての
+ポケモンを　つかまえたのね！</language>
 	</row>
 
 	<row id="msg_hyouka_hakase_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
