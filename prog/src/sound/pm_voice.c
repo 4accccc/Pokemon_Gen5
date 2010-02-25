@@ -377,8 +377,7 @@ static BOOL loadWave( PMVOICE_PLAYER* voicePlayer, int waveNo )
     begin = waveArc->waveOffset[0];
     end = waveArc->fileHeader.fileSize;
     len = end - begin;
-
-		//OS_Printf("soundData rate %d, speed %d\n", waveData->param.rate, waveData->param.timer );
+		len -= sizeof(SNDWaveParam); 
 
 		voicePlayer->waveDataBegin = (void*)(waveData->samples);
 		voicePlayer->waveSize = len;
