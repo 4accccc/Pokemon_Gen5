@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-02-22T23:01:03"/>
+	<create user="matsuda" host="W00142" date="2010-02-25T12:59:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -418,10 +418,10 @@
 ▲のマークのあるメッセージへ分岐</comment>
 		<language name="JPN" width="216" line="2">[1:1C:簡易会話単語:2][BE:02:ウェイト変更（単発）:15][BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]が
-はなしかけて　きました</language>
+はなしかけて　きました[BE:02:ウェイト変更（単発）:15]</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:1C:簡易会話単語:2][BE:02:ウェイト変更（単発）:15][BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]が
-話しかけて　きました</language>
+話しかけて　きました[BE:02:ウェイト変更（単発）:15]</language>
 	</row>
 
 	<row id="msg_union_connect_00_03" text-color="#000000,,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -438,9 +438,9 @@
 
 トレーナー名：０　話しかけてきた相手の名前</comment>
 		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]の
-へんじを　まっています</language>
+へんじを　まっています[BE:02:ウェイト変更（単発）:15]</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]の
-返事を　待っています</language>
+返事を　待っています[BE:02:ウェイト変更（単発）:15]</language>
 	</row>
 
 	<row id="msg_union_connect_00_05" text-color="#000000,,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -1888,7 +1888,7 @@ msg_connect_union_08からの分岐メッセージ
 交換は　できないよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_union_talkboy_05_01" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+	<row id="msg_union_talkboy_05_01" text-color="#0000ff,,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>★男OBJに話し掛けて、やめる」を選んだとき
 　msg_union_talkboy_00_02からの分岐
 　→ＥＮＤ

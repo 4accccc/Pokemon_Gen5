@@ -1081,16 +1081,12 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
     (*seq)++;
     break;
   case 1:
-    if(UnionMsg_TalkStream_Check(unisys) == FALSE){
-      break;
-    }
-    
     if(GFL_NET_GetConnectNum() > 1){
       OS_TPrintf("接続しました！：子\n");
       UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_CHILD);
       UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, situ->mycomm.answer_pc);
       UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, NULL);
-      (*seq)++;
+      return TRUE;  //UnionMsg_TalkStream_Checkは次のUNION_STATUS_TALK_CHILDで行う
     }
     else{
       situ->wait++;
@@ -1354,7 +1350,7 @@ static BOOL OneselfSeq_TalkListSendUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
         UnionMsg_GetMsgID_ParentMainMenuSelectAnswerNG(situ->mycomm.mainmenu_select,
         situ->mycomm.talk_pc->beacon.sex));
-      (*seq)++;
+      return TRUE;  //メッセージ待ちはUNION_STATUS_SHUTDOWNで行う
     }
     break;
   case 2:
@@ -1591,6 +1587,7 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
           UnionMsg_GetMsgID_ChildMainMenuSelectRefuse(situ->mycomm.mainmenu_select));
       }
       UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
+      return TRUE;  //メッセージ待ちはUNION_STATUS_SHUTDOWNで行う
     }
     else{
       UnionOneself_ReqStatus(unisys, 
@@ -2467,12 +2464,17 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
-  if(UnionMsg_TalkStream_Check(unisys) == FALSE){
-    return FALSE;
+  enum{
+    _LAST_MSG_WAIT = 30,
+  };
+  
+  if(UnionMsg_TalkStream_Check(unisys) == TRUE && situ->work < _LAST_MSG_WAIT){
+    situ->work++;
   }
-
+  
   switch(*seq){
   case 0:
+    situ->work = 0;
     GFL_NET_HANDLE_TimeSyncStart(
       GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_SHUTDOWN, WB_NET_UNION);
     OS_TPrintf("切断前の同期取り：開始\n");
@@ -2491,6 +2493,11 @@ static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     break;
   case 3:
     if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE){
+      (*seq)++;
+    }
+    break;
+  case 4:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE && situ->work >= _LAST_MSG_WAIT){
       UnionMyComm_PartyDel(&situ->mycomm, situ->mycomm.connect_pc);
       UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, NULL);
       return TRUE;
