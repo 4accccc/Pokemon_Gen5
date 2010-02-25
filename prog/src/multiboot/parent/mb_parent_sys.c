@@ -360,6 +360,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     work->timeOutCnt++;
     if( work->timeOutCnt >= MB_PARENT_FIRST_TIMEOUT )
     {
+      MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_ERROR );
       work->state = MPS_FAIL_FIRST_CONNECT;
     }
     else
@@ -402,6 +403,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR )
     {
       //読み込みエラーが発生した
+      MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_ERROR );
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
       MB_COMM_ReqDisconnect( work->commWork );
       work->state = MPS_EXIT_COMM;
@@ -478,9 +480,10 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
         work->state = MPS_SAVE_INIT;
       }
       else
-      if( MB_COMM_GetChildState(work->commWork) == MCCS_CRC_NG )
+      if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR )
       {
         //CRCチェックエラーが発生した
+        MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_ERROR );
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
         MB_COMM_ReqDisconnect( work->commWork );
         work->state = MPS_EXIT_COMM;
@@ -527,6 +530,10 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME ||
         MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR )
     {
+      if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR )
+      {
+        MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_ERROR );
+      }
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
       MB_COMM_ReqDisconnect( work->commWork );
       work->state = MPS_EXIT_COMM;

@@ -378,8 +378,9 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     if( work->cardType == CARD_TYPE_INVALID )
     {
       //ROM違う！
-      MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_02 );
-      work->state = MCS_ERROR;
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_02 , work->initData->msgSpeed );
+      MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+      work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
     }
     else
     {
@@ -728,7 +729,6 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       }
       else
       {
-        MB_COMM_SetChildState( work->commWork , MCCS_CRC_NG );
         //CRCチェック失敗
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_12 , work->initData->msgSpeed );
