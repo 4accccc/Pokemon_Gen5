@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-25T19:12:51"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-25T22:47:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -630,14 +630,14 @@ msg_palpark_first_19に続く</comment>
 このこ　なんと　でんどういり　してる
 トレーナー　なのよ！▼
 このこなら　きっと
-アレを　うごかせるわ！</language>
+アレを　うごかせるわ！▼</language>
 		<language name="JPN_KANJI" width="256">博士！▼
 ちょっと　いいかしら？
 いいわよね！　きいて！▼
 この子　なんと　殿堂入り　してる
 トレーナー　なのよ！▼
 この子なら　きっと
-アレを　動かせるわ！</language>
+アレを　動かせるわ！▼</language>
 	</row>
 
 	<row id="msg_palpark_first_04">
@@ -703,8 +703,8 @@ msg_palpark_first_19に続く</comment>
 
 	<row id="msg_palpark_first_06">
 		<comment>助手</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]　さん　よ！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　さん　よ！▼</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さん　よ！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん　よ！▼</language>
 	</row>
 
 	<row id="msg_palpark_first_07">

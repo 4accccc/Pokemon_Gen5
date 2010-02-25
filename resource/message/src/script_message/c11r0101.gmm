@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-15T16:00:32"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-25T22:56:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -266,7 +266,7 @@
 		</language>
 	</columns>
 
-	<dialog left="203" top="257" right="908" bottom="885" maximized="no" rayout="Vertical2">
+	<dialog left="390" top="143" right="1095" bottom="725" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="649" top="113" right="1122" bottom="511" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -275,7 +275,7 @@
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -305,10 +305,10 @@
 	<row id="msg_reception01_01">
 		<attribute name="キャラ指定">受付嬢１</attribute>
 		<language name="JPN" width="256">こんにちは！
-こくれんへ　ようこそ！▼
+ユナイテッドタワーへ　ようこそ！▼
 フロアに　いどうしますか？▼</language>
 		<language name="JPN_KANJI" width="256">こんにちは！
-国連へ　ようこそ！▼
+ユナイテッドタワーへ　ようこそ！▼
 フロアに　移動しますか？▼</language>
 	</row>
 
@@ -327,9 +327,28 @@
 	<row id="msg_reception02_01">
 		<attribute name="キャラ指定">受付嬢２</attribute>
 		<language name="JPN" width="256">ここは　ユナイテッドタワー▼
-いか　せつめい</language>
+うみも　くにも　こえた　ばしょから
+せかいじゅうの　トレーナーが▽
+つどう　ばしょ▼
+いける　フロアは　おきゃくさま　しだい！▼
+おきゃくさまの　しりあいが
+いる　フロアならば▽
+じゆうに　いくことが　できます▼
+せかいじゅうに　しりあいが　おおいほど
+いろんな　フロアに　いけるでしょう▼
+どうぞ　こころゆくまで
+おたのしみ　ください！</language>
 		<language name="JPN_KANJI" width="256">ここは　ユナイテッドタワー▼
-以下　説明</language>
+海も　国も　こえた　場所から
+世界中の　トレーナーが　集う場所▼
+行ける　フロアは　お客さま　次第！▼
+お客さまの　知り合いが
+いる　フロアならば▽
+自由に　行くことが　できます▼
+世界中に　知り合いが　多いほど
+いろんな　フロアに　行けるでしょう▼
+どうぞ　心ゆくまで
+お楽しみください！</language>
 	</row>
 
 	<row id="msg_reception03_01">
@@ -374,95 +393,141 @@
 それを　実感　できるんだ</language>
 	</row>
 
-	<row id="msg_policeman_01_01">
+	<row id="msg_policeman_01_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>初回メッセージ</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
-		<language name="JPN" width="256">しょかい▼
-なんだ　かんこうきゃくか？
-ボディチェックを　するぞ</language>
-		<language name="JPN_KANJI" width="256">しょかい▼
-なんだ　観光客か？
-ボディチェックを　するぞ</language>
+		<language name="JPN" width="256">はじめて　みる　かおだな
+きみ　ここは　はじめてかい？▼
+ここ　ユナイテッドタワーには
+せかいじゅうから　トレーナーが▽
+やってくるんだがね▼
+そういった　わかぞうトレーナーを
+まもるため▼
+おじさんは　まいにち　こうして
+セキュリティチェックを　がんばっとるんだ▼</language>
+		<language name="JPN_KANJI" width="256">初めて　見る　顔だな
+きみ　ここは　初めてかい？▼
+ここ　ユナイテッドタワーには
+世界中から　トレーナーが▽
+やってくるんだがね▼
+そういった　わかぞうトレーナーを
+守るため▼
+おじさんは　毎日　こうして
+セキュリティチェックを　頑張っとるんだ▼</language>
 	</row>
 
-	<row id="msg_policeman_01_02">
+	<row id="msg_policeman_01_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>1カ国とこうかん　</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
-		<language name="JPN" width="256">1カ国以上▼
-[1:00:トレーナー名:3]
-ボディチェックを　するぞ</language>
-		<language name="JPN_KANJI" width="256">1カ国以上▼
-[1:00:トレーナー名:3]
-ボディチェックを　するぞ</language>
+		<language name="JPN" width="256">あまり　ウロチョロして
+わるさ　するんじゃないぞ▼</language>
+		<language name="JPN_KANJI" width="256">あまり　ウロチョロして
+わるさ　するんじゃないぞ▼</language>
 	</row>
 
-	<row id="msg_policeman_01_03">
+	<row id="msg_policeman_01_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>3カ国と交換　</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
-		<language name="JPN" width="256">3カ国▼
-[1:00:トレーナー名:3]
-ボディチェックを　するぞ</language>
-		<language name="JPN_KANJI" width="256">3カ国▼
-[1:00:トレーナー名:3]
-ボディチェックを　するぞ</language>
+		<language name="JPN" width="256">ん？　どこかで　あったことが
+あるような……▼
+……まぁ　いい▼
+はしゃぎすぎて　ころんだり
+しないようにな▼
+きゃくに　ケガされると
+おじさん　こまるんだ▼</language>
+		<language name="JPN_KANJI" width="256">ん？　どこかで　あったことが
+あるような……▼
+……まぁ　いい▼
+はしゃぎすぎて　転んだり
+しないようにな▼
+客に　ケガされると
+おじさん　こまるんだ▼</language>
 	</row>
 
-	<row id="msg_policeman_01_04">
+	<row id="msg_policeman_01_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>6カ国と交換　</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
-		<language name="JPN" width="256">6カ国以上▼
-[1:00:トレーナー名:3]
-ボディチェックを　するぞ</language>
-		<language name="JPN_KANJI" width="256">6カ国以上▼
-[1:00:トレーナー名:3]
-ボディチェックを　するぞ</language>
+		<language name="JPN" width="256">ほう　きみは　トレーナーなのか▼
+そうか　おやもとを　はなれて
+たびを　しているんだな▼
+……まぁ　なんだ▼
+たまに　れんらくでも
+すると　いいんじゃないか▼</language>
+		<language name="JPN_KANJI" width="256">ほう　きみは　トレーナーなのか▼
+そうか　親元を　はなれて
+旅を　しているんだな▼
+……まぁ　なんだ▼
+たまに　連絡でも
+すると　いいんじゃないか▼</language>
 	</row>
 
-	<row id="msg_policeman_01_05">
+	<row id="msg_policeman_01_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>10カ国と交換</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
-		<language name="JPN" width="256">10カ国以上▼
-[1:00:トレーナー名:3]
-ボディチェックを　するぞ</language>
-		<language name="JPN_KANJI" width="256">10カ国以上▼
-[1:00:トレーナー名:3]
-ボディチェックを　するぞ</language>
+		<language name="JPN" width="256">ふぬ　きみは　こうかんするのが
+すきなのか？▼
+……いいんじゃないか
+わかものらしく　かっぱつで▼</language>
+		<language name="JPN_KANJI" width="256">ふぬ　きみは　交換するのが
+好きなのか？▼
+……いいんじゃないか
+若者らしく　活発で▼</language>
 	</row>
 
-	<row id="msg_policeman_01_06">
+	<row id="msg_policeman_01_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>15カ国と交換　</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
-		<language name="JPN" width="256">15カ国以上▼
-[1:00:トレーナー名:3]
-ボディチェックを　するぞ</language>
-		<language name="JPN_KANJI" width="256">15カ国以上▼
-[1:00:トレーナー名:3]
-ボディチェックを　するぞ</language>
+		<language name="JPN" width="256">すごいな　きみは
+せかいじゅうに　しりあいが　いるのかい？▼
+おじさんが　わかいころじゃ
+かんがえられん　せかいだな▼</language>
+		<language name="JPN_KANJI" width="256">すごいな　きみは
+世界中に　知り合いが　いるのかい？▼
+おじさんが　若いころじゃ
+考えられん　せかいだな▼</language>
 	</row>
 
-	<row id="msg_policeman_01_07">
+	<row id="msg_policeman_01_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>20カ国と交換</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
-		<language name="JPN" width="256">20カ国以上▼
-[1:00:トレーナー名:3]
-ボディチェックを　するぞ</language>
-		<language name="JPN_KANJI" width="256">20カ国以上▼
-[1:00:トレーナー名:3]
-ボディチェックを　するぞ</language>
+		<language name="JPN" width="256">きみか　[1:00:トレーナー名:3][BE:01:ページ切り替え（クリア）]
+さいきん　きみを　さがしにくる
+トレーナーが　おおいんだよ[BE:00:ページ切り替え（行送り）]
+なんだ　アイドル　みたいじゃないか[BE:01:ページ切り替え（クリア）]
+だが　おじさんもな
+きみの　としごろには[BE:00:ページ切り替え（行送り）]
+おんなのこに　キャーキャー[BE:00:ページ切り替え（行送り）]
+いわれてたんだぞ　はっは[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">きみか　[1:00:トレーナー名:3][BE:01:ページ切り替え（クリア）]
+最近　きみを　探しにくる
+トレーナーが　多いんだよ[BE:00:ページ切り替え（行送り）]
+なんだ　アイドル　みたいじゃないか[BE:01:ページ切り替え（クリア）]
+だが　おじさんもな
+きみの　年ごろには[BE:00:ページ切り替え（行送り）]
+女の子に　キャーキャー[BE:00:ページ切り替え（行送り）]
+言われてたんだぞ　はっは[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_policeman_01_08">
+	<row id="msg_policeman_01_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>30カ国と交換</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
-		<language name="JPN" width="256">30カ国以上▼
-[1:00:トレーナー名:3]
-ボディチェックを　するぞ</language>
-		<language name="JPN_KANJI" width="256">30カ国以上▼
-[1:00:トレーナー名:3]
-ボディチェックを　するぞ</language>
+		<language name="JPN" width="256">ってきみか　[1:00:トレーナー名:3][BE:01:ページ切り替え（クリア）]
+最近じゃ　きみ　みたいな
+グローバルな　トレーナーが[BE:00:ページ切り替え（行送り）]
+多い　みたいだな[BE:01:ページ切り替え（クリア）]
+そうすると　なんだ[BE:01:ページ切り替え（クリア）]
+世界平和も　そう　遠くはない
+そう　思っても　いいのか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ってきみか　[1:00:トレーナー名:3][BE:01:ページ切り替え（クリア）]
+最近じゃ　きみ　みたいな
+グローバルな　トレーナーが[BE:00:ページ切り替え（行送り）]
+多い　みたいだな[BE:01:ページ切り替え（クリア）]
+そうすると　なんだ[BE:01:ページ切り替え（クリア）]
+世界平和も　そう　遠くはない
+そう　思っても　いいのか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_policeman_01_09">
+	<row id="msg_policeman_01_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>40カ国と交換</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">40カ国以上▼
@@ -473,7 +538,7 @@
 ボディチェックを　するぞ</language>
 	</row>
 
-	<row id="msg_policeman_01_10">
+	<row id="msg_policeman_01_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>50カ国と交換</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">50カ国以上▼
@@ -484,8 +549,8 @@
 ボディチェックを　するぞ</language>
 	</row>
 
-	<row id="msg_policeman_01_11">
-		<comment>60カ国と交換</comment>
+	<row id="msg_policeman_01_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>75カ国と交換</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">60カ国以上▼
 [1:00:トレーナー名:3]
@@ -495,8 +560,8 @@
 ボディチェックを　するぞ</language>
 	</row>
 
-	<row id="msg_policeman_01_12">
-		<comment>70カ国と交換</comment>
+	<row id="msg_policeman_01_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>100カ国と交換</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">70カ国以上▼
 [1:00:トレーナー名:3]
@@ -506,8 +571,8 @@
 ボディチェックを　するぞ</language>
 	</row>
 
-	<row id="msg_policeman_01_13">
-		<comment>80カ国と交換</comment>
+	<row id="msg_policeman_01_13" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>125カ国と交換</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">80カ国以上▼
 [1:00:トレーナー名:3]
@@ -517,8 +582,8 @@
 ボディチェックを　するぞ</language>
 	</row>
 
-	<row id="msg_policeman_01_14">
-		<comment>90カ国と交換</comment>
+	<row id="msg_policeman_01_14" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>150カ国と交換</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">90カ国以上▼
 [1:00:トレーナー名:3]
@@ -528,8 +593,8 @@
 ボディチェックを　するぞ</language>
 	</row>
 
-	<row id="msg_policeman_01_15">
-		<comment>100カ国と交換</comment>
+	<row id="msg_policeman_01_15" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>175カ国と交換</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">100カ国以上▼
 [1:00:トレーナー名:3]
@@ -539,8 +604,8 @@
 ボディチェックを　するぞ</language>
 	</row>
 
-	<row id="msg_policeman_01_16">
-		<comment>150カ国と交換</comment>
+	<row id="msg_policeman_01_16" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>200カ国と交換</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">150カ国以上▼
 [1:00:トレーナー名:3]
@@ -550,7 +615,7 @@
 ボディチェックを　するぞ</language>
 	</row>
 
-	<row id="msg_policeman_01_17">
+	<row id="msg_policeman_01_17" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>233カ国と交換</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">233カ国以上▼
