@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-25T13:19:26"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-25T18:59:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1354" top="178" right="2059" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="52" top="144" right="757" bottom="772" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -347,15 +347,17 @@
 しばらく　お待ちください</language>
 	</row>
 
-	<row id="MSG_MB_CHILD_02">
+	<row id="MSG_MB_CHILD_02" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+		<comment>Hozumi追加0225
+メッセージを調整</comment>
 		<language name="JPN" width="208">ただしい　ソフトが　ささっていません
-もうひとつの　ＤＳの　せつめいに　
-したがって　ポケシフターを
-きどう　しなおして　ください</language>
+でんげんをきり　ただしい　ソフトを
+さしてから　ポケシフターを
+きどうしなおして　ください</language>
 		<language name="JPN_KANJI" width="208">正しい　ソフトが　ささっていません
-もう一つの　ＤＳの　説明に
-従って　ポケシフターを
-起動しなおしてください</language>
+電源を切り　正しい　ソフトを
+さしてから　ポケシフターを
+起動し直してください</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_03">
@@ -396,10 +398,10 @@
 	</row>
 
 	<row id="MSG_MB_CHILD_08">
-		<language name="JPN" width="208">ボックスの　あきが　たりません。
-ポケシフターを　しゅうりょうします。▼</language>
-		<language name="JPN_KANJI" width="208">ボックスの　空きが　足りません。
-ポケシフターを　終了します。▼</language>
+		<language name="JPN" width="208">ボックスの　あきが　たりません
+ポケシフターを　しゅうりょうします▼</language>
+		<language name="JPN_KANJI" width="208">ボックスの　空きが　足りません
+ポケシフターを　終了します▼</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_09">
@@ -413,11 +415,11 @@
 		<comment>Ariizumi追加0219
 
 初期ロード失敗</comment>
-		<language name="JPN" width="208">データのよみこみに　
-しっぱいしました。
-ポケシフターを　しゅうりょうします。▼</language>
-		<language name="JPN_KANJI" width="208">データの読み込みに　失敗しました。
-ポケシフターを　終了します。▼</language>
+		<language name="JPN" width="208">データのよみこみに
+しっぱいしました
+ポケシフターを　しゅうりょうします▼</language>
+		<language name="JPN_KANJI" width="208">データの読み込みに　失敗しました
+ポケシフターを　終了します▼</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_11" back-color=",,,#ffff80,,,,,,,,,,,,,,">
