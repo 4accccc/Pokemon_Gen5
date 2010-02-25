@@ -63,6 +63,7 @@ enum {
   SEQ_MAIN,
   SEQ_LEAVE,
   SEQ_OUT,
+  SEQ_DISCONNECT_WAIT,
 };
 
 // サブシーケンスの遷移用

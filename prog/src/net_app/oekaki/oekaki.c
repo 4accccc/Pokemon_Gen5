@@ -392,6 +392,16 @@ GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *myw
   case SEQ_OUT:
     if( WIPE_SYS_EndCheck() ){
       OS_Printf("ワイプ終了確認\n");
+      // 通信コマンドテーブル解放
+      GFL_NET_DelCommandTable( GFL_NET_CMD_PICTURE );
+      // 通信切断
+      Union_App_Shutdown( wk->param->uniapp );
+      *seq = SEQ_DISCONNECT_WAIT;
+    }
+    break;
+  case SEQ_DISCONNECT_WAIT:
+    // ユニオン通信切断待ち
+    if(Union_App_WaitShutdown(wk->param->uniapp)){
       return GFL_PROC_RES_FINISH;
     }
     break;
@@ -436,9 +446,6 @@ GFL_PROC_RESULT OekakiProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk
   switch(*seq){
   case 0:
     OS_Printf("おえかきワーク解放処理突入\n");
-
-    // 通信コマンドテーブル解放
-    GFL_NET_DelCommandTable( GFL_NET_CMD_PICTURE );
 
     // Vblank期間中のBG転送終了
     GFL_TCB_DeleteTask( wk->vblankTcb );
