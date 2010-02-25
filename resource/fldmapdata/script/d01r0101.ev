@@ -227,8 +227,7 @@ ev_d01r0101_pokecount:
 			_ME_PLAY( SEQ_ME_POKEGET )
 			_SYSWIN_MSG_ALLPUT(msg_d01r0101_girl_08, POS_DOWN)
 			_ME_WAIT()
-			//【仮】コマンドバグ処理待ち
-			//_AB_KEYWAIT_MARK()
+			_AB_KEYWAIT_MARK()
 			_SYSWIN_CLOSE()
 			
 			//名前をつけますか？
