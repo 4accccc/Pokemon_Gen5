@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T22:42:30"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T15:20:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1518" top="284" right="2223" bottom="903" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -383,7 +383,7 @@ TVトランシーバー</attribute>
 ですって[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r02_mama_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r02_mama_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>仮メッセージ
 メッセージ表示後、T02方面へ移動
 画面外に消えると、操作可能に</comment>
@@ -462,8 +462,10 @@ TVトランシーバー</attribute>
 そんなときは　道を　歩く！</language>
 	</row>
 
-	<row id="msg_r02_girl2_01">
-		<comment>♀</comment>
+	<row id="msg_r02_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ
+・内容は掲示板などに変更</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ポケモンリストの　ひだりうえ！[BE:01:ページ切り替え（クリア）]
 そこに　セットしてあげるのは
@@ -494,12 +496,14 @@ TVトランシーバー</attribute>
 	<row id="msg_r02_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ちょっぴり
+おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
 たたかいに　さんかした　ポケモンは
 けいけんちが　もらえます！[BE:01:ページ切り替え（クリア）]
 ポケモンを　どんどん　たたかわせて
 どんどん　つよくしよう！</language>
-		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ちょっぴり
+お得な　掲示板！[BE:01:ページ切り替え（クリア）]
 戦いに　参加した　ポケモンは
 経験値が　もらえます！[BE:01:ページ切り替え（クリア）]
 ポケモンを　どんどん　戦わせて
