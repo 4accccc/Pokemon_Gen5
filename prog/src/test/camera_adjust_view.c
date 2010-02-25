@@ -141,7 +141,7 @@ extern GFL_CAMADJUST* GFL_CAMADJUST_Create( const GFL_CAMADJUST_SETUP* setup, HE
   gflCamAdjust->strBufTmp = GFL_STR_CreateBuffer(8, gflCamAdjust->heapID);
 
   gflCamAdjust->fontHandle = GFL_FONT_Create
-    (ARCID_FONT, NARC_font_small_batt_gftr, GFL_FONT_LOADTYPE_FILE, FALSE ,gflCamAdjust->heapID);
+    (ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE ,gflCamAdjust->heapID);
   gflCamAdjust->printQue = PRINTSYS_QUE_Create(gflCamAdjust->heapID);
 
   // ‰Šú‰»
