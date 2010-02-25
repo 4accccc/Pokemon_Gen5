@@ -1559,6 +1559,10 @@ static void _touchState_BeforeTimeing2(POKEMON_TRADE_WORK* pWork)
     IRC_POKETRADE3D_SetColorTex(pWork);
 
     if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+
+      WIPE_ResetBrightness(WIPE_DISP_MAIN);
+      WIPE_ResetBrightness(WIPE_DISP_SUB);
+
       POKE_GTS_InitWork(pWork);
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_13, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);

@@ -752,6 +752,8 @@ static void _NEGO_Select6CancelWait5(POKEMON_TRADE_WORK* pWork)
     POKMEONTRADE_RemoveCoreResource(pWork);
 
 //    GFL_CLACT_UNIT_Delete(pWork->cellUnit);
+    IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE_NORMAL);
+    IRC_POKETRADE_SetSubVram(pWork);
     pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
     POKETRADE_MESSAGE_HeapInit(pWork);
     IRC_POKETRADE_InitBoxCursor(pWork);  // タスクバー
@@ -763,7 +765,8 @@ static void _NEGO_Select6CancelWait5(POKEMON_TRADE_WORK* pWork)
     GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
     POKETRADE_TOUCHBAR_Init(pWork);
     GFL_NET_ReloadIcon();
-    
+    GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+
     _CHANGE_STATE(pWork,IRC_POKMEONTRADE_ChangeFinish);
   }
 }
