@@ -551,6 +551,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   MYSTERY_EFFECT_Start( &p_wk->effect, MYSTERY_EFFECT_TYPE_NORMAL );
   MYSTERY_EFFECT_SetUpdateFlag( &p_wk->effect, TRUE );
 
+  PMSND_PlayBGM( SEQ_BGM_WIFI_PRESENT );
+
   return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------

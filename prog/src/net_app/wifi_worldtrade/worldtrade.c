@@ -45,6 +45,7 @@
 #include "poke_icon.naix"
 
 #include "debug/debug_nagihashi.h"
+#include "sound/pm_sndsys.h"
 
 
 #define BRIGHT_VAL  (-7)          ///< パッシブ状態のための半透明率
@@ -188,12 +189,7 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 
     //WirelessIconEasy();
 
-    // サウンドデータロード(フィールド)
-    Snd_DataSetByScene( SND_SCENE_FIELD, SEQ_BLD_BLD_GTC, 1 );
-    Snd_DataSetByScene( SND_SCENE_P2P, SEQ_GS_WIFI_ACCESS, 1 );
-
-    // プラチナで、マップの曲と、画面の曲が変更になったので、
-    // 画面から、フィールドに戻る時のためにシーンを変更
+    PMSND_PlayBGM( SEQ_BGM_GTS );
 
     // 会話ウインドウのタッチON
     MsgPrintTouchPanelFlagSet( MSG_TP_ON );

@@ -15,6 +15,7 @@
 #include "system/main.h"
 #include "system/wipe.h"
 #include "net/dwc_error.h"
+#include "sound/pm_sndsys.h"
 
 //アーカイブ
 #include "message.naix"
@@ -158,7 +159,13 @@ static GFL_PROC_RESULT WIFILOGOUT_PROC_Init
   p_wk->p_message = WIFILOGIN_MESSAGE_Init( p_wk->heapID, NARC_message_wifi_system_dat, p_param->display );
 
   //開始シーケンス
-  SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_StartFadeIn );
+  SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_StartFadeIn );  
+  
+  
+  if( p_param->bg == WIFILOGIN_BG_NORMAL )
+  { 
+    PMSND_PlayBGM( SEQ_BGM_WIFI_ACCESS );
+  }
 
   return GFL_PROC_RES_FINISH;
 }

@@ -976,7 +976,12 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
     }
 
   }
-  
+
+  if( pEv->bg == WIFILOGIN_BG_NORMAL )
+  { 
+    PMSND_PlayBGM( SEQ_BGM_WIFI_ACCESS );
+  }
+
   return GFL_PROC_RES_FINISH;
 }
 

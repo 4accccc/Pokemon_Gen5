@@ -100,12 +100,6 @@
 #define SE_GTC_OFF						(SEQ_SE_SELECT1)
 #define SE_GTC_PLAYER_OUT			(SEQ_SE_SELECT1)
 #define SE_GTC_APPEAR					(SEQ_SE_SELECT1)
-#define SND_SCENE_WIFI_WORLD_TRADE	(SEQ_SE_SELECT1)
-#define SND_SCENE_FIELD				(0)
-#define SND_SCENE_P2P					(0)
-#define SEQ_BLD_BLD_GTC				(0)
-#define SEQ_GS_WIFI_ACCESS		(0)
-#define SEQ_GS_BLD_GTC				(0)
 
 #define FONT_TOUCH						(0)
 #define FONT_SYSTEM						(0)

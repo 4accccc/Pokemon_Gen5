@@ -141,12 +141,6 @@ int WorldTrade_Title_Init(WORLDTRADE_WORK *wk, int seq)
 	// メニューの項目を描画
 	TitleMenuPrint( wk );
 
-	// サウンドデータロード(フィールド)
-	//Snd_DataSetByScene( SND_SCENE_FIELD, SEQ_BLD_BLD_GTC, 1 );
-
-
-	Snd_DataSetByScene( SND_SCENE_WIFI_WORLD_TRADE, SEQ_GS_BLD_GTC, 1 );
-
 
 	// プラチナで、マップの曲と、画面の曲が変更になったので、
 	// 画面から、フィールドに戻る時のためにシーンを変更
