@@ -794,6 +794,17 @@ BOOL MAPATTR_VALUE_CheckEncountGround( const MAPATTR_VALUE val )
 {
   return ( val == MATTR_E_ZIMEN_01 );
 }
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　室内（エンカウント）
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountIndoor( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_E_ZIMEN_02 );
+}
 
 //--------------------------------------------------------------
 /**
