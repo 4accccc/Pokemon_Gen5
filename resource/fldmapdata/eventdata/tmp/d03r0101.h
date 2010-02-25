@@ -24,6 +24,13 @@
 #define D03R0101_BACKPACKERM_01           10
 #define D03R0101_FLD_ITEM_01              11
 #define D03R0101_FLD_ITEM_02              12
+#define TR_BACKPACKERM_05                 13
+#define TR_BACKPACKERW_05                 14
+#define TR_ESPW_04                        15
+#define TR_BACKPACKERW_06                 16
+#define TR_ESPM_04                        17
+#define TR_BACKPACKERM_06                 18
+#define TR_ESPM_05                        19
 
 #endif //ZONE_D03R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

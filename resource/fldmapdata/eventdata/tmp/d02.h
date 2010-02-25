@@ -11,6 +11,9 @@
 
 #define D02_GIRL2_01                       0
 #define D02_LEADER3_01                     1
+#define TR_TANPAN_09                       2
+#define TR_TANPAN_10                       3
+#define TR_KARATE_03                       4
 
 #endif //ZONE_D02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
