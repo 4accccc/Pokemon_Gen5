@@ -41,6 +41,9 @@
 
 #include "system/main.h"      //GFL_HEAPID_APP参照
 
+#include "../../field/eventwork.h"
+#include "../../../resource/fldmapdata/flagwork/work_define.h"
+
 //============================================================================================
 //============================================================================================
 
@@ -120,6 +123,8 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork);
 static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork );
 static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork );
 static void _itemInnerUseError( FIELD_ITEMMENU_WORK* pWork );
+static void _itemInnerUseRightStone( FIELD_ITEMMENU_WORK* pWork );
+static void _itemInnerUseRightStoneWait( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork);
 static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork);
 static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork);
@@ -766,6 +771,12 @@ static BOOL _check_spray( u16 item_id )
       item_id == ITEM_MUSIYOKESUPUREE  );
 }
 
+enum{
+  ITEM_USE_NONE=0,          // 通常使用
+  INNER_USE_BAG,            // 使うとバッグの中でメッセージがでてバッグ選択に戻る
+  INNER_USE_AFTER_OUTBAG,   // 使うとバッグの中でメッセージがでてバッグを終了させる
+};
+
 //-----------------------------------------------------------------------------
 /**
  *  @brief  バッグ内で使うアイテムか判定
@@ -775,16 +786,20 @@ static BOOL _check_spray( u16 item_id )
  *  @retval TURE:バッグ内で使うアイテム
  */
 //-----------------------------------------------------------------------------
-static BOOL BAG_IsInnerItem( u16 item_id )
+static int BAG_IsInnerItem( u16 item_id )
 {
   // スプレー
   if(  _check_spray( item_id ) )
   {
-    return TRUE;
+    return INNER_USE_BAG;
   }
-
+  else if( item_id==ITEM_DAAKUSUTOON || item_id==ITEM_RAITOSUTOON){
+    return INNER_USE_AFTER_OUTBAG;
+  }
   return FALSE;
 }
+
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -866,6 +881,99 @@ static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork )
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
 }
+
+
+// Nの前で「ほらライトストーンを使ってみせてよ」
+#define N01R0502_START     ( 1 )
+// ライトストーンを使った
+#define N01R0502_CHANGE    ( 2 )
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  バッグ内で使うアイテム処理
+ *
+ *  @param  FIELD_ITEMMENU_WORK* pWork
+ *
+ *  @retval
+ */
+//-----------------------------------------------------------------------------
+static void _itemInnerUseRightStone( FIELD_ITEMMENU_WORK* pWork )
+{
+  // スプレー
+  if( pWork->ret_item ==ITEM_DAAKUSUTOON || pWork->ret_item==ITEM_RAITOSUTOON )
+  {
+    SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( pWork->gamedata );
+    ENC_SV_PTR encsv = EncDataSave_GetSaveDataPtr( save );
+    EVENTWORK *evwork = GAMEDATA_GetEventWork(pWork->gamedata);
+
+    // 使用チェック(Nの前でライトストーンを使うシチュエーションか？)
+    if( *EVENTWORK_GetEventWorkAdrs(evwork,WK_SYS_N01R0502_ITEMUSE)==N01R0502_START )
+    {
+      // 使用メッセージ「なにも反応もしめさない」
+      if(pWork->ret_item==ITEM_DAAKUSUTOON){
+        GFL_MSG_GetString( pWork->MsgManager, msg_bag_n_001w, pWork->pStrBuf );
+      }else{
+        GFL_MSG_GetString( pWork->MsgManager, msg_bag_n_001b, pWork->pStrBuf );
+      }
+      WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+      ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
+
+      // 音が見当たらないのでとりあえずテキトーな音
+      GFL_SOUND_PlaySE( SE_BAG_RAITOSUTOON );
+      _CHANGE_STATE(pWork,_itemInnerUseRightStoneWait);
+      
+    }
+    else
+    {
+      // つかえなかったので「アララギの　ことば…　つかいどきがある」
+      GFL_MSG_GetString( pWork->MsgManager, msg_bag_057, pWork->pStrBuf );
+      WORDSET_RegisterPlayerName(pWork->WordSet, 0,  pWork->mystatus );
+      WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+      ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
+      _CHANGE_STATE(pWork,_itemInnerUseWait);
+    }
+
+  }
+  else
+  {
+    GF_ASSERT(0);
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  ライトストーン・ブラックストーン専用メッセージウェイト（と後処理）
+ *
+ *  @param  FIELD_ITEMMENU_WORK* pWork
+ *
+ *  @retval
+ */
+//-----------------------------------------------------------------------------
+static void _itemInnerUseRightStoneWait( FIELD_ITEMMENU_WORK* pWork )
+{
+  EVENTWORK *evwork = GAMEDATA_GetEventWork(pWork->gamedata);
+  if(!ITEMDISP_MessageEndCheck(pWork)){
+    return;
+  }
+
+  // 入力待ち
+  if( ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) || GFL_UI_TP_GetTrg() )
+  {
+    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+
+    // 再描画
+    _windowRewrite(pWork);
+
+    pWork->ret_code = BAG_NEXTPROC_EXIT;
+    _CHANGE_STATE(pWork,NULL);
+
+    // イベントワークの書き換え
+    *EVENTWORK_GetEventWorkAdrs(evwork,WK_SYS_N01R0502_ITEMUSE) = N01R0502_CHANGE;
+    
+  }
+}
+
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -1235,9 +1343,14 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     }
     else if(BAG_MENU_TSUKAU==pWork->ret_code2){ //つかう
       // バッグ内で使うアイテム判定
-      if( BAG_IsInnerItem( pWork->ret_item ) )
+      int ret = BAG_IsInnerItem( pWork->ret_item );
+      if( ret==INNER_USE_BAG )
       {
         _CHANGE_STATE(pWork,_itemInnerUse); //メッセージウェイトして通常メニューにもどる
+      }
+      else if(ret==INNER_USE_AFTER_OUTBAG)
+      {
+        _CHANGE_STATE(pWork,_itemInnerUseRightStone);
       }
       else
       {
@@ -2853,12 +2966,12 @@ int (*MenuFuncTbl[])( FIELD_ITEMMENU_WORK *pWork)={
 //@TODO 不要？
 //-----------------------------------------------------------------------------
 /**
- *	@brief  きのみプランター判定
+ *  @brief  きのみプランター判定
  *
- *	@param	u16 pocket
- *	@param	item 
+ *  @param  u16 pocket
+ *  @param  item 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static BOOL BAGMAIN_NPlanterUseCheck( u16 pocket, u16 item )
@@ -2870,14 +2983,57 @@ static BOOL BAGMAIN_NPlanterUseCheck( u16 pocket, u16 item )
   return FALSE;
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 「つかう」「おりる」「みる」「ひらく」「うめる」「とめる」項目追加
+ *
+ * @param   pWork   
+ * @param   itemdata    
+ * @param   item    
+ * @param   tbl     メニュー項目テーブル
+ */
+//----------------------------------------------------------------------------------
+static void _tsukau_check( FIELD_ITEMMENU_WORK *pWork, void *itemdata, ITEM_ST * item, u8 *tbl )
+{
+  if( ITEM_GetBufParam( itemdata,  ITEM_PRM_FIELD ) != 0 )
+  {
+    if( item->id == ITEM_ZITENSYA && pWork->cycle_flg == 1 )
+    {
+      tbl[BAG_MENU_USE] = BAG_MENU_ORIRU;
+    }
+    else if( item->id == ITEM_POFINKEESU )
+    {
+      tbl[BAG_MENU_USE] = BAG_MENU_HIRAKU;
+    }
+    else
+    {
+      tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU;
+    }
+  }
+
+  // ダウジングマシン
+  if( item->id == ITEM_DAUZINGUMASIN )
+  {
+    tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU;
+  }
+
+  // ダークストーン・ライトストーンは特殊な状況で使用可能になる
+  if( (item->id == ITEM_RAITOSUTOON || item->id == ITEM_DAAKUSUTOON))
+  {
+    tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU;
+  }
+
+}
+
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アイテム選択時のメニューリストを生成
+ *  @brief  アイテム選択時のメニューリストを生成
  *
- *	@param	FIELD_ITEMMENU_WORK * pWork
- *	@param	tbl 
+ *  @param  FIELD_ITEMMENU_WORK * pWork
+ *  @param  tbl 
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
@@ -2927,31 +3083,7 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
       // ひらく
       // うめる
       // とめる
-      if( ITEM_GetBufParam( itemdata,  ITEM_PRM_FIELD ) != 0 )
-      {
-        if( item->id == ITEM_ZITENSYA && pWork->cycle_flg == 1 )
-        {
-          tbl[BAG_MENU_USE] = BAG_MENU_ORIRU;
-        }
-        else if( item->id == ITEM_POFINKEESU )
-        {
-          tbl[BAG_MENU_USE] = BAG_MENU_HIRAKU;
-        }
-        //    else if( pWork->ret_item == ITEM_gbPUREIYAA && Snd_GameBoyFlagCheck() == 1 )
-        //    {
-        //    tbl[BAG_MENU_USE] = BAG_MENU_TOMERU;
-        //}
-        else
-        {
-          tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU;
-        }
-      }
-
-      // ダウジングマシン
-      if( item->id == ITEM_DAUZINGUMASIN )
-      {
-        tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU;
-      }
+      _tsukau_check( pWork, itemdata, item, tbl );
 
     }
 
@@ -3012,11 +3144,11 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アイテム使用ウィンドウ描画
+ *  @brief  アイテム使用ウィンドウ描画
  *
- *	@param	pWork
+ *  @param  pWork
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)

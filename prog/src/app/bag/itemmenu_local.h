@@ -1,9 +1,9 @@
 //======================================================================
 /**
- * @file	  itemmenu.h
- * @brief	  アイテムメニュー
- * @author	k.ohno
- * @date	  2009.06.30
+ * @file    itemmenu.h
+ * @brief   アイテムメニュー
+ * @author  k.ohno
+ * @date    2009.06.30
  */
 //======================================================================
 
@@ -48,6 +48,7 @@ enum
   SE_BAG_WAZA         = SEQ_SE_PC_LOGIN,  ///< ワザマシン起動音
   SE_BAG_SORT         = SEQ_SE_SYS_36,    ///< ソート音
   SE_BAG_SPRAY        = SEQ_SE_DECIDE1,   ///< スプレー使用音
+  SE_BAG_RAITOSUTOON  = SEQ_SE_DECIDE2,   ///< ライトストーン・ダークストーン
 };
 
 #define ITEMMENU_SCROLLBAR_ENABLE_NUM (7) // スクロールバーが有効になるアイテム数
@@ -126,7 +127,7 @@ enum
 };
 
 //--------------------------------------------------------------
-///	数値入力モード
+/// 数値入力モード
 //==============================================================
 typedef enum
 { 
@@ -154,26 +155,26 @@ struct _FIELD_ITEMMENU_PARAM {
 //  FIELDMAP_WORK       * fieldmap;
 
   // [PRIVATE]
-	ITEM_ST ScrollItem[ BAG_MYITEM_MAX ];	///< スクロールする為のアイテムリスト
+  ITEM_ST ScrollItem[ BAG_MYITEM_MAX ]; ///< スクロールする為のアイテムリスト
   StateFunc * state;                    ///< ハンドルのプログラム状態
-	GFL_BMPWIN* win;
+  GFL_BMPWIN* win;
   GFL_BMPWIN* itemInfoDispWin;
   GFL_BMPWIN* pocketNameWin;
   PRINT_UTIL  SysMsgPrintUtil;      ///< システムウインドウPrintUtil
   PRINT_QUE*  SysMsgQue;
-  GFL_MSGDATA* MsgManager;		      ///< 名前入力メッセージデータマネージャー
-  GFL_MSGDATA* MsgManagerItemInfo;	///< 名前入力メッセージデータマネージャー
+  GFL_MSGDATA* MsgManager;          ///< 名前入力メッセージデータマネージャー
+  GFL_MSGDATA* MsgManagerItemInfo;  ///< 名前入力メッセージデータマネージャー
   GFL_MSGDATA* MsgManagerPocket;
   GFL_MSGDATA* MsgManagerItemName;
-  WORDSET*    WordSet;							///< メッセージ展開用ワークマネージャー
+  WORDSET*    WordSet;              ///< メッセージ展開用ワークマネージャー
   STRBUF*     pStrBuf;
-	STRBUF*     pExpStrBuf;
-	STRBUF*     pItemNameBuf;
+  STRBUF*     pExpStrBuf;
+  STRBUF*     pItemNameBuf;
   GFL_FONT*   fontHandle;
   MenuFunc*   menu_func[BAG_MENUTBL_MAX];
-	HEAPID      heapID;
+  HEAPID      heapID;
 
-	u32 objRes[3];          ///< CLACTリソース
+  u32 objRes[3];          ///< CLACTリソース
   u32 cellRes[SCR_MAX];   ///< アイテムカーソル
 
   u32 commonCellTypeNcg[POKETYPE_MAX];
@@ -186,8 +187,8 @@ struct _FIELD_ITEMMENU_PARAM {
   u32 nListEnable[ITEM_LIST_NUM];
   GFL_CLWK  *listMarkCell[ITEM_LIST_NUM];  //チェックマーク
   
-	GFL_BUTTON_MAN* pButton;
-	GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
+  GFL_BUTTON_MAN* pButton;
+  GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
   GFL_CLUNIT *cellUnit;
   GFL_CLWK  *cellicon;
   GFL_CLWK  *clwkCur;
@@ -197,7 +198,7 @@ struct _FIELD_ITEMMENU_PARAM {
   GFL_CLWK  *clwkWazaType;
   GFL_CLWK  *clwkBarIcon[ BAR_ICON_MAX ];
   GFL_CLWK  *clwkSort;
-	GFL_TCBLSYS *pMsgTcblSys;
+  GFL_TCBLSYS *pMsgTcblSys;
   PRINT_STREAM* pStream;
   TOUCH_SW_SYS* pTouchSWSys;
   GFL_BMPWIN* winWaza;
@@ -213,7 +214,7 @@ struct _FIELD_ITEMMENU_PARAM {
 
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
-	APP_TASKMENU_RES* pAppTaskRes;
+  APP_TASKMENU_RES* pAppTaskRes;
   
   //メニュー土台
   NNSG2dCharacterData *ncgData;
@@ -227,14 +228,14 @@ struct _FIELD_ITEMMENU_PARAM {
   int subbg2;
   int barbg;
   int numFrameBg;
-	int pocketno;  //今さしているポケット番号
-	int curpos;   //今さしているカーソル番号
+  int pocketno;  //今さしているポケット番号
+  int curpos;   //今さしているカーソル番号
   int oamlistpos; //OAMLIST の 先頭位置 -1から開始
   int moveMode;  //移動モードになる
   int menuNum;          //サブメニューの項目数
   int subListCursor;  //サブメニューのカーソル位置
   int submenuList[BAG_MENUTBL_MAX];  //サブメニューの項目
-	u32 bgchar;
+  u32 bgchar;
   BOOL bChange;   ///< CELL更新フラグ
   BOOL bDispUpReq; ///< 上画面DISP切替(VBLANK中に判定、処理)
 
@@ -275,8 +276,8 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _POCKETNAME_FONT_PAL_B (0x0)
 
 
-#define	FBMP_COL_WHITE		(15)
-#define WINCLR_COL(col)	(((col)<<4)|(col))
+#define FBMP_COL_WHITE    (15)
+#define WINCLR_COL(col) (((col)<<4)|(col))
 
 
 #define _ITEMUSE_DISP_INITX (17)
