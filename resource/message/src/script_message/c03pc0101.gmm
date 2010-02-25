@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T19:17:06"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-02-25T20:17:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="377" top="113" right="1082" bottom="733" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="726" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_favorite_01">
+	<row id="msg_favorite_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・手持ちの先頭がポケモンの場合
 ・はい／いいえの選択肢表示
@@ -306,7 +306,7 @@
 [1:01:ポケモン種族名:0]でしょ？</language>
 	</row>
 
-	<row id="msg_favorite_02">
+	<row id="msg_favorite_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・手持ちの先頭がタマゴの場合
 ・はい/いいえの選択肢表示
@@ -320,7 +320,7 @@
 タマゴ　なんでしょ？</language>
 	</row>
 
-	<row id="msg_favorite_03">
+	<row id="msg_favorite_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ＧＤＳプロフィールの「好きポケ」が
 　先頭のポケモン、タマゴに書き換わる
@@ -332,7 +332,7 @@
 やっぱり　そうだと　おもったんだ！</language>
 	</row>
 
-	<row id="msg__favorite_04">
+	<row id="msg_favorite_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・0＝手持ちで先頭にいるポケモン名</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
@@ -342,7 +342,7 @@
 [1:01:ポケモン種族名:0]じゃ　ないのー！？</language>
 	</row>
 
-	<row id="msg_favorite_05">
+	<row id="msg_favorite_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・先頭がタマゴのとき</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
@@ -352,14 +352,14 @@
 タマゴじゃ　ないのー！？</language>
 	</row>
 
-	<row id="msg_c03pc0101_man1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>コイツ削除</comment>
-		<attribute name="キャラ指定">MAN1
-青年</attribute>
-		<language name="JPN" width="256">くもに　ささりそうな　ビルばかりで
-あっとう　されてしまうよな！</language>
-		<language name="JPN_KANJI" width="256">雲に　ささりそうな　ビルばかりで
-圧倒されて　しまうよな！</language>
+	<row id="msg_favorite_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・手持ちにダメタマゴがある場合</comment>
+		<attribute name="キャラ指定">WOMAN1</attribute>
+		<language name="JPN" width="256">みんなの　おきにいりの
+ポケモンが　しりたいな！</language>
+		<language name="JPN_KANJI" width="256">みんなの　おきにいりの
+ポケモンが　しりたいな！</language>
 	</row>
 
 	<row id="msg_c03pc0101_businessman2_01">

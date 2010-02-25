@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_c03pc0101_man1_01
+_EVENT_DATA		ev_c03pc0101_woman1_01	//お気に入りポケモン登録イベント
 _EVENT_DATA		ev_c03pc0101_businessman_01
 _EVENT_DATA		ev_c03pc0101_shop
 _EVENT_DATA		ev_c03pc0101_fix_shop
@@ -42,13 +42,6 @@ EVENT_START ev_c03pc0101_fix_shop
   _FIX_SHOP_CALL( C03_FS )
 EVENT_END
 
-/**************************************************************/
-/* 			MAN1	C03PC0101								  */
-/**************************************************************/
-EVENT_START		ev_c03pc0101_man1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03pc0101_man1_01 )
-EVENT_END
-
 
 /**************************************************************/
 /* 			BUSINESSMAN	C03PC0101							  */
@@ -57,4 +50,84 @@ EVENT_START		ev_c03pc0101_businessman_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03pc0101_businessman2_01 )
 EVENT_END
 
+
+/**************************************************************/
+/* 				お気に入りポケモン登録イベント				  */
+/**************************************************************/
+DEFINE_LOCAL LWK_DAME_CHK
+DEFINE_LOCAL LWK_EGG_CHK
+DEFINE_LOCAL LWK_MONS_NAME
+
+//バトルレコーダーに表示される「お気に入りポケモン」を登録するイベント
+//[100225 斉藤マ]イベント追加
+EVENT_START		ev_c03pc0101_woman1_01
+	_TALK_OBJ_START()
+	
+	//ダメタマゴの数をチェック
+	_GET_PARTY_POKE_COUNT( LWK_DAME_CHK, POKECOUNT_MODE_ONLY_DAME_EGG )
+	IF $LWK_DAME_CHK != 0 THEN
+
+		//ダメタマゴがある場合
+		_CALL	ev_dame_tamago
+
+	ELSE
+
+		//ダメタマゴが無ければお気に入り登録処理へ
+		_CALL	ev_entry_favorite
+
+	ENDIF
+	
+EVENT_END
+
+
+//ダメタマゴがある場合
+ev_dame_tamago:
+	_BALLOONWIN_TALKOBJ_MSG( msg_favorite_06 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+_RET
+
+
+//お気に入りポケモンの登録処理
+ev_entry_favorite:
+
+		//あなたのお気に入りは～～でしょ？
+
+		_CHECK_TEMOTI_EGG( LWK_EGG_CHK, 0 )		//先頭がタマゴかチェック
+		IF $LWK_EGG_CHK == TRUE THEN
+			//あなたのお気に入りはタマゴ？
+			_BALLOONWIN_TALKOBJ_MSG( msg_favorite_02 )
+		ELSE
+			//あなたのお気に入りは～～？
+			_TEMOTI_MONS_NAME( 0, 0 )	//先頭ポケモンの種族名をセット
+			_BALLOONWIN_TALKOBJ_MSG( msg_favorite_01 )
+		ENDIF
+
+		_YES_NO_WIN( SCWK_ANSWER )
+
+		IF $SCWK_ANSWER == SCR_YES THEN
+
+			//はいなら登録
+			_SET_FAVORITE_POKEMON( 0 )
+			//でしょでしょ！
+			_BALLOONWIN_TALKOBJ_MSG( msg_favorite_03 )
+
+		ELSE
+
+			//いいえなら終了
+			IF $LWK_EGG_CHK == TRUE THEN
+				//えー タマゴじゃないのー
+				_BALLOONWIN_TALKOBJ_MSG( msg_favorite_05 )
+			ELSE
+				//えー ～～じゃないのー！
+				_TEMOTI_MONS_NAME( 0, 0 )	//先頭ポケモンの種族名をセット
+				_BALLOONWIN_TALKOBJ_MSG( msg_favorite_04 )
+			ENDIF
+
+		ENDIF
+
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+_RET
 

@@ -9,7 +9,7 @@
 #ifndef ZONE_C03PC0101_EVC_H
 #define ZONE_C03PC0101_EVC_H
 
-#define C03PC0101_MAN1_01                  0
+#define C03PC0101_WOMAN1_01                0
 #define C03PC0101_BUSINESSMAN_01           1
 #define C03PC0101_CONNECT_00               2
 #define C03PC0101_CONNECT_01               3
