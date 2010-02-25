@@ -30,5 +30,7 @@ extern GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
     BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys );
 extern GMEVENT * BSUBWAY_EVENT_TrainerBattle(
     BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
+extern GMEVENT * BSUBWAY_EVENT_CommBattle(
+    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
 extern GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
     BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, int tr_idx );

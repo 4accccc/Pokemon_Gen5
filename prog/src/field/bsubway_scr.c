@@ -91,6 +91,9 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
   bsw_scr->scoreData = SaveControl_DataPtrGet(
       save, GMDATA_ID_BSUBWAY_SCOREDATA );
 
+  bsw_scr->wifiData = SaveControl_DataPtrGet(
+      save, GMDATA_ID_BSUBWAY_WIFIDATA );
+  
   BSUBWAY_PLAYDATA_SetSaveFlag( bsw_scr->playData, FALSE ); //セーブなしに
   
   GF_ASSERT( GAMEDATA_GetBSubwayScrWork(gdata) == NULL );
@@ -404,6 +407,8 @@ void BSUBWAY_SCRWORK_SetLoseScore(
   //周回数リセット
   BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
   BSUBWAY_SCOREDATA_ResetStageNo( bsw_scr->scoreData, play_mode );
+  
+  //wifiモードの場合はプレイデータを反映
 }
 
 #if 0 //wb null
@@ -707,6 +712,8 @@ void BSUBWAY_SCRWORK_SetClearScore(
   
   //ラウンド数リセット
   BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
+  
+  //wifiモードの場合はプレイデータを反映
 }
 
 //--------------------------------------------------------------
@@ -742,11 +749,8 @@ void BSUBWAY_SCRWORK_ChoiceBattlePartner( BSUBWAY_SCRWORK *bsw_scr )
   
   switch( bsw_scr->play_mode ){
   case BSWAY_MODE_WIFI:
-    #if 0 //wb null
-    btltower_BtlPartnerSelectWifi(sv,wk->tr_data,wk->now_round-1);
-    #else
-    GF_ASSERT( 0 );
-    #endif
+    BSUBWAY_WIFIDATA_GetBtlPlayerData( bsw_scr->wifiData,
+        &bsw_scr->tr_data[0], round );
     break;
   case BSWAY_MODE_MULTI:
   case BSWAY_MODE_S_MULTI:

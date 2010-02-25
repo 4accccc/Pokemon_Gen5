@@ -17,6 +17,7 @@
 #include "bsubway_scr_def.h"
 #include "bsubway_scr_proc.h"
 
+#include "demo/comm_btl_demo.h"
 
 //======================================================================
 //  define
@@ -53,6 +54,10 @@ extern void BSUBWAY_SCRWORK_ChoiceBattlePartner( BSUBWAY_SCRWORK *bsw_scr );
 extern u16 BSUBWAY_SCRWORK_GetTrainerOBJCode( BSUBWAY_SCRWORK *bsw_scr, u16 idx );
 extern u16 BSUBWAY_SCRWORK_SetWifiRank(
     BSUBWAY_SCRWORK *, GAMESYS_WORK *gsys, BSWAY_SETMODE mode );
+
+//bsubway_tr.h
+extern COMM_BTL_DEMO_PARAM * BSUBWAY_SCRWORK_CreateBattleDemoParam(
+    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys );
 
 //bsubway_comm.h
 extern void BSUBWAY_COMM_Init( BSUBWAY_SCRWORK *bsw_scr );

@@ -45,9 +45,15 @@
 #include "../../../resource/fldmapdata/script/c04r0111_def.h"
 #include "msg/script/msg_c04r0111.h"
 
+#include "gamesystem/iss_switch_sys.h"
+
+#include "event_wifi_bsubway.h"
+
 //======================================================================
 //  define
 //======================================================================
+//歴代データがダウンロード済みか
+//歴代ビューアー
 
 //======================================================================
 //  struct
@@ -172,6 +178,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
         playData, BSWAY_PLAYDATA_ID_playmode, NULL );
   BSUBWAY_SCOREDATA *scoreData = SaveControl_DataPtrGet(
       save, GMDATA_ID_BSUBWAY_SCOREDATA );
+  BSUBWAY_WIFI_DATA *wifiData = SaveControl_DataPtrGet(
+      save, GMDATA_ID_BSUBWAY_WIFIDATA );
   FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   u16 com_id = VMGetU16( core );
   u16 param0 = SCRCMD_GetVMWorkValue( core, work );
@@ -490,7 +498,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //----TOOL Wifi関連
   //Wifiアップロードフラグをセット
-  case BSWTOOL_SET_WIFI_UPLOAD_FLAG:
+  case BSWTOOL_WIFI_SET_UPLOAD_FLAG:
     if( param0 == 0 ){ //リセット
       BSUBWAY_SCOREDATA_SetFlag( scoreData,
           BSWAY_SCOREDATA_FLAG_WIFI_UPLOAD, BSWAY_SETMODE_reset );
@@ -500,7 +508,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     }
     break;
   //Wifiアップロードフラグを取得
-  case BSWTOOL_GET_WIFI_UPLOAD_FLAG:
+  case BSWTOOL_WIFI_GET_UPLOAD_FLAG:
     *ret_wk = BSUBWAY_SCOREDATA_SetFlag(
           scoreData, BSWAY_SCOREDATA_FLAG_WIFI_UPLOAD, BSWAY_SETMODE_get );
     break;
@@ -513,6 +521,59 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     GF_ASSERT( 0 && "BSWTOOL_WIFI_CONNECT WB未作成コマンドです" );
     #endif
     break;
+  //WiFi 前回の記録をアップロード
+  case BSWTOOL_WIFI_UPLOAD_SCORE:
+    SCRIPT_CallEvent( sc, WIFI_BSUBWAY_EVENT_Start(
+          gsys,WIFI_BSUBWAY_MODE_SCORE_UPLOAD) );
+    return( VMCMD_RESULT_SUSPEND );
+  //WiFi ゲーム情報をダウンロード
+  case BSWTOOL_WIFI_DOWNLOAD_GAMEDATA:
+    SCRIPT_CallEvent( sc, WIFI_BSUBWAY_EVENT_Start(
+          gsys,WIFI_BSUBWAY_MODE_GAMEDATA_DOWNLOAD) );
+    return( VMCMD_RESULT_SUSPEND );
+  //WiFi 歴代情報をダウンロード
+  case BSWTOOL_WIFI_DOWNLOAD_SCDATA:
+    SCRIPT_CallEvent( sc, WIFI_BSUBWAY_EVENT_Start(
+          gsys,WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD) );
+    return( VMCMD_RESULT_SUSPEND );
+  //WiFi ランク取得
+  case BSWTOOL_WIFI_GET_RANK:
+    *ret_wk = BSUBWAY_WIFIDATA_GetPlayerRank( wifiData );
+    break;
+  //WiFi ダウンロードデータがあるか
+  case BSWTOOL_WIFI_CHK_DL_DATA:
+    *ret_wk = BSUBWAY_WIFIDATA_CheckPlayerDataEnable( wifiData );
+    break;
+  //WiFi  ダウンロードプレイを行うかセット
+  case BSWTOOL_WIFI_SET_SEL_DL_BTL:
+    {
+      u8 buf = param0;
+      BSUBWAY_PLAYDATA_SetData( playData,
+        BSWAY_PLAYDATA_ID_sel_wifi_dl_play, &buf );
+    }
+    break;
+  //WiFi  ダウンロードプレイを行うかチェック
+  case BSWTOOL_WIFI_CHK_SEL_DL_BTL:
+    {
+      *ret_wk = (u16)BSUBWAY_PLAYDATA_GetData( playData,
+        BSWAY_PLAYDATA_ID_sel_wifi_dl_play, NULL );
+    }
+    break;
+  //WiFi　歴代情報ダウンロード済みか
+  case BSWTOOL_WIFI_CHK_DL_SCDATA:
+    {
+      *ret_wk = BSUBWAY_WIFIDATA_CheckLeaderDataEnable( wifiData );
+    }
+    break;
+  //WiFi　歴代情報閲覧イベント呼び出し
+  case BSWTOOL_WIFI_EV_READ_SCDATA:
+    {
+      /*
+      SCRIPT_CallEvent( sc, WIFI_BSUBWAY_EVENT_Start(
+          gsys,WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD) );
+      */
+    }
+    return( VMCMD_RESULT_SUSPEND );
   //----ワーク依存
   //プレイモード別復帰位置セット
   case BSWSUB_SET_PLAY_MODE_LOCATION:
@@ -613,11 +674,11 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     KAGAYA_Printf( "BSWSUB GET PLAY_MODE = %d\n", *ret_wk );
     break;
   //ボスクリアフラグをセット
-  case BSWSUB_SET_BOSS_CLEAR_FLAG:
+  case BSWSUB_SET_PLAY_BOSS_CLEAR:
     bsw_scr->boss_f = param0;
     break;
   //ボスクリアフラグを取得
-  case BSWSUB_GET_BOSS_CLEAR_FLAG:
+  case BSWSUB_GET_PLAY_BOSS_CLEAR:
     *ret_wk = bsw_scr->boss_f;
     break;
   //バトルポイント加算
@@ -732,6 +793,23 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //ホームに着いた際に行うワークセット
   case BSWSUB_SET_HOME_WORK:
     BSUBWAY_SCRWORK_SetHomeWork( bsw_scr, gsys );
+    break;
+  //電車内BGM、ラウンド数別スイッチ設定
+  case BSWSUB_SET_TRAIN_BGM_ROUND_SW:
+    {
+      SWITCH_INDEX idx = SWITCH_00;
+      u16 round = BSUBWAY_PLAYDATA_GetRoundNo( playData );
+      
+      if( round ){ //ラウンドが存在する
+        idx += round;
+
+        if( idx < SWITCH_NUM ){
+          ISS_SYS *iss = GAMESYSTEM_GetIssSystem( gsys );
+          ISS_SWITCH_SYS *iss_sw = ISS_SYS_GetIssSwitchSystem( iss );
+          ISS_SWITCH_SYS_SwitchOn( iss_sw, idx ); 
+        }
+      }
+    }
     break;
   //----ワーク依存　通信関連
   //通信開始

@@ -361,7 +361,7 @@ EVENT_START ev_c04r0111_home
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
 
   //ボスを倒したか
-  _BSUBWAY_TOOL( BSWSUB_GET_BOSS_CLEAR_FLAG, BSW_NULL, BSW_NULL, boss_f )
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_BOSS_CLEAR, BSW_NULL, BSW_NULL, boss_f )
   
   //途中駅状態に
   $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_STOPOVER
@@ -402,55 +402,62 @@ EVENT_START ev_c04r0111_home
   //戻り先を無効に
   _BSUBWAY_TOOL( BSWTOOL_POP_NOW_LOCATION, BSW_NULL, BSW_NULL,BSW_NULL )
   
-  IF $boss_f == 1 THEN //倒した
-    _BSUBWAY_TOOL( BSWSUB_CHK_S_MODE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+  IF $play_mode == BSWAY_MODE_WIFI THEN //wifi
+    //前の部屋か？
+    //ランク処理
+    //ランク？になりました
+    //今回の成績をWifiに送るか？
+  ELSE
+    IF $boss_f == 1 THEN //倒した
+      _BSUBWAY_TOOL( BSWSUB_CHK_S_MODE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
     
-    IF $SCWK_ANSWER == TRUE THEN //スーパーボスである
-      _SYSWIN_MSG( msg_c04r0111_04 , WIN_DOWN ) //おめでとうございます
-      _AB_KEYWAIT()
-      
-      _PLAYER_NAME( 0 )
-      _NUMBER( 1, 50, 2 )
-      _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
-      _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
-      _ME_WAIT()
-
-      _BSUBWAY_TOOL( BSWTOOL_GET_S_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, SCWK_ANSWER )
-      
-       IF $SCWK_ANSWER == 0 THEN //初めて倒した
-        _SYSWIN_MSG( msg_c04r0111_08 , WIN_DOWN ) //トロフィを差し上げます
+      IF $SCWK_ANSWER == TRUE THEN //スーパーボスである
+        _SYSWIN_MSG( msg_c04r0111_04 , WIN_DOWN ) //おめでとうございます
         _AB_KEYWAIT()
-        _BSUBWAY_TOOL( BSWTOOL_SET_S_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
-      ENDIF
-    ELSE  //ノーマルボスである
-      _SYSWIN_MSG( msg_c04r0111_04 , WIN_DOWN ) //おめでとうございます
-      _AB_KEYWAIT()
       
-      _PLAYER_NAME( 0 )
-      _NUMBER( 1, 50, 2 )
-      _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
-      _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
-      _ME_WAIT()
-     
-      _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, SCWK_ANSWER )
-      
-      IF $SCWK_ANSWER == 0 THEN //初めて倒した
-        _SYSWIN_MSG( msg_c04r0111_05 , WIN_DOWN ) //スーパーに挑戦出来ます
-        _AB_KEYWAIT()
-        _BSUBWAY_TOOL( BSWTOOL_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
-      ENDIF
-    ENDIF
-  ELSE //倒していない
-    _SYSWIN_MSG( msg_c04r0111_03 , WIN_DOWN ) //おめでとうございます
-    _AB_KEYWAIT()
-    
-    _PLAYER_NAME( 0 )
-    _NUMBER( 1, 50, 2 )
-    _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
-    _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
-    _ME_WAIT()
-  ENDIF
+        _PLAYER_NAME( 0 )
+        _NUMBER( 1, 50, 2 )
+        _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
+        _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
+        _ME_WAIT()
   
+        _BSUBWAY_TOOL( BSWTOOL_GET_S_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, SCWK_ANSWER )
+        
+         IF $SCWK_ANSWER == 0 THEN //初めて倒した
+          _SYSWIN_MSG( msg_c04r0111_08 , WIN_DOWN ) //トロフィを差し上げます
+          _AB_KEYWAIT()
+          _BSUBWAY_TOOL( BSWTOOL_SET_S_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
+        ENDIF
+      ELSE  //ノーマルボスである
+        _SYSWIN_MSG( msg_c04r0111_04 , WIN_DOWN ) //おめでとうございます
+        _AB_KEYWAIT()
+        
+        _PLAYER_NAME( 0 )
+        _NUMBER( 1, 50, 2 )
+        _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
+        _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
+        _ME_WAIT()
+     
+        _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, SCWK_ANSWER )
+      
+        IF $SCWK_ANSWER == 0 THEN //初めて倒した
+          _SYSWIN_MSG( msg_c04r0111_05 , WIN_DOWN ) //スーパーに挑戦出来ます
+          _AB_KEYWAIT()
+          _BSUBWAY_TOOL( BSWTOOL_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
+        ENDIF
+      ENDIF
+    ELSE //倒していない
+      _SYSWIN_MSG( msg_c04r0111_03 , WIN_DOWN ) //おめでとうございます
+      _AB_KEYWAIT()
+    
+      _PLAYER_NAME( 0 )
+      _NUMBER( 1, 50, 2 )
+      _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
+      _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
+      _ME_WAIT()
+    ENDIF
+  ENDIF
+
   //レポート
   _SYSWIN_MSG( msg_c04r0111_01 , WIN_DOWN )
   _REPORT_CALL( SCWK_ANSWER )
@@ -543,9 +550,9 @@ sub_demo_train_arrival:
   
   //途中駅なら電車去る
   IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN
-    _TIME_WAIT( 10 ) //ちょっと待つ
+    _TIME_WAIT( 20 ) //ちょっと待つ
     _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, 0, BTRAIN_POS_RECEIPT, BSW_NULL )
-    _TIME_WAIT( 5 ) //ちょっと待つ
+    _TIME_WAIT( 30 ) //ちょっと待つ
     
     //ブラックアウト
     _BLACK_OUT()

@@ -35,6 +35,7 @@ enum
   FC_BSUBWAY_PLAYER_DATA = GFL_NET_CMD_BSUBWAY,
   FC_BSUBWAY_TR_DATA,
   FC_BSUBWAY_RETIRE_SELECT,
+  FC_BSUBWAY_MYSTATUS_DATA,
   FC_BSUBWAY_MAX,
 };
 
@@ -62,6 +63,9 @@ static void commCmd_FrWiFiCounterTowerRecvBufTrainerData(
 static void commCmd_FrWiFiCounterTowerRecvBufRetireSelect(
     int netID, const int size, const void *pData,
     void *pWork, GFL_NETHANDLE *pNetHandle );
+static void commCmd_FrRecvMyStatusData(
+    int netID, const int size, const void *pData,
+    void *pWork, GFL_NETHANDLE *pNetHandle );
 
 //======================================================================
 //  通信データ
@@ -74,6 +78,7 @@ static const NetRecvFuncTable data_RecvFuncTbl[FC_BSUBWAY_CMD_MAX] =
   {commCmd_RecvBufPlayerData, NULL},
   {commCmd_FrWiFiCounterTowerRecvBufTrainerData, NULL},
   {commCmd_FrWiFiCounterTowerRecvBufRetireSelect, NULL},
+  {commCmd_FrRecvMyStatusData, NULL},
 };
 
 /*
@@ -378,7 +383,7 @@ void BSUBWAY_SCRWORK_CommSendPlayerData(
   POKEMON_PARAM *pp;
   MYSTATUS *my = GAMEDATA_GetMyStatus( gdata );
   const POKEPARTY *party = GAMEDATA_GetMyPokemon( gdata );
-
+  
   bsw_scr->send_buf[0] = MyStatus_GetMySex( my );
   
   for( i = 0; i < 2; i++ ){
@@ -389,9 +394,9 @@ void BSUBWAY_SCRWORK_CommSendPlayerData(
   
   //ここはBTWR_MODE_COMM_MULTI専用
   OS_Printf( "bsw_scr->play_mode = %d\n", bsw_scr->play_mode );
-
+  
   bsw_scr->send_buf[3] = BSUBWAY_SCOREDATA_GetStageNo(
-      bsw_scr->scoreData, bsw_scr->play_mode  );
+      bsw_scr->scoreData, bsw_scr->play_mode );
 }
 
 //--------------------------------------------------------------
@@ -449,12 +454,16 @@ BOOL BSUBWAY_SCRWORK_CommSendData(
     command = FC_BSUBWAY_RETIRE_SELECT;
     BSUBWAY_SCRWORK_CommSendRetireSelect( bsw_scr, param );
     break;
-  case BSWAY_COMM_CHALLENGE_CONTINUE: //続けて挑戦する
-    break;
-  case BSWAY_COMM_GAME_END: //ゲームを終了する
+  case BSWAY_COMM_MYSTATUS_DATA: //MYSTATUS送信
+    command = FC_BSUBWAY_MYSTATUS_DATA;
+    {
+      MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
+      MyStatus_Copy( mystatus, (MYSTATUS*)bsw_scr->send_buf );
+    }
     break;
   default:
     GF_ASSERT( 0 );
+    return( FALSE );
   }
   
   OS_Printf( "bsubway comn send : cmdNo(%d) buf 0:%d, 1:%d, 2:%d\n",
@@ -499,10 +508,13 @@ BOOL BSUBWAY_SCRWORK_CommRecieveData( BSUBWAY_SCRWORK *bsw_scr, u16 *ret_buf )
   u8 check_num;
   
   //データ受信待ち
-  if( bsw_scr->comm_mode == BSWAY_COMM_TR_DATA ){
+  switch( bsw_scr->comm_mode ){
+  case BSWAY_COMM_TR_DATA:
     check_num = 1;
-  }else{
+    break;
+  default:
     check_num = 2;
+    break;
   }
   
   if( bsw_scr->comm_recieve_count == check_num ){
@@ -819,4 +831,40 @@ static void commCmd_FrWiFiCounterTowerRecvBufRetireSelect(
   if( bsw_scr->retire_f || recv_buf[0] ){
     bsw_scr->comm_check_work = 1;
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  recv_bufのバトルサブウェイ送られてきたMYSTATUSを取得
+ * @param   id_no    送信者のネットID
+ * @param   size    受信データサイズ
+ * @param   pData    受信データ
+ * @param   work    FRONTIER_SYSTEMへのポインタ
+ * @return  none
+ */
+//--------------------------------------------------------------
+static void commCmd_FrRecvMyStatusData(
+    int netID, const int size, const void *pData,
+    void *pWork, GFL_NETHANDLE *pNetHandle )
+{
+  int num;
+  BSUBWAY_SCRWORK *bsw_scr = pWork;
+  const u16 *recv_buf = pData;
+  
+  OS_Printf( "WIFI受付 バトルサブウェイ　MYSTATUSを受信した\n" );
+  OS_Printf( "id_no = %d\n", netID );
+  OS_Printf( "自分id = %d\n", GFL_NET_SystemGetCurrentID() );
+  
+  num = 0;
+  bsw_scr->comm_recieve_count++;
+
+  OS_Printf( "bsw_scr->comm_recieve_count = %d\n",
+      bsw_scr->comm_recieve_count );
+  
+  //自分のデータは受け取らない
+  if( GFL_NET_SystemGetCurrentID() == netID ){
+    return;
+  }
+   
+  MI_CpuCopy8( recv_buf, &bsw_scr->mystatus_fr, sizeof(MYSTATUS) );
 }

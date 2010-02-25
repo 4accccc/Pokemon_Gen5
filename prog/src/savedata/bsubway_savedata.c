@@ -41,10 +41,11 @@ struct _BSUBWAY_PLAYDATA
 {
   u16 itemfix_f  :1;  ///<固定アイテムかどうかのフラグ
   u16 saved_f    :1;  ///<セーブ済みかどうか
-  u16 play_mode  :3;  ///<現在どこにチャレンジ中か?
+  u16 play_mode  :4;  ///<現在どこにチャレンジ中か?
   u16 partner    :3;  ///<現在誰と組んでいるか?
   u16 use_battle_box:1; ///<バトルボックスを使用するか
-  u16 padding_bit:7; ///<余り
+  u16 sel_wifi_dl_play:1; ///<wifiダウンロードプレイを行うか
+  u16 padding_bit:5; ///<余り
   u8 wifi_rec_down;    ///<勝ち抜きまでに倒されたポケモン数
   u8 round;  ///<バトルサブウェイ ラウンド数
   
@@ -220,6 +221,8 @@ u32 BSUBWAY_PLAYDATA_GetData(
     return bsw_play->partner;
   case BSWAY_PLAYDATA_ID_use_battle_box:
     return bsw_play->use_battle_box;
+  case BSWAY_PLAYDATA_ID_sel_wifi_dl_play:
+    return bsw_play->sel_wifi_dl_play;
   default:
     GF_ASSERT( 0 );
   }
@@ -279,6 +282,9 @@ void BSUBWAY_PLAYDATA_SetData(
     break;
   case BSWAY_PLAYDATA_ID_use_battle_box:
     bsw_play->use_battle_box = buf8[0];
+    break;
+  case BSWAY_PLAYDATA_ID_sel_wifi_dl_play:
+    bsw_play->sel_wifi_dl_play = buf8[0];
     break;
   default:
     GF_ASSERT( 0 );

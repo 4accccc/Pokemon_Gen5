@@ -20,6 +20,7 @@
 #include "bsubway_scr_def.h"
 
 #include "event_field_proclink.h"
+#include "demo/comm_btl_demo.h"
 
 //======================================================================
 //  define
@@ -81,7 +82,8 @@ struct _TAG_BSUBWAY_SCRWORK
   GAMEDATA *gdata; ///<GAMEDATA
   BSUBWAY_PLAYDATA *playData;  ///<セーブデータへのポインタ
   BSUBWAY_SCOREDATA *scoreData;  ///<セーブデータへのポインタ
-  
+  BSUBWAY_WIFI_DATA *wifiData; ///<セーブデータへのポインタ
+
   u8 pokelist_select_num[6]; ///<ポケモン選択で取得した手持ちNo
   u16 pokelist_result_select; ///<ポケモンリスト戻り値
   u16 pokelist_return_mode;
@@ -110,6 +112,9 @@ struct _TAG_BSUBWAY_SCRWORK
   u8  comm_timing_no; //通信タイミング番号
   u16 comm_check_work;
   u16 ret_work_id;
+  
+  MYSTATUS mystatus_fr; //通信パートナーのMYSTATUS
+  COMM_BTL_DEMO_PARAM comm_btl_demo_param;
   
   //プラチナで追加
 //  int winlose_flag; //(LOCATION_WORKを消して、そこに入れることも可能？)

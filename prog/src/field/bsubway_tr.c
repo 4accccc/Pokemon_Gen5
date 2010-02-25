@@ -71,6 +71,9 @@ static void * get_TrainerRomData(u16 tr_no,HEAPID heapID);
 
 static void get_PokemonRomData(
     BSUBWAY_POKEMON_ROM_DATA *prd,int index);
+static void  make_TrainerData(
+    BATTLE_SETUP_PARAM *bp, BSUBWAY_PARTNER_DATA *tr_data,
+    int cnt, BTL_CLIENT_ID client_no, HEAPID heapID );
 
 static STRCODE * PM_strcpy( STRCODE* to_str, const STRCODE* from_str );
 static u16 get_Rand( BSUBWAY_SCRWORK *wk );
@@ -381,14 +384,14 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     dst->party[BTL_CLIENT_ENEMY1] = NULL;
     dst->party[BTL_CLIENT_PARTNER] = NULL;
     dst->party[BTL_CLIENT_ENEMY2] = NULL;
-
-    dst->competitor = BTL_COMPETITOR_TRAINER;
-
+    
+    dst->competitor = BTL_COMPETITOR_SUBWAY;
+    
     dst->playerStatus[BTL_CLIENT_PLAYER] = GAMEDATA_GetMyStatus( gameData );
     dst->playerStatus[BTL_CLIENT_ENEMY1] = NULL;
     dst->playerStatus[BTL_CLIENT_PARTNER] = NULL;
     dst->playerStatus[BTL_CLIENT_ENEMY2] = NULL;
-
+    
     dst->itemData     = GAMEDATA_GetMyItem( gameData );
     dst->bagCursor    = GAMEDATA_GetBagCursor( gameData );
     dst->zukanData    = GAMEDATA_GetZukanSave( gameData );
@@ -432,6 +435,10 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     dst->tr_data[BTL_CLIENT_PLAYER] = create_BSP_TRAINER_DATA( HEAPID_PROC );
     dst->tr_data[BTL_CLIENT_ENEMY1] = create_BSP_TRAINER_DATA( HEAPID_PROC );
   }
+  
+  if( play_mode == BSWAY_MODE_WIFI ){ //WiFiの場合は
+
+  }
 
   { //敵トレーナーセット
     PMS_DATA *pd;
@@ -472,7 +479,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
       GFL_HEAP_FreeMemory( pp );
     }
   }
-
+  
   { //プレイヤーセット
     BTL_CLIENT_ID client = BTL_CLIENT_PLAYER;
     POKEPARTY **party = &dst->party[client];
@@ -516,7 +523,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
         }
 
 #ifdef DEBUG_ONLY_FOR_kagaya
-        PP_Put( entry_pp, ID_PARA_hp, 1 );
+//        PP_Put( entry_pp, ID_PARA_hp, 1 ); //瀕死状態に
 #endif
         PokeParty_Add( *party, entry_pp );
       }
@@ -532,6 +539,25 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     }
   }
 
+  switch( play_mode ){
+  case BSWAY_MODE_MULTI:
+  case BSWAY_MODE_S_MULTI: //ペアデータをセット
+    //トレーナーデータ確保
+    dst->tr_data[BTL_CLIENT_PARTNER] = create_BSP_TRAINER_DATA( HEAPID_PROC );
+    make_TrainerData( dst, &wk->tr_data[0],
+        wk->member_num, BTL_CLIENT_PARTNER, wk->heapID );
+    //↓ここは共通処理で流れていい
+  case BSWAY_MODE_COMM_MULTI:
+  case BSWAY_MODE_S_COMM_MULTI: //トレーナーデータ(enemy2)をセット
+    //トレーナーデータ確保
+    dst->tr_data[BTL_CLIENT_ENEMY2] = create_BSP_TRAINER_DATA( HEAPID_PROC );
+    make_TrainerData( dst, &wk->tr_data[1],
+        wk->member_num, BTL_CLIENT_ENEMY2, wk->heapID );
+    break;
+  default:
+    break;
+  }
+  
   return dst;
 }
 
@@ -587,6 +613,21 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     break;
   }
 #endif
+
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+COMM_BTL_DEMO_PARAM * BSUBWAY_SCRWORK_CreateBattleDemoParam(
+    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys )
+{
+  COMM_BTL_DEMO_PARAM *demo;
+  demo = &bsw_scr->comm_btl_demo_param;
+  return( NULL );
+}
 
 //======================================================================
 //  通信関連コマンド
@@ -1286,6 +1327,55 @@ static void get_PokemonRomData(
 {
   //ここは通信はありえないのでプラチナ限定！(AIマルチ)
   GFL_ARC_LoadData( (void*)prd, ARCID_PL_BTD_PM, index );
+}
+
+//--------------------------------------------------------------
+/**
+ *  バトルタワートレーナーデータ生成
+ * @param[in/out]  bp      生成するBATTLE_PARAM構造体
+ * @param[in]    tr_data    生成元になるトレーナーデータ
+ * @param[in]    cnt      トレーナーの持ちポケモン数
+ * @param[in]    client_no  生成するclient_no
+ * @param[in]    heapID    ヒープID（POKEMON_PARAMの生成に必要）
+ */
+//--------------------------------------------------------------
+static void  make_TrainerData(
+    BATTLE_SETUP_PARAM *bp, BSUBWAY_PARTNER_DATA *tr_data,
+    int cnt, BTL_CLIENT_ID client_no, HEAPID heapID )
+{
+  int i,j;
+  PMS_DATA *pd;
+  POKEMON_PARAM  *pp;
+  
+  //トレーナーIDをセット
+  bp->tr_data[client_no]->tr_id = tr_data->bt_trd.player_id;
+  
+  //トレーナーデータをセット
+  bp->tr_data[client_no]->tr_type = tr_data->bt_trd.tr_type;
+  
+//PM_strcpy( bp->tr_data[client_no].name, &tr_data->bt_trd.name[0] );
+  GFL_STR_SetStringCode( bp->tr_data[client_no]->name, tr_data->bt_trd.name );
+  
+  pd = (PMS_DATA*)&tr_data->bt_trd.win_word[0];
+  bp->tr_data[client_no]->win_word = *pd;
+  pd = (PMS_DATA*)&tr_data->bt_trd.lose_word[0];
+  bp->tr_data[client_no]->lose_word = *pd;
+  
+  //ポケモンデータをセット
+  {
+    POKEPARTY **party = &bp->party[client_no];
+
+    pp = GFL_HEAP_AllocMemoryLo( heapID, POKETOOL_GetWorkSize() );
+    *party = PokeParty_AllocPartyWork( HEAPID_PROC );
+    PokeParty_Init( *party, TEMOTI_POKEMAX );
+    
+    for(i=0;i<cnt;i++){
+      make_PokePara( &tr_data->btpwd[i], pp );
+      PokeParty_Add( *party, pp );
+    }
+  
+    GFL_HEAP_FreeMemory( pp );
+  }
 }
 
 //======================================================================

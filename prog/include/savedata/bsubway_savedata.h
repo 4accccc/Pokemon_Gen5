@@ -52,6 +52,7 @@ typedef enum
   BSWAY_PLAYDATA_ID_trainer,
   BSWAY_PLAYDATA_ID_partner,
   BSWAY_PLAYDATA_ID_use_battle_box,
+  BSWAY_PLAYDATA_ID_sel_wifi_dl_play,
   BSWAY_PLAYDATA_ID_MAX,
 }BSWAY_PLAYDATA_ID;
 

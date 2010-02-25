@@ -9,13 +9,18 @@
 #include "system/gfl_use.h"
 #include "system/vm_cmd.h"
 
+#include "gamesystem\btl_setup.h"
 #include "event_fieldmap_control.h"
+#include "event_fldmmdl_control.h"
 #include "poke_tool/poke_regulation.h"
 #include "app/pokelist.h"
 #include "app/p_status.h"
 #include "battle/battle.h"
 
 #include "event_battle.h"
+#include "field/event_battle_call.h"
+#include "event_fieldmap_control.h"
+#include "event_ircbattle.h"
 
 #include "fieldmap.h"
 
@@ -38,6 +43,16 @@ FS_EXTERN_OVERLAY(pokelist);
 //======================================================================
 //  struct
 //======================================================================
+//--------------------------------------------------------------
+/// EVENT_BSW_COMM_BATTLE_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+  GAMESYS_WORK * gsys;
+  FIELDMAP_WORK * fieldmap;
+  BATTLE_SETUP_PARAM *para;
+  COMM_BTL_DEMO_PARAM *demo_prm;
+}EVENT_BSW_COMM_BATTLE_WORK;
 
 //======================================================================
 //  proto
@@ -218,6 +233,101 @@ GMEVENT * BSUBWAY_EVENT_TrainerBattle(
   event = EVENT_BSubwayTrainerBattle( gsys, fieldmap, bp );
   
   return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　通信バトル
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+GMEVENT * BSUBWAY_EVENT_CommBattle(
+    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
+{
+  GMEVENT * event;
+  BATTLE_SETUP_PARAM *bp;
+  COMM_BTL_DEMO_PARAM *demo;
+
+  bp = BSUBWAY_SCRWORK_CreateBattleParam( bsw_scr, gsys );
+  demo = BSUBWAY_SCRWORK_CreateBattleDemoParam( bsw_scr, gsys );
+  event = EVENT_CommBattle( gsys, bp, demo );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　通信バトル　メイン
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT bsw_CommBattleMain( GMEVENT *event, int *seq, void *wk )
+{
+  EVENT_BSW_COMM_BATTLE_WORK *work = wk;
+  GAMESYS_WORK *gsys = work->gsys;
+  
+  switch (*seq){
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, work->fieldmap) );
+    (*seq)++;
+    break;
+  case 1:
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeOut_Black(
+          gsys, work->fieldmap, FIELD_FADE_WAIT );
+      GMEVENT_CallEvent(event, fade_event);
+    }
+    (*seq)++;
+    break;
+  case 2:
+    GMEVENT_CallEvent( event, EVENT_FieldClose(gsys,work->fieldmap) );
+    (*seq)++;
+    break;
+  case 3:
+    GMEVENT_CallEvent( event, 
+      EVENT_FSND_PushPlayNextBGM(gsys,work->para->musicDefault,
+        FSND_FADE_SHORT, FSND_FADE_NONE) ); 
+    (*seq)++;
+    break;
+  case 4:
+    GMEVENT_CallEvent( event,
+        EVENT_CommBattle(gsys,work->para,work->demo_prm) );
+    (*seq)++;
+    break;
+  case 5:
+#if 0
+    BATTLE_PARAM_Release( &work->para ); //バトルSetupParam解放
+#else
+    BATTLE_PARAM_Delete( work->para ); //バトルSetupParam解放
+#endif
+    OS_TPrintf("_FIELD_OPEN\n");
+    GMEVENT_CallEvent( event, EVENT_FieldOpen(gsys) );
+    (*seq) ++;
+    break;
+  case 6:
+    OS_TPrintf("_FIELD_FADEIN\n");
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeIn_Black(
+          gsys, work->fieldmap, FIELD_FADE_WAIT );
+      GMEVENT_CallEvent(event, fade_event);
+    }
+    (*seq) ++;
+    break;
+  case 7:
+    GMEVENT_CallEvent( event,
+        EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT,FSND_FADE_NORMAL) );
+    (*seq) ++;
+    break;
+  case 8:
+    return GMEVENT_RES_FINISH;
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+  return GMEVENT_RES_CONTINUE;
 }
 
 //======================================================================

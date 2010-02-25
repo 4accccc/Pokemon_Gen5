@@ -147,7 +147,7 @@ sub_bsw_receipt_guide_wifi:
   DEFINE_LOCAL ret
   
   //アップロードしていないデータがあるか？
-  _BSUBWAY_TOOL( BSWTOOL_GET_WIFI_UPLOAD_FLAG, 0, BSW_NULL, ret )
+  _BSUBWAY_TOOL( BSWTOOL_WIFI_GET_UPLOAD_FLAG, 0, BSW_NULL, ret )
   
   IF $ret == TRUE THEN //未アップロードデータあり
     //アップロードするか？
@@ -162,18 +162,26 @@ sub_bsw_receipt_guide_wifi:
    
   //ようこそ
   _CALL sub_receipt_msg_greet
-   
+  
   //wifiランクメッセージ
   _SYSWIN_MSG( msg_bsw_scr_49 , WIN_DOWN )
-  
+  _AB_KEYWAIT()
+
   //選択メニュー
   _CALL sub_receipt_menu_challenge_wifi
   
-  IF $SCWK_ANSWER == 0 THEN //挑戦する
+  SWITCH $SCWK_ANSWER
+  CASE 0 THEN //挑戦する
+    _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_SEL_DL_BTL, TRUE, BSW_NULL, BSW_NULL )
     _CALL sub_receipt_challenge
-  ELSE //やめる
+  CASE 1 THEN //歴代の記録
+    _CALL sub_receipt_rekidai_download
+  CASE 2 THEN //前のトレイン
+    _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_SEL_DL_BTL, FALSE, BSW_NULL, BSW_NULL )
+    _CALL sub_receipt_challenge
+  DEFAULT
     _CALL sub_receipt_common_exit
-  ENDIF
+  ENDSWITCH
 }
 _RET
 
@@ -182,6 +190,69 @@ _RET
 //--------------------------------------------------------------
 sub_bsw_receipt_guide_wifi_upload:
 {
+  DEFINE_LOCAL ret
+  
+  _SYSWIN_MSG( msg_bsw_scr_50, WIN_DOWN )
+  _YES_NO_WIN( ret )
+  
+  IF $ret == SCR_YES THEN
+    //フィールド通信切断
+    _FIELD_COMM_EXIT_EVENT_CALL( ret )
+    
+    IF $ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
+      $ret = FALSE
+    ELSIF $ret == SCR_FIELD_COMM_EXIT_ERROR THEN
+      $ret = FALSE
+    ELSE
+      $ret = TRUE
+    ENDIF
+    
+    IF $ret == FALSE THEN //切断失敗
+      _SYSWIN_MSG( msg_bsw_scr_77 , WIN_DOWN )
+      _AB_KEYWAIT()
+    ELSE
+      _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
+    ENDIF
+  ENDIF
+  
+  _CALL sub_receipt_common_exit
+}
+_RET
+
+//--------------------------------------------------------------
+//  受付話し掛け　案内　歴代データダウンロード
+//--------------------------------------------------------------
+sub_receipt_rekidai_download:
+{
+  DEFINE_LOCAL ret
+  
+  _SYSWIN_MSG( msg_bsw_scr_33, WIN_DOWN )
+  _YES_NO_WIN( ret )
+  _SYSWIN_CLOSE()
+
+  IF $ret == SCR_YES THEN
+    //フィールド通信切断
+    _FIELD_COMM_EXIT_EVENT_CALL( ret )
+    
+    IF $ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
+      $ret = FALSE
+    ELSIF $ret == SCR_FIELD_COMM_EXIT_ERROR THEN
+      $ret = FALSE
+    ELSE
+      $ret = TRUE
+    ENDIF
+    
+    IF $ret == FALSE THEN //切断失敗
+      _SYSWIN_MSG( msg_bsw_scr_77 , WIN_DOWN )
+      _AB_KEYWAIT()
+    ELSE
+      _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_SCDATA, BSW_NULL, BSW_NULL, BSW_NULL )
+      _SYSWIN_MSG( msg_bsw_scr_52, WIN_DOWN )
+      _AB_KEYWAIT()
+    ENDIF
+  ENDIF
+  
+  _CALL sub_receipt_common_exit
 }
 _RET
 
@@ -218,19 +289,37 @@ _RET
 //--------------------------------------------------------------
 sub_receipt_menu_challenge_wifi:
 {
-  $SCWK_ANSWER = 1
+  DEFINE_LOCAL loop
+  DEFINE_LOCAL wifi_data
   
-  WHILE $SCWK_ANSWER == 1
+  _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_DL_DATA, BSW_NULL, BSW_NULL, wifi_data )
+  
+  $loop = TRUE
+  
+  WHILE $loop == TRUE
     _CALL sub_receipt_msg_ask_geton
-    
     _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
-    _BMPMENU_MAKE_LIST( msg_bsw_scr_39, 0 ) //挑戦
-    _BMPMENU_MAKE_LIST( msg_bsw_scr_40, 1 ) //説明
-    _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 2 ) //やめる
-    _BMPMENU_START()
     
-    IF $SCWK_ANSWER == 1 THEN //説明文
+    IF $wifi_data == TRUE THEN //データあり
+      _BMPMENU_MAKE_LIST( msg_bsw_scr_39, 0 ) //挑戦
+      _BMPMENU_MAKE_LIST( msg_bsw_scr_42, 1 ) //歴代
+      _BMPMENU_MAKE_LIST( msg_bsw_scr_43, 2 ) //前のトレイン
+      _BMPMENU_MAKE_LIST( msg_bsw_scr_40, 3 ) //説明
+      _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 4 ) //やめる
+    ELSE //ダウンロードデータなし
+      _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+      _BMPMENU_MAKE_LIST( msg_bsw_scr_39, 0 ) //挑戦
+      _BMPMENU_MAKE_LIST( msg_bsw_scr_42, 1 ) //歴代
+      _BMPMENU_MAKE_LIST( msg_bsw_scr_40, 3 ) //説明
+      _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 4 ) //やめる
+    ENDIF
+    
+    _BMPMENU_START()
+
+    IF $SCWK_ANSWER == 3 THEN //説明文
       _CALL sub_receipt_msg_account
+    ELSE
+      $loop = FALSE
     ENDIF
   ENDWHILE
 }
@@ -280,6 +369,7 @@ sub_receipt_challenge_single_double:
   _CALL sub_receipt_common_select_temoti_bbox
   
   IF $SCWK_ANSWER == 0 THEN //参加不可
+    _CALL sub_receipt_common_exit
     _RET
   ENDIF
   
@@ -287,6 +377,7 @@ sub_receipt_challenge_single_double:
   _CALL sub_receipt_common_pokemon_select
   
   IF $SCWK_ANSWER == 0 THEN //参加不可
+    _CALL sub_receipt_common_exit
     _RET
   ENDIF
   
@@ -297,6 +388,7 @@ sub_receipt_challenge_single_double:
   _CALL sub_receipt_common_save
   
   IF $SCWK_ANSWER == 1 THEN //キャンセル
+    _CALL sub_receipt_common_exit
     _RET
   ENDIF
   
@@ -506,8 +598,8 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //お互いが選んだポケモンデータを交換
-  _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, 0, BSW_NULL, BSW_NULL )
-  _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, 0, BSW_NULL, ret )
+  _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_PLAYER_DATA, BSW_NULL, BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_PLAYER_DATA, BSW_NULL, ret )
   
   SWITCH $ret
   CASE 1 THEN //同じポケモン 1
@@ -524,6 +616,11 @@ sub_receipt_challenge_multi_comm:
     _CALL sub_receipt_common_comm_exit
     _RET
   ENDIF
+  
+  //MYSTATUS送信
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_SEND_MYST, BSW_NULL, BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_MYSTATUS_DATA, BSW_NULL, BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_PLAYER_DATA, BSW_NULL, BSW_NULL )
   
   //トレーナーセット開始
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_BTL_TRAINER_SET, BSW_NULL, BSW_NULL )
@@ -609,6 +706,12 @@ _RET
 //--------------------------------------------------------------
 sub_receipt_challenge_wifi:
 {
+  DEFINE_LOCAL dl_play
+  DEFINE_LOCAL ret
+
+  //wifi接続フラグをワークがクリアされる前に取得
+  _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_SEL_DL_BTL, BSW_NULL, BSW_NULL, dl_play )
+
   //ワーク作成
   _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, BSWAY_MODE_WIFI )
   
@@ -616,6 +719,7 @@ sub_receipt_challenge_wifi:
   _CALL sub_receipt_common_select_temoti_bbox
   
   IF $SCWK_ANSWER == 0 THEN //参加不可
+    _CALL sub_receipt_common_exit
     _RET
   ENDIF
   
@@ -623,6 +727,7 @@ sub_receipt_challenge_wifi:
   _CALL sub_receipt_common_pokemon_select
   
   IF $SCWK_ANSWER == 0 THEN //参加不可
+    _CALL sub_receipt_common_exit
     _RET
   ENDIF
   
@@ -633,14 +738,22 @@ sub_receipt_challenge_wifi:
   _CALL sub_receipt_common_save
   
   IF $SCWK_ANSWER == 1 THEN //キャンセル
+    _CALL sub_receipt_common_exit
     _RET
   ENDIF
   
   //wifi接続
-  _NOP
+  IF $dl_play == TRUE THEN
+    _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_GAMEDATA, BSW_NULL, BSW_NULL, BSW_NULL )
+    _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_DL_DATA, BSW_NULL, BSW_NULL, ret )
+    
+    IF $ret == FALSE THEN
+      _CALL sub_receipt_common_exit
+      _RET
+    ENDIF
+  ENDIF
   
   //乗車メッセージ
-  
   _CALL sub_receipt_msg_geton_train
   
   //デモ　出発
@@ -1171,7 +1284,7 @@ sub_receipt_demo_start_train:
   
   //電車移動
   _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, BTRAIN_ANIME_TYPE_START_HOME, BSW_NULL, BSW_NULL )
-  _TIME_WAIT( 24 ) //アニメを少し見せてフェードアウト
+  _TIME_WAIT( 30 ) //アニメを少し見せてフェードアウト
 }
 _RET
 
