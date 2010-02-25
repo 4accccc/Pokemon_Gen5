@@ -48,6 +48,7 @@ EVENT_END
 //==============================================================
 sub_available_wireless_check:
 {
+  _BALLOONWIN_CLOSE()
   _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
 
   //FALSEのとき、無線通信は使えない
@@ -209,12 +210,12 @@ sub_club_counter_connect:
   //Wi-Fi接続を開始しますか？
   _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_03, SCWK_TARGET_OBJID, POS_DL )
   _YES_NO_WIN( i_ret )
-  _BALLOONWIN_CLOSE()
 
   IF $i_ret == SCR_NO THEN
     $reg_return = SEQ_GOODBYE
     _RET
   ENDIF
+  _BALLOONWIN_CLOSE()
 
   // レポートを書く
   _REPORT_EVENT_CALL( i_ret )

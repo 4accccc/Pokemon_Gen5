@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-02-24T16:55:17"/>
+	<create user="iwasawa" host="W00157" date="2010-02-25T23:17:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="149" top="557" right="854" bottom="1185" maximized="no" rayout="Vertical2">
+	<dialog left="1567" top="278" right="2272" bottom="745" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -369,9 +369,7 @@ Wi-Fi P2P接続画面へ</comment>
 「レベル１００」を　えらべます▼
 「レベル５０」や「レベル１００」では
 さんかした　ポケモン　すべてが▽
-そのレベルに　そろえられます▼
-Ｗｉ－Ｆｉコネクションを
-ごりよう　ですか？</language>
+そのレベルに　そろえられます▼</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉコネクション　では
 ともだちてちょうに　登録した▽
 人　同士で　ポケモン交換や▽
@@ -382,9 +380,7 @@ Wi-Fi P2P接続画面へ</comment>
 「レベル１００」を　選べます▼
 「レベル５０」や「レベル１００」では
 参加した　ポケモン　すべてが▽
-そのレベルに　そろえられます▼
-Ｗｉ－Ｆｉコネクションを
-ご利用ですか？</language>
+そのレベルに　そろえられます▼</language>
 	</row>
 
 	<row id="msg_wifi_counter_err01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -815,14 +811,14 @@ C-Gear入手前</comment>
 	<row id="msg_rndmatch_02_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
-		<language name="JPN" width="256">レーティングと　フリーの　２つの</language>
+		<language name="JPN" width="256">ランダムマッチ　について</language>
 		<language name="JPN_KANJI" width="256">ランダムマッチ　について</language>
 	</row>
 
 	<row id="msg_rndmatch_02_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
-		<language name="JPN" width="256">モードで　あそべます</language>
+		<language name="JPN" width="256">レーティングモード　について</language>
 		<language name="JPN_KANJI" width="256">レーティングモード　について</language>
 	</row>
 
