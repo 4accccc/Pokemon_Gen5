@@ -4146,6 +4146,49 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_ZENKOKU_ZUKAN_FLAG
+ * @brief 全国図鑑モードの確認
+ * @param ret_wk
+ * @retval  TRUEの時、全国図鑑モード
+ * @retval  FALSEの時、地方図鑑モード
+ */
+//--------------------------------------------------------------
+#define _GET_ZENKOKU_ZUKAN_FLAG( ret_wk ) \
+    _ASM_GET_ZENKOKU_ZUKAN_FLAG ret_wk
+
+    .macro  _ASM_GET_ZENKOKU_ZUKAN_FLAG ret_wk
+    .short  EV_SEQ_GET_ZUKAN_ZENKOKU_FLAG
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SET_ZENKOKU_ZUKAN_FLAG
+ * @brief 全国図鑑モードのセット
+ */
+//--------------------------------------------------------------
+#define _SET_ZENKOKU_ZUKAN_FLAG() \
+    _ASM_SET_ZENKOKU_ZUKAN_FLAG
+
+    .macro  _ASM_SET_ZENKOKU_ZUKAN_FLAG ret_wk
+    .short  EV_SEQ_SET_ZUKAN_ZENKOKU_FLAG
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SET_ZUKAN_GRAPHIC_FLAG
+ * @brief ずかんバージョンアップ：フォルム詳細画面追加
+ */
+//--------------------------------------------------------------
+#define _SET_ZUKAN_GRAPHIC_FLAG() \
+    _ASM_SET_ZUKAN_GRAPHIC_FLAG
+
+    .macro  _ASM_SET_ZUKAN_GRAPHIC_FLAG ret_wk
+    .short  EV_SEQ_SET_ZUKAN_GRAPHIC_FLAG
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _GET_BADGE_FLAG
  * @brief バッジフラグの取得
  * @param ret_wk    結果を受けるワーク

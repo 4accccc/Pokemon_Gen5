@@ -594,7 +594,6 @@ VMCMD_RESULT EvCmdGetZukanCount( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdSetZukanZenkokuFlag( VMHANDLE * core, void *wk )
 {
-  u16               mode = SCRCMD_GetVMWorkValue( core, wk );
   SCRCMD_WORK*      work = wk;
   GAMEDATA*     gamedata = SCRCMD_WORK_GetGameData( work );
   ZUKAN_SAVEDATA* zukan = GAMEDATA_GetZukanSave( gamedata );
@@ -608,7 +607,6 @@ VMCMD_RESULT EvCmdSetZukanZenkokuFlag( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetZukanZenkokuFlag( VMHANDLE * core, void *wk )
 {
-  u16               mode = SCRCMD_GetVMWorkValue( core, wk );
   u16 *           ret_wk = SCRCMD_GetVMWork( core, wk );
   SCRCMD_WORK*      work = wk;
   GAMEDATA*     gamedata = SCRCMD_WORK_GetGameData( work );
@@ -623,7 +621,6 @@ VMCMD_RESULT EvCmdGetZukanZenkokuFlag( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdSetZukanGraphicFlag( VMHANDLE * core, void *wk )
 {
-  u16               mode = SCRCMD_GetVMWorkValue( core, wk );
   SCRCMD_WORK*      work = wk;
   GAMEDATA*     gamedata = SCRCMD_WORK_GetGameData( work );
   ZUKAN_SAVEDATA* zukan = GAMEDATA_GetZukanSave( gamedata );
