@@ -811,6 +811,11 @@ static void LTVT_SCRIPT_DispMessageInit( LOCAL_TVT_WORK *work )
     LOCAL_TVT_MSG_OpenWindow( work , LTMP_UP );
   }
   
+  if( work->wordSet != NULL )
+  {
+    WORDSET_Delete( work->wordSet );
+  }
+  
   work->wordSet = WORDSET_Create( work->heapId );
   WORDSET_RegisterPlayerName( work->wordSet , 0 , GAMEDATA_GetMyStatus(work->initWork->gameData) );
   
