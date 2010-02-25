@@ -77,6 +77,13 @@ EVENT_START   ev_reserve_c09r0601_champion_01
 	_BALLOONWIN_OBJMSG( msg_c09r0601_champion_05 , C09R0601_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
 	
+	//========================================//
+		//復帰チャンピオンを倒した後の処理 ※注意！殿堂入り後の処理はinit_scr.evに記述
+		//壁紙を追加（２段階目）
+		_GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER2 )
+	
+	//========================================//
+	
 	//殿堂入り処理
 	_GOTO_GAMECLEAR_DEMO( 0 )
 

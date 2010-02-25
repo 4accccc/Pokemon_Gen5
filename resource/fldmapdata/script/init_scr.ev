@@ -256,6 +256,9 @@ INIT_EVENT_START  ev_init_gameclear_script
   //全国図鑑の入手可能フラグをセット
   _FLAG_SET( FE_ZUKAN_GRADEUP )
 
+  //ボックス壁紙追加
+  _GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER1 )
+
 }
 INIT_EVENT_END
 
