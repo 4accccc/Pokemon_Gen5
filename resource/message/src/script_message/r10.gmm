@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T22:37:40"/>
+	<create user="matsumiya" host="W00224" date="2010-02-25T15:54:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -333,7 +333,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『……隠さないでよ▼</language>
 	</row>
 
-	<row id="msg_r10_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r10_black_04">
 		<comment>♀
 ・続けてwhite_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -345,7 +345,7 @@
 こんなとき　なにもできないのか▼</language>
 	</row>
 
-	<row id="msg_r10_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手処理
 　No023「かいふくのくすり」（仮）×２
@@ -360,7 +360,7 @@
 あたしからは　これ！▼</language>
 	</row>
 
-	<row id="msg_r10_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてblack_05
 ・0＝主人公名前</comment>
@@ -371,7 +371,7 @@
 みんな　ばらばらで▼</language>
 	</row>
 
-	<row id="msg_r10_black_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r10_black_05">
 		<comment>♂
 ・続けてwhite_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -381,7 +381,7 @@
 こんなときに　きみは……▼</language>
 	</row>
 
-	<row id="msg_r10_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてblack_06</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -409,7 +409,7 @@
 って　なんか　うれしくなったの▼</language>
 	</row>
 
-	<row id="msg_r10_black_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r10_black_06">
 		<comment>♂
 ・サポートを向いて
 ・続けてblack_07</comment>
@@ -424,7 +424,7 @@
 できることを　すれば　いいんだよね▼</language>
 	</row>
 
-	<row id="msg_r10_black_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r10_black_07">
 		<comment>♂
 ・主人公を向いて
 ・出現した方向に戻る（ダッシュ?）
@@ -447,7 +447,7 @@
 頼んだよ！▼</language>
 	</row>
 
-	<row id="msg_r10_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ライバルの去ったほうをみながら（主人公も）
 ・続けてwhite_05
@@ -457,7 +457,7 @@
 		<language name="JPN_KANJI" width="256">ベル『行っちゃった！▼</language>
 	</row>
 
-	<row id="msg_r10_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後、サポートも出現してきた方向に去る
 ・画面外に消えると主人公、操作可能に
@@ -489,14 +489,14 @@
 		<language name="JPN_KANJI" width="256">１０番道路</language>
 	</row>
 
-	<row id="msg_r10_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r10_sign2_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>バッジチェックゲート
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">バッジチェックゲート
-トレーナーの　うつわを　ためす！</language>
+ゲートをひらき　れきしをかえよ！</language>
 		<language name="JPN_KANJI" width="256">バッジチェックゲート
-トレーナーの　器を　試す！</language>
+ゲートを開き　歴史を変えよ！</language>
 	</row>
 
 	<flowchart-group-list>
