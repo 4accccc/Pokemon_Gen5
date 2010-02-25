@@ -98,7 +98,7 @@ EVENT_START		ev_c07gym0101_leader7_01
 		
 		//ハチクからアイシクルバッジをもらった
 		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG( msg_c07gym0101_leader_03 , POS_DOWN )
+		_SYSWIN_MSG( msg_c07gym0101_leader_03 , POS_DEFAULT )
 		_SYSWIN_CLOSE()
 
 		//ハチクメッセージ
@@ -129,6 +129,14 @@ EVENT_START		ev_c07gym0101_leader7_01
 		
 		//d08r0101のマップを入り口が破壊されたマップに差し替える
 		_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, TRUE, TRUE )
+		
+		//ジムトレーナーの視線無効
+		_TRAINER_FLAG_SET( TRID_KARATE_04 )
+		_TRAINER_FLAG_SET( TRID_BATTLEG_04 )
+		_TRAINER_FLAG_SET( TRID_KARATE_05 )
+		_TRAINER_FLAG_SET( TRID_BATTLEG_05 )
+		_TRAINER_FLAG_SET( TRID_BATTLEG_06 )
+		_TRAINER_FLAG_SET( TRID_KARATE_06 )
 
 		//========================================//
 		

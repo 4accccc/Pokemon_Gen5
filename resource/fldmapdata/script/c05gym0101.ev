@@ -131,7 +131,7 @@ EVENT_START		ev_c05gym0101_leader
 		
 		//ヤーコンからクエイクバッジをもらった
 		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG( msg_c05gym0101_leader_03 , POS_DOWN )
+		_SYSWIN_MSG( msg_c05gym0101_leader_03 , POS_DEFAULT )
 		_SYSWIN_CLOSE()
 
 		//ヤーコンメッセージ
@@ -154,6 +154,13 @@ EVENT_START		ev_c05gym0101_leader
 		
 		//R05のチャンピオンを非表示に
 		_FLAG_SET( FV_R05_CHAMPION )
+		
+		//ジムトレーナーの視線無効
+		_TRAINER_FLAG_SET( TRID_WORKER2_12 )
+		_TRAINER_FLAG_SET( TRID_WORKER2_13 )
+		_TRAINER_FLAG_SET( TRID_OL_03 )
+		_TRAINER_FLAG_SET( TRID_BUSINESS1_04 )
+		_TRAINER_FLAG_SET( TRID_WORKER2_14 )
 
 		//========================================//
 		

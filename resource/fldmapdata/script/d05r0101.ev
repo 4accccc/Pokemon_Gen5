@@ -36,17 +36,27 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_scene_d05r0101_01
 
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+
+	//カメラ操作　サポートの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,557056,0,1851392,30 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
 	//「？」
 	_OBJ_ANIME(D05R0101_RIVAL_01,anm_d05r0101_rival_01)
 	_OBJ_ANIME_WAIT()
 	
 	//会話
 	_BALLOONWIN_OBJMSG(msg_d05r0101_black_01,D05R0101_RIVAL_01)
-	_BALLOONWIN_CLOSE()
-	
-	//会話
 	_BALLOONWIN_OBJMSG(msg_d05r0101_black_02,D05R0101_RIVAL_01)
 	_BALLOONWIN_CLOSE()
+	
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 20 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
 	
 	//去るアニメ
 	_OBJ_ANIME(D05R0101_RIVAL_01,anm_d05r0101_rival_02)

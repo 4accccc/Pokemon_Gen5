@@ -110,7 +110,7 @@ EVENT_START	ev_c08gym0101_leader8_01
 			
 			//シャガからレジェンドバッジをもらった
 			_PLAYER_NAME( 0 )
-			_SYSWIN_MSG( msg_c08gym0101_leader_03b , POS_DOWN )
+			_SYSWIN_MSG( msg_c08gym0101_leader_03b , POS_DEFAULT )
 			_SYSWIN_CLOSE()
 
 			//シャガメッセージ
@@ -128,6 +128,16 @@ EVENT_START	ev_c08gym0101_leader8_01
 			_BALLOONWIN_CLOSE()
 			
 			//========================================//
+			
+			//ジムトレーナーの視線・POS無効
+			_TRAINER_FLAG_SET( TRID_ELITEM_10 )
+			_TRAINER_FLAG_SET( TRID_VETERANW_04 )
+			_TRAINER_FLAG_SET( TRID_ELITEW_10 )
+			_TRAINER_FLAG_SET( TRID_ELITEW_11 )
+			_TRAINER_FLAG_SET( TRID_ELITEM_11 )
+			_TRAINER_FLAG_SET( TRID_ELITEM_12 )
+			_TRAINER_FLAG_SET( TRID_ELITEW_12 )
+			$WK_SCENE_C08GYM0101 = 1
 		
 			//========================================//
 			
@@ -185,7 +195,7 @@ EVENT_START	ev_c08gym0101_leader8_01
 			
 			//アイリスからレジェンドバッジをもらった
 			_PLAYER_NAME( 0 )
-			_SYSWIN_MSG( msg_c08gym0101_leader_03w , POS_DOWN )
+			_SYSWIN_MSG( msg_c08gym0101_leader_03w , POS_DEFAULT )
 			_SYSWIN_CLOSE()
 
 			//アイリスメッセージ
@@ -203,6 +213,16 @@ EVENT_START	ev_c08gym0101_leader8_01
 			_BALLOONWIN_CLOSE()
 			
 			//========================================//
+			
+			//ジムトレーナーの視線・POS無効
+			_TRAINER_FLAG_SET( TRID_ELITEM_10 )
+			_TRAINER_FLAG_SET( TRID_VETERANW_04 )
+			_TRAINER_FLAG_SET( TRID_ELITEW_10 )
+			_TRAINER_FLAG_SET( TRID_ELITEW_11 )
+			_TRAINER_FLAG_SET( TRID_ELITEM_11 )
+			_TRAINER_FLAG_SET( TRID_ELITEM_12 )
+			_TRAINER_FLAG_SET( TRID_ELITEW_12 )
+			$WK_SCENE_C08GYM0101 = 1
 		
 			//========================================//
 			
