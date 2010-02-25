@@ -23,6 +23,8 @@
   .include "c08r0401_def.h"
   .include "t01.h"
   .include "hiden_def.h"
+
+  .include "init_scr_def.h"
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -165,9 +167,12 @@ EVENT_START ev_debug_masafumi
 		ELSIF $SCWK_TEMP1 == 3 THEN
 			$SCWK_TEMP0 = 555
 			
-			$WK_SCENE_C04P01 = 0
-			_FLAG_RESET( FV_C04P01_BOSS_01 )
-			_MAP_CHANGE( ZONE_ID_C04P01, 17, 13, DIR_DOWN )
+			_FLAG_SET( FE_MUSEUM_TOUNAN )	//盗難イベントの開始
+			_FLAG_RESET(FV_C02GYM0101_HAKAI)	//博物館のプラズマ団を表示
+			$WK_SCENE_C02GYM0101  = 2
+			
+			_MAP_CHANGE( ZONE_ID_C02GYM0101, 12, 5, DIR_DOWN )
+			
 			
 		ELSIF $SCWK_TEMP1 == 4 THEN
 			_CALL	ev_event_off
@@ -775,7 +780,8 @@ EVENT_START ev_debug_common
 		
 		IF $SCWK_ANSWER == 0 THEN
 			
-			_FLAG_SET( SYS_FLAG_GAME_CLEAR )
+			//殿堂入り後にかかる処理を呼び出す
+			_GLOBAL_CALL	SCRID_INIT_GAMECLEAR_SCRIPT
 			
 		ELSIF $SCWK_ANSWER == 1 THEN
 			
