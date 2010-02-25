@@ -47,13 +47,18 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	IF $LCWK_VERSION == VERSION_WHITE THEN
 		_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_MEAT_W )
 		
-		_OBJ_ADD_EX( 16, 10, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE7, MV_DMY )
+		_OBJ_ADD_EX( 16, 10, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE7, MV_DMY )
+		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_turn_d)
+		_OBJ_ANIME_WAIT()
+		
 		_MAP_FADE_BLACK_IN()
 		_DISP_FADE_END_CHECK()
 	ELSE
 		_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_MEAT_B )
 
-		_OBJ_ADD_EX( 16, 10, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE8, MV_DMY )
+		_OBJ_ADD_EX( 16, 10, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE8, MV_DMY )
+		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_turn_d)
+		_OBJ_ANIME_WAIT()
 		_MAP_FADE_BLACK_IN()
 		_DISP_FADE_END_CHECK()
 	ENDIF
@@ -108,7 +113,7 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_OBJ_ANIME_WAIT()
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke_idou_02)
 	//Nの動作モデルを消す
-	_TIME_WAIT(22)
+	_TIME_WAIT(38)
 	_OBJ_DEL( D08R0901_BOSS_01 )
 	_OBJ_ANIME_WAIT()
 	
@@ -168,8 +173,7 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	
 	//画面遷移後、イベントが自動で始まるようにセット
 	_RESERVE_SCRIPT( SCRID_RESERVE_D08_HAKASE1_01 )
-	_MAP_CHANGE_NO_FADE(ZONE_ID_D08, 179, 3, 146, DIR_UP)
-	
+	_MAP_CHANGE_NO_FADE(ZONE_ID_D08, 179, 3, 146, DIR_UP)	
 
 	
 EVENT_END
@@ -213,7 +217,8 @@ _ANIME_LABEL	anm_leader7_idou_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_poke_idou_01
 
-	_ANIME_DATA AC_WALK_U_8F,6
+//	_ANIME_DATA AC_WALK_U_8F,6
+	_ANIME_DATA AC_SHIN_MU_FLY_UPPER,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -221,7 +226,8 @@ _ANIME_LABEL	anm_poke_idou_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_poke_idou_02
 	
-	_ANIME_DATA AC_WALK_L_2F,24
+//	_ANIME_DATA AC_WALK_L_2F,24
+	_ANIME_DATA AC_SHIN_MU_FLY_L,24
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -236,6 +242,13 @@ _ANIME_LABEL	anm_common_gyoe
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_up
 	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：下を向く_むきのみ                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_turn_d
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-02-24T19:40:02"/>
+	<create user="murakami_naoto" host="W00228" date="2010-02-25T19:08:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -469,8 +469,8 @@
 	</row>
 
 	<row id="msg_debug_murakami_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<language name="JPN" width="256">D08リュウラセンイベント</language>
-		<language name="JPN_KANJI" width="256">D08リュウラセンイベント</language>
+		<language name="JPN" width="256">D08リュウラセンイベント最初から</language>
+		<language name="JPN_KANJI" width="256">D08リュウラセンイベント最初から</language>
 	</row>
 
 	<row id="msg_debug_murakami_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -479,8 +479,18 @@
 	</row>
 
 	<row id="msg_debug_murakami_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<language name="JPN" width="256">テスト用2</language>
-		<language name="JPN_KANJI" width="256">テスト用2</language>
+		<language name="JPN" width="256">リュウラセン/最上階/シンムデモ・アニメ</language>
+		<language name="JPN_KANJI" width="256">リュウラセン/最上階/シンムデモ・アニメ</language>
+	</row>
+
+	<row id="msg_debug_murakami_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">リュウラセン/６F/塔揺れるデモ</language>
+		<language name="JPN_KANJI" width="256">リュウラセン/６F/塔揺れるデモ</language>
+	</row>
+
+	<row id="msg_debug_murakami_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">テスト用</language>
+		<language name="JPN_KANJI" width="256">テスト用</language>
 	</row>
 
 	<row id="msg_debug_08">

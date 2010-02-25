@@ -496,10 +496,13 @@ EVENT_START   ev_debug_murakami
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_02, 2 )	//テスト02
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_03, 3 )	//テスト用1
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_04, 4 )	//テスト用2
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_05, 5 )	//テスト用2
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_06, 6 )	//テスト用2
 		_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
 		
+		//C02　ストーン入手イベント
 		IF $SCWK_TEMP1 == 1 THEN
 
 			//C02の博士（父、娘）、チャンピオン、ジムリーダー、サポートを表示
@@ -515,7 +518,8 @@ EVENT_START   ev_debug_murakami
 			$WK_SCENE_C02 = 6
 			  
 			_MAP_CHANGE( ZONE_ID_C02, 644, 587, DIR_UP )
-	  
+		
+		//リュウラセンイベント最初から
 		ELSIF $SCWK_TEMP1 == 2 THEN
 			
 			//イベント関係者を表示
@@ -531,7 +535,8 @@ EVENT_START   ev_debug_murakami
 			
 			_MAP_CHANGE( ZONE_ID_D08, 180, 148, DIR_UP )
 			$WK_SCENE_D08_LEGEND = 1
-				
+		
+		//デンチュラの巣を破壊する		
 		ELSIF $SCWK_TEMP1 == 3 THEN
 
 			_MAP_CHANGE( ZONE_ID_D06, 107, 343, DIR_UP )
@@ -553,13 +558,27 @@ EVENT_START   ev_debug_murakami
 			_OBJ_ANIME_WAIT()
 			
 			_OBJ_DEL( D06_STOPPER_01 )
-			
+		
+		//リュウラセン/シンムデモ・アニメ	
 		ELSIF $SCWK_TEMP1 == 4 THEN
 		
-			//カメラテスト
-//			_SHAKE_CAMERA(1, 3, 15000, 3)
-			$WK_SCENE_D08_LEGEND  = 6
+			$WK_SCENE_D08_LEGEND  = 8
+			_MAP_CHANGE( ZONE_ID_D08R0901, 16, 24, DIR_UP )
+		
+		//リュウラセン/6F/塔揺れるデモ	
+		ELSIF $SCWK_TEMP1 == 5 THEN
 			
+			$WK_SCENE_D08_LEGEND  = 6
+			_MAP_CHANGE( ZONE_ID_D08R0801, 15, 27, DIR_UP )
+		
+		//テスト用	
+		ELSIF $SCWK_TEMP1 == 6 THEN
+			_MAP_FADE_BLACK_OUT()
+			_MAP_FADE_END_CHECK()
+			_CALL_3D_DEMO( DEMO3D_ID_N_CASTLE )
+			_MAP_FADE_BLACK_IN()
+			_MAP_FADE_END_CHECK()
+		
 		ENDIF
 		
 EVENT_END
