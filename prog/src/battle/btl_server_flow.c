@@ -959,7 +959,8 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
     if( action->gen.cmd != BTL_ACTION_CHANGE ){ continue; }
     if( action->change.depleteFlag ){ continue; }
 
-    if( !BPP_IsDead(wk->actOrder[i].bpp) ){
+    if( !BPP_IsDead(wk->actOrder[i].bpp) )
+    {
 
       BTL_N_Printf( DBGSTR_SVFL_AfterPokeIn_Alive,
               action->change.posIdx, action->change.memberIdx );
@@ -1477,6 +1478,10 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
     for(j=0; j<numPoke; j++)
     {
       order[p].action = *BTL_SVCL_GetPokeAction( clwk, j );
+      if( BTL_ACTION_IsDeplete(&order[p].action) ){
+        break;
+      }
+
       if( BTL_ACTION_GetAction(&order[p].action) != BTL_ACTION_CHANGE ){
         order[p].bpp = BTL_PARTY_GetMemberData( clwk->party, j );
       }else{

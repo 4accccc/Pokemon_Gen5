@@ -111,6 +111,10 @@ static inline void BTL_ACTION_SetChangeDepleteParam( BTL_ACTION_PARAM* p )
   p->change.memberIdx = 0;
   p->change.depleteFlag = 1;
 }
+static inline BOOL BTL_ACTION_IsDeplete( const BTL_ACTION_PARAM* p )
+{
+  return ((p->change.cmd == BTL_ACTION_CHANGE) && (p->change.depleteFlag == 1));
+}
 
 static inline void BTL_ACTION_SetEscapeParam( BTL_ACTION_PARAM* p )
 {
