@@ -520,6 +520,61 @@ static void towerscr_SetCommonScore(BTOWER_SCRWORK* wk,SAVEDATA* sv,u8 win_f,u16
 }
 #endif
 
+
+//--------------------------------------------------------------
+//
+//--------------------------------------------------------------
+enum
+{
+  BTP_SINGLE,
+  BTP_S_SINGLE,
+  BTP_DOUBLE,
+  BTP_S_DOUBLE,
+  BTP_MULTI,
+  BTP_S_MULTI,
+  BTP_WIFI,
+  BTP_TYPE_MAX,
+};
+
+static const u8 bpoint_tbl[BTP_TYPE_MAX][10] =
+{
+  //シングル
+  {
+    3, 3, 3, 0, 0,
+    0, 0, 0, 0, 0
+  },
+  //スーパーシングル
+  {
+    5, 6, 7, 8, 9,
+    10, 10, 10, 10, 10
+  },
+  //ダブル
+  {
+    3, 3, 3, 0, 0,
+    0, 0, 0, 0, 0
+  },
+  //スーパーダブル
+  {
+    5, 6, 7, 8, 9,
+    10, 10, 10, 10, 10
+  },
+  //マルチ
+  {
+    3, 3, 3, 0, 0,
+    0, 0, 0, 0, 0
+  },
+  //スーパーマルチ
+  {
+    5, 6, 7, 8, 9,
+    10, 10, 10, 10, 10
+  },
+  //WiFi ランク別
+  {
+    10, 10, 10, 10, 10,
+    10, 10, 10, 10, 10
+  },
+};
+
 //--------------------------------------------------------------
 /**
  * バトルポイント追加
@@ -529,34 +584,75 @@ static void towerscr_SetCommonScore(BTOWER_SCRWORK* wk,SAVEDATA* sv,u8 win_f,u16
 //--------------------------------------------------------------
 u16  BSUBWAY_SCRWORK_AddBattlePoint( BSUBWAY_SCRWORK *bsw_scr )
 {
-  u16  point = 0;
-  static const u8  bpoint_wifi[] = {0,
-    BTLPOINT_VAL_BSUBWAY_WIFI1,BTLPOINT_VAL_BSUBWAY_WIFI2,
-    BTLPOINT_VAL_BSUBWAY_WIFI3,BTLPOINT_VAL_BSUBWAY_WIFI4,
-    BTLPOINT_VAL_BSUBWAY_WIFI5,BTLPOINT_VAL_BSUBWAY_WIFI6,
-    BTLPOINT_VAL_BSUBWAY_WIFI7,BTLPOINT_VAL_BSUBWAY_WIFI8,
-    BTLPOINT_VAL_BSUBWAY_WIFI9,BTLPOINT_VAL_BSUBWAY_WIFI10,
-  };
-  static const u8 bpoint_normal[] = {0,
-    BTLPOINT_VAL_BSUBWAY_STAGE1,BTLPOINT_VAL_BSUBWAY_STAGE2,
-    BTLPOINT_VAL_BSUBWAY_STAGE3,BTLPOINT_VAL_BSUBWAY_STAGE4,
-    BTLPOINT_VAL_BSUBWAY_STAGE5,BTLPOINT_VAL_BSUBWAY_STAGE6,
-    BTLPOINT_VAL_BSUBWAY_STAGE7,
-  };
+  u16 point = 0;
   
   if( bsw_scr->play_mode == BSWAY_MODE_WIFI ){ //ランクごと
-    u8 rank = BSUBWAY_SCOREDATA_GetWifiRank( bsw_scr->scoreData );
-    point = bpoint_wifi[rank];
+    s8 rank = BSUBWAY_SCOREDATA_GetWifiRank( bsw_scr->scoreData );
+    if( rank < 0 ){
+      rank = 0;
+    }else if( rank >= 10 ){
+      rank = 9;
+    }
+    point = bpoint_tbl[BTP_WIFI][rank];
   }else{ //周回数ごと
-    u16 stage = BSUBWAY_SCOREDATA_GetStageNo(
+    u16 type;
+    BOOL super = FALSE;
+    s16 stage = BSUBWAY_SCOREDATA_GetStageNo(
         bsw_scr->scoreData, bsw_scr->play_mode );
     
+    switch( bsw_scr->play_mode ){
+    case BSWAY_MODE_SINGLE:
+      type = BTP_SINGLE;
+      break;
+    case BSWAY_MODE_S_SINGLE:
+      type = BTP_S_SINGLE;
+      super = TRUE;
+      break;
+    case BSWAY_MODE_DOUBLE:
+      type = BTP_DOUBLE;
+      break;
+    case BSWAY_MODE_S_DOUBLE:
+      type = BTP_S_DOUBLE;
+      super = TRUE;
+      break;
+    case BSWAY_MODE_MULTI:
+      type = BTP_MULTI;
+      break;
+    case BSWAY_MODE_COMM_MULTI:
+      type = BTP_MULTI;
+      break;
+    case BSWAY_MODE_S_MULTI:
+      type = BTP_S_MULTI;
+      super = TRUE;
+      break;
+    case BSWAY_MODE_S_COMM_MULTI:
+      type = BTP_S_MULTI;
+      super = TRUE;
+      break;
+    case BSWAY_MODE_WIFI:
+      type = BTP_WIFI;
+      break;
+    default:
+      GF_ASSERT( 0 );
+      type = BTP_SINGLE;
+    }
+
+    stage--;
+    
+    if( stage < 0 ){
+      stage = 0;
+    }else if( stage >= 10 ){
+      stage = 9;
+    }
+    
     if( bsw_scr->boss_f ){
-      point = BTLPOINT_VAL_BSUBWAY_LEADER;
-    }else if( stage >= 7 ){ //７戦以上
-      point = BTLPOINT_VAL_BSUBWAY_STAGE8;
+      if( super == TRUE ){
+        point = 30;
+      }else{
+        point = 10;
+      }
     }else{
-      point = bpoint_normal[stage];
+      point = bpoint_tbl[type][stage];
     }
   }
   
