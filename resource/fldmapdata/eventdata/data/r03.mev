@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/25 22:38:03
+#save date:2010/02/26 16:15:45
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03.wms
 #hold event type:
 1
 #hold event number:
-28
+27
 #event number: 0
 #type
 1
@@ -417,37 +417,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_BREEDERMN_01
-#OBJ CODE Number
-BREEDERM
-#MOVE CODE Number
-MV_UP
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-0
-#Event Script Name
-SCRID_TRID_BREEDERM_01
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-3
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-968 0 -88
-#event number: 14
-#type
-1
-#ID name
 TR_BREEDERW_01
 #OBJ CODE Number
 BREEDERW
@@ -475,7 +444,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 168 16 104
-#event number: 15
+#event number: 14
 #type
 1
 #ID name
@@ -506,7 +475,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 488 0 -232
-#event number: 16
+#event number: 15
 #type
 1
 #ID name
@@ -537,7 +506,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 536 0 -504
-#event number: 17
+#event number: 16
 #type
 1
 #ID name
@@ -568,7 +537,7 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 -40 0 -616
-#event number: 18
+#event number: 17
 #type
 1
 #ID name
@@ -599,7 +568,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 152 16 24
-#event number: 19
+#event number: 18
 #type
 1
 #ID name
@@ -630,7 +599,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 248 0 -264
-#event number: 20
+#event number: 19
 #type
 1
 #ID name
@@ -661,25 +630,25 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 296 0 -648
-#event number: 21
+#event number: 20
 #type
 1
 #ID name
-TR_R03_DUMMY_OBJ_04
+TR_BREEDERM_01
 #OBJ CODE Number
 BREEDERM
 #MOVE CODE Number
 MV_RND_DR
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_BREEDERM_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-0
+4
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -692,7 +661,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -24 16 -248
-#event number: 22
+#event number: 21
 #type
 1
 #ID name
@@ -723,7 +692,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 600 0 -56
-#event number: 23
+#event number: 22
 #type
 1
 #ID name
@@ -754,7 +723,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 -120 16 88
-#event number: 24
+#event number: 23
 #type
 1
 #ID name
@@ -785,7 +754,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 1032 16 136
-#event number: 25
+#event number: 24
 #type
 1
 #ID name
@@ -816,7 +785,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 1064 16 104
-#event number: 26
+#event number: 25
 #type
 1
 #ID name
@@ -847,7 +816,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -104 0 -360
-#event number: 27
+#event number: 26
 #type
 1
 #ID name
