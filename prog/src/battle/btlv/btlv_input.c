@@ -1014,6 +1014,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
   switch( type ){
   case BTLV_INPUT_SCRTYPE_STANDBY:
+    BTLV_GAUGE_RequestYure( BTLV_EFFECT_GetGaugeWork(), BTLV_MCSS_POS_MAX );
     if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
     {
       MtxFx22 mtx;
@@ -1033,7 +1034,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
 
-      BTLV_GAUGE_RequestYure( BTLV_EFFECT_GetGaugeWork(), BTLV_MCSS_POS_MAX );
       BTLV_INPUT_DeleteBallGauge( biw );
       BTLV_INPUT_DeletePokeIcon( biw );
       BTLV_INPUT_DeleteWeatherIcon( biw );
@@ -1274,6 +1274,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   }
   if( hit != GFL_UI_TP_HIT_NONE )
   { 
+    OS_TPrintf("hit:%d\n",hit);
     hit = BTLV_INPUT_SetButtonReaction( biw, hit, tp_tbl->button_pltt[ hit ] );
     //カメラワークエフェクト
     BTLV_EFFECT_Stop();

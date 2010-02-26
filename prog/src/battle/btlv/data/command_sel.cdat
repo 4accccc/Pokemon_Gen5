@@ -124,17 +124,18 @@ static const BOOL SkillMenuTouchData3vs3Cancel[] = {
 };
 
 static const int SkillMenuTouchData3vs3Pltt[] = {
-   9,  //‹Z1
-  10,  //‹Z2
-  11,  //‹Z3
-  12,  //‹Z4
-   4,  //ƒLƒƒƒ“ƒZƒ‹
-   2,  //ˆÚ“®
+  1 << 9,  //‹Z1
+  1 <<10,  //‹Z2
+  1 <<11,  //‹Z3
+  1 <<12,  //‹Z4
+  1 << 4,  //ƒLƒƒƒ“ƒZƒ‹
+  1 << 2,  //ˆÚ“®
 };
 
 static const BTLV_INPUT_HITTBL SkillMenuTouchData3vs3 = {
   SkillMenuTouchData3vs3HitTbl,
   SkillMenuTouchData3vs3Cancel,
+  SkillMenuTouchData3vs3Pltt,
 };
 
 static const BTLV_INPUT_KEYTBL  SkillMenuKeyData3vs3[] = { 
