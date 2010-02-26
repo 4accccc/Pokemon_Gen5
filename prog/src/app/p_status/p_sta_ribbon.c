@@ -860,38 +860,39 @@ void PSTATUS_RIBBON_DeleteRibbonBar( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
 
 static void PSTATUS_RIBBON_CreateRibbonBarFunc( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork , PSTATUS_RIBBON_DISP_WORK *ribbonDispWork )
 {
+  PSTATUS_RIBBON_DATA_WORK *ribbonData = &ribbonWork->ribbonDataWork[ribbonDispWork->dispRibbonNo];
+  if( ribbonData->isEnable == TRUE )
   {
-    u8 *srcData = ribbonWork->srcCellNcg->pRawData;
-    u8 *chrAdr = GFL_BMP_GetCharacterAdrs( ribbonDispWork->bmpData );
-    //選択されたリボンなので土台のキャラずらす
-    if( ribbonDispWork->dispRibbonNo == ribbonWork->selectType )
     {
-      srcData = (u8*)((u32)srcData + PSTATUS_RIBBON_BAR_CHARSIZE);
+      u8 *srcData = ribbonWork->srcCellNcg->pRawData;
+      u8 *chrAdr = GFL_BMP_GetCharacterAdrs( ribbonDispWork->bmpData );
+      //選択されたリボンなので土台のキャラずらす
+      if( ribbonDispWork->dispRibbonNo == ribbonWork->selectType )
+      {
+        srcData = (u8*)((u32)srcData + PSTATUS_RIBBON_BAR_CHARSIZE);
+      }
+      GFL_STD_MemCopy( srcData , chrAdr , PSTATUS_RIBBON_BAR_CHARSIZE );
     }
-    GFL_STD_MemCopy( srcData , chrAdr , PSTATUS_RIBBON_BAR_CHARSIZE );
+    {
+      STRBUF *srcStr = GFL_MSG_CreateString( ribbonWork->ribbonMsg , mes_ribbon_category_01+ribbonData->category ); 
+      STRBUF *dstStr = GFL_STR_CreateBuffer( 32, work->heapId );
+      WORDSET *wordSet = WORDSET_Create( work->heapId );
+      WORDSET_RegisterNumber( wordSet , 0 , ribbonData->catNo , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+      WORDSET_ExpandStr( wordSet , dstStr , srcStr );
+      //ここのフォントはOBJのパレットを使っているので注意！！！ 
+      //個々では例外的にbmp直書きを使う
+      GFL_FONTSYS_SetColor( 1,2,0 );
+      PRINTSYS_Print( ribbonDispWork->bmpData , 10 , 6 , dstStr , work->fontHandle );
+      GFL_FONTSYS_SetDefaultColor();
+  //    PRINTSYS_PrintQueColor( work->printQue , ribbonDispWork->bmpData , 
+  //            10 , 6 , dstStr , work->fontHandle , PRINTSYS_LSB_Make(1,2,0) );
+      GFL_STR_DeleteBuffer( srcStr );
+      GFL_STR_DeleteBuffer( dstStr );
+      WORDSET_Delete( wordSet );
+    }
+    PSTA_OAM_ActorBmpTrans( ribbonDispWork->bmpOam );
+  //  ribbonDispWork->isUpdateStr = TRUE;
   }
-  {
-    PSTATUS_RIBBON_DATA_WORK *ribbonData = &ribbonWork->ribbonDataWork[ribbonDispWork->dispRibbonNo];
-    
-    //FIXME ribbonDispWork->dispRibbonNo をバー表示用のMsg番号Idxに直す
-    STRBUF *srcStr = GFL_MSG_CreateString( ribbonWork->ribbonMsg , mes_ribbon_category_01+ribbonData->category ); 
-    STRBUF *dstStr = GFL_STR_CreateBuffer( 32, work->heapId );
-    WORDSET *wordSet = WORDSET_Create( work->heapId );
-    WORDSET_RegisterNumber( wordSet , 0 , ribbonData->catNo , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
-    WORDSET_ExpandStr( wordSet , dstStr , srcStr );
-    //ここのフォントはOBJのパレットを使っているので注意！！！ 
-    //個々では例外的にbmp直書きを使う
-    GFL_FONTSYS_SetColor( 1,2,0 );
-    PRINTSYS_Print( ribbonDispWork->bmpData , 10 , 6 , dstStr , work->fontHandle );
-    GFL_FONTSYS_SetDefaultColor();
-//    PRINTSYS_PrintQueColor( work->printQue , ribbonDispWork->bmpData , 
-//            10 , 6 , dstStr , work->fontHandle , PRINTSYS_LSB_Make(1,2,0) );
-    GFL_STR_DeleteBuffer( srcStr );
-    GFL_STR_DeleteBuffer( dstStr );
-    WORDSET_Delete( wordSet );
-  }
-  PSTA_OAM_ActorBmpTrans( ribbonDispWork->bmpOam );
-//  ribbonDispWork->isUpdateStr = TRUE;
   
 }
 
