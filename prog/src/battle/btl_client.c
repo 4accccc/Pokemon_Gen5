@@ -137,6 +137,9 @@ struct _BTL_CLIENT {
   BtlPokePos  myChangePokePos[ BTL_POSIDX_MAX ];
 
   u8          fieldEffectFlag[ CLIENT_FLDEFF_BITFLAG_SIZE ];
+
+  //@todo トレーナーメッセージ表示実験
+  BOOL  trainer_msg_check;
 };
 
 
@@ -962,6 +965,38 @@ static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq )
   return FALSE;
 }
 
+//@todo トレーナーメッセージ表示実験
+#include  "tr_tool/tr_tool.h"
+#include  "btlv/btlv_effect.h"
+#include  "btlv/btlv_gauge.h"
+static  BOOL  check_tr_message( BTL_CLIENT* wk );
+
+static  BOOL  check_tr_message( BTL_CLIENT* wk )
+{ 
+  u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
+  u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
+  BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+
+  if( ( BTL_MAIN_GetRule( wk->mainModule ) != BTL_RULE_SINGLE ) &&
+      ( BTL_MAIN_GetCompetitor( wk->mainModule ) != BTL_COMPETITOR_TRAINER ) )
+  {  
+    return FALSE;
+  }
+
+	if( TT_TrainerMessageCheck( trainerID, TRMSG_FIGHT_POKE_LAST_HP_HALF, wk->heapID ) )
+  { 
+    //とりあえず最後の1匹判定だけする
+    if( ( BTL_PARTY_GetAliveMemberCount( party ) == 1 ) && ( wk->trainer_msg_check == FALSE ))
+    { 
+      wk->trainer_msg_check = TRUE;
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
+
 //----------------------------------------------------------------------
 /**
  *  アクション選択ルート
@@ -980,7 +1015,19 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
       ClientSubProc_Set( wk, selact_CheckFinish );
     }
     else{
+      //@todo トレーナーメッセージ表示実験
+#if 1
+      if( check_tr_message( wk ) == TRUE )
+      { 
+        (*seq) = 5;
+      }
+      else
+      { 
+        (*seq)++;
+      }
+#else
       (*seq)++;
+#endif
     }
     break;
 
@@ -1073,6 +1120,38 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
       }
       break;
     }
+    break;
+  //@todo トレーナーメッセージ表示実験
+  case 5:
+    { 
+      u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
+      u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
+      int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
+
+      BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
+      BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
+      BTLV_StartMsgTrainer( wk->viewCore, trainerID, TRMSG_FIGHT_POKE_LAST_HP_HALF );
+      if( BTLV_GAUGE_GetPinchBGMFlag( BTLV_EFFECT_GetGaugeWork() ) == 0 )
+      { 
+        PMSND_PlayBGM( SEQ_BGM_BATTLESUPERIOR );
+      }
+      (*seq)++;
+    }
+    break;
+  case 6:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      BTLV_EFFECT_Add( BTLEFF_TRAINER_OUT );
+      (*seq)++;
+    }
+    break;
+  case 7:
+    if( !BTLV_EFFECT_CheckExecute() )
+    { 
+      BTLV_EFFECT_DelTrainer( BTLV_MCSS_POS_TR_BB );
+      (*seq) = 0;
+    }
+    break;
   }
   return FALSE;
 }

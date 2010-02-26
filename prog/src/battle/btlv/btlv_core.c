@@ -1777,12 +1777,21 @@ void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args )
  * @param   trainerID
  * @param   param
  *
+ * @retval  TRUE:メッセージ有り　FALSE:メッセージなし
  */
 //=============================================================================================
-void BTLV_StartMsgTrainer( BTLV_CORE* wk, u32 trainerID, int param )
+BOOL BTLV_StartMsgTrainer( BTLV_CORE* wk, u32 trainerID, int param )
 {
-  TT_TrainerMessageGet( trainerID, param, wk->strBuf, wk->heapID );
-  BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+	if( TT_TrainerMessageCheck( trainerID, param, wk->heapID ) )
+  { 
+    TT_TrainerMessageGet( trainerID, param, wk->strBuf, wk->heapID );
+    BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+  }
+  else
+  { 
+    return FALSE;
+  }
+  return TRUE;
 }
 
 void BTLV_StartMsgWaza( BTLV_CORE* wk, u8 pokeID, u16 waza )

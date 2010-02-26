@@ -42,4 +42,5 @@ extern  BOOL              BTLV_GAUGE_CheckExecute( BTLV_GAUGE_WORK *bgw );
 extern  void              BTLV_GAUGE_SetDrawEnable( BTLV_GAUGE_WORK* bgw, BOOL on_off );
 extern  void              BTLV_GAUGE_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick sick, BtlvMcssPos pos );
 extern  void              BTLV_GAUGE_RequestYure( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos );
+extern  int               BTLV_GAUGE_GetPinchBGMFlag( BTLV_GAUGE_WORK* bgw );
 

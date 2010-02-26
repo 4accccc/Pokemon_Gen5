@@ -1710,6 +1710,19 @@ void  BTLV_GAUGE_RequestYure( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos )
 
 //--------------------------------------------------------------
 /**
+ * @brief   ゲージゆれリクエスト
+ *
+ * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
+ * @param pos   リクエストするポケモンの立ち位置
+ */
+//--------------------------------------------------------------
+int  BTLV_GAUGE_GetPinchBGMFlag( BTLV_GAUGE_WORK* bgw )
+{ 
+  return  bgw->pinch_bgm_flag;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   ピンチBGM再生チェック
  *
  * @param bgw     BTLV_GAUGE_WORK管理構造体へのポインタ

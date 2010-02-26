@@ -232,7 +232,7 @@ extern void BTLV_StartMsgWaza( BTLV_CORE* wk, u8 pokeID, u16 waza );
 
 extern void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args );
 extern void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args );
-extern void BTLV_StartMsgTrainer( BTLV_CORE* wk, u32 trainerID, int param );
+extern BOOL BTLV_StartMsgTrainer( BTLV_CORE* wk, u32 trainerID, int param );
 
 
 extern BOOL BTLV_WaitMsg( BTLV_CORE* wk );
