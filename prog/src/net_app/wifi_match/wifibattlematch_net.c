@@ -4028,8 +4028,12 @@ WIFIBATTLEMATCH_NET_EVILCHECK_RET WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEM
       { 
         p_data->poke_result[i] = NHTTP_RAP_EVILCHECK_GetPokeResult( p_buff, i );
       }
-      cp_sign  = NHTTP_RAP_EVILCHECK_GetSign( p_buff, p_wk->poke_max );
-      GFL_STD_MemCopy( cp_sign, p_data->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
+
+      if( p_data->status_code == 0 )
+      { 
+        cp_sign  = NHTTP_RAP_EVILCHECK_GetSign( p_buff, p_wk->poke_max );
+        GFL_STD_MemCopy( cp_sign, p_data->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
+      }
 
       NHTTP_RAP_PokemonEvilCheckDelete(p_wk->p_nhttp);
       if(p_wk->p_nhttp)

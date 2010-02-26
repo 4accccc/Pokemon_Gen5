@@ -62,6 +62,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 #define SAKE_REPORT_NONE          //レポートをしない
 #endif //PM_DEBUG
 
+#define DISCONNECT_REC_AFTER
 
 //デバッグWINインクルード
 #ifdef DEBUGWIN_USE
@@ -1277,7 +1278,9 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
 
   case SEQ_WAIT_DISCONNECT:
+#ifndef DISCONNECT_REC_AFTER
     if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
+#endif
     { 
       *p_seq = SEQ_START_SAVE_MSG;
     }
@@ -1336,6 +1339,9 @@ static void WbmRndSeq_Rate_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 { 
   enum
   { 
+#ifdef DISCONNECT_REC_AFTER
+    SEQ_DISCONNECT,
+#endif 
     SEQ_START,
 
     SEQ_WAIT_MSG,
@@ -1346,6 +1352,15 @@ static void WbmRndSeq_Rate_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 
   switch( *p_seq )
   { 
+#ifdef DISCONNECT_REC_AFTER
+  case SEQ_DISCONNECT:
+    if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
+    { 
+      *p_seq = SEQ_START;
+    }
+    break;
+#endif 
+
   case SEQ_START:
     WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupContinue );
     break;
@@ -1886,7 +1901,9 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
 
   case SEQ_WAIT_DISCONNECT:
+#ifndef DISCONNECT_REC_AFTER
     if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
+#endif
     { 
 
       switch( p_param->btl_result )
@@ -1960,6 +1977,9 @@ static void WbmRndSeq_Free_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 { 
   enum
   { 
+#ifdef DISCONNECT_REC_AFTER
+    SEQ_DISCONNECT,
+#endif 
     SEQ_START,
 
     SEQ_WAIT_MSG,
@@ -1970,6 +1990,15 @@ static void WbmRndSeq_Free_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 
   switch( *p_seq )
   { 
+#ifdef DISCONNECT_REC_AFTER
+  case SEQ_DISCONNECT:
+    if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
+    { 
+      *p_seq = SEQ_START;
+    }
+    break;
+#endif 
+
   case SEQ_START:
     WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_CupContinue );
     break;
@@ -2249,6 +2278,7 @@ static void WbmRndSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   { 
   case SEQ_START:
     p_wk->cnt = 0;
+    GFL_STD_MemClear( &p_wk->evilecheck_data, sizeof(WIFIBATTLEMATCH_NET_EVILCHECK_DATA ));
     (*p_seq)++;
     break;
 
@@ -2257,7 +2287,6 @@ static void WbmRndSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       const POKEMON_PARAM *cp_pp  = PokeParty_GetMemberPointer( (POKEPARTY*)p_my_data->pokeparty, p_wk->cnt);
 
       WIFIBATTLEMATCH_NET_StartEvilCheck( p_wk->p_net, cp_pp, WIFIBATTLEMATCH_NET_EVILCHECK_TYPE_PP );
-      GFL_STD_MemClear( &p_wk->evilecheck_data, sizeof(WIFIBATTLEMATCH_NET_EVILCHECK_DATA ));
       (*p_seq)++;
       NAGI_Printf( "EvilCheck Start\n" );
     }

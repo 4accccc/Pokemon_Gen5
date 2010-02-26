@@ -66,6 +66,8 @@ FS_EXTERN_OVERLAY(dpw_common);
 #define SAKE_REPORT_NONE          //レポートをしない
 #endif //PM_DEBUG
 
+#define DISCONNECT_REC_AFTER      //相手との切断を録画後にする
+
 
 //=============================================================================
 /**
@@ -2206,6 +2208,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         //自分のデータ作成
         WIFIBATTLEMATCH_ENEMYDATA *p_my_data = p_param->p_player_data;
         Util_SetMyDataInfo( p_my_data, p_wk );
+        Util_SetEvilcheckParty( p_wk );
 
 #ifdef MYPOKE_SELFCHECK
         {
@@ -2637,7 +2640,9 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     break;
 
   case SEQ_WAIT_DISCONNECT:
+#ifndef DISCONNECT_REC_AFTER
     if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
+#endif
     { 
       *p_seq = SEQ_END;
     }
@@ -2672,6 +2677,9 @@ static void WbmWifiSeq_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 { 
   enum
   { 
+#ifdef DISCONNECT_REC_AFTER
+    SEQ_DISCONNECT,
+#endif 
     SEQ_START_NET_MSG,
     SEQ_START_RECVDATA_SAKE,
     SEQ_WAIT_RECVDATA_SAKE,
@@ -2695,6 +2703,15 @@ static void WbmWifiSeq_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 
   switch( *p_seq )
   { 
+#ifdef DISCONNECT_REC_AFTER
+  case SEQ_DISCONNECT:
+    if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
+    { 
+      *p_seq = SEQ_START_NET_MSG;
+    }
+    break;
+#endif 
+
   case SEQ_START_NET_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_35, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
@@ -3964,18 +3981,11 @@ static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFI
 
 
   { 
-    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( cp_wk->p_param->p_param->p_game_data );
-    BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-    POKEPARTY         *p_party  =  BATTLE_BOX_SAVE_MakePokeParty( p_bbox_save, HEAPID_WIFIBATTLEMATCH_CORE );
-
-    const REGULATION_CARDDATA *cp_reg_card  = SaveData_GetRegulationCardData(p_sv);
-
+    const REGULATION_CARDDATA *cp_reg_card  = SaveData_GetRegulationCardData(GAMEDATA_GetSaveControlWork( cp_wk->p_param->p_param->p_game_data ));
     p_my_data->wificup_no      = Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_CUPNO );
-
-
-    GFL_STD_MemCopy( p_party, p_my_data->pokeparty, PokeParty_GetWorkSize() );
-    GFL_HEAP_FreeMemory( p_party );
   }
+
+  GFL_STD_MemCopy( cp_wk->sake_data.pokeparty, p_my_data->pokeparty, PokeParty_GetWorkSize() );
 }
 //----------------------------------------------------------------------------
 /**
@@ -4015,8 +4025,6 @@ static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, POKEPARTY *p
   for( i = 0; i < PokeParty_GetPokeCount( p_party ); i++ )
   { 
     p_pp  = PokeParty_GetMemberPointer( p_party, i);
-
-    PP_Renew( p_pp );
 
     p_buff  = NHTTP_RAP_EVILCHECK_CreateVerifyPokeBuffer( POKETOOL_GetWorkSize(), 1, GFL_HEAP_LOWID(heapID) );
     NHTTP_RAP_EVILCHECK_AddPokeVerifyPokeBuffer( p_buff, p_pp, POKETOOL_GetWorkSize(), 0 );

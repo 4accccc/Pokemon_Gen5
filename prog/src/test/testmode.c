@@ -211,6 +211,18 @@ static BOOL TESTMODE_ITEM_DebugFight( TESTMODE_WORK *work , const int idx );
   #define QuickSelectFunc   TESTMODE_ITEM_SelectFuncSogabe
 #elif defined DEBUG_ONLY_FOR_sounduser
   #define QuickSelectFunc   TESTMODE_ITEM_SelectFuncSogabe
+#elif defined DEBUG_ONLY_FOR_matsumiya
+  #define QuickSelectFunc   TESTMODE_ITEM_ConnectMCS
+#elif defined DEBUG_ONLY_FOR_masafumi_saitou
+  #define QuickSelectFunc   TESTMODE_ITEM_ConnectMCS
+#elif defined DEBUG_ONLY_FOR_suginaka_katsunori
+  #define QuickSelectFunc   TESTMODE_ITEM_ConnectMCS
+#elif defined DEBUG_ONLY_FOR_mizuguchi_mai || defined DEBUG_ONLY_FOR_mai_ando
+  #define QuickSelectFunc   TESTMODE_ITEM_ConnectMCS
+#elif defined DEBUG_ONLY_FOR_murakami_naoto
+  #define QuickSelectFunc   TESTMODE_ITEM_ConnectMCS
+
+
 #endif
 
 
