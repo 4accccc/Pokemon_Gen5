@@ -817,7 +817,9 @@ static BOOL _menu_anime_check( EARTH_DEMO_WORK *wk )
       if( APP_TASKMENU_WIN_IsDecide( wk->TaskMenuWork[i] ) )
       { 
         if( APP_TASKMENU_WIN_IsFinish( wk->TaskMenuWork[i] )==FALSE){
-          APP_TASKMENU_WIN_SetDecide( wk->TaskMenuWork[i], FALSE );
+//          APP_TASKMENU_WIN_SetActive( wk->TaskMenuWork[i], FALSE );
+//          APP_TASKMENU_WIN_SetDecide( wk->TaskMenuWork[i], FALSE );
+            APP_TASKMENU_WIN_ResetDecide( wk->TaskMenuWork[i] );
           return FALSE;
         }
       }
