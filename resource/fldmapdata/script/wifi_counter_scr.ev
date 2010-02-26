@@ -89,7 +89,6 @@ sub_wifi_counter_main:
   ENDIF
 
   _BALLOONWIN_OBJMSG_POS( msg_wifi_counter_00 , SCWK_TARGET_OBJID, POS_DL ) //ようこそ!
-//@  _BALLOONWIN_CLOSE()
   $i_seq = SEQ_MAIN_MENU
   
   //フィールド通信切断
@@ -101,12 +100,10 @@ sub_wifi_counter_main:
     CASE SEQ_MAIN_MENU THEN //メニュー表示
       _BALLOONWIN_OBJMSG_POS( msg_wifi_counter_01 , SCWK_TARGET_OBJID, POS_DL ) //Wi-Fiカウンターをご利用ですか？
       _CALL sub_wifi_counter_main_menu
-//@      _BALLOONWIN_CLOSE() 
       $i_seq = $reg_return
 
     CASE SEQ_COUNTER_EXP THEN
       _BALLOONWIN_OBJMSG_POS( msg_wifi_counter_07 , SCWK_TARGET_OBJID, POS_DL ) //Wi-Fiコネクションでは…
-//@      _BALLOONWIN_CLOSE() 
       $i_seq = SEQ_MAIN_MENU
 
     CASE SEQ_RANDOM_MATCH THEN
@@ -128,6 +125,9 @@ sub_wifi_counter_main:
     CASE SEQ_EXIT THEN
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
+      $i_loop = FALSE
+
+    CASE SEQ_THROW_EXIT THEN
       $i_loop = FALSE
 
     //無限ループを避けるために、とりあえず
@@ -214,7 +214,6 @@ sub_wifi_random_match:
       //ランダムマッチに挑戦しますか？
       _BALLOONWIN_OBJMSG_POS( msg_rndmatch_01 , SCWK_TARGET_OBJID, POS_DL )  
       _CALL sub_rndmatch_menu  //メニュー表示
-//@      _BALLOONWIN_CLOSE()
       $i_seq = $reg_return
     
     CASE SEQ_SUB_RNDMATCH_EXP THEN
@@ -239,6 +238,10 @@ sub_wifi_random_match:
     
     CASE SEQ_SUB_RNDMATCH_EXIT THEN
       $reg_return = SEQ_GOODBYE
+      $i_loop = FALSE
+    
+    CASE SEQ_SUB_RNDMATCH_END THEN
+      $reg_return = SEQ_THROW_EXIT
       $i_loop = FALSE
     ENDSWITCH
   ENDWHILE
@@ -281,8 +284,6 @@ sub_rndmatch_exp:
     
   //ランダムマッチでは…
   _BALLOONWIN_OBJMSG_POS( msg_rndmatch_02_01 , SCWK_TARGET_OBJID, POS_DL )
-  //（消）
-//@  _BALLOONWIN_CLOSE()
 
   $i_loop = TRUE
   WHILE $i_loop == TRUE
@@ -302,13 +303,10 @@ sub_rndmatch_exp:
   	_BMPMENU_START()
 
     //どの説明を聞きますか（消）
-//@    _BALLOONWIN_CLOSE()
-
     IF $i_ret < 3 THEN
       $i_msg = msg_rndmatch_02_exp01
       $i_msg += $i_ret
       _BALLOONWIN_OBJMSG_POS( i_msg , SCWK_TARGET_OBJID, POS_DL )
-//@      _BALLOONWIN_CLOSE()
     ELSE
       $i_loop = FALSE
     ENDIF
@@ -350,9 +348,7 @@ sub_rndmatch_try_select:
   //メニュー表示
 	_BMPMENU_START()
 
-  //どの対戦をしますか？（消）
-//@  _BALLOONWIN_CLOSE()
-
+  //どの対戦をしますか？
   IF $i_ret > 4 THEN
     $reg_return = SEQ_SUB_RNDMATCH_RETURN
     _RET
@@ -387,9 +383,7 @@ sub_rndmatch_try_check:
   //メニュー表示
 	_BMPMENU_START()
 
-  //○○に挑戦しますか？（消）
-//@  _BALLOONWIN_CLOSE()
-
+  //○○に挑戦しますか？
   IF $i_ret == 0 THEN
     //決定
     $reg_return = SEQ_SUB_RNDMATCH_TRY
@@ -398,7 +392,6 @@ sub_rndmatch_try_check:
     $i_msg = msg_rndmatch_04_exp01
     $i_msg += $lwk_rm_regu_idx
     _BALLOONWIN_OBJMSG_POS( i_msg , SCWK_TARGET_OBJID, POS_DL )
-//@    _BALLOONWIN_CLOSE()
     
     $reg_return = SEQ_SUB_RNDMATCH_TRY_CHECK
   ELSE
@@ -449,7 +442,7 @@ sub_rndmatch_try:
 
   _CALL sub_anm_wifi_counter_out
 
-  $reg_return = SEQ_SUB_RNDMATCH_EXIT
+  $reg_return = SEQ_SUB_RNDMATCH_END
 }
 _RET
 
@@ -536,7 +529,6 @@ sub_gterminal_menu:
 		
 	//メニュー表示
 	_BMPMENU_START()
-//@  _BALLOONWIN_CLOSE()
 
   IF $i_ret == EV_WIN_B_CANCEL THEN
     $reg_return = SEQ_SUB_GTERMINAL_RETURN
@@ -604,7 +596,6 @@ sub_gterminal_gts_menu:
 		
 	//メニュー表示
 	_BMPMENU_START()
-//@  _BALLOONWIN_CLOSE()
 
   IF $i_ret == EV_WIN_B_CANCEL THEN
     $reg_return = SEQ_SUB_GTERMINAL_GTS_RETURN
@@ -624,7 +615,6 @@ sub_gterminal_gts_exp:
   
   //GTSは
   _BALLOONWIN_OBJMSG_POS( msg_gterminal_gts_exp01 , SCWK_TARGET_OBJID, POS_DL )
-//@  _BALLOONWIN_CLOSE()
 
   $i_loop = TRUE
   WHILE $i_loop == TRUE
@@ -641,8 +631,7 @@ sub_gterminal_gts_exp:
 	  //メニュー表示
   	_BMPMENU_START()
 
-    //説明（消）
-//@    _BALLOONWIN_CLOSE()
+    //説明
 
     IF $i_ret == 0 THEN
       _BALLOONWIN_OBJMSG_POS( msg_gterminal_gts_exp_leave , SCWK_TARGET_OBJID, POS_DL )
@@ -772,7 +761,6 @@ sub_gterminal_gts_nego_exp:
 
   //説明
   _BALLOONWIN_OBJMSG_POS( msg_gterminal_gtsnego_exp , SCWK_TARGET_OBJID, POS_DL )
-//@  _BALLOONWIN_CLOSE()
 
   $i_loop = TRUE
   WHILE $i_loop == TRUE
@@ -790,15 +778,11 @@ sub_gterminal_gts_nego_exp:
 	  //メニュー表示
   	_BMPMENU_START()
 
-    //詳しい説明をご希望ですか？（消）
-//@    _BALLOONWIN_CLOSE()
-
+    //詳しい説明をご希望ですか？）
     IF $i_ret == 0 THEN
       _BALLOONWIN_OBJMSG_POS( msg_gterminal_gtsnego_exp01 , SCWK_TARGET_OBJID, POS_DL )
- //@     _BALLOONWIN_CLOSE()
     ELSIF $i_ret == 1 THEN
       _BALLOONWIN_OBJMSG_POS( msg_gterminal_gtsnego_exp02 , SCWK_TARGET_OBJID, POS_DL )
-//@      _BALLOONWIN_CLOSE()
     ELSE
       $i_loop = FALSE
     ENDIF
@@ -866,8 +850,7 @@ sub_gterminal_btl_video:
 	  //メニュー表示
   	_BMPMENU_START()
 
-    //バトルビデオを見ますか？（消）
-//@    _BALLOONWIN_CLOSE()
+    //バトルビデオを見ますか？
 
     IF $i_ret == 0 THEN
       $reg_param = SCRCMD_BTL_RECORDER_MODE_VIDEO
@@ -877,7 +860,6 @@ sub_gterminal_btl_video:
       ENDIF
     ELSIF $i_ret == 1 THEN
       _BALLOONWIN_OBJMSG_POS( msg_gterminal_btlvideo_exp , SCWK_TARGET_OBJID, POS_DL )  //説明
-//@      _BALLOONWIN_CLOSE()
     ELSE
       $reg_return = SEQ_SUB_GTERMINAL_MENU
       $i_loop = FALSE
@@ -911,9 +893,7 @@ sub_gterminal_musical:
 	  //メニュー表示
   	_BMPMENU_START()
 
-    //ミュージカルをみますか？（消）
-//@    _BALLOONWIN_CLOSE()
-
+    //ミュージカルをみますか？
     IF $i_ret == 0 THEN
       $reg_param = SCRCMD_BTL_RECORDER_MODE_MUSICAL
       _CALL sub_gterminal_btl_recorder_call
@@ -922,7 +902,6 @@ sub_gterminal_musical:
       ENDIF
     ELSIF $i_ret == 1 THEN
       _BALLOONWIN_OBJMSG_POS( msg_gterminal_musical_exp , SCWK_TARGET_OBJID, POS_DL )  //説明
-//@      _BALLOONWIN_CLOSE()
     ELSE
       $reg_return = SEQ_SUB_GTERMINAL_MENU
       $i_loop = FALSE

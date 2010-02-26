@@ -11,5 +11,6 @@
 #define SEQ_GOODBYE           (10)
 #define SEQ_RETRY             (11)
 #define SEQ_EXIT              (12)
+#define SEQ_THROW_EXIT        (13)
 #define SEQ_END               (0xFF)
 

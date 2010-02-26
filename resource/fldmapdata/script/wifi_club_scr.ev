@@ -120,6 +120,9 @@ sub_club_counter_main:
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
       $i_loop = FALSE
+    
+    CASE SEQ_THROW_EXIT THEN
+      $i_loop = FALSE
     ENDSWITCH
   ENDWHILE
 }
@@ -240,13 +243,7 @@ sub_club_counter_connect:
   _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_04, SCWK_TARGET_OBJID, POS_DL )
   _BALLOONWIN_CLOSE()
 
-  //引率アニメ再生
-  //_OBJ_ANIME( MMDL_ID_PLAYER, anm_wifi_club_p01 )
-  //_OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_club_p01 )
-  //_OBJ_ANIME_WAIT()
-
   //エレベータアニメ再生
-
   _CHG_COMMON_SCR SCRID_POKECEN_ELEVATOR_IN
   //復帰時の出現先をここにする
   _SET_SP_LOCATION_HERE()
@@ -254,15 +251,11 @@ sub_club_counter_connect:
   _FLAG_SET( SYS_FLAG_SPEXIT_REQUEST )
 
   //クラブイベント呼び出し
-  //_MAP_FADE_BLACK_OUT( )
-	//_MAP_FADE_END_CHECK()
   _WIFI_CLUB_EVENT_CALL()
-	//_MAP_FADE_BLACK_IN( )
-	//_MAP_FADE_END_CHECK()
 
   _CHG_COMMON_SCR SCRID_POKECEN_ELEVATOR_OUT
 
-  $reg_return = SEQ_GOODBYE
+  $reg_return = SEQ_THROW_EXIT
 }
 _RET
 

@@ -13,6 +13,7 @@
 #define SEQ_GOODBYE           (10)
 #define SEQ_RETRY             (11)
 #define SEQ_EXIT              (12)
+#define SEQ_THROW_EXIT        (13)
 #define SEQ_END               (0xFF)
 #define SEQ_CONNECT           (0)
 
@@ -22,6 +23,7 @@
 #define SEQ_SUB_RNDMATCH_TRY_CHECK   (2)
 #define SEQ_SUB_RNDMATCH_TRY         (3)
 #define SEQ_SUB_RNDMATCH_EXP         (4)
+#define SEQ_SUB_RNDMATCH_END         (0xFD)
 #define SEQ_SUB_RNDMATCH_RETURN      (0xFE)
 #define SEQ_SUB_RNDMATCH_EXIT        (0xFF)
 
