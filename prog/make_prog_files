@@ -66,12 +66,6 @@ NETWORKSRC =  net/net_icondata.c \
 				net/wih_dwc.c \
 				net/net_save.c \
 				net_app/pdw_account/pdwacc_mainproc.c \
-        net_app/union/union_comm.c \
-        net_app/union/union_main.c \
-        net_app/union/union_comm_command.c \
-        net_app/union/union_subproc.c \
-        net_app/union/colosseum_comm_command.c \
-        net_app/union/colosseum.c \
         net_app/gds/gds_main.c \
         gamesystem/g_power.c
 
@@ -176,7 +170,6 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/game_comm.c \
         gamesystem/game_beacon.c \
         gamesystem/beacon_status.c \
-        field/field_comm/game_beacon_search.c \
         debug/debugwin_sys.c \
         test/tetsu/debug_common.c \
         debug/debug_system_group.c \
@@ -349,6 +342,12 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         musical/stage/musical_stage_sys.c \
         musical/musical_program.c \
 				net_app/mystery/mystery_createdata.c \
+        net_app/union/union_comm.c \
+        net_app/union/union_main.c \
+        net_app/union/union_comm_command.c \
+        net_app/union/union_subproc.c \
+        net_app/union/colosseum_comm_command.c \
+        net_app/union/colosseum.c \
         map/dp3format.c \
 				field/map_matrix.c \
         field/map_replace.c \
@@ -392,6 +391,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/calender.c \
         field/scrcmd_faceup.c \
         field/event_beacon_detail.c \
+        field/field_comm/game_beacon_search.c \
 				gamesystem/game_beacon_accessor.c \
         field/pleasure_boat_st.c \
         field/scrcmd_pl_boat_init.c \
