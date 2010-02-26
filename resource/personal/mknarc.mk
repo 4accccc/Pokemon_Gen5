@@ -15,6 +15,7 @@ include user.def
 #------------------------------------------------------------------------------
 PERSONAL	= personal.narc
 PERSONAL_NAIX	= personal.naix
+PERSONAL_CSV	= personal_wb_fix.csv
 WOTBL			= wotbl.narc
 EVOTBL		= evo.narc
 PMSTBL		= pms.narc
@@ -51,7 +52,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 LDIRT_CLEAN = $(TARGETDIR)$(PERSONAL) $(TARGETDIR)$(PERSONAL_NAIX) $(TARGETDIR)$(WOTBL) $(TARGETDIR)$(EVOTBL) $(TARGETDIR)$(PMSTBL)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-LDIRT_CLEAN += $(PERSONAL) $(PERSONAL_NAIX) $(WOTBL) $(EVOTBL) $(PMSTBL) *.bin
+LDIRT_CLEAN += $(PERSONAL) $(PERSONAL_NAIX) $(WOTBL) $(EVOTBL) $(PMSTBL) $(PERSONAL_CSV) *.bin
 endif
 
 .PHONY:	do-build
@@ -60,7 +61,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES: .s .bin
 
 #パーソナルデータ生成
-do-build: narc
+do-build: narc $(PERSONAL_CSV)
 
 narc:
 personal.narc: $(PERFILES)
@@ -72,6 +73,8 @@ evo.narc: $(EVOFILES)
 pms.narc: $(PMSFILES)
 	nnsarc -c -l -n pms.narc pms_*.bin
 
+$(PERSONAL_CSV): personal_wb.csv
+	ruby ../../tools/personal_conv/wazamachine_split.rb personal_wb.csv $(PERSONAL_CSV)
 endif
 
 #------------------------------------------------------------------------------
