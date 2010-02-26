@@ -353,6 +353,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       //MsgSpeedが受信できてない！
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_11 , 1 );
       MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+      MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
       work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
     }
     else
@@ -380,6 +381,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       //ROM違う！
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_02 , work->initData->msgSpeed );
       MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+      MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
       work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
     }
     else
@@ -441,6 +443,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     //読み込み失敗
     MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_10 , work->initData->msgSpeed );
     MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+    MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
     work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
     break;
     
@@ -448,6 +451,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     //初期ポケ不足
     MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_09 , work->initData->msgSpeed );
     MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+    MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
     work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
     break;
   
@@ -733,6 +737,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_12 , work->initData->msgSpeed );
         MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+        MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
         work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
       }
     }
@@ -837,10 +842,11 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     {
       //初期タイムアウトから来るとmsgSpdもらってない。
       const int msgSpd = ( work->initData!= NULL ? work->initData->msgSpeed : 1 );
-      MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_07 , msgSpd );
       MB_COMM_ReqDisconnect( work->commWork );
       work->state = MCS_WAIT_EXIT_COMM;
+      //ゲーム後のポケ不足でも来る。その際はエラーじゃないので、ここでステートセットはしない！
+      //MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
     }
     MB_CHILD_ErrCheck( work , FALSE );
     break;
