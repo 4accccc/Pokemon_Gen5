@@ -78,7 +78,8 @@ typedef struct{
 	int master_brightness_sub;	///<サブ画面マスター輝度
 	s32 h_intr;					///<Hブランク割り込み許可
 	s32 v_intr;					///<Vブランク割り込み許可
-	GXVRamBG bg_bank;			///<BG VRAMバンク情報
+	GXVRamBG bg_bank;			    ///<BG VRAMバンク情報
+	GXVRamSubBG bg_bank_sub;	///<SUB BG VRAMバンク情報
 	
 	u8 font_letter;
 	u8 font_shadow;
@@ -495,6 +496,7 @@ static void Local_ErrDispInit(void)
 	
 	//VRAMバンク情報退避
 	nes->bg_bank = GX_ResetBankForBG();
+	nes->bg_bank_sub = GX_ResetBankForSubBG();
 	GX_SetBankForBG(GX_VRAM_BG_128_C);
 	OS_TPrintf("VRAM BANK = %d\n", nes->bg_bank);
 
@@ -568,6 +570,7 @@ static void Local_ErrDispExit(void)
 	//VRAMバンク情報復帰
 	GX_ResetBankForBG();
 	GX_SetBankForBG(nes->bg_bank);
+	GX_SetBankForSubBG(nes->bg_bank_sub);
 
 	//割り込み復帰
 	GX_HBlankIntr(nes->h_intr);
