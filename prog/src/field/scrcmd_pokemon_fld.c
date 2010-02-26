@@ -314,14 +314,14 @@ VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
     }
     break;
 
-  case SCR_ZUKAN_HYOUKA_MODE_LOCAL: //博士（娘）
-    if ( zenkoku_flag == TRUE )
+  case SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET: //博士（娘）捕まえた
     {
       //ちほうずかん（全国モード後）は「捕まえた数」
       count = ZUKANSAVE_GetLocalPokeGetCount( zw, heap_id );
       tbl = LocalGetTable;
     }
-    else
+    break;
+  case SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE: //博士（娘）見た
     {
       //ちほうずかん（全国モード前）は「見た数」
       count = ZUKANSAVE_GetLocalPokeSeeCount( zw, heap_id );

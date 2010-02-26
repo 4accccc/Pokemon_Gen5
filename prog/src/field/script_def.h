@@ -283,9 +283,10 @@
 //--------------------------------------------------------------
 //  ずかん評価のモード指定
 //--------------------------------------------------------------
-#define SCR_ZUKAN_HYOUKA_MODE_AUTO    (0)   ///<自動判別（パソコン）
-#define SCR_ZUKAN_HYOUKA_MODE_LOCAL   (1)   ///<常に地方ずかん（博士・娘）
-#define SCR_ZUKAN_HYOUKA_MODE_GLOBAL  (2)   ///<常に全国ずかん（博士・父）
+#define SCR_ZUKAN_HYOUKA_MODE_AUTO        (0)   ///<自動判別（パソコン）
+#define SCR_ZUKAN_HYOUKA_MODE_GLOBAL      (1)   ///<常に全国ずかん（博士・父）
+#define SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE   (2)   ///<地方ずかん・見た（博士・娘）
+#define SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET   (3)   ///<地方ずかん・見た（博士・娘）
 
 //--------------------------------------------------------------
 /// ボックス追加壁紙指定  _SET_BOX_WALLPAPER()に使用
