@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-18T16:42:14"/>
+	<create user="taya" host="W00146" date="2010-02-26T13:17:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -262,7 +262,7 @@
 
 	<dialog left="240" top="137" right="1118" bottom="866" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="356" top="385" right="787" bottom="783" visible="yes"/>
+		<tag-palette left="604" top="465" right="1035" bottom="863" visible="no"/>
 		<band id="0" index="0" style="0001" width="484"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
@@ -364,6 +364,36 @@
 	<row id="BTLSTR_UI_COMM_WAIT">
 		<language name="JPN" width="216">つうしんたいきちゅう…</language>
 		<language name="JPN_KANJI" width="216" line="100">通信待機中…</language>
+	</row>
+
+	<row id="BTLSTR_UI_LVUP_DIFF">
+		<language name="JPN" width="216">Ｈ　Ｐ[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:0]
+こうげき[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:1]
+ぼうぎょ[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:2]
+とくこう[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:3]
+とくぼう[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:4]
+すばやさ[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:5]</language>
+		<language name="JPN_KANJI" width="216" line="100">Ｈ　Ｐ[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:0]
+攻　撃[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:1]
+防　御[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:2]
+特　攻[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:3]
+特　防[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:4]
+素早さ[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:5]</language>
+	</row>
+
+	<row id="BTLSTR_UI_LVUP_PARAM">
+		<language name="JPN" width="216">Ｈ　Ｐ[BD:03:Ｘ右寄せ:40][2:02:３桁:0]
+こうげき[BD:03:Ｘ右寄せ:40][2:02:３桁:1]
+ぼうぎょ[BD:03:Ｘ右寄せ:40][2:02:３桁:2]
+とくこう[BD:03:Ｘ右寄せ:40][2:02:３桁:3]
+とくぼう[BD:03:Ｘ右寄せ:40][2:02:３桁:4]
+すばやさ[BD:03:Ｘ右寄せ:40][2:02:３桁:5]</language>
+		<language name="JPN_KANJI" width="216" line="100">Ｈ　Ｐ[BD:03:Ｘ右寄せ:40][2:02:３桁:0]
+攻　撃[BD:03:Ｘ右寄せ:40][2:02:３桁:1]
+防　御[BD:03:Ｘ右寄せ:40][2:02:３桁:2]
+特　攻[BD:03:Ｘ右寄せ:40][2:02:３桁:3]
+特　防[BD:03:Ｘ右寄せ:40][2:02:３桁:4]
+素早さ[BD:03:Ｘ右寄せ:40][2:02:３桁:5]</language>
 	</row>
 
 	<flowchart-group-list>
