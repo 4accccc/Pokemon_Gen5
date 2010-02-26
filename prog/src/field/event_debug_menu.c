@@ -4606,9 +4606,9 @@ static const FLDMENUFUNC_LIST DATA_EncEffMenuList[ENCEFFLISTMAX] =
   { DEBUG_FIELD_ENCEFF26, (void*)25 },
   { DEBUG_FIELD_ENCEFF27, (void*)26 },
   { DEBUG_FIELD_ENCEFF28, (void*)27 },
-  { DEBUG_FIELD_ENCEFF29, (void*)28 },
-  { DEBUG_FIELD_ENCEFF30, (void*)29 },
-  { DEBUG_FIELD_ENCEFF31, (void*)30 },
+  { DEBUG_FIELD_ENCEFF30, (void*)28 },
+  { DEBUG_FIELD_ENCEFF31, (void*)29 },
+  { DEBUG_FIELD_ENCEFF29, (void*)30 },
   { DEBUG_FIELD_ENCEFF32, (void*)31 },
   { DEBUG_FIELD_ENCEFF33, (void*)32 },
   { DEBUG_FIELD_ENCEFF34, (void*)33 },
@@ -4711,7 +4711,7 @@ static GMEVENT_RESULT debugMenuEncEffListEvent(
     }
 
     GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, -1 );
+          GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, -1 );
     (*seq)++;
     break;
   case 3:
