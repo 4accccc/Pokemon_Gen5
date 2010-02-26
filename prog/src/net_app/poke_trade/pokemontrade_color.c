@@ -89,10 +89,16 @@ static void PokemonTrade_PartyPokeDotPut( POKEMON_TRADE_WORK* pWork, POKEPARTY* 
 {
 	POKEMON_PASO_PARAM * ppp;
   u8	i;
+  int num = PokeParty_GetPokeCount(pParty);
+    
 
-  for( i = 0; i < PokeParty_GetPokeCount(pParty) ; i++ ){
-    ppp = PP_GetPPPPointer( PokeParty_GetMemberPointer( pParty , i ) );
-    buf[i] = _getColorIndex(ppp,pWork->heapID);
+  for( i = 0; i <  TEMOTI_POKEMAX; i++ ){
+    if( num > i ){
+      ppp = PP_GetPPPPointer( PokeParty_GetMemberPointer( pParty , i ) );
+      buf[i] = _getColorIndex(ppp,pWork->heapID);
+    }else{
+      buf[i] = 0xf;
+    }
   }
 }
 

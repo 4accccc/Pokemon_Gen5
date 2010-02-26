@@ -945,9 +945,9 @@ static VecFx10 gCubeNormal[6] = {
 
 static GXSt    gCubeTexCoord[] = {
   GX_ST(0, 0),
-  GX_ST(0, 64 * FX32_ONE),
-  GX_ST(64 * FX32_ONE, 0),
-  GX_ST(64 * FX32_ONE, 64 * FX32_ONE)
+  GX_ST(0, 32 * FX32_ONE),
+  GX_ST(32 * FX32_ONE, 0),
+  GX_ST(32 * FX32_ONE, 32 * FX32_ONE)
   };
 
 static void vtx(int idx)
@@ -971,26 +971,108 @@ static void tex_coord(int idx)
 static const  u32     myTexAddr = 0x03000;       // a texture image at 0x1000 of the texture image slots
 static const  u32     myTexPlttAddr = 0x02000;   // a texture palette at 0x1000 of the texture palette slots
 
-static const  u32     myTexSize = 2048;   // a texture palette at 0x1000 of the texture palette slots
+static const  u32     myTexSize = 512;   // a texture palette at 0x1000 of the texture palette slots
 
 
-static void _printColorSquear(u8* tempBuff, int x, int y, int colno)
+// 横方向の定数
+#define ONE_COLUMN_SIZE (3)
+#define ONE_COLUMN_YOHAKU_SIZE (2)
+
+// 縦方向の定数
+#define ONE_RAW_SIZE (3)
+#define ONE_RAW_YOHAKU_SIZE (3)
+
+// POKEPARTYの表示
+#define POKEPARTY_DRAW_RAW      (3)
+#define POKEPARTY_DRAW_COLUMN   (2)
+#define POKEPARTY_DRAW_START_IDX_RAW    (1)
+#define POKEPARTY_DRAW_START_IDX_COLUMN (2)
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  １ポケモン分の描画
+ *
+ *	@param	tempBuff  バッファ
+ *	@param	pos_x     X位置  （０～BOX_MAX_COLUMN）
+ *	@param	pos_y     Y位置 （０～BOX_MAX_RAW）
+ *	@param	colno     色
+ */
+//-----------------------------------------------------------------------------
+static void _printColorSquear(u16* tempBuff, int pos_x, int pos_y, int colno )
 {
   int i,j;
-  int xstart = x*10+1;
-  int ystart = y*10+2;
-    
-  for(i = ystart ; i < (ystart + 8); i++){  //y座標
-    for(j = xstart; j < (xstart + 8); j++){  //x座標
-      int pos = j/2+i*32;
+  int buff_pos;
+  int buff_index;
+  int buff_ofs;
+  int start_x, start_y;
 
-      if((j % 2)==0){
-        tempBuff[pos] = (0xf0 & tempBuff[pos]) + colno;
-      }
-      else{
-        tempBuff[pos] = (0x0f & tempBuff[pos]) + (colno<<4);
-      }
+  start_x = ONE_COLUMN_YOHAKU_SIZE + (pos_x * (ONE_COLUMN_SIZE+ONE_COLUMN_YOHAKU_SIZE));
+  start_y = ONE_RAW_YOHAKU_SIZE + (pos_y * (ONE_RAW_SIZE+ONE_RAW_YOHAKU_SIZE));
+    
+  for(i = start_y; i < start_y+ONE_RAW_SIZE; i++){  //y座標
+    for(j = start_x; j < start_x+ONE_COLUMN_SIZE; j++){  //x座標
+      buff_pos = (i*32) + j;
+
+      buff_index  = buff_pos / 4;
+      buff_ofs    = buff_pos % 4;
+
+      tempBuff[buff_index] &= ~(0xF<<(buff_ofs*4));
+      tempBuff[buff_index] |= colno<<(buff_ofs*4);
     }
+  }
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンテクスチャ作成
+ *	        32 * 32 のテクスチャを生成
+ *
+ *	@param	tempBuff    バッファ
+ *	@param  box         ボックス情報
+ *	@param	tray_num    トレイナンバー
+ *	@param	on_colno    (16色)
+ */
+//-----------------------------------------------------------------------------
+static void _printColorBox(u16* tempBuff, const u8* box, int tray_num, u16 on_colno )
+{
+  int i,j;
+  int index;
+  TOMOYA_Printf( "Boxプリント %d\n", tray_num );
+  
+  for(i = 0; i < BOX_MAX_RAW; i++){  //y座標
+    for(j = 0; j < BOX_MAX_COLUMN; j++){  //x座標
+       index = (i *  BOX_MAX_COLUMN) + j;
+      _printColorSquear( tempBuff, j, i, box[ (tray_num * BOX_MAX_POS) + index ] );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンパーティテクスチャ作成
+ *	        32 * 32 のテクスチャを生成
+ *
+ *	@param	tempBuff    バッファ
+ *	@param  party       ポケモンパーティ情報
+ *	@param	on_colno    (16色)
+ */
+//-----------------------------------------------------------------------------
+static void _printColorPokeParty(u16* tempBuff, const u8* party_col, u16 on_colno )
+{
+  int i;
+  int poke_num = TEMOTI_POKEMAX;
+  int x, y;
+
+  TOMOYA_Printf( "Partyプリント %d\n", poke_num );
+  
+  for(i = 0; i < poke_num; i++){
+    x = POKEPARTY_DRAW_START_IDX_COLUMN + (i % POKEPARTY_DRAW_COLUMN);
+    y = POKEPARTY_DRAW_START_IDX_RAW + (i / POKEPARTY_DRAW_COLUMN);
+
+    _printColorSquear( tempBuff, x, y, party_col[i] );
   }
 }
 
@@ -998,7 +1080,7 @@ static void _printColorSquear(u8* tempBuff, int x, int y, int colno)
 //全部のテクスチャーを作る
 static void _panelLoad(POKEMON_TRADE_WORK *pWork,int num)
 {
-  u8* tempBuff;
+  u16* tempBuff;
   //---------------------------------------------------------------------------
   // Download the texture images:
   //
@@ -1010,9 +1092,13 @@ static void _panelLoad(POKEMON_TRADE_WORK *pWork,int num)
   {
     int i,index;
     for(i=0;i < num;i++){
-      GFL_STD_MemFill(tempBuff, 0xf, myTexSize);
+      GFL_STD_MemFill(tempBuff, (0xf|(0xf<<4)), myTexSize);
 
-      _printColorSquear(tempBuff, num%6, num/6, num%16);
+      if( i==0 ){
+        _printColorPokeParty( tempBuff, &pWork->FriendPokemonCol[1][BOX_POKESET_MAX], 2 );
+      }else{
+        _printColorBox( tempBuff, &pWork->FriendPokemonCol[1][0], i-1, 2 );
+      }
 
 
 #if 0
@@ -1069,7 +1155,7 @@ static void _panelRelease(POKEMON_TRADE_WORK *pWork)
 
 
 #define DEMO_INTENSITY_DF   23
-#define DEMO_INTENSITY_AM   8
+#define DEMO_INTENSITY_AM   26
 #define DEMO_INTENSITY_SP   31
 
 static const GXRgb DEMO_DIFFUSE_COL =
@@ -1098,77 +1184,107 @@ static void DEMO_Set3DDefaultMaterial(BOOL bUsediffuseAsVtxCol, BOOL bUseShinine
 
 
 
-static void _createBoard(float pos, int index)
+static void _createBoard(fx32 r, int index, u16 rotate, u16 global_rotate)
 {
-  u16     Rotate = 182*(360-70);                // for rotating cubes(0-65535)
+  static u16 rotate_x = 0x299a;
+  static u16 rotate_y = 0x8000; //裏から見るために反転
   fx32 height;
+
+    // 角度操作
+#if 0
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
+      rotate_x += 182;
+      TOMOYA_Printf( "rotate_x 0x%x\n", rotate_x );
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
+      rotate_x -= 182;
+      TOMOYA_Printf( "rotate_x 0x%x\n", rotate_x );
+    }
+#endif
+
   
  G3_PushMtx();
-  {
-    fx16    s = FX_SinIdx(Rotate);
-    fx16    c = FX_CosIdx(Rotate);
+ {
+    //以下の変換は、ポジションにのみ反映
+    //方向ベクトルには反映されない
+    G3_MtxMode(GX_MTXMODE_POSITION);
+    // 全体にかかる回転
+    G3_RotY( FX_SinIdx(global_rotate), FX_CosIdx(global_rotate) );
+ 
+    G3_PushMtx();
+    {
+      fx16    s = FX_SinIdx(rotate);
+      fx16    c = FX_CosIdx(rotate);
 
-    G3_Scale(FX32_ONE*0.15,FX32_ONE*0.15,FX32_ONE*0.15);
 
-    G3_Translate(0, 0, -5.5 * FX32_ONE); //-5.5 * FX32_ONE);
 
-    G3_Translate(0, -4.3*FX32_ONE , 0);
-    G3_Translate(pos * FX32_ONE, 0, 0);
+      // Y軸のローカル回転角は移動に反映
+      G3_RotY( FX_SinIdx(rotate), FX_CosIdx(rotate) );
 
-    G3_RotX(s, c);
+      // 移動
+      G3_Translate(0, 0, r);
 
-  }
+      // X軸回転は描画にのみ反映
+      G3_RotY( FX_SinIdx(rotate_y), FX_CosIdx(rotate_y) );
+      G3_RotX( FX_SinIdx(rotate_x), FX_CosIdx(rotate_x) );
 
-  {
-    G3_MtxMode(GX_MTXMODE_TEXTURE);
-    G3_Identity();
-    // Use an identity matrix for the texture matrix for simplicity
-    G3_MtxMode(GX_MTXMODE_POSITION_VECTOR);
-  }
+      // まず大本を
+      // 拡大
+      G3_Scale(FX32_CONST(0.15),FX32_CONST(0.15),FX32_CONST(0.15));
 
-  // Set the material color( diffuse, ambient , specular ) as basic white
-  DEMO_Set3DDefaultMaterial(TRUE, TRUE);
-  //DEMO_Set3DDefaultShininessTable();
+    }
 
-  G3_TexImageParam(GX_TEXFMT_PLTT16,      // use 16 colors palette texture
-                   GX_TEXGEN_TEXCOORD,    // use texcoord
-                   GX_TEXSIZE_S64,        // 32 pixels
-                   GX_TEXSIZE_T64,        // 32 pixels
-                   GX_TEXREPEAT_NONE,     // no repeat
-                   GX_TEXFLIP_NONE,       // no flip
-                   GX_TEXPLTTCOLOR0_USE,  // use color 0 of the palette
-                   myTexAddr+index*myTexSize     // the offset of the texture image
+    {
+      G3_MtxMode(GX_MTXMODE_TEXTURE);
+      G3_Identity();
+      // Use an identity matrix for the texture matrix for simplicity
+      G3_MtxMode(GX_MTXMODE_POSITION_VECTOR);
+    }
+
+    // Set the material color( diffuse, ambient , specular ) as basic white
+    DEMO_Set3DDefaultMaterial(TRUE, TRUE);
+    //DEMO_Set3DDefaultShininessTable();
+
+    G3_TexImageParam(GX_TEXFMT_PLTT16,      // use 16 colors palette texture
+                     GX_TEXGEN_TEXCOORD,    // use texcoord
+                     GX_TEXSIZE_S32,        // 32 pixels
+                     GX_TEXSIZE_T32,        // 32 pixels
+                     GX_TEXREPEAT_NONE,     // no repeat
+                     GX_TEXFLIP_NONE,       // no flip
+                     GX_TEXPLTTCOLOR0_USE,  // use color 0 of the palette
+                     myTexAddr+index*myTexSize     // the offset of the texture image
+                     );
+
+    G3_TexPlttBase(myTexPlttAddr,  // the offset of the texture palette
+                   GX_TEXFMT_PLTT16 // 16 colors palette texture
                    );
 
-  G3_TexPlttBase(myTexPlttAddr,  // the offset of the texture palette
-                 GX_TEXFMT_PLTT16 // 16 colors palette texture
-                 );
+    G3_PolygonAttr(GX_LIGHTMASK_0, // Light none 
+                   GX_POLYGONMODE_MODULATE, // modulation mode
+                   GX_CULL_FRONT,   // 裏だけ描画
+                   index,              // polygon ID(0 - 63)
+                   31,             // alpha(0 - 31)
+                   0               // OR of GXPolygonAttrMisc's value
+                   );
 
-  G3_PolygonAttr(GX_LIGHTMASK_0, // Light #0 is on
-                 GX_POLYGONMODE_MODULATE, // modulation mode
-                 GX_CULL_NONE,   // cull none
-                 0,              // polygon ID(0 - 63)
-                 31,             // alpha(0 - 31)
-                 0               // OR of GXPolygonAttrMisc's value
-                 );
+    G3_Begin(GX_BEGIN_QUADS);
+    {
+      tex_coord(1);
+      normal(0);
+      vtx(2);
+      tex_coord(0);
+      normal(0);
+      vtx(0);
+      tex_coord(2);
+      normal(0);
+      vtx(4);
+      tex_coord(3);
+      normal(0);
+      vtx(6);
 
-  G3_Begin(GX_BEGIN_QUADS);
-  {
-    tex_coord(1);
-    normal(0);
-    vtx(2);
-    tex_coord(0);
-    normal(0);
-    vtx(0);
-    tex_coord(2);
-    normal(0);
-    vtx(4);
-    tex_coord(3);
-    normal(0);
-    vtx(6);
-
+    }
+    G3_End();
+    G3_PopMtx(1);
   }
-  G3_End();
   G3_PopMtx(1);
 }
 
@@ -1176,21 +1292,47 @@ static void _createBoard(float pos, int index)
 
 static void _polygondraw(POKEMON_TRADE_WORK *pWork)
 {
-  u16     Rotate = 0;                // for rotating cubes(0-65535)
-
-//  return;
-  
   G3X_Reset();
 
   //---------------------------------------------------------------------------
   // Set up a camera matrix
   //---------------------------------------------------------------------------
   {
-    VecFx32 Eye = { 0, 0, FX32_ONE };   // Eye position
-    VecFx32 at = { 0, 0, 0 };  // Viewpoint
-    VecFx32 vUp = { 0, FX32_ONE, 0 };   // Up
+    static VecFx32 Eye = { 0, 0x180, 0x3000 };   // Eye position
+    static VecFx32 at = { 0, 0x980, 0 };  // Viewpoint
+    static const VecFx32 vUp = { 0, FX32_ONE, 0 };   // Up
 
     G3_LookAt(&Eye, &vUp, &at, NULL);
+
+    // カメラ操作
+#if 0
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
+      Eye.z += FX32_HALF;
+      TOMOYA_Printf( "Eye.z 0x%x\n", Eye.z );
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
+      Eye.z -= FX32_HALF;
+      TOMOYA_Printf( "Eye.z 0x%x\n", Eye.z );
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
+      Eye.y += FX32_HALF;
+      TOMOYA_Printf( "Eye.y 0x%x\n", Eye.y );
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
+      Eye.y -= FX32_HALF;
+      TOMOYA_Printf( "Eye.y 0x%x\n", Eye.y );
+    }
+
+    if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
+      Eye.y -= 0x100;
+      at.y -= 0x100;
+      TOMOYA_Printf( "Eye.y 0x%x\n", Eye.y );
+      TOMOYA_Printf( "at.y 0x%x\n", at.y );
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
+      Eye.y += 0x100;
+      at.y += 0x100;
+      TOMOYA_Printf( "Eye.y 0x%x\n", Eye.y );
+      TOMOYA_Printf( "at.y 0x%x\n", at.y );
+    }
+
+#endif
   }
 
   //---------------------------------------------------------------------------
@@ -1208,15 +1350,46 @@ static void _polygondraw(POKEMON_TRADE_WORK *pWork)
 
 
   {
+    // 各スクリーンのスクロール幅 
+    enum{
+      PARTY_TRAY_SCROLL_NUM = _TEMOTITRAY_MAX,
+      BOX_TRAY_SCROLL_NUM = _BOXTRAY_MAX,
+    };
+    
     int i;
-    float num = pWork->FriendBoxScrollNum;
+    int tray_num = POKEMONTRADE_GetFriendBoxNum( pWork );
+    int scroll_max = (tray_num * BOX_TRAY_SCROLL_NUM) + PARTY_TRAY_SCROLL_NUM;  // BoxScrollの最大数
+    int num = pWork->FriendBoxScrollNum;
+    int roop = tray_num + 1;
+    u32 rotate_add;
+    u32 global_rotate;
+    static fx32 circle_r = 0x13cd;
 
-    num = num / 127;
-  
-    for(i=0;i<25;i++){
-      num = num - i;
-      _createBoard(  3.6 * num ,   i  );
+    // 半分ループを微調整 相手の画面でカーソルの中心の場所を移す
+    num += 128;
+    num %= scroll_max;
+
+    global_rotate = (u64)(0x10000 * (u64)num) / (u64)scroll_max;
+
+    //TOMOYA_Printf( "num %d scroll_max %d\n", num, scroll_max );
+
+    //TOMOYA_Printf( "global rotate %d num %d scroll_max %d\n", global_rotate / 182, num, scroll_max );
+
+    for(i=0;i<roop;i++){
+      rotate_add = (0x10000 * i) / roop;
+      _createBoard( circle_r,  i, rotate_add, 0x10000 - global_rotate );
     }
+
+    // 円半径操作
+#if 0
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
+      circle_r += 0x100;
+      TOMOYA_Printf( "circle_r 0x%x\n", circle_r );
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
+      circle_r -= 0x100;
+      TOMOYA_Printf( "circle_r 0x%x\n", circle_r );
+    }
+#endif
   }
 
   
