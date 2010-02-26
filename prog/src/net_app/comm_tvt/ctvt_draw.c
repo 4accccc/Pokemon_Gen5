@@ -57,6 +57,9 @@
 #define CTVT_DRAW_INFO_DRAW_X2 (80)
 
 #define CTVT_DRAW_INFO_EDIT_X (64)
+
+#define CTVT_DRAW_USE_SAMPLING (0)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -142,8 +145,10 @@ struct _CTVT_DRAW_WORK
   u8  penSize;
   u8  stampType;
 
+#if CTVT_DRAW_USE_SAMPLING
   u32 samplingRes;
   TP_ONE_DATA	tpData;
+#endif //CTVT_DRAW_USE_SAMPLING
 
   
   BOOL isUpdateInfo;    //上画面用
@@ -427,7 +432,9 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   //上画面の会話アイコンを消す
   COMM_TVT_EraseTalkIcon( work );
   
+#if CTVT_DRAW_USE_SAMPLING
   GFL_UI_TP_AutoStartNoBuff();
+#endif //CTVT_DRAW_USE_SAMPLING
   
 }
 
@@ -439,8 +446,10 @@ void CTVT_DRAW_TermMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   u8 i;
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
   
+#if CTVT_DRAW_USE_SAMPLING
   //サンプリング終了
   GFL_UI_TP_AutoStop();
+#endif //CTVT_DRAW_USE_SAMPLING
 
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , heapId );
   GFL_NET_ReloadIcon();
@@ -486,7 +495,9 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
   
   int i;
+#if CTVT_DRAW_USE_SAMPLING
   drawWork->samplingRes = GFL_UI_TP_AutoSamplingMain( &drawWork->tpData, TP_BUFFERING_JUST, 1 );
+#endif //CTVT_DRAW_USE_SAMPLING
   drawWork->isTouch = FALSE;
   
   switch( drawWork->state )
@@ -903,6 +914,11 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
     return;
   }
   
+  if( GFL_UI_TP_GetCont() == FALSE )
+  {
+    drawWork->isHold = FALSE;
+  }
+
   if( GFL_UI_TP_GetTrg() == TRUE &&
       drawWork->isTouch == FALSE &&
       drawWork->state == CDS_EDIT &&
@@ -1000,6 +1016,7 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
   if( drawWork->editMode == CDED_PEN ||
       drawWork->editMode == CDED_KESHIGOMU )
   {
+#if CTVT_DRAW_USE_SAMPLING
     if( drawWork->samplingRes == TP_OK )
     {
       u8 i;
@@ -1060,10 +1077,54 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
         }
       }
     }
-  }
-  if( GFL_UI_TP_GetCont() == FALSE )
+#else
+  if( drawWork->isHold == TRUE )
   {
-    drawWork->isHold = FALSE;
+    u32 tpx,tpy;
+    GFL_UI_TP_GetPointCont( &tpx,&tpy );
+    if( drawWork->isHold == TRUE )
+    {
+      if( drawWork->befPenX != 0xFFFF &&
+          drawWork->befPenY != 0xFFFF )
+      {
+        BOOL isFull;
+        const u8 connectNum = COMM_TVT_GetConnectNum( work );
+        CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+        DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( work );
+        DRAW_SYS_PEN_INFO *info = CTVT_COMM_GetDrawBuf(work,commWork,&isFull);
+        if( isFull == FALSE ||
+            connectNum == 1 )
+        {
+          info->startX = drawWork->befPenX;
+          info->startY = drawWork->befPenY;
+        }
+        info->endX = tpx;
+        info->endY = tpy;
+        info->penType = drawWork->penSize;
+        if( drawWork->editMode == CDED_KESHIGOMU )
+        {
+          info->col = 0;
+          info->penType = DSPS_CIRCLE_8;
+        }
+        else
+        {
+          info->col  = drawWork->penCol;
+        }
+        
+        if( connectNum == 1 )
+        {
+          DRAW_SYS_SetPenInfo( drawSys , info );
+        }
+        else
+        {
+          CTVT_COMM_AddDrawBuf( work , commWork );
+        }
+      }
+      drawWork->befPenX = tpx;
+      drawWork->befPenY = tpy;
+    }
+  }
+#endif
   }
 
 }

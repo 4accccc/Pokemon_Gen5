@@ -134,24 +134,56 @@ static void DRAW_SYS_DrawLine( DRAW_SYS_WORK* work , void *vramAdr , const u16 x
   const int baseY = y1 - (penData->sizeY/2);
   
   u8 i;
+  u8 drawBit = 31;
+  const u8 bitX = ( addX >= 0 ? DSPD_BIT_RIGHT : DSPD_BIT_LEFT );
+  const u8 bitY = ( addY >= 0 ? DSPD_BIT_DOWN : DSPD_BIT_UP );
+  int befX = baseX;
+  int befY = baseY;
   
   for( i=0;i<loopNum;i++ )
   {
     u8 x,y;
     const int posX = baseX + (subX>>FX32_SHIFT);
     const int posY = baseY + (subY>>FX32_SHIFT);
-    for( x=0;x<penData->sizeX;x++ )
+    if( i < loopNum-1 )
     {
-      for( y=0;y<penData->sizeY;y++ )
+      drawBit = 0;
+      if( posX != befX )
       {
-        if( penData->penData[y][x] == 1 )
-        {
-          DRAW_SYS_DrawDot_DirectBmp( work , vramAdr , posX+x , posY+y , col );
-        }
+        drawBit += bitX;
+      }
+      if( posY != befY )
+      {
+        drawBit += bitY;
       }
     }
+    else
+    {
+      drawBit = 31;
+    }
+    OS_TFPrintf(3,"---------------------------------------------[%d]\n",drawBit);
+    for( y=0;y<penData->sizeY;y++ )
+    {
+      for( x=0;x<penData->sizeX;x++ )
+      {
+        if( penData->penData[y][x] & drawBit )
+        {
+          DRAW_SYS_DrawDot_DirectBmp( work , vramAdr , posX+x , posY+y , col );
+          OS_TFPrintf(3,"o");
+        }
+        else
+        {
+          OS_TFPrintf(3,"x");
+        }
+      }
+      OS_TFPrintf(3,"\n");
+    }
+    OS_TFPrintf(3,"---------------------------------------------\n");
     subX += addX;
     subY += addY;
+    
+    befX = posX;
+    befY = posY;
   }
   
 }
