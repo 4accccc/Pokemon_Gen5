@@ -61,7 +61,9 @@ enum {
   VCMD_INPUTWORD_UPDATE,  ///< カテゴリで入力された文字表示を更新
 	VCMD_SCROLL_WORDWIN_BAR,		///< 単語ウィンドウスクロールバー
 
-  VCMD_ERASE_IN_CATEGORY_INITIAL,  // カテゴリあいうえお入力において、1文字消去したとき、1文字消去ボタンを明滅させる
+  VCMD_ERASE_BLINK_IN_CATEGORY_INITIAL,  // カテゴリあいうえお入力において、1文字消去したとき、1文字消去ボタンを明滅させる
+  VCMD_INPUT_BLINK_IN_CATEGORY,          // カテゴリあいうえお入力において、1文字入力したとき、その文字のところを明滅させる  // カテゴリわざピクチャーなどから選択において、選択したとき、その選択したところを明滅させる
+  VCMD_INPUT_BLINK_IN_WORDWIN,          // 単語選択において、選択したとき、その選択したところを明滅させる
 
   VCMD_MAX
 };

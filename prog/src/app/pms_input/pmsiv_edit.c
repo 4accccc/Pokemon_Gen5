@@ -1306,9 +1306,9 @@ void PMSIV_EDIT_ActiveCursor( PMSIV_EDIT* wk )
 }
 void PMSIV_EDIT_VisibleCursor( PMSIV_EDIT* wk, BOOL flag )
 {
-	if(flag && (*wk->p_key_mode == GFL_APP_KTST_TOUCH)){
-		return;
-	}
+	//if(flag && (*wk->p_key_mode == GFL_APP_KTST_TOUCH)){  // 呼び出し元がきちんとflagを立てているので、flag以外で表示を禁止する必要はない
+	//	return;                                             // タッチ入力であっても、編集エリアにはカーソルを表示しておく。
+	//}                                                     // 編集エリア以外(けってい/やめるボタン)をタッチしたときは、編集エリアのカーソルは非表示にする(非表示になるようこの関数を呼び出すこと)。
 	GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor[0], flag );
 	GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor[1], flag );
 	set_cursor_anm( wk, TRUE );

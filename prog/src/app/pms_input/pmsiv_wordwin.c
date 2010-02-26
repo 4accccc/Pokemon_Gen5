@@ -111,6 +111,8 @@ struct _PMSIV_WORDWIN {
 	GFL_BMPWIN  *tmp_win;
 
 	GFL_CLWK*	cursor_actor;
+  BOOL      input_blink_cursor_visible;  // InputBlickを行うときのcursor_actorの表示を覚えておく
+
 //	GFL_CLWK*	up_arrow_actor;
 //	GFL_CLWK*	down_arrow_actor;
 	GFL_CLWK*	scroll_bar_actor;
@@ -171,6 +173,8 @@ PMSIV_WORDWIN*  PMSIV_WORDWIN_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK*
 
 
 	wk->cursor_actor = NULL;
+	wk->input_blink_cursor_visible = FALSE;
+
 //	wk->up_arrow_actor = NULL;
 //	wk->down_arrow_actor = NULL;
 
@@ -800,3 +804,81 @@ static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line )
     }
   }
 }
+
+
+//------------------------------------------------------------------
+/**
+	* 単語選択において、選択したとき、その選択したところを明滅させる
+	*
+	* @param   wk		
+	* @param   pos		
+	*
+	*/
+//------------------------------------------------------------------
+void PMSIV_WORDWIN_InputBlink( PMSIV_WORDWIN* wk, u32 pos )
+{
+  // InputBlickを行うときのcursor_actorの表示を覚えておく
+  wk->input_blink_cursor_visible = GFL_CLACT_WK_GetDrawEnable( wk->cursor_actor );
+
+  // cursor_actorを明滅アニメにする
+  GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor, TRUE );
+  {
+
+    // PMSIV_WORDWIN_MoveCursor を参考に位置を決める
+	GFL_CLACTPOS clPos;
+	u32 x, y;
+
+	if(pos == 0xFFFFFFFF){	//back
+	}else{
+		x = pos & 1;
+		y = pos / 2;
+
+		clPos.x = (CURSOR_OX + CURSOR_X_MARGIN * x );
+		clPos.y = (CURSOR_OY + CURSOR_Y_MARGIN * y );
+
+		GFL_CLACT_WK_SetPos( wk->cursor_actor, &clPos , CLSYS_DEFREND_MAIN );
+		GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, ANM_WORDWIN_CURSOR_ON );
+	}
+
+  }
+}
+//------------------------------------------------------------------
+/**
+	* 単語選択において、選択したとき、その選択したところを明滅させ終わるまで待つ
+	*
+	* @param   wk	
+  *
+	* @retval  TRUEのとき、明滅が終了した	
+	*
+	* @note    明滅の更新をこの関数で行っているので、PMSIV_WORDWIN_InputBlinkを呼んだ後は毎フレーム呼び出して下さい(1フレーム中に何回呼び出しても、1フレーム分の処理しか進まない)。
+	*
+	*/
+//------------------------------------------------------------------
+BOOL PMSIV_WORDWIN_WaitInputBlink( PMSIV_WORDWIN* wk )
+{
+  u16 anm_seq = GFL_CLACT_WK_GetAnmSeq( wk->cursor_actor );
+  if( anm_seq != ANM_WORDWIN_CURSOR_ON )
+    return TRUE;
+  
+  // 終了しているか
+  if( !GFL_CLACT_WK_CheckAnmActive( wk->cursor_actor ) )
+  {
+    // InputBlinkを行う前にcursor_actorを表示していたか
+    GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor, wk->input_blink_cursor_visible );
+
+    // cursor_actorのアニメを元に戻しておく
+    {
+      // PMSIV_WORDWIN_MoveCursor 参考
+      // 位置は変えなくていい
+	{
+		GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, ANM_WORDWIN_CURSOR_ACTIVE );
+	}
+    }
+
+    wk->input_blink_cursor_visible = FALSE;
+
+    return TRUE;
+  }
+  return FALSE;
+}
+

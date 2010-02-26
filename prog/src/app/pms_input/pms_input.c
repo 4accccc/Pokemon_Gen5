@@ -1607,9 +1607,14 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 
 		switch(ret){
 		case 0:	//決定
-		case 1:	//やめる
 #if PMS_USE_SND
 			GFL_SOUND_PlaySE(SOUND_DECIDE);
+#endif //PMS_USE_SND
+			*seq = SEQ_EDS_TO_SUBPROC_OK+ret;
+			break;
+    case 1:	//やめる
+#if PMS_USE_SND
+			GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 			*seq = SEQ_EDS_TO_SUBPROC_OK+ret;
 			break;
@@ -1637,6 +1642,9 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 			break;
 		case 4:	//単語選択
 		case 5:
+#if PMS_USE_SND
+			GFL_SOUND_PlaySE(SOUND_DECIDE);
+#endif //PMS_USE_SND
 			wk->category_pos = 0;
 			wk->edit_pos = ret-4;
 			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_CATEGORY );
@@ -1914,7 +1922,11 @@ static GFL_PROC_RESULT MainProc_Category( PMS_INPUT_WORK* wk, int* seq )
 {
 	switch( *seq ){
 	case SEQ_CA_KEYWAIT:
-		if (PMSIView_WaitCommand( wk->vwk, VCMD_MOVE_WORDWIN_CURSOR) == FALSE )
+		//if (PMSIView_WaitCommand( wk->vwk, VCMD_MOVE_WORDWIN_CURSOR) == FALSE )  // VCMD_MOVE_CATEGORY_CURSOR の間違いでは？
+		if (
+            PMSIView_WaitCommand( wk->vwk, VCMD_MOVE_CATEGORY_CURSOR) == FALSE 
+		     && PMSIView_WaitCommand( wk->vwk, VCMD_INPUT_BLINK_IN_CATEGORY ) == FALSE
+    )
 		{
 			break;
 		}
@@ -1983,7 +1995,7 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     if( wk->category_mode == CATEGORY_MODE_INITIAL && PMSI_SEARCH_DelWord( wk->swk ) )
     {
 		  GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
-		  PMSIView_SetCommand( wk->vwk, VCMD_ERASE_IN_CATEGORY_INITIAL );
+		  PMSIView_SetCommand( wk->vwk, VCMD_ERASE_BLINK_IN_CATEGORY_INITIAL );
 
       PMSI_SEARCH_Start( wk->swk );
       PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
@@ -2022,7 +2034,7 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
       {
 		    //GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
 		    GFL_SOUND_PlaySE(SOUND_DECIDE);  // Aボタンを使ったので決定音
-		    PMSIView_SetCommand( wk->vwk, VCMD_ERASE_IN_CATEGORY_INITIAL );
+		    PMSIView_SetCommand( wk->vwk, VCMD_ERASE_BLINK_IN_CATEGORY_INITIAL );
 
         PMSI_SEARCH_Start( wk->swk );
         PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
@@ -2043,6 +2055,8 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     // カテゴリ選択
     else if( wk->category_mode == CATEGORY_MODE_GROUP )
     {
+      PMSIView_SetCommand( wk->vwk, VCMD_INPUT_BLINK_IN_CATEGORY );
+      
       if(check_category_enable( wk ) )
       {
         // 単語リストへ
@@ -2058,10 +2072,13 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     else
     {
       PMSI_SEARCH_AddWord( wk->swk, wk->category_pos );
-      GFL_SOUND_PlaySE( SOUND_WORD_INPUT );
+      //GFL_SOUND_PlaySE( SOUND_WORD_INPUT );
+		  GFL_SOUND_PlaySE(SOUND_DECIDE);  // Aボタンを使ったので決定音
       
       PMSI_SEARCH_Start( wk->swk );
       PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
+      
+      PMSIView_SetCommand( wk->vwk, VCMD_INPUT_BLINK_IN_CATEGORY );
     }
     return;
   }
@@ -2245,6 +2262,7 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
     // タッチなし
 		if(ret < 0 ) { return; }
 		wk->category_pos = ret;
+    PMSIView_SetCommand( wk->vwk, VCMD_INPUT_BLINK_IN_CATEGORY );
     // 無効判定
 		if( ( ret >= CATEGORY_GROUP_MAX ) ||
         ( PMSI_DATA_GetGroupEnableWordCount( wk->dwk, wk->category_pos ) == 0 ) )
@@ -2273,6 +2291,8 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
       PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
 
       GFL_SOUND_PlaySE( SOUND_WORD_INPUT );
+
+      PMSIView_SetCommand( wk->vwk, VCMD_INPUT_BLINK_IN_CATEGORY );
       return;
     }
     else
@@ -2307,7 +2327,7 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
         if( PMSI_SEARCH_DelWord( wk->swk ) )
         {
           GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
-		      PMSIView_SetCommand( wk->vwk, VCMD_ERASE_IN_CATEGORY_INITIAL );
+		      PMSIView_SetCommand( wk->vwk, VCMD_ERASE_BLINK_IN_CATEGORY_INITIAL );
 
           PMSI_SEARCH_Start( wk->swk );
           PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
@@ -2744,6 +2764,7 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 
 		wk->word_win.touch_pos = 0xFFFF;
 		set_select_word( wk );
+    PMSIView_SetCommand( wk->vwk, VCMD_INPUT_BLINK_IN_WORDWIN );
 		PMSIView_SetCommand( wk->vwk, VCMD_WORDTIN_TO_EDITAREA );
 		wk->next_proc = MainProc_EditArea;
 		(*seq) = SEQ_WORD_CHANGE_NEXTPROC;
@@ -2816,6 +2837,9 @@ static int word_input_scr_btn(PMS_INPUT_WORK* wk)
 			if(GFL_UI_TP_HitSelf( tbl, tpx,tpy) != GFL_UI_TP_HIT_NONE ){
 				wk->word_win.touch_pos = pos;
 
+        wk->word_win.cursor_x = j;  // 選択したときに明滅アニメをしなければならないので、
+        wk->word_win.cursor_y = i;  // カーソルの場所をタッチした場所にしておく
+
 				ARI_TPrintf(" Select Pos = %d -> %d\n",i*2+j , pos);
 				return WORDWIN_RESULT_SELECT;
 			}
@@ -2879,6 +2903,7 @@ static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 
 		set_select_word( wk );
 		wk->next_proc = MainProc_EditArea;
+    PMSIView_SetCommand( wk->vwk, VCMD_INPUT_BLINK_IN_WORDWIN );
 		PMSIView_SetCommand( wk->vwk, VCMD_WORDTIN_TO_EDITAREA );
 		(*seq) = SEQ_WORD_CHANGE_NEXTPROC;
 		return;

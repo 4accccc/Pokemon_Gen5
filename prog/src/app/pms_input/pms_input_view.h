@@ -194,6 +194,12 @@ enum {
 	ANM_WORD_SCR_U02,
 	ANM_WORD_SCR_D01,
 	ANM_WORD_SCR_D02,
+
+  ANM_WORDWIN_CURSOR_ON,
+  ANM_EDITAREA_CURSOR_ON,
+  ANM_INITIAL_CURSOR_ON,
+  ANM_CATEGORY_CURSOR_ON,
+  ANM_BUTTON_CURSOR_ON,
 };
 
 typedef struct
@@ -306,6 +312,9 @@ extern void PMSIV_CATEGORY_InputWordUpdate( PMSIV_CATEGORY* wk );
 extern void PMSIV_CATEGORY_StartMoveSubWinList( PMSIV_CATEGORY* wk, BOOL is_enable );
 extern BOOL PMSIV_CATEGORY_WaitMoveSubWinList( PMSIV_CATEGORY* wk, BOOL is_enable );
 
+extern void PMSIV_CATEGORY_InputBlink( PMSIV_CATEGORY* wk, u32 pos );
+extern BOOL PMSIV_CATEGORY_WaitInputBlink( PMSIV_CATEGORY* wk );
+
 
 //================================================================================
 //  単語ウィンドウ処理
@@ -342,6 +351,9 @@ extern void PMSIV_WINDOW_GetScrollBarPos( PMSIV_WORDWIN * wk, GFL_CLACTPOS * pos
 extern void PMSIV_WORDWIN_MoveScrollBar( PMSIV_WORDWIN * wk, u32 py );
 extern u32 PMSIV_WORDWIN_GetScrollBarPosCount( PMSIV_WORDWIN * wk, u32 max );
 extern void PMSIV_WORDWIN_SetScrollBarPos( PMSIV_WORDWIN * wk, u32 now, u32 max );
+
+extern void PMSIV_WORDWIN_InputBlink( PMSIV_WORDWIN* wk, u32 pos );
+extern BOOL PMSIV_WORDWIN_WaitInputBlink( PMSIV_WORDWIN* wk );
 
 
 //================================================================================

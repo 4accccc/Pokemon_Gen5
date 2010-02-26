@@ -174,6 +174,7 @@ struct _PMSIV_CATEGORY {
 	PMSIV_TOOL_SCROLL_WORK  scroll_work;
 
 	GFL_CLWK		*cursor_actor;
+  BOOL        input_blink_cursor_visible;  // InputBlickを行うときのcursor_actorの表示を覚えておく
 
 	int*			p_key_mode;
 	
@@ -193,8 +194,6 @@ static u32 setup_initial_window( PMSIV_CATEGORY* wk, u32 charpos );
 static u32 setup_input_window( PMSIV_CATEGORY* wk, u32 charpos );
 static void setup_sublist_window( PMSIV_CATEGORY* wk );
 static void setup_actor( PMSIV_CATEGORY* wk );
-
-
 
 
 //------------------------------------------------------------------
@@ -221,6 +220,7 @@ PMSIV_CATEGORY*  PMSIV_CATEGORY_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WOR
 	wk->effect_task = NULL;
 
 	wk->cursor_actor = NULL;
+	wk->input_blink_cursor_visible = FALSE;
 
 	wk->p_key_mode = PMSI_GetKTModePointer(wk->mwk);
 	return wk;
@@ -531,7 +531,6 @@ static void setup_actor( PMSIV_CATEGORY* wk )
 
 	GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, ANM_CATEGORY_CURSOR_ACTIVE );
 	GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor, FALSE );
-
 }
 
 
@@ -1147,6 +1146,130 @@ BOOL PMSIV_CATEGORY_WaitMoveSubWinList( PMSIV_CATEGORY* wk, BOOL is_enable )
     return TRUE;
   }
 
+  return FALSE;
+}
+
+//------------------------------------------------------------------
+/**
+	* カテゴリあいうえお入力において、1文字入力したとき、その文字のところを明滅させる
+	* カテゴリわざピクチャーなどから選択おいて、選択したとき、その選択したところを明滅させる
+	*
+	* @param   wk		
+	* @param   pos		
+	*
+	*/
+//------------------------------------------------------------------
+void PMSIV_CATEGORY_InputBlink( PMSIV_CATEGORY* wk, u32 pos )
+{
+  // InputBlickを行うときのcursor_actorの表示を覚えておく
+  wk->input_blink_cursor_visible = GFL_CLACT_WK_GetDrawEnable( wk->cursor_actor );
+
+  // cursor_actorを明滅アニメにする
+  GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor, TRUE );
+  {
+
+    // PMSIV_CATEGORY_MoveCursor を参考に位置を決める
+	GFL_CLACTPOS  clPos;
+	u32  mode;
+	u32  anm;
+
+	mode = PMSI_GetCategoryMode(wk->mwk);
+		
+  if( mode == CATEGORY_MODE_GROUP && pos != CATEGORY_POS_BACK )
+	{
+    GF_ASSERT( pos != CATEGORY_POS_SELECT );
+    GF_ASSERT( pos != CATEGORY_POS_ERASE );
+
+    clPos.x = CATEGORY_CURSOR_OX + CATEGORY_CURSOR_X_MARGIN * (pos % CATEGORY_WIN_ROWS);
+    clPos.y = CATEGORY_CURSOR_OY + CATEGORY_CURSOR_Y_MARGIN * (pos / CATEGORY_WIN_ROWS);
+    anm = ANM_CATEGORY_CURSOR_ON;
+  }
+  else
+  {
+    //PMSIV_MENU* menu_wk = PMSIView_GetMenuWork( wk->vwk );
+			
+		anm = ANM_CATEGORY_BACK_CURSOR_ACTIVE; // 何も表示しないOAM
+
+    if( pos == CATEGORY_POS_SELECT )
+    {
+    }
+    else if( pos == CATEGORY_POS_ERASE )
+    {
+    }
+    else if( pos == CATEGORY_POS_BACK )
+    {
+    }
+    else
+    {
+			u32 x, y;
+      
+      //PMSIV_MENU_TaskMenuSetActive( menu_wk, NULL , FALSE );
+			
+      PMSI_INITIAL_DAT_GetPrintPos(pos, &x, &y);
+			clPos.x = INITIAL_CURSOR_OX + x;
+			clPos.y = INITIAL_CURSOR_OY + y;
+			anm = ANM_INITIAL_CURSOR_ON;
+    }
+  }
+    
+  GFL_CLACT_WK_SetPos( wk->cursor_actor, &clPos , CLSYS_DEFREND_MAIN );
+  GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, anm );
+
+  }
+}
+//------------------------------------------------------------------
+/**
+	* カテゴリあいうえお入力において、1文字入力したとき、その文字のところを明滅させ終わるまで待つ
+	* カテゴリわざピクチャーなどから選択おいて、選択したとき、その選択したところを明滅させ終わるまで待つ
+	*
+	* @param   wk	
+  *
+	* @retval  TRUEのとき、明滅が終了した	
+	*
+	* @note    明滅の更新をこの関数で行っているので、PMSIV_CATEGORY_InputBlinkを呼んだ後は毎フレーム呼び出して下さい(1フレーム中に何回呼び出しても、1フレーム分の処理しか進まない)。
+	*
+	*/
+//------------------------------------------------------------------
+BOOL PMSIV_CATEGORY_WaitInputBlink( PMSIV_CATEGORY* wk )
+{
+  u16 anm_seq = GFL_CLACT_WK_GetAnmSeq( wk->cursor_actor );
+  if(    anm_seq != ANM_CATEGORY_CURSOR_ON
+      && anm_seq != ANM_INITIAL_CURSOR_ON )
+    return TRUE;
+  
+  // 終了しているか
+  if( !GFL_CLACT_WK_CheckAnmActive( wk->cursor_actor ) )
+  {
+    // InputBlinkを行う前にcursor_actorを表示していたか
+    GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor, wk->input_blink_cursor_visible );
+
+    // cursor_actorのアニメを元に戻しておく
+    {
+      // PMSIV_CATEGORY_MoveCursor 参考
+      // 位置は変えなくていい
+	u32  mode;
+	u32  anm;
+
+	mode = PMSI_GetCategoryMode(wk->mwk);
+		
+  if( mode == CATEGORY_MODE_GROUP )
+	{
+    anm = ANM_CATEGORY_CURSOR_ACTIVE;
+  }
+  else
+  {
+    {
+			anm = ANM_INITIAL_CURSOR_ACTIVE;
+    }
+  }
+    
+  GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, anm );
+    }
+
+    wk->input_blink_cursor_visible = FALSE;
+
+    return TRUE;
+  }
   return FALSE;
 }
 

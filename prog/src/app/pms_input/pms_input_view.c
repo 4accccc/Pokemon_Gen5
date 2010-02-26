@@ -155,7 +155,9 @@ static void Cmd_ButtonDownRelease(GFL_TCB *tcb, void* wk_adrs);
 static void Cmd_InputWordUpdate( GFL_TCB* tcb, void* wk_adrs );
 static void Cmd_ScrollWordWinBar(GFL_TCB *tcb, void* wk_adrs);
 
-static void Cmd_EraseInCategoryInitial( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_EraseBlinkInCategoryInitial( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_InputBlinkInCategory( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_InputBlinkInWordWin( GFL_TCB *tcb, void* wk_adrs );
 
 
 static const GFL_DISP_VRAM bank_data = {
@@ -398,7 +400,9 @@ void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
     Cmd_InputWordUpdate,
 		Cmd_ScrollWordWinBar,
 
-    Cmd_EraseInCategoryInitial,
+    Cmd_EraseBlinkInCategoryInitial,
+    Cmd_InputBlinkInCategory,
+    Cmd_InputBlinkInWordWin,
 	};
 
 
@@ -931,7 +935,7 @@ static void Cmd_ChangeKTEditArea( GFL_TCB *tcb, void* wk_adrs )
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
 	if(*vwk->p_key_mode == GFL_APP_KTST_TOUCH){	//キーからタッチへ
-		PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );
+		//PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );  // 編集エリアのカーソルは(他のボタンにカーソルが移動しない限り)表示したままにしておく
 //		PMSIV_BUTTON_VisibleCursor( vwk->button_wk, FALSE );
 	}else{	//タッチからキーへ
 		if(vwk->status == PMSI_ST_BUTTON){
@@ -1044,6 +1048,7 @@ static void Cmd_ButtonToEditArea( GFL_TCB *tcb, void* wk_adrs )
 //	PMSIV_BUTTON_VisibleCursor( vwk->button_wk, FALSE );
 	PMSIV_EDIT_ActiveArrow( vwk->edit_wk );
 	PMSIV_EDIT_VisibleCursor( vwk->edit_wk, TRUE );
+	PMSIV_EDIT_MoveCursor( vwk->edit_wk, PMSI_GetEditAreaCursorPos( wk->mwk ) );
 
 	DeleteCommand( wk );
 }
@@ -1063,7 +1068,14 @@ static void Cmd_EditAreaToCategory( GFL_TCB *tcb, void* wk_adrs )
 	int flag1,flag2;
 	
 	switch( wk->seq ){
-	case 0:
+  case 0:
+    // 編集エリアのどこを対象としているのか分かるように、カーソルを表示しておく。
+	  PMSIV_EDIT_VisibleCursor( vwk->edit_wk, TRUE );
+	  PMSIV_EDIT_MoveCursor( vwk->edit_wk, PMSI_GetEditAreaCursorPos( wk->mwk ) );
+    wk->seq++;
+    break;
+
+	case 1:
     HOSAKA_Printf("Cmd_EditAreaToCategory\n");
     PMSIV_MENU_SetupCategory( vwk->menu_wk );
 		PMSIV_EDIT_StopCursor( vwk->edit_wk );
@@ -1087,7 +1099,7 @@ static void Cmd_EditAreaToCategory( GFL_TCB *tcb, void* wk_adrs )
 		wk->seq++;
 		break;
 
-	case 1:
+	case 2:
 		flag1 = PMSIV_CATEGORY_WaitEnableBG( vwk->category_wk );
 		flag2 = PMSIV_EDIT_ScrollWait( vwk->edit_wk);
 		if(flag1 && flag2){
@@ -1298,13 +1310,22 @@ static void Cmd_CategoryToWordWin( GFL_TCB *tcb, void* wk_adrs )
 
 	switch( wk->seq )
   {
-	case 0:
-    PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
-    PMSIV_MENU_SetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_SEARCH );
+  case 0:
+    // コマンドには優先順位がないのでどれから行われるか分からない。
+    // ここで1フレーム待って、VCMD_INPUT_BLINK_IN_CATEGORY が確実に開始されるようにしておく。
     wk->seq++;
     break;
 
-  case 1:
+	case 1:
+    if( PMSIV_CATEGORY_WaitInputBlink( vwk->category_wk ) )
+    {
+      PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
+      PMSIV_MENU_SetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_SEARCH );
+      wk->seq++;
+    }
+    break;
+
+  case 2:
     if( PMSIV_MENU_IsFinishCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_SEARCH ) )
     {
       PMSIV_CATEGORY_StartFadeOut( vwk->category_wk );
@@ -1313,7 +1334,7 @@ static void Cmd_CategoryToWordWin( GFL_TCB *tcb, void* wk_adrs )
     }
     break;
 
-  case 2 :
+  case 3 :
     {
       BOOL flag1 = PMSIV_CATEGORY_WaitMoveSubWinList( vwk->category_wk, FALSE );
       BOOL flag2 = PMSIV_CATEGORY_WaitFadeOut( vwk->category_wk );
@@ -1339,7 +1360,7 @@ static void Cmd_CategoryToWordWin( GFL_TCB *tcb, void* wk_adrs )
 		}
 		break;
 
-	case 3:
+	case 4:
 		if( PMSIV_WORDWIN_WaitFadeIn( vwk->wordwin_wk ) )
 		{
 			PMSIV_WORDWIN_MoveCursor( vwk->wordwin_wk, PMSI_GetWordWinCursorPos(vwk->main_wk) );
@@ -1451,19 +1472,28 @@ static void Cmd_WordWinToEditArea( GFL_TCB *tcb, void* wk_adrs )
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
 	switch( wk->seq ){
-	case 0:
-//		PMSIV_BUTTON_Appear( vwk->button_wk );
-    PMSIV_MENU_SetupEdit( vwk->menu_wk );
-		PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk, FALSE );
-//		PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, FALSE );
-		PMSIV_WORDWIN_StartFadeOut( vwk->wordwin_wk );
-		PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,0);
-		PMSIV_EDIT_SetSystemMessage( vwk->edit_wk,PMSIV_MSG_GUIDANCE);
-		PMSIV_EDIT_ScrollSet( vwk->edit_wk,1);
-		wk->seq++;
-		break;
+  case 0:
+    // コマンドには優先順位がないのでどれから行われるか分からない。
+    // ここで1フレーム待って、VCMD_INPUT_BLINK_IN_WORDWIN が確実に開始されるようにしておく。
+    wk->seq++;
+    break;
 
 	case 1:
+    if( PMSIV_WORDWIN_WaitInputBlink( vwk->wordwin_wk ) )
+    {
+  //		PMSIV_BUTTON_Appear( vwk->button_wk );
+      PMSIV_MENU_SetupEdit( vwk->menu_wk );
+  		PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk, FALSE );
+  //		PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, FALSE );
+  		PMSIV_WORDWIN_StartFadeOut( vwk->wordwin_wk );
+  		PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,0);
+  		PMSIV_EDIT_SetSystemMessage( vwk->edit_wk,PMSIV_MSG_GUIDANCE);
+  		PMSIV_EDIT_ScrollSet( vwk->edit_wk,1);
+  		wk->seq++;
+    }
+		break;
+
+	case 2:
 		flag1 = PMSIV_WORDWIN_WaitFadeOut( vwk->wordwin_wk );
 		flag2 = PMSIV_EDIT_ScrollWait( vwk->edit_wk);
 		if(flag1 && flag2){
@@ -1487,7 +1517,7 @@ static void Cmd_WordWinToEditArea( GFL_TCB *tcb, void* wk_adrs )
 		}
 		break;
 
-	case 2:
+	case 3:
 		if( PMSIV_CATEGORY_WaitFadeIn( vwk->category_wk ) )
 		{
 			PMSIV_CATEGORY_StartBrightDown( vwk->category_wk );
@@ -1495,7 +1525,7 @@ static void Cmd_WordWinToEditArea( GFL_TCB *tcb, void* wk_adrs )
 		}
 		break;
 
-	case 3:
+	case 4:
 		if( PMSIV_CATEGORY_WaitBrightDown( vwk->category_wk ) )
 		{
 			PMSIV_EDIT_UpdateEditArea( vwk->edit_wk );
@@ -1969,7 +1999,7 @@ static void Cmd_ScrollWordWinBar( GFL_TCB *tcb, void* wk_adrs )
 	*
 	*/
 //----------------------------------------------------------------------------------------------
-static void Cmd_EraseInCategoryInitial( GFL_TCB *tcb, void* wk_adrs )
+static void Cmd_EraseBlinkInCategoryInitial( GFL_TCB *tcb, void* wk_adrs )
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
@@ -1993,7 +2023,73 @@ static void Cmd_EraseInCategoryInitial( GFL_TCB *tcb, void* wk_adrs )
 	}
 }
 
+//----------------------------------------------------------------------------------------------
+/**
+	* 描画コマンド：カテゴリあいうえお入力において、1文字入力したとき、その文字のところを明滅させる
+	* 描画コマンド：カテゴリわざピクチャーなどから選択おいて、選択したとき、その選択したところを明滅させる
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	* @note   1文字入力が確定したときのみ、この描画コマンドを発行して下さい。
+  *         1文字入力できるか判定や音鳴らし、入力した文字の表示や単語候補の更新はしていません。
+	*
+ 	* @note   選択が確定したときのみ、この描画コマンドを発行して下さい。
+  *         選択できるか判定や音鳴らしはしていません。
+	*
+	*/
+//----------------------------------------------------------------------------------------------
+static void Cmd_InputBlinkInCategory( GFL_TCB *tcb, void* wk_adrs )
+{
+	COMMAND_WORK* wk = wk_adrs;
+	PMS_INPUT_VIEW* vwk = wk->vwk;
 
+	switch( wk->seq )
+  {
+	case 0:
+    PMSIV_CATEGORY_InputBlink( vwk->category_wk, PMSI_GetCategoryCursorPos(vwk->main_wk) );
+    wk->seq++;
+		break;
+	case 1:
+    if( PMSIV_CATEGORY_WaitInputBlink(vwk->category_wk) )
+    {
+			DeleteCommand( wk );
+    }
+		break;
+	}
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+	* 描画コマンド：単語選択において、選択したとき、その選択したところを明滅させる
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+ 	* @note   選択が確定したときのみ、この描画コマンドを発行して下さい。
+  *         選択できるか判定や音鳴らしはしていません。
+	*
+	*/
+//----------------------------------------------------------------------------------------------
+static void Cmd_InputBlinkInWordWin( GFL_TCB *tcb, void* wk_adrs )
+{
+	COMMAND_WORK* wk = wk_adrs;
+	PMS_INPUT_VIEW* vwk = wk->vwk;
+
+	switch( wk->seq )
+  {
+	case 0:
+    PMSIV_WORDWIN_InputBlink( vwk->wordwin_wk, PMSI_GetWordWinCursorPos(vwk->main_wk) );
+    wk->seq++;
+		break;
+	case 1:
+    if( PMSIV_WORDWIN_WaitInputBlink(vwk->wordwin_wk) )
+    {
+			DeleteCommand( wk );
+    }
+		break;
+	}
+}
 
 
 //==============================================================================================
