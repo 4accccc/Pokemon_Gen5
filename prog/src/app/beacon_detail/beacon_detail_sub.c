@@ -583,7 +583,8 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
 	  //タウンマップ上の座標取得
 	  wk->icon_x = TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_POS_X );
 	  wk->icon_y = TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_POS_Y );
-
+    IWASAWA_Printf(" BeaconWin root_zone = %d, tmap_dat_idx = %d, x = %d, y = %d\n",
+        GAMEBEACON_Get_TownmapRootZoneID( wk->tmpInfo ),dataIndex,wk->icon_x,wk->icon_y);
     if( wk->icon_y < 16 ){
       wk->icon_y = 16;
     }else if( wk->icon_y > 152 ){
