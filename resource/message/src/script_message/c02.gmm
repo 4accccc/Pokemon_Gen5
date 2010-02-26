@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T16:40:50"/>
+	<create user="matsumiya" host="W00224" date="2010-02-26T18:26:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1290" top="283" right="1995" bottom="911" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="806" top="169" right="1280" bottom="567" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -414,14 +414,14 @@
 その　ボールの中……▽
 キミに　したがう　ポケモンだらけだ▼
 しかたない……
-ボクの　ともだちと　たたかいたまえ！▼
+ボクの　トモダチと　たたかいたまえ！▼
 キミに　とらえられた　ポケモンを
 じゆうに　してあげるから……[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ボクを　からかっているね
 その　ボールの中……▽
 キミに従う　ポケモンだらけだ▼
 仕方ない……
-ボクの　友達と　戦いたまえ！▼
+ボクの　トモダチと　戦いたまえ！▼
 キミに　捕らえられた　ポケモンを
 解放してあげるから……[BE:09:速度コントロール:0]▼</language>
 	</row>
@@ -435,14 +435,14 @@
 その　ボールのなか……▽
 キミに　したがう　ポケモンだらけ▼
 しかたない……
-ボクの　ともだちと　たたかいたまえ！▼
+ボクの　トモダチと　たたかいたまえ！▼
 キミに　とらえられた　ポケモンを
 じゆうに　してあげるから……[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ボクに　逆らうんだね
 その　ボールの中……▽
 キミに従う　ポケモンだらけ▼
 仕方ない……
-ボクの　友達と　戦いたまえ！▼
+ボクの　トモダチと　戦いたまえ！▼
 キミに　捕らえられた　ポケモンを
 解放してあげるから……[BE:09:速度コントロール:0]▼</language>
 	</row>
@@ -454,12 +454,12 @@
 　５歩移動
 ・続けてmsg_c02_boss_05</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]いまの　ボクの　ともだちとでは
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]いまの　ボクの　トモダチとでは
 ポケモンを　すくいだせないか……▼
 ボクには　ちからが　ひつようだ▼
 せかいの　みんなが　ボクの　りそうに
 さんせい　するような　そんな　ちから……[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]今の　友達とでは
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]今の　ボクの　トモダチとでは
 ポケモンを　救いだせないか……▼
 ボクには　力が　必要だ▼
 世界の　みんなが　ボクの理想に
