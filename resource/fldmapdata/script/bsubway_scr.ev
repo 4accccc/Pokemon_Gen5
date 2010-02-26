@@ -1006,19 +1006,26 @@ sub_receipt_msg_account:
   //プレイモード別　説明
   SWITCH $play_mode
   CASE BSWAY_MODE_SINGLE THEN
-    _SYSWIN_MSG( msg_bsw_scr_09 , WIN_DOWN )
+    _SYSWIN_MSG( msg_bsw_scr_09, WIN_DOWN )
+    _SYSWIN_MSG( msg_bsw_scr_09_1, WIN_DOWN )
   CASE BSWAY_MODE_DOUBLE THEN
     _SYSWIN_MSG( msg_bsw_scr_10 , WIN_DOWN )
+    _SYSWIN_MSG( msg_bsw_scr_10_1 , WIN_DOWN )
   CASE BSWAY_MODE_MULTI THEN
     _SYSWIN_MSG( msg_bsw_scr_11 , WIN_DOWN )
+    _SYSWIN_MSG( msg_bsw_scr_11_1 , WIN_DOWN )
   CASE BSWAY_MODE_WIFI THEN
     _SYSWIN_MSG( msg_bsw_scr_12 , WIN_DOWN )
+    _SYSWIN_MSG( msg_bsw_scr_12_1 , WIN_DOWN )
   CASE BSWAY_MODE_S_SINGLE THEN
     _SYSWIN_MSG( msg_bsw_scr_09 , WIN_DOWN )
+    _SYSWIN_MSG( msg_bsw_scr_09_1 , WIN_DOWN )
   CASE BSWAY_MODE_S_DOUBLE THEN
     _SYSWIN_MSG( msg_bsw_scr_10 , WIN_DOWN )
+    _SYSWIN_MSG( msg_bsw_scr_10_1 , WIN_DOWN )
   CASE BSWAY_MODE_S_MULTI THEN
     _SYSWIN_MSG( msg_bsw_scr_11 , WIN_DOWN )
+    _SYSWIN_MSG( msg_bsw_scr_11_1 , WIN_DOWN )
   ENDSWITCH
   
   _AB_KEYWAIT()
