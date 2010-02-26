@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-26T13:17:11"/>
+	<create user="taya" host="W00146" date="2010-02-26T14:57:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -262,13 +262,13 @@
 
 	<dialog left="240" top="137" right="1118" bottom="866" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="604" top="465" right="1035" bottom="863" visible="no"/>
+		<tag-palette left="581" top="272" right="1012" bottom="670" visible="yes"/>
 		<band id="0" index="0" style="0001" width="484"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="870"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -367,18 +367,18 @@
 	</row>
 
 	<row id="BTLSTR_UI_LVUP_DIFF">
-		<language name="JPN" width="216">Ｈ　Ｐ[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:0]
-こうげき[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:1]
-ぼうぎょ[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:2]
-とくこう[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:3]
-とくぼう[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:4]
-すばやさ[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:5]</language>
-		<language name="JPN_KANJI" width="216" line="100">Ｈ　Ｐ[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:0]
-攻　撃[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:1]
-防　御[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:2]
-特　攻[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:3]
-特　防[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:4]
-素早さ[BD:03:Ｘ右寄せ:40]＋[2:01:２桁:5]</language>
+		<language name="JPN" width="216">Ｈ　Ｐ[BD:03:Ｘ右寄せ:10]＋[2:01:２桁:0]
+こうげき[BD:03:Ｘ右寄せ:14]＋[2:01:２桁:1]
+ぼうぎょ[BD:03:Ｘ右寄せ:18]＋[2:01:２桁:2]
+とくこう[BD:03:Ｘ右寄せ:22]＋[2:01:２桁:3]
+とくぼう[BD:03:Ｘ右寄せ:26]＋[2:01:２桁:4]
+すばやさ[BD:03:Ｘ右寄せ:30]＋[2:01:２桁:5]</language>
+		<language name="JPN_KANJI" width="216" line="100">Ｈ　Ｐ[BD:03:Ｘ右寄せ:10]＋[2:01:２桁:0]
+攻　撃[BD:03:Ｘ右寄せ:14]＋[2:01:２桁:1]
+防　御[BD:03:Ｘ右寄せ:18]＋[2:01:２桁:2]
+特　攻[BD:03:Ｘ右寄せ:22]＋[2:01:２桁:3]
+特　防[BD:03:Ｘ右寄せ:26]＋[2:01:２桁:4]
+素早さ[BD:03:Ｘ右寄せ:30]＋[2:01:２桁:5]</language>
 	</row>
 
 	<row id="BTLSTR_UI_LVUP_PARAM">
