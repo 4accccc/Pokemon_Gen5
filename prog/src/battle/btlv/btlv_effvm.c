@@ -44,7 +44,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-//#define DEBUG_OS_PRINT
+#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -70,6 +70,7 @@ typedef struct{
   GFL_TCB*          tcb[ BTLV_EFFVM_TCB_MAX ];
   GFL_PTC_PTR       ptc[ PARTICLE_GLOBAL_MAX ];
   int               ptc_no[ PARTICLE_GLOBAL_MAX ];
+  int               spr_max[ PARTICLE_GLOBAL_MAX ];
   int               obj[ EFFVM_OBJ_MAX ];
   BtlvMcssPos       attack_pos;
   BtlvMcssPos       defence_pos;
@@ -195,6 +196,14 @@ typedef struct
   int               tcb_index;
 }BTLV_EFFVM_CHANGE_VOLUME;
 
+//SPAデータ（SPAに含まれるsprの数を取りたい）
+typedef struct
+{ 
+  u8  head[ 8 ];    //ヘッダーデータ
+  u16 size;         //spaに含まれるsprの数らしい
+  u8  data[ 1 ];    //実データ？（取りたいのはサイズだけなので、とりあえず１個だけ）
+}SPA_DATA;
+
 //============================================================================================
 /**
  *  プロトタイプ宣言
@@ -218,6 +227,7 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_PARTICLE_PLAY_ALL( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_DELETE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_work );
@@ -288,7 +298,9 @@ static  int           EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag );
 static  int           EFFVM_ConvPokePosition( BTLV_EFFVM_WORK* bevw, BtlvMcssPos position );
 static  int           EFFVM_ConvPosition( VMHANDLE *vmh, BtlvMcssPos position );
 static  BOOL          EFFVM_RegistPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, int* ptc_no );
+static  void          EFFVM_RegistSprMax( BTLV_EFFVM_WORK *bevw, int ptc_no, void* resource );
 static  int           EFFVM_GetPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
+static  int           EFFVM_GetSprMax( BTLV_EFFVM_WORK *bevw, int ptc_no );
 static  void          EFFVM_InitEmitterPos( GFL_EMIT_PTR emit );
 static  void          EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag );
 static  void          EFFVM_InitEmitterCircleMove( GFL_EMIT_PTR emit );
@@ -368,6 +380,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_PARTICLE_PLAY,
   VMEC_PARTICLE_PLAY_COORDINATE,
   VMEC_PARTICLE_PLAY_ORTHO,
+  VMEC_PARTICLE_PLAY_ALL,
   VMEC_PARTICLE_DELETE,
   VMEC_EMITTER_MOVE,
   VMEC_EMITTER_MOVE_COORDINATE,
@@ -996,6 +1009,7 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
       ofs = ofs_p[ BTLV_EFFVM_GetDPDNo( bevw, datID, DPD_TYPE_PARTICLE ) ];
       resource = (void *)&bevw->dpd->adrs[ ofs ];
       GFL_PTC_SetResourceEx( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
+      EFFVM_RegistSprMax( bevw, ptc_no, resource );
       return bevw->control_mode;
     }
 #endif
@@ -1003,6 +1017,7 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
     bevw->ptc[ ptc_no ] = GFL_PTC_Create( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, bevw->heapID );
     resource = GFL_PTC_LoadArcResource( ARCID_PTC, datID, bevw->heapID );
     GFL_PTC_SetResource( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
+    EFFVM_RegistSprMax( bevw, ptc_no, resource );
   }
 
   return bevw->control_mode;
@@ -1175,6 +1190,59 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work 
     }
 
     EFFVM_INIT_EMITTER_POS( bevw, beeiw_src, ptc_no, index );
+  }
+
+  GFL_HEAP_FreeMemory( beeiw_src );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief パーティクル再生すべて
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_PARTICLE_PLAY_ALL( VMHANDLE *vmh, void *context_work )
+{
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  BTLV_EFFVM_EMIT_INIT_WORK *beeiw_src = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+  ARCDATID  datID   = EFFVM_ConvDatID( bevw, ( ARCDATID )VMGetU32( vmh ) );
+  int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
+  int       spr_max = EFFVM_GetSprMax( bevw, ptc_no );
+  int       dummy, index;
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_PARTICLE_PLAY\n");
+#endif DEBUG_OS_PRINT
+
+  if( ptc_no != EFFVM_PTCNO_NO_FIND )
+  { 
+    beeiw_src->vmh    = vmh;
+    beeiw_src->src    = ( int )VMGetU32( vmh );
+    beeiw_src->dst    = ( int )VMGetU32( vmh );
+    beeiw_src->ofs.x  = 0;
+    beeiw_src->ofs.y  = ( fx32 )VMGetU32( vmh );
+    beeiw_src->ofs.z  = 0;
+    beeiw_src->angle  = ( fx32 )VMGetU32( vmh );
+    //ダミーデータがあるので空読み；
+    dummy = VMGetU32( vmh );
+    beeiw_src->radius = ( fx32 )VMGetU32( vmh );
+    beeiw_src->life   = ( fx32 )VMGetU32( vmh );
+    beeiw_src->scale  = ( fx32 )VMGetU32( vmh );
+    beeiw_src->speed  = ( fx32 )VMGetU32( vmh );
+
+    if( beeiw_src->dst == BTLEFF_PARTICLE_PLAY_SIDE_NONE )
+    {
+      beeiw_src->dst = beeiw_src->src;
+    }
+
+    for( index = 0 ; index < spr_max ; index++ )
+    { 
+      EFFVM_INIT_EMITTER_POS( bevw, beeiw_src, ptc_no, index );
+    }
   }
 
   GFL_HEAP_FreeMemory( beeiw_src );
@@ -3951,6 +4019,22 @@ static  BOOL  EFFVM_RegistPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, int *ptc
 
 //============================================================================================
 /**
+ * @brief パーティクルに含まれるsprのmaxを登録
+ *
+ * @param[in]   bevw      エフェクト仮想マシンのワーク構造体へのポインタ
+ * @param[out]  ptc_no    datIDを登録したptc_no
+ * @param[out]  resource  spaリソース
+ */
+//============================================================================================
+static  void  EFFVM_RegistSprMax( BTLV_EFFVM_WORK *bevw, int ptc_no, void* resource )
+{ 
+  SPA_DATA* sd = ( SPA_DATA* )resource;
+
+  bevw->spr_max[ ptc_no ] = sd->size;
+}
+
+//============================================================================================
+/**
  * @brief パーティクルのdatIDからptc配列の添え字Noを取得
  *
  * @param[in] bevw  エフェクト仮想マシンのワーク構造体へのポインタ
@@ -3972,6 +4056,21 @@ static  int EFFVM_GetPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID )
   }
 
   return i;
+}
+
+//============================================================================================
+/**
+ * @brief パーティクルに含まれるsprのmaxを取得
+ *
+ * @param[in] bevw    エフェクト仮想マシンのワーク構造体へのポインタ
+ * @param[in] ptc_no  取得するパーティクルデータのインデックス
+ *
+ * @retval  sprのmax
+ */
+//============================================================================================
+static  int EFFVM_GetSprMax( BTLV_EFFVM_WORK *bevw, int ptc_no )
+{
+  return bevw->spr_max[ ptc_no ];
 }
 
 //============================================================================================
