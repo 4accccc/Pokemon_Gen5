@@ -1412,6 +1412,15 @@ SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
 		app/p_status/p_sta_oam.c \
 		app/p_status/ribbon.c
 
+#Wifiクラブ対戦用サブプロック
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> GROUP_OVERLAY_UNION_INTRUDE
+#===> SRCS_OVERLAY_UI_COMMON
+#===> SRCS_OVERLAY_POKELIST
+#===> SRCS_OVERLAY_POKE_STATUS
+SRCS_OVERLAY_WIFICLUB_SUBPROC = net_app/wificlub/wifi_p2p_subproc.c
+
 #wifiGTS
 #===> SRCS_OVERLAY_DPW_COMMON
 #===> SRCS_OVERLAY_WIFI_LOGIN

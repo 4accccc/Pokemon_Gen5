@@ -182,6 +182,9 @@ typedef enum
   PSMS_FORM_CHANGE_INIT,
   PSMS_FORM_CHANGE_MAIN,
   PSMS_FORM_CHANGE_TERM,
+
+  PSMS_FINISH_SYNC_INIT,  //Wifiバトル終了通信同期
+  PSMS_FINISH_SYNC_WAIT,
   
   PSMS_FADEOUT,
   PSMS_FADEOUT_FORCE, //強制終了
@@ -233,8 +236,9 @@ struct _PLIST_WORK
   u8  selectState;
   BOOL isActiveWindowMask;  //メニュー出たときのWndMaskのON/OFFのVBlank切り替えよう
   BOOL canExit;   //Xボタンが効くか？
-  BOOL isSetWazaMode;  //技用のMODE_SELECTか？
+  BOOL isSetWazaMode;     //技用のMODE_SELECTか？
   BOOL isSetMusicalMode;  //ミュージカル用のMODE_SELECTか？
+  BOOL isFinishSync;      //終了時に通信同期をとる(WifiBattle
   
   PL_SELECT_POS pokeCursor;
   PL_SELECT_POS changeTarget;

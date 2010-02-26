@@ -37,6 +37,9 @@
 #include "include/demo/comm_btl_demo.h"
 #include "field/event_battle_call.h"
 
+//リスト⇔ステータスのプロック
+#include "wifi_p2p_subproc.h"
+
 //#include "net_app/balloon.h"
 
 //==============================================================================
@@ -62,6 +65,7 @@ FS_EXTERN_OVERLAY(wificlub);
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(ui_common);
 FS_EXTERN_OVERLAY(pokemon_trade);
+FS_EXTERN_OVERLAY(wificlub_subproc);
 #define _LOCALMATCHNO (100)
 //----------------------------------------------------------------
 // バトル用定義
@@ -70,7 +74,8 @@ extern const NetRecvFuncTable BtlRecvFuncTable[];
 
 
 typedef struct{
-  PLIST_DATA PokeList;
+  //PLIST_DATA PokeList;
+  WIFICLUB_BATTLE_SUBPROC_PARAM subProcParam;
   COMM_TVT_INIT_WORK aTVT;
   WIFIP2PMATCH_PROC_PARAM* pMatchParam;
   POKEMONTRADE_PARAM aPokeTr;
@@ -186,12 +191,27 @@ static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,EV_P2PEVENT_WORK * ep2p,in
 static void _pokeListWorkMake(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 gamemode)
 {
   int my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-  PLIST_DATA* plist = &ep2p->PokeList;
   MYSTATUS* pTarget = GAMEDATA_GetMyStatusPlayer(pGameData,1-my_net_id);
+  WIFICLUB_BATTLE_SUBPROC_PARAM *initWork = &ep2p->subProcParam;
+  
+  initWork->regulation = ep2p->pMatchParam->pRegulation;
+  initWork->selfPokeParty = ep2p->pMatchParam->pPokeParty[my_net_id];
+  initWork->enemyName = MyStatus_GetMyName(pTarget);
+  initWork->enemySex = MyStatus_GetMySex(pTarget);
+  initWork->enemyPokeParty = ep2p->pMatchParam->pPokeParty[1-my_net_id];
+  initWork->gameData = pGameData;
+  initWork->comm_selected_num = 0;
+  
+  //以下[out]
+  PokeParty_InitWork(ep2p->pPokeParty);
+  initWork->p_party = ep2p->pPokeParty;
+
+/*
+  PLIST_DATA* plist = &ep2p->PokeList;
   
   plist->reg = ep2p->pMatchParam->pRegulation;
   plist->pp = ep2p->pMatchParam->pPokeParty[my_net_id];
-  plist->mode = PL_MODE_BATTLE;
+  plist->mode = PL_MODE_BATTLE_WIFI;
   plist->myitem = GAMEDATA_GetMyItem(pGameData);
   plist->cfg = SaveData_GetConfig(GAMEDATA_GetSaveControlWork(pGameData));
   plist->is_disp_party = TRUE;
@@ -219,6 +239,7 @@ static void _pokeListWorkMake(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 ga
     plist->type = PL_TYPE_ROTATION;
     break;
   }
+*/
 }
 
 //==============================================================================
@@ -226,10 +247,11 @@ static void _pokeListWorkMake(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 ga
 //==============================================================================
 static void _pokeListWorkOut(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 gamemode)
 {
+/*
   int entry_no;
   int my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-  PLIST_DATA* plist = &ep2p->PokeList;
   MYSTATUS* pTarget = GAMEDATA_GetMyStatusPlayer(pGameData,1-my_net_id);
+  PLIST_DATA* plist = &ep2p->PokeList;
 
   PokeParty_InitWork(ep2p->pPokeParty);
 
@@ -240,6 +262,7 @@ static void _pokeListWorkOut(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 gam
     PokeParty_Add(ep2p->pPokeParty, 
                   PokeParty_GetMemberPointer(plist->pp, plist->in_num[entry_no] - 1));
   }
+*/
 }
 
 
@@ -304,7 +327,8 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     {
       _pokeListWorkMake(ep2p,GAMESYSTEM_GetGameData(pClub->gsys),ep2p->seq );
       //GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &ep2p->PokeList);
-      GMEVENT_CallProc(pClub->event,FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &ep2p->PokeList);
+      //GMEVENT_CallProc(pClub->event,FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &ep2p->PokeList);
+      GMEVENT_CallProc(pClub->event,FS_OVERLAY_ID(wificlub_subproc), &WifiClubBattle_Sub_ProcData, &ep2p->subProcParam);
       ep2p->seq++;
     }
     break;

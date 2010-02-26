@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-24T13:06:54"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-26T11:55:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="314" top="174" right="1019" bottom="802" maximized="no" rayout="Vertical2">
+	<dialog left="182" top="174" right="887" bottom="802" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="305" right="1280" bottom="703" visible="yes"/>
+		<tag-palette left="807" top="305" right="1280" bottom="703" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -1735,6 +1735,13 @@ PP値上昇アイテムで技選択するとき</comment>
 （追加 091016Ariizumi</comment>
 		<language name="JPN" font=" 1:small" width="216">[2:01:２桁:0]：[2:01:２桁:1]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[2:01:２桁:0]：[2:01:２桁:1]</language>
+	</row>
+
+	<row id="mes_pokelist_13_07" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+		<comment>Wifi対戦 終了時同期待ち
+（追加 100226Ariizumi</comment>
+		<language name="JPN" font=" 1:small" width="216">つうしんたいきちゅう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信待機中</language>
 	</row>
 
 	<row id="mes_pokelist_deb_01">

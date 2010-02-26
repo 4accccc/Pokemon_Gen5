@@ -187,6 +187,7 @@ typedef enum  {
   WB_NET_BATTLE_ADD_CMD,  ///< 通信バトル コマンド送信
   WB_NET_BTL_REC_SEL,      ///<通信対戦後の録画選択画面
   WB_NET_BSUBWAY,         ///<バトルサブウェイ
+  WB_NET_POKELIST,         ///<ポケモンリスト(終了時同期コマンド用
   
   WB_NET_SERVICEID_MAX   // 終端
 } NetworkServiceID_e;
@@ -233,6 +234,7 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_GURUGURU = (WB_NET_GURUGURU << 8),      ///<ぐるぐる交換
   GFL_NET_CMD_PICTURE = (WB_NET_PICTURE << 8),        ///<お絵かき
   GFL_NET_CMD_BSUBWAY = (WB_NET_BSUBWAY << 8),  ///<バトルサブウェイ
+  GFL_NET_CMD_POKELIST = (WB_NET_POKELIST << 8),///<ポケモンリスト(終了時同期コマンド用
 };
 
 

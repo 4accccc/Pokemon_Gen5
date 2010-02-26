@@ -13,6 +13,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/wipe.h"
+#include "net/network_define.h"
 
 #include "arc_def.h"
 #include "pokelist_gra.naix"
@@ -251,6 +252,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
     work->cellRes[i] = PCR_NONE;
   }
 
+  //特殊モード分岐
   if( work->plData->mode == PL_MODE_SET_MUSICAL )
   {
     //work->plData->mode = PL_MODE_SET;
@@ -261,6 +263,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
     work->isSetMusicalMode = FALSE;
   }
   
+
   if( work->plData->mode == PL_MODE_SET_WAZA )
   {
     work->plData->mode = PL_MODE_SET;
@@ -271,6 +274,16 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
     work->isSetWazaMode = FALSE;
   }
 
+  if( work->plData->mode == PL_MODE_BATTLE_WIFI )
+  {
+    work->plData->mode = PL_MODE_BATTLE;
+    work->isFinishSync = TRUE;
+  }
+  else
+  {
+    work->isFinishSync = FALSE;
+  }
+  
   if( work->plData->mode == PL_MODE_WAZASET )
   {
     if( work->plData->waza == 0 )
@@ -355,6 +368,8 @@ const BOOL PLIST_TermPokeList( PLIST_WORK *work )
   {
     PLIST_MENU_DeleteMenuWin_BattleMenu( work->btlMenuWin[0] );
     PLIST_MENU_DeleteMenuWin_BattleMenu( work->btlMenuWin[1] );
+    work->btlMenuWin[0] = NULL;
+    work->btlMenuWin[1] = NULL;
   }
   
   PLIST_MENU_DeleteSystem( work , work->menuWork );
@@ -381,6 +396,7 @@ const BOOL PLIST_TermPokeList( PLIST_WORK *work )
   PLIST_ReleaseResource( work );
   PLIST_TermGraphic( work );
 
+  //特殊モード戻し
   if( work->isSetWazaMode == TRUE )
   {
     work->plData->mode = PL_MODE_SET_WAZA;
@@ -388,6 +404,10 @@ const BOOL PLIST_TermPokeList( PLIST_WORK *work )
   if( work->isSetMusicalMode == TRUE )
   {
     work->plData->mode = PL_MODE_SET_MUSICAL;
+  }
+  if( work->isFinishSync == TRUE )
+  {
+    work->plData->mode = PL_MODE_BATTLE_WIFI;
   }
 
 
@@ -468,7 +488,24 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
       work->btlTermAnmCnt++;
       if( work->btlTermAnmCnt > APP_TASKMENU_ANM_CNT )
       {
-        work->mainSeq = PSMS_FADEOUT;
+        if( work->isFinishSync == TRUE )
+        {
+          //通信同期をとる
+          work->mainSeq = PSMS_FINISH_SYNC_INIT;
+          //メニューを消す
+          PLIST_MENU_DeleteMenuWin_BattleMenu( work->btlMenuWin[0] );
+          PLIST_MENU_DeleteMenuWin_BattleMenu( work->btlMenuWin[1] );
+          work->btlMenuWin[0] = NULL;
+          work->btlMenuWin[1] = NULL;
+          PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
+          PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_13_07 );
+          
+
+        }
+        else
+        {
+          work->mainSeq = PSMS_FADEOUT;
+        }
       }
     }
     break;
@@ -487,6 +524,25 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
 
   case PSMS_FORM_CHANGE_TERM:
     PLIST_DEMO_DemoTerm( work );
+    break;
+
+  case PSMS_FINISH_SYNC_INIT:  //Wifiバトル終了通信同期
+    {
+      GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      GFL_NET_HANDLE_TimeSyncStart( selfHandle , 128 , WB_NET_POKELIST );
+      work->mainSeq = PSMS_FINISH_SYNC_WAIT;
+    }
+    break;
+
+  case PSMS_FINISH_SYNC_WAIT:
+    {
+      GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      if( GFL_NET_HANDLE_IsTimeSync( selfHandle , 128 , WB_NET_POKELIST ) == TRUE )
+      {
+        work->mainSeq = PSMS_FADEOUT;
+      }
+    }
+    
     break;
 
   case PSMS_FADEOUT_FORCE:
