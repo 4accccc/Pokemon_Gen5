@@ -29,6 +29,8 @@ struct PLAYER_DATA {
 	CONFIG config;
 	MYSTATUS mystatus;
 	PLAYTIME playtime;
+	u8 now_save_mode_setup;    ///<TRUE:初回セットアップしかしていない状態(FALSE:正規のセーブ移行はずっとFALSE状態)
+	u8 padding[3];
 };
 
 //============================================================================================
@@ -60,6 +62,7 @@ void PLAYERDATA_Init(PLAYER_DATA * pd)
 	CONFIG_Init(&pd->config);
 	MyStatus_Init(&pd->mystatus);
 	PLAYTIME_Init(&pd->playtime);
+	pd->now_save_mode_setup = TRUE;
 }
 
 //============================================================================================
@@ -109,6 +112,47 @@ PLAYTIME * SaveData_GetPlayTime(SAVE_CONTROL_WORK * sv)
 	return &pd->playtime;
 }
 
+//==================================================================
+/**
+ * 現在のセーブ状態が初回セットアップしかされていない状況なのか調べる
+ *
+ * @param   sv		
+ *
+ * @retval  BOOL		TRUE:初回セットアップしかされていない
+ *                      ※初回移行、一度でもセーブすれば以後、ずっとFALSEになる
+ */
+//==================================================================
+BOOL SaveData_GetNowSaveModeSetup(SAVE_CONTROL_WORK *sv)
+{
+	PLAYER_DATA * pd = SaveControl_DataPtrGet(sv, GMDATA_ID_PLAYER_DATA);
+	return pd->now_save_mode_setup;
+}
+
+//==================================================================
+/**
+ * 現在のセーブ状態を「初回セットアップしかされていない」状況にする
+ *
+ * @param   sv		
+ */
+//==================================================================
+void SaveData_SetNowSaveModeSetupON(SAVE_CONTROL_WORK *sv)
+{
+	PLAYER_DATA * pd = SaveControl_DataPtrGet(sv, GMDATA_ID_PLAYER_DATA);
+	pd->now_save_mode_setup = TRUE;
+}
+
+//==================================================================
+/**
+ * 初回セットアップフラグをOFFにし、現在のセーブ状態を普通にする
+ *
+ * @param   sv		
+ */
+//==================================================================
+void SaveData_SetNowSaveModeSetupOFF(SAVE_CONTROL_WORK *sv)
+{
+	PLAYER_DATA * pd = SaveControl_DataPtrGet(sv, GMDATA_ID_PLAYER_DATA);
+	pd->now_save_mode_setup = FALSE;
+}
 
 
 //==============================================================================

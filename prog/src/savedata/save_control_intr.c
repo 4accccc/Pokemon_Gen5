@@ -11,6 +11,7 @@
 //==============================================================================
 #include <gflib.h>
 #include "savedata/save_control_intr.h"
+#include "savedata/player_data.h"
 
 
 //==============================================================================
@@ -67,9 +68,10 @@ INTR_SAVE_CONTROL * IntrSave_Init(HEAPID heap_id, SAVE_CONTROL_WORK *ctrl)
   if(SaveData_GetExistFlag(ctrl) == TRUE){
     isc->no_save = TRUE;
   }
-  
-  //セーブ時のソフトリセットコールバック設定
-  GFL_UI_SoftResetSetFunc(_SoftReset_Callback_SaveCancel, isc);
+  else{
+    //セーブ時のソフトリセットコールバック設定
+    GFL_UI_SoftResetSetFunc(_SoftReset_Callback_SaveCancel, isc);
+  }
   
   return isc;
 }
@@ -105,6 +107,10 @@ void IntrSave_Start(INTR_SAVE_CONTROL *isc)
     return;
   }
   SaveControl_SaveAsyncInit(isc->ctrl);
+  if(isc->no_save == FALSE){
+    //初回セットアップ状態にする
+    SaveData_SetNowSaveModeSetupON(isc->ctrl);
+  }
   isc->status = INTR_SAVE_STATUS_MAIN;
 }
 

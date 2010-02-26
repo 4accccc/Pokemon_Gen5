@@ -11,6 +11,7 @@
 #include "system/main.h"
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
+#include "savedata/player_data.h"
 
 
 //==============================================================================
@@ -27,6 +28,7 @@ struct _SAVE_CONTROL_WORK{
 	BOOL new_data_flag;			///<TRUE:新規データ
 	BOOL data_exists;			///<データが存在するかどうか
 	BOOL total_save_flag;		///<TRUE:全体セーブ
+	BOOL backup_now_save_mode_setup;    ///<TRUE:初回セットアップのフラグバックアップ
 	u32 first_status;			///<一番最初のセーブデータチェック結果(bit指定)
 	GFL_SAVEDATA *sv_normal;	///<ノーマル用セーブデータへのポインタ
 	GFL_SAVEDATA *sv_extra[SAVE_EXTRA_ID_MAX];
@@ -195,6 +197,8 @@ SAVE_RESULT SaveControl_Save(SAVE_CONTROL_WORK *ctrl)
 {
 	SAVE_RESULT result;
 
+  SaveData_SetNowSaveModeSetupOFF(ctrl);
+  
 	result = GFL_BACKUP_Save(ctrl->sv_normal);
 	if(result == SAVE_RESULT_OK){
 		ctrl->new_data_flag = FALSE;
@@ -212,6 +216,9 @@ SAVE_RESULT SaveControl_Save(SAVE_CONTROL_WORK *ctrl)
 //--------------------------------------------------------------
 void SaveControl_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl)
 {
+  ctrl->backup_now_save_mode_setup = SaveData_GetNowSaveModeSetup(ctrl);
+  SaveData_SetNowSaveModeSetupOFF(ctrl);
+  
 	GFL_BACKUP_SAVEASYNC_Init(ctrl->sv_normal);
 }
 
@@ -244,6 +251,9 @@ SAVE_RESULT SaveControl_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl)
 void SaveControl_SaveAsyncCancel(SAVE_CONTROL_WORK *ctrl)
 {
   GFL_BACKUP_SAVEASYNC_Cancel(ctrl->sv_normal);
+  if(ctrl->backup_now_save_mode_setup == TRUE){
+    SaveData_SetNowSaveModeSetupON(ctrl);
+  }
 }
 
 //==================================================================
@@ -326,8 +336,13 @@ u32 SaveControl_GetLoadResult(const SAVE_CONTROL_WORK * sv)
  * @return	BOOL		TRUEのとき、セーブデータが存在する
  */
 //---------------------------------------------------------------------------
-BOOL SaveData_GetExistFlag(const SAVE_CONTROL_WORK * sv)
+BOOL SaveData_GetExistFlag(SAVE_CONTROL_WORK * sv)
 {
+  if(sv->data_exists == TRUE){
+    if(SaveData_GetNowSaveModeSetup(sv) == TRUE){
+      return FALSE; //初回セットアップ状態の場合はデータ無し判定
+    }
+  }
 	return sv->data_exists;
 }
 
@@ -339,7 +354,7 @@ BOOL SaveData_GetExistFlag(const SAVE_CONTROL_WORK * sv)
  * @retval	FALSE		データがないか、既存データである
  */
 //---------------------------------------------------------------------------
-BOOL SaveControl_IsOverwritingOtherData(const SAVE_CONTROL_WORK * sv)
+BOOL SaveControl_IsOverwritingOtherData(SAVE_CONTROL_WORK * sv)
 {
 	if (SaveControl_NewDataFlagGet(sv) == TRUE && SaveData_GetExistFlag(sv) == TRUE) {
 		return TRUE;
