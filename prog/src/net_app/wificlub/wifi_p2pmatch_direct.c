@@ -454,9 +454,11 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
   switch(wk->directmode){
   case WIFIP2PMATCH_PLAYERDIRECT_VCT:
     gamemode = WIFI_GAME_VCT;
+//    GFL_NET_DWC_SetVChat(TRUE);
     break;
   case WIFIP2PMATCH_PLAYERDIRECT_TVT:
     gamemode = WIFI_GAME_TVT;
+    GFL_NET_DWC_SetVChat(FALSE);
     break;
   case WIFIP2PMATCH_PLAYERDIRECT_TRADE:
     gamemode = WIFI_GAME_TRADE;

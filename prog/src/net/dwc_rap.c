@@ -287,7 +287,7 @@ int GFL_NET_DWC_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
   _dWork->friendindex = -1;
   _dWork->maxConnectNum = pNetInit->maxConnectNum;
   _dWork->newFriendConnect = -1;
-  _dWork->bVChat = TRUE;
+  _dWork->bVChat = FALSE;
   _dWork->bHeapError = FALSE;
 
   _dWork->myvchaton = 1;
@@ -1827,6 +1827,7 @@ static void _DWC_StartVChat(int heapID)
   int num = 1;
   //    BOOL bFourGame = CommLocalIsWiFiQuartetGroup(CommStateGetServiceNo());
 
+  OS_TPrintf("VCTON\n");
   // デバックプリントOFF
 #ifndef DEBUGPRINT_ON
   VCT_SetReportLevel( VCT_REPORTLEVEL_NONE );

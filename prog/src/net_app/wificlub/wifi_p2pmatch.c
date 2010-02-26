@@ -2088,6 +2088,24 @@ static void InitCellActor(WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle)
  */
 
 
+static void _setVChat( WIFIP2PMATCH_WORK *wk )
+{
+  u32 gamemode;
+  BOOL bVchat = WIFI_STATUS_GetVChatStatus( wk->pMatch );
+
+  gamemode = WIFI_STATUS_GetGameMode(wk->pMatch);
+  if(gamemode != WIFI_GAME_TVT){
+//    GFL_NET_DWC_SetVChat(bVchat);
+    OS_TPrintf("no   TVT\n");
+  }
+  else{
+    GFL_NET_DWC_SetVChat(FALSE);
+    OS_TPrintf("TVT\n");
+  }
+}
+
+
+
 //------------------------------------------------------------------
 /**
  * $brief   開始時のメッセージ   WIFIP2PMATCH_MODE_INIT
@@ -2985,7 +3003,8 @@ static BOOL _checkParentNewPlayer( WIFIP2PMATCH_WORK *wk )
     // ボイスチャットとBGM音量の関係を整理 tomoya takahashi
     // ここでVCHATをONにしないと
     // DWC_RAP内でVCHATを開始しなし
-    GFL_NET_DWC_SetVChat( WIFI_STATUS_GetVChatStatus( wk->pMatch ));
+    _setVChat(wk);
+//    GFL_NET_DWC_SetVChat( WIFI_STATUS_GetVChatStatus( wk->pMatch ));
     NET_PRINT( "Connect VCHAT set\n" );
     return TRUE;
   }
@@ -3289,7 +3308,8 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_043, FALSE);
     }
     // ボイスチャット設定
-    GFL_NET_DWC_SetVChat(WIFI_STATUS_GetVChatStatus( wk->pMatch ));// ボイスチャットとBGM音量の関係を整理 tomoya takahashi
+//    GFL_NET_DWC_SetVChat(WIFI_STATUS_GetVChatStatus( wk->pMatch ));// ボイスチャットとBGM音量の関係を整理 tomoya takahashi
+    _setVChat(wk);
     NET_PRINT( "Connect VCHAT set\n" );
 
     // つながった人のデータ表示
@@ -4005,7 +4025,8 @@ static int _parentModeSelectRelWait( WIFIP2PMATCH_WORK* wk, int seq )
   if((wk->preConnect == -1) && (GFL_NET_DWC_IsNewPlayer() != -1)){  // 接続があった
 
     // ボイスチャットとBGM音量の関係を整理 tomoya takahashi
-    GFL_NET_DWC_SetVChat(WIFI_STATUS_GetVChatStatus( wk->pMatch ));
+//    GFL_NET_DWC_SetVChat(WIFI_STATUS_GetVChatStatus( wk->pMatch ));
+    _setVChat(wk);
     NET_PRINT( "Connect VCHAT set\n" );
 
     // すでにYesNoSelectMainで解放されてなければ
@@ -6932,7 +6953,8 @@ static BOOL WifiP2PMatch_CommWifiBattleStart( WIFIP2PMATCH_WORK* wk, int friendn
 
   // ボイスチャット設定
   // ボイスチャットとBGM音量の関係を整理 tomoya takahashi
-  GFL_NET_DWC_SetVChat(WIFI_STATUS_GetVChatStatus( wk->pMatch ));
+//  GFL_NET_DWC_SetVChat(WIFI_STATUS_GetVChatStatus( wk->pMatch ));
+    _setVChat(wk);
 
   // 接続する前に４人募集で送られてくる可能性のある
   // コマンドを設定する
