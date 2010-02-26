@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tomoya_takahashi" host="W00148" date="2010-02-20T20:46:43"/>
+	<create user="matsumiya" host="W00224" date="2010-02-26T16:29:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="201" top="155" right="906" bottom="775" maximized="no" rayout="Vertical2">
+	<dialog left="1534" top="222" right="2239" bottom="842" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="419" right="1280" bottom="817" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -440,17 +440,17 @@
 
 	<row id="msg_wifi_bt_title_001">
 		<comment>背景に描画するタイトル文字列</comment>
-		<language name="JPN" width="216">ＷｉーＦｉコネクションに　せつぞく</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉコネクションに　せつぞく</language>
+		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクションに　せつぞく</language>
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクションに　せつぞく</language>
 	</row>
 
 	<row id="msg_wifi_bt_error_001">
 		<comment>サーバー運営終了時</comment>
-		<language name="JPN" width="216">ＷｉーＦｉバトルタワーは
+		<language name="JPN" width="216">Ｗｉ－Ｆｉバトルタワーは
 げんざい　メンテナンスちゅう　です[BE:01:ページ切り替え（クリア）]
 しばらく　おまちいただいたのち　
 ごりようください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉバトルタワーは
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉバトルタワーは
 げんざい　メンテナンスちゅう　です[BE:01:ページ切り替え（クリア）]
 しばらく　おまちいただいたのち　
 ごりようください[BE:01:ページ切り替え（クリア）]</language>
@@ -458,11 +458,11 @@
 
 	<row id="msg_wifi_bt_error_002">
 		<comment>サーバーがいっぱいで送受信できなかったとき</comment>
-		<language name="JPN" width="216">ＷｉーＦｉバトルタワーは
+		<language name="JPN" width="216">Ｗｉ－Ｆｉバトルタワーは
 げんざい　こみあって　おります[BE:01:ページ切り替え（クリア）]
 しばらく　おまちいただいたのち
 ごりようください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉバトルタワーは
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉバトルタワーは
 げんざい　こみあって　おります[BE:01:ページ切り替え（クリア）]
 しばらく　おまちいただいたのち
 ごりようください[BE:01:ページ切り替え（クリア）]</language>
@@ -470,45 +470,45 @@
 
 	<row id="msg_wifi_bt_error_003">
 		<comment>サーバーログインに失敗した</comment>
-		<language name="JPN" width="216">ＷｉーＦｉバトルタワーに
+		<language name="JPN" width="216">Ｗｉ－Ｆｉバトルタワーに
 せつぞく　できませんでした[BE:01:ページ切り替え（クリア）]
 うけつけにもどります[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉバトルタワーに
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉバトルタワーに
 せつぞく　できませんでした[BE:01:ページ切り替え（クリア）]
 うけつけにもどります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_error_004" back-color=",,,,,,#00ff00,,,,,,,,,,,">
 		<comment>サーバーからの応答が切れた</comment>
-		<language name="JPN" width="216">ＷｉーＦｉバトルタワーとの　
+		<language name="JPN" width="216">Ｗｉ－Ｆｉバトルタワーとの　
 つうしんが　せつだん　されました[BE:01:ページ切り替え（クリア）]
 うけつけに　もどります[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉバトルタワーとの　
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉバトルタワーとの　
 つうしんが　せつだん　されました[BE:01:ページ切り替え（クリア）]
 うけつけに　もどります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_error_005">
 		<comment>サーバーがいっぱいで送受信できなかったとき</comment>
-		<language name="JPN" width="216">ＷｉーＦｉバトルタワーに
+		<language name="JPN" width="216">Ｗｉ－Ｆｉバトルタワーに
 してい　できない　すうじです[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉバトルタワーに
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉバトルタワーに
 してい　できない　すうじです[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_cleanup_000">
 		<comment>サーバーログインに失敗した</comment>
-		<language name="JPN" width="216">ＷｉーＦｉコネクション　から
+		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクション　から
 せつだんしています</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉコネクション　から
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクション　から
 せつだんしています</language>
 	</row>
 
 	<row id="msg_wifi_bt_cleanup_001">
 		<comment>サーバーからの応答が切れた</comment>
-		<language name="JPN" width="216">ＷｉーＦｉコネクション　から
+		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクション　から
 せつだん　しました</language>
-		<language name="JPN_KANJI" width="216">ＷｉーＦｉコネクション　から
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクション　から
 せつだん　しました</language>
 	</row>
 
