@@ -113,7 +113,7 @@ FS_EXTERN_OVERLAY(ui_common);
 //ＢＧ書き換え用
 #define BASE_OFS  (1*32)    //ＢＧ先頭アドレス１キャラ先から開始
 #define MAIN_DISP_COUNTRY_MAX (144)   //メイン画面には144カ国表示
-
+#define SUB_DISP_COUNTRY_MAX (89)   //サブ画面には89カ国表示
 //ＯＢＪ
 #define UN_OBJ_CHRRES_MAX (1)
 #define UN_OBJ_PALRES_MAX (1)
@@ -326,6 +326,11 @@ static BOOL SceneConfirm_Init( UI_SCENE_CNT_PTR cnt, void* work );
 static BOOL SceneConfirm_Main( UI_SCENE_CNT_PTR cnt, void* work );
 static BOOL SceneConfirm_End( UI_SCENE_CNT_PTR cnt, void* work );
 
+// ジャンプＮＧ
+static BOOL SceneJumpNG_Init( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL SceneJumpNG_Main( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL SceneJumpNG_End( UI_SCENE_CNT_PTR cnt, void* work );
+
 static void HBlankTask( GFL_TCB * tcb, void * work );
 
 
@@ -356,6 +361,7 @@ typedef enum
   UNS_SCENE_ID_LIST_MAKE = 0, ///< リスト生成
   UNS_SCENE_ID_SELECT_FLOOR,  ///< フロア選択
   UNS_SCENE_ID_CONFIRM,       ///< 確認画面
+  UNS_SCENE_ID_JUMP_NG,       ///< ジャンプＮＧ
 
   UNS_SCENE_ID_MAX,
 } UNS_SCENE_ID;
@@ -388,6 +394,14 @@ static const UI_SCENE_FUNC_SET c_scene_func_tbl[ UNS_SCENE_ID_MAX ] =
     SceneConfirm_Main,
     NULL,
     SceneConfirm_End,
+  },
+  // UNS_SCENE_ID_NG_JUMP
+  {
+    SceneJumpNG_Init,
+    NULL,
+    SceneJumpNG_Main,
+    NULL,
+    SceneJumpNG_End,
   },
 };
 
@@ -671,17 +685,20 @@ static void UNSelect_BG_LoadResource( UN_SELECT_MAIN_WORK* wk, HEAPID heap_id )
       u8 target_line;
       u8 ofs;
       int adr;
+      int target;
       int valid_idx;
-      valid_idx = (UN_LIST_MAX - i) - 1;
+///>      valid_idx = (UN_LIST_MAX - i) - 1;
+      valid_idx = i;
+      target = (UN_LIST_MAX - i) - 1;
 
-      if (i < MAIN_DISP_COUNTRY_MAX) data = (u8*)charData_main->pRawData;
-      else data = (u8*)charData_sub->pRawData;
+      if (i < SUB_DISP_COUNTRY_MAX) data = (u8*)charData_sub->pRawData;
+      else data = (u8*)charData_main->pRawData;
 
       if ( !wk->Valid[valid_idx] )
       {
         //書き換えキャラを選定
-        chr_idx = i/8;
-        target_line = 7 - (i%8);    //キャラ内書き換え対象ライン（0～7）キャラの下から書き換える
+        chr_idx = target/8;
+        target_line = 7 - (target%8);    //キャラ内書き換え対象ライン（0～7）キャラの下から書き換える
         ofs = target_line * 4;    //一列８ドットは４バイト
         adr = BASE_OFS + (chr_idx * 32) + ofs;
         //４バイト書き換え
@@ -1071,7 +1088,8 @@ static void MSG_CNT_DrawListElem( UN_SELECT_MSG_CNT_WORK* wk, PRINT_UTIL* util, 
 
   // フロア表示
   idx = itemNum;
-  floor = UN_LIST_MAX - itemNum + 1; //フロアは2Ｆから
+///>  floor = UN_LIST_MAX - itemNum + 1; //フロアは2Ｆから
+  floor = (UN_LIST_MAX+1) - itemNum;
   GFL_MSG_GetString( wk->msghandle, un_reception_msg_04, wk->strbuf );
   WORDSET_RegisterNumber( wk->wordset, 2, floor, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
   //※↑国連だけ特別に半角数字を許可してもらっているらしい。
@@ -1379,6 +1397,14 @@ static void ListCallBack_Move( void * work, u32 listPos, BOOL flg )
 { 
   UN_SELECT_MAIN_WORK* wk = work;
   HOSAKA_Printf("move!\n");
+  {
+    s16 cur_y;
+    cur_y = FRAMELIST_GetScrollBarPY(wk->lwk);
+    //スクロールバー移動
+    SetScrollBarPos( wk, cur_y );
+    //ビルカーソル位置セット
+    SetBuilCurPos( wk, cur_y );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1446,21 +1472,21 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
 
     0,              // 初期位置
     CUR_MOVE_RANGE,              // カーソル移動範囲
-    (UN_LIST_MAX-1)-3,  // 初期スクロール値 　下から４番目
+    0,  // 初期スクロール値 　一番上
 
     TouchHitTbl,      // タッチデータ
 
     &FRMListCallBack, // コールバック関数
     NULL,
   };
-
+/**
   //受け渡されたフロア数が5Ｆより大きかった場合だった場合初期位置を書き換える
   if ( wk->pwk->InFloor > 5 )
   {
     NOZOMU_Printf("国フロアからアプリがコールされたとみなす\n");
     header.initScroll = (UN_LIST_MAX-1)-(wk->pwk->InFloor-2);
   }
-
+*/
   header.cbWork = wk;
 
   wk->lwk = FRAMELIST_Create( &header, wk->heap_id );
@@ -1490,8 +1516,8 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
     {
       int type;
       int idx;
-      idx = UN_LIST_MAX - i - 1;
-
+///>      idx = UN_LIST_MAX - i - 1;
+      idx = i;
       if ( wk->Valid[i] == TRUE ) type = 0;
       else type = 1;
 
@@ -1578,7 +1604,8 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
       int code_idx;   //国コード-1の値が入る
       int floor_idx;
       code_idx = g_FloorTable[i] - 1;
-      floor_idx = UN_LIST_MAX - i - 1;
+///>      floor_idx = UN_LIST_MAX - i - 1;
+      floor_idx = i;
       if ( prm->OpenCountryFlg[code_idx]) wk->Valid[floor_idx] = TRUE;
       else wk->Valid[floor_idx] = FALSE;
     }
@@ -1677,9 +1704,11 @@ static void app_end( UN_SELECT_MAIN_WORK* wk, END_MODE end_mode )
       int floor;
       int floor_idx;
       //リスト位置をフロアインデックスに変換
-      floor_idx = (UN_LIST_MAX-1) - wk->ListSelPos;
+///>      floor_idx = (UN_LIST_MAX-1) - wk->ListSelPos;
+      floor_idx = wk->ListSelPos;
       //フロア数は2Ｆからなのでインデックスに2を足す
-      floor = floor_idx+2;
+///>      floor = floor_idx+2;
+      floor = UN_LIST_MAX - floor_idx;
       //フロアインデックスを国コードに変換
       code = g_FloorTable[floor_idx];
 
@@ -1772,14 +1801,6 @@ static BOOL SceneSelectFloor_Main( UI_SCENE_CNT_PTR cnt, void* work )
   UN_SELECT_MAIN_WORK* wk = work;
 
   // フロア選択処理
-  // @TODO タッチ及びカーソルで選択
-/**
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
-  {
-    UI_SCENE_CNT_SetNextScene( cnt, UNS_SCENE_ID_CONFIRM );
-    return TRUE;
-  }
-*/
   ret = FRAMELIST_Main( wk->lwk );
 
   if ( (0<=ret)&&(ret<CUR_MOVE_RANGE) )
@@ -1881,7 +1902,8 @@ static BOOL SceneConfirm_Init( UI_SCENE_CNT_PTR cnt, void* work )
     {
       int code;
       //リスト位置を国コードに変換
-      code = g_FloorTable[(UN_LIST_MAX-1) - wk->ListSelPos];
+///>      code = g_FloorTable[(UN_LIST_MAX-1) - wk->ListSelPos];
+      code = g_FloorTable[wk->ListSelPos];
       if ( (0<code)&&(code<UN_LIST_MAX) )
       {
         //国名タグ展開
@@ -1975,6 +1997,136 @@ static BOOL SceneConfirm_Main( UI_SCENE_CNT_PTR cnt, void* work )
  */
 //-----------------------------------------------------------------------------
 static BOOL SceneConfirm_End( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  UN_SELECT_MAIN_WORK* wk = work;
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  SCENE 確認画面 初期化処理
+ *
+ *  @param  UI_SCENE_CNT_PTR cnt
+ *  @param  work 
+ *
+ *  @retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneJumpNG_Init( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  UN_SELECT_MAIN_WORK* wk = work;
+  u8 seq = UI_SCENE_CNT_GetSubSeq( cnt );
+
+  switch(seq)
+  {
+  case 0:
+    // パッシブ状態に遷移
+    PASSIVE_Request();
+
+#if 0
+    TOUCHBAR_SetVisible( wk->touchbar, TOUCHBAR_ICON_CUR_L, FALSE );
+    TOUCHBAR_SetVisible( wk->touchbar, TOUCHBAR_ICON_CUR_R, FALSE );i++;
+    ;i++TOUCHBAR_SetVisible( wk->touchbar, TOUCHBAR_ICON_RETURN, FALSE );
+#endif
+    {
+      int code;
+      //リスト位置を国コードに変換
+///>      code = g_FloorTable[(UN_LIST_MAX-1) - wk->ListSelPos];
+      code = g_FloorTable[wk->ListSelPos];
+      if ( (0<code)&&(code<UN_LIST_MAX) )
+      {
+        //国名タグ展開
+        WORDSET_RegisterCountryName( wk->cnt_msg->wordset, 0, code );
+      }
+      else GF_ASSERT_MSG(0,"listpos = %d code = %d",wk->ListSelPos, code);
+    }
+    MSG_CNT_SetPrint( wk->cnt_msg, un_reception_msg_01 );
+    UI_SCENE_CNT_IncSubSeq( cnt );
+    break;
+
+  case 1:
+    if( MSG_CNT_PrintProc(wk->cnt_msg) )
+    {
+      UI_SCENE_CNT_IncSubSeq( cnt );
+    }
+    break;
+
+  case 2:
+    // タスクメニュー表示
+    wk->menu = UNSelect_TASKMENU_Init( 
+        wk->menu_res, 
+        MSG_CNT_GetMsgData(wk->cnt_msg), 
+        wk->heap_id );
+
+    return TRUE;
+
+  default : GF_ASSERT(0);
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  SCENE 確認画面 主処理
+ *
+ *  @param  UI_SCENE_CNT_PTR cnt
+ *  @param  work 
+ *
+ *  @retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneJumpNG_Main( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  UN_SELECT_MAIN_WORK* wk = work;
+
+  //タスクメニューメイン処理
+  UNSelect_TASKMENU_Main( wk->menu );
+
+  if( APP_TASKMENU_IsFinish( wk->menu ) )
+  {
+    u8 pos = APP_TASKMENU_GetCursorPos( wk->menu );
+
+    switch( pos )
+    {
+    case 0 :
+      // 終了
+      app_end( wk, END_MODE_DECIDE );
+      PASSIVE_Reset();
+      MSG_CNT_PrintClear( wk->cnt_msg );
+      UNSelect_TASKMENU_Exit( wk->menu );
+      UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
+      break;
+
+    case 1 :
+      // 選択画面に戻る
+      PASSIVE_Reset();
+      MSG_CNT_PrintClear( wk->cnt_msg );
+      UNSelect_TASKMENU_Exit( wk->menu );
+      UI_SCENE_CNT_SetNextScene( cnt, UNS_SCENE_ID_SELECT_FLOOR );
+      break;
+
+    default : GF_ASSERT(0);
+    }
+
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  SCENE　ジャンプＮＧ 後処理
+ *
+ *  @param  UI_SCENE_CNT_PTR cnt
+ *  @param  work 
+ *
+ *  @retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneJumpNG_End( UI_SCENE_CNT_PTR cnt, void* work )
 {
   UN_SELECT_MAIN_WORK* wk = work;
 
@@ -2405,7 +2557,8 @@ static void SetupListMarker( UN_SELECT_MAIN_WORK* wk, int target_item )
       if (floor_idx == NOT_MARKER){
         continue;
       }
-      item_idx = UN_LIST_MAX - floor_idx - 1;
+///>      item_idx = UN_LIST_MAX - floor_idx - 1;
+      item_idx = floor_idx;
       //サブ
       for(j=0;j<UN_LISTMARKER_SETUP_MAX;j++)
       {
@@ -2485,7 +2638,8 @@ static BOOL IsMarkerFloorValid( UN_SELECT_MAIN_WORK *wk, const int inTargetItem 
 {
   int i;
   //リストインデックスをフロアインデックスに変換
-  int floor_idx = UN_LIST_MAX - inTargetItem - 1;
+///>  int floor_idx = UN_LIST_MAX - inTargetItem - 1;
+  int floor_idx = inTargetItem;
   for (i=0;i<FLOOR_MARKING_MAX;i++)
   {
     if ( wk->MarkerFloor[i] == floor_idx ) return TRUE;
