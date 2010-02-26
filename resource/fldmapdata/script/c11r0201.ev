@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "msg_c11r0201.h"
   .include  "c11r0201.h"
+  .include  "c11r0201_def.h"  //for reserve
   .include  "c11r0101_def.h"  //for reserve
 
 //--------------------------------------------------------------
@@ -117,8 +118,31 @@ EVENT_START		ev_un_elevator
       //マップチェンジ
       _MAP_CHANGE( ZONE_ID_C11R0101, 14, 5, DIR_DOWN )
     CASE 1 THEN
-      //他のフロアへ
+      {
+        DEFINE_LOCAL Floor
+        DEFINE_LOCAL Country
+        //他のフロアへ（選択アプリ）      
+        _MAP_FADE_BLACK_OUT()
+        _MAP_FADE_END_CHECK()
+        _FIELD_CLOSE()
+        _UN_CALL_FLOOR_SEL_APP( 1, Floor, Country, SCWK_ANSWER )
+        _FIELD_OPEN()
+        _MAP_FADE_BLACK_IN()
+        _MAP_FADE_END_CHECK()
       
+        IF $SCWK_ANSWER == TRUE THEN
+          //エレベーターにはいる
+          _CALL player_elev_in
+          //データセット
+          _UN_SET_COUNTRY_INFO( Country, Floor )
+          //国連部屋訪問状態をON
+          $WK_OTHER_UN = 1
+          //予約スクリプト マップチェンジ後、エレベータから出てくるスクリプトを起動する
+		      _RESERVE_SCRIPT( SCRID_RESERVE_C11R0201 )
+          //マップチェンジ
+          _MAP_CHANGE( ZONE_ID_C11R0201, 10, 5, DIR_DOWN )
+        ENDIF
+      }  
     DEFAULT
       //そのほかは何もしない
     ENDSWITCH
