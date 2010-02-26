@@ -90,7 +90,7 @@ EVENT_END
 //説明
 explanation:
   //説明メッセージ
-  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_001, SCWK_TARGET_OBJID, POS_DL )  //@todo
+  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_028, SCWK_TARGET_OBJID, POS_DL )
 _RET
 
 charange:
