@@ -356,6 +356,7 @@ void  BTLV_EFFECT_Main( void )
 void  BTLV_EFFECT_Add( int eff_no )
 {
   BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_ERROR, BTLV_MCSS_POS_ERROR, eff_no, NULL );
+  bew->execute_flag = TRUE;
 }
 //=============================================================================================
 /**
@@ -369,6 +370,7 @@ void  BTLV_EFFECT_Add( int eff_no )
 void BTLV_EFFECT_AddByPos( BtlvMcssPos pos, int eff_no )
 {
   BTLV_EFFVM_Start( bew->vm_core, pos, BTLV_MCSS_POS_ERROR, eff_no, NULL );
+  bew->execute_flag = TRUE;
 }
 //=============================================================================================
 /**
@@ -383,6 +385,7 @@ void BTLV_EFFECT_AddByPos( BtlvMcssPos pos, int eff_no )
 void BTLV_EFFECT_AddByDir( BtlvMcssPos from, BtlvMcssPos to, int eff_no )
 {
   BTLV_EFFVM_Start( bew->vm_core, from, to, eff_no, NULL );
+  bew->execute_flag = TRUE;
 }
 //=============================================================================================
 /**
@@ -400,6 +403,7 @@ void BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param )
   effvm_param.continue_count = param->continue_count;
 
   BTLV_EFFVM_Start( bew->vm_core, param->from, param->to, param->waza, &effvm_param );
+  bew->execute_flag = TRUE;
 }
 
 //=============================================================================================
@@ -410,6 +414,7 @@ void BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param )
 void BTLV_EFFECT_Stop( void )
 {
   BTLV_EFFVM_Stop( bew->vm_core );
+  bew->execute_flag = FALSE;
 }
 
 //=============================================================================================
@@ -420,6 +425,7 @@ void BTLV_EFFECT_Stop( void )
 void BTLV_EFFECT_Restart( void )
 {
   BTLV_EFFVM_Restart( bew->vm_core );
+  bew->execute_flag = TRUE;
 }
 
 //=============================================================================================
