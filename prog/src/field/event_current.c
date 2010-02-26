@@ -299,9 +299,6 @@ GMEVENT* EVENT_PlayerMoveOnCurrent( GMEVENT* parent,
   work->SEPlayerID_splash = PMSND_GetSE_DefaultPlayerID( SEQ_SPLASH );
   work->SEPlayerID_water  = PMSND_GetSE_DefaultPlayerID( SEQ_WATER );
 
-  OS_TFPrintf( 3, "jump   : %d\n",work->SEPlayerID_jump );
-  OS_TFPrintf( 3, "splash : %d\n",work->SEPlayerID_splash );
-  OS_TFPrintf( 3, "water  : %d\n",work->SEPlayerID_water );
   return event;
 } 
 
