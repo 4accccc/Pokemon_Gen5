@@ -139,11 +139,37 @@ void MB_UTIL_ConvertPPP( const void *src , POKEMON_PASO_PARAM *dst , const DLPLA
     const u32 lv = PPP_CalcLevel( dst );
     RTCDate now_date;
     GFL_RTC_GetDate( &now_date );
-    // 手持ち０番目に捕獲場所WFの目的ポケモンを設定
-    PPP_Put( dst, ID_PARA_get_place, 30001 );
     PPP_Put( dst, ID_PARA_get_year, now_date.year );
     PPP_Put( dst, ID_PARA_get_month, now_date.month );
     PPP_Put( dst, ID_PARA_get_day, now_date.day );
     PPP_Put( dst, ID_PARA_get_level , lv );
+
+    //映画配信チェック
+    {
+      const u32 monsNo = PPP_Get( dst, ID_PARA_monsno , NULL );
+      const u32 getPlace = PPP_Get( dst, ID_PARA_get_place , NULL );
+      const u32 isEvent = PPP_Get( dst, ID_PARA_event_get_flag , NULL );
+      const BOOL isRare = PPP_CheckRare( dst );
+      if( monsNo == MONSNO_SEREBHI &&
+          getPlace == 3008 &&
+          isEvent == 1 )
+      {
+        PPP_Put( dst, ID_PARA_get_place, 30012 );
+      }
+      else
+      if( ( monsNo == MONSNO_RAIKOU || monsNo == MONSNO_ENTEI || monsNo == MONSNO_SUIKUN ) &&
+          getPlace == 3008 &&
+          isRare == TRUE &&
+          isEvent == 1 )
+      {
+        PPP_Put( dst, ID_PARA_get_place, 30010 );
+      }
+      else
+      {
+        PPP_Put( dst, ID_PARA_get_place, 30001 );
+      }
+    }
+    
+
   }
 }

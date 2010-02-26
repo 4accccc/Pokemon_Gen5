@@ -13,6 +13,7 @@
 #include "system/gfl_use.h"
 #include "system/wipe.h"
 #include "system/camera_system.h"
+#include "system/ds_system.h"
 
 #include "comm_tvt.naix"
 #include "ctvt_camera.h"
@@ -336,6 +337,8 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
           scrSizeY = ( mode == CTDM_DOUBLE ?96 :48 );
         }
         
+//        if( CTVT_COMM_CanUseCameraMember( work , commWork , i ) == TRUE &&
+//            DS_SYSTEM_IsRestrictPhotoExchange() == FALSE )
         if( CTVT_COMM_CanUseCameraMember( work , commWork , i ) == TRUE )
         {
           bufferBase = (u32)camWork->scrBuf + scrSizeX*scrSizeY*2*idx;

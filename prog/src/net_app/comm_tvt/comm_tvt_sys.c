@@ -14,6 +14,7 @@
 #include "system/wipe.h"
 #include "system/bmp_winframe.h"
 #include "system/net_err.h"
+#include "system/ds_system.h"
 #include "sound/pm_sndsys.h"
 #include "app/app_menu_common.h"
 
@@ -1042,8 +1043,9 @@ const BOOL COMM_TVT_IsTwlMode( void )
 const BOOL COMM_TVT_CanUseCamera( void )
 {
 #if (defined(SDK_TWL))
-  if( OS_IsRunOnTwl() == TRUE &&
-      OS_IsRestrictPhotoExchange() == FALSE )
+//  if( DS_SYSTEM_IsRunOnTwl() == TRUE &&
+//      DS_SYSTEM_IsRestrictPhotoExchange() == FALSE )
+  if( DS_SYSTEM_IsRunOnTwl() == TRUE )
 #else
   if( TRUE )
 #endif
