@@ -267,26 +267,23 @@ EVENT_START ev_union
   $explain    = FALSE
   _GET_PARTY_POKE_COUNT( dame_egg_count, POKECOUNT_MODE_ONLY_DAME_EGG )
 
+  _TALK_OBJ_START()
+
   // C-gear持ってない場合
   IF $have_cgear != TRUE THEN 
-    //「ただいま じゅんびちゅう です！」
+    //「まだ入れません」
     _BALLOONWIN_OBJMSG_POS( msg_pc_union_06, SCWK_TARGET_OBJID, POS_DL ) 
-    _AB_KEYWAIT()
-    _BALLOONWIN_CLOSE()
   ENDIF 
 
   // 駄目タマゴを持っている場合
   IF $dame_egg_count > 0 THEN
     //「つれていけない ポケモンがいます」
     _BALLOONWIN_OBJMSG_POS( msg_pc_union_07, SCWK_TARGET_OBJID, POS_DL ) 
-    _AB_KEYWAIT()
-    _BALLOONWIN_CLOSE()
   ENDIF
 
   // C-gear持っいて, 駄目タマゴを持っていない場合
   IF ($have_cgear == TRUE) && ($dame_egg_count == 0) THEN 
     //「ユニオンルームにようこそ」
-    _TALK_OBJ_START()
     _BALLOONWIN_OBJMSG_POS( msg_pc_union_01, SCWK_TARGET_OBJID, POS_DL ) 
     // メニュー表示
     _BMPMENU_INIT_EX( 1, 1, 0, 1, ret )
@@ -294,8 +291,6 @@ EVENT_START ev_union
     _BMPMENU_MAKE_LIST( msg_pc_union_menu_explain, msg_pc_union_menu_explain )
     _BMPMENU_MAKE_LIST( msg_pc_union_menu_no, msg_pc_union_menu_no )
     _BMPMENU_START() 
-    // 選択したら吹出しを閉じる
-    _BALLOONWIN_CLOSE() 
     // 選択結果で分岐
     SWITCH $ret 
     CASE msg_pc_union_menu_yes THEN //-------『はい』
@@ -312,7 +307,6 @@ EVENT_START ev_union
     //「へやにはいりますか？」
     _BALLOONWIN_OBJMSG_POS( msg_pc_union_02, SCWK_TARGET_OBJID, POS_DL )
     _YES_NO_WIN( ret )
-    _BALLOONWIN_CLOSE()
     //『はい』
     IF $ret == SCR_YES THEN
       $room_in = TRUE
@@ -323,6 +317,7 @@ EVENT_START ev_union
   IF $room_in == TRUE THEN
     _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
     IF $SCWK_ANSWER == FALSE THEN
+      _BALLOONWIN_CLOSE()
       _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
       $room_in = FALSE
     ENDIF
@@ -391,7 +386,7 @@ EVENT_START ev_union
   IF $room_in != TRUE THEN
     //「また おこしください」
     _BALLOONWIN_OBJMSG_POS( msg_pc_union_05, SCWK_TARGET_OBJID, POS_DL )
-    _AB_KEYWAIT()
+    _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF
 }
