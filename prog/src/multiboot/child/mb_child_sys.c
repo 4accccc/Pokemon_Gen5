@@ -773,7 +773,8 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
 
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_09 , work->initData->msgSpeed );
-        MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
+        //エラーではなく通常終了扱い
+        MB_COMM_SetChildState( work->commWork , MCCS_END_GAME );
         work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
       }
       else
@@ -782,7 +783,8 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
 
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_08 , work->initData->msgSpeed );
-        MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
+        //エラーではなく通常終了扱い
+        MB_COMM_SetChildState( work->commWork , MCCS_END_GAME );
         work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
       }
       else
