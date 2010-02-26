@@ -16,13 +16,17 @@
 #include "field_player.h"
 #include "fldmmdl.h"
 #include "fldmmdl_code.h"
-#include "map_attr_def.h"  // for MATTR_xxxx
+#include "map_attr_def.h"     // for MATTR_xxxx
 #include "fldeff_namipoke.h"  // for NAMIPOKE_
 
 
 //=============================================================================================
 // ■定数
 //=============================================================================================
+#define SEQ_JUMP   (SEQ_SE_DANSA)   // ジャンプSE
+#define SEQ_SPLASH (SEQ_SE_FLD_83)  // 着水SE
+#define SEQ_WATER  (SEQ_SE_FLD_129) // 水流SE
+
 // 処理シーケンス
 enum {
   SEQ_START,  // イベント開始
@@ -167,6 +171,13 @@ typedef struct
   const CURRENT_DATA* current; // 適用中の水流データ
   const ROCK_DATA*    rock;    // 適用中の岩データ
 
+  BOOL jumpFlag; // ジャンプ中かどうか
+
+  // SEプレイヤーID
+  SEPLAYER_ID SEPlayerID_jump;   // ジャンプ
+  SEPLAYER_ID SEPlayerID_splash; // 着水
+  SEPLAYER_ID SEPlayerID_water;  // 流水
+
 } EVENT_WORK;
 
 
@@ -183,6 +194,8 @@ static void SplashCheck( EVENT_WORK* work );
 static void CurrentCheck( EVENT_WORK* work );
 static void RockCheck( EVENT_WORK* work );
 static void ExitEvent( EVENT_WORK* work );
+static void PlayJumpSE( EVENT_WORK* work );
+static void PlaySplashSE( EVENT_WORK* work );
 static void StartWaterSE( EVENT_WORK* work );
 static void StopWaterSE( EVENT_WORK* work );
 
@@ -199,8 +212,7 @@ static GMEVENT_RESULT AutoMoveEvent( GMEVENT* event, int* seq, void* wk )
   // イベント開始
   case SEQ_START:
     // 足元が移動床でなければ終了
-    if( !IsCurrent( GetNowAttribute(work) ) )
-    {
+    if( !IsCurrent( GetNowAttribute(work) ) ) {
       *seq = SEQ_EXIT;
       break;
     }
@@ -217,6 +229,9 @@ static GMEVENT_RESULT AutoMoveEvent( GMEVENT* event, int* seq, void* wk )
 
   // メイン処理
   case SEQ_MAIN:
+    // 水流SE再生開始
+    StartWaterSE( work );
+
     // 移動終了時
     if( MMDL_CheckEndAcmd(work->mmdl) )
     {
@@ -225,8 +240,8 @@ static GMEVENT_RESULT AutoMoveEvent( GMEVENT* event, int* seq, void* wk )
       RockCheck( work );    // 岩チェック
 
       // 水流がなくなったら終了
-      if( (work->current == NULL) && (work->rock == NULL) )
-      {
+      if( (work->current == NULL) && (work->rock == NULL) ) {
+        StopWaterSE( work ); // 水流SE停止
         *seq = SEQ_EXIT;
         break;
       }
@@ -237,7 +252,6 @@ static GMEVENT_RESULT AutoMoveEvent( GMEVENT* event, int* seq, void* wk )
 
   // イベント終了
   case SEQ_EXIT:
-    StopWaterSE( work ); // 水流SE停止
     ExitEvent( work );
     return GMEVENT_RES_FINISH;
   }
@@ -274,12 +288,20 @@ GMEVENT* EVENT_PlayerMoveOnCurrent( GMEVENT* parent,
 
   // 初期化
   work = GMEVENT_GetEventWork( event );
-  work->gsys             = gsys;
-  work->fieldmap         = fieldmap;
-  work->player           = player;
-  work->mmdl             = FIELD_PLAYER_GetMMdl( player );
-  work->current          = NULL;
-  work->rock             = NULL;
+  work->gsys              = gsys;
+  work->fieldmap          = fieldmap;
+  work->player            = player;
+  work->mmdl              = FIELD_PLAYER_GetMMdl( player );
+  work->current           = NULL;
+  work->rock              = NULL;
+  work->jumpFlag          = FALSE;
+  work->SEPlayerID_jump   = PMSND_GetSE_DefaultPlayerID( SEQ_JUMP );
+  work->SEPlayerID_splash = PMSND_GetSE_DefaultPlayerID( SEQ_SPLASH );
+  work->SEPlayerID_water  = PMSND_GetSE_DefaultPlayerID( SEQ_WATER );
+
+  OS_TFPrintf( 3, "jump   : %d\n",work->SEPlayerID_jump );
+  OS_TFPrintf( 3, "splash : %d\n",work->SEPlayerID_splash );
+  OS_TFPrintf( 3, "water  : %d\n",work->SEPlayerID_water );
   return event;
 } 
 
@@ -313,7 +335,7 @@ BOOL CheckAttributeIsCurrent( MAPATTR_VALUE attrval )
 //---------------------------------------------------------------------------------------------
 static u16 GetMoveAcmd( const EVENT_WORK* work )
 {
-  if( !work->current ){ return 0; }
+  if( !work->current ) { return 0; }
   return work->current->moveAcmd;
 }
 
@@ -328,7 +350,7 @@ static u16 GetMoveAcmd( const EVENT_WORK* work )
 //---------------------------------------------------------------------------------------------
 static u16 GetJumpAcmd( const EVENT_WORK* work )
 {
-  if( !work->rock ){ return 0; }
+  if( !work->rock ) { return 0; }
   return work->rock->jumpAcmd;
 }
 
@@ -343,7 +365,7 @@ static u16 GetJumpAcmd( const EVENT_WORK* work )
 //---------------------------------------------------------------------------------------------
 static u16 GetMoveDir( const EVENT_WORK* work )
 {
-  if( !work->current ){ return 0; }
+  if( !work->current ) { return 0; }
   return work->current->moveDir;
 }
 
@@ -407,9 +429,14 @@ static MAPATTR_VALUE GetFrontAttribute( const EVENT_WORK* work )
 //---------------------------------------------------------------------------------------------
 static void MoveStart( EVENT_WORK* work )
 { 
-  // アニメーションコマンドをセット
-  if( work->rock ){ MMDL_SetAcmd( work->mmdl, GetJumpAcmd(work) ); }  // ジャンプ
-  else if( work->current ){ MMDL_SetAcmd( work->mmdl, GetMoveAcmd(work) ); }  // 移動
+  if( work->rock ) { // ジャンプ
+    MMDL_SetAcmd( work->mmdl, GetJumpAcmd(work) );
+    PlayJumpSE( work );
+    work->jumpFlag = TRUE;
+  }
+  else if( work->current ) { // 移動
+    MMDL_SetAcmd( work->mmdl, GetMoveAcmd(work) );
+  }  
 }
 
 //---------------------------------------------------------------------------------------------
@@ -432,8 +459,7 @@ static void SplashCheck( EVENT_WORK* work )
     proc_id = FLDEFF_PROCID_NAMIPOKE_EFFECT;
 
     // エフェクト登録
-    if( FLDEFF_CTRL_CheckRegistEffect( fectrl, proc_id ) == FALSE )
-    {
+    if( FLDEFF_CTRL_CheckRegistEffect( fectrl, proc_id ) == FALSE ) {
       FLDEFF_CTRL_RegistEffect( fectrl, &proc_id, 1 );
     }
     // エフェクトを表示
@@ -442,10 +468,11 @@ static void SplashCheck( EVENT_WORK* work )
     FLDEFF_NAMIPOKE_EFFECT_SetEffectAlone( fectrl, type, &pos );
 
     // 着水SE 再生
-    PMSND_PlaySE( SEQ_SE_FLD_83 );
+    PlaySplashSE( work );
 
     // ジャンプ終了
     work->rock = NULL;
+    work->jumpFlag = FALSE;
   }
 }
 
@@ -498,9 +525,40 @@ static void ExitEvent( EVENT_WORK* work )
   // 波ポケ後部の水飛沫エフェクトON
   {
     FLDEFF_TASK* task;
-    task   = FIELD_PLAYER_GetEffectTaskWork( work->player );
+    task = FIELD_PLAYER_GetEffectTaskWork( work->player );
     FLDEFF_NAMIPOKE_SetRippleEffect( task, TRUE );
   }
+}
+
+//---------------------------------------------------------------------------------------------
+/**
+ * @brief ジャンプSEを再生する
+ *
+ * @param work
+ */
+//---------------------------------------------------------------------------------------------
+static void PlayJumpSE( EVENT_WORK* work )
+{
+  // サウンドロード中
+  if( PMSND_IsLoading() ) { return; }
+
+  PMSND_StopSE_byPlayerID( work->SEPlayerID_water );
+  PMSND_PlaySE_byPlayerID( SEQ_JUMP, work->SEPlayerID_jump );
+}
+
+//---------------------------------------------------------------------------------------------
+/**
+ * @brief 着水SEを再生する
+ *
+ * @param work
+ */
+//---------------------------------------------------------------------------------------------
+static void PlaySplashSE( EVENT_WORK* work )
+{
+  // サウンドロード中
+  if( PMSND_IsLoading() ) { return; }
+
+  PMSND_PlaySE_byPlayerID( SEQ_SPLASH, work->SEPlayerID_splash );
 }
 
 //---------------------------------------------------------------------------------------------
@@ -512,7 +570,15 @@ static void ExitEvent( EVENT_WORK* work )
 //---------------------------------------------------------------------------------------------
 static void StartWaterSE( EVENT_WORK* work )
 {
-  PMSND_PlaySE( SEQ_SE_FLD_129 );
+  // サウンドロード中
+  if( PMSND_IsLoading() ) { return; }
+
+  // ジャンプ終了
+  if( ( work->jumpFlag == FALSE ) &&
+      ( PMSND_CheckPlaySE_byPlayerID( work->SEPlayerID_water ) == FALSE ) )
+  {
+    PMSND_PlaySE_byPlayerID( SEQ_WATER, work->SEPlayerID_water );
+  }
 } 
 
 //---------------------------------------------------------------------------------------------
@@ -524,5 +590,5 @@ static void StartWaterSE( EVENT_WORK* work )
 //---------------------------------------------------------------------------------------------
 static void StopWaterSE( EVENT_WORK* work )
 {
-  PMSND_StopSE();
+  PMSND_StopSE_byPlayerID( work->SEPlayerID_water );
 }
