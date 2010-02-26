@@ -520,7 +520,9 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   {
     INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(save);
     wk->my_data.power = ISC_SAVE_GetGPowerID(int_sv);
-    wk->my_data.power = 1;
+#ifdef DEBUG_ONLY_FOR_iwasawa
+    wk->my_data.power = 43;
+#endif
     wk->my_power_f = (wk->my_data.power == GPOWER_ID_NULL);
   }
   wk->item_sv = GAMEDATA_GetMyItem( wk->gdata );

@@ -529,8 +529,11 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
     PMS_DATA pms;
    
     PMS_DRAW_Clear( wk->pms_draw, idx, FALSE );
+    GAMEBEACON_Get_IntroductionPms( info, &pms );
+#if 0
     PMSDAT_SetDebugRandom( &pms );
     PMSDAT_SetDeco( &pms, 0, PMS_DECOID_HERO + idx );
+#endif
     PMS_DRAW_Print( wk->pms_draw, bp->pms, &pms , idx );
   }
   //ユニオンキャラクタナンバーを取得
@@ -544,7 +547,9 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
   {
     int rank = GAMEBEACON_Get_ResearchTeamRank(info);
 
+#if 0
     rank = 5;
+#endif
     if( rank == 0){
       GFL_CLACT_WK_SetDrawEnable( bp->cRank, FALSE );
     }else{

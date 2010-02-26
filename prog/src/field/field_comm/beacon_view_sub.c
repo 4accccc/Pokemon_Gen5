@@ -1084,8 +1084,9 @@ static void panel_NamePrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp )
  */
 static void panel_RankSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info )
 {
+#if 0
   pp->rank = 1;
-
+#endif
   if(pp->rank == 0){
     GFL_CLACT_WK_SetAnmFrame( pp->cRank, 0);
   }else{
