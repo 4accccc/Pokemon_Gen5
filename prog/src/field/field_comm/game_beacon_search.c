@@ -337,6 +337,7 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
       }
       else if(beacon->beacon_type == GBS_BEACONN_TYPE_INFO){
         GAMEBEACON_SetRecvBeacon(&beacon->info);
+        GFL_NET_WLResetGFBss(hit_index);  //ビーコンバッファクリア
       }
     }
   }
