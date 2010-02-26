@@ -714,6 +714,13 @@ static const TOUCH_AREA_INIT_DATA MenuTouchAreaInitData[ MENU_TOUCH_AREA_NUM ] =
 
 static const TOUCH_AREA_INIT_DATA TopicTouchAreaInitData[ TOPIC_TOUCH_AREA_NUM ] = 
 {
+  //「もどる」ボタン
+  {
+    TOUCH_AREA_RETURN_BUTTON_X,
+    TOUCH_AREA_RETURN_BUTTON_X + TOUCH_AREA_RETURN_BUTTON_WIDTH,
+    TOUCH_AREA_RETURN_BUTTON_Y,
+    TOUCH_AREA_RETURN_BUTTON_Y + TOUCH_AREA_RETURN_BUTTON_HEIGHT,
+  },
   { 0, 0, 0, 0 }, // 調査項目0
   { 0, 0, 0, 0 }, // 調査項目1
   { 0, 0, 0, 0 }, // 調査項目2
@@ -724,12 +731,5 @@ static const TOUCH_AREA_INIT_DATA TopicTouchAreaInitData[ TOPIC_TOUCH_AREA_NUM ]
   { 0, 0, 0, 0 }, // 調査項目7
   { 0, 0, 0, 0 }, // 調査項目8
   { 0, 0, 0, 0 }, // 調査項目9
-  //「もどる」ボタン
-  {
-    TOUCH_AREA_RETURN_BUTTON_X,
-    TOUCH_AREA_RETURN_BUTTON_X + TOUCH_AREA_RETURN_BUTTON_WIDTH,
-    TOUCH_AREA_RETURN_BUTTON_Y,
-    TOUCH_AREA_RETURN_BUTTON_Y + TOUCH_AREA_RETURN_BUTTON_HEIGHT,
-  },
   { GFL_UI_TP_HIT_END, 0, 0, 0 }, // 終端コード
 };

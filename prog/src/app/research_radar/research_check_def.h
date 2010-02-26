@@ -132,14 +132,14 @@
 #define ANSWER_LOWER_Y         (8)   // Y座標   (キャラクター単位, 下半分)
 #define ANSWER_LOWER_WIDTH     (16)  // Xサイズ (キャラクター単位, 下半分)
 #define ANSWER_LOWER_HEIGHT    (3)   // Yサイズ (キャラクター単位, 下半分)
-#define ANSWER_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
-#define ANSWER_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
+#define ANSWER_STRING_OFFSET_X (24)  // 文字列の書き込み先オフセットX
+#define ANSWER_STRING_OFFSET_Y (4)   // 文字列の書き込み先オフセットY
 #define ANSWER_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
 #define ANSWER_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
 #define ANSWER_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
-#define ANSWER_LEFT_CURSOR_OFFSET_X  (0) // 左カーソル x オフセット
+#define ANSWER_LEFT_CURSOR_OFFSET_X  (0)  // 左カーソル x オフセット
 #define ANSWER_LEFT_CURSOR_OFFSET_Y  (32) // 左カーソル y オフセット
-#define ANSWER_RIGHT_CURSOR_OFFSET_X (0) // 右カーソル x オフセット
+#define ANSWER_RIGHT_CURSOR_OFFSET_X (0)  // 右カーソル x オフセット
 #define ANSWER_RIGHT_CURSOR_OFFSET_Y (32) // 右カーソル y オフセット
 
 // 下画面 自分の回答
@@ -147,8 +147,8 @@
 #define MY_ANSWER_Y               (11)  // Y座標   (キャラクター単位)
 #define MY_ANSWER_WIDTH           (15)  // Xサイズ (キャラクター単位)
 #define MY_ANSWER_HEIGHT          (5)   // Yサイズ (キャラクター単位)
-#define MY_ANSWER_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
-#define MY_ANSWER_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
+#define MY_ANSWER_STRING_OFFSET_X (12)  // 文字列の書き込み先オフセットX
+#define MY_ANSWER_STRING_OFFSET_Y (4)   // 文字列の書き込み先オフセットY
 #define MY_ANSWER_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
 #define MY_ANSWER_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
 #define MY_ANSWER_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
@@ -162,14 +162,14 @@
 #define COUNT_Y               (16)  // Y座標   (キャラクター単位)
 #define COUNT_WIDTH           (19)  // Xサイズ (キャラクター単位)
 #define COUNT_HEIGHT          (5)   // Yサイズ (キャラクター単位)
-#define COUNT_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
-#define COUNT_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
+#define COUNT_STRING_OFFSET_X (34)  // 文字列の書き込み先オフセットX
+#define COUNT_STRING_OFFSET_Y (4)   // 文字列の書き込み先オフセットY
 #define COUNT_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
 #define COUNT_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
 #define COUNT_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
-#define COUNT_LEFT_CURSOR_OFFSET_X  (0) // 左カーソル x オフセット
+#define COUNT_LEFT_CURSOR_OFFSET_X  (0)  // 左カーソル x オフセット
 #define COUNT_LEFT_CURSOR_OFFSET_Y  (20) // 左カーソル y オフセット
-#define COUNT_RIGHT_CURSOR_OFFSET_X (0) // 右カーソル x オフセット
+#define COUNT_RIGHT_CURSOR_OFFSET_X (0)  // 右カーソル x オフセット
 #define COUNT_RIGHT_CURSOR_OFFSET_Y (20) // 右カーソル y オフセット
 
 // 下画面「ただいまちょうさちゅう」
@@ -189,7 +189,7 @@
 #define DATA_RECEIVING_WIDTH           (28)  // Xサイズ (キャラクター単位)
 #define DATA_RECEIVING_HEIGHT          (4)   // Yサイズ (キャラクター単位)
 #define DATA_RECEIVING_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
-#define DATA_RECEIVING_STRING_OFFSET_Y (0)   // 文字列の書き込み先オフセットY
+#define DATA_RECEIVING_STRING_OFFSET_Y (4)   // 文字列の書き込み先オフセットY
 #define DATA_RECEIVING_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
 #define DATA_RECEIVING_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
 #define DATA_RECEIVING_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
