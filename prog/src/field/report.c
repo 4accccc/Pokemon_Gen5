@@ -69,7 +69,7 @@
 #define	BMPWIN_BADGE_PAL	( 0 )
 // ê}ä”
 #define	BMPWIN_ZUKAN_FRM	( GFL_BG_FRAME1_S )
-#define	BMPWIN_ZUKAN_PX		( 17 )
+#define	BMPWIN_ZUKAN_PX		( 16 )
 #define	BMPWIN_ZUKAN_PY		( 16 )
 #define	BMPWIN_ZUKAN_SX		( 12 )
 #define	BMPWIN_ZUKAN_SY		( 2 )
