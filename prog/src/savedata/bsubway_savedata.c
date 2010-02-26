@@ -547,6 +547,19 @@ void BSUBWAY_SCOREDATA_UpdateRenshouMax(
 
 //--------------------------------------------------------------
 /**
+ * スコアデータ、連勝数セット
+ * @param bsw_score BSUBWAY_SCOREDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCOREDATA_SetRenshou(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count )
+{
+  bsw_score->renshou[mode] = count;
+}
+
+//--------------------------------------------------------------
+/**
  * スコアデータ　ステージ数リセット
  * @param bsw_play BSUBWAY_SCOREDATA
  * @retval nothing

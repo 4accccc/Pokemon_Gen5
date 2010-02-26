@@ -134,7 +134,7 @@ struct _TAG_FLDMSGBG
 {
 	HEAPID heapID; //u16
 	u16 bgFrame;
-   
+  
   u16 bgFrameBld;
 	u16 deriveWin_plttNo;
   
@@ -492,6 +492,12 @@ void FLDMSGBG_ReleaseBGResouce( FLDMSGBG *fmb )
     GFL_BG_FreeBGControl( fmb->bgFrame );
     fmb->bgFrame = BGFRAME_ERROR;
   }
+#if 0  
+  if( fmb->bgFrameBld != BGFRAME_ERROR ){
+    GFL_BG_FreeBGControl( fmb->bgFrameBld );
+    fmb->bgFrameBld = BGFRAME_ERROR;
+  }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -4424,9 +4430,9 @@ static void setBGResource( FLDMSGBG *fmb )
 		GFL_BG_LoadScreenReq( fmb->bgFrame );
 	}
 
-#if 0  
   fmb->bgFrameBld = FLDMSGBG_BGFRAME_BLD; //半透明BG
-  
+
+#if 0  
   {	//BG初期化
 		GFL_BG_BGCNT_HEADER bgcntText = {
 			0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
@@ -4548,15 +4554,13 @@ void FLDMSGBG_RecoveryBG( FLDMSGBG *fmb )
 		
 		GFL_BG_LoadScreenReq( fmb->bgFrame );
 	}
-  
-#if 0
+#if 0  
 	{
 		GFL_BG_FillScreen( fmb->bgFrameBld,
 			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 		GFL_BG_LoadScreenReq( fmb->bgFrameBld );
 	}
-#endif
-
+#endif  
 	{	//フォントパレット
 		GFL_ARC_UTIL_TransVramPalette(
 			ARCID_FONT, NARC_font_default_nclr, //黒

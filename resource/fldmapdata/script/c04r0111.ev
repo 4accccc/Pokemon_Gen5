@@ -413,7 +413,7 @@ EVENT_START ev_c04r0111_home
       _AB_KEYWAIT()
       
       _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT, BSW_NULL, BSW_NULL, point )
-
+      
       _PLAYER_NAME( 0 )
       _NUMBER( 1, point, 2 )
       _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
@@ -441,7 +441,7 @@ EVENT_START ev_c04r0111_home
       _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, SCWK_ANSWER )
     
       IF $SCWK_ANSWER == 0 THEN //初めて倒した
-        _SYSWIN_MSG( msg_c04r0111_05 , WIN_DOWN ) //スーパーに挑戦出来ます
+        _SYSWIN_MSG( msg_c04r0111_05, WIN_DOWN ) //スーパーに挑戦出来ます
         _AB_KEYWAIT()
         _BSUBWAY_TOOL( BSWTOOL_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
       ENDIF

@@ -755,6 +755,9 @@ BOOL BSUBWAY_SCRWORK_GetEntryPoke( BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys 
   }
 }
 
+extern void BSUBWAY_SCOREDATA_SetRenshou(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count );
+
 //--------------------------------------------------------------
 /**
  *  @brief  7連勝しているかどうかチェック
@@ -764,6 +767,20 @@ BOOL BSUBWAY_SCRWORK_GetEntryPoke( BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys 
 //--------------------------------------------------------------
 BOOL BSUBWAY_SCRWORK_IsClear( BSUBWAY_SCRWORK *bsw_scr )
 {
+#ifdef DEBUG_BSW_NORMAL_CLEAR
+  switch( bsw_scr->play_mode ){
+  case BSWAY_MODE_SINGLE:
+  case BSWAY_MODE_DOUBLE:
+  case BSWAY_MODE_MULTI:
+  case BSWAY_MODE_COMM_MULTI:
+    BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, 7 );
+    BSUBWAY_SCOREDATA_SetStageNo( bsw_scr->scoreData, bsw_scr->play_mode, 2 );
+    BSUBWAY_SCOREDATA_SetRenshou(
+        bsw_scr->scoreData, bsw_scr->play_mode, 7*3 );
+    break;
+  }
+#endif
+
   if( bsw_scr->clear_f == FALSE ){
     u32 round = BSUBWAY_PLAYDATA_GetRoundNo( bsw_scr->playData );
     

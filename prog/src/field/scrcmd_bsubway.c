@@ -376,13 +376,13 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //ボスクリア済みフラグセット
   case BSWTOOL_SET_BOSS_CLEAR_FLAG:
-    *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
+    BSUBWAY_SCOREDATA_SetFlag( scoreData,
         BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param0,
         BSWAY_SETMODE_set );
     break;
-  //スーパーボスクリア済みフラグ取得
+  //スーパーボスクリア済みフラグセット
   case BSWTOOL_SET_S_BOSS_CLEAR_FLAG:
-    *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
+    BSUBWAY_SCOREDATA_SetFlag( scoreData,
         BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param0,
         BSWAY_SETMODE_set );
     break;
@@ -540,16 +540,19 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWTOOL_WIFI_UPLOAD_SCORE:
     SCRIPT_CallEvent( sc, WIFI_BSUBWAY_EVENT_Start(
           gsys,WIFI_BSUBWAY_MODE_SCORE_UPLOAD) );
+    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
   //WiFi ゲーム情報をダウンロード
   case BSWTOOL_WIFI_DOWNLOAD_GAMEDATA:
     SCRIPT_CallEvent( sc, WIFI_BSUBWAY_EVENT_Start(
           gsys,WIFI_BSUBWAY_MODE_GAMEDATA_DOWNLOAD) );
+    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
   //WiFi 歴代情報をダウンロード
   case BSWTOOL_WIFI_DOWNLOAD_SCDATA:
     SCRIPT_CallEvent( sc, WIFI_BSUBWAY_EVENT_Start(
           gsys,WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD) );
+    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
   //WiFi ランク取得
   case BSWTOOL_WIFI_GET_RANK:
@@ -585,6 +588,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     {
       SCRIPT_CallEvent( sc, BSUBWAY_EVENT_CallLeaderBoard(gsys) );
     }
+    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
   //----ワーク依存
   //プレイモード別復帰位置セット
@@ -631,6 +635,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //ポケモン選択画面へ
   case BSWSUB_SELECT_POKE:
     SCRIPT_CallEvent( sc, BSUBWAY_EVENT_SetSelectPokeList(bsw_scr,gsys) );
+    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return VMCMD_RESULT_SUSPEND;
   //選択ポケモン取得
   case BSWSUB_GET_ENTRY_POKE:
@@ -686,6 +691,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     SCRIPT_CallEvent(
         sc, BSUBWAY_EVENT_TrainerBattle(bsw_scr,gsys,fieldmap) );
 #endif
+    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return VMCMD_RESULT_SUSPEND;
   //現在のプレイモードを取得
   case BSWSUB_GET_PLAY_MODE:
@@ -728,6 +734,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWSUB_TRAINER_BEFORE_MSG:
     SCRIPT_CallEvent(
         sc, BSUBWAY_EVENT_TrainerBeforeMsg(bsw_scr,gsys,param0) );
+    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
   //ゲームクリア時のプレイデータをセーブ
   case BSWSUB_SAVE_GAMECLEAR:
@@ -835,6 +842,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     bsw_scr->comm_timing_no = param0;
     BSUBWAY_COMM_TimingSyncStart( bsw_scr->comm_timing_no );
     VMCMD_SetWait( core, evCommTimingSync );
+    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
   //親機選択メニュー表示
   case BSWSUB_COMM_ENTRY_PARENT_MENU:
@@ -847,6 +855,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
           COMM_ENTRY_GAMETYPE_SUBWAY, NULL );
       VMCMD_SetWait( core, evCommEntryMenuPerent );
     }
+    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
   //子機選択メニュー表示
   case BSWSUB_COMM_ENTRY_CHILD_MENU:
@@ -859,6 +868,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
           COMM_ENTRY_GAMETYPE_SUBWAY, NULL );
       VMCMD_SetWait( core, evCommEntryMenuChild );
     }
+    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
   //通信データ送信
   case BSWSUB_COMM_SEND_BUF:
@@ -869,6 +879,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     BSUBWAY_SCRWORK_CommRecieveDataStart( bsw_scr, param0 );
     bsw_scr->ret_work_id = retwk_id;
     VMCMD_SetWait( core, evCommRecvData );
+    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
     break;
   //自分の通信IDを取得
@@ -882,6 +893,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   }
   
+  KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
   return( VMCMD_RESULT_CONTINUE );
 }
 
