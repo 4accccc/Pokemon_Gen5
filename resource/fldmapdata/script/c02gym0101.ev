@@ -497,7 +497,7 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	//ローカル変数定義
 	DEFINE_LOCAL	BM_ANIME_ID1
 	//けむり演出のアニメコントローラを作成
-	_BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_EVENT, 8, 1 )
+	_BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_EVENT, 14, 15 )
 	_BMODEL_ANIME_SET( BM_ANIME_ID1, 0 )
 	
 	_WHITE_IN()
@@ -514,6 +514,7 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
 	
+
 	//アロエが化石まで移動
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00, anm_leader_idou_tounan_a )
 	_OBJ_ANIME_WAIT()
@@ -529,6 +530,8 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	
 	//ジムリーダー：消す
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+
 	
 	//==============フラグワーク操作==============//
 	

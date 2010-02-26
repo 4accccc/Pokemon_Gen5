@@ -145,8 +145,12 @@ EVENT_START ev_debug_masafumi
 			_FLAG_RESET( FV_R03_SODATEYA_01 )
 			$WK_OTHER_DISCOVER_EGG = 1
 			
+			$WK_SCENE_C04R0201 = 1
+			
 			//R05のライバル戦POSイベントを有効
-			$WK_SCENE_R05 = 1
+			$WK_SCENE_R05 = 2
+			_FLAG_RESET( FV_R05_RIVAL )
+			_FLAG_RESET( FV_R05_LEADER4 )
 			
 			//研究所の博士を表示
 			_FLAG_RESET( FV_T01R0401_HAKASE1 )
