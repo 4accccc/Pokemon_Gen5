@@ -2999,13 +2999,13 @@ void POKEMONTRADE_CreatePokeSelectMessage(POKEMON_TRADE_WORK* pWork)
   GFL_CLWK_DATA cellInitData;
   GFL_CLACTPOS pos[GTS_SEL6MSG_NUM]={
     {64+32, 0+32},
-    {64+32, 48+16},
-    {64+32, 96+16},
-    {64+32, 144+16},
+    {64+32+8, 48+16},
+    {64+32+8, 96+16},
+    {64+32+8, 144+16},
     {128+64+32, 0+32},
-    {128+64+32, 48+16},
-    {128+64+32, 96+16},
-    {128+64+32,144+16},
+    {128+64+32+8, 48+16},
+    {128+64+32+8, 96+16},
+    {128+64+32+8,144+16},
   };
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
 
