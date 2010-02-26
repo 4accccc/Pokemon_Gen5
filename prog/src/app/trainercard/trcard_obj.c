@@ -268,10 +268,14 @@ void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk)
                                                wk->resCell[entry_dat[i].cgx].ncgIdx,
                                                wk->resCell[entry_dat[i].cel].anmIdx ,
                                                &addData , CLSYS_DEFREND_SUB , wk->heapId );
-      GFL_CLACT_WK_SetDrawEnable( wk->ClActWorkS[i],   TRUE); //非表示
+      GFL_CLACT_WK_SetDrawEnable( wk->ClActWorkS[i],   TRUE); //表示
       GFL_CLACT_WK_SetAutoAnmSpeed( wk->ClActWorkS[i], FX32_ONE );
       GFL_CLACT_WK_SetAutoAnmFlag( wk->ClActWorkS[i],  TRUE );
-      
+
+      // タッチエフェクトは非表示にする
+      if(i==ACTS_BTN_EFF){
+        GFL_CLACT_WK_SetDrawEnable( wk->ClActWorkS[i], FALSE); //非表示
+      }
     }
     
     // エフェクトアクターは非表示にする

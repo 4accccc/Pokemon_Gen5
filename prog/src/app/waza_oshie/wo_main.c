@@ -43,6 +43,7 @@
 #include "app/app_menu_common.h"
 #include "waza_tool/wazadata.h"
 #include "app/p_status.h"
+#include "app/app_taskmenu.h"
 #include "system/poke2dgra.h"
 
 #include "app/waza_oshie.h"
@@ -162,7 +163,7 @@ typedef struct {
   u32 clres[4][WO_CHR_ID_MAX];  // セルアクターリソースインデックス用ワーク
 
   // セルアクター
-  GFL_CLUNIT    *csp;
+  GFL_CLUNIT    *clUnit;
 //  CATS_RES_PTR  crp;
   GFL_CLWK    *cap[WO_CLA_MAX];
 
@@ -194,6 +195,13 @@ typedef struct {
 
   BUTTON_ANM_WORK button_anm_work;
 
+  // APPMENU関連
+  APP_TASKMENU_RES   *app_res;
+  APP_TASKMENU_WORK  *app_menuwork;
+  APP_TASKMENU_ITEMWORK menuitem[2];
+  APP_TASKMENU_ITEMWORK yn_menuitem[2];
+  PRINT_QUE             *printQue;
+  APP_TASKMENU_WIN_WORK *oboe_menu_work[2];
 }WO_WORK;
 
 
@@ -604,7 +612,6 @@ GFL_PROC_RESULT WazaOshieProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
 
   wk->pMsgTcblSys = GFL_TCBL_Init( HEAPID_WAZAOSHIE , HEAPID_WAZAOSHIE , 32 , 32 );
 
-
   WO_DispInit( wk );
 
   WO_SelCursorChange( wk, wk->dat->pos, PALDW_CURSOR );
@@ -700,6 +707,7 @@ GFL_PROC_RESULT WazaOshieProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *
   WO_3DMain(&wk->p3d);
   GFL_CLACT_SYS_Main( );
   GFL_TCBL_Main( wk->pMsgTcblSys );
+  PRINTSYS_QUE_Main( wk->printQue );
 
   return GFL_PROC_RES_CONTINUE;
 /*↑[GS_CONVERT_TAG]*/
@@ -740,6 +748,71 @@ GFL_PROC_RESULT WazaOshieProc_End( GFL_PROC * proc, int *seq, void *pwk, void *m
 
   return GFL_PROC_RES_FINISH;
 /*↑[GS_CONVERT_TAG]*/
+}
+
+
+static const int menu_item[][2]={
+  { msg_exp_decide, APP_TASKMENU_WIN_TYPE_NORMAL },
+  { msg_exp_back,   APP_TASKMENU_WIN_TYPE_RETURN },
+};
+
+static const int yn_item[][2]={
+  { msg_wazaoshie_yes,  APP_TASKMENU_WIN_TYPE_NORMAL },
+  { msg_wazaoshie_no,   APP_TASKMENU_WIN_TYPE_NORMAL },
+};
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief タスクメニュー用初期化
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void InitTaskMenu( WO_WORK *wk )
+{
+  int i;
+  wk->printQue = PRINTSYS_QUE_Create( HEAPID_WAZAOSHIE );
+  
+  // APPMENUリソース読み込み
+  wk->app_res = APP_TASKMENU_RES_Create( SFRM_MSG, 10, wk->fontHandle, wk->printQue, HEAPID_WAZAOSHIE );
+
+  // タッチバーメニュー項目
+  for(i=0;i<2;i++){
+    wk->menuitem[i].str      = GFL_MSG_CreateString( wk->mman, menu_item[i][0] ); //メニューに表示する文字列
+    wk->menuitem[i].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;   //文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
+    wk->menuitem[i].type     = menu_item[i][1];
+  }
+  // はい・いいえ
+  for(i=0;i<2;i++){
+    wk->yn_menuitem[i].str      = GFL_MSG_CreateString( wk->mman, yn_item[i][0] ); //メニューに表示する文字列
+    wk->yn_menuitem[i].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;   //文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
+    wk->yn_menuitem[i].type     = yn_item[i][1];
+  }
+  wk->oboe_menu_work[0] = NULL;
+  wk->oboe_menu_work[1] = NULL;
+
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief タスクメニュー終了
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void ExitTaskMenu( WO_WORK *wk )
+{
+  // 文字列破棄
+  GFL_STR_DeleteBuffer( wk->menuitem[0].str);
+  GFL_STR_DeleteBuffer( wk->menuitem[1].str);
+  GFL_STR_DeleteBuffer( wk->yn_menuitem[0].str);
+  GFL_STR_DeleteBuffer( wk->yn_menuitem[1].str);
+
+
+  // APPMENUリソース解放
+  APP_TASKMENU_RES_Delete( wk->app_res );
+
+  PRINTSYS_QUE_Delete( wk->printQue );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -791,6 +864,8 @@ static void WO_DispInit( WO_WORK * wk )
 
   GFL_ARC_CloseDataHandle( p_handle );
 /*↑[GS_CONVERT_TAG]*/
+  
+  InitTaskMenu(wk); // タスクメニュー初期化
 }
 
 //--------------------------------------------------------------------------------------------
@@ -804,6 +879,9 @@ static void WO_DispInit( WO_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void WO_DispExit( WO_WORK * wk )
 {
+
+  ExitTaskMenu(wk);
+  
   CursorMoveExit( wk );
 
   WO_WazaListExit( wk );
@@ -1395,6 +1473,11 @@ static int WO_SeqSelect( WO_WORK * wk )
     break;
   }
 
+  // 「おぼえる」「もどる」メニューの表示メイン処理
+  if(wk->oboe_menu_work[0]!=NULL){
+    APP_TASKMENU_WIN_Update( wk->oboe_menu_work[0] );
+    APP_TASKMENU_WIN_Update( wk->oboe_menu_work[1] );
+  }
   return SEQ_SELECT;
 
 }
@@ -1437,6 +1520,7 @@ static int WO_SeqMsgWait( WO_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int WO_SeqYesNoPut( WO_WORK * wk )
 {
+#if 0
   TOUCH_SW_PARAM param;
   MI_CpuClear8(&param,sizeof(TOUCH_SW_PARAM));
 
@@ -1448,6 +1532,21 @@ static int WO_SeqYesNoPut( WO_WORK * wk )
   param.kt_st = wk->key_mode;
   param.key_pos = 0;
   TOUCH_SW_Init( wk->ynbtn_wk, &param);
+#endif
+  APP_TASKMENU_INITWORK init;
+
+  init.heapId   = HEAPID_WAZAOSHIE;
+  init.itemNum  = 2;
+  init.itemWork = wk->yn_menuitem;
+  init.posType  = ATPT_LEFT_UP;
+  init.charPosX = 21; //ウィンドウ開始位置(キャラ単位
+  init.charPosY =  8;
+  init.w = 10;  //キャラ単位
+  init.h =  3;  //キャラ単位
+
+  // はい・いいえメニュー開始
+  wk->app_menuwork = APP_TASKMENU_OpenMenu( &init, wk->app_res );
+
   PassiveSet( TRUE );
   return SEQ_YESNO_WAIT;
 }
@@ -1463,6 +1562,7 @@ static int WO_SeqYesNoPut( WO_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int WO_SeqYesNoWait( WO_WORK * wk )
 {
+/*
   u32 ret,key_mode;
 
   ret = TOUCH_SW_Main( wk->ynbtn_wk );
@@ -1482,6 +1582,21 @@ static int WO_SeqYesNoWait( WO_WORK * wk )
   wk->key_mode = TOUCH_SW_GetKTStatus(wk->ynbtn_wk);
 //  WO_InputModeChange(wk);
   TOUCH_SW_Reset( wk->ynbtn_wk);
+*/
+  u32 ret=SEQ_YESNO_WAIT;
+  if(APP_TASKMENU_IsFinish( wk->app_menuwork )){
+    if(APP_TASKMENU_GetCursorPos(wk->app_menuwork)==0){
+      ret = YesNoFunc[wk->ynidx].yes( wk );
+    }else{
+      ret = YesNoFunc[wk->ynidx].no( wk );
+    }
+    PassiveSet( FALSE );
+  }
+  APP_TASKMENU_UpdateMenu( wk->app_menuwork );
+  if(ret!=SEQ_YESNO_WAIT){
+    APP_TASKMENU_CloseMenu( wk->app_menuwork );
+  }
+
   return ret;
 }
 
@@ -1648,7 +1763,7 @@ static void NumPrmSet( WO_WORK * wk, u32 msg_id, u32 num, u8 keta, u8 type )
   STRBUF * str;
 
   str = GFL_MSG_CreateString( wk->mman, msg_id );
-  WORDSET_RegisterNumber( wk->wset, 0, num, keta, type, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterNumber( wk->wset, 0, num, keta, type, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wset, wk->mbuf, str );
   GFL_STR_DeleteBuffer( str );
 }
@@ -1742,7 +1857,7 @@ static void WO_DefStrWrite( WO_WORK * wk )
     WORDSET_RegisterNumber( wk->wset, 0,
       PPP_Get(ppp,ID_PARA_pp1+i,NULL),2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
     WORDSET_RegisterNumber( wk->wset, 1,
-      PPP_Get(ppp,ID_PARA_pp_max1+i,NULL),2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+      PPP_Get(ppp,ID_PARA_pp_max1+i,NULL),2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
     WORDSET_ExpandStr( wk->wset, wk->mbuf, wk->pp2_str );
     PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->win[WIN_MWAZA]), F_WLIST_PP2_OX, 32*i+16,
                        wk->mbuf, wk->fontHandle, WOFCOL_N_BLACK );
@@ -1761,7 +1876,7 @@ static void WO_DefStrWrite( WO_WORK * wk )
 
   GFL_MSG_GetString( wk->mman, msg_param_level, str );
   WORDSET_RegisterNumber( wk->wset, 0,
-      PPP_Get(ppp,ID_PARA_level,NULL),3, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+      PPP_Get(ppp,ID_PARA_level,NULL),3, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
 
   WORDSET_ExpandStr( wk->wset, wk->mbuf, str );
   StrPut( wk, WIN_MPRM, wk->fontHandle, WOFCOL_N_BLACK, STR_MODE_RIGHT ,16);
@@ -1847,9 +1962,9 @@ static void WO_WazaListLineDraw( WO_WORK * wk ,u8 scr,u8 pos)
 
   // PP/MPP
   tmp = WAZADATA_GetMaxPP( wk->ld[scr+pos].param, 0 );
-  WORDSET_RegisterNumber( wk->wset, 0, tmp,2, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterNumber( wk->wset, 0, tmp,2, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
 
-  WORDSET_RegisterNumber( wk->wset, 1, tmp,2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterNumber( wk->wset, 1, tmp,2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
 
   WORDSET_ExpandStr( wk->wset, wk->mbuf, wk->pp2_str );
   PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->win[WIN_LIST]), F_WLIST_PP2_OX, py, wk->mbuf,
@@ -2427,8 +2542,8 @@ static void WO_ClactResManInit( WO_WORK * wk )
 
   //システム作成
   GFL_CLACT_SYS_Create( &clsys_init, &waza_oshie_vram, HEAPID_WAZAOSHIE );
-  wk->csp = GFL_CLACT_UNIT_Create( WO_CLA_MAX, 0, HEAPID_WAZAOSHIE );
-  GFL_CLACT_UNIT_SetDefaultRend( wk->csp );
+  wk->clUnit = GFL_CLACT_UNIT_Create( WO_CLA_MAX, 0, HEAPID_WAZAOSHIE );
+  GFL_CLACT_UNIT_SetDefaultRend( wk->clUnit );
 
 
 
@@ -2453,11 +2568,11 @@ static void WO_ObjFree( WO_WORK * wk )
   for( i=0; i<WO_CLA_MAX; i++ ){
     GFL_CLACT_WK_Remove( wk->cap[i] );
   }
-//  CATS_ResourceDestructor_S( wk->csp, wk->crp );
-//  CATS_FreeMemory( wk->csp );
+//  CATS_ResourceDestructor_S( wk->clUnit, wk->crp );
+//  CATS_FreeMemory( wk->clUnit );
 
   //システム破棄
-  GFL_CLACT_UNIT_Delete( wk->csp );
+  GFL_CLACT_UNIT_Delete( wk->clUnit );
   GFL_CLACT_SYS_Delete();
 
 }
@@ -2723,7 +2838,7 @@ static void WO_KindIconChange( WO_WORK * wk, u16 waza )
   ARCHANDLE *handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_WAZAOSHIE );
 
 //  CATS_ChangeResourceCharArc(
-//    wk->csp, wk->crp, WazaKindIcon_ArcIDGet(),
+//    wk->clUnit, wk->crp, WazaKindIcon_ArcIDGet(),
 //    WazaKindIcon_CgrIDGet(kind), WAZAKINDICON_COMP_CHAR, WO_CHR_ID_KIND );
 
 //  GFL_CLGRP_CGR_ReplaceSrc_VramTransfer( wk->clres[0][WO_CHR_ID_KIND],
@@ -2769,7 +2884,7 @@ static void WO_ObjInit( WO_WORK * wk, ARCHANDLE* p_handle )
 
     OS_Printf("%d:pal=%d handle=%d\n", i, ClactParamTbl[i].id[1], wk->clres[1][ClactParamTbl[i].id[1]]);
 
-    wk->cap[i] = GFL_CLACT_WK_Create( wk->csp, wk->clres[0][ClactParamTbl[i].id[0]],
+    wk->cap[i] = GFL_CLACT_WK_Create( wk->clUnit, wk->clres[0][ClactParamTbl[i].id[0]],
                                                wk->clres[1][ClactParamTbl[i].id[1]],
                                                wk->clres[2][ClactParamTbl[i].id[2]], &dat,
                                                ClactParamTbl[i].d_area, HEAPID_WAZAOSHIE );
@@ -3172,7 +3287,7 @@ static void CursorMoveInit( WO_WORK * wk )
 {
   wk->cmwk = CURSORMOVE_Create( ListKeyTbl, &ListCallBack, wk, TRUE, 0, HEAPID_WAZAOSHIE );
 
-  EnterButtonOnOff( wk, FALSE );  // 決定を消す
+//  EnterButtonOnOff( wk, FALSE );  // 決定を消す
   ScrollButtonOnOff( wk );    // スクロール設定
 }
 
@@ -3307,13 +3422,21 @@ static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos )
   WO_SelCursorChange( wk, now_pos, PALDW_CURSOR );
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief ボタンON/OFF
+ *
+ * @param   wk    
+ * @param   flg   
+ */
+//----------------------------------------------------------------------------------
 static void EnterButtonOnOff( WO_WORK * wk, BOOL flg )
 {
+#if 0
   // 表示
   if( flg == TRUE ){
     CURSORMOVE_MoveTableBitOn( wk->cmwk, 7 );
     GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_ABTN] );
-/*↑[GS_CONVERT_TAG]*/
     WO_SubBGPartsDraw(
       wk, BG_ABTN_PX, BG_ABTN_PY, BG_ABTN_SX, BG_ABTN_SY, BG_ABTN_OX+BG_ABTN_SX, BG_ABTN_OY );
     wk->enter_flg = 1;
@@ -3325,6 +3448,21 @@ static void EnterButtonOnOff( WO_WORK * wk, BOOL flg )
       wk, BG_ABTN_PX, BG_ABTN_PY, BG_ABTN_SX, BG_ABTN_SY, BG_ABTN_OX, BG_ABTN_OY );
     wk->enter_flg = 0;
   }
+#endif
+  if(flg==TRUE)
+  {
+    wk->oboe_menu_work[0] = APP_TASKMENU_WIN_Create( wk->app_res, &wk->menuitem[0], 13, 21, 9, HEAPID_WAZAOSHIE );
+    wk->oboe_menu_work[1] = APP_TASKMENU_WIN_Create( wk->app_res, &wk->menuitem[1], 22, 21, 9, HEAPID_WAZAOSHIE );
+    wk->enter_flg = 1;
+    
+  }else {
+    APP_TASKMENU_WIN_Delete( wk->oboe_menu_work[0] );
+    APP_TASKMENU_WIN_Delete( wk->oboe_menu_work[1] );
+    wk->oboe_menu_work[0] = NULL;
+    wk->oboe_menu_work[1] = NULL;
+    wk->enter_flg = 0;
+  }
+
 }
 
 static void ScrollButtonOnOff( WO_WORK * wk )
@@ -3374,6 +3512,14 @@ static void ScrollButtonAnmChange( WO_WORK * wk, s32 mv )
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief サブ画面パーツ描画
+ *
+ * @param   wk    
+ * @param   pos   
+ */
+//----------------------------------------------------------------------------------
 static void WazaSelBgChange( WO_WORK * wk, u32 pos )
 {
   u32 i;

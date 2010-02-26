@@ -430,6 +430,8 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
     cardData->UnionTrNo = MyStatus_GetTrainerView( mystatus );
     cardData->TimeUpdate = TRUE;
     cardData->PlayTime = SaveData_GetPlayTime( SaveControl_GetPointer() );
+    cardData->Personality = TRCSave_GetPersonarity(  trc_ptr );
+
   }
   //クリア日時とプレイ開始日時
   {

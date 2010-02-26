@@ -96,68 +96,65 @@ typedef struct TR_CARD_WORK_tag
   int  CardOffsetX;
   int  CardOffsetY;
   u16  ScaleSide;     // カードの左右どっちを拡大しているか？( 0:左 1:右）
-  u16  ScaleMode;
+  u16  ScaleMode;     // 拡大縮小モード状態
 
 //  int touch;
-  int key_mode;
+  int  key_mode;
   BOOL rc_cover;
-  int BeforeX;
-  int BeforeY;
+  int  BeforeX;
+  int  BeforeY;
   TR_CARD_OBJ_WORK ObjWork;
 //  int RevSpeed;
-  int Scroll;
+  int  Scroll;
   BOOL ButtonPushFlg;
   SND_BADGE_WORK SndBadgeWork;
-  TR_SCRUCH_SND ScruchSnd;
+  TR_SCRUCH_SND  ScruchSnd;
   
-  void *TrScrnArcData;
-  NNSG2dScreenData* ScrnData;
-  void *pScrnBCase;
-  NNSG2dScreenData* pSBCase;
+  void             *TrScrnArcData;
+  NNSG2dScreenData *ScrnData;
+  void             *pScrnBCase;
+  NNSG2dScreenData *pSBCase;
   
-  TOUCH_SW_SYS* ynbtn_wk;   // YesNo選択ボタンワーク
-  GFL_TCB *vblankFunc;
-  GFL_TCBLSYS *vblankTcblSys;
+  TOUCH_SW_SYS *ynbtn_wk;   // YesNo選択ボタンワーク
+  GFL_TCB      *vblankFunc;
+  GFL_TCBLSYS  *vblankTcblSys;
 
-  GFL_FONT  *fontHandle;
-  GFL_MSGDATA* msgMan;
-  WORDSET*     wordset;
+  GFL_FONT     *fontHandle;
+  GFL_MSGDATA  *msgMan;
+  WORDSET      *wordset;
   
   STRBUF  *PlayTimeBuf;   //プレイ時間用文字列バッファ
-  STRBUF  *SecBuf;      //プレイ時間コロン用文字列バッファ
-  STRBUF  *TmpBuf;      //テンポラリ文字列
+  STRBUF  *SecBuf;        //プレイ時間コロン用文字列バッファ
+  STRBUF  *TmpBuf;        //テンポラリ文字列
   STRBUF  *DigitBuf;      //カード数値パラメータ展開用文字列バッファ
   STRBUF  *ExpBuf[3];     //<説明メッセージ文字列バッファ
   STRBUF  *SignBuf[2];    //サイン説明メッセージ文字列バッファ
   STRBUF  *CPrmBuf[TR_CPRM_STR_MAX];  //カードパラメータ展開用文字列バッファ
   STRBUF  *CreditBuf[TR_CREDIT_STR_MAX];  // カードパラメータ展開用(回数単位表示用）文字列バッファ
 
-  PMS_DATA pms;
+  PMS_DATA pms;           // 簡易会話
 
   u8 badge[TR_BADGE_NUM_MAX];
-
   u8 IsOpen;
   u8 Counter;
   u8 sub_seq;
   
   u8 SignAnimeWait;   // トレーナーサインアニメ用ワーク
   u8 SignAnimePat;    // トレーナーサインアニメのパターン指定（SIGN_ALL,SIGN_LEFT,SIGN_RIGHT)
-  u8 SecCount;        //秒表示のためのカウンタ
-  u8 isClear:1;       //殿堂入りしているか否か？
-  u8 isComm:1;        //通信中か否か？
-  u8 aff_req:1;       //アフィン変換実行リクエスト
-  u8 drug_f:1;        //ドラッグフラグ
-  u8 Dummy:5;         //パディング
+  u8 SecCount;        // 秒表示のためのカウンタ
+  u8 isClear:1;       // 殿堂入りしているか否か？
+  u8 isComm:1;        // 通信中か否か？
+  u8 aff_req:1;       // アフィン変換実行リクエスト
+  u8 drug_f:1;        // ドラッグフラグ
+  u8 Dummy:5;         // パディング
   
   PRINT_STREAM  *printHandle;
-  u8 win_type;  ///<ウィンドウタイプ
-  u8 msg_spd;   ///<メッセージスピード
-  u8 scrl_ct;   ///<背景スクロールカウンタ
+  u8  win_type;  ///<ウィンドウタイプ
+  u8  msg_spd;   ///<メッセージスピード
+  u8  scrl_ct;   ///<背景スクロールカウンタ
   u32 tp_x;
   u32 tp_y;
-  u8 draw_seq;
-  u8 trainer_type;    // トレーナータイプ
-  u8 personality;     // 性格
+  u8  draw_seq;
 
   s16 scrol_point;      // スコア表示スクロールポイント
   s16 old_scrol_point;  // スクロールポイント過去位置
@@ -167,7 +164,7 @@ typedef struct TR_CARD_WORK_tag
   TOUCH_INFO      MyTouchResult;  
   TOUCH_INFO      AllTouchResult; // 通信で取得したサンプリング結果（このデータで描画する
   TOUCH_INFO      OldTouch;       // 前回からのポイント履歴
-  u8  pen;              // サインの色(0:黒 1:白）
+  u8  pen;                        // サインの色(0:黒 1:白）
 }TR_CARD_WORK;
 
 extern GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
