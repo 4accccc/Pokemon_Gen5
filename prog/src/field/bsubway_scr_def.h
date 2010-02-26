@@ -13,12 +13,12 @@
 //======================================================================
 //  define
 //======================================================================
-#define DEBUG_BSW_COMM_MULTI_BTL_SKIP
+#define DEBUG_BSW_COMM_MULTI_BTL_SKIP //定義で通信マルチバトルをスキップ
 
 #ifdef DEBUG_ONLY_FOR_kagaya
-#define DEBUG_BSW_CLEAR_1 //定義で1回戦闘のみでクリア
-//#define DEBUG_BSW_BTL_SKIP //定義で戦闘スキップ
-//#define DEBUG_BSW_NORMAL_CLEAR //定義で即ノーマルクリア
+//#define DEBUG_BSW_CLEAR_1 //定義で1回戦闘のみでクリア
+#define DEBUG_BSW_BTL_SKIP //定義で戦闘スキップ
+#define DEBUG_BSW_NORMAL_CLEAR //定義で即ノーマルクリア
 #endif
 
 #define BSUBWAY_SCRWORK_MAGIC  (0x12345678) ///<マジックナンバー

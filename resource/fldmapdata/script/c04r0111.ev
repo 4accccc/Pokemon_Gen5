@@ -422,7 +422,7 @@ EVENT_START ev_c04r0111_home
 
       _BSUBWAY_TOOL( BSWTOOL_GET_S_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, SCWK_ANSWER )
       
-       IF $SCWK_ANSWER == 0 THEN //初めて倒した
+      IF $SCWK_ANSWER == 0 THEN //初めて倒した
         _SYSWIN_MSG( msg_c04r0111_08 , WIN_DOWN ) //トロフィを差し上げます
         _AB_KEYWAIT()
         _BSUBWAY_TOOL( BSWTOOL_SET_S_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
@@ -441,7 +441,19 @@ EVENT_START ev_c04r0111_home
       _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, SCWK_ANSWER )
     
       IF $SCWK_ANSWER == 0 THEN //初めて倒した
-        _SYSWIN_MSG( msg_c04r0111_05, WIN_DOWN ) //スーパーに挑戦出来ます
+        _PLAYER_NAME( 0 )
+        
+        SWITCH $play_mode
+        CASE BSWAY_MODE_SINGLE THEN
+          _SYSWIN_MSG( msg_c04r0111_05, WIN_DOWN ) //スーパーに挑戦出来ます
+        CASE BSWAY_MODE_DOUBLE THEN
+          _SYSWIN_MSG( msg_c04r0111_06, WIN_DOWN ) //スーパーに挑戦出来ます
+        CASE BSWAY_MODE_MULTI THEN
+          _SYSWIN_MSG( msg_c04r0111_07, WIN_DOWN ) //スーパーに挑戦出来ます
+        CASE BSWAY_MODE_COMM_MULTI THEN
+          _SYSWIN_MSG( msg_c04r0111_08, WIN_DOWN ) //スーパーに挑戦出来ます
+        ENDSWITCH
+        
         _AB_KEYWAIT()
         _BSUBWAY_TOOL( BSWTOOL_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
       ENDIF
@@ -449,7 +461,7 @@ EVENT_START ev_c04r0111_home
   ELSE //ボス倒していない
     _SYSWIN_MSG( msg_c04r0111_03 , WIN_DOWN ) //おめでとうございます
     _AB_KEYWAIT()
-
+      
     _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT, BSW_NULL, BSW_NULL, point )
     _PLAYER_NAME( 0 )
     _NUMBER( 1, point, 2 )
@@ -467,6 +479,9 @@ EVENT_START ev_c04r0111_home
       _BSUBWAY_TOOL( BSWTOOL_UP_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
       
       IF $ret != 0 THEN //ランクアップした
+        _PLAYER_NAME( 0 )
+        _NUMBER( 1, ret, 2 )
+
         //ランク？になりました
         _SYSWIN_MSG( msg_c04r0111_21, WIN_DOWN )
       
