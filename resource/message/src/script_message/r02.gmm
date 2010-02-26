@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T15:20:02"/>
+	<create user="matsumiya" host="W00224" date="2010-02-26T15:09:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1290" top="283" right="1995" bottom="911" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -464,19 +464,12 @@ TVトランシーバー</attribute>
 
 	<row id="msg_r02_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・仮メッセージ
-・内容は掲示板などに変更</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
-		<language name="JPN" width="256">ポケモンリストの　ひだりうえ！[BE:01:ページ切り替え（クリア）]
-そこに　セットしてあげるのは
-じぶんの　すきな　ポケモン！[BE:01:ページ切り替え（クリア）]
-だって　ポケモンしょうぶのとき
-さいしょに　とびだして　くれるから！</language>
-		<language name="JPN_KANJI" width="256">ポケモンリストの　左上！[BE:01:ページ切り替え（クリア）]
-そこに　セットしてあげるのは
-じぶんの　好きな　ポケモン！[BE:01:ページ切り替え（クリア）]
-だって　ポケモン勝負のとき
-最初に　飛びだして　くれるから！</language>
+		<language name="JPN" width="256">トレーナーとの　ポケモンしょうぶで
+にげることは　できないよ！</language>
+		<language name="JPN_KANJI" width="256">トレーナーとの　ポケモン勝負で
+逃げることは　できないよ！</language>
 	</row>
 
 	<row id="msg_r02_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
