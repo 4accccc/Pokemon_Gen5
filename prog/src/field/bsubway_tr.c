@@ -374,7 +374,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
       if( GFL_NET_SystemGetCurrentID() == GFL_NET_NO_PARENTMACHINE ){
         dst->commPos = 0;
       }else{
-        dst->commPos = 1;
+        dst->commPos = 2;
       }
       break;
     }

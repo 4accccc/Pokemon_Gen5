@@ -145,7 +145,8 @@ _RET
 sub_bsw_receipt_guide_wifi:
 {
   DEFINE_LOCAL ret
-  
+  DEFINE_LOCAL rank
+
   //アップロードしていないデータがあるか？
   _BSUBWAY_TOOL( BSWTOOL_WIFI_GET_UPLOAD_FLAG, 0, BSW_NULL, ret )
   
@@ -164,9 +165,12 @@ sub_bsw_receipt_guide_wifi:
   _CALL sub_receipt_msg_greet
   
   //wifiランクメッセージ
+  _PLAYER_NAME( 0 )
+  _BSUBWAY_TOOL( BSWTOOL_GET_WIFI_RANK, BSW_NULL, BSW_NULL, rank )
+  _NUMBER( 1, rank, 2 )
   _SYSWIN_MSG( msg_bsw_scr_49 , WIN_DOWN )
   _AB_KEYWAIT()
-
+  
   //選択メニュー
   _CALL sub_receipt_menu_challenge_wifi
   
