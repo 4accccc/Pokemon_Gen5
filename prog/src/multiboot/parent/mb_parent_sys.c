@@ -220,6 +220,8 @@ static void MB_PARENT_SaveInit( MB_PARENT_WORK *work );
 static void MB_PARENT_SaveTerm( MB_PARENT_WORK *work );
 static void MB_PARENT_SaveMain( MB_PARENT_WORK *work );
 
+static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state );
+
 BOOL WhCallBackFlg = FALSE;
 FS_EXTERN_OVERLAY(dev_wireless);
 
@@ -242,7 +244,8 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   {
     SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( work->initWork->gameData );
     work->miscSave = SaveData_GetMisc( svWork );
-    MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_NORMAL );
+    //とりあえずキャンセル(一番低いステート)にしておく
+    MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_CANCEL );
   }
   
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_PARENT_VBlankFunc , work , 8 );
@@ -283,7 +286,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       work->state != MPS_WAIT_FADEOUT )
   {
     work->state = MPS_FADEOUT;
-    MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_ERROR );
+    MB_PARENT_SetFinishState( work , PALPARK_FINISH_ERROR );
   }
 
   switch( work->state )
@@ -360,7 +363,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     work->timeOutCnt++;
     if( work->timeOutCnt >= MB_PARENT_FIRST_TIMEOUT )
     {
-      MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_ERROR );
+      MB_PARENT_SetFinishState( work , PALPARK_FINISH_ERROR );
       work->state = MPS_FAIL_FIRST_CONNECT;
     }
     else
@@ -403,7 +406,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR )
     {
       //読み込みエラーが発生した
-      MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_ERROR );
+      MB_PARENT_SetFinishState( work , PALPARK_FINISH_ERROR );
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
       MB_COMM_ReqDisconnect( work->commWork );
       work->state = MPS_EXIT_COMM;
@@ -430,7 +433,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     else
     if( MB_COMM_GetChildState(work->commWork) == MCCS_CANCEL_BOX )
     {
-      MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_CANCEL );
+      MB_PARENT_SetFinishState( work , PALPARK_FINISH_CANCEL );
 
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
       MB_COMM_ReqDisconnect( work->commWork );
@@ -458,7 +461,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     if( MB_COMM_GetChildState(work->commWork) == MCCS_NEXT_GAME )
     {
       //ここに来たということは捕まえていない！
-      MISC_SetPalparkFinishState( work->miscSave,PALPARK_FINISH_NO_GET );
+      MB_PARENT_SetFinishState( work , PALPARK_FINISH_NO_GET );
       work->state = MPS_SEND_LEAST_BOX;
     }
     break;
@@ -483,7 +486,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR )
       {
         //CRCチェックエラーが発生した
-        MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_ERROR );
+        MB_PARENT_SetFinishState( work , PALPARK_FINISH_ERROR );
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
         MB_COMM_ReqDisconnect( work->commWork );
         work->state = MPS_EXIT_COMM;
@@ -532,7 +535,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     {
       if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR )
       {
-        MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_ERROR );
+        MB_PARENT_SetFinishState( work , PALPARK_FINISH_ERROR );
       }
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
       MB_COMM_ReqDisconnect( work->commWork );
@@ -1138,7 +1141,7 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
       if( ret == MMYR_RET1 )
       {
         GF_ASSERT_MSG( MBP_GetState() == MBP_STATE_ENTRY , "state is not[MBP_STATE_ENTRY][%d]!!!\n",MBP_GetState() );
-        MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_CANCEL );
+        MB_PARENT_SetFinishState( work , PALPARK_FINISH_CANCEL );
         MBP_Cancel();
         work->confirmState = MPCS_END;
       }
@@ -1166,6 +1169,63 @@ static BOOL MP_PARENT_WhCallBack( BOOL bResult )
   return TRUE;
 }
 
+static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state )
+{
+  const u8 nowState = MISC_GetPalparkFinishState( work->miscSave );
+  BOOL isSet = FALSE;
+  //連続プレイ時を考慮して、優先度の高いステートを入れる。
+  
+  switch( state )
+  {
+  case PALPARK_FINISH_NORMAL:    // (0)  //捕獲した
+    //ハイスコア・エラー以外
+    if( state != PALPARK_FINISH_HIGHSOCRE && 
+        state != PALPARK_FINISH_ERROR )
+    {
+      isSet = TRUE;
+    }
+    break;
+
+  case PALPARK_FINISH_HIGHSOCRE: // (1)  //捕獲した＋ハイスコア
+    //エラー以外
+    if( state != PALPARK_FINISH_ERROR )
+    {
+      isSet = TRUE;
+    }
+    break;
+
+  case PALPARK_FINISH_NO_GET:    // (2)  //捕獲できなかった
+    //キャンセルかエラーの時
+    if( state != PALPARK_FINISH_NORMAL &&
+        state != PALPARK_FINISH_HIGHSOCRE && 
+        state != PALPARK_FINISH_ERROR )
+    {
+      isSet = TRUE;
+    }
+    break;
+
+  case PALPARK_FINISH_ERROR:     // (3)  //エラー終了
+    //エラーは絶対
+    isSet = TRUE;
+    break;
+
+  case PALPARK_FINISH_CANCEL:    // (4)  //キャンセル終了
+    //一番優先度が低い
+    if( state != PALPARK_FINISH_NO_GET &&
+        state != PALPARK_FINISH_NORMAL &&
+        state != PALPARK_FINISH_HIGHSOCRE && 
+        state != PALPARK_FINISH_ERROR )
+    {
+      isSet = TRUE;
+    }
+    break;
+  }
+  
+  if( isSet == TRUE )
+  {
+    MISC_SetPalparkFinishState( work->miscSave , state );
+  }
+}
 
 
 #pragma mark [>save func
@@ -1203,17 +1263,17 @@ static void MB_PARENT_SaveInit( MB_PARENT_WORK *work )
     if( nowScore < newScore )
     {
       MISC_SetPalparkHighscore(work->miscSave,newScore);
-      MISC_SetPalparkFinishState( work->miscSave,PALPARK_FINISH_HIGHSOCRE );
+      MB_PARENT_SetFinishState( work , PALPARK_FINISH_HIGHSOCRE );
     }
     else
     {
       if( pokeNum == 0 )
       {
-        MISC_SetPalparkFinishState( work->miscSave,PALPARK_FINISH_NO_GET );
+        MB_PARENT_SetFinishState( work , PALPARK_FINISH_NO_GET );
       }
       else
       {
-        MISC_SetPalparkFinishState( work->miscSave,PALPARK_FINISH_NORMAL );
+        MB_PARENT_SetFinishState( work , PALPARK_FINISH_NORMAL );
       }
     }
     
