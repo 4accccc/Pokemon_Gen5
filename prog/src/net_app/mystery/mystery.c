@@ -360,11 +360,11 @@ typedef struct
 //-------------------------------------
 ///	プロセス
 //=====================================
-static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init
+static GFL_PROC_RESULT MYSTERY_PROC_Init
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
-static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit
+static GFL_PROC_RESULT MYSTERY_PROC_Exit
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
-static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main
+static GFL_PROC_RESULT MYSTERY_PROC_Main
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
 //-------------------------------------
 ///	BGリソース
@@ -455,9 +455,9 @@ static void MYSTERY_BTN_PrintMain( MYSTERY_BTN_WORK *p_wk );
 //=====================================
 const GFL_PROC_DATA MysteryGiftProcData  =
 { 
-  WIFIBATTLEMATCH_PROC_Init,
-  WIFIBATTLEMATCH_PROC_Main,
-  WIFIBATTLEMATCH_PROC_Exit,
+  MYSTERY_PROC_Init,
+  MYSTERY_PROC_Main,
+  MYSTERY_PROC_Exit,
 };
 //=============================================================================
 /**
@@ -476,7 +476,7 @@ const GFL_PROC_DATA MysteryGiftProcData  =
  *	@return	終了コード
  */
 //-----------------------------------------------------------------------------
-static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
+static GFL_PROC_RESULT MYSTERY_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 { 
   MYSTERY_WORK  *p_wk;
   MYSTERY_PARAM *p_param  = p_param_adrs;
@@ -567,7 +567,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
  *	@return	終了コード
  */
 //-----------------------------------------------------------------------------
-static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
+static GFL_PROC_RESULT MYSTERY_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 { 
   MYSTERY_WORK  *p_wk     = p_wk_adrs;
   MYSTERY_PARAM *p_param  = p_param_adrs;
@@ -609,6 +609,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
 
+  PMSND_StopBGM();
+
   return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -623,7 +625,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
  *	@return	終了コード
  */
 //-----------------------------------------------------------------------------
-static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
+static GFL_PROC_RESULT MYSTERY_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 { 
   MYSTERY_WORK  *p_wk     = p_wk_adrs;
   MYSTERY_PARAM *p_param  = p_param_adrs;
