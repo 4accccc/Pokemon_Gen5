@@ -7,7 +7,8 @@
 #pragma once
 
 #include "field/fieldmap_proc.h"
+#include "encount_data.h"
 
-extern int ENCEFFNO_GetWildEncEffNo( const int inMonsNo, FIELDMAP_WORK *fieldmap );
-extern int ENCEFFNO_GetTrEncEffNo( const int inTrID, FIELDMAP_WORK *fieldmap );
+extern void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, FIELDMAP_WORK *fieldmap, int *outEffNo, u16 *outBgmNo );
+extern void ENCEFFNO_GetTrEncEffNoBgmNo( const int inTrID, FIELDMAP_WORK *fieldmap, int *outEffNo, u16 *outBgmNo );
 

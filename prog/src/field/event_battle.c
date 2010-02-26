@@ -19,7 +19,6 @@
 #include "./event_fieldmap_control.h"
 #include "./event_battle.h"
 
-#include "sound/wb_sound_data.sadl" //サウンドラベルファイル
 #include "sound/pm_sndsys.h"
 
 #include "battle/battle.h"
@@ -52,6 +51,8 @@
 #include "debug/debug_flg.h"
 
 #include "trial_house.h"
+
+#include "sound/wb_sound_data.sadl" //サウンドラベルファイル
 
 //======================================================================
 //  define
@@ -194,7 +195,7 @@ typedef struct {
   GAMESYS_WORK * gsys;
   BATTLE_SETUP_PARAM * bp;
   BOOL sub_event_f;
-  int enc_eff_no;
+  ENCOUNT_TYPE EncType;
 }WILD_BATTLE_EVENT_WORK;
 
 //--------------------------------------------------------------
@@ -216,7 +217,16 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
       BEW_Initialize( bew, gsys, wbew->bp );
       bew->is_sub_event = TRUE; //このイベントが存在する以上、常にバトルはサブイベント
       //bew->is_sub_event = wbew->sub_event_f;
-      bew->EncEffNo = wbew->enc_eff_no;     //エンカウントエフェクトセット
+
+      //バトルセットアップパラムから戦闘するポケモンを取得
+      {
+        POKEPARTY* enemy = BATTLE_PARAM_GetPokePartyPointer( wbew->bp, BTL_CLIENT_ENEMY1 );
+        POKEMON_PARAM *pp = PokeParty_GetMemberPointer(enemy, 0);
+        int monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+        FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+        //エンカウントエフェクトとＢＧＭを取得してセット
+        ENCEFFNO_GetWildEncEffNoBgmNo( monsno, wbew->EncType, fieldmap, &bew->EncEffNo, &bew->battle_param->musicDefault );
+      }
 
       GMEVENT_CallEvent( event, battle_main_event );
     }
@@ -269,10 +279,13 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
  * フィールド野生ポケモンバトルイベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldmap FIELDMAP_WORK
+ * @param bp
+ * @param sub_event
+ * @param enc_type
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp, BOOL sub_event_f, const int enc_eff_no )
+GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp, BOOL sub_event_f, ENCOUNT_TYPE enc_type )
 {
 #if 0
   GMEVENT * event;
@@ -294,7 +307,7 @@ GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BAT
   wbew->gsys = gsys;
   wbew->bp = bp;
   wbew->sub_event_f = sub_event_f;
-  wbew->enc_eff_no = enc_eff_no;
+  wbew->EncType = enc_type;
 
 #ifdef PM_DEBUG
   debug_FieldDebugFlagSet( bp );
@@ -337,7 +350,7 @@ GMEVENT * EVENT_TrainerBattle(
 
     BeaconReq_BtlTrainer( tr_id0, BTL_BEACON_ST_START );
 
-#if 1
+#if 0
     //2009年12月末ロム用処理：ジムリーダー戦のみ、BGMを変更する
     switch (tr_id0)
     {
@@ -367,8 +380,8 @@ GMEVENT * EVENT_TrainerBattle(
   {
     bew->is_no_lose = TRUE;
   }
-  //エンカウントエフェクトセット
-  bew->EncEffNo = ENCEFFNO_GetTrEncEffNo( tr_id0, fieldmap );
+  //エンカウントエフェクトとＢＧＭをセット
+  ENCEFFNO_GetTrEncEffNoBgmNo(tr_id0, fieldmap, &bew->EncEffNo, &bew->battle_param->musicDefault);
   //エフェクトエンカウト　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
 
@@ -414,9 +427,9 @@ GMEVENT * EVENT_BSubwayTrainerBattle(
   bew->is_sub_event = FALSE; //戦闘後のフェードイン目当て
 #endif
   bew->is_no_lose = TRUE; //敗戦処理無し
-  //エンカウントエフェクトセット(サブウェイ固有)
+  //エンカウントエフェクトとＢＧＭセット(サブウェイ固有)
   bew->EncEffNo = ENCEFFID_SUBWAY;
-
+  bew->battle_param->musicDefault = SEQ_BGM_VS_SUBWAY_TRAINER;
   //エフェクトエンカウト　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
   return event;
@@ -454,8 +467,9 @@ GMEVENT * EVENT_TrialHouseTrainerBattle(
 #endif
   bew->Examination = TRUE;    //採点する
   bew->is_no_lose = TRUE; //敗戦処理無し
-  //エンカウントエフェクトセット(サブウェイと同じ)
+  //エンカウントエフェクトとＢＧＭセット(サブウェイと同じ) 
   bew->EncEffNo = ENCEFFID_SUBWAY;
+  bew->battle_param->musicDefault = SEQ_BGM_VS_SUBWAY_TRAINER;
 
   //エフェクトエンカウト　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
@@ -518,7 +532,8 @@ GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, 
   bew = GMEVENT_GetEventWork(event);
   BEW_Initialize( bew, gsys, bp );
   bew->is_sub_event = TRUE;
-  bew->EncEffNo = ENCEFFNO_GetWildEncEffNo( MONSNO_MINEZUMI, fieldmap );
+  //エンカウントエフェクトとＢＧＭをセット
+  ENCEFFNO_GetWildEncEffNoBgmNo( MONSNO_MINEZUMI, ENC_TYPE_DEMO, fieldmap, &bew->EncEffNo, &bew->battle_param->musicDefault );
 
   return event;
 }

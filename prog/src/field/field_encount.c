@@ -134,7 +134,6 @@ void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc )
 //--------------------------------------------------------------
 void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
 {
-  int enc_eff_no;
   u32 per,enc_num;
   BOOL ret = FALSE,force_f = FALSE;
   BATTLE_SETUP_PARAM* bp;
@@ -213,11 +212,8 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   // プレイヤー座標更新＆歩数カウントクリア
   encwork_SetPlayerPos( ewk, fplayer);
 
-  //エンカウントエフェクト抽選
-  enc_eff_no = ENCEFFNO_GetWildEncEffNo( poke_tbl[0].monsNo, enc->fwork );
-
   //エンカウントイベント生成
-  return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp, FALSE, enc_eff_no );
+  return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp, FALSE, enc_type );
 }
 
 //--------------------------------------------------------------
@@ -229,7 +225,6 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
 //--------------------------------------------------------------
 void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv, u16 flags )
 {
-  int enc_eff_no;
   BATTLE_SETUP_PARAM* bp;
   ENCOUNT_WORK* ewk;
   ENC_POKE_PARAM poke_tbl[FLD_ENCPOKE_NUM_MAX];
@@ -264,11 +259,8 @@ void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv,
     BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_LEGEND );
   }
 
-  //エンカウントエフェクト抽選
-  enc_eff_no = ENCEFFNO_GetWildEncEffNo( poke_tbl[0].monsNo, enc->fwork );
-
   //エンカウントイベント生成
-  return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp, TRUE, enc_eff_no );
+  return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp, TRUE, ENC_TYPE_NORMAL );
 }
 
 //--------------------------------------------------------------
@@ -347,7 +339,6 @@ void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
 //-----------------------------------------------------------------------------
 void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, const FIELD_WFBC* cp_wfbcdata )
 {
-  int enc_eff_no;
   u32 per,enc_num;
   BOOL ret = FALSE,force_f = FALSE;
   BATTLE_SETUP_PARAM* bp;
@@ -405,11 +396,8 @@ void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, const FIELD_WFBC* cp_w
   // プレイヤー座標更新＆歩数カウントクリア
   encwork_SetPlayerPos( ewk, fplayer);
 
-  //エンカウントエフェクト抽選
-  enc_eff_no = ENCEFFNO_GetWildEncEffNo( poke_tbl[0].monsNo, enc->fwork );
-
   //エンカウントイベント生成
-  return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp, FALSE, enc_eff_no );
+  return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp, FALSE, ENC_TYPE_WFBC );
 }
 
 /*
