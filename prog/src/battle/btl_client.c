@@ -3708,12 +3708,12 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     }
     if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlaySE() ){
       subSeq = 0;
-      (*seq) = SEQ_LVUP_INFO_PARAM_SEQ1;
+      (*seq) = SEQ_LVUP_WAZAOBOE_WAIT;
     }
     break;
 
   case SEQ_LVUP_INFO_PARAM_SEQ1:
-
+//    (*seq) =
     break;
 
   case SEQ_LVUP_WAZAOBOE_WAIT:
