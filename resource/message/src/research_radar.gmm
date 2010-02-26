@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-02-24T23:40:45"/>
+	<create user="ohmori" host="W00223" date="2010-02-26T15:54:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -346,8 +346,8 @@
 	</row>
 
 	<row id="str_menu_button_change" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさないようの　けってい</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査内容の決定</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさの　へんこう</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査の変更</language>
 	</row>
 
 	<row id="str_menu_button_check" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
@@ -410,30 +410,44 @@
 		<language name="JPN">[2:01:２桁:0]ばん：[1:00:トレーナー名:1]
 [2:03:４桁:2]にん
 [2:02:３桁:3]％</language>
-		<language name="JPN_KANJI">[2:01:２桁:0]ばん：[1:00:トレーナー名:1]
-[2:03:４桁:2]にん
-[2:02:３桁:3]％回答データ</language>
+		<language name="JPN_KANJI">[2:01:２桁:0]番：[1:00:トレーナー名:1]
+[2:03:４桁:2]人
+[2:02:３桁:3]％</language>
 	</row>
 
 	<row id="str_check_my_answer" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN">じぶんは
 [1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI">じぶんは
+		<language name="JPN_KANJI">自分は
 [1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="str_check_today_count" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">きょうの　かいとうにんずう
+		<language name="JPN">きょうの　にんずう
 [2:03:４桁:0]にん</language>
-		<language name="JPN_KANJI">きょうの　かいとうにんずう
-[2:03:４桁:0]にん</language>
+		<language name="JPN_KANJI">今日の人数
+[2:03:４桁:0]人</language>
 	</row>
 
-	<row id="str_check_total_count" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">いままでの　かいとうにんずう
+	<row id="str_check_today_count01" text-color=",,,#c0c0c0,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN">きょうの　にんずうを
+ひょうじします</language>
+		<language name="JPN_KANJI">今日の人数を
+表示します</language>
+	</row>
+
+	<row id="str_check_total_count" text-color=",,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN">ごうけいの　にんずう
 [2:03:４桁:0]にん</language>
-		<language name="JPN_KANJI">いままでの　かいとうにんずう
-[2:03:４桁:0]にん</language>
+		<language name="JPN_KANJI">合計の人数
+[2:03:４桁:0]人</language>
+	</row>
+
+	<row id="str_check_total_count01" text-color=",,,#c0c0c0,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN">ごうけいの　にんずうを
+ひょうじ　します</language>
+		<language name="JPN_KANJI">合計の人数を
+表示します</language>
 	</row>
 
 	<row id="str_check_data_receive" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
