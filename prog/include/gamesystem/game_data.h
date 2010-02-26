@@ -43,6 +43,7 @@
 #include "savedata/un_savedata.h"
 
 #include "field/trial_house_ptr.h"
+#include "savedata/trainercard_data.h"
 
 //============================================================================================
 //============================================================================================
@@ -106,9 +107,9 @@ extern SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata);
 /**
  * セーブ実行中か調べる
  *
- * @param   gamedata		ゲームデータへのポインタ
+ * @param   gamedata    ゲームデータへのポインタ
  *
- * @retval  BOOL		    TRUE:セーブ実行中　　FALSE:セーブしていない
+ * @retval  BOOL        TRUE:セーブ実行中　　FALSE:セーブしていない
  */
 //==================================================================
 extern BOOL GAMEDATA_GetIsSave(const GAMEDATA *gamedata);
@@ -660,5 +661,12 @@ extern MUSICAL_SAVE *GAMEDATA_GetMusicalSavePtr(GAMEDATA * gamedata);
 //----------------------------------------------------------
 extern TRIAL_HOUSE_WORK_PTR *GAMEDATA_GetTrialHouseWorkPtr(GAMEDATA * gamedata);
 
-
+//----------------------------------------------------------
+/**
+ * @brief   トレーナーカードデータへのポインタ取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  トレーナーカードデータへのポインタ
+ */
+//----------------------------------------------------------
+extern TR_CARD_SV_PTR GAMEDATA_GetTrainerCardPtr(GAMEDATA * gamedata);
 

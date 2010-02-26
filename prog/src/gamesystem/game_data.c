@@ -695,11 +695,11 @@ void GAMEDATA_SetSeasonID(GAMEDATA *gamedata, u8 season_id)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  天気IDを取得
+ *  @brief  天気IDを取得
  *
- *	@param	cp_data   データ
+ *  @param  cp_data   データ
  *
- *	@return 天気ID
+ *  @return 天気ID
  */
 //-----------------------------------------------------------------------------
 u32 GAMEDATA_GetWeatherNo( const GAMEDATA* cp_data )
@@ -709,10 +709,10 @@ u32 GAMEDATA_GetWeatherNo( const GAMEDATA* cp_data )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  天気IDを登録
+ *  @brief  天気IDを登録
  *
- *	@param	p_data
- *	@param	weather_no 
+ *  @param  p_data
+ *  @param  weather_no 
  */
 //-----------------------------------------------------------------------------
 void GAMEDATA_SetWeatherNo( GAMEDATA* p_data, u8 weather_no )
@@ -1506,9 +1506,9 @@ SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata)
 /**
  * セーブ実行中か調べる
  *
- * @param   gamedata		ゲームデータへのポインタ
+ * @param   gamedata    ゲームデータへのポインタ
  *
- * @retval  BOOL		    TRUE:セーブ実行中　　FALSE:セーブしていない
+ * @retval  BOOL        TRUE:セーブ実行中　　FALSE:セーブしていない
  */
 //==================================================================
 BOOL GAMEDATA_GetIsSave(const GAMEDATA *gamedata)
@@ -1592,45 +1592,45 @@ void GAMEDATA_SetBSubwayScrWork(GAMEDATA * gamedata, BSUBWAY_SCRWORK *bsw_scr )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  バトルサブウェイ　プレイデータ　を取得
+ *  @brief  バトルサブウェイ　プレイデータ　を取得
  *
- *	@param	gamedata    GAMEDATAへのポインタ
+ *  @param  gamedata    GAMEDATAへのポインタ
  *
- *	@return　BSUBWAY_PLAYDATA
+ *  @return　BSUBWAY_PLAYDATA
  */
 //-----------------------------------------------------------------------------
 BSUBWAY_PLAYDATA * GAMEDATA_GetBSubwayPlayData( GAMEDATA* gamedata )
 {
-	return (BSUBWAY_PLAYDATA*)SaveControl_DataPtrGet( gamedata->sv_control_ptr, GMDATA_ID_BSUBWAY_PLAYDATA );
+  return (BSUBWAY_PLAYDATA*)SaveControl_DataPtrGet( gamedata->sv_control_ptr, GMDATA_ID_BSUBWAY_PLAYDATA );
 
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  バトルサブウェイ　スコアデータ　を取得
+ *  @brief  バトルサブウェイ　スコアデータ　を取得
  *
- *	@param	gamedata    GAMEDATAへのポインタ
+ *  @param  gamedata    GAMEDATAへのポインタ
  *
- *	@return BSUBWAY_SCOREDATA
+ *  @return BSUBWAY_SCOREDATA
  */
 //-----------------------------------------------------------------------------
 BSUBWAY_SCOREDATA * GAMEDATA_GetBSubwayScoreData( GAMEDATA* gamedata )
 {
-	return (BSUBWAY_SCOREDATA*)SaveControl_DataPtrGet( gamedata->sv_control_ptr, GMDATA_ID_BSUBWAY_SCOREDATA );
+  return (BSUBWAY_SCOREDATA*)SaveControl_DataPtrGet( gamedata->sv_control_ptr, GMDATA_ID_BSUBWAY_SCOREDATA );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  バトルサブウェイ　WiFiデータ　を取得
+ *  @brief  バトルサブウェイ　WiFiデータ　を取得
  *
- *	@param	gamedata  GAMEDATAへのポインタ
+ *  @param  gamedata  GAMEDATAへのポインタ
  *
- *	@return BSUBWAY_WIFIDATA
+ *  @return BSUBWAY_WIFIDATA
  */
 //-----------------------------------------------------------------------------
 BSUBWAY_WIFI_DATA * GAMEDATA_GetBSubwayWifiData( GAMEDATA* gamedata )
 {
-	return (BSUBWAY_WIFI_DATA*)SaveControl_DataPtrGet( gamedata->sv_control_ptr, GMDATA_ID_BSUBWAY_WIFIDATA );
+  return (BSUBWAY_WIFI_DATA*)SaveControl_DataPtrGet( gamedata->sv_control_ptr, GMDATA_ID_BSUBWAY_WIFIDATA );
 }
 
 
@@ -1721,3 +1721,14 @@ TRIAL_HOUSE_WORK_PTR *GAMEDATA_GetTrialHouseWorkPtr(GAMEDATA * gamedata)
   return &gamedata->TrialHouseWorkPtr;
 }
 
+//----------------------------------------------------------
+/**
+ * @brief   トレーナーカードデータへのポインタ取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  トレーナーカードデータへのポインタ
+ */
+//----------------------------------------------------------
+TR_CARD_SV_PTR GAMEDATA_GetTrainerCardPtr(GAMEDATA * gamedata)
+{
+  return TRCSave_GetSaveDataPtr( gamedata->sv_control_ptr );
+}
