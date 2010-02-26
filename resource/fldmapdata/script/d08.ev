@@ -376,7 +376,10 @@ EVENT_START    ev_pos_d08_hakase1_01
 		//C07のライバルを消す
 		_FLAG_SET(FV_D08_RIVAL_01)
 		_FLAG_SET( FV_C07_RIVAL_01 )
-		_FLAG_SET( FV_C07_RIVAL_01 )
+		_FLAG_SET( FV_C07_RIVAL_01 ) 
+		
+		//プラズマ団配置
+		_FLAG_RESET( FV_D08R0101_HAKAI )
 
 		_FLAG_SET(FV_D08R0101_NONDRAW_01)
 		//リュウラセンの外マップイベントを無効に

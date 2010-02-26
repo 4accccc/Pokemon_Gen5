@@ -9,7 +9,7 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../message/dst/script/msg_d08r0201.h"
+  .include  "../../message/dst/script/msg_d08r0101.h"
   .include  "d08r0101.h"
 
 //--------------------------------------------------------------
@@ -27,7 +27,7 @@ _EVENT_DATA_END
 EVENT_START    ev_d08r0101_leader7_01	
 	
 	_TALK_OBJ_START()
-	_BALLOONWIN_OBJMSG_WB( msg_d08r0201_leader7_01w, msg_d08r0201_leader7_01b, D08R0101_LEADER7_01, POS_DL )
+	_BALLOONWIN_OBJMSG_WB( msg_d08r0101_leader7_01w, msg_d08r0101_leader7_01b, D08R0101_LEADER7_01, POS_DL )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
@@ -38,7 +38,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START    ev_d08r0101_hakase1_01	
 
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0201_hakase1_01 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0101_hakase1_02 )
 	
 EVENT_END
 
@@ -47,7 +47,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START    ev_d08r0101_hakaim_01	
 
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0201_hakaim_01 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0101_hakase1_01 )
 	
 EVENT_END
 
