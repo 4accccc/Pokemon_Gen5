@@ -985,7 +985,7 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
             CTVT_COMM_BEACON *becData = beaconData;
             const STRCODE *name = MyStatus_GetMyName( &becData->myStatus );
             const u32 sex = MyStatus_GetMySex( &becData->myStatus );
-            const u32 id  = MyStatus_GetID( &becData->myStatus );
+            const u32 id  = (MyStatus_GetID( &becData->myStatus )&0x0000FFFF);
             isFriend = CTVT_CALL_CheckRegistFriendData( work , callWork , name , id , sex );
           }
           else
@@ -1499,7 +1499,8 @@ static const BOOL CTVT_CALL_CheckRegistFriendData( COMM_TVT_WORK *work , CTVT_CA
   {
     if( WifiList_IsFriendData( wifiList , i ) == TRUE )
     {
-      if( id == WifiList_GetFriendInfo( wifiList , i , WIFILIST_FRIEND_ID ) )
+      const u32 friendId = WifiList_GetFriendInfo( wifiList , i , WIFILIST_FRIEND_ID );
+      if( id == (friendId&0x0000FFFF) )
       {
         if( sex == WifiList_GetFriendInfo( wifiList , i , WIFILIST_FRIEND_SEX ) )
         {

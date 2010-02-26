@@ -26,7 +26,7 @@
 #pragma mark [> define
 
 // マイクゲインを設定
-#define CTVT_MIC_Print(...) (void)((OS_TPrintf(__VA_ARGS__)))
+#define CTVT_MIC_Print(...) (void)((OS_TFPrintf(1,__VA_ARGS__)))
 //#define CTVT_MIC_Print(...)  ((void)0)
 
 
@@ -260,7 +260,7 @@ static void CTVT_MIC_BufferEndCallBack(MICResult	result, void*	arg )
   CTVT_MIC_WORK *micWork = arg;
   micWork->isRecord = FALSE;
   micWork->recSize = CTVT_MIC_SAMPLING_SIZE;
-  CTVT_MIC_Print( "CommTVTMic StopRecording(Buff is full)\n" );
+  CTVT_MIC_Print( "CommTVTMic StopRecording(Buff is full)[%d]\n",result );
 }
 
 //--------------------------------------------------------------
