@@ -76,7 +76,7 @@ typedef enum {
   RES_MONITOR_NSBTP_3,  // モニター・テクスチャパターン・アニメーション3
   RES_NUM
 } RES_INDEX;
-static const GFL_G3D_UTIL_RES res_table[RES_NUM] = 
+static const GFL_G3D_UTIL_RES res_table[ RES_NUM ] = 
 {
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_nsbtx, GFL_G3D_UTIL_RESARC },
@@ -106,7 +106,7 @@ typedef enum {
   ANM_MONITOR_3,            // モニター・テクスチャ・アニメーション3
   ANM_NUM
 } ANM_INDEX;
-static const GFL_G3D_UTIL_ANM anm_table[ANM_NUM] = 
+static const GFL_G3D_UTIL_ANM anm_table[ ANM_NUM ] = 
 {
   // アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ELBOARD_NSBTA_1, 0 },
@@ -126,7 +126,7 @@ typedef enum {
   OBJ_ELBOARD,  // 電光掲示板
   OBJ_NUM
 } OBJ_INDEX;
-static const GFL_G3D_UTIL_OBJ obj_table[OBJ_NUM] = 
+static const GFL_G3D_UTIL_OBJ obj_table[ OBJ_NUM ] = 
 {
   // モデルリソースID, 
   // モデルデータID(リソース内部INDEX), 
@@ -141,7 +141,7 @@ typedef enum {
   UNIT_ELBOARD, // 電光掲示板 + モニター
   UNIT_NUM
 } UNIT_INDEX;
-static const GFL_G3D_UTIL_SETUP unit[UNIT_NUM] =
+static const GFL_G3D_UTIL_SETUP unit[ UNIT_NUM ] =
 {
   { res_table, RES_NUM, obj_table, OBJ_NUM },
 };
@@ -448,6 +448,7 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   GATEWORK*        work = (GATEWORK*)save_buf->gateWork;
   static fx32 animeSpeed = FX32_ONE;
 
+#if 0
   // TEST:
   {
     int key = GFL_UI_KEY_GetCont();
@@ -481,6 +482,7 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
       }
     }
   }
+#endif
 
   // 電光掲示板メイン処理
   GOBJ_ELBOARD_Main( work->elboard, animeSpeed );
@@ -491,7 +493,7 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
     FLD_EXP_OBJ_PlayAnime( exobj_cnt );
   }
 
-
+#if 0
   // TEST:
   {
     int key = GFL_UI_KEY_GetCont();
@@ -576,6 +578,7 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
       }
     }
   }
+#endif
 }
 
 

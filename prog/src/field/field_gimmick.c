@@ -47,8 +47,6 @@ FS_EXTERN_OVERLAY(field_gym_dragon);
 FS_EXTERN_OVERLAY(field_gimmick_gate);
 FS_EXTERN_OVERLAY(field_gimmick_h01);
 FS_EXTERN_OVERLAY(field_gimmick_h03);
-FS_EXTERN_OVERLAY(field_gimmick_league_front01);
-FS_EXTERN_OVERLAY(field_gimmick_league_front02);
 
 const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
 	NULL,					//0:–³‚µ
@@ -80,8 +78,8 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   NULL,//D06_GIMMICK_Setup,
   NULL,//D06_GIMMICK_Setup,
   NULL,//D06_GIMMICK_Setup,
-  FS_OVERLAY_ID(field_gimmick_league_front01),//LEAGUE_FRONT_01_GIMMICK_Setup,
-  FS_OVERLAY_ID(field_gimmick_league_front02),//LEAGUE_FRONT_02_GIMMICK_Setup,
+  NULL,//LEAGUE_FRONT_01_GIMMICK_Setup,
+  NULL,//LEAGUE_FRONT_02_GIMMICK_Setup,
   FS_OVERLAY_ID(field_gimmick_gate),  // D03R0201
   FS_OVERLAY_ID(field_gimmick_bgate),
   NULL,//C04R01002
@@ -93,6 +91,10 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   NULL,//C04R01008
   NULL,//C04R01010
   NULL,//C04R01011
+  FS_OVERLAY_ID(field_gimmick_gate),  // R01R0101
+  FS_OVERLAY_ID(field_gimmick_gate),  // R15R0101
+  FS_OVERLAY_ID(field_gimmick_gate),  // R11R0101
+  FS_OVERLAY_ID(field_gimmick_gate),  // R12R0101
 };
 
 const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
@@ -138,6 +140,10 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   BSUBWAY_GIMMICK_Setup, //C04R0108
   BSUBWAY_GIMMICK_Setup, //C04R0110
   BSUBWAY_GIMMICK_Setup, //C04R0111
+  GATE_GIMMICK_Setup,  // R01R0101
+  GATE_GIMMICK_Setup,  // R15R0101
+  GATE_GIMMICK_Setup,  // R11R0101
+  GATE_GIMMICK_Setup,  // R12R0101
 };
 
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
@@ -183,6 +189,10 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   BSUBWAY_GIMMICK_End, //C04R0108
   BSUBWAY_GIMMICK_End, //C04R0110
   BSUBWAY_GIMMICK_End, //C04R0111
+  GATE_GIMMICK_End,  // R01R0101
+  GATE_GIMMICK_End,  // R15R0101
+  GATE_GIMMICK_End,  // R11R0101
+  GATE_GIMMICK_End,  // R12R0101
 };
 
 const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
@@ -228,6 +238,10 @@ const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   BSUBWAY_GIMMICK_Move, //C04R0108
   BSUBWAY_GIMMICK_Move, //C04R0110
   BSUBWAY_GIMMICK_Move, //C04R0111
+  GATE_GIMMICK_Move,  // R01R0101
+  GATE_GIMMICK_Move,  // R15R0101
+  GATE_GIMMICK_Move,  // R11R0101
+  GATE_GIMMICK_Move,  // R12R0101
 };
 
 #if 0
