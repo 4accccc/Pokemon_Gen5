@@ -444,7 +444,7 @@ BOOL GAMEBEACON_Check_Error(const GAMEBEACON_INFO *info)
     return TRUE;
   }
   //ゾーンIDチェック
-  if( info->zone_id >= ZONE_ID_MAX || info->townmap_root_zone_id >= TOWNMAP_DATA_MAX ){
+  if( info->zone_id >= ZONE_ID_MAX || info->townmap_root_zone_id >= ZONE_ID_MAX ){
     return TRUE;
   }
   //すれ違い人数＆御礼カウント
