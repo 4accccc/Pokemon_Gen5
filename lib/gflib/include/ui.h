@@ -130,6 +130,7 @@ typedef union{
 typedef struct _UI_SYS UISYS;  ///< UISYS 型宣言
 typedef struct _UI_TPSYS UI_TPSYS; ///< UIタッチパネルSYS型宣言
 typedef void (GFL_UI_SLEEPRELEASE_FUNC)(void* pWork);  ///< リセット復帰時に呼ばれる関数
+typedef void (GFL_UI_SOFTRESET_CALLBACK)( void *work ); ///<ソフトリセットコールバック関数
 
 
 //==============================================================================
@@ -224,6 +225,17 @@ extern void GFL_UI_SoftResetDisable(const u8 softResetBit);
  */
 //------------------------------------------------------------------
 extern void GFL_UI_SoftResetEnable( const u8 softResetBit);
+
+//------------------------------------------------------------------
+/**
+ * @brief   ソフトウエアリセット直前時に呼ばれる関数をセットする
+ * @param   pFunc   ソフトウエアリセット直前時に呼ばれる関数
+ * @param   pWork   呼ばれる際に渡すワーク
+ * @return  none
+ */
+//------------------------------------------------------------------
+extern void GFL_UI_SoftResetSetFunc(GFL_UI_SOFTRESET_CALLBACK* pFunc, void* pWork);
+
 //----------------------------------------------------------------------------
 /**
  * @brief	  ふたが開いたかどうか
