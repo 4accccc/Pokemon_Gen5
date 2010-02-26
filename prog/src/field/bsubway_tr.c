@@ -384,7 +384,12 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     dst->party[BTL_CLIENT_PARTNER] = NULL;
     dst->party[BTL_CLIENT_ENEMY2] = NULL;
     
-    dst->competitor = BTL_COMPETITOR_SUBWAY;
+    if( play_mode == BSWAY_MODE_COMM_MULTI ||
+        play_mode == BSWAY_MODE_S_COMM_MULTI ){
+      dst->competitor = BTL_COMPETITOR_COMM;
+    }else{
+      dst->competitor = BTL_COMPETITOR_SUBWAY;
+    }
     
     dst->playerStatus[BTL_CLIENT_PLAYER] = GAMEDATA_GetMyStatus( gameData );
     dst->playerStatus[BTL_CLIENT_ENEMY1] = NULL;

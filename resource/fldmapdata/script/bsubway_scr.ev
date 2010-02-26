@@ -83,10 +83,12 @@ INIT_EVENT_START ev_recover_bsw_receipt
         //自機の隣に
         _OBJ_POS_CHANGE( objid, 10, 0, 5, DIR_RIGHT )
       ELSE //エラー
+        $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
         _CALL sub_receipt_common_del_partner //パートナーOBJ削除
       ENDIF
     ENDIF
   CASE BSWAY_SCENE_RECEIPT_ERROR THEN     //エラー
+    $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
     _CALL sub_receipt_common_del_partner  //パートナーOBJ削除
   ENDSWITCH
 }

@@ -41,6 +41,11 @@
 static u8 get_MemberNum( u16 mode );
 static BOOL is_ConflictTrainer( u16* trainer,u16 id,u16 num );
 
+static void bsw_SetCommonScore(
+    BSUBWAY_SCRWORK *wk, SAVE_CONTROL_WORK *sv, u8 win_f, u16 now_renshou );
+static void bsw_SaveMemberPokeData(
+    BSUBWAY_SCRWORK *wk, SAVE_CONTROL_WORK *sv, BSWAY_SCORE_POKE_DATA mode );
+
 //======================================================================
 //  バトルサブウェイ　スクリプトワーク関連
 //======================================================================
@@ -408,7 +413,12 @@ void BSUBWAY_SCRWORK_SetLoseScore(
   BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
   BSUBWAY_SCOREDATA_ResetStageNo( bsw_scr->scoreData, play_mode );
   
-  //wifiモードの場合はプレイデータを反映
+  { //勝ち負け共通データ作成
+    SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( bsw_scr->gdata );
+    u16 renshou = BSUBWAY_SCOREDATA_GetRenshou(
+        bsw_scr->scoreData, play_mode );
+    bsw_SetCommonScore( bsw_scr, save, TRUE, renshou );
+  }
 }
 
 #if 0 //wb null
@@ -826,7 +836,12 @@ void BSUBWAY_SCRWORK_SetClearScore(
   //ラウンド数リセット
   BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
   
-  //wifiモードの場合はプレイデータを反映
+  { //勝ち負け共通データ作成
+    SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( bsw_scr->gdata );
+    u16 renshou = BSUBWAY_SCOREDATA_GetRenshou(
+        bsw_scr->scoreData, play_mode );
+    bsw_SetCommonScore( bsw_scr, save, TRUE, renshou );
+  }
 }
 
 //--------------------------------------------------------------
@@ -1264,42 +1279,44 @@ static void bswayscr_MakeTVRenshouMaxUpdate(
  *  @param  now_renshou  現在の連勝数
  */
 //--------------------------------------------------------------
-#if 0 //wb
-static void bswayscr_SetCommonScore(
-    BSUBWAY_SCRWORK *wk, SAVEDATA *sv, u8 win_f, u16 now_renshou )
+static void bsw_SetCommonScore(
+    BSUBWAY_SCRWORK *wk, SAVE_CONTROL_WORK *sv, u8 win_f, u16 now_renshou )
 {
   u8  buf8;
-
+  
   switch( wk->play_mode ){
   case BSWAY_MODE_SINGLE:
     //ポケモンデータセット
-    bswayscr_SaveMemberPokeData( wk,sv,BSWAY_SCORE_POKE_SINGLE );
+    bsw_SaveMemberPokeData( wk,sv,BSWAY_SCORE_POKE_SINGLE );
   case BSWAY_MODE_DOUBLE:
+#if 0
     if( now_renshou >= 7){
       //TVインタビューデータセット(シングルとダブルで実行)
       TVTOPIC_BTowerTemp_Set( SaveData_GetTvWork( sv ),win_f,now_renshou );
     }
+#endif
     break;
   case BSWAY_MODE_WIFI:
     //ポケモンデータセット
-    bswayscr_SaveMemberPokeData( wk,sv,BSWAY_SCORE_POKE_WIFI );
+    bsw_SaveMemberPokeData( wk, sv, BSWAY_SCORE_POKE_WIFI );
+
     //スコア押し出し
-    TowerPlayData_WifiRecordAdd( wk->playSave,wk->rec_down,wk->rec_turn,wk->rec_damage );
+    BSUBWAY_PLAYDATA_AddWifiRecord(
+        wk->playData, wk->rec_down, wk->rec_turn, wk->rec_damage );
 
     //プレイモード書き出し
     buf8 = wk->play_mode;
-    TowerPlayData_Put( wk->playSave,BSWAY_PSD_playmode,&buf8);
+    BSUBWAY_PLAYDATA_SetData(
+        wk->playData, BSWAY_PLAYDATA_ID_playmode, &buf8 );
     //ラウンド数書き出し
-    buf8 = wk->now_round;
-    TowerPlayData_Put( wk->playSave,BSWAY_PSD_round,&buf8);
-    
-    TowerScoreData_SetWifiScore( wk->scoreSave,wk->playSave );
+    buf8 = BSUBWAY_PLAYDATA_GetRoundNo( wk->playData ) + 1;
+    BSUBWAY_PLAYDATA_SetData( wk->playData, BSWAY_PLAYDATA_ID_round, &buf8 );
+    BSUBWAY_SCOREDATA_SetWifiScore( wk->scoreData, wk->playData );
     break;
   default:
     break;
   }
 }
-#endif
 
 #if 0 //wb null
 void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
@@ -1895,69 +1912,68 @@ static u16 bswayscr_IfRenshouPrizeGet( BSUBWAY_SCRWORK *wk )
  *  @brief  参加したポケモンのパラメータをB_TOWER_POKEMON型にパックする
  */
 //--------------------------------------------------------------
-#if 0
-static void bswayscr_PokeDataPack( B_TOWER_POKEMON *dat,POKEMON_PARAM *pp )
+static void bsw_PokeDataPack( BSUBWAY_POKEMON *dat, POKEMON_PARAM *pp )
 {
   int i;
   
   //mons_no/form_no/item_no
-  dat->mons_no = PokeParaGet( pp,ID_PARA_monsno,NULL );
-  dat->form_no = PokeParaGet( pp,ID_PARA_form_no,NULL );
-  dat->item_no = PokeParaGet( pp,ID_PARA_item,NULL );
-
+  dat->mons_no = PP_Get( pp,ID_PARA_monsno,NULL );
+  dat->form_no = PP_Get( pp,ID_PARA_form_no,NULL );
+  dat->item_no = PP_Get( pp,ID_PARA_item,NULL );
+  
   //waza/pp_count
   for( i = 0;i < WAZA_TEMOTI_MAX;i++){
-    dat->waza[i] = PokeParaGet( pp,ID_PARA_waza1+i,NULL );
-    dat->pp_count |= (( PokeParaGet( pp,ID_PARA_pp_count1+i,NULL )) << ( i*2));
+    dat->waza[i] = PP_Get( pp,ID_PARA_waza1+i,NULL );
+    dat->pp_count |= ((PP_Get( pp, ID_PARA_pp_count1+i, NULL )) << (i*2));
   }
   //country,id,personal
-  dat->country_code = PokeParaGet( pp,ID_PARA_country_code,NULL );
-  dat->id_no = PokeParaGet( pp,ID_PARA_id_no,NULL );
-  dat->personal_rnd = PokeParaGet( pp,ID_PARA_personal_rnd,NULL );
+  dat->country_code = PP_Get( pp,ID_PARA_country_code,NULL );
+  dat->id_no = PP_Get( pp,ID_PARA_id_no,NULL );
+  dat->personal_rnd = PP_Get( pp,ID_PARA_personal_rnd,NULL );
 
   //power_rnd
-  dat->power_rnd = PokeParaGet( pp,ID_PARA_power_rnd,NULL );
+  dat->power_rnd = PP_Get( pp,ID_PARA_power_rnd,NULL );
 
   //exp
   for( i = 0;i < 6;i++){
-    dat->exp[i] = PokeParaGet( pp,ID_PARA_hp_exp+i,NULL );
+    dat->exp[i] = PP_Get( pp,ID_PARA_hp_exp+i,NULL );
   }
   //tokusei,natukido
-  dat->tokusei = PokeParaGet( pp,ID_PARA_speabino,NULL );
-  dat->natuki = PokeParaGet( pp,ID_PARA_friend,NULL );
+  dat->tokusei = PP_Get( pp,ID_PARA_speabino,NULL );
+  dat->natuki = PP_Get( pp,ID_PARA_friend,NULL );
   
   //ニックネーム
-  PokeParaGet( pp,ID_PARA_nickname,dat->nickname );
+  PP_Get( pp,ID_PARA_nickname,dat->nickname );
 }
-#endif
 
 //--------------------------------------------------------------
 /**
  *  @brief  参加したポケモンのパラメータを保存する
  */
 //--------------------------------------------------------------
-#if 0
-static void bswayscr_SaveMemberPokeData( BSUBWAY_SCRWORK *wk,SAVEDATA *sv,BSWAY_SCORE_POKE_DATA mode )
+static void bsw_SaveMemberPokeData(
+    BSUBWAY_SCRWORK *wk, SAVE_CONTROL_WORK *sv, BSWAY_SCORE_POKE_DATA mode )
 {
   int i = 0;
-  B_TOWER_POKEMON *dat;
+  BSUBWAY_POKEMON *dat;
   POKEPARTY  *party;
   POKEMON_PARAM *pp;
   
-  dat = sys_AllocMemoryLo( wk->heapID,sizeof( B_TOWER_POKEMON )*3);
-  MI_CpuClear8( dat,sizeof( B_TOWER_POKEMON )*3);
-
+  dat = GFL_HEAP_AllocMemoryLo( wk->heapID, sizeof(BSUBWAY_POKEMON)*3 );
+  MI_CpuClear8( dat,sizeof(BSUBWAY_POKEMON)*3);
+  
   party = SaveData_GetTemotiPokemon( sv );
-  for( i = 0;i < 3;i++){
-    pp = PokeParty_GetMemberPointer( party,wk->member[i]);
-    bswayscr_PokeDataPack(&( dat[i]),pp );  
-  }
-  TowerScoreData_SetUsePokeData( wk->scoreSave,mode,dat );
 
-  MI_CpuClear8( dat,sizeof( B_TOWER_POKEMON )*3);
-  sys_FreeMemoryEz( dat );
+  for( i = 0;i < 3;i++){
+    pp = PokeParty_GetMemberPointer( party, wk->member[i] );
+    bsw_PokeDataPack(&( dat[i]),pp );  
+  }
+  
+  BSUBWAY_SCOREDATA_SetUsePokeData( wk->scoreData,mode,dat );
+
+  MI_CpuClear8( dat,sizeof( BSUBWAY_POKEMON )*3);
+  GFL_HEAP_FreeMemory( dat );
 }
-#endif
 
 //  フロンティアとフィールドで共通で使用するものを移動
 //--------------------------------------------------------------
