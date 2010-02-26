@@ -749,13 +749,14 @@ static BOOL UnicharaSeq_TalkingUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *
         anmcode = AC_DIR_L;
         break;
       }
+      IWASAWA_Printf( "before mv_code = %d\n", MMDL_GetMoveCode( mmdl ));
       //MMDL_ChangeMoveCode( mmdl, movecode );
       MMDL_SetAcmd(mmdl, anmcode);
       (*seq)++;
     }
     break;
   case 1:
-    if(MMDL_CheckPossibleAcmd(mmdl) == TRUE){
+    if(MMDL_EndAcmd(mmdl) == TRUE){ //アニメコマンド終了待ち
       MMDL_OnStatusBit(mmdl, MMDL_STABIT_PAUSE_DIR);
       (*seq)++;
     }
@@ -763,6 +764,7 @@ static BOOL UnicharaSeq_TalkingUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *
   case 2:
     if(situ->mycomm.talk_obj_id != UNION_CHARA_GetCharaIndex(unichara->parent_pc, unichara)){
       //MMDL_ChangeMoveCode( mmdl, MV_DIR_RND );
+      IWASAWA_Printf( "after mv_code = %d\n", MMDL_GetMoveCode( mmdl ));
       MMDL_OffStatusBit(mmdl, MMDL_STABIT_PAUSE_DIR);
       return TRUE;
     }
