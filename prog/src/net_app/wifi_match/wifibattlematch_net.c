@@ -642,6 +642,7 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
 //-----------------------------------------------------------------------------
 void WIFIBATTLEMATCH_NET_StartInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
+  p_wk->seq       = 0;
   p_wk->init_seq  = 0;
 }
 //----------------------------------------------------------------------------
@@ -2391,7 +2392,7 @@ void WIFIBATTLEMATCH_GDB_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, u32 recordID, WI
   p_wk->seq           = 0;
   p_wk->p_get_wk      = p_wk_adrs;
   p_wk->get_recordID = recordID;
-
+  DEBUG_NET_Printf( "GDB:request[%d]\n",type );
   GF_ASSERT( p_wk->get_recordID );
 
 
@@ -2912,6 +2913,7 @@ void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
 { 
 
   p_wk->seq             = 0;
+  DEBUG_NET_Printf( "GDBW: request[%d]\n", type );
   switch( type )
   { 
   case WIFIBATTLEMATCH_GDB_WRITE_DEBUGALL:
@@ -2941,23 +2943,23 @@ void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
     { 
       const WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA *cp_data  = cp_wk_adrs;
 
-      p_wk->p_field_buff[0].name  = ATLAS_GET_KEY_NAME( ARENA_ELO_RATING_1V1_WIFICUP );
+      p_wk->p_field_buff[0].name  = ATLAS_GET_STAT_NAME( ARENA_ELO_RATING_1V1_WIFICUP );
       p_wk->p_field_buff[0].type  = DWC_GDB_FIELD_TYPE_INT;
       p_wk->p_field_buff[0].value.int_s32 = cp_data->rate;
 
-      p_wk->p_field_buff[1].name  = ATLAS_GET_KEY_NAME( CHEATS_WIFICUP_COUNTER );
+      p_wk->p_field_buff[1].name  = ATLAS_GET_STAT_NAME( CHEATS_WIFICUP_COUNTER );
       p_wk->p_field_buff[1].type  = DWC_GDB_FIELD_TYPE_INT;
       p_wk->p_field_buff[1].value.int_s32 = cp_data->cheat;
 
-      p_wk->p_field_buff[2].name  = ATLAS_GET_KEY_NAME( DISCONNECTS_WIFICUP_COUNTER );
+      p_wk->p_field_buff[2].name  = ATLAS_GET_STAT_NAME( DISCONNECTS_WIFICUP_COUNTER );
       p_wk->p_field_buff[2].type  = DWC_GDB_FIELD_TYPE_INT;
       p_wk->p_field_buff[2].value.int_s32 = cp_data->disconnect;
 
-      p_wk->p_field_buff[3].name  = ATLAS_GET_KEY_NAME( NUM_WIFICUP_LOSE_COUNTER );
+      p_wk->p_field_buff[3].name  = ATLAS_GET_STAT_NAME( NUM_WIFICUP_LOSE_COUNTER );
       p_wk->p_field_buff[3].type  = DWC_GDB_FIELD_TYPE_INT;
       p_wk->p_field_buff[3].value.int_s32 = cp_data->lose;
 
-      p_wk->p_field_buff[4].name  = ATLAS_GET_KEY_NAME( NUM_WIFICUP_WIN_COUNTER );
+      p_wk->p_field_buff[4].name  = ATLAS_GET_STAT_NAME( NUM_WIFICUP_WIN_COUNTER );
       p_wk->p_field_buff[4].type  = DWC_GDB_FIELD_TYPE_INT;
       p_wk->p_field_buff[4].value.int_s32 = cp_data->win;
 
@@ -3000,6 +3002,7 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk )
     SEQ_WAIT,
     SEQ_END,
     SEQ_EXIT,
+    SEQ_NONE,
   };
 
   DWCGdbState state;
@@ -3015,7 +3018,7 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk )
         WIFIBATTLEMATCH_NETERR_SetGdbError( &p_wk->error, error );
         return TRUE;
       }
-      DEBUG_NET_Printf( "GDB:Init\n" );
+      DEBUG_NET_Printf( "GDBW:Init\n" );
       p_wk->seq = SEQ_START;
       break;
 
@@ -3027,7 +3030,7 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk )
         WIFIBATTLEMATCH_NETERR_SetGdbError( &p_wk->error, error );
         return TRUE;
       }
-      DEBUG_NET_Printf( "GDB:Get start\n" );
+      DEBUG_NET_Printf( "GDBW:Get start\n" );
       p_wk->async_timeout = 0;
       p_wk->seq= SEQ_WAIT;
       break;
@@ -3044,6 +3047,7 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk )
         state = DWC_GdbGetState();
         if( DWC_GDB_STATE_IN_ASYNC_PROCESS == state )
         { 
+          DEBUG_NET_Printf( "GDBW:Get wait\n" );
           DWC_GdbProcess();
         }
         else
@@ -3055,7 +3059,7 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk )
           }
           else
           { 
-            DEBUG_NET_Printf( "GDB:Get wait\n" );
+            DEBUG_NET_Printf( "GDBW:Get wait end\n" );
             p_wk->seq = SEQ_END;
           }
         }
@@ -3072,16 +3076,19 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk )
           return TRUE;
         }
       }
-      DEBUG_NET_Printf( "GDB:Get end\n" );
+      DEBUG_NET_Printf( "GDBW:Get end\n" );
       p_wk->seq = SEQ_EXIT;
       break;
 
     case SEQ_EXIT:
       DwcRap_Gdb_Finalize( p_wk );
-      DEBUG_NET_Printf( "GDB:Get exit\n" );
+      DEBUG_NET_Printf( "GDBW:Get exit\n" );
       DEBUG_NET_Printf( "sake ƒe[ƒuƒ‹ID %d\n", p_wk->sake_record_id );
-      return TRUE;
+      p_wk->seq = SEQ_NONE;
+      /* fallthrough */
 
+    case SEQ_NONE:
+      return TRUE;
     }
   }
 

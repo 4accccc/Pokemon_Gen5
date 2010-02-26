@@ -20,6 +20,7 @@
 #include "savedata/wifilist.h"
 #include "system/net_err.h"
 #include "net/nhttp_rap_evilcheck.h"
+#include "poke_tool/pokeparty.h"
 //=============================================================================
 /**
  *					’è”éŒ¾
@@ -150,7 +151,7 @@ typedef struct
 //-------------------------------------
 ///	SAKE‚©‚ç‚Ìƒf[ƒ^ó‚¯æ‚è
 //=====================================
-#define WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE (1334)
+#define WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE (POKEPARTY_WORK_SIZE)
 typedef struct
 { 
   s32 cheat;

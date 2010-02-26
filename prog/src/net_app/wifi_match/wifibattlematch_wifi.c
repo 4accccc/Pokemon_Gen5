@@ -264,6 +264,8 @@ static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFI
 static void Util_SetMyDataSign( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_NET_EVILCHECK_DATA  *cp_evilecheck_data, u32 index );
 //ポケモン証明
 static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, HEAPID heapID );
+//ポケパーティを設定
+static void Util_SetEvilcheckParty( WIFIBATTLEMATCH_WIFI_WORK *p_wk );
 
 //=============================================================================
 /**
@@ -343,7 +345,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Init( GFL_PROC *p_proc, int *p_
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
   }
 
-  p_wk->p_other_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_CORE );
+  p_wk->p_other_party     = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_CORE );
+  p_wk->p_evilcheck_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_CORE );
 
   Util_InitMyData( p_param->p_player_data );
 
@@ -376,6 +379,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Exit( GFL_PROC *p_proc, int *p_
 	WIFIBATTLEMATCH_WIFI_WORK	  *p_wk	= p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_param_adrs;
 
+  GFL_HEAP_FreeMemory( p_wk->p_evilcheck_party );
   GFL_HEAP_FreeMemory( p_wk->p_other_party );
 
 	//モジュールの破棄
@@ -1663,20 +1667,17 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       u32 failed_bit  = 0;
       SAVE_CONTROL_WORK *p_sv   = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
       REGULATION        *p_reg  = SaveData_GetRegulation( p_sv,0 );
-      BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-      POKEPARTY         *p_party=  BATTLE_BOX_SAVE_MakePokeParty( p_bbox_save, GFL_HEAP_LOWID(HEAPID_WIFIBATTLEMATCH_CORE) );
+      Util_SetEvilcheckParty( p_wk );
 
-      if( POKE_REG_OK == PokeRegulationMatchLookAtPokeParty(p_reg, p_party, &failed_bit) )
+      if( POKE_REG_OK == PokeRegulationMatchLookAtPokeParty(p_reg, p_wk->p_evilcheck_party, &failed_bit) )
       { 
         OS_TPrintf( "バトルボックスのポケモンレギュレーションOK\n" );
         *p_seq  = SEQ_WAIT_MOVEOUT_BTLBOX;
-        GFL_HEAP_FreeMemory( p_party );
       }
       else
       { 
         OS_TPrintf( "バトルボックスのポケモンレギュレーションNG!! 0x%x \n", failed_bit );
         *p_seq  = SEQ_START_NG_REG_MSG;
-        GFL_HEAP_FreeMemory( p_party );
       }
     }
 #endif
@@ -1707,9 +1708,7 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     //=====================================
   case SEQ_START_SEND_CHECK_DIRTY_POKE:
     { 
-      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
-      BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-      p_wk->p_evilcheck_party =  BATTLE_BOX_SAVE_MakePokeParty( p_bbox_save, HEAPID_WIFIBATTLEMATCH_CORE );
+      Util_SetEvilcheckParty( p_wk );
 
       WIFIBATTLEMATCH_NET_StartEvilCheck( p_wk->p_net, p_wk->p_evilcheck_party, WIFIBATTLEMATCH_NET_EVILCHECK_TYPE_PARTY );
       *p_seq = SEQ_WAIT_SEND_CHECK_DIRTY_POKE;
@@ -1744,19 +1743,16 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           *p_seq = SEQ_START_DIRTY_POKE_MSG;
         }
 
-        GFL_HEAP_FreeMemory( p_wk->p_evilcheck_party );
       }
 
       //エラー
       switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-        GFL_HEAP_FreeMemory( p_wk->p_evilcheck_party );
         *p_seq  = SEQ_START_DRAW_PLAYERINFO;
         break;
 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
-        GFL_HEAP_FreeMemory( p_wk->p_evilcheck_party );
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
         break;
       }
@@ -1771,9 +1767,7 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
   case SEQ_START_SEND_SAKE_POKE:
     {
-      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
-      BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-      p_wk->p_evilcheck_party =  BATTLE_BOX_SAVE_MakePokeParty( p_bbox_save, HEAPID_WIFIBATTLEMATCH_CORE );
+      Util_SetEvilcheckParty( p_wk );
 
       WIFIBATTLEMATCH_GDB_StartWrite( p_wk->p_net, WIFIBATTLEMATCH_GDB_WRITE_POKEPARTY, p_wk->p_evilcheck_party );
       *p_seq  = SEQ_WAIT_SEND_SAKE_POKE;
@@ -1785,19 +1779,16 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       if( WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net ) )
       { 
         *p_seq  = SEQ_START_INIT_SAKE_DATA;
-        GFL_HEAP_FreeMemory( p_wk->p_evilcheck_party );
       }
 
       //エラー
       switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-        GFL_HEAP_FreeMemory( p_wk->p_evilcheck_party );
         *p_seq  = SEQ_START_DRAW_PLAYERINFO;
         break;
 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
-        GFL_HEAP_FreeMemory( p_wk->p_evilcheck_party );
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
         break;
       }
@@ -3526,11 +3517,7 @@ static void WbmWifiSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   { 
   case SEQ_START:
     { 
-      SAVE_CONTROL_WORK *p_sv;
-      BATTLE_BOX_SAVE   *p_bbox_save;
-      p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_game_data );
-      p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-      p_wk->p_evilcheck_party =  BATTLE_BOX_SAVE_MakePokeParty( p_bbox_save, HEAPID_WIFIBATTLEMATCH_CORE );
+      Util_SetEvilcheckParty( p_wk );
       OS_TFPrintf( 3, "自分のポケモン署名取得開始\n" );
     }
     p_wk->cnt = 0;
@@ -3610,7 +3597,6 @@ static void WbmWifiSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_END:
-    GFL_HEAP_FreeMemory( p_wk->p_evilcheck_party );
     WBM_SEQ_End( p_seqwk );
     break;
   }
@@ -4057,4 +4043,23 @@ static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, HEAPID heapI
   }
 
   return ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  不正ポケモン用パーティバッファにバトルボックスのパーティを設定
+ *
+ *	@param	WIFIBATTLEMATCH_WIFI_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Util_SetEvilcheckParty( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
+{ 
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_game_data );
+  BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+  POKEPARTY         *p_party  =  BATTLE_BOX_SAVE_MakePokeParty( p_bbox_save, HEAPID_WIFIBATTLEMATCH_CORE );
+
+  PokeParty_InitWork( p_wk->p_evilcheck_party );
+
+  GFL_STD_MemCopy( p_party, p_wk->p_evilcheck_party, PokeParty_GetWorkSize() );
+
+  GFL_HEAP_FreeMemory( p_party );
 }

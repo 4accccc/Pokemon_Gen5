@@ -20,6 +20,7 @@
 #include "net/network_define.h"
 #include "poke_tool/poke_regulation.h"
 #include "sound/pm_sndsys.h"
+#include "system/net_err.h"
 
 //各プロセス
 #include "net_app/wifi_login.h"
@@ -398,10 +399,11 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
 	//ヒープ破棄
 	GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SYS );
 
+  PMSND_StopBGM();
+
 	return GFL_PROC_RES_FINISH;
 }
 
-#include "system/net_err.h"
 //----------------------------------------------------------------------------
 /**
  *	@brief	WIFIバトルマッチ画面	メインプロセス処理
