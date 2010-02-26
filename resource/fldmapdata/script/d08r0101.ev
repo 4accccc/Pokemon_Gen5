@@ -38,7 +38,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START    ev_d08r0101_hakase1_01	
 
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0101_hakase1_02 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0101_hakase1_01 )
 	
 EVENT_END
 
@@ -47,7 +47,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START    ev_d08r0101_hakaim_01	
 
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0101_hakase1_01 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0101_hakaim1_01 )
 	
 EVENT_END
 
