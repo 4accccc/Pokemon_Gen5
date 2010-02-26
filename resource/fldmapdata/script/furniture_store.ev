@@ -21,6 +21,5 @@ _EVENT_DATA_END //èIóπ
 /**************************************************************/
 /**************************************************************/
 EVENT_START ev_furniture_store
-  //Ç»Ç…Ç‡ÇµÇ»Ç¢//
-EVENT_END
-
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_furniture_store_02 )
+ EVENT_END
