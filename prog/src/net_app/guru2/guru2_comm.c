@@ -131,7 +131,7 @@ const NetRecvFuncTable _Guru2CommPacketTbl[] = {
 //----------------------------------------------------------------------------------
 static UNION_APP_PTR _get_unionwork( GURU2COMM_WORK *wk)
 {
-  return wk->g2p->param.uniapp;
+  return wk->g2p->param->uniapp;
 }
 
 

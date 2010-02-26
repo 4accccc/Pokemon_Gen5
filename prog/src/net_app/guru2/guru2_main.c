@@ -1203,7 +1203,7 @@ GFL_PROC_RESULT Guru2MainProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
   OS_Printf("g2m=%08x, g2p=%08x, g2c=%08x\n", (u32)g2m, (u32)g2p, (u32)g2p->g2c);
   
   //ポケモンパーティ
-  g2m->my_poke_party = GAMEDATA_GetMyPokemon( g2m->g2p->param.gamedata );
+  g2m->my_poke_party = GAMEDATA_GetMyPokemon( g2m->g2p->param->gamedata );
   
   //アーカイブハンドルオープン
   g2m->arc_handle = GFL_ARC_OpenDataHandle( ARCID_GURU2, HEAPID_GURU2 );
@@ -1480,7 +1480,7 @@ static RET Guru2Subproc_OyaSendJoinClose( GURU2MAIN_WORK *g2m )
 static UNION_APP_PTR _get_unionwork(GURU2MAIN_WORK *wk)
 {
 //  OS_Printf("union app adr=%08x\n",(u32)wk->g2p->param.uniapp);
-  return wk->g2p->param.uniapp;
+  return wk->g2p->param->uniapp;
 }
 
 //--------------------------------------------------------------
@@ -1822,7 +1822,7 @@ static RET Guru2Subproc_EggAddInit( GURU2MAIN_WORK *g2m )
   //BGM切り替え
 //  Snd_DataSetByScene( SND_SCENE_GURUGURU, SEQ_GS_GURUGURU, 1 );
   PMSND_PlayBGM( SEQ_BGM_GURUGURU );
-  g2m->g2p->param.bgm_change = TRUE;
+  g2m->g2p->param->bgm_change = TRUE;
   
   Guru2TalkWin_Clear( g2m );
   return( RET_CONT );
@@ -2554,7 +2554,7 @@ static RET Guru2Subproc_OmakeAreaCheck( GURU2MAIN_WORK *g2m )
     Guru2TalkWin_WriteItem( g2m, MSG_OMAKE_AREA, id );
     
     ret = MYITEM_AddItem(
-      GAMEDATA_GetMyItem(g2m->g2p->param.gamedata), id, 1, HEAPID_GURU2 ); 
+      GAMEDATA_GetMyItem(g2m->g2p->param->gamedata), id, 1, HEAPID_GURU2 ); 
     
     _me_play( SEQ_ME_ITEM );  //ファンファーレ
     
@@ -2637,8 +2637,8 @@ static RET Guru2Subproc_OmakeAreaErrorMsgWait( GURU2MAIN_WORK *g2m )
 static RET Guru2Subproc_SaveBeforeTimingInit( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  RECORD_Inc( g2m->g2p->param.record, RECID_GURUGURU_COUNT );
-  RECORD_Score_Add( g2m->g2p->param.record,SCORE_ID_GURUGURU );
+  RECORD_Inc( g2m->g2p->param->record, RECID_GURUGURU_COUNT );
+  RECORD_Score_Add( g2m->g2p->param->record,SCORE_ID_GURUGURU );
   
   Guru2TalkWin_Write( g2m, MSG_SAVE );
   GFL_NET_HANDLE_TimeSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
@@ -2681,7 +2681,7 @@ static RET Guru2Subproc_SaveBeforeTimingWait( GURU2MAIN_WORK *g2m )
     Guru2MainFriendEggExchange( g2m, g2m->front_eggact->comm_id );
 //    CommSyncronizeSaveInit( &g2m->save_seq );
     // 通信同期セーブ開始
-    g2m->NetSaveWork = NET_SAVE_Init( HEAPID_GURU2, g2m->g2p->param.gamedata);
+    g2m->NetSaveWork = NET_SAVE_Init( HEAPID_GURU2, g2m->g2p->param->gamedata);
 #ifdef WINDOW_SAVE_ICON
     g2m->time_wait_icon_p = TimeWaitIconAdd(
       g2m->msgwork.bmpwin_talk, BGF_CHARNO_TALK );
@@ -2701,7 +2701,6 @@ static RET Guru2Subproc_SaveBeforeTimingWait( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static RET Guru2Subproc_Save( GURU2MAIN_WORK *g2m )
 {
-//  int ret = CommSyncronizeSave( g2m->g2p->param.sv, &g2m->save_seq );
   BOOL ret = NET_SAVE_Main( g2m->NetSaveWork ); // 通信同期セーブメイン
   
   if( ret ){

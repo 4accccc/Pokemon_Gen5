@@ -306,7 +306,7 @@ GFL_PROC_RESULT Guru2ReceiptProc_Init( GFL_PROC * proc, int *seq, void *pwk, voi
 static UNION_APP_PTR _get_unionwork(GURU2RC_WORK *wk)
 {
 //  OS_Printf("union app adr=%08x\n",(u32)wk->g2p->param.uniapp);
-  return wk->g2p->param.uniapp;
+  return wk->g2p->param->uniapp;
 }
 
 //----------------------------------------------------------------------------------
@@ -882,7 +882,7 @@ static const int res_tbl[][2]={
 static void InitCellActor(GURU2RC_WORK *wk, ARCHANDLE* p_handle)
 {
   int i;
-  MYSTATUS *my = GAMEDATA_GetMyStatus( wk->g2p->param.gamedata);
+  MYSTATUS *my = GAMEDATA_GetMyStatus( wk->g2p->param->gamedata);
   int gender   = MyStatus_GetMySex( my );
   // 主人公セルデータオープン
   ARCHANDLE *handle = GFL_ARC_OpenDataHandle( ARCID_WIFILEADING, HEAPID_GURU2 );
