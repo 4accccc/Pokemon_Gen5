@@ -45,7 +45,7 @@
 // ビットマップ描画位置オフセット
 #define FIELD_SAVEANIME_BMP_POS_X_OFS ( -16 )
 #define FIELD_SAVEANIME_BMP_POS_Y_OFS ( -24 )
-#define FIELD_SAVEANIME_POS_Y_OFS ( 24*FX32_ONE )
+#define FIELD_SAVEANIME_POS_Y_OFS ( 28*FX32_ONE )
 
 // 性別別パレットインデックス
 static const int sc_PLTT_INDEX[ PM_NEUTRAL ] = 
@@ -295,10 +295,36 @@ static void SAVEANIME_CreateBmpWin( FIELD_SAVEANIME* p_wk )
   
   // ビットマップ描画位置を求める
   {
+    VecFx32 camera_way;
+    VecFx32 camera_way_xz;
+    VecFx32 camera_side;
+    VecFx32 camera_up;
+    VecFx32 camera_pos;
+    VecFx32 camera_target;
+    static const VecFx32 up_way = { 0,FX32_ONE,0 };
+
 	  GFL_G3D_CAMERA_Switching( cp_g3Dcamera );
 
+    GFL_G3D_CAMERA_GetTarget( cp_g3Dcamera, &camera_target );
+    GFL_G3D_CAMERA_GetPos( cp_g3Dcamera, &camera_pos );
+
+    VEC_Subtract( &camera_target, &camera_pos, &camera_way );
+    // XZ平面横方向取得
+    camera_way_xz = camera_way;
+    camera_way_xz.y = 0;
+    VEC_Normalize( &camera_way_xz, &camera_way_xz );
+
+    // 横方向を外積で求める
+    VEC_CrossProduct( &camera_way_xz, &up_way, &camera_side );
+    // 横とカメラ方向から上を求める
+    VEC_CrossProduct( &camera_way, &camera_side, &camera_up );
+    VEC_Normalize( &camera_up, &camera_up );
+
     FIELD_PLAYER_GetPos( p_player, &pos );
-    pos.y += FIELD_SAVEANIME_POS_Y_OFS; // Yは３D座標であわせる。
+    // 上方向に移動
+    pos.x += FX_Mul( camera_up.x, -FIELD_SAVEANIME_POS_Y_OFS );
+    pos.y += FX_Mul( camera_up.y, -FIELD_SAVEANIME_POS_Y_OFS );
+    pos.z += FX_Mul( camera_up.z, -FIELD_SAVEANIME_POS_Y_OFS );
     NNS_G3dWorldPosToScrPos( &pos, &pos_x, &pos_y );
     pos_x += FIELD_SAVEANIME_BMP_POS_X_OFS; // Xはスクリーン座標であわせる
     pos_y += FIELD_SAVEANIME_BMP_POS_Y_OFS; // Xはスクリーン座標であわせる
