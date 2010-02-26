@@ -142,7 +142,7 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
     outEfp->mons_chr = PP_GetSeikaku( pp );
 
     //特性効果発生チェック
-    efp_MonsSpaCheck( outEfp, WEATHER_NO_SUNNY);
+    efp_MonsSpaCheck( outEfp, weather );
   }
   
   //////////////////////////////
