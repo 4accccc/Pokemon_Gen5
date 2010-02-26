@@ -236,6 +236,7 @@ static GMEVENT* BtlPartySelectCheck( GAMESYS_WORK* gsys, const REGULATION* regul
   wk->my_party_ng = reg_my != POKE_REG_OK ? TRUE : FALSE;
   wk->btl_party_ng = reg_btl != POKE_REG_OK ? TRUE : FALSE;
 
+  IWASAWA_Printf(" BoxSelect mine = %d, box = %d\n", wk->my_party_ng, wk->btl_party_ng );
   return event;
 }
 
