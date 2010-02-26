@@ -235,7 +235,7 @@ ev_wkobjcommon:
   _TALK_OBJ_START()
   //話したことあるか？
   _UN_CHK_TALK_FLG( LOCALWORK0, SCWK_ANSWER )
-  IF $SCWK_ANSWER == TRUE THEN
+  IF $SCWK_ANSWER == FALSE THEN      //話したことない
     //初回メッセージ消化フラグON
     _UN_SET_TALK_FLG( LOCALWORK0 )
     //初回メッセージ
