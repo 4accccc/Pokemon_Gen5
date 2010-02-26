@@ -323,7 +323,10 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
     
     beacon = GameBeacon_BeaconSearch(gbs, &hit_index);
     if(beacon != NULL){
-      if( beacon->beacon_type == GBS_BEACONN_TYPE_PALACE ){
+      if(beacon->error != 0){
+        GFL_NET_WLResetGFBss(hit_index);  //ビーコンバッファクリア
+      }
+      else if( beacon->beacon_type == GBS_BEACONN_TYPE_PALACE ){
         int i;
         u8 *mac_address;
         
