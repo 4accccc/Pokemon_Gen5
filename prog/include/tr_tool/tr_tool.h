@@ -34,6 +34,8 @@
 
 #define	TRMSG_FIGHT_WIN					(100)	//戦闘勝ち（戦闘内でのみ使用される）
 
+#define TRMSG_NONE              ( -1 )  //メッセージが見つからなかった
+
 //トレーナーデータを取得するときのID定義
 #define	ID_TD_data_type		(0)		//データタイプ
 #define	ID_TD_tr_type		  (1)		//トレーナー分類
