@@ -1129,7 +1129,7 @@ static void MSG_CNT_SetPrint( UN_SELECT_MSG_CNT_WORK* wk, int str_id )
                                            wk->tcblsys, 0xffff, wk->heap_id, clear_color );
   
   // フレーム生成
-  BmpWinFrame_Write( wk->win_talk, WINDOW_TRANS_OFF, CGX_BMPWIN_FRAME_POS, GFL_BMPWIN_GetPalette(wk->win_talk) );
+  BmpWinFrame_Write( wk->win_talk, WINDOW_TRANS_OFF, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M );
 
   // 転送
   { 
@@ -1649,6 +1649,10 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
 		BLEND_EV1, BLEND_EV2 );
 
   wk->htask = GFUser_HIntr_CreateTCB( HBlankTask, wk, 0 );
+
+  //通信アイコン
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, wk->heap_id );
+	GFL_NET_ReloadIcon();
 
   return wk;
 }
