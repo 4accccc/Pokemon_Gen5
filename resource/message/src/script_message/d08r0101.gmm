@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-07T14:43:23"/>
+	<create user="matsumiya" host="W00224" date="2010-02-26T13:00:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,21 @@
 	</lock>
 
 
-	<row id="msg_d08r0101_hakase1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_d08r0101_hakase1_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+		<comment>♂
+・c07ジムバッジ取得で出現
+・d08r0901イベント終了で削除
+・GRIDX=23、GRIDZ=46、左向き</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『……さきほど
+ジムリーダーたちが　のぼっていったが▽
+おまえたちには　なにも　できないぜ</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……先ほど
+ジムリーダーたちが　登っていったが▽
+おまえたちには　なにも　できないぜ</language>
+	</row>
+
+	<row id="msg_d08r0101_hakase1_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♂
 ・d08でmsg_d08_white_07表示後</comment>
 		<attribute name="キャラ指定">博士父</attribute>
@@ -304,7 +318,7 @@
 娘に　調べさせるか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08r0101_leader7_01w" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_d08r0101_leader7_01w" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♂
 ・d08でmsg_d08_white_07表示後
 ・WHITEver</comment>
@@ -320,7 +334,7 @@
 眠りから　さますとは……</language>
 	</row>
 
-	<row id="msg_d08r0101_leader7_01b" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_d08r0101_leader7_01b" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♂
 ・d08でmsg_d08_white_07表示後
 ・BLACKver</comment>
