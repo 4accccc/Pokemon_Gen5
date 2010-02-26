@@ -1575,9 +1575,11 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
     for( i=0; i<UN_LIST_MAX; i++)
     {
       int code_idx;   //国コード-1の値が入る
+      int floor_idx;
       code_idx = g_FloorTable[i] - 1;
-      if ( prm->OpenCountryFlg[code_idx]) wk->Valid[i] = TRUE;
-      else wk->Valid[i] = FALSE;
+      floor_idx = UN_LIST_MAX - i - 1;
+      if ( prm->OpenCountryFlg[code_idx]) wk->Valid[floor_idx] = TRUE;
+      else wk->Valid[floor_idx] = FALSE;
     }
   }
   //マークするフロアをワークに受け取る

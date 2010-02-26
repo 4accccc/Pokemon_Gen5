@@ -69,8 +69,10 @@ EVENT_END
 /*            受付1                                            */
 /**************************************************************/
 EVENT_START ev_c11r0101_reception01
-  DEFINE_LOCAL AppSelectRec
   DEFINE_LOCAL Floor
+  DEFINE_LOCAL Country
+  
+  _TALK_OBJ_START()
   //「国連行く？」
   _BALLOONWIN_TALKOBJ_MSG( msg_reception01_01 )
   _YES_NO_WIN( SCWK_ANSWER )
@@ -80,28 +82,42 @@ EVENT_START ev_c11r0101_reception01
     //「行き先えらんで」
     _BALLOONWIN_TALKOBJ_MSG( msg_reception01_01a )
     _BALLOONWIN_CLOSE()
-    //選択アプリ    todo
-    $AppSelectRec = 1   //国コードセット  @todo
-    $Floor = 1          //フロアセット　@todo
-    //データセット
-    _UN_SET_COUNTRY_INFO( AppSelectRec, Floor )
-    //「こちらへ」
-    _BALLOONWIN_TALKOBJ_MSG( msg_reception01_02 )
-    _BALLOONWIN_CLOSE()
-    //アニメ
-    _CALL player_in_anm
-    //国連部屋訪問状態をON
-    $WK_OTHER_UN = 1
-    //予約スクリプト マップチェンジ後、エレベータから出てくるスクリプトを起動する
-		_RESERVE_SCRIPT( SCRID_RESERVE_C11R0201 )
-    //マップチェンジ
-    _MAP_CHANGE( ZONE_ID_C11R0201, 10, 5, DIR_DOWN )
+    //選択アプリ
+    {
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _FIELD_CLOSE()
+      _UN_CALL_FLOOR_SEL_APP( 1, Floor, Country, SCWK_ANSWER )
+      _FIELD_OPEN()
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+    }
+    IF $SCWK_ANSWER == FALSE THEN
+      //「またね」
+      _BALLOONWIN_TALKOBJ_MSG( msg_reception01_03 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+    ELSE
+      //データセット
+      _UN_SET_COUNTRY_INFO( Country, Floor )
+      //「こちらへ」
+      _BALLOONWIN_TALKOBJ_MSG( msg_reception01_02 )
+      _BALLOONWIN_CLOSE()
+      //アニメ
+      _CALL player_in_anm
+      //国連部屋訪問状態をON
+      $WK_OTHER_UN = 1
+      //予約スクリプト マップチェンジ後、エレベータから出てくるスクリプトを起動する
+		  _RESERVE_SCRIPT( SCRID_RESERVE_C11R0201 )
+      //マップチェンジ
+      _MAP_CHANGE( ZONE_ID_C11R0201, 10, 5, DIR_DOWN )
+    ENDIF  
   ELSE
     //「またね」
     _BALLOONWIN_TALKOBJ_MSG( msg_reception01_03 )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
-  ENDIF  
+  ENDIF
 
 EVENT_END
 

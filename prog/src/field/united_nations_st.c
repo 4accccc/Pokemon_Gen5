@@ -101,6 +101,9 @@ GMEVENT * UN_CreateAppEvt(GAMESYS_WORK *gsys, u16 inFloor, u16 *outFloor, u16 *o
   
   evt_work = GMEVENT_GetEventWork(event);
   evt_work->Param.InFloor = inFloor;
+  evt_work->Ret = ret_wk;
+  evt_work->OutFloor = outFloor;
+  evt_work->CountryCode = outCountry;
 
   //セーブデータから国連関連データをセットする
   {
@@ -114,7 +117,10 @@ GMEVENT * UN_CreateAppEvt(GAMESYS_WORK *gsys, u16 inFloor, u16 *outFloor, u16 *o
     {
       int idx = i-1;
       if ( WIFIHISTORY_CheckCountryBit(wh, i) )
+      {
+        NOZOMU_Printf("-------------code %d\n",i);
         evt_work->Param.OpenCountryFlg[idx] = 1;
+      }
       else
         evt_work->Param.OpenCountryFlg[idx] = 0;
     }
