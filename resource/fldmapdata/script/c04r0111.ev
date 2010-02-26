@@ -280,7 +280,7 @@ sub_mapchg_receipt:
       
       //受信バッファクリア
       _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
-
+      
       //選択結果送信
       _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_RETIRE_SELECT, LOCALWORK0, BSW_NULL )
       //選択結果受信
@@ -357,7 +357,8 @@ EVENT_START ev_c04r0111_home
   DEFINE_LOCAL ret
   DEFINE_LOCAL boss_f
   DEFINE_LOCAL play_mode
-  
+  DEFINE_LOCAL point
+
   //プレイモード取得
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
 
@@ -411,8 +412,10 @@ EVENT_START ev_c04r0111_home
       _SYSWIN_MSG( msg_c04r0111_04 , WIN_DOWN ) //おめでとうございます
       _AB_KEYWAIT()
       
+      _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT, BSW_NULL, BSW_NULL, point )
+
       _PLAYER_NAME( 0 )
-      _NUMBER( 1, 50, 2 )
+      _NUMBER( 1, point, 2 )
       _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
       _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
       _ME_WAIT()
@@ -428,8 +431,9 @@ EVENT_START ev_c04r0111_home
       _SYSWIN_MSG( msg_c04r0111_04 , WIN_DOWN ) //おめでとうございます
       _AB_KEYWAIT()
       
+      _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT, BSW_NULL, BSW_NULL, point )
       _PLAYER_NAME( 0 )
-      _NUMBER( 1, 50, 2 )
+      _NUMBER( 1, point, 2 )
       _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
       _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
       _ME_WAIT()
@@ -445,9 +449,10 @@ EVENT_START ev_c04r0111_home
   ELSE //ボス倒していない
     _SYSWIN_MSG( msg_c04r0111_03 , WIN_DOWN ) //おめでとうございます
     _AB_KEYWAIT()
-  
+
+    _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT, BSW_NULL, BSW_NULL, point )
     _PLAYER_NAME( 0 )
-    _NUMBER( 1, 50, 2 )
+    _NUMBER( 1, point, 2 )
     _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
     _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
     _ME_WAIT()

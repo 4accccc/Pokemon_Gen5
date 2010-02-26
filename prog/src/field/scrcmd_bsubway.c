@@ -675,10 +675,17 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //バトル呼び出し
   case BSWSUB_LOCAL_BTL_CALL:
-    #ifndef DEBUG_BSW_BTL_SKIP
+#ifdef DEBUG_BSW_COMM_MULTI_BTL_SKIP
+    if( play_mode == BSWAY_MODE_COMM_MULTI ||
+        play_mode == BSWAY_MODE_S_COMM_MULTI ){
+      return VMCMD_RESULT_SUSPEND;
+    }
+#endif
+
+#ifndef DEBUG_BSW_BTL_SKIP
     SCRIPT_CallEvent(
         sc, BSUBWAY_EVENT_TrainerBattle(bsw_scr,gsys,fieldmap) );
-    #endif
+#endif
     return VMCMD_RESULT_SUSPEND;
   //現在のプレイモードを取得
   case BSWSUB_GET_PLAY_MODE:
@@ -815,10 +822,12 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //通信開始
   case BSWSUB_COMM_START:
     BSUBWAY_COMM_Init( bsw_scr );
+    GAMESYSTEM_SetAlwaysNetFlag( gsys, TRUE );
     break;
   //通信終了
   case BSWSUB_COMM_END:
     BSUBWAY_COMM_Exit( bsw_scr );
+    GAMESYSTEM_SetAlwaysNetFlag( gsys, FALSE );
     break;
   //通信同期
   case BSWSUB_COMM_TIMSYNC:

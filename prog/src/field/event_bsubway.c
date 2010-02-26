@@ -230,105 +230,12 @@ GMEVENT * BSUBWAY_EVENT_TrainerBattle(
   GMEVENT * event;
   BATTLE_SETUP_PARAM *bp;
   
+  return BSUBWAY_EVENT_CommBattle( bsw_scr, gsys, fieldmap );
+  
   bp = BSUBWAY_SCRWORK_CreateBattleParam( bsw_scr, gsys );
   event = EVENT_BSubwayTrainerBattle( gsys, fieldmap, bp );
   
   return( event );
-}
-
-//--------------------------------------------------------------
-/**
- * バトルサブウェイ　通信バトル
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-GMEVENT * BSUBWAY_EVENT_CommBattle(
-    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
-{
-  GMEVENT * event;
-  BATTLE_SETUP_PARAM *bp;
-  COMM_BTL_DEMO_PARAM *demo;
-
-  bp = BSUBWAY_SCRWORK_CreateBattleParam( bsw_scr, gsys );
-  demo = BSUBWAY_SCRWORK_CreateBattleDemoParam( bsw_scr, gsys );
-  event = EVENT_CommBattle( gsys, bp, demo );
-  return( event );
-}
-
-//--------------------------------------------------------------
-/**
- * バトルサブウェイ　通信バトル　メイン
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-static GMEVENT_RESULT bsw_CommBattleMain( GMEVENT *event, int *seq, void *wk )
-{
-  EVENT_BSW_COMM_BATTLE_WORK *work = wk;
-  GAMESYS_WORK *gsys = work->gsys;
-  
-  switch (*seq){
-  case 0:
-    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, work->fieldmap) );
-    (*seq)++;
-    break;
-  case 1:
-    {
-      GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeOut_Black(
-          gsys, work->fieldmap, FIELD_FADE_WAIT );
-      GMEVENT_CallEvent(event, fade_event);
-    }
-    (*seq)++;
-    break;
-  case 2:
-    GMEVENT_CallEvent( event, EVENT_FieldClose(gsys,work->fieldmap) );
-    (*seq)++;
-    break;
-  case 3:
-    GMEVENT_CallEvent( event, 
-      EVENT_FSND_PushPlayNextBGM(gsys,work->para->musicDefault,
-        FSND_FADE_SHORT, FSND_FADE_NONE) ); 
-    (*seq)++;
-    break;
-  case 4:
-    GMEVENT_CallEvent( event,
-        EVENT_CommBattle(gsys,work->para,work->demo_prm) );
-    (*seq)++;
-    break;
-  case 5:
-#if 0
-    BATTLE_PARAM_Release( &work->para ); //バトルSetupParam解放
-#else
-    BATTLE_PARAM_Delete( work->para ); //バトルSetupParam解放
-#endif
-    OS_TPrintf("_FIELD_OPEN\n");
-    GMEVENT_CallEvent( event, EVENT_FieldOpen(gsys) );
-    (*seq) ++;
-    break;
-  case 6:
-    OS_TPrintf("_FIELD_FADEIN\n");
-    {
-      GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn_Black(
-          gsys, work->fieldmap, FIELD_FADE_WAIT );
-      GMEVENT_CallEvent(event, fade_event);
-    }
-    (*seq) ++;
-    break;
-  case 7:
-    GMEVENT_CallEvent( event,
-        EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT,FSND_FADE_NORMAL) );
-    (*seq) ++;
-    break;
-  case 8:
-    return GMEVENT_RES_FINISH;
-  default:
-    GF_ASSERT(0);
-    break;
-  }
-  return GMEVENT_RES_CONTINUE;
 }
 
 //======================================================================
@@ -515,6 +422,360 @@ GMEVENT * BSUBWAY_EVENT_CallLeaderBoard( GAMESYS_WORK *gsys )
 
   return event;
 }
+
+//======================================================================
+//
+//======================================================================
+#include "net/network_define.h"
+
+static GFL_PROC_RESULT CommBattleCallProc_Init(  GFL_PROC *proc, int *seq, void* pwk, void* mywk );
+static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void* pwk, void* mywk );
+static GFL_PROC_RESULT CommBattleCallProc_End(  GFL_PROC *proc, int *seq, void* pwk, void* mywk );
+
+const GFL_PROC_DATA bsw_CommBattleCommProcData = 
+{ 
+  CommBattleCallProc_Init,
+  CommBattleCallProc_Main,
+  CommBattleCallProc_End,
+};
+
+typedef struct{
+  GFL_PROCSYS* procsys_up; 
+}COMM_BTL_DEMO_PROC_WORK;
+
+typedef struct{
+  // [IN]
+  GAMESYS_WORK * gsys;  
+  BATTLE_SETUP_PARAM  *btl_setup_prm;
+  COMM_BTL_DEMO_PARAM *demo_prm;
+  // [PRIVATE]
+  COMM_BATTLE_CALL_PROC_PARAM cbc;
+}BSW_EVENT_BATTLE_CALL_WORK;
+
+#define BATTLE_CALL_HEAP_SIZE (0x4000) // PROC内用ヒープのサイズ
+#define BATTLE_ADD_CMD_TBL_TIMING 200 ///< 同期NO
+
+// バトル用定義
+extern const NetRecvFuncTable BtlRecvFuncTable[];
+
+FS_EXTERN_OVERLAY(battle);
+
+//--------------------------------------------------------
+/**
+ *	@brief  通信バトル呼び出しPROC 初期化処理
+ *	@param	GFL_PROC *proc
+ *	@param	*seq
+ *	@param	pwk
+ *	@param	mywk 
+ *	@retval
+ */
+//-------------------------------------------------------
+static GFL_PROC_RESULT CommBattleCallProc_Init(  GFL_PROC *proc, int *seq, void* pwk, void* mywk )
+{
+  COMM_BTL_DEMO_PROC_WORK*   work;
+
+  // ヒープ生成
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_CALL, BATTLE_CALL_HEAP_SIZE );
+
+  // ワーク アロケート
+  work = GFL_PROC_AllocWork( proc , sizeof(COMM_BTL_DEMO_PROC_WORK) , HEAPID_BATTLE_CALL );
+
+  work->procsys_up = GFL_PROC_LOCAL_boot( HEAPID_BATTLE_CALL );
+  
+  return GFL_PROC_RES_FINISH;
+}
+
+//---------------------------------------------------
+/**
+ *	@brief  通信バトル呼び出しPROC 終了処理
+ *
+ *	@param	GFL_PROC *proc
+ *	@param	*seq
+ *	@param	pwk
+ *	@param	mywk 
+ *
+ *	@retval
+ */
+//--------------------------------------------------
+static GFL_PROC_RESULT CommBattleCallProc_End(  GFL_PROC *proc, int *seq, void* pwk, void* mywk )
+{
+  COMM_BTL_DEMO_PROC_WORK*   work = mywk;
+
+  GFL_PROC_LOCAL_Exit( work->procsys_up );
+  GFL_PROC_FreeWork( proc );
+  
+  // ヒープ開放
+  GFL_HEAP_DeleteHeap( HEAPID_BATTLE_CALL );
+  return GFL_PROC_RES_FINISH;
+}
+
+//-------------------------------------------------
+/**
+ *	@brief  通信バトル呼び出しPROC 主処理
+ *
+ *	@param	GFL_PROC *proc
+ *	@param	*seq
+ *	@param	pwk
+ *	@param	mywk 
+ *
+ *	@retval
+ */
+//------------------------------------------------
+static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void* pwk, void* mywk )
+{
+  enum
+  {
+    SEQ_BATTLE_TIMING_INIT,
+    SEQ_BATTLE_TIMING_WAIT,
+    SEQ_BATTLE_INIT,
+    SEQ_BATTLE_WAIT,
+    SEQ_BATTLE_END,
+    SEQ_END
+  };
+  
+  COMM_BTL_DEMO_PROC_WORK *work = mywk;
+  COMM_BATTLE_CALL_PROC_PARAM * bcw = pwk;
+  GFL_PROC_MAIN_STATUS up_status;
+  
+  GF_ASSERT(work);
+  GF_ASSERT(bcw);
+  
+  up_status = GFL_PROC_LOCAL_Main( work->procsys_up );
+  
+  switch (*seq) {
+  case SEQ_BATTLE_TIMING_INIT:
+    {
+      GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
+      GFL_NET_AddCommandTable(
+          GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL );
+      GFL_NET_TimingSyncStart(
+          GFL_NET_HANDLE_GetCurrentHandle(), BATTLE_ADD_CMD_TBL_TIMING);
+      OS_TPrintf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
+      (*seq) = SEQ_BATTLE_TIMING_WAIT;
+    }
+    break;
+  case SEQ_BATTLE_TIMING_WAIT:
+    if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), BATTLE_ADD_CMD_TBL_TIMING)){
+      OS_TPrintf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
+      (*seq) = SEQ_BATTLE_INIT;
+    }
+    break;
+  case SEQ_BATTLE_INIT:
+    GFL_PROC_LOCAL_CallProc( work->procsys_up, NO_OVERLAY_ID, &BtlProcData, bcw->btl_setup_prm);
+    (*seq) = SEQ_BATTLE_WAIT;
+    break;
+  case SEQ_BATTLE_WAIT:
+    if ( up_status != GFL_PROC_MAIN_VALID ){
+      (*seq) = SEQ_BATTLE_END;
+    }
+    break;
+  case SEQ_BATTLE_END:
+    OS_TPrintf("バトル完了\n");
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+    (*seq) = SEQ_END;
+    break;
+  case SEQ_END:
+    return GFL_PROC_RES_FINISH;
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+
+  return GFL_PROC_RES_CONTINUE;
+}
+
+//----------------------------------------------------
+/**
+ *	@brief  イベント：通信バトル呼び出し
+ *	@param	* event
+ *	@param	*  seq
+ *	@param	* work
+ *	@retval
+ */
+//----------------------------------------------------
+static GMEVENT_RESULT bsw_EventCommBattleMain(
+    GMEVENT * event, int *  seq, void * work)
+{
+  BSW_EVENT_BATTLE_CALL_WORK *bcw = work;
+  GAMESYS_WORK * gsys = bcw->gsys;
+  
+  switch (*seq) 
+  {
+  case 0:
+    {
+      COMM_BATTLE_CALL_PROC_PARAM *prm = &bcw->cbc;
+      prm->gdata = GAMESYSTEM_GetGameData( gsys );
+      prm->btl_setup_prm = bcw->btl_setup_prm;
+      prm->demo_prm = bcw->demo_prm;
+      GAMESYSTEM_CallProc( gsys, NO_OVERLAY_ID,
+          &bsw_CommBattleCommProcData, prm);
+    }
+    (*seq)++;
+    break;
+
+  case 1:
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+      break;
+    }
+    return GMEVENT_RES_FINISH;
+  }
+  
+  return GMEVENT_RES_CONTINUE;
+}
+
+
+//==================================================================
+/**
+ * イベント作成：通信バトル呼び出し
+ *
+ * @param   gsys		
+ * @param   para		
+ * @param   demo_prm		
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+static GMEVENT * bsw_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_setup_prm, COMM_BTL_DEMO_PARAM *demo_prm)
+{
+  BSW_EVENT_BATTLE_CALL_WORK *bcw;
+  GMEVENT * event;
+
+  event = GMEVENT_Create(
+      gsys, NULL, bsw_EventCommBattleMain,
+      sizeof(BSW_EVENT_BATTLE_CALL_WORK) );
+  bcw = GMEVENT_GetEventWork(event);
+  bcw->gsys = gsys;
+  bcw->btl_setup_prm = btl_setup_prm;
+  bcw->demo_prm = demo_prm;
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　通信バトル　メイン
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT bsw_CommBattleMain( GMEVENT *event, int *seq, void *wk )
+{
+  EVENT_BSW_COMM_BATTLE_WORK *work = wk;
+  GAMESYS_WORK *gsys = work->gsys;
+  
+  switch (*seq){
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, work->fieldmap) );
+    (*seq)++;
+    break;
+  case 1:
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeOut_Black(
+          gsys, work->fieldmap, FIELD_FADE_WAIT );
+      GMEVENT_CallEvent(event, fade_event);
+    }
+    (*seq)++;
+    break;
+  case 2:
+    GMEVENT_CallEvent( event, EVENT_FieldClose(gsys,work->fieldmap) );
+    (*seq)++;
+    break;
+  case 3:
+    GMEVENT_CallEvent( event, 
+      EVENT_FSND_PushPlayNextBGM(gsys,work->para->musicDefault,
+        FSND_FADE_SHORT, FSND_FADE_NONE) ); 
+    (*seq)++;
+    break;
+  case 4: //battle main
+    GMEVENT_CallEvent( event,
+        bsw_CommBattle(gsys,work->para,work->demo_prm) );
+    (*seq)++;
+    break;
+  case 5:
+#if 0
+    BATTLE_PARAM_Release( &work->para ); //バトルSetupParam解放
+#else
+    BATTLE_PARAM_Delete( work->para ); //バトルSetupParam解放
+#endif
+    OS_TPrintf("_FIELD_OPEN\n");
+    GMEVENT_CallEvent( event, EVENT_FieldOpen(gsys) );
+    (*seq) ++;
+    break;
+  case 6:
+    OS_TPrintf("_FIELD_FADEIN\n");
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeIn_Black(
+          gsys, work->fieldmap, FIELD_FADE_WAIT );
+      GMEVENT_CallEvent(event, fade_event);
+    }
+    (*seq) ++;
+    break;
+  case 7:
+    GMEVENT_CallEvent( event,
+        EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT,FSND_FADE_NORMAL) );
+    (*seq) ++;
+    break;
+  case 8:
+    return GMEVENT_RES_FINISH;
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+
+//==================================================================
+/**
+ * イベント作成：通信バトル呼び出し
+ *
+ * @param   gsys		
+ * @param   para		
+ * @param   demo_prm		
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+static GMEVENT * ev_CommBattle(
+    GAMESYS_WORK * gsys,
+    FIELDMAP_WORK *fieldmap,
+    BATTLE_SETUP_PARAM *btl_setup_prm,
+    COMM_BTL_DEMO_PARAM *demo_prm)
+{
+  EVENT_BSW_COMM_BATTLE_WORK *bcw;
+  GMEVENT * event;
+
+  event = GMEVENT_Create(
+      gsys, NULL, bsw_CommBattleMain, sizeof(EVENT_BSW_COMM_BATTLE_WORK) );
+  bcw = GMEVENT_GetEventWork(event);
+  bcw->gsys = gsys;
+  bcw->para = btl_setup_prm;
+  bcw->demo_prm = demo_prm;
+  bcw->fieldmap = fieldmap;
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　通信バトル
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+GMEVENT * BSUBWAY_EVENT_CommBattle(
+    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
+{
+  GMEVENT * event;
+  BATTLE_SETUP_PARAM *bp;
+  COMM_BTL_DEMO_PARAM *demo;
+
+  bp = BSUBWAY_SCRWORK_CreateBattleParam( bsw_scr, gsys );
+  demo = BSUBWAY_SCRWORK_CreateBattleDemoParam( bsw_scr, gsys );
+  event = ev_CommBattle( gsys, fieldmap, bp, demo );
+  return( event );
+}
+
 
 //======================================================================
 //  バトルサブウェイ wifi
@@ -839,3 +1100,6 @@ GMEVENT * BSUBWAY_EVENT_SetWifiConnect(
   work->dpw_code = dpw_code;
 }
 #endif
+
+
+

@@ -347,16 +347,15 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   GAMEDATA *gameData = GAMESYSTEM_GetGameData( gsys );
   
   play_mode = wk->play_mode;
+  
   dst = BATTLE_PARAM_Create( HEAPID_PROC );
   
   {
     BTL_FIELD_SITUATION_Init( &sit );
       
-//  dst->netID = 0;
     dst->netHandle = NULL;
     dst->commMode = BTL_COMM_NONE;
     dst->commPos = 0;
-    
     dst->multiMode = 0;
     dst->recBuffer = NULL;
     dst->fRecordPlay = FALSE;
@@ -392,17 +391,22 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     dst->playerStatus[BTL_CLIENT_PARTNER] = NULL;
     dst->playerStatus[BTL_CLIENT_ENEMY2] = NULL;
     
+    if( play_mode == BSWAY_PLAYMODE_COMM_MULTI ||
+        play_mode == BSWAY_PLAYMODE_S_COMM_MULTI ){
+      dst->playerStatus[BTL_CLIENT_PARTNER] = &wk->mystatus_fr;
+    }
+    
     dst->itemData     = GAMEDATA_GetMyItem( gameData );
     dst->bagCursor    = GAMEDATA_GetBagCursor( gameData );
     dst->zukanData    = GAMEDATA_GetZukanSave( gameData );
 //  dst->commSupport  = GAMEDATA_GetCommPlayerSupportPtr( gameData );
     dst->commSupport  = NULL;
-
+    
     {
       SAVE_CONTROL_WORK *saveCtrl = GAMEDATA_GetSaveControlWork( gameData );
       dst->configData = SaveData_GetConfig( saveCtrl );
     }
-
+    
     MI_CpuCopy8( &sit, &dst->fieldSituation, sizeof(BTL_FIELD_SITUATION) );
 
     dst->musicDefault = SEQ_BGM_VS_NORAPOKE;
@@ -453,7 +457,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     tr_data->tr_type = bsw_trainer->tr_type;
     tr_data->ai_bit = 0xFFFFFFFF;  //Å‹­
 
-    //name
+      //name
     GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
 
     //win word
@@ -628,7 +632,7 @@ COMM_BTL_DEMO_PARAM * BSUBWAY_SCRWORK_CreateBattleDemoParam(
 {
   COMM_BTL_DEMO_PARAM *demo;
   demo = &bsw_scr->comm_btl_demo_param;
-  return( NULL );
+  return( demo );
 }
 
 //======================================================================
