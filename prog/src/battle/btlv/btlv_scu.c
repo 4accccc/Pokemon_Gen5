@@ -2618,7 +2618,7 @@ void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, BtlvMcssPos vpos )
 }
 BOOL BTLV_SCU_WaitMemberOutAct( BTLV_SCU* wk )
 {
-  return wk->taskCounter[TASKTYPE_MEMBER_OUT];
+  return ( wk->taskCounter[TASKTYPE_MEMBER_OUT] == 0 );
 }
 
 static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs )
@@ -2627,11 +2627,18 @@ static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs )
 
   switch( twk->seq ){
   case 0:
-    BTLV_EFFECT_DelGauge( twk->viewpos );
-    BTLV_EFFECT_DelPokemon( twk->viewpos );
+    BTLV_EFFECT_AddByPos( twk->viewpos, BTLEFF_POKEMON_MODOSU );
     twk->seq++;
     break;
   case 1:
+    if( !BTLV_EFFECT_CheckExecute() )
+    { 
+      BTLV_EFFECT_DelGauge( twk->viewpos );
+      BTLV_EFFECT_DelPokemon( twk->viewpos );
+      twk->seq++;
+    }
+    break;
+  case 2:
     (*(twk->taskCounter))--;
     GFL_TCBL_Delete( tcbl );
   }
@@ -2679,6 +2686,7 @@ void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos, u8 clientID, u8 memberI
       BTL_Printf("“ü‚éƒ|ƒPƒ‚ƒ“  memIdx=%d, pokeID=%d, monsno=%d, monsno_src=%d\n",
             memberIdx, BPP_GetID(bpp), BPP_GetMonsNo(bpp), PP_Get(pp, ID_PARA_monsno, NULL) );
       BTLV_EFFECT_SetPokemon( pp, vpos );
+      BTLV_EFFECT_AddByPos( vpos, BTLEFF_POKEMON_KURIDASU );
     }
   }
 }
@@ -2695,8 +2703,11 @@ static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs )
 
   switch( twk->seq ){
   case 0:
-    statwin_disp_start( twk->statWin );
-    twk->seq++;
+    if( !BTLV_EFFECT_CheckExecute() )
+    { 
+      statwin_disp_start( twk->statWin );
+      twk->seq++;
+    }
     break;
   case 1:
     (*(twk->taskCounter))--;
