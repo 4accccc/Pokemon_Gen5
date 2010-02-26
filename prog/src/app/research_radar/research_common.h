@@ -8,6 +8,8 @@
 ///////////////////////////////////////////////////////////////////////////////// 
 #pragma once
 #include <gflib.h>
+#include "research_common_index.h"
+#include "gamesystem/gamesystem.h"  // for GAMESYS_WORK
 
 
 //=============================================================================== 
@@ -44,9 +46,31 @@
 #define MAIN_BG_BACK_FIRST_PLT_IDX (0)  // 背景BG面の先頭パレット番号
 #define MAIN_BG_BACK_PLT_NUM       (1)  // 背景BG面のパレット数
 
+
 // VRAM-Bank 設定
 extern const GFL_DISP_VRAM VRAMBankSettings;
 
 // BGモード設定
 extern const GFL_BG_SYS_HEADER BGSysHeader2D;
 extern const GFL_BG_SYS_HEADER BGSysHeader3D;
+
+// セルアクターシステム
+extern const GFL_CLSYS_INIT ClactSystemInitData;
+
+// 共通ワーク
+typedef struct _RESEARCH_COMMON_WORK RESEARCH_COMMON_WORK;
+
+// 共通ワーク 生成・破棄
+RESEARCH_COMMON_WORK* RESEARCH_COMMON_CreateWork( HEAPID heapID, GAMESYS_WORK* gameSystem );
+void RESEARCH_COMMON_DeleteWork( RESEARCH_COMMON_WORK* work ); 
+
+// 共通ワーク 共通OBJ 準備・後片付け
+void RESEARCH_COMMON_SetupCommonOBJ( RESEARCH_COMMON_WORK* work );
+void RESEARCH_COMMON_CleanUpCommonOBJ( RESEARCH_COMMON_WORK* work );
+
+// 共通ワーク 取得
+HEAPID RESEARCH_COMMON_GetHeapID( const RESEARCH_COMMON_WORK* work );
+GAMESYS_WORK* RESEARCH_COMMON_GetGameSystem( const RESEARCH_COMMON_WORK* work );
+GAMEDATA* RESEARCH_COMMON_GetGameData( const RESEARCH_COMMON_WORK* work );
+GFL_CLUNIT* RESEARCH_COMMON_GetClactUnit( const RESEARCH_COMMON_WORK* work, COMMON_CLUNIT_INDEX unitIdx );
+GFL_CLWK* RESEARCH_COMMON_GetClactWork( const RESEARCH_COMMON_WORK* work, COMMON_CLWK_INDEX workIdx );

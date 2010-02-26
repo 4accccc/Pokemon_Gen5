@@ -9,6 +9,7 @@
 #include <gflib.h>
 #include "bg_font.h"
 #include "research_common.h"
+#include "research_common_def.h"
 #include "research_menu_index.h"
 
 #include "obj_NANR_LBLDEFS.h"        // for NANR_obj_xxxx
@@ -302,6 +303,13 @@ static const TOUCH_AREA_INIT_DATA TouchAreaInitData[ TOUCH_AREA_NUM ] =
     TOUCH_AREA_CHECK_BUTTON_X + TOUCH_AREA_CHECK_BUTTON_WIDTH,
     TOUCH_AREA_CHECK_BUTTON_Y,
     TOUCH_AREA_CHECK_BUTTON_Y + TOUCH_AREA_CHECK_BUTTON_HEIGHT,
+  },
+  //「もどる」ボタン
+  {
+    TOUCH_AREA_RETURN_BUTTON_X,
+    TOUCH_AREA_RETURN_BUTTON_X + TOUCH_AREA_RETURN_BUTTON_WIDTH,
+    TOUCH_AREA_RETURN_BUTTON_Y,
+    TOUCH_AREA_RETURN_BUTTON_Y + TOUCH_AREA_RETURN_BUTTON_HEIGHT,
   },
   // 終端コード
   { GFL_UI_TP_HIT_END, 0, 0, 0 }, 

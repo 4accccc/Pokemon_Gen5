@@ -1,0 +1,120 @@
+////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief  調査レーダー 全画面共通データ
+ * @file   research_common_data.cdat
+ * @author obata
+ * @date   2010.02.26
+ */
+//////////////////////////////////////////////////////////////////////////////////////////////// 
+#include <gflib.h>
+#include "research_common.h"
+#include "research_common_index.h"
+#include "research_common_def.h"
+
+
+//===============================================================================
+// ■VRAM-Bank 設定
+//===============================================================================
+const GFL_DISP_VRAM VRAMBankSettings =
+{
+  GX_VRAM_BG_128_A,            // MAIN-BG
+  GX_VRAM_BGEXTPLTT_NONE,      // MAIN-BG-EXP-PLT
+  GX_VRAM_SUB_BG_128_C,        // SUB--BG
+  GX_VRAM_SUB_BGEXTPLTT_NONE,  // SUB--BG-EXP-PLT
+  GX_VRAM_OBJ_64_E,            // MAIN-OBJ
+  GX_VRAM_OBJEXTPLTT_NONE,     // MAIN-OBJ-EXP-PLT
+  GX_VRAM_SUB_OBJ_16_I,        // SUB--OBJ
+  GX_VRAM_SUB_OBJEXTPLTT_NONE, // SUB--OBJ-EXP-PLT
+  GX_VRAM_TEX_0_B,             // TEX-IMG
+  GX_VRAM_TEXPLTT_0_G,         // TEX-PLT
+  GX_OBJVRAMMODE_CHAR_1D_32K,  // MAIN-OBJ-MAPPING-MODE
+  GX_OBJVRAMMODE_CHAR_1D_32K,  // SUB--OBJ-MAPPING-MODE
+}; 
+
+//===============================================================================
+// ■BGモード設定
+//===============================================================================
+// 2D
+const GFL_BG_SYS_HEADER BGSysHeader2D = 
+{
+  GX_DISPMODE_GRAPHICS,   // 表示モード指定
+  GX_BGMODE_0,            // ＢＧモード指定(メインスクリーン)
+  GX_BGMODE_0,            // ＢＧモード指定(サブスクリーン)
+  GX_BG0_AS_2D            // ＢＧ０の２Ｄ、３Ｄモード選択
+}; 
+// 3D
+const GFL_BG_SYS_HEADER BGSysHeader3D = 
+{
+  GX_DISPMODE_GRAPHICS,   // 表示モード指定
+  GX_BGMODE_0,            // ＢＧモード指定(メインスクリーン)
+  GX_BGMODE_0,            // ＢＧモード指定(サブスクリーン)
+  GX_BG0_AS_3D            // ＢＧ０の２Ｄ、３Ｄモード選択
+};
+
+
+//===============================================================================
+// ■セルアクターシステム
+//===============================================================================
+// 初期化データ
+static const GFL_CLSYS_INIT ClactSystemInitData = 
+{
+  0, 0,   // メイン サーフェースの左上座標
+  0, 512, // サブ サーフェースの左上座標
+  4, 124, // メイン画面OAM管理開始位置/管理数 4の倍数
+  4, 124, // サブ画面OAM管理開始位置/管理数 4の倍数
+  0,      // セルVram転送管理数
+  256,    ///< 登録できるキャラデータ数
+  32,     ///< 登録できるパレットデータ数
+  32,     ///< 登録できるセルアニメパターン数
+  32,     ///< 登録できるマルチセルアニメパターン数（※現状未対応）
+  16,     ///< メイン CGR VRAM管理領域 開始オフセット（キャラクタ単位）
+  16,     ///< サブ CGR VRAM管理領域開始オフセット（キャラクタ単位）
+};
+
+//------------------------
+// □セルアクターユニット
+//------------------------
+
+// 最大ワーク数
+static const u16 ClactUnitWorkSize[ COMMON_CLUNIT_NUM ] = 
+{
+  COMMON_CLUNIT_MAIN_OBJ_WORK_SIZE,  // index COMMON_CLUNIT_MAIN_OBJ
+};
+
+// 描画優先順位
+static const u8 ClactUnitPriority[ COMMON_CLUNIT_NUM ] = 
+{
+  COMMON_CLUNIT_MAIN_OBJ_PRIORITY,  // index COMMON_CLUNIT_MAIN_OBJ
+};
+
+// 初期化データ
+typedef struct
+{
+  s16             posX;            // x 座標
+  s16             posY;            // y 座標
+  s16             animeSeq;        // アニメーションシーケンス
+  u8              softPriority;    // ソフト優先順位
+  u8              BGPriority;      // BG 優先順位
+  COMMON_CLUNIT_INDEX    unitIdx;         // 所属ユニット
+  COMMON_OBJ_RESOURCE_ID characterResID;  // キャラクタ リソース
+  COMMON_OBJ_RESOURCE_ID paletteResID;    // パレット リソース
+  COMMON_OBJ_RESOURCE_ID cellAnimeResID;  // セルアニメ リソース
+  u16             setSurface;      // サーフェス指定
+
+} CLWK_INIT_DATA;
+
+static const CLWK_INIT_DATA ClactWorkInitData[ COMMON_CLWK_NUM ] = 
+{
+  { // COMMON_CLWK_RETURN,
+    CLWK_RETURN_POS_X,         // x 座標
+    CLWK_RETURN_POS_Y,         // y 座標
+    CLWK_RETURN_ANIME_SEQ,     // アニメーションシーケンス
+    CLWK_RETURN_SOFT_PRIORITY, // ソフト優先順位
+    CLWK_RETURN_BG_PRIORITY,   // BG 優先順位
+    COMMON_CLUNIT_MAIN_OBJ,                   // 所属ユニット
+    COMMON_OBJ_RESOURCE_MAIN_CHARACTER,       // キャラクタ リソース
+    COMMON_OBJ_RESOURCE_MAIN_PALETTE,         // パレット リソース
+    COMMON_OBJ_RESOURCE_MAIN_CELL_ANIME,      // セルアニメ リソース
+    CLSYS_DEFREND_MAIN,                // サーフェス指定
+  },
+};

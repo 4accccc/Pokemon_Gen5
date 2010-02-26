@@ -188,5 +188,8 @@ static int CalcXOffsetForCentering( const BG_FONT* BGFont, const STRBUF* str )
   // センタリングのためのオフセット値を算出
   offset = (targetWidth - strWidth) * 0.5f; 
 
+  // オフセットがマイナスにならないよう補正
+  if( offset < 0 ){ offset = 0; }
+
   return offset;
 }

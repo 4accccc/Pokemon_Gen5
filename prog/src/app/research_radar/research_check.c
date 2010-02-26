@@ -17,19 +17,19 @@
 #include "research_check_data.cdat"
 #include "research_common.h"
 
-#include "print/gf_font.h"               // for GFL_FONT_xxxx
-#include "print/printsys.h"              // for PRINTSYS_xxxx
-#include "print/wordset.h"               // for WORDSET_xxxx
 #include "system/gfl_use.h"              // for GFUser_xxxx
 #include "system/palanm.h"               // for PaletteFadeXxxx
 #include "system/bmp_oam.h"              // for BmpOam_xxxx
+#include "gamesystem/gamesystem.h"       // for GAMESYS_WORK
 #include "gamesystem/game_beacon.h"      // for GAMEBEACON_xxxx
 #include "savedata/save_control.h"       // for SaveControl_xxxx
 #include "savedata/questionnaire_save.h" // for QuestionnareWork_xxxx
 #include "sound/pm_sndsys.h"             // for PMSND_xxxx
 #include "sound/wb_sound_data.sadl"      // for SEQ_SE_XXXX
+#include "print/gf_font.h"               // for GFL_FONT_xxxx
+#include "print/printsys.h"              // for PRINTSYS_xxxx
+#include "print/wordset.h"               // for WORDSET_xxxx
 
-#include "system/main.h"                    // for HEAPID_xxxx
 #include "arc/arc_def.h"                    // for ARCID_xxxx
 #include "arc/research_radar_graphic.naix"  // for NARC_research_radar_xxxx
 #include "arc/font/font.naix"               // for NARC_font_xxxx
@@ -60,7 +60,11 @@
 //==============================================================================================
 struct _RESEARCH_CHECK_WORK
 { 
-  HEAPID       heapID;                 // ƒq[ƒvID
+  RESEARCH_COMMON_WORK* commonWork; // ‘S‰æ–Ê‹¤’Êƒ[ƒN
+  HEAPID                heapID;
+  GAMESYS_WORK*         gameSystem;
+  GAMEDATA*             gameData;
+
   GFL_FONT*    font;                   // ƒtƒHƒ“ƒg
   GFL_MSGDATA* message[ MESSAGE_NUM ]; // ƒƒbƒZ[ƒW
   WORDSET*     wordset;                // ƒ[ƒhƒZƒbƒg
@@ -339,23 +343,31 @@ static void Debug_SetupResearchData( RESEARCH_CHECK_WORK* work ); // ’²¸ƒf[ƒ^‚
 /**
  * @brief ’²¸•ñŠm”F‰æ–Êƒ[ƒN‚Ì¶¬
  *
- * @param heapID
+ * @param commonWork ‘S‰æ–Ê‹¤’Êƒ[ƒN
+ *
+ * @return ’²¸•ñŠm”F‰æ–Êƒ[ƒN
  */
 //----------------------------------------------------------------------------------------------
-RESEARCH_CHECK_WORK* CreateResearchCheckWork( HEAPID heapID )
+RESEARCH_CHECK_WORK* CreateResearchCheckWork( RESEARCH_COMMON_WORK* commonWork )
 {
   int i;
   RESEARCH_CHECK_WORK* work;
+  HEAPID heapID;
+
+  heapID = RESEARCH_COMMON_GetHeapID( commonWork );
 
   // ¶¬
   work = GFL_HEAP_AllocMemory( heapID, sizeof(RESEARCH_CHECK_WORK) );
 
   // ‰Šú‰»
+  work->commonWork      = commonWork;
+  work->heapID          = heapID;
+  work->gameSystem      = RESEARCH_COMMON_GetGameSystem( commonWork );
+  work->gameData        = RESEARCH_COMMON_GetGameData( commonWork );
   work->seq             = RESEARCH_CHECK_SEQ_SETUP;
   work->seqFinishFlag   = FALSE;
   work->seqCount        = 0;
   work->result          = RESEARCH_CHECK_RESULT_NONE;
-  work->heapID          = heapID;
   work->cursorPos       = MENU_ITEM_QUESTION;
   work->analyzeFlag     = FALSE;
   work->questionIdx     = 0;
@@ -616,6 +628,16 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
   //----------
   // B ƒ{ƒ^ƒ“
   if( trg & PAD_BUTTON_B ) {
+    // ƒV[ƒPƒ“ƒX•ÏX
+    SetNextSequence( work, RESEARCH_CHECK_SEQ_FADE_OUT );
+    SetNextSequence( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
+    FinishCurrentSequence( work );
+    return;
+  }
+
+  //-----------------
+  //u‚à‚Ç‚évƒ{ƒ^ƒ“
+  if( touchedAreaIdx == TOUCH_AREA_RETURN_BUTTON ) {
     // ƒV[ƒPƒ“ƒX•ÏX
     SetNextSequence( work, RESEARCH_CHECK_SEQ_FADE_OUT );
     SetNextSequence( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
@@ -1893,7 +1915,7 @@ static void UpdateBGFont_MyAnswer( RESEARCH_CHECK_WORK* work )
   }
 
   // ƒZ[ƒuƒf[ƒ^‚ðŽæ“¾
-  save              = SaveControl_GetPointer();
+  save              = GAMEDATA_GetSaveControlWork( work->gameData );
   questionnaireSave = SaveData_GetQuestionnaire( save );
   myAnswerWork      = Questionnaire_GetAnswerWork( questionnaireSave );
 
@@ -2773,7 +2795,7 @@ static void SetupResearchData( RESEARCH_CHECK_WORK* work )
   QUESTIONNAIRE_SAVE_WORK* questionnaireSave;
 
   // ƒZ[ƒuƒf[ƒ^Žæ“¾
-  save              = SaveControl_GetPointer();
+  save              = GAMEDATA_GetSaveControlWork( work->gameData );
   questionnaireSave = SaveData_GetQuestionnaire( save );
   topicID = QuestionnaireWork_GetInvestigatingQuestion( questionnaireSave, 0 ); // ’²¸€–ÚID
   questionID[0] = Question1_topic[ topicID ]; // Ž¿–âID
@@ -2858,7 +2880,7 @@ static void SetupTouchArea( RESEARCH_CHECK_WORK* work )
 static void CreateClactSystem( RESEARCH_CHECK_WORK* work )
 {
   // ƒVƒXƒeƒ€ì¬
-  GFL_CLACT_SYS_Create( &ClactSystemInitData, &VRAMBankSettings, work->heapID );
+  //GFL_CLACT_SYS_Create( &ClactSystemInitData, &VRAMBankSettings, work->heapID );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create clact system\n" );
@@ -2874,7 +2896,7 @@ static void CreateClactSystem( RESEARCH_CHECK_WORK* work )
 static void DeleteClactSystem( RESEARCH_CHECK_WORK* work )
 { 
   // ƒVƒXƒeƒ€”jŠü
-  GFL_CLACT_SYS_Delete();
+  //GFL_CLACT_SYS_Delete();
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete clact system\n" );

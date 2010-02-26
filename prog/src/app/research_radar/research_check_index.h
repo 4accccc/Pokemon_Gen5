@@ -35,6 +35,7 @@ typedef enum {
   TOUCH_AREA_CONTROL_CURSOR_L,// 左カーソル
   TOUCH_AREA_CONTROL_CURSOR_R,// 右カーソル
   TOUCH_AREA_QUESTION,        // 質問
+  TOUCH_AREA_RETURN_BUTTON,   //「もどる」ボタン
   TOUCH_AREA_DUMMY,           // 終端コード
   TOUCH_AREA_NUM,             // 総数
 } TOUCH_AREA_INDEX;

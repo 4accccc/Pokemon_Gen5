@@ -8,8 +8,10 @@
 //////////////////////////////////////////////////////////////////////////////////////////////// 
 #include <gflib.h>
 #include "bg_font.h"
-#include "research_check_index.h"
 #include "research_common.h"
+#include "research_common_def.h"
+#include "research_common_index.h"
+#include "research_check_index.h"
 
 #include "arc/arc_def.h"                    // for ARCID_xxxx
 #include "topic_id.h"                       // for TOPIC_ID_xxxx
@@ -577,6 +579,13 @@ static const TOUCH_AREA_INIT_DATA TouchAreaInitData[ TOUCH_AREA_NUM ] =
     TOUCH_AREA_QUESTION_X + TOUCH_AREA_QUESTION_WIDTH,
     TOUCH_AREA_QUESTION_Y,
     TOUCH_AREA_QUESTION_Y + TOUCH_AREA_QUESTION_HEIGHT,
+  },
+  //「もどる」ボタン
+  {
+    TOUCH_AREA_RETURN_BUTTON_X,
+    TOUCH_AREA_RETURN_BUTTON_X + TOUCH_AREA_RETURN_BUTTON_WIDTH,
+    TOUCH_AREA_RETURN_BUTTON_Y,
+    TOUCH_AREA_RETURN_BUTTON_Y + TOUCH_AREA_RETURN_BUTTON_HEIGHT,
   },
   { GFL_UI_TP_HIT_END, 0, 0, 0 }, // 終端コード
 };

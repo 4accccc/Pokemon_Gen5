@@ -15,16 +15,16 @@
 #include "research_select_data.cdat"
 #include "research_common.h"
 
-#include "print/gf_font.h"           // for GFL_FONT_xxxx
-#include "print/printsys.h"          // for PRINTSYS_xxxx
+#include "system/main.h"             // for HEAPID_xxxx
 #include "system/gfl_use.h"          // for GFUser_xxxx
 #include "system/palanm.h"           // for PaletteFadeXxxx
 #include "system/bmp_oam.h"          // for BmpOam_xxxx
 #include "gamesystem/game_beacon.h"  // for GAMEBEACON_xxxx
 #include "sound/pm_sndsys.h"         // for PMSND_xxxx
 #include "sound/wb_sound_data.sadl"  // for SEQ_SE_XXXX
+#include "print/gf_font.h"           // for GFL_FONT_xxxx
+#include "print/printsys.h"          // for PRINTSYS_xxxx
 
-#include "system/main.h"                    // for HEAPID_xxxx
 #include "arc/arc_def.h"                    // for ARCID_xxxx
 #include "arc/research_radar_graphic.naix"  // for NARC_research_radar_xxxx
 #include "arc/font/font.naix"               // for NARC_font_xxxx
@@ -46,8 +46,13 @@
 //==============================================================================================
 struct _RESEARCH_SELECT_WORK
 { 
-  HEAPID    heapID;  // ƒq[ƒvID
-  GFL_FONT* font;    // ƒtƒHƒ“ƒg
+  RESEARCH_COMMON_WORK* commonWork; // ‘S‰æ–Ê‹¤’Êƒ[ƒN
+  HEAPID                heapID;
+  GAMESYS_WORK*         gameSystem;
+  GAMEDATA*             gameData;
+
+  GFL_FONT*    font;
+  GFL_MSGDATA* message[ MESSAGE_NUM ];
 
   QUEUE*                 seqQueue;      // ƒV[ƒPƒ“ƒXƒLƒ…[
   RESEARCH_SELECT_SEQ    seq;           // ˆ—ƒV[ƒPƒ“ƒX
@@ -60,11 +65,10 @@ struct _RESEARCH_SELECT_WORK
   GFL_TCB*    VBlankTask;      // VBlankƒ^ƒCƒ~ƒ“ƒO’†‚És‚¤ƒ^ƒXƒN
 
   // ƒƒjƒ…[€–Ú
-  MENU_ITEM menuCursorPos;  // ƒJ[ƒ\ƒ‹ˆÊ’u
+  MENU_ITEM menuCursorPos; // ƒJ[ƒ\ƒ‹ˆÊ’u
 
   // ’²¸€–Ú
-  u8 selectedTopicIDs[ SELECT_TOPIC_MAX_NUM ];  // ‘I‘ğ‚µ‚½’²¸€–ÚID
-  u8 selectedTopicNum;                          // ‘I‘ğ‚µ‚½’²¸€–Ú‚Ì”
+  u8 selectedTopicID; // ‘I‘ğ‚µ‚½’²¸€–ÚID
 
   u8  topicCursorPos;         // ƒJ[ƒ\ƒ‹ˆÊ’u
   u8  topicCursorNextPos;     // ˆÚ“®Œã‚ÌƒJ[ƒ\ƒ‹ˆÊ’u 
@@ -73,9 +77,6 @@ struct _RESEARCH_SELECT_WORK
   // ƒ^ƒbƒ`—Ìˆæ
   GFL_UI_TP_HITTBL menuTouchHitTable[ MENU_TOUCH_AREA_NUM ];
   GFL_UI_TP_HITTBL topicTouchHitTable[ TOPIC_TOUCH_AREA_NUM ];
-
-  // ƒƒbƒZ[ƒW
-  GFL_MSGDATA* message[ MESSAGE_NUM ];
 
   // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg
   BG_FONT* BGFont[ BG_FONT_NUM ];
@@ -97,7 +98,7 @@ struct _RESEARCH_SELECT_WORK
 
 
 //----------------------------------------------------------------------------------------------
-//  LAYER 4 ƒV[ƒPƒ“ƒX“®ì
+//  LAYER 5 ƒV[ƒPƒ“ƒX“®ì
 //----------------------------------------------------------------------------------------------
 // ƒV[ƒPƒ“ƒXˆ—
 static void Main_SETUP        ( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
@@ -157,10 +158,9 @@ static void MoveMenuCursorDown( RESEARCH_SELECT_WORK* work ); // ‰º‚ÖˆÚ“®‚·‚é
 static void MoveTopicCursorUp    ( RESEARCH_SELECT_WORK* work ); // ã‚ÖˆÚ“®‚·‚é
 static void MoveTopicCursorDown  ( RESEARCH_SELECT_WORK* work ); // ‰º‚ÖˆÚ“®‚·‚é
 static void MoveTopicCursorDirect( RESEARCH_SELECT_WORK* work, u8 topicID ); // ’¼ÚˆÚ“®‚·‚é
-static BOOL SelectTopic( RESEARCH_SELECT_WORK* work ); // ’²¸€–Ú‚ğ‘I‘ğ‚·‚é
 
 //----------------------------------------------------------------------------------------------
-//  LAYER 2 ŒÂ•Ê‘€ì
+//  LAYER 3 ŒÂ•Ê‘€ì
 //---------------------------------------------------------------------------------------------- 
 // ƒƒjƒ…[€–ÚƒJ[ƒ\ƒ‹
 static void ShiftMenuCursorPos( RESEARCH_SELECT_WORK* work, int stride ); // ƒƒjƒ…[€–ÚƒJ[ƒ\ƒ‹ˆÊ’u‚ğ•ÏX‚·‚é
@@ -174,19 +174,20 @@ static void TopicCursorScrollStart( RESEARCH_SELECT_WORK* work );  // ’²¸€–ÚƒJ
 static void UpdateTopicTouchArea( RESEARCH_SELECT_WORK* work ); // ƒ^ƒbƒ`”ÍˆÍ‚ğXV‚·‚é
 
 // ‘I‘ğ‚µ‚½’²¸€–ÚID
-static void RegisterTopicID( RESEARCH_SELECT_WORK* work ); // ’²¸€–ÚID‚ğ“o˜^‚·‚é
-static void ReleaseTopicID ( RESEARCH_SELECT_WORK* work ); // ’²¸€–ÚID‚ğ‰ğœ‚·‚é
-static BOOL IsTopicIDRegistered( const RESEARCH_SELECT_WORK* work, u8 topicID ); // ‘I‘ğÏ‚İ‚©‚ğ”»’è‚·‚é
+static u8 GetSelectedTopicID( const RESEARCH_SELECT_WORK* work ); // ‘I‘ğ’†‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
+static void SetSelectedTopicID( RESEARCH_SELECT_WORK* work, u8 topicID ); // ’²¸€–ÚID‚ğ‘I‘ğ‚·‚é
+static void ResetSelectedTopicID( RESEARCH_SELECT_WORK* work ); // ’²¸€–ÚID‚Ì‘I‘ğ‚ğ‰ğœ‚·‚é
+static BOOL IsTopicIDSelected( const RESEARCH_SELECT_WORK* work ); // ‘I‘ğÏ‚İ‚©‚ğ”»’è‚·‚é
 
 // ƒƒjƒ…[€–Ú‚Ì•\¦
 static void SetMenuCursorOn( RESEARCH_SELECT_WORK* work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
 static void SetMenuCursorOff( RESEARCH_SELECT_WORK* work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
 
 // ’²¸€–Ú‚Ì•\¦
-static void SetTopicCursorOn ( const RESEARCH_SELECT_WORK* work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
-static void SetTopicCursorOff( const RESEARCH_SELECT_WORK* work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
-static void SetTopicSelected   ( const RESEARCH_SELECT_WORK* work ); // ‘I‘ğ‚³‚ê‚Ä‚¢‚éó‘Ô‚É‚·‚é
-static void SetTopicNotSelected( const RESEARCH_SELECT_WORK* work ); // ‘I‘ğ‚³‚ê‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
+static void SetTopicButtonCursorOn ( const RESEARCH_SELECT_WORK* work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
+static void SetTopicButtonCursorOff( const RESEARCH_SELECT_WORK* work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
+static void SetTopicButtonSelected   ( const RESEARCH_SELECT_WORK* work, u8 topicID ); // ‘I‘ğ‚³‚ê‚Ä‚¢‚éó‘Ô‚É‚·‚é
+static void SetTopicButtonNotSelected( const RESEARCH_SELECT_WORK* work ); // ‘I‘ğ‚³‚ê‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
 static void UpdateSubDisplayStrings( RESEARCH_SELECT_WORK* work ); // ã‰æ–Ê‚ÌƒJ[ƒ\ƒ‹ˆË‘¶•¶š—ñ•\¦‚ğXV‚·‚é
 static void UpdateTopicScroll( RESEARCH_SELECT_WORK* work );       // ’²¸€–Ú‚ÌƒXƒNƒ[ƒ‹ó‘Ô‚ğXV‚·‚é
 static void FinishTopicScroll( RESEARCH_SELECT_WORK* work );       // ’²¸€–Ú‚ÌƒXƒNƒ[ƒ‹ó‘Ô‚ğŠ®—¹‚³‚¹‚é
@@ -199,7 +200,7 @@ static int CalcScreenScrollY      ( const RESEARCH_SELECT_WORK* work );         
 
 // OBJ‚Ì•\¦
 static void UpdateScrollControlPos( const RESEARCH_SELECT_WORK* work );  // ƒXƒNƒ[ƒ‹ƒo[‚Ì‚Â‚Ü‚İ•”•ª‚ÌˆÊ’u‚ğXV‚·‚é
-static void UpdateTopicSelectIcons( const RESEARCH_SELECT_WORK* work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚Ì•\¦ó‘Ô‚ğXV‚·‚é
+static void UpdateTopicSelectIcon( const RESEARCH_SELECT_WORK* work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚Ì•\¦ó‘Ô‚ğXV‚·‚é
 
 // ƒpƒŒƒbƒgƒtƒF[ƒh
 static void StartPaletteFadeOut( RESEARCH_SELECT_WORK* work ); // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒAƒEƒg‚ğŠJn‚·‚é
@@ -210,7 +211,7 @@ static BOOL IsPaletteFadeEnd   ( RESEARCH_SELECT_WORK* work ); // ƒpƒŒƒbƒg‚ÌƒtƒF
 static void BmpOamSetDrawEnable( RESEARCH_SELECT_WORK* work, BMPOAM_ACTOR_INDEX BmpOamActorIdx, BOOL enable );  // •\¦‚·‚é‚©‚Ç‚¤‚©‚ğİ’è‚·‚é
 
 //----------------------------------------------------------------------------------------------
-//  LAYER 1 ƒf[ƒ^ƒAƒNƒZƒX
+//  LAYER 2 ƒf[ƒ^ ƒAƒNƒZƒX
 //----------------------------------------------------------------------------------------------
 // OBJ
 static u32 GetObjResourceRegisterIndex( const RESEARCH_SELECT_WORK* work, OBJ_RESOURCE_ID resID ); // OBJƒŠƒ\[ƒX‚Ì“o˜^ƒCƒ“ƒfƒbƒNƒX
@@ -219,6 +220,12 @@ static GFL_CLWK* GetClactWork( const RESEARCH_SELECT_WORK* work, CLWK_INDEX wkId
 
 // BMP-OAM
 static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem ); // ƒƒjƒ…[€–Ú‚É‘Î‰‚·‚éBMP-OAMƒAƒNƒ^[
+
+//----------------------------------------------------------------------------------------------
+//  LAYER 1 ƒZ[ƒuƒf[ƒ^ ƒAƒNƒZƒX
+//----------------------------------------------------------------------------------------------
+static u8 GetInvestigatingTopicID( const RESEARCH_SELECT_WORK* work );      // Œ»İ’²¸’†‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
+static void UpdateInvestigatingTopicID( const RESEARCH_SELECT_WORK* work ); // ’²¸‚·‚é€–Ú‚ğXV‚·‚é
 
 //----------------------------------------------------------------------------------------------
 //  LAYER 0 ‰Šú‰»ˆ—/I—¹ˆ—
@@ -240,6 +247,7 @@ static void CleanUpMainBG_FONT( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ƒtƒHƒ
 // ‰æ–Ê‚Ì€”õ/Œã•Ğ•t‚¯ ( OBJ )
 static void CreateClactSystem( RESEARCH_SELECT_WORK* work ); // OBJ ƒVƒXƒeƒ€ ¶¬
 static void DeleteClactSystem( RESEARCH_SELECT_WORK* work ); // OBJ ƒVƒXƒeƒ€ ”jŠü
+static void InitOBJResources( RESEARCH_SELECT_WORK* work );  // OBJ ƒŠƒ\[ƒX ‰Šú‰»
 static void RegisterSubObjResources( RESEARCH_SELECT_WORK* work ); // SUB-OBJ ƒŠƒ\[ƒX “o˜^
 static void ReleaseSubObjResources ( RESEARCH_SELECT_WORK* work ); // SUB-OBJ ƒŠƒ\[ƒX ‰ğ•ú
 static void RegisterMainObjResources( RESEARCH_SELECT_WORK* work ); // MAIN-OBJ ƒŠƒ\[ƒX “o˜^
@@ -261,7 +269,7 @@ static void CleanUpBmpOamSystem( RESEARCH_SELECT_WORK* work ); // BMP-OAM ƒVƒXƒe
 static void CreateBmpOamActors( RESEARCH_SELECT_WORK* work ); // BMP-OAM ƒAƒNƒ^[ ì¬
 static void DeleteBmpOamActors( RESEARCH_SELECT_WORK* work ); // BMP-OAM ƒAƒNƒ^[ ”jŠü
 
-// VBlankƒ^ƒXƒN‚Ì“o˜^/‰ğœ
+// VBlankƒ^ƒXƒN‚Ì“o˜^‰ğœ
 static void RegisterVBlankTask( RESEARCH_SELECT_WORK* work );
 static void ReleaseVBlankTask ( RESEARCH_SELECT_WORK* work );
 
@@ -283,12 +291,10 @@ static void DeleteMessages( RESEARCH_SELECT_WORK* work ); // ƒƒbƒZ[ƒW ”jŠü
 static void InitBGFonts  ( RESEARCH_SELECT_WORK* work ); // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg ‰Šú‰»
 static void CreateBGFonts( RESEARCH_SELECT_WORK* work ); // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg ¶¬
 static void DeleteBGFonts( RESEARCH_SELECT_WORK* work ); // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg ”jŠü
-static void InitSelectedTopicIDs( RESEARCH_SELECT_WORK* work ); // ‘I‘ğ‚µ‚½’²¸€–ÚID
 static void SetupTouchArea( RESEARCH_SELECT_WORK* work ); // ƒ^ƒbƒ`—Ìˆæ €”õ
 
 // DEBUG:
 static void DebugPrint_seqQueue( const RESEARCH_SELECT_WORK* work ); // ƒV[ƒPƒ“ƒXƒLƒ…[‚Ì’†g‚ğ•\¦‚·‚é
-static void DebugPrint_SelectedTopicIDs( const RESEARCH_SELECT_WORK* work );  // “o˜^Ï‚İ‚Ì’²¸€–ÚID‚ğo—Í‚·‚é
 
 
 //==============================================================================================
@@ -299,30 +305,37 @@ static void DebugPrint_SelectedTopicIDs( const RESEARCH_SELECT_WORK* work );  //
 /**
  * @brief ’²¸‰Šú‰æ–Êƒ[ƒN‚Ì¶¬
  *
- * @param heapID
+ * @param commonWork ‘S‰æ–Ê‹¤’Êƒ[ƒN
+ *
+ * @return ’²¸“à—e•ÏX‰æ–Êƒ[ƒN
  */
 //----------------------------------------------------------------------------------------------
-RESEARCH_SELECT_WORK* CreateResearchSelectWork( HEAPID heapID )
+RESEARCH_SELECT_WORK* CreateResearchSelectWork( RESEARCH_COMMON_WORK* commonWork )
 {
   int i;
   RESEARCH_SELECT_WORK* work;
+  HEAPID heapID;
+
+  heapID = RESEARCH_COMMON_GetHeapID( commonWork );
 
   // ¶¬
   work = GFL_HEAP_AllocMemory( heapID, sizeof(RESEARCH_SELECT_WORK) );
 
   // ‰Šú‰»
+  work->commonWork            = commonWork;
+  work->heapID                = heapID;
+  work->gameSystem            = RESEARCH_COMMON_GetGameSystem( commonWork );
+  work->gameData              = RESEARCH_COMMON_GetGameData( commonWork );
   work->seq                   = RESEARCH_SELECT_SEQ_SETUP;
   work->seqCount              = 0;
   work->seqFinishFlag         = FALSE;
   work->result                = RESEARCH_SELECT_RESULT_NONE;
-  work->heapID                = heapID;
   work->menuCursorPos         = MENU_ITEM_DETERMINATION_OK;
   work->topicCursorPos        = 0;
   work->topicCursorNextPos    = 0;
   work->topicScrollFrameCount = 0;
+  work->selectedTopicID       = TOPIC_ID_DUMMY;
   work->VBlankTCBSystem       = GFUser_VIntr_GetTCBSYS();
-
-  for( i=0; i<OBJ_RESOURCE_NUM; i++ ){ work->objResRegisterIdx[i] = 0; }
 
   InitSeqQueue( work );
   InitMessages( work );
@@ -330,7 +343,7 @@ RESEARCH_SELECT_WORK* CreateResearchSelectWork( HEAPID heapID )
   InitBGFonts( work );
   InitClactUnits( work );
   InitClactWorks( work );
-  InitSelectedTopicIDs( work );
+  InitOBJResources( work );
   InitPaletteFadeSystem( work );
   InitBitmapDatas( work );
 
@@ -385,19 +398,17 @@ RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work )
   case RESEARCH_SELECT_SEQ_FADE_OUT:     Main_FADE_OUT( work );     break;
   case RESEARCH_SELECT_SEQ_PALETTE_RESET:Main_PALETTE_RESET( work );break;
   case RESEARCH_SELECT_SEQ_CLEAN_UP:     Main_CLEAN_UP( work );     break;
-  case RESEARCH_SELECT_SEQ_FINISH:       return work->result;
+  case RESEARCH_SELECT_SEQ_FINISH:       return work->result; // I—¹
   default:  GF_ASSERT(0);
   }
 
   // ƒZƒ‹ƒAƒNƒ^[ƒVƒXƒeƒ€ ƒƒCƒ“ˆ—
   GFL_CLACT_SYS_Main();
 
-  // ƒV[ƒPƒ“ƒXƒJƒEƒ“ƒ^XV
-  CountUpSeqCount( work );
+  CountUpSeqCount( work ); // ƒV[ƒPƒ“ƒXƒJƒEƒ“ƒ^XV
+  SwitchSequence( work );  // ƒV[ƒPƒ“ƒXXV
 
-  // ƒV[ƒPƒ“ƒXXV
-  SwitchSequence( work );
-
+  // Œp‘±
   return RESEARCH_SELECT_RESULT_CONTINUE;
 }
 
@@ -472,11 +483,10 @@ static void Main_SETUP( RESEARCH_SELECT_WORK* work )
 static void Main_STANDBY( RESEARCH_SELECT_WORK* work )
 {
   int trg;
-  int touchedAreaIdx;
-  BOOL select = FALSE;
+  int touch;
 
-  trg            = GFL_UI_KEY_GetTrg();
-  touchedAreaIdx = GFL_UI_TP_HitTrg( work->topicTouchHitTable );
+  trg   = GFL_UI_KEY_GetTrg();
+  touch = GFL_UI_TP_HitTrg( work->topicTouchHitTable );
 
   //--------------------
   // \šƒL[ or A or B
@@ -488,18 +498,29 @@ static void Main_STANDBY( RESEARCH_SELECT_WORK* work )
       (trg & PAD_BUTTON_B) ) {
     SetNextSequence( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
     FinishCurrentSequence( work );
+    return;
   }
 
-  if( (TOPIC_TOUCH_AREA_TOPIC_0 <= touchedAreaIdx) && (touchedAreaIdx <= TOPIC_TOUCH_AREA_TOPIC_9) ) {
-    MoveTopicCursorDirect( work, touchedAreaIdx ); // ƒJ[ƒ\ƒ‹ˆÚ“®
-    select = SelectTopic( work );                  // ’²¸€–Ú‚ğ‘I‘ğ
-  } 
-
-  // Å‘å”‚Ì’²¸€–Ú‚ğ‘I‘ğ
-  if( (select == TRUE) && (work->selectedTopicNum == SELECT_TOPIC_MAX_NUM) ) {
+  //--------
+  // ƒ^ƒbƒ`
+  if( (TOPIC_TOUCH_AREA_TOPIC_0 <= touch) && 
+      (touch <= TOPIC_TOUCH_AREA_TOPIC_9) ) 
+  {
+    MoveTopicCursorDirect( work, touch );               // ƒJ[ƒ\ƒ‹ˆÚ“®
+    SetSelectedTopicID( work, work->topicCursorPos );   // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì’²¸€–Ú‚ğ‘I‘ğ
+    PMSND_PlaySE( SEQ_SE_DECIDE1 );                     // Œˆ’è‰¹
     SetNextSequence( work, RESEARCH_SELECT_SEQ_CONFIRM );
     FinishCurrentSequence( work );
-    // --> ’²¸€–ÚŠm”FƒV[ƒPƒ“ƒX‚Ö
+    return;
+  } 
+
+  if( touch == TOPIC_TOUCH_AREA_RETURN_BUTTON ) {
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );      // ƒLƒƒƒ“ƒZƒ‹‰¹
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_FADE_OUT );
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
+    FinishCurrentSequence( work );
+    return;
   }
 }
 
@@ -513,11 +534,11 @@ static void Main_STANDBY( RESEARCH_SELECT_WORK* work )
 static void Main_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 { 
   int trg;
-  int touchedAreaIdx;
+  int touch;
   BOOL select = FALSE;
 
-  trg            = GFL_UI_KEY_GetTrg();
-  touchedAreaIdx = GFL_UI_TP_HitTrg( work->topicTouchHitTable );
+  trg   = GFL_UI_KEY_GetTrg();
+  touch = GFL_UI_TP_HitTrg( work->topicTouchHitTable );
 
   if( trg & PAD_KEY_UP ) {
     MoveTopicCursorUp( work );
@@ -535,6 +556,25 @@ static void Main_KEY_WAIT( RESEARCH_SELECT_WORK* work )
     return;
   } 
 
+  if( trg & PAD_BUTTON_A ) {
+    SetSelectedTopicID( work, work->topicCursorPos ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì’²¸€–Ú‚ğ‘I‘ğ
+    PMSND_PlaySE( SEQ_SE_DECIDE1 );                   // Œˆ’è‰¹
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_CONFIRM );
+    FinishCurrentSequence( work );
+    return;
+  } 
+
+  if( (TOPIC_TOUCH_AREA_TOPIC_0 <= touch) && 
+      (touch <= TOPIC_TOUCH_AREA_TOPIC_9) ) 
+  {
+    MoveTopicCursorDirect( work, touch );             // ƒJ[ƒ\ƒ‹ˆÚ“®
+    SetSelectedTopicID( work, work->topicCursorPos ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì’²¸€–Ú‚ğ‘I‘ğ
+    PMSND_PlaySE( SEQ_SE_DECIDE1 );                   // Œˆ’è‰¹
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_CONFIRM );
+    FinishCurrentSequence( work );
+    return;
+  }
+
   if( trg & PAD_BUTTON_B ) {
     PMSND_PlaySE( SEQ_SE_CANCEL1 );      // ƒLƒƒƒ“ƒZƒ‹‰¹
     SetNextSequence( work, RESEARCH_SELECT_SEQ_FADE_OUT );
@@ -544,19 +584,13 @@ static void Main_KEY_WAIT( RESEARCH_SELECT_WORK* work )
     return;
   }
 
-  if( trg & PAD_BUTTON_A ) {
-    select = SelectTopic( work );    // ’²¸€–Ú‚ğ‘I‘ğ
-  } 
-
-  if( (TOPIC_TOUCH_AREA_TOPIC_0 <= touchedAreaIdx) && (touchedAreaIdx <= TOPIC_TOUCH_AREA_TOPIC_9) ) {
-    MoveTopicCursorDirect( work, touchedAreaIdx ); // ƒJ[ƒ\ƒ‹ˆÚ“®
-    select = SelectTopic( work );                  // ’²¸€–Ú‚ğ‘I‘ğ
-  } 
-
-  // Å‘å”‚Ì’²¸€–Ú‚ğ‘I‘ğ
-  if( (select == TRUE) && (work->selectedTopicNum == SELECT_TOPIC_MAX_NUM) ) {
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_CONFIRM );
+  if( touch == TOPIC_TOUCH_AREA_RETURN_BUTTON ) {
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );      // ƒLƒƒƒ“ƒZƒ‹‰¹
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_FADE_OUT );
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
+    return;
   }
 }
 
@@ -573,7 +607,7 @@ static void Main_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
   UpdateTopicScroll( work );       // ’²¸€–Úƒ{ƒ^ƒ“
   UpdateTopicTouchArea( work );    // ƒ^ƒbƒ`”ÍˆÍ‚ğXV‚·‚é
   UpdateScrollControlPos( work );  // ƒXƒNƒ[ƒ‹ƒo[‚Ì‚Â‚Ü‚İ•”•ª
-  UpdateTopicSelectIcons( work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“
+  UpdateTopicSelectIcon( work );   // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“
   work->topicScrollFrameCount++;
 
   // ƒXƒNƒ[ƒ‹I—¹
@@ -593,10 +627,10 @@ static void Main_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
 static void Main_CONFIRM( RESEARCH_SELECT_WORK* work )
 {
   int trg;
-  int touchedAreaIdx;
+  int touch;
 
-  trg     = GFL_UI_KEY_GetTrg();
-  touchedAreaIdx = GFL_UI_TP_HitTrg( work->menuTouchHitTable );
+  trg = GFL_UI_KEY_GetTrg();
+  touch = GFL_UI_TP_HitTrg( work->menuTouchHitTable );
 
   if( trg & PAD_KEY_UP ) {
     MoveMenuCursorUp( work );
@@ -605,13 +639,36 @@ static void Main_CONFIRM( RESEARCH_SELECT_WORK* work )
     MoveMenuCursorDown( work );
   } 
 
-  if( (trg & PAD_BUTTON_A) || (touchedAreaIdx == MENU_TOUCH_AREA_OK_BUTTON) ) {
-    SetNextSequence( work, MenuItemNextSequence[ work->menuCursorPos ] );
+  // Aƒ{ƒ^ƒ“
+  if( trg & PAD_BUTTON_A ) {
+    switch( work->menuCursorPos )
+    {
+    case MENU_ITEM_DETERMINATION_OK:
+      SetNextSequence( work, RESEARCH_SELECT_SEQ_DETERMINE );
+      break;
+    case MENU_ITEM_DETERMINATION_CANCEL:
+      PMSND_PlaySE( SEQ_SE_CANCEL1 ); // ƒLƒƒƒ“ƒZƒ‹‰¹
+      SetNextSequence( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
+      SetNextSequence( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
+      break;
+    default:
+      GF_ASSERT(0);
+    }
     FinishCurrentSequence( work );
     return;
   } 
 
-  if( (trg & PAD_BUTTON_B) || (touchedAreaIdx == MENU_TOUCH_AREA_CANCEL_BUTTON) ) {
+  // u‚¯‚Á‚Ä‚¢vƒ{ƒ^ƒ“
+  if( touch == MENU_TOUCH_AREA_OK_BUTTON ) {
+    SetNextSequence( work, RESEARCH_SELECT_SEQ_DETERMINE );
+    FinishCurrentSequence( work );
+    return;
+  } 
+
+  // Bƒ{ƒ^ƒ“ or u‚â‚ß‚évƒ{ƒ^ƒ“
+  if( (trg & PAD_BUTTON_B) || 
+      (touch == MENU_TOUCH_AREA_CANCEL_BUTTON) ) {
+    PMSND_PlaySE( SEQ_SE_CANCEL1 ); // ƒLƒƒƒ“ƒZƒ‹‰¹
     SetNextSequence( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
     SetNextSequence( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
     FinishCurrentSequence( work );
@@ -922,7 +979,7 @@ static void SetSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq
  */
 //----------------------------------------------------------------------------------------------
 static void InitSequence_SETUP( RESEARCH_SELECT_WORK* work )
-{
+{ 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq SETUP\n" );
 }
@@ -936,7 +993,7 @@ static void InitSequence_SETUP( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void InitSequence_STANDBY( RESEARCH_SELECT_WORK* work )
 {
-  SetTopicCursorOff( work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
+  SetTopicButtonCursorOff( work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq STANDBY\n" );
@@ -951,7 +1008,7 @@ static void InitSequence_STANDBY( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void InitSequence_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 {
-  SetTopicCursorOn( work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
+  SetTopicButtonCursorOn( work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq KEY_WAIT\n" );
@@ -1092,6 +1149,19 @@ static void InitSequence_CLEAN_UP( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void FinishSequence_SETUP( RESEARCH_SELECT_WORK* work )
 {
+  u8 nowTopicID;
+
+  // ’²¸’†‚Ì€–ÚID‚ğæ“¾
+  nowTopicID = GetInvestigatingTopicID( work );
+
+  // ’²¸’†‚Ì€–Ú‚ª‚ ‚éê‡
+  if( nowTopicID != INVESTIGATING_QUESTION_NULL ) {
+    // ’²¸’†‚Ì€–Ú‚ğ‘I‘ğó‘Ô‚É‚·‚é
+    SetTopicButtonSelected( work, nowTopicID ); // ‘I‘ğ‚µ‚Ä‚¢‚éó‘Ô‚É‚·‚é
+    SetSelectedTopicID( work, nowTopicID );     // ’²¸’†‚Ì€–Ú‚ğ‘I‘ğ
+    UpdateTopicSelectIcon( work );              // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
+  }
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq SETUP\n" );
 }
@@ -1162,6 +1232,9 @@ static void FinishSequence_CONFIRM( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void FinishSequence_DETERMINE( RESEARCH_SELECT_WORK* work )
 { 
+  // ’²¸‚·‚é€–Ú‚ğXV‚·‚é
+  UpdateInvestigatingTopicID( work ); 
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq DETERMINE\n" );
 }
@@ -1280,7 +1353,7 @@ static void MoveMenuCursorDown( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void MoveTopicCursorUp( RESEARCH_SELECT_WORK* work )
 {
-  SetTopicCursorOff( work );         // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
+  SetTopicButtonCursorOff( work );   // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
   SetTopicCursorNextPos( work, -1 ); // ˆÚ“®æ‚ğİ’è
   PMSND_PlaySE( SEQ_SE_SELECT1 );    // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
 }
@@ -1294,7 +1367,7 @@ static void MoveTopicCursorUp( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void MoveTopicCursorDown( RESEARCH_SELECT_WORK* work )
 {
-  SetTopicCursorOff( work );         // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
+  SetTopicButtonCursorOff( work );   // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
   SetTopicCursorNextPos( work, 1 );  // ˆÚ“®æ‚ğİ’è
   PMSND_PlaySE( SEQ_SE_SELECT1 );    // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
 }
@@ -1309,9 +1382,9 @@ static void MoveTopicCursorDown( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void MoveTopicCursorDirect( RESEARCH_SELECT_WORK* work, u8 topicID )
 {
-  SetTopicCursorOff( work );                // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
+  SetTopicButtonCursorOff( work );          // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
   SetTopicCursorPosDirect( work, topicID ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
-  SetTopicCursorOn( work );                 // ˆÚ“®Œã‚Ì€–Ú‚ğ‘I‘ğó‘Ô‚É‚·‚é
+  SetTopicButtonCursorOn( work );           // ˆÚ“®Œã‚Ì€–Ú‚ğ‘I‘ğó‘Ô‚É‚·‚é
   PMSND_PlaySE( SEQ_SE_SELECT1 );           // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
 }
 
@@ -1433,30 +1506,33 @@ static void UpdateTopicTouchArea( RESEARCH_SELECT_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief ƒJ[ƒ\ƒ‹ˆÊ’u‚É‚ ‚é’²¸€–Ú‚ğ‘I‘ğ‚·‚é
+ * @brief ‘I‘ğ’†‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
  *
- * @param work
+ * @parma work
+ *
+ * @return ‘I‘ğ’†‚Ì’²¸€–ÚID ( TOPIC_ID_XXXX )
+ *         –¢‘I‘ğ‚Ìê‡ TOPIC_ID_DUMMY
  */
 //----------------------------------------------------------------------------------------------
-static void RegisterTopicID( RESEARCH_SELECT_WORK* work )
+static u8 GetSelectedTopicID( const RESEARCH_SELECT_WORK* work )
 {
-  int topicID;
-  int registerPos;
+  return work->selectedTopicID;
+}
 
-  // ‘I‘ğ‘ÎÛ‚Æ ‚»‚Ì“o˜^êŠ‚ğŒˆ’è
-  topicID     = work->topicCursorPos;
-  registerPos = work->selectedTopicNum;
-
-  // ƒGƒ‰[ƒ`ƒFƒbƒN
-  GF_ASSERT( registerPos < SELECT_TOPIC_MAX_NUM ); // ‘I‘ğ”ƒI[ƒo[
-  GF_ASSERT( work->selectedTopicIDs[ registerPos ] == TOPIC_ID_DUMMY );  // ˆ—‚Ì®‡«‚ªæ‚ê‚Ä‚¢‚È‚¢
-
-  // ‘I‘ğ‚µ‚½’²¸€–Ú‚Æ‚µ‚Ä“o˜^
-  work->selectedTopicIDs[ registerPos ] = topicID;
-  work->selectedTopicNum++;
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ’²¸€–Ú‚ğ‘I‘ğ‚·‚é
+ *
+ * @param work
+ * @param topicID ‘I‘ğ‚·‚é’²¸€–ÚID
+ */
+//----------------------------------------------------------------------------------------------
+static void SetSelectedTopicID( RESEARCH_SELECT_WORK* work, u8 topicID )
+{
+  work->selectedTopicID = topicID;
 
   // DEBUG:
-  DebugPrint_SelectedTopicIDs( work );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: selected topicID ==>%d\n", topicID );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1466,66 +1542,27 @@ static void RegisterTopicID( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void ReleaseTopicID( RESEARCH_SELECT_WORK* work )
+static void ResetSelectedTopicID( RESEARCH_SELECT_WORK* work )
 {
-  int topicID;
-  int shiftPos;
-  int registerPos;
-
-  // ƒLƒƒƒ“ƒZƒ‹‘ÎÛ‚ğŒˆ’è
-  topicID = work->topicCursorPos;
-
-  // ‘I‘ğ‚³‚ê‚Ä‚¢‚éID‚Ì’†‚©‚ç, ƒJ[ƒ\ƒ‹ˆÊ’u‚É‚ ‚é€–Ú‚ÌID‚ğŒŸõ
-  for( registerPos=0; registerPos < work->selectedTopicNum; registerPos++ )
-  {
-    // ”­Œ©
-    if( work->selectedTopicIDs[ registerPos ] == topicID ){ break; }
-  }
-
-  // ƒGƒ‰[ƒ`ƒFƒbƒN
-  GF_ASSERT( registerPos < SELECT_TOPIC_MAX_NUM ); // ‘I‘ğ‚³‚ê‚Ä‚¢‚È‚¢
-
-  // ‰ğœ
-  for( shiftPos = registerPos; shiftPos < SELECT_TOPIC_MAX_NUM - 1; shiftPos++ )
-  {
-    work->selectedTopicIDs[ shiftPos ] = work->selectedTopicIDs[ shiftPos + 1 ];
-  }
-  work->selectedTopicIDs[ SELECT_TOPIC_MAX_NUM - 1 ] = TOPIC_ID_DUMMY;
-  work->selectedTopicNum--;
+  work->selectedTopicID = TOPIC_ID_DUMMY;
 
   // DEBUG:
-  DebugPrint_SelectedTopicIDs( work );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: release topicID\n" );
 }
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief ’²¸€–Ú‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
+ * @brief ’²¸€–Ú‚ğ‘I‘ğ‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
  *
  * @param work
- * @parma topicID ’²¸€–ÚID
  *
- * @return w’è‚µ‚½’²¸€–Ú‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚éê‡ TRUE
+ * @return ’²¸€–Ú‚ğ‘I‘ğ‚µ‚Ä‚¢‚éê‡ TRUE
  *         ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
  */
 //----------------------------------------------------------------------------------------------
-static BOOL IsTopicIDRegistered( const RESEARCH_SELECT_WORK* work, u8 topicID )
+static BOOL IsTopicIDSelected( const RESEARCH_SELECT_WORK* work )
 {
-  int idx;
-  int selectedNum;
-
-  // ‘I‘ğÏ‚İ’²¸€–Ú‚Ì”
-  selectedNum = work->selectedTopicNum;
-
-  // ‘I‘ğÏ‚İ’²¸€–ÚƒŠƒXƒg‚©‚ç, w’è‚³‚ê‚½€–Ú‚ğŒŸõ
-  for( idx=0; idx < selectedNum; idx++ )
-  {
-    // ”­Œ©
-    if( work->selectedTopicIDs[ idx ] == topicID )
-    {
-      return TRUE;
-    }
-  }
-  return FALSE;
+  return (work->selectedTopicID != TOPIC_ID_DUMMY);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1571,7 +1608,7 @@ static void SetMenuCursorOff( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void SetTopicCursorOn( const RESEARCH_SELECT_WORK* work )
+static void SetTopicButtonCursorOn( const RESEARCH_SELECT_WORK* work )
 {
   u8 topicID;
   u8 BGFrame;
@@ -1599,7 +1636,7 @@ static void SetTopicCursorOn( const RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void SetTopicCursorOff( const RESEARCH_SELECT_WORK* work )
+static void SetTopicButtonCursorOff( const RESEARCH_SELECT_WORK* work )
 {
   u8 topicID;
   u8 BGFrame;
@@ -1622,19 +1659,17 @@ static void SetTopicCursorOff( const RESEARCH_SELECT_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief ƒJ[ƒ\ƒ‹ˆÊ’u‚É‚ ‚é’²¸€–Ú‚ğ ‘I‘ğ‚³‚ê‚½ó‘Ô‚É‚·‚é
+ * @brief ’²¸€–Ú‚Ìƒ{ƒ^ƒ“‚ğ ‘I‘ğ‚³‚ê‚½ó‘Ô‚É‚·‚é
  *
  * @param work
+ * @param topicID ‘I‘ğó‘Ô‚É‚·‚é’²¸€–Ú‚ÌID
  */
 //----------------------------------------------------------------------------------------------
-static void SetTopicSelected( const RESEARCH_SELECT_WORK* work )
+static void SetTopicButtonSelected( const RESEARCH_SELECT_WORK* work, u8 topicID )
 {
-  u8 topicID;
   u16* screenBuffer1;
   u16* screenBuffer2;
   int xOffset, yOffset;
-
-  topicID = work->topicCursorPos;
 
   // ƒXƒNƒŠ[ƒ“ƒoƒbƒtƒ@‚ğæ“¾
   screenBuffer1 = GFL_BG_GetScreenBufferAdrs( MAIN_BG_WINDOW );
@@ -1648,7 +1683,7 @@ static void SetTopicSelected( const RESEARCH_SELECT_WORK* work )
       int left, top, x, y;
       int srcPos, destPos;
 
-      left    = CalcTopicScreenPosLeft( work, topicID );
+      left    = TOPIC_BUTTON_X;
       top     = CalcTopicScreenPosTop( work, topicID );
       x       = left + xOffset;
       y       = top  + yOffset;
@@ -1665,7 +1700,7 @@ static void SetTopicSelected( const RESEARCH_SELECT_WORK* work )
     int left, top, x, y;
     int srcPos, destPos;
 
-    left    = CalcTopicScreenPosLeft( work, topicID );
+    left    = TOPIC_BUTTON_X;
     top     = CalcTopicScreenPosTop( work, topicID );
     x       = left + TOPIC_BUTTON_WIDTH - 1;
     y       = top;
@@ -1695,12 +1730,12 @@ static void SetTopicSelected( const RESEARCH_SELECT_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief ƒJ[ƒ\ƒ‹ˆÊ’u‚É‚ ‚é’²¸€–Ú‚ğ ‘I‘ğ‚³‚ê‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
+ * @brief ’²¸€–Ú‚Ìƒ{ƒ^ƒ“‚ğ ‘I‘ğ‚³‚ê‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
  *
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void SetTopicNotSelected( const RESEARCH_SELECT_WORK* work )
+static void SetTopicButtonNotSelected( const RESEARCH_SELECT_WORK* work )
 {
   u8 topicID;
   u16* screenBuffer1;
@@ -1721,7 +1756,7 @@ static void SetTopicNotSelected( const RESEARCH_SELECT_WORK* work )
       int left, top, x, y;
       int srcPos, destPos;
 
-      left    = CalcTopicScreenPosLeft( work, topicID );
+      left    = TOPIC_BUTTON_X - 1;
       top     = CalcTopicScreenPosTop( work, topicID );
       x       = left + xOffset;
       y       = top  + yOffset;
@@ -1738,7 +1773,7 @@ static void SetTopicNotSelected( const RESEARCH_SELECT_WORK* work )
     int left, top, x, y;
     int srcPos, destPos;
 
-    left    = CalcTopicScreenPosLeft( work, topicID );
+    left    = TOPIC_BUTTON_X - 1;
     top     = CalcTopicScreenPosTop( work, topicID );
     x       = left;
     y       = top;
@@ -1822,7 +1857,6 @@ static void FinishTopicScroll( RESEARCH_SELECT_WORK* work )
 {
   work->topicCursorPos = work->topicCursorNextPos; // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
   UpdateSubDisplayStrings( work );                 // ã‰æ–Ê‚ÌƒJ[ƒ\ƒ‹ˆË‘¶•¶š—ñ‚ğXV
-  SetTopicCursorOn( work );                        // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish topic scroll\n" );
@@ -1857,8 +1891,8 @@ static u8 CalcTopicScreenPosLeft( const RESEARCH_SELECT_WORK* work, u8 topicID )
   // ƒfƒtƒHƒ‹ƒg‚ÌˆÊ’u
   left = TOPIC_BUTTON_X;
 
-  // ‘I‘ğ‚³‚ê‚Ä‚¢‚éê‡, 1ƒLƒƒƒ‰•ª¶‚É‚ ‚é
-  if( IsTopicIDRegistered( work, topicID ) ){ left -= 1; }
+  // ’²¸’†‚Ìê‡, 1ƒLƒƒƒ‰•ª¶‚É‚ ‚é
+  if( GetInvestigatingTopicID(work) == topicID ){ left -= 1; }
 
   return left;
 }
@@ -1986,80 +2020,6 @@ static int CalcScreenScrollY( const RESEARCH_SELECT_WORK* work )
 
 
 
-
-
-
-
-
-
-
-//==============================================================================================
-// ¡’²¸€–Ú
-//==============================================================================================
-
-//----------------------------------------------------------------------------------------------
-/**
- * @brief ƒJ[ƒ\ƒ‹ˆÊ’u‚É‚ ‚é’²¸€–Ú‚ğ‘I‘ğ‚·‚éB
- *        ‚·‚Å‚É‘I‘ğÏ‚İ‚È‚ç“o˜^‚ğ‰ğœ‚·‚éB
- *        ‚»‚¤‚Å‚È‚¯‚ê‚Î, “o˜^‚·‚éB
- *
- * @param work
- *
- * @return V‚µ‚¢€–Ú‚ğ‘I‘ğ‚µ‚½ê‡ TRUE
- *         ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
- */
-//----------------------------------------------------------------------------------------------
-static BOOL SelectTopic( RESEARCH_SELECT_WORK* work )
-{
-  BOOL select = FALSE;  // V‚µ‚¢€–Ú‚ğ‘I‘ğ‚µ‚½‚©‚Ç‚¤‚©
-
-
-  if( IsTopicIDRegistered( work, work->topicCursorPos ) ) // “o˜^Ï‚İ
-  {
-    SetTopicNotSelected( work );    // ‘I‘ğ‚µ‚Ä‚¢‚È‚¢ó‘Ô‚É–ß‚·
-    ReleaseTopicID( work );         // “o˜^‚µ‚Ä‚¢‚½€–ÚID‚ğ‰ğœ‚·‚é
-    PMSND_PlaySE( SEQ_SE_CANCEL1 ); // ƒLƒƒƒ“ƒZƒ‹‰¹
-  }
-  else if( work->selectedTopicNum == SELECT_TOPIC_MAX_NUM ) // ‚·‚Å‚ÉÅ‘å”‚ğ‘I‘ğÏ‚İ
-  {
-  }
-  else // V‚µ‚¢€–Ú‚ğ‘I‘ğ
-  {
-    SetTopicSelected( work );       // ‘I‘ğ‚µ‚Ä‚¢‚éó‘Ô‚É‚·‚é
-    RegisterTopicID( work );        // €–ÚID‚ğ“o˜^‚·‚é
-    PMSND_PlaySE( SEQ_SE_DECIDE1 ); // Œˆ’è‰¹
-    select = TRUE;
-  }
-
-  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
-  UpdateTopicSelectIcons( work );
-
-  return select;
-}
-
-//----------------------------------------------------------------------------------------------
-/**
- * @brief ‘I‘ğÏ‚İ’²¸€–ÚIDƒŠƒXƒg‚ğ‰Šú‰»‚·‚é
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static void InitSelectedTopicIDs( RESEARCH_SELECT_WORK* work )
-{
-  int i;
-
-  // ‘I‘ğÏ‚İ’²¸€–ÚID‚ğ‰Šú‰»
-  for( i=0; i < SELECT_TOPIC_MAX_NUM; i++ )
-  { 
-    work->selectedTopicIDs[i] = TOPIC_ID_DUMMY;
-  }
-
-  // ‘I‘ğ‚µ‚½’²¸€–Ú‚Ì”‚ğ‰Šú‰»
-  work->selectedTopicNum = 0;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init select topic IDs\n" );
-}
 
 //----------------------------------------------------------------------------------------------
 /**
@@ -2741,7 +2701,7 @@ static void DeleteBGFonts( RESEARCH_SELECT_WORK* work )
 static void CreateClactSystem( RESEARCH_SELECT_WORK* work )
 {
   // ƒVƒXƒeƒ€ì¬
-  GFL_CLACT_SYS_Create( &ClactSystemInitData, &VRAMBankSettings, work->heapID );
+  //GFL_CLACT_SYS_Create( &ClactSystemInitData, &VRAMBankSettings, work->heapID );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create clact system\n" );
@@ -2757,16 +2717,33 @@ static void CreateClactSystem( RESEARCH_SELECT_WORK* work )
 static void DeleteClactSystem( RESEARCH_SELECT_WORK* work )
 { 
   // ƒVƒXƒeƒ€”jŠü
-  GFL_CLACT_SYS_Delete();
+  //GFL_CLACT_SYS_Delete();
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: delete clact system\n" );
 }
 
 
-//==============================================================================================
-// ¡SUB-OBJ ƒŠƒ\[ƒX
-//==============================================================================================
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief OBJ ƒŠƒ\[ƒX‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void InitOBJResources( RESEARCH_SELECT_WORK* work )
+{
+  int i;
+
+  for( i=0; i<OBJ_RESOURCE_NUM; i++ )
+  {
+    work->objResRegisterIdx[i] = 0; 
+  }
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init OBJ resources\n" );
+}
 
 //----------------------------------------------------------------------------------------------
 /**
@@ -3423,6 +3400,51 @@ static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RESEARCH_SELECT_WORK* work
   return work->BmpOamActor[ BmpOamActorIdx ];
 }
 
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ’²¸’†‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»İ’²¸’†‚Ì’²¸€–ÚID
+ */
+//----------------------------------------------------------------------------------------------
+static u8 GetInvestigatingTopicID( const RESEARCH_SELECT_WORK* work )
+{
+  SAVE_CONTROL_WORK* saveControlWork;
+  QUESTIONNAIRE_SAVE_WORK* questionnaireSave;
+
+  saveControlWork   = GAMEDATA_GetSaveControlWork( work->gameData );
+  questionnaireSave = SaveData_GetQuestionnaire( saveControlWork );
+
+  // ƒZ[ƒuƒf[ƒ^‚©‚çæ“¾
+  return QuestionnaireWork_GetInvestigatingQuestion( questionnaireSave, 0 );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ’²¸‚·‚é€–Ú‚ğXV‚·‚é
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void UpdateInvestigatingTopicID( const RESEARCH_SELECT_WORK* work )
+{
+  SAVE_CONTROL_WORK* saveControlWork;
+  QUESTIONNAIRE_SAVE_WORK* questionnaireSave;
+  u8 topicID;
+
+  // €–Ú‚ğ‘I‘ğ‚µ‚Ä‚¢‚È‚¢
+  GF_ASSERT( IsTopicIDSelected(work) );
+
+  topicID           = GetSelectedTopicID( work ); // ‘I‘ğ‚µ‚½’²¸€–ÚID
+  saveControlWork   = GAMEDATA_GetSaveControlWork( work->gameData );
+  questionnaireSave = SaveData_GetQuestionnaire( saveControlWork );
+  
+  // ƒZ[ƒuƒf[ƒ^‚ğXV
+  QuestionnaireWork_SetInvestigatingQuestion( questionnaireSave, topicID, 0 );
+}
+
 
 //==============================================================================================
 // ¡OBJ •\¦
@@ -3470,46 +3492,33 @@ static void UpdateScrollControlPos( const RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void UpdateTopicSelectIcons( const RESEARCH_SELECT_WORK* work )
+static void UpdateTopicSelectIcon( const RESEARCH_SELECT_WORK* work )
 {
-  int idx;
-  int selectedTopicNum = work->selectedTopicNum;
-  CLWK_INDEX iconClactWorkIdx[ SELECT_TOPIC_MAX_NUM ] = 
-  {
-    CLWK_SELECT_ICON_0,
-  };
+  int topicID;
+  GFL_CLWK* clactWork;
 
-  // ‘SƒAƒCƒRƒ“‚ğÁ‹
-  for( idx=0; idx < SELECT_TOPIC_MAX_NUM; idx++ )
-  {
-    GFL_CLWK* clactWork;
-    CLWK_INDEX wkIdx;
+  topicID   = GetInvestigatingTopicID( work );          // ’²¸’†‚Ì€–ÚID
+  clactWork = GetClactWork( work, CLWK_SELECT_ICON_0 ); // ƒAƒCƒRƒ“‚ÌƒZƒ‹ƒAƒNƒ^[ƒ[ƒN
 
-    wkIdx     = iconClactWorkIdx[ idx ];
-    clactWork = GetClactWork( work, wkIdx );
-    GFL_CLACT_WK_SetDrawEnable( clactWork, FALSE );
+  // ’²¸’†‚Ì€–Ú‚ª–³‚¢
+  if( topicID == INVESTIGATING_QUESTION_NULL ) {
+    GFL_CLACT_WK_SetDrawEnable( clactWork, FALSE ); // ”ñ•\¦
   }
-
-  // ‘I‘ğ€–Ú‚Ì”‚¾‚¯•\¦
-  for( idx=0; idx < selectedTopicNum; idx++ )
-  { 
+  else {
     GFL_CLACTPOS pos;
-    GFL_CLWK* clactWork;
-    CLWK_INDEX wkIdx;
     u16 setSurface;
 
-    wkIdx      = iconClactWorkIdx[ idx ];
-    clactWork  = GetClactWork( work, wkIdx );
-    pos.x      = CalcTopicDisplayPosLeft( work, work->selectedTopicIDs[ idx ] ) + SELECT_ICON_DRAW_OFFSET_X;
-    pos.y      = CalcTopicDisplayPosTop( work, work->selectedTopicIDs[ idx ] ) + SELECT_ICON_DRAW_OFFSET_Y;
-    setSurface = ClactWorkInitData[ wkIdx ].setSurface;
+    // •\¦ó‘Ô‚ğXV
+    pos.x      = CalcTopicDisplayPosLeft( work, topicID ) + SELECT_ICON_DRAW_OFFSET_X;
+    pos.y      = CalcTopicDisplayPosTop( work, topicID ) + SELECT_ICON_DRAW_OFFSET_Y;
+    setSurface = ClactWorkInitData[ CLWK_SELECT_ICON_0 ].setSurface;
     GFL_CLACT_WK_SetPos( clactWork, &pos, setSurface );
     GFL_CLACT_WK_SetAutoAnmFlag( clactWork, TRUE );
     GFL_CLACT_WK_SetDrawEnable( clactWork, TRUE );
   }
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: update topic select icons\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: update topic select icon\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -3660,22 +3669,3 @@ static void DebugPrint_seqQueue( const RESEARCH_SELECT_WORK* work )
   }
   OS_TFPrintf( PRINT_TARGET, "\n" );
 } 
-
-//----------------------------------------------------------------------------------------------
-/**
- * @brief ‘I‘ğÏ‚İ‚Ì’²¸€–ÚID‚ğ•\¦‚·‚é
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static void DebugPrint_SelectedTopicIDs( const RESEARCH_SELECT_WORK* work )
-{
-  int i;
-
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: selected topic IDs =" );
-  for( i=0; i < work->selectedTopicNum; i++ )
-  {
-    OS_TFPrintf( PRINT_TARGET, " %d", work->selectedTopicIDs[i] );
-  }
-  OS_TFPrintf( PRINT_TARGET, "\n" );
-}

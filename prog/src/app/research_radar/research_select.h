@@ -8,6 +8,8 @@
 ///////////////////////////////////////////////////////////////////////////////// 
 #pragma once
 #include <gflib.h>
+#include "gamesystem/gamesystem.h" // for GAMESYS_WORK
+#include "research_common.h"       // for RESEARCH_COMMON_WORK
 
 
 //===============================================================================
@@ -31,8 +33,8 @@ typedef struct _RESEARCH_SELECT_WORK RESEARCH_SELECT_WORK;
 // Å†í≤ç∏èâä˙âÊñ  êßå‰ä÷êî
 //=============================================================================== 
 // ÉèÅ[ÉNê∂ê¨/îjä¸
-RESEARCH_SELECT_WORK* CreateResearchSelectWork( HEAPID heapID );
-void                DeleteResearchSelectWork( RESEARCH_SELECT_WORK* work );
+RESEARCH_SELECT_WORK* CreateResearchSelectWork( RESEARCH_COMMON_WORK* commonWork );
+void DeleteResearchSelectWork( RESEARCH_SELECT_WORK* work );
 
 // ÉÅÉCÉììÆçÏ
 RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work );

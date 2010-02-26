@@ -15,14 +15,14 @@
 #include "research_menu_data.cdat"
 #include "research_common.h"
 
+#include "system/main.h"            // for HEAPID_xxxx
+#include "system/gfl_use.h"         // for GFUser_xxxx
 #include "print/gf_font.h"          // for GFL_FONT_xxxx
 #include "print/printsys.h"         // for PRINTSYS_xxxx
-#include "system/gfl_use.h"         // for GFUser_xxxx
 #include "gamesystem/game_beacon.h" // for GAMEBEACON_xxxx
 #include "sound/pm_sndsys.h"        // for PMSND_xxxx
 #include "sound/wb_sound_data.sadl" // for SEQ_SE_XXXX
 
-#include "system/main.h"                    // for HEAPID_xxxx
 #include "arc/arc_def.h"                    // for ARCID_xxxx
 #include "arc/research_radar_graphic.naix"  // for NARC_research_radar_xxxx
 #include "arc/font/font.naix"               // for NARC_font_xxxx
@@ -36,9 +36,13 @@
 //==============================================================================================
 struct _RESEARCH_MENU_WORK
 { 
-  HEAPID       heapID;  // ヒープID
-  GFL_FONT*    font;    // フォント
-  GFL_MSGDATA* message[ MESSAGE_NUM ]; // メッセージ
+  RESEARCH_COMMON_WORK* commonWork; // 全画面共通ワーク
+  HEAPID                heapID;
+  GAMESYS_WORK*         gameSystem;
+  GAMEDATA*             gameData;
+
+  GFL_FONT*    font;
+  GFL_MSGDATA* message[ MESSAGE_NUM ];
 
   QUEUE*               seqQueue;      // シーケンスキュー
   RESEARCH_MENU_SEQ    seq;           // 処理シーケンス
@@ -70,8 +74,7 @@ static void Main_SETUP   ( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_SETU
 static void Main_STAND_BY( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_STAND_BY
 static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_WAIT
 static void Main_FADE_OUT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_FADE_OUT
-static void Main_CLEAN_UP( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_CLEAN_UP
-
+static void Main_CLEAN_UP( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_CLEAN_UP 
 // シーケンス制御
 static void CountUpSeqCount( RESEARCH_MENU_WORK* work ); // シーケンスカウンタを更新する
 static void SetNextSequence( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq ); // 次のシーケンスを登録する
@@ -79,14 +82,12 @@ static void FinishCurrentSequence( RESEARCH_MENU_WORK* work ); // 現在のシーケン
 static void SwitchSequence( RESEARCH_MENU_WORK* work ); // 処理シーケンスを変更する
 static void SetSequence( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq ); // 処理シーケンスを設定する
 static void SetResult( RESEARCH_MENU_WORK* work, RESEARCH_MENU_RESULT result ); // 画面終了結果を設定する
-
 // シーケンス初期化処理
 static void InitSequence_SETUP   ( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_SETUP
 static void InitSequence_STAND_BY( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_STAND_BY
 static void InitSequence_KEY_WAIT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_WAIT
 static void InitSequence_FADE_OUT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_FADE_OUT
-static void InitSequence_CLEAN_UP( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_CLEAN_UP
-
+static void InitSequence_CLEAN_UP( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_CLEAN_UP 
 // シーケンス終了処理
 static void FinishSequence_SETUP   ( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_SETUP
 static void FinishSequence_STAND_BY( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_STAND_BY
@@ -110,7 +111,7 @@ static void CreateMessages( RESEARCH_MENU_WORK* work );
 static void DeleteMessages( RESEARCH_MENU_WORK* work );
 // タッチ領域
 static void SetupTouchArea( RESEARCH_MENU_WORK* work );
-
+// シーケンスキュー
 static void InitSeqQueue  ( RESEARCH_MENU_WORK* work ); // シーケンスキュー 初期化
 static void CreateSeqQueue( RESEARCH_MENU_WORK* work ); // シーケンスキュー 作成
 static void DeleteSeqQueue( RESEARCH_MENU_WORK* work ); // シーケンスキュー 破棄
@@ -143,10 +144,10 @@ static void MenuItemSwitchOff( MENU_ITEM menuItem );
 // OBJ システム
 static void CreateClactSystem( RESEARCH_MENU_WORK* work );
 static void DeleteClactSystem( RESEARCH_MENU_WORK* work );
-// SUB-OBJ リソース
+// OBJ リソース
+static void InitOBJResources( RESEARCH_MENU_WORK* work );
 static void RegisterSubObjResources( RESEARCH_MENU_WORK* work );
 static void ReleaseSubObjResources ( RESEARCH_MENU_WORK* work );
-// MAIN-OBJ リソース
 static void RegisterMainObjResources( RESEARCH_MENU_WORK* work );
 static void ReleaseMainObjResources ( RESEARCH_MENU_WORK* work );
 // セルアクターユニット
@@ -178,28 +179,35 @@ static void DebugPrint_seqQueue( const RESEARCH_MENU_WORK* work );
 /**
  * @brief 調査初期画面ワークの生成
  *
- * @param heapID
+ * @param commonWork 全画面共通ワーク
+ *
+ * @return 調査初期画面ワーク
  */
 //----------------------------------------------------------------------------------------------
-RESEARCH_MENU_WORK* CreateResearchMenuWork( HEAPID heapID )
+RESEARCH_MENU_WORK* CreateResearchMenuWork( RESEARCH_COMMON_WORK* commonWork )
 {
   int i;
   RESEARCH_MENU_WORK* work;
+  HEAPID heapID;
+
+  heapID = RESEARCH_COMMON_GetHeapID( commonWork );
 
   // 生成
   work = GFL_HEAP_AllocMemory( heapID, sizeof(RESEARCH_MENU_WORK) );
 
   // 初期化
+  work->commonWork   = commonWork;
+  work->heapID       = heapID;
+  work->gameSystem   = RESEARCH_COMMON_GetGameSystem( commonWork );
+  work->gameData     = RESEARCH_COMMON_GetGameData( commonWork );
   work->seq          = RESEARCH_MENU_SEQ_SETUP;
   work->seqFinishFlag= FALSE;
   work->seqCount     = 0;
   work->result       = RESEARCH_MENU_RESULT_NONE;
   work->cursorPos    = MENU_ITEM_CHANGE_RESEARCH;
   work->newEntryFlag = FALSE;
-  work->heapID       = heapID;
 
-  for( i=0; i<OBJ_RESOURCE_NUM; i++ ){ work->objResRegisterIdx[i] = 0; }
-
+  InitOBJResources( work );
   InitSeqQueue( work );
   InitMessages( work );
   InitFont( work );
@@ -367,6 +375,17 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
     return;
   }
 
+  //-----------------
+  //「もどる」ボタン
+  if( touchedAreaIdx == TOUCH_AREA_RETURN_BUTTON ) {
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );               // キャンセル音
+    SetResult( work, RESEARCH_MENU_RESULT_EXIT ); // 画面終了結果を決定
+    SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
+    SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
+    FinishCurrentSequence( work );
+    return;
+  }
+
   //------------------
   // L ボタン (DEBUG)
   if( trg & PAD_BUTTON_L ) {
@@ -418,6 +437,17 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
       ( touchedAreaIdx == TOUCH_AREA_CHECK_BUTTON ) ) {
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                   // 決定音
     SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK ); // 画面終了結果を決定
+    SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
+    SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
+    FinishCurrentSequence( work );
+    return;
+  }
+
+  //-----------------
+  //「もどる」ボタン
+  if( touchedAreaIdx == TOUCH_AREA_RETURN_BUTTON ) {
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );               // キャンセル音
+    SetResult( work, RESEARCH_MENU_RESULT_EXIT ); // 画面終了結果を決定
     SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
     SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
@@ -1561,7 +1591,7 @@ static void MenuItemSwitchOff( MENU_ITEM menuItem )
 static void CreateClactSystem( RESEARCH_MENU_WORK* work )
 {
   // システム作成
-  GFL_CLACT_SYS_Create( &ClactSystemInitData, &VRAMBankSettings, work->heapID );
+  //GFL_CLACT_SYS_Create( &ClactSystemInitData, &VRAMBankSettings, work->heapID );
 
   // VBlank 割り込み関数を登録
   GFUser_SetVIntrFunc( GFL_CLACT_SYS_VBlankFunc );
@@ -1583,7 +1613,7 @@ static void DeleteClactSystem( RESEARCH_MENU_WORK* work )
   GFUser_ResetVIntrFunc();
 
   // システム破棄
-  GFL_CLACT_SYS_Delete();
+  //GFL_CLACT_SYS_Delete();
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: delete clact system\n" );
@@ -1593,6 +1623,26 @@ static void DeleteClactSystem( RESEARCH_MENU_WORK* work )
 //==============================================================================================
 // ■SUB-OBJ リソース
 //==============================================================================================
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief OBJ のリソースを初期化する
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void InitOBJResources( RESEARCH_MENU_WORK* work )
+{
+  int i;
+
+  for( i=0; i<OBJ_RESOURCE_NUM; i++ )
+  {
+    work->objResRegisterIdx[i] = 0;
+  }
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init OBJ resources\n" );
+}
 
 //----------------------------------------------------------------------------------------------
 /**

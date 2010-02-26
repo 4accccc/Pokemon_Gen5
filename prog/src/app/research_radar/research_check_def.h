@@ -46,8 +46,8 @@
 // αブレンディング
 #define MAIN_BG_BLEND_TARGET_1 (GX_BLEND_PLANEMASK_BG2)  // 第一対象面
 #define MAIN_BG_BLEND_TARGET_2 (GX_BLEND_PLANEMASK_BG1)  // 第二対象面
-#define MAIN_BG_BLEND_WEIGHT_1 (31)  // 第一対象面のブレンディング係数
-#define MAIN_BG_BLEND_WEIGHT_2 (31)  // 第二対象面のブレンディング係数
+#define MAIN_BG_BLEND_WEIGHT_1 (16)  // 第一対象面のブレンディング係数
+#define MAIN_BG_BLEND_WEIGHT_2 (5)  // 第二対象面のブレンディング係数
 
 //----------------
 // □パレット番号

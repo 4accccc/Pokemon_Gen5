@@ -82,18 +82,20 @@ static const GFL_BG_BGCNT_HEADER MainBGControl_BACK =
 //===============================================================================
 // 初期化プロセス
 typedef enum{
-  PROC_INIT_SEQ_ALLOC_WORK,     // プロセスワーク確保
-  PROC_INIT_SEQ_INIT_WORK,      // プロセスワーク初期化
-  PROC_INIT_SEQ_SETUP_DISPLAY,  // 表示準備
-  PROC_INIT_SEQ_SETUP_BG,       // BG 準備
-  PROC_INIT_SEQ_FINISH,         // 終了
+  PROC_INIT_SEQ_ALLOC_WORK,        // プロセスワーク確保
+  PROC_INIT_SEQ_INIT_WORK,         // プロセスワーク初期化
+  PROC_INIT_SEQ_SETUP_DISPLAY,     // 表示準備
+  PROC_INIT_SEQ_SETUP_BG,          // BG 準備
+  PROC_INIT_SEQ_SETUP_COMMON_WORK, // 全画面共通ワークの準備
+  PROC_INIT_SEQ_FINISH,            // 終了
 } PROC_INIT_SEQ;
 
 // 終了プロセス
-typedef enum{
-  PROC_END_SEQ_CLEAN_UP_BG, // BG後片付け
-  PROC_END_SEQ_FREE_WORK,   // プロセスワーク解放
-  PROC_END_SEQ_FINISH,      // 終了
+typedef enum {
+  PROC_END_SEQ_CLEAN_UP_COMMON_WORK, // 全画面共通ワークの後片付け
+  PROC_END_SEQ_CLEAN_UP_BG,          // BG後片付け
+  PROC_END_SEQ_FREE_WORK,            // プロセスワーク解放
+  PROC_END_SEQ_FINISH,               // 終了
 } PROC_END_SEQ;
 
 // メインプロセス
@@ -117,6 +119,9 @@ typedef struct
 
   // フレームカウンタ
   u32 frameCount;
+
+  // 全画面共通ワーク
+  RESEARCH_COMMON_WORK* commonWork;
 
   // 各画面専用ワーク
   RESEARCH_TEST_WORK*   testWork;   // テスト画面
@@ -196,6 +201,7 @@ static GFL_PROC_RESULT ResearchRadarProcInit( GFL_PROC* proc, int* seq, void* pr
     work->heapID     = GFL_HEAPID_APP;
     work->gameSystem = param->gameSystem;
     work->frameCount = 0;
+    work->commonWork = NULL;
     work->testWork   = NULL;
     work->menuWork   = NULL;
     work->selectWork = NULL;
@@ -215,6 +221,13 @@ static GFL_PROC_RESULT ResearchRadarProcInit( GFL_PROC* proc, int* seq, void* pr
     SetupBG( work->heapID );
     LoadMainBGResources( work->heapID ); 
     LoadSubBGResources ( work->heapID ); 
+    (*seq)++;
+    break;
+
+  // 全画面共通ワークの準備
+  case PROC_INIT_SEQ_SETUP_COMMON_WORK:
+    work->commonWork = RESEARCH_COMMON_CreateWork( work->heapID, work->gameSystem );
+    RESEARCH_COMMON_SetupCommonOBJ( work->commonWork );
     (*seq)++;
     break;
 
@@ -246,6 +259,13 @@ static GFL_PROC_RESULT ResearchRadarProcEnd( GFL_PROC* proc, int* seq, void* prm
 
   switch( *seq )
   {
+  // 全画面共通ワークの後片付け
+  case PROC_END_SEQ_CLEAN_UP_COMMON_WORK:
+    RESEARCH_COMMON_CleanUpCommonOBJ( work->commonWork );
+    RESEARCH_COMMON_DeleteWork( work->commonWork );
+    (*seq)++;
+  break;
+
   // BG後片付け
   case PROC_END_SEQ_CLEAN_UP_BG:
     CleanUpBG();
@@ -429,9 +449,9 @@ static void SetMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq
   {
   case PROC_MAIN_SEQ_SETUP:   break;
   case PROC_MAIN_SEQ_TEST:    work->testWork   = CreateResearchTestWork  ( work->heapID );  break;
-  case PROC_MAIN_SEQ_MENU:    work->menuWork   = CreateResearchMenuWork  ( work->heapID );  break;
-  case PROC_MAIN_SEQ_SELECT:  work->selectWork = CreateResearchSelectWork( work->heapID );  break;
-  case PROC_MAIN_SEQ_CHECK:   work->checkWork  = CreateResearchCheckWork ( work->heapID );  break;
+  case PROC_MAIN_SEQ_MENU:    work->menuWork   = CreateResearchMenuWork  ( work->commonWork );  break;
+  case PROC_MAIN_SEQ_SELECT:  work->selectWork = CreateResearchSelectWork( work->commonWork );  break;
+  case PROC_MAIN_SEQ_CHECK:   work->checkWork  = CreateResearchCheckWork ( work->commonWork );  break;
   case PROC_MAIN_SEQ_FINISH:  break;
   default:  GF_ASSERT(0);
   } 

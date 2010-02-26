@@ -16,7 +16,6 @@ typedef enum {
   RESEARCH_SELECT_SEQ_KEY_WAIT,     // キー入力待ち
   RESEARCH_SELECT_SEQ_SCROLL_WAIT,  // スクロール完了待ち
   RESEARCH_SELECT_SEQ_CONFIRM,      // 調査項目確定の確認
-  RESEARCH_SELECT_SEQ_TO_KEY_WAIT,  // キー入力待ちに戻る
   RESEARCH_SELECT_SEQ_DETERMINE,    // 調査項目確定
   RESEARCH_SELECT_SEQ_FADE_IN,      // フェードイン
   RESEARCH_SELECT_SEQ_FADE_OUT,     // フェードアウト
@@ -52,6 +51,7 @@ typedef enum {
   TOPIC_TOUCH_AREA_TOPIC_7,       // 調査項目7
   TOPIC_TOUCH_AREA_TOPIC_8,       // 調査項目8
   TOPIC_TOUCH_AREA_TOPIC_9,       // 調査項目9
+  TOPIC_TOUCH_AREA_RETURN_BUTTON, //「もどる」ボタン
   TOPIC_TOUCH_AREA_DUMMY,         // 終端コード
   TOPIC_TOUCH_AREA_NUM,           // 総数
 } TOPIC_TOUCH_AREA_INDEX;

@@ -8,8 +8,10 @@
 //////////////////////////////////////////////////////////////////////////////////////////////// 
 #include <gflib.h>
 #include "bg_font.h"
-#include "research_select_index.h"
 #include "research_common.h"
+#include "research_common_def.h"
+#include "research_common_index.h"
+#include "research_select_index.h"
 
 #include "arc/arc_def.h"                    // for ARCID_xxxx
 #include "topic_id.h"                       // for TOPIC_ID_xxxx
@@ -35,13 +37,6 @@ static const u32 MessageDataID[ MESSAGE_NUM ] =
 //==============================================================================================
 // ■メニュー
 //==============================================================================================
-
-// 選択時の遷移先シーケンス
-static const RESEARCH_SELECT_SEQ MenuItemNextSequence[ MENU_ITEM_NUM ] = 
-{
-  RESEARCH_SELECT_SEQ_DETERMINE,   //「けってい」
-  RESEARCH_SELECT_SEQ_TO_KEY_WAIT, //「やめる」
-};
 
 // 対応するBMP-OAMアクターのインデックス
 static const BMPOAM_ACTOR_INDEX BmpOamIndexOfMenu[ MENU_ITEM_NUM ] = 
@@ -729,5 +724,12 @@ static const TOUCH_AREA_INIT_DATA TopicTouchAreaInitData[ TOPIC_TOUCH_AREA_NUM ]
   { 0, 0, 0, 0 }, // 調査項目7
   { 0, 0, 0, 0 }, // 調査項目8
   { 0, 0, 0, 0 }, // 調査項目9
+  //「もどる」ボタン
+  {
+    TOUCH_AREA_RETURN_BUTTON_X,
+    TOUCH_AREA_RETURN_BUTTON_X + TOUCH_AREA_RETURN_BUTTON_WIDTH,
+    TOUCH_AREA_RETURN_BUTTON_Y,
+    TOUCH_AREA_RETURN_BUTTON_Y + TOUCH_AREA_RETURN_BUTTON_HEIGHT,
+  },
   { GFL_UI_TP_HIT_END, 0, 0, 0 }, // 終端コード
 };

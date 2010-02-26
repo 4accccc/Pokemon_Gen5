@@ -8,6 +8,8 @@
 ///////////////////////////////////////////////////////////////////////////////// 
 #pragma once
 #include <gflib.h>
+#include "gamesystem/gamesystem.h" // for GAMESYS_WORK
+#include "research_common.h"       // for RESEARCH_COMMON_WORK
 
 
 //===============================================================================
@@ -31,7 +33,7 @@ typedef struct _RESEARCH_CHECK_WORK RESEARCH_CHECK_WORK;
 // □調査報告確認画面 制御関数
 //=============================================================================== 
 // ワーク生成/破棄
-RESEARCH_CHECK_WORK* CreateResearchCheckWork( HEAPID heapID );
+RESEARCH_CHECK_WORK* CreateResearchCheckWork( RESEARCH_COMMON_WORK* commonWork );
 void                 DeleteResearchCheckWork( RESEARCH_CHECK_WORK* work );
 
 // メイン関数
