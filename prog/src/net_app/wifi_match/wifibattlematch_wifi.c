@@ -59,7 +59,12 @@ FS_EXTERN_OVERLAY(dpw_common);
 ///	デバッグ
 //=====================================
 #ifdef PM_DEBUG
+
+
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
 #define GPF_FLAG_ON             //GPFフラグを強制ONにする
+#endif
+
 //#define MYPOKE_SELFCHECK        //自分のポケモンを送ったとき、サケとチェックし署名も証明させる
 //#define DEBUG_REGULATION_DATA   //レギュレーションデータを作成する
 //#define REGULATION_CHECK_ON     //パーティのレギュレーションチェックを強制ONにする

@@ -57,7 +57,11 @@ FS_EXTERN_OVERLAY(dpw_common);
 //=====================================
 #ifdef PM_DEBUG
 #define DEBUGWIN_USE
+
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
 #define DEBUG_GPF_PASS
+#endif
+
 //#define DEBUG_DIRTYCHECK_PASS
 #define SAKE_REPORT_NONE          //ÉåÉ|Å[ÉgÇÇµÇ»Ç¢
 #endif //PM_DEBUG
@@ -1423,7 +1427,7 @@ static void WbmRndSeq_Rate_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void 
         switch( select )
         { 
         case 0:
-          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_Start );
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_Matching );
           break;
         case 1:
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupEnd );
@@ -2060,7 +2064,7 @@ static void WbmRndSeq_Free_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void 
         switch( select )
         { 
         case 0:
-          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_Start );
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_Matching );
           break;
         case 1:
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_CupEnd );
