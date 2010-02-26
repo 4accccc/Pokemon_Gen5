@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-26T14:57:19"/>
+	<create user="taya" host="W00146" date="2010-02-26T16:20:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="870"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -367,33 +367,33 @@
 	</row>
 
 	<row id="BTLSTR_UI_LVUP_DIFF">
-		<language name="JPN" width="216">Ｈ　Ｐ[BD:03:Ｘ右寄せ:10]＋[2:01:２桁:0]
-こうげき[BD:03:Ｘ右寄せ:14]＋[2:01:２桁:1]
-ぼうぎょ[BD:03:Ｘ右寄せ:18]＋[2:01:２桁:2]
-とくこう[BD:03:Ｘ右寄せ:22]＋[2:01:２桁:3]
-とくぼう[BD:03:Ｘ右寄せ:26]＋[2:01:２桁:4]
-すばやさ[BD:03:Ｘ右寄せ:30]＋[2:01:２桁:5]</language>
-		<language name="JPN_KANJI" width="216" line="100">Ｈ　Ｐ[BD:03:Ｘ右寄せ:10]＋[2:01:２桁:0]
-攻　撃[BD:03:Ｘ右寄せ:14]＋[2:01:２桁:1]
-防　御[BD:03:Ｘ右寄せ:18]＋[2:01:２桁:2]
-特　攻[BD:03:Ｘ右寄せ:22]＋[2:01:２桁:3]
-特　防[BD:03:Ｘ右寄せ:26]＋[2:01:２桁:4]
-素早さ[BD:03:Ｘ右寄せ:30]＋[2:01:２桁:5]</language>
+		<language name="JPN" width="80">Ｈ　Ｐ[BD:03:Ｘ右寄せ:0]＋[2:01:２桁:0]
+こうげき[BD:03:Ｘ右寄せ:0]＋[2:01:２桁:1]
+ぼうぎょ[BD:03:Ｘ右寄せ:0]＋[2:01:２桁:2]
+とくこう[BD:03:Ｘ右寄せ:0]＋[2:01:２桁:3]
+とくぼう[BD:03:Ｘ右寄せ:0]＋[2:01:２桁:4]
+すばやさ[BD:03:Ｘ右寄せ:0]＋[2:01:２桁:5]</language>
+		<language name="JPN_KANJI" width="80" line="100">Ｈ　Ｐ[BD:03:Ｘ右寄せ:0]＋[2:01:２桁:0]
+こうげき[BD:03:Ｘ右寄せ:0]＋[2:01:２桁:1]
+ぼうぎょ[BD:03:Ｘ右寄せ:0]＋[2:01:２桁:2]
+とくこう[BD:03:Ｘ右寄せ:0]＋[2:01:２桁:3]
+とくぼう[BD:03:Ｘ右寄せ:0]＋[2:01:２桁:4]
+すばやさ[BD:03:Ｘ右寄せ:0]＋[2:01:２桁:5]</language>
 	</row>
 
 	<row id="BTLSTR_UI_LVUP_PARAM">
-		<language name="JPN" width="216">Ｈ　Ｐ[BD:03:Ｘ右寄せ:40][2:02:３桁:0]
-こうげき[BD:03:Ｘ右寄せ:40][2:02:３桁:1]
-ぼうぎょ[BD:03:Ｘ右寄せ:40][2:02:３桁:2]
-とくこう[BD:03:Ｘ右寄せ:40][2:02:３桁:3]
-とくぼう[BD:03:Ｘ右寄せ:40][2:02:３桁:4]
-すばやさ[BD:03:Ｘ右寄せ:40][2:02:３桁:5]</language>
-		<language name="JPN_KANJI" width="216" line="100">Ｈ　Ｐ[BD:03:Ｘ右寄せ:40][2:02:３桁:0]
-攻　撃[BD:03:Ｘ右寄せ:40][2:02:３桁:1]
-防　御[BD:03:Ｘ右寄せ:40][2:02:３桁:2]
-特　攻[BD:03:Ｘ右寄せ:40][2:02:３桁:3]
-特　防[BD:03:Ｘ右寄せ:40][2:02:３桁:4]
-素早さ[BD:03:Ｘ右寄せ:40][2:02:３桁:5]</language>
+		<language name="JPN" width="80">Ｈ　Ｐ[BD:03:Ｘ右寄せ:0][2:02:３桁:0]
+こうげき[BD:03:Ｘ右寄せ:0][2:02:３桁:1]
+ぼうぎょ[BD:03:Ｘ右寄せ:0][2:02:３桁:2]
+とくこう[BD:03:Ｘ右寄せ:0][2:02:３桁:3]
+とくぼう[BD:03:Ｘ右寄せ:0][2:02:３桁:4]
+すばやさ[BD:03:Ｘ右寄せ:0][2:02:３桁:5]</language>
+		<language name="JPN_KANJI" width="80" line="100">Ｈ　Ｐ[BD:03:Ｘ右寄せ:0][2:02:３桁:0]
+こうげき[BD:03:Ｘ右寄せ:0][2:02:３桁:1]
+ぼうぎょ[BD:03:Ｘ右寄せ:0][2:02:３桁:2]
+とくこう[BD:03:Ｘ右寄せ:0][2:02:３桁:3]
+とくぼう[BD:03:Ｘ右寄せ:0][2:02:３桁:4]
+すばやさ[BD:03:Ｘ右寄せ:0][2:02:３桁:5]</language>
 	</row>
 
 	<flowchart-group-list>
