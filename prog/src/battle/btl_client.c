@@ -31,6 +31,7 @@
 #include "btl_client.h"
 
 #include "tr_ai/tr_ai.h"
+#include "tr_tool/tr_tool.h"
 
 enum {
   PRINT_FLG = FALSE,
@@ -2482,8 +2483,48 @@ static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq )
       (*seq)++;
     }
     break;
-
   case 1:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
+      u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
+      int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
+
+      BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
+      BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
+      BTLV_StartMsgTrainer( wk->viewCore, trainerID, TRMSG_FIGHT_LOSE );
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      if( BTL_MAIN_IsMultiMode( wk->mainModule ) )
+      { 
+        BTLV_EFFECT_Add( BTLEFF_TRAINER_OUT );
+        (*seq)++;
+      }
+      else
+      { 
+        (*seq) = 4;
+      }
+    }
+    break;
+  case 3:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {  
+      u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 1 );
+      u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
+      int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
+
+      BTLV_EFFECT_DelTrainer( BTLV_MCSS_POS_TR_BB );
+      BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
+      BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
+       BTLV_StartMsgTrainer( wk->viewCore, trainerID, TRMSG_FIGHT_LOSE );
+      (*seq)++;
+    }
+    break;
+  case 4:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
       u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
@@ -2496,7 +2537,7 @@ static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq )
     }
     break;
 
-  case 2:
+  case 5:
     if( BTLV_WaitMsg(wk->viewCore) ){
       (*seq)++;
     }

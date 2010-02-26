@@ -165,6 +165,7 @@ void	TT_TrainerMessageGet( TrainerID tr_id, int kindID, STRBUF* str, HEAPID heap
 		ofs += 4;
 	}
 	GFL_ARC_CloseDataHandle( handle );
+  GFL_MSG_Delete( msg );
 
 //	GF_ASSERT_MSG(ofs!=size,"TrainerMessage Not Found");
 	//メッセージが見つからなかったら、STRBUFをクリアして返す

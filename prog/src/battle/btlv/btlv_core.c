@@ -11,6 +11,7 @@
 
 #include "print/gf_font.h"
 #include "waza_tool/wazano_def.h"   //soga
+#include "tr_tool/tr_tool.h"   //soga
 #include "arc_def.h"
 #include "sound/pm_sndsys.h"
 #include "font/font.naix"
@@ -1765,6 +1766,22 @@ void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args )
 void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args )
 {
   BTL_STR_MakeStringSet( wk->strBuf, strID, args );
+  BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+}
+
+//=============================================================================================
+/**
+ * メッセージ表示開始（トレーナーメッセージ）
+ *
+ * @param   wk
+ * @param   trainerID
+ * @param   param
+ *
+ */
+//=============================================================================================
+void BTLV_StartMsgTrainer( BTLV_CORE* wk, u32 trainerID, int param )
+{
+  TT_TrainerMessageGet( trainerID, param, wk->strBuf, wk->heapID );
   BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
 }
 
