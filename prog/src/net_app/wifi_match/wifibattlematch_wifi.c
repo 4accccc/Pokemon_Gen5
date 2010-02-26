@@ -60,7 +60,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 //=====================================
 #ifdef PM_DEBUG
 #define GPF_FLAG_ON             //GPFフラグを強制ONにする
-#define MYPOKE_SELFCHECK        //自分のポケモンを送ったとき、サケとチェックし署名も証明させる
+//#define MYPOKE_SELFCHECK        //自分のポケモンを送ったとき、サケとチェックし署名も証明させる
 //#define DEBUG_REGULATION_DATA   //レギュレーションデータを作成する
 //#define REGULATION_CHECK_ON     //パーティのレギュレーションチェックを強制ONにする
 #define SAKE_REPORT_NONE          //レポートをしない
@@ -263,9 +263,11 @@ static void Util_InitMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data );
 static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_WIFI_WORK *cp_wk );
 static void Util_SetMyDataSign( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_NET_EVILCHECK_DATA  *cp_evilecheck_data, u32 index );
 //ポケモン証明
-static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, HEAPID heapID );
+static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, POKEPARTY *p_party, HEAPID heapID );
 //ポケパーティを設定
 static void Util_SetEvilcheckParty( WIFIBATTLEMATCH_WIFI_WORK *p_wk );
+//ポケパーティを比較
+static BOOL Util_ComarepPokeParty( const POKEPARTY *cp_pokeparty_1, const POKEPARTY *cp_pokeparty_2 );
 
 //=============================================================================
 /**
@@ -1711,6 +1713,7 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       Util_SetEvilcheckParty( p_wk );
 
       WIFIBATTLEMATCH_NET_StartEvilCheck( p_wk->p_net, p_wk->p_evilcheck_party, WIFIBATTLEMATCH_NET_EVILCHECK_TYPE_PARTY );
+      GFL_STD_MemClear( &p_wk->evilecheck_data, sizeof(WIFIBATTLEMATCH_NET_EVILCHECK_DATA));
       *p_seq = SEQ_WAIT_SEND_CHECK_DIRTY_POKE;
     }
     break;
@@ -2206,13 +2209,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
 #ifdef MYPOKE_SELFCHECK
         {
-          SAVE_CONTROL_WORK *p_sv   = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
-          BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-          POKEPARTY         *p_party=  BATTLE_BOX_SAVE_MakePokeParty( p_bbox_save, GFL_HEAP_LOWID(HEAPID_WIFIBATTLEMATCH_CORE) );
-
+          Util_SetEvilcheckParty( p_wk );
           {
             int i;
-            u8 *p_src = (u8*)p_party;
+            u8 *p_src = (u8*)p_wk->p_evilcheck_party;
             OS_TFPrintf( 2, "\n\n" );
             for( i = 0; i < PokeParty_GetWorkSize(); i++ )
             { 
@@ -2231,7 +2231,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           }
 
 
-          if( GFL_STD_MemComp( p_party, p_my_data->pokeparty, PokeParty_GetWorkSize() ) == 0 )
+          if( Util_ComarepPokeParty( p_wk->p_evilcheck_party, (POKEPARTY*)p_my_data->pokeparty ) )
           { 
             OS_TFPrintf( 3, "自分のパーティとサケは一緒\n" );
           }
@@ -2240,12 +2240,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
             OS_TFPrintf( 3, "自分のパーティとサケが違う！！\n" );
             GF_ASSERT(0);
           }
-
-          GFL_HEAP_FreeMemory( p_party );
         }
 
         //自分で自分の署名は通るのかチェック
-        if( Util_VerifyPokeData( p_my_data, HEAPID_WIFIBATTLEMATCH_CORE ) )
+        if( Util_VerifyPokeData( p_my_data, p_wk->p_evilcheck_party, HEAPID_WIFIBATTLEMATCH_CORE ) )
 #endif  //MYPOKE_SELFCHECK
         { 
           OS_TFPrintf( 3, "自分の署名は通ったぜ\n" );
@@ -2412,8 +2410,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
   case SEQ_CHECK_DIRTY_POKE:
     //相手のサーバーポケモンと送信されてきたポケモンは同一か。
-    if( GFL_STD_MemComp( p_wk->p_other_party, p_wk->p_param->p_enemy_data->pokeparty,
-          PokeParty_GetWorkSize() ) != 0 )
+    if( !Util_ComarepPokeParty( p_wk->p_other_party, (POKEPARTY*)p_wk->p_param->p_enemy_data->pokeparty ) )
     { 
       NAGI_Printf( "!!相手のポケモンとサーバーポケモン違うNG!! \n" );
       p_wk->other_dirty_cnt++;
@@ -2424,7 +2421,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     }
 
     //相手のサーバーポケモンと署名から、正常データであることを証明
-    if( !Util_VerifyPokeData( p_wk->p_param->p_enemy_data, HEAPID_WIFIBATTLEMATCH_CORE ) )
+    if( !Util_VerifyPokeData( p_wk->p_param->p_enemy_data, p_wk->p_other_party, HEAPID_WIFIBATTLEMATCH_CORE ) )
     { 
       NAGI_Printf( "!!相手のポケモン署名NG!! \n" );
       p_wk->other_dirty_cnt++;
@@ -3529,6 +3526,7 @@ static void WbmWifiSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       const POKEMON_PARAM *cp_pp  = PokeParty_GetMemberPointer( p_wk->p_evilcheck_party, p_wk->cnt);
 
       WIFIBATTLEMATCH_NET_StartEvilCheck( p_wk->p_net, cp_pp, WIFIBATTLEMATCH_NET_EVILCHECK_TYPE_PP );
+      GFL_STD_MemClear( &p_wk->evilecheck_data, sizeof(WIFIBATTLEMATCH_NET_EVILCHECK_DATA));
       (*p_seq)  = SEQ_WAIT_EVIL_CHECK;
       NAGI_Printf( "EvilCheck Start [%d]匹目\n", p_wk->cnt );
     }
@@ -3984,6 +3982,7 @@ static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFI
 //-----------------------------------------------------------------------------
 static void Util_SetMyDataSign( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_NET_EVILCHECK_DATA  *cp_evilecheck_data, u32 index )
 { 
+  OS_TFPrintf( 3, "署名を追加%d\n", index );
   GFL_STD_MemCopy( cp_evilecheck_data->sign, p_my_data->sign[ index ], NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
 }
 
@@ -3997,30 +3996,31 @@ static void Util_SetMyDataSign( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFI
  *	@return TRUEで証明  FALSEで不正
  */
 //-----------------------------------------------------------------------------
-static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, HEAPID heapID )
+static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, POKEPARTY *p_party, HEAPID heapID )
 { 
   int i;
   void *p_buff;
-  POKEPARTY *p_party  = (POKEPARTY *)p_data->pokeparty;
-  const POKEMON_PARAM *cp_pp;
+  POKEMON_PARAM *p_pp;
   BOOL ret  = TRUE;
 
   NAGI_Printf( "ポケモン署名開始　全部で[%d]匹\n", PokeParty_GetPokeCount( p_party ) );
   OS_TFPrintf( 3, "相手のポケモン署名チェック開始\n" );
   for( i = 0; i < PokeParty_GetPokeCount( p_party ); i++ )
   { 
-    cp_pp  = PokeParty_GetMemberPointer( p_party, i);
+    p_pp  = PokeParty_GetMemberPointer( p_party, i);
+
+    PP_Renew( p_pp );
 
     p_buff  = NHTTP_RAP_EVILCHECK_CreateVerifyPokeBuffer( POKETOOL_GetWorkSize(), 1, GFL_HEAP_LOWID(heapID) );
-    NHTTP_RAP_EVILCHECK_AddPokeVerifyPokeBuffer( p_buff, cp_pp, POKETOOL_GetWorkSize(), 0 );
+    NHTTP_RAP_EVILCHECK_AddPokeVerifyPokeBuffer( p_buff, p_pp, POKETOOL_GetWorkSize(), 0 );
 
     ret = NHTTP_RAP_EVILCHECK_VerifySign( p_buff, POKETOOL_GetWorkSize(), 1, p_data->sign[i], GFL_HEAP_LOWID(heapID) );
 
     OS_TFPrintf( 3, "-=-=-=ポケモン証明[%d]-=-=-=\n", i );
     { 
-      OS_TFPrintf( 3, "mosno=%d\n", PP_Get( cp_pp, ID_PARA_monsno, NULL ) );
-      OS_TFPrintf( 3, "sex  =%d\n", PP_Get( cp_pp, ID_PARA_sex, NULL ) );
-      OS_TFPrintf( 3, "level=%d\n", PP_Get( cp_pp, ID_PARA_level, NULL ) );
+      OS_TFPrintf( 3, "mosno=%d\n", PP_Get( p_pp, ID_PARA_monsno, NULL ) );
+      OS_TFPrintf( 3, "sex  =%d\n", PP_Get( p_pp, ID_PARA_sex, NULL ) );
+      OS_TFPrintf( 3, "level=%d\n", PP_Get( p_pp, ID_PARA_level, NULL ) );
     }
     {
       int len = 0;
@@ -4062,4 +4062,46 @@ static void Util_SetEvilcheckParty( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
   GFL_STD_MemCopy( p_party, p_wk->p_evilcheck_party, PokeParty_GetWorkSize() );
 
   GFL_HEAP_FreeMemory( p_party );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンパーティの一致
+ *
+ *	@param	const POKEPARTY *cp_pokeparty_1 比較A
+ *	@param	POKEPARTY *cp_pokeparty_2       比較B
+ *
+ *	@return TRUE一致  FALSE不一致
+ */
+//-----------------------------------------------------------------------------
+static BOOL Util_ComarepPokeParty( const POKEPARTY *cp_pokeparty_1, const POKEPARTY *cp_pokeparty_2 )
+{ 
+  const u32 max1  = PokeParty_GetPokeCount(cp_pokeparty_1);
+  const u32 max2  = PokeParty_GetPokeCount(cp_pokeparty_2 );
+  if( max1 == max2 )
+  { 
+    int i;
+    POKEMON_PARAM *p_pp1;
+    POKEMON_PARAM *p_pp2;
+    POKEMON_PASO_PARAM  *p_ppp1;
+    POKEMON_PASO_PARAM  *p_ppp2;
+    for( i = 0; i < max1; i++ )
+    { 
+      p_pp1 = PokeParty_GetMemberPointer( cp_pokeparty_1, i );
+      p_pp2 = PokeParty_GetMemberPointer( cp_pokeparty_2, i );
+
+      p_ppp1  = PP_GetPPPPointer( p_pp1 );
+      p_ppp2  = PP_GetPPPPointer( p_pp2 );
+
+      if( GFL_STD_MemComp( p_ppp1, p_ppp2, POKETOOL_GetPPPWorkSize() ) != 0 )
+      {
+        OS_TPrintf( "Cnt%d Failed !!!\n", i );
+        return FALSE;
+      }
+    }
+    return TRUE;
+  }
+
+  OS_TPrintf( "%d != %d !!!\n", max1, max2 );
+  
+  return FALSE;
 }
