@@ -236,6 +236,18 @@ SAVE_RESULT SaveControl_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl)
 
 //==================================================================
 /**
+ * 分割セーブのキャンセル処理
+ *
+ * @param   ctrl		セーブデータ管理ワークへのポインタ
+ */
+//==================================================================
+void SaveControl_SaveAsyncCancel(SAVE_CONTROL_WORK *ctrl)
+{
+  GFL_BACKUP_SAVEASYNC_Cancel(ctrl->sv_normal);
+}
+
+//==================================================================
+/**
  * SaveControl_SaveAsyncMainで実行中のセーブが何バイト目まで書き込んだかを取得する
  *
  * @param   ctrl		

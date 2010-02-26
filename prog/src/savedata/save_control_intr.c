@@ -38,6 +38,12 @@ struct _INTR_SAVE_CONTROL{
 
 
 //==============================================================================
+//  プロトタイプ宣言
+//==============================================================================
+static void _SoftReset_Callback_SaveCancel(void *work);
+
+
+//==============================================================================
 //
 //  
 //
@@ -61,6 +67,10 @@ INTR_SAVE_CONTROL * IntrSave_Init(HEAPID heap_id, SAVE_CONTROL_WORK *ctrl)
   if(SaveData_GetExistFlag(ctrl) == TRUE){
     isc->no_save = TRUE;
   }
+  
+  //セーブ時のソフトリセットコールバック設定
+  GFL_UI_SoftResetSetFunc(_SoftReset_Callback_SaveCancel, isc);
+  
   return isc;
 }
 
@@ -73,6 +83,9 @@ INTR_SAVE_CONTROL * IntrSave_Init(HEAPID heap_id, SAVE_CONTROL_WORK *ctrl)
 //==================================================================
 void IntrSave_Exit(INTR_SAVE_CONTROL *isc)
 {
+  //セーブ時のソフトリセットコールバック解除
+  GFL_UI_SoftResetSetFunc(NULL, NULL);
+  
   if(isc->no_save == FALSE){
     GF_ASSERT(isc->status == INTR_SAVE_STATUS_FINISH);
   }
@@ -237,3 +250,20 @@ BOOL IntrSave_CheckAllSaveEnd(INTR_SAVE_CONTROL *isc)
   return FALSE;
 }
 
+//--------------------------------------------------------------
+/**
+ * ソフトウェアリセット直前時に呼ばれるコールバック関数
+ *
+ * @param   work		
+ */
+//--------------------------------------------------------------
+static void _SoftReset_Callback_SaveCancel(void *work)
+{
+  INTR_SAVE_CONTROL *isc = work;
+  
+  OS_TPrintf("intr_save softreset callback\n");
+  if(isc->no_save == FALSE && isc->status != INTR_SAVE_STATUS_FINISH){
+    SaveControl_SaveAsyncCancel(isc->ctrl);
+    isc->no_save = TRUE;  //一応、セーブ処理の方にいかないようにno_save扱いにしておく
+  }
+}
