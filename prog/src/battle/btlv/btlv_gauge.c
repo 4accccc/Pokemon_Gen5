@@ -499,7 +499,7 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL
   {
     GFL_CLWK_DATA gauge = {
       0, 0,     //x, y
-      0, 0, 0,  //アニメ番号、優先順位、BGプライオリティ
+      0, 0, 1,  //アニメ番号、優先順位、BGプライオリティ
     };
     int pltt_id = ( pos < BTLV_MCSS_POS_A ) ? pos : pos - BTLV_MCSS_POS_A;
     gauge.softpri = 1;
