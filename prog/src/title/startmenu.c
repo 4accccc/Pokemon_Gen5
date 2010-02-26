@@ -1352,7 +1352,7 @@ static BOOL CursorMove( START_MENU_WORK * wk, s8 vec );
 static void VanishMenuObj( START_MENU_WORK * wk, BOOL flg );
 
 static void PutNewGameWarrning( START_MENU_WORK * wk );
-static void ClearNewGameWarrning( START_MENU_WORK * wk );
+static void ClearNewGameWarrning( START_MENU_WORK * wk, BOOL flg );
 
 static void PutMessage( START_MENU_WORK * wk, int strIdx );
 static void ClearMessage( START_MENU_WORK * wk );
@@ -1591,14 +1591,12 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 
 	switch( result ){
 	case LIST_ITEM_CONTINUE:			// 続きから
-		GameStart_Continue();
-/*
+//		GameStart_Continue();
 		if( wk->continueRet == 0 ){
 			GameStart_ContinueNet();
 		}else{
 			GameStart_ContinueNetOff();
 		}
-*/
 		break;
 
 	case LIST_ITEM_NEW_GAME:			// 最初から
@@ -1740,6 +1738,7 @@ static int MainSeq_Main( START_MENU_WORK * wk )
 	BLINKPALANM_Main( wk->blink );
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+		PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
 		if( wk->list[wk->listPos] == LIST_ITEM_NEW_GAME ){
 			PutNewGameWarrning( wk );
 			return MAINSEQ_NEWGAME;
@@ -1752,18 +1751,21 @@ static int MainSeq_Main( START_MENU_WORK * wk )
 	}
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 		wk->listResult = LIST_ITEM_MAX;
 		return SetFadeOut( wk, MAINSEQ_RELEASE );
 	}
 
 	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
 		if( CursorMove( wk, -1 ) == TRUE ){
+			PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
 			return MAINSEQ_SCROLL;
 		}
 	}
 
 	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
 		if( CursorMove( wk, 1 ) == TRUE ){
+			PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
 			return MAINSEQ_SCROLL;
 		}
 	}
@@ -1776,6 +1778,7 @@ static int MainSeq_Scroll( START_MENU_WORK * wk )
 	if( wk->bgScrollCount == 3 ){
 		wk->bgScrollCount = 0;
 		wk->bgScrollSpeed = 0;
+		BLINKPALANM_InitAnimeCount( wk->blink );
 		ChangeListItemPalette( wk, wk->list[wk->listPos], GetListPutY(wk,wk->cursorPutPos), CURSOR_PALETTE );
 		return MAINSEQ_MAIN;
 	}
@@ -1878,13 +1881,15 @@ static int MainSeq_NewGame( START_MENU_WORK * wk )
 	if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
 		// Ａボタン
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-			ClearNewGameWarrning( wk );
+			PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
+			ClearNewGameWarrning( wk, TRUE );
 			wk->listResult = LIST_ITEM_NEW_GAME;
 			return SetFadeOut( wk, MAINSEQ_RELEASE );
 		}
 		// Ｂボタン
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-			ClearNewGameWarrning( wk );
+			PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
+			ClearNewGameWarrning( wk, FALSE );
 			return MAINSEQ_MAIN;
 		}
 	}
@@ -2499,6 +2504,8 @@ static void InitListPut( START_MENU_WORK * wk )
 
 		py += ListItemData[wk->list[i]].sy;
 	}
+
+	ChangeListItemPalette( wk, wk->list[0], wk->cursorPutPos, CURSOR_PALETTE );
 }
 
 static void PutListItem( START_MENU_WORK * wk, u8 item, s8 py )
@@ -2790,15 +2797,17 @@ static void PutNewGameWarrning( START_MENU_WORK * wk )
 	VanishMenuObj( wk, FALSE );
 }
 
-static void ClearNewGameWarrning( START_MENU_WORK * wk )
+static void ClearNewGameWarrning( START_MENU_WORK * wk, BOOL flg )
 {
+	GFL_BMPWIN_Delete( wk->utilWin.win );
+
+	if( flg == TRUE ){ return; }
+
 	ClearWarrningWindow(
 		NEW_GAME_WARRNING_WIN_PX, NEW_GAME_WARRNING_WIN_PY,
 		NEW_GAME_WARRNING_WIN_SX, NEW_GAME_WARRNING_WIN_SY, GFL_BG_FRAME2_M );
 
 	GFL_BG_ClearScreenCodeVReq( BMPWIN_NEWGAME_WIN_FRM, 0 );
-
-	GFL_BMPWIN_Delete( wk->utilWin.win );
 
 	// リスト復帰
 	GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_X_SET, 0 );
