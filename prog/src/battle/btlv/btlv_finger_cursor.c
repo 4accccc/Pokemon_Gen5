@@ -312,12 +312,15 @@ static  void  TCB_BTLV_FINGER_CURSOR_WatchAnmEndFlag( GFL_TCB* tcb, void* work )
 { 
   BTLV_FINGER_CURSOR_WORK* bfcw = ( BTLV_FINGER_CURSOR_WORK* )work;
 
-  if( bfcw->bfcp.anm_end_flag )
+  if( bfcw->clwk )
   { 
-    if( --bfcw->bfcp.wait == 0 )
+    if( bfcw->bfcp.anm_end_flag )
     { 
-      GFL_CLACT_WK_SetDrawEnable( bfcw->clwk, FALSE );
-      bfcw->bfcp.anm_end_flag = FALSE;
+      if( --bfcw->bfcp.wait == 0 )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( bfcw->clwk, FALSE );
+        bfcw->bfcp.anm_end_flag = FALSE;
+      }
     }
   }
 }

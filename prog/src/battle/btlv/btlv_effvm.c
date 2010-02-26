@@ -662,9 +662,9 @@ void      BTLV_EFFVM_Stop( VMHANDLE *vmh )
 {
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
 
-  VMEC_SEQ_END( vmh, VM_GetContext( vmh ) );
   if( bevw->sequence )
   { 
+    VMEC_SEQ_END( vmh, VM_GetContext( vmh ) );
     GFL_HEAP_FreeMemory( bevw->sequence );
     bevw->sequence = NULL;
   }
