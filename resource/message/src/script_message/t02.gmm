@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T22:48:16"/>
+	<create user="matsumiya" host="W00224" date="2010-02-26T12:02:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1031,18 +1031,14 @@
 		<language name="JPN_KANJI" width="256">みず</language>
 	</row>
 
-	<row id="msg_t01_woman1_01" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_t01_woman1_01" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">女性１</attribute>
-		<language name="JPN" width="256">かべの　らくがきも
-グラフィティと　よばれるほど▼
-げいじゅつせいが　たかまれば
-ひとびとは　よろこぶもの　なのね</language>
-		<language name="JPN_KANJI" width="256">壁の　落書きも
-グラフィティと　呼ばれるほど▼
-芸術性が　高まれば
-人々は　喜ぶもの　なのね</language>
+		<language name="JPN" width="256">あなたと　あなたのポケモン
+どことなく　にてるって　かんじ！</language>
+		<language name="JPN_KANJI" width="256">あなたと　あなたのポケモン
+どことなく　似てるって　感じ！</language>
 	</row>
 
 	<row id="msg_t01_oldman1_01" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
@@ -1059,18 +1055,18 @@
 ポケモンは　６匹まで　なんじゃ！</language>
 	</row>
 
-	<row id="msg_t01_oldwoman1_01" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_t01_oldwoman1_01" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">老婆１</attribute>
 		<language name="JPN" width="256">ポケモンは　ひとのため
-せいいっぱい　ちからを　だす▼
+ちからのかぎり　がんばる▼
 ひとは　そんな　ポケモンのため
 あいをもって　せっする▼
 それが　おたがいの　かんけいだよ
 わたしは　そうおもってるよ</language>
 		<language name="JPN_KANJI" width="256">ポケモンは　人のため
-精一杯　力を　だす▼
+ちからのかぎり　がんばる▼
 人は　そんな　ポケモンのため
 愛をもって　接する▼
 それが　お互いの　関係だよ
