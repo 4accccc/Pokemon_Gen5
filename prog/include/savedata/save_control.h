@@ -75,6 +75,7 @@ extern LOAD_RESULT SaveControl_Load(SAVE_CONTROL_WORK *ctrl);
 extern SAVE_RESULT SaveControl_Save(SAVE_CONTROL_WORK *ctrl);
 extern void SaveControl_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl);
 extern SAVE_RESULT SaveControl_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl);
+extern void SaveControl_SaveAsyncCancel(SAVE_CONTROL_WORK *ctrl);
 extern u32 SaveControl_GetSaveAsyncMain_WritingSize(SAVE_CONTROL_WORK *ctrl);
 extern void * SaveControl_DataPtrGet(SAVE_CONTROL_WORK *ctrl, GFL_SVDT_ID gmdata_id);
 extern const void * SaveControl_GetSaveWorkAdrs(SAVE_CONTROL_WORK *ctrl, u32 *get_size);
