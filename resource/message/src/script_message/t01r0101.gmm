@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-16T22:53:56"/>
+	<create user="matsumiya" host="W00224" date="2010-02-26T14:59:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="249" right="1996" bottom="877" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,9 +296,11 @@
 		<comment>♂
 ・続けてmsg_t01r0101_white_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『おばさん
+		<language name="JPN" width="256">チェレン『おばさん　さわがしくして
+ほんとうに　すみませんでした！▼
 それでは　しつれいします[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『おばさん
+		<language name="JPN_KANJI" width="256">チェレン『おばさん　騒がしくして
+本当に　すみませんでした！▼
 それでは　失礼します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -308,9 +310,9 @@
 ・続けて主人公ママ、主人公に隣接して
 　msg_t01r0101_mama_01表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『おじゃま　しました
+		<language name="JPN" width="256">ベル『おじゃま　しましたあ
 また　あそびに　きますね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『おじゃま　しました
+		<language name="JPN_KANJI" width="256">ベル『おじゃま　しましたあ
 また　遊びに　来ますね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -318,12 +320,12 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ママ『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
-なんだか　にぎやかだったけど
+ものすごーく　にぎやかだったけど
 なにが　あったの？[BE:01:ページ切り替え（クリア）]
 ……　……　……
 ……　……　……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ママ『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
-なんだか　にぎやかだったけど
+ものすごーく　にぎやかだったけど
 なにが　あったの？[BE:01:ページ切り替え（クリア）]
 ……　……　……
 ……　……　……[BE:01:ページ切り替え（クリア）]</language>
@@ -444,8 +446,8 @@
 ……　……　……▼</language>
 		<language name="JPN_KANJI" width="256">ママ『[1:03:ポケモンタイプ:0]！
 おかえりなさい▼
-たいへん　だったみたいね
-すこし　やすんで　いきなさいよ▼
+大変だったみたいね
+すこし　休んで　いきなさいよ▼
 ……　……　……
 ……　……　……▼</language>
 	</row>
