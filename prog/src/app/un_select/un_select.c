@@ -142,6 +142,8 @@ FS_EXTERN_OVERLAY(ui_common);
 #define SCROLL_BAR_UY (8)
 #define SCROLL_BAR_DY (160)
 
+#define NOT_MARKER (0xffff)
+
 enum {
   UN_OBJ_BUIL_CURSOR = 0,           //1
   UN_OBJ_BUIL_MARKER_START = 1,     //20
@@ -1585,7 +1587,8 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
     for(i=0;i<FLOOR_MARKING_MAX;i++){
       int code;
       code = prm->StayCountry[i];
-      floor_idx = GetFloorIdxFromCountryCode(code);
+      if (code != 0) floor_idx = GetFloorIdxFromCountryCode(code);
+      else floor_idx = NOT_MARKER;
       wk->MarkerFloor[i] = floor_idx;
     }
   }
@@ -2262,6 +2265,14 @@ static void SetBuilMarkerPos( UN_SELECT_MAIN_WORK *wk )
     GFL_CLACTPOS calc_pos;
     //アクター取得
     GFL_CLWK *clwk = wk->ClWk[UN_OBJ_BUIL_MARKER_START+i];
+
+    if ( wk->MarkerFloor[i] == NOT_MARKER )
+    {
+      //非表示
+      GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
+      continue;
+    }
+
     //座標セット
     GFL_CLACT_WK_GetPos( clwk, &calc_pos, CLWK_SETSF_NONE ); //絶対座標指定
     calc_pos.y = BUIL_FLOOR_YDOT_BOTTOM - wk->MarkerFloor[i];
@@ -2366,6 +2377,9 @@ static void SetupListMarker( UN_SELECT_MAIN_WORK* wk, int target_item )
       int floor_idx;
       int item_idx;
       floor_idx = wk->MarkerFloor[i];
+      if (floor_idx == NOT_MARKER){
+        continue;
+      }
       item_idx = UN_LIST_MAX - floor_idx - 1;
       //サブ
       for(j=0;j<UN_LISTMARKER_SETUP_MAX;j++)
