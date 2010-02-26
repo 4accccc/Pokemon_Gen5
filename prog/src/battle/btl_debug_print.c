@@ -69,6 +69,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_SelectActionStart:      return "Act選択(%d体目=ID:%d）開始します  checked %d poke\n";
   case DBGSTR_CLIENT_SelectActionDone:       return "カバー位置数(%d)終了、アクション送信へ\n";
   case DBGSTR_CLIENT_SelectAction_Pokemon:   return "「ポケモン」を選んだ->選択画面へ\n";
+  case DBGSTR_CLIENT_SelectAction_Fight:     return "「たたかう」を選んだ->選択画面へ\n";
   case DBGSTR_CLIENT_SelectChangePoke:       return " ポケモン選んだ ... idx=%d\n";
   case DBGSTR_CLIENT_SelectChangePokeCancel: return " ポケモン選ばなかった\n";
 
@@ -92,6 +93,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_CmdLimitTimeOver:    return "コマンド選択タイムアップ ... 強制終了フラグON\n";
   case DBGSTR_CLIENT_ForcePokeChange:     return "強制入れ替え %d/%d PosIdx=%d, MemberIdx=%d\n";
   case DBGSTR_CLIENT_UpdateEnemyBaseHP:   return "相手ポケ基準HP値を更新 ->%d  (Poke=%d)\n";
+  case DBGSTR_CLIENT_ForceQuitByTimeLimit: return "時間制限による強制終了(ClientID=%d)\n";
 
   case DBGSTR_BPP_NemuriWakeCheck:        return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
 

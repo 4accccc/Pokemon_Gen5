@@ -909,3 +909,62 @@ static void ms_yesno_simple( STRBUF* dst, BtlStrID_WAZAOBOE strID, const int* ar
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
 
+
+
+//=============================================================================================
+/**
+ * レベルアップウィンドウテキスト（前レベルとの差分）生成
+ *
+ * @param   buf
+ * @param   hp
+ * @param   atk
+ * @param   def
+ * @param   sp_atk
+ * @param   sp_def
+ * @param   agi
+ */
+//=============================================================================================
+void BTL_STR_MakeString_LvupInfo_Diff( STRBUF* dst, u32 hp, u32 atk, u32 def, u32 sp_atk, u32 sp_def, u32 agi )
+{
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], BTLSTR_UI_LVUP_DIFF, SysWork.tmpBuf );
+
+  WORDSET_RegisterNumber( SysWork.wset, 0, hp,     2,  STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( SysWork.wset, 1, atk,    2,  STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( SysWork.wset, 2, def,    2,  STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( SysWork.wset, 3, sp_atk, 2,  STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( SysWork.wset, 4, sp_def, 2,  STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( SysWork.wset, 5, agi,    2,  STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+//=============================================================================================
+/**
+ * レベルアップウィンドウテキスト（新レベルパラメータ）生成
+ *
+ * @param   dst
+ * @param   hp
+ * @param   atk
+ * @param   def
+ * @param   sp_atk
+ * @param   sp_def
+ * @param   agi
+ */
+//=============================================================================================
+void BTL_STR_MakeString_LvupInfo_Param( STRBUF* dst, u32 hp, u32 atk, u32 def, u32 sp_atk, u32 sp_def, u32 agi )
+{
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], BTLSTR_UI_LVUP_PARAM, SysWork.tmpBuf );
+
+  WORDSET_RegisterNumber( SysWork.wset, 0, hp,     3,  STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( SysWork.wset, 1, atk,    3,  STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( SysWork.wset, 2, def,    3,  STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( SysWork.wset, 3, sp_atk, 3,  STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( SysWork.wset, 4, sp_def, 3,  STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( SysWork.wset, 5, agi,    3,  STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+
+
+
+
+

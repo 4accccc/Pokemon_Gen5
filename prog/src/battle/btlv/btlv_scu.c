@@ -35,8 +35,8 @@
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
 enum {
-  MAIN_STRBUF_LEN = 512,
-  SUB_STRBUF_LEN  = 32,
+  MAIN_STRBUF_LEN = 1024,
+  SUB_STRBUF_LEN  = 384,
   SUBPROC_WORK_SIZE = 64,
 
   PALIDX_MSGWIN        = 0,
@@ -71,6 +71,7 @@ enum {
   BGFRAME_MAIN_MESSAGE  = GFL_BG_FRAME1_M,
   BGFRAME_TOKWIN_FRIEND = GFL_BG_FRAME2_M,
   BGFRAME_TOKWIN_ENEMY  = GFL_BG_FRAME3_M,
+  BGFRAME_LVUPWIN       = GFL_BG_FRAME3_M,  // 使い回している
 
   TOKWIN_CGRDATA_CHAR_W = 18,   // とくせいウィンドウCGRデータ横キャラ数
   TOKWIN_DRAWAREA_CHAR_W = 17,  // とくせいウィンドウ書き込み可能領域の横キャラ数
@@ -92,10 +93,13 @@ enum {
   TOKWIN_MARGIN_L = 8,
   TOKWIN_HIDEPOS_FRIEND = (TOKWIN_CGRDATA_CHAR_W * 8),
   TOKWIN_HIDEPOS_ENEMY = -(TOKWIN_CGRDATA_CHAR_W * 8),
+  TOKWIN_SCRN_YPOS = 0,
 
   TOKWIN_MOVE_FRAMES = 8,
 
   BTLIN_STD_FADE_WAIT = 2,
+
+  LVUPWIN_STEP_SE = SEQ_SE_SELECT2,
 };
 
 
@@ -186,6 +190,7 @@ struct _BTLV_SCU {
 
   GFL_BMPWIN*     lvupWin;
   GFL_BMP_DATA*   lvupBmp;
+  u32             lvupWin_frameCharPos;
 
   PRINT_QUE*      printQue;
   PRINT_UTIL      printUtil;
@@ -222,6 +227,9 @@ struct _BTLV_SCU {
   u8            btlinSeq;
   u16           msgwinVisibleSeq;
   MSGWIN_VISIBLE   msgwinVisibleWork;
+
+  const BTL_POKEPARAM*    lvupBpp;
+  const BTL_LEVELUP_INFO* lvupInfo;
 };
 
 /*--------------------------------------------------------------------------*/
@@ -286,6 +294,9 @@ static BOOL tokwin_hide_progress( TOK_WIN* tokwin );
 static void tokwin_renew_start( TOK_WIN* tokwin, BtlPokePos pos );
 static BOOL tokwin_renew_progress( TOK_WIN* tokwin );
 static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID, BTLV_BALL_GAUGE_TYPE type );
+static BOOL lvupWinProc_Disp( int* seq, void* wk_adrs );
+static BOOL lvupWinProc_Fwd( int* seq, void* wk_adrs );
+static BOOL lvupWinProc_Hide( int* seq, void* wk_adrs );
 
 
 
@@ -384,17 +395,19 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   GFL_BMPWIN_MakeScreen( wk->win );
   GFL_BMPWIN_MakeFrameScreen( wk->win, winfrm_charpos, PALIDX_MSGWIN );
 
-  winfrm_charpos = transWinFrameCgx( wk, ARCID_BATTGRA, NARC_battgra_wb_lvup_w_NCGR, BGFRAME_TOKWIN_ENEMY );
+  wk->lvupWin_frameCharPos = transWinFrameCgx( wk, ARCID_BATTGRA, NARC_battgra_wb_lvup_w_NCGR, BGFRAME_TOKWIN_ENEMY );
 
   wk->lvupWin = GFL_BMPWIN_Create( BGFRAME_TOKWIN_ENEMY, LVUPWIN_ORG_X, LVUPWIN_ORG_Y+32, LVUPWIN_WIDTH, LVUPWIN_HEIGHT,
         PALIDX_LVUPWIN, GFL_BMP_CHRAREA_GET_F );
   wk->lvupBmp = GFL_BMPWIN_GetBmp( wk->lvupWin );
-  TAYA_Printf("lvup_win charpos=%d\n", winfrm_charpos );
+  TAYA_Printf("lvup_win charpos=%d\n", wk->lvupWin_frameCharPos );
 
+  /*
   GFL_BMPWIN_MakeScreen( wk->lvupWin );
-  GFL_BMPWIN_MakeFrameScreen( wk->lvupWin, winfrm_charpos, PALIDX_LVUPWIN );
+  GFL_BMPWIN_MakeFrameScreen( wk->lvupWin, wk->lvupWin_frameCharPos, PALIDX_LVUPWIN );
   GFL_BMP_Clear( wk->lvupBmp, COLIDX_LVUPWIN_CLEAR );
   GFL_BMPWIN_TransVramCharacter( wk->lvupWin );
+  */
 
 
   msgWinVisible_Init( &wk->msgwinVisibleWork, wk->win );
@@ -2632,7 +2645,7 @@ static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs )
     break;
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
-    { 
+    {
       BTLV_EFFECT_DelGauge( twk->viewpos );
       BTLV_EFFECT_DelPokemon( twk->viewpos );
       twk->seq++;
@@ -2704,7 +2717,7 @@ static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs )
   switch( twk->seq ){
   case 0:
     if( !BTLV_EFFECT_CheckExecute() )
-    { 
+    {
       statwin_disp_start( twk->statWin );
       twk->seq++;
     }
@@ -3622,47 +3635,175 @@ void BTLV_SCU_ClearCommWaitInfo( BTLV_SCU* wk )
 //=============================================================================================
 //  レベルアップ情報表示処理
 //=============================================================================================
-
+//----------------------------------------------------------------
 /**
  *  表示処理 開始
  */
+//----------------------------------------------------------------
 void BTLV_SCU_LvupWin_StartDisp( BTLV_SCU* wk, const BTL_POKEPARAM* bpp, const BTL_LEVELUP_INFO* lvupInfo )
 {
+  wk->lvupBpp = bpp;
+  wk->lvupInfo = lvupInfo;
 
+  BTL_UTIL_SetupProc( &wk->proc, wk, NULL, lvupWinProc_Disp );
 }
+//----------------------------------------------------------------
 /**
  *  表示処理 終了待ち
  */
+//----------------------------------------------------------------
 BOOL BTLV_SCU_LvupWin_WaitDisp( BTLV_SCU* wk )
 {
-  return TRUE;
+  return BTL_UTIL_CallProc( &wk->proc );
 }
+//----------------------------------------------------------------
 /**
  *  次ページ表示処理 開始
  */
-void BTLV_SCU_LvupWin_StartHide( BTLV_SCU* wk )
+//----------------------------------------------------------------
+void BTLV_SCU_LvupWin_StepFwd( BTLV_SCU* wk )
 {
-
+  BTL_UTIL_SetupProc( &wk->proc, wk, NULL, lvupWinProc_Fwd );
 }
+//----------------------------------------------------------------
 /**
  *  次ページ表示処理 終了待ち
  */
-BOOL BTLV_SCU_LvupWin_WaitHide( BTLV_SCU* wk )
+//----------------------------------------------------------------
+BOOL BTLV_SCU_LvupWin_WaitFwd( BTLV_SCU* wk )
 {
-  return TRUE;
+  return BTL_UTIL_CallProc( &wk->proc );
 }
+//----------------------------------------------------------------
 /**
  *  消去処理 開始
  */
-void BTLV_SCU_LvupWin_StepFwd( BTLV_SCU* wk )
+//----------------------------------------------------------------
+void BTLV_SCU_LvupWin_StartHide( BTLV_SCU* wk )
 {
-
+  BTL_UTIL_SetupProc( &wk->proc, wk, NULL, lvupWinProc_Hide );
 }
+//----------------------------------------------------------------
 /**
  *  消去処理 終了待ち
  */
-BOOL BTLV_SCU_LvupWin_WaitFwd( BTLV_SCU* wk )
+//----------------------------------------------------------------
+BOOL BTLV_SCU_LvupWin_WaitHide( BTLV_SCU* wk )
 {
-  return TRUE;
+  return BTL_UTIL_CallProc( &wk->proc );
 }
+
+/**
+ *  １ページ目表示処理（レベルアップによる差分）
+ */
+static BOOL lvupWinProc_Disp( int* seq, void* wk_adrs )
+{
+  BTLV_SCU* wk = wk_adrs;
+
+  switch( *seq ){
+  case 0:
+    GFL_FONTSYS_SetColor( COLIDX_LVUPWIN_LETTER, COLIDX_LVUPWIN_SHADOW, COLIDX_LVUPWIN_CLEAR );
+
+    GFL_BMPWIN_MakeScreen( wk->lvupWin );
+    GFL_BMPWIN_MakeFrameScreen( wk->lvupWin, wk->lvupWin_frameCharPos, PALIDX_LVUPWIN );
+    GFL_BMP_Clear( wk->lvupBmp, COLIDX_LVUPWIN_CLEAR );
+    GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->lvupWin) );
+    (*seq)++;
+    break;
+
+  case 1:
+    BTL_STR_MakeString_LvupInfo_Diff( wk->strBufMain,
+      wk->lvupInfo->hp, wk->lvupInfo->atk, wk->lvupInfo->def, wk->lvupInfo->sp_atk,
+      wk->lvupInfo->sp_def, wk->lvupInfo->agi );
+
+    PRINTSYS_Print( wk->lvupBmp, 0, 0, wk->strBufMain, wk->defaultFont );
+    (*seq)++;
+    break;
+  case 2:
+    GFL_BMPWIN_TransVramCharacter( wk->lvupWin );
+    (*seq)++;
+    break;
+  case 3:
+//    GFL_BG_SetPriority(
+    GFL_BG_SetScroll( BGFRAME_LVUPWIN, GFL_BG_SCROLL_X_SET, 0 );
+    GFL_BG_SetScroll( BGFRAME_LVUPWIN, GFL_BG_SCROLL_Y_SET, 256 );
+    PMSND_PlaySE( LVUPWIN_STEP_SE );
+    (*seq)++;
+    break;
+  case 4:
+    return TRUE;
+  }
+
+  return FALSE;
+}
+/**
+ *  ２ページ目表示処理（レベルアップによるパラメータ）
+ */
+static BOOL lvupWinProc_Fwd( int* seq, void* wk_adrs )
+{
+  BTLV_SCU* wk = wk_adrs;
+
+  switch( *seq ){
+  case 0:
+    {
+      u8 hp     = BPP_GetValue_Base( wk->lvupBpp, BPP_MAX_HP );
+      u8 atk    = BPP_GetValue_Base( wk->lvupBpp, BPP_ATTACK );
+      u8 def    = BPP_GetValue_Base( wk->lvupBpp, BPP_DEFENCE );
+      u8 sp_atk = BPP_GetValue_Base( wk->lvupBpp, BPP_SP_ATTACK );
+      u8 sp_def = BPP_GetValue_Base( wk->lvupBpp, BPP_SP_DEFENCE );
+      u8 agi    = BPP_GetValue_Base( wk->lvupBpp, BPP_AGILITY );
+
+      BTL_STR_MakeString_LvupInfo_Param( wk->strBufMain, hp, atk, def, sp_atk, sp_def, agi );
+      GFL_BMP_Clear( wk->lvupBmp, COLIDX_LVUPWIN_CLEAR );
+      PRINTSYS_Print( wk->lvupBmp, 0, 0, wk->strBufMain, wk->defaultFont );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    GFL_BMPWIN_TransVramCharacter( wk->lvupWin );
+    PMSND_PlaySE( LVUPWIN_STEP_SE );
+    (*seq)++;
+    break;
+  case 2:
+    return TRUE;
+  }
+
+  return FALSE;
+}
+/**
+ *  消去処理
+ */
+static BOOL lvupWinProc_Hide( int* seq, void* wk_adrs )
+{
+  BTLV_SCU* wk = wk_adrs;
+
+  switch( *seq ){
+  case 0:
+    {
+      int win_ox = GFL_BMPWIN_GetPosX( wk->lvupWin ) - 1;
+      int win_oy = GFL_BMPWIN_GetPosY( wk->lvupWin ) - 1;
+      int win_width  = GFL_BMPWIN_GetSizeX( wk->lvupWin ) + 2;
+      int win_height = GFL_BMPWIN_GetSizeY( wk->lvupWin ) + 2;
+      u8  win_frame = GFL_BMPWIN_GetFrame( wk->lvupWin );
+
+      GFL_BG_FillScreen( win_frame, 0, win_ox, win_oy, win_width, win_height, 0 );
+      GFL_BG_LoadScreenReq( win_frame );
+      PMSND_PlaySE( LVUPWIN_STEP_SE );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    GFL_BG_SetScroll( BGFRAME_LVUPWIN, GFL_BG_SCROLL_X_SET, TOKWIN_HIDEPOS_ENEMY );
+    GFL_BG_SetScroll( BGFRAME_LVUPWIN, GFL_BG_SCROLL_Y_SET, TOKWIN_SCRN_YPOS );
+    (*seq)++;
+    break;
+  case 2:
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+
+
 

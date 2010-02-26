@@ -129,4 +129,9 @@ typedef u16 BtlStrID_YESNO;
 
 extern void BTL_STR_MakeStringYesNoWithArgArray( STRBUF* buf, BtlStrID_YESNO strID, const int* array );
 
+//----------------------------------------------------------------------
+// レベルアップウィンドウテキスト生成
+//----------------------------------------------------------------------
+extern void BTL_STR_MakeString_LvupInfo_Diff( STRBUF* buf, u32 hp, u32 atk, u32 def, u32 sp_atk, u32 sp_def, u32 agi );
+extern void BTL_STR_MakeString_LvupInfo_Param( STRBUF* buf, u32 hp, u32 atk, u32 def, u32 sp_atk, u32 sp_def, u32 agi );
 

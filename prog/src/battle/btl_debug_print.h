@@ -33,6 +33,7 @@ typedef enum {
   DBGSTR_CLIENT_SelectActionStart,
   DBGSTR_CLIENT_SelectActionDone,
   DBGSTR_CLIENT_SelectAction_Pokemon,
+  DBGSTR_CLIENT_SelectAction_Fight,
   DBGSTR_CLIENT_SelectChangePoke,
   DBGSTR_CLIENT_SelectChangePokeCancel,
   DBGSTR_CLIENT_ReturnSeqDone,
@@ -55,6 +56,7 @@ typedef enum {
   DBGSTR_CLIENT_CmdLimitTimeOver,
   DBGSTR_CLIENT_ForcePokeChange,
   DBGSTR_CLIENT_UpdateEnemyBaseHP,
+  DBGSTR_CLIENT_ForceQuitByTimeLimit,
 
   DBGSTR_BPP_NemuriWakeCheck,
 

@@ -1018,6 +1018,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
   case 4:
     if( CheckSelactForceQuit(wk, selact_ForceQuit) )
     {
+      BTL_N_Printf( DBGSTR_CLIENT_ForceQuitByTimeLimit, wk->myID );
       BTLV_UI_SelectAction_ForceQuit( wk->viewCore );
       return FALSE;
     }
@@ -1033,6 +1034,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
     // u‚½‚½‚©‚¤v‚ð‘I‚ñ‚¾
     case BTL_ACTION_FIGHT:
+      BTL_N_Printf( DBGSTR_CLIENT_SelectAction_Fight );
       shooterCost_Save( wk, wk->procPokeIdx, 0 );
       ClientSubProc_Set( wk, selact_Fight );
       break;
@@ -1108,6 +1110,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
   case SEQ_SELECT_WAZA_WAIT:
     if( CheckSelactForceQuit(wk, selact_ForceQuit) )
     {
+      BTL_N_Printf( DBGSTR_CLIENT_ForceQuitByTimeLimit, wk->myID );
       BTLV_UI_SelectWaza_ForceQuit( wk->viewCore );
       return FALSE;
     }
@@ -2500,19 +2503,19 @@ static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq )
     if( BTLV_WaitMsg(wk->viewCore) )
     {
       if( BTL_MAIN_IsMultiMode( wk->mainModule ) )
-      { 
+      {
         BTLV_EFFECT_Add( BTLEFF_TRAINER_OUT );
         (*seq)++;
       }
       else
-      { 
+      {
         (*seq) = 4;
       }
     }
     break;
   case 3:
     if( !BTLV_EFFECT_CheckExecute() )
-    {  
+    {
       u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 1 );
       u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
       int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
@@ -3751,8 +3754,7 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     }
     if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlaySE() ){
       subSeq = 0;
-//      (*seq) = SEQ_LVUP_INFO_PARAM_START;
-      (*seq) = SEQ_LVUP_WAZAOBOE_WAIT;
+      (*seq) = SEQ_LVUP_INFO_PARAM_START;
     }
     break;
 
