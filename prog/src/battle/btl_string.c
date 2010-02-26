@@ -229,7 +229,7 @@ static inline void register_PokeName( u8 pokeID, u8 bufID )
 
 static void register_TrainerType( WORDSET* wset, u8 bufIdx, u8 clientID )
 {
-  u32 trainerID = BTL_MAIN_GetClientTrainerID( SysWork.mainModule, clientID );
+  u32 trainerID = BTL_MAIN_GetClientTrainerType( SysWork.mainModule, clientID );
   WORDSET_RegisterTrTypeName( wset, bufIdx, trainerID );
 }
 static void register_TrainerName( WORDSET* wset, u8 bufIdx, u8 clientID )
