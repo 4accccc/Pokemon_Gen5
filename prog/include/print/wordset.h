@@ -53,7 +53,8 @@ extern void WORDSET_RegisterPokeTypeName( WORDSET* wordset, u32 bufID, u32 typeI
 extern void WORDSET_RegisterPlayerName( WORDSET* wordset, u32 bufID, const MYSTATUS* my );
 extern void WORDSET_RegisterCountryName( WORDSET* wordset, u32 bufID, u32 countryID );
 extern void WORDSET_RegisterLocalPlaceName(WORDSET* wordset,u32 bufID,u32 countryID,u32 placeID);
-extern void WORDSET_RegisterTrTypeName( WORDSET* wordset, u32 bufID, TrainerID trID );
+extern void WORDSET_RegisterTrTypeName( WORDSET* wordset, u32 bufID, u8 trType );
+extern void WORDSET_RegisterTrTypeName_byTrID( WORDSET* wordset, u32 bufID, TrainerID trID );
 extern void WORDSET_RegisterTrainerName( WORDSET* wordset, u32 bufID, TrainerID trID );
 extern void WORDSET_RegisterPokeStatusName( WORDSET* wordset, u32 bufID, u8 statusID );
 extern void WORDSET_RegisterItemPocketName( WORDSET* wordset, u32 bufID, u32 pocketID );
