@@ -97,7 +97,6 @@ typedef struct{
 
 }NET_ERR_SYSTEM;
 
-
 //==============================================================================
 //	ローカル変数
 //==============================================================================
@@ -506,17 +505,17 @@ static void Local_ErrDispInit(void)
 	GX_SetVisiblePlane(GX_PLANEMASK_BG1);
 	GX_SetVisibleWnd(GX_WNDMASK_NONE);
 
-	//VRAMのデータを退避(念のため上でBG1の設定をしてから行っている)
-	GFL_STD_MemCopy16(G2_GetBG1CharPtr(), nes->push_char_p, NETERR_PUSH_CHARVRAM_SIZE);
-	GFL_STD_MemCopy16(G2_GetBG1ScrPtr(), nes->push_scrn_p, NETERR_PUSH_SCRNVRAM_SIZE);
-	GFL_STD_MemCopy16((void*)HW_PLTT, nes->push_pltt_p, NETERR_PUSH_PLTTVRAM_SIZE);
-
 	//BG1Control退避
 	nes->bg1cnt = G2_GetBG1Control();
 	G2_SetBG1Control(GX_BG_SCRSIZE_TEXT_256x256, GX_BG_COLORMODE_16, 
 		GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, nes->bg1cnt.bgExtPltt);
 	G2_BG1Mosaic(FALSE);
 	G2_SetBG1Offset(0, 0);
+
+	//VRAMのデータを退避(念のため上でBG1の設定をしてから行っている)
+	GFL_STD_MemCopy16(G2_GetBG1CharPtr(), nes->push_char_p, NETERR_PUSH_CHARVRAM_SIZE);
+	GFL_STD_MemCopy16(G2_GetBG1ScrPtr(), nes->push_scrn_p, NETERR_PUSH_SCRNVRAM_SIZE);
+	GFL_STD_MemCopy16((void*)HW_PLTT, nes->push_pltt_p, NETERR_PUSH_PLTTVRAM_SIZE);
 
 	//フォントカラー退避
 	GFL_FONTSYS_GetColor(&nes->font_letter, &nes->font_shadow, &nes->font_back);
@@ -555,18 +554,17 @@ static void Local_ErrDispExit(void)
 	//フォントカラー復帰
 	GFL_FONTSYS_SetColor(nes->font_letter, nes->font_shadow, nes->font_back);
 
+	//VRAM復帰
+	GFL_STD_MemCopy16(nes->push_char_p, G2_GetBG1CharPtr(), NETERR_PUSH_CHARVRAM_SIZE);
+	GFL_STD_MemCopy16(nes->push_scrn_p, G2_GetBG1ScrPtr(), NETERR_PUSH_SCRNVRAM_SIZE);
+	GFL_STD_MemCopy16(nes->push_pltt_p, (void*)HW_PLTT, NETERR_PUSH_PLTTVRAM_SIZE);
+
 	//BG1Control復帰
 	G2_SetBG1Control(nes->bg1cnt.screenSize, nes->bg1cnt.colorMode,
 		nes->bg1cnt.screenBase, nes->bg1cnt.charBase, nes->bg1cnt.bgExtPltt);
 	G2_BG1Mosaic(nes->bg1cnt.mosaic);
 	GFL_NET_BG1PosGet(&x, &y);
 	G2_SetBG1Offset(x, y);
-
-	//VRAM復帰
-	GFL_STD_MemCopy16(nes->push_char_p, G2_GetBG1CharPtr(), NETERR_PUSH_CHARVRAM_SIZE);
-	GFL_STD_MemCopy16(nes->push_scrn_p, G2_GetBG1ScrPtr(), NETERR_PUSH_SCRNVRAM_SIZE);
-	GFL_STD_MemCopy16(nes->push_pltt_p, (void*)HW_PLTT, NETERR_PUSH_PLTTVRAM_SIZE);
-
 	
 	//dispcnt復帰
 	GX_SetGraphicsMode(nes->dispcnt.dispMode, nes->dispcnt.bgMode, nes->dispcnt.bg0_2d3d);
