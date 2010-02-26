@@ -33,6 +33,9 @@ enum {
 	BMPWIN_MIC,
 	BMPWIN_MACHINE,
 
+	BMPWIN_MSG,
+//	BMPWIN_YESNO,
+
 	BMPWIN_MAX
 };
 
@@ -104,6 +107,20 @@ enum {
 #define	BMPWIN_MACHINE_PY		( 0 )
 #define	BMPWIN_MACHINE_SX		( 19 )
 #define	BMPWIN_MACHINE_SY		( 3 )
+// メッセージ
+#define	BMPWIN_MSG_FRM			( GFL_BG_FRAME0_M )
+#define	BMPWIN_MSG_PX				( 1 )
+#define	BMPWIN_MSG_PY				( 19 )
+#define	BMPWIN_MSG_SX				( 30 )
+#define	BMPWIN_MSG_SY				( 4 )
+#define	BMPWIN_MSG_PAL			( FONT_PALETTE_M )
+// はい・いいえ
+#define	BMPWIN_YESNO_FRM		( GFL_BG_FRAME0_M )
+#define	BMPWIN_YESNO_PX			( 24 )
+#define	BMPWIN_YESNO_PY			( 13 )
+#define	BMPWIN_YESNO_SX			( 5 )
+#define	BMPWIN_YESNO_SY			( 4 )
+#define	BMPWIN_YESNO_PAL		( FONT_PALETTE_M )
 
 // 最初から始めるの警告ウィンドウ
 #define	BMPWIN_NEWGAME_WIN_FRM	( GFL_BG_FRAME0_M )
@@ -125,6 +142,27 @@ enum {
 
 #define	WARRNING_WIN_CHAR_NUM		( 1 )		// ウィンドウキャラ番号
 #define	WARRNING_WIN_PLTT_NUM		( 1 )		// ウィンドウパレット番号
+
+// 続きから始めるの説明ウィンドウ
+#define	BMPWIN_CONTINUE_WIN_FRM		( GFL_BG_FRAME0_S )
+#define	BMPWIN_CONTINUE_WIN_PX		( 2 )
+#define	BMPWIN_CONTINUE_WIN_PY		( 3 )
+#define	BMPWIN_CONTINUE_WIN_SX		( 30 )
+#define	BMPWIN_CONTINUE_WIN_SY		( 19 )
+#define	BMPWIN_CONTINUE_WIN_PAL		( FONT_PALETTE_S )
+
+// 続きから始めるの説明文表示座標
+#define	CONTINUE_INFO_ATTENTION_PY	( 0 )
+#define	CONTINUE_INFO_MESSAGE_PY		( 3*8 )
+#define	CONTINUE_INFO_WIN_PX				( 0 )
+#define	CONTINUE_INFO_WIN_PY				( 1 )
+#define	CONTINUE_INFO_WIN_SX				( 32 )
+#define	CONTINUE_INFO_WIN_SY				( 22 )
+
+
+// メッセージウィンドウ
+#define	MESSAGE_WIN_CHAR_NUM			( 1 )
+#define	MESSAGE_WIN_PLTT_NUM			( 14 )
 
 // リストフレームデータ
 #define	LIST_FRAME_SX						( 26 )
