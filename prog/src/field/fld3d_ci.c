@@ -125,6 +125,7 @@ typedef struct FLD3D_CI_tag
 
   SETUP_CALLBACK SetupCallBack;
   MAIN_SEQ_FUNC MainSeqFunc;
+  int SubSeq;
 }FLD3D_CI;
 
 //バイナリデータフォーマット
@@ -428,6 +429,7 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
 
   size = sizeof(FLD3D_CI_EVENT_WORK);
   ptr->PartGene = 0;
+  ptr->SubSeq = 0;
   ptr->CutInNo = inCutInNo;
   //セットアップ後コールバックなしでセットする
   ptr->SetupCallBack = NULL;
@@ -1984,8 +1986,19 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
 //-----------------------------------------------------------------------------
 static BOOL EncFadeMain(GMEVENT* event, FLD3D_CI_PTR ptr)
 {
-  if (ptr->PtclEnd&&ptr->MdlAnm1End&&ptr->MdlAnm2End) return TRUE;
-
+  switch(ptr->SubSeq){
+  case 0:
+    if (ptr->PtclEnd&&ptr->MdlAnm1End&&ptr->MdlAnm2End) ptr->SubSeq++;
+    break;
+  case 1:
+    //ホワイトアウト開始
+    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, -1 );  //両画面フェードアウト
+    ptr->SubSeq++;
+  case 2:
+    //ホワイトアウト待ち
+    if ( GFL_FADE_CheckFade() != FALSE ) break;
+    return TRUE;
+  }
   return FALSE;
 }
 

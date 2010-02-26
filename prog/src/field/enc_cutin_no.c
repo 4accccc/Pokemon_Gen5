@@ -37,7 +37,7 @@ static const ENC_CUTIN_DAT EncCutinDat[] =
   {0, 0, 0, 0, GRA_TRANS_NONE}, //ƒvƒ‰ƒYƒ}’c
 };
 
-const ENC_CUTIN_DAT *ENC_CUTIN_NO_GetDat(const inEncCutinNo)
+const ENC_CUTIN_DAT *ENC_CUTIN_NO_GetDat(const int inEncCutinNo)
 {
   return &EncCutinDat[inEncCutinNo];
 }

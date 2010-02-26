@@ -55,5 +55,5 @@ typedef struct ENC_CUTIN_DAT_tag
  *
 */
 
-extern const ENC_CUTIN_DAT *ENC_CUTIN_NO_GetDat(const inEncCutinNo);
+extern const ENC_CUTIN_DAT *ENC_CUTIN_NO_GetDat(const int inEncCutinNo);
 

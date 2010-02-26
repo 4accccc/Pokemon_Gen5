@@ -158,7 +158,7 @@ static GMEVENT_RESULT EffMainEvt( GMEVENT* event, int* seq, void* work )
       if (rc)
       {
         //ホワイトアウト開始
-        GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, 0 );
+        GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 0 );  //両画面フェードアウト
         (*seq)++;
       }
     }
