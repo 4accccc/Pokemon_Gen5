@@ -57,6 +57,24 @@ static BOOL TESTMODE_ITEM_SelectUNSelect( TESTMODE_WORK* work, const int idx )
 {
   UN_SELECT_PARAM* initParam = GFL_HEAP_AllocClearMemory( GFL_HEAPID_APP, sizeof(UN_SELECT_PARAM) );
 
+  //テストデータセット
+  {
+    int i;
+    //解禁国コードをテストセット
+    for( i=0; i<UN_LIST_MAX; i++)
+    {
+      if ( GFUser_GetPublicRand0( 2 ) ) initParam->OpenCountryFlg[i] = 1;
+      else initParam->OpenCountryFlg[i] = 0;
+    }
+    
+    //滞在国コードをテストセット
+    for(i=0;i<FLOOR_MARKING_MAX;i++){
+      int code;
+      code = GFUser_GetPublicRand(UN_LIST_MAX) + 1;
+      initParam->StayCountry[i] = code;
+    }
+  }
+
 	TESTMODE_COMMAND_ChangeProc(work, FS_OVERLAY_ID(un_select), &UNSelectProcData, initParam);
 
   return TRUE;

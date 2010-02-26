@@ -8307,17 +8307,23 @@
 //--------------------------------------------------------------
 /**
  * @brief 国連関連 フロア選択アプリコール
- * @param ret       結果
+ * @param in_floor    現在フロア    エントランスのときは　1以下を指定
+ * @param out_floor   移動先フロア格納ワーク
+ * @param country　   移動先国コードワーク
+ * @param ret         結果　TRUE で移動
  */
 //--------------------------------------------------------------
-#define _UN_CALL_FLOOR_SEL_APP( ret ) _ASM_UN_CALL_FLOOR_SEL_APP ret
+#define _UN_CALL_FLOOR_SEL_APP( in_floor, out_floor, country, ret ) \
+    _ASM_UN_CALL_FLOOR_SEL_APP in_floor, out_floor, country, ret
 
-  .macro _ASM_UN_CALL_FLOOR_SEL_APP ret
+  .macro _ASM_UN_CALL_FLOOR_SEL_APP in_floor, out_floor, country, ret
   .short EV_SEQ_UN_CALL_FLOOR_SEL_APP
+  .short \in_floor
+  .short \out_floor
+  .short \country
   .short \ret
   .endm
   
-
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------

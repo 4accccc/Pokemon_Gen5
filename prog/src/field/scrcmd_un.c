@@ -294,15 +294,29 @@ VMCMD_RESULT EvCmdUn_GetRoomObjMsg( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdUn_CallFloorSelApp( VMHANDLE *core, void *wk )
 {
+  u16 in_floor;
   u16 *ret;
+  u16 *out_floor;
+  u16 *country;
+  GMEVENT *call_event;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA *gdata =  GAMESYSTEM_GetGameData(gsys);
   UNSV_WORK *unsv_work = GAMEDATA_GetUnsvWorkPtr(gdata);
 
+  in_floor = SCRCMD_GetVMWorkValue( core, work );
+  out_floor = SCRCMD_GetVMWork( core, work );
+  country = SCRCMD_GetVMWork( core, work );
   ret = SCRCMD_GetVMWork( core, work );
-  //@todo
+
+  call_event = UN_CreateAppEvt(gsys, in_floor, out_floor, country, ret);
+
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
+  SCRIPT_CallEvent( sc, call_event );
   return VMCMD_RESULT_CONTINUE;
 }
 

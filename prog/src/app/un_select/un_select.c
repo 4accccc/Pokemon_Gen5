@@ -62,8 +62,6 @@
 #include "message.naix"
 #include "un_select_gra.naix" // アーカイブ
 
-#include "savedata/wifihistory.h" // for WIFIHISTORY_CheckCountryBit, WIFI_COUNTRY_MAX
-
 // サウンド
 #include "sound/pm_sndsys.h"
 
@@ -94,13 +92,9 @@ FS_EXTERN_OVERLAY(ui_common);
  *                定数定義
  */
 //=============================================================================
-enum
-{ 
-  UN_SELECT_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
 
-  UN_LIST_MAX = WIFI_COUNTRY_MAX-1, ///< 項目数 233ヶ国
-  CUR_MOVE_RANGE = 4,
-};
+#define   UN_SELECT_HEAP_SIZE (0x30000) ///< ヒープサイズ
+#define   CUR_MOVE_RANGE (4)
 
 // パッシブ定数　※上画面はアルファブレンドを使用するので、マスター輝度変更でパッシブ状態にする
 #define YESNO_MASK_DISP ( MASK_MAIN_DISPLAY )
@@ -115,8 +109,6 @@ enum
 #define	BLEND_EV2		( 10 )			// ブレンド係数
 
 #define COUNTRY_DISP_OFS  (30)
-
-#define FLOOR_MARKING_MAX (20)
 
 //ＢＧ書き換え用
 #define BASE_OFS  (1*32)    //ＢＧ先頭アドレス１キャラ先から開始

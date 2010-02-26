@@ -15,6 +15,11 @@
 //system
 #include "gamesystem/gamesystem.h"
 
+#include "savedata/wifihistory.h" // for WIFI_COUNTRY_MAX
+
+#define UN_LIST_MAX  (WIFI_COUNTRY_MAX-1) ///< 項目数 233ヶ国
+#define FLOOR_MARKING_MAX (20)
+
 //=============================================================================
 /**
  *					外部公開
@@ -41,10 +46,14 @@ extern const GFL_PROC_DATA UNSelectProcData;
 ///	PROCに渡す引数
 //=====================================
 typedef struct
-{	
+{
   u8 InFloor;       ///< [IN] 開始フロア
   u8 OutFloor;      ///< [OUT] 選択フロア
   u16 CountryCode;  ///< [OUT] 選択国コード
   BOOL Decide;      ///< [OUT] 国を決定した場合TRUE
+
+  u16 StayCountry[FLOOR_MARKING_MAX];  ///< [IN] 滞在中の国コード
+  u8 OpenCountryFlg[UN_LIST_MAX];          ///< [IN] 解禁国判定フラグ0 or 1 添え字は国コード-1が国と対応
+  u8 dummy[3];
 } UN_SELECT_PARAM;
 
