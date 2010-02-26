@@ -2363,6 +2363,8 @@ static int AC_WarpDown_0( MMDL * mmdl )
 	work->total_offset = GRID_HALF_FX32 * 40;
 	work->value = -(FX32_ONE * 16);
 	
+  PMSND_PlaySE( SEQ_SE_FLD_05 );
+  
 	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
 	MMDL_IncAcmdSeq( mmdl );
 	
@@ -2398,7 +2400,6 @@ static int AC_WarpDown_1( MMDL * mmdl )
 	if( work->total_offset > 0 ){
 		return( FALSE );
 	}
-	
 	
 	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
