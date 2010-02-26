@@ -351,7 +351,8 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   
   {
     const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
-    if( initWork->mode == CTM_CHILD )
+    if( initWork->mode == CTM_CHILD ||
+        initWork->mode == CTM_WIFI )
     {
       //CGEARから呼び出しできた。
       GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN_OFF );
@@ -413,6 +414,7 @@ void CTVT_CALL_TermMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 {
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
+  const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
   
   switch( callWork->state )
   {
@@ -433,7 +435,8 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     if( WIPE_SYS_EndCheck() == TRUE )
     {
       const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
-      if( initWork->mode == CTM_CHILD )
+      if( initWork->mode == CTM_CHILD ||
+          initWork->mode == CTM_WIFI )
       {
         //CGEARから呼び出しできた。
         callWork->state = CCS_WAIT_CONNECT_JOIN_DIRECT;
@@ -648,74 +651,77 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
   
   }
   
-  CTVT_CALL_UpdateBeacon( work , callWork );
+  if( initWork->mode != CTM_WIFI )
   {
-    u8 i;
-    for( i=0;i<CTVT_CALL_BAR_NUM;i++ )
+    CTVT_CALL_UpdateBeacon( work , callWork );
     {
-      if( callWork->barWork[i].isUpdateStr == TRUE )
+      u8 i;
+      for( i=0;i<CTVT_CALL_BAR_NUM;i++ )
       {
-        PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
-        if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( callWork->barWork[i].strWin )) == FALSE )
+        if( callWork->barWork[i].isUpdateStr == TRUE )
         {
-          GFL_BMPWIN_MakeTransWindow_VBlank( callWork->barWork[i].strWin );
-          callWork->barWork[i].isUpdateStr = FALSE;
-        }
-      }
-    }
-  }
-  if( callWork->isUpdateBarPos == TRUE )
-  {
-    u8 i;
-    u8 checkNum = 0;
-    for( i=0;i<CTVT_CALL_BAR_NUM;i++ )
-    {
-      CTVT_CALL_UpdateBarPosFunc( work , callWork , &callWork->barWork[i] , i );
-    }
-    GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , callWork->scrollOfs );
-
-    //チェックボックスの更新
-    for( i=0;i<3;i++ )
-    {
-      if( callWork->checkIdx[i] != CTVT_CALL_INVALID_NO )
-      {
-        checkNum++;
-      }
-    }
-    for( i=0;i<CTVT_CALL_SEARCH_NUM;i++ )
-    {
-      if( callWork->memberData[i].isEnable == TRUE )
-      {
-        CTVT_CALL_BAR_WORK *barWork = &callWork->barWork[ callWork->memberData[i].barWorkNo ];
-        if( callWork->memberData[i].isCheck == TRUE &&
-            callWork->memberData[i].connectNum < CTVT_MEMBER_NUM && 
-            ( callWork->checkIdxParent == CTVT_CALL_INVALID_NO ||
-              callWork->checkIdxParent == i ) )
-        {
-          GFL_CLACT_WK_SetAnmSeq( barWork->clwkCheck , CTOAS_CHECK_SELECT );
-        }
-        else
-        {
-          if( checkNum == 3 ||
-              callWork->checkIdxParent != CTVT_CALL_INVALID_NO ||
-              callWork->memberData[i].connectNum == CTVT_MEMBER_NUM )
+          PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+          if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( callWork->barWork[i].strWin )) == FALSE )
           {
-            GFL_CLACT_WK_SetAnmSeq( barWork->clwkCheck , CTOAS_CHECK_NONE );
+            GFL_BMPWIN_MakeTransWindow_VBlank( callWork->barWork[i].strWin );
+            callWork->barWork[i].isUpdateStr = FALSE;
+          }
+        }
+      }
+    }
+    if( callWork->isUpdateBarPos == TRUE )
+    {
+      u8 i;
+      u8 checkNum = 0;
+      for( i=0;i<CTVT_CALL_BAR_NUM;i++ )
+      {
+        CTVT_CALL_UpdateBarPosFunc( work , callWork , &callWork->barWork[i] , i );
+      }
+      GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , callWork->scrollOfs );
+
+      //チェックボックスの更新
+      for( i=0;i<3;i++ )
+      {
+        if( callWork->checkIdx[i] != CTVT_CALL_INVALID_NO )
+        {
+          checkNum++;
+        }
+      }
+      for( i=0;i<CTVT_CALL_SEARCH_NUM;i++ )
+      {
+        if( callWork->memberData[i].isEnable == TRUE )
+        {
+          CTVT_CALL_BAR_WORK *barWork = &callWork->barWork[ callWork->memberData[i].barWorkNo ];
+          if( callWork->memberData[i].isCheck == TRUE &&
+              callWork->memberData[i].connectNum < CTVT_MEMBER_NUM && 
+              ( callWork->checkIdxParent == CTVT_CALL_INVALID_NO ||
+                callWork->checkIdxParent == i ) )
+          {
+            GFL_CLACT_WK_SetAnmSeq( barWork->clwkCheck , CTOAS_CHECK_SELECT );
           }
           else
           {
-            GFL_CLACT_WK_SetAnmSeq( barWork->clwkCheck , CTOAS_CHECK );
+            if( checkNum == 3 ||
+                callWork->checkIdxParent != CTVT_CALL_INVALID_NO ||
+                callWork->memberData[i].connectNum == CTVT_MEMBER_NUM )
+            {
+              GFL_CLACT_WK_SetAnmSeq( barWork->clwkCheck , CTOAS_CHECK_NONE );
+            }
+            else
+            {
+              GFL_CLACT_WK_SetAnmSeq( barWork->clwkCheck , CTOAS_CHECK );
+            }
+          }
+          if( callWork->memberData[i].isBlinkReq == TRUE )
+          {
+            callWork->memberData[i].isBlinkReq = FALSE;
+            GFL_CLACT_WK_SetAnmSeq( barWork->clwkBar , CTOAS_SCROLL_BAR_BLINK );
           }
         }
-        if( callWork->memberData[i].isBlinkReq == TRUE )
-        {
-          callWork->memberData[i].isBlinkReq = FALSE;
-          GFL_CLACT_WK_SetAnmSeq( barWork->clwkBar , CTOAS_SCROLL_BAR_BLINK );
-        }
       }
-    }
 
-    callWork->isUpdateBarPos = FALSE;
+      callWork->isUpdateBarPos = FALSE;
+    }
   }
 
   if( callWork->isUpdateMsgWin == TRUE )

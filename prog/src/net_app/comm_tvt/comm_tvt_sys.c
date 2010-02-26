@@ -215,7 +215,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
     break;
   case CTM_WIFI:   //Wifi‹N“®
     CTVT_COMM_SetMode( work , work->commWork , CCIM_CONNECTED );
-    work->nextMode = CTM_TALK;
+    work->nextMode = CTM_CALL;
     break;
   }
 
