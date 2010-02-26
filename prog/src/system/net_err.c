@@ -561,6 +561,12 @@ static void Local_ErrDispExit(void)
 	G2_BG1Mosaic(nes->bg1cnt.mosaic);
 	GFL_NET_BG1PosGet(&x, &y);
 	G2_SetBG1Offset(x, y);
+
+	//VRAM復帰
+	GFL_STD_MemCopy16(nes->push_char_p, G2_GetBG1CharPtr(), NETERR_PUSH_CHARVRAM_SIZE);
+	GFL_STD_MemCopy16(nes->push_scrn_p, G2_GetBG1ScrPtr(), NETERR_PUSH_SCRNVRAM_SIZE);
+	GFL_STD_MemCopy16(nes->push_pltt_p, (void*)HW_PLTT, NETERR_PUSH_PLTTVRAM_SIZE);
+
 	
 	//dispcnt復帰
 	GX_SetGraphicsMode(nes->dispcnt.dispMode, nes->dispcnt.bgMode, nes->dispcnt.bg0_2d3d);
@@ -568,6 +574,7 @@ static void Local_ErrDispExit(void)
 	GX_SetVisibleWnd(nes->dispcnt.visibleWnd);
 
 	//VRAMバンク情報復帰
+  GX_ResetBankForSubBG();
 	GX_ResetBankForBG();
 	GX_SetBankForBG(nes->bg_bank);
 	GX_SetBankForSubBG(nes->bg_bank_sub);
