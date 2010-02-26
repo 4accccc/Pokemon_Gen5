@@ -1033,6 +1033,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
 
+      BTLV_GAUGE_RequestYure( BTLV_EFFECT_GetGaugeWork(), BTLV_MCSS_POS_MAX );
       BTLV_INPUT_DeleteBallGauge( biw );
       BTLV_INPUT_DeletePokeIcon( biw );
       BTLV_INPUT_DeleteWeatherIcon( biw );
@@ -1073,6 +1074,14 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       }
       else
       {
+        if( biw->type == BTLV_INPUT_TYPE_SINGLE )
+        { 
+          BTLV_GAUGE_RequestYure( BTLV_EFFECT_GetGaugeWork(), bicp->pos );
+        }
+        else
+        { 
+          BTLV_GAUGE_RequestYure( BTLV_EFFECT_GetGaugeWork(), BTLV_MCSS_POS_A + bicp->pos * 2 );
+        }
         BTLV_INPUT_CreateBallGauge( biw, bicp, BALL_GAUGE_TYPE_MINE );
         if( bicp->trainer_flag )
         {

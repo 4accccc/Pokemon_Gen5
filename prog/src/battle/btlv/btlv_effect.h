@@ -184,6 +184,7 @@ extern  BTLV_TIMER_WORK*  BTLV_EFFECT_GetTimerWork( void );
 extern  BtlRule           BTLV_EFFECT_GetBtlRule( void );
 extern  BOOL              BTLV_EFFECT_GetMulti( void );
 extern  int               BTLV_EFFECT_GetTrType( int pos );
+extern  BTLV_GAUGE_WORK*  BTLV_EFFECT_GetGaugeWork( void );
 
 #ifdef PM_DEBUG
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );

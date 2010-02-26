@@ -156,6 +156,9 @@ enum
   MOVE_VALUE = 16,
   MOVE_COUNT = 2,
   MOVE_SPEED = MOVE_VALUE / MOVE_COUNT,
+
+  YURE_OFFSET = 2048,
+  YURE_SPEED  = 0x400,
 };
 
 typedef enum
@@ -217,7 +220,8 @@ struct _BTLV_GAUGE_CLWK
   u32           seq_no        :4;
   u32           se_wait       :8;
   u32           move_cnt      :4;
-  u32                         :12;
+  u32           yure_req      :1;
+  u32                         :11;
 };
 
 struct _BTLV_GAUGE_WORK
@@ -241,7 +245,8 @@ struct _BTLV_GAUGE_WORK
   u32             vanish_flag   :1;
   u32             bgm_fade_flag :1;
   u32             pinch_bgm_flag:1;
-  u32                           :30;
+  u32             yure_angle    :16;
+  u32                           :14;
 
   u32             now_bgm_no;
 
@@ -275,6 +280,7 @@ static  void  PutHPNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, s32 nowH
 static  void  PutLVNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
 static  void  PutBallOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
 static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
+static  void  Gauge_Yure( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos );
 
 static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw );
 
@@ -431,6 +437,10 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
     {
       Gauge_LevelUp( bgw, &bgw->bgcl[ i ] );
     }
+    if( bgw->bgcl[ i ].yure_req )
+    { 
+      Gauge_Yure( bgw, i );
+    }
   }
   //ピンチBGM再生チェック
   pinch_bgm_check( bgw );
@@ -537,7 +547,7 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL
                                                        bgw->bgcl[ pos ].exp_cellID,
                                                        &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
     }
-    BTLV_GAUGE_SetPos( bgw, pos );
+    BTLV_GAUGE_SetPos( bgw, pos, NULL );
   }
 
   {
@@ -654,9 +664,10 @@ void  BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos )
  *
  *  @param[in] bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
  *  @param[in] pos   立ち位置
+ *  @param[in] ofs   位置オフセット
  */
 //============================================================================================
-void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos )
+void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, GFL_CLACTPOS* ofs )
 {
   GFL_CLACTPOS  cl_pos;
   GFL_CLACTPOS  hp_pos_ofs[]={
@@ -696,6 +707,12 @@ void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos )
   { 
     pos_x = gauge_pos[ pos ].x;
     pos_y = gauge_pos[ pos ].y;
+  }
+
+  if( ofs )
+  { 
+    pos_x += ofs->x;
+    pos_y += ofs->y;
   }
 
   cl_pos.x = pos_x;
@@ -1607,6 +1624,25 @@ static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
 
 //--------------------------------------------------------------
 /**
+ * @brief   ゲージゆれ処理
+ *
+ * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
+ * @param pos   ゲージ位置
+ */
+//--------------------------------------------------------------
+static  void  Gauge_Yure( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos )
+{ 
+  GFL_CLACTPOS  yure_ofs;
+
+  yure_ofs.x = -MOVE_VALUE;
+  yure_ofs.y = FX_SinIdx( bgw->yure_angle ) / YURE_OFFSET;
+  bgw->yure_angle += YURE_SPEED;
+
+  BTLV_GAUGE_SetPos( bgw, pos, &yure_ofs );
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   状態異常アイコンセット
  *
  * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
@@ -1639,6 +1675,36 @@ void  BTLV_GAUGE_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick sick, BtlvMcssPos pos
     BTL_Printf("GAUGE[%d] SetStatus(%d)\n", pos, sick);
     GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].status_clwk, TRUE );
     GFL_CLACT_WK_SetAnmSeq( bgw->bgcl[ pos ].status_clwk, sick_anm[ sick ] );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ゲージゆれリクエスト
+ *
+ * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
+ * @param pos   リクエストするポケモンの立ち位置
+ */
+//--------------------------------------------------------------
+void  BTLV_GAUGE_RequestYure( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos )
+{ 
+  int i;
+
+  for( i = 0 ; i < BTLV_MCSS_POS_MAX ; i++ )
+  { 
+    if( ( bgw->bgcl[ i ].base_clwk ) && ( bgw->bgcl[ i ].yure_req ) )
+    { 
+      GFL_CLACTPOS  ofs = { -MOVE_VALUE, 0 };
+
+      bgw->bgcl[ i ].yure_req = 0;
+      BTLV_GAUGE_SetPos( bgw, i, &ofs );
+    }
+  }
+  //立ち位置指定が範囲外ならゲージのゆれを止めるだけでリターン
+  if( pos != BTLV_MCSS_POS_MAX )
+  { 
+    bgw->bgcl[ pos ].yure_req = 1;
+    bgw->yure_angle = 0;
   }
 }
 
