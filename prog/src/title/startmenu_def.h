@@ -105,6 +105,27 @@ enum {
 #define	BMPWIN_MACHINE_SX		( 19 )
 #define	BMPWIN_MACHINE_SY		( 3 )
 
+// 最初から始めるの警告ウィンドウ
+#define	BMPWIN_NEWGAME_WIN_FRM	( GFL_BG_FRAME0_M )
+#define	BMPWIN_NEWGAME_WIN_PX		( 2 )
+#define	BMPWIN_NEWGAME_WIN_PY		( 2 )
+#define	BMPWIN_NEWGAME_WIN_SX		( 30 )
+#define	BMPWIN_NEWGAME_WIN_SY		( 20 )
+#define	BMPWIN_NEWGAME_WIN_PAL	( FONT_PALETTE_M )
+
+// 最初から始めるの警告文表示座標
+#define	NEW_GAME_WARRNING_ATTENTION_PY	( 0 )
+#define	NEW_GAME_WARRNING_MESSAGE_PY		( 3*8 )
+#define	NEW_GAME_WARRNING_A_BUTTON_PY		( 16*8 )
+#define	NEW_GAME_WARRNING_B_BUTTON_PY		( 18*8 )
+#define	NEW_GAME_WARRNING_WIN_PX				( 32 )
+#define	NEW_GAME_WARRNING_WIN_PY				( 1 )
+#define	NEW_GAME_WARRNING_WIN_SX				( 32 )
+#define	NEW_GAME_WARRNING_WIN_SY				( 22 )
+
+#define	WARRNING_WIN_CHAR_NUM		( 1 )		// ウィンドウキャラ番号
+#define	WARRNING_WIN_PLTT_NUM		( 1 )		// ウィンドウパレット番号
+
 // リストフレームデータ
 #define	LIST_FRAME_SX						( 26 )
 #define	LIST_FRAME_CONTINUE_SY	( 14 )

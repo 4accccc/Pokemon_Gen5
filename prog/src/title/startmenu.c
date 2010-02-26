@@ -1170,34 +1170,6 @@ static void START_MENU_CheckButtonAnime( START_MENU_WORK *work )
 #include "startmenu.naix"
 #include "wifileadingchar.naix"
 
-/*
-#include <gflib.h>
-#include "system/gfl_use.h"
-#include "system/main.h"
-#include "system/bmp_winframe.h"
-#include "arc_def.h"
-#include "font/font.naix"
-
-#include "print/printsys.h"
-#include "print/wordset.h"
-#include "print/global_font.h"
-#include "message.naix"
-#include "startmenu.naix"
-#include "msg/msg_startmenu.h"
-#include "sound/pm_sndsys.h"
-
-#include "savedata/save_control.h"
-#include "savedata/mystatus.h"
-#include "app/name_input.h"
-#include "title/startmenu.h"
-#include "title/title.h"
-#include "title/game_start.h"
-#include "battle_championship/battle_championship.h"
-#include "net_app/irc_battle.h"
-#include "test/ariizumi/ari_debug.h"
-#include "net_app/mystery.h"
-#include "msg/msg_wifi_system.h"
-*/
 
 //============================================================================================
 //	定数定義
@@ -1264,6 +1236,8 @@ typedef struct {
 	PRINT_STREAM * stream;		// プリントストリーム
 
 	PRINT_UTIL	util[BMPWIN_MAX];
+	PRINT_UTIL	utilWin;
+
 	u16 * listFrame[LIST_ITEM_MAX];
 
 	BGWINFRM_WORK * wfrm;
@@ -1302,6 +1276,8 @@ enum {
 	MAINSEQ_MAIN,
 	MAINSEQ_SCROLL,
 
+	MAINSEQ_NEWGAME,
+
 	MAINSEQ_END_SET,
 
 	MAINSEQ_END,
@@ -1324,6 +1300,7 @@ static int MainSeq_ButtonAnm( START_MENU_WORK * wk );
 static int MainSeq_InitWait( START_MENU_WORK * wk );
 static int MainSeq_Main( START_MENU_WORK * wk );
 static int MainSeq_Scroll( START_MENU_WORK * wk );
+static int MainSeq_NewGame( START_MENU_WORK * wk );
 static int MainSeq_EndSet( START_MENU_WORK * wk );
 
 static void InitVBlank( START_MENU_WORK * wk );
@@ -1360,6 +1337,9 @@ static int SetFadeIn( START_MENU_WORK * wk, int next );
 static int SetFadeOut( START_MENU_WORK * wk, int next );
 
 static BOOL CursorMove( START_MENU_WORK * wk, s8 vec );
+
+static void PutNewGameWarrning( START_MENU_WORK * wk );
+static void ClearNewGameWarrning( START_MENU_WORK * wk );
 
 
 //============================================================================================
@@ -1408,6 +1388,8 @@ static const pSTARTMENU_FUNC MainSeq[] = {
 	MainSeq_InitWait,
 	MainSeq_Main,
 	MainSeq_Scroll,
+
+	MainSeq_NewGame,
 
 	MainSeq_EndSet
 };
@@ -1559,138 +1541,10 @@ static GFL_PROC_RESULT START_MENU_ProcMain( GFL_PROC * proc, int * seq, void * p
 	GFL_CLACT_SYS_Main();
 
   return GFL_PROC_RES_CONTINUE;
-
-/*
-  
-  switch( work->state )
-  {
-  case SMS_FADE_IN:
-    if( GFL_FADE_CheckFade() == FALSE )
-    {
-      work->state = SMS_SELECT;
-    }
-    break;
-    
-  case SMS_SELECT:
-    START_MENU_UpdateControl( work );
-    break;
-    
-  case SMS_FADE_OUT:
-    if( GFL_FADE_CheckFade() == FALSE )
-    {
-      return GFL_PROC_RES_FINISH;
-    }
-    break;
-  }
-
-  
-  //スクロール処理(現状特にオーバー処理など入れてないので8の約数で
-  if( work->targetPos > work->dispPos )
-  {
-    work->dispPos += 4;
-    GFL_BG_SetScroll( BG_PLANE_MENU , GFL_BG_SCROLL_Y_SET , work->dispPos );
-  }
-  else
-  if( work->targetPos < work->dispPos )
-  {
-    work->dispPos -= 4;
-    GFL_BG_SetScroll( BG_PLANE_MENU , GFL_BG_SCROLL_Y_SET , work->dispPos );
-  }
-
-  //OBJの更新
-  GFL_CLACT_SYS_Main();
-
-  START_MENU_UpdatePalletAnime( work );
-
-  return GFL_PROC_RES_CONTINUE;
-*/
 }
 
 static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-/*
-  START_MENU_WORK *work = mywk;
-
-  //選択による分岐処理
-  {
-    switch( work->selectItem )
-    {
-    case SMI_CONTINUE:    //続きから
-      //Procの変更を中でやってる
-      GameStart_Continue();
-      break;
-    case SMI_NEWGAME:   //最初から
-      //Procの変更を中でやってる
-      GameStart_Beginning();
-      break;
-      
-    case SMI_MYSTERY_GIFT:  //不思議な贈り物
-      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(mystery), &MysteryGiftProcData, NULL);
-      break;
-
-    case SMI_WIFI_SETTING: //WIFI設定
-      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(wifi_util), &WifiUtilProcData, NULL);
-      break;
-
-    case SMI_PDW_ACCOUNT: //ポケモンドリームワールド設定
-      GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &PDW_ACC_MainProcData, NULL);
-        break;
-      
-    case SMI_GBS_CONNECT: //バトル大会メニュー
-      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(battle_championship), &BATTLE_CHAMPIONSHIP_ProcData, NULL);
-      break;
-                
-    case SMI_RETURN_TITLE:
-      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
-      break;
-    default:
-      //Procの変更を中でやってる
-      GameStart_Beginning();
-      break;
-    }
-  }
-
-  //開放処理
-  {
-    u8 i;
-    GFL_TCB_DeleteTask( work->vblankFuncTcb );
-
-    GFL_CLACT_WK_Remove( work->cellCursor[0] );
-    GFL_CLACT_WK_Remove( work->cellCursor[1] );
-    
-    GFL_CLGRP_PLTT_Release( work->pltIdx );
-    GFL_CLGRP_CGR_Release( work->ncgIdx );
-    GFL_CLGRP_CELLANIM_Release( work->anmIdx );
-    
-    GFL_CLACT_UNIT_Delete( work->cellUnit );
-    GFL_CLACT_SYS_Delete();
-
-    for( i=0;i<SMI_MAX;i++ )
-    {
-      if( work->itemWork[i].enable == TRUE )
-      {
-        GFL_BMPWIN_Delete( work->itemWork[i].win );
-      }
-    }
-    // infomsg
-    GFL_STR_DeleteBuffer(work->pStrBuf);
-    GFL_MSG_Delete(work->pMsgWiFiData);
-    if(work->infoDispWin){
-      GFL_BMPWIN_Delete(work->infoDispWin);
-      work->infoDispWin=NULL;
-    }
-
-    GFL_FONT_Delete( work->fontHandle );
-    GFL_BMPWIN_Exit();
-
-    GFL_BG_FreeBGControl(BG_PLANE_MENU);
-    GFL_BG_FreeBGControl(BG_PLANE_INFO);
-    GFL_BG_FreeBGControl(BG_PLANE_BACK_GROUND);
-    GFL_BG_Exit();
-    
-  }
-*/
-
   START_MENU_WORK * wk;
 	u8	result;
 	
@@ -1790,11 +1644,7 @@ static int MainSeq_Init( START_MENU_WORK * wk )
 static int MainSeq_Release( START_MENU_WORK * wk )
 {
 	ExitVBlank( wk );
-/*
-	ZKNSEARCHMAIN_ExitBgWinFrame( wk );
 
-	ZKNSEARCHMAIN_ExitPaletteFade( wk );
-*/
 	ExitBlinkAnm( wk );
 
 	ExitBgWinFrame( wk );
@@ -1850,6 +1700,10 @@ static int MainSeq_Main( START_MENU_WORK * wk )
 	BLINKPALANM_Main( wk->blink );
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+		if( wk->list[wk->listPos] == LIST_ITEM_NEW_GAME ){
+			PutNewGameWarrning( wk );
+			return MAINSEQ_NEWGAME;
+		}
 		wk->listResult = wk->list[wk->listPos];
 		return SetFadeOut( wk, MAINSEQ_RELEASE );
 	}
@@ -1900,11 +1754,34 @@ static int MainSeq_Scroll( START_MENU_WORK * wk )
 	return MAINSEQ_SCROLL;
 }
 
+static int MainSeq_NewGame( START_MENU_WORK * wk )
+{
+	if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
+		// Ａボタン
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+			ClearNewGameWarrning( wk );
+			wk->listResult = LIST_ITEM_NEW_GAME;
+			return SetFadeOut( wk, MAINSEQ_RELEASE );
+		}
+		// Ｂボタン
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+			ClearNewGameWarrning( wk );
+			return MAINSEQ_MAIN;
+		}
+	}
+
+	PRINTSYS_QUE_Main( wk->que );
+	PRINT_UTIL_Trans( &wk->utilWin, wk->que );
+
+	return MAINSEQ_NEWGAME;
+}
 
 static int MainSeq_EndSet( START_MENU_WORK * wk )
 {
 	return MAINSEQ_END_SET;
 }
+
+
 
 static void VBlankTask( GFL_TCB * tcb, void * work )
 {
@@ -1955,16 +1832,16 @@ static void InitBg(void)
 	}
 	{	// メイン画面：リスト文字
 		GFL_BG_BGCNT_HEADER cnth= {
-			0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x10000, 0x8000,
+			0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x10000, 0x8000,
 			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &cnth, GFL_BG_MODE_TEXT );
 	}
 	{	// メイン画面：リスト背景
 		GFL_BG_BGCNT_HEADER cnth= {
-			0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x08000, 0x8000,
+			0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0xb000, GX_BG_CHARBASE_0x08000, 0x8000,
 			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &cnth, GFL_BG_MODE_TEXT );
@@ -1972,7 +1849,7 @@ static void InitBg(void)
 	{	// メイン画面：背景
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x08000, 0x8000,
+			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,
 			GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &cnth, GFL_BG_MODE_TEXT );
@@ -2710,7 +2587,106 @@ static BOOL CursorMove( START_MENU_WORK * wk, s8 vec )
 }
 
 
+static void PutWarrningWindow( u8 px, u8 py, u8 sx, u8 sy, u8 frm )
+{
+	// 左上
+	GFL_BG_FillScreen( frm, WARRNING_WIN_CHAR_NUM, px, py, 1, 1, WARRNING_WIN_PLTT_NUM );
+	// 右上
+	GFL_BG_FillScreen( frm, WARRNING_WIN_CHAR_NUM+2, px+sx-1, py, 1, 1, WARRNING_WIN_PLTT_NUM );
+	// 左下
+	GFL_BG_FillScreen( frm, WARRNING_WIN_CHAR_NUM+6, px, py+sy-1, 1, 1, WARRNING_WIN_PLTT_NUM );
+	// 右下
+	GFL_BG_FillScreen( frm, WARRNING_WIN_CHAR_NUM+8, px+sx-1, py+sy-1, 1, 1, WARRNING_WIN_PLTT_NUM );
+	// 上
+	GFL_BG_FillScreen( frm, WARRNING_WIN_CHAR_NUM+1, px+1, py, sx-2, 1, WARRNING_WIN_PLTT_NUM );
+	// 下
+	GFL_BG_FillScreen( frm, WARRNING_WIN_CHAR_NUM+7, px+1, py+sy-1, sx-2, 1, WARRNING_WIN_PLTT_NUM );
+	// 左
+	GFL_BG_FillScreen( frm, WARRNING_WIN_CHAR_NUM+3, px, py+1, 1, sy-2, WARRNING_WIN_PLTT_NUM );
+	// 右
+	GFL_BG_FillScreen( frm, WARRNING_WIN_CHAR_NUM+5, px+sx-1, py+1, 1, sy-2, WARRNING_WIN_PLTT_NUM );
+	// 中
+	GFL_BG_FillScreen( frm, WARRNING_WIN_CHAR_NUM+4, px+1, py+1, sx-2, sy-2, WARRNING_WIN_PLTT_NUM );
 
+	GFL_BG_LoadScreenV_Req( frm );
+}
+
+static void ClearWarrningWindow( u8 px, u8 py, u8 sx, u8 sy, u8 frm )
+{
+	GFL_BG_FillScreen( frm, 0, px, py, sx, sy, 0 );
+	GFL_BG_LoadScreenV_Req( frm );
+}
+
+
+static void PutNewGameWarrning( START_MENU_WORK * wk )
+{
+	STRBUF * str;
+	u32	i;
+
+	wk->utilWin.win = GFL_BMPWIN_Create(
+											BMPWIN_NEWGAME_WIN_FRM,
+											BMPWIN_NEWGAME_WIN_PX, BMPWIN_NEWGAME_WIN_PY,
+											BMPWIN_NEWGAME_WIN_SX, BMPWIN_NEWGAME_WIN_SY,
+											BMPWIN_NEWGAME_WIN_PAL, GFL_BMP_CHRAREA_GET_B );
+
+	// 注意
+	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ATTENTION_06 );
+	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, NEW_GAME_WARRNING_ATTENTION_PY, str, wk->font, FCOL_MP15RN );
+	GFL_STR_DeleteBuffer( str );
+	// 文章
+	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ATTENTION_07 );
+	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, NEW_GAME_WARRNING_MESSAGE_PY, str, wk->font, FCOL_MP15WN );
+	GFL_STR_DeleteBuffer( str );
+	// Ａ
+	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ATTENTION_08 );
+	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, NEW_GAME_WARRNING_A_BUTTON_PY, str, wk->font, FCOL_MP15WN );
+	GFL_STR_DeleteBuffer( str );
+	// Ｂ
+	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ATTENTION_09 );
+	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, NEW_GAME_WARRNING_B_BUTTON_PY, str, wk->font, FCOL_MP15WN );
+	GFL_STR_DeleteBuffer( str );
+
+	GFL_BMPWIN_MakeScreen( wk->utilWin.win );
+	GFL_BG_LoadScreenV_Req( BMPWIN_NEWGAME_WIN_FRM );
+
+	// ウィンドウ描画
+	PutWarrningWindow(
+		NEW_GAME_WARRNING_WIN_PX, NEW_GAME_WARRNING_WIN_PY,
+		NEW_GAME_WARRNING_WIN_SX, NEW_GAME_WARRNING_WIN_SY, GFL_BG_FRAME2_M );
+
+	// リストを退避
+	GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_X_SET, 256 );
+	GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_Y_SET, 0 );
+	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_X_SET, 256 );
+	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
+
+	for( i=OBJ_ID_PLAYER; i<=OBJ_ID_NEW_MACHINE; i++ ){
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
+	}
+}
+
+static void ClearNewGameWarrning( START_MENU_WORK * wk )
+{
+	u32	i;
+
+	ClearWarrningWindow(
+		NEW_GAME_WARRNING_WIN_PX, NEW_GAME_WARRNING_WIN_PY,
+		NEW_GAME_WARRNING_WIN_SX, NEW_GAME_WARRNING_WIN_SY, GFL_BG_FRAME2_M );
+
+	GFL_BG_ClearScreenCodeVReq( BMPWIN_NEWGAME_WIN_FRM, 0 );
+
+	GFL_BMPWIN_Delete( wk->utilWin.win );
+
+	// リスト復帰
+	GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_X_SET, 0 );
+	GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_Y_SET, wk->bgScroll );
+	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_X_SET, 0 );
+	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, wk->bgScroll );
+
+	for( i=OBJ_ID_PLAYER; i<=OBJ_ID_NEW_MACHINE; i++ ){
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], TRUE );
+	}
+}
 
 
 

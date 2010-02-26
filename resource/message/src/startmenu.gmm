@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-02-25T21:57:43"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-02-25T22:18:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,7 +342,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -498,6 +498,64 @@
 しょかい　じゅしん</language>
 		<language name="JPN_KANJI" width="256">ふしぎなおくりもの
 初回受信</language>
+	</row>
+
+	<row id="START_MENU_STR_ATTENTION_04">
+		<comment>通信機能を設定するときのメッセージ</comment>
+		<language name="JPN" width="256">ちゅうい！</language>
+		<language name="JPN_KANJI" width="256">ちゅうい！</language>
+	</row>
+
+	<row id="START_MENU_STR_ATTENTION_05">
+		<comment>通信機能を設定するときのメッセージ</comment>
+		<language name="JPN" width="256">このゲームを　さいだいげんに
+たのしむには　むせんつうしんきのうを
+ＯＮに　してください
+ひこうきや　びょういんなど
+むせんつうしんを　きんしに　している
+ばしょでは　ＯＦＦに　してください
+ゲームちゅうの　せっていがめんでも
+へんこう　することが　できます</language>
+		<language name="JPN_KANJI" width="256">このゲームを　さいだいげんに
+たのしむには　むせんつうしんきのうを
+ＯＮに　してください
+ひこうきや　びょういんなど
+むせんつうしんを　きんしに　している
+ばしょでは　ＯＦＦに　してください
+ゲームちゅうの　せっていがめんでも
+へんこう　することが　できます</language>
+	</row>
+
+	<row id="START_MENU_STR_ATTENTION_06">
+		<comment>最初から始めるときのメッセージ</comment>
+		<language name="JPN" width="256">ちゅうい！</language>
+		<language name="JPN_KANJI" width="256">ちゅうい！</language>
+	</row>
+
+	<row id="START_MENU_STR_ATTENTION_07">
+		<comment>最初から始めるときのメッセージ</comment>
+		<language name="JPN" width="256">べつの　レポートが　かかれています
+これから　はじめる　ぼうけんは
+とちゅうで　レポートを
+かくことが　できません！
+それでも　はじめますか？</language>
+		<language name="JPN_KANJI" width="256">べつの　レポートが　かかれています
+これから　はじめる　ぼうけんは
+とちゅうで　レポートを
+かくことが　できません！
+それでも　はじめますか？</language>
+	</row>
+
+	<row id="START_MENU_STR_ATTENTION_08">
+		<comment>最初から始めるときのメッセージ</comment>
+		<language name="JPN" width="256">Ａボタン　ぼうけんを　はじめる</language>
+		<language name="JPN_KANJI" width="256">Ａボタン　ぼうけんを　はじめる</language>
+	</row>
+
+	<row id="START_MENU_STR_ATTENTION_09">
+		<comment>最初から始めるときのメッセージ</comment>
+		<language name="JPN" width="256">Ｂボタン　やめる</language>
+		<language name="JPN_KANJI" width="256">Ｂボタン　やめる</language>
 	</row>
 
 	<flowchart-group-list>
