@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T22:27:38"/>
+	<create user="matsushima" host="W00181" date="2010-02-25T23:05:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="209"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1503" top="195" right="2208" bottom="815" maximized="no" rayout="Vertical2">
+	<dialog left="105" top="150" right="810" bottom="770" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,14 +292,138 @@
 	</lock>
 
 
-	<row id="msg_c03r0502_00_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>ロックカプセル用
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+	<row id="msg_c03r0502_mrlock_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>●ロックカプセル入手前
+・１回転してからセリフ。</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
 		<language name="JPN" width="256">ワタシの　なまえは　ミスターロック
-どんなものでも　あけますよ！</language>
+どんなものでも　あけてしまう[BE:00:ページ切り替え（行送り）]
+まかふしぎな　ピエロでございます…[BE:01:ページ切り替え（クリア）]
+あなたの　おなまえは　[1:00:トレーナー名:0]さん
+また　おあいすることに　なるでしょう</language>
 		<language name="JPN_KANJI" width="256">ワタシの　名前は　ミスターロック
 どんなものでも　開けますよ！</language>
+	</row>
+
+	<row id="msg_c03r0502_mrlock_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>●ロックカプセル入手後
+
+・１回転してからセリフ。
+
+・このあと、モゾモゾする小芝居。</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さん　あてに
+ロックカプセルが[BE:00:ページ切り替え（行送り）]
+おくられてきましたよ！[BE:00:ページ切り替え（行送り）]
+ワタシが　あっというまに
+あけて　ごらんにいれましょう！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c03r0502_mrlock_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>●ロックカプセル開錠後
+
+・このあと、アイテム入手の汎用メッセージ</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
+		<language name="JPN" width="256">ほら　あきましたよ！
+なかみは…[BE:00:ページ切り替え（行送り）]
+じゃららららんっ！[BE:00:ページ切り替え（行送り）]
+わざマシン！[BE:00:ページ切り替え（行送り）]</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c03r0502_mrlock_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>・このセリフのあと、モゾモゾする小芝居。</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
+		<language name="JPN" width="256">おやおや…
+ロックカプセルと　いっしょに[BE:00:ページ切り替え（行送り）]
+ジョウトちほうの　ジュンサーさんから[BE:00:ページ切り替え（行送り）]
+てがみが　おくられてきましたよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c03r0502_mrlock_05" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">CLOWN</attribute>
+		<language name="JPN" width="256">なになに…[BE:01:ページ切り替え（クリア）]
+『ロックカプセルに　はいっている
+わざマシンは[BE:00:ページ切り替え（行送り）]
+イッシュちほうの　しんらいできる[BE:00:ページ切り替え（行送り）]
+トレーナーに　あずけます…[BE:01:ページ切り替え（クリア）]
+ロケットだんのような　わるものに
+つかわれないように　してください[BE:00:ページ切り替え（行送り）]
+…ということ　みたいですね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c03r0502_mrlock_06" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>・１回転してからセリフ。</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
+		<language name="JPN" width="256">おや　つづきが　ありますよ…[BE:01:ページ切り替え（クリア）]
+わざマシン１０１は　バークアウト
+あくタイプの　とくしゅこうげきで[BE:00:ページ切り替え（行送り）]
+あいての　とくこうを　さげる…[BE:01:ページ切り替え（クリア）]
+おもしろい　つかいかたが
+できそうな　わざですね！</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c03r0502_mrlock_07" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>●ロックカプセルイベント終了後
+繰り返しのセリフ</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
+		<language name="JPN" width="256">ワタシの　なまえは　ミスターロック
+どんなものでも　あけてしまう[BE:00:ページ切り替え（行送り）]
+まかふしぎな　ピエロでございます…</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c03r0502_engineer_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●転送マシンメニューを表示させるための
+パスワード入力
+
+●この後、簡易会話画面へ</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">とくべつな　ネットワークを　つないで
+てんそうマシンを　つかいたければ[BE:00:ページ切り替え（行送り）]
+パスワードを　おしえてくれたまえ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c03r0502_engineer_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●正しいパスワードが入力されたセリフ
+・このあとmsg_c03r0502_engineer_03</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">うむ！　ただしい　パスワードが
+にゅうりょく　されたようだ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c03r0502_engineer_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●ダウンロードプログラムが実行されるまで
+このセリフを繰り返す。</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">タイトルがめんに　あたらしい　ボタンを
+つくっておいたぞ！[BE:00:ページ切り替え（行送り）]
+たしかめてみるがよい！</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c03r0502_engineer_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●パスワードが間違っていた場合のセリフ</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">うーむ…
+なにかを　かんちがいしているようだ…[BE:01:ページ切り替え（クリア）]
+ただしい　パスワードを
+おぼえてきたまえ！</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c03r0502_engineer_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●転送マシンを実行したあとのセリフ</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">てんそうマシンを　つかうのは
+かんたんだった　だろう</language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<flowchart-group-list>
