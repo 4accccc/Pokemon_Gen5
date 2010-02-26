@@ -434,11 +434,11 @@ static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk,
   GFL_STD_MemClear(ep2p, sizeof(EV_P2PEVENT_WORK));
   ep2p->pMatchParam = GFL_HEAP_AllocClearMemory(GetHeapLowID(HEAPID_PROC), sizeof(WIFIP2PMATCH_PROC_PARAM));
   ep2p->pMatchParam->pMatch = GFL_HEAP_AllocClearMemory(GetHeapLowID(HEAPID_PROC), sizeof( WIFI_STATUS ));
-  ep2p->pMatchParam->pSaveData = pClub->ctrl;
   ep2p->pMatchParam->pGameData = GAMESYSTEM_GetGameData(pClub->gsys);
+  ep2p->pMatchParam->pSaveData = GAMEDATA_GetSaveControlWork(ep2p->pMatchParam->pGameData);
   ep2p->pMatchParam->vchatMain = TRUE;
 
-  ep2p->pGameData =  GAMESYSTEM_GetGameData(pClub->gsys);
+  ep2p->pGameData =  ep2p->pMatchParam->pGameData;
   ep2p->pWifiList = GAMEDATA_GetWiFiList(ep2p->pGameData);
   ep2p->pMatchParam->seq = WIFI_GAME_NONE;
   ep2p->gsys = pClub->gsys;

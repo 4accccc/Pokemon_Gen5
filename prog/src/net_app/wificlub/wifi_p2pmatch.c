@@ -3330,7 +3330,6 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
         return seq;
       }
     }
-
     ret = WIFI_MCR_Main( &wk->matchroom );
     WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
     //        ret = BmpListMain(wk->lw);

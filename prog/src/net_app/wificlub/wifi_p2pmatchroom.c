@@ -415,6 +415,7 @@ u32 WIFI_MCR_Main( WIFI_MATCHROOM* p_mcr )
 {
   BOOL result;
 
+  if(OS_GetVBlankCount()%2){
   // オブジェクト動作
   WF2DMAP_OBJSysMain( p_mcr->p_objsys );
 
@@ -438,7 +439,8 @@ u32 WIFI_MCR_Main( WIFI_MATCHROOM* p_mcr )
 
   // チェック前に出口を消す
   WcrClactResEffectExitDrawOff( p_mcr );
-
+  }
+    
   // キー入力処理
   if( WcrMoveObjKeyInputCheck( p_mcr ) == TRUE ){
 
@@ -934,8 +936,10 @@ void WIFI_MCR_PCAnmOff( WIFI_MATCHROOM* p_mcr )
 //-----------------------------------------------------------------------------
 void WIFI_MCR_PCAnmMain( WIFI_MATCHROOM* p_mcr )
 {
+  if(OS_GetVBlankCount()%2){
   // パソコンアニメ
   WcrPCANM_Main( p_mcr, &p_mcr->pc_anm );
+  }
 }
 
 

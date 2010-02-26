@@ -126,7 +126,7 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
   }
 
   dbw = GMEVENT_GetEventWork(event);
-  dbw->ctrl = SaveControl_GetPointer();
+ // dbw->ctrl = SaveControl_GetPointer();
   dbw->gsys = gsys;
   dbw->fieldmap = fieldmap;
   dbw->event = event;

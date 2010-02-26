@@ -21,7 +21,7 @@ typedef struct {
   GMEVENT * event;
   GAMESYS_WORK * gsys;
   FIELDMAP_WORK * fieldmap;
-  SAVE_CONTROL_WORK *ctrl;
+//  SAVE_CONTROL_WORK *ctrl;
   void* pWork;
   BOOL isEndProc;
   BOOL bFieldEnd;

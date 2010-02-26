@@ -2898,7 +2898,6 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
     p_gts->wifi.event     = p_event;
     p_gts->wifi.gsys      = p_gamesys;
     p_gts->wifi.fieldmap  = p_field;
-    p_gts->wifi.ctrl      = SaveControl_GetPointer();
     p_gts->wifi.pWork     = NULL;
     p_gts->wifi.isEndProc = TRUE;
     p_gts->wifi.selectType  = 0;
