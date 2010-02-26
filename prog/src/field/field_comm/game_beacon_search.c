@@ -17,6 +17,7 @@
 #include "gamesystem/game_comm.h"
 #include "field/field_beacon_message.h"
 #include "field/intrude_comm.h"
+#include "net/net_whpipe.h"
 
 
 //==============================================================================
