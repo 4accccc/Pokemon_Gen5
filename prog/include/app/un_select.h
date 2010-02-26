@@ -42,7 +42,9 @@ extern const GFL_PROC_DATA UNSelectProcData;
 //=====================================
 typedef struct
 {	
-  u8 floor; ///< [IN/OUT] 開始フロア／選択フロア
-
+  u8 InFloor;       ///< [IN] 開始フロア
+  u8 OutFloor;      ///< [OUT] 選択フロア
+  u16 CountryCode;  ///< [OUT] 選択国コード
+  BOOL Decide;      ///< [OUT] 国を決定した場合TRUE
 } UN_SELECT_PARAM;
 
