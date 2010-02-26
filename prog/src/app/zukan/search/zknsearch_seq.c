@@ -229,6 +229,8 @@ static int MainSeq_Init( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHMAIN_InitPaletteFade( wk );
 	ZKNSEARCHMAIN_SetPalFadeSeq( wk, 16, 16 );
 
+	ZKNSEARCHMAIN_LoadLoadingWindow( wk );
+
 	ZKNSEARCHMAIN_InitVBlank( wk );
 	ZKNSEARCHMAIN_InitHBlank( wk );
 
@@ -245,6 +247,8 @@ static int MainSeq_Release( ZKNSEARCHMAIN_WORK * wk )
 
 	ZKNSEARCHMAIN_ExitHBlank( wk );
 	ZKNSEARCHMAIN_ExitVBlank( wk );
+
+	ZKNSEARCHMAIN_UnloadLoadingWindow( wk );
 
 	ZKNSEARCHMAIN_ExitBgWinFrame( wk );
 
@@ -418,6 +422,8 @@ static int MainSeq_StartSort( ZKNSEARCHMAIN_WORK * wk )
 												HEAPID_ZUKAN_SYS,
 												&wk->dat->list );
 		if( wk->dat->listMax != 0 ){
+			PMSND_StopSE();
+			PMSND_PlaySE( ZKNSEARCH_SE_HIT );
 			ZKNSEARCHBMP_SearchComp( wk );
 		}else{
 			PMSND_StopSE();
@@ -436,7 +442,6 @@ static int MainSeq_ResultSort( ZKNSEARCHMAIN_WORK * wk )
 {
 	if( ZKNSEARCHUI_Result( wk ) == TRUE ){
 		if( wk->dat->listMax != 0 ){
-			PMSND_StopSE();
 			wk->dat->retMode = ZKNSEARCH_RET_START;
 			return MAINSEQ_END_SET;
 		}

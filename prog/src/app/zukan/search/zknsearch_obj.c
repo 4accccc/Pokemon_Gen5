@@ -390,6 +390,23 @@ void ZKNSEARCHOBJ_GetPos( ZKNSEARCHMAIN_WORK * wk, u32 id, s16 * x, s16 * y, u16
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		セルアクターBGプライオリティ変更
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		id			OBJ ID
+ * @param		pri			プライオリティ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNSEARCHOBJ_BgPriChange( ZKNSEARCHMAIN_WORK * wk, u32 id, int pri )
+{
+	GFL_CLACT_WK_SetBgPri( wk->clwk[id], pri );
+}
+
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief		セルアクターパレット変更
  *
  * @param		wk			図鑑検索画面ワーク

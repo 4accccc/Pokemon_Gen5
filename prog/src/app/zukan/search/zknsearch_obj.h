@@ -184,6 +184,19 @@ extern void ZKNSEARCHOBJ_SetPos( ZKNSEARCHMAIN_WORK * wk, u32 id, s16 x, s16 y, 
 //--------------------------------------------------------------------------------------------
 extern void ZKNSEARCHOBJ_GetPos( ZKNSEARCHMAIN_WORK * wk, u32 id, s16 * x, s16 * y, u16 setsf );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルアクターBGプライオリティ変更
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		id			OBJ ID
+ * @param		pri			プライオリティ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZKNSEARCHOBJ_BgPriChange( ZKNSEARCHMAIN_WORK * wk, u32 id, int pri );
+
 //extern void ZKNSEARCHOBJ_VanishAll( ZKNSEARCHMAIN_WORK * wk );
 
 extern void ZKNSEARCHOBJ_VanishList( ZKNSEARCHMAIN_WORK * wk );

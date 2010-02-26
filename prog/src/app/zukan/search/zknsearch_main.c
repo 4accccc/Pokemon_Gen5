@@ -677,15 +677,34 @@ void ZKNSEARCHMAIN_LoadFormListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 #define	LOAD_WIN_SX		( 32 )
 #define	LOAD_WIN_SY		( 6 )
 
+void ZKNSEARCHMAIN_LoadLoadingWindow( ZKNSEARCHMAIN_WORK * wk )
+{
+	ARCHANDLE * ah;
+	NNSG2dScreenData * scrn;
+	void * buf;
+	u32	siz;
+
+	siz = sizeof(u16) * LOAD_WIN_SX * LOAD_WIN_SY;
+
+	wk->loadingBuff = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_SEARCH, siz );
+
+	ah  = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
+	buf = GFL_ARCHDL_UTIL_LoadScreen(
+					ah, NARC_zukan_gra_search_load_win_NSCR, FALSE, &scrn, HEAPID_ZUKAN_SEARCH_L );
+  GFL_STD_MemCopy16( (void *)scrn->rawData, wk->loadingBuff, siz );
+	GFL_HEAP_FreeMemory( buf );
+	GFL_ARC_CloseDataHandle( ah );
+}
+
+void ZKNSEARCHMAIN_UnloadLoadingWindow( ZKNSEARCHMAIN_WORK * wk )
+{
+	GFL_HEAP_FreeMemory( wk->loadingBuff );
+}
+
 void ZKNSEARCHMAIN_LoadingWindowOn( ZKNSEARCHMAIN_WORK * wk )
 {
-	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
-
-	GFL_ARCHDL_UTIL_TransVramScreen(
-		ah, NARC_zukan_gra_search_load_win_NSCR,
-		GFL_BG_FRAME1_M, 32*LOAD_WIN_PY, 0, FALSE, HEAPID_ZUKAN_SEARCH );
-
-	GFL_ARC_CloseDataHandle( ah );
+	GFL_BG_WriteScreen( GFL_BG_FRAME1_M, wk->loadingBuff, LOAD_WIN_PX, LOAD_WIN_PY, LOAD_WIN_SX, LOAD_WIN_SY );
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_M );
 
 	ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_OFF );
 	ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_EXIT, APP_COMMON_BARICON_EXIT_OFF );
@@ -694,6 +713,9 @@ void ZKNSEARCHMAIN_LoadingWindowOn( ZKNSEARCHMAIN_WORK * wk )
 	}else{
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, APP_COMMON_BARICON_CHECK_OFF_PASSIVE );
 	}
+	ZKNSEARCHOBJ_BgPriChange( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, 1 );
+	ZKNSEARCHOBJ_BgPriChange( wk, ZKNSEARCHOBJ_IDX_TB_EXIT, 1 );
+	ZKNSEARCHOBJ_BgPriChange( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, 1 );
 }
 
 void ZKNSEARCHMAIN_LoadingWindowOff( ZKNSEARCHMAIN_WORK * wk )
@@ -709,6 +731,10 @@ void ZKNSEARCHMAIN_LoadingWindowOff( ZKNSEARCHMAIN_WORK * wk )
 	}else{
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, APP_COMMON_BARICON_CHECK_OFF );
 	}
+	ZKNSEARCHOBJ_BgPriChange( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, 0 );
+	ZKNSEARCHOBJ_BgPriChange( wk, ZKNSEARCHOBJ_IDX_TB_EXIT, 0 );
+	ZKNSEARCHOBJ_BgPriChange( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, 0 );
+
 
 	ZKNSEARCHBMP_PutResetStart( wk );
 //	ZKNSEARCHMAIN_LoadMenuPageScreen( wk );
