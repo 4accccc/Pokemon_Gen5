@@ -184,11 +184,12 @@ enum
 { 
   //メインBG
   PLTID_BG_BACK_M       = 0,
-  PLTID_BG_TEXT_M       = 1,
-  PLTID_BG_TEXT_WIN_M   = 2,
+//  PLTID_BG_TEXT_M       = 1,
+//  PLTID_BG_TEXT_WIN_M   = 2,
   PLTID_BG_TASKMENU_M   = 11,
   PLTID_BG_TOUCHBAR_M   = 13,
-  PLTID_BG_INFOWIN_M    = 15,
+  PLTID_BG_TEXT_M       = 14,
+  PLTID_BG_TEXT_WIN_M    = 15,
   //サブBG
   PLTID_BG_BACK_S       = 0,
   PLTID_BG_TEXT_S       = 6,
@@ -629,8 +630,8 @@ static void UNSelect_BG_LoadResource( UN_SELECT_MAIN_WORK* wk, HEAPID heap_id )
   handle  = GFL_ARC_OpenDataHandle( ARCID_UN_SELECT_GRA, heap_id );
 
   // 上下画面ＢＧパレット転送
-  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_un_select_gra_kokuren_bg_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0, heap_id );
-  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_un_select_gra_kokuren_bg_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0, heap_id );
+  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_un_select_gra_kokuren_bg_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 7*0x20, heap_id );
+  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_un_select_gra_kokuren_bg_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 7*0x20, heap_id );
   
   //  ----- サブ画面 -----
 /**
@@ -1643,8 +1644,8 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
   
   //アルファセット
   G2S_SetBlendAlpha(
-		GX_BLEND_PLANEMASK_BG1,
 		GX_BLEND_PLANEMASK_BG2,
+		GX_BLEND_PLANEMASK_BG3,
 		BLEND_EV1, BLEND_EV2 );
 
   wk->htask = GFUser_HIntr_CreateTCB( HBlankTask, wk, 0 );
@@ -1990,7 +1991,22 @@ static void HBlankTask( GFL_TCB * tcb, void * work )
 {
 	s32	vcount = GX_GetVCount();
 
-	if( vcount >= 168 ){
+#if 0  
+  int base = 4*8;
+
+	if( vcount >= base+LIST_MARLER_OFS*3 ){
+		G2S_ChangeBlendAlpha( 11, 5 );
+	}else if( vcount >= base+LIST_MARLER_OFS*2 ){
+		G2S_ChangeBlendAlpha( 10, 6 );
+	}else if( vcount >= base+LIST_MARLER_OFS*1 ){
+		G2S_ChangeBlendAlpha( 9, 7 );
+	}else if( vcount >= base ){
+		G2S_ChangeBlendAlpha( 8, 8 );
+	}else{
+		G2S_ChangeBlendAlpha( 6, 10 );
+	}
+#else
+  if( vcount >= 168 ){
 		G2S_ChangeBlendAlpha( 11, 5 );
 	}else if( vcount >= 144 ){
 		G2S_ChangeBlendAlpha( 10, 6 );
@@ -2003,6 +2019,7 @@ static void HBlankTask( GFL_TCB * tcb, void * work )
 	}else{
 		G2S_ChangeBlendAlpha( 4, 12 );
 	}
+#endif
 }
 
 //////////////////////////////////////////////////
@@ -2159,6 +2176,8 @@ static void MakeAct( UN_SELECT_MAIN_WORK *wk )
     {
       GFL_CLWK *clwk;
       clwk = CreateAct( unit, &data );
+      //半透明
+      GFL_CLACT_WK_SetObjMode( clwk, GX_OAM_MODE_XLU );
       //アクター非表示
       GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
       wk->ClWk[UN_OBJ_LIST_MARKER_S_START+i] = clwk;
