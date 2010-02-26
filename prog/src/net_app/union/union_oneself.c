@@ -743,6 +743,11 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
   s16 check_gx, check_gy, check_gz;
   MMDL *target_pc;
   
+  if(NetErr_App_CheckError() == TRUE){
+    NetErr_App_ReqErrorDisp();
+    return FALSE;
+  }
+  
   //外部から動作リクエストを受けているなら切り替える
   if(situ->next_union_status != UNION_STATUS_NORMAL){
     OS_TPrintf("NormalUpdate:外部リクエスト受信。切り替えます next_status=%d\n", situ->next_union_status);
