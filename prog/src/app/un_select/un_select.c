@@ -69,6 +69,9 @@
 
 #include "msg/msg_wifi_place_msg_UN.h"  // GMM
 
+//国50音順配列
+#include "country_ary.cdat"
+
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
 //=============================================================================
@@ -83,244 +86,7 @@ FS_EXTERN_OVERLAY(ui_common);
 //=============================================================================
 
 
-//--------------------------------------------------------------
-/// フロアテーブル
-//==============================================================
-static const int g_FloorTable[]={
-  country093, //アイスランド
-  country098, //アイルランド
-  country014, //アゼルバイジャン
-  country001, //アフガニスタン
-  country220, //アメリカ
-  country004, //アメリカりょうサモア
-  country221, //アメリカりょうバージンしょとう
-  country218, //アラブしゅちょうこく
-  country003, //アルジェリア
-  country009, //アルゼンチン
-  country011, //アルバ
-  country002, //アルバニア
-  country010, //アルメニア
-  country007, //アンギラ
-  country006, //アンゴラ
-  country008, //アンティグア・バーブーダ
-  country005, //アンドラ
-  country231, //イエメン
-  country219, //イギリス
-  country029, //イギリスりょうバージンしょとう
-  country100, //イスラエル
-  country101, //イタリア
-  country097, //イラク
-  country096, //イラン
-  country094, //インド
-  country095, //インドネシア
-  country216, //ウガンダ
-  country217, //ウクライナ
-  country223, //ウズベキスタン
-  country222, //ウルグアイ
-  country060, //エクアドル
-  country061, //エジプト
-  country065, //エストニア
-  country066, //エチオピア
-  country064, //エリトリア
-  country062, //エルサルバドル
-  country012, //オーストラリア
-  country013, //オーストリア
-  country157, //オマーン
-  country146, //オランダ
-  country147, //オランダりょうアンティル
-  country078, //ガーナ
-  country037, //カーボベルデ
-  country088, //ガイアナ
-  country106, //カザフスタン
-  country105, //カシミール
-  country169, //カタール
-  country036, //カナダ
-  country074, //ガボン
-  country035, //カメルーン
-  country110, //かんこく
-  country075, //ガンビア
-  country034, //カンボジア
-  country109, //きたちょうせん
-  country155, //きたマリアナしょとう
-  country086, //ギニア
-  country087, //ギニアビサウ
-  country054, //キプロス
-  country053, //キューバ
-  country080, //ギリシャ
-  country108, //キリバス
-  country112, //キルギス
-  country085, //グアテマラ
-  country083, //グアドループとう
-  country084, //グアム
-  country111, //クウェート
-  country049, //クックしょとう
-  country081, //グリーンランド
-  country044, //クリスマスとう
-  country076, //グルジア
-  country082, //グレナダ
-  country052, //クロアチア
-  country038, //ケイマンしょとう
-  country107, //ケニア
-  country051, //コートジボワール
-  country050, //コスタリカ
-  country046, //コモロ
-  country045, //コロンビア
-  country048, //コンゴきょうわこく
-  country047, //コンゴみんしゅきょうわこく
-  country182, //サウジアラビア
-  country179, //サモア
-  country181, //サントメ・プリンシペ
-  country232, //ザンビア
-  country177, //サンピエール・ミクロン
-  country180, //サンマリノ
-  country186, //シエラレオネ
-  country057, //ジブチ
-  country079, //ジブラルタル
-  country102, //ジャマイカ
-  country201, //シリア
-  country187, //シンガポール
-  country233, //ジンバブエ
-  country200, //スイス
-  country199, //スウェーデン
-  country195, //スーダン
-  country197, //スバールバル・ヤンマンエンとう
-  country193, //スペイン
-  country196, //スリナム
-  country194, //スリランカ
-  country188, //スロバキア
-  country189, //スロベニア
-  country198, //スワジランド
-  country185, //セーシェル
-  country063, //せきどうギニア
-  country183, //セネガル
-  country184, //セルビア・モンテネグロ
-  country175, //セントクリストファー・ネービス
-  country178, //セントビンセント・グレナディーン
-  country174, //セントヘレナとう
-  country176, //セントルシア
-  country191, //ソマリア
-  country190, //ソロモンしょとう
-  country214, //タークス・カイコスしょとう
-  country205, //タイ
-  country202, //たいわん
-  country203, //タジキスタン
-  country204, //タンザニア
-  country055, //チェコ
-  country040, //チャド
-  country041, //チャネルしょとう
-  country039, //ちゅうおうアフリカ
-  country043, //ちゅうごく
-  country211, //チュニジア
-  country042, //チリ
-  country215, //ツバル
-  country056, //デンマーク
-  country077, //ドイツ
-  country207, //トーゴ
-  country208, //トケラウ
-  country058, //ドミニカ
-  country059, //ドミニカきょうわこく
-  country210, //トリニダード・トバゴ
-  country213, //トルクメニスタン
-  country212, //トルコ
-  country209, //トンガ
-  country152, //ナイジェリア
-  country144, //ナウル
-  country143, //ナミビア
-  country153, //ニウエ
-  country150, //ニカラグア
-  country151, //ニジェール
-  country230, //にしサハラ
-  country103, //にほん
-  country148, //ニューカレドニア
-  country149, //ニュージーランド
-  country145, //ネパール
-  country154, //ノーフォークとう
-  country156, //ノルウェー
-  country016, //バーレーン
-  country089, //ハイチ
-  country158, //パキスタン
-  country225, //バチカン
-  country160, //パナマ
-  country224, //バヌアツ
-  country015, //バハマ
-  country161, //パプアニューギニア
-  country023, //バミューダ
-  country159, //パラオ
-  country162, //パラグアイ
-  country018, //バルバドス
-  country229, //パレスチナじちく
-  country092, //ハンガリー
-  country017, //バングラデシュ
-  country206, //ひがしティモール
-  country165, //ピトケアン
-  country069, //フィジーしょとう
-  country164, //フィリピン
-  country070, //フィンランド
-  country024, //ブータン
-  country168, //プエルトリコ
-  country067, //フェローしょとう
-  country068, //フォークランド（マルビナス)しょとう
-  country028, //ブラジル
-  country071, //フランス
-  country072, //フランスりょうギアナ
-  country073, //フランスりょうポリネシア
-  country031, //ブルガリア
-  country032, //ブルキナファソ
-  country030, //ブルネイ
-  country033, //ブルンジ
-  country227, //ベトナム
-  country022, //ベナン
-  country226, //ベネズエラ
-  country019, //ベラルーシ
-  country021, //ベリーズ
-  country163, //ペルー
-  country020, //ベルギー
-  country166, //ポーランド
-  country026, //ボスニア・ヘルツェゴビナ
-  country027, //ボツワナ
-  country025, //ボリビア
-  country167, //ポルトガル
-  country091, //ホンコン
-  country090, //ホンジュラス
-  country130, //マーシャルしょとう
-  country122, //マカオ
-  country123, //マケドニアきゅうユーゴスラビア
-  country124, //マダガスカル
-  country134, //マヨット
-  country125, //マラウイ
-  country128, //マリ
-  country129, //マルタ
-  country131, //マルチニーク
-  country126, //マレーシア
-  country099, //マンとう
-  country136, //ミクロネシア
-  country192, //みなみアフリカ
-  country142, //ミャンマー
-  country135, //メキシコ
-  country133, //モーリシャス
-  country132, //モーリタニア
-  country141, //モザンビーク
-  country138, //モナコ
-  country127, //モルディブ
-  country137, //モルドバ
-  country140, //モロッコ
-  country139, //モンゴル
-  country104, //ヨルダン
-  country113, //ラオス
-  country114, //ラトビア
-  country120, //リトアニア
-  country118, //リビア
-  country119, //リヒテンシュタイン
-  country117, //リベリア
-  country171, //ルーマニア
-  country121, //ルクセンブルク
-  country173, //ルワンダ
-  country116, //レソト
-  country115, //レバノン
-  country170, //レユニオン
-  country172, //ロシア
-  country228  //ワリス・フテュナしょとう
-};
+
 
 
 //=============================================================================
@@ -1589,8 +1355,16 @@ static void ListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 
     int y = py + (LIST_MARLER_OFS/2); //項目縦幅の真ん中に表示
     SetListMarker(wk, disp, y);
   }
-
-  
+/**
+  {
+    s16 cur_y;
+    cur_y = FRAMELIST_GetScrollBarPY(wk->lwk);
+    //スクロールバー移動
+    SetScrollBarPos( wk, cur_y );
+    //ビルカーソル位置セット
+    SetBuilCurPos( wk, cur_y );
+  }
+*/
 }
 
 //-----------------------------------------------------------------------------
@@ -1682,6 +1456,13 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
     &FRMListCallBack, // コールバック関数
     NULL,
   };
+
+  //受け渡されたフロア数が5Ｆより大きかった場合だった場合初期位置を書き換える
+  if ( wk->pwk->InFloor > 5 )
+  {
+    NOZOMU_Printf("国フロアからアプリがコールされたとみなす\n");
+    header.initScroll = (UN_LIST_MAX-1)-(wk->pwk->InFloor-2);
+  }
 
   header.cbWork = wk;
 
@@ -1859,6 +1640,7 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
     cur_y = SCROLL_BAR_DY-(SCROLL_BAR_SIZE/2);
     SetBuilCurPos( wk, cur_y );
   }
+  
   //アルファセット
   G2S_SetBlendAlpha(
 		GX_BLEND_PLANEMASK_BG1,
@@ -1884,13 +1666,31 @@ static void app_end( UN_SELECT_MAIN_WORK* wk, END_MODE end_mode )
 {
   switch( end_mode )
   {
-  case END_MODE_DECIDE: 
+  case END_MODE_DECIDE:     //フロア選択
+    {
+      int code;
+      int floor;
+      int floor_idx;
+      //リスト位置をフロアインデックスに変換
+      floor_idx = (UN_LIST_MAX-1) - wk->ListSelPos;
+      //フロア数は2Ｆからなのでインデックスに2を足す
+      floor = floor_idx+2;
+      //フロアインデックスを国コードに変換
+      code = g_FloorTable[floor_idx];
+
       // データ吐き出し
-      //@TODO 選択フロア
+      wk->pwk->OutFloor = floor;
+      wk->pwk->CountryCode = code;
+      wk->pwk->Decide = TRUE;
+      NOZOMU_Printf("output: Floor = %d Code = %d\n",floor, code);
+    }
     break;
-  case END_MODE_CANCEL:
+  case END_MODE_CANCEL:     //キャンセル
       // データ吐き出し
-      //@TODO キャンセル
+      wk->pwk->OutFloor = 0;
+      wk->pwk->CountryCode = 0;
+      wk->pwk->Decide = FALSE;
+      NOZOMU_Printf("output: Floor Cansel\n");
     break;
   }
   
