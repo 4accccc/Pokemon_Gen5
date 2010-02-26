@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2010-02-26T02:03:23"/>
+	<create user="mori" host="W00155" date="2010-02-25T13:25:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1245,6 +1245,11 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_WIFI_BSW_03">
 		<language name="JPN" width="160">アップロード</language>
 		<language name="JPN_KANJI" width="160">アップロード</language>
+	</row>
+
+	<row id="DEBUG_FIELD_WIFI_BSW_04">
+		<language name="JPN" width="160">れきだいトレーナー</language>
+		<language name="JPN_KANJI" width="160">歴代トレーナー表示</language>
 	</row>
 
 	<row id="DEBUG_FIELD_GPOWER">
