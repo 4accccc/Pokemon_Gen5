@@ -113,13 +113,25 @@ EVENT_START ev_train_entry_first
   DEFINE_LOCAL multi_flag
   
   $WK_OTHER_BSUBWAY_TRAIN = BSWAY_SCENE_TRAIN_NON
+
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_TOOL( BSWTOOL_CHK_MODE_MULTI, play_mode, BSW_NULL, multi_flag )
+
+  //自機設置
+  IF $multi_flag == TRUE THEN //マルチか？
+    _BSUBWAY_TOOL( BSWTOOL_GET_MINE_OBJ, BSW_NULL, BSW_NULL, OBJCHRWORK0 )
+    _OBJ_ADD_EX( 4, 4, DIR_RIGHT, BSW_TRAIN_OBJID_JIKI, WKOBJCODE00, MV_DMY )
+    
+    $OBJCHRWORK1 = SUPPORT
+    _OBJ_ADD_EX( 4, 3, DIR_RIGHT, BSW_TRAIN_OBJID_PARTNER, WKOBJCODE01, MV_DMY )
+  ELSE //その他
+    _BSUBWAY_TOOL( BSWTOOL_GET_MINE_OBJ, BSW_NULL, BSW_NULL, OBJCHRWORK0 )
+    _OBJ_ADD_EX( 4, 4, DIR_RIGHT, BSW_TRAIN_OBJID_JIKI, WKOBJCODE00, MV_DMY )
+  ENDIF
   
   //マップフェード
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
-  
-  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  _BSUBWAY_TOOL( BSWTOOL_CHK_MODE_MULTI, play_mode, BSW_NULL, multi_flag )
   
   //自機入場アニメ
   IF $multi_flag == TRUE THEN //マルチか？
@@ -138,10 +150,12 @@ EVENT_END
 //--------------------------------------------------------------
 sub_anm_player_in_first:
 {
+/*
   _BSUBWAY_TOOL( BSWTOOL_GET_MINE_OBJ, BSW_NULL, BSW_NULL, OBJCHRWORK0 )
   _OBJ_ADD_EX( 2, 8, DIR_UP, BSW_TRAIN_OBJID_JIKI, WKOBJCODE00, MV_DMY )
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_player_in_first )
   _OBJ_ANIME_WAIT()
+*/
 }
 _RET
 
@@ -156,6 +170,7 @@ _ANIME_LABEL  anm_player_in_first
 //--------------------------------------------------------------
 sub_anm_player_in_first_multi:
 {
+/*
   _BSUBWAY_TOOL( BSWTOOL_GET_MINE_OBJ, BSW_NULL, BSW_NULL, OBJCHRWORK0 )
   
   _OBJ_ADD_EX( 2, 8, DIR_UP, BSW_TRAIN_OBJID_JIKI, WKOBJCODE00, MV_DMY )
@@ -168,7 +183,7 @@ sub_anm_player_in_first_multi:
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_player_in_first_multi_1 )
   _OBJ_ANIME( BSW_TRAIN_OBJID_PARTNER, anm_player_in_first_multi_2 )
   _OBJ_ANIME_WAIT()
-  
+*/
 }
 _RET
 
