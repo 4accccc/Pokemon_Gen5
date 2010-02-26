@@ -275,7 +275,7 @@ typedef struct
 
   int ListSelPos;   //リストで選んだ位置 0～UN_LIST_MAX-1
 
-  BOOL Valid[UN_LIST_MAX]; //たぶん無くせるとおもう @todo  0=最上階　232=2Ｆ
+  BOOL Valid[UN_LIST_MAX]; //0=最上階　232=2Ｆ
 
   GFL_TCB * htask;		// TCB ( HBLANK )
 
@@ -342,6 +342,8 @@ static void SetupListMarker( UN_SELECT_MAIN_WORK* wk, int target_item );
 static void SetListMarker(UN_SELECT_MAIN_WORK* wk, const BOOL inIsMain, const int inY);
 static BOOL SetListMarkerCore(GFL_CLWK **clwk_ary, const int inIdx, const u16 inSetsf, const int inY);
 static BOOL IsMarkerFloorValid( UN_SELECT_MAIN_WORK *wk, const int inTargetItem );
+
+static int GetFloorIdxFromCountryCode(const int inCountryCode);
 
 //--------------------------------------------------------------
 /// SceneID
@@ -1564,17 +1566,29 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
   // 初期化
   wk->heap_id = HEAPID_UN_SELECT;
   wk->pwk = prm;
-#ifdef PM_DEBUG
-  //@todo    解禁国ランダムセット（デバッグ処理）
+
+  //解禁国セット
   {
     int i;
     for( i=0; i<UN_LIST_MAX; i++)
     {
-      if ( GFUser_GetPublicRand0( 2 ) ) wk->Valid[i] = TRUE;
+      int code_idx;   //国コード-1の値が入る
+      code_idx = g_FloorTable[i] - 1;
+      if ( prm->OpenCountryFlg[code_idx]) wk->Valid[i] = TRUE;
       else wk->Valid[i] = FALSE;
     }
   }
-#endif  
+  //マークするフロアをワークに受け取る
+  {
+    int i;
+    int floor_idx;
+    for(i=0;i<FLOOR_MARKING_MAX;i++){
+      int code;
+      code = prm->StayCountry[i];
+      floor_idx = GetFloorIdxFromCountryCode(code);
+      wk->MarkerFloor[i] = floor_idx;
+    }
+  }
   //描画設定初期化
   wk->graphic = UN_SELECT_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heap_id );
 
@@ -1611,17 +1625,6 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
 
   //アクター作成
   MakeAct( wk );
-
-  //デバッグマーカー抽選
-  {
-    int i;
-    int ofs;
-    int floor_idx;
-    for(i=0;i<FLOOR_MARKING_MAX;i++){
-      floor_idx = GFUser_GetPublicRand(UN_LIST_MAX);
-      wk->MarkerFloor[i] = floor_idx;
-    }
-  }
 
   //ビルマーカー位置決定
   SetBuilMarkerPos( wk );
@@ -1862,8 +1865,8 @@ static BOOL SceneConfirm_Init( UI_SCENE_CNT_PTR cnt, void* work )
 
 #if 0
     TOUCHBAR_SetVisible( wk->touchbar, TOUCHBAR_ICON_CUR_L, FALSE );
-    TOUCHBAR_SetVisible( wk->touchbar, TOUCHBAR_ICON_CUR_R, FALSE );
-    TOUCHBAR_SetVisible( wk->touchbar, TOUCHBAR_ICON_RETURN, FALSE );
+    TOUCHBAR_SetVisible( wk->touchbar, TOUCHBAR_ICON_CUR_R, FALSE );i++;
+    ;i++TOUCHBAR_SetVisible( wk->touchbar, TOUCHBAR_ICON_RETURN, FALSE );
 #endif
     {
       int code;
@@ -2452,3 +2455,19 @@ static BOOL IsMarkerFloorValid( UN_SELECT_MAIN_WORK *wk, const int inTargetItem 
   return FALSE;
 }
 
+//国コードからフロアインデックスを取得
+static int GetFloorIdxFromCountryCode(const int inCountryCode)
+{
+  int i;
+  for (i=0;i<UN_LIST_MAX;i++)
+  {
+    if ( inCountryCode == g_FloorTable[i] ) break;
+  }
+
+  if ( i >= UN_LIST_MAX )
+  {
+    GF_ASSERT_MSG( 0,"code not found %d",inCountryCode );
+    return 0;
+  }
+  return i;
+}
