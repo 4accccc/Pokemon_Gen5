@@ -13,6 +13,8 @@
   .include  "c04_def.h"
   .include  "c04r0101.h"
 
+  .include "../../../prog/src/field/bsubway_scr_def.h"
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -26,6 +28,7 @@ _EVENT_DATA    ev_c04r0101_fighterm_01
 _EVENT_DATA    ev_pos_c04r0101_connect_c04
 _EVENT_DATA    ev_scene_c04r0101_entry
 _EVENT_DATA    ev_c04r0101_boy1_btltalk
+_EVENT_DATA    ev_bg_bsleader_board		//歴代リーダー閲覧
 _EVENT_DATA_END
 
 //簡易会話用ワーク
@@ -226,3 +229,17 @@ easy_talk_loop:
     ENDIF
   ENDWHILE
 _RET
+
+
+/************************************************************/
+/*					歴代リーダー閲覧						*/
+/************************************************************/
+EVENT_START	ev_bg_bsleader_board
+	_TALK_START_SE_PLAY()
+	
+	//【仮】サーバに接続できないため仮データを表示する。第２～４引数はダミー
+	_BSUBWAY_TOOL( BSWTOOL_WIFI_EV_READ_SCDATA, 0, 0, SCWK_ANSWER )
+EVENT_END
+
+
+

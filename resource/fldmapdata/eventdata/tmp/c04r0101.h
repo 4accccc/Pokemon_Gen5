@@ -28,5 +28,6 @@
 #ifndef ZONE_C04R0101_EVB_H
 #define ZONE_C04R0101_EVB_H
 
+#define BG_BSLEADER_BOARD                 0
 
 #endif //ZONE_C04R0101_EVB_H
