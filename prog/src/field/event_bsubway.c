@@ -394,6 +394,8 @@ static GMEVENT_RESULT ev_CallLeaderBoard(
       ev = EVENT_FieldSubProc( work->gsys, work->fieldmap,
 		          FS_OVERLAY_ID(leader_board), &LeaderBoardProcData, &work->param);
   		GMEVENT_CallEvent( event, ev );
+
+      (*seq) ++;
     }
     break;
   case 1:

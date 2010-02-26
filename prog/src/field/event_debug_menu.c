@@ -94,6 +94,7 @@
 
 #include "debug/debug_mystery_card.h"
 #include "event_wifi_bsubway.h"
+#include "event_bsubway.h"
 #include "savedata/battle_box_save.h"
 #include "event_geonet.h"
 #include "app/name_input.h"
@@ -4853,6 +4854,7 @@ enum
   DEBUG_BSWAY_DEMO_HOME = 0xfff0,
   DEBUG_BSWAY_DEMO_HOME_LAST,
 
+  DEBUG_BSWAY_SCDATA_VIEW,
   DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD,
   DEBUG_BSWAY_WIFI_RIREKI_DOWNLOAD,
   DEBUG_BSWAY_WIFI_UPLOAD,
@@ -4871,6 +4873,7 @@ static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
   { DEBUG_FIELD_BSW_09, (void*)ZONE_ID_C04R0111 },
   { DEBUG_FIELD_BSW_09, (void*)DEBUG_BSWAY_DEMO_HOME },
   { DEBUG_FIELD_BSW_09, (void*)DEBUG_BSWAY_DEMO_HOME_LAST },
+  { DEBUG_FIELD_BSW_10, (void*)DEBUG_BSWAY_SCDATA_VIEW },
   { DEBUG_FIELD_WIFI_BSW_01, (void*)DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD },
   { DEBUG_FIELD_WIFI_BSW_02, (void*)DEBUG_BSWAY_WIFI_RIREKI_DOWNLOAD },
   { DEBUG_FIELD_WIFI_BSW_03, (void*)DEBUG_BSWAY_WIFI_UPLOAD },
@@ -4939,6 +4942,12 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
         next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
           work->gmSys, work->fieldWork, ret );
         break;
+
+      // 歴代リーダー表示
+      case DEBUG_BSWAY_SCDATA_VIEW:  
+        next_event = BSUBWAY_EVENT_CallLeaderBoard( work->gmSys );
+        break;
+
 
       // WiFi系イベントの起動
       case DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD:  // ゲームデータダウンロード

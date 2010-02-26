@@ -1232,6 +1232,11 @@ allocable (0x[2:07:８桁:5])</language>
 		<language name="JPN_KANJI" width="160">ホーム</language>
 	</row>
 
+	<row id="DEBUG_FIELD_BSW_10">
+		<language name="JPN" width="160">れきだいリーダーひょうじ</language>
+		<language name="JPN_KANJI" width="160">歴代リーダー表示</language>
+	</row>
+
 	<row id="DEBUG_FIELD_WIFI_BSW_01">
 		<language name="JPN" width="160">ゲームデータダウンロード</language>
 		<language name="JPN_KANJI" width="160">ゲームデータダウンロード</language>
