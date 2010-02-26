@@ -3601,8 +3601,10 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     SEQ_LVUP_EFFECT_WAIT,
     SEQ_LVUP_INFO_START,
     SEQ_LVUP_INFO_MSG_WAIT,
+    SEQ_LVUP_INFO_PARAM_START,
     SEQ_LVUP_INFO_PARAM_SEQ1,
     SEQ_LVUP_INFO_PARAM_SEQ2,
+    SEQ_LVUP_INFO_PARAM_END,
     SEQ_LVUP_WAZAOBOE_WAIT,
     SEQ_END,
   };
@@ -3708,12 +3710,45 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     }
     if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlaySE() ){
       subSeq = 0;
+//      (*seq) = SEQ_LVUP_INFO_PARAM_START;
       (*seq) = SEQ_LVUP_WAZAOBOE_WAIT;
     }
     break;
 
+  case SEQ_LVUP_INFO_PARAM_START:
+    BTLV_LvupWin_StartDisp( wk->viewCore, bpp, &lvupInfo );
+    (*seq) = SEQ_LVUP_INFO_PARAM_SEQ1;
+    break;
+
   case SEQ_LVUP_INFO_PARAM_SEQ1:
-//    (*seq) =
+    if( BTLV_LvupWin_WaitDisp(wk->viewCore) )
+    {
+      if( (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B))
+      ||  (GFL_UI_TP_GetTrg())
+      ){
+        BTLV_LvupWin_StepFwd( wk->viewCore );
+        (*seq) = SEQ_LVUP_INFO_PARAM_SEQ2;
+      }
+    }
+    break;
+
+  case SEQ_LVUP_INFO_PARAM_SEQ2:
+    if( BTLV_LvupWin_WaitFwd(wk->viewCore) )
+    {
+      if( (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B))
+      ||  (GFL_UI_TP_GetTrg())
+      ){
+        BTLV_LvupWin_StartHide( wk->viewCore );
+        (*seq) = SEQ_LVUP_INFO_PARAM_END;
+      }
+    }
+    break;
+
+  case SEQ_LVUP_INFO_PARAM_END:
+    if( BTLV_LvupWin_WaitHide(wk->viewCore) ){
+      subSeq = 0;
+      (*seq) = SEQ_LVUP_WAZAOBOE_WAIT;
+    }
     break;
 
   case SEQ_LVUP_WAZAOBOE_WAIT:

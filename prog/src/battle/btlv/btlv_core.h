@@ -332,6 +332,14 @@ extern BOOL BTLV_WAZAWASURE_Wait( BTLV_CORE* wk, u8* result );
 extern void BTLV_StartSelectChangeOrEscape( BTLV_CORE* wk );
 extern BOOL BTLV_WaitSelectChangeOrEscape( BTLV_CORE* wk, u8* fSelect );
 
+// レベルアップ情報処理
+extern void BTLV_LvupWin_StartDisp( BTLV_CORE* wk, const BTL_POKEPARAM* bpp, const BTL_LEVELUP_INFO* lvupInfo );
+extern BOOL BTLV_LvupWin_WaitDisp( BTLV_CORE* wk );
+extern void BTLV_LvupWin_StepFwd( BTLV_CORE* wk );
+extern BOOL BTLV_LvupWin_WaitFwd( BTLV_CORE* wk );
+extern void BTLV_LvupWin_StartHide( BTLV_CORE* wk );
+extern BOOL BTLV_LvupWin_WaitHide( BTLV_CORE* wk );
+
 //=============================================================================================
 //  時間制限によるアクション選択の強制終了対応
 //=============================================================================================

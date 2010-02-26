@@ -101,5 +101,16 @@ extern void BTLV_SCU_StartCommWaitInfo( BTLV_SCU* wk );
 extern BOOL BTLV_SCU_WaitCommWaitInfo( BTLV_SCU* wk );
 extern void BTLV_SCU_ClearCommWaitInfo( BTLV_SCU* wk );
 
+//=============================================================================================
+//  レベルアップ情報表示処理
+//=============================================================================================
+extern void BTLV_SCU_LvupWin_StartDisp( BTLV_SCU* wk, const BTL_POKEPARAM* bpp, const BTL_LEVELUP_INFO* lvupInfo );
+extern BOOL BTLV_SCU_LvupWin_WaitDisp( BTLV_SCU* wk );
+extern void BTLV_SCU_LvupWin_StartHide( BTLV_SCU* wk );
+extern BOOL BTLV_SCU_LvupWin_WaitHide( BTLV_SCU* wk );
+extern void BTLV_SCU_LvupWin_StepFwd( BTLV_SCU* wk );
+extern BOOL BTLV_SCU_LvupWin_WaitFwd( BTLV_SCU* wk );
+
+
 
 #endif

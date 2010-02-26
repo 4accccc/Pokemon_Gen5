@@ -16,6 +16,7 @@
 #include "arc_def.h"
 #include "message.naix"
 #include "font/font.naix"
+#include "winframe.naix"
 #include "battle/battgra_wb.naix"
 
 #include "battle/btl_common.h"
@@ -38,13 +39,28 @@ enum {
   SUB_STRBUF_LEN  = 32,
   SUBPROC_WORK_SIZE = 64,
 
-  PALIDX_MSGWIN     = 0,
-  PALIDX_TOKWIN1    = 1,
-  PALIDX_SYSWIN     = 2,
+  PALIDX_MSGWIN        = 0,
+  PALIDX_TOKWIN1       = 1,
+  PALIDX_SYSWIN        = 2,
+  PALIDX_LVUPWIN       = 3,
 
   COLIDX_MSGWIN_CLEAR  = 0x0c,
   COLIDX_MSGWIN_LETTER = 0x01,
   COLIDX_MSGWIN_SHADOW = 0x09,
+
+  COLIDX_LVUPWIN_CLEAR  = 0x0c,
+  COLIDX_LVUPWIN_LETTER = 0x01,
+  COLIDX_LVUPWIN_SHADOW = 0x09,
+
+  MSGWIN_WIDTH = 30,
+  MSGWIN_HEIGHT = 4,
+  MSGWIN_ORG_X = 1,
+  MSGWIN_ORG_Y = 19,
+
+  LVUPWIN_WIDTH = 10,
+  LVUPWIN_HEIGHT = 12,
+  LVUPWIN_ORG_X = (32 - LVUPWIN_WIDTH - 1),
+  LVUPWIN_ORG_Y = ((MSGWIN_ORG_Y-1)-LVUPWIN_HEIGHT-1),
 
   MSGWIN_EVA_MAX = 31,
   MSGWIN_EVA_MIN = 0,
@@ -61,6 +77,9 @@ enum {
   TOKWIN_DRAWAREA_CHAR_H = 4,   // とくせいウィンドウ書き込み可能領域の縦キャラ数
   TOKWIN_CGRDATA_TRANS_CHARS = TOKWIN_CGRDATA_CHAR_W * TOKWIN_DRAWAREA_CHAR_H,
   TOKWIN_CGRDATA_TRANS_SIZE = (TOKWIN_CGRDATA_TRANS_CHARS * 0x20),
+
+  TOKWIN_CGRDATA_TOTAL_SIZE = TOKWIN_CGRDATA_TRANS_SIZE*2,
+  TOKWIN_CGRDATA_CHAR_CNT = (TOKWIN_CGRDATA_TOTAL_SIZE / 0x20),
 
   TOKWIN_CGRDATA_LINE_SIZE = (TOKWIN_CGRDATA_CHAR_W * 0x20),
 
@@ -97,6 +116,7 @@ typedef enum {
   MSGWIN_STATE_TO_HIDE,
   MSGWIN_STATE_HIDE,
   MSGWIN_STATE_TO_DISP,
+  MSGWIN_STATE_TO_DISP_READY,
 
 }MsgWinState;
 
@@ -136,6 +156,7 @@ typedef struct {
 
   fx32            posX;
   fx32            speedX;
+  u32             charPos;
   u8              moveTimer;
   u8              writeRaw;
   u8              dispFlag;
@@ -162,6 +183,9 @@ struct _BTLV_SCU {
 
   GFL_BMPWIN*     win;
   GFL_BMP_DATA*   bmp;
+
+  GFL_BMPWIN*     lvupWin;
+  GFL_BMP_DATA*   lvupBmp;
 
   PRINT_QUE*      printQue;
   PRINT_UTIL      printUtil;
@@ -203,6 +227,7 @@ struct _BTLV_SCU {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static u32 transWinFrameCgx( BTLV_SCU* wk, u32 arcID, u32 datID, u8 bgFrame );
 static inline void* Scu_GetProcWork( BTLV_SCU* wk, u32 size );
 static void btlin_startFade( int wait );
 static inline void btlinTool_vpos_exchange( BTLV_SCU* wk, BtlvMcssPos vpos, BtlvMcssPos* vposDst, BtlPokePos* posDst, const BTL_POKEPARAM** bppDst );
@@ -251,7 +276,7 @@ static void statwin_cleanup( STATUS_WIN* stwin );
 static void statwin_hide( STATUS_WIN* stwin );
 static void statwin_disp_start( STATUS_WIN* stwin );
 static TokwinSide PokePosToTokwinSide( const BTL_MAIN_MODULE* mainModule, BtlPokePos pos );
-static void tokwin_setupAll( BTLV_SCU* wk );
+static void tokwin_setupAll( BTLV_SCU* wk, u32 charpos_top );
 static void tokwin_cleanupAll( BTLV_SCU* wk );
 static void tokwin_disp_first( TOK_WIN* tokwin, BtlPokePos pos, BOOL fFlash );
 static BOOL tokwin_disp_progress( TOK_WIN* tokwin );
@@ -314,7 +339,7 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
     GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000, 0x8000,
     GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
   };
-  u32 winfrm_charpos;
+  u32 winfrm_charpos, tokwin_charpos;
 
   GFL_BG_SetBGControl( BGFRAME_MAIN_MESSAGE,  &bgcntText,   GFL_BG_MODE_TEXT );
   GFL_BG_SetBGControl( BGFRAME_TOKWIN_FRIEND, &bgcntTok1,   GFL_BG_MODE_TEXT );
@@ -323,8 +348,10 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_BATTGRA, NARC_battgra_wb_msgwin_frm_NCLR, wk->heapID,
       FADE_MAIN_BG, 0x20, PALIDX_MSGWIN*16, 0 );
 
+  // lvupwin color も含んでいる
   PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCLR, wk->heapID,
-        FADE_MAIN_BG, 0x40, PALIDX_TOKWIN1*16, PALIDX_TOKWIN1*16 );
+        FADE_MAIN_BG, 0x60, PALIDX_TOKWIN1*16, PALIDX_TOKWIN1*16 );
+
 
   //BD面カラーを黒にする
   {
@@ -334,15 +361,7 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
 
   GFL_BG_FillScreen( BGFRAME_MAIN_MESSAGE, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
   GFL_BG_FillCharacter( BGFRAME_MAIN_MESSAGE, 0x00, 1, 0 );
-  {
-    ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID(wk->heapID) );
-    GFL_ARCUTIL_TRANSINFO transInfo;
-    transInfo = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle, NARC_battgra_wb_msgwin_frm_NCGR,
-                BGFRAME_MAIN_MESSAGE, 0, FALSE, GFL_HEAP_LOWID(wk->heapID) );
-    winfrm_charpos = GFL_ARCUTIL_TRANSINFO_GetPos( transInfo );
-    GFL_ARC_CloseDataHandle( handle );
-  }
-
+  winfrm_charpos = transWinFrameCgx( wk, ARCID_BATTGRA, NARC_battgra_wb_msgwin_frm_NCGR, BGFRAME_MAIN_MESSAGE );
 
 //  GFL_BG_FillScreen( BGFRAME_TOKWIN_FRIEND, 0x0000, 0, 0, 64, 32, GFL_BG_SCRWRT_PALIN );
 //  GFL_BG_FillScreen( BGFRAME_TOKWIN_ENEMY,  0x0000, 0, 0, 64, 32, GFL_BG_SCRWRT_PALIN );
@@ -350,24 +369,38 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
 //                              0, FALSE, wk->heapID );
   GFL_ARC_UTIL_TransVramBgCharacter( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_FRIEND,
                               0, 0, FALSE, wk->heapID );
+
+  tokwin_charpos = transWinFrameCgx( wk, ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_FRIEND );
+  TAYA_Printf("tokwin charpos=%d\n", tokwin_charpos );
+
   GFL_ARC_UTIL_TransVramScreen( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w01_NSCR, BGFRAME_TOKWIN_FRIEND,
           0, 0, FALSE, wk->heapID );
   GFL_ARC_UTIL_TransVramScreen( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w02_NSCR, BGFRAME_TOKWIN_ENEMY,
           0, 0, FALSE, wk->heapID );
 
-  wk->win = GFL_BMPWIN_Create( BGFRAME_MAIN_MESSAGE, 1, 19, 30, 4, PALIDX_MSGWIN, GFL_BMP_CHRAREA_GET_F );
+  wk->win = GFL_BMPWIN_Create( BGFRAME_MAIN_MESSAGE, MSGWIN_ORG_X, MSGWIN_ORG_Y, MSGWIN_WIDTH, MSGWIN_HEIGHT,
+          PALIDX_MSGWIN, GFL_BMP_CHRAREA_GET_F );
   wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
   GFL_BMPWIN_MakeScreen( wk->win );
-
   GFL_BMPWIN_MakeFrameScreen( wk->win, winfrm_charpos, PALIDX_MSGWIN );
 
-  GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
-  GFL_BMPWIN_TransVramCharacter( wk->win );
+  winfrm_charpos = transWinFrameCgx( wk, ARCID_BATTGRA, NARC_battgra_wb_lvup_w_NCGR, BGFRAME_TOKWIN_ENEMY );
+
+  wk->lvupWin = GFL_BMPWIN_Create( BGFRAME_TOKWIN_ENEMY, LVUPWIN_ORG_X, LVUPWIN_ORG_Y+32, LVUPWIN_WIDTH, LVUPWIN_HEIGHT,
+        PALIDX_LVUPWIN, GFL_BMP_CHRAREA_GET_F );
+  wk->lvupBmp = GFL_BMPWIN_GetBmp( wk->lvupWin );
+  TAYA_Printf("lvup_win charpos=%d\n", winfrm_charpos );
+
+  GFL_BMPWIN_MakeScreen( wk->lvupWin );
+  GFL_BMPWIN_MakeFrameScreen( wk->lvupWin, winfrm_charpos, PALIDX_LVUPWIN );
+  GFL_BMP_Clear( wk->lvupBmp, COLIDX_LVUPWIN_CLEAR );
+  GFL_BMPWIN_TransVramCharacter( wk->lvupWin );
+
 
   msgWinVisible_Init( &wk->msgwinVisibleWork, wk->win );
 
   statwin_setupAll( wk );
-  tokwin_setupAll( wk );
+  tokwin_setupAll( wk, tokwin_charpos );
 
   GFL_BG_LoadScreenReq( BGFRAME_MAIN_MESSAGE  );
   GFL_BG_LoadScreenReq( BGFRAME_TOKWIN_FRIEND );
@@ -381,12 +414,29 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   ///<obj
   GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
+/**
+ *  WindowFrame CGX 転送して転送位置キャラナンバーを返す
+ */
+static u32 transWinFrameCgx( BTLV_SCU* wk, u32 arcID, u32 datID, u8 bgFrame )
+{
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( arcID, GFL_HEAP_LOWID(wk->heapID) );
+  GFL_ARCUTIL_TRANSINFO transInfo;
+  u32 charPos;
+
+  transInfo = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle, datID, bgFrame,
+    0, FALSE, GFL_HEAP_LOWID(wk->heapID) );
+  charPos = GFL_ARCUTIL_TRANSINFO_GetPos( transInfo );
+  GFL_ARC_CloseDataHandle( handle );
+
+  return charPos;
+}
 
 void BTLV_SCU_Delete( BTLV_SCU* wk )
 {
   tokwin_cleanupAll( wk );
   statwin_cleanupAll( wk );
 
+  GFL_BMPWIN_Delete( wk->lvupWin );
   GFL_BMPWIN_Delete( wk->win );
   GFL_BG_FreeBGControl( BGFRAME_MAIN_MESSAGE );
   GFL_BG_FreeBGControl( BGFRAME_TOKWIN_FRIEND );
@@ -2975,7 +3025,7 @@ static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk )
     wk->eva_step = FX32_CONST( MSGWIN_EVA_MAX - MSGWIN_EVA_MIN ) / MSGWIN_VISIBLE_STEP;
     wk->evb_step = FX32_CONST( MSGWIN_EVB_MIN - MSGWIN_EVB_MAX ) / MSGWIN_VISIBLE_STEP;
     wk->timer = MSGWIN_VISIBLE_STEP;
-    wk->state = MSGWIN_STATE_TO_DISP;
+    wk->state = MSGWIN_STATE_TO_DISP_READY;
   }
 }
 static BOOL msgWinVisible_Update( MSGWIN_VISIBLE* wk )
@@ -2985,6 +3035,9 @@ static BOOL msgWinVisible_Update( MSGWIN_VISIBLE* wk )
     return TRUE;
   case MSGWIN_STATE_DISP:
     return TRUE;
+  case MSGWIN_STATE_TO_DISP_READY:
+    wk->state = MSGWIN_STATE_TO_DISP;
+    return FALSE;
   case MSGWIN_STATE_TO_DISP:
     if( wk->timer ){
       wk->eva += wk->eva_step;
@@ -3192,7 +3245,7 @@ BOOL BTLV_SCU_TokWin_Renew_Wait( BTLV_SCU* wk, BtlPokePos pos )
   return tokwin_renew_progress( &wk->tokWin[side] );
 }
 
-static void tokwin_setupAll( BTLV_SCU* wk )
+static void tokwin_setupAll( BTLV_SCU* wk, u32 charpos_top )
 {
   u32 i;
 
@@ -3208,6 +3261,7 @@ static void tokwin_setupAll( BTLV_SCU* wk )
     wk->tokWin[i].bmp = GFL_BMP_Create( TOKWIN_CGRDATA_CHAR_W, TOKWIN_DRAWAREA_CHAR_H, GFL_BMP_16_COLOR, wk->heapID );
     wk->tokWin[i].tokusei = POKETOKUSEI_NULL;
     wk->tokWin[i].pokeID = BTL_POKEID_NULL;
+    wk->tokWin[i].charPos = charpos_top + TOKWIN_CGRDATA_TRANS_CHARS * i;
     wk->tokWin[i].dispFlag = FALSE;
   }
 }
@@ -3248,7 +3302,7 @@ static BOOL tokwin_disp_progress( TOK_WIN* tokwin )
   switch( tokwin->seq ){
   case 0:
     GFL_BG_LoadCharacter( tokwin->bgFrame, tokwin->cgrSrc,
-        TOKWIN_CGRDATA_TRANS_SIZE, TOKWIN_CGRDATA_TRANS_SIZE * tokwin->mySide );
+        TOKWIN_CGRDATA_TRANS_SIZE, tokwin->charPos);
     tokwin->seq++;
     break;
   case 1:
@@ -3287,7 +3341,7 @@ static BOOL tokwin_disp_progress( TOK_WIN* tokwin )
     {
       const u8* cp = GFL_BMP_GetCharacterAdrs( tokwin->bmp );
       u32 offs = tokwin->writeRaw * 0x20;
-      u32 writeCharOfs = (tokwin->mySide * TOKWIN_CGRDATA_TRANS_CHARS) + tokwin->writeRaw;
+      u32 writeCharOfs = (tokwin->charPos + tokwin->writeRaw);
       u32 i;
       cp += offs;
       for(i=0; i<TOKWIN_DRAWAREA_CHAR_H; ++i)
@@ -3453,7 +3507,7 @@ static BOOL tokwin_renew_progress( TOK_WIN* tokwin )
   case 2:
     {
       const u8* cp = GFL_BMP_GetCharacterAdrs( tokwin->bmp );
-      GFL_BG_LoadCharacter( tokwin->bgFrame, cp, TOKWIN_CGRDATA_TRANS_SIZE, tokwin->mySide*TOKWIN_CGRDATA_TRANS_CHARS );
+      GFL_BG_LoadCharacter( tokwin->bgFrame, cp, TOKWIN_CGRDATA_TRANS_SIZE, tokwin->charPos );
       tokwin->seq++;
     }
     break;
@@ -3552,5 +3606,52 @@ void BTLV_SCU_ClearCommWaitInfo( BTLV_SCU* wk )
 {
 //  GFL_BMP_Clear( wk->bmp, 0x0f );
 //  GFL_BMPWIN_TransVramCharacter( wk->win );
+}
+
+//=============================================================================================
+//  レベルアップ情報表示処理
+//=============================================================================================
+
+/**
+ *  表示処理 開始
+ */
+void BTLV_SCU_LvupWin_StartDisp( BTLV_SCU* wk, const BTL_POKEPARAM* bpp, const BTL_LEVELUP_INFO* lvupInfo )
+{
+
+}
+/**
+ *  表示処理 終了待ち
+ */
+BOOL BTLV_SCU_LvupWin_WaitDisp( BTLV_SCU* wk )
+{
+  return TRUE;
+}
+/**
+ *  次ページ表示処理 開始
+ */
+void BTLV_SCU_LvupWin_StartHide( BTLV_SCU* wk )
+{
+
+}
+/**
+ *  次ページ表示処理 終了待ち
+ */
+BOOL BTLV_SCU_LvupWin_WaitHide( BTLV_SCU* wk )
+{
+  return TRUE;
+}
+/**
+ *  消去処理 開始
+ */
+void BTLV_SCU_LvupWin_StepFwd( BTLV_SCU* wk )
+{
+
+}
+/**
+ *  消去処理 終了待ち
+ */
+BOOL BTLV_SCU_LvupWin_WaitFwd( BTLV_SCU* wk )
+{
+  return TRUE;
 }
 

@@ -2340,6 +2340,55 @@ BOOL BTLV_WAZAWASURE_Wait( BTLV_CORE* wk, u8* result )
   }
   return FALSE;
 }
+
+//=============================================================================================
+//  レベルアップ情報処理
+//=============================================================================================
+
+/**
+ *  表示処理 開始
+ */
+void BTLV_LvupWin_StartDisp( BTLV_CORE* wk, const BTL_POKEPARAM* bpp, const BTL_LEVELUP_INFO* lvupInfo )
+{
+  BTLV_SCU_LvupWin_StartDisp( wk->scrnU, bpp, lvupInfo );
+}
+/**
+ *  表示処理 終了待ち
+ */
+BOOL BTLV_LvupWin_WaitDisp( BTLV_CORE* wk )
+{
+  return BTLV_SCU_LvupWin_WaitDisp( wk->scrnU );
+}
+/**
+ *  次ページ表示処理 開始
+ */
+void BTLV_LvupWin_StepFwd( BTLV_CORE* wk )
+{
+  BTLV_SCU_LvupWin_StepFwd( wk->scrnU );
+}
+/**
+ *  次ページ表示処理 終了待ち
+ */
+BOOL BTLV_LvupWin_WaitFwd( BTLV_CORE* wk )
+{
+  return BTLV_SCU_LvupWin_WaitFwd( wk->scrnU );
+}
+/**
+ *  消去処理 開始
+ */
+void BTLV_LvupWin_StartHide( BTLV_CORE* wk )
+{
+  BTLV_SCU_LvupWin_StartHide( wk->scrnU );
+}
+/**
+ *  消去処理 終了待ち
+ */
+BOOL BTLV_LvupWin_WaitHide( BTLV_CORE* wk )
+{
+  return BTLV_SCU_LvupWin_WaitHide( wk->scrnU );
+}
+
+
 //=============================================================================================
 //  時間制限によるアクション選択の強制終了対応
 //=============================================================================================
