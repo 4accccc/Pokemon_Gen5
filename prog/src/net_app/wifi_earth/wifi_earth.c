@@ -865,6 +865,12 @@ static void _menu_main( EARTH_DEMO_WORK *wk )
 
 }
 
+static const GFL_UI_TP_HITTBL touch_move_table[]={
+  {   0, 167,   0, 239, },
+  { 168, 191,  72, 183, },
+  {GFL_UI_TP_HIT_END,0,0,0},    // 終了データ
+};
+
 //----------------------------------------------------------------------------------
 /**
  * @brief サブシーケンス制御
@@ -882,7 +888,12 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
 
   wk->trg = GFL_UI_KEY_GetTrg(); 
   wk->cont = GFL_UI_KEY_GetCont();
-  wk->tpcont = GFL_UI_TP_GetPointCont(&wk->tpx, &wk->tpy); 
+
+  if(GFL_UI_TP_HitCont( touch_move_table )!=GFL_UI_TP_HIT_NONE){
+    wk->tpcont = GFL_UI_TP_GetPointCont(&wk->tpx, &wk->tpy); 
+  }else{
+    wk->tpcont = FALSE;
+  }
   if(wk->tpcont == TRUE){
     wk->tptrg = GFL_UI_TP_GetTrg(); 
   } else {
@@ -1538,6 +1549,7 @@ static int  EarthAreaTableGet(int nationID)
   return WIFI_COUNTRY_CountryCodeToDataIndex( nationID );
 }
 
+// 「みる」「やめる」座標
 #define MENU_BT0_X  (  0 )
 #define MENU_BT1_X  ( 23 )
 #define MENU_BT_Y   ( 21 )
@@ -1545,6 +1557,7 @@ static int  EarthAreaTableGet(int nationID)
 #define MENU_BT_H   (  3 )
 
 
+// 「みる」「やめる」ボタン範囲定義
 static const GFL_UI_TP_HITTBL touch_tbl[]={
   { MENU_BT_Y*8,(MENU_BT_Y+MENU_BT_H)*8-1, MENU_BT0_X*8, (MENU_BT0_X+MENU_BT_W)*8-1 },
   { MENU_BT_Y*8,(MENU_BT_Y+MENU_BT_H)*8-1, MENU_BT1_X*8, (MENU_BT1_X+MENU_BT_W)*8-1 },
@@ -1802,6 +1815,9 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
   //アイコンＢＧ面コントロール設定
   GFL_BG_SetBGControl(EARTH_ICON_PLANE,&Earth_Demo_BGtxt_header,GFL_BG_MODE_TEXT);
   GFL_BG_ClearScreen(EARTH_ICON_PLANE);//アイコンＢＧ面クリア
+
+  // ３Ｄ面プライオリティ設定
+  GFL_BG_SetBGControl3D( 1 );     // ボタンよりは下に
 
   //背景ＢＧ面コントロール設定
   GFL_BG_SetBGControl(EARTH_BACK_M_PLANE,&Earth_Demo_Back_header,GFL_BG_MODE_TEXT);
@@ -2567,7 +2583,7 @@ static BOOL Earth3D_Control( EARTH_DEMO_WORK * wk,int keytrg,int keycont )
   rotate_y = wk->rotate.y;
 
   //カメラ遠近移動判定（世界地球儀モードのみ）
-  if((keytrg & PAD_BUTTON_A)||(wk->tp_result & PAD_BUTTON_B)){
+  if((keytrg & PAD_BUTTON_A)||(wk->tp_result & PAD_BUTTON_A)){
     if(wk->earth_mode == GLOBAL_MODE){
       if(wk->camera_status == CAMERA_FAR){
         wk->camera_status = CAMERA_NEAR;
