@@ -59,12 +59,13 @@
 #define _GTSINFO13_WAIT (60*2)
 
 
-static void _pokeNickNameMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,BOOL bEgg,POKEMON_TRADE_WORK* pWork);
-static void _pokeLvMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
-static void _pokeSexMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
+//static void _pokeNickNameMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,BOOL bEgg,POKEMON_TRADE_WORK* pWork);
+//static void _pokeLvMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
+//static void _pokeSexMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
 static void _Select6MessageInitEnd(POKEMON_TRADE_WORK* pWork);
 static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork);
 static void _menuMyPokemonMenu(POKEMON_TRADE_WORK* pWork);
+static void _NEGO_Select6CancelWait3(POKEMON_TRADE_WORK* pWork);
 
 
 //６体のポケモン選択
@@ -341,10 +342,12 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
   pWin = pWork->GTSInfoWindow;
   GFL_FONTSYS_SetColor( 0xe, 0xf, 0x0 );
 
-  GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_31 , pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 8,  2, pWork->pStrBuf, pWork->pFontHandle);
-  GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_22 + pWork->GTSlv[0], pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 128+8,  2, pWork->pStrBuf, pWork->pFontHandle);
+  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
+    GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_31 , pWork->pStrBuf );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 8,  2, pWork->pStrBuf, pWork->pFontHandle);
+    GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_22 + pWork->GTSlv[0], pWork->pStrBuf );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 128+8,  2, pWork->pStrBuf, pWork->pFontHandle);
+  }
 
   GFL_BMPWIN_TransVramCharacter(pWin);
   GFL_BMPWIN_MakeScreen(pWin);
@@ -360,10 +363,11 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
       WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
       PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8, 2, pWork->pStrBuf, pWork->pFontHandle);
 
-      GFL_FONTSYS_SetColor( 3, 4, 0x0 );
-      GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_17 + pWork->GTStype[side], pWork->pStrBuf );
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8+4, 32+2, pWork->pStrBuf, pWork->pFontHandle);
-
+      if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
+        GFL_FONTSYS_SetColor( 3, 4, 0x0 );
+        GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_17 + pWork->GTStype[side], pWork->pStrBuf );
+        PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8+4, 32+2, pWork->pStrBuf, pWork->pFontHandle);
+      }
 
     }
   }
@@ -464,6 +468,7 @@ static void _menuFriendPokemonStart(POKEMON_TRADE_WORK* pWork)
 
   int msg[]={ POKETRADE_STR_04, POKETRADE_STR_06};
   POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
+    TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
   _CHANGE_STATE(pWork, _menuFriendPokemon);
 }
 
@@ -540,6 +545,14 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
     POKETRADE_MESSAGE_WindowOpen(pWork);
     _CHANGE_STATE(pWork,_networkFriendsStandbyWait2);
   }
+
+  if(pWork->pokemonGTSSeq == POKEMONTORADE_SEQ_SELECTNG){  //キャンセル時
+    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_14, pWork->pMessageStrBuf );
+    POKETRADE_MESSAGE_WindowOpen(pWork);
+    pWork->pokemonGTSSeqSend = POKEMONTORADE_SEQ_SELECTNG;
+    _CHANGE_STATE(pWork,_NEGO_Select6CancelWait3);
+  }
+  
 }
 
 
@@ -766,6 +779,9 @@ static void _menuMyPokemonMenu(POKEMON_TRADE_WORK* pWork)
   {    
     int msg[]={POKETRADE_STR_05, POKETRADE_STR_04, POKETRADE_STR_06};
     POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
+
+    TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
+    
     _CHANGE_STATE(pWork,_menuMyPokemon);
   }
 }
@@ -858,10 +874,10 @@ static void _NEGO_Select6CancelWait4(POKEMON_TRADE_WORK* pWork)
   BOOL bEnd=FALSE;
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    if(pWork->pokemonGTSSeqSend == POKEMONTORADE_SEQ_SELECTNG){
+    if(pWork->pokemonGTSSeq == POKEMONTORADE_SEQ_SELECTNG){
       bEnd = TRUE;
     }
-    else if(pWork->pokemonGTSSeqSend == POKEMONTORADE_SEQ_SELECTOK){
+    else if(pWork->pokemonGTSSeq == POKEMONTORADE_SEQ_SELECTOK){
       bEnd = TRUE;
     }
   }
@@ -875,7 +891,7 @@ static void _NEGO_Select6CancelWait4(POKEMON_TRADE_WORK* pWork)
   }
 }
 
-//
+//NGだった事を送信
 static void _NEGO_Select6CancelWait3(POKEMON_TRADE_WORK* pWork)
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
@@ -894,7 +910,8 @@ static void _NEGO_Select6CancelWait3(POKEMON_TRADE_WORK* pWork)
   }
 }
 
-//
+//見せ合いをやめて戻る
+
 static void _NEGO_Select6CancelWait2(POKEMON_TRADE_WORK* pWork)
 {
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
@@ -909,9 +926,7 @@ static void _NEGO_Select6CancelWait2(POKEMON_TRADE_WORK* pWork)
       GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
       pWork->NegoWaitTime = _GTSINFO04_WAIT;
-
       pWork->pokemonGTSSeqSend = POKEMONTORADE_SEQ_SELECTNG;
-
       _CHANGE_STATE(pWork,_NEGO_Select6CancelWait3);
       break;
     default: //いいえ
@@ -922,6 +937,8 @@ static void _NEGO_Select6CancelWait2(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+
+//見せ合いをやめて戻るかどうか はいいいえ
 static void _NEGO_Select6CancelWait(POKEMON_TRADE_WORK* pWork)
 {
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
@@ -953,6 +970,7 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
   trgno = GFL_UI_TP_HitTrg(_tp_data);
   if(trgno != -1){
     GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
+    POKEMONTRADE_StartPokeSelectSixButton(pWork, -1);
     if(_NEGO_Select6PokemonSelect(pWork, trgno)){
       return;
     }
@@ -960,7 +978,10 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
   if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
     if(GFL_UI_KEY_GetTrg()){
       GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
-      pWork->pokemonselectno=0;
+      pWork->pokemonselectno = pWork->pokemonselectno % 6;
+      if(pWork->pokemonselectno<0){
+        pWork->pokemonselectno=0;
+      }
       POKEMONTRADE_StartPokeSelectSixButton(pWork,pWork->pokemonselectno);
       PMSND_PlaySystemSE(SEQ_SE_SELECT1);
       return;
@@ -982,6 +1003,7 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_15, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
     _CHANGE_STATE(pWork, _NEGO_Select6CancelWait );
+    return;
   }
   TOUCHBAR_Main(pWork->pTouchWork);
   switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
@@ -1010,7 +1032,7 @@ static void POKETRADE_NEGO_Select6keywaitMsg2(POKEMON_TRADE_WORK* pWork)
     POKETRADE_MESSAGE_WindowClear(pWork);
 
 #if KARI_EN
-    POKETRADE_MESSAGE_SixStateDisp(pWork , GFL_BG_FRAME2_S);//６体表示
+//    POKETRADE_MESSAGE_SixStateDisp(pWork , GFL_BG_FRAME2_S);//６体表示
 #endif
 
     _CHANGE_STATE(pWork,POKETRADE_NEGO_Select6keywait);
@@ -1105,7 +1127,7 @@ static void _Select6Init(POKEMON_TRADE_WORK* pWork)
 
 
   POKETRADE_MESSAGE_SixStateDisp(pWork , GFL_BG_FRAME2_S);//６体表示
-
+  
   if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
     POKEMONTRADE_StartPokeSelectSixButton(pWork, -1);
     pWork->pokemonselectno=-1;
@@ -1238,6 +1260,23 @@ static void _Select6MessageInitEnd(POKEMON_TRADE_WORK* pWork)
 }
 
 
+static void _Select6MessageInitEndNoSend(POKEMON_TRADE_WORK* pWork)
+{
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
+  if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
+  }
+  else if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_RETURN,WB_NET_TRADE_SERVICEID)){
+    _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
+  }
+}
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   6体表示に移動してよいかどうか確認する
@@ -1312,8 +1351,8 @@ static void _Select6MessageInit3(POKEMON_TRADE_WORK* pWork)
       //あいてはポケモン交換したがっているようです でもどす
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_04, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
-      pWork->pokemonGTSSeqSend =POKEMONTORADE_SEQ_NONE;
-      _CHANGE_STATE(pWork, _Select6MessageInitEnd);
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_RETURN,WB_NET_TRADE_SERVICEID);
+      _CHANGE_STATE(pWork, _Select6MessageInitEndNoSend);
       return;
     }
     if(POKEMONTRADEPROC_IsNetworkMode(pWork)){

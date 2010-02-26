@@ -1714,6 +1714,24 @@ static void _endCancelState(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+//終了のタイミングを待つ
+static void _endWaitStateNetwork3(POKEMON_TRADE_WORK* pWork)
+{
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
+  if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    POKETRADE_MESSAGE_WindowClear(pWork);
+    _CHANGE_STATE(pWork,_touchState);
+  }
+  else if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_RETURN,WB_NET_TRADE_SERVICEID)){
+    POKETRADE_MESSAGE_WindowClear(pWork);
+    _CHANGE_STATE(pWork,_touchState);
+  }
+}
+
 
 //終了待ち
 static void _endWaitStateNetwork2(POKEMON_TRADE_WORK* pWork)
@@ -1729,9 +1747,14 @@ static void _endWaitStateNetwork2(POKEMON_TRADE_WORK* pWork)
     POKETRADE_MESSAGE_WindowOpen(pWork);
     _CHANGE_STATE(pWork, _endCancelState);
   }
+  if(POKEMONTORADE_SEQ_MISERUOK==pWork->pokemonGTSSeq){
+    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_04, pWork->pMessageStrBuf );
+    POKETRADE_MESSAGE_WindowOpen(pWork);
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_RETURN,WB_NET_TRADE_SERVICEID);
+    _CHANGE_STATE(pWork, _endWaitStateNetwork3);
 
+  }
 }
-
 
 //終わるのを相手に伝えている
 static void _endWaitStateNetwork(POKEMON_TRADE_WORK* pWork)
@@ -2919,6 +2942,7 @@ void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork)
   IRC_POKETRADEDEMO_RemoveModel( pWork);
   POKE_GTS_ReleasePokeIconResource(pWork);
   POKE_GTS_DeleteEruptedIcon(pWork);
+  POKE_GTS_SelectStatusMessageDelete(pWork);
 
   IRC_POKETRADE_ResetBoxNameWindow(pWork);
   IRCPOKETRADE_PokeDeleteMcss(pWork,1);

@@ -2983,3 +2983,112 @@ void POKEMONTRADE_NEGOBG_Select6Create(POKEMON_TRADE_WORK* pWork)
   GFL_ARC_CloseDataHandle( p_handle );
 }
 
+
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   文字プレートを作成 (ポケモン３＋自分)X2
+ */
+//------------------------------------------------------------------------------
+
+void POKEMONTRADE_CreatePokeSelectMessage(POKEMON_TRADE_WORK* pWork)
+{
+  int i;
+  GFL_CLWK_DATA cellInitData;
+  GFL_CLACTPOS pos[GTS_SEL6MSG_NUM]={
+    {64+32, 0+32},
+    {64+32, 48+16},
+    {64+32, 96+16},
+    {64+32, 144+16},
+    {128+64+32, 0+32},
+    {128+64+32, 48+16},
+    {128+64+32, 96+16},
+    {128+64+32,144+16},
+  };
+  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
+
+  GF_ASSERT(!pWork->select6CellRes[PAL_SEL6MSG]);
+  
+  pWork->select6CellRes[PAL_SEL6MSG] =
+    GFL_CLGRP_PLTT_RegisterEx(
+      p_handle ,NARC_trade_default_NCLR , CLSYS_DRAW_SUB ,  _PALETTE_OAMMSG*0x20, 0, 1, pWork->heapID  );
+  pWork->select6CellRes[ANM_SEL6MSG] =
+    GFL_CLGRP_CELLANIM_Register(
+      p_handle , NARC_trade_plate_NCER, NARC_trade_plate_NANR , pWork->heapID  );
+
+  
+  for(i=0;i<GTS_SEL6MSG_NUM;i++){
+    pWork->listBmp[i] = GFL_BMP_Create( 16, 6, GFL_BMP_16_COLOR, pWork->heapID );
+    pWork->listRes[i] = GFL_CLGRP_CGR_Register(  p_handle , NARC_trade_plate_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+  }
+  
+  for(i=0;i<GTS_SEL6MSG_NUM;i++){
+    cellInitData.pos_x = pos[i].x;
+    cellInitData.pos_y = pos[i].y;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 1;
+    
+    pWork->select6Msg[i] =
+      GFL_CLACT_WK_Create( pWork->cellUnit ,
+                           pWork->listRes[i],
+                           pWork->select6CellRes[PAL_SEL6MSG],
+                           pWork->select6CellRes[ANM_SEL6MSG],
+                           &cellInitData ,CLSYS_DRAW_SUB, pWork->heapID );
+    GFL_CLACT_WK_SetDrawEnable( pWork->select6Msg[i], TRUE );
+  }
+
+
+  GFL_ARC_CloseDataHandle( p_handle );
+}
+
+void POKEMONTRADE_RemovePokeSelectMessage(POKEMON_TRADE_WORK* pWork)
+{
+//  Resource pWork->select6CellRes[PAL_SEL6MSG]
+  int i;
+
+  for(i=0;i<GTS_SEL6MSG_NUM;i++){
+    if( pWork->select6Msg[i] ){
+      GFL_CLACT_WK_Remove( pWork->select6Msg[i]);
+      pWork->select6Msg[i]=NULL;
+      GFL_BMP_Delete(pWork->listBmp[i]);
+      pWork->listBmp[i]=NULL;
+      GFL_CLGRP_CGR_Release(pWork->listRes[i]);
+      pWork->listRes[i]=0;
+    }
+  }
+  if(pWork->select6CellRes[PLT_POKEICON]!=0){
+    GFL_CLGRP_PLTT_Release(pWork->select6CellRes[PLT_POKEICON] );
+    pWork->select6CellRes[PLT_POKEICON]=0;
+  }
+  if(pWork->select6CellRes[PLT_POKEICON]!=0){
+    GFL_CLGRP_CELLANIM_Release(pWork->select6CellRes[ANM_POKEICON] );
+    pWork->select6CellRes[PLT_POKEICON]=0;
+  }
+}
+
+
+void POKEMONTRADE_MessageOAMWriteVram(POKEMON_TRADE_WORK* pWork)
+{
+  int i,x;
+  u8 buff[]={0,2,4,6,1,3,5,7};
+  
+#if 1
+  // リストOAM生成＆描画
+  for(i = 0; i< GTS_SEL6MSG_NUM ; i++)
+  {
+    u32 dest_adrs = GFL_CLGRP_CGR_GetAddr( pWork->listRes[i], CLSYS_DRAW_SUB);
+    u8* charbuff = GFL_BMP_GetCharacterAdrs(pWork->listBmp[i]);
+    u32 size = GFL_BMP_GetBmpDataSize(pWork->listBmp[i]);
+    
+    DC_FlushRange(charbuff, size);
+
+    for(x = 0; x < 8; x++){
+      GXS_LoadOBJ(&charbuff[ 8*32*buff[x] ], dest_adrs, (32*8));
+      dest_adrs += 8*32;
+    }
+  }
+#endif
+}

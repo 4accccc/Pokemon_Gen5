@@ -71,6 +71,7 @@ typedef enum
   _TIMING_SAVEEND,
   _TIMING_ANIMEEND,
   _TIMING_POKECOLOR,
+  _TIMING_RETURN,     //あいてが交換したがっていて、相手がやめたい時は同期をとって元のシーケンスに戻る
 
 } NET_TIMING_ENUM;
 
@@ -118,6 +119,8 @@ typedef enum
 #define _OBJPLT_POKEICON  (3)  //ポケモンアイコン 3本
 #define _OBJPLT_BOX_OFFSET (_OBJPLT_POKEICON_OFFSET+_OBJPLT_POKEICON*32)
 #define _OBJPLT_BOX  (6)  //サブ画面OBJパレット基本  5本
+#define _PALETTE_OAMMSG (0x0e) //メッセージOAM用
+
 
 //PLTID_OBJ_POKEITEM_S
 
@@ -295,6 +298,23 @@ enum{
   GTS_FACE_BUTTON_NUM,
 };
 
+// ６体見せ合いの時の文章
+enum{
+  GTS_SEL6MSG_MY_NAME,
+  GTS_SEL6MSG_MY_POKE1,
+  GTS_SEL6MSG_MY_POKE2,
+  GTS_SEL6MSG_MY_POKE3,
+  GTS_SEL6MSG_FRIEND_NAME,
+  GTS_SEL6MSG_FRIEND_POKE1,
+  GTS_SEL6MSG_FRIEND_POKE2,
+  GTS_SEL6MSG_FRIEND_POKE3,
+  GTS_SEL6MSG_NUM,
+};
+
+typedef enum{
+  PAL_SEL6MSG,
+  ANM_SEL6MSG,
+} OAMRESOURCE_SEL6MSG;
 
 // ポケモンステータスを自分と相手を切り替える際のCELLの位置
 #define _POKEMON_SELECT1_CELLX  (128-32)
@@ -582,6 +602,10 @@ struct _POKEMON_TRADE_WORK{
 
   GFL_CLWK* eruptedButtonGTS[GTS_ERUPTED_BUTTON_NUM * 2];  //顔噴出し
   GFL_CLWK* faceButtonGTS[GTS_FACE_BUTTON_NUM];  //顔マークボタン
+  GFL_CLWK* select6Msg[GTS_SEL6MSG_NUM];  //文章
+  u32 select6CellRes[2]; //pal anm
+  GFL_BMP_DATA* listBmp[GTS_SEL6MSG_NUM];
+  u32 listRes[GTS_SEL6MSG_NUM];
   
   u16* scrTray;
   u16* scrTemoti;
@@ -881,4 +905,6 @@ extern void IRC_POKETRADE3D_SetColorTex( POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_StartPokeSelectSixButton(POKEMON_TRADE_WORK* pWork,int index);
 extern void POKEMONTRADE_RemovePokeSelectSixButton(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_IsInPokemonRecvPoke(POKEMON_PARAM* pp);
-
+extern void POKEMONTRADE_CreatePokeSelectMessage(POKEMON_TRADE_WORK* pWork);
+extern void POKEMONTRADE_RemovePokeSelectMessage(POKEMON_TRADE_WORK* pWork);
+extern void POKEMONTRADE_MessageOAMWriteVram(POKEMON_TRADE_WORK* pWork);
