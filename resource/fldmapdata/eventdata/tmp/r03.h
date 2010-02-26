@@ -25,21 +25,20 @@
 #define TR_KINDERGARTENW_01               10
 #define TR_KINDERGARTENM_02               11
 #define TR_KINDERGARTENM_01               12
-#define TR_BREEDERMN_01                   13
-#define TR_BREEDERW_01                    14
-#define TR_SCHOOLB_01                     15
-#define TR_SCHOOLG_01                     16
-#define TR_SCHOOLB_03                     17
-#define R03_FLD_ITEM_01                   18
-#define R03_FLD_ITEM_02                   19
-#define R03_FLD_ITEM_03                   20
-#define TR_R03_DUMMY_OBJ_04               21
-#define R03_RIVAL_01                      22
-#define R03_RIVAL_03                      23
-#define R03_POKE3_01                      24
-#define R03_POKE4_01                      25
-#define R03_FLD_ITEM_04                   26
-#define R03_FLD_ITEM_05                   27
+#define TR_BREEDERW_01                    13
+#define TR_SCHOOLB_01                     14
+#define TR_SCHOOLG_01                     15
+#define TR_SCHOOLB_03                     16
+#define R03_FLD_ITEM_01                   17
+#define R03_FLD_ITEM_02                   18
+#define R03_FLD_ITEM_03                   19
+#define TR_BREEDERM_01                    20
+#define R03_RIVAL_01                      21
+#define R03_RIVAL_03                      22
+#define R03_POKE3_01                      23
+#define R03_POKE4_01                      24
+#define R03_FLD_ITEM_04                   25
+#define R03_FLD_ITEM_05                   26
 
 #endif //ZONE_R03_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
