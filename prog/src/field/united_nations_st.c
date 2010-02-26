@@ -102,6 +102,37 @@ GMEVENT * UN_CreateAppEvt(GAMESYS_WORK *gsys, u16 inFloor, u16 *outFloor, u16 *o
   evt_work = GMEVENT_GetEventWork(event);
   evt_work->Param.InFloor = inFloor;
 
+  //セーブデータから国連関連データをセットする
+  {
+    int i;
+    int num;
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+    SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+    WIFI_HISTORY *wh = SaveData_GetWifiHistory(sv);
+    //全国解禁フラグセット
+    for (i=1;i<WIFI_COUNTRY_MAX;i++)
+    {
+      int idx = i-1;
+      if ( WIFIHISTORY_CheckCountryBit(wh, i) )
+        evt_work->Param.OpenCountryFlg[idx] = 1;
+      else
+        evt_work->Param.OpenCountryFlg[idx] = 0;
+    }
+    //訪問国セット
+    num = WIFIHISTORY_GetValidUnDataNum(wh);
+    for (i=0;i<num;i++){
+      int code;
+      MYSTATUS *status = WIFIHISTORY_GetUnMyStatus(wh, i);
+      //国コード取得
+      code = MyStatus_GetMyNation(status);
+      evt_work->Param.StayCountry[i] = code;
+    }
+    for (;i<FLOOR_MARKING_MAX;i++)
+    {
+      evt_work->Param.StayCountry[i] = 0;
+    }
+  }
+
   return event;
 }
 
