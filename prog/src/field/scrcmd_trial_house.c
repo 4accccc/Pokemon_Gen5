@@ -84,7 +84,8 @@ VMCMD_RESULT EvCmdTH_SetPlayMode( VMHANDLE *core, void *wk )
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
   TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
 
-  play_mode = SCRCMD_GetVMWorkValue( core, work );  
+  play_mode = SCRCMD_GetVMWorkValue( core, work );
+  NOZOMU_Printf("TH playmode = %d\n",play_mode);
   TRIAL_HOUSE_SetPlayMode(*ptr, play_mode );
   return VMCMD_RESULT_CONTINUE;
 
