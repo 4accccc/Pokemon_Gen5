@@ -786,6 +786,20 @@ const BOOL APP_TASKMENU_WIN_IsTrg( const APP_TASKMENU_WIN_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	決定をOFF状態にリセットする
+ *
+ *	@param	APP_TASKMENU_WIN_WORK *wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+void APP_TASKMENU_WIN_ResetDecide( APP_TASKMENU_WIN_WORK *wk )
+{
+	wk->isDecide	= 0;
+  wk->anmCnt    = 0;
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	フレームをBMPWINに転送
  *
  *	@param	GFL_BMPWIN *bmpwin					BMPWIN

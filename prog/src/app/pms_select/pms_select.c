@@ -1836,6 +1836,7 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
       {
         // 移動があった場合は更新
         PLATE_CNT_UpdateAll( wk );
+        GFL_SOUND_PlaySE( SE_MOVE_LISTBAR_ICON );
       }
       b_input = FALSE;
     }
@@ -1889,6 +1890,7 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
             // 移動があった場合、または、選択されていたものが無効化された場合、は更新
             PLATE_CNT_UpdateAll( wk );
           }
+          GFL_SOUND_PlaySE( SE_MOVE_LISTBAR_ICON );
           b_input = FALSE;
         }
       }

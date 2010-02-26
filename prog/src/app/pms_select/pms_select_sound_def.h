@@ -23,5 +23,6 @@ enum
 { 
   SE_DECIDE       = SEQ_SE_DECIDE1, ///< 決定
   SE_MOVE_CURSOR  = SEQ_SE_SELECT1, ///< カーソル移動
+  SE_MOVE_LISTBAR_ICON  = SEQ_SE_SYS_06, ///< スライドバーをタッチ
 };
 

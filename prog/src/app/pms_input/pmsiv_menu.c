@@ -494,6 +494,7 @@ static BOOL _wait_category_erase( PMSIV_MENU* wk )
   {
     if( PMSIV_MENU_TaskMenuIsFinish( wk, 1 ) )
     {
+      APP_TASKMENU_WIN_ResetDecide( wk->menu_win[ 1 ] );  // Œˆ’è‰‰o‚ğI‚í‚ç‚¹‚é
       return TRUE;
     }
   }

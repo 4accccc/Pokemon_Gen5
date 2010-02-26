@@ -155,6 +155,9 @@ static void Cmd_ButtonDownRelease(GFL_TCB *tcb, void* wk_adrs);
 static void Cmd_InputWordUpdate( GFL_TCB* tcb, void* wk_adrs );
 static void Cmd_ScrollWordWinBar(GFL_TCB *tcb, void* wk_adrs);
 
+static void Cmd_EraseInCategoryInitial( GFL_TCB *tcb, void* wk_adrs );
+
+
 static const GFL_DISP_VRAM bank_data = {
 	GX_VRAM_BG_128_B,				// メイン2DエンジンのBG
 	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
@@ -394,6 +397,8 @@ void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 
     Cmd_InputWordUpdate,
 		Cmd_ScrollWordWinBar,
+
+    Cmd_EraseInCategoryInitial,
 	};
 
 
@@ -1204,6 +1209,7 @@ static void Cmd_ChangeCategoryModeEnable( GFL_TCB *tcb, void* wk_adrs )
 		break;
 	}
 }
+
 //----------------------------------------------------------------------------------------------
 /**
 	* 描画コマンド：カテゴリ選択から編集エリアへ
@@ -1950,6 +1956,44 @@ static void Cmd_ScrollWordWinBar( GFL_TCB *tcb, void* wk_adrs )
 
 	DeleteCommand( wk );
 }
+
+//----------------------------------------------------------------------------------------------
+/**
+	* 描画コマンド：カテゴリあいうえお入力において、1文字消去したとき、1文字消去ボタンを明滅させる
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	* @note   1文字消去が確定したときのみ、この描画コマンドを発行して下さい。
+  *         1文字消去できるか判定や音鳴らしはしていません。
+	*
+	*/
+//----------------------------------------------------------------------------------------------
+static void Cmd_EraseInCategoryInitial( GFL_TCB *tcb, void* wk_adrs )
+{
+	COMMAND_WORK* wk = wk_adrs;
+	PMS_INPUT_VIEW* vwk = wk->vwk;
+
+	switch( wk->seq )
+  {
+	case 0:
+    PMSIV_MENU_SetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_ERASE );
+		wk->seq++;
+		break;
+	case 1:
+    if( PMSIV_MENU_IsFinishCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_ERASE ) )
+    {
+      if( PMSI_GetCategoryCursorPos(vwk->main_wk) == CATEGORY_POS_ERASE )
+      {
+        PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, 1, TRUE );
+      }
+			DeleteCommand( wk );
+    }
+		break;
+	}
+}
+
+
 
 
 //==============================================================================================

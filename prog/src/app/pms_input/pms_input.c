@@ -1983,6 +1983,7 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     if( wk->category_mode == CATEGORY_MODE_INITIAL && PMSI_SEARCH_DelWord( wk->swk ) )
     {
 		  GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
+		  PMSIView_SetCommand( wk->vwk, VCMD_ERASE_IN_CATEGORY_INITIAL );
 
       PMSI_SEARCH_Start( wk->swk );
       PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
@@ -1990,7 +1991,7 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     // GROUP‚Í–³ðŒ‚Å‰æ–Ê‚©‚ç”²‚¯‚é
     else
     {
-      GFL_SOUND_PlaySE(SOUND_CANCEL);
+      GFL_SOUND_PlaySE(SOUND_CANCEL); 
       PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_EDITAREA );
       wk->next_proc = MainProc_EditArea;
 		  *seq = SEQ_CA_NEXTPROC;
@@ -2016,11 +2017,20 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     }
     else if( wk->category_pos == CATEGORY_POS_ERASE )
     {
-		  GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
+      // INITIAL‚È‚ç•¶ŽšÁ‹Ž¨‚±‚êˆÈãÁ‚·‚à‚Ì‚ª‚È‚¯‚ê‚Î‹ÖŽ~‰¹
+      if( wk->category_mode == CATEGORY_MODE_INITIAL && PMSI_SEARCH_DelWord( wk->swk ) )
+      {
+		    //GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
+		    GFL_SOUND_PlaySE(SOUND_DECIDE);  // Aƒ{ƒ^ƒ“‚ðŽg‚Á‚½‚Ì‚ÅŒˆ’è‰¹
+		    PMSIView_SetCommand( wk->vwk, VCMD_ERASE_IN_CATEGORY_INITIAL );
 
-      PMSI_SEARCH_DelWord( wk->swk );
-      PMSI_SEARCH_Start( wk->swk );
-      PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
+        PMSI_SEARCH_Start( wk->swk );
+        PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
+      }
+      else
+      {
+        GFL_SOUND_PlaySE( SOUND_DISABLE_BUTTON );
+      }
     }
     else if( wk->category_pos == CATEGORY_POS_BACK )
     {
@@ -2297,6 +2307,7 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
         if( PMSI_SEARCH_DelWord( wk->swk ) )
         {
           GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
+		      PMSIView_SetCommand( wk->vwk, VCMD_ERASE_IN_CATEGORY_INITIAL );
 
           PMSI_SEARCH_Start( wk->swk );
           PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );

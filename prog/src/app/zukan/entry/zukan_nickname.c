@@ -208,7 +208,7 @@ ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
     work->bg_chara_info = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle,
                                                                        NARC_battgra_wb_battle_w_bg_NCGR,
                                                                        ZUKAN_NICKNAME_BG_FRAME_INPUT_PIC,
-                                                                       32*14*GFL_BG_1CHRDATASIZ,
+                                                                       32*15*GFL_BG_1CHRDATASIZ,
                                                                        FALSE, work->heap_id );
     GF_ASSERT_MSG( work->bg_chara_info != GFL_ARCUTIL_TRANSINFO_FAIL, "ZUKAN_NICKNAME : BGƒLƒƒƒ‰—Ìˆæ‚ª‘«‚è‚Ü‚¹‚ñ‚Å‚µ‚½B\n" );
     GFL_ARCHDL_UTIL_TransVramScreen( handle, NARC_battgra_wb_battle_w_bg1d_NSCR,

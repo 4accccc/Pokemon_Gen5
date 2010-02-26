@@ -61,6 +61,8 @@ enum {
   VCMD_INPUTWORD_UPDATE,  ///< カテゴリで入力された文字表示を更新
 	VCMD_SCROLL_WORDWIN_BAR,		///< 単語ウィンドウスクロールバー
 
+  VCMD_ERASE_IN_CATEGORY_INITIAL,  // カテゴリあいうえお入力において、1文字消去したとき、1文字消去ボタンを明滅させる
+
   VCMD_MAX
 };
 

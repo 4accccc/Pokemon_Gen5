@@ -105,3 +105,4 @@ extern void APP_TASKMENU_WIN_SetDecide( APP_TASKMENU_WIN_WORK *wk, BOOL isDecide
 extern BOOL APP_TASKMENU_WIN_IsDecide( const APP_TASKMENU_WIN_WORK *wk );
 extern const BOOL APP_TASKMENU_WIN_IsFinish( const APP_TASKMENU_WIN_WORK *work );
 extern const BOOL APP_TASKMENU_WIN_IsTrg( const APP_TASKMENU_WIN_WORK *wk );
+extern void APP_TASKMENU_WIN_ResetDecide( APP_TASKMENU_WIN_WORK *wk );
