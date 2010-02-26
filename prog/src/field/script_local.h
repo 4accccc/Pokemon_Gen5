@@ -14,8 +14,11 @@
 #include "field/fieldmap_proc.h"
 #include "field/field_msgbg.h"
 
+
 #include "scrend_check_bit.h"
 #include "scrcmd_work.h"      //for SCRCMD_WORK
+
+#include "field_saveanime.h"      //for FIELD_SAVEANIME
 
 //--------------------------------------------------------------
 ///	SCRIPT_FLDPARAM スクリプト制御ワーク　フィールドパラメータ
@@ -219,3 +222,12 @@ extern void * SCRIPT_GetMemberWork_Musical( SCRIPT_WORK * sc );
 //--------------------------------------------------------------
 extern u16 SCRIPT_GetStartScriptID( const SCRIPT_WORK * sc );
 
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブBGアニメーションワークの管理
+ */
+//-----------------------------------------------------------------------------
+extern void SCRIPT_SetSaveAnimeWork( SCRIPT_WORK * sc, FIELD_SAVEANIME * wk );
+extern FIELD_SAVEANIME * SCRIPT_GetSaveAnimeWork( SCRIPT_WORK * sc ); 

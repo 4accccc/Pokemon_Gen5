@@ -2,7 +2,14 @@
 #	フィールドエフェクト アーカイブ用Makefile
 #---------------------------------------------------------------
 USERS = kagaya fuchino iwasawa obata_toshihiro ibe_mana yoshida lee_hyunjung unno tomoya_takahashi
+
+#------------------------------------------------------------------------------
+#※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
+#------------------------------------------------------------------------------
+SUBDIRS		=	save_icon
+
 include $(PROJECT_RSCDIR)/macro_define
+
 
 TARGET_FE 	=	fldeff.narc
 HEADER_FE	=	$(TARGET_FE:.narc=.naix)
@@ -120,7 +127,10 @@ $(TMPDIR)/%.nsbva: %.iva
 #-------------------------------------------------
 #	生成ルール定義
 #-------------------------------------------------
-do-build: $(COPYDIR)/$(TARGET_FE)
+do-build: subdir $(COPYDIR)/$(TARGET_FE)
+
+subdir:
+	$(MAKE_SUBDIR)
 
 $(COPYDIR)/$(TARGET_FE): $(TARGET_FE)
 	$(COPY) $(TARGET_FE) $(COPYDIR)

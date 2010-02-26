@@ -23,6 +23,8 @@
 #include "fieldmap.h"
 #include "field_subscreen.h"
 
+#include "field_saveanime.h"
+
 #include "report_event.h"
 
 
@@ -83,6 +85,7 @@ struct _REPORT_EVENT_LOCAL {
 	APP_TASKMENU_WORK * ynWork;
 
 	TIMEICON_WORK * timeIcon;
+  FIELD_SAVEANIME* bgAnime;
 };
 
 
@@ -96,6 +99,8 @@ static void SetReportMsgBuff( FMENU_REPORT_EVENT_WORK * wk );
 static BOOL MainReportMsg( FMENU_REPORT_EVENT_WORK * wk );
 static void SetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * work );
 static void ResetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * work );
+static void SetReportBgAnime( FMENU_REPORT_EVENT_WORK * work );
+static void ResetReportBgAnime( FMENU_REPORT_EVENT_WORK * work );
 static void InitReportYesNo( FMENU_REPORT_EVENT_WORK * wk );
 static void ExitReportYesNo( FMENU_REPORT_EVENT_WORK * wk );
 static void SetReportYesNo( FMENU_REPORT_EVENT_WORK * wk );
@@ -217,6 +222,7 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 											wk->local->win, 15, TIMEICON_DEFAULT_WAIT, wk->heapID );
 			FIELD_SUBSCREEN_SetReportStart( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
 			SetReportPlayerAnime( wk );
+      SetReportBgAnime( wk );
 			GAMEDATA_SaveAsyncStart( GAMESYSTEM_GetGameData(wk->gsys) );
 			*seq = REPORT_SEQ_SAVE_MAIN;
 		}
@@ -230,6 +236,7 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
       
 		case SAVE_RESULT_OK:
 			FIELD_SUBSCREEN_SetReportEnd( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
+      ResetReportBgAnime( wk );
 			ResetReportPlayerAnime( wk );
 			{
 				WORDSET * wset;
@@ -248,6 +255,7 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 
 		case SAVE_RESULT_NG:
 			FIELD_SUBSCREEN_SetReportEnd( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
+      ResetReportBgAnime( wk );
 			ResetReportPlayerAnime( wk );
 			SetReportMsg( wk, msg_common_report_06 );
 			TILEICON_Exit( wk->local->timeIcon );
@@ -535,3 +543,27 @@ static void ResetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
 		FIELD_PLAYER_UpdateRequest( fld_player );
 	}
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レポートBGアニメーション    ON
+ */
+//-----------------------------------------------------------------------------
+static void SetReportBgAnime( FMENU_REPORT_EVENT_WORK * work )
+{
+  work->local->bgAnime = FIELD_SAVEANIME_Create( work->heapID, work->fieldWork );
+  FIELD_SAVEANIME_Start( work->local->bgAnime );
+}
+
+//----------------------------------------------------------------------------
+/** 
+ *	@brief  レポートBGアニメーション  OFF
+ */
+//-----------------------------------------------------------------------------
+static void ResetReportBgAnime( FMENU_REPORT_EVENT_WORK * work )
+{
+  FIELD_SAVEANIME_End( work->local->bgAnime );
+  FIELD_SAVEANIME_Delete( work->local->bgAnime );
+}
+

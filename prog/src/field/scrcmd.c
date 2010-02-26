@@ -25,6 +25,8 @@
 #include "field_status_local.h"
 #include "field_sound.h"
 
+#include "field_saveanime.h"
+
 
 #include "debug/debug_flg.h" //DEBUG_FLG_～
 
@@ -1300,6 +1302,7 @@ static BOOL EvWaitSave(VMHANDLE * core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
   SAVE_RESULT result;
+  BOOL ret; // 戻り値
 
   // 分割セーブ実行
   result = GAMEDATA_SaveAsyncMain( gdata );
@@ -1307,23 +1310,43 @@ static BOOL EvWaitSave(VMHANDLE * core, void *wk )
   // 結果を返す
   switch( result )
   {
+  // 続行
   case SAVE_RESULT_CONTINUE:
   case SAVE_RESULT_LAST:
-    return FALSE;
+    ret = FALSE;
+    break;
+
+  // 完了
   case SAVE_RESULT_OK:
     {
       u16* ret_wk = SCRCMD_GetVMWork( core, work );
       *ret_wk = TRUE;
     }
-    return TRUE;
+    ret = TRUE;
+    break;
   case SAVE_RESULT_NG:
     {
       u16* ret_wk = SCRCMD_GetVMWork( core, work );
       *ret_wk = FALSE;
     }
-    return TRUE;
+    ret = TRUE;
+    break;
   } 
-  return FALSE;
+
+  // セーブアニメーション破棄
+  if( ret == TRUE )
+  {
+    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+    FIELD_SAVEANIME* saveanime = SCRIPT_GetSaveAnimeWork( sc );
+
+    GF_ASSERT( saveanime );
+
+    FIELD_SAVEANIME_End( saveanime );
+    FIELD_SAVEANIME_Delete( saveanime );
+    SCRIPT_SetSaveAnimeWork( sc, NULL );
+  }
+  
+  return ret;
 }
 //--------------------------------------------------------------
 /**
@@ -1337,7 +1360,12 @@ static BOOL EvWaitSave(VMHANDLE * core, void *wk )
 static VMCMD_RESULT EvCmdReportCall( VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  HEAPID heapID = FIELDMAP_GetHeapID( fieldmap );
+  FIELD_SAVEANIME *saveanime;
 
 #ifdef  PM_DEBUG
   if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableReport) ) {
@@ -1346,6 +1374,12 @@ static VMCMD_RESULT EvCmdReportCall( VMHANDLE * core, void *wk )
     return VMCMD_RESULT_SUSPEND;
   }
 #endif
+
+  saveanime = FIELD_SAVEANIME_Create( heapID, fieldmap );
+  FIELD_SAVEANIME_Start( saveanime );
+  // 保存
+  SCRIPT_SetSaveAnimeWork( sc, saveanime );
+  
   // 分割セーブ開始
   GAMEDATA_SaveAsyncStart( gdata );
   

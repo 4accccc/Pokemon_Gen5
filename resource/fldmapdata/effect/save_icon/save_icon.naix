@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: save_icon.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_SAVE_ICON_NAIX_
+#define NARC_SAVE_ICON_NAIX_
+
+enum {
+	NARC_save_icon_report_icon_NCGR = 0,
+	NARC_save_icon_report_icon_NCLR = 1,
+	NARC_save_icon_report_icon_NSCR = 2
+};
+
+/* NARC_SAVE_ICON_NAIX_ */
+#endif

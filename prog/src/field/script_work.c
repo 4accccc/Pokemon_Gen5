@@ -112,6 +112,7 @@ struct _TAG_SCRIPT_WORK
 
   MUSICAL_EVENT_WORK *musicalEventWork;
 
+  FIELD_SAVEANIME* bg_saveanime;
 };
 
 //============================================================================================
@@ -691,5 +692,37 @@ void SCRIPT_ResetEventFlagTrainer( EVENTWORK *ev, u16 tr_id )
 {
 	EVENTWORK_ResetEventFlag( ev, GET_TRAINER_FLAG(tr_id) );
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブBGアニメーションワークの管理
+ */
+//-----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブBGアニメーションワークの保存
+ *
+ *	@param	sc    ワーク
+ *	@param	wk    セーブBGアニメーションワーク
+ */
+//-----------------------------------------------------------------------------
+void SCRIPT_SetSaveAnimeWork( SCRIPT_WORK * sc, FIELD_SAVEANIME * wk )
+{
+  sc->bg_saveanime = wk;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  保存しているセーブBGアニメーションワーク取得
+ *
+ *	@param	sc  ワーク
+ */
+//-----------------------------------------------------------------------------
+FIELD_SAVEANIME * SCRIPT_GetSaveAnimeWork( SCRIPT_WORK * sc )
+{
+  return sc->bg_saveanime;
+}
+
 
 
