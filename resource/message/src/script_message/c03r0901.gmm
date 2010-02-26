@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-16T18:12:11"/>
+	<create user="matsushima" host="W00181" date="2010-02-26T18:40:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="272"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="24" top="169" right="729" bottom="789" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,10 +292,9 @@
 	</lock>
 
 
-	<row id="msg_c03r0901_musician_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・配布ポケモン関連
-・12月ロム用仮メッセージ</comment>
+	<row id="msg_c03r0901_musician_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●メロディアが手持ちにいない場合
+・繰り返しのセリフ。</comment>
 		<attribute name="キャラ指定">MUSICIAN</attribute>
 		<language name="JPN" width="256">メロディの　もつ　ちから……[BE:01:ページ切り替え（クリア）]
 うつくしい　せんりつは
@@ -309,7 +308,121 @@
 みんなが　落ち込んでしまう……</language>
 	</row>
 
-	<row id="msg_c03r0901_waiter_01">
+	<row id="msg_c03r0901_musician_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●メロディアが手持ちにいて
+●「いにしえのうた」を覚えていない場合
+
+・メロディアのイベントが起動
+
+・メロディアの曲がスタート。</comment>
+		<attribute name="キャラ指定">MUSICIAN</attribute>
+		<language name="JPN" width="256">キミの　はこんだ　かぜの　においが
+セピアいろの　きおくの　ふちから[BE:00:ページ切り替え（行送り）]
+こんな　メロディを　おもいださせたよ[BE:01:ページ切り替え（クリア）]
+それは　ははが　すきだった　うた…
+いにしえの　ノスタルジー…[BE:01:ページ切り替え（クリア）]
+きいてくれるかい…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">キミの　はこんだ　かぜの　においが
+セピアいろの　きおくの　ふちから[BE:00:ページ切り替え（行送り）]
+こんな　メロディを　おもいださせたよ[BE:01:ページ切り替え（クリア）]
+それは　ははが　すきだった　うた…
+いにしえの　ノスタルジー…[BE:01:ページ切り替え（クリア）]
+きいてくれるかい…[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0901_musician_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>・曲を弾き終えたあとのセリフ。</comment>
+		<attribute name="キャラ指定">MUSICIAN</attribute>
+		<language name="JPN" width="256">ボクの　ははが　はなしてくれた…[BE:01:ページ切り替え（クリア）]
+メロディを　かなでる　ポケモンは
+かろやかな　ステップで[BE:00:ページ切り替え（行送り）]
+ひとの　こころを　みたしてくれたと…[BE:01:ページ切り替え（クリア）]
+ところが　おおきな　かなしみが
+せかいを　おおってしまったとき[BE:00:ページ切り替え（行送り）]
+ポケモンは　メロディを　うしなった…[BE:01:ページ切り替え（クリア）]
+どうじに　あかいくつも
+どこかへ　いっちゃった　とね…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ボクの　ははが　はなしてくれた…[BE:01:ページ切り替え（クリア）]
+メロディを　かなでる　ポケモンは
+かろやかな　ステップで[BE:00:ページ切り替え（行送り）]
+ひとの　こころを　みたしてくれたと…[BE:01:ページ切り替え（クリア）]
+ところが　おおきな　かなしみが
+せかいを　おおってしまったとき[BE:00:ページ切り替え（行送り）]
+ポケモンは　メロディを　うしなった…[BE:01:ページ切り替え（クリア）]
+どうじに　あかいくつも
+どこかへ　いっちゃった　とね…[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0901_musician_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>・話題が移るので、フキダシを出し直し。</comment>
+		<attribute name="キャラ指定">MUSICIAN</attribute>
+		<language name="JPN" width="256">キミが　とびらから　はいってきたとき
+ボクは　メロディを　おもいだし[BE:00:ページ切り替え（行送り）]
+ポケモンは　なくした　ステップを[BE:00:ページ切り替え（行送り）]
+かろやかに　ふんだ…[BE:01:ページ切り替え（クリア）]
+きっかけを　はこんできたのは　キミ…
+ふしぎな　こどもだね…</language>
+		<language name="JPN_KANJI" width="256">キミが　とびらから　はいってきたとき
+ボクは　メロディを　おもいだし[BE:00:ページ切り替え（行送り）]
+ポケモンは　なくした　ステップを[BE:00:ページ切り替え（行送り）]
+かろやかに　ふんだ…[BE:01:ページ切り替え（クリア）]
+きっかけを　はこんできたのは　キミ…
+ふしぎな　こどもだね…</language>
+	</row>
+
+	<row id="msg_c03r0901_musician_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●「いにしえのうた」を覚えている場合</comment>
+		<attribute name="キャラ指定">MUSICIAN</attribute>
+		<language name="JPN" width="256">いにしえのうた　を　うたわせてごらん[BE:01:ページ切り替え（クリア）]
+ボイスフォルムは　ステップフォルムに
+ステップフォルムは　ボイスフォルムに[BE:00:ページ切り替え（行送り）]
+すがたを　かえるのさ…</language>
+		<language name="JPN_KANJI" width="256">いにしえのうた　を　うたわせてごらん[BE:01:ページ切り替え（クリア）]
+ボイスフォルムは　ステップフォルムに
+ステップフォルムは　ボイスフォルムに[BE:00:ページ切り替え（行送り）]
+すがたを　かえるのさ…</language>
+	</row>
+
+	<row id="msg_c03r0901_narrator_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>0:メロディアのニックネーム</comment>
+		<attribute name="キャラ指定">ナレーション</attribute>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
+いにしえのうた　を　おもいだした！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
+いにしえのうた　を　おもいだした！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0901_narrator_02" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<comment>0:メロディアのニックネーム
+
+●技スロットに空きがない場合
+・「はい／いいえ」選択肢
+
+●「はい」の場合
+　→技忘れ画面へ
+●「いいえ」の場合
+　→msg_c03r0901_narrator_03</comment>
+		<attribute name="キャラ指定">ナレーション</attribute>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
+すでに　わざを　４つ　おぼえている！[BE:01:ページ切り替え（クリア）]
+わざを　わすれさせますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
+すでに　わざを　４つ　おぼえている！[BE:01:ページ切り替え（クリア）]
+わざを　わすれさせますか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0901_narrator_03" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<comment>0:メロディアのニックネーム
+
+●「いにしえのうた」を覚えない場合</comment>
+		<attribute name="キャラ指定">ナレーション</attribute>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は　いにしえのうた　を
+おもいださなかった！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は　いにしえのうた　を
+おもいださなかった！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0901_waiter_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>♂
 ・メッセージ後、アイテム入手処理
 　No032「ミックスオレ」</comment>
@@ -320,7 +433,7 @@
 これを……▼</language>
 	</row>
 
-	<row id="msg_c03r0901_waiter_02">
+	<row id="msg_c03r0901_waiter_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>♂
 ・アイテム入手後、自動で表示</comment>
 		<attribute name="キャラ指定">WAITER</attribute>
@@ -328,7 +441,7 @@
 		<language name="JPN_KANJI" width="256">いとしの　ポケモンに　どうぞ</language>
 	</row>
 
-	<row id="msg_c03r0901_waiter_03">
+	<row id="msg_c03r0901_waiter_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>♂
 ・waiter_02表示以降、繰り返し</comment>
 		<attribute name="キャラ指定">WAITER</attribute>
@@ -336,6 +449,28 @@
 ごゆっくり……</language>
 		<language name="JPN_KANJI" width="256">せっかく　いらしたのです
 ごゆっくり……</language>
+	</row>
+
+	<row id="msg_c03r0901_bussinesman_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>♂
+・繰り返しセリフ。</comment>
+		<attribute name="キャラ指定">BUSSINESMAN</attribute>
+		<language name="JPN" width="256">しごとに　つかれた　こころを
+いやすのに　うってつけの　おみせです</language>
+		<language name="JPN_KANJI" width="256">しごとに　つかれた　こころを
+いやすのに　うってつけの　おみせです</language>
+	</row>
+
+	<row id="msg_c03r0901_sunglasses_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>♂
+・繰り返しのセリフ。</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
+		<language name="JPN" width="256">ヤツの　ギターを　きいているとなぁ
+わかい　ころに　とびだした　いえと[BE:00:ページ切り替え（行送り）]
+なく　おふくろを　おもいだすのさ…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ヤツの　ギターを　きいているとなぁ
+わかい　ころに　とびだした　いえと[BE:00:ページ切り替え（行送り）]
+なく　おふくろを　おもいだすのさ…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
