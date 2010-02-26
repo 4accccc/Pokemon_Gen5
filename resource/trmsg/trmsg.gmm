@@ -1282,9 +1282,9 @@
 
 	<row id="TRID_BOSS_01_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">すまない　ボクの　トモダチ……
-キミたちを　くるしませてしまった</language>
+キミを　くるしませてしまった</language>
 		<language name="JPN_KANJI" width="216">すまない　ボクの　トモダチ……
-キミたちを　苦しませてしまった</language>
+キミを　苦しませてしまった</language>
 	</row>
 
 	<row id="TRID_ESPM_01_TRMSG_FIGHT_START">
