@@ -1,19 +1,16 @@
 EFFSEQ
-$0004
+$0005
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_01_open1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_01_fix.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_01_close.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_capture_01.spa
 #001
 %00
 ポケモンパレットフェード	攻撃側	0	16	0	31:31:31
 ボールモード	捕獲ボール攻撃側
-パーティクルデータロード	be_ball_001_1
-パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_1	攻撃側	方向無し	0:0:0	1:1:1	1
-パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_2	攻撃側	方向無し	0:0:0	1:1:1	1
-パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_3	攻撃側	方向無し	0:0:0	1:1:1	1
-パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_4	攻撃側	方向無し	0:0:0	1:1:1	1
-パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_5	攻撃側	方向無し	0:0:0	1:1:1	1
+パーティクルデータロード	be_capture_01
+パーティクル再生すべて	be_capture_01	攻撃側	方向無し	0:0:0	1:1:1	1
 パーティクルデータロード	be_m_ball_01_open1
 パーティクル再生	be_m_ball_01_open1	BE_M_BALL_01_OPEN1_M_BALL_01_OPEN2	攻撃側	方向無し	0:0:0	1:1:1	1
 SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
