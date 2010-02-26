@@ -2090,6 +2090,16 @@ FS_EXTERN_OVERLAY(battle);
           u8 commPos = (GFL_NET_GetNetID( netHandle ) + 1) & 3;
           BTL_SETUP_Multi_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS,
             commPos, HEAPID_BTL_DEBUG_SYS );
+
+          if( PokeParty_GetPokeCount(wk->partyEnemy1) )
+          {
+              TrainerID  trID = 2 + GFL_STD_MtRand( 100 ); // ‚Ä‚«‚Æ[‚Éƒ‰ƒ“ƒ_ƒ€‚Å
+
+            BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData,
+                &wk->fieldSit, trID, HEAPID_BTL_DEBUG_SYS );
+
+            BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+          }
         }
         break;
       case BTL_RULE_TRIPLE:

@@ -11,6 +11,7 @@
 #define __BTL_NET_H__
 
 #include "poke_tool/pokeparty.h"
+#include "battle/battle.h"
 
 enum {
   BTL_NET_SERVER_VERSION = 100,
@@ -26,6 +27,9 @@ typedef enum {
   BTL_NET_TIMING_NOTIFY_PLAYER_DATA,
   BTL_NET_TIMING_SETUP_END,
 
+  BTL_NET_TIMING_NOTIFY_TAG_AI_PARTY_DATA,
+  BTL_NET_TIMING_NOTIFY_TAG_AI_TRAINER_DATA,
+
 }BtlNetTiming;
 
 
@@ -40,7 +44,8 @@ typedef struct {
   u16                  LimitTimeGame;
   u16                  LimitTimeCommand;
   u8                   msgSpeed;
-  u8                   fWazaEffectEnable;
+  u8                   fWazaEffectEnable : 4;
+  u8                   fCommTag          : 4; ///< 通信タッグモード
 
 }BTLNET_SERVER_NOTIFY_PARAM;
 
@@ -78,6 +83,12 @@ extern BOOL BTL_NET_IsCompleteNotifyPlayerData( void );
 extern void BTL_NET_EndNotifyPlayerData( void );
 extern const MYSTATUS* BTL_NET_GetPlayerData( u8 clientID );
 
+
+extern BOOL BTL_NET_StartNotify_AI_PartyData( const POKEPARTY* party );
+extern BOOL BTL_NET_IsRecved_AI_PartyData( void );
+extern BOOL BTL_NET_StartNotify_AI_TrainerData( const BSP_TRAINER_DATA* tr_data, u32 size );
+extern const BSP_TRAINER_DATA* BTL_NET_Get_AI_TrainerData( void );
+extern BOOL BTL_NET_IsRecved_AI_TrainerData( void );
 
 
 

@@ -30,7 +30,9 @@ enum {
   CMD_NOTIFY_SERVER_VER = GFL_NET_CMD_BATTLE,
   CMD_NOTIFY_SERVER_PARAM,
   CMD_NOTIFY_PARTY_DATA,
+  CMD_NOTIFY_AI_PARTY_DATA,
   CMD_NOTIFY_PLAYER_DATA,
+  CMD_NOTIFY_AI_TRAINER_DATA,
   CMD_TO_CLIENT,
   CMD_TO_SERVER,
 };
@@ -127,11 +129,16 @@ static SYSWORK* Sys;
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static void recv_serverVer( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
+static u8 clientIDtoNetID( u8 clientID );
 static void recv_serverParam( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_partyData( int netID, void* pWork, int size );
 static void recv_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
+static u8* getbuf_AI_partyData( int netID, void* pWork, int size );
+static void recv_AI_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_playerData( int netID, void* pWork, int size );
 static void recv_playerData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
+static u8* getbuf_AI_trainerData( int netID, void* pWork, int size );
+static void recv_AI_trainerData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_clientData( int netID, void* pWork, int size );
 static void recv_clientData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static void recv_serverCmd( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
@@ -146,12 +153,14 @@ static inline void recvBuf_clear( RECV_BUFFER* buf );
 
 //static const NetRecvFuncTable RecvFuncTable[] = {
 const NetRecvFuncTable BtlRecvFuncTable[] = {
-    { recv_serverVer, NULL },
-    { recv_serverParam,  NULL },
-    { recv_partyData,   getbuf_partyData },
-    { recv_playerData,  getbuf_playerData },
-    { recv_serverCmd,   getbuf_serverCmd },
-    { recv_clientData,  getbuf_clientData },
+    { recv_serverVer,      NULL },
+    { recv_serverParam,    NULL },
+    { recv_partyData,      getbuf_partyData     },
+    { recv_AI_partyData,   getbuf_AI_partyData  },
+    { recv_playerData,     getbuf_playerData },
+    { recv_AI_trainerData,  getbuf_AI_trainerData },
+    { recv_serverCmd,      getbuf_serverCmd  },
+    { recv_clientData,     getbuf_clientData },
 };
 
 
@@ -390,7 +399,6 @@ static void recv_partyData( const int netID, const int size, const void* pData, 
       monsno = PP_Get( pp, ID_PARA_monsno, NULL );
     }
   }
-
 }
 
 // パーティデータの相互受信が完了したか？
@@ -410,6 +418,42 @@ BOOL BTL_NET_IsCompleteNotifyPartyData( void )
   BTL_N_PrintfEx( PRINT_FLG, DBGSTR_NET_PartyDataComplete, max);
   return TRUE;
 }
+
+
+// 通信タッグ用のAIパーティデータを送信（サーバ→全マシン）
+BOOL BTL_NET_StartNotify_AI_PartyData( const POKEPARTY* party )
+{
+  u32 size = PokeParty_GetWorkSize();
+
+  return GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_AI_PARTY_DATA,
+        size,
+        party,
+        FALSE,  // 優先度を高くする
+        TRUE,   // 同一コマンドがキューに無い場合のみ送信する
+        TRUE    // GFL_NETライブラリの外で保持するバッファを使用
+  );
+}
+static u8* getbuf_AI_partyData( int netID, void* pWork, int size )
+{
+  GF_ASSERT(Sys->tmpRecvBuf[ BTL_CLIENT_ENEMY1 ] == NULL);
+
+  Sys->tmpRecvBuf[ BTL_CLIENT_ENEMY1 ] = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(Sys->heapID), size );
+  return Sys->tmpRecvBuf[ BTL_CLIENT_ENEMY1 ];
+}
+static void recv_AI_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
+{
+  Sys->tmpLargeBufUsedSize[ BTL_CLIENT_ENEMY1 ] = size;
+
+  BTL_N_PrintfEx( PRINT_FLG, DBGSTR_NET_RecvedPartyData,
+      BTL_CLIENT_ENEMY1, *(const u32*)pData, pData, Sys->tmpRecvBuf[BTL_CLIENT_ENEMY1] );
+}
+// 通信タッグ用のAIパーティデータを受信したかチェック
+BOOL BTL_NET_IsRecved_AI_PartyData( void )
+{
+  return (Sys->tmpLargeBufUsedSize[ BTL_CLIENT_ENEMY1 ] != 0);
+}
+
+
 
 
 // 受信したパーティデータポインタを取得（※ clientID 指定）
@@ -453,8 +497,6 @@ BOOL BTL_NET_StartNotifyPlayerData( const MYSTATUS* playerData )
         TRUE      // GFL_NETライブラリの外で保持するバッファを使用
   );
 }
-
-
 static u8* getbuf_playerData( int netID, void* pWork, int size )
 {
   GF_ASSERT(Sys->tmpRecvBuf[ netID ] == NULL);
@@ -470,7 +512,7 @@ static void recv_playerData( const int netID, const int size, const void* pData,
       netID, pData, Sys->tmpRecvBuf[netID] );
 
 }
-// パーティデータの相互受信が完了したか？
+// プレイヤーデータの相互受信が完了したか？
 BOOL BTL_NET_IsCompleteNotifyPlayerData( void )
 {
   int i, max;
@@ -487,7 +529,7 @@ BOOL BTL_NET_IsCompleteNotifyPlayerData( void )
   BTL_Printf("プレイヤーデータ相互受信完了  メンバー数=%d\n", max);
   return TRUE;
 }
-
+// 受信したトレーナーデータを取得
 const MYSTATUS* BTL_NET_GetPlayerData( u8 clientID )
 {
   u8 netID = clientIDtoNetID( clientID );
@@ -498,6 +540,47 @@ const MYSTATUS* BTL_NET_GetPlayerData( u8 clientID )
 
   return Sys->tmpRecvBuf[ netID ];
 }
+
+// AI用トレーナーデータを連絡する（サーバ→全マシン）
+BOOL BTL_NET_StartNotify_AI_TrainerData( const BSP_TRAINER_DATA* tr_data, u32 size )
+{
+  return GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_AI_TRAINER_DATA,
+        size,
+        tr_data,
+        FALSE,     // 優先度を高くする
+        TRUE,     // 同一コマンドがキューに無い場合のみ送信する
+        TRUE      // GFL_NETライブラリの外で保持するバッファを使用
+  );
+}
+static u8* getbuf_AI_trainerData( int netID, void* pWork, int size )
+{
+  GF_ASSERT(Sys->tmpRecvBuf[ BTL_CLIENT_ENEMY1 ] == NULL);
+
+  Sys->tmpRecvBuf[ BTL_CLIENT_ENEMY1 ] = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(Sys->heapID), size );
+  return Sys->tmpRecvBuf[ BTL_CLIENT_ENEMY1 ];
+}
+static void recv_AI_trainerData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
+{
+  Sys->tmpLargeBufUsedSize[ BTL_CLIENT_ENEMY1 ] = size;
+}
+// AIトレーナーデータ受信完了したか
+BOOL BTL_NET_IsRecved_AI_TrainerData( void )
+{
+  return (Sys->tmpLargeBufUsedSize[ BTL_CLIENT_ENEMY1 ] != 0);
+
+}
+
+// 受信したAIトレーナーデータを取得を取得
+const BSP_TRAINER_DATA* BTL_NET_Get_AI_TrainerData( void )
+{
+  GF_ASSERT(Sys->tmpRecvBuf[BTL_CLIENT_ENEMY1] != NULL);
+  GF_ASSERT(Sys->tmpLargeBufUsedSize[BTL_CLIENT_ENEMY1] != 0);
+
+  return Sys->tmpRecvBuf[ BTL_CLIENT_ENEMY1 ];
+
+}
+
+
 
 void BTL_NET_EndNotifyPlayerData( void )
 {

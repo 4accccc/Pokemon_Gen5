@@ -296,7 +296,7 @@ FS_EXTERN_OVERLAY(battle);
 //--------------------------------------------------------------
 extern const NetRecvFuncTable BtlRecvFuncTable[];
 enum {
-  BTL_NETFUNCTBL_ELEMS = 6,
+  BTL_NETFUNCTBL_ELEMS = 8,
 };
 
 
