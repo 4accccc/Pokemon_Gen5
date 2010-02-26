@@ -59,6 +59,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 #define DEBUGWIN_USE
 #define DEBUG_GPF_PASS
 //#define DEBUG_DIRTYCHECK_PASS
+#define SAKE_REPORT_NONE          //レポートをしない
 #endif //PM_DEBUG
 
 
@@ -858,6 +859,7 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 #endif //DEBUG_DIRTYCHECK_PASS
     }
     break;
+
     //-------------------------------------
     /// ポケモン不正チェック
     //=====================================
@@ -1196,28 +1198,30 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_REPORT_ATLAS );
     break;
   case SEQ_START_REPORT_ATLAS:
+#ifndef SAKE_REPORT_NONE
     WIFIBATTLEMATCH_SC_Start( p_wk->p_net, p_param->p_param->mode, p_param->p_param->btl_rule, p_param->btl_result );
+#endif
     *p_seq = SEQ_WAIT_REPORT_ATLAS;
     break;
   case SEQ_WAIT_REPORT_ATLAS:
     { 
+#ifndef SAKE_REPORT_NONE
       if( WIFIBATTLEMATCH_SC_Process( p_wk->p_net ) )
+#endif
       { 
         *p_seq = SEQ_START_RECVDATA_SAKE;
       }
-      else
-      { 
-        //エラー
-        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
-        { 
-        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //戻る
-          *p_seq = SEQ_START_SAVE_MSG;
-          break;
 
-        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
-          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
-          break;
-        }
+      //エラー
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+      { 
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //戻る
+        *p_seq = SEQ_START_SAVE_MSG;
+        break;
+
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+        break;
       }
     }
     break;

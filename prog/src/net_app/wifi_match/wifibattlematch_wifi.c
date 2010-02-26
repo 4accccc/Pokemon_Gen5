@@ -63,6 +63,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 #define MYPOKE_SELFCHECK        //自分のポケモンを送ったとき、サケとチェックし署名も証明させる
 //#define DEBUG_REGULATION_DATA   //レギュレーションデータを作成する
 //#define REGULATION_CHECK_ON     //パーティのレギュレーションチェックを強制ONにする
+#define SAKE_REPORT_NONE          //レポートをしない
 #endif //PM_DEBUG
 
 
@@ -2620,12 +2621,16 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_REPORT_ATLAS );
     break;
   case SEQ_START_REPORT_ATLAS:
+#ifndef SAKE_REPORT_NONE
     WIFIBATTLEMATCH_SC_Start( p_wk->p_net, p_param->p_param->mode, p_param->p_param->btl_rule, p_param->btl_result );
+#endif // SAKE_REPORT_NONE
     *p_seq = SEQ_WAIT_REPORT_ATLAS;
     break;
   case SEQ_WAIT_REPORT_ATLAS:
     { 
+#ifndef SAKE_REPORT_NONE
       if( WIFIBATTLEMATCH_SC_Process( p_wk->p_net ) )
+#endif
       { 
         *p_seq = SEQ_WAIT_DISCONNECT;
       }
