@@ -54,6 +54,8 @@ INIT_EVENT_END
 //--------------------------------------------------------------
 sub_init_add_trainer:
 {
+  DEFINE_LOCAL ver
+
   //トレーナー抽選
   _BSUBWAY_TOOL( BSWSUB_CHOICE_BTL_PARTNER, BSW_NULL, BSW_NULL, BSW_NULL )
    
@@ -61,9 +63,19 @@ sub_init_add_trainer:
   _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, BSW_NULL, BSW_NULL, SCWK_ANSWER )
   
   IF $SCWK_ANSWER == LEADER_SET_1ST THEN
-    $OBJCHRWORK2 = OBJCODE_TRAINBOSS
+    _GET_ROM_VERSION( ver )
+    IF $ver == VERSION_WHITE THEN
+      $OBJCHRWORK2 = TBOSS
+    ELSE
+      $OBJCHRWORK2 = TBOSSBL
+    ENDIF
   ELSIF $SCWK_ANSWER == LEADER_SET_2ND THEN
-    $OBJCHRWORK2 = OBJCODE_TRAINBOSS
+    _GET_ROM_VERSION( ver )
+    IF $ver == VERSION_WHITE THEN
+      $OBJCHRWORK2 = TBOSS
+    ELSE
+      $OBJCHRWORK2 = TBOSSBL
+    ENDIF
   ELSE
     _BSUBWAY_TOOL( BSWSUB_GET_ENEMY_OBJ, BSW_NULL, BSW_NULL, SCWK_ANSWER )
     $OBJCHRWORK2 = $SCWK_ANSWER
@@ -80,6 +92,8 @@ _RET
 //--------------------------------------------------------------
 sub_init_add_trainer_multi:
 {
+  DEFINE_LOCAL ver
+
   //トレーナー抽選
   _BSUBWAY_TOOL( BSWSUB_CHOICE_BTL_PARTNER, BSW_NULL, BSW_NULL, BSW_NULL )
   
@@ -87,9 +101,19 @@ sub_init_add_trainer_multi:
   _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, BSW_NULL, BSW_NULL, SCWK_ANSWER )
   
   IF $SCWK_ANSWER == LEADER_SET_1ST THEN
-    $OBJCHRWORK2 = OBJCODE_TRAINBOSS
+    _GET_ROM_VERSION( ver )
+    IF $ver == VERSION_WHITE THEN
+      $OBJCHRWORK2 = TBOSS
+    ELSE
+      $OBJCHRWORK2 = TBOSSBL
+    ENDIF
   ELSIF $SCWK_ANSWER == LEADER_SET_2ND THEN
-    $OBJCHRWORK2 = OBJCODE_TRAINBOSS
+    _GET_ROM_VERSION( ver )
+    IF $ver == VERSION_WHITE THEN
+      $OBJCHRWORK2 = TBOSS
+    ELSE
+      $OBJCHRWORK2 = TBOSSBL
+    ENDIF
   ELSE
     _BSUBWAY_TOOL( BSWSUB_GET_ENEMY_OBJ, BSW_NULL, BSW_NULL, SCWK_ANSWER )
     $OBJCHRWORK2 = $SCWK_ANSWER
@@ -394,10 +418,15 @@ sub_train_battle_win_clear:
   //クリアした状況を反映
   _BSUBWAY_TOOL( BSWSUB_SET_CLEAR_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
   
+  _TIME_WAIT( 55 )
+
   //マップフェードアウト
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
-  
+
+  //OBJアニメ待ち
+  _OBJ_ANIME_WAIT()
+
   //フラグセット
   _CALL sub_set_obj_vanish_flag
   $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_GAME_CLEAR //クリア状態に
@@ -414,23 +443,22 @@ sub_anm_train_battle_win_clear:
 {
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_train_battle_win_clear_jiki )
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_0, anm_train_battle_win_clear_trainer )
-  
-  _OBJ_ANIME_WAIT()
+//  _OBJ_ANIME_WAIT() //呼び先で待つ
 }
 _RET
 
 _ANIME_LABEL  anm_train_battle_win_clear_trainer
   _ANIME_DATA  AC_WAIT_4F,1
   _ANIME_DATA  AC_WALK_U_8F,2
-  _ANIME_DATA  AC_STAY_WALK_D_8F,1
+//  _ANIME_DATA  AC_STAY_WALK_D_8F,1
   _ANIME_DATA  ACMD_END,0
 
 _ANIME_LABEL  anm_train_battle_win_clear_jiki 
   _ANIME_DATA  AC_WAIT_8F,1
   _ANIME_DATA  AC_WALK_R_8F,6
   _ANIME_DATA  AC_WALK_D_8F,4
-  _ANIME_DATA  AC_STAY_WALK_D_8F,1
-  _ANIME_DATA  AC_VANISH_ON,1
+//  _ANIME_DATA  AC_STAY_WALK_D_8F,1
+//  _ANIME_DATA  AC_VANISH_ON,1
   _ANIME_DATA  ACMD_END,0
 
 //--------------------------------------------------------------
@@ -443,37 +471,37 @@ sub_anm_train_battle_win_clear_multi:
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_0, anm_train_battle_win_clear_multi_trainer0 )
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_1, anm_train_battle_win_clear_multi_trainer1 )
   
-  _OBJ_ANIME_WAIT()
+//  _OBJ_ANIME_WAIT() 呼び先で待つ
 }
 _RET
 
 _ANIME_LABEL  anm_train_battle_win_clear_multi_trainer0
   _ANIME_DATA  AC_WAIT_4F,1
   _ANIME_DATA  AC_WALK_U_8F,2
-  _ANIME_DATA  AC_STAY_WALK_D_8F,1
+//  _ANIME_DATA  AC_STAY_WALK_D_8F,1
   _ANIME_DATA  ACMD_END,0
 
 _ANIME_LABEL  anm_train_battle_win_clear_multi_trainer1
   _ANIME_DATA  AC_WAIT_4F,1
   _ANIME_DATA  AC_WALK_U_8F,1
   _ANIME_DATA  AC_WALK_R_8F,1
-  _ANIME_DATA  AC_STAY_WALK_D_8F,1
+//  _ANIME_DATA  AC_STAY_WALK_D_8F,1
   _ANIME_DATA  ACMD_END,0
   
 _ANIME_LABEL  anm_train_battle_win_clear_multi_jiki 
   _ANIME_DATA  AC_WAIT_8F,1
   _ANIME_DATA  AC_WALK_R_8F,6
   _ANIME_DATA  AC_WALK_D_8F,4
-  _ANIME_DATA  AC_STAY_WALK_D_8F,1
-  _ANIME_DATA  AC_VANISH_ON,1
+//  _ANIME_DATA  AC_STAY_WALK_D_8F,1
+//  _ANIME_DATA  AC_VANISH_ON,1
   _ANIME_DATA  ACMD_END,0
   
 _ANIME_LABEL  anm_train_battle_win_clear_multi_partner
   _ANIME_DATA  AC_WAIT_8F,1
   _ANIME_DATA  AC_WALK_R_8F,6
   _ANIME_DATA  AC_WALK_D_8F,4
-  _ANIME_DATA  AC_STAY_WALK_D_8F,1
-  _ANIME_DATA  AC_VANISH_ON,1
+//  _ANIME_DATA  AC_STAY_WALK_D_8F,1
+//  _ANIME_DATA  AC_VANISH_ON,1
   _ANIME_DATA  ACMD_END,0
 
 //--------------------------------------------------------------
