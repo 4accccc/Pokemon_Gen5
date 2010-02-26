@@ -2257,6 +2257,7 @@ static void WbmRndSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       const POKEMON_PARAM *cp_pp  = PokeParty_GetMemberPointer( (POKEPARTY*)p_my_data->pokeparty, p_wk->cnt);
 
       WIFIBATTLEMATCH_NET_StartEvilCheck( p_wk->p_net, cp_pp, WIFIBATTLEMATCH_NET_EVILCHECK_TYPE_PP );
+      GFL_STD_MemClear( &p_wk->evilecheck_data, sizeof(WIFIBATTLEMATCH_NET_EVILCHECK_DATA ));
       (*p_seq)++;
       NAGI_Printf( "EvilCheck Start\n" );
     }
