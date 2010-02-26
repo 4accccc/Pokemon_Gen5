@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-02-22T14:57:56"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-02-26T16:42:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="712" top="374" right="1417" bottom="994" maximized="no" rayout="Vertical2">
+	<dialog left="877" top="438" right="1581" bottom="1058" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1614" top="194" right="2087" bottom="592" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<tag-palette left="1053" top="142" right="1526" bottom="540" visible="yes"/>
+		<band id="0" index="0" style="0000" width="529"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="696"/>
+		<band id="3" index="3" style="0000" width="696"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -351,20 +351,20 @@
 		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　だいすき！
 [1:1C:簡易会話単語:1]　も　すき！</language>
 		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　だいすき！
-[1:1C:簡易会話単語:0]　も　すき！</language>
+[1:1C:簡易会話単語:1]　も　すき！</language>
 	</row>
 
 	<row id="pmss_mail_04">
 		<language name="JPN" width="216">すきな　[1:1C:簡易会話単語:0]　は
 [1:1C:簡易会話単語:1]　です！</language>
 		<language name="JPN_KANJI" width="216">すきな　[1:1C:簡易会話単語:0]　は
-[1:1C:簡易会話単語:0]　です！</language>
+[1:1C:簡易会話単語:1]　です！</language>
 	</row>
 
 	<row id="pmss_mail_05">
-		<language name="JPN" width="216">すきな　[1:1C:簡易会話単語:1]　は
+		<language name="JPN" width="216">すきな　[1:1C:簡易会話単語:0]　は
 なんですか？</language>
-		<language name="JPN_KANJI" width="216">すきな　【・・・・・】　は
+		<language name="JPN_KANJI" width="216">すきな　[1:1C:簡易会話単語:0]　は
 なんですか？</language>
 	</row>
 
@@ -379,7 +379,7 @@
 		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　は
 [1:1C:簡易会話単語:1]　なの？</language>
 		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　は
-[1:1C:簡易会話単語:0]　なの？</language>
+[1:1C:簡易会話単語:1]　なの？</language>
 	</row>
 
 	<row id="pmss_mail_08">
@@ -393,14 +393,14 @@
 		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　って
 [1:1C:簡易会話単語:1]　できると　おもう？</language>
 		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　って
-[1:1C:簡易会話単語:0]　できると　おもう？</language>
+[1:1C:簡易会話単語:1]　できると　おもう？</language>
 	</row>
 
 	<row id="pmss_mail_10">
 		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　って
 [1:1C:簡易会話単語:1]　！</language>
 		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　って
-[1:1C:簡易会話単語:0]　！</language>
+[1:1C:簡易会話単語:1]　！</language>
 	</row>
 
 	<row id="pmss_mail_11">
@@ -421,21 +421,21 @@
 		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　こそ
 [1:1C:簡易会話単語:1]　なのだ！</language>
 		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　こそ
-[1:1C:簡易会話単語:0]　なのだ！</language>
+[1:1C:簡易会話単語:1]　なのだ！</language>
 	</row>
 
 	<row id="pmss_mail_14">
 		<language name="JPN" width="216">この　[1:1C:簡易会話単語:0]　は
 [1:1C:簡易会話単語:1]　なんだよー</language>
 		<language name="JPN_KANJI" width="216">この　[1:1C:簡易会話単語:0]　は
-[1:1C:簡易会話単語:0]　なんだよー</language>
+[1:1C:簡易会話単語:1]　なんだよー</language>
 	</row>
 
 	<row id="pmss_mail_15">
 		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　な　りゆうは
 [1:1C:簡易会話単語:1]　だからです</language>
 		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　な　りゆうは
-[1:1C:簡易会話単語:0]　だからです</language>
+[1:1C:簡易会話単語:1]　だからです</language>
 	</row>
 
 	<row id="pmss_mail_16">
@@ -449,14 +449,14 @@
 		<language name="JPN" width="216">じつは　[1:1C:簡易会話単語:0]
 [1:1C:簡易会話単語:1]　なんです</language>
 		<language name="JPN_KANJI" width="216">じつは　[1:1C:簡易会話単語:0]
-[1:1C:簡易会話単語:0]　なんです</language>
+[1:1C:簡易会話単語:1]　なんです</language>
 	</row>
 
 	<row id="pmss_mail_18">
 		<language name="JPN" width="216">さいきん　[1:1C:簡易会話単語:0]　が
 [1:1C:簡易会話単語:1]　なんだよ</language>
 		<language name="JPN_KANJI" width="216">さいきん　[1:1C:簡易会話単語:0]　が
-[1:1C:簡易会話単語:0]　なんだよ</language>
+[1:1C:簡易会話単語:1]　なんだよ</language>
 	</row>
 
 	<row id="pmss_mail_19">

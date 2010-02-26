@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-02-22T15:04:48"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-02-26T16:41:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="797" top="398" right="1502" bottom="1018" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -370,9 +370,9 @@
 
 	<row id="pmss_peculiar_06">
 		<language name="JPN" width="216">きみの　すきな
-[1:1C:簡易会話単語:1]　は　なーに？</language>
+[1:1C:簡易会話単語:0]　は　なーに？</language>
 		<language name="JPN_KANJI" width="216">きみの　すきな
-[1:1C:簡易会話単語:1]　は　なーに？</language>
+[1:1C:簡易会話単語:0]　は　なーに？</language>
 	</row>
 
 	<row id="pmss_peculiar_07">
