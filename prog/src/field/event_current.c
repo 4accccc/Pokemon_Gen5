@@ -24,7 +24,7 @@
 // ■定数
 //=============================================================================================
 // 処理シーケンス
-enum{
+enum {
   SEQ_START,  // イベント開始
   SEQ_MAIN,   // メイン処理
   SEQ_EXIT,   // イベント終了
@@ -159,12 +159,13 @@ static BOOL IsRock( MAPATTR_VALUE attrval )
 //=============================================================================================
 typedef struct
 {
-  GAMESYS_WORK*          gsys;  // ゲームシステム
-  FIELDMAP_WORK*     fieldmap;  // フィールドマップ
-  FIELD_PLAYER*        player;  // 自機
-  MMDL*                  mmdl;  // 自機の動作モデル
-  const CURRENT_DATA* current;  // 適用中の水流データ
-  const ROCK_DATA*       rock;  // 適用中の岩データ
+  GAMESYS_WORK*  gsys;     // ゲームシステム
+  FIELDMAP_WORK* fieldmap; // フィールドマップ
+  FIELD_PLAYER*  player;   // 自機
+  MMDL*          mmdl;     // 自機の動作モデル
+
+  const CURRENT_DATA* current; // 適用中の水流データ
+  const ROCK_DATA*    rock;    // 適用中の岩データ
 
 } EVENT_WORK;
 
@@ -182,12 +183,14 @@ static void SplashCheck( EVENT_WORK* work );
 static void CurrentCheck( EVENT_WORK* work );
 static void RockCheck( EVENT_WORK* work );
 static void ExitEvent( EVENT_WORK* work );
+static void StartWaterSE( EVENT_WORK* work );
+static void StopWaterSE( EVENT_WORK* work );
 
 
 //=============================================================================================
 // ■イベント処理関数
 //=============================================================================================
-static GMEVENT_RESULT AutoMove( GMEVENT* event, int* seq, void* wk )
+static GMEVENT_RESULT AutoMoveEvent( GMEVENT* event, int* seq, void* wk )
 {
   EVENT_WORK* work = (EVENT_WORK*)wk;
 
@@ -207,19 +210,20 @@ static GMEVENT_RESULT AutoMove( GMEVENT* event, int* seq, void* wk )
       task   = FIELD_PLAYER_GetEffectTaskWork( work->player );
       FLDEFF_NAMIPOKE_SetRippleEffect( task, FALSE );
     }
+    // 水流SE再生開始
+    StartWaterSE( work );
     *seq = SEQ_MAIN;
     break;
+
   // メイン処理
   case SEQ_MAIN:
     // 移動終了時
-    if( MMDL_CheckEndAcmd(work->mmdl) ) // if(移動終了)
+    if( MMDL_CheckEndAcmd(work->mmdl) )
     {
-      // 着水チェック
-      SplashCheck( work );
-      // 水流チェック
-      CurrentCheck( work );
-      // 岩チェック
-      RockCheck( work );
+      SplashCheck( work );  // 着水チェック
+      CurrentCheck( work ); // 水流チェック
+      RockCheck( work );    // 岩チェック
+
       // 水流がなくなったら終了
       if( (work->current == NULL) && (work->rock == NULL) )
       {
@@ -230,8 +234,10 @@ static GMEVENT_RESULT AutoMove( GMEVENT* event, int* seq, void* wk )
       MoveStart( work );
     }
     break;
+
   // イベント終了
   case SEQ_EXIT:
+    StopWaterSE( work ); // 水流SE停止
     ExitEvent( work );
     return GMEVENT_RES_FINISH;
   }
@@ -259,17 +265,21 @@ GMEVENT* EVENT_PlayerMoveOnCurrent( GMEVENT* parent,
 {
   GMEVENT* event;
   EVENT_WORK* work;
+  FIELD_PLAYER* player;
+
+  player = FIELDMAP_GetFieldPlayer( fieldmap );
 
   // 生成
-  event = GMEVENT_Create( gsys, parent, AutoMove, sizeof(EVENT_WORK) );
+  event = GMEVENT_Create( gsys, parent, AutoMoveEvent, sizeof(EVENT_WORK) );
+
   // 初期化
   work = GMEVENT_GetEventWork( event );
-  work->gsys     = gsys;
-  work->fieldmap = fieldmap;
-  work->player   = FIELDMAP_GetFieldPlayer( fieldmap );
-  work->mmdl     = FIELD_PLAYER_GetMMdl( work->player );
-  work->current  = NULL;
-  work->rock     = NULL;
+  work->gsys             = gsys;
+  work->fieldmap         = fieldmap;
+  work->player           = player;
+  work->mmdl             = FIELD_PLAYER_GetMMdl( player );
+  work->current          = NULL;
+  work->rock             = NULL;
   return event;
 } 
 
@@ -430,7 +440,8 @@ static void SplashCheck( EVENT_WORK* work )
     type = NAMIPOKE_EFFECT_TYPE_TAKI_SPLASH;
     FIELD_PLAYER_GetPos( work->player, &pos );
     FLDEFF_NAMIPOKE_EFFECT_SetEffectAlone( fectrl, type, &pos );
-    // SE再生
+
+    // 着水SE 再生
     PMSND_PlaySE( SEQ_SE_FLD_83 );
 
     // ジャンプ終了
@@ -490,4 +501,28 @@ static void ExitEvent( EVENT_WORK* work )
     task   = FIELD_PLAYER_GetEffectTaskWork( work->player );
     FLDEFF_NAMIPOKE_SetRippleEffect( task, TRUE );
   }
+}
+
+//---------------------------------------------------------------------------------------------
+/**
+ * @brief 水流SEの再生を開始する
+ *
+ * @param work
+ */
+//---------------------------------------------------------------------------------------------
+static void StartWaterSE( EVENT_WORK* work )
+{
+  PMSND_PlaySE( SEQ_SE_FLD_129 );
+} 
+
+//---------------------------------------------------------------------------------------------
+/**
+ * @brief 水流SEを停止する
+ *
+ * @param work
+ */
+//---------------------------------------------------------------------------------------------
+static void StopWaterSE( EVENT_WORK* work )
+{
+  PMSND_StopSE();
 }
