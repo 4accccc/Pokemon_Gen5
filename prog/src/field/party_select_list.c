@@ -235,13 +235,14 @@ PARTY_SELECT_LIST_PTR PARTY_SELECT_LIST_Setup(FIELDMAP_WORK *fieldWork, const PO
  * 手持ち or バトルボックス、選択リスト：終了処理
  *
  * @param   psl		
+ * @param   ng_flag   手持ちorBBOXを決定して終了した時に、レギュレーション的にNGの場合はTRUE
  *
  * @retval  SELECT_PARTY		決定した項目
  */
 //==================================================================
-SELECT_PARTY PARTY_SELECT_LIST_Exit(PARTY_SELECT_LIST_PTR psl)
+SELECT_PARTY PARTY_SELECT_LIST_Exit(PARTY_SELECT_LIST_PTR psl, BOOL *ng_flag)
 {
-  SELECT_PARTY select_party = psl->return_select;
+  SELECT_PARTY select_party = PARTY_SELECT_LIST_GetSelect(psl, ng_flag);
   
   GF_ASSERT(psl->finish == TRUE); //途中終了は出来ない
 
@@ -323,9 +324,16 @@ BOOL PARTY_SELECT_LIST_Main(PARTY_SELECT_LIST_PTR psl)
  * @retval  SELECT_PARTY		
  */
 //==================================================================
-SELECT_PARTY PARTY_SELECT_LIST_GetSelect(PARTY_SELECT_LIST_PTR psl)
+SELECT_PARTY PARTY_SELECT_LIST_GetSelect(PARTY_SELECT_LIST_PTR psl, BOOL *ng_flag)
 {
   GF_ASSERT(psl->finish == TRUE);
+  *ng_flag = FALSE;
+  if(psl->return_select == SELECT_PARTY_TEMOTI && psl->temoti_reg_fail == TRUE){
+    *ng_flag = TRUE;
+  }
+  else if(psl->return_select == SELECT_PARTY_BBOX && psl->bbox_reg_fail == TRUE){
+    *ng_flag = TRUE;
+  }
   return psl->return_select;
 }
 

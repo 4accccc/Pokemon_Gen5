@@ -243,7 +243,8 @@ static GMEVENT_RESULT event_BtlPartySelect(GMEVENT * event, int *  seq, void * w
 {
   PARTY_SELECT_WORK * wk = work;
   GAMESYS_WORK * gsys = wk->gsys;
-
+  BOOL reg_ng;
+  
   switch (*seq) {
   case 0:
      wk->psl = PARTY_SELECT_LIST_Setup( wk->fieldmap, 
@@ -254,7 +255,10 @@ static GMEVENT_RESULT event_BtlPartySelect(GMEVENT * event, int *  seq, void * w
     if( PARTY_SELECT_LIST_Main( wk->psl ) == FALSE){
       break;
     }
-    *(wk->ret_wk) = PARTY_SELECT_LIST_Exit( wk->psl );
+    *(wk->ret_wk) = PARTY_SELECT_LIST_Exit( wk->psl, &reg_ng );
+    if(reg_ng == TRUE){
+      *(wk->ret_wk) = SCR_BTL_PARTY_SELECT_NG;
+    }
     GFL_HEAP_FreeMemory( wk->btl_party );
     return GMEVENT_RES_FINISH;
   }

@@ -3411,7 +3411,8 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
         
   case _MENU_WAIT:
     if(PARTY_SELECT_LIST_Main(unisys->alloc.psl) == TRUE){
-      SELECT_PARTY select_party = PARTY_SELECT_LIST_Exit(unisys->alloc.psl);
+      BOOL reg_ng;
+      SELECT_PARTY select_party = PARTY_SELECT_LIST_Exit(unisys->alloc.psl, &reg_ng);
       unisys->alloc.psl = NULL;
       if(select_party == SELECT_PARTY_CANCEL){
         OS_TPrintf("メニューをキャンセルしました\n");
