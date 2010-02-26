@@ -2245,7 +2245,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         }
 
         //自分で自分の署名は通るのかチェック
-        if( Util_VerifyPokeData( p_my_data, p_wk->p_evilcheck_party, HEAPID_WIFIBATTLEMATCH_CORE ) )
+        if( Util_VerifyPokeData( p_my_data, (POKEPARTY*)p_wk->p_param->p_enemy_data->pokeparty, HEAPID_WIFIBATTLEMATCH_CORE ) )
 #endif  //MYPOKE_SELFCHECK
         { 
           OS_TFPrintf( 3, "自分の署名は通ったぜ\n" );
@@ -3568,7 +3568,7 @@ static void WbmWifiSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_END_CHECK:
     //データを格納
-    OS_TPrintf( "ポケモン結果[%d]status=%d\n", p_wk->evilecheck_data.poke_result[0], p_wk->evilecheck_data.status_code );
+    OS_TPrintf( "ポケモン結果[不正番号%d]status=%d\n", p_wk->evilecheck_data.poke_result[0], p_wk->evilecheck_data.status_code );
     if( p_wk->evilecheck_data.status_code == 0 && p_wk->evilecheck_data.poke_result[0] == NHTTP_RAP_EVILCHECK_RESULT_OK )
     { 
       OS_TFPrintf( 3, "-=-=-=ポケモン証明[%d]-=-=-=\n", p_wk->cnt );
@@ -3724,7 +3724,7 @@ static void Util_MatchInfo_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk, const WIFIBA
   if( p_wk->p_matchinfo == NULL )
   { 
     GFL_CLUNIT  *p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic );
-    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, p_wk->p_param->p_param->mode, HEAPID_WIFIBATTLEMATCH_CORE );
+    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, p_wk->p_param->p_param->mode, TRUE, HEAPID_WIFIBATTLEMATCH_CORE );
   }
 }
 //----------------------------------------------------------------------------

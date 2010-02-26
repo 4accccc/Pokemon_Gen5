@@ -1858,6 +1858,7 @@ enum
 //=====================================
 struct _MATCHINFO_WORK
 {	
+  BOOL          is_rate;
 	GFL_BMPWIN		*p_bmpwin[ MATCHINFO_BMPWIN_MAX ];
 	PRINT_UTIL		print_util[ MATCHINFO_BMPWIN_MAX ];
 	GFL_CLWK			*p_clwk;
@@ -1913,13 +1914,13 @@ static void MatchInfo_STAR_Delete( MATCHINFO_WORK * p_wk );
  *	@return	ƒ[ƒN
  */
 //-----------------------------------------------------------------------------
-MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, WIFIBATTLEMATCH_MODE mode, HEAPID heapID )
+MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, WIFIBATTLEMATCH_MODE mode, BOOL is_rate, HEAPID heapID )
 {	
 	MATCHINFO_WORK	*	p_wk;
   WBM_CARD_RANK rank;
 	p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(MATCHINFO_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(MATCHINFO_WORK) );
-
+  p_wk->is_rate = is_rate;
 	p_wk->p_pms	= PMS_DRAW_Init( p_unit, CLSYS_DRAW_MAIN, p_que, p_font, MATCHINFO_PLT_OBJ_PMS, 1, heapID );
   PMS_DRAW_SetNullColorPallet( p_wk->p_pms, 0 );
 	
@@ -2197,14 +2198,28 @@ static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const WIFIBATTLEMATC
         color = PLAYERINFO_STR_COLOR_WHITE;
 				break;
 			case MATCHINFO_BMPWIN_RATE_LABEL:
-				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_008, p_str );
-        color = PLAYERINFO_STR_COLOR_WHITE;
+        if( p_wk->is_rate )
+        { 
+          GFL_MSG_GetString( p_msg, WIFIMATCH_STR_008, p_str );
+          color = PLAYERINFO_STR_COLOR_WHITE;
+        }
+        else
+        { 
+          is_print  = FALSE;
+        }
 				break;
 			case MATCHINFO_BMPWIN_RATE_NUM:
-				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_009, p_src );
-				WORDSET_RegisterNumber( p_word, 0, cp_data->rate, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-				WORDSET_ExpandStr( p_word, p_str, p_src );
-        color = PLAYERINFO_STR_COLOR_WHITE;
+        if( p_wk->is_rate )
+        { 
+          GFL_MSG_GetString( p_msg, WIFIMATCH_STR_009, p_src );
+          WORDSET_RegisterNumber( p_word, 0, cp_data->rate, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_word, p_str, p_src );
+          color = PLAYERINFO_STR_COLOR_WHITE;
+        }
+        else
+        { 
+          is_print  = FALSE;
+        }
 				break;
 			case MATCHINFO_BMPWIN_COMEFROM:
 				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_018, p_str );
