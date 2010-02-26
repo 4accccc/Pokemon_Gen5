@@ -39,6 +39,7 @@
 
 //	save
 #include "savedata/irc_compatible_savedata.h"
+#include "savedata/save_tbl.h"
 
 //	mine
 #include "net_app/irc_ranking.h"
@@ -2371,7 +2372,7 @@ static RANKING_DATA	*RANKING_DATA_Create( GAMEDATA *p_gamedata, HEAPID heapID )
 
   p_sv	= IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
   data_len  = IRC_COMPATIBLE_SV_GetRankNum( p_sv );
-  
+
 	//Šm•Û
 	p_data	= GFL_HEAP_AllocMemory( heapID, sizeof(RANKING_DATA)*data_len );
 	GFL_STD_MemClear( p_data, sizeof(RANKING_DATA)*data_len );
