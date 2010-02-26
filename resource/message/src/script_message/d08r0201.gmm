@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-08T19:30:17"/>
+	<create user="matsumiya" host="W00224" date="2010-02-26T13:01:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1395" top="350" right="2100" bottom="970" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d08r0201_hakaim_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d08r0201_hakaim_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・c07ジムバッジ取得で出現
 ・d08r0901イベント終了で削除
@@ -306,7 +306,7 @@
 おまえたちには　なにも　できないぜ</language>
 	</row>
 
-	<row id="msg_d08r0201_hakase1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08r0201_hakase1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・d08でmsg_d08_white_07表示後</comment>
 		<attribute name="キャラ指定">博士父</attribute>
@@ -318,7 +318,7 @@
 娘に　調べさせるか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08r0201_leader7_01w">
+	<row id="msg_d08r0201_leader7_01w" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・d08でmsg_d08_white_07表示後
 ・WHITEver</comment>
@@ -334,7 +334,7 @@
 眠りから　さますとは……</language>
 	</row>
 
-	<row id="msg_d08r0201_leader7_01b">
+	<row id="msg_d08r0201_leader7_01b" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・d08でmsg_d08_white_07表示後
 ・BLACKver</comment>
