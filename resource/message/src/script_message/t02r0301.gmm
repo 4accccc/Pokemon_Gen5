@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T19:39:25"/>
+	<create user="matsumiya" host="W00224" date="2010-02-26T12:25:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="26" top="195" right="731" bottom="795" maximized="no" rayout="Vertical2">
+	<dialog left="1449" top="356" right="2154" bottom="956" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -297,45 +297,40 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MAN1
 青年１</attribute>
-		<language name="JPN" width="256">でんせつの　ポケモンね……[BE:01:ページ切り替え（クリア）]
-イッシュちほうの　まもりがみ　なんだ
-ぜったい　いるに　きまってるよ</language>
-		<language name="JPN_KANJI" width="256">伝説の　ポケモンね……[BE:01:ページ切り替え（クリア）]
-イッシュ地方の　守り神　なんだ
-絶対　いるに　決まってるよ</language>
+		<language name="JPN" width="256">いまは　よわい　ポケモンでも
+そだてれば　つよくなる！▽
+だいじなのは　あいじょう！</language>
+		<language name="JPN_KANJI" width="256">いまは　弱い　ポケモンでも
+育てれば　強くなる！▽
+大事なのは　愛情！</language>
 	</row>
 
-	<row id="msg_t02r0301_middlewoman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_t02r0301_middlewoman2_01">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2
 太ったおばさん</attribute>
-		<language name="JPN" width="256">でんせつの　ポケモンと　であうべく
-おのれを　きたえる　トレーナーたち……[BE:01:ページ切り替え（クリア）]
-ひとが　つよくなりたい　りゆうなんて
-それこそ　ほしのかずほど　あるわね</language>
-		<language name="JPN_KANJI" width="256">伝説の　ポケモンと　出会うべく
-己を　鍛える　トレーナーたち……[BE:01:ページ切り替え（クリア）]
-人が　強くなりたい　理由なんて
-それこそ　星の数ほど　あるわね</language>
+		<language name="JPN" width="256">たくましくなれば　さきにすすめる
+さきにすすめば　また　たくましくなる▼
+いいわね！
+ぼうけんの　たびって！</language>
+		<language name="JPN_KANJI" width="256">たくましくなれば　先に進める
+先に進めば　また　たくましくなる▼
+いいわね！
+冒険の　旅って！</language>
 	</row>
 
 	<row id="msg_t02r0301_babyboy1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">男の子１</attribute>
-		<language name="JPN" width="256">つよい　トレーナーの　もと
-その　ポケモン　すがたを　あらわし[BE:00:ページ切り替え（行送り）]
-せかいを　みちびく　たすけとなる……[BE:01:ページ切り替え（クリア）]
-これが　イッシュちほうの　おはなし[BE:01:ページ切り替え（クリア）]
-どれだけ　つよくなれば
-でんせつの　ポケモンに　あえるのかな？</language>
-		<language name="JPN_KANJI" width="256">強い　トレーナーの　もと
-その　ポケモン　姿を　現し[BE:00:ページ切り替え（行送り）]
-世界を　導く　助けとなる……[BE:01:ページ切り替え（クリア）]
-これが　イッシュ地方の　お話[BE:01:ページ切り替え（クリア）]
-どれだけ　強くなれば
-伝説の　ポケモンに　会えるのかな？</language>
+		<language name="JPN" width="256">えいゆうの　もとに
+その　ポケモン　すがたを　あわらし▽
+せかいを　みちびく　たすけとなる……▼
+イッシュちほうの　おはなし　だよ！</language>
+		<language name="JPN_KANJI" width="256">えいゆうの　もとに
+その　ポケモン　すがたを　あわらし▽
+せかいを　みちびく　たすけとなる……▼
+イッシュちほうの　おはなし　だよ！</language>
 	</row>
 
 	<flowchart-group-list>
