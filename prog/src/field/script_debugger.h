@@ -22,6 +22,7 @@ extern BOOL SCRDEBUGGER_ReadEventFile( u32 zone_id, void * buffer, u32 buf_size 
 //------------------------------------------------------------------
 extern BOOL SCRDEBUGGER_Boot_Core( void );
 extern BOOL SCRDEBUGGER_CORE_readScript( u32 scr_id, void * buffer, u32 buf_size );
+extern void * SCRDEBUGGER_CORE_readScriptAlloc( u32 scr_id, HEAPID heapID, u32 buf_size );
 extern BOOL SCRDEBUGGER_CORE_readEventData( u32 zone_id, void * buffer, u32 buf_size );
 
 

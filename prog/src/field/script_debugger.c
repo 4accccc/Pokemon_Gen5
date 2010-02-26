@@ -51,12 +51,15 @@ void * SCRDEBUGGER_ReadScriptFile( HEAPID heapID, u32 scr_id )
 
   if ( checkMCSEnable() == FALSE ) return NULL;
 
+  buffer = SCRDEBUGGER_CORE_readScriptAlloc( scr_id, heapID, 0 );
+#if 0
   buffer = GFL_HEAP_AllocClearMemory( heapID, 8000 );
   if ( SCRDEBUGGER_CORE_readScript( scr_id, buffer, 8000 ) == FALSE )
   {
     GFL_HEAP_FreeMemory( buffer );
     return NULL;
   }
+#endif
   return buffer;
 }
 

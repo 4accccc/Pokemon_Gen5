@@ -75,3 +75,53 @@ BOOL GF_MCS_FILE_Read( const char * path, void * buf, u32 buf_size )
   return TRUE;
 }
 
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+void * GF_MCS_FILE_ReadAlloc( const char * path, HEAPID heapID, u32 buf_size )
+{
+  NNSMcsFile infoRead;
+  u32 errCode;
+  u32 fileSize;
+  u32 readSize;
+  void * buf;
+
+  if ( NNS_McsIsServerConnect() == FALSE) return NULL;
+
+  // 読み込み用オープン
+  errCode = NNS_McsOpenFile(
+    &infoRead,
+    path, // ファイル名
+    NNS_MCS_FILEIO_FLAG_READ | NNS_MCS_FILEIO_FLAG_INCENVVAR ); // 読み込みモード、環境変数展開
+  if (errCode != 0)
+  {
+    // ファイルオープン失敗
+    OS_Printf( "ファイル(%s)オープン失敗:%d\n", path, errCode );
+    return FALSE;
+  }
+
+  fileSize = NNS_McsGetFileSize( &infoRead );
+  if ( buf_size > 0 && fileSize >= buf_size )
+  {
+    //ファイルサイズが大きすぎる
+    NNS_McsCloseFile( &infoRead );
+    OS_Printf("Too Large FileSize(%d) > bufsize(%d)\n", fileSize, buf_size );
+    return FALSE;
+  }
+  buf = GFL_HEAP_AllocClearMemory( heapID, buf_size != 0 ? buf_size : fileSize );
+  errCode = NNS_McsReadFile(
+      &infoRead,
+      buf,
+      fileSize,
+      &readSize);
+  if ( errCode != 0 )
+  {
+    //ファイル読み込み失敗
+    NNS_McsCloseFile( &infoRead );
+    OS_Printf( "ファイル(%s)読み込み失敗:%d\n", path, errCode );
+    GFL_HEAP_FreeMemory( buf );
+    return NULL;
+  }
+  NNS_McsCloseFile( &infoRead );
+  return buf;
+}
+

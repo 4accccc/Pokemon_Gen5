@@ -45,21 +45,27 @@ BOOL SCRDEBUGGER_Boot_Core( void )
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static void makeScriptPath( char * tempPath, u16 scr_id )
+{
+  static const char relPath[] = "script/";
+  GFL_STD_MemClear( tempPath, PATH_MAX_LEN );
+  GFL_STD_MemCopy( scrDirPath, tempPath, sizeof(scrDirPath) );
+  GFL_STD_StrCat( tempPath, relPath, sizeof(relPath) );
+  GFL_STD_StrCat( tempPath, scrNamePath[scr_id], GFL_STD_StrLen( scrNamePath[scr_id] ) );
+  OS_Printf("scrDirPath(%s) Length = %d\n", scrDirPath, sizeof(scrDirPath) );
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 BOOL SCRDEBUGGER_CORE_readScript( u32 scr_id, void * buffer, u32 buf_size )
 {
   BOOL result;
-  static const char relPath[] = "script/";
   char tempPath[ PATH_MAX_LEN ];
 
   if ( scr_id >= NELEMS( scrNamePath ) )
   {
     return FALSE;
   }
-  GFL_STD_MemClear( tempPath, PATH_MAX_LEN );
-  GFL_STD_MemCopy( scrDirPath, tempPath, sizeof(scrDirPath) );
-  GFL_STD_StrCat( tempPath, relPath, sizeof(relPath) );
-  GFL_STD_StrCat( tempPath, scrNamePath[scr_id], GFL_STD_StrLen( scrNamePath[scr_id] ) );
-  OS_Printf("scrDirPath(%s) Length = %d\n", scrDirPath, sizeof(scrDirPath) );
+  makeScriptPath( tempPath, scr_id );
 
   result = GF_MCS_FILE_Read( tempPath, buffer, buf_size );
   if ( result )
@@ -67,6 +73,31 @@ BOOL SCRDEBUGGER_CORE_readScript( u32 scr_id, void * buffer, u32 buf_size )
     OS_Printf("MCSスクリプト読み込み：%d\n", scr_id );
   }
   return result;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void * SCRDEBUGGER_CORE_readScriptAlloc( u32 scr_id, HEAPID heapID, u32 buf_size )
+{
+  char tempPath[ PATH_MAX_LEN ];
+  void * buffer;
+
+  if ( scr_id >= NELEMS( scrNamePath ) )
+  {
+    return NULL;
+  }
+  makeScriptPath( tempPath, scr_id );
+
+  buffer = GF_MCS_FILE_ReadAlloc( tempPath, heapID, buf_size );
+  if ( buffer == NULL )
+  {
+    return NULL;
+  }
+  else
+  {
+    OS_Printf("MCSスクリプト読み込み：%d\n", scr_id );
+    return buffer;
+  }
 }
 
 //------------------------------------------------------------------
