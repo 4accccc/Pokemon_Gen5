@@ -60,7 +60,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 //=====================================
 #ifdef PM_DEBUG
 #define GPF_FLAG_ON             //GPFフラグを強制ONにする
-//#define MYPOKE_SELFCHECK        //自分のポケモンを送ったとき、サケとチェックし署名も証明させる
+#define MYPOKE_SELFCHECK        //自分のポケモンを送ったとき、サケとチェックし署名も証明させる
 //#define DEBUG_REGULATION_DATA   //レギュレーションデータを作成する
 //#define REGULATION_CHECK_ON     //パーティのレギュレーションチェックを強制ONにする
 #define SAKE_REPORT_NONE          //レポートをしない
@@ -2209,7 +2209,6 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
 #ifdef MYPOKE_SELFCHECK
         {
-          Util_SetEvilcheckParty( p_wk );
           {
             int i;
             u8 *p_src = (u8*)p_wk->p_evilcheck_party;
@@ -2421,7 +2420,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     }
 
     //相手のサーバーポケモンと署名から、正常データであることを証明
-    if( !Util_VerifyPokeData( p_wk->p_param->p_enemy_data, p_wk->p_other_party, HEAPID_WIFIBATTLEMATCH_CORE ) )
+    if( !Util_VerifyPokeData( p_wk->p_param->p_enemy_data, (POKEPARTY*)p_wk->p_param->p_enemy_data->pokeparty, HEAPID_WIFIBATTLEMATCH_CORE ) )
     { 
       NAGI_Printf( "!!相手のポケモン署名NG!! \n" );
       p_wk->other_dirty_cnt++;
@@ -3963,12 +3962,20 @@ static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFI
 
   p_my_data->sake_recordID = WIFIBATTLEMATCH_GDB_GetRecordID( cp_wk->p_net );
 
-  { 
-    const REGULATION_CARDDATA *cp_reg_card  = SaveData_GetRegulationCardData(GAMEDATA_GetSaveControlWork( cp_wk->p_param->p_param->p_game_data ));
-    p_my_data->wificup_no      = Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_CUPNO );
-  }
 
-  GFL_STD_MemCopy( cp_wk->sake_data.pokeparty, p_my_data->pokeparty, PokeParty_GetWorkSize() );
+  { 
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( cp_wk->p_param->p_param->p_game_data );
+    BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+    POKEPARTY         *p_party  =  BATTLE_BOX_SAVE_MakePokeParty( p_bbox_save, HEAPID_WIFIBATTLEMATCH_CORE );
+
+    const REGULATION_CARDDATA *cp_reg_card  = SaveData_GetRegulationCardData(p_sv);
+
+    p_my_data->wificup_no      = Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_CUPNO );
+
+
+    GFL_STD_MemCopy( p_party, p_my_data->pokeparty, PokeParty_GetWorkSize() );
+    GFL_HEAP_FreeMemory( p_party );
+  }
 }
 //----------------------------------------------------------------------------
 /**
