@@ -119,7 +119,7 @@ u16 TOWNMAP_DATA_SearchRootZoneID( const TOWNMAP_DATA *cp_wk, u16 zoneID )
   int i;
   for( i = 0; i < TOWNMAP_DATA_MAX; i++ )
   { 
-    if( TOWNMAP_DATA_GetParam( cp_wk, i, TOWNMAP_DATA_PARAM_ZONE_ID ) )
+    if( TOWNMAP_DATA_GetParam( cp_wk, i, TOWNMAP_DATA_PARAM_ZONE_ID ) == zoneID )
     { 
       return i;
     }
