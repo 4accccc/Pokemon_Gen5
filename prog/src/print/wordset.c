@@ -12,6 +12,7 @@
 #include "print/wordset.h"
 #include "print/global_msg.h"
 #include "str_tool_local.h"
+#include "tr_tool/trtype_def.h" // for TRTYPE_xxxx
 #include "../../../resource/research_radar/data/hobby_id.h"  // for HOBBY_ID_xxxx
 #include "../../../resource/research_radar/data/job_id.h"  // for JOB_ID_xxxx
 
