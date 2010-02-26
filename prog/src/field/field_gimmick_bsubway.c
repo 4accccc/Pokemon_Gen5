@@ -38,7 +38,7 @@ enum
   BSWGMK_NO_MAX,
 };
 
-#define SHAKE_Y (6)
+#define SHAKE_Y (4)
 
 //======================================================================
 //  struct
@@ -92,7 +92,8 @@ typedef struct
 {
   u8 shake_stop;
   u8 seq_no;
-  u8 padding[2];
+  u8 wait_seq_no;
+  u8 padding;
   
   int wait;
   int shake_y;
@@ -331,12 +332,15 @@ static void delProc_ShakeTrain( BSW_GMK *bsw_gmk, FIELDMAP_WORK *fldmap )
 static void moveProc_ShakeTrain( BSW_GMK *bsw_gmk, FIELDMAP_WORK *fldmap )
 {
   VecFx32 scroll = {0,0,0};
+  int wait_tbl[4] = { 60,10,60,10 };
   SHAKE_WORK *work = bsw_gmk->bsw_work;
   FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fldmap );
   
   switch( work->seq_no ){
   case 0: //‰Šú‰»
-    work->wait = GFUser_GetPublicRand( 30*3 ) + 15; //Å‘å3•b+Å’á0.5•b‚ÌŠÔ
+    work->wait = wait_tbl[work->wait_seq_no];
+    work->wait_seq_no++;
+    work->wait_seq_no &= 3;
     work->seq_no++;
   case 1: //ƒEƒFƒCƒg
     work->wait--;

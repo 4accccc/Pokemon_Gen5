@@ -230,10 +230,13 @@ GMEVENT * BSUBWAY_EVENT_TrainerBattle(
   GMEVENT * event;
   BATTLE_SETUP_PARAM *bp;
   
-  return BSUBWAY_EVENT_CommBattle( bsw_scr, gsys, fieldmap );
-  
-  bp = BSUBWAY_SCRWORK_CreateBattleParam( bsw_scr, gsys );
-  event = EVENT_BSubwayTrainerBattle( gsys, fieldmap, bp );
+  if( bsw_scr->play_mode == BSWAY_MODE_COMM_MULTI ||
+      bsw_scr->play_mode == BSWAY_MODE_S_COMM_MULTI ){
+    return BSUBWAY_EVENT_CommBattle( bsw_scr, gsys, fieldmap );
+  }else{
+    bp = BSUBWAY_SCRWORK_CreateBattleParam( bsw_scr, gsys );
+    event = EVENT_BSubwayTrainerBattle( gsys, fieldmap, bp );
+  }
   
   return( event );
 }
