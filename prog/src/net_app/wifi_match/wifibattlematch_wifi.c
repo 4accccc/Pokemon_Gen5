@@ -60,7 +60,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 //=====================================
 #ifdef PM_DEBUG
 #define GPF_FLAG_ON             //GPFフラグを強制ONにする
-#define MYPOKE_SELFCHECK        //自分のポケモンを送ったとき、サケとチェックし署名も証明させる
+//#define MYPOKE_SELFCHECK        //自分のポケモンを送ったとき、サケとチェックし署名も証明させる
 //#define DEBUG_REGULATION_DATA   //レギュレーションデータを作成する
 //#define REGULATION_CHECK_ON     //パーティのレギュレーションチェックを強制ONにする
 #define SAKE_REPORT_NONE          //レポートをしない
@@ -2207,8 +2207,8 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       { 
         //自分のデータ作成
         WIFIBATTLEMATCH_ENEMYDATA *p_my_data = p_param->p_player_data;
-        Util_SetMyDataInfo( p_my_data, p_wk );
         Util_SetEvilcheckParty( p_wk );
+        Util_SetMyDataInfo( p_my_data, p_wk );
 
 #ifdef MYPOKE_SELFCHECK
         {
@@ -2245,7 +2245,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         }
 
         //自分で自分の署名は通るのかチェック
-        if( Util_VerifyPokeData( p_my_data, (POKEPARTY*)p_wk->p_param->p_enemy_data->pokeparty, HEAPID_WIFIBATTLEMATCH_CORE ) )
+        if( Util_VerifyPokeData( p_my_data, (POKEPARTY*)p_wk->p_param->p_player_data->pokeparty, HEAPID_WIFIBATTLEMATCH_CORE ) )
 #endif  //MYPOKE_SELFCHECK
         { 
           OS_TFPrintf( 3, "自分の署名は通ったぜ\n" );

@@ -2788,10 +2788,11 @@ static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, HEAPID heapI
     p_buff  = NHTTP_RAP_EVILCHECK_CreateVerifyPokeBuffer( POKETOOL_GetWorkSize(), 1, GFL_HEAP_LOWID(heapID) );
     NHTTP_RAP_EVILCHECK_AddPokeVerifyPokeBuffer( p_buff, cp_pp, POKETOOL_GetWorkSize(), 0 );
 
-    ret &= NHTTP_RAP_EVILCHECK_VerifySign( p_buff, POKETOOL_GetWorkSize(), 1, p_data->sign[i], GFL_HEAP_LOWID(heapID) );
+    ret = NHTTP_RAP_EVILCHECK_VerifySign( p_buff, POKETOOL_GetWorkSize(), 1, p_data->sign[i], GFL_HEAP_LOWID(heapID) );
 
     NHTTP_RAP_EVILCHECK_DeleteVerifyPokeBuffer( p_buff );
 
+    NAGI_Printf( "%d•C–Ú=[%d]\n", i, ret );
     if( ret == FALSE )
     { 
       break;
