@@ -33,5 +33,6 @@
 #ifndef ZONE_C04R0201_EVB_H
 #define ZONE_C04R0201_EVB_H
 
+#define BG_C04R0201_MUSICAL_SHOT          0
 
 #endif //ZONE_C04R0201_EVB_H
