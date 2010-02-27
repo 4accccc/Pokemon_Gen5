@@ -236,6 +236,7 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_PICTURE = (WB_NET_PICTURE << 8),        ///<お絵かき
   GFL_NET_CMD_BSUBWAY = (WB_NET_BSUBWAY << 8),  ///<バトルサブウェイ
   GFL_NET_CMD_POKELIST = (WB_NET_POKELIST << 8),///<ポケモンリスト(終了時同期コマンド用
+  GFL_NET_CMD_BATTLE_EXAMINATION = (WB_NET_BATTLE_EXAMINATION<<8),  ///<バトル検定配信
 };
 
 

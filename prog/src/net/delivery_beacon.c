@@ -191,6 +191,7 @@ static void _beaconDataDiv(DELIVERY_BEACON_WORK* pWork)
   int i;
   int max = (pWork->aInit.datasize/DELIVERY_BEACON_ONCE_NUM)+1;
 
+  OS_TPrintf("%d %d\n",pWork->aInit.datasize , (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
   GF_ASSERT(pWork->aInit.datasize < (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
 
   for(i = 0; i < DELIVERY_BEACON_MAX_NUM ; i++){
@@ -286,6 +287,7 @@ static void _beaconAlloc(DELIVERY_BEACON_WORK* pWork)
 {
   int max = (pWork->aInit.datasize/DELIVERY_BEACON_ONCE_NUM)+1;
 
+  OS_TPrintf("%d %d\n",pWork->aInit.datasize , (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
   GF_ASSERT(pWork->aInit.datasize < (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
 
 }
@@ -408,6 +410,27 @@ BOOL DELIVERY_BEACON_RecvStart(DELIVERY_BEACON_WORK* pWork)
   GFL_NET_Init(&aGFLNetInit, _recvInit, pWork);
   _CHANGE_STATE( _not );
   return TRUE;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief   ビーコンが１つでもあるかどうか
+ * @param   DELIVERY_BEACON_WORK 管理ワーク
+ * @retval  ある場合TRUE
+ */
+//--------------------------------------------------------------
+BOOL DELIVERY_BEACON_RecvSingleCheck(DELIVERY_BEACON_WORK* pWork)
+{
+  int i;
+
+  for(i = 0;i < DELIVERY_BEACON_MAX_NUM;i++){
+    DELIVERY_BEACON* pBeacon = &pWork->aSendRecv[i];
+    if(0 != pBeacon->countMax){
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 

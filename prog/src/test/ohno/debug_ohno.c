@@ -18,6 +18,10 @@
 #include "net/dwc_raputil.h"
 #include "net/delivery_beacon.h"
 #include "wmi.naix"
+
+#include "savedata/mystery_data.h"
+#include "debug/debug_mystery_card.h"
+
 #define _MAXNUM   (4)         // 最大接続人数
 #define _MAXSIZE  (80)        // 最大送信バイト数
 #define _BCON_GET_NUM (16)    // 最大ビーコン収集数
@@ -683,8 +687,31 @@ const GFL_PROC_DATA NetFourChildProcData = {
   DebugOhnoMainProcEnd,
 };
 
-
 //--------------------------------------------------------------------
+
+static void _fushigiDataSet(DEBUG_OHNO_CONTROL * pDOC)
+{
+  DOWNLOAD_GIFT_DATA* pDG;
+
+  
+  pDOC->aInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
+  pDOC->aInit.datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
+  pDOC->aInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.datasize);     // データ
+  pDOC->aInit.ConfusionID = 12;
+  pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
+
+  pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aInit.pData;
+
+  DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
+  DEBUG_MYSTERY_SetGiftPokeData(&pDG->data,12);
+  pDG->version = 12;
+  pDG->event_text[0] = L'て';
+  pDG->event_text[1] = L'す';
+  pDG->event_text[2] = L'と';
+  pDG->event_text[3] = 0xffff;
+
+}
+
 
 static BOOL _loop(void* pCtl)
 {
@@ -692,6 +719,7 @@ static BOOL _loop(void* pCtl)
   DELIVERY_BEACON_Main(pDOC->pDBWork);
   return FALSE;
 }
+
 
 static GFL_PROC_RESULT NetDeliverySendProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
@@ -704,19 +732,11 @@ static GFL_PROC_RESULT NetDeliverySendProc_Init(GFL_PROC * proc, int * seq, void
 
   
   {
-    pDOC->aInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
-    pDOC->aInit.datasize = 256;   //データ全体サイズ
-    pDOC->aInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.datasize);     // データ
-    pDOC->aInit.ConfusionID = 12;
-    pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
+
+    _fushigiDataSet(pDOC);
 
 
-    pDOC->aInit.pData[12]=2;
-    pDOC->aInit.pData[2]=2;
-    pDOC->aInit.pData[32]=2;
-    pDOC->aInit.pData[102]=2;
-    pDOC->aInit.pData[222]=2;
-    pDOC->aInit.pData[129]=2;
+
 
     
     pDOC->pDBWork=DELIVERY_BEACON_Init(&pDOC->aInit);

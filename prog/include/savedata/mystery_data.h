@@ -23,30 +23,28 @@
 //------------------------------------------------------------------
 ///		贈り物データの個数
 //------------------------------------------------------------------
-#define	GIFT_DATA_MAX		12	//カード12
-
-#define MYSTERYGIFT_NUTSET_MAX 4 //木の実セットの数
+#define	GIFT_DATA_MAX		(12)	//カード12
 
 //------------------------------------------------------------------
 ///		カード関係のサイズ定義
 //------------------------------------------------------------------
-#define GIFT_DATA_CARD_TITLE_MAX	36    //配布タイトル
+#define GIFT_DATA_CARD_TITLE_MAX	(36)    //配布タイトル
 
-#define GIFT_DATA_CARD_TEXT_MAX		504   //説明テキスト
+#define GIFT_DATA_CARD_TEXT_MAX		(252)   //説明テキスト
 
 
 //------------------------------------------------------------------
 ///		贈り物データ構造体
 //------------------------------------------------------------------
-#define MYSTERYGIFT_TYPE_NONE		0	// 何も無い
-#define MYSTERYGIFT_TYPE_POKEMON	1	// ポケモン
-#define MYSTERYGIFT_TYPE_ITEM		2	// どうぐ
-#define MYSTERYGIFT_TYPE_POWER		3	// パワー
-#define MYSTERYGIFT_TYPE_RULE  4   //削除予定
-#define MYSTERYGIFT_TYPE_NUTSET  5 //削除予定
-#define MYSTERYGIFT_TYPE_MAX	6	// 総数
+#define MYSTERYGIFT_TYPE_NONE		(0)	// 何も無い
+#define MYSTERYGIFT_TYPE_POKEMON	(1)	// ポケモン
+#define MYSTERYGIFT_TYPE_ITEM		(2)	// どうぐ
+#define MYSTERYGIFT_TYPE_POWER		(3)	// パワー
+#define MYSTERYGIFT_TYPE_RULE  (4)   //削除予定
+#define MYSTERYGIFT_TYPE_NUTSET  (5) //削除予定
+#define MYSTERYGIFT_TYPE_MAX	(6)	// 総数
 
-#define MYSTERYGIFT_TYPE_CLEAR		255	// ふしぎ領域の強制クリア
+#define MYSTERYGIFT_TYPE_CLEAR		(255)	// ふしぎ領域の強制クリア
 
 
 //------------------------------------------------------------------

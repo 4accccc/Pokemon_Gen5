@@ -11,7 +11,7 @@
 #include "net/network_define.h"
 
 #define DELIVERY_BEACON_ONCE_NUM  (88)  //送信サイズ
-#define DELIVERY_BEACON_MAX_NUM  (4)    //DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUMバイトの送信が可能
+#define DELIVERY_BEACON_MAX_NUM  (9)    //DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUMバイトの送信が可能
 
 
 
@@ -19,8 +19,8 @@ typedef struct {
   int NetDevID;   // //通信種類
   int datasize;   //データ全体サイズ
   u8* pData;     // データ
-  u16 ConfusionID;   //混線しないためのID
-  HEAPID heapID;
+  u16 ConfusionID;   //混線しないためのID 送信側で必要
+  HEAPID heapID;    //HEAP
 } DELIVERY_BEACON_INIT;
 
 
@@ -61,6 +61,15 @@ extern BOOL DELIVERY_BEACON_RecvStart(DELIVERY_BEACON_WORK* pWork);
  */
 //--------------------------------------------------------------
 extern BOOL DELIVERY_BEACON_RecvCheck(DELIVERY_BEACON_WORK* pWork);
+
+//--------------------------------------------------------------
+/**
+ * @brief   ビーコンが１つでもあるかどうか
+ * @param   DELIVERY_BEACON_WORK 管理ワーク
+ * @retval  ある場合TRUE
+ */
+//--------------------------------------------------------------
+extern BOOL DELIVERY_BEACON_RecvSingleCheck(DELIVERY_BEACON_WORK* pWork);
 
 //--------------------------------------------------------------
 /**
