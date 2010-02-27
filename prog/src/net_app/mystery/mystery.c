@@ -1598,7 +1598,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         is_cancel  = TRUE;
         break;
       case MYSTERY_NET_MODE_WIRELESS:
-        if( MYSTERY_NET_GetState( p_wk->p_net, MYSTERY_NET_STATE_MAIN_BEACON_DOWNLOAD ) )
+        if( MYSTERY_NET_GetState( p_wk->p_net ) )
         { 
           MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_END_BEACON_DOWNLOAD );
           is_cancel  = TRUE;
