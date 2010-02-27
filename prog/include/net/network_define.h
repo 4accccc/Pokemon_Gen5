@@ -188,6 +188,7 @@ typedef enum  {
   WB_NET_BTL_REC_SEL,      ///<通信対戦後の録画選択画面
   WB_NET_BSUBWAY,         ///<バトルサブウェイ
   WB_NET_POKELIST,         ///<ポケモンリスト(終了時同期コマンド用
+  WB_NET_BATTLE_EXAMINATION,  ///<バトル検定配信
   
   WB_NET_SERVICEID_MAX   // 終端
 } NetworkServiceID_e;
