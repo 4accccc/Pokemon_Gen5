@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2010-02-25T13:25:39"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-02-27T16:37:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1375,6 +1375,11 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_STR64">
 		<language name="JPN" width="160">なまえへんこう</language>
 		<language name="JPN_KANJI" width="160">名前変更</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR65">
+		<language name="JPN" width="160">ポケモンかきかえ</language>
+		<language name="JPN_KANJI" width="160">ポケモン書き換え</language>
 	</row>
 
 	<flowchart-group-list>

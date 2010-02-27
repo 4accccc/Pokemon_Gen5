@@ -166,6 +166,7 @@ static BOOL debugMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_DebugMakePoke( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_DebugReWritePoke( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_DebugSecretItem( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk );
@@ -276,6 +277,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 
   { DEBUG_FIELD_TITLE_03, (void*)BMPMENULIST_LABEL },       //○データ作成
   { DEBUG_FIELD_STR41, debugMenuCallProc_DebugMakePoke },   //ポケモン作成
+  { DEBUG_FIELD_STR65, debugMenuCallProc_DebugReWritePoke },//ポケモン書き換え
   { DEBUG_FIELD_STR32, debugMenuCallProc_DebugItem },       //アイテム作成
   { DEBUG_FIELD_STR33, debugMenuCallProc_DebugSecretItem }, //隠されアイテム作成
   { DEBUG_FIELD_STR37, debugMenuCallProc_BoxMax },          //ボックス最大
@@ -2375,6 +2377,80 @@ static GMEVENT_RESULT debugMenuMakePoke( GMEVENT *p_event, int *p_seq, void *p_w
     }
     return GMEVENT_RES_FINISH;
     break;
+  }
+
+  return GMEVENT_RES_CONTINUE ;
+}
+
+static GMEVENT_RESULT debugMenuReWritePoke( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+//----------------------------------------------------------------------------
+/**
+ *  @brief  ポケモン書き換え
+ *
+ *  @param  DEBUG_MENU_EVENT_WORK *wk   ワーク
+ *
+ *  @return TRUEイベント継続  FALSE終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_DebugReWritePoke( DEBUG_MENU_EVENT_WORK *p_wk )
+{ 
+  GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
+  GMEVENT       *p_event    = p_wk->gmEvent;
+  FIELDMAP_WORK *p_field  = p_wk->fieldWork;
+  HEAPID heapID = HEAPID_PROC;
+  DEBUG_MAKEPOKE_EVENT_WORK *p_mp_work;
+
+  //イヴェント
+  GMEVENT_Change( p_event, debugMenuReWritePoke, sizeof(DEBUG_MAKEPOKE_EVENT_WORK) );
+  p_mp_work = GMEVENT_GetEventWork( p_event );
+  GFL_STD_MemClear( p_mp_work, sizeof(DEBUG_MAKEPOKE_EVENT_WORK) );
+
+  //ワーク設定
+  p_mp_work->p_gamesys  = p_gamesys;
+  p_mp_work->p_event    = p_event;
+  p_mp_work->p_field    = p_field;
+  p_mp_work->heapID     = heapID;
+  {
+    POKEPARTY *p_party  = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(p_gamesys) );
+    p_mp_work->pp =  PokeParty_GetMemberPointer( p_party, 0 );
+  }
+  p_mp_work->p_mp_work.dst  = p_mp_work->pp;
+  p_mp_work->p_mp_work.oyaStatus = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(p_gamesys) );
+
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  デバッグポケモン書き換えイベント
+ *
+ *  @param  GMEVENT *event  GMEVENT
+ *  @param  *seq            シーケンス
+ *  @param  *work           ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT debugMenuReWritePoke( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CALL_PROC,
+    SEQ_PROC_END,
+  };
+
+  DEBUG_MAKEPOKE_EVENT_WORK *p_wk = p_wk_adrs;
+
+  switch(*p_seq )
+  {
+  case SEQ_CALL_PROC:
+    GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
+        FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, &p_wk->p_mp_work ) );
+    *p_seq  = SEQ_PROC_END;
+    break;
+
+  case SEQ_PROC_END:
+    return GMEVENT_RES_FINISH;
   }
 
   return GMEVENT_RES_CONTINUE ;
