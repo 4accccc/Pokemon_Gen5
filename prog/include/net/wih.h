@@ -821,3 +821,14 @@ extern void WH_StepScan(void);
   Returns:      none
  *---------------------------------------------------------------------------*/
 extern void WHSetScanWaitFrame(int no);
+
+/*---------------------------------------------------------------------*
+  Name:         WIH_FixScanMode
+  Description:  スキャンする物を固定する
+  Arguments:    指定channel
+  Arguments:    指定mac
+ *--------------------------------------------------------------------*/
+
+extern void WIH_FixScanMode(int channe, void* pMac );
+
+

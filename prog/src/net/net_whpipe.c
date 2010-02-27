@@ -2002,3 +2002,16 @@ GameServiceID GFL_NET_WLGetGameServiceID(u8 index)
 	return WB_NET_NOP_SERVICEID;
 }
 
+//-------------------------------------------------------------
+/**
+ * @brief   スキャンするビーコンをこのindexのビーコンに絞り込む
+ * @param   index  ビーコンindex
+ * @retval  GameServiceID
+ */
+//-------------------------------------------------------------
+
+void GFL_NET_WLFIXScan(int index)
+{
+  WIH_FixScanMode(_pNetWL->sBssDesc[index].channel, _pNetWL->sBssDesc[index].bssid );
+}
+

@@ -21,6 +21,8 @@
 #include "net_whpipe.h"
 
 
+#define _BEACON_CHANGE_COUNT (0)
+
 //ビーコン単体の中身
 typedef struct 
 {
@@ -218,7 +220,7 @@ static void _beaconDataDiv(DELIVERY_BEACON_WORK* pWork)
 //一定間隔でビーコンいれかえ送信
 static void _sendLoop(DELIVERY_BEACON_WORK* pWork)
 {
-  if( WHGetBeaconSendNum() > 1 ){
+  if( WHGetBeaconSendNum() > _BEACON_CHANGE_COUNT ){
     pWork->nowCount++;
     NET_WHPIPE_BeaconSetInfo();
     OS_TPrintf("いれかえ%d\n",pWork->nowCount);
@@ -349,7 +351,10 @@ static void  _recvLoop(DELIVERY_BEACON_WORK* pWork)
       continue; //間違ったデータ
     }
     //取得
-      OS_TPrintf("取得%d \n",i);
+    OS_TPrintf("取得%d \n",index);
+
+    GFL_NET_WLFIXScan( i ); //スキャンを限定する
+
     GFL_STD_MemCopy( pBeacon, &pWork->aSendRecv[index],  sizeof(DELIVERY_BEACON));
   }
 

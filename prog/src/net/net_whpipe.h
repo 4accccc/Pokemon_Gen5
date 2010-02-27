@@ -490,3 +490,12 @@ extern void GFL_NET_WL_DisconnectError(void);
 //-------------------------------------------------------------
 
 extern GameServiceID GFL_NET_WLGetGameServiceID(u8 index);
+//-------------------------------------------------------------
+/**
+ * @brief   スキャンするビーコンをこのindexのビーコンに絞り込む
+ * @param   index  ビーコンindex
+ * @retval  GameServiceID
+ */
+//-------------------------------------------------------------
+
+extern void GFL_NET_WLFIXScan(int index);

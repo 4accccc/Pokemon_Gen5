@@ -778,6 +778,20 @@ static BOOL _getTime(void* pCtl)
 }
 
 
+static void _fushigiDataRecv(DEBUG_OHNO_CONTROL * pDOC)
+{
+  DOWNLOAD_GIFT_DATA* pDG;
+
+  pDOC->aInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
+  pDOC->aInit.datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
+  pDOC->aInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.datasize);     // データ
+  pDOC->aInit.ConfusionID = 12;
+  pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
+
+}
+
+
+
 static GFL_PROC_RESULT NetDeliveryRecvProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
   DEBUG_OHNO_CONTROL * pDOC;
@@ -789,11 +803,7 @@ static GFL_PROC_RESULT NetDeliveryRecvProc_Init(GFL_PROC * proc, int * seq, void
 
   
   {
-    pDOC->aInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
-    pDOC->aInit.datasize = 256;   //データ全体サイズ
-    pDOC->aInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.datasize);     // データ
-    pDOC->aInit.ConfusionID = 12;
-    pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
+    _fushigiDataRecv(pDOC);
     
     pDOC->pDBWork=DELIVERY_BEACON_Init(&pDOC->aInit);
     GF_ASSERT(DELIVERY_BEACON_RecvStart(pDOC->pDBWork));
