@@ -17,6 +17,7 @@
 #include "net/network_define.h"
 #include "net/dwc_raputil.h"
 #include "net/delivery_beacon.h"
+#include "net/delivery_irc.h"
 #include "wmi.naix"
 
 #include "savedata/mystery_data.h"
@@ -42,6 +43,8 @@ struct _DEBUG_OHNO_CONTROL{
   DELIVERY_BEACON_WORK* pDBWork;
   DELIVERY_BEACON_INIT aInit;
   int counter;
+  DELIVERY_IRC_WORK* pIRCWork;
+  DELIVERY_IRC_INIT aIRCInit;
 };
 
 
@@ -747,7 +750,7 @@ static GFL_PROC_RESULT NetDeliverySendProc_Init(GFL_PROC * proc, int * seq, void
   return GFL_PROC_RES_FINISH;
 }
 
-//-------------------------------------------------------------------
+//-------------------------------------------------------------------WIRLESS
 
 
 
@@ -828,6 +831,153 @@ const GFL_PROC_DATA NetDeliverySendProcData = {
 // プロセス定義データ
 const GFL_PROC_DATA NetDeliveryRecvProcData = {
   NetDeliveryRecvProc_Init,
+  DebugOhnoMainProcMain,
+  DebugOhnoMainProcEnd,
+};
+
+
+
+
+
+
+
+
+//--------------------------------------------------------------------IRC
+
+//-------------------------------------------------------------------IRC
+
+
+
+
+static BOOL _getIRCTime(void* pCtl)
+{
+  DEBUG_OHNO_CONTROL* pDOC = pCtl;
+  int i,j,k;
+
+  DELIVERY_IRC_Main(pDOC->pIRCWork);
+  
+  pDOC->counter++;
+  k = DELIVERY_IRC_RecvCheck(pDOC->pIRCWork);
+  if( DELIVERY_IRC_RecvCheck(pDOC->pIRCWork) ){  // もう通信している場合終了処理
+    OS_TPrintf("受信完了 %d %d\n",pDOC->counter,k);
+
+    for(j=0;j<pDOC->aInit.datasize;){
+      for(i=0;i<16;i++){
+        OS_TPrintf("%x ",pDOC->aIRCInit.pData[j]);
+        j++;
+      }
+      OS_TPrintf("\n");
+    }
+    DELIVERY_IRC_End(pDOC->pIRCWork);
+    _CHANGE_STATE(NetTestNone);
+  }
+  return FALSE;
+}
+
+
+static void _fushigiDataIRCRecv(DEBUG_OHNO_CONTROL * pDOC)
+{
+  DOWNLOAD_GIFT_DATA* pDG;
+
+  pDOC->aIRCInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
+  pDOC->aIRCInit.datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
+  pDOC->aIRCInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aIRCInit.datasize);     // データ
+  pDOC->aIRCInit.ConfusionID = 12;
+  pDOC->aIRCInit.heapID = HEAPID_OHNO_DEBUG;
+
+}
+
+
+
+static GFL_PROC_RESULT NetDeliveryIRCRecvProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+  DEBUG_OHNO_CONTROL * pDOC;
+
+  
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OHNO_DEBUG, 0x30000 );
+  pDOC = GFL_PROC_AllocWork( proc, sizeof(DEBUG_OHNO_CONTROL), HEAPID_OHNO_DEBUG );
+  GFL_STD_MemClear(pDOC, sizeof(DEBUG_OHNO_CONTROL));
+
+  
+  {
+    _fushigiDataIRCRecv(pDOC);
+    
+    pDOC->pIRCWork=DELIVERY_IRC_Init(&pDOC->aIRCInit);
+    GF_ASSERT(DELIVERY_IRC_RecvStart(pDOC->pIRCWork));
+  }
+  pDOC->counter=0;
+  _CHANGE_STATE( _getIRCTime ); // 
+
+
+  return GFL_PROC_RES_FINISH;
+}
+
+
+
+static void _fushigiDataIRCSet(DEBUG_OHNO_CONTROL * pDOC)
+{
+  DOWNLOAD_GIFT_DATA* pDG;
+
+  pDOC->aIRCInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
+  pDOC->aIRCInit.datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
+  pDOC->aIRCInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aIRCInit.datasize);     // データ
+  pDOC->aIRCInit.ConfusionID = 12;
+  pDOC->aIRCInit.heapID = HEAPID_OHNO_DEBUG;
+
+  pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aIRCInit.pData;
+
+  DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
+  DEBUG_MYSTERY_SetGiftPokeData(&pDG->data,12);
+  pDG->version = 12;
+  pDG->event_text[0] = L'I';
+  pDG->event_text[1] = L'R';
+  pDG->event_text[2] = L'C';
+  pDG->event_text[3] = 0xffff;
+
+}
+
+
+static BOOL _loopirc(void* pCtl)
+{
+  DEBUG_OHNO_CONTROL* pDOC = pCtl;
+  DELIVERY_IRC_Main(pDOC->pIRCWork);
+  return FALSE;
+}
+
+
+static GFL_PROC_RESULT NetDeliveryIRCSendProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+  DEBUG_OHNO_CONTROL * pDOC;
+
+  
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OHNO_DEBUG, 0x30000 );
+  pDOC = GFL_PROC_AllocWork( proc, sizeof(DEBUG_OHNO_CONTROL), HEAPID_OHNO_DEBUG );
+  GFL_STD_MemClear(pDOC, sizeof(DEBUG_OHNO_CONTROL));
+
+  {
+
+    _fushigiDataIRCSet(pDOC);
+    
+    pDOC->pIRCWork=DELIVERY_IRC_Init(&pDOC->aIRCInit);
+    GF_ASSERT(DELIVERY_IRC_SendStart(pDOC->pIRCWork));
+  }
+  _CHANGE_STATE( _loopirc ); // 
+
+  return GFL_PROC_RES_FINISH;
+}
+
+// プロセス定義データ
+const GFL_PROC_DATA NetDeliveryIRCSendProcData = {
+  NetDeliveryIRCSendProc_Init,
+  DebugOhnoMainProcMain,
+  DebugOhnoMainProcEnd,
+};
+
+
+
+// プロセス定義データ
+const GFL_PROC_DATA NetDeliveryIRCRecvProcData = {
+  NetDeliveryIRCRecvProc_Init,
   DebugOhnoMainProcMain,
   DebugOhnoMainProcEnd,
 };
