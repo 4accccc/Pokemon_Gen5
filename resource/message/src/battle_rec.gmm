@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-12-28T16:31:25"/>
+	<create user="shimoyamada" host="W00184" date="2010-02-28T00:30:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,14 +312,14 @@
 		</language>
 	</columns>
 
-	<dialog left="367" top="214" right="1072" bottom="834" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+	<dialog left="1303" top="433" right="1960" bottom="1053" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="yes"/>
+		<band id="0" index="0" style="0000" width="482"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="649"/>
+		<band id="3" index="3" style="0000" width="649"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1047,13 +1047,13 @@
 	</row>
 
 	<row id="msg_901">
-		<language name="JPN" font=" 1:small" width="216">[BD:02:Ｘセンタリング]レーティングモードの　せいせき</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:02:Ｘセンタリング]レーティングモードの　せいせき</language>
+		<language name="JPN" font=" 1:small" width="216">[BD:02:Ｘセンタリング]レーティングモード　せいせき</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:02:Ｘセンタリング]レーティングモード　せいせき</language>
 	</row>
 
 	<row id="msg_902">
-		<language name="JPN" font=" 1:small" width="216">[BD:02:Ｘセンタリング]フリーモードの　せいせき</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:02:Ｘセンタリング]フリーモードの　せいせき</language>
+		<language name="JPN" font=" 1:small" width="216">[BD:02:Ｘセンタリング]フリーモード　せいせき</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:02:Ｘセンタリング]フリーモード　せいせき</language>
 	</row>
 
 	<row id="msg_903">
@@ -1116,423 +1116,511 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">いいえ</language>
 	</row>
 
-	<row id="msg_rule_000">
-		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
-シングル　せいげんなし</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
-シングル　せいげんなし</language>
+	<row id="msg_rule_000" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　シングル
+せいげんなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　シングル
+せいげんなし</language>
 	</row>
 
-	<row id="msg_rule_000_01">
-		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
-シングル　スタンダードカップ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
-シングル　スタンダードカップ</language>
+	<row id="msg_rule_000_01" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　シングル
+フラット</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　シングル
+フラット</language>
 	</row>
 
-	<row id="msg_rule_000_02">
-		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
-シングル　ファンシーカップ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
-シングル　ファンシーカップ</language>
+	<row id="msg_rule_000_02" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　シングル
+せいげんなし　シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　シングル
+せいげんなし　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_000_03">
-		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
-シングル　リトルカップ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
-シングル　リトルカップ</language>
+	<row id="msg_rule_000_03" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　シングル
+フラット　シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　シングル
+フラット　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_000_04">
-		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
-シングル　ライトカップ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
-シングル　ライトカップ</language>
+	<row id="msg_rule_000_04" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　ダブル
+せいげんなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　ダブル
+せいげんなし</language>
 	</row>
 
-	<row id="msg_rule_000_05">
-		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
-シングル　ダブルカップ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
-シングル　ダブルカップ</language>
+	<row id="msg_rule_000_05" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　ダブル
+フラット</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　ダブル
+フラット</language>
 	</row>
 
-	<row id="msg_rule_000_06">
-		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
-シングル　そのたのカップ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
-シングル　そのたのカップ</language>
+	<row id="msg_rule_000_06" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　ダブル
+せいげんなし　シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　ダブル
+せいげんなし　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_001">
-		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
-ダブル　せいげんなし</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
-ダブル　せいげんなし</language>
+	<row id="msg_rule_001" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　ダブル
+フラット　シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　ダブル
+フラット　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_001_01">
-		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
-ダブル　スタンダードカップ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
-ダブル　スタンダードカップ</language>
+	<row id="msg_rule_001_01" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　トリプル
+せいげんなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　トリプル
+せいげんなし</language>
 	</row>
 
-	<row id="msg_rule_001_02">
-		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
-ダブル　ファンシーカップ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
-ダブル　ファンシーカップ</language>
+	<row id="msg_rule_001_02" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　トリプル
+フラット</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　トリプル
+フラット</language>
 	</row>
 
-	<row id="msg_rule_001_03">
-		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
-ダブル　リトルカップ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
-ダブル　リトルカップ</language>
+	<row id="msg_rule_001_03" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　トリプル
+せいげんなし　シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　トリプル
+せいげんなし　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_001_04">
-		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
-ダブル　ライトカップ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
-ダブル　ライトカップ</language>
+	<row id="msg_rule_001_04" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　トリプル
+フラット　シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　トリプル
+フラット　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_001_05">
-		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
-ダブル　ダブルカップ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
-ダブル　ダブルカップ</language>
+	<row id="msg_rule_001_05" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　ローテーション
+せいげんなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　ローテーション
+せいげんなし</language>
 	</row>
 
-	<row id="msg_rule_001_06">
-		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
-ダブル　そのたのカップ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
-ダブル　そのたのカップ</language>
+	<row id="msg_rule_001_06" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　ローテーション
+フラット</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　ローテーション
+フラット</language>
 	</row>
 
-	<row id="msg_rule_002">
-		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム
-マルチ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム
-マルチ</language>
+	<row id="msg_rule_002" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　ローテーション
+せいげんなし　シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　ローテーション
+せいげんなし　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_003">
-		<language name="JPN" font=" 1:small" width="216" line="2">バトルタワー
+	<row id="msg_rule_003" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　ローテーション
+フラット　シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　ローテーション
+フラット　シューターあり</language>
+	</row>
+
+	<row id="msg_rule_004" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　マルチ
+せいげんなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　マルチ
+せいげんなし</language>
+	</row>
+
+	<row id="msg_rule_005" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　マルチ
+フラット</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　マルチ
+フラット</language>
+	</row>
+
+	<row id="msg_rule_006" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　マルチ
+せいげんなし　シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　マルチ
+せいげんなし　シューターあり</language>
+	</row>
+
+	<row id="msg_rule_007" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">コロシアム　マルチ
+フラット　シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">コロシアム　マルチ
+フラット　シューターあり</language>
+	</row>
+
+	<row id="msg_rule_008" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">バトルサブウェイ
 シングル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルタワー
-シングル</language>
-	</row>
-
-	<row id="msg_rule_004">
-		<language name="JPN" font=" 1:small" width="216" line="2">バトルタワー
-ダブル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルタワー
-ダブル</language>
-	</row>
-
-	<row id="msg_rule_005">
-		<language name="JPN" font=" 1:small" width="216" line="2">バトルタワー
-マルチ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルタワー
-マルチ</language>
-	</row>
-
-	<row id="msg_rule_006">
-		<language name="JPN" font=" 1:small" width="216" line="2">バトルファクトリー
-レベル５０　シングル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルファクトリー
-レベル５０　シングル</language>
-	</row>
-
-	<row id="msg_rule_007">
-		<language name="JPN" font=" 1:small" width="216" line="2">バトルファクトリー
-レベル５０　ダブル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルファクトリー
-レベル５０　ダブル</language>
-	</row>
-
-	<row id="msg_rule_008">
-		<language name="JPN" font=" 1:small" width="216" line="2">バトルファクトリー
-レベル５０　マルチ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルファクトリー
-レベル５０　マルチ</language>
-	</row>
-
-	<row id="msg_rule_009">
-		<language name="JPN" font=" 1:small" width="216" line="2">バトルファクトリー
-オープンレベル　シングル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルファクトリー
-オープンレベル　シングル</language>
-	</row>
-
-	<row id="msg_rule_010">
-		<language name="JPN" font=" 1:small" width="216" line="2">バトルファクトリー
-オープンレベル　ダブル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルファクトリー
-オープンレベル　ダブル</language>
-	</row>
-
-	<row id="msg_rule_011">
-		<language name="JPN" font=" 1:small" width="216">バトルファクトリー
-オープンレベル　マルチ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">バトルファクトリー
-オープンレベル　マルチ</language>
-	</row>
-
-	<row id="msg_rule_012">
-		<language name="JPN" font=" 1:small" width="216">バトルステージ
-シングル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">バトルステージ
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルサブウェイ
 シングル</language>
 	</row>
 
-	<row id="msg_rule_013">
-		<language name="JPN" font=" 1:small" width="216">バトルステージ
+	<row id="msg_rule_009" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">バトルサブウェイ
 ダブル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">バトルステージ
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルサブウェイ
 ダブル</language>
 	</row>
 
-	<row id="msg_rule_014">
-		<language name="JPN" font=" 1:small" width="216">バトルステージ
+	<row id="msg_rule_010" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216" line="2">バトルサブウェイ
 マルチ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">バトルステージ
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">バトルサブウェイ
 マルチ</language>
 	</row>
 
-	<row id="msg_rule_015">
-		<language name="JPN" font=" 1:small" width="216">バトルキャッスル
+	<row id="msg_rule_011" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">ランダムマッチ　フリー
 シングル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">バトルキャッスル
-シングル</language>
-	</row>
-
-	<row id="msg_rule_016">
-		<language name="JPN" font=" 1:small" width="216">バトルキャッスル
-ダブル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">バトルキャッスル
-ダブル</language>
-	</row>
-
-	<row id="msg_rule_017">
-		<language name="JPN" font=" 1:small" width="216">バトルキャッスル
-マルチ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">バトルキャッスル
-マルチ</language>
-	</row>
-
-	<row id="msg_rule_018">
-		<language name="JPN" font=" 1:small" width="216">バトルルーレット
-シングル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">バトルルーレット
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランダムマッチ　フリー
 シングル</language>
 	</row>
 
-	<row id="msg_rule_019">
-		<language name="JPN" font=" 1:small" width="216">バトルルーレット
+	<row id="msg_rule_012" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">ランダムマッチ　フリー
 ダブル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">バトルルーレット
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランダムマッチ　フリー
 ダブル</language>
 	</row>
 
-	<row id="msg_rule_020">
-		<language name="JPN" font=" 1:small" width="216">バトルルーレット
-マルチ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">バトルルーレット
-マルチ</language>
+	<row id="msg_rule_013" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">ランダムマッチ　フリー
+トリプル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランダムマッチ　フリー
+トリプル</language>
 	</row>
 
-	<row id="msg_rule_021">
-		<language name="JPN" font=" 1:small" width="216">コロシアム
-シングル　せいげんなし</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">コロシアム
-シングル　せいげんなし</language>
+	<row id="msg_rule_014" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">ランダムマッチ　フリー
+ローテーション</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランダムマッチ　フリー
+ローテーション</language>
 	</row>
 
-	<row id="msg_rule_022">
-		<language name="JPN" font=" 1:small" width="216">コロシアム
-シングル　カップせん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">コロシアム
-シングル　カップせん</language>
+	<row id="msg_rule_015" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">ランダムマッチ　フリー
+シューターバトル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランダムマッチ　フリー
+シューターバトル</language>
 	</row>
 
-	<row id="msg_rule_023">
-		<language name="JPN" font=" 1:small" width="216">コロシアム
-ダブル　せいげんなし</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">コロシアム
-ダブル　せいげんなし</language>
+	<row id="msg_rule_016" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">ランダムマッチ　レーティング
+シングル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランダムマッチ　レーティング
+シングル</language>
 	</row>
 
-	<row id="msg_rule_024">
-		<language name="JPN" font=" 1:small" width="216">コロシアム
-ダブル　カップせん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">コロシアム
-ダブル　カップせん</language>
+	<row id="msg_rule_017" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">ランダムマッチ　レーティング
+ダブル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランダムマッチ　レーティング
+ダブル</language>
 	</row>
 
-	<row id="msg_rule_no_000">
-		<language name="JPN" font=" 1:small" width="216" line="2">　１：コロシアム
-　　　シングル　せいげんなし</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　１：コロシアム
-　　　シングル　せいげんなし</language>
+	<row id="msg_rule_018" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">ランダムマッチ　レーティング
+トリプル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランダムマッチ　レーティング
+トリプル</language>
 	</row>
 
-	<row id="msg_rule_no_000_01">
-		<language name="JPN" font=" 1:small" width="216" line="2">　２：コロシアム
-　　　シングル　カップせん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　２：コロシアム
-　　　シングル　カップせん</language>
+	<row id="msg_rule_019" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">ランダムマッチ　レーティング
+ローテーション</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランダムマッチ　レーティング
+ローテーション</language>
 	</row>
 
-	<row id="msg_rule_no_001">
-		<language name="JPN" font=" 1:small" width="216" line="2">　３：コロシアム
-　　　ダブル　せいげんなし</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　３：コロシアム
-　　　ダブル　せいげんなし</language>
+	<row id="msg_rule_020" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">ランダムマッチ　レーティング
+シューターバトル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ランダムマッチ　レーティング
+シューターバトル</language>
 	</row>
 
-	<row id="msg_rule_no_001_01">
-		<language name="JPN" font=" 1:small" width="216" line="2">　４：コロシアム
-　　　ダブル　カップせん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　４：コロシアム
-　　　ダブル　カップせん</language>
+	<row id="msg_rule_021" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">たいかい　シングル
+シューターなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">たいかい　シングル
+シューターなし</language>
 	</row>
 
-	<row id="msg_rule_no_002">
-		<language name="JPN" font=" 1:small" width="216" line="2">　５：コロシアム
-　　　マルチ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　５：コロシアム
-　　　マルチ</language>
+	<row id="msg_rule_022" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">たいかい　シングル
+シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">たいかい　シングル
+シューターあり</language>
 	</row>
 
-	<row id="msg_rule_no_003">
-		<language name="JPN" font=" 1:small" width="216" line="2">　６：バトルタワー
-　　　シングル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　６：バトルタワー
-　　　シングル</language>
+	<row id="msg_rule_023" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">たいかい　ダブル
+シューターなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">たいかい　ダブル
+シューターなし</language>
 	</row>
 
-	<row id="msg_rule_no_004">
-		<language name="JPN" font=" 1:small" width="216" line="2">　７：バトルタワー
-　　　ダブル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　７：バトルタワー
-　　　ダブル</language>
+	<row id="msg_rule_024" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">たいかい　ダブル
+シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">たいかい　ダブル
+シューターあり</language>
 	</row>
 
-	<row id="msg_rule_no_005">
-		<language name="JPN" font=" 1:small" width="216" line="2">　８：バトルタワー
-　　　マルチ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　８：バトルタワー
-　　　マルチ</language>
+	<row id="msg_rule_025" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">たいかい　トリプル
+シューターなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">たいかい　トリプル
+シューターなし</language>
 	</row>
 
-	<row id="msg_rule_no_006">
-		<language name="JPN" font=" 1:small" width="216" line="2">　９：バトルファクトリー
-　　　レベル５０　シングル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">　９：バトルファクトリー
-　　　レベル５０　シングル</language>
+	<row id="msg_rule_026" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">たいかい　トリプル
+シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">たいかい　トリプル
+シューターあり</language>
 	</row>
 
-	<row id="msg_rule_no_007">
-		<language name="JPN" font=" 1:small" width="216" line="2">１０：バトルファクトリー
-　　　レベル５０　ダブル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">１０：バトルファクトリー
-　　　レベル５０　ダブル</language>
+	<row id="msg_rule_027" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">たいかい　ローテーション
+シューターなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">たいかい　ローテーション
+シューターなし</language>
 	</row>
 
-	<row id="msg_rule_no_008">
-		<language name="JPN" font=" 1:small" width="216" line="2">１１：バトルファクトリー
-　　　レベル５０　マルチ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">１１：バトルファクトリー
-　　　レベル５０　マルチ</language>
+	<row id="msg_rule_028" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="216">たいかい　ローテーション
+シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">たいかい　ローテーション
+シューターあり</language>
 	</row>
 
-	<row id="msg_rule_no_009">
-		<language name="JPN" font=" 1:small" width="216" line="2">１２：バトルファクトリー
-　　　オープンレベル　シングル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">１２：バトルファクトリー
-　　　オープンレベル　シングル</language>
+	<row id="msg_rule_no_000" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192" line="2">１：コロシアム　シングル
+　シューターなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192" line="2">１：コロシアム　シングル
+　シューターなし</language>
 	</row>
 
-	<row id="msg_rule_no_010">
-		<language name="JPN" font=" 1:small" width="216" line="2">１３：バトルファクトリー
-　　　オープンレベル　ダブル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">１３：バトルファクトリー
-　　　オープンレベル　ダブル</language>
+	<row id="msg_rule_no_000_01" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192" line="2">２：コロシアム　シングル
+　シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192" line="2">２：コロシアム　シングル
+　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_no_011">
-		<language name="JPN" font=" 1:small" width="216">１４：バトルファクトリー
-　　　オープンレベル　マルチ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">１４：バトルファクトリー
-　　　オープンレベル　マルチ</language>
+	<row id="msg_rule_no_001" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192" line="2">３：コロシアム　ダブル
+　シューターなし </language>
+		<language name="JPN_KANJI" font=" 1:small" width="192" line="2">３：コロシアム　ダブル
+　シューターなし </language>
 	</row>
 
-	<row id="msg_rule_no_012">
-		<language name="JPN" font=" 1:small" width="216">１５：バトルステージ
-　　　シングル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">１５：バトルステージ
-　　　シングル</language>
+	<row id="msg_rule_no_001_01" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192" line="2">４：コロシアム　ダブル
+　シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192" line="2">４：コロシアム　ダブル
+　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_no_013">
-		<language name="JPN" font=" 1:small" width="216">１６：バトルステージ
-　　　ダブル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">１６：バトルステージ
-　　　ダブル</language>
+	<row id="msg_rule_no_002" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192" line="2">５：コロシアム　トリプル
+　シューターなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192" line="2">５：コロシアム　トリプル
+　シューターなし</language>
 	</row>
 
-	<row id="msg_rule_no_014">
-		<language name="JPN" font=" 1:small" width="216">１７：バトルステージ
-　　　マルチ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">１７：バトルステージ
-　　　マルチ</language>
+	<row id="msg_rule_no_003" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192" line="2">６：コロシアム　トリプル
+　シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192" line="2">６：コロシアム　トリプル
+　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_no_015">
-		<language name="JPN" font=" 1:small" width="216">１８：バトルキャッスル
-　　　シングル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">１８：バトルキャッスル
-　　　シングル</language>
+	<row id="msg_rule_no_004" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192" line="2">７：コロシアム　ローテーション
+　シューターなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192" line="2">７：コロシアム　ローテーション
+　シューターなし</language>
 	</row>
 
-	<row id="msg_rule_no_016">
-		<language name="JPN" font=" 1:small" width="216">１９：バトルキャッスル
-　　　ダブル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">１９：バトルキャッスル
-　　　ダブル</language>
+	<row id="msg_rule_no_005" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192" line="2">８：コロシアム　ローテーション
+　シューターなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192" line="2">８：コロシアム　ローテーション
+　シューターなし</language>
+	</row>
+
+	<row id="msg_rule_no_006" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192" line="2">９：コロシアム　マルチ
+　シューターなし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192" line="2">９：コロシアム　マルチ
+　シューターなし</language>
+	</row>
+
+	<row id="msg_rule_no_007" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192" line="2">１0：コロシアム　マルチ
+　シューターあり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192" line="2">１0：コロシアム　マルチ
+　シューターあり</language>
+	</row>
+
+	<row id="msg_rule_no_008" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192" line="2">１１：バトルサブウェイ
+　シングル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192" line="2">１１：バトルサブウェイ
+　シングル</language>
+	</row>
+
+	<row id="msg_rule_no_009" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192" line="2">１2：バトルサブウェイ
+　ダブル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192" line="2">１2：バトルサブウェイ
+　ダブル</language>
+	</row>
+
+	<row id="msg_rule_no_010" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192" line="2">１3：バトルサブウェイ
+　マルチ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192" line="2">１3：バトルサブウェイ
+　マルチ</language>
+	</row>
+
+	<row id="msg_rule_no_011" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192">１４：ランダムマッチ
+　シングル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192">１４：ランダムマッチ
+　シングル</language>
+	</row>
+
+	<row id="msg_rule_no_012" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192">１５：ランダムマッチ
+　ダブル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192">１５：ランダムマッチ
+　ダブル</language>
+	</row>
+
+	<row id="msg_rule_no_013" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192">１６：ランダムマッチ
+　トリプル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192">１６：ランダムマッチ
+　トリプル</language>
+	</row>
+
+	<row id="msg_rule_no_014" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192">１７：ランダムマッチ
+　ローテーション</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192">１７：ランダムマッチ
+　ローテーション</language>
+	</row>
+
+	<row id="msg_rule_no_015" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192">１８：ランダムマッチ
+　シューターバトル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192">１８：ランダムマッチ
+　シューターバトル</language>
+	</row>
+
+	<row id="msg_rule_no_016" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>シャチ用の置換</comment>
+		<language name="JPN" font=" 1:small" width="192">１９：バトルたいかい
+</language>
+		<language name="JPN_KANJI" font=" 1:small" width="192">１９：バトルたいかい
+</language>
 	</row>
 
 	<row id="msg_rule_no_017">
-		<language name="JPN" font=" 1:small" width="216">２０：バトルキャッスル
+		<language name="JPN" font=" 1:small" width="192">２０：バトルキャッスル
 　　　マルチ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">２０：バトルキャッスル
+		<language name="JPN_KANJI" font=" 1:small" width="192">２０：バトルキャッスル
 　　　マルチ</language>
 	</row>
 
 	<row id="msg_rule_no_018">
-		<language name="JPN" font=" 1:small" width="216">２１：バトルルーレット
+		<language name="JPN" font=" 1:small" width="192">２１：バトルルーレット
 　　　シングル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">２１：バトルルーレット
+		<language name="JPN_KANJI" font=" 1:small" width="192">２１：バトルルーレット
 　　　シングル</language>
 	</row>
 
 	<row id="msg_rule_no_019">
-		<language name="JPN" font=" 1:small" width="216">２２：バトルルーレット
+		<language name="JPN" font=" 1:small" width="192">２２：バトルルーレット
 　　　ダブル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">２２：バトルルーレット
+		<language name="JPN_KANJI" font=" 1:small" width="192">２２：バトルルーレット
 　　　ダブル</language>
 	</row>
 
 	<row id="msg_rule_no_020">
-		<language name="JPN" font=" 1:small" width="216">２３：バトルルーレット
+		<language name="JPN" font=" 1:small" width="192">２３：バトルルーレット
 　　　マルチ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">２３：バトルルーレット
+		<language name="JPN_KANJI" font=" 1:small" width="192">２３：バトルルーレット
 　　　マルチ</language>
 	</row>
 
