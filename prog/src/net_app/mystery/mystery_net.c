@@ -91,12 +91,11 @@ typedef struct
   BOOL              cancel_req;
   BOOL              wifi_cancel;
   int               server_filenum;
-  char              filebuffer[MYSTERY_DOWNLOAD_GIFT_DATA_SIZE];
-  BOOL              is_recv;
   u32               percent;
   u32               recived;
   u32               contentlen;
   u32               target;
+  char              *p_buffer;
 } WIFI_DOWNLOAD_DATA;
 
 //-------------------------------------
@@ -114,6 +113,9 @@ struct _MYSTERY_NET_WORK
   WIFI_DOWNLOAD_DATA  wifi_download_data;
   const SAVE_CONTROL_WORK *cp_sv;
   DELIVERY_BEACON_WORK  *p_beacon;
+
+  char              buffer[MYSTERY_DOWNLOAD_GIFT_DATA_SIZE];
+  BOOL              is_recv;
 } ;
 
 //-------------------------------------
@@ -424,9 +426,9 @@ GAME_COMM_STATUS_BIT MYSTERY_NET_GetCommStatus( const MYSTERY_NET_WORK *cp_wk )
 //-----------------------------------------------------------------------------
 BOOL MYSTERY_NET_GetDownloadData( const MYSTERY_NET_WORK *cp_wk, void *p_data, u32 size )
 { 
-  if( cp_wk->wifi_download_data.is_recv )
+  if( cp_wk->is_recv )
   { 
-    GFL_STD_MemCopy( cp_wk->wifi_download_data.filebuffer, p_data, size );
+    GFL_STD_MemCopy( cp_wk->buffer, p_data, size );
     return TRUE;
   }
   return FALSE;
@@ -599,9 +601,9 @@ static void SEQFUNC_InitBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     { 
       DELIVERY_BEACON_INIT  belivery_beacon_init;
       GFL_STD_MemClear( &belivery_beacon_init, sizeof(DELIVERY_BEACON_INIT) );
-      belivery_beacon_init.NetDevID = WB_NET_MYSTERY;
-      belivery_beacon_init.datasize = sizeof( DOWNLOAD_GIFT_DATA );
-      belivery_beacon_init.pData    = NULL;
+      belivery_beacon_init.NetDevID     = WB_NET_MYSTERY;
+      belivery_beacon_init.datasize     = sizeof( DOWNLOAD_GIFT_DATA );
+      belivery_beacon_init.pData        = (void*)p_wk->buffer;
       belivery_beacon_init.ConfusionID  = 0;
       belivery_beacon_init.heapID       = p_wk->heapID;
       p_wk->p_beacon  = DELIVERY_BEACON_Init( &belivery_beacon_init );
@@ -688,6 +690,7 @@ static void SEQFUNC_MainBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   if( DELIVERY_BEACON_RecvCheck(p_wk->p_beacon) )
   { 
     OS_TFPrintf( 3, "ビーコン受け取り\n" );
+    p_wk->is_recv = TRUE;
     SEQ_SetNext( p_seqwk, SEQFUNC_ExitBeaconDownload );
   }
 }
@@ -727,9 +730,11 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   switch( *p_seq )
   { 
   case SEQ_INIT:
+    GFL_STD_MemClear( p_nd_data, sizeof(WIFI_DOWNLOAD_DATA) );
     p_nd_data->cancel_req   = FALSE;
     p_nd_data->wifi_cancel  = FALSE;
     p_nd_data->target = 0;
+    p_nd_data->p_buffer     = p_wk->buffer;
 
     if( DWC_NdInitAsync( NdCallback, GF_DWC_ND_LOGIN, WIFI_ND_LOGIN_PASSWD ) == FALSE )
     {
@@ -887,7 +892,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_GET_FILE:
     // ファイル読み込み開始
     OS_TPrintf( "取得するもの target%d max%d\n", p_nd_data->target, p_nd_data->server_filenum );
-    if(DWC_NdGetFileAsync( &p_nd_data->fileInfo[ p_nd_data->target ], p_nd_data->filebuffer, MYSTERY_DOWNLOAD_GIFT_DATA_SIZE) == FALSE){
+    if(DWC_NdGetFileAsync( &p_nd_data->fileInfo[ p_nd_data->target ], p_nd_data->p_buffer, MYSTERY_DOWNLOAD_GIFT_DATA_SIZE) == FALSE){
       OS_TPrintf( "DWC_NdGetFileAsync: Failed.\n" );
       GF_ASSERT(0);
       break;
@@ -931,7 +936,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       if(p_nd_data->wifi_cancel == FALSE)
       {
         // ファイル読み込み終了
-        p_wk->wifi_download_data.is_recv  = TRUE;
+        p_wk->is_recv  = TRUE;
         WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data, ND_RESULT_COMPLETE, p_seq, SEQ_DOWNLOAD_COMPLETE, SEQ_DOWNLOAD_COMPLETE ); 
       } else {
         // ダウンロードキャンセル
