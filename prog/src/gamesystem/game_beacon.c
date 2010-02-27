@@ -220,7 +220,7 @@ void GAMEBEACON_SendDataCopy(GAMEBEACON_INFO *info)
 void GAMEBEACON_SendBeaconUpdate(void)
 {
   if(GameBeaconSys->send.beacon_update == TRUE){
-    GFI_NET_BeaconSetInfo();
+    NET_WHPIPE_BeaconSetInfo();
     GameBeaconSys->send.beacon_update = FALSE;
   }
 }

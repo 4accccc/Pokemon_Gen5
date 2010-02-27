@@ -32,6 +32,7 @@
 #include "net_app/wificlub/wifi_p2pmatch.h"
 #include "net_app/pokemontrade.h"
 #include "poke_tool/monsno_def.h"
+#include "debug_ohno.h"
 
 
 //==============================================================================
@@ -164,14 +165,18 @@ static const D_MENULIST DebugMenuList[] = {
 		FS_OVERLAY_ID(pokemon_trade)
 	},
 	{//
-		DEBUG_OHNO_MSG0002, 
-		&DebugLayoutMainProcData,	
+//		DEBUG_OHNO_MSG0002, 
+		DEBUG_OHNO_MSG0022, 
+//		&DebugLayoutMainProcData,
+    &NetDeliverySendProcData,
 		NULL,
 		FS_OVERLAY_ID(ohno_debugapp)
 	},
 	{//
-		DEBUG_OHNO_MSG0003, 
-		&DebugOhnoMainProcData,	
+//		DEBUG_OHNO_MSG0003, 
+//		&DebugOhnoMainProcData,	
+		DEBUG_OHNO_MSG0023, 
+		&NetDeliveryRecvProcData,	
 		NULL,
 		FS_OVERLAY_ID(ohno_debugapp)
 	},

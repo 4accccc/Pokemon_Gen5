@@ -8,22 +8,13 @@
 //============================================================================================
 
 
-#ifndef __DEBUG_OHNO_H__
-#define __DEBUG_OHNO_H__
+#pragma once
 
 #include "net/network_define.h"
 
-typedef BOOL (*NetTestFunc)(void* pCtl);
-
 
 //------------------------------------------------------------------
-typedef struct {
-  u32 debug_heap_id;
-  GFL_PROCSYS * psys;
-  NetTestFunc funcNet;
-  int bMoveRecv;
-  BOOL bParent;
-}DEBUG_OHNO_CONTROL;
+typedef struct _DEBUG_OHNO_CONTROL DEBUG_OHNO_CONTROL;
 
 
 enum NetDebugOhnoCommand_e {
@@ -33,13 +24,11 @@ enum NetDebugOhnoCommand_e {
 };
 
 
-#define _MAXNUM   (4)         // 最大接続人数
-#define _MAXSIZE  (80)        // 最大送信バイト数
-#define _BCON_GET_NUM (16)    // 最大ビーコン収集数
 
 extern void DebugOhnoInit(HEAPID heap_id);
 extern void DebugOhnoMain(void);
 extern void DebugOhnoExit(void);
 
+extern const GFL_PROC_DATA NetDeliverySendProcData;
+extern const GFL_PROC_DATA NetDeliveryRecvProcData;
 
-#endif //__DEBUG_OHNO_H__

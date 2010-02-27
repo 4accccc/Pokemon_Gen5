@@ -341,6 +341,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         musical/dressup/musical_dressup_sys.c \
         musical/stage/musical_stage_sys.c \
         musical/musical_program.c \
+				net/delivery_beacon.c \
 				net_app/mystery/mystery_createdata.c \
         net_app/union/union_comm.c \
         net_app/union/union_main.c \

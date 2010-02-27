@@ -451,7 +451,7 @@ void UnionComm_Update(int *seq, void *pwk, void *pWork)
   }
   
   if(unisys->send_beacon_update == TRUE){
-    GFI_NET_BeaconSetInfo();
+    NET_WHPIPE_BeaconSetInfo();
     unisys->send_beacon_update = FALSE;
   }
 

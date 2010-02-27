@@ -437,7 +437,7 @@ extern u16 GFL_NET_WL_GetCurrentAid(void);
  *  @retval  none
  */
 //==============================================================================
-extern void GFI_NET_BeaconSetInfo( void );
+extern void NET_WHPIPE_BeaconSetInfo( void );
 
 
 //==============================================================================

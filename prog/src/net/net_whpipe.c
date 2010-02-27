@@ -877,7 +877,7 @@ static void _WLParentBconCheck(void)
  *  @retval  none
  */
 //-------------------------------------------------------------
-void GFI_NET_BeaconSetInfo( void )
+void NET_WHPIPE_BeaconSetInfo( void )
 {
 	u8 macBuff[6];
 	u8 sBuff[_BEACON_FIXHEAD_SIZE];
@@ -1325,7 +1325,7 @@ void* GFL_NET_WLGetUserBss(int index)
 	GFL_NETWL* pNetWL = _pNetWL;
 	if(pNetWL && (pNetWL->bconUnCatchTime[index]!=0)){
 		_GF_BSS_DATA_INFO* pGF = (_GF_BSS_DATA_INFO*)pNetWL->sBssDesc[index].gameInfo.userGameInfo;
-		return (void*)pGF->aBeaconDataBuff;
+    return (void*)pGF->aBeaconDataBuff;
 	}
 	return NULL;
 }
@@ -1489,7 +1489,7 @@ void GFL_NET_WLFlashMyBss(void)
         size = func(pNet->pWork);
     }
 
-    GFI_NET_BeaconSetInfo();
+    NET_WHPIPE_BeaconSetInfo();
 }
  */
 //-------------------------------------------------------------
@@ -1670,7 +1670,7 @@ static void _parentMeasurechanneling(GFL_NETWL* pNetWL)
 		if(pInit->bTGIDChange){
 			pNetWL->_sTgid = WM_GetNextTgid();
 		}
-		GFI_NET_BeaconSetInfo();
+		NET_WHPIPE_BeaconSetInfo();
 		bRet = WH_ParentConnect(mode[pInit->bMPMode], pNetWL->_sTgid, channel, pInit->maxConnectNum-1 );
 		//   pNetWL->pCallback(bRet);
 		_CHANGE_STATE(NULL);
@@ -1899,7 +1899,7 @@ static void _crossScanShootEndWait(GFL_NETWL* pNetWL)
     if(pNetWL->crossChannel >= elementof(ch)){
       pNetWL->crossChannel=0;
     }
-		GFI_NET_BeaconSetInfo();
+		NET_WHPIPE_BeaconSetInfo();
     if( WH_ParentConnect(WH_CONNECTMODE_MP_PARENT, pNetWL->_sTgid, ch[pNetWL->crossChannel], 1 )){
       pNetWL->CrossRand = 60 + GFUser_GetPublicRand(152);
 //      pNetWL->CrossRand= GFUser_GetPublicRand(5);

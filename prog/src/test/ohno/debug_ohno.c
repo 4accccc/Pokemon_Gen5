@@ -14,13 +14,31 @@
 #include "debug_ohno.h"
 #include "debug_field.h"
 #include "system/main.h"
-#include "net\network_define.h"
-#include "net\dwc_raputil.h"
+#include "net/network_define.h"
+#include "net/dwc_raputil.h"
+#include "net/delivery_beacon.h"
 #include "wmi.naix"
+#define _MAXNUM   (4)         // 最大接続人数
+#define _MAXSIZE  (80)        // 最大送信バイト数
+#define _BCON_GET_NUM (16)    // 最大ビーコン収集数
 
-static DEBUG_OHNO_CONTROL * DebugOhnoControl;
 
 FS_EXTERN_OVERLAY(dev_wifi);
+
+typedef BOOL (*NetTestFunc)(void* pCtl);
+
+
+struct _DEBUG_OHNO_CONTROL{
+  u32 debug_heap_id;
+  GFL_PROCSYS * psys;
+  NetTestFunc funcNet;
+  int bMoveRecv;
+  BOOL bParent;
+  int beaconIncCount;  //ビーコンの中身を替えるカウンタ
+  DELIVERY_BEACON_WORK* pDBWork;
+  DELIVERY_BEACON_INIT aInit;
+  int counter;
+};
 
 
 //------------------------------------------------------------------
@@ -666,6 +684,122 @@ const GFL_PROC_DATA NetFourChildProcData = {
 };
 
 
+//--------------------------------------------------------------------
 
+static BOOL _loop(void* pCtl)
+{
+  DEBUG_OHNO_CONTROL* pDOC = pCtl;
+  DELIVERY_BEACON_Main(pDOC->pDBWork);
+  return FALSE;
+}
+
+static GFL_PROC_RESULT NetDeliverySendProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+  DEBUG_OHNO_CONTROL * pDOC;
+
+  
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OHNO_DEBUG, 0x30000 );
+  pDOC = GFL_PROC_AllocWork( proc, sizeof(DEBUG_OHNO_CONTROL), HEAPID_OHNO_DEBUG );
+  GFL_STD_MemClear(pDOC, sizeof(DEBUG_OHNO_CONTROL));
+
+  
+  {
+    pDOC->aInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
+    pDOC->aInit.datasize = 256;   //データ全体サイズ
+    pDOC->aInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.datasize);     // データ
+    pDOC->aInit.ConfusionID = 12;
+    pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
+
+
+    pDOC->aInit.pData[12]=2;
+    pDOC->aInit.pData[2]=2;
+    pDOC->aInit.pData[32]=2;
+    pDOC->aInit.pData[102]=2;
+    pDOC->aInit.pData[222]=2;
+    pDOC->aInit.pData[129]=2;
+
+    
+    pDOC->pDBWork=DELIVERY_BEACON_Init(&pDOC->aInit);
+    GF_ASSERT(DELIVERY_BEACON_SendStart(pDOC->pDBWork));
+  }
+  _CHANGE_STATE( _loop ); // 
+
+  return GFL_PROC_RES_FINISH;
+}
+
+//-------------------------------------------------------------------
+
+
+
+
+static BOOL _getTime(void* pCtl)
+{
+  DEBUG_OHNO_CONTROL* pDOC = pCtl;
+  int i,j;
+
+  DELIVERY_BEACON_Main(pDOC->pDBWork);
+  
+  pDOC->counter++;
+
+  if(DELIVERY_BEACON_RecvCheck(pDOC->pDBWork) ){  // もう通信している場合終了処理
+    OS_TPrintf("受信完了 %d\n",pDOC->counter);
+
+    for(j=0;j<pDOC->aInit.datasize;){
+      for(i=0;i<16;i++){
+        OS_TPrintf("%x ",pDOC->aInit.pData[j]);
+        j++;
+      }
+      OS_TPrintf("\n");
+    }
+    DELIVERY_BEACON_End(pDOC->pDBWork);
+    _CHANGE_STATE(NetTestNone);
+  }
+  return FALSE;
+}
+
+
+static GFL_PROC_RESULT NetDeliveryRecvProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+  DEBUG_OHNO_CONTROL * pDOC;
+
+  
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OHNO_DEBUG, 0x30000 );
+  pDOC = GFL_PROC_AllocWork( proc, sizeof(DEBUG_OHNO_CONTROL), HEAPID_OHNO_DEBUG );
+  GFL_STD_MemClear(pDOC, sizeof(DEBUG_OHNO_CONTROL));
+
+  
+  {
+    pDOC->aInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
+    pDOC->aInit.datasize = 256;   //データ全体サイズ
+    pDOC->aInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.datasize);     // データ
+    pDOC->aInit.ConfusionID = 12;
+    pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
+    
+    pDOC->pDBWork=DELIVERY_BEACON_Init(&pDOC->aInit);
+    GF_ASSERT(DELIVERY_BEACON_RecvStart(pDOC->pDBWork));
+  }
+  pDOC->counter=0;
+  _CHANGE_STATE( _getTime ); // 
+
+
+  return GFL_PROC_RES_FINISH;
+}
+
+
+// プロセス定義データ
+const GFL_PROC_DATA NetDeliverySendProcData = {
+  NetDeliverySendProc_Init,
+  DebugOhnoMainProcMain,
+  DebugOhnoMainProcEnd,
+};
+
+
+
+// プロセス定義データ
+const GFL_PROC_DATA NetDeliveryRecvProcData = {
+  NetDeliveryRecvProc_Init,
+  DebugOhnoMainProcMain,
+  DebugOhnoMainProcEnd,
+};
 
 
