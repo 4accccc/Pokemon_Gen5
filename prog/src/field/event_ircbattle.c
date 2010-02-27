@@ -410,9 +410,7 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
   dbw->ctrl =  GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(gsys) ); 
   dbw->gamedata = GAMESYSTEM_GetGameData(gsys);
   dbw->gsys = gsys;
-
   dbw->para =BATTLE_PARAM_Create(HEAPID_PROC);
-
   bxsv = BATTLE_BOX_SAVE_GetBattleBoxSave(dbw->ctrl);
 
   {

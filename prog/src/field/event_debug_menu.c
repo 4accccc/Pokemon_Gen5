@@ -836,8 +836,8 @@ static BOOL debugMenuCallProc_OpenGTSNegoMenu( DEBUG_MENU_EVENT_WORK *wk )
 static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 {
   {
-    DREAMWORLD_SAVEDATA *pdw = SaveControl_DataPtrGet(SaveControl_GetPointer(), GMDATA_ID_DREAMWORLD);
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData(wk->gmSys);
+    DREAMWORLD_SAVEDATA *pdw = SaveControl_DataPtrGet(GAMEDATA_GetSaveControlWork(gamedata), GMDATA_ID_DREAMWORLD);
     POKEPARTY *party = GAMEDATA_GetMyPokemon(gamedata);
     POKEMON_PARAM *pp = PokeParty_GetMemberPointer(party, 0);
     POKEMON_PASO_PARAM  *ppp = PP_GetPPPPointer( pp );
@@ -859,7 +859,7 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
     }
 
     {//ÉåÉRÅ[Éh
-      long* rec = (long*)SaveData_GetRecord(SaveControl_GetPointer());
+      long* rec = (long*)SaveData_GetRecord(GAMEDATA_GetSaveControlWork(gamedata));
 
       OS_TPrintf("before record capture=%d, fishing=%d\n", rec[RECID_CAPTURE_POKE], rec[RECID_FISHING_SUCCESS]);
       rec[RECID_CAPTURE_POKE] = 7896;

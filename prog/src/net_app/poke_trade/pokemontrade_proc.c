@@ -2849,10 +2849,6 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMEDATA* pGameData,BOOL
   if(bDebug){
 
     GF_ASSERT(pWork->pBox);
- //   pWork->pBox = BOX_DAT_InitManager(pWork->heapID,SaveControl_GetPointer());
- //   pWork->pMy = MyStatus_AllocWork(pWork->heapID);
-
-//    MyStatus_Init(pWork->pMy);
     
     pWork->pMailBlock = GFL_HEAP_AllocClearMemory(pWork->heapID,MAIL_GetBlockWorkSize());
     MAIL_Init(pWork->pMailBlock);

@@ -67,7 +67,7 @@ struct _DEBUGITEM_PARAM {
 //  GMEVENT * event;
   GAMESYS_WORK * gsys;
 //  FIELDMAP_WORK * fieldmap;
-  SAVE_CONTROL_WORK *ctrl;
+//  SAVE_CONTROL_WORK *ctrl;
   GFL_BMPWIN* win;
   GFL_SKB*      skb;
   GFL_MSGDATA *MsgManager;      // 名前入力メッセージデータマネージャー
@@ -680,12 +680,13 @@ GMEVENT* EVENT_DebugItemMake( GAMESYS_WORK * gsys, void * work )
   GMEVENT * new_event;
   EVENT_DEBUGITEM_WORK * wk;
   HEAPID heapID = HEAPID_FIELDMAP;
+ GAMEDATA* gamedata=  GAMESYSTEM_GetGameData(gsys);
 
   new_event = GMEVENT_Create( gsys, NULL, EVENT_DebugItemMain, sizeof( EVENT_DEBUGITEM_WORK ) );
   wk = GMEVENT_GetEventWork(new_event);
   GFL_STD_MemClear(wk, sizeof(EVENT_DEBUGITEM_WORK));
   wk->mode = DEBUGITEM_MODE_MYBAG;
-  wk->ctrl = SaveControl_GetPointer();
+  //wk->ctrl = GAMEDATA_GetSaveControlWork(gamedata);
   wk->gsys = gsys;
   wk->heapID = heapID;
   wk->itemnum = 1;
@@ -706,12 +707,13 @@ GMEVENT* EVENT_DebugSecretItemMake( GAMESYS_WORK * gsys, void * work )
   GMEVENT * new_event;
   EVENT_DEBUGITEM_WORK * wk;
   HEAPID heapID = HEAPID_FIELDMAP;
+  GAMEDATA* gamedata=  GAMESYSTEM_GetGameData(gsys);
 
   new_event = GMEVENT_Create( gsys, NULL, EVENT_DebugItemMain, sizeof( EVENT_DEBUGITEM_WORK ) );
   wk = GMEVENT_GetEventWork(new_event);
   GFL_STD_MemClear(wk, sizeof(EVENT_DEBUGITEM_WORK));
   wk->mode = DEBUGITEM_MODE_SECRETITEM;
-  wk->ctrl = SaveControl_GetPointer();
+  //wk->ctrl = GAMEDATA_GetSaveControlWork(gamedata);
   wk->gsys = gsys;
   wk->heapID = heapID;
   wk->itemnum = 1;

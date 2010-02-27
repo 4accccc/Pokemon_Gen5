@@ -859,6 +859,7 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 
   pWork->heapID = HEAPID_GAMESYNC;
 
+  GF_ASSERT(pParent);
   if(pParent){
     pWork->pParent = pParent;
     pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
@@ -879,35 +880,6 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
       _CHANGE_STATE(_ghttpPokemonListDownload);
       break;
     }
-  }
-  else{
-#if 0  //OHNODEBUGにもっていかないと
-    pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, 1234, NULL);
-    _pWork=pWork;
-    pWork->trayno=0;
-    pWork->indexno=0;
-//    pWork->pSaveData = SaveControl_GetPointer();
-    pWork->pBox = BOX_DAT_InitManager(pWork->heapID,SaveControl_GetPointer());
-
-    {
-      POKEMON_PARAM *pp;
-      BOX_MANAGER* pBox = pWork->pBox;
-      pp = PP_Create(MONSNO_MARIRU, 100, 123456, pWork->heapID);
-      {
-        u16 oyaName[5] = {L'デ',L'バ',L'ッ',L'グ',0xFFFF};
-        POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(MONSNO_MARIRU, 0, GFL_HEAPID_APP);
-        u32 ret = POKE_PERSONAL_GetParam(ppd, POKEPER_ID_sex);
-        PP_SetupEx(pp, MONSNO_MARIRU, 3, 123456,PTL_SETUP_POW_AUTO, ret);
-        PP_Put( pp , ID_PARA_oyaname_raw , (u32)oyaName );
-
-        BOXDAT_PutPokemonBox(pBox, 0, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp));
-
-        POKE_PERSONAL_CloseHandle(ppd);
-      }
-      GFL_HEAP_FreeMemory(pp);
-    }
-    _CHANGE_STATE(_BoxPokeMove);
-#endif
   }
 
   pWork->pDispWork = GSYNC_DISP_Init(pWork->heapID);
