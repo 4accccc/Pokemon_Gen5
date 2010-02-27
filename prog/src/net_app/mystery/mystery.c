@@ -1590,18 +1590,27 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
     { 
+      BOOL is_cancel  = FALSE;
       switch( p_wk->mode )
       { 
       case MYSTERY_NET_MODE_WIFI:
         MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_CANCEL_WIFI_DOWNLOAD );
+        is_cancel  = TRUE;
         break;
       case MYSTERY_NET_MODE_WIRELESS:
-        MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_END_BEACON_DOWNLOAD );
+        if( MYSTERY_NET_GetState( p_wk->p_net, MYSTERY_NET_STATE_MAIN_BEACON_DOWNLOAD ) )
+        { 
+          MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_END_BEACON_DOWNLOAD );
+          is_cancel  = TRUE;
+        }
         break;
       }
 
-      //Bキャンセルorタイムアウト
-      *p_seq = SEQ_NO_GIFT_INIT;
+      if( is_cancel )
+      { 
+        //Bキャンセルorタイムアウト
+        *p_seq = SEQ_NO_GIFT_INIT;
+      }
     }
     break;
 
