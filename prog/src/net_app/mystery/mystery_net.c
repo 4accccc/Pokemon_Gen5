@@ -20,9 +20,11 @@
 #include "net/dwc_rap.h"
 #include "net/wih_dwc.h"
 #include "system/net_err.h"
+#include "net/delivery_beacon.h"
 
 //セーブデータ
 #include "savedata/wifilist.h"
+#include "savedata/mystery_data.h"
 
 //外部公開
 #include "mystery_net.h"
@@ -111,6 +113,7 @@ struct _MYSTERY_NET_WORK
   BOOL              is_exit;
   WIFI_DOWNLOAD_DATA  wifi_download_data;
   const SAVE_CONTROL_WORK *cp_sv;
+  DELIVERY_BEACON_WORK  *p_beacon;
 } ;
 
 //-------------------------------------
@@ -145,12 +148,14 @@ static void SEQFUNC_Wait( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_InitBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_ExitBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_MainBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_InitWirelessScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_ExitWirelessScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_MainWirelessScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_InitIrcScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_ExitIrcScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_MainIrcScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
+static void SEQFUNC_InitBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_ExitBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_MainBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
+static void SEQFUNC_InitIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_ExitIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_MainIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
@@ -330,6 +335,14 @@ void MYSTERY_NET_ChangeStateReq( MYSTERY_NET_WORK *p_wk, MYSTERY_NET_STATE state
     SEQ_SetNext( &p_wk->seq, SEQFUNC_LogoutWifi );
     break;
 
+  case MYSTERY_NET_STATE_START_BEACON_DOWNLOAD:
+    SEQ_SetNext( &p_wk->seq, SEQFUNC_InitBeaconDownload );
+    break;
+
+  case MYSTERY_NET_STATE_END_BEACON_DOWNLOAD:
+    SEQ_SetNext( &p_wk->seq, SEQFUNC_ExitBeaconDownload );
+    break;
+
   }
 }
 
@@ -368,7 +381,18 @@ MYSTERY_NET_STATE MYSTERY_NET_GetState( const MYSTERY_NET_WORK *cp_wk )
   { 
     return MYSTERY_NET_STATE_LOGOUT_WIFI;
   }
-
+  else if( SEQ_IsComp( &cp_wk->seq, SEQFUNC_InitBeaconDownload ) )
+  { 
+    return MYSTERY_NET_STATE_START_BEACON_DOWNLOAD;
+  }
+  else if( SEQ_IsComp( &cp_wk->seq, SEQFUNC_MainBeaconDownload ) )
+  { 
+    return MYSTERY_NET_STATE_MAIN_BEACON_DOWNLOAD;
+  }
+  else if( SEQ_IsComp( &cp_wk->seq, SEQFUNC_ExitBeaconDownload ) )
+  { 
+    return MYSTERY_NET_STATE_END_BEACON_DOWNLOAD;
+  }
 
   GF_ASSERT(0);
   return 0;
@@ -545,6 +569,127 @@ static void SEQFUNC_MainBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
 
   WIH_DWC_MainLoopScanBeaconData();
   p_wk->comm_status = WIH_DWC_GetAllBeaconTypeBit();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビーコンダウンロード開始
+ *
+ *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_InitBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_INIT_WAIT,
+    SEQ_END,
+  };
+
+
+  MYSTERY_NET_WORK *p_wk  = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    { 
+      DELIVERY_BEACON_INIT  belivery_beacon_init;
+      GFL_STD_MemClear( &belivery_beacon_init, sizeof(DELIVERY_BEACON_INIT) );
+      belivery_beacon_init.NetDevID = WB_NET_MYSTERY;
+      belivery_beacon_init.datasize = sizeof( DOWNLOAD_GIFT_DATA );
+      belivery_beacon_init.pData    = NULL;
+      belivery_beacon_init.ConfusionID  = 0;
+      belivery_beacon_init.heapID       = p_wk->heapID;
+      p_wk->p_beacon  = DELIVERY_BEACON_Init( &belivery_beacon_init );
+      DELIVERY_BEACON_RecvStart( p_wk->p_beacon );
+    }
+    *p_seq = SEQ_INIT_WAIT;
+    break;
+
+  case SEQ_INIT_WAIT:
+    if( GFL_NET_IsInit() )
+		{
+      //通信アイコン
+      GFL_NET_WirelessIconEasy_HoldLCD( TRUE, p_wk->heapID );
+      GFL_NET_ReloadIcon();
+
+      *p_seq = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    OS_TFPrintf( 3, "ビーコン初期化\n" );
+    SEQ_SetNext( p_seqwk, SEQFUNC_MainBeaconDownload );
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビーコンサーチ終了
+ *
+ *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_ExitBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_WIH_EXIT,
+    SEQ_EXIT_WAIT,
+    SEQ_END,
+  };
+  MYSTERY_NET_WORK *p_wk  = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_WIH_EXIT:
+    DELIVERY_BEACON_End( p_wk->p_beacon );
+    *p_seq  = SEQ_EXIT_WAIT;
+    break;
+
+  case SEQ_EXIT_WAIT:
+    if( !GFL_NET_IsInit() )
+		{
+      *p_seq = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    OS_TFPrintf( 3, "ビーコン開放\n" );
+    SEQ_SetNext( p_seqwk, SEQFUNC_Wait );
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビーコンサーチ終了
+ *
+ *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					  シーケンス
+ *	@param	*p_wk_adrs		  	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_MainBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  MYSTERY_NET_WORK *p_wk  = p_wk_adrs;
+
+  DELIVERY_BEACON_Main( p_wk->p_beacon );
+
+  if( DELIVERY_BEACON_RecvCheck(p_wk->p_beacon) )
+  { 
+    OS_TFPrintf( 3, "ビーコン受け取り\n" );
+    SEQ_SetNext( p_seqwk, SEQFUNC_ExitBeaconDownload );
+  }
 }
 
 //----------------------------------------------------------------------------

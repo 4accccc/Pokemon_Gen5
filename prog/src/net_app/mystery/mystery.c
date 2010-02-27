@@ -1533,9 +1533,14 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   switch( *p_seq )
   { 
   case SEQ_INIT:
-    if( p_wk->mode  == MYSTERY_NET_MODE_WIFI )
+    switch( p_wk->mode )
     { 
+    case MYSTERY_NET_MODE_WIFI:
       MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_WIFI_DOWNLOAD );
+      break;
+    case MYSTERY_NET_MODE_WIRELESS:
+      MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_START_BEACON_DOWNLOAD );
+      break;
     }
 
     //さがしています
@@ -1544,8 +1549,6 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     break;
 
   case SEQ_SEARCH:
-
-    if( p_wk->mode  == MYSTERY_NET_MODE_WIFI )
     { 
       if( MYSTERY_NET_GetState( p_wk->p_net)  == MYSTERY_NET_STATE_WAIT )
       {
@@ -1584,20 +1587,17 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
      
       }
     }
-    else
-    { 
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
-      { 
-        //見つかった  本来Aボタンじゃない
-        *p_seq  = SEQ_SELECT_GIFT_MSG;
-      }
-    }
 
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
     { 
-      if( p_wk->mode  == MYSTERY_NET_MODE_WIFI )
+      switch( p_wk->mode )
       { 
+      case MYSTERY_NET_MODE_WIFI:
         MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_CANCEL_WIFI_DOWNLOAD );
+        break;
+      case MYSTERY_NET_MODE_WIRELESS:
+        MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_END_BEACON_DOWNLOAD );
+        break;
       }
 
       //Bキャンセルorタイムアウト
