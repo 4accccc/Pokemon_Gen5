@@ -284,7 +284,6 @@ typedef enum{
 //=====================================
 typedef struct 
 {
-  IRC_COMPATIBLE_SAVEDATA *p_sv;
 	STRBUF	*p_name;
 	u32			score			:7;
 	u32			play_cnt	:10;
@@ -498,8 +497,8 @@ static void Scroll_DeleteWriteData( GFL_BMP_DATA **pp_data, u16 data_len );
 ///	RANKING_DATA
 //=====================================
 static RANKING_DATA	*RANKING_DATA_Create( GAMEDATA *p_gamedata, HEAPID heapID );
-static void RANKING_DATA_Delete( RANKING_DATA	*p_data );
-static u16 RANKING_DATA_GetRankNum( const RANKING_DATA *cp_data );
+static void RANKING_DATA_Delete( RANKING_DATA	*p_data, GAMEDATA *p_gamedata );
+static u16 RANKING_DATA_GetRankNum( GAMEDATA *p_gamedata );
 //-------------------------------------
 ///	TOUCH
 //=====================================
@@ -709,7 +708,7 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 			GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_FONT_S),
 			GRAPHIC_GetBgWorkConst(&p_wk->grp),
 			p_wk->p_rank_data,
-			RANKING_DATA_GetRankNum( p_wk->p_rank_data ),
+			RANKING_DATA_GetRankNum(GAMESYSTEM_GetGameData(p_rank_param->p_gamesys)),
 			HEAPID_IRCRANKING
 			);
 
@@ -732,6 +731,7 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 static GFL_PROC_RESULT IRC_RANKING_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_param, void *p_work )
 {	
 	IRC_RANKING_WORK	*p_wk	= p_work;
+  IRC_RANKING_PARAM	*p_rank_param	=p_param;
 
 	//モジュール破棄
 	APPBAR_Exit( p_wk->p_appbar );
@@ -743,7 +743,7 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void
 	GRAPHIC_Exit( &p_wk->grp );
 
 	//データ破棄
-	RANKING_DATA_Delete( p_wk->p_rank_data );
+	RANKING_DATA_Delete( p_wk->p_rank_data, GAMESYSTEM_GetGameData(p_rank_param->p_gamesys) );
 
   GFL_FONT_Delete( p_wk->p_font );
   PRINTSYS_QUE_Delete( p_wk->p_que );
@@ -2354,8 +2354,8 @@ static void Scroll_DeleteWriteData( GFL_BMP_DATA **pp_data, u16 data_len )
 //-----------------------------------------------------------------------------
 static RANKING_DATA	*RANKING_DATA_Create( GAMEDATA *p_gamedata, HEAPID heapID )
 {	
-	RANKING_DATA	*p_data;
-  SAVE_CONTROL_WORK *p_sv_ctrl;
+	RANKING_DATA	          *p_data;
+  SAVE_CONTROL_WORK       *p_sv_ctrl;
   IRC_COMPATIBLE_SAVEDATA * p_sv;
   u16 data_len;
 
@@ -2371,12 +2371,16 @@ static RANKING_DATA	*RANKING_DATA_Create( GAMEDATA *p_gamedata, HEAPID heapID )
   }
 
   p_sv	= IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
-  data_len  = IRC_COMPATIBLE_SV_GetRankNum( p_sv );
+  data_len  = RANKING_DATA_GetRankNum( p_gamedata );
+
+  if( data_len == 0 )
+  { 
+    return NULL;
+  }
 
 	//確保
 	p_data	= GFL_HEAP_AllocMemory( heapID, sizeof(RANKING_DATA)*data_len );
 	GFL_STD_MemClear( p_data, sizeof(RANKING_DATA)*data_len );
-  p_data->p_sv  = p_sv;
 
 	//データ読み込み
 	{	
@@ -2388,19 +2392,19 @@ static RANKING_DATA	*RANKING_DATA_Create( GAMEDATA *p_gamedata, HEAPID heapID )
 		u8	pre_rank	= 0;
     u8  sex;
 
-		rank_max	= IRC_COMPATIBLE_SV_GetRankNum( p_data->p_sv );
-		new_rank	= IRC_COMPATIBLE_SV_GetNewRank( p_data->p_sv );
+		rank_max	= IRC_COMPATIBLE_SV_GetRankNum( p_sv );
+		new_rank	= IRC_COMPATIBLE_SV_GetNewRank( p_sv );
 		GF_ASSERT( rank_max <= data_len );
 		for( i = 0; i < rank_max; i++ )
 		{	
 			//名前
 			p_data[i].p_name	= GFL_STR_CreateBuffer( IRC_COMPATIBLE_SV_DATA_NAME_LEN, heapID );
-			GFL_STR_SetStringCode( p_data[i].p_name, IRC_COMPATIBLE_SV_GetPlayerName( p_data->p_sv, i ) );	
+			GFL_STR_SetStringCode( p_data[i].p_name, IRC_COMPATIBLE_SV_GetPlayerName( p_sv, i ) );	
 			//スコア
-			p_data[i].score	= IRC_COMPATIBLE_SV_GetScore( p_data->p_sv, i );
+			p_data[i].score	= IRC_COMPATIBLE_SV_GetScore( p_sv, i );
 				
 			//回数
-			p_data[i].play_cnt	= IRC_COMPATIBLE_SV_GetPlayCount( p_data->p_sv, i );
+			p_data[i].play_cnt	= IRC_COMPATIBLE_SV_GetPlayCount( p_sv, i );
 			//ランク
 			//点数が下ならそのときのランク
 			//同じならば同ランク
@@ -2417,7 +2421,7 @@ static RANKING_DATA	*RANKING_DATA_Create( GAMEDATA *p_gamedata, HEAPID heapID )
 				GF_ASSERT(0);
 			}
 			//パレット
-      sex = IRC_COMPATIBLE_SV_GetSex( p_data->p_sv, i );
+      sex = IRC_COMPATIBLE_SV_GetSex( p_sv, i );
 			if( new_rank == i )
 			{	
 				p_data[i].plt		= 5 + !sex * 5;
@@ -2454,13 +2458,14 @@ static RANKING_DATA	*RANKING_DATA_Create( GAMEDATA *p_gamedata, HEAPID heapID )
  *
  */
 //-----------------------------------------------------------------------------
-static void RANKING_DATA_Delete( RANKING_DATA	*p_data )
+static void RANKING_DATA_Delete( RANKING_DATA	*p_data, GAMEDATA *p_gamedata )
 {
+  if( p_data )
 	{	
 		u32 rank_max;
 		int i;
 
-		rank_max	= IRC_COMPATIBLE_SV_GetRankNum( p_data->p_sv );
+		rank_max	= RANKING_DATA_GetRankNum( p_gamedata );
 		for( i = 0; i < rank_max; i++ )
 		{	
 			if( p_data[i].p_name )
@@ -2468,9 +2473,10 @@ static void RANKING_DATA_Delete( RANKING_DATA	*p_data )
 				GFL_STR_DeleteBuffer( p_data[i].p_name );
 			}
 		}
+
+    GFL_HEAP_FreeMemory( p_data );
 	}
 
-	GFL_HEAP_FreeMemory( p_data );
 }
 
 //----------------------------------------------------------------------------
@@ -2482,9 +2488,9 @@ static void RANKING_DATA_Delete( RANKING_DATA	*p_data )
  *	@return ランキングの数
  */
 //-----------------------------------------------------------------------------
-static u16 RANKING_DATA_GetRankNum( const RANKING_DATA *cp_data )
+static u16 RANKING_DATA_GetRankNum( GAMEDATA *p_gamedata )
 { 
-  return IRC_COMPATIBLE_SV_GetRankNum( cp_data->p_sv );
+  return IRC_COMPATIBLE_SV_GetRankNum( IRC_COMPATIBLE_SV_GetSavedata( GAMEDATA_GetSaveControlWork(p_gamedata) ) );
 }
 
 //=============================================================================
