@@ -691,7 +691,10 @@ const GFL_PROC_DATA NetFourChildProcData = {
 };
 
 //--------------------------------------------------------------------
+//ここから不思議な贈り物
+//--------------------------------------------------------------------
 
+//不思議な贈り物のデータをセット
 static void _fushigiDataSet(DEBUG_OHNO_CONTROL * pDOC)
 {
   DOWNLOAD_GIFT_DATA* pDG;
@@ -715,7 +718,7 @@ static void _fushigiDataSet(DEBUG_OHNO_CONTROL * pDOC)
 
 }
 
-
+//親機なのでビーコン送信を行っているだけ
 static BOOL _loop(void* pCtl)
 {
   DEBUG_OHNO_CONTROL* pDOC = pCtl;
@@ -723,7 +726,7 @@ static BOOL _loop(void* pCtl)
   return FALSE;
 }
 
-
+//不思議な贈り物送信最初
 static GFL_PROC_RESULT NetDeliverySendProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
   DEBUG_OHNO_CONTROL * pDOC;
@@ -733,15 +736,8 @@ static GFL_PROC_RESULT NetDeliverySendProc_Init(GFL_PROC * proc, int * seq, void
   pDOC = GFL_PROC_AllocWork( proc, sizeof(DEBUG_OHNO_CONTROL), HEAPID_OHNO_DEBUG );
   GFL_STD_MemClear(pDOC, sizeof(DEBUG_OHNO_CONTROL));
 
-  
   {
-
     _fushigiDataSet(pDOC);
-
-
-
-
-    
     pDOC->pDBWork=DELIVERY_BEACON_Init(&pDOC->aInit);
     GF_ASSERT(DELIVERY_BEACON_SendStart(pDOC->pDBWork));
   }
@@ -750,11 +746,35 @@ static GFL_PROC_RESULT NetDeliverySendProc_Init(GFL_PROC * proc, int * seq, void
   return GFL_PROC_RES_FINISH;
 }
 
+
+//トライアルハウスもビーコン配信
+static GFL_PROC_RESULT NetDeliveryTriSendProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+  DEBUG_OHNO_CONTROL * pDOC;
+
+  
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OHNO_DEBUG, 0x30000 );
+  pDOC = GFL_PROC_AllocWork( proc, sizeof(DEBUG_OHNO_CONTROL), HEAPID_OHNO_DEBUG );
+  GFL_STD_MemClear(pDOC, sizeof(DEBUG_OHNO_CONTROL));
+
+  {
+    //@todo ここにトライアルハウステストデータを入れる
+
+    pDOC->pDBWork=DELIVERY_BEACON_Init(&pDOC->aInit);
+    GF_ASSERT(DELIVERY_BEACON_SendStart(pDOC->pDBWork));
+  }
+  _CHANGE_STATE( _loop ); // 
+
+  return GFL_PROC_RES_FINISH;
+}
+
+
+
 //-------------------------------------------------------------------WIRLESS
 
 
 
-
+// こちらは受信テスト
 static BOOL _getTime(void* pCtl)
 {
   DEBUG_OHNO_CONTROL* pDOC = pCtl;
@@ -780,7 +800,7 @@ static BOOL _getTime(void* pCtl)
   return FALSE;
 }
 
-
+//受信のために領域確保
 static void _fushigiDataRecv(DEBUG_OHNO_CONTROL * pDOC)
 {
   DOWNLOAD_GIFT_DATA* pDG;
@@ -793,8 +813,7 @@ static void _fushigiDataRecv(DEBUG_OHNO_CONTROL * pDOC)
 
 }
 
-
-
+//受信の初期化
 static GFL_PROC_RESULT NetDeliveryRecvProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
   DEBUG_OHNO_CONTROL * pDOC;
@@ -819,7 +838,7 @@ static GFL_PROC_RESULT NetDeliveryRecvProc_Init(GFL_PROC * proc, int * seq, void
 }
 
 
-// プロセス定義データ
+// プロセス定義データ ビーコン配信
 const GFL_PROC_DATA NetDeliverySendProcData = {
   NetDeliverySendProc_Init,
   DebugOhnoMainProcMain,
@@ -827,10 +846,18 @@ const GFL_PROC_DATA NetDeliverySendProcData = {
 };
 
 
-
-// プロセス定義データ
+// プロセス定義データ  ビーコン受信
 const GFL_PROC_DATA NetDeliveryRecvProcData = {
   NetDeliveryRecvProc_Init,
+  DebugOhnoMainProcMain,
+  DebugOhnoMainProcEnd,
+};
+
+
+
+// プロセス定義データ  トライアルハウスビーコン配信
+const GFL_PROC_DATA NetDeliveryTriSendProcData = {
+  NetDeliveryTriSendProc_Init,
   DebugOhnoMainProcMain,
   DebugOhnoMainProcEnd,
 };
@@ -912,8 +939,7 @@ static GFL_PROC_RESULT NetDeliveryIRCRecvProc_Init(GFL_PROC * proc, int * seq, v
   return GFL_PROC_RES_FINISH;
 }
 
-
-
+//赤外線用テストデータセット
 static void _fushigiDataIRCSet(DEBUG_OHNO_CONTROL * pDOC)
 {
   DOWNLOAD_GIFT_DATA* pDG;
@@ -966,7 +992,7 @@ static GFL_PROC_RESULT NetDeliveryIRCSendProc_Init(GFL_PROC * proc, int * seq, v
   return GFL_PROC_RES_FINISH;
 }
 
-// プロセス定義データ
+// プロセス定義データ   赤外線配信部分
 const GFL_PROC_DATA NetDeliveryIRCSendProcData = {
   NetDeliveryIRCSendProc_Init,
   DebugOhnoMainProcMain,
@@ -975,7 +1001,7 @@ const GFL_PROC_DATA NetDeliveryIRCSendProcData = {
 
 
 
-// プロセス定義データ
+// プロセス定義データ  赤外線受信テスト
 const GFL_PROC_DATA NetDeliveryIRCRecvProcData = {
   NetDeliveryIRCRecvProc_Init,
   DebugOhnoMainProcMain,

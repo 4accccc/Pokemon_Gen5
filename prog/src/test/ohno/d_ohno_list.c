@@ -159,14 +159,14 @@ static const D_MENULIST DebugMenuList[] = {
 		FS_OVERLAY_ID(pokemon_trade)
 	},
 	{//
-//		DEBUG_OHNO_MSG0013, 
-//		&PokemonTradeProcData,	
-//		_PokeIrcTradeWorkCreate,
-//		FS_OVERLAY_ID(pokemon_trade)
-    DEBUG_OHNO_MSG0025,
-    &NetDeliveryIRCRecvProcData,
-		NULL,
-		FS_OVERLAY_ID(ohno_debugapp)
+		DEBUG_OHNO_MSG0013, 
+		&PokemonTradeProcData,	
+		_PokeIrcTradeWorkCreate,
+		FS_OVERLAY_ID(pokemon_trade)
+//    DEBUG_OHNO_MSG0025,
+//    &NetDeliveryIRCRecvProcData,
+//		NULL,
+//		FS_OVERLAY_ID(ohno_debugapp)
 	},
 	{//
 //		DEBUG_OHNO_MSG0002, 
@@ -179,8 +179,10 @@ static const D_MENULIST DebugMenuList[] = {
 	{//
 //		DEBUG_OHNO_MSG0003, 
 //		&DebugOhnoMainProcData,	
-		DEBUG_OHNO_MSG0023, 
-		&NetDeliveryRecvProcData,	
+//		DEBUG_OHNO_MSG0023, 
+//		&NetDeliveryRecvProcData,
+		DEBUG_OHNO_MSG0026, 
+		&NetDeliveryTriSendProcData,
 		NULL,
 		FS_OVERLAY_ID(ohno_debugapp)
 	},

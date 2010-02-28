@@ -8,17 +8,8 @@
 //======================================================================
 
 #pragma once
-#include "net/network_define.h"
+#include "net/delivery_base.h"
 
-#define DELIVERY_IRC_MAX_NUM  (9*88)  //送信サイズ
-
-typedef struct {
-  int NetDevID;   // //通信種類
-  int datasize;   //データ全体サイズ
-  u8* pData;     // データ  受信バッファ
-  u16 ConfusionID;   //混線しないためのID 送信側で必要
-  HEAPID heapID;    //HEAP
-} DELIVERY_IRC_INIT;
 
 #define DELIVERY_IRC_FUNC (0)   //動作中
 #define DELIVERY_IRC_SUCCESS (1)  //成功
