@@ -454,6 +454,20 @@ BOOL MYSTERY_NET_GetDownloadData( const MYSTERY_NET_WORK *cp_wk, void *p_data, u
   }
   return FALSE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エラー修復戻り先を取得
+ *
+ *	@param	MYSTERY_NET_WORK *p_wk  ワーク
+ *
+ *	@return MYSTERY_NET_ERROR_REPAIR_TYPEに準じる
+ */
+//-----------------------------------------------------------------------------
+MYSTERY_NET_ERROR_REPAIR_TYPE MYSTERY_NET_GetErrorRepairType( MYSTERY_NET_WORK *p_wk )
+{ 
+  return MYSTERY_NET_ERROR_REPAIR_NONE;
+}
+
 //=============================================================================
 /**
  *						SEQFUNC

@@ -202,7 +202,7 @@ typedef enum
 #define MYSTERY_MENU_ALPHA_EV2  (3)
 
 
-#define MYSTERY_RECV_TIMEOUT    (120)
+#define MYSTERY_RECV_TIMEOUT    (60*60)
 
 //=============================================================================
 /**

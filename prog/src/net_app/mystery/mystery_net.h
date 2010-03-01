@@ -76,3 +76,13 @@ extern GAME_COMM_STATUS_BIT MYSTERY_NET_GetCommStatus( const MYSTERY_NET_WORK *c
 
 //ダウンロードしたデータうけとり
 extern BOOL MYSTERY_NET_GetDownloadData( const MYSTERY_NET_WORK *cp_wk, void *p_data, u32 size );
+
+//エラー修復戻り先
+typedef enum
+{ 
+  MYSTERY_NET_ERROR_REPAIR_NONE,        //エラーなし
+  MYSTERY_NET_ERROR_REPAIR_RETURN,      //１つ前の選択肢まで戻る
+  MYSTERY_NET_ERROR_REPAIR_DISCONNECT,  //切断する（Wi-Fi時にしかないはず）
+  MYSTERY_NET_ERROR_REPAIR_FATAL,       //電源切断
+}MYSTERY_NET_ERROR_REPAIR_TYPE;
+extern MYSTERY_NET_ERROR_REPAIR_TYPE MYSTERY_NET_GetErrorRepairType( MYSTERY_NET_WORK *p_wk );
