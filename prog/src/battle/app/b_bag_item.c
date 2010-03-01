@@ -186,7 +186,7 @@ void BattleBag_PocketInit( BBAG_WORK * wk )
 		}
 	}
 
-	for( i=0; i<5; i++ ){
+	for( i=0; i<BATTLE_BAG_POKE_MAX; i++ ){
 		if( wk->item_max[i] == 0 ){
 			wk->scr_max[i] = 0;
 		}else{

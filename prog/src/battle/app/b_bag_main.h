@@ -302,8 +302,12 @@ typedef struct {
 
 	s8	page_mv;		// アイテム選択ページの移動方向
 
+/*
 	u8	item_max[5];	// アイテム数
 	u8	scr_max[5];		// アイテムスクロールカウンタ最大値
+*/
+	u8	item_max[BATTLE_BAG_POKE_MAX];	// アイテム数
+	u8	scr_max[BATTLE_BAG_POKE_MAX];		// アイテムスクロールカウンタ最大値
 
 	u8	get_seq;		// 捕獲デモシーケンス
 	u8	get_cnt;		// 捕獲デモカウンタ
