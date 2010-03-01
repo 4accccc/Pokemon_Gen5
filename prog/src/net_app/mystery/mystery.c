@@ -64,7 +64,6 @@ FS_EXTERN_OVERLAY(dpw_common);
 #ifdef PM_DEBUG
 #endif //PM_DEBUG
 
-
 //=============================================================================
 /**
  *					定数宣言
@@ -201,6 +200,9 @@ typedef enum
 
 #define MYSTERY_MENU_ALPHA_EV1  (15)
 #define MYSTERY_MENU_ALPHA_EV2  (3)
+
+
+#define MYSTERY_RECV_TIMEOUT    (120)
 
 //=============================================================================
 /**
@@ -1541,10 +1543,14 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     case MYSTERY_NET_MODE_WIRELESS:
       MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_START_BEACON_DOWNLOAD );
       break;
+    case MYSTERY_NET_MODE_IRC:
+      MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_START_IRC_DOWNLOAD );
+      break;
     }
 
     //さがしています
     MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_010, MYSTERY_TEXT_TYPE_STREAM );
+    p_wk->cnt = 0;
     *p_seq  = SEQ_SEARCH;
     break;
 
@@ -1584,11 +1590,11 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           NAGI_Printf( "取得できなかった\n" );
           *p_seq = SEQ_NO_GIFT_INIT;
         }
-     
       }
     }
 
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
+    //Bボタンキャンセルかタイムアウト
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL || p_wk->cnt++ > MYSTERY_RECV_TIMEOUT )
     { 
       BOOL is_cancel  = FALSE;
       switch( p_wk->mode )
@@ -1598,9 +1604,16 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         is_cancel  = TRUE;
         break;
       case MYSTERY_NET_MODE_WIRELESS:
-        if( MYSTERY_NET_GetState( p_wk->p_net ) )
+        if( MYSTERY_NET_GetState( p_wk->p_net ) == MYSTERY_NET_STATE_MAIN_BEACON_DOWNLOAD )
         { 
           MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_END_BEACON_DOWNLOAD );
+          is_cancel  = TRUE;
+        }
+        break;
+      case MYSTERY_NET_MODE_IRC:
+        if( MYSTERY_NET_GetState( p_wk->p_net ) == MYSTERY_NET_STATE_MAIN_IRC_DOWNLOAD )
+        { 
+          MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_END_IRC_DOWNLOAD );
           is_cancel  = TRUE;
         }
         break;
@@ -1610,6 +1623,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       { 
         //Bキャンセルorタイムアウト
         *p_seq = SEQ_NO_GIFT_INIT;
+        p_wk->cnt   = 0;
       }
     }
     break;

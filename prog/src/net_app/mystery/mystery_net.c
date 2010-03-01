@@ -21,6 +21,7 @@
 #include "net/wih_dwc.h"
 #include "system/net_err.h"
 #include "net/delivery_beacon.h"
+#include "net/delivery_irc.h"
 
 //セーブデータ
 #include "savedata/wifilist.h"
@@ -113,6 +114,7 @@ struct _MYSTERY_NET_WORK
   WIFI_DOWNLOAD_DATA  wifi_download_data;
   const SAVE_CONTROL_WORK *cp_sv;
   DELIVERY_BEACON_WORK  *p_beacon;
+  DELIVERY_IRC_WORK     *p_irc;
 
   char              buffer[MYSTERY_DOWNLOAD_GIFT_DATA_SIZE];
   BOOL              is_recv;
@@ -344,9 +346,16 @@ void MYSTERY_NET_ChangeStateReq( MYSTERY_NET_WORK *p_wk, MYSTERY_NET_STATE state
   case MYSTERY_NET_STATE_END_BEACON_DOWNLOAD:
     SEQ_SetNext( &p_wk->seq, SEQFUNC_ExitBeaconDownload );
     break;
+  case MYSTERY_NET_STATE_START_IRC_DOWNLOAD:
+    SEQ_SetNext( &p_wk->seq, SEQFUNC_InitIrcDownload );
+    break;
 
+  case MYSTERY_NET_STATE_END_IRC_DOWNLOAD:
+    SEQ_SetNext( &p_wk->seq, SEQFUNC_ExitIrcDownload );
+    break;
   }
 }
+
 
 //----------------------------------------------------------------------------
 /**
@@ -394,6 +403,18 @@ MYSTERY_NET_STATE MYSTERY_NET_GetState( const MYSTERY_NET_WORK *cp_wk )
   else if( SEQ_IsComp( &cp_wk->seq, SEQFUNC_ExitBeaconDownload ) )
   { 
     return MYSTERY_NET_STATE_END_BEACON_DOWNLOAD;
+  }
+  else if( SEQ_IsComp( &cp_wk->seq, SEQFUNC_InitIrcDownload ) )
+  { 
+    return MYSTERY_NET_STATE_START_IRC_DOWNLOAD;
+  }
+  else if( SEQ_IsComp( &cp_wk->seq, SEQFUNC_MainIrcDownload ) )
+  { 
+    return MYSTERY_NET_STATE_MAIN_IRC_DOWNLOAD;
+  }
+  else if( SEQ_IsComp( &cp_wk->seq, SEQFUNC_ExitIrcDownload ) )
+  { 
+    return MYSTERY_NET_STATE_END_IRC_DOWNLOAD;
   }
 
   GF_ASSERT(0);
@@ -692,6 +713,123 @@ static void SEQFUNC_MainBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     OS_TFPrintf( 3, "ビーコン受け取り\n" );
     p_wk->is_recv = TRUE;
     SEQ_SetNext( p_seqwk, SEQFUNC_ExitBeaconDownload );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  赤外線でダウンロード開始
+ *
+ *	@param	SEQ_WORK *p_seqwk   シーケンスワーク
+ *	@param	*p_seq              シーケンス
+ *	@param	*p_wk_adrs          ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_InitIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_INIT_WAIT,
+    SEQ_END,
+  };
+
+  MYSTERY_NET_WORK *p_wk  = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    { 
+      DELIVERY_IRC_INIT  belivery_irc_init;
+      GFL_STD_MemClear( &belivery_irc_init, sizeof(DELIVERY_IRC_INIT) );
+      belivery_irc_init.NetDevID     = WB_NET_MYSTERY;
+      belivery_irc_init.datasize     = sizeof( DOWNLOAD_GIFT_DATA );
+      belivery_irc_init.pData        = (void*)p_wk->buffer;
+      belivery_irc_init.ConfusionID  = 0;
+      belivery_irc_init.heapID       = p_wk->heapID;
+      p_wk->p_irc  = DELIVERY_IRC_Init( &belivery_irc_init );
+      DELIVERY_IRC_RecvStart( p_wk->p_irc );
+    }
+    *p_seq = SEQ_INIT_WAIT;
+    break;
+
+  case SEQ_INIT_WAIT:
+    if( GFL_NET_IsInit() )
+		{
+      //通信アイコン
+      GFL_NET_WirelessIconEasy_HoldLCD( TRUE, p_wk->heapID );
+      GFL_NET_ReloadIcon();
+
+      *p_seq = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    OS_TFPrintf( 3, "赤外線初期化\n" );
+    SEQ_SetNext( p_seqwk, SEQFUNC_MainIrcDownload );
+    break;
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  赤外線でダウンロード終了
+ *
+ *	@param	SEQ_WORK *p_seqwk   シーケンスワーク
+ *	@param	*p_seq              シーケンス
+ *	@param	*p_wk_adrs          ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_ExitIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_WIH_EXIT,
+    SEQ_EXIT_WAIT,
+    SEQ_END,
+  };
+  MYSTERY_NET_WORK *p_wk  = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_WIH_EXIT:
+    DELIVERY_IRC_End( p_wk->p_irc );
+    *p_seq  = SEQ_EXIT_WAIT;
+    break;
+
+  case SEQ_EXIT_WAIT:
+    if( !GFL_NET_IsInit() )
+		{
+      *p_seq = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    OS_TFPrintf( 3, "赤外線開放\n" );
+    SEQ_SetNext( p_seqwk, SEQFUNC_Wait );
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  赤外線でダウンロード中
+ *
+ *	@param	SEQ_WORK *p_seqwk   シーケンスワーク
+ *	@param	*p_seq              シーケンス
+ *	@param	*p_wk_adrs          ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_MainIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  MYSTERY_NET_WORK *p_wk  = p_wk_adrs;
+
+  DELIVERY_IRC_Main( p_wk->p_irc );
+
+  if( DELIVERY_IRC_RecvCheck( p_wk->p_irc ) )
+  { 
+    OS_TFPrintf( 3, "赤外線受け取り\n" );
+    p_wk->is_recv = TRUE;
+    SEQ_SetNext( p_seqwk, SEQFUNC_ExitIrcDownload );
   }
 }
 

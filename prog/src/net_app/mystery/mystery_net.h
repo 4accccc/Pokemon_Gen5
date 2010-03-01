@@ -38,7 +38,12 @@ typedef enum
   //ビーコン受け取り
   MYSTERY_NET_STATE_START_BEACON_DOWNLOAD,  //START終了時、MAINへ勝手に状態遷移
   MYSTERY_NET_STATE_MAIN_BEACON_DOWNLOAD,   //受け取り時、ENDへ勝手に状態遷移 リクエストは受付ない
-  MYSTERY_NET_STATE_END_BEACON_DOWNLOAD,    //END終了時、WAITへ勝手に状態遷移 リクエストは受付ない
+  MYSTERY_NET_STATE_END_BEACON_DOWNLOAD,    //END終了時、WAITへ勝手に状態遷移 
+
+  //赤外線受け取り
+  MYSTERY_NET_STATE_START_IRC_DOWNLOAD,  //START終了時、MAINへ勝手に状態遷移
+  MYSTERY_NET_STATE_MAIN_IRC_DOWNLOAD,   //受け取り時、ENDへ勝手に状態遷移 リクエストは受付ない
+  MYSTERY_NET_STATE_END_IRC_DOWNLOAD,    //END終了時、WAITへ勝手に状態遷移
 
 } MYSTERY_NET_STATE;
 
