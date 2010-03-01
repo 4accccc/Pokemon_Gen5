@@ -639,7 +639,12 @@ void PMSND_ChangeBGMVolume( u16 trackBit, int volume )
 //------------------------------------------------------------------
 BOOL	PMSND_CheckPlayBGM( void )
 {
-	int count = NNS_SndPlayerCountPlayingSeqBySeqNo(SOUNDMAN_GetHierarchyPlayerSoundIdx());
+	u32 soundIdx = SOUNDMAN_GetHierarchyPlayerSoundIdx();
+	int count;
+
+	if(soundIdx == 0){ return FALSE; }
+
+	count = NNS_SndPlayerCountPlayingSeqBySeqNo(SOUNDMAN_GetHierarchyPlayerSoundIdx());
 
 	if( count ){
 		return TRUE;
