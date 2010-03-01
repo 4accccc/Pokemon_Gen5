@@ -1,3 +1,13 @@
+//============================================================================================
+/**
+ * @file		startmenu_def.h
+ * @brief		タイトルメニュー定義
+ * @author	Hiroyuki Nakamura
+ * @date		10.02.25
+ */
+//============================================================================================
+#pragma	once
+
 // [ HEAPID_STARTMENU ] 後方確保用定義
 #define	HEAPID_STARTMENU_L		( GFL_HEAP_LOWID(HEAPID_STARTMENU) )
 
@@ -34,7 +44,6 @@ enum {
 	BMPWIN_MACHINE,
 
 	BMPWIN_MSG,
-//	BMPWIN_YESNO,
 
 	BMPWIN_MAX
 };
@@ -118,8 +127,6 @@ enum {
 #define	BMPWIN_YESNO_FRM		( GFL_BG_FRAME0_M )
 #define	BMPWIN_YESNO_PX			( 24 )
 #define	BMPWIN_YESNO_PY			( 13 )
-#define	BMPWIN_YESNO_SX			( 5 )
-#define	BMPWIN_YESNO_SY			( 4 )
 #define	BMPWIN_YESNO_PAL		( FONT_PALETTE_M )
 
 // 最初から始めるの警告ウィンドウ
@@ -175,20 +182,22 @@ enum {
 #define	LIST_FRAME_MIC_TEST_SY	( 3 )
 #define	LIST_FRAME_MACHINE_SY		( 3 )
 
-
-#define	LIST_SCRN_SX			( 32 )
+// リストを表示するエリアサイズ
+//define	LIST_SCRN_SX			( 32 )
 #define	LIST_SCRN_SY			( 64 )
 
+// リスト項目表示座標
 #define	LIST_ITEM_PX			( 3 )
 #define	LIST_ITEM_PY			( 2 )
 
+// ＢＧパレット
 #define	LIST_PALETTE			( 1 )
 #define	CURSOR_PALETTE		( 2 )
 #define	CURSOR_PALETTE2		( 3 )
 #define	FONT_PALETTE_M		( 15 )
 #define	FONT_PALETTE_S		( 15 )
 
-// パレット
+// 文字色
 #define	FCOL_MP15WN		( PRINTSYS_LSB_Make(15,2,0) )
 #define	FCOL_MP15BLN	( PRINTSYS_LSB_Make(6,5,0) )
 #define	FCOL_MP15RN		( PRINTSYS_LSB_Make(4,3,0) )
