@@ -49,5 +49,6 @@
 "texset/outdoor049.nsbtx"
 "texset/outdoor050.nsbtx"
 "texset/outdoor051.nsbtx"
+"texset/outdoor052.nsbtx"
 
 

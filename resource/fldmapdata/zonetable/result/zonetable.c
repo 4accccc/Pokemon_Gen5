@@ -8354,7 +8354,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_D10R0201 = 261
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_IN03,
+		AREA_ID_OUT52,
 		MATRIX_ID_DUN1002,
 		NARC_script_seq_d10r0201_bin,
 		NARC_script_seq_sp_d10r0201_bin,	//NARC_script_seq_sp_d10r0201_bin,
@@ -8386,7 +8386,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_D10R0301 = 262
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_IN03,
+		AREA_ID_OUT52,
 		MATRIX_ID_DUN1003,
 		NARC_script_seq_d10r0301_bin,
 		NARC_script_seq_sp_d10r0301_bin,	//NARC_script_seq_sp_d10r0301_bin,
@@ -8674,7 +8674,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_D12R0102 = 271
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_IN03,
+		AREA_ID_IN58,
 		MATRIX_ID_D12H02,
 		NARC_script_seq_d12r0102_bin,
 		NARC_script_seq_sp_d12r0102_bin,	//NARC_script_seq_sp_d12r0102_bin,

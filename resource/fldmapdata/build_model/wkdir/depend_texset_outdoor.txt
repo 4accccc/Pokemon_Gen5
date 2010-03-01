@@ -49,7 +49,8 @@ DEP_TEXSET_OUTDOOR =	\
 	texset/outdoor048.nsbtx	\
 	texset/outdoor049.nsbtx	\
 	texset/outdoor050.nsbtx	\
-	texset/outdoor051.nsbtx
+	texset/outdoor051.nsbtx	\
+	texset/outdoor052.nsbtx
 
 DEP_TEXSET_IMD_OUTDOOR001 = \
 	$(SRCDIR)/pc_01.imd \
@@ -309,7 +310,8 @@ DEP_TEXSET_IMD_OUTDOOR007 = \
 	$(SRCDIR)/out_dust01.imd \
 	$(SRCDIR)/outwarp01.imd \
 	$(SRCDIR)/outwarp02.imd \
-	$(SRCDIR)/outwarp03.imd
+	$(SRCDIR)/outwarp03.imd \
+	$(SRCDIR)/gate_01_2.imd
 
 texset/outdoor007.imd: $(DEP_TEXSET_IMD_OUTDOOR007) texset/tmp/outdoor007.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor007.list
@@ -1791,4 +1793,33 @@ DEP_TEXSET_IMD_OUTDOOR051 = \
 
 texset/outdoor051.imd: $(DEP_TEXSET_IMD_OUTDOOR051) texset/tmp/outdoor051.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor051.list
+
+DEP_TEXSET_IMD_OUTDOOR052 = \
+	$(SRCDIR)/pc_01.imd \
+	$(SRCDIR)/gate_01.imd \
+	$(SRCDIR)/rock_01.imd \
+	$(SRCDIR)/fountain_01.imd \
+	$(SRCDIR)/o_chair_01.imd \
+	$(SRCDIR)/o_parasol_01.imd \
+	$(SRCDIR)/o_table_01.imd \
+	$(SRCDIR)/searock_01.imd \
+	$(SRCDIR)/searock_02.imd \
+	$(SRCDIR)/plant_01.imd \
+	$(SRCDIR)/door_pc.imd \
+	$(SRCDIR)/door01.imd \
+	$(SRCDIR)/c0101.imd \
+	$(SRCDIR)/thouse_01.imd \
+	$(SRCDIR)/cart_01.imd \
+	$(SRCDIR)/sign01.imd \
+	$(SRCDIR)/sign02.imd \
+	$(SRCDIR)/sign03.imd \
+	$(SRCDIR)/sign04.imd \
+	$(SRCDIR)/out_vender01.imd \
+	$(SRCDIR)/out_dust01.imd \
+	$(SRCDIR)/outwarp01.imd \
+	$(SRCDIR)/outwarp02.imd \
+	$(SRCDIR)/outwarp03.imd
+
+texset/outdoor052.imd: $(DEP_TEXSET_IMD_OUTDOOR052) texset/tmp/outdoor052.list
+	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor052.list
 
