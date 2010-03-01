@@ -27,7 +27,7 @@
 #include "field/eventwork_def.h"
 
 
-#include "app/mysign.h"
+//#include "app/mysign.h"
 #include "app/trainer_card.h"
 #include "trcard_sys.h"
 
@@ -309,11 +309,11 @@ static int sub_SignInit(TR_CARD_SYS* wk)
 {
 //  FS_EXTERN_OVERLAY(mysign);
   // プロセス定義データ
-  static const GFL_PROC_DATA MySignProcData = {
-    MySignProc_Init,
-    MySignProc_Main,
-    MySignProc_End,
-  };
+//  static const GFL_PROC_DATA MySignProcData = {
+//    MySignProc_Init,
+//    MySignProc_Main,
+//    MySignProc_End,
+//  };
     
 //  wk->proc = PROC_Create(&MySignProcData,(void*)wk->tcp->savedata,wk->heapId);
   if( wk->procSys == NULL )
@@ -346,17 +346,6 @@ static int sub_SignWait(TR_CARD_SYS* wk)
     wk->tcp->TrCardData->Pms = *wk->PmsParam.out_pms_data;
   }
 
-/*
-  //サインデータを呼び出しテンポラリに書き戻し
-  {
-    TR_CARD_SV_PTR trc_ptr = TRCSave_GetSaveDataPtr(SaveControl_GetPointer());
-    //サインデータの有効/無効フラグを取得(金銀ローカルでのみ有効)
-    wk->tcp->TrCardData->MySignValid = TRCSave_GetSigned(trc_ptr);
-    //サインデータをセーブデータからコピー
-    MI_CpuCopy8(TRCSave_GetSignDataPtr(trc_ptr),
-        wk->tcp->TrCardData->SignRawData, SIGN_SIZE_X*SIGN_SIZE_Y*8 );
-  }
-*/
   return CARD_INIT;
 }
 
@@ -399,9 +388,9 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   // カードランク取得
   cardData->CardRank = TRAINERCARD_GetCardRank( gameData );
 
-  cardData->TrSex = MyStatus_GetMySex( mystatus );
+  cardData->TrSex     = MyStatus_GetMySex( mystatus );
   cardData->TrainerID = MyStatus_GetID( mystatus );
-  cardData->Money = MISC_GetGold( misc );
+  cardData->Money     = MISC_GetGold( misc );
   cardData->BadgeFlag = 0;
   cardData->Version   = PM_VERSION;
 
@@ -418,7 +407,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   //通信用かで分岐
   if( isSendData == TRUE )
   {
-    PLAYTIME *playTime = SaveData_GetPlayTime( SaveControl_GetPointer() );
+    PLAYTIME *playTime = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(gameData) );
     cardData->UnionTrNo = MyStatus_GetTrainerView( mystatus );
     cardData->TimeUpdate = FALSE;
     cardData->PlayTime = NULL;
@@ -429,7 +418,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   {
     cardData->UnionTrNo = MyStatus_GetTrainerView( mystatus );
     cardData->TimeUpdate = TRUE;
-    cardData->PlayTime = SaveData_GetPlayTime( SaveControl_GetPointer() );
+    cardData->PlayTime = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(gameData) );
     cardData->Personality = TRCSave_GetPersonarity(  trc_ptr );
 
   }

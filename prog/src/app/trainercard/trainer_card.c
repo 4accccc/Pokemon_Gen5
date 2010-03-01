@@ -309,7 +309,6 @@ static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, in
 GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   TR_CARD_WORK * wk;
-  CONFIG* configSave; ///<コンフィグセーブデータ
 
   GFL_DISP_GX_InitVisibleControl();
   GFL_DISP_GXS_InitVisibleControl();
@@ -333,9 +332,8 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   wk->TrCardData = wk->tcp->TrCardData;
   wk->key_mode = GFL_UI_CheckTouchOrKey();
 
-  configSave = SaveData_GetConfig(SaveControl_GetPointer());
   wk->msg_spd = MSGSPEED_GetWait();
-  wk->win_type = CONFIG_GetWindowType(configSave);
+  wk->win_type = 0;
 
   if(wk->TrCardData->Clear_m != 0){ //月が0月でなければ、クリアしたとみなす
     wk->isClear = TRUE;
@@ -424,7 +422,7 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   //通信アイコンセット
   // 受信強度アイコンを通信接続中なら表示するし、
   // ユニオンのように通信回路は動作しているが接続はしていない状態なら出さない
-  //WirelessIconEasyUnion();
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, wk->heapId );
 
   //BGMをしぼる
   //Snd_BgmFadeOut( BGM_VOL_TR_CASE, BGM_FADE_TR_CASE_TIME );
