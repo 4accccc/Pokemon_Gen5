@@ -531,20 +531,7 @@ static void * _BalloonParentWorkCreate(D_MATSU_WORK *wk)
 //==============================================================================
 static void * _WifiLobbyParentWorkCreate(D_MATSU_WORK *wk)
 {
-#if 0
-	WFLBY_PROC_PARAM *wflby_pwk;
-	
-	wflby_pwk = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(WFLBY_PROC_PARAM));
-	wflby_pwk->p_wflby_counter 
-		= GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(WFLBY_COUNTER_TIME));
-	wflby_pwk->p_save = SaveControl_GetPointer();
-	wflby_pwk->check_skip = FALSE;
-	
-	D_Tomoya_WiFiLobby_DebugStart = 0;//TRUE;
-	return wflby_pwk;
-#else
   return NULL;
-#endif
 }
 
 

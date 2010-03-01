@@ -289,60 +289,6 @@ static BOOL DebugMatsuda_SaveSystemTest(D_MATSU_WORK *wk)
 //--------------------------------------------------------------
 static BOOL DebugMatsuda_SaveTest(D_MATSU_WORK *wk)
 {
-#if 0
-	LOAD_RESULT load_ret;
-	SAVE_RESULT save_ret;
-	
-	GF_ASSERT(wk);
-	GF_ASSERT(wk->sv_normal == NULL);
-	
-	switch( wk->seq ){
-	case 0:
-		//コンテストデータを引っ張ってきて中身を表示
-		{
-			CONTEST_DATA *condata;
-			u16 value;
-			
-			condata = SaveControl_DataPtrGet(SaveControl_GetPointer(), GMDATA_ID_CONTEST);
-			value = CONDATA_GetValue(condata, 0,0);
-			OS_TPrintf("value = %d\n", value);
-		}
-		wk->seq++;
-		break;
-	case 1:
-		//コンテストデータの中身を変更してセーブ実行
-		//次回起動した時に中身が変わっているか確認！
-		{
-			CONTEST_DATA *condata;
-			u16 value;
-			
-			condata = SaveControl_DataPtrGet(SaveControl_GetPointer(), GMDATA_ID_CONTEST);
-			value = CONDATA_GetValue(condata, 0,0);
-			CONDATA_RecordAdd(condata, 0, 0);
-			OS_TPrintf("セーブ実行\n");
-			OS_TPrintf("before value = %d, after value = %d\n", value, value+1);
-			save_ret = SaveControl_Save(SaveControl_GetPointer());
-			switch(save_ret){
-			case SAVE_RESULT_CONTINUE:		///<セーブ処理継続中
-				OS_TPrintf("SAVE:継続中\n");
-				break;
-			case SAVE_RESULT_LAST:			///<セーブ処理継続中、最後の一つ前
-				OS_TPrintf("SAVE:継続中 最後の1つ前\n");
-				break;
-			case SAVE_RESULT_OK:			///<セーブ正常終了
-				OS_TPrintf("SAVE:正常終了\n");
-				break;
-			case SAVE_RESULT_NG:			///<セーブ失敗終了
-				OS_TPrintf("SAVE:失敗\n");
-				break;
-			}
-		}
-		wk->seq++;
-		break;
-	default:
-		return TRUE;
-	}
-#endif
 	return FALSE;
 }
 

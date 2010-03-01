@@ -229,26 +229,27 @@ typedef struct
 static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   GAMESTART_FIRST_WORK*   work;
+  SAVE_CONTROL_WORK *sv_ctrl = SaveControl_GetPointer();
   
   // ワーク アロケート
   work = GFL_PROC_AllocWork( proc , sizeof(GAMESTART_FIRST_WORK) , GFL_HEAPID_APP );
   
   // セーブデータ:ワークエリアのの初期化
-  SaveControl_ClearData( SaveControl_GetPointer() );
+  SaveControl_ClearData( sv_ctrl );
 
   // セーブシステム作成
 #ifdef USE_INTRSAVE
-  work->intr_save = IntrSave_Init( GFL_HEAPID_APP, SaveControl_GetPointer() );
+  work->intr_save = IntrSave_Init( GFL_HEAPID_APP, sv_ctrl );
 #endif
 
   // SELMODE 初期化
   work->selModeParam.type       = SMT_START_GAME;
-  work->selModeParam.configSave = SaveData_GetConfig( SaveControl_GetPointer() );
-  work->selModeParam.mystatus   = SaveData_GetMyStatus( SaveControl_GetPointer() );
+  work->selModeParam.configSave = SaveData_GetConfig( sv_ctrl );
+  work->selModeParam.mystatus   = SaveData_GetMyStatus( sv_ctrl );
 
   //主人公の性別は、性別設定が終わってから入れる
   GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );  
-  work->nameInParam = NAMEIN_AllocParam( GFL_HEAPID_APP , NAMEIN_MYNAME , 0, 0, NAMEIN_PERSON_LENGTH , NULL, SaveData_GetMisc(SaveControl_GetPointer()) );
+  work->nameInParam = NAMEIN_AllocParam( GFL_HEAPID_APP , NAMEIN_MYNAME , 0, 0, NAMEIN_PERSON_LENGTH , NULL, SaveData_GetMisc(sv_ctrl) );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
   work->procsys_up = GFL_PROC_LOCAL_boot( GFL_HEAPID_APP );
@@ -285,7 +286,7 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
   }
 
   // イントロデモのパラメータ初期化
-  work->introParam.save_ctrl  = SaveControl_GetPointer();
+  work->introParam.save_ctrl  = sv_ctrl;
   work->introParam.scene_id   = INTRO_SCENE_ID_00;
   work->introParam.intr_save  = work->intr_save;
   work->introParam.voice_load_id = work->voice_load_id;
@@ -523,12 +524,13 @@ static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, vo
   GAMESTART_FIRST_WORK *work = mywk;
   GAME_INIT_WORK * init_param;
   PLAYERWORK_SAVE plsv;
-
+  SAVE_CONTROL_WORK *sv_ctrl = SaveControl_GetPointer();
+  
   // 直前の選択肢で選んだ通信モードを取得する
   int search_mode_temp = CONFIG_GetNetworkSearchMode( work->selModeParam.configSave );
 
-  SaveControl_Load(SaveControl_GetPointer());
-  SaveData_SituationLoad_PlayerWorkSave(SaveControl_GetPointer(), &plsv);
+  SaveControl_Load(sv_ctrl);
+  SaveData_SituationLoad_PlayerWorkSave(sv_ctrl, &plsv);
 
   init_param = DEBUG_GetGameInitWork(
   GAMEINIT_MODE_CONTINUE, plsv.zoneID, &plsv.position, plsv.direction );
@@ -584,10 +586,11 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
   VecFx32 pos = {0,0,0};
   int always_net;
   int sex = 0;
+  SAVE_CONTROL_WORK *sv_ctrl = SaveControl_GetPointer();
   
   always_net = (int)pwk;   //TRUE:常時通信で「続きから」
 
-  SaveControl_ClearData(SaveControl_GetPointer());  //セーブデータクリア
+  SaveControl_ClearData(sv_ctrl);  //セーブデータクリア
   
   {//名前のセット
     MYSTATUS    *myStatus;
@@ -613,7 +616,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
       sex = PM_FEMALE;
     }
 #endif
-    myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
+    myStatus = SaveData_GetMyStatus( sv_ctrl );
     MyStatus_SetMyNameFromString( myStatus , namebuf );
     MyStatus_SetMySex(myStatus, sex);
     MyStatus_SetID(myStatus, GFUser_GetPublicRand0(0xFFFFFFFF));
@@ -632,7 +635,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
     CONFIG *config;
     NETWORK_SEARCH_MODE mode;
 
-    config  = SaveData_GetConfig( SaveControl_GetPointer() );
+    config  = SaveData_GetConfig( sv_ctrl );
     switch(always_net){
     case DEBUG_COMM_SEARCH_ONLY:
       mode = NETWORK_SEARCH_ON;
@@ -650,7 +653,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
     }
     CONFIG_SetNetworkSearchMode( config, mode );
     //CGEARON
-    CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(SaveControl_GetPointer()),TRUE);
+    CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(sv_ctrl),TRUE);
   }
   
   init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, ZONE_ID_T01, &pos, 0 );
@@ -715,6 +718,8 @@ static GFL_PROC_RESULT GameStart_DebugSelectNameProcEnd( GFL_PROC * proc, int * 
 {
 #ifdef PM_DEBUG
   TESTMODE_PROC_WORK *work = mywk;
+  SAVE_CONTROL_WORK *sv_ctrl = SaveControl_GetPointer();
+  
   if( (int)work->work_ == 0 )
   {
     GAME_INIT_WORK * init_param;
@@ -724,12 +729,12 @@ static GFL_PROC_RESULT GameStart_DebugSelectNameProcEnd( GFL_PROC * proc, int * 
       //常時通信モードのセット
       CONFIG *config;
 
-      config  = SaveData_GetConfig( SaveControl_GetPointer() );
+      config  = SaveData_GetConfig( sv_ctrl );
       CONFIG_SetNetworkSearchMode( config, NETWORK_SEARCH_OFF );
       DebugScanOnly = TRUE;
     }
     //CGEARON
-    CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(SaveControl_GetPointer()),TRUE);
+    CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(sv_ctrl),TRUE);
     
     init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0, &pos, 0 );
     GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
