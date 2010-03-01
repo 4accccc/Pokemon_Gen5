@@ -1267,7 +1267,7 @@ static BOOL PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WI
       if( i==p_wk->poke_num ){
         WIFI_BSUBWAY_Printf( "認証　OK\n" );
       }else{
-        WIFI_BSUBWAY_Printf( "認証　Error\n" );
+        WIFI_BSUBWAY_Printf( "認証　Error %d\n", i );
       }
     }
     else
@@ -1275,6 +1275,11 @@ static BOOL PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WI
       // 認証確認失敗
       ERROR_DATA_SetNhttpError( p_error, BSUBWAY_NHTTP_ERROR_DISCONNECTED );
       WIFI_BSUBWAY_Printf( "認証　Error\n" );
+
+      for( i=0; i<p_wk->poke_num; i++ ){
+        poke_result  = NHTTP_RAP_EVILCHECK_GetPokeResult( p_data, i );
+        WIFI_BSUBWAY_Printf( "認証　Error pokenum %d  result %d\n", i, poke_result );
+      }
     }
 
     NHTTP_RAP_PokemonEvilCheckDelete( p_wk->p_nhttp );
