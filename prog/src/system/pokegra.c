@@ -358,7 +358,7 @@ void POKEGRA_SortOBJCharacter( NNSG2dCharacterData *p_chara, HEAPID heapID )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  パッチールのためのブチをキャラに書き込み
+ *	@brief  パッチールのためのブチをキャラに書き込み(BGキャラの並びのときを想定)
  *
  *	@param	NNSG2dCharacterData *p_chara  キャラデータ
  */
@@ -367,8 +367,8 @@ void POKEGRA_MakePattiiruBuchi( NNSG2dCharacterData *p_chara, u32 personal_rnd )
 { 
   const	PATTIIRU_BUCHI_DATA	*pbd;
   int i, j;
-  u8	setx, sety, cnt;
-  int	pos[ 2 ];
+  int	setx, sety, cnt;
+  int	pos;
   u32 rnd = personal_rnd;
   u8  *buf = p_chara->pRawData;
 
@@ -378,32 +378,32 @@ void POKEGRA_MakePattiiruBuchi( NNSG2dCharacterData *p_chara, u32 personal_rnd )
     cnt=0;
     while( pbd[ cnt ].posx != 0xff )
     {
-      setx = pbd[ cnt ].posx +   ( ( (rnd) & 0x0f ) - 8 );
-      sety = pbd[ cnt ].posy + ( ( ( (rnd) & 0xf0 ) >> 4 ) - 8 );
-      pos[ 0 ] = setx / 2 + sety * 128;
-      pos[ 1 ] = setx / 2 + ( sety + 40 ) * 128;
-      for( j = 0 ; j < 2 ; j++ )
-      { 
-        if( setx & 1)
+      setx = pbd[ cnt ].posx - OFS_X + 8 - 2 + ( ( (rnd) & 0x0f ) - 8 );
+      sety = pbd[ cnt ].posy - OFS_Y + 8     + ( ( ( (rnd) & 0xf0 ) >> 4 ) - 8 );
+
+      pos = (setx / 8 + (sety / 8) * 12 ) * 64  + ((setx) % 8 + (sety % 8) * 8) ;
+      pos /= 2;
+
+      //NAGI_Printf( "[%d]=x[%d]y[%d]\n", i, setx, sety );
+
+      if( setx & 1 )
+      {
+        if( ( ( buf[ pos ] & 0xf0 ) >= 0x10 ) && ( ( buf[ pos ] & 0xf0 ) <= 0x30) )
         {
-          if( ( ( buf[ pos[ j ] ] & 0xf0 ) >= 0x10 ) && ( ( buf[ pos[ j ] ] & 0xf0 ) <= 0x30) )
-          {
-            buf[ pos[ j ] ] += 0x50;
-          }
+          buf[ pos ] += 0x50;
         }
-        else
+      }
+      else
+      {
+        if( ( ( buf[ pos ] & 0x0f ) >= 0x01 ) && ( ( buf[ pos ] & 0x0f ) <= 0x03 ) )
         {
-          if( ( ( buf[ pos[ j ] ] & 0x0f ) >= 0x01 ) && ( ( buf[ pos[ j ] ] & 0x0f ) <= 0x03 ) )
-          {
-            buf[ pos[ j ] ] += 0x05;
-          }
+          buf[ pos ] += 0x05;
         }
       }
       cnt++;
     }
     (rnd) = (rnd) >> 8;
   }
-
 }
 
 //=============================================================================
