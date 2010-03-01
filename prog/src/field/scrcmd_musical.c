@@ -734,6 +734,8 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
     }
     break;
   case MUSICAL_TOOL_COMM_TIMESYNC:
+    //”ñ’ÊM‚È‚çƒXƒ‹[
+    if( musScriptWork->commWork != NULL )
     {
       musScriptWork->commSyncNo = val1;
       MUS_COMM_SendTimingCommand( musScriptWork->commWork , musScriptWork->commSyncNo );
@@ -846,7 +848,8 @@ static GMEVENT_RESULT event_Musical(
     }
     break;
   case 3:
-    if( GFL_NET_IsExit() == TRUE )
+    if( GFL_NET_IsExit() == TRUE ||
+        ev_musical_work->isComm == FALSE )
     {
       EvCmdMusical_ExitCommon( ev_musical_work->musScriptWork );
       (*seq)++;
