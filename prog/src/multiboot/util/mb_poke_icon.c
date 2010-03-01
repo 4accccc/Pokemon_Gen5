@@ -62,53 +62,14 @@ ARCHANDLE* MB_ICON_GetArcHandle( HEAPID heapId , const DLPLAY_CARD_TYPE cardType
   switch( cardType )
   {
   case CARD_TYPE_DP:   //ダイアモンド＆パール
-    arcHandle = GFL_ARC_OpenDataHandleByFilePath("rom:/poketool/icongra/poke_icon.narc",heapId);
+    arcHandle = GFL_ARC_OpenDataHandleByFilePath("child_rom:/poketool/icongra/poke_icon.narc",heapId);
     break;
   case CARD_TYPE_PT:   //プラチナ
-#if 0
-    {
-      u8 i;
-      FSDirectoryEntryInfo info[3];
-      FSFile file;
-      BOOL ret;
-      int resurt;
-      FS_InitFile( &file );
-      ret = FS_OpenDirectory( &file , "rom:/" , 0 );
-      resurt = FS_GetResultCode(&file);
-      for( i=0;i<3;i++ )
-      {
-        FS_ReadDirectory( &file , &info[i] );
-      }
-      GF_ASSERT_MSG( 0 , "[%d][%d]\n[%s]\n[%s]\n[%s]\n"
-                          , ret , resurt
-                          ,info[0].longname 
-                          ,info[1].longname 
-                          ,info[2].longname );
-      
-    }
-    {
-      BOOL ret;
-      FSFile file;
-      char name[128];
-      char name2[128];
-      int resurt;
-      //FS_UnloadTable();
-      
-      FS_InitFile( &file );
-      FS_GetPathName( &file, name2 , 128 );
-      ret = FS_OpenDirectory( &file , "rom:/poketool/icongra/" , 0 );
-      GF_ASSERT_MSG( ret , "Dis Open is Failue!!\nErrorCode[%d][%d]\n[%s][%s]\n",resurt,FS_GetResultCode(&file),name2,name);
-      ret = FS_OpenFile( &file, "rom:/poketool/icongra/pl_poke_icon.narc" );
-      resurt = FS_GetResultCode(&file);
-      FS_GetPathName( &file, name , 128 );
-      GF_ASSERT_MSG( 0 , "Arc Open is [%d]!!\nErrorCode[%d][%d]\n[%s][%s]\n",ret,resurt,FS_GetResultCode(&file),name2,name);
-      
-    }
-#endif
-    arcHandle = GFL_ARC_OpenDataHandleByFilePath("rom:/poketool/icongra/pl_poke_icon.narc",heapId);
+
+    arcHandle = GFL_ARC_OpenDataHandleByFilePath("child_rom:/poketool/icongra/pl_poke_icon.narc",heapId);
     break;
   case CARD_TYPE_GS:   //ゴールド＆シルバー
-    arcHandle = GFL_ARC_OpenDataHandleByFilePath("rom:/a/0/2/0",heapId);
+    arcHandle = GFL_ARC_OpenDataHandleByFilePath("child_rom:/a/0/2/0",heapId);
     break;
   case CARD_TYPE_DUMMY:  //MBテストダミー
     arcHandle = GFL_ARC_OpenDataHandle(ARCID_MB_SELECT,heapId);

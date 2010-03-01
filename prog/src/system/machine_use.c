@@ -200,6 +200,8 @@ static FSResult MyRom_ArchiveProc(FSFile *file, FSCommandType cmd)
 
 static void MachineSystem_MbInitFile(void)
 {
+  //マルチブートで子機ROMからファイ(アイコン)を読むための処理
+  
   u32 file_table_size;
   void* p_table;
   MBParam *multi_p = (MBParam *)MB_GetMultiBootParam();
@@ -216,17 +218,10 @@ static void MachineSystem_MbInitFile(void)
     const u32 base = 0;
     const CARDRomRegion *fnt = &((CARDRomHeader*)CARD_GetRomHeader())->fnt;
     const CARDRomRegion *fat = &((CARDRomHeader*)CARD_GetRomHeader())->fat;
-    const char *name = "rom";
+    const char *name = "child_rom";
 
     static MyRomArchive newRom;
 
-    FSArchive *oldROM = FS_FindArchive("rom", 3);
-    if (oldROM) 
-    {
-      FS_UnloadArchive(oldROM);
-      // FS_ReleaseArchiveName(oldROM);
-    }
-    
     FS_InitArchive(newRom.arc);
     newRom.default_dma_no = FS_DMA_NUMBER;
     newRom.card_lock_id = (u32)OS_GetLockID();

@@ -1173,8 +1173,8 @@ static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state )
 {
   const u8 nowState = MISC_GetPalparkFinishState( work->miscSave );
   BOOL isSet = FALSE;
+  MB_TPrintf( "SetFinishState[%d->%d]\n",nowState,state );
   //連続プレイ時を考慮して、優先度の高いステートを入れる。
-  
   switch( state )
   {
   case PALPARK_FINISH_NORMAL:    // (0)  //捕獲した
@@ -1223,6 +1223,7 @@ static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state )
   
   if( isSet == TRUE )
   {
+    MB_TPrintf( "SetFinishState Set!!![%d->%d]\n",nowState,state );
     MISC_SetPalparkFinishState( work->miscSave , state );
   }
 }
