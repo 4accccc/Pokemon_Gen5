@@ -936,7 +936,7 @@ EVENT_END
 /*							ŠÅ”Â							*/
 /************************************************************/
 EVENT_START	ev_bg_r05_board_03
-	_EASY_BGWIN_MSG( msg_r05_sign3_01, TYPE_INFO )
+	_EASY_BGWIN_MSG( msg_r05_sign4_01, TYPE_INFO )
 EVENT_END
 
 
