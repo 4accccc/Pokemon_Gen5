@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T16:35:50"/>
+	<create user="matsumiya" host="W00224" date="2010-03-01T14:55:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -350,18 +350,13 @@
 	</row>
 
 	<row id="msg_c02r0601_middleman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+		<comment>♂</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2
 太ったおじさん</attribute>
-		<language name="JPN" width="256">おいしい！
-ボリュームたっぷりで　やすい！[BE:01:ページ切り替え（クリア）]
-じぶんが　まんぞく　できるなら
+		<language name="JPN" width="256">じぶんが　まんぞく　できるなら
 だれも　しらないような[BE:00:ページ切り替え（行送り）]
 いなかの　みせでも　いいじゃないか</language>
-		<language name="JPN_KANJI" width="256">美味しい！
-ボリュームたっぷりで　安い！[BE:01:ページ切り替え（クリア）]
-自分が　満足できるなら
+		<language name="JPN_KANJI" width="256">自分が　満足できるなら
 だれも　知らないような[BE:00:ページ切り替え（行送り）]
 田舎の　店でも　いいじゃないか</language>
 	</row>
@@ -371,14 +366,10 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BIGMAN
 太った兄さん</attribute>
-		<language name="JPN" width="256">ここの　メニューは
-ぜんぶが　デリシャスッ！[BE:01:ページ切り替え（クリア）]
-ぼくの　この　からだが
-それを　しょうめい　しているだろ！</language>
-		<language name="JPN_KANJI" width="256">ここの　メニューは
-全部が　デリシャスッ！[BE:01:ページ切り替え（クリア）]
-ぼくの　この　ムッチリボディが
-それを　証明しているだろ！</language>
+		<language name="JPN" width="256">このカフェは　まいしゅう
+すいようびが　サービスデー！</language>
+		<language name="JPN_KANJI" width="256">このカフェは　毎週
+水曜日が　サービスデー！</language>
 	</row>
 
 	<row id="msg_c02r0601_man2_01">
