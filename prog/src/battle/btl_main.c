@@ -282,7 +282,6 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       BTL_MAIN_MODULE* wk = mywk;
       if( BTL_UTIL_CallProc(&wk->subProc) )
       {
-        BTL_Printf("セットアップ終了\n");
         BTL_N_Printf( DBGSTR_SETUP_DONE );
         return GFL_PROC_RES_FINISH;
       }
@@ -420,6 +419,7 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
   {
     BTL_UTIL_SetPrintType( BTL_PRINTTYPE_STANDALONE );
 
+
     switch( setup_param->rule ){
     case BTL_RULE_SINGLE:
       BTL_UTIL_SetupProc( bp, wk, setup_alone_single, NULL );
@@ -523,7 +523,6 @@ static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const
       }
     }
   }
-  BTL_Printf("デバッグフラグbit=%04x\n", sp->DebugFlagBit);
   BTL_N_Printf( DBGSTR_DEBUGFLAG_BIT, sp->DebugFlagBit );
 }
 
@@ -1054,8 +1053,6 @@ static BOOL setup_comm_double( int* seq, void* work )
     POKEPARTY* party = sp->party[ BTL_CLIENT_ENEMY1 ];
     BOOL fCommTag = ((party != NULL) && PokeParty_GetPokeCount(party) != 0);
 
-    OS_TPrintf("セットアップStart\n");
-
     if( sp->multiMode == 0 )
     {
       wk->numClients = 2;
@@ -1083,6 +1080,7 @@ static BOOL setup_comm_double( int* seq, void* work )
     }
 
     wk->myClientID = wk->setupParam->commPos;
+    OS_TPrintf("自分のクライアントIDは%d\n", wk->myClientID);
     wk->myOrgPos = BTL_MAIN_GetClientPokePos( wk, wk->myClientID, 0 );
     {
       u8 vpos = BTL_MAIN_BtlPosToViewPos( wk, wk->myOrgPos );
@@ -1403,10 +1401,14 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
     {
       const MYSTATUS* playerStatus;
       u32 i;
-      for(i=0; i<wk->numClients; ++i){
+      for(i=0; i<wk->numClients; ++i)
+      {
         playerStatus = BTL_NET_GetPlayerData( i );
-        trainerParam_StorePlayer( &wk->trainerParam[i], wk->heapID, playerStatus );
-        Bspstore_PlayerStatus( wk, i, playerStatus );
+        if( playerStatus )
+        {
+          trainerParam_StorePlayer( &wk->trainerParam[i], wk->heapID, playerStatus );
+          Bspstore_PlayerStatus( wk, i, playerStatus );
+        }
       }
       BTL_Printf("プレイヤーデータ相互受信できました。\n");
       (*seq)++;
@@ -1514,10 +1516,24 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
         clientID, numCoverPos, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
     BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[clientID]), clientID, numCoverPos );
 
-    for(i=0; i<wk->numClients; ++i)
+    // 通信タッグの場合
+    // @todo 条件判定はもっと明確に記述できるように整える。
+    if( (wk->numClients == 3) && (sp->multiMode) )
     {
-      if(i==clientID){ continue; }
-      BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, i, numCoverPos );
+      wk->client[BTL_CLIENT_ENEMY1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
+          BTL_CLIENT_ENEMY1, 2, BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+      BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[BTL_CLIENT_ENEMY1]), BTL_CLIENT_ENEMY1, 2 );
+
+      BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, BTL_CLIENT_PARTNER, numCoverPos );
+    }
+    // 通常の通信ダブルの場合
+    else
+    {
+      for(i=0; i<wk->numClients; ++i)
+      {
+        if(i==clientID){ continue; }
+        BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, i, numCoverPos );
+      }
     }
   }
   // 自分がサーバではない
@@ -3252,7 +3268,7 @@ const BTL_POKEPARAM* BTL_POKECON_GetFrontPokeDataConst( const BTL_POKE_CONTAINER
     BTL_PrintfSimple("クライアント[%d]の %d 番目のポケを返す\n", clientID, posIdx );
     return BTL_PARTY_GetMemberDataConst( party, posIdx );
   }else{
-    BTL_PrintfSimple("存在しないポケモンデータを参照した\n");
+    BTL_N_Printf( DBGSTR_MAIN_PokeConGetByPos, pos, clientID, posIdx);
     return NULL;
   }
 }

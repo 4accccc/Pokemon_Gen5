@@ -3431,8 +3431,6 @@ static void scproc_MemberChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u8
     pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, outPokeID );
     BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, pos, &clientID, &posIdx );
 
-    OS_TPrintf("pos=%d, clientID=%d, posIdx=%d\n", pos, clientID, posIdx);
-
     scproc_MemberInForChange( wk, clientID, posIdx, nextPokeIdx, TRUE );
   }
 }
@@ -3812,8 +3810,6 @@ static BOOL scproc_Fight_CheckCombiWazaReady( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
       }
 
       combiPokeID = BPP_GetID( combiPoke );
-      OS_TPrintf(" Bpp Adrs=%p, ID=%d\n", combiPoke, combiPokeID);
-
       BTL_N_Printf( DBGSTR_SVFL_CombiDecide, pokeID, combiPokeID );
 
       BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_COMBIWAZA_READY );
@@ -5438,7 +5434,7 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
 {
   fx32 dmg_ratio;
   BOOL fTargetPlural;
-  u32  dmg_sum, i;
+  u32  dmg_sum, dmg_tmp, i;
 
   FlowFlg_Clear( wk, FLOWFLG_SET_WAZAEFFECT );
 
@@ -5462,15 +5458,33 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
   TAYA_Printf("hitCnt=%d\n", wk->hitCheckParam.countMax);
   for(i=0; i<wk->hitCheckParam.countMax; ++i)
   {
+    if( (BTL_POKESET_GetCount(&wk->pokesetFriend) == 0)
+    &&  (BTL_POKESET_GetCount(&wk->pokesetEnemy) == 0)
+    ){
+      break;
+    }
+    if( BPP_IsDead(attacker) ){
+      break;
+    }
+
     wk->hitCheckParam.count++;
     wk->hitCheckParam.fPutEffectCmd = FALSE;
+    dmg_tmp = 0;
 
     if( BTL_POKESET_GetCount( &wk->pokesetFriend ) ){
-      dmg_sum += scproc_Fight_Damage_side( wk, wazaParam, attacker, &wk->pokesetFriend, &wk->hitCheckParam, dmg_ratio, fTargetPlural );
+      dmg_tmp += scproc_Fight_Damage_side( wk, wazaParam, attacker, &wk->pokesetFriend, &wk->hitCheckParam, dmg_ratio, fTargetPlural );
+      BTL_POKESET_RemoveDeadPoke( &wk->pokesetFriend );
     }
-    if( BTL_POKESET_GetCount( &wk->pokesetEnemy ) ){
-      dmg_sum += scproc_Fight_Damage_side( wk, wazaParam, attacker, &wk->pokesetEnemy, &wk->hitCheckParam, dmg_ratio, fTargetPlural );
+
+    if( !BPP_IsDead(attacker) )
+    {
+      if( BTL_POKESET_GetCount( &wk->pokesetEnemy ) ){
+        dmg_tmp += scproc_Fight_Damage_side( wk, wazaParam, attacker, &wk->pokesetEnemy, &wk->hitCheckParam, dmg_ratio, fTargetPlural );
+        BTL_POKESET_RemoveDeadPoke( &wk->pokesetEnemy );
+      }
     }
+
+    dmg_sum += dmg_tmp;
   }
 
   if( HITCHECK_IsPluralHitWaza(&wk->hitCheckParam) && (i>0) )
@@ -5587,8 +5601,6 @@ static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
 
   poke_cnt = BTL_POKESET_GetCount( targets );
   GF_ASSERT(poke_cnt <= BTL_POSIDX_MAX);
-
-  OS_TPrintf("poke_cnt=%d\n", poke_cnt);
 
   dmg_sum = 0;
   for(i=0; i<poke_cnt; ++i)
@@ -8752,8 +8764,6 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPA
         result[i].fBonus = TRUE;
       }
 
-      OS_TPrintf("Gパワー前経験値 = %d\n", result[i].exp);
-
       // Ｇパワー補正
       result[i].exp = GPOWER_Calc_Exp( result[i].exp );
 
@@ -8887,7 +8897,6 @@ static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16
   numer = _calc_adjust_level_sub( numer_int );
   denom = _calc_adjust_level_sub( denom_int );
   ratio = FX32_CONST(numer) / denom;
-  OS_TPrintf( "numer=%x, denom=%x, ratio=%08x\n", numer, denom, ratio );
 
   result = BTL_CALC_MulRatio( base_exp, ratio ) + 1;
   expMargin = BPP_GetExpMargin( bpp );

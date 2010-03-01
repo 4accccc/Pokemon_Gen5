@@ -221,7 +221,7 @@ void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GF
     BTL_ADAPTER* adapter;
 
     party = BTL_POKECON_GetPartyData( server->pokeCon, clientID );
-    adapter = BTL_ADAPTER_Create( netHandle, server->heapID, clientID );
+    adapter = BTL_ADAPTER_Create( netHandle, clientID, TRUE, server->heapID );
 
     client = &server->client[ clientID ];
     Svcl_Setup( client, clientID, adapter, FALSE );

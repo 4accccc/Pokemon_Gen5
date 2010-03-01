@@ -303,11 +303,12 @@ BTL_CLIENT* BTL_CLIENT_Create(
 {
   BTL_CLIENT* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_CLIENT) );
   int i;
+  BOOL fComm = ((commMode != BTL_COMM_NONE) && (clientType == BTL_CLIENT_TYPE_UI));
 
   wk->myID = clientID;
   wk->heapID = heapID;
   wk->myType = clientType;
-  wk->adapter = BTL_ADAPTER_Create( netHandle, heapID, clientID );
+  wk->adapter = BTL_ADAPTER_Create( netHandle, clientID, fComm, heapID );
   wk->myParty = BTL_POKECON_GetPartyDataConst( pokecon, clientID );
   wk->mainModule = mainModule;
   wk->pokeCon = pokecon;
@@ -428,6 +429,7 @@ BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
       {
         wk->subProc = getSubProc( wk, cmd );
         if( wk->subProc != NULL ){
+          BTL_N_Printf( DBGSTR_CLIENT_StartCmd, wk->myID, cmd );
           wk->subSeq = 0;
           wk->myState = 1;
         }else{
@@ -972,22 +974,22 @@ static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq )
 static  BOOL  check_tr_message( BTL_CLIENT* wk );
 
 static  BOOL  check_tr_message( BTL_CLIENT* wk )
-{ 
+{
   u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
   u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
   BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
 
   if( ( BTL_MAIN_GetRule( wk->mainModule ) != BTL_RULE_SINGLE ) &&
       ( BTL_MAIN_GetCompetitor( wk->mainModule ) != BTL_COMPETITOR_TRAINER ) )
-  {  
+  {
     return FALSE;
   }
 
-	if( TT_TrainerMessageCheck( trainerID, TRMSG_FIGHT_POKE_LAST_HP_HALF, wk->heapID ) )
-  { 
+  if( TT_TrainerMessageCheck( trainerID, TRMSG_FIGHT_POKE_LAST_HP_HALF, wk->heapID ) )
+  {
     //とりあえず最後の1匹判定だけする
     if( ( BTL_PARTY_GetAliveMemberCount( party ) == 1 ) && ( wk->trainer_msg_check == FALSE ))
-    { 
+    {
       wk->trainer_msg_check = TRUE;
       return TRUE;
     }
@@ -1018,11 +1020,11 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
       //@todo トレーナーメッセージ表示実験
 #if 1
       if( check_tr_message( wk ) == TRUE )
-      { 
+      {
         (*seq) = 5;
       }
       else
-      { 
+      {
         (*seq)++;
       }
 #else
@@ -1123,7 +1125,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     break;
   //@todo トレーナーメッセージ表示実験
   case 5:
-    { 
+    {
       u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
       u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
       int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
@@ -1132,7 +1134,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
       BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
       BTLV_StartMsgTrainer( wk->viewCore, trainerID, TRMSG_FIGHT_POKE_LAST_HP_HALF );
       if( BTLV_GAUGE_GetPinchBGMFlag( BTLV_EFFECT_GetGaugeWork() ) == 0 )
-      { 
+      {
         PMSND_PlayBGM( SEQ_BGM_BATTLESUPERIOR );
       }
       (*seq)++;
@@ -1147,7 +1149,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     break;
   case 7:
     if( !BTLV_EFFECT_CheckExecute() )
-    { 
+    {
       BTLV_EFFECT_DelTrainer( BTLV_MCSS_POS_TR_BB );
       (*seq) = 0;
     }
@@ -2314,7 +2316,7 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
     }
     else
     {
-      BTL_Printf("myID=%d 戦えるポケモンいない\n", wk->myID);
+      BTL_N_Printf( DBGSTR_CLIENT_NoMorePuttablePoke, wk->myID);
       BTL_ACTION_SetChangeDepleteParam( &wk->actionParam[0] );
       wk->returnDataPtr = &(wk->actionParam[0]);
       wk->returnDataSize = sizeof(wk->actionParam[0]);
@@ -2757,6 +2759,8 @@ restart:
 
       cmdSize = BTL_ADAPTER_GetRecvData( wk->adapter, &cmdBuf );
       SCQUE_Setup( wk->cmdQue, cmdBuf, cmdSize );
+
+      OS_TPrintf("サーバコマンド読み込み開始：Size=%d\n", cmdSize);
 
       if( wk->commWaitInfoOn )
       {
@@ -4581,7 +4585,9 @@ static BOOL scProc_OP_UpdateUseWaza( BTL_CLIENT* wk, int* seq, const int* args )
   BPP_UpdateWazaProcResult( bpp, args[1], args[2], args[3], args[4] );
   return TRUE;
 }
-
+/**
+ *  継続フラグセット  args[0]=pokeID, args[1]=flagID
+ */
 static BOOL scProc_OP_SetContFlag( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );

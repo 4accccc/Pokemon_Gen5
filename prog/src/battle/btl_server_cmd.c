@@ -862,12 +862,15 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
 {
   ServerCmd cmd = scque_read2byte( que );
 
+  OS_TPrintf("Read cmd=%d\n", cmd);
+
   // 予約領域に何も書き込まれなかった場合は単純にスキップする
   while( cmd == SCEX_RESERVE )
   {
     u8 reserve_size = scque_read1byte( que );
     que->readPtr += reserve_size;
     cmd = scque_read2byte( que );
+    OS_TPrintf(" -> reserved cmd=%d\n", cmd);
   }
 
   GF_ASSERT_MSG( cmd < NELEMS(ServerCmdToFmtTbl), "cmd=%d\n", cmd );
@@ -878,6 +881,18 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
     if( (fmt != SC_ARGFMT_MSG) && (fmt != SC_ARGFMT_MSG_SE) )
     {
       read_core( que, fmt, args );
+      #ifdef PM_DEBUG
+      {
+        u8 arg_cnt = SC_ARGFMT_GetArgCount( fmt );
+        u8 i;
+        OS_TPrintf("  args=" );
+
+        for(i=0; i<arg_cnt; ++i){
+          OS_TPrintf("%d,", args[i]);
+        }
+        OS_TPrintf("\n");
+      }
+      #endif
     }
     else
     {

@@ -25,7 +25,10 @@ typedef enum {
   DBGSTR_DEBUGFLAG_BIT,
   DBGSTR_ADAPTER_SEND_START,
   DBGSTR_ADAPTER_RECV_DONE,
+  DBGSTR_ADAPTER_Create,
   DBGSTR_ADAPTER_RECVED_A_CLIENT,
+  DBGSTR_MAIN_PokeConGetByPos,
+
   DBGSTR_CLIENT_RETURN_CMD_START,
   DBGSTR_CLIENT_RETURN_CMD_DONE,
   DBGSTR_CLIENT_SelActPokeDead,
@@ -57,6 +60,7 @@ typedef enum {
   DBGSTR_CLIENT_ForcePokeChange,
   DBGSTR_CLIENT_UpdateEnemyBaseHP,
   DBGSTR_CLIENT_ForceQuitByTimeLimit,
+  DBGSTR_CLIENT_StartCmd,
 
   DBGSTR_BPP_NemuriWakeCheck,
 
@@ -70,6 +74,11 @@ typedef enum {
   DBGSTR_NET_RecvedAllClientsData,
   DBGSTR_NET_ReturnToServerTrying,
   DBGSTR_NET_RecvedClientData,
+  DBGSTR_NET_RecvedServerVersion,
+  DBGSTR_NET_ServerDetermine,
+  DBGSTR_NET_SendAITrainerData,
+  DBGSTR_NET_RecvAITrainerData,
+
   DBGSTR_CALCDMG_BaseDamage,
   DBGSTR_CALCDMG_WazaParam,
   DBGSTR_CALCDMG_RangeHosei,

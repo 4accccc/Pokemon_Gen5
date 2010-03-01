@@ -16,7 +16,7 @@
 #include "btl_net.h"
 
 enum {
-  PRINT_FLG = FALSE,
+  PRINT_FLG = TRUE,
 };
 
 /*--------------------------------------------------------------------------*/
@@ -24,6 +24,8 @@ enum {
 /*--------------------------------------------------------------------------*/
 enum {
   NETID_NULL = 40,  ///< GFL/Net系のNetIDとしてあり得ない値
+
+  NETID_VT_AI = 3,  ///< 通信タッグでAIに与える仮想netID
 };
 
 enum {
@@ -111,8 +113,11 @@ typedef struct {
   RECV_BUFFER   recvClient[ BTL_CLIENT_MAX ];
 
   // 一時受信バッファ
-  void* tmpRecvBuf[ BTL_NET_CONNECT_MACHINE_MAX ];
+  void* tmpRecvBuf[ BTL_NET_CONNECT_MACHINE_MAX  ];
   u32   tmpLargeBufUsedSize[ BTL_NET_CONNECT_MACHINE_MAX ];
+
+  void* tmpExBuffer;
+  u32   tmpExBufferUsedSize;
 
   // 常駐送信バッファ
   TMP_SEND_BUFFER sendBuf[ BTL_NET_CONNECT_MACHINE_MAX ];
@@ -135,6 +140,7 @@ static u8* getbuf_partyData( int netID, void* pWork, int size );
 static void recv_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_AI_partyData( int netID, void* pWork, int size );
 static void recv_AI_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
+static void clearAllTmpBuffer( void );
 static u8* getbuf_playerData( int netID, void* pWork, int size );
 static void recv_playerData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_AI_trainerData( int netID, void* pWork, int size );
@@ -185,11 +191,14 @@ void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, HEAPID heapID )
 
     {
       u32 i;
-      for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; ++i){
+      for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; ++i)
+      {
         Sys->tmpRecvBuf[i] = NULL;
         Sys->tmpLargeBufUsedSize[i] = 0;
-        Sys->clientID[0] = BTL_CLIENTID_NULL;
+        Sys->clientID[i] = BTL_CLIENTID_NULL;
       }
+      Sys->tmpExBuffer = NULL;
+      Sys->tmpExBufferUsedSize = 0;
     }
 
     BTL_Printf("自分のネットID=%d, 接続メンバー数=%d\n", Sys->myNetID, Sys->memberCount);
@@ -240,7 +249,7 @@ static void recv_serverVer( const int netID, const int size, const void* pData, 
   const TMP_SEND_BUFFER* tsb = (const TMP_SEND_BUFFER*)pData;
   SVVER_WORK* swk = (SVVER_WORK*)(&Sys->svverWork);
 
-  BTL_Printf("サーババージョン受信 ... netID=%d, version=%d\n", netID, tsb->val16[0]);
+  BTL_N_Printf( DBGSTR_NET_RecvedServerVersion, netID, tsb->val16[0]);
 
   if( swk->recvTable[netID].recvedFlag == FALSE )
   {
@@ -271,7 +280,7 @@ static void recv_serverVer( const int netID, const int size, const void* pData, 
         if( swk->recvTable[i].version == swk->maxVersion )
         {
           Sys->serverNetID = i;
-          BTL_Printf("サーバは netID=%d のマシンに決定\n", i);
+          BTL_N_Printf( DBGSTR_NET_ServerDetermine, i);
           break;
         }
       }
@@ -386,7 +395,7 @@ static void recv_partyData( const int netID, const int size, const void* pData, 
 {
   Sys->tmpLargeBufUsedSize[ netID ] = size;
   BTL_N_PrintfEx( PRINT_FLG, DBGSTR_NET_RecvedPartyData,
-      netID, *(const u32*)pData, pData, Sys->tmpRecvBuf[netID] );
+      netID, Sys->clientID[netID], pData, Sys->tmpRecvBuf[netID] );
 
   // このブロックはただのデバッグ出力です
   {
@@ -435,22 +444,22 @@ BOOL BTL_NET_StartNotify_AI_PartyData( const POKEPARTY* party )
 }
 static u8* getbuf_AI_partyData( int netID, void* pWork, int size )
 {
-  GF_ASSERT(Sys->tmpRecvBuf[ BTL_CLIENT_ENEMY1 ] == NULL);
+  GF_ASSERT(Sys->tmpExBuffer == NULL);
 
-  Sys->tmpRecvBuf[ BTL_CLIENT_ENEMY1 ] = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(Sys->heapID), size );
-  return Sys->tmpRecvBuf[ BTL_CLIENT_ENEMY1 ];
+  OS_TPrintf("AIパーティデータ受信バッファを生成\n");
+
+  Sys->tmpExBuffer = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(Sys->heapID), size );
+  return Sys->tmpExBuffer;
 }
 static void recv_AI_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
 {
-  Sys->tmpLargeBufUsedSize[ BTL_CLIENT_ENEMY1 ] = size;
-
-  BTL_N_PrintfEx( PRINT_FLG, DBGSTR_NET_RecvedPartyData,
-      BTL_CLIENT_ENEMY1, *(const u32*)pData, pData, Sys->tmpRecvBuf[BTL_CLIENT_ENEMY1] );
+  Sys->tmpExBufferUsedSize = size;
+  OS_TPrintf("AIパーティデータ受信 size=%d\n", size);
 }
 // 通信タッグ用のAIパーティデータを受信したかチェック
 BOOL BTL_NET_IsRecved_AI_PartyData( void )
 {
-  return (Sys->tmpLargeBufUsedSize[ BTL_CLIENT_ENEMY1 ] != 0);
+  return Sys->tmpExBufferUsedSize != 0;
 }
 
 
@@ -461,28 +470,30 @@ const POKEPARTY* BTL_NET_GetPartyData( u8 clientID )
 {
   u8 netID = clientIDtoNetID( clientID );
 
-  GF_ASSERT_MSG(netID!=NETID_NULL, "netID unknown clientID=%d\n", clientID);
-  GF_ASSERT_MSG(Sys->tmpRecvBuf[netID] != NULL, "netID=%d", netID);
-  GF_ASSERT_MSG(Sys->tmpLargeBufUsedSize[netID] != 0, "netID=%d", netID);
-
-  return Sys->tmpRecvBuf[ netID ];
-}
-
-
-void BTL_NET_EndNotifyPartyData( void )
-{
-  int i;
-
-  for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
+  if( netID != NETID_NULL )
   {
-    if( Sys->tmpRecvBuf[i] != NULL )
-    {
-      GFL_HEAP_FreeMemory( Sys->tmpRecvBuf[i] );
-      Sys->tmpRecvBuf[i] = NULL;
-      Sys->tmpLargeBufUsedSize[i] = 0;
-    }
+    GF_ASSERT_MSG(Sys->tmpRecvBuf[netID] != NULL, "netID=%d", netID);
+    GF_ASSERT_MSG(Sys->tmpLargeBufUsedSize[netID] != 0, "netID=%d", netID);
+
+    return Sys->tmpRecvBuf[ netID ];
+  }
+  else if( Sys->tmpExBuffer != NULL )
+  {
+    return Sys->tmpExBuffer;
+  }
+  else
+  {
+    GF_ASSERT_MSG(0, "clientID=%d, partyData not found\n", clientID);
+    return NULL;
   }
 }
+// パーティデータ受信処理を完了する
+void BTL_NET_EndNotifyPartyData( void )
+{
+  clearAllTmpBuffer();
+}
+
+
 
 // プレイヤーデータデータを連絡する（全マシン相互）
 BOOL BTL_NET_StartNotifyPlayerData( const MYSTATUS* playerData )
@@ -510,7 +521,6 @@ static void recv_playerData( const int netID, const int size, const void* pData,
   Sys->tmpLargeBufUsedSize[ netID ] = size;
   BTL_Printf("netID=%dのプレイヤーデータ受信完了, pData=%p, buf=%p\n",
       netID, pData, Sys->tmpRecvBuf[netID] );
-
 }
 // プレイヤーデータの相互受信が完了したか？
 BOOL BTL_NET_IsCompleteNotifyPlayerData( void )
@@ -534,55 +544,72 @@ const MYSTATUS* BTL_NET_GetPlayerData( u8 clientID )
 {
   u8 netID = clientIDtoNetID( clientID );
 
-  GF_ASSERT_MSG(netID!=NETID_NULL, "netID unknown clientID=%d\n", clientID);
-  GF_ASSERT_MSG(Sys->tmpRecvBuf[netID] != NULL, "netID=%d", netID);
-  GF_ASSERT_MSG(Sys->tmpLargeBufUsedSize[netID] != 0, "netID=%d", netID);
+  if( netID != NETID_NULL )
+  {
+    GF_ASSERT_MSG(Sys->tmpRecvBuf[netID] != NULL, "netID=%d", netID);
+    GF_ASSERT_MSG(Sys->tmpLargeBufUsedSize[netID] != 0, "netID=%d", netID);
 
-  return Sys->tmpRecvBuf[ netID ];
+    return Sys->tmpRecvBuf[ netID ];
+  }
+  else if( (Sys->tmpExBuffer != NULL) && (Sys->tmpExBufferUsedSize != 0) )
+  {
+    return Sys->tmpExBuffer;
+  }
+  else
+  {
+    return NULL;
+  }
 }
 
 // AI用トレーナーデータを連絡する（サーバ→全マシン）
 BOOL BTL_NET_StartNotify_AI_TrainerData( const BSP_TRAINER_DATA* tr_data, u32 size )
 {
-  return GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_AI_TRAINER_DATA,
+  BOOL result = GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_AI_TRAINER_DATA,
         size,
         tr_data,
         FALSE,     // 優先度を高くする
         TRUE,     // 同一コマンドがキューに無い場合のみ送信する
         TRUE      // GFL_NETライブラリの外で保持するバッファを使用
   );
+  if( result ){
+    BTL_N_Printf( DBGSTR_NET_SendAITrainerData, size );
+  }
+  return result;
 }
 static u8* getbuf_AI_trainerData( int netID, void* pWork, int size )
 {
-  GF_ASSERT(Sys->tmpRecvBuf[ BTL_CLIENT_ENEMY1 ] == NULL);
-
-  Sys->tmpRecvBuf[ BTL_CLIENT_ENEMY1 ] = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(Sys->heapID), size );
-  return Sys->tmpRecvBuf[ BTL_CLIENT_ENEMY1 ];
+  Sys->tmpExBuffer = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(Sys->heapID), size );
+  return Sys->tmpExBuffer;
 }
 static void recv_AI_trainerData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
 {
-  Sys->tmpLargeBufUsedSize[ BTL_CLIENT_ENEMY1 ] = size;
+  BTL_N_Printf( DBGSTR_NET_RecvAITrainerData, size );
+  Sys->tmpExBufferUsedSize = size;
 }
 // AIトレーナーデータ受信完了したか
 BOOL BTL_NET_IsRecved_AI_TrainerData( void )
 {
-  return (Sys->tmpLargeBufUsedSize[ BTL_CLIENT_ENEMY1 ] != 0);
-
+  return (Sys->tmpExBufferUsedSize != 0);
 }
 
 // 受信したAIトレーナーデータを取得を取得
 const BSP_TRAINER_DATA* BTL_NET_Get_AI_TrainerData( void )
 {
-  GF_ASSERT(Sys->tmpRecvBuf[BTL_CLIENT_ENEMY1] != NULL);
-  GF_ASSERT(Sys->tmpLargeBufUsedSize[BTL_CLIENT_ENEMY1] != 0);
+  GF_ASSERT(Sys->tmpExBuffer != NULL);
+  GF_ASSERT(Sys->tmpExBufferUsedSize != 0);
 
-  return Sys->tmpRecvBuf[ BTL_CLIENT_ENEMY1 ];
-
+  return Sys->tmpExBuffer;
+}
+// プレイヤー・トレーナーデータ受信処理を完了する
+void BTL_NET_EndNotifyPlayerData( void )
+{
+  clearAllTmpBuffer();
 }
 
-
-
-void BTL_NET_EndNotifyPlayerData( void )
+/**
+ *  全ての一時利用バッファを解放
+ */
+static void clearAllTmpBuffer( void )
 {
   int i;
 
@@ -595,7 +622,16 @@ void BTL_NET_EndNotifyPlayerData( void )
       Sys->tmpLargeBufUsedSize[i] = 0;
     }
   }
+  if( Sys->tmpExBuffer )
+  {
+    GFL_HEAP_FreeMemory( Sys->tmpExBuffer );
+    Sys->tmpExBuffer = NULL;
+    Sys->tmpExBufferUsedSize = 0;
+  }
 }
+
+
+
 
 
 
@@ -656,17 +692,21 @@ BOOL BTL_NET_SendToClient( u8 clientID, const void* adrs, u32 size )
   u8 netID = clientIDtoNetID( clientID );
   BOOL result;
 
-  GF_ASSERT(netID != NETID_NULL);
+//  GF_ASSERT(netID != NETID_NULL);
+  if( netID != NETID_NULL )
+  {
 
-  result = GFL_NET_SendDataEx( Sys->netHandle, netID, CMD_TO_CLIENT, size, adrs,
-        FALSE,    // 優先度を高くする
-        FALSE,    // 同一コマンドがキューに無い場合のみ送信する
-        TRUE      // GFL_NETライブラリの外で保持するバッファを使用
-  );
-  if( result ){
-    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_NET_SendCmdDone, netID, size);
+    result = GFL_NET_SendDataEx( Sys->netHandle, netID, CMD_TO_CLIENT, size, adrs,
+          FALSE,    // 優先度を高くする
+          FALSE,    // 同一コマンドがキューに無い場合のみ送信する
+          TRUE      // GFL_NETライブラリの外で保持するバッファを使用
+    );
+    if( result ){
+      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_NET_SendCmdDone, netID, size);
+    }
+    return result;
   }
-  return result;
+  return TRUE;
 }
 
 //=============================================================================================

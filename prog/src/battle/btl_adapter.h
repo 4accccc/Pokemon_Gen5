@@ -21,20 +21,6 @@
 //--------------------------------------------------------------
 typedef struct _BTL_ADAPTER   BTL_ADAPTER;
 
-
-//--------------------------------------------------------------
-/**
- *  アダプタータイプ
- */
-//--------------------------------------------------------------
-typedef enum {
-  BTL_ADAPTER_LOCAL,      ///< 通信せず、サーバと同一マシン上にクライアントがある
-  BTL_ADAPTER_COMM_PARENT,  ///< DS 無線通信を利用（親機側）
-  BTL_ADAPTER_COMM_CHILD,   ///< DS 無線通信をを利用（子機側）
-  BTL_ADAPTER_WIFI_PARENT,  ///< DS Wi-Fi 機能を利用（親機側）
-  BTL_ADAPTER_WIFI_CHILD,   ///< DS Wi-Fi 機能を利用（子機側）
-}BtlAdapterType;
-
 //--------------------------------------------------------------
 /**
  *  アダプターコマンド
@@ -68,7 +54,7 @@ typedef enum {
 extern void BTL_ADAPTERSYS_Init( BtlCommMode mode );
 extern void BTL_ADAPTERSYS_Quit( void );
 
-extern BTL_ADAPTER*  BTL_ADAPTER_Create( GFL_NETHANDLE* netHandle, HEAPID heapID, u16 adapterID );
+extern BTL_ADAPTER*  BTL_ADAPTER_Create( GFL_NETHANDLE* netHandle, u8 adapterID, BOOL fCommType, HEAPID heapID );
 extern void BTL_ADAPTER_Delete( BTL_ADAPTER* wk );
 
 

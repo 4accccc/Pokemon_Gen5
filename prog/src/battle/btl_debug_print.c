@@ -62,6 +62,10 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_ADAPTER_SEND_START:            return " Adapter-%d, コマンド %d を送信開始します\n";
   case DBGSTR_ADAPTER_RECV_DONE:             return " [Adapter] Received from All Clients\n";
   case DBGSTR_ADAPTER_RECVED_A_CLIENT:       return " [Adapter] Received from AdapterID=%d\n";
+  case DBGSTR_ADAPTER_Create:                return "アダプタ(%d）作成：通信対応フラグ=%d\n";
+
+  case DBGSTR_MAIN_PokeConGetByPos:          return "存在しない位置(pos=%d, clientID=%d, idx=%d)のポケモンデータを参照した\n";
+
   case DBGSTR_CLIENT_RETURN_CMD_START:       return "ID[%d], 返信開始へ\n";
   case DBGSTR_CLIENT_RETURN_CMD_DONE:        return "ID[%d], 返信しました\n";
   case DBGSTR_CLIENT_SelectActionSkip:       return "Act選択(%d体目）スキップ\n";
@@ -94,6 +98,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_ForcePokeChange:     return "強制入れ替え %d/%d PosIdx=%d, MemberIdx=%d\n";
   case DBGSTR_CLIENT_UpdateEnemyBaseHP:   return "相手ポケ基準HP値を更新 ->%d  (Poke=%d)\n";
   case DBGSTR_CLIENT_ForceQuitByTimeLimit: return "時間制限による強制終了(ClientID=%d)\n";
+  case DBGSTR_CLIENT_StartCmd:            return "Client(%d), AdaptCmd(%d) 実行開始\n";
 
   case DBGSTR_BPP_NemuriWakeCheck:        return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
 
@@ -113,6 +118,11 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_NET_RecvedAllClientsData: return "全クライアントからのデータ返ってきた\n";
   case DBGSTR_NET_ReturnToServerTrying: return "Try Return to Server %d byte ...";
   case DBGSTR_NET_RecvedClientData:     return "[BTLNET] recv from netID[%d], size=%d\n";
+  case DBGSTR_NET_RecvedServerVersion:  return "サーババージョン受信 ... netID=%d, version=%d\n";
+  case DBGSTR_NET_ServerDetermine:      return "サーバは netID=%d のマシンに決定\n";
+  case DBGSTR_NET_SendAITrainerData:    return "AIトレーナーデータ送信完了, size=%d\n";
+  case DBGSTR_NET_RecvAITrainerData:    return "AIトレーナーデータ受信完了, size=%d\n";
+
   case DBGSTR_CALCDMG_WazaParam:        return "ワザ情報：ID=%d, Type=%d\n";
   case DBGSTR_CALCDMG_BaseDamage:       return "基礎ダメージ値 (%d)\n";
   case DBGSTR_CALCDMG_RangeHosei:       return "対象数によるダメージ補正:%d\n";

@@ -363,7 +363,6 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCLR, wk->heapID,
         FADE_MAIN_BG, 0x60, PALIDX_TOKWIN1*16, PALIDX_TOKWIN1*16 );
 
-
   //BD面カラーを黒にする
   {
     u16 dat = 0;
@@ -382,7 +381,6 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
                               0, 0, FALSE, wk->heapID );
 
   tokwin_charpos = transWinFrameCgx( wk, ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_FRIEND );
-  TAYA_Printf("tokwin charpos=%d\n", tokwin_charpos );
 
   GFL_ARC_UTIL_TransVramScreen( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w01_NSCR, BGFRAME_TOKWIN_FRIEND,
           0, 0, FALSE, wk->heapID );
@@ -400,7 +398,6 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   wk->lvupWin = GFL_BMPWIN_Create( BGFRAME_TOKWIN_ENEMY, LVUPWIN_ORG_X, LVUPWIN_ORG_Y+32, LVUPWIN_WIDTH, LVUPWIN_HEIGHT,
         PALIDX_LVUPWIN, GFL_BMP_CHRAREA_GET_F );
   wk->lvupBmp = GFL_BMPWIN_GetBmp( wk->lvupWin );
-  TAYA_Printf("lvup_win charpos=%d\n", wk->lvupWin_frameCharPos );
 
   /*
   GFL_BMPWIN_MakeScreen( wk->lvupWin );
@@ -791,11 +788,9 @@ static u16 GetWildSingleEncountStrID( BTLV_SCU* wk )
     return BTL_STRID_STD_Encount_Wild_Move;
   }
   if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_LEGEND) ){
-    TAYA_Printf("話しかけエンカウント\n");
     return BTL_STRID_STD_Encount_Wild_Talk;
   }
   if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_SYMBOL) ){
-    TAYA_Printf("シンボルエンカウント\n");
     return BTL_STRID_STD_Encount_Wild_Symbol;
   }
   return BTL_STRID_STD_Encount_Wild1;
@@ -1718,9 +1713,6 @@ static BOOL btlinEffSub_OpponentPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_
       subwk->bpp[1] = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pos[1] );
       subwk->pokeID[1] = BPP_GetID( subwk->bpp[1] );
 
-      OS_TPrintf("マルチポケIN  pos=%d,poke=%d,   pos=%d,poke=%d\n",
-          subwk->pos[0], subwk->pokeID[0], subwk->pos[1], subwk->pokeID[1] );
-
       strID = btlfinEffsub_getOpponentPokeInStrID( wk, 1 );
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 2, clientID_1, subwk->pokeID[0] );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
@@ -2104,7 +2096,7 @@ static BOOL btlinEffSub_MyPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_1, u8 
         subwk->pos[i] = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, subwk->vpos[i] );
         subwk->bpp[i] = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pos[i] );
         subwk->pokeID[i] = BPP_GetID( subwk->bpp[i] );
-        OS_TPrintf("pos(%d) ... poke=%d\n", subwk->pos[i], subwk->pokeID[i]);
+//        OS_TPrintf("pos(%d) ... poke=%d\n", subwk->pos[i], subwk->pokeID[i]);
       }
 
       strID = (BTL_MAIN_GetCompetitor(wk->mainModule)==BTL_COMPETITOR_COMM)? BTL_STRID_STD_PutSingle_Player : BTL_STRID_STD_PutSingle_NPC;
@@ -2966,7 +2958,6 @@ void BTLV_SCU_ChangeForm_Start( BTLV_SCU* wk, BtlvMcssPos vpos )
   twk->seq = 0;
 
   (*(twk->pTaskCounter))++;
-  OS_TPrintf("フォルムチェンジカウンタ Inc:%d\n", (*(twk->pTaskCounter)));
 }
 /**
  *  フォルムチェンジ 動作終了待ち
@@ -2999,7 +2990,6 @@ static void taskChangeForm( GFL_TCBL* tcbl, void* wk_adrs )
   case 2:
     if( !BTLV_EFFECT_CheckExecute() ){
       (*(wk->pTaskCounter))--;
-      OS_TPrintf("フォルムチェンジカウンタ Dec:%d\n", (*(wk->pTaskCounter)));
       GFL_TCBL_Delete( tcbl );
     }
     break;

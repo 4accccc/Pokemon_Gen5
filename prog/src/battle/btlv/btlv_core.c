@@ -1085,6 +1085,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->bagData.time_out_flg = FALSE;
 
     wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
+//    OS_TPrintf("Bag StructAdrs=%p, PP Adrs=%p, pokeCnt=%d\n", &(wk->plistData), wk->plistData.pp, PokeParty_GetPokeCount(wk->plistData.pp));
     wk->plistData.multi_pp = BTL_MAIN_GetMultiPlayerPokeParty( wk->mainModule );
     wk->plistData.multiMode = ( wk->plistData.multi_pp != NULL );
     wk->plistData.multiPos = BTL_MAIN_GetPlayerMultiPos( wk->mainModule );
@@ -1782,13 +1783,13 @@ void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args )
 //=============================================================================================
 BOOL BTLV_StartMsgTrainer( BTLV_CORE* wk, u32 trainerID, int param )
 {
-	if( TT_TrainerMessageCheck( trainerID, param, wk->heapID ) )
-  { 
+  if( TT_TrainerMessageCheck( trainerID, param, wk->heapID ) )
+  {
     TT_TrainerMessageGet( trainerID, param, wk->strBuf, wk->heapID );
     BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
   }
   else
-  { 
+  {
     return FALSE;
   }
   return TRUE;

@@ -117,33 +117,35 @@ static void cont_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 po
  */
 static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
 {
-  BTL_HANDEX_PARAM_DAMAGE* dmg_param;
-  u16 damage = BTL_CALC_QuotMaxHP( bpp, 8 );
   BPP_SICK_CONT  cont = BPP_GetSickCont( bpp, WAZASICK_YADORIGI );
   BtlPokePos  pos_to = BPP_SICKCONT_GetParam( cont );
-  u16 que_reserve_pos = BTL_SVFTOOL_ReserveQuePos( flowWk, SC_ACT_EFFECT_BYVECTOR );
+  u8 recoverPokeID = BTL_SVFTOOL_GetExistPokeID( flowWk, pos_to );
 
-  dmg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
-  dmg_param->pokeID = pokeID;
-  dmg_param->damage = damage;
-  HANDEX_STR_Setup( &dmg_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_YadorigiTurn );
-  HANDEX_STR_AddArg( &dmg_param->exStr, pokeID );
-
-  // ダメージが成功したらエフェクト
+  if( recoverPokeID != BTL_POKEID_NULL )
   {
-    BTL_HANDEX_PARAM_EFFECT_BY_POS* eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EFFECT_BY_POS, pokeID );
-    eff_param->header.failSkipFlag = TRUE;
-    eff_param->effectNo = BTLEFF_YADORIGI;
-    // エフェクト側の from, to の解釈が逆っぽいのでこうする。
-    eff_param->pos_from = pos_to;
-    eff_param->pos_to = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
-    eff_param->reservedQuePos = que_reserve_pos;
-    eff_param->fQueReserve = TRUE;
-  }
+    BTL_HANDEX_PARAM_DAMAGE* dmg_param;
+    u16 damage = BTL_CALC_QuotMaxHP( bpp, 8 );
+    u16 que_reserve_pos = BTL_SVFTOOL_ReserveQuePos( flowWk, SC_ACT_EFFECT_BYVECTOR );
 
-  // 続けて回復
-  {
-    u8 recoverPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, pos_to );
+    dmg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
+    dmg_param->pokeID = pokeID;
+    dmg_param->damage = damage;
+    HANDEX_STR_Setup( &dmg_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_YadorigiTurn );
+    HANDEX_STR_AddArg( &dmg_param->exStr, pokeID );
+
+    // ダメージが成功したらエフェクト
+    {
+      BTL_HANDEX_PARAM_EFFECT_BY_POS* eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EFFECT_BY_POS, pokeID );
+      eff_param->header.failSkipFlag = TRUE;
+      eff_param->effectNo = BTLEFF_YADORIGI;
+      // エフェクト側の from, to の解釈が逆っぽいのでこうする。
+      eff_param->pos_from = pos_to;
+      eff_param->pos_to = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+      eff_param->reservedQuePos = que_reserve_pos;
+      eff_param->fQueReserve = TRUE;
+    }
+
+    // 続けて回復
     if( recoverPokeID != BTL_POKEID_NULL )
     {
       BTL_HANDEX_PARAM_DRAIN* drain_param;
@@ -154,7 +156,6 @@ static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
       drain_param->recoverHP = damage;
     }
   }
-
 }
 /**
  *  ねをはる：継続
