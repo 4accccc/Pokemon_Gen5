@@ -1943,7 +1943,7 @@ static void bsw_PokeDataPack( BSUBWAY_POKEMON *dat, POKEMON_PARAM *pp )
   dat->natuki = PP_Get( pp,ID_PARA_friend,NULL );
   
   //ニックネーム
-  PP_Get( pp,ID_PARA_nickname,dat->nickname );
+  PP_Get( pp,ID_PARA_nickname_raw,dat->nickname );
 }
 
 //--------------------------------------------------------------
