@@ -27,6 +27,8 @@
 #include "field/zonedata.h"
 #include "../script_hideitem.h"
 #include "../../../../resource/fldmapdata/flagwork/flag_define.h"  // FLAG_HIDEITEM_AREA_START参照のため
+#include "field/intrude_secret_item.h"
+#include "savedata/intrude_save_field.h"
 
 #include "../field_subscreen.h" 
 #include "dowsing.h"             // field_subscreen.hをインクルードしてから、このファイルをインクルードして下さい。
@@ -46,7 +48,6 @@
 //=============================================================================
 //=============================================================================
 
-
 //=============================================================================
 /**
  *  アイテムサーチ
@@ -54,7 +55,8 @@
 //=============================================================================
 // オーバーレイ
 FS_EXTERN_OVERLAY(notwifi);
-// ダウジングが起動するときは、notwifiが既にロードされている。
+FS_EXTERN_OVERLAY(fieldmap);
+// ダウジングが起動するときは、notwifi、fieldmapが既にロードされている。
 
 // アイテムデータ
 typedef struct
@@ -66,26 +68,73 @@ typedef struct
   u16 x, z;
 }
 ITEM_DATA;
-// 取り敢えずHIDE_ITEM_DATAと同じ中身にしておく
+// HIDE_ITEM_DATAと同じ中身にしておく
 
+
+//=============================================================================
+//=============================================================================
+// アイテムの種類
+typedef enum
+{
+  ITEM_TYPE_NONE,      // アイテムを見付けていないときのアイテムの種類の値
+  ITEM_TYPE_HIDE,      // 最初から隠してあるアイテム          // HIDE_ITEM_DATA               // src/field/script_hideitem.c
+  ITEM_TYPE_INTRUDE,   // 他のユーザが侵入して隠したアイテム  // INTRUDE_SECRET_ITEM_POSDATA  // include/field/intrude_secret_item.h
+}
+ITEM_TYPE;
+
+typedef struct
+{
+  const ITEM_DATA*                    item_data;     // ソースに埋め込まれた配列テーブルへのポインタを保持しているだけ
+}
+HIDE_INFO;
+
+typedef struct
+{
+  const INTRUDE_SECRET_ITEM_POSDATA*  item_posdata;  // ソースに埋め込まれた配列テーブルへのポインタを保持しているだけ
+}
+INTRUDE_INFO;
+
+typedef struct
+{
+  // type == ITEM_TYPE_HIDE のとき有効
+  HIDE_INFO     hide;
+  // type == ITEM_TYPE_INTRUDE のとき有効
+  INTRUDE_INFO  intrude;
+}
+INFO;
+
+// アイテムの情報
+typedef struct
+{
+  ITEM_TYPE   type;
+  INFO        info;
+}
+ITEM_INFO;
+
+
+//=============================================================================
+//=============================================================================
 // ワーク
 typedef struct
 {
-  const EVENTWORK*  event_wk;
-  const ITEM_DATA*  item_data;
-  u16               item_data_num;
-  u16               search_no;  // 次はitem_data[search_no]からサーチする
+  const EVENTWORK*          event_wk;
+  u16                       hide_search_no;     // 次は[hide_search_no]からサーチする      // hideを全て探した後にintrudeを探す
+
+  const INTRUDE_SAVE_WORK*  intrude_wk;
+  u16                       intrude_search_no;  // 次は[intrude_search_no]からサーチする
 }
 ITEM_SEARCH_WORK;
 
 // 初期化処理
-static ITEM_SEARCH_WORK* ItemSearchInit( HEAPID heap_id, const EVENTWORK* event_wk )
+static ITEM_SEARCH_WORK* ItemSearchInit( HEAPID heap_id, const EVENTWORK* event_wk, const INTRUDE_SAVE_WORK* intrude_wk )
 {
   ITEM_SEARCH_WORK* work = GFL_HEAP_AllocClearMemory( heap_id, sizeof(ITEM_SEARCH_WORK) );
 
   work->event_wk         = event_wk;
-  work->item_data        = HIDEITEM_GetTable( &(work->item_data_num) );
-  work->search_no        = 0;
+  work->hide_search_no   = 0;
+
+  work->intrude_wk          = intrude_wk;
+  work->intrude_search_no   = 0;
 
   return work;
 }
@@ -99,41 +148,87 @@ static void ItemSearchExit( ITEM_SEARCH_WORK* work )
 // TRUEのときアイテムが存在する
 // FALSEのときアイテムが存在しない
 // アイテムが存在するか確認する
-static BOOL ItemSearchExist( ITEM_SEARCH_WORK* work, u16 item_data_index )
+static BOOL ItemSearchExist( ITEM_SEARCH_WORK* work, const ITEM_INFO* item_info )
 {
-  u16 iflag = FLAG_HIDEITEM_AREA_START + item_data_index;
-  return ( EVENTWORK_CheckEventFlag( (EVENTWORK*)(work->event_wk), iflag ) == FALSE );
+  if( item_info->type == ITEM_TYPE_HIDE )
+  {
+    u16 flag = FLAG_HIDEITEM_AREA_START + item_info->info.hide.item_data->index;
+    return ( EVENTWORK_CheckEventFlag( (EVENTWORK*)(work->event_wk), flag ) == 0 );
+  }
+  else if( item_info->type == ITEM_TYPE_INTRUDE )
+  {
+    return ( ISC_SAVE_CheckItem( (INTRUDE_SAVE_WORK*)(work->intrude_wk),
+                 item_info->info.intrude.item_posdata->zone_id,
+                 item_info->info.intrude.item_posdata->grid_x,
+                 item_info->info.intrude.item_posdata->grid_y,
+                 item_info->info.intrude.item_posdata->grid_z ) != ISC_SAVE_SEARCH_NONE );
+  }
+  else
+  {
+    return FALSE;
+  }
 }
 
 // 最初からサーチし直し
 static void ItemSearchRestart( ITEM_SEARCH_WORK* work )
 {
-  work->search_no = 0;
+  work->hide_search_no = 0;
+  work->intrude_search_no = 0;
 }
 
-// TRUEのとき有効なアイテムデータをdataにいれている
-// FALSEのときもうアイテムデータがなくdataは不定
-// アイテムデータを得る
-static BOOL ItemSearchGet( ITEM_SEARCH_WORK* work, const ITEM_DATA** data )
+// TRUEのとき有効なアイテムの情報をitem_infoにいれている
+// FALSEのときもうアイテムがなくitem_infoのtypeにITEM_TYPE_NONEをいれている
+// アイテムの情報を得る
+static BOOL ItemSearchGet( ITEM_SEARCH_WORK* work, ITEM_INFO* item_info )
 {
-  BOOL find = FALSE;
-  const ITEM_DATA* idata;
+  BOOL      find           = FALSE;
+  ITEM_INFO l_item_info;
 
-  do
+  const ITEM_DATA*   hide_item_data;
+  u16                hide_item_data_num;
+
+  const INTRUDE_SECRET_ITEM_POSDATA* intrude_item_posdata;
+  int                                intrude_work_no;
+
+  hide_item_data  = HIDEITEM_GetTable( &hide_item_data_num );
+
+  intrude_item_posdata   = NULL;
+  intrude_work_no        = work->intrude_search_no;
+
+  while( work->hide_search_no < hide_item_data_num )
   {
-    if( work->search_no >= work->item_data_num ) break;
-
-    idata = &( work->item_data[ work->search_no ] );
-    if( ItemSearchExist( work, idata->index ) )  // アイテムが存在する
+    l_item_info.type                = ITEM_TYPE_HIDE;
+    l_item_info.info.hide.item_data = &( hide_item_data[ work->hide_search_no ] );
+    if( ItemSearchExist( work, &l_item_info ) )  // アイテムが存在する
     {
-      *data = idata;
+      item_info->type                = l_item_info.type;
+      item_info->info.hide.item_data = l_item_info.info.hide.item_data;
       find = TRUE;
     }
-    work->search_no++;
+    work->hide_search_no++;
+    if( find ) return TRUE;
   }
-  while( !find );
 
-  return find;
+  intrude_item_posdata = ISC_SAVE_GetItemPosData( (INTRUDE_SAVE_WORK*)(work->intrude_wk), &intrude_work_no );
+  work->intrude_search_no = intrude_work_no;
+  while( intrude_item_posdata )
+  {
+    l_item_info.type                      = ITEM_TYPE_INTRUDE;
+    l_item_info.info.intrude.item_posdata = intrude_item_posdata;
+    if( ItemSearchExist( work, &l_item_info ) )  // アイテムが存在する
+    {
+      item_info->type                      = l_item_info.type;
+      item_info->info.intrude.item_posdata = l_item_info.info.intrude.item_posdata;
+      find = TRUE;
+    }
+    if( find ) return TRUE;
+  
+    intrude_item_posdata = ISC_SAVE_GetItemPosData( (INTRUDE_SAVE_WORK*)(work->intrude_wk), &intrude_work_no );
+    work->intrude_search_no = intrude_work_no;
+  }
+
+  item_info->type = ITEM_TYPE_NONE;
+  return FALSE;
 }
 
 
@@ -285,15 +380,6 @@ STATE;
 #define ABOVE_SE_PITCH (384)
 #define ABOVE_SE_WAIT  (6)
 
-// アイテムの種類
-typedef enum
-{
-  ITEM_TYPE_NONE,      // アイテムを見付けていないときのアイテムの種類の値
-  ITEM_TYPE_HIDE,      // 最初から隠してあるアイテム          // HIDE_ITEM_DATA               // src/field/script_hideitem.c
-  ITEM_TYPE_INTRUDE,   // 他のユーザが侵入して隠したアイテム  // INTRUDE_SECRET_ITEM_POSDATA  // include/field/intrude_secret_item.h
-}
-ITEM_TYPE;
-
 
 //=============================================================================
 /**
@@ -364,36 +450,6 @@ typedef struct
 KIT_SET;
 
 //-------------------------------------
-/// アイテムの情報
-//=====================================
-typedef struct
-{
-  ITEM_TYPE   type;
-
-  union
-  {
-    // type == ITEM_TYPE_HIDE のとき有効
-    struct
-    {
-      u16         index;
-    }
-    hide;
-
-    // type == ITEM_TYPE_INTRUDE のとき有効
-    struct
-    {
-      s16         grid_x;
-      s16         grid_y;
-      s16         grid_z;
-      u16         zone_id;
-    }
-    intrude;
-  }
-  info;
-}
-ITEM_INFO;
-
-//-------------------------------------
 /// ワーク
 //=====================================
 struct _DOWSING_WORK
@@ -427,8 +483,6 @@ struct _DOWSING_WORK
 
   ITEM_INFO                   item_info_prev;
   ITEM_INFO                   item_info_curr;
-  u16                         item_prev;
-  u16                         item_curr;
 
   s32                         player_grid_pos_x_prev;
   s32                         player_grid_pos_y_prev;
@@ -546,8 +600,6 @@ DOWSING_WORK*    DOWSING_Init(
 
   work->item_info_prev.type = ITEM_TYPE_NONE;
   work->item_info_curr.type = ITEM_TYPE_NONE;
-  work->item_prev      = ITEM_NONE;
-  work->item_curr      = ITEM_NONE;
 
   work->player_grid_pos_x_prev    = 0;
   work->player_grid_pos_y_prev    = 0;
@@ -563,15 +615,19 @@ DOWSING_WORK*    DOWSING_Init(
 
   // アイテムサーチ
   {
-    GAMESYS_WORK*   gs_wk;
-    GAMEDATA*       gamedata;
-    EVENTWORK*      event_wk;
+    GAMESYS_WORK*        gs_wk;
+    GAMEDATA*            gamedata;
+    EVENTWORK*           event_wk;
+    SAVE_CONTROL_WORK*   sv_wk;
+    INTRUDE_SAVE_WORK*   intrude_wk;
 
-    gs_wk     = FIELDMAP_GetGameSysWork( work->fieldmap_wk );
-    gamedata  = GAMESYSTEM_GetGameData( gs_wk );
-    event_wk  = GAMEDATA_GetEventWork( gamedata );
+    gs_wk       = FIELDMAP_GetGameSysWork( work->fieldmap_wk );
+    gamedata    = GAMESYSTEM_GetGameData( gs_wk );
+    event_wk    = GAMEDATA_GetEventWork( gamedata );
+    sv_wk       = GAMEDATA_GetSaveControlWork( gamedata );
+    intrude_wk  = SaveData_GetIntrude( sv_wk );
 
-    work->item_search_wk   = ItemSearchInit( work->heap_id, event_wk );
+    work->item_search_wk   = ItemSearchInit( work->heap_id, event_wk, intrude_wk );
   }
 
 /*
@@ -667,6 +723,7 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
   s32             player_grid_pos_y;
   s32             player_grid_pos_z;
   u32             zone_id;
+  BOOL            zone_id_field;  // zone_idがフィールドマップのゾーンIDならTRUE
 
   BOOL            search;
 
@@ -674,7 +731,17 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
 
   // 前回の状態を覚えておく
   work->rod_prev = work->rod_curr;
-  work->item_prev = work->item_curr;
+  {
+    work->item_info_prev.type = work->item_info_curr.type;
+    if( work->item_info_prev.type == ITEM_TYPE_HIDE )
+    {
+      work->item_info_prev.info.hide.item_data = work->item_info_curr.info.hide.item_data;
+    }
+    else if( work->item_info_prev.type == ITEM_TYPE_INTRUDE )
+    {
+      work->item_info_prev.info.intrude.item_posdata = work->item_info_curr.info.intrude.item_posdata;
+    }
+  }
 
   // 今回
   gs_wk       = FIELDMAP_GetGameSysWork( work->fieldmap_wk );
@@ -689,11 +756,13 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
     GAMEDATA*     gamedata    = GAMESYSTEM_GetGameData( gs_wk );
     MAP_MATRIX*   map_mat     = GAMEDATA_GetMapMatrix( gamedata );
 
-    zone_id = MAP_MATRIX_ZONE_ID_NON;
+    zone_id       = MAP_MATRIX_ZONE_ID_NON;
+    zone_id_field = FALSE;
 
     if( MAP_MATRIX_CheckVectorPosRange( map_mat, player_pos->x, player_pos->z ) == TRUE )
     {
       zone_id = MAP_MATRIX_GetVectorPosZoneID( map_mat, player_pos->x, player_pos->z );
+      zone_id_field = ZONEDATA_IsFieldMatrixID( (u16)zone_id );
     }
   }
   
@@ -706,35 +775,43 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
   }
   else
   {
+#if 0
     if(    player_grid_pos_x != work->player_grid_pos_x_prev
         || player_grid_pos_y != work->player_grid_pos_y_prev
         || player_grid_pos_z != work->player_grid_pos_z_prev )  // プレイヤーが移動したら
     {
       search = TRUE;
     }
-    else if( !ItemSearchExist( work->item_search_wk, work->item_prev ) )  // 前回見つけていたアイテムがなくなっていたら
+    else if( !ItemSearchExist( work->item_search_wk, &work->item_info_prev ) )  // 前回見つけていたアイテムがなくなっていたら
     {
-      work->item_prev = ITEM_NONE;
+      work->item_info_prev.type = ITEM_TYPE_NONE;
       search = TRUE;
     }
+#else
+    search = TRUE;  // 他のユーザがアイテムを隠す可能性があるので、毎フレーム探すことにする
+#endif
   }
 
   // アイテムサーチ
   if( search ) 
   {
-    u32 distance_sq_min = 0xFFFFFFFF;
-    const ITEM_DATA* distance_min_item_data = NULL;  // 最小を見付けたときNULLでなくなる
-    u16 distance_min_table_idx;
-    
     s32 rect_x_min = player_grid_pos_x - AREA_ORIGIN_X;  // rect_x_min<= <rect_x_max
     s32 rect_x_max = player_grid_pos_x + AREA_WIDTH - AREA_ORIGIN_X;
     s32 rect_z_min = player_grid_pos_z - AREA_ORIGIN_Y;  // rect_z_min<= <rect_z_max
     s32 rect_z_max = player_grid_pos_z + AREA_HEIGHT - AREA_ORIGIN_Y;
 
-    const ITEM_DATA* item_data;
+    ITEM_INFO item_info;
+    s32       x;
+    s32       z;
+
+    u32       distance_sq_min = 0xFFFFFFFF;
+    u16       distance_min_table_idx;  // item_rod_tableのインデックス
+    ITEM_INFO distance_min_item_info;  // 最小を見付けたときtypeがITEM_TYPE_NONEでなくなる
+    distance_min_item_info.type = ITEM_TYPE_NONE;
+   
     ItemSearchRestart( work->item_search_wk );
     
-    while( ItemSearchGet( work->item_search_wk, &item_data ) )
+    while( ItemSearchGet( work->item_search_wk, &item_info ) )
     {
       u16 table_idx;  // item_rod_tableのインデックス
 
@@ -745,30 +822,51 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
       }
       else
       {
-         if( zone_id != (u32)(item_data->zone_id) )
-         {
-           if(    (item_data->world_flag)
-               && ZONEDATA_IsFieldMatrixID( (u16)zone_id ) )
-           {
-             // ゾーンIDは違うが、フィールドマップなので同じ座標系
-           }
-           else
-           {
-             continue;
-           }
-         }
+        if( item_info.type == ITEM_TYPE_HIDE )
+        {
+          const ITEM_DATA* item_data = item_info.info.hide.item_data;
+          if( zone_id != (u32)(item_data->zone_id) )
+          {
+            if(    (item_data->world_flag)
+                && zone_id_field )
+            {
+              // ゾーンIDは違うが、フィールドマップなので同じ座標系
+            }
+            else
+            {
+              continue;
+            }
+          }
+          x = item_data->x;
+          z = item_data->z;
+        }
+        else if( item_info.type == ITEM_TYPE_INTRUDE )
+        {
+          const INTRUDE_SECRET_ITEM_POSDATA* item_posdata = item_info.info.intrude.item_posdata;
+          if(    ZONEDATA_IsFieldMatrixID( item_posdata->zone_id )
+              && zone_id_field )
+          {
+            // ゾーンIDは違うが、フィールドマップなので同じ座標系
+          }
+          else
+          {
+            continue;
+          }
+          x = item_posdata->grid_x;
+          z = item_posdata->grid_z;
+        }
       }
 
       // 自分を囲むサーチ範囲の矩形の中にあるか
-      if( !(    rect_x_min<=item_data->x && item_data->x<rect_x_max
-             && rect_z_min<=item_data->z && item_data->z<rect_z_max ) )
+      if( !(    rect_x_min<=x && x<rect_x_max
+             && rect_z_min<=z && z<rect_z_max ) )
       {
         continue;
       }
 
       // 自分を囲むサーチ範囲の矩形の中にあるので、item_rod_tableのインデックスを求められる
-      table_idx =   ( item_data->z - player_grid_pos_z + AREA_ORIGIN_Y ) * AREA_WIDTH \
-                  + ( item_data->x - player_grid_pos_x + AREA_ORIGIN_X );
+      table_idx =   ( z - player_grid_pos_z + AREA_ORIGIN_Y ) * AREA_WIDTH \
+                  + ( x - player_grid_pos_x + AREA_ORIGIN_X );
 
       // その場所はROD_NONE(NN)ではないか
       if( work->item_rod_table[ table_idx ] == ROD_NONE )
@@ -778,27 +876,42 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
 
       // 最も近いか
       {
-        u32 distance_sq =   ( item_data->x - player_grid_pos_x ) * ( item_data->x - player_grid_pos_x ) \
-                          + ( item_data->z - player_grid_pos_z ) * ( item_data->z - player_grid_pos_z );
+        u32 distance_sq =   ( x - player_grid_pos_x ) * ( x - player_grid_pos_x ) \
+                          + ( z - player_grid_pos_z ) * ( z - player_grid_pos_z );
         if( distance_sq < distance_sq_min )
         {
           distance_sq_min = distance_sq;
-          distance_min_item_data = item_data;
           distance_min_table_idx = table_idx;
+          distance_min_item_info.type = item_info.type;
+          if( item_info.type == ITEM_TYPE_HIDE )
+          {
+            distance_min_item_info.info.hide.item_data = item_info.info.hide.item_data;
+          }
+          else if( item_info.type == ITEM_TYPE_INTRUDE )
+          {
+            distance_min_item_info.info.intrude.item_posdata = item_info.info.intrude.item_posdata;
+          }
         }
       }
     }
 
     // 今回の状態
-    if( distance_min_item_data )
+    work->item_info_curr.type = distance_min_item_info.type;
+    if( distance_min_item_info.type != ITEM_TYPE_NONE )
     {
-      work->rod_curr = work->item_rod_table[ distance_min_table_idx ];
-      work->item_curr = distance_min_item_data->index;
+      work->rod_curr            = work->item_rod_table[ distance_min_table_idx ];
+      if( distance_min_item_info.type == ITEM_TYPE_HIDE )
+      {
+        work->item_info_curr.info.hide.item_data = distance_min_item_info.info.hide.item_data;
+      }
+      else if( distance_min_item_info.type == ITEM_TYPE_INTRUDE )
+      {
+        work->item_info_curr.info.intrude.item_posdata = distance_min_item_info.info.intrude.item_posdata;
+      }
     }
     else
     {
       work->rod_curr = ROD_NONE;
-      work->item_curr = ITEM_NONE;
     }
   }
 
@@ -864,9 +977,51 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
     {
       if( work->rod_curr != ROD_ABOVE )
       {
-        if( work->item_curr != ITEM_NONE )
+        if( work->item_info_curr.type != ITEM_TYPE_NONE )
         {
-          if( work->item_prev != work->item_curr )
+          BOOL different_item = FALSE;
+          do
+          {
+            // 場所で同じか違うか判断する
+            s32 prev_x;
+            s32 prev_z;
+            s32 curr_x;
+            s32 curr_z;
+            if( work->item_info_prev.type == ITEM_TYPE_HIDE )
+            {
+              prev_x = work->item_info_prev.info.hide.item_data->x;
+              prev_z = work->item_info_prev.info.hide.item_data->z;
+            }
+            else if( work->item_info_prev.type == ITEM_TYPE_INTRUDE )
+            {
+              prev_x = work->item_info_prev.info.intrude.item_posdata->grid_x;
+              prev_z = work->item_info_prev.info.intrude.item_posdata->grid_z;
+            }
+            else
+            {
+              // 今回初めて見付けたとき
+              different_item = TRUE;
+              break;
+            }
+            if( work->item_info_curr.type == ITEM_TYPE_HIDE )
+            {
+              curr_x = work->item_info_curr.info.hide.item_data->x;
+              curr_z = work->item_info_curr.info.hide.item_data->z;
+            }
+            else if( work->item_info_curr.type == ITEM_TYPE_INTRUDE )
+            {
+              curr_x = work->item_info_curr.info.intrude.item_posdata->grid_x;
+              curr_z = work->item_info_curr.info.intrude.item_posdata->grid_z;
+            }
+            if( prev_x != curr_x || prev_z != curr_z )
+            {
+              // 違うアイテムを見付けたとき
+              different_item = TRUE;
+              break;
+            }
+          }
+          while(0);
+          if( different_item )
           {
             SEPLAYER_ID seplayer_id = PMSND_GetSE_DefaultPlayerID( SEQ_SE_FLD_120 );
             int pan = ( (int)( kid_info[work->rod_curr].pan ) -8 ) * 16;

@@ -1610,12 +1610,16 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 #if PMS_USE_SND
 			GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
+			wk->cmd_button_pos = BUTTON_POS_DECIDE;
+			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON );  // 編集エリアじゃなく「けってい/やめるボタン」のところにいるかもしれないが、ボタンを光らせたいのでこのコマンドを呼んでおく。
 			*seq = SEQ_EDS_TO_SUBPROC_OK+ret;
 			break;
     case 1:	//やめる
 #if PMS_USE_SND
 			GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
+			wk->cmd_button_pos = BUTTON_POS_CANCEL;
+			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON );  // 編集エリアじゃなく「けってい/やめるボタン」のところにいるかもしれないが、ボタンを光らせたいのでこのコマンドを呼んでおく。
 			*seq = SEQ_EDS_TO_SUBPROC_OK+ret;
 			break;
 		case 2:	// 左
@@ -3376,31 +3380,34 @@ static void SubProc_CommandOK( PMS_INPUT_WORK* wk, int* seq )
 
 	switch(*seq){
 	case SEQ_INIT:
-		if( CheckModified( wk ) || PMSI_PARAM_GetNotEditEgnoreFlag(wk->input_param) )
-		{
-			if( check_input_complete( wk ) )
-			{
-				InitMenuState( &wk->menu, MENU_RESULT_POS_MAX, MENU_RESULT_POS_YES );
-        wk->cmd_button_pos = 0;
-				PMSIView_SetCommand( wk->vwk, VCMD_TASKMENU_DECIDE );
-				(*seq) = SEQ_MENU_CTRL;
-			}
-			else
-			{
-        /// @TODO このままでは何もメッセージが出ない
-				PMSIView_SetCommand( wk->vwk, VCMD_DISP_MESSAGE_WARN );
-				(*seq) = SEQ_WAIT_ANYKEY;
-			}
-		}
-		else
-		{
-      // 無効なボタンタッチ音
-      GFL_SOUND_PlaySE( SOUND_DISABLE_BUTTON );
+		if( PMSIView_WaitCommandAll( wk->vwk ) )
+    {
+  		if( CheckModified( wk ) || PMSI_PARAM_GetNotEditEgnoreFlag(wk->input_param) )
+  		{
+  			if( check_input_complete( wk ) )
+  			{
+  				InitMenuState( &wk->menu, MENU_RESULT_POS_MAX, MENU_RESULT_POS_YES );
+          wk->cmd_button_pos = 0;
+  				PMSIView_SetCommand( wk->vwk, VCMD_TASKMENU_DECIDE );
+  				(*seq) = SEQ_MENU_CTRL;
+  			}
+  			else
+  			{
+          /// @TODO このままでは何もメッセージが出ない
+  				PMSIView_SetCommand( wk->vwk, VCMD_DISP_MESSAGE_WARN );
+  				(*seq) = SEQ_WAIT_ANYKEY;
+  			}
+  		}
+  		else
+  		{
+        // 無効なボタンタッチ音
+        GFL_SOUND_PlaySE( SOUND_DISABLE_BUTTON );
 
-			PMSIView_SetCommand( wk->vwk, VCMD_ERASE_MENU );
-			(*seq) = SEQ_RETURN;
-//			SetSubProc( wk, SubProc_CommandCancel );
-		}
+  			PMSIView_SetCommand( wk->vwk, VCMD_ERASE_MENU );
+  			(*seq) = SEQ_RETURN;
+  //			SetSubProc( wk, SubProc_CommandCancel );
+  		}
+    }
 		break;
 
 	case SEQ_MENU_CTRL:
