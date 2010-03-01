@@ -317,7 +317,7 @@ typedef struct {
 //=============================================================================
 
 // リスト生成
-static BOOL SceneListMake( UI_SCENE_CNT_PTR cnt, void* work );
+//static BOOL SceneListMake( UI_SCENE_CNT_PTR cnt, void* work );
 
 // フロア選択
 static BOOL SceneSelectFloor_Init( UI_SCENE_CNT_PTR cnt, void* work );
@@ -361,7 +361,6 @@ static int GetFloorIdxFromCountryCode(const int inCountryCode);
 //==============================================================
 typedef enum
 { 
-  UNS_SCENE_ID_LIST_MAKE = 0, ///< リスト生成
   UNS_SCENE_ID_SELECT_FLOOR,  ///< フロア選択
   UNS_SCENE_ID_CONFIRM,       ///< 確認画面
   UNS_SCENE_ID_JUMP_NG,       ///< ジャンプＮＧ
@@ -374,14 +373,6 @@ typedef enum
 //==============================================================
 static const UI_SCENE_FUNC_SET c_scene_func_tbl[ UNS_SCENE_ID_MAX ] = 
 {
-  // UNS_SCENE_ID_LIST_MAKE
-  {
-    NULL,
-    NULL,
-    SceneListMake,
-    NULL,
-    NULL,
-  },
   // UNS_SCENE_ID_SELECT_FLOOR
   {
     SceneSelectFloor_Init,
@@ -497,33 +488,26 @@ const GFL_PROC_DATA UNSelectProcData =
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT UNSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
-  UN_SELECT_MAIN_WORK *wk;
+  UN_SELECT_MAIN_WORK *wk = mywk;
   
   GF_ASSERT( pwk );
 
-  switch( *seq )
-  {
+  switch( *seq ){
   case 0:
     wk = app_init( proc, pwk );
-  
-    // フェードイン リクエスト
-    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1 );
-
     (*seq)++;
     break;
-
   case 1:
-    if( GFL_FADE_CheckFade() == FALSE )
+    // リスト初期化
+    if( FRAMELIST_Init( wk->lwk ) == FALSE )
     {
       return GFL_PROC_RES_FINISH;
     }
-    break;
-
-  default : GF_ASSERT(0);
   }
 
   return GFL_PROC_RES_CONTINUE;
 }
+
 //-----------------------------------------------------------------------------
 /**
  *  @brief  PROC 終了処理
@@ -600,19 +584,32 @@ static GFL_PROC_RESULT UNSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, v
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT UNSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
+  BOOL end = FALSE;
   UN_SELECT_MAIN_WORK* wk = mywk;
-  
-  // SCENE
-  if( UI_SCENE_CNT_Main( wk->cnt_scene ) )
-  {
-    return GFL_PROC_RES_FINISH;
+  switch( *seq ){
+  case 0:
+    //ブラックインリクエスト
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1 );
+    (*seq)++;
+    break;
+  case 1:
+    //ブラックイン待ち
+    if( GFL_FADE_CheckFade() == FALSE )
+    {
+      (*seq)++;
+    }
+    break;
+  case 2:
+    // SCENE
+    if( UI_SCENE_CNT_Main( wk->cnt_scene ) ) end = TRUE;
   }
 
   // メッセージ主処理
   MSG_CNT_Main( wk->cnt_msg );
-
   //2D描画
   UN_SELECT_GRAPHIC_2D_Draw( wk->graphic );
+
+  if (end) return GFL_PROC_RES_FINISH;
 
   return GFL_PROC_RES_CONTINUE;
 }
@@ -878,6 +875,8 @@ static void PASSIVE_Request( void )
 {
   BrightnessChgReset( YESNO_MASK_DISP );
   ChangeBrightnessRequest( BRIGHT_PASSIVE_SYNC, BRIGHT_PASSIVE_VOL, 0, YESNO_MASK_PLANE, YESNO_MASK_DISP );
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 8, -1 );
+
 }
 
 //-----------------------------------------------------------------------------
@@ -893,6 +892,7 @@ static void PASSIVE_Reset( void )
 {
   BrightnessChgReset( YESNO_MASK_DISP ); // パッシブ解除
   ChangeBrightnessRequest( BRIGHT_PASSIVE_SYNC, 0, BRIGHT_PASSIVE_VOL, YESNO_MASK_PLANE, YESNO_MASK_DISP );
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 8, 0, -1 );
 }
 
 
@@ -1641,7 +1641,7 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
   // シーンコントローラ作成
   wk->cnt_scene = UI_SCENE_CNT_Create( 
       wk->heap_id, c_scene_func_tbl, UNS_SCENE_ID_MAX, 
-      UNS_SCENE_ID_LIST_MAKE, wk );
+      UNS_SCENE_ID_SELECT_FLOOR, wk );
 
   //BGリソース読み込み
   UNSelect_BG_LoadResource( wk, wk->heap_id );
@@ -1745,7 +1745,7 @@ static void app_end( UN_SELECT_MAIN_WORK* wk, END_MODE end_mode )
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 1 );
 }
 
-
+#if 0
 //-----------------------------------------------------------------------------
 /**
  *  @brief  SCENE リスト生成 主処理
@@ -1780,6 +1780,7 @@ static BOOL SceneListMake( UI_SCENE_CNT_PTR cnt, void* work )
 
   return FALSE;
 }
+#endif
 
 //-----------------------------------------------------------------------------
 /**
@@ -1908,11 +1909,14 @@ static BOOL SceneConfirm_Init( UI_SCENE_CNT_PTR cnt, void* work )
   UN_SELECT_MAIN_WORK* wk = work;
   u8 seq = UI_SCENE_CNT_GetSubSeq( cnt );
 
-  switch(seq)
-  {
+  switch(seq){
   case 0:
     // パッシブ状態に遷移
     PASSIVE_Request();
+    UI_SCENE_CNT_IncSubSeq( cnt );
+    break;
+  case 1:
+    if( (GFL_FADE_CheckFade() == TRUE)||(!IsFinishedBrightnessChg(MASK_MAIN_DISPLAY)) ) break;
 
 #if 0
     TOUCHBAR_SetVisible( wk->touchbar, TOUCHBAR_ICON_CUR_L, FALSE );
@@ -1935,14 +1939,14 @@ static BOOL SceneConfirm_Init( UI_SCENE_CNT_PTR cnt, void* work )
     UI_SCENE_CNT_IncSubSeq( cnt );
     break;
 
-  case 1:
+  case 2:
     if( MSG_CNT_PrintProc(wk->cnt_msg) )
     {
       UI_SCENE_CNT_IncSubSeq( cnt );
     }
     break;
 
-  case 2:
+  case 3:
     // タスクメニュー表示
     wk->menu = UNSelect_TASKMENU_Init( 
         wk->menu_res, 
@@ -2019,6 +2023,7 @@ static BOOL SceneConfirm_Main( UI_SCENE_CNT_PTR cnt, void* work )
 static BOOL SceneConfirm_End( UI_SCENE_CNT_PTR cnt, void* work )
 {
   UN_SELECT_MAIN_WORK* wk = work;
+  if( (GFL_FADE_CheckFade() == TRUE)||(!IsFinishedBrightnessChg(MASK_MAIN_DISPLAY)) ) return FALSE;
 
   return TRUE;
 }
@@ -2043,12 +2048,16 @@ static BOOL SceneJumpNG_Init( UI_SCENE_CNT_PTR cnt, void* work )
   case 0:
     // パッシブ状態に遷移
     PASSIVE_Request();
+    UI_SCENE_CNT_IncSubSeq( cnt );
+    break;
+  case 1:
+    if( (GFL_FADE_CheckFade() == TRUE)||(!IsFinishedBrightnessChg(MASK_MAIN_DISPLAY)) ) break;
 
     MSG_CNT_SetPrint( wk->cnt_msg, un_reception_msg_06 );
     UI_SCENE_CNT_IncSubSeq( cnt );
     break;
 
-  case 1:
+  case 2:
     return TRUE;
   default : GF_ASSERT(0);
   }
@@ -2145,7 +2154,7 @@ static void HBlankTask( GFL_TCB * tcb, void * work )
 //OBJ
 #define	RES_NONE	( 0xffffffff )		// リソースが読み込まれていない
 
-#define LIST_MARKER_X (29*8)
+#define LIST_MARKER_X (29*8+2)
 #define BUIL_MARKER_X (32+8)
 #define BUIL_CUR_X (8)
 #define SCROLL_BAR_X (256-10)
