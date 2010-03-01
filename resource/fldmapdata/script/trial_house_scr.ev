@@ -18,62 +18,100 @@
 _EVENT_DATA   ev_tri_house_reception
 _EVENT_DATA_END
 
+DEFINE_LOCAL loop
 DEFINE_LOCAL exit
 DEFINE_LOCAL btl_count    //戦闘回数
+DEFINE_LOCAL download_flg
 
 //受付
 EVENT_START ev_tri_house_reception
 
+  DEFINE_LOCAL dl_data_valid
   DEFINE_LOCAL first_list_ret
-  DEFINE_LOCAL loop
   DEFINE_LOCAL rank
+  
 
   //トライアルハウススタート
   _TH_START()
 
   _TALK_OBJ_START()
-  
-  //ループ初期化
-  $loop = TRUE
 
-  //ランク取得
-  _TH_GET_RANK(rank)
-  //マスターランクになったか？
-  IF $rank == TH_RANK_MASTER THEN
-    //「ししょう！チャレンジする？」
-    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_002, SCWK_TARGET_OBJID, POS_DL )
-  ELSE
-    //「チャレンジする？」
-    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_001, SCWK_TARGET_OBJID, POS_DL )
-  ENDIF
+  {
+    DEFINE_LOCAL download_data
+    DEFINE_LOCAL dl_data_msg
+    //ダウンロードデータのタイプを取得　シングル　or ダブル　or データなし
+    $download_data = 0   //@todo
+    IF $download_data == 1 THEN      //シングル
+      $dl_data_msg = msg_trialhouse_022    //「ダウンロードしたシングルバトルする？」
+      $dl_data_valid = TRUE
+    ELSIF $download_data == 2 THEN   //ダブル
+      $dl_data_msg = msg_trialhouse_030    //「ダウンロードしたダブルバトルする？」
+      $dl_data_valid = TRUE
+    ELSE                            //データ無し        
+      $dl_data_valid = FALSE
+    ENDIF
 
-  WHILE $loop == TRUE
-    $loop = FALSE
-    //リスト作成
-    _BMPMENU_INIT_EX( 1,1,0,1,first_list_ret )
-    _BMPMENU_MAKE_LIST( msg_trialhouse_str1, 0 )    //チャレンジ
-    _BMPMENU_MAKE_LIST( msg_trialhouse_str2, 1 )    //せつめい
-    _BMPMENU_MAKE_LIST( msg_trialhouse_str3, 2 )    //やめる
-     _BMPMENU_START()
-    //ウィンドウ閉じる
-    _BALLOONWIN_CLOSE()
-    IF $first_list_ret == EV_WIN_B_CANCEL THEN//キャンセル
-      //やめるフラグＯＮ
-      $exit = TRUE
-    ELSE
-      SWITCH $first_list_ret
-      CASE 0 THEN   //チャレンジ
+    IF $dl_data_valid == TRUE THEN
+      _BALLOONWIN_OBJMSG_POS(dl_data_msg, SCWK_TARGET_OBJID, POS_DL )
+      _YES_NO_WIN( SCWK_ANSWER )
+      _BALLOONWIN_CLOSE()
+      IF $SCWK_ANSWER == 0 THEN //ダウンロード挑戦
+        $download_flg = TRUE
         _CALL charange
-      CASE 1 THEN //説明聴く
-        $loop = TRUE      //ループフラグ立てる
-        //説明メッセージコール
-        _CALL explanation
-      CASE 2 THEN //やめる
+      ELSE                      //挑戦しない
+        $exit = TRUE
+      ENDIF
+    ENDIF  
+  }
+  
+  IF $dl_data_valid == FALSE THEN
+    //ループ初期化
+    $loop = TRUE
+
+    //ランク取得
+    _TH_GET_RANK(rank)
+    //マスターランクになったか？
+    IF $rank == TH_RANK_MASTER THEN
+      //「ししょう！チャレンジする？」
+      _BALLOONWIN_OBJMSG_POS(msg_trialhouse_002, SCWK_TARGET_OBJID, POS_DL )
+    ELSE
+      //「チャレンジする？」
+      _BALLOONWIN_OBJMSG_POS(msg_trialhouse_001, SCWK_TARGET_OBJID, POS_DL )
+    ENDIF
+
+    WHILE $loop == TRUE
+      $loop = FALSE
+      //リスト作成
+      _BMPMENU_INIT_EX( 1,1,0,1,first_list_ret )
+      _BMPMENU_MAKE_LIST( msg_trialhouse_str1, 0 )    //チャレンジ
+      _BMPMENU_MAKE_LIST( msg_trialhouse_str2, 1 )    //せつめい
+      _BMPMENU_MAKE_LIST( msg_trialhouse_str8, 2 )    //ダウンロード
+      _BMPMENU_MAKE_LIST( msg_trialhouse_str3, 3 )    //やめる
+       _BMPMENU_START()
+      //ウィンドウ閉じる
+      _BALLOONWIN_CLOSE()
+      IF $first_list_ret == EV_WIN_B_CANCEL THEN//キャンセル
         //やめるフラグＯＮ
         $exit = TRUE
-      ENDSWITCH
-    ENDIF
-  ENDWHILE
+      ELSE
+        SWITCH $first_list_ret
+        CASE 0 THEN   //チャレンジ
+          $download_flg = FALSE
+          _CALL charange
+        CASE 1 THEN //説明聴く
+          $loop = TRUE      //ループフラグ立てる
+          //説明メッセージコール
+          _CALL explanation
+        CASE 2 THEN //ダウンロード
+          _CALL download
+        CASE 3 THEN //やめる
+          //やめるフラグＯＮ
+          $exit = TRUE
+        ENDSWITCH
+      ENDIF
+    ENDWHILE
+
+  ENDIF //  $dl_data_valid == FALSE
 
   IF $exit == TRUE THEN
     //「またこんど」
@@ -97,49 +135,49 @@ charange:
   DEFINE_LOCAL    list_ret
   DEFINE_LOCAL    party_sel
   DEFINE_LOCAL    regulation
-  DEFINE_LOCAL    download
-  //「チャレンジするのね。ちょっとまって」
-  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_003, SCWK_TARGET_OBJID, POS_DL )
-  _BALLOONWIN_CLOSE()
-
-  //ビーコンサーチ処理
-  _TH_SEARCH_BEACON( download )
-
+  DEFINE_LOCAL    btl_mode
+  
   //ダウンロードデータで遊ぶかをセットする
-  _TH_SET_DL_FLG( download )
-  //シングル？ダブル?
-  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_006, SCWK_TARGET_OBJID, POS_DL )
-  //リスト作成
-  _BMPMENU_INIT_EX( 1,1,0,1,list_ret )
-  _BMPMENU_MAKE_LIST( msg_trialhouse_str4, 0 )    //シングル
-  _BMPMENU_MAKE_LIST( msg_trialhouse_str5, 1 )    //ダブル
-  _BMPMENU_MAKE_LIST( msg_trialhouse_str3, 2 )    //やめる
-  _BMPMENU_START()
-  //ウィンドウ閉じる
-  _BALLOONWIN_CLOSE()
+  _TH_SET_DL_FLG( download_flg )
 
-  IF $list_ret == EV_WIN_B_CANCEL THEN  //キャンセル
-    //やめるフラグＯＮ
-    $exit = TRUE
-    _RET
-  ELSE
-    DEFINE_LOCAL mode
-    SWITCH $list_ret
-    CASE 0 THEN   //シングル
-      $regulation = REG_SUBWAY_SINGLE   //バトルサブウェイシングルレギュレーションで代用
-      $mode = TH_PLAYMODE_SINGLE 
-    CASE 1 THEN //ダブル
-      $regulation = REG_SUBWAY_DOUBLE   //バトルサブウェイダブルレギュレーションで代用
-      $mode = TH_PLAYMODE_DOUBLE
-    CASE 2 THEN //やめる
+  IF $download_flg == FALSE THEN      //ロムデータのとき
+     //シングル？ダブル?
+    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_006, SCWK_TARGET_OBJID, POS_DL )
+    //リスト作成
+    _BMPMENU_INIT_EX( 1,1,0,1,list_ret )
+    _BMPMENU_MAKE_LIST( msg_trialhouse_str4, 0 )    //シングル
+    _BMPMENU_MAKE_LIST( msg_trialhouse_str5, 1 )    //ダブル
+    _BMPMENU_MAKE_LIST( msg_trialhouse_str3, 2 )    //やめる
+    _BMPMENU_START()
+    //ウィンドウ閉じる
+    _BALLOONWIN_CLOSE()
+
+    IF $list_ret == EV_WIN_B_CANCEL THEN  //キャンセル
       //やめるフラグＯＮ
       $exit = TRUE
-     _RET
-    ENDSWITCH
-    //戦闘モードセット
-    _TH_SET_PLAY_MODE( mode )
+      _RET
+    ELSE
+      SWITCH $list_ret
+      CASE 0 THEN   //シングル
+        $regulation = REG_SUBWAY_SINGLE   //バトルサブウェイシングルレギュレーションで代用
+        $btl_mode = TH_PLAYMODE_SINGLE 
+      CASE 1 THEN //ダブル
+        $regulation = REG_SUBWAY_DOUBLE   //バトルサブウェイダブルレギュレーションで代用
+        $btl_mode = TH_PLAYMODE_DOUBLE
+      CASE 2 THEN //やめる
+        //やめるフラグＯＮ
+        $exit = TRUE
+      _RET
+      ENDSWITCH
+    ENDIF
+  ELSE                            //ダウンロードデータのとき
+    //ダウンロードデータはシングルか？だぶるか？@todo
+    $regulation = REG_SUBWAY_DOUBLE   //バトルサブウェイダブルレギュレーションで代用
+    $btl_mode = TH_PLAYMODE_DOUBLE
   ENDIF
 
+  //戦闘モードセット
+  _TH_SET_PLAY_MODE( btl_mode )
   //「早速はじめる」
   _BALLOONWIN_OBJMSG_POS(msg_trialhouse_011, SCWK_TARGET_OBJID, POS_DL )
   _BALLOONWIN_CLOSE()
@@ -303,6 +341,60 @@ recover_anm:
   _OBJ_ANIME( C04R0901_RECEPTION_01, anm_recep_center2 )
   _OBJ_ANIME_WAIT()
 
+_RET
+
+
+//ダウンロード
+download:
+  //DSiの通信機能はＯＮになってるか？
+  _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
+  //FALSEのとき、無線通信は使えない
+  IF $SCWK_ANSWER == FALSE THEN
+   	//共通メッセージ呼び出し
+    _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
+    $exit = TRUE
+  ELSE
+    //ビーコンサーチ処理
+    _TH_SEARCH_BEACON( SCWK_ANSWER )
+    IF $SCWK_ANSWER == FALSE THEN
+      //「ダウンロードするものがない」
+      _BALLOONWIN_OBJMSG_POS(msg_trialhouse_024, SCWK_TARGET_OBJID, POS_DL )
+      //メニュー選択やり直し
+      $loop = TRUE
+      _RET
+    ENDIF
+
+    //「特別な検定する?」
+    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_023, SCWK_TARGET_OBJID, POS_DL )
+    _YES_NO_WIN( SCWK_ANSWER )
+    _BALLOONWIN_CLOSE()
+    IF $SCWK_ANSWER == 0 THEN //やる
+      //@todo
+      //「ダウンロードしました」
+      _BALLOONWIN_OBJMSG_POS(msg_trialhouse_025, SCWK_TARGET_OBJID, POS_DL )
+      _BALLOONWIN_CLOSE()
+      //「今すぐ挑戦？」
+      _BALLOONWIN_OBJMSG_POS(msg_trialhouse_026, SCWK_TARGET_OBJID, POS_DL )
+      _YES_NO_WIN( SCWK_ANSWER )
+      _BALLOONWIN_CLOSE()
+      IF $SCWK_ANSWER == 0 THEN //ダウンロード挑戦
+        //「チャレンジするのね。ちょっとまって」  @todo
+//        _BALLOONWIN_OBJMSG_POS(msg_trialhouse_003, SCWK_TARGET_OBJID, POS_DL )
+//        _BALLOONWIN_CLOSE()
+
+        $download_flg = TRUE
+        _CALL charange
+        
+      ELSE                      //挑戦しない
+        //ラストメッセージ「じゃああとで」
+        _BALLOONWIN_OBJMSG_POS(msg_trialhouse_027, SCWK_TARGET_OBJID, POS_DL )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+      ENDIF
+    ELSE
+      $exit = TRUE
+    ENDIF
+  ENDIF
 _RET
 
 //--------------------------------------------------------------------
