@@ -144,6 +144,9 @@ FS_EXTERN_OVERLAY(ui_common);
 
 #define NOT_MARKER (0xffff)
 
+#define BG_PLT_NUM  (7)         //BGが使用するパレット本数
+#define UP_MSG_FRM_SIZE (16)    //上画面メッセージウィンドウフレームキャラサイズ（8+1キャラだけど16確保）
+
 enum {
   UN_OBJ_BUIL_CURSOR = 0,           //1
   UN_OBJ_BUIL_MARKER_START = 1,     //20
@@ -611,11 +614,6 @@ static GFL_PROC_RESULT UNSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, v
   //2D描画
   UN_SELECT_GRAPHIC_2D_Draw( wk->graphic );
 
-  //3D描画
-  UN_SELECT_GRAPHIC_3D_StartDraw( wk->graphic );
-
-  UN_SELECT_GRAPHIC_3D_EndDraw( wk->graphic );
-
   return GFL_PROC_RES_CONTINUE;
 }
 //=============================================================================
@@ -644,25 +642,21 @@ static void UNSelect_BG_LoadResource( UN_SELECT_MAIN_WORK* wk, HEAPID heap_id )
   handle  = GFL_ARC_OpenDataHandle( ARCID_UN_SELECT_GRA, heap_id );
 
   // 上下画面ＢＧパレット転送
-  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_un_select_gra_kokuren_bg_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 7*0x20, heap_id );
-  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_un_select_gra_kokuren_bg_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 7*0x20, heap_id );
+  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_un_select_gra_kokuren_bg_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, BG_PLT_NUM*0x20, heap_id );
+  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_un_select_gra_kokuren_bg_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, BG_PLT_NUM*0x20, heap_id );
   
   //  ----- サブ画面 -----
-/**
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_un_select_gra_kokuren_bg_NCGR,
-            BG_FRAME_BACK_S, 0, 0, 0, heap_id );
-*/
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_un_select_gra_up_msg_frame_NCGR,
+            BG_FRAME_TEXT_S, 0, UP_MSG_FRM_SIZE*0x20, 0, heap_id );
   GFL_ARCHDL_UTIL_TransVramScreen(  handle, NARC_un_select_gra_kokuren_bgu_NSCR,
             BG_FRAME_BACK_S, 0, 0, 0, heap_id );
+  GFL_ARCHDL_UTIL_TransVramScreen(  handle, NARC_un_select_gra_up_msg_frame_NSCR,
+            BG_FRAME_TEXT_S, 0, 0, 0, heap_id );
 
   subbg_data = GFL_ARCHDL_UTIL_LoadBGCharacter(
       handle, NARC_un_select_gra_kokuren_bg_NCGR, FALSE, &charData_sub, heap_id );
 
   //  ----- メイン画面 -----
-/**
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_un_select_gra_kokuren_bg_NCGR,
-            BG_FRAME_BACK_M, 0, 0, 0, heap_id );
-*/            
   GFL_ARCHDL_UTIL_TransVramScreen(  handle, NARC_un_select_gra_kokuren_bgd_NSCR,
             BG_FRAME_BACK_M, 0, 0, 0, heap_id );
 
@@ -1511,7 +1505,6 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
 
   // アーカイブ オープン
   ah = GFL_ARC_OpenDataHandle( ARCID_UN_SELECT_GRA, wk->heap_id );
-
   // 項目背景設定
   FRAMELIST_LoadFrameGraphicAH( wk->lwk, ah, NARC_un_select_gra_kokuren_bg_listframe_NSCR, FALSE, 0 );
   FRAMELIST_LoadFrameGraphicAH( wk->lwk, ah, NARC_un_select_gra_kokuren_bg_listframe2_NSCR, FALSE, 1 );
@@ -1639,12 +1632,12 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
       wk->MarkerFloor[i] = floor_idx;
     }
   }
+  // 輝度を最低にしておく
+	GX_SetMasterBrightness( -16 );
+	GXS_SetMasterBrightness( -16 );
   //描画設定初期化
   wk->graphic = UN_SELECT_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heap_id );
 
-  // メッセージ生成
-  wk->cnt_msg = MSG_CNT_Create( wk->heap_id );
-  
   // シーンコントローラ作成
   wk->cnt_scene = UI_SCENE_CNT_Create( 
       wk->heap_id, c_scene_func_tbl, UNS_SCENE_ID_MAX, 
@@ -1652,6 +1645,9 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
 
   //BGリソース読み込み
   UNSelect_BG_LoadResource( wk, wk->heap_id );
+
+  // メッセージ生成
+  wk->cnt_msg = MSG_CNT_Create( wk->heap_id );
 
 #ifdef UN_SELECT_TOUCHBAR
   //タッチバーの初期化
@@ -1688,7 +1684,7 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
   
   //アルファセット
   G2S_SetBlendAlpha(
-		GX_BLEND_PLANEMASK_BG2,
+		GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG2,
 		GX_BLEND_PLANEMASK_BG3,
 		BLEND_EV1, BLEND_EV2 );
 
