@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-01T19:37:39"/>
+	<create user="matsumiya" host="W00224" date="2010-03-01T20:20:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -509,9 +509,9 @@ C03ジムリーダー</attribute>
 　msg_c02_leader2_02表示</comment>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
-		<language name="JPN" width="256">アロエ『あんた　また
+		<language name="JPN" width="256">アロエ『アンタ　また
 いきづまったのかい？▼</language>
-		<language name="JPN_KANJI" width="256">アロエ『あんた　また
+		<language name="JPN_KANJI" width="256">アロエ『アンタ　また
 創作に　行き詰ったのかい？▼</language>
 	</row>
 
@@ -583,8 +583,7 @@ C02ジムリーダー</attribute>
 		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]
 ジムバッジは　てにいれた？▼
 って　どうしたの？
-なんだか　そうぞうしいね▼
-</language>
+なんだか　そうぞうしいね▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]
 ジムバッジは　手に入れた？▼
 って　どうしたの？
@@ -601,7 +600,7 @@ C02ジムリーダー</attribute>
 C02ジムリーダー</attribute>
 		<language name="JPN" width="256">アロエ『なんだいなんだい？
 このこたちは……？▽
-あんたの　ともだちかい？▼
+アンタの　ともだちかい？▼
 ……　……　……
 ……　……　……▼
 なるほど　トレーナーなんだね！▼
@@ -617,15 +616,17 @@ C02ジムリーダー</attribute>
 あたしゃ　こっちね▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_05" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・盗難イベント中
 ・続けてmsg_c02_leader2_06</comment>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
-		<language name="JPN" width="256">そして　あんたたちは
+		<language name="JPN" width="256">そして　アンタたち！▼
+チェレンと　ベルは
 はくぶつかんに　のこってちょうだい！▼</language>
-		<language name="JPN_KANJI" width="256">そして　あんたたちは
+		<language name="JPN_KANJI" width="256">そして　アンタたち！▼
+チェレンと　ベルは
 博物館に　残ってちょうだい！▼</language>
 	</row>
 
@@ -721,15 +722,24 @@ C03ジムリーダー</attribute>
 	<row id="msg_c02_black_04" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・盗難イベント中
-・メッセージ表示後
-　サポートとライバル、博物館の中へ
+・メッセージ表示後、ライバル博物館へ
+・続けてwhite_04
 ・主人公、操作可能に</comment>
 		<attribute name="キャラ指定">ライバル（友達♂）</attribute>
 		<language name="JPN" width="256">チェレン『じじょうが
 わからないけれど　はくぶつかんを▽
-まもれば　いいんだよね？</language>
+まもれば　いいんだよね？▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『事情が　わからないけれど
-博物館を　守れば　いいんだよね？</language>
+博物館を　守れば　いいんだよね？▼</language>
+	</row>
+
+	<row id="msg_c02_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・表示後、サポート、博物館へ
+・主人公、操作可能に</comment>
+		<attribute name="キャラ指定">サポート（友達♀）</attribute>
+		<language name="JPN" width="256">ベル『あっ　あたしも！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『あっ　あたしも！▼</language>
 	</row>
 
 	<row id="msg_c02_leader2_07" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -750,19 +760,19 @@ C02ジムリーダー</attribute>
 アンタ……　ヤグルマの森　たのんだよ！</language>
 	</row>
 
-	<row id="msg_c02_woman2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02_woman2_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">WOMAN2
 女性（金髪）</attribute>
 		<language name="JPN" width="256">だれも　つかっていない
 いふくの　こうじょうや　そうこを▽
-おかねを　もってない　ひとたちが▽
+きぼうにあふれた　わかい　ひとたちが▽
 アトリエとして　つかっていたの▼
 それが　げいじゅつのまち　とよばれる
 シッポウシティの　はじまりね</language>
 		<language name="JPN_KANJI" width="256">だれも　使っていない
 衣服の　工場や　倉庫を▽
-お金を　持っていない　人たちが▽
+希望にあふれた　若い人たちが▽
 アトリエとして　使いだしたの▼
 それが　芸術の街と　呼ばれる
 シッポウシティの　始まりね</language>
