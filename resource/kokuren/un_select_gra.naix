@@ -22,7 +22,9 @@ enum {
 	NARC_un_select_gra_kokuren_obj_NANR = 8,
 	NARC_un_select_gra_kokuren_obj_NCER = 9,
 	NARC_un_select_gra_kokuren_obj_NCGR = 10,
-	NARC_un_select_gra_kokuren_obj_NCLR = 11
+	NARC_un_select_gra_kokuren_obj_NCLR = 11,
+	NARC_un_select_gra_up_msg_frame_NCGR = 12,
+	NARC_un_select_gra_up_msg_frame_NSCR = 13
 };
 
 /* NARC_UN_SELECT_GRA_NAIX_ */
