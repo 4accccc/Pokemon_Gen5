@@ -837,9 +837,7 @@ static BOOL	DrawGround( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 
 		if( checkCullingBoxTest( g3Dmap->NNSrnd ) == TRUE ){
 			//地形描画
-      // @TODO 渡辺さん確認後GFL_G3D_Drawを公開する
-      NNS_G3dDraw( g3Dmap->NNSrnd );
-			//GFL_G3D_Draw( g3Dmap->NNSrnd );
+			GFL_G3D_Draw( g3Dmap->NNSrnd );
 			return TRUE;
 		}
 	}
@@ -892,9 +890,7 @@ static void	DrawObj( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 	
 					if( checkCullingBoxTest( NNSrnd ) == TRUE ){
 						//オブジェクト描画
-            // @TODO 渡辺さん確認後GFL_G3D_Drawを公開する
-            NNS_G3dDraw( NNSrnd );
-            //GFL_G3D_Draw( NNSrnd );
+            GFL_G3D_Draw( NNSrnd );
 					}
 				}
 			}

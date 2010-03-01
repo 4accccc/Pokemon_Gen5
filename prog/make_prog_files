@@ -842,10 +842,7 @@ SRCS_OVERLAY_FIELD_SEATEMPLE = field/field_seatemple.c
 
 # マッパーサンプル
 #===> GROUP_OVERLAY_UNION_INTRUDE
-SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/g3d_mapper.c \
-        test/tetsu/sample/sample_net.c \
-        test/tetsu/sample/g3dmapfunc/func_mapeditor_file.c \
-        test/tetsu/sample/g3dmapfunc/func_pmcustom_file.c \
+SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/sample_net.c \
         test/tetsu/test_prog1.c \
         test/tetsu/sample2.c \
         test/tetsu/sample3.c \

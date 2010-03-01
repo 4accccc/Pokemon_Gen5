@@ -40,7 +40,7 @@ extern "C" {
 #include "g3d_scene.h"
 #include "g3d_camera.h"
 #include "g3d_light.h"
-#include "g3d_map.h"
+//#include "g3d_map.h"  gflib.aからはずされることがあるのでコメントアウト
 #include "billboard.h"
 #include "billboard_act.h"
 
