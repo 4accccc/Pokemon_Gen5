@@ -128,6 +128,7 @@ static BOOL CMD_BRIGHTNESS_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int*
 static BOOL CMD_BRIGHTNESS_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_BGM_FADEOUT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_BGM_CHANGE_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param);
 static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
@@ -188,6 +189,7 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   CMD_BRIGHTNESS_WAIT,
   CMD_BGM,
   CMD_BGM_FADEOUT,
+  CMD_BGM_CHANGE_WAIT,
   CMD_SE,
   CMD_SE_STOP,
   CMD_KEY_WAIT,
@@ -634,10 +636,28 @@ static BOOL CMD_BRIGHTNESS_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int
 //-----------------------------------------------------------------------------
 static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  HOSAKA_Printf( "play bgm =%d fadeInFrame=%d, fadeOutFrame=%d \n", param[0], param[1], param[2] );
+  OS_Printf( "play bgm =%d fadeInFrame=%d, fadeOutFrame=%d \n", param[0], param[1], param[2] );
 //  PMSND_PlayBGM( param[0] );
   PMSND_PlayNextBGM( param[0], param[1], param[2] );
 
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief BGM切り替えた後にロードが終了するのを待つ
+ *
+ * @retval  BOOL  ロード中はFALSE, 再生開始されているならTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL CMD_BGM_CHANGE_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  u32 check = PMSND_CheckPlayBGM();
+  OS_Printf("BGM check=%d\n", check);
+
+  if(check==0){
+    return FALSE;
+  }
   return TRUE;
 }
 
@@ -1474,6 +1494,7 @@ void Intro_CMD_Exit( INTRO_CMD_WORK* wk )
 BOOL Intro_CMD_Main( INTRO_CMD_WORK* wk )
 {
   INTRO_MSG_Main( wk->wk_msg );
+
 
   // ストアされたコマンドを実行
   if( cmd_store_exec( wk ) == FALSE )

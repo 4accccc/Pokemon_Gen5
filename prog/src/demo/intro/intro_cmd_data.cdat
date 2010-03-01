@@ -58,8 +58,8 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
   { INTRO_CMD_TYPE_MCSS_LOAD, {0, 0, 0, 0x5a0c }, CMD_READ_NEXT },    // 博士ロード
   { INTRO_CMD_TYPE_MCSS_LOAD, {1, MONSNO_HATTHE, -FX32_CONST(14), -FX32_CONST(11.5) }, CMD_READ_NEXT },    // ポケモンロード
   { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, 1, FALSE }, // ポケモン非表示
-  { INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 30, 0, -16 }, CMD_READ_NEXT }, // ブラックからフェードイン
-  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2 } }, // BGM切替
+  { INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 30, 0, -16 }, }, // ブラックからフェードイン
+  { INTRO_CMD_TYPE_BGM_CHANGE_WAIT,  }, // BGM切替待ち
 
 #if 0
   // デモを飛ばす？
