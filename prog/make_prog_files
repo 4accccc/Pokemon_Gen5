@@ -1321,7 +1321,8 @@ SRCS_OVERLAY_MYSTERY = net_app/mystery/mystery.c \
                       net_app/mystery/mystery_graphic.c \
                       net_app/mystery/mystery_util.c \
                       net_app/mystery/mystery_album.c \
-                      net_app/mystery/mystery_net.c
+                      net_app/mystery/mystery_net.c \
+                      net_app/mystery/mystery_data_util.c
 
 # CGEAR WIRELESS
 #===> SRCS_OVERLAY_DPW_COMMON

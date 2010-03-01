@@ -83,6 +83,15 @@ typedef struct
 } BEACON_DATA;
 
 //-------------------------------------
+///	エラーワーク
+//=====================================
+typedef struct 
+{
+  int dummy;
+} MYSTERY_ERROR_WORK;
+
+
+//-------------------------------------
 ///	WIFIダウンロード
 //=====================================
 typedef struct 
@@ -115,6 +124,8 @@ struct _MYSTERY_NET_WORK
   const SAVE_CONTROL_WORK *cp_sv;
   DELIVERY_BEACON_WORK  *p_beacon;
   DELIVERY_IRC_WORK     *p_irc;
+
+  MYSTERY_ERROR_WORK    error;
 
   char              buffer[MYSTERY_DOWNLOAD_GIFT_DATA_SIZE];
   BOOL              is_recv;
@@ -181,6 +192,10 @@ static void	NETCALLBACK_ExitCallback(void* p_wk_adrs);
 // wifi downloadで使用するコールバック
 static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servererror);
 static void NdCleanupCallback( void );
+
+//-------------------------------------
+///	エラー
+//=====================================
 
 //-------------------------------------
 ///	その他
@@ -465,6 +480,33 @@ BOOL MYSTERY_NET_GetDownloadData( const MYSTERY_NET_WORK *cp_wk, void *p_data, u
 //-----------------------------------------------------------------------------
 MYSTERY_NET_ERROR_REPAIR_TYPE MYSTERY_NET_GetErrorRepairType( MYSTERY_NET_WORK *p_wk )
 { 
+#if 0
+  //DWCのエラー
+  if( GFL_NET_IsInit() )
+  { 
+    //下記関数はdev_wifilibのオーバーレイにあるので、GFL_NETが解放されるとよばれなくなる
+    switch( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) )
+    { 
+    case GFL_NET_DWC_ERROR_RESULT_NONE:
+      repair  = WIFIBATTLEMATCH_NET_ERROR_NONE;
+      break;
+
+    case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:
+      repair  = WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN;
+      break;
+
+    case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC:
+      repair  = WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
+      break;
+
+    case GFL_NET_DWC_ERROR_RESULT_FATAL:
+      repair  = WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL;
+      break;
+    }
+  } 
+
+#endif
+
   return MYSTERY_NET_ERROR_REPAIR_NONE;
 }
 

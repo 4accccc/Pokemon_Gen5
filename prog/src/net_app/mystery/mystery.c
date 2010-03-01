@@ -45,6 +45,7 @@
 #include "mystery_album.h"
 #include "mystery_net.h"
 #include "mystery_snd.h"
+#include "net_app/mystery_data_util.h"
 
 //デバッグ
 #include "mystery_debug.h"
@@ -350,7 +351,7 @@ typedef struct
   //汎用カウンタ
   u32                       cnt;
 
-  //仮データ @todo
+  //取得データ
   DOWNLOAD_GIFT_DATA        data;
 } MYSTERY_WORK;
 
@@ -1527,6 +1528,9 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     SEQ_CANCEL_GIFT_INIT,
     SEQ_CANCEL_GIFT_WAIT,
 
+    SEQ_DIRTY_MSG,
+    SEQ_DIRTY_END,
+
     SEQ_MSG_WAIT,
   };
 
@@ -1564,7 +1568,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         { 
           u32 dirty;
 
-          dirty = MYSTERYDATA_ModifyDownloadData( &p_wk->data );
+          dirty = MYSTERYDATA_ModifyDownloadData( &p_wk->data, p_wk->p_gamedata, GFL_HEAP_LOWID(HEAPID_MYSTERYGIFT) );
 
 #ifdef PM_DEBUG
           { 
@@ -1583,7 +1587,14 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           }
 #endif //PM_DEBUG
 
-          *p_seq  = SEQ_SELECT_GIFT_MSG;
+          if( dirty == 0 )
+          { 
+            *p_seq  = SEQ_SELECT_GIFT_MSG;
+          }
+          else
+          { 
+            *p_seq  = SEQ_DIRTY_MSG;
+          }
         }
         else
         { 
@@ -1739,6 +1750,18 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     }
     break;
 
+    //-------------------------------------
+    ///	不正な場合
+    //=====================================
+  case SEQ_DIRTY_MSG:
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_err_006, MYSTERY_TEXT_TYPE_STREAM );
+    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_DIRTY_END );
+    *p_seq  = SEQ_MSG_WAIT;
+    break;
+
+  case SEQ_DIRTY_END:
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_DisConnectReturn );
+    break;
 
   case SEQ_MSG_WAIT:
     if( MYSTERY_TEXT_IsEndPrint( p_wk->p_text ) )

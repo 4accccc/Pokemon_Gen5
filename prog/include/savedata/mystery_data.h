@@ -24,6 +24,7 @@
 ///		贈り物データの個数
 //------------------------------------------------------------------
 #define	GIFT_DATA_MAX		(12)	//カード12
+#define MYSTERY_DATA_MAX_EVENT		(2048)  //イベント最大
 
 //------------------------------------------------------------------
 ///		カード関係のサイズ定義
@@ -126,8 +127,8 @@ typedef struct {
 } GIFT_PRESENT_REMOVE;
 
 typedef union {
-  GIFT_PRESENT_POKEMON		pokemon;
-  GIFT_PRESENT_ITEM		item;
+  GIFT_PRESENT_POKEMON	pokemon;
+  GIFT_PRESENT_ITEM		  item;
   GIFT_PRESENT_POWER		gpower;
   GIFT_PRESENT_REMOVE		remove;
 } GIFT_PRESENT;
@@ -233,9 +234,6 @@ extern BOOL MYSTERYDATA_IsEventRecvFlag(MYSTERY_DATA * fd, u32 eventno);
 //------------------------------------------------------------------
 extern void MYSTERYDATA_SetEventRecvFlag(MYSTERY_DATA * fd, u32 eventno);
 
-//受け取ってないものがあるか
-
-
 //------------------------------------------------------------------
 /// 受信日時　年月日受け取り
 //------------------------------------------------------------------
@@ -256,12 +254,6 @@ inline s32 MYSTERYDATA_GetDay( s32 recv_date )
 //	 指定のカードを入れ替える
 //------------------------------------------------------------------
 extern void MYSTERYDATA_SwapCard( MYSTERY_DATA * fd, u32 cardindex1, u32 cardindex2 );
-
-//------------------------------------------------------------------
-/// 不正修正関数  (現在名前のEOMチェックとEVENT_IDの範囲チェックのみです)
-//------------------------------------------------------------------
-extern u32 MYSTERYDATA_ModifyDownloadData( DOWNLOAD_GIFT_DATA *p_data );
-extern u32 MYSTERYDATA_ModifyGiftData( GIFT_PACK_DATA *p_data );
 
 //------------------------------------------------------------------
 /// デバッグ用にポケモンデータをセットする関数
