@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-03-01T20:20:17"/>
+	<create user="matsumiya" host="W00224" date="2010-03-01T22:52:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -266,7 +266,7 @@
 		</language>
 	</columns>
 
-	<dialog left="390" top="143" right="1095" bottom="725" maximized="no" rayout="Vertical2">
+	<dialog left="1516" top="302" right="2221" bottom="884" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="649" top="113" right="1122" bottom="511" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -274,7 +274,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -332,7 +332,7 @@
 つどう　ばしょ▼
 いける　フロアは　おきゃくさま　しだい！▼
 おきゃくさまの　しりあいが
-いる　フロアならば▽
+いらっしゃる　フロアならば▽
 じゆうに　いくことが　できます▼
 せかいじゅうに　しりあいが　おおいほど
 いろんな　フロアに　いけるでしょう▼
@@ -343,7 +343,7 @@
 世界中の　トレーナーが　集う場所▼
 行ける　フロアは　お客さま　次第！▼
 お客さまの　知り合いが
-いる　フロアならば▽
+いらっしゃる　フロアならば▽
 自由に　行くことが　できます▼
 世界中に　知り合いが　多いほど
 いろんな　フロアに　行けるでしょう▼
