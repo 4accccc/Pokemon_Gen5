@@ -423,17 +423,23 @@ UNITEDNATIONS_SAVE *WIFIHISTORY_GetUNDataPtr(WIFI_HISTORY * wh)
  * @brief	指定インデックスの国ビットを立てる
  * @param	wh			WIFI履歴データへのポインタ
  * @param inCountryCode
- * @return none
+ * @return BOOL 新規ビット立て成功
  */
 //----------------------------------------------------------
-void WIFIHISTORY_SetCountryBit(WIFI_HISTORY * wh, const u32 inCountryCode)
+BOOL WIFIHISTORY_SetCountryBit(WIFI_HISTORY * wh, const u32 inCountryCode)
 {
+  BOOL rc;
+  rc = FALSE;
   //指定インデックオーバーチェック
   if (inCountryCode < WIFI_COUNTRY_MAX)
   {
     u32 idx;
     u8 data;
     u8 bit_pos; //0～7
+    
+
+    if ( !WIFIHISTORY_CheckCountryBit(wh, inCountryCode) ) rc = TRUE;
+
     //指定国のビットが格納されている1バイトデータを配列から取得
     idx = inCountryCode / 8;
     data = wh->billopen[idx];
@@ -444,6 +450,8 @@ void WIFIHISTORY_SetCountryBit(WIFI_HISTORY * wh, const u32 inCountryCode)
     //配列に格納しなおし
     wh->billopen[idx] = data;
   }
+
+  return rc;
 }
 
 //----------------------------------------------------------
