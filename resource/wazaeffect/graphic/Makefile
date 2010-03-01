@@ -56,7 +56,7 @@ endif
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
-waza_eff_gra.scr:	mkscr.rb
+waza_eff_gra.scr:	*.NCGR *.NCLR *.NSCR mkscr.rb
 	ruby mkscr.rb waza_eff_gra.scr
 
 ncer: $(notdir $(WAZAEFFNCE:.nce=.NCER))
