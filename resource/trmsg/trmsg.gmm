@@ -1346,11 +1346,11 @@
 ぼくの　ポケモン！</language>
 	</row>
 
-	<row id="TRID_LEADER1A_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
-		<language name="JPN" width="216">……あれ？
-これって　ピンチですよね</language>
-		<language name="JPN_KANJI" width="216">……あれ？
-これって　ピンチですよね</language>
+	<row id="TRID_LEADER1A_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">……あれ？　もしかして
+ぼくの　ポケモン　あと１ひき？</language>
+		<language name="JPN_KANJI" width="216">……あれ？　もしかして
+ぼくの　ポケモン　あと１匹？</language>
 	</row>
 
 	<row id="TRID_LEADER1A_01_TRMSG_FIGHT_LOSE">
@@ -1367,11 +1367,11 @@
 いい　攻撃かもね</language>
 	</row>
 
-	<row id="TRID_LEADER1B_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
-		<language name="JPN" width="216">すなおに　ピンチだと　みとめますが
-まだ　おわったわけでは　ありません</language>
-		<language name="JPN_KANJI" width="216">すなおに　ピンチだと　認めますが
-まだ　終わったわけでは　ありません</language>
+	<row id="TRID_LEADER1B_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">この　ポケモンに
+すべてを　かけましょう！</language>
+		<language name="JPN_KANJI" width="216">この　ポケモンに
+すべてを　かけましょう！</language>
 	</row>
 
 	<row id="TRID_LEADER1B_01_TRMSG_FIGHT_LOSE">
@@ -1386,7 +1386,7 @@
 		<language name="JPN_KANJI" width="216">そんなの　効くかよ！</language>
 	</row>
 
-	<row id="TRID_LEADER1C_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+	<row id="TRID_LEADER1C_01_TRMSG_FIGHT_POKE_LAST">
 		<language name="JPN" width="216">まだまだ！
 ここから　きあいだぜ！</language>
 		<language name="JPN_KANJI" width="216">まだまだ！
@@ -1457,7 +1457,7 @@
 トレーナーなのか　みえててきたよ！</language>
 	</row>
 
-	<row id="TRID_LEADER2_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+	<row id="TRID_LEADER2_01_TRMSG_FIGHT_POKE_LAST">
 		<language name="JPN" width="216">こんな　じょうきょうでも
 かつ　しゅだんを　さぐるのさ！</language>
 		<language name="JPN_KANJI" width="216">こんな　状況でも
@@ -1523,7 +1523,7 @@
 スイッチ　入ったよ！！</language>
 	</row>
 
-	<row id="TRID_LEADER3_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+	<row id="TRID_LEADER3_01_TRMSG_FIGHT_POKE_LAST">
 		<language name="JPN" width="216">まさに　むしのいき……　だね
 いやいや　そんなことないよ！</language>
 		<language name="JPN_KANJI" width="216">まさに　むしのいき……　だね
@@ -1544,7 +1544,7 @@
 強さ　伝わったわ……　ステキね</language>
 	</row>
 
-	<row id="TRID_LEADER4_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+	<row id="TRID_LEADER4_01_TRMSG_FIGHT_POKE_LAST">
 		<language name="JPN" width="216">ドラマチックに　かつには
 ピンチが　ひつよう　なのよ</language>
 		<language name="JPN_KANJI" width="216">ドラマチックに　勝つには
@@ -1633,7 +1633,7 @@
 		<language name="JPN_KANJI" width="216">……そうきたか</language>
 	</row>
 
-	<row id="TRID_LEADER5_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+	<row id="TRID_LEADER5_01_TRMSG_FIGHT_POKE_LAST">
 		<language name="JPN" width="216">もう　おしまい……　となげくか
 まだこれから！　とふんばるかだよな</language>
 		<language name="JPN_KANJI" width="216">もう　おしまい……　と嘆くか
@@ -1654,7 +1654,7 @@
 アハ！　なんだか　興奮してきた！</language>
 	</row>
 
-	<row id="TRID_LEADER6_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+	<row id="TRID_LEADER6_01_TRMSG_FIGHT_POKE_LAST">
 		<language name="JPN" width="216">つぎに　おみまいするのは
 とっておきの　わざ　なんだよ！</language>
 		<language name="JPN_KANJI" width="216">次に　おみまいするのは
@@ -3718,7 +3718,7 @@
 		<language name="JPN_KANJI" width="216">……強い！</language>
 	</row>
 
-	<row id="TRID_LEADER7_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+	<row id="TRID_LEADER7_01_TRMSG_FIGHT_POKE_LAST">
 		<language name="JPN" width="216">きょくげんで　こそ
 ためされる！　きたえられる！</language>
 		<language name="JPN_KANJI" width="216">極限でこそ
@@ -3739,7 +3739,7 @@
 確かに　タフな　相手だな</language>
 	</row>
 
-	<row id="TRID_LEADER8A_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+	<row id="TRID_LEADER8A_01_TRMSG_FIGHT_POKE_LAST">
 		<language name="JPN" width="216">なんの！　この　じょうきょう
 かえって　きもちが　たかぶるわ！</language>
 		<language name="JPN_KANJI" width="216">なんの！　この状況
@@ -3762,7 +3762,7 @@
 アタシも　おなじように　かんじる！</language>
 	</row>
 
-	<row id="TRID_LEADER8B_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+	<row id="TRID_LEADER8B_01_TRMSG_FIGHT_POKE_LAST">
 		<language name="JPN" width="216">マダよ！　マダマダッ！！
 マダ　アタシたち　たたかえる！！</language>
 		<language name="JPN_KANJI" width="216">マダよ！　マダマダッ！！
