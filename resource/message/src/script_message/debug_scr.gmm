@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-02-25T19:08:52"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-03-01T11:52:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -516,8 +516,8 @@
 	</row>
 
 	<row id="msg_debug_masafumi_11" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,">
-		<language name="JPN" width="256">仮メッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">C09ポケモンリーグ手前</language>
+		<language name="JPN_KANJI" width="256">C09ポケモンリーグ手前</language>
 	</row>
 
 	<row id="msg_debug_masafumi_12" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,">

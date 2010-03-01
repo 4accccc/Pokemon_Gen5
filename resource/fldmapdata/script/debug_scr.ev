@@ -267,17 +267,18 @@ ev_event_off:
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_06, 2 )	//Ｎの城
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_08, 0 )	//チャンピオン部屋
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_09, 1 )	//Ｔ01全イベント
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_11, 3 )	//Ｃ09ポケモンリーグ手前
 	_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
 	//メニュー表示
 	_BMPMENU_START()
-	
+
 	IF $SCWK_ANSWER == 0 THEN
 		//チャンピオン部屋のＮとのイベントを無効にする
 		$WK_SCENE_C09R0501 = 1
 		_FLAG_SET( FV_C09R0501_BOSS_01 )
 		_FLAG_SET( FV_C09R0501_CHAMPION_01 )
 		_MAP_CHANGE( ZONE_ID_C09R0501, 16, 18, DIR_UP )
-		
+
 	ELSIF $SCWK_ANSWER == 1 THEN
 		//T01の初回イベントを全部OFF
 		//図鑑入手イベント終わった状態にする
@@ -298,13 +299,19 @@ ev_event_off:
 		$WK_SCENE_T01R0102 = 2
 		_FLAG_SET( FV_T01R0102_RIVAL )
 		_FLAG_SET( FV_T01R0102_SUPPORT )
-		
+
 	ELSIF $SCWK_ANSWER == 2 THEN
 		//Ｎの城１Ｆの初回イベント無効
 		$WK_SCENE_N01R0101 = 2
 		//Ｎの城２Ｆのダークトリニティイベント無効
 		$WK_SCENE_N01R0201 = 1
 		_MAP_CHANGE( ZONE_ID_N01R0101, 20, 20, DIR_UP )
+
+	ELSIF $SCWK_ANSWER == 3 THEN
+		//ポケモンリーグ手前の初回誘導POSイベントを無効
+		$WK_SCENE_C09 = 1
+		_MAP_CHANGE( ZONE_ID_C09, 32, 57, DIR_UP )
+
 	ENDIF
 	
 _RET
