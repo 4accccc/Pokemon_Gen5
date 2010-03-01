@@ -210,17 +210,7 @@ void GYM_NORMAL_Move(FIELDMAP_WORK *fieldWork)
 {
   int i;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
-#ifdef PM_DEBUG
-  //テスト
-  {
-    GAMESYS_WORK *gsys  = FIELDMAP_GetGameSysWork( fieldWork );
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-      test_GYM_NORMAL_WallAnm(gsys, 0);
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-    }
-  }
-#endif  //PM_DEBUG
+
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
 
