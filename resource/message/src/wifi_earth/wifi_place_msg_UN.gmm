@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-23T21:00:15"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-03-01T17:58:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1537,9 +1537,8 @@
 
 	<row id="un_reception_msg_00">
 		<comment>専用画面メッセージ</comment>
-		<language name="JPN">いきさきの　フロアを　せんたくしてください
-</language>
-		<language name="JPN_KANJI">行き先の　フロアを　選択してください</language>
+		<language name="JPN">いきさきを　えらんでください</language>
+		<language name="JPN_KANJI">行き先を　選んでください</language>
 	</row>
 
 	<row id="un_reception_msg_01">
