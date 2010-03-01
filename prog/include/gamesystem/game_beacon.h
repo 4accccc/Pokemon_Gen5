@@ -67,6 +67,27 @@ typedef enum{
   GAMEBEACON_ACTION_DISTRIBUTION_POKE,        ///<ポケモン配布中                        25
   GAMEBEACON_ACTION_DISTRIBUTION_ITEM,        ///<アイテム配布中                        26
   GAMEBEACON_ACTION_DISTRIBUTION_ETC,         ///<その他配布中                          27
+  GAMEBEACON_ACTION_CRITICAL_HIT,             ///<急所に攻撃をあてた                    28
+  GAMEBEACON_ACTION_CRITICAL_DAMAGE,          ///<急所に攻撃を受けた                    29
+  GAMEBEACON_ACTION_ESCAPE,                   ///<戦闘から逃げ出した                    30
+  GAMEBEACON_ACTION_HP_LITTLE,                ///<HPが残り少ない                        31
+  GAMEBEACON_ACTION_PP_LITTLE,                ///<PPが残り少ない                        32
+  GAMEBEACON_ACTION_DYING,                    ///<先頭のポケモンが瀕死                  33
+  GAMEBEACON_ACTION_STATE_IS_ABNORMAL,        ///<先頭のポケモンが状態異常              34
+  GAMEBEACON_ACTION_USE_ITEM,                 ///<アイテムを使用                        35
+  GAMEBEACON_ACTION_FIELD_SKILL,              ///<フィールド技を使用                    36
+  GAMEBEACON_ACTION_SODATEYA_EGG,             ///<育て屋から卵を引き取った              37
+  GAMEBEACON_ACTION_EGG_HATCH,                ///<タマゴが孵化した                      38
+  GAMEBEACON_ACTION_SHOPING,                  ///<買い物中                              39
+  GAMEBEACON_ACTION_SUBWAY,                   ///<バトルサブウェイ挑戦中                40
+  GAMEBEACON_ACTION_SUBWAY_STRAIGHT_VICTORIES,  ///<バトルサブウェイ連勝中              41
+  GAMEBEACON_ACTION_SUBWAY_VICTORIES_ACHIEVE,   ///<バトルサブウェイ連勝が規定回数を達成  42
+  GAMEBEACON_ACTION_TRIALHOUSE,               ///<トライアルハウスに挑戦中              43
+  GAMEBEACON_ACTION_TRIALHOUSE_RANK,          ///<トライアルハウスでランク確定          44
+  GAMEBEACON_ACTION_FERRIS_WHEEL,             ///<観覧車に乗った                        45
+  GAMEBEACON_ACTION_POKESHIFTER,              ///<ポケシフターに入った                  46
+  GAMEBEACON_ACTION_MUSICAL,                  ///<ミュージカル挑戦中                    47
+  GAMEBEACON_ACTION_OTHER_GPOWER_USE,         ///<他人のGパワーを使用                   48
   
 //  GAMEBEACON_ACTION_CONGRATULATIONS,      ///<「おめでとう！」
 //  GAMEBEACON_ACTION_UNION_OUT,            ///<ユニオンルーム退室
@@ -117,6 +138,7 @@ extern u32 GAMEBEACON_Get_LogCount(void);
 extern int GAMEBEACON_Get_UpdateLogNo(int *start_log_no);
 extern void GAMEBEACON_Reset_UpdateFlag(int log_no);
 extern BOOL GAMEBEACON_Set_SearchUpdateFlag(const GAMEBEACON_INFO *info);
+extern u16 GAMEBEACON_Get_RecvBeaconTime(u16 trainer_id);
 
 //--------------------------------------------------------------
 //  ビーコンセット
@@ -151,6 +173,27 @@ extern void GAMEBEACON_Set_DistributionPoke(u16 monsno);
 extern void GAMEBEACON_Set_DistributionItem(u16 item);
 extern void GAMEBEACON_Set_DistributionEtc(void);
 #endif
+extern void GAMEBEACON_Set_CriticalHit(const STRBUF *nickname);
+extern void GAMEBEACON_Set_CriticalDamage(const STRBUF *nickname);
+extern void GAMEBEACON_Set_Escape(void);
+extern void GAMEBEACON_Set_HPLittle(const STRBUF *nickname);
+extern void GAMEBEACON_Set_PPLittle(const STRBUF *nickname);
+extern void GAMEBEACON_Set_Dying(const STRBUF *nickname);
+extern void GAMEBEACON_Set_StateIsAbnormal(const STRBUF *nickname);
+extern void GAMEBEACON_Set_UseItem(u16 item_no);
+extern void GAMEBEACON_Set_FieldSkill(u16 wazano);
+extern void GAMEBEACON_Set_SodateyaEgg(const STRBUF *nickname);
+extern void GAMEBEACON_Set_EggHatch(const STRBUF *nickname);
+extern void GAMEBEACON_Set_Shoping(void);
+extern void GAMEBEACON_Set_Subway(void);
+extern void GAMEBEACON_Set_SubwayStraightVictories(u32 victory_count);
+extern void GAMEBEACON_Set_SubwayVictoriesAchieve(u32 victory_count);
+extern void GAMEBEACON_Set_TrialHouse(void);
+extern void GAMEBEACON_Set_TrialHouseRank(u8 rank);
+extern void GAMEBEACON_Set_FerrisWheel(void);
+extern void GAMEBEACON_Set_PokeShifter(void);
+extern void GAMEBEACON_Set_Musical(const STRBUF *nickname);
+extern void GAMEBEACON_Set_OtherGPowerUse(GPOWER_ID gpower_id);
 extern void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata, u32 target_trainer_id);
 
 //=====詳細パラメータセット

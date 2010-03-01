@@ -72,12 +72,16 @@ extern u16 GAMEBEACON_Get_Details_BattleMonsNo(const GAMEBEACON_INFO *info);
 extern GAMEBEACON_ACTION GAMEBEACON_Get_Action_ActionNo(const GAMEBEACON_INFO *info);
 extern u16 GAMEBEACON_Get_Action_Monsno(const GAMEBEACON_INFO *info);
 extern u16 GAMEBEACON_Get_Action_ItemNo(const GAMEBEACON_INFO *info);
+extern u16 GAMEBEACON_Get_Action_WazaNo(const GAMEBEACON_INFO *info);
 extern u16 GAMEBEACON_Get_Action_DistributionMonsno(const GAMEBEACON_INFO *info);
 extern u16 GAMEBEACON_Get_Action_DistributionItemNo(const GAMEBEACON_INFO *info);
 extern void GAMEBEACON_Get_Action_Nickname(const GAMEBEACON_INFO *info, STRBUF *dest);
 extern u16 GAMEBEACON_Get_Action_TrNo(const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_Action_ThankyouCount(const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_Action_Hour(const GAMEBEACON_INFO *info);
+extern u32 GAMEBEACON_Get_Action_VictoriCount(const GAMEBEACON_INFO *info);
+extern u8 GAMEBEACON_Get_Action_TrialHouseRank(const GAMEBEACON_INFO *info);
+extern u16 GAMEBEACON_Get_Action_GPowerID(const GAMEBEACON_INFO *info);
 
 void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID temp_heap_id);
 

@@ -69,9 +69,13 @@ typedef struct{
   union{
     u16 tr_no;                              ///<トレーナー番号
     u16 itemno;                             ///<アイテム番号
+    u16 wazano;                             ///<技番号
     u16 hour;                               ///<時
     u32 thankyou_count;                     ///<お礼を受けた回数
     u32 target_trainer_id;                  ///<対象相手のトレーナーID
+    u32 victory_count;                      ///<連勝数
+    u8 trial_house_rank;                    ///<トライアルハウスのランク
+    u16 gpower_id;                          ///<GパワーID
     struct{ //通常
       STRCODE nickname[MONS_NAME_SIZE];       ///<ポケモン名(ニックネーム) !! EOM除く !!
     }normal;

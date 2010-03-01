@@ -845,10 +845,28 @@ u16 GAMEBEACON_Get_Action_ItemNo(const GAMEBEACON_INFO *info)
 {
   switch(info->action.action_no){
   case GAMEBEACON_ACTION_SP_ITEM_GET:
+  case GAMEBEACON_ACTION_USE_ITEM:
     return info->action.itemno;
   }
   GF_ASSERT(0);
   return info->action.itemno;
+}
+
+//==================================================================
+/**
+ * 行動パラメータ取得：技番号
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  u16		  技番号
+ */
+//==================================================================
+u16 GAMEBEACON_Get_Action_WazaNo(const GAMEBEACON_INFO *info)
+{
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_FIELD_SKILL:
+    return info->action.wazano;
+  }
+  GF_ASSERT(0);
+  return info->action.wazano;
 }
 
 //==================================================================
@@ -900,6 +918,15 @@ void GAMEBEACON_Get_Action_Nickname(const GAMEBEACON_INFO *info, STRBUF *dest)
   switch(info->action.action_no){
   case GAMEBEACON_ACTION_POKE_EVOLUTION:
   case GAMEBEACON_ACTION_POKE_LVUP:
+  case GAMEBEACON_ACTION_CRITICAL_HIT:
+  case GAMEBEACON_ACTION_CRITICAL_DAMAGE:
+  case GAMEBEACON_ACTION_HP_LITTLE:
+  case GAMEBEACON_ACTION_PP_LITTLE:
+  case GAMEBEACON_ACTION_DYING:
+  case GAMEBEACON_ACTION_STATE_IS_ABNORMAL:
+  case GAMEBEACON_ACTION_SODATEYA_EGG:
+  case GAMEBEACON_ACTION_EGG_HATCH:
+  case GAMEBEACON_ACTION_MUSICAL:
     return;
   }
   GF_ASSERT(0);
@@ -961,6 +988,58 @@ u32 GAMEBEACON_Get_Action_Hour(const GAMEBEACON_INFO *info)
   }
   GF_ASSERT(0);
   return info->action.hour;
+}
+
+//==================================================================
+/**
+ * 行動パラメータ取得：連勝数
+ * @param   info	ビーコン情報へのポインタ
+ * @retval  u32		経過時間(時)
+ */
+//==================================================================
+u32 GAMEBEACON_Get_Action_VictoriCount(const GAMEBEACON_INFO *info)
+{
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_SUBWAY_STRAIGHT_VICTORIES:
+  case GAMEBEACON_ACTION_SUBWAY_VICTORIES_ACHIEVE:
+    return info->action.victory_count;
+  }
+  GF_ASSERT(0);
+  return info->action.victory_count;
+}
+
+//==================================================================
+/**
+ * 行動パラメータ取得：トライアルハウスランク
+ * @param   info	ビーコン情報へのポインタ
+ * @retval  u8		TH_RANK_xxx
+ */
+//==================================================================
+u8 GAMEBEACON_Get_Action_TrialHouseRank(const GAMEBEACON_INFO *info)
+{
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_TRIALHOUSE_RANK:
+    return info->action.trial_house_rank;
+  }
+  GF_ASSERT(0);
+  return info->action.trial_house_rank;
+}
+
+//==================================================================
+/**
+ * 行動パラメータ取得：Gパワー
+ * @param   info	ビーコン情報へのポインタ
+ * @retval  u16		GパワーID
+ */
+//==================================================================
+u16 GAMEBEACON_Get_Action_GPowerID(const GAMEBEACON_INFO *info)
+{
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_OTHER_GPOWER_USE:
+    return info->action.gpower_id;
+  }
+  GF_ASSERT(0);
+  return info->action.gpower_id;
 }
 
 //==================================================================

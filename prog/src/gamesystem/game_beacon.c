@@ -43,6 +43,8 @@ SDK_COMPILER_ASSERT(GAMEBEACON_SYSTEM_LOG_MAX < 32);
 ///1件のログデータ
 typedef struct{
   GAMEBEACON_INFO info;
+  u16 time;                           ///<最新のデータを受け取ってから経過しているフレーム数
+  u16 padding;
 }GAMEBEACON_LOG;
 
 ///送信ビーコン管理
@@ -112,6 +114,27 @@ void BEACONINFO_Set_DistributionPoke(GAMEBEACON_INFO *info, u16 monsno);
 void BEACONINFO_Set_DistributionItem(GAMEBEACON_INFO *info, u16 item);
 void BEACONINFO_Set_DistributionEtc(GAMEBEACON_INFO *info);
 #endif
+void BEACONINFO_Set_CriticalHit(GAMEBEACON_INFO *info, const STRBUF *nickname);
+void BEACONINFO_Set_CriticalDamage(GAMEBEACON_INFO *info, const STRBUF *nickname);
+void BEACONINFO_Set_Escape(GAMEBEACON_INFO *info);
+void BEACONINFO_Set_HPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname);
+void BEACONINFO_Set_PPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname);
+void BEACONINFO_Set_Dying(GAMEBEACON_INFO *info, const STRBUF *nickname);
+void BEACONINFO_Set_StateIsAbnormal(GAMEBEACON_INFO *info, const STRBUF *nickname);
+void BEACONINFO_Set_UseItem(GAMEBEACON_INFO *info, u16 item_no);
+void BEACONINFO_Set_FieldSkill(GAMEBEACON_INFO *info, u16 wazano);
+void BEACONINFO_Set_SodateyaEgg(GAMEBEACON_INFO *info, const STRBUF *nickname);
+void BEACONINFO_Set_EggHatch(GAMEBEACON_INFO *info, const STRBUF *nickname);
+void BEACONINFO_Set_Shoping(GAMEBEACON_INFO *info);
+void BEACONINFO_Set_Subway(GAMEBEACON_INFO *info);
+void BEACONINFO_Set_SubwayStraightVictories(GAMEBEACON_INFO *info, u32 victory_count);
+void BEACONINFO_Set_SubwayVictoriesAchieve(GAMEBEACON_INFO *info, u32 victory_count);
+void BEACONINFO_Set_TrialHouse(GAMEBEACON_INFO *info);
+void BEACONINFO_Set_TrialHouseRank(GAMEBEACON_INFO *info, u8 rank);
+void BEACONINFO_Set_FerrisWheel(GAMEBEACON_INFO *info);
+void BEACONINFO_Set_PokeShifter(GAMEBEACON_INFO *info);
+void BEACONINFO_Set_Musical(GAMEBEACON_INFO *info, const STRBUF *nickname);
+void BEACONINFO_Set_OtherGPowerUse(GAMEBEACON_INFO *info, GPOWER_ID gpower_id);
 void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 target_trainer_id);
 void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAMEDATA *cp_gamedata);
 void BEACONINFO_Set_ThanksRecvCount(GAMEBEACON_INFO *info, u32 count);
@@ -171,12 +194,21 @@ void GAMEBEACON_Exit(void)
 void GAMEBEACON_Update(void)
 {
   GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
+  int i;
   
   if(GameBeaconSys == NULL){
     return;
   }
 
   SendBeacon_Update(&bsys->send);
+  
+  for(i = 0; i < GAMEBEACON_SYSTEM_LOG_MAX; i++){
+    if(bsys->log[i].info.version_bit != 0){
+      if(bsys->log[i].time < 0xffff){
+        bsys->log[i].time++;
+      }
+    }
+  }
 }
 
 //==================================================================
@@ -297,6 +329,7 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
   //ログにセット
   GFL_STD_MemClear(setlog, sizeof(GAMEBEACON_LOG));
   setlog->info = *info;
+  setlog->time = 0;
   bsys->update_log |= 1 << bsys->end_log;
   if(bsys->log_num < GAMEBEACON_SYSTEM_LOG_MAX){
     bsys->log_num++;
@@ -322,7 +355,7 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
     return FALSE; //受け取れないバージョン
   }
   
-//  OS_TPrintf("SetRecv action_NO = %d\n", info->action.action_no);
+//  MATSUDA_Printf("SetRecv action_NO = %d\n", info->action.action_no);
   if(info->action.action_no == GAMEBEACON_ACTION_NULL || info->action.action_no >= GAMEBEACON_ACTION_MAX){
     return FALSE;
   }
@@ -332,7 +365,28 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
       if(bsys->log[i].info.trainer_id == info->trainer_id){
         if(info->action.action_no == GAMEBEACON_ACTION_SEARCH 
             || bsys->log[i].info.send_counter == info->send_counter){
-//        OS_TPrintf("既に受信済み\n");
+          return FALSE; //ログに同じデータを受信済み
+        }
+        same_player = TRUE; //1プレイヤーは対になった1つのログバッファしか持たない
+        break;
+      }
+    }
+  }
+  else{
+    for(i = bsys->start_log; i < GAMEBEACON_SYSTEM_LOG_MAX; i++){
+      if(bsys->log[i].info.trainer_id == info->trainer_id){
+        if(info->action.action_no == GAMEBEACON_ACTION_SEARCH 
+            || bsys->log[i].info.send_counter == info->send_counter){
+          return FALSE; //ログに同じデータを受信済み
+        }
+        same_player = TRUE; //1プレイヤーは対になった1つのログバッファしか持たない
+        break;
+      }
+    }
+    for(i = 0; i <= bsys->end_log; i++){
+      if(bsys->log[i].info.trainer_id == info->trainer_id){
+        if(info->action.action_no == GAMEBEACON_ACTION_SEARCH 
+            || bsys->log[i].info.send_counter == info->send_counter){
           return FALSE; //ログに同じデータを受信済み
         }
         same_player = TRUE; //1プレイヤーは対になった1つのログバッファしか持たない
@@ -360,12 +414,14 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   
   if(same_player == TRUE){
     bsys->log[i].info = *info;
+    bsys->log[i].time = 0;
     bsys->update_log |= 1 << i;
+    MATSUDA_Printf("sameBeacon %d件目\n", i);
   }
   else{
     BeaconInfo_Set(bsys, info);
     bsys->log_count++;
-    OS_TPrintf("セット完了 %d件目 id=%d\n", bsys->log_count, info->trainer_id);
+    MATSUDA_Printf("セット完了 %d件目 id=%d\n", bsys->log_count, info->trainer_id);
   }
   
 #if 0
@@ -491,6 +547,7 @@ BOOL GAMEBEACON_Set_SearchUpdateFlag(const GAMEBEACON_INFO *info)
   for(i = 0; i < GAMEBEACON_SYSTEM_LOG_MAX; i++){
     if(bsys->log[i].info.trainer_id == info->trainer_id){
       bsys->update_log |= 1 << i;
+      MATSUDA_Printf("update on %d\n", i);
       return TRUE;
     }
   }
@@ -594,6 +651,28 @@ static void SendBeacon_SetCommon(GAMEBEACON_SEND_MANAGER *send)
   send->beacon_update = TRUE;
 }
 
+//==================================================================
+/**
+ * 受信ビーコンバッファから指定トレーナーIDのビーコンを検索し、最後のデータを受信してから何フレーム経過しているかを取得する
+ *
+ * @param   trainer_id		検索対象のトレーナーID(下位2バイト)
+ *
+ * @retval  u16		最後のデータを受信してからの経過フレーム数
+ *                受信バッファに指定したユーザーが居ない場合は0xffff
+ */
+//==================================================================
+u16 GAMEBEACON_Get_RecvBeaconTime(u16 trainer_id)
+{
+  GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
+  int i;
+  
+  for(i = 0; i < GAMEBEACON_SYSTEM_LOG_MAX; i++){
+    if(bsys->log[i].info.version_bit != 0 && bsys->log[i].info.trainer_id == trainer_id){
+      return bsys->log[i].time;
+    }
+  }
+  return 0xffff;
+}
 
 //==============================================================================
 //
@@ -1382,6 +1461,585 @@ void BEACONINFO_Set_DistributionEtc(GAMEBEACON_INFO *info)
   BEACONINFO_Set_Details_Walk(info);
 }
 #endif  //PM_DEBUG
+
+//==================================================================
+/**
+ * 送信ビーコンセット：戦闘：プレイヤーのポケモンが急所に攻撃をあてた
+ *
+ * @param   nickname		対象のポケモンのニックネーム(攻撃をしたポケモン)
+ */
+//==================================================================
+void GAMEBEACON_Set_CriticalHit(const STRBUF *nickname)
+{
+  BEACONINFO_Set_CriticalHit(&GameBeaconSys->send.info, nickname);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：戦闘：プレイヤーのポケモンが急所に攻撃をあてた
+ *
+ * @param   info		
+ * @param   nickname		対象のポケモンのニックネーム(攻撃をしたポケモン)
+ */
+//==================================================================
+void BEACONINFO_Set_CriticalHit(GAMEBEACON_INFO *info, const STRBUF *nickname)
+{
+  info->action.action_no = GAMEBEACON_ACTION_CRITICAL_HIT;
+  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
+
+//  詳細は直前のを維持
+//  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：戦闘：プレイヤーのポケモンが急所に攻撃を受けた
+ *
+ * @param   nickname		対象のポケモンのニックネーム(攻撃を受けたポケモン)
+ */
+//==================================================================
+void GAMEBEACON_Set_CriticalDamage(const STRBUF *nickname)
+{
+  BEACONINFO_Set_CriticalDamage(&GameBeaconSys->send.info, nickname);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：戦闘：プレイヤーのポケモンが急所に攻撃を受けた
+ *
+ * @param   info		
+ * @param   nickname		対象のポケモンのニックネーム(攻撃を受けたポケモン)
+ */
+//==================================================================
+void BEACONINFO_Set_CriticalDamage(GAMEBEACON_INFO *info, const STRBUF *nickname)
+{
+  info->action.action_no = GAMEBEACON_ACTION_CRITICAL_DAMAGE;
+  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
+
+//  詳細は直前のを維持
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：戦闘から逃げ出した
+ */
+//==================================================================
+void GAMEBEACON_Set_Escape(void)
+{
+  BEACONINFO_Set_Escape(&GameBeaconSys->send.info);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：戦闘から逃げ出した
+ */
+//==================================================================
+void BEACONINFO_Set_Escape(GAMEBEACON_INFO *info)
+{
+  info->action.action_no = GAMEBEACON_ACTION_ESCAPE;
+
+//  詳細は直前のを維持
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：戦闘後、先頭のポケモンのHPが5割以上少なくなっている
+ *
+ * @param   nickname		対象のポケモンのニックネーム
+ */
+//==================================================================
+void GAMEBEACON_Set_HPLittle(const STRBUF *nickname)
+{
+  BEACONINFO_Set_HPLittle(&GameBeaconSys->send.info, nickname);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：戦闘後、先頭のポケモンのHPが5割以上少なくなっている
+ *
+ * @param   info		
+ * @param   nickname		対象のポケモンのニックネーム
+ */
+//==================================================================
+void BEACONINFO_Set_HPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname)
+{
+  info->action.action_no = GAMEBEACON_ACTION_HP_LITTLE;
+  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
+
+//  詳細は直前のを維持
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：戦闘後、先頭のポケモンのPPが1つでも0になっている
+ *
+ * @param   nickname		対象のポケモンのニックネーム
+ */
+//==================================================================
+void GAMEBEACON_Set_PPLittle(const STRBUF *nickname)
+{
+  BEACONINFO_Set_PPLittle(&GameBeaconSys->send.info, nickname);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：戦闘後、先頭のポケモンのPPが1つでも0になっている
+ *
+ * @param   info		
+ * @param   nickname		対象のポケモンのニックネーム
+ */
+//==================================================================
+void BEACONINFO_Set_PPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname)
+{
+  info->action.action_no = GAMEBEACON_ACTION_PP_LITTLE;
+  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
+
+//  詳細は直前のを維持
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：戦闘後、戦闘のポケモンが瀕死
+ *
+ * @param   nickname		対象のポケモンのニックネーム
+ */
+//==================================================================
+void GAMEBEACON_Set_Dying(const STRBUF *nickname)
+{
+  BEACONINFO_Set_Dying(&GameBeaconSys->send.info, nickname);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：戦闘後、先頭のポケモンが瀕死
+ *
+ * @param   info		
+ * @param   nickname		対象のポケモンのニックネーム
+ */
+//==================================================================
+void BEACONINFO_Set_Dying(GAMEBEACON_INFO *info, const STRBUF *nickname)
+{
+  info->action.action_no = GAMEBEACON_ACTION_DYING;
+  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
+
+//  詳細は直前のを維持
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：戦闘後、戦闘のポケモンが状態異常
+ *
+ * @param   nickname		対象のポケモンのニックネーム
+ */
+//==================================================================
+void GAMEBEACON_Set_StateIsAbnormal(const STRBUF *nickname)
+{
+  BEACONINFO_Set_StateIsAbnormal(&GameBeaconSys->send.info, nickname);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：戦闘後、先頭のポケモンが状態異常
+ *
+ * @param   info		
+ * @param   nickname		対象のポケモンのニックネーム
+ */
+//==================================================================
+void BEACONINFO_Set_StateIsAbnormal(GAMEBEACON_INFO *info, const STRBUF *nickname)
+{
+  info->action.action_no = GAMEBEACON_ACTION_STATE_IS_ABNORMAL;
+  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
+
+//  詳細は直前のを維持
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：プレイヤーが道具を使用
+ *
+ * @param   item_no   アイテム番号
+ */
+//==================================================================
+void GAMEBEACON_Set_UseItem(u16 item_no)
+{
+  BEACONINFO_Set_UseItem(&GameBeaconSys->send.info, item_no);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：プレイヤーが道具を使用
+ *
+ * @param   info		
+ * @param   item_no   アイテム番号
+ */
+//==================================================================
+void BEACONINFO_Set_UseItem(GAMEBEACON_INFO *info, u16 item_no)
+{
+  info->action.action_no = GAMEBEACON_ACTION_USE_ITEM;
+  info->action.itemno = item_no;
+  
+//  詳細は直前のを維持
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：フィールド技を使用
+ *
+ * @param   wazano    技番号
+ */
+//==================================================================
+void GAMEBEACON_Set_FieldSkill(u16 wazano)
+{
+  BEACONINFO_Set_FieldSkill(&GameBeaconSys->send.info, wazano);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：フィールド技を使用
+ *
+ * @param   info		
+ * @param   wazano		技番号
+ */
+//==================================================================
+void BEACONINFO_Set_FieldSkill(GAMEBEACON_INFO *info, u16 wazano)
+{
+  info->action.action_no = GAMEBEACON_ACTION_FIELD_SKILL;
+  info->action.wazano = wazano;
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：タマゴを育て屋から受け取った
+ *
+ * @param   nickname		タマゴの親(メス)のポケモンのニックネーム
+ */
+//==================================================================
+void GAMEBEACON_Set_SodateyaEgg(const STRBUF *nickname)
+{
+  BEACONINFO_Set_SodateyaEgg(&GameBeaconSys->send.info, nickname);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：タマゴを育て屋から受け取った
+ *
+ * @param   info		
+ * @param   nickname		タマゴの親(メス)のポケモンのニックネーム
+ */
+//==================================================================
+void BEACONINFO_Set_SodateyaEgg(GAMEBEACON_INFO *info, const STRBUF *nickname)
+{
+  info->action.action_no = GAMEBEACON_ACTION_SODATEYA_EGG;
+  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：タマゴが孵化
+ *
+ * @param   nickname		孵化したタマゴのポケモンのニックネーム
+ */
+//==================================================================
+void GAMEBEACON_Set_EggHatch(const STRBUF *nickname)
+{
+  BEACONINFO_Set_EggHatch(&GameBeaconSys->send.info, nickname);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：タマゴが孵化
+ *
+ * @param   info		
+ * @param   nickname		孵化したタマゴのポケモンのニックネーム
+ */
+//==================================================================
+void BEACONINFO_Set_EggHatch(GAMEBEACON_INFO *info, const STRBUF *nickname)
+{
+  info->action.action_no = GAMEBEACON_ACTION_EGG_HATCH;
+  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：買い物中
+ */
+//==================================================================
+void GAMEBEACON_Set_Shoping(void)
+{
+  BEACONINFO_Set_Shoping(&GameBeaconSys->send.info);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：買い物中
+ */
+//==================================================================
+void BEACONINFO_Set_Shoping(GAMEBEACON_INFO *info)
+{
+  info->action.action_no = GAMEBEACON_ACTION_SHOPING;
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：バトルサブウェイ挑戦中
+ */
+//==================================================================
+void GAMEBEACON_Set_Subway(void)
+{
+  BEACONINFO_Set_Subway(&GameBeaconSys->send.info);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：バトルサブウェイ挑戦中
+ */
+//==================================================================
+void BEACONINFO_Set_Subway(GAMEBEACON_INFO *info)
+{
+  info->action.action_no = GAMEBEACON_ACTION_SUBWAY;
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：バトルサブウェイ連勝中
+ *
+ * @param   victory_count		連勝数
+ */
+//==================================================================
+void GAMEBEACON_Set_SubwayStraightVictories(u32 victory_count)
+{
+  BEACONINFO_Set_SubwayStraightVictories(&GameBeaconSys->send.info, victory_count);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：バトルサブウェイ連勝中
+ *
+ * @param   victory_count		連勝数
+ */
+//==================================================================
+void BEACONINFO_Set_SubwayStraightVictories(GAMEBEACON_INFO *info, u32 victory_count)
+{
+  info->action.action_no = GAMEBEACON_ACTION_SUBWAY_STRAIGHT_VICTORIES;
+  info->action.victory_count = victory_count;
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：バトルサブウェイで規定数勝利
+ *
+ * @param   victory_count		連勝数
+ */
+//==================================================================
+void GAMEBEACON_Set_SubwayVictoriesAchieve(u32 victory_count)
+{
+  static const u16 counter[] = {50, 100, 1000};
+  int i;
+  
+  for(i = 0; i < NELEMS(counter); i++){
+    if(counter[i] == victory_count){
+      BEACONINFO_Set_SubwayVictoriesAchieve(&GameBeaconSys->send.info, victory_count);
+      SendBeacon_SetCommon(&GameBeaconSys->send);
+    }
+  }
+}
+
+//==================================================================
+/**
+ * ビーコンセット：バトルサブウェイで規定数勝利
+ *
+ * @param   victory_count		連勝数
+ */
+//==================================================================
+void BEACONINFO_Set_SubwayVictoriesAchieve(GAMEBEACON_INFO *info, u32 victory_count)
+{
+  info->action.action_no = GAMEBEACON_ACTION_SUBWAY_VICTORIES_ACHIEVE;
+  info->action.victory_count = victory_count;
+  
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：トライアルハウスに挑戦中
+ */
+//==================================================================
+void GAMEBEACON_Set_TrialHouse(void)
+{
+  BEACONINFO_Set_TrialHouse(&GameBeaconSys->send.info);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：トライアルハウスに挑戦中
+ */
+//==================================================================
+void BEACONINFO_Set_TrialHouse(GAMEBEACON_INFO *info)
+{
+  info->action.action_no = GAMEBEACON_ACTION_TRIALHOUSE;
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：トライアルハウスでランク確定
+ *
+ * @param   rank      TH_RANK_xxx
+ */
+//==================================================================
+void GAMEBEACON_Set_TrialHouseRank(u8 rank)
+{
+  BEACONINFO_Set_TrialHouseRank(&GameBeaconSys->send.info, rank);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：トライアルハウスでランク確定
+ *
+ * @param   info		
+ * @param   rank		TH_RANK_xxx
+ */
+//==================================================================
+void BEACONINFO_Set_TrialHouseRank(GAMEBEACON_INFO *info, u8 rank)
+{
+  info->action.action_no = GAMEBEACON_ACTION_TRIALHOUSE_RANK;
+  info->action.trial_house_rank = rank;
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：観覧車に乗った
+ */
+//==================================================================
+void GAMEBEACON_Set_FerrisWheel(void)
+{
+  BEACONINFO_Set_FerrisWheel(&GameBeaconSys->send.info);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：観覧車に乗った
+ */
+//==================================================================
+void BEACONINFO_Set_FerrisWheel(GAMEBEACON_INFO *info)
+{
+  info->action.action_no = GAMEBEACON_ACTION_FERRIS_WHEEL;
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：ポケシフター入室
+ */
+//==================================================================
+void GAMEBEACON_Set_PokeShifter(void)
+{
+  BEACONINFO_Set_PokeShifter(&GameBeaconSys->send.info);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：ポケシフター入室
+ */
+//==================================================================
+void BEACONINFO_Set_PokeShifter(GAMEBEACON_INFO *info)
+{
+  info->action.action_no = GAMEBEACON_ACTION_POKESHIFTER;
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：ミュージカル入室
+ *
+ * @param   nickname		参加したポケモンのニックネーム
+ */
+//==================================================================
+void GAMEBEACON_Set_Musical(const STRBUF *nickname)
+{
+  BEACONINFO_Set_Musical(&GameBeaconSys->send.info, nickname);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：ミュージカル入室
+ *
+ * @param   info		
+ * @param   nickname		参加したポケモンのニックネーム
+ */
+//==================================================================
+void BEACONINFO_Set_Musical(GAMEBEACON_INFO *info, const STRBUF *nickname)
+{
+  info->action.action_no = GAMEBEACON_ACTION_MUSICAL;
+  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：他人のプレイヤーから受け取ったGパワーを使用
+ *
+ * @param   gpower_id		GパワーID
+ */
+//==================================================================
+void GAMEBEACON_Set_OtherGPowerUse(GPOWER_ID gpower_id)
+{
+  BEACONINFO_Set_OtherGPowerUse(&GameBeaconSys->send.info, gpower_id);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：他人のプレイヤーから受け取ったGパワーを使用
+ *
+ * @param   info		
+ * @param   gpower_id		GパワーID
+ */
+//==================================================================
+void BEACONINFO_Set_OtherGPowerUse(GAMEBEACON_INFO *info, GPOWER_ID gpower_id)
+{
+  info->action.action_no = GAMEBEACON_ACTION_OTHER_GPOWER_USE;
+  info->action.gpower_id = gpower_id;
+
+  BEACONINFO_Set_Details_Walk(info);
+}
 
 //==================================================================
 /**
