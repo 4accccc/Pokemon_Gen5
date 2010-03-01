@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-26T18:26:22"/>
+	<create user="matsumiya" host="W00224" date="2010-03-01T18:06:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1142,8 +1142,10 @@ C02ジムリーダー</attribute>
 		<comment>カフェ用看板
 ･仮メッセージ</comment>
 		<attribute name="キャラ指定">看板</attribute>
-		<language name="JPN" width="256">カフェ　ソーコ</language>
-		<language name="JPN_KANJI" width="256">カフェ　ソーコ</language>
+		<language name="JPN" width="256">カフェ　ソーコ
+すいようびは　おいしいサービス！</language>
+		<language name="JPN_KANJI" width="256">カフェ　ソーコ
+水曜日は　おいしいサービス！</language>
 	</row>
 
 	<row id="msg_c02_gymsign_01" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
