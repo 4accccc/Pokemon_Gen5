@@ -78,8 +78,8 @@ static u32 BMODEL_DEBUG_RESOURCE_MemorySize = 0;  // リソース
 //============================================================================================
 
 enum {
-  GFL_G3D_MAP_OBJST_MAX = 32,
-  GFL_G3D_MAP_OBJID_NULL = 0xffffffff,
+  FLD_G3D_MAP_OBJST_MAX = 32,
+  FLD_G3D_MAP_OBJID_NULL = 0xffffffff,
 
   MAPBLOCK_MAX = 9,
 };
@@ -182,16 +182,16 @@ typedef struct {
 
 //------------------------------------------------------------------
 /**
- * GFL_G3D_MAPの保持するGFL_G3D_MAP_GLOBALOBJ_STを
+ * FLD_G3D_MAPの保持するFLD_G3D_MAP_GLOBALOBJ_STを
  * 参照、コントロールするためのラッパーオブジェクト
  */
 //------------------------------------------------------------------
 struct _G3DMAPOBJST{
-  GFL_G3D_MAP * g3Dmap;   ///<所属GFL_G3D_MAPへの参照
+  FLD_G3D_MAP * g3Dmap;   ///<所属FLD_G3D_MAPへの参照
   u32 entryNoBackup;      ///<モデル指定IDのバックアップ
   u16 index;              ///<所属g3Dmap内でのインデックス
   u16 viewFlag;           ///<可視設定フラグ
-  GFL_G3D_MAP_GLOBALOBJ_ST * objSt; ///<実オブジェクトへのポインタ
+  FLD_G3D_MAP_GLOBALOBJ_ST * objSt; ///<実オブジェクトへのポインタ
 };
 
 //------------------------------------------------------------------
@@ -240,7 +240,7 @@ struct _FIELD_BMODEL_MAN
   ///適用する配置モデルアーカイブ指定
 	ARCID mdl_arc_id;
   
-	GFL_G3D_MAP_GLOBALOBJ	g3dMapObj;						///<共通オブジェクト
+	FLD_G3D_MAP_GLOBALOBJ	g3dMapObj;						///<共通オブジェクト
 
 	u32	objRes_Count;		  		///<共通オブジェクトリソース数
 	OBJ_RES * objRes;					///<共通オブジェクトリソース
@@ -254,7 +254,7 @@ struct _FIELD_BMODEL_MAN
 
   FIELD_BMODEL * bmodels[BMODEL_USE_MAX];
 
-  G3DMAPOBJST g3DmapObjSt[GFL_G3D_MAP_OBJST_MAX * MAPBLOCK_MAX];
+  G3DMAPOBJST g3DmapObjSt[FLD_G3D_MAP_OBJST_MAX * MAPBLOCK_MAX];
 };
 
 //============================================================================================
@@ -340,8 +340,8 @@ static void DEBUG_BMANIME_dump(const FIELD_BMANIME_DATA * data);
 static void createAllResource(FIELD_BMODEL_MAN * man);
 static void deleteAllResource(FIELD_BMODEL_MAN * man);
 
-static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOBJ * g3dMapObj);
-static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOBJ * g3dMapObj);
+static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, FLD_G3D_MAP_GLOBALOBJ * g3dMapObj);
+static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, FLD_G3D_MAP_GLOBALOBJ * g3dMapObj);
 
 static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, BMODEL_ID bm_id);
 static void OBJRES_finalize( OBJ_RES * objRes );
@@ -363,10 +363,10 @@ static u8   TIMEANIME_CTRL_getIndex( const TIMEANIME_CTRL * tmanm_ctrl );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static G3DMAPOBJST * G3DMAPOBJST_create(
-    FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, GFL_G3D_MAP_GLOBALOBJ_ST * status, int idx);
+    FIELD_BMODEL_MAN * man, FLD_G3D_MAP * g3Dmap, FLD_G3D_MAP_GLOBALOBJ_ST * status, int idx);
 static void G3DMAPOBJST_init(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj);
 static void G3DMAPOBJST_deleteByObject(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj);
-static void G3DMAPOBJST_deleteByG3Dmap(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap);
+static void G3DMAPOBJST_deleteByG3Dmap(FIELD_BMODEL_MAN * man, FLD_G3D_MAP * g3Dmap);
 
 static void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel );
 
@@ -617,17 +617,17 @@ HEAPID FIELD_BMODEL_MAN_GetHeapID(const FIELD_BMODEL_MAN * man)
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 int FIELD_BMODEL_MAN_ResistAllMapObjects
-(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount)
+(FIELD_BMODEL_MAN * man, FLD_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount)
 {
-  GFL_G3D_MAP_GLOBALOBJ_ST status;
+  FLD_G3D_MAP_GLOBALOBJ_ST status;
   int dataCount, resistCount, count;
 
   for( dataCount=0, resistCount = 0, count = objCount; dataCount<count ; resistCount++, dataCount++ )
   {
-    if (resistCount >= GFL_G3D_MAP_OBJST_MAX)
+    if (resistCount >= FLD_G3D_MAP_OBJST_MAX)
     {
       OS_Printf("マップブロック内の配置モデル数が%dを超えているため表示できません\n",
-          GFL_G3D_MAP_OBJST_MAX);
+          FLD_G3D_MAP_OBJST_MAX);
       GF_ASSERT(0);
     }
 
@@ -654,7 +654,7 @@ int FIELD_BMODEL_MAN_ResistAllMapObjects
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void FIELD_BMODEL_MAN_ReleaseAllMapObjects
-(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap)
+(FIELD_BMODEL_MAN * man, FLD_G3D_MAP * g3Dmap)
 {
   G3DMAPOBJST_deleteByG3Dmap( man, g3Dmap );
 }
@@ -662,9 +662,9 @@ void FIELD_BMODEL_MAN_ReleaseAllMapObjects
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void FIELD_BMODEL_MAN_ResistMapObject
-(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount)
+(FIELD_BMODEL_MAN * man, FLD_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount)
 {
-  GFL_G3D_MAP_GLOBALOBJ_ST status;
+  FLD_G3D_MAP_GLOBALOBJ_ST status;
   status.id = BMIDtoEntryNo(man, objStatus->resourceID);
   VEC_Set(&status.trans, objStatus->xpos, objStatus->ypos, -objStatus->zpos);
   status.rotate = (u16)(objStatus->rotate);
@@ -732,7 +732,7 @@ u16 FIELD_BMODEL_MAN_GetUniqKey( FIELD_BMODEL_MAN * man, const FIELD_BMODEL * bm
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GFL_G3D_MAP_GLOBALOBJ * FIELD_BMODEL_MAN_GetGlobalObjects(FIELD_BMODEL_MAN * man)
+FLD_G3D_MAP_GLOBALOBJ * FIELD_BMODEL_MAN_GetGlobalObjects(FIELD_BMODEL_MAN * man)
 {
   return &man->g3dMapObj;
 }
@@ -1130,7 +1130,7 @@ static void deleteAllResource(FIELD_BMODEL_MAN * man)
 //------------------------------------------------------------------
 /** 配置モデルG3D_OBJECT登録 */
 //------------------------------------------------------------------
-static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOBJ * g3dMapObj)
+static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, FLD_G3D_MAP_GLOBALOBJ * g3dMapObj)
 {
   int i;
   u32 entryCount = man->entryCount;
@@ -1140,7 +1140,7 @@ static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOB
   }
 
   g3dMapObj->gobjCount = entryCount;
-  g3dMapObj->gobj = GFL_HEAP_AllocClearMemory( man->heapID, sizeof(GFL_G3D_MAP_OBJ) * entryCount );
+  g3dMapObj->gobj = GFL_HEAP_AllocClearMemory( man->heapID, sizeof(FLD_G3D_MAP_OBJ) * entryCount );
   BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( g3dMapObj->gobj );
 
   man->objHdl_Count = entryCount;
@@ -1162,7 +1162,7 @@ static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOB
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, GFL_G3D_MAP_GLOBALOBJ * g3dMapObj)
+static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, FLD_G3D_MAP_GLOBALOBJ * g3dMapObj)
 {
 	if( g3dMapObj->gobj != NULL ){
     BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( g3dMapObj->gobj );
@@ -1741,7 +1741,7 @@ static fx32 OBJHND_getAnimeFrame( const OBJ_HND * objHdl, u32 anmNo)
 
 //============================================================================================
 //
-//  GFL_G3D_MAPの保持するGFL_G3D_MAP_GLOBALOBJ_STを参照、コントロールするための
+//  FLD_G3D_MAPの保持するFLD_G3D_MAP_GLOBALOBJ_STを参照、コントロールするための
 //  ラッパーオブジェクト
 //
 //============================================================================================
@@ -1757,7 +1757,7 @@ static inline BOOL G3DMAPOBJST_exists(const G3DMAPOBJST * obj)
 static void G3DMAPOBJST_init(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj)
 {
   obj->g3Dmap = NULL;
-  obj->entryNoBackup = GFL_G3D_MAP_OBJID_NULL;
+  obj->entryNoBackup = FLD_G3D_MAP_OBJID_NULL;
   obj->index = 0;
   obj->viewFlag = FALSE;
   obj->objSt = NULL;
@@ -1766,7 +1766,7 @@ static void G3DMAPOBJST_init(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj)
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static G3DMAPOBJST * G3DMAPOBJST_create(
-    FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, GFL_G3D_MAP_GLOBALOBJ_ST * status, int idx)
+    FIELD_BMODEL_MAN * man, FLD_G3D_MAP * g3Dmap, FLD_G3D_MAP_GLOBALOBJ_ST * status, int idx)
 {
   int i;
   for (i = 0; i < NELEMS(man->g3DmapObjSt); i++)
@@ -1775,14 +1775,14 @@ static G3DMAPOBJST * G3DMAPOBJST_create(
     if ( G3DMAPOBJST_exists(obj) == FALSE )
     {
       // 多重登録チェック
-      GF_ASSERT( GFL_G3D_MAP_GetGlobalObj(g3Dmap, idx) == NULL );
+      GF_ASSERT( FLD_G3D_MAP_GetGlobalObj(g3Dmap, idx) == NULL );
       
-      GFL_G3D_MAP_ResistGlobalObj( g3Dmap, status, idx );
+      FLD_G3D_MAP_ResistGlobalObj( g3Dmap, status, idx );
       obj->g3Dmap = g3Dmap;
-      obj->entryNoBackup = GFL_G3D_MAP_OBJID_NULL;
+      obj->entryNoBackup = FLD_G3D_MAP_OBJID_NULL;
       obj->index = idx;
       obj->viewFlag = TRUE;
-      obj->objSt = GFL_G3D_MAP_GetGlobalObj( g3Dmap, idx );
+      obj->objSt = FLD_G3D_MAP_GetGlobalObj( g3Dmap, idx );
 
       return obj;
     }
@@ -1793,7 +1793,7 @@ static G3DMAPOBJST * G3DMAPOBJST_create(
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void G3DMAPOBJST_deleteByG3Dmap(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap)
+static void G3DMAPOBJST_deleteByG3Dmap(FIELD_BMODEL_MAN * man, FLD_G3D_MAP * g3Dmap)
 {
   int i, max = NELEMS(man->g3DmapObjSt);
   for (i = 0; i < max; i++)
@@ -1810,8 +1810,8 @@ static void G3DMAPOBJST_deleteByG3Dmap(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3D
 //------------------------------------------------------------------
 static void G3DMAPOBJST_deleteByObject(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj)
 {
-  GF_ASSERT( obj->objSt == GFL_G3D_MAP_GetGlobalObj(obj->g3Dmap, obj->index) );
-  GFL_G3D_MAP_ReleaseGlobalObj( obj->g3Dmap, obj->index );
+  GF_ASSERT( obj->objSt == FLD_G3D_MAP_GetGlobalObj(obj->g3Dmap, obj->index) );
+  FLD_G3D_MAP_ReleaseGlobalObj( obj->g3Dmap, obj->index );
   G3DMAPOBJST_init( man, obj );
 }
 
@@ -1820,13 +1820,13 @@ static void G3DMAPOBJST_deleteByObject(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj
 //------------------------------------------------------------------
 static BOOL G3DMAPOBJST_isVanished( const G3DMAPOBJST * obj )
 {
-  return (obj->objSt->id == GFL_G3D_MAP_OBJID_NULL );
+  return (obj->objSt->id == FLD_G3D_MAP_OBJID_NULL );
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static u8 G3DMAPOBJST_getEntryNo( const G3DMAPOBJST * obj )
 {
-  if ( obj->objSt->id == GFL_G3D_MAP_OBJID_NULL )
+  if ( obj->objSt->id == FLD_G3D_MAP_OBJID_NULL )
   {
     return obj->entryNoBackup;
   }
@@ -1842,13 +1842,13 @@ void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag)
   if (flag)
   {
     obj->objSt->id = obj->entryNoBackup;
-    obj->entryNoBackup = GFL_G3D_MAP_OBJID_NULL;
+    obj->entryNoBackup = FLD_G3D_MAP_OBJID_NULL;
     obj->viewFlag = TRUE;
   }
   else
   {
     obj->entryNoBackup = obj->objSt->id;
-    obj->objSt->id = GFL_G3D_MAP_OBJID_NULL;
+    obj->objSt->id = FLD_G3D_MAP_OBJID_NULL;
     obj->viewFlag = FALSE;
   }
 }
@@ -1876,7 +1876,7 @@ G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
 {
   G3DMAPOBJST ** result;
   int objNo, count = 0;
-  result = GFL_HEAP_AllocClearMemory(man->heapID, sizeof(G3DMAPOBJST*) * GFL_G3D_MAP_OBJST_MAX);
+  result = GFL_HEAP_AllocClearMemory(man->heapID, sizeof(G3DMAPOBJST*) * FLD_G3D_MAP_OBJST_MAX);
 
   GF_ASSERT( search < BM_SEARCH_ID_MAX );
   for (objNo = 0; objNo < NELEMS(man->g3DmapObjSt); objNo ++)
@@ -1890,7 +1890,7 @@ G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList
       continue;
     }
 
-    GFL_G3D_MAP_GetTrans( obj->g3Dmap, &pos );
+    FLD_G3D_MAP_GetTrans( obj->g3Dmap, &pos );
     VEC_Add( &obj->objSt->trans, &pos, &pos );
     if ( FLDHIT_RECT_IsIncludePos( rect, pos.x, pos.z ) == TRUE )
     {
@@ -1990,7 +1990,7 @@ void G3DMAPOBJST_setAnime( FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj, u32 anm_id
 void G3DMAPOBJST_getPos(G3DMAPOBJST * obj, VecFx32 * dst)
 {
   VecFx32 pos;
-  GFL_G3D_MAP_GetTrans( obj->g3Dmap, &pos );
+  FLD_G3D_MAP_GetTrans( obj->g3Dmap, &pos );
   VEC_Add( &obj->objSt->trans, &pos, dst );
 }
 
@@ -2029,7 +2029,7 @@ fx32 G3DMAPOBJST_getAnimeFrame(FIELD_BMODEL_MAN* man, const G3DMAPOBJST * obj, u
 FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj)
 {
   const OBJ_RES * objRes;
-  const GFL_G3D_MAP_GLOBALOBJ_ST * status = obj->objSt;
+  const FLD_G3D_MAP_GLOBALOBJ_ST * status = obj->objSt;
   VecFx32 drawOffset;
 
   FIELD_BMODEL * bmodel = GFL_HEAP_AllocMemory( man->heapID, sizeof(FIELD_BMODEL) );
@@ -2044,7 +2044,7 @@ FIELD_BMODEL * FIELD_BMODEL_Create(FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj)
     MTX_RotY33( &bmodel->g3dObjStatus.rotate, sin, cos );
   }
   //位置設定：g3Dmapに依存せず表示するため、ここで座標加算しておく
-  GFL_G3D_MAP_GetTrans( obj->g3Dmap, &bmodel->g3dObjStatus.trans );
+  FLD_G3D_MAP_GetTrans( obj->g3Dmap, &bmodel->g3dObjStatus.trans );
   VEC_Add( &bmodel->g3dObjStatus.trans, &status->trans, &bmodel->g3dObjStatus.trans );
   FLDMAPPER_GetDrawOffset( man->fldmapper, &drawOffset );
   VEC_Add( &bmodel->g3dObjStatus.trans, &drawOffset, &bmodel->g3dObjStatus.trans );

@@ -39,6 +39,8 @@
 #include "gamesystem/gamedata_def.h"
 #include "field/map_matrix.h"
 
+#include "field_g3d_map.h"
+
 
 //============================================================================================
 /**
@@ -81,7 +83,7 @@ typedef struct {
 }BLOCKINFO;
 
 //-------------------------------------
-// GFL_G3D_MAP拡張ワーク
+// FLD_G3D_MAP拡張ワーク
 struct _FLD_G3D_MAP_EXWORK{
 	FIELD_GRANM_WORK* p_granm_wk;		// 地面アニメーション
 	FIELD_BMODEL_MAN * bmodel_man;	// 
@@ -94,7 +96,7 @@ struct _FLD_G3D_MAP_EXWORK{
 //-------------------------------------
 ///	ブロック管理ワーク
 typedef struct {
-	GFL_G3D_MAP*		g3Dmap;       // マップ情報
+	FLD_G3D_MAP*		g3Dmap;       // マップ情報
 	FLD_G3D_MAP_EXWORK	g3DmapExWork; // 拡張ワーク
 	BLOCKINFO				blockInfo;    //  今の状態
 } BLOCK_WORK;
@@ -185,7 +187,7 @@ static void BLOCKINFO_GetBlockTrans(const BLOCKINFO * info, VecFx32* trans);
 static void GetExHight( const FLDMAPPER* g3Dmapper, const VecFx32 *pos, FLDMAPPER_GRIDINFO* gridInfo );
 
 static void WRITEBLOCK_Control_Clear( FLDMAPPER* g3Dmapper );
-static void WRITEBLOCK_Control_SetOneBlock( FLDMAPPER* g3Dmapper, GFL_G3D_MAP* g3Dmap, u32 index );
+static void WRITEBLOCK_Control_SetOneBlock( FLDMAPPER* g3Dmapper, FLD_G3D_MAP* g3Dmap, u32 index );
 static BOOL WRITEBLOCK_Control_IsWriteBlockIndex( const FLDMAPPER* g3Dmapper, u32 index, FLDMAPPER_DRAW_TYPE draw_type );
 
 
@@ -194,7 +196,7 @@ static BOOL WRITEBLOCK_Control_IsWriteBlockIndex( const FLDMAPPER* g3Dmapper, u3
  * @brief	セットアップ
  */
 //------------------------------------------------------------------
-static const GFL_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
+static const FLD_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
 	{ WBGRIDPACK_HEADER, FieldLoadMapData_WBNormalFile, FieldGetAttr_WBNormalFile },
 	{ WBGCROSSPACK_HEADER, FieldLoadMapData_WBCrossFile, FieldGetAttr_WBCrossFile },
   { NOGRIDPACK_HEADER, FieldLoadMapData_NoGridFile, FieldGetAttr_NoGridFile },
@@ -303,7 +305,7 @@ void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
   // 描画ブロック数を求める
   WRITEBLOCK_Control_Clear( g3Dmapper );
 	for( i=0; i<g3Dmapper->blockNum; i++ ){
-		GFL_G3D_MAP_Main( g3Dmapper->blockWk[i].g3Dmap );
+		FLD_G3D_MAP_Main( g3Dmapper->blockWk[i].g3Dmap );
     WRITEBLOCK_Control_SetOneBlock( g3Dmapper, g3Dmapper->blockWk[i].g3Dmap, i );
 	}
 
@@ -336,7 +338,7 @@ void	FLDMAPPER_Draw( const FLDMAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera, FLDM
 	
 	GF_ASSERT( g3Dmapper );
 	
-///	GFL_G3D_MAP_StartDraw();
+///	FLD_G3D_MAP_StartDraw();
 
   if( (type == FLDMAPPER_DRAW_TOP) && (g3Dmapper->topWriteBlockNum == 0) ){
     return ;
@@ -347,13 +349,13 @@ void	FLDMAPPER_Draw( const FLDMAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera, FLDM
     // 表示ブロック制御
     for( i=0; i<g3Dmapper->blockNum; i++ ){
       if( WRITEBLOCK_Control_IsWriteBlockIndex( g3Dmapper, i, type ) ){
-        GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &org_pos );
+        FLD_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &org_pos );
         draw_pos.x = org_pos.x + g3Dmapper->globalDrawOffset.x;
         draw_pos.y = org_pos.y + g3Dmapper->globalDrawOffset.y;
         draw_pos.z = org_pos.z + g3Dmapper->globalDrawOffset.z;
-        GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &draw_pos );
-        GFL_G3D_MAP_Draw( g3Dmapper->blockWk[i].g3Dmap, g3Dcamera );
-        GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &org_pos );
+        FLD_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &draw_pos );
+        FLD_G3D_MAP_Draw( g3Dmapper->blockWk[i].g3Dmap, g3Dcamera );
+        FLD_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &org_pos );
       }
     }
   }
@@ -371,9 +373,9 @@ BOOL FLDMAPPER_CheckTrans( const FLDMAPPER* g3Dmapper )
 {
 	int i;
 	for ( i=0; i<g3Dmapper->blockNum; i++ ){
-		GFL_G3D_MAP_LOAD_STATUS *ldst;
-		GFL_G3D_MAP_GetLoadStatusPointer( g3Dmapper->blockWk[i].g3Dmap, &ldst );
-		if (ldst->seq != GFL_G3D_MAP_LOAD_IDLING) {
+		FLD_G3D_MAP_LOAD_STATUS *ldst;
+		FLD_G3D_MAP_GetLoadStatusPointer( g3Dmapper->blockWk[i].g3Dmap, &ldst );
+		if (ldst->seq != FLD_G3D_MAP_LOAD_IDLING) {
 			return FALSE;
 		}
 	}
@@ -658,7 +660,7 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 
 	{
 		int i;
-		GFL_G3D_MAP_SETUP setup;
+		FLD_G3D_MAP_SETUP setup;
 
 		if (g3Dmapper->globalTexture != NULL) {
 			setup.mapDataHeapSize = resistData->memsize;
@@ -689,7 +691,7 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
     g3Dmapper->blockWk = GFL_HEAP_AllocClearMemory( g3Dmapper->heapID, sizeof(BLOCK_WORK) * g3Dmapper->blockNum );
     g3Dmapper->blockNew = GFL_HEAP_AllocClearMemory( g3Dmapper->heapID, sizeof(BLOCK_NEWREQ) * g3Dmapper->blockNum );
 		for( i=0; i<g3Dmapper->blockNum; i++ ){
-      GFL_G3D_MAP * g3dmap;
+      FLD_G3D_MAP * g3dmap;
 
       BLOCKINFO_init(&g3Dmapper->blockWk[i].blockInfo);
 
@@ -698,21 +700,21 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 			setup.externalWork = &g3Dmapper->blockWk[i].g3DmapExWork;
 
 			// ブロック情報生成
-      g3dmap = GFL_G3D_MAP_Create( &setup, g3Dmapper->heapID );
+      g3dmap = FLD_G3D_MAP_Create( &setup, g3Dmapper->heapID );
 			g3Dmapper->blockWk[i].g3Dmap = g3dmap;
 
       //新アーカイブＩＤを登録
-      GFL_G3D_MAP_ResistArc( g3dmap, g3Dmapper->arcID, g3Dmapper->heapID );
+      FLD_G3D_MAP_ResistArc( g3dmap, g3Dmapper->arcID, g3Dmapper->heapID );
 
       //グローバルリソース登録
       if( g3Dmapper->globalTexture != NULL ){
-        GFL_G3D_MAP_ResistGlobalTexResource( g3dmap, g3Dmapper->globalTexture );
+        FLD_G3D_MAP_ResistGlobalTexResource( g3dmap, g3Dmapper->globalTexture );
       }
-      GFL_G3D_MAP_ResistGlobalObjResource( g3dmap,
+      FLD_G3D_MAP_ResistGlobalObjResource( g3dmap,
           FIELD_BMODEL_MAN_GetGlobalObjects(g3Dmapper->bmodel_man) );
 
       //ファイル識別設定（仮）
-      GFL_G3D_MAP_ResistFileType( g3dmap, resistData->g3DmapFileType );
+      FLD_G3D_MAP_ResistFileType( g3dmap, resistData->g3DmapFileType );
     }
 
 	}
@@ -735,11 +737,11 @@ void FLDMAPPER_ReleaseData( FLDMAPPER* g3Dmapper )
     //マップブロック制御解除
     for( i=0; i<g3Dmapper->blockNum; i++ ){
 
-      GFL_G3D_MAP_ReleaseGlobalObjResource( g3Dmapper->blockWk[i].g3Dmap );
-      GFL_G3D_MAP_ReleaseGlobalTexResource( g3Dmapper->blockWk[i].g3Dmap );
-      GFL_G3D_MAP_ReleaseArc( g3Dmapper->blockWk[i].g3Dmap );
+      FLD_G3D_MAP_ReleaseGlobalObjResource( g3Dmapper->blockWk[i].g3Dmap );
+      FLD_G3D_MAP_ReleaseGlobalTexResource( g3Dmapper->blockWk[i].g3Dmap );
+      FLD_G3D_MAP_ReleaseArc( g3Dmapper->blockWk[i].g3Dmap );
 
-      GFL_G3D_MAP_Delete( g3Dmapper->blockWk[i].g3Dmap );
+      FLD_G3D_MAP_Delete( g3Dmapper->blockWk[i].g3Dmap );
 
       // 拡張ワークの破棄
       FLD_G3D_MAP_ExWork_Exit( &g3Dmapper->blockWk[i].g3DmapExWork );
@@ -915,10 +917,10 @@ int FLDMAPPER_GetCurrentBlockAccessIdx( const FLDMAPPER* g3Dmapper )
 	  VecFx32 trans;
 		fx32 min_x, min_z, max_x, max_z;
 
-		if( GFL_G3D_MAP_GetDrawSw( g3Dmapper->blockWk[i].g3Dmap ) == FALSE ){
+		if( FLD_G3D_MAP_GetDrawSw( g3Dmapper->blockWk[i].g3Dmap ) == FALSE ){
       continue;
     }
-		GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &trans );
+		FLD_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &trans );
 		min_x = trans.x - g3Dmapper->blockWidth/2;
 		min_z = trans.z - g3Dmapper->blockWidth/2;
 		max_x = trans.x + g3Dmapper->blockWidth/2;
@@ -1183,7 +1185,7 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new )
           // (小さいマップでループ表示する場合, 同じIDのブロックが座標だけ変更して現れることがあるため)
           VecFx32 trans;
           BLOCKINFO_GetBlockTrans( &new[j].newBlockInfo, &trans );
-          GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &trans );
+          FLD_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &trans );
           BLOCKINFO_init( &new[j].newBlockInfo );
 					delFlag = TRUE;
 				}
@@ -1192,14 +1194,14 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new )
 			if( delFlag == FALSE )
       {
         BLOCKINFO_init( &g3Dmapper->blockWk[i].blockInfo );
-				GFL_G3D_MAP_SetDrawSw( g3Dmapper->blockWk[i].g3Dmap, FALSE );
+				FLD_G3D_MAP_SetDrawSw( g3Dmapper->blockWk[i].g3Dmap, FALSE );
 
         FIELD_BMODEL_MAN_ReleaseAllMapObjects( g3Dmapper->bmodel_man, g3Dmapper->blockWk[i].g3Dmap );
 				// 拡張ワークの情報もクリア
 				FLD_G3D_MAP_ExWork_ClearBlockData( &g3Dmapper->blockWk[i].g3DmapExWork );
 
         // 読み込み停止
-        GFL_G3D_MAP_ResetLoadData( g3Dmapper->blockWk[i].g3Dmap );
+        FLD_G3D_MAP_ResetLoadData( g3Dmapper->blockWk[i].g3Dmap );
         
 				delProcFlag = TRUE;
 			}
@@ -1230,9 +1232,9 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new )
 
 					if( mapdatID != FLDMAPPER_MAPDATA_NULL )
           { 
-						GFL_G3D_MAP_SetLoadReq( g3Dmapper->blockWk[j].g3Dmap, mapdatID );
-						GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[j].g3Dmap, &trans );
-						GFL_G3D_MAP_SetDrawSw( g3Dmapper->blockWk[j].g3Dmap, TRUE );
+						FLD_G3D_MAP_SetLoadReq( g3Dmapper->blockWk[j].g3Dmap, mapdatID );
+						FLD_G3D_MAP_SetTrans( g3Dmapper->blockWk[j].g3Dmap, &trans );
+						FLD_G3D_MAP_SetDrawSw( g3Dmapper->blockWk[j].g3Dmap, TRUE );
 					}
 					g3Dmapper->blockWk[j].blockInfo = new[i].newBlockInfo;
 					addFlag = TRUE;
@@ -1392,7 +1394,7 @@ void FLDMAPPER_GRIDINFO_Init( FLDMAPPER_GRIDINFO* gridInfo )
 BOOL FLDMAPPER_GetGridInfo
 	( const FLDMAPPER* g3Dmapper, const VecFx32* pos, FLDMAPPER_GRIDINFO* gridInfo )
 {
-	GFL_G3D_MAP_ATTRINFO attrInfo;
+	FLD_G3D_MAP_ATTRINFO attrInfo;
 	VecFx32 trans;
 	int		i, p;
 
@@ -1407,10 +1409,10 @@ BOOL FLDMAPPER_GetGridInfo
 	p = 0;
 
 	for( i=0; i<g3Dmapper->blockNum; i++ ){
-		if( GFL_G3D_MAP_GetDrawSw( g3Dmapper->blockWk[i].g3Dmap ) == TRUE ){
+		if( FLD_G3D_MAP_GetDrawSw( g3Dmapper->blockWk[i].g3Dmap ) == TRUE ){
 			fx32 min_x, min_z, max_x, max_z;
 
-			GFL_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &trans );
+			FLD_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &trans );
 
 			min_x = trans.x - g3Dmapper->blockWidth/2;
 			min_z = trans.z - g3Dmapper->blockWidth/2;
@@ -1420,7 +1422,7 @@ BOOL FLDMAPPER_GetGridInfo
 			//ブロック範囲内チェック（マップブロックのＸＺ平面上地点）
 			if(	(pos->x >= min_x)&&(pos->x < max_x)&&(pos->z >= min_z)&&(pos->z < max_z) ){
 
-				GFL_G3D_MAP_GetAttr( &attrInfo, g3Dmapper->blockWk[i].g3Dmap, pos, g3Dmapper->blockWidth );
+				FLD_G3D_MAP_GetAttr( &attrInfo, g3Dmapper->blockWk[i].g3Dmap, pos, g3Dmapper->blockWidth );
 				if( attrInfo.mapAttrCount ){
 					int j;
 
@@ -1522,8 +1524,8 @@ BOOL FLDMAPPER_GetGridData
 BOOL FLDMAPPER_GetGridDataForEffectEncount
 	( const FLDMAPPER* g3Dmapper, int blockIdx, const VecFx32* pos, FLDMAPPER_GRIDINFODATA* pGridData )
 {
-	GFL_G3D_MAP_ATTRINFO attrInfo;
-  GFL_G3D_MAP* map;
+	FLD_G3D_MAP_ATTRINFO attrInfo;
+  FLD_G3D_MAP* map;
 
 	GF_ASSERT( g3Dmapper );
 	if( g3Dmapper->blocks == NULL ){
@@ -1534,10 +1536,10 @@ BOOL FLDMAPPER_GetGridDataForEffectEncount
   FLDMAPPER_GRIDINFODATA_Init(pGridData);
 	
   map = g3Dmapper->blockWk[blockIdx].g3Dmap;
-  if( GFL_G3D_MAP_GetDrawSw( map ) == FALSE ){
+  if( FLD_G3D_MAP_GetDrawSw( map ) == FALSE ){
     return FALSE;
   }
-	GFL_G3D_MAP_GetAttr( &attrInfo, map, pos, g3Dmapper->blockWidth );
+	FLD_G3D_MAP_GetAttr( &attrInfo, map, pos, g3Dmapper->blockWidth );
 	if( attrInfo.mapAttrCount == 0 ){
     return FALSE;
   }
@@ -1722,7 +1724,7 @@ static FIELD_GRANM * createGroundAnime( u32 blockNum, GFL_G3D_RES* globalTexture
 //============================================================================================
 //-----------------------------------------------------------------------------
 /**
- *			GFL_G3D_MAP拡張ワーク操作
+ *			FLD_G3D_MAP拡張ワーク操作
  */
 //-----------------------------------------------------------------------------
 
@@ -1811,7 +1813,7 @@ HEAPID FLD_G3D_MAP_EXWORK_GetHeapID( const FLD_G3D_MAP_EXWORK* cp_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	GFL_G3D_MAPの拡張ワーク初期化
+ *	@brief	FLD_G3D_MAPの拡張ワーク初期化
  *
  *	@param	p_wk				ワーク
  *	@param	g3Dmapper		マッパーワーク
@@ -1831,7 +1833,7 @@ static void FLD_G3D_MAP_ExWork_Init( FLD_G3D_MAP_EXWORK* p_wk, FLDMAPPER* g3Dmap
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	GFL_G3D_MAPの拡張ワーク破棄
+ *	@brief	FLD_G3D_MAPの拡張ワーク破棄
  *
  *	@param	p_wk		ワーク
  */
@@ -2047,10 +2049,10 @@ static void WRITEBLOCK_Control_Clear( FLDMAPPER* g3Dmapper )
  *	@param	g3Dmap    ブロックデータ
  */
 //-----------------------------------------------------------------------------
-static void WRITEBLOCK_Control_SetOneBlock( FLDMAPPER* g3Dmapper, GFL_G3D_MAP* g3Dmap, u32 index )
+static void WRITEBLOCK_Control_SetOneBlock( FLDMAPPER* g3Dmapper, FLD_G3D_MAP* g3Dmap, u32 index )
 {
-  if( GFL_G3D_MAP_GetRenderObj( g3Dmap ) != NULL ){
-    if( GFL_G3D_MAP_GetDrawSw( g3Dmap ) ){
+  if( FLD_G3D_MAP_GetRenderObj( g3Dmap ) != NULL ){
+    if( FLD_G3D_MAP_GetDrawSw( g3Dmap ) ){
       g3Dmapper->nowWriteBlockNum++;
     }
   }

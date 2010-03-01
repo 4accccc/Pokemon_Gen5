@@ -21,6 +21,7 @@ extern "C"{
 #include "map/dp3format.h"
 
 #include "field_g3d_mapper.h"
+#include "field_g3d_map.h"
 
 #include "field/field_wfbc_data.h"
 #include "field/eventdata_system.h"
@@ -103,7 +104,7 @@ extern FIELD_WFBC_CORE_TYPE FIELD_WFBC_GetType( const FIELD_WFBC* cp_wk );
 extern MAPMODE FIELD_WFBC_GetMapMode( const FIELD_WFBC* cp_wk );
 
 // ブロック配置情報
-extern int FIELD_WFBC_SetUpBlock( FIELD_WFBC* p_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, GFL_G3D_MAP* g3Dmap, int build_count, u32 block_x, u32 block_z, HEAPID heapID );
+extern int FIELD_WFBC_SetUpBlock( FIELD_WFBC* p_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, FLD_G3D_MAP* g3Dmap, int build_count, u32 block_x, u32 block_z, HEAPID heapID );
 
 // イベントデータの書換え
 extern void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p_evdata, MAPMODE mapmode, HEAPID heapID );

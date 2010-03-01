@@ -13,8 +13,8 @@
 #include "field_func_wbcross_file.h"
 
 #include "../field_buildmodel.h"
-#include "../field_g3dmap_exwork.h"	// GFL_G3D_MAP拡張ワーク
-#include "field/map_attr.h"	// GFL_G3D_MAP拡張ワーク
+#include "../field_g3dmap_exwork.h"	// FLD_G3D_MAP拡張ワーク
+#include "field/map_attr.h"	// FLD_G3D_MAP拡張ワーク
 
 //============================================================================================
 /**
@@ -39,7 +39,7 @@
  */
 //============================================================================================
 enum {
-	FILE_LOAD_START = GFL_G3D_MAP_LOAD_START,
+	FILE_LOAD_START = FLD_G3D_MAP_LOAD_START,
 	FILE_LOAD,
 	RND_CREATE,
 	TEX_TRANS,
@@ -53,36 +53,36 @@ enum{
 
 
 ///プロトタイプ
-static void fgr_WBCrossFileCore( GFL_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, const u32 attrAdrs,
+static void fgr_WBCrossFileCore( FLD_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, const u32 attrAdrs,
     const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height );
 
-BOOL FieldLoadMapData_WBCrossFile( GFL_G3D_MAP* g3Dmap, void * exWork )
+BOOL FieldLoadMapData_WBCrossFile( FLD_G3D_MAP* g3Dmap, void * exWork )
 {
-	GFL_G3D_MAP_LOAD_STATUS* ldst;
-	FLD_G3D_MAP_EXWORK* p_exwork;	// GFL_G3D_MAP拡張ワーク
+	FLD_G3D_MAP_LOAD_STATUS* ldst;
+	FLD_G3D_MAP_EXWORK* p_exwork;	// FLD_G3D_MAP拡張ワーク
 
 
 	// 拡張ワーク取得
 	p_exwork = exWork;
 
-	GFL_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
+	FLD_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
 
 	switch( ldst->seq ){
 
 	case FILE_LOAD_START:
-		GFL_G3D_MAP_ResetLoadStatus(g3Dmap);
+		FLD_G3D_MAP_ResetLoadStatus(g3Dmap);
 
 		//モデルデータロード開始
 		{
 			u32		datID;
-			GFL_G3D_MAP_GetLoadDatID( g3Dmap, &datID );
-			GFL_G3D_MAP_StartFileLoad( g3Dmap, datID );
+			FLD_G3D_MAP_GetLoadDatID( g3Dmap, &datID );
+			FLD_G3D_MAP_StartFileLoad( g3Dmap, datID );
 		}
 		ldst->seq = FILE_LOAD;
 		break;
 
 	case FILE_LOAD:
-		if( GFL_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
+		if( FLD_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
 			ldst->mdlLoaded = TRUE;
 			ldst->texLoaded = TRUE;
 			ldst->attrLoaded = TRUE;
@@ -98,12 +98,12 @@ BOOL FieldLoadMapData_WBCrossFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 			WBGridCrossMapPackHeaderSt*	fileHeader;
 
 			//ヘッダー設定
-			GFL_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
+			FLD_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
 			fileHeader = (WBGridCrossMapPackHeaderSt*)mem;
 			//モデルリソース設定
-			GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + fileHeader->nsbmdOffset));
+			FLD_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + fileHeader->nsbmdOffset));
 			//テクスチャリソース設定
-			//>>GFL_G3D_MAP_CreateResourceTex(g3Dmap, (void*)((u32)mem + fileHeader->nsbtxOffset)); 
+			//>>FLD_G3D_MAP_CreateResourceTex(g3Dmap, (void*)((u32)mem + fileHeader->nsbtxOffset)); 
 			//配置オブジェクト設定
 			if( fileHeader->positionOffset != fileHeader->endPos ){
 				LayoutFormat* layout = (LayoutFormat*)((u32)mem + fileHeader->positionOffset);
@@ -112,8 +112,8 @@ BOOL FieldLoadMapData_WBCrossFile( GFL_G3D_MAP* g3Dmap, void * exWork )
         FIELD_BMODEL_MAN_ResistAllMapObjects(bm, g3Dmap, objStatus, layout->count);
 			}
 		}
-		//>>GFL_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定
-		GFL_G3D_MAP_MakeRenderObj( g3Dmap );
+		//>>FLD_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定
+		FLD_G3D_MAP_MakeRenderObj( g3Dmap );
 
 		// 地面アニメーションの設定
 		if( FLD_G3D_MAP_EXWORK_IsGranm( p_exwork ) ){
@@ -121,17 +121,17 @@ BOOL FieldLoadMapData_WBCrossFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 
 			p_granm = FLD_G3D_MAP_EXWORK_GetGranmWork( p_exwork );
 			FIELD_GRANM_WORK_Bind( p_granm, 
-					GFL_G3D_MAP_GetResourceMdl(g3Dmap), GFL_G3D_MAP_GetResourceTex(g3Dmap), 
-					GFL_G3D_MAP_GetRenderObj(g3Dmap) );
+					FLD_G3D_MAP_GetResourceMdl(g3Dmap), FLD_G3D_MAP_GetResourceTex(g3Dmap), 
+					FLD_G3D_MAP_GetRenderObj(g3Dmap) );
 		}
 
 		ldst->seq = TEX_TRANS;
 		break;
 
 	case TEX_TRANS:
-		//>>if( GFL_G3D_MAP_TransVram(g3Dmap) == FALSE ){
+		//>>if( FLD_G3D_MAP_TransVram(g3Dmap) == FALSE ){
 		{
-			ldst->seq = GFL_G3D_MAP_LOAD_IDLING;
+			ldst->seq = FLD_G3D_MAP_LOAD_IDLING;
 			return FALSE;
 		}
 		break;
@@ -150,14 +150,14 @@ BOOL FieldLoadMapData_WBCrossFile( GFL_G3D_MAP* g3Dmap, void * exWork )
  *
  */
 //============================================================================================
-void FieldGetAttr_WBCrossFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata, 
+void FieldGetAttr_WBCrossFile( FLD_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata, 
 					const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height )
 {
-  GFL_G3D_MAP_ATTRINFO attr;
+  FLD_G3D_MAP_ATTRINFO attr;
 
 	WBGridCrossMapPackHeaderSt* fileHeader = (WBGridCrossMapPackHeaderSt*)mapdata;
 
-  MI_CpuClear8(&attr,sizeof(GFL_G3D_MAP_ATTRINFO));
+  MI_CpuClear8(&attr,sizeof(FLD_G3D_MAP_ATTRINFO));
 
   //デフォルト階層ロード
   fgr_WBCrossFileCore( &attr, CROSS_LAYER_DEF, (u32)mapdata + fileHeader->vertexOffset,
@@ -201,7 +201,7 @@ void FieldGetAttr_WBCrossFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapda
 /**
   @brief  アトリビュートファイルの解釈
  */
-static void fgr_WBCrossFileCore( GFL_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, const u32 attrAdrs,
+static void fgr_WBCrossFileCore( FLD_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, const u32 attrAdrs,
     const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height )
 {
 	fx32			grid_w, grid_x, grid_z;

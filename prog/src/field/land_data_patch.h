@@ -20,6 +20,7 @@ extern "C"{
 
 #include "map/dp3format.h"
 
+#include "field_g3d_map.h"
 #include "field_buildmodel.h"
 
 //-----------------------------------------------------------------------------
@@ -53,7 +54,7 @@ extern void FIELD_DATA_PATCH_OverWriteAttr( const FIELD_DATA_PATCH* cp_sys, Norm
 extern void FIELD_DATA_PATCH_OverWriteAttrEx( const FIELD_DATA_PATCH* cp_sys, NormalVtxFormat* p_buff, u32 read_grid_x, u32 read_grid_z, u32 write_grid_x, u32 write_grid_z, u32 size_grid_x, u32 size_grid_z );
 
 // îzíuÉÇÉfÉãê›íË
-extern int FIELD_LAND_DATA_PATCH_AddBuildModel( const FIELD_DATA_PATCH* cp_sys, FIELD_BMODEL_MAN * p_bmodel, GFL_G3D_MAP * g3Dmap, int count_start, u32 grid_x, u32 grid_z );
+extern int FIELD_LAND_DATA_PATCH_AddBuildModel( const FIELD_DATA_PATCH* cp_sys, FIELD_BMODEL_MAN * p_bmodel, FLD_G3D_MAP * g3Dmap, int count_start, u32 grid_x, u32 grid_z );
 
 #ifdef _cplusplus
 }	// extern "C"{

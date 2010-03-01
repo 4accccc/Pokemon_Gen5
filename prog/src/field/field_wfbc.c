@@ -399,7 +399,7 @@ MAPMODE FIELD_WFBC_GetMapMode( const FIELD_WFBC* cp_wk )
  *	@retval build_count ’Ç‰ÁŒã
  */
 //-----------------------------------------------------------------------------
-int FIELD_WFBC_SetUpBlock( FIELD_WFBC* p_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, GFL_G3D_MAP* g3Dmap, int build_count, u32 block_x, u32 block_z, HEAPID heapID )
+int FIELD_WFBC_SetUpBlock( FIELD_WFBC* p_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, FLD_G3D_MAP* g3Dmap, int build_count, u32 block_x, u32 block_z, HEAPID heapID )
 {
   WFBC_BLOCK_NOW map_data;
   u32 local_grid_x, local_grid_z;

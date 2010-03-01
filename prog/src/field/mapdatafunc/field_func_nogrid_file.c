@@ -12,7 +12,7 @@
 #include "field_func_nogrid_file.h"
 
 
-#include "../field_g3dmap_exwork.h"	// GFL_G3D_MAP拡張ワーク
+#include "../field_g3dmap_exwork.h"	// FLD_G3D_MAP拡張ワーク
 
 #include "height.h"
 
@@ -49,18 +49,18 @@ typedef struct {
  */
 //============================================================================================
 enum {
-	FILE_LOAD_START = GFL_G3D_MAP_LOAD_START,
+	FILE_LOAD_START = FLD_G3D_MAP_LOAD_START,
 	FILE_LOAD,
 	RND_CREATE,
 	TEX_TRANS,
 };
 
-BOOL FieldLoadMapData_NoGridFile( GFL_G3D_MAP* g3Dmap, void * exWork )
+BOOL FieldLoadMapData_NoGridFile( FLD_G3D_MAP* g3Dmap, void * exWork )
 {
-	GFL_G3D_MAP_LOAD_STATUS* ldst;
-	FLD_G3D_MAP_EXWORK* p_exwork;	// GFL_G3D_MAP拡張ワーク
+	FLD_G3D_MAP_LOAD_STATUS* ldst;
+	FLD_G3D_MAP_EXWORK* p_exwork;	// FLD_G3D_MAP拡張ワーク
 
-	GFL_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
+	FLD_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
 
 	// 拡張ワーク取得
 	p_exwork = exWork;
@@ -68,19 +68,19 @@ BOOL FieldLoadMapData_NoGridFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 	switch( ldst->seq ){
 
 	case FILE_LOAD_START:
-		GFL_G3D_MAP_ResetLoadStatus(g3Dmap);
+		FLD_G3D_MAP_ResetLoadStatus(g3Dmap);
 
 		//モデルデータロード開始
 		{
 			u32		datID;
-			GFL_G3D_MAP_GetLoadDatID( g3Dmap, &datID );
-			GFL_G3D_MAP_StartFileLoad( g3Dmap, datID );
+			FLD_G3D_MAP_GetLoadDatID( g3Dmap, &datID );
+			FLD_G3D_MAP_StartFileLoad( g3Dmap, datID );
 		}
 		ldst->seq = FILE_LOAD;
 		break;
 
 	case FILE_LOAD:
-		if( GFL_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
+		if( FLD_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
 			ldst->mdlLoaded = TRUE;
 			ldst->texLoaded = TRUE;
 			ldst->attrLoaded = TRUE;
@@ -95,11 +95,11 @@ BOOL FieldLoadMapData_NoGridFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 			void*				mem;
 			NoGridPackHeaderSt*	fileHeader;
 			//ヘッダー設定
-			GFL_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
+			FLD_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
 			fileHeader = (NoGridPackHeaderSt*)mem;
 
 			//モデルリソース設定
-			GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + fileHeader->nsbmdOffset));
+			FLD_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + fileHeader->nsbmdOffset));
 			//配置オブジェクト設定
 			if( fileHeader->positionOffset != fileHeader->endPos ){
 				LayoutFormat* layout = (LayoutFormat*)((u32)mem + fileHeader->positionOffset);
@@ -110,7 +110,7 @@ BOOL FieldLoadMapData_NoGridFile( GFL_G3D_MAP* g3Dmap, void * exWork )
     }
 
       
-		GFL_G3D_MAP_MakeRenderObj( g3Dmap );
+		FLD_G3D_MAP_MakeRenderObj( g3Dmap );
 
 
 
@@ -120,8 +120,8 @@ BOOL FieldLoadMapData_NoGridFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 
 			p_granm = FLD_G3D_MAP_EXWORK_GetGranmWork( p_exwork );
 			FIELD_GRANM_WORK_Bind( p_granm, 
-					GFL_G3D_MAP_GetResourceMdl(g3Dmap), GFL_G3D_MAP_GetResourceTex(g3Dmap), 
-					GFL_G3D_MAP_GetRenderObj(g3Dmap) );
+					FLD_G3D_MAP_GetResourceMdl(g3Dmap), FLD_G3D_MAP_GetResourceTex(g3Dmap), 
+					FLD_G3D_MAP_GetRenderObj(g3Dmap) );
 		}
 
 		ldst->seq = TEX_TRANS;
@@ -129,7 +129,7 @@ BOOL FieldLoadMapData_NoGridFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 
 	case TEX_TRANS:
 		{
-			ldst->seq = GFL_G3D_MAP_LOAD_IDLING;
+			ldst->seq = FLD_G3D_MAP_LOAD_IDLING;
 			return FALSE;
 		}
 		break;
@@ -148,7 +148,7 @@ BOOL FieldLoadMapData_NoGridFile( GFL_G3D_MAP* g3Dmap, void * exWork )
  *
  */
 //============================================================================================
-void FieldGetAttr_NoGridFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata, 
+void FieldGetAttr_NoGridFile( FLD_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata, 
 					const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height )
 {
   // アトリビュートも高さもない！

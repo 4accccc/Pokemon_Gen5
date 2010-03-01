@@ -218,7 +218,7 @@ void FIELD_DATA_PATCH_OverWriteAttrEx( const FIELD_DATA_PATCH* cp_sys, NormalVtx
  *	@return モデル登録　終了カウント値
  */
 //-----------------------------------------------------------------------------
-int FIELD_LAND_DATA_PATCH_AddBuildModel( const FIELD_DATA_PATCH* cp_sys, FIELD_BMODEL_MAN * p_bmodel, GFL_G3D_MAP * g3Dmap, int count_start, u32 grid_x, u32 grid_z )
+int FIELD_LAND_DATA_PATCH_AddBuildModel( const FIELD_DATA_PATCH* cp_sys, FIELD_BMODEL_MAN * p_bmodel, FLD_G3D_MAP * g3Dmap, int count_start, u32 grid_x, u32 grid_z )
 {
   const LayoutFormat* cp_3dmd;
   const PositionSt* cp_position;

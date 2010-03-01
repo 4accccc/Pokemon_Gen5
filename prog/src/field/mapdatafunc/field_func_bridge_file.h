@@ -10,6 +10,7 @@
  */
 //============================================================================================
 #include "map\dp3format.h"
+#include "../field_g3d_map.h"
 
 enum {
 	BRIDGEPACK_HEADER = 'B' + 'R' * 0x100,
@@ -19,13 +20,13 @@ enum {
  * @brief	マップデータ読み込み
  */
 //============================================================================================
-extern BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap, void * exWork );
+extern BOOL FieldLoadMapData_BridgeFile( FLD_G3D_MAP* g3Dmap, void * exWork );
 //============================================================================================
 /**
  * @brief	３Ｄマップ情報取得
  */
 //============================================================================================
-extern void FieldGetAttr_BridgeFile( GFL_G3D_MAP_ATTRINFO* attrInfo,
+extern void FieldGetAttr_BridgeFile( FLD_G3D_MAP_ATTRINFO* attrInfo,
 									const void* mapdata, const VecFx32* posInBlock, 
 									const fx32 map_width, const fx32 map_height );
 

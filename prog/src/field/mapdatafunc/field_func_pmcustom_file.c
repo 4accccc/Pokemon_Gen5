@@ -114,22 +114,22 @@ typedef struct {
  */
 //============================================================================================
 enum {
-	FILE_LOAD_START = GFL_G3D_MAP_LOAD_START,
+	FILE_LOAD_START = FLD_G3D_MAP_LOAD_START,
 	FILE_LOAD,
 	FILE_HEADER_SET,
 	RND_CREATE,
 };
 
-BOOL FieldLoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap, void * exWork )
+BOOL FieldLoadMapData_PMcustomFile( FLD_G3D_MAP* g3Dmap, void * exWork )
 {
-	GFL_G3D_MAP_LOAD_STATUS* ldst;
+	FLD_G3D_MAP_LOAD_STATUS* ldst;
 
-	GFL_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
+	FLD_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
 
 	switch( ldst->seq ){
 
 	case FILE_LOAD_START:
-		GFL_G3D_MAP_ResetLoadStatus(g3Dmap);
+		FLD_G3D_MAP_ResetLoadStatus(g3Dmap);
 
 		//メモリ先頭にはデータ取得用情報を配置するため、読み込みポインタをずらす
 		ldst->mOffs += sizeof(MAP_DATA_INFO);
@@ -137,14 +137,14 @@ BOOL FieldLoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 		//モデルデータロード開始
 		{
 			u32		datID;
-			GFL_G3D_MAP_GetLoadDatID( g3Dmap, &datID );
-			GFL_G3D_MAP_StartFileLoad( g3Dmap, datID );
+			FLD_G3D_MAP_GetLoadDatID( g3Dmap, &datID );
+			FLD_G3D_MAP_StartFileLoad( g3Dmap, datID );
 		}
 		ldst->seq = FILE_LOAD;
 		break;
 
 	case FILE_LOAD:
-		if( GFL_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
+		if( FLD_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
 			ldst->seq = FILE_HEADER_SET;
 		}
 		break;
@@ -158,7 +158,7 @@ BOOL FieldLoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 			HEIGHT_DATA_HEADER*	heightHeader;
 			u32					dataOffset = 0;
 
-			GFL_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
+			FLD_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
 
 			//データ取得用情報設定
 			mapdataInfo = (MAP_DATA_INFO*)mem;
@@ -179,16 +179,16 @@ BOOL FieldLoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 			//配置オブジェクト設定
 			{
 				MAP3D_OBJECT_ST* objStatus = (MAP3D_OBJECT_ST*)((u32)mem + dataOffset);
-				GFL_G3D_MAP_GLOBALOBJ_ST status;
+				FLD_G3D_MAP_GLOBALOBJ_ST status;
 				int i, count = header->objSize/sizeof(MAP3D_OBJECT_ST);
 				u32 id;
 
 				for( i=0; i<count; i++ ){
-					if( GFL_G3D_MAP_GetGlobalObjectID( g3Dmap, objStatus[i].id, &id ) == TRUE ){
+					if( FLD_G3D_MAP_GetGlobalObjectID( g3Dmap, objStatus[i].id, &id ) == TRUE ){
 						status.id = id;
 						status.trans = objStatus[i].global;
 						status.rotate = 0;
-						GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, i );
+						FLD_G3D_MAP_ResistGlobalObj( g3Dmap, &status, i );
 					} else {
 						OS_Printf("cannot exchange ID = %x\n", objStatus[i].id );
 					}
@@ -196,7 +196,7 @@ BOOL FieldLoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 			}
 			dataOffset += header->objSize;
 			//モデルリソース設定
-			GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + dataOffset));
+			FLD_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + dataOffset));
 			dataOffset += header->mapSize;
 
 			//高さリソース設定
@@ -235,12 +235,12 @@ BOOL FieldLoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 
 	case RND_CREATE:
 		//レンダー作成
-		GFL_G3D_MAP_MakeRenderObj( g3Dmap );
+		FLD_G3D_MAP_MakeRenderObj( g3Dmap );
 
 		ldst->mdlLoaded = TRUE;
 		ldst->attrLoaded = TRUE;
 
-		ldst->seq = GFL_G3D_MAP_LOAD_IDLING;
+		ldst->seq = FLD_G3D_MAP_LOAD_IDLING;
 		return FALSE;
 		break;
 	}
@@ -260,7 +260,7 @@ BOOL FieldLoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 static BOOL CheckRectIO( const XZ_VERTEX* vtx0, const XZ_VERTEX *vtx1, const VecFx32* pos );
 static BOOL	BinSearch( const LINE_DATA *list, const u16 size, const fx32 valZ, u16* idx );
 //============================================================================================
-void FieldGetAttr_PMcustomFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata,
+void FieldGetAttr_PMcustomFile( FLD_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata,
 					const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height )
 {
 	//データ取得用情報設定
@@ -306,7 +306,7 @@ void FieldGetAttr_PMcustomFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapd
 			VEC_Fx16Set( &attrInfo->mapAttr[attrInfo->mapAttrCount].vecN, vecN.x, vecN.y, vecN.z );
 			
 			attrInfo->mapAttrCount++;
-			if (attrInfo->mapAttrCount >= GFL_G3D_MAP_ATTR_GETMAX){
+			if (attrInfo->mapAttrCount >= FLD_G3D_MAP_ATTR_GETMAX){
 				return;	//取得オーバーフロー
 			}
 		}
@@ -519,7 +519,7 @@ void M3DO_LoadArc3DObjData(	ARCHANDLE *ioHandle,
  */
 //==============================================================================
 u16 FieldGetAttrData_PMcustomFile(
-	GFL_G3D_MAP *g3Dmap, const VecFx32 *pos, int gridBlockW )
+	FLD_G3D_MAP *g3Dmap, const VecFx32 *pos, int gridBlockW )
 {
 	void *mem;
 	int bx,bz;
@@ -529,7 +529,7 @@ u16 FieldGetAttrData_PMcustomFile(
 	const MAP_FILE_HEADER *header;
 	const MAP_DATA_INFO *mapdataInfo;
 	
-	GFL_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
+	FLD_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
 	mapdataInfo = (MAP_DATA_INFO*)mem;
 	buf = (u16*)mapdataInfo->attrAdrs;
 	

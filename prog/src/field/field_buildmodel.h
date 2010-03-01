@@ -12,6 +12,7 @@
 
 #include "field/areadata.h"
 #include "field_g3d_mapper.h"
+#include "field_g3d_map.h"
 
 #include "map/dp3format.h"
 #include "field_hit_check.h"
@@ -71,16 +72,16 @@ extern HEAPID FIELD_BMODEL_MAN_GetHeapID(const FIELD_BMODEL_MAN * man);
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern GFL_G3D_MAP_GLOBALOBJ * FIELD_BMODEL_MAN_GetGlobalObjects(FIELD_BMODEL_MAN * man);
+extern FLD_G3D_MAP_GLOBALOBJ * FIELD_BMODEL_MAN_GetGlobalObjects(FIELD_BMODEL_MAN * man);
 
 extern int FIELD_BMODEL_MAN_ResistAllMapObjects
-(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount);
+(FIELD_BMODEL_MAN * man, FLD_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount);
 
 extern void FIELD_BMODEL_MAN_ReleaseAllMapObjects
-(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap);
+(FIELD_BMODEL_MAN * man, FLD_G3D_MAP * g3Dmap);
 
 extern void FIELD_BMODEL_MAN_ResistMapObject
-(FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount);
+(FIELD_BMODEL_MAN * man, FLD_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount);
 
 //============================================================================================
 //

@@ -11,8 +11,9 @@
 
 #include "field_func_bridge_file.h"
 
+#include "../field_g3d_map.h.h"
 
-#include "../field_g3dmap_exwork.h"	// GFL_G3D_MAP拡張ワーク
+#include "../field_g3dmap_exwork.h"	// FLD_G3D_MAP拡張ワーク
 
 #include "height.h"
 
@@ -32,7 +33,7 @@ void CheckHeightData(const void *mem, MHI_PTR outMHI);
 void SetInvalidHeightData(MHI_PTR outMap3DInfo);
 extern BOOL GetHeightForBlock(const fx32 inNowY, const fx32 inX, const fx32 inZ,
 		MHI_CONST_PTR inMap3DInfo,fx32 *outY);
-extern int GetDPFormatHeight(const fx32 inX, const fx32 inZ, MHI_CONST_PTR inMap3DInfo, GFL_G3D_MAP_ATTRINFO* attrInfo);
+extern int GetDPFormatHeight(const fx32 inX, const fx32 inZ, MHI_CONST_PTR inMap3DInfo, FLD_G3D_MAP_ATTRINFO* attrInfo);
 //============================================================================================
 /**
  *
@@ -56,18 +57,18 @@ extern int GetDPFormatHeight(const fx32 inX, const fx32 inZ, MHI_CONST_PTR inMap
  */
 //============================================================================================
 enum {
-	FILE_LOAD_START = GFL_G3D_MAP_LOAD_START,
+	FILE_LOAD_START = FLD_G3D_MAP_LOAD_START,
 	FILE_LOAD,
 	RND_CREATE,
 	TEX_TRANS,
 };
 
-BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap, void * exWork )
+BOOL FieldLoadMapData_BridgeFile( FLD_G3D_MAP* g3Dmap, void * exWork )
 {
-	GFL_G3D_MAP_LOAD_STATUS* ldst;
-	FLD_G3D_MAP_EXWORK* p_exwork;	// GFL_G3D_MAP拡張ワーク
+	FLD_G3D_MAP_LOAD_STATUS* ldst;
+	FLD_G3D_MAP_EXWORK* p_exwork;	// FLD_G3D_MAP拡張ワーク
 
-	GFL_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
+	FLD_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
 
 	// 拡張ワーク取得
 	p_exwork = exWork;
@@ -75,7 +76,7 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 	switch( ldst->seq ){
 
 	case FILE_LOAD_START:
-		GFL_G3D_MAP_ResetLoadStatus(g3Dmap);
+		FLD_G3D_MAP_ResetLoadStatus(g3Dmap);
 
 		SetInvalidHeightData((MHI_PTR)ldst->mOffs);
 		//メモリ先頭にはデータ取得用情報を配置するため、読み込みポインタをずらす
@@ -84,14 +85,14 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 		//モデルデータロード開始
 		{
 			u32		datID;
-			GFL_G3D_MAP_GetLoadDatID( g3Dmap, &datID );
-			GFL_G3D_MAP_StartFileLoad( g3Dmap, datID );
+			FLD_G3D_MAP_GetLoadDatID( g3Dmap, &datID );
+			FLD_G3D_MAP_StartFileLoad( g3Dmap, datID );
 		}
 		ldst->seq = FILE_LOAD;
 		break;
 
 	case FILE_LOAD:
-		if( GFL_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
+		if( FLD_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
 			ldst->mdlLoaded = TRUE;
 			ldst->texLoaded = TRUE;
 			ldst->attrLoaded = TRUE;
@@ -106,19 +107,19 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 			void*				mem;
 			BridgePackHeaderSt*	fileHeader;
 			//ヘッダー設定
-			GFL_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
+			FLD_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
 			mem = ((u8*)mem + sizeof(MAP_HEIGHT_INFO));
 			fileHeader = (BridgePackHeaderSt*)mem;
 			//モデルリソース設定
-			GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + fileHeader->nsbmdOffset));
+			FLD_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + fileHeader->nsbmdOffset));
 			//テクスチャリソース設定
-			//>>GFL_G3D_MAP_CreateResourceTex(g3Dmap, (void*)((u32)mem + fileHeader->nsbtxOffset)); 
+			//>>FLD_G3D_MAP_CreateResourceTex(g3Dmap, (void*)((u32)mem + fileHeader->nsbtxOffset)); 
 			//配置オブジェクト設定
 			if( fileHeader->positionOffset != fileHeader->endPos ){
 				LayoutFormat* layout = (LayoutFormat*)((u32)mem + fileHeader->positionOffset);
 				PositionSt* objStatus = (PositionSt*)&layout->posData;
         FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
-				GFL_G3D_MAP_GLOBALOBJ_ST status;
+				FLD_G3D_MAP_GLOBALOBJ_ST status;
 				int i, count = layout->count;
 
 				for( i=0; i<count; i++ ){
@@ -127,7 +128,7 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 				}
 			//===========
 			} else {
-				//GFL_G3D_MAP_MakeTestPos( g3Dmap );
+				//FLD_G3D_MAP_MakeTestPos( g3Dmap );
 			//===========
 			}
 
@@ -147,8 +148,8 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 					(MHI_PTR)((u8*)mem - sizeof(MAP_HEIGHT_INFO))
 					);
 		}
-		//>>GFL_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定
-		GFL_G3D_MAP_MakeRenderObj( g3Dmap );
+		//>>FLD_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定
+		FLD_G3D_MAP_MakeRenderObj( g3Dmap );
 
 
 
@@ -158,17 +159,17 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap, void * exWork )
 
 			p_granm = FLD_G3D_MAP_EXWORK_GetGranmWork( p_exwork );
 			FIELD_GRANM_WORK_Bind( p_granm, 
-					GFL_G3D_MAP_GetResourceMdl(g3Dmap), GFL_G3D_MAP_GetResourceTex(g3Dmap), 
-					GFL_G3D_MAP_GetRenderObj(g3Dmap) );
+					FLD_G3D_MAP_GetResourceMdl(g3Dmap), FLD_G3D_MAP_GetResourceTex(g3Dmap), 
+					FLD_G3D_MAP_GetRenderObj(g3Dmap) );
 		}
 
 		ldst->seq = TEX_TRANS;
 		break;
 
 	case TEX_TRANS:
-		//>>if( GFL_G3D_MAP_TransVram(g3Dmap) == FALSE )
+		//>>if( FLD_G3D_MAP_TransVram(g3Dmap) == FALSE )
 		{
-			ldst->seq = GFL_G3D_MAP_LOAD_IDLING;
+			ldst->seq = FLD_G3D_MAP_LOAD_IDLING;
 			return FALSE;
 		}
 		break;
@@ -188,7 +189,7 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap, void * exWork )
  *
  */
 //============================================================================================
-void FieldGetAttr_BridgeFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata, 
+void FieldGetAttr_BridgeFile( FLD_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata, 
 					const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height )
 {
   // 090731 橋、C3には現在アトリビュートはない

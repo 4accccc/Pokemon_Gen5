@@ -191,8 +191,6 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/iss_zone_sys.c \
         gamesystem/iss_switch_sys.c \
         gamesystem/pm_weather.c \
-        system/ica_anime.c \
-        system/ica_camera.c \
         system/bgwinfrm.c \
         poke_tool/gauge_tool.c \
         system/gra_tool.c \
@@ -351,6 +349,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         net_app/union/colosseum_comm_command.c \
         net_app/union/colosseum.c \
         map/dp3format.c \
+        system/ica_anime.c \
+        system/ica_camera.c \
 				field/map_matrix.c \
         field/map_replace.c \
         field/warpdata.c \
@@ -412,6 +412,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
 				field/c_gear/event_cgearget.c \
         field/trial_house_st.c \
         field/ev_time.c \
+        field/field_g3d_map.c \
 		    field/report_event.c
 
 # wifiÉvÉçÉOÉâÉÄ
