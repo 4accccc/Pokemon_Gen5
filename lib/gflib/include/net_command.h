@@ -64,8 +64,7 @@ enum GFL_NET_CommCommand_e {
  * @retval  none
  */
 //--------------------------------------------------------------
-extern void GFL_NET_COMMAND_Init(const int cokind, const NetRecvFuncTable* pCommPacketLocal,int listNum,void* pWork,HEAPID heapId);
-
+extern void GFL_NET_COMMAND_Init(const int cokind, const NetRecvFuncTable* pCommPacketLocal,int listNum,void* pWork, HEAPID heapID);
 
 //--------------------------------------------------------------
 /**
