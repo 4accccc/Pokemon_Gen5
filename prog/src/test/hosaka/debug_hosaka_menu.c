@@ -73,6 +73,8 @@ static BOOL TESTMODE_ITEM_SelectUNSelect( TESTMODE_WORK* work, const int idx )
       code = GFUser_GetPublicRand(UN_LIST_MAX) + 1;
       initParam->StayCountry[i] = code;
     }
+
+    initParam->InFloor = 5;
   }
 
 	TESTMODE_COMMAND_ChangeProc(work, FS_OVERLAY_ID(un_select), &UNSelectProcData, initParam);
