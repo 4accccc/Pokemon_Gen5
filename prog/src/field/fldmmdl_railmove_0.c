@@ -1517,8 +1517,14 @@ static void MMdl_RailCommon_ReflectSaveLocation( MV_RAIL_COMMON_WORK* p_work, MM
 {
   if( p_work->location.type != FIELD_RAIL_TYPE_MAX )
   {
+    VecFx32 pos;
+    
     FIELD_RAIL_WORK_SetLocation( p_work->rail_wk, &p_work->location );
     p_work->location.type = FIELD_RAIL_TYPE_MAX;
+
+    // ƒ|ƒWƒVƒ‡ƒ“
+    FIELD_RAIL_WORK_GetPos( p_work->rail_wk, &pos );
+    MMDL_SetVectorPos( fmmdl, &pos );
   }
 }
 
