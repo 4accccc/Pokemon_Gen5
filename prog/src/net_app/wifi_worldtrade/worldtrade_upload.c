@@ -441,10 +441,10 @@ static void BgInit( void )
 	}
 
 
-	// サブ画面背景( この面は256色 )
+	// サブ画面背景( この面は256色 ->じゃなくなりました )
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000,GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			2, 0, 0, FALSE
 		};
@@ -495,7 +495,8 @@ static void BgExit( void )
 static void BgGraphicSet( WORLDTRADE_WORK * wk )
 {
 	// 上画面ＢＧパレット転送
-	GFL_ARC_UTIL_TransVramPalette(    ARCID_WORLDTRADE_GRA, NARC_worldtrade_conect_nclr, PALTYPE_MAIN_BG, 0, 16*3*2,  HEAPID_WORLDTRADE);
+	//GFL_ARC_UTIL_TransVramPalette(    ARCID_WORLDTRADE_GRA, NARC_worldtrade_conect_nclr, PALTYPE_MAIN_BG, 0, 16*3*2,  HEAPID_WORLDTRADE);
+  //@todo　使っていないようだが・・・
 	
 	// 会話フォントパレット転送
 	TalkFontPaletteLoad( PALTYPE_MAIN_BG, WORLDTRADE_TALKFONT_PAL*0x20, HEAPID_WORLDTRADE );

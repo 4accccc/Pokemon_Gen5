@@ -1,4 +1,3 @@
-g2dcvtr conect.ncl
 g2dcvtr deposit.ncl
 g2dcvtr mybox.ncl
 g2dcvtr search.ncl
@@ -9,7 +8,6 @@ g2dcvtr poke_view.ncl
 g2dcvtr worldtrade_obj.ncl
 g2dcvtr hero.ncl
 
-g2dcvtr conect.ncg -bg
 g2dcvtr deposit.ncg -bg
 g2dcvtr mybox.ncg -bg
 g2dcvtr search.ncg -bg
@@ -21,8 +19,6 @@ g2dcvtr worldtrade_obj.nce
 g2dcvtr worldtrade_obj_s.nce
 g2dcvtr btower.nce
 
-g2dcvtr conect_01.nsc
-g2dcvtr conect_02.nsc
 g2dcvtr deposit.nsc
 g2dcvtr mybox.nsc
 g2dcvtr mypoke.nsc
@@ -34,7 +30,6 @@ g2dcvtr title_menu.nsc
 g2dcvtr traderoom.nsc
 
 
-ntrcomp -l 2 -o conect_lz.ncgr conect.ncgr
 ntrcomp -l 2 -o deposit_lz.ncgr deposit.ncgr
 ntrcomp -l 2 -o mybox_lz.ncgr mybox.ncgr
 ntrcomp -l 2 -o search_lz.ncgr search.ncgr
@@ -48,8 +43,6 @@ ntrcomp -l 2 -o worldtrade_obj_lz.nanr worldtrade_obj.nanr
 ntrcomp -l 2 -o hero_lz.ncgr hero.ncgr
 ntrcomp -l 2 -o worldtrade_obj_s_lz.ncer worldtrade_obj_s.ncer
 ntrcomp -l 2 -o worldtrade_obj_s_lz.nanr worldtrade_obj_s.nanr
-ntrcomp -l 2 -o conect_01_lz.nscr conect_01.nscr
-ntrcomp -l 2 -o conect_02_lz.nscr conect_02.nscr
 ntrcomp -l 2 -o deposit_lz.nscr deposit.nscr
 ntrcomp -l 2 -o mybox_lz.nscr mybox.nscr
 ntrcomp -l 2 -o mypoke_lz.nscr mypoke.nscr

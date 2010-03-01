@@ -340,10 +340,10 @@ void WorldTrade_SubLcdBgInit( int sub_bg1_y_offset, BOOL sub_bg2_no_clear )
 	}
 
 
-	// サブ画面背景BG1( この面は256色 )
+	// サブ画面背景BG1( この面は256色 -> じゃなくなりました )
 	{	
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000,GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
 			2, 0, 0, FALSE
 		};
@@ -1371,6 +1371,9 @@ void WorldTrade_SubLcdBgGraphicSet( WORLDTRADE_WORK *wk  )
 void WorldTrade_SubLcdWinGraphicSet( WORLDTRADE_WORK *wk )
 {
 	// -------------サブ画面---------------------
+  
+  GFL_ARC_UTIL_TransVramPalette( ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_win_nclr, PALTYPE_SUB_BG,  0, 32,  HEAPID_WORLDTRADE);
+
 	// メイン画面BG2キャラ転送
 	GFL_ARC_UTIL_TransVramBgCharacter(  ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_win_lz_ncgr,
 						GFL_BG_FRAME2_S,    0, 0, 1, HEAPID_WORLDTRADE);

@@ -6,7 +6,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= toru_nagihashi
+USERS	= toru_nagihashi saya_tsuruta
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -64,11 +64,11 @@ endif
 clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
-	rm -f *.nanr
-	rm -f *.ncer
-	rm -f *.nscr
-	rm -f *.ncgr
-	rm -f *.nclr
+	rm -f *.NANR
+	rm -f *.NCER
+	rm -f *.NSCR
+	rm -f *.NCGR
+	rm -f *.NCLR
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc
