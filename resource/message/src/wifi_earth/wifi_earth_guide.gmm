@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="watanabe" host="W00138" date="2010-02-23T18:09:55"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-03-01T18:38:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -374,14 +374,14 @@
 		<comment>さいしょのあいさつ</comment>
 		<language name="JPN" width="216">ハイテク　ちきゅうぎ
 ジオネット　へ　ようこそ！▼</language>
-		<language name="JPN_KANJI" width="216">ハイテク　ちきゅうぎ
+		<language name="JPN_KANJI" width="216">ハイテク　地球儀
 ジオネット　へ　ようこそ！▼</language>
 	</row>
 
 	<row id="mes_earth_01_02">
 		<comment>地球儀、場所登録の選択メッセージ</comment>
 		<language name="JPN" width="216">なにを　しますか？</language>
-		<language name="JPN_KANJI" width="216">なにを　しますか？</language>
+		<language name="JPN_KANJI" width="216">何を　しますか？</language>
 	</row>
 
 	<row id="mes_earth_01_03">
@@ -397,32 +397,32 @@
 おくられる　ことが　あります▼
 あなたが　すんでいる　ばしょを
 とうろく　しますか？</language>
-		<language name="JPN_KANJI" width="216">ここでは　あなたが　じっさいに
-すんでいる　ばしょを▽
-とうろく　することが　できます▼
-あなたが　とうろくした　ばしょは
+		<language name="JPN_KANJI" width="216">ここでは　あなたが　実際に
+住んでいる　場所を▽
+登録　することが　できます▼
+あなたが　登録した　場所は
 ＤＳワイヤレスつうしん　や▽
 ＷｉーＦｉコネクション　で▽
-ともだちや　しらない　だれかに▽
-おくられる　ことが　あります▼
-あなたが　すんでいる　ばしょを
-とうろく　しますか？</language>
+友達や　知らない　だれかに▽
+送られる　ことが　あります▼
+あなたが　住んでいる　場所を
+登録　しますか？</language>
 	</row>
 
 	<row id="mes_earth_01_04">
 		<comment>住んでいる国を入力するときのメッセージ</comment>
 		<language name="JPN" width="216">あなたが　すんでいる　ばしょを
 えらんでください</language>
-		<language name="JPN_KANJI" width="216">あなたが　すんでいる　ばしょを
-えらんでください</language>
+		<language name="JPN_KANJI" width="216">あなたが　住んでいる　場所を
+選んでください</language>
 	</row>
 
 	<row id="mes_earth_01_05">
 		<comment>住んでいる地域を入力するときのメッセージ</comment>
 		<language name="JPN" width="216">あなたが　すんでいる　ちいきを
 えらんでください</language>
-		<language name="JPN_KANJI" width="216">あなたが　すんでいる　ちいきを
-えらんでください</language>
+		<language name="JPN_KANJI" width="216">あなたが　住んでいる　地域を
+選んでください</language>
 	</row>
 
 	<row id="mes_earth_01_06">
@@ -432,11 +432,11 @@
 へんこう　することは　できません▼
 ほんとうに　この　ばしょを
 とうろく　しますか？</language>
-		<language name="JPN_KANJI" width="216">すんでいる　ばしょを
-いちど　とうろく　すると▽
-へんこう　することは　できません▼
-ほんとうに　この　ばしょを
-とうろく　しますか？</language>
+		<language name="JPN_KANJI" width="216">住んでいる　場所を
+一度　登録　すると▽
+変更　することは　できません▼
+本当に　この　場所を
+登録　しますか？</language>
 	</row>
 
 	<row id="mes_earth_02_01">
@@ -462,14 +462,14 @@
 	<row id="mes_earth_02_05">
 		<comment>③で、地球儀を見るときのメニュー項目</comment>
 		<language name="JPN" width="216">いちらんを　みる</language>
-		<language name="JPN_KANJI" width="216">いちらんを　みる</language>
+		<language name="JPN_KANJI" width="216">一覧を　みる</language>
 	</row>
 
 	<row id="mes_earth_02_06">
 		<comment>③で、自分が住んでいる場所を登録するときの
 メニュー項目</comment>
 		<language name="JPN" width="216">とうろくを　する</language>
-		<language name="JPN_KANJI" width="216">とうろくを　する</language>
+		<language name="JPN_KANJI" width="216">登録を　する</language>
 	</row>
 
 	<row id="mes_earth_02_07">
@@ -488,7 +488,7 @@
 		<language name="JPN" width="216">あなたが　とうろくした　ばしょ
 [1:24:国名:0]
 [1:25:地域名:1]</language>
-		<language name="JPN_KANJI" width="216">あなたが　とうろくした　ばしょ
+		<language name="JPN_KANJI" width="216">あなたが　登録した　場所
 [1:24:国名:0]
 [1:25:地域名:1]</language>
 	</row>
@@ -496,8 +496,8 @@
 	<row id="mes_earth_03_02">
 		<language name="JPN" width="216">ポイントのうえで　Ｘボタンを　おすと
 ちめいを　ひょうじ　します</language>
-		<language name="JPN_KANJI" width="216">ポイントのうえで　Ｘボタンを　おすと
-ちめいを　ひょうじ　します</language>
+		<language name="JPN_KANJI" width="216">ポイントのうえで　Ｘボタンを　押すと
+地名を　表示　します</language>
 	</row>
 
 	<row id="mes_earth_03_03">
