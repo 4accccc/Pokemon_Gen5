@@ -32,6 +32,7 @@
 #define MUS_COMM_POKEDATA_SIZE (sizeof(MUSICAL_POKE_PARAM)+POKETOOL_GetWorkSize())
 
 #define MUS_COMM_SYNC_START_PROGRAM (64)
+#define MUS_COMM_SYNC_EXIT_COMM     (65)
 
 //======================================================================
 //	enum
@@ -313,20 +314,37 @@ void* MUS_COMM_InitGameComm(int *seq, void *pwk)
 BOOL MUS_COMM_ExitGameComm(int *seq, void *pwk, void *pWork)
 {
   MUS_COMM_WORK* work = pwk;
-  if( work->mode == MCM_CHILD )
+  
+  switch( *seq )
   {
-    if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
+  case 0:
+    GFL_NET_SetNoChildErrorCheck( FALSE );
+    MUS_COMM_SendTimingCommand( work , MUS_COMM_SYNC_EXIT_COMM );
+    *seq = 1;
+    break;
+  case 1:
+    if( MUS_COMM_CheckTimingCommand( work , MUS_COMM_SYNC_EXIT_COMM ) == TRUE )
     {
-      return TRUE;
+      *seq = 2;
     }
-  }
-  else
-  {
-    if( GFL_NET_GetConnectNum() <= 1 )
+    break;
+  case 2:
+    if( work->mode == MCM_CHILD )
     {
-      GFL_NET_Exit( NULL );
-      return TRUE;
+      if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
+      {
+        return TRUE;
+      }
     }
+    else
+    {
+      if( GFL_NET_GetConnectNum() <= 1 )
+      {
+        GFL_NET_Exit( NULL );
+        return TRUE;
+      }
+    }
+    break;
   }
   return FALSE;
 }
@@ -578,7 +596,8 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
     }
     break;
   case MCS_SEND_STRM:
-    MUS_COMM_Start_SendStrmData( work );
+    //外からストリームの開始をたたく
+    //MUS_COMM_Start_SendStrmData( work );
     work->commState = MCS_START_WAIT_POST_ALL;
     break;
   

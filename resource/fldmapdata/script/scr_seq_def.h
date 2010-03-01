@@ -3334,16 +3334,16 @@
 //--------------------------------------------------------------
 /**
  *  _MUSICAL_CALL ミュージカル：ミュージカル呼び出し
- *  @param pokeIdx 選択位置
+ *  @param pos 選択位置
  *  @param mode モード (0:非通信 1:通信 2:ミュージカルショット
  */
 //--------------------------------------------------------------
-#define _MUSICAL_CALL( pokeIdx, mode ) \
-    _ASM_MUSICAL_CALL pokeIdx, mode
+#define _MUSICAL_CALL( pos, mode ) \
+    _ASM_MUSICAL_CALL pos, mode
 
-  .macro  _ASM_MUSICAL_CALL pokeIdx, mode
+  .macro  _ASM_MUSICAL_CALL pos, mode
   .short EV_SEQ_MUSICAL_CALL
-  .short \pokeIdx
+  .short \pos
   .byte \mode
   .endm
 
@@ -3352,10 +3352,10 @@
  *  _MUSICAL_CALL ミュージカル：ミュージカルショット呼び出し
  */
 //--------------------------------------------------------------
-#define _MUSICAL_CALL_MUSICAL_SHOT( pokeIdx, mode ) \
-    _ASM_MUSICAL_CALL_MUSICAL_SHOT pokeIdx, mode
+#define _MUSICAL_CALL_MUSICAL_SHOT() \
+    _ASM_MUSICAL_CALL_MUSICAL_SHOT
 
-  .macro  _ASM_MUSICAL_CALL_MUSICAL_SHOT pokeIdx, mode
+  .macro  _ASM_MUSICAL_CALL_MUSICAL_SHOT
   .short EV_SEQ_MUSICAL_CALL
   .short 0
   .byte 2
@@ -3364,15 +3364,15 @@
 //--------------------------------------------------------------
 /**
  *  _MUSICAL_FITTING_CALL ミュージカル：試着室呼び出し
- *  @param pokeIdx 選択位置
+ *  @param pos 選択位置
  */
 //--------------------------------------------------------------
-#define _MUSICAL_FITTING_CALL( pokeIdx ) \
-    _ASM_MUSICAL_FITTING_CALL pokeIdx
+#define _MUSICAL_FITTING_CALL( pos ) \
+    _ASM_MUSICAL_FITTING_CALL pos
 
-  .macro  _ASM_MUSICAL_FITTING_CALL pokeIdx
+  .macro  _ASM_MUSICAL_FITTING_CALL pos
   .short EV_SEQ_MUSICAL_FITTING_CALL
-  .short \pokeIdx
+  .short \pos
   .endm
 
 //--------------------------------------------------------------
@@ -3601,13 +3601,13 @@
  *  @param ret_val  戻り値  (０できない！:１できる！
  */
 //--------------------------------------------------------------
-#define _GET_MUSICAL_VALUE_CHECK_MUSICAL_POKE( pokeIdx, retVal ) \
-    _ASM_GET_MUSICAL_VALUE_CHECK_MUSICAL_POKE pokeIdx, retVal
+#define _GET_MUSICAL_VALUE_CHECK_MUSICAL_POKE( pos, retVal ) \
+    _ASM_GET_MUSICAL_VALUE_CHECK_MUSICAL_POKE pos, retVal
 
-  .macro  _ASM_GET_MUSICAL_VALUE_CHECK_MUSICAL_POKE pokeIdx, retVal
+  .macro  _ASM_GET_MUSICAL_VALUE_CHECK_MUSICAL_POKE pos, retVal
   .short EV_SEQ_GET_MUSICAL_VALUE
   .byte 12
-  .short \pokeIdx
+  .short \pos
   .short \retVal
   .endm
 

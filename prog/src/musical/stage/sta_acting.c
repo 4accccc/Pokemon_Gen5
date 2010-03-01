@@ -1186,7 +1186,6 @@ static void STA_ACT_UpdatePalAnm( ACTING_WORK *work )
       const s8 or = (work->ofsCol[0][i] * sin)>>FX32_SHIFT;
       const s8 og = (work->ofsCol[1][i] * sin)>>FX32_SHIFT;
       const s8 ob = (work->ofsCol[2][i] * sin)>>FX32_SHIFT;
-      OS_TFPrintf(2,"[%d:%d][%d:%d][%d:%d]\n",sr,or , sg,og , sb,ob);
       work->transPal[i] = GX_RGB( sr+or , sg+og , sb+ob );
     }
     NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,

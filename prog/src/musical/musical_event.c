@@ -234,6 +234,17 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
 static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
 {
   MUSICAL_EVENT_WORK *evWork = work;
+  
+#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+  {
+    static u8 befState = 0xFF;
+    if( befState != evWork->state )
+    {
+      ARI_TPrintf("MusEvState[%d]->[%d]\n",befState,evWork->state);
+      befState = evWork->state;
+    }
+  }
+#endif
   switch( evWork->state )
   {
   case MES_ENTER_WAITROOM_FIRST_BEF_COMM:
@@ -561,6 +572,7 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
 {
   evWork->shotInitWork = GFL_HEAP_AllocMemory( HEAPID_PROC_WRAPPER , sizeof( MUS_SHOT_INIT_WORK ));
   evWork->shotInitWork->musShotData = GFL_HEAP_AllocClearMemory( HEAPID_PROC_WRAPPER , sizeof( MUSICAL_SHOT_DATA ));
+  evWork->shotInitWork->isLoadOverlay = FALSE;
   {
     u8 i;
     RTCDate date;

@@ -27,6 +27,7 @@ FS_EXTERN_OVERLAY(musical_shot);
 typedef struct
 {
   BOOL    isCheckMode;  //保存確認するか？
+  BOOL    isLoadOverlay;
   
   MUSICAL_SHOT_DATA *musShotData;
   MUSICAL_SAVE* musicalSave;  //isCheckMode = TRUE の時だけ必要

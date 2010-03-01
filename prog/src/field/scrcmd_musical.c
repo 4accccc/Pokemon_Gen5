@@ -119,13 +119,13 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
 
-  MUSICAL_SCRIPT_WORK *musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
-  
-  u8  mode = VMGetU8(core);
   u16 pokeIdx = SCRCMD_GetVMWorkValue( core, work );
+  u8  mode = VMGetU8(core);
 
   if( mode == 0 || mode == 1 )
   {
+    MUSICAL_SCRIPT_WORK *musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
+    
     const BOOL isComm = ( mode == 0 ? FALSE : TRUE );
     call_event = GMEVENT_Create(
         gsys, NULL, event_Musical, sizeof(EVENT_MUSICAL_WORK) );
@@ -156,7 +156,7 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
     callWork->initWork = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(MUS_SHOT_INIT_WORK) );
     callWork->initWork->isCheckMode = FALSE;
     callWork->initWork->musShotData = MUSICAL_SAVE_GetMusicalShotData( musSave );
-    
+    callWork->initWork->isLoadOverlay = TRUE;
     //ショット呼び出し
     event = EVENT_FieldSubProc_Callback( gsys, fieldmap, 
                                          FS_OVERLAY_ID(musical_shot), &MusicalShot_ProcData, callWork->initWork,
@@ -676,6 +676,8 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
   {
     musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
   }
+
+  ARI_TPrintf("ScriptMusTools[%d][%d][%d]\n",type,val1,val2);
 
   switch( type )
   {

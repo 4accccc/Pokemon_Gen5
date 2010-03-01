@@ -317,7 +317,7 @@ EVENT_START		ev_bg_c04r0201_musical_shot
 		_MSGWIN_CLOSE()
 
 		//ミュージカルショット閲覧画面へ ※引数はダミー
-		_MUSICAL_CALL_MUSICAL_SHOT( 0, 0 )
+		_MUSICAL_CALL_MUSICAL_SHOT()
 
 	ELSE
 		//データなし

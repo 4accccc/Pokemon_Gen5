@@ -108,6 +108,7 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
     GFL_OVERLAY_Load( FS_OVERLAY_ID(musical) );
     work->shotInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_SHOT , sizeof( MUS_SHOT_INIT_WORK ));
     work->shotInitWork->musShotData = GFL_HEAP_AllocClearMemory( HEAPID_MUSICAL_SHOT , sizeof( MUSICAL_SHOT_DATA ));
+    work->shotInitWork->isLoadOverlay = FALSE;
     {
       u8 i;
       RTCDate date;
@@ -193,6 +194,11 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
     work->shotInitWork = pwk;
   }
   
+  if( work->shotInitWork->isLoadOverlay == TRUE )
+  {
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(musical) );
+  }
+  
   work->vblankFuncTcb = GFUser_VIntr_CreateTCB( MUSICAL_SHOT_VBlankFunc , (void*)work , 64 );
 
 
@@ -230,6 +236,11 @@ static GFL_PROC_RESULT MusicalShotProc_Term( GFL_PROC * proc, int * seq , void *
   MUSICAL_SHOT_ExitGraphic( work );
 
   GFL_TCB_DeleteTask( work->vblankFuncTcb );
+
+  if( work->shotInitWork->isLoadOverlay == TRUE )
+  {
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(musical) );
+  }
   
   if( pwk == NULL )
   {

@@ -106,3 +106,4 @@
 
 //タイミングシンク用番号
 #define MUSICAL_COMM_SYNC_FIRST (10)
+#define MUSICAL_COMM_SYNC_DRESSUP_START (11)

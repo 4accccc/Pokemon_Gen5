@@ -19,8 +19,8 @@
 
 //デバッグ用マクロ
 #if DEB_ARI
-#define ARI_TPrintf(...) (void)((OS_TPrintf(__VA_ARGS__)))
-#define ARI_Printf(...)  (void)((OS_Printf(__VA_ARGS__)))
+#define ARI_TPrintf(...) (void)((OS_TFPrintf(2,__VA_ARGS__)))
+#define ARI_Printf(...)  (void)((OS_FPrintf(2,__VA_ARGS__)))
 #else
 #define ARI_TPrintf(...) ((void)0)
 #define ARI_Printf(...)  ((void)0)
