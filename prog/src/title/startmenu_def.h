@@ -189,6 +189,8 @@ enum {
 // リスト項目表示座標
 #define	LIST_ITEM_PX			( 3 )
 #define	LIST_ITEM_PY			( 2 )
+//#define	LIST_ITEM_SCROLL_DOWN_PY	( 22 )
+//#define	LIST_ITEM_SCROLL_UP_PY		( 17 )
 
 // ＢＧパレット
 #define	LIST_PALETTE			( 1 )

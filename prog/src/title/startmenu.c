@@ -87,7 +87,7 @@ typedef struct {
 	u8	listPos;
 	u8	listResult;
 
-	u8	continueSeq;
+	u8	subSeq;
 	u8	continueRet;
 
 	s8	cursorPutPos;
@@ -119,6 +119,7 @@ enum {
 
 	MAINSEQ_CONTINUE,
 	MAINSEQ_NEWGAME,
+	MAINSEQ_HUSHIGI,
 
 	MAINSEQ_END_SET,
 
@@ -144,6 +145,7 @@ static int MainSeq_Main( START_MENU_WORK * wk );
 static int MainSeq_Scroll( START_MENU_WORK * wk );
 static int MainSeq_Continue( START_MENU_WORK * wk );
 static int MainSeq_NewGame( START_MENU_WORK * wk );
+static int MainSeq_Hushigi( START_MENU_WORK * wk );
 static int MainSeq_EndSet( START_MENU_WORK * wk );
 
 static void InitVBlank( START_MENU_WORK * wk );
@@ -167,12 +169,13 @@ static void ExitBlinkAnm( START_MENU_WORK * wk );
 static void InitList( START_MENU_WORK * wk );
 static void LoadListFrame( START_MENU_WORK * wk );
 static void UnloadListFrame( START_MENU_WORK * wk );
+static void PutListObj( START_MENU_WORK * wk, u16 idx, s16 py );
 static void InitListPut( START_MENU_WORK * wk );
 static void PutListItem( START_MENU_WORK * wk, u8 item, s8 py );
 static void ChangeListItemPalette( START_MENU_WORK * wk, u8 item, s8 py, u8 pal );
 static s8 GetListPutY( START_MENU_WORK * wk, s8 py );
 
-static void ScrollObj( START_MENU_WORK * wk, int vec );
+static void ScrollObj( START_MENU_WORK * wk, int val );
 
 static void SetBlendAlpha(void);
 
@@ -181,12 +184,12 @@ static int SetFadeOut( START_MENU_WORK * wk, int next );
 
 static BOOL CursorMove( START_MENU_WORK * wk, s8 vec );
 
-static void VanishMenuObj( START_MENU_WORK * wk, BOOL flg );
+static void VanishListObj( START_MENU_WORK * wk, BOOL flg );
 
 static void PutNewGameWarrning( START_MENU_WORK * wk );
 static void ClearNewGameWarrning( START_MENU_WORK * wk, BOOL flg );
 
-static void PutMessage( START_MENU_WORK * wk, int strIdx );
+static void StartMessage( START_MENU_WORK * wk, int strIdx );
 static void ClearMessage( START_MENU_WORK * wk );
 static BOOL MainMessage( START_MENU_WORK * wk );
 
@@ -194,6 +197,9 @@ static void SetYesNoMenu( START_MENU_WORK * wk );
 
 static void PutContinueInfo( START_MENU_WORK * wk );
 static void ClearContinueInfo( START_MENU_WORK * wk );
+
+static BOOL CheckHushigiBeacon( START_MENU_WORK * wk );
+
 
 
 //============================================================================================
@@ -204,7 +210,7 @@ FS_EXTERN_OVERLAY(battle_championship);
 FS_EXTERN_OVERLAY(pdw_acc);
 extern const GFL_PROC_DATA PDW_ACC_MainProcData;
 
-
+// PROC
 const GFL_PROC_DATA StartMenuProcData = {
   START_MENU_ProcInit,
   START_MENU_ProcMain,
@@ -245,6 +251,7 @@ static const pSTARTMENU_FUNC MainSeq[] = {
 
 	MainSeq_Continue,
 	MainSeq_NewGame,
+	MainSeq_Hushigi,
 
 	MainSeq_EndSet
 };
@@ -452,9 +459,19 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 }
 
 
+//============================================================================================
+//	メインシーケンス
+//============================================================================================
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：初期化
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	次の処理
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Init( START_MENU_WORK * wk )
 {
 	// セーブデータがない場合は「最初から」の処理に飛ばす
@@ -496,6 +513,15 @@ static int MainSeq_Init( START_MENU_WORK * wk )
 	return MAINSEQ_INIT_WAIT;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：解放
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	次の処理
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Release( START_MENU_WORK * wk )
 {
 	ExitVBlank( wk );
@@ -522,6 +548,15 @@ static int MainSeq_Release( START_MENU_WORK * wk )
 	return MAINSEQ_END;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：フェード待ち
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	次の処理
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Fade( START_MENU_WORK * wk )
 {
 	if( WIPE_SYS_EndCheck() == TRUE ){
@@ -530,11 +565,29 @@ static int MainSeq_Fade( START_MENU_WORK * wk )
 	return MAINSEQ_FADE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：ボタンアニメ
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	次の処理
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_ButtonAnm( START_MENU_WORK * wk )
 {
 	return MAINSEQ_BUTTON_ANM;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：初期化待ち
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	次の処理
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_InitWait( START_MENU_WORK * wk )
 {
 	u32	i;
@@ -550,9 +603,23 @@ static int MainSeq_InitWait( START_MENU_WORK * wk )
 	return MAINSEQ_INIT_WAIT;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：メイン
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	次の処理
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Main( START_MENU_WORK * wk )
 {
 	BLINKPALANM_Main( wk->blink );
+
+	// 不思議な贈り物受信チェック
+	if( CheckHushigiBeacon( wk ) == TRUE ){
+		return MAINSEQ_HUSHIGI;
+	}
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 		PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
@@ -590,6 +657,15 @@ static int MainSeq_Main( START_MENU_WORK * wk )
 	return MAINSEQ_MAIN;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：リストスクロール
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	次の処理
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Scroll( START_MENU_WORK * wk )
 {
 	if( wk->bgScrollCount == 3 ){
@@ -617,27 +693,37 @@ static int MainSeq_Scroll( START_MENU_WORK * wk )
 	return MAINSEQ_SCROLL;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：「続きから」処理
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	次の処理
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Continue( START_MENU_WORK * wk )
 {
-	switch( wk->continueSeq ){
+	switch( wk->subSeq ){
 	case 0:
-		// メッセージ表示
+		// リスト非表示
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_OFF );
-		VanishMenuObj( wk, FALSE );
-		wk->continueSeq++;
+		VanishListObj( wk, FALSE );
+		wk->subSeq++;
 		break;
 
 	case 1:
-		PutMessage( wk, START_MENU_STR_CONTINUE_01 );
+		// メッセージ表示
+		StartMessage( wk, START_MENU_STR_CONTINUE_01 );
 		PutContinueInfo( wk );
-		wk->continueSeq++;
+		wk->subSeq++;
 		break;
 
 	case 2:
 		// メッセージ待ち
 		if( MainMessage( wk ) == FALSE ){
 			SetYesNoMenu( wk );
-			wk->continueSeq++;
+			wk->subSeq++;
 		}
 		break;
 
@@ -647,25 +733,25 @@ static int MainSeq_Continue( START_MENU_WORK * wk )
 		case 0:
 			// 本体設定の無線設定
 			if( DS_SYSTEM_IsAvailableWireless() == FALSE ){
-				PutMessage( wk, START_MENU_STR_ATTENTION_01 );
-				wk->continueSeq = 5;
+				StartMessage( wk, START_MENU_STR_ATTENTION_01 );
+				wk->subSeq = 5;
 				break;
 			}
 /*	とりあえずコメントアウト
 			// ペアレンタルコントロール
 			if( DS_SYSTEM_IsRestrictUGC() == TRUE ){
-				PutMessage( wk, START_MENU_STR_ATTENTION_02 );
-				wk->continueSeq = 5;
+				StartMessage( wk, START_MENU_STR_ATTENTION_02 );
+				wk->subSeq = 5;
 				break;
 			}
 */
 			wk->continueRet = 0;
-			wk->continueSeq = 4;
+			wk->subSeq = 4;
 			break;
 
 		case BMPMENU_CANCEL:
 			wk->continueRet = 1;
-			wk->continueSeq = 4;
+			wk->subSeq = 4;
 			break;
 		}
 		break;
@@ -680,7 +766,7 @@ static int MainSeq_Continue( START_MENU_WORK * wk )
 		if( MainMessage( wk ) == FALSE ){
 	    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
 				wk->continueRet = 1;
-				wk->continueSeq = 4;
+				wk->subSeq = 4;
 				break;
 			}
 		}
@@ -693,6 +779,15 @@ static int MainSeq_Continue( START_MENU_WORK * wk )
 	return MAINSEQ_CONTINUE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：「最初から」処理
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	次の処理
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_NewGame( START_MENU_WORK * wk )
 {
 	if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
@@ -717,41 +812,150 @@ static int MainSeq_NewGame( START_MENU_WORK * wk )
 	return MAINSEQ_NEWGAME;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：「不思議な贈り物」受信
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	次の処理
+ */
+//--------------------------------------------------------------------------------------------
+static int MainSeq_Hushigi( START_MENU_WORK * wk )
+{
+	switch( wk->subSeq ){
+	case 0:
+		// リスト非表示
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_OFF );
+		VanishListObj( wk, FALSE );
+		wk->subSeq++;
+		break;
+
+	case 1:
+		// メッセージ表示
+		StartMessage( wk, START_MENU_STR_ATTENTION_03 );
+		wk->subSeq++;
+		break;
+
+	case 2:
+		// メッセージ待ち
+		if( MainMessage( wk ) == FALSE ){
+	    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+				ClearMessage( wk );
+				wk->subSeq++;
+			}
+		}
+		break;
+
+	case 3:
+		// リスト再構築
+		InitList( wk );
+		InitListPut( wk );
+		GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_Y_SET, wk->bgScroll );
+		GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, wk->bgScroll );
+		wk->subSeq++;
+		break;
+
+	case 4:
+		VanishListObj( wk, TRUE );
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_ON );
+		wk->subSeq = 0;
+		return MAINSEQ_MAIN;
+	}
+
+	return MAINSEQ_HUSHIGI;
+}
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：終了設定
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	次の処理
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_EndSet( START_MENU_WORK * wk )
 {
 	return MAINSEQ_END_SET;
 }
 
 
+//============================================================================================
+//	初期化関連
+//============================================================================================
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VBLANK処理
+ *
+ * @param		tcb		GFL_TCB
+ * @param		work	タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void VBlankTask( GFL_TCB * tcb, void * work )
 {
-//	BOX2_SYS_WORK * syswk = work;
-
 	GFL_BG_VBlankFunc();
 	GFL_CLACT_SYS_VBlankFunc();
-
-//	PaletteFadeTrans( syswk->app->pfd );
 
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VBLANK処理設定
+ *
+ * @param		wk	タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitVBlank( START_MENU_WORK * wk )
 {
 	wk->vtask = GFUser_VIntr_CreateTCB( VBlankTask, wk, 0 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VBLANK処理削除
+ *
+ * @param		wk	タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitVBlank( START_MENU_WORK * wk )
 {
 	GFL_TCB_DeleteTask( wk->vtask );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VRAM初期化
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitVram(void)
 {
 	GFL_DISP_ClearVRAM( NULL );
 	GFL_DISP_SetBank( &VramTbl );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BG初期化
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitBg(void)
 {
 	GFL_BG_Init( HEAPID_STARTMENU );
@@ -827,6 +1031,15 @@ static void InitBg(void)
 		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_ON );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BG削除
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitBg(void)
 {
 	GFL_DISP_GX_SetVisibleControl(
@@ -845,14 +1058,21 @@ static void ExitBg(void)
 	GFL_BG_Exit();
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧグラフィック読み込み
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void LoadBgGraphic(void)
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_STARTMENU, HEAPID_STARTMENU_L );
 
 	GFL_ARCHDL_UTIL_TransVramPalette(
 		ah, NARC_startmenu_bgu_NCLR, PALTYPE_MAIN_BG, 0, 0x20*4, HEAPID_STARTMENU );
-//	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-//		ah, NARC_startmenu_frame_bgu_lz_NCGR, GFL_BG_FRAME1_M, 0, 0, TRUE, HEAPID_STARTMENU );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_startmenu_bgu_lz_NCGR, GFL_BG_FRAME2_M, 0, 0, TRUE, HEAPID_STARTMENU );
 	GFL_ARCHDL_UTIL_TransVramScreen(
@@ -883,6 +1103,15 @@ static void LoadBgGraphic(void)
 		FONT_PALETTE_S*0x20, 0x20, HEAPID_STARTMENU );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソルアニメ初期化
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitBlinkAnm( START_MENU_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_STARTMENU, HEAPID_STARTMENU_L );
@@ -896,11 +1125,29 @@ static void InitBlinkAnm( START_MENU_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソルアニメ削除
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitBlinkAnm( START_MENU_WORK * wk )
 {
 	BLINKPALANM_Exit( wk->blink );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メッセージ初期化
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitMsg( START_MENU_WORK * wk )
 {
 	wk->mman = GFL_MSG_Create(
@@ -916,6 +1163,15 @@ static void InitMsg( START_MENU_WORK * wk )
 	wk->tcbl = GFL_TCBL_Init( HEAPID_STARTMENU, HEAPID_STARTMENU, 1, 4 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メッセージ削除
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitMsg( START_MENU_WORK * wk )
 {
   GFL_TCBL_Exit( wk->tcbl );
@@ -927,6 +1183,15 @@ static void ExitMsg( START_MENU_WORK * wk )
 	GFL_MSG_Delete( wk->mman );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＭＰ初期化
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitBmp( START_MENU_WORK * wk )
 {
 	const u8 * dat;
@@ -1030,6 +1295,15 @@ static void InitBmp( START_MENU_WORK * wk )
 	GFL_STR_DeleteBuffer( str );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＭＰ削除
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitBmp( START_MENU_WORK * wk )
 {
 	u32	i;
@@ -1041,6 +1315,15 @@ static void ExitBmp( START_MENU_WORK * wk )
 	GFL_BMPWIN_Exit();
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪ初期化
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitObj( START_MENU_WORK * wk )
 {
 	{	// システム初期化
@@ -1141,6 +1424,15 @@ static void InitObj( START_MENU_WORK * wk )
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );		// SUB DISP OBJ ON
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪ削除
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitObj( START_MENU_WORK * wk )
 {
 	u32	i;
@@ -1163,6 +1455,15 @@ static void ExitObj( START_MENU_WORK * wk )
 	GFL_CLACT_SYS_Delete();
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BGWINFRAME初期化
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitBgWinFrame( START_MENU_WORK * wk )
 {
 	u32	i;
@@ -1191,12 +1492,48 @@ static void InitBgWinFrame( START_MENU_WORK * wk )
 	BGWINFRM_BmpWinOn( wk->wfrm, LIST_ITEM_MACHINE, wk->util[BMPWIN_MACHINE].win );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BGWINFRAME削除
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitBgWinFrame( START_MENU_WORK * wk )
 {
 	BGWINFRM_Exit( wk->wfrm );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		半透明設定
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void SetBlendAlpha(void)
+{
+	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 10, 6 );
+}
 
+
+//============================================================================================
+//	メニューリスト関連
+//============================================================================================
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト初期化
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitList( START_MENU_WORK * wk )
 {
 	u32	i;
@@ -1248,6 +1585,15 @@ static void InitList( START_MENU_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストフレーム読み込み
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void LoadListFrame( START_MENU_WORK * wk )
 {
 	ARCHANDLE * ah;
@@ -1273,6 +1619,15 @@ static void LoadListFrame( START_MENU_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストフレーム削除
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void UnloadListFrame( START_MENU_WORK * wk )
 {
 	u32	i;
@@ -1282,7 +1637,18 @@ static void UnloadListFrame( START_MENU_WORK * wk )
 	}
 }
 
-static void PutNewObj( START_MENU_WORK * wk, u16 idx, s16 py )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト上のOBJ配置
+ *
+ * @param		wk		タイトルメニューワーク
+ * @param		idx		OBJ index
+ * @param		py		表示Ｙ座標
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void PutListObj( START_MENU_WORK * wk, u16 idx, s16 py )
 {
 	GFL_CLACTPOS	pos;
 
@@ -1291,11 +1657,22 @@ static void PutNewObj( START_MENU_WORK * wk, u16 idx, s16 py )
 	GFL_CLACT_WK_SetPos( wk->clwk[idx], &pos, CLSYS_DRAW_MAIN );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト配置（全体）
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitListPut( START_MENU_WORK * wk )
 {
 	u32	i;
 	s8	py;
 
+	wk->listPos = 0;
+	wk->bgScroll = 0;
 	wk->cursorPutPos = LIST_ITEM_PY;
 	py = LIST_ITEM_PY;
 
@@ -1306,25 +1683,38 @@ static void InitListPut( START_MENU_WORK * wk )
 		PutListItem( wk, wk->list[i], py );
 
 		if( wk->list[i] == LIST_ITEM_HUSHIGI ){
-			PutNewObj( wk, OBJ_ID_NEW_HUSHIGI, py*8+ListItemData[wk->list[i]].sy*8/2 );
+			PutListObj( wk, OBJ_ID_NEW_HUSHIGI, py*8+ListItemData[wk->list[i]].sy*8/2 );
 			GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_NEW_HUSHIGI], TRUE );
 		}else if( wk->list[i] == LIST_ITEM_BATTLE ){
-			PutNewObj( wk, OBJ_ID_NEW_BATTLE, py*8+ListItemData[wk->list[i]].sy*8/2 );
+			PutListObj( wk, OBJ_ID_NEW_BATTLE, py*8+ListItemData[wk->list[i]].sy*8/2 );
 			GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_NEW_BATTLE], TRUE );
 		}else if( wk->list[i] == LIST_ITEM_GAME_SYNC ){
-			PutNewObj( wk, OBJ_ID_NEW_GAMESYNC, py*8+ListItemData[wk->list[i]].sy*8/2 );
+			PutListObj( wk, OBJ_ID_NEW_GAMESYNC, py*8+ListItemData[wk->list[i]].sy*8/2 );
 			GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_NEW_GAMESYNC], TRUE );
 		}else if( wk->list[i] == LIST_ITEM_MACHINE ){
-			PutNewObj( wk, OBJ_ID_NEW_MACHINE, py*8+ListItemData[wk->list[i]].sy*8/2 );
+			PutListObj( wk, OBJ_ID_NEW_MACHINE, py*8+ListItemData[wk->list[i]].sy*8/2 );
 			GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_NEW_MACHINE], TRUE );
 		}
 
 		py += ListItemData[wk->list[i]].sy;
 	}
 
+	PutListObj( wk, OBJ_ID_PLAYER, PLAYER_OBJ_PY );
+
 	ChangeListItemPalette( wk, wk->list[0], wk->cursorPutPos, CURSOR_PALETTE );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト配置（項目ごと）
+ *
+ * @param		wk		タイトルメニューワーク
+ * @param		item	項目
+ * @param		py		表示Ｙ座標
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void PutListItem( START_MENU_WORK * wk, u8 item, s8 py )
 {
 	GFL_BG_WriteScreenExpand(
@@ -1394,6 +1784,18 @@ static void PutListItem( START_MENU_WORK * wk, u8 item, s8 py )
 */
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト項目パレット変更
+ *
+ * @param		wk		タイトルメニューワーク
+ * @param		item	項目
+ * @param		py		表示Ｙ座標
+ * @param		pal		パレット
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ChangeListItemPalette( START_MENU_WORK * wk, u8 item, s8 py, u8 pal )
 {
 	GFL_BG_ChangeScreenPalette(
@@ -1428,47 +1830,38 @@ static s8 GetListPutY( START_MENU_WORK * wk, s8 py )
 	return ( py + ( wk->bgScroll / 8 ) );
 }
 
-static void ScrollObj( START_MENU_WORK * wk, int vec )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト上のＯＢＪをスクロール
+ *
+ * @param		wk		タイトルメニューワーク
+ * @param		val		移動値
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void ScrollObj( START_MENU_WORK * wk, int val )
 {
 	GFL_CLACTPOS	pos;
 	u32	i;
 
 	for( i=0; i<OBJ_ID_MAX; i++ ){
 		GFL_CLACT_WK_GetPos( wk->clwk[i], &pos, CLSYS_DRAW_MAIN );
-		pos.y += vec;
+		pos.y += val;
 		GFL_CLACT_WK_SetPos( wk->clwk[i], &pos, CLSYS_DRAW_MAIN );
 	}
 }
 
-
-static void SetBlendAlpha(void)
-{
-	G2_SetBlendAlpha(
-		GX_BLEND_PLANEMASK_BG2,
-		GX_BLEND_PLANEMASK_BG3,
-		10, 6 );
-}
-
-static int SetFadeIn( START_MENU_WORK * wk, int next )
-{
-	WIPE_SYS_Start(
-		WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
-		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, HEAPID_STARTMENU );
-	wk->fadeSeq = next;
-	return MAINSEQ_FADE;
-}
-
-static int SetFadeOut( START_MENU_WORK * wk, int next )
-{
-	WIPE_SYS_Start(
-		WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
-		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, HEAPID_STARTMENU );
-	wk->fadeSeq = next;
-	return MAINSEQ_FADE;
-}
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル移動
+ *
+ * @param		wk		タイトルメニューワーク
+ * @param		vec		移動方向
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL CursorMove( START_MENU_WORK * wk, s8 vec )
 {
 	u8	now_item;
@@ -1554,7 +1947,17 @@ static BOOL CursorMove( START_MENU_WORK * wk, s8 vec )
 	return TRUE;
 }
 
-static void VanishMenuObj( START_MENU_WORK * wk, BOOL flg )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト上のＯＢＪの表示切り替え
+ *
+ * @param		wk		タイトルメニューワーク
+ * @param		flg		TRUE = 表示, FALSE = 非表示
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void VanishListObj( START_MENU_WORK * wk, BOOL flg )
 {
 	u32	i;
 
@@ -1563,6 +1966,24 @@ static void VanishMenuObj( START_MENU_WORK * wk, BOOL flg )
 	}
 }
 
+
+//============================================================================================
+//	各項目の処理
+//============================================================================================
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		警告ウィンドウ表示
+ *
+ * @param		px		表示Ｘ座標
+ * @param		py		表示Ｙ座標
+ * @param		sx		Ｘサイズ
+ * @param		sy		Ｙサイズ
+ * @param		frm		ＢＧフレーム
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void PutWarrningWindow( u8 px, u8 py, u8 sx, u8 sy, u8 frm )
 {
 	// 左上
@@ -1587,13 +2008,34 @@ static void PutWarrningWindow( u8 px, u8 py, u8 sx, u8 sy, u8 frm )
 	GFL_BG_LoadScreenV_Req( frm );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		警告ウィンドウクリア
+ *
+ * @param		px		表示Ｘ座標
+ * @param		py		表示Ｙ座標
+ * @param		sx		Ｘサイズ
+ * @param		sy		Ｙサイズ
+ * @param		frm		ＢＧフレーム
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ClearWarrningWindow( u8 px, u8 py, u8 sx, u8 sy, u8 frm )
 {
 	GFL_BG_FillScreen( frm, 0, px, py, sx, sy, 0 );
 	GFL_BG_LoadScreenV_Req( frm );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		「最初から始める」の警告ウィンドウ表示
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void PutNewGameWarrning( START_MENU_WORK * wk )
 {
 	STRBUF * str;
@@ -1635,9 +2077,21 @@ static void PutNewGameWarrning( START_MENU_WORK * wk )
 	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_X_SET, 256 );
 	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
 
-	VanishMenuObj( wk, FALSE );
+	VanishListObj( wk, FALSE );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		「最初から始める」の警告ウィンドウクリア
+ *
+ * @param		wk		タイトルメニューワーク
+ * @param		flg		TRUE = 非表示
+ *
+ * @return	none
+ *
+ * @li	flg = FALSE の場合はBMPWINの削除のみ
+ */
+//--------------------------------------------------------------------------------------------
 static void ClearNewGameWarrning( START_MENU_WORK * wk, BOOL flg )
 {
 	GFL_BMPWIN_Delete( wk->utilWin.win );
@@ -1656,72 +2110,18 @@ static void ClearNewGameWarrning( START_MENU_WORK * wk, BOOL flg )
 	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_X_SET, 0 );
 	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, wk->bgScroll );
 
-	VanishMenuObj( wk, TRUE );
+	VanishListObj( wk, TRUE );
 }
 
-static void PutMessage( START_MENU_WORK * wk, int strIdx )
-{
-  GFL_MSG_GetString( wk->mman, strIdx, wk->exp );
-
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->util[BMPWIN_MSG].win), 15 );
-	BmpWinFrame_Write(
-		wk->util[BMPWIN_MSG].win, WINDOW_TRANS_OFF, MESSAGE_WIN_CHAR_NUM, MESSAGE_WIN_PLTT_NUM );
-
-	wk->stream = PRINTSYS_PrintStream(
-								wk->util[BMPWIN_MSG].win,
-								0, 0, wk->exp,
-								wk->font,
-								MSGSPEED_GetWait(),
-								wk->tcbl,
-								10,		// tcbl pri
-								HEAPID_STARTMENU,
-								15 );	// clear color
-	GFL_BMPWIN_MakeTransWindow_VBlank( wk->util[BMPWIN_MSG].win );
-}
-
-static void ClearMessage( START_MENU_WORK * wk )
-{
-	BmpWinFrame_Clear( wk->util[BMPWIN_MSG].win, WINDOW_TRANS_ON_V );
-}
-
-static BOOL MainMessage( START_MENU_WORK * wk )
-{
-  switch( PRINTSYS_PrintStreamGetState(wk->stream) ){
-  case PRINTSTREAM_STATE_RUNNING: //実行中
-    if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
-      PRINTSYS_PrintStreamShortWait( wk->stream, 0 );
-    }
-    break;
-
-  case PRINTSTREAM_STATE_PAUSE: //一時停止中
-    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
-      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
-      PRINTSYS_PrintStreamReleasePause( wk->stream );
-    }
-    break;
-
-  case PRINTSTREAM_STATE_DONE: //終了
-    PRINTSYS_PrintStreamDelete( wk->stream );
-		return FALSE;
-	}
-
-	return TRUE;
-}
-
-static void SetYesNoMenu( START_MENU_WORK * wk )
-{
-	BMPWIN_YESNO_DAT	dat;
-
-	dat.frmnum = BMPWIN_YESNO_FRM;
-	dat.pos_x  = BMPWIN_YESNO_PX;
-	dat.pos_y  = BMPWIN_YESNO_PY;
-	dat.palnum = BMPWIN_YESNO_PAL;
-	dat.chrnum = 0;
-
-	wk->mwk = BmpMenu_YesNoSelectInit(
-							&dat, MESSAGE_WIN_CHAR_NUM, MESSAGE_WIN_PLTT_NUM, 0, HEAPID_STARTMENU );
-}
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		「続きから始める」の情報ウィンドウ表示
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void PutContinueInfo( START_MENU_WORK * wk )
 {
 	STRBUF * str;
@@ -1750,6 +2150,15 @@ static void PutContinueInfo( START_MENU_WORK * wk )
 		CONTINUE_INFO_WIN_SX, CONTINUE_INFO_WIN_SY, GFL_BG_FRAME1_S );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		「続きから始める」の情報ウィンドウクリア
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ClearContinueInfo( START_MENU_WORK * wk )
 {
 /*
@@ -1762,7 +2171,167 @@ static void ClearContinueInfo( START_MENU_WORK * wk )
 	GFL_BMPWIN_Delete( wk->utilWin.win );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メッセージ表示開始
+ *
+ * @param		wk				タイトルメニューワーク
+ * @param		strIdx		文字列インデックス
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void StartMessage( START_MENU_WORK * wk, int strIdx )
+{
+  GFL_MSG_GetString( wk->mman, strIdx, wk->exp );
 
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->util[BMPWIN_MSG].win), 15 );
+	BmpWinFrame_Write(
+		wk->util[BMPWIN_MSG].win, WINDOW_TRANS_OFF, MESSAGE_WIN_CHAR_NUM, MESSAGE_WIN_PLTT_NUM );
+
+	wk->stream = PRINTSYS_PrintStream(
+								wk->util[BMPWIN_MSG].win,
+								0, 0, wk->exp,
+								wk->font,
+								MSGSPEED_GetWait(),
+								wk->tcbl,
+								10,		// tcbl pri
+								HEAPID_STARTMENU,
+								15 );	// clear color
+	GFL_BMPWIN_MakeTransWindow_VBlank( wk->util[BMPWIN_MSG].win );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メッセージ非表示
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void ClearMessage( START_MENU_WORK * wk )
+{
+	BmpWinFrame_Clear( wk->util[BMPWIN_MSG].win, WINDOW_TRANS_ON_V );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メッセージメイン
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @retval	"TRUE = メッセージ処理中"
+ * @retval	"FALSE = メッセージ処理終了"
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL MainMessage( START_MENU_WORK * wk )
+{
+  switch( PRINTSYS_PrintStreamGetState(wk->stream) ){
+  case PRINTSTREAM_STATE_RUNNING: //実行中
+    if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+      PRINTSYS_PrintStreamShortWait( wk->stream, 0 );
+    }
+    break;
+
+  case PRINTSTREAM_STATE_PAUSE: //一時停止中
+    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+      PRINTSYS_PrintStreamReleasePause( wk->stream );
+    }
+    break;
+
+  case PRINTSTREAM_STATE_DONE: //終了
+    PRINTSYS_PrintStreamDelete( wk->stream );
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		はい・いいえ設定
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @retval	none
+ */
+//--------------------------------------------------------------------------------------------
+static void SetYesNoMenu( START_MENU_WORK * wk )
+{
+	BMPWIN_YESNO_DAT	dat;
+
+	dat.frmnum = BMPWIN_YESNO_FRM;
+	dat.pos_x  = BMPWIN_YESNO_PX;
+	dat.pos_y  = BMPWIN_YESNO_PY;
+	dat.palnum = BMPWIN_YESNO_PAL;
+	dat.chrnum = 0;
+
+	wk->mwk = BmpMenu_YesNoSelectInit(
+							&dat, MESSAGE_WIN_CHAR_NUM, MESSAGE_WIN_PLTT_NUM, 0, HEAPID_STARTMENU );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		「不思議な贈り物」受信チェック
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @retval	none
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL CheckHushigiBeacon( START_MENU_WORK * wk )
+{
+	// 仮。
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+		return TRUE;
+	}
+	return FALSE;
+}
+
+
+//============================================================================================
+//	その他
+//============================================================================================
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フェードイン設定
+ *
+ * @param		wk		タイトルメニューワーク
+ * @param		next	フェード後のシーケンス
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
+static int SetFadeIn( START_MENU_WORK * wk, int next )
+{
+	WIPE_SYS_Start(
+		WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
+		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, HEAPID_STARTMENU );
+	wk->fadeSeq = next;
+	return MAINSEQ_FADE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フェードアウト設定
+ *
+ * @param		wk		タイトルメニューワーク
+ * @param		next	フェード後のシーケンス
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
+static int SetFadeOut( START_MENU_WORK * wk, int next )
+{
+	WIPE_SYS_Start(
+		WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
+		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, HEAPID_STARTMENU );
+	wk->fadeSeq = next;
+	return MAINSEQ_FADE;
+}
 
 
 
