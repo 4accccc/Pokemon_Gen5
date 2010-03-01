@@ -691,11 +691,11 @@
 #define FV_D03R0101_DARUMA_05              667 /* 0x029b 砂漠のゴリダルマ(瞑想モード)その５ */
 #define FV_C06_GIRLBOY_01                  668 /* 0x029c フキヨセ滑走路に出てくる少年少女（なみのり入手イベント） */
 #define FV_C09R0701_WARPMAN                669 /* 0x029d ポケモンリーグ回復施設：Nの城にワープさせてくれるNPC */
-		/* not used   670(0x029e) */
-		/* not used   671(0x029f) */
-		/* not used   672(0x02a0) */
-		/* not used   673(0x02a1) */
-		/* not used   674(0x02a2) */
+#define FV_MUSICAL_FUN_01                  670 /* 0x029e ミュージカルホール：出待ちのファン１人目 */
+#define FV_MUSICAL_FUN_02                  671 /* 0x029f ミュージカルホール：出待ちのファン２人目 */
+#define FV_MUSICAL_FUN_03                  672 /* 0x02a0 ミュージカルホール：出待ちのファン３人目 */
+#define FV_MUSICAL_FUN_04                  673 /* 0x02a1 ミュージカルホール：出待ちのファン４人目 */
+#define FV_MUSICAL_FUN_05                  674 /* 0x02a2 ミュージカルホール：出待ちのファン５人目 */
 		/* not used   675(0x02a3) */
 		/* not used   676(0x02a4) */
 		/* not used   677(0x02a5) */
