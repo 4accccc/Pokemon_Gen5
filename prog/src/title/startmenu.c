@@ -853,10 +853,12 @@ static int MainSeq_Hushigi( START_MENU_WORK * wk )
 		InitListPut( wk );
 		GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_Y_SET, wk->bgScroll );
 		GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, wk->bgScroll );
+		BLINKPALANM_InitAnimeCount( wk->blink );
 		wk->subSeq++;
 		break;
 
 	case 4:
+		// ƒŠƒXƒg•\Ž¦
 		VanishListObj( wk, TRUE );
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_ON );
 		wk->subSeq = 0;
