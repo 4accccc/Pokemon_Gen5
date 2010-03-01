@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-26T18:25:21"/>
+	<create user="matsumiya" host="W00224" date="2010-03-01T20:05:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -332,13 +332,13 @@
 どうするつもり　でしょう？</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_01" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・初回
 ・受付カウンターを越えたあたりにpos設定
 ・最初標本の前、上向きに鉢
-　posを踏むと！マーク表示後
-　下を向き、主人公に隣接してmsg_c02gym0101_ad_02
+　posを踏むと下を向き
+　主人公に隣接してmsg_c02gym0101_ad_02
 ・ホネ（大）→隕石→石→ジム</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
@@ -419,22 +419,30 @@
 展示して　おります▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_06" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・階段付近
+・続けて、下を向いてから07表示</comment>
+		<attribute name="キャラ指定">副館長（Assistant　Director）
+助手♂</attribute>
+		<language name="JPN" width="256">この　さきが
+ポケモンジムと　なっております▼</language>
+		<language name="JPN_KANJI" width="256">この　先が
+ポケモンジムと　なっております▼</language>
+	</row>
+
+	<row id="msg_c02gym0101_ad_06a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジム（予定）……階段付近
 ・ジムバッジ取得まで
 　この位置でこのメッセージ繰り返し</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
-		<language name="JPN" width="256">この　さきが
-ポケモンジムと　なっております▼
-いちばん　おくで　つよくて　やさしい
+		<language name="JPN" width="256">いちばん　おくで　つよくて　やさしい
 ジムリーダーが　まってます▼
 ちなみに　ジムリーダーの　アロエは
 わたくしの　おくさん　なのです</language>
-		<language name="JPN_KANJI" width="256">この　先が
-ポケモンジムと　なっております▼
-一番　奥で　強くて　やさしい
+		<language name="JPN_KANJI" width="256">一番　奥で　強くて　やさしい
 ジムリーダーが　待ってます▼
 ちなみに　ジムリーダーの　アロエは
 わたくしの　奥さん　なのです</language>

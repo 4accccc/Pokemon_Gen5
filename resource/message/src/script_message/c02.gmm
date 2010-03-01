@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-01T18:06:31"/>
+	<create user="matsumiya" host="W00224" date="2010-03-01T19:37:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="283" right="1995" bottom="911" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="806" top="169" right="1280" bottom="567" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -359,11 +359,10 @@
 	</lock>
 
 
-	<row id="msg_c02_black_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02_black_01" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・r03側のPOSを踏むと
-　画面左から出現
-・POS＝ゲートを出てすぐあたり
+・画面内に配置
+　r03側のPOSを踏むと！マーク後、主人公に隣接
 ・メッセージ表示後、ライバル戦闘で連れ歩き</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『まちに　ついたら
@@ -389,13 +388,14 @@
 向こうの　倉庫を　見てるから▼</language>
 	</row>
 
-	<row id="msg_c02_boss_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_boss_01" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・ジムの前のPOSを踏むと
 　画面左から出現
 ・主人公に隣接してメッセージ表示
 ・はい/いいえの選択
-　どちらを選んだか保存しておく</comment>
+　どちらを選んだか保存しておく
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]まよえる　トレーナーよ
 ポケモンたちを　じゆうにする……▽

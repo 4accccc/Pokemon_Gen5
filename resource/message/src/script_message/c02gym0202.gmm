@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T12:44:00"/>
+	<create user="matsumiya" host="W00224" date="2010-03-01T20:04:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="180"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -404,6 +404,17 @@
 
 	<row id="msg_c02gym0202_ad_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
+・まずメッセージウインドウ表示
+・主人公たちに！マーク後
+　ad_02に</comment>
+		<attribute name="キャラ指定">副館長（Assistant　Director）
+助手♂</attribute>
+		<language name="JPN" width="256">ママー！！▼</language>
+		<language name="JPN_KANJI" width="256">ママー！！▼</language>
+	</row>
+
+	<row id="msg_c02gym0202_ad_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
 ・メッセージ表示後
 　ジムリーダー退場
 　c02gym0101に出現</comment>
@@ -434,6 +445,26 @@
 どういうことだい！？[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！
 アンタも　おいで！！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c02gym0202_bookrack1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">本棚</attribute>
+		<language name="JPN" width="256">アロエの　けんきゅうしりょうが
+きそくただしく　つめこまれている！</language>
+		<language name="JPN_KANJI" width="256">アロエの　研究資料が
+規則正しく　詰め込まれている！</language>
+	</row>
+
+	<row id="msg_c02gym0202_case1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">ガラスケース</attribute>
+		<language name="JPN" width="256">アロエの　けんきゅうしりょうの
+ホネなどが　ちんれつ　されている</language>
+		<language name="JPN_KANJI" width="256">アロエの　研究資料の
+ホネなどが　陳列されている</language>
 	</row>
 
 	<flowchart-group-list>
