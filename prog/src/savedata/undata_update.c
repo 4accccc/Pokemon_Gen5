@@ -236,10 +236,12 @@ static void  AddData(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data, const BOOL
   AddDataCore(un_data, add_data, inTalkFlg);
   //国ビット立てる
   {
+    BOOL rc;
     u32 code;
     //国コードを取得
     code = MyStatus_GetMyNation(&add_data->aMyStatus);
-    WIFIHISTORY_SetCountryBit(wh, code);
+    rc = WIFIHISTORY_SetCountryBit(wh, code);
+    if (rc) WIFIHISTORY_AddMyCountryCount(wh);
   }
 }
 
