@@ -1097,6 +1097,18 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   MYSTERY_WORK  *p_wk     = p_wk_adrs;
 
+  //エラーチェック
+  switch( MYSTERY_NET_GetErrorRepairType( p_wk->p_net ) )
+  { 
+  case MYSTERY_NET_ERROR_REPAIR_RETURN:      //１つ前の選択肢まで戻る
+  case MYSTERY_NET_ERROR_REPAIR_DISCONNECT:  //切断する
+    MYSTERY_NET_ClearError( p_wk->p_net );
+
+    *p_seq  = SEQ_INIT;
+    break;
+  }
+
+  //シーケンス
   switch( *p_seq )
   { 
   case SEQ_INIT:
@@ -1302,7 +1314,7 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       break;
 
     case MYSTERY_NET_MODE_WIFI:
-      GF_ASSERT(0);
+      GF_ASSERT(0); //ここへはこない
       break;
 
     case MYSTERY_NET_MODE_IRC:
@@ -1602,6 +1614,18 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           *p_seq = SEQ_NO_GIFT_INIT;
         }
       }
+    }
+
+    //エラーチェック
+    switch( MYSTERY_NET_GetErrorRepairType( p_wk->p_net ) )
+    { 
+    case MYSTERY_NET_ERROR_REPAIR_RETURN:      //１つ前の選択肢まで戻る
+    case MYSTERY_NET_ERROR_REPAIR_DISCONNECT:  //切断する
+      MYSTERY_NET_ClearError( p_wk->p_net );
+
+      NAGI_Printf( "取得できなかった\n" );
+      *p_seq = SEQ_NO_GIFT_INIT;
+      break;
     }
 
     //Bボタンキャンセルかタイムアウト
@@ -2178,6 +2202,17 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 
   MYSTERY_WORK  *p_wk     = p_wk_adrs;
 
+  //エラーチェック
+  switch( MYSTERY_NET_GetErrorRepairType( p_wk->p_net ) )
+  { 
+  case MYSTERY_NET_ERROR_REPAIR_RETURN:      //１つ前の選択肢まで戻る
+  case MYSTERY_NET_ERROR_REPAIR_DISCONNECT:  //切断する
+    MYSTERY_NET_ClearError( p_wk->p_net );
+
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
+    break;
+  }
+
   switch( *p_seq )
   { 
   case SEQ_FADEIN_START:
@@ -2290,6 +2325,17 @@ static void SEQFUNC_DisConnectEnd( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *
     SEQ_END,
   };
   MYSTERY_WORK  *p_wk     = p_wk_adrs;
+
+  //エラーチェック
+  switch( MYSTERY_NET_GetErrorRepairType( p_wk->p_net ) )
+  { 
+  case MYSTERY_NET_ERROR_REPAIR_RETURN:      //１つ前の選択肢まで戻る
+  case MYSTERY_NET_ERROR_REPAIR_DISCONNECT:  //切断する
+    MYSTERY_NET_ClearError( p_wk->p_net );
+
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_FadeOut );
+    break;
+  }
 
   switch( *p_seq )
   { 

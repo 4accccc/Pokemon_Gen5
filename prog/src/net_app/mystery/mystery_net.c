@@ -22,6 +22,7 @@
 #include "system/net_err.h"
 #include "net/delivery_beacon.h"
 #include "net/delivery_irc.h"
+#include "net/dwc_error.h"
 
 //セーブデータ
 #include "savedata/wifilist.h"
@@ -196,6 +197,9 @@ static void NdCleanupCallback( void );
 //-------------------------------------
 ///	エラー
 //=====================================
+static MYSTERY_NET_ERROR_REPAIR_TYPE Mystery_Net_Wifi_GetErrorRepairType( const MYSTERY_NET_WORK *cp_wk );
+static MYSTERY_NET_ERROR_REPAIR_TYPE Mystery_Net_Wireless_GetErrorRepairType( const MYSTERY_NET_WORK *cp_wk );
+static MYSTERY_NET_ERROR_REPAIR_TYPE Mystery_Net_Irc_GetErrorRepairType( const MYSTERY_NET_WORK *cp_wk );
 
 //-------------------------------------
 ///	その他
@@ -478,36 +482,127 @@ BOOL MYSTERY_NET_GetDownloadData( const MYSTERY_NET_WORK *cp_wk, void *p_data, u
  *	@return MYSTERY_NET_ERROR_REPAIR_TYPEに準じる
  */
 //-----------------------------------------------------------------------------
-MYSTERY_NET_ERROR_REPAIR_TYPE MYSTERY_NET_GetErrorRepairType( MYSTERY_NET_WORK *p_wk )
+MYSTERY_NET_ERROR_REPAIR_TYPE MYSTERY_NET_GetErrorRepairType( const MYSTERY_NET_WORK *cp_wk )
 { 
-#if 0
-  //DWCのエラー
+  MYSTERY_NET_ERROR_REPAIR_TYPE repair  = MYSTERY_NET_ERROR_REPAIR_NONE;
+
   if( GFL_NET_IsInit() )
   { 
-    //下記関数はdev_wifilibのオーバーレイにあるので、GFL_NETが解放されるとよばれなくなる
-    switch( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) )
+    switch( GFL_NET_GetNETInitStruct()->bNetType )
     { 
-    case GFL_NET_DWC_ERROR_RESULT_NONE:
-      repair  = WIFIBATTLEMATCH_NET_ERROR_NONE;
+    case GFL_NET_TYPE_WIRELESS:
+    case GFL_NET_TYPE_WIRELESS_SCANONLY:
+      repair  = Mystery_Net_Wireless_GetErrorRepairType( cp_wk );
       break;
 
-    case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:
-      repair  = WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN;
+    case GFL_NET_TYPE_WIFI:
+      repair  = Mystery_Net_Wifi_GetErrorRepairType( cp_wk );
       break;
 
-    case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC:
-      repair  = WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
+    case GFL_NET_TYPE_IRC:
+      repair  = Mystery_Net_Irc_GetErrorRepairType( cp_wk );
       break;
 
-    case GFL_NET_DWC_ERROR_RESULT_FATAL:
-      repair  = WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL;
-      break;
+    default:
+      GF_ASSERT(0);
     }
-  } 
+  }
 
-#endif
+  return repair;
+}
 
-  return MYSTERY_NET_ERROR_REPAIR_NONE;
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エラーを修復
+ *
+ *	@param	MYSTERY_NET_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_NET_ClearError( MYSTERY_NET_WORK *p_wk )
+{ 
+  MYSTERY_NET_ChangeStateReq( p_wk, MYSTERY_NET_STATE_WAIT );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WIFIのエラー修復戻り先を取得
+ *
+ *	@param	MYSTERY_NET_WORK *p_wk  ワーク
+ *
+ *	@return MYSTERY_NET_ERROR_REPAIR_TYPEに準じる
+ */
+//-----------------------------------------------------------------------------
+static MYSTERY_NET_ERROR_REPAIR_TYPE Mystery_Net_Wifi_GetErrorRepairType( const MYSTERY_NET_WORK *cp_wk )
+{ 
+  MYSTERY_NET_ERROR_REPAIR_TYPE repair  = MYSTERY_NET_ERROR_REPAIR_NONE;
+
+  //下記関数はdev_wifilibのオーバーレイにあるので、GFL_NETが解放されるとよばれなくなる
+  switch( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) )
+  { 
+  case GFL_NET_DWC_ERROR_RESULT_NONE:
+    repair  = MYSTERY_NET_ERROR_REPAIR_NONE;
+    break;
+
+  case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:
+    repair  = MYSTERY_NET_ERROR_REPAIR_RETURN;
+    break;
+
+  case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC:
+    repair  = MYSTERY_NET_ERROR_REPAIR_DISCONNECT;
+    break;
+
+  case GFL_NET_DWC_ERROR_RESULT_FATAL:
+    repair  = MYSTERY_NET_ERROR_REPAIR_FATAL;
+    break;
+  }
+
+  return repair;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WIRELESSのエラー修復戻り先を取得
+ *
+ *	@param	MYSTERY_NET_WORK *p_wk  ワーク
+ *
+ *	@return MYSTERY_NET_ERROR_REPAIR_TYPEに準じる
+ */
+//-----------------------------------------------------------------------------
+static MYSTERY_NET_ERROR_REPAIR_TYPE Mystery_Net_Wireless_GetErrorRepairType( const MYSTERY_NET_WORK *cp_wk )
+{ 
+  MYSTERY_NET_ERROR_REPAIR_TYPE repair  = MYSTERY_NET_ERROR_REPAIR_NONE;
+
+  if( NetErr_App_CheckError() )
+  { 
+    NetErr_ExitNetSystem();
+    NetErr_DispCallPushPop();
+
+    repair  = MYSTERY_NET_ERROR_REPAIR_RETURN;
+  }
+
+  return repair;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  IRCのエラー修復戻り先を取得
+ *
+ *	@param	MYSTERY_NET_WORK *p_wk  ワーク
+ *
+ *	@return MYSTERY_NET_ERROR_REPAIR_TYPEに準じる
+ */
+//-----------------------------------------------------------------------------
+static MYSTERY_NET_ERROR_REPAIR_TYPE Mystery_Net_Irc_GetErrorRepairType( const MYSTERY_NET_WORK *cp_wk )
+{ 
+  MYSTERY_NET_ERROR_REPAIR_TYPE repair  = MYSTERY_NET_ERROR_REPAIR_NONE;
+
+  if( NetErr_App_CheckError() )
+  { 
+    NetErr_ExitNetSystem();
+    NetErr_DispCallPushPop();
+
+    repair  = MYSTERY_NET_ERROR_REPAIR_RETURN;
+  }
+  return repair;
 }
 
 //=============================================================================
@@ -933,10 +1028,11 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     if( DWC_NdInitAsync( NdCallback, GF_DWC_ND_LOGIN, WIFI_ND_LOGIN_PASSWD ) == FALSE )
     {
       OS_TPrintf( "DWC_NdInitAsync: Failed\n" );
-      GF_ASSERT(0);//@todo
-      break;
     }
-    WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_ATTR );
+    else
+    { 
+      WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_ATTR );
+    }
     break;
 
   case SEQ_ATTR:
@@ -944,17 +1040,20 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     if( p_nd_data->wifi_cancel )
     { 
       WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_CANCEL, p_seq, SEQ_CANCEL, SEQ_CANCEL );
-      break;
     }
-
-    // ファイル属性の設定
-    if( DWC_NdSetAttr(WIFI_FILE_ATTR1, WIFI_FILE_ATTR2, WIFI_FILE_ATTR3) == FALSE )
-    {
-      OS_TPrintf( "DWC_NdSetAttr: Failed\n." );
-      GF_ASSERT(0);//@todo
-      break;
+    else
+    { 
+      // ファイル属性の設定
+      if( DWC_NdSetAttr(WIFI_FILE_ATTR1, WIFI_FILE_ATTR2, WIFI_FILE_ATTR3) == FALSE )
+      {
+        OS_TPrintf( "DWC_NdSetAttr: Failed\n." );
+        //エラーが起こったら内部で取得するためループ
+      }
+      else
+      { 
+        *p_seq = SEQ_FILENUM;
+      }
     }
-    *p_seq = SEQ_FILENUM;
     break;
 
 //-------------------------------------
@@ -965,10 +1064,12 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     if( DWC_NdGetFileListNumAsync( &p_nd_data->server_filenum ) == FALSE )
     {
       OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
-      GF_ASSERT( 0 ); //@todo
-      break;
+      //エラーが起こったら内部で取得するためループ
     }
-    WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_FILELIST );
+    else
+    { 
+      WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_FILELIST );
+    }
     break;
 
   case SEQ_FILELIST:
@@ -986,10 +1087,11 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       if( DWC_NdGetFileListAsync( p_nd_data->fileInfo, 0, MYSTERY_DOWNLOAD_FILE_MAX ) == FALSE)
       {
         OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
-        GF_ASSERT(0);
-        break;
       }
-      WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_GET_FILE );
+      else
+      { 
+        WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_GET_FILE );
+      }
     }
     else
     { 
@@ -998,10 +1100,11 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       if( DWC_NdGetFileListAsync( p_nd_data->fileInfo, 0, MYSTERY_DOWNLOAD_FILE_MAX ) == FALSE)
       {
         OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
-        GF_ASSERT(0);
-        break;
       }
-      WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_CHECKLIST );
+      else
+      { 
+        WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_CHECKLIST );
+      }
     }
     break;
 
@@ -1088,13 +1191,14 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     OS_TPrintf( "取得するもの target%d max%d\n", p_nd_data->target, p_nd_data->server_filenum );
     if(DWC_NdGetFileAsync( &p_nd_data->fileInfo[ p_nd_data->target ], p_nd_data->p_buffer, MYSTERY_DOWNLOAD_GIFT_DATA_SIZE) == FALSE){
       OS_TPrintf( "DWC_NdGetFileAsync: Failed.\n" );
-      GF_ASSERT(0);
-      break;
     }
-    p_nd_data->percent = 0;
-    s_callback_flag   = FALSE;
-    s_callback_result = DWC_ND_ERROR_NONE;
-    *p_seq = SEQ_GETTING_FILE;
+    else
+    { 
+      p_nd_data->percent = 0;
+      s_callback_flag   = FALSE;
+      s_callback_result = DWC_ND_ERROR_NONE;
+      *p_seq = SEQ_GETTING_FILE;
+    }
     break;
     
   case SEQ_GETTING_FILE:
@@ -1123,7 +1227,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     else if( s_callback_result != DWC_ND_ERROR_NONE)
     {
-      GF_ASSERT(0);
+
     }
     else
     { //callback1_result
@@ -1182,8 +1286,8 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     { 
       s_callback_flag = FALSE;
       if( s_callback_result != DWC_ND_ERROR_NONE)
-      { 
-        GF_ASSERT(0); //@todo
+      {
+
       }
       else
       { 

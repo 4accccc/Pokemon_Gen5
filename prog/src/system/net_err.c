@@ -406,7 +406,7 @@ void NetErr_GetTempArea( u8** charArea , u16** scrnArea , u16** plttArea )
  *
  */
 //-----------------------------------------------------------------------------
-static void NetErr_ExitNetSystem( void )
+void NetErr_ExitNetSystem( void )
 { 
   if(GFL_NET_IsInit() )
   { 

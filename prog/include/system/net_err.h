@@ -56,6 +56,7 @@ extern void NetErr_ErrorSet(void);
 extern BOOL NetErr_DispCall(BOOL fatal_error);
 extern void NetErr_DispCallPushPop(void);
 extern void NetErr_DispCallFatal(void);
+extern void NetErr_ExitNetSystem( void );
 
 extern void NetErr_GetTempArea( u8** charArea , u16** scrnArea , u16** plttArea );
 
