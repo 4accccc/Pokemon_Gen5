@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohnishi_shinichi" host="W00207" date="2010-03-01T19:10:03" source="black_ship01.mb"/>
+	<create user="ohnishi_shinichi" host="W00207" date="2010-03-01T19:43:28" source="black_ship01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohnishi_shinichi" host="W00207" date="2010-03-01T19:10:03" source="black_ship01.mb"/>
+<original_create user="ohnishi_shinichi" host="W00207" date="2010-03-01T19:43:28" source="black_ship01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -30,12 +30,54 @@
 <box_test pos_scale="6" xyz="-0.958008 -0.250000 -2.405518" whd="1.915527 1.287109 4.113281"/>
 
 <tex_image_array size="3">
-	<tex_image index="0" name="c03_ship_03_t01"
+	<tex_image index="0" name="C3Ship_wa"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="C3Ship_wa_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/c03_ship_03/tex/C3Ship_wa.tga"
+	>
+		<bitmap size="256">
+			0000 0000 1100 2221 1122 0111 0000 0000
+			0000 1100 2211 1122 2221 1222 0111 0000
+			1111 1111 2221 1112 1111 2211 1222 1111
+			2222 1122 2222 2222 1111 1111 2211 2222
+			1111 2222 1122 2211 2222 1111 1111 1222
+			1111 2221 1112 1111 2111 1112 1111 1121
+			2211 2222 1111 1111 1111 1122 1111 1121
+			1122 2111 1122 1111 1111 1122 1111 2221
+			1244 2211 1244 1111 2111 2244 1111 4422
+			1122 1111 2222 1111 1111 2222 2122 2222
+			1111 1331 2111 1122 1111 1111 2221 1112
+			1111 3333 1111 1122 1111 2111 1122 1111
+			1133 1331 2211 1112 1222 2221 1112 3111
+			1333 1111 2221 2222 2222 2222 1111 3331
+			1133 2111 1222 1111 1111 2222 1111 3311
+			1111 2221 1111 1111 1133 2211 1112 1111
+			1111 1222 1111 3111 1333 1111 1122 1111
+			2111 1112 0011 1110 1133 1100 2211 1111
+			2221 1111 0000 1000 0111 0000 2111 2222
+			2222 0111 0000 0000 0110 0000 1110 2222
+			1122 1111 0000 0000 0100 0000 1100 2211
+			1111 1000 0001 0000 1100 0000 1111 1111
+			0011 0000 0111 0000 1000 1101 0011 1110
+			0000 0000 1110 0001 0000 0111 0000 0000
+			0000 1000 1111 0011 0000 0010 0000 0000
+			0000 0111 0000 1111 0000 0011 0000 0000
+			1000 0001 0000 1000 1111 1111 0000 0000
+			1100 0111 0000 0000 1110 1001 0111 0000
+			0111 1110 0001 0000 1100 0000 1100 1100
+			0001 0000 0011 1000 1111 0001 1110 0111
+			0000 0000 1110 1111 0000 1111 0111 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="c3ship3_1"
 		width="32" height="128" original_width="32" original_height="128"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="c03_ship_03_t01_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/c03_ship_03/tex/c03_ship_03_t01.tga"
+		palette_name="c3ship3_1_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/c03_ship_03/tex/c3ship3_1.tga"
 	>
 		<bitmap size="1024">
 			1111 2221 3653 4444 7765 44a8 4444 4444
@@ -168,48 +210,6 @@
 			8888 8888 8888 8888 8888 8888 8888 8888
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="c03_ship_03_t02"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="c03_ship_03_t02_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/c03_ship_03/tex/c03_ship_03_t02.tga"
-	>
-		<bitmap size="256">
-			0000 0000 1100 2221 1122 0111 0000 0000
-			0000 1100 2211 1122 2221 1222 0111 0000
-			1111 1111 2221 1112 1111 2211 1222 1111
-			2222 1122 2222 2222 1111 1111 2211 2222
-			1111 2222 1122 2211 2222 1111 1111 1222
-			1111 2221 1112 1111 2111 1112 1111 1121
-			2211 2222 1111 1111 1111 1122 1111 1121
-			1122 2111 1122 1111 1111 1122 1111 2221
-			1244 2211 1244 1111 2111 2244 1111 4422
-			1122 1111 2222 1111 1111 2222 2122 2222
-			1111 1331 2111 1122 1111 1111 2221 1112
-			1111 3333 1111 1122 1111 2111 1122 1111
-			1133 1331 2211 1112 1222 2221 1112 3111
-			1333 1111 2221 2222 2222 2222 1111 3331
-			1133 2111 1222 1111 1111 2222 1111 3311
-			1111 2221 1111 1111 1133 2211 1112 1111
-			1111 1222 1111 3111 1333 1111 1122 1111
-			2111 1112 0011 1110 1133 1100 2211 1111
-			2221 1111 0000 1000 0111 0000 2111 2222
-			2222 0111 0000 0000 0110 0000 1110 2222
-			1122 1111 0000 0000 0100 0000 1100 2211
-			1111 1000 0001 0000 1100 0000 1111 1111
-			0011 0000 0111 0000 1000 1101 0011 1110
-			0000 0000 1110 0001 0000 0111 0000 0000
-			0000 1000 1111 0011 0000 0010 0000 0000
-			0000 0111 0000 1111 0000 0011 0000 0000
-			1000 0001 0000 1000 1111 1111 0000 0000
-			1100 0111 0000 0000 1110 1001 0111 0000
-			0111 1110 0001 0000 1100 0000 1100 1100
-			0001 0000 0011 1000 1111 0001 1110 0111
-			0000 0000 1110 1111 0000 1111 0111 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
 	<tex_image index="2" name="h_mado"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
@@ -227,12 +227,12 @@
 </tex_image_array>
 
 <tex_palette_array size="3">
-	<tex_palette index="0" name="c03_ship_03_t01_pl" color_size="16">
+	<tex_palette index="0" name="C3Ship_wa_pl" color_size="8">
+		03e0 6649 72f0 59a0 7378 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="c3ship3_1_pl" color_size="16">
 		2d57 7c00 7e00 39ce 318c 294a 2108 18c6
 		1084 1084 0842 7fff 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="1" name="c03_ship_03_t02_pl" color_size="8">
-		03e0 6649 72f0 59a0 7378 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="2" name="h_mado_pl" color_size="4">
 		7339 7b9c 7fff 7fff
@@ -257,7 +257,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
+		tex_image_idx="1" tex_palette_idx="1"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -305,7 +305,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="1"
+		tex_image_idx="0" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
