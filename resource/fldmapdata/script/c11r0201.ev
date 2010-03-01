@@ -119,13 +119,16 @@ EVENT_START		ev_un_elevator
       _MAP_CHANGE( ZONE_ID_C11R0101, 14, 5, DIR_DOWN )
     CASE 1 THEN
       {
+        DEFINE_LOCAL NowFloor
         DEFINE_LOCAL Floor
         DEFINE_LOCAL Country
+        //現在のフロアを取得
+        _UN_GET_ROOM_INFO( UN_ROOMINFO_TYPE_FLOOR, NowFloor )
         //他のフロアへ（選択アプリ）      
         _MAP_FADE_BLACK_OUT()
         _MAP_FADE_END_CHECK()
         _FIELD_CLOSE()
-        _UN_CALL_FLOOR_SEL_APP( 1, Floor, Country, SCWK_ANSWER )
+        _UN_CALL_FLOOR_SEL_APP( NowFloor, Floor, Country, SCWK_ANSWER )
         _FIELD_OPEN()
         _MAP_FADE_BLACK_IN()
         _MAP_FADE_END_CHECK()

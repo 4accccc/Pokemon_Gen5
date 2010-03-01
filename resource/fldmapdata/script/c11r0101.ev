@@ -406,6 +406,7 @@ _ANIME_LABEL	anm_reception_close
 check_posevt_start:
   DEFINE_LOCAL	chk_total
   DEFINE_LOCAL	chk_val
+  DEFINE_LOCAL	next_scene
 
   //シーンワークで分岐
   SWITCH $WK_SCENE_C11GATE
@@ -450,9 +451,49 @@ check_posevt_start:
 
   //ヶ国数取得
   _UN_GET_COUNTRY_NUM( chk_total )
+
+  IF $chk_total >= 233 THEN
+    $next_scene = 16
+  ELSIF $chk_total >= 150 THEN
+    $next_scene = 15
+  ELSIF $chk_total >= 100 THEN
+    $next_scene = 14
+  ELSIF $chk_total >= 90 THEN
+    $next_scene = 13
+  ELSIF $chk_total >= 80 THEN
+    $next_scene = 12
+  ELSIF $chk_total >= 70 THEN
+    $next_scene = 11
+  ELSIF $chk_total >= 60 THEN
+    $next_scene = 10
+  ELSIF $chk_total >= 50 THEN
+    $next_scene = 9
+  ELSIF $chk_total >= 40 THEN
+    $next_scene = 8
+  ELSIF $chk_total >= 30 THEN
+    $next_scene = 7
+  ELSIF $chk_total >= 20 THEN
+    $next_scene = 6
+  ELSIF $chk_total >= 15 THEN
+    $next_scene = 5
+  ELSIF $chk_total >= 10 THEN
+    $next_scene = 4
+  ELSIF $chk_total >= 6 THEN
+    $next_scene = 3
+  ELSIF $chk_total >= 3 THEN
+    $next_scene = 2
+  ELSIF $chk_total >= 1 THEN
+    $next_scene = 1
+  ELSE 
+    $next_scene = 0
+  ENDIF
+
   //POS起動条件を満たす国数まで到達したか？
   IF $chk_total >= $chk_val THEN
     $LOCALWORK1 = 1   //POS起動
+    IF $next_scene > $WK_SCENE_C11GATE THEN
+      $WK_SCENE_C11GATE = $next_scene
+    ENDIF 
   ENDIF
 _RET
 
