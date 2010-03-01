@@ -539,7 +539,7 @@ typedef struct
 
 static const BITMAP_INIT_DATA BitmapInitData[ BMPOAM_ACTOR_NUM ] = 
 {
-  { //「…ちょうさをかいしします…」
+  { //「…かいせきちゅう…」
     BMPOAM_ACTOR_ANALYZING_CHARA_SIZE_X,   // x サイズ ( キャラ単位 )
     BMPOAM_ACTOR_ANALYZING_CHARA_SIZE_Y,   // y サイズ ( キャラ単位 )
     GFL_BMP_16_COLOR,                      // カラーモード

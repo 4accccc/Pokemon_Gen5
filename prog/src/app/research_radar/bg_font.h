@@ -42,8 +42,8 @@ typedef struct
 // Å†
 //===============================================================================
 // ê∂ê¨ÅEîjä¸
-extern BG_FONT* BG_FONT_Create( const BG_FONT_PARAM* param, 
-                                GFL_FONT* font, GFL_MSGDATA* message, HEAPID heapID );
+extern BG_FONT* BG_FONT_Create( 
+    const BG_FONT_PARAM* param, GFL_FONT* font, GFL_MSGDATA* message, HEAPID heapID );
 extern void BG_FONT_Delete( BG_FONT* BGFont );
 
 // ï∂éöóÒÇÃê›íË

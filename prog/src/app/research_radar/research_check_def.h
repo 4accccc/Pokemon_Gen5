@@ -244,14 +244,14 @@
 // □BMP-OAM アクター
 //-------------------
 //「…かいせきちゅう…」
-#define BMPOAM_ACTOR_ANALYZING_CHARA_SIZE_X   (30)  // x サイズ ( キャラ単位 )
+#define BMPOAM_ACTOR_ANALYZING_CHARA_SIZE_X   (32)  // x サイズ ( キャラ単位 )
 #define BMPOAM_ACTOR_ANALYZING_CHARA_SIZE_Y   (5)   // y サイズ ( キャラ単位 )
-#define BMPOAM_ACTOR_ANALYZING_POS_X          (8)   // 左上x座標
+#define BMPOAM_ACTOR_ANALYZING_POS_X          (0)   // 左上x座標
 #define BMPOAM_ACTOR_ANALYZING_POS_Y          (76)  // 左上y座標
 #define BMPOAM_ACTOR_ANALYZING_PALETTE_OFFSET (1)   // パレットオフセット
 #define BMPOAM_ACTOR_ANALYZING_SOFT_PRIORITY  (0)   // ソフトプライオリティ
 #define BMPOAM_ACTOR_ANALYZING_BG_PRIORITY    (0)   // BGプライオリティ
-#define BMPOAM_ACTOR_ANALYZING_STRING_OFFSET_X (0)  // 文字の書き込み先 x 座標オフセット
+#define BMPOAM_ACTOR_ANALYZING_STRING_OFFSET_X (8)  // 文字の書き込み先 x 座標オフセット
 #define BMPOAM_ACTOR_ANALYZING_STRING_OFFSET_Y (9)  // 文字の書き込み先 y 座標オフセット
 #define BMPOAM_ACTOR_ANALYZING_STRING_COLOR_L (1)   // 文字のカラー番号
 #define BMPOAM_ACTOR_ANALYZING_STRING_COLOR_S (2)   // 影のカラー番号
@@ -306,3 +306,9 @@
 // カーソル
 #define TOUCH_AREA_CONTROL_CURSOR_WIDTH  (16) // Xサイズ (ドット単位)
 #define TOUCH_AREA_CONTROL_CURSOR_HEIGHT (16) // Yサイズ (ドット単位)
+
+//===============================================================================
+// ■矢印
+//===============================================================================
+#define ARROW_START_X (120) // 矢印の始点x座標
+#define ARROW_START_Y (40)  // 矢印の始点y座標

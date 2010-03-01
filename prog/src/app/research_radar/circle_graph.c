@@ -38,7 +38,6 @@
 #define DISAPPEAR_FRAMES (20)  // 消去状態の動作フレーム数
 #define UPDATE_FRAMES    (60)  // 消去状態の動作フレーム数
 
-
 // 円グラフの状態
 typedef enum {
   GRAPH_STATE_HIDE,      // 非表示
@@ -53,20 +52,17 @@ typedef enum {
 //=========================================================================================
 // ■描画用頂点データ
 //=========================================================================================
-typedef struct
-{
-  VecFx16 pos;   // 座標
-  GXRgb   color; // 頂点カラー
-  u8      polygonID; // ポリゴンID
-
+typedef struct {
+  VecFx16 pos;       // 座標
+  GXRgb   color;     // 頂点カラー
+  u8      polygonID; // ポリゴンID 
 } VERTEX;
 
 
 //=========================================================================================
 // ■グラフの構成要素単位のデータ
 //=========================================================================================
-typedef struct
-{
+typedef struct {
   u8  ID;              // 構成要素ID
   u32 value;           // 値
   u8  percentage;      // 全構成要素中の割合[%]
@@ -77,8 +73,7 @@ typedef struct
   u8  outerColorB;     // 外周の色(B) [0, 31]
   u8  centerColorR;    // 中心点の色(R) [0, 31]
   u8  centerColorG;    // 中心点の色(G) [0, 31]
-  u8  centerColorB;    // 中心点の色(B) [0, 31]
-
+  u8  centerColorB;    // 中心点の色(B) [0, 31] 
 } GRAPH_COMPONENT;
 
 
@@ -168,17 +163,19 @@ static void StopGraph( CIRCLE_GRAPH* graph, u32 frames ); // 動作を停止させる
 static void SetCenterPos( CIRCLE_GRAPH* graph, const VecFx16* pos ); // 中心点の座標を設定する
 
 //-----------------------------------------------------------------------------------------
-// 取得
+// 取得・判定
 //-----------------------------------------------------------------------------------------
-const u8 GetComponentRank( const CIRCLE_GRAPH* graph, u8 ID ); // 構成要素のランク
+const u8 GetComponentRank( const CIRCLE_GRAPH* graph, u8 componentID ); // 構成要素のランク
+const GRAPH_COMPONENT* GetComponentByID( const CIRCLE_GRAPH* graph, u8 componentID ); // 構成要素
 const GRAPH_COMPONENT* GetComponentByRank( const CIRCLE_GRAPH* graph, int compoentRank ); // 構成要素
-const GRAPH_COMPONENT* GetComponentByID( const CIRCLE_GRAPH* graph, u8 ID ); // 構成要素
 static u32 GetComponentsTotalValue( const CIRCLE_GRAPH* graph ); // 全構成要素の合計値
 static u32 GetComponentsTotalPercentage( const CIRCLE_GRAPH* graph ); // 全構成要素が占める割合の合計値
 static void GetComponentCirclePointIndex( const GRAPH_COMPONENT* component, u8* destHeadIdx, u8* destTailIdx ); // 構成要素に該当する外周頂点のインデックス
 static GXRgb GetComponentOuterColor( const GRAPH_COMPONENT* component ); // 構成要素の外周の色
 static GXRgb GetComponentCenterColor( const GRAPH_COMPONENT* component ); // 構成要素の中心の色
 static BOOL GetDrawEnable( const CIRCLE_GRAPH* graph ); // 描画が許可されているかどうか
+static BOOL CheckAnime( const CIRCLE_GRAPH* graph ); // アニメーション中かどうか
+static void GetPointPos( const CIRCLE_GRAPH* graph, u8 componentID, VecFx16* dest ); // 矢印の指すべき座標
 
 //-----------------------------------------------------------------------------------------
 // 初期化・生成・破棄・準備
@@ -193,6 +190,11 @@ static void DeleteGraph( CIRCLE_GRAPH* graph );              // 円グラフ 破棄
 static void CreateStateQueue( CIRCLE_GRAPH* graph ); // 状態キュー 生成
 static void DeleteStateQueue( CIRCLE_GRAPH* graph ); // 状態キュー 破棄
 static void SetupCirclePoints( CIRCLE_GRAPH* graph ); // 外周頂点の座標 準備
+
+//-----------------------------------------------------------------------------------------
+// 計算
+//-----------------------------------------------------------------------------------------
+static void CalcScreenPos( const VecFx16* pos, int* destX, int* destY ); // スクリーン座標を計算する
 
 //-----------------------------------------------------------------------------------------
 // デバッグ
@@ -455,6 +457,39 @@ u8 CIRCLE_GRAPH_GetComponentPercentage( const CIRCLE_GRAPH* graph, u8 componentI
   return component->percentage;
 }
 
+//-----------------------------------------------------------------------------------------
+/**
+ * @breif アニメーション中かどうかを判定する
+ *
+ * @param graph
+ *
+ * @return アニメーション中なら TRUE
+ *         そうでなければ FALSE
+ */
+//-----------------------------------------------------------------------------------------
+BOOL CIRCLE_GRAPH_IsAnime( const CIRCLE_GRAPH* graph )
+{
+  return CheckAnime( graph );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 矢印が指し示すべき座標を取得する
+ *
+ * @param graph
+ * @param componentID 構成要素ID
+ * @param destX       スクリーンx座標の格納先
+ * @param destY       スクリーンy座標の格納先
+ */
+//-----------------------------------------------------------------------------------------
+void CIRCLE_GRAPH_GetComponentPointPos( const CIRCLE_GRAPH* graph, u8 componentID, int* destX, int* destY )
+{
+  VecFx16 pos;
+
+  GetPointPos( graph, componentID, &pos );
+  CalcScreenPos( &pos, destX, destY );
+}
+
 
 //=========================================================================================
 // 描画
@@ -632,6 +667,19 @@ static void SetMatrix( const CIRCLE_GRAPH* graph )
             FX_F32_TO_FX16(0.1f),
             FX_F32_TO_FX16(5.0f),
             NULL ); 
+
+  NNS_G3dGlbInit();
+
+  NNS_G3dGlbLookAt( &camPos, &camUp, &target );
+
+  NNS_G3dGlbOrtho( FX32_CONST(1.0f),
+                   FX32_CONST(-1.0f),
+                   FX32_CONST(-1.333f),
+                   FX32_CONST(1.333f),
+                   FX32_CONST(0.1f),
+                   FX32_CONST(5.0f) );
+
+  NNS_G3dGlbFlushP();
 }
 
 
@@ -651,8 +699,7 @@ static void GraphMain( CIRCLE_GRAPH* graph )
 {
   if( graph->stopFlag == FALSE ) {
     // 状態ごとのメイン動作
-    switch( graph->state )
-    {
+    switch( graph->state ) {
     case GRAPH_STATE_HIDE:      GraphAct_HIDE( graph );      break;
     case GRAPH_STATE_ANALYZE:   GraphAct_ANALYZE( graph );   break;
     case GRAPH_STATE_APPEAR:    GraphAct_APPEAR( graph );    break;
@@ -781,8 +828,7 @@ static void CountUpStateCount( CIRCLE_GRAPH* graph )
   graph->stateCount++;
 
   // 最大値を決定
-  switch( graph->state )
-  {
+  switch( graph->state ) {
   case GRAPH_STATE_HIDE:      maxCount = 0xffffffff;       break;
   case GRAPH_STATE_ANALYZE:   maxCount = ANALYZE_FRAMES;   break;
   case GRAPH_STATE_APPEAR:    maxCount = APPEAR_FRAMES;    break;
@@ -869,8 +915,7 @@ static void SwitchState( CIRCLE_GRAPH* graph )
 static void ChangeState( CIRCLE_GRAPH* graph, GRAPH_STATE nextState )
 {
   // 現在の状態の終了処理
-  switch( graph->state )
-  {
+  switch( graph->state ) {
   case GRAPH_STATE_HIDE:      GraphFinish_HIDE( graph );      break;
   case GRAPH_STATE_ANALYZE:   GraphFinish_ANALYZE( graph );   break;
   case GRAPH_STATE_APPEAR:    GraphFinish_APPEAR( graph );    break;
@@ -885,8 +930,7 @@ static void ChangeState( CIRCLE_GRAPH* graph, GRAPH_STATE nextState )
   graph->stateCount = 0;
 
   // 次の状態の状態の開始処理
-  switch( nextState )
-  {
+  switch( nextState ) {
   case GRAPH_STATE_HIDE:      GraphStart_HIDE( graph );      break;
   case GRAPH_STATE_ANALYZE:   GraphStart_ANALYZE( graph );   break;
   case GRAPH_STATE_APPEAR:    GraphStart_APPEAR( graph );    break;
@@ -898,8 +942,7 @@ static void ChangeState( CIRCLE_GRAPH* graph, GRAPH_STATE nextState )
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: change state ==> " );
-  switch( nextState )
-  {
+  switch( nextState ) {
   case GRAPH_STATE_HIDE:      OS_TFPrintf( PRINT_TARGET, "HIDE" );      break;
   case GRAPH_STATE_ANALYZE:   OS_TFPrintf( PRINT_TARGET, "ANALYZE" );   break;
   case GRAPH_STATE_APPEAR:    OS_TFPrintf( PRINT_TARGET, "APPEAR" );    break;
@@ -1356,12 +1399,12 @@ static void SetCenterPos( CIRCLE_GRAPH* graph, const VecFx16* pos )
  * @brief 構成要素のランクを取得する
  *
  * @param graph
- * @param ID    構成要素ID
+ * @param componentID    構成要素ID
  *
  * @return 指定したIDの構成要素が上位何位なのか 
  */
 //-----------------------------------------------------------------------------------------
-const u8 GetComponentRank( const CIRCLE_GRAPH* graph, u8 ID )
+const u8 GetComponentRank( const CIRCLE_GRAPH* graph, u8 componentID )
 {
   int rank;
   int componentNum;
@@ -1373,7 +1416,7 @@ const u8 GetComponentRank( const CIRCLE_GRAPH* graph, u8 ID )
     const GRAPH_COMPONENT* component = &( graph->components[ rank ] );
 
     // 発見
-    if( component->ID == ID ) { return rank; }
+    if( component->ID == componentID ) { return rank; }
   }
 
   // 指定されたIDを持つ構成要素が存在しない
@@ -1404,16 +1447,16 @@ const GRAPH_COMPONENT* GetComponentByRank( const CIRCLE_GRAPH* graph, int rank )
  * @brief 構成要素を取得する
  *
  * @param graph
- * @param ID 構成要素ID
+ * @param componentID 構成要素ID
  *
  * @param 指定したIDを持つ構成要素
  */
 //-----------------------------------------------------------------------------------------
-const GRAPH_COMPONENT* GetComponentByID( const CIRCLE_GRAPH* graph, u8 ID )
+const GRAPH_COMPONENT* GetComponentByID( const CIRCLE_GRAPH* graph, u8 componentID )
 { 
   int rank;
 
-  rank = GetComponentRank( graph, ID );
+  rank = GetComponentRank( graph, componentID );
   return GetComponentByRank( graph, rank );
 }
 
@@ -1523,6 +1566,32 @@ static GXRgb GetComponentCenterColor( const GRAPH_COMPONENT* component )
 
 //-----------------------------------------------------------------------------------------
 /**
+ * @brief 矢印が指すべき座標を取得する
+ * 
+ * @param graph
+ * @param componentID 構成要素ID
+ * @param dest        計算した座標の格納先
+ */
+//-----------------------------------------------------------------------------------------
+static void GetPointPos( const CIRCLE_GRAPH* graph, u8 componentID, VecFx16* dest )
+{
+  const GRAPH_COMPONENT* component;
+  u8 headIdx, tailIdx, centerIdx;
+
+  // 構成要素に該当する外周頂点のインデックスを取得
+  component = GetComponentByID( graph, componentID );
+  GetComponentCirclePointIndex( component, &headIdx, &tailIdx );
+
+  // 外周頂点の中間地点にある頂点インデックスを算出
+  centerIdx = ( headIdx + tailIdx ) / 2;
+
+  // 指し示す座標を決定
+  *dest = graph->circlePoints[ centerIdx ];
+  VEC_Fx16Add( &(graph->centerPos), dest, dest );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
  * @brief 描画が許可されているかどうか
  *
  * @param graph
@@ -1534,6 +1603,30 @@ static GXRgb GetComponentCenterColor( const GRAPH_COMPONENT* component )
 static BOOL GetDrawEnable( const CIRCLE_GRAPH* graph )
 {
   return graph->drawFlag;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @breif アニメーション中かどうか
+ *
+ * @param graph
+ *
+ * @return アニメーション中なら TRUE
+ *         そうでなければ FALSE
+ */
+//-----------------------------------------------------------------------------------------
+static BOOL CheckAnime( const CIRCLE_GRAPH* graph )
+{
+  switch( graph->state ) {
+    case GRAPH_STATE_HIDE:      return FALSE;
+    case GRAPH_STATE_ANALYZE:   return TRUE;
+    case GRAPH_STATE_APPEAR:    return TRUE;
+    case GRAPH_STATE_DISAPPEAR: return TRUE;
+    case GRAPH_STATE_STAY:      return FALSE;
+    case GRAPH_STATE_UPDATE:    return TRUE;
+    default: GF_ASSERT(0);
+  }
+  return FALSE;
 }
 
 
@@ -1717,6 +1810,34 @@ static void SetupCirclePoints( CIRCLE_GRAPH* graph )
 }
 
 
+//=========================================================================================
+// ■計算
+//=========================================================================================
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @breif スクリーン座標を求める
+ *
+ * @param pos   変換するワールド座標
+ * @param destX 求めたスクリーンx座標の格納先
+ * @param destY 求めたスクリーンy座標の格納先Y
+ */
+//-----------------------------------------------------------------------------------------
+static void CalcScreenPos( const VecFx16* pos, int* destX, int* destY )
+{
+  VecFx32 posFx32;
+  int ret;
+
+  // ベクトルを変換
+  posFx32.x = FX32_CONST( FX_FX16_TO_F32(pos->x) );
+  posFx32.y = FX32_CONST( FX_FX16_TO_F32(pos->y) );
+  posFx32.z = FX32_CONST( FX_FX16_TO_F32(pos->z) );
+
+  ret = NNS_G3dWorldPosToScrPos( &posFx32, destX, destY );
+
+  OS_Printf( "------------------------%d\n", ret );
+}
+
 
 //=========================================================================================
 // ■デバッグ
@@ -1744,8 +1865,7 @@ static void DebugPrint_stateQueue( const CIRCLE_GRAPH* graph )
   {
     data = QUEUE_PeekData( graph->stateQueue, i );
 
-    switch( data )
-    {
+    switch( data ) {
     case GRAPH_STATE_HIDE:      OS_TFPrintf( PRINT_TARGET, "HIDE ");      break;
     case GRAPH_STATE_ANALYZE:   OS_TFPrintf( PRINT_TARGET, "ANALYZE ");   break;
     case GRAPH_STATE_APPEAR:    OS_TFPrintf( PRINT_TARGET, "APPEAR ");    break;
