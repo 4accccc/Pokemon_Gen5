@@ -134,9 +134,9 @@ FS_EXTERN_OVERLAY(ui_common);
 #define LIST_MARLER_OFS (5*8)     //リスト項目は５キャラ間隔
 #define BASE_FLOOR_IDX (3)       //計算基底フロアインデックス
 
-//ビルフロア塗りつぶし終了Ｙドット位置（絶対座標）ここの位置がフロアインデックス232(233カ国目)に相当
+//ビルフロア塗りつぶし開始Ｙドット位置（絶対座標）ここの位置がフロアインデックス0(1カ国目234階)に相当
 #define BUIL_FLOOR_YDOT_TOP    (103)
-//ビルフロア塗りつぶし開始Ｙドット位置（絶対座標）ここの位置がフロアインデックス0（１カ国目）に相当
+//ビルフロア塗りつぶし開始Ｙドット位置（絶対座標）ここの位置がフロアインデックス232（233カ国目2階）に相当
 #define BUIL_FLOOR_YDOT_BOTTOM    (335)
 
 #define SCROLL_BAR_UY (8)
@@ -395,7 +395,7 @@ static const UI_SCENE_FUNC_SET c_scene_func_tbl[ UNS_SCENE_ID_MAX ] =
     NULL,
     SceneConfirm_End,
   },
-  // UNS_SCENE_ID_NG_JUMP
+  // UNS_SCENE_ID_JUMP_NG
   {
     SceneJumpNG_Init,
     NULL,
@@ -1445,6 +1445,7 @@ static void ListCallBack_Scroll( void * work, s8 mv )
 static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
 {
   ARCHANDLE* ah;
+  int i;
 
   static FRAMELIST_HEADER header = {
     BG_FRAME_LIST_M,
@@ -1489,6 +1490,23 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
 */
   header.cbWork = wk;
 
+  //初期位置セット
+  for (i=0; i<UN_LIST_MAX; i++)
+  {
+    int floor;
+    floor = UN_LIST_MAX - i + 1;
+    if( floor == wk->pwk->InFloor )
+    {
+      if( i > (UN_LIST_MAX-CUR_MOVE_RANGE) )
+      {
+        header.initPos    = i - ( UN_LIST_MAX-CUR_MOVE_RANGE );
+        header.initScroll = i - header.initPos;
+      }else{
+        header.initScroll = i;
+      }
+    }
+  }
+
   wk->lwk = FRAMELIST_Create( &header, wk->heap_id );
 
   // アーカイブ オープン
@@ -1506,13 +1524,12 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
         
   // リスト項目生成
   {
-    int i;
     GFL_MSGDATA* mman;
     
     mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
         NARC_message_wifi_place_msg_UN_dat, wk->heap_id );
 
-    for( i=0; i<UN_LIST_MAX; i++)
+    for(i=0; i<UN_LIST_MAX; i++)
     {
       int type;
       int idx;
@@ -1813,8 +1830,15 @@ static BOOL SceneSelectFloor_Main( UI_SCENE_CNT_PTR cnt, void* work )
     //項目有効判定
     if ( wk->Valid[list_pos] == TRUE )
     {
+      int scene;
+      int floor;
       wk->ListSelPos = list_pos;
-      UI_SCENE_CNT_SetNextScene( cnt, UNS_SCENE_ID_CONFIRM );
+      floor = UN_LIST_MAX - list_pos + 1;
+      //選んだフロアがアプリ起動時に受け渡したフロアと同じ場合は飛べないことを警告するメッセージを出す
+      if ( wk->pwk->InFloor == floor ) scene = UNS_SCENE_ID_JUMP_NG;
+      else scene = UNS_SCENE_ID_CONFIRM;
+
+      UI_SCENE_CNT_SetNextScene( cnt, scene );
       return TRUE;
     }
     else
@@ -2005,7 +2029,7 @@ static BOOL SceneConfirm_End( UI_SCENE_CNT_PTR cnt, void* work )
 
 //-----------------------------------------------------------------------------
 /**
- *  @brief  SCENE 確認画面 初期化処理
+ *  @brief  SCENE ジャンプ不可メッセージ出力
  *
  *  @param  UI_SCENE_CNT_PTR cnt
  *  @param  work 
@@ -2024,43 +2048,12 @@ static BOOL SceneJumpNG_Init( UI_SCENE_CNT_PTR cnt, void* work )
     // パッシブ状態に遷移
     PASSIVE_Request();
 
-#if 0
-    TOUCHBAR_SetVisible( wk->touchbar, TOUCHBAR_ICON_CUR_L, FALSE );
-    TOUCHBAR_SetVisible( wk->touchbar, TOUCHBAR_ICON_CUR_R, FALSE );i++;
-    ;i++TOUCHBAR_SetVisible( wk->touchbar, TOUCHBAR_ICON_RETURN, FALSE );
-#endif
-    {
-      int code;
-      //リスト位置を国コードに変換
-///>      code = g_FloorTable[(UN_LIST_MAX-1) - wk->ListSelPos];
-      code = g_FloorTable[wk->ListSelPos];
-      if ( (0<code)&&(code<UN_LIST_MAX) )
-      {
-        //国名タグ展開
-        WORDSET_RegisterCountryName( wk->cnt_msg->wordset, 0, code );
-      }
-      else GF_ASSERT_MSG(0,"listpos = %d code = %d",wk->ListSelPos, code);
-    }
-    MSG_CNT_SetPrint( wk->cnt_msg, un_reception_msg_01 );
+    MSG_CNT_SetPrint( wk->cnt_msg, un_reception_msg_06 );
     UI_SCENE_CNT_IncSubSeq( cnt );
     break;
 
   case 1:
-    if( MSG_CNT_PrintProc(wk->cnt_msg) )
-    {
-      UI_SCENE_CNT_IncSubSeq( cnt );
-    }
-    break;
-
-  case 2:
-    // タスクメニュー表示
-    wk->menu = UNSelect_TASKMENU_Init( 
-        wk->menu_res, 
-        MSG_CNT_GetMsgData(wk->cnt_msg), 
-        wk->heap_id );
-
     return TRUE;
-
   default : GF_ASSERT(0);
   }
 
@@ -2081,37 +2074,7 @@ static BOOL SceneJumpNG_Main( UI_SCENE_CNT_PTR cnt, void* work )
 {
   UN_SELECT_MAIN_WORK* wk = work;
 
-  //タスクメニューメイン処理
-  UNSelect_TASKMENU_Main( wk->menu );
-
-  if( APP_TASKMENU_IsFinish( wk->menu ) )
-  {
-    u8 pos = APP_TASKMENU_GetCursorPos( wk->menu );
-
-    switch( pos )
-    {
-    case 0 :
-      // 終了
-      app_end( wk, END_MODE_DECIDE );
-      PASSIVE_Reset();
-      MSG_CNT_PrintClear( wk->cnt_msg );
-      UNSelect_TASKMENU_Exit( wk->menu );
-      UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
-      break;
-
-    case 1 :
-      // 選択画面に戻る
-      PASSIVE_Reset();
-      MSG_CNT_PrintClear( wk->cnt_msg );
-      UNSelect_TASKMENU_Exit( wk->menu );
-      UI_SCENE_CNT_SetNextScene( cnt, UNS_SCENE_ID_SELECT_FLOOR );
-      break;
-
-    default : GF_ASSERT(0);
-    }
-
-    return TRUE;
-  }
+  if( MSG_CNT_PrintProc(wk->cnt_msg) ) return TRUE;
 
   return FALSE;
 }
@@ -2130,6 +2093,10 @@ static BOOL SceneJumpNG_End( UI_SCENE_CNT_PTR cnt, void* work )
 {
   UN_SELECT_MAIN_WORK* wk = work;
 
+  // 選択画面に戻る
+  PASSIVE_Reset();
+  MSG_CNT_PrintClear( wk->cnt_msg );
+  UI_SCENE_CNT_SetNextScene( cnt, UNS_SCENE_ID_SELECT_FLOOR );
   return TRUE;
 }
 
@@ -2147,7 +2114,7 @@ static void HBlankTask( GFL_TCB * tcb, void * work )
 {
 	s32	vcount = GX_GetVCount();
 
-#if 0  
+#if 1  
   int base = 4*8;
 
 	if( vcount >= base+LIST_MARLER_OFS*3 ){
@@ -2452,7 +2419,7 @@ static void SetBuilMarkerPos( UN_SELECT_MAIN_WORK *wk )
 
     //座標セット
     GFL_CLACT_WK_GetPos( clwk, &calc_pos, CLWK_SETSF_NONE ); //絶対座標指定
-    calc_pos.y = BUIL_FLOOR_YDOT_BOTTOM - wk->MarkerFloor[i];
+    calc_pos.y = BUIL_FLOOR_YDOT_TOP + wk->MarkerFloor[i];
     GFL_CLACT_WK_SetPos( clwk, &calc_pos, CLWK_SETSF_NONE ); //絶対座標指定
   }
 }
