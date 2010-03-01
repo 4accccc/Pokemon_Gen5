@@ -164,6 +164,7 @@ struct _FIELD_MENU_WORK
   FIELD_SUBSCREEN_WORK *subScrWork;
   FIELD_MENU_STATE state;
   EVENTWORK *ev;
+  MYSTATUS  *my;
   u16 zoneId;
 
   u8  cursorPosX; //0か1
@@ -214,14 +215,14 @@ static void _cancel_func_set( FIELD_MENU_WORK *work, BOOL isCancel );
 
 static const u16 FIELD_MENU_ITEM_MSG_ARR[FMIT_MAX] =
 {
-  FLDMAPMENU_STR_ITEM07,
-  FLDMAPMENU_STR_ITEM02,
-  FLDMAPMENU_STR_ITEM01,
-  FLDMAPMENU_STR_ITEM03,
-  FLDMAPMENU_STR_ITEM04,
-  FLDMAPMENU_STR_ITEM05,
-  FLDMAPMENU_STR_ITEM06,
-  FLDMAPMENU_STR_ITEM09,
+  FLDMAPMENU_STR_ITEM07,    // 「」空白
+  FLDMAPMENU_STR_ITEM02,    // 「ポケモン」
+  FLDMAPMENU_STR_ITEM01,    // 「ずかん」
+  FLDMAPMENU_STR_ITEM03,    // 「バッグ」
+  FLDMAPMENU_STR_ITEM04,    // 「じぶん」
+  FLDMAPMENU_STR_ITEM05,    // 「レポート」
+  FLDMAPMENU_STR_ITEM06,    // 「せってい」
+  FLDMAPMENU_STR_ITEM09,    // 「」空白
 };
 static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX][3] =
 {
@@ -229,22 +230,27 @@ static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX][3] =
   { NARC_field_menu_menu_obj_common_NCGR, 
     NARC_field_menu_menu_obj_common_NCER,
     NARC_field_menu_menu_obj_common_NANR},
-
+  // モンスターボール
   { NARC_field_menu_menu_icon_poke_NCGR,
     NARC_field_menu_menu_icon_poke_NCER,
     NARC_field_menu_menu_icon_poke_NANR},
+  // ずかん
   { NARC_field_menu_menu_icon_zukan_NCGR,
     NARC_field_menu_menu_icon_zukan_NCER,
     NARC_field_menu_menu_icon_zukan_NANR},
+  // バッグ
   { NARC_field_menu_menu_icon_itembag_NCGR,
     NARC_field_menu_menu_icon_itembag_NCER,
     NARC_field_menu_menu_icon_itembag_NANR},
+  // トレーナーカード
   { NARC_field_menu_menu_icon_tcard_NCGR,
     NARC_field_menu_menu_icon_tcard_NCER,
     NARC_field_menu_menu_icon_tcard_NANR},
+  // レポートアイコン
   { NARC_field_menu_menu_icon_report_NCGR,
     NARC_field_menu_menu_icon_report_NCER,
     NARC_field_menu_menu_icon_report_NANR},
+  // 設定画面アイコン
   { NARC_field_menu_menu_icon_confing_NCGR,
     NARC_field_menu_menu_icon_confing_NCER,
     NARC_field_menu_menu_icon_confing_NANR},
@@ -273,6 +279,7 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , const HEAPID tempHea
   work->state = FMS_WAIT_INIT;
   work->zoneId = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gameSys) );
   work->ev = GAMEDATA_GetEventWork( gameData );
+  work->my = GAMEDATA_GetMyStatus( gameData );
 
   
   work->cursorPosX = 0;
@@ -773,6 +780,92 @@ int FIELDMENU_GetMenuType( EVENTWORK *ev, int zoneId )
 }
 
 
+
+// menuTypeに対応したアイコンの数
+//static const u8 menu_type_table[]={
+//  6,  // FIELD_MENU_NORMAL=0,            通常メニュー
+//  5,  // FIELD_MENU_UNION,               ユニオンルーム
+//  5,  // FIELD_MENU_NO_ZUKAN,            図鑑無し
+//  4,  // FIELD_MENU_NO_POKEMON_NO_ZUKAN, 図鑑無し・ポケモン無し
+//  5,  // FIELD_MENU_PLEASURE_BOAT,       遊覧船内
+//};
+
+// --------------------------------------------------
+// menuType毎の項目列
+// --------------------------------------------------
+static const FIELD_MENU_ITEM_TYPE typeArr[][7] =
+{
+  { //通常
+    FMIT_POKEMON,
+    FMIT_ZUKAN,
+    FMIT_ITEMMENU,
+    FMIT_TRAINERCARD,
+    FMIT_REPORT,
+    FMIT_CONFING,
+    FMIT_EXIT,
+  },
+  { //ユニオン
+    FMIT_POKEMON,
+    FMIT_ZUKAN,
+    FMIT_ITEMMENU,
+    FMIT_TRAINERCARD,
+    FMIT_CONFING,
+    FMIT_NONE,
+    FMIT_EXIT,
+  },
+  { //図鑑無し
+    FMIT_POKEMON,
+    FMIT_ITEMMENU,
+    FMIT_TRAINERCARD,
+    FMIT_REPORT,
+    FMIT_CONFING,
+    FMIT_NONE,
+    FMIT_EXIT,
+  },
+  { //ポケモン無し・図鑑無し
+    FMIT_ITEMMENU,
+    FMIT_TRAINERCARD,
+    FMIT_REPORT,
+    FMIT_CONFING,
+    FMIT_NONE,
+    FMIT_NONE,
+    FMIT_EXIT,
+  },
+  { //遊覧船
+    FMIT_POKEMON,
+    FMIT_ZUKAN,
+    FMIT_ITEMMENU,
+    FMIT_TRAINERCARD,
+    FMIT_CONFING,
+    FMIT_NONE,
+    FMIT_EXIT,
+  },
+};
+
+static int _get_menu_num(int menutype)
+{
+  int n=0,count=0;
+
+
+  while( typeArr[menutype][n]!=FMIT_EXIT ){
+    if(typeArr[menutype][n]!=FMIT_NONE){
+      count++;
+    }
+    n++;
+  }
+  return count;
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief メニューアイコン配置初期化
+ *
+ * @param   work    
+ * @param   arcHandle   
+ * @param   menuType    
+ */
+//----------------------------------------------------------------------------------
 static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, int menuType )
 {
   //TODO 場所により個数などが変動することを想定
@@ -787,57 +880,6 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, 
     {  6,16 },
     { 22,16 },
     { 13,21 },
-  };
-
-  static const FIELD_MENU_ITEM_TYPE typeArr[][7] =
-  {
-    { //通常
-      FMIT_POKEMON,
-      FMIT_ZUKAN,
-      FMIT_ITEMMENU,
-      FMIT_TRAINERCARD,
-      FMIT_REPORT,
-      FMIT_CONFING,
-      FMIT_EXIT,
-    },
-    { //ユニオン
-      FMIT_POKEMON,
-      FMIT_ZUKAN,
-      FMIT_ITEMMENU,
-      FMIT_TRAINERCARD,
-      FMIT_CONFING,
-      FMIT_NONE,
-      FMIT_EXIT,
-    },
-    { //図鑑無し
-      FMIT_POKEMON,
-      FMIT_ITEMMENU,
-      FMIT_TRAINERCARD,
-      FMIT_REPORT,
-      FMIT_CONFING,
-      FMIT_NONE,
-      FMIT_EXIT,
-    },
-    { //ポケモン無し・図鑑無し
-      FMIT_ITEMMENU,
-      FMIT_TRAINERCARD,
-      FMIT_REPORT,
-      FMIT_CONFING,
-      FMIT_NONE,
-      FMIT_NONE,
-      FMIT_EXIT,
-    },
-    { //遊覧船
-      FMIT_POKEMON,
-      FMIT_ZUKAN,
-      FMIT_ITEMMENU,
-      FMIT_TRAINERCARD,
-      FMIT_CONFING,
-      FMIT_NONE,
-      FMIT_EXIT,
-    },
-
-
   };
 
   GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , 
@@ -856,11 +898,10 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, 
     if( itemType == FMIT_TRAINERCARD )
     {
       //トレーナーカード
-      MYSTATUS  *mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
       initWork.str = GFL_STR_CreateBuffer( 16 , work->tempHeapId );
-      if( MyStatus_CheckNameClear( mystatus ) == FALSE )
+      if( MyStatus_CheckNameClear( work->my ) == FALSE )
       {
-        const STRCODE *myname = MyStatus_GetMyName( mystatus );
+        const STRCODE *myname = MyStatus_GetMyName( work->my );
         GFL_STR_SetStringCode( initWork.str , myname );
       }
       else
@@ -1020,21 +1061,6 @@ static int _get_nowcursor_pos( int x, int y )
 // 4     5
 //   6(7)
 
-// 上下左右の順
-static const u8 move_table[][8][4]={
- {{0,2,0,1,},{1,3,0,1,},{0,2,2,3,},{1,3,2,3,},{6,6,6,6,},{6,6,6,6},{0xfe,6,6,6,},{0xfe,6,6,6,},},  // 4個
- {{0,2,0,1,},{1,3,0,1,},{0,4,2,3,},{1,3,2,3,},{2,4,4,4,},{6,6,6,6},{   4,6,6,6,},{   4,6,6,6,},},  // 5個
- {{0,2,0,1,},{1,3,0,1,},{0,4,2,3,},{1,5,2,3,},{2,4,4,5,},{3,5,4,5},{0xff,6,6,6,},{0xff,6,6,6,},},  // 6個
-};
-
-// menuTypeに対応したアイコンの数
-static const u8 menu_type_table[]={
-  6,  // FIELD_MENU_NORMAL=0,            通常メニュー
-  5,  // FIELD_MENU_UNION,               ユニオンルーム
-  5,  // FIELD_MENU_NO_ZUKAN,            図鑑無し
-  4,  // FIELD_MENU_NO_POKEMON_NO_ZUKAN, 図鑑無し・ポケモン無し
-  5,  // FIELD_MENU_PLEASURE_BOAT,       遊覧船内
-};
 
 // カーソル位置をXYに振り分けるテーブル
 static const u8 pos2xy_table[][2]={
@@ -1044,6 +1070,12 @@ static const u8 pos2xy_table[][2]={
   {0,3},
 };
 
+// 上下左右の順
+static const u8 move_table[][8][4]={
+ {{0,2,0,1,},{1,3,0,1,},{0,2,2,3,},{1,3,2,3,},{6,6,6,6,},{6,6,6,6},{0xfe,6,6,6,},{0xfe,6,6,6,},},  // 4個
+ {{0,2,0,1,},{1,3,0,1,},{0,4,2,3,},{1,3,2,3,},{2,4,4,4,},{6,6,6,6},{   4,6,6,6,},{   4,6,6,6,},},  // 5個
+ {{0,2,0,1,},{1,3,0,1,},{0,4,2,3,},{1,5,2,3,},{2,4,4,5,},{3,5,4,5},{0xff,6,6,6,},{0xff,6,6,6,},},  // 6個
+};
 
 //----------------------------------------------------------------------------------
 /**
@@ -1059,14 +1091,16 @@ static const u8 pos2xy_table[][2]={
 static BOOL _move_cursor( FIELD_MENU_WORK* work, int move )
 {
   int now = _get_nowcursor_pos(work->cursorPosX, work->cursorPosY);
-  int ret;
+  int ret,menunum;
   int i;
 
   if(now<0 || now>7){
     GF_ASSERT_MSG(0,"カーソルが範囲外 (%d,%d)", work->cursorPosX, work->cursorPosY);
   }
 
-  ret = move_table[menu_type_table[work->menuType]-4][now][move];
+  // タイプからメニューの個数を取得
+  menunum = _get_menu_num( work->menuType )-4;
+  ret = move_table[menunum][now][move];
 
   
   if(now!=ret){     // 特殊移動1(0xffの場合はY座標的に1段上に移動する）
