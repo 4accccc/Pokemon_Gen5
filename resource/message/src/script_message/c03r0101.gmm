@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-01T16:09:17"/>
+	<create user="matsumiya" host="W00224" date="2010-03-01T18:49:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -823,7 +823,7 @@ assistantm_01_15へ続く</comment>
 対戦に　役立てたいそうだ</language>
 	</row>
 
-	<row id="msg_c03r0101_assistantm_01_13ｊ" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r0101_assistantm_01_13j" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・隊長
 『いらいをうける』を選択し、
 依頼一覧から『じかんちょうさ』を選択し、
@@ -886,7 +886,7 @@ assistantm_01_15へ続く</comment>
 理由は　言えんな</language>
 	</row>
 
-	<row id="msg_c03r0101_assistantm_01_13ｌ" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r0101_assistantm_01_13l" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・隊長
 『いらいをうける』を選択し、
 依頼一覧から『じかんちょうさ』を選択し、
@@ -1536,7 +1536,7 @@ assistantm_01_15へ続く
 調査結果を　対戦に　役立てたいそうだ</language>
 	</row>
 
-	<row id="msg_c03r0101_assistantm_01_14ｊ" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r0101_assistantm_01_14j" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>・隊長
 『いらいをうける』を選択し、
 依頼一覧から『にんずうちょうさ』を選択し、
@@ -1600,7 +1600,7 @@ assistantm_01_15へ続く
 それを知りたくてな…　え？　理由は　言えんな</language>
 	</row>
 
-	<row id="msg_c03r0101_assistantm_01_14ｌ" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r0101_assistantm_01_14l" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>・隊長
 『いらいをうける』を選択し、
 依頼一覧から『にんずうちょうさ』を選択し、
