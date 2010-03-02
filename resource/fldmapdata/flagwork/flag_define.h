@@ -120,7 +120,7 @@
 #define FE_SODATEYA_AZUKE                  104 /* 0x0068 育て屋に預けたことがある */
 #define FE_CONNECT_UNION_GUIDE_TALK        105 /* 0x0069 ユニオンガイドと会話した */
 #define FE_FIRST_POKE_GET                  106 /* 0x006a ポケモン入手済み */
-#define FE_ZUKAN_GET                       107 /* 0x006b 図鑑ゲット(イベント用) */
+		/* not used   107(0x006b) */
 #define FE_R30R0201_GAKUSYUUSOUTI_GET      108 /* 0x006c 学習装置を入手 */
 #define FE_T02R0302_BALLGET                109 /* 0x006d カノコタウン民家２F：親父からスーパーボール入手した */
 #define FE_C01R0102_ITEM_GET               110 /* 0x006e サンヨウシティビルＡ ２Ｆ：アイテム入手イベント（アイテム未定） */
