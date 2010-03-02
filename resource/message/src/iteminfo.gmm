@@ -5715,6 +5715,33 @@
 </language>
 	</row>
 
+	<row id="ITEMINFO_621">
+		<language name="JPN" width="256">キャモメが　はいたつ　している
+たいせつな　てがみ。
+</language>
+		<language name="JPN_KANJI" width="256">キャモメが　はいたつ　している
+たいせつな　てがみ。
+</language>
+	</row>
+
+	<row id="ITEMINFO_622">
+		<language name="JPN" width="256">キャモメが　はいたつ　している
+たいせつな　てがみ。
+</language>
+		<language name="JPN_KANJI" width="256">キャモメが　はいたつ　している
+たいせつな　てがみ。
+</language>
+	</row>
+
+	<row id="ITEMINFO_623">
+		<language name="JPN" width="256">キャモメが　はいたつ　している
+たいせつな　てがみ。
+</language>
+		<language name="JPN_KANJI" width="256">キャモメが　はいたつ　している
+たいせつな　てがみ。
+</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
