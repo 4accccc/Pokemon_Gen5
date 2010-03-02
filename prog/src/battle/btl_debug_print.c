@@ -65,6 +65,10 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_ADAPTER_Create:                return "アダプタ(%d）作成：通信対応フラグ=%d\n";
 
   case DBGSTR_MAIN_PokeConGetByPos:          return "存在しない位置(pos=%d, clientID=%d, idx=%d)のポケモンデータを参照した\n";
+  case DBGSTR_MAIN_PartyDataNotifyComplete:  return "パーティデータ相互受信できました。\n";
+  case DBGSTR_MAIN_AIPartyDataSendComplete:  return "AIパーティデータ受信完了\n";
+  case DBGSTR_MAIN_SendAIParty:              return "AIパーティメンバー送信完了 ... pokeCnt=%d\n  monsno=";
+
 
   case DBGSTR_CLIENT_RETURN_CMD_START:       return "ID[%d], 返信開始へ\n";
   case DBGSTR_CLIENT_RETURN_CMD_DONE:        return "ID[%d], 返信しました\n";
@@ -93,12 +97,14 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_ForbidEscape_Jiryoku_Chk:      return "逃げ交換禁止チェック「じりょく」by pokeID(%d)\n";
   case DBGSTR_CLIENT_ForbidEscape_Jiryoku_Enable:   return "  「じりょく」有効！\n";
   case DBGSTR_CLIENT_UpdateWazaProcResult:          return "ワザプロセス情報更新 : PokeID=%d, OrgWaza=%d, ActWaza=%d, ActTargetPos=%d, ActEnable=%d\n";
-  case DBGSTR_CLIENT_CmdLimitTimeEnable:  return "コマンド選択制限時間が有効 -> %d sec\n";
-  case DBGSTR_CLIENT_CmdLimitTimeOver:    return "コマンド選択タイムアップ ... 強制終了フラグON\n";
-  case DBGSTR_CLIENT_ForcePokeChange:     return "強制入れ替え %d/%d PosIdx=%d, MemberIdx=%d\n";
-  case DBGSTR_CLIENT_UpdateEnemyBaseHP:   return "相手ポケ基準HP値を更新 ->%d  (Poke=%d)\n";
+  case DBGSTR_CLIENT_CmdLimitTimeEnable:   return "コマンド選択制限時間が有効 -> %d sec\n";
+  case DBGSTR_CLIENT_CmdLimitTimeOver:     return "コマンド選択タイムアップ ... 強制終了フラグON\n";
+  case DBGSTR_CLIENT_ForcePokeChange:      return "強制入れ替え %d/%d PosIdx=%d, MemberIdx=%d\n";
+  case DBGSTR_CLIENT_UpdateEnemyBaseHP:    return "相手ポケ基準HP値を更新 ->%d  (Poke=%d)\n";
   case DBGSTR_CLIENT_ForceQuitByTimeLimit: return "時間制限による強制終了(ClientID=%d)\n";
-  case DBGSTR_CLIENT_StartCmd:            return "Client(%d), AdaptCmd(%d) 実行開始\n";
+  case DBGSTR_CLIENT_StartCmd:             return "Client(%d), AdaptCmd(%d) 実行開始\n";
+  case DBGSTR_CLIENT_RecvedQuitCmd:        return "Client(%d), バトル終了コマンド受信\n";
+  case DBGSTR_CLIENT_ReplyToQuitCmd:       return "Client(%d), バトル終了コマンドに対し返信完了\n";
 
   case DBGSTR_BPP_NemuriWakeCheck:        return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
 
@@ -122,6 +128,9 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_NET_ServerDetermine:      return "サーバは netID=%d のマシンに決定\n";
   case DBGSTR_NET_SendAITrainerData:    return "AIトレーナーデータ送信完了, size=%d\n";
   case DBGSTR_NET_RecvAITrainerData:    return "AIトレーナーデータ受信完了, size=%d\n";
+  case DBGSTR_NET_AIPartyInfo:          return "Client(%d)=AIパーティと判断する (pokeCnt=%d)\n  monsno=";
+  case DBGSTR_NET_CreateAIPartyRecvBuffer: return "AIパーティデータ受信バッファを生成\n";
+  case DBGSTR_NET_RecvedAIPartyData:       return "AIパーティデータ受信 size=%d\n";
 
   case DBGSTR_CALCDMG_WazaParam:        return "ワザ情報：ID=%d, Type=%d\n";
   case DBGSTR_CALCDMG_BaseDamage:       return "基礎ダメージ値 (%d)\n";
@@ -171,7 +180,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_HitCheckInfo2:       return "防御ポケ[%d]  回避Rank=%d\n";
   case DBGSTR_SVFL_HitCheckInfo3:       return "命中ランク=%d, 命中率=%d, 命中率補正=%08x\n";
   case DBGSTR_SVFL_HitCheckInfo4:       return "最終命中率 = %d\n";
-  case DBGSTR_SVFL_StartAfterPokeChange: return "ターン途中ポケモン入れ替え後のサーバーコマンド生成\n";
+  case DBGSTR_SVFL_StartAfterPokeChange:return "ターン途中ポケモン入れ替え後のサーバーコマンド生成\n";
   case DBGSTR_SVFL_PokeChangeRootInfo:  return "クライアント(%d)のポケモン(位置%d) を、%d番目のポケといれかえる\n";
   case DBGSTR_SVFL_UseItemCall:         return "シューター「アイテムコール」使用  対象Poke=%d\n";
   case DBGSTR_SVFL_ChangePokeReqInfo:   return "クライアント[%d]   空いている位置の数=%d\n";
@@ -201,15 +210,16 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";
 
-
-  case DBGSTR_SERVER_FlowResult:        return "サーバー処理結果=%d\n";
+  case DBGSTR_SERVER_FlowResult:              return "サーバー処理結果=%d\n";
   case DBGSTR_SERVER_SendShooterChargeCmd:    return "シューターチャージコマンド発行\n";
   case DBGSTR_SERVER_ShooterChargeCmdDoneAll: return "全クライアントでシューターチャージコマンド処理終了\n";
   case DBGSTR_SERVER_SendActionSelectCmd:     return "アクション選択コマンド発行\n";
   case DBGSTR_SERVER_ActionSelectDoneAll:     return "アクション受け付け完了\n";
-  case DBGSTR_SV_ChangePokeOnTheTurn:    return "ターン途中のポケ入れ替え発生\n";
-  case DBGSTR_SV_PokeInReqForEmptyPos:   return "空き位置への新ポケ投入リクエスト受け付け\n";
-  case DBGSTR_SV_StartChangePokeInfo:    return "入れ替えポケモン選択へ  交替されるポケ数=%d\n";
+  case DBGSTR_SV_ChangePokeOnTheTurn:         return "ターン途中のポケ入れ替え発生\n";
+  case DBGSTR_SV_PokeInReqForEmptyPos:        return "空き位置への新ポケ投入リクエスト受け付け\n";
+  case DBGSTR_SV_StartChangePokeInfo:         return "入れ替えポケモン選択へ  交替されるポケ数=%d\n";
+  case DBGSTR_SV_SendQuitACmad:               return "全クライアントにバトル終了コマンド(%d)送信開始\n";
+  case DBGSTR_SV_ReplyQuitACmad:              return "全クライアントからバトル終了コマンド受信応答あり\n";
 
 
   case DBGSTR_SC_PutCmd:                return "[QUE]PutCmd=%d, Format=%02x, argCnt=%d, args=";
@@ -219,6 +229,10 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SC_ReadMsgParam:          return "[QUE] READ MSG SC=%d, StrID=%d";
   case DBGSTR_SC_PutMsg_SE:             return "  SE_ID=%d\n";
   case DBGSTR_SC_ArgsEqual:             return " args = ";
+  case DBGSTR_SC_ReadCmd:               return "Read cmd=%d\n";
+  case DBGSTR_SC_ReserveCmd:            return " -> reserved cmd=%d\n";
+
+
   case DBGSTR_EVENT_AddFactorInfo:      return "FactorType=%x, subPri=%x, TotalPriority=%x\n";
   case DBGSTR_EV_AddFactor:             return "[ADD] Factor=%p Depend=%d Type=%d, Pri=%06x [ADD]\n";
   case DBGSTR_EV_DelFactor:             return "[DEL] DEL Factor=%p Depend=%d, Type=%d [DEL]\n";
@@ -236,7 +250,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_HANDWAZA_CombiWazaExe:    return "ポケ(%d)がポケ(%d）のワザ(%d)に続けて合体ワザ発動->効果=%d\n";
 
 
-  case DBGSTR_val_comma:  return "%d,";
+  case DBGSTR_csv:  return "%d,";
   case DBGSTR_done: return "done!";
   case DBGSTR_LF: return "\n";
 

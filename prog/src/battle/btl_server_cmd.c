@@ -756,7 +756,7 @@ void SCQUE_PUT_Common( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ... )
     #if 1
     BTL_N_Printf( DBGSTR_SC_PutCmd, cmd, fmt, arg_cnt);
     for(i=0; i<arg_cnt; ++i){
-      BTL_N_PrintfSimple( DBGSTR_val_comma, ArgBuffer[i]);
+      BTL_N_PrintfSimple( DBGSTR_csv, ArgBuffer[i]);
     }
     BTL_N_PrintfSimple(DBGSTR_LF);
     #endif
@@ -833,7 +833,7 @@ void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ...
     {
       BTL_N_Printf( DBGSTR_SC_ArgsEqual );
       for( i=0; i<arg_cnt; ++i ){
-        BTL_N_PrintfSimple(DBGSTR_val_comma, ArgBuffer[i]);
+        BTL_N_PrintfSimple(DBGSTR_csv, ArgBuffer[i]);
       }
     }
     BTL_N_PrintfSimple(DBGSTR_LF);
@@ -860,9 +860,13 @@ void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ...
 
 ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
 {
+  enum {
+    PRINT_FLAG = TRUE,
+  };
+
   ServerCmd cmd = scque_read2byte( que );
 
-  OS_TPrintf("Read cmd=%d\n", cmd);
+  BTL_N_PrintfEx( PRINT_FLAG, DBGSTR_SC_ReadCmd, cmd);
 
   // 予約領域に何も書き込まれなかった場合は単純にスキップする
   while( cmd == SCEX_RESERVE )
@@ -870,7 +874,7 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
     u8 reserve_size = scque_read1byte( que );
     que->readPtr += reserve_size;
     cmd = scque_read2byte( que );
-    OS_TPrintf(" -> reserved cmd=%d\n", cmd);
+    BTL_N_PrintfEx( PRINT_FLAG, DBGSTR_SC_ReserveCmd, cmd);
   }
 
   GF_ASSERT_MSG( cmd < NELEMS(ServerCmdToFmtTbl), "cmd=%d\n", cmd );
@@ -885,12 +889,12 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
       {
         u8 arg_cnt = SC_ARGFMT_GetArgCount( fmt );
         u8 i;
-        OS_TPrintf("  args=" );
+        BTL_N_PrintfEx( PRINT_FLAG, DBGSTR_SC_ArgsEqual );
 
         for(i=0; i<arg_cnt; ++i){
-          OS_TPrintf("%d,", args[i]);
+          BTL_N_PrintfEx( PRINT_FLAG, DBGSTR_csv, args[i]);
         }
-        OS_TPrintf("\n");
+        BTL_N_PrintfEx( PRINT_FLAG, DBGSTR_LF );
       }
       #endif
     }
@@ -956,7 +960,7 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
     do {
       arg = va_arg( list, int );
       if( arg != MSGARG_TERMINATOR ){
-        BTL_N_PrintfSimple( DBGSTR_val_comma, arg );
+        BTL_N_PrintfSimple( DBGSTR_csv, arg );
       }
       scque_put4byte( que, arg );
     }while( arg != MSGARG_TERMINATOR );
@@ -988,7 +992,7 @@ static void read_core_msg( BTL_SERVER_CMD_QUE* que, u8 scType, int* args )
       if( args[i] == MSGARG_TERMINATOR ){
         break;
       }
-      BTL_N_PrintfSimple( DBGSTR_val_comma, args[i] );
+      BTL_N_PrintfSimple( DBGSTR_csv, args[i] );
     }
     BTL_N_PrintfSimple( DBGSTR_LF );
 

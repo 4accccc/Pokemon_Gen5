@@ -84,7 +84,8 @@ typedef struct {
 typedef struct {
 
   u8    data[ BTL_SERVER_CMD_QUE_SIZE ];
-  u32   size;
+  u16   size;
+  u16   fCleared;
 
 }RECV_BUFFER;
 
@@ -140,20 +141,20 @@ static u8* getbuf_partyData( int netID, void* pWork, int size );
 static void recv_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_AI_partyData( int netID, void* pWork, int size );
 static void recv_AI_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
-static void clearAllTmpBuffer( void );
 static u8* getbuf_playerData( int netID, void* pWork, int size );
 static void recv_playerData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_AI_trainerData( int netID, void* pWork, int size );
 static void recv_AI_trainerData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
+static void clearAllTmpBuffer( void );
 static u8* getbuf_clientData( int netID, void* pWork, int size );
 static void recv_clientData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static void recv_serverCmd( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_serverCmd( int netID, void* pWork, int size );
-static inline void recvBuf_Store( RECV_BUFFER* buf, const void* pData, int size );
-static inline u8* recvBuf_getBufAdrs( RECV_BUFFER* buf );
-static inline u32 recvBuf_getData( const RECV_BUFFER* buf, const void** ppData );
-static inline BOOL recvBuf_isEmpty( const RECV_BUFFER* buf );
 static inline void recvBuf_clear( RECV_BUFFER* buf );
+static inline BOOL recvBuf_isEmpty( const RECV_BUFFER* buf );
+static inline u8* recvBuf_getBufAdrs( RECV_BUFFER* buf );
+static inline void recvBuf_setRecvedSize( RECV_BUFFER* buf, u16 size );
+static inline u32 recvBuf_getData( const RECV_BUFFER* buf, const void** ppData );
 
 
 
@@ -446,7 +447,7 @@ static u8* getbuf_AI_partyData( int netID, void* pWork, int size )
 {
   GF_ASSERT(Sys->tmpExBuffer == NULL);
 
-  OS_TPrintf("AIパーティデータ受信バッファを生成\n");
+  BTL_N_Printf( DBGSTR_NET_CreateAIPartyRecvBuffer );
 
   Sys->tmpExBuffer = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(Sys->heapID), size );
   return Sys->tmpExBuffer;
@@ -454,7 +455,8 @@ static u8* getbuf_AI_partyData( int netID, void* pWork, int size )
 static void recv_AI_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
 {
   Sys->tmpExBufferUsedSize = size;
-  OS_TPrintf("AIパーティデータ受信 size=%d\n", size);
+  BTL_N_Printf( DBGSTR_NET_RecvedAIPartyData, size);
+
 }
 // 通信タッグ用のAIパーティデータを受信したかチェック
 BOOL BTL_NET_IsRecved_AI_PartyData( void )
@@ -479,6 +481,21 @@ const POKEPARTY* BTL_NET_GetPartyData( u8 clientID )
   }
   else if( Sys->tmpExBuffer != NULL )
   {
+    {
+      const POKEPARTY* party = (const POKEPARTY*)(Sys->tmpExBuffer);
+      const POKEMON_PARAM* pp;
+      u32 cnt, i;
+
+      cnt = PokeParty_GetPokeCount( party );
+      BTL_N_Printf( DBGSTR_NET_AIPartyInfo, clientID, cnt );
+      for(i=0; i<cnt; ++i)
+      {
+        pp = PokeParty_GetMemberPointer( party, i );
+        BTL_N_PrintfSimple(  DBGSTR_csv, PP_Get(pp, ID_PARA_monsno, NULL) );
+      }
+      BTL_N_PrintfSimple( DBGSTR_LF );
+    }
+
     return Sys->tmpExBuffer;
   }
   else
@@ -690,13 +707,11 @@ BOOL BTL_NET_IsTimingSync( u8 timingID )
 BOOL BTL_NET_SendToClient( u8 clientID, const void* adrs, u32 size )
 {
   u8 netID = clientIDtoNetID( clientID );
-  BOOL result;
 
 //  GF_ASSERT(netID != NETID_NULL);
   if( netID != NETID_NULL )
   {
-
-    result = GFL_NET_SendDataEx( Sys->netHandle, netID, CMD_TO_CLIENT, size, adrs,
+    BOOL result = GFL_NET_SendDataEx( Sys->netHandle, netID, CMD_TO_CLIENT, size, adrs,
           FALSE,    // 優先度を高くする
           FALSE,    // 同一コマンドがキューに無い場合のみ送信する
           TRUE      // GFL_NETライブラリの外で保持するバッファを使用
@@ -750,11 +765,11 @@ static void recv_clientData( const int netID, const int size, const void* pData,
 {
   GF_ASSERT(size<BTL_SERVER_CMD_QUE_SIZE);
 
+  recvBuf_setRecvedSize( &Sys->recvClient[netID], size );
+
   Sys->recvClient[ netID ].size = size;
-  if( Sys->recvClient[netID].size == 0 )
-  {
-    Sys->recvClient[netID].size = 1;
-  }
+  Sys->recvClient[ netID ].fCleared = FALSE;
+
   BTL_N_PrintfEx( PRINT_FLG, DBGSTR_NET_RecvedClientData, netID, size);
 }
 
@@ -806,24 +821,12 @@ BOOL BTL_NET_ReturnToServer( const void* data, u32 size )
   return result;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 static void recv_serverCmd( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
 {
   GF_ASSERT(size<BTL_SERVER_CMD_QUE_SIZE);
   if( Sys->serverCmdReceived == FALSE )
   {
-//    recvBuf_Store( &Sys->recvServer, pData, size );
-    Sys->recvServer.size = size;
+    recvBuf_setRecvedSize( &Sys->recvServer, size );
     Sys->serverCmdReceived = TRUE;
   }
 }
@@ -834,34 +837,45 @@ static u8* getbuf_serverCmd( int netID, void* pWork, int size )
 }
 
 
-
-static inline void recvBuf_Store( RECV_BUFFER* buf, const void* pData, int size )
+/**
+ *  受信バッファ：初期化
+ */
+static inline void recvBuf_clear( RECV_BUFFER* buf )
 {
-//  GF_ASSERT_MSG(size<=sizeof(buf->data), "buffer over! size=%d\n", size);
-//  GFL_STD_MemCopy( pData, buf->data, size );
-  buf->size = size;
+  buf->size = 0;
+  buf->fCleared = TRUE;
 }
-
+/**
+ *  受信バッファ：空（初期化）状態かチェック
+ */
+static inline BOOL recvBuf_isEmpty( const RECV_BUFFER* buf )
+{
+  return buf->fCleared;
+}
+/**
+ *  受信バッファ：データ受信のためのバッファアドレス取得
+ */
 static inline u8* recvBuf_getBufAdrs( RECV_BUFFER* buf )
 {
   return buf->data;
 }
-
+/**
+ *  受信バッファ：データ受信後のパラメータ設定
+ */
+static inline void recvBuf_setRecvedSize( RECV_BUFFER* buf, u16 size )
+{
+  buf->size = size;
+  buf->fCleared = FALSE;
+}
+/**
+ *  受信バッファ：受信データ＆サイズ取得
+ */
 static inline u32 recvBuf_getData( const RECV_BUFFER* buf, const void** ppData )
 {
-  GF_ASSERT(buf->size);
+  GF_ASSERT(buf->fCleared==FALSE);
   *ppData = buf->data;
   return buf->size;
 }
 
-static inline BOOL recvBuf_isEmpty( const RECV_BUFFER* buf )
-{
-  return buf->size == 0;
-}
-
-static inline void recvBuf_clear( RECV_BUFFER* buf )
-{
-  buf->size = 0;
-}
 
 

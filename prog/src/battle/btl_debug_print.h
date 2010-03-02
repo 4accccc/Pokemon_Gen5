@@ -61,10 +61,16 @@ typedef enum {
   DBGSTR_CLIENT_UpdateEnemyBaseHP,
   DBGSTR_CLIENT_ForceQuitByTimeLimit,
   DBGSTR_CLIENT_StartCmd,
+  DBGSTR_CLIENT_RecvedQuitCmd,
+  DBGSTR_CLIENT_ReplyToQuitCmd,
 
   DBGSTR_BPP_NemuriWakeCheck,
 
   DBGSTR_MAIN_SwapPartyMember,
+  DBGSTR_MAIN_PartyDataNotifyComplete,
+  DBGSTR_MAIN_AIPartyDataSendComplete,
+  DBGSTR_MAIN_SendAIParty,
+
   DBGSTR_NET_DecideClientID,
   DBGSTR_NET_SendSucceed,
   DBGSTR_NET_RecvedServerParam,
@@ -78,6 +84,9 @@ typedef enum {
   DBGSTR_NET_ServerDetermine,
   DBGSTR_NET_SendAITrainerData,
   DBGSTR_NET_RecvAITrainerData,
+  DBGSTR_NET_AIPartyInfo,
+  DBGSTR_NET_CreateAIPartyRecvBuffer,
+  DBGSTR_NET_RecvedAIPartyData,
 
   DBGSTR_CALCDMG_BaseDamage,
   DBGSTR_CALCDMG_WazaParam,
@@ -162,6 +171,9 @@ typedef enum {
   DBGSTR_SC_PutMsg_SE,
   DBGSTR_SC_ReadMsg_SE,
   DBGSTR_SC_ArgsEqual,
+  DBGSTR_SC_ReadCmd,
+  DBGSTR_SC_ReserveCmd,
+
   DBGSTR_SERVER_SendShooterChargeCmd,
   DBGSTR_SERVER_ShooterChargeCmdDoneAll,
   DBGSTR_SERVER_SendActionSelectCmd,
@@ -170,6 +182,8 @@ typedef enum {
   DBGSTR_SV_ChangePokeOnTheTurn,
   DBGSTR_SV_PokeInReqForEmptyPos,
   DBGSTR_SV_StartChangePokeInfo,
+  DBGSTR_SV_SendQuitACmad,
+  DBGSTR_SV_ReplyQuitACmad,
 
   DBGSTR_EVENT_AddFactorInfo,
   DBGSTR_EV_AddFactor,
@@ -196,7 +210,7 @@ typedef enum {
   DBGSTR_HANDWAZA_CombiWazaExe,
 
 
-  DBGSTR_val_comma,
+  DBGSTR_csv,
   DBGSTR_done,
   DBGSTR_LF,
 

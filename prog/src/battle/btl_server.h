@@ -37,7 +37,9 @@ extern void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commM
 extern void BTL_SERVER_Startup( BTL_SERVER* server );
 extern void BTL_SERVER_Delete( BTL_SERVER* wk );
 
-extern void BTL_SERVER_Main( BTL_SERVER* server );
+extern BOOL BTL_SERVER_Main( BTL_SERVER* server );
+extern u8 BTL_SERVER_GetEscapeClientID( const BTL_SERVER* sv );
+
 
 //-------------------------------------
 // server_flow -> server ŒÄ‚Ño‚µê—p

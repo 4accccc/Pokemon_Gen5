@@ -1299,7 +1299,7 @@ static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
       for(i=0; i<empty_pos_cnt; ++i)
       {
         BTL_SERVER_RequestChangePokemon( wk->server, posAry[i] );
-        BTL_N_PrintfSimple( DBGSTR_val_comma, posAry[i] );
+        BTL_N_PrintfSimple( DBGSTR_csv, posAry[i] );
       }
       BTL_N_PrintfSimple( DBGSTR_LF );
       result = TRUE;

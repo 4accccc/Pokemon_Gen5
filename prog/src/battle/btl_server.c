@@ -155,6 +155,7 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, const GFL_STD_RandCo
   sv->changePokeCnt = 0;
   sv->giveupClientCnt = 0;
   sv->bagMode = bagMode;
+  sv->escapeClientID = BTL_CLIENTID_NULL;
   sv->randContext = *randContext;
   sv->strbuf = GFL_STR_CreateBuffer( SERVER_STRBUF_SIZE, heapID );
 
@@ -279,7 +280,7 @@ void BTL_SERVER_Delete( BTL_SERVER* wk )
  * @retval  BOOL    終了時 TRUE を返す
  */
 //--------------------------------------------------------------------------------------
-void BTL_SERVER_Main( BTL_SERVER* sv )
+BOOL BTL_SERVER_Main( BTL_SERVER* sv )
 {
   if( sv->quitStep != QUITSTEP_CORE )
   {
@@ -287,15 +288,32 @@ void BTL_SERVER_Main( BTL_SERVER* sv )
     {
       sv->escapeClientID = BTL_SVFLOW_GetEscapeClientID( sv->flowWork );
       SetAdapterCmdEx( sv, BTL_ACMD_QUIT_BTL, &sv->escapeClientID, sizeof(sv->escapeClientID) );
+      BTL_N_Printf( DBGSTR_SV_SendQuitACmad, BTL_ACMD_QUIT_BTL );
       sv->quitStep = QUITSTEP_CORE;
     }
   }
   else
   {
-    WaitAllAdapterReply( sv );
+    if( WaitAllAdapterReply(sv) ){
+      BTL_N_Printf( DBGSTR_SV_ReplyQuitACmad );
+      return TRUE;
+    }
   }
+  return FALSE;
 }
-
+//----------------------------------------------------------------------------------
+/**
+ * 終了時、逃げたクライアントのIDを取得
+ *
+ * @param   sv
+ *
+ * @retval  u8    逃げたクライアントID（誰も逃げていないならBTL_CLIENTID_NULL）
+ */
+//----------------------------------------------------------------------------------
+u8 BTL_SERVER_GetEscapeClientID( const BTL_SERVER* sv )
+{
+  return sv->escapeClientID;
+}
 //----------------------------------------------------------------------------------
 /**
  * メインループ関数切り替え

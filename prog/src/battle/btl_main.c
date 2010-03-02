@@ -1292,7 +1292,7 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
     // パーティデータ相互受信を完了
     if( BTL_NET_IsCompleteNotifyPartyData() )
     {
-      TAYA_Printf("パーティデータ相互受信できました。\n");
+      BTL_N_Printf( DBGSTR_MAIN_PartyDataNotifyComplete );
 
       if( wk->fCommTag == FALSE )
       {
@@ -1315,13 +1315,26 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
       if( !BTL_NET_StartNotify_AI_PartyData(sp->party[ BTL_CLIENT_ENEMY1 ]) ){
         break;
       }
+      #ifdef PM_DEBUG
+      {
+        const POKEMON_PARAM* pp;
+        u32 cnt, i;
+        cnt = PokeParty_GetPokeCount( sp->party[ BTL_CLIENT_ENEMY1 ] );
+        BTL_N_Printf( DBGSTR_MAIN_SendAIParty, cnt );
+        for(i=0; i<cnt; ++i){
+          pp = PokeParty_GetMemberPointer( sp->party[ BTL_CLIENT_ENEMY1 ], i );
+          BTL_N_PrintfSimple( DBGSTR_csv, PP_Get(pp, ID_PARA_monsno, NULL) );
+        }
+        BTL_N_PrintfSimple( DBGSTR_LF );
+      }
+      #endif
     }
     (*seq)++;
     break;
     /* fallthru */
   case 6:
     if( BTL_NET_IsRecved_AI_PartyData() ){
-      OS_TPrintf("AIパーティデータ受信完了\n");
+      BTL_N_Printf( DBGSTR_MAIN_AIPartyDataSendComplete );
       (*seq) = 10;
     }
     break;
@@ -1655,17 +1668,16 @@ static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
   BOOL quitFlag = FALSE;
   int i;
 
-  BTL_SERVER_Main( wk->server );
+  quitFlag = BTL_SERVER_Main( wk->server );
+  if( quitFlag ){
+    wk->escapeClientID = BTL_SERVER_GetEscapeClientID( wk->server );
+  }
 
   for(i=0; i<BTL_CLIENT_MAX; i++)
   {
     if( wk->client[i] )
     {
-      if( BTL_CLIENT_Main(wk->client[i]) )
-      {
-        wk->escapeClientID = BTL_CLIENT_GetEscapeClientID( wk->client[i] );
-        quitFlag = TRUE;
-      }
+      BTL_CLIENT_Main( wk->client[i] );
     }
   }
 
@@ -3268,7 +3280,7 @@ const BTL_POKEPARAM* BTL_POKECON_GetFrontPokeDataConst( const BTL_POKE_CONTAINER
     BTL_PrintfSimple("クライアント[%d]の %d 番目のポケを返す\n", clientID, posIdx );
     return BTL_PARTY_GetMemberDataConst( party, posIdx );
   }else{
-    BTL_N_Printf( DBGSTR_MAIN_PokeConGetByPos, pos, clientID, posIdx);
+    BTL_N_Printf( DBGSTR_MAIN_PokeConGetByPos, pos, clientID, posIdx );
     return NULL;
   }
 }

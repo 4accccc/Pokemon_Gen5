@@ -146,6 +146,7 @@ struct _BTL_CLIENT {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static void setDummyReturnData( BTL_CLIENT* wk );
 static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd );
 static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_Setup( BTL_CLIENT* wk, int* seq );
@@ -167,6 +168,7 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Start( BTL_CLIENT* wk, int* seq );
 static void selact_startMsg( BTL_CLIENT* wk, const BTLV_STRPARAM* strParam );
 static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq );
+static  BOOL  check_tr_message( BTL_CLIENT* wk );
 static BOOL selact_Root( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Fight( BTL_CLIENT* wk, int* seq );
 static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq );
@@ -423,7 +425,11 @@ BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
         const u32* p;
         BTL_ADAPTER_GetRecvData( wk->adapter, (const void**)&p );
         wk->escapeClientID = *p;
-        return TRUE;
+        BTL_N_Printf( DBGSTR_CLIENT_RecvedQuitCmd, wk->myID );
+        setDummyReturnData( wk );
+        wk->subSeq = 0;
+        wk->myState = 3;
+        break;
       }
       if( cmd != BTL_ACMD_NONE )
       {
@@ -432,10 +438,10 @@ BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
           BTL_N_Printf( DBGSTR_CLIENT_StartCmd, wk->myID, cmd );
           wk->subSeq = 0;
           wk->myState = 1;
-        }else{
-          wk->dummyReturnData = 0;
-          wk->returnDataPtr = &(wk->dummyReturnData);
-          wk->returnDataSize = sizeof(wk->dummyReturnData);
+        }
+        else
+        {
+          setDummyReturnData( wk );
           wk->subSeq = 0;
           wk->myState = 2;
         }
@@ -456,9 +462,29 @@ BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
       BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_RETURN_CMD_DONE, wk->myID );
     }
     break;
+
+  case 3:
+    if( BTL_ADAPTER_ReturnCmd(wk->adapter, wk->returnDataPtr, wk->returnDataSize) ){
+      wk->myState = 4;
+      BTL_N_Printf( DBGSTR_CLIENT_ReplyToQuitCmd, wk->myID );
+    }
+    break;
+
+  case 4:
+    return TRUE;
   }
   return FALSE;
 }
+/**
+ *  ダミー返信データ（サーバに返信する必要があるが内容は問われないケース）を作成
+ */
+static void setDummyReturnData( BTL_CLIENT* wk )
+{
+  wk->dummyReturnData = 0;
+  wk->returnDataPtr = &(wk->dummyReturnData);
+  wk->returnDataSize = sizeof(wk->dummyReturnData);
+}
+
 static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
 {
   static const struct {
@@ -2198,7 +2224,7 @@ static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos )
   numChangePoke = BTL_ADAPTER_GetRecvData( wk->adapter, (const void*)&changePokePos );
   BTL_N_Printf( DBGSTR_CLIENT_NumChangePokeBegin, numChangePoke);
   for(i=0; i<numChangePoke; ++i){
-    BTL_N_PrintfSimple( DBGSTR_val_comma, changePokePos[i]);
+    BTL_N_PrintfSimple( DBGSTR_csv, changePokePos[i]);
   }
   BTL_N_PrintfSimple( DBGSTR_LF );
 
