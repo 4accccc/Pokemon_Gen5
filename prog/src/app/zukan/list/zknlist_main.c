@@ -419,6 +419,40 @@ void ZKNLISTMAIN_SetBlendAlpha(void)
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		ウィンドウ設定
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNLISTMAIN_SetWindow(void)
+{
+	G2S_SetWndOBJInsidePlane(
+		GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |
+		GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ, TRUE );
+	G2S_SetWndOutsidePlane(
+		GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |
+		GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ, TRUE );
+	GXS_SetVisibleWnd( GX_WNDMASK_OW );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ウィンドウ無効
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNLISTMAIN_ResetWindow(void)
+{
+	GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief	  メッセージ関連初期化
  *
  * @param		wk		図鑑リストワーク

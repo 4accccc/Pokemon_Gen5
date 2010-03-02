@@ -231,6 +231,8 @@ static int MainSeq_Init( ZKNSEARCHMAIN_WORK * wk )
 
 	ZKNSEARCHMAIN_LoadLoadingWindow( wk );
 
+	ZKNSEARCHMAIN_SetWindow();
+
 	ZKNSEARCHMAIN_InitVBlank( wk );
 	ZKNSEARCHMAIN_InitHBlank( wk );
 
@@ -247,6 +249,8 @@ static int MainSeq_Release( ZKNSEARCHMAIN_WORK * wk )
 
 	ZKNSEARCHMAIN_ExitHBlank( wk );
 	ZKNSEARCHMAIN_ExitVBlank( wk );
+
+	ZKNSEARCHMAIN_ResetWindow();
 
 	ZKNSEARCHMAIN_UnloadLoadingWindow( wk );
 

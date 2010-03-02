@@ -776,8 +776,10 @@ static void AddPokeIcon( ZKNLISTMAIN_WORK * wk )
 		prm.disp = CLSYS_DRAW_SUB;
 		wk->clwk[ZKNLISTOBJ_IDX_POKEICON_S+i] = ZKNCOMM_CreateClact( wk->clunit, &prm, HEAPID_ZUKAN_LIST );
 		ZKNLISTOBJ_SetBlendMode( wk, ZKNLISTOBJ_IDX_POKEICON_S+i, TRUE );
-	}
 
+		wk->clwk[ZKNLISTOBJ_IDX_POKEICON_SW+i] = ZKNCOMM_CreateClact( wk->clunit, &prm, HEAPID_ZUKAN_LIST );
+		GFL_CLACT_WK_SetObjMode( wk->clwk[ZKNLISTOBJ_IDX_POKEICON_SW+i], GX_OAM_MODE_OBJWND );
+	}
 
 	for( i=0; i<ZKNLISTOBJ_MAIN_POKEICON_MAX; i++ ){
 //		ZKNLISTOBJ_ChgPokeIcon( wk, ZKNLISTOBJ_IDX_POKEICON+i, 1+i, 0, TRUE );
@@ -786,6 +788,7 @@ static void AddPokeIcon( ZKNLISTMAIN_WORK * wk )
 	for( i=0; i<ZKNLISTOBJ_SUB_POKEICON_MAX; i++ ){
 //		ZKNLISTOBJ_ChgPokeIcon( wk, ZKNLISTOBJ_IDX_POKEICON_S+i, 8+i, 0, FALSE );
 		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_POKEICON_S+i, FALSE );
+		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_POKEICON_SW+i, FALSE );
 	}
 
 }
@@ -827,7 +830,7 @@ void ZKNLISTOBJ_ChgPokeIcon( ZKNLISTMAIN_WORK * wk, u32 idx, u16 mons, u16 form,
 		wk->clwk[idx], POKEICON_GetPalNum(mons,form,FALSE), CLWK_PLTTOFFS_MODE_PLTT_TOP );
 }
 
-
+/*
 void ZKNLISTOBJ_ScrollPokeIcon( ZKNLISTMAIN_WORK * wk, s16 mv )
 {
 	u32	i;
@@ -842,6 +845,7 @@ void ZKNLISTOBJ_ScrollPokeIcon( ZKNLISTMAIN_WORK * wk, s16 mv )
 		ZKNLISTOBJ_SetPos( wk, i, x, y+mv, CLSYS_DRAW_SUB );
 	}
 }
+*/
 
 /*
 void ZKNLISTOBJ_PutPokeList( ZKNLISTMAIN_WORK * wk, u32 objIdx, s32 listPos, BOOL disp )
@@ -956,6 +960,8 @@ void ZKNLISTOBJ_PutPokeList2( ZKNLISTMAIN_WORK * wk, u16 mons, s16 py, BOOL disp
 		ZKNLISTOBJ_SetPos( wk, obj, POKEICON_PX, py+POKEICON_PY, CLSYS_DRAW_MAIN );
 	}else{
 		ZKNLISTOBJ_SetPos( wk, obj, POKEICON_PX, py+POKEICON_PY, CLSYS_DRAW_SUB );
+		ZKNLISTOBJ_SetPos( wk, ZKNLISTOBJ_SUB_POKEICON_MAX+obj, POKEICON_PX, py+POKEICON_PY, CLSYS_DRAW_SUB );
+		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_SUB_POKEICON_MAX+obj, TRUE );
 	}
 }
 
@@ -982,8 +988,11 @@ void ZKNLISTOBJ_PutScrollList2( ZKNLISTMAIN_WORK * wk, s8 mv )
 		ZKNLISTOBJ_GetPos( wk, i, &x, &y, CLSYS_DRAW_SUB );
 		ZKNLISTOBJ_SetPos( wk, i, x, y+mv, CLSYS_DRAW_SUB );
 
+		ZKNLISTOBJ_SetPos( wk, ZKNLISTOBJ_SUB_POKEICON_MAX+i, x, y+mv, CLSYS_DRAW_SUB );
+
 		if( (y+mv) <= -16 || (y+mv) >= 200 ){
 			ZKNLISTOBJ_SetVanish( wk, i, FALSE );
+			ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_SUB_POKEICON_MAX+i, FALSE );
 		}
 	}
 }
@@ -1021,6 +1030,7 @@ void ZKNLISTOBJ_VanishJumpPokeIcon( ZKNLISTMAIN_WORK * wk )
 	for( i=ZKNLISTOBJ_IDX_POKEICON_S; i<ZKNLISTOBJ_IDX_POKEICON_S+ZKNLISTOBJ_SUB_POKEICON_MAX; i++ ){
 		if( wk->iconPutSub & (1<<(i-ZKNLISTOBJ_IDX_POKEICON_S)) ){
 			ZKNLISTOBJ_SetVanish( wk, i, FALSE );
+			ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_SUB_POKEICON_MAX+i, FALSE );
 		}
 	}
 

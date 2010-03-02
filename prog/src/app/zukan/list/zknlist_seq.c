@@ -150,6 +150,7 @@ static int MainSeq_Init( ZKNLISTMAIN_WORK * wk )
 	GFL_NET_ReloadIcon();
 
 	ZKNLISTMAIN_SetBlendAlpha();
+	ZKNLISTMAIN_SetWindow();
 
 	ZKNLISTMAIN_InitFrameScroll( wk );
 
@@ -167,6 +168,8 @@ static int MainSeq_Release( ZKNLISTMAIN_WORK * wk )
 
 	ZKNLISTMAIN_ExitHBlank( wk );
 	ZKNLISTMAIN_ExitVBlank( wk );
+
+	ZKNLISTMAIN_ResetWindow();
 
 	ZKNLISTMAIN_FreeList( wk );
 	ZKNLISTMAIN_FreeLocalNoList( wk );
