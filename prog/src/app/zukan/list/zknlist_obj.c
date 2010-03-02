@@ -631,6 +631,7 @@ void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons )
 	u32	nowID, newID;
 	u32	pal;
 	u32	sex, form;
+	u32	rand;
 	BOOL	rare;
 	
 	prm = PokeClactParam;
@@ -681,9 +682,16 @@ void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons )
 		ZUKANSAVE_GetDrawData( wk->dat->savedata, mons, &sex, &rare, &form, HEAPID_ZUKAN_LIST_L );
 
 		ah = POKE2DGRA_OpenHandle( HEAPID_ZUKAN_LIST_L );
+
+		if( mons == MONSNO_PATTIIRU ){
+			rand = ZUKANSAVE_GetPokeRandomFlag( wk->dat->savedata, ZUKANSAVE_RANDOM_PACHI );
+		}else{
+			rand = 0;
+		}
+
 		wk->chrRes[prm.chrRes] = POKE2DGRA_OBJ_CGR_Register(
 															ah, mons, form, sex, rare, POKEGRA_DIR_FRONT,
-															FALSE, 0x88888888,CLSYS_DRAW_MAIN, HEAPID_ZUKAN_LIST );
+															FALSE, rand, CLSYS_DRAW_MAIN, HEAPID_ZUKAN_LIST );
 		wk->palRes[prm.palRes] = POKE2DGRA_OBJ_PLTT_Register(
 															ah, mons, form, sex, rare, POKEGRA_DIR_FRONT,
 															FALSE, CLSYS_DRAW_MAIN, pal, HEAPID_ZUKAN_LIST );
