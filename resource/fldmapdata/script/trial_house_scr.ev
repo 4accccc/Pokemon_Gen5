@@ -40,7 +40,7 @@ EVENT_START ev_tri_house_reception
     DEFINE_LOCAL download_data
     DEFINE_LOCAL dl_data_msg
     //ダウンロードデータのタイプを取得　シングル　or ダブル　or データなし
-    $download_data = 0   //@todo
+    _TH_GET_DL_DATA_TYPE( download_data )
     IF $download_data == 1 THEN      //シングル
       $dl_data_msg = msg_trialhouse_022    //「ダウンロードしたシングルバトルする？」
       $dl_data_valid = TRUE
@@ -64,6 +64,7 @@ EVENT_START ev_tri_house_reception
     ENDIF  
   }
   
+  //ダウンロードデータが無いとき
   IF $dl_data_valid == FALSE THEN
     //ループ初期化
     $loop = TRUE
@@ -96,8 +97,16 @@ EVENT_START ev_tri_house_reception
       ELSE
         SWITCH $first_list_ret
         CASE 0 THEN   //チャレンジ
-          $download_flg = FALSE
-          _CALL charange
+          //殿堂入りチェック
+          IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN    //殿堂入り後
+            $download_flg = FALSE
+            _CALL charange
+          ELSE                                      //殿堂入り前
+            //ラストメッセージ「まだ早い」
+            _BALLOONWIN_OBJMSG_POS(msg_trialhouse_004, SCWK_TARGET_OBJID, POS_DL )
+             _LAST_KEYWAIT()
+            _BALLOONWIN_CLOSE()
+          ENDIF
         CASE 1 THEN //説明聴く
           $loop = TRUE      //ループフラグ立てる
           //説明メッセージコール
@@ -171,9 +180,22 @@ charange:
       ENDSWITCH
     ENDIF
   ELSE                            //ダウンロードデータのとき
-    //ダウンロードデータはシングルか？ダブルか？@todo
-    $regulation = REG_SUBWAY_DOUBLE   //バトルサブウェイダブルレギュレーションで代用
-    $btl_mode = TH_PLAYMODE_DOUBLE
+    //ダウンロードデータはシングルか？ダブルか？
+    {
+      DEFINE_LOCAL type
+      _TH_GET_DL_DATA_TYPE( type )
+      IF $type == TH_DL_DATA_TYPE_SINGLE THEN
+        $regulation = REG_SUBWAY_SINGLE   //バトルサブウェイシングルレギュレーションで代用
+        $btl_mode = TH_PLAYMODE_SINGLE 
+      ELSIF $type == TH_DL_DATA_TYPE_DOUBLE THEN
+        $regulation = REG_SUBWAY_DOUBLE   //バトルサブウェイダブルレギュレーションで代用
+        $btl_mode = TH_PLAYMODE_DOUBLE
+      ELSE
+        //ここにくることはないけど
+        $regulation = REG_SUBWAY_SINGLE   //バトルサブウェイシングルレギュレーションで代用
+        $btl_mode = TH_PLAYMODE_SINGLE 
+      ENDIF
+    }
   ENDIF
 
   //戦闘モードセット
@@ -277,6 +299,11 @@ charange:
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 
+    //ダウンロードデータクリア
+    IF $download_flg == TRUE THEN
+      _TH_CLEAR_DL_DATA()
+    ENDIF
+
   ENDIF
   
 _RET
@@ -354,22 +381,29 @@ download:
     _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
     $exit = TRUE
   ELSE
-    //ビーコンサーチ処理
-    _TH_SEARCH_BEACON( SCWK_ANSWER )
-    IF $SCWK_ANSWER == FALSE THEN
-      //「ダウンロードするものがない」
-      _BALLOONWIN_OBJMSG_POS(msg_trialhouse_024, SCWK_TARGET_OBJID, POS_DL )
-      //メニュー選択やり直し
-      $loop = TRUE
-      _RET
-    ENDIF
-
     //「特別な検定する?」
     _BALLOONWIN_OBJMSG_POS(msg_trialhouse_023, SCWK_TARGET_OBJID, POS_DL )
     _YES_NO_WIN( SCWK_ANSWER )
     _BALLOONWIN_CLOSE()
-    IF $SCWK_ANSWER == 0 THEN //やる
-      //@todo
+    IF $SCWK_ANSWER == 0 THEN //特別な検定やる
+      //フィールド通信を終了
+      _FIELD_COMM_EXIT_EVENT_CALL( SCWK_ANSWER )
+      IF $SCWK_ANSWER == SCR_FIELD_COMM_EXIT_CANCEL THEN
+        _RET
+      ELSIF $SCWK_ANSWER == SCR_FIELD_COMM_EXIT_ERROR THEN
+        _RET
+      ENDIF
+
+      //ビーコンサーチ処理
+      _TH_SEARCH_BEACON( SCWK_ANSWER )
+      IF $SCWK_ANSWER == FALSE THEN
+        //「ダウンロードするものがない」
+        _BALLOONWIN_OBJMSG_POS(msg_trialhouse_024, SCWK_TARGET_OBJID, POS_DL )
+        //メニュー選択やり直し
+        $loop = TRUE
+        _RET
+      ENDIF
+      
       //「ダウンロードしました」
       _BALLOONWIN_OBJMSG_POS(msg_trialhouse_025, SCWK_TARGET_OBJID, POS_DL )
       _BALLOONWIN_CLOSE()
@@ -391,7 +425,7 @@ download:
         _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
       ENDIF
-    ELSE
+    ELSE                      //特別な検定やらない
       $exit = TRUE
     ENDIF
   ENDIF

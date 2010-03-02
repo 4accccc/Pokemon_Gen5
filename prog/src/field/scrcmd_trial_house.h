@@ -22,3 +22,5 @@ extern VMCMD_RESULT EvCmdTH_SetRank( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTH_GetRank( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTH_SearchBeacon( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTH_CalcBtlResult( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdTH_GetDLDataType( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdTH_ClearDLData( VMHANDLE *core, void *wk );

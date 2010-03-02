@@ -904,8 +904,8 @@
   DEF_CMD( EvCmdTH_SearchBeacon, EV_SEQ_TH_SEARCH_BEACON )
   DEF_CMD( EvCmdTH_CalcBtlResult, EV_SEQ_TH_CALC_BTL_RESULT )
 
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdTH_GetDLDataType, EV_SEQ_TH_GET_DL_DATA_TYPE )
+  DEF_CMD( EvCmdTH_ClearDLData, EV_SEQ_TH_CLEAR_DL_DATA )
   NO_CMD()
   NO_CMD()
 

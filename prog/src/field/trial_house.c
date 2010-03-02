@@ -15,12 +15,19 @@
 #include  "trial_house_scr_def.h"
 #include "savedata/battle_examination.h"
 #include "savedata/th_rank_def.h"
+#include "savedata/save_tbl.h"    //for SAVESIZE_EXTRA_BATTLE_EXAMINATION
+
+#include "net/delivery_beacon.h"
 
 //ビーコンサーチワーク
 typedef struct
 {
+  DELIVERY_BEACON_INIT BeaconInit;
+  DELIVERY_BEACON_WORK *BeaconWork;
   GAMESYS_WORK *gsys;
+  TRIAL_HOUSE_WORK_PTR Ptr;
   u16 *Ret;
+  int Time;
 }EVENT_WORK_BEACON_SEARCH;
 
 static void MakeTrainer(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount);
@@ -28,6 +35,15 @@ static void SetDownLoadData(GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr, const
 static u16 GetTrainerOBJCode( TRIAL_HOUSE_WORK_PTR ptr );
 
 static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk );
+
+typedef enum
+{
+  BEACON_SEQ_START = 0,
+  BEACON_SEQ_SEARCH,
+  BEACON_SEQ_CHECK,
+  BEACON_SEQ_MAIN,
+  BEACON_SEQ_END
+}BEACON_SEQ;
 
 //--------------------------------------------------------------
 /**
@@ -38,10 +54,27 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk );
 TRIAL_HOUSE_WORK_PTR TRIAL_HOUSE_Start(void)
 {
   TRIAL_HOUSE_WORK_PTR ptr;
+  SAVE_CONTROL_WORK * sv = NULL;   //@todo
   int size = sizeof(TRIAL_HOUSE_WORK);
+  int comm_size = BATTLE_EXAMINATION_SAVE_GetWorkSize();
   NOZOMU_Printf("TrialHouseWorkSize = 0x%x\n",size);
   ptr = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, size);
   ptr->HeapID = HEAPID_APP_CONTROL;//HEAPID_PROC;
+  ptr->CommBuf = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, comm_size);
+  ptr->ThSaveWork = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, comm_size);
+
+  if (sv != NULL)
+  {
+    //外部データをロード
+    if ( LOAD_RESULT_OK == SaveControl_Extra_LoadWork(sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION, HEAPID_APP_CONTROL,
+                                                     ptr->ThSaveWork, SAVESIZE_EXTRA_BATTLE_EXAMINATION) )
+    {
+      OS_Printf("トライアルハウス外部データロード\n");
+    }
+    else GF_ASSERT_MSG(0,"extra_data_load fail");
+    
+    SaveControl_Extra_UnloadWork(sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION);
+  }
   //パーティ作成
   ptr->Party = PokeParty_AllocPartyWork( ptr->HeapID );
   return ptr;
@@ -58,7 +91,9 @@ void TRIAL_HOUSE_End( TRIAL_HOUSE_WORK_PTR *ptr )
 {
   if ( *ptr != NULL )
   {
-    GFL_HEAP_FreeMemory((*ptr)->Party);
+    GFL_HEAP_FreeMemory( (*ptr)->ThSaveWork );
+    GFL_HEAP_FreeMemory( (*ptr)->CommBuf );
+    GFL_HEAP_FreeMemory( (*ptr)->Party );
     GFL_HEAP_FreeMemory( *ptr );
     *ptr = NULL;
   }
@@ -210,12 +245,8 @@ static void SetDownLoadData(GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr, const
   SAVE_CONTROL_WORK * sv;
   BATTLE_EXAMINATION_SAVEDATA *exa;
   BSUBWAY_PARTNER_DATA *data;
-  {
-    GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
-    sv = GAMEDATA_GetSaveControlWork( gdata );
-  }
-  //セーブデータにアクセス
-  exa = BATTLE_EXAMINATION_SAVE_GetSvPtr(sv);
+  
+  exa = ptr->ThSaveWork;
   //データ取得
   data = BATTLE_EXAMINATION_SAVE_GetData(exa, inBtlCount);
   //トライアルハウスワークにデータをセット
@@ -255,11 +286,12 @@ GMEVENT *TRIAL_HOUSE_CreateBeforeMsgEvt( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PT
 /**
  * @brief	ビーコンサーチ
  * @param	gsys        ゲームシステムポインタ
+ * @param ptr         トライアルハウスワークポインタ
  * @param outRet      サーチ結果格納バッファ
  * @retval	event     イベントポインタ
 */
 //--------------------------------------------------------------
-GMEVENT *TRIAL_HOUSE_CreateBeaconSearchEvt( GAMESYS_WORK *gsys, u16* outRet )
+GMEVENT *TRIAL_HOUSE_CreateBeaconSearchEvt( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, u16* outRet )
 {
   GMEVENT *event;
   EVENT_WORK_BEACON_SEARCH *evt_wk;
@@ -268,6 +300,18 @@ GMEVENT *TRIAL_HOUSE_CreateBeaconSearchEvt( GAMESYS_WORK *gsys, u16* outRet )
   evt_wk = GMEVENT_GetEventWork( event );
   evt_wk->gsys = gsys;
   evt_wk->Ret = outRet;
+  evt_wk->Ptr = ptr;
+  evt_wk->Time = 0;
+  //ビーコン構造体初期化
+  {
+    DELIVERY_BEACON_INIT *init;
+    init = &evt_wk->BeaconInit;
+    init->NetDevID = WB_NET_BATTLE_EXAMINATION;   // //通信種類
+    init->datasize = BATTLE_EXAMINATION_SAVE_GetWorkSize();  //データ全体サイズ
+    init->pData = ptr->CommBuf;     // 受信バッファデータ
+    init->ConfusionID = 0;   //混線しないためのID
+    init->heapID = HEAPID_APP_CONTROL;
+  }
 
   return event;
 }
@@ -285,22 +329,65 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
 {
   EVENT_WORK_BEACON_SEARCH *evt_wk = wk;
   GAMESYS_WORK *gsys = evt_wk->gsys;
+
   switch( *seq ){
-  case 0:
-    //ビーコンサーチ開始
-    ;
-    (*seq)++;
-    break;
-  case 1:
-    //データ受け取り待ち
-    if (1)
+  case BEACON_SEQ_START:
     {
-      //受け取りの結果をセット（現行は失敗）@todo
-      *(evt_wk->Ret) = FALSE;
-      (*seq)++;
+      BOOL rc;
+      //ビーコンサーチ開始
+      evt_wk->BeaconWork = DELIVERY_BEACON_Init(&evt_wk->BeaconInit);
+      rc = DELIVERY_BEACON_RecvStart(evt_wk->BeaconWork);
+      if (!rc)
+      { //開始失敗
+        GF_ASSERT_MSG(0,"beacon_start_error");
+        //受け取りの結果をセット
+        *(evt_wk->Ret) = FALSE;   //失敗
+        (*seq) = BEACON_SEQ_END;
+      }
+      else (*seq) = BEACON_SEQ_SEARCH;
     }
     break;
-  case 2:
+  case BEACON_SEQ_SEARCH:
+    //配信サービス検出のため、２秒間位配送メインをまわす
+    {
+      //配送メイン
+      DELIVERY_BEACON_Main( evt_wk->BeaconWork );
+    }
+    evt_wk->Time++;
+    if ( evt_wk->Time > 30*2 ) (*seq) = BEACON_SEQ_CHECK;
+    break;
+  case BEACON_SEQ_CHECK:
+    //配送メイン
+    DELIVERY_BEACON_Main( evt_wk->BeaconWork );
+    {
+      BOOL rc;
+      //ビーコンが１つでもあるかどうか（ 配信サービスがやっているかどうか）
+      rc = DELIVERY_BEACON_RecvSingleCheck( evt_wk->BeaconWork );
+      if (rc) (*seq) = BEACON_SEQ_MAIN;
+      else
+      {   //配信していない
+        //受け取りの結果をセット
+        *(evt_wk->Ret) = FALSE;   //失敗
+        (*seq) = BEACON_SEQ_END;
+      }
+    }
+    break;
+  case BEACON_SEQ_MAIN:
+    //配送メイン
+    DELIVERY_BEACON_Main( evt_wk->BeaconWork );
+    //データ受け取り待ち
+    if ( DELIVERY_BEACON_RecvCheck( evt_wk->BeaconWork )  )
+    {      
+      //バッファからセーブへデータコピー
+      GFL_STD_MemCopy( evt_wk->Ptr->CommBuf, evt_wk->Ptr->ThSaveWork, BATTLE_EXAMINATION_SAVE_GetWorkSize() );
+      //受け取りの結果をセット
+      *(evt_wk->Ret) = TRUE;    //成功
+      (*seq) = BEACON_SEQ_END;
+    }
+    break;
+  case BEACON_SEQ_END:
+    //ビーコン終了
+    DELIVERY_BEACON_End( evt_wk->BeaconWork );
     //終了
     return( GMEVENT_RES_FINISH );
   }
@@ -351,6 +438,67 @@ void TRIAL_HOUSE_CalcBtlResult( TRIAL_HOUSE_WORK_PTR ptr, u16 *outRank, u16 *out
   *outRank = rank;
   *outPoint = val;
 }
+
+//--------------------------------------------------------------
+/**
+ * ダウンロードデータの種類を取得
+ * @param   gsys      ゲームシステムポインタ
+ * @param   ptr       トライアルハウスワークポインタ
+ * @retval  u32       データタイプ
+ */
+//--------------------------------------------------------------
+u32 TRIAL_HOUSE_GetDLDataType( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
+{
+  BOOL rc;
+  u32 type;
+  u32 monsno;
+  BATTLE_EXAMINATION_SAVEDATA *exa;
+  BSUBWAY_PARTNER_DATA *data;
+  exa = ptr->ThSaveWork;
+  //データの有効性をチェック
+  rc = BATTLE_EXAMINATION_SAVE_IsInData(exa);
+  if (!rc) type = TH_DL_DATA_TYPE_NONE;
+  else
+  {
+    //一人目のトレーナーの手持ちポケモンの４番目を取得
+    data = BATTLE_EXAMINATION_SAVE_GetData(exa, 0);
+    //3匹目取得
+    monsno = data->btpwd[2].mons_no;
+    //3匹目いなければ、データ無し
+    if ( (0<monsno)&&(monsno<=MONSNO_END) ) type = TH_DL_DATA_TYPE_NONE;
+    else
+    {
+      //4匹目取得
+      monsno = data->btpwd[3].mons_no;
+      //４匹目いなければシングル、いればダブル
+      if ( (0<monsno)&&(monsno<=MONSNO_END) ) type = TH_DL_DATA_TYPE_DOUBLE;
+      else type = TH_DL_DATA_TYPE_SINGLE;
+    }
+  }
+
+  NOZOMU_Printf("DL_data_type = %d\n",type);
+  return type;
+}
+
+//--------------------------------------------------------------
+/**
+ * 検定データを無効状態にしてセーブする
+ * @param   gsys      ゲームシステムポインタ
+ * @param   ptr       トライアルハウスワークポインタ
+ * @retval  none
+ */
+//--------------------------------------------------------------
+void TRIAL_HOUSE_InvalidDLData( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
+{
+  BATTLE_EXAMINATION_SAVEDATA *exa;
+  BSUBWAY_PARTNER_DATA *data;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+
+  exa = ptr->ThSaveWork;
+  BATTLE_EXAMINATION_SAVE_Write(sv, exa, ptr->HeapID);
+}
+
 
 
 

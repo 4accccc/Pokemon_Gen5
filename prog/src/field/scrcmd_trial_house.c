@@ -287,10 +287,11 @@ VMCMD_RESULT EvCmdTH_SearchBeacon( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
 
   ret = SCRCMD_GetVMWork( core, work );
 
-  event = TRIAL_HOUSE_CreateBeaconSearchEvt( gsys, ret );
+  event = TRIAL_HOUSE_CreateBeaconSearchEvt( gsys, *ptr, ret );
   SCRIPT_CallEvent( sc, event );
 
   return VMCMD_RESULT_SUSPEND;
@@ -321,6 +322,54 @@ VMCMD_RESULT EvCmdTH_CalcBtlResult( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * トライアルハウス ダウンロードデータタイプ取得
+ * @note シングル or ダブル or データ無し
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdTH_GetDLDataType( VMHANDLE *core, void *wk )
+{
+  u16 *type;
+  GMEVENT* event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
+
+  type = SCRCMD_GetVMWork( core, work );
+  //データのタイプを返す
+  *type = TRIAL_HOUSE_GetDLDataType( gsys, *ptr );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * トライアルハウス ダウンロードデータクリア
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdTH_ClearDLData( VMHANDLE *core, void *wk )
+{
+  GMEVENT* event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
+
+  //データクリア @todo
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
 
 
 

@@ -37,4 +37,6 @@ typedef struct TRIAL_HOUSE_WORK_tag
   BSWAY_PLAYMODE PlayMode;
   BOOL DownLoad;
   TH_POINT_WORK PointWork;
+  void *CommBuf;
+  void *ThSaveWork;
 }TRIAL_HOUSE_WORK;
