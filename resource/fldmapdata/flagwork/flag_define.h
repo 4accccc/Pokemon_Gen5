@@ -202,7 +202,7 @@
 #define FE_ZUKAN_GRADEUP                   186 /* 0x00ba 全国図鑑入手可能フラグ（地方を全て「見た」にするか、ゲームクリアでセット） */
 #define FE_C01_ITEMGET_01                  187 /* 0x00bb C01サンヨウシティ：釣り人のアイテム入手フラグ */
 #define FE_ZUKAN_COMPLETE_LOCAL_SEE        188 /* 0x00bc 地方図鑑「みた」モードを完成 */
-		/* not used   189(0x00bd) */
+#define FE_C01_ITEMGET_02                  189 /* 0x00bd C01サンヨウシティ：ビル裏の人アイテム入手フラグ */
 		/* not used   190(0x00be) */
 		/* not used   191(0x00bf) */
 		/* not used   192(0x00c0) */
@@ -2508,7 +2508,7 @@
 #define TMFLG_C03R1001_MASSAGE            2734 /* 0x0aae １日１回なつきマッサージ */
 #define TMFLG_C03P09_SWEETS               2735 /* 0x0aaf １日１個購入制限アイテム */
 #define TMFLG_C02R0601_ITEM               2736 /* 0x0ab0 １日１個入手制限アイテム */
-		/* not used  2737(0x0ab1) */
+#define TMFLG_D02_ROCK                    2737 /* 0x0ab1 ヤグルマの森：試しの岩イベント */
 		/* not used  2738(0x0ab2) */
 		/* not used  2739(0x0ab3) */
 		/* not used  2740(0x0ab4) */
