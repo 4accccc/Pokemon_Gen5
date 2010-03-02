@@ -87,6 +87,7 @@ static void SetData(WIFI_HISTORY *wh, UNSV_WORK* work, const int inCountryCode, 
   
   work->TargetCountryCode = inCountryCode;
   work->Floor = inFloor;
+  NOZOMU_Printf("SetFloor = %d\n",inFloor);
   work->ObjNum = 0;
   for (i=0;i<UNDATA_MAX;i++)
   {
@@ -304,7 +305,7 @@ static void SetWords(WORDSET *wordset, GAMEDATA *gdata, const u32 inDataIdx)
   }
   //7番にNPCトレーナー名をセット
   {
-    WORDSET_RegisterPlayerName( wordset, 3, npc_my );
+    WORDSET_RegisterPlayerName( wordset, 7, npc_my );
   }
   //8番にNPC交換国数をセット
   {
