@@ -610,8 +610,9 @@
 #define ITEM_HAITATUBUTU1		( 621 )		// はいたつぶつ１
 #define ITEM_HAITATUBUTU2		( 622 )		// はいたつぶつ２
 #define ITEM_HAITATUBUTU3		( 623 )		// はいたつぶつ３
+#define ITEM_DORAGONNOHONE		( 624 )		// ドラゴンのホネ
 
-#define ITEM_DATA_MAX		( 623 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 624 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数

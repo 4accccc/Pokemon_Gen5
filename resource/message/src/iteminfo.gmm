@@ -5742,6 +5742,15 @@
 </language>
 	</row>
 
+	<row id="ITEMINFO_624">
+		<language name="JPN" width="256">あれくるう　うみを　ものともせず
+じゆうに　とびまわっていたと　される
+ポケモンの　あたまの　ホネ。</language>
+		<language name="JPN_KANJI" width="256">あれくるう　うみを　ものともせず
+じゆうに　とびまわっていたと　される
+ポケモンの　あたまの　ホネ。</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
