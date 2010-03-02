@@ -995,6 +995,7 @@ static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq )
 
 //@todo トレーナーメッセージ表示実験
 #include  "tr_tool/tr_tool.h"
+#include  "tr_tool/trtype_def.h"
 #include  "btlv/btlv_effect.h"
 #include  "btlv/btlv_gauge.h"
 static  BOOL  check_tr_message( BTL_CLIENT* wk );
@@ -1023,7 +1024,6 @@ static  BOOL  check_tr_message( BTL_CLIENT* wk )
 
   return FALSE;
 }
-
 
 //----------------------------------------------------------------------
 /**
@@ -1161,7 +1161,28 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
       BTLV_StartMsgTrainer( wk->viewCore, trainerID, TRMSG_FIGHT_POKE_LAST_HP_HALF );
       if( BTLV_GAUGE_GetPinchBGMFlag( BTLV_EFFECT_GetGaugeWork() ) == 0 )
       {
-        PMSND_PlayBGM( SEQ_BGM_BATTLESUPERIOR );
+        switch( BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID ) ){ 
+        //現状、曲変化はジムリーダーと四天王だけ
+        case TRTYPE_BIGFOUR1:
+        case TRTYPE_BIGFOUR2:
+        case TRTYPE_BIGFOUR3:
+        case TRTYPE_BIGFOUR4:
+        case TRTYPE_LEADER1A:
+        case TRTYPE_LEADER1B:
+        case TRTYPE_LEADER1C:
+        case TRTYPE_LEADER2:
+        case TRTYPE_LEADER3:
+        case TRTYPE_LEADER4:
+        case TRTYPE_LEADER5:
+        case TRTYPE_LEADER6:
+        case TRTYPE_LEADER7:
+        case TRTYPE_LEADER8A:
+        case TRTYPE_LEADER8B:
+          PMSND_PlayBGM( SEQ_BGM_BATTLESUPERIOR );
+          break;
+        default:
+          break;
+        }
       }
       (*seq)++;
     }
