@@ -1254,6 +1254,9 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
     case EVENTIRCBTL_ENTRYMODE_TRADE:
       net_ini_data.gsid = WB_NET_IRCTRADE;
       break;
+    case EVENTIRCBTL_ENTRYMODE_SUBWAY:
+      net_ini_data.gsid = WB_NET_BSUBWAY;
+      break;
     default:
 //      GF_ASSERT(0);
       break;

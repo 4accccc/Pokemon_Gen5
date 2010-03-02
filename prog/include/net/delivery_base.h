@@ -12,7 +12,7 @@
 #include "net/network_define.h"
 
 #define DELIVERY_BEACON_ONCE_NUM  (88)  //ビーコン一回の送信サイズ
-#define DELIVERY_BEACON_MAX_NUM  (9)    //DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUMバイトの送信が可能
+#define DELIVERY_BEACON_MAX_NUM  (17)    //DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUMバイトの送信が可能
 
 //IRC送信サイズ
 //赤外線は内部で分割送信

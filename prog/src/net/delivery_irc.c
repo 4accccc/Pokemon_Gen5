@@ -31,7 +31,7 @@ typedef void (StateFunc)(DELIVERY_IRC_WORK* pState);
 struct _DELIVERY_IRC_LOCALWORK{
   DELIVERY_IRC_INIT aInit;   //初期化構造体のコピー
 //   DELIVERY_IRC aSend;  //配信する、受け取る構造体
-  DELIVERY_IRC aRecv[2];  //配信する、受け取る構造体
+  DELIVERY_IRC aRecv;  //配信する、受け取る構造体
   u8 end;
   u8 bSend;
   u16 bNego;
@@ -106,6 +106,7 @@ static void _changeStateDebug(DELIVERY_IRC_WORK* pWork,StateFunc state, int line
 static void _RecvDeliveryData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
   //すでに受信済み
+/*
   DELIVERY_IRC_WORK *pWork = pWk;
   int i,j;
   const u8* pU8 = pData;
@@ -121,6 +122,7 @@ static void _RecvDeliveryData(const int netID, const int size, const void* pData
   GFL_STD_MemCopy( pData, pWork->aInit.pData,pWork->aInit.datasize);
 
   OS_TPrintf("_RecvDeliveryData %d %d\n",netID,size);
+*/
 }
 
 
@@ -143,7 +145,7 @@ static void _Recvcrc16Data(const int netID, const int size, const void* pData, v
 static u8* _getDeliveryData(int netID, void* pWk, int size)
 {
   DELIVERY_IRC_WORK *pWork = pWk;
-  return (u8*)pWork->aRecv[netID].data;
+  return (u8*)pWork->aRecv.data;
 }
 
 //なにもしない
@@ -157,6 +159,8 @@ static void _sendInit7(DELIVERY_IRC_WORK* pWork)
   if( GFL_NET_IsInit() == FALSE ){
     if(!pWork->bSend){
       pWork->end = DELIVERY_IRC_SUCCESS;
+      
+      GFL_STD_MemCopy( pWork->aRecv.data, pWork->aInit.pData,pWork->aInit.datasize);
       if(pWork->crc != GFL_STD_CrcCalc( pWork->aInit.pData, pWork->aInit.datasize) ){
         pWork->end = DELIVERY_IRC_FAILED;
       }

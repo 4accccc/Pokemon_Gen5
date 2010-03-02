@@ -25,14 +25,17 @@
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
 #include "net/network_define.h"
+
 #include "savedata/wifilist.h"
 #include "savedata/system_data.h"
+#include "savedata/gametime.h"
+#include "savedata/dreamworld_data.h"
+#include "savedata/symbol_save.h"
+
 #include "msg/msg_d_ohno.h"
 #include "gsync_local.h"
 #include "net/nhttp_rap.h"
 #include "../../field/event_gsync.h"
-#include "savedata/dreamworld_data.h"
-#include "savedata/symbol_save.h"
 #include "gsync_obj_NANR_LBLDEFS.h"
 #include "gsync_poke.cdat"
 #include "msg/msg_gsync.h"
@@ -456,6 +459,26 @@ static void _wakeupAction4(G_SYNC_WORK* pWork)
 }
 
 
+
+
+static void _wakeupActionFailed1(G_SYNC_WORK* pWork)
+{
+ if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+  _CHANGE_STATE(_networkClose);
+}
+
+
+
+
+
+static void _wakeupActionFailed(G_SYNC_WORK* pWork)
+{
+  GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_009);
+  _CHANGE_STATE(_wakeupActionFailed1);
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケモン起こし処理
@@ -476,7 +499,25 @@ static void _wakeupAction3(G_SYNC_WORK* pWork)
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
 
     if(selectno==0){
+      /*
+      GMTIME* pGMT = SaveData_GetGameTime(pWork->pSaveData);
+      if(GMTIME_IsPenaltyMode(pGMT)){  //ペナルティー
+        _CHANGE_STATE(_wakeupActionFailed);
+      }
+      else{          //時間を確認する
+        GFDATE gd = DREAMWORLD_SV_GetTime(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData));
+        RTCDate date;
+        GFDATE_GFDate2RTCDate(gd, &date);
+        if(GFL_RTC_GetDaysOffset(&date) > 0){
+          _CHANGE_STATE(_wakeupAction4);
+        }
+        else{
+          _CHANGE_STATE(_wakeupActionFailed);
+        }
+      }
+         */
       _CHANGE_STATE(_wakeupAction4);
+      
     }
     else{
       _CHANGE_STATE(_networkClose);
@@ -515,6 +556,10 @@ static void _wakeupAction2(G_SYNC_WORK* pWork)
 
 static void _wakeupAction1(G_SYNC_WORK* pWork)
 {
+  if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+  GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
 
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_rug_ani3);
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_zzz_ani);
@@ -560,19 +605,6 @@ static void _playStatusCheck(G_SYNC_WORK* pWork, int status , gs_response* pRep)
   case DREAM_WORLD_SERVER_NO_DATA:   //アカウント未登録の場合
     switch(pWork->pParent->selectType){
     case GSYNC_CALLTYPE_INFO:
-/*
-      {          //時間を確認する
-        GFDATE gd = DREAMWORLD_SV_GetTime(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData));
-        RTCDate date;
-        GFDATE_GFDate2RTCDate(gd, &date);
-        if(GFL_RTC_GetDaysOffset(&date) > 0){
-          _CHANGE_STATE(_wakeupAction1);   //起こす部分
-        }
-        else{
-          
-        }
-      }
-   */
       _CHANGE_STATE(_wakeupAction1);   //起こす部分
       break;
     case GSYNC_CALLTYPE_POKELIST:          //眠らせるポケモンを選ぶ

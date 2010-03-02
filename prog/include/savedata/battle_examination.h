@@ -9,7 +9,7 @@
 
 
 #include "savedata/bsubway_savedata.h"
-//#include "battle/bsubway_battle_data.h"
+#include "battle/bsubway_battle_data.h"
 
 
 //typedef _BSUBWAY_PARTNER_DATA BSUBWAY_PARTNER_DATA;
@@ -17,7 +17,16 @@
 #define BATTLE_EXAMINATION_MAX (5)   ///< バトル検定の人数
 #define BATTLE_EXAMINATION_TITLE_MSG_MAX (34+2)   ///< メッセージの数
 
-typedef struct _BATTLE_EXAMINATION_SAVEDATA BATTLE_EXAMINATION_SAVEDATA;
+//通信で使用するので外部公開していますが、アクセス関数を使用してください
+typedef struct {
+  BSUBWAY_PARTNER_DATA trainer[BATTLE_EXAMINATION_MAX];
+  STRCODE titleName[BATTLE_EXAMINATION_TITLE_MSG_MAX];
+  u16 crc;
+  u16 bActive;
+}BATTLE_EXAMINATION_SAVEDATA;
+
+
+
 
 extern int BATTLE_EXAMINATION_SAVE_GetWorkSize(void);
 extern BATTLE_EXAMINATION_SAVEDATA* BATTLE_EXAMINATION_SAVE_AllocWork(HEAPID heapID);

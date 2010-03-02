@@ -16,13 +16,6 @@
 #include "savedata/battle_examination.h"
 #include "battle/bsubway_battle_data.h"
 
-struct _BATTLE_EXAMINATION_SAVEDATA{
-  BSUBWAY_PARTNER_DATA trainer[BATTLE_EXAMINATION_MAX];
-  STRCODE titleName[BATTLE_EXAMINATION_TITLE_MSG_MAX];
-  u16 crc;
-  u16 bActive;
-};
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -72,6 +65,7 @@ BATTLE_EXAMINATION_SAVEDATA *BATTLE_EXAMINATION_SAVE_GetSvPtr( SAVE_CONTROL_WORK
 {	
 	BATTLE_EXAMINATION_SAVEDATA	*data;
   data = SaveControl_Extra_DataPtrGet(p_sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION, 0);
+//  data = SaveControl_DataPtrGet(p_sv, GMDATA_ID_EXAMINATION);
 	return data;
 }
 

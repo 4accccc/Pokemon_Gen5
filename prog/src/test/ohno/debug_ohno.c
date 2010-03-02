@@ -23,6 +23,11 @@
 #include "savedata/mystery_data.h"
 #include "debug/debug_mystery_card.h"
 
+#include "savedata/bsubway_savedata.h"
+#include "savedata/battle_examination.h"
+#include "waza_tool/wazano_def.h"
+#include "battle/bsubway_battle_data.h"
+
 #define _MAXNUM   (4)         // 最大接続人数
 #define _MAXSIZE  (80)        // 最大送信バイト数
 #define _BCON_GET_NUM (16)    // 最大ビーコン収集数
@@ -77,7 +82,7 @@ static BOOL _NetTestParent(void* pCtl);
 
 static void _endCallBack(void* pWork);
 static u8* _recvMemory(int netID, void* pWork, int size);
-
+static void _debug_bsubData(BSUBWAY_PARTNER_DATA* pData);
 
 
 static const NetRecvFuncTable _CommPacketTbl[] = {
@@ -747,6 +752,33 @@ static GFL_PROC_RESULT NetDeliverySendProc_Init(GFL_PROC * proc, int * seq, void
 }
 
 
+//トライアルハウスダミーデータ
+static void _debug_bsubDataMain(DEBUG_OHNO_CONTROL * pDOC)
+{
+  BATTLE_EXAMINATION_SAVEDATA* pDG;
+
+  
+  pDOC->aInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
+  pDOC->aInit.datasize = sizeof(BATTLE_EXAMINATION_SAVEDATA);   //データ全体サイズ
+  pDOC->aInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.datasize);     // データ
+  pDOC->aInit.ConfusionID = 12;
+  pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
+
+  pDG = (BATTLE_EXAMINATION_SAVEDATA* )pDOC->aInit.pData;
+
+  _debug_bsubData( &pDG->trainer[0] );
+  _debug_bsubData( &pDG->trainer[1] );
+  _debug_bsubData( &pDG->trainer[2] );
+  _debug_bsubData( &pDG->trainer[3] );
+  _debug_bsubData( &pDG->trainer[4] );
+  pDG->titleName[0] = L'て';
+  pDG->titleName[1] = L'す';
+  pDG->titleName[2] = 0xffff;
+}
+
+
+
+
 //トライアルハウスもビーコン配信
 static GFL_PROC_RESULT NetDeliveryTriSendProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
@@ -759,7 +791,9 @@ static GFL_PROC_RESULT NetDeliveryTriSendProc_Init(GFL_PROC * proc, int * seq, v
 
   {
     //@todo ここにトライアルハウステストデータを入れる
+    _debug_bsubDataMain(pDOC);
 
+    
     pDOC->pDBWork=DELIVERY_BEACON_Init(&pDOC->aInit);
     GF_ASSERT(DELIVERY_BEACON_SendStart(pDOC->pDBWork));
   }
@@ -1020,4 +1054,170 @@ const GFL_PROC_DATA NetDeliveryIRCRecvProcData = {
   DebugOhnoMainProcEnd,
 };
 
+
+
+
+///------------------------------バトル検定
+
+
+
+
+
+
+
+
+#if 0
+//--------------------------------------------------------------
+/// バトルサブウェイロム用トレーナーデータ構造体
+/// トレーナー名、会話データは、gmmで管理（トレーナーIDから取得）
+//--------------------------------------------------------------
+typedef struct
+{
+	u16		tr_type;				//トレーナータイプ
+	u16		use_poke_cnt;			//使用可能ポケモン数	
+	u16		use_poke_table[1];		//使用可能ポケモンINDEXテーブル（可変長）
+}BSUBWAY_TRAINER_ROM_DATA;
+
+//--------------------------------------------------------------
+/// バトルサブウェイロム用ポケモンデータ構造体
+//--------------------------------------------------------------
+typedef struct
+{
+	u16		mons_no;				//モンスターナンバー
+	u16		waza[WAZA_TEMOTI_MAX];	//所持技
+	u8		exp_bit;				//努力値振り分けビット
+	u8		chr;					//性格
+	u16		item_no;				//装備道具
+	u16		form_no;				//フォルムナンバー
+}BSUBWAY_POKEMON_ROM_DATA;
+
+//--------------------------------------------------------------
+/// Wifiデータ
+/// サブウェイ用ポケモンデータ型
+/// セーブデータとやり取りするのでsavedata/b_tower.hにtypedef定義を切り
+/// 不完全ポインタでやり取りできるようにしておく
+//(Dpw_Bt_PokemonData)
+//--------------------------------------------------------------
+struct _BSUBWAY_POKEMON
+{
+	union{
+		struct{
+			u16	mons_no:11;	///<モンスターナンバー
+			u16	form_no:5;	///<モンスターナンバー
+		};
+		u16	mons_param;
+	};
+	u16	item_no;	///<装備道具
+
+	u16	waza[WAZA_TEMOTI_MAX];		///<所持技
+
+	u32	id_no;					///<IDNo
+	u32	personal_rnd;			///<個性乱数
+
+	union{
+		struct{
+		u32	hp_rnd		:5;		///<HPパワー乱数
+		u32	pow_rnd		:5;		///<POWパワー乱数
+		u32	def_rnd		:5;		///<DEFパワー乱数
+		u32	agi_rnd		:5;		///<AGIパワー乱数
+		u32	spepow_rnd	:5;		///<SPEPOWパワー乱数
+		u32	spedef_rnd	:5;		///<SPEDEFパワー乱数
+		u32	ngname_f	:1;		///<NGネームフラグ
+		u32				:1;		//1ch 余り
+		};
+		u32 power_rnd;
+	};
+
+	union{
+		struct{
+		u8	hp_exp;				///<HP努力値
+		u8	pow_exp;			///<POW努力値
+		u8	def_exp;			///<DEF努力値
+		u8	agi_exp;			///<AGI努力値
+		u8	spepow_exp;			///<SPEPOW努力値
+		u8	spedef_exp;			///<SPEDEF努力値
+		};
+		u8 exp[6];
+	};
+	union{
+		struct{
+		u8	pp_count0:2;	///<技1ポイントアップ
+		u8	pp_count1:2;	///<技2ポイントアップ
+		u8	pp_count2:2;	///<技3ポイントアップ
+		u8	pp_count3:2;	///<技4ポイントアップ
+		};
+		u8 pp_count;
+	};
+
+	u8	country_code;			///<国コード
+
+	u8	tokusei;				///<特性
+	u8	natuki;				///<なつき度
+
+	///ニックネーム ((MONS_NAME_SIZE:10)+(EOM_SIZE:1))*(STRCODE:u16)=22
+	STRCODE nickname[MONS_NAME_SIZE+EOM_SIZE];
+};
+
+//--------------------------------------------------------------
+/// サブウェイトレーナーデータ
+//--------------------------------------------------------------
+typedef struct _BSUBWAY_TRAINER
+{
+	u32		player_id;	///<トレーナーのID
+	u16		tr_type;	///<トレーナータイプ
+	u16		dummy;		///<ダミー
+	STRCODE	name[PERSON_NAME_SIZE+EOM_SIZE];
+	
+	u16		appear_word[4];						//登場メッセージ	
+	u16		win_word[4];						//勝利メッセージ	
+	u16		lose_word[4];						//敗退メッセージ
+}BSUBWAY_TRAINER;
+
+//--------------------------------------------------------------
+/// バトルサブウェイ　対戦相手データ構造体
+//--------------------------------------------------------------
+struct _BSUBWAY_PARTNER_DATA
+{
+	BSUBWAY_TRAINER	bt_trd;			//トレーナーデータ
+	struct _BSUBWAY_POKEMON	btpwd[4];		//持ちポケモンデータ
+};
+
+
+#endif
+
+
+static void _debug_bsubData(BSUBWAY_PARTNER_DATA* pData)
+{
+  int i;
+
+  pData->bt_trd.player_id =10;
+  pData->bt_trd.tr_type = 20;
+  pData->bt_trd.name[0]= L'で';
+  pData->bt_trd.name[1]= L'ば';
+  pData->bt_trd.name[2]= L'ぐ';
+  pData->bt_trd.name[3]= 0xffff;
+  pData->bt_trd.appear_word[0]=1;
+  pData->bt_trd.appear_word[1]=2;
+  pData->bt_trd.appear_word[2]=3;
+  pData->bt_trd.appear_word[3]=4;
+  pData->bt_trd.win_word[0]=1;
+  pData->bt_trd.win_word[1]=2;
+  pData->bt_trd.win_word[2]=3;
+  pData->bt_trd.win_word[3]=4;
+  pData->bt_trd.lose_word[0]=1;
+  pData->bt_trd.lose_word[1]=2;
+  pData->bt_trd.lose_word[2]=3;
+  pData->bt_trd.lose_word[3]=4;
+  for(i=0;i<4;i++){
+    BSUBWAY_POKEMON* pPoke = &pData->btpwd[i];
+    pPoke->mons_param = 1;
+    pPoke->item_no=0;
+    pPoke->waza[0]=WAZANO_HAPPAKATTAA;
+    pPoke->waza[1]=WAZANO_NULL;
+    pPoke->waza[2]=WAZANO_NULL;
+    pPoke->waza[3]=WAZANO_NULL;
+    pPoke->id_no = 12;
+    pPoke->nickname[0]=0xffff;
+  }
+}
 
