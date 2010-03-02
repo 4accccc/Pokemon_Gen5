@@ -30,6 +30,7 @@
 #include "print/printsys.h"
 #include "font/font.naix"
 #include "message.naix"
+#include "msg/msg_d_soga.h"
 
 #include "battle/btlv/btlv_input.h"
 #include "battle/btlv/btlv_b_gauge.h"
@@ -214,6 +215,7 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
   // フォント作成を前に  taya
   wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
   wk->small_font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_batt_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+  wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_soga_dat, wk->heapID );
 
   wk->seq_no = 0;
   {
@@ -279,7 +281,7 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
 
   GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
 
-  wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_SINGLE, BTL_COMPETITOR_WILD, wk->font, &wk->cursor_flag, wk->heapID );
+  wk->biw = BTLV_INPUT_InitEx( BTLV_INPUT_TYPE_SINGLE, wk->font, &wk->cursor_flag, wk->heapID );
 
   //フェードイン
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 2 );
@@ -333,6 +335,7 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
     BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
 //    BTLV_CAMERA_MoveCameraPosition( wk->bcw, &pos, &target );
     BTLV_CAMERA_MoveCameraInterpolation( wk->bcw, &pos, &target, 20, 0, 20 );
+    BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
   }
 
   if( trg & PAD_BUTTON_A )
@@ -343,6 +346,16 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
   }
 
   MoveCamera( wk );
+
+  if( tp )
+  { 
+    BTLV_INPUT_YESNO_PARAM param;
+    param.yes_msg = GFL_MSG_CreateString( wk->msg, EVMSG_DECIDE );
+    param.no_msg = GFL_MSG_CreateString( wk->msg, EVMSG_CANCEL );
+    BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_YES_NO, &param );
+    GFL_HEAP_FreeMemory( param.yes_msg );
+    GFL_HEAP_FreeMemory( param.no_msg );
+  }
 
 #if 0
   if( trg & PAD_BUTTON_SELECT )
