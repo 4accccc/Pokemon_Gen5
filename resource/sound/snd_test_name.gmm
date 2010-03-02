@@ -7982,6 +7982,10 @@
 		<language name="JPN" width="256">FLD-130</language>
 		<language name="JPN_KANJI" width="256">FLD-130</language>
 	</row>
+	<row id="msg_seq_se_sys_84">
+		<language name="JPN" width="256">SYS-84</language>
+		<language name="JPN_KANJI" width="256">SYS-84</language>
+	</row>
 	<row id="msg_seq_se_dmy_236">
 		<language name="JPN" width="256">DMY-236</language>
 		<language name="JPN_KANJI" width="256">DMY-236</language>
