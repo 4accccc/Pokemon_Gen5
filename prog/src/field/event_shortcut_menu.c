@@ -31,6 +31,18 @@
 //プロセス（主に起動時モードのため）
 #include "app/zukan.h"
 
+//スクリプトイベント呼び出しのため
+#include "field/script.h"
+#include "field/script_local.h"
+#include "../../../resource/fldmapdata/script/common_scr_def.h" //SCRID_～
+//#include "./event_fieldmap_control.h"
+//#include "./event_gpower.h"
+
+//#include "sound/pm_sndsys.h"
+//#include "sound/wb_sound_data.sadl"
+
+//#include "system/main.h"      //GFL_HEAPID_APP参照
+
 //セーブデータ
 #include "savedata/shortcut.h"
 
@@ -89,6 +101,9 @@ static void ShortCutMenu_Exit( EVENT_SHORTCUTMENU_WORK *p_wk );
 //コールバック
 static void ShortCutMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
 static void ShortCutMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
+
+//アイテム使用NGメッセージ表示イベント生成
+static GMEVENT* EVENT_ItemuseNGMsgCall(GAMESYS_WORK * gsys, u8 type );
 
 //=============================================================================
 /**
@@ -724,3 +739,21 @@ static void ShortCutMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void
 	EVENT_SHORTCUTMENU_WORK *p_wk	= wk_adrs;
 	ShortCutMenu_Exit( p_wk );
 }
+
+/*
+ *  @brief  ショートカットアイテム使用NGメッセージイベント
+ *
+ *  @param  type    0:通常,1:自転車を降りられない
+ */
+static GMEVENT* EVENT_ItemuseNGMsgCall(GAMESYS_WORK * gsys, u8 type )
+{
+  GMEVENT* event;
+  SCRIPT_WORK* sc;
+
+  event = SCRIPT_SetEventScript( gsys, SCRID_ITEMUSE_NG_MSG, NULL, HEAPID_FIELDMAP );
+  sc = SCRIPT_GetScriptWorkFromEvent( event );
+  SCRIPT_SetScriptWorkParam( sc, type, 0, 0, 0 );
+  
+  return event;
+}
+

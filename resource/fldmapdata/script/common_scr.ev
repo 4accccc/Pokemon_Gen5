@@ -12,13 +12,12 @@
 //               スクリプト本体
 //--------------------------------------------------------------------
 _EVENT_DATA   ev_dummy
-_EVENT_DATA   ev_heal_p01_dummy
-_EVENT_DATA   ev_gameover_recover_home
 _EVENT_DATA   ev_gameover_recover_pokecen
 _EVENT_DATA   ev_report_event_call_wireless
 _EVENT_DATA   ev_report_event_call
 _EVENT_DATA   ev_field_comm_exit_event_call
 _EVENT_DATA   ev_wireless_off_message
+_EVENT_DATA   ev_itemuse_ng_msg
 _EVENT_DATA_END //終了
 
 //--------------------------------------------------------------------
@@ -29,71 +28,6 @@ _EVENT_DATA_END //終了
 EVENT_START ev_dummy
   //なにもしない//
 EVENT_END
-
-//====================================================================
-//  ジョーイ
-//  ※pokecen_scr.evに移動しました。
-//====================================================================
-EVENT_START   ev_heal_p01_dummy
-EVENT_END
-
-//////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
-EVENT_START   ev_gameover_recover_home
-  _ME_PLAY( SEQ_ME_ASA )
-  _ME_WAIT()
-
-//マップフェードイン
-	_MAP_FADE_BLACK_IN_FORCE( )
-	_MAP_FADE_END_CHECK()
-
-  _TEMOTI_POKEMON_KAIFUKU()                         //手持ちポケモン回復処理
-EVENT_END
-/*
-	//向き合う
-	_OBJ_ANIME		FLDOBJ_ID_PLAYER,player_recover_myhome_anm
-	_OBJ_ANIME		T20R0201_MAMA,mama_recover_myhome_anm //070419金銀への移行に伴い無効化
-															//090428再び有効
-	_OBJ_ANIME_WAIT	
-
-	_BLACK_IN		SCR_WIPE_DIV,SCR_WIPE_SYNC
-	_WIPE_FADE_END_CHECK
-
-	_PLAYER_NAME	0
-	_TALKMSG	msg_all_dead_11
-
-	_BLACK_OUT		SCR_WIPE_DIV,SCR_WIPE_SYNC
-	_WIPE_FADE_END_CHECK
-
-	_TALK_CLOSE
-	_ME_PLAY		SEQ_ME_ASA
-	_ME_WAIT
-
-	_PC_KAIFUKU
-	_BLACK_IN		SCR_WIPE_DIV,SCR_WIPE_SYNC
-	_WIPE_FADE_END_CHECK
-
-	//図鑑入手しているかでメッセージを分岐
-#if 0		//070515 金銀へ移行したため無効化
-	_IF_FLAGON_CALL		FE_ZUKAN_GET,ev_game_over_recover_myhome_zukan_on
-	_IF_FLAGOFF_CALL	FE_ZUKAN_GET,ev_game_over_recover_myhome_zukan_off
-#endif
-	_TALKMSG		msg_all_dead_12
-
-	_LAST_KEYWAIT
-	_TALK_CLOSE
-
-//--------------------------------------------------------------------
-//主人公　ママ　向き合う
-//--------------------------------------------------------------------
-_ANIME_LABEL	player_recover_myhome_anm
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	mama_recover_myhome_anm
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-*/
 
 //====================================================================
 //====================================================================
@@ -371,5 +305,27 @@ ev_wireless_off_message:
   _SYSWIN_MSG( msg_common_wireless_off_keywait, POS_DOWN )
   _SYSWIN_CLOSE()
   _CHG_LOCAL_SCR    //呼び出し元スクリプトに切り替え
+
+
+//====================================================================
+//便利ボタンからのアイテム使用時NGメッセージ
+//プログラムイベントからコールされます
+//====================================================================
+//--------------------------------------------------------------
+//  SCWK_PARAM0   0:博士NGメッセージ,1:自転車から降りられないメッセージ
+//--------------------------------------------------------------
+EVENT_START   ev_itemuse_ng_msg
+{
+  DEFINE_LOCAL  i_msg 
+
+  $i_msg = msg_common_itemuse_ng
+  $i_msg += SCWK_PARAM0
+
+  _PLAYER_NAME(0)
+  _SYSWIN_MSG( i_msg, POS_DOWN )
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+}
+EVENT_END
 
 
