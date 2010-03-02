@@ -85,13 +85,19 @@ struct _BTLV_EFFECT_WORK
 
 typedef struct
 {
-  void        *resource;
   BtlvMcssPos target;
   int         seq_no;
   int         work;
   int         wait;
   int         color;
-}BTLV_EFFECT_TCB;
+}BTLV_EFFECT_DAMAGE_TCB;
+
+typedef struct
+{
+  BtlvMcssPos   vpos;
+  int           seq_no;
+  MCSS_ADD_WORK maw;
+}BTLV_EFFECT_HENGE_TCB;
 
 typedef struct
 {
@@ -110,6 +116,7 @@ static  BTLV_EFFECT_WORK  *bew = NULL;
 
 static  void  BTLV_EFFECT_VBlank( GFL_TCB *tcb, void *work );
 static  void  BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work );
+static  void  BTLV_EFFECT_TCB_Henge( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_EFFECT_Rotation( GFL_TCB *tcb, void *work );
 
 #ifdef PM_DEBUG
@@ -438,27 +445,27 @@ void BTLV_EFFECT_Restart( void )
 //=============================================================================================
 void BTLV_EFFECT_Damage( BtlvMcssPos target, WazaID waza )
 {
-  BTLV_EFFECT_TCB *bet = GFL_HEAP_AllocMemory( bew->heapID, sizeof(BTLV_EFFECT_TCB) );
+  BTLV_EFFECT_DAMAGE_TCB *bedt = GFL_HEAP_AllocMemory( bew->heapID, sizeof(BTLV_EFFECT_DAMAGE_TCB) );
 
-  bet->seq_no = 0;
-  bet->target = target;
-  bet->work = BTLV_EFFECT_BLINK_TIME;
-  bet->wait = 0;
+  bedt->seq_no = 0;
+  bedt->target = target;
+  bedt->work = BTLV_EFFECT_BLINK_TIME;
+  bedt->wait = 0;
 
   bew->tcb_execute_flag = 1;
 
   if( WAZADATA_GetDamageType( waza ) == WAZADATA_DMG_PHYSIC )
   {
     //物理ダメージ
-    bet->color = BTLV_EFFECT_BLINK_PHYSIC;
+    bedt->color = BTLV_EFFECT_BLINK_PHYSIC;
   }
   else
   {
     //特殊ダメージ
-    bet->color = BTLV_EFFECT_BLINK_SPECIAL;
+    bedt->color = BTLV_EFFECT_BLINK_SPECIAL;
   }
 
-  GFL_TCB_AddTask( bew->tcb_sys, BTLV_EFFECT_TCB_Damage, bet, 0 );
+  GFL_TCB_AddTask( bew->tcb_sys, BTLV_EFFECT_TCB_Damage, bedt, 0 );
 }
 //=============================================================================================
 /**
@@ -493,6 +500,29 @@ void BTLV_EFFECT_BallThrow( int vpos, u16 item_no, u8 yure_cnt, BOOL f_success, 
 
   BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_AA, vpos, BTLEFF_BALL_THROW, &effvm_param );
 }
+
+//=============================================================================================
+/**
+ * @brief 変化エフェクト起動
+ *
+ * @param[in] pp    対象ポケモンのPOKEMON_PARAM
+ * @param[in] vpos  対象ポケモンの描画位置
+ */
+//=============================================================================================
+void BTLV_EFFECT_Henge( const POKEMON_PARAM* pp, BtlvMcssPos vpos )
+{
+  BTLV_EFFECT_HENGE_TCB *beht = GFL_HEAP_AllocMemory( bew->heapID, sizeof(BTLV_EFFECT_HENGE_TCB) );
+
+  beht->seq_no = 0;
+  beht->vpos = vpos;
+
+  BTLV_MCSS_MakeMAW( pp, &beht->maw, vpos );
+
+  bew->tcb_execute_flag = 1;
+
+  GFL_TCB_AddTask( bew->tcb_sys, BTLV_EFFECT_TCB_Henge, beht, 0 );
+}
+
 //============================================================================================
 /**
  * @brief  エフェクト起動中かチェック
@@ -1140,31 +1170,69 @@ static  void  BTLV_EFFECT_VBlank( GFL_TCB *tcb, void *work )
 //============================================================================================
 static  void  BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work )
 {
-  BTLV_EFFECT_TCB *bet = (BTLV_EFFECT_TCB*)work;
+  BTLV_EFFECT_DAMAGE_TCB *bedt = (BTLV_EFFECT_DAMAGE_TCB*)work;
 
-  if( bet->wait ){
-    bet->wait--;
+  if( bedt->wait ){
+    bedt->wait--;
     return;
   }
-  switch( bet->seq_no ){
+  switch( bedt->seq_no ){
   case 0:
-    BTLV_MCSS_SetPaletteFade( bew->bmw, bet->target, 16, 16, 0, bet->color );
-    bet->wait = BTLV_EFFECT_BLINK_WAIT;
-    bet->seq_no = 1;
+    BTLV_MCSS_SetPaletteFade( bew->bmw, bedt->target, 16, 16, 0, bedt->color );
+    bedt->wait = BTLV_EFFECT_BLINK_WAIT;
+    bedt->seq_no = 1;
     break;
   case 1:
-    BTLV_MCSS_SetVanishFlag( bew->bmw, bet->target, BTLV_MCSS_VANISH_ON );
-    bet->wait = BTLV_EFFECT_BLINK_WAIT;
-    bet->seq_no = 2;
+    BTLV_MCSS_SetVanishFlag( bew->bmw, bedt->target, BTLV_MCSS_VANISH_ON );
+    bedt->wait = BTLV_EFFECT_BLINK_WAIT;
+    bedt->seq_no = 2;
     break;
   case 2:
-    bet->seq_no = 0;
-    BTLV_MCSS_SetVanishFlag( bew->bmw, bet->target, BTLV_MCSS_VANISH_OFF );
-    BTLV_MCSS_SetPaletteFade( bew->bmw, bet->target, 0, 0, 0, 0x7fff );
-    bet->wait = BTLV_EFFECT_BLINK_WAIT;
-    if( --bet->work == 0 ){
+    bedt->seq_no = 0;
+    BTLV_MCSS_SetVanishFlag( bew->bmw, bedt->target, BTLV_MCSS_VANISH_OFF );
+    BTLV_MCSS_SetPaletteFade( bew->bmw, bedt->target, 0, 0, 0, 0x7fff );
+    bedt->wait = BTLV_EFFECT_BLINK_WAIT;
+    if( --bedt->work == 0 ){
       bew->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( bet );
+      GFL_HEAP_FreeMemory( bedt );
+      GFL_TCB_DeleteTask( tcb );
+    }
+    break;
+  }
+}
+
+//============================================================================================
+/**
+ *  @brief  ダメージエフェクトシーケンス（多重起動があるのでTCBで作成）
+ */
+//============================================================================================
+static  void  BTLV_EFFECT_TCB_Henge( GFL_TCB *tcb, void *work )
+{ 
+  BTLV_EFFECT_HENGE_TCB *beht = (BTLV_EFFECT_HENGE_TCB*)work;
+
+  switch( beht->seq_no ){ 
+  case 0:
+    BTLV_MCSS_MoveAlpha( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_DIRECT, 16, 0, 0, 0 );
+    BTLV_MCSS_MoveMosaic( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_INTERPOLATION, 8, 8, 1, 0 );
+    beht->seq_no++;
+    break;
+  case 1:
+    if( !BTLV_MCSS_CheckTCBExecute( bew->bmw, beht->vpos ) )
+    { 
+      BTLV_MCSS_OverwriteMAW( bew->bmw, beht->vpos, &beht->maw );
+      beht->seq_no++;
+    }
+    break;
+  case 2:
+    BTLV_MCSS_MoveMosaic( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_INTERPOLATION, 0, 8, 1, 0 );
+    beht->seq_no++;
+    break;
+  case 3:
+    if( !BTLV_MCSS_CheckTCBExecute( bew->bmw, beht->vpos ) )
+    { 
+      BTLV_MCSS_MoveAlpha( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_DIRECT, 31, 0, 0, 0 );
+      bew->tcb_execute_flag = 0;
+      GFL_HEAP_FreeMemory( beht );
       GFL_TCB_DeleteTask( tcb );
     }
     break;
