@@ -2508,8 +2508,8 @@
 #define TMFLG_C03R1001_MASSAGE            2734 /* 0x0aae １日１回なつきマッサージ */
 #define TMFLG_C03P09_SWEETS               2735 /* 0x0aaf １日１個購入制限アイテム */
 #define TMFLG_C02R0601_ITEM               2736 /* 0x0ab0 １日１個入手制限アイテム */
-#define TMFLG_D02_ROCK                    2737 /* 0x0ab1 ヤグルマの森：試しの岩イベント */
-		/* not used  2738(0x0ab2) */
+#define TMFLG_D02_ROCK_01                 2737 /* 0x0ab1 ヤグルマの森：試しの岩１イベント */
+#define TMFLG_D02_ROCK_02                 2738 /* 0x0ab2 ヤグルマの森：試しの岩２イベント */
 		/* not used  2739(0x0ab3) */
 		/* not used  2740(0x0ab4) */
 		/* not used  2741(0x0ab5) */
