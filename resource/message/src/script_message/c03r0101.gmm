@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-01T20:37:08"/>
+	<create user="nakamura_akira" host="W00131" date="2010-03-02T16:02:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -597,7 +597,7 @@ assistantm_01_15へ続く</comment>
 assistantm_01_15へ続く</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">この　ちょうさは……▼…
+		<language name="JPN" width="256">この　ちょうさは……▼
 とある　ポケモンはかせ　からの▽
 いらい　だな▼
 ２じかんいじょう　ちょうさして
@@ -1087,7 +1087,8 @@ assistantm_01_15へ続く</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-とある　せんせい　からのいらいだな▼
+とある　せんせい　からの
+いらいだな▼
 １６じかんいじょう　ちょうさして
 いちばんすきな　べんきょうと▽
 いちばんにがてな　べんきょうを▽
@@ -1616,9 +1617,10 @@ assistantm_01_15へ続く
 いちばんだいじに　おもっているものを▽
 しらべてくる　ちょうさだ▼
 みんな　なにが
-いちばん　だいじなのか…▽
+いちばん　だいじなのか……▽
 それを　しりたくてな……▼
-え？　りゆうは　いえんな</language>
+え？
+りゆうは　いえんな</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの依頼だな▼
 [2:03:４桁:11]人以上と　すれ違って
@@ -1661,7 +1663,7 @@ assistantm_01_15へ続く
 え？
 なにか　あったのか？▼
 べ　べつに　なにもない……
-べ　べつになにもない…　きにするな</language>
+きにするな</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの依頼だな▼
 [2:03:４桁:12]人以上と　すれ違って
@@ -2180,7 +2182,7 @@ assistantm_01_17へ続く
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『[1:1C:簡易会話単語:1]』の　
+		<language name="JPN" width="256">まだ　『[1:1C:簡易会話単語:1]』の
 ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんは
 ちょうさをする　ひつようがあるぞ▼
@@ -2783,7 +2785,7 @@ assistantm_01_25へ続く
 いちばんなりたいものは
 『[1:1C:簡易会話単語:29]』のようだな▼
 なにかに　あこがれるのも
-わるくないが▼
+わるくないが▽
 まずは　じぶんに
 じしんを　もつことだな</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
@@ -2907,10 +2909,11 @@ assistantm_01_27へ続く
 </comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:1]は　[1:1C:簡易会話単語:32]たいいんに
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は▽
+[1:1C:簡易会話単語:32]たいいんに
 にんめいされた！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は　[1:1C:簡易会話単語:32]隊員に
-任命された！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+[1:1C:簡易会話単語:32]隊員に　任命された！</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_28" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3005,8 +3008,8 @@ assistantm_01_31へ続く</comment>
 会話終了</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">ここは
-すれちがい　ちょうさたいほんぶよ▼
+		<language name="JPN" width="256">ここは　すれちがい
+ちょうさたいほんぶよ▼
 にゅうたいきぼうなら
 たいちょうに　はなしかけてね</language>
 		<language name="JPN_KANJI" width="256">ここは　すれ違い　調査隊本部よ▼
@@ -3280,8 +3283,12 @@ woman2_18へ続く
 [簡易会話単語:37]＝調査レーダー用アンケートタイトル</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">ちょうさレーダーに　『[1:1C:簡易会話単語:33]』が　ふえた！</language>
-		<language name="JPN_KANJI" width="256">調査レーダーに　『[1:1C:簡易会話単語:33]』が　増えた！</language>
+		<language name="JPN" width="256">ちょうさレーダーに▽
+『[1:1C:簡易会話単語:33]』が
+ふえた！</language>
+		<language name="JPN_KANJI" width="256">調査レーダーに▽
+『[1:1C:簡易会話単語:33]』が
+増えた！</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_18" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3294,8 +3301,10 @@ woman2_18へ続く
 答えていないアンケートがある　⇒　woman2_21へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">それと…　これは　アンケートに　こたえてくれた　おれいよ</language>
-		<language name="JPN_KANJI" width="256">それと…　これは　アンケートに　答えてくれた　お礼よ</language>
+		<language name="JPN" width="256">それと……　これは　アンケートに
+こたえてくれた　おれいよ</language>
+		<language name="JPN_KANJI" width="256">それと……　これは　アンケートに
+答えてくれた　お礼よ</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_19" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3305,12 +3314,16 @@ woman2_18へ続く
 woman2_20へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">これで　アンケートは　ぜんぶおわり
-アナタのことが　わかって　たのしかったわ▼
-こんどは　ちょうさレーダーをつかって
-アナタが　いろいろ　ちょうさしてみてね</language>
-		<language name="JPN_KANJI" width="256">これで　アンケートは　全部終わり
-アナタのことが　わかって　楽しかったわ▼
+		<language name="JPN" width="256">これで　アンケートは　ぜんぶおわり▼
+アナタのことが　わかって
+たのしかったわ▼
+こんどは　ちょうさレーダーを
+つかって▽
+アナタが　いろいろ　ちょうさ▽
+してみてね</language>
+		<language name="JPN_KANJI" width="256">これで　アンケートは　全部終わり▼
+アナタのことが　わかって
+楽しかったわ▼
 今度は　調査レーダーを使って
 アナタが　いろいろ　調査してみてね</language>
 	</row>
@@ -3321,8 +3334,10 @@ woman2_20へ続く</comment>
 会話終了</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">アンケートは　なんども　こたえられるから
-かいとうを　かえたくなったら　いってね</language>
+		<language name="JPN" width="256">アンケートは　なんども
+こたえられるから▽
+かいとうを　かえたくなったら▽
+いってね</language>
 		<language name="JPN_KANJI" width="256">アンケートは　何度も　答えられるから
 回答を　変えたくなったら　いってね</language>
 	</row>
@@ -3349,9 +3364,11 @@ woman2_22へ続く
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">ちょうさたいのためにも　できるだけ
-たくさんの　アンケートに　きょうりょくしてね！</language>
+たくさんの　アンケートに▽
+きょうりょくしてね！</language>
 		<language name="JPN_KANJI" width="256">調査隊のためにも　できるだけ
-たくさんの　アンケートに　協力してね！</language>
+たくさんの　アンケートに▽
+協力してね！</language>
 	</row>
 
 	<row id="msg_c03r0101_boy2_01">
@@ -3531,12 +3548,12 @@ girl4_04へ続く
 会話終了</comment>
 		<attribute name="キャラ指定">GIRL4
 お礼隊員</attribute>
-		<language name="JPN" width="256">すてきな　ことばね▼
-きくだけで　こころが
+		<language name="JPN" width="256">すてきな　ことばね
+きくだけで　こころが▽
 あたたかくなるわ▼
 かんしゃのきもちを
 いつも　わすれないでね</language>
-		<language name="JPN_KANJI" width="256">素敵な　言葉ね▼
+		<language name="JPN_KANJI" width="256">素敵な　言葉ね
 聞くだけで　心が　暖かくなるわ▼
 感謝の気持ちを　いつも　忘れないでね</language>
 	</row>
@@ -3627,7 +3644,7 @@ girl4_04へ続く
 		<attribute name="キャラ指定">BOY1
 一般隊員A</attribute>
 		<language name="JPN" width="256">たいいんランクって　しってる？▼
-…って　Ｓランクの
+……って　Ｓランクの
 [1:00:トレーナー名:1]たいいん！▼
 あとすこしで　さいこうの
 ＳＳランクたいいんですね！▼
@@ -3651,13 +3668,13 @@ girl4_04へ続く
 		<attribute name="キャラ指定">BOY1
 一般隊員A</attribute>
 		<language name="JPN" width="256">たいいんランクって　しってる？▼
-…って　ＳＳランクの
+……って　ＳＳランクの
 [1:00:トレーナー名:1]たいいん！▼
 しつれいしました！▼
 オレも　すこしでも　ランクが
 あがるように　がんばります！</language>
 		<language name="JPN_KANJI" width="256">隊員ランクって　知ってる？▼
-…って　ＳＳランクの
+……って　ＳＳランクの
 [1:00:トレーナー名:1]隊員！▼
 失礼しました！▼
 オレも　少しでも　ランクが
@@ -3670,8 +3687,8 @@ girl4_04へ続く
 会話終了</comment>
 		<attribute name="キャラ指定">BOY3
 一般隊員B</attribute>
-		<language name="JPN" width="256">ちょうさは　たのしいよ！▽
-いろんなひとの　きもちが
+		<language name="JPN" width="256">ちょうさは　たのしいよ！
+いろんなひとの　きもちが▽
 わかるからね▼
 みんなのいけんを　あつめて
 みんながたのしむ▼
@@ -3746,13 +3763,13 @@ girl4_04へ続く
 一般隊員B</attribute>
 		<language name="JPN" width="256">おつかれさまです！
 [1:00:トレーナー名:1]たいいん！▼
-たいいんもふえて　にぎやかに
+たいいんも　ふえて　にぎやかに
 なりましたね▼
 これなら　ちょうさデータも
 たくさん　あつまりますね</language>
 		<language name="JPN_KANJI" width="256">お疲れ様です！
 [1:00:トレーナー名:1]隊員！▼
-隊員も増えて　にぎやかに
+隊員も　増えて　にぎやかに
 なりましたね▼
 これなら　調査データも
 たくさん　集まりますね</language>
@@ -3850,11 +3867,11 @@ girl4_04へ続く
 		<language name="JPN" width="256">さっき　アンケートを　こたえたら
 アンケートようしを　もらえたわよ▼
 ぜんぶの　アンケートに
-こたえてみようかな……？</language>
+こたえてみようかな……</language>
 		<language name="JPN_KANJI" width="256">さっき　アンケートを　答えたら
 アンケート用紙を　もらえたわよ▼
 全部の　アンケートに
-答えてみようかな……？</language>
+答えてみようかな……</language>
 	</row>
 
 	<row id="msg_c03r0101_girl2_02">
@@ -3922,11 +3939,11 @@ girl4_04へ続く
 		<attribute name="キャラ指定">BOY4
 一般隊員E</attribute>
 		<language name="JPN" width="256">いま　にんきがある
-えいがって　なんだろう？▽
+えいがって　なんだろう？▼
 [1:00:トレーナー名:1]たいいんは
 しってますか？</language>
 		<language name="JPN_KANJI" width="256">今　人気がある
-映画って　なんだろう？▽
+映画って　なんだろう？▼
 [1:00:トレーナー名:1]隊員は
 知ってますか？</language>
 	</row>
@@ -3940,11 +3957,11 @@ girl4_04へ続く
 		<attribute name="キャラ指定">BOY4
 一般隊員E</attribute>
 		<language name="JPN" width="256">いま　にんきがある
-たべものって　なんだろう？▽
+たべものって　なんだろう？▼
 [1:00:トレーナー名:1]たいいんは
 しってますか？</language>
 		<language name="JPN_KANJI" width="256">今　人気がある
-食べ物って　なんだろう？▽
+食べ物って　なんだろう？▼
 [1:00:トレーナー名:1]隊員は
 知ってますか？</language>
 	</row>
@@ -3957,14 +3974,14 @@ girl4_04へ続く
 [トレーナー名:1]＝主人公名</comment>
 		<attribute name="キャラ指定">BOY4
 一般隊員E</attribute>
-		<language name="JPN" width="256">いま　にんきが……▼
-あ　[1:00:トレーナー名:1]たいいん
-やっぱり　じぶんで▽
+		<language name="JPN" width="256">いま　にんきが……
+あ　[1:00:トレーナー名:1]たいいん▼
+やっぱり　じぶんで
 しらべないと　ダメですよね……▼
 う～ん　めんどうなんだもんな……</language>
-		<language name="JPN_KANJI" width="256">今　人気が……▼
-あ　[1:00:トレーナー名:1]隊員
-やっぱり　自分で▽
+		<language name="JPN_KANJI" width="256">今　人気が……
+あ　[1:00:トレーナー名:1]隊員▼
+やっぱり　自分で
 調べないと　ダメですよね……▼
 う～ん　面倒なんだもんな……</language>
 	</row>
@@ -4034,9 +4051,9 @@ girl4_04へ続く
 会話終了</comment>
 		<attribute name="キャラ指定">NONE
 机の書類</attribute>
-		<language name="JPN" width="256">ちょうさたい　たいいん　ぼしゅうちゅう！
+		<language name="JPN" width="256">たいいん　ぼしゅうちゅう！
 しょうさいは　たいちょうまで！</language>
-		<language name="JPN_KANJI" width="256">調査隊　隊員　募集中！
+		<language name="JPN_KANJI" width="256">隊員　募集中！
 詳細は　隊長まで！</language>
 	</row>
 
@@ -4050,9 +4067,11 @@ girl4_04へ続く
 [簡易会話単語:32]＝隊員ランクを表示</comment>
 		<attribute name="キャラ指定">NONE
 机の書類</attribute>
-		<language name="JPN" width="256">たいいんばんごう　３ばん　[1:00:トレーナー名:1]
+		<language name="JPN" width="256">[1:00:トレーナー名:1]▼
+たいいんばんごう　３ばん
 たいいんランク　[1:1C:簡易会話単語:32]たいいん</language>
-		<language name="JPN_KANJI" width="256">隊員番号　３番　[1:00:トレーナー名:1]
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]▼
+隊員番号　３番
 隊員ランク　[1:1C:簡易会話単語:32]隊員</language>
 	</row>
 
