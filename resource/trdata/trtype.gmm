@@ -391,13 +391,13 @@
 	</row>
 
 	<row id="MSG_TRTYPE_SCHOOLB">
-		<language name="JPN" width="216">じゅくがえり</language>
-		<language name="JPN_KANJI" width="216">じゅくがえり</language>
+		<language name="JPN" width="216">じゅくがえり♂</language>
+		<language name="JPN_KANJI" width="216">じゅくがえり♂</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SCHOOLG">
-		<language name="JPN" width="216">じゅくがえり</language>
-		<language name="JPN_KANJI" width="216">じゅくがえり</language>
+		<language name="JPN" width="216">じゅくがえり♀</language>
+		<language name="JPN_KANJI" width="216">じゅくがえり♀</language>
 	</row>
 
 	<row id="MSG_TRTYPE_TENNIS">
@@ -421,18 +421,18 @@
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER1A">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">ジムリーダー1A</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー1A</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER1C">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">ジムリーダー1C</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー1C</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER1B">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">ジムリーダー1B</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー1B</language>
 	</row>
 
 	<row id="MSG_TRTYPE_CHILDCARE">
@@ -441,13 +441,13 @@
 	</row>
 
 	<row id="MSG_TRTYPE_KINDERGARTENW">
-		<language name="JPN" width="216">ようちえん</language>
-		<language name="JPN_KANJI" width="216">ようちえん</language>
+		<language name="JPN" width="216">ようちえん♀</language>
+		<language name="JPN_KANJI" width="216">ようちえん♀</language>
 	</row>
 
 	<row id="MSG_TRTYPE_KINDERGARTENM">
-		<language name="JPN" width="216">ようちえん</language>
-		<language name="JPN_KANJI" width="216">ようちえん</language>
+		<language name="JPN" width="216">ようちえん♂</language>
+		<language name="JPN_KANJI" width="216">ようちえん♂</language>
 	</row>
 
 	<row id="MSG_TRTYPE_FUTAGO">
@@ -456,63 +456,63 @@
 	</row>
 
 	<row id="MSG_TRTYPE_BREEDERM">
-		<language name="JPN" width="216">ポケモンブリーダー</language>
-		<language name="JPN_KANJI" width="216">ポケモンブリーダー</language>
+		<language name="JPN" width="216">ポケモンブリーダー♂</language>
+		<language name="JPN_KANJI" width="216">ポケモンブリーダー♂</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BREEDERW">
-		<language name="JPN" width="216">ポケモンブリーダー</language>
-		<language name="JPN_KANJI" width="216">ポケモンブリーダー</language>
+		<language name="JPN" width="216">ポケモンブリーダー♀</language>
+		<language name="JPN_KANJI" width="216">ポケモンブリーダー♀</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER2">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">ジムリーダー2</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー2</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER3">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">ジムリーダー3</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー3</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER4">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">ジムリーダー4</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー4</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER5">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">ジムリーダー5</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー5</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER6">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">ジムリーダー6</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー6</language>
 	</row>
 
 	<row id="MSG_TRTYPE_RANGERM">
-		<language name="JPN" width="216">ポケモンレンジャー</language>
-		<language name="JPN_KANJI" width="216">ポケモンレンジャー</language>
+		<language name="JPN" width="216">ポケモンレンジャー♂</language>
+		<language name="JPN_KANJI" width="216">ポケモンレンジャー♂</language>
 	</row>
 
 	<row id="MSG_TRTYPE_RANGERW">
-		<language name="JPN" width="216">ポケモンレンジャー</language>
-		<language name="JPN_KANJI" width="216">ポケモンレンジャー</language>
+		<language name="JPN" width="216">ポケモンレンジャー♀</language>
+		<language name="JPN_KANJI" width="216">ポケモンレンジャー♀</language>
 	</row>
 
 	<row id="MSG_TRTYPE_WORKER2">
-		<language name="JPN" width="216">さぎょういん</language>
-		<language name="JPN_KANJI" width="216">さぎょういん</language>
+		<language name="JPN" width="216">さぎょういん2</language>
+		<language name="JPN_KANJI" width="216">さぎょういん2</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BACKPACKERM">
-		<language name="JPN" width="216">バックパッカー</language>
-		<language name="JPN_KANJI" width="216">バックパッカー</language>
+		<language name="JPN" width="216">バックパッカー♂</language>
+		<language name="JPN_KANJI" width="216">バックパッカー♂</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BACKPACKERW">
-		<language name="JPN" width="216">バックパッカー</language>
-		<language name="JPN_KANJI" width="216">バックパッカー</language>
+		<language name="JPN" width="216">バックパッカー♀</language>
+		<language name="JPN_KANJI" width="216">バックパッカー♀</language>
 	</row>
 
 	<row id="MSG_TRTYPE_FISHING">
@@ -546,33 +546,33 @@
 	</row>
 
 	<row id="MSG_TRTYPE_ESPM">
-		<language name="JPN" width="216">サイキッカー</language>
-		<language name="JPN_KANJI" width="216">サイキッカー</language>
+		<language name="JPN" width="216">サイキッカー♂</language>
+		<language name="JPN_KANJI" width="216">サイキッカー♂</language>
 	</row>
 
 	<row id="MSG_TRTYPE_ESPW">
-		<language name="JPN" width="216">サイキッカー</language>
-		<language name="JPN_KANJI" width="216">サイキッカー</language>
+		<language name="JPN" width="216">サイキッカー♀</language>
+		<language name="JPN_KANJI" width="216">サイキッカー♀</language>
 	</row>
 
 	<row id="MSG_TRTYPE_RIVAL">
-		<language name="JPN" width="216">ポケモントレーナー</language>
-		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+		<language name="JPN" width="216">ポケモントレーナー（RIVAL）</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー（RIVAL）</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SUPPORT">
-		<language name="JPN" width="216">ポケモントレーナー</language>
-		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+		<language name="JPN" width="216">ポケモントレーナー（SUPPORT）</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー（SUPPORT）</language>
 	</row>
 
 	<row id="MSG_TRTYPE_HAKAIM1">
-		<language name="JPN" width="216">プラズマだん</language>
-		<language name="JPN_KANJI" width="216">プラズマだん</language>
+		<language name="JPN" width="216">プラズマだん♂</language>
+		<language name="JPN_KANJI" width="216">プラズマだん♂</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BOSS">
-		<language name="JPN" width="216">ポケモントレーナー</language>
-		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+		<language name="JPN" width="216">ポケモントレーナー（BOSS）</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー（BOSS）</language>
 	</row>
 
 	<row id="MSG_TRTYPE_PRINCE">
@@ -591,8 +591,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_WORKER1">
-		<language name="JPN" width="216">さぎょういん</language>
-		<language name="JPN_KANJI" width="216">さぎょういん</language>
+		<language name="JPN" width="216">さぎょういん1</language>
+		<language name="JPN_KANJI" width="216">さぎょういん1</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BASKET">
@@ -601,8 +601,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_SCIENTISTW">
-		<language name="JPN" width="216">けんきゅういん</language>
-		<language name="JPN_KANJI" width="216">けんきゅういん</language>
+		<language name="JPN" width="216">けんきゅういん♀</language>
+		<language name="JPN_KANJI" width="216">けんきゅういん♀</language>
 	</row>
 
 	<row id="MSG_TRTYPE_OL">
@@ -611,13 +611,13 @@
 	</row>
 
 	<row id="MSG_TRTYPE_ELITEW">
-		<language name="JPN" width="216">エリートトレーナー</language>
-		<language name="JPN_KANJI" width="216">エリートトレーナー</language>
+		<language name="JPN" width="216">エリートトレーナー♀</language>
+		<language name="JPN_KANJI" width="216">エリートトレーナー♀</language>
 	</row>
 
 	<row id="MSG_TRTYPE_ELITEM">
-		<language name="JPN" width="216">エリートトレーナー</language>
-		<language name="JPN_KANJI" width="216">エリートトレーナー</language>
+		<language name="JPN" width="216">エリートトレーナー♂</language>
+		<language name="JPN_KANJI" width="216">エリートトレーナー♂</language>
 	</row>
 
 	<row id="MSG_TRTYPE_KARATE">
@@ -626,8 +626,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_SCIENTISTM">
-		<language name="JPN" width="216">けんきゅういん</language>
-		<language name="JPN_KANJI" width="216">けんきゅういん</language>
+		<language name="JPN" width="216">けんきゅういん♂</language>
+		<language name="JPN_KANJI" width="216">けんきゅういん♂</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SOCCER">
@@ -636,18 +636,18 @@
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER7">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">ジムリーダー7</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー7</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER8A">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">ジムリーダー8A</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー8A</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER8B">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">ジムリーダー8B</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー8B</language>
 	</row>
 
 	<row id="MSG_TRTYPE_HEADS">
@@ -661,13 +661,13 @@
 	</row>
 
 	<row id="MSG_TRTYPE_DAISUKIM">
-		<language name="JPN" width="216">だいすきクラブ</language>
-		<language name="JPN_KANJI" width="216">だいすきクラブ</language>
+		<language name="JPN" width="216">だいすきクラブ♂</language>
+		<language name="JPN_KANJI" width="216">だいすきクラブ♂</language>
 	</row>
 
 	<row id="MSG_TRTYPE_DAISUKIW">
-		<language name="JPN" width="216">だいすきクラブ</language>
-		<language name="JPN_KANJI" width="216">だいすきクラブ</language>
+		<language name="JPN" width="216">だいすきクラブ♀</language>
+		<language name="JPN_KANJI" width="216">だいすきクラブ♀</language>
 	</row>
 
 	<row id="MSG_TRTYPE_DOCTOR">
@@ -696,33 +696,33 @@
 	</row>
 
 	<row id="MSG_TRTYPE_BUSINESS1">
-		<language name="JPN" width="216">ビジネスマン</language>
-		<language name="JPN_KANJI" width="216">ビジネスマン</language>
+		<language name="JPN" width="216">ビジネスマン1</language>
+		<language name="JPN_KANJI" width="216">ビジネスマン1</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BUSINESS2">
-		<language name="JPN" width="216">ビジネスマン</language>
-		<language name="JPN_KANJI" width="216">ビジネスマン</language>
+		<language name="JPN" width="216">ビジネスマン2</language>
+		<language name="JPN_KANJI" width="216">ビジネスマン2</language>
 	</row>
 
 	<row id="MSG_TRTYPE_FANM">
-		<language name="JPN" width="216">ファンクラブ</language>
-		<language name="JPN_KANJI" width="216">ファンクラブ</language>
+		<language name="JPN" width="216">ファンクラブ♂</language>
+		<language name="JPN_KANJI" width="216">ファンクラブ♂</language>
 	</row>
 
 	<row id="MSG_TRTYPE_FANW">
-		<language name="JPN" width="216">ファンクラブ</language>
-		<language name="JPN_KANJI" width="216">ファンクラブ</language>
+		<language name="JPN" width="216">ファンクラブ♀</language>
+		<language name="JPN_KANJI" width="216">ファンクラブ♀</language>
 	</row>
 
 	<row id="MSG_TRTYPE_VETERANM">
-		<language name="JPN" width="216">ベテラントレーナー</language>
-		<language name="JPN_KANJI" width="216">ベテラントレーナー</language>
+		<language name="JPN" width="216">ベテラントレーナー♂</language>
+		<language name="JPN_KANJI" width="216">ベテラントレーナー♂</language>
 	</row>
 
 	<row id="MSG_TRTYPE_VETERANW">
-		<language name="JPN" width="216">ベテラントレーナー</language>
-		<language name="JPN_KANJI" width="216">ベテラントレーナー</language>
+		<language name="JPN" width="216">ベテラントレーナー♀</language>
+		<language name="JPN_KANJI" width="216">ベテラントレーナー♀</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BADRIDER">
@@ -751,33 +751,33 @@
 	</row>
 
 	<row id="MSG_TRTYPE_HAKAIW1">
-		<language name="JPN" width="216">プラズマだん</language>
-		<language name="JPN_KANJI" width="216">プラズマだん</language>
+		<language name="JPN" width="216">プラズマだん♀</language>
+		<language name="JPN_KANJI" width="216">プラズマだん♀</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BIGFOUR1">
-		<language name="JPN" width="216">してんのう</language>
-		<language name="JPN_KANJI" width="216">してんのう</language>
+		<language name="JPN" width="216">してんのう1</language>
+		<language name="JPN_KANJI" width="216">してんのう1</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BIGFOUR3">
-		<language name="JPN" width="216">してんのう</language>
-		<language name="JPN_KANJI" width="216">してんのう</language>
+		<language name="JPN" width="216">してんのう3</language>
+		<language name="JPN_KANJI" width="216">してんのう3</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BIGFOUR2">
-		<language name="JPN" width="216">してんのう</language>
-		<language name="JPN_KANJI" width="216">してんのう</language>
+		<language name="JPN" width="216">してんのう2</language>
+		<language name="JPN_KANJI" width="216">してんのう2</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BIGFOUR4">
-		<language name="JPN" width="216">してんのう</language>
-		<language name="JPN_KANJI" width="216">してんのう</language>
+		<language name="JPN" width="216">してんのう4</language>
+		<language name="JPN_KANJI" width="216">してんのう4</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SAGE1">
-		<language name="JPN" width="216">プラズマだん</language>
-		<language name="JPN_KANJI" width="216">プラズマだん</language>
+		<language name="JPN" width="216">プラズマだん1</language>
+		<language name="JPN_KANJI" width="216">プラズマだん1</language>
 	</row>
 
 	<row id="MSG_TRTYPE_RAIL">
@@ -806,8 +806,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_BCHAMP">
-		<language name="JPN" width="216">ポケモントレーナー</language>
-		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+		<language name="JPN" width="216">ポケモントレーナー（BCHAMP）</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー（BCHAMP）</language>
 	</row>
 
 	<row id="MSG_TRTYPE_CHAMPION">
@@ -816,13 +816,13 @@
 	</row>
 
 	<row id="MSG_TRTYPE_CYCLINGM">
-		<language name="JPN" width="216">サイクリング</language>
-		<language name="JPN_KANJI" width="216">サイクリング</language>
+		<language name="JPN" width="216">サイクリング♂</language>
+		<language name="JPN_KANJI" width="216">サイクリング♂</language>
 	</row>
 
 	<row id="MSG_TRTYPE_CYCLINGW">
-		<language name="JPN" width="216">サイクリング</language>
-		<language name="JPN_KANJI" width="216">サイクリング</language>
+		<language name="JPN" width="216">サイクリング♀</language>
+		<language name="JPN_KANJI" width="216">サイクリング♀</language>
 	</row>
 
 	<flowchart-group-list>
