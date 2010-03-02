@@ -325,9 +325,18 @@ BOOL MUS_COMM_ExitGameComm(int *seq, void *pwk, void *pWork)
   switch( *seq )
   {
   case 0:
-    GFL_NET_SetNoChildErrorCheck( FALSE );
-    MUS_COMM_SendTimingCommand( work , MUS_COMM_SYNC_EXIT_COMM );
-    *seq = 1;
+    //一人の時は即切断。それ以外は同期とって終了コマンド、後に切断。
+    if( GFL_NET_GetConnectNum() <= 1 )
+    {
+      GFL_NET_Exit( NULL );
+      return TRUE;
+    }
+    else
+    {
+      GFL_NET_SetNoChildErrorCheck( FALSE );
+      MUS_COMM_SendTimingCommand( work , MUS_COMM_SYNC_EXIT_COMM );
+      *seq = 1;
+    }
     break;
   case 1:
     if( MUS_COMM_CheckTimingCommand( work , MUS_COMM_SYNC_EXIT_COMM ) == TRUE )

@@ -98,6 +98,8 @@
 #define MUSICAL_TOOL_COMM_WAIT_POST_ALLPOKE (17)  //ポケ受信待ち
 #define MUSICAL_TOOL_COMM_IR_CONNECT (18) //赤外線接続
 
+#define MUSICAL_TOOL_PRINT (100) //デバッグ出力
+
 //通信エントリー用返り値
 #define MUSICAL_COMM_ENTRY_PARENT_OK (0)
 #define MUSICAL_COMM_ENTRY_PARENT_CANCEL (1)

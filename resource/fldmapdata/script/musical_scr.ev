@@ -163,14 +163,15 @@ EVENT_START ev_musical_recept_comm_core
   ENDIF
   
   //赤外線orワイヤレス
-  _SYSWIN_MSG( msg_musical_recept_ir_01 , POS_DOWN )
+  _BALLOONWIN_TALKOBJ_MSG( msg_musical_recept_04 )
   
   _BMPMENU_INIT_EX( 1, 1, 0, 1, ret )
   _BMPMENU_MAKE_LIST( msg_musical_recept_05, 0 ) //赤外線
   _BMPMENU_MAKE_LIST( msg_musical_recept_06, 1 ) //ワイヤレス
   _BMPMENU_MAKE_LIST( msg_musical_recept_return, 2 ) //やめる
   _BMPMENU_START()
-  _SYSWIN_CLOSE()
+  _BALLOONWIN_CLOSE()
+  _MUSICAL_TOOLS( MUSICAL_TOOL_PRINT, ret, 0, 0 )
   
   IF $ret == 0 THEN
     //通信開始
@@ -182,16 +183,19 @@ EVENT_START ev_musical_recept_comm_core
     //--------------------------
     //ここからワイヤレス受付処理
     //親になるか子になるか
-    _SYSWIN_MSG( msg_musical_recept_wl_01 , POS_DOWN )
+    _BALLOONWIN_TALKOBJ_MSG( msg_musical_recept_wl_01 )
     
     _BMPMENU_INIT_EX( 1, 1, 0, 1, ret )
     _BMPMENU_MAKE_LIST( msg_musical_recept_leader, 0 ) //リーダー
     _BMPMENU_MAKE_LIST( msg_musical_recept_group, 1 ) //グループ
     _BMPMENU_MAKE_LIST( msg_musical_recept_return, 2 ) //やめる
     _BMPMENU_START()
-    _SYSWIN_CLOSE()
+    _BALLOONWIN_CLOSE()
     
     IF $ret == 2 THEN //やめる
+      _CALL ev_musical_exit_common
+      _RET
+    ELSIF $ret == EV_WIN_B_CANCEL THEN
       _CALL ev_musical_exit_common
       _RET
     ENDIF
@@ -215,6 +219,9 @@ EVENT_START ev_musical_recept_comm_core
     //ここまでワイヤレス受付処理
     //--------------------------
   ELSIF $ret == 2 THEN //(IRorWL)やめる
+    _CALL ev_musical_exit_common
+    _RET
+  ELSIF $ret == EV_WIN_B_CANCEL THEN
     _CALL ev_musical_exit_common
     _RET
   ENDIF

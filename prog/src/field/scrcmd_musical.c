@@ -784,6 +784,15 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
       return( VMCMD_RESULT_SUSPEND );
     }
     break;
+    
+  case MUSICAL_TOOL_PRINT:
+    ARI_TPrintf("----------------------------\n");
+    ARI_TPrintf("ScriptMusTools Print[%d][%d]\n",val1,val2);
+    break;
+
+  default:
+    ARI_TPrintf("ScriptMusTools InvalidType!!\n");
+    break;
   }
 
   return VMCMD_RESULT_CONTINUE;  

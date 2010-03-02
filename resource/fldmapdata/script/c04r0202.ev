@@ -118,7 +118,6 @@ grade_all_msg_routine:
 			_BALLOONWIN_OBJMSG( msg_mus_03_001_03 , C04R0202_WOMAN1_01 )
 		ENDIF
 	ENDIF
-	_AB_KEYWAIT()     //キー待ち
 	_BALLOONWIN_CLOSE()
 
 }
@@ -205,7 +204,6 @@ grade_one_msg_routine:
 	ELSE
 		_BALLOONWIN_OBJMSG( msg_mus_03_002_02 , C04R0202_WOMAN1_01 )
 	ENDIF
-	_AB_KEYWAIT()     //キー待ち
 	_BALLOONWIN_CLOSE()
 
 	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POINT,ownerPos,point)
@@ -223,7 +221,6 @@ grade_one_msg_routine:
 	ELSE
 		_BALLOONWIN_OBJMSG( msg_mus_03_003_06 , C04R0202_WOMAN1_01 )
 	ENDIF
-	_AB_KEYWAIT()     //キー待ち
 	_BALLOONWIN_CLOSE()
 }
 _RET
@@ -266,7 +263,6 @@ EVENT_START ev_c04r0202_mus_1st
 	_MUSICAL_WORD( MUSICAL_WORD_AUDI_TYPE   , 1 , condition )
 	
 	_BALLOONWIN_OBJMSG( msg_mus_01_001 , C04R0202_WOMAN1_01 )
-	_AB_KEYWAIT()     //キー待ち
 	_BALLOONWIN_CLOSE()
 
 	//通信同期(ドレスアップ開始前)
@@ -289,7 +285,6 @@ EVENT_START ev_c04r0202_mus_2nd
 	//_CALL npc_pos_set_routine
 
 	_BALLOONWIN_OBJMSG( msg_mus_02_001 , C04R0202_WOMAN1_01 )
-	_AB_KEYWAIT()     //キー待ち
 	_BALLOONWIN_CLOSE()
 
 	_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_POST_ALLPOKE , 0 , 0 , 0 )
