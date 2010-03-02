@@ -76,6 +76,12 @@ u32 TT_TrainerDataParaGet( TrainerID tr_id, int id )
 	case ID_TD_aibit:			  //AIパターン
 		ret = td.aibit;
 		break;
+  case ID_TD_hp_recover_flag: //戦闘後回復するか？
+    ret = td.hp_recover_flag;
+		break;
+  case ID_TD_gift_item:       //贈呈するアイテム
+    ret = td.gift_item;
+		break;
   default:
     //定義されていないIDです
     GF_ASSERT( 0 );
