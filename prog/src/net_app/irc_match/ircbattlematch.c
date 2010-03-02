@@ -1258,7 +1258,9 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
       GF_ASSERT(0);
       break;
     }
-    GFL_NET_Init(&net_ini_data, NULL, pWork);	//’ÊM‰Šú‰»
+    if(pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL){
+      GFL_NET_Init(&net_ini_data, NULL, pWork);	//’ÊM‰Šú‰»
+    }
   }
   _ReturnButtonStart(pWork);
   
