@@ -40,11 +40,13 @@ EVENT_START ev_pc
   DEFINE_LOCAL select_pos
   DEFINE_LOCAL f_pcname
   DEFINE_LOCAL f_zukan_get
+  DEFINE_LOCAL f_game_clear
 
   // ローカル変数の初期化
   $log_out = FALSE
   _FLAG_CHECK( SYS_FLAG_PCNAME, f_pcname )
   _FLAG_CHECK( SYS_FLAG_ZUKAN_GET, f_zukan_get )
+  _FLAG_CHECK( SYS_FLAG_GAME_CLEAR, f_game_clear )
 
   // PC起動イベント
   _POKECEN_PC_ON()
@@ -69,8 +71,9 @@ EVENT_START ev_pc
     IF $f_zukan_get == TRUE THEN
       _BMPMENU_MAKE_LIST( msg_pc_window_04, msg_pc_window_04 )  // はかせのパソコン
     ENDIF
-    // @todo 殿堂入りしていなければ表示しない
-    _BMPMENU_MAKE_LIST( msg_pc_window_05, msg_pc_window_05 )  // でんどういり
+    IF $f_game_clear == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_pc_window_05, msg_pc_window_05 )  // でんどういり
+    ENDIF
     _BMPMENU_MAKE_LIST( msg_pc_window_06, msg_pc_window_06 )  // スイッチをきる
     _BMPMENU_START_BREAKABLE()
     _SYSWIN_CLOSE()
