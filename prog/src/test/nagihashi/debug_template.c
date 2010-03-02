@@ -292,7 +292,7 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
   //プロセスワーク作成
   p_wk  = GFL_PROC_AllocWork( p_proc, sizeof(TEMPLATE_WORK), HEAPID_NAGI_DEBUG_SUB );
   GFL_STD_MemClear( p_wk, sizeof(TEMPLATE_WORK) );
-  p_wk->pokeID  = 0x88888888;
+  p_wk->pokeID  = 215718508;//0x88888888;
 
   //共通モジュールの作成
   p_wk->p_font    = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,

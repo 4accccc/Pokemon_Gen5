@@ -36,12 +36,12 @@
  *					定数宣言
 */
 //=============================================================================
+//ファイル属性
+#define WIFI_FILE_ATTR1			"MYSTERY_J" //ふしぎなおくりもの識別子＋言語コード
+#define WIFI_FILE_ATTR2			""          //ROMバージョンのビット（あとで判別するため今はNULL）
+#define WIFI_FILE_ATTR3			""          //未使用
 
-#define WIFI_FILE_ATTR1			"MYSTERY"
-#define WIFI_FILE_ATTR2			""
-#define WIFI_FILE_ATTR3			""
-
-#define MYSTERY_DOWNLOAD_FILE_MAX  3
+#define MYSTERY_DOWNLOAD_FILE_MAX  10
 
 #define MYSTERY_DOWNLOAD_GIFT_DATA_SIZE (4096)
 
@@ -98,10 +98,12 @@ typedef struct
 typedef struct 
 {
   DWCNdFileInfo     fileInfo[ MYSTERY_DOWNLOAD_FILE_MAX ];
+  BOOL              recvflag[ MYSTERY_DOWNLOAD_FILE_MAX ];
   s32               next_seq;
   BOOL              cancel_req;
   BOOL              wifi_cancel;
   int               server_filenum;
+  int               recv_filenum;
   u32               percent;
   u32               recived;
   u32               contentlen;
@@ -204,7 +206,7 @@ static MYSTERY_NET_ERROR_REPAIR_TYPE Mystery_Net_Irc_GetErrorRepairType( const M
 //-------------------------------------
 ///	その他
 //=====================================
-static int UTIL_StringToInteger( const char *buf );
+static u32 UTIL_StringToHex( const char *buf );
 
 //=============================================================================
 /**
@@ -987,6 +989,24 @@ static void SEQFUNC_MainIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 //----------------------------------------------------------------------------
 /**
  *	@brief  Wifiからダウンロード
+ *	@note{  
+ *	WIFIから持ってくる場合の仕様
+ *  ○条件
+ *	・最新のデータのみサーバー上におき、過去のデータは消去する
+ *	・複数のデータがあった場合、プレイヤーごとの固定値からダウンロードするデータをかえる
+ *	・ROMバージョンや言語コードが異なるものでも同一サーバー上におく
+ *	・ふしぎなおくりもの以外にもレギュレーションデータなども同一サーバー上におく
+ *
+ *  ○属性の使い方
+ *	属性１）	ふしぎなおくりもの識別子＋言語コード
+ *			例	…	MYSTERY_J
+ *
+ *	属性２）	ROMバージョンをビットにした数値を16進数にしたもの
+ *			例	…	FFFFFFFF
+ *
+ *	属性３）	未使用
+ *	}
+ *
  *
  *	@param	SEQ_WORK *p_seqwk   シーケンスワーク
  *	@param	*p_seq              シーケンス
@@ -1000,6 +1020,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_INIT,
     SEQ_ATTR,
     SEQ_FILENUM,
+    SEQ_CHECK_ROM,
     SEQ_FILELIST,
     SEQ_CHECKLIST,
     SEQ_GET_FILE,
@@ -1073,122 +1094,122 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_FILELIST:
-    //ファイルがなかった場合
-    if( p_nd_data->server_filenum == 0 )
     { 
       OS_TPrintf( "server_filenum %d\n", p_nd_data->server_filenum );
-      WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_NOT_FOUND_FILES, p_seq, SEQ_DOWNLOAD_COMPLETE, SEQ_DOWNLOAD_COMPLETE );
-      break;
-    }
-    else if( p_nd_data->server_filenum == 1 )
-    { 
-      //ファイルが１つだけの場合決定
-      OS_TPrintf( "server_filenum %d\n", p_nd_data->server_filenum );
-      if( DWC_NdGetFileListAsync( p_nd_data->fileInfo, 0, MYSTERY_DOWNLOAD_FILE_MAX ) == FALSE)
-      {
-        OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
+      //ファイルがなかった場合
+      if( p_nd_data->server_filenum == 0 )
+      { 
+        WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_NOT_FOUND_FILES, p_seq, SEQ_DOWNLOAD_COMPLETE, SEQ_DOWNLOAD_COMPLETE );
+        break;
       }
       else
       { 
-        WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_GET_FILE );
-      }
-    }
-    else
-    { 
-      //ファイルがたくさんある場合（何度かファイル属性を換え、リストを取得し直す）
-      OS_TPrintf( "server_filenum %d\n", p_nd_data->server_filenum );
-      if( DWC_NdGetFileListAsync( p_nd_data->fileInfo, 0, MYSTERY_DOWNLOAD_FILE_MAX ) == FALSE)
-      {
-        OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
-      }
-      else
-      { 
-        WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_CHECKLIST );
+        //ファイルが１つ以上あったときには属性を取得する
+
+        if( DWC_NdGetFileListAsync( p_nd_data->fileInfo, 0, MYSTERY_DOWNLOAD_FILE_MAX ) == FALSE)
+        {
+          OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
+        }
+        else
+        { 
+          WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_CHECK_ROM );
+        }
       }
     }
     break;
 
-  case SEQ_CHECKLIST:
-    {
-      int i, j;
-      u8 comp_file  = 0;
-      u16 target_num;
-      u16 event_id[  MYSTERY_DOWNLOAD_FILE_MAX ]  = {0};
-      BOOL comp_id[  MYSTERY_DOWNLOAD_FILE_MAX ]  = {0};
-      //文字列を数値へ変換
+  case SEQ_CHECK_ROM:
+    { 
+      int i;
+      u32 rom_version;
+      //ロムバージョンのチェックし、受信可能フラグをつける
       for( i = 0; i < p_nd_data->server_filenum; i++ )
       { 
-        event_id[i]  = UTIL_StringToInteger( p_nd_data->fileInfo[ i ].param2 );
-        OS_TPrintf( "[%d}=event_id%d\n", i, event_id[i] );
+        rom_version  = UTIL_StringToHex( p_nd_data->fileInfo[ i ].param2 );
+        OS_TPrintf( "[%d}=rom_version%d\n", i, rom_version );
+        
+        if( rom_version & 1<<GET_VERSION() )
+        { 
+          p_nd_data->recvflag[i]  = TRUE;
+          OS_TPrintf( "受信できるバージョン%d %d\n",rom_version, 1<<GET_VERSION() );
+        }
+        else
+        { 
+          p_nd_data->recvflag[i]  = FALSE;
+          OS_TPrintf( "受信できないバージョン%d %d\n",rom_version, 1<<GET_VERSION() );
+        }
       }
-      
-      //一番早い数字をチェック
-      target_num  = event_id[0];
-      p_nd_data->target = 0;
-      for( i = 0; i < p_nd_data->server_filenum; i++ )
-      {
-        for( j = 0; j < p_nd_data->server_filenum; j++ )
+
+      //ROMバージョンがあっている本当に受信可能なものの数を取得
+      p_nd_data->recv_filenum = 0;
+      for( i = 0; i < MYSTERY_DOWNLOAD_FILE_MAX; i++ )
+      { 
+        if( p_nd_data->recvflag[i] )
         {
-          if( event_id[i] < event_id[j] )
+          p_nd_data->recv_filenum++;
+        }
+      }
+
+      *p_seq  = SEQ_CHECKLIST;
+    }
+    break;
+
+  case SEQ_CHECKLIST:
+    if( p_nd_data->recv_filenum == 1 )
+    { 
+      //自分が取得できるファイルが１つならば、それを落とす
+      int i;
+      for( i = 0; i < MYSTERY_DOWNLOAD_FILE_MAX; i++ )
+      { 
+        if( p_nd_data->recvflag[i] )
+        {
+          p_nd_data->target = i;
+          break;
+        }
+      }
+    }
+    else
+    {
+      //自分が取得できるファイルが複数あるときは、
+      //自分のIDから取得すべきファイルを決めて、それを落とす
+      int i;
+      u32 playerID;
+      s32 index;
+      int cnt   = 0;
+      GF_ASSERT( p_nd_data->recv_filenum );
+
+      playerID  = MyStatus_GetID_Low( SaveData_GetMyStatus((SAVE_CONTROL_WORK *)p_wk->cp_sv) );
+      playerID  = playerID == 0 ? 1: playerID;
+      index     = playerID % p_nd_data->recv_filenum;
+
+      //２つ以上重複しているので、
+      //その重複している中から、プレイヤーID%Nのものを取り出す
+      for( i = 0; i < MYSTERY_DOWNLOAD_FILE_MAX; i++ )
+      { 
+        if( p_nd_data->recvflag[i] )
+        { 
+          if( cnt == index )
           { 
             p_nd_data->target = i;
-            target_num  = event_id[i];
+            break;
           }
-        }
-      }
-      OS_TPrintf( "値が古いもの　index=%d num=%d", p_nd_data->target, target_num );
 
-      //重複チェック
-      for( i = 0; i < p_nd_data->server_filenum; i++ )
-      {
-        if( target_num == event_id[i] )
-        { 
-          comp_file++;
-          comp_id[i]  = TRUE;
+          cnt++;
         }
-      }
-      OS_TPrintf( "重複している数 %d\n", comp_file );
-
-      if( comp_file > 1 )
-      { 
-        const u32 playerID  = MyStatus_GetID_Low( SaveData_GetMyStatus((SAVE_CONTROL_WORK *)p_wk->cp_sv) );
-        const u32 index     = playerID % comp_file;
-        int cnt = 0;
-        //２つ以上重複しているので、
-        //その重複している中から、プレイヤーID%Nのものを取り出す
-        for( i = 0; i < p_nd_data->server_filenum; i++ )
-        {
-          if( comp_id[i] )
-          { 
-            if( cnt == index )
-            { 
-              break;
-            }
-            cnt++;
-          }
-        }
-        if( i >= p_nd_data->server_filenum ) 
-        { 
-          OS_TPrintf("おかしいチェック");
-          i = 0;
-        }
-        p_nd_data->target = i;
-        OS_TPrintf( "重複しているので、プレイヤーごとの固定値でとるよ ID%d index%d \n", index, p_nd_data->target );
-      }
-      else
-      { 
-        OS_TPrintf( "\n重複していないので、数字が早いものからとるよ%d\n", p_nd_data->target );
       }
 
-      *p_seq  = SEQ_GET_FILE;
+      p_nd_data->target = i;
+      OS_TPrintf( "重複しているので、プレイヤーごとの固定値でとるよ ID%d index%d cnt%d\n", index, p_nd_data->target, cnt );
     }
+
+    *p_seq  = SEQ_GET_FILE;
     break;
 //-------------------------------------
 ///	ファイル読み込み開始
 //=====================================
   case SEQ_GET_FILE:
     // ファイル読み込み開始
-    OS_TPrintf( "取得するもの target%d max%d\n", p_nd_data->target, p_nd_data->server_filenum );
+    OS_TPrintf( "取得するもの target%d max%d ser%d\n", p_nd_data->target, p_nd_data->recv_filenum, p_nd_data->server_filenum );
     if(DWC_NdGetFileAsync( &p_nd_data->fileInfo[ p_nd_data->target ], p_nd_data->p_buffer, MYSTERY_DOWNLOAD_GIFT_DATA_SIZE) == FALSE){
       OS_TPrintf( "DWC_NdGetFileAsync: Failed.\n" );
     }
@@ -1682,28 +1703,126 @@ static void NdCleanupCallback( void )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  文字列を数値へ変換する
+ *	@brief  16進数文字列から数値へ変換する
  *
- *	@param	char *str   文字列アスキーコード
+ *	@param	char *str   文字列アスキーコード  0～FFFFFFFF
  *
- *	@return 変換後の整数
+ *	@return 変換後の数値
  */
 //-----------------------------------------------------------------------------
-static int UTIL_StringToInteger( const char *buf )
+static u32 UTIL_StringToHex( const char *buf )
 { 
-  int i, ans, ret;
-
-  if(*buf == '-') ans = -1;
-  else ans = 1;
-
-  i = ret = 0;
-  while(1){
-    if( (48 <= *(buf + i)) && (*(buf + i) <= 57) ){
-      ret *= 10;
-      ret += (*(buf + i) - 48);
+  static const struct
+  { 
+    char  c;
+    s8    n;
+  } sc_hash_tbl[] = 
+  { 
+    //数字
+    { 
+      '0',0
+    },
+    { 
+      '1',1
+    },
+    { 
+      '2',2
+    },
+    { 
+      '3',3
+    },
+    { 
+      '4',4
+    },
+    { 
+      '5',5
+    },
+    { 
+      '6',6
+    },
+    { 
+      '7',7
+    },
+    { 
+      '8',8
+    },
+    { 
+      '9',9
+    },
+    //大文字
+    { 
+      'A',0xA
+    },
+    { 
+      'B',0xB
+    },
+    { 
+      'C',0xC
+    },
+    { 
+      'D',0xD
+    },
+    { 
+      'E',0xE
+    },
+    { 
+      'F',0xF
+    },
+    //小文字でもOK
+    {
+      'a',0xA
+    },
+    { 
+      'b',0xB
+    },
+    { 
+      'c',0xC
+    },
+    { 
+      'd',0xD
+    },
+    { 
+      'e',0xE
+    },
+    { 
+      'f',0xF
+    },
+    { 
+      '\0',-1
     }
-    else if(*(buf + i) == '\0') break;
-    i++;
+  };
+
+  int i; 
+  int num;
+  int ret;
+  const char *origin = buf;
+
+  ret = 0;
+  while(1)
+  {
+    num = -1;
+    for( i = 0; i < NELEMS(sc_hash_tbl); i++ )
+    { 
+      if( sc_hash_tbl[ i ].c == *buf )
+      { 
+        num = sc_hash_tbl[ i ].n;
+        break;
+      }
+    }
+    
+    if( num == -1 )
+    { 
+      //終了コードかテーブルにない値の場合終了
+      break;
+    }
+    else
+    { 
+      ret *= 0x10;  //16進数にするので
+      ret += num;
+      buf++;
+    }
   }
-  return ans * ret;
+
+  NAGI_Printf( "%s==[%d]\n", origin, ret );
+  return ret;
 }

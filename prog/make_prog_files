@@ -1232,7 +1232,6 @@ SRCS_OVERLAY_DPW_COMMON   = 							net/pdw_ca.c \
               net/dpw_rap.c
 
 
-
 # WIFIログイン
 #===> SRCS_OVERLAY_DPW_COMMON
 SRCS_OVERLAY_WIFI_LOGIN =  net_app/wifi_login/wifilogin_proc.c \
@@ -1287,10 +1286,10 @@ SRCS_OVERLAY_APP_MAIL = app/mail/mailtool.c \
                     	app/mail/mb_seq.c \
                     	app/mail/mb_ui.c
 
-
-
 # 不思議な贈り物
 #===> SRCS_OVERLAY_WIFI_LOGIN
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_MYSTERY = net_app/mystery/mystery.c \
                       net_app/mystery/mystery_graphic.c \
                       net_app/mystery/mystery_util.c \
