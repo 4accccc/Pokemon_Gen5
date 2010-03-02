@@ -35,6 +35,7 @@ _EVENT_DATA_END
 //------------------------------注意--------------------------------//
 //	LOCALWORK1⇒POSイベント発動トリガー
 //　　　POSイベント制御に使用します
+//  LOCALWORK2⇒POSイベント発動時のシーンワークの次の更新値を保存しておきます
 //
 //------------------------------------------------------------------//
 //ローカル定義
@@ -173,40 +174,40 @@ EVENT_START ev_c11r0101_policeman01
   SWITCH $WK_SCENE_C11GATE
   CASE 0 THEN     //ここにはこないけど
     $gardman_talk_msg = msg_policeman_01_01
-  CASE 1 THEN     //初回
+  CASE 1 THEN     //ここにはこないけど
     $gardman_talk_msg = msg_policeman_01_01
   CASE 2 THEN     //1ヶ国
-    $gardman_talk_msg = msg_policeman_01_02
+    $gardman_talk_msg = msg_policeman_02_02
   CASE 3 THEN     //3ヶ国
-    $gardman_talk_msg = msg_policeman_01_03
+    $gardman_talk_msg = msg_policeman_02_03
   CASE 4 THEN     //6ヶ国
-    $gardman_talk_msg = msg_policeman_01_04
+    $gardman_talk_msg = msg_policeman_02_04
   CASE 5 THEN     //10ヶ国
-    $gardman_talk_msg = msg_policeman_01_05
+    $gardman_talk_msg = msg_policeman_02_05
   CASE 6 THEN     //15
-    $gardman_talk_msg = msg_policeman_01_06
+    $gardman_talk_msg = msg_policeman_02_06
   CASE 7 THEN     //20
-    $gardman_talk_msg = msg_policeman_01_07
+    $gardman_talk_msg = msg_policeman_02_07
   CASE 8 THEN     //30
-    $gardman_talk_msg = msg_policeman_01_08
+    $gardman_talk_msg = msg_policeman_02_08
   CASE 9 THEN     //40
-    $gardman_talk_msg = msg_policeman_01_09
+    $gardman_talk_msg = msg_policeman_02_09
   CASE 10 THEN     //50
-    $gardman_talk_msg = msg_policeman_01_10
+    $gardman_talk_msg = msg_policeman_02_10
   CASE 11 THEN    //60
-    $gardman_talk_msg = msg_policeman_01_11
+    $gardman_talk_msg = msg_policeman_02_11
   CASE 12 THEN    //70
-    $gardman_talk_msg = msg_policeman_01_12
+    $gardman_talk_msg = msg_policeman_02_12
   CASE 13 THEN    //80
-    $gardman_talk_msg = msg_policeman_01_13
+    $gardman_talk_msg = msg_policeman_02_13
   CASE 14 THEN    //90
-    $gardman_talk_msg = msg_policeman_01_14
+    $gardman_talk_msg = msg_policeman_02_14
   CASE 15 THEN    //100
-    $gardman_talk_msg = msg_policeman_01_15
+    $gardman_talk_msg = msg_policeman_02_15
   CASE 16 THEN    //150
-    $gardman_talk_msg = msg_policeman_01_16
+    $gardman_talk_msg = msg_policeman_02_16
   DEFAULT  
-    $gardman_talk_msg = msg_policeman_01_17
+    $gardman_talk_msg = msg_policeman_02_17
   ENDSWITCH
 
   //プレーヤー名をタグ3番にセット
@@ -243,9 +244,12 @@ EVENT_START ev_c11r0101_pos01
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_up)
   _OBJ_ANIME_WAIT()
 
-  SWITCH $WK_SCENE_C11GATE
-  CASE 0 THEN     //初回
-    $gardman_msg = msg_policeman_01_01
+  IF $WK_SCENE_C11GATE == 0 THEN  //初回
+   _BALLOONWIN_OBJMSG(msg_policeman_01_01, UN_ENTRANCE_POLICEMAN_01)
+  _BALLOONWIN_CLOSE() 
+  ENDIF
+
+  SWITCH $LOCALWORK2
   CASE 1 THEN     //1ヶ国
     $gardman_msg = msg_policeman_01_02
   CASE 2 THEN     //3ヶ国
@@ -264,17 +268,17 @@ EVENT_START ev_c11r0101_pos01
     $gardman_msg = msg_policeman_01_09
   CASE 9 THEN     //50
     $gardman_msg = msg_policeman_01_10
-  CASE 10 THEN    //60
+  CASE 10 THEN    //75
     $gardman_msg = msg_policeman_01_11
-  CASE 11 THEN    //70
+  CASE 11 THEN    //100
     $gardman_msg = msg_policeman_01_12
-  CASE 12 THEN    //80
+  CASE 12 THEN    //125
     $gardman_msg = msg_policeman_01_13
-  CASE 13 THEN    //90
+  CASE 13 THEN    //150
     $gardman_msg = msg_policeman_01_14
-  CASE 14 THEN    //100
+  CASE 14 THEN    //175
     $gardman_msg = msg_policeman_01_15
-  CASE 15 THEN    //150
+  CASE 15 THEN    //200
     $gardman_msg = msg_policeman_01_16
   CASE 16 THEN    //233
     $gardman_msg = msg_policeman_01_17
@@ -289,6 +293,7 @@ EVENT_START ev_c11r0101_pos01
     _BALLOONWIN_OBJMSG(gardman_msg, UN_ENTRANCE_POLICEMAN_01)
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
+    $WK_SCENE_C11GATE = $LOCALWORK2
     $WK_SCENE_C11GATE += 1    //シーンワーク更新
   ENDIF
 
@@ -430,18 +435,18 @@ check_posevt_start:
     $chk_val = 40
   CASE 9 THEN     //50
     $chk_val = 50
-  CASE 10 THEN    //60
-    $chk_val = 60
-  CASE 11 THEN    //70
-    $chk_val = 70
-  CASE 12 THEN    //80
-    $chk_val = 80
-  CASE 13 THEN    //90
-    $chk_val = 90
-  CASE 14 THEN    //100
+  CASE 10 THEN    //75
+    $chk_val = 75
+  CASE 11 THEN    //100
     $chk_val = 100
-  CASE 15 THEN    //150
+  CASE 12 THEN    //125
+    $chk_val = 125
+  CASE 13 THEN    //150
     $chk_val = 150
+  CASE 14 THEN    //175
+    $chk_val = 175
+  CASE 15 THEN    //200
+    $chk_val = 200
   CASE 16 THEN    //233
     $chk_val = 233
   DEFAULT
@@ -454,17 +459,17 @@ check_posevt_start:
 
   IF $chk_total >= 233 THEN
     $next_scene = 16
-  ELSIF $chk_total >= 150 THEN
+  ELSIF $chk_total >= 200 THEN
     $next_scene = 15
-  ELSIF $chk_total >= 100 THEN
+  ELSIF $chk_total >= 175 THEN
     $next_scene = 14
-  ELSIF $chk_total >= 90 THEN
+  ELSIF $chk_total >= 150 THEN
     $next_scene = 13
-  ELSIF $chk_total >= 80 THEN
+  ELSIF $chk_total >= 125 THEN
     $next_scene = 12
-  ELSIF $chk_total >= 70 THEN
+  ELSIF $chk_total >= 100 THEN
     $next_scene = 11
-  ELSIF $chk_total >= 60 THEN
+  ELSIF $chk_total >= 75 THEN
     $next_scene = 10
   ELSIF $chk_total >= 50 THEN
     $next_scene = 9
@@ -492,7 +497,7 @@ check_posevt_start:
   IF $chk_total >= $chk_val THEN
     $LOCALWORK1 = 1   //POS起動
     IF $next_scene > $WK_SCENE_C11GATE THEN
-      $WK_SCENE_C11GATE = $next_scene
+      $LOCALWORK2 = $next_scene
     ENDIF 
   ENDIF
 _RET
