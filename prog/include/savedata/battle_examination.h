@@ -14,6 +14,8 @@
 
 //typedef _BSUBWAY_PARTNER_DATA BSUBWAY_PARTNER_DATA;
 
+#define BATTLE_EXAMINATION_MAGIC_KEY (3432)   //u16
+
 #define BATTLE_EXAMINATION_MAX (5)   ///< バトル検定の人数
 #define BATTLE_EXAMINATION_TITLE_MSG_MAX (34+2)   ///< メッセージの数
 
@@ -21,8 +23,8 @@
 typedef struct {
   BSUBWAY_PARTNER_DATA trainer[BATTLE_EXAMINATION_MAX];
   STRCODE titleName[BATTLE_EXAMINATION_TITLE_MSG_MAX];
-  u16 crc;
   u16 bActive;
+  u16 crc;
 }BATTLE_EXAMINATION_SAVEDATA;
 
 

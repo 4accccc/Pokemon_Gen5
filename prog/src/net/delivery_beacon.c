@@ -287,11 +287,11 @@ BOOL DELIVERY_BEACON_SendStart(DELIVERY_BEACON_WORK* pWork)
 //Ši”[êŠì¬
 static void _beaconAlloc(DELIVERY_BEACON_WORK* pWork)
 {
-  int max = (pWork->aInit.datasize/DELIVERY_BEACON_ONCE_NUM)+1;
-
-  OS_TPrintf("%d %d\n",pWork->aInit.datasize , (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
-  GF_ASSERT(pWork->aInit.datasize < (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
-
+  if(pWork->aInit.datasize){
+    int max = (pWork->aInit.datasize/DELIVERY_BEACON_ONCE_NUM)+1;
+    OS_TPrintf("%d %d\n",pWork->aInit.datasize , (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
+    GF_ASSERT(pWork->aInit.datasize < (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
+  }
 }
 
 
@@ -323,10 +323,10 @@ static BOOL  _recvCheck(DELIVERY_BEACON_WORK* pWork)
 static void  _recvLoop(DELIVERY_BEACON_WORK* pWork)
 {
   DELIVERY_BEACON* pBeacon;
-  DELIVERY_BEACON_INIT* pInit;
+//  DELIVERY_BEACON_INIT* pInit;
   int i,index;
   int max;
-  pInit = &pWork->aInit;
+//  pInit = &pWork->aInit;
 
   for(i = 0;i < _BCON_GET_NUM;i++){
     DELIVERY_BEACON* pBeacon = GFL_NET_WLGetUserBss(i);

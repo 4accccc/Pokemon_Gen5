@@ -62,8 +62,12 @@ void BATTLE_EXAMINATION_SAVE_Init(BATTLE_EXAMINATION_SAVEDATA* pSV)
 
 BOOL BATTLE_EXAMINATION_SAVE_IsInData(BATTLE_EXAMINATION_SAVEDATA* pSV)
 {
-  //@todo crcŒŸ¸•K—v
-  return TRUE;
+  if(pSV->crc == GFL_STD_CrcCalc(pSV, sizeof(BATTLE_EXAMINATION_SAVEDATA)-2)){
+    if(pSV->bActive == BATTLE_EXAMINATION_MAGIC_KEY){
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------

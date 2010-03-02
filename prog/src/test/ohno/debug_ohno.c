@@ -766,6 +766,7 @@ static void _debug_bsubDataMain(DEBUG_OHNO_CONTROL * pDOC)
 
   pDG = (BATTLE_EXAMINATION_SAVEDATA* )pDOC->aInit.pData;
 
+  pDG->bActive = BATTLE_EXAMINATION_MAGIC_KEY;
   _debug_bsubData( &pDG->trainer[0] );
   _debug_bsubData( &pDG->trainer[1] );
   _debug_bsubData( &pDG->trainer[2] );
@@ -774,6 +775,8 @@ static void _debug_bsubDataMain(DEBUG_OHNO_CONTROL * pDOC)
   pDG->titleName[0] = L'‚Ä';
   pDG->titleName[1] = L'‚·';
   pDG->titleName[2] = 0xffff;
+  pDG->crc = GFL_STD_CrcCalc(pDOC->aInit.pData, pDOC->aInit.datasize-2);
+
 }
 
 
