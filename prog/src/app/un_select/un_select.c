@@ -64,6 +64,7 @@
 
 // サウンド
 #include "sound/pm_sndsys.h"
+#include "un_select_se_def.h"
 
 #include "msg/msg_wifi_place_msg_UN.h"  // GMM
 
@@ -146,6 +147,8 @@ FS_EXTERN_OVERLAY(ui_common);
 
 #define BG_PLT_NUM  (7)         //BGが使用するパレット本数
 #define UP_MSG_FRM_SIZE (16)    //上画面メッセージウィンドウフレームキャラサイズ（8+1キャラだけど16確保）
+
+#define ITEM_SEl_PAL  (3)   //項目を選択したときのパレット番号
 
 enum {
   UN_OBJ_BUIL_CURSOR = 0,           //1
@@ -323,6 +326,12 @@ typedef struct {
 static BOOL SceneSelectFloor_Init( UI_SCENE_CNT_PTR cnt, void* work );
 static BOOL SceneSelectFloor_Main( UI_SCENE_CNT_PTR cnt, void* work );
 static BOOL SceneSelectFloor_End( UI_SCENE_CNT_PTR cnt, void* work );
+#if 0
+//指定項目点滅
+static BOOL SceneSelectFlash_Init( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL SceneSelectFlash_Main( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL SceneSelectFlash_End( UI_SCENE_CNT_PTR cnt, void* work );
+#endif
 
 // 確認画面
 static BOOL SceneConfirm_Init( UI_SCENE_CNT_PTR cnt, void* work );
@@ -523,52 +532,62 @@ static GFL_PROC_RESULT UNSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, v
 static GFL_PROC_RESULT UNSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
   UN_SELECT_MAIN_WORK* wk = mywk;
-    
-  if( GFL_FADE_CheckFade() == TRUE )
-  {
-     return GFL_PROC_RES_CONTINUE;
-  }
 
-  GFL_TCB_DeleteTask( wk->htask );
-  // ブレンド初期化
-	G2_BlendNone();
-	G2S_BlendNone();
+  switch( *seq ){
+  case 0:
+    // フェードアウト リクエスト
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 1 );
+    (*seq)++;
+    break;
+  case 1:
+    if( GFL_FADE_CheckFade() == TRUE )
+    {
+      return GFL_PROC_RES_CONTINUE;
+    }
+    (*seq)++;
+    break;
+  case 2:
+    GFL_TCB_DeleteTask( wk->htask );
+    // ブレンド初期化
+	  G2_BlendNone();
+	  G2S_BlendNone();
   
-  // リスト開放
-  LIST_Delete( wk ); 
+    // リスト開放
+    LIST_Delete( wk ); 
 
-  // シーンコントーラ削除
-  UI_SCENE_CNT_Delete( wk->cnt_scene );
+    // シーンコントーラ削除
+    UI_SCENE_CNT_Delete( wk->cnt_scene );
 
-  // メッセージ消去
-  MSG_CNT_Delete( wk->cnt_msg );
+    // メッセージ消去
+    MSG_CNT_Delete( wk->cnt_msg );
 
-  //アクター削除
-  DelAct( wk );
-  //ＯＢＪリソース解放
-  ExitRes( wk );
+    //アクター削除
+    DelAct( wk );
+    //ＯＢＪリソース解放
+    ExitRes( wk );
 
-  //TASKMENU リソース破棄
-  APP_TASKMENU_RES_Delete( wk->menu_res );  
+    //TASKMENU リソース破棄
+    APP_TASKMENU_RES_Delete( wk->menu_res );  
 
 #ifdef UN_SELECT_TOUCHBAR
-  //タッチバー
-  UNSelect_TOUCHBAR_Exit( wk->touchbar );
+    //タッチバー
+    UNSelect_TOUCHBAR_Exit( wk->touchbar );
 #endif //UN_SELECT_TOUCHBAR
 
-  //描画設定破棄
-  UN_SELECT_GRAPHIC_Exit( wk->graphic );
+    //描画設定破棄
+    UN_SELECT_GRAPHIC_Exit( wk->graphic );
 
-  //PROC用メモリ解放
-  GFL_PROC_FreeWork( proc );
-  GFL_HEAP_DeleteHeap( wk->heap_id );
+    //PROC用メモリ解放
+    GFL_PROC_FreeWork( proc );
+    GFL_HEAP_DeleteHeap( wk->heap_id );
 
-  //オーバーレイ破棄
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
+    //オーバーレイ破棄
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
 
-  HOSAKA_Printf(" PROC終了！ \n");
+    HOSAKA_Printf(" PROC終了！ \n");
 
-  return GFL_PROC_RES_FINISH;
+    return GFL_PROC_RES_FINISH;
+  }
 }
 //-----------------------------------------------------------------------------
 /**
@@ -1398,6 +1417,7 @@ static void ListCallBack_Move( void * work, u32 listPos, BOOL flg )
     SetScrollBarPos( wk, cur_y );
     //ビルカーソル位置セット
     SetBuilCurPos( wk, cur_y );
+    NOZOMU_Printf( "list_pos= %d\n",FRAMELIST_GetListPos( wk->lwk ) );
   }
 }
 
@@ -1424,6 +1444,7 @@ static void ListCallBack_Scroll( void * work, s8 mv )
     SetScrollBarPos( wk, cur_y );
     //ビルカーソル位置セット
     SetBuilCurPos( wk, cur_y );
+    NOZOMU_Printf( "scr_list_pos= %d\n",FRAMELIST_GetListPos( wk->lwk ) );
   }
 }
 
@@ -1458,7 +1479,7 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
 
     { 40, 20, 10, 8, 5, 4 },    // スクロール速度 [0] = 最速 ※itemSizYを割り切れる値であること！
 
-    3,              // 選択項目のパレット
+    ITEM_SEl_PAL,              // 選択項目のパレット
 
     SCROLL_BAR_SIZE,              // スクロールバーのＹサイズ
 
@@ -1721,7 +1742,7 @@ static void app_end( UN_SELECT_MAIN_WORK* wk, END_MODE end_mode )
       floor_idx = wk->ListSelPos;
       //フロア数は2Ｆからなのでインデックスに2を足す
 ///>      floor = floor_idx+2;
-      floor = UN_LIST_MAX - floor_idx;
+      floor = UN_LIST_MAX - floor_idx + 1;    //最上階は234Ｆ
       //フロアインデックスを国コードに変換
       code = g_FloorTable[floor_idx];
 
@@ -1740,9 +1761,6 @@ static void app_end( UN_SELECT_MAIN_WORK* wk, END_MODE end_mode )
       NOZOMU_Printf("output: Floor Cansel\n");
     break;
   }
-  
-  // フェードアウト リクエスト
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 1 );
 }
 
 #if 0
@@ -1831,6 +1849,10 @@ static BOOL SceneSelectFloor_Main( UI_SCENE_CNT_PTR cnt, void* work )
       int floor;
       wk->ListSelPos = list_pos;
       floor = UN_LIST_MAX - list_pos + 1;
+      //選んだフロアの項目を光らせる
+      FRAMELIST_ChangePosPalette( wk->lwk, FRAMELIST_GetCursorPos(wk->lwk), ITEM_SEl_PAL );
+      //選択ＳＥ再生
+      PMSND_PlaySE( UNSEL_SE_DECIDE );
       //選んだフロアがアプリ起動時に受け渡したフロアと同じ場合は飛べないことを警告するメッセージを出す
       if ( wk->pwk->InFloor == floor ) scene = UNS_SCENE_ID_JUMP_NG;
       else scene = UNS_SCENE_ID_CONFIRM;
