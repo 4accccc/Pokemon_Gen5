@@ -58,12 +58,14 @@ GMEVENT* EVENT_GPowerEffectStart(GAMESYS_WORK * gsys, GPOWER_ID g_power, BOOL mi
     POWER_CONV_DATA * p_data = GPOWER_PowerData_LoadAlloc( GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
     GPOWER_TYPE type = GPOWER_ID_to_Type( p_data, g_power );
     GPOWER_Set_OccurID( g_power, p_data, mine );
-    GAMEBEACON_Set_GPower( g_power );
 
     SCRIPT_SetScriptWorkParam( sc, g_power, type, mine, 0 );
     sub_InstantPowerUse( gsys, SCRIPT_GetWordSet( sc ), type );
  
     GPOWER_PowerData_Unload( p_data );
+  }
+  if( mine ){ //自分のを使った時だけビーコン送信
+    GAMEBEACON_Set_GPower( g_power );
   }
   return event;
 }
