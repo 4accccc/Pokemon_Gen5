@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-01T21:38:36"/>
+	<create user="matsumiya" host="W00224" date="2010-03-02T16:41:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1290" top="287" right="1995" bottom="915" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -461,7 +461,7 @@
 
 	<row id="msg_c01r0501_boy3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・状態異常のクイズ（予定）</comment>
+・はい/いいえの選択肢表示</comment>
 		<attribute name="キャラ指定">BOY3
 少年（聡明）</attribute>
 		<language name="JPN" width="256">よろしければ　ポケモンの
@@ -470,6 +470,107 @@
 		<language name="JPN_KANJI" width="256">よろしければ　ポケモンの
 状態異常に　ついて[BE:00:ページ切り替え（行送り）]
 クイズを　してみませんか？</language>
+	</row>
+
+	<row id="msg_c01r0501_boy3_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・三択（quiz_01~03）表示</comment>
+		<attribute name="キャラ指定">BOY3
+少年（聡明）</attribute>
+		<language name="JPN" width="256">では　もんだい　です▼
+どくを　なおす　ポケモンの　どうぐは
+つぎのうち　どれでしょう？</language>
+		<language name="JPN_KANJI" width="256">では　問題です▼
+どくを治す　ポケモンの道具は
+次のうち　どれでしょう？</language>
+	</row>
+
+	<row id="msg_c01r0501_quiz_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">どくけし</language>
+		<language name="JPN_KANJI" width="256">どくけし</language>
+	</row>
+
+	<row id="msg_c01r0501_quiz_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">まひなおし</language>
+		<language name="JPN_KANJI" width="256">まひなおし</language>
+	</row>
+
+	<row id="msg_c01r0501_quiz_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ねむけざまし</language>
+		<language name="JPN_KANJI" width="256">ねむけざまし</language>
+	</row>
+
+	<row id="msg_c01r0501_boy3_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・どくけしを選択時
+　続いてboy03_04へ</comment>
+		<attribute name="キャラ指定">BOY3</attribute>
+		<language name="JPN" width="256">せいかい　です！
+つぎの　もんだい　です</language>
+		<language name="JPN_KANJI" width="256">正解です！
+次の　問題です</language>
+	</row>
+
+	<row id="msg_c01r0501_boy3_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・三択（quiz_01~03）表示</comment>
+		<attribute name="キャラ指定">BOY3</attribute>
+		<language name="JPN" width="256">まひを　なおす　ポケモンの　どうぐは▼
+……まひなおし　ですが▼
+ねむった　ポケモンを　おこす
+どうぐは　つぎのうち　どれでしょう？</language>
+		<language name="JPN_KANJI" width="256">まひを　治す　ポケモンの道具は▼
+……まひなおし　ですが▼
+眠った　ポケモンを　起こす
+道具は　次のうち　どれでしょう？</language>
+	</row>
+
+	<row id="msg_c01r0501_boy3_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・ねむけざまし選択時
+続いてboy03_06へ</comment>
+		<attribute name="キャラ指定">BOY3</attribute>
+		<language name="JPN" width="256">だいせいかい　です！▼
+じょうたいいじょうに　くわしい
+あなたに　これを　プレゼントします</language>
+		<language name="JPN_KANJI" width="256">大正解です！▼
+状態異常に　詳しい
+あなたに　これを　プレゼントします</language>
+	</row>
+
+	<row id="msg_c01r0501_boy3_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・クイズ正解後はこれを繰り返す</comment>
+		<attribute name="キャラ指定">BOY3</attribute>
+		<language name="JPN" width="256">なんでもなおしは　そのなのとおり
+どんな　じょうたいいじょう　を▽
+なおすことが　できます！</language>
+		<language name="JPN_KANJI" width="256">なんでもなおしは　その名の通り
+どんな　状態異常も▽
+治すことが　できます！</language>
+	</row>
+
+	<row id="msg_c01r0501_boy3_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">BOY3</attribute>
+		<language name="JPN" width="256">クイズが　したくなったら
+はなしかけて　くださいね</language>
+		<language name="JPN_KANJI" width="256">クイズが　したくなったら
+話しかけて　くださいね</language>
+	</row>
+
+	<row id="msg_c01r0501_boy3_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・クイズがハズレの場合</comment>
+		<attribute name="キャラ指定">BOY3</attribute>
+		<language name="JPN" width="256">ざんねん……　ハズレです
+また　チャレンジ　してください</language>
+		<language name="JPN_KANJI" width="256">残念……　ハズレです
+また　チャレンジ　してください</language>
 	</row>
 
 	<row id="msg_c01r0501_board_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
