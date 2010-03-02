@@ -13,7 +13,7 @@
 
 #define R07_RIVAL_01                       0
 #define TR_TANPAN_07                       1
-#define TR_BACKPACKERM_03                  2
+#define TR_BACKPACKERW_03                  2
 #define TR_BACKPACKERM_04                  3
 #define TR_RANGERM_04                      4
 #define TR_RANGERW_04                      5

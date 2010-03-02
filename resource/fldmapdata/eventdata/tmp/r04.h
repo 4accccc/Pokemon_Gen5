@@ -19,7 +19,7 @@
 #define TR_WORKER2_01                      4
 #define TR_WORKER2_02                      5
 #define TR_WORKER2_03                      6
-#define TR_BACKPACKERW_03                  7
+#define TR_BACKPACKERM_03                  7
 #define TR_BACKPACKERW_01                  8
 #define R04_FLD_ITEM_07                    9
 #define R04_FLD_ITEM_08                   10

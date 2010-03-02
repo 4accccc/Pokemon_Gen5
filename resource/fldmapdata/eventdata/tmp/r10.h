@@ -15,7 +15,7 @@
 #define TR_KARATE_01                       2
 #define TR_MOUNT_01                        3
 #define TR_ELITEM_01                       4
-#define TR_ELITEM_02                       5
+#define TR_ELITEW_01                       5
 #define TR_VETERANM_01                     6
 #define TR_VETERANW_01                     7
 #define R10_SUPPORT_01                     8
