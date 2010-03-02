@@ -134,17 +134,17 @@
 #define ANSWER_ID_132 (132) //「ドラゴン」
 #define ANSWER_ID_133 (133) //「あく」
 #define ANSWER_ID_134 (134) //「はがね」
-#define ANSWER_ID_135 (135) //「０?１０じかん」
-#define ANSWER_ID_136 (136) //「１０?２０じかん」
-#define ANSWER_ID_137 (137) //「２０?３０じかん」
-#define ANSWER_ID_138 (138) //「３０?４０じかん」
-#define ANSWER_ID_139 (139) //「４０?５０じかん」
-#define ANSWER_ID_140 (140) //「５０?６０じかん」
-#define ANSWER_ID_141 (141) //「６０?７０じかん」
-#define ANSWER_ID_142 (142) //「７０?８０じかん」
-#define ANSWER_ID_143 (143) //「８０?９０じかん」
-#define ANSWER_ID_144 (144) //「９０?１００じかん」
-#define ANSWER_ID_145 (145) //「１００じかん?」
+#define ANSWER_ID_135 (135) //「０ー１０じかん」
+#define ANSWER_ID_136 (136) //「１０ー２０じかん」
+#define ANSWER_ID_137 (137) //「２０ー３０じかん」
+#define ANSWER_ID_138 (138) //「３０ー４０じかん」
+#define ANSWER_ID_139 (139) //「４０ー５０じかん」
+#define ANSWER_ID_140 (140) //「５０ー６０じかん」
+#define ANSWER_ID_141 (141) //「６０ー７０じかん」
+#define ANSWER_ID_142 (142) //「７０ー８０じかん」
+#define ANSWER_ID_143 (143) //「８０ー９０じかん」
+#define ANSWER_ID_144 (144) //「９０ー１００じかん」
+#define ANSWER_ID_145 (145) //「１００じかんー」
 #define ANSWER_ID_NUM   (146)    // 回答IDの数
 #define ANSWER_ID_MAX   (ANSWER_ID_NUM - 1)  // 回答IDの最大値
 #define ANSWER_ID_DUMMY (0xffff)             // 回答IDのダミー値

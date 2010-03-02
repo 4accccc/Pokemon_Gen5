@@ -1053,38 +1053,38 @@
         <language name="JPN" width="256">はがね</language>
         <language name="JPN_KANJI" width="256">はがね</language>
       </row><row id="str_answer_135">
-        <language name="JPN" width="256">０?１０じかん</language>
-        <language name="JPN_KANJI" width="256">０?１０じかん</language>
+        <language name="JPN" width="256">０ー１０じかん</language>
+        <language name="JPN_KANJI" width="256">０ー１０じかん</language>
       </row><row id="str_answer_136">
-        <language name="JPN" width="256">１０?２０じかん</language>
-        <language name="JPN_KANJI" width="256">１０?２０じかん</language>
+        <language name="JPN" width="256">１０ー２０じかん</language>
+        <language name="JPN_KANJI" width="256">１０ー２０じかん</language>
       </row><row id="str_answer_137">
-        <language name="JPN" width="256">２０?３０じかん</language>
-        <language name="JPN_KANJI" width="256">２０?３０じかん</language>
+        <language name="JPN" width="256">２０ー３０じかん</language>
+        <language name="JPN_KANJI" width="256">２０ー３０じかん</language>
       </row><row id="str_answer_138">
-        <language name="JPN" width="256">３０?４０じかん</language>
-        <language name="JPN_KANJI" width="256">３０?４０じかん</language>
+        <language name="JPN" width="256">３０ー４０じかん</language>
+        <language name="JPN_KANJI" width="256">３０ー４０じかん</language>
       </row><row id="str_answer_139">
-        <language name="JPN" width="256">４０?５０じかん</language>
-        <language name="JPN_KANJI" width="256">４０?５０じかん</language>
+        <language name="JPN" width="256">４０ー５０じかん</language>
+        <language name="JPN_KANJI" width="256">４０ー５０じかん</language>
       </row><row id="str_answer_140">
-        <language name="JPN" width="256">５０?６０じかん</language>
-        <language name="JPN_KANJI" width="256">５０?６０じかん</language>
+        <language name="JPN" width="256">５０ー６０じかん</language>
+        <language name="JPN_KANJI" width="256">５０ー６０じかん</language>
       </row><row id="str_answer_141">
-        <language name="JPN" width="256">６０?７０じかん</language>
-        <language name="JPN_KANJI" width="256">６０?７０じかん</language>
+        <language name="JPN" width="256">６０ー７０じかん</language>
+        <language name="JPN_KANJI" width="256">６０ー７０じかん</language>
       </row><row id="str_answer_142">
-        <language name="JPN" width="256">７０?８０じかん</language>
-        <language name="JPN_KANJI" width="256">７０?８０じかん</language>
+        <language name="JPN" width="256">７０ー８０じかん</language>
+        <language name="JPN_KANJI" width="256">７０ー８０じかん</language>
       </row><row id="str_answer_143">
-        <language name="JPN" width="256">８０?９０じかん</language>
-        <language name="JPN_KANJI" width="256">８０?９０じかん</language>
+        <language name="JPN" width="256">８０ー９０じかん</language>
+        <language name="JPN_KANJI" width="256">８０ー９０じかん</language>
       </row><row id="str_answer_144">
-        <language name="JPN" width="256">９０?１００じかん</language>
-        <language name="JPN_KANJI" width="256">９０?１００じかん</language>
+        <language name="JPN" width="256">９０ー１００じかん</language>
+        <language name="JPN_KANJI" width="256">９０ー１００じかん</language>
       </row><row id="str_answer_145">
-        <language name="JPN" width="256">１００じかん?</language>
-        <language name="JPN_KANJI" width="256">１００じかん?</language>
+        <language name="JPN" width="256">１００じかんー</language>
+        <language name="JPN_KANJI" width="256">１００じかんー</language>
       </row>
 
   <lock>
