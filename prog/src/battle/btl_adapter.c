@@ -17,7 +17,7 @@
 #include "btl_adapter.h"
 
 enum {
-  PRINT_FLG = TRUE,
+  PRINT_FLG = FALSE,
 };
 
 

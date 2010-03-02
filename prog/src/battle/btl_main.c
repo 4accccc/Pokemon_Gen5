@@ -1442,7 +1442,7 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
     break;
   case 6:
     if( wk->ImServer ){
-      if( !BTL_NET_StartNotify_AI_TrainerData( sp->tr_data[BTL_CLIENT_ENEMY1], sizeof(sp->tr_data[0]) ) ){
+      if( !BTL_NET_StartNotify_AI_TrainerData( sp->tr_data[BTL_CLIENT_ENEMY1], sizeof(*(sp->tr_data[0])) ) ){
         break;
       }
     }
@@ -2872,8 +2872,9 @@ u8 BTL_MAIN_GetEnemyClientID( const BTL_MAIN_MODULE* wk, u8 idx )
 u8 BTL_MAIN_GetPlayerMultiPos( const BTL_MAIN_MODULE* wk )
 {
   if( BTL_MAIN_IsMultiMode(wk) ){
-    return (wk->myClientID & 1);
-  }
+//    return (wk->myClientID & 1);
+    return ((wk->myClientID & 2) != 0);
+ }
   return 0;
 }
 
