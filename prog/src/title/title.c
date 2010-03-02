@@ -20,6 +20,7 @@
 #include "title/startmenu.h"
 #include "test/testmode.h"
 #include "test/performance.h"
+#include "backup_erase.h"
 
 #include "title.naix"
 #include "title1.naix"
@@ -34,11 +35,8 @@
 //	定数定義
 //==============================================================================
 /// 入力トリガマスク
-#ifdef PM_DEBUG
-#define NEXT_PROC_MASK	(PAD_BUTTON_START | PAD_BUTTON_SELECT | PAD_BUTTON_A)
-#else
-#define NEXT_PROC_MASK	(PAD_BUTTON_START | PAD_BUTTON_A)
-#endif
+#define NEXT_PROC_MASK		( PAD_BUTTON_START | PAD_BUTTON_A )
+#define	BACKUP_ERASE_MASK	( PAD_KEY_UP | PAD_BUTTON_SELECT | PAD_BUTTON_B )
 
 #define TOTAL_WAIT			(60*20)
 
@@ -58,6 +56,7 @@ enum{
 enum {
 	END_SELECT = 0,
 	END_TIMEOUT,
+	END_BACKUP_ERASE,
 #ifdef	PM_DEBUG
 	END_DEBUG_CALL,
 #endif	// PM_DEBUG
@@ -245,6 +244,18 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 
 	case SEQ_MAIN:
 		MainFunc(tw);
+		// ゲーム開始
+		if( GFL_UI_TP_GetTrg() == TRUE || ( GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK ) ){
+			tw->mode = END_SELECT;
+			tw->seq = SEQ_NEXT;
+			break;
+		}
+		// セーブデータ初期化
+		if( GFL_UI_KEY_GetCont() == BACKUP_ERASE_MASK ){
+			tw->mode = END_BACKUP_ERASE;
+			tw->seq = SEQ_NEXT;
+			break;
+		}
 #ifdef	PM_DEBUG
 		// デバッグメニューへ
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
@@ -253,12 +264,6 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 			break;
 		}
 #endif	// PM_DEBUG
-		// ゲーム開始
-		if( GFL_UI_TP_GetTrg() == TRUE || ( GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK ) ){
-			tw->mode = END_SELECT;
-			tw->seq = SEQ_NEXT;
-			break;
-		}
 		// 表示時間判別処理
 		tw->totalWait++;
 		if(tw->totalWait > TOTAL_WAIT){
@@ -313,6 +318,8 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 
 	if( mode == END_SELECT ){
 		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &StartMenuProcData, NULL);
+	}else if( mode == END_BACKUP_ERASE ){
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &BACKUP_ERASE_ProcData, NULL);
 #ifdef PM_DEBUG	// デバッグ用スキップ処理
 	}else if( mode == END_DEBUG_CALL ){
 		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, NULL );

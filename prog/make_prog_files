@@ -967,6 +967,7 @@ SRCS_OVERLAY_TITLE  = title/title.c \
         title/game_start.c \
         title/select_moji_mode.c \
         title/corporate.c \
+        title/backup_erase.c \
         savedata/save_control_intr.c
 
 # testmode
