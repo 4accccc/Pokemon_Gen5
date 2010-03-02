@@ -187,7 +187,7 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
 
 void BTLV_SCD_Init( BTLV_SCD* wk )
 {
-  wk->biw = BTLV_INPUT_Init( BTL_MAIN_GetRule(wk->mainModule), BTL_MAIN_GetCompetitor(wk->mainModule), wk->clientWork, wk->font, &wk->cursor_flag, wk->heapID );
+  wk->biw = BTLV_INPUT_Init( BTL_MAIN_GetRule(wk->mainModule), BTL_MAIN_GetCompetitor(wk->mainModule), wk->font, &wk->cursor_flag, wk->heapID );
 
   ///<obj
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
