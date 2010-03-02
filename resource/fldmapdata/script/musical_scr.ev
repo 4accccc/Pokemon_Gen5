@@ -9,7 +9,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_musical_scr.h"
-  .include  "musical_scr_local.h"	//ミュージカルの定義が入っています
+  .include  "musical_scr_local.h" //ミュージカルの定義が入っています
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -18,51 +18,49 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_musical_recept_single
-_EVENT_DATA		ev_musical_recept_comm
-_EVENT_DATA		ev_musical_change_program
-_EVENT_DATA		ev_musical_fan_01
-_EVENT_DATA		ev_musical_fan_02
-_EVENT_DATA		ev_musical_fan_03
-_EVENT_DATA		ev_musical_fan_04
-_EVENT_DATA		ev_musical_fan_05
+_EVENT_DATA   ev_musical_recept_single
+_EVENT_DATA   ev_musical_recept_comm
+_EVENT_DATA   ev_musical_change_program
+_EVENT_DATA   ev_musical_fan_01
+_EVENT_DATA   ev_musical_fan_02
+_EVENT_DATA   ev_musical_fan_03
+_EVENT_DATA   ev_musical_fan_04
+_EVENT_DATA   ev_musical_fan_05
 _EVENT_DATA_END
 
 
 //----------------------------------------------------------------------
 // ローカルワーク
 //----------------------------------------------------------------------
-DEFINE_LOCAL fan_number	// ファンの番号
+DEFINE_LOCAL fan_number // ファンの番号
 
 /*************************************************************/
-/*						一人用　受付						 */
+/*            一人用　受付             */
 /*************************************************************/
-EVENT_START	ev_musical_recept_single
+EVENT_START ev_musical_recept_single
 
-	_MUSICAL_TOOLS( MUSICAL_TOOL_INIT, 0,0,0 )
+  _MUSICAL_TOOLS( MUSICAL_TOOL_INIT, 0,0,0 )
 
   _TALK_OBJ_START()
 
-	_BALLOONWIN_TALKOBJ_MSG( msg_musical_test_01 )
-	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
+  _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_01 )
+  _YES_NO_WIN( SCWK_ANSWER )
+  _BALLOONWIN_CLOSE()
 
   IF $SCWK_ANSWER == 0 THEN
 
     _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_02 )
     _BALLOONWIN_CLOSE()
 
-	//FIXME ポケモンインデックス設定！
+  //FIXME ポケモンインデックス設定！
     _MUSICAL_CALL(0,MUSICAL_CALL_LOCAL) //ミュージカル呼び出し
-	//ここから処理は帰ってきません。
-	//細かい開放はプログラムで行います。
-	
+  //ここから処理は帰ってきません。
+  //細かい開放はプログラムで行います。
+  
   ELSE
 
-    _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_03 )
-    _LAST_KEYWAIT()
-    _BALLOONWIN_CLOSE()
-
+  _CALL ev_musical_exit_common
+  _RET
   ENDIF
   
 
@@ -70,32 +68,76 @@ EVENT_END
 
 
 /*************************************************************/
-/*						通信　受付							 */
+/*            通信　受付               */
 /*************************************************************/
-EVENT_START	ev_musical_recept_comm
+EVENT_START ev_musical_recept_comm
 
-	_MUSICAL_TOOLS( MUSICAL_TOOL_INIT, 0,0,0 )
+  _MUSICAL_TOOLS( MUSICAL_TOOL_INIT, 0,0,0 )
 
-	_CALL ev_musical_recept_comm_core
+  _CALL ev_musical_recept_comm_core
 
 EVENT_END
 
 
 /*************************************************************/
-/*						通信　受付コア							 */
+/*            通信　受付コア               */
 /*************************************************************/
-EVENT_START	ev_musical_recept_comm_core
+EVENT_START ev_musical_recept_comm_core
 
+  DEFINE_LOCAL LWK_ENT_POKE
   DEFINE_LOCAL ret
-  
+
   //ワイヤレス通信開始しますか
-  _SYSWIN_MSG( msg_musical_recept_01 , POS_DOWN )
+  _BALLOONWIN_TALKOBJ_MSG( msg_musical_recept_01 )
   _YES_NO_WIN( ret )
-  
+  _BALLOONWIN_CLOSE()
+
   IF $ret == SCR_NO THEN //やめる
+    _CALL ev_musical_exit_common
     _RET
   ENDIF
-  
+
+  _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
+  //FALSEのとき、無線通信は使えない
+  IF $SCWK_ANSWER == FALSE THEN
+    //共通メッセージ呼び出し
+    _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
+    _CALL ev_musical_exit_common
+  ENDIF
+
+  //TODO ペアコンチェック！！
+
+  //参加可能ポケチェック
+  {
+    DEFINE_LOCAL LWK_ENT_CHK
+
+    //ミュージカル参加できるポケが何匹いるかチェック
+    _GET_MUSICAL_VALUE_COUNT_MUSICAL_POKE( LWK_ENT_CHK )
+    IF $LWK_ENT_CHK == 0 THEN
+      //参加できるポケモンがいない
+      _BALLOONWIN_TALKOBJ_MSG( msg_musical_recept_02 )
+      _CALL ev_musical_exit_common
+      _RET
+    ENDIF
+  }  
+  {
+    
+    DEFINE_LOCAL LWK_SEL_CANCEL
+    //参加ポケモンを選ぶ
+    _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_05 )
+    _BALLOONWIN_CLOSE()
+    //選択画面をコール
+    _SELECT_MUSCAL_POKE( LWK_SEL_CANCEL , LWK_ENT_POKE )
+    
+    //キャンセルして戻ってきた
+    IF $LWK_SEL_CANCEL == 0 THEN
+      _CALL ev_musical_exit_common
+      _RET
+    ENDIF
+  }
+
+  //レポート
+
   //フィールド通信切断
   _FIELD_COMM_EXIT_EVENT_CALL( ret )
   
@@ -108,7 +150,7 @@ EVENT_START	ev_musical_recept_comm_core
   ENDIF
   
   IF $ret == FALSE THEN //切断失敗
-    _SYSWIN_MSG( msg_musical_test_01 , POS_DOWN )
+  _CALL ev_musical_exit_common
     _RET
   ENDIF
 
@@ -116,53 +158,97 @@ EVENT_START	ev_musical_recept_comm_core
   _REPORT_EVENT_CALL_WIRELESS( ret )
   
   IF $ret != SCR_REPORT_OK THEN //レポートしない
-    _RET
-  ENDIF
-  
-  //親になるか子になるか
-  _SYSWIN_MSG( msg_musical_recept_ir_01 , POS_DOWN )
-  
-  _BMPMENU_INIT_EX( 1, 1, 0, 1, ret )
-  _BMPMENU_MAKE_LIST( msg_musical_recept_leader, 0 ) //リーダー
-  _BMPMENU_MAKE_LIST( msg_musical_recept_group, 1 ) //グループ
-  _BMPMENU_MAKE_LIST( msg_musical_recept_return, 2 ) //やめる
-  _BMPMENU_START()
-  
-  IF $ret == 2 THEN //やめる
     _CALL ev_musical_exit_common
     _RET
   ENDIF
   
+  //赤外線orワイヤレス
+  _SYSWIN_MSG( msg_musical_recept_ir_01 , POS_DOWN )
+  
+  _BMPMENU_INIT_EX( 1, 1, 0, 1, ret )
+  _BMPMENU_MAKE_LIST( msg_musical_recept_05, 0 ) //赤外線
+  _BMPMENU_MAKE_LIST( msg_musical_recept_06, 1 ) //ワイヤレス
+  _BMPMENU_MAKE_LIST( msg_musical_recept_return, 2 ) //やめる
+  _BMPMENU_START()
   _SYSWIN_CLOSE()
+  
+  IF $ret == 0 THEN
+    //通信開始
+    //第2引数はWLorIrc
+    _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 1, 0, 0 )
+    _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,0,0,0 )
+    _CALL ev_musical_receipt_comm_connect_ir
+  ELSIF $ret == 1 THEN
+    //--------------------------
+    //ここからワイヤレス受付処理
+    //親になるか子になるか
+    _SYSWIN_MSG( msg_musical_recept_wl_01 , POS_DOWN )
+    
+    _BMPMENU_INIT_EX( 1, 1, 0, 1, ret )
+    _BMPMENU_MAKE_LIST( msg_musical_recept_leader, 0 ) //リーダー
+    _BMPMENU_MAKE_LIST( msg_musical_recept_group, 1 ) //グループ
+    _BMPMENU_MAKE_LIST( msg_musical_recept_return, 2 ) //やめる
+    _BMPMENU_START()
+    _SYSWIN_CLOSE()
+    
+    IF $ret == 2 THEN //やめる
+      _CALL ev_musical_exit_common
+      _RET
+    ENDIF
 
-  //通信開始
-  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 0, 0, 0 )
-  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,0,0,0 )
+    //通信開始
+    //第2引数はWLorIrc
+    _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 0, 0, 0 )
+    _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,0,0,0 )
 
-  //リーダー、グループ別参加処理
-  IF $ret == 0 THEN //リーダー
-    _CALL ev_musical_receipt_comm_connect_parent
-  ELSE //グループ
-    _CALL ev_musical_receipt_comm_connect_child
-  ENDIF
+    //リーダー、グループ別参加処理
+    IF $ret == 0 THEN //リーダー
+      _CALL ev_musical_receipt_comm_connect_parent
+    ELSE //グループ
+      _CALL ev_musical_receipt_comm_connect_child
+    ENDIF
 
-  IF $SCWK_ANSWER == FALSE THEN //接続失敗
-    _CALL ev_musical_exit_comm_common
+    IF $SCWK_ANSWER == FALSE THEN //接続失敗
+      _CALL ev_musical_exit_comm_common
+      _RET
+    ENDIF
+    //ここまでワイヤレス受付処理
+    //--------------------------
+  ELSIF $ret == 2 THEN //(IRorWL)やめる
+    _CALL ev_musical_exit_common
     _RET
   ENDIF
+  
+  //通信同期(お友達の選択を待っています)
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_FIRST, 0, 0 )
 
-	//通信同期(お友達の選択を待っています)
-	_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_FIRST, 0, 0 )
-
-	//FIXME ポケモンインデックス設定！
+  //FIXME ポケモンインデックス設定！
     _MUSICAL_CALL(0,MUSICAL_CALL_COMM) //ミュージカル呼び出し
-	//ここから処理は帰ってきません。
-	//細かい開放はプログラムで行います。
+  //ここから処理は帰ってきません。
+  //細かい開放はプログラムで行います。
 
     _CALL ev_musical_exit_comm_common
 
 EVENT_END
 
+
+//--------------------------------------------------------------
+//  受付　通信　赤外線接続
+//  @retval SCWK_ANSWER FALSE=接続無し
+//--------------------------------------------------------------
+ev_musical_receipt_comm_connect_ir:
+{
+  //親参加メニュー
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_IR_CONNECT, 0, 0, SCWK_ANSWER )
+  
+  SWITCH $SCWK_ANSWER
+  CASE MUSICAL_COMM_ENTRY_IR_OK THEN //OK
+    $SCWK_ANSWER = TRUE
+  CASE MUSICAL_COMM_ENTRY_IR_CANCEL THEN //キャンセル
+    $SCWK_ANSWER = FALSE
+  ENDSWITCH
+  _RET
+}
 
 //--------------------------------------------------------------
 //  受付　通信　リーダー接続
@@ -204,19 +290,19 @@ ev_musical_receipt_comm_connect_child:
 
 
 /*************************************************************/
-/*						共通終了処理(通信					 */
+/*            共通終了処理(通信          */
 /*************************************************************/
-EVENT_START	ev_musical_exit_comm_common
-	_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_EXIT, 0, 0, 0 )
-	_CALL ev_musical_exit_common
+EVENT_START ev_musical_exit_comm_common
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_EXIT, 0, 0, 0 )
+  _CALL ev_musical_exit_common
 EVENT_END
 /*************************************************************/
-/*						共通終了処理							 */
+/*            共通終了処理               */
 /*************************************************************/
-EVENT_START	ev_musical_exit_common
-	_MUSICAL_TOOLS( MUSICAL_TOOL_EXIT, 0,0,0 )
+EVENT_START ev_musical_exit_common
+  _MUSICAL_TOOLS( MUSICAL_TOOL_EXIT, 0,0,0 )
   
-  _SYSWIN_MSG( msg_musical_test_03 , POS_DOWN ) //また　おこしください
+  _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_03 ) //また　おこしください
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   
@@ -224,119 +310,119 @@ EVENT_END
 
 
 /*************************************************************/
-/*						脚本家								 */
+/*            脚本家                 */
 /*************************************************************/
-EVENT_START	ev_musical_change_program
+EVENT_START ev_musical_change_program
 
   _TALK_OBJ_START()
 
-	_BALLOONWIN_TALKOBJ_MSG( msg_musical_test_04 )
-	//メニュー作成
-	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
-	//リスト追加
-	_BMPMENU_MAKE_LIST( msg_musical_program_01, 0 )
-	_BMPMENU_MAKE_LIST( msg_musical_program_02, 1 )
-	_BMPMENU_MAKE_LIST( msg_musical_program_03, 2 )
-	_BMPMENU_MAKE_LIST( msg_musical_program_04, 3 )
-	_BMPMENU_MAKE_LIST( msg_musical_program_05, 4 )
-	_BMPMENU_MAKE_LIST( msg_musical_program_06, 5 )	//やめる
-	//メニュー表示
-	_BMPMENU_START()
-	_BALLOONWIN_CLOSE()
+  _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_04 )
+  //メニュー作成
+  _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+  //リスト追加
+  _BMPMENU_MAKE_LIST( msg_musical_program_01, 0 )
+  _BMPMENU_MAKE_LIST( msg_musical_program_02, 1 )
+  _BMPMENU_MAKE_LIST( msg_musical_program_03, 2 )
+  _BMPMENU_MAKE_LIST( msg_musical_program_04, 3 )
+  _BMPMENU_MAKE_LIST( msg_musical_program_05, 4 )
+  _BMPMENU_MAKE_LIST( msg_musical_program_06, 5 ) //やめる
+  //メニュー表示
+  _BMPMENU_START()
+  _BALLOONWIN_CLOSE()
 
-	IF $SCWK_ANSWER == 6 THEN
-		//NoFunction!
-	ELSE
-		_SET_MUSICAL_VALUE_SELECT_PROGRAM( SCWK_ANSWER )
-	ENDIF
+  IF $SCWK_ANSWER == 6 THEN
+    //NoFunction!
+  ELSE
+    _SET_MUSICAL_VALUE_SELECT_PROGRAM( SCWK_ANSWER )
+  ENDIF
 
 EVENT_END
 
 /*************************************************************/
-/*						ファンの処理						 */
+/*            ファンの処理             */
 /*************************************************************/
 fan_main_routine:
 {
-	DEFINE_LOCAL fan_type	// ファンの見た目
-	DEFINE_LOCAL msg_id		// メッセージID
-	DEFINE_LOCAL gift_type	// 贈り物種類
-	DEFINE_LOCAL gift_number// 贈り物番号(アイテム・グッズ
+  DEFINE_LOCAL fan_type // ファンの見た目
+  DEFINE_LOCAL msg_id   // メッセージID
+  DEFINE_LOCAL gift_type  // 贈り物種類
+  DEFINE_LOCAL gift_number// 贈り物番号(アイテム・グッズ
 
-	//本来見た目の処理はココでやるべきではないと思うが、仮処理
-	_GET_MUSICAL_FAN_VALUE_TYPE( fan_number , fan_type )
-	IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
-		_BALLOONWIN_TALKOBJ_MSG( msg_musical_fan_none )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-	ELSE
-		
-		//応援メッセージ
-		_GET_MUSICAL_FAN_VALUE_CHEER_MSG( fan_number , msg_id )
-		_PLAYER_NAME( 0 )
-		_BALLOONWIN_TALKOBJ_MSG( msg_id )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-		
-		_GET_MUSICAL_FAN_VALUE_GIFT_TYPE( fan_number , gift_type )
-		_GET_MUSICAL_FAN_VALUE_GIFT_NUMBER( fan_number , gift_number )
-		_GET_MUSICAL_FAN_VALUE_GIFT_MSG( fan_number , msg_id )
-		
-		SWITCH $gift_type
-		CASE MUSICAL_GIFT_TYPE_NONE THEN
-			//渡すものは無い！
-			//もしくはもう渡した！
-		CASE MUSICAL_GIFT_TYPE_GOODS THEN
-			//グッズをもらう
-			//グッズ名のセット
-			_MUSICAL_WORD_GOODS_NAME( 0 , gift_number )
-			//贈るメッセージ
-			_BALLOONWIN_TALKOBJ_MSG( msg_id )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-			
-			//仮メッセージ
-						_SYSWIN_MSG( msg_musical_fan_get_goods , POS_DOWN )
-				_LAST_KEYWAIT()
-			_SYSWIN_CLOSE()
-			
-			//追加処理
-			_ADD_MUSICAL_GOODS( gift_number)
-			
-			//渡たすフラグ落とし
-			_RESET_MUSICAL_FAN_GIFT_FLG( fan_number )
-		CASE MUSICAL_GIFT_TYPE_ITEM THEN
-			//アイテム汎用処理をお願いします
-			//gift_number にアイテム番号入ってます。
+  //本来見た目の処理はココでやるべきではないと思うが、仮処理
+  _GET_MUSICAL_FAN_VALUE_TYPE( fan_number , fan_type )
+  IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
+    _BALLOONWIN_TALKOBJ_MSG( msg_musical_fan_none )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ELSE
+    
+    //応援メッセージ
+    _GET_MUSICAL_FAN_VALUE_CHEER_MSG( fan_number , msg_id )
+    _PLAYER_NAME( 0 )
+    _BALLOONWIN_TALKOBJ_MSG( msg_id )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+    
+    _GET_MUSICAL_FAN_VALUE_GIFT_TYPE( fan_number , gift_type )
+    _GET_MUSICAL_FAN_VALUE_GIFT_NUMBER( fan_number , gift_number )
+    _GET_MUSICAL_FAN_VALUE_GIFT_MSG( fan_number , msg_id )
+    
+    SWITCH $gift_type
+    CASE MUSICAL_GIFT_TYPE_NONE THEN
+      //渡すものは無い！
+      //もしくはもう渡した！
+    CASE MUSICAL_GIFT_TYPE_GOODS THEN
+      //グッズをもらう
+      //グッズ名のセット
+      _MUSICAL_WORD_GOODS_NAME( 0 , gift_number )
+      //贈るメッセージ
+      _BALLOONWIN_TALKOBJ_MSG( msg_id )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+      
+      //仮メッセージ
+            _SYSWIN_MSG( msg_musical_fan_get_goods , POS_DOWN )
+        _LAST_KEYWAIT()
+      _SYSWIN_CLOSE()
+      
+      //追加処理
+      _ADD_MUSICAL_GOODS( gift_number)
+      
+      //渡たすフラグ落とし
+      _RESET_MUSICAL_FAN_GIFT_FLG( fan_number )
+    CASE MUSICAL_GIFT_TYPE_ITEM THEN
+      //アイテム汎用処理をお願いします
+      //gift_number にアイテム番号入ってます。
 
-			//渡たすフラグ落とし
-			_RESET_MUSICAL_FAN_GIFT_FLG( fan_number )
-		ENDSWITCH
-		
-	ENDIF
+      //渡たすフラグ落とし
+      _RESET_MUSICAL_FAN_GIFT_FLG( fan_number )
+    ENDSWITCH
+    
+  ENDIF
 }
 _RET
 
-EVENT_START	ev_musical_fan_01
-	$fan_number = 0
-	_CALL fan_main_routine
+EVENT_START ev_musical_fan_01
+  $fan_number = 0
+  _CALL fan_main_routine
 EVENT_END
 
-EVENT_START	ev_musical_fan_02
-	$fan_number = 1
-	_CALL fan_main_routine
+EVENT_START ev_musical_fan_02
+  $fan_number = 1
+  _CALL fan_main_routine
 EVENT_END
 
-EVENT_START	ev_musical_fan_03
-	$fan_number = 2
-	_CALL fan_main_routine
+EVENT_START ev_musical_fan_03
+  $fan_number = 2
+  _CALL fan_main_routine
 EVENT_END
 
-EVENT_START	ev_musical_fan_04
-	$fan_number = 3
-	_CALL fan_main_routine
+EVENT_START ev_musical_fan_04
+  $fan_number = 3
+  _CALL fan_main_routine
 EVENT_END
 
-EVENT_START	ev_musical_fan_05
-	$fan_number = 4
-	_CALL fan_main_routine
+EVENT_START ev_musical_fan_05
+  $fan_number = 4
+  _CALL fan_main_routine
 EVENT_END

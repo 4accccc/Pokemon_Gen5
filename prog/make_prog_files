@@ -1206,31 +1206,6 @@ SRCS_OVERLAY_MUSICAL_SHOT = musical/shot/musical_shot_sys.c \
         musical/shot/mus_shot_photo.c\
         musical/shot/mus_shot_info.c
 
-
-# ミュージカル
-#===> SRCS_OVERLAY_MUSICAL_SHOT
-SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
-        musical/mus_poke_data.c \
-        musical/mus_item_draw.c \
-        musical/mus_item_data.c \
-        musical/dressup/dup_fitting.c \
-        musical/dressup/dup_fitting_item.c \
-        musical/musical_mcss.c \
-        musical/stage/sta_acting.c \
-        musical/stage/sta_act_effect.c \
-        musical/stage/sta_act_poke.c \
-        musical/stage/sta_act_obj.c \
-        musical/stage/sta_act_light.c \
-        musical/stage/sta_act_bg.c \
-		musical/stage/sta_act_audience.c \
-		musical/stage/sta_act_button.c \
-        musical/stage/script/sta_act_script.c \
-        musical/stage/script/script_command.c \
-        musical/stage/script/script_table.c \
-		musical/comm/mus_comm_lobby.c \
-		musical/comm/mus_comm_func.c \
-        test/ariizumi/musical_editor.c
-
 #パレス
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
@@ -1407,6 +1382,33 @@ SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
 		app/p_status/p_sta_skill.c \
 		app/p_status/p_sta_oam.c \
 		app/p_status/ribbon.c
+
+
+# ミュージカル
+#===> SRCS_OVERLAY_POKE_STATUS
+#===> SRCS_OVERLAY_MUSICAL_SHOT
+SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
+        musical/mus_poke_data.c \
+        musical/mus_item_draw.c \
+        musical/mus_item_data.c \
+        musical/dressup/dup_fitting.c \
+        musical/dressup/dup_fitting_item.c \
+        musical/musical_mcss.c \
+        musical/stage/sta_acting.c \
+        musical/stage/sta_act_effect.c \
+        musical/stage/sta_act_poke.c \
+        musical/stage/sta_act_obj.c \
+        musical/stage/sta_act_light.c \
+        musical/stage/sta_act_bg.c \
+		musical/stage/sta_act_audience.c \
+		musical/stage/sta_act_button.c \
+        musical/stage/script/sta_act_script.c \
+        musical/stage/script/script_command.c \
+        musical/stage/script/script_table.c \
+		musical/comm/mus_comm_lobby.c \
+		musical/comm/mus_comm_func.c \
+        test/ariizumi/musical_editor.c
+
 
 #Wifiクラブ対戦用サブプロック
 #===> SRCS_OVERLAY_DEV_WIFI

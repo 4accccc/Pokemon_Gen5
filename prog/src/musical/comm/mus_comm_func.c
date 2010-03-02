@@ -134,6 +134,7 @@ struct _MUS_COMM_WORK
 {
   HEAPID heapId;
   
+  BOOL isInitIrc;
   BOOL isInitComm;
   BOOL isRefreshUserData;
   BOOL isStartGame;
@@ -237,7 +238,7 @@ static const NetRecvFuncTable MusCommRecvTable[] =
   { MUS_COMM_Post_ScriptData , MUS_COMM_Post_ScriptDataBuff },
 };
 
-static const GFLNetInitializeStruct aGFLNetInitMusical = 
+static GFLNetInitializeStruct aGFLNetInitMusical = 
 {
   MusCommRecvTable, //NetSamplePacketTbl,  // 受信関数テーブル
   NELEMS(MusCommRecvTable), // 受信テーブル要素数
@@ -265,7 +266,7 @@ static const GFLNetInitializeStruct aGFLNetInitMusical =
   GFL_HEAPID_APP,         //元になるheapid
   HEAPID_NETWORK,         //通信用にcreateされるHEAPID
   HEAPID_WIFI,            //wifi用にcreateされるHEAPID
-  HEAPID_NETWORK,         //
+  HEAPID_IRC,         //
   GFL_WICON_POSX,GFL_WICON_POSY,  // 通信アイコンXY位置
   MUSICAL_COMM_MEMBER_NUM,        //_MAXNUM,  //最大接続人数
   24,                     //_MAXSIZE, //最大送信バイト数
@@ -283,9 +284,10 @@ static const GFLNetInitializeStruct aGFLNetInitMusical =
 };  
 
 #pragma mark [>script func
-void MUS_COMM_InitField( HEAPID heapId , GAMEDATA *gameData , GAME_COMM_SYS_PTR gameComm )
+void MUS_COMM_InitField( HEAPID heapId , GAMEDATA *gameData , GAME_COMM_SYS_PTR gameComm , const BOOL isIrc )
 {
   MUS_COMM_WORK* work = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof( MUS_COMM_WORK ));
+  work->isInitIrc = isIrc;
   work->gameData = gameData;
   work->gameComm = gameComm;
 
@@ -301,6 +303,11 @@ void* MUS_COMM_InitGameComm(int *seq, void *pwk)
 {
   MUS_COMM_WORK* work = pwk;
   work->myStatus = GAMEDATA_GetMyStatus( work->gameData );
+
+  if( work->isInitIrc == TRUE )
+  {
+    aGFLNetInitMusical.bNetType = GFL_NET_TYPE_IRC_WIRELESS;
+  }
 
   MyStatus_Copy( work->myStatus, &work->beacon.mystatus );
   OS_GetMacAddress( work->beacon.mac_address );

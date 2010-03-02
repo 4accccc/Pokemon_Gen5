@@ -47,6 +47,7 @@
 
 #include "../../../resource/fldmapdata/script/musical_scr_local.h"
 #include "fieldmap/fldmmdl_objcode.h"
+#include "net_app/irc_match/ircbattlematch.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -54,6 +55,7 @@
 //  define
 //======================================================================
 FS_EXTERN_OVERLAY(musical);
+FS_EXTERN_OVERLAY(ircbattlematch);
 
 //======================================================================
 //  struct
@@ -84,12 +86,13 @@ typedef struct
 //======================================================================
 static void EvCmdMusical_InitCommon( SCRIPT_WORK *sc );
 static void EvCmdMusical_ExitCommon( MUSICAL_SCRIPT_WORK *musScriptWork );
-static void EvCmdMusical_InitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork , GAMEDATA *gdata , GAME_COMM_SYS_PTR gameComm );
+static void EvCmdMusical_InitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork , GAMEDATA *gdata , GAME_COMM_SYS_PTR gameComm , const BOOL isIrc );
 static void EvCmdMusical_ExitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork );
 
 static GMEVENT_RESULT event_Musical( GMEVENT *event, int *seq, void *work );
 static void EvCmdMusicalShotCallProc_CallBack( void* work );
 static void EvCmdFittingCallProc_CallBack( void* work );
+static void EvCmdIrcEntry_CallBack( void* work );
 
 static BOOL EvCmdMusicalEntryParent( VMHANDLE *core, void *wk );
 static BOOL EvCmdMusicalEntryChild( VMHANDLE *core, void *wk );
@@ -696,7 +699,7 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
   case MUSICAL_TOOL_COMM_INIT: //通信開始
     {
       GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
-      EvCmdMusical_InitCommon_Comm( musScriptWork , gdata , gameComm );
+      EvCmdMusical_InitCommon_Comm( musScriptWork , gdata , gameComm , val1 );
     }
     break;
 
@@ -764,6 +767,23 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
     }
     
     break;
+  case MUSICAL_TOOL_COMM_IR_CONNECT:
+    {
+      //赤外線受付
+      GMEVENT* event;
+      musScriptWork->scriptRet = ret_wk;
+      musScriptWork->irEntryWork.gamedata = gdata;
+      musScriptWork->irEntryWork.selectType = EVENTIRCBTL_ENTRYMODE_MUSICAL;
+      event = EVENT_FieldSubProc_Callback( gsys, fieldmap, 
+                                           FS_OVERLAY_ID(ircbattlematch), 
+                                           &IrcBattleMatchProcData, 
+                                           &musScriptWork->irEntryWork,
+                                           EvCmdIrcEntry_CallBack, 
+                                           musScriptWork );
+      SCRIPT_CallEvent( sc, event );
+      return( VMCMD_RESULT_SUSPEND );
+    }
+    break;
   }
 
   return VMCMD_RESULT_CONTINUE;  
@@ -787,10 +807,10 @@ static void EvCmdMusical_ExitCommon( MUSICAL_SCRIPT_WORK *musScriptWork )
   GFL_HEAP_FreeMemory( musScriptWork );
 }
 
-static void EvCmdMusical_InitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork , GAMEDATA *gdata , GAME_COMM_SYS_PTR gameComm )
+static void EvCmdMusical_InitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork , GAMEDATA *gdata , GAME_COMM_SYS_PTR gameComm , const BOOL isIrc )
 {
   //ここではワークを取れないので、初期化確認でワークをもらう！
-  MUS_COMM_InitField( HEAPID_PROC , gdata , gameComm );
+  MUS_COMM_InitField( HEAPID_PROC , gdata , gameComm , isIrc );
 }
 static void EvCmdMusical_ExitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork )
 {
@@ -875,6 +895,15 @@ static void EvCmdFittingCallProc_CallBack( void* work )
   GFL_HEAP_FreeMemory( callWork->initWork );
 }
 
+
+static void EvCmdIrcEntry_CallBack( void* work )
+{
+  MUSICAL_SCRIPT_WORK *musScriptWork = work;
+  *musScriptWork->scriptRet = FALSE;
+  OS_TFPrintf(3,"----------------------------\n");
+  OS_TFPrintf(3,"     IrcConnectCallBack     \n");
+  OS_TFPrintf(3,"----------------------------\n");
+}
 
 //--------------------------------------------------------------
 /**

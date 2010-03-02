@@ -10,6 +10,7 @@
 
 #include "musical_define.h"
 #include "net_app/comm_entry_menu.h"
+#include "net_app/irc_match.h"
 #include "savedata/save_control.h"
 #include "gamesystem/game_comm.h"
 
@@ -19,9 +20,14 @@ typedef struct
   void *commWork;   //MUS_COMM_WORK
   
   //スクリプト内で使用
+  //通信受け付け用
   COMM_ENTRY_MENU_PTR entryWork;
+   IRC_MATCH_WORK     irEntryWork;
   u16                 *scriptRet;
+
   u16                 commSyncNo;
+  
+  
 }MUSICAL_SCRIPT_WORK;
 
 //ミュージカルの参加資格があるか調べる
