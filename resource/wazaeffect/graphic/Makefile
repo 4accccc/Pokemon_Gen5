@@ -49,14 +49,14 @@ WAZAEFFNCL	:= $(wildcard $(RES_DIR)*.ncl)
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-do-build:	waza_eff_gra.scr ncer ncgr nscr nclr $(NARCNAME) $(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NAIXNAME) $(TARGETDIR)/$(HEADNAME)
+do-build: ncer ncgr nscr nclr waza_eff_gra.scr $(NARCNAME) $(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NAIXNAME) $(TARGETDIR)/$(HEADNAME)
 else
 do-build:	$(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NAIXNAME) $(TARGETDIR)/$(HEADNAME)
 endif
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
-waza_eff_gra.scr:	*.NCGR *.NCLR *.NSCR mkscr.rb
+waza_eff_gra.scr:	*.ncg *.ncl *.nsc mkscr.rb
 	ruby mkscr.rb waza_eff_gra.scr
 
 ncer: $(notdir $(WAZAEFFNCE:.nce=.NCER))
