@@ -14,7 +14,7 @@
 #include "arc_def.h"
 #include "pokegra/pokegra_wb.naix"
 
-#include "data/patch.cdat"
+#include "patch.cdat"
 
 //============================================================================================
 /**
@@ -143,9 +143,9 @@ MCSS_WORK*  MCSS_TOOL_AddPokeMcss( MCSS_SYS_WORK* mcss_sys, const POKEMON_PARAM*
   MCSS_ADD_WORK maw;
   u32 personal_rnd = PP_Get( pp, ID_PARA_personal_rnd, NULL );
 
+  MCSS_TOOL_SetMakeBuchiCallback( mcss_sys, personal_rnd );
   MCSS_TOOL_MakeMAWPP( pp, &maw, dir );
   mcss = MCSS_Add( mcss_sys, pos_x, pos_y, pos_z, &maw );
-  MCSS_TOOL_SetMakeBuchiCallback( mcss_sys, personal_rnd );
 
   return mcss;
 }
@@ -193,8 +193,8 @@ static  BOOL  MCSS_TOOL_MakeBuchi( const MCSS_ADD_WORK* maw, TCB_LOADRESOURCE_WO
 		  cnt=0;
 		  while( pbd[ cnt ].posx != 0xff )
       {
-			  setx = pbd[ cnt ].posx +   ( ( (*rnd) & 0x0f ) - 8 );
-			  sety = pbd[ cnt ].posy + ( ( ( (*rnd) & 0xf0 ) >> 4 ) - 8 );
+			  setx = pbd[ cnt ].posx +   ( ( rnd & 0x0f ) - 8 );
+			  sety = pbd[ cnt ].posy + ( ( ( rnd & 0xf0 ) >> 4 ) - 8 );
 			  pos[ 0 ] = setx / 2 + sety * 128;
 			  pos[ 1 ] = setx / 2 + ( sety + 40 ) * 128;
         for( j = 0 ; j < 2 ; j++ )
@@ -216,7 +216,7 @@ static  BOOL  MCSS_TOOL_MakeBuchi( const MCSS_ADD_WORK* maw, TCB_LOADRESOURCE_WO
         }
 			  cnt++;
 		  }
-		  (*rnd) = (*rnd) >> 8;
+		  rnd = rnd >> 8;
 	  }
   }
 
