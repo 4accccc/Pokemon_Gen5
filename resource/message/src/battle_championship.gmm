@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T11:24:47"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-03-01T20:00:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="-1025" top="-15" right="-320" bottom="613" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -313,7 +313,7 @@
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -438,6 +438,33 @@
 	<row id="BC_SELECT_08">
 		<language name="JPN" width="256">いいえ</language>
 		<language name="JPN_KANJI" width="256">いいえ</language>
+	</row>
+
+	<row id="BC_SELECT_09">
+		<language name="JPN" width="256">さんかを　かいじょする</language>
+		<language name="JPN_KANJI" width="256">参加を　解除する</language>
+	</row>
+
+	<row id="BC_STR_06">
+		<language name="JPN" width="256">ライブたいかいに
+さんか　しますか？</language>
+		<language name="JPN_KANJI" width="256">ライブ大会に
+参加　しますか？</language>
+	</row>
+
+	<row id="BC_STR_07">
+		<language name="JPN" width="256">ライブ大会は
+ＧＰＦの　ホームページで[BE:00:ページ切り替え（行送り）]
+登録することで　参加できます[BE:01:ページ切り替え（クリア）]
+大会のルールや　開催期間は
+大好きクラブホームページで[BE:00:ページ切り替え（行送り）]
+確認してください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ライブ大会は
+ＧＰＦの　ホームページで[BE:00:ページ切り替え（行送り）]
+登録することで　参加できます[BE:01:ページ切り替え（クリア）]
+大会のルールや　開催期間は
+大好きクラブホームページで[BE:00:ページ切り替え（行送り）]
+確認してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
