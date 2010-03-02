@@ -29,7 +29,6 @@
 #include "print/wordset.h"
 
 //  セーブデータ
-#include "savedata/regulation.h"
 #include "savedata/rndmatch_savedata.h"
 
 //  WIFIバトルマッチのモジュール
@@ -102,6 +101,9 @@ typedef struct
   WBM_SEQ_WORK              *p_seq;
 
   //引数
+  DIGITALCARDCHECK_PARAM    param;
+
+  //ゲームデータ
   GAMEDATA                  *p_game_data;
 } DIGITALCARDCHECK_WORK;
 
@@ -189,7 +191,8 @@ const GFL_PROC_DATA	DigitalCard_ProcData =
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT DIGITALCARDCHECK_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
-	DIGITALCARDCHECK_WORK	*p_wk;
+	DIGITALCARDCHECK_WORK	  *p_wk;
+  DIGITALCARDCHECK_PARAM  *p_param  = p_param_adrs;
 
 	//ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_DIGITALCARD_CHECK, 0x30000 );
@@ -197,6 +200,7 @@ static GFL_PROC_RESULT DIGITALCARDCHECK_PROC_Init( GFL_PROC *p_proc, int *p_seq,
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(DIGITALCARDCHECK_WORK), HEAPID_DIGITALCARD_CHECK );
 	GFL_STD_MemClear( p_wk, sizeof(DIGITALCARDCHECK_WORK) );
+  p_wk->param         = *p_param;
   p_wk->p_game_data   = GAMEDATA_Create( HEAPID_DIGITALCARD_CHECK );
 
 	//グラフィック設定
@@ -222,7 +226,8 @@ static GFL_PROC_RESULT DIGITALCARDCHECK_PROC_Init( GFL_PROC *p_proc, int *p_seq,
 #if DEBUG_INPUT_STATUS
   { 
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_game_data );
-    REGULATION_CARDDATA*p_reg = SaveData_GetRegulationCardData( p_sv );
+    REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
+    REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, p_wk->param.type );
     Regulation_SetDebugData( p_reg );
     Regulation_SetCardParam( p_reg, REGULATION_CARD_STATUS, DEBUG_INPUT_STATUS );
   }
@@ -376,7 +381,8 @@ static void DC_SEQFUNC_Init( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
 { 
   DIGITALCARDCHECK_WORK	  *p_wk	    = p_wk_adrs;
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_game_data );
-  REGULATION_CARDDATA * p_reg = SaveData_GetRegulationCardData( p_sv );
+  REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
+  REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, p_wk->param.type );
   const u32 cup_no      = Regulation_GetCardParam( p_reg, REGULATION_CARD_CUPNO );
   const u32 cup_status  = Regulation_GetCardParam( p_reg, REGULATION_CARD_STATUS );
 
@@ -640,10 +646,10 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   case SEQ_RETIRE:
     { 
-      
       SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_game_data );
+      REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
+      REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, p_wk->param.type ); 
       BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-      REGULATION_CARDDATA*p_reg = SaveData_GetRegulationCardData( p_sv );
 
       BATTLE_BOX_SAVE_SetLockFlg( p_bbox_save, FALSE );
       Regulation_SetCardParam( p_reg, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_RETIRE );
@@ -934,8 +940,8 @@ static void Util_PlayerInfo_Create( DIGITALCARDCHECK_WORK *p_wk )
 
     PLAYERINFO_WIFICUP_DATA info_setup;
 
-    const REGULATION_CARDDATA *cp_reg_card  = SaveData_GetRegulationCardData(GAMEDATA_GetSaveControlWork( p_wk->p_game_data ));
-
+    REGULATION_SAVEDATA* p_reg_sv  = SaveData_GetRegulationSaveData(GAMEDATA_GetSaveControlWork( p_wk->p_game_data ));
+    const REGULATION_CARDDATA *cp_reg_card  = RegulationSaveData_GetRegulationCard(p_reg_sv, p_wk->param.type );
 
     p_my    = GAMEDATA_GetMyStatus( p_wk->p_game_data); 
     p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic );

@@ -24,14 +24,32 @@
 #define HEAPID_SAVE_TEMP        (GFL_HEAPID_APP)
 
 
+
 //============================================================================================
 //============================================================================================
+struct _REGULATION_SAVEDATA
+{ 
+  REGULATION_CARDDATA card_data[ REGULATION_CARD_TYPE_MAX ];
+};
+
 
 //============================================================================================
 //
 //	セーブデータシステムが依存する関数
 //
 //============================================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レギュレーションセーブデータのサイズ
+ *
+ *	@return サイズ
+ */
+//-----------------------------------------------------------------------------
+int RegulationSaveData_GetWorkSize(void)
+{ 
+  return sizeof(REGULATION_SAVEDATA);
+}
 //----------------------------------------------------------
 /**
  * @brief	ワークサイズ取得
@@ -108,9 +126,9 @@ int Regulation_Cmp(const REGULATION* pCmp1,const REGULATION* pCmp2)
  * @param	pReg		REGULATIONワークへのポインタ
  */
 //----------------------------------------------------------
-void Regulation_Init(REGULATION* pReg)
+void Regulation_Init(REGULATION * my)
 {
-  GFL_STD_MemClear(pReg, sizeof(REGULATION));
+  GFL_STD_MemClear(my, sizeof(REGULATION));
 }
 
 //----------------------------------------------------------
@@ -124,6 +142,32 @@ void RegulationData_Init(REGULATION_CARDDATA* pRegData)
   GFL_STD_MemClear(pRegData, sizeof(REGULATION_CARDDATA));
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レギュレーションをカードデータから取得
+ *
+ *	@param	REGULATION_CARDDATA *pRegData カードデータ
+ *
+ *	@return レギュレーション
+ */
+//-----------------------------------------------------------------------------
+REGULATION* RegulationData_GetRegulation(REGULATION_CARDDATA *pRegData)
+{ 
+  return &pRegData->regulation_buff;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カードデータへレギュレーションを設定
+ *
+ *	@param	*pRegData           カードデータ
+ *	@param	REGULATION* pReg    レギュレーション
+ */
+//-----------------------------------------------------------------------------
+void RegulationData_SetRegulation(REGULATION_CARDDATA *pRegData, const REGULATION* pReg)
+{ 
+
+}
 //----------------------------------------------------------
 /**
  * @brief	カップ名セット
@@ -627,16 +671,10 @@ BOOL Regulation_CheckCrc( const REGULATION_CARDDATA* pReg )
  * @return	REGULATION	ワークへのポインタ  無効データの場合NULL
  */
 //----------------------------------------------------------
-REGULATION* SaveData_GetRegulation(SAVE_CONTROL_WORK* pSave, int regNo)
+REGULATION_CARDDATA* RegulationSaveData_GetRegulationCard( REGULATION_SAVEDATA *p_save, const REGULATION_CARD_TYPE type )
 {
-  REGULATION_CARDDATA* pRegData = NULL;
-
-  GF_ASSERT(regNo < REGULATION_MAX_NUM);
-  if(regNo < REGULATION_MAX_NUM){
-    pRegData = SaveControl_DataPtrGet(pSave, GMDATA_ID_REGULATION_DATA);
-    return &pRegData->regulation_buff;
-  }
-  return NULL;
+  GF_ASSERT( type < REGULATION_CARD_TYPE_MAX );
+  return &p_save->card_data[ type ];
 }
 
 //----------------------------------------------------------
@@ -647,26 +685,32 @@ REGULATION* SaveData_GetRegulation(SAVE_CONTROL_WORK* pSave, int regNo)
  * @return	none
  */
 //----------------------------------------------------------
-void SaveData_SetRegulation(SAVE_CONTROL_WORK* pSave, const REGULATION* pReg, const int regNo)
+void RegulationSaveData_SetRegulation(REGULATION_SAVEDATA *p_save, const REGULATION_CARD_TYPE type, const REGULATION_CARDDATA* pReg)
 {
-  REGULATION_CARDDATA* pRegData = NULL;
+  GF_ASSERT( type < REGULATION_CARD_TYPE_MAX );
+  GFL_STD_MemCopy(pReg, &p_save->card_data[ type ], sizeof(REGULATION_CARDDATA) );
+}
 
-  pRegData = SaveControl_DataPtrGet(pSave, GMDATA_ID_REGULATION_DATA);
-  GF_ASSERT(regNo < REGULATION_MAX_NUM);
-  if(regNo < REGULATION_MAX_NUM){
-    Regulation_Copy(pReg, &pRegData->regulation_buff);
-  }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レギュレーションデータへのポインタ
+ *
+ *	@param	* my  ポインタ
+ */
+//-----------------------------------------------------------------------------
+void RegulationSaveData_Init(REGULATION_SAVEDATA * my)
+{ 
+  GFL_STD_MemClear(my, sizeof(REGULATION_SAVEDATA));
 }
 
 //----------------------------------------------------------
 /**
  * @brief	レギュレーションデータへのポインタ取得
  * @param	pSave    	セーブデータ保持ワークへのポインタ
- * @param	何本目のレギュレーションデータか
  * @return	REGULATION	ワークへのポインタ  無効データの場合NULL
  */
 //----------------------------------------------------------
-REGULATION_CARDDATA* SaveData_GetRegulationCardData(SAVE_CONTROL_WORK* pSave)
+REGULATION_SAVEDATA* SaveData_GetRegulationSaveData(SAVE_CONTROL_WORK* pSave)
 {
   return SaveControl_DataPtrGet(pSave, GMDATA_ID_REGULATION_DATA);
 }

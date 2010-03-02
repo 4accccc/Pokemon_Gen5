@@ -764,14 +764,19 @@ static void *POKELIST_AllocParam( HEAPID heapID, void *p_wk_adrs )
     case WIFIBATTLEMATCH_BTLRULE_SHOOTER:
       reg_no  = REG_RND_TRIPLE_SHOOTER;
       break;
+    default:
+      GF_ASSERT(0);
     }
 
     p_param->regulation = (REGULATION*)PokeRegulation_LoadDataAlloc( reg_no, heapID );
   }
   else if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_WIFI )
   { 
-    SAVE_CONTROL_WORK *p_sv   = GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data );
-    p_param->regulation       = SaveData_GetRegulation( p_sv,0 );
+    SAVE_CONTROL_WORK *p_sv       = GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data );
+    REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
+    REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_WIFI );
+
+    p_param->regulation       = RegulationData_GetRegulation( p_reg );
   }
   else
   { 
@@ -921,8 +926,10 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
   //WiFI‘å‰ï‚Ìƒoƒgƒ‹Ý’è
   else if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_WIFI )
   { 
-    SAVE_CONTROL_WORK *p_sv   = GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data );
-    REGULATION* p_reg         = SaveData_GetRegulation( p_sv,0 );
+    SAVE_CONTROL_WORK *p_sv       = GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data );
+    REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
+    REGULATION_CARDDATA *p_reg_card    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_WIFI );
+    REGULATION* p_reg        = RegulationData_GetRegulation( p_reg_card );
 
     switch( Regulation_GetParam( p_reg, REGULATION_BATTLETYPE ) )
     {

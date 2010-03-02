@@ -38,11 +38,12 @@
 #include "net_app/irc_battle.h"
 #include "net_app/wifibattlematch.h"
 #include "net_app/digitalcardcheck.h"
+#include "net/dreamworld_netdata.h"
 
 #include "battle_championship/battle_championship.h"
 #include "test/ariizumi/ari_debug.h"
 
-//WIFI世界対戦のグラフィックを流用
+//WIFI対戦のグラフィックを流用
 #include "net_app/wifi_match/wifibattlematch_graphic.h"
 #include "net_app/wifi_match/wifibattlematch_view.h"
 #include "net_app/wifi_match/wifibattlematch_util.h"
@@ -68,7 +69,7 @@ typedef enum
   BCNP_TITLE,
   BCNP_WIFI_BATTLE,
   BCNP_EVENT_BATTLE,
-  
+  BCNP_LIVE_BATTLE,
 }BATTLE_CHAMPIONSHIP_NEXT_PROC;
 
 //======================================================================
@@ -159,6 +160,8 @@ static void SEQFUNC_Info( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_WifiMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_WifiInfo( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_DigitalCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_LiveMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_LiveInfo( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 static void SEQFUNC_RestrictUGC( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_EnableWireless( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -341,7 +344,7 @@ static void BATTLE_CHAMPIONSHIP_OpenFirstMenu( BATTLE_CHAMPIONSHIP_WORK *p_wk, B
   } pos;
 
   u8 x,y,w,h;
-
+  REGULATION_SAVEDATA*  p_sv = SaveData_GetRegulationSaveData(SaveControl_GetPointer());
 
   WBM_LIST_SETUP  setup;
   GFL_STD_MemClear( &setup, sizeof(WBM_LIST_SETUP) );
@@ -361,17 +364,42 @@ static void BATTLE_CHAMPIONSHIP_OpenFirstMenu( BATTLE_CHAMPIONSHIP_WORK *p_wk, B
     pos = POS_CENTER;
     break;
   case BC_MENU_TYPE_WIFI:
-    setup.strID[0]= BC_SELECT_06;
-    setup.strID[1]= BC_SELECT_04;
-    setup.strID[2]= BC_SELECT_03;
+    {
+      const REGULATION_CARDDATA* cp_reg  = RegulationSaveData_GetRegulationCard( p_sv, REGULATION_CARD_TYPE_WIFI );
+
+      setup.strID[0]= BC_SELECT_06;
+      setup.strID[1]= BC_SELECT_04;
+      if( cp_reg->status == DREAM_WORLD_MATCHUP_SIGNUP || cp_reg->status == DREAM_WORLD_MATCHUP_ENTRY )
+      { 
+        setup.strID[2]= BC_SELECT_09;
+      }
+      else
+      { 
+        setup.strID[2]= BC_SELECT_03;
+      }
+    }
     setup.strID[3]= BC_SELECT_05;
     setup.list_max= 4;
     pos = POS_CENTER;
     break;
   case BC_MENU_TYPE_LIVE:
-    setup.strID[0]= BC_SELECT_05;
-    setup.list_max= 1;
-    pos = POS_CENTER;
+    {
+      const REGULATION_CARDDATA* cp_reg  = RegulationSaveData_GetRegulationCard( p_sv, REGULATION_CARD_TYPE_LIVE );
+
+      setup.strID[0]= BC_SELECT_06;
+      setup.strID[1]= BC_SELECT_04;
+      if( cp_reg->status == DREAM_WORLD_MATCHUP_SIGNUP || cp_reg->status == DREAM_WORLD_MATCHUP_ENTRY )
+      { 
+        setup.strID[2]= BC_SELECT_09;
+      }
+      else
+      { 
+        setup.strID[2]= BC_SELECT_03;
+      }
+      setup.strID[3]= BC_SELECT_05;
+      setup.list_max= 4;
+      pos = POS_CENTER;
+    }
     break;
   case BC_MENU_TYPE_YESNO:
     setup.strID[0]= BC_SELECT_07;
@@ -577,8 +605,7 @@ static void SEQFUNC_MainMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
           WBM_SEQ_SetNext( p_seqwk, SEQFUNC_WifiMenu );
           break;
         case 1: //イベント大会
-          //WBM_SEQ_SetNext( p_seqwk, SEQFUNC_LiveMenu );
-          WBM_SEQ_SetNext( p_seqwk, SEQFUNC_FadeOut );
+          WBM_SEQ_SetNext( p_seqwk, SEQFUNC_LiveMenu );
           break;
         case 2: //説明をきく
           WBM_SEQ_SetNext( p_seqwk, SEQFUNC_Info );
@@ -859,6 +886,141 @@ static void SEQFUNC_DigitalCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 		}
 		break;
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ライブ大会メニュー画面
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_LiveMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_LIVEMSG,
+    SEQ_WAIT_LIVEMSG,
+    SEQ_START_LIVEMENU,
+    SEQ_WAIT_LIVEMENU,
+
+    SEQ_START_CANCELMSG,
+    SEQ_WAIT_CANCELMSG,
+    SEQ_START_CANCELMENU,
+    SEQ_WAIT_CANCELMENU,
+  };
+  BATTLE_CHAMPIONSHIP_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START_LIVEMSG:
+    BATTLE_CHAMPIONSHIP_ShowMessage( p_wk, BC_STR_06 );
+    *p_seq = SEQ_WAIT_LIVEMSG;
+    break;
+
+  case SEQ_WAIT_LIVEMSG:
+    BATTLE_CHAMPIONSHIP_UpdateMessage( p_wk );
+    if( BATTLE_CHAMPIONSHIP_IsFinishMessage( p_wk ) == TRUE )
+    {
+      *p_seq = SEQ_START_LIVEMENU;
+    }
+    break;
+
+  case SEQ_START_LIVEMENU:
+    BATTLE_CHAMPIONSHIP_OpenFirstMenu( p_wk, BC_MENU_TYPE_LIVE );
+    *p_seq = SEQ_WAIT_LIVEMENU;
+    break;
+
+  case SEQ_WAIT_LIVEMENU:
+    {
+      const u32 ret = BATTLE_CHAMPIONSHIP_UpdateFirstMenu( p_wk );
+      if( ret != WBM_LIST_SELECT_NULL )
+      {
+        switch( ret )
+        {
+        case 0: //さんかする
+          if( !DS_SYSTEM_IsAvailableWireless() )
+          { 
+            //DSの無線設定で通信不可のとき
+            WBM_SEQ_SetNext( p_seqwk, SEQFUNC_EnableWireless );
+          }
+          else if( DS_SYSTEM_IsRestrictUGC() )
+          { 
+            //ペアレンタルコントロールで送受信拒否しているとき
+            WBM_SEQ_SetNext( p_seqwk, SEQFUNC_RestrictUGC );
+          }
+          else
+          { 
+            //接続できるとき
+            WBM_SEQ_SetNext( p_seqwk, SEQFUNC_FadeOut );
+            p_wk->nextProcType = BCNP_LIVE_BATTLE;
+          }
+          break;
+        case 1: //説明を聞く
+          WBM_SEQ_SetNext( p_seqwk, SEQFUNC_WifiInfo );
+          break;
+        case 2: //デジタル選手証をみる
+          WBM_SEQ_SetNext( p_seqwk, SEQFUNC_DigitalCard );
+          break;
+        case 3: //やめる
+          *p_seq  = SEQ_START_CANCELMSG;
+          break;
+        }
+        BATTLE_CHAMPIONSHIP_CloseFirstMenu( p_wk );
+      }
+    }
+    break;
+
+  case SEQ_START_CANCELMSG:
+    BATTLE_CHAMPIONSHIP_ShowMessage( p_wk, BC_STR_05 );
+    *p_seq = SEQ_WAIT_CANCELMSG;
+    break;
+
+  case SEQ_WAIT_CANCELMSG:
+    BATTLE_CHAMPIONSHIP_UpdateMessage( p_wk );
+    if( BATTLE_CHAMPIONSHIP_IsFinishMessage( p_wk ) == TRUE )
+    {
+      *p_seq = SEQ_START_CANCELMENU;
+    }
+    break;
+
+  case SEQ_START_CANCELMENU:
+    BATTLE_CHAMPIONSHIP_OpenFirstMenu( p_wk, BC_MENU_TYPE_YESNO );
+    *p_seq = SEQ_WAIT_CANCELMENU;
+    break;
+
+  case SEQ_WAIT_CANCELMENU:
+    {
+      const u32 ret = BATTLE_CHAMPIONSHIP_UpdateFirstMenu( p_wk );
+      if( ret != WBM_LIST_SELECT_NULL )
+      {
+        switch( ret )
+        {
+        case 0: //はい
+          WBM_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
+          break;
+        case 1: //いいえ
+          *p_seq  =SEQ_START_LIVEMSG;
+          break;
+        }
+        BATTLE_CHAMPIONSHIP_CloseFirstMenu( p_wk );
+      }
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ライブ大会説明画面
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_LiveInfo( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+
 }
 //----------------------------------------------------------------------------
 /**

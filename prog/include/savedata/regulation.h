@@ -29,7 +29,6 @@
 typedef enum {
   REGULATION_CUPNAME_SIZE = 12,      ///< カップ名の長さ 12文字24バイト +EOM2byte
   REGULATION_RULENAME_SIZE = 12,      ///< ルール名の長さ 12文字24バイト +EOM2byte
-  REGULATION_MAX_NUM = 1,   ///< １本保存可能
   REGULATION_VS_TIME = 99,        ///< 対戦時間MAX 99分
   REGULATION_COMMAND_TIME = 99,   ///< コマンド入力時間 99秒
   REGULATION_SHOW_POKE_TIME_MAX = 99,   ///< 見せ合い時間 99秒
@@ -104,6 +103,14 @@ typedef enum  {
   REGULATION_CARD_STATUS,      ///< 大会状態：net/dreamworld_netdata.hのDREAM_WORLD_MATCHUP_TYPEの値
 } REGULATION_CARD_PARAM_TYPE;
 
+typedef enum {
+  REGULATION_CARD_TYPE_WIFI,   //WIFI大会で使用
+  REGULATION_CARD_TYPE_LIVE,   //ライブ大会で使用
+
+  REGULATION_CARD_TYPE_MAX,    //.cで使用
+} REGULATION_CARD_TYPE;
+
+
 //----------------------------------------------------------
 /**
  * @brief	バトルレギュレーションデータ型定義  fushigi_data.h参照の為外部公開に
@@ -158,15 +165,15 @@ typedef struct {
   u16 crc;  //整合性検査
 } REGULATION_CARDDATA;
 
-
-
-
+//セーブデータ
+typedef struct _REGULATION_SAVEDATA REGULATION_SAVEDATA;
 
 //============================================================================================
 //============================================================================================
 //----------------------------------------------------------
 //	セーブデータシステムや通信で使用する関数
 //----------------------------------------------------------
+extern int RegulationSaveData_GetWorkSize(void);
 extern int Regulation_GetWorkSize(void);
 extern int RegulationData_GetWorkSize(void);
 extern REGULATION * Regulation_AllocWork(HEAPID heapID);
@@ -177,6 +184,10 @@ extern int Regulation_Cmp(const REGULATION* pCmp1,const REGULATION* pCmp2);
 //	REGULATION操作のための関数
 //----------------------------------------------------------
 extern void Regulation_Init(REGULATION * my);
+
+//取得
+extern REGULATION* RegulationData_GetRegulation(REGULATION_CARDDATA *pRegData);
+extern void RegulationData_SetRegulation(REGULATION_CARDDATA *pRegData, const REGULATION* pReg);
 
 //カップ名
 extern void Regulation_GetCupName(const REGULATION* pReg,STRBUF* pReturnCupName);
@@ -197,6 +208,10 @@ extern BOOL Regulation_CheckParamBit(const REGULATION* pReg, REGULATION_PARAM_TY
 //----------------------------------------------------------
 extern void RegulationData_Init(REGULATION_CARDDATA * my);
 
+//取得
+extern REGULATION_CARDDATA* RegulationSaveData_GetRegulationCard( REGULATION_SAVEDATA *p_save, const REGULATION_CARD_TYPE type );
+extern void RegulationSaveData_SetRegulation(REGULATION_SAVEDATA *p_save, const REGULATION_CARD_TYPE type, const REGULATION_CARDDATA* pReg);
+
 //カップ名
 extern void Regulation_GetCardCupName(const REGULATION_CARDDATA* pReg,STRBUF* pReturnCupName);
 extern STRBUF* Regulation_CreateCardCupName(const REGULATION_CARDDATA* pReg, HEAPID heapID);
@@ -211,12 +226,8 @@ extern BOOL Regulation_CheckCrc( const REGULATION_CARDDATA* pReg );
 //----------------------------------------------------------
 //	セーブデータ取得のための関数
 //----------------------------------------------------------
-extern REGULATION* SaveData_GetRegulation(SAVE_CONTROL_WORK* pSave,int regNo);
-extern void SaveData_SetRegulation(SAVE_CONTROL_WORK* pSave, const REGULATION* pReg, const int regNo);
-
-extern REGULATION_CARDDATA* SaveData_GetRegulationCardData(SAVE_CONTROL_WORK* pSave);
-
-
+extern void RegulationSaveData_Init(REGULATION_SAVEDATA * my);
+extern REGULATION_SAVEDATA* SaveData_GetRegulationSaveData(SAVE_CONTROL_WORK* pSave);
 
 //----------------------------------------------------------
 //	デバッグ用

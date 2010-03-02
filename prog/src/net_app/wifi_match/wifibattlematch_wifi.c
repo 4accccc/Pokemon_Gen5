@@ -192,6 +192,8 @@ typedef struct
   //引数
   WIFIBATTLEMATCH_CORE_PARAM  *p_param;
 
+  REGULATION_CARDDATA         *p_reg;
+
 } WIFIBATTLEMATCH_WIFI_WORK;
 
 //=============================================================================
@@ -324,6 +326,12 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Init( GFL_PROC *p_proc, int *p_
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(WIFIBATTLEMATCH_WIFI_WORK), HEAPID_WIFIBATTLEMATCH_CORE );
 	GFL_STD_MemClear( p_wk, sizeof(WIFIBATTLEMATCH_WIFI_WORK) );
   p_wk->p_param = p_param;
+
+  { 
+    SAVE_CONTROL_WORK *p_sv       = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
+    REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
+    p_wk->p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_WIFI );
+  }
 
 	//グラフィック設定
 	p_wk->p_graphic	= WIFIBATTLEMATCH_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, HEAPID_WIFIBATTLEMATCH_CORE );
@@ -909,7 +917,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   WIFIBATTLEMATCH_WIFI_WORK	  *p_wk	    = p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
 
-  const REGULATION_CARDDATA *cp_reg_card  = SaveData_GetRegulationCardData(GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data ));
+  const REGULATION_CARDDATA *cp_reg_card  = p_wk->p_reg;
 
   //-------------------------------------
   ///	選手証チェックでエラーが起こったら必ずログインからやりなおし
@@ -1111,7 +1119,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       { 
         SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
         //取得成功
-        WIFIBATTLEMATCH_NET_GetDownloadDigCard( p_wk->p_net, SaveData_GetRegulationCardData(p_sv) );
+        WIFIBATTLEMATCH_NET_GetDownloadDigCard( p_wk->p_net, p_wk->p_reg );
         *p_seq  =  SEQ_WAIT_DOWNLOAD_REG_SUCCESS;
       }
       else if( ret == WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_EMPTY )
@@ -1674,8 +1682,7 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 #else
     {
       u32 failed_bit  = 0;
-      SAVE_CONTROL_WORK *p_sv   = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
-      REGULATION        *p_reg  = SaveData_GetRegulation( p_sv,0 );
+      REGULATION        *p_reg  = RegulationData_GetRegulation( p_wk->p_reg );
       Util_SetEvilcheckParty( p_wk );
 
       if( POKE_REG_OK == PokeRegulationMatchLookAtPokeParty(p_reg, p_wk->p_evilcheck_party, &failed_bit) )
@@ -2283,7 +2290,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
   case SEQ_START_MATCH:
     {
-      const REGULATION_CARDDATA *cp_reg_card  = SaveData_GetRegulationCardData(GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_game_data ));
+      const REGULATION_CARDDATA *cp_reg_card  = p_wk->p_reg;
       WIFIBATTLEMATCH_MATCH_KEY_DATA  data;
       GFL_STD_MemClear( &data, sizeof(WIFIBATTLEMATCH_MATCH_KEY_DATA) );
       data.rate = p_wk->sake_data.rate;
@@ -2373,8 +2380,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_CHECK_YOU_REGULATION:
     {
       u32 failed_bit  = 0;
-      SAVE_CONTROL_WORK *p_sv   = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
-      REGULATION        *p_reg  = SaveData_GetRegulation( p_sv,0 );
+      REGULATION        *p_reg  = RegulationData_GetRegulation( p_wk->p_reg );
       POKEPARTY         *p_party=  (POKEPARTY*)p_param->p_enemy_data->pokeparty;
       //相手のポケモンをレギュレーションチェックにかける
       if( POKE_REG_OK == PokeRegulationMatchLookAtPokeParty(p_reg, p_party, &failed_bit)  )
@@ -3200,8 +3206,7 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       s32 now;
       s32 end;
 
-      SAVE_CONTROL_WORK *p_sv   = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
-      REGULATION_CARDDATA*p_reg = SaveData_GetRegulationCardData( p_sv );
+      REGULATION_CARDDATA *p_reg = p_wk->p_reg;
       ret = DWC_GetDateTime( &now_date, &time );
 
       start_date.year  = Regulation_GetCardParam( p_reg, REGULATION_CARD_START_YEAR );
@@ -3645,7 +3650,7 @@ static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 
     PLAYERINFO_WIFICUP_DATA info_setup;
 
-    const REGULATION_CARDDATA *cp_reg_card  = SaveData_GetRegulationCardData(GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_game_data ));
+    const REGULATION_CARDDATA *cp_reg_card  = p_wk->p_reg;
 
     p_my  = GAMEDATA_GetMyStatus( p_wk->p_param->p_param->p_game_data); 
     p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic );
@@ -3986,7 +3991,7 @@ static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFI
 
 
   { 
-    const REGULATION_CARDDATA *cp_reg_card  = SaveData_GetRegulationCardData(GAMEDATA_GetSaveControlWork( cp_wk->p_param->p_param->p_game_data ));
+    const REGULATION_CARDDATA *cp_reg_card  = cp_wk->p_reg;
     p_my_data->wificup_no      = Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_CUPNO );
   }
 

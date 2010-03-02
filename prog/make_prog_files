@@ -1632,6 +1632,7 @@ SRCS_OVERLAY_BATTLE_RECORDER_CORE	=	net_app/battle_recorder/br_core.c \
 #バトルレコーダーツール WiFI上で動くバトルレコーダー内で使用するので、バトルと並列にしなければいけない
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
 SRCS_OVERLAY_BATTLE_RECORDER_TOOLS	= 	poke_tool/pp_to_rpp.c \
 						poke_tool/rpp_to_pp.c
 
