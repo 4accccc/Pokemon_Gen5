@@ -233,6 +233,51 @@ void DREAMWORLD_SV_ClearAllItem(DREAMWORLD_SAVEDATA* pSV)
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief   アイテムの残っているindex数を返す
+ * @param	  pSV		DREAMWORLD_SAVEDATAポインタ
+ * @retval	残り数
+ */
+//--------------------------------------------------------------------------------------------
+
+int DREAMWORLD_SV_GetItemRestNum(DREAMWORLD_SAVEDATA* pSV)
+{
+  int count=0,i;
+
+  for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
+    if(0!=DREAMWORLD_SV_GetItemNum(pSV,i)){
+      count++;
+    }
+  }
+  return count;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   残っているアイテムを構造体に入れて返す
+ * @param	  pSV		DREAMWORLD_SAVEDATAポインタ
+ * @param	  index		何番目のデータなのか返す
+ * @param	  pItem		アイテムの種類と数を構造体で返す
+ * @retval	返せたらTRUE
+ */
+//--------------------------------------------------------------------------------------------
+
+BOOL DREAMWORLD_SV_GetRestItem(DREAMWORLD_SAVEDATA* pSV, int* index, DREAMWORLD_ITEM_DATA* pItem)
+{
+  int i;
+
+  for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
+    if(0 != DREAMWORLD_SV_GetItemNum(pSV,i)){
+      pItem->itemindex = DREAMWORLD_SV_GetItem(pSV,i);
+      pItem->itemnum = DREAMWORLD_SV_GetItemNum(pSV,i);
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief   家具データをえる
  * @param	  pSV		DREAMWORLD_SAVEDATAポインタ
  * @return	DREAM_WORLD_FURNITUREDATA*
@@ -290,6 +335,59 @@ void DREAMWORLD_SV_SetPokemonStatus(DREAMWORLD_SAVEDATA* pSV,DREAM_WORLD_SLEEP_T
   }
   pSV->pokemoStatus = status;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   GSYNCを行い、預けた時間を得る
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @return	GFDATE
+ */
+//--------------------------------------------------------------------------------------------
+GFDATE DREAMWORLD_SV_GetTime(DREAMWORLD_SAVEDATA* pSV)
+{
+  return pSV->gsyncTime;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   預けた時間を書く
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @param	  GFDATE  時間
+ */
+//--------------------------------------------------------------------------------------------
+void DREAMWORLD_SV_SetTime(DREAMWORLD_SAVEDATA* pSV,GFDATE date)
+{
+  pSV->gsyncTime = date;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   GSYNCを行い、預けた回数を取得
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @return	回数
+ */
+//--------------------------------------------------------------------------------------------
+int DREAMWORLD_SV_GetUploadCount(DREAMWORLD_SAVEDATA* pSV)
+{
+  return pSV->uploadCount;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   預けた回数を書く
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @param	  回数
+ */
+//--------------------------------------------------------------------------------------------
+void DREAMWORLD_SV_SetUploadCount(DREAMWORLD_SAVEDATA* pSV,int count)
+{
+  pSV->uploadCount = count;
+}
+
+
+
+
+
 
 
 //----------------------------------------------------------

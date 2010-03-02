@@ -20,7 +20,6 @@
 //----------------------------------------------------------
 
 struct _CGEAR_SAVEDATA {
-  GFDATE gsyncTime;
 	u8 type[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
   u16 CGearPictCRC;
   u8 CGearPictureON;

@@ -334,6 +334,7 @@ void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork)
       BOXDAT_PutPokemonPos(pWork->pBox, pWork->selectBoxno,
                            pWork->selectIndex, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp));
     }
+    ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave( pWork->pGameData ), pp );
   }
 
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);

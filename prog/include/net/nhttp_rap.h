@@ -116,6 +116,15 @@ extern void NHTTP_RAP_RESPONSE_PokemonEvilCheck(NHTTP_RAP_WORK* pWork);
 extern void NHTTP_RAP_PokemonEvilCheckReset(NHTTP_RAP_WORK* pWork,NHTTP_POKECHK_ENUM type);
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   受信処理パーセントを返す
+ * @param   NHTTP_RAP_WORK* pWork,  ワーク
+ * @retval    0-100
+ */
+//------------------------------------------------------------------------------
+extern int NHTTP_RAP_ProcessPercent(NHTTP_RAP_WORK* pWork);
+
 
 
 

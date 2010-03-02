@@ -242,7 +242,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     dbw->boxIndex = dbw->boxParam.retPoke;   		// 終了時に選択された位置（寝かせる用
     if((BOX_RET_SEL_NONE==dbw->boxParam.retTray) && (BOX_RET_SEL_NONE==dbw->boxParam.retPoke)){
       GFL_NET_Exit(NULL);
-      *seq = _FIELD_OPEN;
+      *seq = _NETEND;
     }
     else{
       dbw->selectType = GSYNC_CALLTYPE_BOXSET;  // ポケモンセット後

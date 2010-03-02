@@ -9,6 +9,7 @@
 #pragma once
 
 #include "poke_tool/poke_tool.h"
+#include "system/gf_date.h"
 
 #define DREAM_WORLD_DATA_MAX_ITEMBOX (20)          ///< 受け取るアイテムボックスの数
 #define DREAM_WORLD_DATA_FURNITURE_NAME_NUM (12)  ///< 家具名文字列NUM
@@ -33,7 +34,17 @@ typedef struct {
   u16 furnitureName[DREAM_WORLD_DATA_FURNITURE_NAME_NUM];
 } DREAM_WORLD_FURNITUREDATA;
 
+//アイテムを外部から取り出す時
+typedef struct {
+  u16 itemindex;
+  u16 itemnum;
+} DREAMWORLD_ITEM_DATA;
 
+
+typedef enum{
+  DREAMWORLD_PRESENT_ITEM,
+  DREAMWORLD_PRESENT_KIND_MAX,
+}DREAMWORLD_PRESENT_KIND;
 
 extern int DREAMWORLD_SV_GetWorkSize(void);
 extern DREAMWORLD_SAVEDATA* DREAMWORLD_SV_AllocWork(HEAPID heapID);
@@ -46,6 +57,9 @@ extern u8 DREAMWORLD_SV_GetItemNum(DREAMWORLD_SAVEDATA* pSV, int index);
 extern void DREAMWORLD_SV_SetItem(DREAMWORLD_SAVEDATA* pSV,int index ,int itemNo, int num);
 extern void DREAMWORLD_SV_DeleteItem(DREAMWORLD_SAVEDATA* pSV,int index);
 extern void DREAMWORLD_SV_ClearAllItem(DREAMWORLD_SAVEDATA* pSV);
+extern int DREAMWORLD_SV_GetItemRestNum(DREAMWORLD_SAVEDATA* pSV);
+extern BOOL DREAMWORLD_SV_GetRestItem(DREAMWORLD_SAVEDATA* pSV, int* index, DREAMWORLD_ITEM_DATA* pItem);
+
 
 extern DREAM_WORLD_FURNITUREDATA* DREAMWORLD_SV_GetFurnitureData(DREAMWORLD_SAVEDATA* pSV,int index);
 extern void DREAMWORLD_SV_SetFurnitureData(DREAMWORLD_SAVEDATA* pSV,int index,DREAM_WORLD_FURNITUREDATA* pF);
@@ -64,6 +78,14 @@ extern BOOL DREAMWORLD_SV_GetAccount(DREAMWORLD_SAVEDATA* pSV);
 
 extern void DREAMWORLD_SV_SetRatemode(DREAMWORLD_SAVEDATA* pSV,BOOL bFlg);  //レーティングバトル開放
 extern BOOL DREAMWORLD_SV_GetRatemode(DREAMWORLD_SAVEDATA* pSV);
+
+extern GFDATE DREAMWORLD_SV_GetTime(DREAMWORLD_SAVEDATA* pSV);  //時間
+extern void DREAMWORLD_SV_SetTime(DREAMWORLD_SAVEDATA* pSV,GFDATE date); //時間
+
+
+extern int DREAMWORLD_SV_GetUploadCount(DREAMWORLD_SAVEDATA* pSV);   
+extern void DREAMWORLD_SV_SetUploadCount(DREAMWORLD_SAVEDATA* pSV,int count);
+
 
 
 extern DREAMWORLD_SAVEDATA* DREAMWORLD_SV_GetDreamWorldSaveData(SAVE_CONTROL_WORK* pSave);

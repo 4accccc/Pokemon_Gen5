@@ -885,10 +885,10 @@ static BOOL _getIRCTime(void* pCtl)
   
   pDOC->counter++;
   k = DELIVERY_IRC_RecvCheck(pDOC->pIRCWork);
-  if( DELIVERY_IRC_RecvCheck(pDOC->pIRCWork) ){  // もう通信している場合終了処理
+  if( k ){  // もう通信している場合終了処理
     OS_TPrintf("受信完了 %d %d\n",pDOC->counter,k);
 
-    for(j=0;j<pDOC->aInit.datasize;){
+    for(j=0;j<pDOC->aIRCInit.datasize;){
       for(i=0;i<16;i++){
         OS_TPrintf("%x ",pDOC->aIRCInit.pData[j]);
         j++;
@@ -959,6 +959,18 @@ static void _fushigiDataIRCSet(DEBUG_OHNO_CONTROL * pDOC)
   pDG->event_text[1] = L'R';
   pDG->event_text[2] = L'C';
   pDG->event_text[3] = 0xffff;
+
+  {
+    int i,j;
+    for(j=0;j<pDOC->aIRCInit.datasize;){
+      for(i=0;i<16;i++){
+        OS_TPrintf("%x ",pDOC->aIRCInit.pData[j]);
+        j++;
+      }
+      OS_TPrintf("\n");
+    }
+  }
+  
 
 }
 

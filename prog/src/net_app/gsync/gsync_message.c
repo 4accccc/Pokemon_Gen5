@@ -110,6 +110,7 @@ struct _GSYNC_MESSAGE_WORK {
   WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
   GFL_FONT* pFontHandle;
   STRBUF* pStrBuf;
+  STRBUF* pMessageStrBufEx;
   int msgidx[_MESSAGE_INDEX_MAX];
 
   GFL_BMPWIN* infoDispWin;
@@ -142,11 +143,13 @@ GSYNC_MESSAGE_WORK* GSYNC_MESSAGE_Init(HEAPID id,int msg_dat)
   GSYNC_MESSAGE_WORK* pWork = GFL_HEAP_AllocClearMemory(id, sizeof(GSYNC_MESSAGE_WORK));
   pWork->heapID = id;
 
+  pWork->pWordSet    = WORDSET_Create( pWork->heapID );
   GFL_BMPWIN_Init(pWork->heapID);
   GFL_FONTSYS_Init();
   pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 1 , 0 );
   pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
   pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
+  pWork->pMessageStrBufEx = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
   pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
   pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msg_dat, pWork->heapID );
 
@@ -189,12 +192,14 @@ void GSYNC_MESSAGE_End(GSYNC_MESSAGE_WORK* pWork)
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar2S));
   _ButtonSafeDelete(pWork);
 
+  WORDSET_Delete(pWork->pWordSet);
 //  GSYNC_MESSAGE_ButtonWindowDelete(pWork);
 
   GFL_FONTSYS_SetDefaultColor();
   GFL_MSG_Delete( pWork->pMsgData );
   GFL_FONT_Delete(pWork->pFontHandle);
   GFL_STR_DeleteBuffer(pWork->pStrBuf);
+  GFL_STR_DeleteBuffer(pWork->pMessageStrBufEx);
 
   APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
   GFL_TCBL_Exit(pWork->pMsgTcblSys);
@@ -225,11 +230,9 @@ void GSYNC_MESSAGE_End(GSYNC_MESSAGE_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-void GSYNC_MESSAGE_InfoMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid)
+void GSYNC_MESSAGE_MessageDisp(GSYNC_MESSAGE_WORK* pWork)
 {
   GFL_BMPWIN* pwin;
-
-  GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
   
   if(pWork->infoDispWin==NULL){
     pWork->infoDispWin = GFL_BMPWIN_Create(
@@ -251,6 +254,38 @@ void GSYNC_MESSAGE_InfoMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid)
   GFL_BMPWIN_MakeScreen(pwin);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   説明ウインドウ表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void GSYNC_MESSAGE_InfoMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid)
+{
+  GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
+  GSYNC_MESSAGE_MessageDisp(pWork);
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   nickname表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void GSYNC_MESSAGE_NickNameMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid,POKEMON_PARAM* pp)
+{
+
+  GFL_MSG_GetString( pWork->pMsgData, GSYNC_007, pWork->pMessageStrBufEx );
+  WORDSET_RegisterPokeNickName( pWork->pWordSet, 0,  pp );
+  WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pMessageStrBufEx  );
+  GSYNC_MESSAGE_MessageDisp(pWork);
+}
+
+
 
 
 //------------------------------------------------------------------------------

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T11:12:24"/>
+	<create user="ohno" host="W00141" date="2010-02-28T17:02:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="249" right="1996" bottom="877" maximized="no" rayout="Vertical2">
+	<dialog left="96" top="213" right="801" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -397,14 +397,86 @@
 	</row>
 
 	<row id="GSYNC_005">
-		<language name="JPN" width="256">ゲームシンクが　かんりょうしました
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]がめをさました！
 
 なにかを　てに　にぎって いたようです
 ポケモンセンターに　いってみよう！</language>
-		<language name="JPN_KANJI" width="256">ゲームシンクが　完了しました
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]がめをさました！
 
 なにかを　手に握っていたようです
 ポケモンセンターで　受け取ってください</language>
+	</row>
+
+	<row id="GSYNC_006">
+		<language name="JPN" width="256">しばらくおまちください</language>
+		<language name="JPN_KANJI" width="256">しばらくおまちください</language>
+	</row>
+
+	<row id="GSYNC_007">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]はスヤスヤ眠りはじめた！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]はスヤスヤ眠りはじめた！</language>
+	</row>
+
+	<row id="GSYNC_008">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]がめをさました！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]がめをさました！</language>
+	</row>
+
+	<row id="GSYNC_009">
+		<language name="JPN" width="256">今は夢を見ているようだ</language>
+		<language name="JPN_KANJI" width="256">今は夢を見ているようだ</language>
+	</row>
+
+	<row id="GSYNC_010">
+		<language name="JPN" width="256">まだ夢を見ていないみたい</language>
+		<language name="JPN_KANJI" width="256">まだ夢を見ていないみたい</language>
+	</row>
+
+	<row id="GSYNC_011">
+		<language name="JPN" width="256">ポケモンを起こす？</language>
+		<language name="JPN_KANJI" width="256">ポケモンを起こす？</language>
+	</row>
+
+	<row id="GSYNC_ERR001" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>追加</comment>
+		<language name="JPN" width="256">サーバーの容量オーバーです</language>
+		<language name="JPN_KANJI" width="256">サーバーの容量オーバーです</language>
+	</row>
+
+	<row id="GSYNC_ERR002" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>追加</comment>
+		<language name="JPN" width="256">サーバーに既にデータがあります</language>
+		<language name="JPN_KANJI" width="256">サーバーに既にデータがあります</language>
+	</row>
+
+	<row id="GSYNC_ERR003" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>追加</comment>
+		<language name="JPN" width="256">アップロードされたデータが壊れています</language>
+		<language name="JPN_KANJI" width="256">アップロードされたデータが壊れています</language>
+	</row>
+
+	<row id="GSYNC_ERR004" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>追加</comment>
+		<language name="JPN" width="256">アップロードされたデータが不正です</language>
+		<language name="JPN_KANJI" width="256">アップロードされたデータが不正です</language>
+	</row>
+
+	<row id="GSYNC_ERR005" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>追加</comment>
+		<language name="JPN" width="256">サーバにデータがありません</language>
+		<language name="JPN_KANJI" width="256">サーバにデータがありません</language>
+	</row>
+
+	<row id="GSYNC_ERR006" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>追加</comment>
+		<language name="JPN" width="256">サービスが終了している</language>
+		<language name="JPN_KANJI" width="256">サービスが終了している</language>
+	</row>
+
+	<row id="GSYNC_ERR007" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>追加</comment>
+		<language name="JPN" width="256">サーバとせつぞくできませんでした</language>
+		<language name="JPN_KANJI" width="256">サーバとせつぞくできませんでした</language>
 	</row>
 
 	<flowchart-group-list>

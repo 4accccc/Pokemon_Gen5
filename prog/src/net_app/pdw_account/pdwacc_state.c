@@ -117,10 +117,12 @@ struct _PDWACC_WORK {
   int countTimer;
   char tempbuffer[30];
   BOOL bEnd;
+  DREAM_WORLD_SERVER_ERROR_TYPE ErrorNo;   ///エラーがあった場合の番号
 };
 
 
 static void _ghttpKeyWait(PDWACC_WORK* pWork);
+static void _ghttpInfoWait0(PDWACC_WORK* pWork);
 
 
 
@@ -187,9 +189,17 @@ static void _modeFadeStart(PDWACC_WORK* pWork)
 static void _networkClose1(PDWACC_WORK* pWork)
 {
   if(!GFL_NET_IsInit()){
-    _CHANGE_STATE(_modeFadeout);
+    _CHANGE_STATE(_modeFadeStart);
   }
 }
+
+
+static void _networkClose(PDWACC_WORK* pWork)
+{
+  GFL_NET_Exit(NULL);
+  _CHANGE_STATE(_networkClose1);
+}
+
 
 
 
@@ -198,8 +208,7 @@ static void _createAccount8(PDWACC_WORK* pWork)
   if(GFL_UI_KEY_GetTrg()){
     PDWACC_MESSAGE_NoMessageEnd(pWork->pMessageWork);
 
-    GFL_NET_Exit(NULL);
-    _CHANGE_STATE(_networkClose1);
+    _CHANGE_STATE(_networkClose);
   }
 }
 
@@ -219,7 +228,6 @@ static void _createAccount7(PDWACC_WORK* pWork)
   u64 code = id + crc * 0x100000000;
   OS_TPrintf("id=%x crc=%x code=%x\n",id,crc,code);
 
-  PDWACC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
   
   PDWACC_MESSAGE_NoMessageDisp(pWork->pMessageWork,code);
   PDWACC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,PDWACC_008);
@@ -227,55 +235,43 @@ static void _createAccount7(PDWACC_WORK* pWork)
   _CHANGE_STATE(_createAccount8);
 }
 
+
 //------------------------------------------------------------------------------
 /**
- * @brief   ポケモン状態検査
+ * @brief   エラー表示処理
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
-static void _createAccount6(PDWACC_WORK* pWork)
+static void _ErrorDisp2(PDWACC_WORK* pWork)
 {
-  if(GFL_NET_IsInit()){
-    if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
-      NET_PRINT("終了\n");
-      {
-        EVENT_DATA* pEvent = (EVENT_DATA*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
 
-
-      }
-
-
-      _CHANGE_STATE(_createAccount7);
-    }
-  }
-  else{
-    _CHANGE_STATE(_createAccount7);
+  if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)){
+    _CHANGE_STATE(_networkClose);
   }
 }
 
-static void _createAccount5(PDWACC_WORK* pWork)
+
+static void _ErrorDisp(PDWACC_WORK* pWork)
 {
-  if(GFL_NET_IsInit()){
-    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNT_CREATE, pWork->pNHTTPRap)){
-      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
-        _CHANGE_STATE(_createAccount6);
-      }
-    }
+  int gmm = GSYNC_ERR001 + pWork->ErrorNo - 1;
+
+  if(pWork->ErrorNo >= DREAM_WORLD_SERVER_ERROR_MAX){
+    gmm = DREAM_WORLD_SERVER_ERROR_ETC + 1 + GSYNC_ERR001;
   }
-  else{
-    if(GFL_UI_KEY_GetTrg()){
-      _CHANGE_STATE(_createAccount6);
-    }
-  }
+  PDWACC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,gmm);
+  _CHANGE_STATE(_ErrorDisp2);
 }
+
+//---------------------------------
+
 
 static void _createAccount4_2(PDWACC_WORK* pWork)
 {
   if(!PDWACC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  _CHANGE_STATE(_createAccount5);
+  _CHANGE_STATE(_ghttpInfoWait0);
 }
 
 
@@ -291,7 +287,7 @@ static void _createAccount4(PDWACC_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   ポケモン起こし処理
+ * @brief   アカウント作成
  * @retval  none
  */
 //------------------------------------------------------------------------------
@@ -305,10 +301,7 @@ static void _createAccount3(PDWACC_WORK* pWork)
       _CHANGE_STATE(_createAccount4);
     }
     else{
-
-
-
-      _CHANGE_STATE(NULL);
+      _CHANGE_STATE(_networkClose);
     }
     PDWACC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
@@ -318,7 +311,7 @@ static void _createAccount3(PDWACC_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   ポケモン起こし処理
+ * @brief   アカウント作成
  * @retval  none
  */
 //------------------------------------------------------------------------------
@@ -366,6 +359,8 @@ static void _ghttpInfoWait1(PDWACC_WORK* pWork)
       {
         gs_response* pEvent = (gs_response*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
         NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+        PDWACC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
+
         if(pEvent->ret_cd==DREAM_WORLD_SERVER_ALREADY_EXISTS){ //アカウントはすでにある
           _CHANGE_STATE(_createAccount7);
         }
@@ -377,26 +372,17 @@ static void _ghttpInfoWait1(PDWACC_WORK* pWork)
           _CHANGE_STATE(_createAccount7);
         }
         else{
-#if DEBUG_ONLY_FOR_ohno
-          GF_ASSERT(0);
-#endif
-          _CHANGE_STATE(_createAccount7);
-          //その他のエラー
+          pWork->ErrorNo = pEvent->ret_cd;
+          _CHANGE_STATE(_ErrorDisp);
         }
       }
-      //アカウントがなければ作成に
-//      _CHANGE_STATE(_createAccount1);
     }
   }
-
-  
-  
-
 }
 
 //------------------------------------------------------------------------------
 /**
- * @brief   ポケモン状態検査
+ * @brief   ポケモンアカウント作成
  * @retval  none
  */
 //------------------------------------------------------------------------------
@@ -488,15 +474,7 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
   pWork->pGameData = pParent->gameData;
   pWork->profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pParent->gameData) );
   pWork->pNHTTPRap = NHTTP_RAP_Init(pParent->heapID, pWork->profileID, NULL);
-
-  switch(pParent->type){
-  case PDWACC_GETACC:
-    _CHANGE_STATE(_ghttpInfoWait0);
-    break;
-  case PDWACC_DISPPASS:
-    _CHANGE_STATE(_createAccount7);
-    break;
-  }
+  OS_TPrintf("profileID %x\n",pWork->profileID);
   
   pWork->pDispWork = PDWACC_DISP_Init(pWork->heapID);
   pWork->pMessageWork = PDWACC_MESSAGE_Init(pWork->heapID, NARC_message_pdwacc_dat);
@@ -506,6 +484,15 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
 
   PMSND_PlayBGM(SEQ_BGM_GAME_SYNC);
 
+  switch(pParent->type){
+  case PDWACC_GETACC:
+
+    _CHANGE_STATE(_createAccount1);
+    break;
+  case PDWACC_DISPPASS:
+    _CHANGE_STATE(_createAccount7);
+    break;
+  }
 
   return GFL_PROC_RES_FINISH;
 }

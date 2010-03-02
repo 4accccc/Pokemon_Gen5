@@ -21,7 +21,6 @@
 //ビーコン単体の中身
 typedef struct
 {
-  u16 crc16;      // CRC16-CCITT 生成多項式 0x1021 初期値0xffff出力XORなし 左送り
   u8 data[DELIVERY_IRC_MAX_NUM];   // 全体のデータでRC4がかかっている
 } DELIVERY_IRC;
 
@@ -31,8 +30,8 @@ typedef void (StateFunc)(DELIVERY_IRC_WORK* pState);
 //ローカルワーク
 struct _DELIVERY_IRC_LOCALWORK{
   DELIVERY_IRC_INIT aInit;   //初期化構造体のコピー
-  // DELIVERY_IRC aSend;  //配信する、受け取る構造体
-  //DELIVERY_IRC aRecv;  //配信する、受け取る構造体
+//   DELIVERY_IRC aSend;  //配信する、受け取る構造体
+  DELIVERY_IRC aRecv[2];  //配信する、受け取る構造体
   u8 end;
   u8 bSend;
   u16 bNego;
@@ -43,6 +42,7 @@ struct _DELIVERY_IRC_LOCALWORK{
 #define _BCON_GET_NUM (16)
 
 #define _TIMING_START (23)
+#define _TIMING_START2 (24)
 #define _TIMING_END (35)
 
 static void _RecvDeliveryData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -103,9 +103,24 @@ static void _changeStateDebug(DELIVERY_IRC_WORK* pWork,StateFunc state, int line
 
 
 // 受信
-static void _RecvDeliveryData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+static void _RecvDeliveryData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
   //すでに受信済み
+  DELIVERY_IRC_WORK *pWork = pWk;
+  int i,j;
+  const u8* pU8 = pData;
+  
+    for(j=0;j<size;){
+      for(i=0;i<16;i++){
+        OS_TPrintf("%x ",pU8[j]);
+        j++;
+      }
+      OS_TPrintf("\n");
+    }
+  
+  GFL_STD_MemCopy( pData, pWork->aInit.pData,pWork->aInit.datasize);
+
+  OS_TPrintf("_RecvDeliveryData %d %d\n",netID,size);
 }
 
 
@@ -128,7 +143,7 @@ static void _Recvcrc16Data(const int netID, const int size, const void* pData, v
 static u8* _getDeliveryData(int netID, void* pWk, int size)
 {
   DELIVERY_IRC_WORK *pWork = pWk;
-  return (u8*)pWork->aInit.pData;
+  return (u8*)pWork->aRecv[netID].data;
 }
 
 //なにもしない
@@ -142,7 +157,7 @@ static void _sendInit7(DELIVERY_IRC_WORK* pWork)
   if( GFL_NET_IsInit() == FALSE ){
     if(!pWork->bSend){
       pWork->end = DELIVERY_IRC_SUCCESS;
-      if(pWork->crc != GFL_STD_CrcCalc( &pWork->aInit.pData, pWork->aInit.datasize) ){
+      if(pWork->crc != GFL_STD_CrcCalc( pWork->aInit.pData, pWork->aInit.datasize) ){
         pWork->end = DELIVERY_IRC_FAILED;
       }
     }
@@ -171,23 +186,21 @@ static void _sendInit5(DELIVERY_IRC_WORK* pWork)
 //終了タイミング
 static void _sendInit4(DELIVERY_IRC_WORK* pWork)
 {
-  u16 crc = GFL_STD_CrcCalc( &pWork->aInit.pData, pWork->aInit.datasize);
+  u16 crc = GFL_STD_CrcCalc( pWork->aInit.pData, pWork->aInit.datasize);
 
-  if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle() , _CRCCCTI_DATA , sizeof(u16) ,    &crc )){
-    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  _TIMING_END, pWork->aInit.NetDevID);
-    _CHANGE_STATE(_sendInit5);
-  }
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  _TIMING_END, pWork->aInit.NetDevID);
+  _CHANGE_STATE(_sendInit5);
 }
 
 
 //送る
 static void _sendInit3(DELIVERY_IRC_WORK* pWork)
 {
-  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_START, pWork->aInit.NetDevID) ){
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_START2, pWork->aInit.NetDevID) ){
     if(pWork->bSend){
       if( GFL_NET_SendDataEx( GFL_NET_HANDLE_GetCurrentHandle() , GFL_NET_SENDID_ALLUSER ,
                               _DELIVERY_DATA , pWork->aInit.datasize ,
-                              &pWork->aInit.pData , TRUE , FALSE , TRUE )){
+                              pWork->aInit.pData , FALSE , FALSE , TRUE )){
         _CHANGE_STATE(_sendInit4);
       }
     }
@@ -197,21 +210,35 @@ static void _sendInit3(DELIVERY_IRC_WORK* pWork)
   }
 }
 
+
+
+static void _sendInit25(DELIVERY_IRC_WORK* pWork)
+
+{
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_START, pWork->aInit.NetDevID) ){
+    if( pWork->bSend ){
+      u16 crc=0;
+      crc = GFL_STD_CrcCalc( pWork->aInit.pData, pWork->aInit.datasize);
+      if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle() , _CRCCCTI_DATA , sizeof(u16) ,  &crc )){
+        GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  _TIMING_START2, pWork->aInit.NetDevID);
+        pWork->bNego=FALSE;
+        _CHANGE_STATE(_sendInit3);
+      }
+    }
+    else{
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  _TIMING_START2, pWork->aInit.NetDevID);
+      _CHANGE_STATE(_sendInit3);
+    }
+  }
+}
+
+
 //タイミング
 static void _sendInit2(DELIVERY_IRC_WORK* pWork)
 {
   if( GFL_NET_GetConnectNum() > 1 ){
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  _TIMING_START, pWork->aInit.NetDevID);
-    _CHANGE_STATE(_sendInit3);
-  }
-  if( pWork->bNego ){
-//    if(GFL_NET_HANDLE_RequestNegotiation()){
-  //    pWork->bNego=FALSE;
-  //  }
-    u16 crc=0;
-    if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle() , _CRCCCTI_DATA , sizeof(u16) ,    &crc )){
-      pWork->bNego=FALSE;
-    }
+    _CHANGE_STATE(_sendInit25);
   }
 }
 

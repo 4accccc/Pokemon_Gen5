@@ -313,6 +313,22 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
   return err;
 }
 
+//ˆ—%‚ð•Ô‚·
+int NHTTP_RAP_ProcessPercent(NHTTP_RAP_WORK* pWork)
+{
+  u32 receivedCurrent;
+  u32 contentLength;
+
+  if(pWork->handle){
+    if ( NHTTP_ERROR_NONE == NHTTPGetConnectionProgress(pWork->handle, &receivedCurrent, &contentLength))
+    {
+      return ((100 * contentLength) / receivedCurrent);
+    }
+  }
+  return 0;
+}
+
+
 
 
 void* NHTTP_RAP_GetRecvBuffer(NHTTP_RAP_WORK* pWork)
