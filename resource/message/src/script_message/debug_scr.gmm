@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-01T20:31:39"/>
+	<create user="murakami_naoto" host="W00228" date="2010-03-02T21:08:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -479,16 +479,21 @@
 	</row>
 
 	<row id="msg_debug_murakami_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<language name="JPN" width="256">リュウラセン/最上階/シンムデモ・アニメ</language>
-		<language name="JPN_KANJI" width="256">リュウラセン/最上階/シンムデモ・アニメ</language>
+		<language name="JPN" width="256">D08リュウラセン/最上階/シンムデモ・アニメ</language>
+		<language name="JPN_KANJI" width="256">D08リュウラセン/最上階/シンムデモ・アニメ</language>
 	</row>
 
 	<row id="msg_debug_murakami_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<language name="JPN" width="256">リュウラセン/６F/塔揺れるデモ</language>
-		<language name="JPN_KANJI" width="256">リュウラセン/６F/塔揺れるデモ</language>
+		<language name="JPN" width="256">D08リュウラセン/６F/塔揺れるデモ</language>
+		<language name="JPN_KANJI" width="256">D08リュウラセン/６F/塔揺れるデモ</language>
 	</row>
 
 	<row id="msg_debug_murakami_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">D06R0101電気石の洞穴_Nとの対戦</language>
+		<language name="JPN_KANJI" width="256">D06R0101電気石の洞穴_Nとの対戦</language>
+	</row>
+
+	<row id="msg_debug_murakami_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<language name="JPN" width="256">テスト用</language>
 		<language name="JPN_KANJI" width="256">テスト用</language>
 	</row>

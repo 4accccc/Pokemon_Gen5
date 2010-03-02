@@ -518,12 +518,13 @@ EVENT_START   ev_debug_murakami
 		//メニュー作成
 		_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, SCWK_TEMP1 )
 		//リスト追加
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_01, 1 )	//テスト01
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_02, 2 )	//テスト02
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_03, 3 )	//テスト用1
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_04, 4 )	//テスト用2
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_05, 5 )	//テスト用2
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_06, 6 )	//テスト用2
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_01, 1 )	//C02ストーン入手イベント
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_03, 2 )	//デンチュラの巣を破壊
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_06, 3 )	//電気石の洞穴_Nとの対戦
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_02, 4 )	//リュウラセン最初から
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_05, 5 )	//リュウラセン塔を揺らす
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_04, 6 )	//リュウラセンシンムデモ
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_07, 7 )	//テスト用
 		_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
@@ -545,25 +546,9 @@ EVENT_START   ev_debug_murakami
 			  
 			_MAP_CHANGE( ZONE_ID_C02, 644, 587, DIR_UP )
 		
-		//リュウラセンイベント最初から
-		ELSIF $SCWK_TEMP1 == 2 THEN
-			
-			//イベント関係者を表示
-			_FLAG_RESET(FV_D08R0901_BOSS_01)
-			_FLAG_RESET(FV_D08R0801_EVENT_01)
-			_FLAG_RESET(FV_D08R0901_EVENT_01)
-			_FLAG_RESET(FV_D08R0601_EVENT_01)
-			_FLAG_RESET(FV_D08_HAKASE1_01)
-			_FLAG_RESET(FV_D08_RIVAL_01)
-			
-			//d08r0101のマップを入り口が破壊されたマップに差し替える
-			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, TRUE, TRUE )
-			
-			_MAP_CHANGE( ZONE_ID_D08, 180, 148, DIR_UP )
-			$WK_SCENE_D08_LEGEND = 1
-		
+
 		//デンチュラの巣を破壊する		
-		ELSIF $SCWK_TEMP1 == 3 THEN
+		ELSIF $SCWK_TEMP1 == 2 THEN
 
 			_MAP_CHANGE( ZONE_ID_D06, 107, 343, DIR_UP )
 			_TIME_WAIT(90)
@@ -585,14 +570,33 @@ EVENT_START   ev_debug_murakami
 			
 			_OBJ_DEL( D06_STOPPER_01 )
 		
-		//リュウラセン/シンムデモ・アニメ	
+		//電気石の洞穴_Nとの対戦	
+		ELSIF $SCWK_TEMP1 == 3  THEN
+			//POSを踏むホワイトを表示する。
+			//POSを踏む博士2を表示する。
+			_FLAG_RESET(FV_D06R0101_FRIENDS)
+			_FLAG_RESET(FV_D06R0201_BOSS_01)
+			
+			$WK_SCENE_D06R0101 = 4			
+			
+			_MAP_CHANGE( ZONE_ID_D06R0101, 63, 13, DIR_RIGHT )			
+
+		//リュウラセンイベント最初から
 		ELSIF $SCWK_TEMP1 == 4 THEN
-		
-			$WK_SCENE_D08_LEGEND  = 8
+			
+			//イベント関係者を表示
 			_FLAG_RESET(FV_D08R0901_BOSS_01)
+			_FLAG_RESET(FV_D08R0801_EVENT_01)
+			_FLAG_RESET(FV_D08R0901_EVENT_01)
+			_FLAG_RESET(FV_D08R0601_EVENT_01)
 			_FLAG_RESET(FV_D08_HAKASE1_01)
-			_OBJ_ADD(D08R0901_BOSS_01)
-			_MAP_CHANGE( ZONE_ID_D08R0901, 16, 24, DIR_UP )
+			_FLAG_RESET(FV_D08_RIVAL_01)
+			
+			//d08r0101のマップを入り口が破壊されたマップに差し替える
+			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, TRUE, TRUE )
+			
+			_MAP_CHANGE( ZONE_ID_D08, 180, 148, DIR_UP )
+			$WK_SCENE_D08_LEGEND = 1
 		
 		//リュウラセン/6F/塔揺れるデモ	
 		ELSIF $SCWK_TEMP1 == 5 THEN
@@ -600,13 +604,19 @@ EVENT_START   ev_debug_murakami
 			$WK_SCENE_D08_LEGEND  = 6
 			_MAP_CHANGE( ZONE_ID_D08R0801, 15, 27, DIR_UP )
 		
-		//テスト用	
+		//リュウラセン/シンムデモ・アニメ	
 		ELSIF $SCWK_TEMP1 == 6 THEN
-			_MAP_FADE_BLACK_OUT()
-			_MAP_FADE_END_CHECK()
-			_CALL_3D_DEMO( DEMO3D_ID_N_CASTLE )
-			_MAP_FADE_BLACK_IN()
-			_MAP_FADE_END_CHECK()
+		
+			$WK_SCENE_D08_LEGEND  = 8
+			_FLAG_RESET(FV_D08R0901_BOSS_01)
+			_FLAG_RESET(FV_D08_HAKASE1_01)
+			_OBJ_ADD(D08R0901_BOSS_01)
+			_MAP_CHANGE( ZONE_ID_D08R0901, 16, 24, DIR_UP )
+		
+		//テスト用	
+		ELSIF $SCWK_TEMP1 == 7 THEN
+			$WK_SCENE_C02 = 1
+//			_FLAG_RESET(FV_C02_POSEVENT_01)	
 		
 		ENDIF
 		
