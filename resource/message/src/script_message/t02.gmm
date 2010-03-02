@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-26T13:01:28"/>
+	<create user="matsumiya" host="W00224" date="2010-03-02T11:32:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -881,7 +881,7 @@
 じゃあね▼</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t01_babygirl1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀：3すくみの説明
 ・はい/いいえの選択肢表示</comment>
 		<attribute name="キャラ指定">女の子</attribute>
@@ -891,7 +891,7 @@
 ポケモンじゃんけん　しようよ！</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t01_babygirl1_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・いいえ選択時
 ・再度話しかけるとmsg_t01_babygirl1_01</comment>
@@ -902,7 +902,7 @@
 つまんないの</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t01_babygirl1_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・はい選択時
 ・メッセージ表示後
@@ -914,7 +914,7 @@
 ポケモン　じゃんけん　いっせーの……</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t01_babygirl1_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・ほのお選択で主人公の勝ち</comment>
 		<attribute name="キャラ指定">女の子</attribute>
@@ -930,7 +930,7 @@
 ということで　あたしの　まけね</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t01_babygirl1_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・ほのお選択で主人公の負け</comment>
 		<attribute name="キャラ指定">女の子</attribute>
@@ -946,7 +946,7 @@
 ということで　あたしの　かち！</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t01_babygirl1_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・みず選択で主人公の勝ち</comment>
 		<attribute name="キャラ指定">女の子</attribute>
@@ -962,7 +962,7 @@
 ということで　あたしの　まけね</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_07" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t01_babygirl1_07" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・みず選択で主人公の負け</comment>
 		<attribute name="キャラ指定">女の子</attribute>
@@ -978,7 +978,7 @@
 ということで　あたしの　かち！</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_08" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t01_babygirl1_08" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・くさ選択で主人公の勝ち</comment>
 		<attribute name="キャラ指定">女の子</attribute>
@@ -994,7 +994,7 @@
 ということで　あたしの　まけね</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_09" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t01_babygirl1_09" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・くさ選択で主人公の負け</comment>
 		<attribute name="キャラ指定">女の子</attribute>
@@ -1010,21 +1010,21 @@
 ということで　あたしの　かち！</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_10" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,,">
+	<row id="msg_t01_babygirl1_10" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>三択ウインドウ用</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ほのお</language>
 		<language name="JPN_KANJI" width="256">ほのお</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_11" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,,">
+	<row id="msg_t01_babygirl1_11" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>三択ウインドウ用</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">くさ</language>
 		<language name="JPN_KANJI" width="256">くさ</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_12" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,,">
+	<row id="msg_t01_babygirl1_12" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>三択ウインドウ用</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">みず</language>
