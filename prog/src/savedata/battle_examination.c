@@ -52,6 +52,20 @@ void BATTLE_EXAMINATION_SAVE_Init(BATTLE_EXAMINATION_SAVEDATA* pSV)
   GFL_STD_MemClear(pSV,sizeof(BATTLE_EXAMINATION_SAVEDATA));
 }
 
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   データが入っていて正しいかどうかを返す
+ * @return	正しいならTRUE
+ */
+//--------------------------------------------------------------------------------------------
+
+BOOL BATTLE_EXAMINATION_SAVE_IsInData(BATTLE_EXAMINATION_SAVEDATA* pSV)
+{
+  //@todo crc検査必要
+  return TRUE;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	データのポインタ取得
@@ -96,4 +110,29 @@ BSUBWAY_PARTNER_DATA *BATTLE_EXAMINATION_SAVE_GetData(BATTLE_EXAMINATION_SAVEDAT
 
   return data;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   検定用データセーブする
+ * @param   pSave   セーブデータポインタ
+ * @param   pBattleEx   検定データポインタ
+ * @param   heapID    ヒープ
+ */
+//--------------------------------------------------------------------------------------------
+void BATTLE_EXAMINATION_SAVE_Write(SAVE_CONTROL_WORK * pSave , BATTLE_EXAMINATION_SAVEDATA* pBattleEx, HEAPID heapID)
+{
+
+  SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_BATTLE_EXAMINATION, heapID,
+                             pBattleEx,SAVESIZE_EXTRA_BATTLE_EXAMINATION);
+
+  SaveControl_Extra_SaveAsyncInit(pSave,SAVESIZE_EXTRA_BATTLE_EXAMINATION);
+  while(1){
+    if(SAVE_RESULT_OK==SaveControl_Extra_SaveAsyncMain(pSave,SAVE_EXTRA_ID_CGEAR_PICUTRE)){
+      break;
+    }
+    OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+  }
+  SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE);
+}
+
 
