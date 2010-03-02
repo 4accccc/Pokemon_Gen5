@@ -10,6 +10,9 @@
 #ifndef ZONE_C04R1001_EVC_H
 #define ZONE_C04R1001_EVC_H
 
+#define C04R1001_TRAINERM_01               0
+#define C04R1001_POKEMON_01                1
+#define C04R1001_TRAINERW_01               2
 
 #endif //ZONE_C04R1001_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r1001.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

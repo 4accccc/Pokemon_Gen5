@@ -19,18 +19,40 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c04r0801_trainerw_01
+_EVENT_DATA		ev_c04r0801_trainerw_01
 _EVENT_DATA		ev_bg_c04r0801_board_01
+_EVENT_DATA		ev_c04r0801_informationw_01
 _EVENT_DATA_END
 
 
 /************************************************************/
-/*						エリート　女性						*/
+/*				エリートトレーナー（女性）					*/
 /************************************************************/
-//【仮】ジムバッジ８つでストッパー解除の予定。現状は一言メッセージで対応。解除できない状態。
 EVENT_START	ev_c04r0801_trainerw_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0801_elitew_01 )
+	_TALK_OBJ_START()
+	
+	//【仮】16番道路ゾロアイベント前後でメッセージ分岐
+	IF FLAG_OFF( FH_01 ) THEN
+		//イベント前
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0801_elitew_01 )
+	ELSE
+		//イベント後
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0801_elitew_02 )
+	ENDIF
+
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
 EVENT_END
+
+
+/************************************************************/
+/*							受付							*/
+/************************************************************/
+EVENT_START	ev_c04r0801_informationw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0801_infomationw_01 )
+EVENT_END
+
 
 /**************************************************************/
 /*  電光掲示板のイベントスクリプト*/

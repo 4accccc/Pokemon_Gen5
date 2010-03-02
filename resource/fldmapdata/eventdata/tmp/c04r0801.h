@@ -11,6 +11,7 @@
 #define ZONE_C04R0801_EVC_H
 
 #define C04R0801_TRAINERW_01               0
+#define C04R0801_INFORMATIONW_01           1
 
 #endif //ZONE_C04R0801_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0801.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
