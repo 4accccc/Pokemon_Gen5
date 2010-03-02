@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T16:57:36"/>
+	<create user="morimoto" host="W00220" date="2010-03-02T21:43:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,14 +337,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1319" top="286" right="2024" bottom="914" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="291" right="1280" bottom="689" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -617,6 +617,33 @@
 けんていに　チャレンジ　しちゃう？</language>
 	</row>
 
+	<row id="msg_trialhouse_031" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="256">げんざい　はいしんされている
+バトルけんていは　すでに▽
+チャレンジされて　いるようです。▼
+どうする？</language>
+		<language name="JPN_KANJI" width="256">げんざい　はいしんされている
+バトルけんていは　すでに▽
+チャレンジされて　いるようです。▼
+どうする？</language>
+	</row>
+
+	<row id="msg_trialhouse_032" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="256">げんざい　ひょうじする　
+けんていけっかが　ありません</language>
+		<language name="JPN_KANJI" width="256">げんざい　ひょうじする　
+けんていけっかが　ありません</language>
+	</row>
+
+	<row id="msg_trialhouse_033" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="256">つうじょうの　けんていけっかと
+とくべつな　けんていのけっか▽
+どちらを　みますか？</language>
+		<language name="JPN_KANJI" width="256">つうじょうの　けんていけっかと
+とくべつな　けんていのけっか▽
+どちらを　みますか？</language>
+	</row>
+
 	<row id="msg_trialhouse_str1">
 		<language name="JPN" width="256">チャレンジする</language>
 		<language name="JPN_KANJI" width="256">チャレンジする</language>
@@ -655,6 +682,16 @@
 	<row id="msg_trialhouse_str8" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">ダウンロード</language>
 		<language name="JPN_KANJI" width="256">ダウンロード</language>
+	</row>
+
+	<row id="msg_trialhouse_str9" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="256">つうじょう</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_trialhouse_str10" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="256">とくべつ</language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<flowchart-group-list>
