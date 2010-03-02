@@ -888,45 +888,28 @@ void BattlePokeList_ButtonAnmMain( BPLIST_WORK * wk )
 	switch( wk->btn_seq ){
 	case 0:
 		BPL_ButtonScreenWrite( wk, wk->btn_id, 1, wk->btn_pat );
-//		BPL_ButtonBmpWinShift( wk, wk->btn_id, 1 );
-//		BPL_ButtonObjMove( wk, wk->btn_id, 1 );
-		wk->btn_cnt = 0;
-		wk->btn_seq = 1;
+		wk->btn_seq++;
 		break;
 
 	case 1:
-/*
-		if( wk->btn_cnt < 1 ){
+		if( wk->btn_cnt == 4 ){
+			BPL_ButtonScreenWrite( wk, wk->btn_id, 0, wk->btn_pat );
+			wk->btn_cnt = 0;
+			wk->btn_seq++;
+		}else{
 			wk->btn_cnt++;
-			return;
 		}
-*/
-		BPL_ButtonScreenWrite( wk, wk->btn_id, 2, wk->btn_pat );
-//		BPL_ButtonBmpWinShift( wk, wk->btn_id, 2 );
-//		BPL_ButtonObjMove( wk, wk->btn_id, 2 );
-		wk->btn_cnt = 0;
-		wk->btn_seq = 2;
 		break;
 
 	case 2:
-/*
-		if( wk->btn_cnt < 1 ){
+		if( wk->btn_cnt == 1 ){
+			wk->btn_cnt = 0;
+			wk->btn_seq = 0;
+			wk->btn_flg = 0;
+		}else{
 			wk->btn_cnt++;
-			return;
 		}
-*/
-		BPL_ButtonScreenWrite( wk, wk->btn_id, 0, wk->btn_pat );
-//		BPL_ButtonBmpWinShift( wk, wk->btn_id, 0 );
-//		BPL_ButtonObjMove( wk, wk->btn_id, 0 );
-		wk->btn_cnt = 0;
-//		wk->btn_seq = 3;
-		wk->btn_flg = 0;
 		break;
-/*
-	case 3:
-		wk->btn_flg = 0;
-		break;
-*/
 	}
 }
 

@@ -484,8 +484,16 @@ void BBAGANM_ButtonAnmMain( BBAG_WORK * wk )
 			break;
 
 		case 1:
-		case 3:
-			if( wk->btn_cnt == 1 ){
+			if( wk->btn_cnt == 4 ){
+				if( wk->btn_id >= BBAG_BGWF_RETURN ){
+					pal = SYSBTN_PAL_NORMAL;
+				}else{
+					pal = BUTTON_PAL_NORMAL;
+				}
+				BGWINFRM_PaletteChange(
+					wk->bgwfrm, wk->btn_id, 0, 0,
+					ButtonAddData[wk->btn_id].sx, ButtonAddData[wk->btn_id].sy, pal );
+				BGWINFRM_FrameOn( wk->bgwfrm, wk->btn_id );
 				wk->btn_cnt = 0;
 				wk->btn_seq++;
 			}else{
@@ -494,21 +502,13 @@ void BBAGANM_ButtonAnmMain( BBAG_WORK * wk )
 			break;
 
 		case 2:
-			if( wk->btn_id >= BBAG_BGWF_RETURN ){
-				pal = SYSBTN_PAL_NORMAL;
+			if( wk->btn_cnt == 1 ){
+				wk->btn_cnt = 0;
+				wk->btn_seq = 0;
+				wk->btn_flg = 0;
 			}else{
-				pal = BUTTON_PAL_NORMAL;
+				wk->btn_cnt++;
 			}
-			BGWINFRM_PaletteChange(
-				wk->bgwfrm, wk->btn_id, 0, 0,
-				ButtonAddData[wk->btn_id].sx, ButtonAddData[wk->btn_id].sy, pal );
-			BGWINFRM_FrameOn( wk->bgwfrm, wk->btn_id );
-			wk->btn_seq++;
-			break;
-
-		case 4:
-			wk->btn_seq = 0;
-			wk->btn_flg = 0;
 			break;
 		}
 	}
