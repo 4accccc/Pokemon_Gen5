@@ -138,6 +138,9 @@ EVENT_START	ev_c08gym0101_leader8_01
 			_TRAINER_FLAG_SET( TRID_ELITEM_12 )
 			_TRAINER_FLAG_SET( TRID_ELITEW_12 )
 			$WK_SCENE_C08GYM0101 = 1
+			
+			//C08R0601案内嬢POSイベント起動
+			$WK_SCENE_C08_GYMCLEAR = 1
 		
 			//========================================//
 			
@@ -223,6 +226,9 @@ EVENT_START	ev_c08gym0101_leader8_01
 			_TRAINER_FLAG_SET( TRID_ELITEM_12 )
 			_TRAINER_FLAG_SET( TRID_ELITEW_12 )
 			$WK_SCENE_C08GYM0101 = 1
+			
+			//C08R0601案内嬢POSイベント起動
+			$WK_SCENE_C08_GYMCLEAR = 1
 		
 			//========================================//
 			
@@ -385,7 +391,7 @@ EVENT_START	ev_bg_c08gym0101_statue_01
 
 		ELSE
 			//R10でのライバル戦後にライバルの名前追記
-			IF $WK_SCENE_R10 >= 1 THEN
+			IF $WK_SCENE_C08_GYMCLEAR >= 2 THEN
 				//イベント進行後
 				_PLAINWIN_MSG_DOWN( msg_c02gym0101_statue_b_03 )
 			ELSE
@@ -405,7 +411,7 @@ EVENT_START	ev_bg_c08gym0101_statue_01
 
 		ELSE
 			//R10でのライバル戦後にライバルの名前追記
-			IF $WK_SCENE_R10 >= 1 THEN
+			IF $WK_SCENE_C08_GYMCLEAR >= 2 THEN
 				//イベント進行後
 				_PLAINWIN_MSG_DOWN( msg_c02gym0101_statue_w_03 )
 			ELSE

@@ -153,7 +153,7 @@
 #define WK_SCENE_D03R0101                16541 /* 0x409d D03砂漠（遺跡手前）：イベント用ワーク */
 #define WK_SCENE_D04R0101                16542 /* 0x409e D04遺跡：イベント用ワーク */
 #define WK_SCENE_D04R0601                16543 /* 0x409f D04遺跡奥：イベント用ワーク */
-#define WK_SCENE_R10                     16544 /* 0x40a0 R10／10番道路：イベント用ワーク */
+		/* not used 16544(0x40a0) */
 #define WK_SCENE_C09                     16545 /* 0x40a1 ポケモンリーグ外観：イベント用ワーク */
 #define WK_SCENE_C09R0501                16546 /* 0x40a2 ポケモンリーグチャンピオンの部屋：イベント用ワーク */
 #define WK_SCENE_H03                     16547 /* 0x40a3 H03：イベント用ワーク */
@@ -177,6 +177,7 @@
 #define WK_SCENE_H01R0201                16565 /* 0x40b5 スカイアローブリッジC03側ゲート：ライバルＰＯＳイベント */
 #define WK_SCENE_N01R0502                16566 /* 0x40b6 Ｎの城 謁見の間：イベント用ワーク */
 #define WK_SCENE_R06R0202                16567 /* 0x40b7 ６番道路洞窟のイベント用ワーク */
+#define WK_SCENE_C08_GYMCLEAR            16568 /* 0x40b8 ソウリュウシティジム：イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 

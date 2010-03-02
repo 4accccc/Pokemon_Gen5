@@ -21,8 +21,32 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c08pc0101_shop
 _EVENT_DATA    ev_c08pc0101_fix_shop
+_EVENT_DATA    ev_c08pc0101_lady_01
+_EVENT_DATA    ev_c08pc0101_gentleman_01
 _EVENT_DATA_END
 
+/**************************************************************/
+/* LADY_01                                               */
+/**************************************************************/
+
+EVENT_START   ev_c08pc0101_lady_01
+	//WB分岐メッセージ
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_c08pc0101_lady_01w , msg_c08pc0101_lady_01b , C08PC0101_LADY_01 , POS_DEFAULT)
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/* GENTLEMAN_01                                               */
+/**************************************************************/
+
+EVENT_START   ev_c08pc0101_gentleman_01
+	//WB分岐メッセージ
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_c08pc0101_gentleman_01w , msg_c08pc0101_gentleman_01b , C08PC0101_GENTLEMAN_01 , POS_DEFAULT)
+	_BALLOONWIN_CLOSE()
+EVENT_END
 
 //=============================================================
 //ショップカウンター 変動ショップ

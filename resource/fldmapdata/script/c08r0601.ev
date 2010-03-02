@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c08r0601.h"
-  //.include  "c08r0601.h"
+  .include  "c08r0601.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,23 +19,152 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c08r0601
 _EVENT_DATA 	ev_bg_c08r0601_board_01
+_EVENT_DATA 	ev_c08r0601_informationw_01
+_EVENT_DATA 	ev_pos_c08r0601_informationw_02
+_EVENT_DATA 	ev_c08r0601_trainerm_01
+_EVENT_DATA 	ev_c08r0601_trainerw_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/* INFORMATIONW_01                                             */
 /**************************************************************/
-//ev_c08r0601_flag_change:
-//  _END
+EVENT_START   ev_c08r0601_informationw_01
+
+	//C08ジムクリア前
+	IF $WK_SCENE_C08_GYMCLEAR == 0 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0601_infomationw_01 )
+	
+	//【仮】ジムクリア後、R07伝説イベント後
+	//ELSIF $?? == ?? THEN
+		//_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0601_infomationw_04 )
+	
+	//R07伝説イベント前
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0601_infomationw_03 )
+	ENDIF
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/* POS：INFORMATIONW_02                                        */
 /**************************************************************/
-ev_c08r0601:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_pos_c08r0601_informationw_02
+	
+	//INFOお姉さん「！」
+	_OBJ_ANIME( C08R0601_INFORMATIONW_01,anm_c08r0601_informationw_gyoe_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//INFOお姉さん呼びとめ
+	_BALLOONWIN_OBJMSG( msg_c08r0601_infomationw_02 , C08R0601_INFORMATIONW_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//自機座標取得変数定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+	
+	//プレイヤー座標に応じてINFOに移動
+	SWITCH $POSX
+	CASE 2 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_info_x2 )
+		_OBJ_ANIME_WAIT()
+	CASE 3 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_info_x3 )
+	_OBJ_ANIME_WAIT()
+	CASE 4 THEN  //目の前に立った時
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_info_x4 )
+		 _OBJ_ANIME_WAIT()
+	CASE 5 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_info_x5 )
+		_OBJ_ANIME_WAIT()
+	CASE 6 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_info_x6 )
+		_OBJ_ANIME_WAIT()
+	CASE 7 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_info_x7 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_info_x7 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	//INFOお姉さん呼びとめ
+	_BALLOONWIN_OBJMSG( msg_c08r0601_infomationw_03 , C08R0601_INFORMATIONW_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//========================================//
+	//R10ライバルイベント起動
+	$WK_SCENE_C08_GYMCLEAR = 2
+		
+	//========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	案内嬢イベント：呼び止める「！」
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08r0601_informationw_gyoe_01
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	案内嬢イベント：プレイヤー移動x2
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_info_x2
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	案内嬢イベント：プレイヤー移動x3
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_info_x3
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	案内嬢イベント：プレイヤー移動x4
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_info_x4
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	案内嬢イベント：プレイヤー移動x5
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_info_x5
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	案内嬢イベント：プレイヤー移動x6
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_info_x6
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	案内嬢イベント：プレイヤー移動x7
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_info_x7
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/* TRAINERM_01                                             */
+/**************************************************************/
+EVENT_START   ev_c08r0601_trainerm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0601_trainerm_01 )
+EVENT_END
+
+/**************************************************************/
+/* TRAINERW_01                                             */
+/**************************************************************/
+EVENT_START   ev_c08r0601_trainerw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0601_trainerw_01 )
+EVENT_END
+
 /**************************************************************/
 /*  電光掲示板のイベントスクリプト*/
 /**************************************************************/

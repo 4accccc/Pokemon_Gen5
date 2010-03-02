@@ -165,7 +165,7 @@ EVENT_START   ev_pos_r10_rival_01
 	_FLAG_SET( FV_R10_RIVAL_01 )
 
 	//ÉtÉâÉOëÄçÏ
-	$WK_SCENE_R10 = 1
+	$WK_SCENE_C08_GYMCLEAR = 3
 	//==================================//
 	
 EVENT_END

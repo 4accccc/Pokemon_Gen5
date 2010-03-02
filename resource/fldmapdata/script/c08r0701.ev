@@ -21,7 +21,8 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c08r0701_policeman_01
 _EVENT_DATA    ev_pos_c08r0701_policeman_01
-_EVENT_DATA		ev_bg_c08r0701_board_01
+_EVENT_DATA    ev_bg_c08r0701_board_01
+_EVENT_DATA    ev_c08r0701_informationw_01
 _EVENT_DATA_END
 
 
@@ -48,6 +49,17 @@ EVENT_END
 _ANIME_LABEL	anm_C08R0701_stoper_01
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/* INFORMATIONW_01                                             */
+/**************************************************************/
+EVENT_START   ev_c08r0701_informationw_01
+	//WB分岐メッセージ
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_r08r0701_infomationw_01w , msg_r08r0701_infomationw_02b , C08R0701_INFORMATIONW_01 , POS_DEFAULT)
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+EVENT_END
 	
 /**************************************************************/
 /*  電光掲示板のイベントスクリプト*/

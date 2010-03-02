@@ -585,7 +585,7 @@ _ANIME_LABEL	anm_c08_player_to_champion_02
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_champion_goodbye_01
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	AC_WALK_R_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -619,7 +619,7 @@ EVENT_END
 EVENT_START   ev_c08_gentleman_01
 	//WB分岐メッセージ
 	_TALK_OBJ_START()
-	_BALLOONWIN_OBJMSG_WB( msg_c08_gentleman_01w , msg_c08_gentleman_01b , C08_GENTLEMAN_01 , WIN_NONE)
+	_BALLOONWIN_OBJMSG_WB( msg_c08_gentleman_01w , msg_c08_gentleman_01b , C08_GENTLEMAN_01 , POS_DEFAULT)
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
@@ -631,7 +631,7 @@ EVENT_END
 EVENT_START   ev_c08_fighterm_01
 	//WB分岐メッセージ
 	_TALK_OBJ_START()
-	_BALLOONWIN_OBJMSG_WB( msg_c08_fighterm_01w , msg_c08_fighterm_01b , C08_FIGHTERM_01 , WIN_NONE)
+	_BALLOONWIN_OBJMSG_WB( msg_c08_fighterm_01w , msg_c08_fighterm_01b , C08_FIGHTERM_01 , POS_DEFAULT)
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
@@ -643,7 +643,7 @@ EVENT_END
 EVENT_START   ev_c08_boy2_01
 	//WB分岐メッセージ
 	_TALK_OBJ_START()
-	_BALLOONWIN_OBJMSG_WB( msg_c08_boy2_01w , msg_c08_boy2_01b , C08_BOY2_01 , WIN_NONE)
+	_BALLOONWIN_OBJMSG_WB( msg_c08_boy2_01w , msg_c08_boy2_01b , C08_BOY2_01 , POS_DEFAULT)
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
@@ -655,7 +655,7 @@ EVENT_END
 EVENT_START   ev_c08_woman1_01
 	//WB分岐メッセージ
 	_TALK_OBJ_START()
-	_BALLOONWIN_OBJMSG_WB( msg_c08_woman1_01w , msg_c08_woman1_01b , C08_WOMAN1_01 , WIN_NONE)
+	_BALLOONWIN_OBJMSG_WB( msg_c08_woman1_01w , msg_c08_woman1_01b , C08_WOMAN1_01 , POS_DEFAULT)
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
@@ -667,7 +667,7 @@ EVENT_END
 EVENT_START   ev_c08_iss_01
 	//WB分岐メッセージ
 	_TALK_OBJ_START()
-	_BALLOONWIN_OBJMSG_WB( msg_c08_iss_01w , msg_c08_iss_01b , C08_ISS_01 , WIN_NONE)
+	_BALLOONWIN_OBJMSG_WB( msg_c08_iss_01w , msg_c08_iss_01b , C08_ISS_01 , POS_DEFAULT)
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
