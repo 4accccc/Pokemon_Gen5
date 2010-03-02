@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-20T15:10:09"/>
+	<create user="matsumiya" host="W00224" date="2010-03-02T15:09:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="263"/>
+		<comment position="4" width="297"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1374" top="276" right="2079" bottom="896" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -307,9 +307,9 @@
 ぼくにも　みせて　ほしいな！</language>
 		<language name="JPN_KANJI" width="256">やあ！
 ぼくは　ゲーム　ディレクター▼
-おー！　きみは　ポケモンずかんを
-あつめて　いるんだね！▼
-たくさん　あつまったら
+おー！　きみは　ポケモン図鑑を
+集めているんだね！▼
+たくさん　集まったら
 ぼくにも　みせて　ほしいな！</language>
 	</row>
 
@@ -333,14 +333,25 @@
 シンオウの　ポケモンを▽
 ぜんぶ　みたんだね！▼
 いやー　すごい！
-ひょうしょう　しましょう！</language>
+ひょうしょう　しましょう！！</language>
 		<language name="JPN_KANJI" width="256">やあ！
 ぼくは　ゲーム　ディレクター▼
 おおー！　きみは
 シンオウの　ポケモンを▽
-ぜんぶ　みたんだね！▼
+全部　みたんだね！▼
 いやー　すごい！
-ひょうしょう　しましょう！</language>
+表彰しましょう！！</language>
+	</row>
+
+	<row id="msg_c03r0402_director_02a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・02表示後1回のみ、このメッセージを表示
+・あわせてt01r0102にイッシュ図鑑の表彰状の動作モデル追加</comment>
+		<attribute name="キャラ指定">MAN2（暫定）</attribute>
+		<language name="JPN" width="256">この　ひょうしょうじょう　ですが
+きみの　いえにも　おくっておきますね！</language>
+		<language name="JPN_KANJI" width="256">この　表彰状ですが
+きみの　家にも　送っておきますね！</language>
 	</row>
 
 	<row id="msg_c03r0402_director_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -362,18 +373,16 @@
 ずかんを　かんせい　させたんだね！▼
 こんなに　たくさんの　ポケモンを
 がんばって　あつめて　くれるなんて…▼
-ぜひ　ひょうしょう
-させて　ください！</language>
+ぜひ　ひょうしょう　させてください！</language>
 		<language name="JPN_KANJI" width="256">やあ！
 ぼくは　ゲーム　ディレクター▼
 おおおー！　すごい！
 きみは　ついに　すべての▽
-ポケモンを　あつめて▽
-ずかんを　かんせい　させたんだね！▼
+ポケモンを　集めて▽
+図鑑を　完成させたんだね！▼
 こんなに　たくさんの　ポケモンを
-がんばって　あつめて　くれるなんて…▼
-ぜひ　ひょうしょう
-させて　ください！</language>
+がんばって　集めてくれるなんて…▼
+ぜひ　表彰　させてください！！</language>
 	</row>
 
 	<row id="msg_c03r0402_director_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -390,14 +399,24 @@
 おなじ　ポケモンずかんでも
 ひとり　ひとり　ちがうんだね！</language>
 		<language name="JPN_KANJI" width="256">きみは
-あつめた　ポケモンたちと▽
-どうやって　であったの？▼
-じぶんで　つかまえたり
-おともだちに　もらったり▽
-せかいじゅうの　ひとと▽
-こうかん　したり…▼
-おなじ　ポケモンずかんでも
-ひとり　ひとり　ちがうんだね！</language>
+集めた　ポケモンたちと▽
+どうやって　出会ったの？▼
+自分で　捕まえたり
+お友達に　もらったり▽
+世界中の　人と　交換したり…▼
+おなじ　ポケモン図鑑でも
+ひとり　ひとり　違うんだね！</language>
+	</row>
+
+	<row id="msg_c03r0402_director_04a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・04表示後1回のみ、このメッセージを表示
+・あわせてt01r0102に全国図鑑の表彰状の動作モデル追加</comment>
+		<attribute name="キャラ指定">MAN2（暫定）</attribute>
+		<language name="JPN" width="256">この　ひょうしょうじょう　ですが
+きみの　いえにも　おくっておきますね！</language>
+		<language name="JPN_KANJI" width="256">この　表彰状ですが
+きみの　家にも　送っておきますね！</language>
 	</row>
 
 	<row id="msg_c03r0402_01_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
