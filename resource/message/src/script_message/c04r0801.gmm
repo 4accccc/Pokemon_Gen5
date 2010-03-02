@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-02T14:32:43"/>
+	<create user="matsumiya" host="W00224" date="2010-03-02T20:41:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,10 +292,9 @@
 	</lock>
 
 
-	<row id="msg_c04r0801_infomationw_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0801_infomationw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・仮メッセージ
-・このゲートでのストッパーは不要！</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">INFORMATIONW
 受付嬢</attribute>
 		<language name="JPN" width="256">このさき　１６ばんどうろ
@@ -304,7 +303,7 @@
 そして　ワンダーブリッジです！</language>
 	</row>
 
-	<row id="msg_c04r0801_elitew_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0801_elitew_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ゾロアークイベント前
 ・仮メッセージ</comment>
@@ -312,16 +311,16 @@
 		<language name="JPN" width="256">１６ばんどうろの　まよいのもり……▼
 みとめられた　トレーナーでないと
 いつまでも　とおりぬけられない▼
-そうきいたが　どうすれば
+そうきいたけれど　どうすれば
 みとめられると　いうのかしら？</language>
 		<language name="JPN_KANJI" width="256">１６番道路の　迷いの森……▼
 認められた　トレーナーでないと
 いつまでも　通り抜けられない▼
-そうきいたが　どうすれば
+そうきいたけれど　どうすれば
 認められると　いうのかしら？</language>
 	</row>
 
-	<row id="msg_c04r0801_elitew_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0801_elitew_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ゾロアークイベント後
 ・仮メッセージ</comment>
