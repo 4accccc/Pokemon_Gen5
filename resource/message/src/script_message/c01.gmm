@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-02T13:14:43"/>
+	<create user="matsumiya" host="W00224" date="2010-03-02T21:10:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1324" top="392" right="2029" bottom="1020" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -369,6 +369,41 @@
 きちんと　対策しておいたほうが
 いいと　思いますよ[BE:01:ページ切り替え（クリア）]
 それでは　中で　待っていますね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c01_leader1_01a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・d01r0101でポケモンをもらっていないとき</comment>
+		<attribute name="キャラ指定">LEADER1
+デント（草）</attribute>
+		<language name="JPN" width="256">……え？　ぼくが　このまちの
+ジムリーダー　ですけど[BE:00:ページ切り替え（行送り）]
+きみは……？[BE:01:ページ切り替え（クリア）]
+そうですか　ジムに　ちょうせん[BE:01:ページ切り替え（クリア）]
+それで　きみ……
+さいしょに　えらんだ[BE:00:ページ切り替え（行送り）]
+ポケモンは　なんですか？[BE:01:ページ切り替え（クリア）]
+[1:01:ポケモン種族名:0]か……　なるほど
+[1:03:ポケモンタイプ:1]タイプが　にがて　なんですね[BE:01:ページ切り替え（クリア）]
+きちんと　たいさく　しておいたほうが
+いいと　おもいますよ[BE:01:ページ切り替え（クリア）]
+たとえば　ゆめのあとちで
+ポケモンを　きたえる　とか▼
+では　しつれい　しますね▼</language>
+		<language name="JPN_KANJI" width="256">……え？　ぼくが　この街の
+ジムリーダー　ですけど[BE:00:ページ切り替え（行送り）]
+きみは……？[BE:01:ページ切り替え（クリア）]
+そうですか　ジムに挑戦[BE:01:ページ切り替え（クリア）]
+それで　きみ……
+最初に　選んだ[BE:00:ページ切り替え（行送り）]
+ポケモンは　なんですか？[BE:01:ページ切り替え（クリア）]
+[1:01:ポケモン種族名:0]か……　なるほど
+[1:03:ポケモンタイプ:1]タイプが　苦手　なんですね[BE:01:ページ切り替え（クリア）]
+きちんと　対策しておいたほうが
+いいと　思いますよ[BE:01:ページ切り替え（クリア）]
+たとえば　夢の跡地で
+ポケモンを　鍛える　とか▼
+では　失礼しますね▼</language>
 	</row>
 
 	<row id="msg_c01_stop_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
