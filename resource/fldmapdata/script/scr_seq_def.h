@@ -8546,4 +8546,33 @@
   .short \point
   .endm
   
+//--------------------------------------------------------------
+/**
+ * @brief トライアルハウス　ダウンロードデータタイプ取得
+ * @param type     タイプ格納ワーク
+ * @note          戻り値は
+ * TH_DL_DATA_TYPE_NONE ：データなし
+ * TH_DL_DATA_TYPE_SINGLE ：シングル
+ * TH_DL_DATA_TYPE_DOUBLE ：ダブル
+ */
+//--------------------------------------------------------------
+#define _TH_GET_DL_DATA_TYPE( type ) _ASM_TH_GET_DL_DATA_TYPE type
+  
+  .macro _ASM_TH_GET_DL_DATA_TYPE type
+  .short EV_SEQ_TH_GET_DL_DATA_TYPE
+  .short \type
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief トライアルハウス　ダウンロードデータをクリア
+ * @param none
+ */
+//--------------------------------------------------------------
+#define _TH_CLEAR_DL_DATA() _ASM_TH_CLEAR_DL_DATA
+  
+  .macro _ASM_TH_CLEAR_DL_DATA
+  .short EV_SEQ_TH_CLEAR_DL_DATA
+  .endm
+  
 
