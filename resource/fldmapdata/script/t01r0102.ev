@@ -609,25 +609,39 @@ EVENT_START	ev_t01r0102_support_01
 		
 	ELSE
 		
-		//ポケモン入手後の会話（戦闘前の選択肢でいいえを選んだ場合）
-		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0102_white_08 )
-		_YES_NO_WIN( SCWK_ANSWER )
-		_MSGWIN_CLOSE()
-		
-		//はい・いいえ分岐
-		IF $SCWK_ANSWER == SCR_YES THEN
-			//はい
-			
-			//対戦イベントへ
-			_CALL		ev_t01r0102_support_battle
-			
-		ELSE
-			//いいえ
-			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0102_white_10 )
+		IF FLAG_ON( FE_T01R0102_SUPPORTBTL ) THEN
+			//戦闘後なら
+			//あたし ～～ とチェレンのポケモン勝負見てみたい！
+			_PLAYER_NAME( 0 )
+			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0102_white_14 )
 			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+
+		ELSE
+			//戦闘前なら
+			//ポケモン入手後の会話（戦闘前の選択肢でいいえを選んだ場合）
+			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0102_white_08 )
+			_YES_NO_WIN( SCWK_ANSWER )
 			_MSGWIN_CLOSE()
 			
+			//はい・いいえ分岐
+			IF $SCWK_ANSWER == SCR_YES THEN
+				//はい
+				
+				//対戦イベントへ
+				_CALL		ev_t01r0102_support_battle
+				
+			ELSE
+				//いいえ
+				_BALLOONWIN_TALKOBJ_MSG( msg_t01r0102_white_10 )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+				
+			ENDIF
+		
+		
 		ENDIF
+		
 	
 	
 	ENDIF
