@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T16:56:02"/>
+	<create user="matsumiya" host="W00224" date="2010-03-02T21:03:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -406,47 +406,63 @@
 王様の　ため</language>
 	</row>
 
-	<row id="msg_d02r0101_leader3_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d02r0101_leader3_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・きょろきょろした状態で待機
 ・pos（GRIDX=71~76、GRIDZ=71）を踏むと
 　下を向いてメッセージ表示
-・続けてleader3_02</comment>
+・続けてleader3_01a</comment>
 		<attribute name="キャラ指定">C03ジムリーダー
 アーティ</attribute>
 		<language name="JPN" width="256">アーティ『あのね▼
 ヤグルマのもりを　ぬけるには
 ふたとおり　あるんだ▼
 まっすぐ　いく　みちと
-もりのなかを　ぬける　みち▼
-ボクは　このまま　まっすぐ　すすんで
-あいつらを　おいかけるよ▼
-いなかったとしても　にげられないよう
-でぐちを　ふさぐ　つもりさ▼</language>
+もりのなかを　ぬける　みち▼</language>
 		<language name="JPN_KANJI" width="256">アーティ『あのね▼
 ヤグルマの森を　抜けるには
-二通り　あるんだ▼
+２通り　あるんだ▼
 まっすぐ　行く　道と
-森の中を　抜ける　道▼
-ボクは　このまま　まっすぐ　進み
-あいつらを　追いかけるよ▼
-いなかったとしても　逃げられないよう
+森の中を　抜ける　道▼</language>
+	</row>
+
+	<row id="msg_d02r0101_leader3_01a" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・上向きのままメッセージ表示
+・続けてleader3_01b</comment>
+		<attribute name="キャラ指定">C03ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">ボクは　このまま　まっすぐ　すすんで
+あいつらを　おいかけるよ▼</language>
+		<language name="JPN_KANJI" width="256">いなかったとしても　逃げられないよう
 出口を　ふさぐ　つもりさ▼</language>
 	</row>
 
-	<row id="msg_d02r0101_leader3_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d02r0101_leader3_01b" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・再度下向き
+・続けてleader3_02</comment>
+		<attribute name="キャラ指定">C03ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">いなかったとしても　にげられないよう
+でぐちを　ふさぐ　つもりさ▼</language>
+		<language name="JPN_KANJI" width="256">ボクは　このまま　まっすぐ　進み
+あいつらを　追いかけるよ▼</language>
+	</row>
+
+	<row id="msg_d02r0101_leader3_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・画面左を向いてメッセージ表示
 ・続けてleader3_03</comment>
 		<attribute name="キャラ指定">C03ジムリーダー
 アーティ</attribute>
-		<language name="JPN" width="256">アーティ『きみは　こっちの　ルートに
+		<language name="JPN" width="256">きみは　こっちの　ルートに
 プラズマだんが　かくれていないか▽
 さがして　くれないかな▼
 トレーナーも　おおいけれど
 きほん　いっぽんみち　だから▽
 まようことは　ないよ▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『きみは　こっちの　ルートに
+		<language name="JPN_KANJI" width="256">きみは　こっちの　ルートに
 プラズマ団が　隠れていないか▽
 探して　くれないかな▼
 トレーナーも　多いけれど
@@ -454,15 +470,15 @@
 迷うことは　ないよ▼</language>
 	</row>
 
-	<row id="msg_d02r0101_leader3_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d02r0101_leader3_03" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・再度主人公を向いてメッセージ表示
 ・メッセージ表示後、画面上に移動</comment>
 		<attribute name="キャラ指定">C03ジムリーダー
 アーティ</attribute>
-		<language name="JPN" width="256">アーティ『じゃあ
+		<language name="JPN" width="256">それじゃあ
 アロエねえさんの　ため　やりますか！▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『じゃあ
+		<language name="JPN_KANJI" width="256">それじゃあ
 アロエ姉さんの　ため　やりますか！▼</language>
 	</row>
 
