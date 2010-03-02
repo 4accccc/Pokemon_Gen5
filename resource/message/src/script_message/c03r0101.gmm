@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00131" date="2010-03-02T16:02:59"/>
+	<create user="matsumiya" host="W00224" date="2010-03-02T22:01:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1601" top="215" right="2304" bottom="842" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="695"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -668,7 +668,7 @@ assistantm_01_15へ続く</comment>
 ちょうさの　けっかを
 あすの　ちょうかんに　したいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　新聞社　からの依頼だな▼
+とある　新聞社からの依頼だな▼
 ４時間以上　調査して
 男の子と　女の子▽
 どっちが　多いかを
@@ -1096,7 +1096,7 @@ assistantm_01_15へ続く</comment>
 ちょうさの　けっかを
 じゅぎょうに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　先生　からの依頼だな▼
+とある　先生からの依頼だな▼
 １６時間以上　調査して
 １番好きな　勉強と▽
 １番苦手な　勉強を▽
@@ -2014,7 +2014,7 @@ assistantm_01_15へ続く
 ちょうさの　けっかを
 ジムのうんえいに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　ジムリーダー　からの依頼だな▼
+とある　ジムリーダーからの依頼だな▼
 [2:03:４桁:22]人以上と　すれ違って
 １番人気のある　ジムリーダーを▽
 調べてくる　調査だ▼
@@ -2275,8 +2275,8 @@ assistantm_01_25へ続く
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
 １番選ばれた　最初のポケモンは
 『[1:1C:簡易会話単語:3]』のようだな▼
-以外な　結果だな
-これだから　調査は　面白い</language>
+意外な　結果だな
+これだから　調査は　おもしろい！</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_24c" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2360,13 +2360,13 @@ assistantm_01_25へ続く
 		<language name="JPN" width="256">ふむふむ……　なるほど……▼
 いちばん　おおい　しゅみは
 『[1:1C:簡易会話単語:7]』のようだな▼
-いろいろな　ことを　たのしむのは
-いいことだ▼
+いろいろな　ことを
+たのしむのは　いいことだ▼
 じぶんの　せかいが　ひろがるからな</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
 １番多い　趣味は
 『[1:1C:簡易会話単語:7]』のようだな▼
-色々な　ことを　楽しむのはいいことだ
+いろいろな　ことを　楽しむのはいいことだ
 自分の　世界が　広がるからな</language>
 	</row>
 
@@ -2405,15 +2405,15 @@ assistantm_01_25へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">ふむふむ……　なるほど……▼
-いちばん　にんきがあるのは
+いちばん　にんきが　あるのは
 『[1:1C:簡易会話単語:9]』ポケモンのようだな▼
 いろいろな　ポケモンがいるからな▼
 たくさんの　ポケモンと
 であいたいものだ</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-一番人気があるのは
+１番人気があるのは
 『[1:1C:簡易会話単語:9]』ポケモンのようだな▼
-色々な　ポケモンがいるからな▼
+いろいろな　ポケモンがいるからな▼
 たくさんの　ポケモンと
 出会いたいものだ</language>
 	</row>
@@ -2432,7 +2432,7 @@ assistantm_01_25へ続く
 いちばん　にんきのある
 ポケモンの　タイプは▽
 『[1:1C:簡易会話単語:10]』のようだな▼
-ポケモンにも　いろいろいるな▼
+ポケモンにも　いろいろ　いるな▼
 たいせんに　やくだつ
 じょうほうに　なるだろう</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
@@ -2524,7 +2524,7 @@ assistantm_01_25へ続く
 にんげんのタイプ　は▽
 『[1:1C:簡易会話単語:16]』のようだな▼
 さんこうになった▼
-ひとのみりょくには　いろいろある▼
+ひとの　みりょくには　いろいろある▼
 わたしの　みりょくに
 なぜ　きがつかないかね……</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
@@ -2679,7 +2679,7 @@ assistantm_01_25へ続く
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
 １番好きな　学校の時間は
 『[1:1C:簡易会話単語:23]』のようだな▼
-学校か…　懐かしいな▼
+学校か……　懐かしいな▼
 昔は　学校にいるだけでも
 楽しかったものだ</language>
 	</row>
@@ -2759,7 +2759,8 @@ assistantm_01_25へ続く
 さんこうになった▼
 これで　しゅうまつは
 たのしいデートが　できそうだ▼
-デートあいて？　それは　ひみつだ</language>
+デートあいて？
+それは　ひみつだ</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
 １番人気のある　休日の過ごし方は
 『[1:1C:簡易会話単語:27]』のようだな▼
@@ -2768,7 +2769,8 @@ assistantm_01_25へ続く
 参考になった▼
 これで　週末は　楽しいデートが
 できそうだ▼
-デート相手？　それは　秘密だ</language>
+デート相手？
+それは　秘密だ</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_24u" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2785,7 +2787,7 @@ assistantm_01_25へ続く
 いちばんなりたいものは
 『[1:1C:簡易会話単語:29]』のようだな▼
 なにかに　あこがれるのも
-わるくないが▽
+わるくないが▼
 まずは　じぶんに
 じしんを　もつことだな</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
@@ -2836,16 +2838,16 @@ assistantm_01_25へ続く
 『[1:1C:簡易会話単語:31]』のようだな▼
 さんこうになった▼
 ポケモンには　たのしみかたが
-たくさんあるな▼
+たくさん　あるな▼
 ポケモンの　たのしさは
-むげんだいだな</language>
+むげんだい　だな</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
 １番だと思う
 ポケモンの面白いところは▽
 『[1:1C:簡易会話単語:31]』のようだな▼
 参考になった▼
 ポケモンには　楽しみ方が
-たくさんあるな▼
+たくさん　あるな▼
 ポケモンの　楽しさは　無限大だな</language>
 	</row>
 
@@ -2885,12 +2887,12 @@ assistantm_01_27へ続く
 </comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">それにしても　キミのかつやくには
-まいかいおどろかされるな▼
+		<language name="JPN" width="256">それにしても　キミの　かつやくには
+まいかい　おどろかされるな▼
 よろしい！　きょうから　キミは
 [1:1C:簡易会話単語:32]たいいんだ！</language>
 		<language name="JPN_KANJI" width="256">それにしても　キミの活躍には
-毎回驚かされるな▼
+毎回　驚かされるな▼
 よろしい！　今日から　キミは
 [1:1C:簡易会話単語:32]隊員だ！</language>
 	</row>
@@ -2909,9 +2911,9 @@ assistantm_01_27へ続く
 </comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:1]は▽
-[1:1C:簡易会話単語:32]たいいんに
-にんめいされた！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+[1:1C:簡易会話単語:32]たいいんに▽
+にんめい　された！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 [1:1C:簡易会話単語:32]隊員に　任命された！</language>
 	</row>
@@ -2942,7 +2944,7 @@ assistantm_01_29へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">つぎの　ちょうさも
-きたいしているぞ！▼
+きたい　しているぞ！▼
 [1:00:トレーナー名:1]たいいん！</language>
 		<language name="JPN_KANJI" width="256">次の　調査も　期待しているぞ！
 [1:00:トレーナー名:1]隊員！</language>
@@ -2958,15 +2960,15 @@ assistantm_01_29へ続く
 assistantm_01_31へ続く</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">……これで　すべての　ちょうさいらいが
-しゅうりょうした▼
+		<language name="JPN" width="256">……これで　すべての
+ちょうさいらいが　しゅうりょうした▼
 [1:00:トレーナー名:1]たいいん　よくやった！▼
 わたしは　もうれつに
 かんどうしている！▼
 これは　わたしのきもちだ
 うけとってくれ</language>
-		<language name="JPN_KANJI" width="256">……これで　すべての　調査依頼が
-終了した▼
+		<language name="JPN_KANJI" width="256">……これで　すべての
+調査依頼が　終了した▼
 [1:00:トレーナー名:1]隊員　よくやった！▼
 わたしは　猛烈に　感動している！▼
 これは　わたしの気持ちだ
@@ -2995,8 +2997,8 @@ assistantm_01_31へ続く</comment>
 会話終了</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">そうか……▽
-たいちょうも　さびしいから▽
+		<language name="JPN" width="256">そうか……▼
+たいちょうも　さびしいから
 たまには　かおを　みせにきてくれ</language>
 		<language name="JPN_KANJI" width="256">そうか……　隊長も　寂しいから
 たまには　顔を　見せに来てくれ</language>
@@ -3046,30 +3048,30 @@ assistantm_01_31へ続く</comment>
 ちょっと　たのみたいことがあるの▼
 じつは　いま　たいいんの　みんなに
 アンケートを　おねがいしているの▼
-アンケートに　きょうりょくして
-くれたら▽
-おれいとして　アンケートようしを▽
-あげるわ▼
-このアンケートようしがあれば
-ちょうさレーダーの　こうもくが▽
-ふえるのよ▼
+アンケートに
+きょうりょく　してくれたら▼
+おれい　として
+アンケートようしを　あげるわ▼
+このアンケートようしが　あれば
+ちょうさレーダーの▽
+こうもくが　ふえるのよ▼
 アンケートに　こたえるほど
-アナタが　ちょうさできる　ないようも▽
-ふえるってわけ▼
+アナタが　ちょうさできる▽
+ないようも　ふえるってわけ▼
 どう？　アナタも
-きょうりょくしてくれない？▼</language>
+きょうりょく　してくれない？▼</language>
 		<language name="JPN_KANJI" width="256">そうだ　アナタに
 ちょっと　頼みたいことがあるの▼
 実は　今　隊員の　みんなに
 アンケートを　お願いしているの▼
 アンケートに　協力してくれたら
-お礼として　アンケート用紙を▽
-あげるわ▼
+お礼として▽
+アンケート用紙を　あげるわ▼
 このアンケート用紙があれば
 調査レーダーの項目が　増えるのよ▼
 アンケートに　答えるほど
-アナタが　調査できる内容も▽
-増えるってわけ▼
+アナタが　調査できる▽
+内容も　増えるってわけ▼
 どう？　アナタも　協力してくれない？▼</language>
 	</row>
 
@@ -3098,8 +3100,8 @@ assistantm_01_31へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">しょうがないわね▼
-そのきになったら
-またこえを　かけてね</language>
+そのきに　なったら
+また　こえを　かけてね</language>
 		<language name="JPN_KANJI" width="256">しょうがないわね▼
 その気になったら　また声を　かけてね</language>
 	</row>
@@ -3283,11 +3285,11 @@ woman2_18へ続く
 [簡易会話単語:37]＝調査レーダー用アンケートタイトル</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">ちょうさレーダーに▽
-『[1:1C:簡易会話単語:33]』が
+		<language name="JPN" width="256">ちょうさレーダーに
+『[1:1C:簡易会話単語:33]』が▽
 ふえた！</language>
-		<language name="JPN_KANJI" width="256">調査レーダーに▽
-『[1:1C:簡易会話単語:33]』が
+		<language name="JPN_KANJI" width="256">調査レーダーに
+『[1:1C:簡易会話単語:33]』が▽
 増えた！</language>
 	</row>
 
@@ -3314,14 +3316,16 @@ woman2_18へ続く
 woman2_20へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">これで　アンケートは　ぜんぶおわり▼
+		<language name="JPN" width="256">これで　アンケートは
+ぜんぶ　おわり▼
 アナタのことが　わかって
 たのしかったわ▼
 こんどは　ちょうさレーダーを
 つかって▽
 アナタが　いろいろ　ちょうさ▽
 してみてね</language>
-		<language name="JPN_KANJI" width="256">これで　アンケートは　全部終わり▼
+		<language name="JPN_KANJI" width="256">これで　アンケートは
+全部　終わり▼
 アナタのことが　わかって
 楽しかったわ▼
 今度は　調査レーダーを使って
@@ -3551,7 +3555,7 @@ girl4_04へ続く
 		<language name="JPN" width="256">すてきな　ことばね
 きくだけで　こころが▽
 あたたかくなるわ▼
-かんしゃのきもちを
+かんしゃの　きもちを
 いつも　わすれないでね</language>
 		<language name="JPN_KANJI" width="256">素敵な　言葉ね
 聞くだけで　心が　暖かくなるわ▼
@@ -3618,7 +3622,7 @@ girl4_04へ続く
 		<language name="JPN" width="256">たいいんランクって　しってる？▼
 あ　Ａランクの
 [1:00:トレーナー名:1]たいいん▼
-もうＡランクたいいんなんだね
+もうＡランクたいいん　なんだね
 すごいな……▽
 オレも　がんばって▽
 ちょうさしないと！▼
@@ -3647,7 +3651,7 @@ girl4_04へ続く
 ……って　Ｓランクの
 [1:00:トレーナー名:1]たいいん！▼
 あとすこしで　さいこうの
-ＳＳランクたいいんですね！▼
+ＳＳランクたいいん　ですね！▼
 オレ　おうえんしています！
 がんばってください！！</language>
 		<language name="JPN_KANJI" width="256">隊員ランクって　知ってる？▼
@@ -3688,10 +3692,10 @@ girl4_04へ続く
 		<attribute name="キャラ指定">BOY3
 一般隊員B</attribute>
 		<language name="JPN" width="256">ちょうさは　たのしいよ！
-いろんなひとの　きもちが▽
-わかるからね▼
-みんなのいけんを　あつめて
-みんながたのしむ▼
+いろんな　ひとの▽
+きもちが　わかるからね▼
+みんなの　いけんを　あつめて
+みんなが　たのしむ▼
 それが　ちょうさたいの　たのしさだね</language>
 		<language name="JPN_KANJI" width="256">調査は　楽しいよ！
 いろんな人の　気持ちがわかるからね▼
@@ -3707,7 +3711,7 @@ girl4_04へ続く
 		<attribute name="キャラ指定">BOY3
 一般隊員B</attribute>
 		<language name="JPN" width="256">アンケートには　もうこたえた？▼
-じぶんが　どんなひとなのか
+じぶんが　どんな　ひとなのか
 これぐらいは　こたえたほうが　いいよ</language>
 		<language name="JPN_KANJI" width="256">アンケートには　もう答えた？▼
 自分が　どんな人なのか
@@ -3763,14 +3767,14 @@ girl4_04へ続く
 一般隊員B</attribute>
 		<language name="JPN" width="256">おつかれさまです！
 [1:00:トレーナー名:1]たいいん！▼
-たいいんも　ふえて　にぎやかに
-なりましたね▼
+たいいんも　ふえて
+にぎやかに　なりましたね▼
 これなら　ちょうさデータも
 たくさん　あつまりますね</language>
 		<language name="JPN_KANJI" width="256">お疲れ様です！
 [1:00:トレーナー名:1]隊員！▼
-隊員も　増えて　にぎやかに
-なりましたね▼
+隊員も　増えて
+にぎやかに　なりましたね▼
 これなら　調査データも
 たくさん　集まりますね</language>
 	</row>
@@ -3783,7 +3787,7 @@ girl4_04へ続く
 一般隊員C</attribute>
 		<language name="JPN" width="256">ちょうさって　すればするほど
 おもしろいわ▼
-もっと　たくさんのひとと
+もっと　たくさんの　ひとと
 すれちがうわよ！▼
 ひとりより　みんなで　ちょうさを
 するほうが　だんぜん　おもしろいわ</language>
