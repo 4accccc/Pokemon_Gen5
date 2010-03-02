@@ -540,10 +540,7 @@ static GFL_PROC_RESULT UNSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, v
     (*seq)++;
     break;
   case 1:
-    if( GFL_FADE_CheckFade() == TRUE )
-    {
-      return GFL_PROC_RES_CONTINUE;
-    }
+    if( GFL_FADE_CheckFade() == TRUE ) break;
     (*seq)++;
     break;
   case 2:
@@ -588,6 +585,7 @@ static GFL_PROC_RESULT UNSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, v
 
     return GFL_PROC_RES_FINISH;
   }
+  return GFL_PROC_RES_CONTINUE;
 }
 //-----------------------------------------------------------------------------
 /**
@@ -1416,8 +1414,15 @@ static void ListCallBack_Move( void * work, u32 listPos, BOOL flg )
     //スクロールバー移動
     SetScrollBarPos( wk, cur_y );
     //ビルカーソル位置セット
-    SetBuilCurPos( wk, cur_y );
-    NOZOMU_Printf( "list_pos= %d\n",FRAMELIST_GetListPos( wk->lwk ) );
+    {
+      int list_pos, cur_pos;
+      int buil_cur_y;
+      list_pos = FRAMELIST_GetListPos( wk->lwk );
+      cur_pos = FRAMELIST_GetCursorPos( wk->lwk );
+      buil_cur_y = BUIL_FLOOR_YDOT_TOP + (list_pos - cur_pos);
+      SetBuilCurPos( wk, buil_cur_y );
+    }
+    
   }
 }
 
@@ -1443,8 +1448,14 @@ static void ListCallBack_Scroll( void * work, s8 mv )
     //スクロールバー移動
     SetScrollBarPos( wk, cur_y );
     //ビルカーソル位置セット
-    SetBuilCurPos( wk, cur_y );
-    NOZOMU_Printf( "scr_list_pos= %d\n",FRAMELIST_GetListPos( wk->lwk ) );
+    {
+      int list_pos, cur_pos;
+      int buil_cur_y;
+      list_pos = FRAMELIST_GetListPos( wk->lwk );
+      cur_pos = FRAMELIST_GetCursorPos( wk->lwk );
+      buil_cur_y = BUIL_FLOOR_YDOT_TOP + (list_pos - cur_pos);
+      SetBuilCurPos( wk, buil_cur_y );
+    }
   }
 }
 
@@ -1695,14 +1706,14 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
 
   //ビルマーカー位置決定
   SetBuilMarkerPos( wk );
-
+/**
   {
     //ビルカーソル位置セット
     s16 cur_y;
     cur_y = SCROLL_BAR_DY-(SCROLL_BAR_SIZE/2);
     SetBuilCurPos( wk, cur_y );
   }
-  
+*/  
   //アルファセット
   G2S_SetBlendAlpha(
 		GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG2,
@@ -2475,32 +2486,11 @@ static void SetScrollBarPos( UN_SELECT_MAIN_WORK *wk, const int inY )
 //ビルカーソルの位置をセット
 static void SetBuilCurPos( UN_SELECT_MAIN_WORK *wk, const int inY )
 {
-  s16 y;
-  s16 w;
   s16 pos_y;
   GFL_CLACTPOS	pos;
   GFL_CLWK *clwk = wk->ClWk[UN_OBJ_BUIL_CURSOR];
-  y = inY;
-  w = SCROLL_BAR_SIZE/2;
-  if( y < SCROLL_BAR_UY+w ){
-		y = SCROLL_BAR_UY + w;
-	}else if( y > SCROLL_BAR_DY-w ){
-		y = SCROLL_BAR_DY - w;
-	}
-
-  {
-    int numerator;      //スクロールバー位置の割合分子
-    int denominator;    //スクロールバー位置の割合分母
-    int band;           //ビルカーソル移動範囲
-    int val;            //計算結果
-    int scr_w = SCROLL_BAR_SIZE/2;
-    int cur_w = BUIL_CUR_SIZE/2;
-    numerator = y - (SCROLL_BAR_UY+scr_w);
-    denominator = (SCROLL_BAR_DY-scr_w) - (SCROLL_BAR_UY+scr_w);
-    band = (BUIL_FLOOR_YDOT_BOTTOM-cur_w) - (BUIL_FLOOR_YDOT_TOP+cur_w)+1;
-    val = (band * numerator) / denominator;
-    pos_y = BUIL_FLOOR_YDOT_TOP + cur_w + val;
-  }
+  pos_y = inY;
+  NOZOMU_Printf("buil_cur_pos %d %d\n",inY, inY-BUIL_FLOOR_YDOT_TOP);
   GFL_CLACT_WK_GetPos( clwk, &pos, CLWK_SETSF_NONE ); //絶対座標指定
 	pos.y = pos_y;
 	GFL_CLACT_WK_SetPos( clwk, &pos, CLWK_SETSF_NONE ); //絶対座標指定
