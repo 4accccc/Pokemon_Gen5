@@ -385,7 +385,8 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_06, 2 )	//C03の誘導イベント
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 3 )	//ラストバトル前に移動
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_08, 4 )	//ライトストーン所持
-		_BMPMENU_MAKE_LIST( msg_debug_00, 5 )	//やめる
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_09, 5 )	//ライトストーン所持
+		_BMPMENU_MAKE_LIST( msg_debug_00, 6 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
 	
@@ -485,6 +486,19 @@ EVENT_START   ev_debug_suginaka
 			$WK_SYS_N01R0502_ITEMUSE = 2
 			
 			$SCWK_TEMP0 = 428
+			
+		ELSIF $SCWK_ANSWER == 5 THEN
+			//D02のイベント
+			$WK_SCENE_D02 = 1
+
+			_FLAG_RESET( FV_D02R0101_LEADER3 )	//盗難イベント用アーティ表示
+			_FLAG_SET( FV_D02R0101_HAKAI )		//ヤグルマの森ストッパーの解除	
+			_FLAG_RESET( FV_D02_LEADER3 )	//D02のジムリーダー3を表示	
+
+			$SCWK_TEMP0 = 428
+
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_D02, 593, 584, DIR_LEFT )
 
 		ELSE
 

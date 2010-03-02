@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/26 0:26:51
+#save date:2010/03/02 17:06:37
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d02.wms
 #SECTION START:OBJ_EVENT
@@ -298,20 +298,20 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-5
+12
 #event number: 0
 #Bg Event Label
 BGID_D02_ROCK_01
 #Bg Event Type
 BG_TALK_TYPE_NORMAL
 #Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
+BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_BG_D02_ROCK_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-536 64 -552
+424 64 -568
 #event number: 1
 #Bg Event Label
 D02_HIDE_ITEM_00
@@ -364,6 +364,97 @@ SCRID_BG_D02_SIGN1_01
 EVENTDATA_POSTYPE_GRID
 #position
 -56 0 152
+#event number: 5
+#Bg Event Label
+BGID_D02_ROCK_03
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D02_ROCK_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+424 64 -584
+#event number: 6
+#Bg Event Label
+BGID_D02_ROCK_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D02_ROCK_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+440 64 -568
+#event number: 7
+#Bg Event Label
+BGID_D02_ROCK_04
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D02_ROCK_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+440 64 -584
+#event number: 8
+#Bg Event Label
+BGID_D02_ROCK_05
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D02_ROCK_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+520 64 -536
+#event number: 9
+#Bg Event Label
+BGID_D02_ROCK_07
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D02_ROCK_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+520 64 -552
+#event number: 10
+#Bg Event Label
+BGID_D02_ROCK_08
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D02_ROCK_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+536 64 -552
+#event number: 11
+#Bg Event Label
+BGID_D02_ROCK_06
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D02_ROCK_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+536 64 -536
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

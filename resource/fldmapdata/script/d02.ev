@@ -23,6 +23,7 @@ _EVENT_DATA		ev_d02_girl2_01
 _EVENT_DATA		ev_pos_d02_stop
 _EVENT_DATA		ev_bg_d02_rock_01
 _EVENT_DATA		ev_bg_d02_sign1_01
+_EVENT_DATA		ev_bg_d02_rock_02
 _EVENT_DATA_END
 
 
@@ -78,7 +79,6 @@ EVENT_END
 //	ジムリーダーアーティ　自機の方を見る・去る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_leader3_miru
-	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -89,13 +89,200 @@ _ANIME_LABEL	anm_leader3_saru
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*	D02			ためしのいわ								  */
+/*	D02			ためしのいわ１								  */
 /**************************************************************/
-//【仮】	タイプ判別のコマンドが未実装のため保留
 EVENT_START		ev_bg_d02_rock_01
-	_PLAINWIN_MSG_DOWN( msg_d02_rock_01 )
-	_LAST_KEYWAIT()
-	_PLAINWIN_CLOSE()
+{
+	DEFINE_LOCAL	LWK_POKETYPE1
+	DEFINE_LOCAL	LWK_POKETYPE2
+
+	//その日、初めての場合
+	IF FLAG_OFF( FH_01) THEN
+
+		//先頭のポケモンのタイプをチェック
+		_GET_TEMOTI_POKE_TYPE( LWK_POKETYPE1, LWK_POKETYPE2, 0 )
+
+		//タイプ１が格闘タイプの場合
+		IF $LWK_POKETYPE1 == POKETYPE_KAKUTOU THEN
+
+			//ためしのいわを壊すか壊さないか・分岐
+			
+			_TEMOTI_MONS_NAME( 0, 0 )
+			_PLAINWIN_MSG_DOWN( msg_d02_rock_01 )
+			_YES_NO_WIN( SCWK_ANSWER )
+			_PLAINWIN_CLOSE()
+			
+			//はいの場合
+			IF $SCWK_ANSWER == SCR_YES THEN
+			
+				_TEMOTI_MONS_NAME( 0, 0 )
+				_PLAINWIN_MSG_DOWN( msg_d02_rock_02 )
+				_PLAINWIN_CLOSE()
+				
+				//【仮】アイテムは未定　とりあえずほしのかけら
+				_ITEM_EVENT_KEYWAIT( ITEM_HOSINOKAKERA, 1 )
+				
+				//========================================/
+				
+				//ためしのいわ壊したフラグ（１日でリセット）
+				_FLAG_SET(FH_01)
+				
+				//========================================/
+			
+			ENDIF
+			
+		//タイプ１が違う場合
+		ELSE
+	
+			//タイプ２が格闘タイプの場合
+			IF $LWK_POKETYPE2 == POKETYPE_KAKUTOU THEN
+			
+				//ためしのいわを壊すか壊さないか・分岐
+				_TEMOTI_MONS_NAME( 0, 0 )
+				_PLAINWIN_MSG_DOWN( msg_d02_rock_01 )
+				_YES_NO_WIN( SCWK_ANSWER )
+				_PLAINWIN_CLOSE()
+				
+				//はいの場合
+				IF $SCWK_ANSWER == SCR_YES THEN
+					
+					_TEMOTI_MONS_NAME( 0, 0 )
+					_PLAINWIN_MSG_DOWN( msg_d02_rock_02 )
+					_PLAINWIN_CLOSE()
+					
+					//【仮】アイテムは未定　とりあえずほしのかけら
+					_ITEM_EVENT_KEYWAIT( ITEM_HOSINOKAKERA, 1 )
+					
+					//========================================/
+					
+					//ためしのいわ壊したフラグ（１日でリセット）
+					_FLAG_SET(FH_01)
+					
+					//========================================/
+				
+				ENDIF
+
+			//タイプ２も違う場合
+			ELSE
+		
+				//ためしのいわがある
+				_PLAINWIN_MSG_DOWN( msg_d02_rock_03 )
+				_LAST_KEYWAIT()
+				_PLAINWIN_CLOSE()
+		
+			ENDIF
+		
+		ENDIF
+		
+	//初めてではない場合
+	ELSE
+	
+		//ためしのいわがある
+		_PLAINWIN_MSG_DOWN( msg_d02_rock_03 )
+		_LAST_KEYWAIT()
+		_PLAINWIN_CLOSE()
+		
+	ENDIF
+}
+EVENT_END
+
+/**************************************************************/
+/*	D02			ためしのいわ２								  */
+/**************************************************************/
+EVENT_START		ev_bg_d02_rock_02
+
+{
+	DEFINE_LOCAL	LWK_POKETYPE1
+	DEFINE_LOCAL	LWK_POKETYPE2
+
+	//その日、初めての場合
+	IF FLAG_OFF( FH_01) THEN
+
+		//先頭のポケモンのタイプをチェック
+		_GET_TEMOTI_POKE_TYPE( LWK_POKETYPE1, LWK_POKETYPE2, 0 )
+
+		//タイプ１が格闘タイプの場合
+		IF $LWK_POKETYPE1 == POKETYPE_KAKUTOU THEN
+
+			//ためしのいわを壊すか壊さないか・分岐
+			
+			_TEMOTI_MONS_NAME( 0, 0 )
+			_PLAINWIN_MSG_DOWN( msg_d02_rock_01 )
+			_YES_NO_WIN( SCWK_ANSWER )
+			_PLAINWIN_CLOSE()
+			
+			//はいの場合
+			IF $SCWK_ANSWER == SCR_YES THEN
+			
+				_TEMOTI_MONS_NAME( 0, 0 )
+				_PLAINWIN_MSG_DOWN( msg_d02_rock_02 )
+				_PLAINWIN_CLOSE()
+				
+				//【仮】アイテムは未定　とりあえずほしのかけら
+				_ITEM_EVENT_KEYWAIT( ITEM_HOSINOKAKERA, 1 )
+				
+				//========================================/
+				
+				//ためしのいわ壊したフラグ（１日でリセット）
+				_FLAG_SET(FH_01)
+				
+				//========================================/
+			
+			ENDIF
+			
+		//タイプ１が違う場合
+		ELSE
+	
+			//タイプ２が格闘タイプの場合
+			IF $LWK_POKETYPE2 == POKETYPE_KAKUTOU THEN
+			
+				//ためしのいわを壊すか壊さないか・分岐
+				_TEMOTI_MONS_NAME( 0, 0 )
+				_PLAINWIN_MSG_DOWN( msg_d02_rock_01 )
+				_YES_NO_WIN( SCWK_ANSWER )
+				_PLAINWIN_CLOSE()
+				
+				//はいの場合
+				IF $SCWK_ANSWER == SCR_YES THEN
+					
+					_TEMOTI_MONS_NAME( 0, 0 )
+					_PLAINWIN_MSG_DOWN( msg_d02_rock_02 )
+					_PLAINWIN_CLOSE()
+					
+					//【仮】アイテムは未定　とりあえずほしのかけら
+					_ITEM_EVENT_KEYWAIT( ITEM_HOSINOKAKERA, 1 )
+					
+					//========================================/
+					
+					//ためしのいわ壊したフラグ（１日でリセット）
+					_FLAG_SET(FH_01)
+					
+					//========================================/
+				
+				ENDIF
+
+			//タイプ２も違う場合
+			ELSE
+		
+				//ためしのいわがある
+				_PLAINWIN_MSG_DOWN( msg_d02_rock_03 )
+				_LAST_KEYWAIT()
+				_PLAINWIN_CLOSE()
+		
+			ENDIF
+		
+		ENDIF
+		
+	//初めてではない場合
+	ELSE
+	
+		//ためしのいわがある
+		_PLAINWIN_MSG_DOWN( msg_d02_rock_03 )
+		_LAST_KEYWAIT()
+		_PLAINWIN_CLOSE()
+		
+	ENDIF
+}
 EVENT_END
 
 /**************************************************************/

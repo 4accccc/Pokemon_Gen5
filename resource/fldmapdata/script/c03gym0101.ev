@@ -271,6 +271,9 @@ ev_leader3_btl:
 	
 	//【仮】C03R0601
 	$WK_SCENE_C03R0601 = 1
+
+	//ワークの値を１にし、イベント終了
+	$WK_SCENE_C03 = 1
 	
 	//TVTイベント用・C03P07
 	$WK_SCENE_C03P07 = 2

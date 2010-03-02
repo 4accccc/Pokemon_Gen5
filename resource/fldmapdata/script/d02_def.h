@@ -9,5 +9,6 @@
 #define SCRID_POS_D02_STOP (2)
 #define SCRID_BG_D02_ROCK_01 (3)
 #define SCRID_BG_D02_SIGN1_01 (4)
+#define SCRID_BG_D02_ROCK_02 (5)
 
 #endif //_D02_DEF_H_

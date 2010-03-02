@@ -37,6 +37,7 @@ _EVENT_DATA		ev_bg_c03_sign4_01
 _EVENT_DATA		ev_bg_c03_sign5_01
 _EVENT_DATA		ev_bg_c03_sign6_01
 _EVENT_DATA		ev_bg_c03_sign7_01
+_EVENT_DATA		ev_pos_c03_rivalevent_02
 _EVENT_DATA_END
 
 
@@ -120,7 +121,7 @@ EVENT_END
 /*		LEADER3		POSイベント用スクリプト					  */
 /**************************************************************/
 EVENT_START		ev_pos_c03_rivalevent_01
-
+{
 	DEFINE_LOCAL	LWK_INDEX
 	DEFINE_LOCAL	LWK_FRONT
 	DEFINE_LOCAL	LWK_SIDE
@@ -200,7 +201,7 @@ EVENT_START		ev_pos_c03_rivalevent_01
 	$WK_SCENE_C03 = 1
 
 	//========================================/
-
+}
 EVENT_END
 
 //--------------------------------------------------------------
@@ -247,9 +248,10 @@ _ANIME_LABEL anm_leader_leave
 	_ANIME_DATA		AC_VANISH_ON, 1
 	_ANIME_DATA		ACMD_END,0
 
-_ANIME_LABEL anm_rival_leave
-	_ANIME_DATA		AC_WALK_D_8F,1
-	_ANIME_DATA		AC_WALK_R_8F,15
+_ANIME_LABEL anm_leader_leave2
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,10
+	_ANIME_DATA		AC_DIR_L,1
 	_ANIME_DATA		AC_VANISH_ON, 1
 	_ANIME_DATA		ACMD_END,0
 	
@@ -294,6 +296,47 @@ _ANIME_LABEL anm_player_come12
 	_ANIME_DATA		AC_DIR_L,1
 	_ANIME_DATA		ACMD_END,0
 
+_ANIME_LABEL anm_player2_come6
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,3
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player2_come7
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,2
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player2_come8
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player2_come9
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player2_come10
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player2_come11
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_D_8F,2
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player2_come12
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_D_8F,3
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
 //--------------------------------------------------------------------
 //		リーダーあにめ
 //--------------------------------------------------------------------
@@ -301,6 +344,98 @@ _ANIME_LABEL anm_leader_come
 	_ANIME_DATA		AC_WALK_D_8F,5
 	_ANIME_DATA		AC_STAY_WALK_R_8F,1
 	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_leader_come2
+	_ANIME_DATA		AC_WALK_D_8F,5
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+/**************************************************************/
+/*		LEADER3		POSイベント用スクリプト2				  */
+/**************************************************************/
+EVENT_START		ev_pos_c03_rivalevent_02
+{
+	DEFINE_LOCAL	LWK_INDEX
+	DEFINE_LOCAL	LWK_FRONT
+	DEFINE_LOCAL	LWK_SIDE
+	
+	 _GET_PLAYER_RAIL_LOC( LWK_INDEX, LWK_FRONT, LWK_SIDE )
+
+	//【仮】使い方解んない・ドアアニメ再生
+	
+	//フラグリセット
+	_FLAG_RESET(FV_C03_GUIDE_01)
+	_OBJ_ADD(C03_LEADER3_01)
+	
+	//ジムリーダー：登場
+	_OBJ_ANIME( C03_LEADER3_01, anm_leader_come2 )
+	_OBJ_ANIME_WAIT()
+
+	//自機：移動
+	SWITCH $LWK_SIDE
+	CASE 6 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player2_come6 )
+		_OBJ_ANIME_WAIT()
+	CASE 7 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player2_come7 )
+		_OBJ_ANIME_WAIT()
+	CASE 8 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player2_come8 )
+		_OBJ_ANIME_WAIT()
+	CASE 9 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player2_come9 )
+		_OBJ_ANIME_WAIT()
+	CASE 10 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player2_come10 )
+		_OBJ_ANIME_WAIT()
+	CASE 11 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player2_come11 )
+		_OBJ_ANIME_WAIT()
+	CASE 12 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player2_come12 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+
+	//んうん？　ああ　きみ！
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_c03_leader3_01 , C03_LEADER3_01 )
+	_MSGWIN_CLOSE()
+
+	//ジムリーダー：下向き
+	_OBJ_ANIME( C03_LEADER3_01, anm_stay_d )
+	_OBJ_ANIME_WAIT()
+
+	//ヒウンシティにも　プラズマだんが　いたんだ
+	_BALLOONWIN_OBJMSG( msg_c03_leader3_02 , C03_LEADER3_01 )
+	_MSGWIN_CLOSE()
+
+	//ジムリーダー：左向き
+	_OBJ_ANIME( C03_LEADER3_01, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+
+	//もちろん　おっぱったけどね
+	_BALLOONWIN_OBJMSG( msg_c03_leader3_03 , C03_LEADER3_01 )
+	_MSGWIN_CLOSE()
+
+	//ジムリーダー：画面左へ行き消去
+	_OBJ_ANIME( C03_LEADER3_01, anm_leader_leave2 )
+	_OBJ_ANIME_WAIT()
+
+	//========================================/
+
+	//アーティ削除
+	_OBJ_DEL( C03_LEADER3_01 )
+	_FLAG_SET( FV_C03_GUIDE_01 )
+
+	//フラグ操作・ライバルＲ０４に出現
+	_FLAG_RESET( FV_R04_RIVAL_01 )
+	
+	//ワークの値を１にし、イベント終了
+	$WK_SCENE_C03 = 1
+
+	//========================================/
+}
+EVENT_END
 
 /**************************************************************/
 /*		看板１

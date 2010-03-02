@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/24 19:50:24
+#save date:2010/03/02 18:45:25
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03.wms
 #SECTION START:OBJ_EVENT
@@ -360,7 +360,7 @@ EVENTDATA_POSTYPE_RAIL
 #hold event type:
 1
 #hold event number:
-10
+12
 #event number: 0
 #Bg Event Label
 BGID_C03_SIGN2_01
@@ -386,7 +386,7 @@ SCRID_BG_C03_SIGN1_01
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 14 3
+2 15 3
 #event number: 2
 #Bg Event Label
 BGID_C03_SIGN1_01
@@ -399,7 +399,7 @@ SCRID_BG_C03_SIGN1_01
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 15 3
+2 16 3
 #event number: 3
 #Bg Event Label
 BGID_C03_SIGN1_03
@@ -412,7 +412,7 @@ SCRID_BG_C03_SIGN1_01
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 13 3
+2 14 3
 #event number: 4
 #Bg Event Label
 BGID_C03_SIGN3_01
@@ -464,7 +464,7 @@ SCRID_BG_C03_SIGN5_01
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-5 24 3
+5 25 3
 #event number: 8
 #Bg Event Label
 BGID_C03_SIGN7_01
@@ -477,7 +477,7 @@ SCRID_BG_C03_SIGN7_01
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-4 14 3
+4 15 3
 #event number: 9
 #Bg Event Label
 BGID_C03_SIGN6_01
@@ -491,6 +491,32 @@ SCRID_BG_C03_SIGN6_01
 EVENTDATA_POSTYPE_RAIL
 #position
 4 24 3
+#event number: 10
+#Bg Event Label
+BGID_C03_SIGN1_04
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C03_SIGN1_01
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+2 13 3
+#event number: 11
+#Bg Event Label
+BGID_C03_SIGN1_05
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C03_SIGN1_01
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+2 12 3
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -500,7 +526,7 @@ EVENTDATA_POSTYPE_RAIL
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Pos Event Label
 C03_RIVALEVENT_01
@@ -516,6 +542,23 @@ WK_SCENE_C03
 EVENTDATA_POSTYPE_RAIL
 #position
 5 7 -2
+#size
+1 7
+#event number: 1
+#Pos Event Label
+C03_RIVALEVENT_02
+#Pos Script Name
+SCRID_POS_C03_RIVALEVENT_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C03
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+5 12 -2
 #size
 1 7
 #Map Event List Data End

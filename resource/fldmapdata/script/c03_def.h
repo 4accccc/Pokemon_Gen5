@@ -23,5 +23,6 @@
 #define SCRID_BG_C03_SIGN5_01 (16)
 #define SCRID_BG_C03_SIGN6_01 (17)
 #define SCRID_BG_C03_SIGN7_01 (18)
+#define SCRID_POS_C03_RIVALEVENT_02 (19)
 
 #endif //_C03_DEF_H_
