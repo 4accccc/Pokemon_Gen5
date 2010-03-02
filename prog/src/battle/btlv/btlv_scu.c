@@ -2902,6 +2902,7 @@ static void taskFakeDisable( GFL_TCBL* tcbl, void* wk_adrs )
   FAKEDISABLE_ACT_WORK* wk = wk_adrs;
 
   // @todo ¡‚Í‚½‚¾Á‚µ‚Ä, o‚µ‚Ä‚é‚¾‚¯‚Å‚·
+#if 0
   switch( wk->seq ){
   case 0:
     BTLV_EFFECT_DelPokemon( wk->vpos );
@@ -2918,6 +2919,26 @@ static void taskFakeDisable( GFL_TCBL* tcbl, void* wk_adrs )
     }
   case 2:
     if( !BTLV_EFFECT_CheckExecute() ){
+      (*(wk->pTaskCounter))--;
+      GFL_TCBL_Delete( tcbl );
+    }
+    break;
+  }
+#endif
+  switch( wk->seq ){
+  case 0:
+    { 
+      const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->parentWork->pokeCon, wk->pos );
+      const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
+      BTLV_EFFECT_Henge( pp, wk->vpos );
+      BTLV_EFFECT_DelGauge( wk->vpos );
+      wk->seq++;
+    }
+    break;
+  case 1:
+    if( !BTLV_EFFECT_CheckExecute() ){
+      const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->parentWork->pokeCon, wk->pos );
+      BTLV_EFFECT_SetGauge( wk->parentWork->mainModule, bpp, wk->vpos );
       (*(wk->pTaskCounter))--;
       GFL_TCBL_Delete( tcbl );
     }
@@ -2974,6 +2995,7 @@ static void taskChangeForm( GFL_TCBL* tcbl, void* wk_adrs )
 {
   CHANGEFORM_ACT_WORK* wk = wk_adrs;
 
+#if 0
   // @todo ¡‚Í‚½‚¾Á‚µ‚Ä, o‚µ‚Ä‚é‚¾‚¯‚Å‚·
   switch( wk->seq ){
   case 0:
@@ -2988,6 +3010,23 @@ static void taskChangeForm( GFL_TCBL* tcbl, void* wk_adrs )
       wk->seq++;
     }
   case 2:
+    if( !BTLV_EFFECT_CheckExecute() ){
+      (*(wk->pTaskCounter))--;
+      GFL_TCBL_Delete( tcbl );
+    }
+    break;
+  }
+#endif
+  switch( wk->seq ){
+  case 0:
+    { 
+      const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->parentWork->pokeCon, wk->pos );
+      const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
+      BTLV_EFFECT_Henge( pp, wk->vpos );
+      wk->seq++;
+    }
+    break;
+  case 1:
     if( !BTLV_EFFECT_CheckExecute() ){
       (*(wk->pTaskCounter))--;
       GFL_TCBL_Delete( tcbl );
