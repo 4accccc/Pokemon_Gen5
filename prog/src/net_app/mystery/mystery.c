@@ -667,6 +667,10 @@ static GFL_PROC_RESULT MYSTERY_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
   { 
     MYSTERY_MSGWINSET_PrintMain( p_wk->p_winset_m );
   }
+  if( p_wk->p_menu )
+  { 
+    MYSTERY_MENU_PrintMain( p_wk->p_menu );
+  }
 
 	//終了
 	if( MYSTERY_SEQ_IsEnd( p_wk->p_seq ) )
@@ -1174,9 +1178,9 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   switch( *p_seq )
   { 
   case SEQ_INIT:
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_001, MYSTERY_TEXT_TYPE_QUE );
     if( p_wk->p_menu == NULL )
     {
-      MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_001, MYSTERY_TEXT_TYPE_QUE );
       UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_TOP, HEAPID_MYSTERYGIFT ); 
     }
     *p_seq  = SEQ_TOP_SELECT;
@@ -1324,17 +1328,29 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       GAME_COMM_STATUS_BIT  bit;
 
       bit = MYSTERY_NET_GetCommStatus( p_wk->p_net );
-      if( bit & (GAME_COMM_STATUS_BIT_WIRELESS|GAME_COMM_STATUS_BIT_WIRELESS_TR|GAME_COMM_STATUS_BIT_WIRELESS_UN|GAME_COMM_STATUS_BIT_WIRELESS_FU) )
+      if( bit & (GAME_COMM_STATUS_BIT_WIRELESS_FU) )
       { 
-        MYSTERY_MENU_BlinkMain( p_wk->p_menu, 0 );
+        MYSTERY_MENU_SetBlink( p_wk->p_menu, 0, TRUE );
+      }
+      else
+      { 
+        MYSTERY_MENU_SetBlink( p_wk->p_menu, 0, FALSE );
       }
       if( bit & (GAME_COMM_STATUS_BIT_WIFI|GAME_COMM_STATUS_BIT_WIFI_ZONE|GAME_COMM_STATUS_BIT_WIFI_FREE|GAME_COMM_STATUS_BIT_WIFI_LOCK) )
       { 
-        MYSTERY_MENU_BlinkMain( p_wk->p_menu, 1 );
+        MYSTERY_MENU_SetBlink( p_wk->p_menu, 1, TRUE );
+      }
+      else
+      { 
+        MYSTERY_MENU_SetBlink( p_wk->p_menu, 1, FALSE );
       }
       if( bit & GAME_COMM_STATUS_BIT_IRC )
       { 
-        MYSTERY_MENU_BlinkMain( p_wk->p_menu, 2 );
+        MYSTERY_MENU_SetBlink( p_wk->p_menu, 2, TRUE );
+      }
+      else
+      { 
+        MYSTERY_MENU_SetBlink( p_wk->p_menu, 2, FALSE );
       }
 
       //選択
@@ -2118,6 +2134,8 @@ static void SEQFUNC_CardAlbum( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     OBJ_ReLoad( &p_wk->obj, HEAPID_MYSTERYGIFT );
     p_wk->p_text  = MYSTERY_TEXT_Init( BG_FRAME_M_TEXT, PLT_BG_FONT_M, p_wk->p_que, p_wk->p_font, HEAPID_MYSTERYGIFT );
     MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, BG_CGX_OFS_M_TEXT, PLT_BG_TEXT_M );
+
+    UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_TOP, HEAPID_MYSTERYGIFT ); 
     *p_seq  = SEQ_START_FADEIN_EXIT;
     break;
   case SEQ_START_FADEIN_EXIT:
@@ -2708,25 +2726,13 @@ static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID hea
       break;
     }
 
-    //メニュー作成
-    p_wk->p_menu  = MYSTERY_MENU_Init( &setup, heapID );
-
-    //メニューへ文字列バッファを渡していたら開放
-    if( setup.p_msg == NULL )
-    { 
-      int i;
-      for( i  = 0; i < MYSTERY_MENU_WINDOW_MAX; i++ )
-      {
-        if( setup.p_strbuf[i] )
-        { 
-          GFL_STR_DeleteBuffer( setup.p_strbuf[i] );
-        }
-      }
-    }
-
     //BG設定
     { 
       ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
+
+      GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_mystery_fusigi_bg_00_NCLR,
+          PALTYPE_MAIN_BG, PLT_BG_BACK_M*0x20, 5*0x20, heapID );
+
       GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mystery_fusigi_bg_00_NCGR, 
           BG_FRAME_M_BACK1, 0, 0, FALSE, heapID );
 
@@ -2746,6 +2752,23 @@ static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID hea
 
       GFL_BG_LoadScreenReq( BG_FRAME_M_BACK1 );
       GFL_BG_SetVisible( BG_FRAME_M_BACK1, TRUE );
+    }
+
+
+    //メニュー作成
+    p_wk->p_menu  = MYSTERY_MENU_Init( &setup, heapID );
+
+    //メニューへ文字列バッファを渡していたら開放
+    if( setup.p_msg == NULL )
+    { 
+      int i;
+      for( i  = 0; i < MYSTERY_MENU_WINDOW_MAX; i++ )
+      {
+        if( setup.p_strbuf[i] )
+        { 
+          GFL_STR_DeleteBuffer( setup.p_strbuf[i] );
+        }
+      }
     }
 
     //アルファ設定

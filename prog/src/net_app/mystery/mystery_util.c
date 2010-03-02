@@ -876,7 +876,7 @@ static const GFL_POINT sc_menu_cursor_pos[] =
 };
 
 //-------------------------------------
-///	選択リスト
+///	選択メニュー
 //=====================================
 struct _MYSTERY_MENU_WORK
 { 
@@ -886,14 +886,18 @@ struct _MYSTERY_MENU_WORK
   u32               list_max;
   u16								clear_chr;	//クリアキャラ
   u16               color[ MYSTERY_MENU_WINDOW_MAX ];
-  u16               cnt;
+  u16               color_buff[ MYSTERY_MENU_WINDOW_MAX ];
+  u16               change_color;
+  u16               cnt[ MYSTERY_MENU_WINDOW_MAX ];
   u16               font_plt;
   u16               font_frm;
   u16               bg_frm;
+  u16               bg_ofs;
   s16               chr_y_ofs;
   u16               anm_seq;
   MYSTERY_MENU_CURSOR_CALLBACK callback;
-  void *p_wk_adrs;
+  void              *p_wk_adrs;
+  BOOL              is_blink[ MYSTERY_MENU_WINDOW_MAX ];
 };
 //-------------------------------------
 ///	プロトタイプ
@@ -921,24 +925,25 @@ MYSTERY_MENU_WORK * MYSTERY_MENU_Init( const MYSTERY_MENU_SETUP *cp_setup, HEAPI
   p_wk->p_cursor  = cp_setup->p_cursor;
   p_wk->font_plt  = cp_setup->font_plt;
   p_wk->bg_frm    = cp_setup->bg_frm;
+  p_wk->bg_ofs    = cp_setup->bg_ofs;
   p_wk->font_frm  = cp_setup->font_frm;
   p_wk->callback  = cp_setup->callback;
   p_wk->p_wk_adrs = cp_setup->p_wk_adrs;
   p_wk->chr_y_ofs = cp_setup->chr_y_ofs;
   p_wk->anm_seq   = cp_setup->anm_seq;
 
-  //１５をコピー
-/*  { 
-    int i = 0;
-    static const u16 sc_back_plt  = GX_RGB(31,31,31);
+  //各窓の背景色と決定色をコピー
+  { 
+    int i;
 
     for( i = 0; i < p_wk->list_max; i++ )
     {
-      const u32 dst = HW_BG_PLTT+cp_setup->font_plt*0x20+(0xF-(i+1))*2;
-      GFL_STD_MemCopy( &sc_back_plt,(void*)(dst),2);
+      const u16* dst = (u16*)(HW_BG_PLTT+cp_setup->bg_ofs*0x20+(0xA+i)*2);
+      p_wk->color[i]  = *dst;
     }
+    p_wk->change_color  = *(u16*)(HW_BG_PLTT+cp_setup->bg_ofs*0x20+(0xF)*2);
   }
-*/
+
   //BMPWIN作成
   { 
     int i;
@@ -988,7 +993,6 @@ MYSTERY_MENU_WORK * MYSTERY_MENU_Init( const MYSTERY_MENU_SETUP *cp_setup, HEAPI
       }
     }
   }
-
 
   //カーソル設定
   {
@@ -1096,18 +1100,42 @@ u32 MYSTERY_MENU_Main( MYSTERY_MENU_WORK *p_wk )
     }
   }
 
-  //文字描画
-  MYSTERY_MSGWINSET_PrintMain( p_wk->p_winset );
+  //背景色の変更
+  { 
+    int i;
+    for( i = 0; i < MYSTERY_MENU_WINDOW_MAX; i++ )
+    { 
+      if( p_wk->is_blink[ i ] )
+      { 
+        //パレットアニメ
+        if( p_wk->cnt[i] + 0x400 >= 0x10000 )
+        {
+          p_wk->cnt[i] = p_wk->cnt[i]+0x400-0x10000;
+        }
+        else
+        {
+          p_wk->cnt[i] += 0x400;
+        }
 
+        MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_MAIN, &p_wk->color_buff[i], p_wk->cnt[i],
+            p_wk->bg_ofs, 0xA+i, p_wk->color[i], p_wk->change_color );
+      }
+      else
+      { 
+        if( p_wk->cnt[i] != 0 )
+        { 
+          p_wk->cnt[i] += 0x400;
 
-  //パレットアニメ
-  if( p_wk->cnt + 0x400 >= 0x10000 )
-  {
-    p_wk->cnt = p_wk->cnt+0x400-0x10000;
-  }
-  else
-  {
-    p_wk->cnt += 0x400;
+          if( 0 < p_wk->cnt[i] && p_wk->cnt[i] < 0x400 )
+          { 
+            p_wk->cnt[i]  = 0;
+          }
+
+          MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_MAIN, &p_wk->color_buff[i], p_wk->cnt[i],
+              p_wk->bg_ofs, 0xA+i, p_wk->color[i], p_wk->change_color );
+        }
+      }
+    }
   }
 
   return MYSTERY_MENU_SELECT_NULL;
@@ -1115,14 +1143,29 @@ u32 MYSTERY_MENU_Main( MYSTERY_MENU_WORK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  文字表示メイン
+ *
+ *	@param	MYSTERY_MENU_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_MENU_PrintMain( MYSTERY_MENU_WORK *p_wk )
+{ 
+  //文字描画
+  MYSTERY_MSGWINSET_PrintMain( p_wk->p_winset );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  リストの背景を明滅
  *
  *	@param	MYSTERY_MENU_WORK *p_wk   ワーク
  *	@param	list_num                  明滅させるリスト
+ *	@param  is_blink                  TRUEで明滅開始  FALSEで明滅終了
  */
 //-----------------------------------------------------------------------------
-void MYSTERY_MENU_BlinkMain( MYSTERY_MENU_WORK *p_wk, u32 list_num )
-{ 
+void MYSTERY_MENU_SetBlink( MYSTERY_MENU_WORK *p_wk, u32 list_num, BOOL is_blink )
+{
+  GF_ASSERT( list_num < MYSTERY_MENU_WINDOW_MAX );
+  p_wk->is_blink[ list_num ]  = is_blink;
 }
 //----------------------------------------------------------------------------
 /**

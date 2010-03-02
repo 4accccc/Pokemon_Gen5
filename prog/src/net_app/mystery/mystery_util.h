@@ -215,8 +215,9 @@ typedef struct _MYSTERY_MENU_WORK MYSTERY_MENU_WORK;
 extern MYSTERY_MENU_WORK * MYSTERY_MENU_Init( const MYSTERY_MENU_SETUP *cp_setup, HEAPID heapID );
 extern void MYSTERY_MENU_Exit( MYSTERY_MENU_WORK *p_wk );
 extern u32 MYSTERY_MENU_Main( MYSTERY_MENU_WORK *p_wk );
+extern void MYSTERY_MENU_PrintMain( MYSTERY_MENU_WORK *p_wk );
 
-extern void MYSTERY_MENU_BlinkMain( MYSTERY_MENU_WORK *p_wk, u32 list_num );
+extern void MYSTERY_MENU_SetBlink( MYSTERY_MENU_WORK *p_wk, u32 list_num, BOOL is_blink );
 
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/

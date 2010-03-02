@@ -1037,8 +1037,11 @@ static MCSS_WORK * POKE3D_CreateWkPP( MCSS_SYS_WORK * mcss, POKEMON_PARAM *pp, c
 
 	VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
 
+#if 0
 	MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_FRONT );
 	poke = MCSS_Add( mcss, pos->x, pos->y , pos->z, &addWork );
+#endif 
+  poke  = MCSS_TOOL_AddPokeMcss( mcss, pp, MCSS_DIR_FRONT, pos->x, pos->y , pos->z );
 	MCSS_SetScale( poke , &scale );
 	return poke;
 }
