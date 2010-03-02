@@ -50,6 +50,8 @@
 #define MCS_READ_CH     ( 0 )
 #define MCS_WRITE_CH    ( 0 )
 
+#define EFFECT_ENABLE_KEY  ( PAD_BUTTON_A | PAD_BUTTON_B | PAD_BUTTON_X | PAD_BUTTON_Y )
+
 enum{
   BACK_COL = 0,
   SHADOW_COL = 4,
@@ -419,66 +421,69 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
   EffectViewerSequence( evw );
   BTLV_EFFECT_Main();
 
-  if( evw->viewer_mode )
+  if( evw->seq_no == SEQ_IDLE )
   { 
-    if( ( rep & PAD_KEY_UP ) && ( evw->tr_type < TRTYPE_MAX - 1 ) )
+    if( evw->viewer_mode )
     { 
-      evw->tr_type++;
-      del_pokemon( evw );
-      set_pokemon( evw );
-    }
-    if( ( rep & PAD_KEY_DOWN ) && ( evw->tr_type ) )
-    { 
-      evw->tr_type--;
-      del_pokemon( evw );
-      set_pokemon( evw );
-    }
-    if( ( rep & PAD_KEY_RIGHT ) && ( evw->tr_type + 10 <= TRTYPE_MAX - 1 ) )
-    { 
-      evw->tr_type += 10;
-      del_pokemon( evw );
-      set_pokemon( evw );
-    }
-    if( rep & PAD_KEY_LEFT )
-    { 
-      evw->tr_type -= 10;
-      if( evw->tr_type < 0 )
+      if( ( rep & PAD_KEY_UP ) && ( evw->tr_type < TRTYPE_MAX - 1 ) )
       { 
-        evw->tr_type = 0;
+        evw->tr_type++;
+        del_pokemon( evw );
+        set_pokemon( evw );
       }
-      del_pokemon( evw );
-      set_pokemon( evw );
-    }
-  }
-  else
-  { 
-    if( ( rep & PAD_KEY_UP ) && ( evw->mons_no <= MONSNO_END ) )
-    { 
-      evw->mons_no++;
-      del_pokemon( evw );
-      set_pokemon( evw );
-    }
-    if( ( rep & PAD_KEY_DOWN ) && ( evw->mons_no ) )
-    { 
-      evw->mons_no--;
-      del_pokemon( evw );
-      set_pokemon( evw );
-    }
-    if( ( rep & PAD_KEY_RIGHT ) && ( evw->mons_no + 10 <=  MONSNO_END ) )
-    { 
-      evw->mons_no += 10;
-      del_pokemon( evw );
-      set_pokemon( evw );
-    }
-    if( rep & PAD_KEY_LEFT )
-    { 
-      evw->mons_no -= 10;
-      if( evw->mons_no < 0 )
+      if( ( rep & PAD_KEY_DOWN ) && ( evw->tr_type ) )
       { 
-        evw->mons_no = 0;
+        evw->tr_type--;
+        del_pokemon( evw );
+        set_pokemon( evw );
       }
-      del_pokemon( evw );
-      set_pokemon( evw );
+      if( ( rep & PAD_KEY_RIGHT ) && ( evw->tr_type + 10 <= TRTYPE_MAX - 1 ) )
+      { 
+        evw->tr_type += 10;
+        del_pokemon( evw );
+        set_pokemon( evw );
+      }
+      if( rep & PAD_KEY_LEFT )
+      { 
+        evw->tr_type -= 10;
+        if( evw->tr_type < 0 )
+        { 
+          evw->tr_type = 0;
+        }
+        del_pokemon( evw );
+        set_pokemon( evw );
+      }
+    }
+    else
+    { 
+      if( ( rep & PAD_KEY_UP ) && ( evw->mons_no <= MONSNO_END ) )
+      { 
+        evw->mons_no++;
+        del_pokemon( evw );
+        set_pokemon( evw );
+      }
+      if( ( rep & PAD_KEY_DOWN ) && ( evw->mons_no ) )
+      { 
+        evw->mons_no--;
+        del_pokemon( evw );
+        set_pokemon( evw );
+      }
+      if( ( rep & PAD_KEY_RIGHT ) && ( evw->mons_no + 10 <=  MONSNO_END ) )
+      { 
+        evw->mons_no += 10;
+        del_pokemon( evw );
+        set_pokemon( evw );
+      }
+      if( rep & PAD_KEY_LEFT )
+      { 
+        evw->mons_no -= 10;
+        if( evw->mons_no < 0 )
+        { 
+          evw->mons_no = 0;
+        }
+        del_pokemon( evw );
+        set_pokemon( evw );
+      }
     }
   }
 
@@ -587,7 +592,7 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
   switch( evw->seq_no ){
   default:
   case SEQ_IDLE:
-    if( cont )
+    if( cont & EFFECT_ENABLE_KEY )
     {
       evw->seq_no = SEQ_EFFECT_ENABLE;
     }
