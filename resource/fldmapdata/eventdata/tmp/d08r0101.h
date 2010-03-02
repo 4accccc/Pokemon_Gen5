@@ -12,7 +12,7 @@
 
 #define D08R0201_HAKASE1_01                0
 #define D08R0101_LEADER7_01                1
-#define TR_ELITEW_03                       2
+#define TR_ELITEM_04                       2
 #define TR_ELITEW_04                       3
 #define D08R0101_NONE_01                   4
 #define D08R0101_NONE_02                   5
