@@ -1255,7 +1255,7 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
       net_ini_data.gsid = WB_NET_IRCTRADE;
       break;
     default:
-      GF_ASSERT(0);
+//      GF_ASSERT(0);
       break;
     }
     if(pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL){
