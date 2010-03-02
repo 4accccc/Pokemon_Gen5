@@ -368,6 +368,24 @@ BOOL RAIL_ATTR_VALUE_CheckIceTurnR( const MAPATTR_VALUE val )
   return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レール上　Diving
+ *
+ *	@param	val   
+ *
+ *	@return　TRUE　FALSE
+ */
+//-----------------------------------------------------------------------------
+BOOL RAIL_ATTR_VALUE_CheckDivingAutoUp( const MAPATTR_VALUE val )
+{
+  if( (val == MATTR_DIVING_UP) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 
 

@@ -70,6 +70,8 @@ FS_EXTERN_OVERLAY( dpw_common );
 
 #define WIFI_BSUBWAY_Printf( ... )  OS_TPrintf( __VA_ARGS__ )
 
+#include "battle/bsubway_battle_data.h"
+
 #else
 
 #define WIFI_BSUBWAY_Printf( ... )  ((void)0)
@@ -1198,6 +1200,20 @@ static void PERSONAL_DATA_SetUpNhttpPokemon( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_B
 
   // ポケモンを設定する
   NHTTP_RAP_PokemonEvilCheckAdd( p_wk->p_nhttp, (BSUBWAY_POKEMON*)p_wk->bt_player.pokemon, sizeof(Dpw_Bt_PokemonData)*BSUBWAY_STOCK_WIFI_MEMBER_MAX );
+
+  // デバック出力
+#ifdef PM_DEBUG
+  {
+    int i;
+    u16* p_bin = (u16*)p_wk->bt_player.pokemon;
+
+    OS_TPrintf( "size %d\n", sizeof(BSUBWAY_POKEMON) );
+    for( i=0; i<(sizeof(Dpw_Bt_PokemonData)/2); i++ ){
+      OS_TPrintf( "%04x ", p_bin[i] );
+    }
+    OS_TPrintf( "\n" );
+  }
+#endif
 
   // 設定ポケモン数
   p_wk->poke_num = BSUBWAY_STOCK_WIFI_MEMBER_MAX;

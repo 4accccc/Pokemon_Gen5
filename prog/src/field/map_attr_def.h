@@ -89,6 +89,7 @@
 #define MATTR_SLIP_JUMP_RIGHT     (0xa6)		//氷上ジャンプ音（右向き）
 #define MATTR_SLIP_JUMP_LEFT      (0xa7)		//氷上ジャンプ音（左向き）
 #define MATTR_TURN_RIGHT          (0xa8)		//右を向く
+#define MATTR_DIVING_UP           (0xb0)		//ダイビング上昇床
 #define MATTR_OZE_01              (0xbe)		//尾瀬
 #define MATTR_OZE_STAIRS          (0xbf)		//尾瀬階段
 #define MATTR_COUNTER_01          (0xd4)		//カウンター

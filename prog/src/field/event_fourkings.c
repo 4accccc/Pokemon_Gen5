@@ -1438,12 +1438,14 @@ typedef struct
 {
   FIELD_BMODEL_MAN* p_man;
   const G3DMAPOBJST* cp_obj;
+  u16 se_2_on;
+  s16 se_2_time;
 } ESPERT_SOUND;
 
 // エスパー部屋星の位置
 static const VecFx32 sc_ESPERT_STAR_SARCH_POS = 
 {
-  FX32_CONST(128), 0, FX32_CONST(255)
+  FX32_CONST(118), 0, FX32_CONST(236)
 };
 
 #define ESPERT_SE_START_TIMING_MAX  (2)
@@ -1452,6 +1454,8 @@ static const sc_ESPERT_SE_START_TIMING[ ESPERT_SE_START_TIMING_MAX ] =
   FX32_CONST(90), FX32_CONST(213),
 };
 #define ESPERT_BMODEL_ANIME_IDX  ( 0 )
+
+#define ESPERT_SE_2_TIMING  ( 40 )
 
 
 static void ESPERT_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
@@ -1522,7 +1526,19 @@ static void ESPERT_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fiel
     if(frame == sc_ESPERT_SE_START_TIMING[i])
     {
       PMSND_PlaySE( SEQ_SE_FLD_108 );
+      p_wk->se_2_on = TRUE;
+      p_wk->se_2_time = ESPERT_SE_2_TIMING;
       break;
+    }
+  }
+
+  // 水滴の音
+  if(  p_wk->se_2_on  ){
+    p_wk->se_2_time --;
+    if( p_wk->se_2_time <= 0 ){
+      PMSND_PlaySE( SEQ_SE_FLD_130 );
+      p_wk->se_2_on = FALSE;
+      p_wk->se_2_time = 0;
     }
   }
 

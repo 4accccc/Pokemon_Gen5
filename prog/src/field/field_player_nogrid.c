@@ -67,8 +67,10 @@ typedef enum
   FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_R      = (1<<4),
   ///動作後強制右向き
   FIELD_PLAYER_NOGRID_MOVEBIT_TURN_R      = (1<<5),
+  ///自動上昇
+  FIELD_PLAYER_NOGRID_MOVEBIT_AUTO_UP      = (1<<6),
   ///最大
-  FIELD_PLAYER_NOGRID_MOVEBIT_BITMAX      = (1<<6),
+  FIELD_PLAYER_NOGRID_MOVEBIT_BITMAX      = (1<<7),
 }FIELD_PLAYER_NOGRID_MOVEBIT;
 
 #define FIELD_PLAYER_NOGRID_MOVEBIT_MAX (3)
@@ -98,6 +100,7 @@ typedef enum
   UNDER_ICE_JUMP_L, //滑る床 左ジャンプ
   UNDER_ICE_JUMP_R, //滑る床 右ジャンプ
   UNDER_ICE_TURN_R, //滑る床 強制右向き
+  UNDER_AUTO_UP, //自動上昇
   UNDER_MAX,
 }UNDER;
 
@@ -125,6 +128,15 @@ typedef enum
   KURUKURU_DIR_MAX,
 } KURUKURU_DIR;
 
+
+
+//--------------------------------------------------------------
+///	自動上昇
+//--------------------------------------------------------------
+enum{
+  AUTO_UP_NOINPUT_COUNT = 30, // 自動上昇が始まる値
+};
+
 //======================================================================
 //	struct
 //======================================================================
@@ -140,6 +152,19 @@ typedef struct
 
 
 //-------------------------------------
+///	自動上昇ワーク
+//=====================================
+typedef struct {
+  u8 auto_up_under:1; // 自動アップ床か？
+  u8 auto_up_flag:1;  // 自動上昇中か？
+  u8 auto_up_now_flag:1;  // 自動上昇開始か？
+  u8 auto_up_time:5;  // 時間制限がきているか？
+  s16 noinput_time; // 入力なし時間
+  int save_dir;   //上昇中に押された方向を保存
+} AUTO_UP_WORK;
+
+
+//-------------------------------------
 ///	レール動作用補助ワーク
 //=====================================
 struct _FIELD_PLAYER_NOGRID
@@ -147,12 +172,14 @@ struct _FIELD_PLAYER_NOGRID
   int move_state;
   FIELD_PLAYER_NOGRID_MOVEBIT move_bit;
   KURUKURU_WORK kurukuru;
+  AUTO_UP_WORK autoup;  //自動上昇ワーク
   
   FIELD_PLAYER_CORE* p_player_core;
 	FIELDMAP_WORK* p_fieldwork;
   MMDL* p_mmdl;
   
   FIELD_RAIL_WORK* p_railwork;
+
 } ;
 
 //======================================================================
@@ -188,6 +215,8 @@ static void nogrid_OnMoveBitSpinR( FIELD_PLAYER_NOGRID *nogrid );
 static void nogrid_OffMoveBitSpinR( FIELD_PLAYER_NOGRID *nogrid );
 static void nogrid_OnMoveBitTurnR( FIELD_PLAYER_NOGRID *nogrid );
 static void nogrid_OffMoveBitTurnR( FIELD_PLAYER_NOGRID *nogrid );
+static void nogrid_OnMoveBitAutoUp( FIELD_PLAYER_NOGRID *nogrid );
+static void nogrid_OffMoveBitAutoUp( FIELD_PLAYER_NOGRID *nogrid );
 
 static UNDER nogrid_CheckUnder( FIELD_PLAYER_NOGRID *nogrid, u16 dir );
 
@@ -201,6 +230,7 @@ static u16 nogrid_ControlUnderIceSpinR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BO
 static u16 nogrid_ControlUnderIceJumpL( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
 static u16 nogrid_ControlUnderIceJumpR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
 static u16 nogrid_ControlUnderIceTurnR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
+static u16 nogrid_ControlUnderAutoUp( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
 
 
 static u16 (* const nogrid_ControlUnderFunc[ UNDER_MAX ])( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug ) = 
@@ -212,6 +242,7 @@ static u16 (* const nogrid_ControlUnderFunc[ UNDER_MAX ])( FIELD_PLAYER_NOGRID *
   nogrid_ControlUnderIceJumpL,
   nogrid_ControlUnderIceJumpR,
   nogrid_ControlUnderIceTurnR,
+  nogrid_ControlUnderAutoUp,
 };
 
 
@@ -222,6 +253,18 @@ static u16 (* const nogrid_ControlUnderFunc[ UNDER_MAX ])( FIELD_PLAYER_NOGRID *
 static void nogrid_KuruKuru_Start( KURUKURU_WORK* wk, KURUKURU_DIR left_or_right );
 static void nogrid_KuruKuru_Stop( KURUKURU_WORK* wk );
 static void nogrid_KuruKuru_Main( KURUKURU_WORK* wk, MMDL* player );
+
+
+//======================================================================
+//	auto up work
+//======================================================================
+static void nogrid_AutoUp_Init( AUTO_UP_WORK* wk );
+static void nogrid_AutoUp_Start( AUTO_UP_WORK* wk );
+static void nogrid_AutoUp_Stop( AUTO_UP_WORK* wk );
+static void nogrid_AutoUp_Main_Top( AUTO_UP_WORK* wk, int dir, const MMDL* mmdl );
+static void nogrid_AutoUp_Main_Under( AUTO_UP_WORK* wk );
+static int nogrid_AutoUp_GetDir( const AUTO_UP_WORK* wk, int dir );
+static BOOL nogrid_AutoUp_IsAutoMove( const AUTO_UP_WORK* wk );
 
 
 //======================================================================
@@ -383,6 +426,9 @@ FIELD_PLAYER_NOGRID* FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER_CORE* p_player_cor
     MMDL_SetRailLocation( p_wk->p_mmdl, &location );
   }
 
+  // 各ワークの初期化
+  nogrid_AutoUp_Init( &p_wk->autoup );
+
 
   // 状態の復帰
   {
@@ -480,6 +526,9 @@ void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int k
 
   FIELD_PLAYER_CORE_UpdateRequest( p_player->p_player_core );
 
+  // 自動上昇処理　リクエスト処理前
+  nogrid_AutoUp_Main_Top( &p_player->autoup, dir, p_player->p_mmdl );
+
   // 強制移動制御
   dir = nogrid_ControlUnder( p_player, dir, debug_flag );
 
@@ -494,6 +543,10 @@ void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int k
   
   // くるくるまわす
   nogrid_KuruKuruMain( p_player );
+
+
+  // 自動上昇処理　リクエスト処理後
+  nogrid_AutoUp_Main_Under( &p_player->autoup );
 }
 
 //----------------------------------------------------------------------------
@@ -2327,6 +2380,31 @@ static void nogrid_OffMoveBitTurnR( FIELD_PLAYER_NOGRID *nogrid )
   nogrid_OffMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_TURN_R );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動上昇　ON
+ *
+ *	@param	nogrid 
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_OnMoveBitAutoUp( FIELD_PLAYER_NOGRID *nogrid )
+{
+  nogrid_OnMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_AUTO_UP );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動上昇　OFF
+ *
+ *	@param	nogrid 
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_OffMoveBitAutoUp( FIELD_PLAYER_NOGRID *nogrid )
+{
+  nogrid_OffMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_AUTO_UP );
+}
+
+
 
 
 
@@ -2371,6 +2449,10 @@ static UNDER nogrid_CheckUnder( FIELD_PLAYER_NOGRID *nogrid, u16 dir )
     if( RAIL_ATTR_VALUE_CheckIceTurnR(val) == TRUE )
     {
       return ( UNDER_ICE_TURN_R );
+    }
+    if( RAIL_ATTR_VALUE_CheckDivingAutoUp(val) == TRUE )
+    {
+      return ( UNDER_AUTO_UP );
     }
   }
   
@@ -2424,7 +2506,7 @@ static void nogrid_ControlUnder_Clear( FIELD_PLAYER_NOGRID *nogrid )
 
 
   // Pause情報のクリア
-  if( nogrid_CheckMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_FORCE|FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_L|FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_R ) )
+  if( nogrid_CheckMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_FORCE|FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_L|FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_R|FIELD_PLAYER_NOGRID_MOVEBIT_AUTO_UP ) )
   {
     MMDL_OffStatusBit( mmdl, MMDL_STABIT_PAUSE_DIR|MMDL_STABIT_PAUSE_ANM );
   }
@@ -2458,6 +2540,12 @@ static void nogrid_ControlUnder_Clear( FIELD_PLAYER_NOGRID *nogrid )
     MMDL_SetDirAll( mmdl, DIR_RIGHT );
   }
 
+  // 自動上昇ワークのクリア
+  if( nogrid_CheckMoveBit(nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_AUTO_UP) )
+  {
+    nogrid_OffMoveBitAutoUp( nogrid );
+    nogrid_AutoUp_Stop( &nogrid->autoup );
+  }
 }
 
 
@@ -2649,6 +2737,43 @@ static u16 nogrid_ControlUnderIceTurnR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BO
   return ret_dir;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動上昇
+ */
+//-----------------------------------------------------------------------------
+static u16 nogrid_ControlUnderAutoUp( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug )
+{
+  u16 ret_dir;
+  
+  if( !nogrid_CheckMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_AUTO_UP ) ){
+    nogrid_OnMoveBitAutoUp( nogrid );
+    nogrid_AutoUp_Start( &nogrid->autoup );
+  }
+
+  // 自動上昇ワークを使い方向を決める
+  ret_dir = nogrid_AutoUp_GetDir( &nogrid->autoup, dir );
+
+  // 自動上昇するのか？
+  if( nogrid_AutoUp_IsAutoMove( &nogrid->autoup ) ){
+    MMDL_OnStatusBit( nogrid->p_mmdl, MMDL_STABIT_PAUSE_DIR|MMDL_STABIT_PAUSE_ANM );
+
+    // 自動上昇
+    {
+      u16 code = MMDL_ChangeDirAcmdCode( ret_dir, AC_WALK_U_16F );
+      
+      MMDL_SetAcmd( nogrid->p_mmdl, code );
+    }
+    ret_dir = DIR_NOT;
+    
+  }else{
+    
+    MMDL_OffStatusBit( nogrid->p_mmdl, MMDL_STABIT_PAUSE_DIR|MMDL_STABIT_PAUSE_ANM );
+  }
+
+  return ret_dir;
+}
+
 
 
 
@@ -2716,4 +2841,154 @@ static void nogrid_KuruKuru_Main( KURUKURU_WORK* wk, MMDL* player )
 
   MMDL_SetForceDirDisp( player, sc_DATA_KuruKuruTbl[wk->left_or_right][wk->frame] ); 
 }
+
+
+
+
+
+//======================================================================
+//	auto up work
+//======================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動上昇　初期化
+ *
+ *	@param	wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_AutoUp_Init( AUTO_UP_WORK* wk )
+{
+  GFL_STD_MemClear( wk, sizeof(AUTO_UP_WORK) );
+  wk->save_dir = DIR_NOT;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動上昇　開始
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_AutoUp_Start( AUTO_UP_WORK* wk )
+{
+  wk->auto_up_under = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動上昇　停止
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_AutoUp_Stop( AUTO_UP_WORK* wk )
+{
+  nogrid_AutoUp_Init( wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動上昇　メイン処理
+ *
+ *	@param	wk  ワーク
+ *	@param	dir 今フレームの方向
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_AutoUp_Main_Top( AUTO_UP_WORK* wk, int dir, const MMDL* mmdl )
+{
+  if( wk->auto_up_under == FALSE ){
+    return ;
+  }
+  
+  // 時間制限が来ているときの処理
+  if( wk->auto_up_time ){
+    if( dir != DIR_NOT ){
+      // 入力があった。
+      // 時間制限処理は初期化
+      wk->noinput_time = 0;
+      wk->auto_up_time = FALSE;
+
+      // もし自動上昇中なら方向を保持
+      if( wk->auto_up_flag ){
+        wk->save_dir = dir;
+      }
+    }
+    
+  // 時間制限が来ていないときの処理
+  }else{
+    if( dir == DIR_NOT ){
+      if( wk->noinput_time < AUTO_UP_NOINPUT_COUNT ){
+        wk->noinput_time ++;
+      }else{
+        // 時間制限がきた
+        wk->auto_up_time = TRUE;
+      }
+    }
+    
+  }
+  
+  // もし、時間制限中で、動作モデルが動ける状態なら
+  // 自動でアップ
+  if( (MMDL_CheckPossibleAcmd(mmdl) == TRUE) ){
+    if( wk->auto_up_time == FALSE ){
+      wk->auto_up_flag = FALSE; //自動上昇終了
+      wk->auto_up_now_flag = FALSE;
+    }else{
+      wk->auto_up_flag = TRUE;
+      wk->auto_up_now_flag = TRUE;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動上昇　動作後処理
+ *
+ *	@param	wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_AutoUp_Main_Under( AUTO_UP_WORK* wk )
+{
+  if( wk->auto_up_now_flag ){
+    wk->auto_up_now_flag = FALSE;
+  }
+  if( !wk->auto_up_flag ){
+    wk->save_dir = DIR_NOT;
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動上昇　移動方向を取得
+ *
+ *	@param	* wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static int nogrid_AutoUp_GetDir( const AUTO_UP_WORK* wk, int dir )
+{
+  if( wk->auto_up_now_flag ){
+    return DIR_LEFT;
+  }else{
+    if( wk->save_dir != DIR_NOT ){
+      return wk->save_dir;
+    }
+  }
+
+
+  return dir;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動動作  中かチェック
+ *
+ *	@param	wk ワーク
+ *
+ *	@retval TRUE  自動移動中
+ */
+//-----------------------------------------------------------------------------
+static BOOL nogrid_AutoUp_IsAutoMove( const AUTO_UP_WORK* wk )
+{
+  return wk->auto_up_flag;
+}
+
+
+
 
