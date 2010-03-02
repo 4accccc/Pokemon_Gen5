@@ -37,15 +37,17 @@
 #define TRMSG_NONE              ( -1 )  //メッセージが見つからなかった
 
 //トレーナーデータを取得するときのID定義
-#define	ID_TD_data_type		(0)		//データタイプ
-#define	ID_TD_tr_type		  (1)		//トレーナー分類
-#define	ID_TD_fight_type	(2)		//戦闘タイプ（1vs1or2vs2）
-#define	ID_TD_poke_count	(3)		//所持ポケモン数
-#define	ID_TD_use_item1		(4)		//使用道具1
-#define	ID_TD_use_item2		(5)		//使用道具2
-#define	ID_TD_use_item3		(6)		//使用道具3
-#define	ID_TD_use_item4		(7)		//使用道具4
-#define	ID_TD_aibit			  (8)		//AIパターン
+#define	ID_TD_data_type		    ( 0 )		//データタイプ
+#define	ID_TD_tr_type		      ( 1 )		//トレーナー分類
+#define	ID_TD_fight_type	    ( 2 )		//戦闘タイプ（1vs1or2vs2）
+#define	ID_TD_poke_count	    ( 3 )		//所持ポケモン数
+#define	ID_TD_use_item1		    ( 4 )		//使用道具1
+#define	ID_TD_use_item2		    ( 5 )		//使用道具2
+#define	ID_TD_use_item3		    ( 6 )		//使用道具3
+#define	ID_TD_use_item4		    ( 7 )		//使用道具4
+#define	ID_TD_aibit			      ( 8 )		//AIパターン
+#define	ID_TD_hp_recover_flag ( 9 )		//戦闘後回復するか？
+#define	ID_TD_gift_item       ( 10 )  //贈呈するアイテム
 
 //トレーナー持ちポケモンパラメータ
 #define DATATYPE_NORMAL   ( 0 )
@@ -59,16 +61,29 @@
 #include "battle/battle.h"
 #include "buflen.h"
 
+typedef enum
+{ 
+  TD_FIGHT_TYPE_1vs1 = 0,
+  TD_FIGHT_TYPE_2vs2,
+  TD_FIGHT_TYPE_3vs3,
+  TD_FIGHT_TYPE_ROTATION,
+}TD_FIGHT_TYPE;
+
 //トレーナーデータパラメータ
 typedef struct{
-	u8			data_type;        //データタイプ
-	u8			tr_type;					//トレーナー分類
-  u8      fight_type;       //1vs1or2vs2 
-	u8			poke_count;       //所持ポケモン数
+	u8  data_type;            //データタイプ
+	u8	tr_type;					    //トレーナー分類
+  u8  fight_type;           //1vs1 or 2vs2 or 3vs3 or rotate 
+	u8	poke_count;           //所持ポケモン数
 
-	u16			use_item[4];      //使用道具
+	u16	use_item[4];          //使用道具
 
-	u32			aibit;						//AIパターン
+	u32	aibit;						    //AIパターン
+
+  u16 hp_recover_flag :1;   //戦闘後回復するか？
+  u16                 :15;  
+
+  u16 gift_item;
 }TRAINER_DATA;
 
 //トレーナー持ちポケモンパラメータ（データタイプノーマル）
