@@ -86,13 +86,13 @@ typedef struct
 }MCSS_ADD_DEBUG_WORK;
 #endif
 
-typedef BOOL (MCSS_CALLBACK_FUNC)( const MCSS_ADD_WORK*, TCB_LOADRESOURCE_WORK*, void * );
+typedef BOOL (MCSS_CALLBACK_FUNC)( const MCSS_ADD_WORK*, TCB_LOADRESOURCE_WORK*, u32 );
 
 extern	MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID );
 extern	void						MCSS_Exit( MCSS_SYS_WORK *mcss_sys );
 extern	void						MCSS_Main( MCSS_SYS_WORK *mcss_sys );
-extern  void	          MCSS_SetCallBackFunc( MCSS_SYS_WORK *mcss_sys, MCSS_CALLBACK_FUNC* func, void* work );
-extern  void	          MCSS_SetCallBackWork( MCSS_SYS_WORK *mcss_sys, void* work );
+extern  void	          MCSS_SetCallBackFunc( MCSS_SYS_WORK *mcss_sys, MCSS_CALLBACK_FUNC* func, u32 work );
+extern  void	          MCSS_SetCallBackWork( MCSS_SYS_WORK *mcss_sys, u32 work );
 extern  void	          MCSS_ReloadResource( MCSS_SYS_WORK *mcss_sys, MCSS_WORK* mcss, MCSS_ADD_WORK* maw );
 extern	void						MCSS_Draw( MCSS_SYS_WORK *mcss_sys );
 extern	MCSS_WORK*			MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_WORK *maw );
