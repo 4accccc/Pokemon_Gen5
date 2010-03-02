@@ -434,7 +434,6 @@ typedef struct
 
 struct _BTLV_INPUT_WORK
 {
-  const BTL_CLIENT*     clientWork;
   GFL_TCBSYS*           tcbsys;
   void*                 tcbwork;
   ARCHANDLE*            handle;
@@ -505,6 +504,7 @@ struct _BTLV_INPUT_WORK
 
   //メインループTCB
   GFL_TCB*              main_loop;      //scdにメインループが存在しないのでBTLV_EFFECTのTCBを間借りしてメインを回す
+  BOOL                  main_loop_flag;
 
   HEAPID                heapID;
 
@@ -603,6 +603,8 @@ typedef struct
  *  プロトタイプ宣言
  */
 //============================================================================================
+static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( BTLV_INPUT_TYPE type, BtlCompetitor comp,
+                                               GFL_FONT* font, u8* cursor_flag, BOOL main_loop_flag, HEAPID heapID );
 static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw );
 static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work );
@@ -661,7 +663,24 @@ static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw );
 
 //============================================================================================
 /**
- *  @brief  システム初期化
+ *  @brief  システム初期化（汎用）
+ *
+ *  @param[in]  type          インターフェースタイプ
+ *  @param[in]  font          使用するフォント
+ *  @param[in]  cursor_flag   カーソル表示するかどうかフラグのポインタ（他のアプリとも共用するため）
+ *  @param[in]  heapID        ヒープID
+ *
+ *  @retval システム管理構造体のポインタ
+ */
+//============================================================================================
+BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( BTLV_INPUT_TYPE type, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
+{ 
+  return BTLV_INPUT_InitCore( type, BTL_COMPETITOR_WILD, font, cursor_flag, FALSE, heapID );
+}
+
+//============================================================================================
+/**
+ *  @brief  システム初期化（戦闘専用）
  *
  *  @param[in]  type          インターフェースタイプ
  *  @param[in]  comp          対戦相手（野生orトレーナーor通信）
@@ -672,12 +691,30 @@ static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw );
  *  @retval システム管理構造体のポインタ
  */
 //============================================================================================
-BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, BtlCompetitor comp, const BTL_CLIENT* clientWork, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
+BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, BtlCompetitor comp, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
 {
+  return BTLV_INPUT_InitCore( type, comp, font, cursor_flag, TRUE, heapID );
+}
+
+//============================================================================================
+/**
+ *  @brief  システム初期化コア
+ *
+ *  @param[in]  type          インターフェースタイプ
+ *  @param[in]  comp          対戦相手（野生orトレーナーor通信）
+ *  @param[in]  font          使用するフォント
+ *  @param[in]  cursor_flag   カーソル表示するかどうかフラグのポインタ（他のアプリとも共用するため）
+ *  @param[in]  heapID        ヒープID
+ *
+ *  @retval システム管理構造体のポインタ
+ */
+//============================================================================================
+static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( BTLV_INPUT_TYPE type, BtlCompetitor comp,
+                                               GFL_FONT* font, u8* cursor_flag, BOOL main_loop_flag, HEAPID heapID )
+{ 
   BTLV_INPUT_WORK *biw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_INPUT_WORK ) );
 
   biw->heapID = heapID;
-  biw->clientWork = clientWork;
 
   biw->tcbwork  = GFL_HEAP_AllocClearMemory( biw->heapID, GFL_TCB_CalcSystemWorkSize( BTLV_INPUT_TCB_MAX ) );
   biw->tcbsys   = GFL_TCB_Init( BTLV_INPUT_TCB_MAX, biw->tcbwork );
@@ -689,6 +726,8 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, BtlCompetitor comp, con
   biw->cursor_mode = cursor_flag;
 
   biw->old_cursor_pos = CURSOR_NOMOVE;
+
+  biw->main_loop_flag = main_loop_flag;
 
   {
     int i;
@@ -753,8 +792,8 @@ void  BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw )
 //============================================================================================
 void  BTLV_INPUT_Main( BTLV_INPUT_WORK* biw )
 {
-//  GFL_TCB_Main( biw->tcbsys );
-//  INFOWIN_Update();
+  GFL_TCB_Main( biw->tcbsys );
+  INFOWIN_Update();
 }
 
 //============================================================================================
@@ -814,11 +853,14 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
 
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
-  //メインループはTCBで行う
-  biw->main_loop = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), BTLV_INPUT_MainTCB, biw, 0 );
-
   //OBJカーソル表示処理をする
   biw->cursor_decide = 1;
+
+  //メインループはTCBで行う
+  if( biw->main_loop_flag == TRUE )
+  { 
+    biw->main_loop = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), BTLV_INPUT_MainTCB, biw, 0 );
+  }
 
   BTLV_INPUT_CreateScreen( biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
 }
@@ -899,7 +941,11 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
 
   BTLV_INPUT_FreeFrame();
 
-  GFL_TCB_DeleteTask( biw->main_loop );
+  if( biw->main_loop )
+  { 
+    GFL_TCB_DeleteTask( biw->main_loop );
+    biw->main_loop = NULL;
+  }
 
   GFL_ARC_CloseDataHandle( biw->handle );
 
