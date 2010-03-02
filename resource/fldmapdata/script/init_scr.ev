@@ -191,6 +191,10 @@ init_flags:
 	
 	//Ｎの城移動用のワープＮＰＣを非表示
 	_FLAG_SET( FV_C09R0701_WARPMAN )
+	
+	//５番道路：チャンピオンと少年達を非表示。C04ジムクリア後に表示
+	_FLAG_SET( FV_R05_CHAMPION )
+	
 }  
 _RET
 

@@ -186,6 +186,9 @@ ev_leader4_btl:
 
 	//R05ライバル戦闘POSイベントを有効にする
 	$WK_SCENE_R05 = 1
+	
+	//R05にチャンピオンと少年たちを表示させる
+	_FLAG_RESET( FV_R05_CHAMPION )
 
 	//ジムトレーナーの視線無効
 	_TRAINER_FLAG_SET( TRID_PRINCE_01 )
