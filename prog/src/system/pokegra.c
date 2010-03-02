@@ -23,7 +23,7 @@
 #include "system/pokegra.h"
 
 //パッチールブチ作成
-#include "../battle/btlv/data/patch.cdat"
+#include "patch.cdat"
 //=============================================================================
 /**
  *					定数宣言
