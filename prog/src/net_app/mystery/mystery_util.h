@@ -100,6 +100,7 @@ extern void MYSTERY_TEXT_WriteWindowFrame( MYSTERY_TEXT_WORK *p_wk, u16 frm_chr,
 //=====================================
 #define MYSTERY_LIST_SELECT_NULL  (BMPMENULIST_NULL)
 #define MYSTERY_LIST_WINDOW_MAX   (3)
+
 //-------------------------------------
 ///	選択リスト
 //=====================================
@@ -115,6 +116,7 @@ typedef struct
   u16 font_plt;
   u16 frm_plt;
   u16 frm_chr;
+
 } MYSTERY_LIST_SETUP;
 
 //-------------------------------------
@@ -172,8 +174,10 @@ extern BOOL MYSTERY_MSGWINSET_PrintMain( MYSTERY_MSGWINSET_WORK* p_wk );
 ///	定数
 //=====================================
 #define MYSTERY_MENU_SELECT_NULL  (BMPMENULIST_NULL)
+#define MYSTERY_MENU_SELECT_CENCEL  (BMPMENULIST_CANCEL)
 #define MYSTERY_MENU_WINDOW_MAX   (4)
 
+typedef void (*MYSTERY_MENU_CURSOR_CALLBACK)( void *p_wk_adrs );
 //-------------------------------------
 ///	メニュー設定
 //=====================================
@@ -189,11 +193,16 @@ typedef struct
     STRBUF  *p_strbuf[MYSTERY_MENU_WINDOW_MAX];  //すぐ開放してもOK
   };
   u32 list_max;
-
   u16 font_frm;
   u16 font_plt;
   u16 bg_frm; //枠  
   u16 bg_ofs;  //BGパレット
+
+  s16 chr_y_ofs;
+  u16 anm_seq;
+
+  MYSTERY_MENU_CURSOR_CALLBACK callback;
+  void *p_wk_adrs;
 } MYSTERY_MENU_SETUP;
 
 //-------------------------------------
@@ -269,3 +278,9 @@ extern void MYSTERY_MSGOAM_SetStrPos( MYSTERY_MSGOAM_WORK* p_wk, s16 x, s16 y, M
 extern BOOL MYSTERY_MSGOAM_PrintMain( MYSTERY_MSGOAM_WORK* p_wk );
 extern BMPOAM_ACT_PTR MYSTERY_MSGOAM_GetBmpOamAct( MYSTERY_MSGOAM_WORK* p_wk );
 
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  ETC
+ */
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+extern void MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end );

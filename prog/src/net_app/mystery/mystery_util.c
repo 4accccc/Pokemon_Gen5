@@ -890,6 +890,10 @@ struct _MYSTERY_MENU_WORK
   u16               font_plt;
   u16               font_frm;
   u16               bg_frm;
+  s16               chr_y_ofs;
+  u16               anm_seq;
+  MYSTERY_MENU_CURSOR_CALLBACK callback;
+  void *p_wk_adrs;
 };
 //-------------------------------------
 ///	プロトタイプ
@@ -918,6 +922,10 @@ MYSTERY_MENU_WORK * MYSTERY_MENU_Init( const MYSTERY_MENU_SETUP *cp_setup, HEAPI
   p_wk->font_plt  = cp_setup->font_plt;
   p_wk->bg_frm    = cp_setup->bg_frm;
   p_wk->font_frm  = cp_setup->font_frm;
+  p_wk->callback  = cp_setup->callback;
+  p_wk->p_wk_adrs = cp_setup->p_wk_adrs;
+  p_wk->chr_y_ofs = cp_setup->chr_y_ofs;
+  p_wk->anm_seq   = cp_setup->anm_seq;
 
   //１５をコピー
 /*  { 
@@ -956,6 +964,10 @@ MYSTERY_MENU_WORK * MYSTERY_MENU_Init( const MYSTERY_MENU_SETUP *cp_setup, HEAPI
 
     for( i = 0; i < p_wk->list_max; i++ )
     {
+      //Yオフセット
+      tbl[i].y  += cp_setup->chr_y_ofs;
+
+      //文字設定
       if( cp_setup->p_msg )
       { 
         tbl[i].p_strbuf	= GFL_MSG_CreateString( cp_setup->p_msg, cp_setup->strID[ i ] );
@@ -982,11 +994,11 @@ MYSTERY_MENU_WORK * MYSTERY_MENU_Init( const MYSTERY_MENU_SETUP *cp_setup, HEAPI
   {
     GFL_CLACTPOS  pos;
     pos.x = sc_menu_cursor_pos[0].x;
-    pos.y = sc_menu_cursor_pos[0].y;
+    pos.y = sc_menu_cursor_pos[0].y + cp_setup->chr_y_ofs * 8;
     GFL_CLACT_WK_SetPos( p_wk->p_cursor, &pos, CLSYS_DEFREND_MAIN );
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_cursor, TRUE );
+    GFL_CLACT_WK_SetAnmSeq( p_wk->p_cursor, p_wk->anm_seq );
     GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_cursor, TRUE );
-    GFL_CLACT_WK_SetAnmSeq( p_wk->p_cursor, 0 );
   }
 
   return p_wk;
@@ -1046,8 +1058,15 @@ u32 MYSTERY_MENU_Main( MYSTERY_MENU_WORK *p_wk )
   }
   else if( trg & PAD_BUTTON_CANCEL )
   { 
-    p_wk->select  = p_wk->list_max-1;
-    return p_wk->select;
+    if( p_wk->list_max == 1 )
+    { 
+      return MYSTERY_MENU_SELECT_CENCEL;
+    }
+    else
+    { 
+      p_wk->select  = p_wk->list_max-1;
+      return p_wk->select;
+    }
   }
 
   //アップデート
@@ -1057,7 +1076,7 @@ u32 MYSTERY_MENU_Main( MYSTERY_MENU_WORK *p_wk )
     {
       GFL_CLACTPOS  pos;
       pos.x = sc_menu_cursor_pos[p_wk->select].x;
-      pos.y = sc_menu_cursor_pos[p_wk->select].y; 
+      pos.y = sc_menu_cursor_pos[p_wk->select].y + p_wk->chr_y_ofs * 8;
       GFL_CLACT_WK_SetPos( p_wk->p_cursor, &pos, CLSYS_DEFREND_MAIN );
 
       if( p_wk->select == 3 )
@@ -1066,8 +1085,14 @@ u32 MYSTERY_MENU_Main( MYSTERY_MENU_WORK *p_wk )
       }
       else
       { 
-        GFL_CLACT_WK_SetAnmSeq( p_wk->p_cursor, 0 );
+        GFL_CLACT_WK_SetAnmSeq( p_wk->p_cursor, p_wk->anm_seq );
       }
+    }
+
+    //コールバック
+    if( p_wk->callback )
+    { 
+      p_wk->callback( p_wk->p_wk_adrs );
     }
   }
 
@@ -1534,4 +1559,44 @@ static void Mystery_Msgoam_CalcPos( const MYSTERY_MSGOAM_WORK* cp_wk, GFL_FONT *
     }
     break;
   }
+}
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  ETC
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットフェード
+ *
+ *	@param	NNS_GFD_DST_TYPE type 転送先
+ *	@param	*p_buff               バッファ
+ *	@param	cnt                   カウント
+ *	@param	plt_num               パレット縦
+ *	@param	plt_col               パレット横
+ *	@param	start                 開始色
+ *	@param	end                   終了色
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end )
+{ 
+  //1～0に変換
+  const fx16 cos = (FX_CosIdx(cnt)+FX16_ONE)/2;
+  const u8 start_r  = (start & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+  const u8 start_g  = (start & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+  const u8 start_b  = (start & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+  const u8 end_r  = (end & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+  const u8 end_g  = (end & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+  const u8 end_b  = (end & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+
+  const u8 r = start_r + (((end_r-start_r)*cos)>>FX16_SHIFT);
+  const u8 g = start_g + (((end_g-start_g)*cos)>>FX16_SHIFT);
+  const u8 b = start_b + (((end_b-start_b)*cos)>>FX16_SHIFT);
+
+  *p_buff = GX_RGB(r, g, b);
+
+  NNS_GfdRegisterNewVramTransferTask( type,
+      plt_num * 32 + plt_col * 2,
+      p_buff, 2 );
 }

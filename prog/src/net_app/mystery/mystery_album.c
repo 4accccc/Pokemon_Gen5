@@ -224,7 +224,6 @@ static inline u32 Mystery_Album_GetIndexToPage( u32 cursor )
 { 
   return cursor / MYSTERY_CURSOR_MAX;
 }
-static void Mystery_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end );
 
 //-------------------------------------
 ///	カードデータ
@@ -613,7 +612,7 @@ void MYSTERY_ALBUM_Main( MYSTERY_ALBUM_WORK *p_wk )
 
     for( i = 0; i < 0x10; i++ )
     { 
-      Mystery_MainPltAnm( NNS_GFD_DST_2D_OBJ_PLTT_MAIN, &p_wk->plt[i], p_wk->plt_cnt, MYSTERY_ALBUM_OBJ_CURSOR_PLT, i, p_wk->plt_src[i], p_wk->plt_dst[i] );
+      MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_OBJ_PLTT_MAIN, &p_wk->plt[i], p_wk->plt_cnt, MYSTERY_ALBUM_OBJ_CURSOR_PLT, i, p_wk->plt_src[i], p_wk->plt_dst[i] );
     }
   }
 }
@@ -1376,40 +1375,6 @@ static u32 Mystery_Album_GetDataNum( const MYSTERY_ALBUM_WORK *cp_wk )
     }
   }
   return cnt;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  パレットフェード
- *
- *	@param	NNS_GFD_DST_TYPE type 転送先
- *	@param	*p_buff               バッファ
- *	@param	cnt                   カウント
- *	@param	plt_num               パレット縦
- *	@param	plt_col               パレット横
- *	@param	start                 開始色
- *	@param	end                   終了色
- */
-//-----------------------------------------------------------------------------
-static void Mystery_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end )
-{ 
-  //1～0に変換
-  const fx16 cos = (FX_CosIdx(cnt)+FX16_ONE)/2;
-  const u8 start_r  = (start & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
-  const u8 start_g  = (start & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
-  const u8 start_b  = (start & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
-  const u8 end_r  = (end & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
-  const u8 end_g  = (end & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
-  const u8 end_b  = (end & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
-
-  const u8 r = start_r + (((end_r-start_r)*cos)>>FX16_SHIFT);
-  const u8 g = start_g + (((end_g-start_g)*cos)>>FX16_SHIFT);
-  const u8 b = start_b + (((end_b-start_b)*cos)>>FX16_SHIFT);
-
-  *p_buff = GX_RGB(r, g, b);
-
-  NNS_GfdRegisterNewVramTransferTask( type,
-      plt_num * 32 + plt_col * 2,
-      p_buff, 2 );
 }
 
 //=============================================================================
@@ -3247,7 +3212,7 @@ void MYSTERY_CARD_Main( MYSTERY_CARD_WORK *p_wk )
 	      u16 fade = 0 + 0xFFFF/2 * p_wk->cnt / MYSTERY_CARD_EFFECT_SYNC;
 	      for( i = 0; i < 0x10; i++ )
 	      { 
-	        Mystery_MainPltAnm( gfd_type, &p_wk->plt[i], fade, p_wk->plt_num, i, p_wk->plt_pokemon[i], p_wk->plt_silhouette[i] );
+	        MYSTERY_UTIL_MainPltAnm( gfd_type, &p_wk->plt[i], fade, p_wk->plt_num, i, p_wk->plt_pokemon[i], p_wk->plt_silhouette[i] );
 	      }
 	
 	    }
@@ -3285,7 +3250,7 @@ void MYSTERY_CARD_Main( MYSTERY_CARD_WORK *p_wk )
 	      u16 fade = 0xFFFF/2 - 0xFFFF/2 * p_wk->cnt / MYSTERY_CARD_EFFECT_SYNC;
 	      for( i = 0; i < 0x10; i++ )
 	      { 
-	        Mystery_MainPltAnm( gfd_type, &p_wk->plt[i], fade, p_wk->plt_num, i, p_wk->plt_pokemon[i], p_wk->plt_silhouette[i] );
+	        MYSTERY_UTIL_MainPltAnm( gfd_type, &p_wk->plt[i], fade, p_wk->plt_num, i, p_wk->plt_pokemon[i], p_wk->plt_silhouette[i] );
 	      }
 	
 	    }

@@ -94,7 +94,7 @@ enum
 {
 	//メイン画面BG
 	PLT_BG_BACK_M	=	0,
-  PLT_BG_RECV_M = 1,  //6本
+  PLT_BG_RECV_M = 4,
   PLT_BG_CARD_M = 8,
   PLT_BG_LIST_M = 13,
   PLT_BG_TEXT_M = 14,
@@ -240,6 +240,11 @@ typedef struct
   u32       res_cgx[OBJ_RES_CGX_MAX]; //リソースキャラクター
   u32       res_cel[OBJ_RES_CEL_MAX]; //リソースセル
   GFL_CLWK  *p_clwk[OBJ_CLWKID_MAX];  //CLWK
+
+  u16 plt_cnt;
+  u16 plt[0x10];
+  u16 plt_src[0x10];
+  u16 plt_dst[0x10];
 } OBJ_WORK;
 
 //-------------------------------------
@@ -383,6 +388,8 @@ static void OBJ_Init( OBJ_WORK *p_wk, GFL_CLUNIT *p_clunit, HEAPID heapID );
 static void OBJ_Exit( OBJ_WORK *p_wk );
 static GFL_CLWK *OBJ_GetClwk( const OBJ_WORK *cp_wk, u32 clwkID );
 static void OBJ_ReLoad( OBJ_WORK *p_wk, HEAPID heapID );
+static void OBJ_PltFade_Main( OBJ_WORK *p_wk );
+static void OBJ_PltFade_Reset( OBJ_WORK *p_wk );
 //-------------------------------------
 ///	SEQFUNC
 //=====================================
@@ -423,6 +430,8 @@ typedef enum
 }UTIL_MENU_TYPE;
 static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID heapID );
 static void UTIL_DeleteMenu( MYSTERY_WORK *p_wk );
+static u32 UTIL_MainMenu( MYSTERY_WORK *p_wk );
+static void Util_MenuCallback( void *p_wk_adrs );
 //ガイドテキスト
 static void UTIL_CreateGuideText( MYSTERY_WORK *p_wk, HEAPID heapID );
 static void UTIL_DeleteGuideText( MYSTERY_WORK *p_wk );
@@ -760,21 +769,16 @@ static void BG_Load( BG_WORK *p_wk, BG_LOAD_TYPE type )
       GFL_ARC_CloseDataHandle( p_handle );
     }
 
-    //キャラを単位で読み込み
-    { 
-      static const u8 sc_blank_chr[0x20] = { 
-        0
-      };
-      GFL_BG_LoadCharacter( BG_FRAME_M_TEXT, sc_blank_chr, 0x20, BG_CGX_OFS_M_CLEAR );
-      GFL_BG_LoadCharacter( BG_FRAME_M_LIST, sc_blank_chr, 0x20, BG_CGX_OFS_M_CLEAR );
-    }
-
-
     { 
       TalkWinFrame_GraphicSet( BG_FRAME_M_TEXT, BG_CGX_OFS_M_TEXT, PLT_BG_TEXT_M, MENU_TYPE_SYSTEM, heapID );
       TalkWinFrame_GraphicSet( BG_FRAME_M_LIST, BG_CGX_OFS_M_LIST, PLT_BG_LIST_M, MENU_TYPE_SYSTEM, heapID );
 
     }
+
+    //キャラを単位で読み込み
+    GFL_BG_SetClearCharacter( BG_FRAME_M_TEXT, 0x20, BG_CGX_OFS_M_CLEAR, heapID );
+    GFL_BG_SetClearCharacter( BG_FRAME_M_LIST, 0x20, BG_CGX_OFS_M_CLEAR, heapID );
+
     break;
 
   case BG_LOAD_TYPE_GUIDE_S:
@@ -828,6 +832,24 @@ static void OBJ_Init( OBJ_WORK *p_wk, GFL_CLUNIT *p_clunit, HEAPID heapID )
 				NARC_mystery_title_cursol_NCER, NARC_mystery_title_cursol_NANR, heapID );
 		p_wk->res_cgx[ OBJ_RES_CGX_CURSOR ]	= GFL_CLGRP_CGR_Register( p_handle,
 				NARC_mystery_title_cursol_NCGR, FALSE, CLSYS_DRAW_MAX, heapID );
+
+
+    //カーソルのパレットフェード用にパレットをメモリ読み込み
+    { 
+      void *p_buff;
+      NNSG2dPaletteData *p_plt;
+      const u16 *cp_plt_adrs;
+
+      //もとのパレットから色情報を保存
+      p_buff  = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_mystery_title_cursol_NCLR, &p_plt, heapID );
+      cp_plt_adrs = p_plt->pRawData;
+      GFL_STD_MemCopy( cp_plt_adrs, p_wk->plt_dst, sizeof(u16) * 0x10 );
+      GFL_STD_MemCopy( (u8*)cp_plt_adrs + 1 * 0x20, p_wk->plt_src, sizeof(u16) * 0x10 );
+
+      //パレット破棄
+      GFL_HEAP_FreeMemory( p_buff );
+    }
+
 
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
@@ -940,7 +962,6 @@ static GFL_CLWK *OBJ_GetClwk( const OBJ_WORK *cp_wk, u32 clwkID )
 //-----------------------------------------------------------------------------
 static void OBJ_ReLoad( OBJ_WORK *p_wk, HEAPID heapID )
 { 
-
   //リソース読みこみ
 	{	
     void *p_plt_buff;
@@ -949,6 +970,47 @@ static void OBJ_ReLoad( OBJ_WORK *p_wk, HEAPID heapID )
     GFL_CLGRP_PLTT_Replace( p_wk->res_plt[ OBJ_RES_PLT_CURSOR ], p_plt_data, 6 );
     GFL_HEAP_FreeMemory( p_plt_buff );
 	} 
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットフェードメイン
+ *
+ *	@param	OBJ_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void OBJ_PltFade_Main( OBJ_WORK *p_wk )
+{ 
+  //パレットフェード
+  { 
+    int i;
+    const u16 add = 0x400;
+
+    //パレットアニメ
+    if( p_wk->plt_cnt + add >= 0x10000 )
+    {
+      p_wk->plt_cnt = p_wk->plt_cnt+add-0x10000;
+    }
+    else
+    {
+      p_wk->plt_cnt += add;
+    }
+
+    for( i = 0; i < 5; i++ )  //5以降は別なOBJにパレットを使っている
+    { 
+      MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_OBJ_PLTT_MAIN, &p_wk->plt[i], p_wk->plt_cnt, PLT_OBJ_CURSOR_M, i, p_wk->plt_src[i], p_wk->plt_dst[i] );
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットフェードカウンタをリセット
+ *
+ *	@param	OBJ_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void OBJ_PltFade_Reset( OBJ_WORK *p_wk )
+{ 
+  p_wk->plt_cnt = 0;
 }
 //=============================================================================
 /**
@@ -1124,7 +1186,7 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     //おくりものをうけとるorカードアルバムをみるorやめる
     { 
       u32 ret;
-      ret = MYSTERY_MENU_Main( p_wk->p_menu ); 
+      ret = UTIL_MainMenu( p_wk ); 
       if( ret != MYSTERY_MENU_SELECT_NULL )
       {
         if( ret == 0 )
@@ -1276,7 +1338,7 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       }
 
       //選択
-      ret = MYSTERY_MENU_Main( p_wk->p_menu ); 
+      ret = UTIL_MainMenu( p_wk ); 
       if( ret != MYSTERY_MENU_SELECT_NULL )
       { 
         UTIL_DeleteMenu( p_wk );
@@ -1472,7 +1534,7 @@ static void SEQFUNC_Infomation( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   case SEQ_INFO_SELECT_WAIT:
     { 
       u32 ret;
-      ret = MYSTERY_MENU_Main( p_wk->p_menu ); 
+      ret = UTIL_MainMenu( p_wk ); 
       if( ret != MYSTERY_MENU_SELECT_NULL )
       {
         UTIL_DeleteMenu( p_wk );
@@ -1687,7 +1749,8 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     //うけとるおくりものをえらんでください
     { 
       u32 ret;
-      ret = MYSTERY_MENU_Main( p_wk->p_menu ); 
+      BOOL is_cancel  = FALSE;
+      ret = UTIL_MainMenu( p_wk ); 
       if( ret != MYSTERY_MENU_SELECT_NULL )
       { 
         if( ret == 0 )
@@ -1697,8 +1760,17 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_GIFT_YESNO_INIT );
           *p_seq  = SEQ_MSG_WAIT;
         }
+        else if ( ret == MYSTERY_MENU_SELECT_CENCEL )
+        { 
+          is_cancel = TRUE;
+        }
       }
-      else  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
+      else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
+      { 
+        is_cancel = TRUE;
+      }
+
+      if( is_cancel )
       { 
         MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_012, MYSTERY_TEXT_TYPE_STREAM );
         MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_CANCEL_GIFT_INIT );
@@ -1857,6 +1929,10 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_SAVE_INIT:
+    { 
+      MYSTERYDATA_SetCardData( p_wk->p_sv, &p_wk->data.data);
+    }
+
     GAMEDATA_SaveAsyncStart(p_wk->p_gamedata);
     *p_seq  = SEQ_SAVE_MAIN;
     break;
@@ -2587,6 +2663,11 @@ static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID hea
     setup.font_plt= PLT_BG_FONT_M;
     setup.bg_frm = BG_FRAME_M_BACK1;
     setup.bg_ofs = PLT_BG_RECV_M;
+    setup.callback  = Util_MenuCallback;
+    setup.p_wk_adrs = p_wk;
+    setup.chr_y_ofs = 0;
+    setup.anm_seq = 0;
+
 
     switch( type )
     { 
@@ -2612,7 +2693,9 @@ static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID hea
       setup.p_msg   = NULL;
       setup.p_strbuf[0] = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TITLE_MAX+1, heapID );
       GFL_STR_SetStringCodeOrderLength( setup.p_strbuf[0], p_wk->data.data.event_name, GIFT_DATA_CARD_TITLE_MAX );
-      setup.list_max    = 1;
+      setup.list_max  = 1;
+      setup.chr_y_ofs = -1;
+      setup.anm_seq = 10;
       break;
 
     case UTIL_MENU_TYPE_INFO:
@@ -2674,6 +2757,9 @@ static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID hea
           MYSTERY_MENU_ALPHA_EV2
           );
     }
+
+    //フェード最初から
+    OBJ_PltFade_Reset( &p_wk->obj );
   }
 }
 //----------------------------------------------------------------------------
@@ -2697,6 +2783,35 @@ static void UTIL_DeleteMenu( MYSTERY_WORK *p_wk )
     MYSTERY_MENU_Exit( p_wk->p_menu );
     p_wk->p_menu  = NULL;
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メニューメイン処理
+ *
+ *	@param	MYSTERY_WORK *p_wk  ワーク
+ *
+ *	@return 選んだ値
+ */
+//-----------------------------------------------------------------------------
+static u32 UTIL_MainMenu( MYSTERY_WORK *p_wk )
+{ 
+  u32 ret;
+  ret = MYSTERY_MENU_Main( p_wk->p_menu ); 
+  OBJ_PltFade_Main( &p_wk->obj );
+
+  return ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カーソルが動くときに呼ばれるコールバック
+ *
+ *	@param	MYSTERY_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Util_MenuCallback( void *p_wk_adrs )
+{ 
+  MYSTERY_WORK *p_wk  = p_wk_adrs;
+  OBJ_PltFade_Reset( &p_wk->obj );
 }
 //----------------------------------------------------------------------------
 /**
