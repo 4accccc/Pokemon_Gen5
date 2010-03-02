@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T21:47:41"/>
+	<create user="matsumiya" host="W00224" date="2010-03-02T19:42:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -394,6 +394,66 @@
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="msg_d04r0101_stop_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・話しかけたとき</comment>
+		<attribute name="キャラ指定">WORKER
+作業員</attribute>
+		<language name="JPN" width="256">トレーナー！　このさき
+すなばかりで　まだ　すすめん！▼
+おっさん　がんばって
+すなを　とりのぞくので　まってくれ！</language>
+		<language name="JPN_KANJI" width="256">トレーナー！　このさき
+砂ばかりで　まだ　進めん！▼
+おっさん　がんばって
+砂を　とりのぞくので　待ってくれ！</language>
+	</row>
+
+	<row id="msg_d04r0101_stop_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・pos（GRIDX=6、GRIDZ=18）を踏んだとき
+・メッセージ後、主人公を一歩戻す</comment>
+		<attribute name="キャラ指定">WORKER
+作業員</attribute>
+		<language name="JPN" width="256">トレーナー！　このさき
+すなばかりで　まだ　すすめん！▼
+おっさん　がんばって
+すなを　とりのぞくので　まってくれ！▼</language>
+		<language name="JPN_KANJI" width="256">トレーナー！　このさき
+砂ばかりで　まだ　進めん！▼
+おっさん　がんばって
+砂を　とりのぞくので　待ってくれ！▼</language>
+	</row>
+
+	<row id="msg_d04r0101_stop_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・階下に進めるようになったとき</comment>
+		<attribute name="キャラ指定">WORKER
+作業員</attribute>
+		<language name="JPN" width="256">すなが　どんどん　おちていって
+したまで　すすめるように　なったぞ！</language>
+		<language name="JPN_KANJI" width="256">砂が　どんどん　落ちていって
+下まで　進めるように　なったぞ！</language>
+	</row>
+
+	<row id="msg_d04r0101_assistantm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+助手</attribute>
+		<language name="JPN" width="256">りゅうさに　ついて
+わかったことが　２つ　ある！▼
+まんなかは　かならず　おちる！▼
+はしって　とおろうとすると
+すなに　のみこまれて　おちる！</language>
+		<language name="JPN_KANJI" width="256">流砂に　ついて
+わかったことが　２つ　ある！▼
+まんなかを　通ろうとすると
+必ず　落ちる！▼
+走って　通ろうとすると
+砂に　のみこまれて　落ちる！</language>
 	</row>
 
 	<flowchart-group-list>
