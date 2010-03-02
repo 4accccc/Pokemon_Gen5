@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T15:12:06"/>
+	<create user="matsumiya" host="W00224" date="2010-03-02T12:07:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c06gym0201_leader_01">
+	<row id="msg_c06gym0201_leader_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>戦闘前メッセージ</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
 		<language name="JPN" width="256">ようこそ！[BE:01:ページ切り替え（クリア）]
@@ -307,7 +307,7 @@
 もっと　楽しいこと　しようよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06gym0201_leader_02">
+	<row id="msg_c06gym0201_leader_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
 		<language name="JPN" width="256">ヒューッ！
@@ -324,7 +324,7 @@
 アナタに　似合うよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06gym0201_leader_03">
+	<row id="msg_c06gym0201_leader_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>ファンファーレ＋バッジ入手処理</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　フウロから
@@ -333,7 +333,7 @@
 ジェットバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06gym0201_leader_04">
+	<row id="msg_c06gym0201_leader_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>アイテム入手処理</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
 		<language name="JPN" width="256">すごい！　それだけ　バッジがあれば
@@ -352,7 +352,7 @@
 もらってくれるかな[BE:01:ページ切り替え（クリア）]　</language>
 	</row>
 
-	<row id="msg_c06gym0201_leader_05">
+	<row id="msg_c06gym0201_leader_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>アイテム入手処理後
 </comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
@@ -370,7 +370,7 @@
 組みあわせれば　おもしろいかもよ！</language>
 	</row>
 
-	<row id="msg_c06gym0201_leader_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c06gym0201_leader_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>仮：d07イベント終了まで</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
 		<language name="JPN" width="256">……そういえばなんだけど
@@ -385,7 +385,7 @@
 あれって　なあに？</language>
 	</row>
 
-	<row id="msg_c06gym0201_leader_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c06gym0201_leader_07" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>仮：d07イベント終了後から</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
 		<language name="JPN" width="256">どう
