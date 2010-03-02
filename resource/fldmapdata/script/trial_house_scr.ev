@@ -171,7 +171,7 @@ charange:
       ENDSWITCH
     ENDIF
   ELSE                            //ダウンロードデータのとき
-    //ダウンロードデータはシングルか？だぶるか？@todo
+    //ダウンロードデータはシングルか？ダブルか？@todo
     $regulation = REG_SUBWAY_DOUBLE   //バトルサブウェイダブルレギュレーションで代用
     $btl_mode = TH_PLAYMODE_DOUBLE
   ENDIF
