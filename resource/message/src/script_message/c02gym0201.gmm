@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-01T20:06:40"/>
+	<create user="matsumiya" host="W00224" date="2010-03-02T14:48:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="283" right="1995" bottom="911" maximized="no" rayout="Vertical2">
+	<dialog left="1474" top="255" right="2179" bottom="883" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -426,6 +426,7 @@
 	<row id="msg_c02gym0101_girl3_02">
 		<comment>♀：トレーナー
 ・フラグ成立後＝戦闘前（画面下を向いている）</comment>
+		<attribute name="キャラ指定">本棚ストッパー１</attribute>
 		<language name="JPN" width="256">「ピカチュウの　せいたい」ね▼
 ポケモンの　ほんは
 この　れつの　どこかに　あるはずよ</language>
@@ -435,8 +436,7 @@
 	</row>
 
 	<row id="msg_c02gym0101_girl3_03">
-		<comment>♀：トレーナー
-・戦闘後</comment>
+		<attribute name="キャラ指定">本棚ストッパー１</attribute>
 		<language name="JPN" width="256">「こどもを　げんきに　そだてる」ね▼
 しゃかいコーナー　だから
 いちばん　おくの　ほんだなね▼
@@ -449,20 +449,22 @@
 立ち読みを　している人も　いたわ</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_girl3_04">
+		<attribute name="キャラ指定">本棚ストッパー１</attribute>
 		<language name="JPN" width="256">えほんを　さがしているの？▼
 この　ちかくには　ないわね
 えほんなら　じどうしょコーナーね▼
 みつからない　ほんが　あれば
 また　きてね</language>
 		<language name="JPN_KANJI" width="256">絵本を　探しているの?▼
-この　近くには　無いわね
+この　近くには　ないわね
 絵本なら　児童書コーナーね▼
 見つからない　本があれば
 また　来てね</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_girl3_05">
+		<attribute name="キャラ指定">本棚ストッパー１</attribute>
 		<language name="JPN" width="256">なぞなぞから　ほんを　さがして
 ここに　たどりついたのでしょ？▼
 いいわ！　わたしに　かてたら
@@ -473,7 +475,10 @@
 本棚を　調べさせて　あげる▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_girl3_06">
+		<comment>♀：トレーナー
+・戦闘後</comment>
+		<attribute name="キャラ指定">本棚ストッパー１</attribute>
 		<language name="JPN" width="256">もうすぐ　ジムリーダーに　あえるわ
 ここが　さいごの　ほんなの▼
 さいごのほんを　よんだとき
@@ -482,6 +487,20 @@
 ここが　最後の　本なの▼
 最後の本を　読んだとき
 なにが　起きるか　楽しみにしてね</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・ジムバッジ取得後</comment>
+		<attribute name="キャラ指定">本棚ストッパー１</attribute>
+		<language name="JPN" width="256">としょかんの　めいきゅうを　ぬけ
+ジムリーダーに　しょうりする！▼
+あなた……　きっと
+けんきゅうねっしんな　トレーナーね</language>
+		<language name="JPN_KANJI" width="256">図書館の　迷宮を　抜け
+ジムリーダーに　勝利する！▼
+あなた……　きっと
+研究熱心な　トレーナーね</language>
 	</row>
 
 	<row id="msg_c02gym0101_assitantw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -501,6 +520,7 @@
 	<row id="msg_c02gym0101_assitantw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：トレーナー
 ・フラグ成立後＝戦闘前（画面下を向いている）</comment>
+		<attribute name="キャラ指定">本棚ストッパー２</attribute>
 		<language name="JPN" width="256">ここの　ほんを　よみたいの？[BE:01:ページ切り替え（クリア）]
 いいわよ！　ただ　そのまえに……[BE:01:ページ切り替え（クリア）]
 ポケモンしょうぶを　してもらえると
@@ -514,6 +534,7 @@
 	<row id="msg_c02gym0101_assitantw_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：トレーナー
 ・戦闘後</comment>
+		<attribute name="キャラ指定">本棚ストッパー２</attribute>
 		<language name="JPN" width="256">よんだ　ほんは　ほんだなにもどす……
 ほんを　よむときの　ルールよね</language>
 		<language name="JPN_KANJI" width="256">読んだ本は　本棚に戻す……
