@@ -773,7 +773,14 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
       GMEVENT* event;
       musScriptWork->scriptRet = ret_wk;
       musScriptWork->irEntryWork.gamedata = gdata;
-      musScriptWork->irEntryWork.selectType = EVENTIRCBTL_ENTRYMODE_MUSICAL;
+      if( val1 == 0 )
+      {
+        musScriptWork->irEntryWork.selectType = EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER;
+      }
+      else
+      {
+        musScriptWork->irEntryWork.selectType = EVENTIRCBTL_ENTRYMODE_MUSICAL;
+      }
       event = EVENT_FieldSubProc_Callback( gsys, fieldmap, 
                                            FS_OVERLAY_ID(ircbattlematch), 
                                            &IrcBattleMatchProcData, 
