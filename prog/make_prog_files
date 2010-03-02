@@ -500,6 +500,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/mapdatafunc/field_func_wbcross_file.c \
         field/mapdatafunc/field_func_nogrid_file.c \
 				field/mapdatafunc/field_func_random_generate.c \
+				field/mapdatafunc/wb_attr_data.c \
 				field/field_wfbc.c \
 				field/field_easytp.c \
 				field/field_comm_actor.c \

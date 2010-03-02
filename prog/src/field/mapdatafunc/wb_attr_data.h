@@ -16,6 +16,7 @@
 extern "C"{
 #endif
 
+#include <gflib.h>
 
 //-----------------------------------------------------------------------------
 /**
@@ -28,6 +29,7 @@ extern "C"{
 typedef enum {
   WB_NORMALVTX_TRYANGLE_ONE=0,    // 三角形１つのデータ
   WB_NORMALVTX_TRYANGLE_TWO=1,    // 三角形２つのデータ
+  WB_NORMALVTX_TRYANGLE_TWO_INDEX=2,// 三角形２つのデータのインデックス（サイズはWB_NORMALVTXST_TR1と一緒）
 
   WB_NORMALVTX_TRYANGLE_FLAG_MAX,
 
@@ -37,20 +39,13 @@ typedef enum {
 /**
  *  WB_NORMALVTXST_TR1  
  *  WB_NORMALVTXST_TR2  
- *
- *    そのブロック内に、WB_NORMALVTXST_TR1のグリッドしかない場合には、
- *    すべてのグリッドはWB_NORMALVTXST_TR1の形式で出力されます。
- *
- *    そのブロック内に、１つでも三角形が２つ必要なグリッド(WB_NORMALVTXST_TR2)が
- *    あった場合には、すべてのグリッドをWB_NORMALVTXST_TR2の形式で出力します。
- *
 */
 //-----------------------------------------------------------------------------
 /// 高さデータ取得用
 // 3角形１
 typedef struct {
-  u16 tryangleFlag:1;
-	u16	vecN1_x:15;         //１個目の三角形の法線ベクトル
+  u16 tryangleFlag:2;     // WB_NORMALVTX_TRYANGLE_FLAG
+	u16	vecN1_x:14;         //１個目の三角形の法線ベクトル
 	u16	vecN1_D;            // ax+by+cz+d =0 のD値
 
 	u32		attr:31;          //アトリビュートビット    0-15がvalue 16-30がflg
@@ -59,8 +54,8 @@ typedef struct {
 
 // 3角形１
 typedef struct {
-  u16 tryangleFlag:1;     // WB_NORMALVTX_TRYANGLE_FLAG
-	u16	vecN1_x:15;         //１個目の三角形の法線ベクトル
+  u16 tryangleFlag:2;     // WB_NORMALVTX_TRYANGLE_FLAG
+	u16	vecN1_x:14;         //１個目の三角形の法線ベクトル
 	u16	vecN2_x;            //２個目の三角形の法線ベクトル
 	u16	vecN1_D;            // ax+by+cz+d =0 のD値
 	u16	vecN2_D;       
@@ -68,6 +63,20 @@ typedef struct {
 	u32		attr:31;          //アトリビュートビット    0-15がvalue 16-30がflg
 	u32		tryangleType:1;   //三角形の形のタイプ  ／ = 0 左:vecN1,右:vecN2  ＼ = 1 右:vecN1,左:vecN2
 } WB_NORMALVTXST_TR2;
+
+
+//-----------------------------------------------------------------------------
+/**
+ *					インデックス情報
+*/
+//-----------------------------------------------------------------------------
+#define WB_NORMAL_TBL_MAX ( 9 )
+#define WB_PLANE_D_TBL_MAX ( 9 )
+extern const fx16 WB_NORMAL_TBL[WB_NORMAL_TBL_MAX];  // fx16*3単位で法線が格納されています。
+extern const fx32 WB_PLANE_D_TBL[WB_PLANE_D_TBL_MAX];
+
+
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -88,6 +97,22 @@ static inline WB_NORMALVTX_TRYANGLE_FLAG WB_NORMALVTXST_GetTryangleFlag( const v
 {
   const WB_NORMALVTXST_TR1* cp_tr = cp_data;
   return cp_tr->tryangleFlag;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WB_NORMALVTX_TRYANGLE_TWO_INDEXの情報からTR2インデックスを取得
+ *
+ *	@param	cp_data    データ
+ *
+ *	@retval TR2インデックス
+ */
+//-----------------------------------------------------------------------------
+static inline u16 WB_NORMALVTXST_GetTR2Index( const void* cp_data )
+{
+  const WB_NORMALVTXST_TR1* cp_tr = cp_data;
+  GF_ASSERT( cp_tr->tryangleFlag == WB_NORMALVTX_TRYANGLE_TWO_INDEX );
+  return cp_tr->vecN1_D;
 }
 
 #ifdef _cplusplus
