@@ -139,6 +139,9 @@ extern void BTL_SETUP_Double_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 extern void BTL_SETUP_Multi_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode, u8 commPos, HEAPID heapID );
 
+extern void BTL_SETUP_MultiTag_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  GFL_NETHANDLE* netHandle, BtlCommMode commMode, u8 commPos, TrainerID tr_id, HEAPID heapID );
+
 extern void BTL_SETUP_Triple_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode, HEAPID heapID );
 

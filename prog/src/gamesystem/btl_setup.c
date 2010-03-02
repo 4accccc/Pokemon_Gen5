@@ -615,6 +615,26 @@ void BTL_SETUP_Multi_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   setup_common_CommTrainer( dst, gameData, BTL_RULE_DOUBLE, TRUE, netHandle, commMode, commPos, heapID );
 }
 
+
+//=============================================================================================
+/**
+ * ダブル（タッグ）通信対戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   netHandle
+ * @param   commMode
+ * @param   commPos
+ * @param   heapID
+ */
+//=============================================================================================
+void BTL_SETUP_MultiTag_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  GFL_NETHANDLE* netHandle, BtlCommMode commMode, u8 commPos, TrainerID tr_id, HEAPID heapID )
+{
+  setup_common_CommTrainer( dst, gameData, BTL_RULE_DOUBLE, TRUE, netHandle, commMode, commPos, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id, heapID );
+}
+
 //=============================================================================================
 /**
  * トリプル 通信対戦
