@@ -279,7 +279,7 @@ static void WIFIBATTLEMATCH_SUBPROC_InitListData( WIFIBATTLEMATCH_SUBPROC_PARAM 
   plData->reg = reg;
   
   plData->zone_id = 0;
-  plData->mode = PL_MODE_BATTLE;
+  plData->mode = PL_MODE_BATTLE_WIFI;
   switch( reg->BATTLE_TYPE )
   {
   case REGULATION_BATTLE_SINGLE:   ///<ƒVƒ“ƒOƒ‹
