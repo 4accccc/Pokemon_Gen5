@@ -22,6 +22,7 @@
 #define ITEMUSE_FLD_TENKAINOFUE		 	( 22 )	// フィールド：天界の笛
 #define ITEMUSE_FLD_BATTLE_REC		 	( 23 )	// フィールド：バトルレコーダー
 #define ITEMUSE_FLD_GRASHIDEA		 	( 24 )	// フィールド：グラシデアのはな
+#define ITEMUSE_FLD_DOWSING_MACHINE		 	( 25 )	// フィールド：ダウジングマシン
 
 #define	ITEMUSE_BTL_BALL		( 1 )	// バトル：ボール
 #define	ITEMUSE_BTL_RECOVER		( 2 )	// バトル：回復
