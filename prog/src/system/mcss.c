@@ -43,13 +43,6 @@
 #define MCSS_VCOUNT_BORDER          ( 213 )     //テクスチャ転送するときのVCOUNTの境界
                                                 //(192~213がレンダリングエンジンのブランク期間）
 
-typedef enum
-{ 
-  MCSS_PLTT_FADE_OFF = 0,
-  MCSS_PLTT_FADE_ON,
-  MCSS_PLTT_FADE_NONE_TCB,
-}MCSS_PLTT_FADE_FLAG;
-
 //--------------------------------------------------------------------------
 /**
  * 構造体宣言
@@ -79,7 +72,7 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 static	void	MCSS_GetNewMultiCellAnimation(MCSS_WORK *mcss, NNSG2dMCType	mcType );
 static	void	MCSS_MaterialSetup( void );
 static	NNSG2dMultiCellAnimation*     GetNewMultiCellAnim_( u16 num );
-static	void	MCSS_CalcPaletteFade( MCSS_WORK *mcss, MCSS_PLTT_FADE_FLAG flag );
+static	void	MCSS_CalcPaletteFade( MCSS_WORK *mcss );
 static  void  MCSS_FreeResource( MCSS_WORK* mcss );
 
 static	void	TCB_LoadResource( GFL_TCB *tcb, void *work );
@@ -189,7 +182,7 @@ void	MCSS_Main( MCSS_SYS_WORK *mcss_sys )
 			//パレットフェードチェック
 			if( mcss_sys->mcss[ index ]->pal_fade_flag )
 			{	
-				MCSS_CalcPaletteFade( mcss_sys->mcss[ index ], ( mcss_sys->mcss[ index ]->is_load_resource != 0 ) ); 
+				MCSS_CalcPaletteFade( mcss_sys->mcss[ index ] ); 
 			}
     }
 	}
@@ -1216,6 +1209,8 @@ void	MCSS_SetPaletteFade( MCSS_WORK *mcss, u8 start_evy, u8 end_evy, u8 wait, u3
 	mcss->pal_fade_wait				= 0;
 	mcss->pal_fade_wait_tmp		= wait;
 	mcss->pal_fade_rgb				= rgb;
+
+	MCSS_CalcPaletteFade( mcss ); 
 }
 
 //--------------------------------------------------------------------------
@@ -1619,9 +1614,9 @@ static	void	MCSS_MaterialSetup(void)
  * @param[in]	flag	パレットフェード実行制御フラグ
  */
 //--------------------------------------------------------------------------
-static	void	MCSS_CalcPaletteFade( MCSS_WORK *mcss, MCSS_PLTT_FADE_FLAG flag )
+static	void	MCSS_CalcPaletteFade( MCSS_WORK *mcss )
 {	
-	if( ( mcss->pal_fade_wait == 0 ) && ( flag == TRUE ) )
+	if( mcss->pal_fade_wait == 0 )
 	{	
 		TCB_LOADRESOURCE_WORK*	tlw = GFL_HEAP_AllocClearMemory( mcss->heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
 
@@ -1641,10 +1636,7 @@ static	void	MCSS_CalcPaletteFade( MCSS_WORK *mcss, MCSS_PLTT_FADE_FLAG flag )
 							mcss->pal_fade_start_evy,
 							mcss->pal_fade_rgb );
 
-    if( flag != MCSS_PLTT_FADE_NONE_TCB )
-    { 
-		  GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 0 );
-    }
+		GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
 
 		if( mcss->pal_fade_start_evy == mcss->pal_fade_end_evy )
 		{	
@@ -2063,10 +2055,7 @@ static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MC
 			MI_CpuCopy16( tlw->pPlttData->pRawData, mcss->pltt_data, tlw->pPlttData->szByte );
     }
 
-    MCSS_CalcPaletteFade( mcss, MCSS_PLTT_FADE_NONE_TCB );
-
     GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
-
   }
 }
 
