@@ -124,7 +124,7 @@ VMCMD_RESULT EvCmdUn_SetTalkFlg( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdUn_CheckTalkFlg( VMHANDLE *core, void *wk )
 {
-  u8 obj_idx;
+  u16 obj_idx;
   u16 *ret;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
@@ -132,10 +132,12 @@ VMCMD_RESULT EvCmdUn_CheckTalkFlg( VMHANDLE *core, void *wk )
   GAMEDATA *gdata =  GAMESYSTEM_GetGameData(gsys);
   UNSV_WORK *unsv_work = GAMEDATA_GetUnsvWorkPtr(gdata);
   
-  obj_idx = VMGetU16( core ); //0～4
+  obj_idx = SCRCMD_GetVMWorkValue( core, work ); //0～4
   ret = SCRCMD_GetVMWork( core, work );
 
   *ret = FALSE;
+
+  NOZOMU_Printf("obj_idx = %d\n",obj_idx);
 
   //セーブデータにアクセス
   {
@@ -148,8 +150,10 @@ VMCMD_RESULT EvCmdUn_CheckTalkFlg( VMHANDLE *core, void *wk )
       //インデックス番目のデータの話しかけフラグを取得
       flg = WIFIHISTORY_GetUnInfo(wh, idx, UN_INFO_TALK);
       if (flg) *ret = TRUE;
+      NOZOMU_Printf("talk_flg = %d\n",flg);
     }
   }
+  
   return VMCMD_RESULT_CONTINUE;
 }
 
