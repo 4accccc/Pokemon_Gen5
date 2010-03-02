@@ -982,18 +982,18 @@ static u32 MoveListMain( FRAMELIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void SetListScrollSpeed( FRAMELIST_WORK * wk )
 {
-	if( wk->keyRepeat < 40 ){
+	if( wk->keyRepeat < 20 ){
 		wk->keyRepeat++;
 	}
-	if( wk->keyRepeat == 40 ){
+	if( wk->keyRepeat == 20 ){
 		wk->keyRepPos = 0;
-	}else if( wk->keyRepeat >= 32 ){
-		wk->keyRepPos = 1;
-	}else if( wk->keyRepeat >= 24 ){
-		wk->keyRepPos = 2;
 	}else if( wk->keyRepeat >= 16 ){
-		wk->keyRepPos = 3;
+		wk->keyRepPos = 1;
+	}else if( wk->keyRepeat >= 12 ){
+		wk->keyRepPos = 2;
 	}else if( wk->keyRepeat >= 8 ){
+		wk->keyRepPos = 3;
+	}else if( wk->keyRepeat >= 4 ){
 		wk->keyRepPos = 4;
 	}else{
 		wk->keyRepPos = 5;

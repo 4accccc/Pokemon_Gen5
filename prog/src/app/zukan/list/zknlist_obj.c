@@ -718,7 +718,7 @@ void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons )
 	ZKNLISTOBJ_SetVanish( wk, nowID, FALSE );
 
 	// パレットフェードにコピー
-	PaletteWorkSet_VramCopy( wk->pfd, FADE_MAIN_OBJ, pal/0x20, FADE_PAL_ONE_SIZE );
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_MAIN_OBJ, pal/0x20*16, FADE_PAL_ONE_SIZE );
 
 	wk->pokeGraFlag ^= 1;
 }
