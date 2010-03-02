@@ -512,7 +512,7 @@ static const FRAMELIST_HEADER	ListHeader = {
 	ZKNLISTMAIN_LIST_SX,					// €–ÚƒtƒŒ[ƒ€•\¦‚wƒTƒCƒY
 	ZKNLISTMAIN_LIST_SY,					// €–ÚƒtƒŒ[ƒ€•\¦‚xƒTƒCƒY
 
-	3,							// ƒtƒŒ[ƒ€“à‚É•\¦‚·‚éBMPWIN‚Ì•\¦‚wÀ•W
+	7,							// ƒtƒŒ[ƒ€“à‚É•\¦‚·‚éBMPWIN‚Ì•\¦‚wÀ•W
 	0,							// ƒtƒŒ[ƒ€“à‚É•\¦‚·‚éBMPWIN‚Ì•\¦‚xÀ•W
 	11,							// ƒtƒŒ[ƒ€“à‚É•\¦‚·‚éBMPWIN‚Ì•\¦‚wƒTƒCƒY
 	3,							// ƒtƒŒ[ƒ€“à‚É•\¦‚·‚éBMPWIN‚Ì•\¦‚xƒTƒCƒY
@@ -525,7 +525,7 @@ static const FRAMELIST_HEADER	ListHeader = {
 	8,							// ƒXƒNƒ[ƒ‹ƒo[‚Ì‚xƒTƒCƒY
 
 	0,							// €–Ú“o˜^”
-	2,							// ”wŒi“o˜^”
+	3,							// ”wŒi“o˜^”
 
 	0,							// ‰ŠúˆÊ’u
 	7,							// ƒJ[ƒ\ƒ‹ˆÚ“®”ÍˆÍ
@@ -630,6 +630,7 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 	// €–Ú”wŒiİ’è
 	FRAMELIST_LoadFrameGraphicAH( wk->lwk, ah, NARC_zukan_gra_list_listframe_NSCR, FALSE, 0 );
 	FRAMELIST_LoadFrameGraphicAH( wk->lwk, ah, NARC_zukan_gra_list_listframe2_NSCR, FALSE, 1 );
+	FRAMELIST_LoadFrameGraphicAH( wk->lwk, ah, NARC_zukan_gra_list_listframe3_NSCR, FALSE, 2 );
 
 	// “_–ÅƒAƒjƒƒpƒŒƒbƒgİ’è
 	FRAMELIST_LoadBlinkPalette( wk->lwk, ah, NARC_zukan_gra_list_list_bgd_NCLR, 2, 3 );
@@ -650,7 +651,7 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 			FRAMELIST_AddItem( wk->lwk, 1, SET_LIST_PARAM(ZUKAN_LIST_MONS_SEE,wk->dat->list[i]) );
 		}else{
 			wk->name[i] = GFL_MSG_CreateString( wk->mman, str_name_01 );
-			FRAMELIST_AddItem( wk->lwk, 1, SET_LIST_PARAM(ZUKAN_LIST_MONS_NONE,wk->dat->list[i]) );
+			FRAMELIST_AddItem( wk->lwk, 2, SET_LIST_PARAM(ZUKAN_LIST_MONS_NONE,wk->dat->list[i]) );
 		}
 	}
 }

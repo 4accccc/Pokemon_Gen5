@@ -398,7 +398,7 @@ void ZKNSEARCHBMP_PutMainPage( ZKNSEARCHMAIN_WORK * wk )
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_MAIN_START] );
 
 	// 上画面の情報
-	ZKNSEARCHBMP_ClearMainPageLabel( wk );
+	ZKNSEARCHBMP_PutMainPageLabel( wk );
 
 	// 並び
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win[ZKNSEARCHBMP_WINIDX_MAIN_ITEM_ROW].win ), 0 );
@@ -480,18 +480,18 @@ void ZKNSEARCHBMP_PutMainPage( ZKNSEARCHMAIN_WORK * wk )
 
 void ZKNSEARCHBMP_PutMainPageLabel( ZKNSEARCHMAIN_WORK * wk )
 {
-	// 上画面の情報をクリア
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[ZKNSEARCHBMP_WINIDX_LABEL2].win), 0 );
-	GFL_BMPWIN_TransVramCharacter( wk->win[ZKNSEARCHBMP_WINIDX_LABEL2].win );
-}
-
-void ZKNSEARCHBMP_ClearMainPageLabel( ZKNSEARCHMAIN_WORK * wk )
-{
 	// 上画面の情報
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[ZKNSEARCHBMP_WINIDX_LABEL2].win), 0 );
 	StrPrint(
 		wk, ZKNSEARCHBMP_WINIDX_LABEL2, ZKN_SEARCH_INFO_01, 0, 4, FCOL_WP15BN, PRINTTOOL_MODE_LEFT );
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_LABEL2] );
+}
+
+void ZKNSEARCHBMP_ClearMainPageLabel( ZKNSEARCHMAIN_WORK * wk )
+{
+	// 上画面の情報をクリア
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[ZKNSEARCHBMP_WINIDX_LABEL2].win), 0 );
+	GFL_BMPWIN_TransVramCharacter( wk->win[ZKNSEARCHBMP_WINIDX_LABEL2].win );
 }
 
 void ZKNSEARCHBMP_PutRowPage( ZKNSEARCHMAIN_WORK * wk )

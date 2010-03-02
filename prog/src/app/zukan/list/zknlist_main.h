@@ -45,9 +45,9 @@
 #define	ZKNLISTMAIN_TOUCH_BAR_SY		( 3 )
 
 // リスト項目サイズ
-#define	ZKNLISTMAIN_LIST_PX					( 16 )
+#define	ZKNLISTMAIN_LIST_PX					( 12 )
 #define	ZKNLISTMAIN_LIST_PY					( 0 )
-#define	ZKNLISTMAIN_LIST_SX					( 16 )
+#define	ZKNLISTMAIN_LIST_SX					( 20 )
 #define	ZKNLISTMAIN_LIST_SY					( 3 )
 
 // リストパラメータ関連
