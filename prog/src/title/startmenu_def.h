@@ -129,7 +129,7 @@ enum {
 #define	BMPWIN_YESNO_PY			( 13 )
 #define	BMPWIN_YESNO_PAL		( FONT_PALETTE_M )
 
-// 最初から始めるの警告ウィンドウ
+//「最初から始める」の警告ウィンドウ
 #define	BMPWIN_NEWGAME_WIN_FRM	( GFL_BG_FRAME0_M )
 #define	BMPWIN_NEWGAME_WIN_PX		( 2 )
 #define	BMPWIN_NEWGAME_WIN_PY		( 2 )
@@ -137,7 +137,7 @@ enum {
 #define	BMPWIN_NEWGAME_WIN_SY		( 20 )
 #define	BMPWIN_NEWGAME_WIN_PAL	( FONT_PALETTE_M )
 
-// 最初から始めるの警告文表示座標
+//「最初から始める」の警告文表示座標
 #define	NEW_GAME_WARRNING_ATTENTION_PY	( 0 )
 #define	NEW_GAME_WARRNING_MESSAGE_PY		( 3*8 )
 #define	NEW_GAME_WARRNING_A_BUTTON_PY		( 16*8 )
@@ -150,7 +150,7 @@ enum {
 #define	WARRNING_WIN_CHAR_NUM		( 1 )		// ウィンドウキャラ番号
 #define	WARRNING_WIN_PLTT_NUM		( 1 )		// ウィンドウパレット番号
 
-// 続きから始めるの説明ウィンドウ
+//「続きから始める」の説明ウィンドウ
 #define	BMPWIN_CONTINUE_WIN_FRM		( GFL_BG_FRAME0_S )
 #define	BMPWIN_CONTINUE_WIN_PX		( 2 )
 #define	BMPWIN_CONTINUE_WIN_PY		( 3 )
@@ -158,7 +158,7 @@ enum {
 #define	BMPWIN_CONTINUE_WIN_SY		( 19 )
 #define	BMPWIN_CONTINUE_WIN_PAL		( FONT_PALETTE_S )
 
-// 続きから始めるの説明文表示座標
+//「続きから始める」の説明文表示座標
 #define	CONTINUE_INFO_ATTENTION_PY	( 0 )
 #define	CONTINUE_INFO_MESSAGE_PY		( 3*8 )
 #define	CONTINUE_INFO_WIN_PX				( 0 )
@@ -166,6 +166,7 @@ enum {
 #define	CONTINUE_INFO_WIN_SX				( 32 )
 #define	CONTINUE_INFO_WIN_SY				( 22 )
 
+#define	CONTINUE_1ST_WAIT		( 8 )		//「続きから始める」の最初のウェイト
 
 // メッセージウィンドウ
 #define	MESSAGE_WIN_CHAR_NUM			( 1 )

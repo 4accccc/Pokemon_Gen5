@@ -88,7 +88,11 @@ typedef struct {
 	u8	listResult;
 
 	u8	subSeq;
+	u8	wait;
 	u8	continueRet;
+
+	u8	btnSeq;
+	u8	btnCnt;
 
 	s8	cursorPutPos;
 	int	bgScroll;
@@ -200,6 +204,7 @@ static void ClearContinueInfo( START_MENU_WORK * wk );
 
 static BOOL CheckHushigiBeacon( START_MENU_WORK * wk );
 
+static int SetButtonAnm( START_MENU_WORK * wk, int next );
 
 
 //============================================================================================
@@ -576,6 +581,35 @@ static int MainSeq_Fade( START_MENU_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_ButtonAnm( START_MENU_WORK * wk )
 {
+	switch( wk->btnSeq ){
+	case 0:
+	case 2:
+		if( wk->btnCnt == 0 ){
+			ChangeListItemPalette(
+				wk, wk->list[wk->listPos], GetListPutY(wk,wk->cursorPutPos), CURSOR_PALETTE2 );
+			wk->btnCnt = 4;
+			wk->btnSeq++;
+		}else{
+			wk->btnCnt--;
+		}
+		break;
+
+	case 1:
+	case 3:
+		if( wk->btnCnt == 0 ){
+			ChangeListItemPalette(
+				wk, wk->list[wk->listPos], GetListPutY(wk,wk->cursorPutPos), LIST_PALETTE );
+			wk->btnCnt = 4;
+			wk->btnSeq++;
+		}else{
+			wk->btnCnt--;
+		}
+		break;
+
+	case 4:
+		return wk->nextSeq;
+	}
+
 	return MAINSEQ_BUTTON_ANM;
 }
 
@@ -624,14 +658,17 @@ static int MainSeq_Main( START_MENU_WORK * wk )
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 		PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
 		if( wk->list[wk->listPos] == LIST_ITEM_NEW_GAME ){
-			PutNewGameWarrning( wk );
-			return MAINSEQ_NEWGAME;
+//			PutNewGameWarrning( wk );
+//			return MAINSEQ_NEWGAME;
+			return SetButtonAnm( wk, MAINSEQ_NEWGAME );
 		}else if( wk->list[wk->listPos] == LIST_ITEM_CONTINUE ){
 			wk->listResult = wk->list[wk->listPos];
-			return MAINSEQ_CONTINUE;
+//			return MAINSEQ_CONTINUE;
+			return SetButtonAnm( wk, MAINSEQ_CONTINUE );
 		}
 		wk->listResult = wk->list[wk->listPos];
-		return SetFadeOut( wk, MAINSEQ_RELEASE );
+//		return SetFadeOut( wk, MAINSEQ_RELEASE );
+		return SetButtonAnm( wk, MAINSEQ_END_SET );
 	}
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
@@ -709,10 +746,15 @@ static int MainSeq_Continue( START_MENU_WORK * wk )
 		// リスト非表示
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_OFF );
 		VanishListObj( wk, FALSE );
+		wk->wait = CONTINUE_1ST_WAIT;
 		wk->subSeq++;
 		break;
 
 	case 1:
+		if( wk->wait != 0 ){
+			wk->wait--;
+			break;
+		}
 		// メッセージ表示
 		StartMessage( wk, START_MENU_STR_CONTINUE_01 );
 		PutContinueInfo( wk );
@@ -790,6 +832,40 @@ static int MainSeq_Continue( START_MENU_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_NewGame( START_MENU_WORK * wk )
 {
+	switch( wk->subSeq ){
+	case 0:
+		PutNewGameWarrning( wk );
+		wk->subSeq++;
+		break;
+
+	case 1:
+		if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
+			wk->subSeq++;
+		}
+		break;
+
+	case 2:
+		// Ａボタン
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+			PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
+			ClearNewGameWarrning( wk, TRUE );
+			wk->listResult = LIST_ITEM_NEW_GAME;
+			return SetFadeOut( wk, MAINSEQ_RELEASE );
+		}
+		// Ｂボタン
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+			PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
+			ClearNewGameWarrning( wk, FALSE );
+			ChangeListItemPalette(
+				wk, wk->list[wk->listPos], GetListPutY(wk,wk->cursorPutPos), CURSOR_PALETTE );
+			wk->subSeq = 0;
+			return MAINSEQ_MAIN;
+		}
+		break;
+	}
+
+
+/*
 	if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
 		// Ａボタン
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
@@ -805,6 +881,7 @@ static int MainSeq_NewGame( START_MENU_WORK * wk )
 			return MAINSEQ_MAIN;
 		}
 	}
+*/
 
 	PRINTSYS_QUE_Main( wk->que );
 	PRINT_UTIL_Trans( &wk->utilWin, wk->que );
@@ -880,7 +957,7 @@ static int MainSeq_Hushigi( START_MENU_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_EndSet( START_MENU_WORK * wk )
 {
-	return MAINSEQ_END_SET;
+	return SetFadeOut( wk, MAINSEQ_RELEASE );
 }
 
 
@@ -2333,6 +2410,14 @@ static int SetFadeOut( START_MENU_WORK * wk, int next )
 		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, HEAPID_STARTMENU );
 	wk->fadeSeq = next;
 	return MAINSEQ_FADE;
+}
+
+static int SetButtonAnm( START_MENU_WORK * wk, int next )
+{
+	wk->btnCnt = 0;
+	wk->btnSeq = 0;
+	wk->nextSeq = next;
+	return MAINSEQ_BUTTON_ANM;
 }
 
 
