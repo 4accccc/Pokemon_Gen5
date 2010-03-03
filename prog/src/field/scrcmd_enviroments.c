@@ -36,6 +36,7 @@
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  //for SYS_FLAG_
 #include "report.h" //REPORT_SAVE_TYPE_VAL
+#include "savedata/misc.h"
 
 
 //======================================================================
@@ -739,3 +740,49 @@ VMCMD_RESULT EvCmdCheckPlayerViewChange( VMHANDLE * core, void * wk ) {
   
   return VMCMD_RESULT_CONTINUE;
 }
+
+//======================================================================
+//======================================================================
+SDK_COMPILER_ASSERT( SCR_STARTMENU_FLAG_HUSHIGI == MISC_STARTMENU_TYPE_HUSHIGI );
+SDK_COMPILER_ASSERT( SCR_STARTMENU_FLAG_BATTLE == MISC_STARTMENU_TYPE_BATTLE );
+SDK_COMPILER_ASSERT( SCR_STARTMENU_FLAG_GAMESYNC == MISC_STARTMENU_TYPE_GAMESYNC );
+SDK_COMPILER_ASSERT( SCR_STARTMENU_FLAG_MACHINE == MISC_STARTMENU_TYPE_MACHINE );
+
+enum { MISC_STARTMENU_TYPE_MAX = MISC_STARTMENU_TYPE_MACHINE + 1 };
+
+//--------------------------------------------------------------
+/**
+ * @brief タイトルメニュー項目の許可フラグ状態取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetStartMenuFlag( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK* work       = (SCRCMD_WORK*)wk;
+  u16 flag = SCRCMD_GetVMWorkValue( core, wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  MISC * misc = GAMEDATA_GetMiscWork( gamedata );
+
+  GF_ASSERT( flag < MISC_STARTMENU_TYPE_MAX );
+  *ret_wk = ( (MISC_GetStartMenuFlag( misc, flag ) & MISC_STARTMENU_FLAG_OPEN )  != 0 );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief タイトルメニュー項目の許可フラグON
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetStartMenuFlag( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK* work       = (SCRCMD_WORK*)wk;
+  u16 flag = SCRCMD_GetVMWorkValue( core, wk );
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  MISC * misc = GAMEDATA_GetMiscWork( gamedata );
+
+  GF_ASSERT( flag < MISC_STARTMENU_TYPE_MAX );
+  MISC_SetStartMenuFlag( misc, flag, MISC_STARTMENU_FLAG_OPEN );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+

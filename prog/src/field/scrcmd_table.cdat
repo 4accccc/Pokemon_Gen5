@@ -429,8 +429,8 @@
 
   DEF_CMD( EvCmdGetBoxWallPaper, EV_SEQ_GET_BOX_WALLPAPER )
   DEF_CMD( EvCmdCheckPlayerViewChange, EV_SEQ_CHECK_PLAYER_VIEW_CHANGE )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdGetStartMenuFlag, EV_SEQ_GET_START_MENU_FLAG )
+  DEF_CMD( EvCmdSetStartMenuFlag, EV_SEQ_SET_START_MENU_FLAG )
 
   NO_CMD()
   NO_CMD()
