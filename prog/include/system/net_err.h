@@ -65,6 +65,7 @@ extern void NetErr_GetTempArea( u8** charArea , u16** scrnArea , u16** plttArea 
 //	アプリ側で使用する関数
 //--------------------------------------------------------------
 extern NET_ERR_CHECK NetErr_App_CheckError(void);
+extern NET_ERR_CHECK NetErr_App_CheckConnectError(u32 net_bit);
 extern void NetErr_App_ReqErrorDisp(void);
 
 //--------------------------------------------------------------
