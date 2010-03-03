@@ -23,6 +23,9 @@
 _EVENT_DATA		ev_mapchange1
 _EVENT_DATA		ev_mapchange2
 _EVENT_DATA		ev_d04r0101_backpackerw_01
+_EVENT_DATA		ev_d04r0101_assistantm_01
+_EVENT_DATA		ev_d04r0101_stop_01
+_EVENT_DATA		ev_pos_d04r0101_stop_01
 _EVENT_DATA_END
 
 
@@ -86,7 +89,8 @@ _TALK_OBJ_START()
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			
-				//【仮】カセキその１入手処理
+				//カセキその１入手処理
+				_ITEM_EVENT_KEYWAIT( ITEM_KAMENOKASEKI, 1 )
 
 				//========================================//
 				
@@ -103,8 +107,9 @@ _TALK_OBJ_START()
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			
-				//【仮】カセキその２入手処理
-
+				//カセキその２入手処理
+				_ITEM_EVENT_KEYWAIT( ITEM_TORINOKASEKI, 1 )
+				
 				//========================================//
 				
 				//カセキ受取フラグセット
@@ -154,7 +159,8 @@ _TALK_OBJ_START()
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			
-				//【仮】カセキその１入手処理
+				//カセキその１入手処理
+				_ITEM_EVENT_KEYWAIT( ITEM_KAMENOKASEKI, 1 )
 
 				//========================================//
 				
@@ -171,7 +177,8 @@ _TALK_OBJ_START()
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			
-				//【仮】カセキその２入手処理
+				//カセキその２入手処理
+				_ITEM_EVENT_KEYWAIT( ITEM_TORINOKASEKI, 1 )
 
 				//========================================//
 				
@@ -202,3 +209,64 @@ _TALK_OBJ_START()
 	ENDIF
 
 EVENT_END
+
+/**************************************************************/
+/*		D04R0101	ASSISTANTMスクリプト					  */
+/**************************************************************/
+EVENT_START		ev_d04r0101_assistantm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d04r0101_assistantm_01 )
+EVENT_END
+
+/**************************************************************/
+/*		D04R0101	階下ストッパー							  */
+/**************************************************************/
+EVENT_START		ev_d04r0101_stop_01
+
+	IF $WK_SCENE_D04R0101 == 0 THEN
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d04r0101_stop_01 )
+		
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d04r0101_stop_03 )
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		D04R0101	階下ストッパーPOS						  */
+/**************************************************************/
+EVENT_START		ev_pos_d04r0101_stop_01
+
+	_OBJ_ANIME( D04R0101_STOP_01, anm_stoper_stop )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+	_OBJ_ANIME_WAIT()
+
+	//このさき　すなばかりで　すすめん
+	_BALLOONWIN_OBJMSG( msg_d04r0101_stop_02 , D04R0101_STOP_01 )
+	_MSGWIN_CLOSE()
+
+	//自機・一歩もどる
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
+	_OBJ_ANIME_WAIT()
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	STOPPER用アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_back
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stoper_stop
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0	

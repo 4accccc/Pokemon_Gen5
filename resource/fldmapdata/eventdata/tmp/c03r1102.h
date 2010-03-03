@@ -8,6 +8,7 @@
 #ifndef ZONE_C03R1102_EVC_H
 #define ZONE_C03R1102_EVC_H
 
+#define C03R1102_MOUNTAIN_01               0
 
 #endif //ZONE_C03R1102_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r1102.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

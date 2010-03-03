@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c03r1202
+_EVENT_DATA		ev_c03r1202_badge_01
 _EVENT_DATA_END
 
 
@@ -30,9 +30,96 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*		C03R1202	バッジ説明スクリプト					  */
 /**************************************************************/
-ev_c03r1202:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_c03r1202_badge_01
+_TALK_OBJ_START()
+	
+	DEFINE_LOCAL	LWK_BADGE_SELECT
+	DEFINE_LOCAL	LWK_REPEAT
+	
+	$LWK_REPEAT = 0
+	
+	//イッシュちほうで～～～　せつめいをききたいかい？
+	_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_01 )
+	_YES_NO_WIN( SCWK_ANSWER )
+	_MSGWIN_CLOSE()
+	//はい選択時
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		WHILE $LWK_REPEAT != 1
+			
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_11 )
+			
+			//分岐・トライ・ベーシック……　やめる
+			_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 0, LWK_BADGE_SELECT )
+	
+			_BMPMENU_MAKE_LIST( msg_c03r1202_select_01, 0 )	//トライバッジ
+			_BMPMENU_MAKE_LIST( msg_c03r1202_select_02, 1 )	//ベーシックバッジ
+			_BMPMENU_MAKE_LIST( msg_c03r1202_select_03, 2 )	//ビートルバッジ
+			_BMPMENU_MAKE_LIST( msg_c03r1202_select_04, 3 )	//ボルトバッジ
+			_BMPMENU_MAKE_LIST( msg_c03r1202_select_05, 4 )	//クエイクバッジ
+			_BMPMENU_MAKE_LIST( msg_c03r1202_select_06, 5 )	//ジェットバッジ
+			_BMPMENU_MAKE_LIST( msg_c03r1202_select_07, 6 )	//アイシクルバッジ
+			_BMPMENU_MAKE_LIST( msg_c03r1202_select_08, 7 )	//レジェンドバッジ
+			_BMPMENU_MAKE_LIST( msg_c03r1202_select_09, 8 )	//やめる
+	
+			//メニュー表示
+			_BMPMENU_START()
 
+			//選択結果で分岐
+			SWITCH $LWK_BADGE_SELECT
+			CASE 0 THEN
+				_MSGWIN_CLOSE()
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_03 )
+				_MSGWIN_CLOSE()
+			CASE 1 THEN
+				_MSGWIN_CLOSE()
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_04 )
+				_MSGWIN_CLOSE()
+			CASE 2 THEN
+				_MSGWIN_CLOSE()
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_05 )
+				_MSGWIN_CLOSE()
+			CASE 3 THEN
+				_MSGWIN_CLOSE()
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_06 )
+				_MSGWIN_CLOSE()
+			CASE 4 THEN
+				_MSGWIN_CLOSE()
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_07 )
+				_MSGWIN_CLOSE()
+			CASE 5 THEN
+				_MSGWIN_CLOSE()
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_08 )
+				_MSGWIN_CLOSE()
+			CASE 6 THEN
+				_MSGWIN_CLOSE()
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_09 )
+				_MSGWIN_CLOSE()
+			CASE 7 THEN
+				_MSGWIN_CLOSE()
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_10 )
+				_MSGWIN_CLOSE()
+			CASE 8 THEN
+				_MSGWIN_CLOSE()
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_02 )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+				//========================================/
+				//繰り返し脱出
+				$LWK_REPEAT = 1
+				//========================================/
+			ENDSWITCH
+	
+		ENDWHILE
+	
+	//いいえ選択時
+	ELSE
+	_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_02 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END

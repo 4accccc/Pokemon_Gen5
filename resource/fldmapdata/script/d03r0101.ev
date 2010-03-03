@@ -51,14 +51,19 @@ EVENT_START		ev_d03r0101_sunglasses_01
 	ELSE
 	
 		//D08のイベント終了後なら
-		IF $WK_SCENE_D03R0101 >= 2 THEN
+		IF $WK_SCENE_D03R0101 == 0 THEN
 			
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_04 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_02 )
+		
+		
+		ELSIF $WK_SCENE_D03R0101 == 1 THEN
+		
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_03 )
 		
 		//終了していない場合
 		ELSE
 		
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_03 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_04 )
 		
 		ENDIF
 		
@@ -187,6 +192,9 @@ EVENT_START		ev_pos_d03r0101_event_01
 
 	//ライバルＰＯＳイベント終了
 	$WK_SCENE_D03R0101 = 3
+	
+	//D04R0101のストッパー解除
+	$WK_SCENE_D04R0101 = 1
 	
 	//========================================/
 

@@ -19,7 +19,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c03r1201
+_EVENT_DATA		ev_c03r1201_businessman1_01
+_EVENT_DATA		ev_c03r1201_businessman2_01
 _EVENT_DATA_END
 
 
@@ -30,9 +31,16 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*		C03R1201	BUSINESSMAN1スクリプト					  */
 /**************************************************************/
-ev_c03r1201:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_c03r1201_businessman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1201_businessman1_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C03R1201	BUSINESSMAN2スクリプト					  */
+/**************************************************************/
+EVENT_START		ev_c03r1201_businessman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1201_businessman2_01 )
+EVENT_END
 

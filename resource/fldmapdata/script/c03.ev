@@ -254,6 +254,13 @@ _ANIME_LABEL anm_leader_leave2
 	_ANIME_DATA		AC_DIR_L,1
 	_ANIME_DATA		AC_VANISH_ON, 1
 	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_look
+	_ANIME_DATA		AC_WAIT_8F,3
+	_ANIME_DATA		AC_DIR_U,1
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
 	
 _ANIME_LABEL anm_player_come6
 	_ANIME_DATA		AC_MARK_GYOE,1
@@ -419,6 +426,7 @@ EVENT_START		ev_pos_c03_rivalevent_02
 
 	//ジムリーダー：画面左へ行き消去
 	_OBJ_ANIME( C03_LEADER3_01, anm_leader_leave2 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look )
 	_OBJ_ANIME_WAIT()
 
 	//========================================/

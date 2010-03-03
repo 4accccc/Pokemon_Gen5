@@ -97,7 +97,7 @@ EVENT_START		ev_bg_d02_rock_01
 	DEFINE_LOCAL	LWK_POKETYPE2
 
 	//その日、初めての場合
-	IF FLAG_OFF( FH_01) THEN
+	IF FLAG_OFF( TMFLG_D02_ROCK_01 ) THEN
 
 		//先頭のポケモンのタイプをチェック
 		_GET_TEMOTI_POKE_TYPE( LWK_POKETYPE1, LWK_POKETYPE2, 0 )
@@ -125,7 +125,7 @@ EVENT_START		ev_bg_d02_rock_01
 				//========================================/
 				
 				//ためしのいわ壊したフラグ（１日でリセット）
-				_FLAG_SET(FH_01)
+				_FLAG_SET(TMFLG_D02_ROCK_01)
 				
 				//========================================/
 			
@@ -156,7 +156,7 @@ EVENT_START		ev_bg_d02_rock_01
 					//========================================/
 					
 					//ためしのいわ壊したフラグ（１日でリセット）
-					_FLAG_SET(FH_01)
+					_FLAG_SET(TMFLG_D02_ROCK_01)
 					
 					//========================================/
 				
@@ -196,7 +196,7 @@ EVENT_START		ev_bg_d02_rock_02
 	DEFINE_LOCAL	LWK_POKETYPE2
 
 	//その日、初めての場合
-	IF FLAG_OFF( FH_01) THEN
+	IF FLAG_OFF( TMFLG_D02_ROCK_02 ) THEN
 
 		//先頭のポケモンのタイプをチェック
 		_GET_TEMOTI_POKE_TYPE( LWK_POKETYPE1, LWK_POKETYPE2, 0 )
@@ -224,7 +224,7 @@ EVENT_START		ev_bg_d02_rock_02
 				//========================================/
 				
 				//ためしのいわ壊したフラグ（１日でリセット）
-				_FLAG_SET(FH_01)
+				_FLAG_SET(TMFLG_D02_ROCK_02)
 				
 				//========================================/
 			
@@ -255,7 +255,7 @@ EVENT_START		ev_bg_d02_rock_02
 					//========================================/
 					
 					//ためしのいわ壊したフラグ（１日でリセット）
-					_FLAG_SET(FH_01)
+					_FLAG_SET(TMFLG_D02_ROCK_02)
 					
 					//========================================/
 				

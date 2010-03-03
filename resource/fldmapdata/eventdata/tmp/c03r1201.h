@@ -9,6 +9,8 @@
 #ifndef ZONE_C03R1201_EVC_H
 #define ZONE_C03R1201_EVC_H
 
+#define C03R1201_BUSINESSMAN1_01           0
+#define C03R1201_BUSINESSMAN2_01           1
 
 #endif //ZONE_C03R1201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r1201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
