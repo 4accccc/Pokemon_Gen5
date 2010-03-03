@@ -95,9 +95,7 @@ static const u16 plttData1[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_F1 
 static const u16 plttData2[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_B2, COL_F2 };
 static const u16 plttData3[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_F2 };
 
-static const u16* plttData[] = {
-  plttData0, plttData1, plttData2, plttData3, plttData0, plttData1, plttData2, plttData3,
-};
+static const u16* plttData[] = { plttData0, plttData1, plttData2, plttData3 };
 #if 0
 #define BCOL1 (0)
 #define BCOL2 (0)
@@ -659,7 +657,7 @@ static void makeElboard
 //============================================================================================
 static void anmElboard(EL_SCOREBOARD_ANMDATA* anmData, int timer)
 {
-  void* src = (void*)plttData[ timer & 7 ];
+  void* src = (void*)plttData[ (timer & 0x01f)/8 ];
   u32   dst = NNS_GfdGetPlttKeyAddr(anmData->plttVramKey) + anmData->plttOffset;
   u32   siz = PLTT_SIZ;
 
