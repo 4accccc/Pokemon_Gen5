@@ -6969,25 +6969,22 @@
  * カメラ揺れ　（サインカーブ揺れ）
  * @param w   横振れ幅
  * @param h   縦揺れ幅
- * @param sp  ラジアン係数　サインカーブの変化速度に影響します　0～65535
+ * @param sync    1周期にかけるシンク数　1以上
  * @param time    振動回数
  * 
  * @note w,hは同時に値をセットして動かすことができますが、どちらもサインカーブ変化しますので、
  * wに値を入れた場合はh=0
  * hに値を入れた場合はw=0
  *でセットすることが多くなると思います。（つまり、縦横同時揺れはないだろうということです）
- * @note ラジアン係数は値を大きくすれば、振動が速くなるというものではありません。
- * １シンクに変化するサイン値を決定しています。0～16384(0°～90°) 位は早くなります
- * それ以上になると、速さは期待できないかもしれません。
  */
 //--------------------------------------------------------------
-#define _SHAKE_CAMERA(w, h, sp, time) _ASM_SHAKE_CAMERA w, h, sp, time
+#define _SHAKE_CAMERA(w, h, sync, time) _ASM_SHAKE_CAMERA w, h, sync, time
   
-  .macro _ASM_SHAKE_CAMERA w, h, sp, time
+  .macro _ASM_SHAKE_CAMERA w, h, sync, time
   .short EV_SEQ_SHAKE_CAMERA
   .short \w
   .short \h
-  .short \sp
+  .short \sync
   .short \time
   .endm
   

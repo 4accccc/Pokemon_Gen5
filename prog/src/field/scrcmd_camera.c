@@ -48,10 +48,10 @@ typedef struct CAM_SHAKE_WORK_tag
 {
   u16 Width;
   u16 Height;
-  u16 SpRad;
+  u16 Sync;
   u16 Time;
 
-  u32 NowRad;
+  u32 NowSync;
 
   const VecFx32 *WatchTarget;
 }CAM_SHAKE_WORK;
@@ -367,7 +367,7 @@ VMCMD_RESULT EvCmdCamera_Shake( VMHANDLE *core, void *wk )
 
   u16 width = SCRCMD_GetVMWorkValue( core, work );
   u16 height = SCRCMD_GetVMWorkValue( core, work );
-  u16 rad = SCRCMD_GetVMWorkValue( core, work );
+  u16 sync = SCRCMD_GetVMWorkValue( core, work );
   u16 time = SCRCMD_GetVMWorkValue( core, work );
 
   //カメラ揺らすイベントをコール
@@ -382,9 +382,9 @@ VMCMD_RESULT EvCmdCamera_Shake( VMHANDLE *core, void *wk )
 
     wk->Width = width;
     wk->Height = height;
-    wk->SpRad = rad;
+    wk->Sync = sync;
     wk->Time = time;
-    wk->NowRad = 0;
+    wk->NowSync = 0;
 
     SCRIPT_CallEvent( sc, call_event );
   }
@@ -512,38 +512,44 @@ static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* work )
     }
     break;
   case 2:
-    //ターゲットを動かす
-    wk->NowRad += wk->SpRad;
-    if (wk->NowRad >= 0x10000)
     {
-      wk->Time--;
-      wk->NowRad -= 0x10000;
-    }
-    if (wk->Time == 0)
-    {
-      wk->NowRad = 0;
-      end = TRUE;
-    }
+      //ターゲットを動かす
+      int tmp;
+      u16 rad;
+      wk->NowSync++;
+      tmp = (wk->NowSync * 0x10000) / wk->Sync;
+      rad = tmp;
+      if (wk->NowSync >= wk->Sync)
+      {
+        wk->Time--;
+        wk->NowSync = 0;
+      }
+      if (wk->Time == 0)
+      {
+        wk->NowSync = 0;
+        end = TRUE;
+      }
 
-    {
-      fx32 w, h;
-      VecFx32 target;
-      w = wk->Width * FX_SinIdx(wk->NowRad);
-      h = wk->Height * FX_SinIdx(wk->NowRad);
-      target = *wk->WatchTarget;
-      target.x += w;
-      target.y += h;
-      //座標セット
-      FIELD_CAMERA_SetTargetPos( camera, &target );
-    }
-
-    if (end)
-    {
-      //際バインド
-      FIELD_CAMERA_BindTarget(camera, wk->WatchTarget);
-      //トレース再開
-      FIELD_CAMERA_RestartTrace(camera);
-      (*seq)++;
+      if (end)
+      {
+        //際バインド
+        FIELD_CAMERA_BindTarget(camera, wk->WatchTarget);
+        //トレース再開
+        FIELD_CAMERA_RestartTrace(camera);
+        (*seq)++;
+      }
+      else
+      {
+        fx32 w, h;
+        VecFx32 target;
+        w = wk->Width * FX_SinIdx(rad);
+        h = wk->Height * FX_SinIdx(rad);
+        target = *wk->WatchTarget;
+        target.x += w;
+        target.y += h;
+        //座標セット
+        FIELD_CAMERA_SetTargetPos( camera, &target );
+      }
     }
     break;
   case 3:
@@ -556,7 +562,7 @@ static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* work )
 
 #ifdef PM_DEBUG
 
-void DEBUG_CreateCamShakeEvt(GAMESYS_WORK *gsys, u16 width, u16 height, u16 rad, u16 time)
+void DEBUG_CreateCamShakeEvt(GAMESYS_WORK *gsys, u16 width, u16 height, u16 sync, u16 time)
 {
   GMEVENT *event;
   //カメラ揺らすイベントをコール
@@ -568,9 +574,9 @@ void DEBUG_CreateCamShakeEvt(GAMESYS_WORK *gsys, u16 width, u16 height, u16 rad,
 
     wk->Width = width;
     wk->Height = height;
-    wk->SpRad = rad;
+    wk->Sync = sync;
     wk->Time = time;
-    wk->NowRad = 0;
+    wk->NowSync = 0;
   }
 
   GAMESYSTEM_SetEvent(gsys, event);
