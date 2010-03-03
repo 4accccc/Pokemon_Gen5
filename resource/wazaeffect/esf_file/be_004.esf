@@ -54,7 +54,6 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 トレーナーアニメセット	POS_C	1
 ラベル	NO_ANIME_C
 タイマーによるウエイト	20
-SE再生	SEQ_SE_NAGERU	デフォルト	真ん中	0:0:127	0:0:0
 制御モード変更	継続
 立ち位置チェック	POS_AA	いない	NO_EXIST_AA_2
 ボールモード	捕獲ボールAA
@@ -108,7 +107,6 @@ SE再生	SEQ_SE_NAGERU	デフォルト	真ん中	0:0:127	0:0:0
 パーティクルデータ削除	be_m_ball_01_kaiten
 ラベル	NO_DELETE_E
 制御モード変更	継続
-SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 立ち位置チェック	POS_AA	いない	NO_EXIST_AA_3
 ボールモード	捕獲ボールAA
 パーティクルデータロード	be_ball_001_1
@@ -225,13 +223,10 @@ SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 タイマーによるウエイト	7
 ラベル	SE_L
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	2	SE_M
-SE再生	SEQ_SE_TOUJOU_LARGE	デフォルト	真ん中	0:0:127	0:0:0
 ラベル	SE_M
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	1	SE_S
-SE再生	SEQ_SE_TOUJOU_MID	デフォルト	真ん中	0:0:127	0:0:0
 ラベル	SE_S
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	0	SE_END
-SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 ラベル	SE_END
 射影モード	正射影
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	2	SHAKE_1

@@ -6,10 +6,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_505.spa
 %00
 パーティクルデータロード	w_505
 制御モード変更	継続
-SE再生	SEQ_SE_SHINKA_W025	SE1	真ん中	0:0:127	0:0:0
-SEパン	SE1	追従	攻撃側	攻撃側	0	60:0:0
-SE再生	SEQ_SE_W295_01	SE2	真ん中	15:0:127	0:0:0
-SEパン	SE2	追従	攻撃側	攻撃側	0	60:0:0
+SE再生	SEQ_SE_SHINKA_W025	SE1	攻撃側	0:0:127	0:0:0
+SE再生	SEQ_SE_W295_01	SE2	攻撃側	15:0:127	0:0:0
 制御モード変更	逐次
 ポケモンアニメ	防御側	アニメストップ
 カメラ移動	追従	攻撃側	16	0	8

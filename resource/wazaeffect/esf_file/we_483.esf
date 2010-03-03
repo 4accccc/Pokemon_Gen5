@@ -6,14 +6,11 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_483.spa
 %00
 ポケモン円移動	攻撃側	Ｙ軸左	シフトＶ＋	2	2	10:0:3	0
 制御モード変更	継続
-SE再生	SEQ_SE_FLD_112	SE1	真ん中	0:0:127	0:0:0
-SE再生	SEQ_SE_DUMMY5	SE1	真ん中	40:0:0	0:0:0
-SEパン	SE1	追従	攻撃側	攻撃側	0	40:0:0
-SE再生	SEQ_SE_FLD_98	SE1	真ん中	41:0:127	0:0:0
-SEパン	SE1	追従	防御側	防御側	0	60:0:0
+SE再生	SEQ_SE_FLD_112	SE1	攻撃側	0:0:127	0:0:0
+SE再生	SEQ_SE_DUMMY5	SE1	攻撃側	40:0:0	0:0:0
+SE再生	SEQ_SE_FLD_98	SE1	防御側	41:0:127	0:0:0
 SE動的変化	SE1	追従	ボリューム	127	0	75	95:0:0
-SE再生	SEQ_SE_W258_ARARE	SE2	真ん中	41:200:80	0:0:0
-SEパン	SE2	追従	防御側	防御側	0	60:0:0
+SE再生	SEQ_SE_W258_ARARE	SE2	防御側	41:200:80	0:0:0
 制御モード変更	逐次
 エフェクト終了待ち	すべて
 カメラ移動	追従	防御側	16	0	8

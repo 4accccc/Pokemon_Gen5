@@ -9,8 +9,6 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_103.spa
 パーティクル再生	w_103	W_103_103_BIKA_RADIATE	攻撃側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_103	W_103_103_RING_RADIATE	攻撃側	方向無し	2:0:0	1:1:1	1
 制御モード変更	継続
-SE再生	SEQ_SE_W103_01	SE1	真ん中	0:0:120	0:0:0
-SE再生	SEQ_SE_W103_01	SE2	真ん中	30:0:80	0:0:0
 SEパン	SE1	追従	攻撃側	防御側	0	60:0:0
 SEパン	SE2	追従	攻撃側	防御側	25	30:0:0
 制御モード変更	逐次

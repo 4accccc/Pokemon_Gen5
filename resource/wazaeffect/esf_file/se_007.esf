@@ -10,12 +10,10 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_007_heart.spa
 %00
 パーティクルデータロード	be_se_007_heart
 制御モード変更	継続
-SE再生	SEQ_SE_BE_SE_07	SE1	真ん中	0:50:120	0:0:0
-SE再生	SEQ_SE_BE_SE_07	SE2	真ん中	10:100:110	0:0:0
-SE再生	SEQ_SE_BE_SE_07	SE1	真ん中	20:50:100	0:0:0
-SE再生	SEQ_SE_BE_SE_07	SE2	真ん中	30:100:120	0:0:0
-SEパン	SE1	追従	攻撃側	攻撃側	0	60:0:0
-SEパン	SE2	追従	攻撃側	攻撃側	0	60:0:0
+SE再生	SEQ_SE_BE_SE_07	SE1	攻撃側	0:50:120	0:0:0
+SE再生	SEQ_SE_BE_SE_07	SE2	攻撃側	10:100:110	0:0:0
+SE再生	SEQ_SE_BE_SE_07	SE1	攻撃側	20:50:100	0:0:0
+SE再生	SEQ_SE_BE_SE_07	SE2	攻撃側	30:100:120	0:0:0
 制御モード変更	逐次
 パーティクル再生（正射影）	be_se_007_heart	BE_SE_007_HEART_SE_007_HEART	攻撃側	方向無し	0:2:0	0.5:1:0.5	1
 エフェクト終了待ち	すべて
