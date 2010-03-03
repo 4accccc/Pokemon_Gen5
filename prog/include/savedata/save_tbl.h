@@ -103,6 +103,7 @@ enum{
   GMDATA_ID_MYPMS,            // 主人公の挨拶文データ
   GMDATA_ID_QUESTIONNAIRE,    // すれ違いアンケート
   GMDATA_ID_UNSV,             // 国連
+  GMDATA_ID_THSV,             // トライアルハウスランキング表示用
 
 	GMDATA_ID_MAX,
 };

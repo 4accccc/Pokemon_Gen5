@@ -55,6 +55,7 @@
 #include "savedata/questionnaire_save.h"
 #include "savedata/un_savedata.h"
 #include "savedata/zukan_wp_savedata.h"
+#include "savedata/trialhouse_save.h"
 
 //==============================================================================
 //  定数定義
@@ -428,6 +429,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_UNSV,
     (FUNC_GET_SIZE)UNSV_GetWorkSize,
     (FUNC_INIT_WORK)UNSV_Init,
+  },
+  { //トライアルハウスランキング表示用
+    GMDATA_ID_THSV,
+    (FUNC_GET_SIZE)THSV_GetWorkSize,
+    (FUNC_INIT_WORK)THSV_Init,
   },
 };
 
