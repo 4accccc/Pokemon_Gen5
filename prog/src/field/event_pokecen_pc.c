@@ -84,19 +84,8 @@ static GMEVENT_RESULT PcOnEvent( GMEVENT* event, int* seq, void* wk )
       if( PMSND_CheckPlaySE_byPlayerID(player_id) == FALSE ){ ++(*seq); }
     }
     break;
-  // ‘Ò‚¿
-  case 2:
-    work->count = 0;
-    ++(*seq);
-    break;
-  case 3:
-    {
-      const int wait = 10;
-      if( wait < work->count++ ){ ++(*seq); }
-    }
-    break;
   // PC‹N“®’†ƒAƒjƒÄ¶
-  case 4:
+  case 2:
     PMSND_PlaySE( SEQ_SE_PC_LOGIN );
     if( work->pcStatus )
     {
@@ -108,7 +97,7 @@ static GMEVENT_RESULT PcOnEvent( GMEVENT* event, int* seq, void* wk )
     }
     ++(*seq);
     break;
-  case 5:
+  case 3:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
