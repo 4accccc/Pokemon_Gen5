@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-02-26T15:59:27"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-03-03T18:18:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -476,12 +476,12 @@
 むせんつうしんが　つかえませんでした▼
 むせんつうしんを　つかうには
 ＤＳほんたい　せっていに　もどり▽
-むせんつうしんを　オンにしてください▼</language>
+むせんつうしんを　オンにしてください</language>
 		<language name="JPN_KANJI" width="256">ＤＳ本体　設定により
 無線通信が　使えませんでした▼
 無線通信を　使うには
 ＤＳ本体　設定に　もどり▽
-無線通信を　ＯＮにしてください▼</language>
+無線通信を　ＯＮにしてください</language>
 	</row>
 
 	<row id="START_MENU_STR_ATTENTION_02">

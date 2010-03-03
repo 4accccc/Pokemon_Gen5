@@ -21,6 +21,7 @@
 #include "sound/pm_sndsys.h"
 #include "print/printsys.h"
 #include "title/title.h"
+#include "app/app_keycursor.h"
 #include "msg/msg_backup_erase.h"
 
 
@@ -37,7 +38,6 @@
 
 typedef struct {
 	GFL_TCB * vtask;					// TCB ( VBLANK )
-
 	GFL_FONT * font;					// 通常フォント
 	GFL_MSGDATA * mman;				// メッセージデータマネージャ
 	STRBUF * exp;							// メッセージ展開領域
@@ -45,7 +45,7 @@ typedef struct {
 	GFL_TCBLSYS * tcbl;
 	GFL_BMPWIN * win;
 	BMPMENU_WORK * mwk;
-
+	APP_KEYCURSOR_WORK * kcwk;	// メッセージ送りカーソル
 }BACKUP_ERASE_WORK;
 
 // メインシーケンス
@@ -514,6 +514,7 @@ static void InitMsg( BACKUP_ERASE_WORK * wk )
 							GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_BACKUP_ERASE );
 	wk->exp  = GFL_STR_CreateBuffer( EXP_BUF_SIZE, HEAPID_BACKUP_ERASE );
 	wk->tcbl = GFL_TCBL_Init( HEAPID_BACKUP_ERASE, HEAPID_BACKUP_ERASE, 1, 4 );
+	wk->kcwk = APP_KEYCURSOR_Create( 15, TRUE, FALSE, HEAPID_BACKUP_ERASE );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -527,8 +528,8 @@ static void InitMsg( BACKUP_ERASE_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void ExitMsg( BACKUP_ERASE_WORK * wk )
 {
+	APP_KEYCURSOR_Delete( wk->kcwk );
   GFL_TCBL_Exit( wk->tcbl );
-
 	GFL_STR_DeleteBuffer( wk->exp );
 	GFL_FONT_Delete( wk->font );
 	GFL_MSG_Delete( wk->mman );
@@ -683,6 +684,8 @@ static BOOL MainMessage( BACKUP_ERASE_WORK * wk )
     PRINTSYS_PrintStreamDelete( wk->stream );
 		return FALSE;
 	}
+
+	APP_KEYCURSOR_Main( wk->kcwk, wk->stream, wk->win );
 
 	return TRUE;
 }

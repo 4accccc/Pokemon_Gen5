@@ -13,6 +13,7 @@
 #include "savedata/playtime.h"
 #include "sound/pm_sndsys.h"
 #include "font/font.naix"
+#include "app/app_keycursor.h"
 
 #include "message.naix"
 #include "msg/msg_report.h"
@@ -79,6 +80,7 @@ struct _REPORT_EVENT_LOCAL {
 	GFL_BMPWIN * win;
 	PRINT_STREAM * stream;
 	STRBUF * strBuff;
+	APP_KEYCURSOR_WORK * kcwk;	// メッセージ送りカーソル
 
 	APP_TASKMENU_ITEMWORK	ynList[2];
 	APP_TASKMENU_RES * ynRes;
@@ -134,6 +136,7 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 												NARC_script_message_common_scr_dat, wk->heapID );
 			wk->local->strBuff = GFL_STR_CreateBuffer( REPORT_STR_LEN, wk->heapID );
 			wk->local->tcbl = GFL_TCBL_Init( wk->heapID, wk->heapID, 1, 4 );
+			wk->local->kcwk = APP_KEYCURSOR_Create( 15, TRUE, TRUE, wk->heapID );
 			InitReportBmpWin( wk );
 			InitReportYesNo( wk );
 			*seq = REPORT_SEQ_INIT_MESSAGE;
@@ -292,6 +295,7 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 	case REPORT_SEQ_SUBDISP_RESET:					// サブ画面リセット
 		ExitReportYesNo( wk );
 		ExitReportBmpWin( wk );
+		APP_KEYCURSOR_Delete( wk->local->kcwk );
 	  GFL_TCBL_Exit( wk->local->tcbl );
 		GFL_STR_DeleteBuffer( wk->local->strBuff );
     GFL_MSG_Delete( wk->local->msgData );
@@ -416,6 +420,8 @@ static BOOL MainReportMsg( FMENU_REPORT_EVENT_WORK * wk )
     PRINTSYS_PrintStreamDelete( wk->local->stream );
 		return FALSE;
 	}
+
+	APP_KEYCURSOR_Main( wk->local->kcwk, wk->local->stream, wk->local->win );
 
 	return TRUE;
 }

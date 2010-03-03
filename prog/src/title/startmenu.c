@@ -34,6 +34,7 @@
 #include "net/delivery_beacon.h"
 #include "battle_championship/battle_championship.h"
 #include "app/mictest.h"
+#include "app/app_keycursor.h"
 #include "gamesystem/msgspeed.h"
 
 #include "title/title.h"
@@ -73,6 +74,7 @@ typedef struct {
 	PRINT_QUE * que;					// プリントキュー
 	PRINT_STREAM * stream;		// プリントストリーム
 	GFL_TCBLSYS * tcbl;
+	APP_KEYCURSOR_WORK * kcwk;	// メッセージ送りカーソル
 
 	BMPMENU_WORK * mwk;
 
@@ -836,11 +838,14 @@ static int MainSeq_Continue( START_MENU_WORK * wk )
 	case 5:		// 無線設定エラー
 		// メッセージ待ち
 		if( MainMessage( wk ) == FALSE ){
-	    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
-				wk->continueRet = 1;
-				wk->subSeq = 4;
-				break;
-			}
+			wk->subSeq++;
+		}
+		break;
+
+	case 6:
+    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+			wk->continueRet = 1;
+			wk->subSeq = 4;
 		}
 		break;
 	}
@@ -928,14 +933,18 @@ static int MainSeq_Hushigi( START_MENU_WORK * wk )
 	case 2:
 		// メッセージ待ち
 		if( MainMessage( wk ) == FALSE ){
-	    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
-				ClearMessage( wk );
-				wk->subSeq++;
-			}
+			wk->subSeq++;
 		}
 		break;
 
 	case 3:
+    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+			ClearMessage( wk );
+			wk->subSeq++;
+		}
+		break;
+
+	case 4:
 		// リスト再構築
 		MISC_SetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_HUSHIGI, MISC_STARTMENU_FLAG_OPEN );
 		InitList( wk );
@@ -946,7 +955,7 @@ static int MainSeq_Hushigi( START_MENU_WORK * wk )
 		wk->subSeq++;
 		break;
 
-	case 4:
+	case 5:
 		// リスト表示
 		VanishListObj( wk, TRUE );
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_ON );
@@ -1250,8 +1259,8 @@ static void InitMsg( START_MENU_WORK * wk )
 	wk->wset = WORDSET_Create( HEAPID_STARTMENU );
 	wk->que  = PRINTSYS_QUE_Create( HEAPID_STARTMENU );
 	wk->exp  = GFL_STR_CreateBuffer( EXP_BUF_SIZE, HEAPID_STARTMENU );
-
 	wk->tcbl = GFL_TCBL_Init( HEAPID_STARTMENU, HEAPID_STARTMENU, 1, 4 );
+	wk->kcwk = APP_KEYCURSOR_Create( 15, TRUE, FALSE, HEAPID_STARTMENU );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1265,8 +1274,8 @@ static void InitMsg( START_MENU_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void ExitMsg( START_MENU_WORK * wk )
 {
+	APP_KEYCURSOR_Delete( wk->kcwk );
   GFL_TCBL_Exit( wk->tcbl );
-
 	GFL_STR_DeleteBuffer( wk->exp );
 	PRINTSYS_QUE_Delete( wk->que );
 	WORDSET_Delete( wk->wset );
@@ -2366,6 +2375,8 @@ static BOOL MainMessage( START_MENU_WORK * wk )
     PRINTSYS_PrintStreamDelete( wk->stream );
 		return FALSE;
 	}
+
+	APP_KEYCURSOR_Main( wk->kcwk, wk->stream, wk->util[BMPWIN_MSG].win );
 
 	return TRUE;
 }
