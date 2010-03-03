@@ -15,6 +15,7 @@
 #include "../../../resource/fld3d_ci/fldci_id_def.h"
 
 #include "sound/pm_wb_voice.h"   //for PMV_PlayVoice
+#include "sound/pm_sndsys.h"
 
 #include "message.naix"
 #include "msg/msg_sptr_name.h"
@@ -53,6 +54,8 @@
 #endif  //PM_DEBUG
 
 #define ENC_CUTIN_MDL_Z_OFS (700)
+
+#define FLYSKY_SE_FRAME (24)      //空を飛ぶＳＥ再生タイミング
 
 
 typedef GMEVENT_RESULT (*SETUP_CALLBACK)( GMEVENT* event, int* seq, void* work );
@@ -126,6 +129,7 @@ typedef struct FLD3D_CI_tag
   SETUP_CALLBACK SetupCallBack;
   MAIN_SEQ_FUNC MainSeqFunc;
   int SubSeq;
+  int FrameCount;
 }FLD3D_CI;
 
 //バイナリデータフォーマット
@@ -227,6 +231,8 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
 static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work );
 
 static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexName, const char* inPltName, const int inMsgIdx );
+
+static BOOL FlySkyMainFunc(GMEVENT* event, FLD3D_CI_PTR ptr);
 
 #define DEF_CAM_NEAR	( 1 << FX32_SHIFT )
 #define DEF_CAM_FAR	( 1024 << FX32_SHIFT )
@@ -430,6 +436,7 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
   size = sizeof(FLD3D_CI_EVENT_WORK);
   ptr->PartGene = 0;
   ptr->SubSeq = 0;
+  ptr->FrameCount = 0;
   ptr->CutInNo = inCutInNo;
   //セットアップ後コールバックなしでセットする
   ptr->SetupCallBack = NULL;
@@ -616,6 +623,9 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     if ( IsFlySkyOut(ptr->CutInNo) )
     {
       GMEVENT* fade_event;
+      //メイン処理書き換え
+      ptr->MainSeqFunc = FlySkyMainFunc;
+
       if ( ptr->CutInNo == FLDCIID_FLY_OUT )
       {
         fade_event = GMEVENT_Create(gsys, event, WhiteOutEvt, 0);
@@ -692,6 +702,8 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
   case 4:
     {
       BOOL rc1,rc2,rc3,main_rc;
+      //フレームカウント
+      ptr->FrameCount++;
       //パーティクル再生
       rc1 = PlayParticle(ptr);
       //3Ｄモデル1アニメ再生
@@ -702,6 +714,8 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       ptr->PtclEnd = rc1;
       ptr->MdlAnm1End = rc2;
       ptr->MdlAnm2End = rc3;
+
+      NOZOMU_Printf("cutin_frame %d\n", ptr->FrameCount);
 
       main_rc = FALSE;
       if (ptr->MainSeqFunc != NULL) main_rc = ptr->MainSeqFunc(event, ptr);
@@ -728,6 +742,9 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
       mmdl = FIELD_PLAYER_GetMMdl( fld_player );
       MMDL_SetStatusBitVanish(mmdl, FALSE);
+      //自機下向き
+      MMDL_SetDirDisp( mmdl, DIR_DOWN );
+
       //戻ってきた場所はおそらく3Ｄクリアカラーが見えない場所のはずなので
       //3Ｄ面オフの処理とクリアカラーのアルファセットの処理を行わない
     }
@@ -2220,5 +2237,28 @@ GMEVENT *FLD3D_CI_CreateNpcFlyCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, co
   }
 
   return event;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * そらをとぶカットイン中関数
+ *
+ * @param   event       イベントポインタ
+ * @param   ptr         カットイン管理ポインタ
+ * @return	BOOL        TRUEでカットインメイン終了
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL FlySkyMainFunc(GMEVENT* event, FLD3D_CI_PTR ptr)
+{
+  //ＳＥ再生判定
+  if ( ptr->FrameCount == FLYSKY_SE_FRAME )
+  {
+    //ＳＥ鳴らす
+    PMSND_PlaySE( SEQ_SE_FLD_01 );
+  }
+
+  if (ptr->PtclEnd&&ptr->MdlAnm1End&&ptr->MdlAnm2End) return TRUE;
+
+  return FALSE;
 }
 
