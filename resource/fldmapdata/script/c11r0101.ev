@@ -291,7 +291,6 @@ EVENT_START ev_c11r0101_pos01
     //プレーヤー名をタグ3番にセット
     _PLAYER_NAME( 3 )
     _BALLOONWIN_OBJMSG(gardman_msg, UN_ENTRANCE_POLICEMAN_01)
-    _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
     $WK_SCENE_C11GATE = $LOCALWORK2
     $WK_SCENE_C11GATE += 1    //シーンワーク更新

@@ -243,18 +243,14 @@ ev_wkobjcommon:
     _UN_SET_TALK_FLG( LOCALWORK0 )
     //初回メッセージ
     _UN_GET_ROOM_OBJ_MSG(LOCALWORK0, TRUE, TalkMsg)
-    _BALLOONWIN_TALKOBJ_MSG( TalkMsg )
-    _BALLOONWIN_CLOSE()
+  ELSE
+    //メッセージ取得
+    _UN_GET_ROOM_OBJ_MSG(LOCALWORK0, FALSE, TalkMsg)
   ENDIF
-  //メッセージ取得
-  _UN_GET_ROOM_OBJ_MSG(LOCALWORK0, FALSE, TalkMsg)
-  
   _BALLOONWIN_TALKOBJ_MSG( TalkMsg )
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
-
-  _RET  
-
+_RET  
 
 //アニメ
 player_elev_out:
