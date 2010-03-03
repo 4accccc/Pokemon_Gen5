@@ -43,7 +43,7 @@ VMCMD_RESULT EvCmdTH_Start( VMHANDLE *core, void *wk )
 
   TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
 
-  if ( *ptr == NULL ) *ptr = TRIAL_HOUSE_Start();
+  if ( *ptr == NULL ) *ptr = TRIAL_HOUSE_Start(gsys);
   else GF_ASSERT_MSG(0,"TRIAL_HOUSE_ALLOC_ERROR");
 
   return VMCMD_RESULT_CONTINUE;
@@ -63,7 +63,7 @@ VMCMD_RESULT EvCmdTH_End( VMHANDLE *core, void *wk )
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
   
   TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
-  TRIAL_HOUSE_End(ptr);
+  TRIAL_HOUSE_End(gsys, ptr);
 
   return VMCMD_RESULT_CONTINUE;
 }

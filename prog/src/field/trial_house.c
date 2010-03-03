@@ -31,7 +31,7 @@ typedef struct
 }EVENT_WORK_BEACON_SEARCH;
 
 static void MakeTrainer(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount);
-static void SetDownLoadData(GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount);
+static void SetDownLoadData( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount);
 static u16 GetTrainerOBJCode( TRIAL_HOUSE_WORK_PTR ptr );
 
 static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk );
@@ -48,32 +48,34 @@ typedef enum
 //--------------------------------------------------------------
 /**
  * @brief	//トライアルハウスワーク確保関数
+ * @param   gsys      ゲームシステムポインタ
  * @retval	ptr      TRIAL_HOUSE_WORK_PTR
 */
 //--------------------------------------------------------------
-TRIAL_HOUSE_WORK_PTR TRIAL_HOUSE_Start(void)
+TRIAL_HOUSE_WORK_PTR TRIAL_HOUSE_Start(GAMESYS_WORK * gsys)
 {
   TRIAL_HOUSE_WORK_PTR ptr;
-  SAVE_CONTROL_WORK * sv = NULL;   //@todo
   int size = sizeof(TRIAL_HOUSE_WORK);
   int comm_size = BATTLE_EXAMINATION_SAVE_GetWorkSize();
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+
   NOZOMU_Printf("TrialHouseWorkSize = 0x%x\n",size);
+  NOZOMU_Printf("ExaminationSize = 0x%x\n",comm_size);
   ptr = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, size);
   ptr->HeapID = HEAPID_APP_CONTROL;//HEAPID_PROC;
   ptr->CommBuf = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, comm_size);
-  ptr->ThSaveWork = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, comm_size);
+  ptr->ThSaveWork = GFL_HEAP_AllocClearMemory(GFL_HEAP_LOWID(HEAPID_PROC), SAVESIZE_EXTRA_BATTLE_EXAMINATION);
 
   if (sv != NULL)
   {
     //外部データをロード
-    if ( LOAD_RESULT_OK == SaveControl_Extra_LoadWork(sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION, HEAPID_APP_CONTROL,
+    if ( LOAD_RESULT_OK == SaveControl_Extra_LoadWork(sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION, GFL_HEAP_LOWID(HEAPID_PROC),
                                                      ptr->ThSaveWork, SAVESIZE_EXTRA_BATTLE_EXAMINATION) )
     {
       OS_Printf("トライアルハウス外部データロード\n");
     }
     else GF_ASSERT_MSG(0,"extra_data_load fail");
-    
-    SaveControl_Extra_UnloadWork(sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION);
   }
   //パーティ作成
   ptr->Party = PokeParty_AllocPartyWork( ptr->HeapID );
@@ -83,14 +85,18 @@ TRIAL_HOUSE_WORK_PTR TRIAL_HOUSE_Start(void)
 //--------------------------------------------------------------
 /**
  * @brief	トライアルハウスワーク解放関数
+ * @param   gsys  ゲームシステムポインタ
  * @param	ptr      TRIAL_HOUSE_WORK_PTR
  * @retval		none
 */
 //--------------------------------------------------------------
-void TRIAL_HOUSE_End( TRIAL_HOUSE_WORK_PTR *ptr )
+void TRIAL_HOUSE_End( GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR *ptr )
 {
   if ( *ptr != NULL )
   {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+    SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+    SaveControl_Extra_UnloadWork(sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION);
     GFL_HEAP_FreeMemory( (*ptr)->ThSaveWork );
     GFL_HEAP_FreeMemory( (*ptr)->CommBuf );
     GFL_HEAP_FreeMemory( (*ptr)->Party );
@@ -161,13 +167,13 @@ void TRIAL_HOUSE_SetDLFlg( TRIAL_HOUSE_WORK_PTR ptr, const BOOL inDLFlg )
 //--------------------------------------------------------------
 /**
  * @brief	対戦相手の抽選
- * @param gsys        ゲームシステムポインタ
+ * @param gsys      ゲームシステムポインタ
  * @param	ptr      TRIAL_HOUSE_WORK_PTR
  * @param inBtlCouont   対戦回数　0～4（最大五戦）
  * @retval	obj_id      OBJ見た目     
 */
 //--------------------------------------------------------------
-int TRIAL_HOUSE_MakeTrainer( GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount )
+int TRIAL_HOUSE_MakeTrainer( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount )
 {
   int obj_id;
 
@@ -234,19 +240,19 @@ static void MakeTrainer(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount)
 //--------------------------------------------------------------
 /**
  * @brief	対戦相手のセット(ダウンロードデータ)
- * @param gsys    ゲームシステムポインタ
  * @param	ptr      TRIAL_HOUSE_WORK_PTR
  * @param inBtlCouont   対戦回数　0～4（最大五戦）
  * @retval	none    
 */
 //--------------------------------------------------------------
-static void SetDownLoadData(GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount)
+static void SetDownLoadData( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount)
 {
-  SAVE_CONTROL_WORK * sv;
   BATTLE_EXAMINATION_SAVEDATA *exa;
   BSUBWAY_PARTNER_DATA *data;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+  exa = SaveControl_Extra_DataPtrGet( sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION, 0);
   
-  exa = ptr->ThSaveWork;
   //データ取得
   data = BATTLE_EXAMINATION_SAVE_GetData(exa, inBtlCount);
   //トライアルハウスワークにデータをセット
@@ -377,9 +383,14 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
     DELIVERY_BEACON_Main( evt_wk->BeaconWork );
     //データ受け取り待ち
     if ( DELIVERY_BEACON_RecvCheck( evt_wk->BeaconWork )  )
-    {      
+    {
+      BATTLE_EXAMINATION_SAVEDATA *exa;
+      GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+      SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata); 
+      exa = SaveControl_Extra_DataPtrGet( sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION, 0);
       //バッファからセーブへデータコピー
-      GFL_STD_MemCopy( evt_wk->Ptr->CommBuf, evt_wk->Ptr->ThSaveWork, BATTLE_EXAMINATION_SAVE_GetWorkSize() );
+      GFL_STD_MemCopy( evt_wk->Ptr->CommBuf, exa, BATTLE_EXAMINATION_SAVE_GetWorkSize() );
+      NOZOMU_Printf("データ受け取り成功\n");
       //受け取りの結果をセット
       *(evt_wk->Ret) = TRUE;    //成功
       (*seq) = BEACON_SEQ_END;
@@ -454,7 +465,9 @@ u32 TRIAL_HOUSE_GetDLDataType( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
   u32 monsno;
   BATTLE_EXAMINATION_SAVEDATA *exa;
   BSUBWAY_PARTNER_DATA *data;
-  exa = ptr->ThSaveWork;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+  exa = SaveControl_Extra_DataPtrGet( sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION, 0);
   //データの有効性をチェック
   rc = BATTLE_EXAMINATION_SAVE_IsInData(exa);
   if (!rc) type = TH_DL_DATA_TYPE_NONE;
@@ -465,15 +478,16 @@ u32 TRIAL_HOUSE_GetDLDataType( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
     //3匹目取得
     monsno = data->btpwd[2].mons_no;
     //3匹目いなければ、データ無し
-    if ( (0<monsno)&&(monsno<=MONSNO_END) ) type = TH_DL_DATA_TYPE_NONE;
-    else
+    if ( (0<monsno)&&(monsno<=MONSNO_END) )
     {
       //4匹目取得
       monsno = data->btpwd[3].mons_no;
       //４匹目いなければシングル、いればダブル
       if ( (0<monsno)&&(monsno<=MONSNO_END) ) type = TH_DL_DATA_TYPE_DOUBLE;
       else type = TH_DL_DATA_TYPE_SINGLE;
-    }
+    }  
+    else type = TH_DL_DATA_TYPE_NONE;
+    
   }
 
   NOZOMU_Printf("DL_data_type = %d\n",type);
@@ -490,13 +504,16 @@ u32 TRIAL_HOUSE_GetDLDataType( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
 //--------------------------------------------------------------
 void TRIAL_HOUSE_InvalidDLData( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
 {
-  BATTLE_EXAMINATION_SAVEDATA *exa;
+  BATTLE_EXAMINATION_SAVEDATA exa_data;
   BSUBWAY_PARTNER_DATA *data;
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
   SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+  int size = BATTLE_EXAMINATION_SAVE_GetWorkSize();
 
-  exa = ptr->ThSaveWork;
-  BATTLE_EXAMINATION_SAVE_Write(sv, exa, ptr->HeapID);
+  NOZOMU_Printf("検定データ　%dbyte をクリア\n",size);
+
+  GFL_STD_MemClear( &exa_data, size );
+  BATTLE_EXAMINATION_SAVE_Write(sv, &exa_data, ptr->HeapID);
 }
 
 
