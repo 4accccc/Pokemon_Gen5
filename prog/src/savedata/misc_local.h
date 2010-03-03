@@ -8,6 +8,7 @@
 
 #define GYM_MAX     (8)
 
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -38,7 +39,11 @@ struct _MISC
   STRCODE self_introduction[SAVE_SURETIGAI_SELFINTRODUCTION_LEN]; ///<自己紹介
   STRCODE thankyou_message[SAVE_SURETIGAI_THANKYOU_LEN];  ///<お礼メッセージ
   u8 research_team_rank;         ///<調査隊隊員ランク(RESEARCH_TEAM_RANK_xxx)
-  u8 padding[3];
+
+	//タイトルメニュー
+	u8	start_menu_open;		///<メニュー表示
+
+  u8 padding[2];
 
   //ジムリーダー戦勝利時の手持ち記録
   u16 gym_win_monsno[GYM_MAX][TEMOTI_POKEMAX];

@@ -29,6 +29,20 @@ enum {
 
 #define NAMEIN_SAVEMODE_MAX (8)
 
+///タイトルメニューフラグ定義
+typedef enum {
+	MISC_STARTMENU_FLAG_OPEN = 1,		///<表示許可
+	MISC_STARTMENU_FLAG_VIEW = 2,		///<表示済み
+}MISC_STARTMENU_FLAG;
+
+///タイトルメニューフラグ設定定義
+typedef enum {
+	MISC_STARTMENU_TYPE_HUSHIGI = 0,	///<「不思議な贈り物」メニュー表示
+	MISC_STARTMENU_TYPE_BATTLE,				///<「バトル大会」メニュー表示
+	MISC_STARTMENU_TYPE_GAMESYNC,			///<「ゲームシンク設定」メニュー表示
+	MISC_STARTMENU_TYPE_MACHINE,			///<「転送マシンを使う」メニュー表示
+}MISC_STARTMENU_TYPE;
+
 
 //=============================================================================
 /**
@@ -94,5 +108,7 @@ extern u32 MISC_SubGold(MISC *misc, u32 sub);
 //ジム勝利時のデータ登録
 extern void MISC_SetGymVictoryInfo( MISC * misc, int gym_id, const u16 * monsnos );
 extern void MISC_GetGymVictoryInfo( const MISC * misc, int gym_id, u16 * monsnos );
-
+//タイトルメニュー
+extern void MISC_SetStartMenuFlag( MISC * misc, MISC_STARTMENU_TYPE type, MISC_STARTMENU_FLAG flg );
+extern u8 MISC_GetStartMenuFlag( const MISC * misc, MISC_STARTMENU_TYPE type );
 

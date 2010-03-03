@@ -518,3 +518,34 @@ void MISC_GetGymVictoryInfo( const MISC * misc, int gym_id, u16 * monsnos )
 }
 
 
+//==============================================================================
+//  タイトルメニュー
+//==============================================================================
+
+//----------------------------------------------------------
+/**
+ * @brief		フラグセット
+ * @param		misc
+ * @param		type		メニュータイプ
+ * @param		flg			フラグ
+ * @return  
+ */
+//----------------------------------------------------------
+void MISC_SetStartMenuFlag( MISC * misc, MISC_STARTMENU_TYPE type, MISC_STARTMENU_FLAG flg )
+{
+	misc->start_menu_open |= ( flg << (type<<1) );
+}
+
+//----------------------------------------------------------
+/**
+ * @brief		フラグ取得
+ * @param		misc
+ * @param		type		メニュータイプ
+ * @retval	フラグ
+ */
+//----------------------------------------------------------
+u8 MISC_GetStartMenuFlag( const MISC * misc, MISC_STARTMENU_TYPE type )
+{
+	return ( ( misc->start_menu_open >> (type<<1) ) & (MISC_STARTMENU_FLAG_OPEN|MISC_STARTMENU_FLAG_VIEW) );
+}
+
