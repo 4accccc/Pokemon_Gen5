@@ -3,7 +3,7 @@
  * @file	  scrcmd_dreamworld.c
  * @brief	  スクリプトコマンド：ポケモンドリームワールドの配達員
  * @date	  2010.02.12
- * @author  tamada GAMEFREAK inc.
+ * @author  k.ohno
  */
 //======================================================================
 #include <gflib.h>
@@ -22,7 +22,7 @@
 #include "scrcmd_dreamworld.h"
 #include "field_mystery_gift.h"
 
-#include "msg/script/msg_postman.h"
+#include "msg/script/msg_dream_postman.h"
 #include "savedata/dreamworld_data.h"
 #include "savedata/myitem_savedata.h"  //MYITEM_
 #include "print/wordset.h"   //WORDSET_
@@ -39,10 +39,10 @@
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-typedef BOOL (* MP_FUNC_ADD_CHECK)( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
-typedef void (* MP_FUNC_ADD)( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
-typedef u16 (* MP_FUNC_SUCCESS_MSG)( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );
-typedef u16 (* MP_FUNC_FAILURE_MSG)( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );
+typedef BOOL (* MP_FUNC_ADD_CHECK)( SCRCMD_WORK * work, GAMEDATA * gamedata, DREAMWORLD_ITEM_DATA * gpd );
+typedef void (* MP_FUNC_ADD)( SCRCMD_WORK * work, GAMEDATA * gamedata, DREAMWORLD_ITEM_DATA * gpd );
+typedef u16 (* MP_FUNC_SUCCESS_MSG)( WORDSET * wordset, DREAMWORLD_ITEM_DATA * gpd, SCRCMD_WORK * work );
+typedef u16 (* MP_FUNC_FAILURE_MSG)( WORDSET * wordset, DREAMWORLD_ITEM_DATA * gpd, SCRCMD_WORK * work );
 
 //--------------------------------------------------------------
 /**
@@ -68,11 +68,11 @@ static int searchEventDataPostmanObj( GAMEDATA * gamedata );
 static const DREAMWORLD_FUNC_TABLE DreamWorldFuncTable[DREAMWORLD_PRESENT_KIND_MAX];
 
 static BOOL MP_Command_AddCheck(
-    u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
-static u16 MP_Command_SuccessMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK * work );
-static u16 MP_Command_FailureMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK * work );
+    u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, DREAMWORLD_ITEM_DATA * gpd );
+static u16 MP_Command_SuccessMsg( u8 gift_type, DREAMWORLD_ITEM_DATA *gpd, SCRCMD_WORK * work );
+static u16 MP_Command_FailureMsg( u8 gift_type, DREAMWORLD_ITEM_DATA *gpd, SCRCMD_WORK * work );
 static BOOL MP_Command_Receive(
-    u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
+    u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, DREAMWORLD_ITEM_DATA * gpd );
 static u16 MP_Command_ObjStatus( FIELDMAP_WORK * fieldmap );
 static u16 MP_Command_ObjID( FIELDMAP_WORK * fieldmap, GAMEDATA * gamedata );
 
@@ -96,7 +96,7 @@ VMCMD_RESULT EvCmdDreamWorldCommand( VMHANDLE * core, void *wk )
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
   DREAMWORLD_SAVEDATA * fd = DREAMWORLD_SV_GetDreamWorldSaveData( GAMEDATA_GetSaveControlWork( gamedata ) );
   int index;
-  DREAMWORLD_ITEM_DATA * gpd;
+  DREAMWORLD_ITEM_DATA gpd;
   u8 gift_type = 0;
   int restNum = DREAMWORLD_SV_GetItemRestNum(fd);
 
@@ -114,22 +114,22 @@ VMCMD_RESULT EvCmdDreamWorldCommand( VMHANDLE * core, void *wk )
     }
     break;
   case SCR_POSTMAN_REQ_ENABLE:
-    *ret_wk = MP_Command_AddCheck( gift_type, work, gamedata, gpd );
+    *ret_wk = MP_Command_AddCheck( gift_type, work, gamedata, &gpd );
     break;
 
   case SCR_POSTMAN_REQ_OK_MSG:
-    *ret_wk = MP_Command_SuccessMsg( gift_type, gpd, work );
+    *ret_wk = MP_Command_SuccessMsg( gift_type, &gpd, work );
     break;
 
   case SCR_POSTMAN_REQ_NG_MSG:
-    *ret_wk = MP_Command_FailureMsg( gift_type, gpd, work );
+    *ret_wk = MP_Command_FailureMsg( gift_type, &gpd, work );
     break;
 
   case SCR_POSTMAN_REQ_RECEIVE:
     { //手に入れる処理
-      if ( MP_Command_Receive( gift_type, work, gamedata, gpd ) == TRUE )
+      if ( MP_Command_Receive( gift_type, work, gamedata, &gpd ) == TRUE )
       {
-        FIELD_MYSTERYDATA_SetReceived( fd, index );
+        DREAMWORLD_SV_DeleteItem( fd, index );
       }
     }
     *ret_wk = 0;
@@ -159,10 +159,10 @@ VMCMD_RESULT EvCmdDreamWorldCommand( VMHANDLE * core, void *wk )
 /// スクリプトコマンド：贈り物を受け取れるか？チェック
 //--------------------------------------------------------------
 static BOOL MP_Command_AddCheck(
-    u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
+    u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, DREAMWORLD_ITEM_DATA * gpd )
 {
   MP_FUNC_ADD_CHECK func;
-  func = PostmanFuncTable[gift_type].add_check_func;
+  func = DreamWorldFuncTable[gift_type].add_check_func;
   if ( gpd != NULL && func )
   {
     return func( work, gamedata, gpd );
@@ -176,14 +176,14 @@ static BOOL MP_Command_AddCheck(
 //--------------------------------------------------------------
 /// スクリプトコマンド：贈り物を受け取れるか？チェック
 //--------------------------------------------------------------
-static u16 MP_Command_SuccessMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK * work )
+static u16 MP_Command_SuccessMsg( u8 gift_type, DREAMWORLD_ITEM_DATA *gpd, SCRCMD_WORK * work )
 {
   MP_FUNC_SUCCESS_MSG func;
   u16 msg_id;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   WORDSET *wordset    = SCRIPT_GetWordSet( sc );
 
-  func = PostmanFuncTable[gift_type].set_success_words;
+  func = DreamWorldFuncTable[gift_type].set_success_words;
   if ( gpd != NULL && func )
   {
     msg_id = func( wordset, gpd, work );
@@ -197,14 +197,14 @@ static u16 MP_Command_SuccessMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK
 //--------------------------------------------------------------
 /// スクリプトコマンド：贈り物を受け取ったメッセージ
 //--------------------------------------------------------------
-static u16 MP_Command_FailureMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK * work )
+static u16 MP_Command_FailureMsg( u8 gift_type, DREAMWORLD_ITEM_DATA *gpd, SCRCMD_WORK * work )
 {
   MP_FUNC_FAILURE_MSG func;
   u16 msg_id;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   WORDSET *wordset    = SCRIPT_GetWordSet( sc );
 
-  func = PostmanFuncTable[gift_type].set_failure_words;
+  func = DreamWorldFuncTable[gift_type].set_failure_words;
   if ( gpd != NULL && func )
   {
     msg_id = func( wordset, gpd, work );
@@ -219,10 +219,10 @@ static u16 MP_Command_FailureMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK
 /// スクリプトコマンド：贈り物を受け取れなかったメッセージ
 //--------------------------------------------------------------
 static BOOL MP_Command_Receive(
-    u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
+    u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, DREAMWORLD_ITEM_DATA * gpd )
 { //手に入れる処理
   MP_FUNC_ADD func;
-  func = PostmanFuncTable[gift_type].add_func;
+  func = DreamWorldFuncTable[gift_type].add_func;
   if ( gpd != NULL && func )
   {
     func( work, gamedata, gpd );
@@ -324,9 +324,9 @@ static BOOL PFuncCheckItem( SCRCMD_WORK * work, GAMEDATA * gamedata, DREAMWORLD_
   HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
   MYITEM_PTR myitem = GAMEDATA_GetMyItem( gamedata );
 
-  item_no = MYSTERY_CreateItem(gpd);
+  item_no = gpd->itemindex;
 
-  return MYITEM_AddCheck( myitem, item_no, 1, heapID );
+  return MYITEM_AddCheck( myitem, item_no, gpd->itemnum, heapID );
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -335,10 +335,10 @@ static void PFuncAddItem( SCRCMD_WORK * work, GAMEDATA * gamedata, DREAMWORLD_IT
   HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
   MYITEM_PTR myitem = GAMEDATA_GetMyItem( gamedata );
 
-  u16 item_no = gpd->data.item.itemNo;
+  u16 item_no = gpd->itemindex;
   BOOL result;
 
-  result = MYITEM_AddItem( myitem, item_no, 1, heapID );
+  result = MYITEM_AddItem( myitem, item_no, gpd->itemnum, heapID );
   GF_ASSERT( result );
 }
 //--------------------------------------------------------------
@@ -346,19 +346,19 @@ static void PFuncAddItem( SCRCMD_WORK * work, GAMEDATA * gamedata, DREAMWORLD_IT
 static u16  PFuncSetSuccessItemWords( WORDSET * wordset, DREAMWORLD_ITEM_DATA * gpd, SCRCMD_WORK * work )
 {
   MYSTATUS * mystatus = GAMEDATA_GetMyStatus( SCRCMD_WORK_GetGameData( work ) );
-  u16 item_no = gpd->data.item.itemNo;
+  u16 item_no = gpd->itemindex;
   WORDSET_RegisterPlayerName( wordset, 0, mystatus );
   WORDSET_RegisterItemName( wordset, 1, item_no );
-  return msg_postman_08;
+  return msg_dream_postman_08;
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static u16  PFuncSetFailureItemWords( WORDSET * wordset, DREAMWORLD_ITEM_DATA * gpd, SCRCMD_WORK * work )
 {
-  u16 item_no = gpd->data.item.itemNo;
+  u16 item_no = gpd->itemindex;
   WORDSET_RegisterItemName( wordset, 0, item_no );
 
-  return msg_postman_09;
+  return msg_dream_postman_09;
 }
 
 

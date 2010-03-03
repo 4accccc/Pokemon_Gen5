@@ -244,7 +244,7 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
       SHINKA_COND cond;
       POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
     
-      u16 after_mons_no = SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, 0, &cond, pWork->heapID );
+      u16 after_mons_no = SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, (u32)IRC_POKEMONTRADE_GetRecvPP(pWork, 0), &cond, pWork->heapID );
       if( after_mons_no ){
         pWork->pParentWork->ret = POKEMONTRADE_MOVE_EVOLUTION;
         pWork->pParentWork->after_mons_no = after_mons_no;

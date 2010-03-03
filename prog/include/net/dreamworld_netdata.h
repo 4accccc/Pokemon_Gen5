@@ -26,6 +26,7 @@ typedef enum{
 } DREAM_WORLD_SERVER_ERROR_TYPE;   /// サーバから返ってくるサーバの状態
 
 typedef enum{
+  DREAM_WORLD_SERVER_PLAY_EMPTY, //ポケモンを預けていない
   DREAM_WORLD_SERVER_PLAY_NONE,        // まだ遊んでいません
   DREAM_WORLD_SERVER_PLAY_END,	         // ドリームワールドで遊びました
   DREAM_WORLD_SERVER_PLAY_MAX
@@ -35,8 +36,14 @@ typedef enum{
 
 /// 状態確認構造体
 typedef struct {
-//  DREAM_WORLD_SERVER_ERROR_TYPE type;   /// DREAM_WORLD_SERVER_ERROR_TYPE
-  DREAM_WORLD_SERVER_PLAY_TYPE PlayStatus; //DREAM_WORLD_SERVER_PLAY_TYPE
+  u16 PlayStatus; // DREAM_WORLD_SERVER_PLAY_TYPE
+  ///<  ここからはLV1ご褒美の為の実装
+  u16 findPokemon;         ///< であったポケモン番号
+  u16 findPokemonTecnique; ///< であったポケモンに覚えさせる技
+  u8 findPokemonForm;      ///< であったポケモンのフォルム番号
+  u8 findPokemonSex;       ///< であったポケモン性別    0=MALE 1=FEMALE 2=NEUTER 3=RANDOM
+  u16 itemID[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///< 持ち帰ったアイテム
+  u8 itemNum[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///< 持ち帰ったアイテムの個数
 }DREAM_WORLD_SERVER_STATUS_DATA;
 
 
@@ -50,15 +57,16 @@ struct DREAM_WORLD_SERVER_CREATE_DATA{
 
 /// ダウンロードデータ構造体
 typedef struct {
-//  int uploadCount;     ///< アップロード回数
+  int uploadCount;     ///< アップロード回数
+  u16 sleepPokemonLv;   ///< 寝ていたポケモンのレベルアップ値
   u16 findPokemon;         ///< であったポケモン番号
   u16 findPokemonTecnique; ///< であったポケモンに覚えさせる技
   u8 findPokemonForm;      ///< であったポケモンのフォルム番号
   u8 findPokemonSex;       ///< であったポケモン性別    0=MALE 1=FEMALE 2=NEUTER 3=RANDOM
   u8 sleepPokemonState;  ///< 寝ているポケモンの状態
-  u8 musicalNo;      ///< webで選択した番号  無い場合 0xff
-  u8 cgearNo;        ///< webで選択した番号  無い場合 0xff
-  u8 zukanNo;        ///< webで選択した番号  無い場合 0xff
+  u8 musicalNo;      ///< ミュージカル演目 webで選択した番号  無い場合 0xff
+  u8 cgearNo;        ///< CGEAR画像   webで選択した番号  無い場合 0xff
+  u8 zukanNo;        ///< 図鑑画像    webで選択した番号  無い場合 0xff
   u8 signin;        ///<	大好きクラブで登録が終わったかどうか  登録済みなら 1
   u8 bGet;          ///<	このデータをすでに受け取ったかどうか 
   u16 itemID[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///< 持ち帰ったアイテム

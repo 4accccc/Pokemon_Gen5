@@ -249,11 +249,20 @@ static void _keyWait(SAVEADDR_WORK* pWork)
 
     {//レコード
       long* rec = (long*)SaveData_GetRecord(pWork->pSaveData);
+      int num = RECORD_GetWorkSize();
+
+      GF_ASSERT(!(num%4));  //レコードデータは４バイトアライメントでないと
 
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECORDTOP_ADDR", (u32)&rec[0]-(u32)topAddr, 4);
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECORDSIZE", (u32)RECORD_GetWorkSize() , 4);
+
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECORD_CRC", (u32)rec[num-2] , 4);
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECORD_CODED_NUM", (u32)rec[num-1], 4);
+
 
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECID_CAPTURE_POKE", (u32)&rec[RECID_CAPTURE_POKE]-(u32)topAddr, 4);
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECID_FISHING_SUCCESS", (u32)&rec[RECID_FISHING_SUCCESS]-(u32)topAddr, 4);
+
     }
 
     {//システム

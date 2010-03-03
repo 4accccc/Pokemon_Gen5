@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-24T11:51:05"/>
+	<create user="ohno" host="W00141" date="2010-03-02T18:33:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -569,6 +569,11 @@
 [BD:02:Ｘセンタリング][2:01:２桁:0]／３２</language>
 		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]登録人数
 [BD:02:Ｘセンタリング][2:01:２桁:0]／３２</language>
+	</row>
+
+	<row id="IRCBTL_STR_36">
+		<language name="JPN" width="256">すすむ</language>
+		<language name="JPN_KANJI" width="256">すすむ</language>
 	</row>
 
 	<flowchart-group-list>
