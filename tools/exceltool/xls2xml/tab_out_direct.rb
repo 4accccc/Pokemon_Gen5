@@ -12,6 +12,7 @@
 　
 　tab_out_direct.rb <ファイル名> : TAB区切り
 　tab_out_direct.rb <ファイル名> -c : カンマ区切り
+　tab_out_direct.rb <ファイル名> -s : カンマ区切り＋空白を出す
 =end
 
 
@@ -32,8 +33,13 @@ end
 
 filename = getAbsolutePath(ARGV[0])
 sep = "\t"
+isOutSpace = FALSE
 if ARGV[1] == "-c"
   sep = ","
+end
+if ARGV[1] == "-s"
+  sep = ","
+  isOutSpace = TRUE
 end
 
 
@@ -59,6 +65,10 @@ begin
         if useRange.Cells(rowNo,colNo).Value != nil
           print useRange.Cells(rowNo,colNo).Value
           print sep
+        else
+          if isOutSpace == TRUE
+          print sep
+          end
         end
       end
       print "\n"
