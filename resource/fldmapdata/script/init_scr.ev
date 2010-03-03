@@ -22,6 +22,8 @@ INIT_EVENT_START  ev_init_script
 	_CALL	init_flags
   //全滅時の戻り先設定：通常ゲーム開始時は自宅1階から
   _SET_WARP_ID( WARP_ID_T01 )
+
+  _ADD_GOLD( 3000 )   //初期値０円＋３０００円がゲーム開始時の手持ち
 }
 INIT_EVENT_END
 
