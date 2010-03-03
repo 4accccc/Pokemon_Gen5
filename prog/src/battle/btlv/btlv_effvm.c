@@ -14,6 +14,8 @@
 
 #include "btlv_effect.h"
 
+#include "btlv_effvm_dat.h"
+
 #include "arc_def.h"
 #include "particle/wazaeffect/spa.naix"
 #include "wazaeffect/waza_eff_gra.naix"
@@ -38,13 +40,23 @@ enum{
 
   BTLV_EFFVM_TCB_MAX = 20,      //EFFVMで登録できるタスクのMAX
 
-  EFFVM_CHANGE_VOLUME = ( 127 * 80 / 100 ) << FX32_SHIFT,
-  EFFVM_CHANGE_VOLUME_FRAME = 16,
+  EFFVM_CHANGE_VOLUME = ( 127 * EFFVM_VOLUME_DOWN_RATIO / 100 ) << FX32_SHIFT,
+  EFFVM_CHANGE_VOLUME_DOWN_FRAME = EFFVM_VOLUME_DOWN_FRAME,
+  EFFVM_CHANGE_VOLUME_UP_FRAME = EFFVM_VOLUME_UP_FRAME,
 };
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
 #define DEBUG_OS_PRINT
+#endif
+#endif
+
+#ifdef PM_DEBUG
+#ifdef DEBUG_ONLY_FOR_kageyama_shota
+#define KAGEYAMA_DEBUG
+vu32  volume_down_ratio = ( 127 * EFFVM_VOLUME_DOWN_RATIO / 100 ) << FX32_SHIFT;
+vu32  volume_down_frame = EFFVM_CHANGE_VOLUME_DOWN_FRAME;
+vu32  volume_up_frame   = EFFVM_CHANGE_VOLUME_UP_FRAME;
 #endif
 #endif
 
@@ -95,6 +107,7 @@ typedef struct{
 #ifdef PM_DEBUG
   const DEBUG_PARTICLE_DATA*  dpd;
   BOOL                        debug_flag;
+  BOOL                        debug_return_through;
   ARCDATID                    dat_id[ PARTICLE_GLOBAL_MAX ];
   u32                         dat_id_cnt;
   void*                       unpack_info[ PARTICLE_GLOBAL_MAX ];
@@ -158,6 +171,7 @@ typedef struct
   BTLV_EFFVM_WORK*  bevw;
 	int               se_no;
 	int               player;
+	int               pan;
 	int               wait;
   int               pitch;
   int               vol;
@@ -307,7 +321,7 @@ static  void          EFFVM_InitEmitterCircleMove( GFL_EMIT_PTR emit );
 static  void          EFFVM_CircleMoveEmitter( GFL_EMIT_PTR emit, unsigned int flag );
 static  void          EFFVM_DeleteEmitter( GFL_PTC_PTR ptc );
 static  void          EFFVM_ChangeCameraProjection( BTLV_EFFVM_WORK *bevw );
-static  void          EFFVM_SePlay( int se_no, int player, int pitch, int vol, int mod_depth, int mod_speed );
+static  void          EFFVM_SePlay( int se_no, int player, int pan, int pitch, int vol, int mod_depth, int mod_speed );
 static  int           EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param );
 static  void          EFFVM_INIT_EMITTER_POS( BTLV_EFFVM_WORK* bevw, BTLV_EFFVM_EMIT_INIT_WORK* beeiw_src, int ptc_no, int index );
 static  VMCMD_RESULT  EFFVM_INIT_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work, BOOL ortho_mode );
@@ -525,10 +539,18 @@ BOOL    BTLV_EFFVM_Main( VMHANDLE *vmh )
       { 
         BTLV_EFFVM_CHANGE_VOLUME* becv = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_CHANGE_VOLUME ) );
         becv->tcb_index = EFFVM_GetTcbIndex( bevw );
+#ifdef KAGEYAMA_DEBUG
+        becv->start_vol = ( 127 * volume_down_ratio / 100 ) << FX32_SHIFT;
+#else
         becv->start_vol = EFFVM_CHANGE_VOLUME;
+#endif
         becv->end_vol = 127 << FX32_SHIFT;
         becv->bevw = bevw;
-        BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, EFFVM_CHANGE_VOLUME_FRAME );
+#ifdef KAGEYAMA_DEBUG
+        BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, volume_up_frame );
+#else
+        BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, EFFVM_CHANGE_VOLUME_UP_FRAME );
+#endif
         bevw->tcb[ becv->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_ChangeVolume, becv, 0 );
       }
     }
@@ -602,9 +624,17 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
       BTLV_EFFVM_CHANGE_VOLUME* becv = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_CHANGE_VOLUME ) );
       becv->tcb_index = EFFVM_GetTcbIndex( bevw );
       becv->start_vol = 127 << FX32_ONE;
+#ifdef KAGEYAMA_DEBUG
+      becv->end_vol = ( 127 * volume_down_ratio / 100 ) << FX32_SHIFT;
+#else
       becv->end_vol = EFFVM_CHANGE_VOLUME;
+#endif
       becv->bevw = bevw;
-      BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, EFFVM_CHANGE_VOLUME_FRAME );
+#ifdef KAGEYAMA_DEBUG
+      BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, volume_down_frame );
+#else
+      BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, EFFVM_CHANGE_VOLUME_DOWN_FRAME );
+#endif
       bevw->tcb[ becv->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_ChangeVolume, becv, 0 );
     }
   }
@@ -2488,6 +2518,7 @@ static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
   int se_no     = ( int )VMGetU32( vmh );
   int player    = ( int )VMGetU32( vmh );
+  int pan       = ( int )VMGetU32( vmh );
   int wait      = ( int )VMGetU32( vmh );
   int pitch     = ( int )VMGetU32( vmh );
   int vol       = ( int )VMGetU32( vmh );
@@ -2498,12 +2529,21 @@ static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_SE_PLAY\n");
 #endif DEBUG_OS_PRINT
 
+  if( pan == BTLEFF_SEPAN_FLAT )
+  { 
+    pan = 64;
+  }
+  else
+  { 
+    pan = ( EFFVM_GetPosition( vmh, pan ) & 1 ) ? 127 : -128;
+  }
+
   if( mod_depth > 255 ) { mod_depth = 255; }
   if( mod_speed > 255 ) { mod_speed = 255; }
 
   if( wait == 0 )
   { 
-    EFFVM_SePlay( se_no, player, pitch, vol, mod_depth, mod_speed );
+    EFFVM_SePlay( se_no, player, pan, pitch, vol, mod_depth, mod_speed );
   }
   else
   { 
@@ -2511,6 +2551,7 @@ static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
     bes->bevw       = bevw;
     bes->se_no      = se_no;
     bes->player     = player;
+    bes->pan        = pan;
     bes->wait       = wait;
     bes->pitch      = pitch;
     bes->vol        = vol;
@@ -3151,6 +3192,16 @@ static VMCMD_RESULT VMEC_RETURN( VMHANDLE *vmh, void *context_work )
       GFL_HEAP_FreeMemory( bevw->temp_work[ i ] );
     }
     bevw->temp_work_count = 0;
+
+    //仮想マシン停止
+    VM_End( vmh );
+
+    return VMCMD_RESULT_SUSPEND;
+  }
+
+  if( bevw->debug_return_through )
+  { 
+    bevw->debug_return_through = FALSE;
 
     //仮想マシン停止
     VM_End( vmh );
@@ -4516,13 +4567,14 @@ static  void  EFFVM_ChangeCameraProjection( BTLV_EFFVM_WORK *bevw )
  *
  * @param[in]	se_no	      再生するSEナンバー
  * @param[in] player      再生するPlayerNo
+ * @param[in] pan         再生パン
  * @param[in] pitch       再生ピッチ
  * @param[in] vol         再生ボリューム
  * @param[in] mod_depth   再生モジュレーションデプス
  * @param[in] mod_speed   再生モジュレーションスピード
  */
 //============================================================================================
-static  void  EFFVM_SePlay( int se_no, int player, int pitch, int vol, int mod_depth, int mod_speed )
+static  void  EFFVM_SePlay( int se_no, int player, int pan, int pitch, int vol, int mod_depth, int mod_speed )
 { 
   if( player == BTLEFF_SEPLAY_DEFAULT )
   { 
@@ -4534,6 +4586,7 @@ static  void  EFFVM_SePlay( int se_no, int player, int pitch, int vol, int mod_d
     PMSND_PlaySE_byPlayerID( se_no, player );
   }
 	NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player ), vol );
+  PMSND_SetStatusSE_byPlayerID( player, PMSND_NOEFFECT, PMSND_NOEFFECT, pan );
   PMSND_SetStatusSE_byPlayerID( player, PMSND_NOEFFECT, pitch, PMSND_NOEFFECT );
   if( mod_depth != 0 )
   { 
@@ -4972,7 +5025,7 @@ static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work )
   { 
     bes->bevw->se_play_wait_flag = 0;
     bes->bevw->tcb[ bes->tcb_index ] = NULL;
-    EFFVM_SePlay( bes->se_no, bes->player, bes->pitch, bes->vol, bes->mod_depth, bes->mod_speed );
+    EFFVM_SePlay( bes->se_no, bes->player, bes->pan, bes->pitch, bes->vol, bes->mod_depth, bes->mod_speed );
     GFL_HEAP_FreeMemory( bes );
     GFL_TCB_DeleteTask( tcb );
   }
@@ -5154,9 +5207,17 @@ void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, co
     BTLV_EFFVM_CHANGE_VOLUME* becv = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_CHANGE_VOLUME ) );
     becv->tcb_index = EFFVM_GetTcbIndex( bevw );
     becv->start_vol = 127 << FX32_ONE;
+#ifdef KAGEYAMA_DEBUG
+    becv->end_vol = ( 127 * volume_down_ratio / 100 ) << FX32_SHIFT;
+#else
     becv->end_vol = EFFVM_CHANGE_VOLUME;
+#endif
     becv->bevw = bevw;
-    BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, EFFVM_CHANGE_VOLUME_FRAME );
+#ifdef KAGEYAMA_DEBUG
+    BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, volume_down_frame );
+#else
+    BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, EFFVM_CHANGE_VOLUME_DOWN_FRAME );
+#endif
     bevw->tcb[ becv->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_ChangeVolume, becv, 0 );
   }
 
@@ -5167,6 +5228,20 @@ void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, co
   bevw->camera_projection = BTLEFF_CAMERA_PROJECTION_PERSPECTIVE;
   bevw->ball_mode = BTLEFF_USE_BALL;
   VM_Start( vmh, &start[ start_ofs[ 0 ] ] );
+}
+
+//============================================================================================
+/**
+ * @brief VM起動（デバッグ用コールリターンコマンドスルーバージョン）
+ *
+ * @param[in] vmh 仮想マシン制御構造体へのポインタ
+ */
+//============================================================================================
+void  BTLV_EFFVM_StartThrough( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID waza, BTLV_EFFVM_PARAM* param )
+{ 
+  BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+  bevw->debug_return_through = TRUE;
+  BTLV_EFFVM_Start( vmh, from, to, waza, param );
 }
 
 //============================================================================================

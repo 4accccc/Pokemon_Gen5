@@ -45,46 +45,49 @@ enum{
   BTLEFF_SINGLE_ENCOUNT_2_ARARAGI,
 
   //ステータスエフェクト
-  BTLEFF_NEMURI,                //ねむり
-  BTLEFF_DOKU,                  //どく
-  BTLEFF_YAKEDO,                //やけど
-  BTLEFF_KOORI,                 //こおり
-  BTLEFF_MAHI,                  //まひ
-  BTLEFF_KONRAN,                //こんらん
-  BTLEFF_MEROMERO,              //メロメロ
-  BTLEFF_LVUP,                  //レベルアップ
-  BTLEFF_USE_ITEM,              //ポケモンにアイテムを使用
-  BTLEFF_SOUBI_ITEM,            //装備道具発動 10
-  BTLEFF_RARE,                  //レアエフェクト
-  BTLEFF_STATUS_UP,             //ステータス上昇
-  BTLEFF_STATUS_DOWN,           //ステータス下降
-  BTLEFF_HP_RECOVER,            //HP回復
-  BTLEFF_MIGAWARI_WAZA_BEFORE,  //みがわり時に技を繰り出す前エフェクト
-  BTLEFF_MIGAWARI_WAZA_AFTER,   //みがわり時に技を繰り出した後エフェクト
-  BTLEFF_ITEM_ESCAPE,           //エネコのしっぽorピッピ人形
-  BTLEFF_WEATHER_KIRI,          //きり（シャチではないかも？）
-  BTLEFF_WEATHER_AME,           //あめ
-  BTLEFF_WEATHER_ARARE,         //あられ  20
-  BTLEFF_WEATHER_SUNAARASHI,    //すなあらし
-  BTLEFF_WEATHER_HARE,          //はれ
-  BTLEFF_POKEMON_MODOSU,        //ポケモン引っ込めるエフェクト
-  BTLEFF_POKEMON_KURIDASU,      //ポケモン繰り出しエフェクト
-  BTLEFF_MIGAWARI_FALL,         //みがわり落ちてくる
-  BTLEFF_MIGAWARI_DEAD,         //みがわり消滅
-  BTLEFF_TRAINER_IN,            //トレーナーフレームイン
-  BTLEFF_TRAINER_OUT,           //トレーナーフレームアウト
-//  BTLEFF_ANGRY,               //
-  BTLEFF_NOROI,                 //のろい  30
-  BTLEFF_AKUMU,                 //あくむ
-  BTLEFF_YADORIGI,              //やどりぎ
-  BTLEFF_SIMETUKERU,            //しめつける
-  BTLEFF_MAKITUKU,              //まきつく
-  BTLEFF_HONOONOUZU,            //ほのおのうず
-  BTLEFF_MAGUMASUTOOMU,         //マグマストーム
-  BTLEFF_KARADEHASAMU,          //からではさむ
-  BTLEFF_UZUSIO,                //うずしお
-  BTLEFF_SUNAZIGOKU,            //すなじごく
-  BTLEFF_NEWOHARU,              //ねをはる
+  BTLEFF_STATUS_EFFECT_START,
+  BTLEFF_NEMURI = BTLEFF_STATUS_EFFECT_START, //ねむり
+  BTLEFF_DOKU,                                //どく
+  BTLEFF_YAKEDO,                              //やけど
+  BTLEFF_KOORI,                               //こおり
+  BTLEFF_MAHI,                                //まひ
+  BTLEFF_KONRAN,                              //こんらん
+  BTLEFF_MEROMERO,                            //メロメロ
+  BTLEFF_LVUP,                                //レベルアップ
+  BTLEFF_USE_ITEM,                            //ポケモンにアイテムを使用
+  BTLEFF_SOUBI_ITEM,                          //装備道具発動 10
+  BTLEFF_RARE,                                //レアエフェクト
+  BTLEFF_STATUS_UP,                           //ステータス上昇
+  BTLEFF_STATUS_DOWN,                         //ステータス下降
+  BTLEFF_HP_RECOVER,                          //HP回復
+  BTLEFF_MIGAWARI_WAZA_BEFORE,                //みがわり時に技を繰り出す前エフェクト
+  BTLEFF_MIGAWARI_WAZA_AFTER,                 //みがわり時に技を繰り出した後エフェクト
+  BTLEFF_ITEM_ESCAPE,                         //エネコのしっぽorピッピ人形
+  BTLEFF_WEATHER_KIRI,                        //きり（シャチではないかも？）
+  BTLEFF_WEATHER_AME,                         //あめ
+  BTLEFF_WEATHER_ARARE,                       //あられ  20
+  BTLEFF_WEATHER_SUNAARASHI,                  //すなあらし
+  BTLEFF_WEATHER_HARE,                        //はれ
+  BTLEFF_POKEMON_MODOSU,                      //ポケモン引っ込めるエフェクト
+  BTLEFF_POKEMON_KURIDASU,                    //ポケモン繰り出しエフェクト
+  BTLEFF_MIGAWARI_FALL,                       //みがわり落ちてくる
+  BTLEFF_MIGAWARI_DEAD,                       //みがわり消滅
+  BTLEFF_TRAINER_IN,                          //トレーナーフレームイン
+  BTLEFF_TRAINER_OUT,                         //トレーナーフレームアウト
+//  BTLEFF_ANGRY,                             //
+  BTLEFF_NOROI,                               //のろい  30
+  BTLEFF_AKUMU,                               //あくむ
+  BTLEFF_YADORIGI,                            //やどりぎ
+  BTLEFF_SIMETUKERU,                          //しめつける
+  BTLEFF_MAKITUKU,                            //まきつく
+  BTLEFF_HONOONOUZU,                          //ほのおのうず
+  BTLEFF_MAGUMASUTOOMU,                       //マグマストーム
+  BTLEFF_KARADEHASAMU,                        //からではさむ
+  BTLEFF_UZUSIO,                              //うずしお
+  BTLEFF_SUNAZIGOKU,                          //すなじごく
+  BTLEFF_NEWOHARU,                            //ねをはる
+
+  BTLEFF_STATUS_EFFECT_END,
 };
 
 typedef struct _BTLV_EFFECT_SETUP_PARAM BTLV_EFFECT_SETUP_PARAM;

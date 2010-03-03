@@ -182,6 +182,7 @@
 #define BTLEFF_SEPAN_INTERPOLATION            ( 0 )
 #define BTLEFF_SEPAN_ROUNDTRIP                ( 1 )
 
+#define BTLEFF_SEPAN_FLAT                     ( 0 )
 #define BTLEFF_SEPAN_ATTACK                   ( BTLEFF_POKEMON_SIDE_ATTACK )
 #define BTLEFF_SEPAN_DEFENCE                  ( BTLEFF_POKEMON_SIDE_DEFENCE )
 
@@ -1762,9 +1763,10 @@ ex)
 /**
  * @brief	SE再生
  *
- * #param_num	7
+ * #param_num	5
  * @param	se_no	      再生するSEナンバー
  * @param player      再生するPlayerNo
+ * @param pan         再生時のPAN初期値
  * @param wait        再生までのウエイト
  * @param pitch       再生ピッチ
  * @param vol         再生ボリューム
@@ -1774,18 +1776,18 @@ ex)
  * #param	VALUE_INT   再生するSEナンバー
  * #param COMBOBOX_TEXT デフォルト  SE1 SE2 SE3 PSG SYSTEM
  * #param COMBOBOX_VALUE BTLEFF_SEPLAY_DEFAULT  BTLEFF_SEPLAY_SE1 BTLEFF_SEPLAY_SE2 BTLEFF_SEPLAY_SE3 BTLEFF_SEPLAY_PSG BTLEFF_SEPLAY_SYSTEM
- * #param VALUE_INT   再生までのウエイト
- * #param VALUE_INT   再生ピッチ
- * #param VALUE_INT   再生ボリューム
- * #param VALUE_INIT  127
- * #param VALUE_INT   再生モジュレーションデプス
- * #param VALUE_INT   再生モジュレーションスピード
+ * #param COMBOBOX_TEXT 真ん中  攻撃側  防御側
+ * #param	COMBOBOX_VALUE	BTLEFF_SEPAN_FLAT BTLEFF_SEPAN_ATTACK BTLEFF_SEPAN_DEFENCE
+ * #param VALUE_VECINT   再生までのウエイト 再生ピッチ  再生ボリューム
+ * #param VALUE_INIT  0:0:127
+ * #param VALUE_VECINT   再生モジュレーションデプス 再生モジュレーションスピード  未使用
  */
 //======================================================================
-	.macro	SE_PLAY	se_no, player, wait, pitch, vol, mod_depth, mod_speed
+	.macro	SE_PLAY	se_no, player, pan, wait, pitch, vol, mod_depth, mod_speed
 	.short	EC_SE_PLAY
 	.long		\se_no
 	.long   \player
+	.long   \pan
 	.long   \wait
   .long   \pitch
   .long   \vol

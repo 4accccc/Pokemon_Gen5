@@ -9,5 +9,6 @@
 
 #pragma once
 
-#define EFFVM_VOLUME_DOWN_RATIO ( 80 )  //マスターボリュームを何％ダウンするか（80で80%ダウン）
+#define EFFVM_VOLUME_DOWN_RATIO ( 70 )  //マスターボリュームを何％ダウンするか（80で80%ダウン）
 #define EFFVM_VOLUME_DOWN_FRAME ( 20 )  //EFFVM_VOLUME_DOWN_RATIOの％に何フレームでなるかを指定（60で1秒）
+#define EFFVM_VOLUME_UP_FRAME ( 20 )    //100％に何フレームでなるかを指定（60で1秒）
