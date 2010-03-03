@@ -11,6 +11,7 @@
 
 #define T02R0302_POKE_01                   0
 #define T02R0302_MIDDLEMAN1_01             1
+#define T02R0302_BABYGIRL1_01              2
 
 #endif //ZONE_T02R0302_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t02r0302.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

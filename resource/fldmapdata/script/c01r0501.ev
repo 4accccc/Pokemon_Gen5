@@ -66,7 +66,128 @@ EVENT_END
 /*  C01R0501 BOY3の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c01r0501_boy3_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_boy3_01 )
+_TALK_OBJ_START()
+	
+	DEFINE_LOCAL	LWK_QUESTION_01
+	DEFINE_LOCAL	LWK_QUESTION_02
+
+	//クイズをまだ正解していない場合
+	IF FLAG_OFF ( FE_C01R0501_QUIZ ) THEN
+
+		//よろしければ　ポケモンの　じょうたいいじょうに　ついて
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_boy3_01 )
+	
+		//はい・いいえ分岐
+		_YES_NO_WIN( SCWK_ANSWER )
+		_MSGWIN_CLOSE()
+	
+		//はいの場合
+		IF $SCWK_ANSWER == SCR_YES THEN
+			
+			//どくを　なおす　ポケモンの　どうぐは？
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_boy3_02 )
+			
+			//分岐・どくけし・まひなおし・ねむけざまし
+			_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 0, LWK_QUESTION_01 )
+		
+			_BMPMENU_MAKE_LIST( msg_c01r0501_quiz_01, 0 )	//どくけし
+			_BMPMENU_MAKE_LIST( msg_c01r0501_quiz_02, 1 )	//まひなおし
+			_BMPMENU_MAKE_LIST( msg_c01r0501_quiz_03, 2 )	//ねむけざまし
+		
+			//メニュー表示
+			_BMPMENU_START()
+			_MSGWIN_CLOSE()
+			
+			//選択結果で分岐
+			SWITCH $LWK_QUESTION_01	
+			CASE 0 THEN
+			//どくけしを選んだ場合
+				//せいかいです　つぎのもんだいです
+				_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_boy3_03 )
+				_MSGWIN_CLOSE()
+				
+				//ねむった　ポケモンを　おこす
+				_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_boy3_04 )
+				
+				//分岐・どくけし・まひなおし・ねむけざまし
+				_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 0, LWK_QUESTION_02 )
+			
+				_BMPMENU_MAKE_LIST( msg_c01r0501_quiz_01, 0 )	//どくけし
+				_BMPMENU_MAKE_LIST( msg_c01r0501_quiz_02, 1 )	//まひなおし
+				_BMPMENU_MAKE_LIST( msg_c01r0501_quiz_03, 2 )	//ねむけざまし
+		
+				//メニュー表示
+				_BMPMENU_START()
+				_MSGWIN_CLOSE()
+				
+				//選択結果で分岐
+				SWITCH $LWK_QUESTION_02
+				CASE 0 THEN		//どくけしを選んだ場合
+					//はずれです
+					_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_boy3_08 )
+					_LAST_KEYWAIT()
+					_MSGWIN_CLOSE()
+				//まひなおしを選んだ場合
+				CASE 1 THEN
+					//はずれです
+					_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_boy3_08 )
+					_LAST_KEYWAIT()
+					_MSGWIN_CLOSE()
+				//ねむけざましを選んだ場合
+				CASE 2 THEN
+					//大正解です
+					_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_boy3_05 )
+					_MSGWIN_CLOSE()
+					
+					//なんでもなおし入手処理
+					_ITEM_EVENT_KEYWAIT( ITEM_NANDEMONAOSI, 1 )
+					
+					//なんでもなおしは　そのなのとおり
+					_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_boy3_06 )
+					_LAST_KEYWAIT()
+					_MSGWIN_CLOSE()
+					
+					//========================================/
+					
+					//クイズ正解フラグ
+					_FLAG_SET( FE_C01R0501_QUIZ )
+					
+					//========================================/
+				ENDSWITCH
+
+			//まひなおしを選んだ場合
+			CASE 1 THEN
+				//はずれです
+				_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_boy3_08 )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+			//ねむけざましを選んだ場合
+			CASE 2 THEN
+				//はずれです
+				_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_boy3_08 )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+			ENDSWITCH
+		
+		//いいえ選択時
+		ELSE
+		
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_boy3_07 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+
+	//クイズを既に正解している場合
+	ELSE
+
+		//なんでもなおしは　そのなのとおり
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_boy3_06 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+
+	ENDIF
+
 EVENT_END
 
 /**************************************************************/
@@ -199,6 +320,9 @@ EVENT_START   ev_c01r0501_rival_01
 		_BALLOONWIN_OBJMSG( msg_c01r0501_black_06 , C01R0501_RIVAL_01 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
+		
+		_OBJ_ANIME( C01R0501_RIVAL_01, anm_dir_up )
+		_OBJ_ANIME_WAIT()
 		
 		//=========フラグワーク操作==========//
 

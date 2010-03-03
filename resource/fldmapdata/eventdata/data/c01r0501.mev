@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/14 11:56:36
+#save date:2010/03/02 16:18:06
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01r0501.wms
 #SECTION START:OBJ_EVENT
@@ -205,7 +205,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-4
+8
 #event number: 0
 #Bg Event Label
 BGID_C01R0501_BOARD_01
@@ -218,7 +218,7 @@ SCRID_BG_C01R0501_BOARD_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 0 232
+-200 0 232
 #event number: 1
 #Bg Event Label
 BGID_C01R0501_BOARD_04
@@ -231,7 +231,7 @@ SCRID_BG_C01R0501_BOARD_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 0 232
+-152 0 232
 #event number: 2
 #Bg Event Label
 BGID_C01R0501_BOARD_03
@@ -244,7 +244,7 @@ SCRID_BG_C01R0501_BOARD_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 0 232
+-168 0 232
 #event number: 3
 #Bg Event Label
 BGID_C01R0501_BOARD_02
@@ -257,7 +257,59 @@ SCRID_BG_C01R0501_BOARD_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
+-184 0 232
+#event number: 4
+#Bg Event Label
+BGID_C01R0501_BOARD_05
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C01R0501_BOARD_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
 -136 0 232
+#event number: 5
+#Bg Event Label
+BGID_C01R0501_BOARD_06
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C01R0501_BOARD_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 232
+#event number: 6
+#Bg Event Label
+BGID_C01R0501_BOARD_07
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C01R0501_BOARD_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 232
+#event number: 7
+#Bg Event Label
+BGID_C01R0501_BOARD_08
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C01R0501_BOARD_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 232
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

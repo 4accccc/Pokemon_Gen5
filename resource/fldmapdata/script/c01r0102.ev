@@ -162,25 +162,21 @@ _ANIME_LABEL	anm_inventor_dance
 /**************************************************************/
 EVENT_START   ev_c01r0102_inventor_01
 	_TALK_OBJ_START()
-
-	IF $WK_SCENE_C01R0102 == 1 THEN
-
-	//重要アイテム「？？？」を所持しているか、いないかの分岐
-	
-		//重要アイテム「？？？」を持っていない場合
-		IF $WK_SCENE_D01R0101_POKE <= 2 THEN
+		//重要アイテム「ゆめのけむり」を所持しているか、いないかの分岐
+		//重要アイテム「ゆめのけむり」を持っていない場合
+		IF $WK_SCENE_D01R0101_POKE <= 3 THEN
 			//マコモ『ゆめのあとちに　いる　ふしぎなポケモン』
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_07 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 		
 		//重要アイテム「？？？」を持っている場合
-		ELSE
+		ELSIF $WK_SCENE_D01R0101_POKE == 4 THEN
 			//マコモ『じゃじゃーん！
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_08 )
 			_MSGWIN_CLOSE()
 
-		//マコモ：一歩横に移動
+			//マコモ：一歩横に移動
 			DEFINE_LOCAL	LWK_DIR
 			_PLAYER_DIR_GET( LWK_DIR )
 			SWITCH $LWK_DIR
@@ -248,21 +244,15 @@ EVENT_START   ev_c01r0102_inventor_01
 			//ゆめのあとちイベント終了
 			$WK_SCENE_D01R0101_POKE = 5
 			
-			//ＰＤＷ説明イベント終了
-			$WK_SCENE_C01R0102 = 2
-			
 			//========================================/
-			
+		ELSE
+	
+			//gamesyncでねかせた　ポケモンを　おこしたら
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_16 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
 		ENDIF
-	
-	ELSE
-	
-		//gamesyncでねかせた　ポケモンを　おこしたら
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_16 )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
-	
-	ENDIF
 
 EVENT_END
  
@@ -298,25 +288,47 @@ _ANIME_LABEL	anm_return_down2
 EVENT_START   ev_c01r0102_girl3_01
 	_TALK_OBJ_START()
 
-	//重要アイテム「？？？」を持っていない場合
-	IF $WK_SCENE_D01R0101_POKE <= 3 THEN
+	//まだショーロと初会話の場合
+	IF $WK_SCENE_C01R0102 == 1 THEN
 		
 		//あなた　トレーナー？　じゃあ　ポケモンセンターの
 		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_01 )
-		_BALLOONWIN_CLOSE()
+		_MSGWIN_CLOSE()
 		
+		//ショーロ「パソコンの　あずかりシステムは
 		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_02 )
-	
-	//重要アイテム「？？？」を持っている場合
-	ELSE
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_03 )
-	
-	ENDIF
+		_MSGWIN_CLOSE()
+		
+		//========================================/
 
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+		//ショーロと初会話終了
+		$WK_SCENE_C01R0102 = 2
+		
+		//だれかのパソコンをショーロのパソコンに
+		_FLAG_SET( SYS_FLAG_PCNAME )
+		
+		//========================================/
 	
-	_FLAG_SET( SYS_FLAG_PCNAME )
+	//ショーロと会話した事がある場合
+	ELSE
+	
+		//ゆめのけむりを所持していない場合
+		IF $WK_SCENE_D01R0101_POKE <= 3 THEN
+			
+			//ショーロ「パソコンの　あずかりシステムは
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_02 )
+			_MSGWIN_CLOSE()
+	
+		//ゆめのけむりを所持している場合
+		ELSE
+			//ねかせたい　ポケモンを　ボックスに　てんそう　するなら
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+
+	ENDIF
 
 EVENT_END
 

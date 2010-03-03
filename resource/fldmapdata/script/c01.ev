@@ -36,6 +36,7 @@ _EVENT_DATA		ev_zone_c01
 _EVENT_DATA		ev_c01_woman2a_01
 _EVENT_DATA		ev_c01_fising_01
 _EVENT_DATA		ev_bg_c01_gymsign_01
+_EVENT_DATA		ev_c01_badman1_01
 _EVENT_DATA_END
 
 
@@ -174,12 +175,13 @@ EVENT_START   ev_pos_c01_stop
 	//自機の位置取得
 	_PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
 	
-	//X軸が13の場合
-	IF $LWK_HERO_X == 13 THEN
+	//X軸が750の場合
+	IF $LWK_HERO_X == 750 THEN
 		
 		//お爺さん：自機に近づく
 		//自機：お爺さんのほうを見る
-		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_tikaduku13 )
+		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_tikaduku750 )
+		_OBJ_ANIME_WAIT()
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_miru )
 		_OBJ_ANIME_WAIT()
 		
@@ -189,14 +191,16 @@ EVENT_START   ev_pos_c01_stop
 		
 		//自機：１歩下がる
 		//お爺さん：持ち場に戻る
-		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_modoru13 )
+		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_modoru750 )
+		_OBJ_ANIME_WAIT()
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
 		_OBJ_ANIME_WAIT()
 	
-	//X軸が14の場合
+	//X軸が751の場合
 	ELSE
 		//お爺さん：自機に近づく
-		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_tikaduku14 )
+		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_tikaduku751 )
+		_OBJ_ANIME_WAIT()
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_miru )
 		_OBJ_ANIME_WAIT()
 		
@@ -206,7 +210,8 @@ EVENT_START   ev_pos_c01_stop
 		
 		//自機：１歩下がる
 		//お爺さん：持ち場に戻る
-		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_modoru14 )
+		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_modoru751 )
+		_OBJ_ANIME_WAIT()
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
 		_OBJ_ANIME_WAIT()
 		
@@ -217,25 +222,26 @@ EVENT_END
 //--------------------------------------------------------------
 //	おじいさん　近づく
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_oldman_tikaduku13
+_ANIME_LABEL	anm_oldman_tikaduku750
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	AC_STAY_WALK_L_16F,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_oldman_tikaduku14
-	_ANIME_DATA	AC_STAY_WALK_L_16F,1
+_ANIME_LABEL	anm_oldman_tikaduku751
 	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_L_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	おじいさん　戻る
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_oldman_modoru13
-	_ANIME_DATA	AC_WALK_R_8F,1
+_ANIME_LABEL	anm_oldman_modoru750
+	_ANIME_DATA	AC_WALK_R_16F,1
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_oldman_modoru14
+_ANIME_LABEL	anm_oldman_modoru751
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -304,6 +310,10 @@ _TALK_OBJ_START()
 	_OBJ_ANIME( C01_LEADER_01, anm_leader_saru2 )
 	_OBJ_ANIME_WAIT()
 
+	//階段ＳＥ
+	_SE_PLAY(SEQ_SE_KAIDAN)
+	_SE_WAIT()
+
 	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
 	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
 	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
@@ -317,10 +327,6 @@ _TALK_OBJ_START()
 	_OBJ_DEL( C01_LEADER_01 )
 	
 	//========================================//
-
-	//階段ＳＥ
-	_SE_PLAY(SEQ_SE_KAIDAN)
-	_SE_WAIT()
 
 EVENT_END
 
@@ -431,8 +437,15 @@ EVENT_END
 
 
 /**************************************************************/
-//	C01	ジム看板											  */
+/*	C01	ジム看板											  */
 /**************************************************************/
 EVENT_START		ev_bg_c01_gymsign_01
 	_EASY_BGWIN_MSG( msg_c01_gymsign_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/*	C01	BADMAN	アイテム入手イベント						  */
+/**************************************************************/
+EVENT_START		ev_c01_badman1_01
+	_EASY_TALK_ITEM_EVENT( ITEM_DAAKUBOORU, 1, FE_C01_ITEMGET_02, msg_c01_badman1_01, msg_c01_badman1_02, msg_c01_badman1_02 )
 EVENT_END

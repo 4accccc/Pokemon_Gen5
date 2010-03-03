@@ -24,5 +24,6 @@
 #define SCRID_C01_WOMAN2A_01 (17)
 #define SCRID_C01_FISING_01 (18)
 #define SCRID_BG_C01_GYMSIGN_01 (19)
+#define SCRID_C01_BADMAN1_01 (20)
 
 #endif //_C01_DEF_H_

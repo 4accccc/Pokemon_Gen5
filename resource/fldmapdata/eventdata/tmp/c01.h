@@ -27,6 +27,7 @@
 #define C01_INVENTOR_01                    9
 #define C01_FISING_01                     10
 #define C01_BABYGIRL1_01                  11
+#define C01_BADMAN1_01                    12
 
 #endif //ZONE_C01_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c01.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

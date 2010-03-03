@@ -25,5 +25,9 @@
 #define BGID_C01R0501_BOARD_04            1
 #define BGID_C01R0501_BOARD_03            2
 #define BGID_C01R0501_BOARD_02            3
+#define BGID_C01R0501_BOARD_05            4
+#define BGID_C01R0501_BOARD_06            5
+#define BGID_C01R0501_BOARD_07            6
+#define BGID_C01R0501_BOARD_08            7
 
 #endif //ZONE_C01R0501_EVB_H

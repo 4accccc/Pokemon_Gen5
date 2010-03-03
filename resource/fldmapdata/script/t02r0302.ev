@@ -6,6 +6,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../../prog/include/msg/script/msg_t02r0302.h"
+  .include  "t02r0302.h"  
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -14,21 +15,103 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t02r0302_middleman1_01
-_EVENT_DATA    ev_t02r0302_poke_01
+_EVENT_DATA		ev_t02r0302_middleman1_01
+_EVENT_DATA		ev_t02r0302_poke_01
+_EVENT_DATA		ev_t02r0302_babygirl1_01
 _EVENT_DATA_END
 
 /**************************************************************/
-/*  T02R0302 MIDDLEMAN1の会話用イベントスクリプト*/
+/*  T02R0302 MIDDLEMAN1の会話用イベントスクリプト			  */
 /**************************************************************/
 EVENT_START   ev_t02r0302_middleman1_01
 	_EASY_TALK_ITEM_EVENT( ITEM_SUUPAABOORU, 1, FE_T02R0302_BALLGET, msg_t02r0302_middleman1_01, msg_t02r0302_middleman1_02, msg_t02r0302_middleman1_02)
 EVENT_END
 
 /**************************************************************/
-/*  T02R0302POKE_01の会話用スクリプト	【仮】鳴き声が仮です。*/
+/*  T02R0302POKE_01の会話用スクリプト						  */
 /**************************************************************/
 EVENT_START   ev_t02r0302_poke_01
-	_EASY_TALK_POKEVOICE( MONSNO_KORATTA, msg_t02r0302_poke_01 )
+	_EASY_TALK_POKEVOICE( MONSNO_537, msg_t02r0302_poke_01 )
 EVENT_END
 
+/**************************************************************/
+/*  BABYGIRL1_1	じゃんけん少女								  */
+/**************************************************************/
+EVENT_START   ev_t02r0302_babygirl1_01
+_TALK_OBJ_START()
+	
+	//ねえねえ　ポケモンじゃんけん　しようよ！
+	_BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_01, T02R0302_BABYGIRL1_01 ,POS_DL )
+	_YES_NO_WIN( SCWK_ANSWER )
+	_BALLOONWIN_CLOSE()
+
+	IF $SCWK_ANSWER == 0 THEN	//はい
+		
+		//ローカル変数を定義
+		DEFINE_LOCAL	LWK_SCWK_JANKEN
+		DEFINE_LOCAL	LWK_JANKEN_SELECT
+
+		_BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_03,T02R0302_BABYGIRL1_01,POS_DL )
+		
+		//三択表示・くさ、みず、ほのお
+    	_BMPMENU_INIT_EX( 1, 1, 0, 0, LWK_JANKEN_SELECT )
+
+		_BMPMENU_MAKE_LIST( msg_t02r0302_babygirl1_10, 0 )	//『ほのお』
+		_BMPMENU_MAKE_LIST( msg_t02r0302_babygirl1_11, 1 )	//『くさ』
+		_BMPMENU_MAKE_LIST( msg_t02r0302_babygirl1_12, 2 )	//『みず』
+
+		// メニュー表示
+		_BMPMENU_START()
+		_BALLOONWIN_CLOSE()
+		
+		//勝敗決め乱数
+		_GET_RND( LWK_SCWK_JANKEN, 2 )
+
+		//選択結果で分岐
+		SWITCH $LWK_JANKEN_SELECT
+		CASE 0 THEN		//『ほのお』
+			IF $LWK_SCWK_JANKEN == 0 THEN
+				_BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_04,T02R0302_BABYGIRL1_01,POS_DL )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ELSE
+				_BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_05,T02R0302_BABYGIRL1_01,POS_DL )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ENDIF
+	
+		CASE 1 THEN		//『くさ』
+			IF $LWK_SCWK_JANKEN == 0 THEN
+				_BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_08,T02R0302_BABYGIRL1_01,POS_DL )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ELSE
+				_BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_09,T02R0302_BABYGIRL1_01,POS_DL )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ENDIF
+		
+		CASE 2 THEN		//『みず』
+			IF $LWK_SCWK_JANKEN == 0 THEN
+				_BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_06,T02R0302_BABYGIRL1_01,POS_DL )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ELSE
+				_BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_07,T02R0302_BABYGIRL1_01,POS_DL )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ENDIF
+		
+		DEFAULT
+		
+		ENDSWITCH
+
+	ELSE	//いいえ
+		//なんだ　がっかり……　つまんないの
+		_BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_02,T02R0302_BABYGIRL1_01,POS_DL )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END

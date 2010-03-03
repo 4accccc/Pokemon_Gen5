@@ -2,10 +2,8 @@
 #ifndef ZONE_T02R0101_EVD_H
 #define ZONE_T02R0101_EVD_H
 
-#define DOOR_ID_T02R0101_T02_EXIT02       0
-#define DOOR_ID_T02R0101_T02_EXIT01       1
-#define DOOR_ID_T02R0101_T02_EXIT03       2
-#define DOOR_ID_T02R0101_T02R0102_EXIT01  3
+#define DOOR_ID_T02R0101_T02_EXIT01       0
+#define DOOR_ID_T02R0101_T02R0102_EXIT01  1
 
 #endif //ZONE_T02R0101_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t02r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
