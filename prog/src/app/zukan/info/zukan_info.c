@@ -100,7 +100,7 @@ enum
 // BGについて
 #define ZUKAN_INFO_BG_CHARA_SIZE           ( 32 * 4 * GFL_BG_1CHRDATASIZ )  // バイト
 #define ZUKAN_INFO_BG_SCREEN_W             (32)  // キャラ
-#define ZUKAN_INFO_BG_SCREEN_H             (24)  // キャラ
+#define ZUKAN_INFO_BG_SCREEN_H             (32)//(24)  // キャラ
 #define ZUKAN_INFO_BG_SCREEN_SIZE          ( ZUKAN_INFO_BG_SCREEN_W * ZUKAN_INFO_BG_SCREEN_H * GFL_BG_1SCRDATASIZ )  // バイト
 
 // BGのスクロール

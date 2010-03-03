@@ -29,6 +29,7 @@ typedef struct _FLD_ITEM_FUNCTION{
 static BOOL itemcheck_Cycle( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
 static BOOL itemcheck_Ananukenohimo( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
 static BOOL itemcheck_Turizao( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
+static BOOL itemcheck_DowsingMachine( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
 
 //=============================================================================
 /**
@@ -59,7 +60,11 @@ static FLD_ITEM_FUNCTION const DATA_FldItemFunction[ EVENT_ITEMUSE_CALL_MAX ] =
   { //釣竿
     &EVENT_FieldFishing,
     ITEMCHECK_TURIZAO,
-  }
+  },
+  { //ダウジングマシン
+    &EVENT_DowsingMachineUse,
+    ITEMCHECK_DOWSINGMACHINE,
+  },
 };
 
 //-------------------------------------
@@ -75,6 +80,7 @@ static ItemUseCheckFunc const DATA_ItemUseCheckFunc[ITEMCHECK_MAX] = {
   NULL, // バトルレコーダー
   NULL, // メール
   NULL, // スプレー
+  itemcheck_DowsingMachine, // ダウジングマシン
 };
 
 
@@ -222,7 +228,16 @@ static BOOL itemcheck_Turizao( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_
   return FieldFishingCheckPos( gdata, field_wk, NULL );
 }
 
+/*
+ *  @brief  ダウジングマシン使用チェック
+ */
+static BOOL itemcheck_DowsingMachine( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork )
+{
+  u16 zone_id = PLAYERWORK_getZoneID( playerWork );
 
+  // ユニオンルーム、通信対戦部屋、Wi-Fiクラブ、パルパーク、パレスでは使用できません。
+  return !( ZONEDATA_IsPalace(zone_id) || ZONEDATA_IsUnionRoom(zone_id) );
+}
 
 //=============================================================================
 /**
@@ -287,4 +302,36 @@ GMEVENT * EVENT_PalaceJumpUse(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys)
   return EVENT_ChangeMapPos(gsys, fieldWork, jump_zone, &pos, 0, FALSE);
 }
 
+//=============================================================================
+/**
+ *  ダウジングマシン呼び出し
+ */
+//=============================================================================
+typedef struct{
+  GAMESYS_WORK*      gameSys;
+  FIELDMAP_WORK*     fieldWork;
+} DOWSINGMACHINEUSE_STRUCT;
+//------------------------------------------------------------------------------
+/**
+ * @brief   ダウジングマシンを使う
+ * @retval  
+ */
+//------------------------------------------------------------------------------
+static GMEVENT_RESULT DowsingMachineEvent(GMEVENT* event, int* seq, void* work)
+{
+  DOWSINGMACHINEUSE_STRUCT*   pDMU        = work;
+  FIELD_SUBSCREEN_WORK*       subscreen   = FIELDMAP_GetFieldSubscreenWork(pDMU->fieldWork);
+
+  FIELD_SUBSCREEN_Change( subscreen, FIELD_SUBSCREEN_DOWSING );
+
+  return GMEVENT_RES_FINISH;
+}
+GMEVENT* EVENT_DowsingMachineUse(FIELDMAP_WORK* fieldWork, GAMESYS_WORK* gsys)
+{
+  GMEVENT*                    event  = GMEVENT_Create(gsys, NULL, DowsingMachineEvent, sizeof(DOWSINGMACHINEUSE_STRUCT));
+  DOWSINGMACHINEUSE_STRUCT*   pDMU   = GMEVENT_GetEventWork(event);
+  pDMU->gameSys     = gsys;
+  pDMU->fieldWork   = fieldWork;
+  return event;
+}
 

@@ -58,6 +58,7 @@ typedef enum {
   ITEMCHECK_BATTLE_RECORDER,  // バトルレコーダー
   ITEMCHECK_MAIL,         // メール
   ITEMCHECK_SPLAY,        // スプレー
+  ITEMCHECK_DOWSINGMACHINE,  // ダウジングマシン
   ITEMCHECK_MAX,
 
 } ITEMCHECK_ENABLE ;

@@ -25,6 +25,7 @@ typedef enum
 	SHORTCUT_ID_BTLRECORDER,	//バトルレコーダー
 	SHORTCUT_ID_FRIENDNOTE,		//友達手帳
 	SHORTCUT_ID_TURIZAO,			//つりざお
+	SHORTCUT_ID_DOWSINGMACHINE,		//ダウジングマシン
 
 	SHORTCUT_ID_PSTATUS_STATUS,		//ポケモン情報＞ステータス
 	SHORTCUT_ID_PSTATUS_ABILITY,	//ポケモン情報＞のうりょく

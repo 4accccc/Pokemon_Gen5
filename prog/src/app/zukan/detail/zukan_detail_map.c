@@ -16,8 +16,17 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+#include "ui/ui_easy_clwk.h"
+#include "pokeicon/pokeicon.h"
 #include "gamesystem/gamedata_def.h"
+#include "gamesystem/game_data.h"
 #include "savedata/zukan_savedata.h"
+#include "system/bmp_winframe.h"
+#include "print/printsys.h"
+#include "print/gf_font.h"
+#include "print/wordset.h"
+#include "sound/pm_sndsys.h"
+#include "app/townmap_data_sys.h"
 
 #include "zukan_detail_def.h"
 #include "zukan_detail_common.h"
@@ -26,11 +35,17 @@
 
 // アーカイブ
 #include "arc_def.h"
+#include "font/font.naix"
+#include "message.naix"
+#include "msg/msg_zkn.h"
 #include "townmap_gra.naix"
+#include "zukan_gra.naix"
 
 // サウンド
 
 // オーバーレイ
+FS_EXTERN_OVERLAY(ui_common);
+FS_EXTERN_OVERLAY(townmap);
 
 
 //=============================================================================
@@ -41,61 +56,75 @@
 // メインBGフレーム
 #define BG_FRAME_M_ROOT           (GFL_BG_FRAME2_M)
 #define BG_FRAME_M_MAP            (GFL_BG_FRAME3_M)
+#define BG_FRAME_M_TEXT           (GFL_BG_FRAME0_M)
 // メインBGフレームのプライオリティ
-#define BG_FRAME_PRI_M_ROOT       (1)
-#define BG_FRAME_PRI_M_MAP        (2)
+#define BG_FRAME_PRI_M_ROOT       (2)
+#define BG_FRAME_PRI_M_MAP        (3)
+#define BG_FRAME_PRI_M_TEXT       (1)
 
 // メインBGパレット
 // 本数
 enum
 {
-  BG_PAL_NUM_M_              = 0,
+  BG_PAL_NUM_M_TEXT          = 1,
 };
 // 位置
 enum
 {
-  BG_PAL_POS_M_              = 0,
+  BG_PAL_POS_M_TEXT          = 0,
 };
 
-// サブOBJパレット
+// メインOBJパレット
 // 本数
 enum
 {
-  OBJ_PAL_NUM_M_             = 0,
+  OBJ_PAL_NUM_M_TM           = 4,
+  OBJ_PAL_NUM_M_ZUKAN        = 2,
+  OBJ_PAL_NUM_M_EXIST        = 1,
 };
 // 位置
 enum
 {
-  OBJ_PAL_POS_M_             = 0,
+  OBJ_PAL_POS_M_TM           = 0,
+  OBJ_PAL_POS_M_ZUKAN        = 4,
+  OBJ_PAL_POS_M_EXIST        = 6,
 };
 
 // サブBGフレーム
+#define BG_FRAME_S_TEXT           (GFL_BG_FRAME2_S)
+#define BG_FRAME_S_PLACE          (GFL_BG_FRAME3_S)
 #define BG_FRAME_S_REAR           (GFL_BG_FRAME0_S)
 // サブBGフレームのプライオリティ
+#define BG_FRAME_PRI_S_TEXT       (1)
+#define BG_FRAME_PRI_S_PLACE      (2)
 #define BG_FRAME_PRI_S_REAR       (3)
 
 // サブBGパレット
 // 本数
 enum
 {
+  BG_PAL_NUM_S_PLACE             = 8,
+  BG_PAL_NUM_S_TEXT              = 1,
   BG_PAL_NUM_S_REAR              = ZKNDTL_COMMON_REAR_BG_PAL_NUM,
 };
 // 位置
 enum
 {
-  BG_PAL_POS_S_REAR              = 0,
+  BG_PAL_POS_S_PLACE             = 0,
+  BG_PAL_POS_S_TEXT              = 8,
+  BG_PAL_POS_S_REAR              = 9,
 };
 
 // サブOBJパレット
 // 本数
 enum
 {
-  OBJ_PAL_NUM_S_             = 0,
+  OBJ_PAL_NUM_S_POKEICON         = 3,
 };
 // 位置
 enum
 {
-  OBJ_PAL_POS_S_             = 0,
+  OBJ_PAL_POS_S_POKEICON         = 0,
 };
 
 
@@ -213,6 +242,102 @@ p100
 */
 
 
+// メッセージデータ
+enum
+{
+  MSG_ZUKAN,
+  MSG_PLACE,
+  MSG_MAX
+};
+
+// テキスト
+enum
+{
+  TEXT_POKENAME,
+  TEXT_PLACENAME,
+  TEXT_SEASON,
+  TEXT_UNKNOWN,
+  TEXT_MAX
+};
+
+// テキスト表示に必要なダミーのビットマップウィンドウ
+enum
+{
+  TEXT_DUMMY_UP,
+  TEXT_DUMMY_DOWN,
+  TEXT_DUMMY_MAX
+};
+
+// 文字数
+#define STRBUF_POKENAME_LENGTH  ( 64 )  // [ポケモン種族名]のぶんぷ  // buflen.hで確認する必要あり！
+#define STRBUF_UNKNOWN_LENGTH   ( 64 )  // せいそくちふめい
+
+// ポケアイコンの位置
+static const u8 pokeicon_pos[4] = { 56, 112 +8*8,     // スクロール前(陸上、水上、釣りアイコンが見えていないとき)
+                                    56, 112       };  // スクロール後(陸上、水上、釣りアイコンが見えているとき)
+
+// 状態
+typedef enum
+{
+  STATE_TOP,
+  STATE_SELECT,
+}
+STATE;
+
+typedef enum
+{
+  SCROLL_STATE_DOWN,
+  SCROLL_STATE_DOWN_TO_UP,
+  SCROLL_STATE_UP,
+  SCROLL_STATE_UP_TO_DOWN,
+}
+SCROLL_STATE;
+
+#define SCROLL_VEL (8)  // 上画面のスクロールの速度(1フレームにこれだけ移動する)
+
+// OBJ
+enum
+{
+  OBJ_RES_TM_NCG,     // pokemon_wb/prog/src/app/townmap/townmap_grh.c 参考
+  OBJ_RES_TM_NCL,
+  OBJ_RES_TM_NCE,
+  OBJ_RES_ZUKAN_NCG,
+  OBJ_RES_ZUKAN_NCL,
+  OBJ_RES_ZUKAN_NCE,
+  OBJ_RES_EXIST_NCG,
+  OBJ_RES_EXIST_NCL,
+  OBJ_RES_EXIST_NCE,
+  OBJ_RES_MAX,
+};
+enum
+{
+  OBJ_ZUKAN_START,                          // OBJ_ZUKAN_START<= <OBJ_ZUKAN_END
+  OBJ_SEASON          = OBJ_ZUKAN_START,
+  //OBJ_SEASON_L,
+  OBJ_SEASON_R,
+  OBJ_UNKNOWN,
+  OBJ_ZUKAN_END,
+
+  OBJ_TM_START        = OBJ_ZUKAN_END,      // OBJ_TM_START<= <OBJ_TM_END
+  OBJ_CURSOR          = OBJ_TM_START,
+  OBJ_RING_CUR,
+  OBJ_HERO,
+  OBJ_TM_END,
+
+  OBJ_MAX             = OBJ_TM_END,
+};
+
+// 季節
+typedef enum
+{
+  SEASON_SPRING,
+  SEASON_SUMMER,
+  SEASON_AUTUMN,
+  SEASON_WINTER,
+}
+SEASON;
+
+
 //=============================================================================
 /**
 *  構造体宣言
@@ -230,6 +355,29 @@ typedef struct
 
   // ここで作成するもの
   ZKNDTL_COMMON_REAR_WORK*    rear_wk_s;
+
+  // メッセージとテキスト
+  GFL_MSGDATA*                msgdata[MSG_MAX];
+  GFL_BMPWIN*                 text_bmpwin[TEXT_MAX];
+  GFL_BMPWIN*                 text_dummy_bmpwin[TEXT_DUMMY_MAX];
+
+  // 上画面
+  UI_EASY_CLWK_RES            pokeicon_res;    // pokeicon_clwkがNULLのとき、使用していない
+  GFL_CLWK*                   pokeicon_clwk;   // NULLのときなし
+  GFL_ARCUTIL_TRANSINFO       place_tinfo;
+
+  // 状態
+  STATE                       state;
+  SCROLL_STATE                scroll_state;
+  SCROLL_STATE                pokeicon_scroll_state;
+
+  // OBJ
+  u32                         obj_res[OBJ_RES_MAX];
+  GFL_CLWK*                   obj_clwk[OBJ_MAX];
+  GFL_CLWK*                   obj_exist_clwk[TOWNMAP_DATA_MAX];
+
+  // タウンマップデータ
+  TOWNMAP_DATA*               townmap_data;
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
@@ -256,9 +404,44 @@ static void Zukan_Detail_Map_VBlankFunc( GFL_TCB* tcb, void* wk );
 static void Zukan_Detail_Map_AffineExBGInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Map_AffineExBGExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
-// タウンマップOBJ
-static void Zukan_Detail_Map_TownmapObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
-static void Zukan_Detail_Map_TownmapObjExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+// OBJ
+static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_ObjExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_ObjExistInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_ObjExistExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
+// メッセージとテキスト
+static void Zukan_Detail_Map_MsgTextInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_MsgTextExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
+// 上画面
+static void Zukan_Detail_Map_PlaceInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_PlaceExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_PlaceMain( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_PlaceMainScroll( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_PlaceMainIcon( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
+// ポケアイコン
+static GFL_CLWK* PokeiconInit( UI_EASY_CLWK_RES* res, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, BOOL egg, u8 x, u8 y );
+static void PokeiconExit( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk );
+// マクロ
+#define BLOCK_POKEICON_EXIT(res,clwk)                     \
+    {                                                     \
+      if( clwk ) PokeiconExit( res, clwk );               \
+      clwk = NULL;                                        \
+    }
+// NULLを代入し忘れないようにマクロを使うようにしておく
+
+// プレイヤーの位置にOBJを配置する
+static void Zukan_Detail_Map_SetPlayer( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
+// 操作
+static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+// 状態を遷移させる
+static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                 STATE state );
+static void Zukan_Detail_Map_ChangePoke( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_ChangePlace( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 
 //=============================================================================
@@ -322,6 +505,10 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcInit( ZKNDTL_PROC* proc, int* seq
   }
 #endif
 
+  // オーバーレイ
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(townmap) );
+
   // ヒープ
   {
     work = ZKNDTL_PROC_AllocWork(proc, sizeof(ZUKAN_DETAIL_MAP_WORK), param->heap_id);
@@ -335,6 +522,21 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcInit( ZKNDTL_PROC* proc, int* seq
     work->font        = ZKNDTL_COMMON_GetFont(cmn);
     work->print_que   = ZKNDTL_COMMON_GetPrintQue(cmn);
   }
+
+  // NULL初期化
+  {
+    work->pokeicon_clwk = NULL;
+  }
+
+  // 状態初期化
+  {
+    work->state                    = STATE_TOP;
+    work->scroll_state             = SCROLL_STATE_DOWN;
+    work->pokeicon_scroll_state    = SCROLL_STATE_DOWN;
+  }
+
+  // タウンマップデータ
+  work->townmap_data = TOWNMAP_DATA_Alloc( param->heap_id );
 
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Zukan_Detail_Map_VBlankFunc, work, 1 );
@@ -365,8 +567,20 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcExit( ZKNDTL_PROC* proc, int* seq
   ZUKAN_DETAIL_MAP_PARAM*    param    = (ZUKAN_DETAIL_MAP_PARAM*)pwk;
   ZUKAN_DETAIL_MAP_WORK*     work     = (ZUKAN_DETAIL_MAP_WORK*)mywk;
 
+  // ポケアイコン
+  BLOCK_POKEICON_EXIT( &work->pokeicon_res, work->pokeicon_clwk )
+
+  // 上画面
+  Zukan_Detail_Map_PlaceExit( param, work, cmn );
+  // メッセージとテキスト 
+  Zukan_Detail_Map_MsgTextExit( param, work, cmn );
+ 
   // 最背面
   ZKNDTL_COMMON_RearExit( work->rear_wk_s );
+
+  // OBJ
+  Zukan_Detail_Map_ObjExistExit( param, work, cmn );
+  Zukan_Detail_Map_ObjExit( param, work, cmn );
 
   // フェード
   {
@@ -377,8 +591,15 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcExit( ZKNDTL_PROC* proc, int* seq
   // VBlank中TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );
 
+  // タウンマップデータ
+  TOWNMAP_DATA_Free( work->townmap_data );
+
   // ヒープ
   ZKNDTL_PROC_FreeWork( proc );
+
+  // オーバーレイ
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(townmap) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
 
 #ifdef DEBUG_KAWADA
   {
@@ -442,18 +663,35 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
 
         // メインBG
         GFL_BG_SetPriority( BG_FRAME_M_ROOT, BG_FRAME_PRI_M_ROOT );
-        GFL_BG_SetPriority( BG_FRAME_M_MAP, BG_FRAME_PRI_M_MAP );
+        GFL_BG_SetPriority( BG_FRAME_M_MAP,  BG_FRAME_PRI_M_MAP );
+        GFL_BG_SetPriority( BG_FRAME_M_TEXT, BG_FRAME_PRI_M_TEXT );
         
         // サブBG
-        GFL_BG_SetPriority( BG_FRAME_S_REAR, BG_FRAME_PRI_S_REAR );
+        GFL_BG_SetPriority( BG_FRAME_S_TEXT,  BG_FRAME_PRI_S_TEXT );
+        GFL_BG_SetPriority( BG_FRAME_S_PLACE, BG_FRAME_PRI_S_PLACE );
+        GFL_BG_SetPriority( BG_FRAME_S_REAR,  BG_FRAME_PRI_S_REAR );
       }
 
       // アフィン拡張BG
       Zukan_Detail_Map_AffineExBGInit( param, work, cmn );
-
+      // OBJ
+      Zukan_Detail_Map_ObjInit( param, work, cmn );
+      Zukan_Detail_Map_ObjExistInit( param, work, cmn );
+      
       // 最背面
       work->rear_wk_s = ZKNDTL_COMMON_RearInit( param->heap_id, ZKNDTL_COMMON_REAR_TYPE_MAP,
           BG_FRAME_S_REAR, BG_PAL_POS_S_REAR +0, BG_PAL_POS_S_REAR +1 );
+
+      // メッセージとテキスト 
+      Zukan_Detail_Map_MsgTextInit( param, work, cmn );
+      // 上画面
+      Zukan_Detail_Map_PlaceInit( param, work, cmn );
+
+      // プレイヤーの位置にOBJを配置する
+      Zukan_Detail_Map_SetPlayer( param, work, cmn );
+
+      // この画面に来たときに選ばれていたポケモンを表示する
+      Zukan_Detail_Map_ChangePoke( param, work, cmn );
     }
     break;
   case SEQ_PREPARE:
@@ -517,8 +755,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
       }
       else
       {
-        // タッチ
-        //Zukan_Detail_Map_Touch( param, work, cmn );
+        // 操作
+        Zukan_Detail_Map_Input( param, work, cmn );
       }
     }
     break;
@@ -571,10 +809,13 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
     break;
   }
 
-  // 最背面
   if( *seq >= SEQ_PREPARE )
   {
+    // 最背面
     ZKNDTL_COMMON_RearMain( work->rear_wk_s );
+
+    // 上画面
+    Zukan_Detail_Map_PlaceMain( param, work, cmn );
   }
 
   // フェード
@@ -623,7 +864,7 @@ static void Zukan_Detail_Map_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
         monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
         if( monsno_curr != monsno_go )
         {
-          //Zukan_Detail_Map_ChangePoke(param, work, cmn);
+          Zukan_Detail_Map_ChangePoke( param, work, cmn );
         }
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
@@ -637,7 +878,7 @@ static void Zukan_Detail_Map_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
         monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
         if( monsno_curr != monsno_go )
         {
-          //Zukan_Detail_Map_ChangePoke(param, work, cmn);
+          Zukan_Detail_Map_ChangePoke( param, work, cmn );
         }
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
@@ -650,6 +891,11 @@ static void Zukan_Detail_Map_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
         monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
         ZUKANSAVE_SetShortcutMons( zukan_savedata, monsno_curr );
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+      }
+      break;
+    case ZKNDTL_CMD_MAP_RETURN:
+      {
+        Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_TOP );
       }
       break;
     default:
@@ -708,12 +954,753 @@ static void Zukan_Detail_Map_AffineExBGExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKA
 }
 
 //-------------------------------------
-/// タウンマップOBJ
+/// OBJ
 //-------------------------------------
-static void Zukan_Detail_Map_TownmapObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  // リソース読み込み
+  {
+    ARCHANDLE* handle;
+    
+    handle = GFL_ARC_OpenDataHandle( ARCID_TOWNMAP_GRAPHIC, param->heap_id );
+    work->obj_res[OBJ_RES_TM_NCL] = GFL_CLGRP_PLTT_RegisterEx( 
+                                     handle,
+                                     NARC_townmap_gra_tmap_obj_NCLR,
+                                     CLSYS_DRAW_MAIN,
+                                     OBJ_PAL_POS_M_TM*0x20,
+                                     0,
+                                     OBJ_PAL_NUM_M_TM,
+                                     param->heap_id );	
+    work->obj_res[OBJ_RES_TM_NCG] = GFL_CLGRP_CGR_Register(
+                                     handle,
+                                     NARC_townmap_gra_tmap_obj_d_NCGR,
+                                     FALSE,
+                                     CLSYS_DRAW_MAIN,
+                                     param->heap_id );
+    work->obj_res[OBJ_RES_TM_NCE] = GFL_CLGRP_CELLANIM_Register(
+                                     handle,
+                                     NARC_townmap_gra_tmap_obj_d_NCER,
+                                     NARC_townmap_gra_tmap_obj_d_NANR,
+                                     param->heap_id );
+    GFL_ARC_CloseDataHandle( handle );
+
+    handle = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, param->heap_id );
+    work->obj_res[OBJ_RES_ZUKAN_NCL] = GFL_CLGRP_PLTT_RegisterEx( 
+                                     handle,
+                                     NARC_zukan_gra_info_mapwin_obj_NCLR,
+                                     CLSYS_DRAW_MAIN,
+                                     OBJ_PAL_POS_M_ZUKAN*0x20,
+                                     0, 
+                                     OBJ_PAL_NUM_M_ZUKAN,
+                                     param->heap_id );	
+    work->obj_res[OBJ_RES_ZUKAN_NCG] = GFL_CLGRP_CGR_Register(
+                                     handle,
+                                     NARC_zukan_gra_info_mapwin_obj_NCGR,
+                                     FALSE,
+                                     CLSYS_DRAW_MAIN,
+                                     param->heap_id );
+    work->obj_res[OBJ_RES_ZUKAN_NCE] = GFL_CLGRP_CELLANIM_Register(
+                                     handle,
+                                     NARC_zukan_gra_info_mapwin_obj_NCER,
+                                     NARC_zukan_gra_info_mapwin_obj_NANR,
+                                     param->heap_id );
+    GFL_ARC_CloseDataHandle( handle );
+
+    handle = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, param->heap_id );
+    work->obj_res[OBJ_RES_EXIST_NCL] = GFL_CLGRP_PLTT_RegisterEx( 
+                                     handle,
+                                     NARC_zukan_gra_info_map_obj_NCLR,
+                                     CLSYS_DRAW_MAIN,
+                                     OBJ_PAL_POS_M_EXIST*0x20,
+                                     0, 
+                                     OBJ_PAL_NUM_M_EXIST,
+                                     param->heap_id );	
+    work->obj_res[OBJ_RES_EXIST_NCG] = GFL_CLGRP_CGR_Register(
+                                     handle,
+                                     NARC_zukan_gra_info_map_obj_NCGR,
+                                     FALSE,
+                                     CLSYS_DRAW_MAIN,
+                                     param->heap_id );
+    work->obj_res[OBJ_RES_EXIST_NCE] = GFL_CLGRP_CELLANIM_Register(
+                                     handle,
+                                     NARC_zukan_gra_info_map_obj_NCER,
+                                     NARC_zukan_gra_info_map_obj_NANR,
+                                     param->heap_id );
+    GFL_ARC_CloseDataHandle( handle );
+  }
+
+  // CLWK作成
+  {
+    u8 anmseq[OBJ_MAX] =
+    {
+      // OBJ_ZUKAN_
+      1,
+      //2,
+      2,
+      0,
+
+      // OBJ_TM_
+      4,
+      5,
+      6,
+    };
+    u8 bgpri[OBJ_MAX] =
+    {
+      // OBJ_ZUKAN_
+      BG_FRAME_PRI_M_ROOT,
+      //BG_FRAME_PRI_M_ROOT,
+      BG_FRAME_PRI_M_ROOT,
+      BG_FRAME_PRI_M_ROOT,
+
+      // OBJ_TM_
+      BG_FRAME_PRI_M_TEXT,
+      BG_FRAME_PRI_M_TEXT,
+      BG_FRAME_PRI_M_TEXT,
+    };
+    u8 softpri[OBJ_MAX] =
+    {
+      // OBJ_ZUKAN_
+      2,
+      //1,
+      0,
+      3,
+
+      // OBJ_TM_
+      0,
+      1,
+      2,
+    };
+
+    u8 i;
+    GFL_CLWK_DATA cldata;
+    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+   
+    for( i=OBJ_TM_START; i<OBJ_TM_END; i++ )
+    {	
+      work->obj_clwk[i] = GFL_CLACT_WK_Create(
+                             work->clunit,
+                             work->obj_res[OBJ_RES_TM_NCG], work->obj_res[OBJ_RES_TM_NCL], work->obj_res[OBJ_RES_TM_NCE],
+                             &cldata, CLSYS_DEFREND_MAIN, param->heap_id );
+    }
+    
+    for( i=OBJ_ZUKAN_START; i<OBJ_ZUKAN_END; i++ )
+    {	
+      work->obj_clwk[i] = GFL_CLACT_WK_Create(
+                             work->clunit,
+                             work->obj_res[OBJ_RES_ZUKAN_NCG], work->obj_res[OBJ_RES_ZUKAN_NCL], work->obj_res[OBJ_RES_ZUKAN_NCE],
+                             &cldata, CLSYS_DEFREND_MAIN, param->heap_id );
+    }
+
+    for( i=0; i<OBJ_MAX; i++ )
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[i], anmseq[i] );
+      GFL_CLACT_WK_SetAutoAnmFlag( work->obj_clwk[i], TRUE );
+      GFL_CLACT_WK_SetBgPri( work->obj_clwk[i], bgpri[i] );
+      GFL_CLACT_WK_SetSoftPri( work->obj_clwk[i], softpri[i] );
+      GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[i], FALSE );
+      GFL_CLACT_WK_SetObjMode( work->obj_clwk[i], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+    }
+
+    // 個別設定
+    {
+      GFL_CLACTPOS pos;
+      pos.x = 16*8;
+      pos.y = 12*8;
+      for( i=OBJ_ZUKAN_START; i<OBJ_ZUKAN_END; i++ )
+        GFL_CLACT_WK_SetPos( work->obj_clwk[i], &pos, CLSYS_DEFREND_MAIN );
+    }
+  }
 }
-static void Zukan_Detail_Map_TownmapObjExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+static void Zukan_Detail_Map_ObjExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  // CLWK破棄
+  {
+    u8 i;
+    for( i=0; i<OBJ_MAX; i++ )
+    {
+      GFL_CLACT_WK_Remove( work->obj_clwk[i] );
+    }
+  }
+
+  // リソース破棄
+  {
+    GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_RES_EXIST_NCE] );
+    GFL_CLGRP_CGR_Release( work->obj_res[OBJ_RES_EXIST_NCG] );
+    GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_RES_EXIST_NCL] );
+    GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_RES_ZUKAN_NCE] );
+    GFL_CLGRP_CGR_Release( work->obj_res[OBJ_RES_ZUKAN_NCG] );
+    GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_RES_ZUKAN_NCL] );	
+    GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_RES_TM_NCE] );
+    GFL_CLGRP_CGR_Release( work->obj_res[OBJ_RES_TM_NCG] );
+    GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_RES_TM_NCL] );
+  }
+}
+
+static void Zukan_Detail_Map_ObjExistInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // CLWK作成
+  {
+    u8 softpri = 4;  // obj_clwkのsoftpriよりプライオリティを低くしておく
+
+    u8 i;
+    GFL_CLWK_DATA cldata;
+    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+ 
+    for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+    {	
+      work->obj_exist_clwk[i] = GFL_CLACT_WK_Create(
+                             work->clunit,
+                             work->obj_res[OBJ_RES_EXIST_NCG], work->obj_res[OBJ_RES_EXIST_NCL], work->obj_res[OBJ_RES_EXIST_NCE],
+                             &cldata, CLSYS_DEFREND_MAIN, param->heap_id );
+
+      GFL_CLACT_WK_SetAnmSeq( work->obj_exist_clwk[i], 0 );
+      GFL_CLACT_WK_SetAutoAnmFlag( work->obj_exist_clwk[i], TRUE );
+      GFL_CLACT_WK_SetBgPri( work->obj_exist_clwk[i], BG_FRAME_PRI_M_ROOT );
+      GFL_CLACT_WK_SetSoftPri( work->obj_exist_clwk[i], softpri );
+      GFL_CLACT_WK_SetDrawEnable( work->obj_exist_clwk[i], FALSE );
+      GFL_CLACT_WK_SetObjMode( work->obj_exist_clwk[i], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+    }
+  }
+}
+static void Zukan_Detail_Map_ObjExistExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // CLWK破棄
+  {
+    u8 i;
+    for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+    {
+      GFL_CLACT_WK_Remove( work->obj_exist_clwk[i] );
+    }
+  }
+}
+
+//-------------------------------------
+/// メッセージとテキスト
+//-------------------------------------
+static void Zukan_Detail_Map_MsgTextInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u8 dummy_bmpwin_setup[TEXT_DUMMY_MAX][7] =
+  {
+    { BG_FRAME_S_TEXT, 0, 0, 1, 1, BG_PAL_POS_S_TEXT, GFL_BMP_CHRAREA_GET_F },
+    { BG_FRAME_M_TEXT, 0, 0, 1, 1, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_F },
+  };
+  u8 bmpwin_setup[TEXT_MAX][7] =
+  {
+    { BG_FRAME_S_TEXT, 12, 21, 16,  3, BG_PAL_POS_S_TEXT, GFL_BMP_CHRAREA_GET_F },
+    { BG_FRAME_S_TEXT,  9, 25, 16,  2, BG_PAL_POS_S_TEXT, GFL_BMP_CHRAREA_GET_F },
+    { BG_FRAME_M_TEXT,  2,  0, 15,  2, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_F },
+    { BG_FRAME_M_TEXT,  8, 10, 16,  2, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_F },
+  };
+
+  u8 i;
+
+  // パレット
+  GFL_ARC_UTIL_TransVramPaletteEx( ARCID_FONT, NARC_font_default_nclr,
+       PALTYPE_SUB_BG,
+       0,
+       BG_PAL_POS_S_TEXT * 0x20,
+       BG_PAL_NUM_S_TEXT * 0x20,
+       param->heap_id );
+   GFL_ARC_UTIL_TransVramPaletteEx( ARCID_FONT, NARC_font_default_nclr,
+       PALTYPE_MAIN_BG,
+       0,
+       BG_PAL_POS_M_TEXT * 0x20,
+       BG_PAL_NUM_M_TEXT * 0x20,
+       param->heap_id );
+
+  // テキスト表示に必要なダミーのビットマップウィンドウ
+  for( i=0; i<TEXT_DUMMY_MAX; i++ )
+  {
+    work->text_dummy_bmpwin[i] = GFL_BMPWIN_Create(
+                                     dummy_bmpwin_setup[i][0],
+                                     dummy_bmpwin_setup[i][1], dummy_bmpwin_setup[i][2], dummy_bmpwin_setup[i][3], dummy_bmpwin_setup[i][4],
+                                     dummy_bmpwin_setup[i][5], dummy_bmpwin_setup[i][6] );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_dummy_bmpwin[i]), 0 );
+    GFL_BMPWIN_TransVramCharacter( work->text_dummy_bmpwin[i] );
+  }
+
+  // ビットマップウィンドウ
+  for( i=0; i<TEXT_MAX; i++ )
+  {
+    work->text_bmpwin[i] = GFL_BMPWIN_Create(
+                                     bmpwin_setup[i][0],
+                                     bmpwin_setup[i][1], bmpwin_setup[i][2], bmpwin_setup[i][3], bmpwin_setup[i][4],
+                                     bmpwin_setup[i][5], bmpwin_setup[i][6] );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[i]), 0 );
+    GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[i] );
+  }
+
+  // メッセージ
+  work->msgdata[MSG_ZUKAN] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+                           ARCID_MESSAGE, NARC_message_zkn_dat,
+                           param->heap_id );
+  work->msgdata[MSG_PLACE] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+                           ARCID_MESSAGE, NARC_message_place_name_dat,
+                           param->heap_id );
+}
+static void Zukan_Detail_Map_MsgTextExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u8 i;
+  for( i=0; i<MSG_MAX; i++ )
+    GFL_MSG_Delete( work->msgdata[i] );
+  for( i=0; i<TEXT_MAX; i++ )
+    GFL_BMPWIN_Delete( work->text_bmpwin[i] );
+  for( i=0; i<TEXT_DUMMY_MAX; i++ )
+    GFL_BMPWIN_Delete( work->text_dummy_bmpwin[i] );
+}
+
+//-------------------------------------
+/// 上画面
+//-------------------------------------
+static void Zukan_Detail_Map_PlaceInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  ARCHANDLE* handle;
+
+  // BG PLACE
+  handle = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, param->heap_id );
+  // パレット
+  GFL_ARCHDL_UTIL_TransVramPaletteEx(
+                               handle,
+                               NARC_zukan_gra_info_info_bgu_NCLR,
+                               PALTYPE_SUB_BG,
+                               0 * 0x20,
+                               BG_PAL_POS_S_PLACE * 0x20,
+                               BG_PAL_NUM_S_PLACE * 0x20,
+                               param->heap_id );
+  // キャラ
+  work->place_tinfo = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
+                            handle,
+                            NARC_zukan_gra_info_info_bgu_NCGR,
+                            BG_FRAME_S_PLACE,
+                            0,
+                            FALSE,
+                            param->heap_id );
+  GF_ASSERT_MSG( work->place_tinfo != GFL_ARCUTIL_TRANSINFO_FAIL, "ZUKAN_DETAIL_MAP : BGキャラ領域が足りませんでした。\n" );
+  // スクリーン
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(
+        handle,
+        NARC_zukan_gra_info_mapwin_bgu_NSCR,
+        BG_FRAME_S_PLACE,
+        0,
+        GFL_ARCUTIL_TRANSINFO_GetPos( work->place_tinfo ),
+        0,
+        FALSE,
+        param->heap_id );
+
+  GFL_ARC_CloseDataHandle( handle );
+}
+static void Zukan_Detail_Map_PlaceExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  GFL_BG_FreeCharacterArea( BG_FRAME_S_PLACE,
+                            GFL_ARCUTIL_TRANSINFO_GetPos( work->place_tinfo ),
+                            GFL_ARCUTIL_TRANSINFO_GetSize( work->place_tinfo ) );
+}
+static void Zukan_Detail_Map_PlaceMain( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  Zukan_Detail_Map_PlaceMainScroll( param, work, cmn );
+  Zukan_Detail_Map_PlaceMainIcon( param, work, cmn );
+}
+static void Zukan_Detail_Map_PlaceMainScroll( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // BGのスクロールアニメーション
+  switch( work->scroll_state )
+  {
+  case SCROLL_STATE_DOWN:
+    {
+    }
+    break;
+  case SCROLL_STATE_DOWN_TO_UP:
+    {
+      int y = GFL_BG_GetScrollY( BG_FRAME_S_PLACE );
+      if( y >= 8*8 )
+      {
+        GFL_BG_SetScrollReq( BG_FRAME_S_PLACE, GFL_BG_SCROLL_Y_SET, 8*8 );
+        work->scroll_state = SCROLL_STATE_UP; 
+      }
+      else
+      {
+        GFL_BG_SetScrollReq( BG_FRAME_S_PLACE, GFL_BG_SCROLL_Y_INC, SCROLL_VEL );
+        GFL_BG_SetScrollReq( BG_FRAME_S_TEXT, GFL_BG_SCROLL_Y_INC, SCROLL_VEL );
+      }
+    }
+    break;
+  case SCROLL_STATE_UP:
+    {
+    }
+    break;
+  case SCROLL_STATE_UP_TO_DOWN:
+    {
+      int y = GFL_BG_GetScrollY( BG_FRAME_S_PLACE );
+      if( y <= 0 )
+      {
+        GFL_BG_SetScrollReq( BG_FRAME_S_PLACE, GFL_BG_SCROLL_Y_SET, 0 );
+        work->scroll_state = SCROLL_STATE_DOWN; 
+      }
+      else
+      {
+        GFL_BG_SetScrollReq( BG_FRAME_S_PLACE, GFL_BG_SCROLL_Y_DEC, SCROLL_VEL );
+        GFL_BG_SetScrollReq( BG_FRAME_S_TEXT, GFL_BG_SCROLL_Y_DEC, SCROLL_VEL );
+      }
+    }
+    break;
+  }
+
+  // ポケアイコンのスクロールアニメーション
+  if( work->pokeicon_clwk )
+  {
+    GFL_CLACTPOS pos;
+    switch( work->pokeicon_scroll_state )
+    {
+    case SCROLL_STATE_DOWN:
+      {
+      }
+      break;
+    case SCROLL_STATE_DOWN_TO_UP:
+      {
+        GFL_CLACT_WK_GetPos( work->pokeicon_clwk, &pos, CLSYS_DEFREND_SUB );
+        if( pos.y <= pokeicon_pos[3] )
+        {
+          pos.y = pokeicon_pos[3];
+          work->pokeicon_scroll_state = SCROLL_STATE_UP; 
+        }
+        else
+        {
+          pos.y -= SCROLL_VEL;
+        }
+        GFL_CLACT_WK_SetPos( work->pokeicon_clwk, &pos, CLSYS_DEFREND_SUB );
+      }
+      break;
+    case SCROLL_STATE_UP:
+      {
+      }
+      break;
+    case SCROLL_STATE_UP_TO_DOWN:
+      {
+        GFL_CLACT_WK_GetPos( work->pokeicon_clwk, &pos, CLSYS_DEFREND_SUB );
+        if( pos.y >= pokeicon_pos[1] )
+        {
+          pos.y = pokeicon_pos[1];
+          work->pokeicon_scroll_state = SCROLL_STATE_DOWN; 
+        }
+        else
+        {
+          pos.y += SCROLL_VEL;
+        }
+        GFL_CLACT_WK_SetPos( work->pokeicon_clwk, &pos, CLSYS_DEFREND_SUB );
+      }
+      break;
+    }
+  }
+}
+static void Zukan_Detail_Map_PlaceMainIcon( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 陸上、水上、釣りアイコンの明滅アニメーション
+}
+
+//-------------------------------------
+/// ポケアイコン
+//=====================================
+static GFL_CLWK* PokeiconInit( UI_EASY_CLWK_RES* res, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, BOOL egg, u8 x, u8 y )
+{
+  GFL_CLWK* clwk;
+  
+  UI_EASY_CLWK_RES_PARAM prm;
+  prm.draw_type    = CLSYS_DRAW_SUB;
+  prm.comp_flg     = UI_EASY_CLWK_RES_COMP_NCLR;
+  prm.arc_id       = ARCID_POKEICON;
+  prm.pltt_id      = POKEICON_GetPalArcIndex();
+  prm.ncg_id       = POKEICON_GetCgxArcIndexByMonsNumber( mons, form_no, egg );
+  prm.cell_id      = POKEICON_GetCellArcIndex(); 
+  prm.anm_id       = POKEICON_GetAnmArcIndex();
+  prm.pltt_line    = OBJ_PAL_POS_S_POKEICON;
+  prm.pltt_src_ofs = 0;
+  prm.pltt_src_num = OBJ_PAL_NUM_S_POKEICON;
+ 
+  UI_EASY_CLWK_LoadResource( res, &prm, clunit, heap_id );
+  
+  // アニメシーケンスで指定( 0=瀕死, 1=HP最大, 2=HP緑, 3=HP黄, 4=HP赤, 5=状態異常 )
+  clwk = UI_EASY_CLWK_CreateCLWK( res, clunit, x, y, 1, heap_id );
+
+  // 上にアイテムアイコンを描画するので優先度を下げておく
+  GFL_CLACT_WK_SetSoftPri( clwk, 1 );
+
+  // オートアニメ OFF
+  GFL_CLACT_WK_SetAutoAnmFlag( clwk, FALSE );
+
+  {
+    u8 pal_num = POKEICON_GetPalNum( mons, form_no, egg );
+    GFL_CLACT_WK_SetPlttOffs( clwk, pal_num, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+  }
+
+  GFL_CLACT_WK_SetObjMode( clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+
+  return clwk;
+}
+static void PokeiconExit( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk )
+{
+  // CLWK破棄
+  GFL_CLACT_WK_Remove( clwk );
+  // リソース開放
+  UI_EASY_CLWK_UnLoadResource( res );
+}
+
+//-------------------------------------
+/// プレイヤーの位置にOBJを配置する
+//=====================================
+static void Zukan_Detail_Map_SetPlayer( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  GAMEDATA*       gamedata  = ZKNDTL_COMMON_GetGamedata(cmn);
+  PLAYER_WORK*    player_wk = GAMEDATA_GetMyPlayerWork( gamedata );
+  u16             zone_id   = PLAYERWORK_getZoneID( player_wk );
+  u16             escape_id = GAMEDATA_GetEscapeLocation( gamedata )->zone_id;
+ 
+  BOOL b_find = FALSE;
+  u8   player_pos_idx;
+
+  GFL_CLACTPOS pos;
+  u8 i;
+
+  // ゾーンと完全対応する場所を取得
+  if( !b_find )
+  {
+	  for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+	  {	
+	  	if( zone_id == TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_ZONE_ID ) )
+      {
+        b_find = TRUE;
+        player_pos_idx = i;
+        break;
+      }
+    }
+  }
+  // 現在地がフィールドではないならば、エスケープID検索
+  if( !b_find )
+  {
+	  for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+	  {	
+	  	if( escape_id == TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_ZONE_ID ) )
+      {
+        b_find = TRUE;
+        player_pos_idx = i;
+        break;
+      }
+    }
+  }
+
+  if( b_find )
+  {
+    pos.x = TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_POS_X );
+    pos.y = TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_POS_Y );
+    GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_HERO], &pos, CLSYS_DEFREND_MAIN );
+    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_HERO], TRUE );
+  }
+}
+
+//-------------------------------------
+/// 入力
+//=====================================
+static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  switch(work->state)
+  {
+  case STATE_TOP:
+    {
+      u32 x, y;
+      BOOL change_state = FALSE;
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      {
+        change_state = TRUE;
+      }
+      else
+      {
+		    if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+        {
+          if( 0<=y&&y<168) change_state = TRUE;
+        }
+      }
+      if( change_state )
+      {
+        Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_SELECT );
+        PMSND_PlaySE( SEQ_SE_DECIDE1 );
+      }
+    }
+    break;
+  case STATE_SELECT:
+    {
+    }
+    break;
+  }
+}
+
+//-------------------------------------
+/// 状態を遷移させる
+//=====================================
+static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                 STATE state )
+{
+  ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
+ 
+  // 遷移前の状態 
+  switch(work->state)
+  {
+  case STATE_TOP:
+    {
+      if( state == STATE_SELECT )  // 遷移後の状態がSTATE_SELECTなら
+      {
+        work->scroll_state             = SCROLL_STATE_DOWN_TO_UP;
+        work->pokeicon_scroll_state    = SCROLL_STATE_DOWN_TO_UP;
+
+        // タッチバー
+        ZUKAN_DETAIL_TOUCHBAR_SetType(
+            touchbar,
+            ZUKAN_DETAIL_TOUCHBAR_TYPE_MAP,
+            ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
+      }
+    }
+    break;
+  case STATE_SELECT:
+    {
+      if( state == STATE_TOP )  // 遷移後の状態がSTATE_TOPなら
+      {
+        work->scroll_state             = SCROLL_STATE_UP_TO_DOWN;
+        work->pokeicon_scroll_state    = SCROLL_STATE_UP_TO_DOWN;
+        
+        // タッチバー
+        ZUKAN_DETAIL_TOUCHBAR_SetType(
+            touchbar,
+            ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
+            ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
+      }
+    }
+    break;
+  }
+
+  // 遷移後の状態
+  work->state = state;
+}
+
+static void Zukan_Detail_Map_ChangePoke( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // ポケモンを変更したとき
+
+  // 現在の状態
+  SEASON season_curr = SEASON_SPRING;
+
+  // 変更後のポケモン
+  u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
+
+  // ポケアイコン
+  {
+    // 前のの位置を次のにも反映する
+    u8 x, y;
+/* いったん下に下げないとポケモンを変更できないので、下の位置を渡せばよい。
+    if( work->pokeicon_clwk )
+    {
+      GFL_CLACTPOS pos;
+      GFL_CLACT_WK_GetPos( work->pokeicon_clwk, &pos, CLSYS_DEFREND_SUB );
+      x = (u8)(pos.x);
+      y = (u8)(pos.y);
+    }
+    else
+*/
+    {
+      x = pokeicon_pos[0];
+      y = pokeicon_pos[1];
+    }
+
+    // 前のを破棄
+    BLOCK_POKEICON_EXIT( &work->pokeicon_res, work->pokeicon_clwk )
+    // 次のを生成
+    {
+      u32 form_no = 0;
+      work->pokeicon_clwk = PokeiconInit( &work->pokeicon_res, work->clunit, param->heap_id, monsno, form_no, 0, x, y );
+    }
+  }
+
+  // ポケモン名のぶんぷ
+  // 前のをクリア
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_POKENAME]), 0 );
+  GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_POKENAME] );
+  // 次のを表示 
+  {
+    WORDSET* wordset;
+    STRBUF* src_strbuf;
+    STRBUF* strbuf;
+    wordset = WORDSET_Create( param->heap_id );
+    src_strbuf = GFL_MSG_CreateString( work->msgdata[MSG_ZUKAN], ZKN_MAP_TEXT_01 );
+    strbuf = GFL_STR_CreateBuffer( STRBUF_POKENAME_LENGTH, param->heap_id );
+    WORDSET_RegisterPokeMonsNameNo( wordset, 0, monsno );
+    WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
+    GFL_STR_DeleteBuffer( src_strbuf );
+    WORDSET_Delete( wordset );
+    PRINTSYS_PrintQueColor( work->print_que, GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_POKENAME]),
+                            0, 5, strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[TEXT_POKENAME] );
+    GFL_STR_DeleteBuffer( strbuf );
+  }
+
+  // 分布
+  // 前のをクリア
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_UNKNOWN]), 0 );
+  GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_UNKNOWN] );
+  GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_UNKNOWN], FALSE );
+  GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON], FALSE );
+  GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON_R], FALSE );
+  // 次のを表示
+  // 生息地不明のとき
+  {
+    WORDSET* wordset;
+    STRBUF* src_strbuf;
+    STRBUF* strbuf;
+    u16     str_width;
+    u16     bmp_width;
+    u16     x;
+    wordset = WORDSET_Create( param->heap_id );
+    src_strbuf = GFL_MSG_CreateString( work->msgdata[MSG_ZUKAN], ZNK_RANGE_00 );
+    strbuf = GFL_STR_CreateBuffer( STRBUF_UNKNOWN_LENGTH, param->heap_id );
+    WORDSET_RegisterPokeMonsNameNo( wordset, 0, monsno );
+    WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
+    GFL_STR_DeleteBuffer( src_strbuf );
+    WORDSET_Delete( wordset );
+    str_width = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
+    bmp_width = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_UNKNOWN]) );
+    x = ( bmp_width - str_width ) / 2;
+    PRINTSYS_PrintQueColor( work->print_que, GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_UNKNOWN]),
+                            x, 1, strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[TEXT_UNKNOWN] );
+    GFL_STR_DeleteBuffer( strbuf );
+
+    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_UNKNOWN], TRUE );
+  }
+  // 1年中同じ分布のとき
+  {
+  }
+  // 季節ごとに分布が変わるとき
+  {
+    STRBUF* strbuf;
+    u16     str_width;
+    u16     bmp_width;
+    u16     x;
+    strbuf = GFL_MSG_CreateString( work->msgdata[MSG_ZUKAN], ZKN_MAP_SPRING + season_curr );
+    str_width = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
+    bmp_width = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_SEASON]) );
+    x = ( bmp_width - str_width ) / 2;
+    PRINTSYS_PrintQueColor( work->print_que, GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_SEASON]),
+                            x, 1, strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[TEXT_SEASON] );
+    GFL_STR_DeleteBuffer( strbuf );
+
+    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON_R], TRUE );
+  }
+}
+
+static void Zukan_Detail_Map_ChangePlace( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 場所を変更したとき
+  
+  // 前のをクリア
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_PLACENAME]), 0 );
+  GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_PLACENAME] );
 }
 

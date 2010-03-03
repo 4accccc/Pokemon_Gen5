@@ -1199,8 +1199,7 @@ static int _check_DowsingMachine( FIELD_ITEMMENU_WORK* pWork )
 {
   if( BAG_MENU_TSUKAU == pWork->ret_code2 )
   {
-    //if( ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_???? ) )
-    if( 1 ) 
+    if( ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_DOWSINGMACHINE ) )
     {
       pWork->ret_code = BAG_NEXTPROC_DOWSINGMACHINE;  // バッグもメニューも閉じて、ダウジングマシンを使う
       _CHANGE_STATE( pWork, NULL );
@@ -3010,12 +3009,6 @@ static void _tsukau_check( FIELD_ITEMMENU_WORK *pWork, void *itemdata, ITEM_ST *
     {
       tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU;
     }
-  }
-
-  // ダウジングマシン
-  if( item->id == ITEM_DAUZINGUMASIN )
-  {
-    tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU;
   }
 
   // ダークストーン・ライトストーンは特殊な状況で使用可能になる

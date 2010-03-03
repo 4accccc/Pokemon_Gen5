@@ -61,6 +61,9 @@ $SYSFLAG_FILENAME		= "../../fldmapdata/flagwork/flag_define.h";
 @DATA_PLACE4				= ();		#名所４ID
 @DATA_PLACE5				= ();		#名所５ID
 @DATA_PLACE6				= ();		#名所６ID
+@DATA_ZKN_ANM				=	();		#図鑑分布アニメ番号
+@DATA_ZKN_POS_X			=	();		#図鑑分布配置座標X
+@DATA_ZKN_POS_Y			=	();		#図鑑分布配置座標Y
 
 #データ総数
 $DATA_LENGTH				= 0;
@@ -423,6 +426,24 @@ foreach $line ( @TOWNMAP_XLS_DATA )
 				}
 				push( @DATA_PLACE6, $val );
 			}
+			#図鑑分布アニメ番号
+			if( $tag eq "#zkn_anm" )
+			{
+				&UndefAssert( $w );
+				push( @DATA_ZKN_ANM, $val );
+			}
+			#図鑑分布配置座標X
+			elsif( $tag eq "#zkn_pos_x" )
+			{
+				&UndefAssert( $w );
+				push( @DATA_ZKN_POS_X, $w );
+			}
+			#図鑑分布配置座標Y
+			elsif( $tag eq "#zkn_pos_y" )
+			{
+				&UndefAssert( $w );
+				push( @DATA_ZKN_POS_Y, $w );
+			}
 			#終了
 			elsif( $tag eq "#end" )
 			{
@@ -474,7 +495,10 @@ if(0)
 		print( "pla4=".$DATA_PLACE4[$i]."\n" );
 		print( "pla5=".$DATA_PLACE5[$i]."\n" );
 		print( "pla6=".$DATA_PLACE6[$i]."\n" );
-		print( "\n" );
+   	print( "zknAnm=".$DATA_ZKN_ANM[$i]."\n" );
+		print( "zknPosX=".$DATA_ZKN_POS_X[$i]."\n" );
+		print( "zknPosY=".$DATA_ZKN_POS_Y[$i]."\n" );
+    print( "\n" );
 	}
 }
 
@@ -534,6 +558,9 @@ for( my $i = 0; $i < $DATA_LENGTH; $i++ )
 	print( FILEOUT pack( "S", $DATA_PLACE4[$i] ) );
 	print( FILEOUT pack( "S", $DATA_PLACE5[$i] ) );
 	print( FILEOUT pack( "S", $DATA_PLACE6[$i] ) );
+	print( FILEOUT pack( "S", $DATA_ZKN_ANM[$i] ) );
+	print( FILEOUT pack( "S", $DATA_ZKN_POS_X[$i] ) );
+	print( FILEOUT pack( "S", $DATA_ZKN_POS_Y[$i] ) );
 }
 close( FILEOUT ); 
 
