@@ -29,7 +29,8 @@ typedef struct FACEUP_WORK_tag
   GXPlaneMask Mask;
   GXBg23ControlText CntText;
 
-  //背景BG
+  int BackNo;       //背景BG
+
   //顔BG
 }FACEUP_WORK;
 
@@ -66,6 +67,7 @@ GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, GAMESYS_WORK *
 
   *FIELDMAP_GetFaceupWkPtrAdr(fieldmap) = ptr;
   ptr->HeapID = heapID;
+  ptr->BackNo = inBackNo;
 
   //イベント作成
   event = GMEVENT_Create( gsys, NULL, SetupEvt, 0 );
@@ -144,7 +146,7 @@ static void Setup(FACEUP_WK_PTR ptr)
     //キャラ
     {
       NNSG2dCharacterData *chr;
-		  buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_test_ncgr, ptr->HeapID );
+		  buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_bg_day_ncgr, ptr->HeapID );
 		  GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedBGCharacterData(buf,&chr) == FALSE ){
         GF_ASSERT( 0 );
@@ -155,7 +157,7 @@ static void Setup(FACEUP_WK_PTR ptr)
     //スクリーン
     {
       NNSG2dScreenData *scr;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_test_nscr, ptr->HeapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_bg_day_nscr, ptr->HeapID );
       GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedScreenData(buf,&scr) == FALSE ){
         GF_ASSERT( 0 );
@@ -167,7 +169,7 @@ static void Setup(FACEUP_WK_PTR ptr)
     //パレット
     {
       NNSG2dPaletteData *pal;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_test_nclr, ptr->HeapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_bg_nclr, ptr->HeapID );
       GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedPaletteData(buf,&pal) == FALSE ){
         GF_ASSERT( 0 );
@@ -180,7 +182,7 @@ static void Setup(FACEUP_WK_PTR ptr)
     //キャラ
     {
       NNSG2dCharacterData *chr;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_face_test_ncgr, ptr->HeapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_ncgr, ptr->HeapID );
 		  GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedBGCharacterData(buf,&chr) == FALSE ){
         GF_ASSERT( 0 );
@@ -191,7 +193,7 @@ static void Setup(FACEUP_WK_PTR ptr)
     //スクリーン
     {
       NNSG2dScreenData *scr;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_face_test_nscr, ptr->HeapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_nscr, ptr->HeapID );
       GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedScreenData(buf,&scr) == FALSE ){
         GF_ASSERT( 0 );
@@ -202,7 +204,7 @@ static void Setup(FACEUP_WK_PTR ptr)
     //パレット
     {
       NNSG2dPaletteData *pal;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_face_test_nclr, ptr->HeapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_nclr, ptr->HeapID );
       GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedPaletteData(buf,&pal) == FALSE ){
         GF_ASSERT( 0 );
@@ -324,7 +326,7 @@ void FLD_FACEUP_Change(void)
   //キャラ
   {
     NNSG2dCharacterData *chr;
-    buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_face2_test_ncgr, heapID );
+    buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_ncgr, heapID );
 		GF_ASSERT( buf != NULL );
     if( NNS_G2dGetUnpackedBGCharacterData(buf,&chr) == FALSE ){
       GF_ASSERT( 0 );
@@ -336,7 +338,7 @@ void FLD_FACEUP_Change(void)
   //パレット
   {
     NNSG2dPaletteData *pal;
-    buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_face2_test_nclr, heapID );
+    buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_nclr, heapID );
     GF_ASSERT( buf != NULL );
     if( NNS_G2dGetUnpackedPaletteData(buf,&pal) == FALSE ){
       GF_ASSERT( 0 );
