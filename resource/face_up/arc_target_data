@@ -1,10 +1,10 @@
 ARC_TARGET_DATA = \
-data/test.nclr \
-data/face_test.nclr \
-data/face2_test.nclr \
-data/test.ncgr \
-data/face_test.ncgr \
-data/face2_test.ncgr \
-data/test.nscr \
-data/face_test.nscr
+data/faceup_bg.nclr \
+data/faceup.nclr \
+data/faceup_bg_night.ncgr \
+data/faceup_bg_day.ncgr \
+data/faceup.ncgr \
+data/faceup_bg_night.nscr \
+data/faceup_bg_day.nscr \
+data/faceup.nscr
 
