@@ -207,7 +207,7 @@ void ARRIVEDATA_SetArriveFlag( GAMEDATA * gamedata, int zone_id)
 	int i;
 	for (i = 0; i < NELEMS(WarpData); i++) {
 		//OS_Printf("zone = %d, WarpZone = %d\n",zone_id,WarpData[i].fld_id);
-		if (WarpData[i].fld_id == zone_id && WarpData[i].AutoSetArriveFlag) {
+		if (WarpData[i].room_id == zone_id && WarpData[i].AutoSetArriveFlag) {
 			EVENTWORK_SetEventFlag(GAMEDATA_GetEventWork( gamedata ), WarpData[i].arrive_flag);
       TAMADA_Printf("Arrive Flag Set: %x\n", WarpData[i].arrive_flag );
 			return;
