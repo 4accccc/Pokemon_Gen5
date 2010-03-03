@@ -14,11 +14,3 @@
 "obj_u.NCLR"
 "obj_u.NCER"
 "obj_u.NANR"
-
-
-
-
-"title_cursor.NCGR"
-"title_cursor.NCLR"
-"title_cursor.NCER"
-"title_cursor.NANR"
