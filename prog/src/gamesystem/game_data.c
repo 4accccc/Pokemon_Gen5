@@ -127,6 +127,7 @@ struct _GAMEDATA{
   CALENDER* calender;  // カレンダー
   UNSV_WORK UnsvWork;      //国連ワーク
   TRIAL_HOUSE_WORK_PTR  TrialHouseWorkPtr;    //トライアルハウスワーク
+  MUSICAL_SCRIPT_WORK *musicalScrWork;  //ミュージカルスクリプト用ワーク
 };
 
 //==============================================================================
@@ -251,6 +252,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
   //トライアルハウスワークポインタをＮＵＬＬ初期化
   gd->TrialHouseWorkPtr = NULL;
+
+  //ミュージカル用スクリプトワーク NULL初期化
+  gd->musicalScrWork = NULL;
 
   return gd;
 }
@@ -1731,4 +1735,29 @@ TRIAL_HOUSE_WORK_PTR *GAMEDATA_GetTrialHouseWorkPtr(GAMEDATA * gamedata)
 TR_CARD_SV_PTR GAMEDATA_GetTrainerCardPtr(GAMEDATA * gamedata)
 {
   return TRCSave_GetSaveDataPtr( gamedata->sv_control_ptr );
+}
+
+//----------------------------------------------------------
+/**
+ * @brief   ミュージカル用スクリプトワークセット
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  nothing
+ */
+//----------------------------------------------------------
+void GAMEDATA_SetMusicalScrWork(GAMEDATA * gamedata, MUSICAL_SCRIPT_WORK* musScrWork )
+{
+  gamedata->musicalScrWork = musScrWork;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief   ミュージカル用スクリプトワーク取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  MUSICAL_SCRIPT_WORK*
+ */
+//----------------------------------------------------------
+MUSICAL_SCRIPT_WORK* GAMEDATA_GetMusicalScrWork(GAMEDATA * gamedata)
+{
+  GF_ASSERT_MSG( gamedata->musicalScrWork != NULL , "ミュージカルワークがNULL！" );
+  return gamedata->musicalScrWork;
 }

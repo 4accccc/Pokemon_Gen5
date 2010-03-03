@@ -35,6 +35,7 @@
 #include "savedata/wifi_negotiation.h"
 #include "savedata/record.h"
 #include "savedata/musical_save.h"  //MUSICAL_SAVE
+#include "musical/musical_define.h"  //MUSICAL_SCRIPT_WORK
 #include "gamesystem/comm_player_support.h"
 
 #include "field/bsubway_scr_proc.h"
@@ -670,3 +671,21 @@ extern TRIAL_HOUSE_WORK_PTR *GAMEDATA_GetTrialHouseWorkPtr(GAMEDATA * gamedata);
 //----------------------------------------------------------
 extern TR_CARD_SV_PTR GAMEDATA_GetTrainerCardPtr(GAMEDATA * gamedata);
 
+
+//----------------------------------------------------------
+/**
+ * @brief   ミュージカル用スクリプトワークセット
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  nothing
+ */
+//----------------------------------------------------------
+extern void GAMEDATA_SetMusicalScrWork(GAMEDATA * gamedata, MUSICAL_SCRIPT_WORK* musScrWork );
+
+//----------------------------------------------------------
+/**
+ * @brief   ミュージカル用スクリプトワーク取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  MUSICAL_SCRIPT_WORK*
+ */
+//----------------------------------------------------------
+extern MUSICAL_SCRIPT_WORK* GAMEDATA_GetMusicalScrWork(GAMEDATA * gamedata);

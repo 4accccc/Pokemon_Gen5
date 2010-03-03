@@ -906,6 +906,7 @@ static const void MUSICAL_EVENT_JumpMusicalHall( GMEVENT *event, MUSICAL_EVENT_W
   GMEVENT *newEvent;
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
 
+
   //const VecFx32 pos = { FX32_CONST(280.0f) , FX32_CONST(0.0f) , FX32_CONST(120.0f) };
   //––ROM—p
   const VecFx32 pos = { FX32_CONST(232.0f) , FX32_CONST(0.0f) , FX32_CONST(200.0f) };
@@ -929,7 +930,6 @@ static const void MUSICAL_EVENT_RunScript( GMEVENT *event, MUSICAL_EVENT_WORK *e
     newEvent = SCRIPT_SetEventScript( evWork->gsys, scriptId , NULL , HEAPID_FIELDMAP );
     scWork = SCRIPT_GetScriptWorkFromEvent( newEvent );
     
-    SCRIPT_SetMemberWork_Musical( scWork , evWork->scriptWork );
     GMEVENT_CallEvent(event, newEvent);
   }
 }

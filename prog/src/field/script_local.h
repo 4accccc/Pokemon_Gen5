@@ -206,15 +206,6 @@ extern void SCRIPT_RestoreUserWork( SCRIPT_WORK * sc, void *backup_work );
 
 //--------------------------------------------------------------
 /**
- * スクリプト制御ワークのメンバーアドレス設定(ミュージカル
- * @param	sc	  SCRIPT_WORK型のポインタ
- */
-//--------------------------------------------------------------
-extern void SCRIPT_SetMemberWork_Musical( SCRIPT_WORK *sc, void *musEveWork );
-extern void * SCRIPT_GetMemberWork_Musical( SCRIPT_WORK * sc );
-
-//--------------------------------------------------------------
-/**
  * @brief   開始時のスクリプトID取得
  * @param	sc		    SCRIPT_WORKのポインタ
  * @return  u16   スクリプトID

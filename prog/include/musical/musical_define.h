@@ -6,8 +6,8 @@
  * @data	09/02/10
  */
 //======================================================================
-#ifndef MUSICAL_DEFINE_H__
-#define MUSICAL_DEFINE_H__
+#pragma once
+
 #include "poke_tool/poke_tool.h"
 #include "buflen.h"
 
@@ -103,6 +103,8 @@ typedef enum
 //	typedef struct
 //======================================================================
 
+typedef struct _MUSICAL_SCRIPT_WORK MUSICAL_SCRIPT_WORK;
+
 typedef struct
 {
 	u16	itemNo;	//ƒAƒCƒeƒ€‚ÌŽí—Þ
@@ -174,4 +176,3 @@ typedef struct
 }MUSICAL_SHOT_DATA;
 
 
-#endif MUSICAL_DEFINE_H__

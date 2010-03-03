@@ -13,8 +13,8 @@
 #include "net_app/irc_match.h"
 #include "savedata/save_control.h"
 #include "gamesystem/game_comm.h"
-
-typedef struct
+//スクリプト用Work
+struct _MUSICAL_SCRIPT_WORK
 {
   void *eventWork;  //MUSICAL_EVENT_WORK
   void *commWork;   //MUS_COMM_WORK
@@ -26,9 +26,7 @@ typedef struct
   u16                 *scriptRet;
 
   u16                 commSyncNo;
-  
-  
-}MUSICAL_SCRIPT_WORK;
+};
 
 //ミュージカルの参加資格があるか調べる
 const BOOL	MUSICAL_SYSTEM_CheckEntryMusical( POKEMON_PARAM *pokePara );

@@ -110,8 +110,6 @@ struct _TAG_SCRIPT_WORK
 	
 	u16 scrTempWork[TEMP_WORK_SIZE];		//ワーク(ANSWORK,TMPWORKなどの代わり)
 
-  MUSICAL_EVENT_WORK *musicalEventWork;
-
   FIELD_SAVEANIME* bg_saveanime;
 };
 
@@ -180,8 +178,6 @@ SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID,
 
   //フィールドパラメータ生成
 	initFldParam( &sc->fld_param, gsys );
-  //ミュージカルの制御イベントで渡される
-  sc->musicalEventWork = NULL;
 
   //チェックビット処理化
   SCREND_CHK_ClearBits();
@@ -352,27 +348,6 @@ void SCRIPT_SetTargetObj( SCRIPT_WORK * sc, MMDL * obj )
 		*objid = MMDL_GetOBJID( obj ); //話しかけ対象OBJIDのセット
 	}
 }
-//--------------------------------------------------------------
-/**
- * スクリプト制御ワークのメンバーアドレス設定(ミュージカル
- * @param	sc	  SCRIPT_WORK型のポインタ
- */
-//--------------------------------------------------------------
-void SCRIPT_SetMemberWork_Musical( SCRIPT_WORK *sc, void *musEveWork )
-{
-	if( sc->magic_no != SCRIPT_MAGIC_NO ){
-		GF_ASSERT_MSG(0, "起動(確保)していないスクリプトのワークにアクセスしています！" );
-	}
-	sc->musicalEventWork = musEveWork;
-}
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-void * SCRIPT_GetMemberWork_Musical( SCRIPT_WORK * sc )
-{
-  GF_ASSERT_MSG( sc->musicalEventWork != NULL , "ミュージカルワークがNULL！" );
-  return sc->musicalEventWork;
-}
-
 
 //--------------------------------------------------------------
 /**

@@ -84,8 +84,8 @@ typedef struct
 //======================================================================
 //  proto
 //======================================================================
-static void EvCmdMusical_InitCommon( SCRIPT_WORK *sc );
-static void EvCmdMusical_ExitCommon( MUSICAL_SCRIPT_WORK *musScriptWork );
+static void EvCmdMusical_InitCommon( SCRIPT_WORK *sc , GAMEDATA *gameData );
+static void EvCmdMusical_ExitCommon( MUSICAL_SCRIPT_WORK *musScriptWork , GAMEDATA *gameData );
 static void EvCmdMusical_InitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork , GAMEDATA *gdata , GAME_COMM_SYS_PTR gameComm , const BOOL isIrc );
 static void EvCmdMusical_ExitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork );
 
@@ -127,7 +127,7 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
 
   if( mode == 0 || mode == 1 )
   {
-    MUSICAL_SCRIPT_WORK *musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
+    MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
     
     const BOOL isComm = ( mode == 0 ? FALSE : TRUE );
     call_event = GMEVENT_Create(
@@ -235,7 +235,7 @@ VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
   MUSICAL_EVENT_WORK *evWork = NULL;
   if( type >= MUSICAL_VALUE_WR_SELF_IDX )
   {
-    musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
+    musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
     evWork = musScriptWork->eventWork;
   }
 
@@ -547,6 +547,7 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   HEAPID heapId = SCRCMD_WORK_GetHeapID( work );
   WORDSET *wordset    = SCRIPT_GetWordSet( sc );
 
@@ -588,7 +589,7 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
     break;
   case MUSICAL_WORD_TITLE_LOCAL:  //※現在演目
     {
-      MUSICAL_SCRIPT_WORK *musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
+      MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
       MUSICAL_EVENT_WORK *evWork = musScriptWork->eventWork;
       STRBUF * tmpBuf = MUSICAL_EVENT_CreateStr_ProgramTitle( evWork , heapId );
       WORDSET_RegisterWord( wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
@@ -677,7 +678,7 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
   MUSICAL_SCRIPT_WORK *musScriptWork = NULL;
   if( type != MUSICAL_TOOL_INIT )
   {
-    musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
+    musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
   }
 
   ARI_TPrintf("ScriptMusTools[%d][%d][%d]\n",type,val1,val2);
@@ -686,13 +687,13 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
   {
   case MUSICAL_TOOL_INIT: //ミュージカル処理の開始
     {
-      EvCmdMusical_InitCommon( sc );
+      EvCmdMusical_InitCommon( sc , gdata );
     }
     break;
 
   case MUSICAL_TOOL_EXIT: //ミュージカル処理の終了
     {
-      EvCmdMusical_ExitCommon( musScriptWork );
+      EvCmdMusical_ExitCommon( musScriptWork , gdata );
     }
     break;
 
@@ -806,21 +807,22 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
 }
 
 #pragma mark [>func
-static void EvCmdMusical_InitCommon( SCRIPT_WORK *sc )
+static void EvCmdMusical_InitCommon( SCRIPT_WORK *sc , GAMEDATA *gameData )
 {
   MUSICAL_SCRIPT_WORK *musScriptWork = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof( MUSICAL_SCRIPT_WORK ) );
   musScriptWork->eventWork = NULL;
   musScriptWork->commWork = NULL;
-  SCRIPT_SetMemberWork_Musical( sc , musScriptWork );
+  GAMEDATA_SetMusicalScrWork( gameData , musScriptWork );
   GFL_OVERLAY_Load(FS_OVERLAY_ID(musical));
 }
-static void EvCmdMusical_ExitCommon( MUSICAL_SCRIPT_WORK *musScriptWork )
+static void EvCmdMusical_ExitCommon( MUSICAL_SCRIPT_WORK *musScriptWork , GAMEDATA *gameData )
 {
   GF_ASSERT_MSG( musScriptWork->eventWork == NULL , "イベントワークが開放してない！" );
   GF_ASSERT_MSG( musScriptWork->commWork == NULL , "通信ワークが開放してない！" );
   
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical));
   GFL_HEAP_FreeMemory( musScriptWork );
+  GAMEDATA_SetMusicalScrWork( gameData , NULL );
 }
 
 static void EvCmdMusical_InitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork , GAMEDATA *gdata , GAME_COMM_SYS_PTR gameComm , const BOOL isIrc )
@@ -851,6 +853,8 @@ static GMEVENT_RESULT event_Musical(
     GMEVENT *event, int *seq, void *work )
 {
   EVENT_MUSICAL_WORK *ev_musical_work = work;
+  GAMESYS_WORK *gsys =  GMEVENT_GetGameSysWork( event );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   
   switch( (*seq) ){
   case 0:
@@ -859,8 +863,6 @@ static GMEVENT_RESULT event_Musical(
     break;
   case 1:
     {
-      GAMESYS_WORK *gsys =  GMEVENT_GetGameSysWork( event );
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
       FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
       
       EvCmdMusical_ExitCommon_Comm( ev_musical_work->musScriptWork );
@@ -887,7 +889,7 @@ static GMEVENT_RESULT event_Musical(
     if( GFL_NET_IsExit() == TRUE ||
         ev_musical_work->isComm == FALSE )
     {
-      EvCmdMusical_ExitCommon( ev_musical_work->musScriptWork );
+      EvCmdMusical_ExitCommon( ev_musical_work->musScriptWork , gdata );
       (*seq)++;
       return( GMEVENT_RES_FINISH );
     }
@@ -933,7 +935,8 @@ static BOOL EvCmdMusicalEntryParent( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  MUSICAL_SCRIPT_WORK *musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
   
   const COMM_ENTRY_RESULT entry_ret = CommEntryMenu_Update( musScriptWork->entryWork ); 
   BOOL ret = FALSE;
@@ -977,7 +980,8 @@ static BOOL EvCmdMusicalEntryChild( VMHANDLE *core, void *wk )
   COMM_ENTRY_RESULT entry_ret;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  MUSICAL_SCRIPT_WORK *musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
 
   BOOL ret = FALSE;
   entry_ret = CommEntryMenu_Update( musScriptWork->entryWork ); 
@@ -1014,7 +1018,8 @@ static BOOL EvCmdMusicalCommTimingSync( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  MUSICAL_SCRIPT_WORK *musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
   
   if( MUS_COMM_CheckTimingCommand( musScriptWork->commWork , musScriptWork->commSyncNo ) == TRUE )
   {
@@ -1035,7 +1040,8 @@ static BOOL EvCmdMusicalWaitPostProgram( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  MUSICAL_SCRIPT_WORK *musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
   
   if( MUS_COMM_IsPostScriptData( musScriptWork->commWork ) == TRUE )
   {
@@ -1058,8 +1064,9 @@ static BOOL EvCmdMusicalWaitInitNet( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
-  MUSICAL_SCRIPT_WORK *musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
+  MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
 
   if( GFL_NET_IsInit() == TRUE )
   {
@@ -1082,8 +1089,9 @@ static BOOL EvCmdMusicalWaitExitNet( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
-  MUSICAL_SCRIPT_WORK *musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
+  MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
 
   if( GameCommSys_BootCheck( gameComm ) == GAME_COMM_NO_NULL )
   {
@@ -1103,7 +1111,8 @@ static BOOL EvCmdMusicalWaitPostAllPoke( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  MUSICAL_SCRIPT_WORK *musScriptWork = SCRIPT_GetMemberWork_Musical( sc );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
   
   if( MUS_COMM_IsPostAllPoke( musScriptWork->commWork ) == TRUE )
   {
