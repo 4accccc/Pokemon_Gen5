@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-02-24T19:21:16"/>
+	<create user="nakamura_akira" host="W00131" date="2010-03-03T16:43:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,14 +260,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1605" top="351" right="2310" bottom="971" maximized="no" rayout="Vertical2">
+	<dialog left="116" top="257" right="821" bottom="883" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="226" right="1280" bottom="850" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -290,22 +290,22 @@
 
 	<row id="msg_prof01">
 		<language name="JPN" width="256">なまえ</language>
-		<language name="JPN_KANJI" width="256">なまえ</language>
+		<language name="JPN_KANJI" width="256">名前</language>
 	</row>
 
 	<row id="msg_prof02">
 		<language name="JPN" width="256">しごと</language>
-		<language name="JPN_KANJI" width="256">しごと</language>
+		<language name="JPN_KANJI" width="256">仕事</language>
 	</row>
 
 	<row id="msg_prof03">
 		<language name="JPN" width="256">しゅみ</language>
-		<language name="JPN_KANJI" width="256">しゅみ</language>
+		<language name="JPN_KANJI" width="256">趣味</language>
 	</row>
 
 	<row id="msg_prof04">
 		<language name="JPN" width="256">プレイじかん</language>
-		<language name="JPN_KANJI" width="256">プレイじかん</language>
+		<language name="JPN_KANJI" width="256">プレイ時間</language>
 	</row>
 
 	<row id="msg_prof_hobby">
@@ -329,7 +329,7 @@
 
 	<row id="msg_home_town">
 		<language name="JPN" width="256">しゅっしん</language>
-		<language name="JPN_KANJI" width="256">しゅっしん</language>
+		<language name="JPN_KANJI" width="256">出身</language>
 	</row>
 
 	<row id="msg_home_town_word">
@@ -344,8 +344,8 @@
 	<row id="msg_record">
 		<language name="JPN" width="256">おれいをうけた　かいすう
 すれちがった　にんずう</language>
-		<language name="JPN_KANJI" width="256">おれいをうけた　かいすう
-すれちがった　にんずう</language>
+		<language name="JPN_KANJI" width="256">お礼を受けた　回数
+すれ違った　人数</language>
 	</row>
 
 	<row id="msg_record_num">
@@ -354,14 +354,14 @@
 </comment>
 		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:0][2:04:５桁:0]かい
 [BD:03:Ｘ右寄せ:0][2:04:５桁:1]にん</language>
-		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:0][2:04:５桁:0]かい
-[BD:03:Ｘ右寄せ:0][2:04:５桁:1]にん</language>
+		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:0][2:04:５桁:0]回
+[BD:03:Ｘ右寄せ:0][2:04:５桁:1]人</language>
 	</row>
 
 	<row id="msg_record_num02">
 		<comment>1：すれ違った人数&lt;0-99999&gt;</comment>
 		<language name="JPN" width="256">[2:04:５桁:1]にん</language>
-		<language name="JPN_KANJI" width="256">[2:04:５桁:1]にん</language>
+		<language name="JPN_KANJI" width="256">[2:04:５桁:1]人</language>
 	</row>
 
 	<row id="msg_record_num03">
@@ -375,63 +375,63 @@
 		<comment>1：すれ違った時間(時)&lt;0-12&gt;
 2：すれ違った時間(分)&lt;0-59&gt;</comment>
 		<language name="JPN" width="256">すれちがったじかん　ＡＭ[2:01:２桁:0]：[2:01:２桁:1]</language>
-		<language name="JPN_KANJI" width="256">すれちがったじかん　ＡＭ[2:01:２桁:0]：[2:01:２桁:1]</language>
+		<language name="JPN_KANJI" width="256">すれ違った時間　ＡＭ[2:01:２桁:0]：[2:01:２桁:1]</language>
 	</row>
 
 	<row id="msg_receive_time02">
 		<comment>1：すれ違った時間(時)&lt;0-12&gt;
 2：すれ違った時間(分)&lt;0-59&gt;</comment>
 		<language name="JPN" width="256">すれちがったじかん　ＰＭ[2:01:２桁:0]：[2:01:２桁:1]</language>
-		<language name="JPN_KANJI" width="256">すれちがったじかん　ＰＭ[2:01:２桁:0]：[2:01:２桁:1]</language>
+		<language name="JPN_KANJI" width="256">すれ違った時間　ＰＭ[2:01:２桁:0]：[2:01:２桁:1]</language>
 	</row>
 
 	<row id="msg_beacon_000" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<language name="JPN" width="256">[1:05:マップ名:0]を
 いどうちゅう　です</language>
 		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]を
-いどうちゅう　です</language>
+移動中　です</language>
 	</row>
 
 	<row id="msg_beacon_001" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">やせいの　[1:01:ポケモン種族名:0]と
 せんとうちゅう　です</language>
-		<language name="JPN_KANJI" width="256">やせいの　[1:01:ポケモン種族名:0]と
-せんとうちゅう　です</language>
+		<language name="JPN_KANJI" width="256">野生の　[1:01:ポケモン種族名:0]と
+戦闘中　です</language>
 	</row>
 
 	<row id="msg_beacon_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">とくべつな　[1:01:ポケモン種族名:0]と
 せんとうちゅう　です</language>
-		<language name="JPN_KANJI" width="256">とくべつな　[1:01:ポケモン種族名:0]と
-せんとうちゅう　です</language>
+		<language name="JPN_KANJI" width="256">特別な　[1:01:ポケモン種族名:0]と
+戦闘中　です</language>
 	</row>
 
 	<row id="msg_beacon_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">トレーナー　[1:00:トレーナー名:0]と
 たいせんちゅう　です</language>
 		<language name="JPN_KANJI" width="256">トレーナー　[1:00:トレーナー名:0]と
-たいせんちゅう　です</language>
+対戦中　です</language>
 	</row>
 
 	<row id="msg_beacon_004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">ジムリーダー　[1:00:トレーナー名:0]と
 たいせんちゅう　です</language>
-		<language name="JPN_KANJI" width="256">ジムリーダー　[1:00:トレーナー名:0]と
-たいせんちゅう　です</language>
+		<language name="JPN_KANJI" width="256">ジムリーダーと
+対戦中　です</language>
 	</row>
 
 	<row id="msg_beacon_005" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">してんのう　[1:00:トレーナー名:0]と
+		<language name="JPN" width="256">とくべつな　トレーナーと
 たいせんちゅう　です</language>
-		<language name="JPN_KANJI" width="256">してんのう　[1:00:トレーナー名:0]と
-たいせんちゅう　です</language>
+		<language name="JPN_KANJI" width="256">特別な　トレーナーと
+対戦中　です</language>
 	</row>
 
 	<row id="msg_beacon_006" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">チャンピオン　[1:00:トレーナー名:0]と
+		<language name="JPN" width="256">とくべつな　トレーナーと
 たいせんちゅう　です</language>
-		<language name="JPN_KANJI" width="256">チャンピオン　[1:00:トレーナー名:0]と
-たいせんちゅう　です</language>
+		<language name="JPN_KANJI" width="256">特別な　トレーナーと
+対戦中　です</language>
 	</row>
 
 	<flowchart-group-list>

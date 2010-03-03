@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-02-25T21:55:02"/>
+	<create user="nakamura_akira" host="W00131" date="2010-03-03T17:51:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,14 +260,14 @@
 		</language>
 	</columns>
 
-	<dialog left="216" top="222" right="921" bottom="842" maximized="no" rayout="Vertical2">
+	<dialog left="154" top="98" right="859" bottom="718" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1447" top="259" right="1920" bottom="883" visible="yes"/>
+		<tag-palette left="807" top="259" right="1280" bottom="883" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -290,91 +290,93 @@
 
 	<row id="msg_sys_lognum">
 		<language name="JPN" width="256">[2:01:２桁:0]にん</language>
-		<language name="JPN_KANJI" width="256">[2:01:２桁:0]にん</language>
+		<language name="JPN_KANJI" width="256">[2:01:２桁:0]人</language>
 	</row>
 
 	<row id="msg_sys_now_record">
 		<language name="JPN" width="256">ごうけい[2:04:５桁:0]にん</language>
-		<language name="JPN_KANJI" width="256">ごうけい[2:04:５桁:0]にん</language>
+		<language name="JPN_KANJI" width="256">合計[2:04:５桁:0]人</language>
 	</row>
 
 	<row id="msg_sys_thanks">
 		<language name="JPN" width="256">だれにおれいをする？</language>
-		<language name="JPN_KANJI" width="256">だれにおれいをする？</language>
+		<language name="JPN_KANJI" width="256">だれにお礼をする？</language>
 	</row>
 
 	<row id="msg_sys_thanks_send">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんに
-おれいをしました</language>
+おれいを　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんに
-おれいをしました</language>
+お礼を　しました！</language>
 	</row>
 
 	<row id="msg_sys_gpower_use00">
 		<comment>1：Gパワー名
 2：消費するアイテム数(1-999)
 3：もっているアイテム数(1-999)</comment>
-		<language name="JPN" width="256">Ｇパワー[1:11:特殊状態名:1]を
+		<language name="JPN" width="256">[1:11:特殊状態名:1]を
 つかいますか？
-パレスだま　しよう[2:02:３桁:2]／もっている[2:02:３桁:3]</language>
-		<language name="JPN_KANJI" width="256">Ｇパワー[1:11:特殊状態名:1]を
-つかいますか？
-パレスだま　しよう[2:02:３桁:2]／もっている[2:02:３桁:3]</language>
+ひつよう[2:02:３桁:2]／もっている[2:02:３桁:3]</language>
+		<language name="JPN_KANJI" width="256">[1:11:特殊状態名:1]を
+使いますか？
+必要[2:02:３桁:2]／持っている[2:02:３桁:3]</language>
 	</row>
 
 	<row id="msg_sys_gpower_use01">
 		<comment>0：トレーナー名
 1：Gパワー名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
-Ｇパワー[1:11:特殊状態名:1]を
-はつどうしました[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]さんのＧパワー
+[1:11:特殊状態名:1]を
+つかいました！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さんの
 [1:11:特殊状態名:1]を　つかいますか？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-Ｇパワー[1:11:特殊状態名:1]を
-はつどうしました[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]さんのＧパワー
-[1:11:特殊状態名:1]を　つかいますか？</language>
+[1:11:特殊状態名:1]を
+使いました！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さんの
+[1:11:特殊状態名:1]を　使いますか？</language>
 	</row>
 
 	<row id="msg_sys_gpower_use02">
 		<comment>1：Gパワー名</comment>
-		<language name="JPN" width="256">Ｇパワー[1:11:特殊状態名:1]を
-つかいました[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｇパワー[1:11:特殊状態名:1]を
-つかいました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:11:特殊状態名:1]を
+つかいました！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:11:特殊状態名:1]を
+使いました！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_sys_gpower_use_err01">
 		<comment>2：消費するアイテム数(1-999)
 3：もっているアイテム数(1-999)</comment>
-		<language name="JPN" width="256">パレスだまが　たりません
-ひつようなかず[2:02:３桁:2]／もっているかず[2:02:３桁:3][BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">パレスだまが　たりません
-ひつようなかず[2:02:３桁:2]／もっているかず[2:02:３桁:3][BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">Ｇパワーを　つかうには
+パレスだまが　たりません
+ひつよう[2:02:３桁:2]／もっている[2:02:３桁:3][BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｇパワーを　使うには
+パレスだまが　足りません
+必要[2:02:３桁:2]／持っている[2:02:３桁:3][BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_sys_gpower_use_err02">
 		<comment>1：Gパワー名
 5：残り秒(0-59)</comment>
-		<language name="JPN" width="256">Ｇパワー[1:11:特殊状態名:1]を
-しようしています
+		<language name="JPN" width="256">[1:11:特殊状態名:1]を
+つかっています
 のこり　[2:01:２桁:5]びょう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｇパワー[1:11:特殊状態名:1]を
-しようしています
-のこり　[2:01:２桁:5]びょう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:11:特殊状態名:1]を
+使っています
+残り　[2:01:２桁:5]秒[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_sys_gpower_use_err03">
 		<comment>1：Gパワー名
 4：残り分(1-999)
 5：残り秒(0-59)</comment>
-		<language name="JPN" width="256">Ｇパワー[1:11:特殊状態名:1]を
-しようしています
+		<language name="JPN" width="256">[1:11:特殊状態名:1]を
+つかっています
 のこり　[2:02:３桁:4]ふん[2:01:２桁:5]びょう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｇパワー[1:11:特殊状態名:1]を
-しようしています
-のこり　[2:02:３桁:4]ふん[2:01:２桁:5]びょう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:11:特殊状態名:1]を
+使っています
+残り　[2:02:３桁:4]分[2:01:２桁:5]秒[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_sys_tmenu_yes" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -390,10 +392,10 @@
 	</row>
 
 	<row id="msg_beacon_001" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<language name="JPN" width="256">『[1:00:トレーナー名:0]』が
+		<language name="JPN" width="256">『[1:00:トレーナー名:0]』さんが
 ちかくに　います</language>
-		<language name="JPN_KANJI" width="256">『[1:00:トレーナー名:0]』が
-ちかくに　います</language>
+		<language name="JPN_KANJI" width="256">『[1:00:トレーナー名:0]』さんが
+近くに　います</language>
 	</row>
 
 	<row id="msg_beacon_002" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -401,8 +403,8 @@
 やせいの　[1:01:ポケモン種族名:1]との
 せんとうを　かいし　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-やせいの　[1:01:ポケモン種族名:1]との
-せんとうを　かいし　しました！</language>
+野生の　[1:01:ポケモン種族名:1]との
+戦闘を　開始　しました！</language>
 	</row>
 
 	<row id="msg_beacon_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -410,8 +412,8 @@
 やせいの　[1:01:ポケモン種族名:1]との
 せんとうに　しょうりしました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-やせいの　[1:01:ポケモン種族名:1]との
-せんとうに　しょうりしました！</language>
+野生の　[1:01:ポケモン種族名:1]との
+戦闘に　勝利しました！</language>
 	</row>
 
 	<row id="msg_beacon_004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -419,8 +421,8 @@
 とくべつな　[1:01:ポケモン種族名:1]との
 せんとうを　かいし　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-とくべつな　[1:01:ポケモン種族名:1]との
-せんとうを　かいし　しました！</language>
+特別な　[1:01:ポケモン種族名:1]との
+戦闘を　開始　しました！</language>
 	</row>
 
 	<row id="msg_beacon_005" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -428,8 +430,8 @@
 とくべつな　[1:01:ポケモン種族名:1]との
 せんとうに　しょうりしました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-とくべつな　[1:01:ポケモン種族名:1]との
-せんとうに　しょうりしました！</language>
+特別な　[1:01:ポケモン種族名:1]との
+戦闘に　勝利しました！</language>
 	</row>
 
 	<row id="msg_beacon_006" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -438,7 +440,7 @@
 たいせんを　かいし　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
 トレーナー　[1:00:トレーナー名:1]との
-たいせんを　かいし　しました！</language>
+対戦を　開始　しました！</language>
 	</row>
 
 	<row id="msg_beacon_007" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -447,61 +449,61 @@
 たいせんに　しょうり　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
 トレーナー　[1:00:トレーナー名:1]との
-たいせんに　しょうり　しました！</language>
+対戦に　勝利　しました！</language>
 	</row>
 
 	<row id="msg_beacon_008" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
-ジムリーダー　[1:00:トレーナー名:1]との
+ジムリーダーとの
 たいせんを　かいし　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-ジムリーダー　[1:00:トレーナー名:1]との
-たいせんを　かいし　しました！</language>
+ジムリーダーとの
+対戦を　開始　しました！</language>
 	</row>
 
 	<row id="msg_beacon_009" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
-ジムリーダー　[1:00:トレーナー名:1]との
+ジムリーダーとの
 たいせんに　しょうり　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-ジムリーダー　[1:00:トレーナー名:1]との
-たいせんに　しょうり　しました！</language>
+ジムリーダーとの
+対戦に　勝利　しました！</language>
 	</row>
 
 	<row id="msg_beacon_010" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
-してんのう　[1:00:トレーナー名:1]との
+とくべつな　トレーナーとの
 たいせんを　かいし　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-してんのう　[1:00:トレーナー名:1]との
-たいせんを　かいし　しました！</language>
+特別な　トレーナーとの
+対戦を　開始　しました！</language>
 	</row>
 
 	<row id="msg_beacon_011" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
-してんのう　[1:00:トレーナー名:1]との
+とくべつな　トレーナーとの
 たいせんに　しょうり　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-してんのう　[1:00:トレーナー名:1]との
-たいせんに　しょうり　しました！</language>
+特別な　トレーナーとの
+対戦に　勝利　しました！</language>
 	</row>
 
 	<row id="msg_beacon_012" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
-チャンピオン　[1:00:トレーナー名:1]との
+とくべつな　トレーナーとの
 たいせんを　かいし　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-チャンピオン　[1:00:トレーナー名:1]との
-たいせんを　かいし　しました！</language>
+特別な　トレーナーとの
+対戦を　開始　しました！</language>
 	</row>
 
 	<row id="msg_beacon_013" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
-チャンピオン　[1:00:トレーナー名:1]との
+とくべつな　トレーナーとの
 たいせんに　しょうり　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-チャンピオン　[1:00:トレーナー名:1]との
-たいせんに　しょうり　しました！</language>
+特別な　トレーナーとの
+対戦に　勝利　しました！</language>
 	</row>
 
 	<row id="msg_beacon_014" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -509,8 +511,8 @@
 やせいの　[1:01:ポケモン種族名:1]を
 つかまえました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-やせいの　[1:01:ポケモン種族名:1]を
-つかまえました！</language>
+野生の　[1:01:ポケモン種族名:1]を
+捕まえました！</language>
 	</row>
 
 	<row id="msg_beacon_015" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -518,8 +520,8 @@
 とくべつな　[1:01:ポケモン種族名:1]を
 つかまえました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-とくべつな　[1:01:ポケモン種族名:1]を
-つかまえました！</language>
+特別な　[1:01:ポケモン種族名:1]を
+捕まえました！</language>
 	</row>
 
 	<row id="msg_beacon_016" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -536,7 +538,7 @@
 [1:02:ポケモンニックネーム:2]が　しんかして
 [1:01:ポケモン種族名:1]に　なりました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの
-[1:02:ポケモンニックネーム:2]が　しんかして
+[1:02:ポケモンニックネーム:2]が　進化して
 [1:01:ポケモン種族名:1]に　なりました！</language>
 	</row>
 
@@ -556,10 +558,10 @@ msg_sys_gpower_use00～02が
 	<row id="msg_beacon_019" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
 [1:09:どうぐ名:1]を
-てに　いれました！</language>
+みつけました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
 [1:09:どうぐ名:1]を
-てに　いれました！</language>
+見つけました！</language>
 	</row>
 
 	<row id="msg_beacon_020" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -567,7 +569,7 @@ msg_sys_gpower_use00～02が
 プレイじかんが　[2:02:３桁:1]じかんを
 こえました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの
-プレイじかんが　[2:02:３桁:1]じかんを
+プレイ時間が　[2:02:３桁:1]時間を
 こえました！</language>
 	</row>
 
@@ -575,7 +577,7 @@ msg_sys_gpower_use00～02が
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの
 ポケモンずかんが　かんせい　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの
-ポケモンずかんが　かんせい　しました！</language>
+ポケモン図鑑が　完成　しました！</language>
 	</row>
 
 	<row id="msg_beacon_022" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -583,7 +585,7 @@ msg_sys_gpower_use00～02が
 おれいかすうが　[2:02:３桁:1]かいを
 こえました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの
-おれいかすうが　[2:02:３桁:1]かいを
+お礼回数が　[2:02:３桁:1]回を
 こえました！</language>
 	</row>
 
@@ -591,35 +593,35 @@ msg_sys_gpower_use00～02が
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
 ユニオンルームに　さんかしました</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-ユニオンルームに　さんかしました</language>
+ユニオンルームに　参加しました</language>
 	</row>
 
 	<row id="msg_beacon_024" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんから
 かんしゃ　されました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんから
-かんしゃ　されました！</language>
+感謝　されました！</language>
 	</row>
 
 	<row id="msg_beacon_025" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">げんざい　[1:01:ポケモン種族名:1]を
 はいしんちゅう　です！</language>
-		<language name="JPN_KANJI" width="256">げんざい　[1:01:ポケモン種族名:1]を
-はいしんちゅう　です！</language>
+		<language name="JPN_KANJI" width="256">現在　[1:01:ポケモン種族名:1]を
+配信中　です！</language>
 	</row>
 
 	<row id="msg_beacon_026" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">げんざい　[1:09:どうぐ名:1]を
 はいしんちゅう　です！</language>
-		<language name="JPN_KANJI" width="256">げんざい　[1:09:どうぐ名:1]を
-はいしんちゅう　です！</language>
+		<language name="JPN_KANJI" width="256">現在　[1:09:どうぐ名:1]を
+配信中　です！</language>
 	</row>
 
 	<row id="msg_beacon_027" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">げんざい　ふしぎなおくりものを
 はいしんちゅう　です！</language>
-		<language name="JPN_KANJI" width="256">げんざい　ふしぎなおくりものを
-はいしんちゅう　です！</language>
+		<language name="JPN_KANJI" width="256">現在　不思議な贈り物を
+配信中　です！</language>
 	</row>
 
 	<flowchart-group-list>
