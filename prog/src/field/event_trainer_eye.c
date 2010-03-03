@@ -210,7 +210,7 @@ int EVENT_CheckTrainerEyeRange(
     return( EYE_CHECK_NOHIT );
   }
   
-  MMDL_GetGridPos( mmdl, &pj );
+  MMDL_GetGridPos( jiki, &pj );
   MMDL_GetGridPos( mmdl, &pt );
   
   ret = treye_CheckEyeLine( eye_dir, eye_range, 
@@ -929,17 +929,14 @@ static u16 tr_GetTrainerEventType( const MMDL *mmdl )
 //--------------------------------------------------------------
 static BOOL tr_HitCheckEyeLine( const MMDL *mmdl, u16 dir, int range, const FIELD_ENCOUNT* enc )
 {
-  s16 gx,gy,gz;
-  s16 dx,dz;
-  u32 ret;
-  
   if( range ) //ƒŒƒ“ƒW0=–Ú‚Ì‘O
   {
     int i = 0;
     u32 hit;
+    s16 dx,dz;
     MMDL_GRIDPOS pos;
-    MMDL_GetGridPos( mmdl, &pos );
     
+    MMDL_GetGridPos( mmdl, &pos );
     dx = MMDL_TOOL_GetDirAddValueGridX(dir);
     dz = MMDL_TOOL_GetDirAddValueGridZ(dir);
     pos.gx += dx;

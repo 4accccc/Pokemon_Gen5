@@ -18,6 +18,8 @@
 //======================================================================
 #define WAIT_END (-1)                    ///<ウェイト終端
 
+#define BTN_DASH (PAD_BUTTON_B)
+
 //--------------------------------------------------------------
 //  MV_RND系　移動チェック方式識別
 //--------------------------------------------------------------
@@ -89,6 +91,8 @@ enum
   SEQNO_MV_RT4_MOVE_DIR_SET,
   SEQNO_MV_RT4_MOVE,
 };
+
+#define MV_RT4_TURN_END_NO_MAX (4)  ///<4点移動番号最大数
 
 //--------------------------------------------------------------
 ///  サブ動作　クルクル移動　回転方向
@@ -306,6 +310,7 @@ static u16 get_DashAlterNextDir( u16 mv_code, u16 dir );
 
 static void MvRndWorkInit( MMDL * mmdl, int ac, int id, int check );
 
+static BOOL checkDashButton( void );
 static int TblNumGet( const int *tbl, int end );
 static int TblRndGet( const int *tbl, int end );
 static int TblIDRndGet( int id, int end );
@@ -561,7 +566,7 @@ void MMDL_MoveDirRnd_Move( MMDL * mmdl )
   if( type == EV_TYPE_TRAINER_DASH_ALTER )
   {
     if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
-      if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B) ){
+      if( checkDashButton() == TRUE ){
         u16 dir = MMDL_GetDirDisp( mmdl );
         dir = get_DashAlterNextDir( MMDL_GetMoveCode(mmdl), dir );
         
@@ -1146,7 +1151,7 @@ static int MvSpinMove_Wait( MMDL * mmdl, MV_SPIN_DIR_WORK *work )
       return( FALSE );
     }
     
-    if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B) == FALSE ){
+    if( checkDashButton() == FALSE ){
       return( FALSE );
     }
     
@@ -2076,17 +2081,44 @@ static void MvRt4Move_TurnNoInc( MV_RT4_WORK *work )
 //--------------------------------------------------------------
 static int MvRt4Move_JikiCheck( MMDL * mmdl, MV_RT4_WORK *work )
 {
-  if( MMDL_GetEventType(mmdl) == EV_TYPE_TRAINER_ESCAPE ){
-    u16 eye_dir = MMDL_GetDirDisp( mmdl );
-    int eye_range = MMDL_GetParam( mmdl, MMDL_PARAM_0 );
-    int ret = EVENT_CheckTrainerEyeRange( mmdl, eye_dir, eye_range, NULL );
+  if( MMDL_GetEventType(mmdl) == EV_TYPE_TR_ESC ){
+#ifdef DEBUG_ONLY_FOR_kagaya
+    {
+      int sx = 0xff, sz = 0xff;
+      MMDL *jiki = MMDLSYS_SearchMMdlPlayer( MMDL_GetMMdlSys(mmdl) );
+      int id = MMDL_GetOBJID( mmdl );
+      int dir = MMDL_GetDirDisp( mmdl );
+      int gx = MMDL_GetGridPosX( mmdl );
+      int gz = MMDL_GetGridPosZ( mmdl );
+      int jx = 0, jz = 0;
+      if( jiki != NULL ){
+        jx = MMDL_GetGridPosX(jiki); jz = MMDL_GetGridPosZ(jiki);
+        sx = gx - jx;
+        if( sx < 0 ){ sx = -sx; }
+        sz = gz - jz;
+        if( sz < 0 ){ sz = -sz; }
+        sx += sz;
+      }
+
+      if( sx <= 1 ){
+        KAGAYA_Printf( "MMDL TRAINER ESCAPE ID=%d, DIR=%d, GX=%d,GZ=%d (jiki GX=%d,GZ=%d)\n", id, dir, gx, gz, jx, jz );
+        KAGAYA_Printf( "MMDL TRAINER ESCAPE HIT\n" );
+      }
+    }
+#endif
     
-    if( ret != EYE_CHECK_NOHIT ){
-      u16 ac = MMDL_ChangeDirAcmdCode( eye_dir, AC_STAY_JUMP_U_8F );
-      MMDL_SetLocalAcmd( mmdl, ret );
-      MMDL_OnMoveBitMove( mmdl );
-      work->seq_no = SEQNO_MV_RT4_DISCOVERY_JUMP;
-      return( TRUE );
+    {
+      u16 eye_dir = MMDL_GetDirDisp( mmdl );
+      int eye_range = MMDL_GetParam( mmdl, MMDL_PARAM_0 );
+      int ret = EVENT_CheckTrainerEyeRange( mmdl, eye_dir, eye_range, NULL );
+    
+      if( ret != EYE_CHECK_NOHIT ){
+        u16 ac = MMDL_ChangeDirAcmdCode( eye_dir, AC_STAY_JUMP_U_8F );
+        MMDL_SetLocalAcmd( mmdl, ac );
+        MMDL_OnMoveBitMove( mmdl );
+        work->seq_no = SEQNO_MV_RT4_DISCOVERY_JUMP;
+        return( TRUE );
+      }
     }
   }
   
@@ -2102,11 +2134,54 @@ static int MvRt4Move_JikiCheck( MMDL * mmdl, MV_RT4_WORK *work )
  * @retval  int    TRUE=再帰
  */
 //--------------------------------------------------------------
+///MV_RT4_REV_CODE ルート4反転コード
+typedef struct
+{
+  u16 m_code;
+  u16 r_code;
+}MV_RT4_REV_CODE;
+
+///ルート４反転まとめ
+static const MV_RT4_REV_CODE data_MoveRoute4_ReverseTbl[] =
+{
+  {MV_RTUL,MV_RTLU},
+  {MV_RTDR,MV_RTRD},
+  {MV_RTLD,MV_RTDL},
+  {MV_RTRU,MV_RTUR},
+  {MV_CODE_NOT,MV_CODE_NOT}, //end
+};
+
+///回転数反転
+static const u8 data_MoveRoute4_ReverseTurnNo[4] = {3,2,1,0};
+
 static int MvRt4Move_DiscoveryJump( MMDL * mmdl, MV_RT4_WORK *work )
 {
   if( MMDL_ActionLocalAcmd(mmdl) == TRUE ){
+    u16 r_code = MV_CODE_NOT;
+    u16 mv_code = MMDL_GetMoveCode( mmdl );
+    const MV_RT4_REV_CODE *data = data_MoveRoute4_ReverseTbl;
+    
+    while( data->m_code != MV_CODE_NOT ){
+      if( data->m_code == mv_code ){
+        r_code = data->r_code;
+      }else if( data->r_code == mv_code ){
+        r_code = data->m_code;
+      }
+      
+      if( r_code != MV_CODE_NOT ){
+        u16 turn_no = work->turn_no;
+        GF_ASSERT( turn_no < 4 );
+        MMDL_ChangeMoveCode( mmdl, r_code );
+        work->turn_no = data_MoveRoute4_ReverseTurnNo[turn_no];
+        break;
+      }
+       
+      data++;
+    }
+    
     MMDL_OffMoveBitMove( mmdl );
     work->seq_no = SEQNO_MV_RT4_MOVE_DIR_SET;
+    GF_ASSERT( r_code != MV_CODE_NOT );
   }
   
   return( FALSE );
@@ -2118,7 +2193,7 @@ static int MvRt4Move_DiscoveryJump( MMDL * mmdl, MV_RT4_WORK *work )
  * @param  mmdl  MMDL *
  * @param  work  MV_RT4_WORK
  * @retval  int    TRUE=再帰
- */
+*/
 //--------------------------------------------------------------
 static int MvRt4Move_MoveDirSet( MMDL * mmdl, MV_RT4_WORK *work )
 {
@@ -2246,6 +2321,21 @@ static int (* const DATA_MvRt4MoveTbl[])( MMDL * mmdl, MV_RT4_WORK *work ) =
 //======================================================================
 //  パーツ
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * ダッシュボタンが押されているか
+ * @param nothing
+ * @retval BOOL TRUE=押されている
+ */
+//--------------------------------------------------------------
+static BOOL checkDashButton( void )
+{
+  if( (GFL_UI_KEY_GetTrg() & BTN_DASH) ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
 //--------------------------------------------------------------
 /**
  * 方向テーブル要素数取得
@@ -2468,7 +2558,7 @@ static BOOL checkEvTypeDashReact( const MMDL *mmdl, u8 *count )
       return( FALSE );
     }
       
-    if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B) == 0 ){
+    if( checkDashButton() == FALSE ){
       return( FALSE );
     }
       
