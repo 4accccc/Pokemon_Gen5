@@ -690,8 +690,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_trial_house.c \
         field/field_saveanime.c \
         field/field_gimmick_league_front01.c \
-        field/field_gimmick_league_front02.c
-
+        field/field_gimmick_league_front02.c \
+        field/mapdatafunc/mapdata_attr.c
 
 
 
