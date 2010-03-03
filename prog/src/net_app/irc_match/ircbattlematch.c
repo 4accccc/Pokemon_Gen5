@@ -241,7 +241,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
   NULL,  ///< DWCのユーザデータ（自分のデータ）
   0,   ///< DWCへのHEAPサイズ
   TRUE,        ///< デバック用サーバにつなぐかどうか
-  0x532,//0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
+  SYASHI_NETWORK_GGID,  //ggid  
   GFL_HEAPID_APP,  //元になるheapid
   HEAPID_NETWORK,  //通信用にcreateされるHEAPID
   HEAPID_WIFI,  //wifi用にcreateされるHEAPID
@@ -361,7 +361,7 @@ static void _changeState(IRC_BATTLE_MATCH* pWork,StateFunc state)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-#ifdef GFL_NET_DEBUG
+#if PM_DEBUG
 static void _changeStateDebug(IRC_BATTLE_MATCH* pWork,StateFunc state, int line)
 {
   NET_PRINT("ircmatch: %d\n",line);
@@ -373,7 +373,7 @@ static void _endCallBack(void* pWork)
 {
   IRC_BATTLE_MATCH *commsys = pWork;
 
-  OS_TPrintf("endCallBack終了\n");
+  NET_PRINT("endCallBack終了\n");
   commsys->connect_ok = FALSE;
   commsys->connect_bit = 0;
 }
@@ -926,16 +926,33 @@ static void _ReturnButtonStart(IRC_BATTLE_MATCH* pWork)
 {
   int i;
 
-  pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
-  GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_03, pWork->appitem[0].str);
-  pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
-  pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_RETURN;
-  pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
-                                           pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
+  if(EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER == pWork->selectType){
+    pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+    GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_03, pWork->appitem[0].str);
+    pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+    pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_RETURN;
+    pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
+                                             pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
+    GFL_STR_DeleteBuffer(pWork->appitem[0].str);
+  }
+  else{
 
-  
-  GFL_STR_DeleteBuffer(pWork->appitem[0].str);
+    pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+    GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_03, pWork->appitem[0].str);
+    pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+    pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_RETURN;
 
+    pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+    GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_36, pWork->appitem[1].str);
+    pWork->appitem[1].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+    pWork->appitem[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+
+    pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
+                                             pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
+    GFL_STR_DeleteBuffer(pWork->appitem[0].str);
+    GFL_STR_DeleteBuffer(pWork->appitem[1].str);
+
+  }
 }
 
 
@@ -1261,7 +1278,8 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
 //      GF_ASSERT(0);
       break;
     }
-    if(pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL){
+    if((pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL) &&
+        (pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER)){
       GFL_NET_Init(&net_ini_data, NULL, pWork);	//通信初期化
     }
   }
@@ -1488,11 +1506,13 @@ static BOOL _cancelButtonCallback(int bttnid, IRC_BATTLE_MATCH* pWork)
 
 static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 {
-  int num1 = WifiList_GetFriendDataNum( GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ); //WIFILIST_FRIEND_MAX
-  if(num1==WIFILIST_FRIEND_MAX){
-    _CHANGE_STATE(pWork,_waitFinish);        // 終わり()
-    pWork->timer = _FULL_TIMER;
-    return;
+  if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND){
+    int num1 = WifiList_GetFriendDataNum( GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ); //WIFILIST_FRIEND_MAX
+    if(num1==WIFILIST_FRIEND_MAX){
+      _CHANGE_STATE(pWork,_waitFinish);        // 終わり()
+      pWork->timer = _FULL_TIMER;
+      return;
+    }
   }
 
   

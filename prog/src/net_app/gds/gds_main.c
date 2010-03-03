@@ -316,7 +316,7 @@ static void GdsMain_CommInitialize(GDSPROC_MAIN_WORK *gmw)
         MYDWC_HEAPSIZE,
         TRUE,         //デバッグ用サーバにつなぐかどうか
 #endif  //GFL_NET_WIFI
-        0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
+        SYASHI_NETWORK_GGID,  //ggid  
         GFL_HEAPID_APP,
         HEAPID_NETWORK,
         HEAPID_WIFI,

@@ -116,8 +116,7 @@ static const GFLNetInitializeStruct data_NetInit = {
   0, ///< DWCへのHEAPサイズ
   TRUE, // デバック用サーバにつなぐかどうか
 #endif  //GFL_NET_WIFI
-  
-  0x999,  //ggid  DP=0x333,RANGER=0x178,WII=0x346 <-適当なのを
+  SYASHI_NETWORK_GGID,  //ggid  
   GFL_HEAPID_APP, //元になるheapid
   HEAPID_NETWORK + HEAPDIR_MASK,    //通信用にcreateされるHEAPID
   HEAPID_WIFI + HEAPDIR_MASK,    //wifi用にcreateされるHEAPID
