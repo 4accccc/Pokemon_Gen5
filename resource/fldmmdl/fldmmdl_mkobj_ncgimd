@@ -933,6 +933,11 @@
 	@echo convert ncg_imd tbossbl
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/tbossbl.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
+#present.imd
+./mmdl_res/present.imd: ./mmdl_nchara/present.ncg ./mmdl_nchara/present.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
+	@echo convert ncg_imd present
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/present.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
 #tsure_001.imd
 ./mmdl_res/tsure_001.imd: ./mmdl_nchara/pokemon//tsure_001.ncg ./mmdl_nchara/pokemon//tsure_001.ncl ./mmdl_res/ncg4x4pokeflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd tsure_001
