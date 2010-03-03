@@ -150,7 +150,7 @@ static GFL_PROC_RESULT BackupEraseProc_Init( GFL_PROC * proc, int * seq, void * 
 {
 	BACKUP_ERASE_WORK * wk;
 
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BACKUP_ERASE, 0x10000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BACKUP_ERASE, 0x30000 );
 
 	wk = GFL_PROC_AllocWork( proc, sizeof(BACKUP_ERASE_WORK), HEAPID_BACKUP_ERASE );
 	GFL_STD_MemClear( wk, sizeof(BACKUP_ERASE_WORK) );
@@ -377,17 +377,19 @@ static void MainSeq_CheckYesNo( BACKUP_ERASE_WORK * wk, int * seq )
 static void MainSeq_ActionMessage( BACKUP_ERASE_WORK * wk, int * seq )
 {
 	if( MainMessage( wk ) == FALSE ){
-/*
-	  void *temp_save;
-	  temp_save = GFL_HEAP_AllocMemory( HEAPID_BACKUP_ERASE, SAVEFLASH_SIZE);
-		GFL_STD_MemFill(temp_save, SAVEFLASH_INIT_PARAM, SAVEFLASH_SIZE);
-		DEBUG_BACKUP_FlashSave(0, temp_save, SAVEFLASH_SIZE);
-		GFL_HEAP_FreeMemory(temp_save);
+		SAVE_CONTROL_WORK * sv;
+		u32	i;
+		sv = SaveControl_GetPointer();
+		SaveControl_Erase( sv );
+		for( i=0; i<SAVE_EXTRA_ID_MAX; i++ ){
+			if( SaveControl_Extra_Load( sv, i, HEAPID_BACKUP_ERASE ) == LOAD_RESULT_OK ){
+				SaveControl_Extra_Erase( sv, i, HEAPID_BACKUP_ERASE );
+			}
+			SaveControl_Extra_Unload( sv, i );
+		}
+		OS_ResetSystem(0);		// セーブ読み込み状況を更新する為、ソフトリセットする
 
-		OS_ResetSystem(0);	//セーブ読み込み状況を更新する為、ソフトリセットする
-*/
-
-		*seq = MAINSEQ_FADEOUT;
+//		*seq = MAINSEQ_FADEOUT;		// リセットされるのでいらない。
 	}
 }
 
