@@ -27,8 +27,10 @@ typedef enum {
   BTL_NET_TIMING_NOTIFY_PLAYER_DATA,
   BTL_NET_TIMING_SETUP_END,
 
-  BTL_NET_TIMING_NOTIFY_TAG_AI_PARTY_DATA,
-  BTL_NET_TIMING_NOTIFY_TAG_AI_TRAINER_DATA,
+  BTL_NET_TIMING_NOTIFY_TAG_AI_PARTY_1,
+  BTL_NET_TIMING_NOTIFY_TAG_AI_PARTY_2,
+  BTL_NET_TIMING_NOTIFY_TAG_AI_TRAINER_1,
+  BTL_NET_TIMING_NOTIFY_TAG_AI_TRAINER_2,
 
 }BtlNetTiming;
 
@@ -48,6 +50,17 @@ typedef struct {
   u8                   fCommTag          : 4; ///< 通信タッグモード
 
 }BTLNET_SERVER_NOTIFY_PARAM;
+
+/**
+ *  サーバマシンからAI用データ（パーティ、トレーナー）を送信するためのコンテナ
+ */
+typedef struct {
+
+  u32     clientID :  8;
+  u32     dataSize : 24;
+  u8      data[0];
+
+}BTLNET_AIDATA_CONTAINER;
 
 
 extern void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, HEAPID heapID );
@@ -84,12 +97,16 @@ extern void BTL_NET_EndNotifyPlayerData( void );
 extern const MYSTATUS* BTL_NET_GetPlayerData( u8 clientID );
 
 
-extern BOOL BTL_NET_StartNotify_AI_PartyData( const POKEPARTY* party );
-extern BOOL BTL_NET_IsRecved_AI_PartyData( void );
-extern BOOL BTL_NET_StartNotify_AI_TrainerData( const BSP_TRAINER_DATA* tr_data, u32 size );
+extern BOOL BTL_NET_StartNotify_AI_PartyData( const BTLNET_AIDATA_CONTAINER* container );
+extern BOOL BTL_NET_IsRecved_AI_PartyData( u8 clientID );
+extern BOOL BTL_NET_StartNotify_AI_TrainerData( const BSP_TRAINER_DATA* tr_data );
 extern const BSP_TRAINER_DATA* BTL_NET_Get_AI_TrainerData( void );
 extern BOOL BTL_NET_IsRecved_AI_TrainerData( void );
 
+
+extern BTLNET_AIDATA_CONTAINER*  BTL_NET_AIDC_Create( u32 size, HEAPID heapID );
+extern void BTL_NET_AIDC_Delete( BTLNET_AIDATA_CONTAINER* container );
+extern void BTL_NET_AIDC_SetData( BTLNET_AIDATA_CONTAINER* container, const void* src, u8 clientID );
 
 
 #endif

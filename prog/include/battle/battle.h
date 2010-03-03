@@ -188,9 +188,10 @@ typedef struct {
 typedef enum {
 
   BTL_MULTIMODE_NONE = 0, ///< 非マルチ
-  BTL_MULTIMODE_P2_E2,    ///< 敵・味方ともクライアント２名
-  BTL_MULTIMODE_P1_E2,    ///< 味方１人 VS 敵２人
-  BTL_MULTIMODE_P2_E1,    ///< 味方２人 vs 敵１人（タッグ）
+  BTL_MULTIMODE_PP_PP,    ///< プレイヤー２人 vs プレイヤー２人（通信マルチ）
+  BTL_MULTIMODE_PP_AA,    ///< プレイヤー２人 vs AI２人（AI通信マルチ）
+  BTL_MULTIMODE_PA_AA,    ///< プレイヤー１人＆AI１人 vs AI２人（AIマルチ）
+  BTL_MULTIMODE_P_AA,     ///< プレイヤー１人 VS AI２人（AIタッグ）
 
 }BtlMultiMode_tag;
 

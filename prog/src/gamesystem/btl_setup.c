@@ -228,7 +228,7 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
   dst->netHandle = NULL;
   dst->commMode = BTL_COMM_NONE;
   dst->commPos = 0;
-  dst->multiMode = 0;
+  dst->multiMode = BTL_MULTIMODE_NONE;
   dst->recBuffer = NULL;
   dst->fRecordPlay = FALSE;
 
@@ -335,7 +335,7 @@ static void setup_common_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
  */
 //=============================================================================================
 static void setup_common_CommTrainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  BtlRule rule, BOOL multi, GFL_NETHANDLE* netHandle, BtlCommMode commMode, u8 commPos, HEAPID heapID )
+  BtlRule rule, BtlMultiMode multiMode, GFL_NETHANDLE* netHandle, BtlCommMode commMode, u8 commPos, HEAPID heapID )
 {
   BTL_FIELD_SITUATION sit;
 
@@ -353,7 +353,7 @@ static void setup_common_CommTrainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameDat
 
   dst->netHandle = netHandle;
   dst->commMode = commMode;
-  dst->multiMode = multi;
+  dst->multiMode = multiMode;
   dst->commPos = commPos;
 
   // 録画データ生成のため、対戦相手のMYSTATUS, POKEPARTYを受け取るバッファとして確保します taya
@@ -520,7 +520,7 @@ void BTL_SETUP_Tag_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 
   setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id0, heapID );
   setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id1, heapID );
-  dst->multiMode = TRUE;
+  dst->multiMode = BTL_MULTIMODE_P_AA;
 }
 
 //=============================================================================================
@@ -546,7 +546,7 @@ void BTL_SETUP_AIMulti_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   setup_trainer_param( dst, BTL_CLIENT_PARTNER, &dst->party[ BTL_CLIENT_PARTNER ], partner, heapID );
   setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id0, heapID );
   setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id1, heapID );
-  dst->multiMode = TRUE;
+  dst->multiMode = BTL_MULTIMODE_PA_AA;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -570,7 +570,8 @@ void BTL_SETUP_Single_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   u8 myCommPos = GFL_NET_GetNetID( netHandle );
 
-  setup_common_CommTrainer( dst, gameData, BTL_RULE_SINGLE, FALSE, netHandle, commMode, myCommPos, heapID );
+  setup_common_CommTrainer( dst, gameData, BTL_RULE_SINGLE, BTL_MULTIMODE_NONE,
+    netHandle, commMode, myCommPos, heapID );
 }
 
 //=============================================================================================
@@ -591,13 +592,14 @@ void BTL_SETUP_Double_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   u8 myCommPos = GFL_NET_GetNetID( netHandle );
 
-  setup_common_CommTrainer( dst, gameData, BTL_RULE_DOUBLE, FALSE, netHandle, commMode, myCommPos, heapID );
+  setup_common_CommTrainer( dst, gameData, BTL_RULE_DOUBLE, BTL_MULTIMODE_NONE,
+    netHandle, commMode, myCommPos, heapID );
 }
 
 
 //=============================================================================================
 /**
- * ダブル（マルチ）通信対戦
+ * ダブル（マルチ：プレイヤー 2 vs 2）通信対戦
  *
  * @param   dst
  * @param   gameData
@@ -612,27 +614,33 @@ void BTL_SETUP_Double_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 void BTL_SETUP_Multi_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode, u8 commPos, HEAPID heapID )
 {
-  setup_common_CommTrainer( dst, gameData, BTL_RULE_DOUBLE, TRUE, netHandle, commMode, commPos, heapID );
+  setup_common_CommTrainer( dst, gameData, BTL_RULE_DOUBLE, BTL_MULTIMODE_PP_PP,
+    netHandle, commMode, commPos, heapID );
 }
-
 
 //=============================================================================================
 /**
- * ダブル（タッグ）通信対戦
+ * ダブル（マルチ：プレイヤー2 vs AIトレーナー2）通信対戦
  *
  * @param   dst
  * @param   gameData
  * @param   netHandle
  * @param   commMode
  * @param   commPos
+ * @param   tr_id1
+ * @param   tr_id2
  * @param   heapID
  */
 //=============================================================================================
-void BTL_SETUP_MultiTag_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  GFL_NETHANDLE* netHandle, BtlCommMode commMode, u8 commPos, TrainerID tr_id, HEAPID heapID )
+void BTL_SETUP_AIMulti_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  GFL_NETHANDLE* netHandle, BtlCommMode commMode, u8 commPos, TrainerID tr_id1, TrainerID tr_id2, HEAPID heapID )
 {
-  setup_common_CommTrainer( dst, gameData, BTL_RULE_DOUBLE, TRUE, netHandle, commMode, commPos, heapID );
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id, heapID );
+  GF_ASSERT((commPos==BTL_CLIENT_PLAYER)||(commPos==BTL_CLIENT_PARTNER));
+
+  setup_common_CommTrainer( dst, gameData, BTL_RULE_DOUBLE, BTL_MULTIMODE_PP_AA,
+      netHandle, commMode, commPos, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id1, heapID );
+  setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id2, heapID );
 }
 
 //=============================================================================================
@@ -653,7 +661,8 @@ void BTL_SETUP_Triple_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   u8 myCommPos = GFL_NET_GetNetID( netHandle );
 
-  setup_common_CommTrainer( dst, gameData, BTL_RULE_TRIPLE, FALSE, netHandle, commMode, myCommPos, heapID );
+  setup_common_CommTrainer( dst, gameData, BTL_RULE_TRIPLE, BTL_MULTIMODE_NONE,
+      netHandle, commMode, myCommPos, heapID );
 }
 
 
@@ -674,7 +683,8 @@ void BTL_SETUP_Rotation_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode, HEAPID heapID )
 {
   u8 myCommPos = GFL_NET_GetNetID( netHandle );
-  setup_common_CommTrainer( dst, gameData, BTL_RULE_ROTATION, FALSE, netHandle, commMode, myCommPos, heapID );
+  setup_common_CommTrainer( dst, gameData, BTL_RULE_ROTATION, BTL_MULTIMODE_NONE,
+    netHandle, commMode, myCommPos, heapID );
 }
 
 

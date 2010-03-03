@@ -117,6 +117,8 @@ typedef struct {
   void* tmpRecvBuf[ BTL_NET_CONNECT_MACHINE_MAX  ];
   u32   tmpLargeBufUsedSize[ BTL_NET_CONNECT_MACHINE_MAX ];
 
+  void* AIPartyBuffer[ BTL_CLIENT_MAX ];
+
   void* tmpExBuffer;
   u32   tmpExBufferUsedSize;
 
@@ -197,6 +199,10 @@ void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, HEAPID heapID )
         Sys->tmpRecvBuf[i] = NULL;
         Sys->tmpLargeBufUsedSize[i] = 0;
         Sys->clientID[i] = BTL_CLIENTID_NULL;
+      }
+      for(i=0; i<BTL_CLIENT_MAX; ++i)
+      {
+        Sys->AIPartyBuffer[i] = NULL;
       }
       Sys->tmpExBuffer = NULL;
       Sys->tmpExBufferUsedSize = 0;
@@ -431,13 +437,13 @@ BOOL BTL_NET_IsCompleteNotifyPartyData( void )
 
 
 // 通信タッグ用のAIパーティデータを送信（サーバ→全マシン）
-BOOL BTL_NET_StartNotify_AI_PartyData( const POKEPARTY* party )
+BOOL BTL_NET_StartNotify_AI_PartyData( const BTLNET_AIDATA_CONTAINER* container )
 {
-  u32 size = PokeParty_GetWorkSize();
+  u32 size = sizeof(BTLNET_AIDATA_CONTAINER) + container->dataSize;
 
   return GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_AI_PARTY_DATA,
         size,
-        party,
+        container,
         FALSE,  // 優先度を高くする
         TRUE,   // 同一コマンドがキューに無い場合のみ送信する
         TRUE    // GFL_NETライブラリの外で保持するバッファを使用
@@ -445,26 +451,33 @@ BOOL BTL_NET_StartNotify_AI_PartyData( const POKEPARTY* party )
 }
 static u8* getbuf_AI_partyData( int netID, void* pWork, int size )
 {
-  GF_ASSERT(Sys->tmpExBuffer == NULL);
-
   BTL_N_Printf( DBGSTR_NET_CreateAIPartyRecvBuffer );
 
-  Sys->tmpExBuffer = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(Sys->heapID), size );
+  if( Sys->tmpExBuffer == NULL ){
+    Sys->tmpExBuffer = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(Sys->heapID), size );
+  }
   return Sys->tmpExBuffer;
 }
 static void recv_AI_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
 {
-  Sys->tmpExBufferUsedSize = size;
-  BTL_N_Printf( DBGSTR_NET_RecvedAIPartyData, size);
+  const BTLNET_AIDATA_CONTAINER* container = pData;
 
+  if( Sys->AIPartyBuffer[ container->clientID ] == NULL ){
+    Sys->AIPartyBuffer[ container->clientID ] = GFL_HEAP_AllocClearMemory(GFL_HEAP_LOWID(Sys->heapID), container->dataSize);
+  }else{
+    GF_ASSERT(0);
+  }
+
+  GFL_STD_MemCopy( container->data, Sys->AIPartyBuffer[ container->clientID ], container->dataSize );
+
+  GFL_HEAP_FreeMemory( Sys->tmpExBuffer );
+  Sys->tmpExBuffer = NULL;
 }
 // 通信タッグ用のAIパーティデータを受信したかチェック
-BOOL BTL_NET_IsRecved_AI_PartyData( void )
+BOOL BTL_NET_IsRecved_AI_PartyData( u8 clientID )
 {
-  return Sys->tmpExBufferUsedSize != 0;
+  return Sys->AIPartyBuffer[clientID] != NULL;
 }
-
-
 
 
 // 受信したパーティデータポインタを取得（※ clientID 指定）
@@ -479,10 +492,10 @@ const POKEPARTY* BTL_NET_GetPartyData( u8 clientID )
 
     return Sys->tmpRecvBuf[ netID ];
   }
-  else if( Sys->tmpExBuffer != NULL )
+  else if( Sys->AIPartyBuffer[clientID] != NULL )
   {
     {
-      const POKEPARTY* party = (const POKEPARTY*)(Sys->tmpExBuffer);
+      const POKEPARTY* party = (const POKEPARTY*)(Sys->AIPartyBuffer[clientID]);
       const POKEMON_PARAM* pp;
       u32 cnt, i;
 
@@ -579,17 +592,17 @@ const MYSTATUS* BTL_NET_GetPlayerData( u8 clientID )
 }
 
 // AI用トレーナーデータを連絡する（サーバ→全マシン）
-BOOL BTL_NET_StartNotify_AI_TrainerData( const BSP_TRAINER_DATA* tr_data, u32 size )
+BOOL BTL_NET_StartNotify_AI_TrainerData( const BSP_TRAINER_DATA* tr_data )
 {
   BOOL result = GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_AI_TRAINER_DATA,
-        size,
+        sizeof(BSP_TRAINER_DATA),
         tr_data,
         FALSE,     // 優先度を高くする
         TRUE,     // 同一コマンドがキューに無い場合のみ送信する
         TRUE      // GFL_NETライブラリの外で保持するバッファを使用
   );
   if( result ){
-    BTL_N_Printf( DBGSTR_NET_SendAITrainerData, size );
+    BTL_N_Printf( DBGSTR_NET_SendAITrainerData, tr_data->tr_id );
   }
   return result;
 }
@@ -600,7 +613,7 @@ static u8* getbuf_AI_trainerData( int netID, void* pWork, int size )
 }
 static void recv_AI_trainerData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
 {
-  BTL_N_Printf( DBGSTR_NET_RecvAITrainerData, size );
+  BTL_N_Printf( DBGSTR_NET_RecvAITrainerData, ((const BSP_TRAINER_DATA*)pData)->tr_id  );
   Sys->tmpExBufferUsedSize = size;
 }
 // AIトレーナーデータ受信完了したか
@@ -639,6 +652,15 @@ static void clearAllTmpBuffer( void )
       Sys->tmpLargeBufUsedSize[i] = 0;
     }
   }
+
+  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  {
+    if( Sys->AIPartyBuffer[i] != NULL ){
+      GFL_HEAP_FreeMemory( Sys->AIPartyBuffer[i] );
+      Sys->AIPartyBuffer[i] = NULL;
+    }
+  }
+
   if( Sys->tmpExBuffer )
   {
     GFL_HEAP_FreeMemory( Sys->tmpExBuffer );
@@ -878,4 +900,26 @@ static inline u32 recvBuf_getData( const RECV_BUFFER* buf, const void** ppData )
 }
 
 
+
+/*--------------------------------------------------------------------------*/
+/* AIData Container                                                         */
+/*--------------------------------------------------------------------------*/
+
+BTLNET_AIDATA_CONTAINER*  BTL_NET_AIDC_Create( u32 size, HEAPID heapID )
+{
+  BTLNET_AIDATA_CONTAINER* container = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTLNET_AIDATA_CONTAINER)+size );
+  container->dataSize = heapID;
+  container->clientID = BTL_CLIENTID_NULL;
+  return container;
+}
+void BTL_NET_AIDC_Delete( BTLNET_AIDATA_CONTAINER* container )
+{
+  GFL_HEAP_FreeMemory( container );
+}
+
+void BTL_NET_AIDC_SetData( BTLNET_AIDATA_CONTAINER* container, const void* src, u8 clientID )
+{
+  container->clientID = clientID;
+  GFL_STD_MemCopy( src, container->data, container->dataSize );
+}
 

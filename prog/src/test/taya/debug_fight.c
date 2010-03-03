@@ -1992,7 +1992,7 @@ FS_EXTERN_OVERLAY(battle);
       if( btltype_IsMulti( wk->saveData.btlType ) ){
         TAYA_Printf("マルチモードで通信開始\n");
         initParam = &NetInitParamMulti;
-        wk->NeedConnectMembers = 4;
+        wk->NeedConnectMembers = 2;
       }else{
         TAYA_Printf("通常モードで通信開始\n");
         initParam = &NetInitParamNormal;
@@ -2086,19 +2086,30 @@ FS_EXTERN_OVERLAY(battle);
         if( !btltype_IsMulti(wk->saveData.btlType) ){
           BTL_SETUP_Double_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS, HEAPID_BTL_DEBUG_SYS );
         }else{
-          // 意図的にnetIDと立ち位置をバラバラにしてみる
-          u8 commPos = (GFL_NET_GetNetID( netHandle ) + 1) & 3;
-          BTL_SETUP_Multi_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS,
-            commPos, HEAPID_BTL_DEBUG_SYS );
+
+          u8 commPos;
 
           if( PokeParty_GetPokeCount(wk->partyEnemy1) )
           {
-              TrainerID  trID = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+              TrainerID  trID1 = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+              TrainerID  trID2 = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
 
-            BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData,
-                &wk->fieldSit, trID, HEAPID_BTL_DEBUG_SYS );
+              commPos = GFL_NET_GetNetID( netHandle ) * 2;
 
-            BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+              BTL_SETUP_AIMulti_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS,
+                commPos, trID1, trID2, HEAPID_BTL_DEBUG_SYS );
+
+              BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+              BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy2, BTL_CLIENT_ENEMY2 );
+
+          }
+          else
+          {
+            // 意図的にnetIDと立ち位置をバラバラにしてみる
+            commPos = (GFL_NET_GetNetID( netHandle ) + 1) & 3;
+
+            BTL_SETUP_Multi_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS,
+              commPos, HEAPID_BTL_DEBUG_SYS );
           }
         }
         break;
@@ -2114,7 +2125,8 @@ FS_EXTERN_OVERLAY(battle);
     else
     {
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
-      TrainerID  trID = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+//      TrainerID  trID = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+      TrainerID  trID = 293;
 
       switch( rule ){
       case BTL_RULE_SINGLE:

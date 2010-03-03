@@ -67,7 +67,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_MAIN_PokeConGetByPos:          return "存在しない位置(pos=%d, clientID=%d, idx=%d)のポケモンデータを参照した\n";
   case DBGSTR_MAIN_PartyDataNotifyComplete:  return "パーティデータ相互受信できました。\n";
   case DBGSTR_MAIN_AIPartyDataSendComplete:  return "AIパーティデータ受信完了\n";
-  case DBGSTR_MAIN_SendAIParty:              return "AIパーティメンバー送信完了 ... pokeCnt=%d\n  monsno=";
+  case DBGSTR_MAIN_SendAIParty:              return "AIパーティ送信完了 ... clientID=%d, pokeCnt=%d\n  monsno=";
 
 
   case DBGSTR_CLIENT_RETURN_CMD_START:       return "ID[%d], 返信開始へ\n";
@@ -126,8 +126,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_NET_RecvedClientData:     return "[BTLNET] recv from netID[%d], size=%d\n";
   case DBGSTR_NET_RecvedServerVersion:  return "サーババージョン受信 ... netID=%d, version=%d\n";
   case DBGSTR_NET_ServerDetermine:      return "サーバは netID=%d のマシンに決定\n";
-  case DBGSTR_NET_SendAITrainerData:    return "AIトレーナーデータ送信完了, size=%d\n";
-  case DBGSTR_NET_RecvAITrainerData:    return "AIトレーナーデータ受信完了, size=%d\n";
+  case DBGSTR_NET_SendAITrainerData:    return "AIトレーナーデータ送信完了, trID=%d\n";
+  case DBGSTR_NET_RecvAITrainerData:    return "AIトレーナーデータ受信完了, trID=%d\n";
   case DBGSTR_NET_AIPartyInfo:          return "Client(%d)=AIパーティと判断する (pokeCnt=%d)\n  monsno=";
   case DBGSTR_NET_CreateAIPartyRecvBuffer: return "AIパーティデータ受信バッファを生成\n";
   case DBGSTR_NET_RecvedAIPartyData:       return "AIパーティデータ受信 size=%d\n";

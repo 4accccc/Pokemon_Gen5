@@ -100,6 +100,7 @@ struct _BTL_MAIN_MODULE {
   POKEPARTY*            srcParty[ BTL_CLIENT_MAX ];
   POKEPARTY*            tmpParty;
   POKEMON_PARAM*        ppIllusionZoroArc;
+  BTLNET_AIDATA_CONTAINER*  AIDataContainer;
 
   GFL_STD_RandContext   randomContext;
   BTLNET_SERVER_NOTIFY_PARAM  serverNotifyParam;
@@ -126,7 +127,9 @@ struct _BTL_MAIN_MODULE {
   u8        fWazaEffectEnable;
   u8        changeMode;
   u8        fBonusMoneyFixed;
-  u8        fCommTag;
+  u8        MultiAIDataSeq;
+  u8        MultiAIClientNum;
+  u8        MultiAIClientID;
 
 };
 
@@ -239,10 +242,11 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->LimitTimeGame = wk->setupParam->LimitTimeGame;
       wk->LimitTimeCommand = wk->setupParam->LimitTimeCommand;
       wk->fBonusMoneyFixed = FALSE;
-      wk->fCommTag = FALSE;
+      wk->MultiAIClientNum = 0;
 
       wk->bonusMoney = calcBonusMoneyBase( setup_param );
       wk->ppIllusionZoroArc = NULL;
+      wk->AIDataContainer = NULL;
 
       if( !(wk->setupParam->fRecordPlay) ){
         GFL_STD_RandGeneralInit( &wk->randomContext );
@@ -715,7 +719,8 @@ static BOOL setup_alone_double( int* seq, void* work )
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
             BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
 
-  if( sp->fRecordPlay ){
+  if( sp->fRecordPlay )
+  {
     BTL_Printf("再生タイプ初期化 ... dataSize=%d\n", sp->recDataSize);
     BTL_CLIENT_SetRecordPlayType( wk->client[0], sp->recBuffer, sp->recDataSize );
     BTL_CLIENT_SetRecordPlayType( wk->client[1], sp->recBuffer, sp->recDataSize );
@@ -1051,40 +1056,29 @@ static BOOL setup_comm_double( int* seq, void* work )
     const BATTLE_SETUP_PARAM* sp = wk->setupParam;
 
     POKEPARTY* party = sp->party[ BTL_CLIENT_ENEMY1 ];
-    BOOL fCommTag = ((party != NULL) && PokeParty_GetPokeCount(party) != 0);
 
-    if( sp->multiMode == 0 )
-    {
+    switch( sp->multiMode ){
+    case BTL_MULTIMODE_NONE:
+    default:
       wk->numClients = 2;
       wk->posCoverClientID[BTL_POS_1ST_0] = 0;
       wk->posCoverClientID[BTL_POS_2ND_0] = 1;
       wk->posCoverClientID[BTL_POS_1ST_1] = 0;
       wk->posCoverClientID[BTL_POS_2ND_1] = 1;
-    }
-    else if( !fCommTag )
-    {
+      break;
+    case BTL_MULTIMODE_PP_AA:
+      wk->MultiAIClientNum = 2;
+      /* fallthru */
+    case BTL_MULTIMODE_PP_PP:
       wk->numClients = 4;
       wk->posCoverClientID[BTL_POS_1ST_0] = 0;
       wk->posCoverClientID[BTL_POS_2ND_0] = 1;
       wk->posCoverClientID[BTL_POS_1ST_1] = 2;
       wk->posCoverClientID[BTL_POS_2ND_1] = 3;
+      break;
     }
-    else{
-      wk->numClients = 3;
-      wk->fCommTag = TRUE;
-      wk->posCoverClientID[BTL_POS_1ST_0] = 0;
-      wk->posCoverClientID[BTL_POS_2ND_0] = 1;
-      wk->posCoverClientID[BTL_POS_1ST_1] = 2;
-      wk->posCoverClientID[BTL_POS_2ND_1] = 1;
-      OS_TPrintf("自分がサーバになったら通信タッグモードになります\n");
-    }
-
     wk->myClientID = wk->setupParam->commPos;
-    OS_TPrintf("自分のクライアントIDは%d\n", wk->myClientID);
     wk->myOrgPos = BTL_MAIN_GetClientPokePos( wk, wk->myClientID, 0 );
-    {
-      u8 vpos = BTL_MAIN_BtlPosToViewPos( wk, wk->myOrgPos );
-    }
     (*seq)++;
     return FALSE;
   }
@@ -1228,7 +1222,6 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
     wk->serverNotifyParam.fWazaEffectEnable = wk->fWazaEffectEnable;
     wk->serverNotifyParam.LimitTimeGame = wk->setupParam->LimitTimeGame;
     wk->serverNotifyParam.LimitTimeCommand = wk->setupParam->LimitTimeCommand;
-    wk->serverNotifyParam.fCommTag = wk->fCommTag;
     if( BTL_NET_NotifyServerParam(&wk->serverNotifyParam) ){
       ++(*seq);
     }
@@ -1248,10 +1241,6 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
       wk->msgSpeed          = wk->serverNotifyParam.msgSpeed;
       wk->LimitTimeGame     = wk->serverNotifyParam.LimitTimeGame;
       wk->LimitTimeCommand  = wk->serverNotifyParam.LimitTimeCommand;
-      wk->fCommTag          = wk->serverNotifyParam.fCommTag;
-      if( wk->fCommTag ){
-        OS_TPrintf("通信タッグ確定です\n");
-      }
 
       return TRUE;
     }
@@ -1294,35 +1283,51 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
     {
       BTL_N_Printf( DBGSTR_MAIN_PartyDataNotifyComplete );
 
-      if( wk->fCommTag == FALSE )
-      {
+      if( wk->MultiAIClientNum == 0 ){
         (*seq) = 10;
       }
       else
       {
-        BTL_NET_TimingSyncStart( BTL_NET_TIMING_NOTIFY_TAG_AI_PARTY_DATA );
+        if( wk->ImServer ){
+          wk->AIDataContainer = BTL_NET_AIDC_Create( PokeParty_GetWorkSize(), GFL_HEAP_LOWID(wk->heapID) );
+        }
+        wk->MultiAIDataSeq = 0;
         (*seq)++;
       }
     }
     break;
   case 4:
-    if( BTL_NET_IsTimingSync(BTL_NET_TIMING_NOTIFY_TAG_AI_PARTY_DATA) ){
+    if( wk->ImServer )
+    {
+      wk->MultiAIClientID = (wk->MultiAIDataSeq == 0) ? BTL_CLIENT_ENEMY1 : BTL_CLIENT_ENEMY2;
+      BTL_NET_AIDC_SetData( wk->AIDataContainer, (const void*)(sp->party[wk->MultiAIClientID]), wk->MultiAIClientID );
+    }
+    BTL_NET_TimingSyncStart( BTL_NET_TIMING_NOTIFY_TAG_AI_PARTY_1 + wk->MultiAIDataSeq );
+    (*seq)++;
+    break;
+  case 5:
+    if( BTL_NET_IsTimingSync( BTL_NET_TIMING_NOTIFY_TAG_AI_PARTY_1 + wk->MultiAIDataSeq) )
+    {
       (*seq)++;
     }
     break;
-  case 5:
+  case 6:
     if( wk->ImServer ){
-      if( !BTL_NET_StartNotify_AI_PartyData(sp->party[ BTL_CLIENT_ENEMY1 ]) ){
+      if( !BTL_NET_StartNotify_AI_PartyData(wk->AIDataContainer) ){
         break;
       }
       #ifdef PM_DEBUG
       {
+        const POKEPARTY* party = (const POKEPARTY*)(wk->AIDataContainer->data);
         const POKEMON_PARAM* pp;
         u32 cnt, i;
-        cnt = PokeParty_GetPokeCount( sp->party[ BTL_CLIENT_ENEMY1 ] );
-        BTL_N_Printf( DBGSTR_MAIN_SendAIParty, cnt );
+        u8 clientID;
+
+        cnt = PokeParty_GetPokeCount( party );
+        clientID = wk->AIDataContainer->clientID;
+        BTL_N_Printf( DBGSTR_MAIN_SendAIParty, clientID, cnt );
         for(i=0; i<cnt; ++i){
-          pp = PokeParty_GetMemberPointer( sp->party[ BTL_CLIENT_ENEMY1 ], i );
+          pp = PokeParty_GetMemberPointer( party, i );
           BTL_N_PrintfSimple( DBGSTR_csv, PP_Get(pp, ID_PARA_monsno, NULL) );
         }
         BTL_N_PrintfSimple( DBGSTR_LF );
@@ -1332,10 +1337,22 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
     (*seq)++;
     break;
     /* fallthru */
-  case 6:
-    if( BTL_NET_IsRecved_AI_PartyData() ){
-      BTL_N_Printf( DBGSTR_MAIN_AIPartyDataSendComplete );
-      (*seq) = 10;
+  case 7:
+    if( BTL_NET_IsRecved_AI_PartyData(wk->MultiAIClientID) )
+    {
+      wk->MultiAIDataSeq++;
+      if( wk->MultiAIDataSeq >= wk->MultiAIClientNum )
+      {
+        BTL_N_Printf( DBGSTR_MAIN_AIPartyDataSendComplete );
+        if( wk->ImServer ){
+          BTL_NET_AIDC_Delete( wk->AIDataContainer );
+          wk->AIDataContainer = NULL;
+        }
+        (*seq) = 10;
+      }
+      else{
+        (*seq) = 4;
+      }
     }
     break;
 
@@ -1345,9 +1362,6 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
 
       PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
 
-      // @@@ 例えばnumCliens=3だったら、ClientID 割り振りは0～2という想定でいいのか？たぶんダメ。
-      //     ... でも通信対戦で numClients==3 ということは現状、無い。あるとしたらスタンドアロン。
-      //     ... 0～2で通信タッグはOKだ。0,1,3みたいなのはダメ。
       for(i=0; i<wk->numClients; ++i)
       {
         srcParty_Set( wk, i, BTL_NET_GetPartyData(i) );
@@ -1362,9 +1376,6 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
     {
       u32 i;
       PokeCon_Init( &wk->pokeconForServer, wk, TRUE );
-      // @@@ 例えばnumCliens=3だったら、ClientID 割り振りは0～2という想定でいいのか？たぶんダメ。
-      //     ... でも通信対戦で numClients==3 ということは現状、無い。あるとしたらスタンドアロン。
-      //     ... 0～2で通信タッグはOKだ。0,1,3みたいなのはダメ。
       for(i=0; i<wk->numClients; ++i){
         PokeCon_AddParty( &wk->pokeconForServer, wk, i );
       }
@@ -1428,32 +1439,47 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
     }
     break;
   case 4:
-    if( wk->fCommTag == FALSE ){
+    if( wk->MultiAIClientNum == 0 ){
       (*seq) = 10;
-    }else{
-      BTL_NET_TimingSyncStart( BTL_NET_TIMING_NOTIFY_TAG_AI_TRAINER_DATA );
+    }
+    else{
+      wk->MultiAIDataSeq = 0;
       (*seq)++;
     }
     break;
   case 5:
-    if( BTL_NET_IsTimingSync(BTL_NET_TIMING_NOTIFY_TAG_AI_TRAINER_DATA) ){
+    BTL_NET_TimingSyncStart( BTL_NET_TIMING_NOTIFY_TAG_AI_TRAINER_1 + wk->MultiAIDataSeq );
+    (*seq)++;
+    break;
+  case 6:
+    if( BTL_NET_IsTimingSync(BTL_NET_TIMING_NOTIFY_TAG_AI_TRAINER_1 + wk->MultiAIDataSeq) ){
       (*seq)++;
     }
     break;
-  case 6:
-    if( wk->ImServer ){
-      if( !BTL_NET_StartNotify_AI_TrainerData( sp->tr_data[BTL_CLIENT_ENEMY1], sizeof(*(sp->tr_data[0])) ) ){
+  case 7:
+    if( wk->ImServer )
+    {
+      u8 clientID = (wk->MultiAIDataSeq == 0) ? BTL_CLIENT_ENEMY1 : BTL_CLIENT_ENEMY2;
+      if( !BTL_NET_StartNotify_AI_TrainerData(sp->tr_data[clientID]) ){
         break;
       }
     }
     (*seq)++;
     /* fallthru */
-  case 7:
+  case 8:
     if( BTL_NET_IsRecved_AI_TrainerData() )
     {
       const BSP_TRAINER_DATA*  trData = BTL_NET_Get_AI_TrainerData();
-      trainerParam_StoreNPCTrainer( &wk->trainerParam[BTL_CLIENT_ENEMY1], trData );
-      (*seq) = 10;
+      u8 clientID = (wk->MultiAIDataSeq == 0) ? BTL_CLIENT_ENEMY1 : BTL_CLIENT_ENEMY2;
+
+      trainerParam_StoreNPCTrainer( &wk->trainerParam[clientID], trData );
+
+      wk->MultiAIDataSeq++;
+      if( wk->MultiAIDataSeq >= wk->MultiAIClientNum ){
+        (*seq) = 10;
+      }else{
+        (*seq) = 5;
+      }
     }
     break;
 

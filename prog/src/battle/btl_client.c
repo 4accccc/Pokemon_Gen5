@@ -1161,7 +1161,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
       BTLV_StartMsgTrainer( wk->viewCore, trainerID, TRMSG_FIGHT_POKE_LAST_HP_HALF );
       if( BTLV_GAUGE_GetPinchBGMFlag( BTLV_EFFECT_GetGaugeWork() ) == 0 )
       {
-        switch( BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID ) ){ 
+        switch( BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID ) ){
         //現状、曲変化はジムリーダーと四天王だけ
         case TRTYPE_BIGFOUR1:
         case TRTYPE_BIGFOUR2:
@@ -4138,7 +4138,12 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
   switch( *seq ){
   case 0:
     {
-      u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
+      u8 vpos;
+
+      TAYA_Printf("Capture pos=%d, yure=%d, succeed=%d, zukan=%d, critical=%d, ballID=%d\n",
+        args[0], args[1], args[2], args[3], args[4], args[5] );
+
+      vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
       BTLV_EFFECT_BallThrow( vpos, args[5], args[1], args[2], args[4] );
       (*seq)++;
     }
