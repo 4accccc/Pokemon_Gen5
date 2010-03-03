@@ -215,7 +215,7 @@ static void DEB_SD_PRINT_AssertDispMain( const char* str )
     DEB_SD_PRINT_UpdateSystem();
   }
   
-  if( OS_GetConsoleType() & OS_CONSOLE_NITRO )
+  if( OS_GetConsoleType() & (OS_CONSOLE_NITRO|OS_CONSOLE_TWL) )
   {
     // ROM実行用（可能なら情報をLCD表示）
     ASSERT_DEFAULT_dispMain(str);
