@@ -134,6 +134,7 @@ class TR
     STR
     GENDER
     LABEL
+    STR_HASH
   ]
 end
 
@@ -297,7 +298,7 @@ end
 		fp_trpoke = open( name, "wb" )
 
 		for poke_count in 0..5
-      if split_data[ PARA::POKE1_NAME + poke_count ] == nil
+      if split_data[ PARA::POKE1_NAME + poke_count ] == nil || split_data[ PARA::POKE1_NAME + poke_count ] == ""
         break
       end
 
@@ -430,7 +431,7 @@ end
       cnt += 1
     }
 		if flag == 0
-      trainer[ cnt ] = [ str, split_data[ PARA::TR_TYPE ], gender[ split_data[ PARA::GENDER ] ], split_data[ PARA::TR_ID ][ 0..split_data[ PARA::TR_ID ].size - 4 ] ]
+      trainer[ cnt ] = [ str, split_data[ PARA::TR_TYPE ], gender[ split_data[ PARA::GENDER ] ], split_data[ PARA::TR_ID ][ 0..split_data[ PARA::TR_ID ].size - 4 ], split_data[ PARA::TR_TYPE ] ]
       tr_type[ str ] = cnt + 2
     end
 
@@ -520,10 +521,10 @@ end
   #トレーナータイプ名
   #だぶりチェック
   trainer.size.times { |i|
-    str = trainer[ i ][ TR::STR ]
+    str = trainer[ i ][ TR::STR_HASH ]
     find = 0
     for j in ( i + 1 )..( trainer.size - 1 )
-      if str == trainer[ j ][ TR::STR ]
+      if str == trainer[ j ][ TR::STR_HASH ]
         find = 1
         break
       end
@@ -531,26 +532,25 @@ end
 
     if find != 0
       trainer.size.times { |k|
-        if str == trainer[ k ][ TR::STR ]
-          p trainer[ k ][ TR::TRTYPE ]
+        if str == trainer[ k ][ TR::STR_HASH ]
           if trainer[ k ][ TR::TRTYPE ].index(/M[0-9]/) != nil
-            trainer[ k ][ TR::STR ] = trainer[ k ][ TR::STR ] + "♂"
+            trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "♂"
           elsif trainer[ k ][ TR::TRTYPE ].index(/W[0-9]/) != nil
-            trainer[ k ][ TR::STR ] = trainer[ k ][ TR::STR ] + "♀"
+            trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "♀"
           #末尾から数字をサーチして見つかればそれ以降を連結
           elsif trainer[ k ][ TR::TRTYPE ].index(/[0-9]/) != nil
-            trainer[ k ][ TR::STR ] = trainer[ k ][ TR::STR ] + trainer[ k ][ TR::TRTYPE ][ trainer[ k ][ TR::TRTYPE ].index(/[0-9]/)..trainer[ k ][TR::TRTYPE ].size - 1 ]
+            trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + trainer[ k ][ TR::TRTYPE ][ trainer[ k ][ TR::TRTYPE ].index(/[0-9]/)..trainer[ k ][TR::TRTYPE ].size - 1 ]
           #末尾がMかBなら♂
           elsif trainer[ k ][ TR::TRTYPE ][ trainer[ k ][TR::TRTYPE ].size - 1 ].chr == "M" ||
             trainer[ k ][ TR::TRTYPE ][ trainer[ k ][TR::TRTYPE ].size - 1 ].chr == "B"
-            trainer[ k ][ TR::STR ] = trainer[ k ][ TR::STR ] + "♂"
+            trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "♂"
           #末尾がWかGなら♀
           elsif trainer[ k ][ TR::TRTYPE ][ trainer[ k ][TR::TRTYPE ].size - 1 ].chr == "W" ||
                 trainer[ k ][ TR::TRTYPE ][ trainer[ k ][TR::TRTYPE ].size - 1 ].chr == "G"
-            trainer[ k ][ TR::STR ] = trainer[ k ][ TR::STR ] + "♀"
+            trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "♀"
           #それ以外なら、LABELを（）付きで連結
           else
-            trainer[ k ][ TR::STR ] = trainer[ k ][ TR::STR ] + "（%s）" % [ trainer[ k ][ TR::LABEL ].upcase ]
+            trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "（%s）" % [ trainer[ k ][ TR::LABEL ].upcase ]
           end
         end
       }
@@ -568,11 +568,11 @@ end
     fp_trfgra.printf( "\"trwb_%s.NMAR\"\n", trainer[ i ][ TR::LABEL ] )
     fp_trfgra.printf( "\"trwb_%s.NCEC\"\n", trainer[ i ][ TR::LABEL ] )
     fp_trfgra.printf( "\"trwb_%s.NCLR\"\n", trainer[ i ][ TR::LABEL ] )
-		fp_trtype.printf( "#define	%s    ( %d )    //%s\n", trainer[ i ][ TR::TRTYPE ].upcase, no, trainer[ i ][ TR::STR ] )
+		fp_trtype.printf( "#define	%s    ( %d )    //%s\n", trainer[ i ][ TR::TRTYPE ].upcase, no, trainer[ i ][ TR::STR_HASH ] )
     str = "MSG_" + trainer[ i ][ TR::TRTYPE ]
     gmm_type.make_row_kanji( str, trainer[ i ][ TR::STR ], trainer[ i ][ TR::STR ] )
-		fp_trtypesex.printf( "\t%s,\t\t//%s\n", trainer[ i ][ TR::GENDER ], trainer[ i ][ TR::STR ] )
-    fp_hash.printf("\t\t\"%s\"=>%d,\n", trainer[ i ][ TR::STR ], no )
+		fp_trtypesex.printf( "\t%s,\t\t//%s\n", trainer[ i ][ TR::GENDER ], trainer[ i ][ TR::STR_HASH ] )
+    fp_hash.printf("\t\t\"%s\"=>%d,\n", trainer[ i ][ TR::STR_HASH ], no )
     no += 1
 	}
 	fp_trtype.printf( "#define	TRTYPE_MAX	( %d )\n", no )
