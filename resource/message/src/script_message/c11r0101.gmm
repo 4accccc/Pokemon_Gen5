@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-01T22:52:35"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-03-03T18:42:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -266,7 +266,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1516" top="302" right="2221" bottom="884" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="649" top="113" right="1122" bottom="511" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -274,7 +274,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -306,10 +306,10 @@
 		<attribute name="キャラ指定">受付嬢１</attribute>
 		<language name="JPN" width="256">こんにちは！
 ユナイテッドタワーへ　ようこそ！▼
-フロアに　いどうしますか？▼</language>
+フロアに　いどうしますか？</language>
 		<language name="JPN_KANJI" width="256">こんにちは！
 ユナイテッドタワーへ　ようこそ！▼
-フロアに　移動しますか？▼</language>
+フロアに　移動しますか？</language>
 	</row>
 
 	<row id="msg_reception01_02">
@@ -331,9 +331,6 @@
 せかいじゅうの　トレーナーが▽
 つどう　ばしょ▼
 いける　フロアは　おきゃくさま　しだい！▼
-おきゃくさまの　しりあいが
-いらっしゃる　フロアならば▽
-じゆうに　いくことが　できます▼
 せかいじゅうに　しりあいが　おおいほど
 いろんな　フロアに　いけるでしょう▼
 どうぞ　こころゆくまで
@@ -342,9 +339,6 @@
 海も　国も　こえた　場所から
 世界中の　トレーナーが　集う場所▼
 行ける　フロアは　お客さま　次第！▼
-お客さまの　知り合いが
-いらっしゃる　フロアならば▽
-自由に　行くことが　できます▼
 世界中に　知り合いが　多いほど
 いろんな　フロアに　行けるでしょう▼
 どうぞ　心ゆくまで
@@ -653,9 +647,9 @@ POS</comment>
 		<comment>POSイベント発生時</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">そこの　キミ！
-ちょっと　こっちへ　きなさい</language>
+ちょっと　こっちへ　きなさい▼</language>
 		<language name="JPN_KANJI" width="256">そこの　キミ！
-ちょっと　こっちへ　来なさい</language>
+ちょっと　こっちへ　来なさい▼</language>
 	</row>
 
 	<row id="msg_policeman_02_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -678,14 +672,14 @@ POS</comment>
 はしゃぎすぎて　ころんだり
 しないようにな▼
 きゃくに　ケガされると
-おじさん　こまるんだ▼</language>
+おじさん　こまるんだ</language>
 		<language name="JPN_KANJI" width="256">ん？　どこかで　あったことが
 あるような……▼
 ……まぁ　いい▼
 はしゃぎすぎて　転んだり
 しないようにな▼
 客に　ケガされると
-おじさん　こまるんだ▼</language>
+おじさん　こまるんだ</language>
 	</row>
 
 	<row id="msg_policeman_02_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -697,13 +691,13 @@ POS</comment>
 たびを　しているんだな▼
 ……まぁ　なんだ▼
 たまに　れんらくでも
-すると　いいんじゃないか▼</language>
+すると　いいんじゃないか</language>
 		<language name="JPN_KANJI" width="256">ほう　きみは　トレーナーなのか▼
 そうか　親元を　はなれて
 旅を　しているんだな▼
 ……まぁ　なんだ▼
 たまに　連絡でも
-すると　いいんじゃないか▼</language>
+すると　いいんじゃないか</language>
 	</row>
 
 	<row id="msg_policeman_02_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -713,11 +707,11 @@ POS</comment>
 		<language name="JPN" width="256">ふぬ　きみは　こうかんするのが
 すきなのか？▼
 ……いいんじゃないか
-わかものらしく　かっぱつで▼</language>
+わかものらしく　かっぱつで</language>
 		<language name="JPN_KANJI" width="256">ふぬ　きみは　交換するのが
 好きなのか？▼
 ……いいんじゃないか
-若者らしく　活発で▼</language>
+若者らしく　活発で</language>
 	</row>
 
 	<row id="msg_policeman_02_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -727,11 +721,11 @@ POS</comment>
 		<language name="JPN" width="256">すごいな　きみは
 せかいじゅうに　しりあいが　いるのかい？▼
 おじさんが　わかいころじゃ
-かんがえられん　せかいだな▼</language>
+かんがえられん　せかいだな</language>
 		<language name="JPN_KANJI" width="256">すごいな　きみは
 世界中に　知り合いが　いるのかい？▼
 おじさんが　若いころじゃ
-考えられん　せかいだな▼</language>
+考えられん　せかいだな</language>
 	</row>
 
 	<row id="msg_policeman_02_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -745,7 +739,7 @@ POS</comment>
 だが　おじさんもな
 きみの　としごろには[BE:00:ページ切り替え（行送り）]
 おんなのこに　キャーキャー[BE:00:ページ切り替え（行送り）]
-いわれてたんだぞ　はっは[BE:01:ページ切り替え（クリア）]</language>
+いわれてたんだぞ　はっは</language>
 		<language name="JPN_KANJI" width="256">きみか　[1:00:トレーナー名:3][BE:01:ページ切り替え（クリア）]
 最近　きみを　探しにくる
 トレーナーが　多いんだよ[BE:00:ページ切り替え（行送り）]
@@ -753,7 +747,7 @@ POS</comment>
 だが　おじさんもな
 きみの　年ごろには[BE:00:ページ切り替え（行送り）]
 女の子に　キャーキャー[BE:00:ページ切り替え（行送り）]
-言われてたんだぞ　はっは[BE:01:ページ切り替え（クリア）]</language>
+言われてたんだぞ　はっは</language>
 	</row>
 
 	<row id="msg_policeman_02_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -766,14 +760,14 @@ POS</comment>
 多い　みたいだな[BE:01:ページ切り替え（クリア）]
 そうすると　なんだ[BE:01:ページ切り替え（クリア）]
 世界平和も　そう　遠くはない
-そう　思っても　いいのか？[BE:01:ページ切り替え（クリア）]</language>
+そう　思っても　いいのか？</language>
 		<language name="JPN_KANJI" width="256">ってきみか　[1:00:トレーナー名:3][BE:01:ページ切り替え（クリア）]
 最近じゃ　きみ　みたいな
 グローバルな　トレーナーが[BE:00:ページ切り替え（行送り）]
 多い　みたいだな[BE:01:ページ切り替え（クリア）]
 そうすると　なんだ[BE:01:ページ切り替え（クリア）]
 世界平和も　そう　遠くはない
-そう　思っても　いいのか？[BE:01:ページ切り替え（クリア）]</language>
+そう　思っても　いいのか？</language>
 	</row>
 
 	<row id="msg_policeman_02_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
