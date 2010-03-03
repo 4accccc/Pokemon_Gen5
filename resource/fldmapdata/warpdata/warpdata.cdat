@@ -4,7 +4,7 @@ static const WARPDATA WarpData[] = {
 	{
 		SYS_FLAG_ARRIVE_T01,
 		TRUE ,TRUE ,
-		ZONE_ID_T01R0101    ,   6,   9,
+		ZONE_ID_T01R0101    ,   6,   8,
 		ZONE_ID_T01         , 782, 748,
 		ZONE_ID_T01         , 782, 748,
 	},
@@ -91,6 +91,13 @@ static const WARPDATA WarpData[] = {
 		ZONE_ID_T04PC0101   ,   7,  12,
 		ZONE_ID_T04         , 100, 100,
 		ZONE_ID_T04         , 100, 100,
+	},
+	{
+		SYS_FLAG_ARRIVE_C11,
+		FALSE,TRUE ,
+		ZONE_ID_C11         , 395, 748,
+		ZONE_ID_C11         , 395, 748,
+		ZONE_ID_C11         , 395, 748,
 	},
 	{
 		SYS_FLAG_ARRIVE_C10,
