@@ -15,7 +15,6 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_t02_babygirl1_01
 _EVENT_DATA		ev_t02_woman1_01
 _EVENT_DATA		ev_t02_oldman1_01
 _EVENT_DATA		ev_t02_oldwoman1_01
@@ -31,88 +30,6 @@ _EVENT_DATA		ev_bg_t02_sign2_01
 _EVENT_DATA		ev_scene_t02_speech_01
 _EVENT_DATA		ev_pos_t02_rival_speech2
 _EVENT_DATA_END
-
-/**************************************************************/
-/*  BABYGIRL1_1	じゃんけん少女								  */
-/**************************************************************/
-EVENT_START   ev_t02_babygirl1_01
-_TALK_OBJ_START()
-	
-	//ねえねえ　ポケモンじゃんけん　しようよ！
-	_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_01,T02_BABYGIRL1_01,POS_DL )
-	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
-
-	IF $SCWK_ANSWER == 0 THEN	//はい
-		
-		//ローカル変数を定義
-		DEFINE_LOCAL	LWK_SCWK_JANKEN
-		DEFINE_LOCAL	LWK_JANKEN_SELECT
-
-		_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_03,T02_BABYGIRL1_01,POS_DL )
-		
-		//三択表示・くさ、みず、ほのお
-    	_BMPMENU_INIT_EX( 1, 1, 0, 0, LWK_JANKEN_SELECT )
-
-		_BMPMENU_MAKE_LIST( msg_t01_babygirl1_10, 0 )	//『ほのお』
-		_BMPMENU_MAKE_LIST( msg_t01_babygirl1_11, 1 )	//『くさ』
-		_BMPMENU_MAKE_LIST( msg_t01_babygirl1_12, 2 )	//『みず』
-
-		// メニュー表示
-		_BMPMENU_START()
-		_BALLOONWIN_CLOSE()
-		
-		//勝敗決め乱数
-		_GET_RND( LWK_SCWK_JANKEN, 2 )
-
-		//選択結果で分岐
-		SWITCH $LWK_JANKEN_SELECT
-		CASE 0 THEN		//『ほのお』
-			IF $LWK_SCWK_JANKEN == 0 THEN
-				_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_04,T02_BABYGIRL1_01,POS_DL )
-				_LAST_KEYWAIT()
-				_BALLOONWIN_CLOSE()
-			ELSE
-				_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_05,T02_BABYGIRL1_01,POS_DL )
-				_LAST_KEYWAIT()
-				_BALLOONWIN_CLOSE()
-			ENDIF
-	
-		CASE 1 THEN		//『くさ』
-			IF $LWK_SCWK_JANKEN == 0 THEN
-				_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_08,T02_BABYGIRL1_01,POS_DL )
-				_LAST_KEYWAIT()
-				_BALLOONWIN_CLOSE()
-			ELSE
-				_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_09,T02_BABYGIRL1_01,POS_DL )
-				_LAST_KEYWAIT()
-				_BALLOONWIN_CLOSE()
-			ENDIF
-		
-		CASE 2 THEN		//『みず』
-			IF $LWK_SCWK_JANKEN == 0 THEN
-				_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_06,T02_BABYGIRL1_01,POS_DL )
-				_LAST_KEYWAIT()
-				_BALLOONWIN_CLOSE()
-			ELSE
-				_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_07,T02_BABYGIRL1_01,POS_DL )
-				_LAST_KEYWAIT()
-				_BALLOONWIN_CLOSE()
-			ENDIF
-		
-		DEFAULT
-		
-		ENDSWITCH
-
-	ELSE	//いいえ
-		//なんだ　がっかり……　つまんないの
-		_BALLOONWIN_OBJMSG_POS( msg_t01_babygirl1_02,T02_BABYGIRL1_01,POS_DL )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-	
-	ENDIF
-
-EVENT_END
 
 /**************************************************************/
 /*  WOMAN1_01の会話用イベントスクリプト						  */
@@ -284,16 +201,12 @@ _ANIME_LABEL anm_hakai_646return
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_hakai_648return
-	_ANIME_DATA		AC_WALK_L_8F,1
 	_ANIME_DATA		AC_WALK_D_4F,1
-	_ANIME_DATA		AC_WALK_R_4F,1
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_hakai_650return
-	_ANIME_DATA		AC_WALK_L_8F,1
 	_ANIME_DATA		AC_WALK_U_4F,1
-	_ANIME_DATA		AC_WALK_R_4F,1
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
 
@@ -338,11 +251,14 @@ EVENT_START   ev_t02_hakase_guide
 	_BALLOONWIN_CLOSE()
 		
 	//ポケモンセンターに消えていく
+	_OBJ_ANIME( T02_HAKASE_GUIDE, anm_doctor_pokecen1 )
+	_OBJ_ANIME_WAIT()
+	
 	_BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 796, 657 )
 	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
 	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
 
-	_OBJ_ANIME( T02_HAKASE_GUIDE, anm_doctor_pokecen )
+	_OBJ_ANIME( T02_HAKASE_GUIDE, anm_doctor_pokecen2 )
 	_OBJ_ANIME_WAIT()
 
 	//自機も一緒についていく
@@ -381,8 +297,11 @@ EVENT_END
 //--------------------------------------------------------------
 //	アララギ博士のポケセン案内
 //--------------------------------------------------------------
-_ANIME_LABEL anm_doctor_pokecen
-	_ANIME_DATA		AC_DIR_R,1
+_ANIME_LABEL anm_doctor_pokecen1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_doctor_pokecen2
 	_ANIME_DATA		AC_WALK_U_8F,1
 	_ANIME_DATA		AC_VANISH_ON, 1
 	_ANIME_DATA		ACMD_END,0
@@ -712,7 +631,6 @@ t02_speech:
 	
 	//町民復活
 	_FLAG_RESET( FV_T02_SPEECH_AFTER )
-	_OBJ_ADD( T02_BABYGIRL1_01 )
 	_OBJ_ADD( T02_OLDWOMAN1_01 )
 	_OBJ_ADD( T02_OLDMAN1_01 )
 	_OBJ_ADD( T02_WOMAN1_01 )

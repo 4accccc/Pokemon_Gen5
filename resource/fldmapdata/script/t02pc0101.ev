@@ -89,6 +89,10 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_01
 	_OBJ_ANIME( T02PC0101_HAKASE2_01, anm_hakase_counter1 )
 	_OBJ_ANIME_WAIT()
 
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+	_OBJ_ANIME( T02PC0101_SUPPORT_01, anm_dir_l )
+	_OBJ_ANIME_WAIT()
+
 	//ポケモンセンターの凄いところ！
 	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_02, T02PC0101_HAKASE2_01, POS_DL )
@@ -135,7 +139,7 @@ _ANIME_LABEL	anm_player_counter
 //-------------------------------------------------------------
 _ANIME_LABEL	anm_support_counter
 	_ANIME_DATA	AC_WAIT_16F,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,1
@@ -146,6 +150,13 @@ _ANIME_LABEL	anm_support_counter
 //-------------------------------------------------------------
 _ANIME_LABEL	anm_hakase_counter1
 	_ANIME_DATA	AC_STAY_WALK_R_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//-------------------------------------------------------------
+//     共通処理
+//-------------------------------------------------------------
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -210,6 +221,10 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	//博士BGM開始
 	_START_EVENT_BGM( SEQ_BGM_E_TSURETEKE2 )
 
+	//オーケイ！　ポケモン　げんきに　なったわね！
+	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_03b, T02PC0101_HAKASE2_01, POS_DL )
+	_BALLOONWIN_CLOSE()
+
 	//博士：パソコンの前（１マス隣）に移動、自機：パソコンの前に移動、サポート：自機真横に移動
 	_OBJ_ANIME( T02PC0101_HAKASE2_01,anm_hakase_pc )
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_pc )
@@ -237,7 +252,9 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_friendly )
 	_OBJ_ANIME( T02PC0101_SUPPORT_01,anm_support_friendly )
 	_OBJ_ANIME_WAIT()
-	
+
+
+
 	//こちらは　フレンドリィショップ！
 	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_06, T02PC0101_HAKASE2_01, POS_DL )
 	_BALLOONWIN_CLOSE()
@@ -360,7 +377,7 @@ _ANIME_LABEL	anm_player_friendly
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,5
 	_ANIME_DATA	AC_WALK_D_8F,4
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 	
 //-------------------------------------------------------------
@@ -372,7 +389,7 @@ _ANIME_LABEL	anm_support_friendly
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,4
 	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 	
 //-------------------------------------------------------------
@@ -388,7 +405,7 @@ _ANIME_LABEL	anm_hakase_sayonara
 //     サポート、自機のほうに向く
 //-------------------------------------------------------------
 _ANIME_LABEL	anm_support_muku
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //-------------------------------------------------------------
