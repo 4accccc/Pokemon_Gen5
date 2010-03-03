@@ -203,7 +203,7 @@
 #define FE_C01_ITEMGET_01                  187 /* 0x00bb C01サンヨウシティ：釣り人のアイテム入手フラグ */
 #define FE_ZUKAN_COMPLETE_LOCAL_SEE        188 /* 0x00bc 地方図鑑「みた」モードを完成 */
 #define FE_C01_ITEMGET_02                  189 /* 0x00bd C01サンヨウシティ：ビル裏の人アイテム入手フラグ */
-		/* not used   190(0x00be) */
+#define FE_C01R0501_QUIZ                   190 /* 0x00be トレーナーズスクール：クイズのごほうび入手フラグ */
 		/* not used   191(0x00bf) */
 		/* not used   192(0x00c0) */
 		/* not used   193(0x00c1) */
