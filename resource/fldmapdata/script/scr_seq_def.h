@@ -4240,6 +4240,36 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _SET_STARTMENU_FLAG
+ * @brief   タイトルからのスタートメニュー項目をオープンする
+ * @param type    メニュー項目指定（script_def.hのSCR_STARTMENU_FLAG_～を参照）
+ */
+//--------------------------------------------------------------
+#define _SET_STARTMENU_FLAG( type ) \
+    _ASM_SET_STARTMENU_FLAG type
+    .macro  _ASM_SET_STARTMENU_FLAG type
+    .short  EV_SEQ_SET_START_MENU_FLAG
+    .short  \type
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_STARTMENU_FLAG
+ * @brief   タイトルからのスタートメニュー項目の状態取得
+ * @param type    メニュー項目指定（script_def.hのSCR_STARTMENU_FLAG_～を参照）
+ * @param ret_wk  戻り値（TRUE/FALSEを返す）
+ */
+//--------------------------------------------------------------
+#define _GET_STARTMENU_FLAG( type, ret_wk ) \
+    _ASM_GET_STARTMENU_FLAG type, ret_wk
+    .macro  _ASM_GET_STARTMENU_FLAG type, ret_wk
+    .short  EV_SEQ_GET_START_MENU_FLAG
+    .short  \type
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @brief 全滅時戻り先の設定
  * @param warp_id ワープ飛び先指定
  *
