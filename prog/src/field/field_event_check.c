@@ -2957,20 +2957,20 @@ typedef struct {
 static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
 {
   static const MAPATTR_EVENTDATA check_attr_data[] = {
-    { MAPATTR_VALUE_CheckPC,            0,  SCRID_PC },
-    { MAPATTR_VALUE_CheckMap,           0,  EVENTDATA_ID_NONE },
-    { MAPATTR_VALUE_CheckTV,            0,  EVENTDATA_ID_NONE },
-    { MAPATTR_VALUE_CheckBookShelf1,    0,  SCRID_BG_MSG_BOOK1_01 },
-    { MAPATTR_VALUE_CheckBookShelf2,    0,  SCRID_BG_MSG_BOOK2_01 },
-    { MAPATTR_VALUE_CheckBookShelf3,    0,  SCRID_BG_MSG_BOOKRACK1_01 },
-    { MAPATTR_VALUE_CheckBookShelf4,    0,  SCRID_BG_MSG_BOOKRACK2_01 },
-    { MAPATTR_VALUE_CheckVase,          0,  SCRID_BG_MSG_SCRAP_01 },
-    { MAPATTR_VALUE_CheckDustBox,       0,  SCRID_BG_MSG_SCRAP_01 },
-    { MAPATTR_VALUE_CheckShopShelf1,    0,  SCRID_BG_MSG_SHOPRACK1_01 },
-    { MAPATTR_VALUE_CheckShopShelf2,    0,  SCRID_BG_MSG_SHOPRACK2_01 },
-    { MAPATTR_VALUE_CheckShopShelf3,    0,  SCRID_BG_MSG_SHOPRACK2_01 },
-    { MAPATTR_VALUE_CheckWaterFall,     0,  SCRID_HIDEN_TAKINOBORI },
-    { MAPATTR_VALUE_CheckVendorMachine, 0,  SCRID_VENDING_MACHINE01 },
+    { MAPATTR_VALUE_CheckPC,            DIR_UP,  SCRID_PC },
+    { MAPATTR_VALUE_CheckMap,           DIR_NOT, EVENTDATA_ID_NONE },
+    { MAPATTR_VALUE_CheckTV,            DIR_NOT, EVENTDATA_ID_NONE },
+    { MAPATTR_VALUE_CheckBookShelf1,    DIR_UP,  SCRID_BG_MSG_BOOK1_01 },
+    { MAPATTR_VALUE_CheckBookShelf2,    DIR_UP,  SCRID_BG_MSG_BOOK2_01 },
+    { MAPATTR_VALUE_CheckBookShelf3,    DIR_UP,  SCRID_BG_MSG_BOOKRACK1_01 },
+    { MAPATTR_VALUE_CheckBookShelf4,    DIR_UP,  SCRID_BG_MSG_BOOKRACK2_01 },
+    { MAPATTR_VALUE_CheckVase,          DIR_NOT, SCRID_BG_MSG_SCRAP_01 },
+    { MAPATTR_VALUE_CheckDustBox,       DIR_NOT, SCRID_BG_MSG_SCRAP_01 },
+    { MAPATTR_VALUE_CheckShopShelf1,    DIR_NOT, SCRID_BG_MSG_SHOPRACK1_01 },
+    { MAPATTR_VALUE_CheckShopShelf2,    DIR_NOT, SCRID_BG_MSG_SHOPRACK2_01 },
+    { MAPATTR_VALUE_CheckShopShelf3,    DIR_NOT, SCRID_BG_MSG_SHOPRACK2_01 },
+    { MAPATTR_VALUE_CheckWaterFall,     DIR_NOT, SCRID_HIDEN_TAKINOBORI },
+    { MAPATTR_VALUE_CheckVendorMachine, DIR_UP,  SCRID_VENDING_MACHINE01 },
   };
   int i;
 
@@ -2989,10 +2989,12 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
 
   for (i = 0; i < NELEMS(check_attr_data); i++)
   {
-    if ( check_attr_data[i].attr_check_func(attr_val) )
+    if ( check_attr_data[i].dir_code == req->player_dir || check_attr_data[i].dir_code == DIR_NOT )
     {
-      //本当はさらに方向もチェック
-      return check_attr_data[i].script_id;
+      if ( check_attr_data[i].attr_check_func(attr_val) )
+      {
+        return check_attr_data[i].script_id;
+      }
     }
   }
   
