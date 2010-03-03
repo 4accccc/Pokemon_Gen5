@@ -132,3 +132,5 @@ extern u8 MUS_COMM_GetUseButtonPos( MUS_COMM_WORK* work , const u8 musIdx );
 extern void MUS_COMM_ResetUseButtonPos( MUS_COMM_WORK* work , const u8 musIdx );
 extern u8 MUS_COMM_GetUseButtonAttention( MUS_COMM_WORK* work );
 extern void MUS_COMM_ResetUseButtonAttention( MUS_COMM_WORK* work );
+
+extern GFLNetInitializeStruct* MUS_COMM_GetNetInitStruct(void);

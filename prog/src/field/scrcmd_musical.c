@@ -778,6 +778,7 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
       GMEVENT* event;
       musScriptWork->scriptRet = ret_wk;
       musScriptWork->irEntryWork.gamedata = gdata;
+      musScriptWork->irEntryWork.netInitWork = MUS_COMM_GetNetInitStruct();
       if( val1 == 0 )
       {
         musScriptWork->irEntryWork.selectType = EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER;

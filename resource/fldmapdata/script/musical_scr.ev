@@ -233,7 +233,8 @@ EVENT_START ev_musical_recept_comm_core
             //通信開始
             //第2引数はWLorIrc
             _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 1, 0, 0 )
-            _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,0,0,0 )
+            //赤外線後に行う
+            //_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,0,0,0 )
 
             //リーダー、グループ別参加処理
             IF $retParentChild == 0 THEN //リーダー

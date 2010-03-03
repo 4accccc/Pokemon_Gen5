@@ -311,11 +311,14 @@ void* MUS_COMM_InitGameComm(int *seq, void *pwk)
   {
     aGFLNetInitMusical.bNetType = GFL_NET_TYPE_IRC_WIRELESS;
   }
+  else
+  {
+    GFL_NET_Init( &aGFLNetInitMusical , MUS_COMM_FinishNetInitCallback , (void*)work );
+  }
 
   MyStatus_Copy( work->myStatus, &work->beacon.mystatus );
   OS_GetMacAddress( work->beacon.mac_address );
 
-  GFL_NET_Init( &aGFLNetInitMusical , MUS_COMM_FinishNetInitCallback , (void*)work );
   
   return work;
 
@@ -1706,4 +1709,9 @@ inline static void MUS_COMM_SetCommState( MUS_COMM_WORK *work , const MUS_COMM_S
 {
   ARI_TPrintf("MusCommState[%d]\n",commState);
   work->commState = commState;
+}
+
+GFLNetInitializeStruct* MUS_COMM_GetNetInitStruct(void)
+{
+  return &aGFLNetInitMusical;
 }
