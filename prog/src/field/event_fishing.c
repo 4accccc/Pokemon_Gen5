@@ -249,7 +249,11 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
     break;
   //エンカウント失敗
   case SEQ_ENCOUNT_FAILED:
-    if( !sub_TimeWait(wk,TIME_ENCOUNT_FAILED_WAIT )){
+    ret = sub_TimeKeyWait(wk, TIME_ENCOUNT_FAILED_WAIT );
+    if( ret != CODE_END ){
+      if( ret == CODE_HIT ){
+        *seq = SEQ_TOO_EARLY;
+      }
       break;
     }
     //ブレイクスルー
