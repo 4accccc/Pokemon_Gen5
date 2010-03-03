@@ -75,7 +75,6 @@ const BOOL DS_SYSTEM_IsRestrictUGC( void )
   {
     return TRUE;
   }
-  return FALSE;
 
 #if (defined(SDK_TWL))
   if( DS_SYSTEM_IsRunOnTwl() )
