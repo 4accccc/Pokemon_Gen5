@@ -59,6 +59,8 @@ extern BOOL PokeRegulationCheckPokeParaLookAt(const REGULATION* pReg, POKEMON_PA
 // ポケパーティがレギュレーションに適合しているかどうか調べる 何処が悪かったかBITで返します
 extern int PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, POKEPARTY * party, u32* FailedBit);
 
+//ポケパーティをレギュレーションにそったレベル補正をかける
+extern void PokeRegulation_ModifyLevelPokeParty( const REGULATION* pReg, POKEPARTY *party );
 
 
 //==============================================================================

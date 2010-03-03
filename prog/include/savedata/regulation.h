@@ -66,9 +66,9 @@ typedef enum  {
   REGULATION_LEVEL_RANGE_NORMAL,   ///<なし
   REGULATION_LEVEL_RANGE_OVER,     ///<以上
   REGULATION_LEVEL_RANGE_LESS,     ///<以下
-  REGULATION_LEVEL_RANGE_DRAG_DOWN,  ///<引き下げ
+  REGULATION_LEVEL_RANGE_DRAG_DOWN,  ///<以上補正   補正レベル以上ならば補正レベルにする（50補正で51なら50）
   REGULATION_LEVEL_RANGE_SAME,         ///<全補正
-  REGULATION_LEVEL_RANGE_PULL_UP,     ///<引き上げ
+  REGULATION_LEVEL_RANGE_PULL_UP,     ///<以下補正  補正レベル以下ならば補正レベルにする(50補正で49なら50)
   REGULATION_LEVEL_RANGE_MAX   //
 } REGULATION_LEVEL_RANGE_TYPE;
 
@@ -201,7 +201,6 @@ extern int Regulation_GetParam(const REGULATION* pReg, REGULATION_PARAM_TYPE typ
 extern void Regulation_SetParam(REGULATION * pReg, REGULATION_PARAM_TYPE type, int param);
 
 extern BOOL Regulation_CheckParamBit(const REGULATION* pReg, REGULATION_PARAM_TYPE type, int no);
-
 
 //----------------------------------------------------------
 //	REGULATION_CARDDATA操作のための関数 デジタル選手証の事
