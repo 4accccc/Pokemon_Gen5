@@ -1047,20 +1047,24 @@ u32 MYSTERY_MENU_Main( MYSTERY_MENU_WORK *p_wk )
     { 
       p_wk->select--;
     }
+    PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
     is_update  = TRUE;
   }
   else if( repeat & PAD_KEY_DOWN )
   { 
+    PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
     p_wk->select++;
     p_wk->select  %= p_wk->list_max;
     is_update  = TRUE;
   }
   else if( trg & PAD_BUTTON_DECIDE )
   { 
+    PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
     return p_wk->select;
   }
   else if( trg & PAD_BUTTON_CANCEL )
   { 
+    PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
     if( p_wk->list_max == 1 )
     { 
       return MYSTERY_MENU_SELECT_CENCEL;

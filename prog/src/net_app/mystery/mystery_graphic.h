@@ -61,3 +61,9 @@ extern GFL_CLUNIT * MYSTERY_GRAPHIC_GetClunit( const MYSTERY_GRAPHIC_WORK *cp_wk
 ///î•ñŽæ“¾	“à•”‚ÅÝ’è‚µ‚½ƒJƒƒ‰‚ð•Ô‚µ‚Ü‚·	3DŽg‚í‚È‚¢ê‡NULL
 //=====================================
 extern GFL_G3D_CAMERA * MYSTERY_GRAPHIC_GetCamera( const MYSTERY_GRAPHIC_WORK *cp_wk );
+
+//-------------------------------------
+///‚Ó‚µ‚¬‚È‚¨‚­‚è‚à‚Ìê—pŠÖ” 2D‚Æ3D‚ÌØ‚è‘Ö‚¦
+//=====================================
+extern void MYSTERY_GRAPHIC_3D_Setup( MYSTERY_GRAPHIC_WORK *p_wk );
+extern void MYSTERY_GRAPHIC_3D_CleanUp( MYSTERY_GRAPHIC_WORK *p_wk );

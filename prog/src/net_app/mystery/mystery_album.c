@@ -83,7 +83,7 @@
 
 //メインOBJパレット
 #define MYSTERY_ALBUM_OBJ_CURSOR_PLT        0
-#define MYSTERY_ALBUM_OBJ_ICON_PLT          9
+#define MYSTERY_ALBUM_OBJ_ICON_PLT          4
 #define MYSTERY_ALBUM_OBJ_POKEICON_PLT      12
 
 //サブOBJパレット
@@ -283,8 +283,8 @@ static const MYSTERY_ALBUM_THUMBNAIL_DATA sc_thumbnail_data[MYSTERY_CURSOR_MAX] 
     4,
     4,
     8,
-    96,
-    48 -2,
+    92,
+    45,
   },
   //右上
   { 
@@ -292,8 +292,8 @@ static const MYSTERY_ALBUM_THUMBNAIL_DATA sc_thumbnail_data[MYSTERY_CURSOR_MAX] 
     4,
     19,
     8,
-    216,
-    48 -2,
+    212,
+    45,
   },
   //左下
   { 
@@ -301,8 +301,8 @@ static const MYSTERY_ALBUM_THUMBNAIL_DATA sc_thumbnail_data[MYSTERY_CURSOR_MAX] 
     12,
     4,
     16,
-    96,
-    112 -2,
+    92,
+    110,
   },
   //右下
   { 
@@ -310,8 +310,8 @@ static const MYSTERY_ALBUM_THUMBNAIL_DATA sc_thumbnail_data[MYSTERY_CURSOR_MAX] 
     12,
     19,
     16,
-    216,
-    112-2,
+    212,
+    110,
   },
 };
 #define MYSTERY_ALBUM_CARD_BACKSURFACE_OFS  256
@@ -535,6 +535,10 @@ void MYSTERY_ALBUM_Exit( MYSTERY_ALBUM_WORK *p_wk )
   GFL_BG_LoadScreenReq( MYSTERY_ALBUM_CARD_FONT_S );
   GFL_BG_LoadScreenReq( MYSTERY_ALBUM_CARD_FRM_S );
 
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+  GFL_BG_SetVisible( MYSTERY_ALBUM_CARD_FRM_S, TRUE );
+  GFL_BG_SetVisible( MYSTERY_ALBUM_CARD_FONT_S, TRUE );
+
   MYSTERY_SEQ_Exit( p_wk->p_seq );
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -588,6 +592,7 @@ void MYSTERY_ALBUM_Main( MYSTERY_ALBUM_WORK *p_wk )
         }
       }
     }
+
     p_wk->is_card_update  = FALSE;
   }
 
@@ -1020,10 +1025,18 @@ static void Mystery_Album_CreateDisplay( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front
         //アイコン作成
         { 
           u32 plt;
+          s8 ofs_x = 0, ofs_y = 0;
           GFL_CLWK_DATA cldata;
           GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
           cldata.pos_y  = data.icon_y;
           cldata.bgpri  = MYSTERY_ALBUM_FONT_FRM;
+
+          //アイテムアイコンのリソースだけ、ずれているため
+          if(MYSTERY_CARD_DATA_GetType(p_src) == MYSTERYGIFT_TYPE_ITEM )
+          { 
+            ofs_x   = 4;
+            ofs_y   = 8;
+          }
 
           if( is_front )
           { 
@@ -1044,7 +1057,11 @@ static void Mystery_Album_CreateDisplay( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front
               cldata.pos_x = data.icon_x;
             }
           }
+          cldata.pos_x  += ofs_x;
+          cldata.pos_y  += ofs_y;
 
+          //ポケモンなら共通アイコンパレット
+          //それ以外ならばそれぞれのパレット
           plt = ( MYSTERY_CARD_DATA_GetType(p_src) == MYSTERYGIFT_TYPE_POKEMON ) ?
             p_wk->res_poke_icon_plt: p_wk->res_icon_plt[ dst_idx ];
         
@@ -1102,7 +1119,7 @@ static void Mystery_Album_CreateDisplay( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front
     GFL_STR_DeleteBuffer( p_strbuf_dst );
 
   }
-  GFL_BG_LoadScreenReq( MYSTERY_ALBUM_BACK_FRM );
+  GFL_BG_LoadScreenV_Req( MYSTERY_ALBUM_BACK_FRM );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2499,22 +2516,21 @@ static void SEQFUNC_SwapCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   { 
   case SEQ_INIT:
     //スワップ元と先が同じならば終了
+    if( p_wk->p_text )
+    { 
+      MYSTERY_TEXT_Exit( p_wk->p_text );
+      p_wk->p_text  = NULL;
+    }
+    p_wk->is_swap = FALSE; 
     if( card_index == p_wk->swap_card_index )
     { 
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_swap_cursor, FALSE );
-
-      if( p_wk->p_text )
-      { 
-        MYSTERY_TEXT_Exit( p_wk->p_text );
-        p_wk->p_text  = NULL;
-      }
-      p_wk->is_swap = FALSE;
-
       MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
-      return ;
     }
-
-    *p_seq  = SEQ_EFFECT_INIT;
+    else
+    { 
+      *p_seq  = SEQ_EFFECT_INIT;
+    }
     break;
 
   case SEQ_EFFECT_INIT:
@@ -2907,6 +2923,8 @@ struct _MYSTERY_CARD_WORK
   u32 plt_num;
   u32 silhouette_bg_pri;
   u32 font_bg_pri;
+  u16 back_frm;
+  u16 font_frm;
 };
 
 //=============================================================================
@@ -2943,6 +2961,8 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(MYSTERY_CARD_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(MYSTERY_CARD_WORK) );
   p_wk->plt_num = cp_setup->silhouette_obj_plt_num;
+  p_wk->back_frm  = cp_setup->back_frm;
+  p_wk->font_frm  = cp_setup->font_frm;
 
   //描画先をチェック
   if( cp_setup->back_frm < GFL_BG_FRAME0_S )
@@ -2974,8 +2994,6 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
  
     MYSTERY_CARD_DATA_Init( &p_wk->data, cp_setup->p_data, &setup, heapID );
   }
-
-  
 
   //BG読み込み追加
   {
@@ -3118,7 +3136,14 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
       GFL_CLWK_DATA cldata;
       GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
       cldata.pos_x  = 216;
-      cldata.pos_y  = 26;
+      cldata.pos_y  = 22;
+
+      //アイテムアイコンのリソースだけ、ずれているため
+      if(MYSTERY_CARD_DATA_GetType(&p_wk->data) == MYSTERYGIFT_TYPE_ITEM )
+      { 
+        cldata.pos_x   += 4;
+        cldata.pos_y   += 8;
+      }
 
       p_wk->p_icon    = GFL_CLACT_WK_Create( cp_setup->p_clunit, 
           p_wk->res_icon_cgx, p_wk->res_icon_plt, p_wk->res_icon_cel,
@@ -3224,9 +3249,6 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
     }
   }
 
-  GFL_BG_SetVisible( cp_setup->back_frm, TRUE );
-  GFL_BG_SetVisible( cp_setup->font_frm, TRUE );
-
   return p_wk;
 }
 //----------------------------------------------------------------------------
@@ -3242,6 +3264,7 @@ void MYSTERY_CARD_Exit( MYSTERY_CARD_WORK *p_wk )
   //シルエット
   if( p_wk->p_silhouette )
   { 
+#if 0
     //アルファ無効
     if( p_wk->is_main )
     { 
@@ -3251,6 +3274,7 @@ void MYSTERY_CARD_Exit( MYSTERY_CARD_WORK *p_wk )
     { 
       G2S_BlendNone();
     }
+#endif
 
     //シルエット破棄
     { 
@@ -3272,8 +3296,30 @@ void MYSTERY_CARD_Exit( MYSTERY_CARD_WORK *p_wk )
   }
 
   MYSTERY_MSGWINSET_Exit( p_wk->p_winset );
-
   MYSTERY_CARD_DATA_Exit( &p_wk->data );
+
+  { 
+    GFL_BG_ClearScreen( p_wk->back_frm );
+    GFL_BG_ClearScreen( p_wk->font_frm );
+    GFL_BG_LoadScreenReq( p_wk->back_frm );
+    GFL_BG_LoadScreenReq( p_wk->font_frm );
+  }
+
+  //カードが消えたら表示OFF
+  { 
+    if( p_wk->back_frm < GFL_BG_FRAME0_S )
+    { 
+      GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
+    }
+    else
+    { 
+      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
+    }
+
+    GFL_BG_SetVisible( p_wk->back_frm, FALSE );
+    GFL_BG_SetVisible( p_wk->font_frm, FALSE );
+  }
+
   GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
@@ -3297,7 +3343,20 @@ void MYSTERY_CARD_Main( MYSTERY_CARD_WORK *p_wk )
     SEQ_EXIT,
   };
 
-  MYSTERY_MSGWINSET_PrintMain( p_wk->p_winset );
+  if( MYSTERY_MSGWINSET_PrintMain( p_wk->p_winset ) )
+  { 
+    if( p_wk->back_frm < GFL_BG_FRAME0_S )
+    { 
+      GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+    }
+    else
+    { 
+      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+    }
+
+    GFL_BG_SetVisible( p_wk->back_frm, TRUE );
+    GFL_BG_SetVisible( p_wk->font_frm, TRUE );
+  }
 
 
   { 

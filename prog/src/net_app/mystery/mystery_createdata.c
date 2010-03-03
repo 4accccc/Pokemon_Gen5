@@ -137,7 +137,12 @@ POKEMON_PARAM* MYSTERY_CreatePokemon(const GIFT_PACK_DATA* pPack, HEAPID heapID,
     
   PP_Put(pp, ID_PARA_country_code, pGift->country_code);  
 
-  if(pGift->nickname[0]!= GFL_STR_GetEOMCode()){
+  if( pGift->nickname[0]==0){ 
+    GFL_HEAP_FreeMemory(pp);
+    return NULL;
+  }
+  else if(pGift->nickname[0]!= GFL_STR_GetEOMCode()){
+    OS_TPrintf( "ニックネーム先頭　%d\n", pGift->nickname[0] );
     PP_Put(pp, ID_PARA_nickname_raw, (u32)pGift->nickname);
   }
   
@@ -146,7 +151,11 @@ POKEMON_PARAM* MYSTERY_CreatePokemon(const GIFT_PACK_DATA* pPack, HEAPID heapID,
   PP_Put(pp, ID_PARA_get_place, pGift->get_place);  
   PP_Put(pp, ID_PARA_birth_place, pGift->birth_place);  
 
-  if(pGift->nickname[0]!= GFL_STR_GetEOMCode()){
+  if( pGift->oyaname[0]==0){ 
+    GFL_HEAP_FreeMemory(pp);
+    return NULL;
+  }
+  if(pGift->oyaname[0]!= GFL_STR_GetEOMCode()){
     PP_Put(pp, ID_PARA_oyaname_raw, (u32)pGift->oyaname);
   }
   if(pGift->oyasex <= PM_NEUTRAL){

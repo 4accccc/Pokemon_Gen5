@@ -61,6 +61,8 @@ void DEBUG_MYSTERY_SetGiftPokeData( GIFT_PACK_DATA *p_data, u32 event_id )
     p_poke->oyaname[3]  = L'ƒO';
     p_poke->oyaname[4]  = 0xffff;
     p_poke->oyaname[4]  = 0xffff;
+
+    p_poke->nickname[0]  = 0xffff;
   }
   p_data->gift_type     = MYSTERYGIFT_TYPE_POKEMON;
 

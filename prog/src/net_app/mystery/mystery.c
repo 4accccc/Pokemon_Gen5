@@ -32,6 +32,10 @@
 #include "script_message.naix"
 #include "msg/script/msg_common_scr.h"
 
+//@todo
+#include "pokelist_gra.naix"
+#include "../../app/pokelist/pokelist_particle_lst.h"
+
 //セーブデータ
 #include "savedata/mystery_data.h"
 
@@ -63,6 +67,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 ///	デバッグ
 //=====================================
 #ifdef PM_DEBUG
+//#define MYSTERY_SAVEDATA_CLEAR
 #endif //PM_DEBUG
 
 //=============================================================================
@@ -182,7 +187,7 @@ typedef enum
 #define MYSTERY_DEMO_MOVE_GIFT_SYNC     (60)
 #define MYSTERY_DEMO_INIT_WAIT_SYNC     (180)
 #define MYSTERY_DEMO_END_WAIT_SYNC      (60)
-#define MYSTERY_DEMO_STAGE_FADE_SYNC    (30)
+#define MYSTERY_DEMO_STAGE_FADE_SYNC    (120)
 
 //-------------------------------------
 ///	演出
@@ -196,6 +201,7 @@ typedef enum
 { 
   MYSTERY_EFFECT_TYPE_NORMAL,
   MYSTERY_EFFECT_TYPE_DEMO,
+  MYSTERY_EFFECT_TYPE_MOVIE,
 } MYSTERY_EFFECT_TYPE;
 
 
@@ -210,20 +216,6 @@ typedef enum
  *					構造体宣言
 */
 //=============================================================================
-//-------------------------------------
-///	受信デモワーク
-//=====================================
-typedef struct 
-{
-  GFL_CLWK  *p_clwk;
-  BOOL      is_end;
-  u32       res_plt;
-  u32       res_cgx;
-  u32       res_cel;
-  u32       sync;
-  u32       seq;
-} MYSTERY_DEMO_WORK;
-
 //-------------------------------------
 ///	BGリソース管理
 //=====================================
@@ -258,13 +250,26 @@ typedef struct
 } MYSTERY_BTN_WORK;
 
 //-------------------------------------
-///	エフェクトワーク
+///	パーティクル
 //=====================================
 typedef struct 
 {
+  GFL_PTC_PTR   p_ptc;
+  GFL_EMIT_PTR  p_emitter;
+  void          *p_buffer;
+  BOOL          is_use;
+  BOOL          is_start;
+} MYSTERY_PTC_WORK;
+
+//-------------------------------------
+///	エフェクトワーク
+//=====================================
+typedef struct _MYSTERY_EFFECT_WORK MYSTERY_EFFECT_WORK;
+typedef void (*MYSTERY_EFFECT_MOVE_FUNCTION)( MYSTERY_EFFECT_WORK *p_wk );
+struct _MYSTERY_EFFECT_WORK
+{
   BOOL is_start;
   BOOL is_update;
-  MYSTERY_EFFECT_TYPE type;
   u16   cnt;
   fx32  scroll_now;
   fx32  scroll_add;
@@ -272,7 +277,33 @@ typedef struct
   fx32  bright_pos[EFFECT_BRIGHT_MAX];
   fx32  bright_add[EFFECT_BRIGHT_MAX];
   const OBJ_WORK *cp_obj;
-} MYSTERY_EFFECT_WORK;
+  MYSTERY_EFFECT_MOVE_FUNCTION  move_function;
+  u32 seq;
+  HEAPID heapID;
+  MYSTERY_PTC_WORK  ptc;
+} ;
+
+//-------------------------------------
+///	受信デモワーク
+//=====================================
+typedef struct 
+{
+  GFL_CLWK  *p_clwk;
+  BOOL      is_end;
+  u32       res_plt;
+  u32       res_cgx;
+  u32       res_cel;
+  u32       sync;
+  u32       seq;
+
+  MYSTERY_EFFECT_WORK *p_effect;
+
+  u16 plt_cnt;
+  u16 plt[0x10];
+  u16 plt_sub[0x10];
+  u16 plt_src[0x10];
+  u16 plt_dst[0x10];
+} MYSTERY_DEMO_WORK;
 
 //-------------------------------------
 ///	メインワーク
@@ -391,6 +422,14 @@ static void OBJ_ReLoad( OBJ_WORK *p_wk, HEAPID heapID );
 static void OBJ_PltFade_Main( OBJ_WORK *p_wk );
 static void OBJ_PltFade_Reset( OBJ_WORK *p_wk );
 //-------------------------------------
+///	パーティクル
+//=====================================
+static void MYSTERY_PTC_Init( MYSTERY_PTC_WORK *p_wk, HEAPID heapID );
+static void MYSTERY_PTC_Exit( MYSTERY_PTC_WORK *p_wk );
+static void MYSTERY_PTC_LoadResource( MYSTERY_PTC_WORK *p_wk, ARCID arcID, ARCDATID datID, HEAPID heapID );
+static void MYSTERY_PTC_Start( MYSTERY_PTC_WORK *p_wk, u32 res_max );
+static BOOL MYSTERY_PTC_IsUse( const MYSTERY_PTC_WORK *cp_wk );
+//-------------------------------------
 ///	SEQFUNC
 //=====================================
 static void SEQFUNC_Start( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -438,7 +477,7 @@ static void UTIL_DeleteGuideText( MYSTERY_WORK *p_wk );
 //-------------------------------------
 ///	デモ
 //=====================================
-static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, const DOWNLOAD_GIFT_DATA *cp_data, GAMEDATA *p_gamedata, HEAPID heapID );
+static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, const DOWNLOAD_GIFT_DATA *cp_data, GAMEDATA *p_gamedata, const OBJ_WORK *cp_obj, MYSTERY_EFFECT_WORK *p_effect, HEAPID heapID );
 static void MYSTERY_DEMO_Exit( MYSTERY_DEMO_WORK *p_wk );
 static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk, BG_WORK *p_bg );
 static BOOL MYSTERY_DEMO_IsEnd( const MYSTERY_DEMO_WORK *cp_wk );
@@ -450,6 +489,9 @@ static void MYSTERY_EFFECT_Exit( MYSTERY_EFFECT_WORK *p_wk );
 static void MYSTERY_EFFECT_Main( MYSTERY_EFFECT_WORK *p_wk );
 static void MYSTERY_EFFECT_Start( MYSTERY_EFFECT_WORK *p_wk, MYSTERY_EFFECT_TYPE type );
 static void MYSTERY_EFFECT_SetUpdateFlag( MYSTERY_EFFECT_WORK *p_wk, BOOL is_update );
+static void Mystery_Effect_NormalMain( MYSTERY_EFFECT_WORK *p_wk );
+static void Mystery_Effect_DemoMain( MYSTERY_EFFECT_WORK *p_wk );
+static void Mystery_Effect_MovieMain( MYSTERY_EFFECT_WORK *p_wk );
 //-------------------------------------
 ///	ボタン
 //=====================================
@@ -506,6 +548,21 @@ static GFL_PROC_RESULT MYSTERY_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
   p_wk->p_gamedata  = GAMEDATA_Create( HEAPID_MYSTERYGIFT );
 
   p_wk->p_sv    = SaveData_GetMysteryData( GAMEDATA_GetSaveControlWork(p_wk->p_gamedata) );
+
+  //セーブデータをクリア
+#ifdef MYSTERY_SAVEDATA_CLEAR
+  { 
+    int i;
+    for( i = 0; i < GIFT_DATA_MAX; i++ )
+    { 
+      if( MYSTERYDATA_IsExistsCard( p_wk->p_sv, i ) )
+      { 
+        MYSTERYDATA_RemoveCardData( p_wk->p_sv, i );
+        i--;  //内部で空いた分詰めるので
+      }
+    }
+  }
+#endif //MYSTERY_SAVEDATA_CLEAR
 
 #if 0
 #ifdef DEBUG_SET_SAVEDATA
@@ -648,8 +705,12 @@ static GFL_PROC_RESULT MYSTERY_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
   //シーケンス
   MYSTERY_SEQ_Main( p_wk->p_seq );
   
-  //描画
+  //2D描画
 	MYSTERY_GRAPHIC_2D_Draw( p_wk->p_graphic );
+
+  //3D描画
+  MYSTERY_GRAPHIC_3D_StartDraw( p_wk->p_graphic );
+  MYSTERY_GRAPHIC_3D_EndDraw( p_wk->p_graphic );
   
   MYSTERY_EFFECT_Main( &p_wk->effect );
 
@@ -1015,6 +1076,87 @@ static void OBJ_PltFade_Main( OBJ_WORK *p_wk )
 static void OBJ_PltFade_Reset( OBJ_WORK *p_wk )
 { 
   p_wk->plt_cnt = 0;
+}
+
+//=============================================================================
+/**
+ *					PARTICLE
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パーティクル初期化
+ *
+ *	@param	MYSTERY_PTC_WORK *p_wk  ワーク
+ *	@param	heapID                ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void MYSTERY_PTC_Init( MYSTERY_PTC_WORK *p_wk, HEAPID heapID )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(MYSTERY_PTC_WORK) );
+  p_wk->is_use  = TRUE;
+
+  p_wk->p_buffer  = GFL_HEAP_AllocMemory( heapID, PARTICLE_LIB_HEAP_SIZE );
+  p_wk->p_ptc     = GFL_PTC_Create( p_wk->p_buffer, PARTICLE_LIB_HEAP_SIZE, TRUE, heapID );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パーティクル破棄
+ *
+ *	@param	MYSTERY_PTC_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MYSTERY_PTC_Exit( MYSTERY_PTC_WORK *p_wk )
+{ 
+  //GFL_PTC_Delete( p_wk->p_ptc );  //GFL_PTC_Exitで自動的に解放されるのでいらない
+  GFL_HEAP_FreeMemory( p_wk->p_buffer );
+  GFL_STD_MemClear( p_wk, sizeof(MYSTERY_PTC_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パーティクル  リソース読み込み
+ *  
+ *	@param	MYSTERY_PTC_WORK *p_wk  ワーク
+ *	@param	arcID                   アークID
+ *	@param	datID                   データID
+ *	@param	heapID                  ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void MYSTERY_PTC_LoadResource( MYSTERY_PTC_WORK *p_wk, ARCID arcID, ARCDATID datID, HEAPID heapID )
+{ 
+  void *p_resource;
+  int i;
+  p_resource = GFL_PTC_LoadArcResource( arcID, datID, heapID );
+  GFL_PTC_SetResource( p_wk->p_ptc, p_resource, TRUE, NULL );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パーティクル  開始
+ *
+ *	@param	MYSTERY_PTC_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MYSTERY_PTC_Start( MYSTERY_PTC_WORK *p_wk, u32 res_max )
+{ 
+  int i;
+  for( i = 0; i < res_max; i++  )
+  { 
+    GFL_PTC_CreateEmitterCallback( p_wk->p_ptc, i, NULL, p_wk );
+  }
+  p_wk->is_start  = TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パーティクル使用しているか
+ *
+ *	@param	const MYSTERY_PTC_WORK *cp_wk   ワーク
+ *
+ *	@return TRUEで使用中  FALSEで使用してない
+ */
+//-----------------------------------------------------------------------------
+static BOOL MYSTERY_PTC_IsUse( const MYSTERY_PTC_WORK *cp_wk )
+{ 
+  return cp_wk->is_use;
 }
 //=============================================================================
 /**
@@ -1618,6 +1760,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     SEQ_CANCEL_GIFT_INIT,
     SEQ_CANCEL_GIFT_WAIT,
 
+    SEQ_RE_RECV_MSG,
     SEQ_DIRTY_MSG,
     SEQ_DIRTY_END,
 
@@ -1817,7 +1960,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           if( p_wk->data.data.only_one_flag && MYSTERYDATA_IsEventRecvFlag( p_wk->p_sv, p_wk->data.data.event_id ) )
           { 
             NAGI_Printf( "すでに受け取っていました\n" );
-            *p_seq = SEQ_SELECT_GIFT_MSG;
+            *p_seq = SEQ_RE_RECV_MSG;
           }
           else
           { 
@@ -1861,6 +2004,15 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       }
     }
     break;
+  
+    //-------------------------------------
+    /// 一度受信している
+    //=====================================
+  case SEQ_RE_RECV_MSG:
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_err_002, MYSTERY_TEXT_TYPE_STREAM );
+    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_DIRTY_END );
+    *p_seq  = SEQ_MSG_WAIT;
+    break;
 
     //-------------------------------------
     ///	不正な場合
@@ -1898,12 +2050,15 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   enum
   { 
     SEQ_INIT,
+    SEQ_INIT_ONE_WAIT,
     SEQ_INIT_WAIT,
     SEQ_DEMO_MAIN,
     SEQ_SAVE_INIT,
     SEQ_SAVE_MAIN,
     SEQ_RECV,
     SEQ_MSG_WAIT,
+    SEQ_EXIT_3D,
+    SEQ_EXITWAIT_3D,
     SEQ_CARD_INIT,
     SEQ_START_CARD_EFFECT,
     SEQ_WAIT_CARD_EFFECT,
@@ -1918,15 +2073,24 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   switch( *p_seq )
   { 
   case SEQ_INIT:
-    MYSTERY_EFFECT_Start( &p_wk->effect, MYSTERY_EFFECT_TYPE_DEMO );
+    //3D用に設定
+    MYSTERY_GRAPHIC_3D_Setup( p_wk->p_graphic );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M, TRUE ); //なぜかセットアップするとB１と３GがOFFになるので
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M, TRUE );
 
     //おくりものを受信中です
     { 
       GFL_CLUNIT	*p_unit	= MYSTERY_GRAPHIC_GetClunit( p_wk->p_graphic );
-      MYSTERY_DEMO_Init( &p_wk->demo, p_unit, &p_wk->data, p_wk->p_gamedata, HEAPID_MYSTERYGIFT );
+      MYSTERY_DEMO_Init( &p_wk->demo, p_unit, &p_wk->data, p_wk->p_gamedata, &p_wk->obj, &p_wk->effect, HEAPID_MYSTERYGIFT );
       MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_014, MYSTERY_TEXT_TYPE_QUE );
-      *p_seq  = SEQ_INIT_WAIT;
+      *p_seq  = SEQ_INIT_ONE_WAIT;
     }
+    break;
+
+  case SEQ_INIT_ONE_WAIT:
+
+    GFL_BG_SetVisible( GFL_BG_FRAME0_M, TRUE ); //パシり回避のため
+    *p_seq  = SEQ_INIT_WAIT;
     break;
 
   case SEQ_INIT_WAIT:
@@ -1971,18 +2135,29 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_MSG_WAIT:
     if( MYSTERY_TEXT_IsEndPrint(p_wk->p_text) )
     { 
-      MYSTERY_EFFECT_Start( &p_wk->effect, MYSTERY_EFFECT_TYPE_NORMAL );
-      *p_seq  = SEQ_CARD_INIT;
+      *p_seq  = SEQ_EXIT_3D;
     }
+    break;
+
+  case SEQ_EXIT_3D:
+    MYSTERY_DEMO_Exit( &p_wk->demo );
+    MYSTERY_TEXT_Exit( p_wk->p_text );
+    p_wk->p_text  = NULL;
+    UTIL_DeleteMenu( p_wk );
+    MYSTERY_GRAPHIC_3D_CleanUp( p_wk->p_graphic );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M, TRUE ); //なぜかセットアップするとBGがOFFになるので
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M, TRUE );
+    *p_seq  = SEQ_EXITWAIT_3D;
+    break;
+
+  case SEQ_EXITWAIT_3D:
+
+    GFL_BG_SetVisible( GFL_BG_FRAME0_M, TRUE ); //パシリ回避
+    *p_seq  = SEQ_CARD_INIT;
     break;
 
   case SEQ_CARD_INIT:
     { 
-      MYSTERY_DEMO_Exit( &p_wk->demo );
-      MYSTERY_TEXT_Exit( p_wk->p_text );
-      p_wk->p_text  = NULL;
-      UTIL_DeleteMenu( p_wk );
-
       GFL_BG_SetVisible( BG_FRAME_M_TEXT, FALSE );
       { 
         MYSTERY_CARD_SETUP setup;
@@ -2926,9 +3101,54 @@ static void UTIL_DeleteGuideText( MYSTERY_WORK *p_wk )
  *	@param	heapID                  ヒープID
  */
 //-----------------------------------------------------------------------------
-static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, const DOWNLOAD_GIFT_DATA *cp_data, GAMEDATA *p_gamedata, HEAPID heapID )
+static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, const DOWNLOAD_GIFT_DATA *cp_data, GAMEDATA *p_gamedata, const OBJ_WORK *cp_obj, MYSTERY_EFFECT_WORK *p_effect, HEAPID heapID )
 {
   GFL_STD_MemClear( p_wk, sizeof(MYSTERY_DEMO_WORK) );
+  p_wk->p_effect  = p_effect;
+
+  { 
+    static const u16 sc_type_to_back_fade[] =
+    { 
+      0,  //なにもない
+      1,  //ポケモン
+      2,  //道具
+      6,  //Gパワー
+      3,   //映画
+    };
+    u16 plt_ofs;
+
+    //なんのデータかによって、パレットフェードする色が違う読み込み
+    GF_ASSERT( cp_data->data.gift_type < NELEMS(sc_type_to_back_fade) );
+    plt_ofs = sc_type_to_back_fade[ cp_data->data.gift_type ];
+
+    //BGのパレットフェード用にパレットをメモリ読み込み
+    { 
+
+      void *p_buff;
+      NNSG2dPaletteData *p_plt;
+      const u16 *cp_plt_adrs;
+
+      //もとのパレットから色情報を保存
+      p_buff  = GFL_ARC_UTIL_LoadPalette( ARCID_MYSTERY, NARC_mystery_fushigi_back_NCLR, &p_plt, heapID );
+      cp_plt_adrs = p_plt->pRawData;
+      GFL_STD_MemCopy( cp_plt_adrs, p_wk->plt_dst, sizeof(u16) * 0x10 );
+      GFL_STD_MemCopy( (u8*)cp_plt_adrs + plt_ofs * 0x20, p_wk->plt_src, sizeof(u16) * 0x10 );
+
+      //パレット破棄
+      GFL_HEAP_FreeMemory( p_buff );
+    }
+
+    //丸い玉のパレットを変更
+    { 
+      int i;
+      GFL_CLWK      *p_clwk;
+      for( i = 0; i < EFFECT_BRIGHT_MAX; i++ )
+      { 
+        p_clwk  = OBJ_GetClwk( cp_obj, OBJ_CLWKID_BRIGHT_TOP+i );
+        GFL_CLACT_WK_SetPlttOffs( p_clwk, plt_ofs, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+      }
+    }
+  }
 
 	//リソース読みこみ
   switch( cp_data->data.gift_type )
@@ -3009,6 +3229,8 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
 				&cldata,
 				CLSYS_DEFREND_MAIN,
 				heapID );
+
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
 	}
 }
 
@@ -3064,6 +3286,7 @@ static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk, BG_WORK *p_bg )
   switch( p_wk->seq )
   {
   case SEQ_INIT:
+    MYSTERY_EFFECT_Start( p_wk->p_effect, MYSTERY_EFFECT_TYPE_DEMO );
     GFL_BG_SetVisible( BG_FRAME_M_BACK1, FALSE );
     BG_Load( p_bg, BG_LOAD_TYPE_STAGE_M );
     p_wk->seq = SEQ_START_FADEIN;
@@ -3077,20 +3300,34 @@ static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk, BG_WORK *p_bg )
           16
           );
     GFL_BG_SetVisible( BG_FRAME_M_BACK1, TRUE );
+    p_wk->sync  = 0;
     p_wk->seq = SEQ_WAIT_FADEIN;
     break;
 
   case SEQ_WAIT_FADEIN:
+    //お盆のアルファフェード
     {
       s16 ev1 = 0 + 16 * p_wk->sync / MYSTERY_DEMO_STAGE_FADE_SYNC;
       s16 ev2 = 16 - 16 * p_wk->sync / MYSTERY_DEMO_STAGE_FADE_SYNC;
       G2_ChangeBlendAlpha( ev1, ev2 );
-      if( p_wk->sync++ > MYSTERY_DEMO_STAGE_FADE_SYNC )
+    }
+    //BGのパレットフェード
+    { 
+      int i;
+      p_wk->plt_cnt = 0 + 0x7FFF * p_wk->sync / MYSTERY_DEMO_STAGE_FADE_SYNC;
+
+      for( i = 0; i < 0x10; i++ )
       { 
-        G2_BlendNone();
-        p_wk->sync  = 0;
-        p_wk->seq = SEQ_INIT_WAIT;
+        MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_MAIN, &p_wk->plt[i], p_wk->plt_cnt, PLT_BG_BACK_M, i, p_wk->plt_src[i], p_wk->plt_dst[i] );
+        MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_SUB, &p_wk->plt_sub[i], p_wk->plt_cnt, PLT_BG_BACK_S, i, p_wk->plt_src[i], p_wk->plt_dst[i] );
       }
+    }
+    //終了チェック
+    if( p_wk->sync++ > MYSTERY_DEMO_STAGE_FADE_SYNC )
+    { 
+      G2_BlendNone();
+      p_wk->sync  = 0;
+      p_wk->seq = SEQ_INIT_WAIT;
     }
     break;
 
@@ -3109,10 +3346,16 @@ static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk, BG_WORK *p_bg )
       pos = MYSTERY_DEMO_MOVE_GIFT_START_Y + MYSTERY_DEMO_MOVE_GIFT_DIFF_Y * p_wk->sync / MYSTERY_DEMO_MOVE_GIFT_SYNC;
       GFL_CLACT_WK_SetTypePos( p_wk->p_clwk, pos, CLSYS_DEFREND_MAIN, CLSYS_MAT_Y );
 
+      if( 0 - 6*8 <= pos && pos <= 192 )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
+      }
+
       if( p_wk->sync++ >= MYSTERY_DEMO_MOVE_GIFT_SYNC )
       { 
         PMSND_PlaySE( MYSTERY_SE_RECV_PRESENT );
 
+        MYSTERY_EFFECT_Start( p_wk->p_effect, MYSTERY_EFFECT_TYPE_NORMAL );
         p_wk->sync  = 0;
         p_wk->seq   = SEQ_END_WAIT;
       }
@@ -3165,6 +3408,7 @@ static void MYSTERY_EFFECT_Init( MYSTERY_EFFECT_WORK *p_wk, const OBJ_WORK *cp_o
   p_wk->scroll_add  = MYSTERY_EFFECT_DEFAULT_SCROLL_SPEED;
   p_wk->cp_obj  = cp_obj;
   p_wk->init_add    = p_wk->scroll_add;
+  p_wk->heapID    = heapID;
 
   { 
     int i;
@@ -3188,6 +3432,11 @@ static void MYSTERY_EFFECT_Init( MYSTERY_EFFECT_WORK *p_wk, const OBJ_WORK *cp_o
 //-----------------------------------------------------------------------------
 static void MYSTERY_EFFECT_Exit( MYSTERY_EFFECT_WORK *p_wk )
 { 
+  if( MYSTERY_PTC_IsUse( &p_wk->ptc ) )
+  { 
+    MYSTERY_PTC_Exit( &p_wk->ptc );
+  }
+
   GFL_STD_MemClear( p_wk, sizeof(MYSTERY_EFFECT_WORK) );
 }
 //----------------------------------------------------------------------------
@@ -3203,87 +3452,10 @@ static void MYSTERY_EFFECT_Main( MYSTERY_EFFECT_WORK *p_wk )
   { 
     if( p_wk->is_start )
     { 
-      switch( p_wk->type )
+      if( p_wk->move_function )
       { 
-      case MYSTERY_EFFECT_TYPE_NORMAL:
-        if( p_wk->scroll_add != MYSTERY_EFFECT_DEFAULT_SCROLL_SPEED )
-        { 
-          p_wk->scroll_add  = p_wk->init_add  + (MYSTERY_EFFECT_DEFAULT_SCROLL_SPEED-p_wk->init_add) * p_wk->cnt / MYSTERY_EFFECT_DEMO_SCROLL_CHANGE_SYNC;
-          if( p_wk->cnt++ > MYSTERY_EFFECT_DEMO_SCROLL_CHANGE_SYNC )
-          { 
-            p_wk->scroll_add  = MYSTERY_EFFECT_DEFAULT_SCROLL_SPEED;
-          }
-        }
-        { 
-          int i;
-          GFL_CLWK      *p_clwk;
-          GFL_CLACTPOS  pos;
-          for( i = 0; i < EFFECT_BRIGHT_MAX; i++ )
-          { 
-            p_clwk  = OBJ_GetClwk( p_wk->cp_obj, OBJ_CLWKID_BRIGHT_TOP+i );
-            if( GFL_CLACT_WK_GetDrawEnable( p_clwk ) )
-            { 
-              p_wk->bright_pos[i] += p_wk->bright_add[ i ];
-
-              GFL_CLACT_WK_GetWldPos( p_clwk, &pos );
-              pos.y = p_wk->bright_pos[i] >> FX32_SHIFT;
-              GFL_CLACT_WK_SetWldPos( p_clwk, &pos );
-
-              if( 0 <= pos.y && pos.y <= 192 + 16 )
-              { 
-                GFL_CLACT_WK_SetDrawEnable( p_clwk, TRUE );
-              }
-              else
-              { 
-                GFL_CLACT_WK_SetDrawEnable( p_clwk, FALSE );
-              }
-            }
-          }
-        }
-        break;
-
-      case MYSTERY_EFFECT_TYPE_DEMO:
-        if( p_wk->scroll_add != MYSTERY_EFFECT_DEMO_SCROLL_SPEED )
-        { 
-          p_wk->scroll_add  = p_wk->init_add  + (MYSTERY_EFFECT_DEMO_SCROLL_SPEED-p_wk->init_add) * p_wk->cnt / MYSTERY_EFFECT_DEMO_SCROLL_CHANGE_SYNC;
-          if( p_wk->cnt++ > MYSTERY_EFFECT_DEMO_SCROLL_CHANGE_SYNC )
-          { 
-            p_wk->scroll_add  = MYSTERY_EFFECT_DEMO_SCROLL_SPEED;
-          }
-        }
-        { 
-          int i;
-          GFL_CLWK      *p_clwk;
-          GFL_CLACTPOS  pos;
-          for( i = 0; i < EFFECT_BRIGHT_MAX; i++ )
-          { 
-            p_wk->bright_pos[i] += p_wk->bright_add[ i ];
-            if( p_wk->bright_pos[i]>= FX32_CONST(192 +16) )
-            { 
-              p_wk->bright_pos[i] = FX32_CONST( -16 );
-            }
-
-            p_clwk  = OBJ_GetClwk( p_wk->cp_obj, OBJ_CLWKID_BRIGHT_TOP+i );
-            GFL_CLACT_WK_GetWldPos( p_clwk, &pos );
-            pos.y = p_wk->bright_pos[i] >> FX32_SHIFT;
-            GFL_CLACT_WK_SetWldPos( p_clwk, &pos );
-
-            if( 0 <= pos.y && pos.y <= 192 + 16 )
-            { 
-              GFL_CLACT_WK_SetDrawEnable( p_clwk, TRUE );
-            }
-            else
-            { 
-              GFL_CLACT_WK_SetDrawEnable( p_clwk, FALSE );
-            }
-          }
-        }
-        break;
+        p_wk->move_function( p_wk );
       }
-
-      p_wk->scroll_now  += p_wk->scroll_add;
-      GFL_BG_SetScrollReq( BG_FRAME_M_BACK2, GFL_BG_SCROLL_Y_SET, p_wk->scroll_now >> FX32_SHIFT );
-      GFL_BG_SetScrollReq( BG_FRAME_S_BACK2, GFL_BG_SCROLL_Y_SET, p_wk->scroll_now >> FX32_SHIFT );
     }
   }
 }
@@ -3297,18 +3469,22 @@ static void MYSTERY_EFFECT_Main( MYSTERY_EFFECT_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void MYSTERY_EFFECT_Start( MYSTERY_EFFECT_WORK *p_wk, MYSTERY_EFFECT_TYPE type )
 {
-  p_wk->type      = type;
   p_wk->is_start  = TRUE;
   p_wk->cnt       = 0;
   p_wk->init_add  = p_wk->scroll_add;
 
-  switch( p_wk->type )
+  switch( type )
   { 
   case MYSTERY_EFFECT_TYPE_NORMAL:
+    p_wk->move_function = Mystery_Effect_NormalMain;
     break;
 
   case MYSTERY_EFFECT_TYPE_DEMO:
+    p_wk->move_function = Mystery_Effect_DemoMain;
+    break;
 
+  case MYSTERY_EFFECT_TYPE_MOVIE:
+    p_wk->move_function = Mystery_Effect_MovieMain;
     break;
   }
 }
@@ -3323,6 +3499,133 @@ static void MYSTERY_EFFECT_Start( MYSTERY_EFFECT_WORK *p_wk, MYSTERY_EFFECT_TYPE
 static void MYSTERY_EFFECT_SetUpdateFlag( MYSTERY_EFFECT_WORK *p_wk, BOOL is_update )
 { 
   p_wk->is_update  = is_update;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通常エフェクト動作関数
+ *
+ *	@param	MYSTERY_EFFECT_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Mystery_Effect_NormalMain( MYSTERY_EFFECT_WORK *p_wk )
+{ 
+  if( p_wk->scroll_add != MYSTERY_EFFECT_DEFAULT_SCROLL_SPEED )
+  { 
+    p_wk->scroll_add  = p_wk->init_add  + (MYSTERY_EFFECT_DEFAULT_SCROLL_SPEED-p_wk->init_add) * p_wk->cnt / MYSTERY_EFFECT_DEMO_SCROLL_CHANGE_SYNC;
+    if( p_wk->cnt++ > MYSTERY_EFFECT_DEMO_SCROLL_CHANGE_SYNC )
+    { 
+      p_wk->scroll_add  = MYSTERY_EFFECT_DEFAULT_SCROLL_SPEED;
+    }
+  }
+  { 
+    int i;
+    GFL_CLWK      *p_clwk;
+    GFL_CLACTPOS  pos;
+    for( i = 0; i < EFFECT_BRIGHT_MAX; i++ )
+    { 
+      p_clwk  = OBJ_GetClwk( p_wk->cp_obj, OBJ_CLWKID_BRIGHT_TOP+i );
+      if( GFL_CLACT_WK_GetDrawEnable( p_clwk ) )
+      { 
+        p_wk->bright_pos[i] += p_wk->bright_add[ i ];
+
+        GFL_CLACT_WK_GetWldPos( p_clwk, &pos );
+        pos.y = p_wk->bright_pos[i] >> FX32_SHIFT;
+        GFL_CLACT_WK_SetWldPos( p_clwk, &pos );
+
+        if( 0 <= pos.y && pos.y <= 192 + 16 )
+        { 
+          GFL_CLACT_WK_SetDrawEnable( p_clwk, TRUE );
+        }
+        else
+        { 
+          GFL_CLACT_WK_SetDrawEnable( p_clwk, FALSE );
+        }
+      }
+    }
+  }
+
+  p_wk->scroll_now  += p_wk->scroll_add;
+  GFL_BG_SetScrollReq( BG_FRAME_M_BACK2, GFL_BG_SCROLL_Y_SET, p_wk->scroll_now >> FX32_SHIFT );
+  GFL_BG_SetScrollReq( BG_FRAME_S_BACK2, GFL_BG_SCROLL_Y_SET, p_wk->scroll_now >> FX32_SHIFT );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通常受け取り中デモエフェクト動作関数
+ *
+ *	@param	MYSTERY_EFFECT_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Mystery_Effect_DemoMain( MYSTERY_EFFECT_WORK *p_wk )
+{ 
+  if( p_wk->scroll_add != MYSTERY_EFFECT_DEMO_SCROLL_SPEED )
+  { 
+    p_wk->scroll_add  = p_wk->init_add  + (MYSTERY_EFFECT_DEMO_SCROLL_SPEED-p_wk->init_add) * p_wk->cnt / MYSTERY_EFFECT_DEMO_SCROLL_CHANGE_SYNC;
+    if( p_wk->cnt++ > MYSTERY_EFFECT_DEMO_SCROLL_CHANGE_SYNC )
+    { 
+      p_wk->scroll_add  = MYSTERY_EFFECT_DEMO_SCROLL_SPEED;
+    }
+  }
+  { 
+    int i;
+    GFL_CLWK      *p_clwk;
+    GFL_CLACTPOS  pos;
+    for( i = 0; i < EFFECT_BRIGHT_MAX; i++ )
+    { 
+      p_wk->bright_pos[i] += p_wk->bright_add[ i ];
+      if( p_wk->bright_pos[i]>= FX32_CONST(192 +16) )
+      { 
+        p_wk->bright_pos[i] = FX32_CONST( -16 );
+      }
+
+      p_clwk  = OBJ_GetClwk( p_wk->cp_obj, OBJ_CLWKID_BRIGHT_TOP+i );
+      GFL_CLACT_WK_GetWldPos( p_clwk, &pos );
+      pos.y = p_wk->bright_pos[i] >> FX32_SHIFT;
+      GFL_CLACT_WK_SetWldPos( p_clwk, &pos );
+
+      if( 0 <= pos.y && pos.y <= 192 + 16 )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_clwk, TRUE );
+      }
+      else
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_clwk, FALSE );
+      }
+    }
+  }
+  p_wk->scroll_now  += p_wk->scroll_add;
+  GFL_BG_SetScrollReq( BG_FRAME_M_BACK2, GFL_BG_SCROLL_Y_SET, p_wk->scroll_now >> FX32_SHIFT );
+  GFL_BG_SetScrollReq( BG_FRAME_S_BACK2, GFL_BG_SCROLL_Y_SET, p_wk->scroll_now >> FX32_SHIFT );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  映画受け取り中デモエフェクト動作関数
+ *
+ *	@param	MYSTERY_EFFECT_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Mystery_Effect_MovieMain( MYSTERY_EFFECT_WORK *p_wk )
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_MAIN,
+    SEQ_EXIT,
+  };
+  
+  switch( p_wk->seq )
+  { 
+  case SEQ_INIT:
+    MYSTERY_PTC_Init( &p_wk->ptc, p_wk->heapID );
+    MYSTERY_PTC_LoadResource( &p_wk->ptc, ARCID_POKELIST, NARC_pokelist_gra_demo_sheimi_spa, p_wk->heapID );
+    MYSTERY_PTC_Start( &p_wk->ptc, DEMO_SHEIMI_SPAMAX );
+    p_wk->seq++;
+    break;
+  case SEQ_MAIN:
+    break;
+  case SEQ_EXIT:
+    break;
+  }
 }
 //=============================================================================
 /**

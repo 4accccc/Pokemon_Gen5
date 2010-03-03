@@ -64,7 +64,7 @@
 //=====================================
 #define GRAPHIC_BG_USE	//OFFにするとBG使用しません
 #define GRAPHIC_OBJ_USE	//OFFにするとOBJ使用しません
-//#define GRAPHIC_G3D_USE	//OFFにすると3D使用しません
+#define GRAPHIC_G3D_USE	//OFFにすると3D使用しません
 //-------------------------------------
 ///	バンク設定
 //=====================================
@@ -74,12 +74,12 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 	GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
 	GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
 	GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
-	GX_VRAM_OBJ_128_B,					// メイン2DエンジンのOBJ
+	GX_VRAM_OBJ_64_E,					// メイン2DエンジンのOBJ
 	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 	GX_VRAM_SUB_OBJ_128_D,	      // サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
-	GX_VRAM_TEX_NONE,						// テクスチャイメージスロット
-	GX_VRAM_TEXPLTT_NONE,				// テクスチャパレットスロット
+	GX_VRAM_TEX_0_B,						// テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_01_FG,				// テクスチャパレットスロット
 	GX_OBJVRAMMODE_CHAR_1D_128K,// メイン画面OBJマッピングモード		
 	GX_OBJVRAMMODE_CHAR_1D_128K,// サブ画面OBJマッピングモード
 };
@@ -292,7 +292,7 @@ static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 static void Graphic_3d_SetUp( void )
 {
 	// ３Ｄ使用面の設定(表示＆プライオリティー)
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
 	G2_SetBG0Priority(0);
 
 	// 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
@@ -374,6 +374,7 @@ typedef struct
 typedef struct 
 {
 	GFL_G3D_CAMERA		*p_camera;
+  BOOL is_init;
 } GRAPHIC_G3D_WORK;
 
 //-------------------------------------
@@ -385,6 +386,7 @@ struct _MYSTERY_GRAPHIC_WORK
 	GRAPHIC_OBJ_WORK	obj;
 	GRAPHIC_G3D_WORK		g3d;
 	GFL_TCB						*p_vblank_task;
+  HEAPID heapID;
 };
 
 //=============================================================================
@@ -445,6 +447,7 @@ MYSTERY_GRAPHIC_WORK * MYSTERY_GRAPHIC_Init( int display_select, HEAPID heapID )
 	MYSTERY_GRAPHIC_WORK * p_wk;
 	p_wk	= GFL_HEAP_AllocMemory(heapID, sizeof(MYSTERY_GRAPHIC_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(MYSTERY_GRAPHIC_WORK) );
+  p_wk->heapID  = heapID;
 
 	//レジスタ初期化
 	G2_BlendNone();
@@ -476,9 +479,6 @@ MYSTERY_GRAPHIC_WORK * MYSTERY_GRAPHIC_Init( int display_select, HEAPID heapID )
 #ifdef GRAPHIC_OBJ_USE
 	GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
 #endif //GRAPHIC_OBJ_USE
-#ifdef GRAPHIC_G3D_USE
-	GRAPHIC_G3D_Init( &p_wk->g3d, heapID );
-#endif //GRAPHIC_G3D_USE
 
 	//VBlankTask登録
 	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(Graphic_VBlankTask, p_wk, 0 );
@@ -497,10 +497,6 @@ void MYSTERY_GRAPHIC_Exit( MYSTERY_GRAPHIC_WORK *p_wk )
 	//VBLANKTask消去
 	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
 
-	//モジュール破棄
-#ifdef GRAPHIC_G3D_USE
-	GRAPHIC_G3D_Exit( &p_wk->g3d );
-#endif //GRAPHIC_G3D_USE
 #ifdef GRAPHIC_OBJ_USE
 	GRAPHIC_OBJ_Exit( &p_wk->obj );
 #endif //GRAPHIC_OBJ_USE
@@ -595,6 +591,52 @@ GFL_G3D_CAMERA * MYSTERY_GRAPHIC_GetCamera( const MYSTERY_GRAPHIC_WORK *cp_wk )
 	return GRAPHIC_G3D_GetCamera( &cp_wk->g3d );
 #else
 	return NULL;
+#endif //GRAPHIC_G3D_USE
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  G3Dの設定 
+ *	        BG0面をOFFにします
+ *          BG0面にパシりが発生する恐れがあるので、次フレームにONにしてください
+ *
+ *	@param	MYSTERY_GRAPHIC_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_GRAPHIC_3D_Setup( MYSTERY_GRAPHIC_WORK *p_wk )
+{ 
+#ifdef GRAPHIC_G3D_USE
+  GFL_BG_SetVisible( GFL_BG_FRAME0_M, FALSE );
+
+  { 
+    GFL_BG_SYS_HEADER header  = sc_bgsys_header;
+    header.bg0_2Dor3D = GX_BG0_AS_3D;
+    GFL_BG_SetBGMode( &header );
+  }
+
+	GRAPHIC_G3D_Init( &p_wk->g3d, p_wk->heapID );
+  GFL_PTC_Init(p_wk->heapID);
+
+#endif //GRAPHIC_G3D_USE
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  G3Dの設定解除
+ *	        BG0面をOFFにします
+ *          BG0面にパシりが発生する恐れがあるので、次フレームにONにしてください
+ *
+ *	@param	MYSTERY_GRAPHIC_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_GRAPHIC_3D_CleanUp( MYSTERY_GRAPHIC_WORK *p_wk )
+{ 
+	//モジュール破棄
+#ifdef GRAPHIC_G3D_USE
+  GFL_BG_SetVisible( GFL_BG_FRAME0_M, FALSE );
+
+  GFL_PTC_Exit();
+	GRAPHIC_G3D_Exit( &p_wk->g3d );
+
+  GFL_BG_SetBGMode( &sc_bgsys_header );
 #endif //GRAPHIC_G3D_USE
 }
 //=============================================================================
@@ -837,6 +879,9 @@ static void GRAPHIC_G3D_Init( GRAPHIC_G3D_WORK *p_wk, HEAPID heapID )
 			GFL_G3D_VMANLNK, GRAPHIC_G3D_PLTSIZE, 0, heapID, Graphic_3d_SetUp );
 
 	p_wk->p_camera = GRAPHIC_G3D_CAMERA_Create( &sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET, heapID );
+
+
+  p_wk->is_init = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -848,6 +893,7 @@ static void GRAPHIC_G3D_Init( GRAPHIC_G3D_WORK *p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_G3D_Exit( GRAPHIC_G3D_WORK *p_wk )
 {
+  p_wk->is_init = FALSE;
 	GFL_G3D_CAMERA_Delete( p_wk->p_camera );
 	GFL_G3D_Exit();
 }
@@ -861,10 +907,14 @@ static void GRAPHIC_G3D_Exit( GRAPHIC_G3D_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_G3D_StartDraw( GRAPHIC_G3D_WORK *p_wk )
 {	
+  if( p_wk->is_init )
+  { 
+    GFL_G3D_DRAW_Start();
+    GFL_G3D_CAMERA_Switching( p_wk->p_camera );
+    GFL_G3D_DRAW_SetLookAt();
 
-	GFL_G3D_DRAW_Start();
-	GFL_G3D_CAMERA_Switching( p_wk->p_camera );
-	GFL_G3D_DRAW_SetLookAt();
+    GFL_PTC_Main();
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -876,7 +926,10 @@ static void GRAPHIC_G3D_StartDraw( GRAPHIC_G3D_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_G3D_EndDraw( GRAPHIC_G3D_WORK *p_wk )
 {	
-	GFL_G3D_DRAW_End();
+  if( p_wk->is_init )
+  { 
+    GFL_G3D_DRAW_End();
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -889,6 +942,13 @@ static void GRAPHIC_G3D_EndDraw( GRAPHIC_G3D_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static GFL_G3D_CAMERA * GRAPHIC_G3D_GetCamera( const GRAPHIC_G3D_WORK *cp_wk )
 {	
-	return cp_wk->p_camera;
+  if( cp_wk->is_init )
+  { 
+    return cp_wk->p_camera;
+  }
+  else
+  { 
+    return NULL;
+  }
 }
 #endif// GRAPHIC_G3D_USE
