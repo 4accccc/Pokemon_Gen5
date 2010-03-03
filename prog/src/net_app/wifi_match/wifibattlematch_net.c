@@ -416,6 +416,7 @@ static WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_GDB_GetErrorRepairT
 static WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_ND_GetErrorRepairType( DWCNdError nd_err );
 static WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_SYS_GetErrorRepairType( WIFIBATTLEMATCH_NET_SYSERROR  sys_err );
 
+
 //=============================================================================
 /**
  *					データ
@@ -4433,5 +4434,25 @@ static WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_SYS_GetErrorRepairT
     return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
   default:
     return WIFIBATTLEMATCH_NET_ERROR_NONE;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通信アイコンを表示
+ *
+ *	@param	BOOL is_top  TRUEならば上画面  FALSE下画面
+ */
+//-----------------------------------------------------------------------------
+void WIFIBATTLEMATCH_NETICON_SetDraw( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_visible )
+{ 
+  if( is_visible )
+  { 
+    GFL_NET_WirelessIconEasy_HoldLCD( TRUE, p_wk->heapID );
+    GFL_NET_ReloadIcon();
+  }
+  else
+  { 
+    GFL_NET_WirelessIconEasyEnd();
   }
 }

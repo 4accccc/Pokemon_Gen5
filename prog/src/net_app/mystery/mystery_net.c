@@ -246,18 +246,18 @@ static const GFLNetInitializeStruct sc_net_init =
   HEAPID_WIFI,  //wifi用にcreateされるHEAPID
   HEAPID_NETWORK, //
   GFL_WICON_POSX,GFL_WICON_POSY,  // 通信アイコンXY位置
-  2,//_MAXNUM,  //最大接続人数
-  48,//_MAXSIZE,  //最大送信バイト数
-  2,//_BCON_GET_NUM,  // 最大ビーコン収集数
+  1,//_MAXNUM,  //最大接続人数
+  88,//_MAXSIZE,  //最大送信バイト数
+  4,//_BCON_GET_NUM,  // 最大ビーコン収集数
   TRUE,   // CRC計算
   FALSE,    // MP通信＝親子型通信モードかどうか
   GFL_NET_TYPE_WIRELESS,    //通信タイプの指定
-  TRUE,   // 親が再度初期化した場合、つながらないようにする場合TRUE
+  FALSE,   // 親が再度初期化した場合、つながらないようにする場合TRUE
   WB_NET_MYSTERY, //GameServiceID
 #if GFL_NET_IRC
   IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
 #endif
-  0,//MP親最大サイズ 512まで
+  500,//MP親最大サイズ 512まで
   0,//dummy
 };
 
@@ -522,6 +522,12 @@ MYSTERY_NET_ERROR_REPAIR_TYPE MYSTERY_NET_GetErrorRepairType( const MYSTERY_NET_
 //-----------------------------------------------------------------------------
 void MYSTERY_NET_ClearError( MYSTERY_NET_WORK *p_wk )
 { 
+  if( p_wk->p_wih )
+  { 
+    WIH_DWC_AllBeaconEnd(p_wk->p_wih);
+    p_wk->p_wih = NULL;
+  }
+
   MYSTERY_NET_ChangeStateReq( p_wk, MYSTERY_NET_STATE_WAIT );
 }
 
@@ -650,8 +656,6 @@ static void SEQFUNC_InitBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
   { 
   case SEQ_INIT:
 		GFL_NET_Init( &sc_net_init, NULL, p_wk );
-
-
     *p_seq = SEQ_INIT_WAIT;
     break;
 
@@ -700,6 +704,7 @@ static void SEQFUNC_ExitBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
   { 
   case SEQ_WIH_EXIT:
     WIH_DWC_AllBeaconEnd(p_wk->p_wih);
+    p_wk->p_wih = NULL;
     *p_seq  = SEQ_NET_EXIT;
     break;
 

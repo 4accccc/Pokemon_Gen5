@@ -40,15 +40,15 @@ typedef enum
 typedef struct
 { 
   REGULATION          *regulation;                  //[in]レギュレーション
-  POKEMON_PASO_PARAM  *ppp[TEMOTI_POKEMAX];         //[in]選ぶポケモン
-  const STRCODE   *enemyName;                             //[in]相手の名前
+  POKEPARTY           *p_party;                     //[in]選ぶポケモン
+  const STRCODE   *enemyName;                       //[in]相手の名前
   u8        enemySex;                               //[in]相手の性別
   u8        pad2[3];                                //パディング
-  POKEPARTY *enemyPokeParty;                             //[in]相手のポケモン
+  POKEPARTY *enemyPokeParty;                        //[in]相手のポケモン
   GAMEDATA            *gameData;                    //[in]ゲームデータ
   u8                  comm_selected_num;            //[in]すでに選び終わった人数 外部操作
   u8                  dummy[3];
-  POKEPARTY           *p_party;                     //[out]出場するポケパーティ(Allocしておくこと)
+  POKEPARTY           *p_select_party;              //[out]出場するポケパーティ(Allocしておくこと)
   WIFIBATTLEMATCH_SUBPROC_RESULT  result;           //[out]終了コード
 } WIFIBATTLEMATCH_SUBPROC_PARAM;
 

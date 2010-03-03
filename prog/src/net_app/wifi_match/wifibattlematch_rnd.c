@@ -140,6 +140,7 @@ typedef struct
 
   //リスト
   WBM_LIST_WORK                 *p_list;
+  u32                           list_type;
 
   //ネット
   WIFIBATTLEMATCH_NET_WORK      *p_net;
@@ -373,6 +374,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Init( GFL_PROC *p_proc, int *p_s
                               0, 
                               HEAPID_WIFIBATTLEMATCH_CORE );
 #endif
+
+  WIFIBATTLEMATCH_NETICON_SetDraw( p_wk->p_net, TRUE );
 	
 	return GFL_PROC_RES_FINISH;
 }
@@ -393,6 +396,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Exit( GFL_PROC *p_proc, int *p_s
 {
 	WIFIBATTLEMATCH_RND_WORK	      *p_wk	= p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_param_adrs;
+
+  WIFIBATTLEMATCH_NETICON_SetDraw( p_wk->p_net, FALSE );
 
 #ifdef DEBUGWIN_USE
   DEBUGWIN_RemoveGroup( 0 );
@@ -2590,7 +2595,6 @@ static void Util_List_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, UTIL_LIST_TYPE typ
     setup.frm_plt = PLT_LIST_M;
     setup.frm_chr = CGR_OFS_M_LIST;
 
-
     switch( type )
     {
     case UTIL_LIST_TYPE_YESNO:
@@ -2607,6 +2611,7 @@ static void Util_List_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, UTIL_LIST_TYPE typ
       break;
     }
 
+    p_wk->list_type = type;
     p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_WIFIBATTLEMATCH_CORE );
   }
 }
@@ -2638,7 +2643,24 @@ static u32 Util_List_Main( WIFIBATTLEMATCH_RND_WORK *p_wk )
 { 
   if( p_wk->p_list )
   { 
-    return WBM_LIST_Main( p_wk->p_list );
+    u32 ret = WBM_LIST_Main( p_wk->p_list );
+
+    if( p_wk->list_type == UTIL_LIST_TYPE_YESNO )
+    { 
+      if( ret == BMPMENULIST_CANCEL )
+      { 
+        ret = 1;
+      }
+    }
+    else
+    { 
+      if( ret == BMPMENULIST_CANCEL )
+      { 
+        ret = BMPMENULIST_NULL;
+      }
+    }
+    
+    return  ret;
   }
   else
   { 

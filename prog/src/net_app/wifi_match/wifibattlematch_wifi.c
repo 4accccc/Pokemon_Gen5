@@ -375,6 +375,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Init( GFL_PROC *p_proc, int *p_
   }
 #endif //DEBUG_REGULATION_DATA
 
+  WIFIBATTLEMATCH_NETICON_SetDraw( p_wk->p_net, TRUE );
+
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -398,6 +400,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Exit( GFL_PROC *p_proc, int *p_
 
   GFL_HEAP_FreeMemory( p_wk->p_evilcheck_party );
   GFL_HEAP_FreeMemory( p_wk->p_other_party );
+
+  WIFIBATTLEMATCH_NETICON_SetDraw( p_wk->p_net, FALSE );
 
 	//ƒ‚ƒWƒ…[ƒ‹‚Ì”jŠü
   WBM_WAITICON_Exit( p_wk->p_wait );

@@ -1702,7 +1702,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       MYSTERY_NET_ClearError( p_wk->p_net );
 
       NAGI_Printf( "Žæ“¾‚Å‚«‚È‚©‚Á‚½\n" );
-      *p_seq = SEQ_NO_GIFT_INIT;
+      MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
       break;
     }
 
@@ -2244,6 +2244,9 @@ static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     OBJ_ReLoad( &p_wk->obj, HEAPID_MYSTERYGIFT );
     p_wk->p_text  = MYSTERY_TEXT_Init( BG_FRAME_M_TEXT, PLT_BG_FONT_M, p_wk->p_que, p_wk->p_font, HEAPID_MYSTERYGIFT );
     MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, BG_CGX_OFS_M_TEXT, PLT_BG_TEXT_M );
+
+
+    UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_TOP, HEAPID_MYSTERYGIFT ); 
     *p_seq  = SEQ_START_FADEIN_EXIT;
     break;
   case SEQ_START_FADEIN_EXIT:

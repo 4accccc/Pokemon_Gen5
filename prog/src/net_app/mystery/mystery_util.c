@@ -902,7 +902,6 @@ struct _MYSTERY_MENU_WORK
 //-------------------------------------
 ///	プロトタイプ
 //=====================================
-static void PalletFadeMain( u16 *p_buff, u16 *p_cnt, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end );
 //-------------------------------------
 ///	パブリック
 //=====================================
@@ -1167,44 +1166,6 @@ void MYSTERY_MENU_SetBlink( MYSTERY_MENU_WORK *p_wk, u32 list_num, BOOL is_blink
   GF_ASSERT( list_num < MYSTERY_MENU_WINDOW_MAX );
   p_wk->is_blink[ list_num ]  = is_blink;
 }
-//----------------------------------------------------------------------------
-/**
- *  @brief  BG　パレットフェード
- *
- *  @param  u16 *p_buff 色保存バッファ（VBlank転送のため）
- *  @param  *p_cnt      カウンタバッファ
- *  @param  add         カウンタ加算値
- *  @param  plt_num     パレット縦番号
- *  @param  plt_col     パレット横番号
- *  @param  start       開始色
- *  @param  end         終了色
- */
-//-----------------------------------------------------------------------------
-static void PalletFadeMain( u16 *p_buff, u16 *p_cnt, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end )
-{
-  {
-    //1～0に変換
-    const fx16 cos = (FX_CosIdx(*p_cnt)+FX16_ONE)/2;
-    const u8 start_r  = (start & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
-    const u8 start_g  = (start & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
-    const u8 start_b  = (start & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
-    const u8 end_r  = (end & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
-    const u8 end_g  = (end & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
-    const u8 end_b  = (end & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
-
-    const u8 r = start_r + (((end_r-start_r)*cos)>>FX16_SHIFT);
-    const u8 g = start_g + (((end_g-start_g)*cos)>>FX16_SHIFT);
-    const u8 b = start_b + (((end_b-start_b)*cos)>>FX16_SHIFT);
-
-    *p_buff = GX_RGB(r, g, b);
-
-    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
-                                        plt_num * 32 + plt_col *2 ,
-                                        p_buff, 2 );
-  }
-
-}
-
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *				  シーケンス管理
@@ -1624,7 +1585,7 @@ static void Mystery_Msgoam_CalcPos( const MYSTERY_MSGOAM_WORK* cp_wk, GFL_FONT *
 //-----------------------------------------------------------------------------
 void MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end )
 { 
-  //1～0に変換
+  //0～１に変換
   const fx16 cos = (FX_CosIdx(cnt)+FX16_ONE)/2;
   const u8 start_r  = (start & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
   const u8 start_g  = (start & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;

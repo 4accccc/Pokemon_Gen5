@@ -396,7 +396,7 @@ WBM_LIST_WORK * WBM_LIST_InitEx( const WBM_LIST_SETUP *cp_setup, u8 x, u8 y, u8 
     p_wk->p_list  = BmpMenuList_Set( &header, 0, 0, heapID );
 
     BmpMenuList_SetCursorBmp( p_wk->p_list, heapID );
-    BmpMenuList_SetCancelMode( p_wk->p_list, BMPMENULIST_CANCELMODE_NOT );
+    BmpMenuList_SetCancelMode( p_wk->p_list, BMPMENULIST_CANCELMODE_USE );
     
   }
 

@@ -783,8 +783,8 @@ static void *POKELIST_AllocParam( HEAPID heapID, void *p_wk_adrs )
     GF_ASSERT(0);
   }
 
-  p_param->p_party    = p_wk->p_player_btl_party;
-  p_param->gameData   = p_wk->param.p_game_data;
+  p_param->p_select_party    = p_wk->p_player_btl_party;
+  p_param->gameData           = p_wk->param.p_game_data;
 
   //自分のデータ
   { 
@@ -794,12 +794,9 @@ static void *POKELIST_AllocParam( HEAPID heapID, void *p_wk_adrs )
     POKEMON_PARAM *pp;
 
     p_player = p_wk->p_player_data;
-    p_party  = (POKEPARTY*)p_player->pokeparty;
-    for( i = 0; i < PokeParty_GetPokeCount( p_party ); i++ )
-    {
-      pp = PokeParty_GetMemberPointer( p_party, i );
-      p_param->ppp[i] = PP_GetPPPPointer( pp );
-    }
+    p_param->p_party  = (POKEPARTY*)p_player->pokeparty;
+
+    PokeRegulation_ModifyLevelPokeParty( p_param->regulation, p_param->p_party );
   }
 
   //敵データ
@@ -967,6 +964,8 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
   }
 
 
+  p_param->p_btl_setup_param->musicDefault  = WBM_SND_SEQ_BATTLE;
+  p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
   BATTLE_PARAM_SetPokeParty( p_param->p_btl_setup_param, p_wk->p_player_btl_party, BTL_CLIENT_PLAYER ); 
 
   //録画準備

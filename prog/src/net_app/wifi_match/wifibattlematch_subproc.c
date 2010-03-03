@@ -107,19 +107,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Init( GFL_PROC *p_proc, int *p_s
   
   procWork->procSys = GFL_PROC_LOCAL_boot( procWork->heapId );
 
-  procWork->pokeParty = PokeParty_AllocPartyWork( procWork->heapId );
-  for( i=0;i<TEMOTI_POKEMAX;i++ )
-  {
-    if( p_param->ppp[i] )
-    { 
-      if( PPP_Get( p_param->ppp[i] , ID_PARA_poke_exist , NULL ) )
-      {
-        POKEMON_PARAM *pp = PP_CreateByPPP( p_param->ppp[i] , procWork->heapId );
-        PokeParty_Add( procWork->pokeParty , pp );
-        GFL_HEAP_FreeMemory( pp );
-      }
-    }
-  }
+  procWork->pokeParty = p_param->p_party;
   
   WIFIBATTLEMATCH_SUBPROC_InitListData( p_param, procWork , &procWork->plData );
   WIFIBATTLEMATCH_SUBPROC_InitStatusData( p_param, procWork , &procWork->psData );
@@ -147,15 +135,10 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Exit( GFL_PROC *p_proc, int *p_s
     const u8 num = procWork->plData.in_num[i];
     if( num > 0 )
     {
-      POKEMON_PARAM *pp = PP_CreateByPPP( procWork->param.ppp[num-1] , procWork->heapId );
-      PokeParty_Add( p_param->p_party, pp );
-      GFL_HEAP_FreeMemory( pp );
+      POKEMON_PARAM *pp = PokeParty_GetMemberPointer( p_param->p_party, num - 1 );
+      PokeParty_Add( p_param->p_select_party, pp );
     }
   }
-  
-
-
-  GFL_HEAP_FreeMemory( procWork->pokeParty );
 
   GFL_PROC_LOCAL_Exit( procWork->procSys );
 	GFL_PROC_FreeWork( p_proc );

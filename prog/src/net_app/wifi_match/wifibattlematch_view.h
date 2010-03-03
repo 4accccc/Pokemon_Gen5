@@ -355,7 +355,6 @@ extern BOOL WBM_BTLBOX_MoveInMain( WBM_BTLBOX_WORK *p_wk );
 extern BOOL WBM_BTLBOX_MoveOutMain( WBM_BTLBOX_WORK *p_wk );
 extern BOOL WBM_BTLBOX_PrintMain( WBM_BTLBOX_WORK *p_wk, PRINT_QUE *p_que );
 
-
 #ifdef DEBUG_DATA_CREATE
 //extern void MATCHINFO_DEBUG_CreateData( MATCHINFO_DATA *p_data );
 #else
