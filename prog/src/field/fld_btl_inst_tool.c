@@ -516,14 +516,10 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
 
         POKETOOL_CopyPPtoPP( (POKEMON_PARAM*)my_pp, entry_pp );
 
-        if( PP_Get(my_pp,ID_PARA_level,NULL) != 50 ){
-          u32 exp = POKETOOL_GetMinExp(
-              PP_Get(my_pp,ID_PARA_monsno,NULL),
-              PP_Get(my_pp,ID_PARA_form_no,NULL),
-              50 );
-
-          PP_Put( entry_pp, ID_PARA_exp, exp );
-          PP_Renew( entry_pp );
+        //ÉåÉxÉãÇTÇOï‚ê≥
+        if( PP_Get(my_pp,ID_PARA_level,NULL) != 50 )
+        {
+          POKETOOL_MakeLevelRevise(entry_pp, 50);
         }
 
 #ifdef DEBUG_ONLY_FOR_kagaya
