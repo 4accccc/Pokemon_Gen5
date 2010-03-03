@@ -130,10 +130,10 @@ class CEncTable
 
     data_num.times{ |i|
       pl = @mons_list[i]
-      pl.monsno = $monsno_hash.fetch(column[i])
+      pl.monsno = $monsno_hash.fetch(column[i],nil)
       print(column[i]+",")
       if pl.monsno == nil then
-        printf("%s モンスター名エラー %s\n",@zone_name,column[i])
+        printf("\nERROR! %s モンスター名エラー %s\n",@zone_name,column[i])
         exit 1
       end
     }
