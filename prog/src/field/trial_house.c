@@ -75,7 +75,6 @@ TRIAL_HOUSE_WORK_PTR TRIAL_HOUSE_Start(GAMESYS_WORK * gsys)
     {
       OS_Printf("トライアルハウス外部データロード\n");
     }
-    else GF_ASSERT_MSG(0,"extra_data_load fail");
   }
   //パーティ作成
   ptr->Party = PokeParty_AllocPartyWork( ptr->HeapID );
