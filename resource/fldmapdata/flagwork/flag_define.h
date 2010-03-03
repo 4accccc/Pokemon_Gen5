@@ -925,7 +925,7 @@
 #define FV_AREA_END                        899 /* 0x0383  */
 
 
-/* flags "" 900 ～ 1155 */
+/* flags "" 900 ～ 1105 */
 
 #define FLAG_HIDEITEM_AREA_START           900 /* 0x0384  */
 
@@ -1135,320 +1135,270 @@
 #define FLAG_HIDEITEM_203                 1103 /* 0x044f 領域確保による自動生成 */
 #define FLAG_HIDEITEM_204                 1104 /* 0x0450 領域確保による自動生成 */
 #define FLAG_HIDEITEM_205                 1105 /* 0x0451 領域確保による自動生成 */
-#define FLAG_HIDEITEM_206                 1106 /* 0x0452 領域確保による自動生成 */
-#define FLAG_HIDEITEM_207                 1107 /* 0x0453 領域確保による自動生成 */
-#define FLAG_HIDEITEM_208                 1108 /* 0x0454 領域確保による自動生成 */
-#define FLAG_HIDEITEM_209                 1109 /* 0x0455 領域確保による自動生成 */
-#define FLAG_HIDEITEM_210                 1110 /* 0x0456 領域確保による自動生成 */
-#define FLAG_HIDEITEM_211                 1111 /* 0x0457 領域確保による自動生成 */
-#define FLAG_HIDEITEM_212                 1112 /* 0x0458 領域確保による自動生成 */
-#define FLAG_HIDEITEM_213                 1113 /* 0x0459 領域確保による自動生成 */
-#define FLAG_HIDEITEM_214                 1114 /* 0x045a 領域確保による自動生成 */
-#define FLAG_HIDEITEM_215                 1115 /* 0x045b 領域確保による自動生成 */
-#define FLAG_HIDEITEM_216                 1116 /* 0x045c 領域確保による自動生成 */
-#define FLAG_HIDEITEM_217                 1117 /* 0x045d 領域確保による自動生成 */
-#define FLAG_HIDEITEM_218                 1118 /* 0x045e 領域確保による自動生成 */
-#define FLAG_HIDEITEM_219                 1119 /* 0x045f 領域確保による自動生成 */
-#define FLAG_HIDEITEM_220                 1120 /* 0x0460 領域確保による自動生成 */
-#define FLAG_HIDEITEM_221                 1121 /* 0x0461 領域確保による自動生成 */
-#define FLAG_HIDEITEM_222                 1122 /* 0x0462 領域確保による自動生成 */
-#define FLAG_HIDEITEM_223                 1123 /* 0x0463 領域確保による自動生成 */
-#define FLAG_HIDEITEM_224                 1124 /* 0x0464 領域確保による自動生成 */
-#define FLAG_HIDEITEM_225                 1125 /* 0x0465 領域確保による自動生成 */
-#define FLAG_HIDEITEM_226                 1126 /* 0x0466 領域確保による自動生成 */
-#define FLAG_HIDEITEM_227                 1127 /* 0x0467 領域確保による自動生成 */
-#define FLAG_HIDEITEM_228                 1128 /* 0x0468 領域確保による自動生成 */
-#define FLAG_HIDEITEM_229                 1129 /* 0x0469 領域確保による自動生成 */
-#define FLAG_HIDEITEM_230                 1130 /* 0x046a 領域確保による自動生成 */
-#define FLAG_HIDEITEM_231                 1131 /* 0x046b 領域確保による自動生成 */
-#define FLAG_HIDEITEM_232                 1132 /* 0x046c 領域確保による自動生成 */
-#define FLAG_HIDEITEM_233                 1133 /* 0x046d 領域確保による自動生成 */
-#define FLAG_HIDEITEM_234                 1134 /* 0x046e 領域確保による自動生成 */
-#define FLAG_HIDEITEM_235                 1135 /* 0x046f 領域確保による自動生成 */
-#define FLAG_HIDEITEM_236                 1136 /* 0x0470 領域確保による自動生成 */
-#define FLAG_HIDEITEM_237                 1137 /* 0x0471 領域確保による自動生成 */
-#define FLAG_HIDEITEM_238                 1138 /* 0x0472 領域確保による自動生成 */
-#define FLAG_HIDEITEM_239                 1139 /* 0x0473 領域確保による自動生成 */
-#define FLAG_HIDEITEM_240                 1140 /* 0x0474 領域確保による自動生成 */
-#define FLAG_HIDEITEM_241                 1141 /* 0x0475 領域確保による自動生成 */
-#define FLAG_HIDEITEM_242                 1142 /* 0x0476 領域確保による自動生成 */
-#define FLAG_HIDEITEM_243                 1143 /* 0x0477 領域確保による自動生成 */
-#define FLAG_HIDEITEM_244                 1144 /* 0x0478 領域確保による自動生成 */
-#define FLAG_HIDEITEM_245                 1145 /* 0x0479 領域確保による自動生成 */
-#define FLAG_HIDEITEM_246                 1146 /* 0x047a 領域確保による自動生成 */
-#define FLAG_HIDEITEM_247                 1147 /* 0x047b 領域確保による自動生成 */
-#define FLAG_HIDEITEM_248                 1148 /* 0x047c 領域確保による自動生成 */
-#define FLAG_HIDEITEM_249                 1149 /* 0x047d 領域確保による自動生成 */
-#define FLAG_HIDEITEM_250                 1150 /* 0x047e 領域確保による自動生成 */
-#define FLAG_HIDEITEM_251                 1151 /* 0x047f 領域確保による自動生成 */
-#define FLAG_HIDEITEM_252                 1152 /* 0x0480 領域確保による自動生成 */
-#define FLAG_HIDEITEM_253                 1153 /* 0x0481 領域確保による自動生成 */
-#define FLAG_HIDEITEM_254                 1154 /* 0x0482 領域確保による自動生成 */
-#define FLAG_HIDEITEM_255                 1155 /* 0x0483 領域確保による自動生成 */
 
-#define FLAG_HIDEITEM_AREA_END            1155 /* 0x0483  */
+#define FLAG_HIDEITEM_AREA_END            1105 /* 0x0451  */
 
 
-/* flags "item_flag.xls" 1156 ～ 1411 */
+/* flags "item_flag.xls" 1106 ～ 1411 */
 
-#define FV_FLD_ITEM_AREA_START            1156 /* 0x0484  */
+#define FV_FLD_ITEM_AREA_START            1106 /* 0x0452  */
 
-#define FV_FLD_ITEM_0                     1156 /* 0x0484  */
-#define FV_FLD_ITEM_1                     1157 /* 0x0485  */
-#define FV_FLD_ITEM_2                     1158 /* 0x0486  */
-#define FV_FLD_ITEM_3                     1159 /* 0x0487  */
-#define FV_FLD_ITEM_4                     1160 /* 0x0488  */
-#define FV_FLD_ITEM_5                     1161 /* 0x0489  */
-#define FV_FLD_ITEM_6                     1162 /* 0x048a  */
-#define FV_FLD_ITEM_7                     1163 /* 0x048b  */
-#define FV_FLD_ITEM_8                     1164 /* 0x048c  */
-#define FV_FLD_ITEM_9                     1165 /* 0x048d  */
-#define FV_FLD_ITEM_10                    1166 /* 0x048e  */
-#define FV_FLD_ITEM_11                    1167 /* 0x048f  */
-#define FV_FLD_ITEM_12                    1168 /* 0x0490  */
-#define FV_FLD_ITEM_13                    1169 /* 0x0491  */
-#define FV_FLD_ITEM_14                    1170 /* 0x0492  */
-#define FV_FLD_ITEM_15                    1171 /* 0x0493  */
-#define FV_FLD_ITEM_16                    1172 /* 0x0494  */
-#define FV_FLD_ITEM_17                    1173 /* 0x0495  */
-#define FV_FLD_ITEM_18                    1174 /* 0x0496  */
-#define FV_FLD_ITEM_19                    1175 /* 0x0497  */
-#define FV_FLD_ITEM_20                    1176 /* 0x0498  */
-#define FV_FLD_ITEM_21                    1177 /* 0x0499  */
-#define FV_FLD_ITEM_22                    1178 /* 0x049a  */
-#define FV_FLD_ITEM_23                    1179 /* 0x049b  */
-#define FV_FLD_ITEM_24                    1180 /* 0x049c  */
-#define FV_FLD_ITEM_25                    1181 /* 0x049d  */
-#define FV_FLD_ITEM_26                    1182 /* 0x049e  */
-#define FV_FLD_ITEM_27                    1183 /* 0x049f  */
-#define FV_FLD_ITEM_28                    1184 /* 0x04a0  */
-#define FV_FLD_ITEM_29                    1185 /* 0x04a1  */
-#define FV_FLD_ITEM_30                    1186 /* 0x04a2  */
-#define FV_FLD_ITEM_31                    1187 /* 0x04a3  */
-#define FV_FLD_ITEM_32                    1188 /* 0x04a4  */
-#define FV_FLD_ITEM_33                    1189 /* 0x04a5  */
-#define FV_FLD_ITEM_34                    1190 /* 0x04a6  */
-#define FV_FLD_ITEM_35                    1191 /* 0x04a7  */
-#define FV_FLD_ITEM_36                    1192 /* 0x04a8  */
-#define FV_FLD_ITEM_37                    1193 /* 0x04a9  */
-#define FV_FLD_ITEM_38                    1194 /* 0x04aa  */
-#define FV_FLD_ITEM_39                    1195 /* 0x04ab  */
-#define FV_FLD_ITEM_40                    1196 /* 0x04ac  */
-#define FV_FLD_ITEM_41                    1197 /* 0x04ad  */
-#define FV_FLD_ITEM_42                    1198 /* 0x04ae  */
-#define FV_FLD_ITEM_43                    1199 /* 0x04af  */
-#define FV_FLD_ITEM_44                    1200 /* 0x04b0  */
-#define FV_FLD_ITEM_45                    1201 /* 0x04b1  */
-#define FV_FLD_ITEM_46                    1202 /* 0x04b2  */
-#define FV_FLD_ITEM_47                    1203 /* 0x04b3  */
-#define FV_FLD_ITEM_48                    1204 /* 0x04b4  */
-#define FV_FLD_ITEM_49                    1205 /* 0x04b5  */
-#define FV_FLD_ITEM_50                    1206 /* 0x04b6  */
-#define FV_FLD_ITEM_51                    1207 /* 0x04b7  */
-#define FV_FLD_ITEM_52                    1208 /* 0x04b8  */
-#define FV_FLD_ITEM_53                    1209 /* 0x04b9  */
-#define FV_FLD_ITEM_54                    1210 /* 0x04ba  */
-#define FV_FLD_ITEM_55                    1211 /* 0x04bb  */
-#define FV_FLD_ITEM_56                    1212 /* 0x04bc  */
-#define FV_FLD_ITEM_57                    1213 /* 0x04bd  */
-#define FV_FLD_ITEM_58                    1214 /* 0x04be  */
-#define FV_FLD_ITEM_59                    1215 /* 0x04bf  */
-#define FV_FLD_ITEM_60                    1216 /* 0x04c0  */
-#define FV_FLD_ITEM_61                    1217 /* 0x04c1  */
-#define FV_FLD_ITEM_62                    1218 /* 0x04c2  */
-#define FV_FLD_ITEM_63                    1219 /* 0x04c3  */
-#define FV_FLD_ITEM_64                    1220 /* 0x04c4  */
-#define FV_FLD_ITEM_65                    1221 /* 0x04c5  */
-#define FV_FLD_ITEM_66                    1222 /* 0x04c6  */
-#define FV_FLD_ITEM_67                    1223 /* 0x04c7  */
-#define FV_FLD_ITEM_68                    1224 /* 0x04c8  */
-#define FV_FLD_ITEM_69                    1225 /* 0x04c9  */
-#define FV_FLD_ITEM_70                    1226 /* 0x04ca  */
-#define FV_FLD_ITEM_71                    1227 /* 0x04cb  */
-#define FV_FLD_ITEM_72                    1228 /* 0x04cc  */
-#define FV_FLD_ITEM_73                    1229 /* 0x04cd  */
-#define FV_FLD_ITEM_74                    1230 /* 0x04ce  */
-#define FV_FLD_ITEM_75                    1231 /* 0x04cf  */
-#define FV_FLD_ITEM_76                    1232 /* 0x04d0  */
-#define FV_FLD_ITEM_77                    1233 /* 0x04d1  */
-#define FV_FLD_ITEM_78                    1234 /* 0x04d2  */
-#define FV_FLD_ITEM_79                    1235 /* 0x04d3  */
-#define FV_FLD_ITEM_80                    1236 /* 0x04d4  */
-#define FV_FLD_ITEM_81                    1237 /* 0x04d5  */
-#define FV_FLD_ITEM_82                    1238 /* 0x04d6  */
-#define FV_FLD_ITEM_83                    1239 /* 0x04d7  */
-#define FV_FLD_ITEM_84                    1240 /* 0x04d8  */
-#define FV_FLD_ITEM_85                    1241 /* 0x04d9  */
-#define FV_FLD_ITEM_86                    1242 /* 0x04da  */
-#define FV_FLD_ITEM_87                    1243 /* 0x04db  */
-#define FV_FLD_ITEM_88                    1244 /* 0x04dc  */
-#define FV_FLD_ITEM_89                    1245 /* 0x04dd  */
-#define FV_FLD_ITEM_90                    1246 /* 0x04de  */
-#define FV_FLD_ITEM_91                    1247 /* 0x04df  */
-#define FV_FLD_ITEM_92                    1248 /* 0x04e0  */
-#define FV_FLD_ITEM_93                    1249 /* 0x04e1  */
-#define FV_FLD_ITEM_94                    1250 /* 0x04e2  */
-#define FV_FLD_ITEM_95                    1251 /* 0x04e3  */
-#define FV_FLD_ITEM_96                    1252 /* 0x04e4  */
-#define FV_FLD_ITEM_97                    1253 /* 0x04e5  */
-#define FV_FLD_ITEM_98                    1254 /* 0x04e6  */
-#define FV_FLD_ITEM_99                    1255 /* 0x04e7  */
-#define FV_FLD_ITEM_100                   1256 /* 0x04e8  */
-#define FV_FLD_ITEM_101                   1257 /* 0x04e9  */
-#define FV_FLD_ITEM_102                   1258 /* 0x04ea  */
-#define FV_FLD_ITEM_103                   1259 /* 0x04eb  */
-#define FV_FLD_ITEM_104                   1260 /* 0x04ec  */
-#define FV_FLD_ITEM_105                   1261 /* 0x04ed  */
-#define FV_FLD_ITEM_106                   1262 /* 0x04ee  */
-#define FV_FLD_ITEM_107                   1263 /* 0x04ef  */
-#define FV_FLD_ITEM_108                   1264 /* 0x04f0  */
-#define FV_FLD_ITEM_109                   1265 /* 0x04f1  */
-#define FV_FLD_ITEM_110                   1266 /* 0x04f2  */
-#define FV_FLD_ITEM_111                   1267 /* 0x04f3  */
-#define FV_FLD_ITEM_112                   1268 /* 0x04f4  */
-#define FV_FLD_ITEM_113                   1269 /* 0x04f5  */
-#define FV_FLD_ITEM_114                   1270 /* 0x04f6  */
-#define FV_FLD_ITEM_115                   1271 /* 0x04f7  */
-#define FV_FLD_ITEM_116                   1272 /* 0x04f8  */
-#define FV_FLD_ITEM_117                   1273 /* 0x04f9  */
-#define FV_FLD_ITEM_118                   1274 /* 0x04fa  */
-#define FV_FLD_ITEM_119                   1275 /* 0x04fb  */
-#define FV_FLD_ITEM_120                   1276 /* 0x04fc  */
-#define FV_FLD_ITEM_121                   1277 /* 0x04fd  */
-#define FV_FLD_ITEM_122                   1278 /* 0x04fe  */
-#define FV_FLD_ITEM_123                   1279 /* 0x04ff  */
-#define FV_FLD_ITEM_124                   1280 /* 0x0500  */
-#define FV_FLD_ITEM_125                   1281 /* 0x0501  */
-#define FV_FLD_ITEM_126                   1282 /* 0x0502  */
-#define FV_FLD_ITEM_127                   1283 /* 0x0503  */
-#define FV_FLD_ITEM_128                   1284 /* 0x0504  */
-#define FV_FLD_ITEM_129                   1285 /* 0x0505  */
-#define FV_FLD_ITEM_130                   1286 /* 0x0506  */
-#define FV_FLD_ITEM_131                   1287 /* 0x0507  */
-#define FV_FLD_ITEM_132                   1288 /* 0x0508  */
-#define FV_FLD_ITEM_133                   1289 /* 0x0509  */
-#define FV_FLD_ITEM_134                   1290 /* 0x050a  */
-#define FV_FLD_ITEM_135                   1291 /* 0x050b  */
-#define FV_FLD_ITEM_136                   1292 /* 0x050c  */
-#define FV_FLD_ITEM_137                   1293 /* 0x050d  */
-#define FV_FLD_ITEM_138                   1294 /* 0x050e  */
-#define FV_FLD_ITEM_139                   1295 /* 0x050f  */
-#define FV_FLD_ITEM_140                   1296 /* 0x0510  */
-#define FV_FLD_ITEM_141                   1297 /* 0x0511  */
-#define FV_FLD_ITEM_142                   1298 /* 0x0512  */
-#define FV_FLD_ITEM_143                   1299 /* 0x0513  */
-#define FV_FLD_ITEM_144                   1300 /* 0x0514  */
-#define FV_FLD_ITEM_145                   1301 /* 0x0515  */
-#define FV_FLD_ITEM_146                   1302 /* 0x0516  */
-#define FV_FLD_ITEM_147                   1303 /* 0x0517  */
-#define FV_FLD_ITEM_148                   1304 /* 0x0518  */
-#define FV_FLD_ITEM_149                   1305 /* 0x0519  */
-#define FV_FLD_ITEM_150                   1306 /* 0x051a  */
-#define FV_FLD_ITEM_151                   1307 /* 0x051b  */
-#define FV_FLD_ITEM_152                   1308 /* 0x051c  */
-#define FV_FLD_ITEM_153                   1309 /* 0x051d  */
-#define FV_FLD_ITEM_154                   1310 /* 0x051e  */
-#define FV_FLD_ITEM_155                   1311 /* 0x051f  */
-#define FV_FLD_ITEM_156                   1312 /* 0x0520  */
-#define FV_FLD_ITEM_157                   1313 /* 0x0521  */
-#define FV_FLD_ITEM_158                   1314 /* 0x0522  */
-#define FV_FLD_ITEM_159                   1315 /* 0x0523  */
-#define FV_FLD_ITEM_160                   1316 /* 0x0524  */
-#define FV_FLD_ITEM_161                   1317 /* 0x0525  */
-#define FV_FLD_ITEM_162                   1318 /* 0x0526  */
-#define FV_FLD_ITEM_163                   1319 /* 0x0527  */
-#define FV_FLD_ITEM_164                   1320 /* 0x0528  */
-#define FV_FLD_ITEM_165                   1321 /* 0x0529  */
-#define FV_FLD_ITEM_166                   1322 /* 0x052a  */
-#define FV_FLD_ITEM_167                   1323 /* 0x052b  */
-#define FV_FLD_ITEM_168                   1324 /* 0x052c  */
-#define FV_FLD_ITEM_169                   1325 /* 0x052d  */
-#define FV_FLD_ITEM_170                   1326 /* 0x052e  */
-#define FV_FLD_ITEM_171                   1327 /* 0x052f  */
-#define FV_FLD_ITEM_172                   1328 /* 0x0530  */
-#define FV_FLD_ITEM_173                   1329 /* 0x0531  */
-#define FV_FLD_ITEM_174                   1330 /* 0x0532  */
-#define FV_FLD_ITEM_175                   1331 /* 0x0533  */
-#define FV_FLD_ITEM_176                   1332 /* 0x0534  */
-#define FV_FLD_ITEM_177                   1333 /* 0x0535  */
-#define FV_FLD_ITEM_178                   1334 /* 0x0536  */
-#define FV_FLD_ITEM_179                   1335 /* 0x0537  */
-#define FV_FLD_ITEM_180                   1336 /* 0x0538  */
-#define FV_FLD_ITEM_181                   1337 /* 0x0539  */
-#define FV_FLD_ITEM_182                   1338 /* 0x053a  */
-#define FV_FLD_ITEM_183                   1339 /* 0x053b  */
-#define FV_FLD_ITEM_184                   1340 /* 0x053c  */
-#define FV_FLD_ITEM_185                   1341 /* 0x053d  */
-#define FV_FLD_ITEM_186                   1342 /* 0x053e  */
-#define FV_FLD_ITEM_187                   1343 /* 0x053f  */
-#define FV_FLD_ITEM_188                   1344 /* 0x0540  */
-#define FV_FLD_ITEM_189                   1345 /* 0x0541  */
-#define FV_FLD_ITEM_190                   1346 /* 0x0542  */
-#define FV_FLD_ITEM_191                   1347 /* 0x0543  */
-#define FV_FLD_ITEM_192                   1348 /* 0x0544  */
-#define FV_FLD_ITEM_193                   1349 /* 0x0545  */
-#define FV_FLD_ITEM_194                   1350 /* 0x0546  */
-#define FV_FLD_ITEM_195                   1351 /* 0x0547  */
-#define FV_FLD_ITEM_196                   1352 /* 0x0548  */
-#define FV_FLD_ITEM_197                   1353 /* 0x0549  */
-#define FV_FLD_ITEM_198                   1354 /* 0x054a  */
-#define FV_FLD_ITEM_199                   1355 /* 0x054b  */
-#define FV_FLD_ITEM_200                   1356 /* 0x054c  */
-#define FV_FLD_ITEM_201                   1357 /* 0x054d  */
-#define FV_FLD_ITEM_202                   1358 /* 0x054e  */
-#define FV_FLD_ITEM_203                   1359 /* 0x054f  */
-#define FV_FLD_ITEM_204                   1360 /* 0x0550  */
-#define FV_FLD_ITEM_205                   1361 /* 0x0551  */
-#define FV_FLD_ITEM_206                   1362 /* 0x0552  */
-#define FV_FLD_ITEM_207                   1363 /* 0x0553  */
-#define FV_FLD_ITEM_208                   1364 /* 0x0554  */
-#define FV_FLD_ITEM_209                   1365 /* 0x0555  */
-#define FV_FLD_ITEM_210                   1366 /* 0x0556  */
-#define FV_FLD_ITEM_211                   1367 /* 0x0557  */
-#define FV_FLD_ITEM_212                   1368 /* 0x0558  */
-#define FV_FLD_ITEM_213                   1369 /* 0x0559  */
-#define FV_FLD_ITEM_214                   1370 /* 0x055a  */
-#define FV_FLD_ITEM_215                   1371 /* 0x055b  */
-#define FV_FLD_ITEM_216                   1372 /* 0x055c  */
-#define FV_FLD_ITEM_217                   1373 /* 0x055d  */
-#define FV_FLD_ITEM_218                   1374 /* 0x055e  */
-#define FV_FLD_ITEM_219                   1375 /* 0x055f  */
-#define FV_FLD_ITEM_220                   1376 /* 0x0560  */
-#define FV_FLD_ITEM_221                   1377 /* 0x0561  */
-#define FV_FLD_ITEM_222                   1378 /* 0x0562  */
-#define FV_FLD_ITEM_223                   1379 /* 0x0563  */
-#define FV_FLD_ITEM_224                   1380 /* 0x0564  */
-#define FV_FLD_ITEM_225                   1381 /* 0x0565  */
-#define FV_FLD_ITEM_226                   1382 /* 0x0566  */
-#define FV_FLD_ITEM_227                   1383 /* 0x0567  */
-#define FV_FLD_ITEM_228                   1384 /* 0x0568  */
-#define FV_FLD_ITEM_229                   1385 /* 0x0569  */
-#define FV_FLD_ITEM_230                   1386 /* 0x056a  */
-#define FV_FLD_ITEM_231                   1387 /* 0x056b  */
-#define FV_FLD_ITEM_232                   1388 /* 0x056c  */
-#define FV_FLD_ITEM_233                   1389 /* 0x056d  */
-#define FV_FLD_ITEM_234                   1390 /* 0x056e  */
-#define FV_FLD_ITEM_235                   1391 /* 0x056f  */
-#define FV_FLD_ITEM_236                   1392 /* 0x0570  */
-#define FV_FLD_ITEM_237                   1393 /* 0x0571  */
-#define FV_FLD_ITEM_238                   1394 /* 0x0572  */
-#define FV_FLD_ITEM_239                   1395 /* 0x0573  */
-#define FV_FLD_ITEM_240                   1396 /* 0x0574  */
-#define FV_FLD_ITEM_241                   1397 /* 0x0575  */
-#define FV_FLD_ITEM_242                   1398 /* 0x0576  */
-#define FV_FLD_ITEM_243                   1399 /* 0x0577  */
-#define FV_FLD_ITEM_244                   1400 /* 0x0578  */
-#define FV_FLD_ITEM_245                   1401 /* 0x0579  */
-#define FV_FLD_ITEM_246                   1402 /* 0x057a  */
-#define FV_FLD_ITEM_247                   1403 /* 0x057b  */
-#define FV_FLD_ITEM_248                   1404 /* 0x057c  */
-#define FV_FLD_ITEM_249                   1405 /* 0x057d  */
-#define FV_FLD_ITEM_250                   1406 /* 0x057e  */
-#define FV_FLD_ITEM_251                   1407 /* 0x057f  */
-#define FV_FLD_ITEM_252                   1408 /* 0x0580  */
-#define FV_FLD_ITEM_253                   1409 /* 0x0581  */
-#define FV_FLD_ITEM_254                   1410 /* 0x0582  */
-#define FV_FLD_ITEM_255                   1411 /* 0x0583  */
+#define FV_FLD_ITEM_0                     1106 /* 0x0452  */
+#define FV_FLD_ITEM_1                     1107 /* 0x0453  */
+#define FV_FLD_ITEM_2                     1108 /* 0x0454  */
+#define FV_FLD_ITEM_3                     1109 /* 0x0455  */
+#define FV_FLD_ITEM_4                     1110 /* 0x0456  */
+#define FV_FLD_ITEM_5                     1111 /* 0x0457  */
+#define FV_FLD_ITEM_6                     1112 /* 0x0458  */
+#define FV_FLD_ITEM_7                     1113 /* 0x0459  */
+#define FV_FLD_ITEM_8                     1114 /* 0x045a  */
+#define FV_FLD_ITEM_9                     1115 /* 0x045b  */
+#define FV_FLD_ITEM_10                    1116 /* 0x045c  */
+#define FV_FLD_ITEM_11                    1117 /* 0x045d  */
+#define FV_FLD_ITEM_12                    1118 /* 0x045e  */
+#define FV_FLD_ITEM_13                    1119 /* 0x045f  */
+#define FV_FLD_ITEM_14                    1120 /* 0x0460  */
+#define FV_FLD_ITEM_15                    1121 /* 0x0461  */
+#define FV_FLD_ITEM_16                    1122 /* 0x0462  */
+#define FV_FLD_ITEM_17                    1123 /* 0x0463  */
+#define FV_FLD_ITEM_18                    1124 /* 0x0464  */
+#define FV_FLD_ITEM_19                    1125 /* 0x0465  */
+#define FV_FLD_ITEM_20                    1126 /* 0x0466  */
+#define FV_FLD_ITEM_21                    1127 /* 0x0467  */
+#define FV_FLD_ITEM_22                    1128 /* 0x0468  */
+#define FV_FLD_ITEM_23                    1129 /* 0x0469  */
+#define FV_FLD_ITEM_24                    1130 /* 0x046a  */
+#define FV_FLD_ITEM_25                    1131 /* 0x046b  */
+#define FV_FLD_ITEM_26                    1132 /* 0x046c  */
+#define FV_FLD_ITEM_27                    1133 /* 0x046d  */
+#define FV_FLD_ITEM_28                    1134 /* 0x046e  */
+#define FV_FLD_ITEM_29                    1135 /* 0x046f  */
+#define FV_FLD_ITEM_30                    1136 /* 0x0470  */
+#define FV_FLD_ITEM_31                    1137 /* 0x0471  */
+#define FV_FLD_ITEM_32                    1138 /* 0x0472  */
+#define FV_FLD_ITEM_33                    1139 /* 0x0473  */
+#define FV_FLD_ITEM_34                    1140 /* 0x0474  */
+#define FV_FLD_ITEM_35                    1141 /* 0x0475  */
+#define FV_FLD_ITEM_36                    1142 /* 0x0476  */
+#define FV_FLD_ITEM_37                    1143 /* 0x0477  */
+#define FV_FLD_ITEM_38                    1144 /* 0x0478  */
+#define FV_FLD_ITEM_39                    1145 /* 0x0479  */
+#define FV_FLD_ITEM_40                    1146 /* 0x047a  */
+#define FV_FLD_ITEM_41                    1147 /* 0x047b  */
+#define FV_FLD_ITEM_42                    1148 /* 0x047c  */
+#define FV_FLD_ITEM_43                    1149 /* 0x047d  */
+#define FV_FLD_ITEM_44                    1150 /* 0x047e  */
+#define FV_FLD_ITEM_45                    1151 /* 0x047f  */
+#define FV_FLD_ITEM_46                    1152 /* 0x0480  */
+#define FV_FLD_ITEM_47                    1153 /* 0x0481  */
+#define FV_FLD_ITEM_48                    1154 /* 0x0482  */
+#define FV_FLD_ITEM_49                    1155 /* 0x0483  */
+#define FV_FLD_ITEM_50                    1156 /* 0x0484  */
+#define FV_FLD_ITEM_51                    1157 /* 0x0485  */
+#define FV_FLD_ITEM_52                    1158 /* 0x0486  */
+#define FV_FLD_ITEM_53                    1159 /* 0x0487  */
+#define FV_FLD_ITEM_54                    1160 /* 0x0488  */
+#define FV_FLD_ITEM_55                    1161 /* 0x0489  */
+#define FV_FLD_ITEM_56                    1162 /* 0x048a  */
+#define FV_FLD_ITEM_57                    1163 /* 0x048b  */
+#define FV_FLD_ITEM_58                    1164 /* 0x048c  */
+#define FV_FLD_ITEM_59                    1165 /* 0x048d  */
+#define FV_FLD_ITEM_60                    1166 /* 0x048e  */
+#define FV_FLD_ITEM_61                    1167 /* 0x048f  */
+#define FV_FLD_ITEM_62                    1168 /* 0x0490  */
+#define FV_FLD_ITEM_63                    1169 /* 0x0491  */
+#define FV_FLD_ITEM_64                    1170 /* 0x0492  */
+#define FV_FLD_ITEM_65                    1171 /* 0x0493  */
+#define FV_FLD_ITEM_66                    1172 /* 0x0494  */
+#define FV_FLD_ITEM_67                    1173 /* 0x0495  */
+#define FV_FLD_ITEM_68                    1174 /* 0x0496  */
+#define FV_FLD_ITEM_69                    1175 /* 0x0497  */
+#define FV_FLD_ITEM_70                    1176 /* 0x0498  */
+#define FV_FLD_ITEM_71                    1177 /* 0x0499  */
+#define FV_FLD_ITEM_72                    1178 /* 0x049a  */
+#define FV_FLD_ITEM_73                    1179 /* 0x049b  */
+#define FV_FLD_ITEM_74                    1180 /* 0x049c  */
+#define FV_FLD_ITEM_75                    1181 /* 0x049d  */
+#define FV_FLD_ITEM_76                    1182 /* 0x049e  */
+#define FV_FLD_ITEM_77                    1183 /* 0x049f  */
+#define FV_FLD_ITEM_78                    1184 /* 0x04a0  */
+#define FV_FLD_ITEM_79                    1185 /* 0x04a1  */
+#define FV_FLD_ITEM_80                    1186 /* 0x04a2  */
+#define FV_FLD_ITEM_81                    1187 /* 0x04a3  */
+#define FV_FLD_ITEM_82                    1188 /* 0x04a4  */
+#define FV_FLD_ITEM_83                    1189 /* 0x04a5  */
+#define FV_FLD_ITEM_84                    1190 /* 0x04a6  */
+#define FV_FLD_ITEM_85                    1191 /* 0x04a7  */
+#define FV_FLD_ITEM_86                    1192 /* 0x04a8  */
+#define FV_FLD_ITEM_87                    1193 /* 0x04a9  */
+#define FV_FLD_ITEM_88                    1194 /* 0x04aa  */
+#define FV_FLD_ITEM_89                    1195 /* 0x04ab  */
+#define FV_FLD_ITEM_90                    1196 /* 0x04ac  */
+#define FV_FLD_ITEM_91                    1197 /* 0x04ad  */
+#define FV_FLD_ITEM_92                    1198 /* 0x04ae  */
+#define FV_FLD_ITEM_93                    1199 /* 0x04af  */
+#define FV_FLD_ITEM_94                    1200 /* 0x04b0  */
+#define FV_FLD_ITEM_95                    1201 /* 0x04b1  */
+#define FV_FLD_ITEM_96                    1202 /* 0x04b2  */
+#define FV_FLD_ITEM_97                    1203 /* 0x04b3  */
+#define FV_FLD_ITEM_98                    1204 /* 0x04b4  */
+#define FV_FLD_ITEM_99                    1205 /* 0x04b5  */
+#define FV_FLD_ITEM_100                   1206 /* 0x04b6  */
+#define FV_FLD_ITEM_101                   1207 /* 0x04b7  */
+#define FV_FLD_ITEM_102                   1208 /* 0x04b8  */
+#define FV_FLD_ITEM_103                   1209 /* 0x04b9  */
+#define FV_FLD_ITEM_104                   1210 /* 0x04ba  */
+#define FV_FLD_ITEM_105                   1211 /* 0x04bb  */
+#define FV_FLD_ITEM_106                   1212 /* 0x04bc  */
+#define FV_FLD_ITEM_107                   1213 /* 0x04bd  */
+#define FV_FLD_ITEM_108                   1214 /* 0x04be  */
+#define FV_FLD_ITEM_109                   1215 /* 0x04bf  */
+#define FV_FLD_ITEM_110                   1216 /* 0x04c0  */
+#define FV_FLD_ITEM_111                   1217 /* 0x04c1  */
+#define FV_FLD_ITEM_112                   1218 /* 0x04c2  */
+#define FV_FLD_ITEM_113                   1219 /* 0x04c3  */
+#define FV_FLD_ITEM_114                   1220 /* 0x04c4  */
+#define FV_FLD_ITEM_115                   1221 /* 0x04c5  */
+#define FV_FLD_ITEM_116                   1222 /* 0x04c6  */
+#define FV_FLD_ITEM_117                   1223 /* 0x04c7  */
+#define FV_FLD_ITEM_118                   1224 /* 0x04c8  */
+#define FV_FLD_ITEM_119                   1225 /* 0x04c9  */
+#define FV_FLD_ITEM_120                   1226 /* 0x04ca  */
+#define FV_FLD_ITEM_121                   1227 /* 0x04cb  */
+#define FV_FLD_ITEM_122                   1228 /* 0x04cc  */
+#define FV_FLD_ITEM_123                   1229 /* 0x04cd  */
+#define FV_FLD_ITEM_124                   1230 /* 0x04ce  */
+#define FV_FLD_ITEM_125                   1231 /* 0x04cf  */
+#define FV_FLD_ITEM_126                   1232 /* 0x04d0  */
+#define FV_FLD_ITEM_127                   1233 /* 0x04d1  */
+#define FV_FLD_ITEM_128                   1234 /* 0x04d2  */
+#define FV_FLD_ITEM_129                   1235 /* 0x04d3  */
+#define FV_FLD_ITEM_130                   1236 /* 0x04d4  */
+#define FV_FLD_ITEM_131                   1237 /* 0x04d5  */
+#define FV_FLD_ITEM_132                   1238 /* 0x04d6  */
+#define FV_FLD_ITEM_133                   1239 /* 0x04d7  */
+#define FV_FLD_ITEM_134                   1240 /* 0x04d8  */
+#define FV_FLD_ITEM_135                   1241 /* 0x04d9  */
+#define FV_FLD_ITEM_136                   1242 /* 0x04da  */
+#define FV_FLD_ITEM_137                   1243 /* 0x04db  */
+#define FV_FLD_ITEM_138                   1244 /* 0x04dc  */
+#define FV_FLD_ITEM_139                   1245 /* 0x04dd  */
+#define FV_FLD_ITEM_140                   1246 /* 0x04de  */
+#define FV_FLD_ITEM_141                   1247 /* 0x04df  */
+#define FV_FLD_ITEM_142                   1248 /* 0x04e0  */
+#define FV_FLD_ITEM_143                   1249 /* 0x04e1  */
+#define FV_FLD_ITEM_144                   1250 /* 0x04e2  */
+#define FV_FLD_ITEM_145                   1251 /* 0x04e3  */
+#define FV_FLD_ITEM_146                   1252 /* 0x04e4  */
+#define FV_FLD_ITEM_147                   1253 /* 0x04e5  */
+#define FV_FLD_ITEM_148                   1254 /* 0x04e6  */
+#define FV_FLD_ITEM_149                   1255 /* 0x04e7  */
+#define FV_FLD_ITEM_150                   1256 /* 0x04e8  */
+#define FV_FLD_ITEM_151                   1257 /* 0x04e9  */
+#define FV_FLD_ITEM_152                   1258 /* 0x04ea  */
+#define FV_FLD_ITEM_153                   1259 /* 0x04eb  */
+#define FV_FLD_ITEM_154                   1260 /* 0x04ec  */
+#define FV_FLD_ITEM_155                   1261 /* 0x04ed  */
+#define FV_FLD_ITEM_156                   1262 /* 0x04ee  */
+#define FV_FLD_ITEM_157                   1263 /* 0x04ef  */
+#define FV_FLD_ITEM_158                   1264 /* 0x04f0  */
+#define FV_FLD_ITEM_159                   1265 /* 0x04f1  */
+#define FV_FLD_ITEM_160                   1266 /* 0x04f2  */
+#define FV_FLD_ITEM_161                   1267 /* 0x04f3  */
+#define FV_FLD_ITEM_162                   1268 /* 0x04f4  */
+#define FV_FLD_ITEM_163                   1269 /* 0x04f5  */
+#define FV_FLD_ITEM_164                   1270 /* 0x04f6  */
+#define FV_FLD_ITEM_165                   1271 /* 0x04f7  */
+#define FV_FLD_ITEM_166                   1272 /* 0x04f8  */
+#define FV_FLD_ITEM_167                   1273 /* 0x04f9  */
+#define FV_FLD_ITEM_168                   1274 /* 0x04fa  */
+#define FV_FLD_ITEM_169                   1275 /* 0x04fb  */
+#define FV_FLD_ITEM_170                   1276 /* 0x04fc  */
+#define FV_FLD_ITEM_171                   1277 /* 0x04fd  */
+#define FV_FLD_ITEM_172                   1278 /* 0x04fe  */
+#define FV_FLD_ITEM_173                   1279 /* 0x04ff  */
+#define FV_FLD_ITEM_174                   1280 /* 0x0500  */
+#define FV_FLD_ITEM_175                   1281 /* 0x0501  */
+#define FV_FLD_ITEM_176                   1282 /* 0x0502  */
+#define FV_FLD_ITEM_177                   1283 /* 0x0503  */
+#define FV_FLD_ITEM_178                   1284 /* 0x0504  */
+#define FV_FLD_ITEM_179                   1285 /* 0x0505  */
+#define FV_FLD_ITEM_180                   1286 /* 0x0506  */
+#define FV_FLD_ITEM_181                   1287 /* 0x0507  */
+#define FV_FLD_ITEM_182                   1288 /* 0x0508  */
+#define FV_FLD_ITEM_183                   1289 /* 0x0509  */
+#define FV_FLD_ITEM_184                   1290 /* 0x050a  */
+#define FV_FLD_ITEM_185                   1291 /* 0x050b  */
+#define FV_FLD_ITEM_186                   1292 /* 0x050c  */
+#define FV_FLD_ITEM_187                   1293 /* 0x050d  */
+#define FV_FLD_ITEM_188                   1294 /* 0x050e  */
+#define FV_FLD_ITEM_189                   1295 /* 0x050f  */
+#define FV_FLD_ITEM_190                   1296 /* 0x0510  */
+#define FV_FLD_ITEM_191                   1297 /* 0x0511  */
+#define FV_FLD_ITEM_192                   1298 /* 0x0512  */
+#define FV_FLD_ITEM_193                   1299 /* 0x0513  */
+#define FV_FLD_ITEM_194                   1300 /* 0x0514  */
+#define FV_FLD_ITEM_195                   1301 /* 0x0515  */
+#define FV_FLD_ITEM_196                   1302 /* 0x0516  */
+#define FV_FLD_ITEM_197                   1303 /* 0x0517  */
+#define FV_FLD_ITEM_198                   1304 /* 0x0518  */
+#define FV_FLD_ITEM_199                   1305 /* 0x0519  */
+#define FV_FLD_ITEM_200                   1306 /* 0x051a  */
+#define FV_FLD_ITEM_201                   1307 /* 0x051b  */
+#define FV_FLD_ITEM_202                   1308 /* 0x051c  */
+#define FV_FLD_ITEM_203                   1309 /* 0x051d  */
+#define FV_FLD_ITEM_204                   1310 /* 0x051e  */
+#define FV_FLD_ITEM_205                   1311 /* 0x051f  */
+#define FV_FLD_ITEM_206                   1312 /* 0x0520  */
+#define FV_FLD_ITEM_207                   1313 /* 0x0521  */
+#define FV_FLD_ITEM_208                   1314 /* 0x0522  */
+#define FV_FLD_ITEM_209                   1315 /* 0x0523  */
+#define FV_FLD_ITEM_210                   1316 /* 0x0524  */
+#define FV_FLD_ITEM_211                   1317 /* 0x0525  */
+#define FV_FLD_ITEM_212                   1318 /* 0x0526  */
+#define FV_FLD_ITEM_213                   1319 /* 0x0527  */
+#define FV_FLD_ITEM_214                   1320 /* 0x0528  */
+#define FV_FLD_ITEM_215                   1321 /* 0x0529  */
+#define FV_FLD_ITEM_216                   1322 /* 0x052a  */
+#define FV_FLD_ITEM_217                   1323 /* 0x052b  */
+#define FV_FLD_ITEM_218                   1324 /* 0x052c  */
+#define FV_FLD_ITEM_219                   1325 /* 0x052d  */
+#define FV_FLD_ITEM_220                   1326 /* 0x052e  */
+#define FV_FLD_ITEM_221                   1327 /* 0x052f  */
+#define FV_FLD_ITEM_222                   1328 /* 0x0530  */
+#define FV_FLD_ITEM_223                   1329 /* 0x0531  */
+#define FV_FLD_ITEM_224                   1330 /* 0x0532  */
+#define FV_FLD_ITEM_225                   1331 /* 0x0533  */
+#define FV_FLD_ITEM_226                   1332 /* 0x0534  */
+#define FV_FLD_ITEM_227                   1333 /* 0x0535  */
+#define FV_FLD_ITEM_228                   1334 /* 0x0536  */
+#define FV_FLD_ITEM_229                   1335 /* 0x0537  */
+#define FV_FLD_ITEM_230                   1336 /* 0x0538  */
+#define FV_FLD_ITEM_231                   1337 /* 0x0539  */
+#define FV_FLD_ITEM_232                   1338 /* 0x053a  */
+#define FV_FLD_ITEM_233                   1339 /* 0x053b  */
+#define FV_FLD_ITEM_234                   1340 /* 0x053c  */
+#define FV_FLD_ITEM_235                   1341 /* 0x053d  */
+#define FV_FLD_ITEM_236                   1342 /* 0x053e  */
+#define FV_FLD_ITEM_237                   1343 /* 0x053f  */
+#define FV_FLD_ITEM_238                   1344 /* 0x0540  */
+#define FV_FLD_ITEM_239                   1345 /* 0x0541  */
+#define FV_FLD_ITEM_240                   1346 /* 0x0542  */
+#define FV_FLD_ITEM_241                   1347 /* 0x0543  */
+#define FV_FLD_ITEM_242                   1348 /* 0x0544  */
+#define FV_FLD_ITEM_243                   1349 /* 0x0545  */
+#define FV_FLD_ITEM_244                   1350 /* 0x0546  */
+#define FV_FLD_ITEM_245                   1351 /* 0x0547  */
+#define FV_FLD_ITEM_246                   1352 /* 0x0548  */
+#define FV_FLD_ITEM_247                   1353 /* 0x0549  */
+#define FV_FLD_ITEM_248                   1354 /* 0x054a  */
+#define FV_FLD_ITEM_249                   1355 /* 0x054b  */
+#define FV_FLD_ITEM_250                   1356 /* 0x054c  */
+#define FV_FLD_ITEM_251                   1357 /* 0x054d  */
+#define FV_FLD_ITEM_252                   1358 /* 0x054e  */
+#define FV_FLD_ITEM_253                   1359 /* 0x054f  */
+#define FV_FLD_ITEM_254                   1360 /* 0x0550  */
+#define FV_FLD_ITEM_255                   1361 /* 0x0551  */
 
 #define FV_FLD_ITEM_AREA_END              1411 /* 0x0583  */
 
