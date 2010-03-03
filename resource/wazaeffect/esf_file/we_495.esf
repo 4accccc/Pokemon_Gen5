@@ -5,7 +5,7 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 %00
 カメラ移動	追従	攻撃側	16	0	8
 制御モード変更	継続
-SE再生	SEQ_SE_FLD_52	SE1	0	-500	127	0	0
+SE再生	SEQ_SE_FLD_52	SE1	真ん中	0:-500:127	0:0:0
 SEパン	SE1	追従	攻撃側	攻撃側	0	60:0:0
 制御モード変更	逐次
 ポケモン拡縮	攻撃側	往復	0.3	-0.3	4	0	3

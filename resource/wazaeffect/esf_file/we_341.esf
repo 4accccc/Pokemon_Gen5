@@ -4,18 +4,18 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_341.spa
 #001
 %00
 制御モード変更	継続
-SE再生	SEQ_SE_W054_01	SE1	0	0	120	0	0
-SE再生	SEQ_SE_W055_01	SE2	0	100	120	0	0
-SE再生	SEQ_SE_DUMMY5	SE2	80	0	0	0	0
+SE再生	SEQ_SE_W054_01	SE1	真ん中	0:0:120	0:0:0
+SE再生	SEQ_SE_W055_01	SE2	真ん中	0:100:120	0:0:0
+SE再生	SEQ_SE_DUMMY5	SE2	真ん中	80:0:0	0:0:0
 SE動的変化	SE2	追従	ボリューム	120	0	60	20:0:0
 SEパン	SE1	追従	攻撃側	防御側	0	30:0:0
 SEパン	SE2	追従	攻撃側	防御側	0	30:0:0
 制御モード変更	逐次
 制御モード変更	継続
-SE再生	SEQ_SE_W051_01	SE1	30	0	120	0	0
-SE再生	SEQ_SE_W051_01	SE1	40	0	120	0	0
-SE再生	SEQ_SE_W051_01	SE1	50	0	120	0	0
-SE再生	SEQ_SE_W051_01	SE1	60	0	120	0	0
+SE再生	SEQ_SE_W051_01	SE1	真ん中	30:0:120	0:0:0
+SE再生	SEQ_SE_W051_01	SE1	真ん中	40:0:120	0:0:0
+SE再生	SEQ_SE_W051_01	SE1	真ん中	50:0:120	0:0:0
+SE再生	SEQ_SE_W051_01	SE1	真ん中	60:0:120	0:0:0
 SEパン	SE1	追従	防御側	防御側	25	50:0:0
 制御モード変更	逐次
 射影モード	透視射影

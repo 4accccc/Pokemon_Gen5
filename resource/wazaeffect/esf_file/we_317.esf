@@ -4,10 +4,10 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_317.spa
 #001
 %00
 制御モード変更	継続
-SE再生	SEQ_SE_W157_01	SE1	0	0	100	0	0
-SE再生	SEQ_SE_DUMMY5	SE1	100	0	0	0	0
-SE再生	SEQ_SE_W157_03	PSG	0	0	90	0	0
-SE再生	SEQ_SE_DUMMY5	PSG	100	0	0	0	0
+SE再生	SEQ_SE_W157_01	SE1	真ん中	0:0:100	0:0:0
+SE再生	SEQ_SE_DUMMY5	SE1	真ん中	100:0:0	0:0:0
+SE再生	SEQ_SE_W157_03	PSG	真ん中	0:0:90	0:0:0
+SE再生	SEQ_SE_DUMMY5	PSG	真ん中	100:0:0	0:0:0
 SEパン	SE1	追従	攻撃側	攻撃側	0	120:0:0
 制御モード変更	逐次
 射影モード	透視射影
@@ -16,8 +16,8 @@ SEパン	SE1	追従	攻撃側	攻撃側	0	120:0:0
 タイマーによるウエイト	20
 パーティクル再生	w_317	W_317_317_STONE	防御側	方向無し	1:0:0	1:1:1	1
 制御モード変更	継続
-SE再生	SEQ_SE_FLD_50	SE2	0	-500	127	0	0
-SE再生	SEQ_SE_FLD_50	SE2	10	-500	100	0	0
+SE再生	SEQ_SE_FLD_50	SE2	真ん中	0:-500:127	0:0:0
+SE再生	SEQ_SE_FLD_50	SE2	真ん中	10:-500:100	0:0:0
 SEパン	SE2	追従	防御側	防御側	0	20:0:0
 制御モード変更	逐次
 カメラゆれ	縦ゆれ	0.3	0	2	0	1
