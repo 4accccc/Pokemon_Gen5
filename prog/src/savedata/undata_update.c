@@ -210,9 +210,12 @@ static void  DelData(UNITEDNATIONS_SAVE *un_data, const u32 inDelIdx)
   for(i=inDelIdx;i<(UNITEDNATIONS_PEOPLE_MAX-1);i++)
   {
     un_data[i] = un_data[i+1];
-    if ( !un_data[i+1].valid ) break;
+    if ( !un_data[i+1].valid ){
+      i++;
+      break;
+    }
   }
-  i++;
+  NOZOMU_Printf("idx=%d以降は無効データ\n",i);
   //以降は無効データのはずなので無効状態にする
   for (;i<UNITEDNATIONS_PEOPLE_MAX;i++)
   {
