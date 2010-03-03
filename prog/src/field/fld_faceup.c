@@ -125,6 +125,8 @@ static GMEVENT_RESULT SetupEvt( GMEVENT* event, int* seq, void* work )
 //--------------------------------------------------------------
 static void Setup(FACEUP_WK_PTR ptr)
 {
+  int ncgr;
+  int nscr;
   //プライオリティ保存
   PushPriority(ptr);
   //表示状態の保存
@@ -139,6 +141,17 @@ static void Setup(FACEUP_WK_PTR ptr)
       GX_BG_CHARBASE_0x04000);
 
   G2_BlendNone();
+
+  if (ptr->BackNo == 0)
+  {
+    ncgr = NARC_fld_faceup_faceup_bg_day_ncgr;
+    nscr = NARC_fld_faceup_faceup_bg_day_nscr;
+  }
+  else
+  {
+    ncgr = NARC_fld_faceup_faceup_bg_night_ncgr;
+    nscr = NARC_fld_faceup_faceup_bg_night_nscr;
+  }
   //タイプごとの背景、顔BGをロード
   {
     void *buf;
@@ -146,7 +159,7 @@ static void Setup(FACEUP_WK_PTR ptr)
     //キャラ
     {
       NNSG2dCharacterData *chr;
-		  buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_bg_day_ncgr, ptr->HeapID );
+		  buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, ncgr, ptr->HeapID );
 		  GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedBGCharacterData(buf,&chr) == FALSE ){
         GF_ASSERT( 0 );
@@ -157,7 +170,7 @@ static void Setup(FACEUP_WK_PTR ptr)
     //スクリーン
     {
       NNSG2dScreenData *scr;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_bg_day_nscr, ptr->HeapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, nscr, ptr->HeapID );
       GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedScreenData(buf,&scr) == FALSE ){
         GF_ASSERT( 0 );
