@@ -75,6 +75,7 @@
 #define MUSICAL_VALUE_WR_MAX_CONDITION (36) //演目の高いコンディション
 #define MUSICAL_VALUE_WR_POS_TO_RANK (37) //順位に対応した参加番号
 #define MUSICAL_VALUE_WR_POKE_MAX_POINT_CON (38) //最も点が高かったコンディション
+#define MUSICAL_VALUE_WR_POS_TO_OBJ_VIEW (39) //立ち位置に応じた見た目(プレイヤーの時は消す
 
 //_GET_MUSICAL_FAN_VALUE 用
 #define MUSICAL_VALUE_FAN_TYPE (0)  //見た目

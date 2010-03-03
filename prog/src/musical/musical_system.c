@@ -257,22 +257,44 @@ void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData )
   GFL_HEAP_FreeMemory( distData );
 }
 
-void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , const u8 programNo , HEAPID heapId )
+void MUSICAL_SYSTEM_LoadDistributeData_Data( MUSICAL_DISTRIBUTE_DATA *distData , const u8 programNo , HEAPID heapId )
 {
-  //FIXME:セーブデータからの取得
   distData->programNo = programNo;
   if( programNo >= MUS_PROGRAM_LOCAL_NUM )
   {
+    //FIXME:セーブデータからの取得
     distData->programData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_PROGDATA , FALSE , heapId , &distData->programDataSize );
-    distData->messageData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_GMMDATA , FALSE , heapId , &distData->messageDataSize );
-    distData->scriptData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_SCRIPTDATA , FALSE , heapId , &distData->scriptDataSize );
-    distData->strmData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_STRMDATA , FALSE , heapId , &distData->strmDataSize );
   }
   else
   {
     distData->programData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01+programNo , MUSICAL_ARCDATAID_PROGDATA , FALSE , heapId , &distData->programDataSize );
+  }
+}
+void MUSICAL_SYSTEM_LoadDistributeData_Script( MUSICAL_DISTRIBUTE_DATA *distData , const u8 programNo , HEAPID heapId )
+{
+  distData->programNo = programNo;
+  if( programNo >= MUS_PROGRAM_LOCAL_NUM )
+  {
+    //FIXME:セーブデータからの取得
+    distData->messageData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_GMMDATA , FALSE , heapId , &distData->messageDataSize );
+    distData->scriptData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_SCRIPTDATA , FALSE , heapId , &distData->scriptDataSize );
+  }
+  else
+  {
     distData->messageData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01+programNo , MUSICAL_ARCDATAID_GMMDATA , FALSE , heapId , &distData->messageDataSize );
     distData->scriptData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01+programNo , MUSICAL_ARCDATAID_SCRIPTDATA , FALSE , heapId , &distData->scriptDataSize );
+  }
+}
+void MUSICAL_SYSTEM_LoadDistributeData_Strm( MUSICAL_DISTRIBUTE_DATA *distData , const u8 programNo , HEAPID heapId )
+{
+  distData->programNo = programNo;
+  if( programNo >= MUS_PROGRAM_LOCAL_NUM )
+  {
+    //FIXME:セーブデータからの取得
+    distData->strmData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_STRMDATA , FALSE , heapId , &distData->strmDataSize );
+  }
+  else
+  {
     distData->strmData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01+programNo , MUSICAL_ARCDATAID_STRMDATA , FALSE , heapId , &distData->strmDataSize );
   }
 }

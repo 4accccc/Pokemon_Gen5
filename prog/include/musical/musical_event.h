@@ -25,4 +25,5 @@ extern const u8 MUSICAL_EVENT_GetMaxPoint( MUSICAL_EVENT_WORK *evWork );
 extern const u8 MUSICAL_EVENT_GetMinPoint( MUSICAL_EVENT_WORK *evWork );
 extern const u8 MUSICAL_EVENT_GetPosToRank( MUSICAL_EVENT_WORK *evWork , const u8 idx );
 extern const u8 MUSICAL_EVENT_GetMaxPointCondition( MUSICAL_EVENT_WORK *evWork , const u8 idx );
+extern const u8 MUSICAL_EVENT_GetPosObjView( MUSICAL_EVENT_WORK *evWork , const u8 idx );
 extern void MUSICAL_EVENT_CalcProgramData( MUSICAL_EVENT_WORK *evWork );

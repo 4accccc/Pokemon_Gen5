@@ -13,6 +13,7 @@
 #include "system/gfl_use.h"
 
 #include "arc/fieldmap/zone_id.h"
+#include "arc/fieldmap/fldmmdl_objcode.h"
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_comm.h"
@@ -80,6 +81,7 @@ typedef enum
   MES_FINIHS_EVENT,
 
   MES_ENTER_WAITROOM_FIRST_BEF_COMM,
+  MES_ENTER_WAITROOM_FIRST_BEF_COMM2,
   MES_ENTER_WAITROOM_FIRST,
   MES_WAITROOM_FIRST,
   MES_EXIT_WAITROOM_FIRST,
@@ -185,11 +187,13 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
   evWork->shotInitWork = NULL;
   evWork->musSave = MUSICAL_SAVE_GetMusicalSave( evWork->saveCtrl );
   
+  evWork->distData = MUSICAL_SYSTEM_InitDistributeData( HEAPID_PROC_WRAPPER );
+
   if( evWork->isComm == TRUE )
   {
     evWork->state = MES_ENTER_WAITROOM_FIRST_BEF_COMM;
     evWork->subSeq = 0;
-    MUS_COMM_InitMusical( evWork->commWork , GAMEDATA_GetMyStatus(evWork->gameData) , evWork->gameComm , HEAPID_PROC_WRAPPER );
+    MUS_COMM_InitMusical( evWork->commWork , GAMEDATA_GetMyStatus(evWork->gameData) , evWork->gameComm , evWork->distData , HEAPID_PROC_WRAPPER );
   }
   else
   {
@@ -250,7 +254,23 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   case MES_ENTER_WAITROOM_FIRST_BEF_COMM:
     if( MUS_COMM_IsPostAllMyStatus( evWork->scriptWork->commWork ) == TRUE )
     {
+      //マップ遷移前に演目のデータだけ必要(NPCキャラを出すため
+      u32 conPointArr = 0;
+      if( MUS_COMM_GetMode( evWork->scriptWork->commWork ) == MCM_PARENT )
+      {
+        MUSICAL_SYSTEM_LoadDistributeData_Data( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_PROC_WRAPPER );
+        evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
+        conPointArr = MUSICAL_PROGRAM_GetConditionPointArr( evWork->progWork );
+      }
+      MUS_COMM_StartSendProgram_Data( evWork->scriptWork->commWork , conPointArr );
+      evWork->state = MES_ENTER_WAITROOM_FIRST_BEF_COMM2;
+    }
+    break;
+  case MES_ENTER_WAITROOM_FIRST_BEF_COMM2:
+    if( MUS_COMM_IsPostProgramData(evWork->scriptWork->commWork) == TRUE )
+    {
       u8 i;
+      MUSICAL_EVENT_CalcProgramData( evWork );
       evWork->state = MES_ENTER_WAITROOM_FIRST;
       //ここでIDXの取得
       for( i=0;i<MUSICAL_POKE_MAX;i++ )
@@ -443,23 +463,22 @@ static void MUSICAL_EVENT_InitMusical( MUSICAL_EVENT_WORK *evWork )
   //GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_PROC|HEAPDIR_MASK, 0x8000 );
 
   evWork->musPoke = MUSICAL_SYSTEM_InitMusPoke( evWork->pokePara , HEAPID_PROC_WRAPPER );
-  evWork->distData = MUSICAL_SYSTEM_InitDistributeData( HEAPID_PROC_WRAPPER );
   
   if( evWork->isComm == FALSE )
   {
-    MUSICAL_SYSTEM_LoadDistributeData( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
+    MUSICAL_SYSTEM_LoadDistributeData_Data( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
+    MUSICAL_SYSTEM_LoadDistributeData_Script( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
+    MUSICAL_SYSTEM_LoadDistributeData_Strm( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
     evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
   }
   else
   {
-    u32 conPointArr = 0;
     if( MUS_COMM_GetMode( evWork->scriptWork->commWork ) == MCM_PARENT )
     {
-      MUSICAL_SYSTEM_LoadDistributeData( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
-      evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
-      conPointArr = MUSICAL_PROGRAM_GetConditionPointArr( evWork->progWork );
+      MUSICAL_SYSTEM_LoadDistributeData_Script( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
+      MUSICAL_SYSTEM_LoadDistributeData_Strm( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
     }
-    MUS_COMM_StartSendProgram( evWork->scriptWork->commWork , evWork->distData , conPointArr );
+    MUS_COMM_StartSendProgram_Script( evWork->scriptWork->commWork );
   }
 }
 
@@ -1038,6 +1057,35 @@ const u8 MUSICAL_EVENT_GetMaxPointCondition( MUSICAL_EVENT_WORK *evWork , const 
   
   return maxType;
 }
+
+const u8 MUSICAL_EVENT_GetPosObjView( MUSICAL_EVENT_WORK *evWork , const u8 idx )
+{
+  const u8 pos = evWork->musicalIndex[idx];
+  if( idx == evWork->selfIdx )
+  {
+    return NONDRAW;
+  }
+  else
+  if( evWork->isComm == TRUE )
+  {
+    MYSTATUS *commMyStatus = MUS_COMM_GetPlayerMyStatus( evWork->commWork , pos );
+    if( commMyStatus != NULL )
+    {
+      const u32 sex = MyStatus_GetMySex( commMyStatus );
+      if( sex == PM_MALE )
+      {
+        return HERO;
+      }
+      else
+      {
+        return HEROINE;
+      }
+    }
+  }
+  
+  return MUSICAL_PROGRAM_GetNpcObjId( evWork->progWork , pos-1 );
+}
+
 
 //演目データ受信後に数値を計算する
 void MUSICAL_EVENT_CalcProgramData( MUSICAL_EVENT_WORK *evWork )

@@ -106,7 +106,9 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
 
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STRM|HEAPDIR_MASK, 0x80000 );
     work->actInitWork->distData = MUSICAL_SYSTEM_InitDistributeData( GFL_HEAPID_APP );
-    MUSICAL_SYSTEM_LoadDistributeData( work->actInitWork->distData , 0 , HEAPID_MUSICAL_STRM );
+    MUSICAL_SYSTEM_LoadDistributeData_Data( work->actInitWork->distData , 0 , HEAPID_MUSICAL_STRM );
+    MUSICAL_SYSTEM_LoadDistributeData_Script( work->actInitWork->distData , 0 , HEAPID_MUSICAL_STRM );
+    MUSICAL_SYSTEM_LoadDistributeData_Strm( work->actInitWork->distData , 0 , HEAPID_MUSICAL_STRM );
 
     work->actInitWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_MUSICAL_STAGE , work->actInitWork->distData );
     MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_STAGE , work->actInitWork->progWork , work->actInitWork );

@@ -366,6 +366,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_wifi_st.c \
         field/scrcmd_gym_init.c \
         field/scrcmd_sodateya.c \
+        field/scrcmd_musical.c \
         field/field_encount_st.c \
         field/move_pokemon.c \
         field/field_skill.c \
@@ -566,7 +567,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_trainer_eye.c \
         field/scrcmd_trainer.c \
         field/scrcmd_sound.c \
-        field/scrcmd_musical.c \
         field/scrcmd_item.c \
         field/scrcmd_word.c \
         field/scrcmd_mapchange.c \

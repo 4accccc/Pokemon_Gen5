@@ -1849,8 +1849,8 @@ static void PLIST_InitMode_Menu( PLIST_WORK *work )
   case PL_MODE_GURU2:
     if( PLIST_PLATE_IsEgg( work , work->plateWork[work->pokeCursor] ) == TRUE )
     {
-      itemArr[0] = PMIT_STATSU;
-      itemArr[1] = PMIT_ENTER;
+      itemArr[0] = PMIT_ENTER;
+      itemArr[1] = PMIT_STATSU;
       itemArr[2] = PMIT_CLOSE;
       itemArr[3] = PMIT_END_LIST;
       PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
@@ -1875,8 +1875,8 @@ static void PLIST_InitMode_Menu( PLIST_WORK *work )
       const BOOL ret = MUSICAL_SYSTEM_CheckEntryMusical( work->selectPokePara );
       if( ret == TRUE )
       {
-        itemArr[0] = PMIT_STATSU;
-        itemArr[1] = PMIT_ENTER;
+        itemArr[0] = PMIT_ENTER;
+        itemArr[1] = PMIT_STATSU;
         itemArr[2] = PMIT_CLOSE;
         itemArr[3] = PMIT_END_LIST;
       }

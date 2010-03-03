@@ -70,7 +70,7 @@ typedef struct
 //======================================================================
 #pragma mark [> proto
 
-extern void MUS_COMM_InitMusical( MUS_COMM_WORK* work , MYSTATUS *myStatus ,  GAME_COMM_SYS_PTR gameComm , const HEAPID heapId );
+extern void MUS_COMM_InitMusical( MUS_COMM_WORK* work , MYSTATUS *myStatus , GAME_COMM_SYS_PTR gameComm , MUSICAL_DISTRIBUTE_DATA *distData , const HEAPID heapId );
 extern void MUS_COMM_ExitMusical( MUS_COMM_WORK* work );
 
 extern MUS_COMM_WORK* MUS_COMM_CreateWork( HEAPID heapId , GAME_COMM_SYS_PTR gameComm , SAVE_CONTROL_WORK *saveCtrl , MUSICAL_DISTRIBUTE_DATA *distData );
@@ -123,7 +123,8 @@ extern GAME_COMM_SYS_PTR MUS_COMM_GetGameComm( MUS_COMM_WORK* work );
 extern MUS_COMM_MODE MUS_COMM_GetMode( MUS_COMM_WORK* work );
 extern const BOOL MUS_COMM_IsPostAllMyStatus( MUS_COMM_WORK* work );
 extern const BOOL MUS_COMM_IsPostAllPoke( MUS_COMM_WORK* work );
-extern void MUS_COMM_StartSendProgram( MUS_COMM_WORK* work , MUSICAL_DISTRIBUTE_DATA *distData , u32 conArr );
+extern void MUS_COMM_StartSendProgram_Data( MUS_COMM_WORK* work , u32 conArr );
+extern void MUS_COMM_StartSendProgram_Script( MUS_COMM_WORK* work );
 extern void MUS_COMM_StartSendPoke( MUS_COMM_WORK* work , MUSICAL_POKE_PARAM *musPoke);
 extern u32 MUS_COMM_GetConditionPointArr( MUS_COMM_WORK* work );
 

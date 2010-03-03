@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_zone_c04r0202
 _EVENT_DATA    ev_init_c04r0202
 _EVENT_DATA    ev_c04r0202_mus_1st
 _EVENT_DATA    ev_c04r0202_mus_2nd
@@ -31,14 +32,14 @@ _EVENT_DATA_END
 // ローカルワーク
 //----------------------------------------------------------------------
 
-DEFINE_LOCAL selfPos	// 自身の位置
-DEFINE_LOCAL retWk		// 戻り値汎用
-DEFINE_LOCAL point		// 得点
-DEFINE_LOCAL condition	// コンディション
+DEFINE_LOCAL selfPos  // 自身の位置
+DEFINE_LOCAL retWk    // 戻り値汎用
+DEFINE_LOCAL point    // 得点
+DEFINE_LOCAL condition  // コンディション
 
-DEFINE_LOCAL ownerPos		//オーナーの位置
-DEFINE_LOCAL ownerBefPos	//オーナーの前回位置
-DEFINE_LOCAL checkRank 		//今向かう順位(0～3で1～4位
+DEFINE_LOCAL ownerPos   //オーナーの位置
+DEFINE_LOCAL ownerBefPos  //オーナーの前回位置
+DEFINE_LOCAL checkRank    //今向かう順位(0～3で1～4位
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -51,46 +52,51 @@ DEFINE_LOCAL checkRank 		//今向かう順位(0～3で1～4位
 //======================================================================
 npc_pos_set_routine:
 {
-	//仮処理
-	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,0,retWk)
-	 SWITCH $retWk
-	 CASE 1 THEN
-		_OBJ_POS_CHANGE( C04R0202_NPC_01, 8,0,12,DIR_UP )
-	 CASE 2 THEN
-		_OBJ_POS_CHANGE( C04R0202_NPC_02, 8,0,12,DIR_UP )
-	 CASE 3 THEN
-		_OBJ_POS_CHANGE( C04R0202_NPC_03, 8,0,12,DIR_UP )
-	 ENDSWITCH
-	
-	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,1,retWk)
-	 SWITCH $retWk
-	 CASE 1 THEN
-		_OBJ_POS_CHANGE( C04R0202_NPC_01,10,0,12,DIR_UP )
-	 CASE 2 THEN
-		_OBJ_POS_CHANGE( C04R0202_NPC_02,10,0,12,DIR_UP )
-	 CASE 3 THEN
-		_OBJ_POS_CHANGE( C04R0202_NPC_03,10,0,12,DIR_UP )
-	 ENDSWITCH
-	
-	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,2,retWk)
-	 SWITCH $retWk
-	 CASE 1 THEN
-		_OBJ_POS_CHANGE( C04R0202_NPC_01,12,0,12,DIR_UP )
-	 CASE 2 THEN
-		_OBJ_POS_CHANGE( C04R0202_NPC_02,12,0,12,DIR_UP )
-	 CASE 3 THEN
-		_OBJ_POS_CHANGE( C04R0202_NPC_03,12,0,12,DIR_UP )
-	 ENDSWITCH
-	
-	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,3,retWk)
-	 SWITCH $retWk
-	 CASE 1 THEN
-		_OBJ_POS_CHANGE( C04R0202_NPC_01,14,0,12,DIR_UP )
-	 CASE 2 THEN
-		_OBJ_POS_CHANGE( C04R0202_NPC_02,14,0,12,DIR_UP )
-	 CASE 3 THEN
-		_OBJ_POS_CHANGE( C04R0202_NPC_03,14,0,12,DIR_UP )
-	 ENDSWITCH
+  //仮処理
+
+  
+  
+  /*
+  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,0,retWk)
+   SWITCH $retWk
+   CASE 1 THEN
+    _OBJ_POS_CHANGE( C04R0202_NPC_01, 8,0,12,DIR_UP )
+   CASE 2 THEN
+    _OBJ_POS_CHANGE( C04R0202_NPC_02, 8,0,12,DIR_UP )
+   CASE 3 THEN
+    _OBJ_POS_CHANGE( C04R0202_NPC_03, 8,0,12,DIR_UP )
+   ENDSWITCH
+  
+  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,1,retWk)
+   SWITCH $retWk
+   CASE 1 THEN
+    _OBJ_POS_CHANGE( C04R0202_NPC_01,10,0,12,DIR_UP )
+   CASE 2 THEN
+    _OBJ_POS_CHANGE( C04R0202_NPC_02,10,0,12,DIR_UP )
+   CASE 3 THEN
+    _OBJ_POS_CHANGE( C04R0202_NPC_03,10,0,12,DIR_UP )
+   ENDSWITCH
+  
+  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,2,retWk)
+   SWITCH $retWk
+   CASE 1 THEN
+    _OBJ_POS_CHANGE( C04R0202_NPC_01,12,0,12,DIR_UP )
+   CASE 2 THEN
+    _OBJ_POS_CHANGE( C04R0202_NPC_02,12,0,12,DIR_UP )
+   CASE 3 THEN
+    _OBJ_POS_CHANGE( C04R0202_NPC_03,12,0,12,DIR_UP )
+   ENDSWITCH
+  
+  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,3,retWk)
+   SWITCH $retWk
+   CASE 1 THEN
+    _OBJ_POS_CHANGE( C04R0202_NPC_01,14,0,12,DIR_UP )
+   CASE 2 THEN
+    _OBJ_POS_CHANGE( C04R0202_NPC_02,14,0,12,DIR_UP )
+   CASE 3 THEN
+    _OBJ_POS_CHANGE( C04R0202_NPC_03,14,0,12,DIR_UP )
+   ENDSWITCH
+   */
 }
 _RET
 
@@ -99,25 +105,25 @@ _RET
 //======================================================================
 grade_all_msg_routine:
 {
-	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_MAX_POINT,0,point)
-	
-	IF $point >= 100 THEN
-		//単独100点以上が居る
-		_BALLOONWIN_OBJMSG( msg_mus_03_001_04 , C04R0202_WOMAN1_01 )
-	ELSIF $point == 50 THEN
-		//全員同じ(50点
-		_BALLOONWIN_OBJMSG( msg_mus_03_001_01 , C04R0202_WOMAN1_01 )
-	ELSE
-		_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_MIN_POINT,0,point)
-		IF $point >= 40 THEN
-			//平均40以上
-			_BALLOONWIN_OBJMSG( msg_mus_03_001_02 , C04R0202_WOMAN1_01 )
-		ELSE
-			//40以下が居る
-			_BALLOONWIN_OBJMSG( msg_mus_03_001_03 , C04R0202_WOMAN1_01 )
-		ENDIF
-	ENDIF
-	_BALLOONWIN_CLOSE()
+  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_MAX_POINT,0,point)
+  
+  IF $point >= 100 THEN
+    //単独100点以上が居る
+    _BALLOONWIN_OBJMSG( msg_mus_03_001_04 , C04R0202_WOMAN1_01 )
+  ELSIF $point == 50 THEN
+    //全員同じ(50点
+    _BALLOONWIN_OBJMSG( msg_mus_03_001_01 , C04R0202_WOMAN1_01 )
+  ELSE
+    _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_MIN_POINT,0,point)
+    IF $point >= 40 THEN
+      //平均40以上
+      _BALLOONWIN_OBJMSG( msg_mus_03_001_02 , C04R0202_WOMAN1_01 )
+    ELSE
+      //40以下が居る
+      _BALLOONWIN_OBJMSG( msg_mus_03_001_03 , C04R0202_WOMAN1_01 )
+    ENDIF
+  ENDIF
+  _BALLOONWIN_CLOSE()
 
 }
 _RET
@@ -128,64 +134,64 @@ _RET
 //======================================================================
 owner_move_routine:
 {
-	SWITCH $ownerBefPos
-	CASE 0 THEN
-		SWITCH $ownerPos
-		CASE 1 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_2 )
-		CASE 2 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_4 )
-		CASE 3 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_6 )
-		CASE 5 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_0_to_start )
-		ENDSWITCH
-	CASE 1 THEN
-		SWITCH $ownerPos
-		CASE 0 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_2 )
-		CASE 2 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_2 )
-		CASE 3 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_4 )
-		CASE 5 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_1_to_start )
-		ENDSWITCH
-	CASE 2 THEN
-		SWITCH $ownerPos
-		CASE 0 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_4 )
-		CASE 1 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_2 )
-		CASE 3 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_2 )
-		CASE 5 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_2_to_start )
-		ENDSWITCH
-	CASE 3 THEN
-		SWITCH $ownerPos
-		CASE 0 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_6 )
-		CASE 1 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_4 )
-		CASE 2 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_2 )
-		CASE 5 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_3_to_start )
-		ENDSWITCH
-	CASE 5 THEN
-		SWITCH $ownerPos
-		CASE 0 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_start_to_0 )
-		CASE 1 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_start_to_1 )
-		CASE 2 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_start_to_2 )
-		CASE 3 THEN
-			_OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_start_to_3 )
-		ENDSWITCH
-	ENDSWITCH
-	_OBJ_ANIME_WAIT()
+  SWITCH $ownerBefPos
+  CASE 0 THEN
+    SWITCH $ownerPos
+    CASE 1 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_2 )
+    CASE 2 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_4 )
+    CASE 3 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_6 )
+    CASE 5 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_0_to_start )
+    ENDSWITCH
+  CASE 1 THEN
+    SWITCH $ownerPos
+    CASE 0 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_2 )
+    CASE 2 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_2 )
+    CASE 3 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_4 )
+    CASE 5 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_1_to_start )
+    ENDSWITCH
+  CASE 2 THEN
+    SWITCH $ownerPos
+    CASE 0 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_4 )
+    CASE 1 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_2 )
+    CASE 3 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_right_2 )
+    CASE 5 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_2_to_start )
+    ENDSWITCH
+  CASE 3 THEN
+    SWITCH $ownerPos
+    CASE 0 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_6 )
+    CASE 1 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_4 )
+    CASE 2 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_left_2 )
+    CASE 5 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_3_to_start )
+    ENDSWITCH
+  CASE 5 THEN
+    SWITCH $ownerPos
+    CASE 0 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_start_to_0 )
+    CASE 1 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_start_to_1 )
+    CASE 2 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_start_to_2 )
+    CASE 3 THEN
+      _OBJ_ANIME( C04R0202_WOMAN1_01, anm_move_owner_start_to_3 )
+    ENDSWITCH
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
 }
 _RET
 
@@ -194,334 +200,354 @@ _RET
 //======================================================================
 grade_one_msg_routine:
 {
-	_CALL owner_move_routine
-	
-	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POKE_MAX_POINT_CON,ownerPos,condition)
-	IF $condition < MUSICAL_CONDITION_NONE THEN
-		_MUSICAL_WORD( MUSICAL_WORD_CONDITION , 0 , condition )
-		_BALLOONWIN_OBJMSG( msg_mus_03_002_01 , C04R0202_WOMAN1_01 )
-	ELSE
-		_BALLOONWIN_OBJMSG( msg_mus_03_002_02 , C04R0202_WOMAN1_01 )
-	ENDIF
-	_BALLOONWIN_CLOSE()
+  _CALL owner_move_routine
+  
+  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POKE_MAX_POINT_CON,ownerPos,condition)
+  IF $condition < MUSICAL_CONDITION_NONE THEN
+    _MUSICAL_WORD( MUSICAL_WORD_CONDITION , 0 , condition )
+    _BALLOONWIN_OBJMSG( msg_mus_03_002_01 , C04R0202_WOMAN1_01 )
+  ELSE
+    _BALLOONWIN_OBJMSG( msg_mus_03_002_02 , C04R0202_WOMAN1_01 )
+  ENDIF
+  _BALLOONWIN_CLOSE()
 
-	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POINT,ownerPos,point)
-	
-	IF $point >= 100 THEN
-		_BALLOONWIN_OBJMSG( msg_mus_03_003_01 , C04R0202_WOMAN1_01 )
-	ELSIF $point >= 50 THEN
-		_BALLOONWIN_OBJMSG( msg_mus_03_003_02 , C04R0202_WOMAN1_01 )
-	ELSIF $point >= 40 THEN
-		_BALLOONWIN_OBJMSG( msg_mus_03_003_03 , C04R0202_WOMAN1_01 )
-	ELSIF $point >= 30 THEN
-		_BALLOONWIN_OBJMSG( msg_mus_03_003_04 , C04R0202_WOMAN1_01 )
-	ELSIF $point >= 20 THEN
-		_BALLOONWIN_OBJMSG( msg_mus_03_003_05 , C04R0202_WOMAN1_01 )
-	ELSE
-		_BALLOONWIN_OBJMSG( msg_mus_03_003_06 , C04R0202_WOMAN1_01 )
-	ENDIF
-	_BALLOONWIN_CLOSE()
+  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POINT,ownerPos,point)
+  
+  IF $point >= 100 THEN
+    _BALLOONWIN_OBJMSG( msg_mus_03_003_01 , C04R0202_WOMAN1_01 )
+  ELSIF $point >= 50 THEN
+    _BALLOONWIN_OBJMSG( msg_mus_03_003_02 , C04R0202_WOMAN1_01 )
+  ELSIF $point >= 40 THEN
+    _BALLOONWIN_OBJMSG( msg_mus_03_003_03 , C04R0202_WOMAN1_01 )
+  ELSIF $point >= 30 THEN
+    _BALLOONWIN_OBJMSG( msg_mus_03_003_04 , C04R0202_WOMAN1_01 )
+  ELSIF $point >= 20 THEN
+    _BALLOONWIN_OBJMSG( msg_mus_03_003_05 , C04R0202_WOMAN1_01 )
+  ELSE
+    _BALLOONWIN_OBJMSG( msg_mus_03_003_06 , C04R0202_WOMAN1_01 )
+  ENDIF
+  _BALLOONWIN_CLOSE()
 }
 _RET
 
 /**************************************************************/
-//	ゾーンチェンジスクリプト
+//  ゾーンチェンジスクリプト
 /**************************************************************/
+INIT_EVENT_START ev_zone_c04r0202
+/*
+  $OBJCHRWORK1 = RIVEL
+  $OBJCHRWORK2 = RIVEL
+  $OBJCHRWORK3 = RIVEL
+  $OBJCHRWORK4 = RIVEL
+*/
+
+  _MUSICAL_TOOLS( MUSICAL_TOOL_PRINT, 99, 0, 0 )
+  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_OBJ_VIEW,0,retWk)
+  $OBJCHRWORK1 = $retWk
+  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_OBJ_VIEW,1,retWk)
+  $OBJCHRWORK2 = $retWk
+  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_OBJ_VIEW,2,retWk)
+  $OBJCHRWORK3 = $retWk
+  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_OBJ_VIEW,3,retWk)
+  $OBJCHRWORK4 = $retWk
+
+INIT_EVENT_END
+
 INIT_EVENT_START ev_init_c04r0202
-	//動くけどキャラ移動はどうやろう・・・
-	//MUSICAL_EVENT_WORKにはアクセス不可
-	//フェードインキャンセルがあれば可能？
+  //動くけどキャラ移動はどうやろう・・・
+  //MUSICAL_EVENT_WORKにはアクセス不可
+  //フェードインキャンセルがあれば可能？
   _CALL npc_pos_set_routine
 INIT_EVENT_END
 
 /**************************************************************/
-//	ミュージカル台詞　開始時
+//  ミュージカル台詞　開始時
 /**************************************************************/
 EVENT_START ev_c04r0202_mus_1st
-	
-	_CALL npc_pos_set_routine
+  
+  //_CALL npc_pos_set_routine
 
-	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_SELF_IDX,0,selfPos)
+  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_SELF_IDX,0,selfPos)
 
-	 SWITCH $selfPos
-	 CASE 0 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_1 )
-	 CASE 1 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_2 )
-	 CASE 2 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_3 )
-	 CASE 3 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_4 )
-	 ENDSWITCH
-	_OBJ_ANIME_WAIT()
-	
-	_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_POST_PROGRAM , 0 , 0 , 0 )
-	
-	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_MAX_CONDITION,0,condition)
+   SWITCH $selfPos
+   CASE 0 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_1 )
+   CASE 1 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_2 )
+   CASE 2 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_3 )
+   CASE 3 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_4 )
+   ENDSWITCH
+  _OBJ_ANIME_WAIT()
+  
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_POST_PROGRAM , 0 , 0 , 0 )
+  
+  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_MAX_CONDITION,0,condition)
 
-	_MUSICAL_WORD( MUSICAL_WORD_TITLE_LOCAL , 0 , 0 )
-	_MUSICAL_WORD( MUSICAL_WORD_AUDI_TYPE   , 1 , condition )
-	
-	_BALLOONWIN_OBJMSG( msg_mus_01_001 , C04R0202_WOMAN1_01 )
-	_BALLOONWIN_CLOSE()
+  _MUSICAL_WORD( MUSICAL_WORD_TITLE_LOCAL , 0 , 0 )
+  _MUSICAL_WORD( MUSICAL_WORD_AUDI_TYPE   , 1 , condition )
+  
+  _BALLOONWIN_OBJMSG( msg_mus_01_001 , C04R0202_WOMAN1_01 )
+  _BALLOONWIN_CLOSE()
 
-	//通信同期(ドレスアップ開始前)
-	_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_DRESSUP_START, 0, 0 )
+  //通信同期(ドレスアップ開始前)
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_DRESSUP_START, 0, 0 )
 
-	_MAP_FADE_BLACK_OUT( )
-	_MAP_FADE_END_CHECK()
+  _MAP_FADE_BLACK_OUT( )
+  _MAP_FADE_END_CHECK()
 
 EVENT_END
 
 /**************************************************************/
-//	ミュージカル台詞　ショー前
+//  ミュージカル台詞　ショー前
 /**************************************************************/
 EVENT_START ev_c04r0202_mus_2nd
 
-	_MAP_FADE_BLACK_IN( )
-	_MAP_FADE_END_CHECK()
+  _MAP_FADE_BLACK_IN( )
+  _MAP_FADE_END_CHECK()
 
-	//記憶されてるので1回で良い？
-	//_CALL npc_pos_set_routine
+  //記憶されてるので1回で良い？
+  //_CALL npc_pos_set_routine
 
-	_BALLOONWIN_OBJMSG( msg_mus_02_001 , C04R0202_WOMAN1_01 )
-	_BALLOONWIN_CLOSE()
+  _BALLOONWIN_OBJMSG( msg_mus_02_001 , C04R0202_WOMAN1_01 )
+  _BALLOONWIN_CLOSE()
 
-	_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_POST_ALLPOKE , 0 , 0 , 0 )
-	
-	_MAP_FADE_BLACK_OUT( )
-	_MAP_FADE_END_CHECK()
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_POST_ALLPOKE , 0 , 0 , 0 )
+  
+  _MAP_FADE_BLACK_OUT( )
+  _MAP_FADE_END_CHECK()
 
 EVENT_END
 
 /**************************************************************/
-//	ミュージカル台詞　終了時
+//  ミュージカル台詞　終了時
 /**************************************************************/
 EVENT_START ev_c04r0202_mus_3rd
 
-	DEFINE_LOCAL isLoop		//ループチェック
+  DEFINE_LOCAL isLoop   //ループチェック
 
-	_MAP_FADE_BLACK_IN( )
-	_MAP_FADE_END_CHECK()
+  _MAP_FADE_BLACK_IN( )
+  _MAP_FADE_END_CHECK()
 
-	//記憶されてるので1回で良い？
-	//_CALL npc_pos_set_routine
+  //記憶されてるので1回で良い？
+  //_CALL npc_pos_set_routine
 
-	_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_SELF_IDX,0,selfPos)
+  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_SELF_IDX,0,selfPos)
 
-	//全体評価
-	_CALL grade_all_msg_routine
+  //全体評価
+  _CALL grade_all_msg_routine
 
-	//個別評価
-	$isLoop = 1
-	$ownerBefPos = 5
-	
-	//1→4位バージョン
-	$checkRank = 3		//4位のこと
-	WHILE $isLoop == 1
-		_GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_RANK,checkRank,ownerPos)
-		_CALL grade_one_msg_routine
-		$ownerBefPos = $ownerPos 
-		IF $checkRank == 0 THEN
-			$isLoop = 0
-		ELSE
-			$checkRank -= 1
-		ENDIF
-	ENDWHILE
-	
-	$ownerPos = 5
-	_CALL owner_move_routine
-	
-	_BALLOONWIN_OBJMSG( msg_mus_03_004_01 , C04R0202_WOMAN1_01 )
-	_AB_KEYWAIT()     //キー待ち
-	_BALLOONWIN_CLOSE()
-	//帰りのアニメ切る
-/*	
-	 SWITCH $selfPos
-	 CASE 0 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start_1 )
-	 CASE 1 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start_2 )
-	 CASE 2 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start_3 )
-	 CASE 3 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start_4 )
-	 ENDSWITCH
-	_OBJ_ANIME_WAIT()
-*/	
-//	_MAP_FADE_BLACK_OUT( )
-//	_MAP_FADE_END_CHECK()
+  //個別評価
+  $isLoop = 1
+  $ownerBefPos = 5
+  
+  //1→4位バージョン
+  $checkRank = 3    //4位のこと
+  WHILE $isLoop == 1
+    _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_RANK,checkRank,ownerPos)
+    _CALL grade_one_msg_routine
+    $ownerBefPos = $ownerPos 
+    IF $checkRank == 0 THEN
+      $isLoop = 0
+    ELSE
+      $checkRank -= 1
+    ENDIF
+  ENDWHILE
+  
+  $ownerPos = 5
+  _CALL owner_move_routine
+  
+  _BALLOONWIN_OBJMSG( msg_mus_03_004_01 , C04R0202_WOMAN1_01 )
+  _AB_KEYWAIT()     //キー待ち
+  _BALLOONWIN_CLOSE()
+  //帰りのアニメ切る
+/*  
+   SWITCH $selfPos
+   CASE 0 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start_1 )
+   CASE 1 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start_2 )
+   CASE 2 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start_3 )
+   CASE 3 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start_4 )
+   ENDSWITCH
+  _OBJ_ANIME_WAIT()
+*/  
+//  _MAP_FADE_BLACK_OUT( )
+//  _MAP_FADE_END_CHECK()
 
 EVENT_END
 
 
 /**************************************************************/
-//	移動　開始→待機位置
+//  移動　開始→待機位置
 /**************************************************************/
 //入り口から立ち位置(0～3個
 _ANIME_LABEL anm_move_player_start_to_main_1
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,9
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_WALK_R_8F,6
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_WALK_U_8F,9
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_WALK_R_8F,6
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL anm_move_player_start_to_main_2
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,9
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_WALK_R_8F,8
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_WALK_U_8F,9
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_WALK_R_8F,8
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL anm_move_player_start_to_main_3
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,9
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_WALK_R_8F,10
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_WALK_U_8F,9
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_WALK_R_8F,10
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL anm_move_player_start_to_main_4
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,9
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_WALK_R_8F,12
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_WALK_U_8F,9
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_WALK_R_8F,12
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //立ち位置から入り口(0～3個
 _ANIME_LABEL anm_move_player_main_to_start_1
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,1
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_WALK_L_8F,6
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,9
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_WALK_L_8F,6
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_WALK_D_8F,9
+  _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL anm_move_player_main_to_start_2
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,1
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_WALK_L_8F,8
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,9
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_WALK_L_8F,8
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_WALK_D_8F,9
+  _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL anm_move_player_main_to_start_3
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,1
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_WALK_L_8F,10
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,9
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_WALK_L_8F,10
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_WALK_D_8F,9
+  _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL anm_move_player_main_to_start_4
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,1
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_WALK_L_8F,12
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,9
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_WALK_L_8F,12
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_WALK_D_8F,9
+  _ANIME_DATA ACMD_END,0
 
 //オーナー移動用 初期位置から各位置へ
 _ANIME_LABEL anm_move_owner_start_to_0
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,2
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_WALK_L_8F,3
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_WALK_L_8F,3
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 _ANIME_LABEL anm_move_owner_start_to_1
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,2
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_WALK_L_8F,1
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 _ANIME_LABEL anm_move_owner_start_to_2
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,2
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_WALK_R_8F,1
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 _ANIME_LABEL anm_move_owner_start_to_3
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_WALK_D_8F,2
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_WALK_R_8F,3
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_WALK_R_8F,3
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 
 //オーナー移動用 各位置から初期位置へ
 _ANIME_LABEL anm_move_owner_0_to_start
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_WALK_R_8F,3
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,2
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_WALK_R_8F,3
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_WALK_U_8F,2
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 _ANIME_LABEL anm_move_owner_1_to_start
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_WALK_R_8F,1
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,2
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_WALK_U_8F,2
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 _ANIME_LABEL anm_move_owner_2_to_start
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_WALK_L_8F,1
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,2
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_WALK_U_8F,2
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 _ANIME_LABEL anm_move_owner_3_to_start
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_WALK_L_8F,3
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_WALK_U_8F,2
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_WALK_L_8F,3
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_WALK_U_8F,2
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 
 //オーナー移動用 汎用右移動2・4・6
 _ANIME_LABEL anm_move_owner_right_2
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_WALK_R_8F,2
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_WALK_R_8F,2
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 _ANIME_LABEL anm_move_owner_right_4
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_WALK_R_8F,4
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_WALK_R_8F,4
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 _ANIME_LABEL anm_move_owner_right_6
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_WALK_R_8F,6
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA AC_WALK_R_8F,6
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 
 //オーナー移動用 汎用左移動2・4・6
 _ANIME_LABEL anm_move_owner_left_2
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_WALK_L_8F,2
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_WALK_L_8F,2
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 _ANIME_LABEL anm_move_owner_left_4
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_WALK_L_8F,4
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_WALK_L_8F,4
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 _ANIME_LABEL anm_move_owner_left_6
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_WALK_L_8F,6
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA ACMD_END,0
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_WALK_L_8F,6
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0

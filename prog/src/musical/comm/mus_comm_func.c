@@ -31,8 +31,9 @@
 #define MUS_COMM_BEACON_MAX (4)
 #define MUS_COMM_POKEDATA_SIZE (sizeof(MUSICAL_POKE_PARAM)+POKETOOL_GetWorkSize())
 
-#define MUS_COMM_SYNC_START_PROGRAM (64)
+#define MUS_COMM_SYNC_START_SEND_PROGRAM (64)
 #define MUS_COMM_SYNC_EXIT_COMM     (65)
+#define MUS_COMM_SYNC_START_SEND_SCRIPT (66)
 
 //======================================================================
 //	enum
@@ -82,13 +83,15 @@ typedef enum
   MCS_WAIT_MYSTATUS_ONE,
   MCS_WAIT_MYSTATUS_ALL,
   
-  //T‚¦Žº‚Ì“¯Šúˆ—
   MCS_START_SEND_PROGRAM,
   MCS_SEND_SIZE_PROGRAM,
+  MCS_SEND_DATA_PROGRAM,
+  MCS_WAIT_SEND_DATA_SCRIPT,
+  
+  //T‚¦Žº‚Ì“¯Šúˆ—
   MCS_SEND_SIZE_MESSAGE,
   MCS_SEND_SIZE_SCRIPT,
   MCS_SEND_CONDITION_POINT,
-  MCS_SEND_DATA_PROGRAM,
   MCS_SEND_DATA_MESSAGE,
   MCS_SEND_DATA_SCRIPT,
   MCS_SEND_STRM,
@@ -382,7 +385,7 @@ void MUS_COMM_UpdateGameComm(int *seq, void *pwk, void *pWork)
 
 
 #pragma mark [>func
-void MUS_COMM_InitMusical( MUS_COMM_WORK* work , MYSTATUS *myStatus , GAME_COMM_SYS_PTR gameComm , const HEAPID heapId )
+void MUS_COMM_InitMusical( MUS_COMM_WORK* work , MYSTATUS *myStatus , GAME_COMM_SYS_PTR gameComm , MUSICAL_DISTRIBUTE_DATA *distData , const HEAPID heapId )
 {
   u8 i;
   
@@ -400,6 +403,7 @@ void MUS_COMM_InitMusical( MUS_COMM_WORK* work , MYSTATUS *myStatus , GAME_COMM_
     work->userData[i].useButtonPos = MUS_POKE_EQU_INVALID;
     work->userData[i].pokeData = GFL_HEAP_AllocMemory( work->heapId , MUS_COMM_POKEDATA_SIZE );
     work->userData[i].myStatus = GFL_HEAP_AllocMemory( work->heapId , MyStatus_GetWorkSize() );
+    GFL_STD_MemClear( work->userData[i].myStatus , MyStatus_GetWorkSize() );
   }
   work->selfPokeData = NULL;
   work->selfMyStatus = myStatus;
@@ -421,6 +425,7 @@ void MUS_COMM_InitMusical( MUS_COMM_WORK* work , MYSTATUS *myStatus , GAME_COMM_
   work->divSendState = MCDS_NONE;
   work->isReqSendState = FALSE;
   work->useButtonAttentionPoke = MUSICAL_COMM_MEMBER_NUM;
+  work->distData = distData;
   
   if( GFL_NET_IsParentMachine() == TRUE )
   {
@@ -479,6 +484,17 @@ static void MUS_COMM_FinishNetTermCallback( void* pWork )
 //--------------------------------------------------------------
 void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
 {
+#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+  {
+    static u8 befState = 0xFF;
+    if( befState != work->commState )
+    {
+      ARI_TPrintf("MusCommState[%d]->[%d]\n",befState,work->commState);
+      befState = work->commState;
+    }
+  }
+#endif
+
   switch( work->commState )
   {
   case MCS_NONE:
@@ -535,7 +551,7 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
     break;
   
   case MCS_START_SEND_PROGRAM:
-    if( MUS_COMM_CheckTimingCommand( work , MUS_COMM_SYNC_START_PROGRAM ) == TRUE )
+    if( MUS_COMM_CheckTimingCommand( work , MUS_COMM_SYNC_START_SEND_PROGRAM ) == TRUE )
     {
       if( work->mode == MCM_PARENT )
       {
@@ -543,22 +559,48 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
       }
       else
       {
-        work->commState = MCS_START_WAIT_POST_ALL;
+        work->commState = MCS_WAIT_SEND_DATA_SCRIPT;
       }
     }
     break;
   case MCS_SEND_SIZE_PROGRAM:
     if( MUS_COMM_Send_ProgramSize(work) == TRUE )
     {
-      work->commState = MCS_SEND_SIZE_MESSAGE;
+      work->commState = MCS_SEND_DATA_PROGRAM;
     }
     break;
-  case MCS_SEND_SIZE_MESSAGE:
+
+  case MCS_SEND_DATA_PROGRAM:
     if( work->isPostProgramSize == TRUE )
     {
-      if( MUS_COMM_Send_MessageSize(work) == TRUE )
+      if( MUS_COMM_Send_ProgramData(work) == TRUE )
       {
-        work->commState = MCS_SEND_SIZE_SCRIPT;
+        work->commState = MCS_WAIT_SEND_DATA_SCRIPT;
+      }
+    }
+    break;
+
+  case MCS_WAIT_SEND_DATA_SCRIPT:
+    if( work->isPostProgramData == TRUE )
+    {
+      //ˆ—‚È‚µBŠO•”‚©‚ç‚Ì‘€ì‚Å‰º‚Éi‚Þ
+    }
+    
+    break;
+
+  case MCS_SEND_SIZE_MESSAGE:
+    if( MUS_COMM_CheckTimingCommand( work , MUS_COMM_SYNC_START_SEND_SCRIPT ) == TRUE )
+    {
+      if( work->mode == MCM_PARENT )
+      {
+        if( MUS_COMM_Send_MessageSize(work) == TRUE )
+        {
+          work->commState = MCS_SEND_SIZE_SCRIPT;
+        }
+      }
+      else
+      {
+        work->commState = MCS_START_WAIT_POST_ALL;
       }
     }
     break;
@@ -579,22 +621,13 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
                                     work->conditionArr,
                                     GFL_NET_SENDID_ALLUSER) == TRUE )
       {
-        work->commState = MCS_SEND_DATA_PROGRAM;
-      }
-    }
-    break;
-
-  case MCS_SEND_DATA_PROGRAM:
-    if( work->isPostScriptSize == TRUE )
-    {
-      if( MUS_COMM_Send_ProgramData(work) == TRUE )
-      {
         work->commState = MCS_SEND_DATA_MESSAGE;
       }
     }
     break;
+
   case MCS_SEND_DATA_MESSAGE:
-    if( work->isPostProgramData == TRUE )
+    if( work->isPostScriptSize == TRUE )
     {
       if( MUS_COMM_Send_MessageData(work) == TRUE )
       {
@@ -817,14 +850,9 @@ MYSTATUS* MUS_COMM_GetPlayerMyStatus( MUS_COMM_WORK* work , u8 idx )
 {
   if( work->commState != MCS_NONE )
   {
-    const GFL_NETHANDLE *handle = GFL_NET_GetNetHandle( idx );
-    if( handle == NULL )
+    if( work->userData[idx].isValidStatus == TRUE )
     {
-      return NULL;
-    }
-    else
-    {
-      return (MYSTATUS*)GFL_NET_HANDLE_GetInfomationData( handle );
+      return work->userData[idx].myStatus;
     }
   }
   return NULL;
@@ -961,7 +989,8 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
   case MCFT_PROGRAM_SIZE:
     if( work->mode == MCM_CHILD )
     {
-      work->distData->programData = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_STRM , pkt->value );
+      //‚±‚ê‚ÍT‚¦Žº‘O‚È‚Ì‚ÅHEAPID_MUSICAL_STRM‚Í–³‚¢I
+      work->distData->programData = GFL_HEAP_AllocMemory( HEAPID_PROC , pkt->value );
       work->distData->programDataSize = pkt->value;
     }
     work->isPostProgramSize = TRUE;
@@ -1079,7 +1108,7 @@ const BOOL MUS_COMM_Send_AllMyStatus( MUS_COMM_WORK *work  )
     GFL_STD_MemCopy( work->userData[i].myStatus , (void*)startAdr , MyStatus_GetWorkSize() );
   }
   
-  ARI_TPrintf("Send AllPokeData \n");
+  ARI_TPrintf("Send AllStatusData \n");
   {
     GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
     BOOL ret = GFL_NET_SendDataEx( parentHandle , GFL_NET_SENDID_ALLUSER , 
@@ -1087,7 +1116,7 @@ const BOOL MUS_COMM_Send_AllMyStatus( MUS_COMM_WORK *work  )
                               work->allMyStatus , TRUE , FALSE , TRUE );
     if( ret == FALSE )
     {
-      ARI_TPrintf("Send AllPokeData is failued!!\n");
+      ARI_TPrintf("Send AllStatusData is failued!!\n");
     }
     return ret;
   }
@@ -1096,17 +1125,19 @@ static void MUS_COMM_Post_AllMyStatus( const int netID, const int size , const v
 {
   u8 i;
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
-  ARI_TPrintf("MusComm Finish Post AllPokeData.\n");
+  ARI_TPrintf("MusComm Finish Post AllStatusData.\n");
   for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
   {
-    if( work->userData[i].isValid == TRUE  )
+    u32 startAdr = (u32)work->allMyStatus+MyStatus_GetWorkSize()*i;
+    if( MyStatus_CheckNameClear( (MYSTATUS*)startAdr ) == TRUE )
     {
-      u32 startAdr = (u32)work->allMyStatus+MyStatus_GetWorkSize()*i;
       GFL_STD_MemCopy( (void*)startAdr , work->userData[i].myStatus , MyStatus_GetWorkSize() );
+      work->userData[i].isValid = TRUE;
       work->userData[i].isValidStatus = TRUE;
     }
     else
     {
+      work->userData[i].isValid = FALSE;
       work->userData[i].isValidStatus = FALSE;
     }
   }
@@ -1604,13 +1635,18 @@ const BOOL MUS_COMM_IsPostAllPoke( MUS_COMM_WORK* work )
   return work->isPostAllPokeData;
 }
 
-void MUS_COMM_StartSendProgram( MUS_COMM_WORK* work , MUSICAL_DISTRIBUTE_DATA *distData , u32 conArr )
+void MUS_COMM_StartSendProgram_Data( MUS_COMM_WORK* work , u32 conArr )
 {
-  MUS_COMM_SendTimingCommand( work , MUS_COMM_SYNC_START_PROGRAM );
+  MUS_COMM_SendTimingCommand( work , MUS_COMM_SYNC_START_SEND_PROGRAM );
   work->commState = MCS_START_SEND_PROGRAM;
-  work->distData = distData;
   work->conditionArr = conArr;
 }
+void MUS_COMM_StartSendProgram_Script( MUS_COMM_WORK* work )
+{
+  MUS_COMM_SendTimingCommand( work , MUS_COMM_SYNC_START_SEND_SCRIPT );
+  work->commState = MCS_SEND_SIZE_MESSAGE;
+}
+
 void MUS_COMM_StartSendPoke( MUS_COMM_WORK* work , MUSICAL_POKE_PARAM *musPoke)
 {
   work->commState = MCS_SEND_SELF_POKE;

@@ -449,6 +449,10 @@ VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
     *ret_wk = MUSICAL_EVENT_GetMaxPointCondition( evWork , val );
     ARI_TPrintf("MusValWR:MaxPointCon[%d:%d]\n",val,*ret_wk);
     break;
+  case MUSICAL_VALUE_WR_POS_TO_OBJ_VIEW:
+    *ret_wk = MUSICAL_EVENT_GetPosObjView( evWork , val );
+    ARI_TPrintf("MusValWR:ObjView[%d:%d]\n",val,*ret_wk);
+    break;
   default:
     GF_ASSERT_MSG( 0 , "タイプ指定が間違ってる[%d]\n",type );
     break;
@@ -1045,7 +1049,6 @@ static BOOL EvCmdMusicalWaitPostProgram( VMHANDLE *core, void *wk )
   
   if( MUS_COMM_IsPostScriptData( musScriptWork->commWork ) == TRUE )
   {
-    MUSICAL_EVENT_CalcProgramData( musScriptWork->eventWork );
     return TRUE;
   }
   return FALSE;

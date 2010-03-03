@@ -272,7 +272,6 @@ void MUSICAL_PROGRAM_SetData_NPC( MUSICAL_PROGRAM_WORK* progWork , STAGE_INIT_WO
       MUSICAL_STAGE_SetEquip( actInitWork , musicalIdx , pokeData->equipData[i].itemPos , pokeData->equipData[i].itemNo , 0 , i );
     }
   }
-
 }
 
 //--------------------------------------------------------------
@@ -281,4 +280,13 @@ void MUSICAL_PROGRAM_SetData_NPC( MUSICAL_PROGRAM_WORK* progWork , STAGE_INIT_WO
 const u8 MUSICAL_PROGRAM_GetBgNo( MUSICAL_PROGRAM_WORK* progWork )
 {
   return progWork->progData->bgNo;
+}
+
+
+//--------------------------------------------------------------
+//	NPCŒ©‚½–ÚŽæ“¾
+//--------------------------------------------------------------
+const u8 MUSICAL_PROGRAM_GetNpcObjId( MUSICAL_PROGRAM_WORK* progWork , const u8 NPCIdx )
+{
+  return progWork->progData->pokeData[NPCIdx].trainerType;
 }

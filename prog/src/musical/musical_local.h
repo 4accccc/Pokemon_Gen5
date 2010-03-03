@@ -61,6 +61,8 @@ typedef struct
 
 MUSICAL_DISTRIBUTE_DATA* MUSICAL_SYSTEM_InitDistributeData( HEAPID workHeapId );
 void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData );
-void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , const u8 programNo , HEAPID strmHeapId);
+void MUSICAL_SYSTEM_LoadDistributeData_Data( MUSICAL_DISTRIBUTE_DATA *distData , const u8 programNo , HEAPID strmHeapId);
+void MUSICAL_SYSTEM_LoadDistributeData_Script( MUSICAL_DISTRIBUTE_DATA *distData , const u8 programNo , HEAPID strmHeapId);
+void MUSICAL_SYSTEM_LoadDistributeData_Strm( MUSICAL_DISTRIBUTE_DATA *distData , const u8 programNo , HEAPID strmHeapId);
 
 #endif	//MUSICAL_LOCAL_H_
