@@ -5,6 +5,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_510.spa
 #001
 %00
 制御モード変更	継続
+SE再生	SEQ_SE_BE_SE_033	SE1	真ん中	0:0:60	0:0:0
 SEパン	SE1	追従	攻撃側	防御側	0	60:0:0
 制御モード変更	逐次
 パーティクルデータロード	w_510

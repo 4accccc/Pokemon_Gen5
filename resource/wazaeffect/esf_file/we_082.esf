@@ -6,7 +6,9 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_082.spa
 エフェクト終了待ち	すべて
 カメラ移動	追従	防御側	16	0	8
 制御モード変更	継続
+SE再生	SEQ_SE_W225_02	SE1	真ん中	0:0:110	0:0:0
 SE動的変化	SE1	追従	ピッチ	-1000	2000	0	80:0:0
+SE再生	SEQ_SE_DUMMY5	SE1	真ん中	90:0:0	0:0:0
 SE動的変化	SE1	追従	ボリューム	110	0	70	20:0:0
 SEパン	SE1	追従	攻撃側	防御側	0	40:0:0
 制御モード変更	逐次

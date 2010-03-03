@@ -5,7 +5,11 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_114.spa
 %00
 射影モード	透視射影
 BGのパレットフェード	すべて	0	3	1	0:0:0
+SE再生	SEQ_SE_W157_02	SE1	真ん中	0:-400:120	0:0:0
+SE再生	SEQ_SE_DUMMY5	SE1	真ん中	80:0:0	0:0:0
 SE動的変化	SE1	追従	ボリューム	120	0	50	30:0:0
+SE再生	SEQ_SE_W157_03	PSG	真ん中	0:-400:110	0:0:0
+SE再生	SEQ_SE_DUMMY5	PSG	真ん中	80:0:0	0:0:0
 SE動的変化	PSG	追従	ボリューム	120	0	50	30:0:0
 パーティクルデータロード	w_114
 パーティクル再生	w_114	W_114_114_KUROKIRI_MIST1	POS_AA	方向無し	4:0:0	1:1:1	1

@@ -4,6 +4,10 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_157.spa
 #001
 %00
 カメラ移動	追従	防御側	16	0	8
+SE再生	SEQ_SE_W157_02	SE1	真ん中	0:0:120	0:0:0
+SE再生	SEQ_SE_W157_01	SYSTEM	真ん中	0:0:70	0:0:0
+SE再生	SEQ_SE_DUMMY5	SE1	真ん中	140:0:0	0:0:0
+SE再生	SEQ_SE_DUMMY5	SYSTEM	真ん中	140:0:0	0:0:0
 SE動的変化	SYSTEM	追従	ボリューム	70	0	100	40:0:0
 SE動的変化	SE1	追従	ボリューム	120	0	100	40:0:0
 エフェクト終了待ち	パーティクル
