@@ -40,6 +40,7 @@ struct _EVENT_IRCBATTLE_WORK{
   BATTLE_SETUP_PARAM* para;
   COMM_BTL_DEMO_PARAM demo_prm;
   //COMM_BATTLE_CALL_PROC_PARAM callprm;
+  GFLNetInitializeStruct* pInit;
 };
 
 

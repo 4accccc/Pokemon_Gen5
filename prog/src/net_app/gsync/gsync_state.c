@@ -475,6 +475,9 @@ static void _wakeupActionFailed1(G_SYNC_WORK* pWork)
 
 static void _wakeupActionFailed(G_SYNC_WORK* pWork)
 {
+ if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
   GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_009);
   _CHANGE_STATE(_wakeupActionFailed1);
 }
@@ -499,23 +502,6 @@ static void _wakeupAction3(G_SYNC_WORK* pWork)
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
 
     if(selectno==0){
-      /*
-      GMTIME* pGMT = SaveData_GetGameTime(pWork->pSaveData);
-      if(GMTIME_IsPenaltyMode(pGMT)){  //ペナルティー
-        _CHANGE_STATE(_wakeupActionFailed);
-      }
-      else{          //時間を確認する
-        GFDATE gd = DREAMWORLD_SV_GetTime(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData));
-        RTCDate date;
-        GFDATE_GFDate2RTCDate(gd, &date);
-        if(GFL_RTC_GetDaysOffset(&date) > 0){
-          _CHANGE_STATE(_wakeupAction4);
-        }
-        else{
-          _CHANGE_STATE(_wakeupActionFailed);
-        }
-      }
-         */
       _CHANGE_STATE(_wakeupAction4);
       
     }
@@ -681,7 +667,36 @@ static void _ghttpInfoWait0(G_SYNC_WORK* pWork)
 }
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   ボックスがから
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
 
+static void _BoxNullMsg2(G_SYNC_WORK* pWork)
+{
+  if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+  if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)){
+    GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
+    _CHANGE_STATE(_modeFadeStart);
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ボックスがから
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _BoxNullMsg(G_SYNC_WORK* pWork)
+{
+  GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_012);
+  _CHANGE_STATE(_BoxNullMsg2);
+}
 
 //------------------------------------------------------------------------------
 /**    /gs?p=account.playstatus&gsid=123456789012&rom=32&langcode=32&dreamw=32
@@ -723,14 +738,29 @@ static void _ghttpPokemonListDownload1(G_SYNC_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   ポケモン状態検査
+ * @brief   ポケモンの選択をダウンロード
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
 static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork)
 {
-
+  GMTIME* pGMT = SaveData_GetGameTime(pWork->pSaveData);
+  if(GMTIME_IsPenaltyMode(pGMT)){  //ペナルティー中は眠る事ができない
+    _CHANGE_STATE(_wakeupActionFailed);
+    return;
+  }
+  else{          //時間を確認する
+    GFDATE gd = DREAMWORLD_SV_GetTime(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData));
+    RTCDate date;
+    GFDATE_GFDate2RTCDate(gd, &date);
+    if(GFL_RTC_GetDaysOffset(&date) > 0){
+    }
+    else{
+      _CHANGE_STATE(_wakeupActionFailed);
+      return;
+    }
+  }
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_POKEMONLIST, pWork->pNHTTPRap)){
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
@@ -1081,20 +1111,25 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
     pWork->pGameData = pParent->gameData;
     pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
     profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pParent->gameData) );
-    GF_ASSERT(profileID);
     pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, profileID, NULL);
     pWork->pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(pParent->gsys));
     pWork->trayno = pParent->boxNo;
     pWork->indexno = pParent->boxIndex;
     switch(pParent->selectType){
     case GSYNC_CALLTYPE_INFO:      //起こす
+      GF_ASSERT(profileID);
       _CHANGE_STATE(_ghttpInfoWait0);
       break;
     case GSYNC_CALLTYPE_BOXSET:   //BOXポケモン選択後
+      GF_ASSERT(profileID);
       _CHANGE_STATE(_BoxPokeMove);
       break;
     case GSYNC_CALLTYPE_POKELIST:   //アカウントの検査後眠らせるポケモンを選ぶ
+      GF_ASSERT(profileID);
       _CHANGE_STATE(_ghttpInfoWait0);
+      break;
+    case GSYNC_CALLTYPE_BOXNULL:
+      _CHANGE_STATE(_BoxNullMsg);
       break;
     }
   }

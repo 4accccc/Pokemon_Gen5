@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-02-28T17:02:59"/>
+	<create user="ohno" host="W00141" date="2010-03-03T17:25:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -423,8 +423,10 @@
 	</row>
 
 	<row id="GSYNC_009">
-		<language name="JPN" width="256">今は夢を見ているようだ</language>
-		<language name="JPN_KANJI" width="256">今は夢を見ているようだ</language>
+		<language name="JPN" width="256">PDWシステムのエネルギー切れです。
+充電まで１日かかります</language>
+		<language name="JPN_KANJI" width="256">PDWシステムのエネルギー切れです。
+充電まで１日かかります</language>
 	</row>
 
 	<row id="GSYNC_010">
@@ -435,6 +437,88 @@
 	<row id="GSYNC_011">
 		<language name="JPN" width="256">ポケモンを起こす？</language>
 		<language name="JPN_KANJI" width="256">ポケモンを起こす？</language>
+	</row>
+
+	<row id="GSYNC_012">
+		<language name="JPN" width="256">BOXにねむらせるポケモンがいません</language>
+		<language name="JPN_KANJI" width="256">BOXにねむらせるポケモンがいません</language>
+	</row>
+
+	<row id="GSYNC_013">
+		<language name="JPN" width="256">今は夢を見ているようだ</language>
+		<language name="JPN_KANJI" width="256">今は夢を見ているようだ</language>
+	</row>
+
+	<row id="GSYNC_014">
+		<language name="JPN" width="256">前回の夢を配達員から受け取っていませんが、
+起こしていいですか？</language>
+		<language name="JPN_KANJI" width="256">前回の夢を配達員から受け取っていませんが、
+起こしていいですか？</language>
+	</row>
+
+	<row id="GSYNC_015">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
+[2:01:２桁:1]つレベルアップしました</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
+[2:01:２桁:1]つレベルアップしました</language>
+	</row>
+
+	<row id="GSYNC_016">
+		<comment>３つとも変更があった</comment>
+		<language name="JPN" width="256">CGEARのスキンが変わりました
+ミュージカルの演目が変わりました
+ずかんのスキンがかわりました</language>
+		<language name="JPN_KANJI" width="256">CGEARのスキンが変わりました
+ミュージカルの演目が変わりました
+ずかんのスキンがかわりました</language>
+	</row>
+
+	<row id="GSYNC_017">
+		<comment>1つ変更があった</comment>
+		<language name="JPN" width="256">CGEARのスキンが変わりました
+</language>
+		<language name="JPN_KANJI" width="256">CGEARのスキンが変わりました
+</language>
+	</row>
+
+	<row id="GSYNC_018">
+		<comment>1つ変更があった</comment>
+		<language name="JPN" width="256">ミュージカルの演目が変わりました
+</language>
+		<language name="JPN_KANJI" width="256">ミュージカルの演目が変わりました
+</language>
+	</row>
+
+	<row id="GSYNC_019">
+		<comment>1つ変更があった</comment>
+		<language name="JPN" width="256">ずかんのスキンがかわりました</language>
+		<language name="JPN_KANJI" width="256">ずかんのスキンがかわりました</language>
+	</row>
+
+	<row id="GSYNC_020">
+		<comment>２つ変更があった</comment>
+		<language name="JPN" width="256">CGEARのスキンが変わりました
+ミュージカルの演目が変わりました
+</language>
+		<language name="JPN_KANJI" width="256">CGEARのスキンが変わりました
+ミュージカルの演目が変わりました
+</language>
+	</row>
+
+	<row id="GSYNC_021">
+		<comment>２つ変更があった</comment>
+		<language name="JPN" width="256">ミュージカルの演目が変わりました
+ずかんのスキンがかわりました</language>
+		<language name="JPN_KANJI" width="256">ミュージカルの演目が変わりました
+ずかんのスキンがかわりました</language>
+	</row>
+
+	<row id="GSYNC_022">
+		<comment>２つ変更があった</comment>
+		<language name="JPN" width="256">CGEARのスキンが変わりました
+ずかんのスキンがかわりました</language>
+		<language name="JPN_KANJI" width="256">CGEARのスキンが変わりました
+ずかんのスキンがかわりました</language>
 	</row>
 
 	<row id="GSYNC_ERR001" back-color=",,,#ffff00,,,,,,,,,,,,,,">

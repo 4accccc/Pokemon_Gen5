@@ -43,6 +43,7 @@
 
 enum _IBMODE_SELECT {
   _SELECTMODE_EXIT,
+  _SELECTMODE_DECIDE,
 };
 
 
@@ -320,6 +321,9 @@ struct _IRC_BATTLE_MATCH {
 	APP_TASKMENU_RES* pAppTaskRes;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
   APP_TASKMENU_WIN_WORK* pAppWin;
+  APP_TASKMENU_WIN_WORK* pAppWinLeader;
+
+  int musicalNum;
 
 };
 
@@ -352,6 +356,7 @@ enum{
 
 static void _changeState(IRC_BATTLE_MATCH* pWork,StateFunc state)
 {
+  NET_PRINT("irch: %x\n",(u32)state);
   pWork->state = state;
 }
 
@@ -726,6 +731,7 @@ static void _wirelessConnectCallback(void* pWk)
 {
   IRC_BATTLE_MATCH *pWork = pWk;
 
+
   _CHANGE_STATE(pWork, _modeCheckStart);
 }
 
@@ -901,7 +907,7 @@ static void _YesNoStart(IRC_BATTLE_MATCH* pWork)
 
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
-  appinit.charPosY = 14;
+  appinit.charPosY = 13;
 	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
 	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
 
@@ -926,7 +932,7 @@ static void _ReturnButtonStart(IRC_BATTLE_MATCH* pWork)
 {
   int i;
 
-  if(EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER == pWork->selectType){
+  if(EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER != pWork->selectType){
     pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
     GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_03, pWork->appitem[0].str);
     pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
@@ -937,19 +943,23 @@ static void _ReturnButtonStart(IRC_BATTLE_MATCH* pWork)
   }
   else{
 
+
     pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
     GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_03, pWork->appitem[0].str);
     pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
     pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_RETURN;
+
+    pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
+                                             pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
+    GFL_STR_DeleteBuffer(pWork->appitem[0].str);
 
     pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
     GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_36, pWork->appitem[1].str);
     pWork->appitem[1].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
     pWork->appitem[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
 
-    pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
-                                             pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
-    GFL_STR_DeleteBuffer(pWork->appitem[0].str);
+    pWork->pAppWinLeader =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
+                                             &pWork->appitem[1], 32-10, 24-4-3, 10, pWork->heapID);
     GFL_STR_DeleteBuffer(pWork->appitem[1].str);
 
   }
@@ -1006,7 +1016,7 @@ static void _friendNumWindowCreate(int msgno,IRC_BATTLE_MATCH* pWork)
 
   pWork->buttonWin[i] = GFL_BMPWIN_Create(
     frame,
-    2, 8, 16, 4,
+    1, 8, 18, 4,
     _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), WINCLR_COL(FBMP_COL_WHITE) );
   GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
@@ -1027,6 +1037,45 @@ static void _friendNumWindowCreate(int msgno,IRC_BATTLE_MATCH* pWork)
   GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
 
 }
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ミュージカルの人数表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _musicalNumWindowCreate(int msgno,IRC_BATTLE_MATCH* pWork)
+{
+  int i=1;
+  u32 cgx;
+  int frame = GFL_BG_FRAME1_S;
+
+  pWork->buttonWin[i] = GFL_BMPWIN_Create(
+    frame,
+    1, 8, 18, 4,
+    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), WINCLR_COL(FBMP_COL_WHITE) );
+  GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
+  GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
+  BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2), _BUTTON_WIN_PAL );
+
+  GFL_MSG_GetString(  pWork->pMsgData, msgno, pWork->pExStrBuf );
+  {
+    int num1 = GFL_NET_GetNowConnectNum_IRCWIRELESS();
+    WORDSET_RegisterNumber(pWork->pWordSet, 0, num1, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
+    WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
+  }
+  
+  //    GFL_FONTSYS_SetColor( 1, 1, 1 );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0, 2, pWork->pStrBuf, pWork->pFontHandle);
+  GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
+
+}
+
+
 
 //----------------------------------------------------------------------------
 /**
@@ -1098,6 +1147,17 @@ static void _firstConnectMessage(IRC_BATTLE_MATCH* pWork)
     else if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MULTH)
     {
       int aMsgBuff[]={IRCBTL_STR_10};
+      _msgWindowCreate(aMsgBuff, pWork);
+    }
+    else if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER)
+    {
+      int aMsgBuff[]={IRCBTL_STR_38};
+      _msgWindowCreate(aMsgBuff, pWork);
+      _musicalNumWindowCreate(IRCBTL_STR_40, pWork);
+    }
+    else if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MUSICAL)
+    {
+      int aMsgBuff[]={IRCBTL_STR_39};
       _msgWindowCreate(aMsgBuff, pWork);
     }
     else
@@ -1278,8 +1338,14 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
 //      GF_ASSERT(0);
       break;
     }
-    if((pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL) &&
-        (pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER)){
+    if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MUSICAL){
+      GFL_NET_ReserveNetID_IRCWIRELESS(1);
+    }
+    else if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER){
+      GFL_NET_ReserveNetID_IRCWIRELESS(0);
+      pWork->musicalNum =  GFL_NET_GetNowConnectNum_IRCWIRELESS();
+    }
+    else{
       GFL_NET_Init(&net_ini_data, NULL, pWork);	//通信初期化
     }
   }
@@ -1364,6 +1430,49 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
   }
 }
 
+
+
+
+static void _nop(IRC_BATTLE_MATCH* pWork)
+{
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ＩＲＣ接続待機
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _ircActionWait(IRC_BATTLE_MATCH* pWork)
+{
+
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+    if(selectno == 0)
+    { // はいを選択した場合
+      _buttonWindowDelete(pWork);
+      GFL_NET_ForceParentStart_IRCWIRELESS();  //決定
+      _CHANGE_STATE(pWork, _nop);
+    }
+    else
+    {  // いいえを選択した場合
+      _buttonWindowDelete(pWork);
+      _firstConnectMessage(pWork);
+      _ReturnButtonStart(pWork);
+      pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
+      pWork->touch = &_cancelButtonCallback;
+      _CHANGE_STATE(pWork,_ircMatchWait);
+    }
+  }
+}
+
+
+
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   キーを待って終了
@@ -1445,7 +1554,10 @@ static void _modeAppWinFlash(IRC_BATTLE_MATCH* pWork)
 
     APP_TASKMENU_WIN_Delete(pWork->pAppWin);
     pWork->pAppWin = NULL;
+    APP_TASKMENU_WIN_Delete(pWork->pAppWinLeader);
+    pWork->pAppWinLeader = NULL;
 
+    
     GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                   0x20*12, 0x20, pWork->heapID);
     _msgWindowCreate(aMsgBuff, pWork);
@@ -1460,6 +1572,41 @@ static void _modeAppWinFlash(IRC_BATTLE_MATCH* pWork)
     pWork->pButton = NULL;
 
     _CHANGE_STATE(pWork,_ircExitWait);
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   モードセレクト画面タッチ処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeAppWinFlashLeader(IRC_BATTLE_MATCH* pWork)
+{
+  if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWinLeader)){
+    int aMsgBuff[]={IRCBTL_STR_37};
+    _buttonWindowDelete(pWork);
+
+    APP_TASKMENU_WIN_Delete(pWork->pAppWinLeader);
+    pWork->pAppWinLeader = NULL;
+    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+    pWork->pAppWin = NULL;
+
+    GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+                                  0x20*12, 0x20, pWork->heapID);
+    _msgWindowCreate(aMsgBuff, pWork);
+
+    _YesNoStart(pWork);
+
+    GFL_FONTSYS_SetDefaultColor();
+
+    if(pWork->pButton){
+      GFL_BMN_Delete(pWork->pButton);
+    }
+    pWork->pButton = NULL;
+
+    _CHANGE_STATE(pWork,_ircActionWait);
   }
 }
 
@@ -1486,16 +1633,32 @@ static BOOL _cancelButtonCallback(int bttnid, IRC_BATTLE_MATCH* pWork)
 {
   BOOL ret = FALSE;
 
-//  pWork->bttnid = bttnid;
-  switch( bttnid ){
-  case _SELECTMODE_EXIT:
-		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
-//  pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
-    _CHANGE_STATE(pWork,_modeAppWinFlash);        // 終わり
-    break;
-  default:
-    break;
+  if(EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER != pWork->selectType){
+    switch( bttnid ){
+    case _SELECTMODE_EXIT:
+      PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+      APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
+      _CHANGE_STATE(pWork,_modeAppWinFlash);        // 終わり
+      break;
+    default:
+      break;
+    }
+  }
+  else{
+    switch( bttnid ){
+    case _SELECTMODE_EXIT:
+      PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+      APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
+      _CHANGE_STATE(pWork,_modeAppWinFlash);        // 終わり
+      break;
+    case _SELECTMODE_DECIDE:
+      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+      APP_TASKMENU_WIN_SetDecide(pWork->pAppWinLeader, TRUE);
+      _CHANGE_STATE(pWork,_modeAppWinFlashLeader);
+      break;
+    default:
+      break;
+    }
   }
   return ret;
 }
@@ -1593,7 +1756,12 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
       return;
     }
   }
+  if(pWork->musicalNum != GFL_NET_GetNowConnectNum_IRCWIRELESS()){
 
+//    _musicalNumWindowCreate();
+
+    
+  }
 
   GFL_BMN_Main( pWork->pButton );
 
@@ -1710,6 +1878,9 @@ static GFL_PROC_RESULT IrcBattleMatchProcMain( GFL_PROC * proc, int * seq, void 
   if(pWork->pAppWin){
     APP_TASKMENU_WIN_Update( pWork->pAppWin );
   }
+  if(pWork->pAppWinLeader){
+    APP_TASKMENU_WIN_Update( pWork->pAppWinLeader );
+  }
   GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, pWork->yoffset );
   pWork->yoffset--;
   ConnectBGPalAnm_Main(&pWork->cbp);
@@ -1735,6 +1906,9 @@ static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void *
   }
   if(pWork->pAppWin){
     APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+  }
+  if(pWork->pAppWinLeader){
+    APP_TASKMENU_WIN_Delete(pWork->pAppWinLeader);
   }
 	if(pWork->pButton){
 		GFL_BMN_Delete(pWork->pButton);

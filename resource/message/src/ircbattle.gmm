@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-03-02T18:33:22"/>
+	<create user="ohno" host="W00141" date="2010-03-03T17:36:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -574,6 +574,32 @@
 	<row id="IRCBTL_STR_36">
 		<language name="JPN" width="256">すすむ</language>
 		<language name="JPN_KANJI" width="256">すすむ</language>
+	</row>
+
+	<row id="IRCBTL_STR_37">
+		<language name="JPN" width="256">この　メンバーで　よろしいですか？</language>
+		<language name="JPN_KANJI" width="256">この　メンバーで　よろしいですか？</language>
+	</row>
+
+	<row id="IRCBTL_STR_38">
+		<language name="JPN" width="256">グループ　ぜんいんと
+せきがいせんつうしんを　してください</language>
+		<language name="JPN_KANJI" width="256">グループ　ぜんいんと
+せきがいせんつうしんを　してください</language>
+	</row>
+
+	<row id="IRCBTL_STR_39">
+		<language name="JPN" width="256">リーダーと
+せきがいせんつうしんを　してください</language>
+		<language name="JPN_KANJI" width="256">リーダーと
+せきがいせんつうしんを　してください</language>
+	</row>
+
+	<row id="IRCBTL_STR_40">
+		<language name="JPN" width="256">[2:00:１桁:0]にんと　つうしんちゅう
+すすむで　はじまります</language>
+		<language name="JPN_KANJI" width="256">[2:00:１桁:0]にんと　つうしんちゅう
+すすむで　はじまります</language>
 	</row>
 
 	<flowchart-group-list>

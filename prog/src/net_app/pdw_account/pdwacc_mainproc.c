@@ -90,7 +90,7 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
   case _WIFI_LOGIN:
     pWork->login.gamedata = pWork->gameData;
     pWork->login.bg       = WIFILOGIN_BG_NORMAL;
-    pWork->login.display  = WIFILOGIN_DISPLAY_DOWN;
+    pWork->login.display  = WIFILOGIN_DISPLAY_UP;
 
     GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &pWork->login);
 

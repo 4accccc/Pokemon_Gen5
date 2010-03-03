@@ -184,10 +184,19 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     return GMEVENT_RES_FINISH;
     break;
   case _CALL_GAMESYNC:
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, SEQ_BGM_GAME_SYNC, FSND_FADE_SHORT, FSND_FADE_NONE));
-    dbw->push=TRUE;
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &dbw->aLoginWork);
-    (*seq)++;
+    {
+      BOX_MANAGER* pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(gsys));
+      if(0==BOXDAT_GetPokeExistCount2Total(pBox)){  //BOX‚ª‹ó‚È‚ç‚Î
+        dbw->selectType = GSYNC_CALLTYPE_BOXNULL; 
+        (*seq) = _GAMESYNC_MAINPROC;  //BOX‚©‚ç•\Ž¦‚ð‚µ‚ÄI—¹‚·‚é‚½‚ß‚É
+      }
+      else{
+        GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, SEQ_BGM_GAME_SYNC, FSND_FADE_SHORT, FSND_FADE_NONE));
+        dbw->push=TRUE;
+        GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &dbw->aLoginWork);
+        (*seq)++;
+      }
+    }
     break;
   case _WAIT_GAMESYNCLOGIN:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
