@@ -98,7 +98,6 @@ typedef struct _GFL_NETSYS GFL_NETSYS;
 #define GFL_NET_NETID_SERVERBIT (0x80)    ///< サーバーBIT
 #define GFL_NET_SENDID_ALLUSER (0xff)  ///< NetID:全員へ送信する場合
 #define GFL_NET_NETID_INVALID  (0xfe)  ///< ありえないID
-//#define GFL_NET_PARENT_NETID    (0)    ///< 親のID
 #define GFL_NET_NO_PARENTMACHINE (0)  ///< 親機の番号
 
 
@@ -439,6 +438,21 @@ extern void GFL_NET_ChangeoverConnect(NetStepEndCallback callback);
  */
 //==============================================================================
 extern void GFL_NET_ChangeoverConnect_IRCWIRELESS(NetStepEndCallback callback,NetPreStepEndCallback precallback,NetStepEndCallback ircendcallback);
+//==============================================================================
+/**
+ * @brief    赤外線接続を約束した人数
+ * @return   赤外線接続を約束した人数
+ */
+//==============================================================================
+extern int GFL_NET_GetNowConnectNum_IRCWIRELESS(void);
+
+//==============================================================================
+/**
+ * @brief    ユーザーワークの変更
+ * @return   none
+ */
+//==============================================================================
+extern void GFL_NET_WorkChange_IRCWIRELESS(void* pWork);
 
 //==============================================================================
 /**
@@ -458,6 +472,25 @@ extern void GFL_NET_Changeover(NetStepEndCallback callback);
  */
 //==================================================================
 extern void GFL_NET_ChangeoverModeSet(int mode, BOOL bAuto, const u8 *macAddress);
+
+
+
+//==============================================================================
+/**
+ * @brief    親機を無線スタート状態にする
+ */
+//==============================================================================
+
+extern void GFL_NET_ForceParentStart_IRCWIRELESS(void);
+
+//==============================================================================
+/**
+ * @brief    赤外線接続後何のIDになるか予約
+ * @param    netID  無線netid   親になるなら子になるかしかない
+ * @return   none
+ */
+//==============================================================================
+extern void GFL_NET_ReserveNetID_IRCWIRELESS(int netID);
 
 //==============================================================================
 /**
