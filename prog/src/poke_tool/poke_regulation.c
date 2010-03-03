@@ -461,7 +461,7 @@ void PokeRegulation_ModifyLevelPokeParty( const REGULATION* pReg, POKEPARTY *par
   {
     pp  = PokeParty_GetMemberPointer( party, i );
 
-    //補正ごとにレベル補正をかけるポケモンが違う
+    //レギュレーションごとにレベル補正をかけるポケモンが違う
     switch( pReg->LEVEL_RANGE )
     { 
     case REGULATION_LEVEL_RANGE_DRAG_DOWN:  
