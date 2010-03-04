@@ -7,9 +7,9 @@
 //=============================================================================
 
 #include "wb_attr_data.h"
-#include "../field_g3d_map.h"
 #include "field/field_const.h"   //for FIELD_CONST_GRID_SIZE
 #include "map/dp3format.h"       //for NormalVtxFormat
+#include "mapdata_attr.h"
 
 //----------------------------------------------------------------------------
 /**
