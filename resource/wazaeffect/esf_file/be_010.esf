@@ -1,5 +1,5 @@
 EFFSEQ
-$0018
+$0020
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_00_open1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_00_kaiten.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_normal_1.spa
@@ -18,22 +18,10 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_capture_01.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_star1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_01_fix.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_capture_01.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 #001
 %00
-指定されたワークを見て条件分岐	YURE_CNT	>=	0	CAPTURE_START
-パーティクルデータロード	be_m_ball_01_kaiten
-エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	放物線	0:-2:10	防御側	2.399902:35:5	1:1:0
-SE再生	SEQ_SE_NAGERU	SE1	防御側	0:0:127	0:0:0
-SEパン	SE1	追従	攻撃側	防御側	0	35:0:0
-タイマーによるウエイト	27
-SE再生	SEQ_SE_KON	SE1	防御側	0:0:127	0:0:0
-制御モード変更	継続
-パーティクルデータ削除	be_m_ball_01_kaiten
-パーティクルデータロード	be_m_ball_01_kaiten
-エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	直線	0.007324219:4.823242:-8.756104	攻撃側	0:16:0	1:1:0
-エフェクト終了待ち	すべて
-エフェクト終了
-ラベル	CAPTURE_START
 パーティクルデータロード	be_m_ball_01_kaiten
 エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	放物線	0:-2:10	防御側	2.399902:35:5	1:1:0
 SE再生	SEQ_SE_NAGERU	SE1	真ん中	0:0:127	0:0:0
@@ -42,12 +30,10 @@ SEパン	SE1	追従	攻撃側	防御側	0	35:0:0
 パーティクルデータ削除	be_m_ball_01_kaiten
 パーティクルデータロード	be_m_ball_01_open1
 パーティクルデータロード	be_capture_01
-パーティクル再生	be_capture_01	BE_CAPTURE_01_GET_001_1	防御側	方向無し	2.4:0:0	1:1:1	1
-パーティクル再生	be_capture_01	BE_CAPTURE_01_GET_001_2	防御側	方向無し	2.4:0:0	1:1:1	1
-パーティクル再生	be_capture_01	BE_CAPTURE_01_GET_001_3	防御側	方向無し	2.4:0:0	1:1:1	1
+パーティクル再生すべて	be_capture_01	防御側	方向無し	2.399902:0:0	1:1:1	1
 パーティクル再生	be_m_ball_01_open1	BE_M_BALL_01_OPEN1_M_BALL_01_OPEN1	防御側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	be_m_ball_01_open1	BE_M_BALL_01_OPEN1_M_BALL_01_OPEN2	防御側	方向無し	2:0:0	1:1:1	1
-SE再生	SEQ_SE_BOWA2	SE1	真ん中	0:0:127	0:0:0
+SE再生	SEQ_SE_BOWA2	SE1	防御側	0:0:127	0:0:0
 ポケモンパレットフェード	防御側	0	16	1	31:31:31
 エフェクト終了待ち	ポケモン
 ポケモン移動	防御側	追従	0	2.7	20	0	0
@@ -61,35 +47,42 @@ SE再生	SEQ_SE_BOWA2	SE1	真ん中	0:0:127	0:0:0
 タイマーによるウエイト	20
 ボールOBJのセット	0	防御側	0	2.5	0.47	0.47
 パーティクルデータ削除	be_m_ball_01_close
+指定されたワークを見て条件分岐	GET_CRITICAL	!=	1	NO_CRITICAL
+OBJ移動	0	往復ロング	1	0	1	0	2
+エフェクト終了待ち	すべて
+タイマーによるウエイト	16
+ラベル	NO_CRITICAL
 OBJ移動	0	追従	0	24	16	0	0
 OBJアニメセット	0	4
 タイマーによるウエイト	16
-SE再生	SEQ_SE_KON	デフォルト	真ん中	0:0:127	0:0:0
+SE再生	SEQ_SE_KON	デフォルト	防御側	0:0:127	0:0:0
 OBJ移動	0	往復	0	-12	8	0	1
 エフェクト終了待ち	すべて
-SE再生	SEQ_SE_KON	デフォルト	真ん中	0:0:127	0:0:0
+SE再生	SEQ_SE_KON	デフォルト	防御側	0:0:127	0:0:0
 OBJ移動	0	往復	0	-6	4	0	1
 エフェクト終了待ち	すべて
 OBJ移動	0	往復	0	-3	2	0	1
 エフェクト終了待ち	すべて
-SE再生	SEQ_SE_KON	デフォルト	真ん中	0:0:127	0:0:0
+SE再生	SEQ_SE_KON	デフォルト	防御側	0:0:127	0:0:0
 タイマーによるウエイト	16
+指定されたワークを見て条件分岐	GET_CRITICAL	==	1	CRITICAL
 指定されたワークを見て条件分岐	YURE_CNT	==	0	GET_FAIL
 OBJアニメセット	0	1
-SE再生	SEQ_SE_BOWA1	デフォルト	真ん中	0:0:127	0:0:0
+SE再生	SEQ_SE_BOWA1	デフォルト	防御側	0:0:127	0:0:0
 エフェクト終了待ち	すべて
-タイマーによるウエイト	24
+タイマーによるウエイト	48
 指定されたワークを見て条件分岐	YURE_CNT	==	1	GET_FAIL
 OBJアニメセット	0	2
-SE再生	SEQ_SE_BOWA1	デフォルト	真ん中	0:0:127	0:0:0
+SE再生	SEQ_SE_BOWA1	デフォルト	防御側	0:0:127	0:0:0
 エフェクト終了待ち	すべて
-タイマーによるウエイト	24
+タイマーによるウエイト	48
+ラベル	CRITICAL
 OBJアニメセット	0	3
-SE再生	SEQ_SE_BOWA1	デフォルト	真ん中	0:0:127	0:0:0
+SE再生	SEQ_SE_BOWA1	デフォルト	防御側	0:0:127	0:0:0
 エフェクト終了待ち	すべて
-タイマーによるウエイト	24
+タイマーによるウエイト	64
 指定されたワークを見て条件分岐	GET_SUCCESS	==	0	GET_FAIL
-SE再生	SEQ_SE_GETTING	デフォルト	真ん中	0:0:127	0:0:0
+SE再生	SEQ_SE_GETTING	デフォルト	防御側	0:0:127	0:0:0
 OBJパレットフェード	0	0	8	-2	0:0:0
 パーティクルデータロード	be_ball_star1
 パーティクル再生（正射影）	be_ball_star1	BE_BALL_STAR1_BALL_STAR1	防御側	方向無し	0:1:0	0.5:0.75:0.5	0.5
@@ -102,12 +95,9 @@ OBJパレットフェード	0	0	8	-2	0:0:0
 タイマーによるウエイト	16
 OBJ削除	0
 パーティクルデータロード	be_ball_001_1
-パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_1	防御側	方向無し	1:0:0	1:1:1	1
-パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_2	防御側	方向無し	1:0:0	1:1:1	1
-パーティクル再生	be_ball_001_1	BE_BALL_001_1_BALL_001_3	防御側	方向無し	1:0:0	1:1:1	1
-SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
+パーティクル再生すべて	be_ball_001_1	防御側	方向無し	1:0:0	1:1:1	1
+SE再生	SEQ_SE_BOWA2	デフォルト	防御側	0:0:127	0:0:0
 タイマーによるウエイト	16
-パーティクルデータ削除	be_m_ball_01_open1
 ポケモン拡縮	防御側	追従	1	1	20	0	0
 ポケモンパレットフェード	防御側	16	0	1	31:31:31
 エフェクト終了待ち	すべて
