@@ -152,13 +152,14 @@ struct _PRINT_STREAM {
   u8    org_putPerFrame;
   u8    current_putPerFrame;
 
-  u8   wait;
+  u8    wait;
   u8    pauseReleaseFlag;
   u8    pauseWait;
   u8    clearColor;
 
   u8    stopFlag;
   u8    callbackResult;
+  u8    lineMoningFlag;
 
   pPrintCallBack  callback_func;
   u32       org_arg;
@@ -1021,6 +1022,7 @@ PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
   stwk->pauseWait = 0;
   stwk->pauseReleaseFlag = FALSE;
   stwk->stopFlag = FALSE;
+  stwk->lineMoningFlag = FALSE;
   stwk->callbackResult = FALSE;
 
   return stwk;
@@ -1164,6 +1166,33 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
 
   switch( wk->state ){
   case PRINTSTREAM_STATE_RUNNING:
+
+    // s‘—‚èˆ—’†
+    if( wk->lineMoningFlag )
+    {
+      if( wk->pauseWait < LINE_DOT_HEIGHT )
+      {
+        u16 size_x, size_y, feed_speed;
+
+        feed_speed = LINE_FEED_SPEED;
+        if( (wk->pauseWait+feed_speed) > LINE_DOT_HEIGHT ){
+          feed_speed = (LINE_DOT_HEIGHT - wk->pauseWait);
+        }
+        wk->pauseWait += feed_speed;
+
+        size_x = GFL_BMP_GetSizeX( wk->dstBmp );
+        size_y = GFL_BMP_GetSizeY( wk->dstBmp );
+        GFL_BMP_Print( wk->dstBmp, wk->dstBmp, 0, feed_speed, 0, 0, size_x, size_y-feed_speed, GF_BMPPRT_NOTNUKI );
+        GFL_BMP_Fill( wk->dstBmp, 0, size_y-feed_speed, size_x, feed_speed, wk->clearColor );
+        GFL_BMPWIN_TransVramCharacter( wk->dstWin );
+      }else{
+        wk->printJob.write_x = wk->printJob.org_x;
+        wk->printJob.write_y = LINE_DOT_HEIGHT;
+        wk->lineMoningFlag = FALSE;
+      }
+      break;
+    }
+
     if( wk->wait == 0 )
     {
       int i;
@@ -1218,26 +1247,8 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
     {
       switch( wk->pauseType ){
       case PRINTSTREAM_PAUSE_LINEFEED:
-        if( wk->pauseWait < LINE_DOT_HEIGHT )
-        {
-          u16 size_x, size_y, feed_speed;
-
-          feed_speed = LINE_FEED_SPEED;
-          if( (wk->pauseWait+feed_speed) > LINE_DOT_HEIGHT ){
-            feed_speed = (LINE_DOT_HEIGHT - wk->pauseWait);
-          }
-          wk->pauseWait += feed_speed;
-
-          size_x = GFL_BMP_GetSizeX( wk->dstBmp );
-          size_y = GFL_BMP_GetSizeY( wk->dstBmp );
-          GFL_BMP_Print( wk->dstBmp, wk->dstBmp, 0, feed_speed, 0, 0, size_x, size_y-feed_speed, GF_BMPPRT_NOTNUKI );
-          GFL_BMP_Fill( wk->dstBmp, 0, size_y-feed_speed, size_x, feed_speed, wk->clearColor );
-          GFL_BMPWIN_TransVramCharacter( wk->dstWin );
-        }else{
-          wk->printJob.write_x = wk->printJob.org_x;
-          wk->printJob.write_y = LINE_DOT_HEIGHT;
-          wk->state = PRINTSTREAM_STATE_RUNNING;
-        }
+        wk->lineMoningFlag = TRUE;
+        wk->state = PRINTSTREAM_STATE_RUNNING;
         break;
 
       case PRINTSTREAM_PAUSE_CLEAR:
