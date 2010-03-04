@@ -48,6 +48,7 @@
 #define D02R0101_SPROCK_03                34
 #define D02R0101_SPROCK_04                35
 #define D02R0101_FLD_ITEM_01              36
+#define D02R0101_STOP_01                  37
 
 #endif //ZONE_D02R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d02r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

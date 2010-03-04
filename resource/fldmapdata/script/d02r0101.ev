@@ -41,6 +41,7 @@ _EVENT_DATA		ev_pos_d02r0101_event_04
 _EVENT_DATA		ev_d02r0101_hakaim2_01
 _EVENT_DATA		ev_pos_d02r0101_event_05
 _EVENT_DATA		ev_bg_d02r0101_sign1_01
+_EVENT_DATA		ev_d02r0101_stop_01
 _EVENT_DATA_END
 
 
@@ -192,7 +193,23 @@ EVENT_START		ev_pos_d02r0101_event_01
 	//あのね　ヤグルマのもりを　ぬけるには
 	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_01 , D02R0101_LEADER3_01 )
 	_BALLOONWIN_CLOSE()
-
+	
+	//アーティ：上を見る
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_up_staywalk1 )
+	_OBJ_ANIME_WAIT()
+	
+	//ボクは　このまま　まっすぐ　すすんで
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_01a , D02R0101_LEADER3_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//アーティ：自機を見る
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_down_staywalk1 )
+	_OBJ_ANIME_WAIT()
+	
+	//いなかったとしても　にげられないように
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_01b , D02R0101_LEADER3_01 )
+	_BALLOONWIN_CLOSE()
+	
 	//アーティ：左の森を見る
 	_OBJ_ANIME( D02R0101_LEADER3_01, anm_left_staywalk1 )
 	_OBJ_ANIME_WAIT()
@@ -234,6 +251,10 @@ _ANIME_LABEL anm_down_staywalk1
 
 _ANIME_LABEL anm_left_staywalk1
 	_ANIME_DATA		AC_STAY_WALK_L_16F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_up_staywalk1
+	_ANIME_DATA		AC_STAY_WALK_U_16F,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_leader_saru
@@ -297,6 +318,9 @@ EVENT_START		ev_pos_d02r0101_stop
         _OBJ_ANIME_WAIT()
     CASE 76 THEN
         _OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_tikaduku5 )
+        _OBJ_ANIME_WAIT()
+    CASE 74 THEN
+        _OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_tikaduku6 )
         _OBJ_ANIME_WAIT()
     ENDSWITCH
 	
@@ -374,32 +398,38 @@ _ANIME_LABEL	anm_leader_tikaduku5
 	_ANIME_DATA	AC_STAY_WALK_D_16F,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_leader_tikaduku6
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+
 //--------------------------------------------------------------
 //	アーティ　持ち場に戻る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_leader_modoru1
 	_ANIME_DATA	AC_WALK_R_8F,3
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader_modoru2
 	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader_modoru3
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader_modoru4
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader_modoru5
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -707,14 +737,14 @@ EVENT_START		ev_pos_d02r0101_event_05
 	//=========================================//
 	
 	//アーティも同じ位置に
-	_OBJ_POS_CHANGE( D02R0101_LEADER3_01, 43, 0, 36, DIR_UP )
+	_OBJ_POS_CHANGE( D02R0101_LEADER3_01, 43, 0, 37, DIR_UP )
 
     //……わかった　ぬすんだ　ホネは
     _BALLOONWIN_OBJMSG( msg_d02r0101_hakaim3_02 , D02R0101_HAKAIM3_01 )
     _BALLOONWIN_CLOSE()
 
-	//【仮】ホネ入手	アイテム未定のため、とりあえずキズグスリ
-	_ITEM_EVENT_KEYWAIT( ITEM_KIZUGUSURI, 1 )
+	//ホネ入手	
+	_ITEM_EVENT_KEYWAIT( ITEM_DORAGONNOHONE, 1 )
 
 	//ゆっくり後ろに下がる
     _OBJ_ANIME( D02R0101_HAKAIM3_01, anm_hakai_back )
@@ -726,6 +756,10 @@ EVENT_START		ev_pos_d02r0101_event_05
    
 	//賢者５：出現、団員の真横へ
 	_OBJ_ANIME( D02R0101_SAGE5_01, anm_sage5_come )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_push )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
 	_OBJ_ANIME_WAIT()
 
 	//だいじょうぶ　ですか
@@ -789,7 +823,11 @@ EVENT_START		ev_pos_d02r0101_event_05
 	//画面暗転・プラズマ団のOBJ削除
 	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
-	_TIME_WAIT( 10 )
+	_TIME_WAIT( 30 )
+
+	_OBJ_ANIME( D02R0101_LEADER2_01, anm_up_walk )
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_up_walk )
+	_OBJ_ANIME_WAIT()
 
 	_OBJ_DEL(D02R0101_SAGE5_01)
 	_OBJ_DEL(D02R0101_HAKAIM1_01)
@@ -842,12 +880,14 @@ EVENT_START		ev_pos_d02r0101_event_05
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_up_staywalk )
 	_OBJ_ANIME_WAIT()
 	
-	//【仮】アロエにホネを渡す	キズグスリで代用
+	//アロエにホネを渡す
 	_PLAYER_NAME(0)
-	_ITEM_NAME( 1, ITEM_KIZUGUSURI )
+	_ITEM_NAME( 1, ITEM_DORAGONNOHONE )
 	_SYSWIN_MSG( msg_d02r0101_system_01 , POS_DOWN )
 	_LAST_KEYWAIT()
 	_SYSWIN_CLOSE()
+
+	_SUB_ITEM( ITEM_DORAGONNOHONE,1,SCWK_ANSWER )
 
 	//ほんとうに　ありがとうよ
 	_PLAYER_NAME(0)
@@ -901,9 +941,9 @@ _ANIME_LABEL	anm_player_go
 //	アーティ・アロエ
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_leader3_come
-	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader3_leave1
@@ -927,9 +967,9 @@ _ANIME_LABEL	anm_leader2_leave2
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader2_come
-	_ANIME_DATA	AC_WALK_U_4F,4
+	_ANIME_DATA	AC_WALK_U_4F,5
 	_ANIME_DATA	AC_WALK_L_4F,1
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_up_walk
@@ -1007,20 +1047,43 @@ _ANIME_LABEL	anm_down_dir
 _ANIME_LABEL	anm_hakai_back
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_U_16F,2
+	_ANIME_DATA	AC_WALK_U_16F,1
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_sage5_come
-	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_push
+	_ANIME_DATA	AC_WAIT_8F,5
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /*		D02R0101	おとくなけいじばん						  */
 /**************************************************************/
 EVENT_START		ev_bg_d02r0101_sign1_01
 	_EASY_BGWIN_MSG( msg_d02r0101_sign1_01, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D02R0101	OLDMAN1　思索の原ストッパー				  */
+/**************************************************************/
+EVENT_START		ev_d02r0101_stop_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_stop_01 )
 EVENT_END

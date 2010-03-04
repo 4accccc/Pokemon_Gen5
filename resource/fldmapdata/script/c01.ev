@@ -292,9 +292,20 @@ _TALK_OBJ_START()
 		
 	ENDIF
 
-	_BALLOONWIN_TALKOBJ_MSG( msg_c01_leader1_01 )
-	_BALLOONWIN_CLOSE()
-
+	//ゆめのあとちでポケモンを貰っている場合
+	IF $WK_SCENE_D01R0101 == 2 THEN
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01_leader1_01 )
+		_MSGWIN_CLOSE()
+			
+	//ゆめのあとちでポケモンをもらっていない場合
+	ELSE
+		
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01_leader1_01a )
+		_MSGWIN_CLOSE()
+		
+	ENDIF
+	
 	//ローカル定義
 	DEFINE_LOCAL	DOOR_ANIME_ID
 	
