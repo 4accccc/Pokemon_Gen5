@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T21:53:01"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T16:33:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -359,11 +359,11 @@
 ・メッセージ表示後、
 　ライバルだけ、コンテナの奥へ移動</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……かんがえても
-わかりっこ　ないよね▼
+		<language name="JPN" width="256">……かんがえても
+わかるわけ　ないよね▼
 さて　なかを　しらべよう▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……考えても
-わかりっこ　ないよね▼
+		<language name="JPN_KANJI" width="256">……考えても
+わかるわけ　ないよね▼
 さて　中を　探索しよう▼</language>
 	</row>
 
@@ -376,13 +376,13 @@
 　いいえ→black_05</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『……？
-この　おくにも　だれか　いるぞ[BE:01:ページ切り替え（クリア）]
-ひょっとしたら　プラズマだん　かもな
-じゅんびは　いいか？[1:00:トレーナー名:0]</language>
+この　おくにも　だれか　いるね[BE:01:ページ切り替え（クリア）]
+ひょっとしたら　プラズマだん　かな
+じゅんびは　いいかい？　[1:00:トレーナー名:0]</language>
 		<language name="JPN_KANJI" width="256">チェレン『……？
-この　奥にも　だれか　いるぞ[BE:01:ページ切り替え（クリア）]
-ひょっとしたら　プラズマ団かもな
-準備は　良いか？[1:00:トレーナー名:0]</language>
+この奥にも　だれか　いるね[BE:01:ページ切り替え（クリア）]
+ひょっとしたら　プラズマ団かな
+準備は　いいかい？　[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="msg_d05r0101_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
@@ -401,10 +401,10 @@
 ・いいえ選択時
 ・再度話しかけたときはblack_03から</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">……じゅんびして　こいよ
-ここで　まっているからさ</language>
-		<language name="JPN_KANJI" width="256">……準備して　こいよ
-ここで　待っているからさ</language>
+		<language name="JPN" width="256">……じゅんびして　きてよ
+ここで　まっているから</language>
+		<language name="JPN_KANJI" width="256">……準備して　きてよ
+ここで　待っているから</language>
 	</row>
 
 	<row id="msg_d05r0101_workman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
