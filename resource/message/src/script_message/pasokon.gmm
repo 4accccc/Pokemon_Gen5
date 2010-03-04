@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-25T18:11:29"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-03-04T12:53:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -440,28 +440,28 @@
 		<comment>■選択肢ウインドウ
 ・msg_pc_box_02表示</comment>
 		<language name="JPN" width="256">ポケモンを　あずける</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　あずける</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　預ける</language>
 	</row>
 
 	<row id="msg_pc_box_window_02" back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,">
 		<comment>■選択肢ウインドウ
 ・msg_pc_box_03表示</comment>
 		<language name="JPN" width="256">ポケモンを　つれていく</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　つれていく</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　連れていく</language>
 	</row>
 
 	<row id="msg_pc_box_window_03" back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,">
 		<comment>■選択肢ウインドウ
 ・msg_pc_box_04表示</comment>
 		<language name="JPN" width="256">ボックスを　せいりする</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　せいりする</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　整理する</language>
 	</row>
 
 	<row id="msg_pc_box_window_04" back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,">
 		<comment>■選択肢ウインドウ
 ・msg_pc_box_05表示</comment>
 		<language name="JPN" width="256">もちものを　せいりする</language>
-		<language name="JPN_KANJI" width="256">もちものを　せいりする</language>
+		<language name="JPN_KANJI" width="256">持ち物を　整理する</language>
 	</row>
 
 	<row id="msg_pc_box_window_05" back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,">
