@@ -414,7 +414,6 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/trial_house_st.c \
         field/ev_time.c \
         field/field_g3d_map.c \
-        system/g3d_cull.c \
 		    field/report_event.c
 
 # wifiƒvƒƒOƒ‰ƒ€
