@@ -16,7 +16,6 @@
 //              特殊スクリプト
 //--------------------------------------------------------------
 _ZONE_CHANGE_LABEL	SCRID_ZONE_C04R0202
-_FIELD_INIT_LABEL		SCRID_INIT_C04R0202
 _SP_EVENT_DATA_END
 
 

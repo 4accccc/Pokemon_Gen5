@@ -57,29 +57,23 @@ EVENT_START ev_musical_recept_single
 
     //ポケモン選択
     _CALL ev_musical_select_poke
-    IF $SCWK_ANSWER == FALSE THEN //接続失敗
+    IF $SCWK_ANSWER == FALSE THEN //  選ばなかった
       _CALL ev_musical_exit_common
-      _RET
+    ELSE
+      _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_02 )
+      _BALLOONWIN_CLOSE()
+
+      //入場アニメ
+      _CALL recept_move_obj_solo
+
+      //FIXME ポケモンインデックス設定！
+        _MUSICAL_CALL(selectPoke,MUSICAL_CALL_LOCAL) //ミュージカル呼び出し
+      //ここから処理は帰ってきません。
+      //細かい開放はプログラムで行います。
     ENDIF
-
-    _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_02 )
-    _BALLOONWIN_CLOSE()
-
-  //入場アニメ
-  _CALL recept_move_obj_solo
-
-  //FIXME ポケモンインデックス設定！
-    _MUSICAL_CALL(selectPoke,MUSICAL_CALL_LOCAL) //ミュージカル呼び出し
-  //ここから処理は帰ってきません。
-  //細かい開放はプログラムで行います。
-  
   ELSE
-
-  _CALL ev_musical_exit_common
-  _RET
+    _CALL ev_musical_exit_common
   ENDIF
-  
-
 EVENT_END
 
 
@@ -383,7 +377,7 @@ ev_musical_exit_common:
   
   _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_03 ) //また　おこしください
   _LAST_KEYWAIT()
-  _SYSWIN_CLOSE()
+  _BALLOONWIN_CLOSE()
   
 _RET
 

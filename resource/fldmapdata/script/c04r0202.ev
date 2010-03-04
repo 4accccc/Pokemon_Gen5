@@ -22,7 +22,6 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_zone_c04r0202
-_EVENT_DATA    ev_init_c04r0202
 _EVENT_DATA    ev_c04r0202_mus_1st
 _EVENT_DATA    ev_c04r0202_mus_2nd
 _EVENT_DATA    ev_c04r0202_mus_3rd
@@ -52,51 +51,6 @@ DEFINE_LOCAL checkRank    //今向かう順位(0～3で1～4位
 //======================================================================
 npc_pos_set_routine:
 {
-  //仮処理
-
-  
-  
-  /*
-  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,0,retWk)
-   SWITCH $retWk
-   CASE 1 THEN
-    _OBJ_POS_CHANGE( C04R0202_NPC_01, 8,0,12,DIR_UP )
-   CASE 2 THEN
-    _OBJ_POS_CHANGE( C04R0202_NPC_02, 8,0,12,DIR_UP )
-   CASE 3 THEN
-    _OBJ_POS_CHANGE( C04R0202_NPC_03, 8,0,12,DIR_UP )
-   ENDSWITCH
-  
-  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,1,retWk)
-   SWITCH $retWk
-   CASE 1 THEN
-    _OBJ_POS_CHANGE( C04R0202_NPC_01,10,0,12,DIR_UP )
-   CASE 2 THEN
-    _OBJ_POS_CHANGE( C04R0202_NPC_02,10,0,12,DIR_UP )
-   CASE 3 THEN
-    _OBJ_POS_CHANGE( C04R0202_NPC_03,10,0,12,DIR_UP )
-   ENDSWITCH
-  
-  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,2,retWk)
-   SWITCH $retWk
-   CASE 1 THEN
-    _OBJ_POS_CHANGE( C04R0202_NPC_01,12,0,12,DIR_UP )
-   CASE 2 THEN
-    _OBJ_POS_CHANGE( C04R0202_NPC_02,12,0,12,DIR_UP )
-   CASE 3 THEN
-    _OBJ_POS_CHANGE( C04R0202_NPC_03,12,0,12,DIR_UP )
-   ENDSWITCH
-  
-  _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_IDX,3,retWk)
-   SWITCH $retWk
-   CASE 1 THEN
-    _OBJ_POS_CHANGE( C04R0202_NPC_01,14,0,12,DIR_UP )
-   CASE 2 THEN
-    _OBJ_POS_CHANGE( C04R0202_NPC_02,14,0,12,DIR_UP )
-   CASE 3 THEN
-    _OBJ_POS_CHANGE( C04R0202_NPC_03,14,0,12,DIR_UP )
-   ENDSWITCH
-   */
 }
 _RET
 
@@ -234,14 +188,7 @@ _RET
 //  ゾーンチェンジスクリプト
 /**************************************************************/
 INIT_EVENT_START ev_zone_c04r0202
-/*
-  $OBJCHRWORK1 = RIVEL
-  $OBJCHRWORK2 = RIVEL
-  $OBJCHRWORK3 = RIVEL
-  $OBJCHRWORK4 = RIVEL
-*/
 
-  _MUSICAL_TOOLS( MUSICAL_TOOL_PRINT, 99, 0, 0 )
   _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_OBJ_VIEW,0,retWk)
   $OBJCHRWORK1 = $retWk
   _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_OBJ_VIEW,1,retWk)
@@ -253,20 +200,12 @@ INIT_EVENT_START ev_zone_c04r0202
 
 INIT_EVENT_END
 
-INIT_EVENT_START ev_init_c04r0202
-  //動くけどキャラ移動はどうやろう・・・
-  //MUSICAL_EVENT_WORKにはアクセス不可
-  //フェードインキャンセルがあれば可能？
-  _CALL npc_pos_set_routine
-INIT_EVENT_END
-
 /**************************************************************/
 //  ミュージカル台詞　開始時
 /**************************************************************/
 EVENT_START ev_c04r0202_mus_1st
   
-  //_CALL npc_pos_set_routine
-
+  //開始時の移動
   _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_SELF_IDX,0,selfPos)
 
    SWITCH $selfPos
@@ -281,8 +220,13 @@ EVENT_START ev_c04r0202_mus_1st
    ENDSWITCH
   _OBJ_ANIME_WAIT()
   
+  //演目内容の読み上げようにデータ着信待ち
   _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_POST_PROGRAM , 0 , 0 , 0 )
-  
+
+  //デバッグげし
+  //*
+    
+  //「今回の演目は～」
   _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_MAX_CONDITION,0,condition)
 
   _MUSICAL_WORD( MUSICAL_WORD_TITLE_LOCAL , 0 , 0 )
@@ -290,6 +234,9 @@ EVENT_START ev_c04r0202_mus_1st
   
   _BALLOONWIN_OBJMSG( msg_mus_01_001 , C04R0202_WOMAN1_01 )
   _BALLOONWIN_CLOSE()
+
+  //*/
+  //デバッグげし
 
   //通信同期(ドレスアップ開始前)
   _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_DRESSUP_START, 0, 0 )
@@ -307,12 +254,14 @@ EVENT_START ev_c04r0202_mus_2nd
   _MAP_FADE_BLACK_IN( )
   _MAP_FADE_END_CHECK()
 
-  //記憶されてるので1回で良い？
-  //_CALL npc_pos_set_routine
+  //デバッグげし
+  //*
 
   _BALLOONWIN_OBJMSG( msg_mus_02_001 , C04R0202_WOMAN1_01 )
   _BALLOONWIN_CLOSE()
 
+  //*/
+  //デバッグげし
   _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_POST_ALLPOKE , 0 , 0 , 0 )
   
   _MAP_FADE_BLACK_OUT( )
@@ -330,8 +279,8 @@ EVENT_START ev_c04r0202_mus_3rd
   _MAP_FADE_BLACK_IN( )
   _MAP_FADE_END_CHECK()
 
-  //記憶されてるので1回で良い？
-  //_CALL npc_pos_set_routine
+  //デバッグげし
+  //*
 
   _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_SELF_IDX,0,selfPos)
 
@@ -361,6 +310,10 @@ EVENT_START ev_c04r0202_mus_3rd
   _BALLOONWIN_OBJMSG( msg_mus_03_004_01 , C04R0202_WOMAN1_01 )
   _AB_KEYWAIT()     //キー待ち
   _BALLOONWIN_CLOSE()
+
+  //*/
+  //デバッグげし
+
   //帰りのアニメ切る
 /*  
    SWITCH $selfPos
@@ -375,8 +328,47 @@ EVENT_START ev_c04r0202_mus_3rd
    ENDSWITCH
   _OBJ_ANIME_WAIT()
 */  
-//  _MAP_FADE_BLACK_OUT( )
-//  _MAP_FADE_END_CHECK()
+
+  //ファン用バニッシュフラグ操作
+  {
+    DEFINE_LOCAL fan_type // ファンの見た目
+
+    _GET_MUSICAL_FAN_VALUE_TYPE( 0 , fan_type )
+    IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
+      _FLAG_SET( FV_MUSICAL_FUN_01 )
+    ELSE
+      _FLAG_RESET( FV_MUSICAL_FUN_01 )
+    ENDIF
+
+    _GET_MUSICAL_FAN_VALUE_TYPE( 1 , fan_type )
+    IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
+      _FLAG_SET( FV_MUSICAL_FUN_02 )
+    ELSE
+      _FLAG_RESET( FV_MUSICAL_FUN_02 )
+    ENDIF
+
+    _GET_MUSICAL_FAN_VALUE_TYPE( 2 , fan_type )
+    IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
+      _FLAG_SET( FV_MUSICAL_FUN_03 )
+    ELSE
+      _FLAG_RESET( FV_MUSICAL_FUN_03 )
+    ENDIF
+
+    _GET_MUSICAL_FAN_VALUE_TYPE( 3 , fan_type )
+    IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
+      _FLAG_SET( FV_MUSICAL_FUN_04 )
+    ELSE
+      _FLAG_RESET( FV_MUSICAL_FUN_04 )
+    ENDIF
+
+    _GET_MUSICAL_FAN_VALUE_TYPE( 4 , fan_type )
+    IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
+      _FLAG_SET( FV_MUSICAL_FUN_05 )
+    ELSE
+      _FLAG_RESET( FV_MUSICAL_FUN_05 )
+    ENDIF
+  }
+
 
 EVENT_END
 
