@@ -54,7 +54,7 @@ enum{
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_kageyama_shota
 #define KAGEYAMA_DEBUG
-vu32  volume_down_ratio = ( 127 * EFFVM_VOLUME_DOWN_RATIO / 100 ) << FX32_SHIFT;
+vu32  volume_down_ratio = EFFVM_VOLUME_DOWN_RATIO;
 vu32  volume_down_frame = EFFVM_CHANGE_VOLUME_DOWN_FRAME;
 vu32  volume_up_frame   = EFFVM_CHANGE_VOLUME_UP_FRAME;
 #endif
