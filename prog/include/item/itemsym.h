@@ -595,7 +595,7 @@
 #define ITEM_WAZAMASIN99		( 606 )		// わざマシン９９
 #define ITEM_WAZAMASIN100		( 607 )		// わざマシン１００
 #define ITEM_WAZAMASIN101		( 608 )		// わざマシン１０１
-#define ITEM_TORANSIIBAA		( 609 )		// トランシーバー
+#define ITEM_RAIBUKYASUTAA		( 609 )		// ライブキャスター
 #define ITEM_GODDOSUTOON		( 610 )		// ゴッドストーン
 #define ITEM_RIBATHITIKETTO		( 611 )		// リバティチケット
 #define ITEM_AKUAKASETTO		( 612 )		// アクアカセット
