@@ -330,6 +330,8 @@ void WIFIHISTORY_SetUnInfo(WIFI_HISTORY * wh, const int inIdx, const UN_INFO_TYP
 {
   UNITEDNATIONS_SAVE *un;
 
+  NOZOMU_Printf( "idx = %d type = %d info = %d\n", inIdx, inType, inInfo );
+
   if (inIdx >= UNITEDNATIONS_PEOPLE_MAX)
   {
     GF_ASSERT_MSG(0,"INDEX_OVER idx=%d",inIdx);
@@ -370,7 +372,11 @@ void WIFIHISTORY_SetUnInfo(WIFI_HISTORY * wh, const int inIdx, const UN_INFO_TYP
     else GF_ASSERT_MSG(0,"nature error %d", inInfo);
     break;
   case UN_INFO_TALK:           //話したことあるか？
-    if (inInfo) un->bTalk = 1;
+    if (inInfo)
+    {
+      un->bTalk = 1;
+      NOZOMU_Printf("set %d\n",un->bTalk);
+    }
     else un->bTalk = 0;
     break;
   case UN_INFO_VALID:          //データは有効か？
