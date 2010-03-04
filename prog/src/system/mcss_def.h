@@ -58,7 +58,8 @@ struct _MCSS_NCEC_WORK
 struct _MCSS_NCEN_WORK
 {
   u8    stop_cellanms;    //静止アニメでも動き続けるセルアニメの枚数
-  u8    stop_node[1];     //セルアニメノード情報（可変なので1個分だけ確保）
+  u8    fly_flag;         //浮いているマルチセルかフラグ
+  u8    stop_node[2];     //セルアニメノード情報（可変なので1個分だけ確保）
 };
 
 struct _MCSS_WORK
