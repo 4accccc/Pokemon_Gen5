@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-01T20:20:24"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T17:31:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -866,17 +866,17 @@ C02ジムリーダー</attribute>
 ドラゴンだって　いうのかい？▼</language>
 	</row>
 
-	<row id="msg_c02_hakase1_sotne_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02_hakase1_sotne_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♂：d04r0601イベント後
 ・続けてmsg_c02_hakase2_sotne_02</comment>
 		<attribute name="キャラ指定">博士父</attribute>
-		<language name="JPN" width="256">アララギちち『うむ……
+		<language name="JPN" width="256">アララギパパ『うむ……
 あのあと　リュウラセンのとうを▽
 ちょうさ　したところ▼
 ストーンと　リュウラセンのとう　から
 おなじ　じだいの▽
 こんせきが　みつかったのだ▼</language>
-		<language name="JPN_KANJI" width="256">アララギちち『うむ……
+		<language name="JPN_KANJI" width="256">アララギパパ『うむ……
 あのあと　リュウラセンの塔を▽
 調査したところ▼
 ストーンと　リュウラセンの塔　から
@@ -920,7 +920,7 @@ C02ジムリーダー</attribute>
 本当に　助かったよ▼</language>
 	</row>
 
-	<row id="msg_c02_hakase1_sotne_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02_hakase1_sotne_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♂：d04r0601イベント後
 ・メッセージ表示後、主人公に隣接
 ・隣接時、アイテム入手処理
@@ -929,11 +929,11 @@ C02ジムリーダー</attribute>
 　d08r0701でのドラゴン出現デモと同じSE
 ・エフェクト終了後msg_c02_white_sotne_02</comment>
 		<attribute name="キャラ指定">博士父</attribute>
-		<language name="JPN" width="256">アララギ『で　[1:00:トレーナー名:0]▼
+		<language name="JPN" width="256">アララギパパ『で　[1:00:トレーナー名:0]▼
 Ｎが　かかげたのは
 これと　おなじ　いし　だったか？▽
 きちんと　たしかめてくれないか？▼</language>
-		<language name="JPN_KANJI" width="256">アララギ『で　[1:00:トレーナー名:0]▼
+		<language name="JPN_KANJI" width="256">アララギパパ『で　[1:00:トレーナー名:0]▼
 Ｎが　かかげたのは
 これと　同じ　石　だったか？▽
 きちんと　確かめてくれないか？▼</language>
@@ -1033,15 +1033,15 @@ C02ジムリーダー</attribute>
 ドラゴンと　出会ったからに　違いない▼</language>
 	</row>
 
-	<row id="msg_c02_hakase1_sotne_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02_hakase1_sotne_03" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♂：d04r0601イベント後
 ・続けてmsg_c02_champion_sotne_03</comment>
 		<attribute name="キャラ指定">博士父</attribute>
-		<language name="JPN" width="256">アララギちち『そうだな……▼
+		<language name="JPN" width="256">アララギパパ『そうだな……▼
 でないと　とうに　のぼった
 わしにも　はんのう　しないと▽
 おかしい　ということになる▼</language>
-		<language name="JPN_KANJI" width="256">アララギちち『そうだな……▼
+		<language name="JPN_KANJI" width="256">アララギパパ『そうだな……▼
 でないと　塔に　登った
 わしにも　反応しないと▽
 おかしい　ということになる▼</language>
@@ -1071,27 +1071,27 @@ C02ジムリーダー</attribute>
 なにや　教えてくれるであろう▼</language>
 	</row>
 
-	<row id="msg_c02_hakase1_sotne_04w" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02_hakase1_sotne_04w" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♂：d04r0601イベント後
 ・WHITEver
 ・続けてmsg_c02_hakase2_sotne_03</comment>
 		<attribute name="キャラ指定">博士父</attribute>
-		<language name="JPN" width="256">アララギちち『……[1:00:トレーナー名:0]よ
+		<language name="JPN" width="256">アララギパパ『……[1:00:トレーナー名:0]よ
 おまえさんが　その　ダークストーンを▽
 てにいれたのは　うんめい　なのかもな▼</language>
-		<language name="JPN_KANJI" width="256">アララギちち『……[1:00:トレーナー名:0]よ
+		<language name="JPN_KANJI" width="256">アララギパパ『……[1:00:トレーナー名:0]よ
 おまえさんが　その　ダークストーンを▽
 手に入れたのは　運命　なのかもな▼</language>
 	</row>
 
-	<row id="msg_c02_hakase1_sotne_04b" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02_hakase1_sotne_04b" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♂：d04r0601イベント後
 ・BLACKver
 ・続けてmsg_c02_hakase2_sotne_03</comment>
-		<language name="JPN" width="256">アララギちち『……[1:00:トレーナー名:0]よ
+		<language name="JPN" width="256">アララギパパ『……[1:00:トレーナー名:0]よ
 おまえさんが　その　ライトストーンを▽
 てにいれたのは　うんめい　なのかもな▼</language>
-		<language name="JPN_KANJI" width="256">アララギちち『……[1:00:トレーナー名:0]よ
+		<language name="JPN_KANJI" width="256">アララギパパ『……[1:00:トレーナー名:0]よ
 おまえさんが　その　ライトストーンを▽
 手に入れたのは　運命　なのかもな▼</language>
 	</row>
