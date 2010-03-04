@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/25 23:24:56
+#save date:2010/03/04 21:24:38
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r06.wms
 #SECTION START:OBJ_EVENT
@@ -266,7 +266,7 @@ TR_SCIENTISTW_04
 #OBJ CODE Number
 ASSISTANTW
 #MOVE CODE Number
-MV_RND_V
+MV_RND_UD
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
