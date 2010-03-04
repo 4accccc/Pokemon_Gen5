@@ -43,6 +43,7 @@ enum{
   BTLEFF_BALL_THROW,
   BTLEFF_HINSHI,
   BTLEFF_SINGLE_ENCOUNT_2_ARARAGI,
+  BTLEFF_BALL_THROW_TRAINER,
 
   //ステータスエフェクト
   BTLEFF_STATUS_EFFECT_START,
@@ -160,6 +161,7 @@ extern  void              BTLV_EFFECT_CalcGaugeHP( int position, int value );
 extern  void              BTLV_EFFECT_CalcGaugeEXP( int position, int value );
 extern  void              BTLV_EFFECT_CalcGaugeEXPLevelUp( int position, const BTL_POKEPARAM* bpp );
 extern  void              BTLV_EFFECT_BallThrow( int position, u16 item_no, u8 yure_cnt, BOOL f_success, BOOL f_critical );
+extern  void              BTLV_EFFECT_BallThrowTrainer( int vpos, u16 item_no );
 extern  void              BTLV_EFFECT_Henge( const POKEMON_PARAM* pp, BtlvMcssPos vpos );
 extern  BOOL              BTLV_EFFECT_CheckExecuteGauge( void );
 extern  void              BTLV_EFFECT_SetGaugeDrawEnable( BOOL on_off );

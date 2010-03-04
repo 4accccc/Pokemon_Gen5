@@ -494,11 +494,29 @@ void BTLV_EFFECT_BallThrow( int vpos, u16 item_no, u8 yure_cnt, BOOL f_success, 
 {
   BTLV_EFFVM_PARAM  effvm_param;
 
-  effvm_param.yure_cnt    = yure_cnt;
-  effvm_param.get_success = f_success;
-  effvm_param.item_no     = item_no;
+  effvm_param.yure_cnt      = yure_cnt;
+  effvm_param.get_success   = f_success;
+  effvm_param.get_critical  = f_critical;
+  effvm_param.item_no       = item_no;
 
   BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_AA, vpos, BTLEFF_BALL_THROW, &effvm_param );
+}
+
+//=============================================================================================
+/**
+ * @brief 捕獲時ボール投げエフェクト起動（トレーナー戦用）
+ *
+ * @param   vpos        対象ポケモンの描画位置
+ * @param   itemNum     投げたボールのアイテムナンバー
+ */
+//=============================================================================================
+void BTLV_EFFECT_BallThrowTrainer( int vpos, u16 item_no )
+{
+  BTLV_EFFVM_PARAM  effvm_param;
+
+  effvm_param.item_no = item_no;
+
+  BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_AA, vpos, BTLEFF_BALL_THROW_TRAINER, &effvm_param );
 }
 
 //=============================================================================================
