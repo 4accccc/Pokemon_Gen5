@@ -15,6 +15,7 @@ include $(PROJECT_RSCDIR)/macro_define
 TARGET_ARC			= map_land_data.narc
 TARGET_ARCIDX		= $(TARGET_ARC:.narc=.naix)
 TARGET_DIR			= $(PROJECT_ARCDIR)/fieldmap
+TARGET_ARC_TEST			= map_land_data_test.narc
 
 #---------------------------------------------------------------
 #	各要素
@@ -49,7 +50,7 @@ endif
 #---------------------------------------------------------------
 #	buildルール
 #---------------------------------------------------------------
-do-build: $(TARGET_DIR)/$(TARGET_ARC)
+do-build: $(TARGET_DIR)/$(TARGET_ARC) $(TARGET_DIR)/$(TARGET_ARC_TEST)
 
 #SUFFIXESルール
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
@@ -63,6 +64,9 @@ endif #CONVERTUSER
 $(TARGET_DIR)/$(TARGET_ARC): $(TARGET_ARC)
 	$(COPY) $(TARGET_ARC) $(TARGET_DIR)
 	$(COPY) $(TARGET_ARCIDX) $(TARGET_DIR)
+
+$(TARGET_DIR)/$(TARGET_ARC_TEST): $(TARGET_ARC_TEST)
+	$(COPY) $(TARGET_ARC_TEST) $(TARGET_DIR)
 	
 #コンバート
 $(TARGET_ARC): $(LAND_DEPEND_LIST)
