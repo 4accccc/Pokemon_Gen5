@@ -11,6 +11,9 @@
 #include "map/dp3format.h"       //for NormalVtxFormat
 #include "mapdata_attr.h"
 
+//データ
+#include "wb_bin.cdat"
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	高さ　アトリビュート取得関数
@@ -28,8 +31,8 @@ void MAPDATA_ATR_GetAttrFunc( FLD_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, cons
   WB_NORMALVTXST_TR1 *nvs;
   WB_NORMALVTXST_TR2 *ex_nvs;
 
-  const fx16 *nrm_tbl = WB_NORMAL_TBL;
-  const fx32 *d_tbl = WB_PLANE_D_TBL;
+  const fx16 *nrm_tbl = (const fx16*)WB_NORMAL_TBL;
+  const fx32 *d_tbl = (const fx32*)WB_PLANE_D_TBL;
 /**
   if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){
     OS_Printf("GetAttr idx%d = y=%08x\n",idx,posInBlock->y);
@@ -65,7 +68,12 @@ void MAPDATA_ATR_GetAttrFunc( FLD_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, cons
       int ex_idx;
       int ofs;
       ex_idx = WB_NORMALVTXST_GetTR2Index( nvs );
-      ofs = 32*32*2*sizeof(WB_NORMALVTXST_TR1);
+      {
+        NormalVtxFormat *vfmt;
+        vfmt = (NormalVtxFormat*)(attrAdrs);
+        ofs = vfmt->width * vfmt->height * sizeof(WB_NORMALVTXST_TR1);
+      }
+      NOZOMU_Printf("idx %d tryangle two ex_idx=%d\n", grid_idx, ex_idx);
 
       //データの先頭アドレスを計算
       ex_nvs = (WB_NORMALVTXST_TR2*)(attrAdrs + sizeof(NormalVtxFormat) + ofs + ex_idx* sizeof(WB_NORMALVTXST_TR2));
@@ -86,12 +94,27 @@ void MAPDATA_ATR_GetAttrFunc( FLD_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, cons
 			    nrm_idx = ex_nvs->vecN2_x;
           d_idx = ex_nvs->vecN2_D;
 		    }
-        VEC_Fx16Set( &attrInfo->mapAttr[idx].vecN, nrm_tbl[nrm_idx], nrm_tbl[nrm_idx+1], -nrm_tbl[nrm_idx+2] );
-			  valD = d_tbl[d_idx];
       }
+      else
+      {
+        //2-3-0,1-0-3のパターン
+        if( grid_x > grid_z )
+        {
+          nrm_idx = ex_nvs->vecN1_x;
+          d_idx = ex_nvs->vecN1_D;
+        }
+        else
+        {
+          nrm_idx = ex_nvs->vecN2_x;
+          d_idx = ex_nvs->vecN2_D;
+        }
+      }
+      VEC_Fx16Set( &attrInfo->mapAttr[idx].vecN, nrm_tbl[nrm_idx], nrm_tbl[nrm_idx+1], -nrm_tbl[nrm_idx+2] );
+			valD = d_tbl[d_idx];
     }
-    else{
-      GF_ASSERT_MSG(0,"tryangleFlag error");
+    else
+    {
+      GF_ASSERT_MSG(0,"tryangleFlag error %d", flag);
       VEC_Fx16Set( &attrInfo->mapAttr[idx].vecN, 0, FX16_ONE, 0 );
       valD = 0;
     }

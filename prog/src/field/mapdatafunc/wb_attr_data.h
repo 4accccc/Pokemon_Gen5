@@ -69,11 +69,12 @@ typedef struct {
  *					インデックス情報
 */
 //-----------------------------------------------------------------------------
+#if 0
 #define WB_NORMAL_TBL_MAX ( 9 )
 #define WB_PLANE_D_TBL_MAX ( 9 )
 extern const fx16 WB_NORMAL_TBL[WB_NORMAL_TBL_MAX];  // fx16*3単位で法線が格納されています。
 extern const fx32 WB_PLANE_D_TBL[WB_PLANE_D_TBL_MAX];
-
+#endif
 
 
 
