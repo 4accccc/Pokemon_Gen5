@@ -2,6 +2,8 @@
 #ifndef ZONE_C08R0801_EVD_H
 #define ZONE_C08R0801_EVD_H
 
+#define DOOR_ID_C08R0801_C08_EXIT01       0
+#define DOOR_ID_C08R0801_C08R0802_EXIT01  1
 
 #endif //ZONE_C08R0801_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08r0801.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
