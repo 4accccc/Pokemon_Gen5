@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-04T19:10:34"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T19:20:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="33" top="35" right="721" bottom="815" maximized="no" rayout="Vertical2">
+	<dialog left="1461" top="177" right="2149" bottom="957" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="513"/>
@@ -337,9 +337,9 @@
 ＢＰと　けいひんを
 こうかん　しますか？</language>
 		<language name="JPN_KANJI" width="256">ようこそ！
-ポイント　ひきかえ　コーナーへ！[BE:01:ページ切り替え（クリア）]
-ＢＰと　けいひんを
-こうかん　しますか？</language>
+ポイント　引き換え　コーナーへ！[BE:01:ページ切り替え（クリア）]
+ＢＰと　景品を
+交換しますか？</language>
 	</row>
 
 	<row id="msg_bb_shop_02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
