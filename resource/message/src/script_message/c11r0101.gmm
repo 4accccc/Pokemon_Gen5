@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-03-04T12:59:39"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-03-04T16:03:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -266,14 +266,14 @@
 		</language>
 	</columns>
 
-	<dialog left="578" top="127" right="1283" bottom="745" maximized="no" rayout="Vertical2">
+	<dialog left="578" top="127" right="1280" bottom="745" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="649" top="113" right="1122" bottom="511" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="527"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="694"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -472,13 +472,13 @@ POS　</comment>
 POS</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">きみか▼
-ふぬ　きみは　こうかんするのが
+ふぬ……　きみは　こうかんするのが
 すきなのか？▼
 ……いいんじゃないか
 わかものらしく　かっぱつで▽
 ほい　とおって　いいぞ▼</language>
 		<language name="JPN_KANJI" width="256">きみか▼
-ふぬ　きみは　交換するのが
+ふぬ……　きみは　交換するのが
 好きなのか？▼
 ……いいんじゃないか
 若者らしく　活発で▽
@@ -831,11 +831,11 @@ POS</comment>
 		<comment>10カ国と交換
 能動的</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
-		<language name="JPN" width="256">……いいんじゃないか
-わかものらしく　かっぱつで▼
+		<language name="JPN" width="256">いいんじゃないか
+わかものらしく　かっぱつで▽
 がんばれよ</language>
-		<language name="JPN_KANJI" width="256">……いいんじゃないか
-若者らしく　活発で▼
+		<language name="JPN_KANJI" width="256">いいんじゃないか
+若者らしく　活発で▽
 頑張れよ</language>
 	</row>
 
