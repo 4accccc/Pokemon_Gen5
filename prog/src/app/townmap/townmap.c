@@ -128,8 +128,7 @@ enum
 	APPBAR_RES_MAX
 };
 //カスタムボタン
-#define TOUCHBAR_ICON_SCALEUP	(TOUCHBAR_ICON_CUTSOM1)
-#define TOUCHBAR_ICON_SCALEDOWN	(TOUCHBAR_ICON_CUTSOM2)
+#define TOUCHBAR_ICON_SCALE	(TOUCHBAR_ICON_CUTSOM1)
 
 //範囲
 #define APPBAR_MENUBAR_H	(3)
@@ -245,6 +244,9 @@ typedef struct
 	u32						res[APPBAR_RES_MAX];
 	TOUCHBAR_WORK *p_touchbar;
 	GAMEDATA			*p_gamedata;
+  GFL_CLWK      *p_scale;
+  TOUCHBAR_ICON	icon;
+  u32           seq;
 } APPBAR_WORK;
 
 //-------------------------------------
@@ -482,8 +484,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs );
 //=====================================
 static void APPBAR_Init( APPBAR_WORK *p_wk, TOWNMAP_MODE mode, GFL_CLUNIT* p_unit, u8 bar_frm, u8 bg_plt, u8 obj_plt, GAMEDATA *p_gamedata, HEAPID heapID );
 static void APPBAR_Exit( APPBAR_WORK *p_wk );
-static void APPBAR_Main( APPBAR_WORK *p_wk );
-static void APPBAR_SetActive( APPBAR_WORK *p_wk, TOUCHBAR_ICON icon, BOOL is_active );
+static void APPBAR_Main( APPBAR_WORK *p_wk, const MAP_WORK *cp_map );
 static TOUCHBAR_ICON APPBAR_GetTrg( const APPBAR_WORK *cp_wk );
 //-------------------------------------
 ///	CURSOR
@@ -1409,7 +1410,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 	CURSOR_SetPullEnable( &p_wk->cursor, !is_map_move );
 
 	///モジュールメイン処理
-	APPBAR_Main( &p_wk->appbar );
+	APPBAR_Main( &p_wk->appbar, &p_wk->map );
 
 	if( !MAP_IsScale( &p_wk->map ) )
 	{	
@@ -1433,7 +1434,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 
 		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 		break;
-	case TOUCHBAR_ICON_SCALEUP:
+	case TOUCHBAR_ICON_SCALE:
 		if(p_wk->is_scale == FALSE && !MAP_IsScale( &p_wk->map ))
 		{	
 			GFL_POINT next_pos;
@@ -1466,8 +1467,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 
 			p_wk->is_scale	= TRUE;
 		}
-		break;
-	case TOUCHBAR_ICON_SCALEDOWN:
+    else 
 		if(p_wk->is_scale == TRUE && !MAP_IsScale( &p_wk->map ) )
 		{	
 			GFL_POINT src_pos;
@@ -1555,6 +1555,20 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, TOWNMAP_MODE mode, GFL_CLUNIT* p_uni
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 
+  //スケールボタン
+  { 
+    GFL_CLWK_DATA	cldata;
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+    cldata.pos_x  = TOUCHBAR_ICON_X_05;
+    cldata.pos_y  = TOUCHBAR_ICON_Y;
+    cldata.anmseq = 9;
+    p_wk->p_scale = GFL_CLACT_WK_Create( p_unit, p_wk->res[APPBAR_RES_SCALE_CHR],
+        p_wk->res[APPBAR_RES_SCALE_PLT], p_wk->res[APPBAR_RES_SCALE_CEL], &cldata, 0, heapID );
+
+    GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_scale, TRUE );
+    GFL_CLACT_WK_StopAnm( p_wk->p_scale );
+  }
+
 	//タッチバー初期化
 	{	
 		TOUCHBAR_SETUP	touchbar_setup;
@@ -1568,35 +1582,8 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, TOWNMAP_MODE mode, GFL_CLUNIT* p_uni
 				TOUCHBAR_ICON_CLOSE,
 				{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
 			},
-			{	
-				TOUCHBAR_ICON_CUTSOM1,	//カスタムボタン１を拡大アイコンに,
-				{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y },
-			},
-			{	
-				TOUCHBAR_ICON_CUTSOM2,	//カスタムボタン１を縮小アイコンに,
-				{	TOUCHBAR_ICON_X_04, TOUCHBAR_ICON_Y },
-			}
 		};
-		//拡大アイコン
-		touchbar_icon_tbl[2].cg_idx		= p_wk->res[APPBAR_RES_SCALE_CHR];				//キャラリソース
-		touchbar_icon_tbl[2].plt_idx	= p_wk->res[APPBAR_RES_SCALE_PLT];				//パレットリソース
-		touchbar_icon_tbl[2].cell_idx	=	p_wk->res[APPBAR_RES_SCALE_CEL];				//セルリソース
-		touchbar_icon_tbl[2].active_anmseq	=	7;						//アクティブのときのアニメ
-		touchbar_icon_tbl[2].noactive_anmseq	=		11;				//ノンアクティブのときのアニメ
-		touchbar_icon_tbl[2].push_anmseq	=		9;						//押したときのアニメ（STOPになっていること）
-		touchbar_icon_tbl[2].key	=		0;		//キーで押したときに動作させたいならば、ボタン番号
-		touchbar_icon_tbl[2].se		=		0;		//押したときにSEならしたいならば、SEの番号	
-
-		//縮小アイコン
-		touchbar_icon_tbl[3].cg_idx		=  p_wk->res[APPBAR_RES_SCALE_CHR];				//キャラリソース
-		touchbar_icon_tbl[3].plt_idx	= p_wk->res[APPBAR_RES_SCALE_PLT];				//パレットリソース
-		touchbar_icon_tbl[3].cell_idx	=	p_wk->res[APPBAR_RES_SCALE_CEL];				//セルリソース
-		touchbar_icon_tbl[3].active_anmseq	=	8;						//アクティブのときのアニメ
-		touchbar_icon_tbl[3].noactive_anmseq=	12;						//ノンアクティブのときのアニメ
-		touchbar_icon_tbl[3].push_anmseq		=	10;						//押したときのアニメ（STOPになっていること）
-		touchbar_icon_tbl[3].key	=	0;		//キーで押したときに動作させたいならば、ボタン番号
-		touchbar_icon_tbl[3].se		=	0;			//押したときにSEならしたいならば、SEの番号	
-
+	
 		//設定構造体
 		//さきほどの窓情報＋リソース情報をいれる
 		GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
@@ -1611,11 +1598,6 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, TOWNMAP_MODE mode, GFL_CLUNIT* p_uni
 
 		p_wk->p_touchbar	= TOUCHBAR_Init( &touchbar_setup, heapID );
 	}
-
-
-
-	APPBAR_SetActive( p_wk, TOUCHBAR_ICON_SCALEUP, TRUE );
-	APPBAR_SetActive( p_wk, TOUCHBAR_ICON_SCALEDOWN, FALSE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1630,6 +1612,10 @@ static void APPBAR_Exit( APPBAR_WORK *p_wk )
 	//タッチバー破棄
 	TOUCHBAR_Exit( p_wk->p_touchbar );
 
+  { 
+    GFL_CLACT_WK_Remove( p_wk->p_scale );
+  }
+  
 	//OBJ
 	{	
 		//カスタムボタンリソース破棄
@@ -1651,35 +1637,60 @@ static void APPBAR_Exit( APPBAR_WORK *p_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static void APPBAR_Main( APPBAR_WORK *p_wk )
+static void APPBAR_Main( APPBAR_WORK *p_wk, const MAP_WORK *cp_map )
 {	
 	TOUCHBAR_Main( p_wk->p_touchbar );
-
-
-	if( TOUCHBAR_GetTrg( p_wk->p_touchbar ) == TOUCHBAR_ICON_SCALEUP )
-	{	
-		APPBAR_SetActive( p_wk, TOUCHBAR_ICON_SCALEUP, FALSE );
-		APPBAR_SetActive( p_wk, TOUCHBAR_ICON_SCALEDOWN, TRUE );
-	}
-	else if( TOUCHBAR_GetTrg( p_wk->p_touchbar ) == TOUCHBAR_ICON_SCALEDOWN )
-	{	
-		APPBAR_SetActive( p_wk, TOUCHBAR_ICON_SCALEUP, TRUE );
-		APPBAR_SetActive( p_wk, TOUCHBAR_ICON_SCALEDOWN, FALSE );
-	}
 	
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	APPBAR	アイコンのアクティブ設定
- *
- *	@param	APPBAR_WORK *p_wk	ワーク
- *	@param	icon							設定するアイコン
- *	@param	is_active		TRUEでアクティブ	FALSEでノンアクティブ
- */
-//-----------------------------------------------------------------------------
-static void APPBAR_SetActive( APPBAR_WORK *p_wk, TOUCHBAR_ICON icon, BOOL is_active )
-{	
-	TOUCHBAR_SetActive(p_wk->p_touchbar, icon, is_active );
+  p_wk->icon  = TOUCHBAR_SELECT_NONE;
+  { 
+    enum
+    { 
+      SEQ_TOUCH,
+      SEQ_ANM,
+    };
+
+    switch( p_wk->seq )
+    { 
+    case SEQ_TOUCH:
+      { 
+        u32 x, y;
+        GFL_CLACTPOS pos;
+        GFL_CLACT_WK_GetPos( p_wk->p_scale, &pos, 0 );
+        //タッチ判定
+        if( GFL_UI_TP_GetPointTrg( &x, &y ) && !GFL_CLACT_WK_CheckAnmActive( p_wk->p_scale ) && !MAP_IsScale(cp_map) )
+        {	
+          if( ((u32)( x - pos.x) <= (u32)(TOUCHBAR_ICON_WIDTH))
+              &	((u32)( y - pos.y) <= (u32)(TOUCHBAR_ICON_HEIGHT)))
+          {
+            GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+
+            GFL_CLACT_WK_StartAnm( p_wk->p_scale );
+            p_wk->icon  = TOUCHBAR_ICON_SCALE;
+            p_wk->seq = SEQ_ANM;
+          }
+        }
+      }
+      break;
+
+    case SEQ_ANM:
+      if( !GFL_CLACT_WK_CheckAnmActive( p_wk->p_scale ) )
+      { 
+        if( GFL_CLACT_WK_GetAnmSeq( p_wk->p_scale) == 9 )
+        { 
+          GFL_CLACT_WK_SetAnmSeq( p_wk->p_scale, 10 );
+        }
+        else
+        { 
+          GFL_CLACT_WK_SetAnmSeq( p_wk->p_scale, 9 );
+        }
+        GFL_CLACT_WK_StopAnm( p_wk->p_scale );
+
+        p_wk->seq = SEQ_TOUCH;
+      }
+      break;
+    }
+  }
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -1693,22 +1704,12 @@ static void APPBAR_SetActive( APPBAR_WORK *p_wk, TOUCHBAR_ICON icon, BOOL is_act
 static TOUCHBAR_ICON APPBAR_GetTrg( const APPBAR_WORK *cp_wk )
 {	
 	TOUCHBAR_ICON	icon;
-
-	icon	= TOUCHBAR_GetTouch( cp_wk->p_touchbar );
-	if( icon == TOUCHBAR_ICON_SCALEUP ||
-			icon == TOUCHBAR_ICON_SCALEDOWN )
-	{	
-		return icon;
-	}
 	icon	= TOUCHBAR_GetTrg( cp_wk->p_touchbar );
-
-	if( !(icon == TOUCHBAR_ICON_SCALEUP ||
-				icon == TOUCHBAR_ICON_SCALEDOWN) )
-	{	
-		return icon;
-	}
-
-	return TOUCHBAR_SELECT_NONE;
+  if( icon == TOUCHBAR_SELECT_NONE )
+  { 
+    icon  = cp_wk->icon;
+  }
+	return icon;
 }
 //=============================================================================
 /**
