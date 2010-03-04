@@ -7,7 +7,7 @@
 #define TR_CARD_STAR_ACT_MAX        ( 8)
 #define TR_CARD_GRATE_STAR_ACT_MAX  ( 8)
 #define TR_CARD_BTNEFF_ACT_MAX      ( 1)
-#define TR_CARD_CLACT_RES_NUM       ( 3)
+#define TR_CARD_CLACT_RES_NUM       ( 2)
 
 #define TR_CARD_MAIN_ACT_MAX  (TR_CARD_BADGE_ACT_MAX+TR_CARD_STAR_ACT_MAX+\
     TR_CARD_GRATE_STAR_ACT_MAX+TR_CARD_BTNEFF_ACT_MAX)
@@ -92,7 +92,6 @@ typedef struct TR_CARD_OBJ_WORK_tag
 
 
 extern void InitTRCardCellActor( TR_CARD_OBJ_WORK *wk , const GFL_DISP_VRAM *vramBank);
-extern void SetTrCardActor( TR_CARD_OBJ_WORK *wk, const u8 *inBadgeDisp ,const BOOL isClear);
 extern void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk);
 extern void RereaseCellObject(TR_CARD_OBJ_WORK *wk);
 

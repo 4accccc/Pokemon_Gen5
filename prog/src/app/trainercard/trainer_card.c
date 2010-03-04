@@ -259,7 +259,6 @@ static BOOL CardRev(TR_CARD_WORK * wk );
 static void CardRevAffineSet(TR_CARD_WORK* wk);
 static int  CheckInput(TR_CARD_WORK *wk);
 static void SetCardPalette(TR_CARD_WORK *wk ,u8 inCardRank, const u8 inPokeBookHold);
-static void SetCasePalette(TR_CARD_WORK *wk ,const u8 inVersion);
 static void SetUniTrainerPalette(TR_CARD_WORK *wk ,const u8 inTrainerNo);
 
 static void VBlankFunc( GFL_TCB *tcb, void *work );
@@ -376,7 +375,7 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
 
   InitTRCardCellActor( &wk->ObjWork , &vramBank );
 
-//  SetTrCardActor( &wk->ObjWork, wk->badge ,wk->isClear);
+  // 下画面セルアクター登録
   SetTrCardActorSub( &wk->ObjWork);
 
   //Bmpウィンドウ初期化
@@ -699,7 +698,6 @@ GFL_PROC_RESULT TrCardProc_End( GFL_PROC * proc, int * seq , void *pwk, void *my
 
   GFL_HEAP_FreeMemory( wk->TrArcData ); //トレーナーキャラアーカイブデータ解放
 
-  GFL_HEAP_FreeMemory( wk->pScrnBCase );  //バッジケースクリーン解放
   GFL_HEAP_FreeMemory( wk->TrScrnArcData );//トレーナースクリーン解放
 
   TRCBmp_ExitTrCardBmpWin( wk );      // BMPウィンドウ開放
@@ -851,54 +849,6 @@ static void SetCardPalette(TR_CARD_WORK *wk ,u8 inCardRank, const u8 inPokeBookH
   }
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * ケースパレットセット
- *
- * @param inVersion バージョン
- *
- * @return  なし
- */
-//--------------------------------------------------------------------------------------------
-static void SetCasePalette(TR_CARD_WORK *wk ,const u8 inVersion)
-{
-  void *buf;
-  NNSG2dPaletteData *dat;
-/*
-  switch(inVersion){
-  case VERSION_DIAMOND:   //ダイヤ
-    buf = GFL_ARC_UTIL_LoadPalette(
-        ARCID_TRAINERCARD, NARC_trainer_case_card_case_d_NCLR, &dat, wk->heapId );
-    break;
-  case VERSION_PEARL:   //パール
-    buf = GFL_ARC_UTIL_LoadPalette(
-        ARCID_TRAINERCARD, NARC_trainer_case_card_case_p_NCLR, &dat, wk->heapId );
-    break;
-  case VERSION_GOLD:
-  case VERSION_SILVER:
-    buf = GFL_ARC_UTIL_LoadPalette(
-        ARCID_TRAINERCARD, NARC_trainer_case_card_case_g_NCLR, &dat, wk->heapId );
-    break;
-  case VERSION_PLATINUM:
-  default:  //別バージョン
-    buf = GFL_ARC_UTIL_LoadPalette(
-        ARCID_TRAINERCARD, NARC_trainer_case_card_case_x_NCLR, &dat, wk->heapId );
-    break;
-  }
-*/
-  //とりあえずGOLDの動作に統一
-#if 0
-  buf = GFL_ARC_UTIL_LoadPalette(
-      ARCID_TRAINERCARD, NARC_trainer_case_card_case_g_NCLR, &dat, wk->heapId );
-
-
-  DC_FlushRange( dat->pRawData, 2*16 );
-  GX_LoadBGPltt( dat->pRawData, CASE_BD_PAL*32, 2*16 );
-  GXS_LoadBGPltt( dat->pRawData, CASE_BD_PAL*32, 2*16 );
-  GFL_HEAP_FreeMemory(buf);
- #endif
- 
-}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1061,12 +1011,11 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
   SetCardPalette(wk,wk->TrCardData->CardRank, wk->TrCardData->PokeBookFlg);
 
   // UNSER_CASE_COVER PALETTE(UNDER_DISPLAY)
-  {
-    GFL_ARC_UTIL_TransVramPalette( ARCID_TRAINERCARD, NARC_trainer_case_card_case_g_NCLR,
-          PALTYPE_MAIN_BG , 0 , 16*2*16 ,wk->heapId );
-  }
+//  {
+//    GFL_ARC_UTIL_TransVramPalette( ARCID_TRAINERCARD, NARC_trainer_case_card_case_g_NCLR,
+//          PALTYPE_MAIN_BG , 0 , 16*2*16 ,wk->heapId );
+//  }
   // CASE PALETTE
-  SetCasePalette(wk,wk->TrCardData->Version);
 
   //TRAINER
   if (wk->TrCardData->OtherTrCard==FALSE){
@@ -1118,42 +1067,6 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
 
 //  GFL_ARC_UTIL_TransVramScreen( ARCID_TRAINERCARD, NARC_trainer_case_card_case2bg_NSCR,
 //    TRC_BG_BADGE_BACK, 0, 0, 0, wk->heapId );
-
-  //BADGE_CASE & BADGE_BACK
-  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TRAINERCARD, NARC_trainer_case_card_case2_NCGR,
-    TRC_BG_BADGE_CASE, 0, 0, 0, wk->heapId );
-
-  //スクリーンデータ取得
-  wk->pScrnBCase = GFL_ARC_UTIL_LoadScreen(ARCID_TRAINERCARD, NARC_trainer_case_card_case4_NSCR,
-              0, &wk->pSBCase, wk->heapId);
-
-  if(wk->isClear){
-    int i;
-    GFL_ARC_UTIL_TransVramScreen( ARCID_TRAINERCARD, NARC_trainer_case_card_case3_NSCR,
-      TRC_BG_BADGE_CASE, 0, 0, 0, wk->heapId );
-
-    for(i = 0;i < 8;i++){
-      if(wk->badge[i+8] == 0){
-        GFL_BG_WriteScreenExpand(TRC_BG_BADGE_CASE,
-          LEADER_ICON_X+(LEADER_ICON_OX*(i%4)),LEADER_ICON_KY+(LEADER_ICON_OY*(i/4)),
-          LEADER_ICON_SX,LEADER_ICON_SY,wk->pSBCase->rawData,0,LEADER_ICON_PY,
-          wk->pSBCase->screenWidth/8,wk->pSBCase->screenHeight/8);
-      }
-    }
-  }else{
-    int i;
-    GFL_ARC_UTIL_TransVramScreen( ARCID_TRAINERCARD, NARC_trainer_case_card_case2_NSCR,
-      TRC_BG_BADGE_CASE, 0, 0, 0, wk->heapId );
-
-    for(i = 0;i < 8;i++){
-      if(wk->badge[i] == 0){
-        GFL_BG_WriteScreenExpand(TRC_BG_BADGE_CASE,
-          LEADER_ICON_X+(LEADER_ICON_OX*(i%4)),LEADER_ICON_JY+(LEADER_ICON_OY*(i/4)),
-          LEADER_ICON_SX,LEADER_ICON_SY,wk->pSBCase->rawData,0,LEADER_ICON_PY,
-          wk->pSBCase->screenWidth/8,wk->pSBCase->screenHeight/8);
-      }
-    }
-  }
 
   //殿堂入りマーク表示
   if(!wk->isClear && wk->TrCardData->BadgeFlag >= 0x00FF){
@@ -1442,7 +1355,7 @@ static int SignCall( TR_CARD_WORK *wk )
   return 0;
 }
 
-#define ROTATE_SPEED (0x300)    //90度のカウントアップ
+#define ROTATE_SPEED (0x400)    //90度のカウントアップ
 #define ROTATE_MAX (0x4000)   //360度 = 0x10000　90度 = 0x4000 = 16384
 #define START_SCALE ( FX32_ONE + FX32_CONST( 0.015f ) ) //左右を2ピクセル拡大させる倍率
 #define CARD_SCALE_MIN  ( 8.0f )  //最低限表示される厚み(ピクセル)
@@ -1533,7 +1446,6 @@ static BOOL CardRev( TR_CARD_WORK *wk )
 }
 
 
-#define SCALE_CENTERX   (
 
 //----------------------------------------------------------------------------------
 /**

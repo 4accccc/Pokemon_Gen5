@@ -93,129 +93,33 @@ void InitTRCardCellActor( TR_CARD_OBJ_WORK *wk , const GFL_DISP_VRAM *vramBank)
   // セルアクター初期化
   wk->cellUnit = GFL_CLACT_UNIT_Create( TR_CARD_ACT_MAX, 0, wk->heapId );
 
-  // 共通リソース転送
-  for(i = 0;i < 2;i++){
-    int vram_type[2] = {
-      NNS_G2D_VRAM_TYPE_2DMAIN,NNS_G2D_VRAM_TYPE_2DSUB,
-    };
-    u8 res_name[2][4] = {
-     {  NARC_trainer_case_card_badge_NCLR, 
-      NARC_trainer_case_card_badge_NCGR, 
-      NARC_trainer_case_card_badge_NCER, 
-      NARC_trainer_case_card_badge_NANR },
-     {  NARC_trainer_case_card_button_NCLR, 
-      NARC_trainer_case_card_button_NCGR, 
-      NARC_trainer_case_card_button_NCER, 
-      NARC_trainer_case_card_button_NANR },
-    };
-    wk->resCell[i].pltIdx = GFL_CLGRP_PLTT_RegisterEx( p_handle, res_name[i][0], CLSYS_DRAW_MAIN+i, 0, 0, 4, wk->heapId );
-//    wk->resCell[i].pltIdx = GFL_CLGRP_PLTT_Register( p_handle , res_name[i][0] , CLSYS_DRAW_MAIN+i , 4*32 , wk->heapId );
-    wk->resCell[i].ncgIdx = GFL_CLGRP_CGR_Register( p_handle , res_name[i][1] , FALSE , CLSYS_DRAW_MAIN+i , wk->heapId );
-    wk->resCell[i].anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle , res_name[i][2] , res_name[i][3], wk->heapId );
-  }
-
-  // バッジ画面用OBJリソース転送
-  {
-    u8 i;
-    ARCHANDLE* pal_handle;
-
-    const int pal_arc_idx[TR_CARD_BADGE_ACT_MAX] = {
-      NARC_trainer_case_card_badge2_0_NCLR,
-      NARC_trainer_case_card_badge2_1_NCLR,
-      NARC_trainer_case_card_badge2_2_NCLR,
-      NARC_trainer_case_card_badge2_3_NCLR,
-      NARC_trainer_case_card_badge2_4_NCLR,
-      NARC_trainer_case_card_badge2_5_NCLR,
-      NARC_trainer_case_card_badge2_6_NCLR,
-      NARC_trainer_case_card_badge2_7_NCLR
-    };
-    //パレットアーカイブハンドルオープン
-    /*
-    pal_handle  = ArchiveDataHandleOpen( ARCID_TRAINERCARD, HEAPID_TR_CARD);
-    for (i=0;i<TR_CARD_BADGE_ACT_MAX;i++){
-      wk->PalDataBuf[i] = ArchiveDataLoadAllocByHandle( pal_handle, pal_arc_idx[i], HEAPID_TR_CARD );
-      if( wk->PalDataBuf[i] != NULL )
-      {
-        if( NNS_G2dGetUnpackedPaletteData( wk->PalDataBuf[i], &wk->PalData[i] ) == FALSE ){
-          sys_FreeMemoryEz( wk->PalData[i] );
-          GF_ASSERT(0);
-        }
-      }else{
-        GF_ASSERT(0);
-      }
-    }
-    //ハンドルクローズ
-    ArchiveDataHandleClose( pal_handle );
-    */
-    for (i=0;i<TR_CARD_BADGE_ACT_MAX;i++)
-    {
-      wk->badgePalBuf[i] = GFL_ARC_UTIL_LoadPalette( ARCID_TRAINERCARD ,
-                  pal_arc_idx[i], &wk->badgePalData[i] ,wk->heapId );
-    }
-  }
-
+  // セルアクターリソース転送
+  wk->resCell[0].pltIdx = GFL_CLGRP_PLTT_RegisterEx( p_handle, NARC_trainer_case_card_button_NCLR, 
+                                                     CLSYS_DRAW_SUB, 0, 0, 4, wk->heapId );
+  wk->resCell[0].ncgIdx = GFL_CLGRP_CGR_Register( p_handle , NARC_trainer_case_card_button_NCGR, FALSE , 
+                                                  CLSYS_DRAW_SUB , wk->heapId );
+  wk->resCell[0].anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle , 
+                                                       NARC_trainer_case_card_button_NCER, 
+                                                       NARC_trainer_case_card_button_NANR, wk->heapId );
   GFL_ARC_CloseDataHandle( p_handle );
 
-  // タッチバー用リソース転送
 
+  // タッチバー用リソース転送
   p_handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , wk->heapId );
-  wk->resCell[2].pltIdx = GFL_CLGRP_PLTT_Register( p_handle, APP_COMMON_GetBarIconPltArcIdx(),
+  wk->resCell[1].pltIdx = GFL_CLGRP_PLTT_Register( p_handle, APP_COMMON_GetBarIconPltArcIdx(),
                                                    CLSYS_DRAW_SUB , 4*32 , wk->heapId );
-  wk->resCell[2].ncgIdx = GFL_CLGRP_CGR_Register( p_handle, APP_COMMON_GetBarIconCharArcIdx(),
+  wk->resCell[1].ncgIdx = GFL_CLGRP_CGR_Register( p_handle, APP_COMMON_GetBarIconCharArcIdx(),
                                                    FALSE, CLSYS_DRAW_SUB, wk->heapId );
-  wk->resCell[2].anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle, 
+  wk->resCell[1].anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle, 
                                                        APP_COMMON_GetBarIconCellArcIdx( APP_COMMON_MAPPING_32K ),
                                                        APP_COMMON_GetBarIconAnimeArcIdx( APP_COMMON_MAPPING_32K ),
                                                        wk->heapId );
   GFL_ARC_CloseDataHandle( p_handle );
   
   GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );    // MAIN DISP OBJ ON
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );   // SUB DISP OBJ ON
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );   // SUB  DISP OBJ ON
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * セルアクターをセット
- *
- * @param wk        トレーナーカードOBJワーク
- * @param inBadgeDisp   バッジ表示フラグリスト
- * @param isClear     殿堂入りしているか？
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-void SetTrCardActor( TR_CARD_OBJ_WORK *wk, const u8 *inBadgeDisp ,const BOOL isClear)
-{
-  int i;
-  {
-    //登録情報格納
-    u8 ofs;
-    u16 badge_ofs = 0;
-    GFL_CLWK_DATA addData;
-    
-    
-    //セルアクター表示開始
-    if(!isClear){
-      badge_ofs = BADGE_NC_OFS; 
-    }
-
-    // 上画面(メイン画面)
-    //バッジ
-    for(i=0;i<TR_CARD_BADGE_ACT_MAX;i++){
-      addData.pos_x = BadgePos[i].x;
-      addData.pos_y = BadgePos[i].y+badge_ofs;
-      addData.anmseq = i;
-      wk->ClActWork[i] = GFL_CLACT_WK_Create( wk->cellUnit , wk->resCell[0].pltIdx ,
-                      wk->resCell[0].ncgIdx , wk->resCell[0].anmIdx ,
-                      &addData , CLSYS_DEFREND_MAIN , wk->heapId );
-      if (!inBadgeDisp[i]){
-        GFL_CLACT_WK_SetDrawEnable( wk->ClActWork[i], FALSE); //非表示
-      }
-      GFL_CLACT_WK_SetAutoAnmSpeed( wk->ClActWork[i], FX32_ONE );
-      GFL_CLACT_WK_SetAutoAnmFlag( wk->ClActWork[i], TRUE );
-    }
-  } 
-}
 
 
 //==========================================
@@ -242,14 +146,14 @@ void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk)
 {
   int i;
   const CLACT_ENTRY_DAT entry_dat[]={
-    { 228, 21*8, 2,2,2,0, APP_COMMON_BARICON_RETURN },   // 「Ｕ」
-    { 204, 21*8, 2,2,2,0, APP_COMMON_BARICON_EXIT   },   // 「×」
-    {   4, 21*8, 1,1,1,0, ANMS_BADGE_L,             },   // リーグ画面へ
-    {   0,    0, 1,1,1,0, ANMS_EFF                  },   // エフェクト
-    {  36, 21*8, 1,1,1,0, ANMS_LOUPE_L              },   // 精密描画ボタン
-    {  68, 21*8, 1,1,1,0, ANMS_BLACK_PEN_L          },   // ペン先ボタン
-    { 100, 21*8, 1,1,1,0, ANMS_TURN_L,              },   // カード裏返しボタン
-    { 180, 21*8+4, 2,2,2,0, APP_COMMON_BARICON_CHECK_OFF },// ブックマークボタン
+    { 228, 21*8, 1,1,1,0, APP_COMMON_BARICON_RETURN },   // 「Ｕ」
+    { 204, 21*8, 1,1,1,0, APP_COMMON_BARICON_EXIT   },   // 「×」
+    {   4, 21*8, 0,0,0,0, ANMS_BADGE_L,             },   // リーグ画面へ
+    {   0,    0, 0,0,0,0, ANMS_EFF                  },   // エフェクト
+    {  36, 21*8, 0,0,0,0, ANMS_LOUPE_L              },   // 精密描画ボタン
+    {  68, 21*8, 0,0,0,0, ANMS_BLACK_PEN_L          },   // ペン先ボタン
+    { 100, 21*8, 0,0,0,0, ANMS_TURN_L,              },   // カード裏返しボタン
+    { 180, 21*8+4, 1,1,1,0, APP_COMMON_BARICON_CHECK_OFF },// ブックマークボタン
     
   };
 
@@ -295,10 +199,6 @@ void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk)
 void RereaseCellObject(TR_CARD_OBJ_WORK *wk)
 {
   u8 i,j;
-  //パレット解放
-  for(i=0;i<TR_CARD_BADGE_ACT_MAX;i++){
-    GFL_HEAP_FreeMemory(wk->badgePalBuf[i]);
-  }
 
   // セルアクターリソース解放
   for(i=0;i<TR_CARD_CLACT_RES_NUM;i++)
