@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T11:55:06"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T12:06:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="170" right="2001" bottom="798" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="116" right="2001" bottom="744" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -330,7 +330,7 @@
 なんだか　お嬢様　っぽいよね</language>
 	</row>
 
-	<row id="msg_t01_white_01">
+	<row id="msg_t01_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：研究所の前
 ・t01r0301でのイベント後
 　友達♂の隣に配置</comment>
@@ -349,6 +349,172 @@
 はかせに　あおう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『さ！
 博士に　会おう[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01_mama_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・ポケモン図鑑入手後に登場/配置
+・ママ（GRIDX=777、GRIDZ=743）
+・ライバル（GRIDX=776、GRIDZ=741）
+　サポート（GRIDX=778、GRIDZ=741）
+・主人公が研究所からでると
+　ママに！マーク表示後、メッセージ
+・続けてmama_02</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『いたいた！　で
+はかせの　はなしは　どうだった？▼
+……　……　……
+……　……　……▼
+ポケモンずかんの　かんせいを
+おねがい　されたんだ！？▽
+すごーい！！▼</language>
+		<language name="JPN_KANJI" width="256">ママ『いたいた！　で
+博士の　話は　どうだった？▼
+……　……　……
+……　……　……▼
+ポケモン図鑑の　完成を
+お願い　されたんだ！？▽
+すごーい！！▼</language>
+	</row>
+
+	<row id="msg_t01_mama_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・続けてmama_03
+・演出追加のためにラベルを分けていますが
+　mama_01～03までウインドウは閉じないでOKです</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">なーんてね▼
+じつは　ママ　そのはなしを
+すでに　きいていたんだけどね▼</language>
+		<language name="JPN_KANJI" width="256">なーんてね▼
+じつは　ママ　その話を
+すでに　聞いていたんだけどね▼</language>
+	</row>
+
+	<row id="msg_t01_mama_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・主人公、No442「タウンマップ」入手処理
+・続けてmama_04</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">というわけで　あなたたち　この
+タウンマップを　もっていきなさいな▼</language>
+		<language name="JPN_KANJI" width="256">というわけで　あなたたち　この
+タウンマップを　もっていきなさいな▼</language>
+	</row>
+
+	<row id="msg_t01_mama_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・チェレンの下に移動してメッセージ
+・続けてblack_04</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『はい　チェレン▼</language>
+		<language name="JPN_KANJI" width="256">ママ『はい　チェレン▼</language>
+	</row>
+
+	<row id="msg_t01_black_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けて</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『はい！
+たいせつに　つかわせてもらいます▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『はい！
+大切に　使わせてもらいます▼</language>
+	</row>
+
+	<row id="msg_t01_mama_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・ベルの下に移動してメッセージ
+・続けてwhite_02</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『ほら　ベルも▼</language>
+		<language name="JPN_KANJI" width="256">ママ『ほら　ベルも▼</language>
+	</row>
+
+	<row id="msg_t01_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてmama_06</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『あ　ありがとうございます！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『あ　ありがとうございます！▼</language>
+	</row>
+
+	<row id="msg_t01_mama_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・0＝主人公の名前
+・続けてmama_07</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『あと　[1:00:トレーナー名:0]の　へやは
+アタシが　かたづけておくから▽
+ベルたちは　きにしなくて　いいのよ▼</language>
+		<language name="JPN_KANJI" width="256">ママ『あと　[1:00:トレーナー名:0]の　部屋は
+アタシが　片付けておくから▽
+ベルたちは　気にしなくて　いいのよ▼</language>
+	</row>
+
+	<row id="msg_t01_mama_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・GRIDX=777、GRIDZ=743に
+　移動してメッセージ表示
+・続けてmama_08</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『それにしても　ポケモンって
+ほんとうに　すごいのね！▼
+ちいさくても　へやを
+ふきとばすほどの　とんでもない▽
+パワーを　ひめているんだもの！▼
+そんな　ポケモンと　いっしょなら
+どこに　いくのだって　あんしんよね！▼</language>
+		<language name="JPN_KANJI" width="256">ママ『それにしても　ポケモンって
+ほんとうに　すごいのね！▼
+小さくても　部屋を
+ふきとばすほどの　とんでもない▽
+パワーを　秘めているんだもの！▼
+そんな　ポケモンと　一緒なら
+どこに　行くのだって　安心よね！▼</language>
+	</row>
+
+	<row id="msg_t01_mama_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・メッセージ後、ママ、自宅にもどる
+・画面外に消えるとblack_05表示</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">あなたたちの　パパや　ママには
+アタシから　つたえておくから！▼
+ポケモンだけ　じゃなくて
+イッシュちほうの　すてきなところ▼
+いっぱい　いっぱい　みつけて
+ステキな　おとなに　なるのよ！▽
+じゃ　いってらっしゃい！！▼</language>
+		<language name="JPN_KANJI" width="256">あなたたちの　パパや　ママには
+アタシから　伝えておくから！▼
+ポケモンだけ　じゃなくて
+イッシュ地方の　すてきなところ▼
+いっぱい　いっぱい　みつけて
+ステキな　大人に　なるのよ！▽
+じゃ　いってらっしゃい！！▼</language>
+	</row>
+
+	<row id="msg_t01_black_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・このとき、3人、顔を見合わせる？
+・メッセージ表示後、1番道路へ
+・続けてwhite_02</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『１ばんどうろに　いくよ
+はかせが　まってるから▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『１番道路に　行くよ
+博士が　待ってるから▼</language>
+	</row>
+
+	<row id="msg_t01_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、1番道路へ
+・画面外に消えると主人公、操作可能に</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『あっ　まってよ
+[1:00:トレーナー名:0]も　はやく　きてよ▼</language>
+		<language name="JPN_KANJI" width="256">ベル『あっ　待ってよ
+[1:00:トレーナー名:0]も　はやく　来てよ▼</language>
 	</row>
 
 	<row id="msg_t01_bigman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
