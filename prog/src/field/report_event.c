@@ -45,6 +45,7 @@ enum {
 	REPORT_SEQ_OVERWRITE_YESNO_WAIT,		// 上書きしますか？【はい・いいえ】待ち
 */
 	REPORT_SEQ_SAVE_SIZE_CHECK,					// セーブサイズ取得
+	REPORT_SEQ_PALYER_ANM_CHG,					// 主人公アニメ変更
 	REPORT_SEQ_SAVE_INIT,								// セーブ初期設定
 	REPORT_SEQ_SAVE_MAIN,								// セーブ実行
 	REPORT_SEQ_RESULT_OK_WAIT,					// セーブ成功メッセージ待ち
@@ -102,6 +103,7 @@ static void SetReportMsgBuff( FMENU_REPORT_EVENT_WORK * wk );
 static BOOL MainReportMsg( FMENU_REPORT_EVENT_WORK * wk );
 static void SetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * work );
 static void ResetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * work );
+static BOOL CheckPlayerAnime( FMENU_REPORT_EVENT_WORK * wk );
 static void SetReportBgAnime( FMENU_REPORT_EVENT_WORK * work );
 static void ResetReportBgAnime( FMENU_REPORT_EVENT_WORK * work );
 static void InitReportYesNo( FMENU_REPORT_EVENT_WORK * wk );
@@ -216,20 +218,27 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 		}else{
 			SetReportMsg( wk, msg_common_report_03 );
 		}
-		*seq = REPORT_SEQ_SAVE_INIT;
+		*seq = REPORT_SEQ_PALYER_ANM_CHG;
+		break;
+
+	case REPORT_SEQ_PALYER_ANM_CHG:					// 主人公アニメ変更
+		if( MainReportMsg( wk ) == FALSE ){
+			SetReportPlayerAnime( wk );
+			*seq = REPORT_SEQ_SAVE_INIT;
+		}
 		break;
 
 	case REPORT_SEQ_SAVE_INIT:							// セーブ初期設定
-		if( MainReportMsg( wk ) == FALSE ){
-			wk->local->timeIcon = TIMEICON_Create(
-											GFUser_VIntr_GetTCBSYS(),
-											wk->local->win, 15, TIMEICON_DEFAULT_WAIT, wk->heapID );
-			FIELD_SUBSCREEN_SetReportStart( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
-			SetReportPlayerAnime( wk );
-      SetReportBgAnime( wk );
-			GAMEDATA_SaveAsyncStart( GAMESYSTEM_GetGameData(wk->gsys) );
-			*seq = REPORT_SEQ_SAVE_MAIN;
+		if( CheckPlayerAnime( wk ) == FALSE ){
+			break;
 		}
+		wk->local->timeIcon = TIMEICON_Create(
+														GFUser_VIntr_GetTCBSYS(),
+														wk->local->win, 15, TIMEICON_DEFAULT_WAIT, wk->heapID );
+		FIELD_SUBSCREEN_SetReportStart( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
+		SetReportBgAnime( wk );
+		GAMEDATA_SaveAsyncStart( GAMESYSTEM_GetGameData(wk->gsys) );
+		*seq = REPORT_SEQ_SAVE_MAIN;
 		break;
 
 	case REPORT_SEQ_SAVE_MAIN:							// セーブ実行
@@ -269,6 +278,9 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 		break;
 
 	case REPORT_SEQ_RESULT_OK_WAIT:		// セーブ成功メッセージ待ち
+		if( CheckPlayerAnime( wk ) == FALSE ){
+			break;
+		}
 		if( MainReportMsg( wk ) == FALSE ){
 			PMSND_PlaySE( SEQ_SE_SAVE );
 			*seq = REPORT_SEQ_RESULT_SE_WAIT;
@@ -282,6 +294,9 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 		break;
 
 	case REPORT_SEQ_RESULT_NG_WAIT:		// セーブ失敗メッセージ待ち
+		if( CheckPlayerAnime( wk ) == FALSE ){
+			break;
+		}
 		if( MainReportMsg( wk ) == FALSE ){
 			*seq = REPORT_SEQ_END_TRG_WAIT;
 		}
@@ -559,6 +574,12 @@ static void ResetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
 		FIELD_PLAYER_SetRequest( fld_player, FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM );
 		FIELD_PLAYER_UpdateRequest( fld_player );
 	}
+}
+
+// 自機アニメチェック
+static BOOL CheckPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
+{
+	return FIELD_PLAYER_ChangeFormWait( FIELDMAP_GetFieldPlayer(wk->fieldWork) );
 }
 
 
