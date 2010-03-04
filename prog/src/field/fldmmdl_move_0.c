@@ -2127,14 +2127,8 @@ static int MvRt4Move_JikiCheck( MMDL * mmdl, MV_RT4_WORK *work )
 }
 
 //--------------------------------------------------------------
-/**
- * MV_RT4動作　自機を発見　飛び上がり動作
- * @param  mmdl  MMDL *
- * @param  work  MV_RT4_WORK
- * @retval  int    TRUE=再帰
- */
-//--------------------------------------------------------------
 ///MV_RT4_REV_CODE ルート4反転コード
+//--------------------------------------------------------------
 typedef struct
 {
   u16 m_code;
@@ -2151,9 +2145,14 @@ static const MV_RT4_REV_CODE data_MoveRoute4_ReverseTbl[] =
   {MV_CODE_NOT,MV_CODE_NOT}, //end
 };
 
-///回転数反転
-static const u8 data_MoveRoute4_ReverseTurnNo[4] = {3,2,1,0};
-
+//--------------------------------------------------------------
+/**
+ * MV_RT4動作　自機を発見　飛び上がり動作
+ * @param  mmdl  MMDL *
+ * @param  work  MV_RT4_WORK
+ * @retval  int    TRUE=再帰
+ */
+//--------------------------------------------------------------
 static int MvRt4Move_DiscoveryJump( MMDL * mmdl, MV_RT4_WORK *work )
 {
   if( MMDL_ActionLocalAcmd(mmdl) == TRUE ){
@@ -2169,10 +2168,10 @@ static int MvRt4Move_DiscoveryJump( MMDL * mmdl, MV_RT4_WORK *work )
       }
       
       if( r_code != MV_CODE_NOT ){
-        u16 turn_no = work->turn_no;
+        u16 turn_no = MV_RT4_TURN_END_NO_MAX - (work->turn_no+1);
         GF_ASSERT( turn_no < 4 );
         MMDL_ChangeMoveCode( mmdl, r_code );
-        work->turn_no = data_MoveRoute4_ReverseTurnNo[turn_no];
+        work->turn_no = turn_no; //反転した回転数
         break;
       }
        

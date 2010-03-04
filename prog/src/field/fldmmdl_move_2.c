@@ -145,6 +145,13 @@ static int PairTr_OyaCheckAcmdSet( MMDL * mmdl, MV_TR_PAIR_WORK *work );
 
 int (* const DATA_HideMoveTbl[])( MMDL * mmdl, MV_HIDE_WORK *work );
 
+#ifdef DEBUG_ONLY_FOR_kagaya
+static void debug_PrintMMdl(
+    const MMDL *mmdl, const char *f_str, const char *e_str );
+#else
+#define debug_PrintMMdl(m,f,e) ((void)0)
+#endif
+
 //======================================================================
 //  MV_PAIR  自機連れ歩き
 //======================================================================
@@ -302,6 +309,7 @@ static void Pair_WorkInit( MMDL * mmdl, MV_PAIR_WORK *work )
  * @param  work  MV_PAIR_WORK
  * @retval  int    TRUE=更新した
  */
+//--------------------------------------------------------------
 static int Pair_JikiPosUpdateCheck( MMDL * mmdl, MV_PAIR_WORK *work )
 {
   MMDL *jiki = MMDLSYS_SearchMMdlPlayer( MMDL_GetMMdlSys(mmdl) );
@@ -1532,7 +1540,7 @@ static BOOL AlongWall_HandHitGet(
   const MMDL *mmdl, const VecFx32 *pos, int dir, ALONG_DIR hdir )
 {
   u32 attr;
-  BOOL hit = TRUE;
+  BOOL hit = FALSE;
   VecFx32 next = *pos;
   s16 gx = SIZE_GRID_FX32( pos->x );
   s16 gz = SIZE_GRID_FX32( pos->z );
@@ -1543,8 +1551,8 @@ static BOOL AlongWall_HandHitGet(
   next.z = GRID_SIZE_FX32( gz );
   
   if( MMDL_GetMapPosAttr(mmdl,&next,&attr) == TRUE ){
-    if( MAPATTR_GetHitchFlag(attr) == FALSE ){
-      hit = FALSE;
+    if( MAPATTR_GetHitchFlag(attr) != FALSE ){
+      hit = TRUE;
     }
   }
   
@@ -1575,8 +1583,8 @@ static BOOL AlongWall_HandLostHitGet(
   next.x = GRID_SIZE_FX32( gx );
   next.z = GRID_SIZE_FX32( gz );
   if( MMDL_GetMapPosAttr(mmdl,&next,&attr) == TRUE ){
-    if( MAPATTR_GetHitchFlag(attr) == FALSE ){
-      hit = FALSE;
+    if( MAPATTR_GetHitchFlag(attr) != FALSE ){
+      hit = TRUE;
     }
   }
   return( hit );
@@ -1629,10 +1637,9 @@ static int AlongWall_HandLostWallCheck(
 static int AlongWall_MoveHitCheck(
   MMDL * mmdl, int dir_move, ALONG_DIR dir_hand )
 {
-  if( AlongWall_HandWallCheck(
-        mmdl,dir_move,dir_hand) == FALSE ){  //壁が無い
+  if( AlongWall_HandWallCheck(mmdl,dir_move,dir_hand) == FALSE ){ //壁が無い
     if( AlongWall_HandLostWallCheck(mmdl,dir_move,dir_hand) == FALSE ){
-      return( DIR_NOT );          //手探りでも壁が無い
+      return( DIR_NOT ); //手探りでも壁が無い
     }
     
     //壁発見 方向切り替え
@@ -1687,6 +1694,7 @@ static int AlongWall_WallMove(
     dir_move = MMDL_GetDirDisp( mmdl );
     ac = MMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
     MMDL_SetLocalAcmd( mmdl, ac );
+    debug_PrintMMdl( mmdl, "壁を見失っている", NULL );
     return( FALSE );
   }
   
@@ -1709,6 +1717,7 @@ static int AlongWall_WallMove(
       dir_move = MMDL_GetDirDisp( mmdl );
       ac = MMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
       MMDL_SetLocalAcmd( mmdl, ac );
+      debug_PrintMMdl( mmdl, "壁を見失っている 両手利き", NULL );
       return( FALSE );
     }
     
@@ -1730,6 +1739,7 @@ static int AlongWall_WallMove(
       dir_move = MMDL_GetDirDisp( mmdl );
       ac = MMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
       MMDL_SetLocalAcmd( mmdl, ac );
+      debug_PrintMMdl( mmdl, "壁を見失っている 壁ヒット", NULL );
       return( FALSE );
     }
     
@@ -1745,5 +1755,36 @@ static int AlongWall_WallMove(
   dir_move = MMDL_GetDirDisp( mmdl );  //向きを戻す
   ac = MMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
   MMDL_SetLocalAcmd( mmdl, ac );
+  debug_PrintMMdl( mmdl, "完全に移動不可", NULL );
   return( FALSE );
 }
+
+//======================================================================
+//  define
+//======================================================================
+#ifdef DEBUG_ONLY_FOR_kagaya
+//--------------------------------------------------------------
+//  動作モデルの情報をプリント
+//--------------------------------------------------------------
+static void debug_PrintMMdl(
+    const MMDL *mmdl, const char *f_str, const char *e_str )
+{
+  int id = MMDL_GetOBJID( mmdl );
+  int code = MMDL_GetOBJCode( mmdl );
+  int mv_code = MMDL_GetMoveCode( mmdl );
+  int dir = MMDL_GetDirDisp( mmdl );
+  int gx = MMDL_GetGridPosX( mmdl );
+  int gy = MMDL_GetGridPosY( mmdl );
+  int gz = MMDL_GetGridPosZ( mmdl );
+  
+  if( f_str != NULL ){
+    OS_Printf( "%s\n", f_str );
+  }
+  
+  OS_Printf( "MMDL ID %d : CODE %xH : MOVE CODE =%xH : DIR %d : GX = %d GY = %d GZ = %d\n", id, code, mv_code, dir, gx, gy, gz );
+  
+  if( e_str != NULL ){
+    OS_Printf( "%s\n", e_str );
+  }
+}
+#endif
