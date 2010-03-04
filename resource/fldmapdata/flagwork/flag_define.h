@@ -2409,7 +2409,7 @@
 #define SYS_FLAG_ARRIVE_C09               2491 /* 0x09bb 到着フラグ：C09 */
 #define SYS_FLAG_ARRIVE_C10               2492 /* 0x09bc 到着フラグ：C10 */
 #define SYS_FLAG_ARRIVE_T04               2493 /* 0x09bd 到着フラグ：T04 */
-		/* not used  2494(0x09be) */
+#define SYS_FLAG_ARRIVE_C11               2494 /* 0x09be 到着フラグ：C01（国連） */
 		/* not used  2495(0x09bf) */
 		/* not used  2496(0x09c0) */
 		/* not used  2497(0x09c1) */
