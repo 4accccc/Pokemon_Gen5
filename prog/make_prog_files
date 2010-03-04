@@ -1841,3 +1841,8 @@ SRCS_OVERLAY_UN_SELECT = app/un_select/un_select.c \
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_GEONET = net_app/wifi_earth/wifi_earth.c
 
+# 川田デバッグ
+#===> SRCS_OVERLAY_UI_COMMON
+#===> SRCS_OVERLAY_ZUKAN_TOROKU
+SRCS_OVERLAY_KAWADA_DEBUG = test/kawada/d_kawada.c
+

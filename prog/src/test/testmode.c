@@ -171,6 +171,7 @@ static BOOL TESTMODE_ITEM_SelectFuncSaito( TESTMODE_WORK *work , const int idx )
 static BOOL TESTMODE_ITEM_SelectFuncMori( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncNakamura( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncHosaka( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncKawada( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_ChangeRTC( TESTMODE_WORK *work , const int idx );
@@ -260,6 +261,7 @@ static TESTMODE_MENU_LIST topMenu[] =
   {L"もり　あきと"        ,TESTMODE_ITEM_SelectFuncMori},
   {L"なかむら　ひろゆき"  ,TESTMODE_ITEM_SelectFuncNakamura},
   {L"ほさか　げんや"      ,TESTMODE_ITEM_SelectFuncHosaka},
+  {L"かわだ　こうじ"      ,TESTMODE_ITEM_SelectFuncKawada},
 };
 
 static TESTMODE_MENU_LIST menuRTCEdit[] =
@@ -1087,6 +1089,14 @@ static BOOL TESTMODE_ITEM_SelectFuncHosaka( TESTMODE_WORK *work , const int idx 
 static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx )
 {
   TESTMODE_COMMAND_ChangeMenu( work , topMenu , NELEMS(topMenu) );
+  return TRUE;
+}
+
+FS_EXTERN_OVERLAY(kawada_debug);
+extern const GFL_PROC_DATA DebugKawadaMainProcData;
+static BOOL TESTMODE_ITEM_SelectFuncKawada( TESTMODE_WORK *work , const int idx )
+{
+  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(kawada_debug), &DebugKawadaMainProcData, NULL);
   return TRUE;
 }
 
