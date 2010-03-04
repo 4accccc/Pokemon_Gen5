@@ -236,7 +236,7 @@ static BOOL itemcheck_DowsingMachine( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, 
   u16 zone_id = PLAYERWORK_getZoneID( playerWork );
 
   // ユニオンルーム、通信対戦部屋、Wi-Fiクラブ、パルパーク、パレスでは使用できません。
-  return !( ZONEDATA_IsPalace(zone_id) || ZONEDATA_IsUnionRoom(zone_id) );
+  return !( ZONEDATA_IsPalace(zone_id) || ZONEDATA_IsUnionRoom(zone_id) || ZONEDATA_IsColosseum(zone_id) );
 }
 
 //=============================================================================
