@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-03-03T11:52:08"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-03-03T12:29:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 
 	<dialog left="146" top="195" right="851" bottom="815" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -407,47 +407,47 @@
 	</row>
 
 	<row id="str_check_answer" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[2:01:２桁:0]ばん：[1:00:トレーナー名:1]
-[2:03:４桁:2]にん
-[2:03:４桁:3]％</language>
-		<language name="JPN_KANJI">[2:01:２桁:0]番：[1:00:トレーナー名:1]
-[2:03:４桁:2]人
-[2:03:４桁:3]％</language>
+		<language name="JPN">[BD:03:Ｘ右寄せ:0][2:01:２桁:0]ばん：[1:00:トレーナー名:1]
+[BD:03:Ｘ右寄せ:0][2:03:４桁:2]にん
+[BD:03:Ｘ右寄せ:0][2:03:４桁:3]％</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0][2:01:２桁:0]番：[1:00:トレーナー名:1]
+[BD:03:Ｘ右寄せ:0][2:03:４桁:2]人
+[BD:03:Ｘ右寄せ:0][2:03:４桁:3]％</language>
 	</row>
 
 	<row id="str_check_my_answer" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">じぶんは
-[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI">自分は
-[1:00:トレーナー名:0]</language>
+		<language name="JPN">[BD:03:Ｘ右寄せ:0]じぶんは
+[BD:03:Ｘ右寄せ:0][1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]自分は
+[BD:03:Ｘ右寄せ:0][1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="str_check_today_count" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">きょうの　にんずう
-[2:03:４桁:0]にん</language>
-		<language name="JPN_KANJI">今日の人数
-[2:03:４桁:0]人</language>
+		<language name="JPN">[BD:03:Ｘ右寄せ:0]きょうの　にんずう
+[BD:03:Ｘ右寄せ:0][2:03:４桁:0]にん</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]今日の人数
+[BD:03:Ｘ右寄せ:0][2:03:４桁:0]人</language>
 	</row>
 
 	<row id="str_check_today_count01" text-color=",,,#c0c0c0,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">きょうの　にんずうを
-ひょうじします</language>
-		<language name="JPN_KANJI">今日の人数を
-表示します</language>
+		<language name="JPN">[BD:03:Ｘ右寄せ:0]きょうの　にんずうを
+[BD:03:Ｘ右寄せ:0]ひょうじします</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]今日の人数を
+[BD:03:Ｘ右寄せ:0]表示します</language>
 	</row>
 
-	<row id="str_check_total_count" text-color=",,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">ごうけいの　にんずう
-[2:03:４桁:0]にん</language>
-		<language name="JPN_KANJI">合計の人数
-[2:03:４桁:0]人</language>
+	<row id="str_check_total_count" text-color=",,,#c0c0c0,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN">[BD:03:Ｘ右寄せ:0]ごうけいの　にんずう
+[BD:03:Ｘ右寄せ:0][2:03:４桁:0]にん</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]合計の人数
+[BD:03:Ｘ右寄せ:0][2:03:４桁:0]人</language>
 	</row>
 
 	<row id="str_check_total_count01" text-color=",,,#c0c0c0,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">ごうけいの　にんずうを
-ひょうじ　します</language>
-		<language name="JPN_KANJI">合計の人数を
-表示します</language>
+		<language name="JPN">[BD:03:Ｘ右寄せ:0]ごうけいの　にんずうを
+[BD:03:Ｘ右寄せ:0]ひょうじ　します</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]合計の人数を
+[BD:03:Ｘ右寄せ:0]表示します</language>
 	</row>
 
 	<row id="str_check_data_receive" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">

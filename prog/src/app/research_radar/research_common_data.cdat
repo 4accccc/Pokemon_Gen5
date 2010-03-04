@@ -15,7 +15,7 @@
 //===============================================================================
 // ■VRAM-Bank 設定
 //===============================================================================
-const GFL_DISP_VRAM VRAMBankSettings =
+static const GFL_DISP_VRAM VRAMBankSettings =
 {
   GX_VRAM_BG_128_A,            // MAIN-BG
   GX_VRAM_BGEXTPLTT_NONE,      // MAIN-BG-EXP-PLT
@@ -35,7 +35,7 @@ const GFL_DISP_VRAM VRAMBankSettings =
 // ■BGモード設定
 //===============================================================================
 // 2D
-const GFL_BG_SYS_HEADER BGSysHeader2D = 
+static const GFL_BG_SYS_HEADER BGSysHeader2D = 
 {
   GX_DISPMODE_GRAPHICS,   // 表示モード指定
   GX_BGMODE_0,            // ＢＧモード指定(メインスクリーン)
@@ -43,7 +43,7 @@ const GFL_BG_SYS_HEADER BGSysHeader2D =
   GX_BG0_AS_2D            // ＢＧ０の２Ｄ、３Ｄモード選択
 }; 
 // 3D
-const GFL_BG_SYS_HEADER BGSysHeader3D = 
+static const GFL_BG_SYS_HEADER BGSysHeader3D = 
 {
   GX_DISPMODE_GRAPHICS,   // 表示モード指定
   GX_BGMODE_0,            // ＢＧモード指定(メインスクリーン)
@@ -56,7 +56,7 @@ const GFL_BG_SYS_HEADER BGSysHeader3D =
 // ■セルアクターシステム
 //===============================================================================
 // 初期化データ
-static const GFL_CLSYS_INIT ClactSystemInitData = 
+static const GFL_CLSYS_INIT CommonClactSystemInitData = 
 {
   0, 0,   // メイン サーフェースの左上座標
   0, 512, // サブ サーフェースの左上座標
@@ -76,13 +76,13 @@ static const GFL_CLSYS_INIT ClactSystemInitData =
 //------------------------
 
 // 最大ワーク数
-static const u16 ClactUnitWorkSize[ COMMON_CLUNIT_NUM ] = 
+static const u16 CommonClactUnitWorkSize[ COMMON_CLUNIT_NUM ] = 
 {
   COMMON_CLUNIT_MAIN_OBJ_WORK_SIZE,  // index COMMON_CLUNIT_MAIN_OBJ
 };
 
 // 描画優先順位
-static const u8 ClactUnitPriority[ COMMON_CLUNIT_NUM ] = 
+static const u8 CommonClactUnitPriority[ COMMON_CLUNIT_NUM ] = 
 {
   COMMON_CLUNIT_MAIN_OBJ_PRIORITY,  // index COMMON_CLUNIT_MAIN_OBJ
 };
@@ -101,9 +101,9 @@ typedef struct
   COMMON_OBJ_RESOURCE_ID cellAnimeResID;  // セルアニメ リソース
   u16             setSurface;      // サーフェス指定
 
-} CLWK_INIT_DATA;
+} COMMON_CLWK_INIT_DATA;
 
-static const CLWK_INIT_DATA ClactWorkInitData[ COMMON_CLWK_NUM ] = 
+static const COMMON_CLWK_INIT_DATA CommonClactWorkInitData[ COMMON_CLWK_NUM ] = 
 {
   { // COMMON_CLWK_RETURN,
     CLWK_RETURN_POS_X,         // x 座標
@@ -117,4 +117,31 @@ static const CLWK_INIT_DATA ClactWorkInitData[ COMMON_CLWK_NUM ] =
     COMMON_OBJ_RESOURCE_MAIN_CELL_ANIME,      // セルアニメ リソース
     CLSYS_DEFREND_MAIN,                // サーフェス指定
   },
+};
+
+
+//==============================================================================================
+// ■タッチ領域
+//==============================================================================================
+// 初期化データ
+typedef struct
+{
+  u8 left;    // 左 (ドット単位)
+  u8 right;   // 右 (ドット単位)
+  u8 top;     // 上 (ドット単位)
+  u8 bottom;  // 下 (ドット単位)
+
+} COMMON_TOUCH_AREA_INIT_DATA;
+
+static const COMMON_TOUCH_AREA_INIT_DATA CommonTouchAreaInitData[ COMMON_TOUCH_AREA_NUM ] = 
+{
+  //「もどる」ボタン
+  {
+    TOUCH_AREA_RETURN_BUTTON_X,
+    TOUCH_AREA_RETURN_BUTTON_X + TOUCH_AREA_RETURN_BUTTON_WIDTH,
+    TOUCH_AREA_RETURN_BUTTON_Y,
+    TOUCH_AREA_RETURN_BUTTON_Y + TOUCH_AREA_RETURN_BUTTON_HEIGHT,
+  },
+  // 終端コード
+  { GFL_UI_TP_HIT_END, 0, 0, 0 }, 
 };

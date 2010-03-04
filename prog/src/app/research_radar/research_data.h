@@ -60,11 +60,29 @@ typedef struct
 //============================================================================
 // ■データ取得関数
 //============================================================================
-extern u8 RESEARCH_DATA_GetTopicID( const RESEARCH_DATA* data ); // 調査項目IDを取得する
-extern u8 RESEARCH_DATA_GetQuestionID_byIndex( const RESEARCH_DATA* data, u8 qIdx ); // 質問IDを取得する
-extern u8 RESEARCH_DATA_GetAnswerNumOfQuestion_byIndex( const RESEARCH_DATA* data, u8 qIdx ); // 回答の数を取得する
-extern u16 RESEARCH_DATA_GetTodayCountOfQuestion_byIndex( const RESEARCH_DATA* data, u8 qIdx ); // 今日の回答人数を取得する
-extern u16 RESEARCH_DATA_GetTotalCountOfQuestion_byIndex( const RESEARCH_DATA* data, u8 qIdx ); // いままでの回答人数を取得する
-extern u16 RESEARCH_DATA_GetAnswerID_byIndex( const RESEARCH_DATA* data, u8 qIdx, u8 aIdx ); // 回答IDを取得する
-extern u16 RESEARCH_DATA_GetTodayCountOfAnswer( const RESEARCH_DATA* data, u8 qIdx, u8 aIdx ); // 今日の回答人数を取得する
-extern u16 RESEARCH_DATA_GetTotalCountOfAnswer( const RESEARCH_DATA* data, u8 qIdx, u8 aIdx ); // いままでの回答人数を取得する
+// 調査項目IDを取得する
+extern u8 RESEARCH_DATA_GetTopicID( const RESEARCH_DATA* data );
+// 質問IDを取得する
+extern u8 RESEARCH_DATA_GetQuestionID_byIndex( const RESEARCH_DATA* data, u8 qIdx );
+// 回答の数を取得する
+extern u8 RESEARCH_DATA_GetAnswerNumOfQuestion_byIndex( const RESEARCH_DATA* data, u8 qIdx );
+// 今日の回答人数を取得する
+extern u16 RESEARCH_DATA_GetTodayCountOfQuestion_byIndex( const RESEARCH_DATA* data, u8 qIdx );
+// いままでの回答人数を取得する
+extern u16 RESEARCH_DATA_GetTotalCountOfQuestion_byIndex( const RESEARCH_DATA* data, u8 qIdx );
+// 回答IDを取得する
+extern u16 RESEARCH_DATA_GetAnswerID_byIndex( const RESEARCH_DATA* data, u8 qIdx, u8 aIdx );
+// 今日の回答人数を取得する
+extern u16 RESEARCH_DATA_GetTodayCountOfAnswer( const RESEARCH_DATA* data, u8 qIdx, u8 aIdx );
+// いままでの回答人数を取得する
+extern u16 RESEARCH_DATA_GetTotalCountOfAnswer( const RESEARCH_DATA* data, u8 qIdx, u8 aIdx );
+// 回答の表示カラー ( R ) を取得する
+extern u8 RESEARCH_DATA_GetColorR( const RESEARCH_DATA* data, u8 qIdx, u8 aIdx );
+// 回答の表示カラー ( G ) を取得する
+extern u8 RESEARCH_DATA_GetColorG( const RESEARCH_DATA* data, u8 qIdx, u8 aIdx );
+// 回答の表示カラー ( B ) を取得する
+extern u8 RESEARCH_DATA_GetColorB( const RESEARCH_DATA* data, u8 qIdx, u8 aIdx );
+// 質問IDのインデックスを取得する ( IDを指定 )
+extern u8 RESEARCH_DATA_GetQuestionIndex_byID( const RESEARCH_DATA* data, u8 qID );
+// 回答IDのインデックスを取得する ( IDを指定 )
+extern u8 RESEARCH_DATA_GetAnswerIndex_byID( const RESEARCH_DATA* data, u8 qID, u8 aID );

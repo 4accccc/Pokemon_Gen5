@@ -37,7 +37,6 @@ typedef enum {
 typedef enum {
   TOUCH_AREA_CHANGE_BUTTON,  //「調査内容を変更する」
   TOUCH_AREA_CHECK_BUTTON,   //「調査報告を確認する」
-  TOUCH_AREA_RETURN_BUTTON,  //「もどる」ボタン
   TOUCH_AREA_DUMMY,          // 終端コード
   TOUCH_AREA_NUM,            // 総数
 } TOUCH_AREA_INDEX;

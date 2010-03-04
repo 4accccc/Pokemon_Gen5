@@ -8,6 +8,15 @@
 ////////////////////////////////////////////////////////////////
 #pragma once
 
+//--------------
+// □タッチ範囲
+//--------------
+typedef enum {
+  COMMON_TOUCH_AREA_RETURN_BUTTON, //「もどる」ボタン
+  COMMON_TOUCH_AREA_DUMMY,         // 終端コード
+  COMMON_TOUCH_AREA_NUM,           // 総数
+} COMMON_TOUCH_AREA_INDEX;
+
 //--------
 // □OBJ
 //--------

@@ -32,6 +32,7 @@
 #define BOARDER_COLOR_R      (0) // 境界線の色(R)[0, 31]
 #define BOARDER_COLOR_B      (0) // 境界線の色(G)[0, 31]
 #define BOARDER_COLOR_G      (0) // 境界線の色(B)[0, 31]
+#define COMPONENT_POINT_RADIUS (0.42f) // 構成要素を指し示す場所を決定する円の半径
 
 #define ANALYZE_FRAMES   (120) // 解析状態の動作フレーム数
 #define APPEAR_FRAMES    (30)  // 出現状態の動作フレーム数
@@ -91,12 +92,12 @@ struct _CIRCLE_GRAPH
   BOOL        stopFlag;   // 停止フラグ
   u32         stopCount;  // 停止カウンタ
 
+  GRAPH_COMPONENT components[ MAX_COMPONENT_NUM ]; // グラフの構成要素
+  u8              componentNum;                    // 有効な構成要素の数
+
   fx32    radius;    // 円の半径
   VecFx16 centerPos; // 中心点の座標
   VecFx16 circlePoints[ CIRCLE_POINT_COUNT ]; // 外周頂点の座標 ( 中心点からのオフセット )
-
-  GRAPH_COMPONENT components[ MAX_COMPONENT_NUM ]; // 構成要素
-  u8              componentNum;                    // 有効な構成要素の数
 
   VERTEX vertices[ CIRCLE_VERTEX_COUNT ]; // 描画に使用する頂点リスト ( 三角形リスト ) 
 };
@@ -148,7 +149,6 @@ static void GraphFinish_DISAPPEAR( CIRCLE_GRAPH* graph ); // 状態終了処理 ( GRAP
 static void GraphFinish_STAY     ( CIRCLE_GRAPH* graph ); // 状態終了処理 ( GRAPH_STATE_STAY )
 static void GraphFinish_UPDATE   ( CIRCLE_GRAPH* graph ); // 状態終了処理 ( GRAPH_STATE_UPDATE )
 
-
 //-----------------------------------------------------------------------------------------
 // 個別操作
 //-----------------------------------------------------------------------------------------
@@ -175,7 +175,7 @@ static GXRgb GetComponentOuterColor( const GRAPH_COMPONENT* component ); // 構成
 static GXRgb GetComponentCenterColor( const GRAPH_COMPONENT* component ); // 構成要素の中心の色
 static BOOL GetDrawEnable( const CIRCLE_GRAPH* graph ); // 描画が許可されているかどうか
 static BOOL CheckAnime( const CIRCLE_GRAPH* graph ); // アニメーション中かどうか
-static void GetPointPos( const CIRCLE_GRAPH* graph, u8 componentID, VecFx16* dest ); // 矢印の指すべき座標
+static void GetComponentPointPos( const CIRCLE_GRAPH* graph, const GRAPH_COMPONENT* component, VecFx16* dest ); // 矢印の指すべき座標
 
 //-----------------------------------------------------------------------------------------
 // 初期化・生成・破棄・準備
@@ -304,11 +304,20 @@ void CIRCLE_GRAPH_AddComponent( CIRCLE_GRAPH* graph, const GRAPH_COMPONENT_ADD_D
 //-----------------------------------------------------------------------------------------
 void CIRCLE_GRAPH_Main( CIRCLE_GRAPH* graph )
 {
-  // 動作
-  GraphMain( graph );
+  GraphMain( graph ); 
+}
 
-  // 描画
-  if( (GetDrawEnable(graph) == TRUE) && (graph->state != GRAPH_STATE_HIDE) ) {
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 円グラフを描画する
+ *
+ * @param graph
+ */
+//-----------------------------------------------------------------------------------------
+void CIRCLE_GRAPH_Draw( const CIRCLE_GRAPH* graph )
+{
+  if( (GetDrawEnable(graph) == TRUE) && (graph->state != GRAPH_STATE_HIDE) )
+  {
     SetMatrix( graph );   // 行列を設定する
     DrawGraph( graph );   // 円グラフを描画する
     //DrawBoarder( graph ); // 境界線を描画する
@@ -406,7 +415,21 @@ void CIRCLE_GRAPH_SetCenterPos( CIRCLE_GRAPH* graph, const VecFx16* pos )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief 構成要素の値を取得する
+ * @brief 構成要素の数を取得する  
+ *
+ * @param graph
+ *
+ * @return 指定した円グラフの構成要素の数
+ */
+//-----------------------------------------------------------------------------------------
+u8 CIRCLE_GRAPH_GetComponentNum( const CIRCLE_GRAPH* graph )
+{
+  return graph->componentNum;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 構成要素の値を取得する ( 構成要素IDを指定 )
  *
  * @param graph 
  * @param componentID 構成要素ID
@@ -414,7 +437,7 @@ void CIRCLE_GRAPH_SetCenterPos( CIRCLE_GRAPH* graph, const VecFx16* pos )
  * @return 指定した構成要素の値
  */
 //-----------------------------------------------------------------------------------------
-u32 CIRCLE_GRAPH_GetComponentValue( const CIRCLE_GRAPH* graph, u8 componentID )
+u32 CIRCLE_GRAPH_GetComponentValue_byID( const CIRCLE_GRAPH* graph, u8 componentID )
 {
   const GRAPH_COMPONENT* component;
 
@@ -425,7 +448,26 @@ u32 CIRCLE_GRAPH_GetComponentValue( const CIRCLE_GRAPH* graph, u8 componentID )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief 構成要素が上位何位なのかを取得する
+ * @brief 構成要素の値を取得する ( ランクを指定 )
+ *
+ * @param graph 
+ * @param rank 構成要素のランク
+ *
+ * @return 指定した構成要素の値
+ */
+//-----------------------------------------------------------------------------------------
+u32 CIRCLE_GRAPH_GetComponentValue_byRank( const CIRCLE_GRAPH* graph, u8 rank )
+{
+  const GRAPH_COMPONENT* component;
+
+  component = GetComponentByRank( graph, rank );
+
+  return component->value;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 構成要素が上位何位なのかを取得する ( 構成要素IDを指定 )
  *
  * @param graph
  * @param componentID 構成要素ID
@@ -433,14 +475,33 @@ u32 CIRCLE_GRAPH_GetComponentValue( const CIRCLE_GRAPH* graph, u8 componentID )
  * @return 指定した構成要素が上位何位なのか
  */
 //-----------------------------------------------------------------------------------------
-u8 CIRCLE_GRAPH_GetComponentRank( const CIRCLE_GRAPH* graph, u8 componentID )
+u8 CIRCLE_GRAPH_GetComponentRank_byID( const CIRCLE_GRAPH* graph, u8 componentID )
 {
   return GetComponentRank( graph, componentID );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief 構成要素が占める, グラフ内の割合を取得する
+ * @brief 構成要素が上位何位なのかを取得する ( ランクを指定 )
+ *
+ * @param graph
+ * @param rank 構成要素のランク
+ *
+ * @return 指定したランクの構成要素のID
+ */
+//-----------------------------------------------------------------------------------------
+u8 CIRCLE_GRAPH_GetComponentID_byRank( const CIRCLE_GRAPH* graph, u8 rank )
+{
+  const GRAPH_COMPONENT* component;
+
+  component = GetComponentByRank( graph, rank );
+
+  return component->ID;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 構成要素が占める, グラフ内の割合を取得する ( 構成要素IDを指定 )
  *
  * @param graph 
  * @param componentID 構成要素ID
@@ -448,11 +509,30 @@ u8 CIRCLE_GRAPH_GetComponentRank( const CIRCLE_GRAPH* graph, u8 componentID )
  * @return 構成要素が占める, グラフ内の割合
  */
 //-----------------------------------------------------------------------------------------
-u8 CIRCLE_GRAPH_GetComponentPercentage( const CIRCLE_GRAPH* graph, u8 componentID )
+u8 CIRCLE_GRAPH_GetComponentPercentage_byID( const CIRCLE_GRAPH* graph, u8 componentID )
 {
   const GRAPH_COMPONENT* component;
 
   component = GetComponentByID( graph, componentID );
+
+  return component->percentage;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 構成要素が占める, グラフ内の割合を取得する ( ランクを指定 )
+ *
+ * @param graph 
+ * @param rank 構成要素のランク
+ *
+ * @return 構成要素が占める, グラフ内の割合
+ */
+//-----------------------------------------------------------------------------------------
+u8 CIRCLE_GRAPH_GetComponentPercentage_byRank( const CIRCLE_GRAPH* graph, u8 rank )
+{
+  const GRAPH_COMPONENT* component;
+
+  component = GetComponentByRank( graph, rank );
 
   return component->percentage;
 }
@@ -474,7 +554,7 @@ BOOL CIRCLE_GRAPH_IsAnime( const CIRCLE_GRAPH* graph )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief 矢印が指し示すべき座標を取得する
+ * @brief 矢印が指し示すべき座標を取得する ( 構成要素IDを指定 )
  *
  * @param graph
  * @param componentID 構成要素ID
@@ -482,12 +562,34 @@ BOOL CIRCLE_GRAPH_IsAnime( const CIRCLE_GRAPH* graph )
  * @param destY       スクリーンy座標の格納先
  */
 //-----------------------------------------------------------------------------------------
-void CIRCLE_GRAPH_GetComponentPointPos( const CIRCLE_GRAPH* graph, u8 componentID, int* destX, int* destY )
+void CIRCLE_GRAPH_GetComponentPointPos_byID( const CIRCLE_GRAPH* graph, u8 componentID, int* destX, int* destY )
 {
-  VecFx16 pos;
+  const GRAPH_COMPONENT* component;
+  VecFx16 worldPos;
 
-  GetPointPos( graph, componentID, &pos );
-  CalcScreenPos( &pos, destX, destY );
+  component = GetComponentByID( graph, componentID );
+  GetComponentPointPos( graph, component, &worldPos );
+  CalcScreenPos( &worldPos, destX, destY );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 矢印が指し示すべき座標を取得する ( ランクを指定 )
+ *
+ * @param graph
+ * @param rank  構成要素のランク
+ * @param destX スクリーンx座標の格納先
+ * @param destY スクリーンy座標の格納先
+ */
+//-----------------------------------------------------------------------------------------
+void CIRCLE_GRAPH_GetComponentPointPos_byRank( const CIRCLE_GRAPH* graph, u8 rank, int* destX, int* destY )
+{
+  const GRAPH_COMPONENT* component;
+  VecFx16 worldPos;
+
+  component = GetComponentByRank( graph, rank );
+  GetComponentPointPos( graph, component, &worldPos );
+  CalcScreenPos( &worldPos, destX, destY );
 }
 
 
@@ -1399,9 +1501,9 @@ static void SetCenterPos( CIRCLE_GRAPH* graph, const VecFx16* pos )
  * @brief 構成要素のランクを取得する
  *
  * @param graph
- * @param componentID    構成要素ID
+ * @param componentID 構成要素ID
  *
- * @return 指定したIDの構成要素が上位何位なのか 
+ * @return 指定したIDの構成要素が上位何位なのか [0, 要素数-1]
  */
 //-----------------------------------------------------------------------------------------
 const u8 GetComponentRank( const CIRCLE_GRAPH* graph, u8 componentID )
@@ -1566,28 +1668,36 @@ static GXRgb GetComponentCenterColor( const GRAPH_COMPONENT* component )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief 矢印が指すべき座標を取得する
+ * @brief 指定した構成要素について, 矢印が指すべき座標を取得する
  * 
  * @param graph
- * @param componentID 構成要素ID
- * @param dest        計算した座標の格納先
+ * @param component 構成要素
+ * @param dest      計算した座標の格納先
  */
 //-----------------------------------------------------------------------------------------
-static void GetPointPos( const CIRCLE_GRAPH* graph, u8 componentID, VecFx16* dest )
+static void GetComponentPointPos( const CIRCLE_GRAPH* graph, const GRAPH_COMPONENT* component, VecFx16* dest )
 {
-  const GRAPH_COMPONENT* component;
   u8 headIdx, tailIdx, centerIdx;
+  VecFx16 outerPos, vecToOuterPos;
+  float vx, vy, vz;
+  float cx, cy, cz;
 
-  // 構成要素に該当する外周頂点のインデックスを取得
-  component = GetComponentByID( graph, componentID );
-  GetComponentCirclePointIndex( component, &headIdx, &tailIdx );
-
-  // 外周頂点の中間地点にある頂点インデックスを算出
-  centerIdx = ( headIdx + tailIdx ) / 2;
+  // 対象となる外周点の座標を取得
+  GetComponentCirclePointIndex( component, &headIdx, &tailIdx ); // 構成要素の両端の外周頂点のインデックスを取得
+  centerIdx = (headIdx + tailIdx) / 2; // 外周両頂点の中間地点にある頂点インデックスを算出
+  outerPos = graph->circlePoints[ centerIdx ];
 
   // 指し示す座標を決定
-  *dest = graph->circlePoints[ centerIdx ];
-  VEC_Fx16Add( &(graph->centerPos), dest, dest );
+  VEC_Fx16Normalize( &outerPos, &vecToOuterPos ); // 中心点→外周点 方向ベクトル ( 単位ベクトル )
+  vx = FX_FX16_TO_F32(vecToOuterPos.x) * COMPONENT_POINT_RADIUS; // 中心点から外周点方向ベクトル
+  vy = FX_FX16_TO_F32(vecToOuterPos.y) * COMPONENT_POINT_RADIUS; // 
+  vz = FX_FX16_TO_F32(vecToOuterPos.z) * COMPONENT_POINT_RADIUS; // 
+  cx = FX_FX16_TO_F32(graph->centerPos.x); // 中心点の位置ベクトル
+  cy = FX_FX16_TO_F32(graph->centerPos.y); //
+  cz = FX_FX16_TO_F32(graph->centerPos.z); //
+  dest->x = FX16_CONST(cx + vx);
+  dest->y = FX16_CONST(cy + vy);
+  dest->z = FX16_CONST(cz + vz);
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1818,24 +1928,22 @@ static void SetupCirclePoints( CIRCLE_GRAPH* graph )
 /**
  * @breif スクリーン座標を求める
  *
- * @param pos   変換するワールド座標
- * @param destX 求めたスクリーンx座標の格納先
- * @param destY 求めたスクリーンy座標の格納先Y
+ * @param worldPos 変換するワールド座標
+ * @param destX    求めたスクリーンx座標の格納先
+ * @param destY    求めたスクリーンy座標の格納先Y
  */
 //-----------------------------------------------------------------------------------------
-static void CalcScreenPos( const VecFx16* pos, int* destX, int* destY )
+static void CalcScreenPos( const VecFx16* worldPos, int* destX, int* destY )
 {
   VecFx32 posFx32;
   int ret;
 
   // ベクトルを変換
-  posFx32.x = FX32_CONST( FX_FX16_TO_F32(pos->x) );
-  posFx32.y = FX32_CONST( FX_FX16_TO_F32(pos->y) );
-  posFx32.z = FX32_CONST( FX_FX16_TO_F32(pos->z) );
+  posFx32.x = FX32_CONST( FX_FX16_TO_F32(worldPos->x) );
+  posFx32.y = FX32_CONST( FX_FX16_TO_F32(worldPos->y) );
+  posFx32.z = FX32_CONST( FX_FX16_TO_F32(worldPos->z) );
 
   ret = NNS_G3dWorldPosToScrPos( &posFx32, destX, destY );
-
-  OS_Printf( "------------------------%d\n", ret );
 }
 
 

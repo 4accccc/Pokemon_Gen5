@@ -9,6 +9,7 @@
 #include <gflib.h>
 #include "bg_font.h"
 #include "research_common.h"
+#include "research_common_def.h"
 #include "print/printsys.h"  // for PRINTSYS_xxxx
 
 

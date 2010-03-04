@@ -292,6 +292,14 @@
 #define SCROLL_CONTROL_BOTTOM   (160)  // 底辺 y 座標
 #define SCROLL_CONTROL_STEP_NUM (TOPIC_ID_NUM)  // 移動範囲の分割数
 
+// スクロール
+#define MIN_SCROLL_VALUE (-24) // 最小スクロール値
+#define MAX_SCROLL_VALUE (48)  // 最大スクロール値
+#define SCROLL_CURSOR_TOP_MARGIN    (24)
+#define SCROLL_CURSOR_BOTTOM_MARGIN (24) 
+#define MIN_SCROLL_CURSOR_POS (MIN_SCROLL_VALUE + SCROLL_CURSOR_TOP_MARGIN)
+#define MAX_SCROLL_CURSOR_POS (MAX_SCROLL_VALUE + 192 - SCROLL_CURSOR_BOTTOM_MARGIN)
+
 // 調査項目選択アイコン
 #define SELECT_ICON_DRAW_OFFSET_X (0)  // 調査項目ボタン左上x座標からのオフセット
 #define SELECT_ICON_DRAW_OFFSET_Y (10) // 調査項目ボタン左上y座標からのオフセット

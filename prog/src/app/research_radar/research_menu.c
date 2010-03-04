@@ -14,6 +14,7 @@
 #include "research_menu_def.h"
 #include "research_menu_data.cdat"
 #include "research_common.h"
+#include "research_common_data.cdat"
 
 #include "system/main.h"            // for HEAPID_xxxx
 #include "system/gfl_use.h"         // for GFUser_xxxx
@@ -336,10 +337,23 @@ static void Main_SETUP( RESEARCH_MENU_WORK* work )
 static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
 {
   int trg;
-  int touchedAreaIdx;
+  int touch;
+  int commonTouch;
 
-  trg            = GFL_UI_KEY_GetTrg();
-  touchedAreaIdx = GFL_UI_TP_HitTrg( work->touchHitTable );
+  trg   = GFL_UI_KEY_GetTrg();
+  touch = GFL_UI_TP_HitTrg( work->touchHitTable );
+  commonTouch = GFL_UI_TP_HitTrg( RESEARCH_COMMON_GetHitTable(work->commonWork) );
+
+  //-----------------
+  //「もどる」ボタン
+  if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );               // キャンセル音
+    SetResult( work, RESEARCH_MENU_RESULT_EXIT ); // 画面終了結果を決定
+    SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
+    SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
+    FinishCurrentSequence( work );
+    return;
+  }
 
   //--------------------
   // 十字キー or A or B
@@ -355,7 +369,7 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
 
   //-------------------------------------
   //「調査内容を変更する」ボタンをタッチ
-  if( touchedAreaIdx == TOUCH_AREA_CHANGE_BUTTON ) {
+  if( touch == TOUCH_AREA_CHANGE_BUTTON ) {
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                    // 決定音
     SetResult( work, RESEARCH_MENU_RESULT_TO_SELECT ); // 画面終了結果を決定
     SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
@@ -365,21 +379,10 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
   }
   //-------------------------------------
   //「調査報告を確認する」ボタンをタッチ
-  if( touchedAreaIdx == TOUCH_AREA_CHECK_BUTTON ) {
+  if( touch == TOUCH_AREA_CHECK_BUTTON ) {
     MoveCursorDown( work );
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                    // 決定音
     SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK );  // 画面終了結果を決定
-    SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
-    SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
-    FinishCurrentSequence( work );
-    return;
-  }
-
-  //-----------------
-  //「もどる」ボタン
-  if( touchedAreaIdx == TOUCH_AREA_RETURN_BUTTON ) {
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );               // キャンセル音
-    SetResult( work, RESEARCH_MENU_RESULT_EXIT ); // 画面終了結果を決定
     SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
     SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
@@ -403,10 +406,23 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
 static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
 {
   int trg;
-  int touchedAreaIdx;
+  int touch;
+  int commonTouch;
 
   trg            = GFL_UI_KEY_GetTrg();
-  touchedAreaIdx = GFL_UI_TP_HitTrg( work->touchHitTable );
+  touch = GFL_UI_TP_HitTrg( work->touchHitTable );
+  commonTouch = GFL_UI_TP_HitTrg( RESEARCH_COMMON_GetHitTable(work->commonWork) );
+
+  //-----------------
+  //「もどる」ボタン
+  if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );               // キャンセル音
+    SetResult( work, RESEARCH_MENU_RESULT_EXIT ); // 画面終了結果を決定
+    SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
+    SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
+    FinishCurrentSequence( work );
+    return;
+  }
 
   //--------
   // 上 キー
@@ -423,7 +439,7 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
   //----------------------------
   //「調査内容を変更する」ボタン
   if( ( (trg & PAD_BUTTON_A) && (work->cursorPos == MENU_ITEM_CHANGE_RESEARCH) ) ||
-      ( touchedAreaIdx == TOUCH_AREA_CHANGE_BUTTON ) ) {
+      ( touch == TOUCH_AREA_CHANGE_BUTTON ) ) {
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                    // 決定音
     SetResult( work, RESEARCH_MENU_RESULT_TO_SELECT ); // 画面終了結果を決定
     SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
@@ -434,20 +450,9 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
   //----------------------------
   //「調査報告を確認する」ボタン
   if( ( (trg & PAD_BUTTON_A) && (work->cursorPos == MENU_ITEM_CHECK_RESEARCH) ) ||
-      ( touchedAreaIdx == TOUCH_AREA_CHECK_BUTTON ) ) {
+      ( touch == TOUCH_AREA_CHECK_BUTTON ) ) {
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                   // 決定音
     SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK ); // 画面終了結果を決定
-    SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
-    SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
-    FinishCurrentSequence( work );
-    return;
-  }
-
-  //-----------------
-  //「もどる」ボタン
-  if( touchedAreaIdx == TOUCH_AREA_RETURN_BUTTON ) {
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );               // キャンセル音
-    SetResult( work, RESEARCH_MENU_RESULT_EXIT ); // 画面終了結果を決定
     SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
     SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
@@ -465,11 +470,25 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
     return;
   }
 
-  //------------------
-  // L ボタン (DEBUG)
+  // TEST:
   if( trg & PAD_BUTTON_L ) {
     DEBUG_GAMEBEACON_Set_NewEntry();
   }
+
+  // TEST:
+#if 0
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) {
+    static u32 frame = 0;
+    static u16 color1[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+    static u16 color2[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+    u8 evy = (frame / 10) % 16;
+    frame++;
+    OS_Printf( "%d\n", evy );
+    SoftFade( color1, color2, 16, evy, 0xffff );
+    DC_FlushRange( color2, sizeof(u16)*16 );
+    GX_LoadBGPltt( color2, MAIN_BG_PALETTE_WINDOW_ON * ONE_PALETTE_SIZE, ONE_PALETTE_SIZE );
+  }
+#endif
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1727,9 +1746,11 @@ static void RegisterMainObjResources( RESEARCH_MENU_WORK* work )
                                       NARC_research_radar_graphic_obj_NCGR, 
                                       FALSE, CLSYS_DRAW_MAIN, heapID ); 
 
-  palette = GFL_CLGRP_PLTT_Register( arcHandle, 
-                                     NARC_research_radar_graphic_obj_NCLR,
-                                     CLSYS_DRAW_MAIN, 0, heapID );
+  palette = GFL_CLGRP_PLTT_RegisterEx( arcHandle, 
+                                       NARC_research_radar_graphic_obj_NCLR,
+                                       CLSYS_DRAW_MAIN, 
+                                       ONE_PALETTE_SIZE*4, 0, 2, 
+                                       heapID );
 
   cellAnime = GFL_CLGRP_CELLANIM_Register( arcHandle,
                                            NARC_research_radar_graphic_obj_NCER,

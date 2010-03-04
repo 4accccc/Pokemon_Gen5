@@ -15,7 +15,9 @@ typedef enum {
   RESEARCH_CHECK_SEQ_STANDBY,   // 最初のキー入力待ち
   RESEARCH_CHECK_SEQ_KEY_WAIT,  // キー入力待ち
   RESEARCH_CHECK_SEQ_ANALYZE,   // 解析
-  RESEARCH_CHECK_SEQ_FLASH,     // 画面フラッシュシーケンス
+  RESEARCH_CHECK_SEQ_PERCENTAGE,// ％表示
+  RESEARCH_CHECK_SEQ_FLASH_OUT, // 画面フラッシュ ( アウト )
+  RESEARCH_CHECK_SEQ_FLASH_IN,  // 画面フラッシュ ( イン )
   RESEARCH_CHECK_SEQ_UPDATE,    // 更新
   RESEARCH_CHECK_SEQ_FADE_OUT,  // フェードアウト
   RESEARCH_CHECK_SEQ_CLEAN_UP,  // 後片付け
@@ -36,7 +38,11 @@ typedef enum {
   TOUCH_AREA_CONTROL_CURSOR_L,// 左カーソル
   TOUCH_AREA_CONTROL_CURSOR_R,// 右カーソル
   TOUCH_AREA_QUESTION,        // 質問
-  TOUCH_AREA_RETURN_BUTTON,   //「もどる」ボタン
+  TOUCH_AREA_ANSWER,          // 回答
+  TOUCH_AREA_MY_ANSWER,       // 自分の回答
+  TOUCH_AREA_COUNT,           // 回答人数
+  TOUCH_AREA_GRAPH,           // 円グラフ
+  TOUCH_AREA_ANALYZE_BUTTON,  //「ほうこくをみる」ボタン
   TOUCH_AREA_DUMMY,           // 終端コード
   TOUCH_AREA_NUM,             // 総数
 } TOUCH_AREA_INDEX;
@@ -82,22 +88,25 @@ typedef enum {
 
 // セルアクターユニット
 typedef enum {
-  CLUNIT_SUB_OBJ,  // SUB-OBJ
-  CLUNIT_MAIN_OBJ, // MAIN-OBJ
-  CLUNIT_BMPOAM,   // BMP-OAM アクターで使用
-  CLUNIT_NUM,      // 総数
+  CLUNIT_SUB_OBJ,    // SUB-OBJ
+  CLUNIT_MAIN_OBJ,   // MAIN-OBJ
+  CLUNIT_BMPOAM,     // BMP-OAM アクターで使用
+  CLUNIT_PERCENTAGE, // 数値の表示に使用
+  CLUNIT_NUM,        // 総数
 } CLUNIT_INDEX;
 
 // セルアクターワーク
 typedef enum {
-  CLWK_CONTROL_CURSOR_L, // 左カーソル
-  CLWK_CONTROL_CURSOR_R, // 右カーソル
-  CLWK_MY_ANSWER_ICON,   // 自分の回答アイコン
-  CLWK_NUM,              // 総数
+  CLWK_CONTROL_CURSOR_L,         // 左カーソル
+  CLWK_CONTROL_CURSOR_R,         // 右カーソル
+  CLWK_MY_ANSWER_ICON_ON_BUTTON, // 自分の回答アイコン ( ボタン上 )
+  CLWK_MY_ANSWER_ICON_ON_GRAPH,  // 自分の回答アイコン ( グラフ上 )
+  CLWK_NUM,                      // 総数
 } CLWK_INDEX; 
 
 // BMP-OAM
 typedef enum {
-  BMPOAM_ACTOR_ANALYZING,  //「…かいせきちゅう…」
-  BMPOAM_ACTOR_NUM,        // 総数
+  BMPOAM_ACTOR_ANALYZING,      //「…かいせきちゅう…」
+  BMPOAM_ACTOR_ANALYZE_BUTTON, //「ほうこくをみる」ボタン
+  BMPOAM_ACTOR_NUM,            // 総数
 } BMPOAM_ACTOR_INDEX;

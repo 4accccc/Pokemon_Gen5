@@ -1824,7 +1824,8 @@ SRCS_OVERLAY_RESEARCH_RADAR = app/research_radar/research_main.c \
                               app/research_radar/bg_font.c \
                               app/research_radar/circle_graph.c \
                               app/research_radar/arrow.c \
-                              app/research_radar/research_data.c
+                              app/research_radar/research_data.c \
+                              app/research_radar/percentage.c
 
 # ‘˜Aƒrƒ‹
 #===> SRCS_OVERLAY_UI_COMMON

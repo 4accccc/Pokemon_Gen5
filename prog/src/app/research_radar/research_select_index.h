@@ -41,7 +41,6 @@ typedef enum {
 
 // タッチ範囲 ( 調査項目リスト )
 typedef enum {
-  TOPIC_TOUCH_AREA_RETURN_BUTTON, //「もどる」ボタン
   TOPIC_TOUCH_AREA_TOPIC_0,       // 調査項目0
   TOPIC_TOUCH_AREA_TOPIC_1,       // 調査項目1
   TOPIC_TOUCH_AREA_TOPIC_2,       // 調査項目2

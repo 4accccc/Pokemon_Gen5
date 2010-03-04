@@ -14,7 +14,7 @@
 // ■定数
 //=====================================================================================
 #define PRINT_TARGET   (2)  // デバッグ情報の出力先
-#define MAX_CELL_NUM   (40) // 最大セル数
+#define MAX_CELL_NUM   (26) // 最大セル数
 #define ANIME_SPEED    (18.0f) // アニメーション再生速度
 #define ANIME_FRAMES   (36) // アニメーションフレーム数
 #define STRETCH_FRAMES (ANIME_FRAMES/ANIME_SPEED) // 伸長アニメのフレーム数
@@ -112,7 +112,7 @@ static void DeleteClactWorks( ARROW* arrow ); // セルアクターワーク 破棄
 //-------------------------------------------------------------------------------------
 // デバッグ
 //-------------------------------------------------------------------------------------
-static void DebugPrint( const ARROW* arrow );
+static void DebugPrint_cell( const ARROW* arrow ); // セルを出力する
 
 
 
@@ -170,7 +170,7 @@ void ARROW_Delete( ARROW* arrow )
 void ARROW_Setup( ARROW* arrow, int startX, int startY, int endX, int endY ) 
 {
   SetupCellAct( arrow, startX, startY, endX, endY );
-  DebugPrint( arrow );
+  DebugPrint_cell( arrow );
 }
 
 //-------------------------------------------------------------------------------------
@@ -712,15 +712,19 @@ static void SetDispParams( ARROW* arrow, const ARROW_DISP_PARAM* param )
 }
 
 //-------------------------------------------------------------------------------------
-// ■パラメータを出力する
+/**
+ * @brief セルを出力する
+ *
+ * @param arrow
+ */
 //-------------------------------------------------------------------------------------
-static void DebugPrint( const ARROW* arrow )
+static void DebugPrint_cell( const ARROW* arrow )
 {
   int i;
 
   for( i=0; i<arrow->cellNum; i++ )
   {
-    OS_TFPrintf( PRINT_TARGET, "[%d]: x=%3d, y=%3d, f=%3d\n", 
+    OS_TFPrintf( PRINT_TARGET, "ARROW: cell[%d]: x=%3d, y=%3d, f=%3d\n", 
         i, arrow->cell[i].left, arrow->cell[i].top, arrow->cell[i].bootFrame );
   }
 }

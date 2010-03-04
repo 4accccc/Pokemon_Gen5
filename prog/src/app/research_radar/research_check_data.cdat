@@ -18,6 +18,7 @@
 #include "obj_NANR_LBLDEFS.h"               // for NANR_obj_xxxx
 #include "arc/message.naix"                 // for NARC_message_xxxx
 #include "arc/research_radar_graphic.naix"  // for NARC_research_radar_xxxx
+#include "arc/app_menu_common.naix"         // for NARC_app_menu_common_xxxx
 #include "msg/msg_research_radar.h"         // for str_xxxx
 #include "msg/msg_questionnaire.h"          // for str_xxxx
 
@@ -236,20 +237,20 @@ typedef struct
 static const BG_FONT_INIT_DATA BGFontInitData[ BG_FONT_NUM ] = 
 {
   { // 上画面 タイトル
-    SUB_BG_FONT,             // 対象BGフレーム
-    TITLE_X,                 // x座標 (キャラクター単位)
-    TITLE_Y,                 // x座標 (キャラクター単位)
-    TITLE_WIDTH,             // xサイズ (キャラクター単位)
-    TITLE_HEIGHT,            // yサイズ (キャラクター単位)
-    TITLE_STRING_OFFSET_X,   // 書き込み先x座標 (ドット単位)
-    TITLE_STRING_OFFSET_Y,   // 書き込み先y座標 (ドット単位)
-    SUB_BG_PALETTE_FONT,     // 使用パレット番号
-    TITLE_STRING_COLOR_L,    // 文字のカラー番号
-    TITLE_STRING_COLOR_S,    // 影のカラー番号
-    TITLE_STRING_COLOR_B,    // 背景のカラー番号
-    MESSAGE_STATIC,          // 参照するメッセージデータ
-    str_select_title,        // 使用する文字列
-    FALSE,                   // 自力センタリングの有無
+    SUB_BG_FONT,                    // 対象BGフレーム
+    BGFONT_TITLE_X,                 // x座標 (キャラクター単位)
+    BGFONT_TITLE_Y,                 // x座標 (キャラクター単位)
+    BGFONT_TITLE_WIDTH,             // xサイズ (キャラクター単位)
+    BGFONT_TITLE_HEIGHT,            // yサイズ (キャラクター単位)
+    BGFONT_TITLE_STRING_OFFSET_X,   // 書き込み先x座標 (ドット単位)
+    BGFONT_TITLE_STRING_OFFSET_Y,   // 書き込み先y座標 (ドット単位)
+    SUB_BG_PALETTE_FONT,            // 使用パレット番号
+    BGFONT_TITLE_STRING_COLOR_L,    // 文字のカラー番号
+    BGFONT_TITLE_STRING_COLOR_S,    // 影のカラー番号
+    BGFONT_TITLE_STRING_COLOR_B,    // 背景のカラー番号
+    MESSAGE_STATIC,                 // 参照するメッセージデータ
+    str_select_title,               // 使用する文字列
+    FALSE,                          // 自力センタリングの有無
   },
   { // 上画面 調査項目の補足文
     SUB_BG_FONT,                    // 対象BGフレーム
@@ -411,17 +412,19 @@ static const GFL_CLSYS_INIT ClactSystemInitData =
 // 最大ワーク数
 static const u16 ClactUnitWorkSize[ CLUNIT_NUM ] = 
 {
-  CLUNIT_SUB_OBJ_WORK_SIZE,   // index CLUNIT_SUB_OBJ
-  CLUNIT_MAIN_OBJ_WORK_SIZE,  // index CLUNIT_MAIN_OBJ
-  CLUNIT_BMPOAM_WORK_SIZE,    // index CLUNIT_BMPOAM
+  CLUNIT_SUB_OBJ_WORK_SIZE,     // index CLUNIT_SUB_OBJ
+  CLUNIT_MAIN_OBJ_WORK_SIZE,    // index CLUNIT_MAIN_OBJ
+  CLUNIT_BMPOAM_WORK_SIZE,      // index CLUNIT_BMPOAM
+  CLUNIT_PERCENTAGE_WORK_SIZE,  // index CLUNIT_PERCENTAGE
 };
 
 // 描画優先順位
 static const u8 ClactUnitPriority[ CLUNIT_NUM ] = 
 {
-  CLUNIT_SUB_OBJ_PRIORITY,   // index CLUNIT_SUB_OBJ
-  CLUNIT_MAIN_OBJ_PRIORITY,  // index CLUNIT_MAIN_OBJ
-  CLUNIT_BMPOAM_PRIORITY,    // index CLUNIT_BMPOAM
+  CLUNIT_SUB_OBJ_PRIORITY,     // index CLUNIT_SUB_OBJ
+  CLUNIT_MAIN_OBJ_PRIORITY,    // index CLUNIT_MAIN_OBJ
+  CLUNIT_BMPOAM_PRIORITY,      // index CLUNIT_BMPOAM
+  CLUNIT_PERCENTAGE_PRIORITY,  // index CLUNIT_PERCENTAGE
 };
 
 //-----------------------
@@ -470,12 +473,24 @@ static const CLWK_INIT_DATA ClactWorkInitData[ CLWK_NUM ] =
     OBJ_RESOURCE_MAIN_CELL_ANIME,       // セルアニメ リソース
     CLSYS_DEFREND_MAIN,                 // サーフェス指定
   },
-  { // 自分の回答アイコン
-    CLWK_MY_ANSWER_ICON_POS_X,          // x 座標
-    CLWK_MY_ANSWER_ICON_POS_Y,          // y 座標
-    CLWK_MY_ANSWER_ICON_ANIME_SEQ,      // アニメーションシーケンス
-    CLWK_MY_ANSWER_ICON_SOFT_PRIORITY,  // ソフト優先順位
-    CLWK_MY_ANSWER_ICON_BG_PRIORITY,    // BG 優先順位
+  { // 自分の回答アイコン ( ボタン上 )
+    CLWK_MY_ANSWER_ICON_ON_BUTTON_POS_X,          // x 座標
+    CLWK_MY_ANSWER_ICON_ON_BUTTON_POS_Y,          // y 座標
+    CLWK_MY_ANSWER_ICON_ON_BUTTON_ANIME_SEQ,      // アニメーションシーケンス
+    CLWK_MY_ANSWER_ICON_ON_BUTTON_SOFT_PRIORITY,  // ソフト優先順位
+    CLWK_MY_ANSWER_ICON_ON_BUTTON_BG_PRIORITY,    // BG 優先順位
+    CLUNIT_MAIN_OBJ,                    // 所属ユニット
+    OBJ_RESOURCE_MAIN_CHARACTER,        // キャラクタ リソース
+    OBJ_RESOURCE_MAIN_PALETTE,          // パレット リソース
+    OBJ_RESOURCE_MAIN_CELL_ANIME,       // セルアニメ リソース
+    CLSYS_DEFREND_MAIN,                 // サーフェス指定
+  },
+  { // 自分の回答アイコン ( グラフ上 )
+    CLWK_MY_ANSWER_ICON_ON_GRAPH_POS_X,          // x 座標
+    CLWK_MY_ANSWER_ICON_ON_GRAPH_POS_Y,          // y 座標
+    CLWK_MY_ANSWER_ICON_ON_GRAPH_ANIME_SEQ,      // アニメーションシーケンス
+    CLWK_MY_ANSWER_ICON_ON_GRAPH_SOFT_PRIORITY,  // ソフト優先順位
+    CLWK_MY_ANSWER_ICON_ON_GRAPH_BG_PRIORITY,    // BG 優先順位
     CLUNIT_MAIN_OBJ,                    // 所属ユニット
     OBJ_RESOURCE_MAIN_CHARACTER,        // キャラクタ リソース
     OBJ_RESOURCE_MAIN_PALETTE,          // パレット リソース
@@ -504,7 +519,7 @@ typedef struct
 
 static const BMPOAM_ACTOR_INIT_DATA BmpOamActorInitData[ BMPOAM_ACTOR_NUM ] = 
 {
-  { //「…げんざいちょうさちゅう…」
+  { //「…かいせきちゅう…」
     BMPOAM_ACTOR_ANALYZING_POS_X,          // 左上x座標
     BMPOAM_ACTOR_ANALYZING_POS_Y,          // 左上y座標
     OBJ_RESOURCE_MAIN_PALETTE,             // 適用するパレットリソースID
@@ -513,6 +528,16 @@ static const BMPOAM_ACTOR_INIT_DATA BmpOamActorInitData[ BMPOAM_ACTOR_NUM ] =
     BMPOAM_ACTOR_ANALYZING_BG_PRIORITY,    // BG 優先順位
     CLSYS_DEFREND_MAIN,                    // サーフェス指定
     CLSYS_DRAW_MAIN,                       // 描画タイプ
+  },
+  { //「ほうこうくをみる」
+    BMPOAM_ACTOR_ANALYZE_BUTTON_POS_X,          // 左上x座標
+    BMPOAM_ACTOR_ANALYZE_BUTTON_POS_Y,          // 左上y座標
+    OBJ_RESOURCE_MAIN_PALETTE,                  // 適用するパレットリソースID
+    BMPOAM_ACTOR_ANALYZE_BUTTON_PALETTE_OFFSET, // パレットオフセット
+    BMPOAM_ACTOR_ANALYZE_BUTTON_SOFT_PRIORITY,  // ソフト優先順位
+    BMPOAM_ACTOR_ANALYZE_BUTTON_BG_PRIORITY,    // BG 優先順位
+    CLSYS_DEFREND_MAIN,                         // サーフェス指定
+    CLSYS_DRAW_MAIN,                            // 描画タイプ
   },
 };
 
@@ -534,6 +559,7 @@ typedef struct
   u8            colorNo_B;         // 背景のカラー番号
   ARCID         charaDataArcID;    // 背景のキャラクタデータ参照アーカイブID
   ARCDATID      charaDataArcDatID; // 背景のキャラクタデータ参照アーカイブ内データインデックス
+  BOOL          defaultSetupFlag;  // デフォルトのセットアップ処理を適用するかどうか
 
 } BITMAP_INIT_DATA;
 
@@ -552,6 +578,22 @@ static const BITMAP_INIT_DATA BitmapInitData[ BMPOAM_ACTOR_NUM ] =
     BMPOAM_ACTOR_ANALYZING_STRING_COLOR_B, // 背景のカラー番号
     ARCID_RESEARCH_RADAR_GRAPHIC,
     NARC_research_radar_graphic_obj_win2_NCGR,
+    TRUE,
+  },
+  { //「ほうこくをみる」
+    BMPOAM_ACTOR_ANALYZE_BUTTON_CHARA_SIZE_X,   // x サイズ ( キャラ単位 )
+    BMPOAM_ACTOR_ANALYZE_BUTTON_CHARA_SIZE_Y,   // y サイズ ( キャラ単位 )
+    GFL_BMP_16_COLOR,                           // カラーモード
+    MESSAGE_STATIC,                             // 参照するメッセージデータ
+    str_check_analyze_button,                   // 書き込むメッセージID
+    BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_OFFSET_X,// 書き込み先 x 座標 ( ドット単位 )
+    BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_OFFSET_Y,// 書き込み先 y 座標 ( ドット単位 )
+    BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_COLOR_L, // 文字のカラー番号
+    BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_COLOR_S, // 影のカラー番号
+    BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_COLOR_B, // 背景のカラー番号
+    ARCID_APP_MENU_COMMON,
+    NARC_app_menu_common_task_menu_NCGR,
+    FALSE,
   },
 }; 
 
@@ -575,17 +617,45 @@ static const TOUCH_AREA_INIT_DATA TouchAreaInitData[ TOUCH_AREA_NUM ] =
   { 0, 0, 0, 0 }, // 右カーソル
   // 質問
   {
-    TOUCH_AREA_QUESTION_X,
-    TOUCH_AREA_QUESTION_X + TOUCH_AREA_QUESTION_WIDTH,
-    TOUCH_AREA_QUESTION_Y,
-    TOUCH_AREA_QUESTION_Y + TOUCH_AREA_QUESTION_HEIGHT,
+    TOUCH_AREA_QUESTION_LEFT,   // 左 (ドット単位)
+    TOUCH_AREA_QUESTION_RIGHT,  // 右 (ドット単位)
+    TOUCH_AREA_QUESTION_TOP,    // 上 (ドット単位)
+    TOUCH_AREA_QUESTION_BOTTOM, // 下 (ドット単位)
   },
-  //「もどる」ボタン
+  // 回答
   {
-    TOUCH_AREA_RETURN_BUTTON_X,
-    TOUCH_AREA_RETURN_BUTTON_X + TOUCH_AREA_RETURN_BUTTON_WIDTH,
-    TOUCH_AREA_RETURN_BUTTON_Y,
-    TOUCH_AREA_RETURN_BUTTON_Y + TOUCH_AREA_RETURN_BUTTON_HEIGHT,
+    TOUCH_AREA_ANSWER_LEFT,   // 左 (ドット単位)
+    TOUCH_AREA_ANSWER_RIGHT,  // 右 (ドット単位)
+    TOUCH_AREA_ANSWER_TOP,    // 上 (ドット単位)
+    TOUCH_AREA_ANSWER_BOTTOM, // 下 (ドット単位)
+  },
+  // 自分の回答
+  {
+    TOUCH_AREA_MY_ANSWER_LEFT,   // 左 (ドット単位)
+    TOUCH_AREA_MY_ANSWER_RIGHT,  // 右 (ドット単位)
+    TOUCH_AREA_MY_ANSWER_TOP,    // 上 (ドット単位)
+    TOUCH_AREA_MY_ANSWER_BOTTOM, // 下 (ドット単位)
+  },
+  // 回答人数
+  {
+    TOUCH_AREA_COUNT_LEFT,  // 左 (ドット単位)
+    TOUCH_AREA_COUNT_RIGHT, // 右 (ドット単位)
+    TOUCH_AREA_COUNT_TOP,   // 上 (ドット単位)
+    TOUCH_AREA_COUNT_BOTTOM,// 下 (ドット単位)
+  },
+  // 円グラフ
+  {
+    TOUCH_AREA_GRAPH_LEFT,   // 左 (ドット単位)
+    TOUCH_AREA_GRAPH_RIGHT,  // 右 (ドット単位)
+    TOUCH_AREA_GRAPH_TOP,    // 上 (ドット単位)
+    TOUCH_AREA_GRAPH_BOTTOM, // 下 (ドット単位)
+  },
+  //「ほうこくをみる」ボタン
+  {
+    TOUCH_AREA_ANALYZE_BUTTON_LEFT,   // 左 (ドット単位)
+    TOUCH_AREA_ANALYZE_BUTTON_RIGHT,  // 右 (ドット単位)
+    TOUCH_AREA_ANALYZE_BUTTON_TOP,    // 上 (ドット単位)
+    TOUCH_AREA_ANALYZE_BUTTON_BOTTOM, // 下 (ドット単位)
   },
   { GFL_UI_TP_HIT_END, 0, 0, 0 }, // 終端コード
 };

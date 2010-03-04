@@ -55,7 +55,9 @@ GRAPHIC_DATA = $(GRAPHIC_BIN)/bgd.NCLR \
 							 $(GRAPHIC_BIN)/obj_win.NCGR \
 							 $(GRAPHIC_BIN)/obj_window2.NCGR \
 							 $(GRAPHIC_BIN)/obj_window3.NCGR \
-							 $(GRAPHIC_BIN)/obj_win2.NCGR
+							 $(GRAPHIC_BIN)/obj_win2.NCGR \
+							 $(GRAPHIC_BIN)/obj_win3.NCGR
+
 
 
 
@@ -96,6 +98,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g2dcvtr $(GRAPHIC_SOURCE)/obj_window2.ncg -bg -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/obj_window3.ncg -bg -o/$(GRAPHIC_BIN)
 	g2dcvtr $(GRAPHIC_SOURCE)/obj_win2.ncg -bg -o/$(GRAPHIC_BIN)
+	g2dcvtr $(GRAPHIC_SOURCE)/obj_win3.ncg -bg -o/$(GRAPHIC_BIN)
 endif
 
 # ヘッダのコピーだけ実行する

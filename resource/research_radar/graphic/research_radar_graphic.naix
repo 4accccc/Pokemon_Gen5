@@ -32,7 +32,8 @@ enum {
 	NARC_research_radar_graphic_obj_win_NCGR = 18,
 	NARC_research_radar_graphic_obj_window2_NCGR = 19,
 	NARC_research_radar_graphic_obj_window3_NCGR = 20,
-	NARC_research_radar_graphic_obj_win2_NCGR = 21
+	NARC_research_radar_graphic_obj_win2_NCGR = 21,
+	NARC_research_radar_graphic_obj_win3_NCGR = 22
 };
 
 /* NARC_RESEARCH_RADAR_GRAPHIC_NAIX_ */

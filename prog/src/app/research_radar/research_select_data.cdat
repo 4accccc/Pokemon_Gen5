@@ -18,6 +18,7 @@
 #include "obj_NANR_LBLDEFS.h"               // for NANR_obj_xxxx
 #include "arc/message.naix"                 // for NARC_message_xxxx
 #include "arc/research_radar_graphic.naix"  // for NARC_research_radar_xxxx
+#include "arc/app_menu_common.naix"         // for NARC_app_menu_common_xxxx
 #include "msg/msg_research_radar.h"         // for str_xxxx
 #include "msg/msg_questionnaire.h"          // for str_xxxx
 
@@ -615,6 +616,7 @@ typedef struct
   u8            colorNo_B;         // 背景のカラー番号
   ARCID         charaDataArcID;    // 背景のキャラクタデータ参照アーカイブID
   ARCDATID      charaDataArcDatID; // 背景のキャラクタデータ参照アーカイブ内データインデックス
+  BOOL          defaultSetupFlag;  // デフォルトのセットアップ処理を適用するかどうか
 
 } BITMAP_INIT_DATA;
 
@@ -631,8 +633,9 @@ static const BITMAP_INIT_DATA BitmapInitData[ BMPOAM_ACTOR_NUM ] =
     BMPOAM_ACTOR_CONFIRM_STRING_COLOR_L, // 文字のカラー番号
     BMPOAM_ACTOR_CONFIRM_STRING_COLOR_S, // 影のカラー番号
     BMPOAM_ACTOR_CONFIRM_STRING_COLOR_B, // 背景のカラー番号
-    ARCID_RESEARCH_RADAR_GRAPHIC,
+    ARCID_RESEARCH_RADAR_GRAPHIC,             
     NARC_research_radar_graphic_obj_win_NCGR,
+    TRUE, 
   },
   { //「けってい」
     BMPOAM_ACTOR_OK_CHARA_SIZE_X,   // x サイズ ( キャラ単位 )
@@ -645,8 +648,9 @@ static const BITMAP_INIT_DATA BitmapInitData[ BMPOAM_ACTOR_NUM ] =
     BMPOAM_ACTOR_OK_STRING_COLOR_L, // 文字のカラー番号
     BMPOAM_ACTOR_OK_STRING_COLOR_S, // 影のカラー番号
     BMPOAM_ACTOR_OK_STRING_COLOR_B, // 背景のカラー番号
-    ARCID_RESEARCH_RADAR_GRAPHIC,
-    NARC_research_radar_graphic_obj_window2_NCGR,
+    ARCID_APP_MENU_COMMON,
+    NARC_app_menu_common_task_menu_NCGR,
+    FALSE, 
   },
   { //「やめる」
     BMPOAM_ACTOR_CANCEL_CHARA_SIZE_X,   // x サイズ ( キャラ単位 )
@@ -659,8 +663,9 @@ static const BITMAP_INIT_DATA BitmapInitData[ BMPOAM_ACTOR_NUM ] =
     BMPOAM_ACTOR_CANCEL_STRING_COLOR_L, // 文字のカラー番号
     BMPOAM_ACTOR_CANCEL_STRING_COLOR_S, // 影のカラー番号
     BMPOAM_ACTOR_CANCEL_STRING_COLOR_B, // 背景のカラー番号
-    ARCID_RESEARCH_RADAR_GRAPHIC,
-    NARC_research_radar_graphic_obj_window3_NCGR,
+    ARCID_APP_MENU_COMMON,
+    NARC_app_menu_common_task_menu_NCGR,
+    FALSE, 
   },
   { //「ちょうさを　かいしします！」
     BMPOAM_ACTOR_DETERMINE_CHARA_SIZE_X,   // x サイズ ( キャラ単位 )
@@ -675,8 +680,13 @@ static const BITMAP_INIT_DATA BitmapInitData[ BMPOAM_ACTOR_NUM ] =
     BMPOAM_ACTOR_DETERMINE_STRING_COLOR_B, // 背景のカラー番号
     ARCID_RESEARCH_RADAR_GRAPHIC,
     NARC_research_radar_graphic_obj_win2_NCGR,
+    TRUE, 
   },
 };
+
+//------------
+// □共通素材
+//------------
 
 
 //==============================================================================================
@@ -714,13 +724,6 @@ static const TOUCH_AREA_INIT_DATA MenuTouchAreaInitData[ MENU_TOUCH_AREA_NUM ] =
 
 static const TOUCH_AREA_INIT_DATA TopicTouchAreaInitData[ TOPIC_TOUCH_AREA_NUM ] = 
 {
-  //「もどる」ボタン
-  {
-    TOUCH_AREA_RETURN_BUTTON_X,
-    TOUCH_AREA_RETURN_BUTTON_X + TOUCH_AREA_RETURN_BUTTON_WIDTH,
-    TOUCH_AREA_RETURN_BUTTON_Y,
-    TOUCH_AREA_RETURN_BUTTON_Y + TOUCH_AREA_RETURN_BUTTON_HEIGHT,
-  },
   { 0, 0, 0, 0 }, // 調査項目0
   { 0, 0, 0, 0 }, // 調査項目1
   { 0, 0, 0, 0 }, // 調査項目2

@@ -8,6 +8,8 @@
 ///////////////////////////////////////////////////////////////////////////////// 
 #include "app/research_radar.h"
 #include "research_common.h"
+#include "research_common_def.h"
+#include "research_common_data.cdat"
 #include "research_test.h"
 #include "research_menu.h"
 #include "research_select.h"
@@ -17,9 +19,6 @@
 #include "arc/arc_def.h"                    // for ARCID_xxxx
 #include "arc/research_radar_graphic.naix"  // for NARC_xxxx
 
-
-// TEST:
-#include "arrow.h"
 
 
 //===============================================================================
@@ -231,7 +230,6 @@ static GFL_PROC_RESULT ResearchRadarProcInit( GFL_PROC* proc, int* seq, void* pr
   // 全画面共通ワークの準備
   case PROC_INIT_SEQ_SETUP_COMMON_WORK:
     work->commonWork = RESEARCH_COMMON_CreateWork( work->heapID, work->gameSystem );
-    RESEARCH_COMMON_SetupCommonOBJ( work->commonWork );
     (*seq)++;
     break;
 
@@ -265,7 +263,6 @@ static GFL_PROC_RESULT ResearchRadarProcEnd( GFL_PROC* proc, int* seq, void* prm
   {
   // 全画面共通ワークの後片付け
   case PROC_END_SEQ_CLEAN_UP_COMMON_WORK:
-    RESEARCH_COMMON_CleanUpCommonOBJ( work->commonWork );
     RESEARCH_COMMON_DeleteWork( work->commonWork );
     (*seq)++;
   break;
