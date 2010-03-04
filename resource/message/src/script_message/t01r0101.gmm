@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-04T11:08:36"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T13:12:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="220"/>
+		<comment position="4" width="260"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="116" right="2001" bottom="744" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,56 +294,94 @@
 
 	<row id="msg_t01r0101_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてmsg_t01r0101_white_01</comment>
+・続けてwhite_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『おばさん　さわがしくして
-ほんとうに　すみませんでした！▼
-それでは　しつれいします[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『おばさん　騒がしくして
-本当に　すみませんでした！▼
-それでは　失礼します[BE:01:ページ切り替え（クリア）]</language>
+ほんとうに　すみませんでした！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『おばさん　さわがしくして
+ほんとうに　すみませんでした！▼</language>
 	</row>
 
 	<row id="msg_t01r0101_white_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
-・メッセージ表示後、友達♂、友達♀退場
-・続けて主人公ママ、主人公に隣接して
-　msg_t01r0101_mama_01表示</comment>
+・続けてmama_01a</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『おじゃま　しましたあ
-あとで　おかたづけに　きますね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『おじゃま　しましたあ
-あとで　おかたづけに　来ますね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ベル『あ　あのー
+おかたづけ……▼</language>
+		<language name="JPN_KANJI" width="256">ベル『あ　あのー
+おかたづけ……▼</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_01a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・続けてblack_02</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『かたづけ？▼
+いいの　いいの！
+あとで　あたしが　やっておくから▼
+それよりも　アララギはかせが
+まっているんじゃないの？▼</language>
+		<language name="JPN_KANJI" width="256">ママ『かたづけ？▼
+いいの　いいの！
+あとで　あたしが　やっておくから▼
+それよりも　アララギはかせが
+まっているんじゃないの？▼</language>
+	</row>
+
+	<row id="msg_t01r0101_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてwhite_02</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『はい！▼
+じゃあ　アララギはかせに
+おれいを　いいに　いかないと▼
+ポケモンけんきゅうじょの
+まえで　まってるよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『はい！▼
+じゃあ　アララギはかせに
+おれいを　いいに　いかないと▼
+ポケモンけんきゅうじょの
+まえで　まってるよ▼</language>
+	</row>
+
+	<row id="msg_t01r0101_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・メッセージ表示後、友達♂、友達♀退場
+・続けて主人公ママ
+　主人公に隣接してmama_01表示</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『あっ
+あたし　いちど　いえにもどるね▼</language>
+		<language name="JPN_KANJI" width="256">ベル『あっ
+あたし　一度　家にもどるね▼</language>
 	</row>
 
 	<row id="msg_t01r0101_mama_01">
-		<comment>♀</comment>
+		<comment>♀
+・続けてmama_02</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ママ『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
-ものすごーく　にぎやかだったけど
-なにが　あったの？[BE:01:ページ切り替え（クリア）]
-……　……　……
-……　……　……[BE:01:ページ切り替え（クリア）]</language>
+ポケモンしょうぶって
+ものすごーく　にぎやか　なのね！▼
+したまで　ポケモンの
+なきごえとか　きこえてきたわよ！▼</language>
 		<language name="JPN_KANJI" width="256">ママ『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
-ものすごーく　にぎやかだったけど
-なにが　あったの？[BE:01:ページ切り替え（クリア）]
-……　……　……
-……　……　……[BE:01:ページ切り替え（クリア）]</language>
+ポケモンしょうぶって
+ものすごーく　にぎやか　なのね！▼
+したまで　ポケモンの
+なきごえとか　きこえてきたわよ！▼</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_02" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0101_mama_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>♀
-・ハートマーク表示とか
-　感情表現の演出（仮案）</comment>
+・別方向を向いてメッセージ表示
+・続けてmama_03
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
-		<language name="JPN" width="256">そう！　アララギはかせから
-ポケモンを　もらって[BE:00:ページ切り替え（行送り）]
-みんなで　しょうぶを　していたのね！[BE:00:ページ切り替え（行送り）]
-すごーい！　よかったじゃない！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">そう！　アララギ博士から
-ポケモンを　もらって[BE:00:ページ切り替え（行送り）]
-みんなで　勝負を　していたのね！[BE:00:ページ切り替え（行送り）]
-すごーい！　よかったじゃない！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">いいなー！
+みんなと　ポケモンしょうぶ▼</language>
+		<language name="JPN_KANJI" width="256">いいなー！
+みんなと　ポケモンしょうぶ▼</language>
 	</row>
 
 	<row id="msg_t01r0101_mama_03">
@@ -359,7 +397,7 @@
 休ませて　あげないと！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0101_mama_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・テレビトランシーバー入手処理</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
@@ -379,13 +417,15 @@
 ちゃんと　登録されたままよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_04_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0101_mama_04_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ポケモン図鑑入手まで繰り返し</comment>
-		<language name="JPN" width="256">じゃ　いってらっしゃい！
-アララギはかせに　よろしくね！</language>
-		<language name="JPN_KANJI" width="256">じゃ　いってらっしゃい！
-アララギ博士に　よろしくね！</language>
+		<language name="JPN" width="256">あなたも　はかせに
+おれいを　いわないとね！▽
+じゃ　いってらっしゃい！</language>
+		<language name="JPN_KANJI" width="256">あなたも　博士に
+お礼を　いわないとね！▽
+じゃ　いってらっしゃい！</language>
 	</row>
 
 	<row id="msg_t01r0101_mama_05" back-color=",,,#ffff80,,,,,,,,,,,,,,,">

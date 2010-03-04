@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T15:23:18"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T12:40:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -297,13 +297,13 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2
 太ったおばさん</attribute>
-		<language name="JPN" width="256">こちらの　ようちえんの
+		<language name="JPN" width="256">こちらの　ほいくえんの
 いいところ！　それはね！▼
 おとなりの　そだてやさんで
 ポケモンが　そだつ　すがたを　みて▽
 えんじの　みんなが　こころゆたかに▽
 そだつと　ひょうばん　なのよ！</language>
-		<language name="JPN_KANJI" width="256">こちらの　幼稚園の
+		<language name="JPN_KANJI" width="256">こちらの　保育園の
 いいところ！　それはね！▼
 おとなりの　育て屋さんで
 ポケモンが　育つ　姿を　みて▼
@@ -378,6 +378,34 @@
 まてまてぁーっ！！</language>
 		<language name="JPN_KANJI" width="256">ぎゃおー！！
 まてまてぁーっ！！</language>
+	</row>
+
+	<row id="msg_r03r0101_woman3a_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・GRIDX=4、GRIDZ=9
+・HP/PP満タン時</comment>
+		<attribute name="キャラ指定">WOMAN3
+エプロン女性</attribute>
+		<language name="JPN" width="256">あなたの　ポケモン
+とても　げんき　なのね！！</language>
+		<language name="JPN_KANJI" width="256">あなたの　ポケモン
+とても　元気なのね！！</language>
+	</row>
+
+	<row id="msg_r03r0101_woman3a_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・HP/PP満タンでない時
+　続けて画面暗転して回復処理</comment>
+		<attribute name="キャラ指定">WOMAN3
+エプロン女性</attribute>
+		<language name="JPN" width="256">あら……？
+あなたの　ポケモン……▼
+ちょっと　げんきが　ないみたい
+ここで　やすんで　いきなさいよ！▼</language>
+		<language name="JPN_KANJI" width="256">あら……？
+あなたの　ポケモン……▼
+ちょっと　元気が　ないみたい
+ここで　休んで　いきなさいよ！▼</language>
 	</row>
 
 	<flowchart-group-list>

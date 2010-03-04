@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-26T15:09:52"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T12:59:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="234"/>
+		<comment position="4" width="325"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="130">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="283" right="1995" bottom="911" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="190" right="2012" bottom="818" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -322,24 +322,22 @@ TVトランシーバー</attribute>
 	<row id="msg_r02_mama_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：主人公ママ
 ・主人公に隣接してこのメッセージ表示
-0＝プレイヤー名</comment>
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">やっと　おいついた[BE:01:ページ切り替え（クリア）]
 「おそらく　いまごろは
 　サンヨウシティに　むかってます」って[BE:00:ページ切り替え（行送り）]
 アララギはかせに　きいてね[BE:01:ページ切り替え（クリア）]
-で　ママ
-がんばる　あなたに[BE:00:ページ切り替え（行送り）]
-なにも　してあげていないなって……[BE:01:ページ切り替え（クリア）]
+で　ママから
+また　プレゼント！[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！
 これを　はいて　いきなさい[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">やっと　追いついた[BE:01:ページ切り替え（クリア）]
 「おそらく　今ごろは
 　サンヨウシティに　むかってます」って[BE:00:ページ切り替え（行送り）]
 アララギ博士に　聞いてね[BE:01:ページ切り替え（クリア）]
-で　ママ
-がんばる　あなたに[BE:00:ページ切り替え（行送り）]
-なにも　してあげていないなって……[BE:01:ページ切り替え（クリア）]
+で　ママから
+また　プレゼント！[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！
 これを　履いて　いきなさい[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -349,7 +347,7 @@ TVトランシーバー</attribute>
 ・アイテムNo???
 　「ランニングシューズ」追加
 ・ダッシュ機能追加
-0＝プレイヤー名</comment>
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 [FF:00:色:1]ランニングシューズ[FF:00:色:0]を　もらった！[BE:01:ページ切り替え（クリア）]</language>
@@ -359,7 +357,7 @@ TVトランシーバー</attribute>
 
 	<row id="msg_r02_mama_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：主人公ママ
-0＝プレイヤー名</comment>
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ランニングシューズ はいていれば
 どこにいくのも あっ というま　よ![BE:01:ページ切り替え（クリア）]
@@ -370,7 +368,8 @@ TVトランシーバー</attribute>
  はやく はしれるように なります![BE:01:ページ切り替え（クリア）]
  ランニングシューズを はいて
  おもいっきり はしりまくろう!」[BE:01:ページ切り替え（クリア）]
-ですって[BE:01:ページ切り替え（クリア）]</language>
+ですって[BE:01:ページ切り替え（クリア）]
+</language>
 		<language name="JPN_KANJI" width="256">ランニングシューズを 履いていれば
 どこに行くのも あっ というま　よ![BE:01:ページ切り替え（クリア）]
 では　取り扱い説明書を
@@ -384,9 +383,9 @@ TVトランシーバー</attribute>
 	</row>
 
 	<row id="msg_r02_mama_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>仮メッセージ
-メッセージ表示後、T02方面へ移動
-画面外に消えると、操作可能に</comment>
+		<comment>♀：主人公ママ
+・メッセージ表示後、T02方面へ移動
+　画面外に消えると、操作可能に</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
 あなたは　ひとりじゃないの[BE:00:ページ切り替え（行送り）]
@@ -404,6 +403,53 @@ TVトランシーバー</attribute>
 それに　ママだって　いつも
 あなたのことを　想っているから[BE:01:ページ切り替え（クリア）]
 じゃあね　がんばってね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r02_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・pos起動（GRIDX=784~789、GRIDZ=613）
+・メッセージ表示後、主人公に！マーク表示
+ 続けて主人公を下向きにしてからサポート登場</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『おおい！　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『おおい！　[1:00:トレーナー名:0]！▼</language>
+	</row>
+
+	<row id="msg_r02_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・主人公に隣接してメッセージ表示
+・表示後、戦闘に</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『ねえねえ！
+ポケモンしょうぶ　しようよ！▼
+あたらしく　つかまえた　ポケモンも
+すこしは　つよくなったし！▼
+じゃ　はじめるよ！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『ねえねえ！
+ポケモンしょうぶ　しようよ！▼
+あたらしく　つかまえた　ポケモンも
+すこしは　つよくなったし！▼
+じゃ　はじめるよ！▼</language>
+	</row>
+
+	<row id="msg_r02_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・戦闘からフィールドに復帰してメッセージ表示
+・表示後、画面下に移動
+　画面外に消えると主人公、操作可能に</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『ふわあ▼
+やっぱり　つよいんだね！
+[1:00:トレーナー名:0]▼
+あたしも　まけないように
+ポケモンを　そだてるね！▽
+じゃあ　バイバーイ！！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『ふわあ▼
+やっぱり　つよいんだね！
+[1:00:トレーナー名:0]▼
+あたしも　まけないように
+ポケモンを　そだてるね！▽
+じゃあ　バイバーイ！！▼</language>
 	</row>
 
 	<row id="msg_r02_boy2a_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
