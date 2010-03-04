@@ -758,7 +758,7 @@ static void _debug_bsubDataMain(DEBUG_OHNO_CONTROL * pDOC)
   BATTLE_EXAMINATION_SAVEDATA* pDG;
 
   
-  pDOC->aInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
+  pDOC->aInit.NetDevID = WB_NET_BATTLE_EXAMINATION;   // //通信種類
   pDOC->aInit.datasize = sizeof(BATTLE_EXAMINATION_SAVEDATA);   //データ全体サイズ
   pDOC->aInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.datasize);     // データ
   pDOC->aInit.ConfusionID = 12;
@@ -844,6 +844,19 @@ static void _fushigiDataRecv(DEBUG_OHNO_CONTROL * pDOC)
 
   pDOC->aInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
   pDOC->aInit.datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
+  pDOC->aInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.datasize);     // データ
+  pDOC->aInit.ConfusionID = 12;
+  pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
+
+}
+
+//受信のために領域確保
+static void _traialDataRecv(DEBUG_OHNO_CONTROL * pDOC)
+{
+  DOWNLOAD_GIFT_DATA* pDG;
+
+  pDOC->aInit.NetDevID = WB_NET_BATTLE_EXAMINATION;   // //通信種類
+  pDOC->aInit.datasize = sizeof(BATTLE_EXAMINATION_SAVEDATA);   //データ全体サイズ
   pDOC->aInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.datasize);     // データ
   pDOC->aInit.ConfusionID = 12;
   pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
