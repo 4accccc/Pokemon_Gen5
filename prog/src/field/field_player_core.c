@@ -759,7 +759,15 @@ void FIELD_PLAYER_CORE_ChangeFormRequest( FIELD_PLAYER_CORE *player_core, PLAYER
 BOOL FIELD_PLAYER_CORE_ChangeFormWait( FIELD_PLAYER_CORE *player_core )
 {
   MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
-  return MMDL_CheckEndAcmd( mmdl );
+  BOOL result1, result2;
+  result1 = FIELD_PLAYER_CORE_CheckDrawFormWait( player_core );
+  result2 = MMDL_CheckEndAcmd( mmdl );
+
+  // 見た目の更新と、アクションコマンドの終了を待つ
+  if( (result1 == TRUE) && (result2 == result1) ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------
