@@ -107,7 +107,7 @@ typedef struct
 typedef struct
 { 
   int seq_no;
-  int position;
+  int index;
   int wait;
 }BTLV_MCSS_STOP_ANIME;
 
@@ -414,7 +414,7 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
 
   BTLV_MCSS_SetDefaultScale( bmw, position );
 
-  MCSS_SetAnimCtrlCallBack( bmw->btlv_mcss[ index ].mcss, position, BTLV_MCSS_CallBackFunctorFrame, 1 );
+  MCSS_SetAnimCtrlCallBack( bmw->btlv_mcss[ index ].mcss, index, BTLV_MCSS_CallBackFunctorFrame, 1 );
 }
 
 //============================================================================================
@@ -1740,13 +1740,13 @@ static  void  TCB_BTLV_MCSS_StopAnime( GFL_TCB *tcb, void *work )
 { 
   BTLV_MCSS_WORK *bmw = BTLV_EFFECT_GetMcssWork();
   BTLV_MCSS_STOP_ANIME* bmsa = ( BTLV_MCSS_STOP_ANIME* )work;
-  int index = BTLV_MCSS_GetIndex( bmw, bmsa->position );
+  int index = bmsa->index;
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
 
   switch( bmsa->seq_no ){ 
   case 0:
     NNS_G2dStopAnimCtrl( NNS_G2dGetMCAnimAnimCtrl( MCSS_GetAnimCtrl( bmw->btlv_mcss[ index ].mcss ) ) );
-    MCSS_SetTraverseMCNodesCallBack( bmw->btlv_mcss[ index ].mcss, ANIME_STOP_FLAG | bmsa->position, BTLV_MCSS_CallBackNodes );
+    MCSS_SetTraverseMCNodesCallBack( bmw->btlv_mcss[ index ].mcss, ANIME_STOP_FLAG | index, BTLV_MCSS_CallBackNodes );
     bmsa->seq_no++;
     bmsa->wait = BTLV_MCSS_STOP_ANIME_TIME;
     break;
@@ -1757,12 +1757,12 @@ static  void  TCB_BTLV_MCSS_StopAnime( GFL_TCB *tcb, void *work )
     { 
       MCSS_SetAnimeIndex( bmw->btlv_mcss[ index ].mcss, SEQ_ANIME_STANDBY );
       NNS_G2dStartAnimCtrl( NNS_G2dGetMCAnimAnimCtrl( MCSS_GetAnimCtrl( bmw->btlv_mcss[ index ].mcss ) ) );
-      MCSS_SetTraverseMCNodesCallBack( bmw->btlv_mcss[ index ].mcss, ANIME_START_FLAG | bmsa->position, BTLV_MCSS_CallBackNodes );
+      MCSS_SetTraverseMCNodesCallBack( bmw->btlv_mcss[ index ].mcss, ANIME_START_FLAG | index, BTLV_MCSS_CallBackNodes );
       bmsa->seq_no++;
     }
     break;
   case 2:
-    MCSS_SetAnimCtrlCallBack( bmw->btlv_mcss[ index ].mcss, bmsa->position, BTLV_MCSS_CallBackFunctorFrame, 1 );
+    MCSS_SetAnimCtrlCallBack( bmw->btlv_mcss[ index ].mcss, index, BTLV_MCSS_CallBackFunctorFrame, 1 );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
     bmw->btlv_mcss[ index ].tcb = NULL;
@@ -1862,7 +1862,7 @@ static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
 {
   BTLV_MCSS_WORK *bmw = BTLV_EFFECT_GetMcssWork();
   BTLV_MCSS_STOP_ANIME* bmsa;
-  int index = BTLV_MCSS_GetIndex( bmw, data );
+  int index = data;
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
 
   if( BTLV_EFFVM_GetExecuteEffectType( BTLV_EFFECT_GetVMHandle() ) == EXECUTE_EFF_TYPE_WAZA )
@@ -1881,7 +1881,7 @@ static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
   }
 
   bmsa = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bmw->heapID ), sizeof( BTLV_MCSS_STOP_ANIME ) );
-  bmsa->position = data;
+  bmsa->index = data;
 
   if( MCSS_GetMCellAnmNum( bmw->btlv_mcss[ index ].mcss ) > 1 )
   { 
@@ -1901,8 +1901,7 @@ static  BOOL  BTLV_MCSS_CallBackNodes( u32 data, const NNSG2dMultiCellHierarchyD
                                        NNSG2dCellAnimation* pCellAnim, u16 nodeIdx )
 { 
   BTLV_MCSS_WORK *bmw = BTLV_EFFECT_GetMcssWork();
-  int position = data & 0x0000ffff;
-  int index = BTLV_MCSS_GetIndex( bmw, position );
+  int index = data & 0x0000ffff;
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
 
   if( data & ANIME_STOP_FLAG )
@@ -2141,7 +2140,7 @@ void  BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, 
 
   BTLV_MCSS_SetDefaultScale( bmw, position );
 
-  MCSS_SetAnimCtrlCallBack( bmw->btlv_mcss[ index ].mcss, position, BTLV_MCSS_CallBackFunctorFrame, 1 );
+  MCSS_SetAnimCtrlCallBack( bmw->btlv_mcss[ index ].mcss, index, BTLV_MCSS_CallBackFunctorFrame, 1 );
 }
 
 //============================================================================================
