@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00131" date="2010-03-03T17:51:40"/>
+	<create user="nakamura_akira" host="W00131" date="2010-03-04T17:56:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -622,6 +622,200 @@ msg_sys_gpower_use00～02が
 はいしんちゅう　です！</language>
 		<language name="JPN_KANJI" width="256">現在　不思議な贈り物を
 配信中　です！</language>
+	</row>
+
+	<row id="msg_beacon_028" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの
+[1:02:ポケモンニックネーム:2]の　こうげきが
+きゅうしょに　あたりました！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの
+[1:02:ポケモンニックネーム:2]の　攻撃が
+急所に　あたりました！</language>
+	</row>
+
+	<row id="msg_beacon_029" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの
+[1:02:ポケモンニックネーム:2]が　こうげきを
+きゅうしょに　うけました！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの
+[1:02:ポケモンニックネーム:2]が　攻撃を
+急所に　うけました！</language>
+	</row>
+
+	<row id="msg_beacon_030" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんは
+せんとうから　にげだしました！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんは
+戦闘から　逃げ出しました！</language>
+	</row>
+
+	<row id="msg_beacon_031" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの
+[1:02:ポケモンニックネーム:2]の　ＨＰが
+のこりすくない　じょうたいです！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの
+[1:02:ポケモンニックネーム:2]の　ＨＰが
+残り少ない　状態です！</language>
+	</row>
+
+	<row id="msg_beacon_032" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの
+[1:02:ポケモンニックネーム:2]の　ＰＰが
+のこりすくない　じょうたいです！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの
+[1:02:ポケモンニックネーム:2]の　ＰＰが
+残り少ない　状態です！</language>
+	</row>
+
+	<row id="msg_beacon_033" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの
+[1:02:ポケモンニックネーム:2]が
+ひんしの　じょうたいです！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの
+[1:02:ポケモンニックネーム:2]が
+ひんしの　状態です！</language>
+	</row>
+
+	<row id="msg_beacon_034" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの
+[1:02:ポケモンニックネーム:2]が
+じょうたいいじょうです！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの
+[1:02:ポケモンニックネーム:2]が
+状態異常です！</language>
+	</row>
+
+	<row id="msg_beacon_035" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>1：消費アイテム限定</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
+[1:09:どうぐ名:1]を
+つかいました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
+[1:09:どうぐ名:1]を
+使いました</language>
+	</row>
+
+	<row id="msg_beacon_036" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>1：フィールド技限定</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
+[1:07:わざ名:1]を
+つかいました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
+[1:07:わざ名:1]を
+つかいました</language>
+	</row>
+
+	<row id="msg_beacon_037" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんは
+タマゴを　うけとりました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんは
+タマゴを　受け取りました</language>
+	</row>
+
+	<row id="msg_beacon_038" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの　タマゴから
+[1:01:ポケモン種族名:1]が　うまれました！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの　タマゴから
+[1:01:ポケモン種族名:1]が　生まれました！</language>
+	</row>
+
+	<row id="msg_beacon_039" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんは
+かいものちゅうです</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんは
+買い物中です</language>
+	</row>
+
+	<row id="msg_beacon_040" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんは
+バトルサブウェイに
+ちょうせんちゅうです</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんは
+バトルサブウェイに
+挑戦中です</language>
+	</row>
+
+	<row id="msg_beacon_041" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>1：連勝数</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんは
+バトルサブウェイで
+[2:00:１桁:1]れんしょうちゅうです！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんは
+バトルサブウェイで
+[2:00:１桁:1]連勝中です！</language>
+	</row>
+
+	<row id="msg_beacon_042" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>1：50、100、1000勝ごとに</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんは
+バトルサブウェイで
+[2:03:４桁:1]しょうを　たっせいしました！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんは
+バトルサブウェイで
+[2:03:４桁:1]勝を　達成しました！</language>
+	</row>
+
+	<row id="msg_beacon_043" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんは
+トライアルハウスに
+ちょうせんちゅうです</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんは
+トライアルハウスに
+挑戦中です</language>
+	</row>
+
+	<row id="msg_beacon_044" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>1：トライアルハウスのランク名</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんは
+トライアルハウスで
+[1:23:コンテストランク:1]に　にんていされました！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんは
+トライアルハウスで
+[1:23:コンテストランク:1]に　認定されました！</language>
+	</row>
+
+	<row id="msg_beacon_045" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんは
+かんらんしゃに　のりました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんは
+観覧車に　乗りました</language>
+	</row>
+
+	<row id="msg_beacon_046" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんは
+ポケシフターに　はいりました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんは
+ポケシフターに　入りました</language>
+	</row>
+
+	<row id="msg_beacon_047" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの
+[1:02:ポケモンニックネーム:2]は　ミュージカルに
+ちょうせんちゅうです</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの
+[1:02:ポケモンニックネーム:2]は　ミュージカルに
+挑戦中です</language>
+	</row>
+
+	<row id="msg_beacon_048" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>0：トレーナー名
+1：Gパワー名</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんは　うけとった
+[1:11:特殊状態名:1]を
+つかいました！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんは　受け取った
+[1:11:特殊状態名:1]を
+使いました！</language>
+	</row>
+
+	<row id="msg_beacon_049" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>1：フリーワード入力の一言を表示</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
+『[1:1C:簡易会話単語:1]』と
+はつげんしました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
+『[1:1C:簡易会話単語:1]』と
+発言しました</language>
 	</row>
 
 	<flowchart-group-list>
