@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-02T16:41:44"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T13:27:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="287" right="1995" bottom="915" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -334,10 +334,10 @@
 探しにきた　とか？</language>
 	</row>
 
-	<row id="msg_c01r0501_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0501_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・はい選択時
-・続けてblack_05</comment>
+・続けてblack_10</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ジムリーダーと
 すれちがったのかな？▼</language>
@@ -345,10 +345,10 @@
 すれちがったのかな？▼</language>
 	</row>
 
-	<row id="msg_c01r0501_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0501_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・いいえ選択時
-・続けてblack_05</comment>
+・続けてblack_10</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">きみも　べんきょう　なんだね▼
 そういう　いみで　いうなら
@@ -362,17 +362,81 @@
 すごく　勉強に　なるよ▼</language>
 	</row>
 
+	<row id="msg_c01r0501_black_10" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・再度はい/いいえの選択肢表示
+　はい→black_13
+　いいえ→black_12</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ところでさ　[1:00:トレーナー名:0]
+ぼくと　しょうぶ　しないか？▼
+しょうぶのとき　どれだけ
+どうぐが　だいじか　ためしたいんだ</language>
+		<language name="JPN_KANJI" width="256">ところでさ　[1:00:トレーナー名:0]
+ぼくと　勝負　しないか？▼
+勝負のとき　どれだけ
+道具が　重要か　試したいんだ</language>
+	</row>
+
+	<row id="msg_c01r0501_black_11" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・再度はい/いいえの選択肢表示
+　はい→black_13
+　いいえ→black_12</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]
+ぼくと　しょうぶ　しないか？▼
+しょうぶのとき　どれだけ
+どうぐが　だいじか　ためしたいんだ</language>
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]
+ぼくと　勝負　しないか？▼
+勝負のとき　どれだけ
+道具が　重要か　試したいんだ</language>
+	</row>
+
+	<row id="msg_c01r0501_black_12" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・いいえ選択
+・再度会話したときはblack_11から</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">そう？　ぜひとも
+どうぐを　ためしたいから▽
+きみの　じゅんびが　できるまで▽
+ここで　またせてもらうよ</language>
+		<language name="JPN_KANJI" width="256">そう？　ぜひとも
+道具を　試したいから▽
+きみの　準備が　できるまで▽
+ここで　待たせてもらうよ</language>
+	</row>
+
+	<row id="msg_c01r0501_black_13" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・はい選択
+・表示後、トレーナー戦闘に</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『さて　どうぐの　こうか
+どれほどのものか　たしかめよう！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『さて　道具の　効果
+どれほどのものか　確かめよう！▼</language>
+	</row>
+
 	<row id="msg_c01r0501_black_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
+・戦闘後、フィールドに復帰してメッセージ方y時
 ・アイテム入手処理
 　No155「オレンのみ」
 ・入手後、続けてblack_06表示
-・0＝主人公名
-※仮メッセージ</comment>
+・0＝主人公名</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">そうだ　[1:00:トレーナー名:0]
+		<language name="JPN" width="256">チェレン『ありがとう！▼
+どうぐを　つかいこなすのは
+だいじだ！　ってことが　わかったよ▼
+そうだ　[1:00:トレーナー名:0]
 この　きのみを　あげるよ▼</language>
-		<language name="JPN_KANJI" width="256">そうだ　[1:00:トレーナー名:0]
+		<language name="JPN_KANJI" width="256">チェレン『ありがとう！▼
+道具を　つかいこなすのは
+重要だ！　ってことが　わかったよ▼
+そうだ　[1:00:トレーナー名:0]
 この　きのみを　あげるよ▼</language>
 	</row>
 
