@@ -482,7 +482,7 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
  	  die;
   }
 
- 	read READ_NMC, $data, 64; 
+ 	read READ_NMC, $data, 64 * $multi_cell_anms; 
   ($label) = unpack "a7", $data;
 
   $non_stop = 0;
@@ -492,18 +492,59 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
   }
 
   $node_cnt = @node;
+
+ 	read READ_NMC, $header, BLOCK_TYPE + BLOCK_SIZE; 
+ 	($block_type, $block_size) = unpack "a4 L", $header;
+
+	if( $block_type ne "CMNT" ){
+    print "NitroCharacterのnmcファイルではありません\n";
+ 	  die;
+  }
+
+  #ブロックサイズ分読み飛ばし
+	read READ_NMC, $header, $block_size - 8;
+
+ 	read READ_NMC, $header, BLOCK_TYPE + BLOCK_SIZE; 
+ 	($block_type, $block_size) = unpack "a4 L", $header;
+
+	if( $block_type ne "CCMT" ){
+    print "NitroCharacterのnmcファイルではありません\n";
+ 	  die;
+  }
+
+  #ブロックサイズ分読み飛ばし
+	read READ_NMC, $header, $block_size - 8;
+
+ 	read READ_NMC, $header, 16; 
+ 	($block_type, $block_size, $multi_cell_anms, $cmt_size) = unpack "a4 L L L", $header;
+
+	if( $block_type ne "ECMT" ){
+    print "NitroCharacterのnmcファイルではありません\n";
+ 	  die;
+  }
+
+	read READ_NMC, $data, $cmt_size;
+  ($cmt) = unpack "a3", $data;
   
+  $write_work =  0;
+  if( $cmt eq "fly" ){
+    $write_work =  0x00000100;
+  }
+
   if( $non_stop == 1 ){
-		$write = pack "L", 0x000000ff;
+    $write_work |= 0x000000ff;
+    print $write_work;
+		$write = pack "L", $write_work;
 	  print WRITE_NCE $write;
   }
   elsif( $node_cnt == 0 ){
-		$write = pack "L", 0;
+		$write = pack "L", $write_work;
 	  print WRITE_NCE $write;
   }
   else{
-    $padding = 3 - $node_cnt;
-		$write = pack "C", $node_cnt;
+    $padding = 4 - ( 2 + $node_cnt ) % 4;
+    $write_data |= $node_cnt;
+		$write = pack "S", $write_data;
 	  print WRITE_NCE $write;
     for( $i = 0 ; $i < $node_cnt ; $i++ ){
 		  $write = pack "C", $node[$i];
