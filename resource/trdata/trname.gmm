@@ -2860,6 +2860,21 @@
 		<language name="JPN_KANJI" width="216">Ｎ</language>
 	</row>
 
+	<row id="support_10">
+		<language name="JPN" width="216">ベル</language>
+		<language name="JPN_KANJI" width="216">ベル</language>
+	</row>
+
+	<row id="support_11">
+		<language name="JPN" width="216">ベル</language>
+		<language name="JPN_KANJI" width="216">ベル</language>
+	</row>
+
+	<row id="support_12">
+		<language name="JPN" width="216">ベル</language>
+		<language name="JPN_KANJI" width="216">ベル</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

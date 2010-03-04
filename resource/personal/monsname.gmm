@@ -3071,13 +3071,13 @@
 	</row>
 
 	<row id="MONSNAME_540">
-		<language name="JPN" width="216">チェストー</language>
-		<language name="JPN_KANJI" width="216">チェストー</language>
+		<language name="JPN" width="216">ダゲキ</language>
+		<language name="JPN_KANJI" width="216">ダゲキ</language>
 	</row>
 
 	<row id="MONSNAME_541">
-		<language name="JPN" width="216">セイヤー</language>
-		<language name="JPN_KANJI" width="216">セイヤー</language>
+		<language name="JPN" width="216">ナゲキ</language>
+		<language name="JPN_KANJI" width="216">ナゲキ</language>
 	</row>
 
 	<row id="MONSNAME_542">
@@ -3116,8 +3116,8 @@
 	</row>
 
 	<row id="MONSNAME_549">
-		<language name="JPN" width="216">オニバス</language>
-		<language name="JPN_KANJI" width="216">オニバス</language>
+		<language name="JPN" width="216">バスラオ</language>
+		<language name="JPN_KANJI" width="216">バスラオ</language>
 	</row>
 
 	<row id="MONSNAME_550">
@@ -3176,13 +3176,13 @@
 	</row>
 
 	<row id="MONSNAME_561">
-		<language name="JPN" width="216">レイコ</language>
-		<language name="JPN_KANJI" width="216">レイコ</language>
+		<language name="JPN" width="216">ゴビット</language>
+		<language name="JPN_KANJI" width="216">ゴビット</language>
 	</row>
 
 	<row id="MONSNAME_562">
-		<language name="JPN" width="216">レイコーン</language>
-		<language name="JPN_KANJI" width="216">レイコーン</language>
+		<language name="JPN" width="216">ゴルーグ</language>
+		<language name="JPN_KANJI" width="216">ゴルーグ</language>
 	</row>
 
 	<row id="MONSNAME_563">
@@ -3281,13 +3281,13 @@
 	</row>
 
 	<row id="MONSNAME_582">
-		<language name="JPN" width="216">シーバー</language>
-		<language name="JPN_KANJI" width="216">シーバー</language>
+		<language name="JPN" width="216">コアルヒー</language>
+		<language name="JPN_KANJI" width="216">コアルヒー</language>
 	</row>
 
 	<row id="MONSNAME_583">
-		<language name="JPN" width="216">シーイング</language>
-		<language name="JPN_KANJI" width="216">シーイング</language>
+		<language name="JPN" width="216">スワンナ</language>
+		<language name="JPN_KANJI" width="216">スワンナ</language>
 	</row>
 
 	<row id="MONSNAME_584">
@@ -3441,13 +3441,13 @@
 	</row>
 
 	<row id="MONSNAME_614">
-		<language name="JPN" width="216">シロベア</language>
-		<language name="JPN_KANJI" width="216">シロベア</language>
+		<language name="JPN" width="216">シルクマ</language>
+		<language name="JPN_KANJI" width="216">シルクマ</language>
 	</row>
 
 	<row id="MONSNAME_615">
-		<language name="JPN" width="216">シャーベア</language>
-		<language name="JPN_KANJI" width="216">シャーベア</language>
+		<language name="JPN" width="216">ツンベアー</language>
+		<language name="JPN_KANJI" width="216">ツンベアー</language>
 	</row>
 
 	<row id="MONSNAME_616">

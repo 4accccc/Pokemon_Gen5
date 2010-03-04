@@ -508,7 +508,10 @@
 #define	TRID_SUPPORT_08   ( 495 ) 
 #define	TRID_SUPPORT_09   ( 496 ) 
 #define	TRID_BOSS_07   ( 497 ) 
-#define TRID_MAX  ( 498 )
+#define	TRID_SUPPORT_10   ( 498 ) 
+#define	TRID_SUPPORT_11   ( 499 ) 
+#define	TRID_SUPPORT_12   ( 500 ) 
+#define TRID_MAX  ( 501 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;

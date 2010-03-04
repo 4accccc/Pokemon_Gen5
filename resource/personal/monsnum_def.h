@@ -548,8 +548,8 @@
 #define		MONSNO_586		( 537 )		//オタマロ
 #define		MONSNO_587		( 538 )		//ガマガル
 #define		MONSNO_588		( 539 )		//ガマゲロゲ
-#define		MONSNO_575		( 540 )		//チェストー
-#define		MONSNO_576		( 541 )		//セイヤー
+#define		MONSNO_575		( 540 )		//ダゲキ
+#define		MONSNO_576		( 541 )		//ナゲキ
 #define		MONSNO_507		( 542 )		//クルミル
 #define		MONSNO_524		( 543 )		//クルマユ
 #define		MONSNO_508		( 544 )		//ハハコモリ
@@ -557,7 +557,7 @@
 #define		MONSNO_522		( 546 )		//エルフーン
 #define		MONSNO_517		( 547 )		//チュリネ
 #define		MONSNO_519		( 548 )		//ドレディア
-#define		MONSNO_603		( 549 )		//オニバス
+#define		MONSNO_603		( 549 )		//バスラオ
 #define		MONSNO_528		( 550 )		//ダルマッカ
 #define		MONSNO_503		( 551 )		//ヒヒダルマ
 #define		MONSNO_504		( 552 )		//メグロコ
@@ -569,8 +569,8 @@
 #define		MONSNO_539		( 558 )		//ナスカドリ
 #define		MONSNO_526		( 559 )		//デスマス
 #define		MONSNO_510		( 560 )		//デスカーン
-#define		MONSNO_604		( 561 )		//レイコ
-#define		MONSNO_605		( 562 )		//レイコーン
+#define		MONSNO_604		( 561 )		//ゴビット
+#define		MONSNO_605		( 562 )		//ゴルーグ
 #define		MONSNO_622		( 563 )		//カセッキ
 #define		MONSNO_623		( 564 )		//カセキング
 #define		MONSNO_624		( 565 )		//アーケン
@@ -590,8 +590,8 @@
 #define		MONSNO_577		( 579 )		//バチュル
 #define		MONSNO_578		( 580 )		//デンチュラ
 #define		MONSNO_560		( 581 )		//トビッチュ
-#define		MONSNO_609		( 582 )		//シーバー
-#define		MONSNO_610		( 583 )		//シーイング
+#define		MONSNO_609		( 582 )		//コアルヒー
+#define		MONSNO_610		( 583 )		//スワンナ
 #define		MONSNO_611		( 584 )		//ツルリ
 #define		MONSNO_612		( 585 )		//ツルット
 #define		MONSNO_613		( 586 )		//ツルツルダ
@@ -622,8 +622,8 @@
 #define		MONSNO_565		( 611 )		//シャンドル
 #define		MONSNO_529		( 612 )		//ゾロア
 #define		MONSNO_530		( 613 )		//ゾロアーク
-#define		MONSNO_531		( 614 )		//シロベア
-#define		MONSNO_532		( 615 )		//シャーベア
+#define		MONSNO_531		( 614 )		//シルクマ
+#define		MONSNO_532		( 615 )		//ツンベアー
 #define		MONSNO_621		( 616 )		//アイスゴン
 #define		MONSNO_561		( 617 )		//カッチュ
 #define		MONSNO_562		( 618 )		//カチュード
