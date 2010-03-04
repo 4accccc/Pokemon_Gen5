@@ -171,6 +171,7 @@ static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
 static u8 expandPokePos_triple( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst );
 static inline clientID_to_side( u8 clientID );
 static inline BtlPokePos getTripleFrontPos( BtlPokePos pos );
+static u32 GetClientCoverPosNum( const BTL_MAIN_MODULE* wk, u8 clientID );
 static inline u8 GetFriendCrientID( u8 clientID );
 static u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos );
 static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos, u8* clientID, u8* posIdx );
@@ -429,7 +430,7 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
       BTL_UTIL_SetupProc( bp, wk, setup_alone_single, NULL );
       break;
     case BTL_RULE_DOUBLE:
-      if( setup_param->multiMode == FALSE ){
+      if( setup_param->multiMode == BTL_MULTIMODE_NONE ){
         BTL_UTIL_SetupProc( bp, wk, setup_alone_double, NULL );
       }else{
         BTL_UTIL_SetupProc( bp, wk, setup_alone_double_multi, NULL );
@@ -506,7 +507,8 @@ static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup )
  */
 static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp )
 {
-  wk->myClientID = sp->commPos;
+//  wk->myClientID = sp->commPos;
+  wk->myClientID = BTL_CLIENT_PLAYER;
   wk->myOrgPos = BTL_MAIN_GetClientPokePos( wk, wk->myClientID, 0 );
   {
     u8 relation_0 = CommClientRelation( wk->myClientID, 0 );
@@ -744,9 +746,10 @@ static BOOL setup_alone_double( int* seq, void* work )
 
   return TRUE;
 }
+
 //--------------------------------------------------------------------------
 /**
- * スタンドアローン／ダブルバトル（マルチ）：セットアップ
+ * スタンドアローン／ダブルバトル（マルチ含む）：セットアップ
  */
 //--------------------------------------------------------------------------
 static BOOL setup_alone_double_multi( int* seq, void* work )
@@ -756,40 +759,32 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
   BTL_MAIN_MODULE* wk = work;
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
   u8 bagMode = checkBagMode( sp );
-  u8 fClientEnable[ BTL_CLIENT_MAX ];
-  u8 clientCoverPos[ BTL_CLIENT_MAX ];
   int i;
 
+  // 基本設定
   wk->myClientID = 0;
   wk->numClients = 2;
-  wk->posCoverClientID[BTL_POS_1ST_0] = 0;
-  wk->posCoverClientID[BTL_POS_2ND_0] = 1;
-  fClientEnable[0] = fClientEnable[1] = TRUE;
-  fClientEnable[2] = fClientEnable[3] = FALSE;
+  wk->posCoverClientID[BTL_POS_1ST_0] = BTL_CLIENT_PLAYER;
+  wk->posCoverClientID[BTL_POS_1ST_1] = BTL_CLIENT_PLAYER;
+  wk->posCoverClientID[BTL_POS_2ND_0] = BTL_CLIENT_ENEMY1;
+  wk->posCoverClientID[BTL_POS_2ND_1] = BTL_CLIENT_ENEMY1;
 
-  party = sp->party[ BTL_CLIENT_PARTNER ];
-  if( (party==NULL) || (PokeParty_GetPokeCount(party) == 0) ){
-    wk->posCoverClientID[BTL_POS_1ST_1] = 0;
-    clientCoverPos[0] = 2;
-    clientCoverPos[2] = 0;
-  }else{
-    wk->posCoverClientID[BTL_POS_1ST_1] = 2;
-    fClientEnable[2] = TRUE;
-    clientCoverPos[0] = 1;
-    clientCoverPos[2] = 1;
-    wk->numClients++;
-  }
-  party = sp->party[ BTL_CLIENT_ENEMY2 ];
-  if( (party==NULL) || (PokeParty_GetPokeCount(party) == 0) ){
-    wk->posCoverClientID[BTL_POS_2ND_1] = 1;
-    clientCoverPos[1] = 2;
-    clientCoverPos[3] = 0;
-  }else{
-    wk->posCoverClientID[BTL_POS_2ND_1] = 3;
-    fClientEnable[3] = TRUE;
-    clientCoverPos[1] = 1;
-    clientCoverPos[3] = 1;
-    wk->numClients++;
+  switch( sp->multiMode ){
+  case BTL_MULTIMODE_NONE:  // 通常のダブルバトル = 基本設定のままでOK
+  default:
+    break;
+
+  case BTL_MULTIMODE_PA_AA: // AIマルチ
+    wk->posCoverClientID[BTL_POS_1ST_1] = BTL_CLIENT_PARTNER;
+    wk->posCoverClientID[BTL_POS_2ND_1] = BTL_CLIENT_ENEMY2;
+    wk->numClients = 4;
+    break;
+
+  case BTL_MULTIMODE_P_AA:  // AIタッグマルチ
+    wk->posCoverClientID[BTL_POS_2ND_1] = BTL_CLIENT_ENEMY2;
+    OS_TPrintf("P_AA だよ ENEMY2 有効だよ pos[%d] client=%d \n", BTL_POS_2ND_1, BTL_CLIENT_ENEMY2);
+    wk->numClients = 3;
+    break;
   }
 
   setup_alone_common_ClientID_and_srcParty( wk, sp );
@@ -798,7 +793,7 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
   PokeCon_Init( &wk->pokeconForServer, wk, TRUE );
   for(i=0; i<BTL_CLIENT_MAX; ++i)
   {
-    if( fClientEnable[i] ){
+    if( BTL_MAIN_IsExistClient(wk, i) ){
       PokeCon_AddParty( &wk->pokeconForClient, wk, i );
       PokeCon_AddParty( &wk->pokeconForServer, wk, i );
     }
@@ -807,23 +802,28 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
 
-  if( sp->fRecordPlay == FALSE ){
+  // トレーナーパラメータ設定（通常プレイ用）
+  if( sp->fRecordPlay == FALSE )
+  {
     trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
     trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
-    if( fClientEnable[BTL_CLIENT_PARTNER] ){
+    if( BTL_MAIN_IsExistClient(wk, BTL_CLIENT_PARTNER) ){
       trainerParam_StoreNPCTrainer( &wk->trainerParam[BTL_CLIENT_PARTNER], sp->tr_data[BTL_CLIENT_PARTNER] );
     }
-    if( fClientEnable[BTL_CLIENT_ENEMY2] ){
+    if( BTL_MAIN_IsExistClient(wk, BTL_CLIENT_ENEMY2) ){
       trainerParam_StoreNPCTrainer( &wk->trainerParam[BTL_CLIENT_ENEMY2], sp->tr_data[BTL_CLIENT_ENEMY2] );
     }
-  }else{
+  }
+  // 録画再生用
+  else
+  {
     // @todo 再生モード時用パラメータが足りない
     trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
     trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
-    if( fClientEnable[BTL_CLIENT_PARTNER] ){
+    if( BTL_MAIN_IsExistClient(wk, BTL_CLIENT_PARTNER) ){
       trainerParam_StoreNPCTrainer( &wk->trainerParam[BTL_CLIENT_PARTNER], sp->tr_data[BTL_CLIENT_PARTNER] );
     }
-    if( fClientEnable[BTL_CLIENT_ENEMY2] ){
+    if( BTL_MAIN_IsExistClient(wk, BTL_CLIENT_ENEMY2) ){
       trainerParam_StoreNPCTrainer( &wk->trainerParam[BTL_CLIENT_ENEMY2], sp->tr_data[BTL_CLIENT_ENEMY2] );
     }
   }
@@ -831,9 +831,11 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
   // Client 作成
   for(i=0; i<BTL_CLIENT_MAX; ++i)
   {
-    if( fClientEnable[i] ){
-      wk->client[i] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, i, clientCoverPos[i],
-                (i==0)?BTL_CLIENT_TYPE_UI : BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+    if( BTL_MAIN_IsExistClient(wk, i) )
+    {
+      u8 numCoverPos = GetClientCoverPosNum( wk, i );
+      wk->client[i] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, i, numCoverPos,
+                (i==BTL_CLIENT_PLAYER)?BTL_CLIENT_TYPE_UI : BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
     }
   }
 
@@ -841,7 +843,7 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
   {
     for(i=0; i<BTL_CLIENT_MAX; ++i)
     {
-      if( fClientEnable[i] ){
+    if( BTL_MAIN_IsExistClient(wk, i) ){
         BTL_CLIENT_SetRecordPlayType( wk->client[i], sp->recBuffer, sp->recDataSize );
       }
     }
@@ -854,8 +856,10 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
 
   // Server に Client を接続
   for(i=0; i<BTL_CLIENT_MAX; ++i){
-    if( fClientEnable[i] ){
-      BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[i]), i, clientCoverPos[i] );
+    if( BTL_MAIN_IsExistClient(wk, i) )
+    {
+      u8 numCoverPos = GetClientCoverPosNum( wk, i );
+      BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[i]), i, numCoverPos );
     }
   }
 
@@ -1288,6 +1292,7 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
       }
       else
       {
+        BTL_N_Printf ( DBGSTR_MAIN_SendAIPartyStart, wk->MultiAIClientNum );
         if( wk->ImServer ){
           wk->AIDataContainer = BTL_NET_AIDC_Create( PokeParty_GetWorkSize(), GFL_HEAP_LOWID(wk->heapID) );
         }
@@ -1297,22 +1302,23 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
     }
     break;
   case 4:
+    wk->MultiAIClientID = (wk->MultiAIDataSeq == 0) ? BTL_CLIENT_ENEMY1 : BTL_CLIENT_ENEMY2;
     if( wk->ImServer )
     {
-      wk->MultiAIClientID = (wk->MultiAIDataSeq == 0) ? BTL_CLIENT_ENEMY1 : BTL_CLIENT_ENEMY2;
       BTL_NET_AIDC_SetData( wk->AIDataContainer, (const void*)(sp->party[wk->MultiAIClientID]), wk->MultiAIClientID );
     }
-    BTL_NET_TimingSyncStart( BTL_NET_TIMING_NOTIFY_TAG_AI_PARTY_1 + wk->MultiAIDataSeq );
+    BTL_NET_TimingSyncStart( BTL_NET_TIMING_NOTIFY_AI_PARTY_1 + wk->MultiAIDataSeq );
     (*seq)++;
     break;
   case 5:
-    if( BTL_NET_IsTimingSync( BTL_NET_TIMING_NOTIFY_TAG_AI_PARTY_1 + wk->MultiAIDataSeq) )
+    if( BTL_NET_IsTimingSync( BTL_NET_TIMING_NOTIFY_AI_PARTY_1 + wk->MultiAIDataSeq) )
     {
       (*seq)++;
     }
     break;
   case 6:
-    if( wk->ImServer ){
+    if( wk->ImServer )
+    {
       if( !BTL_NET_StartNotify_AI_PartyData(wk->AIDataContainer) ){
         break;
       }
@@ -1325,7 +1331,7 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
 
         cnt = PokeParty_GetPokeCount( party );
         clientID = wk->AIDataContainer->clientID;
-        BTL_N_Printf( DBGSTR_MAIN_SendAIParty, clientID, cnt );
+        BTL_N_Printf( DBGSTR_MAIN_SendAIPartyParam, clientID, cnt );
         for(i=0; i<cnt; ++i){
           pp = PokeParty_GetMemberPointer( party, i );
           BTL_N_PrintfSimple( DBGSTR_csv, PP_Get(pp, ID_PARA_monsno, NULL) );
@@ -1336,7 +1342,7 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
     }
     (*seq)++;
     break;
-    /* fallthru */
+
   case 7:
     if( BTL_NET_IsRecved_AI_PartyData(wk->MultiAIClientID) )
     {
@@ -1448,19 +1454,19 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
     }
     break;
   case 5:
-    BTL_NET_TimingSyncStart( BTL_NET_TIMING_NOTIFY_TAG_AI_TRAINER_1 + wk->MultiAIDataSeq );
+    BTL_NET_TimingSyncStart( BTL_NET_TIMING_NOTIFY_AI_TRAINER_1 + wk->MultiAIDataSeq );
     (*seq)++;
     break;
   case 6:
-    if( BTL_NET_IsTimingSync(BTL_NET_TIMING_NOTIFY_TAG_AI_TRAINER_1 + wk->MultiAIDataSeq) ){
+    if( BTL_NET_IsTimingSync(BTL_NET_TIMING_NOTIFY_AI_TRAINER_1 + wk->MultiAIDataSeq) ){
       (*seq)++;
     }
     break;
   case 7:
+    wk->MultiAIClientID = (wk->MultiAIDataSeq == 0) ? BTL_CLIENT_ENEMY1 : BTL_CLIENT_ENEMY2;
     if( wk->ImServer )
     {
-      u8 clientID = (wk->MultiAIDataSeq == 0) ? BTL_CLIENT_ENEMY1 : BTL_CLIENT_ENEMY2;
-      if( !BTL_NET_StartNotify_AI_TrainerData(sp->tr_data[clientID]) ){
+      if( !BTL_NET_StartNotify_AI_TrainerData(sp->tr_data[ wk->MultiAIClientID ]) ){
         break;
       }
     }
@@ -1470,9 +1476,11 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
     if( BTL_NET_IsRecved_AI_TrainerData() )
     {
       const BSP_TRAINER_DATA*  trData = BTL_NET_Get_AI_TrainerData();
-      u8 clientID = (wk->MultiAIDataSeq == 0) ? BTL_CLIENT_ENEMY1 : BTL_CLIENT_ENEMY2;
 
-      trainerParam_StoreNPCTrainer( &wk->trainerParam[clientID], trData );
+      BTL_N_Printf( DBGSTR_MAIN_RecvedMultiAITrainer, wk->MultiAIClientID, trData->tr_id );
+
+      trainerParam_StoreNPCTrainer( &wk->trainerParam[ wk->MultiAIClientID ], trData );
+      BTL_NET_Clear_AI_TrainerData();
 
       wk->MultiAIDataSeq++;
       if( wk->MultiAIDataSeq >= wk->MultiAIClientNum ){
@@ -1557,11 +1565,15 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
 
     // 通信タッグの場合
     // @todo 条件判定はもっと明確に記述できるように整える。
-    if( (wk->numClients == 3) && (sp->multiMode) )
+    if( (sp->multiMode == BTL_MULTIMODE_PP_AA) )
     {
       wk->client[BTL_CLIENT_ENEMY1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-          BTL_CLIENT_ENEMY1, 2, BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
-      BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[BTL_CLIENT_ENEMY1]), BTL_CLIENT_ENEMY1, 2 );
+          BTL_CLIENT_ENEMY1, numCoverPos, BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+      BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[BTL_CLIENT_ENEMY1]), BTL_CLIENT_ENEMY1, numCoverPos );
+
+      wk->client[BTL_CLIENT_ENEMY2] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
+          BTL_CLIENT_ENEMY2, numCoverPos, BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+      BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[BTL_CLIENT_ENEMY2]), BTL_CLIENT_ENEMY2, numCoverPos );
 
       BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, BTL_CLIENT_PARTNER, numCoverPos );
     }
@@ -1918,7 +1930,7 @@ BtlCommMode BTL_MAIN_GetCommMode( const BTL_MAIN_MODULE* wk )
 //=============================================================================================
 BOOL BTL_MAIN_IsMultiMode( const BTL_MAIN_MODULE * wk )
 {
-  return wk->setupParam->multiMode;
+  return wk->setupParam->multiMode != BTL_MULTIMODE_NONE;
 }
 //=============================================================================================
 /**
@@ -2230,6 +2242,20 @@ static inline BtlPokePos getTripleFrontPos( BtlPokePos pos )
   }
   return BTL_MAINUTIL_GetOpponentPokePos( BTL_RULE_TRIPLE, pos, idx );
 }
+/**
+ *  指定クライアントの担当する位置数を返す
+ */
+static u32 GetClientCoverPosNum( const BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  u32 cnt, i;
+  for(cnt=i=0; i<BTL_CLIENT_MAX; ++i)
+  {
+    if( wk->posCoverClientID[i] == clientID ){
+      ++cnt;
+    }
+  }
+  return cnt;
+}
 
 //=============================================================================================
 /**
@@ -2244,7 +2270,7 @@ static inline BtlPokePos getTripleFrontPos( BtlPokePos pos )
 BOOL BTL_MAIN_IsExistClient( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
   int i;
-  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  for(i=0; i<NELEMS(wk->posCoverClientID); ++i)
   {
     if( wk->posCoverClientID[i] == clientID ){
       return TRUE;
@@ -2906,9 +2932,15 @@ u8 BTL_MAIN_GetPlayerMultiPos( const BTL_MAIN_MODULE* wk )
 
 u32 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx )
 {
+  clientID &= 1;
+  clientID ^= 1;
+  clientID += ((idx & 1) * 2);
+  return clientID;
+  /*
   BtlPokePos pos = BTL_MAIN_GetClientPokePos( wk, clientID, 0 );
   pos = BTL_MAIN_GetOpponentPokePos( wk, pos, idx );
   return BTL_MAIN_BtlPosToClientID( wk, pos );
+  */
 }
 
 
@@ -3299,15 +3331,15 @@ const BTL_POKEPARAM* BTL_POKECON_GetFrontPokeDataConst( const BTL_POKE_CONTAINER
   const BTL_PARTY* party;
   u8 clientID, posIdx;
 
-  BTL_Printf("戦闘位置[%d] = ", pos);
+  BTL_N_Printf( DBGSTR_MAIN_GetFrontPokeData, pos);
 
   btlPos_to_cliendID_and_posIdx( wk->mainModule, pos, &clientID, &posIdx );
   party = &wk->party[ clientID ];
   if( posIdx < BTL_PARTY_GetMemberCount(party) ){
-    BTL_PrintfSimple("クライアント[%d]の %d 番目のポケを返す\n", clientID, posIdx );
+    BTL_N_PrintfSimple( DBGSTR_MAIN_GetFrontPokeDataResult, clientID, posIdx );
     return BTL_PARTY_GetMemberDataConst( party, posIdx );
   }else{
-    BTL_N_Printf( DBGSTR_MAIN_PokeConGetByPos, pos, clientID, posIdx );
+    BTL_N_PrintfSimple( DBGSTR_MAIN_PokeConGetByPos, pos, clientID, posIdx );
     return NULL;
   }
 }
@@ -3762,11 +3794,13 @@ static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, const BSP_TRAIN
     dst->trainerID = trData->tr_id;
     dst->trainerType = trData->tr_type;
     dst->name = trData->name;
+    OS_TPrintf("NPC Set OK trID=%d\n", dst->trainerID);
   }
   else{
     dst->trainerID = TRID_NULL;
     dst->trainerType = 0;
     dst->name = NULL;
+    OS_TPrintf("NPC Set Failed..\n");
   }
 }
 BOOL BTL_MAIN_IsClientNPC( const BTL_MAIN_MODULE* wk, u8 clientID )
@@ -3776,9 +3810,11 @@ BOOL BTL_MAIN_IsClientNPC( const BTL_MAIN_MODULE* wk, u8 clientID )
 // string x 2
 u32 BTL_MAIN_GetClientTrainerID( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  if( clientID != BTL_CLIENTID_COMM_SUPPORT ){
+  if( BTL_MAIN_IsClientNPC(wk, clientID) ){
+    OS_TPrintf("NPCトレーナーです clientID=%d, trID=%d\n", clientID, wk->trainerParam[clientID].trainerID);
     return wk->trainerParam[clientID].trainerID;
   }else{
+    OS_TPrintf("プレイヤートレーナーです clientID=%d\n", clientID);
     return TRID_NULL;
   }
 }
@@ -3791,11 +3827,19 @@ u16 BTL_MAIN_GetClientTrainerType( const BTL_MAIN_MODULE* wk, u8 clientID )
 
 const MYSTATUS* BTL_MAIN_GetClientPlayerData( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  if( clientID != BTL_CLIENTID_COMM_SUPPORT ){
+  if( !BTL_MAIN_IsClientNPC(wk, clientID) )
+  {
     return wk->trainerParam[ clientID ].playerStatus;
-  }else{
-    return COMM_PLAYER_SUPPORT_GetMyStatus( wk->setupParam->commSupport );
   }
+  GF_ASSERT_MSG(0, "This Client(%d) is not Human Player\n", clientID);
+  return NULL;
+}
+/**
+ *  通信サポートプレイヤーのMyStatusを取得
+ */
+const MYSTATUS* BTL_MAIN_GetCommSuppoortPlayerData( const BTL_MAIN_MODULE* wk )
+{
+  return COMM_PLAYER_SUPPORT_GetMyStatus( wk->setupParam->commSupport );
 }
 
 //----------------------------------------------------------------------------------------------

@@ -469,6 +469,7 @@ static void recv_AI_partyData( const int netID, const int size, const void* pDat
   }
 
   GFL_STD_MemCopy( container->data, Sys->AIPartyBuffer[ container->clientID ], container->dataSize );
+  BTL_N_Printf( DBGSTR_NET_RecvedAIPartyData, container->clientID );
 
   GFL_HEAP_FreeMemory( Sys->tmpExBuffer );
   Sys->tmpExBuffer = NULL;
@@ -494,8 +495,10 @@ const POKEPARTY* BTL_NET_GetPartyData( u8 clientID )
   }
   else if( Sys->AIPartyBuffer[clientID] != NULL )
   {
+    const POKEPARTY* party = (const POKEPARTY*)(Sys->AIPartyBuffer[clientID]);
+
+    // デバッグ出力
     {
-      const POKEPARTY* party = (const POKEPARTY*)(Sys->AIPartyBuffer[clientID]);
       const POKEMON_PARAM* pp;
       u32 cnt, i;
 
@@ -509,7 +512,7 @@ const POKEPARTY* BTL_NET_GetPartyData( u8 clientID )
       BTL_N_PrintfSimple( DBGSTR_LF );
     }
 
-    return Sys->tmpExBuffer;
+    return party;
   }
   else
   {
@@ -622,13 +625,22 @@ BOOL BTL_NET_IsRecved_AI_TrainerData( void )
   return (Sys->tmpExBufferUsedSize != 0);
 }
 
-// 受信したAIトレーナーデータを取得を取得
+// 受信したAIトレーナーデータを取得
 const BSP_TRAINER_DATA* BTL_NET_Get_AI_TrainerData( void )
 {
   GF_ASSERT(Sys->tmpExBuffer != NULL);
   GF_ASSERT(Sys->tmpExBufferUsedSize != 0);
 
   return Sys->tmpExBuffer;
+}
+void BTL_NET_Clear_AI_TrainerData( void )
+{
+  GF_ASSERT(Sys->tmpExBuffer != NULL);
+  GF_ASSERT(Sys->tmpExBufferUsedSize != 0);
+
+  GFL_HEAP_FreeMemory( Sys->tmpExBuffer );
+  Sys->tmpExBuffer = NULL;
+  Sys->tmpExBufferUsedSize = 0;
 }
 // プレイヤー・トレーナーデータ受信処理を完了する
 void BTL_NET_EndNotifyPlayerData( void )
@@ -679,12 +691,10 @@ void BTL_NET_TimingSyncStart( u8 timingID )
 {
   if( Sys )
   {
-    GFL_NET_TimingSyncStart( Sys->netHandle, timingID );
+    OS_TPrintf(" Btl TimingID=%d, handle=%p\n", timingID, Sys->netHandle );
     Sys->timingID = timingID;
     Sys->timingSyncStartFlag = TRUE;
-
-    // @@@ 本来はこうする
-//  Sys->timingSyncStartFlag = GFL_NET_TimingSyncStart( Sys->netHandle, timingID );
+    GFL_NET_TimingSyncStart( Sys->netHandle, timingID );
   }
 }
 
@@ -692,18 +702,18 @@ BOOL BTL_NET_IsTimingSync( u8 timingID )
 {
   if( Sys )
   {
-    if( Sys->timingSyncStartFlag ){
+    if( Sys->timingSyncStartFlag )
+    {
       BOOL is_sync = GFL_NET_IsTimingSync( Sys->netHandle, Sys->timingID );
       if( is_sync ){
         Sys->timingID = BTL_NET_TIMING_NULL;
         Sys->timingSyncStartFlag = FALSE;
         return is_sync;
       }
-    }else{
+    }
+    else
+    {
       GFL_NET_TimingSyncStart( Sys->netHandle, Sys->timingID );
-      Sys->timingSyncStartFlag = TRUE;
-      // @@@ 本来はこうする
-  //    Sys->timingSyncStartFlag = GFL_NET_TimingSyncStart( Sys->netHandle, Sys->timingID );
     }
     return FALSE;
   }
@@ -907,9 +917,12 @@ static inline u32 recvBuf_getData( const RECV_BUFFER* buf, const void** ppData )
 
 BTLNET_AIDATA_CONTAINER*  BTL_NET_AIDC_Create( u32 size, HEAPID heapID )
 {
-  BTLNET_AIDATA_CONTAINER* container = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTLNET_AIDATA_CONTAINER)+size );
-  container->dataSize = heapID;
+  BTLNET_AIDATA_CONTAINER* container;
+
+  container = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTLNET_AIDATA_CONTAINER)+size );
+  container->dataSize = size;
   container->clientID = BTL_CLIENTID_NULL;
+
   return container;
 }
 void BTL_NET_AIDC_Delete( BTLNET_AIDATA_CONTAINER* container )

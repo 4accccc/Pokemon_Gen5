@@ -246,7 +246,7 @@ static void register_TrainerName( WORDSET* wset, u8 bufIdx, u8 clientID )
   }
   else
   {
-    const MYSTATUS* status = BTL_MAIN_GetClientPlayerData( SysWork.mainModule, clientID );
+    const MYSTATUS* status = BTL_MAIN_GetCommSuppoortPlayerData( SysWork.mainModule );
     WORDSET_RegisterPlayerName( wset, bufIdx, status );
   }
 }

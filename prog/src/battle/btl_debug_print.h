@@ -69,7 +69,11 @@ typedef enum {
   DBGSTR_MAIN_SwapPartyMember,
   DBGSTR_MAIN_PartyDataNotifyComplete,
   DBGSTR_MAIN_AIPartyDataSendComplete,
-  DBGSTR_MAIN_SendAIParty,
+  DBGSTR_MAIN_SendAIPartyStart,
+  DBGSTR_MAIN_SendAIPartyParam,
+  DBGSTR_MAIN_RecvedMultiAITrainer,
+  DBGSTR_MAIN_GetFrontPokeData,
+  DBGSTR_MAIN_GetFrontPokeDataResult,
 
   DBGSTR_NET_DecideClientID,
   DBGSTR_NET_SendSucceed,

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-18T11:27:58"/>
+	<create user="taya" host="W00146" date="2010-03-04T14:32:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -482,38 +482,46 @@
 	</row>
 
 	<row id="DBGF_ITEM_TYPE05">
-		<language name="JPN" width="256">ダブル　トレーナー１</language>
+		<language name="JPN" width="256">ダブル　トレーナー</language>
 	</row>
 
 	<row id="DBGF_ITEM_TYPE06">
-		<language name="JPN" width="256">ダブル　トレーナー２</language>
+		<language name="JPN" width="256">ダブル　トレーナータッグ</language>
 	</row>
 
 	<row id="DBGF_ITEM_TYPE07">
-		<language name="JPN" width="256">ダブル　つうしん</language>
+		<language name="JPN" width="256">ダブル　トレーナーマルチ</language>
 	</row>
 
 	<row id="DBGF_ITEM_TYPE08">
-		<language name="JPN" width="256">ダブル　マルチつうしん</language>
+		<language name="JPN" width="256">ダブル　つうしん</language>
 	</row>
 
 	<row id="DBGF_ITEM_TYPE09">
-		<language name="JPN" width="256">トリプル　トレーナー</language>
+		<language name="JPN" width="256">ダブル　つうしんマルチ</language>
 	</row>
 
 	<row id="DBGF_ITEM_TYPE10">
-		<language name="JPN" width="256">トリプル　つうしん</language>
+		<language name="JPN" width="256">ダブル　つうしんAIマルチ</language>
 	</row>
 
 	<row id="DBGF_ITEM_TYPE11">
-		<language name="JPN" width="256">ローテ　トレーナー</language>
+		<language name="JPN" width="256">トリプル　トレーナー</language>
 	</row>
 
 	<row id="DBGF_ITEM_TYPE12">
-		<language name="JPN" width="256">ローテ　つうしん</language>
+		<language name="JPN" width="256">トリプル　つうしん</language>
 	</row>
 
 	<row id="DBGF_ITEM_TYPE13">
+		<language name="JPN" width="256">ローテ　トレーナー</language>
+	</row>
+
+	<row id="DBGF_ITEM_TYPE14">
+		<language name="JPN" width="256">ローテ　つうしん</language>
+	</row>
+
+	<row id="DBGF_ITEM_TYPE15">
 		<language name="JPN" width="256">ほかくデモ</language>
 	</row>
 

@@ -2815,6 +2815,7 @@ static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
       u8 yure_cnt, fSuccess, fCritical, fZukanRegister;
 
       fSuccess = CalcCapturePokemon( wk, bpp, targetPoke, itemID, &yure_cnt, &fCritical );
+//      OS_TPrintf("捕獲 .. critical=%d\n", fCritical);
 
       if( fSuccess ){
         wk->flowResult = SVFLOW_RESULT_POKE_GET;
@@ -2912,6 +2913,9 @@ static BOOL CalcCapturePokemon( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke
 
     // クリティカルチェック
     *fCritical = CheckCaptureCritical( wk, capture_value );
+
+    // @todo テスト用一時的な措置
+    *fCritical = TRUE;
 
     if( capture_value >= FX32_CONST(255) ){
       *yure_cnt = (*fCritical)? 1 : BTL_CAPTURE_BALL_YURE_CNT_MAX;

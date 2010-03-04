@@ -2807,8 +2807,6 @@ restart:
       cmdSize = BTL_ADAPTER_GetRecvData( wk->adapter, &cmdBuf );
       SCQUE_Setup( wk->cmdQue, cmdBuf, cmdSize );
 
-      OS_TPrintf("サーバコマンド読み込み開始：Size=%d\n", cmdSize);
-
       if( wk->commWaitInfoOn )
       {
         wk->commWaitInfoOn = FALSE;

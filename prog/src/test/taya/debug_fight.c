@@ -83,9 +83,11 @@ typedef enum {
   BTLTYPE_SINGLE_COMM,
   BTLTYPE_DOUBLE_WILD,
   BTLTYPE_DOUBLE_TRAINER1,
-  BTLTYPE_DOUBLE_TRAINER2,
+  BTLTYPE_DOUBLE_TRAINER_TAG,
+  BTLTYPE_DOUBLE_TRAINER_MULTI,
   BTLTYPE_DOUBLE_COMM,
   BTLTYPE_DOUBLE_COMM_MULTI,
+  BTLTYPE_DOUBLE_COMM_AI_MULTI,
   BTLTYPE_TRIPLE_TRAINER,
   BTLTYPE_TRIPLE_COMM,
   BTLTYPE_ROTATION_TRAINER,
@@ -507,23 +509,25 @@ static const struct {
 static const struct {
   u8  commFlag     : 1;
   u8  wildFlag     : 1;
-  u8  multiFlag    : 1;
-  u8  enemyPokeReg : 5;   // 敵ポケ規定数（0なら自由）
+  u8  multiMode    : 3;
+  u8  enemyPokeReg : 3;   // 敵ポケ規定数（0なら自由）
   u8  rule;
 }BtlTypeParams[] = {
-  { 0, 1, 0, 1, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_WILD
-  { 0, 0, 0, 0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_TRAINER
-  { 1, 0, 0, 0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_COMM
-  { 0, 1, 0, 2, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_WILD
-  { 0, 0, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER1,
-  { 0, 0, 1, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER2,
-  { 1, 0, 0, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM
-  { 1, 0, 1, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM_MULTI
-  { 0, 0, 0, 0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_TRAINER
-  { 1, 0, 0, 0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_COMM
-  { 0, 0, 0, 3, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_TRAINER
-  { 1, 0, 0, 0, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_COMM
-  { 0, 1, 0, 1, BTL_RULE_SINGLE   },   // BTLTYPE_DEMO_CAPTURE
+  { 0, 1, BTL_MULTIMODE_NONE,  1, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_WILD
+  { 0, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_TRAINER
+  { 1, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_COMM
+  { 0, 1, BTL_MULTIMODE_NONE,  2, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_WILD
+  { 0, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER1,
+  { 0, 0, BTL_MULTIMODE_P_AA,  0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER_TAG,
+  { 0, 0, BTL_MULTIMODE_PA_AA, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER_MULTI,
+  { 1, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM
+  { 1, 0, BTL_MULTIMODE_PP_PP, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM_MULTI
+  { 1, 0, BTL_MULTIMODE_PP_AA, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM_AI_MULTI
+  { 0, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_TRAINER
+  { 1, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_COMM
+  { 0, 0, BTL_MULTIMODE_NONE,  3, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_TRAINER
+  { 1, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_COMM
+  { 0, 1, BTL_MULTIMODE_NONE,  1, BTL_RULE_SINGLE   },   // BTLTYPE_DEMO_CAPTURE
 };
 
 /*--------------------------------------------------------------------------*/
@@ -1353,8 +1357,13 @@ static BOOL btltype_IsComm( BtlType type )
 //----------------------------------------------------------------------------------
 static BOOL btltype_IsMulti( BtlType type )
 {
-  return BtlTypeParams[ type ].multiFlag;
+  return BtlTypeParams[ type ].multiMode != BTL_MULTIMODE_NONE;
 }
+static BtlMultiMode btltype_GetMultiType( BtlType type )
+{
+  return BtlTypeParams[ type ].multiMode;
+}
+
 static BOOL btltype_IsWild( BtlType type )
 {
   return BtlTypeParams[ type ].wildFlag;
@@ -1989,12 +1998,16 @@ FS_EXTERN_OVERLAY(battle);
 #else  //親子別接続
     {
       const GFLNetInitializeStruct* initParam;
-      if( btltype_IsMulti( wk->saveData.btlType ) ){
-        TAYA_Printf("マルチモードで通信開始\n");
+
+      if( wk->saveData.btlType == BTLTYPE_DOUBLE_COMM_MULTI )
+      {
+        TAYA_Printf("４人モードで通信開始\n");
         initParam = &NetInitParamMulti;
-        wk->NeedConnectMembers = 2;
-      }else{
-        TAYA_Printf("通常モードで通信開始\n");
+        wk->NeedConnectMembers = 4;
+      }
+      else
+      {
+        TAYA_Printf("２人モードで通信開始\n");
         initParam = &NetInitParamNormal;
         wk->NeedConnectMembers = 2;
       }
@@ -2083,34 +2096,39 @@ FS_EXTERN_OVERLAY(battle);
         BTL_SETUP_Single_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS, HEAPID_BTL_DEBUG_SYS );
         break;
       case BTL_RULE_DOUBLE:
-        if( !btltype_IsMulti(wk->saveData.btlType) ){
+        switch( btltype_GetMultiType(wk->saveData.btlType) ){
+        case BTL_MULTIMODE_NONE:
+        default:
           BTL_SETUP_Double_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS, HEAPID_BTL_DEBUG_SYS );
-        }else{
+          break;
 
-          u8 commPos;
-
-          if( PokeParty_GetPokeCount(wk->partyEnemy1) )
-          {
-              TrainerID  trID1 = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
-              TrainerID  trID2 = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
-
-              commPos = GFL_NET_GetNetID( netHandle ) * 2;
-
-              BTL_SETUP_AIMulti_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS,
-                commPos, trID1, trID2, HEAPID_BTL_DEBUG_SYS );
-
-              BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
-              BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy2, BTL_CLIENT_ENEMY2 );
-
-          }
-          else
+        case BTL_MULTIMODE_PP_PP:
           {
             // 意図的にnetIDと立ち位置をバラバラにしてみる
-            commPos = (GFL_NET_GetNetID( netHandle ) + 1) & 3;
+            u8 commPos = (GFL_NET_GetNetID( netHandle ) + 1) & 3;
 
             BTL_SETUP_Multi_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS,
               commPos, HEAPID_BTL_DEBUG_SYS );
           }
+          break;
+
+        case BTL_MULTIMODE_PP_AA:
+          {
+            // １人が0, もう１人が2を使わねばならない
+            u8 commPos = GFL_NET_GetNetID( netHandle ) * 2;
+
+            TrainerID  trID1 = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+            TrainerID  trID2 = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+
+            commPos = GFL_NET_GetNetID( netHandle ) * 2;
+
+            BTL_SETUP_AIMulti_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS,
+              commPos, trID1, trID2, HEAPID_BTL_DEBUG_SYS );
+
+            BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+            BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy2, BTL_CLIENT_ENEMY2 );
+          }
+          break;
         }
         break;
       case BTL_RULE_TRIPLE:
@@ -2125,8 +2143,7 @@ FS_EXTERN_OVERLAY(battle);
     else
     {
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
-//      TrainerID  trID = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
-      TrainerID  trID = 293;
+      TrainerID  trID = 1 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
 
       switch( rule ){
       case BTL_RULE_SINGLE:
@@ -2135,31 +2152,39 @@ FS_EXTERN_OVERLAY(battle);
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
         break;
       case BTL_RULE_DOUBLE:
-        if( !btltype_IsMulti(wk->saveData.btlType) ){
-          BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData,
-            &wk->fieldSit, trID, HEAPID_BTL_DEBUG_SYS );
-          BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
-        }
-        else
-        {
-          TrainerID  trID2 = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
-          TrainerID  trID3 = 2 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
-
-          if( PokeParty_GetPokeCount(wk->partyFriend) )
+        switch( btltype_GetMultiType(wk->saveData.btlType) ){
+        case BTL_MULTIMODE_NONE:
+        default:
+            BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData,
+              &wk->fieldSit, trID, HEAPID_BTL_DEBUG_SYS );
+            BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+            break;
+        case BTL_MULTIMODE_P_AA:
           {
+            TrainerID  trID2 = 1 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+
+            BTL_SETUP_Tag_Trainer( &wk->setupParam, wk->gameData, &wk->fieldSit, trID, trID2, HEAPID_BTL_DEBUG_SYS );
+            BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+            BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy2, BTL_CLIENT_ENEMY2 );
+
+            TAYA_Printf("P_AA Ptn trID1=%d, trID2=%d\n",
+              wk->setupParam.tr_data[BTL_CLIENT_ENEMY1]->tr_id,
+              wk->setupParam.tr_data[BTL_CLIENT_ENEMY2]->tr_id);
+          }
+          break;
+        case BTL_MULTIMODE_PA_AA:
+          {
+            TrainerID  trID2 = 1 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+            TrainerID  trID_Partner = 1 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+
             BTL_SETUP_AIMulti_Trainer( &wk->setupParam, wk->gameData, &wk->fieldSit,
-              trID3, trID, trID2, HEAPID_BTL_DEBUG_SYS );
+              trID_Partner, trID, trID2, HEAPID_BTL_DEBUG_SYS );
 
             BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyFriend, BTL_CLIENT_PARTNER );
             BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
             BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy2, BTL_CLIENT_ENEMY2 );
           }
-          else
-          {
-            BTL_SETUP_Tag_Trainer( &wk->setupParam, wk->gameData, &wk->fieldSit, trID, trID2, HEAPID_BTL_DEBUG_SYS );
-            BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
-            BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy2, BTL_CLIENT_ENEMY2 );
-          }
+          break;
         }
         break;
       case BTL_RULE_TRIPLE:

@@ -67,8 +67,12 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_MAIN_PokeConGetByPos:          return "存在しない位置(pos=%d, clientID=%d, idx=%d)のポケモンデータを参照した\n";
   case DBGSTR_MAIN_PartyDataNotifyComplete:  return "パーティデータ相互受信できました。\n";
   case DBGSTR_MAIN_AIPartyDataSendComplete:  return "AIパーティデータ受信完了\n";
-  case DBGSTR_MAIN_SendAIParty:              return "AIパーティ送信完了 ... clientID=%d, pokeCnt=%d\n  monsno=";
-
+  case DBGSTR_MAIN_SwapPartyMember:          return "パーティメンバー入れ替え %d <-> %d\n";
+  case DBGSTR_MAIN_RecvedMultiAITrainer:     return "ClientID=%d, trID=%d set\n";
+  case DBGSTR_MAIN_SendAIPartyStart:         return "AIクライアント数=%d, パーティデータ送受信開始\n";
+  case DBGSTR_MAIN_SendAIPartyParam:         return "AI Client=%d パーティ送信完了（ポケ数=%d\n";
+  case DBGSTR_MAIN_GetFrontPokeData:         return "戦闘位置[%d] のポケモン... ";
+  case DBGSTR_MAIN_GetFrontPokeDataResult:   return "クライアント[%d]の %d 番目のポケを返す\n";
 
   case DBGSTR_CLIENT_RETURN_CMD_START:       return "ID[%d], 返信開始へ\n";
   case DBGSTR_CLIENT_RETURN_CMD_DONE:        return "ID[%d], 返信しました\n";
@@ -114,7 +118,6 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_VCORE_SelPokeEnd_Unsel:   return "  [%d]番目 選択されていない\n";
 
 
-  case DBGSTR_MAIN_SwapPartyMember:     return "パーティメンバー入れ替え %d <-> %d\n";
   case DBGSTR_NET_DecideClientID:       return "NetID:%d -> clientID=%d\n";
   case DBGSTR_NET_SendSucceed:          return "  送信成功\n";
   case DBGSTR_NET_RecvedServerParam:    return "netID=%d, サーバパラメータ受信しました。\n";
@@ -130,7 +133,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_NET_RecvAITrainerData:    return "AIトレーナーデータ受信完了, trID=%d\n";
   case DBGSTR_NET_AIPartyInfo:          return "Client(%d)=AIパーティと判断する (pokeCnt=%d)\n  monsno=";
   case DBGSTR_NET_CreateAIPartyRecvBuffer: return "AIパーティデータ受信バッファを生成\n";
-  case DBGSTR_NET_RecvedAIPartyData:       return "AIパーティデータ受信 size=%d\n";
+  case DBGSTR_NET_RecvedAIPartyData:     return "AIパーティデータ受信 clientID=%d\n";
 
   case DBGSTR_CALCDMG_WazaParam:        return "ワザ情報：ID=%d, Type=%d\n";
   case DBGSTR_CALCDMG_BaseDamage:       return "基礎ダメージ値 (%d)\n";

@@ -1303,6 +1303,7 @@ static BOOL  btlinEff_OpponentTrainerInMulti( BTLV_SCU* wk, int* seq )
 {
   u8 clientID_1 = BTL_MAIN_GetEnemyClientID ( wk->mainModule, 0 );
   u8 clientID_2 = BTL_MAIN_GetEnemyClientID ( wk->mainModule, 1 );
+
   if( clientID_1 != clientID_2 )
   {
     return btlinEffSub_OpponentTrainerIn2( wk, seq, clientID_1, clientID_2 );
@@ -2872,7 +2873,7 @@ static void taskFakeDisable( GFL_TCBL* tcbl, void* wk_adrs )
 #endif
   switch( wk->seq ){
   case 0:
-    { 
+    {
       const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->parentWork->pokeCon, wk->pos );
       const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
       BTLV_EFFECT_Henge( pp, wk->vpos );
@@ -2964,7 +2965,7 @@ static void taskChangeForm( GFL_TCBL* tcbl, void* wk_adrs )
 #endif
   switch( wk->seq ){
   case 0:
-    { 
+    {
       const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->parentWork->pokeCon, wk->pos );
       const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
       BTLV_EFFECT_Henge( pp, wk->vpos );
