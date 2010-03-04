@@ -1245,7 +1245,7 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ALL( VMHANDLE *vmh, void *context_work )
   int       dummy, index;
 
 #ifdef DEBUG_OS_PRINT
-  OS_TPrintf("VMEC_PARTICLE_PLAY\n");
+  OS_TPrintf("VMEC_PARTICLE_PLAY_ALL\n");
 #endif DEBUG_OS_PRINT
 
   if( ptc_no != EFFVM_PTCNO_NO_FIND )
@@ -2493,7 +2493,7 @@ static VMCMD_RESULT VMEC_OBJ_DEL( VMHANDLE *vmh, void *context_work )
   int index = ( int )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
-  OS_TPrintf("VMEC_TRAINER_DEL\n");
+  OS_TPrintf("VMEC_OBJ_DEL\n");
 #endif DEBUG_OS_PRINT
 
   GF_ASSERT( index < EFFVM_OBJ_MAX );
@@ -2940,6 +2940,9 @@ static VMCMD_RESULT VMEC_SET_PARAM( VMHANDLE *vmh, void *context_work )
   case BTLEFF_WORK_GET_SUCCESS:   ///<捕獲成功かどうか
     bevw->param.get_success = param;
     break;
+  case BTLEFF_WORK_GET_CRITICAL:   ///<クリティカルかどうか
+    bevw->param.get_critical = param;
+    break;
   case BTLEFF_WORK_ITEM_NO:   ///<ボールのアイテムナンバー
     bevw->param.item_no = param;
     break;
@@ -3080,7 +3083,7 @@ static VMCMD_RESULT VMEC_BALLOBJ_SET( VMHANDLE *vmh, void *context_work )
   GF_ASSERT( bevw->obj[ index ] == EFFVM_OBJNO_NONE );
 
 #ifdef DEBUG_OS_PRINT
-  OS_TPrintf("VMEC_OBJ_SET\n");
+  OS_TPrintf("VMEC_BALLOBJ_SET\n");
 #endif DEBUG_OS_PRINT
 
   BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &pos, position );
@@ -4635,6 +4638,9 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
     break;
   case BTLEFF_WORK_GET_SUCCESS:   ///<捕獲成功かどうか
     ret = bevw->param.get_success;
+    break;
+  case BTLEFF_WORK_GET_CRITICAL:   ///<クリティカルかどうか
+    ret = bevw->param.get_critical;
     break;
   case BTLEFF_WORK_ITEM_NO:   ///<ボールのアイテムナンバー
     ret = bevw->param.item_no;

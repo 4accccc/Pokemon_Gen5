@@ -32,6 +32,7 @@ typedef struct
   u8    continue_count;   ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
   u8    yure_cnt;         ///<ボールゆれるカウント
   BOOL  get_success;      ///<捕獲成功かどうか
+  BOOL  get_critical;     ///<クリティカルかどうか
   u16   item_no;          ///<ボールのアイテムナンバー
 }BTLV_EFFVM_PARAM;
 
