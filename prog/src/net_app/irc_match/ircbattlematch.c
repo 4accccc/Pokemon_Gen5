@@ -394,6 +394,10 @@ static void _endCallBack(void* pWork)
 static void _modeFadeout(IRC_BATTLE_MATCH* pWork)
 {
   if(WIPE_SYS_EndCheck()){
+    if(pWork->pBattleWork->netInitWork){
+      //貰っている初期化構造体に変更
+//      GFL_NET_ChangeInitStruct(pWork->pBattleWork->netInitWork);
+    }
     _CHANGE_STATE(pWork, NULL);        // 終わり
   }
 }
@@ -659,11 +663,19 @@ static void _modeCheckStart5(IRC_BATTLE_MATCH* pWork)
 static void _modeCheckStart4(IRC_BATTLE_MATCH* pWork)
 {
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_DS, WB_NET_IRCBATTLE)){
-    if(GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, _NETCMD_POKEPARTY_SEND,
-                        PokeParty_GetWorkSize(), pWork->pBattleWork->pParty,
-                          FALSE,FALSE,TRUE)){
-      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_POKEP,WB_NET_IRCBATTLE);
-      _CHANGE_STATE(pWork,_modeCheckStart5);
+    switch(pWork->selectType){
+    case EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER:
+    case EVENTIRCBTL_ENTRYMODE_MUSICAL:
+      _CHANGE_STATE(pWork,_modeFadeoutStart);
+      break;
+    default:
+      if(GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, _NETCMD_POKEPARTY_SEND,
+                            PokeParty_GetWorkSize(), pWork->pBattleWork->pParty,
+                            FALSE,FALSE,TRUE)){
+        GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_POKEP,WB_NET_IRCBATTLE);
+        _CHANGE_STATE(pWork,_modeCheckStart5);
+      }
+      break;
     }
   }
 }
@@ -671,6 +683,9 @@ static void _modeCheckStart4(IRC_BATTLE_MATCH* pWork)
 
 static void _modeCheckStart3(IRC_BATTLE_MATCH* pWork)
 {
+  OS_TPrintf("mystatus %x\n",(u32)GAMEDATA_GetMyStatus(pWork->pBattleWork->gamedata));
+  OS_TPrintf("gamedata %x\n",(u32)pWork->pBattleWork->gamedata);
+
   if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_MYSTATUSSEND,
                       MyStatus_GetWorkSize(), GAMEDATA_GetMyStatus(pWork->pBattleWork->gamedata))){
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_DS,WB_NET_IRCBATTLE);
@@ -1053,10 +1068,12 @@ static void _musicalNumWindowCreate(int msgno,IRC_BATTLE_MATCH* pWork)
   u32 cgx;
   int frame = GFL_BG_FRAME1_S;
 
-  pWork->buttonWin[i] = GFL_BMPWIN_Create(
-    frame,
-    1, 8, 18, 4,
-    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+  if(!pWork->buttonWin[i]){
+    pWork->buttonWin[i] = GFL_BMPWIN_Create(
+      frame,
+      1, 8, 18, 4,
+      _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+  }
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), WINCLR_COL(FBMP_COL_WHITE) );
   GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
   GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
@@ -1334,19 +1351,25 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
     case EVENTIRCBTL_ENTRYMODE_SUBWAY:
       net_ini_data.gsid = WB_NET_BSUBWAY;
       break;
+    case EVENTIRCBTL_ENTRYMODE_MUSICAL:
+    case EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER:
+      net_ini_data.gsid = WB_NET_MUSICAL;
+      net_ini_data.bMPMode = TRUE;
+      net_ini_data.maxConnectNum = pWork->pBattleWork->netInitWork->maxConnectNum;         ///< 最大接続人数
+      net_ini_data.maxSendSize = pWork->pBattleWork->netInitWork->maxSendSize;           ///< 送信サイズ
+      pWork->musicalNum = net_ini_data.maxConnectNum;
+      break;
     default:
-//      GF_ASSERT(0);
+      GF_ASSERT(0);
       break;
     }
+    GFL_NET_Init(&net_ini_data, NULL, pWork);	//通信初期化
+    
     if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MUSICAL){
       GFL_NET_ReserveNetID_IRCWIRELESS(1);
     }
     else if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER){
       GFL_NET_ReserveNetID_IRCWIRELESS(0);
-      pWork->musicalNum =  GFL_NET_GetNowConnectNum_IRCWIRELESS();
-    }
-    else{
-      GFL_NET_Init(&net_ini_data, NULL, pWork);	//通信初期化
     }
   }
   _ReturnButtonStart(pWork);
@@ -1652,9 +1675,11 @@ static BOOL _cancelButtonCallback(int bttnid, IRC_BATTLE_MATCH* pWork)
       _CHANGE_STATE(pWork,_modeAppWinFlash);        // 終わり
       break;
     case _SELECTMODE_DECIDE:
-      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-      APP_TASKMENU_WIN_SetDecide(pWork->pAppWinLeader, TRUE);
-      _CHANGE_STATE(pWork,_modeAppWinFlashLeader);
+      if(0!= GFL_NET_GetNowConnectNum_IRCWIRELESS()){
+        PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+        APP_TASKMENU_WIN_SetDecide(pWork->pAppWinLeader, TRUE);
+        _CHANGE_STATE(pWork,_modeAppWinFlashLeader);
+      }
       break;
     default:
       break;
@@ -1679,8 +1704,10 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
   }
 
   
-  if(pWork->ircCenterAnim){  //4台の時2台を真ん中に
-
+  if(pWork->ircCenterAnim &&   //4台の時2台を真ん中に
+    (pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER) &&
+     (pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL)
+     ){
     _buttonWindowDelete(pWork);
     if(pWork->irccenterflg == TRUE){
 
@@ -1714,11 +1741,8 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
       pWork->ircCenterAnim=FALSE;
       GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
     }
-
-
-
   }
-  else if(pWork->ircmatchanim==TRUE){  //2台の時お互いを引く
+  else if((pWork->ircmatchanim==TRUE) && (pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER)){  //2台の時お互いを引く
     if(pWork->ircmatchflg==TRUE){
       _buttonWindowDelete(pWork);
       if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
@@ -1756,11 +1780,11 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
       return;
     }
   }
-  if(pWork->musicalNum != GFL_NET_GetNowConnectNum_IRCWIRELESS()){
-
-//    _musicalNumWindowCreate();
-
-    
+  if((pWork->selectType==EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER){
+    if(pWork->musicalNum != GFL_NET_GetNowConnectNum_IRCWIRELESS()){
+      _musicalNumWindowCreate(IRCBTL_STR_40, pWork);
+      pWork->musicalNum = GFL_NET_GetNowConnectNum_IRCWIRELESS();
+    }
   }
 
   GFL_BMN_Main( pWork->pButton );
@@ -1870,7 +1894,9 @@ static GFL_PROC_RESULT IrcBattleMatchProcMain( GFL_PROC * proc, int * seq, void 
   StateFunc* state = pWork->state;
   if(state != NULL){
     state(pWork);
-    retCode = GFL_PROC_RES_CONTINUE;
+    if(pWork->state){
+      retCode = GFL_PROC_RES_CONTINUE;
+    }
   }
   if(pWork->pAppTask){
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);
