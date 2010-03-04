@@ -172,6 +172,7 @@ enum
 enum
 {
   SEQ_START      = 0,
+  SEQ_PREPARE_0,
   SEQ_PREPARE,
   SEQ_FADE_IN,
   SEQ_MAIN,
@@ -599,7 +600,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
   {
   case SEQ_START:
     {
-      *seq = SEQ_PREPARE;
+      *seq = SEQ_PREPARE_0;
 
       // 切り替え
       {
@@ -676,6 +677,13 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
           BG_FRAME_M_REAR, BG_PAL_POS_M_REAR +0, BG_PAL_POS_M_REAR +1 );
       work->rear_wk_s = ZKNDTL_COMMON_RearInit( param->heap_id, ZKNDTL_COMMON_REAR_TYPE_FORM,
           BG_FRAME_S_REAR, BG_PAL_POS_S_REAR +0, BG_PAL_POS_S_REAR +1 );
+    }
+    break;
+  case SEQ_PREPARE_0:
+    {
+      // MCSSポケモン
+      // ポケモンが黒になるのを待つために、1フレーム余計に待つ
+      *seq = SEQ_PREPARE;
     }
     break;
   case SEQ_PREPARE:

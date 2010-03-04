@@ -20,12 +20,14 @@
 #include "pokeicon/pokeicon.h"
 #include "gamesystem/gamedata_def.h"
 #include "gamesystem/game_data.h"
+#include "gamesystem/pm_season.h"
 #include "savedata/zukan_savedata.h"
 #include "system/bmp_winframe.h"
 #include "print/printsys.h"
 #include "print/gf_font.h"
 #include "print/wordset.h"
 #include "sound/pm_sndsys.h"
+#include "field/zonedata.h"
 #include "app/townmap_data_sys.h"
 
 #include "zukan_detail_def.h"
@@ -295,6 +297,39 @@ SCROLL_STATE;
 
 #define SCROLL_VEL (8)  // 上画面のスクロールの速度(1フレームにこれだけ移動する)
 
+#define SEASON_R_ARROW_POS_X  (17*8)
+#define SEASON_R_ARROW_POS_Y  (0)
+#define SEASON_R_ARROW_SIZE_X (3*8)
+#define SEASON_R_ARROW_SIZE_Y (2*8)
+
+#define SEASON_ARROW_ANMSEQ_NORMAL (2)
+#define SEASON_ARROW_ANMSEQ_SELECT (3)
+
+#define SEASON_PANEL_POS_X  (0)
+#define SEASON_PANEL_POS_Y  (0)
+#define SEASON_PANEL_SIZE_X (20*8)
+#define SEASON_PANEL_SIZE_Y (3*8)
+
+#define DATA_IDX_NONE (0xFF)
+
+// カーソルの移動可能範囲 MIN<= <=MAX
+#define CURSOR_MOVE_RECT_X_MIN (0)
+#define CURSOR_MOVE_RECT_Y_MIN (16)
+#define CURSOR_MOVE_RECT_X_MAX (256 -16 -1)
+#define CURSOR_MOVE_RECT_Y_MAX (168 -1)
+// カーソルのデフォルト位置
+#define CURSOR_DEFAULT_POS_X (128)
+#define CURSOR_DEFAULT_POS_Y (96)
+
+// カーソルの移動
+#define CURSOR_ADD_SPEED		(3)              // カーソルの移動量
+#define PLACE_PULL_R_SQ			(12*12)          // カーソルを吸い込む範囲の二乗
+#define PLACE_PULL_STRONG		(FX32_CONST(1))	 // 吸い込む強さ（カーソルCURSOR_ADD_SPEEDより弱く）
+#define PLACE_PULL_FORCE    (FX32_SQRT3)     // カーソルが動いていないとき、これ未満の距離なら強制的に吸い込ませる(sqrt(2)< <2を満たす値)
+
+// リングのアニメ
+#define RING_CUR_ANMSEQ (5)
+
 // OBJ
 enum
 {
@@ -327,15 +362,21 @@ enum
   OBJ_MAX             = OBJ_TM_END,
 };
 
-// 季節
+// 各ポケモンの情報
+// 一年中か季節ごとか
 typedef enum
 {
-  SEASON_SPRING,
-  SEASON_SUMMER,
-  SEASON_AUTUMN,
-  SEASON_WINTER,
+  APPEAR_RULE_YEAR,
+  APPEAR_RULE_SEASON,
 }
-SEASON;
+APPEAR_RULE;
+// 生息地
+typedef enum
+{
+  HABITAT_UNKNOWN,  // 生息地不明
+  HABITAT_KNOWN,    // 生息地判明
+}
+HABITAT;
 
 
 //=============================================================================
@@ -370,6 +411,13 @@ typedef struct
   STATE                       state;
   SCROLL_STATE                scroll_state;
   SCROLL_STATE                pokeicon_scroll_state;
+  int                         ktst;  // GFL_APP_END_KEY(GFL_APP_KTST_KEY) or GFL_APP_END_TOUCH(GFL_APP_KTST_TOUCH)
+  u8                          season_id;  // PMSEASON_SPRING PMSEASON_SUMMER PMSEASON_AUTUMN PMSEASON_WINTER
+  u8                          select_data_idx;  // 街もダンジョンも道路も選んでいないときDATA_IDX_NONE
+
+  // 各ポケモンの情報
+  APPEAR_RULE                 appear_rule;
+  HABITAT                     habitat;
 
   // OBJ
   u32                         obj_res[OBJ_RES_MAX];
@@ -421,6 +469,9 @@ static void Zukan_Detail_Map_PlaceMain( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DET
 static void Zukan_Detail_Map_PlaceMainScroll( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Map_PlaceMainIcon( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
+// 下画面
+static void Zukan_Detail_Map_SeasonArrowMain( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
 // ポケアイコン
 static GFL_CLWK* PokeiconInit( UI_EASY_CLWK_RES* res, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, BOOL egg, u8 x, u8 y );
 static void PokeiconExit( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk );
@@ -432,16 +483,39 @@ static void PokeiconExit( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk );
     }
 // NULLを代入し忘れないようにマクロを使うようにしておく
 
+// プレイヤーの位置のデータインデックスを得る
+static u8 Zukan_Detail_Map_GetPlayerPosDataIdx( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 // プレイヤーの位置にOBJを配置する
 static void Zukan_Detail_Map_SetPlayer( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+// カーソルを配置する
+static void Zukan_Detail_Map_SetCursor( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+// プレイヤーの位置にカーソルを配置する
+static void Zukan_Detail_Map_SetCursorOnPlayer( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
+// 指定した座標とヒットするデータがあればそのデータインデックスを返す
+static u8 Zukan_Detail_Map_Hit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                                u8 x, u8 y );
+// 指定した座標は吸い込み範囲内か
+static BOOL Zukan_Detail_Map_IsPullHit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                                        u8 data_idx, u8 x, u8 y, u32* distance_sq );
+// 指定した座標を吸い込み範囲内に持つデータがあればそのデータインデックスを返す
+static u8 Zukan_Detail_Map_PullHit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                                u8 x, u8 y );
 
 // 操作
 static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+// マップ上の拠点の選択操作
+static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
 // 状態を遷移させる
 static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn,
                  STATE state );
 static void Zukan_Detail_Map_ChangePoke( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Map_ChangePlace( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
+// 何度も出てくる処理
+static void Zukan_Detail_Map_UtilPrintSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 
 //=============================================================================
@@ -499,6 +573,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcInit( ZKNDTL_PROC* proc, int* seq
   ZUKAN_DETAIL_MAP_PARAM*    param    = (ZUKAN_DETAIL_MAP_PARAM*)pwk;
   ZUKAN_DETAIL_MAP_WORK*     work;
 
+  const GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+
 #ifdef DEBUG_KAWADA
   {
     OS_Printf( "Zukan_Detail_Map_ProcInit\n" );
@@ -533,6 +609,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcInit( ZKNDTL_PROC* proc, int* seq
     work->state                    = STATE_TOP;
     work->scroll_state             = SCROLL_STATE_DOWN;
     work->pokeicon_scroll_state    = SCROLL_STATE_DOWN;
+    work->ktst                     = GFL_UI_CheckTouchOrKey();
+    work->season_id                = GAMEDATA_GetSeasonID(gamedata);
+    work->select_data_idx          = DATA_IDX_NONE;
   }
 
   // タウンマップデータ
@@ -593,6 +672,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcExit( ZKNDTL_PROC* proc, int* seq
 
   // タウンマップデータ
   TOWNMAP_DATA_Free( work->townmap_data );
+
+  // 状態
+  GFL_UI_SetTouchOrKey( work->ktst );
 
   // ヒープ
   ZKNDTL_PROC_FreeWork( proc );
@@ -813,9 +895,10 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
   {
     // 最背面
     ZKNDTL_COMMON_RearMain( work->rear_wk_s );
-
     // 上画面
     Zukan_Detail_Map_PlaceMain( param, work, cmn );
+    // 下画面
+    Zukan_Detail_Map_SeasonArrowMain( param, work, cmn );
   }
 
   // フェード
@@ -1035,13 +1118,13 @@ static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAI
     {
       // OBJ_ZUKAN_
       1,
-      //2,
-      2,
+      //SEASON_ARROW_ANMSEQ_NORMAL,
+      SEASON_ARROW_ANMSEQ_NORMAL,
       0,
 
       // OBJ_TM_
       4,
-      5,
+      RING_CUR_ANMSEQ,
       6,
     };
     u8 bgpri[OBJ_MAX] =
@@ -1398,6 +1481,23 @@ static void Zukan_Detail_Map_PlaceMainIcon( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN
 }
 
 //-------------------------------------
+/// 下画面
+//=====================================
+static void Zukan_Detail_Map_SeasonArrowMain( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  if( GFL_CLACT_WK_GetDrawEnable( work->obj_clwk[OBJ_SEASON_R] ) )
+  {
+    if( GFL_CLACT_WK_GetAnmSeq( work->obj_clwk[OBJ_SEASON_R] ) == SEASON_ARROW_ANMSEQ_SELECT )
+    {
+      if( !GFL_CLACT_WK_CheckAnmActive( work->obj_clwk[OBJ_SEASON_R] ) )
+      {
+        GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[OBJ_SEASON_R], SEASON_ARROW_ANMSEQ_NORMAL );
+      }
+    }
+  }
+}
+
+//-------------------------------------
 /// ポケアイコン
 //=====================================
 static GFL_CLWK* PokeiconInit( UI_EASY_CLWK_RES* res, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, BOOL egg, u8 x, u8 y )
@@ -1445,55 +1545,211 @@ static void PokeiconExit( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk )
 }
 
 //-------------------------------------
-/// プレイヤーの位置にOBJを配置する
+/// プレイヤーの位置のデータインデックスを得る
 //=====================================
-static void Zukan_Detail_Map_SetPlayer( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+static u8 Zukan_Detail_Map_GetPlayerPosDataIdx( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   GAMEDATA*       gamedata  = ZKNDTL_COMMON_GetGamedata(cmn);
   PLAYER_WORK*    player_wk = GAMEDATA_GetMyPlayerWork( gamedata );
   u16             zone_id   = PLAYERWORK_getZoneID( player_wk );
   u16             escape_id = GAMEDATA_GetEscapeLocation( gamedata )->zone_id;
  
-  BOOL b_find = FALSE;
-  u8   player_pos_idx;
+  u8   player_pos_data_idx = DATA_IDX_NONE;
 
-  GFL_CLACTPOS pos;
   u8 i;
 
   // ゾーンと完全対応する場所を取得
-  if( !b_find )
+  if( player_pos_data_idx == DATA_IDX_NONE )
   {
 	  for( i=0; i<TOWNMAP_DATA_MAX; i++ )
 	  {	
 	  	if( zone_id == TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_ZONE_ID ) )
       {
-        b_find = TRUE;
-        player_pos_idx = i;
+        player_pos_data_idx = i;
         break;
       }
     }
   }
   // 現在地がフィールドではないならば、エスケープID検索
-  if( !b_find )
+  if( player_pos_data_idx == DATA_IDX_NONE )
   {
 	  for( i=0; i<TOWNMAP_DATA_MAX; i++ )
 	  {	
 	  	if( escape_id == TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_ZONE_ID ) )
       {
-        b_find = TRUE;
-        player_pos_idx = i;
+        player_pos_data_idx = i;
         break;
       }
     }
   }
 
-  if( b_find )
+  return player_pos_data_idx;
+}
+
+//-------------------------------------
+/// プレイヤーの位置にOBJを配置する
+//=====================================
+static void Zukan_Detail_Map_SetPlayer( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  GFL_CLACTPOS pos;
+
+  u8 player_pos_data_idx = Zukan_Detail_Map_GetPlayerPosDataIdx( param, work, cmn );
+  
+  if( player_pos_data_idx != DATA_IDX_NONE )
   {
-    pos.x = TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_POS_X );
-    pos.y = TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_POS_Y );
+    pos.x = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, player_pos_data_idx, TOWNMAP_DATA_PARAM_POS_X );
+    pos.y = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, player_pos_data_idx, TOWNMAP_DATA_PARAM_POS_Y );
     GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_HERO], &pos, CLSYS_DEFREND_MAIN );
     GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_HERO], TRUE );
   }
+}
+
+//-------------------------------------
+/// カーソルを配置する
+//=====================================
+static void Zukan_Detail_Map_SetCursor( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  GFL_CLACTPOS pos = { CURSOR_DEFAULT_POS_X, CURSOR_DEFAULT_POS_Y };  // デフォルト位置
+
+  // どこの拠点も選択していないときは、プレイヤーの位置にカーソルを合わせておく
+  if( work->select_data_idx == DATA_IDX_NONE )
+  {
+    work->select_data_idx = Zukan_Detail_Map_GetPlayerPosDataIdx( param, work, cmn );
+  }
+
+  if( work->select_data_idx != DATA_IDX_NONE )
+  {
+    pos.x = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, work->select_data_idx, TOWNMAP_DATA_PARAM_POS_X );
+    pos.y = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, work->select_data_idx, TOWNMAP_DATA_PARAM_POS_Y );
+  }
+  
+  GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_CURSOR], &pos, CLSYS_DEFREND_MAIN );
+  GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_CURSOR], TRUE );
+}
+
+//-------------------------------------
+/// プレイヤーの位置にカーソルを配置する
+//=====================================
+static void Zukan_Detail_Map_SetCursorOnPlayer( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 絶対にプレイヤーの位置にカーソルを合わせたいので、プレイヤーの位置の拠点を選択しておく
+  work->select_data_idx = Zukan_Detail_Map_GetPlayerPosDataIdx( param, work, cmn );
+
+  Zukan_Detail_Map_SetCursor( param, work, cmn );
+}
+
+//-------------------------------------
+/// 指定した座標とヒットするデータがあればそのデータインデックスを返す
+//=====================================
+static u8 Zukan_Detail_Map_Hit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                                u8 x, u8 y )
+{
+  // 最小距離のものを残す
+  fx32  distance_min;
+  u8    distance_min_hit_data_idx = DATA_IDX_NONE;
+  u8  i;
+
+	GFL_COLLISION3D_CIRCLE		circle;
+	VecFx32	v;
+
+  v.x	= FX32_CONST( x );
+  v.y	= FX32_CONST( y );
+  v.z	= 0;
+  GFL_COLLISION3D_CIRCLE_SetData( &circle, &v, 0 );
+
+  for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+  {
+	  GFL_COLLISION3D_CYLINDER	cylinder;
+	  VecFx32	v1, v2;
+	  fx32 w;
+    GFL_COLLISION3D_CYLXCIR_RESULT  result;
+
+  	v1.x	= FX32_CONST( TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_HIT_START_X ) );
+  	v1.y	= FX32_CONST( TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_HIT_START_Y ) );
+  	v1.z	= 0;
+  	v2.x	= FX32_CONST( TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_HIT_END_X ) );
+  	v2.y	= FX32_CONST( TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_HIT_END_Y ) );
+  	v2.z	= 0;
+	  w			= FX32_CONST( TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_HIT_WIDTH ) );
+	  GFL_COLLISION3D_CYLINDER_SetData( &cylinder, &v1, &v2, w );
+
+    // 最初距離か
+	  if( GFL_COLLISION3D_CYLXCIR_Check( &cylinder, &circle, &result ) )
+    {
+      if( distance_min_hit_data_idx == DATA_IDX_NONE )
+      {
+        distance_min = result.dist;
+        distance_min_hit_data_idx = i;
+      }
+      else
+      {
+        if( distance_min > result.dist )
+        {
+          distance_min = result.dist;
+          distance_min_hit_data_idx = i;
+        }
+      }
+    }
+  }
+
+  return distance_min_hit_data_idx;
+}
+
+//-------------------------------------
+/// 指定した座標は吸い込み範囲内か
+//=====================================
+static BOOL Zukan_Detail_Map_IsPullHit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                                        u8 data_idx, u8 x, u8 y, u32* distance_sq )
+{
+  u32 data_x, data_y;
+  u32 d2;
+
+  data_x = TOWNMAP_DATA_GetParam( work->townmap_data, data_idx, TOWNMAP_DATA_PARAM_CURSOR_X );
+  data_y = TOWNMAP_DATA_GetParam( work->townmap_data, data_idx, TOWNMAP_DATA_PARAM_CURSOR_Y );
+
+  d2 = ( data_x - x ) * ( data_x - x ) + ( data_y - y ) * ( data_y - y );
+
+  if( d2 < PLACE_PULL_R_SQ )
+  {
+    if( distance_sq ) *distance_sq = d2;
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+//-------------------------------------
+/// 指定した座標を吸い込み範囲内に持つデータがあればそのデータインデックスを返す
+//=====================================
+static u8 Zukan_Detail_Map_PullHit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                                u8 x, u8 y )
+{
+	u32 now_distance_sq;
+	u32 best_distance_sq;
+  u8  best_idx           = DATA_IDX_NONE;
+  u8  i;
+
+	// 複数衝突していたならば一番近くのものを返す
+  for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+  {
+		if( Zukan_Detail_Map_IsPullHit( param, work, cmn, i, x, y, &now_distance_sq ) )
+    {
+      if( best_idx == DATA_IDX_NONE )
+      {
+        best_idx = i;
+        best_distance_sq = now_distance_sq;
+      }
+      else
+      {
+        if( best_distance_sq > now_distance_sq )
+        {
+          best_idx = i;
+          best_distance_sq = now_distance_sq;
+        }
+      }
+    }
+  }
+  return best_idx;
 }
 
 //-------------------------------------
@@ -1509,13 +1765,41 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
       BOOL change_state = FALSE;
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
       {
+        work->ktst = GFL_APP_KTST_KEY;
         change_state = TRUE;
       }
       else
       {
 		    if( GFL_UI_TP_GetPointTrg( &x, &y ) )
         {
-          if( 0<=y&&y<168) change_state = TRUE;
+          if( work->appear_rule == APPEAR_RULE_YEAR )
+          {
+            if( 0<=y&&y<168)
+            {
+              work->ktst = GFL_APP_KTST_TOUCH;
+              change_state = TRUE;
+            }
+          }
+          else
+          {
+            if(    SEASON_R_ARROW_POS_X<=x&&x<SEASON_R_ARROW_POS_X+SEASON_R_ARROW_SIZE_X
+                && SEASON_R_ARROW_POS_Y<=y&&y<SEASON_R_ARROW_POS_Y+SEASON_R_ARROW_SIZE_Y )
+            {
+              work->ktst = GFL_APP_KTST_TOUCH;
+              Zukan_Detail_Map_ChangeSeason( param, work, cmn );
+              PMSND_PlaySE( SEQ_SE_DECIDE1 );
+            }
+            else if(    SEASON_PANEL_POS_X<=x&&x<SEASON_PANEL_POS_X+SEASON_PANEL_SIZE_X
+                     && SEASON_PANEL_POS_Y<=y&&y<SEASON_PANEL_POS_Y+SEASON_PANEL_SIZE_Y )
+            {
+              // 季節名を表示している場所をタッチしたときは、何もしない
+            }
+            else if(0<=y&&y<168)
+            {
+              work->ktst = GFL_APP_KTST_TOUCH;
+              change_state = TRUE;
+            }
+          }
         }
       }
       if( change_state )
@@ -1527,8 +1811,215 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
     break;
   case STATE_SELECT:
     {
+      u32 x, y;
+      BOOL select_enable = TRUE;
+      if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+      {
+        if( work->appear_rule == APPEAR_RULE_SEASON )
+        {
+          if(    SEASON_R_ARROW_POS_X<=x&&x<SEASON_R_ARROW_POS_X+SEASON_R_ARROW_SIZE_X
+              && SEASON_R_ARROW_POS_Y<=y&&y<SEASON_R_ARROW_POS_Y+SEASON_R_ARROW_SIZE_Y )
+          {
+            work->ktst = GFL_APP_KTST_TOUCH;
+            Zukan_Detail_Map_ChangeSeason( param, work, cmn );
+            PMSND_PlaySE( SEQ_SE_DECIDE1 );
+            select_enable = FALSE;
+          }
+          else if(    SEASON_PANEL_POS_X<=x&&x<SEASON_PANEL_POS_X+SEASON_PANEL_SIZE_X
+                   && SEASON_PANEL_POS_Y<=y&&y<SEASON_PANEL_POS_Y+SEASON_PANEL_SIZE_Y )
+          {
+            // 季節名を表示している場所をタッチしたときは、マップ上の拠点の選択操作はしていないものとする
+            select_enable = FALSE;
+          }
+        }
+      }
+      if( select_enable )
+      {
+        // マップ上の拠点の選択操作
+        Zukan_Detail_Map_InputSelect( param, work, cmn );
+      }
     }
     break;
+  }
+}
+
+//-------------------------------------
+/// マップ上の拠点の選択操作
+//=====================================
+static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u32 x, y;
+
+  // キー or タッチの変更
+  if( work->ktst == GFL_APP_KTST_KEY )
+  {
+    if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+    {
+      work->ktst = GFL_APP_KTST_TOUCH;
+      // カーソルを非表示にする
+      {
+        GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_CURSOR], FALSE );
+      }
+      // タッチに変更になった場合は、タッチの処理を続ける
+    }
+  }
+  else
+  {
+    if( GFL_UI_KEY_GetTrg() )
+    {
+      work->ktst = GFL_APP_KTST_KEY;
+      // カーソルを配置する
+      Zukan_Detail_Map_SetCursor( param, work, cmn );
+      Zukan_Detail_Map_ChangePlace( param, work, cmn );
+      // キーに変更になった場合は、キーに変更しただけで処理を終える
+      return;
+    }
+  }
+
+  // キー入力で選択操作
+  if( work->ktst == GFL_APP_KTST_KEY )
+  {
+    u8            select_data_idx_prev  = work->select_data_idx;
+    GFL_CLACTPOS  pos;
+    int           key_cont;
+    BOOL          user_move             = FALSE;  // ユーザの上下左右の入力による移動があるならTRUE
+    BOOL          pull_move             = FALSE;  // 吸い込みによる移動があるならTRUE
+	  GFL_CLACTPOS  pull_pos;
+    BOOL          pull_force            = FALSE;  // もし吸い込みしかない場合、強制的に吸い込ませるか否か
+    VecFx32	norm	= {0,0,0};
+	  VecFx32	pull	= {0,0,0};
+
+    // 移動前の位置
+    GFL_CLACT_WK_GetPos( work->obj_clwk[OBJ_CURSOR], &pos, CLSYS_DEFREND_MAIN );
+
+    // 移動後の位置
+    // ユーザの上下左右の入力による移動
+    key_cont = GFL_UI_KEY_GetCont();
+    if(    ( key_cont & PAD_KEY_RIGHT )
+        || ( key_cont & PAD_KEY_LEFT )
+        || ( key_cont & PAD_KEY_UP )
+        || ( key_cont & PAD_KEY_DOWN ) )
+    {
+      user_move = TRUE;
+      
+      if( key_cont & PAD_KEY_RIGHT ) norm.x += FX32_ONE;
+      if( key_cont & PAD_KEY_LEFT )  norm.x -= FX32_ONE;
+      if( key_cont & PAD_KEY_UP )    norm.y -= FX32_ONE;
+      if( key_cont & PAD_KEY_DOWN )  norm.y += FX32_ONE;
+    }
+
+    // 吸い込まれる処理
+    // 吸い込み範囲内ならば吸い込まれる
+    {
+      u8 pull_data_idx = Zukan_Detail_Map_PullHit( param, work, cmn, (u8)pos.x, (u8)pos.y ); 
+      if( pull_data_idx != DATA_IDX_NONE )
+      {
+        VecFx32  place_pos;
+        VecFx32  now_pos;
+        
+        pull_move = TRUE;
+        pull_pos.x = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, pull_data_idx, TOWNMAP_DATA_PARAM_CURSOR_X );
+        pull_pos.y = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, pull_data_idx, TOWNMAP_DATA_PARAM_CURSOR_Y );
+
+        place_pos.x = FX32_CONST( pull_pos.x );
+        place_pos.y = FX32_CONST( pull_pos.y );
+
+        place_pos.z = 0;
+
+        now_pos.x = FX32_CONST( pos.x );
+        now_pos.y = FX32_CONST( pos.y );
+        now_pos.z = 0;
+
+        VEC_Subtract( &place_pos, &now_pos, &pull );
+
+        // もし吸い込みしかない場合、強制的に吸い込ませるか否か
+        if( VEC_Mag(&pull) < PLACE_PULL_FORCE )
+        {
+          pull_force = TRUE;
+        }
+        // もし一定以上の距離ならば、最大値までにおさめる
+        if( VEC_Mag(&pull) > PLACE_PULL_STRONG )
+        {
+          VEC_Normalize( &pull, &pull );
+          GFL_CALC3D_VEC_MulScalar( &pull, PLACE_PULL_STRONG, &pull );
+        }
+      }
+    }
+
+    // 移動計算
+    if( user_move || pull_move )
+    {
+      // 吸い込みしかなく、強制的に吸い込ませる場合
+      if( (!user_move) && pull_move && pull_force )
+      {
+        pos = pull_pos;
+      }
+      else
+      {
+    		VecFx32	add;
+	    	VEC_Normalize( &norm, &norm );
+
+		    add.x	= (norm.x * CURSOR_ADD_SPEED)	+ pull.x;
+		    add.y	= (norm.y * CURSOR_ADD_SPEED)	+ pull.y;
+		    add.z	=	0;
+
+	    	if( 0 < add.x && add.x < FX32_ONE )
+		    {	
+			    add.x	= FX32_ONE;
+    		}
+	    	else if( -FX32_ONE < add.x && add.x < 0 )
+		    {	
+		    	add.x = -FX32_ONE;
+	    	}
+	    	if( 0 < add.y && add.y < FX32_ONE )
+		    {	
+		    	add.y	= FX32_ONE;
+	    	}
+	    	else if( -FX32_ONE < add.y && add.y < 0 )
+		    {	
+			    add.y = -FX32_ONE;
+    		}
+
+	    	pos.x	+= add.x >> FX32_SHIFT; 
+	    	pos.y	+= add.y >> FX32_SHIFT;
+      }
+
+      pos.x = MATH_CLAMP( pos.x, CURSOR_MOVE_RECT_X_MIN, CURSOR_MOVE_RECT_X_MAX );
+      pos.y = MATH_CLAMP( pos.y, CURSOR_MOVE_RECT_Y_MIN, CURSOR_MOVE_RECT_Y_MAX );
+      
+      GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_CURSOR], &pos, CLSYS_DEFREND_MAIN );
+    
+      // ヒット判定
+      work->select_data_idx = Zukan_Detail_Map_Hit( param, work, cmn, (u8)pos.x, (u8)pos.y );
+
+      if( work->select_data_idx != select_data_idx_prev )
+      {
+        // 場所更新
+        Zukan_Detail_Map_ChangePlace( param, work, cmn );
+ 
+        if( work->select_data_idx != DATA_IDX_NONE )
+        {
+          PMSND_PlaySE( SEQ_SE_SELECT1 );
+        }
+      }
+    }
+  }
+  // タッチ入力で選択操作
+  else
+  {
+    if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+    {
+      // ヒット判定
+      work->select_data_idx = Zukan_Detail_Map_Hit( param, work, cmn, (u8)x, (u8)y );
+
+      // 場所更新
+      Zukan_Detail_Map_ChangePlace( param, work, cmn );
+      
+      if( work->select_data_idx != DATA_IDX_NONE )
+      {
+        PMSND_PlaySE( SEQ_SE_DECIDE1 );
+      }
+    }
   }
 }
 
@@ -1550,6 +2041,20 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
         work->scroll_state             = SCROLL_STATE_DOWN_TO_UP;
         work->pokeicon_scroll_state    = SCROLL_STATE_DOWN_TO_UP;
 
+        // カーソルを表示する
+        if( work->habitat == HABITAT_KNOWN )
+        {
+          if( work->ktst == GFL_APP_KTST_KEY )
+          {
+            Zukan_Detail_Map_SetCursorOnPlayer( param, work, cmn );
+          }
+          else
+          {
+            work->select_data_idx = DATA_IDX_NONE;
+          }
+          Zukan_Detail_Map_ChangePlace( param, work, cmn );
+        }
+
         // タッチバー
         ZUKAN_DETAIL_TOUCHBAR_SetType(
             touchbar,
@@ -1564,7 +2069,16 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
       {
         work->scroll_state             = SCROLL_STATE_UP_TO_DOWN;
         work->pokeicon_scroll_state    = SCROLL_STATE_UP_TO_DOWN;
-        
+       
+        // カーソルを非表示にする
+        {
+          GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_CURSOR], FALSE );
+        }
+        // リングを非表示にする
+        {
+          GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_RING_CUR], FALSE );
+        }
+
         // タッチバー
         ZUKAN_DETAIL_TOUCHBAR_SetType(
             touchbar,
@@ -1583,11 +2097,11 @@ static void Zukan_Detail_Map_ChangePoke( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DE
 {
   // ポケモンを変更したとき
 
-  // 現在の状態
-  SEASON season_curr = SEASON_SPRING;
-
   // 変更後のポケモン
   u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
+
+  work->appear_rule  = APPEAR_RULE_SEASON;
+  work->habitat      = HABITAT_KNOWN;
 
   // ポケアイコン
   {
@@ -1639,15 +2153,37 @@ static void Zukan_Detail_Map_ChangePoke( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DE
     GFL_STR_DeleteBuffer( strbuf );
   }
 
-  // 分布
+  // 生息地不明
   // 前のをクリア
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_UNKNOWN]), 0 );
   GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_UNKNOWN] );
   GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_UNKNOWN], FALSE );
+
+  // 季節表示
+  // 前のをクリア
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_SEASON]), 0 );
+  GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_SEASON] );
   GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON], FALSE );
   GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON_R], FALSE );
+
   // 次のを表示
-  // 生息地不明のとき
+  // 1年中同じ分布のとき
+  if( work->appear_rule == APPEAR_RULE_YEAR )
+  {
+    // 何もしない
+  }
+  // 季節ごとに分布が変わるとき
+  else
+  {
+    Zukan_Detail_Map_UtilPrintSeason( param, work, cmn );
+    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON], TRUE );
+
+    GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[OBJ_SEASON_R], SEASON_ARROW_ANMSEQ_NORMAL );
+    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON_R], TRUE );
+  }
+
+  // 今の季節の生息地が不明のとき
+  if( work->habitat == HABITAT_UNKNOWN )
   {
     WORDSET* wordset;
     STRBUF* src_strbuf;
@@ -1672,26 +2208,10 @@ static void Zukan_Detail_Map_ChangePoke( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DE
 
     GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_UNKNOWN], TRUE );
   }
-  // 1年中同じ分布のとき
+  // 今の季節の生息地が判明しているとき
+  else
   {
-  }
-  // 季節ごとに分布が変わるとき
-  {
-    STRBUF* strbuf;
-    u16     str_width;
-    u16     bmp_width;
-    u16     x;
-    strbuf = GFL_MSG_CreateString( work->msgdata[MSG_ZUKAN], ZKN_MAP_SPRING + season_curr );
-    str_width = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
-    bmp_width = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_SEASON]) );
-    x = ( bmp_width - str_width ) / 2;
-    PRINTSYS_PrintQueColor( work->print_que, GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_SEASON]),
-                            x, 1, strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
-    GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[TEXT_SEASON] );
-    GFL_STR_DeleteBuffer( strbuf );
-
-    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON], TRUE );
-    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON_R], TRUE );
+    // 生息場所を表示する
   }
 }
 
@@ -1702,5 +2222,73 @@ static void Zukan_Detail_Map_ChangePlace( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
   // 前のをクリア
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_PLACENAME]), 0 );
   GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_PLACENAME] );
+  GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_RING_CUR], FALSE );
+
+  // 次のを表示
+  if( work->select_data_idx != DATA_IDX_NONE )
+  {
+    STRBUF* strbuf;
+		u16 zone_id = TOWNMAP_DATA_GetParam( work->townmap_data, work->select_data_idx, TOWNMAP_DATA_PARAM_ZONE_ID );
+		GF_ASSERT( zone_id != TOWNMAP_DATA_ERROR );
+    strbuf = GFL_MSG_CreateString( work->msgdata[MSG_PLACE], ZONEDATA_GetPlaceNameID( zone_id ) );
+    PRINTSYS_PrintQueColor( work->print_que, GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_PLACENAME]),
+                            0, 1, strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[TEXT_PLACENAME] );
+    GFL_STR_DeleteBuffer( strbuf );
+
+    {
+      GFL_CLACTPOS pos;
+      pos.x = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, work->select_data_idx, TOWNMAP_DATA_PARAM_POS_X );
+      pos.y = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, work->select_data_idx, TOWNMAP_DATA_PARAM_POS_Y );
+      GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[OBJ_RING_CUR], RING_CUR_ANMSEQ );
+      GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_RING_CUR], &pos, CLSYS_DEFREND_MAIN );
+      GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_RING_CUR], TRUE );
+    }
+  }
+}
+
+static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 季節を変更したとき
+
+  // 1年中同じ分布のときは、この関数は呼び出されない
+
+  // 変更後の季節にする
+  work->season_id++;
+  if( work->season_id >= PMSEASON_TOTAL ) work->season_id = PMSEASON_SPRING;
+
+  // 季節表示
+  // 前のをクリア
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_SEASON]), 0 );
+  GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_SEASON] );
+
+  // 次のを表示
+  Zukan_Detail_Map_UtilPrintSeason( param, work, cmn );
+  
+  GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[OBJ_SEASON_R], SEASON_ARROW_ANMSEQ_SELECT );
+
+  // カーソルを非表示にする
+  {
+    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_CURSOR], FALSE );
+  }
+}
+
+//-------------------------------------
+/// 何度も出てくる処理
+//=====================================
+static void Zukan_Detail_Map_UtilPrintSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  STRBUF* strbuf;
+  u16     str_width;
+  u16     bmp_width;
+  u16     x;
+  strbuf = GFL_MSG_CreateString( work->msgdata[MSG_ZUKAN], ZKN_MAP_SPRING + work->season_id );
+  str_width = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
+  bmp_width = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_SEASON]) );
+  x = ( bmp_width - str_width ) / 2;
+  PRINTSYS_PrintQueColor( work->print_que, GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_SEASON]),
+                          x, 1, strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
+  GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[TEXT_SEASON] );
+  GFL_STR_DeleteBuffer( strbuf );
 }
 
