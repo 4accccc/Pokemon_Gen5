@@ -738,9 +738,9 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 #endif		//金銀で不要
 
 	// 一行ウインドウ
-	wk->MsgWin= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
+	wk->MsgWin= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
 		LINE_TEXT_X, LINE_TEXT_Y, LINE_TEXT_SX, LINE_TEXT_SY, 
-		WORLDTRADE_TALKFONT_PAL,  LINE_MESSAGE_OFFSET );
+		WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
 	GFL_BMPWIN_MakeTransWindow(wk->MsgWin);
@@ -749,10 +749,10 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 
 	// あずけるポケモン・ほしいポケモン情報BMPWIN確保
 	for(i=0;i<6;i++){
-		wk->InfoWin[i] = GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME3_M,
+		wk->InfoWin[i] = GFL_BMPWIN_Create( GFL_BG_FRAME3_M,
 			infomation_bmp_table[i][0], infomation_bmp_table[i][1], 
 			INFORMATION_STR_SX, INFORMATION_STR_SY, WORLDTRADE_TALKFONT_PAL,  
-			INFOMATION_STR_OFFSET+(INFORMATION_STR_SX*INFORMATION_STR_SY)*i  );
+			GFL_BMP_CHRAREA_GET_B  );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[i]), 0x0000 );
 		GFL_BMPWIN_MakeTransWindow(wk->InfoWin[i]);
 	}

@@ -552,8 +552,8 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 	// ---------- メイン画面 ------------------
 
 	// BG0面BMP（会話ウインドウ）確保
-	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
-		TALK_WIN_X, TALK_WIN_Y, TALK_WIN_SX, TALK_WIN_SY, WORLDTRADE_TALKFONT_PAL,  TALK_MESSAGE_OFFSET );
+	wk->MsgWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
+		TALK_WIN_X, TALK_WIN_Y, TALK_WIN_SX, TALK_WIN_SY, WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
 	GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 

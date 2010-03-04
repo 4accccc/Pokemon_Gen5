@@ -411,18 +411,18 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 	case MODE_HEADWORD_1:
 		// 子音BMPWIN確保
 		for(i=0;i<MODE_HEADWORD1_WIN_NUM;i++){
-			wk->MenuBmp[i]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   word_table[i][0],		word_table[i][1],	
 									   INPUT_LETTER_W, 			INPUT_LETTER_H, 
-									   WORLDTRADE_INPUT_PAL,  	INPUT_BMPWIN_OFFSET+2*2*i );
+									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 		//	GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
 		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
 									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	HEAD1_BACK_BMPWIN_OFFSET );
+									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
@@ -431,26 +431,26 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 	// 名前入力頭文字２
 	case MODE_HEADWORD_2:
 		// 母音BMPWIN確保
-		wk->MenuBmp[0]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+		wk->MenuBmp[0]	= GFL_BMPWIN_Create( wk->BgFrame,
 								   word_table[11][0],		word_table[11][1],	
 								   INPUT_LETTER_W, 			INPUT_LETTER_H, 
-								   WORLDTRADE_INPUT_PAL,  	INPUT_BMPWIN_OFFSET+2*2*0 );
+								   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[0]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[0] );
 
 		for(i=1;i<MODE_HEADWORD2_WIN_NUM;i++){
-			wk->MenuBmp[i]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
 								word_table[i-1][0],		word_table[i-1][1],	
 								INPUT_LETTER_W, 		INPUT_LETTER_H, 
-								WORLDTRADE_INPUT_PAL,  	INPUT_BMPWIN_OFFSET+2*2*i );
+								WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
 		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
 									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	HEAD2_BACK_BMPWIN_OFFSET );
+									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 		break;
@@ -458,55 +458,55 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 	// 名前入力
 	case MODE_POKEMON_NAME:
 		for(i=0;i<MODE_POKENAME_WIN_NUM;i++){
-			wk->MenuBmp[i]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   name_table[i][0],		name_table[i][1],	
 									   INPUT_POKENAME_W, 		INPUT_POKENAME_H, 
 									   WORLDTRADE_INPUT_PAL,  	
-									   INPUT_BMPWIN_OFFSET+INPUT_POKENAME_W*INPUT_POKENAME_H*i );
+									   GFL_BMP_CHRAREA_GET_B );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
 
 		// ページ数表示用BMP
-		wk->MenuBmp[MODE_POKENAME_WIN_NUM]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+		wk->MenuBmp[MODE_POKENAME_WIN_NUM]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   INPUT_PAGE_X,			INPUT_PAGE_Y,	
 									   INPUT_NAME_PAGE_W, 		INPUT_NAME_PAGE_H, 
-									   WORLDTRADE_INPUT_PAL,  	POKENAME_PAGE_BMPWIN_OFFSET );
+									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[MODE_POKENAME_WIN_NUM]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[MODE_POKENAME_WIN_NUM] );
 
 		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
 									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	POKENAME_BACK_BMPWIN_OFFSET );
+									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 		break;
 	case MODE_NATION_HEAD1:
 		// 子音BMPWIN確保
 		for(i=0;i<MODE_NATION_HEADWORD1_WIN_NUM;i++){
-			wk->MenuBmp[i]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   word_table[i][0],		word_table[i][1],	
 									   INPUT_LETTER_W, 			INPUT_LETTER_H, 
-									   WORLDTRADE_INPUT_PAL,  	INPUT_BMPWIN_OFFSET+2*2*i );
+									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
 
 		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
 									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	HEAD1_BACK_BMPWIN_OFFSET );
+									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
 		// 「きにしない」
-		wk->MenuBmp[BMPWIN_NONE_SELECT_WIN]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+		wk->MenuBmp[BMPWIN_NONE_SELECT_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 								   INPUT_NATION_NONE_SELECT_X,	INPUT_NATION_NONE_SELECT_Y,	
 								   INPUT_NONE_W, 				INPUT_NONE_H, 
-								   WORLDTRADE_INPUT_PAL,  		HEAD1_NONE_BMPWIN_OFFSET );
+								   WORLDTRADE_INPUT_PAL,  		GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_NONE_SELECT_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_NONE_SELECT_WIN] );
 
@@ -515,27 +515,27 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 	case MODE_NATION:
 		// 国名BMPWIN確保
 		for(i=0;i<MODE_NATION_WIN_NUM;i++){
-			wk->MenuBmp[i]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   nation_table[i][0],		nation_table[i][1],	
 									   INPUT_NATION_W, 			INPUT_NATION_H, 
 									   WORLDTRADE_INPUT_PAL,  	
-									   INPUT_BMPWIN_OFFSET+INPUT_NATION_W*INPUT_NATION_H*i );
+									   GFL_BMP_CHRAREA_GET_B );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
 		// ページ数表示用BMP
-		wk->MenuBmp[MODE_NATION_WIN_NUM]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+		wk->MenuBmp[MODE_NATION_WIN_NUM]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   INPUT_NATION_PAGE_X,		INPUT_NATION_PAGE_Y,	
 									   INPUT_NAME_PAGE_W, 		INPUT_NAME_PAGE_H, 
-									   WORLDTRADE_INPUT_PAL,  	NATION_PAGE_BMPWIN_OFFSET );
+									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[MODE_NATION_WIN_NUM]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[MODE_NATION_WIN_NUM] );
 
 		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									nation_table[5][0],		nation_table[5][1],	
 									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	NATION_BACK_BMPWIN_OFFSET );
+									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
@@ -543,18 +543,18 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 	case MODE_SEX:
 		// 性別選択
 		for(i=0;i<MODE_SEX_WIN_NUM;i++){
-			wk->MenuBmp[i]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   sexselect_table[i][0],	sexselect_table[i][1],	
 									   INPUT_SEXSELECT_W, 		INPUT_SEXSELECT_H, 
-									   WORLDTRADE_INPUT_PAL,  	INPUT_BMPWIN_OFFSET+INPUT_SEXSELECT_W*INPUT_SEXSELECT_H*i );
+									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
 		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
 									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	SEX_BACK_BMPWIN_OFFSET );
+									WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 		
@@ -562,27 +562,27 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 	case MODE_LEVEL:
 		// 性別選択
 		for(i=0;i<MODE_LEVEL_WIN_NUM;i++){
-			wk->MenuBmp[i]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   levelselect_table[i][0],	levelselect_table[i][1],	
 									   INPUT_LEVELSELECT_W, 	INPUT_LEVELSELECT_H, 
-									   WORLDTRADE_INPUT_PAL,  	INPUT_BMPWIN_OFFSET+INPUT_LEVELSELECT_W*INPUT_LEVELSELECT_H*i );
+									   WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_B);
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
 
 		// ページ数表示用
-		wk->MenuBmp[MODE_LEVEL_WIN_NUM]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+		wk->MenuBmp[MODE_LEVEL_WIN_NUM]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   INPUT_PAGE_X,			INPUT_PAGE_Y,	
 									   INPUT_NAME_PAGE_W, 		INPUT_NAME_PAGE_H, 
-									   WORLDTRADE_INPUT_PAL,  	LEVEL_PAGE_BMPWIN_OFFSET);
+									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B);
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[MODE_LEVEL_WIN_NUM]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[MODE_LEVEL_WIN_NUM] );
 
 		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_CreateFixPos( wk->BgFrame,
+		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
 									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	LEVEL_BACK_BMPWIN_OFFSET );
+									WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 

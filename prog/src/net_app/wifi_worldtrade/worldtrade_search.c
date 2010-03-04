@@ -513,13 +513,13 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 
 
 	// メイン画面BG1キャラ転送
-	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_search_lz_ncgr,  GFL_BG_FRAME1_M, 0, 16*5*0x20, 1, HEAPID_WORLDTRADE);
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_search_lz_ncgr,  GFL_BG_FRAME1_M, 0, 0, 1, HEAPID_WORLDTRADE);
 
 	// メイン画面BG1スクリーン転送
 	GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_worldtrade_search_lz_nscr,  GFL_BG_FRAME1_M, 0, 32*24*2, 1, HEAPID_WORLDTRADE);
 
 	// メイン画面BG2キャラ転送
-	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_input_lz_ncgr,   GFL_BG_FRAME2_M, 0, 16*3*0x20, 1, HEAPID_WORLDTRADE);
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_input_lz_ncgr,   GFL_BG_FRAME2_M, 0, 0, 1, HEAPID_WORLDTRADE);
 
 
 	// サブ画面BG1キャラ転送
@@ -700,9 +700,9 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 {
 	// ---------- メイン画面 ------------------
 
-//	GFL_BMPWIN_CreateFixPos( &wk->TitleWin, GFL_BG_FRAME0_M,
+//	GFL_BMPWIN_Create( &wk->TitleWin, GFL_BG_FRAME0_M,
 //		TITLE_TEXT_X, TITLE_TEXT_Y, TITLE_TEXT_SX, TITLE_TEXT_SY, 
-//		WORLDTRADE_TALKFONT_PAL,  TITLE_MESSAGE_OFFSET );
+//		WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );
 
 //	GFL_BMP_Clear( &wk->TitleWin, 0x0000 );
 	
@@ -710,13 +710,15 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 //	WorldTrade_TalkPrint( &wk->TitleWin, wk->TitleString, 0, 1, 0, PRINTSYS_LSB_Make(15,13,0) );
 
 	// 会話ウインドウ
-	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
+	wk->MsgWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
 		LINE_TEXT_X, LINE_TEXT_Y, LINE_TEXT_SX, LINE_TEXT_SY, 
-		WORLDTRADE_TALKFONT_PAL,  LINE_MESSAGE_OFFSET );
+		WORLDTRADE_TALKFONT_PAL, GFL_BMP_CHRAREA_GET_B );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
 	GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 
+  //BG３面はフォントのみ
+  GFL_BG_FillCharacter( GFL_BG_FRAME3_M, 0, 1, 0 );
 
 	// BG0面BMPWIN情報ウインドウ確保
 	{
@@ -724,35 +726,35 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 
 		// ほしいポケモン情報x６文字列
 		for(i=0;i<6;i++){
-			wk->InfoWin[i]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME3_M,
+			wk->InfoWin[i]	= GFL_BMPWIN_Create( GFL_BG_FRAME3_M,
 					infomation_bmpwin_table[i][0], 
 					infomation_bmpwin_table[i][1], 
 					INFORMATION_STR_SX, INFORMATION_STR_SY,
 					WORLDTRADE_TALKFONT_PAL,  
-					INFOMATION_STR_OFFSET + (INFORMATION_STR_SX*INFORMATION_STR_SY)*i );
+					GFL_BMP_CHRAREA_GET_F );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[i]), 0x0000 );
 			GFL_BMPWIN_MakeTransWindow( wk->InfoWin[i] );
 		}
 
 		// 住んでいる所・国名
 		for(i=0;i<2;i++){
-			wk->CountryWin[i]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME3_M,
+			wk->CountryWin[i]	= GFL_BMPWIN_Create( GFL_BG_FRAME3_M,
 					country_bmpwin_table[i][0], 
 					country_bmpwin_table[i][1], 
 					COUNTRY_STR_SX,COUNTRY_STR_SY,
 					WORLDTRADE_TALKFONT_PAL,  
-					COUNTRY_STR_OFFSET + (COUNTRY_STR_SX*COUNTRY_STR_SY)*i );
+					GFL_BMP_CHRAREA_GET_F );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->CountryWin[i]), 0x0000 );
 			GFL_BMPWIN_MakeTransWindow( wk->CountryWin[i] );
 		}
 
 		// さがす・もどる・あいてをみる
 		for(i=0;i<3;i++){
-			wk->InfoWin[6+i]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME3_M,
+			wk->InfoWin[6+i]	= GFL_BMPWIN_Create( GFL_BG_FRAME3_M,
 					button_bmpwin_table[i][0], 
 					button_bmpwin_table[i][1], 
 					BUTTON_STR_SX,BUTTON_STR_SY,
-					WORLDTRADE_TALKFONT_PAL,  BUTTON_STR_OFFSET+(BUTTON_STR_SX*BUTTON_STR_SY*i));
+					WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_F);
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[6+i]), 0x0000 );
 			GFL_BMPWIN_MakeTransWindow( wk->InfoWin[6+i] );
 		}
@@ -791,7 +793,7 @@ static void BmpWinDelete( WORLDTRADE_WORK *wk )
 		}
 	}
 
-
+  GFL_BG_FillCharacterRelease( GFL_BG_FRAME3_M, 1, 0 );
 }
 
 //------------------------------------------------------------------
@@ -1694,9 +1696,9 @@ static int SUBSEQ_SexSelectMes( WORLDTRADE_WORK *wk)
 	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_SEX_SELECT_LIST );
 
 	// 性別選択ウインドウ確保
-//	GFL_BMPWIN_CreateFixPos( &wk->MenuWin[0], GFL_BG_FRAME0_M,
+//	GFL_BMPWIN_Create( &wk->MenuWin[0], GFL_BG_FRAME0_M,
 //		SELECT_MENU3_X,		SELECT_MENU3_Y,		SELECT_MENU3_SX, 		SELECT_MENU3_SY, 
-//		WORLDTRADE_TALKFONT_PAL,  SELECT_MENU3_OFFSET );
+//		WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );
 //	GFL_BMP_Clear( &wk->MenuWin[0], 0x0000 );
 
 	return SEQ_MAIN;
@@ -1785,9 +1787,9 @@ static int SUBSEQ_LevelSelectMes( WORLDTRADE_WORK *wk)
 	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_LEVEL_SELECT_LIST );
 
 	// 性別選択ウインドウ確保
-//	GFL_BMPWIN_CreateFixPos( &wk->MenuWin[0], GFL_BG_FRAME0_M,
+//	GFL_BMPWIN_Create( &wk->MenuWin[0], GFL_BG_FRAME0_M,
 //		SELECT_MENU4_X,		SELECT_MENU4_Y,		SELECT_MENU4_SX, 		SELECT_MENU4_SY, 
-//		WORLDTRADE_TALKFONT_PAL,  SELECT_MENU4_OFFSET );
+//		WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );
 //	GFL_BMP_Clear( &wk->MenuWin[0], 0x0000 );
 
 	return SEQ_MAIN;
@@ -1879,9 +1881,9 @@ static int SUBSEQ_CountrySelectMes( WORLDTRADE_WORK *wk)
 	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_COUNTRY_SELECT_LIST );
 
 	// 国選択ウインドウ確保
-//	GFL_BMPWIN_CreateFixPos( &wk->MenuWin[0], GFL_BG_FRAME0_M,
+//	GFL_BMPWIN_Create( &wk->MenuWin[0], GFL_BG_FRAME0_M,
 //		SELECT_MENU5_X,		SELECT_MENU5_Y,		SELECT_MENU5_SX, 		SELECT_MENU5_SY, 
-//		WORLDTRADE_TALKFONT_PAL,  SELECT_MENU5_OFFSET );
+//		WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B);
 //	GFL_BMP_Clear( &wk->MenuWin[0], 0x0000 );
 
 	return SEQ_MAIN;

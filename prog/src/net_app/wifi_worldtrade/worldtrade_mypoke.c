@@ -477,17 +477,17 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 {
 	// ---------- メイン画面 ------------------
 
-	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME2_M,
+	wk->MsgWin	= GFL_BMPWIN_Create( GFL_BG_FRAME2_M,
 		LINE_TEXT_X, LINE_TEXT_Y, LINE_TEXT_SX, LINE_TEXT_SY, 
-		WORLDTRADE_TALKFONT_PAL,  LINE_MESSAGE_OFFSET );
+		WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
 	GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 
 	// BMPMENU用の領域がここにある
-	wk->MenuWin[0]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME2_M,
+	wk->MenuWin[0]	= GFL_BMPWIN_Create( GFL_BG_FRAME2_M,
 		SELECT_MENU_X, SELECT_MENU_Y, SELECT_MENU_SX, SELECT_MENU_SY, 
-		WORLDTRADE_TALKFONT_PAL,  SELECT_MENU_OFFSET );	
+		WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );	
 	GFL_BMPWIN_MakeTransWindow( wk->MenuWin[0] );
 
 	// BG0面BMPWIN情報ウインドウ確保
@@ -496,12 +496,12 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 
 		offset = INFO_TEXT_OFFSET;
 		for(i=0;i<INFOW_BMPWIN_MAX;i++){
-			wk->InfoWin[i] = GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME3_M,
+			wk->InfoWin[i] = GFL_BMPWIN_Create( GFL_BG_FRAME3_M,
 					info_bmpwin_table[i][0], 
 					info_bmpwin_table[i][1], 
 					info_bmpwin_table[i][2], 
 					info_bmpwin_table[i][3], 
-					WORLDTRADE_TALKFONT_PAL,  offset );
+					WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[i]), 0x0000 );
 			offset += info_bmpwin_table[i][2]*info_bmpwin_table[i][3];
 			GFL_BMPWIN_MakeTransWindow( wk->InfoWin[i] );

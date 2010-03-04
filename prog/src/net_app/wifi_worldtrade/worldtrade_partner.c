@@ -522,22 +522,22 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 {
 	// ---------- メイン画面 ------------------
 
-	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_S,
+	wk->MsgWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
 		TALK_WIN_X, TALK_WIN_Y, TALK_WIN_SX, TALK_WIN_SY, 
-		WORLDTRADE_TALKFONT_SUB_PAL,  BMPWIN_MESWINDOW_OFFSET );
+		WORLDTRADE_TALKFONT_SUB_PAL,  GFL_BMP_CHRAREA_GET_B );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
 
 	// 「こうかんする」
-	wk->MenuWin[0]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_S,
+	wk->MenuWin[0]	= GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
 		MENU_EXCHANGE1_X, MENU_EXCHANGE1_Y, MENU_EXCHANGE1_SX, MENU_EXCHANGE1_SY, 
-		WORLDTRADE_TALKFONT_SUB_PAL,  BMPWIN_MENU1_OFFSET );	
+		WORLDTRADE_TALKFONT_SUB_PAL,  GFL_BMP_CHRAREA_GET_B );	
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[0]), 0x0000 );
 
 	// 「もどる」
-	wk->MenuWin[1]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_S,
+	wk->MenuWin[1]	= GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
 		MENU_EXCHANGE2_X, MENU_EXCHANGE2_Y, MENU_EXCHANGE2_SX, MENU_EXCHANGE2_SY, 
-		WORLDTRADE_TALKFONT_SUB_PAL,  BMPWIN_MENU2_OFFSET );	
+		WORLDTRADE_TALKFONT_SUB_PAL,  GFL_BMP_CHRAREA_GET_B );	
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[1]), 0x0000 );
 
 	// BG0面BMPWIN情報ウインドウ確保
@@ -551,23 +551,23 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 		// BMPWIN確保
 		for(i=0;i<PARTNER_INFOWIN_MAX;i++){
 			if(info_bmpwin_table[i][4]==GFL_BG_FRAME2_M){
-				wk->InfoWin[i] = GFL_BMPWIN_CreateFixPos(
+				wk->InfoWin[i] = GFL_BMPWIN_Create(
 						info_bmpwin_table[i][4],	// 表示フレーム(GFL_BG_FRAME2_M)
 						info_bmpwin_table[i][0], 	// X
 						info_bmpwin_table[i][1], 	// Y
 						info_bmpwin_table[i][2], 	// W
 						info_bmpwin_table[i][3], 	// H
-						WORLDTRADE_TALKFONT_PAL,  m_offset );
+						WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );
 				m_offset += info_bmpwin_table[i][2]*info_bmpwin_table[i][3];
 
 			}else{
-				wk->InfoWin[i]	= GFL_BMPWIN_CreateFixPos(
+				wk->InfoWin[i]	= GFL_BMPWIN_Create(
 						info_bmpwin_table[i][4],	// 表示フレーム(GFL_BG_FRAME0_S)
 						info_bmpwin_table[i][0], 	// X
 						info_bmpwin_table[i][1], 	// Y
 						info_bmpwin_table[i][2], 	// W
 						info_bmpwin_table[i][3], 	// H
-						WORLDTRADE_TALKFONT_SUB_PAL,  s_offset );
+						WORLDTRADE_TALKFONT_SUB_PAL,  GFL_BMP_CHRAREA_GET_B );
 				s_offset += info_bmpwin_table[i][2]*info_bmpwin_table[i][3];
 				
 			}

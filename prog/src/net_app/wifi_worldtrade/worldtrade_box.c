@@ -679,8 +679,8 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 
 	// BG0面BMPWINタイトルウインドウ確保・描画
 	
-//	wk->TitleWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
-//	TITLE_TEXT_X, TITLE_TEXT_Y, TITLE_TEXT_SX, TITLE_TEXT_SY, WORLDTRADE_TALKFONT_PAL,  TITLE_MESSAGE_OFFSET );
+//	wk->TitleWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
+//	TITLE_TEXT_X, TITLE_TEXT_Y, TITLE_TEXT_SX, TITLE_TEXT_SY, WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );
 
 //	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TitleWin), 0x0000 );
 	
@@ -690,32 +690,32 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 
 	// ボックストレイ名BMPWIN確保
 	
-	wk->SubWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME3_M,
+	wk->SubWin	= GFL_BMPWIN_Create( GFL_BG_FRAME3_M,
 	BOX_TRAY_NAME_X, BOX_TRAY_NAME_Y, BOX_TRAY_NAME_SX, BOX_TRAY_NAME_SY, WORLDTRADE_TALKFONT_PAL,  
-	BOX_TRAY_NAME_OFFSET );
+	GFL_BMP_CHRAREA_GET_B );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->SubWin), 0x0000 );
 	GFL_BMPWIN_MakeTransWindow(wk->SubWin);
 	
 	// 一行ウインドウ
-	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
+	wk->MsgWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
 		LINE_TEXT_X, LINE_TEXT_Y, LINE_TEXT_SX, LINE_TEXT_SY, 
-		WORLDTRADE_TALKFONT_PAL,  LINE_MESSAGE_OFFSET );
+		WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
 	GFL_BMPWIN_MakeTransWindow(wk->MsgWin);
 
 	// 2行ウインドウ
-	wk->TalkWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
+	wk->TalkWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
 		TALK_WIN_X, TALK_WIN_Y, TALK_WIN_SX, TALK_WIN_SY, 
-		WORLDTRADE_TALKFONT_PAL,  TALK_MESSAGE_OFFSET );
+		WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TalkWin), 0x0000 );
 	GFL_BMPWIN_MakeTransWindow(wk->MsgWin);
 
 	// 「もどる」
-	wk->MenuWin[1]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME1_M,
+	wk->MenuWin[1]	= GFL_BMPWIN_Create( GFL_BG_FRAME1_M,
 		END_TEXT_X, END_TEXT_Y, END_TEXT_SX, END_TEXT_SY, 
-		0,  END_MESSAGE_OFFSET );
+		0,  GFL_BMP_CHRAREA_GET_B );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[1]), 0x0606 );
 	GFL_BMPWIN_MakeTransWindow(wk->MenuWin[1]);
@@ -723,9 +723,9 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 	WorldTrade_SysPrint( wk->MenuWin[1], wk->EndString, 0, 1, 1, PRINTSYS_LSB_Make(1,3,6), &wk->print );
 
 	// 選択メニュー領域
-//	wk->MenuWin[0]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
+//	wk->MenuWin[0]	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
 //		SELECT_MENU_X, SELECT_MENU_Y, SELECT_MENU_SX, SELECT_MENU_SY, 
-//		WORLDTRADE_TALKFONT_PAL,  SELECT_MENU_OFFSET );	
+//		WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );	
 
 	
 	// サブ画面のGTS説明用BMPWINを確保する

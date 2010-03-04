@@ -465,7 +465,7 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 
 
 	// メイン画面BG1キャラ転送
-	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_title_lz_ncgr,  GFL_BG_FRAME1_M, 0, 16*6*0x20, 1, HEAPID_WORLDTRADE);
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_title_lz_ncgr,  GFL_BG_FRAME1_M, 0, 0, 1, HEAPID_WORLDTRADE);
 
 
 	// メイン画面BG1スクリーン転送
@@ -597,8 +597,8 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 
 	// BG0面BMPWINタイトルウインドウ確保・描画
 	
-	wk->TitleWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME1_M,
-	TITLE_TEXT_X, TITLE_TEXT_Y, TITLE_TEXT_SX, TITLE_TEXT_SY, WORLDTRADE_TALKFONT_PAL,  TITLE_MESSAGE_OFFSET );
+	wk->TitleWin	= GFL_BMPWIN_Create( GFL_BG_FRAME1_M,
+	TITLE_TEXT_X, TITLE_TEXT_Y, TITLE_TEXT_SX, TITLE_TEXT_SY, WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B);
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TitleWin), 0x0000 );
 	GFL_BMPWIN_MakeTransWindow( wk->TitleWin );
@@ -612,26 +612,26 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 	{
 		int i;
 		for(i=0;i<WT_MENU_MAX_NUM;i++){
-			wk->MenuWin[i]	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME1_M,
+			wk->MenuWin[i]	= GFL_BMPWIN_Create( GFL_BG_FRAME1_M,
 			MENU_TEXT_X, MENU_TEXT_Y+i*5, MENU_TEXT_SX, MENU_TEXT_SY, 1,  
-			MENU_MESSAGE_OFFSET + (MENU_TEXT_SX*MENU_TEXT_SY)*i );
+			GFL_BMP_CHRAREA_GET_B );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[i]), 0x0000 );
 			GFL_BMPWIN_MakeTransWindow( wk->MenuWin[i] );
 		}
 	}
 	
 	// 1行会話ウインドウ
-	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
+	wk->MsgWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
 		LINE_TEXT_X, LINE_TEXT_Y, LINE_TEXT_SX, LINE_TEXT_SY, 
-		WORLDTRADE_TALKFONT_PAL,  LINE_MESSAGE_OFFSET );
+		WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0f0f );
 
 
 	// 通常会話ウインドウ
-	wk->TalkWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
+	wk->TalkWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
 		TALK_WIN_X, TALK_WIN_Y, TALK_WIN_SX, TALK_WIN_SY, 
-		WORLDTRADE_TALKFONT_PAL,  TALK_MESSAGE_OFFSET );
+		WORLDTRADE_TALKFONT_PAL, GFL_BMP_CHRAREA_GET_B );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TalkWin), 0x0f0f );
 
@@ -1400,9 +1400,9 @@ void WorldTrade_SubLcdWinGraphicSet( WORLDTRADE_WORK *wk )
 void WorldTrade_SubLcdExpainPut( WORLDTRADE_WORK *wk, int explain )
 {
 	// 「GTS」
-	wk->ExplainWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_S,
+	wk->ExplainWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
 		EXPLAIN_WIN_X, EXPLAIN_WIN_Y, EXPLAIN_WIN_SX, EXPLAIN_WIN_SY, 
-		WORLDTRADE_TALKFONT_SUB_PAL, GTS_EXPLAIN_OFFSET  );
+		WORLDTRADE_TALKFONT_SUB_PAL, GFL_BMP_CHRAREA_GET_B );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->ExplainWin), 0x0000 );
 	GFL_BMPWIN_MakeTransWindow( wk->ExplainWin );
