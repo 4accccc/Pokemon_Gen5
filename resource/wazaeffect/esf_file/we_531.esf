@@ -4,6 +4,11 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_531.spa
 #001
 %00
+制御モード変更	継続
+SE再生	SEQ_SE_W075_05	SE1	防御側	0:0:127	0:0:0
+SE再生	SEQ_SE_W006_03	SE2	防御側	25:0:127	0:0:0
+SE再生	SEQ_SE_BE_SE_03	SE1	防御側	40:0:127	0:0:0
+制御モード変更	逐次
 エフェクト終了待ち	すべて
 カメラ移動	追従	防御側	16	0	8
 ポケモンアニメ	防御側	アニメストップ
