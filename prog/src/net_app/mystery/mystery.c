@@ -286,7 +286,9 @@ struct _MYSTERY_EFFECT_WORK
 //-------------------------------------
 ///	受信デモワーク
 //=====================================
-typedef struct 
+typedef struct _MYSTERY_DEMO_WORK MYSTERY_DEMO_WORK;
+typedef void (*MYSTERY_DEMO_MOVE_FUNCTION)( MYSTERY_DEMO_WORK *p_wk );
+struct _MYSTERY_DEMO_WORK
 {
   GFL_CLWK  *p_clwk;
   BOOL      is_end;
@@ -296,14 +298,16 @@ typedef struct
   u32       sync;
   u32       seq;
 
+  BG_WORK *p_bg;
   MYSTERY_EFFECT_WORK *p_effect;
+  MYSTERY_DEMO_MOVE_FUNCTION  move_function;
 
   u16 plt_cnt;
   u16 plt[0x10];
   u16 plt_sub[0x10];
   u16 plt_src[0x10];
   u16 plt_dst[0x10];
-} MYSTERY_DEMO_WORK;
+} ;
 
 //-------------------------------------
 ///	メインワーク
@@ -477,10 +481,13 @@ static void UTIL_DeleteGuideText( MYSTERY_WORK *p_wk );
 //-------------------------------------
 ///	デモ
 //=====================================
-static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, const DOWNLOAD_GIFT_DATA *cp_data, GAMEDATA *p_gamedata, const OBJ_WORK *cp_obj, MYSTERY_EFFECT_WORK *p_effect, HEAPID heapID );
+static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, const DOWNLOAD_GIFT_DATA *cp_data, GAMEDATA *p_gamedata, const OBJ_WORK *cp_obj, BG_WORK *p_bg, MYSTERY_EFFECT_WORK *p_effect, HEAPID heapID );
 static void MYSTERY_DEMO_Exit( MYSTERY_DEMO_WORK *p_wk );
-static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk, BG_WORK *p_bg );
+static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk );
 static BOOL MYSTERY_DEMO_IsEnd( const MYSTERY_DEMO_WORK *cp_wk );
+static void Mystery_Demo_NormalMain( MYSTERY_DEMO_WORK *p_wk );
+static void Mystery_Demo_MovieMain( MYSTERY_DEMO_WORK *p_wk );
+
 //-------------------------------------
 ///	演出
 //=====================================
@@ -1820,7 +1827,9 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           }
 #endif //PM_DEBUG
 
-          if( dirty == 0 )
+          //不正が０かつ、取得できるバージョンならばOK
+          //バージョンが０ならば制限なし、それ以外は自分のバージョンマスクで見る
+          if( dirty == 0 && ( p_wk->data.version == 0 || (p_wk->data.version & (1<<GET_VERSION())) ) )
           { 
             *p_seq  = SEQ_SELECT_GIFT_MSG;
           }
@@ -1964,6 +1973,11 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           }
           else
           { 
+            //受信データをセーブデータに設定
+            MYSTERYDATA_SetCardData( p_wk->p_sv, &p_wk->data.data);
+            MYSTERYDATA_SetEventRecvFlag(p_wk->p_sv, p_wk->data.data.event_id);
+
+            //デモへ
             MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_Demo );
           }
         }
@@ -2081,7 +2095,7 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     //おくりものを受信中です
     { 
       GFL_CLUNIT	*p_unit	= MYSTERY_GRAPHIC_GetClunit( p_wk->p_graphic );
-      MYSTERY_DEMO_Init( &p_wk->demo, p_unit, &p_wk->data, p_wk->p_gamedata, &p_wk->obj, &p_wk->effect, HEAPID_MYSTERYGIFT );
+      MYSTERY_DEMO_Init( &p_wk->demo, p_unit, &p_wk->data, p_wk->p_gamedata, &p_wk->obj, &p_wk->bg, &p_wk->effect, HEAPID_MYSTERYGIFT );
       MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_014, MYSTERY_TEXT_TYPE_QUE );
       *p_seq  = SEQ_INIT_ONE_WAIT;
     }
@@ -2101,7 +2115,7 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_DEMO_MAIN:
-    MYSTERY_DEMO_Main( &p_wk->demo, &p_wk->bg );
+    MYSTERY_DEMO_Main( &p_wk->demo );
     if( MYSTERY_DEMO_IsEnd(&p_wk->demo) )
     {
       *p_seq  = SEQ_SAVE_INIT;
@@ -2109,10 +2123,6 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_SAVE_INIT:
-    { 
-      MYSTERYDATA_SetCardData( p_wk->p_sv, &p_wk->data.data);
-    }
-
     GAMEDATA_SaveAsyncStart(p_wk->p_gamedata);
     *p_seq  = SEQ_SAVE_MAIN;
     break;
@@ -2740,7 +2750,7 @@ static void SEQFUNC_RestrictUGC( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   switch( *p_seq )
   { 
   case SEQ_START_MSG:
-    //@TODO
+    //@todo
     MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_err_msg, msg_common_wireless_off_keywait, MYSTERY_TEXT_TYPE_STREAM );
 
     *p_seq  = SEQ_WAIT_MSG;
@@ -3101,10 +3111,11 @@ static void UTIL_DeleteGuideText( MYSTERY_WORK *p_wk )
  *	@param	heapID                  ヒープID
  */
 //-----------------------------------------------------------------------------
-static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, const DOWNLOAD_GIFT_DATA *cp_data, GAMEDATA *p_gamedata, const OBJ_WORK *cp_obj, MYSTERY_EFFECT_WORK *p_effect, HEAPID heapID )
+static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, const DOWNLOAD_GIFT_DATA *cp_data, GAMEDATA *p_gamedata, const OBJ_WORK *cp_obj, BG_WORK *p_bg, MYSTERY_EFFECT_WORK *p_effect, HEAPID heapID )
 {
   GFL_STD_MemClear( p_wk, sizeof(MYSTERY_DEMO_WORK) );
   p_wk->p_effect  = p_effect;
+  p_wk->p_bg      = p_bg;
 
   { 
     static const u16 sc_type_to_back_fade[] =
@@ -3232,6 +3243,17 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
 
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
 	}
+
+
+  //動作関数
+  if( cp_data->movie_flag )
+  { 
+    p_wk->move_function = Mystery_Demo_MovieMain;
+  }
+  else
+  { 
+    p_wk->move_function = Mystery_Demo_NormalMain;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -3270,8 +3292,36 @@ static void MYSTERY_DEMO_Exit( MYSTERY_DEMO_WORK *p_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk, BG_WORK *p_bg )
+static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk )
 {
+  if( p_wk->move_function )
+  { 
+    p_wk->move_function( p_wk );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信デモ  終了チェック
+ *
+ *	@param	const MYSTERY_DEMO_WORK *cp_wk  ワーク
+ *
+ *	@return TRUEでデモ終了  FALSEでデモ中
+ */
+//-----------------------------------------------------------------------------
+static BOOL MYSTERY_DEMO_IsEnd( const MYSTERY_DEMO_WORK *cp_wk )
+{ 
+  return cp_wk->is_end;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通常デモ
+ *
+ *	@param	MYSTERY_DEMO_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Mystery_Demo_NormalMain( MYSTERY_DEMO_WORK *p_wk )
+{ 
   enum
   { 
     SEQ_INIT,
@@ -3288,7 +3338,7 @@ static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk, BG_WORK *p_bg )
   case SEQ_INIT:
     MYSTERY_EFFECT_Start( p_wk->p_effect, MYSTERY_EFFECT_TYPE_DEMO );
     GFL_BG_SetVisible( BG_FRAME_M_BACK1, FALSE );
-    BG_Load( p_bg, BG_LOAD_TYPE_STAGE_M );
+    BG_Load( p_wk->p_bg, BG_LOAD_TYPE_STAGE_M );
     p_wk->seq = SEQ_START_FADEIN;
     break;
 
@@ -3377,16 +3427,115 @@ static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk, BG_WORK *p_bg )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  受信デモ  終了チェック
+ *	@brief  映画用デモ
  *
- *	@param	const MYSTERY_DEMO_WORK *cp_wk  ワーク
- *
- *	@return TRUEでデモ終了  FALSEでデモ中
+ *	@param	MYSTERY_DEMO_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static BOOL MYSTERY_DEMO_IsEnd( const MYSTERY_DEMO_WORK *cp_wk )
+static void Mystery_Demo_MovieMain( MYSTERY_DEMO_WORK *p_wk )
 { 
-  return cp_wk->is_end;
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_START_FADEIN,
+    SEQ_WAIT_FADEIN,
+    SEQ_INIT_WAIT,
+    SEQ_MOVE,
+    SEQ_END_WAIT,
+    SEQ_END,
+  };
+
+  switch( p_wk->seq )
+  {
+  case SEQ_INIT:
+    MYSTERY_EFFECT_Start( p_wk->p_effect, MYSTERY_EFFECT_TYPE_MOVIE );
+    GFL_BG_SetVisible( BG_FRAME_M_BACK1, FALSE );
+    BG_Load( p_wk->p_bg, BG_LOAD_TYPE_STAGE_M );
+    p_wk->seq = SEQ_START_FADEIN;
+    break;
+
+  case SEQ_START_FADEIN:
+    G2_SetBlendAlpha(
+          GX_BLEND_PLANEMASK_BG2,
+          GX_BLEND_PLANEMASK_BG3,
+          0,
+          16
+          );
+    GFL_BG_SetVisible( BG_FRAME_M_BACK1, TRUE );
+    p_wk->sync  = 0;
+    p_wk->seq = SEQ_WAIT_FADEIN;
+    break;
+
+  case SEQ_WAIT_FADEIN:
+    //お盆のアルファフェード
+    {
+      s16 ev1 = 0 + 16 * p_wk->sync / MYSTERY_DEMO_STAGE_FADE_SYNC;
+      s16 ev2 = 16 - 16 * p_wk->sync / MYSTERY_DEMO_STAGE_FADE_SYNC;
+      G2_ChangeBlendAlpha( ev1, ev2 );
+    }
+    //BGのパレットフェード
+    { 
+      int i;
+      p_wk->plt_cnt = 0 + 0x7FFF * p_wk->sync / MYSTERY_DEMO_STAGE_FADE_SYNC;
+
+      for( i = 0; i < 0x10; i++ )
+      { 
+        MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_MAIN, &p_wk->plt[i], p_wk->plt_cnt, PLT_BG_BACK_M, i, p_wk->plt_src[i], p_wk->plt_dst[i] );
+        MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_SUB, &p_wk->plt_sub[i], p_wk->plt_cnt, PLT_BG_BACK_S, i, p_wk->plt_src[i], p_wk->plt_dst[i] );
+      }
+    }
+    //終了チェック
+    if( p_wk->sync++ > MYSTERY_DEMO_STAGE_FADE_SYNC )
+    { 
+      G2_BlendNone();
+      p_wk->sync  = 0;
+      p_wk->seq = SEQ_INIT_WAIT;
+    }
+    break;
+
+  case SEQ_INIT_WAIT:
+    if( p_wk->sync++ > MYSTERY_DEMO_INIT_WAIT_SYNC )
+    { 
+      p_wk->sync  = 0;
+      p_wk->seq   = SEQ_MOVE;
+    }
+    break;
+
+  case SEQ_MOVE:
+    { 
+      s16 pos;
+
+      pos = MYSTERY_DEMO_MOVE_GIFT_START_Y + MYSTERY_DEMO_MOVE_GIFT_DIFF_Y * p_wk->sync / MYSTERY_DEMO_MOVE_GIFT_SYNC;
+      GFL_CLACT_WK_SetTypePos( p_wk->p_clwk, pos, CLSYS_DEFREND_MAIN, CLSYS_MAT_Y );
+
+      if( 0 - 6*8 <= pos && pos <= 192 )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
+      }
+
+      if( p_wk->sync++ >= MYSTERY_DEMO_MOVE_GIFT_SYNC )
+      { 
+        PMSND_PlaySE( MYSTERY_SE_RECV_PRESENT );
+
+        MYSTERY_EFFECT_Start( p_wk->p_effect, MYSTERY_EFFECT_TYPE_NORMAL );
+        p_wk->sync  = 0;
+        p_wk->seq   = SEQ_END_WAIT;
+      }
+    }
+    break;
+
+  case SEQ_END_WAIT:
+    if( p_wk->sync++ > MYSTERY_DEMO_END_WAIT_SYNC )
+    { 
+      p_wk->sync  = 0;
+      p_wk->seq   = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    p_wk->is_end  = TRUE;
+    break;
+  }
 }
 
 //=============================================================================
