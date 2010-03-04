@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T16:41:12"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T17:49:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -339,15 +339,15 @@
 それでは　健闘を　祈る▼</language>
 	</row>
 
-	<row id="msg_c03p07_tvt_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p07_tvt_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・ジムバッジ取得後
 ・ジムの外に出るとコール音</comment>
 		<attribute name="キャラ指定">システム
 TVトランシーバー</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-ＴＶトランシーバーを　つなげた[BE:01:ページ切り替え（クリア）]</language>
+ライブキャスターを　つなげた[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-ＴＶトランシーバーを　つなげた[BE:01:ページ切り替え（クリア）]</language>
+ライブキャスターを　つなげた[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03p07_veteranm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">

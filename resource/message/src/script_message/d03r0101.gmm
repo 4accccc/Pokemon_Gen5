@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T17:51:47"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T17:49:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="337" right="2004" bottom="965" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -505,9 +505,9 @@
 ・メッセージ後、ＴＶトランシーバー画面に切り替え（仮）</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！　きみの
-ＴＶトランシーバー　なっているよ[BE:01:ページ切り替え（クリア）]</language>
+ライブキャスター　なっているよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！　きみの
-ＴＶトランシーバー　鳴っているよ[BE:01:ページ切り替え（クリア）]</language>
+ライブキャスター　鳴っているよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d03r0101_champion_02" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">

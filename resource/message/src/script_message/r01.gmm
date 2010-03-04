@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-04T11:01:32"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T17:48:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -616,21 +616,21 @@
 ・続けてmsg_r01_tvt_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">……？　きみの
-ＴＶトランシーバーも　なっているよ[BE:01:ページ切り替え（クリア）]</language>
+ライブキャスターも　なっているよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">……？　きみの
-ＴＶトランシーバーも　なっているよ[BE:01:ページ切り替え（クリア）]</language>
+ライブキャスターも　なっているよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_tvt_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r01_tvt_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・続けて
 　tvt.gmmのmsg_transceiver_r01_01呼び出し
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">システム
 TVTトランシーバー</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-ＴＶトランシーバーを　つなげた[BE:01:ページ切り替え（クリア）]</language>
+ライブキャスターを　つなげた[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-ＴＶトランシーバーを　つなげた[BE:01:ページ切り替え（クリア）]</language>
+ライブキャスターを　つなげた[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_black_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
