@@ -90,12 +90,11 @@ enum
 //--------------------------------------------------------------
 /// カーソルフラグ
 //--------------------------------------------------------------
-enum
+typedef enum
 {
-  CURSOR_FLAG_NONE = 0,
-  CURSOR_FLAG_WRITE,
-  CURSOR_FLAG_END,
-};
+  CURSOR_STATE_NONE = 0,
+  CURSOR_STATE_WRITE,
+}CURSOR_STATE;
 
 //======================================================================
 //	typedef struct
@@ -105,8 +104,10 @@ enum
 //--------------------------------------------------------------
 typedef struct
 {
+  u8 cursor_state;
   u8 cursor_anm_no;
   u8 cursor_anm_frame;
+  u8 padding;
   GFL_BMP_DATA *bmp_cursor;
 }KEYCURSOR_WORK;
 
@@ -194,7 +195,7 @@ struct _TAG_FLDMSGPRINT_STREAM
 {
   u8 flag_key_trg;
   u8 flag_key_cont;
-  int msg_wait;
+  s16 msg_wait;
   PRINT_STREAM *printStream;
   FLDMSGBG *fmb;
 };
@@ -211,8 +212,6 @@ struct _TAG_FLDMSGWIN_STREAM
   STRBUF *strBuf;
 	FLDMSGBG *fmb;
    
-  u8 flag_cursor;
-  u8 flag_key_pause_clear;
   KEYCURSOR_WORK cursor_work;
 };
 
@@ -228,9 +227,6 @@ struct _TAG_FLDSYSWIN_STREAM
   STRBUF *strBuf;
 	FLDMSGBG *fmb;
    
-  u8 flag_cursor;
-  u8 flag_key_pause_clear;
-  u8 padding;
   KEYCURSOR_WORK cursor_work;
 };
 
@@ -297,7 +293,8 @@ static BOOL bgwin_ScrollBmp(
 
 static void keyCursor_Init( KEYCURSOR_WORK *work, HEAPID heapID );
 static void keyCursor_Delete( KEYCURSOR_WORK *work );
-static void keyCursor_Clear(
+static CURSOR_STATE keyCursor_GetState( KEYCURSOR_WORK *work );
+static void keyCursor_Clear (
     KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col );
 static void keyCursor_Write(
     KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col );
@@ -647,7 +644,7 @@ GFL_MSGDATA * FLDMSGBG_CreateMSGDATA( FLDMSGBG *fmb, u32 arcDatIDMsg )
 	return( msgData );
 }
 
-//--------------------------------------------------------------
+////--------------------------------------------------------------
 /**
  * FLDMSGBG MSGDATAの削除。
  * @param msgData GFL_MSGDATA
@@ -1927,6 +1924,7 @@ static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
       PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
       PRINTSYS_PrintStreamReleasePause( stm->printStream );
       stm->flag_key_trg = FALSE;
+      state = PRINTSTREAM_STATE_RUNNING; //即 RUNNINGで返す
     }
     break;
   case PRINTSTREAM_STATE_DONE: //終了
@@ -2072,43 +2070,25 @@ void FLDMSGWIN_STREAM_PrintStrBufStart(
 //--------------------------------------------------------------
 BOOL FLDMSGWIN_STREAM_Print( FLDMSGWIN_STREAM *msgWin )
 {
-#if 0
-  if( FLDMSGPRINT_STREAM_ProcPrint(msgWin->msgPrintStream) == TRUE ){
-    return( TRUE );
-  }
-  
-  return( FALSE );
-#else
   int trg,cont;
   PRINTSTREAM_STATE state;
   state = fldMsgPrintStream_ProcPrint( msgWin->msgPrintStream );
   
   trg = GFL_UI_KEY_GetTrg();
   cont = GFL_UI_KEY_GetCont();
-
+  
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
-    msgWin->flag_cursor = CURSOR_FLAG_NONE;
-    msgWin->flag_key_pause_clear = FALSE;
+    if( keyCursor_GetState(&msgWin->cursor_work) == CURSOR_STATE_WRITE ){
+		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgWin->bmpwin );
+      keyCursor_Clear( &msgWin->cursor_work, bmp, 0x0f );
+		  GFL_BMPWIN_TransVramCharacter( msgWin->bmpwin );
+    }
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
-    if( msgWin->flag_key_pause_clear == FALSE ){ //既にポーズクリア済みか？
+    {
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgWin->bmpwin );
-      
-      if( (trg & MSG_LAST_BTN) ){
-        if( msgWin->flag_cursor == CURSOR_FLAG_WRITE ){
-          keyCursor_Clear( &msgWin->cursor_work, bmp, 0x0f );
-          
-          msgWin->flag_key_pause_clear = TRUE;
-          msgWin->flag_cursor = CURSOR_FLAG_END;
-        }
-      }
-      
-      if( msgWin->flag_cursor != CURSOR_FLAG_END ){
-        keyCursor_Write( &msgWin->cursor_work, bmp, 0x0f );
-        msgWin->flag_cursor = CURSOR_FLAG_WRITE;
-      }
-      
+      keyCursor_Write( &msgWin->cursor_work, bmp, 0x0f );
 		  GFL_BMPWIN_TransVramCharacter( msgWin->bmpwin );
     }
     break;
@@ -2117,7 +2097,6 @@ BOOL FLDMSGWIN_STREAM_Print( FLDMSGWIN_STREAM *msgWin )
   }
 
   return( FALSE );
-#endif
 }
 
 //--------------------------------------------------------------
@@ -2330,32 +2309,16 @@ BOOL FLDSYSWIN_STREAM_Print( FLDSYSWIN_STREAM *sysWin )
   
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
-    if( sysWin->flag_cursor == CURSOR_FLAG_WRITE ){
+    if( keyCursor_GetState(&sysWin->cursor_work) == CURSOR_STATE_WRITE ){
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
       keyCursor_Clear( &sysWin->cursor_work, bmp, 0x0f );
 		  GFL_BMPWIN_TransVramCharacter( sysWin->bmpwin );
     }
-    sysWin->flag_cursor = CURSOR_FLAG_NONE;
-    sysWin->flag_key_pause_clear = FALSE;
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
-    if( sysWin->flag_key_pause_clear == FALSE ){ //既にポーズクリア済みか？
+    {
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
-      
-      if( (trg & MSG_LAST_BTN) ){
-        if( sysWin->flag_cursor == CURSOR_FLAG_WRITE ){
-          keyCursor_Clear( &sysWin->cursor_work, bmp, 0x0f );
-          
-          sysWin->flag_key_pause_clear = TRUE;
-          sysWin->flag_cursor = CURSOR_FLAG_END;
-        }
-      }
-      
-      if( sysWin->flag_cursor != CURSOR_FLAG_END ){
-        keyCursor_Write( &sysWin->cursor_work, bmp, 0x0f );
-        sysWin->flag_cursor = CURSOR_FLAG_WRITE;
-      }
-      
+      keyCursor_Write( &sysWin->cursor_work, bmp, 0x0f );
 		  GFL_BMPWIN_TransVramCharacter( sysWin->bmpwin );
     }
     break;
@@ -2377,7 +2340,6 @@ void FLDSYSWIN_WriteKeyWaitCursor( FLDSYSWIN_STREAM *sysWin )
 {
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
   keyCursor_Write( &sysWin->cursor_work, bmp, 0x0f );
-  sysWin->flag_cursor = CURSOR_FLAG_WRITE;
   GFL_BMPWIN_TransVramCharacter( sysWin->bmpwin );
 }
 
@@ -2479,13 +2441,8 @@ BOOL FLDSYSWIN_STREAM_CheckAllPrintTrans( FLDSYSWIN_STREAM *sysWin )
 //--------------------------------------------------------------
 struct _TAG_FLDTALKMSGWIN
 {
-  u8 flag_key_trg;
-  u8 flag_key_cont;
-  u8 flag_key_pause_clear;
-  u8 flag_cursor;
-  
   u8 talkMsgWinIdx;
-  u8 padding;
+  u8 flag_key_trg;
   s16 shake_y;
   
   STRBUF *strBuf;
@@ -2677,7 +2634,7 @@ void FLDTALKMSGWIN_ResetMessageStrBuf( FLDTALKMSGWIN *tmsg, STRBUF *strbuf )
   GFL_BMPWIN *bmpwin = TALKMSGWIN_GetBmpWin(
       tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( bmpwin );
-  GFL_BMP_Clear( bmp, 0xff);
+  GFL_BMP_Clear( bmp, 0xff );
   TALKMSGWIN_ResetMessage(
     tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx, strbuf );
 	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(bmpwin) );
@@ -2725,16 +2682,13 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
   
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
-    if( tmsg->flag_cursor == CURSOR_FLAG_WRITE ){
+    if( keyCursor_GetState(&tmsg->cursor_work) == CURSOR_STATE_WRITE ){
       GFL_BMPWIN *twin_bmp = TALKMSGWIN_GetBmpWin(
           tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
       GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
       keyCursor_Clear( &tmsg->cursor_work, bmp, 0x0f );
 		  GFL_BMPWIN_TransVramCharacter( twin_bmp );
     }
-    
-    tmsg->flag_cursor = CURSOR_FLAG_NONE;
-    tmsg->flag_key_pause_clear = FALSE;
     
     if( (trg & MSG_SKIP_BTN) ){
       tmsg->flag_key_trg = TRUE;
@@ -2745,27 +2699,18 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
-    if( tmsg->flag_key_pause_clear == FALSE ){ //既にポーズクリア済みか？
+    { 
       GFL_BMPWIN *twin_bmp = TALKMSGWIN_GetBmpWin(
           tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
       
+      keyCursor_Write( &tmsg->cursor_work, bmp, 0x0f );
+
       if( (trg & MSG_LAST_BTN) ){
         PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
         PRINTSYS_PrintStreamReleasePause( stream );
-        
-        if( tmsg->flag_cursor == CURSOR_FLAG_WRITE ){
-          keyCursor_Clear( &tmsg->cursor_work, bmp, 0x0f );
-        }
-        
+        keyCursor_Clear( &tmsg->cursor_work, bmp, 0x0f );
         tmsg->flag_key_trg = FALSE;
-        tmsg->flag_key_pause_clear = TRUE;
-        tmsg->flag_cursor = CURSOR_FLAG_END;
-      }
-      
-      if( tmsg->flag_cursor != CURSOR_FLAG_END ){
-        keyCursor_Write( &tmsg->cursor_work, bmp, 0x0f );
-        tmsg->flag_cursor = CURSOR_FLAG_WRITE;
       }
       
 		  GFL_BMPWIN_TransVramCharacter( twin_bmp );
@@ -2797,7 +2742,6 @@ void FLDTALKMSGWIN_WriteKeyWaitCursor( FLDTALKMSGWIN *tmsg )
     tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
   keyCursor_Write( &tmsg->cursor_work, bmp, 0x0f );
-  tmsg->flag_cursor = CURSOR_FLAG_WRITE;
   GFL_BMPWIN_TransVramCharacter( twin_bmp );
 }
 
@@ -2809,10 +2753,6 @@ void FLDTALKMSGWIN_WriteKeyWaitCursor( FLDTALKMSGWIN *tmsg )
 //--------------------------------------------------------------
 struct _TAG_FLDPLAINMSGWIN
 {
-  u8 flag_key_trg;
-  u8 flag_key_cont;
-  u8 flag_key_pause_clear;
-  u8 flag_cursor;
   KEYCURSOR_WORK cursor_work;
   
   STRBUF *strBuf;
@@ -3097,31 +3037,16 @@ BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin )
   
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
-    if( plnwin->flag_cursor == CURSOR_FLAG_WRITE ){
+    if( keyCursor_GetState(&plnwin->cursor_work) == CURSOR_STATE_WRITE ){
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
       keyCursor_Clear( &plnwin->cursor_work, bmp, 0x0f );
       GFL_BMPWIN_TransVramCharacter( plnwin->bmpwin );
     }
-    plnwin->flag_cursor = CURSOR_FLAG_NONE;
-    plnwin->flag_key_pause_clear = FALSE;
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
-    if( plnwin->flag_key_pause_clear == FALSE ){ //既にポーズクリア済みか？
+    {
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
-      
-      if( (trg & MSG_LAST_BTN) ){
-        if( plnwin->flag_cursor == CURSOR_FLAG_WRITE ){
-          keyCursor_Clear( &plnwin->cursor_work, bmp, 0x0f );
-          plnwin->flag_key_pause_clear = TRUE;
-          plnwin->flag_cursor = CURSOR_FLAG_END;
-        }
-      }
-      
-      if( plnwin->flag_cursor != CURSOR_FLAG_END ){
-        keyCursor_Write( &plnwin->cursor_work, bmp, 0x0f );
-        plnwin->flag_cursor = CURSOR_FLAG_WRITE;
-      }
-      
+      keyCursor_Write( &plnwin->cursor_work, bmp, 0x0f );
 		  GFL_BMPWIN_TransVramCharacter( plnwin->bmpwin );
     }
     break;
@@ -3143,7 +3068,6 @@ void FLDPLAINMSGWIN_WriteKeyWaitCursor( FLDPLAINMSGWIN *plnwin )
 {
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
   keyCursor_Write( &plnwin->cursor_work, bmp, 0x0f );
-  plnwin->flag_cursor = CURSOR_FLAG_WRITE;
   GFL_BMPWIN_TransVramCharacter( plnwin->bmpwin );
 }
 
@@ -4135,7 +4059,20 @@ static void keyCursor_Init( KEYCURSOR_WORK *work, HEAPID heapID )
 //--------------------------------------------------------------
 static void keyCursor_Delete( KEYCURSOR_WORK *work )
 {
+  work->cursor_state = CURSOR_STATE_NONE;
   GFL_BMP_Delete( work->bmp_cursor );
+}
+
+//--------------------------------------------------------------
+/**
+ * キー送りカーソル　状態取得
+ * @param work KEYCURSOR_WORK
+ * @retval CURSOR_STATE
+ */
+//--------------------------------------------------------------
+static CURSOR_STATE keyCursor_GetState( KEYCURSOR_WORK *work )
+{
+  return( work->cursor_state );
 }
 
 //--------------------------------------------------------------
@@ -4157,6 +4094,8 @@ static void keyCursor_Clear(
   y = GFL_BMP_GetSizeY( bmp ) - 9;
   offs = tbl[work->cursor_anm_no];
   GFL_BMP_Fill( bmp, x, y+offs, 10, 7, n_col );
+  
+  work->cursor_state = CURSOR_STATE_NONE;
 }
 
 //--------------------------------------------------------------
@@ -4189,6 +4128,8 @@ static void keyCursor_Write(
   offs = tbl[work->cursor_anm_no];
   
   GFL_BMP_Print( work->bmp_cursor, bmp, 0, 2, x, y+offs, 10, 7, 0x00 );
+  
+  work->cursor_state = CURSOR_STATE_WRITE;
 }
 
 //--------------------------------------------------------------
@@ -4232,6 +4173,8 @@ static void keyCursor_WriteBmpBG(
   offs = tbl[work->cursor_anm_no];
   
   GFL_BMP_Print( work->bmp_cursor, bmp, 0, 2, x, y+offs, 10, 7, 0x00 );
+  
+  work->cursor_state = CURSOR_STATE_WRITE;
 }
 
 //======================================================================
