@@ -843,6 +843,7 @@ static void loadBMTextureSet(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id)
 {
   man->g3DresTex = GFL_G3D_CreateResourceArc( arc_id, file_id );
   
+  DEBUG_Field_Grayscale( man->g3DresTex );
   if(	!GFL_G3D_TransVramTextureAndFreeImageEntity( man->g3DresTex )){
     GF_ASSERT(0);
     return;

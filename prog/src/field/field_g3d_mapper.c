@@ -810,7 +810,8 @@ BOOL DEBUG_Field_Grayscale(GFL_G3D_RES *g3Dres)
       PaletteGrayScale(pData, sz / sizeof(u16));
     }
     else{
-      PaletteGrayScaleFlip(pData, sz / sizeof(u16));
+      PaletteGrayScale(pData, sz / sizeof(u16));
+//      PaletteGrayScaleFlip(pData, sz / sizeof(u16));
     }
 		return TRUE;
 	}
