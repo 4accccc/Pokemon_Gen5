@@ -242,17 +242,18 @@ void APP_KEYCURSOR_Main( APP_KEYCURSOR_WORK* work, PRINT_STREAM* stream, GFL_BMP
       {
         work->push_flag = TRUE;
         APP_KEYCURSOR_Clear( work, GFL_BMPWIN_GetBmp(msgwin), work->n_col );
+		    GFL_BMPWIN_TransVramCharacter( msgwin );
       }
       else
       {
         if( work->push_flag == FALSE )
         {
           APP_KEYCURSOR_Write( work, GFL_BMPWIN_GetBmp(msgwin), work->n_col );
+			    GFL_BMPWIN_TransVramCharacter( msgwin );
         }
       }
     }
 
-    GFL_BMPWIN_TransVramCharacter( msgwin );
     break;
 
   case PRINTSTREAM_STATE_RUNNING :  // é¿çsíÜ
