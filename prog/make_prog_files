@@ -172,7 +172,6 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/game_beacon.c \
         gamesystem/beacon_status.c \
         debug/debugwin_sys.c \
-        test/tetsu/debug_common.c \
         debug/debug_system_group.c \
         app/app_menu_common.c \
         app/app_taskmenu.c \
@@ -415,6 +414,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/trial_house_st.c \
         field/ev_time.c \
         field/field_g3d_map.c \
+        system/g3d_cull.c \
 		    field/report_event.c
 
 # wifiプログラム
@@ -845,14 +845,9 @@ SRCS_OVERLAY_FIELD_SEATEMPLE = field/field_seatemple.c
 
 # マッパーサンプル
 #===> GROUP_OVERLAY_UNION_INTRUDE
-SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/sample_net.c \
-        test/tetsu/test_prog1.c \
-        test/tetsu/sample2.c \
-        test/tetsu/sample3.c \
-        test/tetsu/sample4.c \
-        test/tetsu/sample5.c \
-        test/tetsu/sample6.c \
-        test/tetsu/debug_watanabe.c
+SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample5.c \
+																test/tetsu/debug_common.c \
+																test/tetsu/debug_watanabe.c
 
 #UI汎用モジュール
 #===> SRCS_OVERLAY_DEV_WIFI
