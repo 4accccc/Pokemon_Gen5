@@ -71,7 +71,7 @@ enum {
 	FORM_MAX_SIKIZIKA = 4,				// シキジカ ※新規
 	FORM_MAX_MERODHIA = 2,				// メロディア ※新規
 	FORM_MAX_HIHIDARUMA = 2,			// シキジカ ※新規
-	FORM_MAX_ONIBASU = 2,					// オニバス ※新規
+	FORM_MAX_BASURAO = 2,					// バスラオ ※新規
 	/* 合計: 72 */
 
 	FORM_ARRAY_LEN = 9,		///< フォルムフラグ配列の大きさ 9 * 8 = 72まで大丈夫
@@ -106,7 +106,7 @@ static const u16 FormTable[][2] =
 	{ MONSNO_SIKIZIKA, FORM_MAX_SIKIZIKA },				// シキジカ ※新規
 	{ MONSNO_MERODHIA, FORM_MAX_MERODHIA },				// メロディア ※新規
 	{ MONSNO_HIHIDARUMA, FORM_MAX_HIHIDARUMA },		// シキジカ ※新規
-	{ MONSNO_ONIBASU, FORM_MAX_ONIBASU },					// オニバス ※新規
+	{ MONSNO_BASURAO, FORM_MAX_BASURAO },					// バスラオ ※新規
 
 	{ 0, 0 },
 };
