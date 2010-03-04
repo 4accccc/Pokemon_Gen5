@@ -131,12 +131,12 @@ void BATTLE_EXAMINATION_SAVE_Write(SAVE_CONTROL_WORK * pSave , BATTLE_EXAMINATIO
 
   SaveControl_Extra_SaveAsyncInit(pSave,SAVESIZE_EXTRA_BATTLE_EXAMINATION);
   while(1){
-    if(SAVE_RESULT_OK==SaveControl_Extra_SaveAsyncMain(pSave,SAVE_EXTRA_ID_CGEAR_PICUTRE)){
+    if(SAVE_RESULT_OK==SaveControl_Extra_SaveAsyncMain(pSave,SAVE_EXTRA_ID_BATTLE_EXAMINATION)){
       break;
     }
     OS_WaitIrq(TRUE, OS_IE_V_BLANK);
   }
-  SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE);
+  SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_BATTLE_EXAMINATION);
 }
 
 
