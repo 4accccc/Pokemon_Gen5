@@ -50,6 +50,7 @@ VMCMD_RESULT EvCmdUn_GetCountryNum( VMHANDLE *core, void *wk )
     SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gdata );
     WIFI_HISTORY *wh = SaveData_GetWifiHistory(sv);
     *ret = WIFIHISTORY_GetMyCountryCount(wh);
+    NOZOMU_Printf("交換国数 %d\n",*ret);
   }
 
   return VMCMD_RESULT_CONTINUE;
@@ -99,7 +100,7 @@ VMCMD_RESULT EvCmdUn_SetTalkFlg( VMHANDLE *core, void *wk )
   GAMEDATA *gdata =  GAMESYSTEM_GetGameData(gsys);
   UNSV_WORK *unsv_work = GAMEDATA_GetUnsvWorkPtr(gdata);
   
-  obj_idx = VMGetU16( core ); //0～4
+  obj_idx = SCRCMD_GetVMWorkValue( core, work ); //0～4
 
   //セーブデータにアクセス
   {
@@ -142,6 +143,7 @@ VMCMD_RESULT EvCmdUn_CheckTalkFlg( VMHANDLE *core, void *wk )
   //セーブデータにアクセス
   {
     u8 idx = UN_GetUnIdx(unsv_work, obj_idx);
+    NOZOMU_Printf("idx = %d\n",idx);
     if (idx != UN_IDX_OVER)
     {
       u8 flg;
@@ -171,7 +173,7 @@ VMCMD_RESULT EvCmdUn_SetPlayerNature( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  nature_idx = VMGetU16( core ); //0～4
+  nature_idx = SCRCMD_GetVMWorkValue( core, work ); //0～4
 
   //セーブデータにアクセス
   {
