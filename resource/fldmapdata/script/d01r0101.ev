@@ -73,16 +73,6 @@ _TALK_OBJ_START()
 		//初回会話時にC01R0501のライバルと話したかチェックを行う
 		IF FLAG_ON( FE_C01R0501_RIVALTALK ) THEN
 		
-		//=========フラグワーク操作==========//
-	
-		//ジム前サングラスの消去
-		_FLAG_SET( FV_C01_GUIDE_01 )
-
-		//ジム前リーダーの開始
-		_FLAG_RESET( FV_C01_LEADER1_01 )
-
-		//===================================//
-		
 		ENDIF
 		
 		//最初に選択した三匹で台詞内にセットする名前を変える
@@ -297,12 +287,12 @@ EVENT_START   ev_pos_d01r0101_support_01
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 	
+	//サポート曲再生。
+	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
+	
 	//サポート登場
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_01)
 	_OBJ_ANIME_WAIT()
-	
-	//サポート曲再生。
-	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
 	
 	//主人公振り向く
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d01r0101_player_retrun01)
