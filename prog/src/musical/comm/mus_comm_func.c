@@ -84,9 +84,9 @@ typedef enum
   MCS_WAIT_MYSTATUS_ALL,
   
   MCS_START_SEND_PROGRAM,
+  MCS_SEND_CONDITION_POINT,
   MCS_SEND_SIZE_PROGRAM,
   MCS_SEND_DATA_PROGRAM,
-  MCS_SEND_CONDITION_POINT,
   MCS_WAIT_SEND_DATA_SCRIPT,
   
   //控え室の同期処理
@@ -331,6 +331,11 @@ BOOL MUS_COMM_ExitGameComm(int *seq, void *pwk, void *pWork)
   switch( *seq )
   {
   case 0:
+    if( work->isInitIrc == TRUE )
+    {
+      GFL_NET_DelCommandTable( GFL_NET_CMD_MUSICAL );
+    }
+
     //一人の時は即切断。それ以外は同期とって終了コマンド、後に切断。
     if( GFL_NET_GetConnectNum() <= 1 )
     {
@@ -388,6 +393,32 @@ void MUS_COMM_UpdateGameComm(int *seq, void *pwk, void *pWork)
 
 
 #pragma mark [>func
+void MUS_COMM_InitAfterWirelessConnect( MUS_COMM_WORK* work )
+{
+  if( GFL_NET_IsParentMachine() == TRUE )
+  {
+    work->mode = MCM_PARENT;
+  }
+  else
+  {
+    work->mode = MCM_CHILD;
+  }
+  
+}
+void MUS_COMM_InitAfterIrcConnect( MUS_COMM_WORK* work )
+{
+  GFL_NET_AddCommandTable( GFL_NET_CMD_MUSICAL , MusCommRecvTable , NELEMS(MusCommRecvTable) , work );
+  if( GFL_NET_IsParentMachine() == TRUE )
+  {
+    work->mode = MCM_PARENT;
+  }
+  else
+  {
+    work->mode = MCM_CHILD;
+  }
+  
+}
+
 void MUS_COMM_InitMusical( MUS_COMM_WORK* work , MYSTATUS *myStatus , GAME_COMM_SYS_PTR gameComm , MUSICAL_DISTRIBUTE_DATA *distData , const HEAPID heapId )
 {
   u8 i;
@@ -429,15 +460,6 @@ void MUS_COMM_InitMusical( MUS_COMM_WORK* work , MYSTATUS *myStatus , GAME_COMM_
   work->isReqSendState = FALSE;
   work->useButtonAttentionPoke = MUSICAL_COMM_MEMBER_NUM;
   work->distData = distData;
-  
-  if( GFL_NET_IsParentMachine() == TRUE )
-  {
-    work->mode = MCM_PARENT;
-  }
-  else
-  {
-    work->mode = MCM_CHILD;
-  }
   
   MUS_COMM_SetCommState( work , MCS_INIT_MUSICAL);
   
@@ -567,7 +589,6 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
     }
     break;
   case MCS_SEND_CONDITION_POINT:
-    if( work->isPostScriptSize == TRUE )
     {
       if( MUS_COMM_Send_FlagServer( work,
                                     MCFT_CONDITION_POINT,

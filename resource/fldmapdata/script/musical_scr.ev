@@ -92,13 +92,13 @@ EVENT_END
 /*************************************************************/
 /*            通信　受付コア               */
 /*************************************************************/
-EVENT_START ev_musical_recept_comm_core
+ev_musical_recept_comm_core:
 
   DEFINE_LOCAL ret
   DEFINE_LOCAL retParentChild
 
   //デバッグ
-/*
+  /*
   //フィールド通信切断
   _FIELD_COMM_EXIT_EVENT_CALL( ret )
   //親になるか子になるか
@@ -111,19 +111,24 @@ EVENT_START ev_musical_recept_comm_core
   _BMPMENU_START()
   _BALLOONWIN_CLOSE()
   
-  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 0, 0, 0 )
-  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,0,0,0 )
+  //WL処理
+  //_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 0, 0, 0 )
+  //_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,0,0,0 )
+  //IR処理
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 1, 0, 0 )
   //リーダー、グループ別参加処理
   IF $retParentChild == 0 THEN //リーダー
-    _CALL ev_musical_receipt_comm_connect_parent
+    _CALL ev_musical_receipt_comm_connect_ir_parent
   ELSE //グループ
-    _CALL ev_musical_receipt_comm_connect_child
+    _CALL ev_musical_receipt_comm_connect_ir_child
   ENDIF
+  //IR処理
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT_AFTER_IR ,0,0,0 )
   //通信同期(お友達の選択を待っています)
   _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_FIRST, 0, 0 )
   _MUSICAL_CALL(0,MUSICAL_CALL_COMM) //ミュージカル呼び出し
-*/
-  
+
+  //*/
   //デバッグ
 
   //ワイヤレス通信開始しますか
@@ -142,6 +147,7 @@ EVENT_START ev_musical_recept_comm_core
     //共通メッセージ呼び出し
     _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
     _CALL ev_musical_exit_common
+    _RET
   ENDIF
 
   //TODO ペアコンチェック！！
@@ -237,10 +243,6 @@ EVENT_START ev_musical_recept_comm_core
               _CALL ev_musical_receipt_comm_connect_ir_child
             ENDIF
 
-            IF $SCWK_ANSWER == TRUE THEN //接続成功
-              _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT_AFTER_IR ,0,0,0 )
-            ENDIF
-
           ELSIF $ret == 1 THEN
             //--------------------------
             //ここからワイヤレス受付処理
@@ -257,13 +259,16 @@ EVENT_START ev_musical_recept_comm_core
               _CALL ev_musical_receipt_comm_connect_child
             ENDIF
 
+            IF $SCWK_ANSWER == TRUE THEN //接続成功
+              //通信切って選びなおし
+              _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_EXIT, 0, 0, 0 )
+            ENDIF
             //ここまでワイヤレス受付処理
             //--------------------------
           ENDIF
 
           IF $SCWK_ANSWER == FALSE THEN //接続失敗
-            //通信切って選びなおし
-            _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_EXIT, 0, 0, 0 )
+            //WLだけ切断するのでここでは処理なし
           ELSE
             $isLoop1 = FALSE
             $isLoop2 = FALSE
@@ -283,13 +288,14 @@ EVENT_START ev_musical_recept_comm_core
   //入場アニメ
   _CALL recept_move_obj_comm
 
-    _MUSICAL_CALL(selectPoke,MUSICAL_CALL_COMM) //ミュージカル呼び出し
+  _MUSICAL_CALL(selectPoke,MUSICAL_CALL_COMM) //ミュージカル呼び出し
+
   //ここから処理は帰ってきません。
   //細かい開放はプログラムで行います。
 
     _CALL ev_musical_exit_comm_common
 
-EVENT_END
+_RET
 
 
 //--------------------------------------------------------------

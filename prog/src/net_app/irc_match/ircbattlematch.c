@@ -1357,6 +1357,7 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
       net_ini_data.bMPMode = TRUE;
       net_ini_data.maxConnectNum = pWork->pBattleWork->netInitWork->maxConnectNum;         ///< 最大接続人数
       net_ini_data.maxSendSize = pWork->pBattleWork->netInitWork->maxSendSize;           ///< 送信サイズ
+      net_ini_data.maxMPParentSize = pWork->pBattleWork->netInitWork->maxMPParentSize;           ///< 送信サイズ
       pWork->musicalNum = net_ini_data.maxConnectNum;
       break;
     default:

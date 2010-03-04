@@ -24,6 +24,8 @@ extern BOOL MUS_COMM_ExitWaitGameComm(int *seq, void *pwk, void *pWork);
 
 extern void MUS_COMM_UpdateGameComm(int *seq, void *pwk, void *pWork);
 
+extern void MUS_COMM_InitAfterWirelessConnect( MUS_COMM_WORK* work );
+extern void MUS_COMM_InitAfterIrcConnect( MUS_COMM_WORK* work );
 extern const BOOL MUS_COMM_IsPostProgramSize( const MUS_COMM_WORK *work );
 extern const BOOL MUS_COMM_IsPostProgramData( const MUS_COMM_WORK *work );
 extern const BOOL MUS_COMM_IsPostMessageSize( const MUS_COMM_WORK *work );

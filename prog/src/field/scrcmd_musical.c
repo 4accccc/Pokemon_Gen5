@@ -802,9 +802,6 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
       return( VMCMD_RESULT_SUSPEND );
     }
     break;
-  case MUSICAL_TOOL_COMM_INIT_AFTER_IR:
-    //赤外線のCBで対応。
-    break;
   case MUSICAL_TOOL_PRINT:
     ARI_TPrintf("----------------------------\n");
     ARI_TPrintf("ScriptMusTools Print[%d][%d]\n",val1,val2);
@@ -938,10 +935,15 @@ static void EvCmdIrcEntry_CallBack( void* wk )
   OS_TFPrintf(3,"----------------------------\n");
   OS_TFPrintf(3,"     IrcConnectCallBack     \n");
   OS_TFPrintf(3,"----------------------------\n");
-  if( /*接続成功*/ TRUE )
+  if( musScriptWork->irEntryWork.selectType != EVENTIRCBTL_ENTRYMODE_EXIT )
   {
     *musScriptWork->scriptRet = TRUE;
     musScriptWork->commWork = GameCommSys_GetAppWork(gameComm);
+    MUS_COMM_InitAfterIrcConnect( musScriptWork->commWork );
+  }
+  else
+  {
+    *musScriptWork->scriptRet = FALSE;
   }
 }
 
@@ -967,6 +969,7 @@ static BOOL EvCmdMusicalEntryParent( VMHANDLE *core, void *wk )
   {
   case COMM_ENTRY_RESULT_SUCCESS:      //メンバーが集まった
     (*musScriptWork->scriptRet) = MUSICAL_COMM_ENTRY_PARENT_OK;
+    MUS_COMM_InitAfterWirelessConnect( musScriptWork->commWork );
     ret = TRUE;
     break;
   case COMM_ENTRY_RESULT_CANCEL:       //キャンセルして終了
@@ -1012,6 +1015,7 @@ static BOOL EvCmdMusicalEntryChild( VMHANDLE *core, void *wk )
   {
   case ENTRY_PARENT_ANSWER_OK:      //エントリーOK
     (*musScriptWork->scriptRet) = MUSICAL_COMM_ENTRY_CHILD_OK;
+    MUS_COMM_InitAfterWirelessConnect( musScriptWork->commWork );
     ret = TRUE;
     break;
   case ENTRY_PARENT_ANSWER_NG:    //エントリーNG

@@ -282,6 +282,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
         evWork->musicalIndex[i] = MUS_COMM_GetMusicalIndex( evWork->scriptWork->commWork , i );
       }
       evWork->selfIdx = MUS_COMM_GetSelfMusicalIndex( evWork->scriptWork->commWork );
+      MUSICAL_EVENT_CalcProgramData( evWork );
     }
     break;
     
@@ -365,6 +366,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   //------------------------------
   case MES_INIT_ACTING:
     MUSICAL_EVENT_InitActing( evWork );
+    ARI_TPrintf("InitAct[%8x][%8x][%8x]\n",evWork->gsys,&MusicalStage_ProcData,evWork->actInitWork );
     GAMESYSTEM_CallProc( evWork->gsys , NO_OVERLAY_ID, &MusicalStage_ProcData, evWork->actInitWork );
     evWork->state = MES_TERM_ACTING;
     break;
@@ -1060,18 +1062,27 @@ const u8 MUSICAL_EVENT_GetMaxPointCondition( MUSICAL_EVENT_WORK *evWork , const 
   return maxType;
 }
 
-const u8 MUSICAL_EVENT_GetPosObjView( MUSICAL_EVENT_WORK *evWork , const u8 idx )
+const u8 MUSICAL_EVENT_GetPosObjView( MUSICAL_EVENT_WORK *evWork , const u8 pos )
 {
-  const u8 pos = evWork->musicalIndex[idx];
+  u8 i;
+  u8 idx = 0;
+  for( i=0;i<4;i++ )
+  {
+    if( evWork->musicalIndex[i] == pos )
+    {
+      idx = i;
+      break;
+    }
+  }
   
-  if( idx == evWork->selfIdx )
+  if( pos == evWork->selfIdx )
   {
     return NONDRAW;
   }
   else
   if( evWork->isComm == TRUE )
   {
-    MYSTATUS *commMyStatus = MUS_COMM_GetPlayerMyStatus( evWork->commWork , pos );
+    MYSTATUS *commMyStatus = MUS_COMM_GetPlayerMyStatus( evWork->commWork , idx );
     if( commMyStatus != NULL )
     {
       const u32 sex = MyStatus_GetMySex( commMyStatus );
@@ -1086,7 +1097,7 @@ const u8 MUSICAL_EVENT_GetPosObjView( MUSICAL_EVENT_WORK *evWork , const u8 idx 
     }
   }
   
-  return MUSICAL_PROGRAM_GetNpcObjId( evWork->progWork , pos-1 );
+  return MUSICAL_PROGRAM_GetNpcObjId( evWork->progWork , idx-1 );
 }
 
 
