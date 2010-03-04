@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T15:18:51"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T11:01:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="115" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="101" right="1261" bottom="499" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -476,22 +476,22 @@
 		<comment>♂
 ・続けてmsg_r01_white_06表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『なるほどな
-そういうことなら　おもしろいな[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレン『なるほどね
+そういうことなら　おもしろいよね[BE:01:ページ切り替え（クリア）]
 ずかんの　ページも　うまるから
 はかせも　よろこぶだろうし[BE:01:ページ切り替え（クリア）]
 そうだね　それでは
 カラクサタウンに　つくまで[BE:00:ページ切り替え（行送り）]
 ポケモンの　かいふくは[BE:00:ページ切り替え（行送り）]
-じたくで　しろよ[BE:01:ページ切り替え（クリア）]</language>
+じたくで　よろしくね[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『なるほどね
-それは　おもしろいな[BE:01:ページ切り替え（クリア）]
-図鑑の　ページも　うまるから
-博士にも　喜んでもらえる[BE:01:ページ切り替え（クリア）]
+そういうことなら　おもしろいよね[BE:01:ページ切り替え（クリア）]
+図鑑の　ページも　埋まるから
+博士も　喜ぶだろうし[BE:01:ページ切り替え（クリア）]
 そうだね　それでは
 カラクサタウンに　着くまで[BE:00:ページ切り替え（行送り）]
 ポケモンの　回復は[BE:00:ページ切り替え（行送り）]
-自宅で……　ということで[BE:01:ページ切り替え（クリア）]</language>
+自宅で　よろしくね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_white_04">
@@ -516,20 +516,19 @@
 ・msg_r01_white_06表示後
 　T02側に出現</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『おっ　[1:00:トレーナー名:0]
-ベルと　しょうぶ　するのか？[BE:01:ページ切り替え（クリア）]
-オレは　１ひき　つかまえて
-ごうけい　２ひき　で▽
-ベルと　ひきわけ　だった[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレン『おや　[1:00:トレーナー名:0]
+ベルと　しょうぶ　するのかい？[BE:01:ページ切り替え（クリア）]
+ぼくも　ベルも
+ポケモンずかんの[BE:00:ページ切り替え（行送り）]
+つかまえた　かずは　２ひき　だよ[BE:01:ページ切り替え（クリア）]
 あっ……　アイツが　どれだけ
 つかまえたか　いってしまった……</language>
-		<language name="JPN_KANJI" width="256">チェレン『おっ　[1:00:トレーナー名:0]
-ベルと　勝負するのか？[BE:01:ページ切り替え（クリア）]
-オレは　１匹　捕まえて
-合計２匹で▽
-ベルと　引き分け　だった[BE:01:ページ切り替え（クリア）]
-あっ……　アイツが
-どれだけ　捕まえたか　教えてしまった……</language>
+		<language name="JPN_KANJI" width="256">チェレン『おや　[1:00:トレーナー名:0]
+ベルと　勝負するのかい？[BE:01:ページ切り替え（クリア）]
+ぼくも　ベルも
+図鑑の　捕まえた数は　２匹だよ[BE:01:ページ切り替え（クリア）]
+あっ……　アイツが　どれだけ
+つかまえたか　いってしまった……</language>
 	</row>
 
 	<row id="msg_r01_white_10">
@@ -578,9 +577,11 @@
 		<comment>♀
 ・はい選択＆2匹</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『２ひきね
+		<language name="JPN" width="256">ベル『ずかんの　つかまえたかずは……[BE:01:ページ切り替え（クリア）]
+２ひき　ね！
 あたしたち　みんな　いっしょだね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『２匹ね
+		<language name="JPN_KANJI" width="256">ベル『図鑑の　捕まえた数は……[BE:01:ページ切り替え（クリア）]
+２匹　ね！
 あたしたち　みんな　一緒だね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
