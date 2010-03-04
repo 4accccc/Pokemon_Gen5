@@ -33,6 +33,9 @@
 #include "message.naix"
 #include "effect_viewer.h"
 
+#include "msg/msg_ev_bgm_list.h"
+#include "ev_bgm_list.cdat"
+
 #define PAD_BUTTON_EXIT ( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
 
 #define CAMERA_SPEED    ( FX32_ONE * 2 )
@@ -86,6 +89,7 @@ enum{
   SEQ_EFFECT_WAIT,
   SEQ_RECEIVE_ACTION,
   SEQ_EFFECT_VIEW,
+  SEQ_STATUS_EFFECT_VIEW,
   SEQ_BGM_SELECT,
 };
 
@@ -100,6 +104,12 @@ enum{
   EV_WAZANO_Y = 90,
   EV_WAZANAME_X = 80,
 
+  EV_STATUS_EFFECT_X = 68,
+  EV_STATUS_EFFECT_Y = 70,
+
+  EV_STATUS_EFFECT_NUM_X = 80,
+  EV_STATUS_EFFECT_NUM_Y = 90,
+
   EV_BGMNO_Y = 90,
 };
 
@@ -108,6 +118,7 @@ typedef enum
   DRAW_REQ_NONE = 0,
   DRAW_REQ_MENU_LIST,
   DRAW_REQ_WAZA_NO,
+  DRAW_REQ_STATUS_EFFECT,
   DRAW_REQ_BGM_NO,
 }EV_DRAW_REQ;
 
@@ -160,7 +171,9 @@ static  void  EffectViewerSequenceLoad( EFFECT_VIEWER_WORK *evw );
 static  void  EffectViewerResourceLoad( EFFECT_VIEWER_WORK *evw );
 static  BOOL  EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw );
 static  BOOL  EffectViewerEffectView( EFFECT_VIEWER_WORK *evw );
+static  BOOL  EffectViewerStatusEffect( EFFECT_VIEWER_WORK *evw );
 static  void  EffectViewerDrawWazaNo( EFFECT_VIEWER_WORK *evw );
+static  void  EffectViewerDrawStatusEffect( EFFECT_VIEWER_WORK *evw );
 static  void  EffectViewerDrawBgmNo( EFFECT_VIEWER_WORK *evw );
 static  void  EffectViewerInitMenuList( EFFECT_VIEWER_WORK *evw, int menu_list );
 static  void  EffectViewerDrawMenuList( EFFECT_VIEWER_WORK *evw );
@@ -189,10 +202,6 @@ static  const int pokemon_pos_table[][2]={
   { BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB },
   { BTLV_MCSS_POS_A, BTLV_MCSS_POS_B },
   { BTLV_MCSS_POS_C, BTLV_MCSS_POS_D }
-};
-
-static  const int bgm_table[]={
-  SEQ_BGM_VS_NORAPOKE,
 };
 
 FS_EXTERN_OVERLAY(battle_view);
@@ -626,6 +635,7 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
         param.item_no = ITEM_MASUTAABOORU;
         param.yure_cnt = GFUser_GetPublicRand( 4 );
         param.get_success = FALSE;
+        param.get_critical = FALSE;
 
         BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, &param, evw->viewer_mode );
       }
@@ -635,6 +645,17 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
         param.item_no = ITEM_MASUTAABOORU;
         param.yure_cnt = 3;
         param.get_success = TRUE;
+        param.get_critical = FALSE;
+
+        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, &param, evw->viewer_mode );
+      }
+      else if( cont == PAD_BUTTON_X | PAD_BUTTON_R ){
+        BTLV_EFFVM_PARAM param;
+
+        param.item_no = ITEM_MASUTAABOORU;
+        param.yure_cnt = 1;
+        param.get_success = TRUE;
+        param.get_critical = TRUE;
 
         BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, &param, evw->viewer_mode );
       }
@@ -691,14 +712,42 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     }
     else if( EffectViewerEffectView( evw ) == TRUE )
     {
+      evw->waza_no = BTLEFF_STATUS_EFFECT_START;
+      evw->draw_req = DRAW_REQ_STATUS_EFFECT;
+      evw->seq_no = SEQ_STATUS_EFFECT_VIEW;
+    }
+    break;
+  case SEQ_STATUS_EFFECT_VIEW:
+    if( cont == PAD_BUTTON_A ){
+      BTLV_EFFVM_StartThrough( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->waza_no, NULL );
+      evw->ret_seq_no = evw->seq_no;
+      evw->seq_no = SEQ_EFFECT_WAIT;
+    }
+    else if( cont == PAD_BUTTON_B ){
+      BTLV_EFFVM_StartThrough( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->waza_no, NULL );
+      evw->ret_seq_no = evw->seq_no;
+      evw->seq_no = SEQ_EFFECT_WAIT;
+    }
+    else if( EffectViewerStatusEffect( evw ) == TRUE )
+    {
       evw->draw_req = DRAW_REQ_BGM_NO;
       evw->seq_no = SEQ_BGM_SELECT;
     }
     break;
   case SEQ_BGM_SELECT:
+    if( ( trg == PAD_KEY_UP ) && ( evw->bgm_no < NELEMS( ev_bgm_table ) - 1 ) )
+    { 
+      evw->bgm_no++;
+      evw->draw_req = DRAW_REQ_BGM_NO;
+    }
+    else if( ( trg == PAD_KEY_DOWN ) && ( evw->bgm_no ) )
+    { 
+      evw->bgm_no--;
+      evw->draw_req = DRAW_REQ_BGM_NO;
+    }
     if( trg == PAD_BUTTON_A )
     {
-      PMSND_PlayBGM( bgm_table[ evw->bgm_no ] );
+      PMSND_PlayBGM( ev_bgm_table[ evw->bgm_no ] );
     }
     else if( trg == PAD_BUTTON_B )
     {
@@ -854,6 +903,7 @@ static  BOOL  EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw )
             PMSND_PlaySE_byPlayerID( evw->se_no, player );
           }
           NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player ), ev_param_get( evw, SPPARAM_VOLUME ) );
+          PMSND_SetStatusSE_byPlayerID( player, PMSND_NOEFFECT, PMSND_NOEFFECT, 0 );
           PMSND_SetStatusSE_byPlayerID( player, PMSND_NOEFFECT, ev_param_get( evw, SPPARAM_PITCH ), PMSND_NOEFFECT );
           NNS_SndPlayerSetTrackModDepth( PMSND_GetSE_SndHandle( player ), 0xffff, ev_param_get( evw, SPPARAM_MODUDEPTH ) );
           NNS_SndPlayerSetTrackModSpeed( PMSND_GetSE_SndHandle( player ), 0xffff, ev_param_get( evw, SPPARAM_MODUSPEED ) );
@@ -970,6 +1020,41 @@ static  BOOL  EffectViewerEffectView( EFFECT_VIEWER_WORK *evw )
   return ( GFL_UI_TP_GetTrg() );
 }
 
+static  BOOL  EffectViewerStatusEffect( EFFECT_VIEWER_WORK *evw )
+{
+  int trg = GFL_UI_KEY_GetTrg();
+
+  if( ( trg == PAD_KEY_UP ) && ( evw->waza_no < BTLEFF_STATUS_EFFECT_END - 1 ) )
+  {
+    evw->waza_no++;
+    evw->draw_req = DRAW_REQ_STATUS_EFFECT;
+  }
+  else if( ( trg == PAD_KEY_DOWN ) && ( evw->waza_no > BTLEFF_STATUS_EFFECT_START ) )
+  {
+    evw->waza_no--;
+    evw->draw_req = DRAW_REQ_STATUS_EFFECT;
+  }
+  else if( trg == PAD_KEY_LEFT )
+  {
+    evw->waza_no -= 10;
+    if( evw->waza_no < BTLEFF_STATUS_EFFECT_START )
+    { 
+      evw->waza_no = BTLEFF_STATUS_EFFECT_START;
+    }
+    evw->draw_req = DRAW_REQ_STATUS_EFFECT;
+  }
+  else if( trg == PAD_KEY_RIGHT )
+  {
+    evw->waza_no += 10;
+    if( evw->waza_no >= BTLEFF_STATUS_EFFECT_END )
+    { 
+      evw->waza_no = BTLEFF_STATUS_EFFECT_END -1;
+    }
+    evw->draw_req = DRAW_REQ_STATUS_EFFECT;
+  }
+  return ( GFL_UI_TP_GetTrg() );
+}
+
 //======================================================================
 //  技No表示
 //======================================================================
@@ -1011,19 +1096,50 @@ static  void  EffectViewerDrawWazaNo( EFFECT_VIEWER_WORK *evw )
 }
 
 //======================================================================
+//  ステータスエフェクト表示
+//======================================================================
+static  void  EffectViewerDrawStatusEffect( EFFECT_VIEWER_WORK *evw )
+{
+  STRBUF  *strbuf;
+  int     keta, ofsx = 0;
+  u32     num;
+  int     div_num = 100;
+  int     waza_no = evw->waza_no - BTLEFF_STATUS_EFFECT_START + 1;
+
+  strbuf = GFL_MSG_CreateString( evw->msg,  EVMSG_STATUS_EFFECT );
+  GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), EV_STATUS_EFFECT_X, EV_STATUS_EFFECT_Y, strbuf, evw->font );
+  GFL_STR_DeleteBuffer( strbuf );
+
+  for( keta = 2 ; keta >= 0 ; keta-- )
+  {
+    num = waza_no / div_num;
+    strbuf = GFL_MSG_CreateString( evw->msg,  EVMSG_NUM0 + num );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), EV_STATUS_EFFECT_NUM_X + ofsx, EV_STATUS_EFFECT_NUM_Y, strbuf, evw->font );
+    GFL_STR_DeleteBuffer( strbuf );
+    ofsx += 8;
+    waza_no %= div_num;
+    div_num /= 10;
+  }
+}
+
+//======================================================================
 //  BGMNo表示
 //======================================================================
 static  void  EffectViewerDrawBgmNo( EFFECT_VIEWER_WORK *evw )
 {
+  GFL_MSGDATA*  msg;
   STRBUF  *strbuf;
   int     pos_x;
 
-  strbuf = GFL_MSG_CreateString( evw->msg, EV_MUS_01 + evw->bgm_no );
+  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_ev_bgm_list_dat, evw->heapID );
+  strbuf = GFL_MSG_CreateString( msg, EV_BGM_000 + evw->bgm_no );
   GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
-  pos_x = 128 - ( PRINTSYS_GetStrWidth( strbuf, evw->font, 0 ) / 2 );
+  pos_x = 24;
   PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), pos_x, EV_BGMNO_Y, strbuf, evw->font );
 
   GFL_STR_DeleteBuffer( strbuf );
+  GFL_MSG_Delete( msg );
 }
 
 //======================================================================
@@ -1063,6 +1179,9 @@ static  void  EffectViewerDrawMenuList( EFFECT_VIEWER_WORK *evw )
       break;
     case DRAW_REQ_WAZA_NO:
       EffectViewerDrawWazaNo( evw );
+      break;
+    case DRAW_REQ_STATUS_EFFECT:
+      EffectViewerDrawStatusEffect( evw );
       break;
     case DRAW_REQ_BGM_NO:
       EffectViewerDrawBgmNo( evw );
