@@ -242,6 +242,11 @@ EVENT_START ev_musical_recept_comm_core
             ELSE //グループ
               _CALL ev_musical_receipt_comm_connect_ir_child
             ENDIF
+
+            IF $SCWK_ANSWER == TRUE THEN //接続成功
+              _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT_AFTER_IR ,0,0,0 )
+            ENDIF
+
           ELSIF $ret == 1 THEN
             //--------------------------
             //ここからワイヤレス受付処理
@@ -265,7 +270,7 @@ EVENT_START ev_musical_recept_comm_core
           IF $SCWK_ANSWER == FALSE THEN //接続失敗
             //通信切って選びなおし
             _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_EXIT, 0, 0, 0 )
-          ELSE //コメントが無いせい？
+          ELSE
             $isLoop1 = FALSE
             $isLoop2 = FALSE
           ENDIF

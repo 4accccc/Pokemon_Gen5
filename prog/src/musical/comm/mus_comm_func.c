@@ -1132,7 +1132,7 @@ static void MUS_COMM_Post_AllMyStatus( const int netID, const int size , const v
   for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
   {
     u32 startAdr = (u32)work->allMyStatus+MyStatus_GetWorkSize()*i;
-    if( MyStatus_CheckNameClear( (MYSTATUS*)startAdr ) == TRUE )
+    if( MyStatus_CheckNameClear( (MYSTATUS*)startAdr ) == FALSE )
     {
       GFL_STD_MemCopy( (void*)startAdr , work->userData[i].myStatus , MyStatus_GetWorkSize() );
       work->userData[i].isValid = TRUE;

@@ -98,6 +98,7 @@
 #define MUSICAL_TOOL_COMM_WAIT_NET_INIT (16)  //通信初期化待ち
 #define MUSICAL_TOOL_COMM_WAIT_POST_ALLPOKE (17)  //ポケ受信待ち
 #define MUSICAL_TOOL_COMM_IR_CONNECT (18) //赤外線接続
+#define MUSICAL_TOOL_COMM_INIT_AFTER_IR (19)  //赤外線接続後の処理
 
 #define MUSICAL_TOOL_PRINT (100) //デバッグ出力
 

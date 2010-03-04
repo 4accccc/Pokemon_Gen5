@@ -792,12 +792,14 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
                                            &IrcBattleMatchProcData, 
                                            &musScriptWork->irEntryWork,
                                            EvCmdIrcEntry_CallBack, 
-                                           musScriptWork );
+                                           work );
       SCRIPT_CallEvent( sc, event );
       return( VMCMD_RESULT_SUSPEND );
     }
     break;
-    
+  case MUSICAL_TOOL_COMM_INIT_AFTER_IR:
+    //ÔŠOü‚ÌCB‚Å‘Î‰žB
+    break;
   case MUSICAL_TOOL_PRINT:
     ARI_TPrintf("----------------------------\n");
     ARI_TPrintf("ScriptMusTools Print[%d][%d]\n",val1,val2);
@@ -919,13 +921,23 @@ static void EvCmdFittingCallProc_CallBack( void* work )
 }
 
 
-static void EvCmdIrcEntry_CallBack( void* work )
+static void EvCmdIrcEntry_CallBack( void* wk )
 {
-  MUSICAL_SCRIPT_WORK *musScriptWork = work;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
+  MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
+
   *musScriptWork->scriptRet = FALSE;
   OS_TFPrintf(3,"----------------------------\n");
   OS_TFPrintf(3,"     IrcConnectCallBack     \n");
   OS_TFPrintf(3,"----------------------------\n");
+  if( /*Ú‘±¬Œ÷*/ TRUE )
+  {
+    *musScriptWork->scriptRet = TRUE;
+    musScriptWork->commWork = GameCommSys_GetAppWork(gameComm);
+  }
 }
 
 //--------------------------------------------------------------

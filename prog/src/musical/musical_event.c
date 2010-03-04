@@ -223,6 +223,11 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
           evWork->selfIdx = i;
         }
       }
+      
+      //マップ遷移前に演目のデータだけ必要(NPCキャラを出すため
+      MUSICAL_SYSTEM_LoadDistributeData_Data( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_PROC_WRAPPER );
+      evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
+
     }
     evWork->state = MES_ENTER_WAITROOM_FIRST;
     evWork->subSeq = 0;
@@ -466,10 +471,8 @@ static void MUSICAL_EVENT_InitMusical( MUSICAL_EVENT_WORK *evWork )
   
   if( evWork->isComm == FALSE )
   {
-    MUSICAL_SYSTEM_LoadDistributeData_Data( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
     MUSICAL_SYSTEM_LoadDistributeData_Script( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
     MUSICAL_SYSTEM_LoadDistributeData_Strm( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
-    evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
   }
   else
   {
@@ -1061,6 +1064,7 @@ const u8 MUSICAL_EVENT_GetMaxPointCondition( MUSICAL_EVENT_WORK *evWork , const 
 const u8 MUSICAL_EVENT_GetPosObjView( MUSICAL_EVENT_WORK *evWork , const u8 idx )
 {
   const u8 pos = evWork->musicalIndex[idx];
+  
   if( idx == evWork->selfIdx )
   {
     return NONDRAW;
@@ -1072,7 +1076,7 @@ const u8 MUSICAL_EVENT_GetPosObjView( MUSICAL_EVENT_WORK *evWork , const u8 idx 
     if( commMyStatus != NULL )
     {
       const u32 sex = MyStatus_GetMySex( commMyStatus );
-      if( sex == PM_MALE )
+      if( sex == PTL_SEX_MALE )
       {
         return HERO;
       }
