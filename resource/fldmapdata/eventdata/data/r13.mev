@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/25 20:10:11
+#save date:2010/03/04 21:17:11
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r13.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-552 0 40
+520 0 8
 #event number: 1
 #type
 1
@@ -235,7 +235,7 @@ TR_KARATE_10
 #OBJ CODE Number
 FIGHTERM
 #MOVE CODE Number
-MV_ALONGW_LRR
+MV_ALONGW_R
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -251,13 +251,13 @@ DIR_RIGHT
 #Parameter 2 Number
 0
 #Move Limit X Number
-15
+5
 #Move Limit Z Number
 4
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1288 -80 -1352
+1496 -80 -1448
 #event number: 8
 #type
 1
@@ -577,11 +577,11 @@ DOOR_ID_R13R0103_R13_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_WALL
+EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 -80 -520
+-184 -80 -504
 #size
 1 1
 #event number: 1
