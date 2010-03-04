@@ -97,6 +97,7 @@ extern void FIELD_PLAYER_CORE_ChangeMoveForm(
 extern void FIELD_PLAYER_CORE_ResetMoveForm( FIELD_PLAYER_CORE *player_core );
 extern void FIELD_PLAYER_CORE_ChangeDrawForm(
     FIELD_PLAYER_CORE *player_core, PLAYER_DRAW_FORM form );
+extern BOOL FIELD_PLAYER_CORE_CheckDrawFormWait( FIELD_PLAYER_CORE *player_core );
 extern PLAYER_DRAW_FORM FIELD_PLAYER_CORE_GetDrawForm( FIELD_PLAYER_CORE *player_core );
 extern void FIELD_PLAYER_CORE_ChangeFormRequest( FIELD_PLAYER_CORE *player_core, PLAYER_DRAW_FORM form );
 extern BOOL FIELD_PLAYER_CORE_ChangeFormWait( FIELD_PLAYER_CORE *player_core );

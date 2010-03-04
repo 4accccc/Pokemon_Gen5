@@ -86,6 +86,9 @@ struct _FIELD_PLAYER_CORE
 
   // EffectTask
   FLDEFF_TASK *fldeff_joint;
+
+  // 見た目更新ウエイト用　待ち時間
+  int draw_form_wait;
 };
 
 //-----------------------------------------------------------------------------
@@ -672,6 +675,35 @@ void FIELD_PLAYER_CORE_ChangeDrawForm(
   if( MMDL_GetOBJCode(mmdl) != code ){
     MMDL_ChangeOBJCode( mmdl, code );
   }
+
+  player_core->draw_form_wait = 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  DrawForm変更待ち
+ *
+ *	@param	player_core 自機ワーク
+ *
+ *	@retval TRUE  完了
+ *	@retval FALSE 変更中
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_PLAYER_CORE_CheckDrawFormWait( FIELD_PLAYER_CORE *player_core )
+{
+  MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
+  u32 arcID;
+  arcID = MMDL_CallDrawGetProc( mmdl, 0 );
+  if(arcID != MMDL_BLACTID_NULL){
+
+    // 描画できる状態から1フレまつ
+    if(player_core->draw_form_wait == 1){
+      return TRUE;
+    }
+
+    player_core->draw_form_wait ++;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------

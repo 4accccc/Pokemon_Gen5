@@ -1062,6 +1062,21 @@ PLAYER_DRAW_FORM FIELD_PLAYER_GetDrawForm( FIELD_PLAYER *fld_player )
   return FIELD_PLAYER_CORE_GetDrawForm( fld_player->corewk );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  DRAW_FORM変更まち
+ *
+ *	@param	fld_player  ワーク
+ *
+ *	@retval TRUE  完了
+ *	@retval FALSE 途中
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_PLAYER_CheckDrawFormWait( FIELD_PLAYER *fld_player )
+{
+  return FIELD_PLAYER_CORE_CheckDrawFormWait( fld_player->corewk );
+}
+
 //--------------------------------------------------------------
 /**
  * 自機を指定フォームに変更リクエスト(アニメコール込み)
