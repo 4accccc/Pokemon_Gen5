@@ -129,7 +129,6 @@ typedef struct {
 }DEBUGITEM_LIST;
 
 FS_EXTERN_OVERLAY(watanabe_sample);
-FS_EXTERN_OVERLAY(fieldmap);
 extern const GFL_PROC_DATA DebugWatanabeSample5ProcData;
 
 static const DEBUGITEM_LIST debugItemList[] = {
