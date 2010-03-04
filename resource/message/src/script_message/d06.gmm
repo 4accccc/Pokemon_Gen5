@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T16:51:16"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T17:27:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -331,16 +331,16 @@
 おら　ミネズミ！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d06_leader_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d06_leader_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・ポケモンが巣に向かい技を出したような演出
 ・巣を削除する処理
 ・続けてleader_04</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
-		<language name="JPN" width="256">ポケモン名
-技名！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ポケモン名
-技名！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">やれい！
+ワルビルっ！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">やれい！
+ワルビルっ！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d06_leader_04">

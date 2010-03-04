@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-12T16:02:24"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T17:25:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1508" top="355" right="2213" bottom="973" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -305,7 +305,7 @@
 最強に　クールだよな！</language>
 	</row>
 
-	<row id="msg_r08r0201_backpackerm_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r08r0201_backpackerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・GRIDX=7、GRIDZ=3、下向き
 ・仮メッセージ</comment>
@@ -323,7 +323,7 @@
 撮影ポイント　さ！</language>
 	</row>
 
-	<row id="msg_r08r0201_assistantm_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r08r0201_assistantm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・GRIDX=8、GRIDZ=3、下向き
 ・仮メッセージ</comment>
