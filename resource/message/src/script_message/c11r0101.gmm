@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-03-04T16:03:36"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-03-04T16:17:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -266,7 +266,7 @@
 		</language>
 	</columns>
 
-	<dialog left="578" top="127" right="1280" bottom="745" maximized="no" rayout="Vertical2">
+	<dialog left="1569" top="83" right="2271" bottom="701" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="649" top="113" right="1122" bottom="511" visible="no"/>
 		<band id="0" index="1" style="0000" width="527"/>
@@ -663,7 +663,7 @@ POS</comment>
 ゆだんした　ときこそが　ねらいめ！▼
 こんなときに　かぎって　もんだいが
 あったり　するんだ！▼
-おじさん　だてに　３０ねん
+はっは！　おじさん　だてに　３０ねん
 ガードマン　やってないからな！▼
 ……　……
 ……　……▼
@@ -676,7 +676,7 @@ POS</comment>
 油断した　時こそが　ねらい目！▼
 こんなときに　限って　問題が
 あったり　するんだ！▼
-おじさん　だてに　３０年
+はっは！　おじさん　だてに　３０年
 ガードマン　やってないからな！▼
 ……　……
 ……　……▼
@@ -688,7 +688,7 @@ POS</comment>
 POS</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">おおっ　きみか　[1:00:トレーナー名:3]▼
-いちおう　セキュリティチェックするぞ▼
+いちおう　セキュリティチェック　するぞ▼
 ……　……
 ……　……▼
 こ……　これは……▼
@@ -698,7 +698,7 @@ POS</comment>
 こんど　おじさんも　かってみようかな▼
 ほい　とおっていいよ▼</language>
 		<language name="JPN_KANJI" width="256">おおっ　きみか　[1:00:トレーナー名:3]▼
-一応　セキュリティチェックするぞ▼
+一応　セキュリティチェック　するぞ▼
 ……　……
 ……　……▼
 こ……　これは……▼
