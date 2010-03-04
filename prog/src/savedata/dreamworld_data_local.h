@@ -34,6 +34,6 @@ struct _DREAMWORLD_SAVEDATA {
   u8 pokemonIn;  ///ppにポケモンが入っているかどうか
   u8 signin; //PDW登録済み
   u8 bAccount; //アカウント取得済み
-  u8 dummy;
+  u8 furnitureNo;  //選んだ家具のインデックス
 };
 

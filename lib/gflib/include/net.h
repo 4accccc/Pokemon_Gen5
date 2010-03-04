@@ -481,7 +481,7 @@ extern void GFL_NET_ChangeoverModeSet(int mode, BOOL bAuto, const u8 *macAddress
  */
 //==============================================================================
 
-extern void GFL_NET_ForceParentStart_IRCWIRELESS(void);
+extern BOOL GFL_NET_ForceParentStart_IRCWIRELESS(void);
 
 //==============================================================================
 /**

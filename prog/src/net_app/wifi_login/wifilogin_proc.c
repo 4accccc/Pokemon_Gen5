@@ -844,7 +844,10 @@ static void _modeFadeStart(WIFILOGIN_WORK* pWork)
 {
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-  PMSND_FadeOutBGM( 8 );
+  if( pWork->dbw->bg == WIFILOGIN_BG_NORMAL )
+  { 
+    PMSND_FadeOutBGM( 8 );
+  }
   _CHANGE_STATE(pWork,_modeFadeout);        // I‚í‚è
 }
 
@@ -968,10 +971,6 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
 
       pWork->dbw = pwk;
 
-    PMSND_PlayBGM(SEQ_BGM_WIFI_ACCESS);
-    PMSND_FadeInBGM( 8 );
-    
-    
     if(GFL_NET_IsInit()){       // Ú‘±’†
       GF_ASSERT(0);
     }
@@ -985,6 +984,11 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
   if( pEv->bg == WIFILOGIN_BG_NORMAL )
   { 
     PMSND_PlayBGM( SEQ_BGM_WIFI_ACCESS );
+    PMSND_FadeInBGM( 8 );
+  }
+  else{
+    PMSND_PlayBGM(SEQ_BGM_GAME_SYNC);
+    PMSND_FadeInBGM( 8 );
   }
 
   return GFL_PROC_RES_FINISH;

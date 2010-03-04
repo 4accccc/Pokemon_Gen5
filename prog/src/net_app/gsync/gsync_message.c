@@ -33,6 +33,7 @@
 #include "sound/pm_sndsys.h"
 #include "../../field/event_ircbattle.h"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
+#include "app/app_printsys_common.h"
 
 #include "gsync_local.h"
 #include "gtsnego.naix"
@@ -123,6 +124,7 @@ struct _GSYNC_MESSAGE_WORK {
 
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
 	APP_TASKMENU_RES* pAppTaskRes;
+  APP_PRINTSYS_COMMON_WORK aPrintWork;
 //  int windowNum;
   HEAPID heapID;
   
@@ -166,6 +168,8 @@ GSYNC_MESSAGE_WORK* GSYNC_MESSAGE_Init(HEAPID id,int msg_dat)
 	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
 																0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
+
+  
 #if PM_DEBUG
   DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );
   DEBUG_PAUSE_SetEnable( TRUE );
@@ -248,6 +252,8 @@ void GSYNC_MESSAGE_MessageDisp(GSYNC_MESSAGE_WORK* pWork)
   pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBuf, pWork->pFontHandle,
                                         MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
 
+  APP_PRINTSYS_COMMON_PrintStreamInit( &pWork->aPrintWork ,APP_PRINTSYS_COMMON_TYPE_BOTH);
+  
   BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar1M), _BUTTON_WIN_PAL );
 
   GFL_BMPWIN_TransVramCharacter(pwin);
@@ -285,9 +291,6 @@ void GSYNC_MESSAGE_NickNameMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid,POKEM
   GSYNC_MESSAGE_MessageDisp(pWork);
 }
 
-
-
-
 //------------------------------------------------------------------------------
 /**
  * @brief   メッセージの終了待ち
@@ -298,21 +301,11 @@ void GSYNC_MESSAGE_NickNameMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid,POKEM
 BOOL GSYNC_MESSAGE_InfoMessageEndCheck(GSYNC_MESSAGE_WORK* pWork)
 {
   if(pWork->pStream){
-    int state = PRINTSYS_PrintStreamGetState( pWork->pStream );
-    switch(state){
-    case PRINTSTREAM_STATE_DONE:
-      PRINTSYS_PrintStreamDelete( pWork->pStream );
-      pWork->pStream = NULL;
-      break;
-    case PRINTSTREAM_STATE_PAUSE:
-      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
-        PRINTSYS_PrintStreamReleasePause( pWork->pStream );
-      }
-      break;
-    default:
-      break;
+    if(!APP_PRINTSYS_COMMON_PrintStreamFunc(&pWork->aPrintWork,pWork->pStream)){
+      return FALSE;  //まだ終わってない
     }
-    return FALSE;  //まだ終わってない
+    PRINTSYS_PrintStreamDelete( pWork->pStream );
+    pWork->pStream = NULL;
   }
   return TRUE;// 終わっている
 }

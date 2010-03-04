@@ -532,6 +532,53 @@ static void _wakeupAction2(G_SYNC_WORK* pWork)
 }
 
 
+static void _wakeupAction12(G_SYNC_WORK* pWork)
+{
+  GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
+
+  GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_rug_ani3);
+  GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_zzz_ani);
+
+  GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_003);
+  PMSND_PlaySE(SEQ_SE_SYS_26);
+
+  _CHANGE_STATE(_wakeupAction2);
+
+}
+
+
+
+static void _itemcheck2(G_SYNC_WORK* pWork)
+{
+
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+
+    if(selectno==0){
+      _CHANGE_STATE(_wakeupAction12);
+    }
+    else{
+      _CHANGE_STATE(_networkClose);
+    }
+    GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+  }
+}
+
+
+
+static void _itemcheck(G_SYNC_WORK* pWork)
+{
+  if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+
+  pWork->pAppTask = GSYNC_MESSAGE_YesNoStart(pWork->pMessageWork,GSYNC_YESNOTYPE_INFO);
+
+  _CHANGE_STATE(_itemcheck2);
+
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -545,16 +592,22 @@ static void _wakeupAction1(G_SYNC_WORK* pWork)
   if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
 
-  GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_rug_ani3);
-  GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_zzz_ani);
+  {
+    DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+    if(1){
+    //    if( DREAMWORLD_SV_GetItemRestNum(pDreamSave) ){
 
-  GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_003);
-  PMSND_PlaySE(SEQ_SE_SYS_26);
+      GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_014);
 
-  _CHANGE_STATE(_wakeupAction2);
+      _CHANGE_STATE(_itemcheck);
 
+    }
+    else{
+      _CHANGE_STATE(_wakeupAction12);
+    }
+  }
+  
 }
 
 //------------------------------------------------------------------------------
@@ -680,6 +733,7 @@ static void _BoxNullMsg2(G_SYNC_WORK* pWork)
     return;
   }
   if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)){
+    pWork->pParent->selectType = GAMESYNC_RETURNMODE_EXIT;
     GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
     _CHANGE_STATE(_modeFadeStart);
   }
@@ -754,6 +808,7 @@ static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork)
     GFDATE gd = DREAMWORLD_SV_GetTime(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData));
     RTCDate date;
     GFDATE_GFDate2RTCDate(gd, &date);
+    
     if(GFL_RTC_GetDaysOffset(&date) > 0){
     }
     else{
@@ -1128,7 +1183,7 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
       GF_ASSERT(profileID);
       _CHANGE_STATE(_ghttpInfoWait0);
       break;
-    case GSYNC_CALLTYPE_BOXNULL:
+    case GSYNC_CALLTYPE_BOXNULL:  //ƒ|ƒPƒ‚ƒ“‚ª‚¢‚È‚¢
       _CHANGE_STATE(_BoxNullMsg);
       break;
     }
@@ -1141,7 +1196,8 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
-  PMSND_PlayBGM(SEQ_BGM_GAME_SYNC);
+  //PMSND_PlayBGM(SEQ_BGM_GAME_SYNC);
+  GFL_NET_ReloadIcon();
 
   
   return GFL_PROC_RES_FINISH;

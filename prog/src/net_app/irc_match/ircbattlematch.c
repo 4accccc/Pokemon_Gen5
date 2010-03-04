@@ -1461,6 +1461,15 @@ static void _nop(IRC_BATTLE_MATCH* pWork)
 {
 }
 
+
+static void _ircstarStart(IRC_BATTLE_MATCH* pWork)
+{
+  if(GFL_NET_ForceParentStart_IRCWIRELESS()){  //Œˆ’è
+    _CHANGE_STATE(pWork,_nop);
+  }
+}
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ‚h‚q‚bÚ‘±‘Ò‹@
@@ -1477,8 +1486,7 @@ static void _ircActionWait(IRC_BATTLE_MATCH* pWork)
     if(selectno == 0)
     { // ‚Í‚¢‚ð‘I‘ð‚µ‚½ê‡
       _buttonWindowDelete(pWork);
-      GFL_NET_ForceParentStart_IRCWIRELESS();  //Œˆ’è
-      _CHANGE_STATE(pWork, _nop);
+      _CHANGE_STATE(pWork, _ircstarStart);
     }
     else
     {  // ‚¢‚¢‚¦‚ð‘I‘ð‚µ‚½ê‡
@@ -1578,8 +1586,10 @@ static void _modeAppWinFlash(IRC_BATTLE_MATCH* pWork)
 
     APP_TASKMENU_WIN_Delete(pWork->pAppWin);
     pWork->pAppWin = NULL;
-    APP_TASKMENU_WIN_Delete(pWork->pAppWinLeader);
-    pWork->pAppWinLeader = NULL;
+    if(pWork->pAppWinLeader){
+      APP_TASKMENU_WIN_Delete(pWork->pAppWinLeader);
+      pWork->pAppWinLeader = NULL;
+    }
 
     
     GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,

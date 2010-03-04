@@ -111,6 +111,8 @@ typedef struct {
   u32 WifiMatchUpID;   ///< ¢ŠE‘Îí‚ÌŠJÃID
   u8 GPFEntryFlg;      ///< GPF‚©‚ç‘‚«ž‚ñ‚¾‚çDREAM_WORLD_ENTRYFLAG_GPF_WRITE DS‚©‚ç‘‚«ž‚ñ‚¾‚çDREAM_WORLD_ENTRYFLAG_DS_WRITE
   u8 WifiMatchUpState; ///< ¢ŠE‘Îí‚Ìisó‹µ
+  u8 signin;        ///<	‘åD‚«ƒNƒ‰ƒu‚Å“o˜^‚ªI‚í‚Á‚½‚©‚Ç‚¤‚©  “o˜^Ï‚Ý‚È‚ç 1
+  u8 dummy;
 } DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA;
 
 
