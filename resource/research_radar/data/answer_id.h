@@ -1,9 +1,9 @@
 // コンバータにより生成
-#define ANSWER_ID_000 (0) //「無回答」
+#define ANSWER_ID_000 (0) //「むかいとう」
 #define ANSWER_ID_001 (1) //「ブラック」
 #define ANSWER_ID_002 (2) //「ホワイト」
-#define ANSWER_ID_003 (3) //「おとこのこ」
-#define ANSWER_ID_004 (4) //「おんなのこ」
+#define ANSWER_ID_003 (3) //「しょうねん」
+#define ANSWER_ID_004 (4) //「しょうじょ」
 #define ANSWER_ID_005 (5) //「たいせん」
 #define ANSWER_ID_006 (6) //「こうかん」
 #define ANSWER_ID_007 (7) //「とかい」
@@ -83,7 +83,7 @@
 #define ANSWER_ID_081 (81) //「バスケ」
 #define ANSWER_ID_082 (82) //「アメフト」
 #define ANSWER_ID_083 (83) //「ホッケー」
-#define ANSWER_ID_084 (84) //「かくどうぎ」
+#define ANSWER_ID_084 (84) //「かくとうぎ」
 #define ANSWER_ID_085 (85) //「あか」
 #define ANSWER_ID_086 (86) //「みどり」
 #define ANSWER_ID_087 (87) //「あお」
@@ -106,9 +106,9 @@
 #define ANSWER_ID_104 (104) //「しゅふ」
 #define ANSWER_ID_105 (105) //「げいじゅつか」
 #define ANSWER_ID_106 (106) //「フリーター」
-#define ANSWER_ID_107 (107) //「さんすくみ草」
-#define ANSWER_ID_108 (108) //「さんすくみ炎」
-#define ANSWER_ID_109 (109) //「さんすくみ水」
+#define ANSWER_ID_107 (107) //「さんすくみ　くさ」
+#define ANSWER_ID_108 (108) //「さんすくみ　ほのお」
+#define ANSWER_ID_109 (109) //「さんすくみ　みず」
 #define ANSWER_ID_110 (110) //「ノーマル」
 #define ANSWER_ID_111 (111) //「むし」
 #define ANSWER_ID_112 (112) //「でんき」

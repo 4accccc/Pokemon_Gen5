@@ -332,25 +332,25 @@
         <language name="JPN_KANJI" width="256">いろいろ</language>
       </row><row id="hobby_1">
         <language name="JPN" width="256">うんどう</language>
-        <language name="JPN_KANJI" width="256">うんどう</language>
+        <language name="JPN_KANJI" width="256">運動</language>
       </row><row id="hobby_2">
         <language name="JPN" width="256">どくしょ</language>
-        <language name="JPN_KANJI" width="256">どくしょ</language>
+        <language name="JPN_KANJI" width="256">読書</language>
       </row><row id="hobby_3">
         <language name="JPN" width="256">おんがく</language>
-        <language name="JPN_KANJI" width="256">おんがく</language>
+        <language name="JPN_KANJI" width="256">音楽</language>
       </row><row id="hobby_4">
         <language name="JPN" width="256">えいが</language>
-        <language name="JPN_KANJI" width="256">えいが</language>
+        <language name="JPN_KANJI" width="256">映画</language>
       </row><row id="hobby_5">
         <language name="JPN" width="256">りょこう</language>
-        <language name="JPN_KANJI" width="256">りょこう</language>
+        <language name="JPN_KANJI" width="256">旅行</language>
       </row><row id="hobby_6">
         <language name="JPN" width="256">りょうり</language>
-        <language name="JPN_KANJI" width="256">りょうり</language>
+        <language name="JPN_KANJI" width="256">料理</language>
       </row><row id="hobby_7">
         <language name="JPN" width="256">つり</language>
-        <language name="JPN_KANJI" width="256">つり</language>
+        <language name="JPN_KANJI" width="256">釣り</language>
       </row><row id="hobby_8">
         <language name="JPN" width="256">ゲーム</language>
         <language name="JPN_KANJI" width="256">ゲーム</language>

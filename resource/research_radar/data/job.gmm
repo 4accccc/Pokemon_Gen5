@@ -332,7 +332,7 @@
         <language name="JPN_KANJI" width="256">いろいろ</language>
       </row><row id="job_1">
         <language name="JPN" width="256">がくせい</language>
-        <language name="JPN_KANJI" width="256">がくせい</language>
+        <language name="JPN_KANJI" width="256">学生</language>
       </row><row id="job_2">
         <language name="JPN" width="256">サラリーマン</language>
         <language name="JPN_KANJI" width="256">サラリーマン</language>
@@ -341,16 +341,16 @@
         <language name="JPN_KANJI" width="256">クリエーター</language>
       </row><row id="job_4">
         <language name="JPN" width="256">じえいぎょう</language>
-        <language name="JPN_KANJI" width="256">じえいぎょう</language>
+        <language name="JPN_KANJI" width="256">自営業</language>
       </row><row id="job_5">
         <language name="JPN" width="256">こうむいん</language>
-        <language name="JPN_KANJI" width="256">こうむいん</language>
+        <language name="JPN_KANJI" width="256">公務員</language>
       </row><row id="job_6">
         <language name="JPN" width="256">しゅふ</language>
-        <language name="JPN_KANJI" width="256">しゅふ</language>
+        <language name="JPN_KANJI" width="256">主婦</language>
       </row><row id="job_7">
         <language name="JPN" width="256">げいじゅつか</language>
-        <language name="JPN_KANJI" width="256">げいじゅつか</language>
+        <language name="JPN_KANJI" width="256">芸術家</language>
       </row><row id="job_8">
         <language name="JPN" width="256">フリーター</language>
         <language name="JPN_KANJI" width="256">フリーター</language>

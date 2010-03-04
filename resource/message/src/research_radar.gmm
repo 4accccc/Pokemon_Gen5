@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-03-03T12:29:32"/>
+	<create user="ohmori" host="W00223" date="2010-03-04T18:04:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="146" top="195" right="851" bottom="815" maximized="no" rayout="Vertical2">
+	<dialog left="145" top="143" right="850" bottom="763" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -390,10 +390,10 @@
 	</row>
 
 	<row id="str_check_examining" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]ただいま
-[BD:02:Ｘセンタリング]ちょうさちゅう！</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]ただいま
-[BD:02:Ｘセンタリング]調査中！</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]まだ　ちょうさが
+[BD:02:Ｘセンタリング]できていません</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]まだ　調査が
+[BD:02:Ｘセンタリング]出来ていません</language>
 	</row>
 
 	<row id="str_check_analyzing" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
@@ -423,30 +423,30 @@
 	</row>
 
 	<row id="str_check_today_count" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:03:Ｘ右寄せ:0]きょうの　にんずう
+		<language name="JPN">[BD:03:Ｘ右寄せ:0]きょうのにんずう
 [BD:03:Ｘ右寄せ:0][2:03:４桁:0]にん</language>
 		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]今日の人数
 [BD:03:Ｘ右寄せ:0][2:03:４桁:0]人</language>
 	</row>
 
 	<row id="str_check_today_count01" text-color=",,,#c0c0c0,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:03:Ｘ右寄せ:0]きょうの　にんずうを
+		<language name="JPN">[BD:03:Ｘ右寄せ:0]きょうのにんずうを
 [BD:03:Ｘ右寄せ:0]ひょうじします</language>
 		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]今日の人数を
 [BD:03:Ｘ右寄せ:0]表示します</language>
 	</row>
 
 	<row id="str_check_total_count" text-color=",,,#c0c0c0,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:03:Ｘ右寄せ:0]ごうけいの　にんずう
+		<language name="JPN">[BD:03:Ｘ右寄せ:0]ごうけいにんずう
 [BD:03:Ｘ右寄せ:0][2:03:４桁:0]にん</language>
-		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]合計の人数
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]合計人数
 [BD:03:Ｘ右寄せ:0][2:03:４桁:0]人</language>
 	</row>
 
 	<row id="str_check_total_count01" text-color=",,,#c0c0c0,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:03:Ｘ右寄せ:0]ごうけいの　にんずうを
-[BD:03:Ｘ右寄せ:0]ひょうじ　します</language>
-		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]合計の人数を
+		<language name="JPN">[BD:03:Ｘ右寄せ:0]ごうけいにんずうを
+[BD:03:Ｘ右寄せ:0]ひょうじします</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]合計人数を
 [BD:03:Ｘ右寄せ:0]表示します</language>
 	</row>
 
