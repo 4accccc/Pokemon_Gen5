@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-01T18:25:06"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T17:29:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="283" right="1995" bottom="911" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="141" right="1280" bottom="539" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -380,11 +380,11 @@
 この　[1:01:ポケモン種族名:1]が　ほしい？</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_d01r0101_girl_03" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♀
 ・はい選択、でも手持ちがいっぱい</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
-		<language name="JPN" width="256">いっしょに　つれてあるける
+		<language name="JPN" width="256">どうじに　つれてあるける
 ポケモンは　６ひきよ[BE:01:ページ切り替え（クリア）]
 ほしかったら　ポケセンの
 パソコンに　あずけてきてね</language>
@@ -394,13 +394,13 @@
 パソコンに　預けてきてね</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_d01r0101_girl_04" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♀
 ・いいえ選択
 ・次回会話時はmsg_d01r0101_girl_02から</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">あらら　ほしくなったら
-また　はなしかけて</language>
+また　はなしかけてね！</language>
 		<language name="JPN_KANJI" width="256">あらら　ほしくなったら
 また　話しかけてね！</language>
 	</row>
