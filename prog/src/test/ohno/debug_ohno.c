@@ -715,7 +715,7 @@ static void _fushigiDataSet(DEBUG_OHNO_CONTROL * pDOC)
 
   DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
   DEBUG_MYSTERY_SetGiftPokeData(&pDG->data,12);
-  pDG->version = 0  //‚O‚È‚Ì‚Å‘SˆõŽóM‚Å‚«‚é
+  pDG->version = 0;  //‚O‚È‚Ì‚Å‘SˆõŽóM‚Å‚«‚é
   pDG->event_text[0] = L'‚Ä';
   pDG->event_text[1] = L'‚·';
   pDG->event_text[2] = L'‚Æ';
