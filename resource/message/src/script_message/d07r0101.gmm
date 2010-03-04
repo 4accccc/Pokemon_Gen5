@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-11T20:36:41"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T15:23:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d07r0101_leader5_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d07r0101_leader5_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・d07r0201からでるとイベント開始
@@ -319,7 +319,7 @@
 最近　プラズマ団を　みたか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d07r0101_leader5_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d07r0101_leader5_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・画面右を向いてこのメッセージ
@@ -339,7 +339,7 @@
 出方を　待つしかないのだ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d07r0101_leader5_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d07r0101_leader5_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<language name="JPN" width="256">まあ　おまえさん　には
@@ -356,7 +356,7 @@
 ポケモン修行でも　していけ！</language>
 	</row>
 
-	<row id="msg_d07r0101_leader5_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d07r0101_leader5_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・msg_d07r0101_leader5_03表示後から
 　ｃ08到着まで
