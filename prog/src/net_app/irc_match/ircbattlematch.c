@@ -1780,7 +1780,7 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
       return;
     }
   }
-  if((pWork->selectType==EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER){
+  if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER){
     if(pWork->musicalNum != GFL_NET_GetNowConnectNum_IRCWIRELESS()){
       _musicalNumWindowCreate(IRCBTL_STR_40, pWork);
       pWork->musicalNum = GFL_NET_GetNowConnectNum_IRCWIRELESS();
