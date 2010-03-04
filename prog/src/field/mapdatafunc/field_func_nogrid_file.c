@@ -16,6 +16,13 @@
 
 #include "height.h"
 
+#include "mapdata_attr.h"
+
+#ifdef PM_DEBUG
+#include "new_height_def.h"
+#endif  //PM_DEBUG
+
+
 /// 全部をパックしたファイルのヘッダー
 typedef struct {
     u16 DataID;         ////< NOGRIDPACK_HEADER

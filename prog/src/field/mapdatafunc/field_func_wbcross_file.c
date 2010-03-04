@@ -16,6 +16,12 @@
 #include "../field_g3dmap_exwork.h"	// FLD_G3D_MAP拡張ワーク
 #include "field/map_attr.h"	// FLD_G3D_MAP拡張ワーク
 
+#include "mapdata_attr.h"
+
+#ifdef PM_DEBUG
+#include "new_height_def.h"
+#endif  //PM_DEBUG
+
 //============================================================================================
 /**
  *
@@ -96,7 +102,6 @@ BOOL FieldLoadMapData_WBCrossFile( FLD_G3D_MAP* g3Dmap, void * exWork )
 		{
 			void*				mem;
 			WBGridCrossMapPackHeaderSt*	fileHeader;
-
 			//ヘッダー設定
 			FLD_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
 			fileHeader = (WBGridCrossMapPackHeaderSt*)mem;
@@ -204,6 +209,10 @@ void FieldGetAttr_WBCrossFile( FLD_G3D_MAP_ATTRINFO* attrInfo, const void* mapda
 static void fgr_WBCrossFileCore( FLD_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, const u32 attrAdrs,
     const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height )
 {
+
+#ifdef NEW_HEIGHT_TEST  
+  MAPDATA_ATR_GetAttrFunc( attrInfo, idx, attrAdrs, posInBlock, map_width, map_height );
+#else  
 	fx32			grid_w, grid_x, grid_z;
 	u32				grid_idx;
 	u32				grid_count;
@@ -252,5 +261,6 @@ static void fgr_WBCrossFileCore( FLD_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, c
 	attrInfo->mapAttr[idx].attr = nvs->attr;
 
 	attrInfo->mapAttr[idx].height = FX_Div( by, vecN.y ) + map_height;
+#endif  //NEW_HEIGHT_TEST
 }
 

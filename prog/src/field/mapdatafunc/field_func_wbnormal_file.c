@@ -17,7 +17,9 @@
 
 #include "mapdata_attr.h"
 
-//#define NEW_HEIGHT_TEST //新バイナリデータ読み込み実験
+#ifdef PM_DEBUG
+#include "new_height_def.h"
+#endif  //PM_DEBUG
 
 //============================================================================================
 /**
@@ -74,15 +76,19 @@ BOOL FieldLoadMapData_WBNormalFile( FLD_G3D_MAP* g3Dmap, void * exWork )
 		break;
 
 	case FILE_LOAD:
-		if( FLD_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
-			ldst->mdlLoaded = TRUE;
-			ldst->texLoaded = TRUE;
-			ldst->attrLoaded = TRUE;
+    {
+      BOOL rc;
+      rc = FLD_G3D_MAP_ContinueFileLoad(g3Dmap);
+		  if( rc == FALSE )
+      {
+			  ldst->mdlLoaded = TRUE;
+		  	ldst->texLoaded = TRUE;
+			  ldst->attrLoaded = TRUE;
 
-			ldst->seq = RND_CREATE;
-		}
-		break;
-
+			  ldst->seq = RND_CREATE;
+		  }
+      else break;
+    }
 	case RND_CREATE:
 		//レンダー作成
 		{
@@ -118,7 +124,7 @@ BOOL FieldLoadMapData_WBNormalFile( FLD_G3D_MAP* g3Dmap, void * exWork )
 		}
 
 		ldst->seq = TEX_TRANS;
-		break;
+//		break;
 
 	case TEX_TRANS:
 		//>>if( FLD_G3D_MAP_TransVram(g3Dmap) == FALSE ){
@@ -195,7 +201,7 @@ void FieldGetAttr_WBNormalFile( FLD_G3D_MAP_ATTRINFO* attrInfo, const void* mapd
 	attrInfo->mapAttr[0].attr = nvs->attr;
 
 	attrInfo->mapAttr[0].height = FX_Div( by, vecN.y ) + map_height;
-#endif
+#endif  //NEW_HEIGHT_TEST
 	attrInfo->mapAttrCount = 1;
 }
 

@@ -70,6 +70,8 @@
 #define MAP_SETUP_OBJ_DRAW_LIMIT    (4096<<FX32_SHIFT)
 #define MAP_SETUP_OBJ_LOD_LIMIT    (1024<<FX32_SHIFT)
 
+#define MAP_LOAD_SIZE (0xc00)
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 
@@ -324,6 +326,26 @@ void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 		FIELD_GRANM_Main( g3Dmapper->granime );
 	}
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップコントロールシステムメイン
+ */
+//------------------------------------------------------------------
+void	FLDMAPPER_MainTail( FLDMAPPER* g3Dmapper )
+{
+	int i;
+	GF_ASSERT( g3Dmapper );
+	if( g3Dmapper->blocks == NULL ){
+		return;
+	}
+	//ブロック制御メイン
+	for( i=0; i<g3Dmapper->blockNum; i++ ){
+		FLD_G3D_MAP_Main( g3Dmapper->blockWk[i].g3Dmap );
+    WRITEBLOCK_Control_SetOneBlock( g3Dmapper, g3Dmapper->blockWk[i].g3Dmap, i );
+	}
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -667,7 +689,7 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 			setup.texVramSize = 0;
 			setup.mapFileFunc = mapFileFuncTbl;
 			setup.externalWork = NULL;
-      setup.mapLoadSize = 0x2000;
+      setup.mapLoadSize = MAP_LOAD_SIZE;
       setup.obj_count     = MAP_SETUP_OBJ_COUNT;
       setup.ddobj_count   = MAP_SETUP_DDOBJ_COUNT;
       setup.obj_draw_limit= MAP_SETUP_OBJ_DRAW_LIMIT;
@@ -677,7 +699,7 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 			setup.texVramSize = FLD_MAPPER_MAPTEX_SIZE;
 			setup.mapFileFunc = mapFileFuncTbl;
 			setup.externalWork = NULL;
-      setup.mapLoadSize = 0x2000;
+      setup.mapLoadSize = MAP_LOAD_SIZE;
       setup.obj_count     = MAP_SETUP_OBJ_COUNT;
       setup.ddobj_count   = MAP_SETUP_DDOBJ_COUNT;
       setup.obj_draw_limit= MAP_SETUP_OBJ_DRAW_LIMIT;
