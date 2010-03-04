@@ -204,6 +204,7 @@ extern void FIELD_PLAYER_SetNaminoriEventEnd( FIELD_PLAYER *fld_player, BOOL fla
 extern void FIELD_PLAYER_ChangeOBJCode( FIELD_PLAYER *fld_player, u16 code );
 extern void FIELD_PLAYER_ClearOBJCodeFix( FIELD_PLAYER *fld_player );
 extern BOOL FIELD_PLAYER_CheckIllegalOBJCode( FIELD_PLAYER *fld_player );
+extern BOOL FIELD_PLAYER_CheckAnimeEnd( const FIELD_PLAYER *fld_player );
 
 // ÉÇÉfÉãåüçı
 extern MMDL * FIELD_PLAYER_GetFrontMMdl( const FIELD_PLAYER *fld_player );

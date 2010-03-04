@@ -692,9 +692,9 @@ void FIELD_PLAYER_CORE_ChangeDrawForm(
 BOOL FIELD_PLAYER_CORE_CheckDrawFormWait( FIELD_PLAYER_CORE *player_core )
 {
   MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
-  u32 arcID;
-  arcID = MMDL_CallDrawGetProc( mmdl, 0 );
-  if(arcID != MMDL_BLACTID_NULL){
+  u32 actID;
+  actID = MMDL_CallDrawGetProc( mmdl, 0 );
+  if(actID != MMDL_BLACTID_NULL){
 
     // 描画できる状態から1フレまつ
     if(player_core->draw_form_wait == 1){
@@ -786,6 +786,40 @@ BOOL FIELD_PLAYER_CORE_CheckIllegalOBJCode( FIELD_PLAYER_CORE *player_core )
   }
   return( FALSE );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自機のアニメーション完了待ち
+ *
+ *	@param	player_core   ワーク
+ *  
+ *	@retval TRUE    完了
+ *	@retval FALSE   途中
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_PLAYER_CORE_CheckAnimeEnd( const FIELD_PLAYER_CORE *player_core )
+{
+  MMDLSYS* p_mmdlsys = MMDL_GetMMdlSys( player_core->fldmmdl );
+  MMDL_BLACTCONT * p_mmdl_bbdadct = MMDLSYS_GetBlActCont( p_mmdlsys );
+  GFL_BBDACT_SYS* p_bbdact = MMDL_BLACTCONT_GetBbdActSys( p_mmdl_bbdadct );
+  u32 actID;
+  u16 comm;
+
+  
+  actID = MMDL_CallDrawGetProc( player_core->fldmmdl, 0 );
+  if( actID != MMDL_BLACTID_NULL ){
+
+    if( GFL_BBDACT_GetAnimeLastCommand( p_bbdact, actID, &comm ) ){
+
+      if( comm == GFL_BBDACT_ANMCOM_END ){
+        return TRUE;
+      }
+    }
+  }
+  
+  return FALSE;
+}
+
 
 
 //======================================================================

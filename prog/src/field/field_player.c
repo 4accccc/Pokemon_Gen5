@@ -803,6 +803,22 @@ BOOL FIELD_PLAYER_CheckIllegalOBJCode( FIELD_PLAYER *fld_player )
   return FIELD_PLAYER_CORE_CheckIllegalOBJCode( fld_player->corewk );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自機アニメーションの完了待ち
+ *
+ *	@param	fld_player  FIELD_PLAYER
+ *
+ *	@retval TRUE    完了
+ *	@retval FALSE   途中
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_PLAYER_CheckAnimeEnd( const FIELD_PLAYER *fld_player )
+{
+  return FIELD_PLAYER_CORE_CheckAnimeEnd( fld_player->corewk );
+}
+
+
 
 //----------------------------------------------------------------------------
 /**

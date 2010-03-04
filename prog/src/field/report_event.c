@@ -648,7 +648,7 @@ static void ResetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
 // 自機アニメチェック
 static BOOL CheckPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
 {
-	return FIELD_PLAYER_CheckDrawFormWait( FIELDMAP_GetFieldPlayer(wk->fieldWork) );
+	return FIELD_PLAYER_CheckAnimeEnd( FIELDMAP_GetFieldPlayer(wk->fieldWork) );
 }
 
 
