@@ -61,7 +61,6 @@ search:
   //「いいですね」
   _BALLOONWIN_TALKOBJ_MSG( msg_id_present_03 )
   _BALLOONWIN_CLOSE()
-  //検索SE開始 @todo
 
   //「検索中・・・」
   _BALLOONWIN_TALKOBJ_MSG( msg_id_present_03a )
@@ -69,12 +68,14 @@ search:
   _SEARCH_POKEID_NUM( ResultNum )
   _BALLOONWIN_CLOSE()
 
-  //検索SE停止 @todo
-
   //数字セット
   _NUMBER( 0, ResultNum, 2 )
 
-  IF $ResultNum < 5 THEN          //結果5つ未満
+  IF $ResultNum == 0 THEN
+    //「0！」
+    $EndMsg = msg_id_present_05a
+    _CALL end_msg
+  ELSIF $ResultNum < 5 THEN          //結果5つ未満
     //「もっと交換して」
     $EndMsg = msg_id_present_05
     _CALL end_msg
