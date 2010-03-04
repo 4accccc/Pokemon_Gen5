@@ -16,9 +16,8 @@
 #define C02PC0101_CONNECT_00               4
 #define C02PC0101_CONNECT_01               5
 #define C02PC0101_CONNECT_02               6
-#define C02PC0101_SHOPM                    7
-#define C02PC0101_SHOPM1_02                8
-#define C02PC0101_DELIVERY                 9
+#define C02PC0101_SHOPM1_02                7
+#define C02PC0101_DELIVERY                 8
 
 #endif //ZONE_C02PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

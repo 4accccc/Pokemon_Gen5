@@ -17,9 +17,11 @@
   .include  "debug_scr_local_iwasawa.h"
   
   .include  "c02.h"
+  .include  "c02gym0101.h"
   .include  "d06.h"
   .include  "d06r0101.h"
   .include  "d08r0901.h"
+  
 
   .include "c08r0401_def.h"
   .include "t01.h"
@@ -524,8 +526,12 @@ EVENT_START   ev_debug_murakami
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_02, 4 )	//リュウラセン最初から
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_05, 5 )	//リュウラセン塔を揺らす
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_04, 6 )	//リュウラセンシンムデモ
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_07, 7 )	//テスト用
-		_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_07, 7 )	//C02博物館盗難イベント(博物館内)
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_08, 8 )	//C02博物館盗難イベント(博物館外)
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_09, 9 )	//C02ライバル　ポケセン誘導
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_10, 10 )	//C02　N戦
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_11, 11 )	//テスト用
+		_BMPMENU_MAKE_LIST( msg_debug_00, 100 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
 		
@@ -613,10 +619,73 @@ EVENT_START   ev_debug_murakami
 			_OBJ_ADD(D08R0901_BOSS_01)
 			_MAP_CHANGE( ZONE_ID_D08R0901, 16, 24, DIR_UP )
 		
-		//テスト用	
+		//C02GYM0101盗難イベント（博物館内）	
 		ELSIF $SCWK_TEMP1 == 7 THEN
+//			_FLAG_RESET( FV_C02GYM0202_LEADER2 ) //ジム2室目からジムリーダーを消す
+//			_FLAG_RESET(FV_C02_POSEVENT_01)
+
+			//盗難イベント開始
+			_FLAG_SET( FE_MUSEUM_TOUNAN )	//盗難イベントの開始
+			_FLAG_SET( FV_C02GYM0202_LEADER2 ) //ジム2室目からジムリーダーを消す
+			_FLAG_RESET( FV_D02R0101_LEADER3 )	//盗難イベント用アーティ表示
+			_FLAG_SET( FV_D02R0101_HAKAI )		//ヤグルマの森ストッパーの解除	
+			_FLAG_RESET( FV_D02_LEADER3 )	//D02のジムリーダー3を表示	
+			_FLAG_SET( FE_ELBOARD_C02GYMWIN )	//電光掲示板のニュースをセット
+			_FLAG_RESET(FV_C02GYM0101_HAKAI)	//博物館のプラズマ団を表示
+			_FLAG_RESET(FV_C02_LEADER2)	//C02ジムリーダーアロエがC02町に出現
+			_FLAG_RESET(FV_C02_POSEVENT_01)	//ライバル・サポート・C03ジムリーダー・アーティがC02町に出現
+			_SET_BADGE_FLAG( BADGE_ID_02 )		//バッジフラグon
+			_FLAG_RESET(FV_MUSEUM_TOUNAN)	//骨を表示
+			
+			//盗難事件のPOSイベントを有効にする
+			//C02gym0101のイベント
+			$WK_SCENE_C02GYM0101  = 2 
+			
+			//D02のイベント
+			$WK_SCENE_D02 = 1
+			
+			//C02のイベント
+			$WK_SCENE_C02 = 3
+			
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_C02GYM0101, 12, 3, DIR_DOWN )
+		
+		//C02博物館盗難イベント（博物館外）
+		ELSIF $SCWK_TEMP1 == 8 THEN
+		
+			//盗難イベント開始
+			_FLAG_SET( FE_MUSEUM_TOUNAN )	//盗難イベントの開始
+			_FLAG_RESET(FV_C02_LEADER2)	//C02ジムリーダーアロエがC02町に出現
+			_FLAG_RESET(FV_C02_POSEVENT_01)	//ライバル・サポート・C03ジムリーダー・アーティがC02町に出現
+			_SET_BADGE_FLAG( BADGE_ID_02 )		//バッジフラグon
+			_FLAG_RESET(FV_MUSEUM_TOUNAN)	//骨を表示
+			
+			//D02のイベント
+			$WK_SCENE_D02 = 1
+			
+			//C02のイベント
+			$WK_SCENE_C02 = 3
+			
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_C02GYM0101, 12,27, DIR_DOWN )
+
+		ELSIF $SCWK_TEMP1 == 9 THEN
+			//POSイベントを有効に
+			$WK_SCENE_C02 = 0
+			//ライバル・サポート・アーティを消す
+			_FLAG_RESET(FV_C02_POSEVENT_01)
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_C02, 668, 599, DIR_LEFT )
+		
+		ELSIF $SCWK_TEMP1 == 10 THEN
+			//POSイベントを有効に
 			$WK_SCENE_C02 = 1
-//			_FLAG_RESET(FV_C02_POSEVENT_01)	
+			//ライバル・サポート・アーティを消す
+			_FLAG_RESET(FV_C02_POSEVENT_01)
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_C02, 644, 586, DIR_UP )
+			
+		ELSIF $SCWK_TEMP1 == 11 THEN
 		
 		ENDIF
 		

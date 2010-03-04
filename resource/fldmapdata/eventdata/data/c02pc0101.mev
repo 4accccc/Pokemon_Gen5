@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/04 11:45:16
+#save date:2010/03/04 20:08:43
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02pc0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02pc0101.wms
 #hold event type:
 1
 #hold event number:
-10
+9
 #event number: 0
 #type
 1
@@ -231,37 +231,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C02PC0101_SHOPM
-#OBJ CODE Number
-SHOPM1
-#MOVE CODE Number
-MV_LEFT
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_C02PC0101_SHOP
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 0 24
-#event number: 8
-#type
-1
-#ID name
 C02PC0101_SHOPM1_02
 #OBJ CODE Number
 SHOPM1
@@ -289,7 +258,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 -72 0 -40
-#event number: 9
+#event number: 8
 #type
 1
 #ID name

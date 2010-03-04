@@ -463,7 +463,7 @@ EVENT_START    ev_d08_support_01
 	
 	//リュウラセンの塔の最上階イベントをクリアしているかで分岐
 	//リュウラセンの塔最上階イベントをクリアしている
-	IF $WK_SCENE_D08_LEGEND == 5 THEN
+	IF $WK_SCENE_D08_LEGEND == 9 THEN
 	
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08_white_08)
 		
