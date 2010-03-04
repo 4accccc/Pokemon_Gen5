@@ -81,6 +81,7 @@ struct _REPORT_EVENT_LOCAL {
 	PRINT_STREAM * stream;
 	STRBUF * strBuff;
 	APP_KEYCURSOR_WORK * kcwk;	// メッセージ送りカーソル
+	BOOL stream_clear_flg;
 
 	APP_TASKMENU_ITEMWORK	ynList[2];
 	APP_TASKMENU_RES * ynRes;
@@ -385,6 +386,9 @@ static void SetReportMsgBuff( FMENU_REPORT_EVENT_WORK * wk )
 									10,		// tcbl pri
 									wk->heapID,
 									15 );	// clear color
+
+	wk->local->stream_clear_flg = FALSE;
+
 	GFL_BMPWIN_MakeTransWindow_VBlank( wk->local->win );
 }
 
@@ -401,27 +405,34 @@ static void SetReportMsgBuff( FMENU_REPORT_EVENT_WORK * wk )
 static BOOL MainReportMsg( FMENU_REPORT_EVENT_WORK * wk )
 {
   GFL_TCBL_Main( wk->local->tcbl );
+  GFL_TCBL_Main( wk->local->tcbl );
+
+	APP_KEYCURSOR_Main( wk->local->kcwk, wk->local->stream, wk->local->win );
+	APP_KEYCURSOR_Main( wk->local->kcwk, wk->local->stream, wk->local->win );
 
   switch( PRINTSYS_PrintStreamGetState(wk->local->stream) ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
-    if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+    if( GFL_UI_TP_GetTrg() == TRUE || (GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
       PRINTSYS_PrintStreamShortWait( wk->local->stream, 0 );
     }
+		wk->local->stream_clear_flg = FALSE;
     break;
 
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
-    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
-      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
-      PRINTSYS_PrintStreamReleasePause( wk->local->stream );
+		if( wk->local->stream_clear_flg == FALSE ){
+			if( GFL_UI_TP_GetTrg() == TRUE || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
+	      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+	      PRINTSYS_PrintStreamReleasePause( wk->local->stream );
+				wk->local->stream_clear_flg = TRUE;
+			}
     }
     break;
 
   case PRINTSTREAM_STATE_DONE: //終了
     PRINTSYS_PrintStreamDelete( wk->local->stream );
+		wk->local->stream_clear_flg = FALSE;
 		return FALSE;
 	}
-
-	APP_KEYCURSOR_Main( wk->local->kcwk, wk->local->stream, wk->local->win );
 
 	return TRUE;
 }
@@ -496,7 +507,7 @@ static void SetReportYesNo( FMENU_REPORT_EVENT_WORK * wk )
 	mwk.w        = APP_TASKMENU_PLATE_WIDTH_YN_WIN;
 	mwk.h        = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
 
-	wk->local->ynWork = APP_TASKMENU_OpenMenu( &mwk, wk->local->ynRes );
+	wk->local->ynWork = APP_TASKMENU_OpenMenuEx( &mwk, wk->local->ynRes );
 }
 
 //--------------------------------------------------------------------------------------------

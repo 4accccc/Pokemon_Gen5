@@ -46,6 +46,7 @@ typedef struct {
 	GFL_BMPWIN * win;
 	BMPMENU_WORK * mwk;
 	APP_KEYCURSOR_WORK * kcwk;	// メッセージ送りカーソル
+	BOOL	stream_clear_flg;
 }BACKUP_ERASE_WORK;
 
 // メインシーケンス
@@ -649,6 +650,9 @@ static void StartMessage( BACKUP_ERASE_WORK * wk, int strIdx )
 								10,		// tcbl pri
 								HEAPID_BACKUP_ERASE,
 								15 );	// clear color
+
+	wk->stream_clear_flg = FALSE;
+
 	GFL_BMPWIN_MakeTransWindow_VBlank( wk->win );
 }
 
@@ -665,27 +669,31 @@ static void StartMessage( BACKUP_ERASE_WORK * wk, int strIdx )
 static BOOL MainMessage( BACKUP_ERASE_WORK * wk )
 {
   GFL_TCBL_Main( wk->tcbl );
+	APP_KEYCURSOR_Main( wk->kcwk, wk->stream, wk->win );
 
   switch( PRINTSYS_PrintStreamGetState(wk->stream) ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
     if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
       PRINTSYS_PrintStreamShortWait( wk->stream, 0 );
     }
+		wk->stream_clear_flg = FALSE;
     break;
 
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
-    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
-      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
-      PRINTSYS_PrintStreamReleasePause( wk->stream );
-    }
+		if( wk->stream_clear_flg == FALSE ){
+			if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+	      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+	      PRINTSYS_PrintStreamReleasePause( wk->stream );
+				wk->stream_clear_flg = TRUE;
+	    }
+		}
     break;
 
   case PRINTSTREAM_STATE_DONE: //終了
     PRINTSYS_PrintStreamDelete( wk->stream );
+		wk->stream_clear_flg = FALSE;
 		return FALSE;
 	}
-
-	APP_KEYCURSOR_Main( wk->kcwk, wk->stream, wk->win );
 
 	return TRUE;
 }
