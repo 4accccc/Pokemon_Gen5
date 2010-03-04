@@ -130,20 +130,10 @@ typedef struct {
 
 FS_EXTERN_OVERLAY(watanabe_sample);
 FS_EXTERN_OVERLAY(fieldmap);
-//extern const GFL_PROC_DATA DebugWatanabeSample1ProcData;
-extern const GFL_PROC_DATA DebugWatanabeSample2ProcData;
-extern const GFL_PROC_DATA DebugWatanabeSample3ProcData;
-extern const GFL_PROC_DATA DebugWatanabeSample4ProcData;
 extern const GFL_PROC_DATA DebugWatanabeSample5ProcData;
-extern const GFL_PROC_DATA DebugWatanabeSample6ProcData;
 
 static const DEBUGITEM_LIST debugItemList[] = {
-  //{DEBUG_TETSU_MENU1, FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample1ProcData},
-  {DEBUG_TETSU_MENU2, FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample2ProcData},
-  {DEBUG_TETSU_MENU3, FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample3ProcData},
-  {DEBUG_TETSU_MENU4, FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample4ProcData},
   {DEBUG_TETSU_MENU5, FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample5ProcData},
-  {DEBUG_TETSU_MENU6, FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample6ProcData},
 };
 
 //------------------------------------------------------------------
@@ -496,8 +486,10 @@ static  BOOL control(DEBUG_WATANABE_WORK* dw)
     //–¢‘I‘ð
     u32 tblPos = GFL_UI_TP_HitTrg(dw->tpTable);
     if( tblPos != GFL_UI_TP_HIT_NONE ){
-      dw->selectItem = tblPos;
-      dw->wait = 0;
+			if( debugItemList[tblPos].procData != NULL ){
+				dw->selectItem = tblPos;
+				dw->wait = 0;
+			}
     }
     return TRUE;
   }
