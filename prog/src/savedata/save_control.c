@@ -162,7 +162,7 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 SAVE_CONTROL_WORK * SaveControl_GetPointer(void)
 {
 	GF_ASSERT(SaveControlWork != NULL);
-    OS_TPrintf("%x\n",(int)SaveControlWork);
+  OS_TPrintf("SAVE_CONTROL_WORKÇ÷ÇÃGlobaléQè∆\n");
 	return SaveControlWork;
 }
 
