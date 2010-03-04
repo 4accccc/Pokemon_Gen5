@@ -105,6 +105,7 @@ struct _APP_TASKMENU_WORK
   GXRgb transCol;
   BOOL isUpdateMsg;
   BOOL isDecide;
+	u32	anmDouble;
 
   GFL_BMPWIN **menuWin;
   APP_TASKMENU_ITEMWORK *itemWork;
@@ -161,7 +162,8 @@ APP_TASKMENU_WORK* APP_TASKMENU_OpenMenu( APP_TASKMENU_INITWORK *initWork, const
   work->cursorPos = 0;
   work->anmCnt = 0;
   work->transAnmCnt = 0;
-  
+
+	work->anmDouble = 1;
 
 	{	
 		work->initWork.w	= initWork->w == 0 ?  APP_TASKMENU_PLATE_WIDTH:  initWork->w;
@@ -177,6 +179,14 @@ APP_TASKMENU_WORK* APP_TASKMENU_OpenMenu( APP_TASKMENU_INITWORK *initWork, const
   work->isUpdateMsg = TRUE;
   
   return work;
+}
+
+// 1/30f用にアニメが倍速になる
+APP_TASKMENU_WORK* APP_TASKMENU_OpenMenuEx( APP_TASKMENU_INITWORK *initWork, const APP_TASKMENU_RES *res )
+{
+	APP_TASKMENU_WORK * work = APP_TASKMENU_OpenMenu( initWork, res );
+	work->anmDouble = 2;
+	return work;
 }
 
 //--------------------------------------------------------------
@@ -235,7 +245,7 @@ void APP_TASKMENU_UpdateMenu( APP_TASKMENU_WORK *work )
   else
   {
     //決定時アニメ
-    const u8 isBlink = (work->anmCnt/APP_TASKMENU_ANM_INTERVAL)%2;
+    const u8 isBlink = (work->anmCnt/(APP_TASKMENU_ANM_INTERVAL/work->anmDouble))%2;
     if( isBlink == 0 )
     {
 			APP_TASKMENU_SetActiveItem( work->menuWin[work->cursorPos], work->res, TRUE );
@@ -255,7 +265,7 @@ void APP_TASKMENU_UpdateMenu( APP_TASKMENU_WORK *work )
 //--------------------------------------------------------------
 const BOOL APP_TASKMENU_IsFinish( APP_TASKMENU_WORK *work )
 {
-  if( work->anmCnt < APP_TASKMENU_ANM_CNT )
+  if( work->anmCnt < (APP_TASKMENU_ANM_CNT/work->anmDouble) )
   {
     return FALSE;
   }

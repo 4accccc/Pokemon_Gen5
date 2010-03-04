@@ -88,6 +88,7 @@ extern void APP_TASKMENU_RES_Delete( APP_TASKMENU_RES *wk );
 
 //ècÉÅÉjÉÖÅ[
 extern APP_TASKMENU_WORK* APP_TASKMENU_OpenMenu( APP_TASKMENU_INITWORK *initWork, const APP_TASKMENU_RES *res );
+extern APP_TASKMENU_WORK* APP_TASKMENU_OpenMenuEx( APP_TASKMENU_INITWORK *initWork, const APP_TASKMENU_RES *res );
 extern void APP_TASKMENU_CloseMenu( APP_TASKMENU_WORK *work );
 extern void APP_TASKMENU_UpdateMenu( APP_TASKMENU_WORK *work );
 extern const BOOL APP_TASKMENU_IsFinish( APP_TASKMENU_WORK *work );
