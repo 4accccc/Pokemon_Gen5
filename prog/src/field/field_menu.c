@@ -174,6 +174,7 @@ struct _FIELD_MENU_WORK
   BOOL isUpdateCursor;
   BOOL isCancel;
   BOOL isDispCursor;
+  int  funcType;      // 決定した機能
   FIELD_MENU_ICON icon[FIELD_MENU_ITEM_NUM];
   FIELD_MENU_ICON *activeIcon; //参照中のアイコン
   
@@ -302,6 +303,8 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , const HEAPID tempHea
   FIELD_MENU_InitIcon( work , arcHandle, menuType);
   GFL_ARC_CloseDataHandle(arcHandle);
 
+
+  // 上画面に輝度オフを掛ける
   G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0 , GX_BLEND_PLANEMASK_NONE , 
                             0 , 0 , -6 );
   
@@ -324,6 +327,24 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , const HEAPID tempHea
   return work;
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 上画面の輝度OFFを判定した上で戻したり戻さなかったりする
+ *
+ * @param   work    
+ */
+//----------------------------------------------------------------------------------
+static void _return_brightness( FIELD_MENU_WORK *work )
+{
+  // フィールドメニューをキャンセルしたか、レポート画面決定で終了するのでなければ
+  if(work->isCancel==TRUE || (work->isCancel==FALSE && work->funcType!=FMIT_REPORT)){
+    // 上画面に掛けていた輝度オフを戻す
+    G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0, GX_BLEND_PLANEMASK_NONE, 0, 0, 0 );
+    FLDMSGBG_SetBlendAlpha( FALSE );
+  }
+}
+
 //--------------------------------------------------------------
 //  開放
 //--------------------------------------------------------------
@@ -334,9 +355,10 @@ void FIELD_MENU_ExitMenu( FIELD_MENU_WORK* work )
   {
     FIELD_MENU_Icon_DeleteIcon( work , &work->icon[i] );
   }
-  G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0 , GX_BLEND_PLANEMASK_NONE , 
-                            0 , 0 , 0 );
-  FLDMSGBG_SetBlendAlpha( FALSE );
+
+  // 上画面の輝度OFFを戻すかどうか判定して処理
+  _return_brightness( work );
+
   GFL_TCB_DeleteTask( work->vBlankTcb );
   
   GFL_CLACT_WK_Remove( work->cellEndButton );
@@ -1265,7 +1287,8 @@ static void _cancel_func_set( FIELD_MENU_WORK *work, BOOL isCancel )
     GFL_CLACT_WK_SetAnmSeq( work->cellEndButton, 8 );
   }else{
     work->isCancel = FALSE;
-    work->state = FMS_EXIT_INIT;
+    work->state    = FMS_EXIT_INIT;
+    work->funcType = work->icon[_get_nowcursor_pos(work->cursorPosX,work->cursorPosY)].type;
   }
 }
 
