@@ -1644,15 +1644,25 @@ static void * FMenuCallProc_WifiNote(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK
  */ 
 //-----------------------------------------------------------------------------
 static RETURNFUNC_RESULT FMenuReturnProc_WifiNote(PROCLINK_WORK* wk,void* param_adrs)
-{ 
+{
+  WIFINOTE_PROC_PARAM* pFriend = param_adrs;
+
   if( wk->param->call == EVENT_PROCLINK_CALL_WIFINOTE )
   { 
-    return RETURNFUNC_RESULT_RETURN;
+		if( pFriend->retMode == WIFINOTE_RET_MODE_CANCEL ){
+			return RETURNFUNC_RESULT_RETURN;
+		}else{
+			return RETURNFUNC_RESULT_EXIT;
+		}
   }
   else
   { 
-    wk->next_type = EVENT_PROCLINK_CALL_BAG;
-    return RETURNFUNC_RESULT_NEXT;
+		if( pFriend->retMode == WIFINOTE_RET_MODE_CANCEL ){
+	    wk->next_type = EVENT_PROCLINK_CALL_BAG;
+	    return RETURNFUNC_RESULT_NEXT;
+		}else{
+			return RETURNFUNC_RESULT_EXIT;
+		}
   }
 }
 //-------------------------------------
