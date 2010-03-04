@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-02-25T23:20:55"/>
+	<create user="ohmori" host="W00223" date="2010-03-02T16:10:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -722,53 +722,33 @@
 	</row>
 
 	<row id="plc_connect_01_01" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
-		<comment>通信接続メッセージ：通信相手の確認・はい・いいえ
+		<comment>通信接続メッセージ：通信成功
 （ホワイトバージョン）</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ホワイトパレスが　みえる
-さきにすすんで　みますか？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ホワイトパレスが　みえる
-さきにすすんで　みますか？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ホワイトパレスと
+つながった！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ホワイトパレスと
+つながった！</language>
 	</row>
 
 	<row id="plc_connect_01_02" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
-		<comment>通信接続メッセージ：通信相手の確認・はい・いいえ
+		<comment>通信接続メッセージ：通信成功
 （ブラックバージョン）</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ブラックパレスが　みえる
-さきにすすんで　みますか？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ブラックパレスが　みえる
-さきにすすんで　みますか？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ブラックパレスと
+つながった！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ブラックパレスと
+つながった！</language>
 	</row>
 
 	<row id="plc_connect_01_03" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
-		<comment>通信接続メッセージ：通信相手の確認・はい・いいえ
+		<comment>通信接続メッセージ：通信成功
 （別バージョン）</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　パレスが　みえる
-さきにすすんで　みますか？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　パレスが　みえる
-さきにすすんで　みますか？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　パレスと
+つながった！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　パレスと
+つながった！</language>
 	</row>
 
 	<row id="plc_connect_02" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
-		<comment>通信接続メッセージ：通信待機</comment>
-		<language name="JPN" width="256">しんにゅう　します……</language>
-		<language name="JPN_KANJI" width="256">しんにゅう　します……</language>
-	</row>
-
-	<row id="plc_connect_03" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
-		<comment>通信接続メッセージ：通信する相手がいない</comment>
-		<language name="JPN" width="256">ここから　さきは
-いけそうにない</language>
-		<language name="JPN_KANJI" width="256">ここから　さきは
-いけそうにない</language>
-	</row>
-
-	<row id="plc_connect_04" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
-		<comment>通信接続メッセージ：通信接続失敗</comment>
-		<language name="JPN" width="256">しんにゅう　できなかった……</language>
-		<language name="JPN_KANJI" width="256">しんにゅう　できなかった……</language>
-	</row>
-
-	<row id="plc_connect_05" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>通信接続メッセージ：自分のパレスにもどる</comment>
 		<language name="JPN" width="256">じぶんの　せかいにもどり
 もとの　すがたに　もどった！</language>
@@ -776,29 +756,35 @@
 もとの　すがたに　もどった！</language>
 	</row>
 
-	<row id="plc_connect_06" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+	<row id="plc_connect_03" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>通信接続メッセージ：自分のパレスにもどる</comment>
 		<language name="JPN" width="256">じぶんの　せかいに　もどった！</language>
 		<language name="JPN_KANJI" width="256">じぶんの　せかいに　もどった！</language>
 	</row>
 
-	<row id="plc_connect_07" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
-		<comment>通信接続メッセージ：通信成功</comment>
+	<row id="plc_connect_04" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+		<comment>通信接続メッセージ：侵入成功</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　せかいに
 はいりこんだ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　せかいに
 はいりこんだ！</language>
 	</row>
 
-	<row id="plc_connect_08" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
-		<comment>通信接続メッセージ：通信成功</comment>
+	<row id="plc_connect_05" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+		<comment>通信接続メッセージ：侵入成功</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　せかいに　はいりこみ
 すがたが　かわった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　せかいに　はいりこみ
 すがたが　かわった！</language>
 	</row>
 
-	<row id="plc_connect_09" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+	<row id="plc_connect_06" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+		<comment>通信接続メッセージ：侵入できない</comment>
+		<language name="JPN" width="256">ここからさきは　いけそうにない</language>
+		<language name="JPN_KANJI" width="256">ここからさきは　いけそうにない</language>
+	</row>
+
+	<row id="plc_connect_07" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>通信接続メッセージ：パレス終了</comment>
 		<language name="JPN" width="256">もといた　ばしょに
 もどりますか？</language>
@@ -806,57 +792,21 @@
 もどりますか？</language>
 	</row>
 
-	<row id="plc_connect_10" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+	<row id="plc_connect_08" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>通信接続メッセージ：パレス終了：通信切断</comment>
 		<language name="JPN" width="256">つうしんを　せつだんします</language>
 		<language name="JPN_KANJI" width="256">つうしんを　せつだんします</language>
 	</row>
 
-	<row id="plc_connect_11" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+	<row id="plc_connect_09" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>通信接続メッセージ：通信切断された</comment>
 		<language name="JPN" width="256">ふしぎなちからで　もどされた</language>
 		<language name="JPN_KANJI" width="256">ふしぎなちからで　もどされた</language>
 	</row>
 
-	<row id="plc_connect_12_01" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
-		<comment>通信接続メッセージ：看板メッセージ
-（ホワイトバージョンと接続）</comment>
-		<language name="JPN" width="256">「[1:00:トレーナー名:0]の　ホワイトパレスへの　かけはし」
-と　かかれている</language>
-		<language name="JPN_KANJI" width="256">「[1:00:トレーナー名:0]の　ホワイトパレスへの　かけはし」
-と　かかれている</language>
-	</row>
-
-	<row id="plc_connect_12_02" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
-		<comment>通信接続メッセージ：看板メッセージ
-（ブラックバージョンと接続）</comment>
-		<language name="JPN" width="256">「[1:00:トレーナー名:0]の　ブラックパレスへの　かけはし」
-と　かかれている</language>
-		<language name="JPN_KANJI" width="256">「[1:00:トレーナー名:0]の　ブラックパレスへの　かけはし」
-と　かかれている</language>
-	</row>
-
-	<row id="plc_connect_12_03" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
-		<comment>通信接続メッセージ：看板メッセージ
-（別バージョンと接続）</comment>
-		<language name="JPN" width="256">「[1:00:トレーナー名:0]の　パレスへの　かけはし」
-と　かかれている</language>
-		<language name="JPN_KANJI" width="256">「[1:00:トレーナー名:0]の　パレスへの　かけはし」
-と　かかれている</language>
-	</row>
-
-	<row id="plc_connect_13" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
-		<comment>通信接続メッセージ：看板メッセージ
-どこともつながっていない</comment>
-		<language name="JPN" width="256">「つながりのない　かけはし」
-と　かかれている</language>
-		<language name="JPN_KANJI" width="256">「つながりのない　かけはし」
-と　かかれている</language>
-	</row>
-
-	<row id="plc_connect_14" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
-		<comment>通信接続メッセージ：看板メッセージ
-ビーコンは受信した</comment>
+	<row id="plc_connect_10" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+		<comment>看板メッセージ(接続とは関係なし)
+</comment>
 		<language name="JPN" width="256">「べつせかいへの　かけはし」
 と　かかれている</language>
 		<language name="JPN_KANJI" width="256">「べつせかいへの　かけはし」
