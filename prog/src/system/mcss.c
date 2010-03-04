@@ -72,7 +72,7 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 static	void	MCSS_GetNewMultiCellAnimation(MCSS_WORK *mcss, NNSG2dMCType	mcType );
 static	void	MCSS_MaterialSetup( void );
 static	NNSG2dMultiCellAnimation*     GetNewMultiCellAnim_( u16 num );
-static	void	MCSS_CalcPaletteFade( MCSS_WORK *mcss );
+static	void	MCSS_CalcPaletteFade( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss );
 static  void  MCSS_FreeResource( MCSS_WORK* mcss );
 
 static	void	TCB_LoadResource( GFL_TCB *tcb, void *work );
@@ -182,7 +182,7 @@ void	MCSS_Main( MCSS_SYS_WORK *mcss_sys )
 			//パレットフェードチェック
 			if( mcss_sys->mcss[ index ]->pal_fade_flag )
 			{	
-				MCSS_CalcPaletteFade( mcss_sys->mcss[ index ] ); 
+				MCSS_CalcPaletteFade( mcss_sys, mcss_sys->mcss[ index ] ); 
 			}
     }
 	}
@@ -1209,8 +1209,6 @@ void	MCSS_SetPaletteFade( MCSS_WORK *mcss, u8 start_evy, u8 end_evy, u8 wait, u3
 	mcss->pal_fade_wait				= 0;
 	mcss->pal_fade_wait_tmp		= wait;
 	mcss->pal_fade_rgb				= rgb;
-
-	MCSS_CalcPaletteFade( mcss ); 
 }
 
 //--------------------------------------------------------------------------
@@ -1538,6 +1536,13 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
 static	void	TCB_LoadPalette( GFL_TCB *tcb, void *work )
 {	
 	TCB_LOADRESOURCE_WORK *tlw = ( TCB_LOADRESOURCE_WORK *)work;
+  u16 *v_count = (u16 *)REG_VCOUNT_ADDR;
+
+  //VCountを確認してちらつきを防ぐ
+  if( *v_count > MCSS_VCOUNT_BORDER )
+  { 
+    return;
+  }
 
 	NNS_G2dInitImagePaletteProxy( tlw->palette_p );
 
@@ -1610,18 +1615,19 @@ static	void	MCSS_MaterialSetup(void)
 /**
  * @brief パレットフェードアニメ計算
  *
+ * @param[in]	mcss	マルチセルシステム管理構造体
  * @param[in]	mcss	マルチセルワーク構造体
  * @param[in]	flag	パレットフェード実行制御フラグ
  */
 //--------------------------------------------------------------------------
-static	void	MCSS_CalcPaletteFade( MCSS_WORK *mcss )
+static	void	MCSS_CalcPaletteFade( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss )
 {	
 	if( mcss->pal_fade_wait == 0 )
 	{	
 		TCB_LOADRESOURCE_WORK*	tlw = GFL_HEAP_AllocClearMemory( mcss->heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
 
 		tlw->palette_p = &mcss->mcss_palette_proxy;
-		tlw->pal_ofs = mcss->mcss_palette_proxy.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_3DMAIN ];
+		tlw->pal_ofs = mcss_sys->palAdrs + MCSS_PAL_SIZE * mcss->index;
 
 		tlw->pPlttData = GFL_HEAP_AllocMemory( mcss->heapID, sizeof( NNSG2dPaletteData ) );
 
