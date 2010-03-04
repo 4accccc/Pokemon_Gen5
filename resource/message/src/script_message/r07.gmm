@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T15:41:37"/>
+	<create user="matsumiya" host="W00224" date="2010-03-04T15:45:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r07_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r07_black_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・pos（GRIDX=134、GRIDZ=243~245）起動
 ・画面左からライバル登場し
@@ -307,7 +307,7 @@
 確かめさせて　もらうよ▼</language>
 	</row>
 
-	<row id="msg_r07_champion_01">
+	<row id="msg_r07_champion_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘復帰時にチャンピオン配置済み
 　GRIDX=136、GRIDZ=244
@@ -325,7 +325,7 @@
 育っておるようで　なにより！▼</language>
 	</row>
 
-	<row id="msg_r07_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r07_black_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてchampion_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -341,7 +341,7 @@
 正直　困ります▼</language>
 	</row>
 
-	<row id="msg_r07_champion_02">
+	<row id="msg_r07_champion_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示前、チャンピオンの動作モデル
 　GRIDX=133、GRIDZ=245付近に移動（ジャンプする?）
@@ -360,7 +360,7 @@
 強くなって　どうするのかね？▼</language>
 	</row>
 
-	<row id="msg_r07_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r07_black_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてchampion_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -374,7 +374,7 @@
 ぼくは　生きている　証が　ほしい▼</language>
 	</row>
 
-	<row id="msg_r07_champion_03">
+	<row id="msg_r07_champion_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・まずライバルに渡すような演出
 ・続けてchampion_04</comment>
@@ -399,7 +399,7 @@
 これでも　持っていけ！▼</language>
 	</row>
 
-	<row id="msg_r07_champion_04">
+	<row id="msg_r07_champion_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公と隣接してメッセージ表示
 ・アイテム入手処理
@@ -410,7 +410,7 @@
 		<language name="JPN_KANJI" width="256">ほら　おまえさんも▼</language>
 	</row>
 
-	<row id="msg_r07_champion_05">
+	<row id="msg_r07_champion_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・表示後、画面左に移動
 ・続けてblack_04</comment>
@@ -425,7 +425,7 @@
 なにを望むか　忘れるなよ！▼</language>
 	</row>
 
-	<row id="msg_r07_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r07_black_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・画面左を見ながら
 ・続けてblack_05</comment>
@@ -438,7 +438,7 @@
 強くなりたいんだよ　ぼくは▼</language>
 	</row>
 
-	<row id="msg_r07_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r07_black_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公と向き合ってメッセージ
 ・表示後、画面左に移動
@@ -451,8 +451,21 @@
 次に会うときは　ぼくが勝つよ▼</language>
 	</row>
 
-	<row id="msg_r07_fighterw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
+	<row id="msg_r07_fighterw1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">FIGHTREW
+格闘家♀</attribute>
+		<language name="JPN" width="256">あの　まるたばし……▼
+うえで　じっと　していると
+おちちゃうから　とまらないでね！</language>
+		<language name="JPN_KANJI" width="256">あの　まるたばし……▼
+うえで　じっと　していると
+おちちゃうから　とまらないでね！</language>
+	</row>
+
+	<row id="msg_r07_fighterw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
 ・仮配置
 ・技マシン入手前
 　アイテム入手処理</comment>
@@ -465,7 +478,7 @@
 	</row>
 
 	<row id="msg_r07_fighterw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
+		<comment>♀
 ・技マシン入手後</comment>
 		<attribute name="キャラ指定">FIGHTREW
 格闘家♀</attribute>
@@ -498,7 +511,7 @@
 はいったら　いかんぞー[BE:00:ページ切り替え（行送り）]
 ポケモンさんに　どつかれるでー[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おやおや　あんた
-くさむら　なんかに[BE:00:ページ切り替え（行送り）]
+草むら　なんかに[BE:00:ページ切り替え（行送り）]
 入ったら　いかんぞー[BE:00:ページ切り替え（行送り）]
 ポケモンさんに　どつかれるでー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
