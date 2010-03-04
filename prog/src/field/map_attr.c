@@ -988,3 +988,43 @@ BOOL MAPATTR_VALUE_CheckNotMoveRight( const MAPATTR_VALUE val )
   return( FALSE );
 }
 
+/*
+ *  @breif  アトリビュート　エフェクトエンカウントタイプチェック
+ */
+EFFENC_TYPE_ID MAPATTR_GetEffectEncountType( MAPATTR attr )
+{
+  MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
+  MAPATTR_VALUE value = MAPATTR_GetAttrValue( attr );
+
+  if( value == MATTR_BRIDGE_01 ){
+    return EFFENC_TYPE_BRIDGE;
+  }
+  if( !(flag & MAPATTR_FLAGBIT_ENCOUNT)){
+    return EFFENC_TYPE_MAX;
+  }
+  switch(value){
+  case MATTR_E_GRASS_LOW:
+    return EFFENC_TYPE_SGRASS_NORMAL;
+
+  case MATTR_SNOW_GRASS_LOW:
+    return EFFENC_TYPE_SGRASS_SNOW;
+  
+  case MATTR_E_GRASS_LOW_02:
+    return EFFENC_TYPE_SGRASS_WARM;
+
+  case MATTR_E_LGRASS_LOW:
+    return EFFENC_TYPE_LGRASS;
+
+  case MATTR_E_ZIMEN_01:
+    return EFFENC_TYPE_CAVE;
+
+  case MATTR_WATER_01:
+  case MATTR_DEEP_MARSH_01:
+    return EFFENC_TYPE_WATER;
+
+  case MATTR_SEA_01:
+    return EFFENC_TYPE_SEA;
+  }
+  return EFFENC_TYPE_MAX;
+}
+

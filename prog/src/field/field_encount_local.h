@@ -37,7 +37,7 @@ struct _TAG_FIELD_ENCOUNT
 //エフェクトエンカウント　パラメータ
 typedef struct _EFFENC_PARAM{
   u16   zone_id;
-  u16   gx,gy,gz;
+  s16   gx,gy,gz;
   fx32  height;
   u8    type;
   u8    valid_f:4;

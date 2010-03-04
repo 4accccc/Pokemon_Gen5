@@ -39,8 +39,7 @@ struct _TAG_FLDEFF_CTRL
    
   u16 task_max;
   u8  season_id;
-  u8  area_inout_switch:7;
-  u8  has_season_diff:1;
+  u8  area_inout_switch;
   void *tcbsys_work;
   GFL_TCBSYS *tcbsys;
   FLDEFF_TASKSYS *tasksys;
@@ -126,7 +125,6 @@ FLDEFF_CTRL * FLDEFF_CTRL_Create(
     GAMEDATA* gdata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldMapWork ) );
     fectrl->season_id = GAMEDATA_GetSeasonID( gdata );
     fectrl->area_inout_switch= AREADATA_GetInnerOuterSwitch( FIELDMAP_GetAreaData( fieldMapWork ) );
-    fectrl->has_season_diff = AREADATA_HasSeasonDiff( area_id );
   }
   fectrl_InitProcEffect( fectrl );
   return( fectrl );
@@ -233,19 +231,6 @@ u8 FLDEFF_CTRL_GetSeasonID( FLDEFF_CTRL *fectrl )
 BOOL FLDEFF_CTRL_GetAreaInOutSwitch( FLDEFF_CTRL *fectrl )
 {
   return( fectrl->area_inout_switch );
-}
-
-//--------------------------------------------------------------
-/**
- * フィールドエフェクト コントロール 季節変化タイプ取得
- * @param fectrl
- * @retval  0 変化がない 
- * @retval  1 変化がある 
- */
-//--------------------------------------------------------------
-BOOL FLDEFF_CTRL_GetHasSeasonDiff( FLDEFF_CTRL *fectrl )
-{
-  return( fectrl->has_season_diff );
 }
 
 //======================================================================

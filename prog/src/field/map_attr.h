@@ -11,6 +11,7 @@
 
 #include "field_g3d_mapper.h"
 #include "map_attr_def.h"
+#include "effect_encount_def.h" //EFFENC_TYPE_IDéQè∆
 
 //======================================================================
 //  define
@@ -130,3 +131,5 @@ extern BOOL MAPATTR_VALUE_CheckNotMoveUp( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckNotMoveDown( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckNotMoveLeft( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckNotMoveRight( const MAPATTR_VALUE val );
+
+extern EFFENC_TYPE_ID MAPATTR_GetEffectEncountType( MAPATTR attr );

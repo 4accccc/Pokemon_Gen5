@@ -124,7 +124,6 @@ extern FLD_G3DOBJ_CTRL * FLDEFF_CTRL_GetFldG3dOBJCtrl( FLDEFF_CTRL *fectrl );
 extern ARCHANDLE * FLDEFF_CTRL_GetArcHandleEffect( FLDEFF_CTRL *fectrl );
 extern u8 FLDEFF_CTRL_GetSeasonID( FLDEFF_CTRL *fectrl );
 extern BOOL FLDEFF_CTRL_GetAreaInOutSwitch( FLDEFF_CTRL *fectrl );
-extern BOOL FLDEFF_CTRL_GetHasSeasonDiff( FLDEFF_CTRL *fectrl );
 
 //FLDEFF_CTRL effect process
 extern void FLDEFF_CTRL_RegistEffect(

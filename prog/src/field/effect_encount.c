@@ -21,8 +21,6 @@
 #include "field_encount.h"
 #include "field_encount_local.h"
 #include "effect_encount.h"
-#include "map_attr.h"
-#include "map_attr_def.h"
 
 #include "../../../resource/fldmapdata/script/field_ev_scr_def.h" // for SCRID_FLD_EV_EFFECT_ENC_ITEM_GET
 
@@ -483,40 +481,6 @@ static void effect_SearchAreaGet( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk, EF
 }
 
 /*
- *  @breif  アトリビュートタイプチェック
- */
-static inline EFFENC_TYPE_ID effect_GetAttributeType( MAPATTR attr )
-{
-  MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
-  MAPATTR_VALUE value = MAPATTR_GetAttrValue( attr );
-
-  if( value == MATTR_BRIDGE_01 ){
-    return EFFENC_TYPE_BRIDGE;
-  }
-  if( !(flag & MAPATTR_FLAGBIT_ENCOUNT)){
-    return EFFENC_TYPE_MAX;
-  }
-  switch(value){
-  case MATTR_E_GRASS_LOW:
-    return EFFENC_TYPE_SGRASS;
-
-  case MATTR_E_LGRASS_LOW:
-    return EFFENC_TYPE_LGRASS;
-
-  case MATTR_E_ZIMEN_01:
-    return EFFENC_TYPE_CAVE;
-
-  case MATTR_WATER_01:
-  case MATTR_DEEP_MARSH_01:
-    return EFFENC_TYPE_WATER;
-
-  case MATTR_SEA_01:
-    return EFFENC_TYPE_SEA;
-  }
-  return EFFENC_TYPE_MAX;
-}
-
-/*
  *  @brief  エフェクトアトリビュートサーチ
  */
 static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
@@ -529,13 +493,17 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   FLDMAPPER_GRIDINFODATA gridData;
   const FLDMAPPER* g3dMapper = (const FLDMAPPER*)FIELDMAP_GetFieldG3Dmapper( enc->fwork ); 
 
+#ifdef DEBUG_ONLY_FOR_iwasawa
+  OSTick start_tick,end_tick;
+  start_tick = OS_GetTick();
+#endif
+
   //検索領域取得
   effect_SearchAreaGet( enc, eff_wk, &esw );
-
-  IWASAWA_Printf("EffSearch\n");
-  IWASAWA_Printf(" Player(%d,%d), x(%d～%d), z(%d～%d)\n",
+/*
+  IWASAWA_Printf("EffSearch\nPlayer(%d,%d), x(%d～%d), z(%d～%d)\n",
       esw.player_x,esw.player_z,esw.sx,esw.ex,esw.sz,esw.ez);
-
+*/
   MI_CpuClear8(&eff_wk->attr_map,sizeof(EFFENC_ATTR_MAP));
   vec.y = 0;
   blockIdx = FLDMAPPER_GetCurrentBlockAccessIdx( g3dMapper );
@@ -545,7 +513,7 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
       vec.x = FX32_CONST(j*16); 
       FLDMAPPER_GetGridDataForEffectEncount( g3dMapper, blockIdx, &vec, &gridData );
 //    IWASAWA_Printf("0x%02x,",gridData.attr&0xFFFF);
-      id = effect_GetAttributeType( gridData.attr );
+      id = MAPATTR_GetEffectEncountType( gridData.attr );
       if(id != EFFENC_TYPE_MAX ){
         eff_wk->attr_map.attr[eff_wk->attr_map.count].type = id;
         eff_wk->attr_map.attr[eff_wk->attr_map.count].gx = j;
@@ -556,6 +524,10 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
     }
 //    IWASAWA_Printf("\n");
   }
+#ifdef DEBUG_ONLY_FOR_iwasawa
+  end_tick = OS_GetTick();
+  IWASAWA_Printf("EncEffAttrSearch tick = %d\n",end_tick-start_tick);
+#endif
 }
 
 /*

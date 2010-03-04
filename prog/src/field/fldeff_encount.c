@@ -24,6 +24,7 @@
 //  define
 //======================================================================
 #define GRASS_SHAKE_FRAME (FX32_ONE*12)
+#define ENCOUNT_IMDRES_MAX  (4)
 #define ENCOUNT_ANMRES_MAX  (4)
 
 //======================================================================
@@ -39,9 +40,10 @@ typedef struct _TAG_FLDEFF_ENCOUNT FLDEFF_ENCOUNT;
 //--------------------------------------------------------------
 typedef struct _EFFRES_DATA{
   u8  anm_num;
-  u8  season_f:4;
-  u8  area_f:2;
-  u8  inout_f:2;
+  u8  ptn_num:3;
+  u8  unit_num:3;
+  u8  season_f:1;
+  u8  inout_f:1;
   u16 se_no;
   u16 mdl_id;
   u16 anm_tbl[ENCOUNT_ANMRES_MAX];
@@ -53,8 +55,8 @@ typedef struct _EFFRES_DATA{
 struct _TAG_FLDEFF_ENCOUNT
 {
 	FLDEFF_CTRL *fectrl;
-  EFFENC_TYPE_ID type;
-  GFL_G3D_RES *g3d_res_mdl;
+  FLDEFF_ENC_ID eff_id;
+  GFL_G3D_RES *g3d_res_mdl[ENCOUNT_IMDRES_MAX];
   GFL_G3D_RES *g3d_res_anm[ENCOUNT_ANMRES_MAX];
 
   EFFRES_DATA data;
@@ -71,11 +73,8 @@ typedef struct
   MMDL *fmmdl;
 
   u16 gx,gz;
-  EFFENC_TYPE_ID type;
-  int init_gx;
-  int init_gz;
-  u16 obj_id;
-  u16 zone_id;
+  FLDEFF_ENC_ID eff_id;
+  u8  ptn_id;
   VecFx32 pos;
 }TASKHEADER_ENCOUNT;
 
@@ -101,25 +100,64 @@ typedef struct
 #define ENCEFF_SE_BIRD  (SEQ_SE_FLD_72)
 #define ENCEFF_SE_SMOKE (SEQ_SE_FLD_73)
 
-static EFFRES_DATA DATA_EffEncountRes[EFFENC_TYPE_MAX] = {
- {  //短い草 EFFENC_TYPE_SGRASS
-   1,TRUE,TRUE,FALSE, ENCEFF_SE_GRASS, 
+/*
+ *  EFFENC_TYPE_IDのならびに対応するエフェクトIDのテーブル
+ */
+static const u8 DATA_EncEffType2EffectID[EFFENC_TYPE_MAX] = {
+ FLDEFF_ENCID_SGRASS,  ///<短い草ノーマル
+ FLDEFF_ENCID_SGRASS,  ///<短い草豪雪地帯
+ FLDEFF_ENCID_SGRASS,  ///<短い草常春
+ FLDEFF_ENCID_LGRASS,  ///<長い草
+ FLDEFF_ENCID_CAVE,    ///<洞窟
+ FLDEFF_ENCID_WATER,   ///<淡水
+ FLDEFF_ENCID_SEA,     ///<海
+ FLDEFF_ENCID_BRIDGE,  ///<橋
+};
+
+/*
+ * エフェクトリソース定義データ
+ *
+ * anm_num  ->  アニメデータファイル数(ixxの種類数)
+ * unit_num ->  四季別やIn/Out別でセットになっているデータ数
+ * ptn_num  ->  同じエフェクトだが、テクスチャが異なるパターンの数。
+ *              短い草は四季のunitを3パターン(ノーマル/豪雪地帯/通年春)もっている
+ *              リソースの数はixxの種別ごとに unit_num*ptn_num分持っている
+ * 
+ * アーカイブリソースのデータの並び anm_num = 2, unit_num = 2, ptn_num = 2の場合
+ *  ＊種別の異なるファイルは連続している必要はありません
+ *
+ *     data_unitA.imd
+ *     data_unitB.imd
+ *
+ *     data_unitA1.ica 
+ *     data_unitA2.ica 
+ *     data_unitB1.ica 
+ *     data_unitB2.ica 
+ *
+ *     data_unitA1.itp
+ *     data_unitA2.itp 
+ *     data_unitB1.itp 
+ *     data_unitB2.itp 
+*/
+static EFFRES_DATA DATA_EffEncountRes[FLDEFF_ENCID_MAX] = {
+ {  //短い草 FLDEFF_ENCID_SGRASS
+   1, 3, 4, TRUE,FALSE, ENCEFF_SE_GRASS,  //anm_num, ptn_num, unit_num, season_f,inout_f,se_no
    NARC_fldeff_short_grass_sp_nsbmd,
    {
      NARC_fldeff_short_grass_sp_nsbta,
      0,0,0
    },
  },
- {  //EFFENC_TYPE_LGRASS,  ///<長い草
-   1,TRUE,FALSE,FALSE, ENCEFF_SE_GRASS,
+ {  //FLDEFF_ENCID_LGRASS,  ///<長い草
+   1, 1, 4, TRUE,FALSE, ENCEFF_SE_GRASS,
    NARC_fldeff_long_grass_sp_nsbmd,
    {
      NARC_fldeff_long_grass_sp_nsbta,
      0,0,0
    },
  },
- {  //EFFENC_TYPE_CAVE,    ///<洞窟
-   2,FALSE,FALSE,FALSE, ENCEFF_SE_SMOKE,
+ {  //FLDEFF_ENCID_CAVE,    ///<洞窟
+   2, 1, 1, FALSE,FALSE, ENCEFF_SE_SMOKE,
    NARC_fldeff_soil_smoke_nsbmd,
    {
      NARC_fldeff_soil_smoke_nsbta,
@@ -127,24 +165,24 @@ static EFFRES_DATA DATA_EffEncountRes[EFFENC_TYPE_MAX] = {
      0,0
    },
  },
- {  //EFFENC_TYPE_WATER,   ///<淡水
-   1,FALSE,FALSE,TRUE, ENCEFF_SE_WATER,
+ {  //FLDEFF_ENCID_WATER,   ///<淡水
+   1, 1, 2, FALSE,TRUE, ENCEFF_SE_WATER,
    NARC_fldeff_freshwater_in_nsbmd,
    {
      NARC_fldeff_freshwater_in_nsbca,
      0,0,0
    },
  },
- {  //EFFENC_TYPE_SEA,     ///<海
-   1,FALSE,FALSE,FALSE, ENCEFF_SE_WATER,
+ {  //FLDEFF_ENCID_SEA,     ///<海
+   1, 1, 1, FALSE,FALSE, ENCEFF_SE_WATER,
    NARC_fldeff_sea_out_nsbmd,
    {
      NARC_fldeff_sea_out_nsbca,
      0,0,0
    },
  },
- {  //EFFENC_TYPE_BRIDGE,  ///<橋
-   3,FALSE,FALSE,FALSE, ENCEFF_SE_BIRD,
+ {  //FLDEFF_ENCID_BRIDGE,  ///<橋
+   3, 1, 1, FALSE,FALSE, ENCEFF_SE_BIRD,
    NARC_fldeff_bird_shadow_nsbmd,
    {
      NARC_fldeff_bird_shadow_nsbta,
@@ -158,8 +196,10 @@ static EFFRES_DATA DATA_EffEncountRes[EFFENC_TYPE_MAX] = {
 //======================================================================
 //	プロトタイプ
 //======================================================================
-static FLDEFF_ENCOUNT* enc_CreateWork( FLDEFF_CTRL* fectrl, HEAPID heapID, EFFENC_TYPE_ID type );
-static void enc_InitResource( FLDEFF_ENCOUNT* enc, EFFENC_TYPE_ID type );
+static FLDEFF_ENCOUNT* enc_CreateWork( FLDEFF_CTRL* fectrl, HEAPID heapID, FLDEFF_ENC_ID type );
+static void enc_InitResource( FLDEFF_ENCOUNT* enc, FLDEFF_ENC_ID eff_id );
+static void enc_InitResourceSGrass( FLDEFF_ENCOUNT* enc, EFFRES_DATA* data, ARCHANDLE* handle );
+static void enc_InitResourceNormal( FLDEFF_ENCOUNT* enc, EFFRES_DATA* data, ARCHANDLE* handle );
 static void enc_DeleteResource( FLDEFF_ENCOUNT* enc );
 static void sub_PlaySE( TASKWORK_ENCOUNT* work, FLDEFF_ENCOUNT* enc );
 
@@ -178,27 +218,27 @@ static const FLDEFF_TASK_HEADER DATA_encountTaskHeader;
 //--------------------------------------------------------------
 void * FLDEFF_ENCOUNT_SGrassInit( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
-  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_SGRASS );
+  return enc_CreateWork( fectrl, heapID, FLDEFF_ENCID_SGRASS );
 }
 void * FLDEFF_ENCOUNT_LGrassInit( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
-  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_LGRASS );
+  return enc_CreateWork( fectrl, heapID, FLDEFF_ENCID_LGRASS );
 }
 void * FLDEFF_ENCOUNT_CaveInit( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
-  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_CAVE );
+  return enc_CreateWork( fectrl, heapID, FLDEFF_ENCID_CAVE );
 }
 void * FLDEFF_ENCOUNT_WaterInit( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
-  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_WATER );
+  return enc_CreateWork( fectrl, heapID, FLDEFF_ENCID_WATER );
 }
 void * FLDEFF_ENCOUNT_SeaInit( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
-  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_SEA );
+  return enc_CreateWork( fectrl, heapID, FLDEFF_ENCID_SEA );
 }
 void * FLDEFF_ENCOUNT_BridgeInit( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
-  return enc_CreateWork( fectrl, heapID, EFFENC_TYPE_BRIDGE );
+  return enc_CreateWork( fectrl, heapID, FLDEFF_ENCID_BRIDGE );
 }
 
 //--------------------------------------------------------------
@@ -225,17 +265,17 @@ void FLDEFF_ENCOUNT_Delete( FLDEFF_CTRL *fectrl, void *work )
  * @brief   コモンワーク生成＆初期化
  * @param   fectrl FLDEFF_CTRL*
  * @param   heapID ヒープID
- * @param   type  リソース初期化タイプ
+ * @param   eff_id  リソース初期化タイプID
  * @retval  FLDEFF_ENCOUNT* 
  */
 //--------------------------------------------------------------
-static FLDEFF_ENCOUNT* enc_CreateWork( FLDEFF_CTRL* fectrl, HEAPID heapID, EFFENC_TYPE_ID type ) 
+static FLDEFF_ENCOUNT* enc_CreateWork( FLDEFF_CTRL* fectrl, HEAPID heapID, FLDEFF_ENC_ID eff_id ) 
 {
   FLDEFF_ENCOUNT* enc;
 	enc = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDEFF_ENCOUNT) );
 	enc->fectrl = fectrl;
 
-  enc_InitResource( enc, type );
+  enc_InitResource( enc, eff_id );
   return enc;
 }
 
@@ -247,33 +287,99 @@ static FLDEFF_ENCOUNT* enc_CreateWork( FLDEFF_CTRL* fectrl, HEAPID heapID, EFFEN
  * @retval  nothing
  */
 //--------------------------------------------------------------
-static void enc_InitResource( FLDEFF_ENCOUNT* enc, EFFENC_TYPE_ID type ) 
+static void enc_InitResource( FLDEFF_ENCOUNT* enc, FLDEFF_ENC_ID eff_id ) 
 {
-  int i,ofs = 0;
-  BOOL ret;
   ARCHANDLE *handle;
 
-  enc->data = DATA_EffEncountRes[type];
+  enc->data = DATA_EffEncountRes[eff_id];
 
   handle = FLDEFF_CTRL_GetArcHandleEffect( enc->fectrl );
- 
-  if( enc->data.season_f ){
+
+  if( eff_id == FLDEFF_ENCID_SGRASS ){
+    enc_InitResourceSGrass( enc, &enc->data, handle );
+  }else{
+    enc_InitResourceNormal( enc, &enc->data, handle );
+  }
+}
+
+/*
+ *  @brief  短い草用リソース初期化
+ *
+ *  短い草だけ(ノーマル、豪雪地帯用、通年春地帯用、の3パターンあり
+ *  通年春用は専用素材を持たないので特殊処理)
+ */
+static void enc_InitResourceSGrass( FLDEFF_ENCOUNT* enc, EFFRES_DATA* data, ARCHANDLE* handle )
+{
+  int i,j,ofs = 0;
+  BOOL ret;
+  
+  ofs = FLDEFF_CTRL_GetSeasonID( enc->fectrl );
+
+  //ノーマル
+  enc->g3d_res_mdl[0] = GFL_G3D_CreateResourceHandle( handle, data->mdl_id+ofs );
+  ret = GFL_G3D_TransVramTexture( enc->g3d_res_mdl[0] );
+  GF_ASSERT( ret );
+  enc->g3d_res_anm[0]	= GFL_G3D_CreateResourceHandle( handle, data->anm_tbl[0]+ofs );
+  
+  //豪雪地帯
+  ofs += data->unit_num;
+  enc->g3d_res_mdl[1] = GFL_G3D_CreateResourceHandle( handle, data->mdl_id+ofs );
+  ret = GFL_G3D_TransVramTexture( enc->g3d_res_mdl[1] );
+  GF_ASSERT( ret );
+  enc->g3d_res_anm[1]	= GFL_G3D_CreateResourceHandle( handle, data->anm_tbl[0]+ofs );
+
+  //通年春
+  enc->g3d_res_mdl[2] = GFL_G3D_CreateResourceHandle( handle, data->mdl_id );
+  ret = GFL_G3D_TransVramTexture( enc->g3d_res_mdl[2] );
+  GF_ASSERT( ret );
+  enc->g3d_res_anm[2]	= GFL_G3D_CreateResourceHandle( handle, data->anm_tbl[0] );
+}
+
+/*
+ *  @brief  その他用共通リソース初期化
+ */
+static void enc_InitResourceNormal( FLDEFF_ENCOUNT* enc, EFFRES_DATA* data, ARCHANDLE* handle )
+{
+  int i,j,ofs = 0;
+  BOOL ret;
+  
+  if( data->season_f ){
     ofs = FLDEFF_CTRL_GetSeasonID( enc->fectrl );
-    if( enc->data.area_f ){
-      ofs += FLDEFF_CTRL_GetHasSeasonDiff( enc->fectrl )*4;
-    }
-  }else if( enc->data.inout_f ){
+  }else if( data->inout_f ){
     ofs = FLDEFF_CTRL_GetAreaInOutSwitch( enc->fectrl );
   }
 
-  enc->g3d_res_mdl = GFL_G3D_CreateResourceHandle( handle, enc->data.mdl_id+ofs );
-  ret = GFL_G3D_TransVramTexture( enc->g3d_res_mdl );
+  for(i = 0;i < data->ptn_num;i++ ){
+    int data_ofs = ofs+(i*data->unit_num);
+
+    enc->g3d_res_mdl[i] = GFL_G3D_CreateResourceHandle( handle, data->mdl_id+data_ofs );
+    ret = GFL_G3D_TransVramTexture( enc->g3d_res_mdl[i] );
+    GF_ASSERT( ret );
+    
+    for(j = 0;j < data->anm_num;j++){
+      enc->g3d_res_anm[j+i*data->anm_num]	=
+        GFL_G3D_CreateResourceHandle( handle, data->anm_tbl[j]+data_ofs );
+    }
+  }
+#if 0
+  int i,ofs = 0;
+  BOOL ret;
+  
+  if( data->season_f ){
+    ofs = FLDEFF_CTRL_GetSeasonID( enc->fectrl );
+  }else if( data->inout_f ){
+    ofs = FLDEFF_CTRL_GetAreaInOutSwitch( enc->fectrl );
+  }
+
+  enc->g3d_res_mdl[0] = GFL_G3D_CreateResourceHandle( handle, data->mdl_id+ofs );
+  ret = GFL_G3D_TransVramTexture( enc->g3d_res_mdl[0] );
   GF_ASSERT( ret );
   
-  for(i = 0;i < enc->data.anm_num;i++){
+  for(i = 0;i < data->anm_num;i++){
     enc->g3d_res_anm[i]	=
-      GFL_G3D_CreateResourceHandle( handle, enc->data.anm_tbl[i]+ofs );
+      GFL_G3D_CreateResourceHandle( handle, data->anm_tbl[i]+ofs );
   }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -287,11 +393,13 @@ static void enc_DeleteResource( FLDEFF_ENCOUNT* enc )
 {
   int i;
 
-  for(i = 0;i < enc->data.anm_num;i++){
+  for(i = 0;i < enc->data.anm_num*enc->data.ptn_num;i++){
  	  GFL_G3D_DeleteResource( enc->g3d_res_anm[i] );
   }
-  GFL_G3D_FreeVramTexture( enc->g3d_res_mdl );
- 	GFL_G3D_DeleteResource( enc->g3d_res_mdl );
+  for(i = 0;i < enc->data.ptn_num;i++){
+    GFL_G3D_FreeVramTexture( enc->g3d_res_mdl[i] );
+ 	  GFL_G3D_DeleteResource( enc->g3d_res_mdl[i] );
+  }
 }
 
 //======================================================================
@@ -309,20 +417,30 @@ FLDEFF_TASK* FLDEFF_ENCOUNT_SetEffect( FIELD_ENCOUNT* fld_enc, FLDEFF_CTRL *fect
   FLDEFF_ENCOUNT* enc;
   TASKHEADER_ENCOUNT head;
   VecFx32 pos;
+  FLDEFF_ENC_ID  eff_id;
   FIELDMAP_WORK* fieldMapWork = FLDEFF_CTRL_GetFieldMapWork( fectrl );
 
   if( FIELDMAP_GetBaseSystemType( fieldMapWork ) != FLDMAP_BASESYS_GRID ){
      return NULL; //レールマップでは生成しない
   }
 
-  enc = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_ENC_SGRASS+type );
+  eff_id = DATA_EncEffType2EffectID[type];
+  enc = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_ENC_SGRASS+eff_id );
+
+  MI_CpuClear8( &head, sizeof(TASKHEADER_ENCOUNT));
   head.fld_enc = fld_enc;
   head.eff_enc = enc;
   head.mmdl_sys = FIELDMAP_GetMMdlSys( fieldMapWork );
 
   head.gx = gx;
   head.gz = gz;
-  head.type = type;
+  head.eff_id = eff_id;
+
+  if( eff_id == FLDEFF_ENCID_SGRASS ){  //短い草にだけ3パターンある
+    head.ptn_id = type-EFFENC_TYPE_SGRASS_NORMAL;
+  }else{
+    head.ptn_id = 0;
+  }
   
   head.pos.x = GRID_SIZE_FX32(gx)+GRID_HALF_FX32;
   head.pos.z = GRID_SIZE_FX32(gz)+GRID_HALF_FX32;
@@ -372,14 +490,14 @@ static void encountTask_Init( FLDEFF_TASK *task, void *wk )
   FLDEFF_TASK_SetPos( task, &head->pos );
   
   work->obj_rnd =
-    GFL_G3D_RENDER_Create( enc->g3d_res_mdl, 0, enc->g3d_res_mdl );
+    GFL_G3D_RENDER_Create( enc->g3d_res_mdl[work->head.ptn_id], 0, enc->g3d_res_mdl[work->head.ptn_id] );
   
   {
     int i;
 
     for(i = 0;i < enc->data.anm_num;i++){
       work->obj_anm[i] =
-      GFL_G3D_ANIME_Create( work->obj_rnd, enc->g3d_res_anm[i], 0 );
+      GFL_G3D_ANIME_Create( work->obj_rnd, enc->g3d_res_anm[i+work->head.ptn_id*enc->data.anm_num], 0 );
     }
   
     work->obj = GFL_G3D_OBJECT_Create( work->obj_rnd, work->obj_anm, enc->data.anm_num );

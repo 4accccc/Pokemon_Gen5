@@ -17,14 +17,14 @@
 //  define
 //======================================================================
 typedef enum{
- EFFENC_TYPE_SGRASS,  ///<’Z‚¢‘
- EFFENC_TYPE_LGRASS,  ///<’·‚¢‘
- EFFENC_TYPE_CAVE,    ///<“´ŒA
- EFFENC_TYPE_WATER,   ///<’W…
- EFFENC_TYPE_SEA,     ///<ŠC
- EFFENC_TYPE_BRIDGE,  ///<‹´
- EFFENC_TYPE_MAX,
-}EFFENC_TYPE_ID;
+ FLDEFF_ENCID_SGRASS,  ///<’Z‚¢‘
+ FLDEFF_ENCID_LGRASS,  ///<’·‚¢‘
+ FLDEFF_ENCID_CAVE,    ///<“´ŒA
+ FLDEFF_ENCID_WATER,   ///<’W…
+ FLDEFF_ENCID_SEA,     ///<ŠC
+ FLDEFF_ENCID_BRIDGE,  ///<‹´
+ FLDEFF_ENCID_MAX,
+}FLDEFF_ENC_ID;
 
 //======================================================================
 //  struct
