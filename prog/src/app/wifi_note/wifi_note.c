@@ -9400,6 +9400,7 @@ static void SetDispActive( WFNOTE_DRAW * p_draw, BOOL flg )
 {
 	if( flg == TRUE ){
 		GFL_CLACT_WK_SetObjMode( p_draw->p_tb, GX_OAM_MODE_XLU );
+		GFL_CLACT_WK_SetObjMode( p_draw->p_tbx, GX_OAM_MODE_XLU );
 		G2_SetBlendAlpha(
 			GX_BLEND_PLANEMASK_BG2,
 			GX_BLEND_PLANEMASK_BG0 |
@@ -9408,6 +9409,7 @@ static void SetDispActive( WFNOTE_DRAW * p_draw, BOOL flg )
 			DISP_PASSIVE_BLEND_EV2 );
 	}else{
 		GFL_CLACT_WK_SetObjMode( p_draw->p_tb, GX_OAM_MODE_NORMAL );
+		GFL_CLACT_WK_SetObjMode( p_draw->p_tbx, GX_OAM_MODE_NORMAL );
 		G2_BlendNone();
 	}
 }
@@ -9437,6 +9439,7 @@ static void SetListDispActive( WFNOTE_FRIENDLIST * p_wk, WFNOTE_DRAW * p_draw, B
 	if( flg == TRUE ){
 		GFL_CLACT_WK_SetObjMode( p_wk->p_pageact, GX_OAM_MODE_XLU );
 		GFL_CLACT_WK_SetObjMode( p_draw->p_tb, GX_OAM_MODE_XLU );
+		GFL_CLACT_WK_SetObjMode( p_draw->p_tbx, GX_OAM_MODE_XLU );
 		for( i=0; i<FLIST_PAGE_FRIEND_NUM; i++ ){
 			if( da->p_hate[i] == NULL ){
 				GFL_CLACT_WK_SetObjMode( WF_2DC_WkClWkGet(da->p_clwk[i]), GX_OAM_MODE_XLU );
@@ -9453,6 +9456,7 @@ static void SetListDispActive( WFNOTE_FRIENDLIST * p_wk, WFNOTE_DRAW * p_draw, B
 	}else{
 		GFL_CLACT_WK_SetObjMode( p_wk->p_pageact, GX_OAM_MODE_NORMAL );
 		GFL_CLACT_WK_SetObjMode( p_draw->p_tb, GX_OAM_MODE_NORMAL );
+		GFL_CLACT_WK_SetObjMode( p_draw->p_tbx, GX_OAM_MODE_NORMAL );
 		for( i=0; i<FLIST_PAGE_FRIEND_NUM; i++ ){
 			if( da->p_hate[i] == NULL ){
 				GFL_CLACT_WK_SetObjMode( WF_2DC_WkClWkGet(da->p_clwk[i]), GX_OAM_MODE_NORMAL );
