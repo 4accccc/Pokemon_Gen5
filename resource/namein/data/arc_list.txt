@@ -5,4 +5,8 @@
 "keymap_qwerty.dat"
 "change_dakuten.dat"
 "change_handakuten.dat"
+"change_seion.dat"
+"change_seion2.dat"
+"change_dakuten2.dat"
+"change_handakuten2.dat"
 "change_qwerty.dat"

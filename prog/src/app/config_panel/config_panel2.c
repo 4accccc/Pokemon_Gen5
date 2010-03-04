@@ -2684,6 +2684,13 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
       p_wk->is_decide = TRUE;
       is_update = TRUE;
     }
+    else
+    { 
+      p_wk->select    = APPBAR_WIN_DECIDE;
+      PMSND_PlaySE( CONFIG_SE_DECIDE );
+      p_wk->is_decide = TRUE;
+      is_update = TRUE;
+    }
     break;
 
   case UI_INPUT_TRG_CANCEL:
@@ -3071,6 +3078,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     }
     break;
 
+  case UI_INPUT_TRG_DECIDE:
   case UI_INPUT_TRG_CANCEL:
     Scroll_ChangePlt( p_wk, FALSE );
     break;

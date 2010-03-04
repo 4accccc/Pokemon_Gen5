@@ -98,7 +98,7 @@ static inline void DEBUG_NAMEIN_Print( STRCODE *x , int len )
 /// ヒープサイズ
 //=====================================
 #define NAMEIN_HEAP_HIGH_SIZE (0x70000)
-#define NAMEIN_HEAP_LOW_SIZE (0x40000)
+#define NAMEIN_HEAP_LOW_SIZE  (0x40000)
 
 //-------------------------------------
 /// BGフレーム
@@ -202,8 +202,13 @@ typedef enum
 //特殊文字変換
 typedef enum
 { 
-  STRINPUT_SP_CHANGE_DAKUTEN,     //濁点
-  STRINPUT_SP_CHANGE_HANDAKUTEN,  //半濁点
+  STRINPUT_SP_CHANGE_DAKUTEN,     //静音→濁点
+  STRINPUT_SP_CHANGE_HANDAKUTEN,  //静音→半濁点
+  STRINPUT_SP_CHANGE_DAKU_SEION,  //濁点→静音
+  STRINPUT_SP_CHANGE_HAN_SEION,   //半濁点→静音
+  STRINPUT_SP_CHANGE_HANSEION,    //半濁点→静音
+  STRINPUT_SP_CHANGE_DAKUTEN2,    //半濁点→濁点
+  STRINPUT_SP_CHANGE_HANDAKUTEN2, //濁点→半濁点
 } STRINPUT_SP_CHANGE;
 
 //-------------------------------------
@@ -303,6 +308,7 @@ typedef enum
   KEYBOARD_INPUT_EXIT,        //終了  
   KEYBOARD_INPUT_SHIFT,       //シフト
   KEYBOARD_INPUT_SPACE,       //スペース
+  KEYBOARD_INPUT_AUTOCHANGE,   //Rボタン用自動変換
 }KEYBOARD_INPUT;
 
 //-------------------------------------
@@ -963,6 +969,12 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
     mode    = MISC_GetNameInMode( p_param->p_misc, p_param->mode );
   }
   
+  //なぜここが１か。
+  //イントロでセーブしながら名前入力を通過するため、
+  //すべてをオンメモリにしなければならず、大きいヒープを用意していました。
+  //イントロ以外で呼び出したときヒープが足りないことを想定して切り替えられるようにしたのですが、
+  //ヒープサイズが変わってしまうとデバッグ時に影響がでるため、
+  //切り替えがなしになりました。その名残です。
   if( 1 )
   { 
     heap_size = NAMEIN_HEAP_HIGH_SIZE;
@@ -2014,6 +2026,22 @@ static BOOL STRINPUT_SetChangeSP( STRINPUT_WORK *p_wk, STRINPUT_SP_CHANGE type )
     //検索文字サーチ
     p_data  =  p_wk->p_changedata[NAMEIN_STRCHANGETYPE_HANDAKUTEN];
     break;
+  case STRINPUT_SP_CHANGE_HAN_SEION:      //静音
+    //検索文字サーチ
+    p_data  =  p_wk->p_changedata[NAMEIN_STRCHANGETYPE_HAN_SEION];
+    break;
+  case STRINPUT_SP_CHANGE_DAKU_SEION:      //静音
+    //検索文字サーチ
+    p_data  =  p_wk->p_changedata[NAMEIN_STRCHANGETYPE_DAKU_SEION];
+    break;
+  case STRINPUT_SP_CHANGE_DAKUTEN2:      //半濁点→濁点
+    //検索文字サーチ
+    p_data  =  p_wk->p_changedata[NAMEIN_STRCHANGETYPE_DAKUTEN2];
+    break;
+  case STRINPUT_SP_CHANGE_HANDAKUTEN2: //濁点→半濁点
+    //検索文字サーチ
+    p_data  =  p_wk->p_changedata[NAMEIN_STRCHANGETYPE_HANDAKUTEN2];
+    break;
   default:
     GF_ASSERT(0);
     return FALSE;
@@ -2034,9 +2062,9 @@ static BOOL STRINPUT_SetChangeSP( STRINPUT_WORK *p_wk, STRINPUT_SP_CHANGE type )
     { 
       if( NAMEIN_STRCHANGE_GetChangeStr( p_data, idx, code, NAMEIN_STRCHANGE_CODE_LEN+1, &len ) )
       { 
-        //確定バッファから削除
+        //確定バッファから変換文字列取得
         NAMEIN_STRCHANGE_GetInputStr( p_data, idx, delete, NAMEIN_STRCHANGE_CODE_LEN+1, &delete_len );
-        //確定バッファに追加
+        //確定バッファから削除
         for( i = 0; i < delete_len; i++ )
         { 
           STRINPUT_BackSpace( p_wk );
@@ -4018,6 +4046,13 @@ static BOOL Keyboard_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
     p_req->anm_pos  = p_wk->cursor;
     ret = TRUE;
   }
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+  { 
+    //自動変換
+    //アニメはしない
+    p_wk->input = KEYBOARD_INPUT_AUTOCHANGE;
+    ret = FALSE;
+  }
 
 #ifdef NAMEIN_KEY_TOUCH
   if( ret && GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
@@ -5377,10 +5412,34 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       STRINPUT_SetChangeStr( &p_wk->strinput, code, is_shift );
       break;
     case KEYBOARD_INPUT_DAKUTEN:    //濁点
-      STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKUTEN );
+      if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKUTEN ) )
+      { 
+        if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKUTEN2 ) )
+        { 
+          STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKU_SEION );
+        }
+      }
       break;
     case KEYBOARD_INPUT_HANDAKUTEN: //半濁点
-      STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HANDAKUTEN );
+      if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HANDAKUTEN ) )
+      { 
+        if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HANDAKUTEN2 ) )
+        { 
+          STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HAN_SEION );
+        }
+      }
+      break;
+    case KEYBOARD_INPUT_AUTOCHANGE: //自動
+      if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKUTEN ) )
+      { 
+        if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HANDAKUTEN2 ) )
+        { 
+          if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKU_SEION ) )
+          { 
+            STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HAN_SEION );
+          }
+        }
+      }
       break;
     case KEYBOARD_INPUT_BACKSPACE:  //一つ前に戻る
       STRINPUT_BackSpace( &p_wk->strinput );

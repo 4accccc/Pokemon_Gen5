@@ -18,7 +18,11 @@ enum {
 	NARC_namein_data_keymap_qwerty_dat = 4,
 	NARC_namein_data_change_dakuten_dat = 5,
 	NARC_namein_data_change_handakuten_dat = 6,
-	NARC_namein_data_change_qwerty_dat = 7
+	NARC_namein_data_change_seion_dat = 7,
+	NARC_namein_data_change_seion2_dat = 8,
+	NARC_namein_data_change_dakuten2_dat = 9,
+	NARC_namein_data_change_handakuten2_dat = 10,
+	NARC_namein_data_change_qwerty_dat = 11
 };
 
 /* NARC_NAMEIN_DATA_NAIX_ */
