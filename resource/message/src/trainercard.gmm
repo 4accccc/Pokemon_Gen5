@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T15:35:24"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-04T17:24:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,14 +260,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="581" top="379" right="1081" bottom="1007" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="123" top="147" right="596" bottom="545" visible="no"/>
-		<band id="0" index="0" style="0000" width="445"/>
+		<tag-palette left="1078" top="88" right="1551" bottom="486" visible="yes"/>
+		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="250"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="240"/>
+		<band id="3" index="3" style="0000" width="591"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -877,9 +877,9 @@
 1～2行目
 バッジ名の下に獲得年月日</comment>
 		<language name="JPN" width="256">トライバッジ
-00ねん00がつ00にち　かくとく</language>
+[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち　かくとく</language>
 		<language name="JPN_KANJI" width="256">トライバッジ
-00年00月00日　獲得</language>
+[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -903,9 +903,9 @@
 1～2行目
 バッジ名の下に獲得年月日</comment>
 		<language name="JPN" width="256">ベーシックバッジ
-00ねん00月00日　かくとく</language>
+[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち　かくとく</language>
 		<language name="JPN_KANJI" width="256">ベーシックバッジ
-00年00月00日　獲得</language>
+[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE2_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -929,9 +929,9 @@
 1～2行目
 バッジ名の下に獲得年月日</comment>
 		<language name="JPN" width="256">ビートルバッジ
-00ねん00がつ00にち　かくとく</language>
+[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち　かくとく</language>
 		<language name="JPN_KANJI" width="256">ビートルバッジ
-00年00月00日　獲得</language>
+[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE3_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -955,9 +955,9 @@
 1～2行目
 バッジ名の下に獲得年月日</comment>
 		<language name="JPN" width="256">ボルトバッジ
-00ねん00がつ00にち　かくとく</language>
+[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち　かくとく</language>
 		<language name="JPN_KANJI" width="256">ボルトバッジ
-00年00月00日　獲得</language>
+[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE4_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -981,9 +981,9 @@
 1～2行目
 バッジ名の下に獲得年月日</comment>
 		<language name="JPN" width="256">クエイクバッジ
-00ねん00がつ00にち　かくとく</language>
+[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち　かくとく</language>
 		<language name="JPN_KANJI" width="256">クエイクバッジ
-00年00月00日　獲得</language>
+[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE5_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -1007,9 +1007,9 @@
 1～2行目
 バッジ名の下に獲得年月日</comment>
 		<language name="JPN" width="256">ジェットバッジ
-00ねん00がつ00にち　かくとく</language>
+[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち　かくとく</language>
 		<language name="JPN_KANJI" width="256">ジェットバッジ
-00年00月00日　獲得</language>
+[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE6_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -1033,9 +1033,9 @@
 1～2行目
 バッジ名の下に獲得年月日</comment>
 		<language name="JPN" width="256">アイシクルバッジ
-00ねん00がつ00にち　かくとく</language>
+[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち　かくとく</language>
 		<language name="JPN_KANJI" width="256">アイシクルバッジ
-00年00月00日　獲得</language>
+[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE7_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -1059,9 +1059,9 @@
 1～2行目
 バッジ名の下に獲得年月日</comment>
 		<language name="JPN" width="256">レジェンドバッジ
-00ねん00がつ00にち　かくとく</language>
+[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち　かくとく</language>
 		<language name="JPN_KANJI" width="256">レジェンドバッジ
-00年00月00日　獲得</language>
+[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日　獲得</language>
 	</row>
 
 	<row id="MSG_LEAGUE_BADGE8_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
