@@ -111,9 +111,9 @@ static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForTrainer( BTL_SERVER* server, int* seq );
 static BOOL SendActionRecord( BTL_SERVER* server );
-static BOOL SendRotateRecord( BTL_SERVER* server );
+static BOOL SendRotateRecord( BTL_SERVER* server, const BtlRotateDir* dirAry );
 static void* MakeSelectActionRecord( BTL_SERVER* server, u32* dataSize );
-static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize );
+static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize, const BtlRotateDir* dirAry );
 static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd );
 static void SetAdapterCmdEx( BTL_SERVER* server, BtlAdapterCmd cmd, const void* sendData, u32 dataSize );
 static void SetAdapterCmdSingle( BTL_SERVER* server, BtlAdapterCmd cmd, u8 clientID, const void* sendData, u32 dataSize );
@@ -422,27 +422,33 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
   case 0:
-    SetAdapterCmd( server, BTL_ACMD_SELECT_ROTATION );
-    (*seq)++;
-    break;
-
-  case 1:
-    if( WaitAllAdapterReply(server) )
     {
-      const BtlRotateDir  *dir;
+      static const BtlRotateDir dirTbl[] = {
+        BTL_ROTATEDIR_STAY,
+        BTL_ROTATEDIR_R,
+        BTL_ROTATEDIR_L,
+      };
+      BtlRotateDir  dirAry[ BTL_CLIENT_MAX ];
       u32 i;
 
       ResetAdapterCmd( server );
       SCQUE_Init( server->que );
       for(i=0; i<BTL_CLIENT_MAX; ++i)
       {
-        if( Svcl_IsEnable(&server->client[i]) ){
-          dir = BTL_ADAPTER_GetReturnData( server->client[i].adapter, NULL );
-          BTL_SVFLOW_CreateRotationCommand( server->flowWork, i, *dir );
+        if( Svcl_IsEnable(&server->client[i]) )
+        {
+//          dir = BTL_ADAPTER_GetReturnData( server->client[i].adapter, NULL );
+          u8 rnd = BTL_CALC_GetRand( NELEMS(dirTbl) );
+          dirAry[ i ] = dirTbl [rnd ];
+          BTL_SVFLOW_CreateRotationCommand( server->flowWork, i, dirAry[ i ] );
+        }
+        else
+        {
+          dirAry[ i ] = BTL_ROTATEDIR_NONE;
         }
       }
 
-      if( SendRotateRecord(server) ){
+      if( SendRotateRecord(server, dirAry) ){
         (*seq)++;
       }else{
         (*seq) += 2;
@@ -450,7 +456,7 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
     }
     break;
 
-  case 2:
+  case 1:
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
@@ -458,12 +464,12 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
     }
     break;
 
-  case 3:
+  case 2:
     SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
     (*seq)++;
     break;
 
-  case 4:
+  case 3:
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
@@ -990,13 +996,12 @@ static BOOL SendActionRecord( BTL_SERVER* server )
 /**
  *  ローテーション記録データ送信開始
  */
-static BOOL SendRotateRecord( BTL_SERVER* server )
+static BOOL SendRotateRecord( BTL_SERVER* server, const BtlRotateDir* dirAry )
 {
   void* recData;
   u32   recDataSize;
-  recData = MakeRotationRecord( server, &recDataSize );
+  recData = MakeRotationRecord( server, &recDataSize, dirAry );
   if( recData != NULL ){
-//    BTL_Printf("ローテーション記録データを送信する (%dbytes)\n", recDataSize);
     SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
     return TRUE;
   }
@@ -1039,7 +1044,7 @@ static void* MakeSelectActionRecord( BTL_SERVER* server, u32* dataSize )
  *
  * @retval  void*   正しく生成できたら送信データポインタ / できない場合NULL
  */
-static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize )
+static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize, const BtlRotateDir* dirAry )
 {
   u32 ID;
 
@@ -1049,8 +1054,7 @@ static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize )
   {
     if( server->client[ID].myID != CLIENT_DISABLE_ID )
     {
-      const BtlRotateDir *pDir = BTL_ADAPTER_GetReturnData( server->client[ID].adapter, NULL );
-      BTL_RECTOOL_PutRotationData( &server->recTool, ID, *pDir );
+      BTL_RECTOOL_PutRotationData( &server->recTool, ID, dirAry[ID] );
     }
   }
 

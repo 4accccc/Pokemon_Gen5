@@ -2658,13 +2658,20 @@ static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq )
   case 4:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
-      u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
       u32 getMoney = BTL_MAIN_FixBonusMoney( wk->mainModule );
-      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_GetMoney );
-      BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
-      BTLV_STRPARAM_AddArg( &wk->strParam, getMoney );
-      BTLV_StartMsg( wk->viewCore, &wk->strParam );
-      (*seq)++;
+      if( getMoney )
+      {
+        u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_GetMoney );
+        BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+        BTLV_STRPARAM_AddArg( &wk->strParam, getMoney );
+        BTLV_StartMsg( wk->viewCore, &wk->strParam );
+        (*seq)++;
+      }
+      else{
+        return TRUE;
+      }
     }
     break;
 
@@ -4235,6 +4242,8 @@ static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args )
       BtlRotateDir dir = args[1];
       BTL_PARTY*  party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
 
+      BTL_N_Printf( DBGSTR_CLIENT_StartRotAct, clientID, dir );
+
       BTL_PARTY_RotateMembers( party, dir, NULL, NULL );
       BTLV_RotationMember_Start( wk->viewCore, clientID, dir );
       (*seq)++;
@@ -4245,6 +4254,8 @@ static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args )
     if( BTLV_RotationMember_Wait(wk->viewCore) )
     {
       BtlRotateDir dir = args[1];
+
+      BTL_N_Printf( DBGSTR_CLIENT_EndRotAct, args[0], args[1] );
       if( dir == BTL_ROTATEDIR_STAY ){
         return TRUE;
       }

@@ -63,6 +63,8 @@ typedef enum {
   DBGSTR_CLIENT_StartCmd,
   DBGSTR_CLIENT_RecvedQuitCmd,
   DBGSTR_CLIENT_ReplyToQuitCmd,
+  DBGSTR_CLIENT_StartRotAct,
+  DBGSTR_CLIENT_EndRotAct,
 
   DBGSTR_BPP_NemuriWakeCheck,
 

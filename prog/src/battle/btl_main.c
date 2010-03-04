@@ -3331,7 +3331,7 @@ const BTL_POKEPARAM* BTL_POKECON_GetFrontPokeDataConst( const BTL_POKE_CONTAINER
   const BTL_PARTY* party;
   u8 clientID, posIdx;
 
-  BTL_N_Printf( DBGSTR_MAIN_GetFrontPokeData, pos);
+//  BTL_N_Printf( DBGSTR_MAIN_GetFrontPokeData, pos);
 
   btlPos_to_cliendID_and_posIdx( wk->mainModule, pos, &clientID, &posIdx );
   party = &wk->party[ clientID ];
@@ -3794,13 +3794,11 @@ static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, const BSP_TRAIN
     dst->trainerID = trData->tr_id;
     dst->trainerType = trData->tr_type;
     dst->name = trData->name;
-    OS_TPrintf("NPC Set OK trID=%d\n", dst->trainerID);
   }
   else{
     dst->trainerID = TRID_NULL;
     dst->trainerType = 0;
     dst->name = NULL;
-    OS_TPrintf("NPC Set Failed..\n");
   }
 }
 BOOL BTL_MAIN_IsClientNPC( const BTL_MAIN_MODULE* wk, u8 clientID )
@@ -3811,10 +3809,8 @@ BOOL BTL_MAIN_IsClientNPC( const BTL_MAIN_MODULE* wk, u8 clientID )
 u32 BTL_MAIN_GetClientTrainerID( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
   if( BTL_MAIN_IsClientNPC(wk, clientID) ){
-    OS_TPrintf("NPCトレーナーです clientID=%d, trID=%d\n", clientID, wk->trainerParam[clientID].trainerID);
     return wk->trainerParam[clientID].trainerID;
   }else{
-    OS_TPrintf("プレイヤートレーナーです clientID=%d\n", clientID);
     return TRID_NULL;
   }
 }

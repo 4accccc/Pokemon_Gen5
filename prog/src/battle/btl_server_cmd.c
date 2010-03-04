@@ -892,9 +892,9 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
         BTL_N_PrintfEx( PRINT_FLAG, DBGSTR_SC_ArgsEqual );
 
         for(i=0; i<arg_cnt; ++i){
-          BTL_N_PrintfEx( PRINT_FLAG, DBGSTR_csv, args[i]);
+          BTL_N_PrintfSimpleEx( PRINT_FLAG, DBGSTR_csv, args[i]);
         }
-        BTL_N_PrintfEx( PRINT_FLAG, DBGSTR_LF );
+        BTL_N_PrintfSimpleEx( PRINT_FLAG, DBGSTR_LF );
       }
       #endif
     }
