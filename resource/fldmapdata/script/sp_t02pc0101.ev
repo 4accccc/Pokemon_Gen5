@@ -10,6 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "t02pc0101_def.h"
+  .include  "postman_scr_def.h"
 
 //--------------------------------------------------------------
 //              特殊スクリプト
@@ -17,6 +18,8 @@
 _SCENE_CHANGE_LABEL		sp_t02pc0101_tbl
 _FIELD_INIT_LABEL		SCRID_INIT_T02PC0101
 _FIELD_RECOVER_LABEL  SCRID_RECOVER_T02PC0101
+_FIELD_INIT_LABEL SCRID_INIT_POSTMAN
+_FIELD_RECOVER_LABEL SCRID_RECOVER_POSTMAN
 _SP_EVENT_DATA_END
 
 //テーブル定義

@@ -11,10 +11,14 @@
 
   .include  "scr_seq_def.h"
   .include  "c03pc0101_def.h"
+  .include  "postman_scr_def.h"
+
 
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_FIELD_INIT_LABEL SCRID_INIT_POSTMAN
+_FIELD_RECOVER_LABEL SCRID_RECOVER_POSTMAN
 _SP_EVENT_DATA_END
 
 
