@@ -524,6 +524,9 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
 void  DUP_FIT_TermFitting( FITTING_WORK *work )
 {
   u8 i;
+  
+  //Newを全部消す
+  MUSICAL_SAVE_ResetNewItem(work->initWork->mus_save);
 
   PMSND_StopBGM();
 
@@ -1187,21 +1190,13 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
   work->totalItemNum = 0;
   for( i=0;i<MUSICAL_ITEM_MAX;i++ )
   {
-    //  FIXME:正しい所持アイテムチェック
+    
+    /*
     if( i<100 )
     {
+      //全部セット
       work->itemStateBase[work->totalItemNum].itemId = i;
       work->itemStateBase[work->totalItemNum].isOutList = FALSE;
-      /*
-      if( i<100 && GFL_STD_MtRand0(4) == 0 )
-      {
-        work->itemStateBase[work->totalItemNum].isNew = TRUE;
-      }
-      else
-      {
-        work->itemStateBase[work->totalItemNum].isNew = FALSE;
-      }
-      */
       work->itemStateBase[work->totalItemNum].isNew = FALSE;
 #ifdef PM_DEBUG
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
@@ -1209,6 +1204,21 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
         work->itemStateBase[work->totalItemNum].isNew = TRUE;
       }
 #endif
+      work->totalItemNum++;
+    }
+    */
+    if( MUSICAL_SAVE_ChackHaveItem(work->initWork->mus_save,i) == TRUE )
+    {
+      work->itemStateBase[work->totalItemNum].itemId = i;
+      work->itemStateBase[work->totalItemNum].isOutList = FALSE;
+      if( MUSICAL_SAVE_ChackNewItem(work->initWork->mus_save,i) == TRUE )
+      {
+        work->itemStateBase[work->totalItemNum].isNew = TRUE;
+      }
+      else
+      {
+        work->itemStateBase[work->totalItemNum].isNew = FALSE;
+      }
       work->totalItemNum++;
     }
   }
@@ -1366,6 +1376,7 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
         DUP_FIT_SetupStartItem( work , mus_bef_save->equipData[i].itemNo );
       }
     }
+    DUP_FIT_CheckItemListPallet( work );
   }
 
   

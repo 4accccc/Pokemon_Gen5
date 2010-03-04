@@ -456,7 +456,7 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
 ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
 {
   static BOOL stopScript = FALSE;
-#if DEB_ARI
+#if PM_DEBUG
   if( STA_SCRIPT_GetRunningScriptNum( work->scriptSys ) == 0 )
   {
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
@@ -606,7 +606,7 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
 
   SND_STRM_Main();
 
-#if DEB_ARI|defined(DEBUG_ONLY_FOR_iwao_kazumasa)
+#if PM_DEBUG
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
     GFL_UI_KEY_GetCont() & PAD_BUTTON_START )
   {

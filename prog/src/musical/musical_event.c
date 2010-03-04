@@ -275,7 +275,6 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     if( MUS_COMM_IsPostProgramData(evWork->scriptWork->commWork) == TRUE )
     {
       u8 i;
-      MUSICAL_EVENT_CalcProgramData( evWork );
       evWork->state = MES_ENTER_WAITROOM_FIRST;
       //‚±‚±‚ÅIDX‚ÌŽæ“¾
       for( i=0;i<MUSICAL_POKE_MAX;i++ )
@@ -403,6 +402,8 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
       {
         evWork->subSeq = 0;
         evWork->state = MES_WAITROOM_THIRD;
+        MUSICAL_EVENT_CalcFanState( evWork );
+        MUSICAL_EVENT_SetSaveData( evWork );
       }
     }
     break;
@@ -427,8 +428,6 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   //”X‚ÌŠJ•ú
   //------------------------------
   case MES_TERM_MUSICAL:
-    MUSICAL_EVENT_CalcFanState( evWork );
-    MUSICAL_EVENT_SetSaveData( evWork );
     MUSICAL_EVENT_TermMusical( evWork );
     MUSICAL_EVENT_JumpMusicalHall( event , evWork );
     evWork->state = MES_FINIHS_EVENT;

@@ -48,6 +48,22 @@ void MUSICAL_SAVE_InitWork(MUSICAL_SAVE *musSave)
     musSave->fanState[i].type = MCT_MAX;
   }
   musSave->programNumber = 0;
+  
+  MUSICAL_SAVE_AddItem( musSave , 48 );
+  MUSICAL_SAVE_AddItem( musSave , 70 );
+  MUSICAL_SAVE_AddItem( musSave , 83 );
+  MUSICAL_SAVE_AddItem( musSave , 75 );
+  MUSICAL_SAVE_AddItem( musSave ,  0 );
+  MUSICAL_SAVE_AddItem( musSave ,  1 );
+  MUSICAL_SAVE_AddItem( musSave , 10 );
+  MUSICAL_SAVE_AddItem( musSave , 28 );
+  MUSICAL_SAVE_AddItem( musSave ,  8 );
+  MUSICAL_SAVE_AddItem( musSave , 59 );
+  MUSICAL_SAVE_AddItem( musSave , 63 );
+  MUSICAL_SAVE_AddItem( musSave , 66 );
+  MUSICAL_SAVE_AddItem( musSave , 16 );
+  MUSICAL_SAVE_AddItem( musSave , 89 );
+  MUSICAL_SAVE_AddItem( musSave , 76 );
 }
 
 //----------------------------------------------------------
@@ -96,14 +112,22 @@ const BOOL MUSICAL_SAVE_ChackHaveItem( MUSICAL_SAVE *musSave , const u8 itemNo )
 {
   const u8 arrIdx = itemNo / 8;
   const u8 bitIdx = itemNo % 8;
-  return ( musSave->itemBit[arrIdx] & (1<<bitIdx) );
+  if( (musSave->itemBit[arrIdx] & (1<<bitIdx)) > 0 )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 const BOOL MUSICAL_SAVE_ChackNewItem( MUSICAL_SAVE *musSave , const u8 itemNo )
 {
   const u8 arrIdx = itemNo / 8;
   const u8 bitIdx = itemNo % 8;
-  return ( musSave->itemNewBit[arrIdx] & (1<<bitIdx) );
+  if( (musSave->itemNewBit[arrIdx] & (1<<bitIdx)) > 0 )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 void MUSICAL_SAVE_AddItem( MUSICAL_SAVE *musSave , const u8 itemNo )
@@ -113,10 +137,10 @@ void MUSICAL_SAVE_AddItem( MUSICAL_SAVE *musSave , const u8 itemNo )
   
   musSave->itemBit[arrIdx] |= (1<<bitIdx);
   musSave->itemNewBit[arrIdx] |= (1<<bitIdx);
-  OS_TPrintf("AddMusicalItem[%d][%d:%d][%d]\n",itemNo,arrIdx,bitIdx,musSave->itemBit[arrIdx]);
+  //OS_TPrintf("AddMusicalItem[%d][%d:%d][%d]\n",itemNo,arrIdx,bitIdx,musSave->itemBit[arrIdx]);
 }
 
-void MUSICAL_SAVE_ResetNewItem( MUSICAL_SAVE *musSave , const u8 itemNo )
+void MUSICAL_SAVE_ResetNewItem( MUSICAL_SAVE *musSave )
 {
   u8 i;
   for( i=0;i<MUS_SAVE_ITEM_BIT_MAX;i++ )

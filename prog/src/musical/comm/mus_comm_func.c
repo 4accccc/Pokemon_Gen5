@@ -86,12 +86,12 @@ typedef enum
   MCS_START_SEND_PROGRAM,
   MCS_SEND_SIZE_PROGRAM,
   MCS_SEND_DATA_PROGRAM,
+  MCS_SEND_CONDITION_POINT,
   MCS_WAIT_SEND_DATA_SCRIPT,
   
   //T‚¦Žº‚Ì“¯Šúˆ—
   MCS_SEND_SIZE_MESSAGE,
   MCS_SEND_SIZE_SCRIPT,
-  MCS_SEND_CONDITION_POINT,
   MCS_SEND_DATA_MESSAGE,
   MCS_SEND_DATA_SCRIPT,
   MCS_SEND_STRM,
@@ -558,7 +558,7 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
     {
       if( work->mode == MCM_PARENT )
       {
-        work->commState = MCS_SEND_SIZE_PROGRAM;
+        work->commState = MCS_SEND_CONDITION_POINT;
       }
       else
       {
@@ -566,6 +566,19 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
       }
     }
     break;
+  case MCS_SEND_CONDITION_POINT:
+    if( work->isPostScriptSize == TRUE )
+    {
+      if( MUS_COMM_Send_FlagServer( work,
+                                    MCFT_CONDITION_POINT,
+                                    work->conditionArr,
+                                    GFL_NET_SENDID_ALLUSER) == TRUE )
+      {
+        work->commState = MCS_SEND_SIZE_PROGRAM;
+      }
+    }
+    break;
+
   case MCS_SEND_SIZE_PROGRAM:
     if( MUS_COMM_Send_ProgramSize(work) == TRUE )
     {
@@ -582,6 +595,7 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
       }
     }
     break;
+
 
   case MCS_WAIT_SEND_DATA_SCRIPT:
     if( work->isPostProgramData == TRUE )
@@ -611,18 +625,6 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
     if( work->isPostMessageSize == TRUE )
     {
       if( MUS_COMM_Send_ScriptSize(work) == TRUE )
-      {
-        work->commState = MCS_SEND_CONDITION_POINT;
-      }
-    }
-    break;
-  case MCS_SEND_CONDITION_POINT:
-    if( work->isPostScriptSize == TRUE )
-    {
-      if( MUS_COMM_Send_FlagServer( work,
-                                    MCFT_CONDITION_POINT,
-                                    work->conditionArr,
-                                    GFL_NET_SENDID_ALLUSER) == TRUE )
       {
         work->commState = MCS_SEND_DATA_MESSAGE;
       }
