@@ -888,7 +888,6 @@ EVENT_START	ev_scene_c04_support_01
 		_TIME_WAIT( 8 )
 		//カミツレ：５番道路側へ去る
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_papa_leader4_goaway_01b )
-		//_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )	//【保留】動きすぎなのでカット
 		_OBJ_ANIME_WAIT()
 		
 		
@@ -917,10 +916,6 @@ EVENT_START	ev_scene_c04_support_01
 		//サポート：主人公を見て
 		_OBJ_ANIME( C04_SUPPORT_01, anm_stay_walk_u )
 		_OBJ_ANIME_WAIT()
-		
-		//主人公：サポートを見る 【保留】動かしすぎな気がする サポートとカミツレに注目してほしいのでカット
-		//_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
-		//_OBJ_ANIME_WAIT()
 		
 	ENDIF
 	

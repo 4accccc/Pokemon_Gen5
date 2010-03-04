@@ -197,7 +197,14 @@ init_flags:
 	//５番道路：チャンピオンと少年達を非表示。C04ジムクリア後に表示
 	_FLAG_SET( FV_R05_CHAMPION )
 	
-}  
+	//ミュージカルのファンを全員消す
+	_FLAG_SET( FV_MUSICAL_FUN_01 )
+	_FLAG_SET( FV_MUSICAL_FUN_02 )
+	_FLAG_SET( FV_MUSICAL_FUN_03 )
+	_FLAG_SET( FV_MUSICAL_FUN_04 )
+	_FLAG_SET( FV_MUSICAL_FUN_05 )
+	
+}
 _RET
 
 //=====================================================================
