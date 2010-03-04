@@ -230,7 +230,6 @@ struct _TAG_FLDSYSWIN_STREAM
    
   u8 flag_cursor;
   u8 flag_key_pause_clear;
-  u8 flag_last_key_cursor; //メッセージ表示後にカーソルキーを表示させる
   u8 padding;
   KEYCURSOR_WORK cursor_work;
 };
@@ -2331,6 +2330,11 @@ BOOL FLDSYSWIN_STREAM_Print( FLDSYSWIN_STREAM *sysWin )
   
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
+    if( sysWin->flag_cursor == CURSOR_FLAG_WRITE ){
+		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
+      keyCursor_Clear( &sysWin->cursor_work, bmp, 0x0f );
+		  GFL_BMPWIN_TransVramCharacter( sysWin->bmpwin );
+    }
     sysWin->flag_cursor = CURSOR_FLAG_NONE;
     sysWin->flag_key_pause_clear = FALSE;
     break;
@@ -2356,12 +2360,6 @@ BOOL FLDSYSWIN_STREAM_Print( FLDSYSWIN_STREAM *sysWin )
     }
     break;
   case PRINTSTREAM_STATE_DONE: //終了
-    if( sysWin->flag_last_key_cursor ){ //カーソル表示のフラグあり
-		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
-      keyCursor_Write( &sysWin->cursor_work, bmp, 0x0f );
-      sysWin->flag_cursor = CURSOR_FLAG_WRITE;
-    }
-    
     return( TRUE );
   }
 
@@ -2380,6 +2378,7 @@ void FLDSYSWIN_WriteKeyWaitCursor( FLDSYSWIN_STREAM *sysWin )
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
   keyCursor_Write( &sysWin->cursor_work, bmp, 0x0f );
   sysWin->flag_cursor = CURSOR_FLAG_WRITE;
+  GFL_BMPWIN_TransVramCharacter( sysWin->bmpwin );
 }
 
 //--------------------------------------------------------------
@@ -2470,19 +2469,6 @@ BOOL FLDSYSWIN_STREAM_CheckAllPrintTrans( FLDSYSWIN_STREAM *sysWin )
   return( FLDMSGPRINT_CheckPrintTrans(sysWin->msgPrint) );
 }
 
-//--------------------------------------------------------------
-/**
- * FLDSYSWIN_STREAM システムウィンドウ キー待ちカーソル表示フラグセット
- * @param sysWin FLDSYSWIN_STREAM*
- * @param flag TRUE=表示 FALSE=非表示
- * @retval nothing
- */
-//--------------------------------------------------------------
-void FLDSYSWIN_STREAM_SetLastKeyCursor( FLDSYSWIN_STREAM *sysWin, BOOL flag )
-{
-  sysWin->flag_last_key_cursor = flag;
-}
-
 //======================================================================
 //  FLDTALKMSGWIN
 //======================================================================
@@ -2498,8 +2484,8 @@ struct _TAG_FLDTALKMSGWIN
   u8 flag_key_pause_clear;
   u8 flag_cursor;
   
-  u8 flag_last_key_cursor; //メッセージ表示後にカーソルキーを表示させる
   u8 talkMsgWinIdx;
+  u8 padding;
   s16 shake_y;
   
   STRBUF *strBuf;
@@ -2739,6 +2725,14 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
   
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
+    if( tmsg->flag_cursor == CURSOR_FLAG_WRITE ){
+      GFL_BMPWIN *twin_bmp = TALKMSGWIN_GetBmpWin(
+          tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
+      GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
+      keyCursor_Clear( &tmsg->cursor_work, bmp, 0x0f );
+		  GFL_BMPWIN_TransVramCharacter( twin_bmp );
+    }
+    
     tmsg->flag_cursor = CURSOR_FLAG_NONE;
     tmsg->flag_key_pause_clear = FALSE;
     
@@ -2749,11 +2743,6 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
     if( tmsg->flag_key_trg == TRUE && (cont & MSG_SKIP_BTN) ){
       PRINTSYS_PrintStreamShortWait( stream, 0 );
     }
-#if 0
-    else{
-      PRINTSYS_PrintStreamShortWait( stream, MSGSPEED_GetWait() );
-    }
-#endif
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
     if( tmsg->flag_key_pause_clear == FALSE ){ //既にポーズクリア済みか？
@@ -2783,16 +2772,10 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
     }
     break;
   case PRINTSTREAM_STATE_DONE: //終了
-    { //shake
-      GFL_BG_SetScroll( FLDMSGBG_BGFRAME, GFL_BG_SCROLL_Y_SET, 0 );
-    }
-    
-    if( tmsg->flag_last_key_cursor ){ //カーソル表示のフラグあり
-      GFL_BMPWIN *twin_bmp = TALKMSGWIN_GetBmpWin(
-          tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
-		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
-      keyCursor_Write( &tmsg->cursor_work, bmp, 0x0f );
-      tmsg->flag_cursor = CURSOR_FLAG_WRITE;
+    if( tmsg->shake_y ){ //shake
+      tmsg->shake_y = 0;
+      GFL_BG_SetScroll(
+          FLDMSGBG_BGFRAME, GFL_BG_SCROLL_Y_SET, tmsg->shake_y );
     }
     
     return( TRUE );
@@ -2815,19 +2798,7 @@ void FLDTALKMSGWIN_WriteKeyWaitCursor( FLDTALKMSGWIN *tmsg )
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
   keyCursor_Write( &tmsg->cursor_work, bmp, 0x0f );
   tmsg->flag_cursor = CURSOR_FLAG_WRITE;
-}
-
-//--------------------------------------------------------------
-/**
- * FLDTALKMSGWIN 吹き出しウィンドウ キー待ちカーソル表示フラグセット
- * @param tmsg FLDTALKMSGWIN
- * @param flag TRUE=表示 FALSE=非表示
- * @retval nothing
- */
-//--------------------------------------------------------------
-void FLDTALKMSGWIN_SetLastKeyCursor( FLDTALKMSGWIN *tmsg, BOOL flag )
-{
-  tmsg->flag_last_key_cursor = flag;
+  GFL_BMPWIN_TransVramCharacter( twin_bmp );
 }
 
 //======================================================================
@@ -2842,8 +2813,6 @@ struct _TAG_FLDPLAINMSGWIN
   u8 flag_key_cont;
   u8 flag_key_pause_clear;
   u8 flag_cursor;
-  u8 flag_last_key_cursor; //メッセージ表示後にカーソルキーを表示させる
-  u8 padding[3]; //余り
   KEYCURSOR_WORK cursor_work;
   
   STRBUF *strBuf;
@@ -3128,6 +3097,11 @@ BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin )
   
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
+    if( plnwin->flag_cursor == CURSOR_FLAG_WRITE ){
+		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
+      keyCursor_Clear( &plnwin->cursor_work, bmp, 0x0f );
+      GFL_BMPWIN_TransVramCharacter( plnwin->bmpwin );
+    }
     plnwin->flag_cursor = CURSOR_FLAG_NONE;
     plnwin->flag_key_pause_clear = FALSE;
     break;
@@ -3136,8 +3110,6 @@ BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin )
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
       
       if( (trg & MSG_LAST_BTN) ){
-//        PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
-//        PRINTSYS_PrintStreamReleasePause( stream );
         if( plnwin->flag_cursor == CURSOR_FLAG_WRITE ){
           keyCursor_Clear( &plnwin->cursor_work, bmp, 0x0f );
           plnwin->flag_key_pause_clear = TRUE;
@@ -3154,11 +3126,6 @@ BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin )
     }
     break;
   case PRINTSTREAM_STATE_DONE: //終了
-    if( plnwin->flag_last_key_cursor ){  //カーソル表示のフラグあり
-		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
-      keyCursor_Write( &plnwin->cursor_work, bmp, 0x0f );
-      plnwin->flag_cursor = CURSOR_FLAG_WRITE;
-    }
     return( TRUE );
   }
   
@@ -3177,19 +3144,7 @@ void FLDPLAINMSGWIN_WriteKeyWaitCursor( FLDPLAINMSGWIN *plnwin )
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
   keyCursor_Write( &plnwin->cursor_work, bmp, 0x0f );
   plnwin->flag_cursor = CURSOR_FLAG_WRITE;
-}
-
-//--------------------------------------------------------------
-/**
- * FLDPLAINMSGWIN プレーンウィンドウ キー待ちカーソル表示フラグセット
- * @param plnwin FLDTALKMSGWIN
- * @param flag TRUE=表示 FALSE=非表示
- * @retval nothing
- */
-//--------------------------------------------------------------
-void FLDPLAINMSGWIN_SetLastKeyCursor( FLDPLAINMSGWIN *plnwin, BOOL flag )
-{
-  plnwin->flag_last_key_cursor = flag;
+  GFL_BMPWIN_TransVramCharacter( plnwin->bmpwin );
 }
 
 //======================================================================

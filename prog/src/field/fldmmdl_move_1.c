@@ -19,6 +19,7 @@
 //======================================================================
 //  struct
 //======================================================================
+#define BTN_DASH (PAD_BUTTON_B)
 
 //======================================================================
 //  proto
@@ -41,6 +42,8 @@ static int SubMoveKyoro_Move( MMDL * mmdl );
 static void SubMoveSpinStop_Init( MMDL * mmdl );
 static int SubMoveSpinStop_StartCheck( MMDL * mmdl );
 static int SubMoveSpinStop_Move( MMDL * mmdl );
+
+static BOOL checkDashButton( void );
 
 static void (* const DATA_MMdl_EventTypeInitProcTbl[EV_TYPE_MAX])( MMDL * );
 static int (* const DATA_MMdl_EventTypeStartCheckProcTbl[EV_TYPE_MAX])( MMDL * );
@@ -362,8 +365,10 @@ static int SubMoveKyoro_Move( MMDL * mmdl )
       u16 ev_type = MMDL_GetEventType( mmdl );
       
       if( ev_type == EV_TYPE_TRAINER_DASH_ACCEL_KYORO ){
-        if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
-          wait_max = KYORO_WAIT_FRAME_DASH;
+        if( checkDashButton() == TRUE ){
+          if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
+            wait_max = KYORO_WAIT_FRAME_DASH;
+          }
         }
       }
       
@@ -556,8 +561,10 @@ static int SubMoveSpinStop_Move( MMDL * mmdl )
       
       if( ev_type == EV_TYPE_TRAINER_DASH_ACCEL_SPIN_STOP_L ||
           ev_type == EV_TYPE_TRAINER_DASH_ACCEL_SPIN_STOP_R ){
-        if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
-          wait_max = SPIN_STOP_WAIT_FRAME_DASH;
+        if( checkDashButton() == TRUE ){
+          if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
+            wait_max = SPIN_STOP_WAIT_FRAME_DASH;
+          }
         }
       }
       
@@ -583,6 +590,24 @@ static int SubMoveSpinStop_Move( MMDL * mmdl )
     }
   }
   
+  return( FALSE );
+}
+
+//======================================================================
+//  parts
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * ダッシュボタンが押されているか
+ * @param nothing
+ * @retval BOOL TRUE=押されている
+ */
+//--------------------------------------------------------------
+static BOOL checkDashButton( void )
+{
+  if( (GFL_UI_KEY_GetTrg() & BTN_DASH) ){
+    return( TRUE );
+  }
   return( FALSE );
 }
 

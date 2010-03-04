@@ -145,13 +145,6 @@ static int PairTr_OyaCheckAcmdSet( MMDL * mmdl, MV_TR_PAIR_WORK *work );
 
 int (* const DATA_HideMoveTbl[])( MMDL * mmdl, MV_HIDE_WORK *work );
 
-#ifdef DEBUG_ONLY_FOR_kagaya
-static void debug_PrintMMdl(
-    const MMDL *mmdl, const char *f_str, const char *e_str );
-#else
-#define debug_PrintMMdl(m,f,e) ((void)0)
-#endif
-
 //======================================================================
 //  MV_PAIR  自機連れ歩き
 //======================================================================
@@ -1694,7 +1687,7 @@ static int AlongWall_WallMove(
     dir_move = MMDL_GetDirDisp( mmdl );
     ac = MMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
     MMDL_SetLocalAcmd( mmdl, ac );
-    debug_PrintMMdl( mmdl, "壁を見失っている", NULL );
+    DEBUG_MMDL_PrintState( mmdl, "壁を見失っている", NULL );
     return( FALSE );
   }
   
@@ -1717,7 +1710,7 @@ static int AlongWall_WallMove(
       dir_move = MMDL_GetDirDisp( mmdl );
       ac = MMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
       MMDL_SetLocalAcmd( mmdl, ac );
-      debug_PrintMMdl( mmdl, "壁を見失っている 両手利き", NULL );
+      DEBUG_MMDL_PrintState( mmdl, "壁を見失っている 両手利き", NULL );
       return( FALSE );
     }
     
@@ -1739,7 +1732,7 @@ static int AlongWall_WallMove(
       dir_move = MMDL_GetDirDisp( mmdl );
       ac = MMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
       MMDL_SetLocalAcmd( mmdl, ac );
-      debug_PrintMMdl( mmdl, "壁を見失っている 壁ヒット", NULL );
+      DEBUG_MMDL_PrintState( mmdl, "壁を見失っている 壁ヒット", NULL );
       return( FALSE );
     }
     
@@ -1755,36 +1748,6 @@ static int AlongWall_WallMove(
   dir_move = MMDL_GetDirDisp( mmdl );  //向きを戻す
   ac = MMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
   MMDL_SetLocalAcmd( mmdl, ac );
-  debug_PrintMMdl( mmdl, "完全に移動不可", NULL );
+  DEBUG_MMDL_PrintState( mmdl, "完全に移動不可", NULL );
   return( FALSE );
 }
-
-//======================================================================
-//  define
-//======================================================================
-#ifdef DEBUG_ONLY_FOR_kagaya
-//--------------------------------------------------------------
-//  動作モデルの情報をプリント
-//--------------------------------------------------------------
-static void debug_PrintMMdl(
-    const MMDL *mmdl, const char *f_str, const char *e_str )
-{
-  int id = MMDL_GetOBJID( mmdl );
-  int code = MMDL_GetOBJCode( mmdl );
-  int mv_code = MMDL_GetMoveCode( mmdl );
-  int dir = MMDL_GetDirDisp( mmdl );
-  int gx = MMDL_GetGridPosX( mmdl );
-  int gy = MMDL_GetGridPosY( mmdl );
-  int gz = MMDL_GetGridPosZ( mmdl );
-  
-  if( f_str != NULL ){
-    OS_Printf( "%s\n", f_str );
-  }
-  
-  OS_Printf( "MMDL ID %d : CODE %xH : MOVE CODE =%xH : DIR %d : GX = %d GY = %d GZ = %d\n", id, code, mv_code, dir, gx, gy, gz );
-  
-  if( e_str != NULL ){
-    OS_Printf( "%s\n", e_str );
-  }
-}
-#endif

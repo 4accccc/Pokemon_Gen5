@@ -43,7 +43,6 @@
 #ifdef DEBUG_MMDL
 //----
 #define DEBUG_MMDL_PRINT //定義でデバッグ出力有効
-//#define DEBUG_MMDL_FRAME_60 //定義で1/60フレームで動く事を想定
 #define DEBUG_MMDL_RESOURCE_MEMORY_SIZE // ONでメモリサイズを計算
 
 #ifdef DEBUG_ONLY_FOR_kagaya
@@ -588,7 +587,7 @@ typedef struct
 #endif
 
 //--------------------------------------------------------------
-///	OBJCODE_PARAM構造体　外部データと一致 28byte
+///	OBJCODE_PARAM構造体　外部データと一致 24byte
 //	0-1 OBJコード
 //	2-3 リソースアーカイブインデックス 
 //	4	表示タイプ
@@ -612,7 +611,7 @@ typedef struct
 	u8 reflect_type;	///<MMDL_REFLECTTYPE
 	u8 mdl_size;		///<MMDL_BLACT_MDLSIZE
   
-	u8 tex_size;		///<GFL_BBD_TEXSIZDEF... テクスチャサイズ
+	u8 tex_size;		///<GFL_BBD_TEXSIZDEF_8x8... テクスチャサイズ
 	u8 anm_id;			///<MMDL_BLACT_ANMTBLNO
   u8 sex;         ///<MMDL_OBJCODESEX
   u8 size_width;  ///<横幅サイズ
@@ -982,6 +981,7 @@ extern BOOL MMDL_CheckSameData(
     const MMDL * mmdl, const MMDL_CHECKSAME_DATA *data );
 extern BOOL MMDL_CheckSameDataIDOnly(
     const MMDL * mmdl, const MMDL_CHECKSAME_DATA *data );
+extern void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code );
 
 extern const OBJCODE_PARAM * MMDLSYS_GetOBJCodeParam(
 		const MMDLSYS *mmdlsys, u16 code );
@@ -1005,8 +1005,6 @@ extern void MMDL_DrawDeleteProcDummy( MMDL * mmdl );
 extern void MMDL_DrawPushProcDummy( MMDL * mmdl );
 extern void MMDL_DrawPopProcDummy( MMDL * mmdl );
 
-extern void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code );
-
 extern u32 MMDL_ROCKPOS_GetWorkSize( void );
 extern void MMDL_ROCKPOS_Init( void *p );
 extern void MMDL_ROCKPOS_SavePos( const MMDL *mmdl );
@@ -1020,8 +1018,12 @@ extern void MMDLHEADER_SetRailPos( MMDL_HEADER* head, u16 index, u16 front, u16 
 
 #ifdef DEBUG_MMDL
 extern u8 * DEBUG_MMDL_GetOBJCodeString( u16 code, HEAPID heapID );
+extern void DEBUG_MMDL_PrintState(
+    const MMDL *mmdl, const char *f_str, const char *e_str );
+#else
+#define DEBUG_MMDL_GetOBJCodeString(c,id) ((void)0)
+#define DEBUG_MMDL_PrintState(m,fs,es) ((void)0)
 #endif
-
 
 //--------------------------------------------------------------
 //	fldmmdl_movedata.c

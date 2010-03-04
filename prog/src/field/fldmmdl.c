@@ -1678,6 +1678,19 @@ const FLDMAPPER * MMDLSYS_GetG3DMapper( const MMDLSYS *fos )
 
 //--------------------------------------------------------------
 /**
+ *  @brief  ノーグリッド動作マッパーの取得
+ *  @param  fos   動作モデルシステム
+ *  @return　マッパー
+ */
+//--------------------------------------------------------------
+FLDNOGRID_MAPPER * MMDLSYS_GetNOGRIDMapper( const MMDLSYS *fos )
+{
+  GF_ASSERT( fos );
+  return fos->pNOGRIDMapper;
+}
+
+//--------------------------------------------------------------
+/**
  * MMDLSYS FIELDMAP_WORK取得
  * @param mmdlsys MMDLSYS
  * @retval fieldMapWork FIELDMAP_WORK
@@ -4691,6 +4704,42 @@ BOOL MMDL_CheckSameDataIDOnly(
   return( FALSE );
 }
 
+//--------------------------------------------------------------
+/**
+ * OBJコードを変更する
+ * @param mmdl MMDL*
+ * @param code 変更するコード。HERO等
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code )
+{
+  const MMDLSYS *fos;
+  fos = MMDL_GetMMdlSys( mmdl );
+  
+  if( MMDLSYS_CheckCompleteDrawInit(fos) == TRUE ){
+    if( MMDL_CheckMoveBitCompletedDrawInit(mmdl) == TRUE ){
+      MMDL_CallDrawDeleteProc( mmdl );
+    }
+  }
+  
+  MMDL_SetOBJCode( mmdl, code );
+  
+  {
+    const OBJCODE_PARAM *param;
+    param = MMDLSYS_GetOBJCodeParam( fos, code );
+    mmdl->gx_size = param->size_width;
+    mmdl->gz_size = param->size_depth;
+    mmdl->offset_x = param->offs_x; //オフセット
+    mmdl->offset_y = param->offs_y;
+    mmdl->offset_z = param->offs_z;
+  }
+
+  MMDL_OffMoveBitCompletedDrawInit( mmdl );
+  mmdl_InitDrawStatus( mmdl );
+  mmdl_InitDrawWork( mmdl );
+}
+
 //======================================================================
 //  OBJCODE_PARAM
 //======================================================================
@@ -5318,7 +5367,9 @@ void MMDLHEADER_SetRailPos( MMDL_HEADER* head, u16 index, u16 front, u16 side )
 //======================================================================
 //  debug
 //======================================================================
+//----
 #ifdef DEBUG_MMDL
+//----
 //--------------------------------------------------------------
 /**
  * デバッグ　動作モデル　OBJコード文字列を取得(ASCII)
@@ -5343,136 +5394,42 @@ u8 * DEBUG_MMDL_GetOBJCodeString( u16 code, HEAPID heapID )
   
   return( buf );
 }
+
+//--------------------------------------------------------------
+/**
+ * 動作モデル情報をプリント
+ * @param mmdl 対象の動作モデル
+ * @param f_str 事前にプリントする文字列 NULL=なし
+ * @param e_str MMDLプリント後にプリントする文字列 NULL=なし
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void DEBUG_MMDL_PrintState(
+    const MMDL *mmdl, const char *f_str, const char *e_str )
+{
+  if( f_str != NULL ){
+    OS_Printf( "%s\n", f_str );
+  }
+  
+  OS_Printf( "MMDL ID %d : CODE %xH : MOVE CODE =%xH : DIR %d : GX = %d GY = %d GZ = %d : EV TYPE %d EV FLAG %d : PARAM 0(%d) 1(%d) 2(%d)\n",
+      MMDL_GetOBJID(mmdl),
+      MMDL_GetOBJCode(mmdl),
+      MMDL_GetMoveCode(mmdl),
+      MMDL_GetDirDisp(mmdl),
+      MMDL_GetGridPosX(mmdl),
+      MMDL_GetGridPosY(mmdl),
+      MMDL_GetGridPosZ(mmdl),
+      MMDL_GetEventType(mmdl),
+      MMDL_GetEventFlag(mmdl),
+      MMDL_GetParam(mmdl,MMDL_PARAM_0),
+      MMDL_GetParam(mmdl,MMDL_PARAM_1),
+      MMDL_GetParam(mmdl,MMDL_PARAM_2)
+      );
+      
+  if( e_str != NULL ){
+    OS_Printf( "%s\n", e_str );
+  }
+}
+//----
 #endif //DEBUG_MMDL
-
-//--------------------------------------------------------------
-/**
- * OBJコードを変更する
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code )
-{
-  const MMDLSYS *fos;
-  fos = MMDL_GetMMdlSys( mmdl );
-  
-  if( MMDLSYS_CheckCompleteDrawInit(fos) == TRUE ){
-    if( MMDL_CheckMoveBitCompletedDrawInit(mmdl) == TRUE ){
-      MMDL_CallDrawDeleteProc( mmdl );
-    }
-  }
-  
-  MMDL_SetOBJCode( mmdl, code );
-  
-  {
-    const OBJCODE_PARAM *param;
-    param = MMDLSYS_GetOBJCodeParam( fos, code );
-    mmdl->gx_size = param->size_width;
-    mmdl->gz_size = param->size_depth;
-    mmdl->offset_x = param->offs_x; //オフセット
-    mmdl->offset_y = param->offs_y;
-    mmdl->offset_z = param->offs_z;
-  }
-
-  MMDL_OffMoveBitCompletedDrawInit( mmdl );
-  mmdl_InitDrawStatus( mmdl );
-  mmdl_InitDrawWork( mmdl );
-}
-
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  ノーグリッド動作マッパーの取得
- *
- *  @param  fos   動作モデルシステム
- *
- *  @return　マッパー
- */
-//-----------------------------------------------------------------------------
-FLDNOGRID_MAPPER * MMDLSYS_GetNOGRIDMapper( const MMDLSYS *fos )
-{
-  GF_ASSERT( fos );
-  return fos->pNOGRIDMapper;
-}
-
-//======================================================================
-//
-//======================================================================
-#if 0
-//--------------------------------------------------------------
-/**
- * MMDL_BUFFER フィールド動作モデルバッファからロード
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-MMDL * MMDL_BUFFER_LoadMMdl(
-  MMDL_BUFFER *buf, MMDLSYS *fos, int no )
-{
-  MMDL *mmdl;
-  
-  mmdl = mmdlsys_SearchSpaceMMdl( fos );
-  GF_ASSERT( mmdl != NULL );
-  
-  OS_Printf( "MMDL LoadNo %d\n", no );
-  
-  *mmdl = buf->fldMMdlBuf[no];
-  
-  mmdl_InitWork( mmdl, fos );
-  
-  if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVEPROC_INIT) == 0 ){
-    mmdl_InitMoveWork( mmdl );
-  }else{
-    mmdl_InitCallMoveProcWork( mmdl );
-  }
-  
-  MMDL_OffMoveBitCompletedDrawInit( mmdl );
-  mmdl_InitDrawWork( mmdl );
-  
-  mmdlsys_AddMMdlTCB( fos, mmdl );
-  mmdlsys_IncrementOBJCount( (MMDLSYS*)MMDL_GetMMdlSys(mmdl) );
-  
-  return( mmdl );
-}
-
-//--------------------------------------------------------------
-/**
- * MMDL_BUFFER フィールド動作モデルバッファからロード
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-void MMDL_BUFFER_LoadBuffer( MMDL_BUFFER *buf, MMDLSYS *fos )
-{
-  int i;
-  MMDL *mmdl;
-
-  for( i = 0; i < MMDL_BUFFER_MAX; i++ ){
-    mmdl = &buf->fldMMdlBuf[i];
-    if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_USE) ){
-      MMDL_BUFFER_LoadMMdl( buf, fos, i );
-    }
-  }
-}
-
-//--------------------------------------------------------------
-/**
- * MMDL_BUFFER フィールド動作モデルバッファへセーブ
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-void MMDL_BUFFER_SaveBuffer( MMDL_BUFFER *buf, MMDLSYS *fos )
-{
-  MMDL *mmdl;
-  u32 i = 0, no = 0;
-  
-  MMDL_BUFFER_InitBuffer( buf );
-  while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&i) == TRUE ){
-    OS_Printf( "MMDL BUFFER WorkNo %d, BufferNo %d Save\n", i-1, no );
-    buf->fldMMdlBuf[no] = *mmdl;
-    no++;
-  }
-}
-#endif
+//----

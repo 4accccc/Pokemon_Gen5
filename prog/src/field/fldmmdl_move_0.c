@@ -1498,8 +1498,10 @@ static int MvRt2_MoveSet( MMDL * mmdl, MV_RT2_WORK *work )
     ac = AC_WALK_U_8F;
     
     if( checkMMdlEventTypeDashAccel(mmdl) ){
-      if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
-        ac = AC_WALK_U_4F;
+      if( checkDashButton() == TRUE ){
+        if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
+          ac = AC_WALK_U_4F;
+        }
       }
     }
     
@@ -1862,8 +1864,10 @@ static int MvRt3Move_MoveDirSet( MMDL * mmdl, MV_RT3_WORK *work )
     ac = AC_WALK_U_8F;
     
     if( checkMMdlEventTypeDashAccel(mmdl) ){
-      if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
-        ac = AC_WALK_U_4F;
+      if( checkDashButton() == TRUE ){
+        if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
+          ac = AC_WALK_U_4F;
+        }
       }
     }
  
@@ -2261,8 +2265,10 @@ static int MvRt4Move_MoveDirSet( MMDL * mmdl, MV_RT4_WORK *work )
     ac = AC_WALK_U_8F;
 
     if( checkMMdlEventTypeDashAccel(mmdl) ){
-      if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
-        ac = AC_WALK_U_4F;
+      if( checkDashButton() == TRUE ){
+        if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
+          ac = AC_WALK_U_4F;
+        }
       }
     }
     
@@ -2584,11 +2590,11 @@ static BOOL checkMMdlEventTypeDashAccel( const MMDL *mmdl )
 {
   u16 ev_type = MMDL_GetEventType( mmdl );
   
-  if( ev_type == EV_TYPE_TRAINER_DASH_ACCEL ||
-      ev_type == EV_TYPE_TRAINER_DASH_ACCEL_SPIN_STOP_L ||
-      ev_type == EV_TYPE_TRAINER_DASH_ACCEL_SPIN_STOP_R ||
-      ev_type == EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_L ||
-      ev_type == EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_L ){
+  if( ev_type == EV_TYPE_TR_D_ACC ||
+      ev_type == EV_TYPE_TR_D_SPINS_L ||
+      ev_type == EV_TYPE_TR_D_SPINS_R ||
+      ev_type == EV_TYPE_TR_D_SPINM_L ||
+      ev_type == EV_TYPE_TR_D_SPINM_R ){
     return( TRUE );
   }
   return( FALSE );
