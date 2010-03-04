@@ -331,10 +331,6 @@ BOOL MUS_COMM_ExitGameComm(int *seq, void *pwk, void *pWork)
   switch( *seq )
   {
   case 0:
-    if( work->isInitIrc == TRUE )
-    {
-      GFL_NET_DelCommandTable( GFL_NET_CMD_MUSICAL );
-    }
 
     //一人の時は即切断。それ以外は同期とって終了コマンド、後に切断。
     if( GFL_NET_GetConnectNum() <= 1 )
@@ -344,6 +340,11 @@ BOOL MUS_COMM_ExitGameComm(int *seq, void *pwk, void *pWork)
     }
     else
     {
+      if( work->isInitIrc == TRUE )
+      {
+        GFL_NET_DelCommandTable( GFL_NET_CMD_MUSICAL );
+      }
+
       GFL_NET_SetNoChildErrorCheck( FALSE );
       MUS_COMM_SendTimingCommand( work , MUS_COMM_SYNC_EXIT_COMM );
       *seq = 1;

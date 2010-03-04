@@ -224,7 +224,7 @@ EVENT_START ev_c04r0202_mus_1st
   _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_POST_PROGRAM , 0 , 0 , 0 )
 
   //デバッグげし
-  //*
+  /*
     
   //「今回の演目は～」
   _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_MAX_CONDITION,0,condition)
@@ -255,7 +255,7 @@ EVENT_START ev_c04r0202_mus_2nd
   _MAP_FADE_END_CHECK()
 
   //デバッグげし
-  //*
+  /*
 
   _BALLOONWIN_OBJMSG( msg_mus_02_001 , C04R0202_WOMAN1_01 )
   _BALLOONWIN_CLOSE()
@@ -280,7 +280,7 @@ EVENT_START ev_c04r0202_mus_3rd
   _MAP_FADE_END_CHECK()
 
   //デバッグげし
-  //*
+  /*
 
   _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_SELF_IDX,0,selfPos)
 

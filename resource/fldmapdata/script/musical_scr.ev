@@ -233,14 +233,18 @@ ev_musical_recept_comm_core:
             //通信開始
             //第2引数はWLorIrc
             _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 1, 0, 0 )
-            //赤外線後に行う
-            //_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,0,0,0 )
+            _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,1,0,0 )
 
             //リーダー、グループ別参加処理
             IF $retParentChild == 0 THEN //リーダー
               _CALL ev_musical_receipt_comm_connect_ir_parent
             ELSE //グループ
               _CALL ev_musical_receipt_comm_connect_ir_child
+            ENDIF
+
+            IF $SCWK_ANSWER == FALSE THEN //接続失敗
+              //通信切って選びなおし
+              _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_EXIT, 1, 0, 0 )
             ENDIF
 
           ELSIF $ret == 1 THEN
@@ -259,7 +263,7 @@ ev_musical_recept_comm_core:
               _CALL ev_musical_receipt_comm_connect_child
             ENDIF
 
-            IF $SCWK_ANSWER == TRUE THEN //接続成功
+            IF $SCWK_ANSWER == FALSE THEN //接続失敗
               //通信切って選びなおし
               _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_EXIT, 0, 0, 0 )
             ENDIF
@@ -267,12 +271,12 @@ ev_musical_recept_comm_core:
             //--------------------------
           ENDIF
 
-          IF $SCWK_ANSWER == FALSE THEN //接続失敗
-            //WLだけ切断するのでここでは処理なし
-          ELSE
+          //WLだけ切断処理するのでここでは成功時のみ
+          IF $SCWK_ANSWER == TRUE THEN //接続成功
             $isLoop1 = FALSE
             $isLoop2 = FALSE
           ENDIF
+
           //実際の通信ロビー処理ここまで
         ENDIF
       }//WHILE isLoop2
@@ -286,9 +290,9 @@ ev_musical_recept_comm_core:
   _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_FIRST, 0, 0 )
 
   //入場アニメ
-  _CALL recept_move_obj_comm
+  //_CALL recept_move_obj_comm
 
-  _MUSICAL_CALL(selectPoke,MUSICAL_CALL_COMM) //ミュージカル呼び出し
+    //_MUSICAL_CALL(selectPoke,MUSICAL_CALL_COMM) //ミュージカル呼び出し
 
   //ここから処理は帰ってきません。
   //細かい開放はプログラムで行います。

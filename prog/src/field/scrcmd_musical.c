@@ -818,7 +818,7 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
 #pragma mark [>func
 static void EvCmdMusical_InitCommon( SCRIPT_WORK *sc , GAMEDATA *gameData )
 {
-  MUSICAL_SCRIPT_WORK *musScriptWork = GFL_HEAP_AllocMemory( HEAPID_PROC , sizeof( MUSICAL_SCRIPT_WORK ) );
+  MUSICAL_SCRIPT_WORK *musScriptWork = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof( MUSICAL_SCRIPT_WORK ) );
   musScriptWork->eventWork = NULL;
   musScriptWork->commWork = NULL;
   GAMEDATA_SetMusicalScrWork( gameData , musScriptWork );
@@ -938,7 +938,6 @@ static void EvCmdIrcEntry_CallBack( void* wk )
   if( musScriptWork->irEntryWork.selectType != EVENTIRCBTL_ENTRYMODE_EXIT )
   {
     *musScriptWork->scriptRet = TRUE;
-    musScriptWork->commWork = GameCommSys_GetAppWork(gameComm);
     MUS_COMM_InitAfterIrcConnect( musScriptWork->commWork );
   }
   else
@@ -1093,7 +1092,7 @@ static BOOL EvCmdMusicalWaitInitNet( VMHANDLE *core, void *wk )
   GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
   MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
 
-  if( GFL_NET_IsInit() == TRUE )
+  if( GameCommSys_BootCheck(gameComm) == GAME_COMM_NO_MUSICAL )
   {
     musScriptWork->commWork = GameCommSys_GetAppWork(gameComm);
     return TRUE;
