@@ -3096,6 +3096,9 @@ void MMDL_SetVectorAttrDrawOffsetPos( MMDL * mmdl, const VecFx32 *vec )
  * MMDL 高さ(グリッド単位)を取得
  * @param  mmdl  MMDL *
  * @retval  s16    高さ。H_GRID単位
+ * @attention 色々あって廃止予定。実行すると無条件でアサート。
+ * グリッドY座標はMMDL_GetGridPosY()を使用してください。
+ * 実座標からグリッド値が欲しい場合はMMDL_GetVectorPosY()から変換して下さい。
  */
 //--------------------------------------------------------------
 s16 MMDL_GetHeightGrid( const MMDL * mmdl )

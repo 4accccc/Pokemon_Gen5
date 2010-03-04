@@ -157,9 +157,9 @@ enum
 //--------------------------------------------------------------
 //  debug
 //--------------------------------------------------------------
-//#ifdef PM_DEBUG
+#ifdef PM_DEBUG
 //#define DEBUG_SEARCH  //有効で方向切り替え型動作全て自機サーチ
-//#endif
+#endif
 
 //======================================================================
 //  struct
@@ -2335,7 +2335,7 @@ static int (* const DATA_MvRt4MoveTbl[])( MMDL * mmdl, MV_RT4_WORK *work ) =
 //--------------------------------------------------------------
 static BOOL checkDashButton( void )
 {
-  if( (GFL_UI_KEY_GetTrg() & BTN_DASH) ){
+  if( (GFL_UI_KEY_GetCont() & BTN_DASH) ){
     return( TRUE );
   }
   return( FALSE );
@@ -2416,40 +2416,45 @@ static int TrJikiDashSearch( MMDL * mmdl )
 {
   int ret = MMDL_GetEventType( mmdl );
   
-#ifndef DEBUG_SEARCH  
+#ifndef DEBUG_SEARCH
   if( ret != EV_TYPE_TRAINER && ret != EV_TYPE_TRAINER_EYEALL ){
     return( DIR_NOT );
   }
 #endif
 
-#if 0  
+#if 0 //old
+  if( Player_AcmdCodeDashCheck(jiki) == FALSE ){
+    return( DIR_NOT );
+  }
+#else
+  if( checkDashButton() == FALSE ){
+    return( DIR_NOT );
+  }
+#endif
+  
   {
-    FIELDSYS_WORK *fsys = MMDL_FieldSysWorkGet( mmdl );
-    PLAYER_STATE_PTR jiki = Player_FieldSysWorkPlayerGet( fsys );
-    
-#ifndef DEBUG_SEARCH    
-    if( Player_AcmdCodeDashCheck(jiki) == FALSE ){
+    int code,i = 0;
+    ret = MMDL_GetMoveCode( mmdl );
+      
+    do{
+      code = JikiDashSensorMoveCodeTbl[i++];
+      if( code == ret ){ break; }
+    }while( code != MV_CODE_NOT );
+      
+    if( ret != code ){
       return( DIR_NOT );
     }
-#endif    
-    {
-      int code,i = 0;
-      ret = MMDL_GetMoveCode( mmdl );
-      
-      do{
-        code = JikiDashSensorMoveCodeTbl[i++];
-        if( code == ret ){ break; }
-      }while( code != MV_CODE_NOT );
-      
-      if( ret != code ){
-        return( DIR_NOT );
-      }
-    }
+  }
     
-    {
-      const MMDL * jikiobj = Player_FieldOBJGet( jiki );
-      int jy = MMDL_GetHeightGrid( jikiobj );
-      int y = MMDL_GetHeightGrid( mmdl );
+  {
+    MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+    const MMDL *jiki = MMDLSYS_SearchMMdlPlayer( mmdlsys );
+
+    if( jiki == NULL ){
+      return( DIR_NOT );
+    }else{
+      int jy = MMDL_GetGridPosY( jiki );
+      int y = MMDL_GetGridPosY( mmdl );
       
       if( jy != y ){
         return( DIR_NOT );
@@ -2457,8 +2462,8 @@ static int TrJikiDashSearch( MMDL * mmdl )
     }
     
     {
-      int jx = Player_NowGPosXGet( jiki );
-      int jz = Player_NowGPosZGet( jiki );
+      int jx = MMDL_GetGridPosX( jiki );
+      int jz = MMDL_GetGridPosZ( jiki );
 #ifndef DEBUG_SEARCH
       int range = MMDL_GetParam( mmdl, MMDL_PARAM_0 );
 #else
@@ -2471,6 +2476,7 @@ static int TrJikiDashSearch( MMDL * mmdl )
       int sz = z - range;
       int ez = z + range;
       
+
       if( sz <= jz && ez >= jz ){
         if( sx <= jx && ex >= jx ){
           return( MMDL_TOOL_GetRangeDir(x,z,jx,jz) );
@@ -2478,7 +2484,7 @@ static int TrJikiDashSearch( MMDL * mmdl )
       }
     }
   }
-#endif  
+
   return( DIR_NOT );
 }
 
@@ -2505,20 +2511,20 @@ static int TrJikiDashSearchTbl( MMDL * mmdl, int id, int end )
     if( dir == DIR_NOT ){
       return( dir );
     }
-#if 0    
+    
     {
       int i = 0;
       
       do{ if(tbl[i]==dir){return(dir);} i++; }while( i < num );
       
       {
+        MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+        MMDL *jiki = MMDLSYS_SearchMMdlPlayer( mmdlsys );
         int dirx = DIR_NOT,dirz = DIR_NOT;
         int x = MMDL_GetGridPosX( mmdl );
         int z = MMDL_GetGridPosZ( mmdl );
-        FIELDSYS_WORK *fsys = MMDL_FieldSysWorkGet( mmdl );
-        PLAYER_STATE_PTR jiki = Player_FieldSysWorkPlayerGet( fsys );
-        int jx = Player_NowGPosXGet( jiki );
-        int jz = Player_NowGPosZGet( jiki );
+        int jx = MMDL_GetGridPosX( jiki );
+        int jz = MMDL_GetGridPosZ( jiki );
         
         if( x > jx ){ dirx = DIR_LEFT; }
         else if( x < jx ){ dirx = DIR_RIGHT; }
@@ -2538,7 +2544,6 @@ static int TrJikiDashSearchTbl( MMDL * mmdl, int id, int end )
         }
       }  
     }
-#endif
   }
   
   return( DIR_NOT );

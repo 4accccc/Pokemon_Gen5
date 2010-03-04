@@ -605,7 +605,7 @@ static int SubMoveSpinStop_Move( MMDL * mmdl )
 //--------------------------------------------------------------
 static BOOL checkDashButton( void )
 {
-  if( (GFL_UI_KEY_GetTrg() & BTN_DASH) ){
+  if( (GFL_UI_KEY_GetCont() & BTN_DASH) ){
     return( TRUE );
   }
   return( FALSE );
