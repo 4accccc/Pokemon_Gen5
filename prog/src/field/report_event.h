@@ -27,6 +27,7 @@ typedef struct {
   FIELDMAP_WORK * fieldWork;
   FLDMSGBG * msgBG;
   HEAPID	heapID;
+	void * resultAddr;
 
 /*
 	// ↓内部で設定
@@ -47,6 +48,11 @@ typedef struct {
 
 }FMENU_REPORT_EVENT_WORK;
 
+enum {
+	REPORTEVENT_RET_SAVE = 0,		// セーブ実行
+	REPORTEVENT_RET_CANCEL,			// キャンセル
+	REPORTEVENT_RET_NONE,				// 処理中
+};
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -59,8 +65,9 @@ typedef struct {
  * @param		wk		ワーク
  * @param		seq		シーケンス
  *
- * @retval	"TRUE = 処理中"
- * @retval	"FALSE = 終了"
+ * @retval	"REPORTEVENT_RET_SAVE = セーブ実行"
+ * @retval	"REPORTEVENT_RET_CANCEL = キャンセル"
+ * @retval	"REPORTEVENT_RET_NONE = 処理中"
  */
 //--------------------------------------------------------------------------------------------
-extern BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq );
+extern int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq );

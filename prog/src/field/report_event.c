@@ -51,9 +51,15 @@ enum {
 	REPORT_SEQ_RESULT_OK_WAIT,					// セーブ成功メッセージ待ち
 	REPORT_SEQ_RESULT_SE_WAIT,					// ＳＥ待ち
 	REPORT_SEQ_RESULT_NG_WAIT,					// セーブ失敗メッセージ待ち
+	REPORT_SEQ_RESULT_NG_TRG_WAIT,			// セーブ失敗メッセージ後のキー待ち
 	REPORT_SEQ_END_TRG_WAIT,						// セーブ後のキー待ち
-	REPORT_SEQ_SUBDISP_RESET,						// サブ画面リセット
-	REPORT_SEQ_END,											// 終了
+
+	REPORT_SEQ_SAVE_CANCEL,							// セーブキャンセル
+	REPORT_SEQ_SAVE_CANCEL_END,					// 終了（セーブキャンセル）
+	REPORT_SEQ_SAVE_COMP,								// セーブ実行
+	REPORT_SEQ_SAVE_COMP_END,						// 終了（セーブ実行）
+
+//	REPORT_SEQ_END,											// 終了
 };
 
 #define	REPORT_STR_LEN		( 512 )		// 文字列バッファの長さ
@@ -74,6 +80,9 @@ enum {
 #define	YESNO_PX	( 32 )
 #define	YESNO_PY	( 12 )
 
+#define	END_AUTO_TIME		( 30*5 )		// セーブ後、自動終了までの時間
+
+
 struct _REPORT_EVENT_LOCAL {
 	GFL_TCBLSYS * tcbl;
 
@@ -90,12 +99,15 @@ struct _REPORT_EVENT_LOCAL {
 
 	TIMEICON_WORK * timeIcon;
   FIELD_SAVEANIME* bgAnime;
+
+	u32	wait;
 };
 
 
 //============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
+static void ReleaseLocalWork( FMENU_REPORT_EVENT_WORK * wk );
 static void InitReportBmpWin( FMENU_REPORT_EVENT_WORK * wk );
 static void ExitReportBmpWin( FMENU_REPORT_EVENT_WORK * wk );
 static void SetReportMsg( FMENU_REPORT_EVENT_WORK * wk, u32 strIdx );
@@ -119,11 +131,12 @@ static s32 MainReportYesNo( FMENU_REPORT_EVENT_WORK * wk );
  * @param		wk		ワーク
  * @param		seq		シーケンス
  *
- * @retval	"TRUE = 処理中"
- * @retval	"FALSE = 終了"
+ * @retval	"REPORTEVENT_RET_SAVE = セーブ実行"
+ * @retval	"REPORTEVENT_RET_CANCEL = キャンセル"
+ * @retval	"REPORTEVENT_RET_NONE = 処理中"
  */
 //--------------------------------------------------------------------------------------------
-BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
+int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 {
 	switch( (*seq) ){
 	case REPORT_SEQ_SUBDISP_SET:						// サブ画面セット
@@ -140,6 +153,7 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 			wk->local->strBuff = GFL_STR_CreateBuffer( REPORT_STR_LEN, wk->heapID );
 			wk->local->tcbl = GFL_TCBL_Init( wk->heapID, wk->heapID, 1, 4 );
 			wk->local->kcwk = APP_KEYCURSOR_Create( 15, TRUE, TRUE, wk->heapID );
+			wk->local->wait = 0;
 			InitReportBmpWin( wk );
 			InitReportYesNo( wk );
 			*seq = REPORT_SEQ_INIT_MESSAGE;
@@ -183,7 +197,7 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 			break;
 
 		case 1:	// いいえ
-			*seq = REPORT_SEQ_SUBDISP_RESET;
+			*seq = REPORT_SEQ_SAVE_CANCEL;
 			break;
 		}
 		break;
@@ -204,7 +218,7 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 			break;
 
 		case 1:	// いいえ
-			*seq = REPORT_SEQ_SUBDISP_RESET;
+			*seq = REPORT_SEQ_SAVE_CANCEL;
 			break;
 		}
 		break;
@@ -298,16 +312,30 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 			break;
 		}
 		if( MainReportMsg( wk ) == FALSE ){
-			*seq = REPORT_SEQ_END_TRG_WAIT;
+			*seq = REPORT_SEQ_RESULT_NG_TRG_WAIT;
+		}
+		break;
+
+	case REPORT_SEQ_RESULT_NG_TRG_WAIT:		// セーブ失敗メッセージ後のキー待ち
+		if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) ){
+			*seq = REPORT_SEQ_SAVE_COMP;
 		}
 		break;
 
 	case REPORT_SEQ_END_TRG_WAIT:			// セーブ後のキー待ち
 		if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) ){
-			*seq = REPORT_SEQ_SUBDISP_RESET;
+//			*seq = REPORT_SEQ_SUBDISP_RESET;
+			*seq = REPORT_SEQ_SAVE_COMP;
 		}
+		// 自動終了
+		if( wk->local->wait >= END_AUTO_TIME ){
+			*seq = REPORT_SEQ_SAVE_COMP;
+			break;
+		}
+		wk->local->wait++;
 		break;
 
+/*
 	case REPORT_SEQ_SUBDISP_RESET:					// サブ画面リセット
 		ExitReportYesNo( wk );
 		ExitReportBmpWin( wk );
@@ -316,15 +344,56 @@ BOOL REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 		GFL_STR_DeleteBuffer( wk->local->strBuff );
     GFL_MSG_Delete( wk->local->msgData );
 		GFL_HEAP_FreeMemory( wk->local );
-		FIELD_SUBSCREEN_Change( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork), FIELD_SUBSCREEN_TOPMENU );
+//		FIELD_SUBSCREEN_Change( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork), FIELD_SUBSCREEN_TOPMENU );
+		FIELD_SUBSCREEN_Change( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork), FIELD_SUBSCREEN_NOGEAR );
 		*seq = REPORT_SEQ_END;
 		break;
+*/
+	case REPORT_SEQ_SAVE_CANCEL:						// セーブキャンセル
+		ReleaseLocalWork( wk );
+		FIELD_SUBSCREEN_Change( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork), FIELD_SUBSCREEN_TOPMENU );
+		*seq = REPORT_SEQ_SAVE_CANCEL_END;
+		break;
 
+	case REPORT_SEQ_SAVE_CANCEL_END:				// 終了（セーブキャンセル）
+		return REPORTEVENT_RET_CANCEL;
+
+	case REPORT_SEQ_SAVE_COMP:							// セーブ実行
+		ReleaseLocalWork( wk );
+		FIELD_SUBSCREEN_Change( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork), FIELD_SUBSCREEN_NORMAL );
+		*seq = REPORT_SEQ_SAVE_COMP_END;
+		break;
+
+	case REPORT_SEQ_SAVE_COMP_END:				// 終了（セーブ実行）
+		return REPORTEVENT_RET_SAVE;
+
+/*
 	case REPORT_SEQ_END:										// 終了
-		return FALSE;
+		return REPORTEVENT_RET_NONE;
+*/
 	}
 
-	return TRUE;
+	return REPORTEVENT_RET_NONE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ワーク削除
+ *
+ * @param		wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void ReleaseLocalWork( FMENU_REPORT_EVENT_WORK * wk )
+{
+	ExitReportYesNo( wk );
+	ExitReportBmpWin( wk );
+	APP_KEYCURSOR_Delete( wk->local->kcwk );
+  GFL_TCBL_Exit( wk->local->tcbl );
+	GFL_STR_DeleteBuffer( wk->local->strBuff );
+	GFL_MSG_Delete( wk->local->msgData );
+	GFL_HEAP_FreeMemory( wk->local );
 }
 
 //--------------------------------------------------------------------------------------------
