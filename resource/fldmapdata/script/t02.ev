@@ -232,6 +232,24 @@ _ANIME_LABEL anm_player_right
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
 
+//--------------------------------------------------------------------
+//		共通処理
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 /*			アララギ博士　ポケセン前						*/
@@ -480,70 +498,113 @@ t02_speech:
 	_START_EVENT_BGM( SEQ_BGM_E_G_CIS )
 
 	//ゲーチス入場
-	_OBJ_ANIME( T02_SAGE_01, anm_sage1_in )
-	_OBJ_ANIME( T02_HAKAIM_04, anm_hakaim_in )
+	_OBJ_ANIME( T02_HAKAIM_04, anm_hakaim_in1 )
 	_OBJ_ANIME_WAIT()
-
+	_OBJ_ANIME( T02_SAGE_01, anm_sage1_in )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( T02_HAKAIM_04, anm_hakaim_in2 )
+	_OBJ_ANIME_WAIT()
+	
 	//わたくしの　なまえは　ゲーチス
 	_BALLOONWIN_OBJMSG_POS( msg_t02_sage1_01 , T02_SAGE_01 ,POS_DL )
 	
 	//群集「えっ？」
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_01 , 15 , 5 , 1 ) 
+	_SUBWIN_MSG( msg_t02_boodle_01 , 20 , 5 , 1 ) 
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_01a , 18 , 10 , 2 )
+	_SUBWIN_MSG( msg_t02_boodle_01a , 22 , 10 , 2 )
 
-	//10フレーム待機した後ウィンドウを消す
-	_TIME_WAIT( 10 )
+	//群集見つめあう
+	_OBJ_ANIME( T02_BOODLE_02A, anm_stay_d )
+	_OBJ_ANIME( T02_BOODLE_03, anm_stay_u )
+	_OBJ_ANIME( T02_BOODLE_08, anm_stay_d )
+	_OBJ_ANIME( T02_BOODLE_06, anm_stay_u )
+	_OBJ_ANIME( T02_BOODLE_04, anm_stay_r )
+	_OBJ_ANIME( T02_BOODLE_05, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_01A, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_07, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+
+	//サブウィン・MSGウィンクローズ
+	_AB_KEYWAIT_MARK()
 	_BALLOONWIN_CLOSE()
-	_TIME_WAIT( 10 )
 	_SUBWIN_CLOSE( 1 )
-	_TIME_WAIT( 10 )
 	_SUBWIN_CLOSE( 2 )
+
+	//ゲーチス移動１
+	_OBJ_ANIME( T02_SAGE_01, anm_sage_move1 )
+	_OBJ_ANIME_WAIT()
 
 	//われわれ　人間は　ポケモンと　ともに
 	_BALLOONWIN_OBJMSG_POS( msg_t02_sage2_02 , T02_SAGE_01,POS_DL )
-	_OBJ_ANIME( T02_SAGE_01, anm_sage_move )
+	_MSGWIN_CLOSE()
+
+	//ゲーチス移動２
+	_OBJ_ANIME( T02_SAGE_01, anm_sage_move2 )
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_CLOSE()
-	
+
 	//トレーナーは　ポケモンに　好き勝手　命令している
 	_BALLOONWIN_OBJMSG_POS( msg_t02_sage3_03 , T02_SAGE_01,POS_DL )
 	
 	//群集：ざわざわ……
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_02 , 12 , 5 , 3 ) 
+	_SUBWIN_MSG( msg_t02_boodle_02 , 16 , 5 , 3 ) 
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_02a , 14 , 12 , 4 )
+	_SUBWIN_MSG( msg_t02_boodle_02a , 18 , 12 , 4 )
 	_TIME_WAIT( 10 )
 	_SUBWIN_MSG( msg_t02_boodle_02b , 20 , 7 , 5)
 
-	//10フレーム待機した後ウィンドウを消す
-	_TIME_WAIT( 10 )
+	//群集見つめあう
+	_OBJ_ANIME( T02_BOODLE_02A, anm_stay_d )
+	_OBJ_ANIME( T02_BOODLE_03, anm_stay_u )
+	_OBJ_ANIME( T02_BOODLE_08, anm_stay_d )
+	_OBJ_ANIME( T02_BOODLE_06, anm_stay_u )
+	_OBJ_ANIME( T02_BOODLE_04, anm_stay_r )
+	_OBJ_ANIME( T02_BOODLE_05, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_01A, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_07, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+
+	//サブウィン・MSGウィンクローズ
+	_AB_KEYWAIT_MARK()
 	_BALLOONWIN_CLOSE()
-	_TIME_WAIT( 10 )
 	_SUBWIN_CLOSE( 3 )
-	_TIME_WAIT( 10 )
 	_SUBWIN_CLOSE( 4 )
-	_TIME_WAIT( 10 )
 	_SUBWIN_CLOSE( 5 )
+
+	//ゲーチス移動３
+	_OBJ_ANIME( T02_SAGE_01, anm_sage_move3 )
+	_OBJ_ANIME_WAIT()
 
 	//いいですか　みなさん　ポケモンは　人間とは　異なり
 	_BALLOONWIN_OBJMSG_POS( msg_t02_sage4_04 , T02_SAGE_01,POS_DL )
 	
 	//群集：？
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_03 , 14 , 5 , 6 ) 
+	_SUBWIN_MSG( msg_t02_boodle_03 , 17 , 5 , 6 ) 
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_03a , 16 , 10 , 7 )
+	_SUBWIN_MSG( msg_t02_boodle_03a , 20 , 10 , 7 )
+
+	//群集見つめあう
+	_OBJ_ANIME( T02_BOODLE_02A, anm_stay_d )
+	_OBJ_ANIME( T02_BOODLE_03, anm_stay_u )
+	_OBJ_ANIME( T02_BOODLE_08, anm_stay_d )
+	_OBJ_ANIME( T02_BOODLE_06, anm_stay_u )
+	_OBJ_ANIME( T02_BOODLE_04, anm_stay_r )
+	_OBJ_ANIME( T02_BOODLE_05, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_01A, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_07, anm_stay_l )
+	_OBJ_ANIME_WAIT()
 
 	//10フレーム待機した後ウィンドウを消す
-	_TIME_WAIT( 10 )
+	_AB_KEYWAIT_MARK()
 	_BALLOONWIN_CLOSE()
-	_TIME_WAIT( 10 )
 	_SUBWIN_CLOSE( 6 )
-	_TIME_WAIT( 10 )
 	_SUBWIN_CLOSE( 7 )
+
+	//ゲーチス移動４
+	_OBJ_ANIME( T02_SAGE_01, anm_sage_move4 )
+	_OBJ_ANIME_WAIT()
 
 	//そうです！　ポケモンを　解放することです！
 	_BALLOONWIN_OBJMSG_POS( msg_t02_sage4_05 , T02_SAGE_01,POS_DL )
@@ -822,14 +883,18 @@ _ANIME_LABEL	anm_dir_l
 //		ゲーチス登場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_sage1_in
-	_ANIME_DATA		AC_WALK_R_8F,4
+	_ANIME_DATA		AC_WALK_R_16F,4
 	_ANIME_DATA		ACMD_END,0
 
-_ANIME_LABEL	anm_hakaim_in
-	_ANIME_DATA		AC_WAIT_8F,1
+_ANIME_LABEL	anm_hakaim_in1
 	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_DIR_D,1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
 	_ANIME_DATA		AC_WALK_U_8F,1
-	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim_in2
 	_ANIME_DATA		AC_WALK_D_8F,1
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		AC_DIR_PAUSE_ON,1
@@ -840,15 +905,24 @@ _ANIME_LABEL	anm_hakaim_in
 //--------------------------------------------------------------
 //	ゲーチス　左右動き
 //--------------------------------------------------------------
-_ANIME_LABEL anm_sage_move
-	_ANIME_DATA		AC_WALK_U_8F,2
-	_ANIME_DATA		AC_DIR_R,1
-	_ANIME_DATA		AC_WAIT_4F,1
-	_ANIME_DATA		AC_WALK_D_8F,3
-	_ANIME_DATA		AC_DIR_R,1
-	_ANIME_DATA		AC_WAIT_4F,1
-	_ANIME_DATA		AC_WALK_U_8F,1
-	_ANIME_DATA		AC_DIR_R,1
+_ANIME_LABEL anm_sage_move1
+	_ANIME_DATA		AC_WALK_U_16F,2
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_sage_move2
+	_ANIME_DATA		AC_WALK_D_16F,2
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_sage_move3
+	_ANIME_DATA		AC_WALK_D_16F,2
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_sage_move4
+	_ANIME_DATA		AC_WALK_U_16F,2
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------
@@ -972,6 +1046,8 @@ _ANIME_LABEL anm_n_leave
 _ANIME_LABEL anm_rival_leave
 	_ANIME_DATA		AC_WALK_U_8F,10
 	_ANIME_DATA		ACMD_END,0
+	
+
 
 /**************************************************************/
 /*  			T02 看板：街								  */

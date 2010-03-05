@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/19 13:29:13
+#save date:2010/03/05 15:24:17
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01r0302.wms
 #SECTION START:OBJ_EVENT
@@ -47,9 +47,9 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C01R0302_POKE1_01
 #OBJ CODE Number
-PIKACHU
+POKE18
 #MOVE CODE Number
-MV_RT2
+MV_RTLU         
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -65,22 +65,22 @@ DIR_RIGHT
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+2
 #Move Limit Z Number
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 0 168
+-40 0 152
 #event number: 2
 #type
 1
 #ID name
 C01R0302_POKE2_01
 #OBJ CODE Number
-PIKACHU
+POKE17
 #MOVE CODE Number
-MV_RT2
+MV_RTRD         
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -98,7 +98,7 @@ DIR_LEFT
 #Move Limit X Number
 2
 #Move Limit Z Number
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
