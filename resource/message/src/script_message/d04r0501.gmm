@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2010-03-05T15:42:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="250"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1576" top="240" right="2281" bottom="860" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,11 +292,30 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d04r0501_hakaim8_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・GRIDX=13、GRIDZ=19、下向き
+・戦闘後メッセージ表示後に再度会話
+・トレーナーIDはhakaim1_08</comment>
+		<attribute name="キャラ指定">プラズマ団♂
+hakaim1_08</attribute>
+		<language name="JPN" width="256">プラズマだん『ふろでも　あびて
+さっぱり　してえよ……　チクショウ！</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『フロでも　浴びて
+さっぱり　してえよ……　チクショウ！</language>
+	</row>
+
+	<row id="msg_d04r0501_hakaiw3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・GRIDX=12、GRIDZ=19、下向き
+・戦闘後メッセージ表示後に再度会話
+・トレーナーIDはhakaiw1_03</comment>
+		<attribute name="キャラ指定">プラズマ団♀
+hakaiw1_03</attribute>
+		<language name="JPN" width="256">プラズマだん『……したで
+アンタの　おなかまが　おまちかねよ！</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……下で
+アンタの　お仲間が　お待ちかねよ！</language>
 	</row>
 
 	<flowchart-group-list>
