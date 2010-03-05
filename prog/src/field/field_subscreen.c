@@ -651,6 +651,18 @@ void FIELD_SUBSCREEN_ResetAction( FIELD_SUBSCREEN_WORK* pWork)
   FIELD_SUBSCREEN_SetAction(pWork, FIELD_SUBSCREEN_ACTION_NONE);
 }
 
+//----------------------------------------------------------------------------
+/**
+ * @brief  è„âÊñ ÇÃãPìxÇñﬂÇ∑
+ * @param  mode
+ */
+//----------------------------------------------------------------------------
+void FIELD_SUBSCREEN_MainDispBrightnessOff(void)
+{
+	G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0, GX_BLEND_PLANEMASK_NONE, 0, 0, 0 );
+	FLDMSGBG_SetBlendAlpha( FALSE );
+}
+
 
 #ifdef  PM_DEBUG
 //----------------------------------------------------------------------------

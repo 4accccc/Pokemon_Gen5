@@ -340,8 +340,7 @@ static void _return_brightness( FIELD_MENU_WORK *work )
   // フィールドメニューをキャンセルしたか、レポート画面決定で終了するのでなければ
   if(work->isCancel==TRUE || (work->isCancel==FALSE && work->funcType!=FMIT_REPORT)){
     // 上画面に掛けていた輝度オフを戻す
-    G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0, GX_BLEND_PLANEMASK_NONE, 0, 0, 0 );
-    FLDMSGBG_SetBlendAlpha( FALSE );
+		FIELD_SUBSCREEN_MainDispBrightnessOff();
   }
 }
 

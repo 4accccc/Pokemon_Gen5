@@ -365,6 +365,7 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 		break;
 
 	case REPORT_SEQ_SAVE_COMP_END:				// 終了（セーブ実行）
+		FIELD_SUBSCREEN_MainDispBrightnessOff();
 		return REPORTEVENT_RET_SAVE;
 
 /*
