@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-03-05T18:08:30"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-03-05T18:47:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,13 +398,13 @@
 	</row>
 
 	<row id="NAMEIN_DEF_NAME_002">
-		<comment>すれ違い「挨拶」のデフォルト</comment>
+		<comment>すれ違い「挨拶」のデフォルト→現在使ってません</comment>
 		<language name="JPN" width="256">よろしく！</language>
 		<language name="JPN_KANJI" width="256">よろしく！</language>
 	</row>
 
 	<row id="NAMEIN_DEF_NAME_003">
-		<comment>すれ違い「お礼」のデフォルト</comment>
+		<comment>すれ違い「お礼」のデフォルト→現在使ってません</comment>
 		<language name="JPN" width="256">ありがとう！</language>
 		<language name="JPN_KANJI" width="256">ありがとう！</language>
 	</row>
