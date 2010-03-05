@@ -221,7 +221,7 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
     Dpw_Tr_Main();
   }
 
-  DEBUG_HEAP_PrintRestUse( HEAPID_WORLDTRADE );
+  //DEBUG_HEAP_PrintRestUse( HEAPID_WORLDTRADE );
 
   GFL_TCB_Main( wk->tcbsys );
   WT_PRINT_Main( &wk->print );

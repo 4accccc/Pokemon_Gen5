@@ -1111,6 +1111,8 @@ static int Enter_Wifilogin_start( WORLDTRADE_WORK *wk )
   param->gamedata     = GAMESYSTEM_GetGameData(wk->param->gamesys);
   param->bg           = WIFILOGIN_BG_NORMAL;
   param->display      = WIFILOGIN_DISPLAY_UP;
+  param->pSvl         = &wk->svl;
+  param->nsid         = WB_NET_WIFIGTS;
 
   GAMESYSTEM_CallProc( wk->param->gamesys,
 		FS_OVERLAY_ID(wifi_login), 

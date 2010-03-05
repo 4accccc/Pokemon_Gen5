@@ -551,6 +551,7 @@ typedef struct _WORLDTRADE_WORK{
 
   NHTTP_RAP_WORK  *nhttp;             ///<認証キーや不正検査で使う
   WIFIWORLDTRATE_EVILCHECK_DATA evilcheck_data; ///<認証コードが入った不正チェックデータ
+  DWCSvlResult                  svl;    ///<サービスロケータ
 
 #ifdef PM_DEBUG
 	int 					frame;									//

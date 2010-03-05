@@ -74,8 +74,6 @@ static void SetSaveNextSequence( WORLDTRADE_WORK *wk, int nextSeq1st, int nextSe
 
 static int Subseq_Start( WORLDTRADE_WORK *wk);
 
-static int Subseq_SvlStart( WORLDTRADE_WORK *wk );
-static int Subseq_SvlResult( WORLDTRADE_WORK *wk );
 static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk );
 static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk );
 
@@ -138,8 +136,6 @@ enum{
 	SUBSEQ_START=0,
 	SUBSEQ_MAIN,
   
-  SUBSEQ_SVL_START,
-  SUBSEQ_SVL_RESULT,
   SUBSEQ_EVILCHECK_START,
   SUBSEQ_EVILCHECK_RESULT,
 
@@ -208,8 +204,6 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 	Subseq_Start,				// SUBSEQ_START=0,
 	Subseq_Main,             	// SUBSEQ_MAIN,
 
-  Subseq_SvlStart,          //SUBSEQ_SVL_START,
-  Subseq_SvlResult,         //SUBSEQ_SVL_RESULT,
   Subseq_EvilCheckStart,    //SUBSEQ_EVILCHECK_START,
   Subseq_EvilCheckResult,   //SUBSEQ_EVILCHECK_RESULT,
 	Subseq_UploadStart,			// SUBSEQ_UPLOAD_START,
@@ -550,7 +544,6 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 static void BmpWinInit( WORLDTRADE_WORK *wk )
 {
 	// ---------- メイン画面 ------------------
-
 	// BG0面BMP（会話ウインドウ）確保
 	wk->MsgWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
 		TALK_WIN_X, TALK_WIN_Y, TALK_WIN_SX, TALK_WIN_SY, WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );
@@ -639,7 +632,7 @@ static int Subseq_Start( WORLDTRADE_WORK *wk)
 	case MODE_UPLOAD:
 		// おくっています
 		Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_01_025, 1, 0x0f0f );
-		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_SVL_START );
+		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_EVILCHECK_START );
     //不正チェックしてからアップロードへ
     wk->evilcheck_mode  = SUBSEQ_UPLOAD_START;
 		break;
@@ -651,7 +644,7 @@ static int Subseq_Start( WORLDTRADE_WORK *wk)
 	case MODE_EXCHANGE:
 		// 交換します
  		Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_01_025, 1, 0x0f0f );
- 		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_SVL_START );
+ 		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_EVILCHECK_START );
     //不正チェックしてから交換へ
     wk->evilcheck_mode  = SUBSEQ_EXCHANGE_START;
 		break;
@@ -686,45 +679,6 @@ static int Subseq_Start( WORLDTRADE_WORK *wk)
 	return SEQ_MAIN;
 }
 
-
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  UPLOAD前に認証キーを任天堂サーバーから貰う  開始
- *
- *	@param	WORLDTRADE_WORK *wk ワーク
- */
-//-----------------------------------------------------------------------------
-static int Subseq_SvlStart( WORLDTRADE_WORK *wk )
-{
-  BOOL ret;
-  wk->nhttp = NHTTP_RAP_Init(HEAPID_WORLDTRADE ,MyStatus_GetProfileID( wk->param->mystatus ),NULL ); //@todo仮
-  ret = NHTTP_RAP_SvlGetTokenStart(wk->nhttp); 
-
-  GF_ASSERT( ret );
-
-  wk->subprocess_seq = SUBSEQ_SVL_RESULT;
-  OS_TPrintf( "サービスロケータ取得開始\n" );
-
-	return SEQ_MAIN;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  UPLOAD前に認証キーを任天堂サーバーから貰う  終了
- *
- *	@param	WORLDTRADE_WORK *wk ワーク
- */
-//-----------------------------------------------------------------------------
-static int Subseq_SvlResult( WORLDTRADE_WORK *wk )
-{ 
-  if( NHTTP_RAP_SvlGetTokenMain(wk->nhttp) )
-  { 
-    OS_TPrintf( "サービスロケータ取得\n" );
-    wk->subprocess_seq = SUBSEQ_EVILCHECK_START;
-  }
-
-	return SEQ_MAIN;
-}
 //----------------------------------------------------------------------------
 /**
  *	@brief  ポケモン不正検査を行う  開始
@@ -738,6 +692,7 @@ static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk )
   
   POKEMON_PASO_PARAM  *pp = PPPPointerGet( (POKEMON_PARAM*)wk->UploadPokemonData.postData.data );
 
+  wk->nhttp = NHTTP_RAP_Init( HEAPID_WORLDTRADE, MyStatus_GetProfileID( wk->param->mystatus ), &wk->svl );
   NHTTP_RAP_PokemonEvilCheckCreate( wk->nhttp, HEAPID_WORLDTRADE, POKETOOL_GetPPPWorkSize(), NHTTP_POKECHK_GTS);
 
   OS_TPrintf( "PPPサイズ %d\n", POKETOOL_GetPPPWorkSize() );
@@ -781,14 +736,10 @@ static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk )
     NHTTP_RAP_End(wk->nhttp);
 
     //送られてきた状態は正常か
-    if( wk->evilcheck_data.status_code == 1 )
+    OS_TPrintf( "不正検査！=[%d]\n", wk->evilcheck_data.poke_result );
+    if( wk->evilcheck_data.status_code == 0 )
     { 
-      //不正ポケモンかチェック
-#ifdef DEBUG_UPLOAD_DIRTY_NONE
-      if(1)
-#else
-      if( NHTTP_RAP_EVILCHECK_Get(&wk->evilcheck_data) == 0 )
-#endif
+      if( wk->evilcheck_data.poke_result == NHTTP_RAP_EVILCHECK_RESULT_OK )
       { 
         OS_TPrintf( "不正検査終了！=[%d]\n", wk->evilcheck_data.poke_result );
         wk->subprocess_seq = wk->evilcheck_mode;

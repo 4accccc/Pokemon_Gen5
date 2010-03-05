@@ -405,6 +405,8 @@ static const u8 nation_table[][2]={
 static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 {
 	int i=0;
+  GFL_BG_FillCharacter( wk->BgFrame, 0, 1, 0 );
+
 	switch(mode){
 
 	// –¼‘O“ü—Í“ª•¶Žš‚P
@@ -414,7 +416,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   word_table[i][0],		word_table[i][1],	
 									   INPUT_LETTER_W, 			INPUT_LETTER_H, 
-									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_F );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 		//	GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
@@ -422,7 +424,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
 									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_F );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
@@ -434,7 +436,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 		wk->MenuBmp[0]	= GFL_BMPWIN_Create( wk->BgFrame,
 								   word_table[11][0],		word_table[11][1],	
 								   INPUT_LETTER_W, 			INPUT_LETTER_H, 
-								   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+								   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_F );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[0]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[0] );
 
@@ -442,7 +444,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
 								word_table[i-1][0],		word_table[i-1][1],	
 								INPUT_LETTER_W, 		INPUT_LETTER_H, 
-								WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+								WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_F );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
@@ -450,7 +452,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
 									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_F );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 		break;
@@ -462,7 +464,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 									   name_table[i][0],		name_table[i][1],	
 									   INPUT_POKENAME_W, 		INPUT_POKENAME_H, 
 									   WORLDTRADE_INPUT_PAL,  	
-									   GFL_BMP_CHRAREA_GET_B );
+									   GFL_BMP_CHRAREA_GET_F );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
@@ -471,7 +473,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 		wk->MenuBmp[MODE_POKENAME_WIN_NUM]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   INPUT_PAGE_X,			INPUT_PAGE_Y,	
 									   INPUT_NAME_PAGE_W, 		INPUT_NAME_PAGE_H, 
-									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_F );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[MODE_POKENAME_WIN_NUM]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[MODE_POKENAME_WIN_NUM] );
 
@@ -479,7 +481,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
 									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_F );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 		break;
@@ -489,7 +491,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   word_table[i][0],		word_table[i][1],	
 									   INPUT_LETTER_W, 			INPUT_LETTER_H, 
-									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_F );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
@@ -498,7 +500,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
 									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_F );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
@@ -506,7 +508,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 		wk->MenuBmp[BMPWIN_NONE_SELECT_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 								   INPUT_NATION_NONE_SELECT_X,	INPUT_NATION_NONE_SELECT_Y,	
 								   INPUT_NONE_W, 				INPUT_NONE_H, 
-								   WORLDTRADE_INPUT_PAL,  		GFL_BMP_CHRAREA_GET_B );
+								   WORLDTRADE_INPUT_PAL,  		GFL_BMP_CHRAREA_GET_F );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_NONE_SELECT_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_NONE_SELECT_WIN] );
 
@@ -519,7 +521,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 									   nation_table[i][0],		nation_table[i][1],	
 									   INPUT_NATION_W, 			INPUT_NATION_H, 
 									   WORLDTRADE_INPUT_PAL,  	
-									   GFL_BMP_CHRAREA_GET_B );
+									   GFL_BMP_CHRAREA_GET_F );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
@@ -527,7 +529,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 		wk->MenuBmp[MODE_NATION_WIN_NUM]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   INPUT_NATION_PAGE_X,		INPUT_NATION_PAGE_Y,	
 									   INPUT_NAME_PAGE_W, 		INPUT_NAME_PAGE_H, 
-									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_F );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[MODE_NATION_WIN_NUM]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[MODE_NATION_WIN_NUM] );
 
@@ -535,7 +537,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									nation_table[5][0],		nation_table[5][1],	
 									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_F );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
@@ -546,7 +548,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   sexselect_table[i][0],	sexselect_table[i][1],	
 									   INPUT_SEXSELECT_W, 		INPUT_SEXSELECT_H, 
-									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_F );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
@@ -554,7 +556,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
 									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_B );
+									WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_F );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 		
@@ -565,7 +567,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   levelselect_table[i][0],	levelselect_table[i][1],	
 									   INPUT_LEVELSELECT_W, 	INPUT_LEVELSELECT_H, 
-									   WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_B);
+									   WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_F);
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
@@ -574,7 +576,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 		wk->MenuBmp[MODE_LEVEL_WIN_NUM]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   INPUT_PAGE_X,			INPUT_PAGE_Y,	
 									   INPUT_NAME_PAGE_W, 		INPUT_NAME_PAGE_H, 
-									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B);
+									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_F);
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[MODE_LEVEL_WIN_NUM]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[MODE_LEVEL_WIN_NUM] );
 
@@ -582,7 +584,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
 									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_B );
+									WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_F );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
@@ -690,6 +692,8 @@ static void select_bmpwin_del( WORLDTRADE_INPUT_WORK *wk, int mode )
 		GFL_BMPWIN_Delete(wk->MenuBmp[BMPWIN_SELECT_END_WIN]);
 		break;
 	}
+
+  GFL_BG_FillCharacterRelease( wk->BgFrame, 1, 0 );
 }
 
 
