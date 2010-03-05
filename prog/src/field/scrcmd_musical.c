@@ -81,6 +81,12 @@ typedef struct
 }EV_FITTING_CALL_WORK;
 
 
+typedef struct
+{
+  SCRCMD_WORK *scWork;
+  MUSICAL_SCRIPT_WORK *musScriptWork;
+}EV_IRCPROC_CALL_WORK;
+
 //======================================================================
 //  proto
 //======================================================================
@@ -781,6 +787,9 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
     {
       //赤外線受付
       GMEVENT* event;
+      EV_IRCPROC_CALL_WORK *cbWork = GFL_HEAP_AllocClearMemoryLo( HEAPID_PROC , sizeof(EV_IRCPROC_CALL_WORK) );
+      cbWork->scWork = work;
+      cbWork->musScriptWork = musScriptWork;
       musScriptWork->scriptRet = ret_wk;
       musScriptWork->irEntryWork.gamedata = gdata;
       musScriptWork->irEntryWork.netInitWork = MUS_COMM_GetNetInitStruct();
@@ -797,7 +806,7 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
                                            &IrcBattleMatchProcData, 
                                            &musScriptWork->irEntryWork,
                                            EvCmdIrcEntry_CallBack, 
-                                           work );
+                                           cbWork );  //←自動開放
       SCRIPT_CallEvent( sc, event );
       return( VMCMD_RESULT_SUSPEND );
     }
@@ -925,24 +934,20 @@ static void EvCmdFittingCallProc_CallBack( void* work )
 
 static void EvCmdIrcEntry_CallBack( void* wk )
 {
-  SCRCMD_WORK *work = wk;
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  //ワークは自動開放！
+  EV_IRCPROC_CALL_WORK *cbWork = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( cbWork->scWork );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( cbWork->scWork );
   GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
-  MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
 
-  *musScriptWork->scriptRet = FALSE;
-  OS_TFPrintf(3,"----------------------------\n");
-  OS_TFPrintf(3,"     IrcConnectCallBack     \n");
-  OS_TFPrintf(3,"----------------------------\n");
-  if( musScriptWork->irEntryWork.selectType != EVENTIRCBTL_ENTRYMODE_EXIT )
+  if( cbWork->musScriptWork->irEntryWork.selectType != EVENTIRCBTL_ENTRYMODE_EXIT )
   {
-    *musScriptWork->scriptRet = TRUE;
-    MUS_COMM_InitAfterIrcConnect( musScriptWork->commWork );
+    *cbWork->musScriptWork->scriptRet = TRUE;
+    MUS_COMM_InitAfterIrcConnect( cbWork->musScriptWork->commWork );
   }
   else
   {
-    *musScriptWork->scriptRet = FALSE;
+    *cbWork->musScriptWork->scriptRet = FALSE;
   }
 }
 
