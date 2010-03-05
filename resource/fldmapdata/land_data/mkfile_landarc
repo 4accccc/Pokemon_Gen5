@@ -15,7 +15,6 @@ include $(PROJECT_RSCDIR)/macro_define
 TARGET_ARC			= map_land_data.narc
 TARGET_ARCIDX		= $(TARGET_ARC:.narc=.naix)
 TARGET_DIR			= $(PROJECT_ARCDIR)/fieldmap
-TARGET_ARC_TEST			= map_land_data_test.narc
 
 #---------------------------------------------------------------
 #	各要素
@@ -23,6 +22,17 @@ TARGET_ARC_TEST			= map_land_data_test.narc
 DIR_OUTPUT = land_output/
 DIR_TEMP = land_temp/
 DIR_RES = land_res/
+DIR_WBBIN = binout/
+DIR_WBTMP = bintmp/
+
+
+#---------------------------------------------------------------
+#	wbbin cdat
+#---------------------------------------------------------------
+WBBIN_CDAT = wb_bin.cdat
+DIR_WBBIN_CDAT = $(PROJECT_ROOT)/prog/src/field/mapdatafunc/
+
+WBBIN_ALLTBL = bintmp/normal_d_bin.alltbl
 
 #G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
 G3DCVTR	= g3dcvtr.exe
@@ -50,24 +60,33 @@ endif
 #---------------------------------------------------------------
 #	buildルール
 #---------------------------------------------------------------
-do-build: $(TARGET_DIR)/$(TARGET_ARC) $(TARGET_DIR)/$(TARGET_ARC_TEST)
+do-build: $(TARGET_DIR)/$(TARGET_ARC) $(DIR_WBBIN_CDAT)$(WBBIN_CDAT)
+
+.SUFFIXES: .3dppack .ngpack .nsbmd .bhc .imd .3dmd .bin .wbbin .tbl .alltbl
 
 #SUFFIXESルール
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
 #拡張子
-.SUFFIXES: .3dppack .ngpack .nsbmd .bhc .imd .3dmd
-#dependルール
-include land_make_depend
+
+#wbbintblルール
+#tblは、USERのみ
+include wbbin_tbl_depend_list
+
 endif #CONVERTUSER
+
+#dependルール alltblに、3dppackなどが依存するため、全員の環境でコンバートする
+include land_make_depend
 
 #対象コピー
 $(TARGET_DIR)/$(TARGET_ARC): $(TARGET_ARC)
 	$(COPY) $(TARGET_ARC) $(TARGET_DIR)
 	$(COPY) $(TARGET_ARCIDX) $(TARGET_DIR)
 
-$(TARGET_DIR)/$(TARGET_ARC_TEST): $(TARGET_ARC_TEST)
-	$(COPY) $(TARGET_ARC_TEST) $(TARGET_DIR)
-	
+#CDATコピー
+$(DIR_WBBIN_CDAT)$(WBBIN_CDAT):$(WBBIN_CDAT)
+	$(COPY) $(WBBIN_CDAT) $(DIR_WBBIN_CDAT)
+
+
 #コンバート
 $(TARGET_ARC): $(LAND_DEPEND_LIST)
 	nnsarc -i -c -l -n $(TARGET_ARC) -S land_output_list > arc_result.txt
@@ -81,7 +100,11 @@ clean:
 	-rm -f $(TARGET_DIR)/$(TARGET_ARCIDX)
 	-rm -f $(TARGET_ARC)
 	-rm -f $(TARGET_ARCIDX)
+	-rm -f $(LAND_DEPEND_LIST)
+	-rm -f $(DIR_WBBIN_CDAT)$(WBBIN_CDAT)
+	-rm -f $(WBBIN_CDAT)
+	-rm -f $(WBBIN_ALLTBL)
+
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	@-rm -f $(LAND_TEMP_LIST)
-	@-rm -f $(LAND_DEPEND_LIST)
 endif #CONVERTUSER

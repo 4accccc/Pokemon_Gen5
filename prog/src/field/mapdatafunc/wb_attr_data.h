@@ -45,7 +45,7 @@ typedef enum {
 // 3角形　1つ
 typedef struct {
   u16 tryangleFlag:2;     // WB_NORMALVTX_TRYANGLE_FLAG
-	u16	vecN1_x:14;         //１個目の三角形の法線ベクトル
+	u16	vecN1_x:14;         //１個目の三角形の法線ベクトルインデックス（このインデックスから３つにx,y,zの順で格納）
 	u16	vecN1_D;            // ax+by+cz+d =0 のD値
   //↑tryangleFlag == WB_NORMALVTX_TRYANGLE_TWO_INDEXのとき、vecN1_DはWB_NORMALVTXST_TR2配列のインデックスとして使用
 
@@ -56,8 +56,8 @@ typedef struct {
 // 3角形 2つ
 typedef struct {
   u16 tryangleFlag:2;     // WB_NORMALVTX_TRYANGLE_FLAG  WB_NORMALVTX_TRYANGLE_TWO 固定
-	u16	vecN1_x:14;         //１個目の三角形の法線ベクトル
-	u16	vecN2_x;            //２個目の三角形の法線ベクトル
+	u16	vecN1_x:14;         //１個目の三角形の法線ベクトル１個目の三角形の法線ベクトルインデックス（このインデックスから３つにx,y,zの順で格納）
+	u16	vecN2_x;            //２個目の三角形の法線ベクトル１個目の三角形の法線ベクトルインデックス（このインデックスから３つにx,y,zの順で格納）
 	u16	vecN1_D;            // ax+by+cz+d =0 のD値
 	u16	vecN2_D;       
 

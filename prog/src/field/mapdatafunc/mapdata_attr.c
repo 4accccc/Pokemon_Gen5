@@ -49,6 +49,7 @@ void MAPDATA_ATR_GetAttrFunc( FLD_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, cons
 	//情報取得(軸の取り方が違うので法線ベクトルはZ反転)
 	nvs = (WB_NORMALVTXST_TR1*)(attrAdrs + sizeof(NormalVtxFormat) + grid_idx * sizeof(WB_NORMALVTXST_TR1));
 
+
   {
     u8 flag;
     int nrm_idx, d_idx;

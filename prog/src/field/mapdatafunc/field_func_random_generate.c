@@ -23,10 +23,6 @@
 
 #include "mapdata_attr.h"
 
-#ifdef PM_DEBUG
-#include "new_height_def.h"
-#endif  //PM_DEBUG
-
 //============================================================================================
 /**
  *
@@ -203,9 +199,6 @@ void FieldGetAttr_RandomGenerate( FLD_G3D_MAP_ATTRINFO* attrInfo, const void* ma
 	WBGridMapPackHeaderSt* fileHeader = (WBGridMapPackHeaderSt*)mapdata;
 	u32				attrAdrs = (u32)mapdata + fileHeader->vertexOffset;
 
-#ifdef NEW_HEIGHT_TEST
-  MAPDATA_ATR_GetAttrFunc( attrInfo, 0, attrAdrs, posInBlock, map_width, map_height );
-#else     
 	VEC_Set( &pos, posInBlock->x + map_width/2, posInBlock->y, posInBlock->z + map_width/2 );
 	//ƒOƒŠƒbƒh“àî•ñŽæ“¾
 	grid_count = (map_width>>FX32_SHIFT) /  FIELD_CONST_GRID_SIZE;
@@ -243,7 +236,6 @@ void FieldGetAttr_RandomGenerate( FLD_G3D_MAP_ATTRINFO* attrInfo, const void* ma
 	attrInfo->mapAttr[0].attr = nvs->attr;
 
 	attrInfo->mapAttr[0].height = FX_Div( by, vecN.y ) + map_height;
-#endif  //NEW_HEIGHT_TEST
 	attrInfo->mapAttrCount = 1;
 }
 

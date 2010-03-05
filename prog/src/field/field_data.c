@@ -22,10 +22,6 @@
 #include "fieldmap_ctrl_nogrid.h"
 #include "fieldmap_ctrl_hybrid.h"
 
-#ifdef PM_DEBUG
-#include "mapdatafunc/new_height_def.h"
-#endif
-
 typedef struct {
 	//横ブロック数, 縦ブロック数, ブロック１辺の幅, グラフィックアーカイブＩＤ, 実マップデータ
 	FLDMAPPER_RESISTDATA	mapperData;
@@ -115,11 +111,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,2,
       FLDMAPPER_MODE_SCROLL_XZ,
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
@@ -140,11 +132,7 @@ const SCENE_DATA resistMapTbl[] = {
 			2048*FX32_ONE, 2048*FX32_ONE, 
       2,3,
       FLDMAPPER_MODE_SCROLL_NONE, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			2,	3, 1,
 			NULL,
@@ -165,11 +153,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,2,
       FLDMAPPER_MODE_SCROLL_NONE, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			2,  2, 1,
 			NULL, 
@@ -190,11 +174,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       3,2,
       FLDMAPPER_MODE_SCROLL_XZ_LOOP, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
@@ -215,11 +195,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,2,
       FLDMAPPER_MODE_SCROLL_NONE, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
@@ -240,11 +216,7 @@ const SCENE_DATA resistMapTbl[] = {
 			1024*FX32_ONE, 1024*FX32_ONE, 
       1,1,
       FLDMAPPER_MODE_SCROLL_NONE, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
@@ -265,11 +237,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       1,1,
       FLDMAPPER_MODE_SCROLL_NONE, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
 
@@ -289,11 +257,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,3,
       FLDMAPPER_MODE_SCROLL_XZ, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
@@ -314,11 +278,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       3,2,
       FLDMAPPER_MODE_SCROLL_XZ, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
@@ -339,11 +299,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       1,1,
       FLDMAPPER_MODE_SCROLL_XZ, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
@@ -364,11 +320,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,2,
       FLDMAPPER_MODE_SCROLL_NONE, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
@@ -390,11 +342,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       3,2,
       FLDMAPPER_MODE_SCROLL_XZ, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
@@ -416,11 +364,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,2,
       FLDMAPPER_MODE_SCROLL_NONE, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
@@ -442,11 +386,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       1,6,
       FLDMAPPER_MODE_SCROLL_NONE, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
@@ -468,11 +408,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,3,
       FLDMAPPER_MODE_SCROLL_NONE, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
@@ -494,11 +430,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       1,1,
       FLDMAPPER_MODE_SCROLL_NONE, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 
@@ -520,11 +452,7 @@ const SCENE_DATA resistMapTbl[] = {
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,2,
       FLDMAPPER_MODE_SCROLL_NONE, 
-#ifdef NEW_HEIGHT_TEST
-      ARCID_FLDMAP_LANDDATA_TEST,
-#else
       ARCID_FLDMAP_LANDDATA,
-#endif
 
 			1,  1, 1,		//dummy map matrix data
 			NULL, 

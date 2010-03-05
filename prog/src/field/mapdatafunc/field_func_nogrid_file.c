@@ -18,10 +18,6 @@
 
 #include "mapdata_attr.h"
 
-#ifdef PM_DEBUG
-#include "new_height_def.h"
-#endif  //PM_DEBUG
-
 
 /// 全部をパックしたファイルのヘッダー
 typedef struct {
@@ -59,7 +55,6 @@ enum {
 	FILE_LOAD_START = FLD_G3D_MAP_LOAD_START,
 	FILE_LOAD,
 	RND_CREATE,
-	TEX_TRANS,
 };
 
 BOOL FieldLoadMapData_NoGridFile( FLD_G3D_MAP* g3Dmap, void * exWork )
@@ -87,14 +82,20 @@ BOOL FieldLoadMapData_NoGridFile( FLD_G3D_MAP* g3Dmap, void * exWork )
 		break;
 
 	case FILE_LOAD:
-		if( FLD_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
-			ldst->mdlLoaded = TRUE;
-			ldst->texLoaded = TRUE;
-			ldst->attrLoaded = TRUE;
+    // ロード完了待ち
+    {
+      BOOL rc;
+      rc = FLD_G3D_MAP_ContinueFileLoad(g3Dmap);
+		  if( rc ){
+        break;
+		  }
+    }
+    ldst->mdlLoaded = TRUE;
+    ldst->texLoaded = TRUE;
+    ldst->attrLoaded = TRUE;
 
-			ldst->seq = RND_CREATE;
-		}
-		break;
+    ldst->seq = RND_CREATE;
+    //break through
 
 	case RND_CREATE:
 		//レンダー作成
@@ -131,15 +132,9 @@ BOOL FieldLoadMapData_NoGridFile( FLD_G3D_MAP* g3Dmap, void * exWork )
 					FLD_G3D_MAP_GetRenderObj(g3Dmap) );
 		}
 
-		ldst->seq = TEX_TRANS;
-		break;
-
-	case TEX_TRANS:
-		{
-			ldst->seq = FLD_G3D_MAP_LOAD_IDLING;
-			return FALSE;
-		}
-		break;
+    //　完了
+    ldst->seq = FLD_G3D_MAP_LOAD_IDLING;
+    return FALSE;
 	}
 	return TRUE;
 }

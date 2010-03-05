@@ -3,7 +3,6 @@ include $(PROJECT_RSCDIR)\macro_define
 MKFILE_LANDLIST = mkfile_landlist
 MKFILE_LAND = mkfile_landarc
 
-
 SUBDIRS	= land_camera
 
 .PHONY: do-build clean
