@@ -22,8 +22,6 @@
 //=============================================================================
 //-------------------------------------
 ///	名前入力モード  
-//  ->　ここに追加すると、savedata/misc.c内で
-//      モード別セーブに使われます
 //=====================================
 typedef enum 
 {
@@ -34,6 +32,7 @@ typedef enum
 	NAMEIN_FRIENDNAME,  // WIFIともだち手帳に書き込むともだちの名前 param1 フィールド３DOBJ
   NAMEIN_GREETING_WORD, // すれちがい挨拶言葉 param1自分の性別
   NAMEIN_THANKS_WORD,   // すれちがいお礼言葉 param1自分の性別
+  NAMEIN_FREE_WORD,     // すれちがいフリーワードparam1自分の性別
 
 //	NAMEIN_FRIENDCODE,	// ともだちコード
 //	NAMEIN_RANDOMGROUP, // 乱数の種グループの名前
@@ -85,6 +84,13 @@ typedef enum
 #define NAMEIN_THANKS_WORD_LENGTH		( 8 )
 #else
 #define NAMEIN_THANKS_WORD_LENGTH		( 8 )
+#endif
+
+// すれ違い　フリーワード
+#if (PM_LANG==LANG_JAPAN)
+#define NAMEIN_FREE_WORD_LENGTH		( 10 )
+#else
+#define NAMEIN_FREE_WORD_LENGTH		( 10 )
 #endif
 
 //=============================================================================

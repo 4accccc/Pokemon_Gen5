@@ -184,19 +184,19 @@ typedef enum
 /// STRINPUT
 //=====================================
 //文字列長
-#define STRINPUT_STR_LEN      (NAMEIN_BOX_LENGTH)     //入力文字列長
-#define STRINPUT_CHANGE_LEN   (3)                     //変換文字列長
+#define STRINPUT_STR_LEN      (10)     //最大入力文字列長
+#define STRINPUT_CHANGE_LEN   (3)      //変換文字列長
 //BMPWINサイズ
 #define STRINPUT_BMPWIN_X     (8)
 #define STRINPUT_BMPWIN_Y     (2)
-#define STRINPUT_BMPWIN_W     (16)
+#define STRINPUT_BMPWIN_W     (24)
 #define STRINPUT_BMPWIN_H     (2)
 //文字描画位置
 #define STRINPUT_STR_START_X  (0)
 #define STRINPUT_STR_OFFSET_X (14)
 #define STRINPUT_STR_Y        (0)
 //BARの位置
-#define STRINPUT_BAR_START_X  (64)
+#define STRINPUT_BAR_START_X  (STRINPUT_BMPWIN_X*8)
 #define STRINPUT_BAR_OFFSET_X (STRINPUT_STR_OFFSET_X)
 #define STRINPUT_BAR_Y        (36)
 //特殊文字変換
@@ -1769,7 +1769,8 @@ static void STRINPUT_Init( STRINPUT_WORK *p_wk, const STRBUF * cp_default_str, u
     u16 x;
     GFL_CLACTPOS  clpos;
     clpos.y = STRINPUT_BAR_Y;
-    x = STRINPUT_BMPWIN_W * 8 / 2 - (p_wk->strlen * STRINPUT_STR_OFFSET_X) /2;  //開始
+ //   x = STRINPUT_BMPWIN_W * 8 / 2 - (p_wk->strlen * STRINPUT_STR_OFFSET_X) /2;  //開始
+      x = 0;
     for( i = 0; i < OBJ_BAR_NUM; i++ )
     { 
       clpos.x = STRINPUT_BAR_START_X + x + i * STRINPUT_BAR_OFFSET_X;
@@ -1863,9 +1864,17 @@ static void STRINPUT_Main( STRINPUT_WORK *p_wk )
 
 
         GFL_STR_SetStringCodeOrderLength( p_wk->p_strbuf, code, 2 );
+#if 0
         x = STRINPUT_BMPWIN_W * 8 / 2 - (p_wk->strlen * STRINPUT_STR_OFFSET_X) /2;  //開始
         x += i * STRINPUT_STR_OFFSET_X + STRINPUT_BAR_OFFSET_X/2;               //幅
         x -= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_wk->p_font, 0 )/2;
+#else
+        //センタリングしていたが、最大文字数が１０になったので、
+        //センタリングできなくなった
+        x = 0;
+        x += i * STRINPUT_STR_OFFSET_X;
+        x += (STRINPUT_BAR_OFFSET_X/2 - PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_wk->p_font, 0 )/2);
+#endif
 
         //変換文字入力中はフォントの色を変える
         if( i >= p_wk->input_idx )
@@ -4983,6 +4992,8 @@ static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode )
 { 
   switch( mode )
   { 
+  case NAMEIN_FREE_WORD:
+    /* fallthrough */
   case NAMEIN_GREETING_WORD:
     /* fallthrough */
   case NAMEIN_THANKS_WORD:
@@ -5057,10 +5068,13 @@ static STRBUF* DEFAULTNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode
     return GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
 
   case NAMEIN_GREETING_WORD:
-    return GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_002 );
+    return GFL_STR_CreateCopyBuffer( cp_wk->p_param->strbuf, heapID );
     
   case NAMEIN_THANKS_WORD:
-    return GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_003 );
+    return GFL_STR_CreateCopyBuffer( cp_wk->p_param->strbuf, heapID );
+
+  case NAMEIN_FREE_WORD:
+    return GFL_STR_CreateCopyBuffer( cp_wk->p_param->strbuf, heapID );
   }
 
   return NULL;
