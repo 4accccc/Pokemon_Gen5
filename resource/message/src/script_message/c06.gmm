@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T16:04:55"/>
+	<create user="matsumiya" host="W00224" date="2010-03-05T21:14:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1288" top="192" right="1993" bottom="820" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -356,8 +356,8 @@
 		<comment>♂
 ・画面下向きでメッセージ表示
 ・ポケモン「ギアン」を
-　捕獲済み→msg_c06_hakase1_03
-　未捕獲→msg_c06_hakase1_04
+　捕獲済み→_hakase1_03
+　未捕獲→hakase1_04
 ・0＝捕まえた数</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">ちょいと　ずかんを　みせてもらうよ
@@ -372,8 +372,7 @@
 
 	<row id="msg_c06_hakase1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・続けてmsg_c06_hakase1_05
-（この処理は暫定）</comment>
+・続けてhakase1_05（この処理は暫定）</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">おお！　ギアルを　つかまえておるのか！
 なかなかの　トレーナーじゃな！[BE:01:ページ切り替え（クリア）]</language>
@@ -383,8 +382,7 @@
 
 	<row id="msg_c06_hakase1_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・続けてmsg_c06_hakase1_05
-（この処理は暫定）</comment>
+・続けてhakase1_05（この処理は暫定）</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">ふむう……
 ギアルは　つかまえて　おらぬのか[BE:01:ページ切り替え（クリア）]
@@ -396,7 +394,7 @@
 
 	<row id="msg_c06_hakase1_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・続けてmsg_c06_hakase1_06</comment>
+・続けてhakase1_06</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">おぉ　すまない！
 ちと　こうふん　してな[BE:01:ページ切り替え（クリア）]
@@ -426,7 +424,7 @@
 		<comment>♂
 ・ポケモン図鑑に
 　フォルムチェンジ確認機能追加予定
-・続けてmsg_c06_hakase1_07</comment>
+・続けてhakase1_07</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">では　であいを　きねんして
 おまえさんの　ポケモンずかんを[BE:00:ページ切り替え（行送り）]
@@ -440,7 +438,7 @@
 		<comment>♂
 ・アイテム入手処理
 　No001「マスターボール」
-・続けてmsg_c06_leader6_01</comment>
+・続けてleader6_01</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">アララギ『よし！　これで
 みた　ポケモンの　すがたなら[BE:00:ページ切り替え（行送り）]
@@ -462,7 +460,7 @@
 
 	<row id="msg_c06_leader6_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・続けてmsg_c06_hakase1_08</comment>
+・続けてhakase1_08</comment>
 		<attribute name="キャラクター">c06ジムリーダー
 フウロ</attribute>
 		<language name="JPN" width="256">？？？『アララギはかせ
@@ -475,7 +473,7 @@
 		<comment>♂
 ・フウロのほうを向いてメッセージ表示
 ※男女性別関係なくこの台詞
-・続けてmsg_c06_leader6_02</comment>
+・続けてleader6_02</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">アララギ『おお！　おう！
 すまんすまん[BE:01:ページ切り替え（クリア）]
@@ -495,7 +493,7 @@
 
 	<row id="msg_c06_leader6_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・続けてmsg_c06_hakase1_09</comment>
+・続けてhakase1_09</comment>
 		<attribute name="キャラクター">c06ジムリーダー
 フウロ</attribute>
 		<language name="JPN" width="256">フウロ『わあ！　だったら
@@ -509,7 +507,7 @@
 	<row id="msg_c06_hakase1_09" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・主人公を向いてメッセージ表示
-・続けてmsg_c06_hakase1_10</comment>
+・続けてhakase1_10</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">アララギ『そうだな　[1:00:トレーナー名:0]くん
 ぜひ　ちょうせんすると　いいぞ！[BE:01:ページ切り替え（クリア）]
@@ -524,7 +522,7 @@
 	<row id="msg_c06_hakase1_10" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・フウロの方を向いてメッセージ表示
-・続けてmsg_c06_leader6_03</comment>
+・続けてleader6_03</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">ではな　フウロくん
 また　なにかあったら　たのむぞ[BE:01:ページ切り替え（クリア）]</language>
@@ -534,7 +532,7 @@
 
 	<row id="msg_c06_leader6_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・続けてmsg_c06_hakase1_11</comment>
+・続けてhakase1_11</comment>
 		<attribute name="キャラクター">c06ジムリーダー
 フウロ</attribute>
 		<language name="JPN" width="256">フウロ『……はかせ
@@ -551,7 +549,7 @@
 		<comment>♂
 ・メッセージ表示後、画面右方面に移動
 ・画面外に消えると
-　続けてmsg_c06_leader6_04</comment>
+　続けてleader6_04</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">アララギ『おいおい
 かわいい　かおして[BE:00:ページ切り替え（行送り）]
@@ -569,10 +567,10 @@
 また　会おうぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_leader6_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_leader6_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・画面右を向いてメッセージ表示
-・続けてmsg_c06_leader6_05</comment>
+・続けてleader6_05かleader6_06</comment>
 		<attribute name="キャラクター">c06ジムリーダー
 フウロ</attribute>
 		<language name="JPN" width="256">フウロ『……ったく！[BE:01:ページ切り替え（クリア）]
@@ -585,23 +583,94 @@
 いまだに　信じられないな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_leader6_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_leader6_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
+・主人公性別＝♂
 ・主人公に隣接してメッセージ
-・メッセージ表示後、画面左上に移動
-　画面外に消えると、主人公操作可能に</comment>
+・続けてleader6_07</comment>
 		<attribute name="キャラクター">c06ジムリーダー
 フウロ</attribute>
 		<language name="JPN" width="256">さてと……
-[1:00:トレーナー名:0]くん　だっけ！[BE:01:ページ切り替え（クリア）]
-じゅんびが　ととのったら
-ジムに　おいでよね！[BE:00:ページ切り替え（行送り）]
-だいかんげい　しちゃうから！！[BE:01:ページ切り替え（クリア）]</language>
+[1:00:トレーナー名:0]くん　だっけ！▽
+ジムに　ちょうせん　だよね？▼
+だけど　アタシ　そのまえに
+やることが　あるんだよね▼</language>
 		<language name="JPN_KANJI" width="256">さてと……
-[1:00:トレーナー名:0]くん　だっけ！[BE:01:ページ切り替え（クリア）]
-準備が　整ったら
-ジムに　おいでよね！[BE:00:ページ切り替え（行送り）]
-大歓迎しちゃうから！！[BE:01:ページ切り替え（クリア）]</language>
+[1:00:トレーナー名:0]くん　だっけ！▽
+ジムに　挑戦だよね？▼
+だけど　アタシ　その前に
+やることが　あるんだよね▼</language>
+	</row>
+
+	<row id="msg_c06_leader6_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・主人公性別＝♀
+・主人公に隣接してメッセージ
+・続けてleader6_07</comment>
+		<attribute name="キャラクター">c06ジムリーダー
+フウロ</attribute>
+		<language name="JPN" width="256">さてと……
+[1:00:トレーナー名:0]さん　だっけ！▽
+ジムに　ちょうせん　だよね？▼
+だけど　アタシ　そのまえに
+やることが　あるんだよね▼</language>
+		<language name="JPN_KANJI" width="256">さてと……
+[1:00:トレーナー名:0]さん　だっけ！▽
+ジムに　挑戦だよね？▼
+だけど　アタシ　その前に
+やることが　あるんだよね▼</language>
+	</row>
+
+	<row id="msg_c06_leader6_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・上向きでメッセージ表示</comment>
+		<attribute name="キャラクター">c06ジムリーダー
+フウロ</attribute>
+		<language name="JPN" width="256">さっき　かもつきを
+そうじゅう　していたときに▼
+タワーオブヘブンの　てっぺんに
+なにか　みえたんだよね▼</language>
+		<language name="JPN_KANJI" width="256">さっき　貨物機を
+操縦していたときに▼
+タワーオブヘブンの　天辺に
+なにか　みえたんだよね▼</language>
+	</row>
+
+	<row id="msg_c06_leader6_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・主人公と向き合ってメッセージ表示
+・表示後、r07方面に歩いて移動
+　画面外に消えると主人公、操作可能に</comment>
+		<attribute name="キャラクター">c06ジムリーダー
+フウロ</attribute>
+		<language name="JPN" width="256">きっと　よわった
+ポケモンだと　おもうの！▼
+で　すごーく　きになるから
+さきに　しらべておきたいなって▼
+ということで　７ばんどうろの
+タワーオブヘブンに　いかせてもらうね▼</language>
+		<language name="JPN_KANJI" width="256">きっと　弱った
+ポケモンだと　思うの！▼
+で　すごーく　気になるから
+先に　調べておきたいなって▼
+ということで　７番道路の
+タワーオブヘブンに　行かせてもらうね▼</language>
+	</row>
+
+	<row id="msg_c06_stop_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・ジムストッパー
+・r07r0105で鐘を鳴らすと削除</comment>
+		<language name="JPN" width="256">フウロさん▼
+かもつきの　そうじゅうを　おえて
+どこに　行っちゃったんですかね▼
+ひょっとして　７ばんどうろの
+タワーオブヘブン　かなあ？</language>
+		<language name="JPN_KANJI" width="256">フウロさん▼
+貨物機の　操縦を　終えて
+どこに　行っちゃったんですかね▼
+ひょっとして　７番道路の
+タワーオブヘブン　かなあ？</language>
 	</row>
 
 	<row id="msg_c06_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">

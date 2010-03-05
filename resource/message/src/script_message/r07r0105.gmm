@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-05T18:02:56"/>
+	<create user="matsumiya" host="W00224" date="2010-03-05T21:14:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,126 @@
 	</lock>
 
 
-	<row id="msg_r07r0105_chime_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r07r0105_leader6_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・GRIDX=16、GRIDZ=13、上向き（暫定）</comment>
+		<attribute name="キャラ指定">c06ジムリーダー
+フウロ</attribute>
+		<language name="JPN" width="256">フウロ『あっ！▼
+さっき　みえたのって　やっぱり
+きずついた　ポケモンだったよ▼
+だけど
+もう　だいじょうぶ！▼
+キズぐすりを　つかってあげたら
+げんきになって　とんでったよ！▼</language>
+		<language name="JPN_KANJI" width="256">フウロ『あっ！▼
+さっき　みえたのって　やっぱり
+傷ついた　ポケモンだったよ▼
+だけど
+もう　大丈夫！▼
+キズぐすりを　使ってあげたら
+元気になって　飛んでったよ！▼</language>
+	</row>
+
+	<row id="msg_r07r0105_leader6_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・GRIDX=198、GRIDZ=13、上向きで
+　メッセージ表示</comment>
+		<attribute name="キャラ指定">c06ジムリーダー
+フウロ</attribute>
+		<language name="JPN" width="256">エヘヘ！
+すごく　めが　いいでしょ！▼
+パイロットの　めは　どんなに
+とおくでも　みえちゃうんだから！▼</language>
+		<language name="JPN_KANJI" width="256">エヘヘ！
+すごく　視力が　いいでしょ！▼
+パイロットの　目は　どんなに
+遠くでも　みえちゃうんだから！▼</language>
+	</row>
+
+	<row id="msg_r07r0105_leader6_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・初期位置にもどり
+　上向きでメッセージ表示</comment>
+		<attribute name="キャラ指定">c06ジムリーダー
+フウロ</attribute>
+		<language name="JPN" width="256">そうだ！　せっかく　きたんだし
+あの　かねを　ならしてごらんよ！▼
+タワーオブヘブンの　かねは
+ポケモンの　たましいを　しずめるの▼
+しかも　ならす　ひとの　こころねが
+ねいろに　はんえい　されるんだ……▼</language>
+		<language name="JPN_KANJI" width="256">そうだ！　せっかく　きたんだし
+あの　鐘を　鳴らしてごらんよ！▼
+タワーオブヘブンの　鐘は
+ポケモンの　魂を　鎮めるの▼
+しかも　鳴らす　人の　心根が
+音色に　反映されるんだ……▼</language>
+	</row>
+
+	<row id="msg_r07r0105_leader6_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・leader6_03表示後に再度会話したとき</comment>
+		<attribute name="キャラ指定">c06ジムリーダー
+フウロ</attribute>
+		<language name="JPN" width="256">フウロ『えんりょしなくって　いいって！▼</language>
+		<language name="JPN_KANJI" width="256">フウロ『遠慮しなくって　いいって！▼</language>
+	</row>
+
+	<row id="msg_r07r0105_leader6_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・主人公性別＝♂
+・鐘のSE再生終了時に自動で表示
+　続けてleader6_07</comment>
+		<attribute name="キャラ指定">c06ジムリーダー
+フウロ</attribute>
+		<language name="JPN" width="256">いい　ねいろ……▼
+[1:00:トレーナー名:0]くんは
+やさしくて　つよい　ひと……▽
+そんな　ねいろ　だよね▼</language>
+		<language name="JPN_KANJI" width="256">いい　音色……▼
+[1:00:トレーナー名:0]くんは
+優しくて　強い　人……▽
+そんな　音色　だよね▼</language>
+	</row>
+
+	<row id="msg_r07r0105_leader6_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・主人公性別＝♀
+・鐘のSE再生終了時に自動で表示
+　続けてleader6_07</comment>
+		<attribute name="キャラ指定">c06ジムリーダー
+フウロ</attribute>
+		<language name="JPN" width="256">いい　ねいろ……▼
+[1:00:トレーナー名:0]さんは
+やさしくて　つよい　ひと……▽
+そんな　ねいろ　だよね▼</language>
+		<language name="JPN_KANJI" width="256">いい　音色……▼
+[1:00:トレーナー名:0]さんは
+優しくて　強い　人……▽
+そんな　音色　だよね▼</language>
+	</row>
+
+	<row id="msg_r07r0105_leader6_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ表示後、歩いて退場
+・画面外に消えると、主人公、操作可能
+　c06のジムストッパー削除</comment>
+		<attribute name="キャラ指定">c06ジムリーダー
+フウロ</attribute>
+		<language name="JPN" width="256">さてと……
+では　あらためて！▼
+じゅんびが　ととのったら
+ジムに　おいでよね！▽
+だいかんげい　しちゃうから！！▼</language>
+		<language name="JPN_KANJI" width="256">さてと……
+では　あらためて！▼
+準備が　整ったら
+ジムに　おいでよね！▽
+熱烈　大歓迎しちゃうから！！▼</language>
+	</row>
+
+	<row id="msg_r07r0105_chime_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・はい/いいえ
 ・はい→chime_02
@@ -304,7 +423,7 @@
 鐘を　鳴らしますか？</language>
 	</row>
 
-	<row id="msg_r07r0105_chime_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r07r0105_chime_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・はい選択時
 ・メッセージ表示後、鐘が動き専用SEを鳴らす
@@ -317,7 +436,7 @@
 鐘を　鳴らした……</language>
 	</row>
 
-	<row id="msg_r07r0105_chime_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r07r0105_chime_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">鐘</attribute>
@@ -327,7 +446,7 @@
 あたりに　鳴り響いた……</language>
 	</row>
 
-	<row id="msg_r07r0105_chime_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r07r0105_chime_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">鐘</attribute>
