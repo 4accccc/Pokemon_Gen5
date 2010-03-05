@@ -290,3 +290,11 @@ const u8 MUSICAL_PROGRAM_GetNpcObjId( MUSICAL_PROGRAM_WORK* progWork , const u8 
 {
   return progWork->progData->pokeData[NPCIdx].trainerType;
 }
+
+//--------------------------------------------------------------
+//	NPC–¼‘O
+//--------------------------------------------------------------
+const u8 MUSICAL_PROGRAM_GetNpcNameIdx( MUSICAL_PROGRAM_WORK* progWork , const u8 NPCIdx )
+{
+  return progWork->progData->pokeData[NPCIdx].trainerName;
+}

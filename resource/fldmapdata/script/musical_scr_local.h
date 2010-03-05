@@ -39,12 +39,14 @@
 #define MUSICAL_FAL_TYPE_NONE (0)
 
 //ココから下は基本ラッパーしてあるのでプログラムで参照
+//※は控え室専用
 //_MUSICAL_WORD 用タイプ
 #define MUSICAL_WORD_TITLE (0)        //セーブにある演目
 #define MUSICAL_WORD_GOODS (1)        //グッズ名
 #define MUSICAL_WORD_TITLE_LOCAL (2)  //※現在演目
 #define MUSICAL_WORD_AUDI_TYPE (3)  //人気客層
 #define MUSICAL_WORD_CONDITION (4)  //コンディション名
+#define MUSICAL_WORD_NPC_NAME (5)  //※参加者名前
 
 //_MUSICAL_CALL 用
 #define MUSICAL_CALL_LOCAL (0)        //非通信

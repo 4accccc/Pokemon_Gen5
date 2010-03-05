@@ -635,6 +635,14 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
       GFL_MSG_Delete( msgHandle );
     }
     break;
+  case MUSICAL_WORD_NPC_NAME:  //¦ŽQ‰ÁŽÒ–¼‘O
+    {
+      MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
+      MUSICAL_EVENT_WORK *evWork = musScriptWork->eventWork;
+      
+      MUSICAL_EVENT_SetPosCharaName_Wordset( evWork , val , wordset , idx );
+    }
+    break;
   }
 
   return VMCMD_RESULT_CONTINUE;

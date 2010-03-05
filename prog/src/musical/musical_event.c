@@ -41,6 +41,8 @@
 #include "musical/dressup/dup_local_def.h"
 #include "test/ariizumi/ari_debug.h"
 
+#include "message.naix"
+
 #include "../resource/fldmapdata/script/c04r0202_def.h"
 #include "../resource/fldmapdata/script/musical_scr_local.h"
 
@@ -127,8 +129,8 @@ struct _MUSICAL_EVENT_WORK
 
   MUSICAL_SAVE *musSave;
 
-  u8 musicalIndex[MUSICAL_POKE_MAX];
-  u8 rankIndex[MUSICAL_POKE_MAX];   //参加番号が順位順で入っている
+  u8 musicalIndex[MUSICAL_POKE_MAX];  //キャラのIDXに対応した立ち位置
+  u8 rankIndex[MUSICAL_POKE_MAX];     //参加番号が順位順で入っている
   u8 selfIdx;
 
 };
@@ -216,13 +218,7 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
         }
       }
       
-      for( i=0;i<MUSICAL_POKE_MAX;i++ )
-      {
-        if( evWork->musicalIndex[i] == 0 )
-        {
-          evWork->selfIdx = i;
-        }
-      }
+      evWork->selfIdx = evWork->musicalIndex[0];
       
       //マップ遷移前に演目のデータだけ必要(NPCキャラを出すため
       MUSICAL_SYSTEM_LoadDistributeData_Data( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_PROC_WRAPPER );
@@ -1098,6 +1094,51 @@ const u8 MUSICAL_EVENT_GetPosObjView( MUSICAL_EVENT_WORK *evWork , const u8 pos 
   }
   
   return MUSICAL_PROGRAM_GetNpcObjId( evWork->progWork , idx-1 );
+}
+
+void MUSICAL_EVENT_SetPosCharaName_Wordset( MUSICAL_EVENT_WORK *evWork , const u8 pos , WORDSET *wordSet , const u8 wordIdx )
+{
+  u8 i;
+  u8 idx = 0;
+  BOOL isSet = FALSE;
+  for( i=0;i<4;i++ )
+  {
+    if( evWork->musicalIndex[i] == pos )
+    {
+      idx = i;
+      break;
+    }
+  }
+
+  if( pos == evWork->selfIdx )
+  {
+    MYSTATUS *myStatus = GAMEDATA_GetMyStatus( evWork->gameData );
+    WORDSET_RegisterPlayerName( wordSet , wordIdx , myStatus );
+    isSet = TRUE;
+  }
+  else
+  if( evWork->isComm == TRUE )
+  {
+    MYSTATUS *commMyStatus = MUS_COMM_GetPlayerMyStatus( evWork->commWork , idx );
+    if( commMyStatus != NULL )
+    {
+      WORDSET_RegisterPlayerName( wordSet , wordIdx , commMyStatus );
+      isSet = TRUE;
+    }
+  }
+  
+  if( isSet == FALSE )
+  {
+    const u8 nameIdx = MUSICAL_PROGRAM_GetNpcNameIdx( evWork->progWork , idx-1 );
+    GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_extra_dat , HEAPID_PROC );
+    STRBUF * tmpBuf = GFL_MSG_CreateString( msgHandle , nameIdx );
+    
+    //@TODO 海外版男女対応
+    WORDSET_RegisterWord( wordSet, wordIdx, tmpBuf, 0, TRUE, PM_LANG );
+
+    GFL_STR_DeleteBuffer( tmpBuf );
+    GFL_MSG_Delete( msgHandle );
+  }
 }
 
 
