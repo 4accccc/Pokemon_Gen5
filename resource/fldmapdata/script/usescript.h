@@ -122,6 +122,9 @@
 //顔アップ定義
 #include "../../../prog/src/field/fld_faceup_def.h"
 
+//自分の性格
+#include "../../../prog/include/savedata/nature_def.h"
+
 
 //======================================================================
 //  共通メッセージ関連
