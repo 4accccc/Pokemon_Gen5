@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-24T22:51:10"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-03-05T20:08:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -486,6 +486,26 @@
 	<row id="COMM_TVT_CALL_14">
 		<language name="JPN">せつぞくちゅう・・・</language>
 		<language name="JPN_KANJI">接続中・・・</language>
+	</row>
+
+	<row id="COMM_TVT_CALL_15">
+		<language name="JPN">ともだちを　さがしています</language>
+		<language name="JPN_KANJI">友達を　探しています</language>
+	</row>
+
+	<row id="COMM_TVT_CALL_16">
+		<language name="JPN">ともだちを　さがしています・</language>
+		<language name="JPN_KANJI">友達を　探しています・</language>
+	</row>
+
+	<row id="COMM_TVT_CALL_17">
+		<language name="JPN">ともだちを　さがしています・・</language>
+		<language name="JPN_KANJI">友達を　探しています・・</language>
+	</row>
+
+	<row id="COMM_TVT_CALL_18">
+		<language name="JPN">ともだちを　さがしています・・・</language>
+		<language name="JPN_KANJI">友達を　探しています・・・</language>
 	</row>
 
 	<row id="COMM_TVT_SYS_01">
