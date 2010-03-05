@@ -70,7 +70,7 @@
 #define MAP_SETUP_OBJ_DRAW_LIMIT    (4096<<FX32_SHIFT)
 #define MAP_SETUP_OBJ_LOD_LIMIT    (1024<<FX32_SHIFT)
 
-#define MAP_LOAD_SIZE (0xc00)
+#define MAP_LOAD_SIZE (0x800)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
