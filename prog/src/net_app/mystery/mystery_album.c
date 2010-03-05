@@ -209,6 +209,8 @@ static void Mystery_Album_InitDisplay( MYSTERY_ALBUM_WORK *p_wk, HEAPID heapID )
 static void Mystery_Album_ExitDisplay( MYSTERY_ALBUM_WORK *p_wk );
 static void Mystery_Album_CreateDisplay( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front, BOOL is_left, u32 page, HEAPID heapID );
 static void Mystery_Album_DeleteDisplay( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front );
+static void Mystery_Album_CreateThumbnail( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front, BOOL is_left, u32 page, u16 index, HEAPID heapID );
+static void Mystery_Album_DeleteThumbnail( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front, u16 index );
 static void Mystery_Album_StartScrollPage( MYSTERY_ALBUM_WORK *p_wk, BOOL is_left );
 static BOOL Mystery_Album_ScrollPage( MYSTERY_ALBUM_WORK *p_wk );
 static void Mystery_Album_RemoveCard( MYSTERY_ALBUM_WORK *p_wk, u32 card_index );
@@ -534,11 +536,11 @@ void MYSTERY_ALBUM_Exit( MYSTERY_ALBUM_WORK *p_wk )
   GFL_BG_ClearScreen( MYSTERY_ALBUM_CARD_FRM_S );
   GFL_BG_LoadScreenReq( MYSTERY_ALBUM_CARD_FONT_S );
   GFL_BG_LoadScreenReq( MYSTERY_ALBUM_CARD_FRM_S );
-
+/*
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
   GFL_BG_SetVisible( MYSTERY_ALBUM_CARD_FRM_S, TRUE );
   GFL_BG_SetVisible( MYSTERY_ALBUM_CARD_FONT_S, TRUE );
-
+*/
   MYSTERY_SEQ_Exit( p_wk->p_seq );
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -891,214 +893,13 @@ static void Mystery_Album_ExitDisplay( MYSTERY_ALBUM_WORK *p_wk )
 static void Mystery_Album_CreateDisplay( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front, BOOL is_left, u32 page, HEAPID heapID )
 {
   int i;
-  MYSTERY_CARD_DATA *p_src;
-  MYSTERY_ALBUM_THUMBNAIL_DATA  data;
-  u32 dst_idx;
 
   for( i = 0; i < MYSTERY_CURSOR_MAX; i++ )
   { 
-    //カードデータ取得
-    p_src = &p_wk->data[ Mystery_Album_GetCardIndex( page, i ) ];
-
-    //カードの中身があったら貼付け---
-    //貼り付ける位置を取得
-    dst_idx = i;
-
-    //座標データ取得
-    data  = sc_thumbnail_data[i];
-
-    //貼る面が右側だったらオフセットでずらす
-    if( (is_front && !p_wk->is_left)
-        || (!is_front && p_wk->is_left) )
-    { 
-      dst_idx += MYSTERY_CURSOR_MAX;
-
-      data.card_x += MYSTERY_ALBUM_CARD_BACKSURFACE_OFS/8;
-      data.date_x += MYSTERY_ALBUM_CARD_BACKSURFACE_OFS/8;
-    }
-
-    //数字キャラ貼付け
-    //カードのキャラをスクリーンに貼り付ける
-    { 
-      int j, k;
-      u16 chr_num;
-      u8 card_index;
-      for( j = 0; j < MYSTERY_ALBUM_CARD_NUMBER_H; j++ )
-      { 
-        for( k = 0; k < MYSTERY_ALBUM_CARD_NUMBER_W; k++ )
-        { 
-          card_index  = Mystery_Album_GetCardIndex( page, i );
-          chr_num = MYSTERY_ALBUM_CARD_NUMBER_GET_CHARA( card_index, k, j );
-
-          NAGI_Printf( "cardindex %d top %d\n", card_index, MYSTERY_ALBUM_CARD_NUMBER_GET_TOP(card_index) );
-
-          GFL_BG_FillScreen( MYSTERY_ALBUM_BACK_FRM, chr_num,
-              data.card_x + k - MYSTERY_ALBUM_CARD_NUMBER_W, 
-              data.card_y + j, 1, 1, MYSTERY_ALBUM_THUMBNAIL_NONE_PLT );
-        }
-      }
-    }
-
-    if( !MYSTERY_CARD_DATA_IsExist( p_src ) )
-    {
-      //カードの中身がなかったら、背面貼付け--
-      //カードのキャラをスクリーンに貼り付ける
-      { 
-        int i,j;
-        u16 chr_num;
-        for( i = 0; i < MYSTERY_ALBUM_THUMBNAIL_CARD_H; i++ )
-        { 
-          for( j = 0; j < MYSTERY_ALBUM_THUMBNAIL_CARD_W; j++ )
-          { 
-            chr_num = MYSTERY_ALBUM_CARD_WRITE_BLANK_SRC_GET_CHARA( j, i );
-
-            GFL_BG_FillScreen( MYSTERY_ALBUM_BACK_FRM, chr_num,
-                data.card_x + j, data.card_y + i, 1, 1, MYSTERY_ALBUM_THUMBNAIL_NONE_PLT );
-          }
-        }
-      }
-
-      //日付BMPWINをクリア
-      { 
-        GFL_BMP_DATA  *p_dst  = GFL_BMPWIN_GetBmp( p_wk->p_bmpwin[dst_idx] );
-        GFL_BMP_Clear( p_dst, 0 );
-        GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin[dst_idx] );
-      }
-
-
-    }
-    else
-    { 
-      //カードのキャラをスクリーンに貼り付ける
-      { 
-        int i,j;
-        u16 chr_num;
-        for( i = 0; i < MYSTERY_ALBUM_THUMBNAIL_CARD_H; i++ )
-        { 
-          for( j = 0; j < MYSTERY_ALBUM_THUMBNAIL_CARD_W; j++ )
-          { 
-            chr_num = MYSTERY_ALBUM_CARD_WRITE_SRC_GET_CHARA( j, i );
-
-            GFL_BG_FillScreen( MYSTERY_ALBUM_BACK_FRM, chr_num,
-                data.card_x + j, data.card_y + i, 1, 1, MYSTERY_ALBUM_THUMBNAIL_NOGETPOKE_PLT );
-          }
-        }
-      }
-
-      //タイプと取得状況によってカードをパレットチェンジ
-      { 
-        const u32 plt      = MYSTERY_CARD_DATA_GetThumbnailPltOfs( p_src );
-
-        GFL_BG_ChangeScreenPalette( MYSTERY_ALBUM_BACK_FRM, data.card_x, data.card_y,
-            MYSTERY_ALBUM_THUMBNAIL_CARD_W, MYSTERY_ALBUM_THUMBNAIL_CARD_H,
-            plt );
-      }
-
-      //日付を貼り付ける
-      { 
-        const GFL_BMP_DATA  *cp_src  = MYSTERY_CARD_DATA_GetBmp( p_src );
-        GFL_BMP_DATA  *p_dst  = GFL_BMPWIN_GetBmp( p_wk->p_bmpwin[dst_idx] );
-        GFL_BMP_Copy( cp_src, p_dst );
-        GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin[dst_idx] );
-      }
-
-      //アイコンを作成する
-      //  日付のように、作成しておいて、設定するだけにしたかったのだが、
-      //  リソースの関係でやむをえずここで作成する
-      { 
-        //リソース読みこみ
-        {	
-          ARCHANDLE	*	p_handle	= MYSTERY_CARD_DATA_GetArcHandle( p_src, heapID );
-
-          if( MYSTERY_CARD_DATA_GetType(p_src) != MYSTERYGIFT_TYPE_POKEMON )
-          { 
-            p_wk->res_icon_plt[ dst_idx ]	= GFL_CLGRP_PLTT_RegisterEx( p_handle, 
-                MYSTERY_CARD_DATA_GetResPlt(p_src), CLSYS_DRAW_MAIN, (MYSTERY_ALBUM_OBJ_ICON_PLT+dst_idx)*0x20, 0,1,heapID );
-          }
-          p_wk->res_cel[ dst_idx ]	= GFL_CLGRP_CELLANIM_Register( p_handle,
-              MYSTERY_CARD_DATA_GetResCel(p_src), MYSTERY_CARD_DATA_GetResAnm(p_src), heapID );
-          p_wk->res_cgx[ dst_idx ]	= GFL_CLGRP_CGR_Register( p_handle,
-              MYSTERY_CARD_DATA_GetResCgx(p_src), FALSE, CLSYS_DRAW_MAIN, heapID );
-
-          GFL_ARC_CloseDataHandle( p_handle );
-        }
-        //アイコン作成
-        { 
-          u32 plt;
-          s8 ofs_x = 0, ofs_y = 0;
-          GFL_CLWK_DATA cldata;
-          GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-          cldata.pos_y  = data.icon_y;
-          cldata.bgpri  = MYSTERY_ALBUM_FONT_FRM;
-
-          //アイテムアイコンのリソースだけ、ずれているため
-          if(MYSTERY_CARD_DATA_GetType(p_src) == MYSTERYGIFT_TYPE_ITEM )
-          { 
-            ofs_x   = 4;
-            ofs_y   = 8;
-          }
-
-          if( is_front )
-          { 
-            cldata.pos_x = data.icon_x;
-          }
-          else
-          { 
-            if( is_left )
-            { 
-              cldata.pos_x = data.icon_x - MYSTERY_ALBUM_CARD_BACKSURFACE_OFS;
-            }
-            else if( !is_left )
-            { 
-              cldata.pos_x = data.icon_x + MYSTERY_ALBUM_CARD_BACKSURFACE_OFS;
-            }
-            else
-            { 
-              cldata.pos_x = data.icon_x;
-            }
-          }
-          cldata.pos_x  += ofs_x;
-          cldata.pos_y  += ofs_y;
-
-          //ポケモンなら共通アイコンパレット
-          //それ以外ならばそれぞれのパレット
-          plt = ( MYSTERY_CARD_DATA_GetType(p_src) == MYSTERYGIFT_TYPE_POKEMON ) ?
-            p_wk->res_poke_icon_plt: p_wk->res_icon_plt[ dst_idx ];
-        
-          p_wk->p_icon[ dst_idx ] = GFL_CLACT_WK_Create( p_wk->setup.p_clunit,
-              p_wk->res_cgx[ dst_idx ], plt, p_wk->res_cel[ dst_idx ],
-              &cldata, CLSYS_DEFREND_MAIN, p_wk->heapID );
-          GFL_CLACT_WK_SetPlttOffs( p_wk->p_icon[ dst_idx ],
-              MYSTERY_CARD_DATA_GetPltOfs( p_src ), CLWK_PLTTOFFS_MODE_OAM_COLOR );
-          GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon[ dst_idx ], TRUE );
-        }
-
-        //入れ替えカーソル
-        if( p_wk->is_swap && Mystery_Album_GetCardIndex( page, i ) == p_wk->swap_card_index )
-        { 
-          GFL_CLACTPOS  pos;
-          pos.x = sc_thumbnail_data[i].card_x*8 - 24;
-          pos.y = sc_thumbnail_data[i].card_y*8 - 8;
-          if( is_front )
-          { 
-          }
-          else
-          { 
-            if( is_left )
-            { 
-              pos.x -= MYSTERY_ALBUM_CARD_BACKSURFACE_OFS;
-            }
-            else if( !is_left )
-            { 
-              pos.x += MYSTERY_ALBUM_CARD_BACKSURFACE_OFS;
-            }
-          }
-          GFL_CLACT_WK_SetPos( p_wk->p_swap_cursor, &pos, CLSYS_DEFREND_MAIN );
-        }
-      }
-    }
+    Mystery_Album_CreateThumbnail( p_wk, is_front, is_left, page, i, heapID );
   }
 
+  //ページを表示
   { 
     int page_max;
     STRBUF *p_strbuf_src;
@@ -1119,7 +920,7 @@ static void Mystery_Album_CreateDisplay( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front
     GFL_STR_DeleteBuffer( p_strbuf_dst );
 
   }
-  GFL_BG_LoadScreenV_Req( MYSTERY_ALBUM_BACK_FRM );
+  GFL_BG_LoadScreenReq( MYSTERY_ALBUM_BACK_FRM );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1132,31 +933,78 @@ static void Mystery_Album_CreateDisplay( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front
 static void Mystery_Album_DeleteDisplay( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front )
 { 
   int i;
+  for( i = 0; i < MYSTERY_CURSOR_MAX; i++ )
+  { 
+    Mystery_Album_DeleteThumbnail( p_wk, is_front, i );
+  }
+  GFL_BG_LoadScreenReq( MYSTERY_ALBUM_BACK_FRM );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サムネイルを作成
+ *
+ *	@param	MYSTERY_ALBUM_WORK *p_wk  ワーク
+ *	@param	is_front                  全面か背面か
+ *	@param	is_left                   左に動くか右に動くか
+ *	@param	page                      何ページ目か
+ *	@param  index                     何番目のサムネイルか
+ *	@param	heapID                    ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void Mystery_Album_CreateThumbnail( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front, BOOL is_left, u32 page, u16 index, HEAPID heapID )
+{
+  MYSTERY_CARD_DATA *p_src;
   MYSTERY_ALBUM_THUMBNAIL_DATA  data;
   u32 dst_idx;
 
-  for( i = 0; i < MYSTERY_CURSOR_MAX; i++ )
+
+  //カードデータ取得
+  p_src = &p_wk->data[ Mystery_Album_GetCardIndex( page, index ) ];
+
+  //カードの中身があったら貼付け---
+  //貼り付ける位置を取得
+  dst_idx = index;
+
+  //座標データ取得
+  data  = sc_thumbnail_data[index];
+
+  //貼る面が右側だったらオフセットでずらす
+  if( (is_front && !p_wk->is_left)
+      || (!is_front && p_wk->is_left) )
   { 
-    //貼り付ける位置を取得
-    dst_idx = i;
+    dst_idx += MYSTERY_CURSOR_MAX;
 
-    //座標データ取得
-    data  = sc_thumbnail_data[i];
+    data.card_x += MYSTERY_ALBUM_CARD_BACKSURFACE_OFS/8;
+    data.date_x += MYSTERY_ALBUM_CARD_BACKSURFACE_OFS/8;
+  }
 
-    //貼る面が右側だったらオフセットでずらす
-    if( (is_front && !p_wk->is_left)
-        || (!is_front && p_wk->is_left) )
+  //数字キャラ貼付け
+  //カードのキャラをスクリーンに貼り付ける
+  { 
+    int j, k;
+    u16 chr_num;
+    u8 card_index;
+    for( j = 0; j < MYSTERY_ALBUM_CARD_NUMBER_H; j++ )
     { 
-      dst_idx += MYSTERY_CURSOR_MAX;
+      for( k = 0; k < MYSTERY_ALBUM_CARD_NUMBER_W; k++ )
+      { 
+        card_index  = Mystery_Album_GetCardIndex( page, index );
+        chr_num = MYSTERY_ALBUM_CARD_NUMBER_GET_CHARA( card_index, k, j );
 
-      data.card_x += MYSTERY_ALBUM_CARD_BACKSURFACE_OFS/8;
-      data.date_x += MYSTERY_ALBUM_CARD_BACKSURFACE_OFS/8;
+        NAGI_Printf( "cardindex %d top %d\n", card_index, MYSTERY_ALBUM_CARD_NUMBER_GET_TOP(card_index) );
+
+        GFL_BG_FillScreen( MYSTERY_ALBUM_BACK_FRM, chr_num,
+            data.card_x + k - MYSTERY_ALBUM_CARD_NUMBER_W, 
+            data.card_y + j, 1, 1, MYSTERY_ALBUM_THUMBNAIL_NONE_PLT );
+      }
     }
+  }
 
-
-    //カードのキャラを消す
+  if( !MYSTERY_CARD_DATA_IsExist( p_src ) )
+  {
+    //カードの中身がなかったら、背面貼付け--
+    //カードのキャラをスクリーンに貼り付ける
     { 
-      //カードのキャラをスクリーンに貼り付ける
       int i,j;
       u16 chr_num;
       for( i = 0; i < MYSTERY_ALBUM_THUMBNAIL_CARD_H; i++ )
@@ -1164,44 +1012,228 @@ static void Mystery_Album_DeleteDisplay( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front
         for( j = 0; j < MYSTERY_ALBUM_THUMBNAIL_CARD_W; j++ )
         { 
           chr_num = MYSTERY_ALBUM_CARD_WRITE_BLANK_SRC_GET_CHARA( j, i );
+
           GFL_BG_FillScreen( MYSTERY_ALBUM_BACK_FRM, chr_num,
               data.card_x + j, data.card_y + i, 1, 1, MYSTERY_ALBUM_THUMBNAIL_NONE_PLT );
         }
       }
     }
 
-    //日付を消す
+    //日付BMPWINをクリア
     { 
       GFL_BMP_DATA  *p_dst  = GFL_BMPWIN_GetBmp( p_wk->p_bmpwin[dst_idx] );
       GFL_BMP_Clear( p_dst, 0 );
       GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin[dst_idx] );
     }
 
-    //アイコンを消す
-    if( p_wk->p_icon[ dst_idx ] != NULL )
-    { 
-      GFL_CLACT_WK_Remove( p_wk->p_icon[ dst_idx ] );
-      p_wk->p_icon[ dst_idx ] = NULL;
 
-      //リソースを消す
-      if( p_wk->res_icon_plt[dst_idx] != GFL_CLGRP_REGISTER_FAILED )
+  }
+  else
+  { 
+    //カードのキャラをスクリーンに貼り付ける
+    { 
+      int i,j;
+      u16 chr_num;
+      for( i = 0; i < MYSTERY_ALBUM_THUMBNAIL_CARD_H; i++ )
       { 
-        GFL_CLGRP_PLTT_Release( p_wk->res_icon_plt[dst_idx] );
-        p_wk->res_icon_plt[dst_idx] = GFL_CLGRP_REGISTER_FAILED;
+        for( j = 0; j < MYSTERY_ALBUM_THUMBNAIL_CARD_W; j++ )
+        { 
+          chr_num = MYSTERY_ALBUM_CARD_WRITE_SRC_GET_CHARA( j, i );
+
+          GFL_BG_FillScreen( MYSTERY_ALBUM_BACK_FRM, chr_num,
+              data.card_x + j, data.card_y + i, 1, 1, MYSTERY_ALBUM_THUMBNAIL_NOGETPOKE_PLT );
+        }
       }
-      if( p_wk->res_cgx[dst_idx] != GFL_CLGRP_REGISTER_FAILED )
-      { 
-        GFL_CLGRP_CGR_Release( p_wk->res_cgx[dst_idx] );
-        p_wk->res_cgx[dst_idx] = GFL_CLGRP_REGISTER_FAILED;
+    }
+
+    //タイプと取得状況によってカードをパレットチェンジ
+    { 
+      const u32 plt      = MYSTERY_CARD_DATA_GetThumbnailPltOfs( p_src );
+
+      GFL_BG_ChangeScreenPalette( MYSTERY_ALBUM_BACK_FRM, data.card_x, data.card_y,
+          MYSTERY_ALBUM_THUMBNAIL_CARD_W, MYSTERY_ALBUM_THUMBNAIL_CARD_H,
+          plt );
+    }
+
+    //日付を貼り付ける
+    { 
+      const GFL_BMP_DATA  *cp_src  = MYSTERY_CARD_DATA_GetBmp( p_src );
+      GFL_BMP_DATA  *p_dst  = GFL_BMPWIN_GetBmp( p_wk->p_bmpwin[dst_idx] );
+      GFL_BMP_Copy( cp_src, p_dst );
+      GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin[dst_idx] );
+    }
+
+    //アイコンを作成する
+    //  日付のように、作成しておいて、設定するだけにしたかったのだが、
+    //  リソースの関係でやむをえずここで作成する
+    { 
+      //リソース読みこみ
+      {	
+        ARCHANDLE	*	p_handle	= MYSTERY_CARD_DATA_GetArcHandle( p_src, heapID );
+
+        if( MYSTERY_CARD_DATA_GetType(p_src) != MYSTERYGIFT_TYPE_POKEMON )
+        { 
+          p_wk->res_icon_plt[ dst_idx ]	= GFL_CLGRP_PLTT_RegisterEx( p_handle, 
+              MYSTERY_CARD_DATA_GetResPlt(p_src), CLSYS_DRAW_MAIN, (MYSTERY_ALBUM_OBJ_ICON_PLT+dst_idx)*0x20, 0,1,heapID );
+        }
+        p_wk->res_cel[ dst_idx ]	= GFL_CLGRP_CELLANIM_Register( p_handle,
+            MYSTERY_CARD_DATA_GetResCel(p_src), MYSTERY_CARD_DATA_GetResAnm(p_src), heapID );
+        p_wk->res_cgx[ dst_idx ]	= GFL_CLGRP_CGR_Register( p_handle,
+            MYSTERY_CARD_DATA_GetResCgx(p_src), FALSE, CLSYS_DRAW_MAIN, heapID );
+
+        GFL_ARC_CloseDataHandle( p_handle );
       }
-      if( p_wk->res_cel[dst_idx] != GFL_CLGRP_REGISTER_FAILED )
+      //アイコン作成
       { 
-        GFL_CLGRP_CELLANIM_Release( p_wk->res_cel[dst_idx] );
-        p_wk->res_cel[dst_idx] = GFL_CLGRP_REGISTER_FAILED;
+        u32 plt;
+        s8 ofs_x = 0, ofs_y = 0;
+        GFL_CLWK_DATA cldata;
+        GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+        cldata.pos_y  = data.icon_y;
+        cldata.bgpri  = MYSTERY_ALBUM_FONT_FRM;
+
+        //アイテムアイコンのリソースだけ、ずれているため
+        if(MYSTERY_CARD_DATA_GetType(p_src) == MYSTERYGIFT_TYPE_ITEM )
+        { 
+          ofs_x   = 4;
+          ofs_y   = 8;
+        }
+
+        if( is_front )
+        { 
+          cldata.pos_x = data.icon_x;
+        }
+        else
+          { 
+            if( is_left )
+            { 
+              cldata.pos_x = data.icon_x - MYSTERY_ALBUM_CARD_BACKSURFACE_OFS;
+            }
+            else if( !is_left )
+            { 
+              cldata.pos_x = data.icon_x + MYSTERY_ALBUM_CARD_BACKSURFACE_OFS;
+            }
+            else
+            { 
+              cldata.pos_x = data.icon_x;
+            }
+          }
+        cldata.pos_x  += ofs_x;
+        cldata.pos_y  += ofs_y;
+
+        //ポケモンなら共通アイコンパレット
+        //それ以外ならばそれぞれのパレット
+        plt = ( MYSTERY_CARD_DATA_GetType(p_src) == MYSTERYGIFT_TYPE_POKEMON ) ?
+          p_wk->res_poke_icon_plt: p_wk->res_icon_plt[ dst_idx ];
+
+        p_wk->p_icon[ dst_idx ] = GFL_CLACT_WK_Create( p_wk->setup.p_clunit,
+            p_wk->res_cgx[ dst_idx ], plt, p_wk->res_cel[ dst_idx ],
+            &cldata, CLSYS_DEFREND_MAIN, p_wk->heapID );
+        GFL_CLACT_WK_SetPlttOffs( p_wk->p_icon[ dst_idx ],
+            MYSTERY_CARD_DATA_GetPltOfs( p_src ), CLWK_PLTTOFFS_MODE_OAM_COLOR );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon[ dst_idx ], TRUE );
+      }
+
+      //入れ替えカーソル
+      if( p_wk->is_swap && Mystery_Album_GetCardIndex( page, index ) == p_wk->swap_card_index )
+      { 
+        GFL_CLACTPOS  pos;
+        pos.x = sc_thumbnail_data[index].card_x*8 - 24;
+        pos.y = sc_thumbnail_data[index].card_y*8 - 8;
+        if( is_front )
+        { 
+        }
+        else
+        { 
+          if( is_left )
+          { 
+            pos.x -= MYSTERY_ALBUM_CARD_BACKSURFACE_OFS;
+          }
+          else if( !is_left )
+          { 
+            pos.x += MYSTERY_ALBUM_CARD_BACKSURFACE_OFS;
+          }
+        }
+        GFL_CLACT_WK_SetPos( p_wk->p_swap_cursor, &pos, CLSYS_DEFREND_MAIN );
       }
     }
   }
-  GFL_BG_LoadScreenReq( MYSTERY_ALBUM_BACK_FRM );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サムネイルを破棄
+ *
+ *	@param	MYSTERY_ALBUM_WORK *p_wk  ワーク
+ *	@param	is_front                  TRUEならば全面  FALSEならば背面
+ *	@param  index                     その面のどのサムネイルか
+ */
+//-----------------------------------------------------------------------------
+static void Mystery_Album_DeleteThumbnail( MYSTERY_ALBUM_WORK *p_wk, BOOL is_front, u16 index )
+{ 
+  //貼り付ける位置を取得
+  MYSTERY_ALBUM_THUMBNAIL_DATA  data;
+  u16 dst_idx = index;
+
+  //座標データ取得
+  data  = sc_thumbnail_data[index];
+
+  //貼る面が右側だったらオフセットでずらす
+  if( (is_front && !p_wk->is_left)
+      || (!is_front && p_wk->is_left) )
+  { 
+    dst_idx += MYSTERY_CURSOR_MAX;
+
+    data.card_x += MYSTERY_ALBUM_CARD_BACKSURFACE_OFS/8;
+    data.date_x += MYSTERY_ALBUM_CARD_BACKSURFACE_OFS/8;
+  }
+
+
+  //カードのキャラを消す
+  { 
+    //カードのキャラをスクリーンに貼り付ける
+    int i,j;
+    u16 chr_num;
+    for( i = 0; i < MYSTERY_ALBUM_THUMBNAIL_CARD_H; i++ )
+    { 
+      for( j = 0; j < MYSTERY_ALBUM_THUMBNAIL_CARD_W; j++ )
+      { 
+        chr_num = MYSTERY_ALBUM_CARD_WRITE_BLANK_SRC_GET_CHARA( j, i );
+        GFL_BG_FillScreen( MYSTERY_ALBUM_BACK_FRM, chr_num,
+            data.card_x + j, data.card_y + i, 1, 1, MYSTERY_ALBUM_THUMBNAIL_NONE_PLT );
+      }
+    }
+  }
+
+  //日付を消す
+  { 
+    GFL_BMP_DATA  *p_dst  = GFL_BMPWIN_GetBmp( p_wk->p_bmpwin[dst_idx] );
+    GFL_BMP_Clear( p_dst, 0 );
+    GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin[dst_idx] );
+  }
+
+  //アイコンを消す
+  if( p_wk->p_icon[ dst_idx ] != NULL )
+  { 
+    GFL_CLACT_WK_Remove( p_wk->p_icon[ dst_idx ] );
+    p_wk->p_icon[ dst_idx ] = NULL;
+
+    //リソースを消す
+    if( p_wk->res_icon_plt[dst_idx] != GFL_CLGRP_REGISTER_FAILED )
+    { 
+      GFL_CLGRP_PLTT_Release( p_wk->res_icon_plt[dst_idx] );
+      p_wk->res_icon_plt[dst_idx] = GFL_CLGRP_REGISTER_FAILED;
+    }
+    if( p_wk->res_cgx[dst_idx] != GFL_CLGRP_REGISTER_FAILED )
+    { 
+      GFL_CLGRP_CGR_Release( p_wk->res_cgx[dst_idx] );
+      p_wk->res_cgx[dst_idx] = GFL_CLGRP_REGISTER_FAILED;
+    }
+    if( p_wk->res_cel[dst_idx] != GFL_CLGRP_REGISTER_FAILED )
+    { 
+      GFL_CLGRP_CELLANIM_Release( p_wk->res_cel[dst_idx] );
+      p_wk->res_cel[dst_idx] = GFL_CLGRP_REGISTER_FAILED;
+    }
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1393,6 +1425,7 @@ static u32 Mystery_Album_GetPageMax( const MYSTERY_ALBUM_WORK *cp_wk )
 { 
   int cnt;
   u32 max;
+#if 0
 
   cnt = Mystery_Album_GetDataNum( cp_wk );
 
@@ -1400,6 +1433,9 @@ static u32 Mystery_Album_GetPageMax( const MYSTERY_ALBUM_WORK *cp_wk )
   max = MATH_IMin( max, MYSTERY_ALBUM_PAGE_MAX );
 
   return max;
+#else
+  return MYSTERY_ALBUM_PAGE_MAX;
+#endif 
 }
 //----------------------------------------------------------------------------
 /**
@@ -1853,6 +1889,7 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       //キー入力
       if( key & PAD_KEY_UP )
       { 
+        PMSND_PlaySE( MYSTERY_SE_SELCT );
         switch( p_wk->cursor )
         { 
         case MYSTERY_CURSOR_LEFT_UP:
@@ -1902,6 +1939,7 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       }
       else if( key & PAD_KEY_DOWN )
       { 
+        PMSND_PlaySE( MYSTERY_SE_SELCT );
         switch( p_wk->cursor )
         { 
         case MYSTERY_CURSOR_LEFT_UP:
@@ -1966,6 +2004,7 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
             next_page  = page_max-1;
           }
 
+          PMSND_PlaySE( MYSTERY_SE_PAGE );
           Mystery_Album_StartScrollPage( p_wk, TRUE );
           Mystery_Album_DeleteDisplay( p_wk, FALSE );
           Mystery_Album_CreateDisplay( p_wk, FALSE, TRUE, next_page, p_wk->heapID );
@@ -1977,6 +2016,11 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
           GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[1], FALSE );
           *p_seq  = SEQ_SCROLL;
         }
+        else
+        { 
+          PMSND_PlaySE( MYSTERY_SE_SELCT );
+        }
+
         if( p_wk->cursor != MYSTERY_CURSOR_RETURN )
         { 
           if( p_wk->cursor == MYSTERY_CURSOR_LEFT_UP || p_wk->cursor == MYSTERY_CURSOR_RIGHT_UP )
@@ -2009,6 +2053,7 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
             next_page  = 0;
           }
 
+          PMSND_PlaySE( MYSTERY_SE_PAGE );
           Mystery_Album_StartScrollPage( p_wk, FALSE );
           Mystery_Album_DeleteDisplay( p_wk, FALSE );
           Mystery_Album_CreateDisplay( p_wk, FALSE, FALSE, next_page, p_wk->heapID );
@@ -2018,6 +2063,10 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
           GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[0], FALSE );
           GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[1], FALSE );
           *p_seq  = SEQ_SCROLL;
+        }
+        else
+        { 
+          PMSND_PlaySE( MYSTERY_SE_SELCT );
         }
         if( p_wk->cursor != MYSTERY_CURSOR_RETURN )
         {
@@ -2042,6 +2091,7 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
         { 
           if( !p_wk->is_swap )
           { 
+            PMSND_PlaySE( MYSTERY_SE_DECIDE );
             MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_End );
           }
         }
@@ -2051,6 +2101,7 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
           const MYSTERY_CARD_DATA *cp_data  = &p_wk->data[ card_index ];
           if( MYSTERY_CARD_DATA_IsExist(cp_data) )
           { 
+            PMSND_PlaySE( MYSTERY_SE_DECIDE );
             //スワップモードならば入れ替えへ
             if( p_wk->is_swap )
             { 
@@ -2065,6 +2116,7 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       }
       else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
       { 
+        PMSND_PlaySE( MYSTERY_SE_CANCEL );
         //スワップモードならば、キャンセル
         if( p_wk->is_swap )
         { 
@@ -2600,8 +2652,31 @@ static void SEQFUNC_SwapCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     PMSND_PlaySE( MYSTERY_SE_SWAP_CARD );
 
     //画面作り直し
+#if 0
     Mystery_Album_DeleteDisplay( p_wk, TRUE );
     Mystery_Album_CreateDisplay( p_wk, TRUE, 0, p_wk->now_page, p_wk->heapID );
+#else
+    { 
+      const u32 swap_page   = Mystery_Album_GetIndexToPage( p_wk->swap_card_index );
+      const u32 swap_index  = p_wk->swap_card_index % MYSTERY_CURSOR_MAX;
+
+      const BOOL  now_is_front = Mystery_Album_GetIndexToPage( card_index ) == p_wk->now_page;
+      const BOOL  swap_is_front = Mystery_Album_GetIndexToPage( p_wk->swap_card_index ) == p_wk->now_page;
+
+      //全面だったら消す
+      if( now_is_front )
+      { 
+        Mystery_Album_DeleteThumbnail( p_wk, TRUE, p_wk->cursor );
+        Mystery_Album_CreateThumbnail( p_wk, TRUE, 0, p_wk->now_page, p_wk->cursor, p_wk->heapID );
+      }
+      if( swap_is_front )
+      { 
+        Mystery_Album_DeleteThumbnail( p_wk, TRUE, p_wk->swap_card_index );
+        Mystery_Album_CreateThumbnail( p_wk, TRUE, 0, swap_page, swap_index, p_wk->heapID );
+      }
+      GFL_BG_LoadScreenReq( MYSTERY_ALBUM_BACK_FRM );
+    }
+#endif 
 
     p_wk->is_card_update  = TRUE;
     *p_seq  = SEQ_EFFECT_FADEIN;
@@ -3013,6 +3088,8 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
 		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, load_scr,
 				cp_setup->back_frm, 0, 0, FALSE, heapID );
     GFL_BG_ChangeScreenPalette( cp_setup->back_frm, 0, 0,34,24, cp_setup->back_plt_num );
+
+    //背面はすぐに表示（パレット変更してるのを適応させるため）
     GFL_BG_LoadScreenReq( cp_setup->back_frm );
 
     GFL_ARC_CloseDataHandle( p_handle ); 
@@ -3151,6 +3228,7 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
       GFL_CLACT_WK_SetPlttOffs( p_wk->p_icon,
               MYSTERY_CARD_DATA_GetPltOfs( &p_wk->data ), CLWK_PLTTOFFS_MODE_OAM_COLOR );
       GFL_CLACT_WK_SetObjMode( p_wk->p_icon, GX_OAM_MODE_NORMAL );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon, FALSE );
 
     }
   }
@@ -3203,6 +3281,7 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
           p_wk->res_silhouette_cgx, p_wk->res_silhouette_plt, p_wk->res_silhouette_cel,
           &cldata, draw_type, heapID );
       GFL_CLACT_WK_SetObjMode( p_wk->p_silhouette, GX_OAM_MODE_XLU );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_silhouette, FALSE );
     }
 
 
@@ -3249,6 +3328,9 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
     }
   }
 
+  //文字転送完了とともにフォント面、OBJを表示させる
+  GFL_BG_LoadScreenReq( cp_setup->font_frm );
+  GFL_BG_SetVisible( cp_setup->font_frm, FALSE );
   return p_wk;
 }
 //----------------------------------------------------------------------------
@@ -3297,27 +3379,19 @@ void MYSTERY_CARD_Exit( MYSTERY_CARD_WORK *p_wk )
 
   MYSTERY_MSGWINSET_Exit( p_wk->p_winset );
   MYSTERY_CARD_DATA_Exit( &p_wk->data );
-
+/*
   { 
     GFL_BG_ClearScreen( p_wk->back_frm );
     GFL_BG_ClearScreen( p_wk->font_frm );
     GFL_BG_LoadScreenReq( p_wk->back_frm );
     GFL_BG_LoadScreenReq( p_wk->font_frm );
   }
-
+*/
   //カードが消えたら表示OFF
   { 
-    if( p_wk->back_frm < GFL_BG_FRAME0_S )
-    { 
-      GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
-    }
-    else
-    { 
-      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
-    }
-
-    GFL_BG_SetVisible( p_wk->back_frm, FALSE );
-    GFL_BG_SetVisible( p_wk->font_frm, FALSE );
+//    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
+ //   GFL_BG_SetVisible( p_wk->back_frm, TRUE );
+ //   GFL_BG_SetVisible( p_wk->font_frm, TRUE );
   }
 
   GFL_HEAP_FreeMemory( p_wk );
@@ -3343,19 +3417,15 @@ void MYSTERY_CARD_Main( MYSTERY_CARD_WORK *p_wk )
     SEQ_EXIT,
   };
 
+  //文字描画完了とともにフォントを出して、OBJも一緒にでる
   if( MYSTERY_MSGWINSET_PrintMain( p_wk->p_winset ) )
   { 
-    if( p_wk->back_frm < GFL_BG_FRAME0_S )
-    { 
-      GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-    }
-    else
-    { 
-      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-    }
-
-    GFL_BG_SetVisible( p_wk->back_frm, TRUE );
     GFL_BG_SetVisible( p_wk->font_frm, TRUE );
+    if( p_wk->p_silhouette )
+    { 
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_silhouette, TRUE );
+    }
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon, TRUE );
   }
 
 

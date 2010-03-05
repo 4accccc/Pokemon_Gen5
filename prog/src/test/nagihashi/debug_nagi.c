@@ -43,6 +43,7 @@
 #include "net_app/battle_recorder.h"
 #include "title/title.h"
 #include "net_app/wifi_logout.h"
+#include "net_app/mystery.h"
 
 #include "savedata/irc_compatible_savedata.h"
 #include "savedata/shortcut.h"
@@ -272,6 +273,7 @@ static void LISTDATA_FullShortCutData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallWifiBattleMatch( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallBtlRecorder( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallWifiLogout( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallMystery( DEBUG_NAGI_MAIN_WORK *p_wk );
 //3d
 static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
@@ -351,6 +353,7 @@ enum
 	LISTDATA_SEQ_PROC_WIFIBATTLEMATCH,
 	LISTDATA_SEQ_PROC_BTLRECORDER,
 	LISTDATA_SEQ_PROC_WIFILOGOUT,
+  LISTDATA_SEQ_PROC_MYSTERY,
 
 	LISTDATA_SEQ_MAX,
 };
@@ -379,6 +382,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[LISTDATA_SEQ_MAX]	=
 	LISTDATA_CallWifiBattleMatch,
 	LISTDATA_CallBtlRecorder,
   LISTDATA_CallWifiLogout,
+  LISTDATA_CallMystery,
 };
 
 //-------------------------------------
@@ -394,15 +398,20 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	{	
 		L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
 	},
+#if 0
 	{	
 		L"運命値チェック", LISTDATA_SEQ_PROC_NAME_DEBUG,
 	},
+#endif
 	{	
 		L"ランクデータフル",	LISTDATA_SEQ_RANKDATA_FULL,
 	},
 	{	
 		L"ポケモン２Dチェック", LISTDATA_SEQ_PROC_POKE2DCHECK,
 	},
+  { 
+    L"ふしぎなおくりもの", LISTDATA_SEQ_PROC_MYSTERY,
+  },
 	{	
 		L"名前入力", LISTDATA_SEQ_PROC_NAMEIN,
 	},
@@ -1377,6 +1386,18 @@ static void LISTDATA_CallWifiLogout( DEBUG_NAGI_MAIN_WORK *p_wk )
     p_wk->wifilogout_param.display  = WIFILOGIN_DISPLAY_UP;
   }
   DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(wifi_login), &WiFiLogout_ProcData, &p_wk->wifilogout_param );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ふしぎなおくりもの
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_CallMystery( DEBUG_NAGI_MAIN_WORK *p_wk )
+{ 
+  DEBUG_NAGI_COMMAND_NextProc( p_wk, FS_OVERLAY_ID(mystery), &MysteryGiftProcData, NULL );
 }
 //=============================================================================
 /**

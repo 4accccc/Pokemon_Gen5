@@ -773,7 +773,7 @@ static void BG_Init( BG_WORK *p_wk, HEAPID heapID )
 
 
   //初期は非表示のもの
-  GFL_BG_SetVisible( BG_FRAME_S_BACK1, FALSE );
+  GFL_BG_SetVisible( BG_FRAME_S_BACK1, TRUE );
 }
 
 //----------------------------------------------------------------------------
@@ -1184,6 +1184,17 @@ static void SEQFUNC_Start( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   MYSTERY_WORK  *p_wk     = p_wk_adrs;  
   
   MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_001, MYSTERY_TEXT_TYPE_QUE );
+
+  //アルファ設定
+  { 
+    G2_SetBlendAlpha(
+        GX_BLEND_PLANEMASK_BG2,
+        GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ,
+        MYSTERY_MENU_ALPHA_EV1,
+          MYSTERY_MENU_ALPHA_EV2
+        );
+  }
+
   UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_TOP, HEAPID_MYSTERYGIFT ); 
 
 	MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
@@ -2552,6 +2563,7 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     p_wk->p_text  = MYSTERY_TEXT_Init( BG_FRAME_M_TEXT, PLT_BG_FONT_M, p_wk->p_que, p_wk->p_font, HEAPID_MYSTERYGIFT );
     MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, BG_CGX_OFS_M_TEXT, PLT_BG_TEXT_M );
 
+    PMSND_PlayBGM( SEQ_BGM_WIFI_PRESENT );
     MYSTERY_EFFECT_SetUpdateFlag( &p_wk->effect, TRUE );
     *p_seq  = SEQ_PROC_WAIT;
     break;
@@ -2959,16 +2971,6 @@ static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID hea
       }
     }
 
-    //アルファ設定
-    { 
-      G2_SetBlendAlpha(
-          GX_BLEND_PLANEMASK_BG2,
-          GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ,
-          MYSTERY_MENU_ALPHA_EV1,
-          MYSTERY_MENU_ALPHA_EV2
-          );
-    }
-
     //フェード最初から
     OBJ_PltFade_Reset( &p_wk->obj );
   }
@@ -2985,7 +2987,6 @@ static void UTIL_DeleteMenu( MYSTERY_WORK *p_wk )
 {
   if(p_wk->p_menu)
   {
-    G2_BlendNone();
 
     GFL_BG_ClearScreen( BG_FRAME_M_BACK1 );
     GFL_BG_LoadScreenReq( BG_FRAME_M_BACK1 );
