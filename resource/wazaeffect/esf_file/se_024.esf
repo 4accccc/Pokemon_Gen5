@@ -15,7 +15,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 ポケモン影バニッシュ	攻撃側	バニッシュオン
 制御モード変更	逐次
 パーティクルデータロード	w_157
-SE再生	SEQ_SE_NAGERU	デフォルト	真ん中	0:0:127	0:0:0
+SE再生	SEQ_SE_NAGERU	SE1	攻撃側	0:0:127	0:0:0
 制御モード変更	継続
 ボールモード	捕獲ボール攻撃側
 パーティクルデータロード	be_m_ball_01_kaiten
@@ -24,7 +24,7 @@ SE再生	SEQ_SE_NAGERU	デフォルト	真ん中	0:0:127	0:0:0
 ボールモード	捕獲ボール攻撃側
 パーティクルデータ削除	be_m_ball_01_kaiten
 制御モード変更	継続
-SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
+SE再生	SEQ_SE_BOWA2	デフォルト	攻撃側	0:0:127	0:0:0
 ボールモード	捕獲ボール攻撃側
 パーティクルデータロード	be_ball_001_1
 パーティクル再生すべて	be_ball_001_1	攻撃側	方向無し	4:0:0	1:1:1	1
@@ -53,13 +53,13 @@ SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 タイマーによるウエイト	5
 ラベル	SE_L
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	2	SE_M
-SE再生	SEQ_SE_TOUJOU_LARGE	デフォルト	真ん中	0:0:127	0:0:0
+SE再生	SEQ_SE_TOUJOU_LARGE	デフォルト	攻撃側	0:0:127	0:0:0
 ラベル	SE_M
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	1	SE_S
-SE再生	SEQ_SE_TOUJOU_MID	デフォルト	真ん中	0:0:127	0:0:0
+SE再生	SEQ_SE_TOUJOU_MID	デフォルト	攻撃側	0:0:127	0:0:0
 ラベル	SE_S
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	0	SE_END
-SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
+SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	攻撃側	0:0:127	0:0:0
 ラベル	SE_END
 射影モード	正射影
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	2	SHAKE_1
@@ -107,7 +107,7 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 ラベル	NO_EXIST_ATK_1
 制御モード変更	逐次
 パーティクルデータロード	w_157
-SE再生	SEQ_SE_NAGERU	デフォルト	真ん中	0:0:127	0:0:0
+SE再生	SEQ_SE_NAGERU	デフォルト	攻撃側	0:0:127	0:0:0
 制御モード変更	継続
 ボールモード	捕獲ボール攻撃側
 パーティクルデータロード	be_m_ball_01_kaiten
@@ -117,7 +117,7 @@ SE再生	SEQ_SE_NAGERU	デフォルト	真ん中	0:0:127	0:0:0
 ボールモード	捕獲ボール攻撃側
 パーティクルデータ削除	be_m_ball_01_kaiten
 制御モード変更	継続
-SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
+SE再生	SEQ_SE_BOWA2	デフォルト	攻撃側	0:0:127	0:0:0
 ボールモード	捕獲ボール攻撃側
 パーティクルデータロード	be_ball_001_1
 パーティクル再生すべて	be_ball_001_1	攻撃側	方向無し	4:0:0	1:1:1	1
