@@ -97,3 +97,14 @@ extern u16 * ZUKANWP_SAVEDATA_GetFramePalette( ZUKANWP_SAVEDATA * sv );
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL ZUKANWP_SAVEDATA_GetDataCheckFlag( ZUKANWP_SAVEDATA * sv );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		データ有無フラグ設定
+ *
+ * @param		sv		セーブデータ
+ *
+ * @param	"TRUE = データあり" 	"FALSE = データなし"
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZUKANWP_SAVEDATA_SetDataCheckFlag( ZUKANWP_SAVEDATA * sv,BOOL flg );

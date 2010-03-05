@@ -1305,6 +1305,7 @@ SRCS_OVERLAY_CG_WIRELESS   = net_app/cg_wireless/cg_wireless_menu.c
 #===> SRCS_OVERLAY_DPW_COMMON
 SRCS_OVERLAY_GAMESYNC   = net_app/gsync/gsync_menu.c \
 									net_app/gsync/gsync_message.c \
+									net_app/gsync/gsync_download.c \
 									net_app/gsync/gsync_disp.c \
 									net_app/gsync/gsync_state.c
 

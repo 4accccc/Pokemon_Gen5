@@ -241,7 +241,7 @@ void GSYNC_MESSAGE_MessageDisp(GSYNC_MESSAGE_WORK* pWork)
   if(pWork->infoDispWin==NULL){
     pWork->infoDispWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME1_S ,
-      1 , 3, 30 ,4 ,
+      1 , 1, 30 ,4 ,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->infoDispWin;
@@ -282,11 +282,15 @@ void GSYNC_MESSAGE_InfoMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid)
  */
 //------------------------------------------------------------------------------
 
-void GSYNC_MESSAGE_NickNameMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid,POKEMON_PARAM* pp)
+void GSYNC_MESSAGE_NickNameMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid, int lvup,POKEMON_PARAM* pp)
 {
 
-  GFL_MSG_GetString( pWork->pMsgData, GSYNC_007, pWork->pMessageStrBufEx );
+  GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pMessageStrBufEx );
   WORDSET_RegisterPokeNickName( pWork->pWordSet, 0,  pp );
+
+  WORDSET_RegisterNumber(pWork->pWordSet, 0, lvup,
+                         3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
+
   WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pMessageStrBufEx  );
   GSYNC_MESSAGE_MessageDisp(pWork);
 }
@@ -346,7 +350,7 @@ APP_TASKMENU_WORK* GSYNC_MESSAGE_YesNoStart(GSYNC_MESSAGE_WORK* pWork,int type)
   switch(type){
   case GSYNC_YESNOTYPE_INFO:
     appinit.charPosX = 32;
-    appinit.charPosY = 14;
+    appinit.charPosY = 12;
     appinit.posType = ATPT_RIGHT_DOWN;
     break;
   case GSYNC_YESNOTYPE_SYS:
@@ -402,7 +406,7 @@ void GSYNC_MESSAGE_SystemMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid)
   
   if(pWork->systemDispWin==NULL){
     pWork->systemDispWin = GFL_BMPWIN_Create(
-      GFL_BG_FRAME2_S , 1 , 3, 30 , 16 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+      GFL_BG_FRAME2_S , 1 , 1, 30 , 16 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->systemDispWin;
 

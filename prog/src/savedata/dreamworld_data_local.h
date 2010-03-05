@@ -35,5 +35,8 @@ struct _DREAMWORLD_SAVEDATA {
   u8 signin; //PDW登録済み
   u8 bAccount; //アカウント取得済み
   u8 furnitureNo;  //選んだ家具のインデックス
+  u8 musicalNo;      ///< webで選択した番号  無い場合 0xff
+  u8 cgearNo;        ///< webで選択した番号  無い場合 0xff
+  u8 zukanNo;        ///< webで選択した番号  無い場合 0xff
 };
 

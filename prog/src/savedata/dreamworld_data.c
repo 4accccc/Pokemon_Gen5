@@ -48,6 +48,10 @@ void DREAMWORLD_SV_Init(DREAMWORLD_SAVEDATA* pSV)
 {
 	GFL_STD_MemClear(pSV, DREAMWORLD_SV_GetWorkSize());
   DREAMWORLD_SV_SetTime(pSV , GFDATE_Set(2010,1,1,0));
+
+  pSV->musicalNo = DREAM_WORLD_NOPICTURE;
+  pSV->cgearNo = DREAM_WORLD_NOPICTURE;
+  pSV->zukanNo = DREAM_WORLD_NOPICTURE;
 }
 
 
@@ -385,8 +389,77 @@ void DREAMWORLD_SV_SetUploadCount(DREAMWORLD_SAVEDATA* pSV,int count)
   pSV->uploadCount = count;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   現在適応中ミュージカルデータ番号を得る
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @return	ミュージカルデータ番号
+ */
+//--------------------------------------------------------------------------------------------
+int DREAMWORLD_SV_GetMusicalNo(DREAMWORLD_SAVEDATA* pSV)
+{
+  return pSV->musicalNo;
+}
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   現在適応中ミュージカルデータ番号をセットする
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @param	  ミュージカルデータ番号
+ */
+//--------------------------------------------------------------------------------------------
+void DREAMWORLD_SV_SetMusicalNo(DREAMWORLD_SAVEDATA* pSV,int no)
+{
+  pSV->musicalNo = no;
+}
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   現在適応中CGEAR番号を得る
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @return	CGEARデータ番号
+ */
+//--------------------------------------------------------------------------------------------
+int DREAMWORLD_SV_GetCGearNo(DREAMWORLD_SAVEDATA* pSV)
+{
+  return pSV->cgearNo;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   現在適応中CGEAR番号をセットする
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @param	  CGEARデータ番号
+ */
+//--------------------------------------------------------------------------------------------
+void DREAMWORLD_SV_SetCGearNo(DREAMWORLD_SAVEDATA* pSV,int no)
+{
+  pSV->cgearNo = no;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   現在適応中図鑑番号を得る
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @return	図鑑データ番号
+ */
+//--------------------------------------------------------------------------------------------
+int DREAMWORLD_SV_GetZukanNo(DREAMWORLD_SAVEDATA* pSV)
+{
+  return pSV->zukanNo;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   現在適応中図鑑番号をセットする
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @param	  図鑑データ番号
+ */
+//--------------------------------------------------------------------------------------------
+void DREAMWORLD_SV_SetZukanNo(DREAMWORLD_SAVEDATA* pSV,int no)
+{
+  pSV->zukanNo = no;
+}
 
 
 

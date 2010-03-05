@@ -114,3 +114,17 @@ BOOL ZUKANWP_SAVEDATA_GetDataCheckFlag( ZUKANWP_SAVEDATA * sv )
 {
 	return sv->flg;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		データ有無フラグ設定
+ *
+ * @param		sv		セーブデータ
+ *
+ * @param	"TRUE = データあり" 	"FALSE = データなし"
+ */
+//--------------------------------------------------------------------------------------------
+void ZUKANWP_SAVEDATA_SetDataCheckFlag( ZUKANWP_SAVEDATA * sv,BOOL flg )
+{
+  sv->flg = flg;
+}

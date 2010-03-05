@@ -71,7 +71,8 @@ extern void GSYNC_MESSAGE_DispClear(GSYNC_MESSAGE_WORK* pWork);
 extern void GSYNC_MESSAGE_DispLevelChange(GSYNC_MESSAGE_WORK* pWork,int no);
 extern void GSYNC_MESSAGE_DispMyChange(GSYNC_MESSAGE_WORK* pWork,int no);
 extern void GSYNC_MESSAGE_DispFriendChange(GSYNC_MESSAGE_WORK* pWork,int no);
-extern void GSYNC_MESSAGE_NickNameMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid,POKEMON_PARAM* pp);
+//extern void GSYNC_MESSAGE_NickNameMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid,POKEMON_PARAM* pp);
+extern void GSYNC_MESSAGE_NickNameMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid, int lvup,POKEMON_PARAM* pp);
 extern void GSYNC_MESSAGE_MessageDisp(GSYNC_MESSAGE_WORK* pWork);
 
 extern APP_TASKMENU_WORK* GSYNC_MESSAGE_SearchButtonStart(GSYNC_MESSAGE_WORK* pWork);

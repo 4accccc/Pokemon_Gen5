@@ -63,9 +63,7 @@ const static char BTL_UP_URL[] ="https://pokemon-ds.basementfactorysystems.com/g
 
 //const static char POKECHK_URL[] ="http://125.206.241.227/pokemon/validate"; //POST
 const static char POKECHK_URL[] ="https://pkvldttest.nintendo.co.jp/pokemon/validate"; //POST
-
-
-
+const static char DOWNLOADEND_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=savedata.download.finish&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0";  //POST
 
 
 //const static char ACCOUNT_URL[] ="http://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsyncget.cgi?p=account.createdata\0"; //POST
@@ -89,6 +87,7 @@ static NHTTPRAP_URLTBL urltable[]={
   {BTL_DL_URL, NHTTP_REQMETHOD_GET},
   {BTL_UP_URL, NHTTP_REQMETHOD_POST},
   {POKECHK_URL, NHTTP_REQMETHOD_POST},
+  {DOWNLOADEND_URL, NHTTP_REQMETHOD_POST},
 };
 
 

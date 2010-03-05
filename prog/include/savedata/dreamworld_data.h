@@ -14,6 +14,7 @@
 #define DREAM_WORLD_DATA_MAX_ITEMBOX (20)          ///< 受け取るアイテムボックスの数
 #define DREAM_WORLD_DATA_FURNITURE_NAME_NUM (12)  ///< 家具名文字列NUM
 #define DREAM_WORLD_DATA_MAX_FURNITURE (5)        ///< 家具のMAX ５つ
+#define DREAM_WORLD_NOPICTURE (0xff)              ///< 絵が入っていない状態
 
 
 typedef struct _DREAMWORLD_SAVEDATA DREAMWORLD_SAVEDATA;
@@ -86,6 +87,12 @@ extern void DREAMWORLD_SV_SetTime(DREAMWORLD_SAVEDATA* pSV,GFDATE date); //時間
 extern int DREAMWORLD_SV_GetUploadCount(DREAMWORLD_SAVEDATA* pSV);   
 extern void DREAMWORLD_SV_SetUploadCount(DREAMWORLD_SAVEDATA* pSV,int count);
 
+extern int DREAMWORLD_SV_GetMusicalNo(DREAMWORLD_SAVEDATA* pSV);
+extern void DREAMWORLD_SV_SetMusicalNo(DREAMWORLD_SAVEDATA* pSV,int no);
+extern int DREAMWORLD_SV_GetCGearNo(DREAMWORLD_SAVEDATA* pSV);
+extern void DREAMWORLD_SV_SetCGearNo(DREAMWORLD_SAVEDATA* pSV,int no);
+extern int DREAMWORLD_SV_GetZukanNo(DREAMWORLD_SAVEDATA* pSV);
+extern void DREAMWORLD_SV_SetZukanNo(DREAMWORLD_SAVEDATA* pSV,int no);
 
 
 extern DREAMWORLD_SAVEDATA* DREAMWORLD_SV_GetDreamWorldSaveData(SAVE_CONTROL_WORK* pSave);

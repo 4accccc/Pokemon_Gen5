@@ -76,6 +76,7 @@
 #include "./c_gear/event_cgearget.h"
 #include "savedata/save_tbl.h"
 #include "savedata/c_gear_picture.h"
+#include "savedata/zukan_wp_savedata.h"
 
 #include "event_debug_local.h"
 
@@ -882,7 +883,8 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
  * @retval    BOOL  TRUE=イベント継続
  */
 //--------------------------------------------------------------
-#else
+#endif
+#if 0
 static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 {
   u16 crc=0;
@@ -894,6 +896,7 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 
   NNSG2dCharacterData* charData;
   NNSG2dPaletteData* palData;
+  NNSG2dScreenData* pScrData;
   void* pArc;
   u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELDMAP,SAVESIZE_EXTRA_CGEAR_PICTURE);
   CGEAR_PICTURE_SAVEDATA* pPic=(CGEAR_PICTURE_SAVEDATA*)pCGearWork;
@@ -913,9 +916,30 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
     GFL_STD_MemCopy(palData->pRawData, pPic->palette, CGEAR_PICTURTE_PAL_SIZE);
   }
   GFL_HEAP_FreeMemory(pArc);
+
+  pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_c_gear00_NSCR, FALSE, HEAPID_FIELDMAP);
+  if( NNS_G2dGetUnpackedScreenData( pArc, &pScrData ) ){
+    GFL_STD_MemCopy(pScrData->rawData, pPic->scr, CGEAR_PICTURTE_SCR_SIZE);
+  }
+  GFL_HEAP_FreeMemory(pArc);
+
   GFL_ARC_CloseDataHandle( p_handle );
 
-  crc = GFL_STD_CrcCalc( pPic, CGEAR_DECAL_SIZE_MAX+CGEAR_PICTURTE_PAL_SIZE );
+  crc = GFL_STD_CrcCalc( pPic, CGEAR_DECAL_SIZE_MAX+CGEAR_PICTURTE_PAL_SIZE+CGEAR_PICTURTE_SCR_SIZE );
+
+  {
+    int i,size = CGEAR_DECAL_SIZE_MAX+CGEAR_PICTURTE_PAL_SIZE+CGEAR_PICTURTE_SCR_SIZE;
+    u8* pU8 = (u8*)pPic;
+    for(i=0;i<size;i++){
+      OS_TPrintf("0x%x ",pU8[i]);
+      if((i%16)==15){
+        OS_TPrintf("\n");
+      }
+    }
+  }
+  
+  OS_TPrintf("-----%x \n",crc);
+
 
   SaveControl_Extra_SaveAsyncInit(pSave,SAVE_EXTRA_ID_CGEAR_PICUTRE);
   while(1){
@@ -933,6 +957,98 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
   return( FALSE );
 }
 #endif
+
+#if 1    //図鑑テスト
+
+// セーブデータ
+typedef struct  {
+	// カスタムグラフィックキャラ
+	u8	customChar[ZUKANWP_SAVEDATA_CHAR_SIZE];
+	// カスタムグラフィックパレット
+	u16	customPalette[ZUKANWP_SAVEDATA_PAL_SIZE];
+	// フレームパレット
+	u16	framePalette[ZUKANWP_SAVEDATA_PAL_SIZE];
+	// データ有無フラグ
+	BOOL	flg;
+} TESTZUKAN_DATA;
+
+
+
+static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
+{
+  int size;
+  u16 crc=0;
+  ARCHANDLE* p_handle;
+  GMEVENT *event = wk->gmEvent;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  GAMESYS_WORK  *gameSys  = wk->gmSys;
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gameSys));
+  NNSG2dCharacterData* charData;
+  NNSG2dPaletteData* palData;
+  NNSG2dScreenData* pScrData;
+  void* pArc;
+  u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELDMAP,SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
+  TESTZUKAN_DATA* pPic=(TESTZUKAN_DATA*)pCGearWork;
+
+  pPic->flg=TRUE;
+//  SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_ZUKAN_WALLPAPER, HEAPID_FIELDMAP,
+ //                            pCGearWork,SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
+
+  p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, HEAPID_FIELDMAP );
+
+  pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_zukantest_NCGR, FALSE, HEAPID_FIELDMAP);
+  if( NNS_G2dGetUnpackedBGCharacterData( pArc, &charData ) ){
+    GFL_STD_MemCopy(charData->pRawData, pPic->customChar, ZUKANWP_SAVEDATA_CHAR_SIZE);
+  }
+  GFL_HEAP_FreeMemory(pArc);
+
+  pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_zukantest_NCLR, FALSE, HEAPID_FIELDMAP);
+  if( NNS_G2dGetUnpackedPaletteData( pArc, &palData ) ){
+    GFL_STD_MemCopy(palData->pRawData, pPic->customPalette, ZUKANWP_SAVEDATA_PAL_SIZE*2);
+  }
+  GFL_HEAP_FreeMemory(pArc);
+
+  pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_zukantest_NCLR, FALSE, HEAPID_FIELDMAP);
+  if( NNS_G2dGetUnpackedPaletteData( pArc, &palData ) ){
+    GFL_STD_MemCopy(palData->pRawData, pPic->framePalette, ZUKANWP_SAVEDATA_PAL_SIZE*2);
+  }
+  GFL_HEAP_FreeMemory(pArc);
+
+  GFL_ARC_CloseDataHandle( p_handle );
+
+  size = ZUKANWP_SAVEDATA_CHAR_SIZE+ZUKANWP_SAVEDATA_PAL_SIZE*4;
+  crc = GFL_STD_CrcCalc( pPic, size );
+
+  {
+    int i;
+    u8* pU8 = (u8*)pPic;
+    for(i=0;i<size;i++){
+      OS_TPrintf("0x%x ",pU8[i]);
+      if((i%16)==15){
+        OS_TPrintf("\n");
+      }
+    }
+  }
+  
+  OS_TPrintf("-----%x \n",crc);
+
+/*
+  SaveControl_Extra_SaveAsyncInit(pSave,SAVE_EXTRA_ID_ZUKAN_WALLPAPER);
+  while(1){
+    if(SAVE_RESULT_OK==SaveControl_Extra_SaveAsyncMain(pSave,SAVE_EXTRA_ID_ZUKAN_WALLPAPER)){
+      break;
+    }
+    OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+  }
+  SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_ZUKAN_WALLPAPER);
+   */
+  GFL_HEAP_FreeMemory(pCGearWork);
+
+  return( FALSE );
+}
+#endif
+
+
 //--------------------------------------------------------------
 /**
  * デバッグメニュー呼び出し 数値入力

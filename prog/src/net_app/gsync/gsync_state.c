@@ -26,20 +26,27 @@
 #include "system/wipe.h"
 #include "net/network_define.h"
 
-#include "savedata/wifilist.h"
+#include "savedata/save_tbl.h"
+//#include "savedata/wifilist.h"
 #include "savedata/system_data.h"
 #include "savedata/gametime.h"
 #include "savedata/dreamworld_data.h"
 #include "savedata/symbol_save.h"
+#include "savedata/c_gear_data.h"
+#include "savedata/zukan_wp_savedata.h"
+#include "savedata/musical_dist_save.h"
 
 #include "msg/msg_d_ohno.h"
 #include "gsync_local.h"
+#include "gsync_download.h"
 #include "net/nhttp_rap.h"
 #include "../../field/event_gsync.h"
 #include "gsync_obj_NANR_LBLDEFS.h"
 #include "gsync_poke.cdat"
 #include "msg/msg_gsync.h"
 #include "gsync.naix"
+#include "savedata/c_gear_picture.h"
+
 
 /*
 ■BGM■
@@ -56,7 +63,7 @@ SEQ_SE_SYS_26			ポケモン眠る
 
 typedef void (StateFunc)(G_SYNC_WORK* pState);
 
-
+#define _DOWNLOAD_ERROR  (GSYNC_ERR008-GSYNC_ERR001+1)
 
 //
 // PHP とのインターフェース構造体
@@ -96,10 +103,18 @@ static void _changeStateDebug(G_SYNC_WORK* pWork,StateFunc* state, int line);
 #endif //_NET_DEBUG
 
 
+typedef enum{
+  _DOWNLOAD_CGEAR,
+  _DOWNLOAD_MUSICAL,
+  _DOWNLOAD_ZUKAN,
+} _DOWNLOAD_CONT_TYPE;
+
 
 
 struct _G_SYNC_WORK {
   HEAPID heapID;
+  DREAM_WORLD_SERVER_DOWNLOAD_FINISH_DATA aDownFinish;
+  GSYNC_DOWNLOAD_WORK* pDownload;
   POKEMON_PARAM* pp;
   NHTTP_RAP_WORK* pNHTTPRap;
   GSYNC_DISP_WORK* pDispWork;  // 描画系
@@ -120,13 +135,21 @@ struct _G_SYNC_WORK {
   BOOL bEnd;
   int zzzCount;
   int notNetEffect;  ///< 通信して無い場合のエフェクト
+  int lvup;
   DREAM_WORLD_SERVER_ERROR_TYPE ErrorNo;   ///エラーがあった場合の番号
+  u8 musicalNo;      ///< webで選択した番号  無い場合 0xff
+  u8 cgearNo;        ///< webで選択した番号  無い場合 0xff
+  u8 zukanNo;        ///< webで選択した番号  無い場合 0xff
+  u8 downloadType;
+  u8 msgBit;
+  u8 dummy;
 };
 
 
 static void _ghttpKeyWait(G_SYNC_WORK* pWork);
 static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork);
 static void _networkClose(G_SYNC_WORK* pWork);
+static void _downloadcheck(G_SYNC_WORK* pWork);
 
 
 //------------------------------------------------------------------------------
@@ -215,7 +238,7 @@ static void _ErrorDisp(G_SYNC_WORK* pWork)
   if((pWork->ErrorNo <= 0) || (pWork->ErrorNo >= DREAM_WORLD_SERVER_ERROR_MAX)){
     gmm = DREAM_WORLD_SERVER_ERROR_ETC - 1 + GSYNC_ERR001;
   }
-
+  GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
   GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,gmm);
   _CHANGE_STATE(_ErrorDisp2);
 }
@@ -242,13 +265,54 @@ static void _networkClose(G_SYNC_WORK* pWork)
 }
 
 
-static void _wakeupActio8(G_SYNC_WORK* pWork)
+static void _wakeupActio10(G_SYNC_WORK* pWork)
 {
   if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
   if(GFL_UI_KEY_GetTrg()){
     _CHANGE_STATE(_networkClose);
+  }
+}
+
+
+
+static void _wakeupActio9(G_SYNC_WORK* pWork)
+{
+  int msgbuff[]={
+    0,
+    GSYNC_017,   //CG
+    GSYNC_018,     //MU
+    GSYNC_020,     //CGMU
+    GSYNC_019,     //ZK
+    GSYNC_022,  //zkcg
+    GSYNC_021,
+    GSYNC_016
+    };
+  
+  if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+  if(GFL_UI_KEY_GetTrg()){
+
+
+    GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork, msgbuff[pWork->msgBit]);
+    
+    _CHANGE_STATE(_wakeupActio10);
+  }
+}
+
+
+static void _wakeupActio8(G_SYNC_WORK* pWork)
+{
+  if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+  if(GFL_UI_KEY_GetTrg()){
+
+    GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_015, pWork->lvup, pWork->pp);
+    
+    _CHANGE_STATE(_wakeupActio9);
   }
 }
 
@@ -274,6 +338,15 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
 
     GFL_STD_MemCopy(DREAMWORLD_SV_GetSleepPokemon(pDream), pp, POKETOOL_GetWorkSize());
 
+    if(pWork->lvup!=0){  //レベル更新
+      int level = PP_Get( pp, ID_PARA_level, 0);
+      level += pWork->lvup;
+      if(level > 100){
+        level = 100;
+      }
+      POKETOOL_MakeLevelRevise( pp, level);
+    }
+    
     BOXDAT_PutPokemon(pWork->pBox, PP_GetPPPPointerConst(pp));
     
     pWork->pp = pp;
@@ -282,7 +355,7 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
 
 
   
-  GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_005, pWork->pp);
+  GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_005,0, pWork->pp);
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani3,NANR_gsync_obj_rug_ani4);
 
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_bed,NANR_gsync_obj_bed_ani);
@@ -298,10 +371,27 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
 }
 
 
+static void _wakeupAction71(G_SYNC_WORK* pWork)
+{
+
+  if(GFL_NET_IsInit()){
+    if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
+      NET_PRINT("終了\n");
+      {
+        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
+        DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+        gs_response* pRep = (gs_response*)pEvent;
+        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+        _CHANGE_STATE(_wakeupAction7);
+      }
+    }
+  }
+  else{
+    _CHANGE_STATE(_wakeupAction7);
+  }
 
 
-
-
+}
 
 
 //------------------------------------------------------------------------------
@@ -313,11 +403,25 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
 
 static void _wakeupAction_save2(G_SYNC_WORK* pWork)
 {
-  if(GAMEDATA_SaveAsyncMain(pWork->pGameData) == SAVE_RESULT_OK){
-    _CHANGE_STATE(_wakeupAction7);
+  if(GAMEDATA_SaveAsyncMain(pWork->pGameData) != SAVE_RESULT_OK){
+    return;
   }
-  //@todo 完了コマンドの送信を行いたい
-  
+
+  if(GFL_NET_IsInit()){
+    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_DOWNLOAD_FINISH, pWork->pNHTTPRap)){
+      pWork->aDownFinish.bGet=TRUE;
+      pWork->aDownFinish.dummy=0;
+      NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), &pWork->aDownFinish, sizeof(NHTTPRAP_URL_DOWNLOAD_FINISH) );
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
+        _CHANGE_STATE(_wakeupAction71);
+      }
+    }
+  }
+  else{
+    if(GFL_UI_KEY_GetTrg()){
+      _CHANGE_STATE(_wakeupAction7);
+    }
+  }
 }
 
 //テスト 
@@ -331,6 +435,281 @@ static void _wakeupAction_1(G_SYNC_WORK* pWork)
   _CHANGE_STATE(_wakeupAction_save2);
 }
 
+//------------------------------------------------------------------
+
+
+
+
+
+static void _cgearsave(G_SYNC_WORK* pWork)
+{
+  {
+    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(pWork->pGameData);
+    u8* pCGearWork = GFL_HEAP_AllocMemory(pWork->heapID,SAVESIZE_EXTRA_CGEAR_PICTURE);
+    CGEAR_PICTURE_SAVEDATA* pPic = (CGEAR_PICTURE_SAVEDATA*)pCGearWork;
+    u16* pCRC = GSYNC_DOWNLOAD_GetData(pWork->pDownload);
+    int size = CGEAR_PICTURTE_CHAR_SIZE+CGEAR_PICTURTE_PAL_SIZE+CGEAR_PICTURTE_SCR_SIZE;
+    int sizeh = size/2;
+    u16 crc;
+    
+    //crc検査 pCRC
+    crc = GFL_STD_CrcCalc( pCRC, size );
+    OS_TPrintf("crc%x crc%x",crc,pCRC[sizeh]);
+    GF_ASSERT(crc == pCRC[sizeh]);
+
+    SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE, pWork->heapID,
+                               pCGearWork,SAVESIZE_EXTRA_CGEAR_PICTURE);
+
+    GFL_STD_MemCopy(pCRC, pPic->picture, size);
+    
+    SaveControl_Extra_SaveAsyncInit(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE);
+    while(1){
+      if(SAVE_RESULT_OK==SaveControl_Extra_SaveAsyncMain(pSave,SAVE_EXTRA_ID_CGEAR_PICUTRE)){
+        break;
+      }
+      OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+    }
+    SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE);
+    pWork->cgearNo=DREAM_WORLD_NOPICTURE;
+
+    CGEAR_SV_SetCGearPictureONOFF(CGEAR_SV_GetCGearSaveData(pSave),TRUE);  //CGEARデカール有効
+    CGEAR_SV_SetCGearPictureCRC(CGEAR_SV_GetCGearSaveData(pSave),crc);  //CGEARデカール有効
+    GFL_HEAP_FreeMemory(pCGearWork);
+  }
+}
+
+static void _zukansave(G_SYNC_WORK* pWork)
+{
+
+  {
+    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(pWork->pGameData);
+    u8* pZknWork = GFL_HEAP_AllocMemory(pWork->heapID, SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
+    u16* pCRC = GSYNC_DOWNLOAD_GetData(pWork->pDownload);
+    int size = ZUKANWP_SAVEDATA_CHAR_SIZE + ZUKANWP_SAVEDATA_PAL_SIZE*4;
+    int sizeh = size/2;
+    u16 crc;
+    
+    //crc検査 pCRC
+    crc = GFL_STD_CrcCalc( pCRC, size );
+    OS_TPrintf("crc%x crc%x",crc,pCRC[sizeh]);
+    GF_ASSERT(crc == pCRC[sizeh]);
+
+    SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_ZUKAN_WALLPAPER, pWork->heapID,
+                               pZknWork,SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
+
+    GFL_STD_MemCopy(pCRC, pZknWork, size);
+    ZUKANWP_SAVEDATA_SetDataCheckFlag( (ZUKANWP_SAVEDATA *) pZknWork,TRUE );
+    
+    SaveControl_Extra_SaveAsyncInit(pSave, SAVE_EXTRA_ID_ZUKAN_WALLPAPER);
+    while(1){
+      if(SAVE_RESULT_OK==SaveControl_Extra_SaveAsyncMain(pSave,SAVE_EXTRA_ID_ZUKAN_WALLPAPER)){
+        break;
+      }
+      OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+    }
+    SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_ZUKAN_WALLPAPER);
+    pWork->zukanNo=DREAM_WORLD_NOPICTURE;
+
+    GFL_HEAP_FreeMemory(pZknWork);
+  }
+
+
+}
+
+static void _musicalsave(G_SYNC_WORK* pWork)
+{
+  //@todo
+  pWork->musicalNo=DREAM_WORLD_NOPICTURE;
+}
+
+
+
+static void _downloadcgearend(G_SYNC_WORK* pWork)
+{
+  if(!GSYNC_DOWNLOAD_ResultEnd(pWork->pDownload)){
+    return;
+  }
+  if(GSYNC_DOWNLOAD_ResultError(pWork->pDownload)){
+    pWork->ErrorNo = _DOWNLOAD_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+  }
+  GSYNC_DOWNLOAD_Exit(pWork->pDownload);
+  pWork->pDownload=NULL;
+  _CHANGE_STATE(_downloadcheck);
+}
+
+static void _downloadcgear6(G_SYNC_WORK* pWork)
+{
+  if(!GSYNC_DOWNLOAD_ResultEnd(pWork->pDownload)){
+    return;
+  }
+  if(GSYNC_DOWNLOAD_ResultError(pWork->pDownload)){
+    pWork->ErrorNo = _DOWNLOAD_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+  }
+  else{
+    switch(pWork->downloadType){
+    case _DOWNLOAD_CGEAR:
+      _cgearsave(pWork);
+      break;
+    case _DOWNLOAD_MUSICAL:
+      _musicalsave(pWork);
+      break;
+    case _DOWNLOAD_ZUKAN:
+      _zukansave(pWork);
+      break;
+    }
+
+    if(GSYNC_DOWNLOAD_ExitAsync(pWork->pDownload)){
+      _CHANGE_STATE(_downloadcgearend);
+    }
+    else{
+      pWork->ErrorNo = _DOWNLOAD_ERROR;
+      _CHANGE_STATE(_ErrorDisp);
+    }
+  }
+}
+
+
+static void _downloadcgear5(G_SYNC_WORK* pWork)
+{
+  if(!GSYNC_DOWNLOAD_ResultEnd(pWork->pDownload)){
+    return;
+  }
+  if(GSYNC_DOWNLOAD_ResultError(pWork->pDownload)){
+    pWork->ErrorNo = _DOWNLOAD_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+  }
+  else if(GSYNC_DOWNLOAD_FileAsync(pWork->pDownload)){
+    _CHANGE_STATE(_downloadcgear6);
+  }
+  else{
+    pWork->ErrorNo = _DOWNLOAD_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+  }
+}
+
+
+static void _downloadcgear4(G_SYNC_WORK* pWork)
+{
+  if(!GSYNC_DOWNLOAD_ResultEnd(pWork->pDownload)){
+    return;
+  }
+  if(GSYNC_DOWNLOAD_ResultError(pWork->pDownload)){
+    pWork->ErrorNo = _DOWNLOAD_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+  }
+  else if(GSYNC_DOWNLOAD_FileListAsync(pWork->pDownload)){
+    _CHANGE_STATE(_downloadcgear5);
+  }
+  else{
+    pWork->ErrorNo = _DOWNLOAD_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+  }
+}
+
+static void _downloadcgear3(G_SYNC_WORK* pWork)
+{
+  if(GSYNC_DOWNLOAD_FileListNumAsync(pWork->pDownload)){
+    _CHANGE_STATE(_downloadcgear4);
+  }
+  else{
+    pWork->ErrorNo = _DOWNLOAD_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+  }
+}
+
+
+static void _downloadcgear2(G_SYNC_WORK* pWork)
+{
+  if(!GSYNC_DOWNLOAD_ResultEnd(pWork->pDownload)){
+    return;
+  }
+  if(GSYNC_DOWNLOAD_ResultError(pWork->pDownload)){
+    pWork->ErrorNo = _DOWNLOAD_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+    return;
+  }
+
+  switch(pWork->downloadType){
+  case _DOWNLOAD_CGEAR:
+    if(GSYNC_DOWNLOAD_SetAttr(pWork->pDownload, "CGEAR", pWork->cgearNo)){
+      _CHANGE_STATE(_downloadcgear3);
+    }
+    else{
+      pWork->ErrorNo = _DOWNLOAD_ERROR;
+      _CHANGE_STATE(_ErrorDisp);
+    }
+    break;
+  case _DOWNLOAD_MUSICAL:
+    if(GSYNC_DOWNLOAD_SetAttr(pWork->pDownload, "MUSICAL", pWork->musicalNo)){
+      _CHANGE_STATE(_downloadcgear3);
+    }
+    else{
+      pWork->ErrorNo = _DOWNLOAD_ERROR;
+      _CHANGE_STATE(_ErrorDisp);
+    }
+    break;
+  case _DOWNLOAD_ZUKAN:
+    if(GSYNC_DOWNLOAD_SetAttr(pWork->pDownload, "ZUKAN", pWork->zukanNo)){
+      _CHANGE_STATE(_downloadcgear3);
+    }
+    else{
+      pWork->ErrorNo = _DOWNLOAD_ERROR;
+      _CHANGE_STATE(_ErrorDisp);
+    }
+    break;
+  }
+}
+
+
+// ダウンロードCGEAR
+static void _downloadcgear(G_SYNC_WORK* pWork)
+{
+  switch(pWork->downloadType){
+  case _DOWNLOAD_CGEAR:
+    pWork->pDownload = GSYNC_DOWNLOAD_Create(pWork->heapID, CGEAR_PICTURE_SAVE_GetWorkSize() + 2); //CRC
+    break;
+  case _DOWNLOAD_MUSICAL:
+    pWork->pDownload = GSYNC_DOWNLOAD_Create(pWork->heapID, MUSICAL_DIST_SAVE_GetWorkSize() + 2); //CRC
+    break;
+  case _DOWNLOAD_ZUKAN:
+    pWork->pDownload = GSYNC_DOWNLOAD_Create(pWork->heapID, ZUKANWP_SAVEDATA_GetWorkSize() + 2); //CRC
+    break;
+  }
+
+  if(GSYNC_DOWNLOAD_InitAsync(pWork->pDownload)){
+    _CHANGE_STATE(_downloadcgear2);
+  }
+  else{
+    pWork->ErrorNo = _DOWNLOAD_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+  }
+}
+
+
+static void _downloadcheck(G_SYNC_WORK* pWork)
+{
+  if(pWork->cgearNo != DREAM_WORLD_NOPICTURE){
+    pWork->downloadType=_DOWNLOAD_CGEAR;
+    _CHANGE_STATE(_downloadcgear);
+    return;
+  }
+  if(pWork->musicalNo != DREAM_WORLD_NOPICTURE){
+    pWork->downloadType=_DOWNLOAD_MUSICAL;
+    _CHANGE_STATE(_downloadcgear);
+    return;
+  }
+  if(pWork->zukanNo != DREAM_WORLD_NOPICTURE){
+    pWork->downloadType=_DOWNLOAD_ZUKAN;
+    _CHANGE_STATE(_downloadcgear);
+    return;
+  }
+  _CHANGE_STATE(_wakeupAction_1);  //起きる演出へ
+}
+
+
+//------------------------------------------------------------------
 
 //   家具をセーブエリアに移動
 static void _furnitureInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream)
@@ -353,42 +732,57 @@ static void _itemInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_D
   }
 }
 
-
 static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream,gs_response* pRep )
 {
-
-
+#if 0  //@todo BFSとの話が終わってから有効
   if(pRep->ret_cd != DREAM_WORLD_SERVER_ERROR_NONE){
     pWork->ErrorNo = pRep->ret_cd;
-    GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
     _CHANGE_STATE(_ErrorDisp);
     return;
   }
-#if 0  //@todo BFSとの話が終わってから有効
-    if(!pDream->bGet && (DREAMWORLD_SV_GetUploadCount() != pDream->uploadCount))
-#else
-    if(!pDream->bGet)
 #endif
-    {
-      //pDreamSave->sleepPokemonState;  ///< 寝ているポケモンの状態はあまりかんけいない
+#if 0  //@todo BFSとの話が終わってから有効
+  if(!pDream->bGet && (DREAMWORLD_SV_GetUploadCount() != pDream->uploadCount))
+#endif
+  {
+    //pDreamSave->sleepPokemonState;  ///< 寝ているポケモンの状態はあまりかんけいない
+    
+    pWork->musicalNo = pDream->musicalNo;      ///< webで選択した番号  無い場合 0xff
+    pWork->cgearNo = pDream->cgearNo; //  u8 cgearNo;        ///< webで選択した番号  無い場合 0xff
+    pWork->zukanNo = pDream->zukanNo; //  u8 zukanNo;        ///< webで選択した番号  無い場合 0xff
+    pWork->lvup = pDream->sleepPokemonLv; //寝てたポケモンのレベルアップ値
 
-      //@todoダウンロードに行く
-      //      /u8 musicalNo;      ///< webで選択した番号  無い場合 0xff
-      //  u8 cgearNo;        ///< webで選択した番号  無い場合 0xff
-      //  u8 zukanNo;        ///< webで選択した番号  無い場合 0xff
-      
-      //ポケモンシンボルエンカウント
-      SymbolSave_Set(SymbolSave_GetSymbolData(pWork->pSaveData), pDream->findPokemon,
-                     pDream->findPokemonTecnique, pDream->findPokemonSex, pDream->findPokemonForm);
-      //サインイン
-      DREAMWORLD_SV_SetSignin(pDreamSave,pDream->signin);
-      // 家具
-      _furnitureInSaveArea(pDreamSave, pDream);
-      //アイテム
-      _itemInSaveArea(pDreamSave, pDream);
-      //          _CHANGE_STATE();  //セーブに行く?
+    if(pWork->cgearNo != DREAM_WORLD_NOPICTURE){
+      pWork->msgBit = pWork->msgBit | 0x01;
     }
-  _CHANGE_STATE(_wakeupAction_1);
+    if(pWork->musicalNo != DREAM_WORLD_NOPICTURE){
+      pWork->msgBit = pWork->msgBit | 0x02;
+    }
+    if(pWork->zukanNo != DREAM_WORLD_NOPICTURE){
+      pWork->msgBit = pWork->msgBit | 0x04;
+    }
+
+
+
+    
+    //@test
+    pWork->cgearNo = DREAM_WORLD_NOPICTURE;
+    pWork->musicalNo = DREAM_WORLD_NOPICTURE;
+    pWork->zukanNo = 1;
+    pWork->lvup = 10;
+    
+    //ポケモンシンボルエンカウント
+    SymbolSave_Set(SymbolSave_GetSymbolData(pWork->pSaveData), pDream->findPokemon,
+                   pDream->findPokemonTecnique, pDream->findPokemonSex, pDream->findPokemonForm);
+    //サインイン
+    DREAMWORLD_SV_SetSignin(pDreamSave,pDream->signin);
+    // 家具
+    _furnitureInSaveArea(pDreamSave, pDream);
+    //アイテム
+    _itemInSaveArea(pDreamSave, pDream);
+    //          _CHANGE_STATE();  //セーブに行く?
+  }
+  _downloadcheck(pWork);
 }
 
 //------------------------------------------------------------------------------
@@ -595,8 +989,7 @@ static void _wakeupAction1(G_SYNC_WORK* pWork)
 
   {
     DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
-    if(1){
-    //    if( DREAMWORLD_SV_GetItemRestNum(pDreamSave) ){
+    if( DREAMWORLD_SV_GetItemRestNum(pDreamSave) ){
 
       GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_014);
 
@@ -653,7 +1046,6 @@ static void _playStatusCheck(G_SYNC_WORK* pWork, int status , gs_response* pRep)
     break;
   default: //普通のエラー処理
     pWork->ErrorNo = pRep->ret_cd;
-    GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
     _CHANGE_STATE(_ErrorDisp);
     break;
   }
@@ -776,7 +1168,6 @@ static void _ghttpPokemonListDownload1(G_SYNC_WORK* pWork)
           _CHANGE_STATE(_modeFadeStart);
         }
         else{
-          GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
           pWork->ErrorNo = pRep->ret_cd;
           _CHANGE_STATE(_ErrorDisp);
         }
@@ -882,7 +1273,7 @@ static void _upeffectLoop6(G_SYNC_WORK* pWork)
     pWork->pTopAddr = NULL;
   }
 
-  GSYNC_MESSAGE_NickNameMessageDisp( pWork->pMessageWork, GSYNC_007, pWork->pp );
+  GSYNC_MESSAGE_NickNameMessageDisp( pWork->pMessageWork, GSYNC_007,0, pWork->pp );
 
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_zzz_ani);
   GSYNC_DISP_BlendSmokeStart(pWork->pDispWork,FALSE);
@@ -954,7 +1345,6 @@ static void _upeffectLoop5(G_SYNC_WORK* pWork)
           _CHANGE_STATE(_updateSave);
         }
         else{
-          GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
           pWork->ErrorNo = pRep->ret_cd;
           _CHANGE_STATE(_ErrorDisp);
         }
@@ -1216,6 +1606,9 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
   }
   if(pWork->pAppTask){
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);
+  }
+  if(pWork->pDownload){
+    GSYNC_DOWNLOAD_Main(pWork->pDownload);
   }
 
   GSYNC_DISP_Main(pWork->pDispWork);
