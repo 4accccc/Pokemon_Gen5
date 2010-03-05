@@ -212,12 +212,19 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	_BALLOONWIN_OBJMSG( msg_r03r0301_black_06 , R03R0301_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 	
-	//プラズマ団その場歩き
-	_OBJ_ANIME( R03R0301_HAKAIM_01 , anm_r03r0301_plasma_staystep02 )
+	
+	//プラズマ団：ポケモンはかえす
+	_BALLOONWIN_OBJMSG_POS( msg_r03r0301_hakaim1_03 , R03R0301_HAKAIM_01 ,POS_DR  )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバルに隣接
+	_OBJ_ANIME( R03R0301_HAKAIM_01 , anm_r03r0301_plasma_retpoke )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_to_plasma )
 	_OBJ_ANIME_WAIT()
 	
-	//プラズマ団：いつか自分の愚かさに気づけ
-	_BALLOONWIN_OBJMSG_POS( msg_r03r0301_hakaim1_03 , R03R0301_HAKAIM_01 ,POS_DOWN  )
+	//プラズマ団：いつかじぶんたちのおろかさにきづけ
+	_BALLOONWIN_OBJMSG_POS( msg_r03r0301_hakaim1_04 , R03R0301_HAKAIM_01 ,POS_DR  )
 	_BALLOONWIN_CLOSE()
 	
 	//暗転プラズマ団OBJ削除
@@ -306,7 +313,7 @@ _ANIME_LABEL	anm_r03r0301_plasma_go2_01
 	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	AC_WAIT_16F,1
 	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,0
 	_ANIME_DATA	ACMD_END,0
 
@@ -338,11 +345,20 @@ _ANIME_LABEL	anm_r03r0301_plasma_staystep
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	プラズマ団その場歩き（下向き
+//	プラズマ団01、ポケモンを返す
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_r03r0301_plasma_staystep02
+_ANIME_LABEL	anm_r03r0301_plasma_retpoke
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	主人公「はい」で進むz6
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r03r0301_rival_to_plasma
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------

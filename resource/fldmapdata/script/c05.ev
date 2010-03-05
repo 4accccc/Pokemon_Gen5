@@ -150,17 +150,25 @@ EVENT_START   ev_pos_c05_gymleader_02
 	_CAMERA_MOVE( 9688,0,970752,13918208,0,26509312,30 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
-	//ゲーヂスとジムリーダー会話
+	//ゲーヂス：はじめまして
 	_BALLOONWIN_OBJMSG(msg_c05_sage1_01,C05_SAGE_01)
 	_BALLOONWIN_CLOSE()
+	//ヤーコン：いやいや
 	_BALLOONWIN_OBJMSG(msg_c05_leader_04,C05_GYMLEADER_02)
 	_BALLOONWIN_CLOSE()
+	//ゲーヂス：おや ごかいが
 	_BALLOONWIN_OBJMSG(msg_c05_sage1_02,C05_SAGE_01)
 	_BALLOONWIN_CLOSE()
+	//ヤーコン：で なんだというんだ
 	_BALLOONWIN_OBJMSG(msg_c05_leader_05,C05_GYMLEADER_02)
 	_BALLOONWIN_CLOSE()
+	//ゲーヂス：プラズマだんとしても
 	_BALLOONWIN_OBJMSG(msg_c05_sage1_03,C05_SAGE_01)
 	_BALLOONWIN_CLOSE()
+	
+	//ヤーコン：ふん！こいつらを連れてかえりな！（その場歩き）
+	_OBJ_ANIME(C05_GYMLEADER_02,anm_c05_gymleader_staystep_d)
+	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG(msg_c05_leader_06,C05_GYMLEADER_02)
 	_BALLOONWIN_CLOSE()
 	
@@ -175,7 +183,7 @@ EVENT_START   ev_pos_c05_gymleader_02
 	//七賢人ゲーヂスの側に行って礼を言う
 	_OBJ_ANIME(C05_SAGE_02,anm_c05_sage2_01)
 	_OBJ_ANIME(C05_HAKAI_08,anm_c05_hakai_01)
-	_OBJ_ANIME(C05_HAKAI_09,anm_c05_hakai_01)
+	_OBJ_ANIME(C05_HAKAI_09,anm_c05_hakai_02)
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG(msg_c05_sage2_01,C05_SAGE_02)
 	_BALLOONWIN_CLOSE()
@@ -211,15 +219,38 @@ EVENT_START   ev_pos_c05_gymleader_02
 	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 	
-	//ジムリーダー一言残してジムの中へ
+	//ジムリーダー一言残してジムの前へ
 	_BALLOONWIN_OBJMSG(msg_c05_leader_07,C05_GYMLEADER_02)
 	_BALLOONWIN_CLOSE()
 	
-	//ジムへ消えてゆくジムリーダー
-	_OBJ_ANIME(C05_GYMLEADER_02,anm_c05_gymleader_01)
+	//ジムへ消えてゆくジムリーダー（ドア前まで）
+	_OBJ_ANIME(C05_GYMLEADER_02,anm_c05_gymleader_to_gym_01)
 	_OBJ_ANIME_WAIT()
+	
+	//ドア開ける
+	DEFINE_LOCAL	DOOR_ANIME_ID
+	_BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 212, 400 )
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	
+	//ジムへ消えてゆくジムリーダー（ドア中に）
+	_OBJ_ANIME(C05_GYMLEADER_02,anm_c05_gymleader_to_gym_01)
+	_OBJ_ANIME_WAIT()
+	
 	_OBJ_DEL(C05_GYMLEADER_02)
 	
+	//ドア閉じる
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+	
+	{
+	//ライバル主人公の方を向く
+	_OBJ_ANIME( C05_RIVAL_02,anm_rival_to_player_01 )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_to_rival_01 )
+	_OBJ_ANIME_WAIT()
+
+	}
 	//ライバル町の見学に出かける
 	_BALLOONWIN_OBJMSG(msg_c05_black_02,C05_RIVAL_02)
 	_BALLOONWIN_CLOSE()
@@ -251,11 +282,18 @@ _ANIME_LABEL	anm_c05_sage1_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
+//	C05ゲーヂスとジムリーダー：ジムリーダー、ジムの中へ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_gymleader_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
 //	C05ゲーヂスとジムリーダー：七賢人ゲーヂスのもとへ
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c05_sage2_01
 	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -263,15 +301,39 @@ _ANIME_LABEL	anm_c05_sage2_01
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c05_hakai_01
 	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C05ゲーヂスとジムリーダー：したっぱゲーヂスのもとへ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_hakai_02
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	C05ゲーヂスとジムリーダー：ジムリーダー、ジムの中へ
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_c05_gymleader_01
-	_ANIME_DATA	AC_WALK_U_8F,2
+_ANIME_LABEL	anm_c05_gymleader_to_gym_01
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C05ゲーヂスとジムリーダー：ライバル主人公の方を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_rival_to_player_01
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C05ゲーヂスとジムリーダー：主人公の方を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_player_to_rival_01
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------
 //	C05ゲーヂスとジムリーダー：ライバル町の見学へ

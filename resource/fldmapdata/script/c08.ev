@@ -59,6 +59,7 @@ INIT_EVENT_END
 //ジム挑戦可能になるまで表示
 EVENT_START   ev_pos_c08_champions_01
 
+
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 
@@ -112,7 +113,7 @@ EVENT_START   ev_pos_c08_champions_01
 	_CAMERA_PURGE()		//カメラのバインドを解く
 	
 	//カメラ操作　ゲーヂス中心に
-	_CAMERA_MOVE( 9688,0,970752,26562560,0,11419648,30 )
+	_CAMERA_MOVE( 9688,0,970752,26574848,0,11436032,30 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//イベント曲再生
@@ -161,6 +162,8 @@ EVENT_START   ev_pos_c08_champions_01
 	
 	//ゲーヂスの演説その２
 	_BALLOONWIN_OBJMSG( msg_c08_sage1_02 , C08_SAGE1_01 )
+	_OBJ_ANIME( C08_SAGE1_01,anm_c08_sage1_speach_01 )
+	_OBJ_ANIME_WAIT()
 	
 	//群集お互いを見る
 	_OBJ_ANIME( C08_OLDMAN_01, anm_c08_croud_panic_d )
@@ -199,10 +202,42 @@ EVENT_START   ev_pos_c08_champions_01
 	_BALLOONWIN_OBJMSG( msg_c08_sage1_03 , C08_SAGE1_01 )
 	_BALLOONWIN_CLOSE()
 	
-	//ゲーヂス去ってゆく
+	//後ろにいるプラズマ団ゲーヂスを囲む
+	_OBJ_ANIME( C08_HAKAIM_01,anm_c08_hakai_goodbye_01 )
+	_OBJ_ANIME( C08_HAKAIW_01,anm_c08_hakai_goodbye_02 )
+	_OBJ_ANIME( C08_HAKAIM_02,anm_c08_hakai_goodbye_03 )
+	_OBJ_ANIME( C08_HAKAIM_03,anm_c08_hakai_goodbye_04 )
+	_OBJ_ANIME( C08_HAKAIW_02,anm_c08_hakai_goodbye_05 )
+	_OBJ_ANIME( C08_HAKAIM_04,anm_c08_hakai_goodbye_06 )
+	_OBJ_ANIME( C08_HAKAIM_05,anm_c08_hakai_goodbye_07 )
+	_OBJ_ANIME_WAIT()
+	
+	//ゲーヂス去ってゆく（左に移動）
+	_OBJ_ANIME( C08_HAKAIM_01,anm_c08_sage1_goodbye_01 )
+	_OBJ_ANIME( C08_HAKAIW_01,anm_c08_sage1_goodbye_01 )
+	_OBJ_ANIME( C08_HAKAIM_02,anm_c08_sage1_goodbye_01 )
+	_OBJ_ANIME( C08_HAKAIM_03,anm_c08_sage1_goodbye_01 )
+	_OBJ_ANIME( C08_HAKAIW_02,anm_c08_sage1_goodbye_01 )
+	_OBJ_ANIME( C08_HAKAIM_04,anm_c08_sage1_goodbye_01 )
+	_OBJ_ANIME( C08_HAKAIM_05,anm_c08_sage1_goodbye_01 )
 	_OBJ_ANIME( C08_SAGE1_01,anm_c08_sage1_goodbye_01 )
 	_OBJ_ANIME_WAIT()
 	
+	//プラズマ団の後列の奴が後ろを守る
+	_OBJ_ANIME( C08_HAKAIM_05,anm_c08_hakai_goodbye_07b )
+	_OBJ_ANIME_WAIT()
+	
+	//ゲーヂス去ってゆく（上に移動）
+	_OBJ_ANIME( C08_HAKAIM_01,anm_c08_sage1_goodbye_02 )
+	_OBJ_ANIME( C08_HAKAIW_01,anm_c08_sage1_goodbye_02 )
+	_OBJ_ANIME( C08_HAKAIM_02,anm_c08_sage1_goodbye_02 )
+	_OBJ_ANIME( C08_HAKAIM_03,anm_c08_sage1_goodbye_02 )
+	_OBJ_ANIME( C08_HAKAIW_02,anm_c08_sage1_goodbye_02 )
+	_OBJ_ANIME( C08_HAKAIM_04,anm_c08_sage1_goodbye_02 )
+	_OBJ_ANIME( C08_HAKAIM_05,anm_c08_sage1_goodbye_02 )
+	_OBJ_ANIME( C08_SAGE1_01,anm_c08_sage1_goodbye_02 )
+	_OBJ_ANIME_WAIT()
+
 	//BGM終了
 	_END_EVENT_BGM()
 	
@@ -448,9 +483,21 @@ _ANIME_LABEL	anm_c08_player_to_champion_z177
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_player_to_crowd_01
 	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	AC_WALK_R_8F,4
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：ゲーヂス演説する
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_sage1_speach_01
+	_ANIME_DATA	AC_WALK_L_16F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	AC_WALK_R_16F,4
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	AC_WALK_L_16F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -482,11 +529,86 @@ _ANIME_LABEL	anm_c08_croud_panic_r
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
+//	ゲーヂス演説イベント：プラズマ団ゲーヂスを囲む（１）
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_hakai_goodbye_01
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：プラズマ団ゲーヂスを囲む（２）
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_hakai_goodbye_02
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：プラズマ団ゲーヂスを囲む（３）
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_hakai_goodbye_03
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：プラズマ団ゲーヂスを囲む（４）
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_hakai_goodbye_04
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：プラズマ団ゲーヂスを囲む（５）
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_hakai_goodbye_05
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：プラズマ団ゲーヂスを囲む（６）
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_hakai_goodbye_06
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：プラズマ団ゲーヂスを囲む（７）
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_hakai_goodbye_07
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：プラズマ団ゲーヂスを囲む（７）上に向いた時ポジションチェンジ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_hakai_goodbye_07b
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
 //	ゲーヂス演説イベント：ゲーヂス去ってゆく
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_sage1_goodbye_01
 	_ANIME_DATA	AC_WALK_L_8F,4
-	_ANIME_DATA	AC_WALK_U_8F,10
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：ゲーヂス去ってゆく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_sage1_goodbye_02
+	_ANIME_DATA	AC_WALK_U_8F,8
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------

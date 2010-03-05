@@ -21,7 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_pos_d05_rival_01
 _EVENT_DATA    ev_d05_workman_01
-_EVENT_DATA    ev_scene_d05_02
+_EVENT_DATA    ev_reserve_d05_end
 _EVENT_DATA    ev_d05_workman_02
 _EVENT_DATA    ev_d05_workman_03
 _EVENT_DATA_END
@@ -78,7 +78,7 @@ EVENT_END
 /**************************************************************/
 /*$WK_SCENE_D05=2 時発動イベント：ライバルD05へ向かう         */
 /**************************************************************/
-EVENT_START   ev_scene_d05_02
+EVENT_START   ev_reserve_d05_end
 
 	//ライバル喋った後C05へ
 	_OBJ_ANIME(D05_RIVAL_01,anm_d05_rival_02)

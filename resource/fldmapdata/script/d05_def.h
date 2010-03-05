@@ -7,7 +7,7 @@
 //スクリプトデータID定義
 #define SCRID_POS_D05_RIVAL_01 (1)
 #define SCRID_D05_WORKMAN_01 (2)
-#define SCRID_SCENE_D05_02 (3)
+#define SCRID_RESERVE_D05_END (3)
 #define SCRID_D05_WORKMAN_02 (4)
 #define SCRID_D05_WORKMAN_03 (5)
 

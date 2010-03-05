@@ -1089,7 +1089,8 @@ _ANIME_LABEL	anm_hakai_bikkuri_player
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_hakai_dash_01
-	_ANIME_DATA	AC_WALK_L_8F,18
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_L_4F,18
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -1124,7 +1125,7 @@ _ANIME_LABEL	anm_rival_01_stop_right
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_support_01
-		_ANIME_DATA	AC_WALK_L_8F,7
+	_ANIME_DATA	AC_WALK_L_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -1250,7 +1251,7 @@ _ANIME_LABEL	 anm_stoper_player_return02
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_stoper_rival_go
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------

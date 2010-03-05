@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d05r0201.h"
   .include  "d05r0201.h"
+  .include  "d05_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +20,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_scene_d05r0201_01
+_EVENT_DATA    ev_reserve_d05r0201_vs_plasma
 _EVENT_DATA_END
 
 
@@ -32,7 +33,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*初回入室時発動イベント：プラズマ団と戦闘                     */
 /**************************************************************/
-EVENT_START   ev_scene_d05r0201_01
+EVENT_START   ev_reserve_d05r0201_vs_plasma
 
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
@@ -127,7 +128,10 @@ EVENT_START   ev_scene_d05r0201_01
 	
 	//======================================//
 	
-	//【仮】シーン切り替え
+	//予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_D05_END )
+	
+	//シーン切り替え
 	_MAP_CHANGE( ZONE_ID_D05, 165, 474, DIR_RIGHT )
 
 EVENT_END
@@ -140,7 +144,7 @@ _ANIME_LABEL	anm_d05r0201_rival_gyoe
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WAIT_16F,1
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -156,7 +160,7 @@ _ANIME_LABEL	anm_d05r0201_player_walk01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_d05r0201_rival_lookup
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -173,7 +177,7 @@ _ANIME_LABEL	anm_d05r0201_rival_goup
 
 _ANIME_LABEL	anm_d05r0201_sage_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -190,7 +194,7 @@ _ANIME_LABEL	anm_d05r0201_hakai_01
 
 _ANIME_LABEL	anm_d05r0201_player_vs
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -206,6 +210,5 @@ _ANIME_LABEL	anm_d05r0201_workman_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_d05r0201_rival_04
-	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0

@@ -36,6 +36,13 @@
 #define C08_CROWD_03                      15
 #define C08_CROWD_04                      16
 #define C08_CROWD_05                      17
+#define C08_HAKAIM_01                     18
+#define C08_HAKAIW_01                     19
+#define C08_HAKAIM_02                     20
+#define C08_HAKAIM_03                     21
+#define C08_HAKAIW_02                     22
+#define C08_HAKAIM_04                     23
+#define C08_HAKAIM_05                     24
 
 #endif //ZONE_C08_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

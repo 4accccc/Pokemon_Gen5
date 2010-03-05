@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d05r0101.h"
   .include  "d05r0101.h"
+  .include  "d05r0201_def.h"
+
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -80,6 +82,8 @@ EVENT_END
 /*【仮】POSイベント：ライバルがプラズマ団に気づいて質問        */
 /**************************************************************/
 EVENT_START   ev_pos_d05r0101_rival_01
+
+	_CALL ev_d05r0101_player_to_rival
 	
 	//先に行くか質問
 	_BALLOONWIN_OBJMSG(msg_d05r0101_black_03,D05R0101_RIVAL_02)
@@ -110,9 +114,47 @@ EVENT_START   ev_pos_d05r0101_rival_01
 	
 EVENT_END
 
+/**************************************************************/
+/*CALL：主人公の座標を取得してライバルに隣接                   */
+/**************************************************************/
+ev_d05r0101_player_to_rival:
+	{
+	//主人公の座標に応じてアニメーションを変更
+
+	//自機座標取得
+	DEFINE_LOCAL  LCW_POSX
+    DEFINE_LOCAL  LCW_POSZ
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+    
+    //プレイヤーが通る4グリッド分を用意
+    SWITCH $LCW_POSZ
+	CASE 8 THEN //デフォルト処理
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_rival_z8 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 9 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_rival_z9 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 10 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_rival_z10 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 11 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_rival_z11 )
+	_OBJ_ANIME_WAIT()
+	
+    DEFAULT
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_rival_z8 )
+	_OBJ_ANIME_WAIT()
+	
+    ENDSWITCH
+	
+	}
+_RET
 
 /**************************************************************/
-/*【仮】CALL：SAGEとイベント→戦闘                             */
+/*CALL：SAGEとイベント→戦闘                             */
 /**************************************************************/
 ev_d05r0101_rival_02:
 
@@ -125,46 +167,56 @@ ev_d05r0101_rival_02:
 	//ライバル先に部屋に入る
 	_OBJ_ANIME(D05R0101_RIVAL_02,anm_d05r0101_rival_go_room)
 	_OBJ_ANIME_WAIT()
+	_SE_PLAY(SEQ_SE_KAIDAN)		//階段ＳＥ
+	_SE_WAIT()
 	//ライバルのオブジェを消去
 	_OBJ_DEL(D05R0101_RIVAL_02)
 	
-	//主人公の座標に応じてアニメーションを変更
-
-	//自機座標取得
-	DEFINE_LOCAL  LCW_POSX
-    DEFINE_LOCAL  LCW_POSZ
-    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-    
-    //プレイヤーが通る4グリッド分を用意
-    SWITCH $LCW_POSZ
-	CASE 8 THEN //デフォルト処理
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_room_z8 )
+	//主人公R02へ
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_r02 )
 	_OBJ_ANIME_WAIT()
 	
-	CASE 9 THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_room_z9 )
-	_OBJ_ANIME_WAIT()
-	
-	CASE 10 THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_room_z10 )
-	_OBJ_ANIME_WAIT()
-	
-	CASE 11 THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_room_z11 )
-	_OBJ_ANIME_WAIT()
-	
-    DEFAULT
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_room_z8 )
-	_OBJ_ANIME_WAIT()
-	
-    ENDSWITCH
+	//予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_D05R0201_VS_PLASMA )
 	
 	//シーン切り替え
 	_MAP_CHANGE( ZONE_ID_D05R0201, 4, 17, DIR_UP )
 	
 _RET
 
+//--------------------------------------------------------------
+//	D05R0101：主人公、ライバルと隣接z8
+//--------------------------------------------------------------
 
+_ANIME_LABEL	anm_player_to_rival_z8
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0101：主人公、ライバルと隣接z9
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_player_to_rival_z9
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0101：主人公、ライバルと隣接z10
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_player_to_rival_z10
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0101：主人公、ライバルと隣接z11
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_player_to_rival_z11
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
 //--------------------------------------------------------------
 //	D05R0101：ライバル「？」
 //--------------------------------------------------------------
@@ -226,36 +278,9 @@ _ANIME_LABEL	anm_d05r0101_rival_go_room
 //	D05R0101：主人公もR02へz8
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_player_room_z8
+_ANIME_LABEL	anm_player_go_r02
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D05R0101：主人公もR02へz9
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_player_room_z9
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D05R0101：主人公もR02へz10
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_player_room_z10
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,3
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D05R0101：主人公もR02へz11
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_player_room_z11
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
