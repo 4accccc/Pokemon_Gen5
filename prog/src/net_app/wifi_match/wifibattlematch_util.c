@@ -567,3 +567,194 @@ void WBM_SEQ_NextReservSeq( WBM_SEQ_WORK *p_wk )
 { 
   p_wk->seq = p_wk->reserv_seq;
 }
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  サブプロセス
+ *				    ・プロセスを行き来するシステム
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	ワーク
+//=====================================
+struct _WBM_SUBPROC_WORK
+{
+	GFL_PROCSYS			  *p_procsys;
+	void						  *p_proc_param;
+
+	HEAPID					  heapID;
+	void						  *p_wk_adrs;
+	const WBM_SUBPROC_DATA			*cp_procdata_tbl;
+  u32               tbl_len;
+
+	u8							  next_procID;
+	u8							  now_procID;
+	u16							  seq;
+
+  GFL_PROC_MAIN_STATUS  status;
+} ;
+//-------------------------------------
+///	外部公開
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WBM_SUBPROCシステム	初期化
+ *
+ *	@param	WBM_SUBPROC_WORK *p_wk	ワーク
+ *	@param	cp_procdata_tbl			プロセス接続テーブル
+ *	@param	void *p_wk_adrs			アロック関数と解放関数に渡すワーク
+ *	@param	heapID							システム構築用ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+WBM_SUBPROC_WORK * WBM_SUBPROC_Init( const WBM_SUBPROC_DATA *cp_procdata_tbl, u32 tbl_len, void *p_wk_adrs, HEAPID heapID )
+{	
+  WBM_SUBPROC_WORK *p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(WBM_SUBPROC_WORK ) );
+	GFL_STD_MemClear( p_wk, sizeof(WBM_SUBPROC_WORK) );
+	p_wk->p_procsys				= GFL_PROC_LOCAL_boot( heapID );
+	p_wk->p_wk_adrs				= p_wk_adrs;
+	p_wk->cp_procdata_tbl	= cp_procdata_tbl;
+  p_wk->tbl_len         = tbl_len;
+	p_wk->heapID					= heapID;
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WBM_SUBPROCシステム	破棄
+ *
+ *	@param	WBM_SUBPROC_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void WBM_SUBPROC_Exit( WBM_SUBPROC_WORK *p_wk )
+{	
+	GF_ASSERT( p_wk->p_proc_param == NULL );
+
+	GFL_PROC_LOCAL_Exit( p_wk->p_procsys );
+
+  GFL_HEAP_FreeMemory( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WBM_SUBPROCシステム	メイン処理
+ *
+ *	@param	WBM_SUBPROC_WORK *p_wk	ワーク
+ *
+ *	@retval	TRUEならば終了	FALSEならばPROCが存在する
+ */
+//-----------------------------------------------------------------------------
+BOOL WBM_SUBPROC_Main( WBM_SUBPROC_WORK *p_wk )
+{	
+	enum
+	{	
+		SEQ_INIT,
+		SEQ_ALLOC_PARAM,
+		SEQ_MAIN,
+		SEQ_FREE_PARAM,
+    SEQ_NEXT,
+		SEQ_END,
+	};
+
+	switch( p_wk->seq )
+	{	
+	case SEQ_INIT:
+		p_wk->now_procID	= p_wk->next_procID;
+		p_wk->seq	= SEQ_ALLOC_PARAM;
+		break;
+
+	case SEQ_ALLOC_PARAM:
+		//プロセス引数作成関数があれば呼び出し
+		if( p_wk->cp_procdata_tbl[ p_wk->now_procID ].alloc_func )
+		{	
+			p_wk->p_proc_param	= p_wk->cp_procdata_tbl[ p_wk->now_procID ].alloc_func(
+					p_wk->heapID, p_wk->p_wk_adrs );
+		}
+		else
+		{	
+			p_wk->p_proc_param	= NULL;
+		}
+
+		//プロック呼び出し
+		GFL_PROC_LOCAL_CallProc( p_wk->p_procsys, p_wk->cp_procdata_tbl[	p_wk->now_procID ].ov_id,
+					p_wk->cp_procdata_tbl[	p_wk->now_procID ].cp_procdata, p_wk->p_proc_param );
+
+		p_wk->seq	= SEQ_MAIN;
+		break;
+
+	case SEQ_MAIN:
+		{	
+			p_wk->status	= GFL_PROC_LOCAL_Main( p_wk->p_procsys );
+			if( GFL_PROC_MAIN_NULL == p_wk->status )
+			{	
+				p_wk->seq	= SEQ_FREE_PARAM;
+			}
+		}
+		break;
+
+	case SEQ_FREE_PARAM:
+		//プロセス引数破棄関数呼び出し
+		if( p_wk->cp_procdata_tbl[	p_wk->now_procID ].free_func )
+		{	
+			if( p_wk->cp_procdata_tbl[	p_wk->now_procID ].free_func( p_wk->p_proc_param, p_wk->p_wk_adrs ) )
+      { 
+        p_wk->p_proc_param	= NULL;
+				p_wk->seq	= SEQ_NEXT;
+      }
+		}
+    else
+    { 
+				p_wk->seq	= SEQ_NEXT;
+    }
+    break;
+
+  case SEQ_NEXT:
+		//もし次のプロセスがあれば呼び出し
+		//なければ終了
+		if( p_wk->now_procID != p_wk->next_procID )
+		{	
+			p_wk->seq	= SEQ_INIT;
+		}
+		else
+		{	
+			p_wk->seq	= SEQ_END;
+		}
+		break;
+
+	case SEQ_END:
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WBM_SUBPROCシステム PROC状態を取得
+ *
+ *	@param	const WBM_SUBPROC_WORK *cp_wk   ワーク
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+GFL_PROC_MAIN_STATUS WBM_SUBPROC_GetStatus( const WBM_SUBPROC_WORK *cp_wk )
+{ 
+  return cp_wk->status;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WBM_SUBPROCシステム	プロセスリクエスト
+ *
+ *	@param	WBM_SUBPROC_WORK *p_wk	ワーク
+ *	@param	proc_id							呼ぶプロセスID
+ *
+ */
+//-----------------------------------------------------------------------------
+void WBM_SUBPROC_CallProc( WBM_SUBPROC_WORK *p_wk, u32 procID )
+{	
+	p_wk->next_procID	= procID;
+}
+
+

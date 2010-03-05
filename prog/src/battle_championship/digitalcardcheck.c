@@ -32,15 +32,12 @@
 #include "savedata/rndmatch_savedata.h"
 
 //  WIFIバトルマッチのモジュール
-#include "wifibattlematch_graphic.h"
-#include "wifibattlematch_view.h"
-#include "wifibattlematch_util.h"
-
-//  PROC
-#include "battle_championship/battle_championship.h"
+#include "net_app/wifi_match/wifibattlematch_graphic.h"
+#include "net_app/wifi_match/wifibattlematch_view.h"
+#include "net_app/wifi_match/wifibattlematch_util.h"
 
 //  外部公開
-#include "net_app/digitalcardcheck.h"
+#include "digitalcardcheck.h"
 
 //-------------------------------------
 ///	オーバーレイ
@@ -50,7 +47,6 @@
 ///	デバッグ
 //=====================================
 #ifdef PM_DEBUG
-//#define DEBUG_INPUT_STATUS  (2)   //0かundefだとやらない  その他は開催ステータスになる
 #endif //PM_DEBUG
 
 //=============================================================================
@@ -68,20 +64,8 @@
 //-------------------------------------
 ///	メインワーク
 //=====================================
-typedef struct 
+struct _DIGITALCARD_CHECK_WORK
 {
-	//グラフィック設定
-	WIFIBATTLEMATCH_GRAPHIC_WORK	*p_graphic;
-
-  //リソース読み込み
-  WIFIBATTLEMATCH_VIEW_RESOURCE *p_res;
-
-	//共通で使うフォント
-	GFL_FONT			            *p_font;
-
-	//共通で使うキュー
-	PRINT_QUE				          *p_que;
-
 	//共通で使うメッセージ
 	GFL_MSGDATA	          		*p_msg;
 
@@ -91,9 +75,6 @@ typedef struct
 	//上画面情報
 	PLAYERINFO_WORK         	*p_playerinfo;
 
-  //テキスト面
-  WBM_TEXT_WORK             *p_text;
-
   //リスト
   WBM_LIST_WORK             *p_list;
 
@@ -101,27 +82,17 @@ typedef struct
   WBM_SEQ_WORK              *p_seq;
 
   //引数
-  DIGITALCARDCHECK_PARAM    param;
+  DIGITALCARD_CHECK_PARAM   param;
 
-  //ゲームデータ
-  GAMEDATA                  *p_game_data;
-} DIGITALCARDCHECK_WORK;
+  //ヒープID
+  HEAPID                    heapID;
+} ;
 
 //=============================================================================
 /**
  *					プロトタイプ
 */
 //=============================================================================
-//-------------------------------------
-///	プロセス
-//=====================================
-static GFL_PROC_RESULT DIGITALCARDCHECK_PROC_Init
-	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
-static GFL_PROC_RESULT DIGITALCARDCHECK_PROC_Exit
-	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
-static GFL_PROC_RESULT DIGITALCARDCHECK_PROC_Main
-	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
-
 //-------------------------------------
 ///	WIFI大会シーケンス関数
 //=====================================
@@ -137,10 +108,10 @@ static void DC_SEQFUNC_End( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 ///	モジュールを使いやすくまとめたもの
 //=====================================
 //プレイヤー情報
-static void Util_PlayerInfo_Create( DIGITALCARDCHECK_WORK *p_wk );
-static void Util_PlayerInfo_Delete( DIGITALCARDCHECK_WORK *p_wk );
-static BOOL Util_PlayerInfo_Move( DIGITALCARDCHECK_WORK *p_wk );
-static void Util_PlayerInfo_RenewalData( DIGITALCARDCHECK_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_TYPE type );
+static void Util_PlayerInfo_Create( DIGITALCARD_CHECK_WORK *p_wk );
+static void Util_PlayerInfo_Delete( DIGITALCARD_CHECK_WORK *p_wk );
+static BOOL Util_PlayerInfo_Move( DIGITALCARD_CHECK_WORK *p_wk );
+static void Util_PlayerInfo_RenewalData( DIGITALCARD_CHECK_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_TYPE type );
 //選択肢
 typedef enum
 { 
@@ -148,221 +119,103 @@ typedef enum
   UTIL_LIST_TYPE_RETURN,
   UTIL_LIST_TYPE_UNREGISTER,
 }UTIL_LIST_TYPE;
-static void Util_List_Create( DIGITALCARDCHECK_WORK *p_wk, UTIL_LIST_TYPE type );
-static void Util_List_Delete( DIGITALCARDCHECK_WORK *p_wk );
-static u32 Util_List_Main( DIGITALCARDCHECK_WORK *p_wk );
+static void Util_List_Create( DIGITALCARD_CHECK_WORK *p_wk, UTIL_LIST_TYPE type );
+static void Util_List_Delete( DIGITALCARD_CHECK_WORK *p_wk );
+static u32 Util_List_Main( DIGITALCARD_CHECK_WORK *p_wk );
 
 //テキスト
-static void Util_Text_Print( DIGITALCARDCHECK_WORK *p_wk, u32 strID );
-static BOOL Util_Text_IsEnd( DIGITALCARDCHECK_WORK *p_wk );
-static void Util_Text_SetVisible( DIGITALCARDCHECK_WORK *p_wk, BOOL is_visible );
+static void Util_Text_Print( DIGITALCARD_CHECK_WORK *p_wk, u32 strID );
+static BOOL Util_Text_IsEnd( DIGITALCARD_CHECK_WORK *p_wk );
+static void Util_Text_SetVisible( DIGITALCARD_CHECK_WORK *p_wk, BOOL is_visible );
 
 //=============================================================================
 /**
  *					外部参照
 */
 //=============================================================================
-//-------------------------------------
-///	PROC
-//=====================================
-const GFL_PROC_DATA	DigitalCard_ProcData =
-{	
-	DIGITALCARDCHECK_PROC_Init,
-	DIGITALCARDCHECK_PROC_Main,
-	DIGITALCARDCHECK_PROC_Exit,
-};
-
-//=============================================================================
-/**
- *					PROC
- */
-//=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	デジタルカード確認画面	コアプロセス初期化
+ *	@brief  デジタル選手証画面  開始
  *
- *	@param	GFL_PROC *p_proc	プロセス
- *	@param	*p_seq						シーケンス
- *	@param	*p_param					親ワーク
- *	@param	*p_work						ワーク
+ *	@param	const DIGITALCARD_CHECK_PARAM *cp_param 引数
+ *	@param	heapID  ヒープID
  *
- *	@return	終了コード
+ *	@return ハンドル
  */
 //-----------------------------------------------------------------------------
-static GFL_PROC_RESULT DIGITALCARDCHECK_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
-{	
-	DIGITALCARDCHECK_WORK	  *p_wk;
-  DIGITALCARDCHECK_PARAM  *p_param  = p_param_adrs;
+DIGITALCARD_CHECK_WORK *DIGITALCARD_CHECK_Init( const DIGITALCARD_CHECK_PARAM *cp_param, HEAPID heapID )
+{ 
+  DIGITALCARD_CHECK_WORK	  *p_wk;
 
-	//ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_DIGITALCARD_CHECK, 0x30000 );
+  p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(DIGITALCARD_CHECK_WORK) );
+	GFL_STD_MemClear( p_wk, sizeof(DIGITALCARD_CHECK_WORK) );
+  p_wk->param         = *cp_param;
+  p_wk->heapID        = heapID;
 
-	//プロセスワーク作成
-	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(DIGITALCARDCHECK_WORK), HEAPID_DIGITALCARD_CHECK );
-	GFL_STD_MemClear( p_wk, sizeof(DIGITALCARDCHECK_WORK) );
-  p_wk->param         = *p_param;
-  p_wk->p_game_data   = GAMEDATA_Create( HEAPID_DIGITALCARD_CHECK );
+  //共通モジュール作成
+  p_wk->p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+        NARC_message_wifi_match_dat, heapID );
+	p_wk->p_word	= WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, WORDSET_COUNTRY_BUFLEN, heapID );
 
-	//グラフィック設定
-	p_wk->p_graphic	= WIFIBATTLEMATCH_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, HEAPID_DIGITALCARD_CHECK );
+  //モジュール作成
+  p_wk->p_seq   = WBM_SEQ_Init( p_wk, DC_SEQFUNC_Init, heapID );
 
-  //リソース読み込み
-  p_wk->p_res     = WIFIBATTLEMATCH_VIEW_LoadResource( WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic ), WIFIBATTLEMATCH_VIEW_RES_MODE_DIGITALCARD, HEAPID_DIGITALCARD_CHECK );
-
-	//共通モジュールの作成
-	p_wk->p_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, 
-      GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_DIGITALCARD_CHECK );
-	p_wk->p_que		= PRINTSYS_QUE_Create( HEAPID_DIGITALCARD_CHECK );
-	p_wk->p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-												NARC_message_wifi_match_dat, HEAPID_DIGITALCARD_CHECK );
-	p_wk->p_word	= WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, WORDSET_COUNTRY_BUFLEN, HEAPID_DIGITALCARD_CHECK );
-
-	//モジュールの作成
-  p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_TEXT, PLT_FONT_M, PLT_TEXT_M, CGR_OFS_M_TEXT, p_wk->p_que, p_wk->p_font, HEAPID_DIGITALCARD_CHECK );
-  Util_Text_SetVisible( p_wk, FALSE );
-  p_wk->p_seq   = WBM_SEQ_Init( p_wk, DC_SEQFUNC_Init, HEAPID_DIGITALCARD_CHECK );
-
-#ifdef DEBUG_INPUT_STATUS
-#if DEBUG_INPUT_STATUS
-  { 
-    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_game_data );
-    REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
-    REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, p_wk->param.type );
-    Regulation_SetDebugData( p_reg );
-    Regulation_SetCardParam( p_reg, REGULATION_CARD_STATUS, DEBUG_INPUT_STATUS );
-  }
-#endif
-#endif 
-
-	return GFL_PROC_RES_FINISH;
+  return p_wk;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	デジタルカード確認画面	コアプロセス破棄
+ *	@brief  デジタル選手証画面  終了
  *
- *	@param	GFL_PROC *p_proc	プロセス
- *	@param	*p_seq						シーケンス
- *	@param	*p_param					親ワーク
- *	@param	*p_work						ワーク
- *
- *	@return	終了コード
+ *	@param	DIGITALCARD_CHECK_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static GFL_PROC_RESULT DIGITALCARDCHECK_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
-{
-	DIGITALCARDCHECK_WORK	  *p_wk	= p_wk_adrs;
-
-	//モジュールの破棄
+void DIGITALCARD_CHECK_Exit( DIGITALCARD_CHECK_WORK *p_wk )
+{ 
+  //モジュールの破棄
   WBM_SEQ_Exit( p_wk->p_seq );
-  WBM_TEXT_Exit( p_wk->p_text );
   Util_PlayerInfo_Delete( p_wk );
 
 	//共通モジュールの破棄
 	WORDSET_Delete( p_wk->p_word );
 	GFL_MSG_Delete( p_wk->p_msg );
-	PRINTSYS_QUE_Delete( p_wk->p_que );
-	GFL_FONT_Delete( p_wk->p_font );
 
-  //リソース破棄
-  WIFIBATTLEMATCH_VIEW_UnLoadResource( p_wk->p_res );
-
-	//グラフィック破棄
-	WIFIBATTLEMATCH_GRAPHIC_Exit( p_wk->p_graphic );
-
-  //ゲームデータ破棄
-  GAMEDATA_Delete( p_wk->p_game_data );
-
-	//プロセスワーク破棄
-	GFL_PROC_FreeWork( p_proc );
-
-	//ヒープ破棄
-	GFL_HEAP_DeleteHeap( HEAPID_DIGITALCARD_CHECK );
-	
-	return GFL_PROC_RES_FINISH;
+  GFL_HEAP_FreeMemory( p_wk );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	デジタルカード確認画面	メインプロセス処理
+ *	@brief  デジタル選手証画面  処理
  *
- *	@param	GFL_PROC *p_proc	プロセス
- *	@param	*p_seq						シーケンス
- *	@param	*p_param					親ワーク
- *	@param	*p_work						ワーク
- *
- *	@return	終了コード
+ *	@param	DIGITALCARD_CHECK_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static GFL_PROC_RESULT DIGITALCARDCHECK_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
-{
-  enum
-  { 
-    SEQ_FADEIN_START,
-    SEQ_FADEIN_WAIT,
-    SEQ_MAIN,
-    SEQ_FADEOUT_START,
-    SEQ_FADEOUT_WAIT,
-  };
-
-	DIGITALCARDCHECK_WORK	*p_wk	    = p_wk_adrs;
-
-  switch( *p_seq )
-  { 
-  case SEQ_FADEIN_START:
-    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
-    *p_seq  = SEQ_FADEIN_WAIT;
-    break;
-
-  case SEQ_FADEIN_WAIT:
-		if( !GFL_FADE_CheckFade() )
-		{
-      *p_seq  = SEQ_MAIN;
-    }
-    break;
-
-  case SEQ_MAIN:
-    //メインシーケンス
-    WBM_SEQ_Main( p_wk->p_seq );
-
-    if( WBM_SEQ_IsEnd( p_wk->p_seq ) )
-    { 
-      *p_seq  = SEQ_FADEOUT_START;
-    }
-    break;
-
-  case SEQ_FADEOUT_START:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
-    *p_seq  = SEQ_FADEOUT_WAIT;
-    break;
-
-  case SEQ_FADEOUT_WAIT:
-		if( !GFL_FADE_CheckFade() )
-		{
-      return GFL_PROC_RES_FINISH;
-    }
-  }
-
-	//描画
-	WIFIBATTLEMATCH_GRAPHIC_2D_Draw( p_wk->p_graphic );
-
-	//プリント
-	PRINTSYS_QUE_Main( p_wk->p_que );
-
-  //テキスト
-  WBM_TEXT_Main( p_wk->p_text );
-
-  //BG
-  WIFIBATTLEMATCH_VIEW_Main( p_wk->p_res );
+void DIGITALCARD_CHECK_Main( DIGITALCARD_CHECK_WORK *p_wk )
+{ 
+  //メインシーケンス
+  WBM_SEQ_Main( p_wk->p_seq );
 
   //文字表示
   if( p_wk->p_playerinfo )
   { 
-    PLAYERINFO_PrintMain( p_wk->p_playerinfo, p_wk->p_que );
+    PLAYERINFO_PrintMain( p_wk->p_playerinfo, p_wk->param.p_que );
   }
-
-  return GFL_PROC_RES_CONTINUE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デジタル選手証画面  終了チェック
+ *
+ *	@param	const DIGITALCARD_CHECK_WORK *cp_wk wアーク
+ *
+ *	@return TRUE終了  FALSE処理中
+ */
+//-----------------------------------------------------------------------------
+BOOL DIGITALCARD_CHECK_IsEnd( const DIGITALCARD_CHECK_WORK *cp_wk )
+{ 
+  return WBM_SEQ_IsEnd( cp_wk->p_seq );
+}
+
 //=============================================================================
 /**
  *  シーケンス
@@ -379,8 +232,8 @@ static GFL_PROC_RESULT DIGITALCARDCHECK_PROC_Main( GFL_PROC *p_proc, int *p_seq,
 //-----------------------------------------------------------------------------
 static void DC_SEQFUNC_Init( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
-  DIGITALCARDCHECK_WORK	  *p_wk	    = p_wk_adrs;
-  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_game_data );
+  DIGITALCARD_CHECK_WORK	  *p_wk	    = p_wk_adrs;
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
   REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
   REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, p_wk->param.type );
   const u32 cup_no      = Regulation_GetCardParam( p_reg, REGULATION_CARD_CUPNO );
@@ -435,7 +288,7 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     SEQ_WAIT_LIST_RETURN,
     SEQ_PROC_END,
   };
-  DIGITALCARDCHECK_WORK	  *p_wk	    = p_wk_adrs;
+  DIGITALCARD_CHECK_WORK	  *p_wk	    = p_wk_adrs;
 
   switch( *p_seq )
   { 
@@ -532,7 +385,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_PROC_END,
     SEQ_WAIT_MSG,
   };
-  DIGITALCARDCHECK_WORK	  *p_wk	    = p_wk_adrs;
+  DIGITALCARD_CHECK_WORK	  *p_wk	    = p_wk_adrs;
 
   switch( *p_seq )
   { 
@@ -646,7 +499,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   case SEQ_RETIRE:
     { 
-      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_game_data );
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
       REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
       REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, p_wk->param.type ); 
       BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
@@ -659,7 +512,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     
   case SEQ_START_SAVE:
     { 
-      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_game_data );
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
       SaveControl_SaveAsyncInit(p_sv);
       *p_seq  = SEQ_WAIT_SAVE;
     }
@@ -667,7 +520,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_WAIT_SAVE:
     {
       SAVE_RESULT ret;
-      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_game_data );
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
       ret = SaveControl_SaveAsyncMain(p_sv);
       if( ret == SAVE_RESULT_OK )
       { 
@@ -720,7 +573,7 @@ static void DC_SEQFUNC_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     SEQ_WAIT_LIST_RETURN,
     SEQ_PROC_END,
   };
-  DIGITALCARDCHECK_WORK	  *p_wk	    = p_wk_adrs;
+  DIGITALCARD_CHECK_WORK	  *p_wk	    = p_wk_adrs;
 
   switch( *p_seq )
   { 
@@ -802,7 +655,7 @@ static void DC_SEQFUNC_Retire( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     SEQ_WAIT_LIST_RETURN,
     SEQ_PROC_END,
   };
-  DIGITALCARDCHECK_WORK	  *p_wk	    = p_wk_adrs;
+  DIGITALCARD_CHECK_WORK	  *p_wk	    = p_wk_adrs;
 
   switch( *p_seq )
   { 
@@ -879,7 +732,7 @@ static void DC_SEQFUNC_NoData( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     SEQ_WAIT_MSG,
     SEQ_PROC_END,
   };
-  DIGITALCARDCHECK_WORK	  *p_wk	    = p_wk_adrs;
+  DIGITALCARD_CHECK_WORK	  *p_wk	    = p_wk_adrs;
 
   switch( *p_seq )
   { 
@@ -912,7 +765,7 @@ static void DC_SEQFUNC_NoData( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 //-----------------------------------------------------------------------------
 static void DC_SEQFUNC_End( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
-  DIGITALCARDCHECK_WORK	  *p_wk	    = p_wk_adrs;
+  DIGITALCARD_CHECK_WORK	  *p_wk	    = p_wk_adrs;
   WBM_SEQ_End( p_seqwk );
 }
 
@@ -925,10 +778,10 @@ static void DC_SEQFUNC_End( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 /**
  *	@brief  自分の情報を表示
  *
- *	@param	DIGITALCARDCHECK_WORK *p_wk ワーク
+ *	@param	DIGITALCARD_CHECK_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void Util_PlayerInfo_Create( DIGITALCARDCHECK_WORK *p_wk )
+static void Util_PlayerInfo_Create( DIGITALCARD_CHECK_WORK *p_wk )
 { 
   if( p_wk->p_playerinfo == NULL )
   {
@@ -940,12 +793,12 @@ static void Util_PlayerInfo_Create( DIGITALCARDCHECK_WORK *p_wk )
 
     PLAYERINFO_WIFICUP_DATA info_setup;
 
-    REGULATION_SAVEDATA* p_reg_sv  = SaveData_GetRegulationSaveData(GAMEDATA_GetSaveControlWork( p_wk->p_game_data ));
+    REGULATION_SAVEDATA* p_reg_sv  = SaveData_GetRegulationSaveData(GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata ));
     const REGULATION_CARDDATA *cp_reg_card  = RegulationSaveData_GetRegulationCard(p_reg_sv, p_wk->param.type );
 
-    p_my    = GAMEDATA_GetMyStatus( p_wk->p_game_data); 
-    p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic );
-    p_sv    = GAMEDATA_GetSaveControlWork( p_wk->p_game_data );
+    p_my    = GAMEDATA_GetMyStatus( p_wk->param.p_gamedata); 
+    p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->param.p_graphic );
+    p_sv    = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
     p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
     cp_match_save  = SaveData_GetRndMatchConst( p_sv );
 
@@ -974,17 +827,17 @@ static void Util_PlayerInfo_Create( DIGITALCARDCHECK_WORK *p_wk )
         + RNDMATCH_GetParam( cp_match_save, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_LOSE );
     }
 
-    p_wk->p_playerinfo	= PLAYERINFO_WIFI_Init( &info_setup, FALSE, p_my, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, p_bbox_save, TRUE, HEAPID_DIGITALCARD_CHECK );
+    p_wk->p_playerinfo	= PLAYERINFO_WIFI_Init( &info_setup, FALSE, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_msg, p_wk->p_word, p_bbox_save, TRUE, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  自分の情報を破棄
  *
- *	@param	DIGITALCARDCHECK_WORK *p_wk ワーク
+ *	@param	DIGITALCARD_CHECK_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void Util_PlayerInfo_Delete( DIGITALCARDCHECK_WORK *p_wk )
+static void Util_PlayerInfo_Delete( DIGITALCARD_CHECK_WORK *p_wk )
 { 
   if( p_wk->p_playerinfo )
   { 
@@ -996,12 +849,12 @@ static void Util_PlayerInfo_Delete( DIGITALCARDCHECK_WORK *p_wk )
 /**
  *	@brief  自分のカードをスライドイン
  *
- *	@param	DIGITALCARDCHECK_WORK *p_wk  ワーク
+ *	@param	DIGITALCARD_CHECK_WORK *p_wk  ワーク
  *
  *	@return TRUEで完了  FALSEで処理中
  */
 //-----------------------------------------------------------------------------
-static BOOL Util_PlayerInfo_Move( DIGITALCARDCHECK_WORK *p_wk )
+static BOOL Util_PlayerInfo_Move( DIGITALCARD_CHECK_WORK *p_wk )
 { 
   return PLAYERINFO_MoveMain( p_wk->p_playerinfo );
 }
@@ -1009,32 +862,31 @@ static BOOL Util_PlayerInfo_Move( DIGITALCARDCHECK_WORK *p_wk )
 /**
  *	@brief  自分のカードのデータを更新
  *
- *	@param	DIGITALCARDCHECK_WORK *p_wk
+ *	@param	DIGITALCARD_CHECK_WORK *p_wk
  *	@param	type 
  */
 //-----------------------------------------------------------------------------
-static void Util_PlayerInfo_RenewalData( DIGITALCARDCHECK_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_TYPE type )
+static void Util_PlayerInfo_RenewalData( DIGITALCARD_CHECK_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_TYPE type )
 { 
-  PLAYERINFO_WIFI_RenewalData( p_wk->p_playerinfo, type, p_wk->p_msg, p_wk->p_que, p_wk->p_font, HEAPID_DIGITALCARD_CHECK );
-
+  PLAYERINFO_WIFI_RenewalData( p_wk->p_playerinfo, type, p_wk->p_msg, p_wk->param.p_que, p_wk->param.p_font, p_wk->heapID );
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  リスト初期化
  *
- *	@param	DIGITALCARDCHECK_WORK *p_wk  ワーク
+ *	@param	DIGITALCARD_CHECK_WORK *p_wk  ワーク
  *	@param	type                            リストの種類
  */
 //-----------------------------------------------------------------------------
-static void Util_List_Create( DIGITALCARDCHECK_WORK *p_wk, UTIL_LIST_TYPE type )
+static void Util_List_Create( DIGITALCARD_CHECK_WORK *p_wk, UTIL_LIST_TYPE type )
 { 
   if( p_wk->p_list == NULL )
   { 
     WBM_LIST_SETUP  setup;
     GFL_STD_MemClear( &setup, sizeof(WBM_LIST_SETUP) );
     setup.p_msg   = p_wk->p_msg;
-    setup.p_font  = p_wk->p_font;
-    setup.p_que   = p_wk->p_que;
+    setup.p_font  = p_wk->param.p_font;
+    setup.p_que   = p_wk->param.p_que;
     setup.frm     = BG_FRAME_M_TEXT;
     setup.font_plt= PLT_FONT_M;
     setup.frm_plt = PLT_LIST_M;
@@ -1057,17 +909,17 @@ static void Util_List_Create( DIGITALCARDCHECK_WORK *p_wk, UTIL_LIST_TYPE type )
       setup.list_max= 2;
       break;
     }
-    p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_DIGITALCARD_CHECK );
+    p_wk->p_list  = WBM_LIST_Init( &setup, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  リスト破棄
  *
- *	@param	DIGITALCARDCHECK_WORK *p_wk ワーク
+ *	@param	DIGITALCARD_CHECK_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void Util_List_Delete( DIGITALCARDCHECK_WORK *p_wk )
+static void Util_List_Delete( DIGITALCARD_CHECK_WORK *p_wk )
 {
   if( p_wk->p_list )
   { 
@@ -1079,12 +931,12 @@ static void Util_List_Delete( DIGITALCARDCHECK_WORK *p_wk )
 /**
  *	@brief  リストメイン
  *
- *	@param	DIGITALCARDCHECK_WORK *p_wk ワーク
+ *	@param	DIGITALCARD_CHECK_WORK *p_wk ワーク
  *
  *	@return 選択したもの
  */
 //-----------------------------------------------------------------------------
-static u32 Util_List_Main( DIGITALCARDCHECK_WORK *p_wk )
+static u32 Util_List_Main( DIGITALCARD_CHECK_WORK *p_wk )
 { 
   if( p_wk->p_list )
   { 
@@ -1101,36 +953,36 @@ static u32 Util_List_Main( DIGITALCARDCHECK_WORK *p_wk )
 /**
  *	@brief  テキストに文字出力
  *
- *	@param	DIGITALCARDCHECK_WORK *p_wk ワーク
+ *	@param	DIGITALCARD_CHECK_WORK *p_wk ワーク
  *	@param	strID                       文字ID
  */
 //-----------------------------------------------------------------------------
-static void Util_Text_Print( DIGITALCARDCHECK_WORK *p_wk, u32 strID )
+static void Util_Text_Print( DIGITALCARD_CHECK_WORK *p_wk, u32 strID )
 { 
-  WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, strID, WBM_TEXT_TYPE_STREAM );
+  WBM_TEXT_Print( p_wk->param.p_text, p_wk->p_msg, strID, WBM_TEXT_TYPE_STREAM );
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  テキストの文字出力が終わったかどうか
  *
- *	@param	DIGITALCARDCHECK_WORK *p_wk   ワーク
+ *	@param	DIGITALCARD_CHECK_WORK *p_wk   ワーク
  *
  *	@return TRUEで描画終了  FALSEで描画中
  */
 //-----------------------------------------------------------------------------
-static BOOL Util_Text_IsEnd( DIGITALCARDCHECK_WORK *p_wk )
+static BOOL Util_Text_IsEnd( DIGITALCARD_CHECK_WORK *p_wk )
 { 
-  return WBM_TEXT_IsEnd( p_wk->p_text );
+  return WBM_TEXT_IsEnd( p_wk->param.p_text );
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  テキストの表示設定
  *
- *	@param	DIGITALCARDCHECK_WORK *p_wk ワーク
+ *	@param	DIGITALCARD_CHECK_WORK *p_wk ワーク
  *	@param	is_visible                  TRUEで表示FALSEで非表示
  */
 //-----------------------------------------------------------------------------
-static void Util_Text_SetVisible( DIGITALCARDCHECK_WORK *p_wk, BOOL is_visible )
+static void Util_Text_SetVisible( DIGITALCARD_CHECK_WORK *p_wk, BOOL is_visible )
 { 
   GFL_BG_SetVisible( BG_FRAME_M_TEXT, is_visible );
 }

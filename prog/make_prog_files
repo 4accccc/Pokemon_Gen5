@@ -1446,10 +1446,12 @@ SRCS_OVERLAY_GURU2 = net_app/guru2/guru2.c \
 
 # バトル大会メニュー
 #===> SRCS_OVERLAY_DEV_WIFI
-SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = battle_championship/battle_championship.c \
+SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = battle_championship/battle_championship_core.c \
+        battle_championship/battle_championship_sys.c \
+        battle_championship/battle_championship_flow.c \
 				net_app/irc_battle/irc_battle_main.c \
 				net_app/irc_battle/irc_battle_subproc.c \
-        net_app/wifi_match/digitalcardcheck.c
+        battle_championship/digitalcardcheck.c
 
 # 小幡デバッグ
 #===> GROUP_OVERLAY_UNION_INTRUDE

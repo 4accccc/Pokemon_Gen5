@@ -210,7 +210,6 @@ static int SetButtonAnm( START_MENU_WORK * wk, int next );
 //	グローバル
 //============================================================================================
 
-FS_EXTERN_OVERLAY(battle_championship);
 FS_EXTERN_OVERLAY(pdw_acc);
 extern const GFL_PROC_DATA PDW_ACC_MainProcData;
 
@@ -437,7 +436,7 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 		break;
 
 	case LIST_ITEM_BATTLE:				// バトル大会
-		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(battle_championship), &BATTLE_CHAMPIONSHIP_ProcData, NULL);
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(battle_championship), &BATTLE_CHAMPIONSHIP_ProcData, BATTLE_CHAMPIONSHIP_MODE_MAIN_MENU);
 		break;
 
 	case LIST_ITEM_GAME_SYNC:			// ゲームシンク設定
@@ -2851,7 +2850,6 @@ static const START_MENU_ITEM_SETTING ItemSettingData[SMI_MAX] =
   {  4 , START_MENU_ITEM_TempCheck , START_MENU_ITEM_CommonSelect , START_MENU_ITEM_CommonDraw },
 };
 
-FS_EXTERN_OVERLAY(battle_championship);
 
 
 //--------------------------------------------------------------
@@ -2942,7 +2940,7 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
         break;
       
     case SMI_GBS_CONNECT: //バトル大会メニュー
-      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(battle_championship), &BATTLE_CHAMPIONSHIP_ProcData, NULL);
+      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(battle_championship), &BATTLE_CHAMPIONSHIP_ProcData, BATTLE_CHAMPIONSHIP_MODE_MAIN_MENU);
       break;
                 
     case SMI_RETURN_TITLE:

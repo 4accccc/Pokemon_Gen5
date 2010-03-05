@@ -25,7 +25,8 @@
 //各プロセス
 #include "net_app/wifi_login.h"
 #include "net_app/wifi_logout.h"
-#include "title/title.h"
+//#include "title/title.h"
+#include "battle_championship/battle_championship.h"
 #include "wifibattlematch_battle.h"
 #include "net_app/btl_rec_sel.h"
 #include "wifibattlematch_utilproc.h"
@@ -38,6 +39,7 @@
 
 //自分のモジュール
 #include "wifibattlematch_core.h"
+#include "wifibattlematch_util.h"
 #include "wifibattlematch_data.h"
 #include "wifibattlematch_snd.h"
 
@@ -67,32 +69,11 @@
 */
 //=============================================================================
 //-------------------------------------
-///	サブプロック移動
+///	ワーク
 //=====================================
-typedef void *(*SUBPROC_ALLOC_FUNCTION)( HEAPID heapID, void *p_wk_adrs );
-typedef BOOL (*SUBPROC_FREE_FUNCTION)( void *p_param, void *p_wk_adrs );
-typedef struct 
-{
-	FSOverlayID							ov_id;
-	const GFL_PROC_DATA			*cp_procdata;
-	SUBPROC_ALLOC_FUNCTION	alloc_func;
-	SUBPROC_FREE_FUNCTION		free_func;
-} SUBPROC_DATA;
-typedef struct {
-	GFL_PROCSYS			*p_procsys;
-	void						*p_proc_param;
-	SUBPROC_DATA		*p_data;
+typedef struct _WBM_SYS_SUBPROC_WORK WBM_SYS_SUBPROC_WORK;
 
-	HEAPID					heapID;
-	void						*p_wk_adrs;
-	const SUBPROC_DATA			*cp_procdata_tbl;
 
-	u8							next_procID;
-	u8							now_procID;
-	u16							seq;
-
-  GFL_PROC_MAIN_STATUS  status;
-} SUBPROC_WORK;
 //-------------------------------------
 ///	システムワーク
 //=====================================
@@ -100,7 +81,9 @@ typedef struct
 { 
   BOOL                        is_create_gamedata;
   WIFIBATTLEMATCH_PARAM       param;
-  SUBPROC_WORK                subproc;
+
+  //プロセス管理システム
+  WBM_SYS_SUBPROC_WORK        *p_subproc;
 
   //コアモード
   WIFIBATTLEMATCH_CORE_MODE     core_mode;
@@ -110,14 +93,12 @@ typedef struct
   BtlResult                   btl_result;
   BtlRule                     btl_rule;
 
-  POKEPARTY                   *p_player_btl_party; //自分で決めたパーティ
-  POKEPARTY                   *p_enemy_btl_party; //相手の決めたパーティ
-
   //以下システム層に置いておくデータ
   WIFIBATTLEMATCH_ENEMYDATA   *p_player_data;
   WIFIBATTLEMATCH_ENEMYDATA   *p_enemy_data;
-
-  DWCSvlResult                svl_result;
+  POKEPARTY                   *p_player_btl_party;//自分で決めたパーティ
+  POKEPARTY                   *p_enemy_btl_party; //相手の決めたパーティ
+  DWCSvlResult                svl_result;         //WIFIログイン時に得るサービスロケータ
 
 #if 0
   DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *p_gpf_data;
@@ -140,15 +121,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
 static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
-
-//-------------------------------------
-///	サブプロセス
-//=====================================
-static void SUBPROC_Init( SUBPROC_WORK *p_wk, const SUBPROC_DATA *cp_procdata_tbl, void *p_wk_adrs, HEAPID heapID );
-static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk );
-static GFL_PROC_MAIN_STATUS SUBPROC_GetStatus( const SUBPROC_WORK *cp_wk );
-static void SUBPROC_Exit( SUBPROC_WORK *p_wk );
-static void SUBPROC_CallProc( SUBPROC_WORK *p_wk, u32 procID );
 
 //-------------------------------------
 ///	サブプロセス用引数の解放、破棄関数
@@ -180,6 +152,38 @@ static BOOL LOGOUT_FreeParam( void *p_param_adrs, void *p_wk_adrs );
 //=====================================
 static void DATA_CreateBuffer( WIFIBATTLEMATCH_SYS *p_wk, HEAPID heapID );
 static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk );
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  サブプロセス
+ *				    ・プロセスを行き来するシステム
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	サブプロセス初期化・解放関数コールバック
+//=====================================
+typedef void *(*WBM_SYS_SUBPROC_ALLOC_FUNCTION)( HEAPID heapID, void *p_wk_adrs );
+typedef BOOL (*WBM_SYS_SUBPROC_FREE_FUNCTION)( void *p_param, void *p_wk_adrs );
+
+//-------------------------------------
+///	サブプロセス設定構造体
+//=====================================
+typedef struct 
+{
+	FSOverlayID							    ov_id;
+	const GFL_PROC_DATA			    *cp_procdata;
+	WBM_SYS_SUBPROC_ALLOC_FUNCTION	alloc_func;
+	WBM_SYS_SUBPROC_FREE_FUNCTION		free_func;
+} WBM_SYS_SUBPROC_DATA;
+
+//-------------------------------------
+///	パブリック
+//=====================================
+static  WBM_SYS_SUBPROC_WORK * WBM_SYS_SUBPROC_Init( const WBM_SYS_SUBPROC_DATA *cp_procdata_tbl, u32 tbl_len, void *p_wk_adrs, HEAPID heapID );
+static  void WBM_SYS_SUBPROC_Exit( WBM_SYS_SUBPROC_WORK *p_wk );
+static  BOOL WBM_SYS_SUBPROC_Main( WBM_SYS_SUBPROC_WORK *p_wk );
+static  GFL_PROC_MAIN_STATUS WBM_SYS_SUBPROC_GetStatus( const WBM_SYS_SUBPROC_WORK *cp_wk );
+static  void WBM_SYS_SUBPROC_CallProc( WBM_SYS_SUBPROC_WORK *p_wk, u32 procID );
 
 //=============================================================================
 /**
@@ -216,7 +220,7 @@ typedef enum
 
 	SUBPROCID_MAX
 } SUBPROC_ID;
-static const SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
+static const WBM_SYS_SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
 {	
 	//SUBPROCID_CORE
 	{	
@@ -338,8 +342,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   DATA_CreateBuffer( p_wk, HEAPID_WIFIBATTLEMATCH_SYS );
 
   //モジュール作成
-	SUBPROC_Init( &p_wk->subproc, sc_subproc_data, p_wk, HEAPID_WIFIBATTLEMATCH_SYS );
-  SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LOGIN );
+	p_wk->p_subproc = WBM_SYS_SUBPROC_Init( sc_subproc_data, SUBPROCID_MAX, p_wk, HEAPID_WIFIBATTLEMATCH_SYS );
+  WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_LOGIN );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -361,7 +365,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
   WIFIBATTLEMATCH_SYS   *p_wk     = p_wk_adrs;
 
 	//モジュール破棄
-	SUBPROC_Exit( &p_wk->subproc );
+	WBM_SYS_SUBPROC_Exit( p_wk->p_subproc );
 
   //データバッファ破棄
   DATA_DeleteBuffer( p_wk );
@@ -382,10 +386,11 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
     GAMEDATA_Delete( p_wk->param.p_game_data );
   }
 
-  //ランダム対戦以外はタイトルから呼ばれるので、戻りはタイトル
+  //WIFI大会の戻りは、WIFI大会メニュー
   if( p_wk->param.mode != WIFIBATTLEMATCH_MODE_RANDOM )
   { 
-    GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+    //GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+    GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(battle_championship), &BATTLE_CHAMPIONSHIP_ProcData, BATTLE_CHAMPIONSHIP_MODE_WIFI_MENU);
   }
 
   if( p_wk->param.is_auto_release )
@@ -453,7 +458,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 	case WBM_SYS_SEQ_MAIN:
 		{
 			BOOL is_end;
-			is_end	= SUBPROC_Main( &p_wk->subproc );
+			is_end	= WBM_SYS_SUBPROC_Main( p_wk->p_subproc );
 
 			if( is_end )
 			{	
@@ -463,7 +468,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
       //このローカルPROC内でPROC遷移するため、エラーシステムを自分で動かす
       //if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_WIFI )
       { 
-        const GFL_PROC_MAIN_STATUS  status  = SUBPROC_GetStatus( &p_wk->subproc );
+        const GFL_PROC_MAIN_STATUS  status  = WBM_SYS_SUBPROC_GetStatus( p_wk->p_subproc );
         if( status == GFL_PROC_MAIN_CHANGE || status == GFL_PROC_MAIN_NULL )
         { 
           NetErr_DispCall(FALSE);
@@ -489,169 +494,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 	}
 	return GFL_PROC_RES_CONTINUE;
 }
-
-//=============================================================================
-/**
- *			SUBPROCシステム
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	SUBPROCシステム	初期化
- *
- *	@param	SUBPROC_WORK *p_wk	ワーク
- *	@param	cp_procdata_tbl			プロセス接続テーブル
- *	@param	void *p_wk_adrs			アロック関数と解放関数に渡すワーク
- *	@param	heapID							システム構築用ヒープID
- *
- */
-//-----------------------------------------------------------------------------
-static void SUBPROC_Init( SUBPROC_WORK *p_wk, const SUBPROC_DATA *cp_procdata_tbl, void *p_wk_adrs, HEAPID heapID )
-{	
-	GFL_STD_MemClear( p_wk, sizeof(SUBPROC_WORK) );
-	p_wk->p_procsys				= GFL_PROC_LOCAL_boot( heapID );
-	p_wk->p_wk_adrs				= p_wk_adrs;
-	p_wk->cp_procdata_tbl	= cp_procdata_tbl;
-	p_wk->heapID					= heapID;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	SUBPROCシステム	メイン処理
- *
- *	@param	SUBPROC_WORK *p_wk	ワーク
- *
- *	@retval	TRUEならば終了	FALSEならばPROCが存在する
- */
-//-----------------------------------------------------------------------------
-static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk )
-{	
-	enum
-	{	
-		SEQ_INIT,
-		SEQ_ALLOC_PARAM,
-		SEQ_MAIN,
-		SEQ_FREE_PARAM,
-    SEQ_NEXT,
-		SEQ_END,
-	};
-
-	switch( p_wk->seq )
-	{	
-	case SEQ_INIT:
-		p_wk->now_procID	= p_wk->next_procID;
-		p_wk->seq	= SEQ_ALLOC_PARAM;
-		break;
-
-	case SEQ_ALLOC_PARAM:
-		//プロセス引数作成関数があれば呼び出し
-		if( p_wk->cp_procdata_tbl[ p_wk->now_procID ].alloc_func )
-		{	
-			p_wk->p_proc_param	= p_wk->cp_procdata_tbl[ p_wk->now_procID ].alloc_func(
-					p_wk->heapID, p_wk->p_wk_adrs );
-		}
-		else
-		{	
-			p_wk->p_proc_param	= NULL;
-		}
-
-		//プロック呼び出し
-		GFL_PROC_LOCAL_CallProc( p_wk->p_procsys, p_wk->cp_procdata_tbl[	p_wk->now_procID ].ov_id,
-					p_wk->cp_procdata_tbl[	p_wk->now_procID ].cp_procdata, p_wk->p_proc_param );
-
-		p_wk->seq	= SEQ_MAIN;
-		break;
-
-	case SEQ_MAIN:
-		{	
-			p_wk->status	= GFL_PROC_LOCAL_Main( p_wk->p_procsys );
-			if( GFL_PROC_MAIN_NULL == p_wk->status )
-			{	
-				p_wk->seq	= SEQ_FREE_PARAM;
-			}
-		}
-		break;
-
-	case SEQ_FREE_PARAM:
-		//プロセス引数破棄関数呼び出し
-		if( p_wk->cp_procdata_tbl[	p_wk->now_procID ].free_func )
-		{	
-			if( p_wk->cp_procdata_tbl[	p_wk->now_procID ].free_func( p_wk->p_proc_param, p_wk->p_wk_adrs ) )
-      { 
-        p_wk->p_proc_param	= NULL;
-				p_wk->seq	= SEQ_NEXT;
-      }
-		}
-    else
-    { 
-				p_wk->seq	= SEQ_NEXT;
-    }
-    break;
-
-  case SEQ_NEXT:
-		//もし次のプロセスがあれば呼び出し
-		//なければ終了
-		if( p_wk->now_procID != p_wk->next_procID )
-		{	
-			p_wk->seq	= SEQ_INIT;
-		}
-		else
-		{	
-			p_wk->seq	= SEQ_END;
-		}
-		break;
-
-	case SEQ_END:
-		return TRUE;
-	}
-
-	return FALSE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  SUBPROCシステム PROC状態を取得
- *
- *	@param	const SUBPROC_WORK *cp_wk   ワーク
- *
- *	@return
- */
-//-----------------------------------------------------------------------------
-static GFL_PROC_MAIN_STATUS SUBPROC_GetStatus( const SUBPROC_WORK *cp_wk )
-{ 
-  return cp_wk->status;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	SUBPROCシステム	破棄
- *
- *	@param	SUBPROC_WORK *p_wk	ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void SUBPROC_Exit( SUBPROC_WORK *p_wk )
-{	
-	GF_ASSERT( p_wk->p_proc_param == NULL );
-
-	GFL_PROC_LOCAL_Exit( p_wk->p_procsys );
-	GFL_STD_MemClear( p_wk, sizeof(SUBPROC_WORK) );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	SUBPROCシステム	プロセスリクエスト
- *
- *	@param	SUBPROC_WORK *p_wk	ワーク
- *	@param	proc_id							呼ぶプロセスID
- *
- */
-//-----------------------------------------------------------------------------
-static void SUBPROC_CallProc( SUBPROC_WORK *p_wk, u32 procID )
-{	
-	p_wk->next_procID	= procID;
-}
-
 //=============================================================================
 /**
  *		サブプロセス用作成破棄
@@ -705,19 +547,19 @@ static BOOL WBM_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   switch( p_param->result )
   { 
   case WIFIBATTLEMATCH_CORE_RESULT_NEXT_BATTLE:
-    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_POKELIST );
+    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_POKELIST );
     break;
     
   case WIFIBATTLEMATCH_CORE_RESULT_NEXT_REC:
-    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_BTLREC );
+    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_BTLREC );
     break;
   
   case WIFIBATTLEMATCH_CORE_RESULT_ERR_NEXT_LOGIN:
-    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LOGIN );
+    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_LOGIN );
     break;
 
   case WIFIBATTLEMATCH_CORE_RESULT_FINISH:
-    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LOGOUT );
+    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_LOGOUT );
     break;
   }
 
@@ -828,11 +670,11 @@ static BOOL POKELIST_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 
   if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS )
   { 
-    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LISTAFTER );
+    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_LISTAFTER );
   }
   else if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN )
   { 
-    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LOGIN );
+    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_LOGIN );
   }
   GFL_HEAP_FreeMemory( p_param->regulation );
   GFL_HEAP_FreeMemory( p_param );
@@ -1014,18 +856,18 @@ static BOOL BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   {
   case WIFIBATTLEMATCH_BATTLELINK_RESULT_SUCCESS:
     p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE;
-    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
+    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_CORE );
     break;
 
   case WIFIBATTLEMATCH_BATTLELINK_RESULT_DISCONNECT:
     //切断された
     p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
-    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
+    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_CORE );
     break;
     
   case WIFIBATTLEMATCH_BATTLELINK_RESULT_EVIL:
     p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
-    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
+    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_CORE );
     break;
   }
 
@@ -1076,7 +918,7 @@ static BOOL LOGIN_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   { 
   case WIFILOGIN_RESULT_LOGIN:
     p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_START;
-    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
+    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_CORE );
     break;
 
   case WIFILOGIN_RESULT_CANCEL:
@@ -1129,11 +971,11 @@ static BOOL WBM_LISTAFTER_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   switch( result )
   { 
   case WIFIBATTLEMATCH_LISTAFTER_RESULT_SUCCESS:
-    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_BATTLE );
+    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_BATTLE );
     break;
 
   case WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_NEXT_LOGIN:
-    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LOGIN );
+    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_LOGIN );
     break;
   }
 
@@ -1187,7 +1029,7 @@ static BOOL WBM_BTLREC_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 
   //次のPROC
   p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDREC;
-  SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
+  WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_CORE );
 
   return TRUE;
 }
@@ -1273,3 +1115,194 @@ static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk )
   GFL_HEAP_FreeMemory( p_wk->p_player_data );
   GFL_HEAP_FreeMemory( p_wk->p_enemy_data );
 }
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  サブプロセス
+ *				    ・プロセスを行き来するシステム
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	ワーク
+//=====================================
+struct _WBM_SYS_SUBPROC_WORK
+{
+	GFL_PROCSYS			  *p_procsys;
+	void						  *p_proc_param;
+
+	HEAPID					  heapID;
+	void						  *p_wk_adrs;
+	const WBM_SYS_SUBPROC_DATA			*cp_procdata_tbl;
+  u32               tbl_len;
+
+	u8							  next_procID;
+	u8							  now_procID;
+	u16							  seq;
+
+  GFL_PROC_MAIN_STATUS  status;
+} ;
+//-------------------------------------
+///	外部公開
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WBM_SYS_SUBPROCシステム	初期化
+ *
+ *	@param	WBM_SYS_SUBPROC_WORK *p_wk	ワーク
+ *	@param	cp_procdata_tbl			プロセス接続テーブル
+ *	@param	void *p_wk_adrs			アロック関数と解放関数に渡すワーク
+ *	@param	heapID							システム構築用ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+WBM_SYS_SUBPROC_WORK * WBM_SYS_SUBPROC_Init( const WBM_SYS_SUBPROC_DATA *cp_procdata_tbl, u32 tbl_len, void *p_wk_adrs, HEAPID heapID )
+{	
+  WBM_SYS_SUBPROC_WORK *p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(WBM_SYS_SUBPROC_WORK ) );
+	GFL_STD_MemClear( p_wk, sizeof(WBM_SYS_SUBPROC_WORK) );
+	p_wk->p_procsys				= GFL_PROC_LOCAL_boot( heapID );
+	p_wk->p_wk_adrs				= p_wk_adrs;
+	p_wk->cp_procdata_tbl	= cp_procdata_tbl;
+  p_wk->tbl_len         = tbl_len;
+	p_wk->heapID					= heapID;
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WBM_SYS_SUBPROCシステム	破棄
+ *
+ *	@param	WBM_SYS_SUBPROC_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void WBM_SYS_SUBPROC_Exit( WBM_SYS_SUBPROC_WORK *p_wk )
+{	
+	GF_ASSERT( p_wk->p_proc_param == NULL );
+
+	GFL_PROC_LOCAL_Exit( p_wk->p_procsys );
+
+  GFL_HEAP_FreeMemory( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WBM_SYS_SUBPROCシステム	メイン処理
+ *
+ *	@param	WBM_SYS_SUBPROC_WORK *p_wk	ワーク
+ *
+ *	@retval	TRUEならば終了	FALSEならばPROCが存在する
+ */
+//-----------------------------------------------------------------------------
+BOOL WBM_SYS_SUBPROC_Main( WBM_SYS_SUBPROC_WORK *p_wk )
+{	
+	enum
+	{	
+		SEQ_INIT,
+		SEQ_ALLOC_PARAM,
+		SEQ_MAIN,
+		SEQ_FREE_PARAM,
+    SEQ_NEXT,
+		SEQ_END,
+	};
+
+	switch( p_wk->seq )
+	{	
+	case SEQ_INIT:
+		p_wk->now_procID	= p_wk->next_procID;
+		p_wk->seq	= SEQ_ALLOC_PARAM;
+		break;
+
+	case SEQ_ALLOC_PARAM:
+		//プロセス引数作成関数があれば呼び出し
+		if( p_wk->cp_procdata_tbl[ p_wk->now_procID ].alloc_func )
+		{	
+			p_wk->p_proc_param	= p_wk->cp_procdata_tbl[ p_wk->now_procID ].alloc_func(
+					p_wk->heapID, p_wk->p_wk_adrs );
+		}
+		else
+		{	
+			p_wk->p_proc_param	= NULL;
+		}
+
+		//プロック呼び出し
+		GFL_PROC_LOCAL_CallProc( p_wk->p_procsys, p_wk->cp_procdata_tbl[	p_wk->now_procID ].ov_id,
+					p_wk->cp_procdata_tbl[	p_wk->now_procID ].cp_procdata, p_wk->p_proc_param );
+
+		p_wk->seq	= SEQ_MAIN;
+		break;
+
+	case SEQ_MAIN:
+		{	
+			p_wk->status	= GFL_PROC_LOCAL_Main( p_wk->p_procsys );
+			if( GFL_PROC_MAIN_NULL == p_wk->status )
+			{	
+				p_wk->seq	= SEQ_FREE_PARAM;
+			}
+		}
+		break;
+
+	case SEQ_FREE_PARAM:
+		//プロセス引数破棄関数呼び出し
+		if( p_wk->cp_procdata_tbl[	p_wk->now_procID ].free_func )
+		{	
+			if( p_wk->cp_procdata_tbl[	p_wk->now_procID ].free_func( p_wk->p_proc_param, p_wk->p_wk_adrs ) )
+      { 
+        p_wk->p_proc_param	= NULL;
+				p_wk->seq	= SEQ_NEXT;
+      }
+		}
+    else
+    { 
+				p_wk->seq	= SEQ_NEXT;
+    }
+    break;
+
+  case SEQ_NEXT:
+		//もし次のプロセスがあれば呼び出し
+		//なければ終了
+		if( p_wk->now_procID != p_wk->next_procID )
+		{	
+			p_wk->seq	= SEQ_INIT;
+		}
+		else
+		{	
+			p_wk->seq	= SEQ_END;
+		}
+		break;
+
+	case SEQ_END:
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WBM_SYS_SUBPROCシステム PROC状態を取得
+ *
+ *	@param	const WBM_SYS_SUBPROC_WORK *cp_wk   ワーク
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+GFL_PROC_MAIN_STATUS WBM_SYS_SUBPROC_GetStatus( const WBM_SYS_SUBPROC_WORK *cp_wk )
+{ 
+  return cp_wk->status;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WBM_SYS_SUBPROCシステム	プロセスリクエスト
+ *
+ *	@param	WBM_SYS_SUBPROC_WORK *p_wk	ワーク
+ *	@param	proc_id							呼ぶプロセスID
+ *
+ */
+//-----------------------------------------------------------------------------
+void WBM_SYS_SUBPROC_CallProc( WBM_SYS_SUBPROC_WORK *p_wk, u32 procID )
+{	
+	p_wk->next_procID	= procID;
+}
+
+

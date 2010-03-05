@@ -61,8 +61,9 @@ extern void WBM_TEXT_PrintDebug( WBM_TEXT_WORK* p_wk, const u16 *cp_str, u16 len
 //-------------------------------------
 ///	定数
 //=====================================
-#define WBM_LIST_SELECT_NULL  (BMPMENULIST_NULL)
-#define WBM_LIST_WINDOW_MAX   (4)
+#define WBM_LIST_SELECT_NULL    (BMPMENULIST_NULL)
+#define WBM_LIST_SELECT_CALNCEL (BMPMENULIST_CANCEL)
+#define WBM_LIST_WINDOW_MAX     (4)
 
 //-------------------------------------
 ///	選択リスト
@@ -119,3 +120,42 @@ extern void WBM_SEQ_SetNext( WBM_SEQ_WORK *p_wk, WBM_SEQ_FUNCTION seq_function )
 extern void WBM_SEQ_End( WBM_SEQ_WORK *p_wk );
 extern void WBM_SEQ_SetReservSeq( WBM_SEQ_WORK *p_wk, int seq );
 extern void WBM_SEQ_NextReservSeq( WBM_SEQ_WORK *p_wk );
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  サブプロセス
+ *				    ・プロセスを行き来するシステム
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	ワーク
+//=====================================
+typedef struct _WBM_SUBPROC_WORK WBM_SUBPROC_WORK;
+
+//-------------------------------------
+///	サブプロセス初期化・解放関数コールバック
+//=====================================
+typedef void *(*WBM_SUBPROC_ALLOC_FUNCTION)( HEAPID heapID, void *p_wk_adrs );
+typedef BOOL (*WBM_SUBPROC_FREE_FUNCTION)( void *p_param, void *p_wk_adrs );
+
+//-------------------------------------
+///	サブプロセス設定構造体
+//=====================================
+typedef struct 
+{
+	FSOverlayID							    ov_id;
+	const GFL_PROC_DATA			    *cp_procdata;
+	WBM_SUBPROC_ALLOC_FUNCTION	alloc_func;
+	WBM_SUBPROC_FREE_FUNCTION		free_func;
+} WBM_SUBPROC_DATA;
+
+//-------------------------------------
+///	パブリック
+//=====================================
+extern WBM_SUBPROC_WORK * WBM_SUBPROC_Init( const WBM_SUBPROC_DATA *cp_procdata_tbl, u32 tbl_len, void *p_wk_adrs, HEAPID heapID );
+extern void WBM_SUBPROC_Exit( WBM_SUBPROC_WORK *p_wk );
+extern BOOL WBM_SUBPROC_Main( WBM_SUBPROC_WORK *p_wk );
+extern GFL_PROC_MAIN_STATUS WBM_SUBPROC_GetStatus( const WBM_SUBPROC_WORK *cp_wk );
+extern void WBM_SUBPROC_CallProc( WBM_SUBPROC_WORK *p_wk, u32 procID );
+
+
