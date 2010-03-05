@@ -204,6 +204,7 @@ G3D_FE_MDL = kage.imd \
   b_train05.imd \
   b_train06.imd \
   b_train07.imd \
+  b_train08.imd \
   mv_hide_tsuchi.imd \
   mv_hide_kusa.imd
 
