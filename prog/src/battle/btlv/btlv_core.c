@@ -2233,7 +2233,7 @@ static BOOL subprocRotateMember( int* seq, void* wk_adrs )
 
   switch( *seq ){
   case 0:
-    BTLV_EFFECT_SetRotateEffect( subwk->dir, subwk->clientID );
+    BTLV_EFFECT_SetRotateEffect( subwk->dir, subwk->vpos1 & 1 );
     (*seq)++;
     break;
 
