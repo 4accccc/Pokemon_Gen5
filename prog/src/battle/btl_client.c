@@ -244,6 +244,7 @@ static BOOL scProc_ACT_FakeDisable( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_EffectByVector( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ChangeForm( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_ResetMove( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
@@ -2801,6 +2802,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_EFFECT_BYPOS,      scProc_ACT_EffectByPos    },
     { SC_ACT_EFFECT_BYVECTOR,   scProc_ACT_EffectByVector },
     { SC_ACT_CHANGE_FORM,       scProc_ACT_ChangeForm     },
+    { SC_ACT_RESET_MOVE,        scProc_ACT_ResetMove      },
   };
 
 restart:
@@ -3765,6 +3767,66 @@ static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args )
 }
 //---------------------------------------------------------------------------------------
 /**
+ *  トリプルバトル・リセットムーブ動作
+ *  args .. [0]:clientID_1, [1]:posIdx_1, [2]:clientID_2, [3]:posIdx_2
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_ResetMove( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_ResetMove );
+    BTLV_StartMsg( wk->viewCore, &wk->strParam );
+    (*seq)++;
+    break;
+  case 1:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      u8 clientID = args[0];
+      u8 posIdx1 = args[1];
+      u8 posIdx2 = 1;
+      u8 pos1  = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx1 );
+      u8 pos2  = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx2 );
+      u8 vpos1 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos1 );
+      u8 vpos2 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos2 );
+
+      BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+      BTL_PARTY_SwapMembers( party, posIdx1, posIdx2 );
+
+      BTLV_ACT_MoveMember_Start( wk->viewCore, clientID, vpos1, vpos2, posIdx1, posIdx2 );
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if( BTLV_ACT_MoveMember_Wait(wk->viewCore) )
+    {
+      u8 clientID = args[2];
+      u8 posIdx1 = args[3];
+      u8 posIdx2 = 1;
+      u8 pos1  = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx1 );
+      u8 pos2  = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx2 );
+      u8 vpos1 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos1 );
+      u8 vpos2 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos2 );
+
+      BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+      BTL_PARTY_SwapMembers( party, posIdx1, posIdx2 );
+
+      BTLV_ACT_MoveMember_Start( wk->viewCore, clientID, vpos1, vpos2, posIdx1, posIdx2 );
+      (*seq)++;
+    }
+    break;
+  case 3:
+    if( BTLV_ACT_MoveMember_Wait(wk->viewCore) )
+    {
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+
+//---------------------------------------------------------------------------------------
+/**
  *  経験値加算処理
  *  args .. [0]:対象ポケモンID  [1]:経験値加算分
  */
@@ -3878,6 +3940,7 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     (*seq) = SEQ_LVUP_INFO_MSG_WAIT;
     break;
 
+  // @todo この辺、レベルアップウィンドウをタッチ前に表示しないようにしたい
   case SEQ_LVUP_INFO_MSG_WAIT:
     if( BTLV_IsJustDoneMsg(wk->viewCore) ){
       PMSND_PauseBGM( TRUE );

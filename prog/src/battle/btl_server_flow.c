@@ -321,7 +321,7 @@ static inline BOOL IsBppExist( const BTL_POKEPARAM* bpp );
 static void FRONT_POKE_SEEK_InitWork( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK* wk );
 static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK* wk, BTL_POKEPARAM** bpp );
 static void scproc_Move( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
-static void scproc_MoveCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 posIdx2 );
+static void scproc_MoveCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 posIdx2, BOOL fActCmd );
 static BOOL scproc_NigeruCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scEvent_SkipNigeruCalc( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
@@ -2325,14 +2325,17 @@ static void scproc_Move( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   posIdx = BTL_PARTY_FindMember( party, bpp );
   if( (posIdx == 0) || (posIdx == 2) )
   {
-    scproc_MoveCore( wk, clientID, posIdx, 1 );
+    scproc_MoveCore( wk, clientID, posIdx, 1, TRUE );
   }
   else
   {
     GF_ASSERT_MSG(0, "clientID=%d, pokeID=%d, posIdx=%d\n", clientID, pokeID, posIdx);
   }
 }
-static void scproc_MoveCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 posIdx2 )
+/**
+ *
+ */
+static void scproc_MoveCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 posIdx2, BOOL fActCmd )
 {
   BtlPokePos pos1, pos2;
 
@@ -2344,7 +2347,10 @@ static void scproc_MoveCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 po
     BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
     BTL_PARTY_SwapMembers( party, posIdx1, posIdx2 );
   }
-  SCQUE_PUT_ACT_MemberMove( wk->que, clientID, pos1, pos2 );
+
+  if( fActCmd ){
+    SCQUE_PUT_ACT_MemberMove( wk->que, clientID, pos1, pos2 );
+  }
 }
 
 //-----------------------------------------------------------------------------------
@@ -8216,9 +8222,13 @@ static void scproc_CheckResetMove( BTL_SVFLOW_WORK* wk )
       u8 posIdx1 = BTL_MAIN_BtlPosToPosIdx( wk->mainModule, pos1 );
       u8 posIdx2 = BTL_MAIN_BtlPosToPosIdx( wk->mainModule, pos2 );
 
+      TAYA_Printf("Žc‚è‚P‚¸‚ÂAPos=%d(Idx=%d), Idx2=%d (Idx=%d)..\n", pos1, posIdx1, pos2, posIdx2 );
+
       if( (posIdx1 == posIdx2) && (!BTL_MAINUTIL_IsTripleCenterPos(pos1) ) )
       {
-//        SCQUT_OP_TripleResetMove( wk->que,
+        SCQUE_PUT_ACT_TripleResetMove( wk->que, clientID_1, posIdx1, clientID_2, posIdx2 );
+        scproc_MoveCore( wk, clientID_1, posIdx1, 1, FALSE );
+        scproc_MoveCore( wk, clientID_2, posIdx2, 1, FALSE );
       }
     }
   }
@@ -13645,7 +13655,7 @@ static u8 scproc_HandEx_swapPoke( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
         s16 posIdx2 = BTL_PARTY_FindMember( party, bpp2 );
         if( (posIdx1 >= 0) && (posIdx2 >= 0) )
         {
-          scproc_MoveCore( wk, clientID, posIdx1, posIdx2 );
+          scproc_MoveCore( wk, clientID, posIdx1, posIdx2, TRUE  );
           handexSub_putString( wk, &param->exStr );
           return 1;
         }

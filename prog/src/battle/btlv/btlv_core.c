@@ -2052,6 +2052,7 @@ static BOOL subprocMoveMember( int* seq, void* wk_adrs )
     if( BTLV_EFFECT_CheckExist(subwk->vpos2) ){
       BTLV_EFFECT_DelPokemon( subwk->vpos2 );
     }
+    PMSND_PlaySE( SEQ_SE_CANCEL3 );  //@todo ’´‰¼
     (*seq)++;
     break;
 

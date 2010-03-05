@@ -99,6 +99,7 @@ typedef enum {
   SC_ACT_EFFECT_BYPOS,      ///< 指定位置にエフェクト発動
   SC_ACT_EFFECT_BYVECTOR,   ///< 指定発動位置＆終点位置でエフェクト発動
   SC_ACT_CHANGE_FORM,       ///< フォルムナンバーチェンジ
+  SC_ACT_RESET_MOVE,        ///< リセットムーブカットイン
   SC_TOKWIN_IN,             ///< とくせいウィンドウ表示イン [ClientID]
   SC_TOKWIN_OUT,            ///< とくせいウィンドウ表示アウト [ClientID]
   SC_MSG_WAZA,              ///< ワザメッセージ表示[ ClientID, wazaIdx ]
@@ -497,6 +498,10 @@ static inline void SCQUE_PUT_ACT_EffectByVector( BTL_SERVER_CMD_QUE* que, BtlPok
 static inline void SCQUE_PUT_ACT_ChangeForm( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 formNo )
 {
   SCQUE_PUT_Common( que, SC_ACT_CHANGE_FORM, pokeID, formNo );
+}
+static inline void SCQUE_PUT_ACT_TripleResetMove( BTL_SERVER_CMD_QUE* que, u8 clientID_1, u8 posIdx1, u8 clientID_2, u8 posIdx2 )
+{
+  SCQUE_PUT_Common( que, SC_ACT_RESET_MOVE, clientID_1, posIdx1, clientID_2, posIdx2 );
 }
 
 
