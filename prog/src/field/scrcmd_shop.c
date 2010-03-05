@@ -691,7 +691,7 @@ static int shop_buy_printwait( SHOP_BUY_APP_WORK *wk )
     return wk->next;
   }else if( state == PRINTSTREAM_STATE_RUNNING)
   {
-    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_DECIDE || GFL_UI_KEY_GetCont()&PAD_BUTTON_DECIDE)
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_DECIDE || GFL_UI_KEY_GetCont()&PAD_BUTTON_CANCEL)
     {
       PRINTSYS_PrintStreamShortWait( wk->printStream, 0 );
     }
