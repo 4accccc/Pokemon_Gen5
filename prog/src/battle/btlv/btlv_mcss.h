@@ -118,15 +118,8 @@ typedef struct
   BtlvMcssPos     position;
   fx32            angle;               //角度
   int             shift;              //回転シフト
-	fx32	          radius;           //半径
+	fx32	          radius;             //半径
 	int		          frame;              //1回転何フレームか
-	int		          rotate_wait;        //回転ウエイト
-	int		          count;              //回転数
-	int		          rotate_after_wait;  //1回転した後のウエイト
-  int             angle;
-  int             speed;
-  int             rotate_wait_count;
-  int             rotate_after_wait_count;
 }BTLV_MCSS_MOVE_SIN_PARAM;
 
 extern  BTLV_MCSS_WORK* BTLV_MCSS_Init( BtlRule rule, GFL_TCBSYS *tcb_sys, HEAPID heapID );
