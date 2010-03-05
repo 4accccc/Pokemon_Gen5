@@ -131,7 +131,7 @@ void FIELDMAP_CTRL_HYBRID_ChangeBaseSystem( FIELDMAP_CTRL_HYBRID* p_wk, FIELDMAP
     if( result )
     {
       // 動作チェンジ
-      FIELD_PLAYER_MoveGrid( p_wk->p_player, 0, 0 );
+      FIELD_PLAYER_MoveGrid( p_wk->p_player, 0, 0, 0 );
       mapCtrlHybrid_ChangeGridToRail( p_fieldmap, p_wk, dir, &location );
     }
   }
@@ -333,7 +333,7 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
         if( result )
         {
           // 動作チェンジ
-          FIELD_PLAYER_MoveGrid( p_wk->p_player, 0, 0 );
+          FIELD_PLAYER_MoveGrid( p_wk->p_player, 0, 0, 0 );
 
           // 描画方向を求める
           if(p_wk->last_move != PLAYER_MOVE_VALUE_WALK){
@@ -353,7 +353,7 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
   // 1つ前の状態を取得
   p_wk->last_move = FIELD_PLAYER_GetMoveValue( p_wk->p_player );
 
-	FIELD_PLAYER_MoveGrid( p_wk->p_player, key_trg, key_cont );
+	FIELD_PLAYER_MoveGrid( p_wk->p_player, key_trg, key_cont, 0 );
 }
 
 //----------------------------------------------------------------------------
