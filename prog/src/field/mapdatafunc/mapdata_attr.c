@@ -86,12 +86,12 @@ void MAPDATA_ATR_GetAttrFunc( FLD_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, cons
         //0-2-1,3-1-2のパターン
         if( grid_x + grid_z < grid_w )
         {
-			    nrm_idx = ex_nvs->vecN1_x * 3;   //3つ１セット;
+			    nrm_idx = ex_nvs->vecN1_x * 3;   //3つ１セット
           d_idx = ex_nvs->vecN1_D;
 		    }
         else
         {
-			    nrm_idx = ex_nvs->vecN2_x * 3;   //3つ１セット;
+			    nrm_idx = ex_nvs->vecN2_x * 3;   //3つ１セット
           d_idx = ex_nvs->vecN2_D;
 		    }
       }
@@ -100,12 +100,12 @@ void MAPDATA_ATR_GetAttrFunc( FLD_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, cons
         //2-3-0,1-0-3のパターン
         if( grid_x > grid_z )
         {
-          nrm_idx = ex_nvs->vecN1_x * 3;   //3つ１セット;
+          nrm_idx = ex_nvs->vecN1_x * 3;   //3つ１セット
           d_idx = ex_nvs->vecN1_D;
         }
         else
         {
-          nrm_idx = ex_nvs->vecN2_x * 3;   //3つ１セット;
+          nrm_idx = ex_nvs->vecN2_x * 3;   //3つ１セット
           d_idx = ex_nvs->vecN2_D;
         }
       }
