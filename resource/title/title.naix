@@ -22,7 +22,13 @@ enum {
 	NARC_title_title_gira_nsbta = 8,
 	NARC_title_mist_NCGR = 9,
 	NARC_title_mist_NSCR = 10,
-	NARC_title_mist_NCLR = 11
+	NARC_title_mist_NCLR = 11,
+	NARC_title_wht_logo_NCGR = 12,
+	NARC_title_wht_logo_NSCR = 13,
+	NARC_title_wht_logo_NCLR = 14,
+	NARC_title_blk_logo_NCGR = 15,
+	NARC_title_blk_logo_NSCR = 16,
+	NARC_title_blk_logo_NCLR = 17
 };
 
 /* NARC_TITLE_NAIX_ */

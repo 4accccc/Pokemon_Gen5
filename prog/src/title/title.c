@@ -455,7 +455,7 @@ static void releaseSystem(SYS_CONTROL* CSys)
 //	G2DControl
 //==============================================================================
 ///フォントが使用するパレット番号
-#define D_FONT_PALNO	(14)
+#define D_FONT_PALNO	(0xa)
 ///アイテムアイコンのパレット展開位置
 #define D_MATSU_ICON_PALNO		(0)
 ///[PUSH START BUTTON]の点滅間隔
@@ -517,13 +517,22 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
 	}
 	//グラフィックデータロード(LOGO)
 	{
+	#if PM_VERSION == VERSION_BLACK
 		GFL_ARC_UTIL_TransVramBgCharacter(
-			ARCID_TITLE, NARC_title_wb_logo_bk2_NCGR, FRAME_LOGO, 0, 0x8000, 0, heapID);
+			ARCID_TITLE, NARC_title_blk_logo_NCGR, FRAME_LOGO, 0, 0x8000, 0, heapID);
 		GFL_ARC_UTIL_TransVramScreen(
-			ARCID_TITLE, NARC_title_wb_logo_bk2_NSCR, FRAME_LOGO, 0, 0, 0, heapID);
+			ARCID_TITLE, NARC_title_blk_logo_NSCR, FRAME_LOGO, 0, 0, 0, heapID);
 		GFL_ARC_UTIL_TransVramPalette(
-			ARCID_TITLE, NARC_title_wb_logo_bk2_NCLR, PALTYPE_SUB_BG, 0, 0, heapID);
-
+			ARCID_TITLE, NARC_title_blk_logo_NCLR, PALTYPE_SUB_BG, 0, 0, heapID);
+	#else
+		GFL_ARC_UTIL_TransVramBgCharacter(
+			ARCID_TITLE, NARC_title_wht_logo_NCGR, FRAME_LOGO, 0, 0x8000, 0, heapID);
+		GFL_ARC_UTIL_TransVramScreen(
+			ARCID_TITLE, NARC_title_wht_logo_NSCR, FRAME_LOGO, 0, 0, 0, heapID);
+		GFL_ARC_UTIL_TransVramPalette(
+			ARCID_TITLE, NARC_title_wht_logo_NCLR, PALTYPE_SUB_BG, 0, 0, heapID);
+  #endif
+  
 		GFL_BG_LoadScreenReq( FRAME_LOGO );
 		GFL_BG_SetVisible(FRAME_LOGO, VISIBLE_ON);
 	}
@@ -559,7 +568,7 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
 		GFL_MSG_GetString(CG2d->mm, TITLE_STR_001, CG2d->strbufENG);
 		//メッセージ表示
 		PRINTSYS_PrintQueColor(CG2d->printQue, CG2d->bmp, 64, 0, CG2d->strbufENG, 
-		  CG2d->fontHandle, PRINTSYS_MACRO_LSB(8,9,0));
+		  CG2d->fontHandle, PRINTSYS_MACRO_LSB(1,2,0));
 		CG2d->message_req = TRUE;
 	}
 }
