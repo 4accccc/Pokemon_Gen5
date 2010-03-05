@@ -11,26 +11,30 @@
 #pragma once
 
 //トレーナーメッセージの表示条件定義
-#define	TRMSG_FIGHT_START				      (0)		//戦闘開始前
-#define	TRMSG_FIGHT_LOSE				      (1)		//戦闘負け
-#define	TRMSG_FIGHT_AFTER				      (2)		//戦闘後
-#define	TRMSG_FIGHT_START_1				    (3)		//戦闘開始前（2vs2トレーナーのデータ1個目）
-#define	TRMSG_FIGHT_LOSE_1				    (4)		//戦闘負け（2vs2トレーナーのデータ1個目）
-#define	TRMSG_FIGHT_AFTER_1				    (5)		//戦闘後（2vs2トレーナーのデータ1個目）
-#define	TRMSG_POKE_ONE_1				      (6)		//ポケモン1体（2vs2トレーナーのデータ1個目）
-#define	TRMSG_FIGHT_START_2				    (7)		//戦闘開始前（2vs2トレーナーのデータ2個目）
-#define	TRMSG_FIGHT_LOSE_2				    (8)		//戦闘負け（2vs2トレーナーのデータ2個目）
-#define	TRMSG_FIGHT_AFTER_2				    (9)		//戦闘後（2vs2トレーナーのデータ2個目）
-#define	TRMSG_POKE_ONE_2				      (10)	//ポケモン1体（2vs2トレーナーのデータ2個目）
-#define	TRMSG_FIGHT_NONE_DN				    (11)	//昼夜、戦闘しない時
-#define	TRMSG_FIGHT_NONE_D				    (12)	//昼、戦闘しない時
-#define	TRMSG_FIGHT_FIRST_DAMAGE		  (13)	//戦闘中：相手ポケモンに最初のダメージを与えたとき
-#define	TRMSG_FIGHT_POKE_HP_HALF		  (14)	//戦闘中：相手ポケモンのＨＰ半分以下
-#define	TRMSG_FIGHT_POKE_LAST			    (15)	//戦闘中：相手ポケモンが残り１匹
-#define	TRMSG_FIGHT_POKE_LAST_HP_HALF	(16)	//戦闘中：相手ポケモンが残り１匹でＨＰ半分以下
-#define	TRMSG_REVENGE_FIGHT_START		  (17)	//フィールド：再戦：対戦前
-#define	TRMSG_REVENGE_FIGHT_START_1		(18)	//フィールド：再戦：対戦前：右
-#define	TRMSG_REVENGE_FIGHT_START_2		(19)	//フィールド：再戦：対戦前：左
+#define	TRMSG_FIGHT_START				          ( 0 )		//戦闘開始前
+#define	TRMSG_FIGHT_LOSE				          ( 1 )		//戦闘負け
+#define	TRMSG_FIGHT_AFTER				          ( 2 )		//戦闘後
+#define	TRMSG_FIGHT_START_1				        ( 3 )		//戦闘開始前（2vs2トレーナーのデータ1個目）
+#define	TRMSG_FIGHT_LOSE_1				        ( 4 )		//戦闘負け（2vs2トレーナーのデータ1個目）
+#define	TRMSG_FIGHT_AFTER_1				        ( 5 )		//戦闘後（2vs2トレーナーのデータ1個目）
+#define	TRMSG_POKE_ONE_1				          ( 6 )		//ポケモン1体（2vs2トレーナーのデータ1個目）
+#define	TRMSG_FIGHT_START_2				        ( 7 )		//戦闘開始前（2vs2トレーナーのデータ2個目）
+#define	TRMSG_FIGHT_LOSE_2				        ( 8 )		//戦闘負け（2vs2トレーナーのデータ2個目）
+#define	TRMSG_FIGHT_AFTER_2				        ( 9 )		//戦闘後（2vs2トレーナーのデータ2個目）
+#define	TRMSG_POKE_ONE_2				          ( 10 )	//ポケモン1体（2vs2トレーナーのデータ2個目）
+#define	TRMSG_FIGHT_NONE_DN				        ( 11 )	//昼夜、戦闘しない時
+#define	TRMSG_FIGHT_NONE_D				        ( 12 )	//昼、戦闘しない時
+#define TRMSG_FIGHT_AFTER_RECOVER_BEFORE  ( 13 )  //フィールド戦闘後：回復前
+#define TRMSG_FIGHT_AFTER_RECOVER_AFTER   ( 14 )  //フィールド戦闘後：回復後
+#define TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE ( 15 )  //フィールド戦闘後：アイテムをくれる前
+#define TRMSG_FIGHT_AFTER_GIFTITEM_AFTER  ( 16 )  //フィールド戦闘後：アイテムをくれた後
+#define	TRMSG_FIGHT_FIRST_DAMAGE		      ( 17 )	//戦闘中：相手ポケモンに最初のダメージを与えたとき
+#define	TRMSG_FIGHT_POKE_HP_HALF		      ( 18 )	//戦闘中：相手ポケモンのＨＰ半分以下
+#define	TRMSG_FIGHT_POKE_LAST			        ( 19 )	//戦闘中：相手ポケモンが残り１匹
+#define	TRMSG_FIGHT_POKE_LAST_HP_HALF	    ( 20 )	//戦闘中：相手ポケモンが残り１匹でＨＰ半分以下
+#define	TRMSG_REVENGE_FIGHT_START		      ( 21 )	//フィールド：再戦：対戦前
+#define	TRMSG_REVENGE_FIGHT_START_1		    ( 22 )	//フィールド：再戦：対戦前：右
+#define	TRMSG_REVENGE_FIGHT_START_2		    ( 23 )	//フィールド：再戦：対戦前：左
 
 #define	TRMSG_FIGHT_WIN					(100)	//戦闘勝ち（戦闘内でのみ使用される）
 
