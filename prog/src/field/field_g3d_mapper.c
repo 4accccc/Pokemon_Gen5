@@ -342,7 +342,7 @@ void	FLDMAPPER_MainTail( FLDMAPPER* g3Dmapper )
 	//ブロック制御メイン
 	for( i=0; i<g3Dmapper->blockNum; i++ ){
 		FLD_G3D_MAP_Main( g3Dmapper->blockWk[i].g3Dmap );
-    WRITEBLOCK_Control_SetOneBlock( g3Dmapper, g3Dmapper->blockWk[i].g3Dmap, i );
+    //WRITEBLOCK_Control_SetOneBlock( g3Dmapper, g3Dmapper->blockWk[i].g3Dmap, i );
 	}
 }
 
