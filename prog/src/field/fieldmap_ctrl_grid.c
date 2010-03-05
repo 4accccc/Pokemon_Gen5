@@ -21,17 +21,9 @@
 #include "arc/arc_def.h"
 #include "arc/fieldmap/camera_scroll.naix"
 
-#ifdef PM_DEBUG
-//@todo 12åéÇqÇnÇlópëŒèà
-#include "../../../resource/fldmapdata/flagwork/flag_define.h"  //for SYS_FLAG_
-#endif
-
 //======================================================================
 //	îÕàÕèÓïÒ
 //======================================================================
- 
-
-
 
 //======================================================================
 //	define
@@ -187,14 +179,8 @@ static void mapCtrlGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 		int key_cont = GFL_UI_KEY_GetCont( );
     PLAYER_MOVEBIT mbit = PLAYER_MOVEBIT_NON;
     
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-      EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
-      
-      if( EVENTWORK_CheckEventFlag(ev,SYS_FLAG_RUNNINGSHOES) ){
-        mbit |= PLAYER_MOVEBIT_DASH;
-      }
+    if( FIELD_PLAYER_CheckPossibleDash(fld_player) == TRUE ){
+      mbit |= PLAYER_MOVEBIT_DASH;
     }
     
 		FIELD_PLAYER_MoveGrid( fld_player, key_trg, key_cont, mbit );

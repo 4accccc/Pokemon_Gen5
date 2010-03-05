@@ -19,6 +19,7 @@
 
 #include "field/field_const.h"
 
+#include "../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_RUNNINGSHOES
 
 //======================================================================
 //	define
@@ -1204,6 +1205,26 @@ void FIELD_PLAYER_SetNaminoriEventEnd( FIELD_PLAYER *fld_player, BOOL flag )
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * ダッシュ可能な状態かチェック
+ * @param fld_player FIELD_PLAYER
+ * @retval BOOL TRUE=可能
+ */
+//--------------------------------------------------------------
+BOOL FIELD_PLAYER_CheckPossibleDash( FIELD_PLAYER *fld_player )
+{
+//  FIELDMAP_WORK *fieldmap =  FIELD_PLAYER_GetFieldMapWork( fld_player );
+  GAMESYS_WORK *gsys = FIELD_PLAYER_GetGameSysWork( fld_player );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
+  
+  if( EVENTWORK_CheckEventFlag(ev,SYS_FLAG_RUNNINGSHOES) ){
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
 
 //======================================================================
 //	Grid 専用処理

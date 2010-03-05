@@ -130,8 +130,9 @@ void FIELDMAP_CTRL_HYBRID_ChangeBaseSystem( FIELDMAP_CTRL_HYBRID* p_wk, FIELDMAP
     
     if( result )
     {
+      PLAYER_MOVEBIT mbit = PLAYER_MOVEBIT_NON;
       // 動作チェンジ
-      FIELD_PLAYER_MoveGrid( p_wk->p_player, 0, 0, 0 );
+      FIELD_PLAYER_MoveGrid( p_wk->p_player, 0, 0, mbit );
       mapCtrlHybrid_ChangeGridToRail( p_fieldmap, p_wk, dir, &location );
     }
   }
@@ -290,6 +291,7 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
 {
   int key_trg = GFL_UI_KEY_GetTrg();
   int key_cont = GFL_UI_KEY_GetCont();
+  PLAYER_MOVEBIT mbit = PLAYER_MOVEBIT_NON;
   MAPATTR attr;
   MAPATTR front_attr;
   MAPATTR_VALUE value;
@@ -307,9 +309,7 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
   {
     dir = MMDL_GetDirMove( mmdl );
   }
-
-
-
+  
   // 移動完了しているか？
   // 1つ前が動いたか、今から動こうとして、乗り換えの上にいたら乗り換え
   if( (MMDL_CheckPossibleAcmd(mmdl) == TRUE) && (dir != DIR_NOT) )
@@ -332,8 +332,9 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
         
         if( result )
         {
+          PLAYER_MOVEBIT dmy = PLAYER_MOVEBIT_NON;
           // 動作チェンジ
-          FIELD_PLAYER_MoveGrid( p_wk->p_player, 0, 0, 0 );
+          FIELD_PLAYER_MoveGrid( p_wk->p_player, 0, 0, dmy );
 
           // 描画方向を求める
           if(p_wk->last_move != PLAYER_MOVE_VALUE_WALK){
@@ -349,11 +350,15 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
       }
     }
   }
-
+  
   // 1つ前の状態を取得
   p_wk->last_move = FIELD_PLAYER_GetMoveValue( p_wk->p_player );
-
-	FIELD_PLAYER_MoveGrid( p_wk->p_player, key_trg, key_cont, 0 );
+  
+  if( FIELD_PLAYER_CheckPossibleDash(p_wk->p_player) == TRUE ){
+    mbit |= PLAYER_MOVEBIT_DASH;
+  }
+  
+	FIELD_PLAYER_MoveGrid( p_wk->p_player, key_trg, key_cont, mbit );
 }
 
 //----------------------------------------------------------------------------
