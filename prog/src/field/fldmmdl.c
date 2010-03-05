@@ -183,13 +183,14 @@ typedef struct{
 typedef struct
 {
   u32 status_bit;      ///<ステータスビット
+  
 #if 0 //wb フラグ整理 動作ビットはクリアされる様にした
   u32 move_bit;        ///<動作ビット
 #else
   //拡張性を考慮しデータ領域自体は残しておく。早速使う
-  u8 padding[2];
   u8 gx_size;
   u8 gz_size;
+  u8 padding[2];
 #endif
   
   u8 obj_id;        ///<OBJ ID
@@ -942,13 +943,13 @@ static void mmdl_InitMoveWork( const MMDLSYS *fos, MMDL *mmdl )
       MMDL_MOVEBIT_HEIGHT_GET_ERROR );
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  * フィールド動作モデル 動作初期化
  *  @param  fos
  *  @param  mmdl 
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 static void mmdl_InitMoveProc( const MMDLSYS *fos, MMDL * mmdl )
 {
   if( !MMDL_CheckStatusBit(mmdl,MMDL_STABIT_RAIL_MOVE) )
@@ -961,13 +962,13 @@ static void mmdl_InitMoveProc( const MMDLSYS *fos, MMDL * mmdl )
   }
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  * フィールド動作モデル動作
  *
  *  @param  mmdl 
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 static void mmdl_UpdateMove( MMDL * mmdl )
 {
   GF_ASSERT( mmdl );
@@ -1285,8 +1286,16 @@ static void mmdl_SaveData_LoadMMdl(
     grid = MMDL_GetGridPosZ( mmdl );
     MMDL_SetOldGridPosZ( mmdl, grid );
     pos.z = GRID_SIZE_FX32( grid ) + MMDL_VEC_Z_GRID_OFFS_FX32;
-  
+    
     MMDL_SetVectorPos( mmdl, &pos );
+    
+    { //管理表指定オフセット座標設定
+      const OBJCODE_PARAM *param;
+      param = MMDLSYS_GetOBJCodeParam( fos, MMDL_GetOBJCode(mmdl) );
+      mmdl->offset_x = param->offs_x; //オフセット
+      mmdl->offset_y = param->offs_y;
+      mmdl->offset_z = param->offs_z;
+    }
   }
   
   { //ステータスビット復帰
