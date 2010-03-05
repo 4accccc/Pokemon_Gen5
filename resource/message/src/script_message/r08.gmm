@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T15:45:55"/>
+	<create user="matsumiya" host="W00224" date="2010-03-05T14:15:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,17 +292,17 @@
 	</lock>
 
 
-	<row id="msg_r08_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r08_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-※出現フラグ設定予定
-・pos起動（GRIDX=240、GRIDZ=178~185）仮
+・下記ストッパーが削除されるとイベント起動条件ON
+・pos起動（GRIDX=240、GRIDZ=175~185）仮
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]！！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]！！▼</language>
 	</row>
 
-	<row id="msg_r08_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r08_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・主人公に隣接してメッセージ表示
 ・続けてトレーナー戦闘に</comment>
@@ -315,7 +315,7 @@
 あたしと　勝負して！▼</language>
 	</row>
 
-	<row id="msg_r08_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r08_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・戦闘後、フィールド復帰時に自動で表示
 ・アイテム入手処理
@@ -333,7 +333,7 @@
 感動したから　これ　あげるね▼</language>
 	</row>
 
-	<row id="msg_r08_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r08_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・その後画面左へ移動
 　画面外に消えると主人公、操作可能に
@@ -355,29 +355,64 @@
 バイバイ！　[1:00:トレーナー名:0]！！▼</language>
 	</row>
 
-	<row id="msg_r08_backpackerm_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_r08_stop1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・削除ラベル</comment>
-		<attribute name="キャラ指定">BACKPACKERM
-バックパッカー♂</attribute>
-		<language name="JPN" width="256">ゆくてに　そびえる
-きょだいな　てつのはし……[BE:00:ページ切り替え（行送り）]
-それが　シリンダーブリッジ！</language>
-		<language name="JPN_KANJI" width="256">行く手に　そびえる
-巨大な　鉄の橋……[BE:00:ページ切り替え（行送り）]
-それが　シリンダーブリッジ！</language>
+・ストッパー
+・GRIDX=243、GRIDZ=179、下向き（仮
+・リュウラセンの塔イベント前
+・話しかけても下向きのまま</comment>
+		<attribute name="キャラ指定">HAKAIM</attribute>
+		<language name="JPN" width="256">プラズマだん『セッカシティの　ちかく
+リュウラセンのとう　で▽
+なかまが　かつどうちゅう　らしいな</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『セッカシティの　近く
+リュウラセンの塔　で▽
+仲間が　活動中らしいな</language>
 	</row>
 
-	<row id="msg_r08_cameraman_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_r08_stop1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・削除ラベル</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">てつどうマニアに　とって
-シリンダーブリッジは[BE:00:ページ切り替え（行送り）]
-かっこうの　さつえいポイントさ！</language>
-		<language name="JPN_KANJI" width="256">鉄道マニアに　とって
-シリンダーブリッジは[BE:00:ページ切り替え（行送り）]
-格好の　撮影ポイントさ！</language>
+・ストッパー
+・リュウラセンの塔イベント後からc02でストーン入手まで
+・ストーン入手でここから削除
+・話しかけても下向きのまま</comment>
+		<attribute name="キャラ指定">HAKAIM</attribute>
+		<language name="JPN" width="256">プラズマだん『リゾートデザートの
+こだいのしろ　で▽
+なかまが　かつどうちゅう　らしいな</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『リゾートデザートの
+古代の城　で▽
+仲間が　活動中らしいな</language>
+	</row>
+
+	<row id="msg_r08_stop2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・ストッパー
+・GRIDX=243、GRIDZ=180、上向き（仮
+・リュウラセンの塔イベント前
+・話しかけても下向きのまま</comment>
+		<attribute name="キャラ指定">HAKAIM</attribute>
+		<language name="JPN" width="256">プラズマだん『セッカシティの　ちかく
+リュウラセンのとう　で▽
+なかまが　かつどうちゅう　らしいぞ</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『セッカシティの　近く
+リュウラセンの塔　で▽
+仲間が　活動中らしいぞ</language>
+	</row>
+
+	<row id="msg_r08_stop2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・ストッパー
+・リュウラセンの塔イベント後からc02でストーン入手まで
+・ストーン入手でここから削除
+・話しかけても下向きのまま</comment>
+		<attribute name="キャラ指定">HAKAIM</attribute>
+		<language name="JPN" width="256">プラズマだん『リゾートデザートの
+こだいのしろ　で▽
+なかまが　かつどうちゅう　らしいぞ</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『リゾートデザートの
+古代の城　で▽
+仲間が　活動中らしいぞ</language>
 	</row>
 
 	<row id="msg_r08_ambrella_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
