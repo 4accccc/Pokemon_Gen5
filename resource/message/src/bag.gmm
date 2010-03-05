@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-04T18:40:38"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-03-05T20:17:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1420,18 +1420,11 @@ const u8 str_konanoryou[]
 なんの　反応も　示さない</language>
 	</row>
 
-	<row id="mes_bag_113" back-color="#80ff80,,,,,,,#ffff00,,,#ffff00,,,,,,,">
-		<comment>あいうえおソートを実行時に表示
+	<row id="mes_bag_113" back-color=",,,,,,,#ffff00,,,#ffff00,,,,,,,">
+		<comment>ソートを実行時に表示
 一括表示</comment>
-		<language name="JPN" width="160">あいうえお　ならび</language>
-		<language name="JPN_KANJI" width="160">あいうえお順</language>
-	</row>
-
-	<row id="mes_bag_114" back-color="#80ff80,,,,,,,#ffff00,,,#ffff00,,,,,,,">
-		<comment>カテゴリーソートを実行時に表示
-一括表示</comment>
-		<language name="JPN" width="160">カテゴリー　ならび</language>
-		<language name="JPN_KANJI" width="160">カテゴリー順</language>
+		<language name="JPN" width="160">もちものを　せいり</language>
+		<language name="JPN_KANJI" width="160">持ち物を整理</language>
 	</row>
 
 	<flowchart-group-list>
