@@ -112,9 +112,8 @@ Property
 	#
 	# ROM HEADER TEMPLATE: Provided to every product by NINTENDO
 	#
-	#RomHeaderTemplate	./etc/rom_header.template.sbin
-	#	RomHeaderTemplate	./spec/rom_header_adaj.template.sbin
-	#RomHeaderLtd $(TWLSDK_ROOT)/tools/bin/rom_header.LTD.sbin
+  RomHeaderTemplate	./spec/IRBJ/rom_header_irbj.template.sbin
+	RomHeaderLtd $(TWLSDK_ROOT)/tools/bin/rom_header.LTD.sbin
 
 	#
 	# BANNER FILE: generated from Banner Spec File
