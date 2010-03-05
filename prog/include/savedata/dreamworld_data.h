@@ -94,6 +94,9 @@ extern void DREAMWORLD_SV_SetCGearNo(DREAMWORLD_SAVEDATA* pSV,int no);
 extern int DREAMWORLD_SV_GetZukanNo(DREAMWORLD_SAVEDATA* pSV);
 extern void DREAMWORLD_SV_SetZukanNo(DREAMWORLD_SAVEDATA* pSV,int no);
 
+extern int DREAMWORLD_SV_GetSelectFurnitureNo(DREAMWORLD_SAVEDATA* pSV);
+extern void DREAMWORLD_SV_SetSelectFurnitureNo(DREAMWORLD_SAVEDATA* pSV,int no);
+
 
 extern DREAMWORLD_SAVEDATA* DREAMWORLD_SV_GetDreamWorldSaveData(SAVE_CONTROL_WORK* pSave);
 

@@ -288,11 +288,11 @@ void GSYNC_MESSAGE_NickNameMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid, int 
   GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pMessageStrBufEx );
   WORDSET_RegisterPokeNickName( pWork->pWordSet, 0,  pp );
 
-  WORDSET_RegisterNumber(pWork->pWordSet, 0, lvup,
+  WORDSET_RegisterNumber(pWork->pWordSet, 1, lvup,
                          3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
 
   WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pMessageStrBufEx  );
-  GSYNC_MESSAGE_MessageDisp(pWork);
+//  GSYNC_MESSAGE_MessageDisp(pWork);
 }
 
 //------------------------------------------------------------------------------
@@ -391,6 +391,21 @@ void GSYNC_MESSAGE_ButtonWindowMain(GSYNC_MESSAGE_WORK* pWork)
   GFL_BMN_Main( pWork->pButton );
 }
 
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   メッセージをセット
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void GSYNC_MESSAGE_SetNormalMessage(GSYNC_MESSAGE_WORK* pWork,int msgid)
+{
+  GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   システムウインドウ表示
@@ -398,12 +413,10 @@ void GSYNC_MESSAGE_ButtonWindowMain(GSYNC_MESSAGE_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-void GSYNC_MESSAGE_SystemMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid)
+void GSYNC_MESSAGE_SystemMessageDisp(GSYNC_MESSAGE_WORK* pWork)
 {
   GFL_BMPWIN* pwin;
 
-  GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
-  
   if(pWork->systemDispWin==NULL){
     pWork->systemDispWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME2_S , 1 , 1, 30 , 16 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
@@ -448,7 +461,8 @@ void GSYNC_MESSAGE_ErrorMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid,int no)
 {
   WORDSET_RegisterNumber(pWork->pWordSet, 0, no,
                          5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
-  GSYNC_MESSAGE_SystemMessageDisp(pWork, msgid);
+  GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
+  GSYNC_MESSAGE_SystemMessageDisp(pWork);
 }
 
 

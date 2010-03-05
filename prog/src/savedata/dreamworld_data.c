@@ -462,6 +462,34 @@ void DREAMWORLD_SV_SetZukanNo(DREAMWORLD_SAVEDATA* pSV,int no)
 }
 
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   家具の番号を得る
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @return	選んだ家具のインデックス
+ */
+//--------------------------------------------------------------------------------------------
+int DREAMWORLD_SV_GetSelectFurnitureNo(DREAMWORLD_SAVEDATA* pSV)
+{
+  return pSV->furnitureNo;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   選んだ家具の番号セット
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @param	  選んだ家具のインデックス
+ */
+//--------------------------------------------------------------------------------------------
+void DREAMWORLD_SV_SetSelectFurnitureNo(DREAMWORLD_SAVEDATA* pSV,int no)
+{
+  if(no >= DREAM_WORLD_DATA_MAX_FURNITURE){
+    return;
+  }
+  pSV->furnitureNo = no;
+}
+
+
 
 
 //----------------------------------------------------------

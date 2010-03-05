@@ -239,7 +239,9 @@ static void _ErrorDisp(G_SYNC_WORK* pWork)
     gmm = DREAM_WORLD_SERVER_ERROR_ETC - 1 + GSYNC_ERR001;
   }
   GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
-  GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,gmm);
+  
+  GSYNC_MESSAGE_SetNormalMessage(pWork->pMessageWork,gmm);
+  GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork);
   _CHANGE_STATE(_ErrorDisp2);
 }
 
@@ -294,10 +296,9 @@ static void _wakeupActio9(G_SYNC_WORK* pWork)
     return;
   }
   if(GFL_UI_KEY_GetTrg()){
-
-
-    GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork, msgbuff[pWork->msgBit]);
-    
+    GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
+    GSYNC_MESSAGE_SetNormalMessage(pWork->pMessageWork, msgbuff[pWork->msgBit]);
+    GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork);
     _CHANGE_STATE(_wakeupActio10);
   }
 }
@@ -309,8 +310,9 @@ static void _wakeupActio8(G_SYNC_WORK* pWork)
     return;
   }
   if(GFL_UI_KEY_GetTrg()){
-
+    GSYNC_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
     GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_015, pWork->lvup, pWork->pp);
+    GSYNC_MESSAGE_MessageDisp(pWork->pMessageWork);
     
     _CHANGE_STATE(_wakeupActio9);
   }
@@ -354,8 +356,10 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
   }
 
 
-  
+  GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
   GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_005,0, pWork->pp);
+  GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork);
+
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani3,NANR_gsync_obj_rug_ani4);
 
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_bed,NANR_gsync_obj_bed_ani);
@@ -1274,7 +1278,8 @@ static void _upeffectLoop6(G_SYNC_WORK* pWork)
   }
 
   GSYNC_MESSAGE_NickNameMessageDisp( pWork->pMessageWork, GSYNC_007,0, pWork->pp );
-
+  GSYNC_MESSAGE_MessageDisp(pWork->pMessageWork);
+  
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_zzz_ani);
   GSYNC_DISP_BlendSmokeStart(pWork->pDispWork,FALSE);
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani1,NANR_gsync_obj_rug_ani3);

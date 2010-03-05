@@ -28,6 +28,7 @@ typedef enum{
 typedef enum{
   DREAM_WORLD_SERVER_PLAY_EMPTY, //ポケモンを預けていない
   DREAM_WORLD_SERVER_PLAY_NONE,        // まだ遊んでいません
+  DREAM_WORLD_SERVER_PLAY_ACTIVE,     //遊んでいる最中です
   DREAM_WORLD_SERVER_PLAY_END,	         // ドリームワールドで遊びました
   DREAM_WORLD_SERVER_PLAY_MAX
 } DREAM_WORLD_SERVER_PLAY_TYPE;   /// サーバから返ってくる遊びに関しての情報

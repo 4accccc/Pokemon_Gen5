@@ -51,7 +51,9 @@ typedef enum
 extern GSYNC_MESSAGE_WORK* GSYNC_MESSAGE_Init(HEAPID id,int msg_dat);
 extern void GSYNC_MESSAGE_Main(GSYNC_MESSAGE_WORK* pWork);
 extern void GSYNC_MESSAGE_End(GSYNC_MESSAGE_WORK* pWork);
+
 extern void GSYNC_MESSAGE_InfoMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid);
+
 extern BOOL GSYNC_MESSAGE_InfoMessageEndCheck(GSYNC_MESSAGE_WORK* pWork);
 extern void GSYNC_MESSAGE_InfoMessageEnd(GSYNC_MESSAGE_WORK* pWork);
 extern APP_TASKMENU_WORK* GSYNC_MESSAGE_YesNoStart(GSYNC_MESSAGE_WORK* pWork,int type);
@@ -59,7 +61,8 @@ extern void GSYNC_MESSAGE_ButtonWindowCreate(int num,int* pMsgBuff,GSYNC_MESSAGE
 extern void GSYNC_MESSAGE_ButtonWindowDelete(GSYNC_MESSAGE_WORK* pWork);
 extern void GSYNC_MESSAGE_ButtonWindowMain(GSYNC_MESSAGE_WORK* pWork);
 
-extern void GSYNC_MESSAGE_SystemMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid);
+extern void GSYNC_MESSAGE_SetNormalMessage(GSYNC_MESSAGE_WORK* pWork,int msgid);
+extern void GSYNC_MESSAGE_SystemMessageDisp(GSYNC_MESSAGE_WORK* pWork);
 extern void GSYNC_MESSAGE_SystemMessageEnd(GSYNC_MESSAGE_WORK* pWork);
 extern void GSYNC_MESSAGE_ErrorMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid,int no);
 

@@ -958,7 +958,7 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 }
 #endif
 
-#if 1    //図鑑テスト
+#if 0    //図鑑テスト
 
 // セーブデータ
 typedef struct  {
@@ -991,8 +991,6 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
   TESTZUKAN_DATA* pPic=(TESTZUKAN_DATA*)pCGearWork;
 
   pPic->flg=TRUE;
-//  SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_ZUKAN_WALLPAPER, HEAPID_FIELDMAP,
- //                            pCGearWork,SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
 
   p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, HEAPID_FIELDMAP );
 
@@ -1032,17 +1030,27 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
   
   OS_TPrintf("-----%x \n",crc);
 
-/*
-  SaveControl_Extra_SaveAsyncInit(pSave,SAVE_EXTRA_ID_ZUKAN_WALLPAPER);
-  while(1){
-    if(SAVE_RESULT_OK==SaveControl_Extra_SaveAsyncMain(pSave,SAVE_EXTRA_ID_ZUKAN_WALLPAPER)){
-      break;
-    }
-    OS_WaitIrq(TRUE, OS_IE_V_BLANK);
-  }
-  SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_ZUKAN_WALLPAPER);
-   */
   GFL_HEAP_FreeMemory(pCGearWork);
+
+  return( FALSE );
+}
+#endif
+#if 1
+static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GMEVENT *event = wk->gmEvent;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  GAMESYS_WORK  *gameSys  = wk->gmSys;
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gameSys));
+  RECORD* pRec = SaveData_GetRecord(pSave);
+  int rand = GFUser_GetPublicRand(12);
+
+  OS_TPrintf(" %d RECID_CAPTURE_POKE\n",rand);
+  RECORD_Set(pRec, RECID_CAPTURE_POKE, rand);
+  rand = GFUser_GetPublicRand(33);
+  OS_TPrintf(" %d RECID_FISHING_SUCCESS\n",rand);
+  RECORD_Set(pRec, RECID_FISHING_SUCCESS, rand);
+
 
   return( FALSE );
 }
