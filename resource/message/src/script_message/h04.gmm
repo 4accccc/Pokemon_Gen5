@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-02T17:08:37"/>
+	<create user="matsumiya" host="W00224" date="2010-03-05T22:03:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="239"/>
+		<comment position="4" width="296"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1468" top="230" right="2159" bottom="845" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="111" right="1990" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="516"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="529"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="683"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="696"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -749,6 +749,552 @@
 きらい　かい？</language>
 		<language name="JPN_KANJI" width="256">れいぞう『おじさんの　歌は……▼
 きらい　かい？</language>
+	</row>
+
+	<row id="msg_h04_waitress_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・対戦前メッセージ
+・対戦がまだで♀主人公の場合→waitress_02へ
+・対戦がまだで♂主人公の場合→waitress_03へ
+・対戦をすでにしていた場合は→waitress_04へ</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">いらっしゃいませ！▼
+しょうぶの　ごよやく
+ありがとうございまーす！</language>
+		<language name="JPN_KANJI" width="256">いらっしゃいませ！▼
+勝負の　ご予約
+ありがとうございまーす！</language>
+	</row>
+
+	<row id="msg_h04_waitress_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・♀主人公の場合
+対戦後メッセージ
+・「いいえ」→waitress_04
+・「はい」→waitress_05
+</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">あなた　すっごいわね！
+ぜひ　うちで　やといたいくらい……▼
+どう？　うちで　ウエートレスとして
+はたらいてくれない？</language>
+		<language name="JPN_KANJI" width="256">あなた　すっごいわね！
+ぜひ　うちで　雇いたいくらい……▼
+どう？　うちで　ウエートレスとして
+働いてくれない？</language>
+	</row>
+
+	<row id="msg_h04_waitress_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・♂主人公の場合
+対戦後メッセージ
+・「いいえ」→waitress_04
+・「はい」→waitress_05</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">あなた　すっごいわね！
+ぜひ　うちで　やといたいくらい……▼
+どう？　うちで　ウエーターとして
+はたらいてくれない？</language>
+		<language name="JPN_KANJI" width="256">あなた　すっごいわね！
+ぜひ　うちで　雇いたいくらい……▼
+どう？　うちで　ウエーターとして
+働いてくれない？</language>
+	</row>
+
+	<row id="msg_h04_waitress_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>繰り返しメッセージ
+・「いいえ」→waitress_05
+・「はい」→waitress_06</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">あら　あなたね
+やっぱり　はたらいてくれない？</language>
+		<language name="JPN_KANJI" width="256">あら　あなたね
+やっぱり　働いてくれない？</language>
+	</row>
+
+	<row id="msg_h04_waitress_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・「いいえ」選択時
+以降話しかけ時→waitress_04</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">そうなの
+ざんねんだけど　しかたないわね！</language>
+		<language name="JPN_KANJI" width="256">そうなの
+残念だけど　仕方ないわね！</language>
+	</row>
+
+	<row id="msg_h04_waitress_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・「はい」選択時
+
+・「はい」「いいえ」選択表示
+「はい」→waitress_09
+「いいえ」→waitress_07</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">ほんとう！　うれしい！▼
+それじゃあ……　そうね
+しごとの　ないようは　わかる？</language>
+		<language name="JPN_KANJI" width="256">本当！　うれしい！▼
+それじゃあ……　そうね
+仕事の　内容は　わかる？</language>
+	</row>
+
+	<row id="msg_h04_waitress_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・ルール説明1
+→waitress_08</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">この　おみせは　ポケモンと　
+たべられる　サンドイッチやさんなの▼
+あなたには　おきゃくさんから
+ちゅうもんを　とってきてほしいわ▼
+わたしが　そのとおりに
+サンドイッチを　つくってくるから</language>
+		<language name="JPN_KANJI" width="256">この　お店は　ポケモンと　
+食べられる　サンドイッチ屋さんなの▼
+あなたには　お客さんから
+注文を　取って来てほしいわ▼
+私が　その通りに
+サンドイッチを　作ってくるから</language>
+	</row>
+
+	<row id="msg_h04_waitress_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・ルール説明2
+→waitress_09
+</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">そのサンドイッチを　ちゅうもんをした
+おきゃくさんに　はこんでほしいの▽
+まちがえて　はこばないようにね</language>
+		<language name="JPN_KANJI" width="256">そのサンドイッチを　注文をした
+お客さんに　運んで欲しいの▽
+間違えて　運ばないようにね</language>
+	</row>
+
+	<row id="msg_h04_waitress_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・ルール説明3 
+注文を全員から取っている→waitress_10
+注文を全員から取っていない→waitress_13</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">それじゃあ　よろしくね！
+きたい　してるわよ！</language>
+		<language name="JPN_KANJI" width="256">それじゃあ　よろしくね！
+期待してるわよ！</language>
+	</row>
+
+	<row id="msg_h04_waitress_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・タグに数字をセット
+・オーダーを全て取ってきた場合
+サンドイッチのトッピングをbmpで入力
+4つのトッピングを入力する
+・→waitress_11</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">[2:00:１桁:]つめのサンドイッチのトッピングは？</language>
+		<language name="JPN_KANJI" width="256">[2:00:１桁:]つ目のサンドイッチのトッピングは？</language>
+	</row>
+
+	<row id="msg_h04_waitress_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・カートの中に入って、料理を作ってくるアニメ
+・→waitress_12</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">さすがね！ありがとう！
+じゃあ　つくるから　まっていてね</language>
+		<language name="JPN_KANJI" width="256">さすがね！　ありがとう！
+じゃあ　つくるから　待っていてね</language>
+	</row>
+
+	<row id="msg_h04_waitress_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・お客さんに全て届けることが成功していたら
+→waitress_14
+・お客さんに全て届けることが失敗していたら
+→waitress_15</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">オーダーどおりに　つくってあるわ　
+まちがわずに　はこんでね</language>
+		<language name="JPN_KANJI" width="256">オーダー通りに　つくってあるわ　
+間違わずに　運んでね</language>
+	</row>
+
+	<row id="msg_h04_waitress_13" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・オーダーを全て取っていない場合
+・オーダーを取ってくるように促す</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">ちゅうもんを　とっていない　
+おきゃくさんが　いるじゃない▽
+ぜんいんから　きいてね！</language>
+		<language name="JPN_KANJI" width="256">注文を　取っていない　
+お客さんが　いるじゃない▽
+全員から　聞いてね！</language>
+	</row>
+
+	<row id="msg_h04_waitress_14" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・イベントを成功させた場合
+→waitress_16</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">さて……
+あなたの　はたらきぶりは……▼
+かんぺきね！　おきゃくさんも
+まんぞく　しているみたい</language>
+		<language name="JPN_KANJI" width="256">さて……
+あなたの　働きぶりは……▼
+いうことなしね！　お客さんも
+満足しているみたい</language>
+	</row>
+
+	<row id="msg_h04_waitress_15" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・イベントを失敗した場合
+→waitress_17</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">さて……
+あなたの　はたらきぶりは……▼
+まだまだ　ってところね
+でも　すぐに　なれるとおもうわ</language>
+		<language name="JPN_KANJI" width="256">さて……
+あなたの　働きぶりは……▼
+まだまだ　ってところね
+でも　すぐに慣れると　思うわ</language>
+	</row>
+
+	<row id="msg_h04_waitress_16 " back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アイテムをくれるときのメッセージ
+・アイテム追加処理「オレンのみ」暫定
+→waitress_17</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">これは　おれいよ
+すごく　がんばっていたわね！</language>
+		<language name="JPN_KANJI" width="256">これは　お礼よ
+すごく　頑張っていたわね！</language>
+	</row>
+
+	<row id="msg_h04_waitress_17" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・イベントクリア後メッセージ　
+・日をまたぐまで、このメッセージ繰り返し</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">きょうは　もう　だいじょうぶかしら
+あした　またきてくれると　うれしいな</language>
+		<language name="JPN_KANJI" width="256">今日は　もう　大丈夫かしら
+明日　また来てくれると　嬉しいな</language>
+	</row>
+
+	<row id="msg_h04_waitress_18" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・イベント中にPOSを踏んでやめた場合
+・イベント自体は失敗した状態で終わる
+・以降、waitress_17繰り返し</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">やめるの？　わかったわ
+いそがしくないから　だいじょうぶよ</language>
+		<language name="JPN_KANJI" width="256">やめるの？　わかったわ
+忙しくないから　大丈夫よ</language>
+	</row>
+
+	<row id="msg_h04_waitress_19" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・♀主人公の場合
+・イベント場所から離れた場所にあるPOSを踏んだとき
+イベント主のウェイトレスから呼びかけ
+
+・イベントをやめるかどうかの「はい」「いいえ」表示
+・「はい」選択時→waitress_18
+・「いいえ」選択時→一歩戻るアニメ</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">あらら　そっちは　こうえんの　そとよ
+ウエートレスの　しごとを　やめるの？</language>
+		<language name="JPN_KANJI" width="256">あらら　そっちは　公園の　外よ
+ウエートレスの　仕事を　やめるの？</language>
+	</row>
+
+	<row id="msg_h04_waitress_20" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・♂主人公の場合
+・イベント場所から離れた場所にあるPOSを踏んだとき
+イベント主のウェイトレスから呼びかけ
+
+・イベントをやめるかどうかの「はい」「いいえ」表示
+・「はい」選択時→waitress_18
+・「いいえ」選択時→一歩戻るアニメ</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">あらら　そっちは　こうえんの　そとよ
+ウエーターの　しごとを　やめるの？</language>
+		<language name="JPN_KANJI" width="256">あらら　そっちは　公園の　外よ
+ウエーターの　仕事を　やめるの？</language>
+	</row>
+
+	<row id="msg_h04_man1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文するときのメッセージ
+・タグにきのみをセット</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">うちの　ポケモンが　すきな
+[1:09:どうぐ名:0]の　トッピングを　ください！</language>
+		<language name="JPN_KANJI" width="256">うちの　ポケモンが　好きな
+[1:09:どうぐ名:0]の　トッピングを　ください！</language>
+	</row>
+
+	<row id="msg_h04_man1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文をした後のメッセージ
+・サブイベント中以外の繰り返しメッセージ</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">ポケモンと　しょくじ　できるんだ
+ほんとうに　いいおみせだよ</language>
+		<language name="JPN_KANJI" width="256">ポケモンと　一緒に　
+食べられるなんて　幸せだよー</language>
+	</row>
+
+	<row id="msg_h04_man1_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文と受け取ったサンドイッチが合っているときのメッセージ
+</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">もぐもぐ　おいしい！
+ぼくの　ポケモンも　よろこんでいるよ</language>
+		<language name="JPN_KANJI" width="256">もぐもぐ　おいしい！
+僕の　ポケモンも　喜んでいるよ</language>
+	</row>
+
+	<row id="msg_h04_man1_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文と受け取ったサンドイッチが違うときのメッセージ
+</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">もぐもぐ▼
+……あれ？　
+なんだか　あじが　ちがうような……？</language>
+		<language name="JPN_KANJI" width="256">もぐもぐ▼
+……あれ？　
+なんだか　味が　違うような……？</language>
+	</row>
+
+	<row id="msg_h04_man3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文するときのメッセージ
+・タグにきのみをセット</comment>
+		<attribute name="キャラ指定">MAN3
+太った兄さん</attribute>
+		<language name="JPN" width="256">きょうは　がっつりと　たべたいから
+[1:09:どうぐ名:0]おおもりに　しようかなっ！</language>
+		<language name="JPN_KANJI" width="256">今日は　がっつりと　食べたいから
+[1:09:どうぐ名:0]大盛りに　しようかなっ！</language>
+	</row>
+
+	<row id="msg_h04_man3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文をした後のメッセージ
+・サブイベント中以外の繰り返しメッセージ</comment>
+		<attribute name="キャラ指定">MAN3
+太った兄さん</attribute>
+		<language name="JPN" width="256">ぼくの　ポケモン　
+ぼくに　にて　たくさん　たべるんだ</language>
+		<language name="JPN_KANJI" width="256">僕の　ポケモン　
+僕に　似て　たくさん　食べるんだ</language>
+	</row>
+
+	<row id="msg_h04_man3_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文と受け取ったサンドイッチが合っているときのメッセージ
+</comment>
+		<attribute name="キャラ指定">MAN3
+太った兄さん</attribute>
+		<language name="JPN" width="256">がつがつ　デリシャス！
+この　しゅんかんが　いちばん　すき！</language>
+		<language name="JPN_KANJI" width="256">がつがつ　デリシャス！
+この瞬間が　一番　好き！</language>
+	</row>
+
+	<row id="msg_h04_man3_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文と受け取ったサンドイッチが違うときのメッセージ
+</comment>
+		<attribute name="キャラ指定">MAN3
+太った兄さん</attribute>
+		<language name="JPN" width="256">がつがつ　デリシャス！
+でも　これを　たのんでないような？</language>
+		<language name="JPN_KANJI" width="256">がつがつ　デリシャス！
+でも　これを　頼んでないような？</language>
+	</row>
+
+	<row id="msg_h04_woman1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文するときのメッセージ
+・タグにきのみをセット</comment>
+		<attribute name="キャラ指定">WOMAN1
+女性</attribute>
+		<language name="JPN" width="256">わたしの　ポケモンは　グルメよ
+[1:09:どうぐ名:0]を　おねがい　できる？</language>
+		<language name="JPN_KANJI" width="256">わたしの　ポケモンは　グルメよ
+[1:09:どうぐ名:0]を　お願いできる？</language>
+	</row>
+
+	<row id="msg_h04_woman1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文をした後のメッセージ
+・サブイベント中以外の繰り返しメッセージ</comment>
+		<attribute name="キャラ指定">WOMAN1
+女性</attribute>
+		<language name="JPN" width="256">ひとも　たべられる　きのみのりょうり
+りょうりにんの　うでの　みせどころね</language>
+		<language name="JPN_KANJI" width="256">人も　食べられる　木の実の料理
+料理人の　腕の　見せ所ね</language>
+	</row>
+
+	<row id="msg_h04_woman1_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文と受け取ったサンドイッチが合っているときのメッセージ
+</comment>
+		<attribute name="キャラ指定">WOMAN1
+女性</attribute>
+		<language name="JPN" width="256">パクッ　……このあじっ！
+まさか　このレベルに　であえるなんて</language>
+		<language name="JPN_KANJI" width="256">パクッ　……この味っ！
+まさか　このレベルに　出会えるなんて</language>
+	</row>
+
+	<row id="msg_h04_woman1_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文と受け取ったサンドイッチが違うときのメッセージ
+</comment>
+		<attribute name="キャラ指定">WOMAN1
+女性</attribute>
+		<language name="JPN" width="256">パクッ　……？
+おいしいけど　オーダーと　ちがうわよ</language>
+		<language name="JPN_KANJI" width="256">パクッ　……？
+美味しいけど　オーダーと　違うわよ</language>
+	</row>
+
+	<row id="msg_h04_girl2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文するときのメッセージ
+・タグにきのみをセット</comment>
+		<attribute name="キャラ指定">GIRL2
+活発少女</attribute>
+		<language name="JPN" width="256">わたしも　ポケモンちゃんも
+[1:09:どうぐ名:0]のきぶん！　おねがいね！</language>
+		<language name="JPN_KANJI" width="256">わたしも　ポケモンちゃんも
+[1:09:どうぐ名:0]の気分！　お願いね！</language>
+	</row>
+
+	<row id="msg_h04_girl2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文をした後のメッセージ
+・サブイベント中以外の繰り返しメッセージ</comment>
+		<attribute name="キャラ指定">GIRL2
+活発少女</attribute>
+		<language name="JPN" width="256">ポケモンと　いっしょに　
+たべられるなんて　しあわせだよー</language>
+		<language name="JPN_KANJI" width="256">ポケモンと　一緒に　
+食べられるなんて　幸せだよー</language>
+	</row>
+
+	<row id="msg_h04_girl2_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文と受け取ったサンドイッチが合っているときのメッセージ
+</comment>
+		<attribute name="キャラ指定">GIRL2
+活発少女</attribute>
+		<language name="JPN" width="256">はむはむ　あーん
+しあわせー</language>
+		<language name="JPN_KANJI" width="256">はむはむ　あーん
+しあわせー</language>
+	</row>
+
+	<row id="msg_h04_girl2_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・注文と受け取ったサンドイッチが違うときのメッセージ
+</comment>
+		<attribute name="キャラ指定">GIRL2
+活発少女</attribute>
+		<language name="JPN" width="256">はむはむ　……むむっ
+なにか　あじが　ちがうの</language>
+		<language name="JPN_KANJI" width="256">はむはむ　……むむっ
+なにか　味が　違うの</language>
+	</row>
+
+	<row id="msg_h04_pokemon_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・チラーミィの鳴き声を再生
+・鳴き声仮</comment>
+		<attribute name="キャラ指定">POKE19
+チラーミィ
+</attribute>
+		<language name="JPN" width="256">みゅぅみゅぃーん</language>
+		<language name="JPN_KANJI" width="256">みゅぅみゅぃーん</language>
+	</row>
+
+	<row id="msg_h04_pokemon_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・ミネズミの鳴き声を再生
+・鳴き声仮</comment>
+		<attribute name="キャラ指定">POKE17
+ミネズミ
+</attribute>
+		<language name="JPN" width="256">ぼふんっぼふうー</language>
+		<language name="JPN_KANJI" width="256">ボフンッボフウー</language>
+	</row>
+
+	<row id="msg_h04_pokemon_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・チュリネの鳴き声を再生
+・鳴き声仮</comment>
+		<attribute name="キャラ指定">POKE18
+チュリネ
+</attribute>
+		<language name="JPN" width="256">ヒョォンヒョォン</language>
+		<language name="JPN_KANJI" width="256">ヒョォンヒョォン</language>
+	</row>
+
+	<row id="msg_h04_pokemon_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・ワルビルの鳴き声を再生
+・鳴き声仮</comment>
+		<attribute name="キャラ指定">POKE20
+ワルビル
+</attribute>
+		<language name="JPN" width="256">じゃあごぉおおお</language>
+		<language name="JPN_KANJI" width="256">じゃあごぉおおお</language>
+	</row>
+
+	<row id="msg_h04_topping_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・トッピングの内容①
+・ビットマップで表示</comment>
+		<language name="JPN" width="256">クラボのみ</language>
+		<language name="JPN_KANJI" width="256">クラボの実</language>
+	</row>
+
+	<row id="msg_h04_topping_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・トッピングの内容②
+・ビットマップで表示</comment>
+		<language name="JPN" width="256">キーのみ</language>
+		<language name="JPN_KANJI" width="256">キーの実</language>
+	</row>
+
+	<row id="msg_h04_topping_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・トッピングの内容③
+・ビットマップで表示</comment>
+		<language name="JPN" width="256">モモンのみ</language>
+		<language name="JPN_KANJI" width="256">モモンの実</language>
+	</row>
+
+	<row id="msg_h04_topping_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・トッピングの内容④
+・ビットマップで表示</comment>
+		<language name="JPN" width="256">カゴのみ</language>
+		<language name="JPN_KANJI" width="256">カゴの実</language>
+	</row>
+
+	<row id="msg_h04_system_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・ウェイトレスにサンドイッチを渡された状態で客に話しかけたとき
+・タグに数字をセット
+・プレーンウィンで表示</comment>
+		<language name="JPN" width="256">この　おきゃくさんに　[2:00:１桁:]つめの
+サンドイッチをわたす？</language>
+		<language name="JPN_KANJI" width="256">この　お客さんに　[2:00:１桁:]つ目の
+サンドイッチを渡す？</language>
+	</row>
+
+	<row id="msg_h04_sign_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・看板用メッセージ</comment>
+		<attribute name="キャラ指定">BG
+POST　施設看板</attribute>
+		<language name="JPN" width="256">ビレッジブリッジ
+めいぶつ　ビレッジサンド</language>
+		<language name="JPN_KANJI" width="256">ビレッジブリッジ
+名物　ビレッジサンド</language>
 	</row>
 
 	<flowchart-group-list>
