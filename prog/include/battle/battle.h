@@ -290,7 +290,6 @@ typedef struct {
   u8 WinTrainerNum; //倒したトレーナー数
   u8 WinPokeNum;    //倒したポケモン数
   u8 LosePokeNum;   //倒されたポケモン数
-  u8 RestHpPer;     //残りＨＰ割合
   u8 UseWazaNum;    //使用した技の数
 
 

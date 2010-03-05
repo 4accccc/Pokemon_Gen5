@@ -191,7 +191,36 @@ void TRIAL_HOUSE_AddBtlPoint( TRIAL_HOUSE_WORK_PTR ptr, BATTLE_SETUP_PARAM *prm 
   ptr->PointWork.WinTrainerNum += prm->WinTrainerNum;  //倒したトレーナー数
   ptr->PointWork.WinPokeNum += prm->WinPokeNum;        //倒したポケモン数
   ptr->PointWork.LosePokeNum += prm->LosePokeNum;      //倒されたポケモン数
-  ptr->PointWork.RestHpPer += prm->RestHpPer;          //残りＨＰ割合
   ptr->PointWork.UseWazaNum += prm->UseWazaNum;        //使用した技の数
+  //ＨＰ割合計算
+  {
+    int i;
+    int poke_num;
+    int hp, hp_max;
+    int per;
+    POKEPARTY* party;
+    party = prm->party[BTL_CLIENT_PLAYER];
+    //ポケモン数を取得
+    poke_num = PokeParty_GetPokeCount(party);
+    //ＨＰ格納バッファ初期化
+    hp = 0;
+    hp_max = 0;
+    for (i=0;i<poke_num;i++)
+    {
+      int pokehp, pokehp_max;
+      POKEMON_PARAM *pp;
+      pp = PokeParty_GetMemberPointer(party, i); 
+      //残りＨＰ取得
+      pokehp = PP_Get( pp, ID_PARA_hp, NULL);
+      //最大ＨＰ取得
+      pokehp_max = PP_Get( pp, ID_PARA_hpmax, NULL);
+      //足しこみ
+      hp += pokehp;
+      hp_max += pokehp_max;
+    }
+    per = (hp * 100) / hp_max; //残りＨＰパーセント
+    ptr->PointWork.RestHpPer += per;      //５戦あるので足しこんでいくと最大で500％になる
+    NOZOMU_Printf( "per = %d, total_per = %d\n",per, ptr->PointWork.RestHpPer );
+  }
 }
 
