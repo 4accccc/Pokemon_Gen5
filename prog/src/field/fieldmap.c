@@ -1022,7 +1022,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
      return MAINSEQ_RESULT_CONTINUE;
   }
 
-  
+  //ƒ[ƒhŒã”¼
+  FLDMAPPER_MainTail( fieldWork->g3Dmapper );
+
   FIELD_SUBSCREEN_Draw(fieldWork->fieldSubscreenWork);
   
   if(fieldWork->fldMsgBG ){ FLDMSGBG_PrintMain( fieldWork->fldMsgBG ); }
