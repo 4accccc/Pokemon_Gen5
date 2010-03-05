@@ -290,9 +290,9 @@ ev_musical_recept_comm_core:
   _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_FIRST, 0, 0 )
 
   //入場アニメ
-  //_CALL recept_move_obj_comm
+  _CALL recept_move_obj_comm
 
-    //_MUSICAL_CALL(selectPoke,MUSICAL_CALL_COMM) //ミュージカル呼び出し
+  _MUSICAL_CALL(selectPoke,MUSICAL_CALL_COMM) //ミュージカル呼び出し
 
   //ここから処理は帰ってきません。
   //細かい開放はプログラムで行います。
