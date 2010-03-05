@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-02-15T22:25:45"/>
+	<create user="fuchino" host="W00152" date="2010-03-05T20:27:31"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="8" xyz="-2.000000 0.000000 -2.000000" whd="4.000000 1.335205 4.000000"/>
 
-<tex_image_array size="12">
+<tex_image_array size="13">
 	<tex_image index="0" name="in42_slop01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
@@ -627,7 +627,145 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="in59_sand"
+	<tex_image index="5" name="in59_block03"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in59_block03_pl"
+		path="C:/home/wb_data3d/field/in59/chip/tex/in59_block03.tga"
+	>
+		<bitmap size="1024">
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 0006 0000 0000 0000
+			6666 6666 4444 4444 4444 4444 4444 4444
+			4444 4444 6666 6666 0006 0000 0000 0000
+			6666 4666 2222 2222 2222 2222 2222 2222
+			2222 2222 6664 6666 0006 0000 0000 0000
+			6666 2466 2222 2222 2222 2222 2112 2222
+			2222 2222 6642 6666 0006 0000 0000 0000
+			6666 2246 2222 2222 2222 1222 4411 2224
+			2222 2222 6422 6666 0006 0000 0000 0000
+			6666 2224 2222 2222 2222 1122 4444 2222
+			2222 2222 4222 6666 0006 0000 0000 0000
+			4666 2222 2222 2222 2222 4222 2222 2222
+			2222 2222 2222 6664 0006 0000 0000 0000
+			2466 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 6642 0006 0000 0000 0000
+			2246 1222 1111 1111 1111 1111 1111 1111
+			1111 1111 2221 6422 0006 0000 0000 0000
+			2246 1222 1111 1111 1111 1111 1111 1111
+			1111 1111 2226 6422 0006 0000 0000 0000
+			2246 1222 4441 4444 4444 4444 4444 4444
+			4444 4444 2226 6422 0006 0000 0000 0000
+			2246 1222 4441 8888 8888 8888 8888 8888
+			8888 4488 2226 6422 0006 0000 0000 0000
+			2246 1222 8441 8888 8888 8888 8888 8888
+			8888 4488 2226 6422 0006 0000 0000 0000
+			2246 1222 8441 8888 4788 7444 8888 7778
+			8877 4888 2226 6422 0006 0000 0000 0000
+			2246 1222 6441 4888 8788 7888 8887 7788
+			8877 4888 2226 6422 0006 0000 0000 0000
+			2246 1222 6441 8888 8444 8888 8887 8788
+			8888 4488 2226 6422 0006 0000 0000 0000
+			2246 1222 6641 8888 8844 8888 8888 8788
+			8888 4488 2226 6422 0006 0000 0000 0000
+			2246 1222 6441 8788 8888 8888 8888 8888
+			8788 4488 2226 6422 0006 0000 0000 0000
+			2246 1222 6441 8488 8888 8888 7777 8747
+			8488 4488 2226 6422 0006 0000 0000 0000
+			2246 1222 6441 7788 4888 8888 8484 8488
+			4478 4488 2226 6422 0006 0000 0000 0000
+			2246 1222 6441 4788 4884 8878 8444 8488
+			4748 4488 2226 6422 0006 0000 0000 0000
+			2246 1221 6441 8888 4888 8847 8888 8888
+			8478 4488 2226 6422 0006 0000 0000 0000
+			2246 1211 6441 8888 8888 8888 8888 8888
+			8888 4488 2226 6422 0006 0000 0000 0000
+			2246 1214 6441 8888 8888 8888 8888 8888
+			8888 4488 2226 6422 0006 0000 0000 0000
+			2246 1244 6441 7888 8777 8788 8844 8488
+			8888 4488 2226 6422 0006 0000 0000 0000
+			2246 1222 6441 8888 8884 8444 8848 4748
+			8848 4488 2226 6422 0006 0000 0000 0000
+			2246 1222 6441 8888 8884 8888 8478 8488
+			8848 4488 2226 6422 0006 0000 0000 0000
+			2246 1222 6441 8888 8888 8888 8888 8888
+			8888 4488 2226 6411 0006 0000 0000 0000
+			2246 1222 6441 8888 8888 8888 8888 8888
+			8888 4488 1226 6421 0006 0000 0000 0000
+			2246 1222 6441 7888 7888 8888 8478 8888
+			8888 4488 1116 6424 0006 0000 0000 0000
+			2246 1222 6441 4888 4878 7444 8877 7488
+			8847 4488 4216 6424 0006 0000 0000 0000
+			2246 1222 6441 8888 8888 8888 8887 8888
+			8888 4488 4426 6422 0006 0000 0000 0000
+			2246 1222 6441 4888 8888 8888 8888 8888
+			8888 4488 2226 6422 0006 0000 0000 0000
+			2246 1222 6441 7888 8888 4488 8884 8878
+			8478 4488 2226 6422 0006 0000 0000 0000
+			2246 1222 6641 4888 4488 8484 8884 4448
+			4478 4488 2226 6422 0006 0000 0000 0000
+			2246 1222 6641 7888 8884 4788 8887 8747
+			7778 4488 2226 6422 0006 0000 0000 0000
+			2246 1222 6441 8888 8888 8888 8888 8888
+			8888 4488 2226 6422 0006 0000 0000 0000
+			2246 1222 6441 8888 8888 8888 8888 8888
+			8888 4444 2226 6422 0006 0000 0000 0000
+			2246 1222 6441 4446 4444 4444 4444 4444
+			4444 4444 2226 6422 0006 0000 0000 0000
+			2246 1222 7661 7777 7777 7777 7777 7777
+			7777 4677 2226 6422 0006 0000 0000 0000
+			2466 1222 7766 7777 7777 7777 7777 7777
+			6777 6666 2226 6642 0006 0000 0000 0000
+			4666 2222 3522 3355 3333 3333 3333 3333
+			3333 2553 2222 6664 0006 0000 0000 0000
+			6666 2224 3555 3333 3333 3333 3333 3333
+			5333 2555 4222 6666 0006 0000 0000 0000
+			6666 2246 2222 3355 3333 3333 3333 3333
+			5553 2255 6422 6666 0006 0000 0000 0000
+			6666 2466 2222 5555 5555 3555 3333 3333
+			5553 2225 6642 6666 0006 0000 0000 0000
+			6666 4666 2222 5222 5555 5555 5335 5535
+			5555 2225 6664 6666 0006 0000 0000 0000
+			6666 6666 7444 7777 7777 7777 3377 7777
+			7777 4477 6666 6666 0006 0000 0000 0000
+			3333 3333 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 0003 0000 0000 0000
+			3333 3333 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 0003 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="6" name="in59_sand"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette4"
 		color0_mode="color"
@@ -701,7 +839,7 @@
 			56aa aa95 aaaa aaaa aaaa 0aaa a000 aaaa
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="in59_slop01"
+	<tex_image index="7" name="in59_slop01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -743,7 +881,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="sea00"
+	<tex_image index="8" name="sea00"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette4"
 		color0_mode="color"
@@ -817,7 +955,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="8" name="sea01"
+	<tex_image index="9" name="sea01"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette4"
 		color0_mode="color"
@@ -891,7 +1029,7 @@
 			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
 		</bitmap>
 	</tex_image>
-	<tex_image index="9" name="sea02"
+	<tex_image index="10" name="sea02"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette4"
 		color0_mode="color"
@@ -965,7 +1103,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="sea_build"
+	<tex_image index="11" name="sea_build"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="color"
@@ -991,7 +1129,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="sea_ground"
+	<tex_image index="12" name="sea_ground"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="color"
@@ -1019,7 +1157,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="12">
+<tex_palette_array size="13">
 	<tex_palette index="0" name="in42_slop01_pl" color_size="16">
 		2daf 3e33 4a96 4eb7 4254 4675 5af9 56b6
 		673a 7fff 7fff 7fff 7fff 7fff 7fff 7fff
@@ -1039,26 +1177,30 @@
 		0000 4580 531a 55c0 56d5 5a27 5a49 5a6b
 		5b7d 5eb1 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="5" name="in59_sand_pl" color_size="4">
+	<tex_palette index="5" name="in59_block03_pl" color_size="16">
+		0000 4580 55c0 56d5 5a27 5a49 5a6b 5eb1
+		7772 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="6" name="in59_sand_pl" color_size="4">
 		5b5c 5f7d 639e 7fff
 	</tex_palette>
-	<tex_palette index="6" name="in59_slop01_pl" color_size="16">
+	<tex_palette index="7" name="in59_slop01_pl" color_size="16">
 		2daf 3e33 4a96 4eb7 4254 4675 5af9 56b6
 		673a 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="7" name="sea00_pl" color_size="4">
+	<tex_palette index="8" name="sea00_pl" color_size="4">
 		6188 65a9 69ca 69ec
 	</tex_palette>
-	<tex_palette index="8" name="sea01_pl" color_size="4">
+	<tex_palette index="9" name="sea01_pl" color_size="4">
 		6d6b 718c 75ad 75ce
 	</tex_palette>
-	<tex_palette index="9" name="sea02_pl" color_size="4">
+	<tex_palette index="10" name="sea02_pl" color_size="4">
 		48c6 4ce7 5108 554a
 	</tex_palette>
-	<tex_palette index="10" name="sea_build_pl" color_size="4">
+	<tex_palette index="11" name="sea_build_pl" color_size="4">
 		198e 498e 7fff 7fff
 	</tex_palette>
-	<tex_palette index="11" name="sea_ground_pl" color_size="4">
+	<tex_palette index="12" name="sea_ground_pl" color_size="4">
 		28a9 4845 610c 7fff
 	</tex_palette>
 </tex_palette_array>
@@ -1081,7 +1223,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="11" tex_palette_idx="11"
+		tex_image_idx="12" tex_palette_idx="12"
 		tex_tiling="repeat repeat"
 		tex_scale="8.000000 8.000000"
 		tex_rotate="0.000000"
@@ -1105,7 +1247,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="10" tex_palette_idx="10"
+		tex_image_idx="11" tex_palette_idx="11"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1129,7 +1271,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="7" tex_palette_idx="7"
+		tex_image_idx="8" tex_palette_idx="8"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1153,7 +1295,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="8" tex_palette_idx="8"
+		tex_image_idx="9" tex_palette_idx="9"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1177,7 +1319,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="9" tex_palette_idx="9"
+		tex_image_idx="10" tex_palette_idx="10"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -4082,7 +4224,7 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="12">
+	<ex_tex_image_array size="13">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
@@ -4090,13 +4232,14 @@
 		<ex_tex_image index="4" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="5" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="6" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="7" disp_pos="180.000000 360.000000"/>
-		<ex_tex_image index="8" disp_pos="300.000000 360.000000"/>
-		<ex_tex_image index="9" disp_pos="420.000000 360.000000"/>
-		<ex_tex_image index="10" disp_pos="-420.000000 360.000000"/>
-		<ex_tex_image index="11" disp_pos="-300.000000 360.000000"/>
+		<ex_tex_image index="7" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="8" disp_pos="180.000000 360.000000"/>
+		<ex_tex_image index="9" disp_pos="300.000000 360.000000"/>
+		<ex_tex_image index="10" disp_pos="420.000000 360.000000"/>
+		<ex_tex_image index="11" disp_pos="-420.000000 360.000000"/>
+		<ex_tex_image index="12" disp_pos="-300.000000 360.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="12">
+	<ex_tex_palette_array size="13">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -4104,11 +4247,12 @@
 		<ex_tex_palette index="4" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="5" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="6" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="7" disp_pos="180.000000 420.000000"/>
-		<ex_tex_palette index="8" disp_pos="300.000000 420.000000"/>
-		<ex_tex_palette index="9" disp_pos="420.000000 420.000000"/>
-		<ex_tex_palette index="10" disp_pos="-420.000000 420.000000"/>
-		<ex_tex_palette index="11" disp_pos="-300.000000 420.000000"/>
+		<ex_tex_palette index="7" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="8" disp_pos="180.000000 420.000000"/>
+		<ex_tex_palette index="9" disp_pos="300.000000 420.000000"/>
+		<ex_tex_palette index="10" disp_pos="420.000000 420.000000"/>
+		<ex_tex_palette index="11" disp_pos="-420.000000 420.000000"/>
+		<ex_tex_palette index="12" disp_pos="-300.000000 420.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="5">
 		<ex_material index="0" disp_pos="-300.000000 300.000000"/>
