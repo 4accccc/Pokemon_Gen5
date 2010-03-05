@@ -31,13 +31,13 @@
 //=============================================================================
 
 //ポケモンデータ作成
-extern void DEBUG_MYSTERY_SetGiftPokeData( GIFT_PACK_DATA *p_data, u32 event_id );
+extern void DEBUG_MYSTERY_SetGiftPokeData( GIFT_PACK_DATA *p_data );
 
 //どうぐデータ作成
-extern void DEBUG_MYSTERY_SetGiftItemData( GIFT_PACK_DATA *p_data, u32 event_id );
+extern void DEBUG_MYSTERY_SetGiftItemData( GIFT_PACK_DATA *p_data );
 
 //GPOWERデータ作成
-void DEBUG_MYSTERY_SetGiftGPowerData( GIFT_PACK_DATA *p_data, u32 event_id );
+extern void DEBUG_MYSTERY_SetGiftGPowerData( GIFT_PACK_DATA *p_data );
 
 //実データ以外のものをセット
 extern void DEBUG_MYSTERY_SetGiftCommonData( GIFT_PACK_DATA *p_data, u32 event_id, BOOL only_one_flag );

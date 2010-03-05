@@ -46,7 +46,7 @@
  *	@param	GIFT_PACK_DATA *p_data  データ
  */
 //-----------------------------------------------------------------------------
-void DEBUG_MYSTERY_SetGiftPokeData( GIFT_PACK_DATA *p_data, u32 event_id )
+void DEBUG_MYSTERY_SetGiftPokeData( GIFT_PACK_DATA *p_data )
 { 
   GFL_STD_MemClear( p_data, sizeof(GIFT_PACK_DATA) );
   //ポケモン作成
@@ -65,9 +65,6 @@ void DEBUG_MYSTERY_SetGiftPokeData( GIFT_PACK_DATA *p_data, u32 event_id )
     p_poke->nickname[0]  = 0xffff;
   }
   p_data->gift_type     = MYSTERYGIFT_TYPE_POKEMON;
-
-  //共通部分
-  DEBUG_MYSTERY_SetGiftCommonData( p_data, event_id, TRUE );
 }
 
 //----------------------------------------------------------------------------
@@ -77,7 +74,7 @@ void DEBUG_MYSTERY_SetGiftPokeData( GIFT_PACK_DATA *p_data, u32 event_id )
  *	@param	GIFT_PACK_DATA *p_data  データ 
  */
 //-----------------------------------------------------------------------------
-void DEBUG_MYSTERY_SetGiftItemData( GIFT_PACK_DATA *p_data, u32 event_id )
+void DEBUG_MYSTERY_SetGiftItemData( GIFT_PACK_DATA *p_data )
 { 
   GFL_STD_MemClear( p_data, sizeof(GIFT_PACK_DATA) );
   //道具作成
@@ -87,9 +84,6 @@ void DEBUG_MYSTERY_SetGiftItemData( GIFT_PACK_DATA *p_data, u32 event_id )
     p_item->movieflag = FALSE;
   }
   p_data->gift_type     = MYSTERYGIFT_TYPE_ITEM;
-
-  //共通部分
-  DEBUG_MYSTERY_SetGiftCommonData( p_data, event_id, TRUE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -98,7 +92,7 @@ void DEBUG_MYSTERY_SetGiftItemData( GIFT_PACK_DATA *p_data, u32 event_id )
  *	@param	GIFT_PACK_DATA *p_data  データ 
  */
 //-----------------------------------------------------------------------------
-void DEBUG_MYSTERY_SetGiftGPowerData( GIFT_PACK_DATA *p_data, u32 event_id )
+void DEBUG_MYSTERY_SetGiftGPowerData( GIFT_PACK_DATA *p_data )
 { 
   GFL_STD_MemClear( p_data, sizeof(GIFT_PACK_DATA) );
   //道具作成
@@ -108,8 +102,6 @@ void DEBUG_MYSTERY_SetGiftGPowerData( GIFT_PACK_DATA *p_data, u32 event_id )
   }
   p_data->gift_type     = MYSTERYGIFT_TYPE_POWER;
 
-  //共通部分
-  DEBUG_MYSTERY_SetGiftCommonData( p_data, event_id, TRUE );
 }
 //----------------------------------------------------------------------------
 /**

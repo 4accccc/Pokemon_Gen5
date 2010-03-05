@@ -5545,8 +5545,8 @@ static BOOL debugMenuCallProc_MakeMysteryCardPoke( DEBUG_MENU_EVENT_WORK *p_wk )
   {
     if( !MYSTERYDATA_IsEventRecvFlag(p_mystery_sv, i) )
     {
-
-      DEBUG_MYSTERY_SetGiftPokeData( &data, i );
+      DEBUG_MYSTERY_SetGiftCommonData( &data, i, FALSE ); 
+      DEBUG_MYSTERY_SetGiftPokeData( &data );
       MYSTERYDATA_SetCardData( p_mystery_sv, &data );
 
       OS_TPrintf( "ふしぎなカードをセットしました イベントID=[%d]\n", i );
@@ -5569,7 +5569,8 @@ static BOOL debugMenuCallProc_MakeMysteryCardItem( DEBUG_MENU_EVENT_WORK *p_wk )
     if( !MYSTERYDATA_IsEventRecvFlag(p_mystery_sv, i) )
     {
 
-      DEBUG_MYSTERY_SetGiftItemData( &data, i );
+      DEBUG_MYSTERY_SetGiftCommonData( &data, i, FALSE ); 
+      DEBUG_MYSTERY_SetGiftItemData( &data );
       MYSTERYDATA_SetCardData( p_mystery_sv, &data );
 
       OS_TPrintf( "ふしぎなカードをセットしました イベントID=[%d]\n", i );
@@ -5591,7 +5592,8 @@ static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk
     if( !MYSTERYDATA_IsEventRecvFlag(p_mystery_sv, i) )
     {
 
-      DEBUG_MYSTERY_SetGiftGPowerData( &data, i );
+      DEBUG_MYSTERY_SetGiftCommonData( &data, i, FALSE ); 
+      DEBUG_MYSTERY_SetGiftGPowerData( &data );
       MYSTERYDATA_SetCardData( p_mystery_sv, &data );
 
       OS_TPrintf( "ふしぎなカードをセットしました イベントID=[%d]\n", i );

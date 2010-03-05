@@ -714,7 +714,7 @@ static void _fushigiDataSet(DEBUG_OHNO_CONTROL * pDOC)
   pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aInit.pData;
 
   DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
-  DEBUG_MYSTERY_SetGiftPokeData(&pDG->data,12);
+  DEBUG_MYSTERY_SetGiftPokeData(&pDG->data);
   pDG->version = 0;  //‚O‚È‚Ì‚Å‘SˆõóM‚Å‚«‚é
   pDG->event_text[0] = L'‚Ä';
   pDG->event_text[1] = L'‚·';
@@ -1003,7 +1003,7 @@ static void _fushigiDataIRCSet(DEBUG_OHNO_CONTROL * pDOC)
   pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aIRCInit.pData;
 
   DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
-  DEBUG_MYSTERY_SetGiftPokeData(&pDG->data,12);
+  DEBUG_MYSTERY_SetGiftPokeData(&pDG->data);
   pDG->version = 12;
   pDG->event_text[0] = L'I';
   pDG->event_text[1] = L'R';

@@ -1977,6 +1977,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           UTIL_DeleteMenu(p_wk);
 
           //すでに受け取っていたら、受け取れない
+          OS_TPrintf( "受信可能？ ONLY_ONE%d RECV%d\n", p_wk->data.data.only_one_flag, MYSTERYDATA_IsEventRecvFlag( p_wk->p_sv, p_wk->data.data.event_id ) );
           if( p_wk->data.data.only_one_flag && MYSTERYDATA_IsEventRecvFlag( p_wk->p_sv, p_wk->data.data.event_id ) )
           { 
             NAGI_Printf( "すでに受け取っていました\n" );
