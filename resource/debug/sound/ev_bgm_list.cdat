@@ -1,4 +1,0 @@
-static  const int ev_bgm_table[]={
-	SEQ_BGM_VS_NORAPOKE,
-	SEQ_BGM_VS_TSUYOPOKE,
-};
