@@ -1340,7 +1340,7 @@ VMCMD_RESULT EvCmdSubWinMsg( VMHANDLE *core, void *wk )
     GFL_STR_DeleteBuffer( msgBuf );
   }
   
-  SCREND_CHK_SetBitOn( SCREND_CHK_WIN_OPEN );
+  SCREND_CHK_SetBitOn( SCREND_CHK_SUBWIN_OPEN );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -1360,7 +1360,7 @@ VMCMD_RESULT EvCmdSubWinClose( VMHANDLE *core, void *wk )
   FLDSUBMSGWIN_Delete( fparam->msgBG, win_id );
   
   if( FLDSUBMSGWIN_CheckExistWindow(fparam->msgBG) == FALSE ){
-    SCREND_CHK_SetBitOff( SCREND_CHK_WIN_OPEN );
+    SCREND_CHK_SetBitOff( SCREND_CHK_SUBWIN_OPEN );
   }
   
   return VMCMD_RESULT_CONTINUE;
@@ -1692,6 +1692,9 @@ static BOOL EvWaitKeyWaitMsgCursor( VMHANDLE *core, void *wk )
     FLDPLAINMSGWIN_WriteKeyWaitCursor( (FLDPLAINMSGWIN*)win );
   }else if( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
     FLDTALKMSGWIN_WriteKeyWaitCursor( (FLDTALKMSGWIN*)win );
+  }else{
+    GF_ASSERT( 0 && "KEYWAIT_MARK NONE WINDOW" );
+    return( TRUE );
   }
   
   return( FALSE );
