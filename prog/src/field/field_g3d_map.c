@@ -68,6 +68,7 @@ struct _FLD_G3D_MAP
 
 typedef BOOL (FLD_G3D_MAPLOAD_FUNC)( FLD_G3D_MAP* g3Dmap );
 
+static const VecFx32 defaultTrans = { 0, 0, 0 };
 static const VecFx32 defaultScale = { FX32_ONE, FX32_ONE, FX32_ONE };
 static const MtxFx33 defaultRotate = { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };
 //------------------------------------------------------------------
@@ -235,13 +236,16 @@ void	FLD_G3D_MAP_StartDraw( void )
 void	FLD_G3D_MAP_Draw( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 {
 	GF_ASSERT( g3Dmap );
-
+  
 	//地形描画
 	if( DrawGround( g3Dmap, g3Dcamera ) == TRUE ){
+
+    // WVP 設定は 地形を引き継ぎ
+    
 		//配置オブジェクト描画
 		if( g3Dmap->globalResObj != NULL ){
 			DrawObj( g3Dmap, g3Dcamera );
-			DirectDrawObj( g3Dmap, g3Dcamera );
+			//DirectDrawObj( g3Dmap, g3Dcamera ); Directは使用しない
 		}
 	}
 }
@@ -828,20 +832,30 @@ void FLD_G3D_MAP_ResistFileType( FLD_G3D_MAP* g3Dmap, u32 fileType )
 //------------------------------------------------------------------
 static BOOL	DrawGround( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 {
+  BOOL ret = FALSE;
+  
 	if( (g3Dmap->drawSw != FALSE)&&(NNS_G3dRenderObjGetResMdl(g3Dmap->NNSrnd) != NULL )){
-		
-		NNS_G3dGlbSetBaseTrans( &g3Dmap->trans );	// 位置設定
-		NNS_G3dGlbSetBaseRot( &defaultRotate );		// 角度設定
-		NNS_G3dGlbSetBaseScale( &defaultScale );	// スケール設定
-		NNS_G3dGlbFlush();							//グローバルステート反映
 
-		if( checkCullingBoxTest( g3Dmap->NNSrnd ) == TRUE ){
-			//地形描画
-			GFL_G3D_Draw( g3Dmap->NNSrnd );
-			return TRUE;
-		}
+  
+    NNS_G3dGlbSetBaseTrans( &defaultTrans );	// 位置設定
+    NNS_G3dGlbSetBaseRot( &defaultRotate );		// 角度設定
+    NNS_G3dGlbSetBaseScale( &defaultScale );	// スケール設定
+    NNS_G3dGlbFlush();							//グローバルステート反映
+
+    {
+      NNS_G3dGeIdentity();
+      NNS_G3dGeLoadMtx43( NNS_G3dGlbGetCameraMtx() );
+      NNS_G3dGeTranslateVec( &g3Dmap->trans );
+      
+      if( checkCullingBoxTest( g3Dmap->NNSrnd ) == TRUE ){
+
+        //地形描画
+        GFL_G3D_Draw( g3Dmap->NNSrnd );
+        ret = TRUE; // 描画完了
+      }
+    }
 	}
-	return FALSE;
+	return ret;
 }
 
 //------------------------------------------------------------------
@@ -854,10 +868,10 @@ static void	DrawObj( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 	FLD_G3D_MAP_OBJ*	obj = g3Dmap->globalResObj->gobj;
 	u32					count = g3Dmap->globalResObj->gobjCount;
 	GFL_G3D_OBJ*		g3Dobj;
-	NNSG3dRenderObj		*NNSrnd, *NNSrnd_L;
-	VecFx32				globalTrans;
-	fx32				length;
+	NNSG3dRenderObj		*NNSrnd;
 	int					i;
+	MtxFx43				mtxAll;
+	MtxFx43				mtxRotTmp;
 	MtxFx33				mtxRot;
 
 	if(( count == 0 )||( obj == NULL )){ return; }
@@ -865,35 +879,28 @@ static void	DrawObj( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 	for( i=0; i<g3Dmap->obj_count; i++ ){
 		if(	(g3Dmap->object[i].id != OBJID_NULL)&&(g3Dmap->object[i].id < count) ){
 
-			VEC_Add( &g3Dmap->object[i].trans, &g3Dmap->trans, &globalTrans );
+      g3Dobj = obj[ g3Dmap->object[i].id ].g3DobjHQ;
+      NNSrnd = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ); 
 
-			getViewLength( g3Dcamera, &globalTrans, &length );
+      if( NNS_G3dRenderObjGetResMdl( NNSrnd ) != NULL ){
 
-			if( length <= g3Dmap->obj_draw_limit ){
-				if( (length > g3Dmap->obj_lod_limit)&&(obj[ g3Dmap->object[i].id ].g3DobjLQ != NULL) ){
-					g3Dobj = obj[ g3Dmap->object[i].id ].g3DobjLQ;
-				} else {
-					g3Dobj = obj[ g3Dmap->object[i].id ].g3DobjHQ;
-				}
-				NNSrnd = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ); 
+        {
+          fx32 sin = FX_SinIdx(g3Dmap->object[i].rotate);
+          fx32 cos = FX_CosIdx(g3Dmap->object[i].rotate);
 
-				if( NNS_G3dRenderObjGetResMdl( NNSrnd ) != NULL ){
-	
-					fx32 sin = FX_SinIdx(g3Dmap->object[i].rotate);
-					fx32 cos = FX_CosIdx(g3Dmap->object[i].rotate);
-					MTX_RotY33(&mtxRot, sin, cos);
-					NNS_G3dGlbSetBaseTrans( &globalTrans );		// 位置設定
-					NNS_G3dGlbSetBaseRot( &mtxRot );		// 角度設定
-					//NNS_G3dGlbSetBaseRot( &defaultRotate );		// 角度設定
-					NNS_G3dGlbSetBaseScale( &defaultScale );	// スケール設定
-					NNS_G3dGlbFlush();							//グローバルステート反映
-	
-					if( checkCullingBoxTest( NNSrnd ) == TRUE ){
-						//オブジェクト描画
+          NNS_G3dGeIdentity();
+          NNS_G3dGeLoadMtx43( NNS_G3dGlbGetCameraMtx() );
+          NNS_G3dGeTranslateVec( &g3Dmap->trans );
+          NNS_G3dGeTranslateVec( &g3Dmap->object[i].trans );
+          MTX_RotY33( &mtxRot, sin, cos );
+          NNS_G3dGeMultMtx33( &mtxRot );
+
+          if( checkCullingBoxTest( NNSrnd ) == TRUE ){
+            //オブジェクト描画
             GFL_G3D_Draw( NNSrnd );
-					}
-				}
-			}
+          }
+        }
+      }
 		}
 	}
 }
