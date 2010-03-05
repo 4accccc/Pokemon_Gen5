@@ -110,7 +110,6 @@
   ARCID_MUSICAL_ITEM  "musical_item.narc"   #ミュージカル装備品
   ARCID_DRESSUP_GRA "dressup_gra.narc"    #ミュージカル　ドレスアップ
   ARCID_STAGE_GRA   "stage_gra.narc"    #ミュージカル　ステージ
-  ARCID_STAGE_AUDIENCE  "stage_audience.narc"   #ミュージカル　ステージ・観客
   ARCID_MMDL_PARAM "fieldmap/fldmmdl_mdlparam.narc" #動作モデル パラメータ
   ARCID_MMDL_RES  "fieldmap/fldmmdl_mdlres.narc" #動作モデル リソース
   ARCID_INFOWIN   "infowin.narc"    #情報ウィンドウ
@@ -129,7 +128,6 @@
   ARCID_FIELD_LIGHT "field_light.narc"  #フィールドライトデータ
   ARCID_FIELD_WEATHER_LIGHT "field_weather_light.narc"  #フィールド天気ライトデータ
   ARCID_WIFI_NOTE   "wifi_note.narc"  #友だち手帳
-  ARCID_RECORD_GRA    "record_gra.narc" #レコード交換
   ARCID_TRF_GRA   "trgra/trbgra.narc" #トレーナー(仮
   ARCID_SELBOX_GRA  "selbox_gra.narc"     #selbox用
   ARCID_OTHERS    "others.narc"

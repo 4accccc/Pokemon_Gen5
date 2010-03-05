@@ -11,7 +11,6 @@
 #include "system/gfl_use.h"
 
 #include "arc_def.h"
-#include "stage_audience.naix"
 
 #include "sta_local_def.h"
 #include "sta_act_audience.h"
@@ -175,43 +174,10 @@ void	STA_AUDI_UpdateSystem( STA_AUDI_SYS *work )
 //--------------------------------------------------------------
 static void STA_AUDI_InitGraphic( STA_AUDI_SYS *work )
 {
-  u8 i;
-  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_STAGE_AUDIENCE , work->heapId );
-/*
-  work->pltIdx = GFL_CLGRP_PLTT_Register( arcHandle , 
-                            NARC_stage_audience_audience_obj_NCLR , 
-                            CLSYS_DRAW_SUB , 
-                            0 , 
-                            work->heapId  );
-
-  for( i=0;i<STA_AUDI_NUM;i++ )
-  {
-    work->anmIdx[i] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
-                                NARC_stage_audience_audience_01_NCER , 
-                                NARC_stage_audience_audience_01_NANR, 
-                                work->heapId  );
-    work->ncgIdx[i] = GFL_CLGRP_CGR_Register_VramTransfer( arcHandle , 
-                                NARC_stage_audience_audience_01_NCGR , 
-                                FALSE , 
-                                CLSYS_DRAW_SUB , 
-                                work->anmIdx[i] ,
-                                work->heapId  );
-  }
-*/
-  GFL_ARC_CloseDataHandle(arcHandle);
 }
 
 static void STA_AUDI_TermGraphic( STA_AUDI_SYS *work )
 {
-  u8 i;
-  /*
-  for( i=0;i<STA_AUDI_NUM;i++ )
-  {
-    GFL_CLGRP_CGR_Release(work->ncgIdx[i]);
-    GFL_CLGRP_CELLANIM_Release(work->anmIdx[i]);
-  }
-  GFL_CLGRP_PLTT_Release(work->pltIdx);
-  */
 }
 
 //--------------------------------------------------------------

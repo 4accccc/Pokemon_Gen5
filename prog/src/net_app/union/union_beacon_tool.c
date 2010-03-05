@@ -10,7 +10,6 @@
 #include <gflib.h>
 
 #include "arc_def.h"
-#include "record_gra.naix"
 #include "test_graphic/trbgra.naix"
 #include "test_graphic/trfgra.naix"
 
