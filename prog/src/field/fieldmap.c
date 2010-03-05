@@ -188,7 +188,7 @@ enum {
   ///billboardActで使用するリソースの最大設定可能数
   FIELD_G3D_BBDACT_RESMAX	    =   64,
   ///billboardActで使用するオブジェクトの最大設定可能数
-  FIELD_G3D_BBDACT_ACTMAX	    =   256,
+  FIELD_G3D_BBDACT_ACTMAX	    =   128,
   
   ///<セルアクターリソース最大
   FIELD_CLSYS_RESOUCE_MAX		  =   64,
