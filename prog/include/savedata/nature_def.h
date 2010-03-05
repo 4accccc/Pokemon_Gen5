@@ -9,8 +9,8 @@
 #pragma once
 
 #define NATURE_DEF      (0)   //デフォルト
-#define NATUEW_LEADER   (1)   //リーダー風
-#define NATUEW_STRANGER (2)   //変人
-#define NATUEW_SCHOLAR  (3)   //研究者
-#define NATUEW_QUIET    (4)   //おっとり
+#define NATURE_LEADER   (1)   //リーダー風
+#define NATURE_STRANGER (2)   //変人
+#define NATURE_SCHOLAR  (3)   //研究者
+#define NATURE_QUIET    (4)   //おっとり
 
