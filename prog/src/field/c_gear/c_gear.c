@@ -27,6 +27,7 @@
 #include "field/field_beacon_message.h"
 #include "gamesystem/game_beacon_accessor.h"
 
+
 #define _NET_DEBUG (1)  //デバッグ時は１
 #define _BRIGHTNESS_SYNC (0)  // フェードのＳＹＮＣは要調整
 
@@ -1905,7 +1906,6 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 {
   StateFunc* state = pWork->state;
   int st;
-
   if(pWork->bAction != bAction){
     pWork->bAction = bAction;
     _PanelPaletteChangeAction(pWork);
@@ -1984,19 +1984,16 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
       }
     }
   }
-
   if( pWork->GetOpenTrg ){
     pWork->GetOpenTrg=FALSE;
     _CHANGE_STATE(pWork,_modeSelectMenuWait1);
   }
-
   if(state != NULL){
     state(pWork);
   }
   _gearCrossObjMain(pWork);
-  GFL_CLACT_SYS_Main();
+  //GFL_CLACT_SYS_Main(); フィールドマップで行うので削除　2010.03.05　saito
   if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
-
 }
 
 

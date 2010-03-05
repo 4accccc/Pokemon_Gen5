@@ -895,31 +895,23 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
     return MAINSEQ_RESULT_CONTINUE;
   }
 
-
 	//キーの分割取得カウンタをリセット
 	GFL_UI_ResetFrameRate();
 	//ゾーン更新処理
   fldmapMain_UpdateMoveZone( fieldWork );
-
   //マップ別 登録処理
-
   if( GAMESYSTEM_GetEvent(gsys) == NULL) {
     //登録テーブルごとに個別のメイン処理を呼び出し
     fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos ); 
-
     //時間イベントのアップデート処理を呼び出し
     EVTIME_Update( fieldWork->gamedata );
   }
-
   // 地名表示システム動作処理
   if(fieldWork->placeNameSys){ FIELD_PLACE_NAME_Process( fieldWork->placeNameSys ); }
-
   // フラッシュ処理
   FIELDSKILL_MAPEFF_Main( fieldWork->fieldskill_mapeff );
-
   //自機更新
   FIELD_PLAYER_Update( fieldWork->field_player );
-
   //通信用処理(プレイヤーの座標の設定とか
   if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
       || ZONEDATA_IsColosseum( fieldWork->map_id ) == TRUE){
@@ -928,33 +920,25 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   else{
     IntrudeField_UpdateCommSystem( fieldWork, fieldWork->gsys, fieldWork->field_player );
   }
-  
   FIELD_SUBSCREEN_Main(fieldWork->fieldSubscreenWork);
   if(fieldWork->debugWork){ FIELD_DEBUG_UpdateProc( fieldWork->debugWork ); }
-  
   if( fieldWork->fldMMdlSys != NULL ){
     MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
   }
-
   //ギミック動作
   FLDGMK_MoveFieldGimmick(fieldWork);
-  
   FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
-
   if(fieldWork->union_eff != NULL){
     UNION_EFF_SystemUpdate(fieldWork->union_eff);
   }
 
 	// フィールドマップ用制御タスクシステム
 	FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );
-
   if(fieldWork->fldMsgBG ){ FLDMSGBG_PrintMain( fieldWork->fldMsgBG ); }
-
   // TCB
   GFL_TCB_Main( fieldWork->fieldmapTCB );
   // タスクマネージャ
   FIELD_TASK_MAN_Main( fieldWork->taskManager );
-
   //now_pos更新
   if( fieldWork->target_now_pos_p != NULL ){
     fieldWork->now_pos = *fieldWork->target_now_pos_p;
@@ -963,10 +947,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   //Mapシステムに位置を渡している。
   //これがないとマップ移動しないので注意
   FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
-
   // Visualにかかわる処理
 	fldmap_G3D_Control( fieldWork );
-
   //遊覧船汽笛監視（遊覧船ではないときは処理をスルーする）
   {
     PL_BOAT_WORK_PTR *wk_ptr = GAMEDATA_GetPlBoatWorkPtr(fieldWork->gamedata);
@@ -977,8 +959,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
   // ----------------------top側3D描画処理---------------------------------------
   // これ以降にデータ更新処理を入れないこと。
+  GFL_CLACT_SYS_Main(); // CLSYSメイン
+  //↑ 2010.03.05　CLSYSメインをテイルからトップへ移動。この移動で、2Ｄ描画と3Ｄ描画に１シンクのずれが生じます。saito
   DrawTop(fieldWork);
-
 #ifdef DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
   debug_fieldmap_end_tick = OS_GetTick();
   debug_fieldmap_end_tick -= debug_fieldmap_start_tick;
@@ -1010,13 +993,14 @@ static void DrawTop(FIELDMAP_WORK *fieldWork)
 }
 
 static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
-{ 
+{
+  
   // 描画にかかる micro second を表示
 #ifdef DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
   OSTick debug_fieldmap_start_tick = OS_GetTick(); 
   OSTick debug_fieldmap_end_tick;
 #endif
-
+  
   if(GAMEDATA_GetIsSave( fieldWork->gamedata )){
      GAMEDATA_ResetFrameSpritCount(GAMESYSTEM_GetGameData(gsys));
      return MAINSEQ_RESULT_CONTINUE;
@@ -1024,7 +1008,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
 
   //ロード後半
   FLDMAPPER_MainTail( fieldWork->g3Dmapper );
-
+  
   FIELD_SUBSCREEN_Draw(fieldWork->fieldSubscreenWork);
   
   if(fieldWork->fldMsgBG ){ FLDMSGBG_PrintMain( fieldWork->fldMsgBG ); }
@@ -1034,9 +1018,6 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
 	MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
 	fldmap_G3D_Draw_tail( fieldWork );
 	MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
-
-	GFL_CLACT_SYS_Main(); // CLSYSメイン
-  
 
 	// ゲームデータのフレーム分割用カウンタをリセット
 	GAMEDATA_ResetFrameSpritCount(GAMESYSTEM_GetGameData(gsys));
@@ -2066,6 +2047,10 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 // field_g3d_mapperのtopフレーム描画
 static void fldmap_G3D_Draw_top( FIELDMAP_WORK * fieldWork )
 {
+  if ( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) &&
+        (GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT) ) return;
+
+  
   GFL_G3D_DRAW_Start();
   GFL_G3D_DRAW_SetLookAt();	//カメラグローバルステート設定
 
@@ -2102,7 +2087,8 @@ static void fldmap_G3D_Draw_top( FIELDMAP_WORK * fieldWork )
 // ３D描画終了（スワップバッファ）
 static void fldmap_G3D_Draw_tail( FIELDMAP_WORK * fieldWork )
 {
-
+  if ( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) &&
+        (GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT) ) return;
   {
     static const DRAW3DMODE_FUNC func[] = {
       Draw3DNormalMode_tail,
@@ -3098,11 +3084,20 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
     if(fieldWork->union_eff != NULL){
       UNION_EFF_SystemDraw( fieldWork->union_eff);
     }
-    
+   
+    if ( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) &&
+        (GFL_UI_KEY_GetCont() & PAD_BUTTON_A) )
+    {
+      ;
+    }
+    else
+    {
+     
     FLD_G3DOBJ_CTRL_Draw( fieldWork->fieldG3dObjCtrl );
     
     GFL_BBDACT_Draw(
         fieldWork->bbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
+    }
 
 		NNS_G3dGlbSetProjectionMtx(&org_pm);
 		NNS_G3dGlbFlush();		//　ジオメトリコマンドを転送
@@ -3118,6 +3113,7 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
   FLD_EXP_OBJ_Draw( fieldWork->ExpObjCntPtr );
 #ifdef PM_DEBUG
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
+#if 0    
     if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
 //      FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 0);
     }else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
@@ -3128,6 +3124,7 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
           FIELDMAP_GetFieldPlayer(fieldWork),
           FIELDMAP_GetFldNoGridMapper( fieldWork ) );
     }
+#endif    
   }
 #endif  //PM_DEBUG  
 
