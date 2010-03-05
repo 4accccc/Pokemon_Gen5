@@ -56,8 +56,8 @@ extern FIELD_PLAYER_GRID * FIELD_PLAYER_GRID_Init(
 		FIELD_PLAYER_CORE *player_core, HEAPID heapID );
 extern void FIELD_PLAYER_GRID_Delete( FIELD_PLAYER_GRID *g_jiki );
 
-extern void FIELD_PLAYER_GRID_Move(
-		FIELD_PLAYER_GRID *g_jiki, int key_trg, int key_cont );
+extern void FIELD_PLAYER_GRID_Move( FIELD_PLAYER_GRID *gjiki,
+    int key_trg, int key_cont, PLAYER_MOVEBIT mbit );
 
 extern PLAYER_MOVE_VALUE FIELD_PLAYER_GRID_GetMoveValue(
     FIELD_PLAYER_GRID *gjiki, u16 dir );

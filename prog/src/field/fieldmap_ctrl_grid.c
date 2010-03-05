@@ -185,23 +185,19 @@ static void mapCtrlGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 	{	//自機移動
 		int key_trg = GFL_UI_KEY_GetTrg( );
 		int key_cont = GFL_UI_KEY_GetCont( );
-
-
-#ifdef PM_DEBUG
-    //@todo 12月ＲＯＭ用対処
+    PLAYER_MOVEBIT mbit = PLAYER_MOVEBIT_NON;
+    
     {
       GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
       GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-      EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
-      if ( !EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_RUNNINGSHOES) ){
-        //Bボタンをマスク
-        if (key_trg & PAD_BUTTON_B) key_trg ^= PAD_BUTTON_B;
-        if (key_cont & PAD_BUTTON_B) key_cont ^= PAD_BUTTON_B;
+      EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
+      
+      if( EVENTWORK_CheckEventFlag(ev,SYS_FLAG_RUNNINGSHOES) ){
+        mbit |= PLAYER_MOVEBIT_DASH;
       }
     }
-#endif  //PM_DEBUG
-
-		FIELD_PLAYER_MoveGrid( fld_player, key_trg, key_cont );
+    
+		FIELD_PLAYER_MoveGrid( fld_player, key_trg, key_cont, mbit );
 	}
 }
 

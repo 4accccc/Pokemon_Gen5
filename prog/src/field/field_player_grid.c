@@ -161,11 +161,23 @@ struct _TAG_FIELD_PLAYER_GRID
   u32 naminori_end_flag;
 };
 
+//--------------------------------------------------------------
+/// INPUTDATA　入力データ
+//--------------------------------------------------------------
+typedef struct
+{
+  int key_trg;
+  int key_cont;
+  u16 dir;
+  PLAYER_MOVEBIT mbit;
+  BOOL debug_flag;
+}INPUTDATA;
+
 //======================================================================
 //  proto
 //======================================================================
 static void gjiki_InitMoveStartCommon(
-    FIELD_PLAYER_GRID *gjiki, u16 key_prs, JIKI_MOVEORDER set );
+    FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set, const INPUTDATA *input );
 static BOOL gjiki_CheckMoveStart( FIELD_PLAYER_GRID *gjiki, u16 dir );
 static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set, u16 dir );
 
@@ -177,163 +189,118 @@ static u16 getKeyDirX( u16 key_prs );
 static u16 getKeyDirZ( u16 key_prs );
 
 //移動開始状態
-static JIKI_MOVEORDER gjiki_GetMoveOrder( FIELD_PLAYER_GRID *gjiki,
-    int key_trg, int key_cont, u16 dir, BOOL debug_flag );
+static JIKI_MOVEORDER gjiki_GetMoveOrder(
+    FIELD_PLAYER_GRID *gjiki, const INPUTDATA *input );
 
 static JIKI_MOVEORDER gjiki_GetMoveOrder_Normal(
-    FIELD_PLAYER_GRID *gjiki,
-    int key_trg, int key_cont, u16 dir, BOOL debug_flag );
+    FIELD_PLAYER_GRID *gjiki, const INPUTDATA *input );
 static JIKI_MOVEORDER gjiki_CheckMoveOrder_Stop(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,  const INPUTDATA *input );
 static JIKI_MOVEORDER gjiki_CheckMoveOrder_Walk(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static JIKI_MOVEORDER gjiki_CheckMoveOrder_Turn(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static JIKI_MOVEORDER gjiki_CheckMoveOrder_Hitch(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 
-static JIKI_MOVEORDER gjiki_GetMoveOrder_Oze( FIELD_PLAYER_GRID *gjiki,
-    int key_trg, int key_cont, u16 dir, BOOL debug_flag );
+static JIKI_MOVEORDER gjiki_GetMoveOrder_Oze(
+    FIELD_PLAYER_GRID *gjiki, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Stop(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Walk(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Yure(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_WaitFallOutJump(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_FallOut(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 
-static JIKI_MOVEORDER gjiki_GetMoveOrder_Cycle( FIELD_PLAYER_GRID *gjiki,
-    int key_trg, int key_cont, u16 dir, BOOL debug_flag );
+static JIKI_MOVEORDER gjiki_GetMoveOrder_Cycle(
+    FIELD_PLAYER_GRID *gjiki, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Stop(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Walk(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Turn(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Hitch(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 
-static JIKI_MOVEORDER gjiki_GetMoveOrder_Swim( FIELD_PLAYER_GRID *gjiki,
-    int key_trg, int key_cont, u16 dir, BOOL debug_flag );
+static JIKI_MOVEORDER gjiki_GetMoveOrder_Swim(
+    FIELD_PLAYER_GRID *gjiki, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Stop(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Walk(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Turn(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Hitch(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 
 //移動セット
-static void gjiki_SetMove( FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void gjiki_SetMove( FIELD_PLAYER_GRID *gjiki,
+    JIKI_MOVEORDER set, const INPUTDATA *input );
 
-static void gjiki_SetMove_Normal( FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void gjiki_SetMove_Normal(
+    FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set,const INPUTDATA *input );
 static void gjiki_SetMove_Non(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjiki_SetMove_Stop(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjiki_SetMove_Walk(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjiki_SetMove_Turn(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjiki_SetMove_Hitch(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjiki_SetMove_Jump(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjikiOze_SetMove_Yure(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjikiOze_SetMove_FallOutJumpStart(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjikiOze_SetMove_FallOutJumpWait(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjikiOze_SetMove_FallOut(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 
-static void gjiki_SetMove_Cycle( FIELD_PLAYER_GRID *gjiki,
-    JIKI_MOVEORDER set,
-    u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void gjiki_SetMove_Cycle(
+    FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set, const INPUTDATA *input );
 static void gjikiCycle_SetMove_Non(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjikiCycle_SetMove_Stop(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjikiCycle_SetMove_Walk(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjikiCycle_SetMove_Turn(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjikiCycle_SetMove_Hitch(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjikiCycle_SetMove_Jump(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 
-static void gjiki_SetMove_Swim( FIELD_PLAYER_GRID *gjiki,
-    JIKI_MOVEORDER set,
-    u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+static void gjiki_SetMove_Swim(
+    FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Stop(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Walk(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Turn(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Hitch(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 
 static void gjikiSwim_SetMove_Non(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjikiSwim_SetMove_Stop(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjikiSwim_SetMove_Walk(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjikiSwim_SetMove_Turn(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 static void gjikiSwim_SetMove_Hitch(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input );
 
 //ヒットチェック
 static u32 gjiki_HitCheckMove(
@@ -456,51 +423,57 @@ void FIELD_PLAYER_GRID_Delete( FIELD_PLAYER_GRID *gjiki )
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FIELD_PLAYER_GRID_Move(
-    FIELD_PLAYER_GRID *gjiki, int key_trg, int key_cont )
+void FIELD_PLAYER_GRID_Move( FIELD_PLAYER_GRID *gjiki,
+    int key_trg, int key_cont, PLAYER_MOVEBIT mbit )
 {
   u16 dir;
-  JIKI_MOVEORDER order;
-  BOOL debug_flag = FALSE;
+  INPUTDATA input;
   
   dir = FIELD_PLAYER_CORE_GetKeyDir( gjiki->player_core, key_cont );
   
-  if( gjiki_CheckMoveStart(gjiki,dir) == FALSE ){
-    return;
+  if( gjiki_CheckMoveStart(gjiki,dir) == TRUE )
+  {
+    BOOL debug_flag = FALSE;
+    
+    #ifdef PM_DEBUG
+    if( key_cont & PLAYER_PAD_DEBUG){
+      debug_flag = TRUE;
+    }
+    #endif
+    
+    FIELD_PLAYER_CORE_UpdateRequest( gjiki->player_core );
+    
+    if( gjiki_ControlUnder(gjiki,dir,debug_flag) == FALSE )
+    {
+      JIKI_MOVEORDER order;
+      input.key_trg = key_trg;
+      input.key_cont = key_cont;
+      input.dir = dir;
+      input.mbit = mbit;
+      input.debug_flag = debug_flag;
+      
+      order = gjiki_GetMoveOrder( gjiki, &input );
+      gjiki_InitMoveStartCommon( gjiki, order, &input );
+      gjiki_SetMove( gjiki, order, &input );
+      gjiki_PlaySE( gjiki, order, dir );
+    }
   }
-  
-#ifdef PM_DEBUG
-  if( key_cont & PAD_BUTTON_R ){
-    debug_flag = TRUE;
-  }
-#endif
-  
-  FIELD_PLAYER_CORE_UpdateRequest( gjiki->player_core );
-  
-  if( gjiki_ControlUnder(gjiki,dir,debug_flag) == TRUE ){
-    return;
-  }
-  
-  order = gjiki_GetMoveOrder( gjiki, key_trg, key_cont, dir, debug_flag );
-  
-  gjiki_InitMoveStartCommon( gjiki, key_cont, order );
-  gjiki_SetMove( gjiki, order, key_trg, key_cont, dir, debug_flag );
-  gjiki_PlaySE( gjiki, order, dir );
 }
 
 //--------------------------------------------------------------
 /**
  * 移動開始時に行う初期化処理
  * @param gjiki FIELD_PLAYER_GRID
- * @param key_prs キー入力情報
+ * @param key_cont キー入力情報
  * @retval nothing
  */
 //--------------------------------------------------------------
 static void gjiki_InitMoveStartCommon(
-    FIELD_PLAYER_GRID *gjiki, u16 key_prs, JIKI_MOVEORDER set )
+    FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set, const INPUTDATA *input )
 {
   gjiki->move_order = set;
-  FIELD_PLAYER_CORE_SetMoveStartKeyDir( gjiki->player_core, key_prs );
+  FIELD_PLAYER_CORE_SetMoveStartKeyDir(
+      gjiki->player_core, input->key_cont );
   gjiki_OffMoveBitStep( gjiki );
   gjiki_OffMoveBit( gjiki, JIKI_MOVEBIT_DASH );
   
@@ -513,9 +486,10 @@ static void gjiki_InitMoveStartCommon(
 
 //--------------------------------------------------------------
 /**
- * オーダーチェック
- * @param
- * @retval
+ * 移動開始チェック
+ * @param gjiki FIELD_PLAYER_GRID
+ * @param dir 移動方向 DIR_UP等
+ * @retval BOOL TRUE=移動開始 FALSE=移動不可
  */
 //--------------------------------------------------------------
 static BOOL gjiki_CheckMoveStart( FIELD_PLAYER_GRID *gjiki, u16 dir )
@@ -777,8 +751,8 @@ static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
  * @retval JIKI_MOVEORDER
  */
 //--------------------------------------------------------------
-static JIKI_MOVEORDER gjiki_GetMoveOrder( FIELD_PLAYER_GRID *gjiki,
-    int key_trg, int key_cont, u16 dir, BOOL debug_flag )
+static JIKI_MOVEORDER gjiki_GetMoveOrder(
+    FIELD_PLAYER_GRID *gjiki, const INPUTDATA *input )
 {
   JIKI_MOVEORDER set;
   PLAYER_MOVE_FORM form;
@@ -788,16 +762,13 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder( FIELD_PLAYER_GRID *gjiki,
   
   switch( form ){
   case PLAYER_MOVE_FORM_NORMAL:
-    set = gjiki_GetMoveOrder_Normal(
-        gjiki, key_trg, key_cont, dir, debug_flag );
+    set = gjiki_GetMoveOrder_Normal( gjiki, input );
     break;
   case PLAYER_MOVE_FORM_CYCLE:
-    set = gjiki_GetMoveOrder_Cycle(
-        gjiki, key_trg, key_cont, dir, debug_flag );
+    set = gjiki_GetMoveOrder_Cycle( gjiki, input );
     break;
   case PLAYER_MOVE_FORM_SWIM:
-    set = gjiki_GetMoveOrder_Swim(
-        gjiki, key_trg, key_cont, dir, debug_flag );
+    set = gjiki_GetMoveOrder_Swim( gjiki, input );
     break;
   default:
     GF_ASSERT( 0 );
@@ -833,8 +804,6 @@ PLAYER_MOVE_VALUE FIELD_PLAYER_GRID_GetMoveValue(
   return( PLAYER_MOVE_VALUE_WALK );
 }
 
-
-
 //--------------------------------------------------------------
 /**
  * 自機オーダーチェック
@@ -848,8 +817,6 @@ BOOL FIELD_PLAYER_GRID_CheckStartMove(
 {
   return FIELD_PLAYER_CORE_CheckStartMove( gjiki->player_core, dir );
 }
-
-
 
 //======================================================================
 // キー入力による自機移動オーダーを取得　通常移動
@@ -865,8 +832,8 @@ BOOL FIELD_PLAYER_GRID_CheckStartMove(
  * @retval JIKI_MOVEORDER
  */
 //--------------------------------------------------------------
-static JIKI_MOVEORDER gjiki_GetMoveOrder_Normal( FIELD_PLAYER_GRID *gjiki,
-    int key_trg, int key_cont, u16 dir, BOOL debug_flag )
+static JIKI_MOVEORDER gjiki_GetMoveOrder_Normal(
+    FIELD_PLAYER_GRID *gjiki, const INPUTDATA *input )
 {
   JIKI_MOVEORDER set;
   MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
@@ -875,27 +842,22 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder_Normal( FIELD_PLAYER_GRID *gjiki,
   
   if( oze_CheckAttrUnderOze(gjiki) == TRUE ||
       gjiki_CheckMoveBitOzeFallOut(gjiki) == TRUE ){
-    set = gjiki_GetMoveOrder_Oze(
-        gjiki, key_trg, key_cont, dir, debug_flag );
+    set = gjiki_GetMoveOrder_Oze( gjiki, input );
     return( set );
   }
   
   switch( gjiki->move_action ){
   case JIKI_ACTION_STOP:
-    set = gjiki_CheckMoveOrder_Stop(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjiki_CheckMoveOrder_Stop( gjiki, mmdl, input );
     break;
   case JIKI_ACTION_WALK:
-    set = gjiki_CheckMoveOrder_Walk(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjiki_CheckMoveOrder_Walk( gjiki, mmdl, input );
     break;
   case JIKI_ACTION_TURN:
-    set = gjiki_CheckMoveOrder_Turn(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjiki_CheckMoveOrder_Turn( gjiki, mmdl, input );
     break;
   case JIKI_ACTION_HITCH:
-    set = gjiki_CheckMoveOrder_Hitch(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjiki_CheckMoveOrder_Hitch( gjiki, mmdl, input );
     break;
   default:
     GF_ASSERT( 0 );
@@ -917,20 +879,18 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder_Normal( FIELD_PLAYER_GRID *gjiki,
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjiki_CheckMoveOrder_Stop(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
-    if( dir != DIR_NOT ){
+    if( input->dir != DIR_NOT ){
       u16 old_dir;
       old_dir = MMDL_GetDirDisp( mmdl );
       
-      if( dir != old_dir && debug_flag == FALSE ){
+      if( input->dir != old_dir && input->debug_flag == FALSE ){
         return( JIKI_MOVEORDER_TURN );
       }
       
-      return( gjiki_CheckMoveOrder_Walk(
-        gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+      return( gjiki_CheckMoveOrder_Walk( gjiki, mmdl, input) );
     }
     
     return( JIKI_MOVEORDER_STOP );
@@ -952,24 +912,22 @@ static JIKI_MOVEORDER gjiki_CheckMoveOrder_Stop(
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjiki_CheckMoveOrder_Walk(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
     return( JIKI_MOVEORDER_NON );
   }
   
-  if( dir == DIR_NOT )
+  if( input->dir == DIR_NOT )
   {
-    return( gjiki_CheckMoveOrder_Stop(
-      gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+    return( gjiki_CheckMoveOrder_Stop( gjiki, mmdl, input) );
   }
   
   {
     MAPATTR attr;
-    u32 hit = gjiki_HitCheckMove( gjiki, mmdl, dir, &attr );
+    u32 hit = gjiki_HitCheckMove( gjiki, mmdl, input->dir, &attr );
     
-    if( debug_flag == TRUE )
+    if( input->debug_flag == TRUE )
     {
       if( hit != MMDL_MOVEHITBIT_NON &&
           !(hit & MMDL_MOVEHITBIT_OUTRANGE) )
@@ -997,8 +955,8 @@ static JIKI_MOVEORDER gjiki_CheckMoveOrder_Walk(
           attr_dir = DIR_RIGHT;
         }
         
-        if( attr_dir != DIR_NOT && attr_dir == dir ){ //ジャンプ方向一致
-          return( JIKI_MOVEORDER_JUMP );
+        if( attr_dir != DIR_NOT && attr_dir == input->dir ){
+          return( JIKI_MOVEORDER_JUMP ); //ジャンプ方向一致
         }
       }
       
@@ -1008,7 +966,7 @@ static JIKI_MOVEORDER gjiki_CheckMoveOrder_Walk(
           return( JIKI_MOVEORDER_WALK );
         }
         
-        if( debug_flag == TRUE ){ //デバッグ移動
+        if( input->debug_flag == TRUE ){ //デバッグ移動
           return( JIKI_MOVEORDER_WALK );
         }
       }
@@ -1031,20 +989,17 @@ static JIKI_MOVEORDER gjiki_CheckMoveOrder_Walk(
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjiki_CheckMoveOrder_Turn(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
     return( JIKI_MOVEORDER_NON );
   }
   
-  if( dir == DIR_NOT ){
-    return( gjiki_CheckMoveOrder_Stop(
-      gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+  if( input->dir == DIR_NOT ){
+    return( gjiki_CheckMoveOrder_Stop( gjiki, mmdl, input) );
   }
   
-  return( gjiki_CheckMoveOrder_Walk(
-    gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+  return( gjiki_CheckMoveOrder_Walk( gjiki, mmdl, input) );
 }
 
 //--------------------------------------------------------------
@@ -1060,28 +1015,24 @@ static JIKI_MOVEORDER gjiki_CheckMoveOrder_Turn(
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjiki_CheckMoveOrder_Hitch(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 dir_now = MMDL_GetDirDisp( mmdl );
    
-  if( dir != DIR_NOT && dir != dir_now ){
+  if( input->dir != DIR_NOT && input->dir != dir_now ){
     MMDL_FreeAcmd( mmdl );
-    return( gjiki_CheckMoveOrder_Walk(
-      gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+    return( gjiki_CheckMoveOrder_Walk( gjiki, mmdl, input) );
   }
   
   if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
     return( JIKI_MOVEORDER_NON );
   }
   
-  if( dir == DIR_NOT ){
-    return( gjiki_CheckMoveOrder_Stop(
-      gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+  if( input->dir == DIR_NOT ){
+    return( gjiki_CheckMoveOrder_Stop( gjiki, mmdl, input) );
   }
   
-  return( gjiki_CheckMoveOrder_Walk(
-    gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+  return( gjiki_CheckMoveOrder_Walk( gjiki, mmdl, input) );
 }
 
 //======================================================================
@@ -1098,8 +1049,8 @@ static JIKI_MOVEORDER gjiki_CheckMoveOrder_Hitch(
  * @retval JIKI_MOVEORDER
  */
 //--------------------------------------------------------------
-static JIKI_MOVEORDER gjiki_GetMoveOrder_Oze( FIELD_PLAYER_GRID *gjiki,
-    int key_trg, int key_cont, u16 dir, BOOL debug_flag )
+static JIKI_MOVEORDER gjiki_GetMoveOrder_Oze(
+    FIELD_PLAYER_GRID *gjiki, const INPUTDATA *input )
 {
   JIKI_MOVEORDER set;
   MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
@@ -1108,33 +1059,26 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder_Oze( FIELD_PLAYER_GRID *gjiki,
   
   switch( gjiki->move_action ){
   case JIKI_ACTION_STOP:
-    set = gjikiOze_CheckMoveOrder_Stop(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjikiOze_CheckMoveOrder_Stop( gjiki, mmdl, input );
     break;
   case JIKI_ACTION_WALK:
-    set = gjikiOze_CheckMoveOrder_Walk(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjikiOze_CheckMoveOrder_Walk( gjiki, mmdl, input );
     break;
   case JIKI_ACTION_TURN:
-    set = gjiki_CheckMoveOrder_Turn( //流用
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjiki_CheckMoveOrder_Turn( gjiki, mmdl, input );//流用
     break;
   case JIKI_ACTION_HITCH:
-    set = gjiki_CheckMoveOrder_Hitch( //流用
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjiki_CheckMoveOrder_Hitch( gjiki, mmdl, input ); //流用
     break;
   case JIKI_ACTION_OZE_YURE:
-    set = gjikiOze_CheckMoveOrder_Yure(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjikiOze_CheckMoveOrder_Yure( gjiki, mmdl, input );
     break;
   case JIKI_ACTION_OZE_FALLOUT_JUMP:
   case JIKI_ACTION_OZE_FALLOUT_JUMP_WAIT:
-    set = gjikiOze_CheckMoveOrder_WaitFallOutJump(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjikiOze_CheckMoveOrder_WaitFallOutJump( gjiki, mmdl, input );
     break;
   case JIKI_ACTION_OZE_FALLOUT:
-    set = gjikiOze_CheckMoveOrder_FallOut(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjikiOze_CheckMoveOrder_FallOut( gjiki, mmdl, input );
     break;
   default:
     GF_ASSERT( 0 );
@@ -1156,24 +1100,21 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder_Oze( FIELD_PLAYER_GRID *gjiki,
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Stop(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
-    if( dir != DIR_NOT ){
+    if( input->dir != DIR_NOT ){
       u16 old_dir;
       old_dir = MMDL_GetDirDisp( mmdl );
       
-      if( dir != old_dir && debug_flag == FALSE ){
+      if( input->dir != old_dir && input->debug_flag == FALSE ){
         return( JIKI_MOVEORDER_TURN );
       }
       
-      return( gjikiOze_CheckMoveOrder_Walk(
-        gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+      return( gjikiOze_CheckMoveOrder_Walk( gjiki, mmdl, input) );
     }
     
-    return( gjikiOze_CheckMoveOrder_Yure(
-          gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+    return( gjikiOze_CheckMoveOrder_Yure( gjiki, mmdl, input) );
   }
   
   return( JIKI_MOVEORDER_NON );
@@ -1192,22 +1133,20 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Stop(
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Walk(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
     return( JIKI_MOVEORDER_NON );
   }
   
-  if( dir == DIR_NOT )
+  if( input->dir == DIR_NOT )
   {
-    return( gjikiOze_CheckMoveOrder_Stop(
-      gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+    return( gjikiOze_CheckMoveOrder_Stop( gjiki, mmdl, input) );
   }
   
   {
     MAPATTR attr;
-    u32 hit = oze_HitCheckMove( gjiki, mmdl, dir, &attr );
+    u32 hit = oze_HitCheckMove( gjiki, mmdl, input->dir, &attr );
     
     if( attr != MAPATTR_ERROR )
     {
@@ -1247,10 +1186,9 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Walk(
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Yure(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
-  if( dir == DIR_NOT ) //何も押していない
+  if( input->dir == DIR_NOT ) //何も押していない
   {
     if( gjiki_CheckMoveBitOzeYure(gjiki) == FALSE ){
       oze_StartYureJiki( gjiki );
@@ -1274,8 +1212,7 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Yure(
   else //何か押した
   { 
     oze_EndYureJiki( gjiki );
-    return( gjikiOze_CheckMoveOrder_Walk(
-      gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+    return( gjikiOze_CheckMoveOrder_Walk( gjiki, mmdl, input) );
   }
   
   return( JIKI_MOVEORDER_OZE_YURE );
@@ -1295,8 +1232,7 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_Yure(
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_WaitFallOutJump(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ) //尾瀬落下開始アニメ終了待ち
   {
@@ -1320,8 +1256,7 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_WaitFallOutJump(
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_FallOut(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   if( oze_CheckFallOutEnd(gjiki) == TRUE ){
     VecFx32 pos;
@@ -1356,8 +1291,8 @@ static JIKI_MOVEORDER gjikiOze_CheckMoveOrder_FallOut(
  * @retval JIKI_MOVEORDER
  */
 //--------------------------------------------------------------
-static JIKI_MOVEORDER gjiki_GetMoveOrder_Cycle( FIELD_PLAYER_GRID *gjiki,
-    int key_trg, int key_cont, u16 dir, BOOL debug_flag )
+static JIKI_MOVEORDER gjiki_GetMoveOrder_Cycle(
+    FIELD_PLAYER_GRID *gjiki, const INPUTDATA *input )
 {
   JIKI_MOVEORDER set;
   MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
@@ -1365,20 +1300,16 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder_Cycle( FIELD_PLAYER_GRID *gjiki,
   set = JIKI_MOVEORDER_NON;
   switch( gjiki->move_action ){
   case JIKI_ACTION_STOP:
-    set = gjikiCycle_CheckMoveOrder_Stop(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjikiCycle_CheckMoveOrder_Stop( gjiki, mmdl, input );
     break;
   case JIKI_ACTION_WALK:
-    set = gjikiCycle_CheckMoveOrder_Walk(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjikiCycle_CheckMoveOrder_Walk( gjiki, mmdl, input );
     break;
   case JIKI_ACTION_TURN:
-    set = gjikiCycle_CheckMoveOrder_Turn(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjikiCycle_CheckMoveOrder_Turn( gjiki, mmdl, input );
     break;
   case JIKI_ACTION_HITCH:
-    set = gjikiCycle_CheckMoveOrder_Hitch(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjikiCycle_CheckMoveOrder_Hitch( gjiki, mmdl, input );
     break;
   default:
     GF_ASSERT( 0 );
@@ -1400,20 +1331,18 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder_Cycle( FIELD_PLAYER_GRID *gjiki,
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Stop(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
-    if( dir != DIR_NOT ){
+    if( input->dir != DIR_NOT ){
       u16 old_dir;
       old_dir = MMDL_GetDirDisp( mmdl );
       
-      if( dir != old_dir && debug_flag == FALSE ){
+      if( input->dir != old_dir && input->debug_flag == FALSE ){
         return( JIKI_MOVEORDER_TURN );
       }
       
-      return( gjikiCycle_CheckMoveOrder_Walk(
-        gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+      return( gjikiCycle_CheckMoveOrder_Walk( gjiki, mmdl, input) );
     }
     return( JIKI_MOVEORDER_STOP );
   }
@@ -1434,17 +1363,15 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Stop(
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Walk(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
     return( JIKI_MOVEORDER_NON );
   }
   
-  if( dir == DIR_NOT )
+  if( input->dir == DIR_NOT )
   {
-    return( gjikiCycle_CheckMoveOrder_Stop(
-      gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+    return( gjikiCycle_CheckMoveOrder_Stop( gjiki, mmdl, input) );
   }
   
   {
@@ -1453,9 +1380,9 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Walk(
     MAPATTR attr;
     MAPATTR_VALUE val;
     MAPATTR_FLAG flag;
-    u32 hit = MMDL_HitCheckMoveDir( mmdl, dir );
+    u32 hit = MMDL_HitCheckMoveDir( mmdl, input->dir );
     
-    if( debug_flag == TRUE )
+    if( input->debug_flag == TRUE )
     {
       if( hit != MMDL_MOVEHITBIT_NON &&
           !(hit&MMDL_MOVEHITBIT_OUTRANGE) )
@@ -1465,7 +1392,7 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Walk(
     }
     
     MMDL_GetVectorPos( mmdl, &pos );
-    MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+    MMDL_TOOL_AddDirVector( input->dir, &pos, GRID_FX32 );
     ret = MMDL_GetMapPosAttr( mmdl, &pos, &attr );
     val = MAPATTR_GetAttrValue( attr );
     flag = MAPATTR_GetAttrFlag( attr );
@@ -1486,9 +1413,9 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Walk(
           attr_dir = DIR_RIGHT;
         }
         
-        if( attr_dir != DIR_NOT && attr_dir == dir ) //ジャンプ方向一致
+        if( attr_dir != DIR_NOT && attr_dir == input->dir )
         {
-          return( JIKI_MOVEORDER_JUMP );
+          return( JIKI_MOVEORDER_JUMP ); //ジャンプ方向一致
         }
       }
     }
@@ -1517,20 +1444,17 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Walk(
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Turn(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
     return( JIKI_MOVEORDER_NON );
   }
   
-  if( dir == DIR_NOT ){
-    return( gjikiCycle_CheckMoveOrder_Stop(
-      gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+  if( input->dir == DIR_NOT ){
+    return( gjikiCycle_CheckMoveOrder_Stop( gjiki, mmdl, input) );
   }
   
-  return( gjikiCycle_CheckMoveOrder_Walk(
-    gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+  return( gjikiCycle_CheckMoveOrder_Walk( gjiki, mmdl, input) );
 }
 
 //--------------------------------------------------------------
@@ -1546,28 +1470,24 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Turn(
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Hitch(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 dir_now = MMDL_GetDirDisp( mmdl );
    
-  if( dir != DIR_NOT && dir != dir_now ){
+  if( input->dir != DIR_NOT && input->dir != dir_now ){
     MMDL_FreeAcmd( mmdl );
-    return( gjikiCycle_CheckMoveOrder_Walk(
-      gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+    return( gjikiCycle_CheckMoveOrder_Walk( gjiki, mmdl, input) );
   }
   
   if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
     return( JIKI_MOVEORDER_NON );
   }
   
-  if( dir == DIR_NOT ){
-    return( gjikiCycle_CheckMoveOrder_Stop(
-      gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+  if( input->dir == DIR_NOT ){
+    return( gjikiCycle_CheckMoveOrder_Stop( gjiki, mmdl, input) );
   }
   
-  return( gjikiCycle_CheckMoveOrder_Walk(
-    gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+  return( gjikiCycle_CheckMoveOrder_Walk( gjiki, mmdl, input) );
 }
 
 //======================================================================
@@ -1584,8 +1504,8 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Hitch(
  * @retval JIKI_MOVEORDER
  */
 //--------------------------------------------------------------
-static JIKI_MOVEORDER gjiki_GetMoveOrder_Swim( FIELD_PLAYER_GRID *gjiki,
-    int key_trg, int key_cont, u16 dir, BOOL debug_flag )
+static JIKI_MOVEORDER gjiki_GetMoveOrder_Swim(
+    FIELD_PLAYER_GRID *gjiki, const INPUTDATA *input )
 {
   JIKI_MOVEORDER set;
   MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
@@ -1593,20 +1513,16 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder_Swim( FIELD_PLAYER_GRID *gjiki,
   set = JIKI_MOVEORDER_NON;
   switch( gjiki->move_action ){
   case JIKI_ACTION_STOP:
-    set = gjikiSwim_CheckMoveOrder_Stop(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjikiSwim_CheckMoveOrder_Stop( gjiki, mmdl, input );
     break;
   case JIKI_ACTION_WALK:
-    set = gjikiSwim_CheckMoveOrder_Walk(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjikiSwim_CheckMoveOrder_Walk( gjiki, mmdl, input );
     break;
   case JIKI_ACTION_TURN:
-    set = gjikiSwim_CheckMoveOrder_Turn(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjikiSwim_CheckMoveOrder_Turn( gjiki, mmdl, input );
     break;
   case JIKI_ACTION_HITCH:
-    set = gjikiSwim_CheckMoveOrder_Hitch(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    set = gjikiSwim_CheckMoveOrder_Hitch( gjiki, mmdl, input );
     break;
   default:
     GF_ASSERT( 0 );
@@ -1628,20 +1544,18 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder_Swim( FIELD_PLAYER_GRID *gjiki,
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Stop(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
-    if( dir != DIR_NOT ){
+    if( input->dir != DIR_NOT ){
       u16 old_dir;
       old_dir = MMDL_GetDirDisp( mmdl );
       
-      if( dir != old_dir && debug_flag == FALSE ){
+      if( input->dir != old_dir && input->debug_flag == FALSE ){
         return( JIKI_MOVEORDER_TURN );
       }
       
-      return( gjikiSwim_CheckMoveOrder_Walk(
-        gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+      return( gjikiSwim_CheckMoveOrder_Walk( gjiki, mmdl, input) );
     }
     
     return( JIKI_MOVEORDER_STOP );
@@ -1663,24 +1577,22 @@ static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Stop(
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Walk(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
     return( JIKI_MOVEORDER_NON );
   }
   
-  if( dir == DIR_NOT )
+  if( input->dir == DIR_NOT )
   {
-    return( gjikiSwim_CheckMoveOrder_Stop(
-      gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+    return( gjikiSwim_CheckMoveOrder_Stop( gjiki, mmdl, input) );
   }
   
   {
     MAPATTR attr;
-    u32 hit = gjiki_HitCheckMove( gjiki, mmdl, dir, &attr );
+    u32 hit = gjiki_HitCheckMove( gjiki, mmdl, input->dir, &attr );
     
-    if( debug_flag == TRUE )
+    if( input->debug_flag == TRUE )
     {
       if( hit != MMDL_MOVEHITBIT_NON &&
           !(hit & MMDL_MOVEHITBIT_OUTRANGE) )
@@ -1699,7 +1611,7 @@ static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Walk(
           return( JIKI_MOVEORDER_WALK );
         }
         
-        if( debug_flag == TRUE ){
+        if( input->debug_flag == TRUE ){
           return( JIKI_MOVEORDER_WALK );
         }
       }
@@ -1722,20 +1634,17 @@ static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Walk(
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Turn(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
     return( JIKI_MOVEORDER_NON );
   }
   
-  if( dir == DIR_NOT ){
-    return( gjikiSwim_CheckMoveOrder_Stop(
-      gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+  if( input->dir == DIR_NOT ){
+    return( gjikiSwim_CheckMoveOrder_Stop( gjiki, mmdl, input) );
   }
   
-  return( gjikiSwim_CheckMoveOrder_Walk(
-    gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+  return( gjikiSwim_CheckMoveOrder_Walk( gjiki, mmdl, input) );
 }
 
 //--------------------------------------------------------------
@@ -1751,28 +1660,24 @@ static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Turn(
  */
 //--------------------------------------------------------------
 static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Hitch(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 dir_now = MMDL_GetDirDisp( mmdl );
    
-  if( dir != DIR_NOT && dir != dir_now ){
+  if( input->dir != DIR_NOT && input->dir != dir_now ){
     MMDL_FreeAcmd( mmdl );
-    return( gjikiSwim_CheckMoveOrder_Walk(
-      gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+    return( gjikiSwim_CheckMoveOrder_Walk( gjiki, mmdl, input) );
   }
   
   if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
     return( JIKI_MOVEORDER_NON );
   }
   
-  if( dir == DIR_NOT ){
-    return( gjikiSwim_CheckMoveOrder_Stop(
-      gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+  if( input->dir == DIR_NOT ){
+    return( gjikiSwim_CheckMoveOrder_Stop( gjiki, mmdl, input) );
   }
   
-  return( gjikiSwim_CheckMoveOrder_Walk(
-    gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
+  return( gjikiSwim_CheckMoveOrder_Walk( gjiki, mmdl, input) );
 }
 
 //======================================================================
@@ -1789,8 +1694,8 @@ static JIKI_MOVEORDER gjikiSwim_CheckMoveOrder_Hitch(
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void gjiki_SetMove( FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+static void gjiki_SetMove( FIELD_PLAYER_GRID *gjiki,
+    JIKI_MOVEORDER set, const INPUTDATA *input )
 {
   PLAYER_MOVE_FORM form;
   
@@ -1798,13 +1703,13 @@ static void gjiki_SetMove( FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set,
   
   switch( form ){
   case PLAYER_MOVE_FORM_NORMAL:
-    gjiki_SetMove_Normal( gjiki, set, key_trg, key_cont, dir, debug_flag );
+    gjiki_SetMove_Normal( gjiki, set, input );
     break;
   case PLAYER_MOVE_FORM_CYCLE:
-    gjiki_SetMove_Cycle( gjiki, set, key_trg, key_cont, dir, debug_flag );
+    gjiki_SetMove_Cycle( gjiki, set, input );
     break;
   case PLAYER_MOVE_FORM_SWIM:
-    gjiki_SetMove_Swim( gjiki, set, key_trg, key_cont, dir, debug_flag );
+    gjiki_SetMove_Swim( gjiki, set, input );
     break;
   default:
     GF_ASSERT( 0 );
@@ -1825,51 +1730,41 @@ static void gjiki_SetMove( FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set,
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void gjiki_SetMove_Normal( FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+static void gjiki_SetMove_Normal(
+    FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set, const INPUTDATA *input )
 {
   MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
   
   switch( set ){
   case JIKI_MOVEORDER_NON:
-    gjiki_SetMove_Non(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjiki_SetMove_Non( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_STOP:
-    gjiki_SetMove_Stop(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjiki_SetMove_Stop( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_WALK:
-    gjiki_SetMove_Walk(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjiki_SetMove_Walk( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_TURN:
-    gjiki_SetMove_Turn(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjiki_SetMove_Turn( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_HITCH:
-    gjiki_SetMove_Hitch(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjiki_SetMove_Hitch( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_JUMP:
-    gjiki_SetMove_Jump(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjiki_SetMove_Jump( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_OZE_YURE:
-    gjikiOze_SetMove_Yure(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjikiOze_SetMove_Yure( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_OZE_FALLOUT_JUMP_START:
-    gjikiOze_SetMove_FallOutJumpStart(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjikiOze_SetMove_FallOutJumpStart( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_OZE_FALLOUT_JUMP_WAIT:
-    gjikiOze_SetMove_FallOutJumpWait(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjikiOze_SetMove_FallOutJumpWait( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_OZE_FALLOUT:
-    gjikiOze_SetMove_FallOut(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjikiOze_SetMove_FallOut( gjiki, mmdl, input );
     break;
   default:
     GF_ASSERT( 0 );
@@ -1888,8 +1783,7 @@ static void gjiki_SetMove_Normal( FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set,
  */
 //--------------------------------------------------------------
 static void gjiki_SetMove_Non(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
 }
 
@@ -1905,10 +1799,10 @@ static void gjiki_SetMove_Non(
  */
 //--------------------------------------------------------------
 static void gjiki_SetMove_Stop(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 code;
+  u16 dir = input->dir;
   
   if( dir == DIR_NOT ){
     dir = MMDL_GetDirDisp( mmdl );
@@ -1918,7 +1812,8 @@ static void gjiki_SetMove_Stop(
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_STOP;
   
-  FIELD_PLAYER_CORE_SetMoveValue( gjiki->player_core, PLAYER_MOVE_VALUE_STOP );
+  FIELD_PLAYER_CORE_SetMoveValue(
+      gjiki->player_core, PLAYER_MOVE_VALUE_STOP );
 #ifdef PLAYER_MOVE_TRACK_CHANGE
   FIELD_SOUND_ChangeBGMTrackStill();
 #endif
@@ -1936,21 +1831,28 @@ static void gjiki_SetMove_Stop(
  */
 //--------------------------------------------------------------
 static void gjiki_SetMove_Walk(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 code;
   BOOL flat_check = TRUE;
   
-  GF_ASSERT( dir != DIR_NOT );
+  GF_ASSERT( input->dir != DIR_NOT );
   
-  if( debug_flag == TRUE ){
+  if( input->debug_flag == TRUE )
+  {
     code = AC_WALK_U_2F;
     flat_check = FALSE;
-  }else if( key_cont & PAD_BUTTON_B ){
-    if( FIELD_PLAYER_CORE_CheckIllegalOBJCode(gjiki->player_core) == FALSE ){
+  }
+  else if( (input->mbit & PLAYER_MOVEBIT_DASH) &&
+      (input->key_cont & PLAYER_PAD_DASH) )
+  {
+    if( FIELD_PLAYER_CORE_CheckIllegalOBJCode(
+          gjiki->player_core) == FALSE )
+    {
       code = AC_WALK_U_4F;
-    }else{
+    }
+    else
+    {
       VecFx32 pos;
       MAPATTR attr;
       
@@ -1958,20 +1860,26 @@ static void gjiki_SetMove_Walk(
       gjiki_OnMoveBit( gjiki, JIKI_MOVEBIT_DASH );
       FIELD_PLAYER_CORE_GetPos( gjiki->player_core, &pos );
       
-      if( MMDL_GetMapPosAttr( mmdl, &pos, &attr )){
-        if( MAPATTR_VALUE_CheckUpDownFloor(MAPATTR_GetAttrValue(attr)) ){
+      if( MMDL_GetMapPosAttr( mmdl, &pos, &attr ))
+      {
+        if( MAPATTR_VALUE_CheckUpDownFloor(MAPATTR_GetAttrValue(attr)) )
+        {
           code = AC_WALK_U_8F; //上下動床ではダッシュなし
           flat_check = FALSE;
           gjiki_OffMoveBit( gjiki, JIKI_MOVEBIT_DASH );
         }
       }
     }
-  }else{
+  }
+  else
+  {
     code = AC_WALK_U_8F;
   }
   
-  if( flat_check == TRUE ){
-    if( gjiki_CheckNextHeight(gjiki,dir) == GROUND_HEIGHT_UP ){
+  if( flat_check == TRUE )
+  {
+    if( gjiki_CheckNextHeight(gjiki,input->dir) == GROUND_HEIGHT_UP )
+    {
       switch( code ){
       case AC_WALK_U_4F:
         code = AC_WALK_U_6F;
@@ -1986,12 +1894,14 @@ static void gjiki_SetMove_Walk(
     }
   }
   
-  code = MMDL_ChangeDirAcmdCode( dir, code );
+  code = MMDL_ChangeDirAcmdCode( input->dir, code );
   
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_WALK;
 
-  FIELD_PLAYER_CORE_SetMoveValue( gjiki->player_core, PLAYER_MOVE_VALUE_WALK );
+  FIELD_PLAYER_CORE_SetMoveValue(
+      gjiki->player_core, PLAYER_MOVE_VALUE_WALK );
+
 #ifdef PLAYER_MOVE_TRACK_CHANGE
   FIELD_SOUND_ChangeBGMTrackAction();
 #endif
@@ -2009,18 +1919,19 @@ static void gjiki_SetMove_Walk(
  */
 //--------------------------------------------------------------
 static void gjiki_SetMove_Turn(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 code;
   
-  GF_ASSERT( dir != DIR_NOT );
-  code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_2F );
+  GF_ASSERT( input->dir != DIR_NOT );
+  code = MMDL_ChangeDirAcmdCode( input->dir, AC_STAY_WALK_U_2F );
   
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_TURN;
   
-  FIELD_PLAYER_CORE_SetMoveValue( gjiki->player_core, PLAYER_MOVE_VALUE_TURN );
+  FIELD_PLAYER_CORE_SetMoveValue(
+      gjiki->player_core, PLAYER_MOVE_VALUE_TURN );
+
 #ifdef PLAYER_MOVE_TRACK_CHANGE
   FIELD_SOUND_ChangeBGMTrackStill();
 #endif
@@ -2038,18 +1949,19 @@ static void gjiki_SetMove_Turn(
  */
 //--------------------------------------------------------------
 static void gjiki_SetMove_Hitch(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 code;
   
-  GF_ASSERT( dir != DIR_NOT );
-  code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_16F );
+  GF_ASSERT( input->dir != DIR_NOT );
+  code = MMDL_ChangeDirAcmdCode( input->dir, AC_STAY_WALK_U_16F );
   
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_HITCH;
   
-  FIELD_PLAYER_CORE_SetMoveValue( gjiki->player_core, PLAYER_MOVE_VALUE_STOP );
+  FIELD_PLAYER_CORE_SetMoveValue(
+      gjiki->player_core, PLAYER_MOVE_VALUE_STOP );
+
   PMSND_PlaySE( SEQ_SE_WALL_HIT );
 #ifdef PLAYER_MOVE_TRACK_CHANGE
   FIELD_SOUND_ChangeBGMTrackStill();
@@ -2068,19 +1980,19 @@ static void gjiki_SetMove_Hitch(
  */
 //--------------------------------------------------------------
 static void gjiki_SetMove_Jump(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 code;
   
-  GF_ASSERT( dir != DIR_NOT );
+  GF_ASSERT( input->dir != DIR_NOT );
   
-  code = MMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_2G_16F );
+  code = MMDL_ChangeDirAcmdCode( input->dir, AC_JUMP_U_2G_16F );
   
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_WALK;
   
-  FIELD_PLAYER_CORE_SetMoveValue( gjiki->player_core, PLAYER_MOVE_VALUE_WALK );
+  FIELD_PLAYER_CORE_SetMoveValue(
+      gjiki->player_core, PLAYER_MOVE_VALUE_WALK );
   PMSND_PlaySE( SEQ_SE_DANSA );
   
 #ifdef PLAYER_MOVE_TRACK_CHANGE
@@ -2100,8 +2012,7 @@ static void gjiki_SetMove_Jump(
  */
 //--------------------------------------------------------------
 static void gjikiOze_SetMove_Yure(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   //特になにもしない？
   gjiki->move_action = JIKI_ACTION_OZE_YURE;
@@ -2119,10 +2030,10 @@ static void gjikiOze_SetMove_Yure(
  */
 //--------------------------------------------------------------
 static void gjikiOze_SetMove_FallOutJumpStart(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 code;
+  u16 dir = input->dir;
 
   if( dir == DIR_NOT ){ //揺れ限界により落ちる
     dir = oze_CheckAttrOzeFallOut( gjiki );
@@ -2148,8 +2059,7 @@ static void gjikiOze_SetMove_FallOutJumpStart(
  */
 //--------------------------------------------------------------
 static void gjikiOze_SetMove_FallOutJumpWait(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   gjiki->move_action = JIKI_ACTION_OZE_FALLOUT_JUMP_WAIT;
 }
@@ -2166,8 +2076,7 @@ static void gjikiOze_SetMove_FallOutJumpWait(
  */
 //--------------------------------------------------------------
 static void gjikiOze_SetMove_FallOut(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   fx32 height;
   VecFx32 pos;
@@ -2204,36 +2113,29 @@ static void gjikiOze_SetMove_FallOut(
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void gjiki_SetMove_Cycle( FIELD_PLAYER_GRID *gjiki,
-    JIKI_MOVEORDER set,
-    u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+static void gjiki_SetMove_Cycle(
+    FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set, const INPUTDATA *input )
 {
   MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
 
   switch( set ){
   case JIKI_MOVEORDER_NON:
-    gjikiCycle_SetMove_Non(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjikiCycle_SetMove_Non( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_STOP:
-    gjikiCycle_SetMove_Stop(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjikiCycle_SetMove_Stop( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_WALK:
-    gjikiCycle_SetMove_Walk(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjikiCycle_SetMove_Walk( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_TURN:
-    gjikiCycle_SetMove_Turn(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjikiCycle_SetMove_Turn( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_HITCH:
-    gjikiCycle_SetMove_Hitch(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjikiCycle_SetMove_Hitch( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_JUMP:
-    gjikiCycle_SetMove_Jump(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjikiCycle_SetMove_Jump( gjiki, mmdl, input );
     break;
   default:
     GF_ASSERT( 0 );
@@ -2252,8 +2154,7 @@ static void gjiki_SetMove_Cycle( FIELD_PLAYER_GRID *gjiki,
  */
 //--------------------------------------------------------------
 static void gjikiCycle_SetMove_Non(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
 }
 
@@ -2269,11 +2170,11 @@ static void gjikiCycle_SetMove_Non(
  */
 //--------------------------------------------------------------
 static void gjikiCycle_SetMove_Stop(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 code;
-  
+  u16 dir = input->dir;
+
   if( dir == DIR_NOT ){
     dir = MMDL_GetDirDisp( mmdl );
   }
@@ -2282,7 +2183,9 @@ static void gjikiCycle_SetMove_Stop(
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_STOP;
   
-  FIELD_PLAYER_CORE_SetMoveValue( gjiki->player_core, PLAYER_MOVE_VALUE_STOP );
+  FIELD_PLAYER_CORE_SetMoveValue(
+      gjiki->player_core, PLAYER_MOVE_VALUE_STOP );
+
 #ifdef PLAYER_MOVE_TRACK_CHANGE
   FIELD_SOUND_ChangeBGMTrackStill();
 #endif
@@ -2300,15 +2203,14 @@ static void gjikiCycle_SetMove_Stop(
  */
 //--------------------------------------------------------------
 static void gjikiCycle_SetMove_Walk(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 code;
   BOOL flat_check = TRUE;
   
-  GF_ASSERT( dir != DIR_NOT );
+  GF_ASSERT( input->dir != DIR_NOT );
   
-  if( debug_flag == TRUE ){
+  if( input->debug_flag == TRUE ){
     code = AC_WALK_U_2F;
     flat_check = FALSE;
   }else{
@@ -2329,19 +2231,21 @@ static void gjikiCycle_SetMove_Walk(
   }
   
   if( flat_check == TRUE ){
-    if( gjiki_CheckNextHeight(gjiki,dir) == GROUND_HEIGHT_UP ){
+    if( gjiki_CheckNextHeight(gjiki,input->dir) == GROUND_HEIGHT_UP ){
       if( code == AC_WALK_U_2F ){
         code = AC_WALK_U_4F;
       }
     }
   }
   
-  code = MMDL_ChangeDirAcmdCode( dir, code );
+  code = MMDL_ChangeDirAcmdCode( input->dir, code );
   
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_WALK;
   
-  FIELD_PLAYER_CORE_SetMoveValue( gjiki->player_core, PLAYER_MOVE_VALUE_WALK );
+  FIELD_PLAYER_CORE_SetMoveValue(
+      gjiki->player_core, PLAYER_MOVE_VALUE_WALK );
+
 #ifdef PLAYER_MOVE_TRACK_CHANGE
   FIELD_SOUND_ChangeBGMTrackAction();
 #endif
@@ -2359,18 +2263,19 @@ static void gjikiCycle_SetMove_Walk(
  */
 //--------------------------------------------------------------
 static void gjikiCycle_SetMove_Turn(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 code;
   
-  GF_ASSERT( dir != DIR_NOT );
-  code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_2F );
+  GF_ASSERT( input->dir != DIR_NOT );
+  code = MMDL_ChangeDirAcmdCode( input->dir, AC_STAY_WALK_U_2F );
   
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_TURN;
   
-  FIELD_PLAYER_CORE_SetMoveValue( gjiki->player_core, PLAYER_MOVE_VALUE_TURN );
+  FIELD_PLAYER_CORE_SetMoveValue(
+      gjiki->player_core, PLAYER_MOVE_VALUE_TURN );
+
 #ifdef PLAYER_MOVE_TRACK_CHANGE
   FIELD_SOUND_ChangeBGMTrackStill();
 #endif
@@ -2388,13 +2293,12 @@ static void gjikiCycle_SetMove_Turn(
  */
 //--------------------------------------------------------------
 static void gjikiCycle_SetMove_Hitch(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 code;
   
-  GF_ASSERT( dir != DIR_NOT );
-  code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_16F );
+  GF_ASSERT( input->dir != DIR_NOT );
+  code = MMDL_ChangeDirAcmdCode( input->dir, AC_STAY_WALK_U_16F );
   
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_HITCH;
@@ -2418,20 +2322,21 @@ static void gjikiCycle_SetMove_Hitch(
  */
 //--------------------------------------------------------------
 static void gjikiCycle_SetMove_Jump(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 code;
   
-  GF_ASSERT( dir != DIR_NOT );
+  GF_ASSERT( input->dir != DIR_NOT );
   
-  code = MMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_2G_16F );
+  code = MMDL_ChangeDirAcmdCode( input->dir, AC_JUMP_U_2G_16F );
   
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_WALK;
   
-  FIELD_PLAYER_CORE_SetMoveValue( gjiki->player_core, PLAYER_MOVE_VALUE_WALK );
+  FIELD_PLAYER_CORE_SetMoveValue(
+      gjiki->player_core, PLAYER_MOVE_VALUE_WALK );
   PMSND_PlaySE( SEQ_SE_DANSA );
+
 #ifdef PLAYER_MOVE_TRACK_CHANGE
   FIELD_SOUND_ChangeBGMTrackAction();
 #endif
@@ -2452,31 +2357,25 @@ static void gjikiCycle_SetMove_Jump(
  */
 //--------------------------------------------------------------
 static void gjiki_SetMove_Swim(
-    FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+    FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set, const INPUTDATA *input )
 {
   MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
 
   switch( set ){
   case JIKI_MOVEORDER_NON:
-    gjikiSwim_SetMove_Non(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjikiSwim_SetMove_Non( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_STOP:
-    gjikiSwim_SetMove_Stop(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjikiSwim_SetMove_Stop( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_WALK:
-    gjikiSwim_SetMove_Walk(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjikiSwim_SetMove_Walk( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_TURN:
-    gjikiSwim_SetMove_Turn(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjikiSwim_SetMove_Turn( gjiki, mmdl, input );
     break;
   case JIKI_MOVEORDER_HITCH:
-    gjikiSwim_SetMove_Hitch(
-      gjiki, mmdl, key_trg, key_cont, dir, debug_flag );
+    gjikiSwim_SetMove_Hitch( gjiki, mmdl, input );
     break;
   default:
     GF_ASSERT( 0 );
@@ -2496,8 +2395,7 @@ static void gjiki_SetMove_Swim(
  */
 //--------------------------------------------------------------
 static void gjikiSwim_SetMove_Non(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
 }
 
@@ -2513,11 +2411,11 @@ static void gjikiSwim_SetMove_Non(
  */
 //--------------------------------------------------------------
 static void gjikiSwim_SetMove_Stop(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 code;
-  
+  u16 dir = input->dir;
+
   if( dir == DIR_NOT ){
     dir = MMDL_GetDirDisp( mmdl );
   }
@@ -2526,7 +2424,8 @@ static void gjikiSwim_SetMove_Stop(
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_STOP;
   
-  FIELD_PLAYER_CORE_SetMoveValue( gjiki->player_core, PLAYER_MOVE_VALUE_STOP );
+  FIELD_PLAYER_CORE_SetMoveValue(
+      gjiki->player_core, PLAYER_MOVE_VALUE_STOP );
 
 #ifdef PLAYER_MOVE_TRACK_CHANGE
   FIELD_SOUND_ChangeBGMTrackStill();
@@ -2545,20 +2444,19 @@ static void gjikiSwim_SetMove_Stop(
  */
 //--------------------------------------------------------------
 static void gjikiSwim_SetMove_Walk(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 code;
   
-  GF_ASSERT( dir != DIR_NOT );
+  GF_ASSERT( input->dir != DIR_NOT );
   
-  if( debug_flag == TRUE ){
+  if( input->debug_flag == TRUE ){
     code = AC_WALK_U_2F;
   }else{
     code = AC_WALK_U_4F;
   }
   
-  code = MMDL_ChangeDirAcmdCode( dir, code );
+  code = MMDL_ChangeDirAcmdCode( input->dir, code );
   
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_WALK;
@@ -2581,18 +2479,19 @@ static void gjikiSwim_SetMove_Walk(
  */
 //--------------------------------------------------------------
 static void gjikiSwim_SetMove_Turn(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 code;
   
-  GF_ASSERT( dir != DIR_NOT );
-  code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_2F );
+  GF_ASSERT( input->dir != DIR_NOT );
+  code = MMDL_ChangeDirAcmdCode( input->dir, AC_STAY_WALK_U_2F );
   
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_TURN;
   
-  FIELD_PLAYER_CORE_SetMoveValue( gjiki->player_core, PLAYER_MOVE_VALUE_TURN );
+  FIELD_PLAYER_CORE_SetMoveValue(
+      gjiki->player_core, PLAYER_MOVE_VALUE_TURN );
+
 #ifdef PLAYER_MOVE_TRACK_CHANGE
   FIELD_SOUND_ChangeBGMTrackStill();
 #endif
@@ -2610,19 +2509,20 @@ static void gjikiSwim_SetMove_Turn(
  */
 //--------------------------------------------------------------
 static void gjikiSwim_SetMove_Hitch(
-  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl,
-  u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
   u16 code;
   
-  GF_ASSERT( dir != DIR_NOT );
-  code = MMDL_ChangeDirAcmdCode( dir, AC_STAY_WALK_U_16F );
+  GF_ASSERT( input->dir != DIR_NOT );
+  code = MMDL_ChangeDirAcmdCode( input->dir, AC_STAY_WALK_U_16F );
   
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_HITCH;
   
-  FIELD_PLAYER_CORE_SetMoveValue( gjiki->player_core, PLAYER_MOVE_VALUE_STOP );
+  FIELD_PLAYER_CORE_SetMoveValue(
+      gjiki->player_core, PLAYER_MOVE_VALUE_STOP );
   PMSND_PlaySE( SEQ_SE_WALL_HIT );
+
 #ifdef PLAYER_MOVE_TRACK_CHANGE
   FIELD_SOUND_ChangeBGMTrackStill();
 #endif

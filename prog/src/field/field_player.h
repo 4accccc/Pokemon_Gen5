@@ -83,6 +83,15 @@ typedef enum
   PLAYER_EVENTBIT_TAKINOBORI = (1<<1), ///<イベント許可 たきのぼり
 }PLAYER_EVENTBIT;
 
+//--------------------------------------------------------------
+/// PLAYER_MOVEBIT
+//--------------------------------------------------------------
+typedef enum
+{
+  PLAYER_MOVEBIT_NON = 0, ///<何もなし
+  PLAYER_MOVEBIT_DASH, ///<ダッシュ可能
+}PLAYER_MOVEBIT;
+
 //======================================================================
 //	struct
 //======================================================================
@@ -217,7 +226,8 @@ extern MMDL * FIELD_PLAYER_GetFrontMMdlEx( const FIELD_PLAYER *fld_player, fx32 
 // GRIDワークのセットアップ
 extern void FIELD_PLAYER_SetUpGrid( FIELD_PLAYER *fld_player, HEAPID heapID );
 // GRIDワークの動作処理
-extern void FIELD_PLAYER_MoveGrid( FIELD_PLAYER *fld_player, int key_trg, int key_cont );
+extern void FIELD_PLAYER_MoveGrid( FIELD_PLAYER *fld_player,
+    int key_trg, int key_cont, PLAYER_MOVEBIT mbit );
 
 //TOOL
 extern void FIELD_PLAYER_GetDirGridPos(

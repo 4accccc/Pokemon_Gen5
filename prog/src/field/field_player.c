@@ -1231,10 +1231,11 @@ void FIELD_PLAYER_SetUpGrid( FIELD_PLAYER *fld_player, HEAPID heapID )
  *	@param	key_cont    ƒRƒ“ƒg
  */
 //-----------------------------------------------------------------------------
-void FIELD_PLAYER_MoveGrid( FIELD_PLAYER *fld_player, int key_trg, int key_cont )
+void FIELD_PLAYER_MoveGrid( FIELD_PLAYER *fld_player,
+    int key_trg, int key_cont, PLAYER_MOVEBIT mbit )
 {
   GF_ASSERT( fld_player->gridwk );
-  FIELD_PLAYER_GRID_Move( fld_player->gridwk, key_trg, key_cont );
+  FIELD_PLAYER_GRID_Move( fld_player->gridwk, key_trg, key_cont, mbit );
 }
 
 
