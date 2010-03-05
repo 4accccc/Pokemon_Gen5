@@ -31,6 +31,7 @@ SUBDIRS	=	wmi \
 			trdata \
 			trmsg \
 			sound \
+			effect_viewer \
 			bag \
 			test_layout \
 			test_graphic\
