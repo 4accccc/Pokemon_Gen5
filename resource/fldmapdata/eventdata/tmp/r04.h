@@ -39,5 +39,6 @@
 #ifndef ZONE_R04_EVB_H
 #define ZONE_R04_EVB_H
 
+#define BGID_R04_SIGN3_01                 0
 
 #endif //ZONE_R04_EVB_H

@@ -50,17 +50,17 @@ EVENT_START		ev_d03r0101_sunglasses_01
 	//じてんしゃ取得済み
 	ELSE
 	
-		//D08のイベント終了後なら
+		//D03R0101博士イベント前なら
 		IF $WK_SCENE_D03R0101 == 0 THEN
 			
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_02 )
 		
-		
+		//D03R0101博士イベント後なら
 		ELSIF $WK_SCENE_D03R0101 == 1 THEN
 		
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_03 )
 		
-		//終了していない場合
+		//それ以外の場合
 		ELSE
 		
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_04 )

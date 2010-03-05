@@ -330,6 +330,7 @@ EVENT_START		ev_pos_d02r0101_stop
 	_BALLOONWIN_CLOSE()
 
 	//自機：押し戻される
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_stay_d )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
 	_OBJ_ANIME_WAIT()
 
@@ -359,7 +360,7 @@ EVENT_END
 //	自機　見る・一歩後ろへ
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_player_back
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_D_16F,1
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
@@ -403,7 +404,6 @@ _ANIME_LABEL	anm_leader_tikaduku6
 	_ANIME_DATA	AC_STAY_WALK_D_16F,1
 	_ANIME_DATA	ACMD_END,0
 
-
 //--------------------------------------------------------------
 //	アーティ　持ち場に戻る
 //--------------------------------------------------------------
@@ -431,6 +431,14 @@ _ANIME_LABEL	anm_leader_modoru5
 	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	共通
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /*  D02R0101	プラズマ団員１	盗難イベントposスクリプト	  */
@@ -469,7 +477,7 @@ EVENT_START		ev_pos_d02r0101_event_02
     _BALLOONWIN_CLOSE()
 
 	//戦闘処理
-	_TRAINER_BTL_SET( TRID_HAKAIM1_14, 0 )
+	_TRAINER_BTL_SET( TRID_HAKAIM1_03, 0 )
 	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -584,8 +592,8 @@ EVENT_START		ev_pos_d02r0101_event_03
     _BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw1_01 , D02R0101_HAKAIW1_01 )
     _BALLOONWIN_CLOSE()
 
-	//【仮】戦闘処理
-	_TRAINER_BTL_SET( TRID_HAKAIM1_06, 0 )
+	//戦闘処理
+	_TRAINER_BTL_SET( TRID_HAKAIM1_14, 0 )
 	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -667,7 +675,7 @@ EVENT_START		ev_pos_d02r0101_event_04
     _BALLOONWIN_OBJMSG( msg_d02r0101_hakaim2_01 , D02R0101_HAKAIM2_01 )
     _BALLOONWIN_CLOSE()
 
-	//【仮】戦闘処理
+	//戦闘処理
 	_TRAINER_BTL_SET( TRID_HAKAIM1_15, 0 )
 	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
@@ -1069,6 +1077,7 @@ _ANIME_LABEL	anm_player_push
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0

@@ -25,6 +25,7 @@ _EVENT_DATA		ev_r04_man2_01
 _EVENT_DATA		ev_r04_woman2_01
 _EVENT_DATA		ev_r04_rival_01
 _EVENT_DATA		ev_pos_r04_rival_01
+_EVENT_DATA		ev_bg_r04_sign3_01
 _EVENT_DATA_END
 
 
@@ -425,3 +426,11 @@ _ANIME_LABEL	anm_rival_leave433
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,8
 	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*	R04		‚¨“¾‚ÈŒfŽ¦”Â									  */
+/**************************************************************/
+EVENT_START  ev_bg_r04_sign3_01
+	_EASY_BGWIN_MSG(msg_r04_sign3_01 , TYPE_INFO)
+EVENT_END
+	
