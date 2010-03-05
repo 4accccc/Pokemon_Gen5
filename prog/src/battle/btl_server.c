@@ -424,7 +424,7 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
   case 0:
     {
       static const BtlRotateDir dirTbl[] = {
-        BTL_ROTATEDIR_STAY,
+//        BTL_ROTATEDIR_STAY,
         BTL_ROTATEDIR_R,
         BTL_ROTATEDIR_L,
       };
