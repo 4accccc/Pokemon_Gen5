@@ -83,12 +83,20 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	ENDIF
 
 	
-	//戦闘後プラズマ団と会話
+	//プラズマ団その場歩き
+	_OBJ_ANIME( R03R0301_HAKAIM_01 , anm_r03r0301_plasma_staystep )
+	_OBJ_ANIME_WAIT()
+	
+	//プラズマ：なぜだ！なぜただしきわれわれが
 	_BALLOONWIN_OBJMSG( msg_r03r0301_hakaim1_02 , R03R0301_HAKAIM_01 )
 	_BALLOONWIN_CLOSE()
+	
+	//ライバル：さすがだね
 	_BALLOONWIN_OBJMSG( msg_r03r0301_black_02 , R03R0301_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
-	_GIZAWIN_OBJMSG_POS( msg_r03r0301_hakaim2_01 , R03R0301_HAKAIM_03 ,WIN_NONE  )
+	
+	//かえす必要はないぜ！
+	_GIZAWIN_OBJMSG_POS( msg_r03r0301_hakaim2_01 , R03R0301_HAKAIM_03 ,POS_DEFAULT  )
 	_GIZAWIN_CLOSE()
 	
 	//第一陣どく
@@ -114,6 +122,7 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_down )
 	_OBJ_ANIME_WAIT()
 	
+	//ライバル：こちらのコンビネーションで
 	_BALLOONWIN_OBJMSG( msg_r03r0301_black_04 , R03R0301_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 	
@@ -183,12 +192,17 @@ EVENT_START   ev_pos_r03r0301_rival_01
 			
 	ENDIF
 	
+	//プラズマ団その場歩き
+	_OBJ_ANIME( R03R0301_HAKAIM_03 , anm_r03r0301_plasma_staystep )
+	_OBJ_ANIME_WAIT()
 	
-	//戦闘終了後会話
+	//プラズマ団：これはただしいことだろ！
 	_BALLOONWIN_OBJMSG( msg_r03r0301_hakaim2_03 , R03R0301_HAKAIM_03 )
 	_BALLOONWIN_CLOSE()
+	//ライバル：どんなりゆうでも
 	_BALLOONWIN_OBJMSG( msg_r03r0301_black_05 , R03R0301_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
+	//プラズマ団：あなたたちのような
 	_BALLOONWIN_OBJMSG( msg_r03r0301_hakaiw1_02 , R03R0301_HAKAIW_01 )
 	_BALLOONWIN_CLOSE()
 	
@@ -198,8 +212,12 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	_BALLOONWIN_OBJMSG( msg_r03r0301_black_06 , R03R0301_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 	
+	//プラズマ団その場歩き
+	_OBJ_ANIME( R03R0301_HAKAIM_01 , anm_r03r0301_plasma_staystep02 )
+	_OBJ_ANIME_WAIT()
+	
 	//プラズマ団：いつか自分の愚かさに気づけ
-	_BALLOONWIN_OBJMSG( msg_r03r0301_hakaim1_03 , R03R0301_HAKAIM_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r03r0301_hakaim1_03 , R03R0301_HAKAIM_01 ,POS_DOWN  )
 	_BALLOONWIN_CLOSE()
 	
 	//暗転プラズマ団OBJ削除
@@ -285,11 +303,11 @@ _ANIME_LABEL	anm_r03r0301_plasma_go1
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03r0301_plasma_go2_01
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	AC_WAIT_16F,1
 	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -297,11 +315,10 @@ _ANIME_LABEL	anm_r03r0301_plasma_go2_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03r0301_plasma_go2_02
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	AC_WAIT_16F,1
 	_ANIME_DATA	AC_WALK_U_8F,3
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -312,6 +329,22 @@ _ANIME_LABEL	anm_r03r0301_plasma_go3
 	_ANIME_DATA	AC_WALK_R_8F,7
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------
+//	プラズマ団その場歩き（右向き
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r03r0301_plasma_staystep
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	プラズマ団その場歩き（下向き
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_r03r0301_plasma_staystep02
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+	
 //--------------------------------------------------------------
 //	主人公「はい」で進むz6
 //--------------------------------------------------------------

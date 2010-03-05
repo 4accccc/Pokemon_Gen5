@@ -16,6 +16,7 @@
 #define R03R0101_BABYBOY1B                 2
 #define R03R0101_WOMAN3_01                 3
 #define R03R0101_BABYGIRL1                 4
+#define R03R0101_WOMAN3_02                 5
 
 #endif //ZONE_R03R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r03r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -19,11 +19,12 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r03r0101_talkobj_middlewoman2
-_EVENT_DATA    ev_r03r0101_talkobj_woman3
-_EVENT_DATA    ev_r03r0101_talkobj_babygirl1
-_EVENT_DATA    ev_r03r0101_talkobj_babyboy1a
-_EVENT_DATA    ev_r03r0101_talkobj_babyboy1b
+_EVENT_DATA    ev_r03r0101_middlewoman2
+_EVENT_DATA    ev_r03r0101_woman3
+_EVENT_DATA    ev_r03r0101_babygirl1
+_EVENT_DATA    ev_r03r0101_babyboy1a
+_EVENT_DATA    ev_r03r0101_babyboy1b
+_EVENT_DATA    ev_r03r0101_woman3_02
 _EVENT_DATA_END
 
 
@@ -36,14 +37,14 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  R03R0101 MIDDLEWOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_r03r0101_talkobj_middlewoman2
+EVENT_START   ev_r03r0101_middlewoman2
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03r0101_middlewoman2_01)
 EVENT_END
 
 /**************************************************************/
 /*  R03R0101 WOMAN3の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_r03r0101_talkobj_woman3
+EVENT_START   ev_r03r0101_woman3
 	_TALK_OBJ_START()
 	
 	//ダブルバトル質問
@@ -64,21 +65,79 @@ EVENT_END
 /**************************************************************/
 /*  R03R0101 BABYGIRL1の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_r03r0101_talkobj_babygirl1
+EVENT_START   ev_r03r0101_babygirl1
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03r0101_babygirl1_01)
 EVENT_END
 
 /**************************************************************/
 /*  R03R0101 BABYBOY1の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_r03r0101_talkobj_babyboy1a
+EVENT_START   ev_r03r0101_babyboy1a
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03r0101_babyboy1a_01)
 EVENT_END
 
 /**************************************************************/
 /*  R03R0101 BABYBOY1の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_r03r0101_talkobj_babyboy1b
+EVENT_START   ev_r03r0101_babyboy1b
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03r0101_babyboy1b_01)
 EVENT_END
 
+/**************************************************************/
+/*  R03R0101 WOMAN3（回復処理）*/
+/**************************************************************/
+EVENT_START   ev_r03r0101_woman3_02
+	_TALK_OBJ_START()
+	
+	//手持ちポケモンカウント
+	DEFINE_LOCAL LCW_POKECOUNT
+	_GET_PARTY_POKE_COUNT( LCW_POKECOUNT , POKECOUNT_MODE_NOT_EGG )
+	
+	//カウント変数定義
+	DEFINE_LOCAL LCW_COUNTER
+	$LCW_COUNTER = 0
+	//HPチェック変数定義
+	DEFINE_LOCAL LCW_HP
+	//HP減り匹数チェック変定義
+	DEFINE_LOCAL LCW_MINUS_POKE
+	$LCW_MINUS_POKE = 0
+	
+	//全手持ちポケモンのHPチェック
+	WHILE $LCW_POKECOUNT > $LCW_COUNTER
+	
+		_CHECK_TEMOTI_HP  ( LCW_HP,LCW_COUNTER )
+		
+		IF $LCW_HP == FALSE THEN
+			//体力が減っているポケモン匹数にプラス
+			$LCW_MINUS_POKE += 1
+		ENDIF
+		
+		//カウントアップ
+		$LCW_COUNTER += 1
+	ENDWHILE
+	
+	//体力の減ったポケモンが１匹以上いる
+	IF $LCW_MINUS_POKE >= 1 THEN
+	
+		//やすんでいきなさい
+		_BALLOONWIN_OBJMSG( msg_r03r0101_woman3a_02,R03R0101_WOMAN3_02 )
+		_BALLOONWIN_CLOSE()
+		
+		//暗転して手持ちポケモンを回復
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		_TEMOTI_POKEMON_KAIFUKU()		//回復処理
+		_ME_PLAY( SEQ_ME_ASA )
+		_ME_WAIT()
+		_BLACK_IN()
+		_DISP_FADE_END_CHECK()
+	
+	//体力の減ったポケモンはいない
+	ELSE
+		
+		//元気ね
+		_BALLOONWIN_OBJMSG( msg_r03r0101_woman3a_01,R03R0101_WOMAN3_02 )
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+EVENT_END

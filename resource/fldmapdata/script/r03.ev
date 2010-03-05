@@ -39,6 +39,8 @@ _EVENT_DATA    ev_pos_r03_futago_01
 _EVENT_DATA    ev_r03_rival_03
 _EVENT_DATA    ev_pos_r03_sodateya_egg		//タマゴ発見を教えてくれるPOSイベント
 _EVENT_DATA    ev_r03_futago_02
+_EVENT_DATA    ev_r03_futago_03
+_EVENT_DATA    ev_pos_r03_support_04
 _EVENT_DATA_END
 
 /************************************************************/
@@ -51,8 +53,8 @@ INIT_EVENT_START	ev_init_r03
 	
 	//クリア時
 	IF $WK_SCENE_R03_PLASMA == 4 THEN
-		_OBJ_POS_CHANGE( R03_SUPPORT_01, 715, 0, 566, DIR_UP )
-		_OBJ_POS_CHANGE( R03_BABYGIRL_02, 717, 0, 566, DIR_UP )
+		_OBJ_POS_CHANGE( R03_SUPPORT_01, 715, 0, 566, DIR_RIGHT )
+		_OBJ_POS_CHANGE( R03_BABYGIRL_02, 717, 0, 566, DIR_LEFT )
 	
 	//初期状態
 	ELSIF $WK_SCENE_R03_PLASMA == 0 THEN
@@ -89,24 +91,109 @@ EVENT_START   ev_pos_r03_futago_01
 		_OBJ_ANIME_WAIT()
 	
 	ELSE
-	
-		//======================================//
+		//「！」
+		_OBJ_ANIME( R03_FUTAGO_01, anm_babygirl1_trainer_gyoe )
+		_OBJ_ANIME( R03_FUTAGO_01_2, anm_babygirl1_trainer_gyoe )
+		_OBJ_ANIME_WAIT()
 		
-		//***フラグ操作：R03の長い草イベントを有効に***
-		$WK_SCENE_R03 = 1
+		//視線！ふたごちゃん
+		_TRAINER_BGM_SET( TRID_FUTAGO_01 )
 		
-		//======================================//
+		{
+		//主人公の座標を見て移動
+		DEFINE_LOCAL  LCW_POSX
+	    DEFINE_LOCAL  LCW_POSZ
+	    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+	    
+	    //プレイヤーが通る4グリッド分を用意
+	    SWITCH $LCW_POSZ
+		CASE 563 THEN
+		_OBJ_ANIME( R03_FUTAGO_01, anm_babygirl1_trainer_down_z563 )
+		_OBJ_ANIME( R03_FUTAGO_01_2, anm_babygirl1_trainer_down_z563 )
+		_OBJ_ANIME_WAIT()
+		
+		CASE 564 THEN
+		_OBJ_ANIME( R03_FUTAGO_01, anm_babygirl1_trainer_down_z564 )
+		_OBJ_ANIME( R03_FUTAGO_01_2, anm_babygirl1_trainer_down_z564 )
+		_OBJ_ANIME_WAIT()
+		
+		CASE 565 THEN
+		_OBJ_ANIME( R03_FUTAGO_01, anm_babygirl1_trainer_down_z565 )
+		_OBJ_ANIME( R03_FUTAGO_01_2, anm_babygirl1_trainer_down_z565 )
+		_OBJ_ANIME_WAIT()
+		
+	    DEFAULT //正面に立った時と同じ処理
+	    _OBJ_ANIME( R03_FUTAGO_01, anm_babygirl1_trainer_down_z563 )
+		_OBJ_ANIME( R03_FUTAGO_01_2, anm_babygirl1_trainer_down_z563 )
+		_OBJ_ANIME_WAIT()
+		
+	    ENDSWITCH
+		}
+		
+		//戦闘処理呼び出し
+		_CALL ev_r03_futago_batlle
 	
 	ENDIF
 
 EVENT_END
 
 /**************************************************************/
-/*  R03 ふたごちゃん話しかけダブルバトル*/
+/*  R03 ふたごちゃん話しかけ（右）*/
 /**************************************************************/
 EVENT_START   ev_r03_futago_02
 	
-	_TALK_OBJ_START()
+	//手持ちポケモンカウント
+	DEFINE_LOCAL LCW_POKECOUNT02
+	_GET_PARTY_POKE_COUNT( LCW_POKECOUNT02 , POKECOUNT_MODE_BATTLE_ENABLE )
+	
+	//戦えるポケモンが１匹しかいない
+	IF $LCW_POKECOUNT02 < 2 THEN
+		
+		_TALK_OBJ_START()
+			
+		_OBJ_ANIME(R03_FUTAGO_01,anm_babygirl1_stop_01)
+		_OBJ_ANIME_WAIT()
+		
+		_BALLOONWIN_OBJMSG(msg_r03_futago_02,R03_FUTAGO_01)
+		_BALLOONWIN_CLOSE()
+		
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_stoper_player_return01)
+		_OBJ_ANIME_WAIT()
+	
+	//既に戦闘した
+	ELSIF $WK_SCENE_R03 == 1 THEN
+		//負け台詞
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03_futago_04 )
+
+	//ポケモンが２匹以上で戦闘もしていない
+	ELSE
+		
+		_TALK_OBJ_START()
+		
+		//「！」
+		_OBJ_ANIME( R03_FUTAGO_01, anm_babygirl1_trainer_gyoe )
+		_OBJ_ANIME( R03_FUTAGO_01_2, anm_babygirl1_trainer_gyoe )
+		_OBJ_ANIME_WAIT()
+		
+		//視線！ふたごちゃん
+		_TRAINER_BGM_SET( TRID_FUTAGO_01 )
+		
+		//戦闘処理呼び出し
+		_CALL ev_r03_futago_batlle
+	
+	ENDIF
+
+
+EVENT_END
+
+/**************************************************************/
+/*CALL：ふたごちゃん戦闘処理                               */
+/**************************************************************/
+ev_r03_futago_batlle:
+
+//ふたごちゃん：あたしたち
+	_BALLOONWIN_OBJMSG(msg_r03_futago_03,R03_FUTAGO_01)
+	_BALLOONWIN_CLOSE()
 	
 	//戦闘処理
 	_TRAINER_BTL_SET( TRID_FUTAGO_01, 0 )
@@ -118,6 +205,21 @@ EVENT_START   ev_r03_futago_02
 		_TRAINER_LOSE()
 	ENDIF
 
+	//======================================//
+		
+	//***フラグ操作：R03の長い草イベントを有効に***
+	$WK_SCENE_R03 = 1
+	
+	//======================================//
+
+_RET
+
+/**************************************************************/
+/*  R03 ふたごちゃん話しかけ（左）*/
+/**************************************************************/
+EVENT_START   ev_r03_futago_03
+	//ふたごちゃん負け台詞
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03_futago_05 )
 EVENT_END
 
 //--------------------------------------------------------------
@@ -135,6 +237,38 @@ _ANIME_LABEL	 anm_babygirl1_stop_01
 
 _ANIME_LABEL	 anm_stoper_player_return01
 	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ふたごちゃん「！」
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_babygirl1_trainer_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ふたごちゃん：Z563移動
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_babygirl1_trainer_down_z563
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ふたごちゃん：Z564移動
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_babygirl1_trainer_down_z564
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ふたごちゃん：Z565移動
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_babygirl1_trainer_down_z565
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -168,6 +302,7 @@ EVENT_START   ev_pos_r03_rival_01
 	_BALLOONWIN_OBJMSG(msg_r03_black_01,R03_RIVAL_01)
 	_BALLOONWIN_CLOSE()
 	
+	{
 	//自機座標取得
 	DEFINE_LOCAL  LCW_POSX
     DEFINE_LOCAL  LCW_POSZ
@@ -200,6 +335,8 @@ EVENT_START   ev_pos_r03_rival_01
 	_OBJ_ANIME_WAIT()
 	
     ENDSWITCH
+    
+    }
 	
 	//ライバル隣接
 	_OBJ_ANIME(R03_RIVAL_01,anm_rival_01_02)
@@ -512,22 +649,28 @@ ev_r03_rival_stoper:
 _RET
 
 /**************************************************************/
-/*  R03 R03R0301イベント終了後POSでお礼イベント*/
+/*  R03 R03R0301イベント終了後POSでお礼イベント（目の前時）*/
 /**************************************************************/
 EVENT_START   ev_pos_r03_support_03
+	
+	//サポートとBABYGIRL主人公に気づく
+	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_sense_02 )
+	_OBJ_ANIME( R03_BABYGIRL_02 , anm_support_sense_02 )
+	_OBJ_ANIME_WAIT()
 
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 
 	//主人公下を向く
 	
+	{
 	//自機座標取得
-	DEFINE_LOCAL  LCW_POSX02
-    DEFINE_LOCAL  LCW_POSZ02
-    _PLAYER_POS_GET( LCW_POSX02,LCW_POSZ02 ) 
+	DEFINE_LOCAL  LCW_POSX
+    DEFINE_LOCAL  LCW_POSZ
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
     
     //プレイヤーが通る3グリッド分を用意
-    SWITCH $LCW_POSX02
+    SWITCH $LCW_POSX
 	CASE 715 THEN
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_goodbye_x715 )
 	_OBJ_ANIME_WAIT()
@@ -545,7 +688,133 @@ EVENT_START   ev_pos_r03_support_03
 	_OBJ_ANIME_WAIT()
 	
     ENDSWITCH
+    
+    }
+    
+    //お礼イベント呼び出し
+    _CALL ev_r03_babygirl_thanks
+	
+EVENT_END
 
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：サポートとBABYGIRL主人公に気づく
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_support_sense_02
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：主人公真ん中にx715
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_player_goodbye_x715
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：主人公真ん中にx717
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_player_goodbye_x717
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*  R03 R03R0301イベント終了後POSでお礼イベント（通り過ぎ時）*/
+/**************************************************************/
+EVENT_START   ev_pos_r03_support_04
+	
+	//サポートとBABYGIRL主人公に気づく
+	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_sense_02 )
+	_OBJ_ANIME( R03_BABYGIRL_02 , anm_support_sense_02 )
+	_OBJ_ANIME_WAIT()
+
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+
+	//ローカル変数定義
+	{
+	
+	//自機座標取得
+	DEFINE_LOCAL  LCW_POSX
+    DEFINE_LOCAL  LCW_POSZ
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+    
+    //プレイヤーが通る3グリッド分を用意
+    SWITCH $LCW_POSZ
+	CASE 562 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_babygirl_z562 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 563 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_player_to_babygirl_z563 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 564 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_babygirl_z564 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 565 THEN	//デフォルト処理
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_babygirl_z565 )
+	_OBJ_ANIME_WAIT()
+	
+    DEFAULT
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_to_babygirl_z565 )
+	_OBJ_ANIME_WAIT()
+	
+    ENDSWITCH
+    
+    }
+    
+    //お礼イベント呼び出し
+    _CALL ev_r03_babygirl_thanks
+	
+EVENT_END
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：主人公真ん中にz562
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_player_to_babygirl_z562
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：主人公真ん中にz563
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_player_to_babygirl_z563
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：主人公真ん中にz564
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_player_to_babygirl_z564
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：主人公真ん中にz565
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_player_to_babygirl_z565
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+/************************************************************/
+/*				お礼処理             */
+/************************************************************/
+ev_r03_babygirl_thanks:
 
 	_BALLOONWIN_OBJMSG( msg_r03_white_07 , R03_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
@@ -599,26 +868,8 @@ EVENT_START   ev_pos_r03_support_03
 	$WK_SCENE_R03_PLASMA = 5
 	
 	//======================================//
-	
-EVENT_END
 
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：主人公真ん中にx715
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_player_goodbye_x715
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：主人公真ん中にx717
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_player_goodbye_x717
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,0
-	_ANIME_DATA	ACMD_END,0
+_RET
 
 //--------------------------------------------------------------
 //	ポケモン誘拐イベント：BABYGIRLからギフト
@@ -813,7 +1064,7 @@ _ANIME_LABEL	anm_rival_01_02
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_hakai_bikkuri_rival
-	_ANIME_DATA	AC_WAIT_15F,1
+	_ANIME_DATA	AC_MARK_HATENA,0
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_D_8F,2
@@ -825,7 +1076,7 @@ _ANIME_LABEL	anm_hakai_bikkuri_rival
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_hakai_bikkuri_player
-	_ANIME_DATA	AC_WAIT_15F,1
+	_ANIME_DATA	AC_MARK_HATENA,0
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_U_8F,1
@@ -838,7 +1089,7 @@ _ANIME_LABEL	anm_hakai_bikkuri_player
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_hakai_dash_01
-	_ANIME_DATA	AC_WALK_L_4F,18
+	_ANIME_DATA	AC_WALK_L_8F,18
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -873,7 +1124,7 @@ _ANIME_LABEL	anm_rival_01_stop_right
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_support_01
-		_ANIME_DATA	AC_WALK_L_4F,7
+		_ANIME_DATA	AC_WALK_L_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -881,7 +1132,7 @@ _ANIME_LABEL	 anm_support_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_babygirl_01
-		_ANIME_DATA	AC_WALK_L_8F,7
+		_ANIME_DATA	AC_WALK_L_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -956,7 +1207,7 @@ _ANIME_LABEL	anm_rival_01_06_down
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_rival_go01
-	_ANIME_DATA	AC_WALK_L_4F,10
+	_ANIME_DATA	AC_WALK_L_8F,10
 	_ANIME_DATA	ACMD_END,0
 
 
