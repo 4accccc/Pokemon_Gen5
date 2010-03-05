@@ -7,6 +7,7 @@
  */
 ///////////////////////////////////////////////////////////////////////////////// 
 #include <gflib.h>
+#include "palette_anime.h"
 #include "research_common.h"
 #include "research_common_def.h"
 #include "research_common_data.cdat"
@@ -29,6 +30,9 @@ struct _RESEARCH_COMMON_WORK
 
   // タッチ範囲
   GFL_UI_TP_HITTBL touchHitTable[ COMMON_TOUCH_AREA_NUM ]; 
+  
+  // パレットアニメーション
+  PALETTE_ANIME* paletteAnime[ COMMON_PALETTE_ANIME_NUM ];
 
   // OBJ
   u32         OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_NUM ]; // 共通リソースの登録インデックス
@@ -69,6 +73,16 @@ static void CreatePaletteFadeSystem( RESEARCH_COMMON_WORK* work ); // パレットフ
 static void DeletePaletteFadeSystem( RESEARCH_COMMON_WORK* work ); // パレットフェードシステムを破棄する
 static void SetupPaletteFadeSystem( RESEARCH_COMMON_WORK* work ); // パレットフェードシステムをセットアップする
 static void CleanUpPaletteFadeSystem( RESEARCH_COMMON_WORK* work ); // パレットフェードシステムをクリーンアップする
+// パレットアニメーション
+static void InitPaletteAnime( RESEARCH_COMMON_WORK* work ); // パレットアニメーションワークを初期化する
+static void CreatePaletteAnime( RESEARCH_COMMON_WORK* work ); // パレットアニメーションワークを生成する
+static void DeletePaletteAnime( RESEARCH_COMMON_WORK* work ); // パレットアニメーションワークを破棄する
+static void SetupPaletteAnime( RESEARCH_COMMON_WORK* work ); // パレットアニメーションワークをセットアップする
+static void CleanUpPaletteAnime( RESEARCH_COMMON_WORK* work ); // パレットアニメーションワークをクリーンアップする
+static void StartPaletteAnime( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index ); // パレットアニメーションを開始する
+static void StopPaletteAnime( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index ); // パレットアニメーションを停止する
+static void ResetPalette( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index  ); // パレットをアニメ開始時の状態にリセットする
+static void UpdatePaletteAnime( RESEARCH_COMMON_WORK* work ); // パレットアニメーションを更新する
 // タッチ範囲
 static void SetupTouchArea( RESEARCH_COMMON_WORK* work ); // タッチ範囲をセットアップする
 
@@ -253,6 +267,94 @@ const GFL_UI_TP_HITTBL* RESEARCH_COMMON_GetHitTable( const RESEARCH_COMMON_WORK*
   return work->touchHitTable;
 }
 
+//-------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションを更新する
+ *
+ * @param work
+ */
+//-------------------------------------------------------------------------------
+void RESEARCH_COMMON_UpdatePaletteAnime( RESEARCH_COMMON_WORK* work )
+{
+  UpdatePaletteAnime( work );
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションを開始する
+ *
+ * @param work
+ * @param index 開始するアニメーション
+ */
+//-------------------------------------------------------------------------------
+void RESEARCH_COMMON_StartPaletteAnime( 
+    RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
+{
+  StartPaletteAnime( work, index );
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションを停止する ( 個別指定 ) 
+ *
+ * @param work
+ * @param index 停止するアニメーション
+ */
+//-------------------------------------------------------------------------------
+void RESEARCH_COMMON_StopPaletteAnime( 
+    RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
+{ 
+  StopPaletteAnime( work, index );
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションを停止する ( 全指定 ) 
+ *
+ * @param work
+ */
+//-------------------------------------------------------------------------------
+void RESEARCH_COMMON_StopAllPaletteAnime( RESEARCH_COMMON_WORK* work )
+{ 
+  int idx;
+
+  for( idx=0; idx < COMMON_PALETTE_ANIME_NUM; idx++ )
+  { 
+    StopPaletteAnime( work, idx );
+  }
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメで操作したパレットをリセットする ( 個別指定 )
+ *
+ * @param work
+ * @param index リセット対象のアニメーション
+ */
+//-------------------------------------------------------------------------------
+void RESEARCH_COMMON_ResetPalette(
+    RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
+{
+  ResetPalette( work, index );
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメで操作したパレットをリセットする ( 全指定 )
+ *
+ * @param work
+ */
+//-------------------------------------------------------------------------------
+void RESEARCH_COMMON_ResetAllPalette( RESEARCH_COMMON_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < COMMON_PALETTE_ANIME_NUM; idx++ )
+  { 
+    ResetPalette( work, idx );
+  }
+}
+
 
 
 
@@ -276,6 +378,7 @@ static void InitCommonWork( RESEARCH_COMMON_WORK* work )
   InitClactUnits( work );
   InitClactWorks( work );
   InitPaletteFadeSystem( work );
+  InitPaletteAnime( work );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: init common work\n" );
@@ -339,6 +442,8 @@ static void SetupCommonWork( RESEARCH_COMMON_WORK* work, GAMESYS_WORK* gameSyste
   CreatePaletteFadeSystem( work ); // パレット管理システムをk生成
   SetupPaletteFadeSystem( work );  // パレット管理システムをセットアップ
   SetupTouchArea( work );          // タッチ範囲をセットアップ
+  CreatePaletteAnime( work );      // パレットアニメーションワークを生成
+  SetupPaletteAnime( work );       // パレットアニメーションワークをセットアップ
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: setup common work\n" );
@@ -353,6 +458,8 @@ static void SetupCommonWork( RESEARCH_COMMON_WORK* work, GAMESYS_WORK* gameSyste
 //-------------------------------------------------------------------------------
 static void CleanUpCommonWork( RESEARCH_COMMON_WORK* work )
 {
+  CleanUpPaletteAnime( work );      // パレットアニメーションワークをクリーンアップ
+  DeletePaletteAnime( work );       // パレットアニメーションワークを破棄
   CleanUpPaletteFadeSystem( work ); // パレット管理システムをクリーンアップ
   DeletePaletteFadeSystem( work );  // パレット管理システムを破棄
   DeleteClactWorks( work );         // セルアクターワークを破棄
@@ -427,7 +534,7 @@ static void RegisterOBJResources( RESEARCH_COMMON_WORK* work )
 {
   HEAPID heapID;
   ARCHANDLE* arcHandle;
-  u32 character, palette, cellAnime;
+  u32 character, iconPalette, cellAnime;
 
   heapID    = work->heapID;
   arcHandle = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, heapID );
@@ -437,7 +544,8 @@ static void RegisterOBJResources( RESEARCH_COMMON_WORK* work )
                                       NARC_app_menu_common_bar_button_128k_NCGR, 
                                       FALSE, CLSYS_DRAW_MAIN, heapID ); 
 
-  palette = GFL_CLGRP_PLTT_RegisterEx( arcHandle, 
+  // 共通素材 ( アイコン ) のパレット
+  iconPalette = GFL_CLGRP_PLTT_RegisterEx( arcHandle, 
                                        NARC_app_menu_common_bar_button_NCLR,
                                        CLSYS_DRAW_MAIN, 
                                        ONE_PALETTE_SIZE*0, 0, 4, 
@@ -448,9 +556,9 @@ static void RegisterOBJResources( RESEARCH_COMMON_WORK* work )
                                            NARC_app_menu_common_bar_button_32k_NANR,
                                            heapID ); 
   // 登録インデックスを記憶
-  work->OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_MAIN_CHARACTER ]  = character;
-  work->OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_MAIN_PALETTE ]    = palette;
-  work->OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_MAIN_CELL_ANIME ] = cellAnime;
+  work->OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_MAIN_CHARACTER ]      = character;
+  work->OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_MAIN_PALETTE_ICON ]   = iconPalette;
+  work->OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_MAIN_CELL_ANIME ]     = cellAnime;
 
   GFL_ARC_CloseDataHandle( arcHandle );
 
@@ -468,7 +576,7 @@ static void RegisterOBJResources( RESEARCH_COMMON_WORK* work )
 static void ReleaseOBJResources( RESEARCH_COMMON_WORK* work )
 {
   GFL_CLGRP_CGR_Release     ( work->OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_MAIN_CHARACTER ] );
-  GFL_CLGRP_PLTT_Release    ( work->OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_MAIN_PALETTE ] );
+  GFL_CLGRP_PLTT_Release    ( work->OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_MAIN_PALETTE_ICON ] );
   GFL_CLGRP_CELLANIM_Release( work->OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_MAIN_CELL_ANIME ] );
 
   // DEBUG:
@@ -734,6 +842,186 @@ static void CleanUpPaletteFadeSystem( RESEARCH_COMMON_WORK* work )
 
   // DEBUG;
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: clean up palette fade system\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションワークを初期化する
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void InitPaletteAnime( RESEARCH_COMMON_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < COMMON_PALETTE_ANIME_NUM; idx++ )
+  {
+    work->paletteAnime[ idx ] = NULL;
+  }
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: init palette anime\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションワークを生成する
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void CreatePaletteAnime( RESEARCH_COMMON_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < COMMON_PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] == NULL ); // 多重生成
+
+    work->paletteAnime[ idx ] = PALETTE_ANIME_Create( work->heapID );
+  }
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: create palette anime\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションワークを破棄する
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void DeletePaletteAnime( RESEARCH_COMMON_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < COMMON_PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    PALETTE_ANIME_Delete( work->paletteAnime[ idx ] );
+  }
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: delete palette anime\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションワークをセットアップする
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void SetupPaletteAnime( RESEARCH_COMMON_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < COMMON_PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    PALETTE_ANIME_Setup( work->paletteAnime[ idx ],
+                         CommonPaletteAnimeData[ idx ].destAdrs,
+                         CommonPaletteAnimeData[ idx ].srcAdrs,
+                         CommonPaletteAnimeData[ idx ].colorNum);
+  }
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: setup palette anime\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションワークをクリーンアップする
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void CleanUpPaletteAnime( RESEARCH_COMMON_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < COMMON_PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    // 操作していたパレットを元に戻す
+    PALETTE_ANIME_Reset( work->paletteAnime[ idx ] );
+  }
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: clean up palette anime\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションを開始する
+ *
+ * @param work
+ * @param index 開始するアニメーション
+ */
+//----------------------------------------------------------------------------------------------
+static void StartPaletteAnime( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
+{
+  PALETTE_ANIME_Start( work->paletteAnime[ index ], 
+                       CommonPaletteAnimeData[ index ].animeType,
+                       CommonPaletteAnimeData[ index ].fadeColor );
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: start palette anime [%d]\n", index );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションを停止する
+ *
+ * @param work
+ * @param index 停止するアニメーション
+ */
+//----------------------------------------------------------------------------------------------
+static void StopPaletteAnime( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
+{
+  PALETTE_ANIME_Stop( work->paletteAnime[ index ] );
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: stop palette anime [%d]\n", index );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief パレットをアニメ開始時の状態にリセットする
+ *
+ * @param work
+ * @param index リセット対象のアニメーション
+ */
+//----------------------------------------------------------------------------------------------
+static void ResetPalette( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
+{ 
+  PALETTE_ANIME_Reset( work->paletteAnime[ index ] );
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: reset palette [%d]\n", index );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションを更新する
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void UpdatePaletteAnime( RESEARCH_COMMON_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < COMMON_PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    PALETTE_ANIME_Update( work->paletteAnime[ idx ] );
+  }
 }
 
 //-------------------------------------------------------------------------------

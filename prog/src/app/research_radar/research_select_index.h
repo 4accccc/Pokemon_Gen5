@@ -79,11 +79,21 @@ typedef enum {
   OBJ_RESOURCE_MAIN_CHARACTER,  // MAIN-OBJ キャラクタ
   OBJ_RESOURCE_MAIN_PALETTE,    // MAIN-OBJ パレット
   OBJ_RESOURCE_MAIN_CELL_ANIME, // MAIN-OBJ セル アニメ
+  OBJ_RESOURCE_MAIN_PALETTE_COMMON_BUTTON, // MAIN-OBJ パレット
   OBJ_RESOURCE_SUB_CHARACTER,   // SUB-OBJ  キャラクタ
   OBJ_RESOURCE_SUB_PALETTE,     // SUB-OBJ  パレット
   OBJ_RESOURCE_SUB_CELL_ANIME,  // SUB-OBJ  セル アニメ
   OBJ_RESOURCE_NUM,             // 総数
 } OBJ_RESOURCE_ID;
+
+// パレットアニメーション
+typedef enum {
+  PALETTE_ANIME_TOPIC_CURSOR_ON,   // 調査項目カーソルON
+  PALETTE_ANIME_TOPIC_SELECT,      // 調査項目選択リアクション
+  PALETTE_ANIME_MENU_CURSOR_ON, // メニュー項目カーソルON
+  PALETTE_ANIME_MENU_SELECT,    // メニュー項目選択リアクション
+  PALETTE_ANIME_NUM,               // 総数
+} PALETTE_ANIME_INDEX;
 
 // セルアクターユニット
 typedef enum {

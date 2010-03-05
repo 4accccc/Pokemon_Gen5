@@ -1,14 +1,15 @@
-////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 /**
  * @brief  調査レーダー 初期画面 ( メニュー画面 )
  * @file   research_menu.c
  * @author obata
  * @date   2010.02.03
  */
-////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 #include <gflib.h>
 #include "bg_font.h"
 #include "queue.h"
+#include "palette_anime.h"
 #include "research_menu.h"
 #include "research_menu_index.h"
 #include "research_menu_def.h"
@@ -32,9 +33,9 @@
 #include "obj_NANR_LBLDEFS.h"               // for NANR_obj_xxxx
 
 
-//==============================================================================================
+//====================================================================================
 // ■調査初期画面 ワーク
-//==============================================================================================
+//====================================================================================
 struct _RESEARCH_MENU_WORK
 { 
   RESEARCH_COMMON_WORK* commonWork; // 全画面共通ワーク
@@ -57,6 +58,9 @@ struct _RESEARCH_MENU_WORK
   // タッチ領域
   GFL_UI_TP_HITTBL touchHitTable[ TOUCH_AREA_NUM ];
 
+  // パレットアニメーション
+  PALETTE_ANIME* paletteAnime[ PALETTE_ANIME_NUM ];
+
   // 文字列描画オブジェクト
   BG_FONT* BGFont[ BG_FONT_NUM ];
 
@@ -67,9 +71,9 @@ struct _RESEARCH_MENU_WORK
 };
 
 
-//==============================================================================================
+//====================================================================================
 // ■非公開関数
-//==============================================================================================
+//====================================================================================
 // シーケンス処理
 static void Main_SETUP   ( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_SETUP
 static void Main_STAND_BY( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_STAND_BY
@@ -101,6 +105,9 @@ static void CheckNewEntry( RESEARCH_MENU_WORK* work );
 // カーソル移動
 static void MoveCursorUp  ( RESEARCH_MENU_WORK* work );
 static void MoveCursorDown( RESEARCH_MENU_WORK* work );
+static void MoveCursorDirect( RESEARCH_MENU_WORK* work, MENU_ITEM menuItem );
+static void ShiftCursorPos( RESEARCH_MENU_WORK* work, int offset );
+static void SetCursorPos( RESEARCH_MENU_WORK* work, MENU_ITEM menuItem );
 
 // フォント
 static void InitFont  ( RESEARCH_MENU_WORK* work );
@@ -163,6 +170,15 @@ static void DeleteClactWorks( RESEARCH_MENU_WORK* work );
 static u32 GetObjResourceRegisterIndex( const RESEARCH_MENU_WORK* work, OBJ_RESOURCE_ID resID );
 static GFL_CLUNIT* GetClactUnit( const RESEARCH_MENU_WORK* work, CLUNIT_INDEX unitIdx );
 static GFL_CLWK*   GetClactWork( const RESEARCH_MENU_WORK* work, CLWK_INDEX wkIdx );
+// パレットアニメーション
+static void InitPaletteAnime( RESEARCH_MENU_WORK* work );
+static void CreatePaletteAnime( RESEARCH_MENU_WORK* work );
+static void DeletePaletteAnime( RESEARCH_MENU_WORK* work );
+static void SetupPaletteAnime( RESEARCH_MENU_WORK* work );
+static void CleanUpPaletteAnime( RESEARCH_MENU_WORK* work );
+static void StartPaletteAnime( RESEARCH_MENU_WORK* work, PALETTE_ANIME_INDEX index );
+static void StopPaletteAnime( RESEARCH_MENU_WORK* work, PALETTE_ANIME_INDEX index );
+static void UpdatePaletteAnime( RESEARCH_MENU_WORK* work );
 
 // "new" アイコン
 static void NewIconDispOn ( const RESEARCH_MENU_WORK* work );
@@ -172,11 +188,11 @@ static void NewIconDispOff( const RESEARCH_MENU_WORK* work );
 static void DebugPrint_seqQueue( const RESEARCH_MENU_WORK* work );
 
 
-//==============================================================================================
+//====================================================================================
 // □調査初期画面 制御関数
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 調査初期画面ワークの生成
  *
@@ -184,7 +200,7 @@ static void DebugPrint_seqQueue( const RESEARCH_MENU_WORK* work );
  *
  * @return 調査初期画面ワーク
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 RESEARCH_MENU_WORK* CreateResearchMenuWork( RESEARCH_COMMON_WORK* commonWork )
 {
   int i;
@@ -215,6 +231,7 @@ RESEARCH_MENU_WORK* CreateResearchMenuWork( RESEARCH_COMMON_WORK* commonWork )
   InitBGFonts( work );
   InitClactUnits( work );
   InitClactWorks( work );
+  InitPaletteAnime( work );
 
   CreateSeqQueue( work );
 
@@ -224,20 +241,20 @@ RESEARCH_MENU_WORK* CreateResearchMenuWork( RESEARCH_COMMON_WORK* commonWork )
   return work;
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 調査初期画面ワークの破棄
  *
  * @param heapID
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 void DeleteResearchMenuWork( RESEARCH_MENU_WORK* work )
 {
-  if( work == NULL )
-  {
+  if( work == NULL ) {
     GF_ASSERT(0);
     return;
   }
+
   DeleteSeqQueue( work ); // シーケンスキュー
   GFL_HEAP_FreeMemory( work );
 
@@ -245,54 +262,49 @@ void DeleteResearchMenuWork( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: delete work\n" );
 } 
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 調査初期画面 メイン動作
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 RESEARCH_MENU_RESULT ResearchMenuMain( RESEARCH_MENU_WORK* work )
 {
   // シーケンスごとの処理
-  switch( work->seq )
-  {
-  case RESEARCH_MENU_SEQ_SETUP:     Main_SETUP   ( work );  break;
-  case RESEARCH_MENU_SEQ_STAND_BY:  Main_STAND_BY( work );  break;
-  case RESEARCH_MENU_SEQ_KEY_WAIT:  Main_KEY_WAIT( work );  break;
-  case RESEARCH_MENU_SEQ_FADE_OUT:  Main_FADE_OUT( work );  break;
-  case RESEARCH_MENU_SEQ_CLEAN_UP:  Main_CLEAN_UP( work );  break;
-  case RESEARCH_MENU_SEQ_FINISH:    return work->result;
+  switch( work->seq ) {
+  case RESEARCH_MENU_SEQ_SETUP:    Main_SETUP   ( work ); break;
+  case RESEARCH_MENU_SEQ_STAND_BY: Main_STAND_BY( work ); break;
+  case RESEARCH_MENU_SEQ_KEY_WAIT: Main_KEY_WAIT( work ); break;
+  case RESEARCH_MENU_SEQ_FADE_OUT: Main_FADE_OUT( work ); break;
+  case RESEARCH_MENU_SEQ_CLEAN_UP: Main_CLEAN_UP( work ); break;
+  case RESEARCH_MENU_SEQ_FINISH:   return work->result;
   default:  GF_ASSERT(0);
   }
 
-  // データ更新
-  CheckNewEntry( work );
+  CheckNewEntry( work );      // データ更新
+  UpdatePaletteAnime( work ); // パレットアニメーション更新
+  RESEARCH_COMMON_UpdatePaletteAnime( work->commonWork ); // 共通パレットアニメーションを更新
+  GFL_CLACT_SYS_Main();       // セルアクターシステム メイン処理
 
-  // セルアクターシステム メイン処理
-  GFL_CLACT_SYS_Main();
-
-  // シーケンスカウンタ更新
-  CountUpSeqCount( work ); 
-
-  // シーケンス更新
-  SwitchSequence( work );
+  CountUpSeqCount( work ); // シーケンスカウンタ更新
+  SwitchSequence( work );  // シーケンス更新
 
   return RESEARCH_MENU_RESULT_CONTINUE;
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■シーケンス処理
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 準備シーケンス ( RESEARCH_MENU_SEQ_SETUP ) の処理
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void Main_SETUP( RESEARCH_MENU_WORK* work )
 {
   CreateFont( work );
@@ -316,9 +328,14 @@ static void Main_SETUP( RESEARCH_MENU_WORK* work )
   CreateClactUnits( work );
   CreateClactWorks( work );
 
+  // パレットアニメーション
+  CreatePaletteAnime( work );
+  SetupPaletteAnime( work );
+
   // 画面フェードイン
   GFL_FADE_SetMasterBrightReq(
-      GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0);
+      GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
+      16, 0, 0);
 
   // 次のシーケンスをセット
   SetNextSequence( work, RESEARCH_MENU_SEQ_STAND_BY ); 
@@ -327,28 +344,30 @@ static void Main_SETUP( RESEARCH_MENU_WORK* work )
   FinishCurrentSequence( work );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
- * @brief 準備シーケンス ( RESEARCH_MENU_SEQ_STAND_BY ) の処理
+ * @brief 最初のキー待ちシーケンス ( RESEARCH_MENU_SEQ_STAND_BY ) の処理
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
 {
   int trg;
   int touch;
   int commonTouch;
 
-  trg   = GFL_UI_KEY_GetTrg();
+  trg = GFL_UI_KEY_GetTrg();
   touch = GFL_UI_TP_HitTrg( work->touchHitTable );
   commonTouch = GFL_UI_TP_HitTrg( RESEARCH_COMMON_GetHitTable(work->commonWork) );
 
   //-----------------
   //「もどる」ボタン
   if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );               // キャンセル音
-    SetResult( work, RESEARCH_MENU_RESULT_EXIT ); // 画面終了結果を決定
+    RESEARCH_COMMON_StartPaletteAnime( 
+        work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // 選択パレットアニメ開始
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // キャンセル音
+    SetResult( work, RESEARCH_MENU_RESULT_EXIT );        // 画面終了結果を決定
     SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
     SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
@@ -357,12 +376,9 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
 
   //--------------------
   // 十字キー or A or B
-  if( (trg & PAD_KEY_UP) ||
-      (trg & PAD_KEY_DOWN) ||
-      (trg & PAD_KEY_LEFT) ||
-      (trg & PAD_KEY_RIGHT) ||
-      (trg & PAD_BUTTON_A) || 
-      (trg & PAD_BUTTON_B) ) {
+  if( (trg & PAD_KEY_UP)   || (trg & PAD_KEY_DOWN)  ||
+      (trg & PAD_KEY_LEFT) || (trg & PAD_KEY_RIGHT) ||
+      (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
     SetNextSequence( work, RESEARCH_MENU_SEQ_KEY_WAIT );
     FinishCurrentSequence( work );
   }
@@ -370,8 +386,11 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
   //-------------------------------------
   //「調査内容を変更する」ボタンをタッチ
   if( touch == TOUCH_AREA_CHANGE_BUTTON ) {
-    PMSND_PlaySE( SEQ_SE_DECIDE1 );                    // 決定音
-    SetResult( work, RESEARCH_MENU_RESULT_TO_SELECT ); // 画面終了結果を決定
+    MoveCursorDirect( work, MENU_ITEM_CHANGE_RESEARCH ); // カーソル位置を更新
+    StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );   // カーソルONパレットアニメ終了
+    StartPaletteAnime( work, PALETTE_ANIME_SELECT );     // 選択パレットアニメ開始
+    PMSND_PlaySE( SEQ_SE_DECIDE1 );                      // 決定音
+    SetResult( work, RESEARCH_MENU_RESULT_TO_SELECT );   // 画面終了結果を決定
     SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
     SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
@@ -380,9 +399,11 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
   //-------------------------------------
   //「調査報告を確認する」ボタンをタッチ
   if( touch == TOUCH_AREA_CHECK_BUTTON ) {
-    MoveCursorDown( work );
-    PMSND_PlaySE( SEQ_SE_DECIDE1 );                    // 決定音
-    SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK );  // 画面終了結果を決定
+    MoveCursorDirect( work, MENU_ITEM_CHECK_RESEARCH ); // カーソル位置を更新
+    StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );  // カーソルONパレットアニメ終了
+    StartPaletteAnime( work, PALETTE_ANIME_SELECT );    // 選択パレットアニメ開始
+    PMSND_PlaySE( SEQ_SE_DECIDE1 );                     // 決定音
+    SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK );   // 画面終了結果を決定
     SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
     SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
@@ -396,28 +417,30 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
   }
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief キー入力待ちシーケンス ( RESEARCH_MENU_SEQ_KEY_WAIT ) の処理
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
 {
   int trg;
   int touch;
   int commonTouch;
 
-  trg            = GFL_UI_KEY_GetTrg();
+  trg = GFL_UI_KEY_GetTrg();
   touch = GFL_UI_TP_HitTrg( work->touchHitTable );
   commonTouch = GFL_UI_TP_HitTrg( RESEARCH_COMMON_GetHitTable(work->commonWork) );
 
   //-----------------
   //「もどる」ボタン
   if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );               // キャンセル音
-    SetResult( work, RESEARCH_MENU_RESULT_EXIT ); // 画面終了結果を決定
+    RESEARCH_COMMON_StartPaletteAnime( 
+        work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // 選択パレットアニメ開始
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // キャンセル音
+    SetResult( work, RESEARCH_MENU_RESULT_EXIT );        // 画面終了結果を決定
     SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
     SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
@@ -428,20 +451,38 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
   // 上 キー
   if( trg & PAD_KEY_UP ) {
     MoveCursorUp( work );
-  }
-
+  } 
   //--------
   // 下 キー
   if( trg & PAD_KEY_DOWN ) {
     MoveCursorDown( work );
   }
 
+  //----------
+  // A ボタン
+  if( trg & PAD_BUTTON_A ) {
+    StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON ); // カーソルONパレットアニメ終了
+    StartPaletteAnime( work, PALETTE_ANIME_SELECT );   // 選択パレットアニメ開始
+    PMSND_PlaySE( SEQ_SE_DECIDE1 );                    // 決定音
+    switch( work->cursorPos ) { // 画面終了結果を決定
+    case MENU_ITEM_CHANGE_RESEARCH: SetResult( work, RESEARCH_MENU_RESULT_TO_SELECT ); break;
+    case MENU_ITEM_CHECK_RESEARCH:  SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK );  break;
+    default: GF_ASSERT(0)
+    }
+    SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
+    SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
+    FinishCurrentSequence( work );
+    return;
+  }
+
   //----------------------------
   //「調査内容を変更する」ボタン
-  if( ( (trg & PAD_BUTTON_A) && (work->cursorPos == MENU_ITEM_CHANGE_RESEARCH) ) ||
-      ( touch == TOUCH_AREA_CHANGE_BUTTON ) ) {
-    PMSND_PlaySE( SEQ_SE_DECIDE1 );                    // 決定音
-    SetResult( work, RESEARCH_MENU_RESULT_TO_SELECT ); // 画面終了結果を決定
+  if( touch == TOUCH_AREA_CHANGE_BUTTON ) {
+    MoveCursorDirect( work, MENU_ITEM_CHANGE_RESEARCH );    // カーソル位置を更新
+    StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );      // カーソルONパレットアニメ終了
+    StartPaletteAnime( work, PALETTE_ANIME_SELECT );        // 選択パレットアニメ開始
+    PMSND_PlaySE( SEQ_SE_DECIDE1 );                         // 決定音
+    SetResult( work, RESEARCH_MENU_RESULT_TO_SELECT );      // 画面終了結果を決定
     SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
     SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
@@ -449,10 +490,12 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
   }
   //----------------------------
   //「調査報告を確認する」ボタン
-  if( ( (trg & PAD_BUTTON_A) && (work->cursorPos == MENU_ITEM_CHECK_RESEARCH) ) ||
-      ( touch == TOUCH_AREA_CHECK_BUTTON ) ) {
-    PMSND_PlaySE( SEQ_SE_DECIDE1 );                   // 決定音
-    SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK ); // 画面終了結果を決定
+  if( touch == TOUCH_AREA_CHECK_BUTTON ) {
+    MoveCursorDirect( work, MENU_ITEM_CHECK_RESEARCH ); // カーソル位置を更新
+    StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );  // カーソルONパレットアニメ終了
+    StartPaletteAnime( work, PALETTE_ANIME_SELECT );    // 選択パレットアニメ開始
+    PMSND_PlaySE( SEQ_SE_DECIDE1 );                     // 決定音
+    SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK );   // 画面終了結果を決定
     SetNextSequence( work, RESEARCH_MENU_SEQ_FADE_OUT );
     SetNextSequence( work, RESEARCH_MENU_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
@@ -474,30 +517,15 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
   if( trg & PAD_BUTTON_L ) {
     DEBUG_GAMEBEACON_Set_NewEntry();
   }
-
-  // TEST:
-#if 0
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) {
-    static u32 frame = 0;
-    static u16 color1[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
-    static u16 color2[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
-    u8 evy = (frame / 10) % 16;
-    frame++;
-    OS_Printf( "%d\n", evy );
-    SoftFade( color1, color2, 16, evy, 0xffff );
-    DC_FlushRange( color2, sizeof(u16)*16 );
-    GX_LoadBGPltt( color2, MAIN_BG_PALETTE_WINDOW_ON * ONE_PALETTE_SIZE, ONE_PALETTE_SIZE );
-  }
-#endif
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 後片付けシーケンス ( RESEARCH_MENU_SEQ_FADE_OUT ) の処理
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void Main_FADE_OUT( RESEARCH_MENU_WORK* work )
 {
   // フェードが終了
@@ -506,15 +534,23 @@ static void Main_FADE_OUT( RESEARCH_MENU_WORK* work )
   } 
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 後片付けシーケンス ( RESEARCH_MENU_SEQ_CLEAN_UP ) の処理
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void Main_CLEAN_UP( RESEARCH_MENU_WORK* work )
 {
+  // 共通パレットアニメーション
+  RESEARCH_COMMON_StopAllPaletteAnime( work->commonWork ); // 停止して, 
+  RESEARCH_COMMON_ResetAllPalette( work->commonWork );     // パレットを元に戻す
+
+  // パレットアニメーション
+  CleanUpPaletteAnime( work );
+  DeletePaletteAnime( work );
+
   // OBJ 後片付け
   DeleteClactWorks( work );
   DeleteClactUnits( work );
@@ -540,17 +576,17 @@ static void Main_CLEAN_UP( RESEARCH_MENU_WORK* work )
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■シーケンス制御
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief シーケンスカウンタを更新する
  * 
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void CountUpSeqCount( RESEARCH_MENU_WORK* work )
 {
   u32 maxCount;
@@ -559,8 +595,7 @@ static void CountUpSeqCount( RESEARCH_MENU_WORK* work )
   work->seqCount++;
 
   // 最大値を決定
-  switch( work->seq )
-  {
+  switch( work->seq ) {
   case RESEARCH_MENU_SEQ_SETUP:     maxCount = 0xffffffff;  break;
   case RESEARCH_MENU_SEQ_STAND_BY:  maxCount = 0xffffffff;  break;
   case RESEARCH_MENU_SEQ_KEY_WAIT:  maxCount = 0xffffffff;  break;
@@ -577,14 +612,14 @@ static void CountUpSeqCount( RESEARCH_MENU_WORK* work )
   }
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 次のシーケンスを登録する
  *
  * @param work
  * @param nextSeq 登録するシーケンス
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void SetNextSequence( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq )
 {
   // シーケンスキューに追加する
@@ -595,13 +630,13 @@ static void SetNextSequence( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq
   DebugPrint_seqQueue( work );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 現在のシーケンスを終了する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void FinishCurrentSequence( RESEARCH_MENU_WORK* work )
 {
   // すでに終了済み
@@ -614,13 +649,13 @@ static void FinishCurrentSequence( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: finish current sequence\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief シーケンスを変更する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void SwitchSequence( RESEARCH_MENU_WORK* work )
 {
   RESEARCH_MENU_SEQ nextSeq;
@@ -636,19 +671,18 @@ static void SwitchSequence( RESEARCH_MENU_WORK* work )
   DebugPrint_seqQueue( work );
 } 
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief シーケンスを設定する
  *
  * @param work
  * @parma nextSeq 設定するシーケンス
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void SetSequence( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq )
 { 
   // シーケンスの終了処理
-  switch( work->seq )
-  {
+  switch( work->seq ) {
   case RESEARCH_MENU_SEQ_SETUP:    FinishSequence_SETUP( work );     break;
   case RESEARCH_MENU_SEQ_STAND_BY: FinishSequence_STAND_BY( work );  break;
   case RESEARCH_MENU_SEQ_KEY_WAIT: FinishSequence_KEY_WAIT( work );  break;
@@ -664,8 +698,7 @@ static void SetSequence( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq )
   work->seqFinishFlag = FALSE;
 
   // シーケンスの初期化処理
-  switch( nextSeq )
-  {
+  switch( nextSeq ) {
   case RESEARCH_MENU_SEQ_SETUP:    InitSequence_SETUP( work );     break;
   case RESEARCH_MENU_SEQ_STAND_BY: InitSequence_STAND_BY( work );  break;
   case RESEARCH_MENU_SEQ_KEY_WAIT: InitSequence_KEY_WAIT( work );  break;
@@ -677,8 +710,7 @@ static void SetSequence( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq )
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: set seq ==> " );
-  switch( nextSeq )
-  {
+  switch( nextSeq ) {
   case RESEARCH_MENU_SEQ_SETUP:    OS_TFPrintf( PRINT_TARGET, "SETUP" );     break;
   case RESEARCH_MENU_SEQ_STAND_BY: OS_TFPrintf( PRINT_TARGET, "STAND_BY" );  break;
   case RESEARCH_MENU_SEQ_KEY_WAIT: OS_TFPrintf( PRINT_TARGET, "KEY_WAIT" );  break;
@@ -690,98 +722,99 @@ static void SetSequence( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq )
   OS_TFPrintf( PRINT_TARGET, "\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 準備シーケンス ( RESEARCH_MENU_SEQ_SETUP ) の初期化処理
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void InitSequence_SETUP( RESEARCH_MENU_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init seq SETUP\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 最初のキー待ちシーケンス ( RESEARCH_MENU_SEQ_STAND_BY ) の初期化処理
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void InitSequence_STAND_BY( RESEARCH_MENU_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init seq STAND_BY\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief キー入力待ちシーケンス ( RESEARCH_MENU_SEQ_KEY_WAIT ) の初期化処理
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void InitSequence_KEY_WAIT( RESEARCH_MENU_WORK* work )
 {
-  // カーソル位置のメニュー項目を選択状態にする
-  MenuItemSwitchOn( work->cursorPos );
+  MenuItemSwitchOn( work->cursorPos ); // カーソル位置のメニュー項目を選択状態にする
+  StartPaletteAnime( work, PALETTE_ANIME_CURSOR_ON ); // カーソルONパレットアニメを開始
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init seq KEY_WAIT\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 後片付けシーケンス ( RESEARCH_MENU_SEQ_CLEAN_UP ) の初期化処理
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void InitSequence_CLEAN_UP( RESEARCH_MENU_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init seq CLEAN_UP\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 後片付けシーケンス ( RESEARCH_MENU_SEQ_FADE_OUT ) の初期化処理
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void InitSequence_FADE_OUT( RESEARCH_MENU_WORK* work )
 {
   // フェードアウト開始
   GFL_FADE_SetMasterBrightReq(
-      GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 0);
+      GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
+      0, 16, 0);
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init seq FADE_OUT\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 準備シーケンス ( RESEARCH_MENU_SEQ_SETUP ) の初期化処理
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void FinishSequence_SETUP( RESEARCH_MENU_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: finish seq SETUP\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 最初のキー入力待ちシーケンス ( RESEARCH_MENU_SEQ_STAND_BY ) の初期化処理
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void FinishSequence_STAND_BY( RESEARCH_MENU_WORK* work )
 {
   // カーソル位置のメニュー項目を選択状態にする
@@ -791,146 +824,204 @@ static void FinishSequence_STAND_BY( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: finish seq STAND_BY\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief キー入力待ちシーケンス ( RESEARCH_MENU_SEQ_KEY_WAIT ) の初期化処理
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void FinishSequence_KEY_WAIT( RESEARCH_MENU_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: finish seq KEY_WAIT\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 後片付けシーケンス ( RESEARCH_MENU_SEQ_CLEAN_UP ) の初期化処理
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void FinishSequence_CLEAN_UP( RESEARCH_MENU_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: finish seq CLEAN_UP\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 後片付けシーケンス ( RESEARCH_MENU_SEQ_FADE_OUT ) の初期化処理
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void FinishSequence_FADE_OUT( RESEARCH_MENU_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: finish seq FADE_OUT\n" );
 }
 
-//==============================================================================================
+//====================================================================================
 // ■データ更新
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 新しい人物とすれ違ったかどうかをチェックする
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void CheckNewEntry( RESEARCH_MENU_WORK* work )
 {
-  if( work->newEntryFlag == FALSE )
-  {
+  if( work->newEntryFlag == FALSE ) {
     // 新しい人物とすれ違った
-    if( GAMEBEACON_Get_NewEntry() == TRUE )
-    {
-      work->newEntryFlag = TRUE;
-      NewIconDispOn( work );      // "new" アイコンを表示する
+    if( GAMEBEACON_Get_NewEntry() == TRUE ) {
+      work->newEntryFlag = TRUE; // フラグを立てる
+      NewIconDispOn( work );     // "new" アイコンを表示する
     }
   }
 }
 
-//==============================================================================================
+//====================================================================================
 // ■カーソル移動
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief カーソルを上へ移動する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void MoveCursorUp( RESEARCH_MENU_WORK* work )
 {
   int nowPos;
   int nextPos;
 
-  // 更新後のカーソル位置を算出
-  nowPos  = work->cursorPos;
-  nextPos = (nowPos - 1 + MENU_ITEM_NUM) % MENU_ITEM_NUM;
-
   // 項目の表示を更新
-  MenuItemSwitchOff( nowPos );
-  MenuItemSwitchOn( nextPos );
+  MenuItemSwitchOff( work->cursorPos );
 
   // カーソル位置を更新
-  work->cursorPos = nextPos;
+  ShiftCursorPos( work, -1 );
+
+  // 項目の表示を更新
+  MenuItemSwitchOn( work->cursorPos );
 
   // カーソル移動音
   PMSND_PlaySE( SEQ_SE_SELECT1 );
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: move cursor ==> %d\n", work->cursorPos );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: move cursor up\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief カーソルを下へ移動する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void MoveCursorDown( RESEARCH_MENU_WORK* work )
+{
+  // 項目の表示を更新
+  MenuItemSwitchOff( work->cursorPos );
+
+  // カーソル位置を更新
+  ShiftCursorPos( work, 1 );
+
+  // 項目の表示を更新
+  MenuItemSwitchOn( work->cursorPos );
+
+  // カーソル移動音
+  PMSND_PlaySE( SEQ_SE_SELECT1 );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: move cursor down\n" );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief カーソルを直接移動する
+ *
+ * @param work
+ * @param menuItem 移動先のメニュー項目
+ */
+//------------------------------------------------------------------------------------
+static void MoveCursorDirect( RESEARCH_MENU_WORK* work, MENU_ITEM menuItem )
+{
+  // 項目の表示を更新
+  MenuItemSwitchOff( work->cursorPos );
+
+  // カーソル位置を更新
+  SetCursorPos( work, menuItem );
+
+  // 項目の表示を更新
+  MenuItemSwitchOn( work->cursorPos );
+
+  // カーソル移動音
+  PMSND_PlaySE( SEQ_SE_SELECT1 );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: move cursor direct\n" );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief カーソル位置を変更する ( オフセット指定 )
+ *
+ * @param work
+ * @param offset 移動量
+ */
+//------------------------------------------------------------------------------------
+static void ShiftCursorPos( RESEARCH_MENU_WORK* work, int offset )
 {
   int nowPos;
   int nextPos;
 
   // 更新後のカーソル位置を算出
   nowPos  = work->cursorPos;
-  nextPos = (nowPos + 1) % MENU_ITEM_NUM;
-
-  // 項目の表示を更新
-  MenuItemSwitchOff( nowPos );
-  MenuItemSwitchOn( nextPos );
+  nextPos = (nowPos + offset + MENU_ITEM_NUM) % MENU_ITEM_NUM;
 
   // カーソル位置を更新
   work->cursorPos = nextPos;
 
-  // カーソル移動音
-  PMSND_PlaySE( SEQ_SE_SELECT1 );
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: shift cursor pos ==> %d\n", nextPos );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief カーソル位置を変更する ( 直値指定 )
+ *
+ * @param work
+ * @param menuItem 移動先
+ */
+//------------------------------------------------------------------------------------
+static void SetCursorPos( RESEARCH_MENU_WORK* work, MENU_ITEM menuItem )
+{
+  // カーソル位置を更新
+  work->cursorPos = menuItem;
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: move cursor ==> %d\n", work->cursorPos );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: set cursor pos ==> %d\n", menuItem );
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■画面終了結果
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 画面の終了結果を決定する
  *
  * @param work
  * @param result 結果
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void SetResult( RESEARCH_MENU_WORK* work, RESEARCH_MENU_RESULT result )
 {
   // 多重設定
@@ -944,17 +1035,17 @@ static void SetResult( RESEARCH_MENU_WORK* work, RESEARCH_MENU_RESULT result )
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■フォント
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief フォントハンドラを初期化する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void InitFont( RESEARCH_MENU_WORK* work )
 {
   // 初期化
@@ -964,13 +1055,13 @@ static void InitFont( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init font\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief フォントハンドラを作成する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void CreateFont( RESEARCH_MENU_WORK* work )
 {
   GF_ASSERT( work->font == NULL );
@@ -983,13 +1074,13 @@ static void CreateFont( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create font\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief フォントハンドラを破棄する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void DeleteFont( RESEARCH_MENU_WORK* work )
 {
   GF_ASSERT( work->font );
@@ -1002,17 +1093,17 @@ static void DeleteFont( RESEARCH_MENU_WORK* work )
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■メッセージ
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief メッセージデータを初期化する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void InitMessages( RESEARCH_MENU_WORK* work )
 {
   int msgIdx;
@@ -1027,13 +1118,13 @@ static void InitMessages( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init messages\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief メッセージデータを作成する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void CreateMessages( RESEARCH_MENU_WORK* work )
 {
   int msgIdx;
@@ -1054,13 +1145,13 @@ static void CreateMessages( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create messages\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief メッセージデータを破棄する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void DeleteMessages( RESEARCH_MENU_WORK* work )
 {
   int msgIdx;
@@ -1077,13 +1168,13 @@ static void DeleteMessages( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: delete messages\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief タッチ範囲を作成する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void SetupTouchArea( RESEARCH_MENU_WORK* work )
 {
   int idx;
@@ -1100,13 +1191,13 @@ static void SetupTouchArea( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create touch hit table\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief シーケンスキューを初期化する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void InitSeqQueue( RESEARCH_MENU_WORK* work )
 {
   // 初期化
@@ -1116,13 +1207,13 @@ static void InitSeqQueue( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init seq queue\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief シーケンスキューを作成する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void CreateSeqQueue( RESEARCH_MENU_WORK* work )
 {
   GF_ASSERT( work->seqQueue == NULL );
@@ -1134,13 +1225,13 @@ static void CreateSeqQueue( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create seq queue\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief シーケンスキューを破棄する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void DeleteSeqQueue( RESEARCH_MENU_WORK* work )
 {
   GF_ASSERT( work->seqQueue );
@@ -1153,17 +1244,17 @@ static void DeleteSeqQueue( RESEARCH_MENU_WORK* work )
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■BG
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief BG の準備
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void SetupBG( RESEARCH_MENU_WORK* work )
 { 
   // BG モード
@@ -1197,13 +1288,13 @@ static void SetupBG( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: setup BG\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief BG の後片付け
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void CleanUpBG( RESEARCH_MENU_WORK* work )
 {
   GFL_BMPWIN_Exit();
@@ -1218,17 +1309,17 @@ static void CleanUpBG( RESEARCH_MENU_WORK* work )
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■上画面 ウィンドウBG面
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 上画面 ウィンドウBG面 準備
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void SetupSubBG_WINDOW( RESEARCH_MENU_WORK* work )
 {
   // データ読み込み
@@ -1259,13 +1350,13 @@ static void SetupSubBG_WINDOW( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: setup SUB-BG-WINDOW\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 上画面 ウィンドウBG面 後片付け
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void CleanUpSubBG_WINDOW( RESEARCH_MENU_WORK* work )
 {
   // DEBUG:
@@ -1273,17 +1364,17 @@ static void CleanUpSubBG_WINDOW( RESEARCH_MENU_WORK* work )
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■上画面 フォントBG面
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief SUB-BG フォント面の準備
  * 
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void SetupSubBG_FONT( RESEARCH_MENU_WORK* work )
 {
   // NULLキャラ確保
@@ -1296,13 +1387,13 @@ static void SetupSubBG_FONT( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: setup SUB-BG-FONT\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief SUB-BG フォント面の後片付け
  * 
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void CleanUpSubBG_FONT( RESEARCH_MENU_WORK* work )
 { 
   // NULLキャラ解放
@@ -1313,17 +1404,17 @@ static void CleanUpSubBG_FONT( RESEARCH_MENU_WORK* work )
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■下画面 ウィンドウBG面
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 下画面 ウィンドウBG面 準備
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void SetupMainBG_WINDOW( RESEARCH_MENU_WORK* work )
 {
   // データ読み込み
@@ -1354,13 +1445,13 @@ static void SetupMainBG_WINDOW( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: setup MAIN-BG-WINDOW\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 下画面 ウィンドウBG面 後片付け
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void CleanUpMainBG_WINDOW( RESEARCH_MENU_WORK* work )
 {
   // DEBUG:
@@ -1368,17 +1459,17 @@ static void CleanUpMainBG_WINDOW( RESEARCH_MENU_WORK* work )
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■下画面 フォントBG面
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 下画面 フォントBG面 準備
  * 
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void SetupMainBG_FONT( RESEARCH_MENU_WORK* work )
 { 
   // NULLキャラ確保
@@ -1391,13 +1482,13 @@ static void SetupMainBG_FONT( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: setup MAIN-BG-FONT\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 下画面 フォントBG面 後片付け
  * 
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void CleanUpMainBG_FONT( RESEARCH_MENU_WORK* work )
 { 
   // NULLキャラ解放
@@ -1408,17 +1499,17 @@ static void CleanUpMainBG_FONT( RESEARCH_MENU_WORK* work )
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■文字列描画オブジェクト
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 文字列描画オブジェクトを初期化する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void InitBGFonts( RESEARCH_MENU_WORK* work )
 {
   int idx;
@@ -1429,13 +1520,13 @@ static void InitBGFonts( RESEARCH_MENU_WORK* work )
   }
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 文字列描画オブジェクトを作成する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void CreateBGFonts( RESEARCH_MENU_WORK* work )
 {
   int i;
@@ -1476,13 +1567,13 @@ static void CreateBGFonts( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create BGFonts\n" ); 
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief 文字列描画オブジェクトを破棄する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void DeleteBGFonts( RESEARCH_MENU_WORK* work )
 {
   int i;
@@ -1500,17 +1591,17 @@ static void DeleteBGFonts( RESEARCH_MENU_WORK* work )
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■メニュー項目操作
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @biref メニュー項目を選択状態にする
  *
  * @param menuItem 選択状態にするメニュー項目を指定
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void MenuItemSwitchOn( MENU_ITEM menuItem )
 {
   u8 BGFrame;
@@ -1550,13 +1641,13 @@ static void MenuItemSwitchOn( MENU_ITEM menuItem )
   GFL_BG_LoadScreenReq( BGFrame );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @biref メニュー項目を非選択状態にする
  *
  * @param menuItem 非選択状態にするメニュー項目を指定
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void MenuItemSwitchOff( MENU_ITEM menuItem )
 {
   u8 BGFrame;
@@ -1596,17 +1687,17 @@ static void MenuItemSwitchOff( MENU_ITEM menuItem )
   GFL_BG_LoadScreenReq( BGFrame );
 }
 
-//==============================================================================================
+//====================================================================================
 // ■OBJ
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief セルアクターシステムを作成する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void CreateClactSystem( RESEARCH_MENU_WORK* work )
 {
   // システム作成
@@ -1619,13 +1710,13 @@ static void CreateClactSystem( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create clact system\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief セルアクターシステムを破棄する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void DeleteClactSystem( RESEARCH_MENU_WORK* work )
 {
   // VBkank 割り込み関数を解除
@@ -1639,17 +1730,17 @@ static void DeleteClactSystem( RESEARCH_MENU_WORK* work )
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■SUB-OBJ リソース
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief OBJ のリソースを初期化する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void InitOBJResources( RESEARCH_MENU_WORK* work )
 {
   int i;
@@ -1663,13 +1754,13 @@ static void InitOBJResources( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init OBJ resources\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief SUB-OBJ リソースを登録する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void RegisterSubObjResources( RESEARCH_MENU_WORK* work )
 {
   HEAPID heapID;
@@ -1703,13 +1794,13 @@ static void RegisterSubObjResources( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: register SUB-OBJ resources\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief SUB-OBJ リソースを解放する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void ReleaseSubObjResources( RESEARCH_MENU_WORK* work )
 {
   GFL_CLGRP_CGR_Release     ( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CHARACTER ] );
@@ -1721,17 +1812,17 @@ static void ReleaseSubObjResources( RESEARCH_MENU_WORK* work )
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■MAIN-OBJ リソース
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief MAIN-OBJ リソースを登録する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void RegisterMainObjResources( RESEARCH_MENU_WORK* work )
 {
   HEAPID heapID;
@@ -1749,7 +1840,7 @@ static void RegisterMainObjResources( RESEARCH_MENU_WORK* work )
   palette = GFL_CLGRP_PLTT_RegisterEx( arcHandle, 
                                        NARC_research_radar_graphic_obj_NCLR,
                                        CLSYS_DRAW_MAIN, 
-                                       ONE_PALETTE_SIZE*4, 0, 2, 
+                                       ONE_PALETTE_SIZE*6, 0, 3, 
                                        heapID );
 
   cellAnime = GFL_CLGRP_CELLANIM_Register( arcHandle,
@@ -1767,13 +1858,13 @@ static void RegisterMainObjResources( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: register MAIN-OBJ resources\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief MAIN-OBJ リソースを解放する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void ReleaseMainObjResources( RESEARCH_MENU_WORK* work )
 {
   GFL_CLGRP_CGR_Release     ( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CHARACTER ] );
@@ -1785,17 +1876,17 @@ static void ReleaseMainObjResources( RESEARCH_MENU_WORK* work )
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■セルアクターユニット
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief セルアクターユニットを初期化する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void InitClactUnits( RESEARCH_MENU_WORK* work )
 {
   int unitIdx;
@@ -1809,13 +1900,13 @@ static void InitClactUnits( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init clact units\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief セルアクターユニットを作成する
  *
  * @param
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void CreateClactUnits( RESEARCH_MENU_WORK* work )
 {
   int unitIdx;
@@ -1835,13 +1926,13 @@ static void CreateClactUnits( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create clact units\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief セルアクターユニットを破棄する
  *
  * @param
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void DeleteClactUnits( RESEARCH_MENU_WORK* work )
 {
   int unitIdx;
@@ -1857,17 +1948,17 @@ static void DeleteClactUnits( RESEARCH_MENU_WORK* work )
 }
 
 
-//==============================================================================================
+//====================================================================================
 // □セルアクターワーク
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief セルアクターワークを初期化する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void InitClactWorks( RESEARCH_MENU_WORK* work )
 {
   int wkIdx;
@@ -1882,13 +1973,13 @@ static void InitClactWorks( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init clact works\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief セルアクターワークを作成する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void CreateClactWorks( RESEARCH_MENU_WORK* work )
 {
   int wkIdx;
@@ -1927,13 +2018,13 @@ static void CreateClactWorks( RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create clact works\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief セルアクターワークを破棄する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void DeleteClactWorks( RESEARCH_MENU_WORK* work )
 {
   int wkIdx;
@@ -1952,11 +2043,11 @@ static void DeleteClactWorks( RESEARCH_MENU_WORK* work )
 }
 
 
-//==============================================================================================
+//====================================================================================
 // ■OBJ アクセス
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief OBJ リソースの登録インデックスを取得する
  *
@@ -1965,13 +2056,13 @@ static void DeleteClactWorks( RESEARCH_MENU_WORK* work )
  *
  * @return 指定したリソースの登録インデックス
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static u32 GetObjResourceRegisterIndex( const RESEARCH_MENU_WORK* work, OBJ_RESOURCE_ID resID )
 {
   return work->objResRegisterIdx[ resID ];
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief セルアクターユニットを取得する
  *
@@ -1980,13 +2071,13 @@ static u32 GetObjResourceRegisterIndex( const RESEARCH_MENU_WORK* work, OBJ_RESO
  *
  * @return 指定したセルアクターユニット
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static GFL_CLUNIT* GetClactUnit( const RESEARCH_MENU_WORK* work, CLUNIT_INDEX unitIdx )
 {
   return work->clactUnit[ unitIdx ];
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief セルアクターワークを取得する
  *
@@ -1995,24 +2086,187 @@ static GFL_CLUNIT* GetClactUnit( const RESEARCH_MENU_WORK* work, CLUNIT_INDEX un
  *
  * @return 指定したセルアクターワーク
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static GFL_CLWK* GetClactWork( const RESEARCH_MENU_WORK* work, CLWK_INDEX wkIdx )
 {
   return work->clactWork[ wkIdx ];
 }
 
+//------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションワークを初期化する
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void InitPaletteAnime( RESEARCH_MENU_WORK* work )
+{
+  int idx;
 
-//==============================================================================================
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    work->paletteAnime[ idx ] = NULL;
+  }
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init palette anime\n" );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションワークを生成する
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void CreatePaletteAnime( RESEARCH_MENU_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] == NULL ); // 多重生成
+
+    work->paletteAnime[ idx ] = PALETTE_ANIME_Create( work->heapID );
+  }
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create palette anime\n" );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションワークを破棄する
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void DeletePaletteAnime( RESEARCH_MENU_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    PALETTE_ANIME_Delete( work->paletteAnime[ idx ] );
+  }
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: delete palette anime\n" );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションワークをセットアップする
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void SetupPaletteAnime( RESEARCH_MENU_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    PALETTE_ANIME_Setup( work->paletteAnime[ idx ],
+                         PaletteAnimeData[ idx ].destAdrs,
+                         PaletteAnimeData[ idx ].srcAdrs,
+                         PaletteAnimeData[ idx ].colorNum);
+  }
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: setup palette anime\n" );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションワークをクリーンアップする
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void CleanUpPaletteAnime( RESEARCH_MENU_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    // 操作していたパレットを元に戻す
+    PALETTE_ANIME_Reset( work->paletteAnime[ idx ] );
+  }
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: clean up palette anime\n" );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションを開始する
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void StartPaletteAnime( RESEARCH_MENU_WORK* work, PALETTE_ANIME_INDEX index )
+{
+  PALETTE_ANIME_Start( work->paletteAnime[ index ], 
+                       PaletteAnimeData[ index ].animeType,
+                       PaletteAnimeData[ index ].fadeColor );
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: start palette anime [%d]\n", index );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションを停止する
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void StopPaletteAnime( RESEARCH_MENU_WORK* work, PALETTE_ANIME_INDEX index )
+{
+  PALETTE_ANIME_Stop( work->paletteAnime[ index ] );
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: stop palette anime [%d]\n", index );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief パレットアニメーションを更新する
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void UpdatePaletteAnime( RESEARCH_MENU_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    PALETTE_ANIME_Update( work->paletteAnime[ idx ] );
+  }
+}
+
+
+
+//====================================================================================
 // ■"new" アイコン
-//==============================================================================================
+//====================================================================================
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * "new" アイコンを表示する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void NewIconDispOn( const RESEARCH_MENU_WORK* work )
 {
   GFL_CLWK* clactWork;
@@ -2027,13 +2281,13 @@ static void NewIconDispOn( const RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: new icon disp on\n" );
 }
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * "new" アイコンを非表示にする
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void NewIconDispOff( const RESEARCH_MENU_WORK* work )
 {
   GFL_CLWK* clactWork;
@@ -2046,13 +2300,13 @@ static void NewIconDispOff( const RESEARCH_MENU_WORK* work )
 }
 
 
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
  * @brief シーケンスキューの中身を表示する
  *
  * @param work
  */
-//----------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 static void DebugPrint_seqQueue( const RESEARCH_MENU_WORK* work )
 {
   int i;
@@ -2068,14 +2322,13 @@ static void DebugPrint_seqQueue( const RESEARCH_MENU_WORK* work )
   { 
     value = QUEUE_PeekData( work->seqQueue, i );
     
-    switch( value )
-    {
-    case RESEARCH_MENU_SEQ_SETUP:     OS_TFPrintf( PRINT_TARGET, "SETUP " );    break;
-    case RESEARCH_MENU_SEQ_STAND_BY:  OS_TFPrintf( PRINT_TARGET, "STAND_BY " );    break;
-    case RESEARCH_MENU_SEQ_KEY_WAIT:  OS_TFPrintf( PRINT_TARGET, "KEY-WAIT " ); break;
-    case RESEARCH_MENU_SEQ_FADE_OUT:  OS_TFPrintf( PRINT_TARGET, "FADE_OUT " ); break;
-    case RESEARCH_MENU_SEQ_CLEAN_UP:  OS_TFPrintf( PRINT_TARGET, "CLEAN-UP " ); break;
-    case RESEARCH_MENU_SEQ_FINISH:    OS_TFPrintf( PRINT_TARGET, "FINISH " );   break;
+    switch( value ) {
+    case RESEARCH_MENU_SEQ_SETUP:    OS_TFPrintf( PRINT_TARGET, "SETUP " );    break;
+    case RESEARCH_MENU_SEQ_STAND_BY: OS_TFPrintf( PRINT_TARGET, "STAND_BY " ); break;
+    case RESEARCH_MENU_SEQ_KEY_WAIT: OS_TFPrintf( PRINT_TARGET, "KEY-WAIT " ); break;
+    case RESEARCH_MENU_SEQ_FADE_OUT: OS_TFPrintf( PRINT_TARGET, "FADE_OUT " ); break;
+    case RESEARCH_MENU_SEQ_CLEAN_UP: OS_TFPrintf( PRINT_TARGET, "CLEAN-UP " ); break;
+    case RESEARCH_MENU_SEQ_FINISH:   OS_TFPrintf( PRINT_TARGET, "FINISH " );   break;
     default: GF_ASSERT(0);
     }
   }

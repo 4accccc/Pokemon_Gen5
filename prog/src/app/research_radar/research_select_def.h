@@ -182,8 +182,8 @@
 // MAIN-OBJ
 #define MAIN_OBJ_PALETTE_FADE_OBJ      (0x0)  // フェード操作対象のOBJ
 #define MAIN_OBJ_PALETTE_NONE_FADE_OBJ (0x1)  // フェード操作非対象のOBJ
-#define MAIN_OBJ_PALETTE_MENU_ITEM_ON  (0xe)  // メニュー項目選択時
-#define MAIN_OBJ_PALETTE_MENU_ITEM_OFF (0xf)  // メニュー項目非選択時
+#define MAIN_OBJ_PALETTE_MENU_ITEM_ON  (0xa)  // メニュー項目選択時
+#define MAIN_OBJ_PALETTE_MENU_ITEM_OFF (0xb)  // メニュー項目非選択時
 
 //------------------------
 // □セルアクターユニット
@@ -225,7 +225,7 @@
 #define BMPOAM_ACTOR_CONFIRM_CHARA_SIZE_Y    (6)   // y サイズ ( キャラ単位 )
 #define BMPOAM_ACTOR_CONFIRM_POS_X           (0)   // 左上x座標
 #define BMPOAM_ACTOR_CONFIRM_POS_Y           (144) // 左上y座標
-#define BMPOAM_ACTOR_CONFIRM_PALETTE_OFFSET  (1)   // パレットオフセット
+#define BMPOAM_ACTOR_CONFIRM_PALETTE_OFFSET  (2)   // パレットオフセット
 #define BMPOAM_ACTOR_CONFIRM_SOFT_PRIORITY   (0)   // ソフトプライオリティ
 #define BMPOAM_ACTOR_CONFIRM_BG_PRIORITY     (0)   // BGプライオリティ
 #define BMPOAM_ACTOR_CONFIRM_STRING_OFFSET_X (10)  // 文字書き込み先 x 座標オフセット
@@ -264,7 +264,7 @@
 #define BMPOAM_ACTOR_DETERMINE_CHARA_SIZE_Y   (4)  // y サイズ ( キャラ単位 )
 #define BMPOAM_ACTOR_DETERMINE_POS_X          (0)  // 左上x座標
 #define BMPOAM_ACTOR_DETERMINE_POS_Y          (76) // 左上y座標
-#define BMPOAM_ACTOR_DETERMINE_PALETTE_OFFSET (1)  // パレットオフセット
+#define BMPOAM_ACTOR_DETERMINE_PALETTE_OFFSET (2)  // パレットオフセット
 #define BMPOAM_ACTOR_DETERMINE_SOFT_PRIORITY  (0)  // ソフトプライオリティ
 #define BMPOAM_ACTOR_DETERMINE_BG_PRIORITY    (0)  // BGプライオリティ
 #define BMPOAM_ACTOR_DETERMINE_STRING_OFFSET_X (0)  // 文字書き込み先 x 座標オフセット
@@ -295,8 +295,8 @@
 // スクロール
 #define MIN_SCROLL_VALUE (-24) // 最小スクロール値
 #define MAX_SCROLL_VALUE (48)  // 最大スクロール値
-#define SCROLL_CURSOR_TOP_MARGIN    (24)
-#define SCROLL_CURSOR_BOTTOM_MARGIN (24) 
+#define SCROLL_CURSOR_TOP_MARGIN    (48)
+#define SCROLL_CURSOR_BOTTOM_MARGIN (48) 
 #define MIN_SCROLL_CURSOR_POS (MIN_SCROLL_VALUE + SCROLL_CURSOR_TOP_MARGIN)
 #define MAX_SCROLL_CURSOR_POS (MAX_SCROLL_VALUE + 192 - SCROLL_CURSOR_BOTTOM_MARGIN)
 

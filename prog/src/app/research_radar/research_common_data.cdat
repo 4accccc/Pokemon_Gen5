@@ -7,6 +7,7 @@
  */
 //////////////////////////////////////////////////////////////////////////////////////////////// 
 #include <gflib.h>
+#include "palette_anime.h"
 #include "research_common.h"
 #include "research_common_index.h"
 #include "research_common_def.h"
@@ -113,12 +114,34 @@ static const COMMON_CLWK_INIT_DATA CommonClactWorkInitData[ COMMON_CLWK_NUM ] =
     CLWK_RETURN_BG_PRIORITY,   // BG 優先順位
     COMMON_CLUNIT_MAIN_OBJ,                   // 所属ユニット
     COMMON_OBJ_RESOURCE_MAIN_CHARACTER,       // キャラクタ リソース
-    COMMON_OBJ_RESOURCE_MAIN_PALETTE,         // パレット リソース
+    COMMON_OBJ_RESOURCE_MAIN_PALETTE_ICON,    // パレット リソース
     COMMON_OBJ_RESOURCE_MAIN_CELL_ANIME,      // セルアニメ リソース
     CLSYS_DEFREND_MAIN,                // サーフェス指定
   },
 };
 
+//==============================================================================================
+// ■パレットアニメーション
+//==============================================================================================
+typedef struct {
+  u16*       destAdrs;  // 転送先アドレス
+  u16*       srcAdrs;   // 元データのアドレス
+  u8         colorNum;  // 転送カラー数
+  ANIME_TYPE animeType; // アニメーションタイプ
+  u16        fadeColor; // フェードカラー
+} COMMON_PALETTE_ANIME_DATA;
+
+static const COMMON_PALETTE_ANIME_DATA CommonPaletteAnimeData[ COMMON_PALETTE_ANIME_NUM ] = 
+{
+  // 選択リアクション (「もどる」アイコン )
+  { 
+    (u16*)( HW_OBJ_PLTT + (0 * ONE_PALETTE_SIZE) ),  // 転送先アドレス
+    (u16*)( HW_OBJ_PLTT + (0 * ONE_PALETTE_SIZE) ),  // 元データのアドレス
+    16,                                              // 転送カラー数
+    ANIME_TYPE_SELECT,                               // アニメーションタイプ
+    0xffff,                                          // フェードカラー
+  },
+};
 
 //==============================================================================================
 // ■タッチ領域

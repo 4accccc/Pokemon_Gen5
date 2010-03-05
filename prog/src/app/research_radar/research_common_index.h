@@ -17,15 +17,23 @@ typedef enum {
   COMMON_TOUCH_AREA_NUM,           // 総数
 } COMMON_TOUCH_AREA_INDEX;
 
+//--------------------------
+// □パレットアニメーション
+//--------------------------
+typedef enum {
+  COMMON_PALETTE_ANIME_RETURN, //「もどる」アイコン選択リアクション
+  COMMON_PALETTE_ANIME_NUM,    // 総数
+} COMMON_PALETTE_ANIME_INDEX;
+
 //--------
 // □OBJ
 //--------
 // OBJリソース
 typedef enum {
-  COMMON_OBJ_RESOURCE_MAIN_CHARACTER,  // MAIN-OBJ キャラクタ
-  COMMON_OBJ_RESOURCE_MAIN_PALETTE,    // MAIN-OBJ パレット
-  COMMON_OBJ_RESOURCE_MAIN_CELL_ANIME, // MAIN-OBJ セル アニメ
-  COMMON_OBJ_RESOURCE_NUM,             // 総数
+  COMMON_OBJ_RESOURCE_MAIN_CHARACTER,      // MAIN-OBJ キャラクタ
+  COMMON_OBJ_RESOURCE_MAIN_PALETTE_ICON,   // MAIN-OBJ パレット ( アイコン )
+  COMMON_OBJ_RESOURCE_MAIN_CELL_ANIME,     // MAIN-OBJ セル アニメ
+  COMMON_OBJ_RESOURCE_NUM,                 // 総数
 } COMMON_OBJ_RESOURCE_ID;
 
 // セルアクターユニット

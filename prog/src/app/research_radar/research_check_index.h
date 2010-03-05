@@ -47,6 +47,13 @@ typedef enum {
   TOUCH_AREA_NUM,             // 総数
 } TOUCH_AREA_INDEX;
 
+// パレットアニメーション
+typedef enum {
+  PALETTE_ANIME_CURSOR_ON, // カーソルON
+  PALETTE_ANIME_SELECT,    //「ほうこくをみる」ボタン選択リアクション
+  PALETTE_ANIME_NUM,       // 総数
+} PALETTE_ANIME_INDEX;
+
 // 調査データの表示タイプ
 typedef enum {
   DATA_DISP_TYPE_TODAY, // 今日のデータを表示 
@@ -80,6 +87,7 @@ typedef enum {
   OBJ_RESOURCE_MAIN_CHARACTER,  // MAIN-OBJ キャラクタ
   OBJ_RESOURCE_MAIN_PALETTE,    // MAIN-OBJ パレット
   OBJ_RESOURCE_MAIN_CELL_ANIME, // MAIN-OBJ セル アニメ
+  OBJ_RESOURCE_MAIN_COMMON_PALETTE, // MAIN-OBJ パレット ( 共通素材ボタン用 )
   OBJ_RESOURCE_SUB_CHARACTER,   // SUB-OBJ  キャラクタ
   OBJ_RESOURCE_SUB_PALETTE,     // SUB-OBJ  パレット
   OBJ_RESOURCE_SUB_CELL_ANIME,  // SUB-OBJ  セル アニメ

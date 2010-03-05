@@ -97,22 +97,22 @@
 
 // 下画面 ボタン ( 調査内容の決定 )
 #define CHANGE_BUTTON_X               (3)   // X座標   (キャラクター単位)
-#define CHANGE_BUTTON_Y               (6)   // Y座標   (キャラクター単位)
+#define CHANGE_BUTTON_Y               (5)   // Y座標   (キャラクター単位)
 #define CHANGE_BUTTON_WIDTH           (26)  // Xサイズ (キャラクター単位)
-#define CHANGE_BUTTON_HEIGHT          (4)   // Yサイズ (キャラクター単位)
+#define CHANGE_BUTTON_HEIGHT          (5)   // Yサイズ (キャラクター単位)
 #define CHANGE_BUTTON_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
-#define CHANGE_BUTTON_STRING_OFFSET_Y (8)   // 文字列の書き込み先オフセットY
+#define CHANGE_BUTTON_STRING_OFFSET_Y (16)  // 文字列の書き込み先オフセットY
 #define CHANGE_BUTTON_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
 #define CHANGE_BUTTON_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
 #define CHANGE_BUTTON_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
 
 // 下画面 ボタン ( 調査報告を見る )
 #define CHECK_BUTTON_X               (3)   // X座標   (キャラクター単位)
-#define CHECK_BUTTON_Y               (13)  // Y座標   (キャラクター単位)
+#define CHECK_BUTTON_Y               (12)  // Y座標   (キャラクター単位)
 #define CHECK_BUTTON_WIDTH           (26)  // Xサイズ (キャラクター単位)
-#define CHECK_BUTTON_HEIGHT          (4)   // Yサイズ (キャラクター単位)
+#define CHECK_BUTTON_HEIGHT          (5)   // Yサイズ (キャラクター単位)
 #define CHECK_BUTTON_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
-#define CHECK_BUTTON_STRING_OFFSET_Y (8)   // 文字列の書き込み先オフセットY
+#define CHECK_BUTTON_STRING_OFFSET_Y (16)  // 文字列の書き込み先オフセットY
 #define CHECK_BUTTON_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
 #define CHECK_BUTTON_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
 #define CHECK_BUTTON_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
@@ -121,6 +121,10 @@
 //===============================================================================
 // ■OBJ
 //===============================================================================
+
+//----------------
+// □パレット番号
+//----------------
 
 //------------------------
 // □セルアクターユニット

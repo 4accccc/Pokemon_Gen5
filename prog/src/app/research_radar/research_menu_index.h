@@ -41,6 +41,13 @@ typedef enum {
   TOUCH_AREA_NUM,            // 総数
 } TOUCH_AREA_INDEX;
 
+// パレットアニメーション
+typedef enum {
+  PALETTE_ANIME_CURSOR_ON, // カーソルON
+  PALETTE_ANIME_SELECT,    // 選択リアクション ( メニュー項目 )
+  PALETTE_ANIME_NUM,       // 総数
+} PALETTE_ANIME_INDEX;
+
 // BGFont オブジェクト
 typedef enum {
   BG_FONT_CAPTION,       // 上画面 説明文

@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////
 #include <gflib.h>
 #include "queue.h"
-#include "bg_font.h"
 #include "circle_graph.h"
 #include "arrow.h"
 #include "percentage.h"
+#include "bg_font.h"
+#include "palette_anime.h"
 #include "research_data.h"
 #include "research_check.h"
 #include "research_check_index.h"
@@ -95,10 +96,13 @@ struct _RESEARCH_CHECK_WORK
   // “•\¦ƒIƒuƒWƒFƒNƒg
   PERCENTAGE* percentage[ PERCENTAGE_NUM ];
   u8          percentageNum;     // —LŒø‚ÈƒIƒuƒWƒFƒNƒg‚Ì”
-  u8          percentageDispNum; // •\¦’†‚ÌƒIƒuƒWƒFƒNƒg‚Ì”
+  u8          percentageDispNum; // •\¦’†‚ÌƒIƒuƒWƒFƒNƒg‚Ì”p
 
   // ƒ^ƒbƒ`—Ìˆæ
   GFL_UI_TP_HITTBL touchHitTable[ TOUCH_AREA_NUM ];
+
+  // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“
+  PALETTE_ANIME* paletteAnime[ PALETTE_ANIME_NUM ];
 
   // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg
   BG_FONT* BGFont[ BG_FONT_NUM ];
@@ -232,6 +236,11 @@ static void DispAllPercentage( RESEARCH_CHECK_WORK* work ); // ‘S‚Ä‚Ì“ƒIƒuƒWƒFƒ
 // ƒ^ƒbƒ`”ÍˆÍ
 static void UpdateTouchArea( RESEARCH_CHECK_WORK* work ); // ƒ^ƒbƒ`”ÍˆÍ‚ğXV‚·‚é
 
+// ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“
+static void StartPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠJn‚·‚é
+static void StopPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~‚·‚é
+static void UpdatePaletteAnime( RESEARCH_CHECK_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é
+
 // BG
 static void UpdateMainBG_WINDOW( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( ƒEƒBƒ“ƒhƒE–Ê ) ‚ğXV‚·‚é
 
@@ -335,6 +344,13 @@ static void SetupBmpOamSystem  ( RESEARCH_CHECK_WORK* work ); // BMP-OAM ƒVƒXƒeƒ
 static void CleanUpBmpOamSystem( RESEARCH_CHECK_WORK* work ); // BMP-OAM ƒVƒXƒeƒ€ Œã•Ğ•t‚¯
 static void CreateBmpOamActors( RESEARCH_CHECK_WORK* work ); // BMP-OAM ƒAƒNƒ^[ ì¬
 static void DeleteBmpOamActors( RESEARCH_CHECK_WORK* work ); // BMP-OAM ƒAƒNƒ^[ ”jŠü
+
+// ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“
+static void InitPaletteAnime( RESEARCH_CHECK_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN ‰Šú‰»
+static void CreatePaletteAnime( RESEARCH_CHECK_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN ¶¬
+static void DeletePaletteAnime( RESEARCH_CHECK_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN ”jŠü
+static void SetupPaletteAnime( RESEARCH_CHECK_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN ƒZƒbƒgƒAƒbƒv
+static void CleanUpPaletteAnime( RESEARCH_CHECK_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN ƒNƒŠ[ƒ“ƒAƒbƒv
 
 // 3D €”õ
 static void Setup3D();
@@ -442,6 +458,7 @@ RESEARCH_CHECK_WORK* CreateResearchCheckWork( RESEARCH_COMMON_WORK* commonWork )
   InitClactWorks( work );
   InitBitmapDatas( work );
   InitPaletteFadeSystem( work );
+  InitPaletteAnime( work );
 
   CreateSeqQueue( work );
 
@@ -482,8 +499,7 @@ void DeleteResearchCheckWork( RESEARCH_CHECK_WORK* work )
 RESEARCH_CHECK_RESULT ResearchCheckMain( RESEARCH_CHECK_WORK* work )
 {
   // ƒV[ƒPƒ“ƒX‚²‚Æ‚Ìˆ—
-  switch( work->seq )
-  {
+  switch( work->seq ) {
   case RESEARCH_CHECK_SEQ_SETUP:      Main_SETUP( work );      break;
   case RESEARCH_CHECK_SEQ_STANDBY:    Main_STANDBY( work );    break;
   case RESEARCH_CHECK_SEQ_KEY_WAIT:   Main_KEY_WAIT( work );   break;
@@ -501,6 +517,8 @@ RESEARCH_CHECK_RESULT ResearchCheckMain( RESEARCH_CHECK_WORK* work )
   GFL_CLACT_SYS_Main();       // ƒZƒ‹ƒAƒNƒ^[ƒVƒXƒeƒ€ ƒƒCƒ“ˆ—
   UpdateCircleGraphs( work ); // ‰~ƒOƒ‰ƒt ƒƒCƒ““®ì
   ARROW_Main( work->arrow );  // –îˆó ƒƒCƒ““®ì
+  RESEARCH_COMMON_UpdatePaletteAnime( work->commonWork ); // ‹¤’ÊƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV
+  UpdatePaletteAnime( work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“XV
 
   CountUpSeqCount( work ); // ƒV[ƒPƒ“ƒXƒJƒEƒ“ƒ^XV
   SwitchSequence( work );  // ƒV[ƒPƒ“ƒXXV
@@ -570,6 +588,8 @@ static void Main_SETUP( RESEARCH_CHECK_WORK* work )
   CreatePercentage( work );        // % •\¦ƒIƒuƒWƒFƒNƒg¶¬
 
   SetupPaletteFadeSystem( work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€ €”õ
+  CreatePaletteAnime( work );     // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğ¶¬
+  SetupPaletteAnime( work );      // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğƒZƒbƒgƒAƒbƒv
   RegisterVBlankTask( work ); // VBkankƒ^ƒXƒN“o˜^
 
   // ‰æ–ÊƒtƒF[ƒhƒCƒ“
@@ -601,7 +621,9 @@ static void Main_STANDBY( RESEARCH_CHECK_WORK* work )
 
   //u‚à‚Ç‚évƒ{ƒ^ƒ“
   if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );      // ƒLƒƒƒ“ƒZƒ‹‰¹
+    RESEARCH_COMMON_StartPaletteAnime( 
+        work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ‘I‘ğƒpƒŒƒbƒgƒAƒjƒŠJn
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // ƒLƒƒƒ“ƒZƒ‹‰¹
     SetNextSequence( work, RESEARCH_CHECK_SEQ_FADE_OUT );
     SetNextSequence( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
@@ -728,7 +750,9 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
 
   //u‚à‚Ç‚évƒ{ƒ^ƒ“
   if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );      // ƒLƒƒƒ“ƒZƒ‹‰¹
+    RESEARCH_COMMON_StartPaletteAnime( 
+        work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ‘I‘ğƒpƒŒƒbƒgƒAƒjƒŠJn
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // ƒLƒƒƒ“ƒZƒ‹‰¹
     SetNextSequence( work, RESEARCH_CHECK_SEQ_FADE_OUT );
     SetNextSequence( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
     FinishCurrentSequence( work );
@@ -746,9 +770,22 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
     return;
   } 
 
-  //u‰~ƒOƒ‰ƒtvƒ^ƒbƒ` oru‚Ù‚¤‚±‚­‚ğ‚İ‚évƒ{ƒ^ƒ“
-  if( (touch == TOUCH_AREA_GRAPH) || (touch == TOUCH_AREA_ANALYZE_BUTTON) ) {
+  //u‰~ƒOƒ‰ƒtvƒ^ƒbƒ`
+  if( touch == TOUCH_AREA_GRAPH ) {
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
+      SetNextSequence( work, RESEARCH_CHECK_SEQ_ANALYZE );
+      SetNextSequence( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
+      SetNextSequence( work, RESEARCH_CHECK_SEQ_FLASH_IN );
+      SetNextSequence( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
+      SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+      FinishCurrentSequence( work );
+    }
+    return;
+  }
+  //u‚Ù‚¤‚±‚­‚ğ‚İ‚évƒ{ƒ^ƒ“
+  if( touch == TOUCH_AREA_ANALYZE_BUTTON ) {
+    if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
+      StartPaletteAnime( work, PALETTE_ANIME_SELECT );
       SetNextSequence( work, RESEARCH_CHECK_SEQ_ANALYZE );
       SetNextSequence( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
       SetNextSequence( work, RESEARCH_CHECK_SEQ_FLASH_IN );
@@ -944,6 +981,14 @@ static void Main_FADE_OUT( RESEARCH_CHECK_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void Main_CLEAN_UP( RESEARCH_CHECK_WORK* work )
 { 
+  // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN
+  CleanUpPaletteAnime( work );
+  DeletePaletteAnime( work );
+
+  // ‹¤’ÊƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“
+  RESEARCH_COMMON_StopAllPaletteAnime( work->commonWork ); // ’â~‚µ‚Ä, 
+  RESEARCH_COMMON_ResetAllPalette( work->commonWork );     // ƒpƒŒƒbƒg‚ğŒ³‚É–ß‚·
+
   ReleaseVBlankTask( work );        // VBlankƒ^ƒXƒN‚ğ‰ğœ
   DeletePercentage( work );         // % •\¦ƒIƒuƒWƒFƒNƒg”jŠü
   DeleteArrow( work );              // –îˆó íœ
@@ -1112,8 +1157,7 @@ static void SwitchSequence( RESEARCH_CHECK_WORK* work )
 static void SetSequence( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
 { 
   // ƒV[ƒPƒ“ƒX‚ÌI—¹ˆ—
-  switch( work->seq )
-  {
+  switch( work->seq ) {
   case RESEARCH_CHECK_SEQ_SETUP:      FinishSequence_SETUP( work );       break;
   case RESEARCH_CHECK_SEQ_STANDBY:    FinishSequence_STANDBY( work );     break;
   case RESEARCH_CHECK_SEQ_KEY_WAIT:   FinishSequence_KEY_WAIT( work );    break;
@@ -1134,8 +1178,7 @@ static void SetSequence( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
   work->seqFinishFlag = FALSE;
 
   // ƒV[ƒPƒ“ƒX‚Ì‰Šú‰»ˆ—
-  switch( nextSeq )
-  {
+  switch( nextSeq ) {
   case RESEARCH_CHECK_SEQ_SETUP:      InitSequence_SETUP( work );       break;
   case RESEARCH_CHECK_SEQ_STANDBY:    InitSequence_STANDBY( work );     break;
   case RESEARCH_CHECK_SEQ_KEY_WAIT:   InitSequence_KEY_WAIT( work );    break;
@@ -1152,8 +1195,7 @@ static void SetSequence( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: set seq ==> " );
-  switch( nextSeq )
-  {
+  switch( nextSeq ) {
   case RESEARCH_CHECK_SEQ_SETUP:      OS_TFPrintf( PRINT_TARGET, "SETUP" );       break;
   case RESEARCH_CHECK_SEQ_STANDBY:    OS_TFPrintf( PRINT_TARGET, "STANDBY" );     break;
   case RESEARCH_CHECK_SEQ_KEY_WAIT:   OS_TFPrintf( PRINT_TARGET, "KEY_WAIT" );    break;
@@ -1358,6 +1400,7 @@ static void FinishSequence_SETUP( RESEARCH_CHECK_WORK* work )
   UpdateMainBG_WINDOW( work );          // MAIN-BG ( ƒEƒBƒ“ƒhƒE–Ê ) ‚ğXV‚·‚é
   UpdateMyAnswerIconOnButton( work );   // ©•ª‚Ì‰ñ“šƒAƒCƒRƒ“ ( ƒ{ƒ^ƒ“ã ) ‚ğXV‚·‚é
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZE_BUTTON, TRUE ); //u‚Ù‚¤‚±‚­‚ğ‚İ‚évƒ{ƒ^ƒ“‚ğ•\¦
+  StartPaletteAnime( work, PALETTE_ANIME_CURSOR_ON ); // ƒJ[ƒ\ƒ‹ONƒpƒŒƒbƒgƒAƒjƒ‚ğŠJn
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq SETUP\n" );
@@ -1697,8 +1740,8 @@ static void MoveMenuCursorDown( RESEARCH_CHECK_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void MoveMenuCursorDirect( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem )
 {
-  // ˆÚ“®æ‚ªu‰ñ“šv‚Ìê‡
-  if( menuItem == MENU_ITEM_ANSWER )
+  // ˆÚ“®æ‚ªu‰ñ“švu©•ª‚Ì‰ñ“šv‚Ìê‡
+  if( (menuItem == MENU_ITEM_ANSWER) || (menuItem == MENU_ITEM_MY_ANSWER) )
   {
     if( (work->analyzeFlag == FALSE) ||   // –¢‰ğÍ
         (GetCountOfQuestion(work) == 0) ) //u‚½‚¾‚¢‚Ü ‚¿‚å‚¤‚³‚¿‚ã‚¤v
@@ -3623,8 +3666,8 @@ static void CreateArrow( RESEARCH_CHECK_WORK* work )
 
   // –îˆó‚ğ¶¬‚·‚é
   dispParam.cgrIndex      = GetObjResourceRegisterIndex( work, OBJ_RESOURCE_MAIN_CHARACTER );
-  dispParam.plttIndex     = GetObjResourceRegisterIndex( work, OBJ_RESOURCE_MAIN_CHARACTER );
-  dispParam.cellAnimIndex = GetObjResourceRegisterIndex( work, OBJ_RESOURCE_MAIN_CHARACTER );
+  dispParam.plttIndex     = GetObjResourceRegisterIndex( work, OBJ_RESOURCE_MAIN_PALETTE );
+  dispParam.cellAnimIndex = GetObjResourceRegisterIndex( work, OBJ_RESOURCE_MAIN_CELL_ANIME );
   dispParam.setSerface    = CLSYS_DEFREND_MAIN;
   dispParam.anmseqH       = NANR_obj_yoko;
   dispParam.anmseqV       = NANR_obj_tate;
@@ -3851,32 +3894,39 @@ static void RegisterMainObjResources( RESEARCH_CHECK_WORK* work )
 {
   HEAPID heapID;
   ARCHANDLE* arcHandle;
-  u32 character, palette, cellAnime;
+  u32 character, palette, commonPalette, cellAnime;
 
-  heapID    = work->heapID;
-  arcHandle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, heapID );
+  heapID = work->heapID;
 
-  // ƒŠƒ\[ƒX‚ğ“o˜^
+  arcHandle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, heapID ); 
   character = GFL_CLGRP_CGR_Register( arcHandle, 
                                       NARC_research_radar_graphic_obj_NCGR, 
                                       FALSE, CLSYS_DRAW_MAIN, heapID ); 
-
   palette = GFL_CLGRP_PLTT_RegisterEx( arcHandle, 
                                        NARC_research_radar_graphic_obj_NCLR,
                                        CLSYS_DRAW_MAIN,
-                                       ONE_PALETTE_SIZE*4, 0, 2, 
-                                       heapID );
-
+                                       ONE_PALETTE_SIZE*6, 0, 3, 
+                                       heapID ); 
   cellAnime = GFL_CLGRP_CELLANIM_Register( arcHandle,
                                            NARC_research_radar_graphic_obj_NCER,
                                            NARC_research_radar_graphic_obj_NANR,
                                            heapID ); 
+  GFL_ARC_CloseDataHandle( arcHandle );
+
+
+  arcHandle = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, heapID ); 
+  commonPalette = GFL_CLGRP_PLTT_RegisterEx( arcHandle, 
+                                       NARC_app_menu_common_task_menu_NCLR,
+                                       CLSYS_DRAW_MAIN,
+                                       ONE_PALETTE_SIZE*9, 0, 1, 
+                                       heapID );
+  GFL_ARC_CloseDataHandle( arcHandle );
+
   // “o˜^ƒCƒ“ƒfƒbƒNƒX‚ğ‹L‰¯
   work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CHARACTER ]  = character;
   work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_PALETTE ]    = palette;
+  work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_COMMON_PALETTE ]    = commonPalette;
   work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CELL_ANIME ] = cellAnime;
-
-  GFL_ARC_CloseDataHandle( arcHandle );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: register MAIN-OBJ resources\n" );
@@ -3893,6 +3943,7 @@ static void ReleaseMainObjResources( RESEARCH_CHECK_WORK* work )
 {
   GFL_CLGRP_CGR_Release     ( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CHARACTER ] );
   GFL_CLGRP_PLTT_Release    ( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_PALETTE ] );
+  GFL_CLGRP_PLTT_Release    ( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_COMMON_PALETTE ] );
   GFL_CLGRP_CELLANIM_Release( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CELL_ANIME ] );
 
   // DEBUG:
@@ -4331,6 +4382,168 @@ static void DeleteBmpOamActors( RESEARCH_CHECK_WORK* work )
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete BMP-OAM actors\n" );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void InitPaletteAnime( RESEARCH_CHECK_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    work->paletteAnime[ idx ] = NULL;
+  }
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init palette anime\n" );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğ¶¬‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void CreatePaletteAnime( RESEARCH_CHECK_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] == NULL ); // ‘½d¶¬
+
+    work->paletteAnime[ idx ] = PALETTE_ANIME_Create( work->heapID );
+  }
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create palette anime\n" );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğ”jŠü‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void DeletePaletteAnime( RESEARCH_CHECK_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    PALETTE_ANIME_Delete( work->paletteAnime[ idx ] );
+  }
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete palette anime\n" );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğƒZƒbƒgƒAƒbƒv‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void SetupPaletteAnime( RESEARCH_CHECK_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    PALETTE_ANIME_Setup( work->paletteAnime[ idx ],
+                         PaletteAnimeData[ idx ].destAdrs,
+                         PaletteAnimeData[ idx ].srcAdrs,
+                         PaletteAnimeData[ idx ].colorNum);
+  }
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup palette anime\n" );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğƒNƒŠ[ƒ“ƒAƒbƒv‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void CleanUpPaletteAnime( RESEARCH_CHECK_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    // ‘€ì‚µ‚Ä‚¢‚½ƒpƒŒƒbƒg‚ğŒ³‚É–ß‚·
+    PALETTE_ANIME_Reset( work->paletteAnime[ idx ] );
+  }
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up palette anime\n" );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠJn‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void StartPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index )
+{
+  PALETTE_ANIME_Start( work->paletteAnime[ index ], 
+                       PaletteAnimeData[ index ].animeType,
+                       PaletteAnimeData[ index ].fadeColor );
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: start palette anime [%d]\n", index );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void StopPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index )
+{
+  PALETTE_ANIME_Stop( work->paletteAnime[ index ] );
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: stop palette anime [%d]\n", index );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void UpdatePaletteAnime( RESEARCH_CHECK_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    PALETTE_ANIME_Update( work->paletteAnime[ idx ] );
+  }
 }
 
 //-------------------------------------------------------------------------------

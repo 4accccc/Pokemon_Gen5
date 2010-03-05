@@ -48,7 +48,7 @@
 //------------------------
 // MAIN-OBJ
 #define COMMON_CLUNIT_MAIN_OBJ_WORK_SIZE (1)  // Å‘åƒ[ƒN”
-#define COMMON_CLUNIT_MAIN_OBJ_PRIORITY  (1)  // •`‰æ—Dæ‡ˆÊ
+#define COMMON_CLUNIT_MAIN_OBJ_PRIORITY  (2)  // •`‰æ—Dæ‡ˆÊ
 
 
 //-----------------------
