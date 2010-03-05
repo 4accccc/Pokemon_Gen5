@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2010-03-05T18:02:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="250"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,11 +292,47 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_r07r0105_chime_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>BGメッセージ
+・はい/いいえ
+・はい→chime_02
+　いいえ→chime_04</comment>
+		<attribute name="キャラ指定">鐘</attribute>
+		<language name="JPN" width="256">タワーオブヘブンの　かねがある……
+かねを　ならしますか？</language>
+		<language name="JPN_KANJI" width="256">タワーオブヘブンの　鐘がある……
+鐘を　鳴らしますか？</language>
+	</row>
+
+	<row id="msg_r07r0105_chime_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>BGメッセージ
+・はい選択時
+・メッセージ表示後、鐘が動き専用SEを鳴らす
+　SE再生終了するとchime_03
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">鐘</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+かねを　ならした……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+鐘を　鳴らした……</language>
+	</row>
+
+	<row id="msg_r07r0105_chime_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>BGメッセージ
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">鐘</attribute>
+		<language name="JPN" width="256">かねの　ねいろが
+あたりに　なりひびいた……</language>
+		<language name="JPN_KANJI" width="256">鐘の　音色が
+あたりに　鳴り響いた……</language>
+	</row>
+
+	<row id="msg_r07r0105_chime_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>BGメッセージ
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">鐘</attribute>
+		<language name="JPN" width="256">かねを　そのままに　しておいた……</language>
+		<language name="JPN_KANJI" width="256">鐘を　そのままに　しておいた……</language>
 	</row>
 
 	<flowchart-group-list>
