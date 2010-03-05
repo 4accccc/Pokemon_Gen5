@@ -38,13 +38,13 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	out_end $(TARGETDIR)ev_bgm_list.cdat $(MSGDIR)ev_bgm_list.gmm
-
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+do-build:	out_end $(TARGETDIR)ev_bgm_list.cdat $(MSGDIR)ev_bgm_list.gmm
 # コンバート
 out_end: ev_bgm_list.txt
 	ruby ../../tools/effectviewer/effectviewer.rb ev_bgm_list.txt ../message/template.gmm
-
+else
+do-build:	$(TARGETDIR)ev_bgm_list.cdat $(MSGDIR)ev_bgm_list.gmm
 endif
 
 # コピーだけ実行する
