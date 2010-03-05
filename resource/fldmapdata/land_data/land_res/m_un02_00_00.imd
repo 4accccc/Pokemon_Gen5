@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-02-05T12:50:24" source="m_un02_00_00c.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-03-05T16:35:35" source="m_un02_00_00c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2010-02-05T12:50:24" source="m_un02_00_00c.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2010-03-05T16:35:35" source="m_un02_00_00c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -21,7 +21,7 @@
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
-	compress_material="on" material_size="12 12"
+	compress_material="on" material_size="13 13"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="6" xyz="-2.500000 0.000000 -3.125000" whd="4.500000 0.750000 2.875000"/>
 
-<tex_image_array size="12">
+<tex_image_array size="13">
 	<tex_image index="0" name="in55_desk01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
@@ -252,7 +252,25 @@
 			0101 0101 0101 0101 0101 0101 0101 0101
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="in55book_02"
+	<tex_image index="3" name="in55_plate"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in55_plate_pl"
+		path="C:/home/wb_data3d/field/in55/chip/tex/in55_plate.tga"
+	>
+		<bitmap size="64">
+			1111 1111 1111 1111 1221 5555 2221 1222
+			1231 5665 2221 1322 1231 5445 1111 1321
+			1231 5555 5555 1321 1231 4665 4665 1321
+			1231 4445 4445 1321 1231 5555 5555 1321
+			1221 4665 4665 1221 1221 4445 4445 1221
+			1111 5555 5555 1111 1111 4665 4665 1111
+			0000 4445 4445 0000 0000 5555 5555 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="in55book_02"
 		width="64" height="32" original_width="64" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -326,7 +344,7 @@
 			2222 2222 2222 2222 2222 2222 2222 2222
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="in55book_08"
+	<tex_image index="5" name="in55book_08"
 		width="64" height="32" original_width="64" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -400,7 +418,7 @@
 			4444 4444 4444 4444 4444 4444 4444 4444
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="in55kage"
+	<tex_image index="6" name="in55kage"
 		width="8" height="16" original_width="8" original_height="16"
 		format="a3i5"
 		palette_name="in55kage_pl"
@@ -417,7 +435,7 @@
 			8080 8080 8080 8080 8080 8080 8080 8080
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="in55kaiga_01"
+	<tex_image index="7" name="in55kaiga_01"
 		width="16" height="8" original_width="16" original_height="8"
 		format="palette16"
 		color0_mode="transparency"
@@ -431,7 +449,7 @@
 			7777 7777 7560 7777 6666 6666 6600 6666
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="in55kaiga_02"
+	<tex_image index="8" name="in55kaiga_02"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette16"
 		color0_mode="color"
@@ -443,7 +461,7 @@
 			2000 2332 3220 3333 3333 3333 3333 3333
 		</bitmap>
 	</tex_image>
-	<tex_image index="8" name="in55tana_01"
+	<tex_image index="9" name="in55tana_01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -485,7 +503,7 @@
 			7777 7777 7777 7777 7777 7777 7777 7777
 		</bitmap>
 	</tex_image>
-	<tex_image index="9" name="in55yuka_01"
+	<tex_image index="10" name="in55yuka_01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -503,7 +521,7 @@
 			1112 1011 1101 0111 0002 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="in55yuka_02"
+	<tex_image index="11" name="in55yuka_02"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -521,7 +539,7 @@
 			5666 1111 1111 6665 6666 1354 4531 6666
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="in55yuka_3"
+	<tex_image index="12" name="in55yuka_3"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -541,7 +559,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="12">
+<tex_palette_array size="13">
 	<tex_palette index="0" name="in55_desk01_pl" color_size="16">
 		1084 14a5 14a6 18c7 2108 6663 72c6 7ee1
 		7f06 7f6e 7fff 7fff 7fff 7fff 7fff 7fff
@@ -553,39 +571,42 @@
 	<tex_palette index="2" name="in55_kabe_pl" color_size="8">
 		0444 0866 0ca8 10c9 2591 3638 3e34 5f9f
 	</tex_palette>
-	<tex_palette index="3" name="in55book_02_pl" color_size="16">
+	<tex_palette index="3" name="in55_plate_pl" color_size="8">
+		04a7 04c9 050b 052c 0a17 0e5a 129c 7fff
+	</tex_palette>
+	<tex_palette index="4" name="in55book_02_pl" color_size="16">
 		0130 01cf 08ca 4665 0445 2963 14a2 1d03
 		39e4 31a4 18e2 4225 2144 0c83 0d6a 0dad
 	</tex_palette>
-	<tex_palette index="4" name="in55book_08_pl" color_size="16">
+	<tex_palette index="5" name="in55book_08_pl" color_size="16">
 		0130 018d 01cf 0445 08ca 0c0a 0c0c 1409
 		1c0a 1c0b 240d 2c0f 3011 3411 7fff 7fff
 	</tex_palette>
-	<tex_palette index="5" name="in55kage_pl" color_size="8">
+	<tex_palette index="6" name="in55kage_pl" color_size="8">
 		0c63 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="6" name="in55kaiga_01_pl" color_size="16">
+	<tex_palette index="7" name="in55kaiga_01_pl" color_size="16">
 		683f 36fc 125c 1239 1df6 15d5 090d 1593
 		1152 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="7" name="in55kaiga_02_pl" color_size="8">
+	<tex_palette index="8" name="in55kaiga_02_pl" color_size="8">
 		772f 7b98 4e6b 3208 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="8" name="in55tana_01_pl" color_size="8">
+	<tex_palette index="9" name="in55tana_01_pl" color_size="8">
 		0465 0467 0488 110d 150c 150e 152f 1550
 	</tex_palette>
-	<tex_palette index="9" name="in55yuka_01_pl" color_size="8">
+	<tex_palette index="10" name="in55yuka_01_pl" color_size="8">
 		6f7b 739c 77bd 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="10" name="in55yuka_02_pl" color_size="8">
+	<tex_palette index="11" name="in55yuka_02_pl" color_size="8">
 		3d02 4101 4102 4501 4900 4901 4d00 7fff
 	</tex_palette>
-	<tex_palette index="11" name="in55yuka_3_pl" color_size="8">
+	<tex_palette index="12" name="in55yuka_3_pl" color_size="8">
 		0211 02b6 3def 49e3 5643 5e63 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="12">
+<material_array size="13">
 	<material index="0" name="in55_desk01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
@@ -658,13 +679,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="in55book_02"
+	<material index="3" name="in55_plate"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="8"
+		polygon_id="9"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -682,7 +703,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="in55book_08"
+	<material index="4" name="in55book_02"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -706,13 +727,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="in55kage"
+	<material index="5" name="in55book_08"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="8"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -730,7 +751,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="in55kaiga_01"
+	<material index="6" name="in55kage"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -743,7 +764,7 @@
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="31 31 31"
+		ambient="0 0 0"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -754,7 +775,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="in55kaiga_02"
+	<material index="7" name="in55kaiga_01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -778,20 +799,20 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="in55tana_01"
+	<material index="8" name="in55kaiga_02"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="8"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="0 0 0"
+		ambient="31 31 31"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -802,13 +823,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="9" name="in55yuka_01"
+	<material index="9" name="in55tana_01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="8"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -826,7 +847,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="10" name="in55yuka_02"
+	<material index="10" name="in55yuka_01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -839,7 +860,7 @@
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="31 31 31"
+		ambient="0 0 0"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -850,7 +871,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="11" name="in55yuka_3"
+	<material index="11" name="in55yuka_02"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -874,13 +895,37 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
+	<material index="12" name="in55yuka_3"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="12" tex_palette_idx="12"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
 </material_array>
 
 <matrix_array size="1">
 	<matrix index="0" mtx_weight="1" node_idx="0"/>
 </matrix_array>
 
-<polygon_array size="12">
+<polygon_array size="13">
 	<polygon index="0" name="polygon0"
 		vertex_size="76" polygon_size="27"
 		triangle_size="8" quad_size="19"
@@ -3664,6 +3709,51 @@
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
+	<polygon index="12" name="polygon12"
+		vertex_size="16" polygon_size="4"
+		triangle_size="0" quad_size="4"
+		volume_min="-3.906250 0.960938 -4.820313"
+		volume_max="-3.500000 1.351563 -4.757813"
+		volume_r="6.349854"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="16">
+					<mtx idx="0"/>
+					<tex st="1.687500 16.000000"/>
+					<clr rgb="16 16 16"/>
+					<pos_xyz xyz="-3.906250 0.960938 -4.820313"/>
+					<pos_xz xz="-3.906250 -4.757813"/>
+					<tex st="1.687500 0.000000"/>
+					<pos_xy xy="-3.906250 1.351563"/>
+					<pos_xz xz="-3.906250 -4.820313"/>
+					<tex st="1.687500 16.000000"/>
+					<pos_xyz xyz="-3.500000 0.960938 -4.757813"/>
+					<pos_xz xz="-3.500000 -4.820313"/>
+					<tex st="1.687500 0.000000"/>
+					<pos_xy xy="-3.500000 1.351563"/>
+					<pos_xz xz="-3.500000 -4.757813"/>
+					<tex st="1.437500 7.125000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xy xy="-3.906250 1.351563"/>
+					<pos_xy xy="-3.500000 1.351563"/>
+					<pos_xz xz="-3.500000 -4.820313"/>
+					<pos_xy xy="-3.906250 1.351563"/>
+					<tex st="0.375000 16.000000"/>
+					<pos_yz yz="0.960938 -4.757813"/>
+					<tex st="15.625000 16.000000"/>
+					<pos_xy xy="-3.500000 0.960938"/>
+					<tex st="15.625000 0.000000"/>
+					<pos_xy xy="-3.500000 1.351563"/>
+					<tex st="0.375000 0.000000"/>
+					<pos_xy xy="-3.906250 1.351563"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
 </polygon_array>
 
 <node_array size="1">
@@ -3678,9 +3768,9 @@
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
-		display_size="12"
-		vertex_size="1160" polygon_size="376"
-		triangle_size="84" quad_size="292"
+		display_size="13"
+		vertex_size="1176" polygon_size="380"
+		triangle_size="84" quad_size="296"
 		volume_min="-5.000000 0.000000 -6.250000"
 		volume_max="4.000000 1.500000 -0.500000"
 		volume_r="7.570557"
@@ -3688,20 +3778,21 @@
 		<display index="0" material="0" polygon="4" priority="0"/>
 		<display index="1" material="1" polygon="5" priority="0"/>
 		<display index="2" material="2" polygon="3" priority="0"/>
-		<display index="3" material="3" polygon="7" priority="0"/>
-		<display index="4" material="4" polygon="9" priority="0"/>
-		<display index="5" material="5" polygon="6" priority="0"/>
-		<display index="6" material="6" polygon="10" priority="0"/>
-		<display index="7" material="7" polygon="11" priority="0"/>
-		<display index="8" material="8" polygon="8" priority="0"/>
-		<display index="9" material="9" polygon="0" priority="0"/>
-		<display index="10" material="10" polygon="2" priority="0"/>
-		<display index="11" material="11" polygon="1" priority="0"/>
+		<display index="3" material="3" polygon="12" priority="0"/>
+		<display index="4" material="4" polygon="7" priority="0"/>
+		<display index="5" material="5" polygon="9" priority="0"/>
+		<display index="6" material="6" polygon="6" priority="0"/>
+		<display index="7" material="7" polygon="10" priority="0"/>
+		<display index="8" material="8" polygon="11" priority="0"/>
+		<display index="9" material="9" polygon="8" priority="0"/>
+		<display index="10" material="10" polygon="0" priority="0"/>
+		<display index="11" material="11" polygon="2" priority="0"/>
+		<display index="12" material="12" polygon="1" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="1160" polygon_size="376"
-	triangle_size="84" quad_size="292"/>
+<output_info vertex_size="1176" polygon_size="380"
+	triangle_size="84" quad_size="296"/>
 
 </body>
 
