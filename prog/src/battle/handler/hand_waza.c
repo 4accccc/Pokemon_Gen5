@@ -638,6 +638,7 @@ static const BtlEventHandlerTable*  ADD_TomoeNage( u32* numElems );
 static void handler_TomoeNage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Utiotosu( u32* numElems );
 static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Utiotosu_checkHide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_KarawoYaburu( u32* numElems );
 static void handler_KarawoYaburu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_MirrorType( u32* numElems );
@@ -4240,9 +4241,9 @@ static void handler_SkyUpper( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static const BtlEventHandlerTable*  ADD_Kaminari( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_POKE_HIDE,   handler_Kaminari_checkHide },      // 消えポケヒットチェック
+    { BTL_EVENT_CHECK_POKE_HIDE,   handler_Kaminari_checkHide     },  // 消えポケヒットチェック
     { BTL_EVENT_EXCUSE_CALC_HIT,   handler_Kaminari_excuseHitCalc },  // ヒット確率計算スキップ
-    { BTL_EVENT_WAZA_HIT_RATIO,    handler_Kaminari_hitRatio },       // 命中率計算
+    { BTL_EVENT_WAZA_HIT_RATIO,    handler_Kaminari_hitRatio      },  // 命中率計算
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -8911,34 +8912,24 @@ static void handler_TomoeNage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
  * うちおとす
  */
 //----------------------------------------------------------------------------------
-//#define _UTIOTOSU_NEW
 
 static const BtlEventHandlerTable*  ADD_Utiotosu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-#ifdef _UTIOTOSU_NEW
-    { BTL_EVENT_WAZASICK_SPECIAL,   handler_Utiotosu   },   // 特殊状態異常
-#else
-    { BTL_EVENT_WAZA_DMG_REACTION,  handler_Utiotosu   },   // ダメージ直後
-#endif
+    { BTL_EVENT_WAZA_DMG_REACTION,  handler_Utiotosu               },   // ダメージ直後
+    { BTL_EVENT_CHECK_POKE_HIDE,    handler_Kaminari_checkHide     },  // 消えポケヒットチェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// ダメージ直後ハンドラ
 static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-#ifdef _UTIOTOSU_NEW
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    BTL_HANDEX_STR_PARAMS* str = (BTL_HANDEX_STR_PARAMS*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICKID, WAZASICK_FLYING_CANCEL );
-    HANDEX_STR_Setup( str, BTL_STRTYPE_SET, BTL_STRID_SET_Utiotosu );
-    HANDEX_STR_AddArg( str, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
-  }
-#else
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+    u8 msgFlag = FALSE;
+
     if( BTL_SVFTOOL_IsFlyingPoke(flowWk, targetPokeID) )
     {
       BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
@@ -8949,10 +8940,25 @@ static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       param->sickCont = BPP_SICKCONT_MakePermanent();
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Utiotosu );
       HANDEX_STR_AddArg( &param->exStr, targetPokeID );
+      msgFlag = TRUE;
+    }
+
+    {
+      const BTL_POKEPARAM* bppTarget = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
+      if( BPP_CONTFLAG_Get(bppTarget, BPP_CONTFLG_SORAWOTOBU) )
+      {
+        BTL_HANDEX_PARAM_TAMEHIDE_CANCEL* cancel_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TAMEHIDE_CANCEL, pokeID );
+        cancel_param->pokeID = targetPokeID;
+        cancel_param->flag = BPP_CONTFLG_SORAWOTOBU;
+        if( !msgFlag ){
+          HANDEX_STR_Setup( &cancel_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Utiotosu );
+          HANDEX_STR_AddArg( &cancel_param->exStr, targetPokeID );
+        }
+      }
     }
   }
-#endif
 }
+
 //----------------------------------------------------------------------------------
 /**
  * からをやぶる

@@ -753,6 +753,7 @@ static u8 scproc_HandEx_swapPoke( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
 static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_fakeBreak( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_TameHideCancel( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_effectByPos( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_changeForm( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 
@@ -8604,7 +8605,6 @@ static void scproc_CheckExpGet( BTL_SVFLOW_WORK* wk )
     }
   }
 }
-
 //----------------------------------------------------------------------------------
 /**
  * 経験値取得処理コマンド生成
@@ -8964,6 +8964,22 @@ static void getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
   }
 }
 
+/**
+ *  そらをとぶ状態をキャンセル
+ */
+static BOOL scproc_TameHideCancel( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppContFlag hideContFlag )
+{
+  if( BPP_CONTFLAG_Get(bpp, hideContFlag) )
+  {
+    scPut_ResetContFlag( wk, bpp, hideContFlag );
+    if( BPP_CheckSick(bpp, WAZASICK_TAMELOCK) ) {
+      scPut_CureSick( wk, bpp, WAZASICK_TAMELOCK, NULL );
+    }
+    SCQUE_PUT_ACT_TameWazaHide( wk->que, BPP_GetID(bpp), FALSE );
+    return TRUE;
+  }
+  return FALSE;
+}
 
 //---------------------------------------------------------------------------------------------
 //  数値関連関数群
@@ -12217,6 +12233,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_HENSIN,               sizeof(BTL_HANDEX_PARAM_HENSIN)              },
     { BTL_HANDEX_FAKE_BREAK,           sizeof(BTL_HANDEX_PARAM_FAKE_BREAK)          },
     { BTL_HANDEX_JURYOKU_CHECK,        sizeof(BTL_HANDEX_PARAM_HEADER)              },
+    { BTL_HANDEX_TAMEHIDE_CANCEL,      sizeof(BTL_HANDEX_PARAM_TAMEHIDE_CANCEL)     },
     { BTL_HANDEX_EFFECT_BY_POS,        sizeof(BTL_HANDEX_PARAM_EFFECT_BY_POS)       },
     { BTL_HANDEX_CHANGE_FORM,          sizeof(BTL_HANDEX_PARAM_CHANGE_FORM)         },
   };
@@ -12406,6 +12423,7 @@ static HandExResult scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_HENSIN:             fPrevSucceed = scproc_HandEx_hensin( wk, handEx_header ); break;
     case BTL_HANDEX_FAKE_BREAK:         fPrevSucceed = scproc_HandEx_fakeBreak( wk, handEx_header ); break;
     case BTL_HANDEX_JURYOKU_CHECK:      fPrevSucceed = scproc_HandEx_juryokuCheck( wk, handEx_header ); break;
+    case BTL_HANDEX_TAMEHIDE_CANCEL:    fPrevSucceed = scproc_HandEx_TameHideCancel( wk, handEx_header ); break;
     case BTL_HANDEX_EFFECT_BY_POS:      fPrevSucceed = scproc_HandEx_effectByPos( wk, handEx_header ); break;
     case BTL_HANDEX_CHANGE_FORM:        fPrevSucceed = scproc_HandEx_changeForm( wk, handEx_header ); break;
     default:
@@ -13664,9 +13682,9 @@ static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
   {
     bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID[i] );
     fFall = FALSE;
-    if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_SORAWOTOBU) ){
-      scPut_ResetContFlag( wk, bpp, BPP_CONTFLG_SORAWOTOBU );
-      scPut_CureSick( wk, bpp, WAZASICK_TAMELOCK, NULL );
+    if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_SORAWOTOBU) )
+    {
+      scproc_TameHideCancel( wk, bpp, BPP_CONTFLG_SORAWOTOBU );
       fFall = TRUE;
     }
     if( BPP_CheckSick(bpp, WAZASICK_FLYING) ){
@@ -13686,6 +13704,25 @@ static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
   }
 
   return 1;
+}
+/**
+ * 溜めワザ消え状態のキャンセル（そらとぶ・ダイビング等）
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_TameHideCancel( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_TAMEHIDE_CANCEL* param = (const BTL_HANDEX_PARAM_TAMEHIDE_CANCEL*)param_header;
+
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+  if( !BPP_IsDead(bpp) )
+  {
+    if( scproc_TameHideCancel(wk, bpp, param->flag) )
+    {
+      handexSub_putString( wk, &param->exStr );
+      return 1;
+    }
+  }
+  return 0;
 }
 /**
  * 位置指定エフェクト生成

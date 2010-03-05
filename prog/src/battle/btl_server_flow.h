@@ -249,6 +249,7 @@ typedef enum {
   BTL_HANDEX_HENSIN,              ///< へんしんする
   BTL_HANDEX_FAKE_BREAK,          ///< イリュージョン解除
   BTL_HANDEX_JURYOKU_CHECK,       ///< じゅうりょく発動時のチェック処理
+  BTL_HANDEX_TAMEHIDE_CANCEL,     ///< 特定の消え状態（そらをとぶなど）をキャンセル
   BTL_HANDEX_EFFECT_BY_POS,       ///< 位置指定してエフェクト発動
   BTL_HANDEX_CHANGE_FORM,         ///< フォルムナンバーチェンジ
 
@@ -774,6 +775,17 @@ typedef struct {
   u8   pokeID;                       ///< 対象ポケID
   BTL_HANDEX_STR_PARAMS    exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_FAKE_BREAK;
+
+/**
+ * 溜めワザによる消え状態（そらをとぶ等）をキャンセルする
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  u8            pokeID;               ///< 対象ポケID
+  BppContFlag   flag;                 ///< キャンセルする状態フラグ
+  BTL_HANDEX_STR_PARAMS    exStr;    ///< 成功時メッセージ
+
+}BTL_HANDEX_PARAM_TAMEHIDE_CANCEL;
 
 /**
  * 位置指定エフェクト
