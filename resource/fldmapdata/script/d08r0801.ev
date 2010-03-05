@@ -54,7 +54,7 @@ EVENT_START    ev_pos_d08r0801_demo_01
 	_GET_ROM_VERSION(LCWK_VERSION)
 	
 	//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
-	_SHAKE_CAMERA(1, 4, 8, 3)
+	_SHAKE_CAMERA(0,2,6,10)
 
 	_TIME_WAIT(8)
 	
