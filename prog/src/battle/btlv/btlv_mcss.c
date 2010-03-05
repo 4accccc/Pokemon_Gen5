@@ -1167,6 +1167,22 @@ BOOL  BTLV_MCSS_GetNoJump( BTLV_MCSS_WORK *bmw, int position )
 
 //============================================================================================
 /**
+ * @brief 指定された立ち位置のfly_flagを取得
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  MCSSの立ち位置
+ *
+ */
+//============================================================================================
+u8  BTLV_MCSS_GetFlyFlag( BTLV_MCSS_WORK *bmw, int position )
+{ 
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+  return MCSS_GetFlyFlag( bmw->btlv_mcss[ index ].mcss );
+}
+
+//============================================================================================
+/**
  * @brief 指定された立ち位置のMCSSにみがわりセット
  *
  * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ

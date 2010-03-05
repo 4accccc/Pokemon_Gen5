@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "system/vm_cmd.h"
 #include "sound/pm_sndsys.h"
+#include "item/item.h"
 
 #include "btlv_effect.h"
 
@@ -47,7 +48,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define DEBUG_OS_PRINT
+//#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -249,6 +250,7 @@ static VMCMD_RESULT VMEC_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work 
 static VMCMD_RESULT VMEC_EMITTER_CIRCLE_MOVE_ORTHO( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_POKEMON_SIN_MOVE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_ALPHA( VMHANDLE *vmh, void *context_work );
@@ -402,6 +404,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_EMITTER_CIRCLE_MOVE_ORTHO,
   VMEC_POKEMON_MOVE,
   VMEC_POKEMON_CIRCLE_MOVE,
+  VMEC_POKEMON_SIN_MOVE,
   VMEC_POKEMON_SCALE,
   VMEC_POKEMON_ROTATE,
   VMEC_POKEMON_ALPHA,
@@ -1532,6 +1535,53 @@ static VMCMD_RESULT VMEC_POKEMON_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work 
 
 //============================================================================================
 /**
+ * @brief ポケモンSIN運動
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_POKEMON_SIN_MOVE( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  BTLV_MCSS_MOVE_CIRCLE_PARAM bmmcp;
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int pos_cnt = EFFVM_GetPokePosition( bevw, ( int )VMGetU32( vmh ), pos );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_POKEMON_SIN_MOVE\n");
+#endif DEBUG_OS_PRINT
+
+  bmmcp.axis              = ( int )VMGetU32( vmh );
+  bmmcp.shift             = ( int )VMGetU32( vmh );
+  bmmcp.radius_h          = ( fx32 )VMGetU32( vmh );
+	bmmcp.radius_v          = ( fx32 )VMGetU32( vmh );
+	bmmcp.frame             = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
+  bmmcp.rotate_wait       = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
+  bmmcp.count             = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
+	bmmcp.rotate_after_wait = ( int )VMGetU32( vmh );
+
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
+  {
+    if( bmmcp.count )
+    { 
+      int i;
+
+      for( i = 0 ; i < pos_cnt ; i++ )
+      { 
+        bmmcp.position = pos[ i ];
+        BTLV_MCSS_MoveCircle( BTLV_EFFECT_GetMcssWork(), &bmmcp );
+      }
+    }
+  }
+
+  return bevw->control_mode;
+}
+
+
+//============================================================================================
+/**
  * @brief ポケモン拡縮
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
@@ -2531,7 +2581,7 @@ static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
 
   if( pan == BTLEFF_SEPAN_FLAT )
   { 
-    pan = 64;
+    pan = 0;
   }
   else
   { 
@@ -3092,9 +3142,16 @@ static VMCMD_RESULT VMEC_BALLOBJ_SET( VMHANDLE *vmh, void *context_work )
   NNS_G3dWorldPosToScrPos( &pos, &pos_x, &pos_y );
 
   { 
+    BALL_ID ballID = ITEM_GetBallID( bevw->param.item_no );
     ARCDATID  ncgrID, nclrID;
-    ncgrID = NARC_waza_eff_gra_ball_01_anim_NCER + bevw->param.item_no * 2;
-    nclrID = NARC_waza_eff_gra_ball_01_anim_NANR + bevw->param.item_no * 2;
+
+    //不正なボールIDはモンスターボールにする
+    if( ( ballID == BALLID_NULL ) || ( ballID > BALLID_MAX ) )
+    { 
+      ballID = BALLID_MONSUTAABOORU;
+    }
+    ncgrID = NARC_waza_eff_gra_ball_01_anim_NCER + ballID * 2;
+    nclrID = NARC_waza_eff_gra_ball_01_anim_NANR + ballID * 2;
     bevw->obj[ index ] = BTLV_CLACT_AddEx( BTLV_EFFECT_GetCLWK(), ARCID_WAZAEFF_GRA,
                                            ncgrID, nclrID,
                                            NARC_waza_eff_gra_ball_01_anim_NCER, NARC_waza_eff_gra_ball_01_anim_NANR,
@@ -4689,6 +4746,19 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
   case BTLEFF_WORK_TRTYPE_D:
     ret = BTLV_EFFECT_GetTrType( param - BTLEFF_WORK_TRTYPE_A );
     break;
+  case BTLEFF_WORK_POS_AA_FLY:
+  case BTLEFF_WORK_POS_BB_FLY:
+  case BTLEFF_WORK_POS_A_FLY:
+  case BTLEFF_WORK_POS_B_FLY:
+  case BTLEFF_WORK_POS_C_FLY:
+  case BTLEFF_WORK_POS_D_FLY:
+  case BTLEFF_WORK_POS_E_FLY:
+  case BTLEFF_WORK_POS_F_FLY:
+    ret = BTLV_MCSS_GetFlyFlag( BTLV_EFFECT_GetMcssWork(), param - BTLEFF_WORK_POS_AA_FLY );
+    break;
+  case BTLEFF_WORK_ATTACK_FLY:
+    ret = BTLV_MCSS_GetFlyFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos );
+    break;
   default:
     //未知のパラメータです
     GF_ASSERT( 0 );
@@ -4997,8 +5067,15 @@ static  ARCDATID  EFFVM_ConvDatID( BTLV_EFFVM_WORK* bevw, ARCDATID datID )
   }
   else
   { 
-    ofs = ( bevw->param.item_no - 1 );
+    ofs = ITEM_GetBallID( bevw->param.item_no );
   }
+
+  //不正なボールIDはモンスターボールにする
+  if( ( ofs == BALLID_NULL ) || ( ofs > BALLID_MAX ) )
+  { 
+    ofs = BALLID_MONSUTAABOORU;
+  }
+
   switch( datID ){ 
   case NARC_spa_be_ball_001_1_spa:
   case NARC_spa_be_capture_01_spa:
@@ -5106,6 +5183,7 @@ static  void  TCB_EFFVM_SEEFFECT( GFL_TCB* tcb, void* work )
       NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( bes->player ), value );
       break;
     case BTLEFF_SEEFFECT_PAN:
+      OS_TPrintf( "pan:%d\n", value );
       PMSND_SetStatusSE_byPlayerID( bes->player, PMSND_NOEFFECT, PMSND_NOEFFECT, value );
       break;
     }

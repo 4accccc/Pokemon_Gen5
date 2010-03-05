@@ -112,6 +112,23 @@ typedef struct
   int             rotate_after_wait_count;
 }BTLV_MCSS_MOVE_CIRCLE_PARAM;
 
+typedef struct
+{ 
+  BTLV_MCSS_WORK* bmw;
+  BtlvMcssPos     position;
+  fx32            angle;               //角度
+  int             shift;              //回転シフト
+	fx32	          radius;           //半径
+	int		          frame;              //1回転何フレームか
+	int		          rotate_wait;        //回転ウエイト
+	int		          count;              //回転数
+	int		          rotate_after_wait;  //1回転した後のウエイト
+  int             angle;
+  int             speed;
+  int             rotate_wait_count;
+  int             rotate_after_wait_count;
+}BTLV_MCSS_MOVE_SIN_PARAM;
+
 extern  BTLV_MCSS_WORK* BTLV_MCSS_Init( BtlRule rule, GFL_TCBSYS *tcb_sys, HEAPID heapID );
 extern  void            BTLV_MCSS_Exit( BTLV_MCSS_WORK *bmw );
 extern  void            BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw );
@@ -155,6 +172,7 @@ extern  int             BTLV_MCSS_GetFormNo( BTLV_MCSS_WORK *bmw, int position )
 extern  u16             BTLV_MCSS_GetWeight( BTLV_MCSS_WORK *bmw, int position );
 extern  u32             BTLV_MCSS_GetStatusFlag( BTLV_MCSS_WORK *bmw, int position );
 extern  BOOL            BTLV_MCSS_GetNoJump( BTLV_MCSS_WORK *bmw, int position );
+extern  u8              BTLV_MCSS_GetFlyFlag( BTLV_MCSS_WORK *bmw, int position );
 extern  void            BTLV_MCSS_SetMigawari( BTLV_MCSS_WORK *bmw, int position, int sw, BOOL flag );
 extern  void            BTLV_MCSS_SetMosaic( BTLV_MCSS_WORK *bmw, int position, int mosaic );
 extern  void            BTLV_MCSS_CopyMAW( BTLV_MCSS_WORK *bmw, int src, int dst );
