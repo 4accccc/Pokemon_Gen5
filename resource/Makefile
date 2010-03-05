@@ -78,7 +78,6 @@ SUBDIRS	=	wmi \
 			code_input \
 			wazatype_icon \
 			wifi_note \
-			record \
 			selbox \
 			particle/wazaeffect \
 			others \
