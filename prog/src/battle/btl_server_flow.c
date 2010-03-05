@@ -541,6 +541,7 @@ static void scproc_Migawari_CheckNoEffect( BTL_SVFLOW_WORK* wk, SVFL_WAZAPARAM* 
 static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   const BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk );
+static void scproc_CheckResetMove( BTL_SVFLOW_WORK* wk );
 static void   scproc_turncheck_CommSupport( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet, BtlEventType event_type );
 static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlEventType event_type );
@@ -8178,10 +8179,51 @@ static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     }
   }
 
+  // トリプルバトル時、リセットムーブ処理
+  if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ){
+    scproc_CheckResetMove( wk );
+  }
+
   if( wk->turnCount < BTL_TURNCOUNT_MAX ){
     wk->turnCount++;
   }
 }
+/**
+ *  ターンチェック：トリプル時リセットムーブ処理
+ */
+static void scproc_CheckResetMove( BTL_SVFLOW_WORK* wk )
+{
+  if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE )
+  {
+    u8 clientID_1 = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+    u8 clientID_2 = BTL_MAIN_GetOpponentClientID( wk->mainModule, clientID_1, 0 );
+
+    BTL_PARTY* party_1 = BTL_POKECON_GetPartyData( wk->pokeCon, clientID_1 );
+    BTL_PARTY* party_2 = BTL_POKECON_GetPartyData( wk->pokeCon, clientID_2 );
+
+    if( (BTL_PARTY_GetAliveMemberCount(party_1) == 1)
+    &&  (BTL_PARTY_GetAliveMemberCount(party_2) == 1)
+    ){
+      BTL_POKEPARAM  *bpp1 = BTL_PARTY_GetAliveTopMember( party_1 );
+      BTL_POKEPARAM  *bpp2 = BTL_PARTY_GetAliveTopMember( party_2 );
+
+      u8 pokeID_1 = BPP_GetID( bpp1 );
+      u8 pokeID_2 = BPP_GetID( bpp2 );
+
+      BtlPokePos  pos1 = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, pokeID_1 );
+      BtlPokePos  pos2 = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, pokeID_2 );
+
+      u8 posIdx1 = BTL_MAIN_BtlPosToPosIdx( wk->mainModule, pos1 );
+      u8 posIdx2 = BTL_MAIN_BtlPosToPosIdx( wk->mainModule, pos2 );
+
+      if( (posIdx1 == posIdx2) && (!BTL_MAINUTIL_IsTripleCenterPos(pos1) ) )
+      {
+//        SCQUT_OP_TripleResetMove( wk->que,
+      }
+    }
+  }
+}
+
 /**
  *  ターンチェック：通信侵入者によるサポート
  */

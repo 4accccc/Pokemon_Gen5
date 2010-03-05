@@ -131,6 +131,7 @@ extern u8 BTL_PARTY_GetAliveMemberCountRear( const BTL_PARTY* party, u8 startIdx
 
 extern int BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param );
 extern int BTL_PARTY_FindMemberByPokeID( const BTL_PARTY* party, u8 pokeID );
+extern BTL_POKEPARAM* BTL_PARTY_GetAliveTopMember( BTL_PARTY* party );
 extern void BTL_PARTY_SetFakeSrcMember( BTL_PARTY* party, u8 memberIdx );
 //-------------------------
 extern BTL_POKEPARAM* BTL_PARTY_GetMemberData( BTL_PARTY* party, u8 idx );

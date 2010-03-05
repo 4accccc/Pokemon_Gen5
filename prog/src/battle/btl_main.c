@@ -431,8 +431,10 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
       break;
     case BTL_RULE_DOUBLE:
       if( setup_param->multiMode == BTL_MULTIMODE_NONE ){
+        TAYA_Printf("通常ダブルとしてのセットアップ\n");
         BTL_UTIL_SetupProc( bp, wk, setup_alone_double, NULL );
       }else{
+        TAYA_Printf("マルチバトルとしてのセットアップ\n");
         BTL_UTIL_SetupProc( bp, wk, setup_alone_double_multi, NULL );
       }
       break;
@@ -2934,7 +2936,14 @@ u32 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx
 {
   clientID &= 1;
   clientID ^= 1;
-  clientID += ((idx & 1) * 2);
+  if( idx )
+  {
+    u8 nextClientID = clientID + ((idx & 1) * 2);
+    if( BTL_MAIN_IsExistClient(wk, nextClientID) ){
+      clientID = nextClientID;
+    }
+  }
+
   return clientID;
   /*
   BtlPokePos pos = BTL_MAIN_GetClientPokePos( wk, clientID, 0 );
@@ -3574,8 +3583,8 @@ u8 BTL_PARTY_GetAliveMemberCount( const BTL_PARTY* party )
 
   for(i=0, cnt=0; i<party->memberCount; i++)
   {
-    if( BPP_GetValue(party->member[i], BPP_HP) ){
-      cnt++;
+    if( BPP_IsFightEnable(party->member[i]) ){
+      ++cnt;
     }
   }
   return cnt;
@@ -3592,8 +3601,8 @@ u8 BTL_PARTY_GetAliveMemberCountRear( const BTL_PARTY* party, u8 startIdx )
   int i, cnt;
   for(i=startIdx, cnt=0; i<party->memberCount; i++)
   {
-    if( BPP_GetValue(party->member[i], BPP_HP) ){
-      cnt++;
+    if( BPP_IsFightEnable(party->member[i]) ){
+      ++cnt;
     }
   }
   return cnt;
@@ -3726,6 +3735,25 @@ int BTL_PARTY_FindMemberByPokeID( const BTL_PARTY* party, u8 pokeID )
     }
   }
   return -1;
+}
+/**
+ * 生きていて戦える先頭のポケモンデータを返す
+ *
+ * @param   party
+ *
+ * @retval  int   パーティ内Index（存在しない場合 NULL）
+ */
+BTL_POKEPARAM* BTL_PARTY_GetAliveTopMember( BTL_PARTY* party )
+{
+  int i;
+
+  for(i=0; i<party->memberCount; ++i)
+  {
+    if( BPP_IsFightEnable(party->member[i]) ){
+      return party->member[i];
+    }
+  }
+  return NULL;
 }
 
 //----------------------------------------------------------------------
