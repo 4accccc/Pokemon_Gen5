@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-09T16:54:59"/>
+	<create user="matsumiya" host="W00224" date="2010-03-05T14:38:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_h03_sage2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_h03_sage2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・posを踏むとッセージ表示</comment>
 		<attribute name="キャラ指定">七人衆</attribute>
@@ -308,7 +308,7 @@
 倒せるか　見させて　もらうぞよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_h03_sage2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_h03_sage2_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・したっぱ7人抜きを終えるとメッセージ表示
 ・表示後、画面暗転し
@@ -328,7 +328,7 @@
 ゲーチスさまに　知らせねば……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_h03_sage2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_h03_sage2_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・sage2_02表示後に、通り抜けようとしたとき</comment>
 		<attribute name="キャラ指定">七人衆</attribute>
@@ -338,7 +338,7 @@
 まだ　終わっていないぞ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_h03_sage2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_h03_sage2_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・sage2_02表示後に、直接話したとき
 ・仮メッセージ</comment>
@@ -355,7 +355,7 @@
 倒せるか　見させて　もらうぞよ！</language>
 	</row>
 
-	<row id="msg_h03_hakaim5_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_h03_hakaim5_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ表示後に再度会話</comment>
 		<attribute name="キャラ指定">プラズマ団♂
@@ -368,7 +368,7 @@ hakaim1_05</attribute>
 さあ　残りの　メンバーに　勝てるか？</language>
 	</row>
 
-	<row id="msg_h03_hakaim6_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_h03_hakaim6_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ表示後に再度会話</comment>
 		<attribute name="キャラ指定">プラズマ団♂
@@ -381,7 +381,7 @@ hakaim1_06</attribute>
 さあ　残りの　メンバーに　勝てるか？</language>
 	</row>
 
-	<row id="msg_h03_hakaim7_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_h03_hakaim7_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ表示後に再度会話</comment>
 		<attribute name="キャラ指定">プラズマ団♂
@@ -394,7 +394,7 @@ hakaim1_07</attribute>
 さあ　残りの　メンバーに　勝てるか？</language>
 	</row>
 
-	<row id="msg_h03_hakaim8_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_h03_hakaim8_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ表示後に再度会話</comment>
 		<attribute name="キャラ指定">プラズマ団♂
@@ -407,7 +407,7 @@ hakaim1_08</attribute>
 さあ　残りの　メンバーに　勝てるか？</language>
 	</row>
 
-	<row id="msg_h03_hakaiw1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_h03_hakaiw1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・戦闘後メッセージ表示後に再度会話</comment>
 		<attribute name="キャラ指定">プラズマ団♀
@@ -420,7 +420,7 @@ hakaiw1_01</attribute>
 さあ　残りの　メンバーに　勝てるか？</language>
 	</row>
 
-	<row id="msg_h03_hakaiw2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_h03_hakaiw2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・戦闘後メッセージ表示後に再度会話</comment>
 		<attribute name="キャラ指定">プラズマ団♀
@@ -433,7 +433,7 @@ hakaiw1_02</attribute>
 さあ　残りの　メンバーに　勝てるか？</language>
 	</row>
 
-	<row id="msg_h03_hakaiw3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_h03_hakaiw3_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・戦闘後メッセージ表示後に再度会話</comment>
 		<attribute name="キャラ指定">プラズマ団♀
