@@ -154,6 +154,21 @@ typedef struct
 } MYSTERY_MSGWINSET_SETUP_TBL;
 
 //-------------------------------------
+///	書き直し
+//=====================================
+typedef struct 
+{
+  BOOL  is_print;
+  u32 strID;
+  STRBUF *p_strbuf;
+  MYSTERY_MSGWIN_POS  pos_type;
+  s16 pos_x;
+  s16 pos_y;
+  PRINTSYS_LSB  color;
+} MYSTERY_MSGWINSET_PRINT_TBL;
+
+
+//-------------------------------------
 ///	メッセージウィンドウ
 //=====================================
 typedef struct _MYSTERY_MSGWINSET_WORK MYSTERY_MSGWINSET_WORK;
@@ -164,6 +179,7 @@ MYSTERY_MSGWINSET_WORK * MYSTERY_MSGWINSET_Init( const MYSTERY_MSGWINSET_SETUP_T
 extern void MYSTERY_MSGWINSET_Exit( MYSTERY_MSGWINSET_WORK* p_wk );
 extern void MYSTERY_MSGWINSET_Clear( MYSTERY_MSGWINSET_WORK* p_wk );
 extern BOOL MYSTERY_MSGWINSET_PrintMain( MYSTERY_MSGWINSET_WORK* p_wk );
+extern void MYSTERY_MSGWINSET_Print( MYSTERY_MSGWINSET_WORK* p_wk, const MYSTERY_MSGWINSET_PRINT_TBL *cp_tbl );
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**

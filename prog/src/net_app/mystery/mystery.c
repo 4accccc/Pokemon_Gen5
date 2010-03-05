@@ -2197,6 +2197,7 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         setup.p_font    = p_wk->p_font; 
         setup.p_que     = p_wk->p_que; 
         setup.p_word    = p_wk->p_word;
+        MYSTERY_CARD_LoadResourceBG( &setup, HEAPID_MYSTERYGIFT );
         p_wk->p_card  = MYSTERY_CARD_Init( &setup, p_wk->p_gamedata, HEAPID_MYSTERYGIFT );
       }
     }
@@ -2332,6 +2333,16 @@ static void SEQFUNC_CardAlbum( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, BG_CGX_OFS_M_TEXT, PLT_BG_TEXT_M );
 
     UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_TOP, HEAPID_MYSTERYGIFT ); 
+    { 
+      G2_SetBlendAlpha(
+          GX_BLEND_PLANEMASK_BG2,
+          GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ,
+          MYSTERY_MENU_ALPHA_EV1,
+          MYSTERY_MENU_ALPHA_EV2
+          );
+    }
+
+
     *p_seq  = SEQ_START_FADEIN_EXIT;
     break;
   case SEQ_START_FADEIN_EXIT:
@@ -2441,6 +2452,14 @@ static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     p_wk->p_text  = MYSTERY_TEXT_Init( BG_FRAME_M_TEXT, PLT_BG_FONT_M, p_wk->p_que, p_wk->p_font, HEAPID_MYSTERYGIFT );
     MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, BG_CGX_OFS_M_TEXT, PLT_BG_TEXT_M );
 
+    { 
+      G2_SetBlendAlpha(
+          GX_BLEND_PLANEMASK_BG2,
+          GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ,
+          MYSTERY_MENU_ALPHA_EV1,
+          MYSTERY_MENU_ALPHA_EV2
+          );
+    }
 
     UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_TOP, HEAPID_MYSTERYGIFT ); 
     *p_seq  = SEQ_START_FADEIN_EXIT;
@@ -2562,6 +2581,15 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 
     p_wk->p_text  = MYSTERY_TEXT_Init( BG_FRAME_M_TEXT, PLT_BG_FONT_M, p_wk->p_que, p_wk->p_font, HEAPID_MYSTERYGIFT );
     MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, BG_CGX_OFS_M_TEXT, PLT_BG_TEXT_M );
+
+    { 
+      G2_SetBlendAlpha(
+          GX_BLEND_PLANEMASK_BG2,
+          GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ,
+          MYSTERY_MENU_ALPHA_EV1,
+          MYSTERY_MENU_ALPHA_EV2
+          );
+    }
 
     PMSND_PlayBGM( SEQ_BGM_WIFI_PRESENT );
     MYSTERY_EFFECT_SetUpdateFlag( &p_wk->effect, TRUE );

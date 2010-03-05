@@ -731,6 +731,8 @@ struct _MYSTERY_MSGWINSET_WORK
 { 
   const MYSTERY_MSGWINSET_SETUP_TBL *cp_tbl;
   u32 tbl_len;
+  GFL_FONT *p_font;
+  GFL_MSGDATA *p_msg;
   MYSTERY_MSGWIN_WORK *p_msgwin[0];
 };
 //-------------------------------------
@@ -762,6 +764,8 @@ MYSTERY_MSGWINSET_WORK * MYSTERY_MSGWINSET_Init( const MYSTERY_MSGWINSET_SETUP_T
   GFL_STD_MemClear( p_wk, size );
   p_wk->cp_tbl  = cp_tbl;
   p_wk->tbl_len = tbl_len;
+  p_wk->p_font  = p_font;
+  p_wk->p_msg   = p_msg;
 
   //作成  ＆　書き込み
   { 
@@ -778,11 +782,11 @@ MYSTERY_MSGWINSET_WORK * MYSTERY_MSGWINSET_Init( const MYSTERY_MSGWINSET_SETUP_T
 
       if( cp_setup->p_strbuf )
       { 
-        MYSTERY_MSGWIN_PrintBuf( p_wk->p_msgwin[i], cp_setup->p_strbuf, p_font );
+        MYSTERY_MSGWIN_PrintBuf( p_wk->p_msgwin[i], cp_setup->p_strbuf, p_wk->p_font );
       }
       else
       { 
-        MYSTERY_MSGWIN_Print( p_wk->p_msgwin[i], p_msg, cp_setup->strID, p_font );
+        MYSTERY_MSGWIN_Print( p_wk->p_msgwin[i], p_msg, cp_setup->strID, p_wk->p_font );
       }
     }
   }
@@ -790,6 +794,42 @@ MYSTERY_MSGWINSET_WORK * MYSTERY_MSGWINSET_Init( const MYSTERY_MSGWINSET_SETUP_T
   return p_wk;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  再描画  
+ *
+ *	@param	MYSTERY_MSGWINSET_WORK* p_wk            ワーク
+ *	@param	MYSTERY_MSGWINSET_PRINT_TBL *cp_print   書き込みデータ
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_MSGWINSET_Print( MYSTERY_MSGWINSET_WORK* p_wk, const MYSTERY_MSGWINSET_PRINT_TBL *cp_tbl )
+{ 
+  //作成  ＆　書き込み
+  { 
+    int i;
+    const MYSTERY_MSGWINSET_PRINT_TBL *cp_print;
+    for( i = 0; i < p_wk->tbl_len; i++ )
+    { 
+      cp_print  = &cp_tbl[i];
+
+      if( cp_print->is_print )
+      { 
+        MYSTERY_MSGWIN_SetPos( p_wk->p_msgwin[i], cp_print->pos_x, cp_print->pos_y, cp_print->pos_type );
+        MYSTERY_MSGWIN_SetColor( p_wk->p_msgwin[i], cp_print->color );
+
+        if( cp_print->p_strbuf )
+        { 
+          MYSTERY_MSGWIN_PrintBuf( p_wk->p_msgwin[i], cp_print->p_strbuf, p_wk->p_font );
+        }
+        else
+        { 
+          MYSTERY_MSGWIN_Print( p_wk->p_msgwin[i], p_wk->p_msg, cp_print->strID, p_wk->p_font );
+        }
+      }
+    }
+  }
+}
 
 //----------------------------------------------------------------------------
 /**
