@@ -22,10 +22,18 @@
 //======================================================================
 #pragma mark [> define
 
+//アピールボースの保持数
+#define MUS_COMM_APPEALBONUS_NUM (2)
+#define MUS_COMM_APPEALBONUS_INVALID (0xFF)
+
 //タイミングコマンド
-#define MUS_COMM_TIMMING_DRESSUP_WAIT (10)
-#define MUS_COMM_TIMMING_START_ACTING (20)
-#define MUS_COMM_TIMMING_WAIT_FITTING (30)
+#define MUS_COMM_SYNC_START_SEND_PROGRAM (64)
+#define MUS_COMM_SYNC_EXIT_COMM     (65)
+#define MUS_COMM_SYNC_START_SEND_SCRIPT (66)
+#define MUS_COMM_TIMMING_DRESSUP_WAIT (67)
+#define MUS_COMM_TIMMING_START_ACTING (68)
+#define MUS_COMM_TIMMING_WAIT_FITTING (69)
+
 //デバッグ
 #define MUS_COMM_TIMMING_START_SCRIPT (200)
 
@@ -127,10 +135,12 @@ extern void MUS_COMM_StartSendProgram_Data( MUS_COMM_WORK* work , u32 conArr );
 extern void MUS_COMM_StartSendProgram_Script( MUS_COMM_WORK* work );
 extern void MUS_COMM_StartSendPoke( MUS_COMM_WORK* work , MUSICAL_POKE_PARAM *musPoke);
 extern u32 MUS_COMM_GetConditionPointArr( MUS_COMM_WORK* work );
+extern const u8 MUS_COMM_GetAppealBonus( MUS_COMM_WORK* work , const u8 pokeIdx , const u8 dataIdx );
 
 extern u8 MUS_COMM_GetUseButtonPos( MUS_COMM_WORK* work , const u8 musIdx );
 extern void MUS_COMM_ResetUseButtonPos( MUS_COMM_WORK* work , const u8 musIdx );
 extern u8 MUS_COMM_GetUseButtonAttention( MUS_COMM_WORK* work );
 extern void MUS_COMM_ResetUseButtonAttention( MUS_COMM_WORK* work );
+extern void MUS_COMM_ReqSendAppealBonusPoke( MUS_COMM_WORK* work , const u8 idx , const u8 pos );
 
 extern GFLNetInitializeStruct* MUS_COMM_GetNetInitStruct(void);

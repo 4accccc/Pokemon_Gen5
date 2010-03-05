@@ -386,7 +386,6 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   case MES_TERM_MUSICAL_SHOT:
     if( GAMESYSTEM_IsProcExists(evWork->gsys) == GFL_PROC_MAIN_NULL )
     {
-      MUSICAL_EVENT_TermActing( evWork );
       evWork->state = MES_ENTER_WAITROOM_THIRD;
     }
     break;
@@ -541,15 +540,15 @@ static void MUSICAL_EVENT_InitActing( MUSICAL_EVENT_WORK *evWork )
   {
     for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
-      if( evWork->musicalIndex[i] == 0 )
+      if( i == 0 )
       {
         //プレイヤー
-        MUSICAL_STAGE_SetData_Player( evWork->actInitWork , i , evWork->musPoke );
+        MUSICAL_STAGE_SetData_Player( evWork->actInitWork , evWork->musicalIndex[i] , evWork->musPoke );
       }
       else
       {
         //NPC
-        MUSICAL_PROGRAM_SetData_NPC( evWork->progWork , evWork->actInitWork , i , evWork->musicalIndex[i]-1 , HEAPID_PROC_WRAPPER );
+        MUSICAL_PROGRAM_SetData_NPC( evWork->progWork , evWork->actInitWork , evWork->musicalIndex[i] , i-1 , HEAPID_PROC_WRAPPER );
       }
     }
   }
@@ -581,7 +580,44 @@ static void MUSICAL_EVENT_InitActing( MUSICAL_EVENT_WORK *evWork )
 //--------------------------------------------------------------
 static void MUSICAL_EVENT_TermActing( MUSICAL_EVENT_WORK *evWork )
 {
-  //現在処理無し
+  if( evWork->isComm == TRUE )
+  {
+    //通信ワークからアピールボーナスの取得
+    u8 i,j;
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      MUSICAL_POKE_PARAM *musPoke = evWork->actInitWork->musPoke[i];
+      for( j=0;j<MUS_COMM_APPEALBONUS_NUM;j++ )
+      {
+        const u8 val = MUS_COMM_GetAppealBonus( evWork->commWork , i , j );
+        if( val != MUS_COMM_APPEALBONUS_INVALID )
+        {
+          musPoke->isApeerBonus[val] = TRUE;
+        }
+      }
+    }
+  }
+  //アピールボーナスの反映
+  {
+    MUS_ITEM_DATA_SYS *itemDataSys = MUS_ITEM_DATA_InitSystem( HEAPID_PROC );
+    u8 i,j;
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      MUSICAL_POKE_PARAM *musPoke = evWork->actInitWork->musPoke[i];
+      for( j=0;j<MUS_POKE_EQUIP_MAX;j++ )
+      {
+        if( musPoke->isApeerBonus[j] == TRUE )
+        {
+          const u8 conType = MUS_ITEM_DATA_GetItemConditionType( itemDataSys , musPoke->equip[j].itemNo );
+          const u8 bonus = MUSICAL_PROGRAM_GetConOnePoint( evWork->progWork , conType );
+          musPoke->point += bonus;
+          ARI_TPrintf("AddAppealBonus[%d:%d(%d)]\n",i,bonus,musPoke->point);
+        }
+      }
+    }
+    
+    MUS_ITEM_DATA_ExitSystem( itemDataSys );
+  }
 }
 
 //--------------------------------------------------------------
@@ -777,12 +813,24 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
   }
   
   //人数計算
-  //取り合えず非通信なので1人(とりあえず水増し
-  num = 1;
-  if( evWork->selfIdx == evWork->rankIndex[0] )
+  if( evWork->isComm == FALSE )
   {
-    //トップなので追加
-    num += 1;
+    //非通信なので1人
+    num = 1;
+  }
+  else
+  {
+    num = GFL_NET_GetConnectNum();
+  }
+  {
+    //トップ同着対応
+    const u16 selfPoint = MUSICAL_EVENT_GetPoint( evWork , evWork->selfIdx );
+    const u16 topPoint  = MUSICAL_EVENT_GetPoint( evWork , evWork->rankIndex[0] );
+    if( selfPoint == topPoint )
+    {
+      //トップなので追加
+      num += 1;
+    }
   }
   {
     const MUSICAL_CONDITION_TYPE conType = MUSICAL_PROGRAM_GetMaxConditionType( evWork->progWork );
@@ -965,7 +1013,15 @@ const u8 MUSICAL_EVENT_GetSelfIndex( MUSICAL_EVENT_WORK *evWork )
 //位置に対応した参加番号取得
 const u8 MUSICAL_EVENT_GetPosIndex( MUSICAL_EVENT_WORK *evWork , const u8 pos )
 {
-  return evWork->musicalIndex[pos];
+  u8 i;
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    if( evWork->musicalIndex[i] == pos )
+    {
+      return i;
+    }
+  }
+  return 0;
 }
 
 //最高コンディションの取得
@@ -1061,15 +1117,7 @@ const u8 MUSICAL_EVENT_GetMaxPointCondition( MUSICAL_EVENT_WORK *evWork , const 
 const u8 MUSICAL_EVENT_GetPosObjView( MUSICAL_EVENT_WORK *evWork , const u8 pos )
 {
   u8 i;
-  u8 idx = 0;
-  for( i=0;i<4;i++ )
-  {
-    if( evWork->musicalIndex[i] == pos )
-    {
-      idx = i;
-      break;
-    }
-  }
+  u8 idx = MUSICAL_EVENT_GetPosIndex( evWork , pos );
   
   if( pos == evWork->selfIdx )
   {
@@ -1099,16 +1147,8 @@ const u8 MUSICAL_EVENT_GetPosObjView( MUSICAL_EVENT_WORK *evWork , const u8 pos 
 void MUSICAL_EVENT_SetPosCharaName_Wordset( MUSICAL_EVENT_WORK *evWork , const u8 pos , WORDSET *wordSet , const u8 wordIdx )
 {
   u8 i;
-  u8 idx = 0;
   BOOL isSet = FALSE;
-  for( i=0;i<4;i++ )
-  {
-    if( evWork->musicalIndex[i] == pos )
-    {
-      idx = i;
-      break;
-    }
-  }
+  u8 idx = MUSICAL_EVENT_GetPosIndex( evWork , pos );
 
   if( pos == evWork->selfIdx )
   {

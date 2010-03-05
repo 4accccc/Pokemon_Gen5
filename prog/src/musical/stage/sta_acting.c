@@ -166,6 +166,7 @@ struct _ACTING_WORK
   BOOL    useItemFlg[MUSICAL_POKE_MAX];
   MUS_POKE_EQUIP_POS useItemPos[MUSICAL_POKE_MAX];
   u8      useItemPoke;  //一発逆転中ポケ
+  u8      useItemPokePos;   //一発逆転中ポケ(使用箇所
   u16     useItemCnt;
   
   //通信時に送るリクエスト
@@ -1480,12 +1481,24 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
     {
       work->useItemCnt = ACT_USEITEM_EFF_TIME;
       work->useItemPoke = usePokeArr[ GFUser_GetPublicRand0(usePokeNum)];
+      work->useItemPokePos = work->useItemPos[work->useItemPoke];
       work->isUpdateAttention = TRUE;
     }
   }
   else
   {
     //通信時
+    {
+      const u8 AttentionIdx = MUS_COMM_GetUseButtonAttention( work->initWork->commWork );
+      if( AttentionIdx < MUSICAL_POKE_MAX )
+      {
+        work->useItemCnt = ACT_USEITEM_EFF_TIME;
+        work->useItemPoke = AttentionIdx;
+        work->useItemPokePos = MUS_COMM_GetUseButtonPos( work->initWork->commWork , AttentionIdx );
+        work->isUpdateAttention = TRUE;
+        MUS_COMM_ResetUseButtonAttention( work->initWork->commWork );
+      }
+    }
     for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
       const u8 usePos = MUS_COMM_GetUseButtonPos( work->initWork->commWork , i );
@@ -1496,16 +1509,6 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
         MUS_COMM_ResetUseButtonPos( work->initWork->commWork , i );
       }
     }
-    {
-      const u8 AttentionIdx = MUS_COMM_GetUseButtonAttention( work->initWork->commWork );
-      if( AttentionIdx < MUSICAL_POKE_MAX )
-      {
-        work->useItemCnt = ACT_USEITEM_EFF_TIME;
-        work->useItemPoke = AttentionIdx;
-        work->isUpdateAttention = TRUE;
-        MUS_COMM_ResetUseButtonAttention( work->initWork->commWork );
-      }
-    }
   }
   
   //時間判定
@@ -1514,8 +1517,22 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
     work->useItemCnt--;
     if( work->useItemCnt == 0 )
     {
+      ARI_TPrintf("<ItemBonus!!Player[%d][%d]>\n",work->useItemPoke,work->useItemPokePos);
+      if( work->initWork->commWork == NULL )
+      {
+        work->initWork->musPoke[work->useItemPoke]->isApeerBonus[work->useItemPokePos] = TRUE;
+      }
+      else
+      {
+        if( GFL_NET_IsParentMachine() == TRUE )
+        {
+          //親の状態でアイテム使用を評価
+          MUS_COMM_ReqSendAppealBonusPoke( work->initWork->commWork , work->useItemPoke , work->useItemPokePos );
+        }
+      }
       work->useItemPoke = MUSICAL_POKE_MAX;
       work->isUpdateAttention = TRUE;
+      
     }
   }
 }

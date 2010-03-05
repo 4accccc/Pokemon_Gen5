@@ -19,18 +19,21 @@
 #include "../sta_snd_def.h"
 #include "test/ariizumi/ari_debug.h"
 
+#define USE_MUS_SCRIPT_PRINT (defined(DEBUG_ONLY_FOR_iwao_kazumasa))
 
 //======================================================================
 //  define
 //======================================================================
 #pragma mark [> define
 
-#if defined(DEBUG_ONLY_FOR_iwao_kazumasa)|1
-#define SCRIPT_TPrintf ARI_TPrintf
-#define SCRIPT_Printf OS_Printf
+#if USE_MUS_SCRIPT_PRINT
+#define SCRIPT_TPrintf(...) ARI_TPrintf(...)
+#define SCRIPT_Printf(...) ARI_Printf(...)
 #else
-#define SCRIPT_TPrintf ARI_TPrintf
-#define SCRIPT_Printf ARI_Printf
+//#define SCRIPT_TPrintf ARI_TPrintf
+//#define SCRIPT_Printf ARI_Printf
+#define SCRIPT_TPrintf(...) ((void)0)
+#define SCRIPT_Printf(...) ((void)0)
 #endif
 
 
@@ -42,7 +45,7 @@
 #define SCRIPT_TCB_PRI_NORMAL (10)
 #define SCRIPT_TCB_PRI_LOW (7)
 
-#if DEB_ARI
+#if USE_MUS_SCRIPT_PRINT
 #define SCRIPT_PRINT_LABEL(str) SCRIPT_TPrintf("SCRIPT[%d] Frame[%4d] No[%2d]%s\n",scriptWork->lineNo,scriptWork->frame, SCRIPT_ENUM_ ## str ,CommandStr[SCRIPT_ENUM_ ## str]);
 static const char* const CommandStr[] = {
                   "スクリプトの終了",
@@ -346,7 +349,7 @@ SCRIPT_FUNC_DEF( Label )
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   const s32 value = ScriptFunc_GetValueS32();
   SCRIPT_PRINT_LABEL(Label);
-  ARI_TPrintf("     LabelCommand[%d]\n",value);
+  SCRIPT_TPrintf("     LabelCommand[%d]\n",value);
   return SFT_CONTINUE;
 }
 
@@ -1246,7 +1249,7 @@ SCRIPT_FUNC_DEF( PokeActionComeNearToTop )
   }
   
   topPoke = GFUser_GetPublicRand0(4);
-  ARI_TPrintf("Top[%d]\n",topPoke);
+  SCRIPT_TPrintf("Top[%d]\n",topPoke);
   //相対位置のチェック
   {
     u8 i;

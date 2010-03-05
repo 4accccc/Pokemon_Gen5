@@ -72,6 +72,7 @@ typedef struct
 struct _MUSICAL_PROGRAM_WORK
 {
   u8 condition[MCT_MAX];
+  u8 conOnePoint[MCT_MAX];  //コンディションを総個数で割った値(アピールボーナスに必要
   
   MUSICAL_PROGRAM_DATA *progData;
 };
@@ -94,6 +95,7 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_InitProgramData( HEAPID heapId , MUSICAL_D
   for( i=0;i<MCT_MAX;i++ )
   {
     progWork->condition[i] = 0;
+    progWork->conOnePoint[i] = 0;
   }
   
   ARI_TPrintf("--Condition--\n");
@@ -179,13 +181,21 @@ void MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID heapId , MUSICAL_PROGRAM_WORK* pro
     }
   }
   
+  ARI_TPrintf("OneCondition:");
+  for( conIdx=0;conIdx<MCT_MAX;conIdx++ )
+  {
+    progWork->conOnePoint[conIdx] = progWork->condition[conIdx] / conditionMax[conIdx];
+    ARI_TPrintf("[%d]",progWork->conOnePoint[conIdx]);
+  }
+  ARI_TPrintf("\n");
+  
   for( pokeIdx = 0 ; pokeIdx < MUSICAL_POKE_MAX ; pokeIdx++ )
   {
     MUSICAL_POKE_PARAM *musPoke = actInitWork->musPoke[pokeIdx];
     ARI_TPrintf("Poke[%d]:",pokeIdx);
     for( conIdx=0;conIdx<MCT_MAX;conIdx++ )
     {
-      const u8 addPoint = progWork->condition[conIdx] * pokeCondition[pokeIdx][conIdx] / conditionMax[conIdx];
+      const u8 addPoint = progWork->conOnePoint[conIdx] * pokeCondition[pokeIdx][conIdx] ;
       musPoke->point += addPoint;
       musPoke->conPoint[conIdx] = addPoint;
       ARI_TPrintf("[%3d]",addPoint);
@@ -297,4 +307,12 @@ const u8 MUSICAL_PROGRAM_GetNpcObjId( MUSICAL_PROGRAM_WORK* progWork , const u8 
 const u8 MUSICAL_PROGRAM_GetNpcNameIdx( MUSICAL_PROGRAM_WORK* progWork , const u8 NPCIdx )
 {
   return progWork->progData->pokeData[NPCIdx].trainerName;
+}
+
+//--------------------------------------------------------------
+//	コンディションの単体ポイントを取得(ポイント／全体装備個数
+//--------------------------------------------------------------
+const u8 MUSICAL_PROGRAM_GetConOnePoint( MUSICAL_PROGRAM_WORK* progWork , const u8 condition )
+{
+  return progWork->conOnePoint[condition];
 }

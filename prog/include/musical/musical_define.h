@@ -128,6 +128,7 @@ typedef struct
 	MUSICAL_POKE_EQUIP equip[MUS_POKE_EQUIP_MAX];
 	u16                point; //評価点
 	u16                conPoint[MCT_MAX]; //コンディション別評価点
+	BOOL               isApeerBonus[MUS_POKE_EQUIP_MAX];  //アピール成功
 }MUSICAL_POKE_PARAM;
 
 //----------------------------------------------------------

@@ -182,7 +182,7 @@ MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPoke( POKEMON_PARAM *pokePara , HEAPID
 {
   int i;
   MUSICAL_POKE_PARAM *musPara;
-  musPara = GFL_HEAP_AllocMemory( heapId , sizeof(MUSICAL_POKE_PARAM) );
+  musPara = GFL_HEAP_AllocClearMemory( heapId , sizeof(MUSICAL_POKE_PARAM) );
   musPara->charaType = MUS_CHARA_INVALID;
   musPara->pokePara = pokePara;
   musPara->point = 0;
@@ -191,6 +191,7 @@ MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPoke( POKEMON_PARAM *pokePara , HEAPID
   {
     musPara->equip[i].itemNo = MUSICAL_ITEM_INVALID;
     musPara->equip[i].angle = 0;
+    musPara->isApeerBonus[i] = FALSE;
   }
   
   musPara->mcssParam.monsno = PP_Get( pokePara, ID_PARA_monsno,	NULL );
@@ -204,7 +205,7 @@ MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPokeParam( u16 monsno , u8 sex , u8 fo
 {
   int i;
   MUSICAL_POKE_PARAM *musPara;
-  musPara = GFL_HEAP_AllocMemory( heapId , sizeof(MUSICAL_POKE_PARAM) );
+  musPara = GFL_HEAP_AllocClearMemory( heapId , sizeof(MUSICAL_POKE_PARAM) );
   musPara->charaType = MUS_CHARA_INVALID;
   musPara->pokePara = NULL;
   musPara->point = 0;
@@ -213,6 +214,7 @@ MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPokeParam( u16 monsno , u8 sex , u8 fo
   {
     musPara->equip[i].itemNo = MUSICAL_ITEM_INVALID;
     musPara->equip[i].angle = 0;
+    musPara->isApeerBonus[i] = FALSE;
   }
   
   musPara->mcssParam.monsno = monsno;

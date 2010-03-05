@@ -53,6 +53,7 @@ struct _STA_BUTTON_SYS
 
   MUSICAL_POKE_PARAM *musPoke;
   BOOL canUseButton;
+  BOOL isUseWait; //’ÊMŽžA”­“®‚Ü‚Å‚Ì‘Ò‚¿
   STA_BUTTON_USEITEM_POS useItemPos;
 
   GFL_CLUNIT  *cellUnit;
@@ -86,6 +87,7 @@ STA_BUTTON_SYS* STA_BUTTON_InitSystem( HEAPID heapId , ACTING_WORK* actWork , MU
   work->actWork = actWork;
   work->musPoke = musPoke;
   work->canUseButton = FALSE;
+  work->isUseWait = FALSE;
   work->useItemPos = SBUP_NONE;
   
   work->equipItem[0] = work->musPoke->equip[MUS_POKE_EQU_HAND_R].itemNo;
@@ -157,6 +159,7 @@ void STA_BUTTON_UpdateSystem( STA_BUTTON_SYS *work )
         G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ , -8 );
         work->useButton[ret] = TRUE;
         work->canUseButton = FALSE;
+        work->isUseWait = TRUE;
         work->useItemPos = ret;
       }
     }
@@ -166,12 +169,21 @@ void STA_BUTTON_UpdateSystem( STA_BUTTON_SYS *work )
   {
     if( STA_ACT_IsUsingItemSelf( work->actWork ) == FALSE )
     {
-      work->canUseButton = TRUE;
-      GFL_CLACT_WK_SetDrawEnable( work->clwkButton[work->useItemPos], FALSE );
-      GFL_CLACT_WK_SetDrawEnable( work->clwkButtonBase[work->useItemPos], FALSE );
+      if( work->isUseWait == FALSE )
+      {
+        work->canUseButton = TRUE;
+        GFL_CLACT_WK_SetDrawEnable( work->clwkButton[work->useItemPos], FALSE );
+        GFL_CLACT_WK_SetDrawEnable( work->clwkButtonBase[work->useItemPos], FALSE );
 
-      work->useItemPos = SBUP_NONE;
-      
+        work->useItemPos = SBUP_NONE;
+      }
+    }
+    else
+    {
+      if( work->isUseWait == TRUE )
+      {
+        work->isUseWait = FALSE;
+      }
     }
   }
 }

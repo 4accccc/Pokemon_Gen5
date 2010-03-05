@@ -31,9 +31,7 @@
 #define MUS_COMM_BEACON_MAX (4)
 #define MUS_COMM_POKEDATA_SIZE (sizeof(MUSICAL_POKE_PARAM)+POKETOOL_GetWorkSize())
 
-#define MUS_COMM_SYNC_START_SEND_PROGRAM (64)
-#define MUS_COMM_SYNC_EXIT_COMM     (65)
-#define MUS_COMM_SYNC_START_SEND_SCRIPT (66)
+#define MUS_COMM_SEND_APPEALBONUS_BUFF (8)
 
 //======================================================================
 //	enum
@@ -69,6 +67,7 @@ typedef enum
   MCFT_CONDITION_POINT,
   MCFT_USE_BUTTON_REQ,    //子機が親機へ使用リクエスト
   MCFT_USE_BUTTON,        //親機が子機へ使用通知
+  MCFT_APPEAL_BONUS,       //親機が子機へアピールボーナス状態を送信
   
 }MUS_COMM_FLAG_TYPE;
 
@@ -128,6 +127,7 @@ typedef struct
   u8                  useReqButtonPos;
   u8                  useButtonPos;
   u8                  musicalIdx;
+  u8                  apeerPointBonus[MUS_COMM_APPEALBONUS_NUM]; //成功した装備箇所が入る(現状手のみなので2箇所)
   MUS_COMM_GAME_STATE gameState;
   MYSTATUS *myStatus;
   void *pokeData;     //MUSICAL_POKE_PARAMとPOKEMON_PARAMのセット。
@@ -178,6 +178,8 @@ struct _MUS_COMM_WORK
   u8 useButtonAttentionPoke;
   //親機専用
   BOOL isReqSendState;
+  BOOL isReqSendAppealBonus;
+  u16  sendAppealBonusData[MUS_COMM_SEND_APPEALBONUS_BUFF]; // 
 };
 
 //======================================================================
@@ -422,7 +424,7 @@ void MUS_COMM_InitAfterIrcConnect( MUS_COMM_WORK* work )
 
 void MUS_COMM_InitMusical( MUS_COMM_WORK* work , MYSTATUS *myStatus , GAME_COMM_SYS_PTR gameComm , MUSICAL_DISTRIBUTE_DATA *distData , const HEAPID heapId )
 {
-  u8 i;
+  u8 i,j;
   
   work->heapId = heapId;
   
@@ -439,6 +441,11 @@ void MUS_COMM_InitMusical( MUS_COMM_WORK* work , MYSTATUS *myStatus , GAME_COMM_
     work->userData[i].pokeData = GFL_HEAP_AllocMemory( work->heapId , MUS_COMM_POKEDATA_SIZE );
     work->userData[i].myStatus = GFL_HEAP_AllocMemory( work->heapId , MyStatus_GetWorkSize() );
     GFL_STD_MemClear( work->userData[i].myStatus , MyStatus_GetWorkSize() );
+    
+    for( j=0;j<MUS_COMM_APPEALBONUS_NUM;j++ )
+    {
+      work->userData[i].apeerPointBonus[j] = MUS_COMM_APPEALBONUS_INVALID;
+    }
   }
   work->selfPokeData = NULL;
   work->selfMyStatus = myStatus;
@@ -459,7 +466,12 @@ void MUS_COMM_InitMusical( MUS_COMM_WORK* work , MYSTATUS *myStatus , GAME_COMM_
   work->isPostMessageData = FALSE;
   work->divSendState = MCDS_NONE;
   work->isReqSendState = FALSE;
+  work->isReqSendAppealBonus = FALSE;
   work->useButtonAttentionPoke = MUSICAL_COMM_MEMBER_NUM;
+  for( i=0;i<MUS_COMM_SEND_APPEALBONUS_BUFF;i++ )
+  {
+    work->sendAppealBonusData[i] = 0xFFFF;
+  }
   work->distData = distData;
   
   MUS_COMM_SetCommState( work , MCS_INIT_MUSICAL);
@@ -774,6 +786,31 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
       }
     }
   }
+  //アピールボーナス送信
+  if( work->isReqSendAppealBonus == TRUE )
+  {
+    u8 i;
+    BOOL isEmpty = TRUE;
+    for( i=0;i<MUS_COMM_SEND_APPEALBONUS_BUFF;i++ )
+    {
+      if( work->sendAppealBonusData[i] != 0xFFFF )
+      {
+        const BOOL ret = MUS_COMM_Send_FlagServer( work , 
+                                      MCFT_APPEAL_BONUS ,
+                                      work->sendAppealBonusData[i],
+                                      GFL_NET_SENDID_ALLUSER );
+        if( ret == TRUE )
+        {
+          work->sendAppealBonusData[i] = 0xFFFF;
+        }
+        isEmpty = FALSE;
+      }
+    }
+    if( isEmpty == TRUE )
+    {
+      work->isReqSendAppealBonus = FALSE;
+    }
+  }
   MUS_COMM_Update_SendStrmData( work );
 }
 
@@ -1081,6 +1118,23 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
       }
       work->useButtonAttentionPoke = (pkt->value & 0xF0000)>>16;
       ARI_TPrintf(":[%d]\n",work->useButtonAttentionPoke);
+    }
+    break;
+  
+  case MCFT_APPEAL_BONUS:
+    {
+      u8 i;
+      const u8 idx = (pkt->value>>8);
+      const u8 pos = (pkt->value&0x0F);
+      for( i=0;i<MUS_COMM_APPEALBONUS_NUM;i++ )
+      {
+        if( work->userData[idx].apeerPointBonus[i] == MUS_COMM_APPEALBONUS_INVALID )
+        {
+          work->userData[idx].apeerPointBonus[i] = pos;
+          break;
+        }
+      }
+      ARI_TPrintf("PostAppealBonus:[%d][%d]\n",idx,pos);
     }
     break;
   }
@@ -1684,6 +1738,11 @@ u32 MUS_COMM_GetConditionPointArr( MUS_COMM_WORK* work )
 {
   return work->conditionArr;
 }
+
+const u8 MUS_COMM_GetAppealBonus( MUS_COMM_WORK* work , const u8 pokeIdx , const u8 dataIdx )
+{
+  return work->userData[pokeIdx].apeerPointBonus[dataIdx];
+}
 #pragma mark [>outer func (button)
 //ボタン関係
 u8 MUS_COMM_GetUseButtonPos( MUS_COMM_WORK* work , const u8 musIdx )
@@ -1725,6 +1784,20 @@ u8 MUS_COMM_GetUseButtonAttention( MUS_COMM_WORK* work )
 void MUS_COMM_ResetUseButtonAttention( MUS_COMM_WORK* work )
 {
   work->useButtonAttentionPoke = MUSICAL_COMM_MEMBER_NUM;
+}
+
+void MUS_COMM_ReqSendAppealBonusPoke( MUS_COMM_WORK* work , const u8 idx , const u8 pos )
+{
+  u8 i;
+  for( i=0;i<MUS_COMM_SEND_APPEALBONUS_BUFF;i++ )
+  {
+    if( work->sendAppealBonusData[i] == 0xFFFF )
+    {
+      work->sendAppealBonusData[i] = (idx<<8) + pos;
+      work->isReqSendAppealBonus = TRUE;
+      return;
+    }
+  }
 }
 
 #pragma mark [> other func
