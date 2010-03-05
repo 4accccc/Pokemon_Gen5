@@ -541,30 +541,41 @@ static int MainSeq_Init( START_MENU_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_Release( START_MENU_WORK * wk )
 {
-	ExitVBlank( wk );
+	switch( wk->subSeq ){
+	case 0:
+		ExitHushigiCheck( wk );
+		wk->subSeq++;
 
-	ExitHushigiCheck( wk );
+	case 1:
+		if( GFL_NET_IsResetEnable() == FALSE ){
+			break;
+		}
 
-	ExitBlinkAnm( wk );
+		ExitVBlank( wk );
 
-	ExitBgWinFrame( wk );
+		ExitBlinkAnm( wk );
 
-	ExitObj( wk );
-	ExitBmp( wk );
+		ExitBgWinFrame( wk );
 
-	UnloadListFrame( wk );
+		ExitObj( wk );
+		ExitBmp( wk );
 
-	ExitMsg( wk );
-	ExitBg();
+		UnloadListFrame( wk );
 
-	// ブレンド初期化
-	G2_BlendNone();
-	G2S_BlendNone();
-	// 表示初期化
-	GFL_DISP_GX_SetVisibleControlDirect( 0 );
-	GFL_DISP_GXS_SetVisibleControlDirect( 0 );
+		ExitMsg( wk );
+		ExitBg();
 
-	return MAINSEQ_END;
+		// ブレンド初期化
+		G2_BlendNone();
+		G2S_BlendNone();
+		// 表示初期化
+		GFL_DISP_GX_SetVisibleControlDirect( 0 );
+		GFL_DISP_GXS_SetVisibleControlDirect( 0 );
+
+		return MAINSEQ_END;
+	}
+
+	return MAINSEQ_RELEASE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -834,6 +845,7 @@ static int MainSeq_Continue( START_MENU_WORK * wk )
 	case 4:		// 終了
 		ClearContinueInfo( wk );
 		ClearMessage( wk );
+		wk->subSeq = 0;
 		return SetFadeOut( wk, MAINSEQ_RELEASE );
 
 	case 5:		// 無線設定エラー
@@ -886,6 +898,7 @@ static int MainSeq_NewGame( START_MENU_WORK * wk )
 			PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
 			ClearNewGameWarrning( wk, TRUE );
 			wk->listResult = LIST_ITEM_NEW_GAME;
+			wk->subSeq = 0;
 			return SetFadeOut( wk, MAINSEQ_RELEASE );
 		}
 		// Ｂボタン
@@ -919,33 +932,40 @@ static int MainSeq_Hushigi( START_MENU_WORK * wk )
 {
 	switch( wk->subSeq ){
 	case 0:
+		// ビーコン取得終了待ち
+		if( GFL_NET_IsResetEnable() == TRUE ){
+			wk->subSeq++;
+		}
+		break;
+
+	case 1:
 		// リスト非表示
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_OFF );
 		VanishListObj( wk, FALSE );
 		wk->subSeq++;
 		break;
 
-	case 1:
+	case 2:
 		// メッセージ表示
 		StartMessage( wk, START_MENU_STR_ATTENTION_03 );
 		wk->subSeq++;
 		break;
 
-	case 2:
+	case 3:
 		// メッセージ待ち
 		if( MainMessage( wk ) == FALSE ){
 			wk->subSeq++;
 		}
 		break;
 
-	case 3:
+	case 4:
     if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
 			ClearMessage( wk );
 			wk->subSeq++;
 		}
 		break;
 
-	case 4:
+	case 5:
 		// リスト再構築
 		MISC_SetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_HUSHIGI, MISC_STARTMENU_FLAG_OPEN );
 		InitList( wk );
@@ -956,7 +976,7 @@ static int MainSeq_Hushigi( START_MENU_WORK * wk )
 		wk->subSeq++;
 		break;
 
-	case 5:
+	case 6:
 		// リスト表示
 		VanishListObj( wk, TRUE );
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_ON );
