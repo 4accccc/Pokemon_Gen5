@@ -315,7 +315,7 @@ void MMDL_EndAcmdList( GFL_TCB * tcb )
 {
 	ACMD_LIST_WORK *work;
 	work = GFL_TCB_GetWork( tcb );
-	GF_ASSERT( MMDL_CheckEndAcmd(work->mmdl) == TRUE );
+	GF_ASSERT( MMDL_CheckEndAcmd(work->mmdl) == TRUE && "MMDL ACMD NOT END" );
 	MMDL_EndAcmd( work->mmdl );
 	GFL_HEAP_FreeMemory( work );
 	GFL_TCB_DeleteTask( tcb );

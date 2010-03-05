@@ -179,7 +179,8 @@ typedef struct
 static void gjiki_InitMoveStartCommon(
     FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set, const INPUTDATA *input );
 static BOOL gjiki_CheckMoveStart( FIELD_PLAYER_GRID *gjiki, u16 dir );
-static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set, u16 dir );
+static void gjiki_PlaySE(
+    FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set, u16 dir );
 
 //キー入力処理
 static u16 gjiki_GetInputKeyDir(
@@ -567,172 +568,145 @@ static const ATTR_FLAG_SE data_PlaySE_NextFlag[] =
 
 //--------------------------------------------------------------
 /**
- * 移動開始時に鳴らすSE
- * @param
- * @retval
+ * 移動開始時に鳴らすSE 判定部分
+ * @param gjiki FIELD_PLAYER_GRID
+ * @param set JIKI_MOVEORDER
+ * @param pos チェックする座標
+ * @param next TRUE=移動先 FALSE=移動元
+ * @retval BOOL TRUE=SE再生した
  */
 //--------------------------------------------------------------
-static void gjiki_PlaySE( FIELD_PLAYER_GRID *gjiki,
-    JIKI_MOVEORDER set, u16 dir )
+static BOOL gjiki_PlaySECore(
+    FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set,
+    const VecFx32 *pos, BOOL next )
+{
+  int dash_count;
+  u32 se,dash_flag,init_flag;
+  const ATTR_FLAG_SE *p0;
+  const ATTR_VALUE_SE *p1;
+  MMDL *mmdl;
+  MAPATTR attr;
+  MAPATTR_FLAG flag;
+  MAPATTR_VALUE val;
+  
+  se = SEQ_SE_DUMMY;
+  dash_count = 0;
+  
+  init_flag = TRUE;
+  dash_flag = 0;
+  
+  if( FIELD_PLAYER_CORE_GetMoveForm(
+        gjiki->player_core) == PLAYER_MOVE_FORM_CYCLE ){
+    dash_flag = 2;
+  }else if( gjiki_CheckMoveBit(gjiki,JIKI_MOVEBIT_DASH) ){
+    dash_flag = 1;
+  }
+  
+  if( dash_flag == 0 ){
+    gjiki->dash_play_se = SEQ_SE_DUMMY;
+    gjiki->dash_play_se_count = 0;
+  }
+  
+  mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
+  
+  if( MMDL_GetMapPosAttr(mmdl,pos,&attr) == TRUE ){
+    flag = MAPATTR_GetAttrFlag( attr );
+    
+    if( next == FALSE ){
+      p0 = data_PlaySE_NowFlag;
+    }else{
+      p0 = data_PlaySE_NextFlag;
+    }
+    
+    for( ; p0->flag != ATTRFLAG_NONE; p0++ ){
+      if( (p0->flag & flag) ){
+        se = p0->se;
+        
+        if( dash_flag == 1 ){
+          dash_count = p0->dash_count;
+        }else if( dash_flag == 2 ){
+          dash_count = p0->cycle_count;
+        }
+        break;
+      }
+    }
+    
+    if( se == SEQ_SE_DUMMY ){
+      if( next == FALSE ){
+        p1 = data_PlaySE_NowValue;
+      }else{
+        p1 = data_PlaySE_NextValue;
+      }
+      
+      for( ; p1->check != NULL; p1++ ){
+        if( p1->check(attr) == TRUE ){
+          se = p1->se;
+          
+          if( dash_flag == 1 ){
+            dash_count = p1->dash_count;
+          }else if( dash_flag == 2 ){
+            dash_count = p1->cycle_count;
+          }
+          break;
+        }
+      }
+    }
+    
+    if( se != SEQ_SE_DUMMY ){
+      if( dash_flag != 0 ){ //dash系判定
+        if( gjiki->dash_play_se != se ){
+          gjiki->dash_play_se_count = 0;
+        }
+        
+        gjiki->dash_play_se = se;
+        
+        if( gjiki->dash_play_se_count != 0 &&
+            gjiki->dash_play_se_count < dash_count ){
+          se = SEQ_SE_DUMMY;
+          init_flag = FALSE; //再生SEはあるが条件満たさず
+        }
+        
+        if( gjiki->dash_play_se_count >= dash_count ){
+          gjiki->dash_play_se_count = 0;
+        }
+        
+        gjiki->dash_play_se_count++;
+      }
+    }
+    
+    if( se != SEQ_SE_DUMMY ){
+      PMSND_PlaySE( se );
+      return( TRUE );
+    }
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 移動開始時に鳴らすSE
+ * @param gjiki FIELD_PLAYER_GRID
+ * @param set JIKI_MOVEORDER
+ * @param dir 移動方向
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void gjiki_PlaySE(
+    FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set, u16 dir )
 {
   if( set != JIKI_MOVEORDER_WALK ){
     gjiki->dash_play_se = SEQ_SE_DUMMY;
     gjiki->dash_play_se_count = 0;
   }else{
-    int dash_count;
-    u32 se,dash_flag,init_flag;
     VecFx32 pos;
-    const ATTR_FLAG_SE *p0;
-    const ATTR_VALUE_SE *p1;
-    MMDL *mmdl;
-    MAPATTR attr;
-    MAPATTR_FLAG flag;
-    MAPATTR_VALUE val;
+    MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
     
-    se = SEQ_SE_DUMMY;
-    dash_count = 0;
-    
-    init_flag = TRUE;
-    dash_flag = 0;
-    
-    if( FIELD_PLAYER_CORE_GetMoveForm(
-          gjiki->player_core) == PLAYER_MOVE_FORM_CYCLE ){
-      dash_flag = 2;
-    }else if( gjiki_CheckMoveBit(gjiki,JIKI_MOVEBIT_DASH) ){
-      dash_flag = 1;
-    }
-    
-    if( dash_flag == 0 ){
-      gjiki->dash_play_se = SEQ_SE_DUMMY;
-      gjiki->dash_play_se_count = 0;
-    }
-    
-    mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
     MMDL_GetVectorPos( mmdl, &pos );
-  
-    if( MMDL_GetMapPosAttr(mmdl,&pos,&attr) == TRUE ){
-      flag = MAPATTR_GetAttrFlag( attr );
-  
-      for( p0 = data_PlaySE_NowFlag; p0->flag != ATTRFLAG_NONE; p0++ ){
-        if( (p0->flag & flag) ){
-          se = p0->se;
-          
-          if( dash_flag == 1 ){
-            dash_count = p0->dash_count;
-          }else if( dash_flag == 2 ){
-            dash_count = p0->cycle_count;
-          }
-          break;
-        }
-      }
-      
-      if( se == SEQ_SE_DUMMY ){
-        for( p1 = data_PlaySE_NowValue; p1->check != NULL; p1++ ){
-          if( p1->check(attr) == TRUE ){
-            se = p1->se;
-            
-            if( dash_flag == 1 ){
-              dash_count = p1->dash_count;
-            }else if( dash_flag == 2 ){
-              dash_count = p1->cycle_count;
-            }
-            break;
-          }
-        }
-      }
-      
-      if( se != SEQ_SE_DUMMY ){
-        if( dash_flag != 0 ){ //dash系判定
-          if( gjiki->dash_play_se != se ){
-            gjiki->dash_play_se_count = 0;
-          }
-          
-          gjiki->dash_play_se = se;
-          
-          if( gjiki->dash_play_se_count != 0 &&
-              gjiki->dash_play_se_count < dash_count ){
-            se = SEQ_SE_DUMMY;
-            init_flag = FALSE; //再生SEはあるが条件満たさず
-          }
-          
-          if( gjiki->dash_play_se_count >= dash_count ){
-            gjiki->dash_play_se_count = 0;
-          }
-          
-          gjiki->dash_play_se_count++;
-        }
-      }
-
-      if( se != SEQ_SE_DUMMY ){
-          PMSND_PlaySE( se );
-          return;
-      }
-    }
-  
-    MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
     
-    if( MMDL_GetMapPosAttr(mmdl,&pos,&attr) == TRUE ){
-      flag = MAPATTR_GetAttrFlag( attr );
-      
-      for( p0 = data_PlaySE_NextFlag; p0->flag != ATTRFLAG_NONE; p0++ ){
-        if( (p0->flag & flag) ){
-          se = p0->se;
-
-          if( dash_flag == 1 ){
-            dash_count = p0->dash_count;
-          }else if( dash_flag == 2 ){
-            dash_count = p0->cycle_count;
-          }
-          break;
-        }
-      }
-    
-      if( se == SEQ_SE_DUMMY ){
-        for( p1 = data_PlaySE_NextValue; p1->check != NULL; p1++ ){
-          if( p1->check(attr) == TRUE ){
-            se = p1->se;
-
-            if( dash_flag == 1 ){
-              dash_count = p1->dash_count;
-            }else if( dash_flag == 2 ){
-              dash_count = p1->cycle_count;
-            }
-            break;
-          }
-        }
-      }
-
-      if( se != SEQ_SE_DUMMY ){
-        if( dash_flag != 0 ){ //dash系判定
-          if( gjiki->dash_play_se != se ){
-            gjiki->dash_play_se_count = 0;
-          }
-          
-          gjiki->dash_play_se = se;
-          
-          if( gjiki->dash_play_se_count != 0 &&
-              gjiki->dash_play_se_count < dash_count ){
-            se = SEQ_SE_DUMMY;
-            init_flag = FALSE; //再生SEはあるが条件満たさず
-          }
-          
-          if( gjiki->dash_play_se_count >= dash_count ){
-            gjiki->dash_play_se_count = 0;
-          }
-
-          gjiki->dash_play_se_count++;
-        }
-      }
-      
-      if( se != SEQ_SE_DUMMY ){
-        PMSND_PlaySE( se );
-        return;
-      }
-    }
-    
-    if( init_flag == TRUE ){ //再生無し　カウントクリア
-      gjiki->dash_play_se = SEQ_SE_DUMMY;
-      gjiki->dash_play_se_count = 0;
+    if( gjiki_PlaySECore(gjiki,set,&pos,FALSE) == FALSE ){
+      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+      gjiki_PlaySECore( gjiki, set, &pos, TRUE );
     }
   }
 }
