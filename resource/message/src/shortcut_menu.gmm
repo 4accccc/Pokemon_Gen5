@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-05T11:48:18"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-03-05T12:28:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -455,6 +455,11 @@
 	<row id="msg_shortcut_menu_05_02">
 		<language name="JPN" width="256">トレーナーカード[FF:00:色:1]＞[FF:00:色:0]うらめん</language>
 		<language name="JPN_KANJI" width="256">トレーナーカード[FF:00:色:1]＞[FF:00:色:0]うらめん</language>
+	</row>
+
+	<row id="msg_shortcut_menu_05_03">
+		<language name="JPN" width="256">トレーナーカード[FF:00:色:1]＞[FF:00:色:0]ジムバッジ</language>
+		<language name="JPN_KANJI" width="256">トレーナーカード[FF:00:色:1]＞[FF:00:色:0]ジムバッジ</language>
 	</row>
 
 	<row id="msg_shortcut_menu_06_01">
