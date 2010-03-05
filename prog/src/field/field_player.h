@@ -89,7 +89,7 @@ typedef enum
 typedef enum
 {
   PLAYER_MOVEBIT_NON = 0, ///<何もなし
-  PLAYER_MOVEBIT_DASH, ///<ダッシュ可能
+  PLAYER_MOVEBIT_DASH = (1<<0), ///<ダッシュ可能
 }PLAYER_MOVEBIT;
 
 //======================================================================
