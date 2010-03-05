@@ -49,7 +49,11 @@ ev_shop_counter:
     _BALLOONWIN_CLOSE()
   ENDIF
 
-  _CALL sub_shop_main
+  IF $lwk_shop_id == SCR_SHOPID_BP_ITEM || $lwk_shop_id == SCR_SHOPID_BP_WAZA THEN
+    _CALL sub_bpshop_main
+  ELSE
+    _CALL sub_shop_main
+  ENDIF
 }
 _CHG_LOCAL_SCR
 
@@ -91,6 +95,54 @@ sub_shop_main:
   ENDWHILE
   
   _BALLOONWIN_OBJMSG_POS( msg_shop_03 , SCWK_TARGET_OBJID, POS_DL ) //またどうぞ
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+}
+_RET
+
+//==============================================================
+//サブルーチン：BPショップメイン
+//==============================================================
+sub_bpshop_main:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_seq
+  DEFINE_LOCAL  i_loop
+
+  //ようこそ ポイント引き換えコーナーへ 景品を交換しますか？
+  _BALLOONWIN_OBJMSG_POS( msg_bp_shop_01 , SCWK_TARGET_OBJID, POS_DL )
+
+  //はい/いいえ
+ 	_YES_NO_WIN( i_ret )
+  IF $i_ret == SCR_YES THEN
+    _CALL sub_shop_buy
+  ENDIF
+
+/*
+  $i_seq = SEQ_MENU
+  $i_loop = TRUE
+  WHILE $i_loop == TRUE
+
+    
+    SWITCH $i_seq
+    CASE SEQ_MENU_CONTINUE THEN
+      _BALLOONWIN_OBJMSG_POS( msg_shop_02 , SCWK_TARGET_OBJID, POS_DL ) //そのほかにお手伝いできることは？
+      $i_seq = SEQ_MENU
+
+    CASE SEQ_MENU THEN
+      _CALL sub_shop_menu
+      $i_seq = $reg_return
+    
+    CASE SEQ_BUY THEN
+      _CALL sub_shop_buy
+      $i_seq = $reg_return 
+    
+    CASE SEQ_EXIT THEN
+      $i_loop = FALSE
+    ENDSWITCH
+  ENDWHILE
+*/
+  _BALLOONWIN_OBJMSG_POS( msg_bp_shop_02 , SCWK_TARGET_OBJID, POS_DL ) //BPをためてまたお越しください
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
 }
