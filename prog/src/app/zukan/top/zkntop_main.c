@@ -272,11 +272,11 @@ static void LoadSaveGraphic( ZKNTOPMAIN_WORK * wk )
 				pal = ZUKANWP_SAVEDATA_GetCustomGraphicPalette( exsv );
 				GFL_BG_LoadCharacter( GFL_BG_FRAME1_M, chr, ZUKANWP_SAVEDATA_CHAR_SIZE, 0 );
 				GFL_BG_LoadPalette(
-					GFL_BG_FRAME1_M, pal, ZUKANWP_SAVEDATA_PAL_SIZE*2, BG_PALNUM_GRAPHIC*2 );
+					GFL_BG_FRAME1_M, pal, ZUKANWP_SAVEDATA_PAL_SIZE*2, BG_PALNUM_GRAPHIC*0x20 );
 
 				pal = ZUKANWP_SAVEDATA_GetFramePalette( exsv );
 				GFL_BG_LoadPalette(
-					GFL_BG_FRAME1_M, pal, ZUKANWP_SAVEDATA_PAL_SIZE*2, BG_PALNUM_FRAME*2 );
+					GFL_BG_FRAME1_M, pal, ZUKANWP_SAVEDATA_PAL_SIZE*2, BG_PALNUM_FRAME*0x20 );
 			}
 		}
 	}
