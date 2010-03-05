@@ -251,7 +251,7 @@ MAPATTR RAIL_ATTR_GetAttribute( const RAIL_ATTR_DATA* cp_work, const RAIL_LOCATI
 //-----------------------------------------------------------------------------
 BOOL RAIL_ATTR_VALUE_CheckSlipDown( const MAPATTR_VALUE val )
 {
-  if( (val == MATTR_SLIP_01) || (val == MATTR_SLIP_GRASS_LOW) || (val == MATTR_SLIP_GRASS_HIGH) )
+  if( (val == MATTR_SLIP_01) )
   {
     return TRUE;
   }
