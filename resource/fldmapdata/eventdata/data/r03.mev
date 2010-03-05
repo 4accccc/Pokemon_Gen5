@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/04 21:24:09
+#save date:2010/03/05 14:25:31
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03.wms
 #SECTION START:OBJ_EVENT
@@ -164,7 +164,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-616 0 -72
+632 0 -72
 #event number: 5
 #type
 1
@@ -708,7 +708,7 @@ FV_R03_RIVAL_03
 #Event Script Name
 SCRID_R03_RIVAL_03
 #Direction Type Number
-DIR_RIGHT
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -931,7 +931,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-10
+11
 #event number: 0
 #Pos Event Label
 SCRID_POS_R03_RIVAL_02
@@ -1102,6 +1102,23 @@ EVENTDATA_POSTYPE_GRID
 952 0 -40
 #size
 1 3
+#event number: 10
+#Pos Event Label
+POSID_R03_SUPPORT_04
+#Pos Script Name
+SCRID_POS_R03_SUPPORT_04
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_R03_PLASMA
+#Event Trigger Work Value
+4
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+488 0 -40
+#size
+1 4
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
