@@ -696,7 +696,7 @@
 #define FV_MUSICAL_FUN_03                  672 /* 0x02a0 ミュージカルホール：出待ちのファン３人目 */
 #define FV_MUSICAL_FUN_04                  673 /* 0x02a1 ミュージカルホール：出待ちのファン４人目 */
 #define FV_MUSICAL_FUN_05                  674 /* 0x02a2 ミュージカルホール：出待ちのファン５人目 */
-		/* not used   675(0x02a3) */
+#define FV_T01R0401_POKEMON_01             675 /* 0x02a3 研究所のミネズミ */
 		/* not used   676(0x02a4) */
 		/* not used   677(0x02a5) */
 		/* not used   678(0x02a6) */
