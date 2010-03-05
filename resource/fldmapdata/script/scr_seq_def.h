@@ -8232,7 +8232,8 @@
 //--------------------------------------------------------------
 /**
  * @brief 国連関連 自分の性格をセット
- * @param nature_idx 正確コード
+ * @param nature_idx 性格コード
+ * @note prog/include/savedata/nature_def.h　参照
  */
 //--------------------------------------------------------------
 #define _UN_SET_MY_NATURE( nature_idx ) _ASM_UN_SET_MY_NATURE nature_idx
@@ -8246,6 +8247,7 @@
 /**
  * @brief 国連関連 自分の趣味をセット
  * @param favorite_idx    趣味コード
+ * @note  resource\research_radar\data\hobby_id.h　参照
  */
 //--------------------------------------------------------------
 #define _UN_SET_MY_FAVORITE( favorite_idx ) _ASM_UN_SET_MY_FAVORITE favorite_idx
@@ -8267,8 +8269,6 @@
   .short EV_SEQ_UN_GET_MY_FAVORITE
   .short \ret
   .endm
-  
-  
   
 //--------------------------------------------------------------
 /**
