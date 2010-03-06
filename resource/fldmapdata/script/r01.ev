@@ -98,15 +98,39 @@ EVENT_START   ev_r01_poke_getdemo_01
 	//サポート＋ライバル博士を見る
 	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget_up )
 	_OBJ_ANIME( R01_SUPPORT_01,anm_R01_pokeget_up )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_R01_pokeget_up )
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
+	//カメラ操作　博士中心に
+	_CAMERA_MOVE( 9688,0,970752,51675136,0,47337472,30 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	_OBJ_ANIME_WAIT()
 
 	//捕獲デモ呼び出し[100216斉藤マ]
 	_CAPTURE_DEMO_SET()
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
+	//カメラ操作　博士中心に
+	_CAMERA_MOVE( 9688,0,970752,51675136,0,47337472,1 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//暗転終了
 	_WILD_WIN()
 	
 	//博士、メッセージ＋退場アニメ
 	_OBJ_ANIME( R01_HAKASE2_01,anm_R01_pokeget1a )
+	
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (30) 
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
 	_OBJ_ANIME_WAIT()
 	
 	//サポート＋ライバル戻ってきた博士を見る
@@ -256,17 +280,17 @@ _ANIME_LABEL	anm_R01_pokeget_rival_look_hakase
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R01　捕獲デモ用：ライバル・サポート捕獲を観察  
+//	R01　捕獲デモ用：ライバル・サポート・主人公、上に三歩歩いてついていく
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_R01_pokeget_up
-	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R01　捕獲デモ用：博士、草むらに入る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_R01_pokeget1
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
