@@ -18,6 +18,6 @@ enum {
 
 enum {
   MAPREPLACE_VAR_COUNT = 4,
-  MAP_REPLACE_DATA_COUNT = (29),
+  MAP_REPLACE_DATA_COUNT = (30),
 };
 //‚±‚±‚Ü‚Å
