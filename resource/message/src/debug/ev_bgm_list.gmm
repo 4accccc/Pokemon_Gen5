@@ -378,6 +378,66 @@
 		<language name="JPN" width="216">SEQ_BGM_VS_TSUYOPOKE</language>
 	</row>
 
+	<row id="EV_BGM_002">
+		<language name="JPN" width="216">SEQ_BGM_VS_TRAINER</language>
+	</row>
+
+	<row id="EV_BGM_003">
+		<language name="JPN" width="216">SEQ_BGM_VS_SUBWAY_TRAINER</language>
+	</row>
+
+	<row id="EV_BGM_004">
+		<language name="JPN" width="216">SEQ_BGM_VS_GYMLEADER</language>
+	</row>
+
+	<row id="EV_BGM_005">
+		<language name="JPN" width="216">SEQ_BGM_VS_RIVAL</language>
+	</row>
+
+	<row id="EV_BGM_006">
+		<language name="JPN" width="216">SEQ_BGM_VS_PLASMA</language>
+	</row>
+
+	<row id="EV_BGM_007">
+		<language name="JPN" width="216">SEQ_BGM_VS_SHITENNO</language>
+	</row>
+
+	<row id="EV_BGM_008">
+		<language name="JPN" width="216">SEQ_BGM_VS_CHAMP</language>
+	</row>
+
+	<row id="EV_BGM_009">
+		<language name="JPN" width="216">SEQ_BGM_VS_N</language>
+	</row>
+
+	<row id="EV_BGM_010">
+		<language name="JPN" width="216">SEQ_BGM_VS_N_2</language>
+	</row>
+
+	<row id="EV_BGM_011">
+		<language name="JPN" width="216">SEQ_BGM_VS_G_CIS</language>
+	</row>
+
+	<row id="EV_BGM_012">
+		<language name="JPN" width="216">SEQ_BGM_VS_SHIN</language>
+	</row>
+
+	<row id="EV_BGM_013">
+		<language name="JPN" width="216">SEQ_BGM_VS_MU</language>
+	</row>
+
+	<row id="EV_BGM_014">
+		<language name="JPN" width="216">SEQ_BGM_VS_RAI</language>
+	</row>
+
+	<row id="EV_BGM_015">
+		<language name="JPN" width="216">SEQ_BGM_VS_MOVEPOKE</language>
+	</row>
+
+	<row id="EV_BGM_016">
+		<language name="JPN" width="216">SEQ_BGM_VS_SETPOKE</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
