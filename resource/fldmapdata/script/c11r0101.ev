@@ -171,43 +171,46 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_c11r0101_policeman01
   DEFINE_LOCAL	gardman_talk_msg
+  
+  _TALK_OBJ_START()
   SWITCH $WK_SCENE_C11GATE
   CASE 0 THEN     //ここにはこないけど
     $gardman_talk_msg = msg_policeman_01_01
   CASE 1 THEN     //初回イベント後
-    $gardman_talk_msg = msg_policeman_01_01
-  CASE 2 THEN     //1ヶ国
     $gardman_talk_msg = msg_policeman_02_02
-  CASE 3 THEN     //3ヶ国
+  CASE 2 THEN     //3ヶ国突破
     $gardman_talk_msg = msg_policeman_02_03
-  CASE 4 THEN     //6ヶ国
+  CASE 3 THEN     //6ヶ国突破
     $gardman_talk_msg = msg_policeman_02_04
-  CASE 5 THEN     //10ヶ国
+  CASE 4 THEN     //10ヶ国突破
     $gardman_talk_msg = msg_policeman_02_05
-  CASE 6 THEN     //15
+  CASE 5 THEN     //15ヶ国突破
     $gardman_talk_msg = msg_policeman_02_06
-  CASE 7 THEN     //20
+  CASE 6 THEN     //20ヶ国突破
     $gardman_talk_msg = msg_policeman_02_07
-  CASE 8 THEN     //30
+  CASE 7 THEN     //30ヶ国突破
     $gardman_talk_msg = msg_policeman_02_08
-  CASE 9 THEN     //40
+  CASE 8 THEN     //40ヶ国突破
     $gardman_talk_msg = msg_policeman_02_09
-  CASE 10 THEN     //50
+  CASE 9 THEN     //50ヶ国突破
     $gardman_talk_msg = msg_policeman_02_10
-  CASE 11 THEN    //60
+  CASE 10 THEN    //75ヶ国突破
     $gardman_talk_msg = msg_policeman_02_11
-  CASE 12 THEN    //70
+  CASE 11 THEN    //100ヶ国突破
     $gardman_talk_msg = msg_policeman_02_12
-  CASE 13 THEN    //80
+  CASE 12 THEN    //125ヶ国突破
     $gardman_talk_msg = msg_policeman_02_13
-  CASE 14 THEN    //90
+  CASE 13 THEN    //150ヶ国突破
     $gardman_talk_msg = msg_policeman_02_14
-  CASE 15 THEN    //100
+  CASE 14 THEN    //175ヶ国突破
     $gardman_talk_msg = msg_policeman_02_15
-  CASE 16 THEN    //150
+  CASE 15 THEN    //200ヶ国突破
     $gardman_talk_msg = msg_policeman_02_16
-  DEFAULT  
+  CASE 16 THEN    //233ヶ国突破
     $gardman_talk_msg = msg_policeman_02_17
+  DEFAULT  
+    //ここにはこないけど
+    $gardman_talk_msg = msg_policeman_02_02
   ENDSWITCH
 
   //プレーヤー名をタグ3番にセット
@@ -250,37 +253,35 @@ EVENT_START ev_c11r0101_pos01
    $WK_SCENE_C11GATE = 1
   ELSE
     SWITCH $LOCALWORK2
-    CASE 2 THEN     //1ヶ国
-      $gardman_msg = msg_policeman_01_02
-    CASE 3 THEN     //3ヶ国
+    CASE 2 THEN     //3ヶ国突破
       $gardman_msg = msg_policeman_01_03
-    CASE 4 THEN     //6ヶ国
+    CASE 3 THEN     //6ヶ国突破
       $gardman_msg = msg_policeman_01_04
-    CASE 5 THEN     //10ヶ国
+    CASE 4 THEN     //10ヶ国突破
       $gardman_msg = msg_policeman_01_05
-    CASE 6 THEN     //15
+    CASE 5 THEN     //15ヶ国突破
       $gardman_msg = msg_policeman_01_06
-    CASE 7 THEN     //20
+    CASE 6 THEN     //20ヶ国突破
       $gardman_msg = msg_policeman_01_07
-    CASE 8 THEN     //30
+    CASE 7 THEN     //30ヶ国突破
       $gardman_msg = msg_policeman_01_08
-    CASE 9 THEN     //40
+    CASE 8 THEN     //40ヶ国突破
       $gardman_msg = msg_policeman_01_09
-    CASE 10 THEN     //50
+    CASE 9 THEN     //50ヶ国突破
       $gardman_msg = msg_policeman_01_10
-    CASE 11 THEN    //75
+    CASE 10 THEN    //75ヶ国突破
       $gardman_msg = msg_policeman_01_11
-    CASE 12 THEN    //100
+    CASE 11 THEN    //100ヶ国突破
       $gardman_msg = msg_policeman_01_12
-    CASE 13 THEN    //125
+    CASE 12 THEN    //125ヶ国突破
       $gardman_msg = msg_policeman_01_13
-    CASE 14 THEN    //150
+    CASE 13 THEN    //150ヶ国突破
       $gardman_msg = msg_policeman_01_14
-    CASE 15 THEN    //175
+    CASE 14 THEN    //175ヶ国突破
       $gardman_msg = msg_policeman_01_15
-    CASE 16 THEN    //200
+    CASE 15 THEN    //200ヶ国突破
       $gardman_msg = msg_policeman_01_16
-    CASE 17 THEN    //233
+    CASE 16 THEN    //233ヶ国突破
       $gardman_msg = msg_policeman_01_17
     DEFAULT
       $talk = FALSE
@@ -416,41 +417,39 @@ check_posevt_start:
     //初回なので必ず起動
     $LOCALWORK1 = 1   //POS起動
   ELSE
-    //シーンワークで分岐  $chk_valには次のＰＯＳイベント発動に必要な人数が入る
+    //シーンワークで分岐  chk_valには次のＰＯＳイベント発動に必要な人数が入る
     SWITCH $WK_SCENE_C11GATE
     CASE 1 THEN     //初回イベント済
-      $chk_val = 1
-    CASE 2 THEN     //1ヶ国チェック済
       $chk_val = 3
-    CASE 3 THEN     //3ヶ国チェック済
+    CASE 2 THEN     //3ヶ国チェック済
       $chk_val = 6
-    CASE 4 THEN     //6ヶ国チェック済
+    CASE 3 THEN     //6ヶ国チェック済
       $chk_val = 10
-    CASE 5 THEN     //10ヶ国チェック済
+    CASE 4 THEN     //10ヶ国チェック済
       $chk_val = 15
-    CASE 6 THEN     //15ヶ国チェック済
+    CASE 5 THEN     //15ヶ国チェック済
       $chk_val = 20
-    CASE 7 THEN     //20ヶ国チェック済
+    CASE 6 THEN     //20ヶ国チェック済
       $chk_val = 30
-    CASE 8 THEN     //30ヶ国チェック済
+    CASE 7 THEN     //30ヶ国チェック済
       $chk_val = 40
-    CASE 9 THEN     //40ヶ国チェック済
+    CASE 8 THEN     //40ヶ国チェック済
       $chk_val = 50
-    CASE 10 THEN     //50ヶ国チェック済
+    CASE 9 THEN     //50ヶ国チェック済
       $chk_val = 75
-    CASE 11 THEN    //75ヶ国チェック済
+    CASE 10 THEN    //75ヶ国チェック済
       $chk_val = 100
-    CASE 12 THEN    //100ヶ国チェック済
+    CASE 11 THEN    //100ヶ国チェック済
       $chk_val = 125
-    CASE 13 THEN    //125ヶ国チェック済
+    CASE 12 THEN    //125ヶ国チェック済
       $chk_val = 150
-    CASE 14 THEN    //150ヶ国チェック済
+    CASE 13 THEN    //150ヶ国チェック済
       $chk_val = 175
-    CASE 15 THEN    //175ヶ国チェック済
+    CASE 14 THEN    //175ヶ国チェック済
       $chk_val = 200
-    CASE 16 THEN    //200ヶ国チェック済
+    CASE 15 THEN    //200ヶ国チェック済
       $chk_val = 233
-    CASE 17 THEN    //233ヶ国チェック済
+    CASE 16 THEN    //233ヶ国チェック済
       $chk_val = 300      //チェックの必要ないので、国数以上の値をセットしておく
     DEFAULT
       //何もしないでリターン
@@ -461,36 +460,34 @@ check_posevt_start:
     _UN_GET_COUNTRY_NUM( chk_total )
 
     IF $chk_total >= 233 THEN
-      $next_scene = 17
-    ELSIF $chk_total >= 200 THEN
       $next_scene = 16
-    ELSIF $chk_total >= 175 THEN
+    ELSIF $chk_total >= 200 THEN
       $next_scene = 15
-    ELSIF $chk_total >= 150 THEN
+    ELSIF $chk_total >= 175 THEN
       $next_scene = 14
-    ELSIF $chk_total >= 125 THEN
+    ELSIF $chk_total >= 150 THEN
       $next_scene = 13
-    ELSIF $chk_total >= 100 THEN
+    ELSIF $chk_total >= 125 THEN
       $next_scene = 12
-    ELSIF $chk_total >= 75 THEN
+    ELSIF $chk_total >= 100 THEN
       $next_scene = 11
-    ELSIF $chk_total >= 50 THEN
+    ELSIF $chk_total >= 75 THEN
       $next_scene = 10
-    ELSIF $chk_total >= 40 THEN
+    ELSIF $chk_total >= 50 THEN
       $next_scene = 9
-    ELSIF $chk_total >= 30 THEN
+    ELSIF $chk_total >= 40 THEN
       $next_scene = 8
-    ELSIF $chk_total >= 20 THEN
+    ELSIF $chk_total >= 30 THEN
       $next_scene = 7
-    ELSIF $chk_total >= 15 THEN
+    ELSIF $chk_total >= 20 THEN
       $next_scene = 6
-    ELSIF $chk_total >= 10 THEN
+    ELSIF $chk_total >= 15 THEN
       $next_scene = 5
-    ELSIF $chk_total >= 6 THEN
+    ELSIF $chk_total >= 10 THEN
       $next_scene = 4
-    ELSIF $chk_total >= 3 THEN
+    ELSIF $chk_total >= 6 THEN
       $next_scene = 3
-    ELSIF $chk_total >= 1 THEN
+    ELSIF $chk_total >= 3 THEN
       $next_scene = 2
     ELSE 
       $next_scene = 1
@@ -500,7 +497,7 @@ check_posevt_start:
     IF $chk_total >= $chk_val THEN
       $LOCALWORK1 = 1   //POS起動
       IF $next_scene > $WK_SCENE_C11GATE THEN
-        $LOCALWORK2 = $next_scene  //LOCALWORK2がとりうる値は2～17。1は$chk_total >= $chk_valではじかれて入らない
+        $LOCALWORK2 = $next_scene
       ENDIF 
     ENDIF
   ENDIF  
