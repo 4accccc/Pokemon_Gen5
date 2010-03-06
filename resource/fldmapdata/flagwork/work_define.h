@@ -143,7 +143,7 @@
 #define WK_SCENE_R05                     16531 /* 0x4093 ５番道路：イベント用ワーク */
 #define WK_SCENE_D01R0101_POKE           16532 /* 0x4094 廃墟：夢ポケモン探しイベント用ワーク */
 #define WK_SCENE_R03_PLASMA              16533 /* 0x4095 ３番道路：プラズマ団誘拐イベント用ワーク */
-#define WK_SCENE_D07R0101                16534 /* 0x4096 D07ネジ山：ヤーコンと遭遇イベント */
+#define WK_SCENE_D07R0201                16534 /* 0x4096 D07ネジ山：ヤーコンと遭遇イベント */
 #define WK_SCENE_C07                     16535 /* 0x4097 C07セッカシティ：イベント用ワーク */
 #define WK_SCENE_D08                     16536 /* 0x4098 D08リュウラセンの塔：イベント進行状況確認ワーク */
 #define WK_SCENE_C06                     16537 /* 0x4099 C06フキヨセシティ：POSイベント用ワーク */
@@ -179,6 +179,7 @@
 #define WK_SCENE_R06R0202                16567 /* 0x40b7 ６番道路洞窟のイベント用ワーク */
 #define WK_SCENE_C08_GYMCLEAR            16568 /* 0x40b8 ソウリュウシティジム：イベント用ワーク */
 #define WK_SCENE_C11GUIDE                16569 /* 0x40b9 国連（内部）：初回誘導イベント用のワーク */
+#define WK_SCENE_C07R0105                16570 /* 0x40ba タワーオブヘブン5F：イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 

@@ -596,7 +596,7 @@
 #define FV_R03_SUPPORT_01                  572 /* 0x023c R03：ストッパーのサポート02 */
 #define FV_R03_RIVAL_02                    573 /* 0x023d R03：ライバル02 */
 #define FV_R03R0301_RIVAL_01               574 /* 0x023e R030101：プラズマ団・ライバル */
-#define FV_D07R0101_GYMLEADER05_01         575 /* 0x023f ネジ山：ヤーコン */
+#define FV_D07R0201_GYMLEADER05_01         575 /* 0x023f ネジ山：ヤーコンとライバル */
 #define FV_C07_RIVAL_01                    576 /* 0x0240 C07セッカシティ：ライバル・サポート */
 #define FV_C07_HAKAIM_01                   577 /* 0x0241 C07セッカシティ：プラズマ団たち */
 #define FV_C07_READER7                     578 /* 0x0242 C07セッカシティ：ハチク */
@@ -697,7 +697,7 @@
 #define FV_MUSICAL_FUN_04                  673 /* 0x02a1 ミュージカルホール：出待ちのファン４人目 */
 #define FV_MUSICAL_FUN_05                  674 /* 0x02a2 ミュージカルホール：出待ちのファン５人目 */
 #define FV_T01R0401_POKEMON_01             675 /* 0x02a3 研究所のミネズミ */
-		/* not used   676(0x02a4) */
+#define FV_R070105_LEADER6_01              676 /* 0x02a4 タワーオブヘブン5Fのフウロ */
 		/* not used   677(0x02a5) */
 		/* not used   678(0x02a6) */
 		/* not used   679(0x02a7) */
