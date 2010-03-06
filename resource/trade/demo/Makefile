@@ -149,6 +149,12 @@ $(targetname).narc:  $(OBJ_FILE) Makefile
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t camera4.ica icatarget.bin
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t ball_001.ica ball_001.bin
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t ball_002.ica ball_002.bin
+	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t short_up_camerachusiten.ica short_up_camerachusiten.bin
+	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t short_up_cameraichi.ica short_up_cameraichi.bin
+	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t short_down_camerachushiten.ica short_down_camerachushiten.bin
+	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t short_down_cameraichi.ica short_down_cameraichi.bin
+	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t short_mcamera_chushiten.ica short_mcamera_chushiten.bin
+	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t short_mcamera_ichi.ica short_mcamera_ichi.bin
 	../../../tools/SPRArchiver.exe -o spahead.h ./ ./ demo_tex001.spa
 	cp spahead.h ../../../prog/src/net_app/poke_trade/
 	-ls -f *.N*R > $(LIST_FILE)
@@ -158,7 +164,7 @@ $(targetname).narc:  $(OBJ_FILE) Makefile
 	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(LIST_FILE)
 	nnsarc -r -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
-	-rm $(LIST_FILE)
+	##-rm $(LIST_FILE)
 
 endif
 
