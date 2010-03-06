@@ -281,6 +281,7 @@ typedef struct
   u16   anmPal[PSTATUS_PALANIM_NUM];
 
   //ppp‚ÌŽžpp‚É•ÏŠ·‚·‚é‚æ‚¤
+  //PSTATUS_UTIL_GetCurrentPP‚ÅŽæ“¾
   POKEMON_PARAM *calcPP;
 
   PSTATUS_MOSAIC_EFFECT_SEQ mosaicEffSeq;
