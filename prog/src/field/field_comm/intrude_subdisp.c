@@ -1108,7 +1108,7 @@ static void _IntSub_ActorUpdate_Area(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SY
   GFL_CLWK *act;
   GFL_CLACTPOS pos;
   int my_area, now_tbl_pos = 0;
-  u8 pal_tbl[FIELD_COMM_MEMBER_MAX] = {0, 0, 0, 0};
+  u8 pal_tbl[FIELD_COMM_MEMBER_MAX] = {0, 0, 0};
   s32 tbl_count = 0, actno;
   
   profile_num = _IntSub_GetProfileRecvNum(intcomm);
@@ -1178,7 +1178,6 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
   
   GFL_STD_MemClear(town_num, sizeof(town_num[0]) * PALACE_TOWN_DATA_MAX);
   GFL_STD_MemClear(palace_num, sizeof(palace_num[0]) * FIELD_COMM_MEMBER_MAX);
-  GF_ASSERT(NELEMS(PalaceWearOffset) == FIELD_COMM_MEMBER_MAX);
   
   for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
     act = intsub->act[INTSUB_ACTOR_CUR_S_0 + net_id];

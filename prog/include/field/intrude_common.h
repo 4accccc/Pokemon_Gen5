@@ -13,7 +13,7 @@
 //  定数定義
 //==============================================================================
 ///侵入：通信最大接続人数
-#define FIELD_COMM_MEMBER_MAX (4)
+#define FIELD_COMM_MEMBER_MAX (3)
 
 ///繋がっていない事を示すNETID
 #define INTRUDE_NETID_NULL    (FIELD_COMM_MEMBER_MAX + 1)
