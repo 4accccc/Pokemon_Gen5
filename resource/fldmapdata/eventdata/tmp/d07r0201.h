@@ -21,6 +21,8 @@
 #define TR_MOUNT_04                        1
 #define TR_BATTLEG_02                      2
 #define D07R0201_FLD_ITEM_01               3
+#define D07R0201_LEADER5_01                4
+#define D07R0201_RIVAL_01                  5
 
 #endif //ZONE_D07R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
