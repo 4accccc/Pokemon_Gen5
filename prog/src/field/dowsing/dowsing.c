@@ -1482,7 +1482,8 @@ static void Dowsing_TouchbarMain( DOWSING_WORK* work )
             }
           }
         }
-/* キーは受け付けないことになった
+// キーは受け付けないことになった
+// →いやはやキーを受け付けることになった
         // キー判定
         if( !input_finish ) 
         {
@@ -1493,7 +1494,7 @@ static void Dowsing_TouchbarMain( DOWSING_WORK* work )
             input_finish = TRUE;
           }
         }
-*/
+
         // 入力があったとき
         if( input_finish )
         {

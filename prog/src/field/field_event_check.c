@@ -563,7 +563,13 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   //便利ボタンチェック
   if( req.convRequest ){
 		if(WIPE_SYS_EndCheck()){
-			if( EVENT_ShortCutMenu_IsOpen(gsys) )
+      FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
+      if( FIELD_SUBSCREEN_GetMode( subscreen ) == FIELD_SUBSCREEN_DOWSING )  // ダウジングマシンを使っているときは、便利ボタンを使用できない
+      {
+        // 何もしない
+      }
+      else
+      if( EVENT_ShortCutMenu_IsOpen(gsys) )
 			{	
 				event = EVENT_ShortCutMenu( gsys, fieldWork, req.heapID );
 				if( event != NULL ){
@@ -583,6 +589,13 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 	//メニュー起動チェック
 	if( req.menuRequest ){
 		if(WIPE_SYS_EndCheck()){
+      {
+        FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
+        if( FIELD_SUBSCREEN_GetMode( subscreen ) == FIELD_SUBSCREEN_DOWSING )  // ダウジングマシンを使っているときは、ダウジングマシンを終了させるだけ
+        {
+          return NULL;
+        }
+      }
       *menu_open_flag = TRUE;
   	  return EVENT_FieldMapMenu( gsys, fieldWork, req.heapID );
 		}
