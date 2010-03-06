@@ -1083,7 +1083,7 @@ static void CreateFont( RESEARCH_MENU_WORK* work )
   GF_ASSERT( work->font == NULL ); // ‰Šú‰»‚³‚ê‚Ä‚¢‚È‚¢
 
   work->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, 
-                                GFL_FONT_LOADTYPE_FILE, TRUE, work->heapID ); 
+                                GFL_FONT_LOADTYPE_FILE, FALSE, work->heapID ); 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create font\n" );
 }

@@ -2904,7 +2904,7 @@ static void CreateFont( RESEARCH_CHECK_WORK* work )
 
   // ¶¬
   work->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, 
-                                GFL_FONT_LOADTYPE_FILE, TRUE, work->heapID );
+                                GFL_FONT_LOADTYPE_FILE, FALSE, work->heapID );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create font\n" );

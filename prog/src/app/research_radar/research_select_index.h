@@ -20,6 +20,7 @@ typedef enum {
   RESEARCH_SELECT_SEQ_DETERMINE,      // 調査項目確定
   RESEARCH_SELECT_SEQ_FADE_IN,        // フェードイン
   RESEARCH_SELECT_SEQ_FADE_OUT,       // フェードアウト
+  RESEARCH_SELECT_SEQ_SCROLL_RESET,   // スクロールの復帰
   RESEARCH_SELECT_SEQ_PALETTE_RESET,  // パレットの復帰
   RESEARCH_SELECT_SEQ_CLEAN_UP,       // 後片付け
   RESEARCH_SELECT_SEQ_FINISH,         // 終了

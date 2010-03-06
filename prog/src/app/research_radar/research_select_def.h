@@ -89,7 +89,7 @@
 #define TITLE_WINDOW_WIDTH           (28)  // Xサイズ (キャラクター単位)
 #define TITLE_WINDOW_HEIGHT          (3)   // Yサイズ (キャラクター単位)
 #define TITLE_WINDOW_STRING_OFFSET_X (0)   // 文字列の書き込み先オフセットX
-#define TITLE_WINDOW_STRING_OFFSET_Y (4)   // 文字列の書き込み先オフセットY
+#define TITLE_WINDOW_STRING_OFFSET_Y (3)   // 文字列の書き込み先オフセットY
 #define TITLE_WINDOW_STRING_COLOR_L  (3)   // フォント (文字) のカラー番号
 #define TITLE_WINDOW_STRING_COLOR_S  (4)   // フォント (影)　 のカラー番号
 #define TITLE_WINDOW_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
