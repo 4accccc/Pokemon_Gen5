@@ -264,6 +264,7 @@ extern void	GFL_BBD_DeleteSys( GFL_BBD_SYS* billboardSys );
 //	ビルボードシステム各種パラメータの取得と変更
 extern void	GFL_BBD_SetUseCustomVecN( GFL_BBD_SYS* billboardSys, VecFx16* pVecN );
 extern void	GFL_BBD_ResetUseCustomVecN( GFL_BBD_SYS* billboardSys );
+extern void	GFL_BBD_SetFlushType( GFL_BBD_SYS* billboardSys, GFL_G3D_DRAWFLUSH_TYPE flushType );
 
 extern void	GFL_BBD_GetScale( GFL_BBD_SYS* billboardSys, VecFx32* scale );
 extern void	GFL_BBD_SetScale( GFL_BBD_SYS* billboardSys, VecFx32* scale );
