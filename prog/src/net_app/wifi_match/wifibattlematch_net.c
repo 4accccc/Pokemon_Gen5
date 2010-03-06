@@ -59,11 +59,7 @@
 //-------------------------------------
 ///	ƒlƒbƒg’è”
 //=====================================
-#ifdef PM_DEBUG
-#define WIFIBATTLEMATCH_NET_SSL_TYPE DWC_GDB_SSL_TYPE_NONE
-#else
-#define WIFIBATTLEMATCH_NET_SSL_TYPE DWC_GDB_SSL_TYPE_SERVER_AUTH
-#endif
+#define WIFIBATTLEMATCH_NET_SSL_TYPE DWC_SSL_TYPE_SERVER_AUTH
 
 #define WIFIBATTLEMATCH_NET_TABLENAME "PlayerStats_v1" 
 
@@ -1178,7 +1174,7 @@ BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk )
     case WIFIBATTLEMATCH_SC_SEQ_INIT:
       p_wk->wait_cnt  = 0;
       { 
-        ret = DWC_GdbInitialize( GAME_ID, p_wk->cp_user_data, DWC_GDB_SSL_TYPE_SERVER_AUTH );
+        ret = DWC_GdbInitialize( GAME_ID, p_wk->cp_user_data, DWC_SSL_TYPE_SERVER_AUTH );
         if( ret != DWC_GDB_ERROR_NONE )
         { 
           WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret );
@@ -1186,7 +1182,7 @@ BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk )
         }
       }
 
-      ret = DWC_ScInitialize( GAME_ID );
+      ret = DWC_ScInitialize( GAME_ID,DWC_SSL_TYPE_SERVER_AUTH );
       if( ret != DWC_SC_RESULT_NO_ERROR )
       { 
         WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret );
