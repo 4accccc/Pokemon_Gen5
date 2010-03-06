@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-04T17:48:02"/>
+	<create user="matsumiya" host="W00224" date="2010-03-06T16:33:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -428,21 +428,23 @@
 じゃ　いってらっしゃい！</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_05" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0101_mama_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ポケモン図鑑入手後から
-　ランニングシューズ入手するまで仮
+　ランニングシューズ入手するまで
 ・メッセージ表示後、
 　画面暗転して回復処理</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
-		<language name="JPN" width="256">ママ『[1:00:トレーナー名:0]
-ポケモンは　げんき　なの？[BE:01:ページ切り替え（クリア）]
-ちょっと　やすんでいきなさいな[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ママ『ふう！　おかたづけは
+ちょっと　きゅうけい▼
+あなたも　あなたの　ポケモンも
+ちょっと　きゅうけい　しなさいな▼
 いい　トレーナーは
 ポケモンに　むりさせないのよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ママ『[1:00:トレーナー名:0]
-ポケモンは　元気なの？[BE:01:ページ切り替え（クリア）]
-ちょっと　休んでいきなさいな[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ママ『ふう！　おかたづけは
+ちょっと　休憩▼
+あなたも　あなたの　ポケモンも
+ちょっと　休憩しなさいな▼
 いい　トレーナーは
 ポケモンに　無理させないのよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -469,6 +471,100 @@
 どんな　ポケモンと　であうのかしら？</language>
 		<language name="JPN_KANJI" width="256">ママ『次は　どこに　行って
 どんな　ポケモンと　出会うのかしら？</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・ランニングシューズ入手後
+・メッセージ表示後、
+　画面暗転して回復処理
+・回復処理後ランダム（20％）で09a~09e表示
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『[1:00:トレーナー名:0]
+ポケモンは　げんき　なの？[BE:01:ページ切り替え（クリア）]
+ちょっと　やすんでいきなさいな[BE:01:ページ切り替え（クリア）]
+いい　トレーナーは
+ポケモンに　むりさせないのよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ママ『[1:00:トレーナー名:0]
+ポケモンは　元気なの？[BE:01:ページ切り替え（クリア）]
+ちょっと　休んでいきなさいな[BE:01:ページ切り替え（クリア）]
+いい　トレーナーは
+ポケモンに　無理させないのよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_09a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・回復処理後ランダム（20％）で09a~09e表示
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『うん　ばっちり！▼
+[1:00:トレーナー名:0]も　ポケモンも
+げんき　ハツラツって　かんじ！▼
+さあ　たびを　つづけなさいな</language>
+		<language name="JPN_KANJI" width="256">ママ『うん　ばっちり！▼
+[1:00:トレーナー名:0]も　ポケモンも
+元気ハツラツって　感じ！▼
+さあ　旅を　続けなさいな</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_09b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・回復処理後ランダム（20％）で09a~09e表示
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『[1:00:トレーナー名:0]
+ポケモンには　やさしくしてる？▼
+あなたの　ために　ポケモンは
+がんばって　くれるんだもん！▼
+あなたも　ポケモンに
+やさしくするのが　ふつうでしょ？</language>
+		<language name="JPN_KANJI" width="256">ママ『[1:00:トレーナー名:0]
+ポケモンには　優しくしてる？▼
+あなたの　ために　ポケモンは
+がんばって　くれるんだもん！▼
+あなたも　ポケモンを
+気遣ってあげるのが　普通でしょ？</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_09c" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・回復処理後ランダム（20％）で09a~09e表示</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『そういえば……▼
+パパも　あなたと　おなじように
+ポケモンと　たびを　していたのよね▼
+たびさきで　ママと　であって……</language>
+		<language name="JPN_KANJI" width="256">ママ『そういえば……▼
+パパも　あなたと　おなじように
+ポケモンと　旅を　していたのよね▼
+旅先で　ママと　出会って……</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_09d" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・回復処理後ランダム（20％）で09a~09e表示</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『どう？　ポケモンは
+たくさん　つかまえているの？▽
+はかせの　おねがい　なんでしょ</language>
+		<language name="JPN_KANJI" width="256">ママ『どう？　ポケモンは
+たくさん　捕まえているの？▽
+博士の　お願い　なんでしょ</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_09e" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・回復処理後ランダム（20％）で09a~09e表示</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『チェレンくんも　ベルちゃんも
+げんきに　たび　してるのかな▼
+ベルちゃんは　たびに　むちゅうなのね
+あんまり　れんらく　してないみたいよ</language>
+		<language name="JPN_KANJI" width="256">ママ『チェレンくんも　ベルちゃんも
+元気に　旅してるのかな▼
+ベルちゃんは　旅に　夢中なのね
+あんまり　連絡してないみたいよ</language>
 	</row>
 
 	<row id="msg_t01r0101_dead_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

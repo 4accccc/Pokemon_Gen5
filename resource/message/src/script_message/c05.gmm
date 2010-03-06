@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-04T16:10:31"/>
+	<create user="matsumiya" host="W00224" date="2010-03-06T15:58:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -637,7 +637,7 @@
 また　のちほど　いらしてください</language>
 	</row>
 
-	<row id="msg_c05_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_white_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・c05ジムバッジ入手後に発動
 ・pos起動（GRIDX=179、GRIDZ=404~407）
@@ -651,7 +651,7 @@
 [1:00:トレーナー名:0]！！▼</language>
 	</row>
 
-	<row id="msg_c05_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_white_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・主人公に隣接してメッセージ表示
 ・続けてwhite_03</comment>
@@ -668,7 +668,7 @@
 いいなあ！　すごいなあ！！▼</language>
 	</row>
 
-	<row id="msg_c05_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_white_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・サポート頭上に「！」マーク表示後
 　メッセージ表示、続けてトレーナー戦闘に</comment>
@@ -683,9 +683,10 @@
 こういうときは　勝負よね！▼</language>
 	</row>
 
-	<row id="msg_c05_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_white_04" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・戦闘後、フィールド復帰時に自動で表示
+・No603「わざマシン９７「そらをとぶ」」入手
 ・続けてwhite_05
 ・0＝主人公名前</comment>
 		<attribute name="キャラクター">友達♀</attribute>
@@ -696,8 +697,8 @@
 じょうずに　いえないけれど▼
 [1:00:トレーナー名:0]は　ポケモンのこと
 よく　しっていると　おもう！▼
-[1:00:トレーナー名:0]は　ぜったい
-つよくなるよ！　バイバイ！！▼</language>
+そうだ！　この　わざマシン
+[1:00:トレーナー名:0]にも　わけてあげるね▼</language>
 		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]とは　ひさびさの
 ポケモン勝負　だったけど▽
 ものすごーく　強くなってるのね！▼
@@ -705,37 +706,33 @@
 じょうずに　いえないけれど▼
 [1:00:トレーナー名:0]は　ポケモンのこと
 よく　知っていると　おもう！▼
-[1:00:トレーナー名:0]は　絶対
-強くなるよ！　バイバイ！！▼</language>
+そうだ！　この　わざマシン
+[1:00:トレーナー名:0]にも　わけてあげるね▼</language>
 	</row>
 
-	<row id="msg_c05_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_white_05" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・ポケモンセンター方向へ数歩移動
-　「！」マーク表示後、主人公のほうを振り向き
-　メッセージ表示
+・アイテム入手処理後、自動で表示
 ・その後画面外（ポケセン方向）へ移動
 ・画面外に消えると主人公、操作可能に
 ・0＝主人公名前</comment>
 		<attribute name="キャラクター">友達♀</attribute>
-		<language name="JPN" width="256">ベル『あのね！▼
-[1:00:トレーナー名:0]が　しっていたら
-おせっかいに　なっちゃうんだけど▼
-３ばんどうろの　そだてやさんに
-ポケモンを　２ひき　あずけていたら▽
-タマゴが　みつかるんだって！▼
-なので　アタシも　ポケモンを
-あずけにいこうと　おもうのでした▼
-もういちど　バイバイ！！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『あのね！▼
-[1:00:トレーナー名:0]が　知っていたら
-おせっかいに　なっちゃうんだけど▼
-３番道路の　育て屋さんに
-ポケモンを　２匹　預けていたら▽
-タマゴが　みつかるんだって！▼
-なので　アタシも　ポケモンを
-預けにいこうと　思うのでした▼
-もういちど　バイバイ！！▼</language>
+		<language name="JPN" width="256">ベル『あのあと　パパが　くれたの！▼
+きっと　いつでも　すぐに
+かえって　これるように！▽
+ってことだと　おもうんだけど……▼
+そうだ　チェレンにも
+わけてあげないと……▼
+じゃあね
+[1:00:トレーナー名:0]！　バイバイ！！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『あのあと　パパが　くれたの！▼
+きっと　いつでも　すぐに
+帰って　これるように！▽
+ってことだと　思うんだけど……▼
+そうだ　チェレンにも
+わけてあげないと……▼
+じゃあね
+[1:00:トレーナー名:0]！　バイバイ！！▼</language>
 	</row>
 
 	<row id="msg_c05_woman2_01">
@@ -827,7 +824,7 @@
 捕まえている　子供も　おるよ</language>
 	</row>
 
-	<row id="msg_c05_boy2" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c05_boy2" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・GRIDX=179、GRIDZ=413辺り
 ・仮メッセージ</comment>
@@ -842,7 +839,7 @@
 あちこち　いったり　きたりさ</language>
 	</row>
 
-	<row id="msg_c05_rangerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05_rangerw_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・GRIDX=171、GRIDZ=430辺り
 ・仮メッセージ</comment>
@@ -855,7 +852,7 @@
 いろんな　ポケモンが　いるのよね</language>
 	</row>
 
-	<row id="msg_c05_mountain_01" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_c05_mountain_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♂
 ・GRIDX=198、GRIDZ=399辺り
 ・仮メッセージ</comment>
@@ -868,14 +865,14 @@
 興味があるなら　会いにいきな</language>
 	</row>
 
-	<row id="msg_c05_sign1_01" text-color=",,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c05_sign1_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>橋看板</comment>
 		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">ホドモエのはねばし</language>
 		<language name="JPN_KANJI" width="256">ホドモエの跳ね橋</language>
 	</row>
 
-	<row id="msg_c05_sign2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+	<row id="msg_c05_sign2_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
 		<comment>船のオブジェクト用
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">看板</attribute>
@@ -883,7 +880,7 @@
 		<language name="JPN_KANJI" width="256">ようこそ　ホドモエシティへ！</language>
 	</row>
 
-	<row id="msg_c05_sign3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+	<row id="msg_c05_sign3_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
 		<comment>街看板</comment>
 		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">ホドモエが　あらわしているのは
@@ -892,7 +889,7 @@
 船の帆と　渦巻く水のこと</language>
 	</row>
 
-	<row id="msg_c05_sign4_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+	<row id="msg_c05_sign4_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
 		<comment>マーケット用
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">看板</attribute>
@@ -900,7 +897,7 @@
 		<language name="JPN_KANJI" width="256">ホドモエの　マーケット</language>
 	</row>
 
-	<row id="msg_c05_gymsign_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c05_gymsign_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ポケモンジム</comment>
 		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">ホドモエシティ　ポケモンジム
