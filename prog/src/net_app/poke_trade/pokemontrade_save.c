@@ -101,16 +101,33 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
   GFL_CLACT_UNIT_Delete(pWork->cellUnit);
   GFL_CLACT_SYS_Delete();
   IRC_POKETRADE_CLACT_Create(pWork);
-
-
-
+  
   pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
+
+
+  if(
+    (pWork->type == POKEMONTRADE_TYPE_GTS) ||
+    (pWork->type == POKEMONTRADE_TYPE_GTSUP)
+    )
+  {
+    pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
+    _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
+    return;
+  }
+
+
+
   POKETRADE_MESSAGE_HeapInit(pWork);
 
   PMSND_PushBGM();
   PMSND_PlayBGM( SEQ_ME_POKEGET );
   PMSND_FadeInBGM( 8 );
 
+
+
+
+
+  
   if(pWork->bEncountMessageEach){
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_30, pWork->pMessageStrBufEx );
   }
@@ -187,7 +204,11 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
 
 
 
-  if(pWork->type == POKEMONTRADE_TYPE_EVENT){
+  if(
+    (pWork->type == POKEMONTRADE_TYPE_EVENT)||
+    (pWork->type == POKEMONTRADE_TYPE_GTSDOWN)
+    )
+  {
     pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
     _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
     return;

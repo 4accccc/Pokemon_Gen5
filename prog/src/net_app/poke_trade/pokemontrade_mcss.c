@@ -152,3 +152,11 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
   }
 }
 
+//MCSS終了の為のコールバック
+static void _McssAnmStop( u32 data, fx32 currentFrame )
+{
+  POKEMON_TRADE_WORK* pWork = (POKEMON_TRADE_WORK*)data;
+
+  MCSS_SetAnmStopFlag( pWork->pokeMcss[0]);
+  pWork->mcssStop[0] = TRUE;
+}

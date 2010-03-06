@@ -71,6 +71,7 @@ NETWORKSRC =  net/net_icondata.c \
         gamesystem/g_power.c
 
 
+#ica_anime camera はポケモン交換で使っていますので常駐においてあります k.ohno
 #常駐プログラム
 SRCS  +=    $(SOUNDSRC) \
         $(SAVEDATASRC) \
@@ -82,6 +83,8 @@ SRCS  +=    $(SOUNDSRC) \
         system/g3d_tool.c \
         system/rtc_tool.c \
         system/build_revision.c \
+        system/ica_anime.c \
+        system/ica_camera.c \
         gamesystem/gamesystem.c \
         gamesystem/game_event.c \
         gamesystem/game_data.c \
@@ -349,8 +352,6 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         net_app/union/colosseum_comm_command.c \
         net_app/union/colosseum.c \
         map/dp3format.c \
-        system/ica_anime.c \
-        system/ica_camera.c \
 				field/map_matrix.c \
         field/map_replace.c \
         field/warpdata.c \
@@ -1257,6 +1258,9 @@ SRCS_OVERLAY_POKEMON_TRADE = net_app/poke_trade/pokemontrade_proc.c \
 								net_app/poke_trade/pokemontrade_nego.c \
 								net_app/poke_trade/pokemontrade_demo.c \
 								net_app/poke_trade/pokemontrade_ircdemo.c \
+								net_app/poke_trade/pokemontrade_demo_up.c \
+								net_app/poke_trade/pokemontrade_demo_down.c \
+								net_app/poke_trade/pokemontrade_demo_gts.c \
 								net_app/poke_trade/pokemontrade_save.c \
 								net_app/poke_trade/pokemontrade_message.c \
 								net_app/poke_trade/pokemontrade_3d.c \
@@ -1272,21 +1276,6 @@ SRCS_OVERLAY_GTS_NEGOTIATE = net_app/gts_nego/gtsnego_proc.c \
 								net_app/gts_nego/gtsnego_message.c
 
 
-
-# メールアプリケーション
-# メールアプリケーション
-#===> SRCS_OVERLAY_POKEMON_TRADE
-#===> SRCS_OVERLAY_PMSINPUT
-#===> SRCS_OVERLAY_POKELIST
-SRCS_OVERLAY_APP_MAIL = app/mail/mailtool.c \
-			app/mail/mailsys.c \
-                    	app/mail/mailview.c \
-                    	app/mail/mailbox.c \
-                    	app/mail/mb_main.c \
-                    	app/mail/mb_bmp.c \
-                    	app/mail/mb_obj.c \
-                    	app/mail/mb_seq.c \
-                    	app/mail/mb_ui.c
 
 # 不思議な贈り物
 #===> SRCS_OVERLAY_WIFI_LOGIN
@@ -1441,6 +1430,25 @@ SRCS_OVERLAY_WORLDTRADE	= net_app/wifi_worldtrade/worldtrade.c \
 													net_app/wifi_worldtrade/worldtrade_title.c \
 													net_app/wifi_worldtrade/worldtrade_upload.c \
 													net_app/wifi_worldtrade/worldtrade_adapter.c
+
+
+# メールアプリケーション
+# メールアプリケーション
+#===> SRCS_OVERLAY_POKEMON_TRADE
+#===> SRCS_OVERLAY_PMSINPUT
+#===> SRCS_OVERLAY_POKELIST
+#===> SRCS_OVERLAY_WORLDTRADE
+SRCS_OVERLAY_APP_MAIL = app/mail/mailtool.c \
+			app/mail/mailsys.c \
+                    	app/mail/mailview.c \
+                    	app/mail/mailbox.c \
+                    	app/mail/mb_main.c \
+                    	app/mail/mb_bmp.c \
+                    	app/mail/mb_obj.c \
+                    	app/mail/mb_seq.c \
+                    	app/mail/mb_ui.c
+
+
 
 # ぐるぐる交換（ユニオンルーム）
 #===> SRCS_OVERLAY_POKE_STATUS

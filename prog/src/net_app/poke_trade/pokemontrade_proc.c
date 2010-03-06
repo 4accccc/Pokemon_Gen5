@@ -56,6 +56,7 @@
 #include "pokemontrade_local.h"
 
 #define HEAPSIZE_POKETRADE (0xd2000)   //全共通 WiFiだとほぼマックス
+#define HEAPSIZE_POKETRADE_DEMO (0xa2000)   //全共通 WiFiだとほぼマックス
 
 //#define _ENDTABLE  {192-32, 192, 256-32, 256}     //終了
 //#define _SEARCHTABLE  {192-32, 192, 0, 32}        //検索ボタン
@@ -164,7 +165,7 @@ BOOL POKEMONTRADEPROC_IsNetworkMode(POKEMON_TRADE_WORK* pWork)
   if(pWork->pParentWork==NULL){
     return FALSE;
   }
-  if(pWork->type==POKEMONTRADE_TYPE_EVENT){
+  if(pWork->type>=POKEMONTRADE_TYPE_VISUAL){
     return FALSE;
   }
   if(GFL_NET_IsInit()){
@@ -2724,7 +2725,12 @@ static void _dispInit(POKEMON_TRADE_WORK* pWork)
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
+//  if(pWork->type >= POKEMONTRADE_TYPE_VISUAL){
+  //  return;
+//  }
+
   POKE_GTS_InitEruptedIconResource(pWork);
+  
   IRC_POKETRADE_InitBoxCursor(pWork);
 
   IRC_POKETRADE_CreatePokeIconResource(pWork);
@@ -3156,12 +3162,28 @@ static GFL_PROC_RESULT PokemonTradeGTSNegoProcInit( GFL_PROC * proc, int * seq, 
   return PokemonTradeProcInit(proc,seq, pParent ,pWork, POKEMONTRADE_TYPE_GTSNEGO);
 }
 
+
+
+static void _commonFunc(POKEMONTRADE_DEMO_PARAM* pParent, POKEMON_TRADE_WORK *pWork)
+{
+  GFL_STD_MemCopy(pParent->pMyPoke, pWork->recvPoke[0] , POKETOOL_GetWorkSize());
+  GFL_STD_MemCopy(pParent->pNPCPoke, pWork->recvPoke[1] , POKETOOL_GetWorkSize());
+
+  IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, pParent->pMyPoke,TRUE);
+  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, pParent->pNPCPoke,TRUE);
+  MCSS_SetVanishFlag( pWork->pokeMcss[1] );
+  
+  pWork->pMy = pParent->pMy;
+  pWork->pFriend = pParent->pNPC;
+  
+}
+
+
 //IRデモのみ表示
 static GFL_PROC_RESULT PokemonTradeDemoProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   GFL_PROC_RESULT ret;
   POKEMONTRADE_DEMO_PARAM* pParent=pwk;
-  POKEMONTRADE_PARAM aParam;
   POKEMON_TRADE_WORK *pWork;
   int i;
   
@@ -3172,22 +3194,77 @@ static GFL_PROC_RESULT PokemonTradeDemoProcInit( GFL_PROC * proc, int * seq, voi
   pParent->aParam.gamedata = pParent->gamedata;
   ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_EVENT);
 
-
-  GFL_STD_MemCopy(pParent->pMyPoke, pWork->recvPoke[0] , POKETOOL_GetWorkSize());
-  GFL_STD_MemCopy(pParent->pNPCPoke, pWork->recvPoke[1] , POKETOOL_GetWorkSize());
-
-  IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, pParent->pMyPoke,TRUE);
+  _commonFunc(pParent, pWork);
+  _CHANGE_STATE(pWork,POKMEONTRADE_IRCDEMO_ChangeDemo);
   
-  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, pParent->pNPCPoke,TRUE);
-  MCSS_SetVanishFlag( pWork->pokeMcss[1] );
-  
-  pWork->pMy = pParent->pMy;
-  pWork->pFriend = pParent->pNPC;
-  
-  POKMEONTRADE_IRCDEMO_ChangeDemo(pWork);
-
   return ret;
 }
+
+
+
+//GTSデモのみ表示
+static GFL_PROC_RESULT PokemonTradeGTSDemoRecvProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  GFL_PROC_RESULT ret;
+  POKEMONTRADE_DEMO_PARAM* pParent=pwk;
+  POKEMON_TRADE_WORK *pWork;
+  int i;
+  
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, HEAPSIZE_POKETRADE_DEMO );
+  pWork = GFL_PROC_AllocWork( proc, sizeof( POKEMON_TRADE_WORK ), HEAPID_IRCBATTLE );
+  GFL_STD_MemClear(pWork, sizeof(POKEMON_TRADE_WORK));
+
+  pParent->aParam.gamedata = pParent->gamedata;
+  ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_GTSDOWN);
+
+  _commonFunc(pParent, pWork);
+  _CHANGE_STATE(pWork,POKMEONTRADE_DEMO_GTSDOWN_ChangeDemo);
+  
+  return ret;
+}
+
+static GFL_PROC_RESULT PokemonTradeGTSDemoSendProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  GFL_PROC_RESULT ret;
+  POKEMONTRADE_DEMO_PARAM* pParent=pwk;
+  POKEMON_TRADE_WORK *pWork;
+  int i;
+  
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, HEAPSIZE_POKETRADE_DEMO );
+  pWork = GFL_PROC_AllocWork( proc, sizeof( POKEMON_TRADE_WORK ), HEAPID_IRCBATTLE );
+  GFL_STD_MemClear(pWork, sizeof(POKEMON_TRADE_WORK));
+
+  pParent->aParam.gamedata = pParent->gamedata;
+  ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_GTSUP);
+
+  _commonFunc(pParent, pWork);
+  _CHANGE_STATE(pWork,POKMEONTRADE_DEMO_GTSUP_ChangeDemo);
+  
+  return ret;
+}
+
+
+static GFL_PROC_RESULT PokemonTradeGTSDemoProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  GFL_PROC_RESULT ret;
+  POKEMONTRADE_DEMO_PARAM* pParent=pwk;
+  POKEMON_TRADE_WORK *pWork;
+  int i;
+  
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, HEAPSIZE_POKETRADE );
+  pWork = GFL_PROC_AllocWork( proc, sizeof( POKEMON_TRADE_WORK ), HEAPID_IRCBATTLE );
+  GFL_STD_MemClear(pWork, sizeof(POKEMON_TRADE_WORK));
+
+  pParent->aParam.gamedata = pParent->gamedata;
+  ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_GTS);
+
+  _commonFunc(pParent, pWork);
+  _CHANGE_STATE(pWork,POKMEONTRADE_DEMO_GTS_ChangeDemo);
+  
+  return ret;
+}
+
+
 
 
 
@@ -3360,21 +3437,21 @@ const GFL_PROC_DATA PokemonTradeDemoProcData = {
 
 //GTS用
 const GFL_PROC_DATA PokemonTradeGTSProcData = {
-  PokemonTradeDemoProcInit,
+  PokemonTradeGTSDemoProcInit,
   PokemonTradeProcMain,
   PokemonTradeProcEnd,
 };
 
 //GTSSend用
 const GFL_PROC_DATA PokemonTradeGTSSendProcData = {
-  PokemonTradeDemoProcInit,
+  PokemonTradeGTSDemoSendProcInit,
   PokemonTradeProcMain,
   PokemonTradeProcEnd,
 };
 
 //GTSRecv用
 const GFL_PROC_DATA PokemonTradeGTSRecvProcData = {
-  PokemonTradeDemoProcInit,
+  PokemonTradeGTSDemoRecvProcInit,
   PokemonTradeProcMain,
   PokemonTradeProcEnd,
 };

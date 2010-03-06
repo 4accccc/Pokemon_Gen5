@@ -135,6 +135,29 @@ static const GFL_G3D_UTIL_RES res_table_trade_ir[] =
 };
 
 
+static const GFL_G3D_UTIL_RES res_table_tradeup[] =
+{
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_short_up_nsbmd,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_short_up_nsbca,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_short_up_nsbta,    GFL_G3D_UTIL_RESARC },
+};
+
+static const GFL_G3D_UTIL_RES res_table_trademiddle[] =
+{
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_short_middle_nsbmd,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_short_middle_nsbca,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_short_middle_nsbta,    GFL_G3D_UTIL_RESARC },
+};
+
+static const GFL_G3D_UTIL_RES res_table_tradedown[] =
+{
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_short_down_nsbmd,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_short_down_nsbca,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_short_down_nsbta,    GFL_G3D_UTIL_RESARC },
+};
+
+
+
 static const GFL_G3D_UTIL_ANM anm_table_trade1[] =
 {
   { 1, 0 },
@@ -173,6 +196,9 @@ static const GFL_G3D_UTIL_SETUP setup[] =
   { NULL, 0, NULL, 0},
   { res_table_trade1, NELEMS(res_table_trade1), obj_table_trade1, NELEMS(obj_table_trade1) },
   { res_table_trade_ir, NELEMS(res_table_trade_ir), obj_table_trade1, NELEMS(obj_table_trade1) },
+  { res_table_tradeup, NELEMS(res_table_tradeup), obj_table_trade1, NELEMS(obj_table_trade1) },
+  { res_table_trademiddle, NELEMS(res_table_trademiddle), obj_table_trade1, NELEMS(obj_table_trade1) },
+  { res_table_tradedown, NELEMS(res_table_tradedown), obj_table_trade1, NELEMS(obj_table_trade1) },
 
 };
 
@@ -400,6 +426,9 @@ static const MODEL3D_SET_FUNCS modelset[] =
   { _cameraSetReel,  _moveSetReel },
   { _cameraSetTrade01,_moveSetTrade01 },
   { _cameraSetTrade01,_moveSetTrade01 },
+  { _cameraSetTrade01,_moveSetTrade01 },
+  { _cameraSetTrade01,_moveSetTrade01 },
+  { _cameraSetTrade01,_moveSetTrade01 },
 };
 
 
@@ -409,17 +438,51 @@ static const MODEL3D_SET_FUNCS modelset[] =
  */
 //============================================================================================
 
-void POKEMONTRADE_DEMO_ICA_Init(POKEMONTRADE_DEMO_WORK* pWork)
+void POKEMONTRADE_DEMO_ICA_Init(POKEMONTRADE_DEMO_WORK* pWork,int type)
 {
-  pWork->icaCamera = ICA_ANIME_CreateStreamingAlloc(
-    pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_icacamera_bin, 10 );
-  pWork->icaTarget = ICA_ANIME_CreateStreamingAlloc(
-    pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_icatarget_bin, 10 );
-  pWork->icaBallin = ICA_ANIME_CreateStreamingAlloc(
-    pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_ball_001_bin, 10 );
-  pWork->icaBallout = ICA_ANIME_CreateStreamingAlloc(
-    pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_ball_002_bin, 10 );
+  switch(type){
+  case _DEMO_TYPE_ALL:
+
+    pWork->icaCamera = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_icacamera_bin, 10 );
+    pWork->icaTarget = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_icatarget_bin, 10 );
+    pWork->icaBallin = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_ball_001_bin, 10 );
+    pWork->icaBallout = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_ball_002_bin, 10 );
+    break;
+
+  case _DEMO_TYPE_UP:
+    pWork->icaCamera = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_short_up_cameraichi_bin, 10 );
+    pWork->icaTarget = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_short_up_camerachusiten_bin, 10 );
+    pWork->icaBallin = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_ball_001_bin, 10 );
+    break;
+  case _DEMO_TYPE_MIDDLE:
+    pWork->icaCamera = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_short_mcamera_ichi_bin, 10 );
+    pWork->icaTarget = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_short_mcamera_chushiten_bin, 10 );
+    break;
+  case _DEMO_TYPE_DOWN:
+    pWork->icaCamera = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_short_down_cameraichi_bin, 10 );
+    pWork->icaTarget = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_short_down_camerachushiten_bin, 10 );
+    pWork->icaBallout = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_ball_002_bin, 10 );
+//Œã”¼•”•ª‚©‚çÄ¶
+     ICA_ANIME_SetAnimeFrame( pWork->icaBallout, FX32_ONE*_POKESPLASH_WHITEIN_START );
+    
+    break;
+  }
+
+
 }
+
 
 //============================================================================================
 /**

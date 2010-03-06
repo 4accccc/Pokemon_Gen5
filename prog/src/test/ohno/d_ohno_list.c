@@ -148,8 +148,12 @@ static const D_MENULIST DebugMenuList[] = {
 	},
 	{//
 		DEBUG_OHNO_MSG0019, 
-		&PokemonTradeDemoProcData,
-		_PokeTradeDemoWorkCreate,
+//		&PokemonTradeDemoProcData,
+//    &PokemonTradeGTSProcData,
+//    &PokemonTradeGTSSendProcData,
+    &PokemonTradeGTSRecvProcData,
+
+    _PokeTradeDemoWorkCreate,
 		FS_OVERLAY_ID(pokemon_trade)
 	},
   {//
@@ -531,12 +535,21 @@ static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk)
 static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk)
 {
 	POKEMONTRADE_DEMO_PARAM *pWork;
+  MYSTATUS* pFriend;
 
   
 	pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_DEMO_PARAM));
 
   pWork->pMyPoke = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
   pWork->pNPCPoke = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
+
+
+  pWork->gamedata = GAMEDATA_Create(GFL_HEAPID_APP);
+  pFriend = GAMEDATA_GetMyStatusPlayer(pWork->gamedata, 1);
+  GFL_STD_MemCopy(MyStatus_AllocWork(GFL_HEAPID_APP),pFriend,MyStatus_GetWorkSize() );
+
+  pWork->pMy = GAMEDATA_GetMyStatusPlayer(pWork->gamedata, 0);
+  pWork->pNPC = pFriend;
 
   
   return pWork;

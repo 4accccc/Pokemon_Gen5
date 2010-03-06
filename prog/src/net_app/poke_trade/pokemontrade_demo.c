@@ -18,31 +18,21 @@
 #include "system/main.h"
 
 #include "poke_icon.naix"
-#include "message.naix"
-#include "print/printsys.h"
-#include "print/global_font.h"
-#include "font/font.naix"
-#include "print/str_tool.h"
 #include "pokeicon/pokeicon.h"
 
-#include "msg/msg_poke_trade.h"
 #include "ircbattle.naix"
 #include "trade.naix"
-#include "net_app/connect_anm.h"
-#include "net/dwc_rapfriend.h"
-#include "savedata/wifilist.h"
 
 #include "system/touch_subwindow.h"
 
 #include "poke_tool/poke_tool_def.h"
 #include "box_m_obj_NANR_LBLDEFS.h"
 #include "p_st_obj_d_NANR_LBLDEFS.h"
-#include "poke_tool/pokeparty.h"
 #include "poke_tool/status_rcv.h"
 #include "tradedemo.naix"
 
 #include "pokemontrade_local.h"
-#include "app/mailtool.h"
+//#include "app/mailtool.h"
 
 #include "spahead.h"
 
@@ -58,134 +48,19 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade20(POKEMON_TRADE_WORK* pWork);
-static void _setFadeMask(_D2_PAL_FADE_WORK* pD2Fade);
-static void	_FIELD_StartPaletteFade( _EFFTOOL_PAL_FADE_WORK* epfw, u8 start_evy, u8 end_evy, u8 wait, u16 rgb );
-static _EFFTOOL_PAL_FADE_WORK* _createPaletteFade(GFL_G3D_RES* g3DRES,HEAPID heapID);
-static void	_freePaletteFade( _EFFTOOL_PAL_FADE_WORK* pwk );
-static void  _EFFTOOL_CalcPaletteFade( _EFFTOOL_PAL_FADE_WORK *epfw );
-static void _pokeMoveRenew(_POKEMCSS_MOVE_WORK* pPoke,int time, const VecFx32* pPos);
-static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, HEAPID heapID);
-static _POKEMCSS_MOVE_WORK* _pokeTblMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, VecFx32* pTbl, HEAPID heapID);
+static void _changeDemo_ModelTrade2_jump(POKEMON_TRADE_WORK* pWork);
 
 
-
-static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove);
-
-//速度調整関数
-static int ANMCNTC(int no)
-{
-  return no;
-}
-
+#include "pokemontrade_mcss.c"
+#include "pokemontrade_fade.c"
+#include "pokemontrade_demo_common.c"
 
 //------------------------------------------------------------------
 /**
- * @brief   次のシーンに必要な値をセット
- * @param   POKEMON_TRADE_WORK ワーク
- * @param   _TRADE_SCENE_NO_E no シーン管理enum
- * @retval  none
+ * @brief   パーティクルコールバック
+ * @param   GFL_EMIT_PTR
  */
 //------------------------------------------------------------------
-
-static void _setNextAnim(POKEMON_TRADE_WORK* pWork, int timer)
-{
-  pWork->anmCount = timer;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief   ポケモン登場CALCT素材INIT
- * @param   POKEMON_TRADE_WORK ワーク
- * @retval  none
- */
-//------------------------------------------------------------------
-static void _pokemonCreateCLACTInit(POKEMON_TRADE_WORK* pWork)
-{
-  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADEDEMO, pWork->heapID );
-
-  pWork->cellRes[CHAR_POKECREATE] =
-    GFL_CLGRP_CGR_Register( p_handle , NARC_tradedemo_trade_obj01_NCGR ,
-                            FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
-  pWork->cellRes[PLT_POKECREATE] =
-    GFL_CLGRP_PLTT_RegisterEx(
-      p_handle ,NARC_tradedemo_trade_obj01_NCLR , CLSYS_DRAW_MAIN ,
-      PLTID_OBJ_DEMO_M * 32 , 0, 1, pWork->heapID  );
-  pWork->cellRes[ANM_POKECREATE] =
-    GFL_CLGRP_CELLANIM_Register(
-      p_handle , NARC_tradedemo_trade01_NCER,
-      NARC_tradedemo_trade01_NANR , pWork->heapID  );
-  GFL_ARC_CloseDataHandle( p_handle );
-  pWork->pPokemonTradeDemo->pPokeCreateCLWK=NULL;
-
-
-
-}
-//------------------------------------------------------------------
-/**
- * @brief   ポケモン登場CALCT素材Exit
- * @param   POKEMON_TRADE_WORK ワーク
- * @retval  none
- */
-//------------------------------------------------------------------
-
-static void _pokemonCreateCLACTExit(POKEMON_TRADE_WORK* pWork)
-{
-  if(pWork->pPokemonTradeDemo->pPokeCreateCLWK){
-    GFL_CLACT_WK_Remove( pWork->pPokemonTradeDemo->pPokeCreateCLWK);
-  }
-  GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_POKECREATE] );
-  GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_POKECREATE] );
-  GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_POKECREATE] );
-  pWork->cellRes[CHAR_POKECREATE] = 0;
-  pWork->cellRes[PLT_POKECREATE] = 0;
-  pWork->cellRes[ANM_POKECREATE] = 0;
-  pWork->pPokemonTradeDemo->pPokeCreateCLWK=NULL;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief   ポケモン登場CALCTをだす
- * @param   POKEMON_TRADE_WORK ワーク
- * @retval  none
- */
-//------------------------------------------------------------------
-static void _pokemonCreateCLACTAdd(POKEMON_TRADE_WORK* pWork)
-{
-  if(pWork->pPokemonTradeDemo->pPokeCreateCLWK==NULL){
-    GFL_CLWK_DATA cellInitData;
-    cellInitData.pos_x = 128;
-    cellInitData.pos_y = 99;
-    cellInitData.anmseq = 0;
-    cellInitData.softpri = 0;
-    cellInitData.bgpri = 0;
-    pWork->pPokemonTradeDemo->pPokeCreateCLWK = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                                  pWork->cellRes[CHAR_POKECREATE],
-                                                  pWork->cellRes[PLT_POKECREATE],
-                                                  pWork->cellRes[ANM_POKECREATE],
-                                                  &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->pPokemonTradeDemo->pPokeCreateCLWK , TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->pPokemonTradeDemo->pPokeCreateCLWK, TRUE );
-  }
-  else{
-    GFL_CLACT_WK_ResetAnm(pWork->pPokemonTradeDemo->pPokeCreateCLWK);
-  }
-}
-
-
-static void _WIPE_SYS_StartRap(int pattern, int wipe_m, int wipe_s, u16 color, int division, int piece_sync, int heap)
-{
-  WIPE_SYS_Start(pattern, wipe_m, wipe_s, color, division, piece_sync, heap);
-}
-
-//MCSS終了の為のコールバック
-static void _McssAnmStop( u32 data, fx32 currentFrame )
-{
-  POKEMON_TRADE_WORK* pWork = (POKEMON_TRADE_WORK*)data;
-
-  MCSS_SetAnmStopFlag( pWork->pokeMcss[0]);
-  pWork->mcssStop[0] = TRUE;
-}
-
 
 static void _pEmitCBInFunc( GFL_EMIT_PTR pEmiter, unsigned int flag)
 {
@@ -247,163 +122,21 @@ void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(POKEMON_TRADE_WORK* pWork)
   VecFx32 apos;
   int i;
 
-  PMSND_PushBGM();
-  PMSND_PlayBGM(  SEQ_BGM_KOUKAN );
-  PMSND_FadeInBGM( 8 );
+  _demoBGMChange();
   
-#if 0
-//  pWork->mcssStop[0] = FALSE;
-//  MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
-#else
   //強制停止
   pWork->mcssStop[0] = TRUE;
   MCSS_SetAnimeIndex(pWork->pokeMcss[0], 0);
-#endif  
+
   _CHANGE_STATE(pWork,_changeDemo_ModelT1);
 }
-
-//------------------------------------------------------------------
-/**
- * @brief   ポケモン登場CALCTをだす
- * @param   POKEMON_TRADE_WORK ワーク
- * @retval  none
- */
-//------------------------------------------------------------------
-static void _changeDemo_ModelT1(POKEMON_TRADE_WORK* pWork)
-{
-  if(pWork->mcssStop[0]!=TRUE){  //アニメ終了待ち
-    return;
-  }
-
-  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ANIMEEND,WB_NET_TRADE_SERVICEID);
-    _CHANGE_STATE(pWork,_changeDemo_ModelT2);
-  }
-  else{
-    _CHANGE_STATE(pWork,_changeDemo_ModelTrade0);
-  }
-
-
-}
-
-static void _changeDemo_ModelT2(POKEMON_TRADE_WORK* pWork)
-{
-  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ANIMEEND, WB_NET_TRADE_SERVICEID)){
-    _CHANGE_STATE(pWork,_changeDemo_ModelTrade0);
-  }
-
-}
-
-static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
-{
-  VecFx32 apos;
-  int i;
-
-  _setNextAnim(pWork, 0);
-
-  pWork->pD2Fade = GFL_HEAP_AllocClearMemory(pWork->heapID, sizeof(_D2_PAL_FADE_WORK));
-  pWork->pD2Fade->pal_fade_time = ANMCNTC(_POKEMON_CENTER_TIME/3);
-  pWork->pD2Fade->pal_fade_nowcount = 0;
-  pWork->pD2Fade->pal_start = 0;
-  pWork->pD2Fade->pal_end = -16;
-
-  if(pWork->modelno!=-1){
-//    pWork->pModelFade = _createPaletteFade(GFL_G3D_UTIL_GetResHandle(pWork->g3dUtil,0), pWork->heapID);
-//    _FIELD_StartPaletteFade( pWork->pModelFade, 0, 16, ANMCNTC(_POKEMON_CENTER_TIME/3)/16, 0 );
-  }
-
-  // ポケモン中央に移動開始
-  {
-    VecFx32 pos={_POKEMON_PLAYER_CENTER_POSX,_POKEMON_PLAYER_CENTER_POSY, _POKEMON_PLAYER_CENTER_POSZ};
-    pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[0], ANMCNTC(_POKEMON_CENTER_TIME), &pos, pWork->heapID);
-  }
-  {
-    VecFx32 pos={_POKEMON_FRIEND_CENTER_POSX,_POKEMON_FRIEND_CENTER_POSY, _POKEMON_FRIEND_CENTER_POSZ};
-    pWork->pMoveMcss[1] = _pokeMoveCreate(pWork->pokeMcss[1], ANMCNTC(_POKEMON_CENTER_TIME*2), &pos, pWork->heapID);
-  }
-
-  MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
-
-  MCSS_SetPaletteFade( pWork->pokeMcss[1], 0, 16, ANMCNTC(_POKEMON_CENTER_TIME/3)/16, 0 );
-  POKETRADE_MESSAGE_WindowClose(pWork);
-
-  GFL_BG_SetBackGroundColor(GFL_BG_FRAME1_M ,0);
-  GFL_BG_SetBackGroundColor(GFL_BG_FRAME1_S ,0);
-
-  _setNextAnim(pWork, 0);
-  _CHANGE_STATE(pWork,_changeDemo_ModelTrade1);
-
-}
-
-static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
-{
-  int i;
-
-  {  // フェード中
-    _setFadeMask(pWork->pD2Fade);
-    if(pWork->pModelFade){
-      _EFFTOOL_CalcPaletteFade(pWork->pModelFade);
-    }
-    _pokeMoveFunc(pWork->pMoveMcss[0]);
-    _pokeMoveFunc(pWork->pMoveMcss[1]);
-  }
-
-
-  if(pWork->anmCount > ANMCNTC(_POKEMON_CENTER_TIME)){  //フェード完了 ポケモン移動完了
-    GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
-    GFL_DISP_GXS_SetVisibleControlDirect( 0 );
-
-    POKMEONTRADE_RemoveCoreResource( pWork);
-    
-    pWork->cellUnit = GFL_CLACT_UNIT_Create( 3 , 0 , pWork->heapID );
-    _freePaletteFade(pWork->pModelFade);
-    pWork->pModelFade = NULL;
-
-    _setNextAnim(pWork, 0);
-
-    {
-      POKEMON_PARAM* pp= IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
-      if(! PP_Get(pp,ID_PARA_tamago_flag,NULL) ){
-        int monsno = PP_Get(pp,ID_PARA_monsno_egg,NULL);
-        int formno = PP_Get(pp,ID_PARA_form_no,NULL);
-        PMVOICE_Play( monsno, formno, 64, FALSE, 0, 0, FALSE, 0 );
-      }
-      if(pWork->pMoveMcss[0]){
-        GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
-        pWork->pMoveMcss[0]=NULL;
-      }
-      {
-        VecFx32 apos;
-        MCSS_GetPosition(pWork->pokeMcss[0], &apos);
-        pWork->pMoveMcss[0] = _pokeTblMoveCreate(pWork->pokeMcss[0], 13*3, &apos, _triJumpTbl,  pWork->heapID);
-      }
-    }
-    _CHANGE_STATE(pWork,_changeDemo_ModelTrade2_1);
-  }
-  
-}
-
-static void _changeDemo_ModelTrade2_1(POKEMON_TRADE_WORK* pWork)
-{
-
-  if(pWork->anmCount > _POKEMON_VOICE_TIME){
-    if(pWork->pMoveMcss[0]){
-      GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
-      pWork->pMoveMcss[0]=NULL;
-    }
-    _CHANGE_STATE(pWork,_changeDemo_ModelTrade2);
-  }
-
-  _pokeMoveFunc(pWork->pMoveMcss[0]);
-}
-
 
 //3dスタート
 static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
 {
   int i;
 
-  GFL_CLACT_UNIT_Delete(pWork->cellUnit);
+  POKMEONTRADE_RemoveCoreResource( pWork);//@new
   GFL_CLACT_SYS_Delete();
   IRC_POKETRADE_DEMOCLACT_Create(pWork);
   pWork->cellUnit = GFL_CLACT_UNIT_Create( 3 , 0 , pWork->heapID );
@@ -411,11 +144,11 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   pWork->pPokemonTradeDemo = GFL_HEAP_AllocClearMemory(pWork->heapID,sizeof(POKEMONTRADE_DEMO_WORK));
   pWork->pPokemonTradeDemo->heapID = pWork->heapID;
 
-  IRC_POKETRADE_SetSubdispGraphicDemo(pWork,0);
+  IRC_POKETRADE_SetSubdispGraphicDemo(pWork,0);  //通常背景
   G2S_BlendNone();
 
   G2_BlendNone();
-  IRC_POKETRADEDEMO_SetModel( pWork, TRADE01_OBJECT);
+  IRC_POKETRADEDEMO_SetModel( pWork, TRADE01_OBJECT);  //通常用モデル
   
   IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1),TRUE );  //相手裏
   IRCPOKETRADE_PokeCreateMcss(pWork, 2, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0),TRUE );  //みかた裏
@@ -424,12 +157,13 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   MCSS_SetVanishFlag( pWork->pokeMcss[2] );
   MCSS_SetVanishFlag( pWork->pokeMcss[3] );
   POKEMONTRADE_DEMO_PTC_Init(pWork->pPokemonTradeDemo);
-  POKEMONTRADE_DEMO_ICA_Init(pWork->pPokemonTradeDemo);
+  POKEMONTRADE_DEMO_ICA_Init(pWork->pPokemonTradeDemo, _DEMO_TYPE_ALL);
 
 
   _setNextAnim(pWork, 0);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade3);
 
+  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BD,0,0);
 
 }
 
@@ -497,12 +231,12 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     _pokemonCreateCLACTAdd(pWork);
   }
   if(pWork->anmCount == ANMCNTC(_POKEUP_WHITEOUT_START)){
-    _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
+    WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
                        ANMCNTC(_POKEUP_WHITEOUT_TIMER), 1, pWork->heapID );
 
   }
   if(pWork->anmCount == ANMCNTC(_POKEUP_WHITEIN_START)){
-    _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
+    WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                        ANMCNTC(_POKEUP_WHITEIN_TIMER), 1, pWork->heapID );
   }
 
@@ -683,19 +417,19 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 
 
   if(pWork->anmCount == ANMCNTC(_POKECHANGE_WHITEOUT_START)){
-    _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
+    WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
                        ANMCNTC(_POKECHANGE_WHITEOUT_TIMER), 1, pWork->heapID );
   }
   if(pWork->anmCount == ANMCNTC(_POKECHANGE_WHITEIN_START)){
-    _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
+    WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                        ANMCNTC(_POKECHANGE_WHITEIN_TIMER), 1, pWork->heapID );
   }
   if(pWork->anmCount == ANMCNTC(_POKESPLASH_WHITEOUT_START)){
-    _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
+    WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
                        ANMCNTC(_POKESPLASH_WHITEOUT_TIMER), 1, pWork->heapID );
   }
   if(pWork->anmCount == ANMCNTC(_POKESPLASH_WHITEIN_START)){
-    _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
+    WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                        ANMCNTC(_POKESPLASH_WHITEIN_TIMER), 1, pWork->heapID );
   }
   //OS_TPrintf("C %d\n",pWork->anmCount);
@@ -711,316 +445,5 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
   _pokeMoveFunc(pWork->pMoveMcss[0]);
   _pokeMoveFunc(pWork->pMoveMcss[1]);
 }
-
-
-static void _changeDemo_ModelTrade20(POKEMON_TRADE_WORK* pWork)
-{
-  _pokemonCreateCLACTExit(pWork);
-  POKEMONTRADE_DEMO_PTC_End(pWork->pPokemonTradeDemo,PTC_KIND_NUM_MAX);
-  POKEMONTRADE_DEMO_ICA_Delete(pWork->pPokemonTradeDemo);
-  GFL_HEAP_FreeMemory(pWork->pPokemonTradeDemo);
-  pWork->pPokemonTradeDemo = NULL;
-
-  _CHANGE_STATE(pWork,POKMEONTRADE_SAVE_Init);
-
-}
-
-//-----------------------------------------------------------------------------------------
-static void _setFadeMask(_D2_PAL_FADE_WORK* pD2Fade)
-{
-  if(!pD2Fade){
-    return;
-  }
-  if(pD2Fade->pal_fade_time < pD2Fade->pal_fade_nowcount){
-    return;
-  }
-  pD2Fade->pal_fade_nowcount++;
-  {
-    int upper = pD2Fade->pal_end - pD2Fade->pal_start;
-    upper *= 4096;
-    upper = upper / pD2Fade->pal_fade_time;
-    upper = upper * pD2Fade->pal_fade_nowcount;
-    upper /= 4096;
-
-    G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|
-                           GX_BLEND_PLANEMASK_OBJ, upper);
-    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|
-                            GX_BLEND_PLANEMASK_OBJ, upper);
-  }
-
-}
-
-//--------------------------------------------------
-/**
- * @brief パレットフェードスタート
- * @param[in]	bfw	      _EFFTOOL_PAL_FADE_WORK管理ワークへのポインタ
- * @param[in]	start_evy	セットするパラメータ（フェードさせる色に対する開始割合16段階）
- * @param[in]	end_evy		セットするパラメータ（フェードさせる色に対する終了割合16段階）
- * @param[in]	wait			セットするパラメータ（ウェイト）
- * @param[in]	rgb				セットするパラメータ（フェードさせる色）
- */
-//--------------------------------------------------
-static void	_FIELD_StartPaletteFade( _EFFTOOL_PAL_FADE_WORK* epfw, u8 start_evy, u8 end_evy, u8 wait, u16 rgb )
-{
-
-  epfw->pal_fade_flag      = 1;
-  epfw->pal_fade_start_evy = start_evy;
-  epfw->pal_fade_end_evy   = end_evy;
-  epfw->pal_fade_wait      = 0;
-  epfw->pal_fade_wait_tmp  = wait;
-  epfw->pal_fade_rgb       = rgb;
-}
-
-
-//----------------------------------------
-/**
- * @brief パレットフェード構造体作成
- * @param[in]	g3DRES	  GFL_G3D_RES
- * @param[in]	heapID	  HEAPID
- * @retturn   パレットフェード構造体
- */
-//----------------------------------------
-
-static _EFFTOOL_PAL_FADE_WORK* _createPaletteFade(GFL_G3D_RES* g3DRES,HEAPID heapID)
-{
-  //パレットフェード用ワーク生成
-  NNSG3dResFileHeader*	header = GFL_G3D_GetResourceFileHeader( g3DRES );
-  NNSG3dResTex*		    	pTex = NNS_G3dGetTex( header );
-  u32                   size = (u32)pTex->plttInfo.sizePltt << 3;
-  _EFFTOOL_PAL_FADE_WORK* pwk = GFL_HEAP_AllocClearMemory(heapID,sizeof(_EFFTOOL_PAL_FADE_WORK));
-
-  pwk->g3DRES = g3DRES;
-  pwk->pData_dst  = GFL_HEAP_AllocClearMemory( heapID, size );
-  return pwk;
-}
-
-//----------------------------------------
-/**
- * @brief パレットフェード構造体開放
- * @param[in]	pwk	_EFFTOOL_PAL_FADE_WORKポインタ
- */
-//----------------------------------------
-static void	_freePaletteFade( _EFFTOOL_PAL_FADE_WORK* pwk )
-{
-  if(pwk){
-    GFL_HEAP_FreeMemory( pwk->pData_dst );
-    GFL_HEAP_FreeMemory( pwk );
-  }
-}
-
-
-
-//-------------------------------------------------
-/**
- *	@brief      3Dモデルのパレットフェードアニメ実行処理   BTLVから転用
- *	@param[in]	epfw  パレットフェード管理構造体へのポインタ
- */
-//-------------------------------------------------
-static void  _EFFTOOL_CalcPaletteFade( _EFFTOOL_PAL_FADE_WORK *epfw )
-{
-
-  if(	(epfw == NULL) || (epfw->pal_fade_flag == 0) )
-  {
-    return;
-  }
-  if( epfw->pal_fade_wait == 0 )
-  {
-    NNSG3dResFileHeader*	header;
-    NNSG3dResTex*		    	pTex;
-    u32                   size;
-    const void*           pData_src;
-    u32                   from;
-
-    epfw->pal_fade_wait = epfw->pal_fade_wait_tmp;
-
-    {
-      //テクスチャリソースポインタの取得
-      header = GFL_G3D_GetResourceFileHeader( epfw->g3DRES );
-      pTex = NNS_G3dGetTex( header );
-
-      size = ( u32 )pTex->plttInfo.sizePltt << 3;
-      pData_src = NNS_G3dGetPlttData( pTex );
-      from = NNS_GfdGetTexKeyAddr( pTex->plttInfo.vramKey );
-
-      SoftFade( pData_src, epfw->pData_dst, ( size / 2 ), epfw->pal_fade_start_evy, epfw->pal_fade_rgb );
-
-      NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT, from, epfw->pData_dst, size );
-    }
-    if( epfw->pal_fade_start_evy == epfw->pal_fade_end_evy )
-    {
-      epfw->pal_fade_flag = 0;
-    }
-    else if( epfw->pal_fade_start_evy > epfw->pal_fade_end_evy )
-    {
-      epfw->pal_fade_start_evy--;
-    }
-    else
-    {
-      epfw->pal_fade_start_evy++;
-    }
-  }
-  else
-  {
- 	  epfw->pal_fade_wait--;
-  }
-}
-
-//-------------------------------------------------
-/**
- *	@brief      MCSS移動命令
- *	@param[in,out]	_POKEMCSS_MOVE_WORK   移動ポインタ
- *	@param[in]	time   移動時間
- *	@param[in]	pPos    最終移動先
- */
-//-------------------------------------------------
-
-static void _pokeMoveRenew(_POKEMCSS_MOVE_WORK* pPoke,int time, const VecFx32* pPos)
-{
-  {
-    VecFx32 apos;
-    MCSS_GetPosition(pPoke->pMcss, &apos);
-    pPoke->time = time;
-    pPoke->nowcount=0;
-    GFL_STD_MemCopy(pPos, &pPoke->end, sizeof(VecFx32));
-    GFL_STD_MemCopy(&apos, &pPoke->start, sizeof(VecFx32));
-  }
-}
-
-//-------------------------------------------------
-/**
- *	@brief      MCSS移動命令作成
- *	@param[in]	pokeMcss   対象MCSS
- *	@param[in]	time   移動時間
- *	@param[in]	pPos    最終移動先
- *	@param[in]	HEAPID  HEAPID
- */
-//-------------------------------------------------
-
-static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, HEAPID heapID)
-{
-  _POKEMCSS_MOVE_WORK* pPoke = GFL_HEAP_AllocClearMemory(heapID, sizeof(_POKEMCSS_MOVE_WORK));
-
-  pPoke->pMcss = pokeMcss;
-  _pokeMoveRenew(pPoke,time,pPos);
-  pPoke->percent=0.0f;
-  return pPoke;
-
-}
-
-
-
-//-------------------------------------------------
-/**
- *	@brief      MCSSテーブル移動命令作成
- *	@param[in]	pokeMcss   対象MCSS
- *	@param[in]	time   移動時間
- *	@param[in]	pPos    最終移動先
- *	@param[in]	HEAPID  HEAPID
- */
-//-------------------------------------------------
-
-static _POKEMCSS_MOVE_WORK* _pokeTblMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, VecFx32* pTbl, HEAPID heapID)
-{
-  _POKEMCSS_MOVE_WORK* pPoke = GFL_HEAP_AllocClearMemory(heapID, sizeof(_POKEMCSS_MOVE_WORK));
-
-  pPoke->pMcss = pokeMcss;
-  _pokeMoveRenew(pPoke,time,pPos);
-  pPoke->percent=0.0f;
-  pPoke->MoveTbl = pTbl;
-  return pPoke;
-
-}
-
-
-
-//-------------------------------------------------
-/**
- *	@brief      MCSS移動命令実行
- *	@param[in]	pokeMcss   対象MCSS
- *	@param[in]	time   移動時間
- *	@param[in]	xend    Xの移動先
- *	@param[in]	zend    Zの移動先
- *	@param[in]	HEAPID  HEAPID
- */
-//-------------------------------------------------
-
-static fx32 _movemath(fx32 st,fx32 en,_POKEMCSS_MOVE_WORK* pMove,BOOL bWave)
-{
-  fx32 re;
-  re = en - st;
-  re = re / pMove->time;
-  
-
-  re = st + re * pMove->nowcount;
-  if(pMove->wave && bWave){
-    re = en + FX_SinIdx(pMove->sins) * _WAVE_NUM;
-  }
-  return re;
-}
-
-
-//-------------------------------------------------
-/**
- *	@brief      テーブルによる移動関数
- *	@param[in]	pMove
- */
-//-------------------------------------------------
-
-static void _pokeMoveTblFunc(_POKEMCSS_MOVE_WORK* pMove)
-{
-  VecFx32 apos,aposold;
-  VecFx32* pPMT = &pMove->MoveTbl[pMove->nowcount];
-  
-  apos.x = pPMT->x + pMove->start.x;
-  apos.y = pPMT->y + pMove->start.y;
-  apos.z = pPMT->z + pMove->start.z;
-
-  MCSS_SetPosition( pMove->pMcss ,&apos );
-
-
-}
-
-//-------------------------------------------------
-/**
- *	@brief      MCSS移動関数
- *	@param[in]	pMove   移動ワーク
- */
-//-------------------------------------------------
-static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
-{
-  if(!pMove){
-    return;
-  }
-  pMove->nowcount++;
-  if(pMove->time < pMove->nowcount){
-    return;
-  }
-  if(pMove->time != pMove->nowcount)
-  {
-    if(pMove->MoveTbl){
-      _pokeMoveTblFunc(pMove);
-      return;
-    }
-    else{
-      VecFx32 apos,aposold;
-      MCSS_GetPosition( pMove->pMcss ,&aposold );
-
-      apos.x = _movemath(pMove->start.x, pMove->end.x ,pMove, FALSE);
-      if(pMove->wave){
-        float an = FX_FX32_TO_F32(aposold.x - apos.x);
-        an = an * 374;
-        pMove->sins -= (s32)an;
-      }
-      apos.y = _movemath(pMove->start.y, pMove->end.y ,pMove, TRUE);
-      apos.z = _movemath(pMove->start.z, pMove->end.z ,pMove, FALSE);
-      MCSS_SetPosition( pMove->pMcss ,&apos );
-    }
-  }
-  else{
-    MCSS_SetPosition( pMove->pMcss ,&pMove->end );
-  }
-}
-
-
 
 
