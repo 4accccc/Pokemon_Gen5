@@ -170,6 +170,10 @@ EVENT_START   ev_r03_futago_02
 		
 		_TALK_OBJ_START()
 		
+		//ふたごちゃん（左）が右を向く
+		_OBJ_ANIME( R03_FUTAGO_01_2, anm_babygirl1_trainer_to_right )
+		_OBJ_ANIME_WAIT()
+		
 		//「！」
 		_OBJ_ANIME( R03_FUTAGO_01, anm_babygirl1_trainer_gyoe )
 		_OBJ_ANIME( R03_FUTAGO_01_2, anm_babygirl1_trainer_gyoe )
@@ -246,6 +250,15 @@ _ANIME_LABEL	 anm_stoper_player_return01
 _ANIME_LABEL	 anm_babygirl1_trainer_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ふたごちゃん右を向く
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_babygirl1_trainer_to_right
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------
 //	ふたごちゃん：Z563移動

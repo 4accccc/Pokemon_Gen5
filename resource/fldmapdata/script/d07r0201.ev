@@ -28,6 +28,9 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START     ev_pos_d07r0201_leader5_01
 	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
 	//ライバル気づく
 	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_llook_player_01 )
 	_OBJ_ANIME_WAIT()

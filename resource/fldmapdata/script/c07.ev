@@ -23,9 +23,6 @@ _EVENT_DATA    ev_pos_c07_hakase1_01
 _EVENT_DATA    ev_scene_c07_leader7_01
 _EVENT_DATA    ev_c07_rival_01
 _EVENT_DATA    ev_c07_support_01
-_EVENT_DATA    ev_c07_hakaim_01
-_EVENT_DATA    ev_c07_hakaim_02
-_EVENT_DATA    ev_c07_hakaiw_01
 _EVENT_DATA    ev_c07_girl2_01
 _EVENT_DATA    ev_c07_ambrella_01
 _EVENT_DATA    ev_c07_man3_01
@@ -373,28 +370,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c07_support_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_white_03 )
-EVENT_END
-
-
-/**************************************************************/
-/* プラズマ団員M1                                             */
-/**************************************************************/
-EVENT_START   ev_c07_hakaim_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_hakaim1_01 )
-EVENT_END
-
-/**************************************************************/
-/* プラズマ団員M2                                             */
-/**************************************************************/
-EVENT_START   ev_c07_hakaim_02
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_hakaim2_01 )
-EVENT_END
-
-/**************************************************************/
-/* プラズマ団員W1                                             */
-/**************************************************************/
-EVENT_START   ev_c07_hakaiw_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_hakaiw1_01 )
 EVENT_END
 
 /**************************************************************/

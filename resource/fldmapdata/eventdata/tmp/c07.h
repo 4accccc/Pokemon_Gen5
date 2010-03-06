@@ -17,17 +17,14 @@
 
 #define C07_RIVAL_01                       0
 #define C07_SUPPORT_01                     1
-#define C07_HAKAIM_01                      2
-#define C07_HAKAIM_02                      3
-#define C07_HAKAIW_01                      4
-#define C07_HAKASE1_01                     5
-#define C07_LEADER7_01                     6
-#define C07_GIRL2_01                       7
-#define C07_MAN3_01                        8
-#define C07_MAN2_01                        9
-#define C07_WOMAN2_01                     10
-#define C07_GIRL2_02                      11
-#define C07_BOY1_01                       12
+#define C07_HAKASE1_01                     2
+#define C07_LEADER7_01                     3
+#define C07_GIRL2_01                       4
+#define C07_MAN3_01                        5
+#define C07_MAN2_01                        6
+#define C07_WOMAN2_01                      7
+#define C07_GIRL2_02                       8
+#define C07_BOY1_01                        9
 
 #endif //ZONE_C07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

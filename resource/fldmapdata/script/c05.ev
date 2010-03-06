@@ -446,19 +446,15 @@ EVENT_START   ev_pos_c05_support_01
 	_BALLOONWIN_OBJMSG(msg_c05_white_04,MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
 	
-	//退場アニメ（１）
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c05_support_goodbye01 )
-	_OBJ_ANIME_WAIT()
-	
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_look_support_down )
-	_OBJ_ANIME_WAIT()
+	//そらをとぶ入手処理
+	_ITEM_EVENT_KEYWAIT ( ITEM_WAZAMASIN97 , 1  )
 	
 	//サポート：あのね！
 	_BALLOONWIN_OBJMSG(msg_c05_white_05,MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
 	
-	//退場アニメ（２）
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c05_support_goodbye02 )
+	//退場アニメ（１）
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c05_support_goodbye01 )
 	_OBJ_ANIME_WAIT()
 	
 	//サポートOBJ消す
@@ -530,30 +526,13 @@ _ANIME_LABEL	anm_c05_support_gyoe
 	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
+
 //--------------------------------------------------------------
-//	サポート登場：退場（1)
+//	サポート登場：退場（１)
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c05_support_goodbye01
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	サポート登場：主人公退場するサポートを見る
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c05_player_look_support_down
-	_ANIME_DATA	AC_STAY_WALK_D_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	サポート登場：退場（２)
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c05_support_goodbye02
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
-	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	AC_WALK_D_8F,8
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/

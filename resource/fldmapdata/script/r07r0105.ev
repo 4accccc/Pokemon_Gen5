@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_r07r0105.h"
-  //.include  "r07r0105.h"
+  .include  "r07r0105.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,225 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r07r0105
+_EVENT_DATA    ev_pos_r07r0105_leader6_01
+_EVENT_DATA    ev_r07r0105_leader6_02
+_EVENT_DATA    ev_bg_r07r0105_bell
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/* POS：【仮】フウロとタワーオブヘブンの鐘                     */
 /**************************************************************/
-//ev_zone_r07r0105:
-//  _END
+//POS位置などマップ調整中のため仮
+EVENT_START   ev_pos_r07r0105_leader6_01
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
+	//カメラ操作　フウロ中心に
+	_CAMERA_MOVE( 9688,0,970752,1081344,458863,864256,40 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
+	//フウロ気づいて振り向く
+	_OBJ_ANIME( R07R0105_LEADER6_01 ,  anm_bell_leader6_hello_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//フウロ：あっ！ さっきみえたのって
+	_BALLOONWIN_OBJMSG( msg_r07r0105_leader6_01 , R07R0105_LEADER6_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//フウロ右に移動して遠くを見る
+	_OBJ_ANIME( R07R0105_LEADER6_01 ,  anm_bell_leader6_go_right )
+	_OBJ_ANIME_WAIT()
+	
+	//フウロ：エヘヘ！すごくめがいいでしょ！
+	_BALLOONWIN_OBJMSG( msg_r07r0105_leader6_02 , R07R0105_LEADER6_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//フウロ元の位置に戻る
+	_OBJ_ANIME( R07R0105_LEADER6_01 ,  anm_bell_leader6_look_bell_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//フウロ：そうだ！ せっかくきたんだし
+	_BALLOONWIN_OBJMSG( msg_r07r0105_leader6_03 , R07R0105_LEADER6_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
+	//======================================//
+	
+	//R070105POSを無効に
+	$WK_SCENE_C07R0105 = 1
+	
+	//======================================//
+EVENT_END
+
+//--------------------------------------------------------------
+//	フウロイベント：フウロ振り向く
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_bell_leader6_hello_01
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	フウロイベント：フウロ右方向にゆっくり移動
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_bell_leader6_go_right
+	_ANIME_DATA	AC_WALK_R_16F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	フウロイベント：フウロ元の位置に戻って鐘を見る
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_bell_leader6_look_bell_01
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*                                                            */
+/* フウロ話しかけ時                                         */
 /**************************************************************/
-ev_r07r0105:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_r07r0105_leader6_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0105_leader6_04)
+EVENT_END
 
+/**************************************************************/
+/* タワーオブヘブン鐘                                         */
+/**************************************************************/
+EVENT_START   ev_bg_r07r0105_bell
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+
+	//鐘を鳴らしますか？
+	_PLAINWIN_MSG_DOWN( msg_r07r0105_chime_01)
+	//はい・いいえ質問
+	DEFINE_LOCAL SCWK_ANSWER01
+	_YES_NO_WIN( SCWK_ANSWER01 )
+	_PLAINWIN_CLOSE()
+	
+	IF $SCWK_ANSWER01 == 0 THEN
+		
+		//【仮】鐘ME再生
+		_ME_PLAY( SEQ_ME_POKEGET )
+		//トレーナーは鐘を鳴らした
+		_PLAINWIN_MSG_DOWN ( msg_r07r0105_chime_02  )
+		_ME_WAIT()
+		_AB_KEYWAIT_MARK()
+		_PLAINWIN_CLOSE()
+		
+		//鳴り響いた
+		_PLAINWIN_MSG_DOWN ( msg_r07r0105_chime_03  )
+		_PLAINWIN_CLOSE()
+		
+			//フウロイベント中はイベントを起動
+			IF $WK_SCENE_C07R0105 == 1 THEN
+				_CALL ev_r07r0105_leader6_03
+			ENDIF
+	ELSE
+		_PLAINWIN_MSG_DOWN ( msg_r07r0105_chime_04  )
+		_LAST_KEYWAIT()
+		_PLAINWIN_CLOSE() 
+	ENDIF
+	
+EVENT_END
+
+/************************************************************/
+/*				フウロと鐘イベント（２）             */
+/************************************************************/
+ev_r07r0105_leader6_03:
+	
+	//主人公振り向く
+	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_bell_player_look_d )
+	_OBJ_ANIME_WAIT()
+	
+	//フウロ鐘の方を見る
+	_OBJ_ANIME( R07R0105_LEADER6_01 ,  anm_bell_leader6_look_bell_02 )
+	_OBJ_ANIME_WAIT()
+
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+
+	//性別が格納されるローカル変数を定義
+	DEFINE_LOCAL SCWK_SEX
+	_GET_MY_SEX(SCWK_SEX)
+	
+	//男性だった場合
+	IF $SCWK_SEX == PM_MALE THEN
+	
+	_BALLOONWIN_OBJMSG( msg_r07r0105_leader6_06 , R07R0105_LEADER6_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//女性だった場合
+	ELSE
+	
+	_BALLOONWIN_OBJMSG( msg_r07r0105_leader6_07 , R07R0105_LEADER6_01 )
+	_BALLOONWIN_CLOSE()
+	
+	ENDIF
+
+	//フウロ：さてと… では、あらためて！
+	_BALLOONWIN_OBJMSG( msg_r07r0105_leader6_07 , R07R0105_LEADER6_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//フウロ退場
+	_OBJ_ANIME( R07R0105_LEADER6_01 ,  anm_bell_leader6_goodbye_01 )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_DEL( R07R0105_LEADER6_01 )
+	_SE_PLAY(SEQ_SE_KAIDAN)		//階段ＳＥ
+	_SE_WAIT()
+
+	//======================================//
+	
+	//R070105のイベントを終了
+	$WK_SCENE_C07R0105 = 2
+	
+	//R070105のフウロOBJを非表示
+	_FLAG_SET( FV_R070105_LEADER6_01 )
+	
+	//【仮】C06のストッパーOBJを非表示
+	
+	//======================================//
+
+_RET
+
+//--------------------------------------------------------------
+//	フウロイベント：フウロ鐘を見る（話しかけで方向変わってた時用）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_bell_leader6_look_bell_02
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	フウロイベント：主人公下を見る
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_bell_player_look_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	フウロイベント：フウロ退場
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_bell_leader6_goodbye_01
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
