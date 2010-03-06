@@ -25,6 +25,7 @@
 typedef struct{
   BATTLE_SETUP_PARAM para;
   u32 work;
+  GFL_PROCSYS *procsys;
 }INTRUDE_BATTLE_SYS;
 
 
@@ -62,6 +63,8 @@ static GFL_PROC_RESULT IntrudeBattleProc_Init(GFL_PROC * proc, int * seq, void *
   
   ibs = GFL_PROC_AllocWork(proc, sizeof(INTRUDE_BATTLE_SYS), HEAPID_PROC);
   GFL_STD_MemClear(ibs, sizeof(INTRUDE_BATTLE_SYS));
+
+  ibs->procsys = GFL_PROC_LOCAL_boot( HEAPID_PROC );
   
   return GFL_PROC_RES_FINISH;
 }
@@ -83,8 +86,11 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData(ibp->gsys);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(ibp->gsys);
 	INTRUDE_COMM_SYS_PTR intcomm;
+  GFL_PROC_MAIN_STATUS proc_status;
 
   intcomm = Intrude_Check_CommConnect(game_comm);
+
+  proc_status = GFL_PROC_LOCAL_Main( ibs->procsys );
  
   switch(*seq){
   case 0:
@@ -106,12 +112,6 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
     }
     break;
   case 3:
-    if(ibs->work < 50){
-      ibs->work++;
-      break;
-    }
-    ibs->work = 0;
-
     if(IntrudeSend_TargetTiming(intcomm, ibp->target_netid, INTRUDE_TIMING_BATTLE_COMMAND_ADD_AFTER) == TRUE){
       OS_TPrintf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
       (*seq) ++;
@@ -124,12 +124,13 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
     }
     break;
   case 5:
-    GAMESYSTEM_CallProc(ibp->gsys, NO_OVERLAY_ID, &BtlProcData, &ibs->para);
+    OS_TPrintf("バトルPROC呼び出し\n");
+    GFL_PROC_LOCAL_CallProc( ibs->procsys, NO_OVERLAY_ID, &BtlProcData, &ibs->para );
     (*seq)++;
     break;
   case 6:
-    if (GAMESYSTEM_IsProcExists(ibp->gsys) != GFL_PROC_MAIN_NULL){
-      OS_TPrintf("バトル終了待ち・・・\n");
+    if(proc_status != GFL_PROC_MAIN_NULL){
+      OS_TPrintf("..バトル終了待ち\n");
       break;
     }
     OS_TPrintf("バトル完了\n");
@@ -155,6 +156,10 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
 //--------------------------------------------------------------
 static GFL_PROC_RESULT IntrudeBattleProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
+  INTRUDE_BATTLE_SYS *ibs = mywk;
+
+  GFL_PROC_LOCAL_Exit( ibs->procsys );
+
   GFL_PROC_FreeWork(proc);
   return GFL_PROC_RES_FINISH;
 }
