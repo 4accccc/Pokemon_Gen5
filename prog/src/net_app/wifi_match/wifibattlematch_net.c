@@ -1125,11 +1125,11 @@ void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_T
   case WIFIBATTLEMATCH_TYPE_WIFICUP:    //WIFI‘å‰ï
     p_wk->SC_CreateReportCoreFunc = DwcRap_Sc_CreateReportWifiCore;
     break;
+  case WIFIBATTLEMATCH_TYPE_RNDFREE:
   case WIFIBATTLEMATCH_TYPE_LIVECUP:    //ƒ‰ƒCƒu‘å‰ï
     GF_ASSERT(0);
     break;
   case WIFIBATTLEMATCH_TYPE_RNDRATE:
-  case WIFIBATTLEMATCH_TYPE_RNDFREE:
     p_wk->SC_CreateReportCoreFunc = DwcRap_Sc_CreateReportRndCore;
     break;
   }

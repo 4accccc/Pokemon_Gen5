@@ -1930,7 +1930,6 @@ MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_C
   MatchInfo_STAR_Cleate( p_wk, cp_data, p_unit, cp_res, heapID );
 
 
-
   {
     GFL_ARC_UTIL_TransVramScreen( ARCID_WIFIMATCH_GRA, NARC_wifimatch_gra_standby_card_NSCR,
 				BG_FRAME_M_CARD, 0, 0, FALSE, GFL_HEAP_LOWID( heapID ) );

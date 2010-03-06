@@ -979,7 +979,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       Util_Matchkey_SetData( &data, p_wk );
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
       PMSND_PlaySE( WBM_SND_SE_MATCHING );
-      WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->mode, TRUE, p_param->p_param->btl_rule, &data );
+      WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, WIFIBATTLEMATCH_TYPE_RNDRATE, TRUE, p_param->p_param->btl_rule, &data );
       *p_seq = SEQ_START_MATCHING_MSG;
     }
     break;
@@ -1209,7 +1209,7 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
   case SEQ_START_REPORT_ATLAS:
 #ifndef SAKE_REPORT_NONE
-    WIFIBATTLEMATCH_SC_Start( p_wk->p_net, p_param->p_param->mode, p_param->p_param->btl_rule, p_param->btl_result );
+    WIFIBATTLEMATCH_SC_Start( p_wk->p_net, WIFIBATTLEMATCH_TYPE_RNDRATE, p_param->p_param->btl_rule, p_param->btl_result );
 #endif
     *p_seq = SEQ_WAIT_REPORT_ATLAS;
     break;
@@ -1684,7 +1684,7 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       Util_Matchkey_SetData( &data, p_wk );
       PMSND_PlaySE( WBM_SND_SE_MATCHING );
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
-      WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->mode, FALSE, p_param->p_param->btl_rule, &data ); 
+      WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, WIFIBATTLEMATCH_TYPE_RNDFREE, FALSE, p_param->p_param->btl_rule, &data ); 
       *p_seq = SEQ_START_MATCHING_MSG;
     }
     break;
@@ -2485,7 +2485,7 @@ static void Util_MatchInfo_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, const WIFIBAT
     BOOL is_rate  = p_wk->p_param->retmode  == WIFIBATTLEMATCH_CORE_RETMODE_RATE;
 
     GFL_CLUNIT  *p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic );
-    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, p_wk->p_param->p_param->mode, is_rate, HEAPID_WIFIBATTLEMATCH_CORE );
+    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, WIFIBATTLEMATCH_TYPE_RNDRATE, is_rate, HEAPID_WIFIBATTLEMATCH_CORE );
   }
 }
 //----------------------------------------------------------------------------

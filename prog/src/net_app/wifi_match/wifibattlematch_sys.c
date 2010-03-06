@@ -362,7 +362,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   //モジュール作成
 	p_wk->p_subproc = WBM_SYS_SUBPROC_Init( sc_subproc_data, SUBPROCID_MAX, p_wk, HEAPID_WIFIBATTLEMATCH_SYS );
 
-  switch( p_wk->type )
+  switch( p_wk->param.mode )
   { 
   case WIFIBATTLEMATCH_MODE_MAINMENU:  //タイトルから進む、メインメニュー
     WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_MAINMENU );
@@ -1245,7 +1245,19 @@ static BOOL LOGOUT_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
   WIFILOGOUT_PARAM    *p_param  = p_param_adrs;
 
-  WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
+  switch( p_wk->type )
+  { 
+  case WIFIBATTLEMATCH_TYPE_WIFICUP:
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
+    break;
+  case WIFIBATTLEMATCH_TYPE_LIVECUP:
+    GF_ASSERT(0);
+    break;
+  case WIFIBATTLEMATCH_TYPE_RNDRATE:
+  case WIFIBATTLEMATCH_TYPE_RNDFREE:
+    WBM_SYS_SUBPROC_End( p_subproc );
+    break;
+  }
 
   GFL_HEAP_FreeMemory( p_param );
 
