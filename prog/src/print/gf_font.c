@@ -123,7 +123,7 @@ struct  _GFL_FONT {
   NNSFontInfo              fontHeader;
   pWidthGetFunc            WidthGetFunc;
   u16                      unknownCodeIndex;
-  u8                       fixedFontFlag;
+  u8                       monoSpaceFlag; // 等幅フラグ
 
 
   NNSGlyphInfo  glyphInfo;
@@ -141,7 +141,7 @@ struct  _GFL_FONT {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPID heapID );
+static void load_font_header( GFL_FONT* wk, u32 datID, BOOL monoSpaceFlag, HEAPID heapID );
 static void unload_font_header( GFL_FONT* wk );
 static void setup_font_datas( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, HEAPID heapID );
 static void setup_type_on_memory( GFL_FONT* wk, u8 cellW, u8 cellH, HEAPID heapID );
@@ -155,7 +155,7 @@ static void GetBitmapFileRead( const GFL_FONT* wk, u32 index, void* dst, GFL_FON
 static void getBitmapCommon( const GFL_FONT* wk, const u8* glyphBuf, u32 glyphRemBits, void* dst, GFL_FONT_SIZE* dstSize );
 static inline void expand_ntr_glyph_block( const u8* srcData, u16 blockPos, u16 cellWidth, BOOL maskFlag, u8* dst );
 static u8 GetWidthProportionalFont( const GFL_FONT* wk, u32 glyphIndex );
-static u8 GetWidthFixedFont( const GFL_FONT* wk, u32 index );
+static u8 GetWidthMonoSpace( const GFL_FONT* wk, u32 index );
 static inline void ExpandFontData( const void* src_p, void* dst_p );
 static inline void BitReader_Init( BIT_READER* br, const u8* src );
 static inline void BitReader_SetNextBit( BIT_READER* br );
@@ -171,23 +171,23 @@ static void dotExpand_2x2( const u8* glyphSrc, u16 remBits, u8* dst );
 /**
  * フォントデータハンドラ作成
  *
- * @param   arcID     フォントデータが含まれるアーカイブID
- * @param   datID     フォントデータのアーカイブ内ID
- * @param   loadType    フォントデータ読み出し方式
- * @param   fixedFontFlag 等幅フォントとして扱うためのフラグ（TRUEなら等幅）
- * @param   heapID      ハンドラ生成用ヒープID
+ * @param   arcID          フォントデータが含まれるアーカイブID
+ * @param   datID          フォントデータのアーカイブ内ID
+ * @param   loadType       フォントデータ読み出し方式
+ * @param   monoSpaceFlag  等幅フォントとして扱うためのフラグ（TRUEなら等幅）
+ * @param   heapID         ハンドラ生成用ヒープID
  *
  * @retval  GFL_FONT*   フォントデータハンドラ
  */
 //=============================================================================================
-GFL_FONT* GFL_FONT_Create( u32 arcID, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, HEAPID heapID )
+GFL_FONT* GFL_FONT_Create( u32 arcID, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL monoSpaceFlag, HEAPID heapID )
 {
   GFL_FONT* wk = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_FONT) );
   if( wk )
   {
     wk->fileHandle = GFL_ARC_OpenDataHandle( arcID, heapID );
     wk->arcDatID = datID;
-    load_font_header( wk, datID, fixedFontFlag, heapID );
+    load_font_header( wk, datID, monoSpaceFlag, heapID );
     setup_font_datas( wk, loadType, heapID );
   }
   return wk;
@@ -212,27 +212,27 @@ void GFL_FONT_Delete( GFL_FONT* wk )
 /**
  * 両タイプで共有するヘッダデータを読み込み・構築
  *
- * @param   wk        ワークポインタ
- * @param   datID     フォントファイルのデータID
- * @param   fixedFontFlag 固定フォントフラグ
- * @param   heapID      ヒープID
+ * @param   wk              ワークポインタ
+ * @param   datID           フォントファイルのデータID
+ * @param   monoSpaceFlag   等幅フラグ
+ * @param   heapID          ヒープID
  *
  */
 //------------------------------------------------------------------
-static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPID heapID )
+static void load_font_header( GFL_FONT* wk, u32 datID, BOOL monoSpaceFlag, HEAPID heapID )
 {
   if( wk->fileHandle )
   {
     GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, 24, sizeof(wk->fontHeader), &(wk->fontHeader) );
     GFL_ARC_LoadDataImgofsByHandle( wk->fileHandle, datID, &wk->fontDataImgOfs );
 
-    wk->fixedFontFlag = fixedFontFlag;
+    wk->monoSpaceFlag = monoSpaceFlag;
 
     // WidthTable
-    if( fixedFontFlag )
+    if( monoSpaceFlag )
     {
       wk->widthTblTop = NULL;
-      wk->WidthGetFunc = GetWidthFixedFont;
+      wk->WidthGetFunc = GetWidthMonoSpace;
     }
     else
     {
@@ -347,7 +347,6 @@ static void setup_font_datas( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, HEAPID h
 //--------------------------------------------------------------------------
 static void setup_type_on_memory( GFL_FONT* wk, u8 cellW, u8 cellH, HEAPID heapID )
 {
-  #if 1
   u32  fileSize, bitDataSize;
 
   fileSize = GFL_ARC_GetDataSizeByHandle( wk->fileHandle, wk->arcDatID );
@@ -362,20 +361,14 @@ static void setup_type_on_memory( GFL_FONT* wk, u8 cellW, u8 cellH, HEAPID heapI
 //  OS_TPrintf("[メモリ常駐型フォント] Bitデータ読み込み完了\n");
 
   wk->GetBitmapFunc = GetBitmapOnMemory;
-  if( cellW==1 && cellH==1 )
+  if( cellW==1 )
   {
-    wk->DotExpandFunc = dotExpand_1x1;
+    wk->DotExpandFunc = (cellH==1)? dotExpand_1x1 : dotExpand_1x2;
   }
-  else if( cellW==2 && cellH==2 )
+  else
   {
-    wk->DotExpandFunc = dotExpand_2x2;
+    wk->DotExpandFunc = (cellH==1)? dotExpand_2x1 : dotExpand_2x2;
   }
-
-  #else
-  // WBではオンメモリ処理をしないと思われるため未実装。
-  // とりあえずファイル読み込みタイプと同じ処理をしておく
-  setup_type_read_file( wk, cellW, cellH, heapID );
-  #endif
 }
 //--------------------------------------------------------------------------
 /**
@@ -740,6 +733,7 @@ static u8 GetWidthProportionalFont( const GFL_FONT* wk, u32 glyphIndex )
     widthIdx = (bitTable[ byteIdx ] >> shift) & 0x03;
 
     if( widthIdx < 3 ){
+      TAYA_Printf("  lots3 ... width=%d\n", wtbl->lotsWidth[ widthIdx ] );
       return wtbl->lotsWidth[ widthIdx ];
     }
   }
@@ -757,6 +751,7 @@ static u8 GetWidthProportionalFont( const GFL_FONT* wk, u32 glyphIndex )
     hashCode = ((glyphIndex & 0x1ff) ^ (keyBit << 3)) % HASH_SIZE;
 
     if( hashTable[hashCode] >= 0 ){
+      TAYA_Printf("  hashTbl ... width=%d (hashCode=%d)\n", hashTable[hashCode], hashCode );
       return hashTable[ hashCode ];
     }else{
       dupIdx = hashTable[ hashCode ] * -1;
@@ -778,6 +773,7 @@ static u8 GetWidthProportionalFont( const GFL_FONT* wk, u32 glyphIndex )
         index = (*chainTable << 8) | *(chainTable+1);
         if( glyphIndex == index ){
           u8 width = *(chainTable + 2);
+          TAYA_Printf("  directWidth ... width=%d \n", width );
           return width;
         }
         else{
@@ -812,7 +808,7 @@ static u8 GetWidthProportionalFont( const GFL_FONT* wk, u32 glyphIndex )
     else
     {
       GF_ASSERT(0);
-      GetWidthFixedFont( wk, index, size );
+      GetWidthMonoSpace( wk, index, size );
       break;
     }
   }
@@ -829,7 +825,7 @@ static u8 GetWidthProportionalFont( const GFL_FONT* wk, u32 glyphIndex )
  * @retval  u8
  */
 //------------------------------------------------------------------
-static u8 GetWidthFixedFont( const GFL_FONT* wk, u32 index )
+static u8 GetWidthMonoSpace( const GFL_FONT* wk, u32 index )
 {
   return wk->fontHeader.totalWidth;
 }

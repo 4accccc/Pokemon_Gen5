@@ -1450,6 +1450,7 @@ u32 PRINTSYS_GetStrWidth( const STRBUF* str, GFL_FONT* font, u16 margin )
   width = max = 0;
   sp = GFL_STR_GetStringCodePointer( str );
 
+
   while( *sp != EOM_CODE )
   {
     width = get_line_width( sp, font, margin, &sp );
