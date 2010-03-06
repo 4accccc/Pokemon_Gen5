@@ -3620,7 +3620,7 @@
 #define _GET_MUSICAL_VALUE_IS_EQUIP_ANY_DRESSUP( retVal ) \
     _ASM_GET_MUSICAL_VALUE_IS_EQUIP_ANY_DRESSUP retVal
 
-  .macro  _ASM_GET_MUSICAL_VALUE_IS_EQUIP_ANY_DRESSUP pos, retVal
+  .macro  _ASM_GET_MUSICAL_VALUE_IS_EQUIP_ANY_DRESSUP retVal
   .short EV_SEQ_GET_MUSICAL_VALUE
   .byte 13
   .short 0
@@ -8661,7 +8661,7 @@
 
 //--------------------------------------------------------------
 /**
- *  _PDW_SET_FURNITURE_TOOLS PDW家具メニュー：家具名セット
+ *  _PDW_SET_FURNITURE_WORD PDW家具メニュー：家具名セット
  * @param idx セットするタグナンバー
  * @param val セットする家具番号
  */
