@@ -78,7 +78,7 @@ enum
 enum
 {
   OBJ_PAL_NUM_M_STAR        = 1,
-  OBJ_PAL_NUM_M_POKEICON    = 3,
+  OBJ_PAL_NUM_M_POKEICON    = 3,  // 圧縮パレットデータの登録および転送では指定しなかった
 };
 // 位置
 enum
@@ -103,17 +103,17 @@ enum
 
 static const GFL_CLACTPOS pokemon_pos_single[POKEMON_NUM_MAX] =
 {
-  { 100, 100 },
-  { 100, 100 },
-  { 100, 100 },
+  {  88, 152 },
+  { 128, 152 },
+  { 168, 152 },
   {   0,   0 },  // 使用しない
 };
 static const GFL_CLACTPOS pokemon_pos_double[POKEMON_NUM_MAX] =
 {
-  { 100, 100 },
-  { 100, 100 },
-  { 100, 100 },
-  { 100, 100 },
+  {  80, 152 },
+  { 112, 152 },
+  { 144, 152 },
+  { 176, 152 },
 };
 
 
@@ -251,7 +251,7 @@ typedef struct
 
   // ポケモン
   u8                          pokemon_num;
-  UI_EASY_CLWK_RES            pokeicon_res[POKEMON_NUM_MAX];
+  u32                         pokeicon_res[POKEMON_NUM_MAX][OBJ_RES_MAX];  // パレットはpokeicon_res[0][OBJ_RES_NCL]だけ有効
   GFL_CLWK*                   pokeicon_clwk[POKEMON_NUM_MAX];  
 
   // テキスト
@@ -556,7 +556,7 @@ static GFL_PROC_RESULT Th_Award_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
   }
 #endif
 
-#if 1
+#if 0 
   {
     // ポケアイコンの位置調整
     static u8 no = 0;
@@ -664,6 +664,10 @@ static void Th_Award_BgExit( TH_AWARD_WORK* work )
 //=====================================
 static void Th_Award_PokeiconInit( TH_AWARD_WORK* work )
 {
+  u8 i;
+  const GFL_CLACTPOS* pokemon_pos;
+  ARCHANDLE* handle;
+
   const TH_SV_COMMON_WK*  common_data;
 
   // NULL、ゼロ初期化
@@ -683,12 +687,87 @@ static void Th_Award_PokeiconInit( TH_AWARD_WORK* work )
 
   if( common_data->Valid == 0 ) return;  // 無効データ
 
-  // ポケモン数
+  // シングルかダブルか
+  {
+    if( common_data->IsDouble == 0 )  // シングル
+    {
+      // ポケモン数
+      work->pokemon_num = 3;
 
+      pokemon_pos = pokemon_pos_single;
+    }
+    else  // ダブル
+    {
+      // ポケモン数
+      work->pokemon_num = 4;
+      
+      pokemon_pos = pokemon_pos_double;
+    }
+  }
 
+  // リソース読み込み＆CLWK作成
+  handle = GFL_ARC_OpenDataHandle( ARCID_POKEICON, work->heap_id );
+  for( i=0; i<work->pokemon_num; i++ )
+  {
+    u32   monsno     = (u32)(common_data->MonsData[i].MonsNo);
+    u32   formno     = (u32)(common_data->MonsData[i].FormNo);
+    u8    sex        = common_data->MonsData[i].Sex;
+    BOOL  egg        = FALSE;
+
+    // リソース読み込み
+    {
+      if( i == 0 )  // パレットはpokeicon_res[0][OBJ_RES_NCL]だけ有効
+      {
+        work->pokeicon_res[i][OBJ_RES_NCL] = GFL_CLGRP_PLTT_RegisterComp( 
+                                                 handle,
+                                                 POKEICON_GetPalArcIndex(),
+                                                 CLSYS_DRAW_MAIN,
+                                                 OBJ_PAL_POS_M_POKEICON*0x20,
+                                                 work->heap_id );	
+      }
+      work->pokeicon_res[i][OBJ_RES_NCG] = GFL_CLGRP_CGR_Register(
+                                       handle,
+                                       POKEICON_GetCgxArcIndexByMonsNumber( monsno, formno, egg ),
+                                       FALSE,
+                                       CLSYS_DRAW_MAIN,
+                                       work->heap_id );
+      work->pokeicon_res[i][OBJ_RES_NCE] = GFL_CLGRP_CELLANIM_Register(
+                                     handle,
+                                     POKEICON_GetCellArcIndex(),
+                                     POKEICON_GetAnmArcIndex(),
+                                     work->heap_id );
+    }
+    // CLWK作成
+    {
+      GFL_CLWK_DATA cldata;
+      GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+      cldata.pos_x = pokemon_pos[i].x;
+      cldata.pos_y = pokemon_pos[i].y;
+      work->pokeicon_clwk[i] = GFL_CLACT_WK_Create(
+                             TH_AWARD_GRAPHIC_GetClunit( work->graphic ),
+                             work->pokeicon_res[i][OBJ_RES_NCG], work->pokeicon_res[0][OBJ_RES_NCL], work->pokeicon_res[i][OBJ_RES_NCE],  // パレットはpokeicon_res[0][OBJ_RES_NCL]だけ有効
+                             &cldata, CLSYS_DEFREND_MAIN, work->heap_id );
+      GFL_CLACT_WK_SetAnmSeq( work->pokeicon_clwk[i], 1 );  // アニメシーケンス( 0=瀕死, 1=HP最大, 2=HP緑, 3=HP黄, 4=HP赤, 5=状態異常 )
+      GFL_CLACT_WK_SetAutoAnmFlag( work->pokeicon_clwk[i], FALSE );
+      {
+        u8 pal_num = POKEICON_GetPalNum( monsno, formno, egg );
+        GFL_CLACT_WK_SetPlttOffs( work->pokeicon_clwk[i], pal_num, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+      }
+    }
+  }
+  GFL_ARC_CloseDataHandle( handle );
 }
 static void Th_Award_PokeiconExit( TH_AWARD_WORK* work )
 {
+  u8 i;
+  for( i=0; i<work->pokemon_num; i++ )
+  {
+    GFL_CLACT_WK_Remove( work->pokeicon_clwk[i] );
+
+    GFL_CLGRP_CELLANIM_Release( work->pokeicon_res[i][OBJ_RES_NCE] );
+    GFL_CLGRP_CGR_Release( work->pokeicon_res[i][OBJ_RES_NCG] );
+    if( i == 0 ) GFL_CLGRP_PLTT_Release( work->pokeicon_res[i][OBJ_RES_NCL] );  // パレットはpokeicon_res[0][OBJ_RES_NCL]だけ有効
+  }
 }
 
 //-------------------------------------
@@ -825,6 +904,21 @@ static void Th_Award_TextInit( TH_AWARD_WORK* work )
       BG_PAL_POS_M_TEXT * 0x20,
       BG_PAL_NUM_M_TEXT * 0x20,
       work->heap_id );
+
+/*
+  {
+    // パレットの作成＆転送
+    u16 num = 3;
+    u16 siz = sizeof(u16) * num;
+    u16 ofs = BG_PAL_POS_M_TEXT * 0x20 + 0x20 - 2 * num;
+    u16* pal = GFL_HEAP_AllocClearMemory( work->heap_id, siz );
+    pal[0x00] = 0x294b;  // 13  // 黒
+    pal[0x01] = 0x5694;  // 14  // 灰
+    pal[0x02] = 0x7fff;  // 15  // 白 
+    GFL_BG_LoadPalette( BG_PAL_POS_M_TEXT, pal, siz, ofs );
+    GFL_HEAP_FreeMemory( pal );
+  }
+*/
 
   // メッセージ
   work->msgdata = GFL_MSG_Create(
