@@ -17,18 +17,29 @@
 */
 //=============================================================================
 //-------------------------------------
-///	種類
+///	起動モード
 //=====================================
 typedef enum
 {
-	WIFIBATTLEMATCH_MODE_WIFI,    //WIFI大会
-	WIFIBATTLEMATCH_MODE_LIVE,    //ライブ大会
-	WIFIBATTLEMATCH_MODE_RANDOM,  //ランダム対戦　（マッチメイクのときにRANDOM＋０がフリー＋１がレーティングにしている）
-
+	WIFIBATTLEMATCH_MODE_MAINMENU,  //タイトルから進む、メインメニュー
+	WIFIBATTLEMATCH_MODE_RANDOM,    //ポケセンのWIFIカウンターからすすむ、ランダム対戦
 } WIFIBATTLEMATCH_MODE;
 
 //-------------------------------------
-///	使用ポケモン
+///	大会モード  内部で使用する値です
+//=====================================
+typedef enum
+{
+	WIFIBATTLEMATCH_TYPE_WIFICUP,
+	WIFIBATTLEMATCH_TYPE_LIVECUP,
+	WIFIBATTLEMATCH_TYPE_RNDRATE,
+	WIFIBATTLEMATCH_TYPE_RNDFREE,
+
+  WIFIBATTLEMATCH_TYPE_MAX
+} WIFIBATTLEMATCH_TYPE;
+
+//-------------------------------------
+///	使用ポケモン  ランダム対戦のときのみ設定
 //=====================================
 typedef enum
 {
@@ -38,7 +49,7 @@ typedef enum
 } WIFIBATTLEMATCH_POKE;
 
 //-------------------------------------
-///	戦闘タイプ
+///	戦闘タイプ    ランダム対戦のときのみ設定
 //=====================================
 typedef enum
 {
@@ -63,11 +74,11 @@ typedef enum
 //=====================================
 typedef struct 
 {
-  GAMEDATA              *p_game_data; //[in ]ゲームデータ NULLの場合は内部で作成する
+  GAMEDATA                  *p_game_data; //[in ]ゲームデータ NULLの場合は内部で作成する
   WIFIBATTLEMATCH_BTLRULE   btl_rule;     //[in ]バトルルール
-	WIFIBATTLEMATCH_MODE	mode;         //[in ]起動モード
-  WIFIBATTLEMATCH_POKE  poke;         //[in ]選択用パーティ（手持ちorバトルボックスのはず）
-  BOOL                  is_auto_release;//[in]アドレスを内部解放するフラグ
+	WIFIBATTLEMATCH_MODE	    mode;         //[in ]起動モード
+  WIFIBATTLEMATCH_POKE      poke;         //[in ]選択用パーティ（手持ちorバトルボックスのはず）
+  BOOL                      is_auto_release;//[in]アドレスを内部解放するフラグ
 } WIFIBATTLEMATCH_PARAM;
 
 

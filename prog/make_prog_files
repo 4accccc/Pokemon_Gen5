@@ -1449,15 +1449,6 @@ SRCS_OVERLAY_GURU2 = net_app/guru2/guru2.c \
                      net_app/guru2/guru2_main.c
 
 
-# バトル大会メニュー
-#===> SRCS_OVERLAY_DEV_WIFI
-SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = battle_championship/battle_championship_core.c \
-        battle_championship/battle_championship_sys.c \
-        battle_championship/battle_championship_flow.c \
-				net_app/irc_battle/irc_battle_main.c \
-				net_app/irc_battle/irc_battle_subproc.c \
-        battle_championship/digitalcardcheck.c
-
 # 小幡デバッグ
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_menu.c \
@@ -1568,7 +1559,7 @@ SRCS_OVERLAY_WIFIBATTLEMATCH_SYS  = net_app/wifi_match/wifibattlematch_sys.c \
                                     net_app/wifi_match/wifibattlematch_subproc.c \
                                     net_app/wifi_match/wifibattlematch_battle.c
 
-# WIFIバトルマッチングフロー周り＋ネット部分
+# WIFIバトルマッチングフロー周り＋WIFネット部分
 #===> SRCS_OVERLAY_DPW_COMMON
 #===> SRCS_OVERLAY_UI_COMMON
 #LIB=>          libdwcgssake.$HYB.a
@@ -1583,6 +1574,14 @@ SRCS_OVERLAY_WIFIBATTLEMATCH_CORE = net_app/wifi_match/wifibattlematch_core.c \
                 net_app/wifi_match/atlas_syachi2ds_v1.c \
                 net_app/wifi_match/debug/debug_wifi_match.c \
                 net_app/wifi_match/wifibattlematch_utilproc.c
+
+# バトル大会メインメニュー＋LIVEバトルマッチングフロー周り＋IRCネット部分
+# バトル大会メニュー
+#===> SRCS_OVERLAY_DEV_WIFI
+SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = net_app/wifi_match/battle_championship_core.c \
+        net_app/wifi_match/battle_championship_flow.c \
+        net_app/wifi_match/livebattlematch_flow.c \
+        net_app/wifi_match/digitalcardcheck.c
 
 #バトルマッチ描画＋汎用モジュール部分
 #===> SRCS_OVERLAY_WIFIBATTLEMATCH_CORE

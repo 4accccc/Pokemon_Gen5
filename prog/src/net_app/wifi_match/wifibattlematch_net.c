@@ -725,7 +725,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CO
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_MODE mode, BOOL is_rnd_rate, WIFIBATTLEMATCH_BTLRULE btl_rule, const WIFIBATTLEMATCH_MATCH_KEY_DATA *cp_data )
+void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_TYPE mode, BOOL is_rnd_rate, WIFIBATTLEMATCH_BTLRULE btl_rule, const WIFIBATTLEMATCH_MATCH_KEY_DATA *cp_data )
 { 
   u32 btl_mode  = mode;
   if( mode == WIFIBATTLEMATCH_MODE_RANDOM )
@@ -746,21 +746,17 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
   //接続評価コールバック指定
   switch( mode )
   { 
-  case WIFIBATTLEMATCH_MODE_WIFI:    //WIFI大会
+  case WIFIBATTLEMATCH_TYPE_WIFICUP:    //WIFI大会
     p_wk->matchmake_eval_callback = WIFIBATTLEMATCH_WIFI_Eval_Callback;
     break;
-  case WIFIBATTLEMATCH_MODE_LIVE:    //ライブ大会
+  case WIFIBATTLEMATCH_TYPE_LIVECUP:    //ライブ大会
     GF_ASSERT( 0 );
     break;
-  case WIFIBATTLEMATCH_MODE_RANDOM:  //ランダム対戦　（マッチメイクのときにRANDOM＋０がフリー＋１がレーティングにしている）
-    if( is_rnd_rate )
-    { 
-      p_wk->matchmake_eval_callback = WIFIBATTLEMATCH_RND_RATE_Eval_Callback;
-    }
-    else
-    { 
-      p_wk->matchmake_eval_callback = WIFIBATTLEMATCH_RND_FREE_Eval_Callback;
-    }
+  case WIFIBATTLEMATCH_TYPE_RNDRATE:  //ランダムレート対戦
+    p_wk->matchmake_eval_callback = WIFIBATTLEMATCH_RND_RATE_Eval_Callback;
+    break;
+  case WIFIBATTLEMATCH_TYPE_RNDFREE:  //ランダムフリー対戦
+    p_wk->matchmake_eval_callback = WIFIBATTLEMATCH_RND_FREE_Eval_Callback;
     break;
   default:
     GF_ASSERT(0);
@@ -1107,7 +1103,7 @@ static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs )
  *	@param  BtlResult result          対戦結果
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_MODE mode, WIFIBATTLEMATCH_BTLRULE rule, BtlResult result )
+void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_TYPE mode, WIFIBATTLEMATCH_BTLRULE rule, BtlResult result )
 { 
   if( GFL_NET_IsParentMachine() )
   { 
@@ -1126,13 +1122,14 @@ void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_M
   
   switch( mode )
   { 
-  case WIFIBATTLEMATCH_MODE_WIFI:    //WIFI大会
+  case WIFIBATTLEMATCH_TYPE_WIFICUP:    //WIFI大会
     p_wk->SC_CreateReportCoreFunc = DwcRap_Sc_CreateReportWifiCore;
     break;
-  case WIFIBATTLEMATCH_MODE_LIVE:    //ライブ大会
+  case WIFIBATTLEMATCH_TYPE_LIVECUP:    //ライブ大会
     GF_ASSERT(0);
     break;
-  case WIFIBATTLEMATCH_MODE_RANDOM:  //ランダム対戦　（マッチメイクのときにRANDOM＋０がフリー＋１がレーティングにしている）
+  case WIFIBATTLEMATCH_TYPE_RNDRATE:
+  case WIFIBATTLEMATCH_TYPE_RNDFREE:
     p_wk->SC_CreateReportCoreFunc = DwcRap_Sc_CreateReportRndCore;
     break;
   }
@@ -3428,7 +3425,6 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
       if( DWC_NdGetFileListAsync( &p_wk->fileInfo, 0, 1 ) == FALSE)
       {
         OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
-        GF_ASSERT(0);
         return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
       }
       DwcRap_Nd_WaitNdCallback( p_wk, SEQ_GET_FILE );
@@ -3436,7 +3432,8 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     else
     { 
       DEBUG_NET_Printf( "サーバーにレギュレーションがあった数 %d\n", p_wk->server_filenum );
-      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
+
+      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_EMPTY;
     }
     break;
 
@@ -3447,7 +3444,6 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     // ファイル読み込み開始
     if(DWC_NdGetFileAsync( &p_wk->fileInfo, (char*)&p_wk->temp_buffer, REGULATION_CARD_DATA_SIZE) == FALSE){
       OS_TPrintf( "DWC_NdGetFileAsync: Failed.\n" );
-      GF_ASSERT(0);
       return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
     }
     s_callback_flag   = FALSE;

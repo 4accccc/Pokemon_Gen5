@@ -32,7 +32,7 @@
 #include "net/dwc_raputil.h"
 #include "net_app/mystery.h"
 #include "net/delivery_beacon.h"
-#include "battle_championship/battle_championship.h"
+#include "net_app/wifibattlematch.h"
 #include "app/mictest.h"
 #include "app/app_keycursor.h"
 #include "gamesystem/msgspeed.h"
@@ -436,7 +436,13 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 		break;
 
 	case LIST_ITEM_BATTLE:				// バトル大会
-		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(battle_championship), &BATTLE_CHAMPIONSHIP_ProcData, BATTLE_CHAMPIONSHIP_MODE_MAIN_MENU);
+    { 
+      WIFIBATTLEMATCH_PARAM *p_param  = GFL_HEAP_AllocMemory( GFL_HEAPID_APP, sizeof(WIFIBATTLEMATCH_PARAM) );
+      GFL_STD_MemClear( p_param, sizeof(WIFIBATTLEMATCH_PARAM) );
+      p_param->mode             = WIFIBATTLEMATCH_MODE_MAINMENU;
+      p_param->is_auto_release  = TRUE; //下のPROCが終了時この引数を自分で削除する
+      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(wifibattlematch_sys), &WifiBattleMatch_ProcData, p_param );
+    }
 		break;
 
 	case LIST_ITEM_GAME_SYNC:			// ゲームシンク設定
@@ -2645,7 +2651,6 @@ static int SetButtonAnm( START_MENU_WORK * wk, int next )
 #include "title/startmenu.h"
 #include "title/title.h"
 #include "title/game_start.h"
-#include "battle_championship/battle_championship.h"
 #include "net_app/irc_battle.h"
 #include "test/ariizumi/ari_debug.h"
 #include "net_app/mystery.h"
@@ -2940,7 +2945,13 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
         break;
       
     case SMI_GBS_CONNECT: //バトル大会メニュー
-      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(battle_championship), &BATTLE_CHAMPIONSHIP_ProcData, BATTLE_CHAMPIONSHIP_MODE_MAIN_MENU);
+    { 
+      WIFIBATTLEMATCH_PARAM *p_param  = GFL_HEAP_AllocMemory( GFL_HEAPID_APP, sizeof(WIFIBATTLEMATCH_PARAM) );
+      GFL_STD_MemClear( p_param, sizeof(WIFIBATTLEMATCH_PARAM) );
+      p_param->mode             = WIFIBATTLEMATCH_MODE_MAINMENU;
+      p_param->is_auto_release  = TRUE; //下のPROCが終了時この引数を自分で削除する
+      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(wifibattlematch_sys), &WifiBattleMatch_ProcData, p_param );
+    }
       break;
                 
     case SMI_RETURN_TITLE:

@@ -112,9 +112,10 @@ typedef enum
 //読み込みタイプ
 typedef enum
 {
-	WIFIBATTLEMATCH_VIEW_RES_MODE_WIFI  = WIFIBATTLEMATCH_MODE_WIFI,    //WIFI大会
-	WIFIBATTLEMATCH_VIEW_RES_MODE_LIVE  = WIFIBATTLEMATCH_MODE_LIVE,    //ライブ大会
-	WIFIBATTLEMATCH_VIEW_RES_MODE_RANDOM  = WIFIBATTLEMATCH_MODE_RANDOM,  //ランダム対戦　（マッチメイクのときにRANDOM＋０がフリー＋１がレーティングにしている）
+	WIFIBATTLEMATCH_VIEW_RES_MODE_WIFI,    //WIFI大会
+	WIFIBATTLEMATCH_VIEW_RES_MODE_LIVE,    //ライブ大会
+	WIFIBATTLEMATCH_VIEW_RES_MODE_RANDOM,  //ランダム対戦　（マッチメイクのときにRANDOM＋０がフリー＋１がレーティングにしている）
+
 	WIFIBATTLEMATCH_VIEW_RES_MODE_DIGITALCARD,
   WIFIBATTLEMATCH_VIEW_RES_MODE_MENU,
 } WIFIBATTLEMATCH_VIEW_RES_MODE;
@@ -268,9 +269,9 @@ extern BOOL PLAYERINFO_PrintMain( PLAYERINFO_WORK * p_wk, PRINT_QUE *p_que );
 extern BOOL PLAYERINFO_MoveMain( PLAYERINFO_WORK * p_wk );
 
 #ifdef DEBUG_DATA_CREATE
-extern void PLAYERINFO_DEBUG_CreateRndData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs );
-extern void PLAYERINFO_DEBUG_CreateWifiData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs );
-extern void PLAYERINFO_DEBUG_CreateLiveData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs );
+extern void PLAYERINFO_DEBUG_CreateRndData( WIFIBATTLEMATCH_TYPE mode, void *p_data_adrs );
+extern void PLAYERINFO_DEBUG_CreateWifiData( WIFIBATTLEMATCH_TYPE mode, void *p_data_adrs );
+extern void PLAYERINFO_DEBUG_CreateLiveData( WIFIBATTLEMATCH_TYPE mode, void *p_data_adrs );
 #else
 #define PLAYERINFO_DEBUG_CreateRndData(a,b)		/*  */
 #define PLAYERINFO_DEBUG_CreateWifiData(a,b)		/*  */
@@ -309,7 +310,7 @@ typedef struct _MATCHINFO_WORK MATCHINFO_WORK;
  *					外部参照
 */
 //=============================================================================
-extern MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, WIFIBATTLEMATCH_MODE mode, BOOL is_rate, HEAPID heapID );
+extern MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, WIFIBATTLEMATCH_TYPE mode, BOOL is_rate, HEAPID heapID );
 extern void MATCHINFO_Exit( MATCHINFO_WORK *p_wk );
 extern BOOL MATCHINFO_PrintMain( MATCHINFO_WORK *p_wk, PRINT_QUE *p_que );
 extern BOOL MATCHINFO_MoveMain( MATCHINFO_WORK * p_wk );

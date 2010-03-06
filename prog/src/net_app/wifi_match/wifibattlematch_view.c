@@ -1734,7 +1734,7 @@ static void PlayerInfo_STAR_Delete( PLAYERINFO_WORK * p_wk )
  *	@param	*p_data										受け取りワーク
  */
 //-----------------------------------------------------------------------------
-void PLAYERINFO_DEBUG_CreateRndData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs )
+void PLAYERINFO_DEBUG_CreateRndData( WIFIBATTLEMATCH_TYPE mode, void *p_data_adrs )
 {	
 		{	
 			PLAYERINFO_RANDOMMATCH_DATA	*p_data	= p_data_adrs;
@@ -1754,7 +1754,7 @@ void PLAYERINFO_DEBUG_CreateRndData( WIFIBATTLEMATCH_MODE mode, void *p_data_adr
  *	@param	*p_data										受け取りワーク
  */
 //-----------------------------------------------------------------------------
-void PLAYERINFO_DEBUG_CreateWifiData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs )
+void PLAYERINFO_DEBUG_CreateWifiData( WIFIBATTLEMATCH_TYPE mode, void *p_data_adrs )
 { 
 		{	
 			PLAYERINFO_WIFICUP_DATA	*p_data	= p_data_adrs;
@@ -1789,7 +1789,7 @@ void PLAYERINFO_DEBUG_CreateWifiData( WIFIBATTLEMATCH_MODE mode, void *p_data_ad
  *	@param	*p_data										受け取りワーク
  */
 //-----------------------------------------------------------------------------
-void PLAYERINFO_DEBUG_CreateLiveData( WIFIBATTLEMATCH_MODE mode, void *p_data_adrs )
+void PLAYERINFO_DEBUG_CreateLiveData( WIFIBATTLEMATCH_TYPE mode, void *p_data_adrs )
 { 
 		{	
 			PLAYERINFO_LIVECUP_DATA	*p_data	= p_data_adrs;
@@ -1914,7 +1914,7 @@ static void MatchInfo_STAR_Delete( MATCHINFO_WORK * p_wk );
  *	@return	ワーク
  */
 //-----------------------------------------------------------------------------
-MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, WIFIBATTLEMATCH_MODE mode, BOOL is_rate, HEAPID heapID )
+MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, WIFIBATTLEMATCH_TYPE mode, BOOL is_rate, HEAPID heapID )
 {	
 	MATCHINFO_WORK	*	p_wk;
   WBM_CARD_RANK rank;
@@ -1937,9 +1937,9 @@ MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_C
 
     switch( mode )
     { 
-    case WIFIBATTLEMATCH_MODE_WIFI:
+    case WIFIBATTLEMATCH_TYPE_WIFICUP:
       /* fallthr */
-    case WIFIBATTLEMATCH_MODE_LIVE:
+    case WIFIBATTLEMATCH_TYPE_LIVECUP:
       GFL_BG_WriteScreenExpand( BG_FRAME_M_CARD, 0, 0, 32, 2,
         GFL_BG_GetScreenBufferAdrs(BG_FRAME_M_CARD), 0, 24, 32, 32 );
     }

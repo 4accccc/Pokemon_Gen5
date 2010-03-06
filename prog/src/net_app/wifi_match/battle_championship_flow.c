@@ -86,7 +86,7 @@ struct _BATTLE_CHAMPIONSHIP_FLOW_WORK
   //ヒープID
   HEAPID                          heapID;
 
-  //フロー
+  //デジタル選手証フロー
   DIGITALCARD_CHECK_WORK          *p_flow;
 };
 //=============================================================================
@@ -136,11 +136,6 @@ static BOOL UTIL_TEXT_IsEnd( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk );
 //フロー終了
 static void UTIL_FLOW_End( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, BATTLE_CHAMPIONSHIP_FLOW_RET ret );
 
-//=============================================================================
-/**
- *					外部参照
-*/
-//=============================================================================
 //=============================================================================
 /**
  *					データ

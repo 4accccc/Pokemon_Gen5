@@ -62,4 +62,5 @@ typedef struct
  *					ŠO•”ŒöŠJ
 */
 //=============================================================================
+FS_EXTERN_OVERLAY( battle_championship );
 extern const GFL_PROC_DATA BATTLE_CHAMPIONSHIP_CORE_ProcData;
