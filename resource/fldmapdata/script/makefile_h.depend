@@ -117,6 +117,9 @@ gpower_scr_def.h: gpower_scr.ev
 trial_house_scr_def.h: trial_house_scr.ev
 	$(EV_DEF) trial_house_scr.ev $(SCR_OFFS_ID_H)
 
+pdw_scr_def.h: pdw_scr.ev
+	$(EV_DEF) pdw_scr.ev $(SCR_OFFS_ID_H)
+
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 

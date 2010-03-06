@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2010 02/19 (Fri) 19:26
+ * @date  2010 03/06 (Sat) 14:03
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -132,6 +132,9 @@
 
 #define ID_TRIAL_HOUSE_SCR_OFFSET        (10430) //トライアルハウス受付スクリプト
 #define ID_TRIAL_HOUSE_SCR_OFFSET_END    (10434)
+
+#define ID_PDW_SCR_OFFSET                (10435) //PDW家具屋用スクリプト
+#define ID_PDW_SCR_OFFSET_END            (10439)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)

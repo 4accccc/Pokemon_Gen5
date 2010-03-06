@@ -3,7 +3,7 @@
 # @file  uniq_script.list
 # @bfief 非マップ依存のスクリプトリスト
 # @author  tamada GAMEFREAK inc.
-# @date  2010 02/19 (Fri) 19:26
+# @date  2010 03/06 (Sat) 14:03
 #
 #  このファイルはコンバータにより自動生成されています
 #
@@ -49,6 +49,7 @@ UNIQ_SCRIPTFILES = \
 	elevator.ev \
 	gpower_scr.ev \
 	trial_house_scr.ev \
+	pdw_scr.ev \
 	debug_scr.ev 
 
 #イベントデータで指定され直接呼ばれるスクリプトファイル
@@ -83,7 +84,8 @@ UNIQ_TOP_EVENT_SCRFILES = \
 	vending_machine.ev \
 	elevator.ev \
 	gpower_scr.ev \
-	trial_house_scr.ev 
+	trial_house_scr.ev \
+	pdw_scr.ev 
 
 #プログラムやスクリプトから呼ばれるスクリプトファイル
 UNIQ_SUB_EVENT_SCRFILES = \
