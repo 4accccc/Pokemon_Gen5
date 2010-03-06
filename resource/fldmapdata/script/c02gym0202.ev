@@ -21,6 +21,8 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c02gym0202
 _EVENT_DATA    ev_c02gym0202_leader2_01
+_EVENT_DATA		ev_bg_c02gym0202_book_01
+_EVENT_DATA		ev_bg_c02gym0202_case_01
 _EVENT_DATA_END
 
 
@@ -96,6 +98,7 @@ EVENT_END
 //ジムリーダー戦
 ev_leader2_btl:
 	//リーダー：戦闘前メッセージ
+	_TALK_OBJ_START()
 	//いらっしゃい！
 	_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_01 )
 	_BALLOONWIN_CLOSE()
@@ -116,8 +119,8 @@ ev_leader2_btl:
 	_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_02 )
 	_BALLOONWIN_CLOSE()
 
-  //リーダー戦勝利時の情報登録
-  _SET_GYM_VICTORY_INFO( BADGE_ID_02 )
+	//リーダー戦勝利時の情報登録
+	_SET_GYM_VICTORY_INFO( BADGE_ID_02 )
 	//バッジ入手処理
 	_SET_BADGE_FLAG( BADGE_ID_02 )		//バッジフラグon
 
@@ -151,30 +154,41 @@ ev_c02gym_tounan:
     DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
    
     _PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+    _PLAYER_NAME(0)
     
 	//ジムリーダー夫を配置
 	_OBJ_ADD_EX( 5, 19, DIR_DOWN, MMDL_ID_EVENTOBJ_00, ASSISTANTM, MV_DMY )
 
+	//ママー
+	_PLAINWIN_MSG_DOWN(msg_c02gym0202_ad_01)
+	_MSGWIN_CLOSE()
+	
 	//ジムリーダーが夫を振り向く
 	_OBJ_ANIME( C02GYM0202_LEADER2_01, anm_common_turn_d  )
 	_OBJ_ANIME_WAIT()
 	
-	//主人公：びっくりして、振り向く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_furimuku )
-	_OBJ_ANIME_WAIT()
+	IF $POSX == 5 && $POSZ == 9 THEN 
+	ELSE
+		//主人公：びっくりして、振り向く
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_furimuku )
+		_OBJ_ANIME_WAIT()
+	ENDIF
 	
 	//ジムリーダー夫：地下室に入ってくる
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_ad_01_come )
-	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(8)
 	
    	//主人公、びっくりして、横に飛び退く
 	IF $POSX == 5 && $POSZ == 11 THEN 
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_jump_b )
-		_OBJ_ANIME_WAIT()
+	ELSIF $POSX == 5 && $POSZ == 9 THEN 
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_jump_a )
 	ENDIF
+	_OBJ_ANIME_WAIT()
 
 	//ジムリーダー夫：たいへんだよ！
-	_BALLOONWIN_OBJMSG( msg_c02gym0202_ad_01 , MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_OBJMSG( msg_c02gym0202_ad_02 , MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
 	
 	//アロエ：びっくりして、ジャンプする
@@ -191,10 +205,14 @@ ev_c02gym_tounan:
 	
 	//アロエ：博物館の方に走っていく
 	_OBJ_ANIME( C02GYM0202_LEADER2_01, anm_leader_dush )
+	_TIME_WAIT(16)
+	IF $POSX == 5 && $POSZ == 11 THEN 
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+	ENDIF
 	_OBJ_ANIME_WAIT()
 	
 	//間を作る為のウェイト
-	_TIME_WAIT  ( 16 )
+	_TIME_WAIT  ( 8 )
 		
 	//ジムリーダー夫：アロエを追いかけて、博物館に。
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_ad_01_dush )
@@ -221,7 +239,7 @@ EVENT_END
 	_ANIME_LABEL	anm_player_furimuku
 	
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -229,11 +247,8 @@ EVENT_END
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_player_jump_a 
 	
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA AC_DIR_PAUSE_ON,1
-	_ANIME_DATA AC_WALK_L_8F,2
-	_ANIME_DATA AC_DIR_PAUSE_OFF,1
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -242,10 +257,8 @@ EVENT_END
 	_ANIME_LABEL	anm_player_jump_b 
 	
 	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA AC_DIR_PAUSE_ON,1
 	_ANIME_DATA AC_WALK_L_8F,1
-	_ANIME_DATA AC_DIR_PAUSE_OFF,1
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------
@@ -294,7 +307,8 @@ EVENT_END
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_ad_01_dush  
 	
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA AC_WAIT_8F,1
 	_ANIME_DATA	AC_WALK_L_4F,1
 	_ANIME_DATA	AC_WALK_D_4F,7
 	_ANIME_DATA	ACMD_END,0
@@ -312,7 +326,7 @@ _ANIME_LABEL	anm_common_gyoe
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_r
 
-	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -320,7 +334,7 @@ _ANIME_LABEL	anm_common_turn_r
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_l
 
-	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -328,7 +342,7 @@ _ANIME_LABEL	anm_common_turn_l
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_d
 
-	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -336,6 +350,26 @@ _ANIME_LABEL	anm_common_turn_d
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_u
 
-	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+/**************************************************************/
+/*     						本棚 				              */
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0202_book_01
+	
+	_PLAINWIN_MSG_DOWN   ( msg_c02gym0202_bookrack1_01)
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+/**************************************************************/
+/*     						ケース 				              */
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0202_case_01
+	
+	_PLAINWIN_MSG_DOWN   ( msg_c02gym0202_case1_01)
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END

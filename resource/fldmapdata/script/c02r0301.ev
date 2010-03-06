@@ -22,6 +22,7 @@
 _EVENT_DATA    ev_c02r0301_woman2_01
 _EVENT_DATA    ev_c02r0301_poke2_01
 _EVENT_DATA    ev_c02r0301_girl1_01
+_EVENT_DATA		ev_c02r0301_boy1_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -155,7 +156,6 @@ EVENT_START   ev_c02r0301_girl1_01
 	
 	_TALK_OBJ_START()
 	_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_01 )
-	_BALLOONWIN_CLOSE() 
 	
 	//手持ちポケモン先頭（0番）のなつき度で分岐
 	
@@ -163,14 +163,12 @@ EVENT_START   ev_c02r0301_girl1_01
   		//なつき度が0～69の処理
   		//まだまだ　これからって　かんじね
   		
-  		_TALK_OBJ_START()
 		_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_04 )
 		
   	ELSIF $nathuki_check < 120 THEN
   		//なつき度が70～119の処理
   		//うん　すこし　なついている
   			
-  		_TALK_OBJ_START()
 		_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_03 )
   	
   	ELSE
@@ -183,8 +181,7 @@ EVENT_START   ev_c02r0301_girl1_01
 
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE() 
-
-	
+		
 EVENT_END
 /**************************************************************/
 /*  C02R0301 POKEの会話用イベントスクリプト*/
@@ -193,4 +190,12 @@ EVENT_START   ev_c02r0301_poke2_01
 
 	_EASY_TALK_POKEVOICE( MONSNO_HUSIGIDANE, msg_c02r0301_poke_01 )	//【仮】フシギダネの鳴き声。
 
+EVENT_END
+/**************************************************************/
+/*  C02R0301 BOY1の会話用イベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_c02r0301_boy1_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c02r0301_boy1_01)
+	
 EVENT_END

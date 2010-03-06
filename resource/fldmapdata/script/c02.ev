@@ -58,9 +58,19 @@ INIT_EVENT_START	ev_init_c02
 		IF $WK_SCENE_C02  == 4 THEN 
 		
 		//アロエの位置をチェンジ
-		_OBJ_POS_CHANGE( C02_LEADER02_01 , 665, 0, 600, DIR_RIGHT )
+		_OBJ_POS_CHANGE( C02_LEADER02_01 , 665, 0, 600, MV_DIR_RND )
 		
 		ENDIF
+	ENDIF
+
+	//ライバルを配置
+	//初期状態では、博物館前に配置されている（後のイベントで使用する為）
+	//ポスを踏んだとき、ポケセン案内イベントの位置に配置し直す。
+	IF$WK_SCENE_C02 == 0 THEN
+		_OBJ_POS_CHANGE( C02_RIVAL_02, 662, 0, 600, DIR_RIGHT )
+	ELSIF$WK_SCENE_C02 == 3 THEN
+		_OBJ_POS_CHANGE( C02_RIVAL_02, 652, 0, 586, DIR_LEFT )
+		_OBJ_POS_CHANGE( C02_SUPPORT_01, 652, 0, 587, DIR_LEFT )
 	ENDIF
 	
 INIT_EVENT_END
@@ -70,45 +80,44 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START   ev_pos_c02_rival_01
 	
-	//ライバルを配置
-	//初期状態では、博物館前に配置されている（後のイベントで使用する為）
-	//ポスを踏んだとき、ポケセン案内イベントの位置に配置し直す。
 
-	{ //ここからローカル変数の参照制限範囲開始
+	
     DEFINE_LOCAL  POSX   /* ローカル変数定義 */
     DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
 
     _PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
-    
-    //プレイヤーが通る4グリッド分を用意
-    SWITCH $POSZ
-    CASE 598 THEN
-	_OBJ_POS_CHANGE( C02_RIVAL_02, 657, 0, 598, DIR_RIGHT )
-	
-    CASE 599 THEN
-	_OBJ_POS_CHANGE( C02_RIVAL_02, 657, 0, 599, DIR_RIGHT )
-     
-    CASE 600 THEN
-	_OBJ_POS_CHANGE( C02_RIVAL_02, 657, 0, 600, DIR_RIGHT )
- 	
-     CASE 601 THEN
-	_OBJ_POS_CHANGE( C02_RIVAL_02, 657, 0, 601, DIR_RIGHT )
- 
-    DEFAULT
-    ENDSWITCH
-    }
-    
-	//主人公がライバルに気づく
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_01_kiduku )
+
+	//ライバルが主人公に気づく
+	_OBJ_ANIME( C02_RIVAL_02, anm_player_01_kiduku )
 	_OBJ_ANIME_WAIT()
 
     //BGMの再生
     _START_EVENT_BGM( SEQ_BGM_E_TSURETEKE2 )
-    
-	//クロックがやってくる
-	_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_come )
-	_OBJ_ANIME_WAIT()
 	
+	//間を作るためのウェイト
+	_TIME_WAIT(16)
+	
+    //プレイヤーが通る4グリッド分を用意
+	//クロックがやってくる
+    SWITCH $POSZ
+    CASE 598 THEN
+		_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_come_z598  )
+		_OBJ_ANIME_WAIT()
+    CASE 599 THEN
+		_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_come_z599  )
+		_OBJ_ANIME_WAIT()
+    CASE 600 THEN
+		_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_come_z600  )
+		_OBJ_ANIME_WAIT()
+    CASE 601 THEN
+		_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_come_z601  )
+		_OBJ_ANIME_WAIT()
+    DEFAULT
+    ENDSWITCH
+
+	//間を作るためのウェイト
+	_TIME_WAIT(16)
+
 	//クロックが喋る
 	//クロック『あたらしい　まちについたら
 	_BALLOONWIN_OBJMSG( msg_c02_black_01, C02_RIVAL_02 )
@@ -117,18 +126,24 @@ EVENT_START   ev_pos_c02_rival_01
 	//クロックが歩いていく
 	_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_walk )
 	
+	//クロックが歩いていく
+	_TIME_WAIT(16)
+	
 	//主人公もついていく
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_01_walk )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバルが振り向く
-	_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_turn1 )
+	_OBJ_ANIME( C02_RIVAL_02, anm_common_turn_r )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバルポケセンについて喋る
 	//このまま　まっすぐ　すすめば
 	_BALLOONWIN_OBJMSG( msg_c02_black_02, C02_RIVAL_02 )
     _BALLOONWIN_CLOSE()
+    
+	//間を作るためのウェイト
+	_TIME_WAIT(16)
 	
 	//ライバルが画面端に消えていく
 	_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_saru )
@@ -173,11 +188,24 @@ _ANIME_LABEL	anm_player_01_walk
 //--------------------------------------------------------------------
 //ライバル:画面外からやってくる                            
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_rival_01_come
-
-	_ANIME_DATA	AC_WALK_R_8F,6
+_ANIME_LABEL	anm_rival_01_come_z598
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_rival_01_come_z599
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_01_come_z600
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_01_come_z601
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //ライバル:ポケセンまで歩いていく                             
@@ -207,32 +235,38 @@ _ANIME_LABEL	anm_rival_01_saru
 /*  C02 Nとの戦闘イベント				                     
 /**************************************************************/
 EVENT_START   ev_pos_c02_boss_01
-	
-	_OBJ_ADD_EX( 636, 586, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, BOSS, MV_DMY )
-	
-	//プレイヤーがNにきづく
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_02_kiduku)
-	_OBJ_ANIME_WAIT()
 
 	//NのBGM再生
 	_START_EVENT_BGM( SEQ_BGM_E_N )
+	
+	_TIME_WAIT(16)
+	_OBJ_ADD_EX( 644, 581, DIR_DOWN, MMDL_ID_EVENTOBJ_00, BOSS, MV_DMY )
+	_TIME_WAIT(16)	
+
+	//プレイヤーがNにきづく
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe)
+	_OBJ_ANIME_WAIT()
+
+	//主人公がNから下がる
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01)
+	
+	//間を作るためのウェイト
+	_TIME_WAIT(8)	
 	
 	//Nがやってくる
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_01)
 	_OBJ_ANIME_WAIT()
 	
-	//主人公がNのほうを向く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_02_turn_d )
-	_OBJ_ANIME_WAIT()
-	
 	//Nがしゃべる
 	//まよえる　トレーナーよ
 	_BALLOONWIN_OBJMSG( msg_c02_boss_01, MMDL_ID_EVENTOBJ_00)
-
+//	_BALLOONWIN_OBJMSG_POS( msg_c02_boss_01, MMDL_ID_EVENTOBJ_00, POS_DR )
+	
 	//はい/いいえの選択
 	_YES_NO_WIN( SCWK_ANSWER )
 	_MSGWIN_CLOSE()
-
+	
+	_TIME_WAIT(16)
 	//Ｎバストアップ表示開始---------------------------------------------------
 	_START_FACEUP( FLD_FACEUP_BG_CITY, FLD_FACEUP_CHAR_BOSS )
 	
@@ -261,7 +295,8 @@ EVENT_START   ev_pos_c02_boss_01
 
 	//NのBGM再生
 	_START_EVENT_BGM( SEQ_BGM_E_N )
-	
+
+	_TIME_WAIT(16)
 	//Ｎバストアップ表示開始---------------------------------------------------
 	_START_FACEUP( FLD_FACEUP_BG_CITY, FLD_FACEUP_CHAR_BOSS )
 	
@@ -271,7 +306,8 @@ EVENT_START   ev_pos_c02_boss_01
     _MSGWIN_CLOSE()
    
  	_END_FACEUP()	//Ｎバストアップ表示終了----------------------------------
- 	
+ 	_TIME_WAIT(16)
+ /*	
 	//Nが5歩移動
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_02 )
 	_OBJ_ANIME_WAIT()
@@ -279,6 +315,18 @@ EVENT_START   ev_pos_c02_boss_01
 	//主人公がNのほうを向く
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_02_turn_l )
 	_OBJ_ANIME_WAIT()
+*/
+
+	//Nが一歩歩く
+	//主人公がNから下がる
+//	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_01)
+	
+//	_TIME_WAIT(8)
+//	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01)
+//	_OBJ_ANIME_WAIT()
+	
+	//間を作るためのウェイト
+	_TIME_WAIT(16)
 	
 	//Nが喋る
 	//Ｎ『せかいには
@@ -287,6 +335,8 @@ EVENT_START   ev_pos_c02_boss_01
 	
 	//Nが画面外に移動する
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_03 )
+	_TIME_WAIT(64)
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
 	_OBJ_ANIME_WAIT()
 
 	//BGM終了
@@ -319,23 +369,14 @@ ev_boss_btl:
 _RET
 
 //--------------------------------------------------------------------
-//主人公:画面外からやってくる、Nに気づく                             
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_02_kiduku
-
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
-	
-
-//--------------------------------------------------------------------
 //主人公:Nのほうを向く                             
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_02_turn_d
+_ANIME_LABEL	anm_player_back_01
 
-	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA AC_WALK_D_16F,3
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
-	
 	
 //--------------------------------------------------------------------
 //主人公:Nのほうを向く                             
@@ -350,8 +391,7 @@ _ANIME_LABEL	anm_player_02_turn_l
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_boss_01_walk_01
 
-	_ANIME_DATA	AC_WALK_R_8F,8
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_D_16F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -369,6 +409,8 @@ _ANIME_LABEL	anm_boss_01_walk_02
 _ANIME_LABEL	anm_boss_01_walk_03
 
 	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	AC_WALK_L_8F,5
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/
@@ -376,13 +418,8 @@ _ANIME_LABEL	anm_boss_01_walk_03
 /**************************************************************/
 EVENT_START   ev_scene_c02_leader02_01
 
-	//主人公が1歩、前に出る
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk )
-	_OBJ_ANIME_WAIT()
-	
 	//アロエがきょろきょろしている
 	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_kyorokyoro )
-	_OBJ_ANIME_WAIT()
 	
 	//主人公の位置を調整
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
@@ -398,11 +435,13 @@ EVENT_START   ev_scene_c02_leader02_01
     _BALLOONWIN_CLOSE()
     
 	//アロエがアーティに気づく
-	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_bikkuri )
-	_OBJ_ANIME_WAIT()
+//	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_bikkuri )
+//	_OBJ_ANIME_WAIT()
 	
 	//アロエがアーティの方を向く
 	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_turn4 )
+	_TIME_WAIT(16)
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
 	_OBJ_ANIME_WAIT()
 	
 	//アロエが喋る
@@ -412,6 +451,8 @@ EVENT_START   ev_scene_c02_leader02_01
     
 	//アロエが主人公を向く
 	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_turn1 )
+	_TIME_WAIT(16)
+	_OBJ_ANIME(MMDL_ID_PLAYER, anm_common_turn_d)
 	_OBJ_ANIME_WAIT()
 	
 	//プレイヤーネームを格納
@@ -424,6 +465,8 @@ EVENT_START   ev_scene_c02_leader02_01
 	
 	//アロエがアーティのほうを向く
 	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_turn4 )
+	_TIME_WAIT(16)
+	_OBJ_ANIME(MMDL_ID_PLAYER, anm_common_turn_l)
 	_OBJ_ANIME_WAIT()
 	
 	//アーティが喋る
@@ -433,25 +476,27 @@ EVENT_START   ev_scene_c02_leader02_01
 	
 	//アロエが喋る
 	//アロエ『そうなんだよ！！
+//	_OBJ_ANIME( C02_LEADER02_01,anm_common_turn_l)
+//	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG( msg_c02_leader2_03 , C02_LEADER02_01)
     _BALLOONWIN_CLOSE()
 	
 	//アロエが怒る
-	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_jump2 )
-	_OBJ_ANIME_WAIT()
+//	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_jump2 )
+//	_OBJ_ANIME_WAIT()
 	
 	//サポートが博物館から出てくる
 	_OBJ_ANIME( C02_SUPPORT_01, anm_support_come )
+	_OBJ_ANIME_WAIT()
+
+	//主人公が振り向く
+	_OBJ_ANIME(MMDL_ID_PLAYER, anm_common_turn_r)
 	_OBJ_ANIME_WAIT()
 	
 	//サポートが喋る
 	//ホワイティ『ねえねえ
 	_BALLOONWIN_OBJMSG( msg_c02_white_01, C02_SUPPORT_01 )
     _BALLOONWIN_CLOSE()
-
-	//主人公がサポートの方を向く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
-	_OBJ_ANIME_WAIT()
 	
 	//ライバルが出てくる
 	_OBJ_ANIME( C02_RIVAL_02, anm_rival_02_come )
@@ -459,7 +504,9 @@ EVENT_START   ev_scene_c02_leader02_01
 	
 	//ライバルが喋る
 	//ジムバッジ　てにいれたかよ？
+//	_OBJ_ANIME( C02_RIVAL_02, anm_common_turn_d )
 	_BALLOONWIN_OBJMSG( msg_c02_black_03, C02_RIVAL_02 )
+//	_OBJ_ANIME_WAIT()	
     _BALLOONWIN_CLOSE()
 	
 	//アロエがサポート・ライバルを向く
@@ -472,6 +519,10 @@ EVENT_START   ev_scene_c02_leader02_01
 
 	//主人公がアロエの方を向く
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+	_TIME_WAIT(16)
+	_OBJ_ANIME( C02_RIVAL_02, anm_common_turn_d )
+	_TIME_WAIT(2)
+	_OBJ_ANIME( C02_SUPPORT_01, anm_common_turn_d )
 	_OBJ_ANIME_WAIT()
 	
 	//アロエが喋る
@@ -495,6 +546,8 @@ EVENT_START   ev_scene_c02_leader02_01
 	//アロエが3番道路に向かって走る
 	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_dush )
 	_OBJ_ANIME_WAIT()
+
+	_TIME_WAIT(24)
 	
 	//アーティが喋る
 	//で　アーティと
@@ -503,28 +556,39 @@ EVENT_START   ev_scene_c02_leader02_01
 	
 	//アーティがD02に向かう
 	_OBJ_ANIME( C02_LEADER3_01, anm_leader03_walk )
+	_TIME_WAIT(16)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
+	_OBJ_ANIME(C02_SUPPORT_01,anm_common_turn_l)
+	_OBJ_ANIME(C02_RIVAL_02,anm_common_turn_l)
 	_OBJ_ANIME_WAIT()
 	
 	//主人公もD02 に向かおうとする。
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move2 )
-	_OBJ_ANIME_WAIT()
+//	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move2 )
+//	_OBJ_ANIME_WAIT()
 	
 	//サポートがびっくり・主人公を立ち止める
-	_OBJ_ANIME( C02_SUPPORT_01, anm_player_tachidomeru  )
+//	_OBJ_ANIME( C02_SUPPORT_01, anm_player_tachidomeru  )
+//	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME(C02_SUPPORT_01, anm_common_gyoe)
 	_OBJ_ANIME_WAIT()
+//	_OBJ_ANIME(C02_SUPPORT_01, anm_common_turn_l)
+//	_OBJ_ANIME_WAIT()
 	
 	//ライバルが主人公のほうを向く
-	_OBJ_ANIME( C02_RIVAL_02, anm_rival_02_turn )
-	_OBJ_ANIME_WAIT()
+//	_OBJ_ANIME( C02_RIVAL_02, anm_common_turn_l)
 
 	//主人公サポートのほうを向く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
 	_OBJ_ANIME_WAIT()
 	
 	//サポートが喋る
 	//これを　もっていってよ！
 	_BALLOONWIN_OBJMSG( msg_c02_white_02, C02_SUPPORT_01 )
     _BALLOONWIN_CLOSE()
+
+	_OBJ_ANIME(C02_SUPPORT_01, anm_common_turn_l)
+   	_OBJ_ANIME_WAIT()
     
     //【仮】ダウンジングマシンをくれる（MEなし）
 	_ITEM_EVENT_KEYWAIT(ITEM_DAUZINGUMASIN, 1)
@@ -533,17 +597,38 @@ EVENT_START   ev_scene_c02_leader02_01
 	//ダウジングマシンを　つかうと
 	_BALLOONWIN_OBJMSG( msg_c02_white_03, C02_SUPPORT_01 )
     _BALLOONWIN_CLOSE()
-    
+   
+	_OBJ_ANIME(C02_RIVAL_02, anm_common_turn_u)
+	_OBJ_ANIME_WAIT()
+	_TIME_WAIT(16)
+	_OBJ_ANIME(C02_RIVAL_02, anm_common_turn_l)
+	_OBJ_ANIME_WAIT()
+	
     //ライバルが喋る
     _BALLOONWIN_OBJMSG( msg_c02_black_04, C02_RIVAL_02 )
 	_BALLOONWIN_CLOSE()
 	
 	//ライバルが博物館の中へ
 	_OBJ_ANIME( C02_RIVAL_02, anm_rival_02_back )
+	_TIME_WAIT(16)
+	_OBJ_ANIME(MMDL_ID_PLAYER, anm_common_turn_u)
 	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME(C02_SUPPORT_01, anm_common_turn_u)
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(8)
+	_OBJ_ANIME(MMDL_ID_PLAYER, anm_common_turn_r)
+	_OBJ_ANIME_WAIT()
+	
+    //サポートが喋る
+    _BALLOONWIN_OBJMSG( msg_c02_white_04, C02_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
 	
 	//サポートも博物館の中へ
 	_OBJ_ANIME( C02_SUPPORT_01, anm_support_back  )
+	_TIME_WAIT(16)
+	_OBJ_ANIME(MMDL_ID_PLAYER, anm_common_turn_u)
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル・サポート・アーティを消す
@@ -582,11 +667,7 @@ _ANIME_LABEL	anm_player_walk
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_move
 	
-	_ANIME_DATA AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA AC_WALK_D_8F,2	
+	_ANIME_DATA	AC_WALK_D_8F,5
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -603,10 +684,13 @@ _ANIME_LABEL	anm_player_move2
 //アロエ:博物館の外で、きょろきょろしている                              
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader02_kyorokyoro
-	_ANIME_DATA AC_STAY_WALK_L_16F,1
-	_ANIME_DATA	AC_WALK_L_8F,2,1
 	_ANIME_DATA AC_STAY_WALK_R_16F,1
-	_ANIME_DATA	AC_WALK_R_8F,4,1
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_STAY_WALK_L_16F,1
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_STAY_WALK_R_16F,1
+	_ANIME_DATA AC_WAIT_8F,1
+	_ANIME_DATA AC_STAY_WALK_L_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -620,14 +704,14 @@ _ANIME_LABEL	anm_leader02_bikkuri
 //アロエ: 主人公のほうを向く                             
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader02_turn1
-	_ANIME_DATA AC_DIR_U,1				
+	_ANIME_DATA AC_STAY_WALK_U_8F,1			
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //アロエ:アーティの方を向く                              
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader02_turn4
-	_ANIME_DATA AC_DIR_L,1				
+	_ANIME_DATA AC_STAY_WALK_L_8F,1				
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -641,7 +725,7 @@ _ANIME_LABEL	anm_leader02_jump2
 //アロエ:アーティのほうを向く                               
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader02_turn2
-	_ANIME_DATA AC_DIR_U,1				
+	_ANIME_DATA AC_STAY_WALK_U_8F,1				
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -649,7 +733,7 @@ _ANIME_LABEL	anm_leader02_turn2
 //アロエ:サポート・ライバルのほうを向く                              
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader02_turn3
-	_ANIME_DATA AC_DIR_L,1			
+	_ANIME_DATA AC_STAY_WALK_L_8F,1			
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -685,29 +769,29 @@ _ANIME_LABEL	anm_leader03_walk
 //ライバル:  D02方向からやってくる                            
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_02_come
-	_ANIME_DATA	AC_WALK_R_8F,10,1
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_L_8F,7,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //ライバル:  主人公のほうを向く                           
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_02_turn
-	_ANIME_DATA AC_DIR_D,1	
+	_ANIME_DATA AC_STAY_WALK_D_8F,1	
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
 //ライバル: 博物館に入る                             
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_02_back 
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,8
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
-//サポート:                              
+//サポート: 3番道路方向からやってくる                             
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_support_come
-	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	AC_WALK_L_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -723,11 +807,11 @@ _ANIME_LABEL	anm_player_tachidomeru
 //サポート: 博物館に入る                               
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_support_back
-	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,8
 	_ANIME_DATA	ACMD_END,0
 	
-
 /**************************************************************/
 /*  C02 ジムリーダーアロエの会話用イベントスクリプト１				                 
 /**************************************************************/

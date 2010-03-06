@@ -84,13 +84,13 @@ INIT_EVENT_START	ev_init_c02gym0201
 	//戦ったトレーナーを、本棚の前から移動させる
 	IF FLAG_ON( FE_C02GYM_TRBTL1 ) THEN	
 		//なぞなぞ本棚前のトレーナーの位置
-    	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTW_01, 2, 0, 5, DIR_RIGHT )
+    	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTW_01, 7, 0, 4, DIR_LEFT )
 		
 	ENDIF
 	
 	IF FLAG_ON( FE_C02GYM_TRBTL2 ) THEN
 		//仕掛け本棚前のトレーナーの位置
-    	_OBJ_POS_CHANGE( C02GYM0201_GIRL3_01, 17, 0, 11 , DIR_LEFT)
+    	_OBJ_POS_CHANGE( C02GYM0201_GIRL3_01, 14, 0, 12 , DIR_LEFT)
 		
 	ENDIF
 	
@@ -220,9 +220,7 @@ _ANIME_LABEL	anm_obj_gyoe
 //	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_danpei_move_a 
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,3
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
@@ -230,9 +228,7 @@ _ANIME_LABEL	anm_obj_gyoe
 //	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_danpei_move_b 
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -240,9 +236,7 @@ _ANIME_LABEL	anm_obj_gyoe
 //	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_danpei_move_c 
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -252,31 +246,26 @@ _ANIME_LABEL	anm_obj_gyoe
 	_ANIME_LABEL	anm_danpei_move_d
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,3
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 		
 //--------------------------------------------------------------
 //	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_danpei_move_e
-	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_danpei_move_f
-	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/
@@ -393,100 +382,112 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c02gym0201_girl3_01
 
-	//読んだ本の状態によって、行動が分岐
+	//ジムバッジを持っているのかを判定
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
 	
-	_TALK_OBJ_START()		
-			
-	IF $WK_SCENE_C02GYM0201 == 1 && FLAG_OFF( FE_C02GYM_TRBTL2) THEN
-	
-		_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_01)
-	    _LAST_KEYWAIT()
-	    _BALLOONWIN_CLOSE()		//前段階の本（カテゴリー3を読んでいない場合）
-	
-	ELSIF $WK_SCENE_C02GYM0201 == 2 && FLAG_OFF( FE_C02GYM_TRBTL2) THEN
-	
-		_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_02)
-	    _LAST_KEYWAIT()
-	    _BALLOONWIN_CLOSE()		//前段階の本（カテゴリー3を読んでいない場合）
-	    
-	ELSIF $WK_SCENE_C02GYM0201 == 3 && FLAG_OFF( FE_C02GYM_TRBTL2) THEN
-		
-		_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_03)
-	    _LAST_KEYWAIT()
-	    _BALLOONWIN_CLOSE()		//前段階の本（カテゴリー3を読んでいない場合）
-	   
 
-	ELSIF $WK_SCENE_C02GYM0201 == 4 && FLAG_OFF( FE_C02GYM_TRBTL2) THEN
+	//読んだ本の状態によって、行動が分岐
+	_TALK_OBJ_START()
+	
+	//ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN		
+		IF $WK_SCENE_C02GYM0201 == 1 && FLAG_OFF( FE_C02GYM_TRBTL2) THEN
 		
-		_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_03)
-	    _LAST_KEYWAIT()
-	    _BALLOONWIN_CLOSE()		//前段階の本（カテゴリー3を読んでいない場合）
-	    
-	ELSIF $WK_SCENE_C02GYM0201 == 5 && FLAG_OFF( FE_C02GYM_TRBTL2) THEN
+			_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_01)
+		    _LAST_KEYWAIT()
+		    _BALLOONWIN_CLOSE()		//前段階の本（カテゴリー3を読んでいない場合）
 		
-		_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_04)
-	    _LAST_KEYWAIT()
-	    _BALLOONWIN_CLOSE()		//前段階の本（カテゴリー3を読んでいない場合）
+		ELSIF $WK_SCENE_C02GYM0201 == 2 && FLAG_OFF( FE_C02GYM_TRBTL2) THEN
+		
+			_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_02)
+		    _LAST_KEYWAIT()
+		    _BALLOONWIN_CLOSE()		//前段階の本（カテゴリー3を読んでいない場合）
+		    
+		ELSIF $WK_SCENE_C02GYM0201 == 3 && FLAG_OFF( FE_C02GYM_TRBTL2) THEN
+			
+			_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_03)
+		    _LAST_KEYWAIT()
+		    _BALLOONWIN_CLOSE()		//前段階の本（カテゴリー3を読んでいない場合）
+		   
+
+		ELSIF $WK_SCENE_C02GYM0201 == 4 && FLAG_OFF( FE_C02GYM_TRBTL2) THEN
+			
+			_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_03)
+		    _LAST_KEYWAIT()
+		    _BALLOONWIN_CLOSE()		//前段階の本（カテゴリー3を読んでいない場合）
+		    
+		ELSIF $WK_SCENE_C02GYM0201 == 5 && FLAG_OFF( FE_C02GYM_TRBTL2) THEN
+			
+			_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_04)
+		    _LAST_KEYWAIT()
+		    _BALLOONWIN_CLOSE()		//前段階の本（カテゴリー3を読んでいない場合）
+			    	
+		ELSIF $WK_SCENE_C02GYM0201 == 6 && FLAG_OFF( FE_C02GYM_TRBTL2 ) THEN
+			
+				//前段階の本（カテゴリー3を読んでいる場合、対戦出来る。
+				_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_05)
+		    	_BALLOONWIN_CLOSE()
 		    	
-	ELSIF $WK_SCENE_C02GYM0201 == 6 && FLAG_OFF( FE_C02GYM_TRBTL2 ) THEN
-		
-			//前段階の本（カテゴリー3を読んでいる場合、対戦出来る。
-			_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_05)
-	    	_BALLOONWIN_CLOSE()
+		    	//トレーナー戦呼び出し
+				_TRAINER_BTL_SET( TRID_SCHOOLG_03, 0 )
+				
+				//敗戦チェック
+				_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+				IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+					_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+				ELSE
+					_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+				ENDIF
+				
+		    	//対戦後メッセージ
+		    	
+		    	_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_06)
+				
+				_LAST_KEYWAIT()
+		    	_BALLOONWIN_CLOSE()
+		    	
+		    	{ //ここからローカル変数の参照制限範囲開始
+		   		 DEFINE_LOCAL  POSX   /* ローカル変数定義 */
+		    	 DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
+
+		    	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+		    
+		   		 //プレイヤーが通る3グリッド分を用意
+		   		SWITCH $POSX
+		   		CASE 12 THEN
+		     	_OBJ_ANIME( C02GYM0201_GIRL3_01, anm_tranier_move_c )
+				_OBJ_ANIME_WAIT()
+				
+		    	CASE 13 THEN
+
+		     		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_a )
+					_OBJ_ANIME_WAIT()
+
+		     		_OBJ_ANIME( C02GYM0201_GIRL3_01, anm_tranier_move_c )
+					_OBJ_ANIME_WAIT()
+					
+		    	DEFAULT
+		    	ENDSWITCH
+		   		}
+		   		 
+		    	_FLAG_SET(FE_C02GYM_TRBTL2)
 	    	
-	    	//トレーナー戦呼び出し
-			_TRAINER_BTL_SET( TRID_SCHOOLG_03, 0 )
+		ELSE	
 			
-			//敗戦チェック
-			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-			ELSE
-				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-			ENDIF
-			
-	    	//対戦後メッセージ
-	    	
-	    	_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_06)
-			
+			//対戦が終了した場合
+			_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_06)
 			_LAST_KEYWAIT()
 	    	_BALLOONWIN_CLOSE()
 	    	
-	    	{ //ここからローカル変数の参照制限範囲開始
-	   		 DEFINE_LOCAL  POSX   /* ローカル変数定義 */
-	    	 DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
-
-	    	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
-	    
-	   		 //プレイヤーが通る3グリッド分を用意
-	   		SWITCH $POSX
-	   		CASE 12 THEN
-	     	_OBJ_ANIME( C02GYM0201_GIRL3_01, anm_tranier_move_c )
-			_OBJ_ANIME_WAIT()
-			
-	    	CASE 13 THEN
-
-	     		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_a )
-				_OBJ_ANIME_WAIT()
-
-	     		_OBJ_ANIME( C02GYM0201_GIRL3_01, anm_tranier_move_c )
-				_OBJ_ANIME_WAIT()
-				
-	    	DEFAULT
-	    	ENDSWITCH
-	   		}
-	   		 
-	    	_FLAG_SET(FE_C02GYM_TRBTL2)
-    	
-	ELSE	
-		
-		//対戦が終了した場合
-		_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_06)
+	    ENDIF
+    ELSE
+    
+   		//jジムバッジを入手している場合
+		_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_07)
 		_LAST_KEYWAIT()
-    	_BALLOONWIN_CLOSE()
-    	
+	    _BALLOONWIN_CLOSE()
+    
     ENDIF
-    	
 EVENT_END
 
 //--------------------------------------------------------------
@@ -494,9 +495,8 @@ EVENT_END
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_tranier_move_c
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -579,7 +579,7 @@ EVENT_START		ev_pos_c02gym0201_trainer_01
 				_OBJ_ANIME_WAIT()
 		     
 		    CASE 6 THEN
-		   		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_b )
+		   		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_a )
 				_OBJ_ANIME_WAIT()
 				
 		   		_OBJ_ANIME( C02GYM0201_ASSITANTW_01, anm_trainer_move_a )
@@ -626,8 +626,8 @@ _ANIME_LABEL	anm_player_turn_b
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_trainer_move_a
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,4
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -653,10 +653,10 @@ EVENT_START		ev_c02gym0201_assitantw_01
 	//対戦が終了した場合は、ヒントメッセージを喋る
 		
 
-	_TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_assitantw_03)
-	_LAST_KEYWAIT()
-    _BALLOONWIN_CLOSE()
+		_TALK_OBJ_START()
+		_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_assitantw_03)
+		_LAST_KEYWAIT()
+	    _BALLOONWIN_CLOSE()
     
     ENDIF
 

@@ -61,8 +61,8 @@ INIT_EVENT_START	ev_init_c02gym0101
 		IF $WK_SCENE_C02GYM0101 == 2  THEN 
 
 			//アロエと、ジムリーダー夫を配置する
-			_OBJ_ADD_EX( 12, 10, DIR_DOWN, MMDL_ID_EVENTOBJ_00, LEADER2, MV_DOWN )
-			_OBJ_POS_CHANGE( C02GYM0101_AD_01, 13, 0, 10, DIR_DOWN )
+			_OBJ_ADD_EX( 12, 12, DIR_DOWN, MMDL_ID_EVENTOBJ_00, LEADER2, MV_DOWN )
+			_OBJ_POS_CHANGE( C02GYM0101_AD_01, 13, 0, 12, DIR_DOWN )
 			
 		ENDIF
 	ENDIF
@@ -164,19 +164,13 @@ EVENT_START		ev_pos_c02gym0101_ad_01
     
 		//うーむ！　この　骨格標本は　いつみても……　ホレボレしますな
 		_BALLOONWIN_OBJMSG( msg_c02gym0101_ad_01, C02GYM0101_AD_01 )
+		_BALLOONWIN_CLOSE()		
 		
 		//副館長：発言を終えるまで、溜める（ホレボレしている）
-		_TIME_WAIT  ( 8 ) 
-		_OBJ_ANIME_WAIT()
-		
-		_BALLOONWIN_CLOSE()
-		
-		//副館長：！マーク
-		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_bikkuri_mark)
-		_OBJ_ANIME_WAIT()
-		
+		_TIME_WAIT  (8) 
+
 		//副館長：主人公を向く
-		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_shita_muku)
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_common_turn_d)
 		_OBJ_ANIME_WAIT()
 		
 		//副館長：発言までに、ウェイトを持たせる
@@ -210,7 +204,7 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		_OBJ_ANIME_WAIT()
 		
 		//副館長：展示物の方を向く
-		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_ue_muku)
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_common_turn_u)
 		_OBJ_ANIME_WAIT()	
 		
 		//副館長：展示物（骨（大））まで移動
@@ -220,16 +214,19 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		SWITCH $POSX
 		CASE 11 THEN
 		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_hone_dai_a)
+		_TIME_WAIT(2)
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_hone_dai_a)
 		_OBJ_ANIME_WAIT()	
 	
 		CASE 12 THEN
 		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_hone_dai_b)
+		_TIME_WAIT(2)
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_hone_dai_b)
 		_OBJ_ANIME_WAIT()	
      
 		CASE 13 THEN
 		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_hone_dai_c)
+		_TIME_WAIT(2)
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_hone_dai_c)
 		_OBJ_ANIME_WAIT()	
 		
@@ -243,7 +240,7 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		
 		//副館長：展示物（隕石）まで移動
 		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_inseki)	
-		
+		_TIME_WAIT(2)
 		//主人公：展示物（隕石）まで移動
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_inseki)
 		_OBJ_ANIME_WAIT()		
@@ -255,7 +252,7 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		
 		//副館長：展示物（石）まで移動
 		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_ishi)	
-		
+		_TIME_WAIT(2)
 		//主人公：展示物（石）まで移動
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_ishi)
 		_OBJ_ANIME_WAIT()		
@@ -267,7 +264,7 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		
 		//副館長：ジムまで移動
 		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_jimu)	
-		
+		_TIME_WAIT(2)		
 		//主人公：ジムまで移動
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_jimu)
 		_OBJ_ANIME_WAIT()		
@@ -275,7 +272,15 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		//副館長：ジムの説明
 		//あの扉の　先が　ポケモンジムと　なっております
 		_BALLOONWIN_OBJMSG( msg_c02gym0101_ad_06, C02GYM0101_AD_01 )
-		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
+		_TIME_WAIT(8)	
+		
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_common_turn_d)
+		_OBJ_ANIME_WAIT()
+		
+		_BALLOONWIN_OBJMSG( msg_c02gym0101_ad_06a, C02GYM0101_AD_01 )
+		_LAST_KEYWAIT() 
 		_BALLOONWIN_CLOSE()
 		
 		//==============フラグワーク操作==============//
@@ -437,6 +442,47 @@ _ANIME_LABEL	anm_player_idou_jimu
 _ANIME_LABEL	anm_ad_turn
 	_ANIME_DATA	AC_DIR_D,1
 
+
+//--------------------------------------------------------------------
+// 共通アニメ：びっくりする                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：右振り向き                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+
+	_ANIME_DATA AC_STAY_WALK_R_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+
+	_ANIME_DATA AC_STAY_WALK_L_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：下振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+
+	_ANIME_DATA AC_STAY_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：上振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+
+	_ANIME_DATA AC_STAY_WALK_U_16F,1
+	_ANIME_DATA	ACMD_END,0
+
 /**************************************************************/
 /*     ジムリーダーアロエが博物館を出て行く					*/
 /**************************************************************/
@@ -445,36 +491,63 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	//主人公が、アロエ気づく
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_idu_tounan )
 	_OBJ_ANIME_WAIT()
-	
+
 	//ハカイ団がしゃべる
+//	_OBJ_ANIME( C02GYM0101_HAKAIM_01, anm_common_turn_u )
+//	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_hakaim1_01 , C02GYM0101_HAKAIM_01, POS_UL ) 
 	_MSGWIN_CLOSE()
-	
-	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_hakaim2_01 , C02GYM0101_HAKAIM_02, POS_UL ) 
-	_MSGWIN_CLOSE()
-	
-	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_hakaim1_02 , C02GYM0101_HAKAIM_01, POS_UL ) 
-	
-	//サブウィンで、ハカイ団がしゃべる
-	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_c02gym0101_hakaim1_03 , 3 , 12 , 1 ) 
-	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_c02gym0101_hakaim1_04 , 21 , 17 , 2 )
 
-	//20フレーム待機した後ウィンドウを消す
-	_TIME_WAIT( 20 )
-	_BALLOONWIN_CLOSE()
-	_SUBWIN_CLOSE( 1 )
-	_SUBWIN_CLOSE( 2 )
-	
 	//盗まれる化石を中心としたカメラに移動する
 	_CAMERA_START()		//カメラ操作開始
     _CAMERA_PURGE()		//対象物とカメラのバインドを解く
  
-	_CAMERA_MOVE(9688,0,970752,823296,139183,1093632,30)
+	_CAMERA_MOVE(9688,0,970752,819200,32775,1216512,30)
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
-    
-    
+	
+	//間を作るためのウェイト
+	_TIME_WAIT(16)
+	
+	//ハカイ団がしゃべる
+//	_OBJ_ANIME( C02GYM0101_HAKAIM_02, anm_common_turn_u )
+//	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_hakaim2_01 , C02GYM0101_HAKAIM_02, POS_DR ) 
+	_MSGWIN_CLOSE()
+	
+	//ハカイ団がしゃべる
+	_OBJ_ANIME( C02GYM0101_HAKAIM_01, anm_common_turn_d )
+	_TIME_WAIT(2)
+	_OBJ_ANIME( C02GYM0101_HAKAIM_02, anm_common_turn_d )
+	_OBJ_ANIME_WAIT()	
+	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_hakaim1_02 , C02GYM0101_HAKAIM_01, POS_DL ) 
+
+	//サブウィンで、ハカイ団がしゃべる
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_c02gym0101_hakaim1_03 , 3 , 8 , 1 ) 
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_c02gym0101_hakaim1_04 , 21 , 13 , 2 )
+
+	//20フレーム待機した後ウィンドウを消す
+	_TIME_WAIT( 20 )
+	_BALLOONWIN_CLOSE()
+	_TIME_WAIT(8)
+	_SUBWIN_CLOSE( 1 )
+	_TIME_WAIT(8)
+	_SUBWIN_CLOSE( 2 )
+	
+	//煙幕を巻くようなアニメ
+	_OBJ_ANIME(C02GYM0101_HAKAIM_03, anm_common_turn_d)
+	_TIME_WAIT(4)
+	_OBJ_ANIME(C02GYM0101_HAKAIM_05, anm_common_turn_d )
+	_TIME_WAIT(2)
+	_OBJ_ANIME(C02GYM0101_HAKAIM_04, anm_common_turn_d )
+	_TIME_WAIT(1)
+	_OBJ_ANIME(C02GYM0101_HAKAIM_06, anm_common_turn_d )
+	_OBJ_ANIME_WAIT()
+
+	//間を作るためのウェイト	
+	_TIME_WAIT(8)
+	
     //[100224斉藤マ修正 けむり演出を組み込みました]
     //ホワイトアウト中にＯＢＪを消す---------------------
 	_WHITE_OUT()
@@ -491,8 +564,8 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	_FLAG_SET( FV_MUSEUM_TOUNAN )  //博物館内の骨がなくなる
 	_OBJ_DEL( C02GYM0101_BONE_01 )
 	
-	_FLAG_SET( FV_MUSEUM_STONE )	//博物館内の石がなくなる
-	_OBJ_DEL( C02GYM0101_BLACKSTONE_01 )
+//	_FLAG_SET( FV_MUSEUM_STONE )	//博物館内の石がなくなる
+//	_OBJ_DEL( C02GYM0101_BLACKSTONE_01 )
 	
 	//ローカル変数定義
 	DEFINE_LOCAL	BM_ANIME_ID1
@@ -508,13 +581,20 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	_BMODEL_ANIME_WAIT( BM_ANIME_ID1 )
 	_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
 	
+	//間をおくためのウェイト
+	//骨が消えて、びっくりする
+//	_TIME_WAIT(32)
+	
 	_TIME_WAIT  ( 40 )
-   	_CAMERA_RECV_MOVE( 50 )
+   	_CAMERA_RECV_MOVE( 40 )
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
 	
-
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00, anm_common_gyoe )
+	_OBJ_ANIME(MMDL_ID_PLAYER, anm_common_gyoe )
+	_OBJ_ANIME_WAIT()
+	
 	//アロエが化石まで移動
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00, anm_leader_idou_tounan_a )
 	_OBJ_ANIME_WAIT()
@@ -528,10 +608,19 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00, anm_leader_idou_tounan_b )
 	_OBJ_ANIME_WAIT()
 	
+	//副館長があたふた見渡す
+	_OBJ_ANIME(C02GYM0101_AD_01, anm_common_turn_l )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME(C02GYM0101_AD_01, anm_common_turn_d )
+	_OBJ_ANIME_WAIT()
+	
+	//副館長が喋る
+	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_07a , C02GYM0101_AD_01, POS_UR )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
 	//ジムリーダー：消す
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-	
-
 	
 	//==============フラグワーク操作==============//
 	
@@ -547,6 +636,7 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_idu_tounan
 	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -560,7 +650,7 @@ _ANIME_LABEL	anm_leader_idou_tounan_a
 //アロエ:博物館の外に退場                              
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader_idou_tounan_b
-	_ANIME_DATA	AC_WALK_L_2F,6,1
+	_ANIME_DATA	AC_WALK_L_2F,5,1
 	_ANIME_DATA	AC_WALK_D_2F,10,1
 	_ANIME_DATA	ACMD_END,0
 	
@@ -650,7 +740,12 @@ EVENT_END
 
 EVENT_START		 ev_bg_c02gym0101_plate_01
 	
-	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_01)
+	//盗難イベント中かどうかによって、メッセージ変更
+	IF FLAG_ON(FE_MUSEUM_TOUNAN )	THEN
+		_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_01a)
+	ELSE
+		_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_01)
+	ENDIF
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
