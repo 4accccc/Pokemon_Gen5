@@ -48,6 +48,7 @@ enum {
 	//GRID_GS_SAMPLE = 3,
 	RSC_TYPE_END
 };
+#include "zone_id.h"
 #include "../area_data/area_id.h"
 #include "..\..\sound\wb_sound_data.sadl"
 //#include "../map_matrix/map_matrix.naix"

@@ -47,6 +47,7 @@ class ColumnID
 	attr :cCAMERA, true
 	attr :cCAMERA_AREA, true
 	attr :cBATTLEBG, true
+  attr :cZONEGROUP, true
 	attr :cNAME, true
 	attr :cPLACENAMEFLAG, true
 	attr :cCOMMENT, true
@@ -103,6 +104,8 @@ class ColumnID
 				@cCAMERA_AREA = c_count
 			when "BATTLE_BG"
 				@cBATTLEBG = c_count
+      when "ZONE_GROUP"
+        @cZONEGROUP = c_count
 			when "PLACE_NAME"
 				@cNAME = c_count
 			when "PLACE_NAME_FLAG"
@@ -271,6 +274,7 @@ class ZoneDataFile < OutputFile
 			STDERR.puts "í“¬”wŒi‚ÌŽw’è‚ª‚¨‚©‚µ‚¢I:#{battle_bg_str}:#{id.upcase}\n"
 			exit 1
     end
+    zone_group = "ZONE_ID_" + column[@cl.cZONEGROUP].upcase
 		name = column[@cl.cNAME].upcase
 		encount_id = case column[@cl.cENCOUNT]
 			when "›"
@@ -307,6 +311,7 @@ class ZoneDataFile < OutputFile
 		#{bgm_winter},
 		#{encount_id},
 		#{event_id},
+    #{zone_group},
 		#{name},
 		#{placename_flag},
 		#{weather},

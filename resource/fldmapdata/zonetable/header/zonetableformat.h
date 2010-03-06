@@ -27,6 +27,7 @@ typedef struct{
 	u16 bgm_winter_id;					///<BGM指定（冬）のID
 	u16 enc_data_id;					///<エンカウント指定
 	u16 event_data_id;					///<イベントデータファイルのアーカイブID
+  u16 zone_group;           ///<タウンマップ上での表示位置用グループ指定
 	u16 placename_id:10;					///<地名メッセージのＩＤ
 	u16 placename_flag:6;				///<地名メッセージ用のウィンドウ
 	u8 weather_id;						///<天候指定のID
