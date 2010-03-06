@@ -41,11 +41,12 @@ typedef enum {
   TOUCH_AREA_NUM,            // 総数
 } TOUCH_AREA_INDEX;
 
-// パレットアニメーション
+// パレットアニメーション ( プライオリティ逆順 )
 typedef enum {
-  PALETTE_ANIME_CURSOR_ON, // カーソルON
-  PALETTE_ANIME_SELECT,    // 選択リアクション ( メニュー項目 )
-  PALETTE_ANIME_NUM,       // 総数
+  PALETTE_ANIME_CURSOR_ON,   // カーソルON
+  PALETTE_ANIME_CURSOR_SET,  // カーソルセット時の点滅
+  PALETTE_ANIME_SELECT,      // 選択時の点滅
+  PALETTE_ANIME_NUM,         // 総数
 } PALETTE_ANIME_INDEX;
 
 // BGFont オブジェクト

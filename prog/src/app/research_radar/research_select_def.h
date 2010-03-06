@@ -47,7 +47,7 @@
 #define MAIN_BG_FONT   (GFL_BG_FRAME3_M)  // フォント面
 
 // 表示優先順位
-#define MAIN_BG_BAR_PRIORITY    (0)  // バー面
+#define MAIN_BG_BAR_PRIORITY    (1)  // バー面
 #define MAIN_BG_WINDOW_PRIORITY (2)  // ウィンドウ面
 #define MAIN_BG_FONT_PRIORITY   (1)  // フォント面
 
@@ -194,7 +194,7 @@
 
 // MAIN-OBJ
 #define CLUNIT_MAIN_OBJ_WORK_SIZE (10)  // 最大ワーク数
-#define CLUNIT_MAIN_OBJ_PRIORITY  (1)   // 描画優先順位
+#define CLUNIT_MAIN_OBJ_PRIORITY  (0)   // 描画優先順位
 
 // BMP-OAM
 #define CLUNIT_BMPOAM_WORK_SIZE (60)  // 最大ワーク数
@@ -207,7 +207,7 @@
 #define CLWK_SCROLL_CONTROL_POS_X (0)  // x 座標
 #define CLWK_SCROLL_CONTROL_POS_Y (0)  // y 座標
 #define CLWK_SCROLL_CONTROL_ANIME_SEQ (NANR_obj_bar)  // アニメーションシーケンス
-#define CLWK_SCROLL_CONTROL_SOFT_PRIORITY (0)  // ソフト優先順位 0>0xff
+#define CLWK_SCROLL_CONTROL_SOFT_PRIORITY (3)  // ソフト優先順位 0>0xff
 #define CLWK_SCROLL_CONTROL_BG_PRIORITY   (0)  // BG 優先順位
 
 // 調査項目選択アイコン
@@ -215,7 +215,7 @@
 #define CLWK_SELECT_ICON_POS_Y (0)  // y 座標
 #define CLWK_SELECT_ICON_ANIME_SEQ (NANR_obj_search)  // アニメーションシーケンス
 #define CLWK_SELECT_ICON_SOFT_PRIORITY (0)  // ソフト優先順位 0>0xff
-#define CLWK_SELECT_ICON_BG_PRIORITY   (0)  // BG 優先順位
+#define CLWK_SELECT_ICON_BG_PRIORITY   (2)  // BG 優先順位
 
 //-------------------
 // □BMP-OAM アクター
@@ -243,8 +243,8 @@
 #define BMPOAM_ACTOR_OK_BG_PRIORITY    (0)    // BGプライオリティ
 #define BMPOAM_ACTOR_OK_STRING_OFFSET_X (10)  // 文字書き込み先 x 座標オフセット
 #define BMPOAM_ACTOR_OK_STRING_OFFSET_Y (5)  // 文字書き込み先 y 座標オフセット
-#define BMPOAM_ACTOR_OK_STRING_COLOR_L (1)    // 文字のカラー番号
-#define BMPOAM_ACTOR_OK_STRING_COLOR_S (2)    // 影のカラー番号
+#define BMPOAM_ACTOR_OK_STRING_COLOR_L (13)    // 文字のカラー番号
+#define BMPOAM_ACTOR_OK_STRING_COLOR_S (13)    // 影のカラー番号
 #define BMPOAM_ACTOR_OK_STRING_COLOR_B (0)    // 背景のカラー番号
 //「やめる」
 #define BMPOAM_ACTOR_CANCEL_CHARA_SIZE_X   (10)   // x サイズ ( キャラ単位 )
@@ -256,8 +256,8 @@
 #define BMPOAM_ACTOR_CANCEL_BG_PRIORITY    (0)    // BGプライオリティ
 #define BMPOAM_ACTOR_CANCEL_STRING_OFFSET_X (10)  // 文字書き込み先 x 座標オフセット
 #define BMPOAM_ACTOR_CANCEL_STRING_OFFSET_Y (5)  // 文字書き込み先 y 座標オフセット
-#define BMPOAM_ACTOR_CANCEL_STRING_COLOR_L (1)    // 文字のカラー番号
-#define BMPOAM_ACTOR_CANCEL_STRING_COLOR_S (2)    // 影のカラー番号
+#define BMPOAM_ACTOR_CANCEL_STRING_COLOR_L (13)    // 文字のカラー番号
+#define BMPOAM_ACTOR_CANCEL_STRING_COLOR_S (13)    // 影のカラー番号
 #define BMPOAM_ACTOR_CANCEL_STRING_COLOR_B (0)    // 背景のカラー番号
 //「ちょうさを　かいしします！」
 #define BMPOAM_ACTOR_DETERMINE_CHARA_SIZE_X   (32) // x サイズ ( キャラ単位 )
@@ -284,7 +284,7 @@
 // 調査項目のスクロール
 #define SCROLL_TOP_MARGIN    (24)  // 上方スクロールの余白
 #define SCROLL_BOTTOM_MARGIN (48)  // 下方スクロールの余白
-#define SCROLL_FRAME         (4)   // スクロールに要するフレーム数
+#define SCROLL_FRAME         (10)   // スクロールに要するフレーム数
 
 // スクロールバーつまみ部分
 #define SCROLL_CONTROL_LEFT     (248)  // x 座標
@@ -294,9 +294,9 @@
 
 // スクロール
 #define MIN_SCROLL_VALUE (-24) // 最小スクロール値
-#define MAX_SCROLL_VALUE (48)  // 最大スクロール値
-#define SCROLL_CURSOR_TOP_MARGIN    (48)
-#define SCROLL_CURSOR_BOTTOM_MARGIN (48) 
+#define MAX_SCROLL_VALUE (72)  // 最大スクロール値
+#define SCROLL_CURSOR_TOP_MARGIN    (24)
+#define SCROLL_CURSOR_BOTTOM_MARGIN (24) 
 #define MIN_SCROLL_CURSOR_POS (MIN_SCROLL_VALUE + SCROLL_CURSOR_TOP_MARGIN)
 #define MAX_SCROLL_CURSOR_POS (MAX_SCROLL_VALUE + 192 - SCROLL_CURSOR_BOTTOM_MARGIN)
 
@@ -305,27 +305,40 @@
 #define SELECT_ICON_DRAW_OFFSET_Y (10) // 調査項目ボタン左上y座標からのオフセット
 
 // パレットフェード ( アウト )
-#define MAIN_BG_PALETTE_FADE_OUT_TARGET_BITMASK (0xffff) // フェード対象パレット番号のマスク
+#define MAIN_BG_PALETTE_FADE_OUT_TARGET_BITMASK (0xbbff) // フェード対象パレット番号のマスク
 #define MAIN_BG_PALETTE_FADE_OUT_WAIT           (2)      // フェード計算待ち時間
 #define MAIN_BG_PALETTE_FADE_OUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
 #define MAIN_BG_PALETTE_FADE_OUT_END_STRENGTH   (10)     // フェード最終濃度 [0, 16]
 #define MAIN_BG_PALETTE_FADE_OUT_COLOR          (0x0000) // 変更後の色
 
-#define MAIN_OBJ_PALETTE_FADE_OUT_TARGET_BITMASK (0x0001) // フェード対象パレット番号のマスク
+#define MAIN_OBJ_PALETTE_FADE_OUT_TARGET_BITMASK (0x00cf) // フェード対象パレット番号のマスク
 #define MAIN_OBJ_PALETTE_FADE_OUT_WAIT           (2)      // フェード計算待ち時間
 #define MAIN_OBJ_PALETTE_FADE_OUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
 #define MAIN_OBJ_PALETTE_FADE_OUT_END_STRENGTH   (10)     // フェード最終濃度 [0, 16]
 #define MAIN_OBJ_PALETTE_FADE_OUT_COLOR          (0x0000) // 変更後の色
 
 // パレットフェード ( イン )
-#define MAIN_BG_PALETTE_FADE_IN_TARGET_BITMASK (0xffff)  // フェード対象パレット番号のマスク
+#define MAIN_BG_PALETTE_FADE_IN_TARGET_BITMASK (0xbbff)  // フェード対象パレット番号のマスク
 #define MAIN_BG_PALETTE_FADE_IN_WAIT           (2)       // フェード計算待ち時間
 #define MAIN_BG_PALETTE_FADE_IN_START_STRENGTH (10)      // フェード初期濃度 [0, 16]
 #define MAIN_BG_PALETTE_FADE_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
 #define MAIN_BG_PALETTE_FADE_IN_COLOR          (0x0000)  // 変更後の色
 
-#define MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK (0x0001)  // フェード対象パレット番号のマスク
+#define MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK (0x00cf)  // フェード対象パレット番号のマスク
 #define MAIN_OBJ_PALETTE_FADE_IN_WAIT           (2)       // フェード計算待ち時間
 #define MAIN_OBJ_PALETTE_FADE_IN_START_STRENGTH (10)      // フェード初期濃度 [0, 16]
 #define MAIN_OBJ_PALETTE_FADE_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
 #define MAIN_OBJ_PALETTE_FADE_IN_COLOR          (0x0000)  // 変更後の色
+
+
+//===============================================================================
+// ■タッチ範囲
+//=============================================================================== 
+// 調査項目ボタン
+#define TOPIC_BUTTON_TOUCH_AREA_WIDTH (216) // タッチ範囲の幅
+#define TOPIC_BUTTON_TOUCH_AREA_HEIGHT (24) // タッチ範囲の高さ
+// スクロールバー
+#define SCROLL_BAR_TOUCH_AREA_LEFT   (232) // タッチ範囲の左上x座標
+#define SCROLL_BAR_TOUCH_AREA_TOP    (24)  // タッチ範囲の左上y座標
+#define SCROLL_BAR_TOUCH_AREA_RIGHT  (255) // タッチ範囲の右下x座標
+#define SCROLL_BAR_TOUCH_AREA_BOTTOM (232) // タッチ範囲の右下y座標

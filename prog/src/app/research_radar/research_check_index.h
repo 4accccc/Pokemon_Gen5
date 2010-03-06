@@ -50,7 +50,9 @@ typedef enum {
 // パレットアニメーション
 typedef enum {
   PALETTE_ANIME_CURSOR_ON, // カーソルON
+  PALETTE_ANIME_CURSOR_SET,// カーソルSET
   PALETTE_ANIME_SELECT,    //「ほうこくをみる」ボタン選択リアクション
+  PALETTE_ANIME_RECEIVE_BUTTON, //「データじゅしんちゅう」ボタンフェード
   PALETTE_ANIME_NUM,       // 総数
 } PALETTE_ANIME_INDEX;
 

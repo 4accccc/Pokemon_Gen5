@@ -85,6 +85,7 @@ struct _RESEARCH_SELECT_WORK
   // É^ÉbÉ`óÃàÊ
   GFL_UI_TP_HITTBL menuTouchHitTable[ MENU_TOUCH_AREA_NUM ];
   GFL_UI_TP_HITTBL topicTouchHitTable[ TOPIC_TOUCH_AREA_NUM ];
+  GFL_UI_TP_HITTBL scrollTouchHitTable[ SCROLL_TOUCH_AREA_NUM ];
 
   // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉì
   PALETTE_ANIME* paletteAnime[ PALETTE_ANIME_NUM ];
@@ -108,53 +109,63 @@ struct _RESEARCH_SELECT_WORK
 };
 
 
+
+//==============================================================================================
+// Åüä÷êîÉCÉìÉfÉbÉNÉX
+//==============================================================================================
+
 //----------------------------------------------------------------------------------------------
-// ÅüLAYER 5 ÉVÅ[ÉPÉìÉXìÆçÏ
+// ÅüLAYER 3 ÉVÅ[ÉPÉìÉX
 //----------------------------------------------------------------------------------------------
+// ÉVÅ[ÉPÉìÉXèâä˙âªèàóù
+static void InitSeq_SETUP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
+static void InitSeq_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
+static void InitSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
+static void InitSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
+static void InitSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_CONTROL
+static void InitSeq_CONFIRM( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
+static void InitSeq_DETERMINE( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
+static void InitSeq_FADE_IN( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
+static void InitSeq_FADE_OUT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
+static void InitSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
+static void InitSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
 // ÉVÅ[ÉPÉìÉXèàóù
-static void Main_SETUP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
-static void Main_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
-static void Main_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
-static void Main_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
-static void Main_CONFIRM( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
-static void Main_DETERMINE( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
-static void Main_FADE_IN( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
-static void Main_FADE_OUT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
-static void Main_PALETTE_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
-static void Main_CLEAN_UP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
+static void MainSeq_SETUP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
+static void MainSeq_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
+static void MainSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
+static void MainSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
+static void MainSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_CONTROL
+static void MainSeq_CONFIRM( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
+static void MainSeq_DETERMINE( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
+static void MainSeq_FADE_IN( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
+static void MainSeq_FADE_OUT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
+static void MainSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
+static void MainSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
+// ÉVÅ[ÉPÉìÉXèIóπèàóù
+static void FinishSeq_SETUP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
+static void FinishSeq_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
+static void FinishSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
+static void FinishSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
+static void FinishSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_CONTROL
+static void FinishSeq_CONFIRM( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
+static void FinishSeq_DETERMINE( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
+static void FinishSeq_FADE_IN( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
+static void FinishSeq_FADE_OUT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
+static void FinishSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
+static void FinishSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
 // ÉVÅ[ÉPÉìÉXêßå‰
 static void CountUpSeqCount( RESEARCH_SELECT_WORK* work ); // ÉVÅ[ÉPÉìÉXÉJÉEÉìÉ^ÇçXêVÇ∑ÇÈ
-static void SetNextSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // éüÇÃÉVÅ[ÉPÉìÉXÇìoò^Ç∑ÇÈ
-static void FinishCurrentSequence( RESEARCH_SELECT_WORK* work ); // åªç›ÇÃÉVÅ[ÉPÉìÉXÇèIóπÇ∑ÇÈ
-static void SwitchSequence( RESEARCH_SELECT_WORK* work ); // èàóùÉVÅ[ÉPÉìÉXÇïœçXÇ∑ÇÈ
-static void SetSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // èàóùÉVÅ[ÉPÉìÉXÇê›íËÇ∑ÇÈ
+static void SetNextSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // éüÇÃÉVÅ[ÉPÉìÉXÇÉLÉÖÅ[Ç…ìoò^Ç∑ÇÈ
+static void FinishCurrentSeq( RESEARCH_SELECT_WORK* work ); // åªç›ÇÃÉVÅ[ÉPÉìÉXÇèIóπÇ∑ÇÈ
+static void SwitchSeq( RESEARCH_SELECT_WORK* work ); // èàóùÉVÅ[ÉPÉìÉXÇïœçXÇ∑ÇÈ
+static void SetSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // èàóùÉVÅ[ÉPÉìÉXÇê›íËÇ∑ÇÈ
 static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result ); // âÊñ èIóπåãâ Çê›íËÇ∑ÇÈ
-// ÉVÅ[ÉPÉìÉXèâä˙âªèàóù
-static void InitSequence_SETUP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
-static void InitSequence_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
-static void InitSequence_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
-static void InitSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
-static void InitSequence_CONFIRM( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
-static void InitSequence_DETERMINE( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
-static void InitSequence_FADE_IN( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
-static void InitSequence_FADE_OUT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
-static void InitSequence_PALETTE_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
-static void InitSequence_CLEAN_UP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
-// ÉVÅ[ÉPÉìÉXèIóπèàóù
-static void FinishSequence_SETUP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
-static void FinishSequence_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
-static void FinishSequence_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
-static void FinishSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
-static void FinishSequence_CONFIRM( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
-static void FinishSequence_DETERMINE( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
-static void FinishSequence_FADE_IN( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
-static void FinishSequence_FADE_OUT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
-static void FinishSequence_PALETTE_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
-static void FinishSequence_CLEAN_UP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
 // VBlankÉ^ÉXÉN
-static void VBlankFunc( GFL_TCB* tcb, void* wk );  // VBlankíÜÇÃèàóù
+static void RegisterVBlankTask( RESEARCH_SELECT_WORK* work ); // VBlankÉ^ÉXÉNÇìoò^Ç∑ÇÈ
+static void ReleaseVBlankTask ( RESEARCH_SELECT_WORK* work ); // VBlankÉ^ÉXÉNÇÃìoò^ÇâèúÇ∑ÇÈ
+static void VBlankFunc( GFL_TCB* tcb, void* wk ); // VBlankíÜÇÃèàóù
 //----------------------------------------------------------------------------------------------
-// ÅüLAYER 3 ã@î\
+// ÅüLAYER 2 ã@î\
 //---------------------------------------------------------------------------------------------- 
 // ÉÅÉjÉÖÅ[çÄñ⁄ÉJÅ[É\Éã
 static void MoveMenuCursorUp( RESEARCH_SELECT_WORK* work ); // è„Ç÷à⁄ìÆÇ∑ÇÈ
@@ -165,8 +176,11 @@ static void MoveTopicCursorUp( RESEARCH_SELECT_WORK* work ); // è„Ç÷à⁄ìÆÇ∑ÇÈ
 static void MoveTopicCursorDown( RESEARCH_SELECT_WORK* work ); // â∫Ç÷à⁄ìÆÇ∑ÇÈ
 static void MoveTopicCursorDirect( RESEARCH_SELECT_WORK* work, u8 topicID ); // íºê⁄à⁄ìÆÇ∑ÇÈ
 //----------------------------------------------------------------------------------------------
-// ÅüLAYER 3 å¬ï ëÄçÏ
+// ÅüLAYER 1 å¬ï ëÄçÏ
 //---------------------------------------------------------------------------------------------- 
+// ÉZÅ[ÉuÉfÅ[É^
+static u8 GetInvestigatingTopicID( const RESEARCH_SELECT_WORK* work ); // åªç›í≤ç∏íÜÇÃí≤ç∏çÄñ⁄IDÇéÊìæÇ∑ÇÈ
+static void UpdateInvestigatingTopicID( const RESEARCH_SELECT_WORK* work ); // í≤ç∏Ç∑ÇÈçÄñ⁄ÇçXêVÇ∑ÇÈ
 // ÉÅÉjÉÖÅ[çÄñ⁄ÉJÅ[É\Éã
 static void ShiftMenuCursorPos( RESEARCH_SELECT_WORK* work, int stride ); // ÉÅÉjÉÖÅ[çÄñ⁄ÉJÅ[É\Éãà íuÇïœçXÇ∑ÇÈ ( ÉIÉtÉZÉbÉgéwíË )
 static void SetMenuCursorPos( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem ); // ÉÅÉjÉÖÅ[çÄñ⁄ÉJÅ[É\Éãà íuÇïœçXÇ∑ÇÈ ( íºíléwíË ) 
@@ -181,129 +195,117 @@ static void SetSelectedTopicID( RESEARCH_SELECT_WORK* work, u8 topicID ); // í≤ç
 static void ResetSelectedTopicID( RESEARCH_SELECT_WORK* work ); // í≤ç∏çÄñ⁄IDÇÃëIëÇâèúÇ∑ÇÈ
 static BOOL IsTopicIDSelected( const RESEARCH_SELECT_WORK* work ); // ëIëçœÇ›Ç©ÇîªíËÇ∑ÇÈ
 // ÉÅÉjÉÖÅ[çÄñ⁄ÇÃï\é¶
-static void SetMenuCursorOn( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
-static void SetMenuCursorOff( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
+static void SetMenuItemCursorOn( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
+static void SetMenuItemCursorOff( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
 // í≤ç∏çÄñ⁄ÇÃï\é¶
-static void SetTopicButtonCursorOn ( const RESEARCH_SELECT_WORK* work ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
+static void SetTopicButtonCursorOn( const RESEARCH_SELECT_WORK* work ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
 static void SetTopicButtonCursorOff( const RESEARCH_SELECT_WORK* work ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
 static void SetTopicButtonInvestigating( const RESEARCH_SELECT_WORK* work, u8 topicID ); // í≤ç∏íÜÇÃèÛë‘Ç…Ç∑ÇÈ
 static void SetTopicButtonNotInvestigating( const RESEARCH_SELECT_WORK* work, u8 topicID ); // í≤ç∏íÜÇ≈Ç»Ç¢èÛë‘Ç…ñﬂÇ∑
+static u8 CalcScreenLeftOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 topicID ); // í≤ç∏çÄñ⁄ÇÃç∂è„xç¿ïWÇéZèoÇ∑ÇÈ ( ÉXÉNÉäÅ[ÉìíPà  )
+static u8 CalcScreenTopOfTopiecButton( const RESEARCH_SELECT_WORK* work, u8 topicID ); // í≤ç∏çÄñ⁄ÇÃç∂è„yç¿ïWÇéZèoÇ∑ÇÈ ( ÉXÉNÉäÅ[ÉìíPà  )
+static int CalcDisplayLeftOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 topicID ); // í≤ç∏çÄñ⁄É{É^ÉìÇÃç∂è„xç¿ïWÇéZèoÇ∑ÇÈ ( ÉfÉBÉXÉvÉåÉCç¿ïWånÅEÉhÉbÉgíPà  )
+static int CalcDisplayTopOfTopicButton ( const RESEARCH_SELECT_WORK* work, u8 topicID ); // í≤ç∏çÄñ⁄É{É^ÉìÇÃç∂è„yç¿ïWÇéZèoÇ∑ÇÈ ( ÉfÉBÉXÉvÉåÉCç¿ïWånÅEÉhÉbÉgíPà  ) 
+// è„âÊñ ÇÃï\é¶
 static void UpdateSubDisplayStrings( RESEARCH_SELECT_WORK* work ); // è„âÊñ ÇÃÉJÅ[É\ÉãàÀë∂ï∂éöóÒï\é¶ÇçXêVÇ∑ÇÈ
-static u8  CalcTopicButtonScreenLeft( const RESEARCH_SELECT_WORK* work, u8 topicID ); // í≤ç∏çÄñ⁄ÇÃç∂è„xç¿ïWÇéZèoÇ∑ÇÈ (ÉXÉNÉäÅ[ÉìíPà )
-static u8  CalcTopicButtonScreenTop ( const RESEARCH_SELECT_WORK* work, u8 topicID ); // í≤ç∏çÄñ⁄ÇÃç∂è„yç¿ïWÇéZèoÇ∑ÇÈ (ÉXÉNÉäÅ[ÉìíPà )
-static int CalcTopicButtonDisplayLeft( const RESEARCH_SELECT_WORK* work, u8 topicID ); // í≤ç∏çÄñ⁄É{É^ÉìÇÃç∂è„xç¿ïWÇéZèoÇ∑ÇÈ (ÉfÉBÉXÉvÉåÉCç¿ïWånÅEÉhÉbÉgíPà )
-static int CalcTopicButtonDisplayTop ( const RESEARCH_SELECT_WORK* work, u8 topicID ); // í≤ç∏çÄñ⁄É{É^ÉìÇÃç∂è„yç¿ïWÇéZèoÇ∑ÇÈ (ÉfÉBÉXÉvÉåÉCç¿ïWånÅEÉhÉbÉgíPà ) 
 // ÉXÉNÉçÅ[ÉãÉoÅ[
-static void UpdateScrollControlPos( const RESEARCH_SELECT_WORK* work ); // ÉXÉNÉçÅ[ÉãÉoÅ[ÇÃÇ¬Ç‹Ç›ïîï™ÇÃà íuÇçXêVÇ∑ÇÈ
-static int CalcScrollControlPos(); // ÉXÉNÉçÅ[ÉãÉoÅ[ÇÃÇ¬Ç‹Ç›ïîï™ÇÃà íuÇåvéZÇ∑ÇÈ
+static void UpdateScrollControlPos( const RESEARCH_SELECT_WORK* work ); // åªç›ÇÃÉXÉNÉçÅ[Éãé¿å¯ílÇ©ÇÁ, ÉXÉNÉçÅ[ÉãÉoÅ[ÇÃÇ¬Ç‹Ç›ïîï™ÇÃà íuÇçXêVÇ∑ÇÈ
+static int CalcScrollControlPos_byScrollValue( int scrollValue ); // ÉXÉNÉçÅ[Éãé¿å¯ílÇ©ÇÁ, ÉXÉNÉçÅ[ÉãÉoÅ[ÇÃÇ¬Ç‹Ç›ïîï™ÇÃà íuÇåvéZÇ∑ÇÈ
+static int CalcScrollCursorPos_byScrollControlPos( int controlPos ); // ÉXÉNÉçÅ[ÉãÉoÅ[ÇÃÇ¬Ç‹Ç›ïîï™ÇÃï\é¶à íuÇ©ÇÁ, ÉXÉNÉçÅ[ÉãÉJÅ[É\Éãà íuÇéZèoÇ∑ÇÈ
+static int GetScrollControlPos( const RESEARCH_SELECT_WORK* work ); // ÉXÉNÉçÅ[ÉãÉoÅ[ÇÃÇ¬Ç‹Ç›ïîï™ÇÃï\é¶à íuÇéÊìæÇ∑ÇÈ
 // ÉXÉNÉçÅ[Éã
 static void StartScroll( RESEARCH_SELECT_WORK* work, int startPos, int endPos, int frames ); // ÉXÉNÉçÅ[ÉãÇäJénÇ∑ÇÈ
 static void UpdateScroll( RESEARCH_SELECT_WORK* work ); // ÉXÉNÉçÅ[ÉãÇçXêVÇ∑ÇÈ
-static void FinishScroll( RESEARCH_SELECT_WORK* work ); // ÉXÉNÉçÅ[ÉãäÆóπéûÇÃèàóù
 static BOOL CheckScrollEnd( RESEARCH_SELECT_WORK* work ); // ÉXÉNÉçÅ[ÉãÇ™èIóπÇµÇΩÇ©Ç«Ç§Ç©ÇîªíËÇ∑ÇÈ
-static void ShiftScrollCursor( RESEARCH_SELECT_WORK* work, int offset ); // ÉXÉNÉçÅ[ÉãÉJÅ[É\Éãà íuÇïœçXÇ∑ÇÈ ( ÉIÉtÉZÉbÉgéwíË )
-static void SetScrollCursor( RESEARCH_SELECT_WORK* work, int pos ); // ÉXÉNÉçÅ[ÉãÉJÅ[É\Éãà íuÇïœçXÇ∑ÇÈ ( íºíléwíË )
-static void AdjustScrollCursor( RESEARCH_SELECT_WORK* work ); // ÉXÉNÉçÅ[ÉãÉJÅ[É\Éãà íuÇï‚ê≥Ç∑ÇÈ
+static void ShiftScrollCursorPos( RESEARCH_SELECT_WORK* work, int offset ); // ÉXÉNÉçÅ[ÉãÉJÅ[É\Éãà íuÇïœçXÇ∑ÇÈ ( ÉIÉtÉZÉbÉgéwíË )
+static void SetScrollCursorPos( RESEARCH_SELECT_WORK* work, int pos ); // ÉXÉNÉçÅ[ÉãÉJÅ[É\Éãà íuÇïœçXÇ∑ÇÈ ( íºíléwíË )
+static void AdjustScrollCursor( RESEARCH_SELECT_WORK* work ); // ÉXÉNÉçÅ[Éãé¿å¯ílÇ…çáÇÌÇπ, ÉXÉNÉçÅ[ÉãÉJÅ[É\Éãà íuÇï‚ê≥Ç∑ÇÈ
 static void UpdateScrollValue( const RESEARCH_SELECT_WORK* work ); // ÉXÉNÉçÅ[Éãé¿å¯ílÇçXêVÇ∑ÇÈ
+static void AdjustScrollValue( const RESEARCH_SELECT_WORK* work ); // ÉXÉNÉçÅ[Éãé¿å¯ílÇÉXÉNÉçÅ[ÉãÉJÅ[É\Éãà íuÇ…çáÇÌÇπÇƒçXêVÇ∑ÇÈ
 static int GetScrollValue(); // ÉXÉNÉçÅ[Éãé¿å¯ílÇéÊìæÇ∑ÇÈ
 static int GetMinScrollCursorMarginPos(); // ÉXÉNÉçÅ[ÉãÉJÅ[É\Éãó]îíîÕàÕÇÃç≈è¨ílÇéÊìæÇ∑ÇÈ
 static int GetMaxScrollCursorMarginPos(); // ÉXÉNÉçÅ[ÉãÉJÅ[É\Éãó]îíîÕàÕÇÃç≈ëÂílÇéÊìæÇ∑ÇÈ
 // í≤ç∏íÜÉAÉCÉRÉì
 static void UpdateTopicSelectIcon( const RESEARCH_SELECT_WORK* work ); // í≤ç∏íÜÉAÉCÉRÉìÇÃï\é¶èÛë‘ÇçXêVÇ∑ÇÈ
+// ÉVÅ[ÉPÉìÉXÉLÉÖÅ[
+static void InitSeqQueue( RESEARCH_SELECT_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[Çèâä˙âªÇ∑ÇÈ
+static void CreateSeqQueue( RESEARCH_SELECT_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[Çê∂ê¨Ç∑ÇÈ
+static void DeleteSeqQueue( RESEARCH_SELECT_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[Çîjä¸Ç∑ÇÈ
+// É^ÉbÉ`óÃàÊ
+static void SetupTouchArea( RESEARCH_SELECT_WORK* work ); // É^ÉbÉ`óÃàÊÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+// ÉtÉHÉìÉgÉfÅ[É^
+static void InitFont( RESEARCH_SELECT_WORK* work ); // ÉtÉHÉìÉgÉfÅ[É^Çèâä˙âªÇ∑ÇÈ
+static void CreateFont( RESEARCH_SELECT_WORK* work ); // ÉtÉHÉìÉgÉfÅ[É^Çê∂ê¨Ç∑ÇÈ
+static void DeleteFont( RESEARCH_SELECT_WORK* work ); // ÉtÉHÉìÉgÉfÅ[É^Çîjä¸Ç∑ÇÈ
+// ÉÅÉbÉZÅ[ÉWÉfÅ[É^
+static void InitMessages( RESEARCH_SELECT_WORK* work ); // ÉÅÉbÉZÅ[ÉWÉfÅ[É^Çèâä˙âªÇ∑ÇÈ
+static void CreateMessages( RESEARCH_SELECT_WORK* work ); // ÉÅÉbÉZÅ[ÉWÉfÅ[É^Çê∂ê¨Ç∑ÇÈ
+static void DeleteMessages( RESEARCH_SELECT_WORK* work ); // ÉÅÉbÉZÅ[ÉWÉfÅ[É^Çîjä¸Ç∑ÇÈ
+// BG
+static void SetupBG( RESEARCH_SELECT_WORK* work ); // BGëSî ÇÃÉZÉbÉgÉAÉbÉvÇçsÇ§
+static void SetupSubBG_WINDOW( RESEARCH_SELECT_WORK* work ); // SUB-BG ( ÉEÉBÉìÉhÉEñ  ) ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static void SetupSubBG_FONT( RESEARCH_SELECT_WORK* work ); // SUB-BG ( ÉtÉHÉìÉgñ  ) ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static void SetupMainBG_BAR( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ÉoÅ[ñ  ) ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static void SetupMainBG_WINDOW( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ÉEÉBÉìÉhÉEñ  ) ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static void SetupMainBG_FONT( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ÉtÉHÉìÉgñ  ) ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static void CleanUpBG( RESEARCH_SELECT_WORK* work ); // BGëSî ÇÃÉNÉäÅ[ÉìÉAÉbÉvÇçsÇ§
+static void CleanUpSubBG_WINDOW( RESEARCH_SELECT_WORK* work ); // SUB-BG ( ÉEÉBÉìÉhÉEñ  ) ÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
+static void CleanUpSubBG_FONT( RESEARCH_SELECT_WORK* work ); // SUB-BG ( ÉtÉHÉìÉgñ  ) ÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
+static void CleanUpMainBG_BAR( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ÉoÅ[ñ  ) ÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
+static void CleanUpMainBG_WINDOW( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ÉEÉBÉìÉhÉEñ  ) ÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
+static void CleanUpMainBG_FONT( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ÉtÉHÉìÉgñ  ) ÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
+// ï∂éöóÒï`âÊÉIÉuÉWÉFÉNÉg
+static void InitBGFonts( RESEARCH_SELECT_WORK* work ); // ï∂éöóÒï`âÊÉIÉuÉWÉFÉNÉgÇèâä˙âªÇ∑ÇÈ
+static void CreateBGFonts( RESEARCH_SELECT_WORK* work ); // ï∂éöóÒï`âÊÉIÉuÉWÉFÉNÉgÇê∂ê¨Ç∑ÇÈ
+static void DeleteBGFonts( RESEARCH_SELECT_WORK* work ); // ï∂éöóÒï`âÊÉIÉuÉWÉFÉNÉgÇîjä¸Ç∑ÇÈ
+// OBJ
+static void CreateClactSystem( RESEARCH_SELECT_WORK* work ); // OBJ ÉVÉXÉeÉÄÇê∂ê¨Ç∑ÇÈ
+static void DeleteClactSystem( RESEARCH_SELECT_WORK* work ); // OBJ ÉVÉXÉeÉÄÇîjä¸Ç∑ÇÈ
+static void InitOBJResources( RESEARCH_SELECT_WORK* work ); // OBJ ÉäÉ\Å[ÉXÇèâä˙âªÇ∑ÇÈ
+static void RegisterSubObjResources( RESEARCH_SELECT_WORK* work ); // SUB-OBJ ÉäÉ\Å[ÉXÇìoò^Ç∑ÇÈ
+static void ReleaseSubObjResources( RESEARCH_SELECT_WORK* work ); // SUB-OBJ ÉäÉ\Å[ÉXÇâï˙Ç∑ÇÈ
+static void RegisterMainObjResources( RESEARCH_SELECT_WORK* work ); // MAIN-OBJ ÉäÉ\Å[ÉXÇìoò^Ç∑ÇÈ
+static void ReleaseMainObjResources( RESEARCH_SELECT_WORK* work ); // MAIN-OBJ ÉäÉ\Å[ÉXÇâï˙Ç∑ÇÈ
+static void InitClactUnits( RESEARCH_SELECT_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉgÇèâä˙âªÇ∑ÇÈ
+static void CreateClactUnits( RESEARCH_SELECT_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉgÇê∂ê¨Ç∑ÇÈ
+static void DeleteClactUnits( RESEARCH_SELECT_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉgÇîjä¸Ç∑ÇÈ
+static void InitClactWorks( RESEARCH_SELECT_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉNÇèâä˙âªÇ∑ÇÈ
+static void CreateClactWorks( RESEARCH_SELECT_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉNÇê∂ê¨Ç∑ÇÈ
+static void DeleteClactWorks( RESEARCH_SELECT_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉNÇîjä¸Ç∑ÇÈ
+static u32 GetObjResourceRegisterIndex( const RESEARCH_SELECT_WORK* work, OBJ_RESOURCE_ID resID ); // OBJÉäÉ\Å[ÉXÇÃìoò^ÉCÉìÉfÉbÉNÉXÇéÊìæÇ∑ÇÈ
+static GFL_CLUNIT* GetClactUnit( const RESEARCH_SELECT_WORK* work, CLUNIT_INDEX unitIdx ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉgÇéÊìæÇ∑ÇÈ
+static GFL_CLWK* GetClactWork( const RESEARCH_SELECT_WORK* work, CLWK_INDEX wkIdx ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉNÇéÊìæÇ∑ÇÈ
+// BMP-OAM
+static void InitBitmapDatas( RESEARCH_SELECT_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^Çèâä˙âªÇ∑ÇÈ
+static void CreateBitmapDatas( RESEARCH_SELECT_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^ÇçÏê¨Ç∑ÇÈ
+static void SetupBitmapData_forDefault( RESEARCH_SELECT_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ ( ÉfÉtÉHÉãÉg )
+static void SetupBitmapData_forOK( RESEARCH_SELECT_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ (ÅuÇØÇ¡ÇƒÇ¢Åv)
+static void SetupBitmapData_forCANCEL( RESEARCH_SELECT_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ (ÅuÇ‚ÇﬂÇÈÅv)
+static void DeleteBitmapDatas( RESEARCH_SELECT_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^Çîjä¸Ç∑ÇÈ
+static void SetupBmpOamSystem( RESEARCH_SELECT_WORK* work ); // BMP-OAM ÉVÉXÉeÉÄÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static void CleanUpBmpOamSystem( RESEARCH_SELECT_WORK* work ); // BMP-OAM ÉVÉXÉeÉÄÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
+static void CreateBmpOamActors( RESEARCH_SELECT_WORK* work ); // BMP-OAM ÉAÉNÉ^Å[ÇçÏê¨Ç∑ÇÈ
+static void DeleteBmpOamActors( RESEARCH_SELECT_WORK* work ); // BMP-OAM ÉAÉNÉ^Å[Çîjä¸Ç∑ÇÈ
+static void BmpOamSetDrawEnable( RESEARCH_SELECT_WORK* work, BMPOAM_ACTOR_INDEX BmpOamActorIdx, BOOL enable ); // ï\é¶Ç∑ÇÈÇ©Ç«Ç§Ç©Çê›íËÇ∑ÇÈ
+static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem ); // ÉÅÉjÉÖÅ[çÄñ⁄Ç…ëŒâûÇ∑ÇÈBMP-OAMÉAÉNÉ^Å[ÇéÊìæÇ∑ÇÈ
 // ÉpÉåÉbÉgÉtÉFÅ[Éh
+static void InitPaletteFadeSystem( RESEARCH_SELECT_WORK* work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhÉVÉXÉeÉÄÇèâä˙âªÇ∑ÇÈ
+static void SetupPaletteFadeSystem( RESEARCH_SELECT_WORK* work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhÉVÉXÉeÉÄÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static void CleanUpPaletteFadeSystem( RESEARCH_SELECT_WORK* work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhÉVÉXÉeÉÄÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
 static void StartPaletteFadeOut( RESEARCH_SELECT_WORK* work ); // ÉpÉåÉbÉgÇÃÉtÉFÅ[ÉhÉAÉEÉgÇäJénÇ∑ÇÈ
 static void StartPaletteFadeIn ( RESEARCH_SELECT_WORK* work ); // ÉpÉåÉbÉgÇÃÉtÉFÅ[ÉhÉCÉìÇäJénÇ∑ÇÈ
-static BOOL IsPaletteFadeEnd   ( RESEARCH_SELECT_WORK* work ); // ÉpÉåÉbÉgÇÃÉtÉFÅ[ÉhÇ™äÆóπÇµÇΩÇ©Ç«Ç§Ç©ÇîªíËÇ∑ÇÈ
-// ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉì
-static void StartPaletteAnime( RESEARCH_SELECT_WORK* work, PALETTE_ANIME_INDEX index );
-static void StopPaletteAnime( RESEARCH_SELECT_WORK* work, PALETTE_ANIME_INDEX index );
-static void UpdatePaletteAnime( RESEARCH_SELECT_WORK* work ); 
-// BMP-OAM
-static void BmpOamSetDrawEnable( RESEARCH_SELECT_WORK* work, BMPOAM_ACTOR_INDEX BmpOamActorIdx, BOOL enable );  // ï\é¶Ç∑ÇÈÇ©Ç«Ç§Ç©Çê›íËÇ∑ÇÈ
-//----------------------------------------------------------------------------------------------
-// ÅüLAYER 2 ÉfÅ[É^ ÉAÉNÉZÉX
-//----------------------------------------------------------------------------------------------
-// OBJ
-static u32 GetObjResourceRegisterIndex( const RESEARCH_SELECT_WORK* work, OBJ_RESOURCE_ID resID ); // OBJÉäÉ\Å[ÉXÇÃìoò^ÉCÉìÉfÉbÉNÉX
-static GFL_CLUNIT* GetClactUnit( const RESEARCH_SELECT_WORK* work, CLUNIT_INDEX unitIdx ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉg
-static GFL_CLWK* GetClactWork( const RESEARCH_SELECT_WORK* work, CLWK_INDEX wkIdx ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉN
-// BMP-OAM
-static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem ); // ÉÅÉjÉÖÅ[çÄñ⁄Ç…ëŒâûÇ∑ÇÈBMP-OAMÉAÉNÉ^Å[
-//----------------------------------------------------------------------------------------------
-// ÅüLAYER 1 ÉZÅ[ÉuÉfÅ[É^ ÉAÉNÉZÉX
-//----------------------------------------------------------------------------------------------
-static u8 GetInvestigatingTopicID( const RESEARCH_SELECT_WORK* work ); // åªç›í≤ç∏íÜÇÃí≤ç∏çÄñ⁄IDÇéÊìæÇ∑ÇÈ
-static void UpdateInvestigatingTopicID( const RESEARCH_SELECT_WORK* work ); // í≤ç∏Ç∑ÇÈçÄñ⁄ÇçXêVÇ∑ÇÈ
-//----------------------------------------------------------------------------------------------
-// ÅüLAYER 0 èâä˙âªèàóù/èIóπèàóù
-//----------------------------------------------------------------------------------------------
-// âÊñ ÇÃèÄîı/å„ï–ïtÇØ ( BG )
-static void SetupBG( RESEARCH_SELECT_WORK* work ); // BG èÄîı
-static void CleanUpBG( RESEARCH_SELECT_WORK* work ); // BG å„ï–ïtÇØ
-static void SetupSubBG_WINDOW( RESEARCH_SELECT_WORK* work ); // SUB-BG ( ÉEÉBÉìÉhÉEñ  ) èÄîı
-static void CleanUpSubBG_WINDOW( RESEARCH_SELECT_WORK* work ); // SUB-BG ( ÉEÉBÉìÉhÉEñ  ) å„ï–ïtÇØ
-static void SetupSubBG_FONT( RESEARCH_SELECT_WORK* work ); // SUB-BG ( ÉtÉHÉìÉgñ  ) èÄîı
-static void CleanUpSubBG_FONT( RESEARCH_SELECT_WORK* work ); // SUB-BG ( ÉtÉHÉìÉgñ  ) å„ï–ïtÇØ
-static void SetupMainBG_BAR( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ÉoÅ[ñ  ) èÄîı
-static void CleanUpMainBG_BAR( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ÉoÅ[ñ  ) å„ï–ïtÇØ
-static void SetupMainBG_WINDOW( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ÉEÉBÉìÉhÉEñ  ) èÄîı
-static void CleanUpMainBG_WINDOW( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ÉEÉBÉìÉhÉEñ  ) å„ï–ïtÇØ
-static void SetupMainBG_FONT( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ÉtÉHÉìÉgñ  ) èÄîı
-static void CleanUpMainBG_FONT( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ÉtÉHÉìÉgñ  ) å„ï–ïtÇØ
-// âÊñ ÇÃèÄîı/å„ï–ïtÇØ ( OBJ )
-static void CreateClactSystem( RESEARCH_SELECT_WORK* work ); // OBJ ÉVÉXÉeÉÄ ê∂ê¨
-static void DeleteClactSystem( RESEARCH_SELECT_WORK* work ); // OBJ ÉVÉXÉeÉÄ îjä¸
-static void InitOBJResources( RESEARCH_SELECT_WORK* work ); // OBJ ÉäÉ\Å[ÉX èâä˙âª
-static void RegisterSubObjResources( RESEARCH_SELECT_WORK* work ); // SUB-OBJ ÉäÉ\Å[ÉX ìoò^
-static void ReleaseSubObjResources( RESEARCH_SELECT_WORK* work ); // SUB-OBJ ÉäÉ\Å[ÉX âï˙
-static void RegisterMainObjResources( RESEARCH_SELECT_WORK* work ); // MAIN-OBJ ÉäÉ\Å[ÉX ìoò^
-static void ReleaseMainObjResources( RESEARCH_SELECT_WORK* work ); // MAIN-OBJ ÉäÉ\Å[ÉX âï˙
-static void InitClactUnits( RESEARCH_SELECT_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉg èâä˙âª
-static void CreateClactUnits( RESEARCH_SELECT_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉg ê∂ê¨
-static void DeleteClactUnits( RESEARCH_SELECT_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉg îjä¸
-static void InitClactWorks( RESEARCH_SELECT_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉN èâä˙âª
-static void CreateClactWorks( RESEARCH_SELECT_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉN ê∂ê¨
-static void DeleteClactWorks( RESEARCH_SELECT_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉN îjä¸
-// BMP-OAM ÇÃèÄîı/å„ï–ïtÇØ
-static void InitBitmapDatas( RESEARCH_SELECT_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^ èâä˙âª
-static void CreateBitmapDatas( RESEARCH_SELECT_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^ çÏê¨
-static void SetupBitmapData_forDefault( RESEARCH_SELECT_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^ èÄîı ( ÉfÉtÉHÉãÉg )
-static void SetupBitmapData_forOK( RESEARCH_SELECT_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^ èÄîı (ÅuÇØÇ¡ÇƒÇ¢Åv)
-static void SetupBitmapData_forCANCEL( RESEARCH_SELECT_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^ èÄîı (ÅuÇ‚ÇﬂÇÈÅv)
-static void DeleteBitmapDatas( RESEARCH_SELECT_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^ îjä¸
-static void SetupBmpOamSystem( RESEARCH_SELECT_WORK* work ); // BMP-OAM ÉVÉXÉeÉÄ èÄîı
-static void CleanUpBmpOamSystem( RESEARCH_SELECT_WORK* work ); // BMP-OAM ÉVÉXÉeÉÄ å„ï–ïtÇØ
-static void CreateBmpOamActors( RESEARCH_SELECT_WORK* work ); // BMP-OAM ÉAÉNÉ^Å[ çÏê¨
-static void DeleteBmpOamActors( RESEARCH_SELECT_WORK* work ); // BMP-OAM ÉAÉNÉ^Å[ îjä¸
+static BOOL IsPaletteFadeEnd( RESEARCH_SELECT_WORK* work ); // ÉpÉåÉbÉgÇÃÉtÉFÅ[ÉhÇ™äÆóπÇµÇΩÇ©Ç«Ç§Ç©ÇîªíËÇ∑ÇÈ
 // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉì
 static void InitPaletteAnime( RESEARCH_SELECT_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇèâä˙âªÇ∑ÇÈ
-static void CreatePaletteAnime( RESEARCH_SELECT_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇ ê∂ê¨Ç∑ÇÈ
+static void CreatePaletteAnime( RESEARCH_SELECT_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇê∂ê¨Ç∑ÇÈ
 static void DeletePaletteAnime( RESEARCH_SELECT_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇîjä¸Ç∑ÇÈ
 static void SetupPaletteAnime( RESEARCH_SELECT_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
 static void CleanUpPaletteAnime( RESEARCH_SELECT_WORK* work );  // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
-// VBlankÉ^ÉXÉNÇÃìoò^âèú
-static void RegisterVBlankTask( RESEARCH_SELECT_WORK* work ); // VBlankÉ^ÉXÉNÇìoò^Ç∑ÇÈ
-static void ReleaseVBlankTask ( RESEARCH_SELECT_WORK* work ); // VBlankÉ^ÉXÉNÇÃìoò^ÇâèúÇ∑ÇÈ
-// ÉpÉåÉbÉgÉtÉFÅ[ÉhÉVÉXÉeÉÄÇÃèÄîı/å„ï–ïtÇØ
-static void InitPaletteFadeSystem( RESEARCH_SELECT_WORK* work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhÉVÉXÉeÉÄ èâä˙âª
-static void SetupPaletteFadeSystem( RESEARCH_SELECT_WORK* work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhÉVÉXÉeÉÄ èÄîı
-static void CleanUpPaletteFadeSystem( RESEARCH_SELECT_WORK* work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhÉVÉXÉeÉÄ å„ï–ïtÇØ
-// ÉfÅ[É^ÇÃèâä˙âª/ê∂ê¨/îjä¸
-static void InitSeqQueue( RESEARCH_SELECT_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[ èâä˙âª
-static void CreateSeqQueue( RESEARCH_SELECT_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[ çÏê¨
-static void DeleteSeqQueue( RESEARCH_SELECT_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[ îjä¸
-static void InitFont( RESEARCH_SELECT_WORK* work ); // ÉtÉHÉìÉg èâä˙âª
-static void CreateFont( RESEARCH_SELECT_WORK* work ); // ÉtÉHÉìÉg ê∂ê¨
-static void DeleteFont( RESEARCH_SELECT_WORK* work ); // ÉtÉHÉìÉg îjä¸
-static void InitMessages( RESEARCH_SELECT_WORK* work ); // ÉÅÉbÉZÅ[ÉW èâä˙âª
-static void CreateMessages( RESEARCH_SELECT_WORK* work ); // ÉÅÉbÉZÅ[ÉW ê∂ê¨
-static void DeleteMessages( RESEARCH_SELECT_WORK* work ); // ÉÅÉbÉZÅ[ÉW îjä¸
-static void InitBGFonts( RESEARCH_SELECT_WORK* work ); // ï∂éöóÒï`âÊÉIÉuÉWÉFÉNÉg èâä˙âª
-static void CreateBGFonts( RESEARCH_SELECT_WORK* work ); // ï∂éöóÒï`âÊÉIÉuÉWÉFÉNÉg ê∂ê¨
-static void DeleteBGFonts( RESEARCH_SELECT_WORK* work ); // ï∂éöóÒï`âÊÉIÉuÉWÉFÉNÉg îjä¸
-static void SetupTouchArea( RESEARCH_SELECT_WORK* work ); // É^ÉbÉ`óÃàÊ èÄîı
+static void StartPaletteAnime( RESEARCH_SELECT_WORK* work, PALETTE_ANIME_INDEX index ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇäJénÇ∑ÇÈ
+static void StopPaletteAnime( RESEARCH_SELECT_WORK* work, PALETTE_ANIME_INDEX index ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇí‚é~Ç∑ÇÈ
+static void UpdatePaletteAnime( RESEARCH_SELECT_WORK* work );  // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇçXêVÇ∑ÇÈ
 //----------------------------------------------------------------------------------------------
-// ÅüLAYER -1 ÉfÉoÉbÉO
+// ÅüLAYER 0 ÉfÉoÉbÉO
 //----------------------------------------------------------------------------------------------
 static void DebugPrint_seqQueue( const RESEARCH_SELECT_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[ÇÃíÜêgÇï\é¶Ç∑ÇÈ
 
@@ -348,7 +350,7 @@ RESEARCH_SELECT_WORK* CreateResearchSelectWork( RESEARCH_COMMON_WORK* commonWork
   work->topicCursorNextPos    = 0;
   work->selectedTopicID       = TOPIC_ID_DUMMY;
   work->VBlankTCBSystem       = GFUser_VIntr_GetTCBSYS();
-  work->scrollCursorPos       = 0;
+  work->scrollCursorPos       = MIN_SCROLL_CURSOR_POS;
   work->scrollStartPos        = 0;
   work->scrollEndPos          = 0;
   work->scrollFrames          = 0;
@@ -405,17 +407,18 @@ RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work )
 {
   // ÉVÅ[ÉPÉìÉXÇ≤Ç∆ÇÃèàóù
   switch( work->seq ) {
-  case RESEARCH_SELECT_SEQ_SETUP:        Main_SETUP( work );        break;
-  case RESEARCH_SELECT_SEQ_STANDBY:      Main_STANDBY( work );      break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:     Main_KEY_WAIT( work );     break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:  Main_SCROLL_WAIT( work );  break;
-  case RESEARCH_SELECT_SEQ_CONFIRM:      Main_CONFIRM( work );      break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:    Main_DETERMINE( work );    break;
-  case RESEARCH_SELECT_SEQ_FADE_IN:      Main_FADE_IN( work );      break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:     Main_FADE_OUT( work );     break;
-  case RESEARCH_SELECT_SEQ_PALETTE_RESET:Main_PALETTE_RESET( work );break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:     Main_CLEAN_UP( work );     break;
-  case RESEARCH_SELECT_SEQ_FINISH:       return work->result; // èIóπ
+  case RESEARCH_SELECT_SEQ_SETUP:           MainSeq_SETUP( work );           break;
+  case RESEARCH_SELECT_SEQ_STANDBY:         MainSeq_STANDBY( work );         break;
+  case RESEARCH_SELECT_SEQ_KEY_WAIT:        MainSeq_KEY_WAIT( work );        break;
+  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:     MainSeq_SCROLL_WAIT( work );     break;
+  case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:  MainSeq_SCROLL_CONTROL( work );  break;
+  case RESEARCH_SELECT_SEQ_CONFIRM:         MainSeq_CONFIRM( work );         break;
+  case RESEARCH_SELECT_SEQ_DETERMINE:       MainSeq_DETERMINE( work );       break;
+  case RESEARCH_SELECT_SEQ_FADE_IN:         MainSeq_FADE_IN( work );         break;
+  case RESEARCH_SELECT_SEQ_FADE_OUT:        MainSeq_FADE_OUT( work );        break;
+  case RESEARCH_SELECT_SEQ_PALETTE_RESET:   MainSeq_PALETTE_RESET( work );   break;
+  case RESEARCH_SELECT_SEQ_CLEAN_UP:        MainSeq_CLEAN_UP( work );        break;
+  case RESEARCH_SELECT_SEQ_FINISH:          return work->result; // èIóπ
   default:  GF_ASSERT(0);
   }
 
@@ -424,7 +427,7 @@ RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work )
   GFL_CLACT_SYS_Main(); // ÉZÉãÉAÉNÉ^Å[ÉVÉXÉeÉÄ ÉÅÉCÉìèàóù
 
   CountUpSeqCount( work ); // ÉVÅ[ÉPÉìÉXÉJÉEÉìÉ^çXêV
-  SwitchSequence( work );  // ÉVÅ[ÉPÉìÉXçXêV
+  SwitchSeq( work );  // ÉVÅ[ÉPÉìÉXçXêV
 
   // åpë±
   return RESEARCH_SELECT_RESULT_CONTINUE;
@@ -445,7 +448,7 @@ RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_SETUP( RESEARCH_SELECT_WORK* work )
+static void MainSeq_SETUP( RESEARCH_SELECT_WORK* work )
 {
   CreateFont( work );
   CreateMessages( work );
@@ -489,12 +492,12 @@ static void Main_SETUP( RESEARCH_SELECT_WORK* work )
   RegisterVBlankTask( work );
 
   // éüÇÃÉVÅ[ÉPÉìÉXÇÉZÉbÉg
-  SetNextSequence( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT ); 
-  SetNextSequence( work, RESEARCH_SELECT_SEQ_FADE_IN ); 
-  SetNextSequence( work, RESEARCH_SELECT_SEQ_STANDBY ); 
+  SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT ); 
+  SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_IN ); 
+  SetNextSeq( work, RESEARCH_SELECT_SEQ_STANDBY ); 
 
   // ÉVÅ[ÉPÉìÉXèIóπ
-  FinishCurrentSequence( work );
+  FinishCurrentSeq( work );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -504,14 +507,14 @@ static void Main_SETUP( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_STANDBY( RESEARCH_SELECT_WORK* work )
+static void MainSeq_STANDBY( RESEARCH_SELECT_WORK* work )
 {
   int trg;
-  int touch;
+  int touchTrg;
   int commonTouch;
 
   trg   = GFL_UI_KEY_GetTrg();
-  touch = GFL_UI_TP_HitTrg( work->topicTouchHitTable );
+  touchTrg = GFL_UI_TP_HitTrg( work->topicTouchHitTable );
   commonTouch = GFL_UI_TP_HitTrg( RESEARCH_COMMON_GetHitTable(work->commonWork) );
 
   //ÅuÇ‡Ç«ÇÈÅvÉ{É^Éì
@@ -519,10 +522,10 @@ static void Main_STANDBY( RESEARCH_SELECT_WORK* work )
     RESEARCH_COMMON_StartPaletteAnime( 
         work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // ÉLÉÉÉìÉZÉãâπ
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_FADE_OUT );
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_OUT );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
+    FinishCurrentSeq( work );
     return;
   }
 
@@ -533,22 +536,21 @@ static void Main_STANDBY( RESEARCH_SELECT_WORK* work )
       (trg & PAD_KEY_RIGHT) ||
       (trg & PAD_BUTTON_A) || 
       (trg & PAD_BUTTON_B) ) {
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
+    FinishCurrentSeq( work );
     return;
   }
 
   //Åuí≤ç∏çÄñ⁄ÅvÉ{É^Éì
-  if( (TOPIC_TOUCH_AREA_TOPIC_0 <= touch) && (touch <= TOPIC_TOUCH_AREA_TOPIC_9) ) 
+  if( (TOPIC_TOUCH_AREA_TOPIC_0 <= touchTrg) && (touchTrg <= TOPIC_TOUCH_AREA_TOPIC_9) ) 
   {
-    StopPaletteAnime( work, PALETTE_ANIME_TOPIC_CURSOR_ON );
     StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );
-    MoveTopicCursorDirect( work, touch );               // ÉJÅ[É\Éãà⁄ìÆ
+    MoveTopicCursorDirect( work, touchTrg );            // ÉJÅ[É\Éãà⁄ìÆ
     SetSelectedTopicID( work, work->topicCursorPos );   // ÉJÅ[É\Éãà íuÇÃí≤ç∏çÄñ⁄ÇëIë
     UpdateSubDisplayStrings( work );                    // è„âÊñ ÇÃÉJÅ[É\ÉãàÀë∂ï∂éöóÒÇçXêV
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                     // åàíËâπ
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_CONFIRM );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM );
+    FinishCurrentSeq( work );
     return;
   } 
 }
@@ -560,15 +562,15 @@ static void Main_STANDBY( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_KEY_WAIT( RESEARCH_SELECT_WORK* work )
+static void MainSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 { 
   int trg;
-  int touch;
+  int touchTrg;
   int commonTouch;
   BOOL select = FALSE;
 
   trg   = GFL_UI_KEY_GetTrg();
-  touch = GFL_UI_TP_HitTrg( work->topicTouchHitTable );
+  touchTrg = GFL_UI_TP_HitTrg( work->topicTouchHitTable );
   commonTouch = GFL_UI_TP_HitTrg( RESEARCH_COMMON_GetHitTable(work->commonWork) );
 
   //ÅuÇ‡Ç«ÇÈÅvÉ{É^Éì
@@ -576,65 +578,70 @@ static void Main_KEY_WAIT( RESEARCH_SELECT_WORK* work )
     RESEARCH_COMMON_StartPaletteAnime( 
         work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_CANCEL1 );      // ÉLÉÉÉìÉZÉãâπ
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_FADE_OUT );
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_OUT );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
+    FinishCurrentSeq( work );
     return;
   }
 
   // Å™ÉLÅ[
   if( trg & PAD_KEY_UP ) {
     MoveTopicCursorUp( work );
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT );
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
+    FinishCurrentSeq( work );
     return;
   }
 
   // Å´ÉLÅ[
   if( trg & PAD_KEY_DOWN ) {
     MoveTopicCursorDown( work );
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT );
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
+    FinishCurrentSeq( work );
     return;
   } 
 
   // AÉ{É^Éì
   if( trg & PAD_BUTTON_A ) {
-    StopPaletteAnime( work, PALETTE_ANIME_TOPIC_CURSOR_ON );
     StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );
     SetSelectedTopicID( work, work->topicCursorPos ); // ÉJÅ[É\Éãà íuÇÃí≤ç∏çÄñ⁄ÇëIë
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                   // åàíËâπ
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_CONFIRM );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM );
+    FinishCurrentSeq( work );
     return;
   } 
 
   //Åuí≤ç∏çÄñ⁄ÅvÉ{É^Éì
-  if( (TOPIC_TOUCH_AREA_TOPIC_0 <= touch) && (touch <= TOPIC_TOUCH_AREA_TOPIC_9) ) 
-  {
-    StopPaletteAnime( work, PALETTE_ANIME_TOPIC_CURSOR_ON );
+  if( (TOPIC_TOUCH_AREA_TOPIC_0 <= touchTrg) && (touchTrg <= TOPIC_TOUCH_AREA_TOPIC_9) ) {
     StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );
-    MoveTopicCursorDirect( work, touch );             // ÉJÅ[É\Éãà⁄ìÆ
+    MoveTopicCursorDirect( work, touchTrg );             // ÉJÅ[É\Éãà⁄ìÆ
     UpdateSubDisplayStrings( work );                  // è„âÊñ ÇÃÉJÅ[É\ÉãàÀë∂ï∂éöóÒÇçXêV
     SetSelectedTopicID( work, work->topicCursorPos ); // ÉJÅ[É\Éãà íuÇÃí≤ç∏çÄñ⁄ÇëIë
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                   // åàíËâπ
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_CONFIRM );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM );
+    FinishCurrentSeq( work );
     return;
   }
 
   // BÉ{É^Éì
   if( trg & PAD_BUTTON_B ) {
     PMSND_PlaySE( SEQ_SE_CANCEL1 );      // ÉLÉÉÉìÉZÉãâπ
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_FADE_OUT );
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_OUT );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
+    FinishCurrentSeq( work );
     return;
   } 
+
+  // ÉXÉNÉçÅ[ÉãÉoÅ[
+  if( GFL_UI_TP_HitCont( work->scrollTouchHitTable ) == SCROLL_TOUCH_AREA_BAR ) {
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_CONTROL );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
+    FinishCurrentSeq( work );
+    return;
+  }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -644,7 +651,7 @@ static void Main_KEY_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
+static void MainSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
 {
   // ÉXÉNÉçÅ[Éãèàóù
   UpdateScroll( work );           // ÉXÉNÉçÅ[ÉãÇçXêV
@@ -655,8 +662,39 @@ static void Main_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
 
   // ÉXÉNÉçÅ[ÉãèIóπ
   if( CheckScrollEnd(work) ) {
-    FinishScroll( work );
-    FinishCurrentSequence( work );
+    FinishCurrentSeq( work );
+  }
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ÉXÉNÉçÅ[ÉãëÄçÏÉVÅ[ÉPÉìÉX ( RESEARCH_SELECT_SEQ_SCROLL_CONTROL ) ÇÃèàóù
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void MainSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work )
+{
+  u32 x, y;
+  BOOL touch;
+
+  touch = GFL_UI_TP_GetPointCont( &x, &y );
+
+  // É^ÉbÉ`Ç™ó£Ç≥ÇÍÇΩ
+  if( touch == FALSE ) {
+    FinishCurrentSeq( work );
+    return;
+  }
+
+  // ÉXÉNÉçÅ[Éãèàóù
+  {
+    int scrollCursorPos;
+    scrollCursorPos = CalcScrollCursorPos_byScrollControlPos( y ); // É^ÉbÉ`èÍèäÇ©ÇÁ, ÉXÉNÉçÅ[ÉãÉJÅ[É\Éãà íuÇéZèo
+    SetScrollCursorPos( work, scrollCursorPos );   // ÉXÉNÉçÅ[ÉãÉJÅ[É\Éãà íuÇçXêV
+    AdjustScrollValue( work );                  // ÉXÉNÉçÅ[Éãé¿å¯ílÇçXêV
+    UpdateTopicTouchArea( work );               // É^ÉbÉ`îÕàÕÇçXêVÇ∑ÇÈ
+    UpdateScrollControlPos( work );             // ÉXÉNÉçÅ[ÉãÉoÅ[ÇÃÇ¬Ç‹Ç›ïîï™ÇçXêV
+    UpdateTopicSelectIcon( work );              // í≤ç∏çÄñ⁄ëIëÉAÉCÉRÉìÇçXêV
   }
 }
 
@@ -667,13 +705,24 @@ static void Main_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_CONFIRM( RESEARCH_SELECT_WORK* work )
+static void MainSeq_CONFIRM( RESEARCH_SELECT_WORK* work )
 {
   int trg;
-  int touch;
+  int touchTrg;
 
   trg = GFL_UI_KEY_GetTrg();
-  touch = GFL_UI_TP_HitTrg( work->menuTouchHitTable );
+  touchTrg = GFL_UI_TP_HitTrg( work->menuTouchHitTable );
+
+
+  // ÉXÉNÉçÅ[Éãèàóù
+  if( CheckScrollEnd(work) == FALSE ) {
+    UpdateScroll( work );           // ÉXÉNÉçÅ[ÉãÇçXêV
+    UpdateScrollValue( work );      // ÉXÉNÉçÅ[Éãé¿å¯ílÇçXêV
+    UpdateTopicTouchArea( work );   // É^ÉbÉ`îÕàÕÇçXêVÇ∑ÇÈ
+    UpdateScrollControlPos( work ); // ÉXÉNÉçÅ[ÉãÉoÅ[ÇÃÇ¬Ç‹Ç›ïîï™
+    UpdateTopicSelectIcon( work );  // í≤ç∏çÄñ⁄ëIëÉAÉCÉRÉì
+  }
+
 
   if( trg & PAD_KEY_UP ) {
     MoveMenuCursorUp( work );
@@ -686,42 +735,42 @@ static void Main_CONFIRM( RESEARCH_SELECT_WORK* work )
   if( trg & PAD_BUTTON_A ) {
     switch( work->menuCursorPos ) {
     case MENU_ITEM_DETERMINATION_OK:
-      SetNextSequence( work, RESEARCH_SELECT_SEQ_DETERMINE );
+      SetNextSeq( work, RESEARCH_SELECT_SEQ_DETERMINE );
       break;
     case MENU_ITEM_DETERMINATION_CANCEL:
       PMSND_PlaySE( SEQ_SE_CANCEL1 ); // ÉLÉÉÉìÉZÉãâπ
-      SetNextSequence( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
-      SetNextSequence( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
+      SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
+      SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
       break;
     default:
       GF_ASSERT(0);
     }
     StopPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );
-    FinishCurrentSequence( work );
+    FinishCurrentSeq( work );
     return;
   } 
 
   // ÅuÇØÇ¡ÇƒÇ¢ÅvÉ{É^Éì
-  if( touch == MENU_TOUCH_AREA_OK_BUTTON ) {
+  if( touchTrg == MENU_TOUCH_AREA_OK_BUTTON ) {
     MoveMenuCursorDirect( work, MENU_ITEM_DETERMINATION_OK );
     StopPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_DETERMINE );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_DETERMINE );
+    FinishCurrentSeq( work );
     return;
   } 
 
   // BÉ{É^Éì or ÅuÇ‚ÇﬂÇÈÅvÉ{É^Éì
   if( (trg & PAD_BUTTON_B) || 
-      (touch == MENU_TOUCH_AREA_CANCEL_BUTTON) ) {
+      (touchTrg == MENU_TOUCH_AREA_CANCEL_BUTTON) ) {
     MoveMenuCursorDirect( work, MENU_ITEM_DETERMINATION_CANCEL );
     StopPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );
     PMSND_PlaySE( SEQ_SE_CANCEL1 ); // ÉLÉÉÉìÉZÉãâπ
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
+    FinishCurrentSeq( work );
   }
 }
 
@@ -732,14 +781,14 @@ static void Main_CONFIRM( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_DETERMINE( RESEARCH_SELECT_WORK* work )
+static void MainSeq_DETERMINE( RESEARCH_SELECT_WORK* work )
 {
   // àÍíËéûä‘Ç™åoâﬂ
   if( SEQ_DETERMINE_WAIT_FRAMES <= work->seqCount ) {
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_FADE_OUT );
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
-    SetNextSequence( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_OUT );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
+    FinishCurrentSeq( work );
   } 
 }
 
@@ -750,11 +799,11 @@ static void Main_DETERMINE( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_FADE_IN( RESEARCH_SELECT_WORK* work )
+static void MainSeq_FADE_IN( RESEARCH_SELECT_WORK* work )
 {
   // ÉtÉFÅ[ÉhÇ™èIóπ
   if( GFL_FADE_CheckFade() == FALSE ) {
-    FinishCurrentSequence( work );
+    FinishCurrentSeq( work );
   } 
 }
 
@@ -765,11 +814,11 @@ static void Main_FADE_IN( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_FADE_OUT( RESEARCH_SELECT_WORK* work )
+static void MainSeq_FADE_OUT( RESEARCH_SELECT_WORK* work )
 {
   // ÉtÉFÅ[ÉhÇ™èIóπ
   if( GFL_FADE_CheckFade() == FALSE ) {
-    FinishCurrentSequence( work );
+    FinishCurrentSeq( work );
   } 
 }
 
@@ -780,11 +829,11 @@ static void Main_FADE_OUT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
+static void MainSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
 {
   // ÉpÉåÉbÉgÉtÉFÅ[ÉhäÆóπ
   if( IsPaletteFadeEnd( work ) ) {
-    FinishCurrentSequence( work );
+    FinishCurrentSeq( work );
   }
 }
 
@@ -795,7 +844,7 @@ static void Main_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_CLEAN_UP( RESEARCH_SELECT_WORK* work )
+static void MainSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work )
 { 
   // VBlankÉ^ÉXÉNÇâèú
   ReleaseVBlankTask( work );
@@ -839,8 +888,8 @@ static void Main_CLEAN_UP( RESEARCH_SELECT_WORK* work )
 
   // âÊñ èIóπåãâ ÇåàíË
   SetResult( work, RESEARCH_SELECT_RESULT_TO_MENU );  
-  SetNextSequence( work, RESEARCH_SELECT_SEQ_FINISH );
-  FinishCurrentSequence( work );
+  SetNextSeq( work, RESEARCH_SELECT_SEQ_FINISH );
+  FinishCurrentSeq( work );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -858,38 +907,35 @@ static void CountUpSeqCount( RESEARCH_SELECT_WORK* work )
   work->seqCount++;
 
   // ç≈ëÂílÇåàíË
-  switch( work->seq )
-  {
-  case RESEARCH_SELECT_SEQ_SETUP:         maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_STANDBY:       maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:      maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:   maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_CONFIRM:       maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:     maxCount = SEQ_DETERMINE_WAIT_FRAMES; break;
-  case RESEARCH_SELECT_SEQ_FADE_IN:       maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:      maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_PALETTE_RESET: maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:      maxCount = 0xffffffff; break;
-  case RESEARCH_SELECT_SEQ_FINISH:        maxCount = 0xffffffff; break;
+  switch( work->seq ) {
+  case RESEARCH_SELECT_SEQ_SETUP:            maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_STANDBY:          maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_KEY_WAIT:         maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:      maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:   maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_CONFIRM:          maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_DETERMINE:        maxCount = SEQ_DETERMINE_WAIT_FRAMES; break;
+  case RESEARCH_SELECT_SEQ_FADE_IN:          maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_FADE_OUT:         maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_PALETTE_RESET:    maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_CLEAN_UP:         maxCount = 0xffffffff; break;
+  case RESEARCH_SELECT_SEQ_FINISH:           maxCount = 0xffffffff; break;
   default: GF_ASSERT(0);
   }
 
   // ç≈ëÂílï‚ê≥
-  if( maxCount < work->seqCount )
-  { 
-    work->seqCount = maxCount;
-  }
+  if( maxCount < work->seqCount ) { work->seqCount = maxCount; }
 }
 
 //----------------------------------------------------------------------------------------------
 /**
- * @brief éüÇÃÉVÅ[ÉPÉìÉXÇìoò^Ç∑ÇÈ
+ * @brief éüÇÃÉVÅ[ÉPÉìÉXÇÉLÉÖÅ[Ç…ìoò^Ç∑ÇÈ
  *
  * @param work
  * @param nextSeq ìoò^Ç∑ÇÈÉVÅ[ÉPÉìÉX
  */
 //----------------------------------------------------------------------------------------------
-static void SetNextSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
+static void SetNextSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
 {
   // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[Ç…í«â¡Ç∑ÇÈ
   QUEUE_EnQueue( work->seqQueue, nextSeq );
@@ -906,7 +952,7 @@ static void SetNextSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nex
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishCurrentSequence( RESEARCH_SELECT_WORK* work )
+static void FinishCurrentSeq( RESEARCH_SELECT_WORK* work )
 {
   // Ç∑Ç≈Ç…èIóπçœÇ›
   GF_ASSERT( work->seqFinishFlag == FALSE );
@@ -943,10 +989,9 @@ static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result
  * @brief ÉVÅ[ÉPÉìÉXÇïœçXÇ∑ÇÈ
  *
  * @param work
- * @param nextSeq ïœçXå„ÇÃÉVÅ[ÉPÉìÉX
  */
 //----------------------------------------------------------------------------------------------
-static void SwitchSequence( RESEARCH_SELECT_WORK* work )
+static void SwitchSeq( RESEARCH_SELECT_WORK* work )
 {
   RESEARCH_SELECT_SEQ nextSeq;
 
@@ -955,7 +1000,7 @@ static void SwitchSequence( RESEARCH_SELECT_WORK* work )
 
   // ïœçX
   nextSeq = QUEUE_DeQueue( work->seqQueue );
-  SetSequence( work, nextSeq ); 
+  SetSeq( work, nextSeq ); 
 
   // DEBUG: ÉVÅ[ÉPÉìÉXÉLÉÖÅ[Çï\é¶
   DebugPrint_seqQueue( work );
@@ -969,62 +1014,62 @@ static void SwitchSequence( RESEARCH_SELECT_WORK* work )
  * @parma nextSeq ê›íËÇ∑ÇÈÉVÅ[ÉPÉìÉX
  */
 //----------------------------------------------------------------------------------------------
-static void SetSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
+static void SetSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
 { 
   // ÉVÅ[ÉPÉìÉXÇÃèIóπèàóù
-  switch( work->seq )
-  {
-  case RESEARCH_SELECT_SEQ_SETUP:         FinishSequence_SETUP( work );         break;
-  case RESEARCH_SELECT_SEQ_STANDBY:       FinishSequence_STANDBY( work );       break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:      FinishSequence_KEY_WAIT( work );      break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:   FinishSequence_SCROLL_WAIT( work );   break;
-  case RESEARCH_SELECT_SEQ_CONFIRM:       FinishSequence_CONFIRM( work );       break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:     FinishSequence_DETERMINE( work );     break;
-  case RESEARCH_SELECT_SEQ_FADE_IN:       FinishSequence_FADE_IN( work );       break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:      FinishSequence_FADE_OUT( work );      break;
-  case RESEARCH_SELECT_SEQ_PALETTE_RESET: FinishSequence_PALETTE_RESET( work ); break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:      FinishSequence_CLEAN_UP( work );      break;
-  case RESEARCH_SELECT_SEQ_FINISH:        break;
+  switch( work->seq ) {
+  case RESEARCH_SELECT_SEQ_SETUP:            FinishSeq_SETUP( work );            break;
+  case RESEARCH_SELECT_SEQ_STANDBY:          FinishSeq_STANDBY( work );          break;
+  case RESEARCH_SELECT_SEQ_KEY_WAIT:         FinishSeq_KEY_WAIT( work );         break;
+  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:      FinishSeq_SCROLL_WAIT( work );      break;
+  case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:   FinishSeq_SCROLL_CONTROL( work );   break;
+  case RESEARCH_SELECT_SEQ_CONFIRM:          FinishSeq_CONFIRM( work );          break;
+  case RESEARCH_SELECT_SEQ_DETERMINE:        FinishSeq_DETERMINE( work );        break;
+  case RESEARCH_SELECT_SEQ_FADE_IN:          FinishSeq_FADE_IN( work );          break;
+  case RESEARCH_SELECT_SEQ_FADE_OUT:         FinishSeq_FADE_OUT( work );         break;
+  case RESEARCH_SELECT_SEQ_PALETTE_RESET:    FinishSeq_PALETTE_RESET( work );    break;
+  case RESEARCH_SELECT_SEQ_CLEAN_UP:         FinishSeq_CLEAN_UP( work );         break;
+  case RESEARCH_SELECT_SEQ_FINISH:           break;
   default:  GF_ASSERT(0);
   }
 
   // çXêV
-  work->seq           = nextSeq;
-  work->seqCount      = 0;
+  work->seq = nextSeq;
+  work->seqCount = 0;
   work->seqFinishFlag = FALSE;
 
   // ÉVÅ[ÉPÉìÉXÇÃèâä˙âªèàóù
-  switch( nextSeq )
-  {
-  case RESEARCH_SELECT_SEQ_SETUP:         InitSequence_SETUP( work );         break;
-  case RESEARCH_SELECT_SEQ_STANDBY:       InitSequence_STANDBY( work );       break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:      InitSequence_KEY_WAIT( work );      break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:   InitSequence_SCROLL_WAIT( work );   break;
-  case RESEARCH_SELECT_SEQ_CONFIRM:       InitSequence_CONFIRM( work );       break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:     InitSequence_DETERMINE( work );     break;
-  case RESEARCH_SELECT_SEQ_FADE_IN:       InitSequence_FADE_IN( work );       break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:      InitSequence_FADE_OUT( work );      break;
-  case RESEARCH_SELECT_SEQ_PALETTE_RESET: InitSequence_PALETTE_RESET( work ); break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:      InitSequence_CLEAN_UP( work );      break;
-  case RESEARCH_SELECT_SEQ_FINISH:        break;
+  switch( nextSeq ) {
+  case RESEARCH_SELECT_SEQ_SETUP:            InitSeq_SETUP( work );            break;
+  case RESEARCH_SELECT_SEQ_STANDBY:          InitSeq_STANDBY( work );          break;
+  case RESEARCH_SELECT_SEQ_KEY_WAIT:         InitSeq_KEY_WAIT( work );         break;
+  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:      InitSeq_SCROLL_WAIT( work );      break;
+  case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:   InitSeq_SCROLL_CONTROL( work );   break;
+  case RESEARCH_SELECT_SEQ_CONFIRM:          InitSeq_CONFIRM( work );          break;
+  case RESEARCH_SELECT_SEQ_DETERMINE:        InitSeq_DETERMINE( work );        break;
+  case RESEARCH_SELECT_SEQ_FADE_IN:          InitSeq_FADE_IN( work );          break;
+  case RESEARCH_SELECT_SEQ_FADE_OUT:         InitSeq_FADE_OUT( work );         break;
+  case RESEARCH_SELECT_SEQ_PALETTE_RESET:    InitSeq_PALETTE_RESET( work );    break;
+  case RESEARCH_SELECT_SEQ_CLEAN_UP:         InitSeq_CLEAN_UP( work );         break;
+  case RESEARCH_SELECT_SEQ_FINISH:           break;
   default:  GF_ASSERT(0);
   }
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: set seq ==> " );
-  switch( nextSeq )
-  {
-  case RESEARCH_SELECT_SEQ_SETUP:         OS_TFPrintf( PRINT_TARGET, "SETUP\n" );         break;
-  case RESEARCH_SELECT_SEQ_STANDBY:       OS_TFPrintf( PRINT_TARGET, "STANDBY\n" );       break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:      OS_TFPrintf( PRINT_TARGET, "KEY_WAIT\n" );      break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:   OS_TFPrintf( PRINT_TARGET, "SCROLL_WAIT\n" );   break;
-  case RESEARCH_SELECT_SEQ_CONFIRM:       OS_TFPrintf( PRINT_TARGET, "CONFIRM\n" );       break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:     OS_TFPrintf( PRINT_TARGET, "DETERMINE\n" );     break;
-  case RESEARCH_SELECT_SEQ_FADE_IN:       OS_TFPrintf( PRINT_TARGET, "FADE_IN\n" );       break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:      OS_TFPrintf( PRINT_TARGET, "FADE_OUT\n" );      break;
-  case RESEARCH_SELECT_SEQ_PALETTE_RESET: OS_TFPrintf( PRINT_TARGET, "PALETTE_RESET\n" ); break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:      OS_TFPrintf( PRINT_TARGET, "CLEAN_UP\n" );      break;
-  case RESEARCH_SELECT_SEQ_FINISH:        OS_TFPrintf( PRINT_TARGET, "FINISH\n" );        break;
+  switch( nextSeq ) {
+  case RESEARCH_SELECT_SEQ_SETUP:            OS_TFPrintf( PRINT_TARGET, "SETUP\n" );            break;
+  case RESEARCH_SELECT_SEQ_STANDBY:          OS_TFPrintf( PRINT_TARGET, "STANDBY\n" );          break;
+  case RESEARCH_SELECT_SEQ_KEY_WAIT:         OS_TFPrintf( PRINT_TARGET, "KEY_WAIT\n" );         break;
+  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:      OS_TFPrintf( PRINT_TARGET, "SCROLL_WAIT\n"    );   break;
+  case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:   OS_TFPrintf( PRINT_TARGET, "SCROLL_CONTROL\n" );   break;
+  case RESEARCH_SELECT_SEQ_CONFIRM:          OS_TFPrintf( PRINT_TARGET, "CONFIRM\n" );          break;
+  case RESEARCH_SELECT_SEQ_DETERMINE:        OS_TFPrintf( PRINT_TARGET, "DETERMINE\n" );        break;
+  case RESEARCH_SELECT_SEQ_FADE_IN:          OS_TFPrintf( PRINT_TARGET, "FADE_IN\n" );          break;
+  case RESEARCH_SELECT_SEQ_FADE_OUT:         OS_TFPrintf( PRINT_TARGET, "FADE_OUT\n" );         break;
+  case RESEARCH_SELECT_SEQ_PALETTE_RESET:    OS_TFPrintf( PRINT_TARGET, "PALETTE_RESET\n" );    break;
+  case RESEARCH_SELECT_SEQ_CLEAN_UP:         OS_TFPrintf( PRINT_TARGET, "CLEAN_UP\n" );         break;
+  case RESEARCH_SELECT_SEQ_FINISH:           OS_TFPrintf( PRINT_TARGET, "FINISH\n" );           break;
   default:  GF_ASSERT(0);
   }
 }
@@ -1036,7 +1081,7 @@ static void SetSequence( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_SETUP( RESEARCH_SELECT_WORK* work )
+static void InitSeq_SETUP( RESEARCH_SELECT_WORK* work )
 { 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq SETUP\n" );
@@ -1049,7 +1094,7 @@ static void InitSequence_SETUP( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_STANDBY( RESEARCH_SELECT_WORK* work )
+static void InitSeq_STANDBY( RESEARCH_SELECT_WORK* work )
 {
   SetTopicButtonCursorOff( work ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
 
@@ -1064,7 +1109,7 @@ static void InitSequence_STANDBY( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_KEY_WAIT( RESEARCH_SELECT_WORK* work )
+static void InitSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 {
   SetTopicButtonCursorOn( work ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
 
@@ -1084,13 +1129,20 @@ static void InitSequence_KEY_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
+static void InitSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
 {
   // ÉXÉNÉçÅ[ÉãäJén
   {
-    int startPos = CalcTopicButtonScreenTop( work, work->topicCursorPos ) * DOT_PER_CHARA;
-    int endPos   = CalcTopicButtonScreenTop( work, work->topicCursorNextPos ) * DOT_PER_CHARA;
-    int frames   = 10;
+    int startPos = CalcScreenTopOfTopiecButton( work, work->topicCursorPos ) * DOT_PER_CHARA;
+    //int startPos = work->scrollCursorPos;
+    int endPos   = CalcScreenTopOfTopiecButton( work, work->topicCursorNextPos ) * DOT_PER_CHARA;
+    int frames;
+    if( startPos < endPos )
+    { // êiÇﬁï˚å¸Ç≈ÉJÅ[É\Éãà íuÇÃénì_ÅEèIì_ÇïœÇ¶ÇÈ
+      startPos += 24;
+      endPos += 24;
+    }
+    frames = ( MATH_MAX(startPos, endPos) - MATH_MIN(startPos, endPos) ) / 3;
     StartScroll( work, startPos, endPos, frames  );  
   }
 
@@ -1100,25 +1152,59 @@ static void InitSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
 
 //----------------------------------------------------------------------------------------------
 /**
+ * @brief ÉVÅ[ÉPÉìÉXÇèâä˙âªÇ∑ÇÈ ( ==> RESEARCH_SELECT_SEQ_SCROLL_CONTROL )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void InitSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq SCROLL_CONTROL\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
  * @brief ÉVÅ[ÉPÉìÉXÇèâä˙âªÇ∑ÇÈ ( ==> RESEARCH_SELECT_SEQ_CONFIRM )
  *
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_CONFIRM( RESEARCH_SELECT_WORK* work )
+static void InitSeq_CONFIRM( RESEARCH_SELECT_WORK* work )
 {
-  SetMenuCursorPos( work, MENU_ITEM_DETERMINATION_OK );     // ÉJÅ[É\Éãà íuÇèâä˙âª
-  SetMenuCursorOff( work, MENU_ITEM_DETERMINATION_CANCEL ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
-  SetMenuCursorOn( work, MENU_ITEM_DETERMINATION_OK );      // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
-  StartPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );  // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìäJén
+  SetMenuCursorPos( work, MENU_ITEM_DETERMINATION_OK );         // ÉJÅ[É\Éãà íuÇèâä˙âª
+  SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_CANCEL ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
+  SetMenuItemCursorOn( work, MENU_ITEM_DETERMINATION_OK );      // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
+  StartPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );      // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìäJén
 
   // ämîFÉÅÉbÉZÅ[ÉWÇ∆ëIëçÄñ⁄Çï\é¶
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, TRUE );
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, TRUE );
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, TRUE );
 
-  // ÉpÉåÉbÉgÉtÉFÅ[ÉhÉAÉEÉgäJén
-  StartPaletteFadeOut( work );
+  BG_FONT_SetPalette( work->TopicsBGFont[ work->topicCursorPos ], 0xe); // ÉtÉHÉìÉgÇÃÉpÉåÉbÉgÇïœçX ( ÉpÉåÉbÉgÉtÉFÅ[ÉhÇ™ñ≥å¯Ç…Ç»ÇÈÇÊÇ§Ç… )
+  StartPaletteFadeOut( work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhÉAÉEÉgäJén
+
+  // ÉXÉNÉçÅ[ÉãäJén
+  {
+    int centerPos = ( GetMinScrollCursorMarginPos() + GetMaxScrollCursorMarginPos() ) / 2;
+    int startPos = work->scrollCursorPos;
+    int endPos   = CalcScreenTopOfTopiecButton( work, work->topicCursorPos ) * DOT_PER_CHARA;
+    int frames;
+    // ÉJÅ[É\Éãà íuÇÃí≤ç∏çÄñ⁄Ç™âÊñ ÇÃîCà”ÇÃà íuÇ‹Ç≈óàÇÈÇÊÇ§Ç…ÉXÉNÉçÅ[ÉãÇ≥ÇπÇÈ
+    if( centerPos < endPos )
+    { // êiÇﬁï˚å¸Ç≈ÉJÅ[É\Éãà íuÇÃénì_ÅEèIì_ÇïœÇ¶ÇÈ
+      startPos = GetMaxScrollCursorMarginPos();
+      endPos = startPos + (endPos - centerPos);
+    }
+    else
+    {
+      startPos = GetMinScrollCursorMarginPos();
+      endPos = startPos - (centerPos - endPos);
+    }
+    frames = ( MATH_MAX(startPos, endPos) - MATH_MIN(startPos, endPos) ) / 2;
+    StartScroll( work, startPos, endPos, frames  );  
+  }
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq CONFIRM\n" );
@@ -1131,7 +1217,7 @@ static void InitSequence_CONFIRM( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_DETERMINE( RESEARCH_SELECT_WORK* work )
+static void InitSeq_DETERMINE( RESEARCH_SELECT_WORK* work )
 {
   // í≤ç∏íÜÇæÇ¡ÇΩçÄñ⁄ÇÃÉ{É^ÉìÇ, í≤ç∏ÇµÇƒÇ¢Ç»Ç¢èÛë‘Ç…ñﬂÇ∑
   SetTopicButtonNotInvestigating( work, GetInvestigatingTopicID(work) );
@@ -1160,7 +1246,7 @@ static void InitSequence_DETERMINE( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_FADE_IN( RESEARCH_SELECT_WORK* work )
+static void InitSeq_FADE_IN( RESEARCH_SELECT_WORK* work )
 {
   // ÉtÉFÅ[ÉhÉCÉìäJén
   GFL_FADE_SetMasterBrightReq(
@@ -1177,7 +1263,7 @@ static void InitSequence_FADE_IN( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_FADE_OUT( RESEARCH_SELECT_WORK* work )
+static void InitSeq_FADE_OUT( RESEARCH_SELECT_WORK* work )
 {
   // ÉtÉFÅ[ÉhÉAÉEÉgäJén
   GFL_FADE_SetMasterBrightReq(
@@ -1194,7 +1280,7 @@ static void InitSequence_FADE_OUT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
+static void InitSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
 {
   // ÉpÉåÉbÉgÇÃÉtÉFÅ[ÉhÉCÉìÇäJénÇ∑ÇÈ
   StartPaletteFadeIn( work );
@@ -1210,7 +1296,7 @@ static void InitSequence_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_CLEAN_UP( RESEARCH_SELECT_WORK* work )
+static void InitSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq CLEAN_UP\n" );
@@ -1223,7 +1309,7 @@ static void InitSequence_CLEAN_UP( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_SETUP( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_SETUP( RESEARCH_SELECT_WORK* work )
 {
   u8 nowTopicID;
 
@@ -1252,7 +1338,7 @@ static void FinishSequence_SETUP( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_STANDBY( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_STANDBY( RESEARCH_SELECT_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq STANDBY\n" );
@@ -1265,7 +1351,7 @@ static void FinishSequence_STANDBY( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_KEY_WAIT( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq KEY_WAIT\n" );
@@ -1278,10 +1364,26 @@ static void FinishSequence_KEY_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
 {
+  SetTopicCursorPosDirect( work, work->topicCursorNextPos ); // í≤ç∏çÄñ⁄ÉJÅ[É\Éãà íuÇçXêV
+  UpdateSubDisplayStrings( work );                 // è„âÊñ ÇÃÉJÅ[É\ÉãàÀë∂ï∂éöóÒÇçXêV
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq SCROLL_WAIT\n" );
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ÉVÅ[ÉPÉìÉXèIóπèàóù ( ==> RESEARCH_SELECT_SEQ_SCROLL_CONTROL )
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void FinishSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq SCROLL_CONTROL\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1291,7 +1393,7 @@ static void FinishSequence_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_CONFIRM( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_CONFIRM( RESEARCH_SELECT_WORK* work )
 { 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq CONFIRM\n" );
@@ -1304,7 +1406,7 @@ static void FinishSequence_CONFIRM( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_DETERMINE( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_DETERMINE( RESEARCH_SELECT_WORK* work )
 { 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq DETERMINE\n" );
@@ -1317,7 +1419,7 @@ static void FinishSequence_DETERMINE( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_FADE_IN( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_FADE_IN( RESEARCH_SELECT_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq FADE_IN\n" );
@@ -1330,7 +1432,7 @@ static void FinishSequence_FADE_IN( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_FADE_OUT( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_FADE_OUT( RESEARCH_SELECT_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq FADE_OUT\n" );
@@ -1343,8 +1445,11 @@ static void FinishSequence_FADE_OUT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
 {
+  // ÉtÉHÉìÉgÇÃÉpÉåÉbÉgÇå≥Ç…ñﬂÇ∑
+  BG_FONT_SetPalette( work->TopicsBGFont[ work->topicCursorPos ], 0xf); 
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq PALETTE_RESET\n" );
 }
@@ -1356,7 +1461,7 @@ static void FinishSequence_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_CLEAN_UP( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq CLEAN_UP\n" );
@@ -1394,10 +1499,11 @@ static void VBlankFunc( GFL_TCB* tcb, void* wk )
 //----------------------------------------------------------------------------------------------
 static void MoveMenuCursorUp( RESEARCH_SELECT_WORK* work )
 { 
-  SetMenuCursorOff( work, work->menuCursorPos ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
-  ShiftMenuCursorPos( work, -1 );                // ÉJÅ[É\Éãà⁄ìÆ
-  SetMenuCursorOn( work, work->menuCursorPos );  // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
-  PMSND_PlaySE( SEQ_SE_SELECT1 );                // ÉJÅ[É\Éãà⁄ìÆâπ
+  SetMenuItemCursorOff( work, work->menuCursorPos );// ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
+  ShiftMenuCursorPos( work, -1 );                   // ÉJÅ[É\Éãà⁄ìÆ
+  SetMenuItemCursorOn( work, work->menuCursorPos ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
+  PMSND_PlaySE( SEQ_SE_SELECT1 );                   // ÉJÅ[É\Éãà⁄ìÆâπ
+  StartPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_SET ); // ÉpÉåÉbÉgÉAÉjÉÅäJén
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1409,10 +1515,11 @@ static void MoveMenuCursorUp( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void MoveMenuCursorDown( RESEARCH_SELECT_WORK* work )
 {
-  SetMenuCursorOff( work, work->menuCursorPos ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
-  ShiftMenuCursorPos( work, 1 );                 // ÉJÅ[É\Éãà⁄ìÆ
-  SetMenuCursorOn( work, work->menuCursorPos );  // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
-  PMSND_PlaySE( SEQ_SE_SELECT1 );                // ÉJÅ[É\Éãà⁄ìÆâπ
+  SetMenuItemCursorOff( work, work->menuCursorPos );// ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
+  ShiftMenuCursorPos( work, 1 );                    // ÉJÅ[É\Éãà⁄ìÆ
+  SetMenuItemCursorOn( work, work->menuCursorPos ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
+  PMSND_PlaySE( SEQ_SE_SELECT1 );                   // ÉJÅ[É\Éãà⁄ìÆâπ
+  StartPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_SET ); // ÉpÉåÉbÉgÉAÉjÉÅäJén
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1425,10 +1532,11 @@ static void MoveMenuCursorDown( RESEARCH_SELECT_WORK* work )
 //----------------------------------------------------------------------------------------------
 static void MoveMenuCursorDirect( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem )
 {
-  SetMenuCursorOff( work, work->menuCursorPos ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
-  SetMenuCursorPos( work, menuItem );            // ÉJÅ[É\Éãà⁄ìÆ
-  SetMenuCursorOn( work, work->menuCursorPos );  // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
-  PMSND_PlaySE( SEQ_SE_SELECT1 );                // ÉJÅ[É\Éãà⁄ìÆâπ
+  SetMenuItemCursorOff( work, work->menuCursorPos );// ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
+  SetMenuCursorPos( work, menuItem );               // ÉJÅ[É\Éãà⁄ìÆ
+  SetMenuItemCursorOn( work, work->menuCursorPos ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
+  PMSND_PlaySE( SEQ_SE_SELECT1 );                   // ÉJÅ[É\Éãà⁄ìÆâπ
+  StartPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_SET ); // ÉpÉåÉbÉgÉAÉjÉÅäJén
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1443,6 +1551,7 @@ static void MoveTopicCursorUp( RESEARCH_SELECT_WORK* work )
   SetTopicButtonCursorOff( work );   // à⁄ìÆëOÇÃçÄñ⁄Çå≥Ç…ñﬂÇ∑
   SetTopicCursorNextPos( work, -1 ); // à⁄ìÆêÊÇê›íË
   PMSND_PlaySE( SEQ_SE_SELECT1 );    // ÉJÅ[É\Éãà⁄ìÆâπ
+  StartPaletteAnime( work, PALETTE_ANIME_TOPIC_CURSOR_SET ); // ÉpÉåÉbÉgÉAÉjÉÅäJén
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1457,6 +1566,7 @@ static void MoveTopicCursorDown( RESEARCH_SELECT_WORK* work )
   SetTopicButtonCursorOff( work );   // à⁄ìÆëOÇÃçÄñ⁄Çå≥Ç…ñﬂÇ∑
   SetTopicCursorNextPos( work, 1 );  // à⁄ìÆêÊÇê›íË
   PMSND_PlaySE( SEQ_SE_SELECT1 );    // ÉJÅ[É\Éãà⁄ìÆâπ
+  StartPaletteAnime( work, PALETTE_ANIME_TOPIC_CURSOR_SET ); // ÉpÉåÉbÉgÉAÉjÉÅäJén
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1473,6 +1583,7 @@ static void MoveTopicCursorDirect( RESEARCH_SELECT_WORK* work, u8 topicID )
   SetTopicCursorPosDirect( work, topicID ); // ÉJÅ[É\Éãà íuÇçXêV
   SetTopicButtonCursorOn( work );           // à⁄ìÆå„ÇÃçÄñ⁄ÇëIëèÛë‘Ç…Ç∑ÇÈ
   PMSND_PlaySE( SEQ_SE_SELECT1 );           // ÉJÅ[É\Éãà⁄ìÆâπ
+  StartPaletteAnime( work, PALETTE_ANIME_TOPIC_CURSOR_SET ); // ÉpÉåÉbÉgÉAÉjÉÅäJén
 }
 
 
@@ -1575,17 +1686,14 @@ static void UpdateTopicTouchArea( RESEARCH_SELECT_WORK* work )
   for( idx=TOPIC_TOUCH_AREA_TOPIC_0; idx <= TOPIC_TOUCH_AREA_TOPIC_9; idx++ )
   {
     int left, top;
-    int width, height;
 
-    left   = CalcTopicButtonDisplayLeft( work, idx );
-    top    = CalcTopicButtonDisplayTop( work, idx );
-    width  = TOPIC_BUTTON_WIDTH * DOT_PER_CHARA;
-    height = TOPIC_BUTTON_HEIGHT * DOT_PER_CHARA;
+    left = CalcDisplayLeftOfTopicButton( work, idx );
+    top  = CalcDisplayTopOfTopicButton( work, idx );
 
     work->topicTouchHitTable[ idx ].rect.left   = left;
-    work->topicTouchHitTable[ idx ].rect.right  = left + width;
+    work->topicTouchHitTable[ idx ].rect.right  = left + TOPIC_BUTTON_TOUCH_AREA_WIDTH;
     work->topicTouchHitTable[ idx ].rect.top    = top; 
-    work->topicTouchHitTable[ idx ].rect.bottom = top + height;
+    work->topicTouchHitTable[ idx ].rect.bottom = top + TOPIC_BUTTON_TOUCH_AREA_HEIGHT;
   }
 
   // DEBUG:
@@ -1661,7 +1769,7 @@ static BOOL IsTopicIDSelected( const RESEARCH_SELECT_WORK* work )
  * @param menuItem ÉÅÉjÉÖÅ[çÄñ⁄
  */
 //----------------------------------------------------------------------------------------------
-static void SetMenuCursorOn( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem )
+static void SetMenuItemCursorOn( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem )
 {
   BMPOAM_ACT_PTR BmpOamActor;
 
@@ -1680,7 +1788,7 @@ static void SetMenuCursorOn( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem )
  * @param menuItem ÉÅÉjÉÖÅ[çÄñ⁄
  */
 //----------------------------------------------------------------------------------------------
-static void SetMenuCursorOff( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem )
+static void SetMenuItemCursorOff( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem )
 {
   BMPOAM_ACT_PTR BmpOamActor;
 
@@ -1707,8 +1815,8 @@ static void SetTopicButtonCursorOn( const RESEARCH_SELECT_WORK* work )
 
   // ÉXÉNÉäÅ[ÉìçXêVÉpÉâÉÅÅ[É^ÇåàíË
   topicID   = work->topicCursorPos;
-  left      = CalcTopicButtonScreenLeft( work, topicID );
-  top       = CalcTopicButtonScreenTop( work, topicID );
+  left      = CalcScreenLeftOfTopicButton( work, topicID );
+  top       = CalcScreenTopOfTopiecButton( work, topicID );
   width     = TOPIC_BUTTON_WIDTH;
   height    = TOPIC_BUTTON_HEIGHT; 
   BGFrame   = MAIN_BG_WINDOW;
@@ -1735,8 +1843,8 @@ static void SetTopicButtonCursorOff( const RESEARCH_SELECT_WORK* work )
 
   // ÉXÉNÉäÅ[ÉìçXêVÉpÉâÉÅÅ[É^ÇåàíË
   topicID   = work->topicCursorPos;
-  left      = CalcTopicButtonScreenLeft( work, topicID );
-  top       = CalcTopicButtonScreenTop( work, topicID );
+  left      = CalcScreenLeftOfTopicButton( work, topicID );
+  top       = CalcScreenTopOfTopiecButton( work, topicID );
   width     = TOPIC_BUTTON_WIDTH;
   height    = TOPIC_BUTTON_HEIGHT; 
   BGFrame   = MAIN_BG_WINDOW;
@@ -1774,7 +1882,7 @@ static void SetTopicButtonInvestigating( const RESEARCH_SELECT_WORK* work, u8 to
       int srcPos, destPos;
 
       left    = TOPIC_BUTTON_X;
-      top     = CalcTopicButtonScreenTop( work, topicID );
+      top     = CalcScreenTopOfTopiecButton( work, topicID );
       x       = left + xOffset;
       y       = top  + yOffset;
       srcPos  = 32 * y + x;
@@ -1791,7 +1899,7 @@ static void SetTopicButtonInvestigating( const RESEARCH_SELECT_WORK* work, u8 to
     int srcPos, destPos;
 
     left    = TOPIC_BUTTON_X;
-    top     = CalcTopicButtonScreenTop( work, topicID );
+    top     = CalcScreenTopOfTopiecButton( work, topicID );
     x       = left + TOPIC_BUTTON_WIDTH - 1;
     y       = top;
     srcPos  = 0;
@@ -1845,7 +1953,7 @@ static void SetTopicButtonNotInvestigating( const RESEARCH_SELECT_WORK* work, u8
       int srcPos, destPos;
 
       left    = TOPIC_BUTTON_X - 1;
-      top     = CalcTopicButtonScreenTop( work, topicID );
+      top     = CalcScreenTopOfTopiecButton( work, topicID );
       x       = left + xOffset;
       y       = top  + yOffset;
       srcPos  = 32 * y + x;
@@ -1862,7 +1970,7 @@ static void SetTopicButtonNotInvestigating( const RESEARCH_SELECT_WORK* work, u8
     int srcPos, destPos;
 
     left    = TOPIC_BUTTON_X - 1;
-    top     = CalcTopicButtonScreenTop( work, topicID );
+    top     = CalcScreenTopOfTopiecButton( work, topicID );
     x       = left;
     y       = top;
     srcPos  = 0;
@@ -1915,24 +2023,6 @@ static void UpdateSubDisplayStrings( RESEARCH_SELECT_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: update sub display strings \n" );
 }
 
-
-//----------------------------------------------------------------------------------------------
-/**
- * @brief ÉXÉNÉçÅ[ÉãäÆóπéûÇÃèàóùÇçsÇ§
- *
- * @param work
- */
-//----------------------------------------------------------------------------------------------
-static void FinishScroll( RESEARCH_SELECT_WORK* work )
-{
-  work->topicCursorPos = work->topicCursorNextPos; // ÉJÅ[É\Éãà íuÇçXêV
-  UpdateSubDisplayStrings( work );                 // è„âÊñ ÇÃÉJÅ[É\ÉãàÀë∂ï∂éöóÒÇçXêV
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish scroll\n" );
-}
-
-
 //----------------------------------------------------------------------------------------------
 /**
  * @brief í≤ç∏çÄñ⁄ÇÃÉXÉNÉäÅ[Éì x ç¿ïWÇéÊìæÇ∑ÇÈ
@@ -1943,7 +2033,7 @@ static void FinishScroll( RESEARCH_SELECT_WORK* work )
  * @return éwíËÇµÇΩí≤ç∏çÄñ⁄IDÇ™äYìñÇ∑ÇÈÉXÉNÉäÅ[ÉìîÕàÕÇÃç∂è„xç¿ïW (ÉXÉNÉäÅ[ÉìíPà )
  */
 //----------------------------------------------------------------------------------------------
-static u8 CalcTopicButtonScreenLeft( const RESEARCH_SELECT_WORK* work, u8 topicID )
+static u8 CalcScreenLeftOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 topicID )
 {
   u8 left;
 
@@ -1966,7 +2056,7 @@ static u8 CalcTopicButtonScreenLeft( const RESEARCH_SELECT_WORK* work, u8 topicI
  * @return éwíËÇµÇΩí≤ç∏çÄñ⁄IDÇ™äYìñÇ∑ÇÈÉXÉNÉäÅ[ÉìîÕàÕÇÃç∂è„yç¿ïW (ÉXÉNÉäÅ[ÉìíPà )
  */
 //----------------------------------------------------------------------------------------------
-static u8 CalcTopicButtonScreenTop( const RESEARCH_SELECT_WORK* work, u8 topicID )
+static u8 CalcScreenTopOfTopiecButton( const RESEARCH_SELECT_WORK* work, u8 topicID )
 {
   u8 top;
 
@@ -1986,12 +2076,12 @@ static u8 CalcTopicButtonScreenTop( const RESEARCH_SELECT_WORK* work, u8 topicID
  * @return éwíËÇµÇΩí≤ç∏çÄñ⁄ÇÃç∂è„xç¿ïW (ÉhÉbÉgíPà )
  */
 //----------------------------------------------------------------------------------------------
-static int CalcTopicButtonDisplayLeft( const RESEARCH_SELECT_WORK* work, u8 topicID )
+static int CalcDisplayLeftOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 topicID )
 {
   int left;
 
   // ÉfÉtÉHÉãÉgÇÃà íuÇéZèo
-  left = CalcTopicButtonScreenLeft( work, topicID ) * DOT_PER_CHARA;
+  left = CalcScreenLeftOfTopicButton( work, topicID ) * DOT_PER_CHARA;
 
   // BGÉXÉNÉçÅ[ÉãÇÃï™Ççló∂Ç∑ÇÈ
   left -= GFL_BG_GetScreenScrollX( MAIN_BG_WINDOW );
@@ -2009,12 +2099,12 @@ static int CalcTopicButtonDisplayLeft( const RESEARCH_SELECT_WORK* work, u8 topi
  * @return éwíËÇµÇΩí≤ç∏çÄñ⁄ÇÃç∂è„yç¿ïW (ÉhÉbÉgíPà )
  */
 //----------------------------------------------------------------------------------------------
-static int CalcTopicButtonDisplayTop( const RESEARCH_SELECT_WORK* work, u8 topicID )
+static int CalcDisplayTopOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 topicID )
 {
   int top;
 
   // ÉfÉtÉHÉãÉgÇÃà íuÇéZèo
-  top = CalcTopicButtonScreenTop( work, topicID ) * DOT_PER_CHARA;
+  top = CalcScreenTopOfTopiecButton( work, topicID ) * DOT_PER_CHARA;
 
   // BGÉXÉNÉçÅ[ÉãÇÃï™Ççló∂Ç∑ÇÈ
   top -= GetScrollValue();
@@ -2049,6 +2139,13 @@ static void SetupTouchArea( RESEARCH_SELECT_WORK* work )
     work->topicTouchHitTable[ idx ].rect.right  = TopicTouchAreaInitData[ idx ].right;
     work->topicTouchHitTable[ idx ].rect.top    = TopicTouchAreaInitData[ idx ].top;
     work->topicTouchHitTable[ idx ].rect.bottom = TopicTouchAreaInitData[ idx ].bottom;
+  }
+  for( idx=0; idx < SCROLL_TOUCH_AREA_NUM; idx++ )
+  {
+    work->scrollTouchHitTable[ idx ].rect.left   = ScrollTouchAreaInitData[ idx ].left;
+    work->scrollTouchHitTable[ idx ].rect.right  = ScrollTouchAreaInitData[ idx ].right;
+    work->scrollTouchHitTable[ idx ].rect.top    = ScrollTouchAreaInitData[ idx ].top;
+    work->scrollTouchHitTable[ idx ].rect.bottom = ScrollTouchAreaInitData[ idx ].bottom;
   }
 
   // DEBUG:
@@ -2845,7 +2942,7 @@ static void RegisterMainObjResources( RESEARCH_SELECT_WORK* work )
   palette3 = GFL_CLGRP_PLTT_RegisterEx( arcHandle, 
                                        NARC_app_menu_common_task_menu_NCLR,
                                        CLSYS_DRAW_MAIN,
-                                       ONE_PALETTE_SIZE*10, 0, 2, 
+                                       ONE_PALETTE_SIZE*4, 0, 2, 
                                        heapID );
   GFL_ARC_CloseDataHandle( arcHandle );
 
@@ -3770,33 +3867,86 @@ static void UpdateScrollControlPos( const RESEARCH_SELECT_WORK* work )
 
   // ï\é¶à íuÇéZèo
   pos.x = SCROLL_CONTROL_LEFT;
-  pos.y = CalcScrollControlPos();
+  pos.y = CalcScrollControlPos_byScrollValue( GetScrollValue() );
 
   // ï\é¶à íuÇïœçX
   GFL_CLACT_WK_SetPos( clactWork, &pos, setSurface );
   GFL_CLACT_WK_SetDrawEnable( clactWork, TRUE );
+
+  OS_TFPrintf( PRINT_TARGET, "update scroll control pos ==> %d\n", pos.y );
 }
 
 //----------------------------------------------------------------------------------------------
 /**
  * @brief ÉXÉNÉçÅ[ÉãÉoÅ[ÇÃÇ¬Ç‹Ç›ïîï™ÇÃà íuÇåvéZÇ∑ÇÈ
  *
- * @return åªç›ÇÃÉXÉNÉçÅ[Éãé¿å¯ílÇ©ÇÁãÅÇﬂÇΩ, ÉXÉNÉçÅ[ÉãÉoÅ[Ç¬Ç‹Ç›ïîï™ÇÃyç¿ïW
+ * @param scrollValue ÉXÉNÉçÅ[Éãé¿å¯íl
+ *
+ * @return éwíËÇµÇΩÉXÉNÉçÅ[Éãé¿å¯ílÇ©ÇÁãÅÇﬂÇΩ, ÉXÉNÉçÅ[ÉãÉoÅ[Ç¬Ç‹Ç›ïîï™ÇÃyç¿ïW
  */
 //----------------------------------------------------------------------------------------------
-static int CalcScrollControlPos()
+static int CalcScrollControlPos_byScrollValue( int scrollValue )
 {
   int controlRange;
   int valueRange;
   int value;
   int pos;
+  float rate;
 
-  controlRange = SCROLL_CONTROL_BOTTOM - SCROLL_CONTROL_TOP;
-  valueRange = MAX_SCROLL_VALUE - MIN_SCROLL_VALUE;
-  value = GetScrollValue() - MIN_SCROLL_VALUE;
-  pos = SCROLL_CONTROL_TOP + controlRange * value / valueRange;
+  rate = (float)(scrollValue - MIN_SCROLL_VALUE) / (float)(MAX_SCROLL_VALUE - MIN_SCROLL_VALUE);
+  pos = SCROLL_CONTROL_TOP + (SCROLL_CONTROL_BOTTOM - SCROLL_CONTROL_TOP) * rate;
 
   return pos;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ÉXÉNÉçÅ[ÉãÉoÅ[ÇÃÇ¬Ç‹Ç›ïîï™ÇÃï\é¶à íuÇ©ÇÁ, ÉXÉNÉçÅ[ÉãÉJÅ[É\Éãà íuÇéZèoÇ∑ÇÈ
+ *
+ * @param controlPos Ç¬Ç‹Ç›ïîï™ÇÃï\é¶à íu
+ *
+ * @return ÉXÉNÉçÅ[ÉãÉJÅ[É\ÉãÇÃà íu
+ */
+//----------------------------------------------------------------------------------------------
+static int CalcScrollCursorPos_byScrollControlPos( int controlPos )
+{
+  float rate;
+  int min, max;
+  int cursorPos;
+
+  if( controlPos < SCROLL_CONTROL_TOP ) { controlPos = SCROLL_CONTROL_TOP; }
+  if( SCROLL_CONTROL_BOTTOM < controlPos ) { controlPos = SCROLL_CONTROL_BOTTOM; }
+
+  rate = (float)(controlPos - SCROLL_CONTROL_TOP) / (float)(SCROLL_CONTROL_BOTTOM - SCROLL_CONTROL_TOP);
+  min = MIN_SCROLL_VALUE + SCROLL_CURSOR_TOP_MARGIN;
+  max = MAX_SCROLL_VALUE + SCROLL_CURSOR_TOP_MARGIN;
+  cursorPos = min + (max - min) * rate;
+
+  return cursorPos;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ÉXÉNÉçÅ[ÉãÉoÅ[ÇÃÇ¬Ç‹Ç›ïîï™ÇÃï\é¶à íuÇéÊìæÇ∑ÇÈ
+ *
+ * @param work
+ *
+ * @return ÉXÉNÉçÅ[ÉãÉoÅ[ÇÃÇ¬Ç‹Ç›ïîï™ÇÃï\é¶à íu
+ */
+//----------------------------------------------------------------------------------------------
+static int GetScrollControlPos( const RESEARCH_SELECT_WORK* work )
+{
+  int controlPos;
+  GFL_CLWK* clwk;
+  GFL_CLACTPOS pos;
+  u16 setSurface;
+
+  clwk = GetClactWork( work, CLWK_SCROLL_CONTROL );
+  setSurface = ClactWorkInitData[ CLWK_SCROLL_CONTROL ].setSurface;
+  GFL_CLACT_WK_GetPos( clwk, &pos, setSurface );
+  controlPos = pos.y;
+
+  return controlPos;
 }
 
 //----------------------------------------------------------------------------------------------
@@ -3833,8 +3983,7 @@ static void UpdateScroll( RESEARCH_SELECT_WORK* work )
   int maxFrame, nowFrame;
   int startPos, endPos, nowPos;
 
-  // Ç∑Ç≈Ç…èIóπÇµÇƒÇ¢ÇÈ
-  if( CheckScrollEnd(work) ) { return; }
+  GF_ASSERT( work->scrollFrameCount <= work->scrollFrames ); // ïsê≥åƒÇ—èoÇµ
 
   // ÉtÉåÅ[ÉÄêîÇçXêV
   work->scrollFrameCount++;
@@ -3847,7 +3996,7 @@ static void UpdateScroll( RESEARCH_SELECT_WORK* work )
   nowPos   = startPos + (endPos - startPos) * nowFrame / maxFrame;
 
   // ÉXÉNÉçÅ[ÉãÉJÅ[É\Éãà íuÇçXêV
-  SetScrollCursor( work, nowPos );
+  SetScrollCursorPos( work, nowPos );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -3882,7 +4031,7 @@ static BOOL CheckScrollEnd( RESEARCH_SELECT_WORK* work )
  * @param offset à⁄ìÆÉIÉtÉZÉbÉgíl
  */
 //----------------------------------------------------------------------------------------------
-static void ShiftScrollCursor( RESEARCH_SELECT_WORK* work, int offset )
+static void ShiftScrollCursorPos( RESEARCH_SELECT_WORK* work, int offset )
 {
   int now;
   int next;
@@ -3908,11 +4057,11 @@ static void ShiftScrollCursor( RESEARCH_SELECT_WORK* work, int offset )
  * @param pos ê›íËÇ∑ÇÈÉJÅ[É\Éãà íu
  */
 //----------------------------------------------------------------------------------------------
-static void SetScrollCursor( RESEARCH_SELECT_WORK* work, int pos )
+static void SetScrollCursorPos( RESEARCH_SELECT_WORK* work, int pos )
 {
-  // à¯êîÇÃïsê≥ílÉ`ÉFÉbÉN
-  GF_ASSERT( MIN_SCROLL_CURSOR_POS <= pos ); // è¨Ç≥Ç∑Ç¨ÇÈ
-  GF_ASSERT( pos <= MAX_SCROLL_CURSOR_POS ); // ëÂÇ´Ç∑Ç¨ÇÈ
+  // à¯êîÇï‚ê≥
+  if( pos < MIN_SCROLL_CURSOR_POS ) { pos = MIN_SCROLL_CURSOR_POS; } // ç≈è¨ílï‚ê≥
+  if( MAX_SCROLL_CURSOR_POS < pos ) { pos = MAX_SCROLL_CURSOR_POS; } // ç≈ëÂílï‚ê≥
 
   // ÉJÅ[É\Éãà íuÇçXêV
   work->scrollCursorPos = pos;
@@ -3935,8 +4084,6 @@ static void AdjustScrollCursor( RESEARCH_SELECT_WORK* work )
   minPos    = GetMinScrollCursorMarginPos(); // ÉJÅ[É\Éãç≈è¨à íu
   maxPos    = GetMaxScrollCursorMarginPos(); // ÉJÅ[É\Éãç≈ëÂà íu
   adjustPos = work->scrollCursorPos;         // ï‚ê≥å„ÇÃç¿ïW
-
-  OS_Printf( "min:%d, max%d, now:%d\n", minPos, maxPos, adjustPos );
 
   // ÉXÉNÉçÅ[Éãé¿å¯ílÇ…çáÇÌÇπÇƒï‚ê≥Ç∑ÇÈ
   if( adjustPos < minPos ) { adjustPos = minPos; } // ç≈è¨ílï‚ê≥
@@ -3968,14 +4115,40 @@ static void UpdateScrollValue( const RESEARCH_SELECT_WORK* work )
   // ÉJÅ[É\ÉãÇ™ó]îíîÕàÕäOÇ…Ç†Ç¡ÇΩÇÁçXêVÇ∑ÇÈ
   if( nowPos < minPos ) {
     value = nowPos - SCROLL_CURSOR_TOP_MARGIN;
-    GFL_BG_SetScroll( MAIN_BG_WINDOW, GFL_BG_SCROLL_Y_SET, value );
-    GFL_BG_SetScroll( MAIN_BG_FONT,   GFL_BG_SCROLL_Y_SET, value );
+    GFL_BG_SetScrollReq( MAIN_BG_WINDOW, GFL_BG_SCROLL_Y_SET, value );
+    GFL_BG_SetScrollReq( MAIN_BG_FONT,   GFL_BG_SCROLL_Y_SET, value );
   }
   else if( maxPos < nowPos ) {
     value = nowPos + SCROLL_CURSOR_BOTTOM_MARGIN - 192;
-    GFL_BG_SetScroll( MAIN_BG_WINDOW, GFL_BG_SCROLL_Y_SET, value );
-    GFL_BG_SetScroll( MAIN_BG_FONT,   GFL_BG_SCROLL_Y_SET, value );
+    GFL_BG_SetScrollReq( MAIN_BG_WINDOW, GFL_BG_SCROLL_Y_SET, value );
+    GFL_BG_SetScrollReq( MAIN_BG_FONT,   GFL_BG_SCROLL_Y_SET, value );
   }
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief ÉXÉNÉçÅ[Éãé¿å¯ílÇÉXÉNÉçÅ[ÉãÉJÅ[É\Éãà íuÇ…çáÇÌÇπÇƒçXêVÇ∑ÇÈ
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void AdjustScrollValue( const RESEARCH_SELECT_WORK* work )
+{
+  int value;
+
+  // ÉXÉNÉçÅ[Éãé¿å¯ílÇåvéZ
+  value = work->scrollCursorPos - SCROLL_CURSOR_TOP_MARGIN;
+
+  // ÉXÉNÉçÅ[Éãé¿å¯ílÇï‚ê≥
+  if( value < MIN_SCROLL_VALUE ) { value = MIN_SCROLL_VALUE; } // ç≈è¨ílï‚ê≥
+  if( MAX_SCROLL_VALUE < value ) { value = MAX_SCROLL_VALUE; } // ç≈ëÂílï‚ê≥
+
+  // ÉXÉNÉçÅ[Éãé¿å¯ílÇçXêV
+  GFL_BG_SetScroll( MAIN_BG_WINDOW, GFL_BG_SCROLL_Y_SET, value );
+  GFL_BG_SetScroll( MAIN_BG_FONT,   GFL_BG_SCROLL_Y_SET, value );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: adjust scroll value ==> %d\n", value );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -4038,8 +4211,8 @@ static void UpdateTopicSelectIcon( const RESEARCH_SELECT_WORK* work )
     u16 setSurface;
 
     // ï\é¶èÛë‘ÇçXêV
-    pos.x      = CalcTopicButtonDisplayLeft( work, topicID ) + SELECT_ICON_DRAW_OFFSET_X;
-    pos.y      = CalcTopicButtonDisplayTop( work, topicID ) + SELECT_ICON_DRAW_OFFSET_Y;
+    pos.x      = CalcDisplayLeftOfTopicButton( work, topicID ) + SELECT_ICON_DRAW_OFFSET_X;
+    pos.y      = CalcDisplayTopOfTopicButton( work, topicID ) + SELECT_ICON_DRAW_OFFSET_Y;
     setSurface = ClactWorkInitData[ CLWK_SELECT_ICON_0 ].setSurface;
     GFL_CLACT_WK_SetPos( clactWork, &pos, setSurface );
     GFL_CLACT_WK_SetAutoAnmFlag( clactWork, TRUE );
@@ -4182,17 +4355,18 @@ static void DebugPrint_seqQueue( const RESEARCH_SELECT_WORK* work )
     
     switch( value )
     {
-    case RESEARCH_SELECT_SEQ_SETUP:         OS_TFPrintf( PRINT_TARGET, "SETUP " );         break;
-    case RESEARCH_SELECT_SEQ_STANDBY:       OS_TFPrintf( PRINT_TARGET, "STANDBY " );       break;
-    case RESEARCH_SELECT_SEQ_KEY_WAIT:      OS_TFPrintf( PRINT_TARGET, "KEY_WAIT " );      break;
-    case RESEARCH_SELECT_SEQ_SCROLL_WAIT:   OS_TFPrintf( PRINT_TARGET, "SCROLL_WAIT " );   break;
-    case RESEARCH_SELECT_SEQ_CONFIRM:       OS_TFPrintf( PRINT_TARGET, "CONFIRM " );       break;
-    case RESEARCH_SELECT_SEQ_DETERMINE:     OS_TFPrintf( PRINT_TARGET, "DETERMINE " );     break;
-    case RESEARCH_SELECT_SEQ_FADE_IN:       OS_TFPrintf( PRINT_TARGET, "FADE_IN " );       break;
-    case RESEARCH_SELECT_SEQ_FADE_OUT:      OS_TFPrintf( PRINT_TARGET, "FADE_OUT " );      break;
-    case RESEARCH_SELECT_SEQ_PALETTE_RESET: OS_TFPrintf( PRINT_TARGET, "PELETTE_RESET " ); break;
-    case RESEARCH_SELECT_SEQ_CLEAN_UP:      OS_TFPrintf( PRINT_TARGET, "CLEAN_UP " );      break;
-    case RESEARCH_SELECT_SEQ_FINISH:        OS_TFPrintf( PRINT_TARGET, "FINISH " );        break;
+    case RESEARCH_SELECT_SEQ_SETUP:            OS_TFPrintf( PRINT_TARGET, "SETUP " );            break;
+    case RESEARCH_SELECT_SEQ_STANDBY:          OS_TFPrintf( PRINT_TARGET, "STANDBY " );          break;
+    case RESEARCH_SELECT_SEQ_KEY_WAIT:         OS_TFPrintf( PRINT_TARGET, "KEY_WAIT " );         break;
+    case RESEARCH_SELECT_SEQ_SCROLL_WAIT:      OS_TFPrintf( PRINT_TARGET, "SCROLL_WAIT " );      break;
+    case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:   OS_TFPrintf( PRINT_TARGET, "SCROLL_CONTROL " );   break;
+    case RESEARCH_SELECT_SEQ_CONFIRM:          OS_TFPrintf( PRINT_TARGET, "CONFIRM " );          break;
+    case RESEARCH_SELECT_SEQ_DETERMINE:        OS_TFPrintf( PRINT_TARGET, "DETERMINE " );        break;
+    case RESEARCH_SELECT_SEQ_FADE_IN:          OS_TFPrintf( PRINT_TARGET, "FADE_IN " );          break;
+    case RESEARCH_SELECT_SEQ_FADE_OUT:         OS_TFPrintf( PRINT_TARGET, "FADE_OUT " );         break;
+    case RESEARCH_SELECT_SEQ_PALETTE_RESET:    OS_TFPrintf( PRINT_TARGET, "PELETTE_RESET " );    break;
+    case RESEARCH_SELECT_SEQ_CLEAN_UP:         OS_TFPrintf( PRINT_TARGET, "CLEAN_UP " );         break;
+    case RESEARCH_SELECT_SEQ_FINISH:           OS_TFPrintf( PRINT_TARGET, "FINISH " );           break;
     default: GF_ASSERT(0);
     }
   }

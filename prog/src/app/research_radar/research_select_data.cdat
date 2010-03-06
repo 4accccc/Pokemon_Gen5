@@ -703,7 +703,15 @@ static const PALETTE_ANIME_DATA PaletteAnimeData[ PALETTE_ANIME_NUM ] =
     (u16*)( HW_BG_PLTT + (MAIN_BG_PALETTE_WINDOW_ON * ONE_PALETTE_SIZE) ),  // 転送先アドレス
     (u16*)( HW_BG_PLTT + (MAIN_BG_PALETTE_WINDOW_ON * ONE_PALETTE_SIZE) ),  // 元データのアドレス
     16,                                                                     // 転送カラー数
-    ANIME_TYPE_CURSOR_ON,                                                   // アニメーションタイプ
+    ANIME_TYPE_SIN_FADE,                                                   // アニメーションタイプ
+    0xffff,                                                                 // フェードカラー
+  },
+  // 調査項目カーソルSET
+  { 
+    (u16*)( HW_BG_PLTT + (MAIN_BG_PALETTE_WINDOW_ON * ONE_PALETTE_SIZE) ),  // 転送先アドレス
+    (u16*)( HW_BG_PLTT + (MAIN_BG_PALETTE_WINDOW_ON * ONE_PALETTE_SIZE) ),  // 元データのアドレス
+    16,                                                                     // 転送カラー数
+    ANIME_TYPE_BLINK_SHORT,                                                 // アニメーションタイプ
     0xffff,                                                                 // フェードカラー
   },
   // 調査項目選択リアクション
@@ -711,23 +719,31 @@ static const PALETTE_ANIME_DATA PaletteAnimeData[ PALETTE_ANIME_NUM ] =
     (u16*)( HW_BG_PLTT + (MAIN_BG_PALETTE_WINDOW_ON * ONE_PALETTE_SIZE) ),  // 転送先アドレス
     (u16*)( HW_BG_PLTT + (MAIN_BG_PALETTE_WINDOW_ON * ONE_PALETTE_SIZE) ),  // 元データのアドレス
     16,                                                                     // 転送カラー数
-    ANIME_TYPE_SELECT,                                                      // アニメーションタイプ
+    ANIME_TYPE_BLINK,                                                      // アニメーションタイプ
     0xffff,                                                                 // フェードカラー
   },
   // メニュー項目カーソルON
   { 
-    (u16*)( HW_OBJ_PLTT + (10 * ONE_PALETTE_SIZE) ),  // 転送先アドレス
-    (u16*)( HW_OBJ_PLTT + (10 * ONE_PALETTE_SIZE) ),  // 元データのアドレス
+    (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) ),  // 転送先アドレス
+    (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) ),  // 元データのアドレス
     16,                                                                     // 転送カラー数
-    ANIME_TYPE_CURSOR_ON,                                                   // アニメーションタイプ
+    ANIME_TYPE_SIN_FADE,                                                   // アニメーションタイプ
+    0xffff,                                                                 // フェードカラー
+  },
+  // メニュー項目カーソルSET
+  { 
+    (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) ),  // 転送先アドレス
+    (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) ),  // 元データのアドレス
+    16,                                                                     // 転送カラー数
+    ANIME_TYPE_BLINK_SHORT,                                                   // アニメーションタイプ
     0xffff,                                                                 // フェードカラー
   },
   // メニュー項目選択リアクション
   { 
-    (u16*)( HW_OBJ_PLTT + (10 * ONE_PALETTE_SIZE) ),  // 転送先アドレス
-    (u16*)( HW_OBJ_PLTT + (10 * ONE_PALETTE_SIZE) ),  // 元データのアドレス
+    (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) ),  // 転送先アドレス
+    (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) ),  // 元データのアドレス
     16,                                                                     // 転送カラー数
-    ANIME_TYPE_SELECT,                                                      // アニメーションタイプ
+    ANIME_TYPE_BLINK,                                                      // アニメーションタイプ
     0xffff,                                                                 // フェードカラー
   },
 };
@@ -778,4 +794,17 @@ static const TOUCH_AREA_INIT_DATA TopicTouchAreaInitData[ TOPIC_TOUCH_AREA_NUM ]
   { 0, 0, 0, 0 }, // 調査項目8
   { 0, 0, 0, 0 }, // 調査項目9
   { GFL_UI_TP_HIT_END, 0, 0, 0 }, // 終端コード
+};
+
+static const TOUCH_AREA_INIT_DATA ScrollTouchAreaInitData[ SCROLL_TOUCH_AREA_NUM ] = 
+{
+  // スクロールバー
+  {
+    SCROLL_BAR_TOUCH_AREA_LEFT,
+    SCROLL_BAR_TOUCH_AREA_RIGHT,
+    SCROLL_BAR_TOUCH_AREA_TOP,
+    SCROLL_BAR_TOUCH_AREA_BOTTOM,
+  },
+  // 終端コード
+  { GFL_UI_TP_HIT_END, 0, 0, 0 }, 
 };

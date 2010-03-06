@@ -138,7 +138,7 @@ static const COMMON_PALETTE_ANIME_DATA CommonPaletteAnimeData[ COMMON_PALETTE_AN
     (u16*)( HW_OBJ_PLTT + (0 * ONE_PALETTE_SIZE) ),  // 転送先アドレス
     (u16*)( HW_OBJ_PLTT + (0 * ONE_PALETTE_SIZE) ),  // 元データのアドレス
     16,                                              // 転送カラー数
-    ANIME_TYPE_SELECT,                               // アニメーションタイプ
+    ANIME_TYPE_BLINK,                               // アニメーションタイプ
     0xffff,                                          // フェードカラー
   },
 };

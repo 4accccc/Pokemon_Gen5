@@ -13,6 +13,7 @@
 
 #define DOT_PER_CHARA     (8)                      // 1キャラ = 8ドット
 #define ONE_CHARA_SIZE    (0x20)                   // 1キャラクターデータのサイズ [Byte]
+#define ONE_COLOR_SIZE    (2)                      // 1カラーデータのサイズ [Byte]
 #define ONE_PALETTE_SIZE  (0x20)                   // 1パレット(16色分)のサイズ [Byte]
 #define FULL_PALETTE_SIZE (ONE_PALETTE_SIZE * 16)  // 16パレットのサイズ [Byte]
 
@@ -69,5 +70,5 @@
 #define CLWK_RETURN_POS_X (RETURN_BUTTON_X * DOT_PER_CHARA) // x 座標 ( ドット単位 )
 #define CLWK_RETURN_POS_Y (RETURN_BUTTON_Y * DOT_PER_CHARA) // y 座標 ( ドット単位 )
 #define CLWK_RETURN_ANIME_SEQ     (1) // アニメーションシーケンス
-#define CLWK_RETURN_SOFT_PRIORITY (0) // ソフト優先順位
-#define CLWK_RETURN_BG_PRIORITY   (0) // BG 優先順位
+#define CLWK_RETURN_SOFT_PRIORITY (3) // ソフト優先順位
+#define CLWK_RETURN_BG_PRIORITY   (1) // BG 優先順位

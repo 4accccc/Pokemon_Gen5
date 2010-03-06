@@ -14,17 +14,33 @@
 //=============================================================================
 // ■定数
 //============================================================================= 
-// カーソルONの明滅
-#define CURSOR_ON_ANIME_ONE_CYCLE_FRAMES (120) // 明滅1回のフレーム数
-#define CURSOR_ON_ANIME_MIN_EVY            (0) // 最小フェード係数１
-#define CURSOR_ON_ANIME_MAX_EVY            (4) // 最大フェード係数
-
-// 選択時の明滅
-#define SELECT_ANIME_FRAMES      (20) // アニメーションフレーム数
-#define SELECT_ANIME_BLINK_FRAMES (4) // 点滅待ちフレーム数
-#define SELECT_ANIME_MIN_EVY      (0) // 最小フェード係数１
-#define SELECT_ANIME_MAX_EVY     (10) // 最大フェード係数
-
+// sin フェード
+#define SIN_FADE_ONE_CYCLE_FRAMES (120) // 明滅1回のフレーム数
+#define SIN_FADE_MIN_EVY            (0) // 最小フェード係数[0, 16]
+#define SIN_FADE_MAX_EVY            (3) // 最大フェード係数[0, 16]
+// sin フェード ( 早 )
+#define SIN_FADE_FAST_ONE_CYCLE_FRAMES (100) // 明滅1回のフレーム数
+#define SIN_FADE_FAST_MIN_EVY            (0) // 最小フェード係数[0, 16]
+#define SIN_FADE_FAST_MAX_EVY            (3) // 最大フェード係数[0, 16]
+// sin フェード ( 遅 )
+#define SIN_FADE_SLOW_ONE_CYCLE_FRAMES (140) // 明滅1回のフレーム数
+#define SIN_FADE_SLOW_MIN_EVY            (0) // 最小フェード係数[0, 16]
+#define SIN_FADE_SLOW_MAX_EVY            (3) // 最大フェード係数[0, 16]
+// 点滅
+#define BLINK_FRAMES      (20) // アニメーションフレーム数
+#define BLINK_WAIT_FRAMES  (4) // 点滅待ちフレーム数
+#define BLINK_MIN_EVY      (0) // 最小フェード係数[0, 16]
+#define BLINK_MAX_EVY      (6) // 最大フェード係数[0, 16]
+// 点滅 ( 短 )
+#define BLINK_SHORT_FRAMES      (10) // アニメーションフレーム数
+#define BLINK_SHORT_WAIT_FRAMES  (4) // 点滅待ちフレーム数
+#define BLINK_SHORT_MIN_EVY      (0) // 最小フェード係数[0, 16]
+#define BLINK_SHORT_MAX_EVY      (6) // 最大フェード係数[0, 16]
+// 点滅 ( 長 )
+#define BLINK_LONG_FRAMES      (30) // アニメーションフレーム数
+#define BLINK_LONG_WAIT_FRAMES  (4) // 点滅待ちフレーム数
+#define BLINK_LONG_MIN_EVY      (0) // 最小フェード係数[0, 16]
+#define BLINK_LONG_MAX_EVY      (6) // 最大フェード係数[0, 16]
 
 
 //=============================================================================
@@ -36,8 +52,8 @@ struct _PALETTE_ANIME
 
   BOOL setupFlag;     // セットアップされているかどうか
   u16* transDest;     // 転送先アドレス
-  u8   colorNum;      // アニメーションするカラー数 ( パレット1本 = 16 )
   u16* originalColor; // アニメーション元データ
+  u8   colorNum;      // アニメーションするカラー数 ( パレット1本 = 16 )
   u16  fadeColor;     // フェードカラー
 
   BOOL       animeFlag;  // アニメーション中かどうか
@@ -49,17 +65,27 @@ struct _PALETTE_ANIME
 
 
 //=============================================================================
-// ■動作・制御
+// ■関数インデックス
 //=============================================================================
+//-----------------------------------------------------------------------------
+// ◆LAYER 2 アニメーション
+//-----------------------------------------------------------------------------
+static void UpdateAnime( PALETTE_ANIME* work ); // アニメーションを更新する
+static void UpdateAnime_SIN_FADE( PALETTE_ANIME* work ); // アニメーションを更新する ( sin フェード )
+static void UpdateAnime_SIN_FADE_FAST( PALETTE_ANIME* work ); // アニメーションを更新する ( sin フェード・早 )
+static void UpdateAnime_SIN_FADE_SLOW( PALETTE_ANIME* work ); // アニメーションを更新する ( sin フェード・遅 )
+static void UpdateAnime_BLINK( PALETTE_ANIME* work ); // アニメーションを更新する ( 点滅 )
+static void UpdateAnime_BLINK_SHORT( PALETTE_ANIME* work ); // アニメーションを更新する ( 点滅・短 )
+static void UpdateAnime_BLINK_LONG( PALETTE_ANIME* work ); // アニメーションを更新する ( 点滅・長 )
+//-----------------------------------------------------------------------------
+// ◆LAYER 1 制御
+//-----------------------------------------------------------------------------
 static void StartAnime( PALETTE_ANIME* work, ANIME_TYPE type, u16 color ); // アニメーションを開始する
 static void StopAnime( PALETTE_ANIME* work ); // アニメーションを停止する
-static void UpdateAnime( PALETTE_ANIME* work ); // アニメーションを更新する
-static void UpdateAnime_CURSOR_ON( PALETTE_ANIME* work ); // アニメーションを更新する ( カーソルONの明滅 )
-static void UpdateAnime_SELECT( PALETTE_ANIME* work ); // アニメーションを更新する ( 選択時の明滅 )
 static void ResetPalette( PALETTE_ANIME* work ); // パレットをリセットする
-//=============================================================================
-// ■生成・破棄
-//=============================================================================
+//-----------------------------------------------------------------------------
+// ◆LAYER 0 生成・破棄
+//-----------------------------------------------------------------------------
 static PALETTE_ANIME* CreateWork( HEAPID heapID ); // ワークを生成する
 static void DeleteWork( PALETTE_ANIME* work ); // ワークを破棄する
 static void InitWork( PALETTE_ANIME* work ); // ワークを初期化する
@@ -226,20 +252,24 @@ static void UpdateAnime( PALETTE_ANIME* work )
 
   // アニメタイプに応じた更新処理
   switch( work->animeType ) {
-  case ANIME_TYPE_CURSOR_ON: UpdateAnime_CURSOR_ON( work ); break;
-  case ANIME_TYPE_SELECT:    UpdateAnime_SELECT( work );    break;
+  case ANIME_TYPE_SIN_FADE:      UpdateAnime_SIN_FADE( work );      break;
+  case ANIME_TYPE_SIN_FADE_FAST: UpdateAnime_SIN_FADE_FAST( work ); break;
+  case ANIME_TYPE_SIN_FADE_SLOW: UpdateAnime_SIN_FADE_SLOW( work ); break;
+  case ANIME_TYPE_BLINK:         UpdateAnime_BLINK( work );         break;
+  case ANIME_TYPE_BLINK_SHORT:   UpdateAnime_BLINK_SHORT( work );   break;
+  case ANIME_TYPE_BLINK_LONG:    UpdateAnime_BLINK_LONG( work );    break;
   default: GF_ASSERT(0);
   }
 }
 
 //-----------------------------------------------------------------------------
 /**
- * @brief アニメーションを更新する ( カーソルONの明滅 )
+ * @brief アニメーションを更新する ( sin フェード )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------
-static void UpdateAnime_CURSOR_ON( PALETTE_ANIME* work )
+static void UpdateAnime_SIN_FADE( PALETTE_ANIME* work )
 {
   u8 evy;
 
@@ -250,10 +280,10 @@ static void UpdateAnime_CURSOR_ON( PALETTE_ANIME* work )
   {
     int idx;
     float sinVal;
-    idx = (work->frameCount * 65536 / CURSOR_ON_ANIME_ONE_CYCLE_FRAMES) % 65536;
+    idx = (work->frameCount * 65536 / SIN_FADE_ONE_CYCLE_FRAMES) % 65536;
     sinVal = FX_FX16_TO_F32( FX_SinIdx( idx ) );
     evy = (int)( sinVal * 16 + 16 );
-    evy = CURSOR_ON_ANIME_MIN_EVY + (CURSOR_ON_ANIME_MAX_EVY - CURSOR_ON_ANIME_MIN_EVY) * evy / 32;
+    evy = SIN_FADE_MIN_EVY + (SIN_FADE_MAX_EVY - SIN_FADE_MIN_EVY) * evy / 32;
   }
 
   // パレット書き換え
@@ -265,12 +295,12 @@ static void UpdateAnime_CURSOR_ON( PALETTE_ANIME* work )
 
 //-----------------------------------------------------------------------------
 /**
- * @brief アニメーションを更新する ( 選択時の明滅 )
+ * @brief アニメーションを更新する ( sin フェード・早 )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------
-static void UpdateAnime_SELECT( PALETTE_ANIME* work )
+static void UpdateAnime_SIN_FADE_FAST( PALETTE_ANIME* work )
 {
   u8 evy;
 
@@ -278,11 +308,74 @@ static void UpdateAnime_SELECT( PALETTE_ANIME* work )
   GF_ASSERT( work->setupFlag ); // セットアップされていない
 
   // フェード係数を決定
-  if( ((work->frameCount / SELECT_ANIME_BLINK_FRAMES) % 2) == 0 ) {
-    evy = SELECT_ANIME_MIN_EVY;
+  {
+    int idx;
+    float sinVal;
+    idx = (work->frameCount * 65536 / SIN_FADE_FAST_ONE_CYCLE_FRAMES) % 65536;
+    sinVal = FX_FX16_TO_F32( FX_SinIdx( idx ) );
+    evy = (int)( sinVal * 16 + 16 );
+    evy = SIN_FADE_FAST_MIN_EVY + (SIN_FADE_FAST_MAX_EVY - SIN_FADE_FAST_MIN_EVY) * evy / 32;
+  }
+
+  // パレット書き換え
+  SoftFade( work->originalColor, work->transDest, work->colorNum, evy, work->fadeColor ); 
+
+  // アニメーションフレーム数をインクリメント
+  work->frameCount++;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief アニメーションを更新する ( sin フェード・遅 )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void UpdateAnime_SIN_FADE_SLOW( PALETTE_ANIME* work )
+{
+  u8 evy;
+
+  GF_ASSERT( work->animeFlag ); // アニメーション停止中
+  GF_ASSERT( work->setupFlag ); // セットアップされていない
+
+  // フェード係数を決定
+  {
+    int idx;
+    float sinVal;
+    idx = (work->frameCount * 65536 / SIN_FADE_SLOW_ONE_CYCLE_FRAMES) % 65536;
+    sinVal = FX_FX16_TO_F32( FX_SinIdx( idx ) );
+    evy = (int)( sinVal * 16 + 16 );
+    evy = SIN_FADE_SLOW_MIN_EVY + (SIN_FADE_SLOW_MAX_EVY - SIN_FADE_SLOW_MIN_EVY) * evy / 32;
+  }
+
+  // パレット書き換え
+  SoftFade( work->originalColor, work->transDest, work->colorNum, evy, work->fadeColor ); 
+
+  // アニメーションフレーム数をインクリメント
+  work->frameCount++;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief アニメーションを更新する ( 点滅 )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void UpdateAnime_BLINK( PALETTE_ANIME* work )
+{
+  u8 evy;
+
+  GF_ASSERT( work->animeFlag ); // アニメーション停止中
+  GF_ASSERT( work->setupFlag ); // セットアップされていない
+  GF_ASSERT( work->frameCount <= BLINK_FRAMES ); // 不正呼び出し
+
+  // フェード係数を決定
+  if( ((work->frameCount / BLINK_WAIT_FRAMES) % 2) == 0 ) {
+    evy = BLINK_MIN_EVY;
   }
   else {
-    evy = SELECT_ANIME_MAX_EVY;
+    evy = BLINK_MAX_EVY;
   }
 
   // パレット書き換え
@@ -292,9 +385,80 @@ static void UpdateAnime_SELECT( PALETTE_ANIME* work )
   work->frameCount++;
 
   // アニメーション終了
-  if( SELECT_ANIME_FRAMES < work->frameCount )
-  {
-    work->animeFlag = FALSE;
+  if( BLINK_FRAMES < work->frameCount ) {
+    StopAnime( work );
+    ResetPalette( work );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief アニメーションを更新する ( 点滅・短 )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void UpdateAnime_BLINK_SHORT( PALETTE_ANIME* work )
+{
+  u8 evy;
+
+  GF_ASSERT( work->animeFlag ); // アニメーション停止中
+  GF_ASSERT( work->setupFlag ); // セットアップされていない
+  GF_ASSERT( work->frameCount <= BLINK_SHORT_FRAMES ); // 不正呼び出し
+
+  // フェード係数を決定
+  if( ((work->frameCount / BLINK_SHORT_WAIT_FRAMES) % 2) == 0 ) {
+    evy = BLINK_SHORT_MIN_EVY;
+  }
+  else {
+    evy = BLINK_SHORT_MAX_EVY;
+  }
+
+  // パレット書き換え
+  SoftFade( work->originalColor, work->transDest, work->colorNum, evy, work->fadeColor ); 
+
+  // アニメーションフレーム数をインクリメント
+  work->frameCount++;
+
+  // アニメーション終了
+  if( BLINK_SHORT_FRAMES < work->frameCount ) {
+    StopAnime( work );
+    ResetPalette( work );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief アニメーションを更新する ( 点滅・長 )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void UpdateAnime_BLINK_LONG( PALETTE_ANIME* work )
+{
+  u8 evy;
+
+  GF_ASSERT( work->animeFlag ); // アニメーション停止中
+  GF_ASSERT( work->setupFlag ); // セットアップされていない
+  GF_ASSERT( work->frameCount <= BLINK_LONG_FRAMES ); // 不正呼び出し
+
+  // フェード係数を決定
+  if( ((work->frameCount / BLINK_LONG_WAIT_FRAMES) % 2) == 0 ) {
+    evy = BLINK_LONG_MIN_EVY;
+  }
+  else {
+    evy = BLINK_LONG_MAX_EVY;
+  }
+
+  // パレット書き換え
+  SoftFade( work->originalColor, work->transDest, work->colorNum, evy, work->fadeColor ); 
+
+  // アニメーションフレーム数をインクリメント
+  work->frameCount++;
+
+  // アニメーション終了
+  if( BLINK_LONG_FRAMES < work->frameCount ) {
+    StopAnime( work );
     ResetPalette( work );
   }
 }
@@ -331,7 +495,7 @@ static PALETTE_ANIME* CreateWork( HEAPID heapID )
   PALETTE_ANIME* work;
 
   work = GFL_HEAP_AllocMemory( heapID, sizeof(PALETTE_ANIME) );
-  work->heapID = heapID;
+  work->heapID = heapID; // 生成時のヒープIDを記憶
   return work;
 }
 
@@ -344,8 +508,7 @@ static PALETTE_ANIME* CreateWork( HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void DeleteWork( PALETTE_ANIME* work )
 {
-  // クリーンアップがされていない
-  GF_ASSERT( work->setupFlag == FALSE );
+  GF_ASSERT( work->setupFlag == FALSE ); // クリーンアップがされていない
 
   GFL_HEAP_FreeMemory( work );
 }
@@ -364,7 +527,7 @@ static void InitWork( PALETTE_ANIME* work )
   // ヒープIDを退避
   heapID = work->heapID;
 
-  // 0クリア
+  // ワークを0クリア
   GFL_STD_MemClear( work, sizeof(PALETTE_ANIME) );
 
   // ヒープIDを復帰
@@ -385,8 +548,7 @@ static void SetupWork( PALETTE_ANIME* work, u16* dest, u16* src, u8 colorNum )
 {
   int i;
 
-  // すでにセットアップされている
-  GF_ASSERT( work->setupFlag == FALSE ); 
+  GF_ASSERT( work->setupFlag == FALSE ); // すでにセットアップされている
 
   work->setupFlag = TRUE;
   work->transDest = dest;
@@ -411,12 +573,11 @@ static void SetupWork( PALETTE_ANIME* work, u16* dest, u16* src, u8 colorNum )
 //-----------------------------------------------------------------------------
 static void CleanUpWork( PALETTE_ANIME* work )
 {
-  // セットアップされていない
-  GF_ASSERT( work->setupFlag );
+  GF_ASSERT( work->setupFlag ); // セットアップされていない
 
   // 元データのワークを破棄
   GFL_HEAP_FreeMemory( work->originalColor );
 
-  // ワークを初期化
-  InitWork( work );
+  // セットアップフラグを伏せる
+  work->setupFlag = FALSE;
 }

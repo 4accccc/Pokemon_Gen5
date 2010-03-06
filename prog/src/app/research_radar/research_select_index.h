@@ -11,17 +11,18 @@
 
 // 処理シーケンス
 typedef enum {
-  RESEARCH_SELECT_SEQ_SETUP,        // 準備
-  RESEARCH_SELECT_SEQ_STANDBY,      // 最初のキー入力待ち
-  RESEARCH_SELECT_SEQ_KEY_WAIT,     // キー入力待ち
-  RESEARCH_SELECT_SEQ_SCROLL_WAIT,  // スクロール完了待ち
-  RESEARCH_SELECT_SEQ_CONFIRM,      // 調査項目確定の確認
-  RESEARCH_SELECT_SEQ_DETERMINE,    // 調査項目確定
-  RESEARCH_SELECT_SEQ_FADE_IN,      // フェードイン
-  RESEARCH_SELECT_SEQ_FADE_OUT,     // フェードアウト
-  RESEARCH_SELECT_SEQ_PALETTE_RESET,// パレットの復帰
-  RESEARCH_SELECT_SEQ_CLEAN_UP,     // 後片付け
-  RESEARCH_SELECT_SEQ_FINISH,       // 終了
+  RESEARCH_SELECT_SEQ_SETUP,          // 準備
+  RESEARCH_SELECT_SEQ_STANDBY,        // 最初のキー入力待ち
+  RESEARCH_SELECT_SEQ_KEY_WAIT,       // キー入力待ち
+  RESEARCH_SELECT_SEQ_SCROLL_WAIT,    // スクロール完了待ち
+  RESEARCH_SELECT_SEQ_SCROLL_CONTROL, // スクロール操作
+  RESEARCH_SELECT_SEQ_CONFIRM,        // 調査項目確定の確認
+  RESEARCH_SELECT_SEQ_DETERMINE,      // 調査項目確定
+  RESEARCH_SELECT_SEQ_FADE_IN,        // フェードイン
+  RESEARCH_SELECT_SEQ_FADE_OUT,       // フェードアウト
+  RESEARCH_SELECT_SEQ_PALETTE_RESET,  // パレットの復帰
+  RESEARCH_SELECT_SEQ_CLEAN_UP,       // 後片付け
+  RESEARCH_SELECT_SEQ_FINISH,         // 終了
 } RESEARCH_SELECT_SEQ;
 
 // 選択項目
@@ -54,6 +55,13 @@ typedef enum {
   TOPIC_TOUCH_AREA_DUMMY,         // 終端コード
   TOPIC_TOUCH_AREA_NUM,           // 総数
 } TOPIC_TOUCH_AREA_INDEX;
+
+// タッチ範囲 ( スクロールバー )
+typedef enum {
+  SCROLL_TOUCH_AREA_BAR,   // スクロールバー
+  SCROLL_TOUCH_AREA_DUMMY, // 終端コード
+  SCROLL_TOUCH_AREA_NUM,   // 総数
+} SCROLL_TOUCH_AREA_INDEX;
 
 // メッセージデータ
 typedef enum {
@@ -89,9 +97,11 @@ typedef enum {
 // パレットアニメーション
 typedef enum {
   PALETTE_ANIME_TOPIC_CURSOR_ON,   // 調査項目カーソルON
+  PALETTE_ANIME_TOPIC_CURSOR_SET,  // 調査項目カーソルSET
   PALETTE_ANIME_TOPIC_SELECT,      // 調査項目選択リアクション
-  PALETTE_ANIME_MENU_CURSOR_ON, // メニュー項目カーソルON
-  PALETTE_ANIME_MENU_SELECT,    // メニュー項目選択リアクション
+  PALETTE_ANIME_MENU_CURSOR_ON,    // メニュー項目カーソルON
+  PALETTE_ANIME_MENU_CURSOR_SET,   // メニュー項目カーソルSET
+  PALETTE_ANIME_MENU_SELECT,       // メニュー項目選択リアクション
   PALETTE_ANIME_NUM,               // 総数
 } PALETTE_ANIME_INDEX;
 

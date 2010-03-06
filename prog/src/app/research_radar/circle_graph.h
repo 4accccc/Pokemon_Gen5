@@ -1,24 +1,24 @@
-///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 /**
  * @brief  円グラフ
  * @file   circle_graph.h
  * @author obata
  * @date   2010.2.21
  */
-/////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////
 #pragma once 
 #include <gflib.h>
 
 
-//=========================================================================================
+//==========================================================================
 // □円グラフの不完全形
-//=========================================================================================
+//==========================================================================
 typedef struct _CIRCLE_GRAPH CIRCLE_GRAPH;
 
 
-//=========================================================================================
+//==========================================================================
 // □円グラフの構成要素追加データ
-//=========================================================================================
+//==========================================================================
 typedef struct
 {
   u8 ID;           // ID
@@ -33,41 +33,51 @@ typedef struct
 } GRAPH_COMPONENT_ADD_DATA;
 
 
-//=========================================================================================
+//==========================================================================
 // □グラフの生成・破棄
-//=========================================================================================
-extern CIRCLE_GRAPH* CIRCLE_GRAPH_Create( HEAPID heapID ); // インスタンスを生成する
-extern void CIRCLE_GRAPH_Delete( CIRCLE_GRAPH* graph );    // インスタンスを破棄する
+//==========================================================================
+// インスタンスを生成する
+extern CIRCLE_GRAPH* CIRCLE_GRAPH_Create( HEAPID heapID );
+// インスタンスを破棄する
+extern void CIRCLE_GRAPH_Delete( CIRCLE_GRAPH* graph );
 
-
-//=========================================================================================
+//==========================================================================
 // □構成要素の設定
-//=========================================================================================
+//==========================================================================
 // 構成要素をセットする
-extern void CIRCLE_GRAPH_SetupComponents( CIRCLE_GRAPH* graph, const GRAPH_COMPONENT_ADD_DATA* data, u8 dataNum );
+extern void CIRCLE_GRAPH_SetupComponents( 
+    CIRCLE_GRAPH* graph, const GRAPH_COMPONENT_ADD_DATA* data, u8 dataNum );
 // 構成要素を追加する
-extern void CIRCLE_GRAPH_AddComponent( CIRCLE_GRAPH* graph, const GRAPH_COMPONENT_ADD_DATA* data );
+extern void CIRCLE_GRAPH_AddComponent( 
+    CIRCLE_GRAPH* graph, const GRAPH_COMPONENT_ADD_DATA* data );
 
-
-//=========================================================================================
-// □制御
-//=========================================================================================
+//==========================================================================
+// □動作
+//==========================================================================
 extern void CIRCLE_GRAPH_Main( CIRCLE_GRAPH* graph ); // メイン動作
 extern void CIRCLE_GRAPH_Draw( const CIRCLE_GRAPH* graph ); // 描画
 
+//==========================================================================
+// □制御
+//==========================================================================
+// 状態変化リクエスト
 extern void CIRCLE_GRAPH_AnalyzeReq( CIRCLE_GRAPH* graph );   // 解析リクエスト
 extern void CIRCLE_GRAPH_AppearReq( CIRCLE_GRAPH* graph );    // 表示リクエスト
 extern void CIRCLE_GRAPH_DisappearReq( CIRCLE_GRAPH* graph ); // 消去リクエスト
 extern void CIRCLE_GRAPH_UpdateReq( CIRCLE_GRAPH* graph );    // 更新リクエスト
 
-extern void CIRCLE_GRAPH_StopGraph( CIRCLE_GRAPH* graph, u32 frames ); // 動作を停止させる
-extern void CIRCLE_GRAPH_SetDrawEnable( CIRCLE_GRAPH* graph, BOOL enable ); // 表示・非表示を変更する
-extern void CIRCLE_GRAPH_SetCenterPos( CIRCLE_GRAPH* graph, const VecFx16* pos ); // 中心点の座標を設定する 
+// 動作を停止させる
+extern void CIRCLE_GRAPH_StopGraph( CIRCLE_GRAPH* graph, u32 frames );
+// 表示・非表示を変更する
+extern void CIRCLE_GRAPH_SetDrawEnable( CIRCLE_GRAPH* graph, BOOL enable );
+// 中心点の座標を設定する 
+extern void CIRCLE_GRAPH_SetCenterPos( CIRCLE_GRAPH* graph, const VecFx16* pos );
+// 中心点のz座標を設定する 
+extern void CIRCLE_GRAPH_SetCenterZ( CIRCLE_GRAPH* graph, fx16 z );
 
-
-//=========================================================================================
+//==========================================================================
 // □取得・判定
-//=========================================================================================
+//==========================================================================
 // 構成要素の数を取得する
 extern u8 CIRCLE_GRAPH_GetComponentNum( const CIRCLE_GRAPH* graph );
 // 構成要素の値を取得する ( 構成要素IDを指定 )

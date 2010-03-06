@@ -166,6 +166,23 @@ void BG_FONT_SetDrawEnable( BG_FONT* BGFont, BOOL enable )
   GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame( BGFont->bmpWin ) );
 }
 
+//-------------------------------------------------------------------------------
+/**
+ * @brief パレットナンバーを変更する
+ *
+ * @param BGFont
+ * @param palnum パレットナンバー
+ */
+//-------------------------------------------------------------------------------
+extern void BG_FONT_SetPalette( BG_FONT* BGFont, u8 palnum )
+{
+  GF_ASSERT( palnum < 16 ); // 不正値
+
+  GFL_BMPWIN_SetPalette( BGFont->bmpWin, palnum ); // パレットを変更
+  GFL_BMPWIN_MakeScreen( BGFont->bmpWin ); // スクリーンを作成
+  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame( BGFont->bmpWin ) ); // VRAMへ転送
+}
+
 
 //-------------------------------------------------------------------------------
 /**
@@ -185,6 +202,13 @@ static int CalcXOffsetForCentering( const BG_FONT* BGFont, const STRBUF* str )
 
   targetWidth = GFL_BMPWIN_GetSizeX( BGFont->bmpWin ) * DOT_PER_CHARA;
   strWidth    = PRINTSYS_GetStrWidth( str, BGFont->font, 0 );
+
+  //GF_ASSERT( strWidth <= targetWidth ) // 書き込み先よりも文字列の幅が大きい
+  if( targetWidth < strWidth ) {
+    OS_Printf( "---------------------------------------------------\n" );
+    OS_Printf( "RESEARCH-RADAR: bitmap width (%d) < string width (%d)\n", targetWidth, strWidth );
+    OS_Printf( "---------------------------------------------------\n" );
+  }
 
   // センタリングのためのオフセット値を算出
   offset = (targetWidth - strWidth) * 0.5f; 

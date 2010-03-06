@@ -21,8 +21,12 @@ typedef struct _PALETTE_ANIME PALETTE_ANIME;
 //============================================================================= 
 // アニメーションタイプ
 typedef enum {
-  ANIME_TYPE_CURSOR_ON, // カーソルが乗っている状態の明滅
-  ANIME_TYPE_SELECT,    // 選択時の明滅
+  ANIME_TYPE_SIN_FADE,      // sin フェード
+  ANIME_TYPE_SIN_FADE_FAST, // sin フェード ( 早 )
+  ANIME_TYPE_SIN_FADE_SLOW, // sin フェード ( 遅 )
+  ANIME_TYPE_BLINK,         // 点滅
+  ANIME_TYPE_BLINK_SHORT,   // 点滅 ( 短 )
+  ANIME_TYPE_BLINK_LONG,    // 点滅 ( 長 )
 } ANIME_TYPE;
 
 
@@ -39,11 +43,11 @@ extern void PALETTE_ANIME_Setup( PALETTE_ANIME* anime, u16* dest, u16* src, u8 c
 //=============================================================================
 // ■制御
 //=============================================================================
-// アニメーション更新
+// アニメーションを更新する
 extern void PALETTE_ANIME_Update( PALETTE_ANIME* anime );
-// アニメーション開始
+// アニメーションを開始する
 extern void PALETTE_ANIME_Start( PALETTE_ANIME* anime, ANIME_TYPE type, u16 color );
-// アニメーション停止
+// アニメーションを停止する
 extern void PALETTE_ANIME_Stop( PALETTE_ANIME* anime );
-// パレットリセット
+// 操作したパレットをアニメーション開始時点の状態にリセットする
 extern void PALETTE_ANIME_Reset( PALETTE_ANIME* anime );

@@ -52,3 +52,6 @@ extern void BG_FONT_SetString( BG_FONT* BGFont, const STRBUF* strbuf );
 
 // 表示・非表示の設定
 extern void BG_FONT_SetDrawEnable( BG_FONT* BGFont, BOOL enable );
+
+// パレットナンバーを変更する
+extern void BG_FONT_SetPalette( BG_FONT* BGFont, u8 palnum );

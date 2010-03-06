@@ -1,20 +1,20 @@
-///////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 /**
  * @brief  ‰~ƒOƒ‰ƒt
  * @file   circle_graph.c
  * @author obata
  * @date   2010.2.21
  */
-/////////////////////////////////////////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////////////////////////////
 #include <math.h>
 #include <gflib.h>
 #include "circle_graph.h"
 #include "queue.h"
 
 
-//=========================================================================================
+//==============================================================================
 // ¡’è”
-//=========================================================================================
+//==============================================================================
 #define PI                   (3.1415926535f) // ‰~ü—¦
 #define PRINT_TARGET         (2)   // ƒfƒoƒbƒOî•ñ‚Ìo—Íæ
 #define STATE_QUEUE_SIZE     (10)  // ó‘ÔƒLƒ…[‚ÌƒTƒCƒY
@@ -24,15 +24,15 @@
 #define CIRCLE_VERTEX_COUNT  (CIRCLE_POINT_COUNT * 3) // ‰~‚Ì•`‰æ‚Ég—p‚·‚é’¸“_‚Ì”
 #define DIV_PERCENTAGE       (100.0f / CIRCLE_DIV_COUNT) // ƒ|ƒŠƒSƒ“‚ ‚½‚è‚ªè‚ß‚éŠ„‡
 #define MAX_COMPONENT_NUM    (20)  // ‰~ƒOƒ‰ƒt‚ÌÅ‘å\¬—v‘f”
-#define CIRCLE_RADIUS        (FX32_CONST(0.491f)) // ‰~ƒOƒ‰ƒt‚Ì”¼Œa
 #define CIRCLE_CENTER_X      (FX16_CONST(-0.707f)) // ‰~ƒOƒ‰ƒt’†S“_‚Ì x À•W
 #define CIRCLE_CENTER_Y      (FX16_CONST(-0.041f)) // ‰~ƒOƒ‰ƒt’†S“_‚Ì y À•W
-#define Z_STRIDE             (FX16_CONST(0.01f)) // \¬—v‘f‚²‚Æ‚Ì z ’l‚ÌŠÔŠu
-#define BOARDER_Z            (FX16_CONST(0.50f)) // ‹«ŠEü‚Ì z ’l
+#define CIRCLE_RADIUS        (FX32_CONST(0.491f)) // ‰~ƒOƒ‰ƒt‚Ì”¼Œa
+#define COMPONENT_POINT_RADIUS (0.42f) // \¬—v‘f‚ğw‚µ¦‚·êŠ‚ğŒˆ’è‚·‚é‰~‚Ì”¼Œa
+#define Z_STRIDE             (FX16_CONST(0.05f)) // \¬—v‘f‚²‚Æ‚Ì z ’l‚ÌŠÔŠu
+#define BOARDER_Z            (FX16_CONST(4.00f)) // ‹«ŠEü‚Ì z ’l
 #define BOARDER_COLOR_R      (0) // ‹«ŠEü‚ÌF(R)[0, 31]
 #define BOARDER_COLOR_B      (0) // ‹«ŠEü‚ÌF(G)[0, 31]
 #define BOARDER_COLOR_G      (0) // ‹«ŠEü‚ÌF(B)[0, 31]
-#define COMPONENT_POINT_RADIUS (0.42f) // \¬—v‘f‚ğw‚µ¦‚·êŠ‚ğŒˆ’è‚·‚é‰~‚Ì”¼Œa
 
 #define ANALYZE_FRAMES   (120) // ‰ğÍó‘Ô‚Ì“®ìƒtƒŒ[ƒ€”
 #define APPEAR_FRAMES    (30)  // oŒ»ó‘Ô‚Ì“®ìƒtƒŒ[ƒ€”
@@ -50,9 +50,9 @@ typedef enum {
 } GRAPH_STATE;
 
 
-//=========================================================================================
+//==============================================================================
 // ¡•`‰æ—p’¸“_ƒf[ƒ^
-//=========================================================================================
+//==============================================================================
 typedef struct {
   VecFx16 pos;       // À•W
   GXRgb   color;     // ’¸“_ƒJƒ‰[
@@ -60,9 +60,9 @@ typedef struct {
 } VERTEX;
 
 
-//=========================================================================================
+//==============================================================================
 // ¡ƒOƒ‰ƒt‚Ì\¬—v‘f’PˆÊ‚Ìƒf[ƒ^
-//=========================================================================================
+//==============================================================================
 typedef struct {
   u8  ID;              // \¬—v‘fID
   u32 value;           // ’l
@@ -78,9 +78,9 @@ typedef struct {
 } GRAPH_COMPONENT;
 
 
-//=========================================================================================
+//==============================================================================
 // ¡‰~ƒOƒ‰ƒt
-//=========================================================================================
+//==============================================================================
 struct _CIRCLE_GRAPH
 {
   HEAPID heapID;
@@ -103,68 +103,68 @@ struct _CIRCLE_GRAPH
 };
 
 
+//==============================================================================
+// ŸŠÖ”ƒCƒ“ƒfƒbƒNƒX
+//==============================================================================
 
-
-//=========================================================================================
-// ¡
-//========================================================================================= 
-
-//-----------------------------------------------------------------------------------------
-// •`‰æ
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+// •`‰æ
+//------------------------------------------------------------------------------
 static void DrawGraph( const CIRCLE_GRAPH* graph ); // ‰~ƒOƒ‰ƒt‚ğ•`‰æ‚·‚é
 static void DrawBoarder( const CIRCLE_GRAPH* graph ); // ‹«ŠEü‚ğ•`‰æ‚·‚é
 static void SetMatrix( const CIRCLE_GRAPH* graph ); // s—ñ‚ğİ’è‚·‚é
-
-//-----------------------------------------------------------------------------------------
-// “®ì
-//-----------------------------------------------------------------------------------------
-static void GraphMain( CIRCLE_GRAPH* graph );
-
-static void GraphAct_HIDE     ( CIRCLE_GRAPH* graph ); // ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_HIDE )
-static void GraphAct_ANALYZE  ( CIRCLE_GRAPH* graph ); // ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_ANALYZE )
-static void GraphAct_APPEAR   ( CIRCLE_GRAPH* graph ); // ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_APPEAR )
-static void GraphAct_DISAPPEAR( CIRCLE_GRAPH* graph ); // ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_DISAPPEAR )
-static void GraphAct_STAY     ( CIRCLE_GRAPH* graph ); // ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_STAY )
-static void GraphAct_UPDATE   ( CIRCLE_GRAPH* graph ); // ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_UPDATE )
-
-static void CountUpStateCount ( CIRCLE_GRAPH* graph ); // ó‘ÔƒJƒEƒ“ƒ^‚ğXV‚·‚é
-static void CountDownStopCount( CIRCLE_GRAPH* graph ); // ’â~ƒJƒEƒ“ƒ^‚ğXV‚·‚é
-
-static void SetNextState( CIRCLE_GRAPH* graph, GRAPH_STATE nextState ); // Ÿ‚Ìó‘Ô‚ğƒLƒ…[‚É“o˜^‚·‚é
-static void SwitchState( CIRCLE_GRAPH* graph ); // ó‘Ô‚ğØ‚è‘Ö‚¦‚é
-static void ChangeState( CIRCLE_GRAPH* graph, GRAPH_STATE nextState ); // ó‘Ô‚ğ•ÏX‚·‚é
-
+//------------------------------------------------------------------------------
+// “®ì
+//------------------------------------------------------------------------------
+static void GraphMain( CIRCLE_GRAPH* graph ); // ƒƒCƒ“ŠÖ”
+// ó‘ÔŠJnˆ—
 static void GraphStart_HIDE     ( CIRCLE_GRAPH* graph ); // ó‘ÔŠJnˆ— ( GRAPH_STATE_HIDE )
 static void GraphStart_ANALYZE  ( CIRCLE_GRAPH* graph ); // ó‘ÔŠJnˆ— ( GRAPH_STATE_ANALYZE )
 static void GraphStart_APPEAR   ( CIRCLE_GRAPH* graph ); // ó‘ÔŠJnˆ— ( GRAPH_STATE_APPEAR )
 static void GraphStart_DISAPPEAR( CIRCLE_GRAPH* graph ); // ó‘ÔŠJnˆ— ( GRAPH_STATE_DISAPPEAR )
 static void GraphStart_STAY     ( CIRCLE_GRAPH* graph ); // ó‘ÔŠJnˆ— ( GRAPH_STATE_STAY )
 static void GraphStart_UPDATE   ( CIRCLE_GRAPH* graph ); // ó‘ÔŠJnˆ— ( GRAPH_STATE_UPDATE )
-
+// ó‘Ô‚²‚Æ‚Ìˆ—
+static void GraphAct_HIDE     ( CIRCLE_GRAPH* graph ); // ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_HIDE )
+static void GraphAct_ANALYZE  ( CIRCLE_GRAPH* graph ); // ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_ANALYZE )
+static void GraphAct_APPEAR   ( CIRCLE_GRAPH* graph ); // ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_APPEAR )
+static void GraphAct_DISAPPEAR( CIRCLE_GRAPH* graph ); // ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_DISAPPEAR )
+static void GraphAct_STAY     ( CIRCLE_GRAPH* graph ); // ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_STAY )
+static void GraphAct_UPDATE   ( CIRCLE_GRAPH* graph ); // ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_UPDATE )
+// óI—¹ˆ—
 static void GraphFinish_HIDE     ( CIRCLE_GRAPH* graph ); // ó‘ÔI—¹ˆ— ( GRAPH_STATE_HIDE )
 static void GraphFinish_ANALYZE  ( CIRCLE_GRAPH* graph ); // ó‘ÔI—¹ˆ— ( GRAPH_STATE_ANALYZE )
 static void GraphFinish_APPEAR   ( CIRCLE_GRAPH* graph ); // ó‘ÔI—¹ˆ— ( GRAPH_STATE_APPEAR )
 static void GraphFinish_DISAPPEAR( CIRCLE_GRAPH* graph ); // ó‘ÔI—¹ˆ— ( GRAPH_STATE_DISAPPEAR )
 static void GraphFinish_STAY     ( CIRCLE_GRAPH* graph ); // ó‘ÔI—¹ˆ— ( GRAPH_STATE_STAY )
 static void GraphFinish_UPDATE   ( CIRCLE_GRAPH* graph ); // ó‘ÔI—¹ˆ— ( GRAPH_STATE_UPDATE )
-
-//-----------------------------------------------------------------------------------------
-// ŒÂ•Ê‘€ì
-//-----------------------------------------------------------------------------------------
+// ó‘Ô
+static void SetNextState( CIRCLE_GRAPH* graph, GRAPH_STATE nextState ); // Ÿ‚Ìó‘Ô‚ğƒLƒ…[‚É“o˜^‚·‚é
+static void SwitchState( CIRCLE_GRAPH* graph ); // ó‘Ô‚ğØ‚è‘Ö‚¦‚é
+static void ChangeState( CIRCLE_GRAPH* graph, GRAPH_STATE nextState ); // ó‘Ô‚ğ•ÏX‚·‚é
+// ƒJƒEƒ“ƒ^
+static void CountUpStateCount ( CIRCLE_GRAPH* graph ); // ó‘ÔƒJƒEƒ“ƒ^‚ğXV‚·‚é
+static void CountDownStopCount( CIRCLE_GRAPH* graph ); // ’â~ƒJƒEƒ“ƒ^‚ğXV‚·‚é
+//------------------------------------------------------------------------------
+// ŒÂ•Ê‘€ì
+//------------------------------------------------------------------------------
+// \¬—v‘f
 static void ResetComponents( CIRCLE_GRAPH* graph ); // \¬—v‘f‚ğƒŠƒZƒbƒg‚·‚é
 static void AddComponent( CIRCLE_GRAPH* graph, const GRAPH_COMPONENT_ADD_DATA* newComponent ); // \¬—v‘f‚ğ’Ç‰Á‚·‚é
 static void LowerSortComponents( CIRCLE_GRAPH* graph ); // \¬—v‘f‚ğ~‡ƒ\[ƒg‚·‚é
 static void UpdateComponentsPercentage( CIRCLE_GRAPH* graph ); // Še\¬—v‘f‚ÌŠ„‡‚ğXV‚·‚é
 static void UpdateComponentsScope( CIRCLE_GRAPH* graph ); // Še\¬—v‘f‚ªè‚ß‚éŠ„‡‚Ì”ÍˆÍ‚ğXV‚·‚é
+// •`‰æ—p’¸“_ƒŠƒXƒg
 static void UpdateDrawVertices( CIRCLE_GRAPH* graph ); // •`‰æ‚Ég—p‚·‚é’¸“_ƒŠƒXƒg‚ğXV‚·‚é
+// •`‰æ‹–‰Âƒtƒ‰ƒO
 static void SetDrawEnable( CIRCLE_GRAPH* graph, BOOL enable ); // •`‰æ‚Ì‹–‰Âó‘Ô‚ğİ’è‚·‚é
+// “®ì’â~ƒtƒ‰ƒO
 static void StopGraph( CIRCLE_GRAPH* graph, u32 frames ); // “®ì‚ğ’â~‚³‚¹‚é
+// À•W
 static void SetCenterPos( CIRCLE_GRAPH* graph, const VecFx16* pos ); // ’†S“_‚ÌÀ•W‚ğİ’è‚·‚é
-
-//-----------------------------------------------------------------------------------------
-// æ“¾E”»’è
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+// æ“¾E”»’è
+//------------------------------------------------------------------------------
 const u8 GetComponentRank( const CIRCLE_GRAPH* graph, u8 componentID ); // \¬—v‘f‚Ìƒ‰ƒ“ƒN
 const GRAPH_COMPONENT* GetComponentByID( const CIRCLE_GRAPH* graph, u8 componentID ); // \¬—v‘f
 const GRAPH_COMPONENT* GetComponentByRank( const CIRCLE_GRAPH* graph, int compoentRank ); // \¬—v‘f
@@ -177,9 +177,9 @@ static BOOL GetDrawEnable( const CIRCLE_GRAPH* graph ); // •`‰æ‚ª‹–‰Â‚³‚ê‚Ä‚¢‚é‚
 static BOOL CheckAnime( const CIRCLE_GRAPH* graph ); // ƒAƒjƒ[ƒVƒ‡ƒ“’†‚©‚Ç‚¤‚©
 static void GetComponentPointPos( const CIRCLE_GRAPH* graph, const GRAPH_COMPONENT* component, VecFx16* dest ); // –îˆó‚Ìw‚·‚×‚«À•W
 
-//-----------------------------------------------------------------------------------------
-// ‰Šú‰»E¶¬E”jŠüE€”õ
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+// ‰Šú‰»E¶¬E”jŠüE€”õ
+//------------------------------------------------------------------------------
 // layer 1
 static void SetupGraph( CIRCLE_GRAPH* graph );   // ‰~ƒOƒ‰ƒt ƒZƒbƒgƒAƒbƒv
 static void CleanUpGraph( CIRCLE_GRAPH* graph ); // ‰~ƒOƒ‰ƒt ƒNƒŠ[ƒ“ƒAƒbƒv
@@ -191,14 +191,14 @@ static void CreateStateQueue( CIRCLE_GRAPH* graph ); // ó‘ÔƒLƒ…[ ¶¬
 static void DeleteStateQueue( CIRCLE_GRAPH* graph ); // ó‘ÔƒLƒ…[ ”jŠü
 static void SetupCirclePoints( CIRCLE_GRAPH* graph ); // ŠOü’¸“_‚ÌÀ•W €”õ
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // ŒvZ
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void CalcScreenPos( const VecFx16* pos, int* destX, int* destY ); // ƒXƒNƒŠ[ƒ“À•W‚ğŒvZ‚·‚é
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // ƒfƒoƒbƒO
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void DebugPrint_stateQueue( const CIRCLE_GRAPH* graph ); // ó‘ÔƒLƒ…[
 static void DebugPrint_components( const CIRCLE_GRAPH* graph ); // \¬—v‘f
 
@@ -206,11 +206,11 @@ static void DebugPrint_components( const CIRCLE_GRAPH* graph ); // \¬—v‘f
 
 
 
-//========================================================================================= 
+//===============================================================================
 // ¡ŠO•”ŒöŠJŠÖ”
-//========================================================================================= 
+//===============================================================================
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ‰~ƒOƒ‰ƒt‚ğì¬‚·‚é
  *
@@ -218,7 +218,7 @@ static void DebugPrint_components( const CIRCLE_GRAPH* graph ); // \¬—v‘f
  *
  * @return ì¬‚µ‚½‰~ƒOƒ‰ƒt
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 CIRCLE_GRAPH* CIRCLE_GRAPH_Create( HEAPID heapID )
 {
   CIRCLE_GRAPH* graph;
@@ -229,20 +229,20 @@ CIRCLE_GRAPH* CIRCLE_GRAPH_Create( HEAPID heapID )
   return graph;
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ‰~ƒOƒ‰ƒt‚ğ”jŠü‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void CIRCLE_GRAPH_Delete( CIRCLE_GRAPH* graph )
 {
   CleanUpGraph( graph ); // ƒNƒŠ[ƒ“ƒAƒbƒv
   DeleteGraph( graph );  // ”jŠü
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚ğƒZƒbƒg‚·‚é
  *
@@ -250,7 +250,7 @@ void CIRCLE_GRAPH_Delete( CIRCLE_GRAPH* graph )
  * @param data    \¬—v‘f‚Ìƒf[ƒ^”z—ñ
  * @param dataNum \¬—v‘f‚Ìƒf[ƒ^”
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void CIRCLE_GRAPH_SetupComponents(
     CIRCLE_GRAPH* graph, const GRAPH_COMPONENT_ADD_DATA* data, u8 componentNum )
 {
@@ -275,14 +275,14 @@ void CIRCLE_GRAPH_SetupComponents(
   DebugPrint_components( graph );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚ğ’Ç‰Á‚·‚é
  *
  * @param graph
  * @param data  ’Ç‰Á‚·‚é\¬—v‘f‚Ìƒf[ƒ^
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void CIRCLE_GRAPH_AddComponent( CIRCLE_GRAPH* graph, const GRAPH_COMPONENT_ADD_DATA* data )
 {
   AddComponent( graph, data );         // ’Ç‰Á
@@ -295,125 +295,144 @@ void CIRCLE_GRAPH_AddComponent( CIRCLE_GRAPH* graph, const GRAPH_COMPONENT_ADD_D
   DebugPrint_components( graph );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ‰~ƒOƒ‰ƒt‚ÌƒƒCƒ““®ì
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void CIRCLE_GRAPH_Main( CIRCLE_GRAPH* graph )
 {
   GraphMain( graph ); 
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ‰~ƒOƒ‰ƒt‚ğ•`‰æ‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void CIRCLE_GRAPH_Draw( const CIRCLE_GRAPH* graph )
 {
   if( (GetDrawEnable(graph) == TRUE) && (graph->state != GRAPH_STATE_HIDE) )
   {
     SetMatrix( graph );   // s—ñ‚ğİ’è‚·‚é
     DrawGraph( graph );   // ‰~ƒOƒ‰ƒt‚ğ•`‰æ‚·‚é
-    //DrawBoarder( graph ); // ‹«ŠEü‚ğ•`‰æ‚·‚é
+    DrawBoarder( graph ); // ‹«ŠEü‚ğ•`‰æ‚·‚é
   }
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ‰ğÍƒŠƒNƒGƒXƒg‚ğ”­s‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void CIRCLE_GRAPH_AnalyzeReq( CIRCLE_GRAPH* graph )
 {
   SetNextState( graph, GRAPH_STATE_ANALYZE );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief •\¦ƒŠƒNƒGƒXƒg‚ğ”­s‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void CIRCLE_GRAPH_AppearReq( CIRCLE_GRAPH* graph )
 {
   SetNextState( graph, GRAPH_STATE_APPEAR );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief Á‹ƒŠƒNƒGƒXƒg‚ğ”­s‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void CIRCLE_GRAPH_DisappearReq( CIRCLE_GRAPH* graph )
 {
   SetNextState( graph, GRAPH_STATE_DISAPPEAR );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief XVƒŠƒNƒGƒXƒg‚ğ”­s‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void CIRCLE_GRAPH_UpdateReq( CIRCLE_GRAPH* graph )
 {
   SetNextState( graph, GRAPH_STATE_UPDATE );
 }
 
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief •`‰æ‚Ì‹–‰Âó‘Ô‚ğİ’è‚·‚é
  *
  * @param graph
  * @param enable •`‰æ‚ğ‹–‰Â‚·‚é‚È‚ç TRUE
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void CIRCLE_GRAPH_SetDrawEnable( CIRCLE_GRAPH* graph, BOOL enable )
 {
   SetDrawEnable( graph, enable );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ƒOƒ‰ƒt‚Ì“®ì‚ğ’â~‚³‚¹‚é
  *
  * @param graph
  * @param frames ’â~ƒtƒŒ[ƒ€”
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void CIRCLE_GRAPH_StopGraph( CIRCLE_GRAPH* graph, u32 frames )
 {
   StopGraph( graph, frames );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ƒOƒ‰ƒt‚Ì’†S“_‚ÌÀ•W‚ğİ’è‚·‚é
  *
  * @param graph
  * @param pos    ’†S“_‚ÌÀ•W
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void CIRCLE_GRAPH_SetCenterPos( CIRCLE_GRAPH* graph, const VecFx16* pos )
 {
   SetCenterPos( graph, pos );  // ’†S“_‚ğİ’è
   UpdateDrawVertices( graph ); // •`‰æ‚Ég—p‚·‚é’¸“_À•W‚ğXV
 } 
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+/**
+ * @brief ƒOƒ‰ƒt‚Ì’†S“_‚ÌÀ•W‚ğİ’è‚·‚é
+ *
+ * @param graph
+ * @param z    ’†S“_‚ÌzÀ•W
+ */
+//------------------------------------------------------------------------------
+void CIRCLE_GRAPH_SetCenterZ( CIRCLE_GRAPH* graph, fx16 z )
+{
+  VecFx16 pos;
+
+  // zÀ•W‚Ì‚İ‚ğ•ÏX‚µ‚½’†S“_‚ÌˆÊ’uƒxƒNƒgƒ‹‚ğì¬
+  VEC_Fx16Set( &pos, graph->centerPos.x, graph->centerPos.y, z );
+
+  // ’†S“_‚ğİ’è
+  CIRCLE_GRAPH_SetCenterPos( graph, &pos );
+} 
+
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚Ì”‚ğæ“¾‚·‚é  
  *
@@ -421,13 +440,13 @@ void CIRCLE_GRAPH_SetCenterPos( CIRCLE_GRAPH* graph, const VecFx16* pos )
  *
  * @return w’è‚µ‚½‰~ƒOƒ‰ƒt‚Ì\¬—v‘f‚Ì”
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 u8 CIRCLE_GRAPH_GetComponentNum( const CIRCLE_GRAPH* graph )
 {
   return graph->componentNum;
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚Ì’l‚ğæ“¾‚·‚é ( \¬—v‘fID‚ğw’è )
  *
@@ -436,7 +455,7 @@ u8 CIRCLE_GRAPH_GetComponentNum( const CIRCLE_GRAPH* graph )
  *
  * @return w’è‚µ‚½\¬—v‘f‚Ì’l
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 u32 CIRCLE_GRAPH_GetComponentValue_byID( const CIRCLE_GRAPH* graph, u8 componentID )
 {
   const GRAPH_COMPONENT* component;
@@ -446,7 +465,7 @@ u32 CIRCLE_GRAPH_GetComponentValue_byID( const CIRCLE_GRAPH* graph, u8 component
   return component->value;
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚Ì’l‚ğæ“¾‚·‚é ( ƒ‰ƒ“ƒN‚ğw’è )
  *
@@ -455,7 +474,7 @@ u32 CIRCLE_GRAPH_GetComponentValue_byID( const CIRCLE_GRAPH* graph, u8 component
  *
  * @return w’è‚µ‚½\¬—v‘f‚Ì’l
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 u32 CIRCLE_GRAPH_GetComponentValue_byRank( const CIRCLE_GRAPH* graph, u8 rank )
 {
   const GRAPH_COMPONENT* component;
@@ -465,7 +484,7 @@ u32 CIRCLE_GRAPH_GetComponentValue_byRank( const CIRCLE_GRAPH* graph, u8 rank )
   return component->value;
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚ªãˆÊ‰½ˆÊ‚È‚Ì‚©‚ğæ“¾‚·‚é ( \¬—v‘fID‚ğw’è )
  *
@@ -474,13 +493,13 @@ u32 CIRCLE_GRAPH_GetComponentValue_byRank( const CIRCLE_GRAPH* graph, u8 rank )
  *
  * @return w’è‚µ‚½\¬—v‘f‚ªãˆÊ‰½ˆÊ‚È‚Ì‚©
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 u8 CIRCLE_GRAPH_GetComponentRank_byID( const CIRCLE_GRAPH* graph, u8 componentID )
 {
   return GetComponentRank( graph, componentID );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚ªãˆÊ‰½ˆÊ‚È‚Ì‚©‚ğæ“¾‚·‚é ( ƒ‰ƒ“ƒN‚ğw’è )
  *
@@ -489,7 +508,7 @@ u8 CIRCLE_GRAPH_GetComponentRank_byID( const CIRCLE_GRAPH* graph, u8 componentID
  *
  * @return w’è‚µ‚½ƒ‰ƒ“ƒN‚Ì\¬—v‘f‚ÌID
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 u8 CIRCLE_GRAPH_GetComponentID_byRank( const CIRCLE_GRAPH* graph, u8 rank )
 {
   const GRAPH_COMPONENT* component;
@@ -499,7 +518,7 @@ u8 CIRCLE_GRAPH_GetComponentID_byRank( const CIRCLE_GRAPH* graph, u8 rank )
   return component->ID;
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚ªè‚ß‚é, ƒOƒ‰ƒt“à‚ÌŠ„‡‚ğæ“¾‚·‚é ( \¬—v‘fID‚ğw’è )
  *
@@ -508,7 +527,7 @@ u8 CIRCLE_GRAPH_GetComponentID_byRank( const CIRCLE_GRAPH* graph, u8 rank )
  *
  * @return \¬—v‘f‚ªè‚ß‚é, ƒOƒ‰ƒt“à‚ÌŠ„‡
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 u8 CIRCLE_GRAPH_GetComponentPercentage_byID( const CIRCLE_GRAPH* graph, u8 componentID )
 {
   const GRAPH_COMPONENT* component;
@@ -518,7 +537,7 @@ u8 CIRCLE_GRAPH_GetComponentPercentage_byID( const CIRCLE_GRAPH* graph, u8 compo
   return component->percentage;
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚ªè‚ß‚é, ƒOƒ‰ƒt“à‚ÌŠ„‡‚ğæ“¾‚·‚é ( ƒ‰ƒ“ƒN‚ğw’è )
  *
@@ -527,7 +546,7 @@ u8 CIRCLE_GRAPH_GetComponentPercentage_byID( const CIRCLE_GRAPH* graph, u8 compo
  *
  * @return \¬—v‘f‚ªè‚ß‚é, ƒOƒ‰ƒt“à‚ÌŠ„‡
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 u8 CIRCLE_GRAPH_GetComponentPercentage_byRank( const CIRCLE_GRAPH* graph, u8 rank )
 {
   const GRAPH_COMPONENT* component;
@@ -537,7 +556,7 @@ u8 CIRCLE_GRAPH_GetComponentPercentage_byRank( const CIRCLE_GRAPH* graph, u8 ran
   return component->percentage;
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @breif ƒAƒjƒ[ƒVƒ‡ƒ“’†‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
  *
@@ -546,13 +565,13 @@ u8 CIRCLE_GRAPH_GetComponentPercentage_byRank( const CIRCLE_GRAPH* graph, u8 ran
  * @return ƒAƒjƒ[ƒVƒ‡ƒ“’†‚È‚ç TRUE
  *         ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 BOOL CIRCLE_GRAPH_IsAnime( const CIRCLE_GRAPH* graph )
 {
   return CheckAnime( graph );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief –îˆó‚ªw‚µ¦‚·‚×‚«À•W‚ğæ“¾‚·‚é ( \¬—v‘fID‚ğw’è )
  *
@@ -561,7 +580,7 @@ BOOL CIRCLE_GRAPH_IsAnime( const CIRCLE_GRAPH* graph )
  * @param destX       ƒXƒNƒŠ[ƒ“xÀ•W‚ÌŠi”[æ
  * @param destY       ƒXƒNƒŠ[ƒ“yÀ•W‚ÌŠi”[æ
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void CIRCLE_GRAPH_GetComponentPointPos_byID( const CIRCLE_GRAPH* graph, u8 componentID, int* destX, int* destY )
 {
   const GRAPH_COMPONENT* component;
@@ -572,7 +591,7 @@ void CIRCLE_GRAPH_GetComponentPointPos_byID( const CIRCLE_GRAPH* graph, u8 compo
   CalcScreenPos( &worldPos, destX, destY );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief –îˆó‚ªw‚µ¦‚·‚×‚«À•W‚ğæ“¾‚·‚é ( ƒ‰ƒ“ƒN‚ğw’è )
  *
@@ -581,7 +600,7 @@ void CIRCLE_GRAPH_GetComponentPointPos_byID( const CIRCLE_GRAPH* graph, u8 compo
  * @param destX ƒXƒNƒŠ[ƒ“xÀ•W‚ÌŠi”[æ
  * @param destY ƒXƒNƒŠ[ƒ“yÀ•W‚ÌŠi”[æ
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void CIRCLE_GRAPH_GetComponentPointPos_byRank( const CIRCLE_GRAPH* graph, u8 rank, int* destX, int* destY )
 {
   const GRAPH_COMPONENT* component;
@@ -593,17 +612,17 @@ void CIRCLE_GRAPH_GetComponentPointPos_byRank( const CIRCLE_GRAPH* graph, u8 ran
 }
 
 
-//=========================================================================================
+//==============================================================================
 // •`‰æ
-//=========================================================================================
+//==============================================================================
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ‰~ƒOƒ‰ƒt‚ğ•`‰æ‚·‚é
  *
  * @param
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void DrawGraph( const CIRCLE_GRAPH* graph )
 {
   int drawPolygonNum;
@@ -688,18 +707,21 @@ static void DrawGraph( const CIRCLE_GRAPH* graph )
   }
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ‹«ŠEü‚ğ•`‰æ‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void DrawBoarder( const CIRCLE_GRAPH* graph )
 {
   int componentIdx;
   int componentNum; // \¬—v‘f‚Ì”
   GXRgb boarderColor; // ‹«ŠEü‚ÌF
+
+  // ƒAƒjƒ[ƒVƒ‡ƒ“’†‚Í•`‰æ‚µ‚È‚¢
+  if( CheckAnime(graph) ) { return; }
 
   // ƒ|ƒŠƒSƒ“ŠÖ˜A‘®«’l‚ğİ’è
   G3_PolygonAttr( 
@@ -725,33 +747,35 @@ static void DrawBoarder( const CIRCLE_GRAPH* graph )
     component = GetComponentByRank( graph, componentIdx );
     GetComponentCirclePointIndex( component, &headPointIdx, &tailPointIdx ); // \¬—v‘f‚ªŠÜ‚ŞŠOü’¸“_‚Ì”ÍˆÍ
 
-    // ƒ‰ƒCƒ“‚Ì—¼’[‚ÌÀ•W‚ğŒˆ’è
+    // è‚ß‚éŠ„‡‚ªˆê’è’lˆÈ‰º‚Ìê‡, •`‰æ‚ğƒXƒLƒbƒv‚·‚é
+    if( component->percentage < 3 ) { continue; } 
+
+    // ƒ‰ƒCƒ“n“_‚ÌÀ•W‚ğİ’è
     lineStartPos.x = graph->centerPos.x;
     lineStartPos.y = graph->centerPos.y;
     lineStartPos.z = BOARDER_Z;
+    // ƒ‰ƒCƒ“I“_‚ÌÀ•W‚ğŒvZ
     lineEndPos.x = graph->centerPos.x + graph->circlePoints[ headPointIdx ].x;
     lineEndPos.y = graph->centerPos.y + graph->circlePoints[ headPointIdx ].y;
     lineEndPos.z = BOARDER_Z;
 
     // \¬—v‘f‚Ìæ“ª‘¤‚Éƒ‰ƒCƒ“‚ğˆø‚­
-    G3_Begin( GX_BEGIN_TRIANGLES );
-
+    G3_Begin( GX_BEGIN_TRIANGLES ); 
     G3_Color( boarderColor );
     G3_Vtx( lineStartPos.x, lineStartPos.y, lineStartPos.z ); // ’¸“_1
     G3_Vtx( lineStartPos.x, lineStartPos.y, lineStartPos.z ); // ’¸“_2
-    G3_Vtx( lineEndPos.x, lineEndPos.y, lineEndPos.z );       // ’¸“_3
-
+    G3_Vtx( lineEndPos.x, lineEndPos.y, lineEndPos.z );       // ’¸“_3 
     G3_End();
   }
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief s—ñ‚ğƒZƒbƒg‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void SetMatrix( const CIRCLE_GRAPH* graph )
 {
   VecFx32 camPos, camUp, target;
@@ -760,8 +784,7 @@ static void SetMatrix( const CIRCLE_GRAPH* graph )
   VEC_Set( &camUp, 0, FX32_ONE, 0 );
   VEC_Set( &target, 0, 0, 0 );
 
-  G3_LookAt( &camPos, &camUp, &target, NULL );
-
+  G3_LookAt( &camPos, &camUp, &target, NULL ); 
   G3_Ortho( FX_F32_TO_FX16(1.0f),
             FX_F32_TO_FX16(-1.0f),
             FX_F32_TO_FX16(-1.333f),
@@ -770,33 +793,30 @@ static void SetMatrix( const CIRCLE_GRAPH* graph )
             FX_F32_TO_FX16(5.0f),
             NULL ); 
 
-  NNS_G3dGlbInit();
-
-  NNS_G3dGlbLookAt( &camPos, &camUp, &target );
-
+  NNS_G3dGlbInit(); 
+  NNS_G3dGlbLookAt( &camPos, &camUp, &target ); 
   NNS_G3dGlbOrtho( FX32_CONST(1.0f),
                    FX32_CONST(-1.0f),
                    FX32_CONST(-1.333f),
                    FX32_CONST(1.333f),
                    FX32_CONST(0.1f),
-                   FX32_CONST(5.0f) );
-
+                   FX32_CONST(5.0f) ); 
   NNS_G3dGlbFlushP();
 }
 
 
 
-//=========================================================================================
+//==============================================================================
 // ¡“®ì
-//========================================================================================= 
+//===============================================================================
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ƒƒCƒ“ŠÖ”
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphMain( CIRCLE_GRAPH* graph )
 {
   if( graph->stopFlag == FALSE ) {
@@ -819,13 +839,13 @@ static void GraphMain( CIRCLE_GRAPH* graph )
   CountDownStopCount( graph );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_HIDE )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphAct_HIDE( CIRCLE_GRAPH* graph )
 {
   // ƒLƒ…[‚ª‹ó‚Å‚È‚¯‚ê‚Îó‘Ô‘JˆÚ‚·‚é
@@ -835,13 +855,13 @@ static void GraphAct_HIDE( CIRCLE_GRAPH* graph )
   }
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_ANALYZE )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphAct_ANALYZE( CIRCLE_GRAPH* graph )
 {
   // ˆê’èŠÔŒo‰ß‚Åó‘Ô‘JˆÚ‚·‚é
@@ -851,13 +871,13 @@ static void GraphAct_ANALYZE( CIRCLE_GRAPH* graph )
   }
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_APPEAR )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphAct_APPEAR( CIRCLE_GRAPH* graph )
 {
   // ˆê’èŠÔŒo‰ß‚Åó‘Ô‘JˆÚ‚·‚é
@@ -867,13 +887,13 @@ static void GraphAct_APPEAR( CIRCLE_GRAPH* graph )
   }
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_DISAPPEAR )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphAct_DISAPPEAR( CIRCLE_GRAPH* graph )
 {
   // ˆê’èŠÔŒo‰ß‚Åó‘Ô‘JˆÚ‚·‚é
@@ -883,13 +903,13 @@ static void GraphAct_DISAPPEAR( CIRCLE_GRAPH* graph )
   }
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_STAY )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphAct_STAY( CIRCLE_GRAPH* graph )
 {
   // ƒLƒ…[‚ª‹ó‚Å‚È‚¯‚ê‚Îó‘Ô‘JˆÚ‚·‚é
@@ -899,13 +919,13 @@ static void GraphAct_STAY( CIRCLE_GRAPH* graph )
   }
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔƒƒCƒ““®ì ( GRAPH_STATE_UPDATE )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphAct_UPDATE( CIRCLE_GRAPH* graph )
 {
   // ˆê’èŠÔŒo‰ß‚Åó‘Ô‘JˆÚ‚·‚é
@@ -915,13 +935,13 @@ static void GraphAct_UPDATE( CIRCLE_GRAPH* graph )
   }
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔƒJƒEƒ“ƒ^‚ğXV‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void CountUpStateCount( CIRCLE_GRAPH* graph )
 {
   u32 maxCount;
@@ -948,13 +968,13 @@ static void CountUpStateCount( CIRCLE_GRAPH* graph )
 }
 
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ’â~ó‘Ô‚ÌƒJƒEƒ“ƒgƒ_ƒEƒ“ˆ—
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void CountDownStopCount( CIRCLE_GRAPH* graph )
 {
   // ’â~‚µ‚Ä‚¢‚È‚¢
@@ -969,14 +989,14 @@ static void CountDownStopCount( CIRCLE_GRAPH* graph )
   }
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief Ÿ‚Ìó‘Ô‚ğƒLƒ…[‚É“o˜^‚·‚é
  *
  * @param graph
  * @param nextState ƒLƒ…[‚É“o˜^‚·‚éó‘Ô
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void SetNextState( CIRCLE_GRAPH* graph, GRAPH_STATE nextState )
 {
   // ƒGƒ“ƒLƒ…[
@@ -987,13 +1007,13 @@ static void SetNextState( CIRCLE_GRAPH* graph, GRAPH_STATE nextState )
   DebugPrint_stateQueue( graph );  // ƒLƒ…[‚Ìó‘Ô‚ğo—Í
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘Ô‚ğØ‚è‘Ö‚¦‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void SwitchState( CIRCLE_GRAPH* graph )
 {
   GRAPH_STATE nextState;
@@ -1006,14 +1026,14 @@ static void SwitchState( CIRCLE_GRAPH* graph )
   DebugPrint_stateQueue( graph );  // ƒLƒ…[‚Ìó‘Ô‚ğo—Í
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘Ô‚ğ•ÏX‚·‚é
  *
  * @param graph
  * @param nextState
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void ChangeState( CIRCLE_GRAPH* graph, GRAPH_STATE nextState )
 {
   // Œ»İ‚Ìó‘Ô‚ÌI—¹ˆ—
@@ -1056,91 +1076,91 @@ static void ChangeState( CIRCLE_GRAPH* graph, GRAPH_STATE nextState )
   OS_TFPrintf( PRINT_TARGET, "\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔŠJnˆ— ( GRAPH_STATE_HIDE )
  *
  * @param graph
  */
-//----------------------------------------------------------------------------------------- 
+//-------------------------------------------------------------------------------
 static void GraphStart_HIDE( CIRCLE_GRAPH* graph )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: start state HIDE\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔŠJnˆ— ( GRAPH_STATE_ANALYZE )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphStart_ANALYZE( CIRCLE_GRAPH* graph )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: start state ANALYZE\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔŠJnˆ— ( GRAPH_STATE_APPEAR )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphStart_APPEAR( CIRCLE_GRAPH* graph )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: start state APPEAR\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔŠJnˆ— ( GRAPH_STATE_DISAPPEAR )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphStart_DISAPPEAR( CIRCLE_GRAPH* graph )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: start state DISAPPEAR\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔŠJnˆ— ( GRAPH_STATE_STAY )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphStart_STAY( CIRCLE_GRAPH* graph )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: start state STAY\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔŠJnˆ— ( GRAPH_STATE_UPDATE )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphStart_UPDATE( CIRCLE_GRAPH* graph )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: start state UPDATE\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔI—¹ˆ— ( GRAPH_STATE_HIDE )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 static void GraphFinish_HIDE( CIRCLE_GRAPH* graph )
 {
@@ -1148,65 +1168,65 @@ static void GraphFinish_HIDE( CIRCLE_GRAPH* graph )
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: finish state HIDE\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔI—¹ˆ— ( GRAPH_STATE_ANALYZE )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphFinish_ANALYZE( CIRCLE_GRAPH* graph )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: finish state ANALYZE\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔI—¹ˆ— ( GRAPH_STATE_APPEAR )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphFinish_APPEAR( CIRCLE_GRAPH* graph )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: finish state APPEAR\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔI—¹ˆ— ( GRAPH_STATE_DISAPPEAR )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphFinish_DISAPPEAR( CIRCLE_GRAPH* graph )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: finish state DISAPPEAR\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔI—¹ˆ— ( GRAPH_STATE_STAY )
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphFinish_STAY( CIRCLE_GRAPH* graph )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: finish state STAY\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔI—¹ˆ— ( GRAPH_STATE_UPDATE ) 
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GraphFinish_UPDATE( CIRCLE_GRAPH* graph )
 {
   // DEBUG:
@@ -1216,17 +1236,17 @@ static void GraphFinish_UPDATE( CIRCLE_GRAPH* graph )
 
 
 
-//=========================================================================================
+//==============================================================================
 // ¡ŒÂ•Ê‘€ì
-//=========================================================================================
+//==============================================================================
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚ğƒŠƒZƒbƒg‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void ResetComponents( CIRCLE_GRAPH* graph )
 {
   graph->componentNum = 0;                // —LŒø‚È\¬—v‘f‚Ì”‚ğƒŠƒZƒbƒg
@@ -1234,14 +1254,14 @@ static void ResetComponents( CIRCLE_GRAPH* graph )
   ChangeState( graph, GRAPH_STATE_HIDE ); // ó‘Ô‚ğ•ÏX‚·‚é
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ƒOƒ‰ƒt‚Ì\¬—v‘f‚ğ’Ç‰Á‚·‚é
  *
  * @param graph
  * @param newComponent ’Ç‰Á‚·‚é\¬—v‘f‚Ìƒf[ƒ^
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void AddComponent( CIRCLE_GRAPH* graph, const GRAPH_COMPONENT_ADD_DATA* newComponent )
 {
   // \¬—v‘f”ƒI[ƒo[ƒtƒ[
@@ -1265,13 +1285,13 @@ static void AddComponent( CIRCLE_GRAPH* graph, const GRAPH_COMPONENT_ADD_DATA* n
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: add new component(%d)\n", graph->componentNum );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚ğ~‡ƒ\[ƒg‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void LowerSortComponents( CIRCLE_GRAPH* graph )
 {
   int idx;
@@ -1303,13 +1323,13 @@ static void LowerSortComponents( CIRCLE_GRAPH* graph )
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: lower sort components\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief Še\¬—v‘f‚ªè‚ß‚éŠ„‡‚ğXV‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void UpdateComponentsPercentage( CIRCLE_GRAPH* graph )
 {
   int totalValue;
@@ -1347,13 +1367,13 @@ static void UpdateComponentsPercentage( CIRCLE_GRAPH* graph )
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: update components percentage\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief Še\¬—v‘f‚ªè‚ß‚éŠ„‡‚Ì”ÍˆÍ‚ğXV‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void UpdateComponentsScope( CIRCLE_GRAPH* graph )
 {
   int idx;
@@ -1382,13 +1402,13 @@ static void UpdateComponentsScope( CIRCLE_GRAPH* graph )
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: update components scope\n" );
 } 
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief •`‰æ‚Ég—p‚·‚é’¸“_ƒŠƒXƒg‚ğXV‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void UpdateDrawVertices( CIRCLE_GRAPH* graph )
 {
   int vertexIdx;
@@ -1417,7 +1437,7 @@ static void UpdateDrawVertices( CIRCLE_GRAPH* graph )
     // ’†S“_‚ÌÀ•W‚ğŒˆ’è
     centerPos.x = graph->centerPos.x;
     centerPos.y = graph->centerPos.y;
-    centerPos.z = graph->centerPos.z + Z_STRIDE * componentIdx; // \¬—v‘f‚²‚Æ‚ÉˆÙ‚È‚é z’l ‚Å•`‰æ‚·‚é
+    centerPos.z = graph->centerPos.z - Z_STRIDE * componentIdx; // \¬—v‘f‚²‚Æ‚ÉˆÙ‚È‚é z’l ‚Å•`‰æ‚·‚é
 
     // \¬—v‘f‚ªè‚ß‚éŠ„‡‚Ì”ÍˆÍ“à‚É‚ ‚é, ‚·‚×‚Ä‚ÌŠOü’¸“_‚ª\¬‚·‚éƒ|ƒŠƒSƒ“‚ğ’Ç‰Á‚·‚é
     for( circlePointIdx=headPointIdx; circlePointIdx <= tailPointIdx; circlePointIdx++ )
@@ -1451,52 +1471,52 @@ static void UpdateDrawVertices( CIRCLE_GRAPH* graph )
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: update draw vertices\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief •`‰æ‚Ì‹–‰Âó‘Ô‚ğİ’è‚·‚é
  *
  * @param graph
  * @param enable •`‰æ‚ğ‹–‰Â‚·‚é‚È‚ç TRUE
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void SetDrawEnable( CIRCLE_GRAPH* graph, BOOL enable )
 {
   graph->drawFlag = enable;
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ƒOƒ‰ƒt‚Ì“®ì‚ğ’â~‚³‚¹‚é
  *
  * @param graph
  * @param frames ’â~ƒtƒŒ[ƒ€”
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void StopGraph( CIRCLE_GRAPH* graph, u32 frames )
 {
   graph->stopFlag  = TRUE;
   graph->stopCount = frames;
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ’†S“_‚ÌÀ•W‚ğİ’è‚·‚é
  *
  * @param graph
  * @param pos
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void SetCenterPos( CIRCLE_GRAPH* graph, const VecFx16* pos )
 {
   VEC_Fx16Set( &(graph->centerPos), pos->x, pos->y, pos->z );
 }
 
 
-//=========================================================================================
+//==============================================================================
 // ¡æ“¾
-//=========================================================================================
+//==============================================================================
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚Ìƒ‰ƒ“ƒN‚ğæ“¾‚·‚é
  *
@@ -1505,7 +1525,7 @@ static void SetCenterPos( CIRCLE_GRAPH* graph, const VecFx16* pos )
  *
  * @return w’è‚µ‚½ID‚Ì\¬—v‘f‚ªãˆÊ‰½ˆÊ‚È‚Ì‚© [0, —v‘f”-1]
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 const u8 GetComponentRank( const CIRCLE_GRAPH* graph, u8 componentID )
 {
   int rank;
@@ -1526,7 +1546,7 @@ const u8 GetComponentRank( const CIRCLE_GRAPH* graph, u8 componentID )
   return 0;
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚ğæ“¾‚·‚é
  *
@@ -1535,7 +1555,7 @@ const u8 GetComponentRank( const CIRCLE_GRAPH* graph, u8 componentID )
  *
  * @return w’è‚µ‚½ƒCƒ“ƒfƒbƒNƒX‚Ì\¬—v‘f
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 const GRAPH_COMPONENT* GetComponentByRank( const CIRCLE_GRAPH* graph, int rank )
 {
   // ƒCƒ“ƒfƒbƒNƒX ƒGƒ‰[
@@ -1544,7 +1564,7 @@ const GRAPH_COMPONENT* GetComponentByRank( const CIRCLE_GRAPH* graph, int rank )
   return &( graph->components[ rank ] );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚ğæ“¾‚·‚é
  *
@@ -1553,7 +1573,7 @@ const GRAPH_COMPONENT* GetComponentByRank( const CIRCLE_GRAPH* graph, int rank )
  *
  * @param w’è‚µ‚½ID‚ğ‚Â\¬—v‘f
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 const GRAPH_COMPONENT* GetComponentByID( const CIRCLE_GRAPH* graph, u8 componentID )
 { 
   int rank;
@@ -1562,7 +1582,7 @@ const GRAPH_COMPONENT* GetComponentByID( const CIRCLE_GRAPH* graph, u8 component
   return GetComponentByRank( graph, rank );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ‘S\¬—v‘f‚Ì‡Œv’l‚ğŒvZ‚·‚é
  *
@@ -1570,7 +1590,7 @@ const GRAPH_COMPONENT* GetComponentByID( const CIRCLE_GRAPH* graph, u8 component
  *
  * @return ‘S\¬—v‘f‚ª‚Âƒf[ƒ^‚Ì‡Œv’l
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static u32 GetComponentsTotalValue( const CIRCLE_GRAPH* graph )
 {
   int idx;
@@ -1589,7 +1609,7 @@ static u32 GetComponentsTotalValue( const CIRCLE_GRAPH* graph )
   return sum;
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ‘S\¬—v‘f‚ªè‚ß‚éŠ„‡‚Ì‡Œv’l‚ğŒvZ‚·‚é
  *
@@ -1597,7 +1617,7 @@ static u32 GetComponentsTotalValue( const CIRCLE_GRAPH* graph )
  *
  * @return ‘S\¬—v‘f‚ªè‚ß‚éŠ„‡‚Ì‡Œv’l
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static u32 GetComponentsTotalPercentage( const CIRCLE_GRAPH* graph )
 {
   int idx;
@@ -1616,7 +1636,7 @@ static u32 GetComponentsTotalPercentage( const CIRCLE_GRAPH* graph )
   return sum;
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief w’è‚µ‚½\¬—v‘f‚ÉŠY“–‚·‚é, ŠOü’¸“_‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ“¾‚·‚é
  *
@@ -1624,7 +1644,7 @@ static u32 GetComponentsTotalPercentage( const CIRCLE_GRAPH* graph )
  * @param destHeadIdx  æ“¾‚µ‚½æ“ªƒCƒ“ƒfƒbƒNƒX‚ÌŠi”[æ
  * @param destTailIdx  æ“¾‚µ‚½––”öƒCƒ“ƒfƒbƒNƒX‚ÌŠi”[æ
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GetComponentCirclePointIndex( const GRAPH_COMPONENT* component, u8* destHeadIdx, u8* destTailIdx )
 {
   u8 startPercentage, endPercentage;
@@ -1638,7 +1658,7 @@ static void GetComponentCirclePointIndex( const GRAPH_COMPONENT* component, u8* 
   *destTailIdx = tailIdx;
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚ÌŠOü‚ÌF‚ğæ“¾‚·‚é
  *
@@ -1646,13 +1666,13 @@ static void GetComponentCirclePointIndex( const GRAPH_COMPONENT* component, u8* 
  *
  * @return w’è‚µ‚½\¬—v‘f‚Ì•\¦ƒJƒ‰[
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static GXRgb GetComponentOuterColor( const GRAPH_COMPONENT* component )
 {
   return GX_RGB( component->outerColorR, component->outerColorG, component->outerColorB );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief \¬—v‘f‚Ì’†S‚ÌF‚ğæ“¾‚·‚é
  *
@@ -1660,13 +1680,13 @@ static GXRgb GetComponentOuterColor( const GRAPH_COMPONENT* component )
  *
  * @return w’è‚µ‚½\¬—v‘f‚Ì•\¦ƒJƒ‰[
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static GXRgb GetComponentCenterColor( const GRAPH_COMPONENT* component )
 {
   return GX_RGB( component->centerColorR, component->centerColorG, component->centerColorB );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief w’è‚µ‚½\¬—v‘f‚É‚Â‚¢‚Ä, –îˆó‚ªw‚·‚×‚«À•W‚ğæ“¾‚·‚é
  * 
@@ -1674,7 +1694,7 @@ static GXRgb GetComponentCenterColor( const GRAPH_COMPONENT* component )
  * @param component \¬—v‘f
  * @param dest      ŒvZ‚µ‚½À•W‚ÌŠi”[æ
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void GetComponentPointPos( const CIRCLE_GRAPH* graph, const GRAPH_COMPONENT* component, VecFx16* dest )
 {
   u8 headIdx, tailIdx, centerIdx;
@@ -1700,7 +1720,7 @@ static void GetComponentPointPos( const CIRCLE_GRAPH* graph, const GRAPH_COMPONE
   dest->z = FX16_CONST(cz + vz);
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief •`‰æ‚ª‹–‰Â‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
  *
@@ -1709,13 +1729,13 @@ static void GetComponentPointPos( const CIRCLE_GRAPH* graph, const GRAPH_COMPONE
  * @return •`‰æ‚ª‹–‰Â‚³‚ê‚Ä‚¢‚é‚È‚ç TRUE
  *         ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static BOOL GetDrawEnable( const CIRCLE_GRAPH* graph )
 {
   return graph->drawFlag;
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @breif ƒAƒjƒ[ƒVƒ‡ƒ“’†‚©‚Ç‚¤‚©
  *
@@ -1724,7 +1744,7 @@ static BOOL GetDrawEnable( const CIRCLE_GRAPH* graph )
  * @return ƒAƒjƒ[ƒVƒ‡ƒ“’†‚È‚ç TRUE
  *         ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static BOOL CheckAnime( const CIRCLE_GRAPH* graph )
 {
   switch( graph->state ) {
@@ -1741,17 +1761,17 @@ static BOOL CheckAnime( const CIRCLE_GRAPH* graph )
 
 
 
-//=========================================================================================
+//==============================================================================
 // ¡‰Šú‰»E¶¬E”jŠüE€”õ
-//=========================================================================================
+//==============================================================================
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ‰~ƒOƒ‰ƒt‚ğƒZƒbƒgƒAƒbƒv‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void SetupGraph( CIRCLE_GRAPH* graph )
 {
   // DEBUG:
@@ -1765,13 +1785,13 @@ static void SetupGraph( CIRCLE_GRAPH* graph )
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: end setup graph\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ‰~ƒOƒ‰ƒt‚ğƒNƒŠ[ƒ“ƒAƒbƒv‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void CleanUpGraph( CIRCLE_GRAPH* graph )
 {
   // DEBUG:
@@ -1784,14 +1804,14 @@ static void CleanUpGraph( CIRCLE_GRAPH* graph )
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: end clean up graph\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ‰~ƒOƒ‰ƒt‚ğ‰Šú‰»‚·‚é
  *
  * @param graph
  * @param heapID g—p‚·‚éƒq[ƒvID
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void InitGraph( CIRCLE_GRAPH* graph, HEAPID heapID )
 {
   graph->heapID       = heapID;
@@ -1809,14 +1829,14 @@ static void InitGraph( CIRCLE_GRAPH* graph, HEAPID heapID )
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: init graph\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ‰~ƒOƒ‰ƒt‚ğ¶¬‚·‚é
  *
  * @param graph
  * @param heapID g—p‚·‚éƒq[ƒvID
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static CIRCLE_GRAPH* CreateGraph( HEAPID heapID )
 {
   CIRCLE_GRAPH* graph;
@@ -1833,13 +1853,13 @@ static CIRCLE_GRAPH* CreateGraph( HEAPID heapID )
   return graph;
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ‰~ƒOƒ‰ƒt‚ğ”jŠü‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void DeleteGraph( CIRCLE_GRAPH* graph )
 {
   GFL_HEAP_FreeMemory( graph );
@@ -1848,13 +1868,13 @@ static void DeleteGraph( CIRCLE_GRAPH* graph )
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: delete graph\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔƒLƒ…[‚ğ¶¬‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void CreateStateQueue( CIRCLE_GRAPH* graph )
 {
   // ‘½d¶¬
@@ -1866,13 +1886,13 @@ static void CreateStateQueue( CIRCLE_GRAPH* graph )
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: create state queueh\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔƒLƒ…[‚ğ”jŠü‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void DeleteStateQueue( CIRCLE_GRAPH* graph )
 {
   // –¢¶¬
@@ -1884,29 +1904,27 @@ static void DeleteStateQueue( CIRCLE_GRAPH* graph )
   OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: delete state queue\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ŠOü’¸“_‚ÌÀ•W‚ğ€”õ‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void SetupCirclePoints( CIRCLE_GRAPH* graph )
 {
   int pointIdx;
-  int pointNum;
   float radius;
 
-  radius   = FX_FX32_TO_F32( graph->radius );
-  pointNum = CIRCLE_POINT_COUNT;
+  radius = FX_FX32_TO_F32( graph->radius );
 
-  for( pointIdx=0; pointIdx < pointNum; pointIdx++ )
+  for( pointIdx=0; pointIdx < CIRCLE_POINT_COUNT; pointIdx++ )
   {
     float radian;
     float x, y, z;
 
-    radian = 2.0f * PI * pointIdx / (float)pointNum;
-    radian = 0.5f * PI - radian;
+    radian = 2.0f * PI * pointIdx / (float)CIRCLE_POINT_COUNT;
+    radian = 0.5f * PI - radian; // ˆÊ‘Š‚ğ’²®
     x = radius * cosf(radian);
     y = radius * sinf(radian);
     z = 0;
@@ -1920,11 +1938,11 @@ static void SetupCirclePoints( CIRCLE_GRAPH* graph )
 }
 
 
-//=========================================================================================
+//==============================================================================
 // ¡ŒvZ
-//=========================================================================================
+//==============================================================================
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @breif ƒXƒNƒŠ[ƒ“À•W‚ğ‹‚ß‚é
  *
@@ -1932,7 +1950,7 @@ static void SetupCirclePoints( CIRCLE_GRAPH* graph )
  * @param destX    ‹‚ß‚½ƒXƒNƒŠ[ƒ“xÀ•W‚ÌŠi”[æ
  * @param destY    ‹‚ß‚½ƒXƒNƒŠ[ƒ“yÀ•W‚ÌŠi”[æY
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void CalcScreenPos( const VecFx16* worldPos, int* destX, int* destY )
 {
   VecFx32 posFx32;
@@ -1947,17 +1965,17 @@ static void CalcScreenPos( const VecFx16* worldPos, int* destX, int* destY )
 }
 
 
-//=========================================================================================
+//==============================================================================
 // ¡ƒfƒoƒbƒO
-//========================================================================================= 
+//===============================================================================
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔƒLƒ…[‚Ì“à—e‚ğo—Í‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void DebugPrint_stateQueue( const CIRCLE_GRAPH* graph )
 {
   int i;
@@ -1986,13 +2004,13 @@ static void DebugPrint_stateQueue( const CIRCLE_GRAPH* graph )
   OS_TFPrintf( PRINT_TARGET, "\n" );
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
  * @brief ‚·‚×‚Ä‚Ì\¬—v‘f‚ğo—Í‚·‚é
  *
  * @param graph
  */
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void DebugPrint_components( const CIRCLE_GRAPH* graph )
 {
   int idx;

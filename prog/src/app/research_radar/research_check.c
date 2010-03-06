@@ -73,18 +73,25 @@ struct _RESEARCH_CHECK_WORK
   GFL_MSGDATA* message[ MESSAGE_NUM ]; // メッセージ
   WORDSET*     wordset;                // ワードセット
 
+  // シーケンス
   QUEUE*                seqQueue;      // シーケンスキュー
   RESEARCH_CHECK_SEQ    seq;           // 現在の処理シーケンス
   BOOL                  seqFinishFlag; // 現在のシーケンスが終了したかどうか
   u32                   seqCount;      // シーケンスカウンタ
   RESEARCH_CHECK_RESULT result;        // 画面終了結果
 
+  // カーソル
   MENU_ITEM      cursorPos;     // カーソル位置
-  RESEARCH_DATA  researchData;  // 調査データ
-  BOOL           analyzeFlag;   // 解析が済んでいるかどうか
   u8             questionIdx;   // 表示中の質問インデックス
   u8             answerIdx;     // 選択中の回答インデックス
   DATA_DISP_TYPE dispType;      // 今日 or 合計 のどちらのデータを表示するのか
+
+  // 調査データ
+  RESEARCH_DATA researchData;
+
+  // フラグ
+  BOOL analyzeFlag; // 解析が済んでいるかどうか
+  BOOL updateFlag;  // 更新中かどうか
 
   // 円グラフ
   CIRCLE_GRAPH* mainGraph[ DATA_DISP_TYPE_NUM ]; // 通常時に表示するグラフ
@@ -126,261 +133,215 @@ struct _RESEARCH_CHECK_WORK
 };
 
 
-//----------------------------------------------------------------------------------------------
-// □LAYER 4 シーケンス動作
-//----------------------------------------------------------------------------------------------
-// シーケンス処理
-static void Main_SETUP     ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_SETUP
-static void Main_STANDBY   ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_STANDBY
-static void Main_KEY_WAIT  ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_KEY_WAIT
-static void Main_ANALYZE   ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_ANALYZE
-static void Main_PERCENTAGE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_PERCENTAGE
-static void Main_FLASH_OUT ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_OUT
-static void Main_FLASH_IN  ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_IN
-static void Main_UPDATE    ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
-static void Main_FADE_OUT  ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
-static void Main_CLEAN_UP  ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP
 
+
+//==============================================================================================
+// ◆関数インデックス
+//==============================================================================================
+
+//----------------------------------------------------------------------------------------------
+// ◇LAYER 4 シーケンス
+//----------------------------------------------------------------------------------------------
+// シーケンス初期化処理
+static void InitSeq_SETUP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_SETUP
+static void InitSeq_STANDBY( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_STANDBY
+static void InitSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_KEY_WAIT
+static void InitSeq_ANALYZE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_ANALYZE
+static void InitSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_PERCENTAGE
+static void InitSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_OUT
+static void InitSeq_FLASH_IN( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_IN
+static void InitSeq_UPDATE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
+static void InitSeq_FADE_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
+static void InitSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP
+// シーケンス処理
+static void MainSeq_SETUP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_SETUP
+static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_STANDBY
+static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_KEY_WAIT
+static void MainSeq_ANALYZE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_ANALYZE
+static void MainSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_PERCENTAGE
+static void MainSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_OUT
+static void MainSeq_FLASH_IN( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_IN
+static void MainSeq_UPDATE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
+static void MainSeq_FADE_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
+static void MainSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP 
+// シーケンス終了処理
+static void FinishSeq_SETUP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_SETUP
+static void FinishSeq_STANDBY( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_STANDBY
+static void FinishSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_KEY_WAIT
+static void FinishSeq_ANALYZE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_ANALYZE
+static void FinishSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_PERCENTAGE
+static void FinishSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_OUT
+static void FinishSeq_FLASH_IN( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_IN
+static void FinishSeq_UPDATE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
+static void FinishSeq_FADE_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
+static void FinishSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP
 // シーケンス制御
 static void CountUpSeqCount( RESEARCH_CHECK_WORK* work ); // シーケンスカウンタを更新する
-static void SetNextSequence( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq ); // 次のシーケンスを登録する
-static void FinishCurrentSequence( RESEARCH_CHECK_WORK* work ); // 現在のシーケンスを終了する
-static void SwitchSequence( RESEARCH_CHECK_WORK* work ); // 処理シーケンスを変更する
-static void SetSequence( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq ); // 処理シーケンスを設定する
+static void SetNextSeq( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq ); // 次のシーケンスを登録する
+static void FinishCurrentSeq( RESEARCH_CHECK_WORK* work ); // 現在のシーケンスを終了する
+static void SwitchSeq( RESEARCH_CHECK_WORK* work ); // 処理シーケンスを変更する
+static void SetSeq( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq ); // 処理シーケンスを設定する
 static void SetResult( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_RESULT result ); // 画面終了結果を設定する
-
-// シーケンス初期化処理
-static void InitSequence_SETUP     ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_SETUP
-static void InitSequence_STANDBY   ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_STANDBY
-static void InitSequence_KEY_WAIT  ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_KEY_WAIT
-static void InitSequence_ANALYZE   ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_ANALYZE
-static void InitSequence_PERCENTAGE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_PERCENTAGE
-static void InitSequence_FLASH_OUT ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_OUT
-static void InitSequence_FLASH_IN  ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_IN
-static void InitSequence_UPDATE    ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
-static void InitSequence_FADE_OUT  ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
-static void InitSequence_CLEAN_UP  ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP
-
-// シーケンス終了処理
-static void FinishSequence_SETUP     ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_SETUP
-static void FinishSequence_STANDBY   ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_STANDBY
-static void FinishSequence_KEY_WAIT  ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_KEY_WAIT
-static void FinishSequence_ANALYZE   ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_ANALYZE
-static void FinishSequence_PERCENTAGE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_PERCENTAGE
-static void FinishSequence_FLASH_OUT ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_OUT
-static void FinishSequence_FLASH_IN  ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_IN
-static void FinishSequence_UPDATE    ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
-static void FinishSequence_FADE_OUT  ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
-static void FinishSequence_CLEAN_UP  ( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP
-
-// 円グラフ
-static void UpdateCircleGraphs( RESEARCH_CHECK_WORK* work ); // すべての円グラフを更新する
-static void DrawCircleGraphs( const RESEARCH_CHECK_WORK* work ); // すべての円グラフを描画する
-
-// 回答マーカー
-static void DrawAnswerMarker( const RESEARCH_CHECK_WORK* work ); // 回答マーカーを描画する
-
-// VBlankタスク
-static void VBlankFunc( GFL_TCB* tcb, void* wk );  // VBlank中の処理
-
 //----------------------------------------------------------------------------------------------
-// □LAYER 3 機能
+// ◇LAYER 3 機能
 //---------------------------------------------------------------------------------------------- 
 // カーソル
-static void MoveMenuCursorUp  ( RESEARCH_CHECK_WORK* work ); // 上へ移動する
+static void MoveMenuCursorUp( RESEARCH_CHECK_WORK* work ); // 上へ移動する
 static void MoveMenuCursorDown( RESEARCH_CHECK_WORK* work ); // 下へ移動する
 static void MoveMenuCursorDirect( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem ); // 直接移動する
-
 // 表示する質問
 static void ChangeQuestionToNext( RESEARCH_CHECK_WORK* work ); // 次の質問に変更する
 static void ChangeQuestionToPrev( RESEARCH_CHECK_WORK* work ); // 前の質問に変更する
-
 // 表示する回答
 static void ChangeAnswerToNext( RESEARCH_CHECK_WORK* work ); // 次の回答に変更する
 static void ChangeAnswerToPrev( RESEARCH_CHECK_WORK* work ); // 前の回答に変更する
-static void ChangeAnswerToTop ( RESEARCH_CHECK_WORK* work ); // 先頭の回答に変更する
-
+static void ChangeAnswerToTop( RESEARCH_CHECK_WORK* work ); // 先頭の回答に変更する
 // 調査データの表示タイプ
 static void SwitchDataDisplayType( RESEARCH_CHECK_WORK* work ); // 調査データの表示タイプを切り替える
-
 //----------------------------------------------------------------------------------------------
-// □LAYER 2 個別操作
+// ◇LAYER 2 個別操作
 //---------------------------------------------------------------------------------------------- 
-// カーソル
+// メニュー項目カーソル
 static void ShiftMenuCursorPos( RESEARCH_CHECK_WORK* work, int stride ); // カーソル位置を変更する
 static void SetMenuCursorPos( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem ); // カーソル位置を変更する
-
+// メニュー項目の表示
+static void SetMenuCursorOn( RESEARCH_CHECK_WORK* work ); // カーソルが乗っている状態にする
+static void SetMenuCursorOff( RESEARCH_CHECK_WORK* work ); // カーソルが乗っていない状態にする
 // 表示する質問インデックス
 static void ShiftQuestionIdx( RESEARCH_CHECK_WORK* work, int stride ); // 表示する質問のインデックスを変更する
-
 // 選択中の回答インデックス
 static void ShiftAnswerIdx( RESEARCH_CHECK_WORK* work, int stride ); // 選択中の回答インデックスを変更する
 static void ResetAnswerIdx( RESEARCH_CHECK_WORK* work );             // 選択中の回答インデックスをリセットする
-
 // 調査データ表示タイプ
 static void SetDataDisplayType( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispType ); // 調査データの表示タイプを設定する
-
-// メニュー項目の表示
-static void SetMenuCursorOn ( RESEARCH_CHECK_WORK* work ); // カーソルが乗っている状態にする
-static void SetMenuCursorOff( RESEARCH_CHECK_WORK* work ); // カーソルが乗っていない状態にする
-
+// 円グラフ
+static void UpdateCircleGraphs( RESEARCH_CHECK_WORK* work ); // すべての円グラフを更新する
+static void DrawCircleGraphs( const RESEARCH_CHECK_WORK* work ); // すべての円グラフを描画する
+static void SetupMainCircleGraph( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispType ); // メイン円グラフを現在の調査データで構成する
+static void SetupSubCircleGraph ( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispType ); // サブ円グラフを現在の調査データで構成する
+static void InterchangeCircleGraph( RESEARCH_CHECK_WORK* work ); // サブ円グラフとメイン円グラフを入れ替える
+static void SetupCenterColorOfGraphComponent( GRAPH_COMPONENT_ADD_DATA* component ); // グラフ構成要素の中心点カラーをセットアップする
+static void AdjustCircleGraphLayer( RESEARCH_CHECK_WORK* work ); // メイン円グラフ, サブ円グラフの重なり方を調整する
+static CIRCLE_GRAPH* GetMainGraph( const RESEARCH_CHECK_WORK* work ); // 現在表示中のメイン円グラフを取得する
+static CIRCLE_GRAPH* GetSubGraph( const RESEARCH_CHECK_WORK* work ); // 現在表示中のサブ円グラフを取得する
+static BOOL CheckAllGraphAnimeEnd( const RESEARCH_CHECK_WORK* work ); // アニメーション中の円グラフがあるかどうかを判定する
+// 回答マーカー
+static void DrawAnswerMarker( const RESEARCH_CHECK_WORK* work ); // 回答マーカーを描画する
 // 矢印
 static void UpdateArrow( RESEARCH_CHECK_WORK* work ); // 矢印の表示を更新する
-
 // % 表示
 static void SetupPercentages( RESEARCH_CHECK_WORK* work ); // 現在の調査データにあわせてセットアップする
 static void VanishAllPercentage( RESEARCH_CHECK_WORK* work ); // 全ての％表示を消去する
 static void DispPercentage( RESEARCH_CHECK_WORK* work, u8 index ); // ％オブジェクトを表示する
 static void DispAllPercentage( RESEARCH_CHECK_WORK* work ); // 全ての％オブジェクトを表示する
-
 // タッチ範囲
 static void UpdateTouchArea( RESEARCH_CHECK_WORK* work ); // タッチ範囲を更新する
-
-// パレットアニメーション
-static void StartPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index ); // パレットアニメーションを開始する
-static void StopPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index ); // パレットアニメーションを停止する
-static void UpdatePaletteAnime( RESEARCH_CHECK_WORK* work ); // パレットアニメーションを更新する
-
 // BG
+static void SetupBG( RESEARCH_CHECK_WORK* work ); // BG全般にかかわるセットアップを行う
+static void SetupSubBG_WINDOW( RESEARCH_CHECK_WORK* work ); // SUB-BG ( ウィンドウ面 ) をセットアップする
+static void SetupSubBG_FONT( RESEARCH_CHECK_WORK* work ); // SUB-BG ( フォント面 ) をセットアップする
+static void SetupMainBG_WINDOW( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( ウィンドウ面 ) をセットアップする
+static void SetupMainBG_FONT( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( フォント面 ) をセットアップする
+static void CleanUpBG( RESEARCH_CHECK_WORK* work ); // BG全般にかかわるクリーンアップを行う
+static void CleanUpSubBG_WINDOW( RESEARCH_CHECK_WORK* work ); // SUB-BG ( ウィンドウ面 ) をクリーンアップする
+static void CleanUpSubBG_FONT( RESEARCH_CHECK_WORK* work ); // SUB-BG ( フォント面 ) をクリーンアップする
+static void CleanUpMainBG_WINDOW( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( ウィンドウ面 ) をクリーンアップする
+static void CleanUpMainBG_FONT( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( フォント面 ) をクリーンアップする
 static void UpdateMainBG_WINDOW( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( ウィンドウ面 ) を更新する
-
 // BGFont
-static void UpdateBGFont_TopicTitle     ( RESEARCH_CHECK_WORK* work ); // 調査項目名を更新する
+static void UpdateBGFont_TopicTitle( RESEARCH_CHECK_WORK* work ); // 調査項目名を更新する
 static void UpdateBGFont_QuestionCaption( RESEARCH_CHECK_WORK* work ); // 質問の補足文を更新する
-static void UpdateBGFont_Question       ( RESEARCH_CHECK_WORK* work ); // 質問を更新する 
-static void UpdateBGFont_Answer         ( RESEARCH_CHECK_WORK* work ); // 回答を更新する
-static void UpdateBGFont_MyAnswer       ( RESEARCH_CHECK_WORK* work ); // 自分の回答を更新する
-static void UpdateBGFont_Count          ( RESEARCH_CHECK_WORK* work ); // 回答人数を更新する
-static void UpdateBGFont_NoData         ( RESEARCH_CHECK_WORK* work ); //「ただいま ちょうさちゅう」の表示を更新する
-static void UpdateBGFont_DataReceiving  ( RESEARCH_CHECK_WORK* work ); //「データしゅとくちゅう」の表示を更新する
-
-// OBJの表示
+static void UpdateBGFont_Question( RESEARCH_CHECK_WORK* work ); // 質問を更新する 
+static void UpdateBGFont_Answer( RESEARCH_CHECK_WORK* work ); // 回答を更新する
+static void UpdateBGFont_MyAnswer( RESEARCH_CHECK_WORK* work ); // 自分の回答を更新する
+static void UpdateBGFont_Count( RESEARCH_CHECK_WORK* work ); // 回答人数を更新する
+static void UpdateBGFont_NoData( RESEARCH_CHECK_WORK* work ); //「ただいま ちょうさちゅう」の表示を更新する
+static void UpdateBGFont_DataReceiving( RESEARCH_CHECK_WORK* work ); //「データしゅとくちゅう」の表示を更新する
+// OBJ
 static void UpdateControlCursor( RESEARCH_CHECK_WORK* work ); // 操作カーソルの表示を更新する
 static void UpdateMyAnswerIconOnButton( RESEARCH_CHECK_WORK* work ); // 自分の回答アイコン ( ボタン上 ) を更新する
 static void UpdateMyAnswerIconOnGraph( RESEARCH_CHECK_WORK* work ); // 自分の回答アイコン ( グラフ上 ) を更新する
-
 // BMP-OAM
+static void InitBitmapDatas( RESEARCH_CHECK_WORK* work ); // ビットマップデータを初期化する
+static void CreateBitmapDatas( RESEARCH_CHECK_WORK* work ); // ビットマップデータを生成する
+static void SetupBitmapData_forDefault( RESEARCH_CHECK_WORK* work ); // ビットマップデータをセットアップする ( デフォルト ) 
+static void SetupBitmapData_forANALYZE_BUTTON( RESEARCH_CHECK_WORK* work ); // ビットマップデータをセットアップする (「報告を見る」ボタン ) 
+static void DeleteBitmapDatas( RESEARCH_CHECK_WORK* work ); // ビットマップデータを破棄する
+static void SetupBmpOamSystem( RESEARCH_CHECK_WORK* work ); // BMP-OAM システムをセットアップする
+static void CleanUpBmpOamSystem( RESEARCH_CHECK_WORK* work ); // BMP-OAM システムをクリーンアップする
+static void CreateBmpOamActors( RESEARCH_CHECK_WORK* work ); // BMP-OAM アクターを生成する
+static void DeleteBmpOamActors( RESEARCH_CHECK_WORK* work ); // BMP-OAM アクターを破棄する
 static void BmpOamSetDrawEnable( RESEARCH_CHECK_WORK* work, BMPOAM_ACTOR_INDEX BmpOamActorIdx, BOOL enable );  // 表示するかどうかを設定する
-
+// パレットアニメーション
+static void InitPaletteAnime( RESEARCH_CHECK_WORK* work ); // パレットアニメーションワークを初期化する
+static void CreatePaletteAnime( RESEARCH_CHECK_WORK* work ); // パレットアニメーションワークを生成する
+static void DeletePaletteAnime( RESEARCH_CHECK_WORK* work ); // パレットアニメーションワークを破棄する
+static void SetupPaletteAnime( RESEARCH_CHECK_WORK* work ); // パレットアニメーションワークをセットアップする
+static void CleanUpPaletteAnime( RESEARCH_CHECK_WORK* work ); // パレットアニメーションワークをクリーンアップする
+static void StartPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index ); // パレットアニメーションを開始する
+static void StopPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index ); // パレットアニメーションを停止する
+static void UpdatePaletteAnime( RESEARCH_CHECK_WORK* work ); // パレットアニメーションを更新する
 // パレットフェード
+static void InitPaletteFadeSystem( RESEARCH_CHECK_WORK* work ); // パレットフェードシステム 初期化
+static void SetupPaletteFadeSystem( RESEARCH_CHECK_WORK* work ); // パレットフェードシステム 準備
+static void CleanUpPaletteFadeSystem( RESEARCH_CHECK_WORK* work ); // パレットフェードシステム 後片付け
 static void StartPaletteFadeOut( RESEARCH_CHECK_WORK* work ); // パレットのフェードアウトを開始する
 static void StartPaletteFadeIn ( RESEARCH_CHECK_WORK* work ); // パレットのフェードインを開始する
 static void StartPaletteFadeFlashOut( RESEARCH_CHECK_WORK* work ); // パレットアニメによるフラッシュ ( アウト ) を開始する
 static void StartPaletteFadeFlashIn ( RESEARCH_CHECK_WORK* work ); // パレットアニメによるフラッシュ ( イン ) を開始する
 static BOOL IsPaletteFadeEnd( RESEARCH_CHECK_WORK* work ); // パレットのフェードが完了したかどうかを判定する
-
-// 円グラフ
-static void SetupMainCircleGraph( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispType ); // メイン円グラフを現在の調査データで構成する
-static void SetupSubCircleGraph ( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispType ); // サブ円グラフを現在の調査データで構成する
-static void InterchangeCircleGraph( RESEARCH_CHECK_WORK* work ); // サブ円グラフとメイン円グラフを入れ替える
-
-//----------------------------------------------------------------------------------------------
-// □LAYER 1 データアクセス
-//----------------------------------------------------------------------------------------------
+// VBlankタスク
+static void RegisterVBlankTask( RESEARCH_CHECK_WORK* work ); // VBlank タスクを登録する
+static void ReleaseVBlankTask( RESEARCH_CHECK_WORK* work ); // VBlank タスクの登録を解除する
+static void VBlankFunc( GFL_TCB* tcb, void* wk );  // VBlank中の処理
 // 調査データ
 static u8 GetTopicID( const RESEARCH_CHECK_WORK* work ); // 現在表示中の調査項目ID
 static u8 GetQuestionID( const RESEARCH_CHECK_WORK* work ); // 現在表示中の質問ID
 static u8 GetAnswerNum( const RESEARCH_CHECK_WORK* work ); // 現在表示中の質問に対する回答選択肢の数
 static u16 GetAnswerID( const RESEARCH_CHECK_WORK* work ); // 現在表示中の回答ID
-static u16 GetCountOfQuestion     ( const RESEARCH_CHECK_WORK* work ); // 現在表示中の質問に対する, 表示中の回答人数
+static u16 GetCountOfQuestion( const RESEARCH_CHECK_WORK* work ); // 現在表示中の質問に対する, 表示中の回答人数
 static u16 GetTodayCountOfQuestion( const RESEARCH_CHECK_WORK* work ); // 現在表示中の質問に対する, 今日の回答人数
 static u16 GetTotalCountOfQuestion( const RESEARCH_CHECK_WORK* work ); // 現在表示中の質問に対する, 合計の回答人数
-static u16 GetCountOfAnswer     ( const RESEARCH_CHECK_WORK* work ); // 現在表示中の回答に対する, 表示中の回答人数
+static u16 GetCountOfAnswer( const RESEARCH_CHECK_WORK* work ); // 現在表示中の回答に対する, 表示中の回答人数
 static u16 GetTodayCountOfAnswer( const RESEARCH_CHECK_WORK* work ); // 現在表示中の回答に対する, 今日の回答人数
 static u16 GetTotalCountOfAnswer( const RESEARCH_CHECK_WORK* work ); // 現在表示中の回答に対する, 合計の回答人数
-
-// 円グラフ
-static CIRCLE_GRAPH* GetMainGraph( const RESEARCH_CHECK_WORK* work ); // 現在表示中のメイン円グラフ
-static CIRCLE_GRAPH* GetSubGraph ( const RESEARCH_CHECK_WORK* work ); // 現在表示中のサブ円グラフ
-static BOOL CheckAllGraphAnimeEnd( const RESEARCH_CHECK_WORK* work ); // アニメーション中の円グラフがあるかどうか
-
-// OBJ
-static u32 GetObjResourceRegisterIndex( const RESEARCH_CHECK_WORK* work, OBJ_RESOURCE_ID resID ); // OBJリソースの登録インデックス
-static GFL_CLUNIT* GetClactUnit( const RESEARCH_CHECK_WORK* work, CLUNIT_INDEX unitIdx ); // セルアクターユニット
-static GFL_CLWK* GetClactWork( const RESEARCH_CHECK_WORK* work, CLWK_INDEX wkIdx ); // セルアクターワーク
-
-//----------------------------------------------------------------------------------------------
-// □LAYER 1 セーブデータ アクセス
-//----------------------------------------------------------------------------------------------
 static u8 GetInvestigatingTopicID( const RESEARCH_CHECK_WORK* work ); // 現在調査中の調査項目IDを取得する
 static u8 GetMyAnswerID( const RESEARCH_CHECK_WORK* work ); // 現在表示中の質問に対する, 自分の回答IDを取得する
-
-//----------------------------------------------------------------------------------------------
-// □LAYER 0 初期化処理/終了処理
-//----------------------------------------------------------------------------------------------
-// 画面の準備/後片付け ( BG )
-static void SetupBG  ( RESEARCH_CHECK_WORK* work ); // BG 準備
-static void CleanUpBG( RESEARCH_CHECK_WORK* work ); // BG 後片付け
-static void SetupSubBG_WINDOW  ( RESEARCH_CHECK_WORK* work ); // SUB-BG ( ウィンドウ面 ) 準備
-static void CleanUpSubBG_WINDOW( RESEARCH_CHECK_WORK* work ); // SUB-BG ( ウィンドウ面 ) 後片付け
-static void SetupSubBG_FONT  ( RESEARCH_CHECK_WORK* work ); // SUB-BG ( フォント面 ) 準備
-static void CleanUpSubBG_FONT( RESEARCH_CHECK_WORK* work ); // SUB-BG ( フォント面 ) 後片付け
-static void SetupMainBG_WINDOW  ( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( ウィンドウ面 ) 準備
-static void CleanUpMainBG_WINDOW( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( ウィンドウ面 ) 後片付け
-static void SetupMainBG_FONT  ( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( フォント面 ) 準備
-static void CleanUpMainBG_FONT( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( フォント面 ) 後片付け
-
-// 画面の準備/後片付け ( OBJ )
-static void CreateClactSystem( RESEARCH_CHECK_WORK* work ); // OBJ システム 生成
-static void DeleteClactSystem( RESEARCH_CHECK_WORK* work ); // OBJ システム 破棄
-static void RegisterSubObjResources( RESEARCH_CHECK_WORK* work ); // SUB-OBJ リソース 登録
-static void ReleaseSubObjResources ( RESEARCH_CHECK_WORK* work ); // SUB-OBJ リソース 解放
-static void RegisterMainObjResources( RESEARCH_CHECK_WORK* work ); // MAIN-OBJ リソース 登録
-static void ReleaseMainObjResources ( RESEARCH_CHECK_WORK* work ); // MAIN-OBJ リソース 解放
-static void InitClactUnits  ( RESEARCH_CHECK_WORK* work ); // セルアクターユニット 初期化
-static void CreateClactUnits( RESEARCH_CHECK_WORK* work ); // セルアクターユニット 生成
-static void DeleteClactUnits( RESEARCH_CHECK_WORK* work ); // セルアクターユニット 破棄
-static void InitClactWorks  ( RESEARCH_CHECK_WORK* work ); // セルアクターワーク 初期化
-static void CreateClactWorks( RESEARCH_CHECK_WORK* work ); // セルアクターワーク 生成
-static void DeleteClactWorks( RESEARCH_CHECK_WORK* work ); // セルアクターワーク 破棄
-
-// BMP-OAM の準備/後片付け
-static void InitBitmapDatas  ( RESEARCH_CHECK_WORK* work ); // ビットマップデータ 初期化
-static void CreateBitmapDatas( RESEARCH_CHECK_WORK* work ); // ビットマップデータ 作成
-static void SetupBitmapData_forDefault( RESEARCH_CHECK_WORK* work ); // ビットマップデータ 準備 ( デフォルト )
-static void SetupBitmapData_forANALYZE_BUTTON( RESEARCH_CHECK_WORK* work ); // ビットマップデータ 準備 (「ほうこくをみる」ボタン )
-static void DeleteBitmapDatas( RESEARCH_CHECK_WORK* work ); // ビットマップデータ 破棄
-static void SetupBmpOamSystem  ( RESEARCH_CHECK_WORK* work ); // BMP-OAM システム 準備
-static void CleanUpBmpOamSystem( RESEARCH_CHECK_WORK* work ); // BMP-OAM システム 後片付け
-static void CreateBmpOamActors( RESEARCH_CHECK_WORK* work ); // BMP-OAM アクター 作成
-static void DeleteBmpOamActors( RESEARCH_CHECK_WORK* work ); // BMP-OAM アクター 破棄
-
-// パレットアニメーション
-static void InitPaletteAnime( RESEARCH_CHECK_WORK* work ); // パレットアニメーションワーク 初期化
-static void CreatePaletteAnime( RESEARCH_CHECK_WORK* work ); // パレットアニメーションワーク 生成
-static void DeletePaletteAnime( RESEARCH_CHECK_WORK* work ); // パレットアニメーションワーク 破棄
-static void SetupPaletteAnime( RESEARCH_CHECK_WORK* work ); // パレットアニメーションワーク セットアップ
-static void CleanUpPaletteAnime( RESEARCH_CHECK_WORK* work ); // パレットアニメーションワーク クリーンアップ
-
-// 3D 準備
-static void Setup3D();
-
-// VBlankタスクの登録/解除
-static void RegisterVBlankTask( RESEARCH_CHECK_WORK* work );
-static void ReleaseVBlankTask ( RESEARCH_CHECK_WORK* work );
-
-// パレットフェードシステムの準備/後片付け
-static void InitPaletteFadeSystem   ( RESEARCH_CHECK_WORK* work ); // パレットフェードシステム 初期化
-static void SetupPaletteFadeSystem  ( RESEARCH_CHECK_WORK* work ); // パレットフェードシステム 準備
-static void CleanUpPaletteFadeSystem( RESEARCH_CHECK_WORK* work ); // パレットフェードシステム 後片付け
-
+// OBJ
+static void CreateClactSystem( RESEARCH_CHECK_WORK* work ); // OBJ システムを生成する
+static void DeleteClactSystem( RESEARCH_CHECK_WORK* work ); // OBJ システムを破棄する
+static void RegisterSubObjResources( RESEARCH_CHECK_WORK* work ); // SUB-OBJ リソースを登録する
+static void ReleaseSubObjResources( RESEARCH_CHECK_WORK* work ); // SUB-OBJ リソース 解放する
+static void RegisterMainObjResources( RESEARCH_CHECK_WORK* work ); // MAIN-OBJ リソースを登録する
+static void ReleaseMainObjResources( RESEARCH_CHECK_WORK* work ); // MAIN-OBJ リソースを解放する
+static void InitClactUnits( RESEARCH_CHECK_WORK* work ); // セルアクターユニットを初期化する
+static void CreateClactUnits( RESEARCH_CHECK_WORK* work ); // セルアクターユニットを生成する
+static void DeleteClactUnits( RESEARCH_CHECK_WORK* work ); // セルアクターユニットを破棄する
+static void InitClactWorks( RESEARCH_CHECK_WORK* work ); // セルアクターワークを初期化する
+static void CreateClactWorks( RESEARCH_CHECK_WORK* work ); // セルアクターワークを生成する
+static void DeleteClactWorks( RESEARCH_CHECK_WORK* work ); // セルアクターワークを破棄する
+static u32 GetObjResourceRegisterIndex( const RESEARCH_CHECK_WORK* work, OBJ_RESOURCE_ID resID ); // OBJリソースの登録インデックスを取得する
+static GFL_CLUNIT* GetClactUnit( const RESEARCH_CHECK_WORK* work, CLUNIT_INDEX unitIdx ); // セルアクターユニットを取得する
+static GFL_CLWK* GetClactWork( const RESEARCH_CHECK_WORK* work, CLWK_INDEX wkIdx ); // セルアクターワークを取得する
+// 3D
+static void Setup3D(); // 3D 描画のセットアップを行う
 // データの初期化/生成/破棄
-static void InitSeqQueue  ( RESEARCH_CHECK_WORK* work ); // シーケンスキュー 初期化
+static void InitSeqQueue( RESEARCH_CHECK_WORK* work ); // シーケンスキュー 初期化
 static void CreateSeqQueue( RESEARCH_CHECK_WORK* work ); // シーケンスキュー 作成
 static void DeleteSeqQueue( RESEARCH_CHECK_WORK* work ); // シーケンスキュー 破棄
-static void InitFont  ( RESEARCH_CHECK_WORK* work ); // フォント 初期化
+static void InitFont( RESEARCH_CHECK_WORK* work ); // フォント 初期化
 static void CreateFont( RESEARCH_CHECK_WORK* work ); // フォント 生成
 static void DeleteFont( RESEARCH_CHECK_WORK* work ); // フォント 破棄
-static void InitMessages  ( RESEARCH_CHECK_WORK* work ); // メッセージ 初期化
+static void InitMessages( RESEARCH_CHECK_WORK* work ); // メッセージ 初期化
 static void CreateMessages( RESEARCH_CHECK_WORK* work ); // メッセージ 生成
 static void DeleteMessages( RESEARCH_CHECK_WORK* work ); // メッセージ 破棄
-static void InitWordset  ( RESEARCH_CHECK_WORK* work ); // ワードセット 初期化
+static void InitWordset( RESEARCH_CHECK_WORK* work ); // ワードセット 初期化
 static void CreateWordset( RESEARCH_CHECK_WORK* work ); // ワードセット 生成
 static void DeleteWordset( RESEARCH_CHECK_WORK* work ); // ワードセット 破棄
-static void InitBGFonts  ( RESEARCH_CHECK_WORK* work ); // 文字列描画オブジェクト 初期化
+static void InitBGFonts( RESEARCH_CHECK_WORK* work ); // 文字列描画オブジェクト 初期化
 static void CreateBGFonts( RESEARCH_CHECK_WORK* work ); // 文字列描画オブジェクト 生成
 static void DeleteBGFonts( RESEARCH_CHECK_WORK* work ); // 文字列描画オブジェクト 破棄
-static void InitCircleGraphs ( RESEARCH_CHECK_WORK* work ); // 円グラフ 初期化
+static void InitCircleGraphs( RESEARCH_CHECK_WORK* work ); // 円グラフ 初期化
 static void CreateCircleGraph( RESEARCH_CHECK_WORK* work ); // 円グラフ 生成
 static void DeleteCircleGraph( RESEARCH_CHECK_WORK* work ); // 円グラフ 破棄
 static void InitResearchData( RESEARCH_CHECK_WORK* work ); // 調査データ 初期化
@@ -392,13 +353,12 @@ static void DeleteArrow( RESEARCH_CHECK_WORK* work ); // 矢印 破棄
 static void InitPercentage( RESEARCH_CHECK_WORK* work ); // % 表示オブジェクト 初期化
 static void CreatePercentage( RESEARCH_CHECK_WORK* work ); // % 表示オブジェクト 生成
 static void DeletePercentage( RESEARCH_CHECK_WORK* work ); // % 表示オブジェクト 破棄
-
 //----------------------------------------------------------------------------------------------
-// □LAYER -1 デバッグ
+// ◇LAYER -1 デバッグ
 //----------------------------------------------------------------------------------------------
 static void DebugPrint_seqQueue( const RESEARCH_CHECK_WORK* work ); // シーケンスキューの中身を表示する
 static void DebugPrint_researchData( const RESEARCH_CHECK_WORK* work ); // 調査データを表示する
-static void Debug_SetupResearchData( RESEARCH_CHECK_WORK* work ); // 調査データを設定する
+static void Debug_SetupResearchData( RESEARCH_CHECK_WORK* work ); // デバッグ用調査データを設定する
 
 
 //==============================================================================================
@@ -436,6 +396,7 @@ RESEARCH_CHECK_WORK* CreateResearchCheckWork( RESEARCH_COMMON_WORK* commonWork )
   work->result          = RESEARCH_CHECK_RESULT_NONE;
   work->cursorPos       = MENU_ITEM_QUESTION;
   work->analyzeFlag     = FALSE;
+  work->updateFlag      = FALSE;
   work->questionIdx     = 0;
   work->answerIdx       = 0;
   work->dispType        = DATA_DISP_TYPE_TODAY;
@@ -500,16 +461,16 @@ RESEARCH_CHECK_RESULT ResearchCheckMain( RESEARCH_CHECK_WORK* work )
 {
   // シーケンスごとの処理
   switch( work->seq ) {
-  case RESEARCH_CHECK_SEQ_SETUP:      Main_SETUP( work );      break;
-  case RESEARCH_CHECK_SEQ_STANDBY:    Main_STANDBY( work );    break;
-  case RESEARCH_CHECK_SEQ_KEY_WAIT:   Main_KEY_WAIT( work );   break;
-  case RESEARCH_CHECK_SEQ_ANALYZE:    Main_ANALYZE( work );    break;
-  case RESEARCH_CHECK_SEQ_PERCENTAGE: Main_PERCENTAGE( work ); break;
-  case RESEARCH_CHECK_SEQ_FLASH_OUT:  Main_FLASH_OUT( work );  break;
-  case RESEARCH_CHECK_SEQ_FLASH_IN:   Main_FLASH_IN( work );   break;
-  case RESEARCH_CHECK_SEQ_UPDATE:     Main_UPDATE( work );     break;
-  case RESEARCH_CHECK_SEQ_FADE_OUT:   Main_FADE_OUT( work );   break;
-  case RESEARCH_CHECK_SEQ_CLEAN_UP:   Main_CLEAN_UP( work );   break;
+  case RESEARCH_CHECK_SEQ_SETUP:      MainSeq_SETUP( work );      break;
+  case RESEARCH_CHECK_SEQ_STANDBY:    MainSeq_STANDBY( work );    break;
+  case RESEARCH_CHECK_SEQ_KEY_WAIT:   MainSeq_KEY_WAIT( work );   break;
+  case RESEARCH_CHECK_SEQ_ANALYZE:    MainSeq_ANALYZE( work );    break;
+  case RESEARCH_CHECK_SEQ_PERCENTAGE: MainSeq_PERCENTAGE( work ); break;
+  case RESEARCH_CHECK_SEQ_FLASH_OUT:  MainSeq_FLASH_OUT( work );  break;
+  case RESEARCH_CHECK_SEQ_FLASH_IN:   MainSeq_FLASH_IN( work );   break;
+  case RESEARCH_CHECK_SEQ_UPDATE:     MainSeq_UPDATE( work );     break;
+  case RESEARCH_CHECK_SEQ_FADE_OUT:   MainSeq_FADE_OUT( work );   break;
+  case RESEARCH_CHECK_SEQ_CLEAN_UP:   MainSeq_CLEAN_UP( work );   break;
   case RESEARCH_CHECK_SEQ_FINISH:     return work->result;
   default: GF_ASSERT(0);
   }
@@ -521,7 +482,7 @@ RESEARCH_CHECK_RESULT ResearchCheckMain( RESEARCH_CHECK_WORK* work )
   UpdatePaletteAnime( work ); // パレットアニメーション更新
 
   CountUpSeqCount( work ); // シーケンスカウンタ更新
-  SwitchSequence( work );  // シーケンス更新
+  SwitchSeq( work );  // シーケンス更新
 
   // 3D描画
   DrawCircleGraphs( work ); // 円グラフを描画
@@ -545,7 +506,7 @@ RESEARCH_CHECK_RESULT ResearchCheckMain( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_SETUP( RESEARCH_CHECK_WORK* work )
+static void MainSeq_SETUP( RESEARCH_CHECK_WORK* work )
 {
   CreateFont( work );
   CreateMessages( work );
@@ -582,7 +543,7 @@ static void Main_SETUP( RESEARCH_CHECK_WORK* work )
 
   //SetupResearchData( work );   // 調査データを取得
   Debug_SetupResearchData( work ); // TEST:
-  DebugPrint_researchData( work ); // TEST: 
+  //DebugPrint_researchData( work ); // TEST: 
   CreateCircleGraph( work );       // 円グラフ 作成
   CreateArrow( work );             // 矢印 作成
   CreatePercentage( work );        // % 表示オブジェクト生成
@@ -596,8 +557,8 @@ static void Main_SETUP( RESEARCH_CHECK_WORK* work )
   GFL_FADE_SetMasterBrightReq(
       GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0);
 
-  SetNextSequence( work, RESEARCH_CHECK_SEQ_STANDBY ); // 次のシーケンスをセット
-  FinishCurrentSequence( work ); // シーケンス終了
+  SetNextSeq( work, RESEARCH_CHECK_SEQ_STANDBY ); // 次のシーケンスをセット
+  FinishCurrentSeq( work ); // シーケンス終了
 }
 
 //----------------------------------------------------------------------------------------------
@@ -607,7 +568,7 @@ static void Main_SETUP( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_STANDBY( RESEARCH_CHECK_WORK* work )
+static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
 {
   int key;
   int trg;
@@ -624,9 +585,9 @@ static void Main_STANDBY( RESEARCH_CHECK_WORK* work )
     RESEARCH_COMMON_StartPaletteAnime( 
         work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // 選択パレットアニメ開始
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // キャンセル音
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_FADE_OUT );
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_FADE_OUT );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
+    FinishCurrentSeq( work );
     return;
   }
 
@@ -638,8 +599,8 @@ static void Main_STANDBY( RESEARCH_CHECK_WORK* work )
       (trg & PAD_BUTTON_A) ||
       (touch == TOUCH_AREA_GRAPH) ) 
   {
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+    FinishCurrentSeq( work );
     return;
   }
 
@@ -647,73 +608,71 @@ static void Main_STANDBY( RESEARCH_CHECK_WORK* work )
   if( touch == TOUCH_AREA_QUESTION ) {
     MoveMenuCursorDirect( work, MENU_ITEM_ANSWER );
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_ANALYZE );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_FLASH_IN );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
-      FinishCurrentSequence( work );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+      FinishCurrentSeq( work );
     }
     return;
   }
   //「回答」ボタン
   if( touch == TOUCH_AREA_ANSWER ) {
     MoveMenuCursorDirect( work, MENU_ITEM_ANSWER );
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+    FinishCurrentSeq( work );
     return;
   } 
   //「自分の回答」ボタン
   if( touch == TOUCH_AREA_MY_ANSWER ) {
     MoveMenuCursorDirect( work, MENU_ITEM_MY_ANSWER );
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+    FinishCurrentSeq( work );
     return;
   } 
   //「回答人数」ボタン
   if( touch == TOUCH_AREA_COUNT ) {
     MoveMenuCursorDirect( work, MENU_ITEM_COUNT );
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+    FinishCurrentSeq( work );
     return;
   }
 
   // 左カーソル
   if( touch == TOUCH_AREA_CONTROL_CURSOR_L ) {
-    switch( work->cursorPos )
-    {
+    switch( work->cursorPos ) {
     case MENU_ITEM_QUESTION:  ChangeQuestionToPrev( work );  break;
     case MENU_ITEM_ANSWER:    ChangeAnswerToPrev( work );    break;
     case MENU_ITEM_MY_ANSWER: break;
     case MENU_ITEM_COUNT:     SwitchDataDisplayType( work ); break;
     default: GF_ASSERT(0);
     }
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+    FinishCurrentSeq( work );
     return;
   }
 
   // 右カーソル
   if( touch == TOUCH_AREA_CONTROL_CURSOR_R ) {
-    switch( work->cursorPos )
-    {
+    switch( work->cursorPos ) {
     case MENU_ITEM_QUESTION:  ChangeQuestionToNext( work );  break;
     case MENU_ITEM_ANSWER:    ChangeAnswerToNext( work );    break;
     case MENU_ITEM_MY_ANSWER: break;
     case MENU_ITEM_COUNT:     SwitchDataDisplayType( work ); break;
     default: GF_ASSERT(0);
     }
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+    FinishCurrentSeq( work );
     return;
   }
 
   // B ボタン
   if( trg & PAD_BUTTON_B ) {
     // シーケンス変更
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_FADE_OUT );
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_FADE_OUT );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
+    FinishCurrentSeq( work );
     return;
   } 
 }
@@ -725,7 +684,7 @@ static void Main_STANDBY( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
+static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
 {
   int key;
   int trg;
@@ -737,14 +696,26 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
   touch = GFL_UI_TP_HitTrg( work->touchHitTable );
   commonTouch = GFL_UI_TP_HitTrg( RESEARCH_COMMON_GetHitTable(work->commonWork) );
 
+  // 調査データの更新を検出
+  if( (work->analyzeFlag == TRUE) && (GAMEBEACON_Get_NewEntry() == TRUE) ) {
+    // 更新シーケンスへ
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_UPDATE );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+    FinishCurrentSeq( work );
+    return;
+  } 
+
   // TEST:
-  if( trg & PAD_BUTTON_DEBUG )
-  {
-    /*
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_UPDATE );
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
-    FinishCurrentSequence( work );
-    */
+  if( trg & PAD_BUTTON_DEBUG ) {
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_UPDATE );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+    FinishCurrentSeq( work );
     return;
   }
 
@@ -753,9 +724,9 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
     RESEARCH_COMMON_StartPaletteAnime( 
         work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // 選択パレットアニメ開始
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // キャンセル音
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_FADE_OUT );
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_FADE_OUT );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
+    FinishCurrentSeq( work );
     return;
   }
 
@@ -773,12 +744,12 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
   //「円グラフ」タッチ
   if( touch == TOUCH_AREA_GRAPH ) {
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_ANALYZE );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_FLASH_IN );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
-      FinishCurrentSequence( work );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+      FinishCurrentSeq( work );
     }
     return;
   }
@@ -786,12 +757,12 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
   if( touch == TOUCH_AREA_ANALYZE_BUTTON ) {
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
       StartPaletteAnime( work, PALETTE_ANIME_SELECT );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_ANALYZE );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_FLASH_IN );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
-      FinishCurrentSequence( work );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+      FinishCurrentSeq( work );
     }
     return;
   }
@@ -818,8 +789,7 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
 
   // ←キー or 左カーソル
   if( (trg & PAD_KEY_LEFT) || (touch == TOUCH_AREA_CONTROL_CURSOR_L) ) {
-    switch( work->cursorPos )
-    {
+    switch( work->cursorPos ) {
     case MENU_ITEM_QUESTION:  ChangeQuestionToPrev( work );  break;
     case MENU_ITEM_ANSWER:    ChangeAnswerToPrev( work );    break;
     case MENU_ITEM_MY_ANSWER: break;
@@ -830,8 +800,7 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
 
   // →キー or 右カーソル
   if( (trg & PAD_KEY_RIGHT) || (touch == TOUCH_AREA_CONTROL_CURSOR_R) ) {
-    switch( work->cursorPos )
-    {
+    switch( work->cursorPos ) {
     case MENU_ITEM_QUESTION:  ChangeQuestionToNext( work );  break;
     case MENU_ITEM_ANSWER:    ChangeAnswerToNext( work );    break;
     case MENU_ITEM_MY_ANSWER: break;
@@ -846,12 +815,12 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
         (GetCountOfQuestion(work) != 0) && 
         (work->cursorPos == MENU_ITEM_QUESTION)  ) {
       // シーケンス変更
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_ANALYZE );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_FLASH_IN );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
-      SetNextSequence( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
-      FinishCurrentSequence( work );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+      FinishCurrentSeq( work );
       return;
     }
   } 
@@ -859,9 +828,9 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
   // B ボタン
   if( trg & PAD_BUTTON_B ) {
     // シーケンス変更
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_FADE_OUT );
-    SetNextSequence( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
-    FinishCurrentSequence( work );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_FADE_OUT );
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
+    FinishCurrentSeq( work );
     return;
   } 
 }
@@ -873,13 +842,13 @@ static void Main_KEY_WAIT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_ANALYZE( RESEARCH_CHECK_WORK* work )
+static void MainSeq_ANALYZE( RESEARCH_CHECK_WORK* work )
 { 
   // SE が停止している
   if( PMSND_CheckPlaySE() == FALSE ) { 
     // 一定時間が経過で次のシーケンスへ
     if( SEQ_ANALYZE_FRAMES <= work->seqCount ) {
-      FinishCurrentSequence( work );
+      FinishCurrentSeq( work );
     } 
     else { 
       // データ解析中SEをループさせる
@@ -895,7 +864,7 @@ static void Main_ANALYZE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_PERCENTAGE( RESEARCH_CHECK_WORK* work )
+static void MainSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work )
 { 
   // 新たな％を表示
   if( work->seqCount % 10 == 0 ) {
@@ -904,7 +873,7 @@ static void Main_PERCENTAGE( RESEARCH_CHECK_WORK* work )
 
   // 全ての数値を表示したら次のシーケンスへ
   if( work->percentageNum <= work->percentageDispNum ) {
-    FinishCurrentSequence( work );
+    FinishCurrentSeq( work );
   }
 }
 
@@ -915,11 +884,11 @@ static void Main_PERCENTAGE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_FLASH_OUT( RESEARCH_CHECK_WORK* work )
+static void MainSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work )
 {
   // パレットフェード終了
   if( IsPaletteFadeEnd( work ) ) {
-    FinishCurrentSequence( work );
+    FinishCurrentSeq( work );
   }
 }
 
@@ -930,11 +899,11 @@ static void Main_FLASH_OUT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_FLASH_IN( RESEARCH_CHECK_WORK* work )
+static void MainSeq_FLASH_IN( RESEARCH_CHECK_WORK* work )
 {
   // パレットフェード終了
   if( IsPaletteFadeEnd( work ) ) {
-    FinishCurrentSequence( work );
+    FinishCurrentSeq( work );
   }
 }
 
@@ -945,12 +914,17 @@ static void Main_FLASH_IN( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_UPDATE( RESEARCH_CHECK_WORK* work )
+static void MainSeq_UPDATE( RESEARCH_CHECK_WORK* work )
 {
-  // 一定時間が経過で次のシーケンスへ
-  if( SEQ_UPDATE_FRAMES <= work->seqCount )
-  {
-    FinishCurrentSequence( work );
+  // SE が停止している
+  if( PMSND_CheckPlaySE() == FALSE ) { 
+    // 一定時間が経過
+    if( SEQ_UPDATE_FRAMES <= work->seqCount ) {
+      FinishCurrentSeq( work ); // シーケンス終了
+    } 
+    else { 
+      PMSND_PlaySE( SEQ_SE_SYS_81 ); // データ受信中SEをループさせる
+    }
   }
 }
 
@@ -961,11 +935,11 @@ static void Main_UPDATE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void Main_FADE_OUT( RESEARCH_CHECK_WORK* work )
+static void MainSeq_FADE_OUT( RESEARCH_CHECK_WORK* work )
 {
   // フェードが終了
   if( GFL_FADE_CheckFade() == FALSE ) {
-    FinishCurrentSequence( work );
+    FinishCurrentSeq( work );
   } 
 }
 
@@ -979,7 +953,7 @@ static void Main_FADE_OUT( RESEARCH_CHECK_WORK* work )
  *         シーケンスが継続する場合 現在のシーケンス番号
  */
 //----------------------------------------------------------------------------------------------
-static void Main_CLEAN_UP( RESEARCH_CHECK_WORK* work )
+static void MainSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work )
 { 
   // パレットアニメーションワーク
   CleanUpPaletteAnime( work );
@@ -1025,8 +999,8 @@ static void Main_CLEAN_UP( RESEARCH_CHECK_WORK* work )
   SetResult( work, RESEARCH_CHECK_RESULT_TO_MENU );  
 
   // シーケンス終了
-  SetNextSequence( work, RESEARCH_CHECK_SEQ_FINISH );
-  FinishCurrentSequence( work );
+  SetNextSeq( work, RESEARCH_CHECK_SEQ_FINISH );
+  FinishCurrentSeq( work );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1036,7 +1010,7 @@ static void Main_CLEAN_UP( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishCurrentSequence( RESEARCH_CHECK_WORK* work )
+static void FinishCurrentSeq( RESEARCH_CHECK_WORK* work )
 {
   // すでに終了済み
   GF_ASSERT( work->seqFinishFlag == FALSE );
@@ -1045,7 +1019,7 @@ static void FinishCurrentSequence( RESEARCH_CHECK_WORK* work )
   work->seqFinishFlag = TRUE;
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish current sequence\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish current Seq\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1114,7 +1088,7 @@ static void CountUpSeqCount( RESEARCH_CHECK_WORK* work )
  * @param nextSeq 登録するシーケンス
  */
 //----------------------------------------------------------------------------------------------
-static void SetNextSequence( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
+static void SetNextSeq( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
 {
   // シーケンスキューに追加する
   QUEUE_EnQueue( work->seqQueue, nextSeq );
@@ -1131,7 +1105,7 @@ static void SetNextSequence( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextS
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void SwitchSequence( RESEARCH_CHECK_WORK* work )
+static void SwitchSeq( RESEARCH_CHECK_WORK* work )
 {
   RESEARCH_CHECK_SEQ nextSeq;
 
@@ -1140,7 +1114,7 @@ static void SwitchSequence( RESEARCH_CHECK_WORK* work )
 
   // 変更
   nextSeq = QUEUE_DeQueue( work->seqQueue );
-  SetSequence( work, nextSeq ); 
+  SetSeq( work, nextSeq ); 
 
   // DEBUG: シーケンスキューを表示
   DebugPrint_seqQueue( work );
@@ -1154,20 +1128,20 @@ static void SwitchSequence( RESEARCH_CHECK_WORK* work )
  * @parma nextSeq 設定するシーケンス
  */
 //----------------------------------------------------------------------------------------------
-static void SetSequence( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
+static void SetSeq( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
 { 
   // シーケンスの終了処理
   switch( work->seq ) {
-  case RESEARCH_CHECK_SEQ_SETUP:      FinishSequence_SETUP( work );       break;
-  case RESEARCH_CHECK_SEQ_STANDBY:    FinishSequence_STANDBY( work );     break;
-  case RESEARCH_CHECK_SEQ_KEY_WAIT:   FinishSequence_KEY_WAIT( work );    break;
-  case RESEARCH_CHECK_SEQ_ANALYZE:    FinishSequence_ANALYZE( work );     break;
-  case RESEARCH_CHECK_SEQ_PERCENTAGE: FinishSequence_PERCENTAGE( work );  break;
-  case RESEARCH_CHECK_SEQ_FLASH_OUT:  FinishSequence_FLASH_OUT( work );   break;
-  case RESEARCH_CHECK_SEQ_FLASH_IN:   FinishSequence_FLASH_IN( work );    break;
-  case RESEARCH_CHECK_SEQ_UPDATE:     FinishSequence_UPDATE( work );      break;
-  case RESEARCH_CHECK_SEQ_FADE_OUT:   FinishSequence_FADE_OUT( work );    break;
-  case RESEARCH_CHECK_SEQ_CLEAN_UP:   FinishSequence_CLEAN_UP( work );    break;
+  case RESEARCH_CHECK_SEQ_SETUP:      FinishSeq_SETUP( work );       break;
+  case RESEARCH_CHECK_SEQ_STANDBY:    FinishSeq_STANDBY( work );     break;
+  case RESEARCH_CHECK_SEQ_KEY_WAIT:   FinishSeq_KEY_WAIT( work );    break;
+  case RESEARCH_CHECK_SEQ_ANALYZE:    FinishSeq_ANALYZE( work );     break;
+  case RESEARCH_CHECK_SEQ_PERCENTAGE: FinishSeq_PERCENTAGE( work );  break;
+  case RESEARCH_CHECK_SEQ_FLASH_OUT:  FinishSeq_FLASH_OUT( work );   break;
+  case RESEARCH_CHECK_SEQ_FLASH_IN:   FinishSeq_FLASH_IN( work );    break;
+  case RESEARCH_CHECK_SEQ_UPDATE:     FinishSeq_UPDATE( work );      break;
+  case RESEARCH_CHECK_SEQ_FADE_OUT:   FinishSeq_FADE_OUT( work );    break;
+  case RESEARCH_CHECK_SEQ_CLEAN_UP:   FinishSeq_CLEAN_UP( work );    break;
   case RESEARCH_CHECK_SEQ_FINISH:     break;
   default:  GF_ASSERT(0);
   }
@@ -1179,16 +1153,16 @@ static void SetSequence( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
 
   // シーケンスの初期化処理
   switch( nextSeq ) {
-  case RESEARCH_CHECK_SEQ_SETUP:      InitSequence_SETUP( work );       break;
-  case RESEARCH_CHECK_SEQ_STANDBY:    InitSequence_STANDBY( work );     break;
-  case RESEARCH_CHECK_SEQ_KEY_WAIT:   InitSequence_KEY_WAIT( work );    break;
-  case RESEARCH_CHECK_SEQ_ANALYZE:    InitSequence_ANALYZE( work );     break;
-  case RESEARCH_CHECK_SEQ_PERCENTAGE: InitSequence_PERCENTAGE( work );  break;
-  case RESEARCH_CHECK_SEQ_FLASH_OUT:  InitSequence_FLASH_OUT( work );   break;
-  case RESEARCH_CHECK_SEQ_FLASH_IN:   InitSequence_FLASH_IN( work );    break;
-  case RESEARCH_CHECK_SEQ_UPDATE:     InitSequence_UPDATE( work );      break;
-  case RESEARCH_CHECK_SEQ_FADE_OUT:   InitSequence_FADE_OUT( work );    break;
-  case RESEARCH_CHECK_SEQ_CLEAN_UP:   InitSequence_CLEAN_UP( work );    break;
+  case RESEARCH_CHECK_SEQ_SETUP:      InitSeq_SETUP( work );       break;
+  case RESEARCH_CHECK_SEQ_STANDBY:    InitSeq_STANDBY( work );     break;
+  case RESEARCH_CHECK_SEQ_KEY_WAIT:   InitSeq_KEY_WAIT( work );    break;
+  case RESEARCH_CHECK_SEQ_ANALYZE:    InitSeq_ANALYZE( work );     break;
+  case RESEARCH_CHECK_SEQ_PERCENTAGE: InitSeq_PERCENTAGE( work );  break;
+  case RESEARCH_CHECK_SEQ_FLASH_OUT:  InitSeq_FLASH_OUT( work );   break;
+  case RESEARCH_CHECK_SEQ_FLASH_IN:   InitSeq_FLASH_IN( work );    break;
+  case RESEARCH_CHECK_SEQ_UPDATE:     InitSeq_UPDATE( work );      break;
+  case RESEARCH_CHECK_SEQ_FADE_OUT:   InitSeq_FADE_OUT( work );    break;
+  case RESEARCH_CHECK_SEQ_CLEAN_UP:   InitSeq_CLEAN_UP( work );    break;
   case RESEARCH_CHECK_SEQ_FINISH:     break;
   default:  GF_ASSERT(0);
   }
@@ -1219,7 +1193,7 @@ static void SetSequence( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_SETUP( RESEARCH_CHECK_WORK* work )
+static void InitSeq_SETUP( RESEARCH_CHECK_WORK* work )
 { 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init seq SETUP\n" );
@@ -1232,7 +1206,7 @@ static void InitSequence_SETUP( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_STANDBY( RESEARCH_CHECK_WORK* work )
+static void InitSeq_STANDBY( RESEARCH_CHECK_WORK* work )
 { 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init seq STANDBY\n" );
@@ -1245,7 +1219,7 @@ static void InitSequence_STANDBY( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_KEY_WAIT( RESEARCH_CHECK_WORK* work )
+static void InitSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
 {
   SetMenuCursorOn( work );     // カーソルが乗っている状態にする
 
@@ -1260,7 +1234,7 @@ static void InitSequence_KEY_WAIT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_ANALYZE( RESEARCH_CHECK_WORK* work )
+static void InitSeq_ANALYZE( RESEARCH_CHECK_WORK* work )
 {
   //「…かいせきちゅう…」を表示
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZING, TRUE );
@@ -1284,7 +1258,7 @@ static void InitSequence_ANALYZE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_PERCENTAGE( RESEARCH_CHECK_WORK* work )
+static void InitSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work )
 {
   SetupPercentages( work ); // ％表示オブジェクトをセットアップ
 
@@ -1299,7 +1273,7 @@ static void InitSequence_PERCENTAGE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_FLASH_OUT( RESEARCH_CHECK_WORK* work )
+static void InitSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work )
 {
   // パレットフェード開始
   StartPaletteFadeFlashOut( work );
@@ -1315,7 +1289,7 @@ static void InitSequence_FLASH_OUT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_FLASH_IN( RESEARCH_CHECK_WORK* work )
+static void InitSeq_FLASH_IN( RESEARCH_CHECK_WORK* work )
 {
   // パレットフェード開始
   StartPaletteFadeFlashIn( work );
@@ -1331,15 +1305,32 @@ static void InitSequence_FLASH_IN( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_UPDATE( RESEARCH_CHECK_WORK* work )
+static void InitSeq_UPDATE( RESEARCH_CHECK_WORK* work )
 {
+  GF_ASSERT( work->updateFlag == FALSE ); // 不正呼び出し
+
+  // 更新開始
+  work->updateFlag = TRUE;
+
+  // 調査データを再セットアップ
+  //SetupResearchData( work );
+  Debug_SetupResearchData( work ); // TEST:
+
+  // 表示を更新
+  SetMenuCursorOff( work );           // カーソルが乗っていない状態にする
   UpdateMainBG_WINDOW( work );        // MAIN-BG ( ウィンドウ面 ) を更新する
-  SetMenuCursorOn( work );            // カーソルが乗っている状態にする
+  UpdateBGFont_Answer( work );        //「回答」文字列の表示を更新する
   UpdateBGFont_DataReceiving( work ); //「データしゅとくちゅう」の表示を更新する
+  UpdateArrow( work );                // 矢印の表示を更新する
+  UpdateControlCursor( work );        // 左右のカーソル表示を更新する
+  VanishAllPercentage( work );        // ％表示を消去する
 
   // サブ円グラフ作成
   SetupSubCircleGraph( work, DATA_DISP_TYPE_TODAY );
   SetupSubCircleGraph( work, DATA_DISP_TYPE_TOTAL );
+
+  // 円グラフの重なり方を調整
+  AdjustCircleGraphLayer( work );
 
   // 円グラフ表示開始
   CIRCLE_GRAPH_SetDrawEnable( GetSubGraph(work), TRUE );
@@ -1356,7 +1347,7 @@ static void InitSequence_UPDATE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_FADE_OUT( RESEARCH_CHECK_WORK* work )
+static void InitSeq_FADE_OUT( RESEARCH_CHECK_WORK* work )
 { 
   // フェードアウト開始
   GFL_FADE_SetMasterBrightReq(
@@ -1373,7 +1364,7 @@ static void InitSequence_FADE_OUT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitSequence_CLEAN_UP( RESEARCH_CHECK_WORK* work )
+static void InitSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init seq CLEAN_UP\n" );
@@ -1386,7 +1377,7 @@ static void InitSequence_CLEAN_UP( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_SETUP( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_SETUP( RESEARCH_CHECK_WORK* work )
 {
   UpdateBGFont_TopicTitle( work );      // 調査項目名を更新する
   UpdateBGFont_QuestionCaption( work ); // 質問の補足文を更新する
@@ -1401,6 +1392,7 @@ static void FinishSequence_SETUP( RESEARCH_CHECK_WORK* work )
   UpdateMyAnswerIconOnButton( work );   // 自分の回答アイコン ( ボタン上 ) を更新する
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZE_BUTTON, TRUE ); //「ほうこくをみる」ボタンを表示
   StartPaletteAnime( work, PALETTE_ANIME_CURSOR_ON ); // カーソルONパレットアニメを開始
+  StartPaletteAnime( work, PALETTE_ANIME_RECEIVE_BUTTON ); //「データ受信中」ボタンのパレットアニメを開始
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq SETUP\n" );
@@ -1413,8 +1405,10 @@ static void FinishSequence_SETUP( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_STANDBY( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_STANDBY( RESEARCH_CHECK_WORK* work )
 {
+  UpdateBGFont_DataReceiving( work ); //「データしゅとくちゅう」の表示を更新する
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq STANDBY\n" );
 }
@@ -1426,7 +1420,7 @@ static void FinishSequence_STANDBY( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_KEY_WAIT( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq KEY_WAIT\n" );
@@ -1439,7 +1433,7 @@ static void FinishSequence_KEY_WAIT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_ANALYZE( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_ANALYZE( RESEARCH_CHECK_WORK* work )
 {
   // 解析済みフラグを立てる
   work->analyzeFlag = TRUE;
@@ -1467,7 +1461,7 @@ static void FinishSequence_ANALYZE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_PERCENTAGE( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq PERCENTAGE\n" );
@@ -1480,7 +1474,7 @@ static void FinishSequence_PERCENTAGE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_FLASH_OUT( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq FLASH_OUT\n" );
@@ -1493,7 +1487,7 @@ static void FinishSequence_FLASH_OUT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_FLASH_IN( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_FLASH_IN( RESEARCH_CHECK_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq FLASH_IN\n" );
@@ -1506,18 +1500,28 @@ static void FinishSequence_FLASH_IN( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_UPDATE( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_UPDATE( RESEARCH_CHECK_WORK* work )
 {
+  GF_ASSERT( work->updateFlag == TRUE ); // 不正呼び出し
+
+  // 更新終了
+  work->updateFlag = FALSE;
+
+  // 円グラフを更新
+  InterchangeCircleGraph( work ); // サブ円グラフとメイン円グラフを入れ替える
+  CIRCLE_GRAPH_SetDrawEnable( GetSubGraph(work), FALSE ); // サブ円グラフ ( 元メイン ) 表示終了
+
+  // 表示を更新
   UpdateMainBG_WINDOW( work );        // MAIN-BG ( ウィンドウ面 ) を更新する
   SetMenuCursorOn( work );            // カーソルが乗っている状態にする
   UpdateBGFont_DataReceiving( work ); //「データしゅとくちゅう」の表示を更新する
+  UpdateBGFont_Answer( work );        // 回答を更新する
   UpdateArrow( work );                // 矢印を更新する
+  UpdateControlCursor( work );        // 左右のカーソル表示を更新する
+  DispAllPercentage( work );          // ％表記を表示する
 
-  // サブ円グラフとメイン円グラフを入れ替える
-  InterchangeCircleGraph( work );
-
-  // サブ円グラフ ( 元メイン ) 表示終了
-  CIRCLE_GRAPH_SetDrawEnable( GetSubGraph(work), FALSE );
+  // 更新完了SE
+  PMSND_PlaySE( SEQ_SE_SYS_82 );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq UPDATE\n" );
@@ -1530,7 +1534,7 @@ static void FinishSequence_UPDATE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_FADE_OUT( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_FADE_OUT( RESEARCH_CHECK_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq FADE_OUT\n" );
@@ -1543,7 +1547,7 @@ static void FinishSequence_FADE_OUT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void FinishSequence_CLEAN_UP( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq CLEAN_UP\n" );
@@ -1598,8 +1602,8 @@ static void DrawAnswerMarker( const RESEARCH_CHECK_WORK* work )
   GXRgb color;
   const RESEARCH_DATA* data;
 
-  // 未解析なら描画しない
-  if( work->analyzeFlag == FALSE ) { return; }
+  // 未解析 or 更新中は表示しない
+  if( (work->analyzeFlag == FALSE) || (work->updateFlag == TRUE) ) { return; }
 
   // 表示中の回答のカラーを取得
   data = &(work->researchData);
@@ -1616,6 +1620,7 @@ static void DrawAnswerMarker( const RESEARCH_CHECK_WORK* work )
                   31,                       // alpha(0 - 31)
                   0 );                      // OR of GXPolygonAttrMisc's value
 
+  // 描画ポリゴンを登録
   G3_Begin( GX_BEGIN_QUADS ); // 四角形ポリゴン
   G3_Color( color ); // 頂点カラー
   G3_Vtx( ANSWER_MARKER_LEFT,  ANSWER_MARKER_TOP,    ANSWER_MARKER_Z ); // 頂点1
@@ -1637,9 +1642,9 @@ static void VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   RESEARCH_CHECK_WORK* work = (RESEARCH_CHECK_WORK*)wk;
 
-  GFL_BG_VBlankFunc();
-  GFL_CLACT_SYS_VBlankFunc();
-  PaletteFadeTrans( work->paletteFadeSystem );
+  GFL_BG_VBlankFunc(); // BG
+  GFL_CLACT_SYS_VBlankFunc(); // OBJ
+  PaletteFadeTrans( work->paletteFadeSystem ); // パレットフェード
 }
 
 
@@ -1681,6 +1686,7 @@ static void MoveMenuCursorUp( RESEARCH_CHECK_WORK* work )
   SetMenuCursorOn( work );      // カーソルが乗っている状態にする
   UpdateControlCursor( work );  // 左右カーソルを更新
   UpdateMyAnswerIconOnGraph( work );  // 自分の回答アイコン ( グラフ上 ) を更新する
+  StartPaletteAnime( work, PALETTE_ANIME_CURSOR_SET ); // カーソルセットのパレットアニメを開始する
 
   // カーソル移動音
   PMSND_PlaySE( SEQ_SE_SELECT1 );
@@ -1722,6 +1728,7 @@ static void MoveMenuCursorDown( RESEARCH_CHECK_WORK* work )
   SetMenuCursorOn( work );      // カーソルが乗っている状態にする
   UpdateControlCursor( work );  // 左右カーソルを更新
   UpdateMyAnswerIconOnGraph( work );  // 自分の回答アイコン ( グラフ上 ) を更新する
+  StartPaletteAnime( work, PALETTE_ANIME_CURSOR_SET ); // カーソルセットのパレットアニメを開始する
 
   // カーソル移動音
   PMSND_PlaySE( SEQ_SE_SELECT1 );
@@ -1745,8 +1752,7 @@ static void MoveMenuCursorDirect( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem 
   {
     if( (work->analyzeFlag == FALSE) ||   // 未解析
         (GetCountOfQuestion(work) == 0) ) //「ただいま ちょうさちゅう」
-    {
-      // 移動を受け付けない
+    { // 移動を受け付けない
       return;
     }
   }
@@ -1761,6 +1767,7 @@ static void MoveMenuCursorDirect( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem 
   SetMenuCursorOn( work );      // カーソルが乗っている状態にする
   UpdateControlCursor( work );  // 左右カーソルを更新
   UpdateMyAnswerIconOnGraph( work );  // 自分の回答アイコン ( グラフ上 ) を更新する
+  StartPaletteAnime( work, PALETTE_ANIME_CURSOR_SET ); // カーソルセットのパレットアニメを開始する
 
   // カーソル移動音
   PMSND_PlaySE( SEQ_SE_SELECT1 );
@@ -2099,11 +2106,11 @@ static void SetDataDisplayType( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispTy
 static void SetMenuCursorOn( RESEARCH_CHECK_WORK* work )
 {
   // 該当するスクリーンを更新
-  switch( work->cursorPos )
-  {
-  case MENU_ITEM_QUESTION:  // 質問
-  case MENU_ITEM_MY_ANSWER: // 自分の回答
-  case MENU_ITEM_COUNT:     // 回答人数
+  switch( work->cursorPos ) {
+  //「質問」「自分の回答」「回答人数」
+  case MENU_ITEM_QUESTION:  
+  case MENU_ITEM_MY_ANSWER: 
+  case MENU_ITEM_COUNT:     
     GFL_BG_ChangeScreenPalette( MAIN_BG_WINDOW, 
                                 MenuItemDrawParam[ work->cursorPos ].left_chara,
                                 MenuItemDrawParam[ work->cursorPos ].top_chara,
@@ -2130,8 +2137,7 @@ static void SetMenuCursorOn( RESEARCH_CHECK_WORK* work )
   }
 
   // スクリーン転送リクエスト
-  GFL_BG_LoadScreenReq( MAIN_BG_WINDOW );
-
+  GFL_BG_LoadScreenReq( MAIN_BG_WINDOW ); 
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: set menu cursor on (%d)\n", work->cursorPos );
@@ -2196,9 +2202,11 @@ static void UpdateArrow( RESEARCH_CHECK_WORK* work )
   // 消去
   ARROW_Vanish( work->arrow );
 
+  // 更新中は表示しない
+  if( work->updateFlag == TRUE ) { return; }
+
   // 表示開始
-  if( work->analyzeFlag )
-  {
+  if( work->analyzeFlag ) {
     int endX, endY;
     CIRCLE_GRAPH_GetComponentPointPos_byID( GetMainGraph(work), GetAnswerID(work), &endX, &endY );
     ARROW_Setup( work->arrow, ARROW_START_X, ARROW_START_Y, endX, endY );
@@ -2368,7 +2376,7 @@ static void UpdateMainBG_WINDOW( RESEARCH_CHECK_WORK* work )
   handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, work->heapID ); 
 
   // 反映させるスクリーンデータを決定
-  if( work->seq == RESEARCH_CHECK_SEQ_UPDATE ) {
+  if( work->updateFlag ) {
     datID = NARC_research_radar_graphic_bgd_graphbtn3_NSCR; //「データ しゅとくちゅう」
   }
   else if( GetCountOfQuestion( work ) == 0 ) {
@@ -2493,8 +2501,8 @@ static void UpdateBGFont_Answer( RESEARCH_CHECK_WORK* work )
   BGFont = work->BGFont[ MAIN_BG_FONT_ANSWER ];
   graph  = GetMainGraph( work );
 
-  // 解析前なら表示しない
-  if( work->analyzeFlag == FALSE ) {
+  // 解析前 or 更新中なら表示しない
+  if( (work->analyzeFlag == FALSE) || (work->updateFlag == TRUE) ) {
     BG_FONT_SetDrawEnable( BGFont, FALSE );
     return;
   }
@@ -2693,9 +2701,8 @@ static void UpdateControlCursor( RESEARCH_CHECK_WORK* work )
   cursorL = GetClactWork( work, CLWK_CONTROL_CURSOR_L );
   cursorR = GetClactWork( work, CLWK_CONTROL_CURSOR_R );
 
-
-  //「自分の回答」を選択している場合は表示しない
-  if( work->cursorPos == MENU_ITEM_MY_ANSWER ) {
+  // 更新中 or「自分の回答」を選択している場合は表示しない
+  if( (work->updateFlag == TRUE ) || (work->cursorPos == MENU_ITEM_MY_ANSWER) ) {
     GFL_CLACT_WK_SetDrawEnable( cursorL, FALSE );
     GFL_CLACT_WK_SetDrawEnable( cursorR, FALSE );
   }
@@ -3554,12 +3561,12 @@ static void SetupResearchData( RESEARCH_CHECK_WORK* work )
   int qIdx, aIdx;
   u8 topicID;
   u8 questionID[ QUESTION_NUM_PER_TOPIC ];
-  u8 answerNum[ QUESTION_NUM_PER_TOPIC ];
-  u16 todayCount_question[ QUESTION_NUM_PER_TOPIC ];
-  u16 totalCount_question[ QUESTION_NUM_PER_TOPIC ];
+  u8 answerNumOfQuestion[ QUESTION_NUM_PER_TOPIC ];
+  u16 todayCountOfQuestion[ QUESTION_NUM_PER_TOPIC ];
+  u16 totalCountOfQuestion[ QUESTION_NUM_PER_TOPIC ];
   u16 answerID[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
-  u16 todayCount_answer[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
-  u16 totalCount_answer[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
+  u16 todayCountOfAnswer[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
+  u16 totalCountOfAnswer[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
   SAVE_CONTROL_WORK* saveControlWork;
   QUESTIONNAIRE_SAVE_WORK* questionnaireSave;
 
@@ -3567,26 +3574,40 @@ static void SetupResearchData( RESEARCH_CHECK_WORK* work )
   saveControlWork = GAMEDATA_GetSaveControlWork( work->gameData );
   questionnaireSave = SaveData_GetQuestionnaire( saveControlWork );
   topicID = QuestionnaireWork_GetInvestigatingQuestion( questionnaireSave, 0 ); // 調査項目ID
-  questionID[0] = Question1_topic[ topicID ]; // 質問ID
-  questionID[1] = Question2_topic[ topicID ]; // 質問ID
-  questionID[2] = Question3_topic[ topicID ]; // 質問ID
-  answerNum[0] = AnswerNum_question[ questionID[0] ]; // 回答選択肢の数
-  answerNum[1] = AnswerNum_question[ questionID[1] ]; // 回答選択肢の数
-  answerNum[2] = AnswerNum_question[ questionID[2] ]; // 回答選択肢の数
-  todayCount_question[0] = QuestionnaireWork_GetTodayCount( questionnaireSave, questionID[0] ); // 今日の回答人数
-  todayCount_question[1] = QuestionnaireWork_GetTodayCount( questionnaireSave, questionID[1] ); // 今日の回答人数
-  todayCount_question[2] = QuestionnaireWork_GetTodayCount( questionnaireSave, questionID[2] ); // 今日の回答人数
-  totalCount_question[0] = QuestionnaireWork_GetTotalCount( questionnaireSave, questionID[0] ); // いままでの回答人数
-  totalCount_question[1] = QuestionnaireWork_GetTotalCount( questionnaireSave, questionID[1] ); // いままでの回答人数
-  totalCount_question[2] = QuestionnaireWork_GetTotalCount( questionnaireSave, questionID[2] ); // いままでの回答人数
+  questionID[0] = Question1_topic[ topicID ]; // 調査項目ID ==> 質問ID
+  questionID[1] = Question2_topic[ topicID ]; // 調査項目ID ==> 質問ID
+  questionID[2] = Question3_topic[ topicID ]; // 調査項目ID ==> 質問ID
+  answerNumOfQuestion[0] = AnswerNum_question[ questionID[0] ]; // 質問ID ==> 回答選択肢の数
+  answerNumOfQuestion[1] = AnswerNum_question[ questionID[1] ]; // 質問ID ==> 回答選択肢の数
+  answerNumOfQuestion[2] = AnswerNum_question[ questionID[2] ]; // 質問ID ==> 回答選択肢の数
+  todayCountOfQuestion[0] = QuestionnaireWork_GetTodayCount( questionnaireSave, questionID[0] ); // 質問に対する, 今日の回答人数
+  todayCountOfQuestion[1] = QuestionnaireWork_GetTodayCount( questionnaireSave, questionID[1] ); // 質問に対する, 今日の回答人数
+  todayCountOfQuestion[2] = QuestionnaireWork_GetTodayCount( questionnaireSave, questionID[2] ); // 質問に対する, 今日の回答人数
+  totalCountOfQuestion[0] = QuestionnaireWork_GetTotalCount( questionnaireSave, questionID[0] ); // 質問に対する, いままでの回答人数
+  totalCountOfQuestion[1] = QuestionnaireWork_GetTotalCount( questionnaireSave, questionID[1] ); // 質問に対する, いままでの回答人数
+  totalCountOfQuestion[2] = QuestionnaireWork_GetTotalCount( questionnaireSave, questionID[2] ); // 質問に対する, いままでの回答人数
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: topicID=%d\n", topicID ); // DEBUG: 調査項目ID
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: questionID[0]=%d\n", questionID[0] ); // DEBUG: 質問ID
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: questionID[1]=%d\n", questionID[1] ); // DEBUG: 質問ID
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: questionID[2]=%d\n", questionID[2] ); // DEBUG: 質問ID
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: answerNumOfQuestion[0]=%d\n", answerNumOfQuestion[0] ); // DEBUG: 質問に対する, 回答選択肢の数
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: answerNumOfQuestion[1]=%d\n", answerNumOfQuestion[1] ); // DEBUG: 質問に対する, 回答選択肢の数
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: answerNumOfQuestion[2]=%d\n", answerNumOfQuestion[2] ); // DEBUG: 質問に対する, 回答選択肢の数
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: todayCountOfQuestion[0]=%d\n", todayCountOfQuestion[0] ); // DEBUG: 質問に対する, 今日の回答人数
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: todayCountOfQuestion[1]=%d\n", todayCountOfQuestion[1] ); // DEBUG: 質問に対する, 今日の回答人数
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: todayCountOfQuestion[2]=%d\n", todayCountOfQuestion[2] ); // DEBUG: 質問に対する, 今日の回答人数
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: totalCountOfQuestion[0]=%d\n", totalCountOfQuestion[0] ); // DEBUG: 質問に対する, いままでの回答人数
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: totalCountOfQuestion[1]=%d\n", totalCountOfQuestion[1] ); // DEBUG: 質問に対する, いままでの回答人数
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: totalCountOfQuestion[2]=%d\n", totalCountOfQuestion[2] ); // DEBUG: 質問に対する, いままでの回答人数
   for( qIdx=0; qIdx < QUESTION_NUM_PER_TOPIC; qIdx++ )
   {
     u8 qID = questionID[ qIdx ];
-    for( aIdx=0; aIdx < answerNum[ qIdx ]; aIdx++ )
+
+    for( aIdx=0; aIdx < answerNumOfQuestion[ qIdx ]; aIdx++ )
     {
       answerID[ qIdx ][ aIdx ] = AnswerID_question[ qID ][ aIdx ]; // 回答ID
-      todayCount_answer[ qIdx ][ aIdx ] = QuestionnaireWork_GetTodayAnswerNum( questionnaireSave, qIdx, aIdx + 1 ); // 今日の回答人数
-      totalCount_answer[ qIdx ][ aIdx ] = QuestionnaireWork_GetTotalAnswerNum( questionnaireSave, qIdx, aIdx + 1 ); // いままでの回答人数
+      todayCountOfAnswer[ qIdx ][ aIdx ] = QuestionnaireWork_GetTodayAnswerNum( questionnaireSave, qID, aIdx + 1 ); // 回答に対する, 今日の回答人数
+      totalCountOfAnswer[ qIdx ][ aIdx ] = QuestionnaireWork_GetTotalAnswerNum( questionnaireSave, qID, aIdx + 1 ); // 回答に対する, いままでの回答人数
     }
   }
 
@@ -3594,10 +3615,10 @@ static void SetupResearchData( RESEARCH_CHECK_WORK* work )
   work->researchData.topicID = topicID; // 調査項目ID
   for( qIdx=0; qIdx < QUESTION_NUM_PER_TOPIC; qIdx++ )
   {
-    work->researchData.questionData[ qIdx ].ID         = questionID[ qIdx ];           // 質問ID
-    work->researchData.questionData[ qIdx ].answerNum  = answerNum[ qIdx ];            // 回答選択肢の数
-    work->researchData.questionData[ qIdx ].todayCount = todayCount_question[ qIdx ];  // 今日の回答人数
-    work->researchData.questionData[ qIdx ].totalCount = totalCount_question[ qIdx ];  // いままでの回答人数
+    work->researchData.questionData[ qIdx ].ID = questionID[ qIdx ]; // 質問ID
+    work->researchData.questionData[ qIdx ].answerNum  = answerNumOfQuestion[ qIdx ]; // 回答選択肢の数
+    work->researchData.questionData[ qIdx ].todayCount = todayCountOfQuestion[ qIdx ]; // 今日の回答人数
+    work->researchData.questionData[ qIdx ].totalCount = totalCountOfQuestion[ qIdx ]; // いままでの回答人数
 
     for( aIdx=0; aIdx < MAX_ANSWER_NUM_PER_QUESTION; aIdx++ )
     {
@@ -3605,8 +3626,8 @@ static void SetupResearchData( RESEARCH_CHECK_WORK* work )
       work->researchData.questionData[ qIdx ].answerData[ aIdx ].colorR = (aIdx * 3) % 31; // 表示カラー(R)
       work->researchData.questionData[ qIdx ].answerData[ aIdx ].colorG = (aIdx * 5) % 31; // 表示カラー(G)
       work->researchData.questionData[ qIdx ].answerData[ aIdx ].colorB = (aIdx * 7) % 31; // 表示カラー(B)
-      work->researchData.questionData[ qIdx ].answerData[ aIdx ].todayCount = todayCount_answer[ qIdx ][ aIdx ]; // 今日の回答人数
-      work->researchData.questionData[ qIdx ].answerData[ aIdx ].totalCount = totalCount_answer[ qIdx ][ aIdx ];  // いままでの回答人数
+      work->researchData.questionData[ qIdx ].answerData[ aIdx ].todayCount = todayCountOfAnswer[ qIdx ][ aIdx ]; // 今日の回答人数
+      work->researchData.questionData[ qIdx ].answerData[ aIdx ].totalCount = totalCountOfAnswer[ qIdx ][ aIdx ];  // いままでの回答人数
     }
   }
 }
@@ -3918,7 +3939,7 @@ static void RegisterMainObjResources( RESEARCH_CHECK_WORK* work )
   commonPalette = GFL_CLGRP_PLTT_RegisterEx( arcHandle, 
                                        NARC_app_menu_common_task_menu_NCLR,
                                        CLSYS_DRAW_MAIN,
-                                       ONE_PALETTE_SIZE*9, 0, 1, 
+                                       ONE_PALETTE_SIZE*4, 0, 2, 
                                        heapID );
   GFL_ARC_CloseDataHandle( arcHandle );
 
@@ -5147,11 +5168,8 @@ static void SetupMainCircleGraph( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE disp
     components[ aIdx ].outerColorR = answerData->colorR;
     components[ aIdx ].outerColorG = answerData->colorG;
     components[ aIdx ].outerColorB = answerData->colorB;
-    components[ aIdx ].centerColorR = answerData->colorR;
-    components[ aIdx ].centerColorG = answerData->colorG;
-    components[ aIdx ].centerColorB = answerData->colorB;
-    switch( dispType )
-    {
+    SetupCenterColorOfGraphComponent( &components[ aIdx ] );
+    switch( dispType ) {
     case DATA_DISP_TYPE_TODAY: components[ aIdx ].value = answerData->todayCount; break;
     case DATA_DISP_TYPE_TOTAL: components[ aIdx ].value = answerData->totalCount; break;
     default: GF_ASSERT(0);
@@ -5194,11 +5212,8 @@ static void SetupSubCircleGraph( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispT
     components[ aIdx ].outerColorR = answerData->colorR;
     components[ aIdx ].outerColorG = answerData->colorG;
     components[ aIdx ].outerColorB = answerData->colorB;
-    components[ aIdx ].centerColorR = 31;
-    components[ aIdx ].centerColorG = 31;
-    components[ aIdx ].centerColorB = 31;
-    switch( dispType )
-    {
+    SetupCenterColorOfGraphComponent( &components[ aIdx ] );
+    switch( dispType ) {
     case DATA_DISP_TYPE_TODAY: components[ aIdx ].value = answerData->todayCount; break;
     case DATA_DISP_TYPE_TOTAL: components[ aIdx ].value = answerData->totalCount; break;
     default: GF_ASSERT(0);
@@ -5211,6 +5226,64 @@ static void SetupSubCircleGraph( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispT
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup sub circle graph\n" );
 } 
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @breif グラフ構成要素の中心点カラーをセットアップする
+ *
+ * @param component グラフ構成要素の追加データ
+ */
+//----------------------------------------------------------------------------------------------
+static void SetupCenterColorOfGraphComponent( GRAPH_COMPONENT_ADD_DATA* component )
+{
+  const int min = 0; // カラー成分の最小値
+  const int max = 31; // カラー成分の最大値
+  const int brightness = 3; // 中心点カラーの明るさ
+  int R, G, B;
+  int cR, cG, cB;
+
+  // 外周の色を取得
+  R = component->outerColorR;
+  G = component->outerColorG;
+  B = component->outerColorB;
+
+  // 値域チェック
+  GF_ASSERT( min<=R && R<=max );
+  GF_ASSERT( min<=G && G<=max );
+  GF_ASSERT( min<=B && B<=max );
+
+  // 中心点の色を決定
+  cR = (R + max * (brightness - 1)) / brightness;
+  cG = (G + max * (brightness - 1)) / brightness;
+  cB = (B + max * (brightness - 1)) / brightness;
+
+  // 値域チェック
+  GF_ASSERT( min<=cR && cR<=max );
+  GF_ASSERT( min<=cG && cG<=max );
+  GF_ASSERT( min<=cB && cB<=max );
+
+  // 中心の色をセット
+  component->centerColorR = cR;
+  component->centerColorG = cG;
+  component->centerColorB = cB;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ * @brief メイン円グラフ, サブ円グラフの重なり方を調整する
+ *
+ * @param work
+ */
+//----------------------------------------------------------------------------------------------
+static void AdjustCircleGraphLayer( RESEARCH_CHECK_WORK* work )
+{
+  // サブ円グラフが手前に表示されるようにz座標を設定する
+  CIRCLE_GRAPH_SetCenterZ( GetMainGraph(work), FX16_CONST(-2.0f) );
+  CIRCLE_GRAPH_SetCenterZ( GetSubGraph(work), FX16_CONST(0.0f) );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: adjust circle graph layer\n" );
+}
 
 //----------------------------------------------------------------------------------------------
 /**
