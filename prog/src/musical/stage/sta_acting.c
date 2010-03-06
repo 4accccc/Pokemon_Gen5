@@ -1521,6 +1521,7 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
       if( work->initWork->commWork == NULL )
       {
         work->initWork->musPoke[work->useItemPoke]->isApeerBonus[work->useItemPokePos] = TRUE;
+        PMSND_PlaySE( SEQ_SE_MSCL_09 );
       }
       else
       {

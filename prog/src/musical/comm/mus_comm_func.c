@@ -19,6 +19,7 @@
 #include "mus_comm_func.h"
 #include "mus_comm_define.h"
 #include "musical/musical_system.h"
+#include "sound/pm_sndsys.h"
 #include "savedata/mystatus.h"
 
 #include "test/ariizumi/ari_debug.h"
@@ -1134,6 +1135,7 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
           break;
         }
       }
+      PMSND_PlaySE( SEQ_SE_MSCL_09 );
       ARI_TPrintf("PostAppealBonus:[%d][%d]\n",idx,pos);
     }
     break;

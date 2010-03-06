@@ -524,11 +524,13 @@ VMCMD_RESULT EvCmdGetMusicalFanValue( VMHANDLE *core, void *wk )
     ARI_TPrintf("MusValFan:Type[%d:%d]\n",pos,*ret_wk);
     break;
   case MUSICAL_VALUE_FAN_CHEER_MSG:   //応援メッセージ
-    *ret_wk = msg_musical_fan_cheer_01 + fanState->type;
+    //*ret_wk = msg_musical_fan_cheer_01 + fanState->type;
+    *ret_wk = msg_musical_fan_cheer_01 + pos;
     ARI_TPrintf("MusValFan:CheerMsg[%d:%d]\n",pos,*ret_wk);
     break;
   case MUSICAL_VALUE_FAN_GIFT_MSG:    //プレゼントメッセージ
-    *ret_wk = msg_musical_fan_gift_01 + fanState->type;
+    //*ret_wk = msg_musical_fan_gift_01 + fanState->type;
+    *ret_wk = msg_musical_fan_gift_01 + pos;
     ARI_TPrintf("MusValFan:GiftMsg[%d:%d]\n",pos,*ret_wk);
     break;
   case MUSICAL_VALUE_FAN_GIFT_TYPE:   //プレゼント種類

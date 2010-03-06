@@ -800,7 +800,7 @@ static void MUSICAL_EVENT_SetSaveData( MUSICAL_EVENT_WORK *evWork )
 //--------------------------------------------------------------
 static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
 {
-  u8 i;
+  u8 i,j;
   u8 num;
   //とりあえず初期化
   for( i=0;i<MUS_SAVE_FAN_NUM;i++ )
@@ -834,11 +834,30 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
   }
   {
     const MUSICAL_CONDITION_TYPE conType = MUSICAL_PROGRAM_GetMaxConditionType( evWork->progWork );
+    
+    //ファンの順番のシャッフル
+    u8 fanTempArr[MUS_SAVE_FAN_NUM];
+    for( i=0;i<MUS_SAVE_FAN_NUM;i++ )
+    {
+      fanTempArr[i] = i;
+    }
+    for( j=0;j<10;j++ )
+    {
+      for( i=0;i<MUS_SAVE_FAN_NUM;i++ )
+      {
+        u8 swapIdx = GFUser_GetPublicRand0(MUS_SAVE_FAN_NUM);
+        u8 temp = fanTempArr[i];
+        fanTempArr[i] = fanTempArr[swapIdx];
+        fanTempArr[swapIdx] = temp;
+      }
+    }
+    
     for( i=0;i<num;i++ )
     {
-      MUSICAL_FAN_STATE* fanState = MUSICAL_SAVE_GetFanState( evWork->musSave , i );
+      const u8 idx = fanTempArr[i];
+      MUSICAL_FAN_STATE* fanState = MUSICAL_SAVE_GetFanState( evWork->musSave , idx );
       const u8 point = MUSICAL_EVENT_GetPoint( evWork , evWork->selfIdx );
-      ARI_TPrintf("Fan[%d]",i);
+      ARI_TPrintf("Fan[%d]",idx);
       //見た目の決定
       fanState->type = conType; //タイプを渡す
       ARI_TPrintf("[%d]",fanState->type);
@@ -976,10 +995,17 @@ static const void MUSICAL_EVENT_JumpMusicalHall( GMEVENT *event, MUSICAL_EVENT_W
 
   //const VecFx32 pos = { FX32_CONST(280.0f) , FX32_CONST(0.0f) , FX32_CONST(120.0f) };
   //末ROM用
-  const VecFx32 pos = { FX32_CONST(232.0f) , FX32_CONST(0.0f) , FX32_CONST(200.0f) };
+  const VecFx32 pos     = { FX32_CONST(232.0f) , FX32_CONST(0.0f) , FX32_CONST(200.0f) };
+  const VecFx32 posComm = { FX32_CONST(168.0f) , FX32_CONST(0.0f) , FX32_CONST(200.0f) };
   
-  newEvent = EVENT_ChangeMapPos( evWork->gsys, fieldWork ,
-                ZONE_ID_C04R0201 , &pos , 2, FALSE );
+  if( evWork->isComm == TRUE )
+  {
+    newEvent = EVENT_ChangeMapPos( evWork->gsys, fieldWork , ZONE_ID_C04R0201 , &posComm , 2, FALSE );
+  }
+  else
+  {
+    newEvent = EVENT_ChangeMapPos( evWork->gsys, fieldWork , ZONE_ID_C04R0201 , &pos , 2, FALSE );
+  }
   GMEVENT_CallEvent(event, newEvent);
 }
 
