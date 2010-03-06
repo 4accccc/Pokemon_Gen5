@@ -616,6 +616,12 @@ HEAPID FIELD_BMODEL_MAN_GetHeapID(const FIELD_BMODEL_MAN * man)
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static inline u16 getResourceID( const PositionSt * objStatus )
+{
+  return objStatus->resourceID + ( objStatus->resourceIDupper << 8 );
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 int FIELD_BMODEL_MAN_ResistAllMapObjects
 (FIELD_BMODEL_MAN * man, FLD_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount)
 {
@@ -634,7 +640,7 @@ int FIELD_BMODEL_MAN_ResistAllMapObjects
     FIELD_BMODEL_MAN_ResistMapObject(man, g3Dmap, &objStatus[dataCount], resistCount);
 
     if (TRUE == BMODELMAN_GetSubModel(man,
-          objStatus[dataCount].resourceID, &status.trans, &status.id) )
+          getResourceID( &objStatus[dataCount] ), &status.trans, &status.id) )
     {
       TAMADA_Printf("Resist Sub Model:index(%d) model id(%d)\n", dataCount, status.id);
       resistCount++;
@@ -665,7 +671,7 @@ void FIELD_BMODEL_MAN_ResistMapObject
 (FIELD_BMODEL_MAN * man, FLD_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount)
 {
   FLD_G3D_MAP_GLOBALOBJ_ST status;
-  status.id = BMIDtoEntryNo(man, objStatus->resourceID);
+  status.id = BMIDtoEntryNo( man, getResourceID( objStatus ) );
   VEC_Set(&status.trans, objStatus->xpos, objStatus->ypos, -objStatus->zpos);
   status.rotate = (u16)(objStatus->rotate);
   G3DMAPOBJST_create(man, g3Dmap, &status, objCount);

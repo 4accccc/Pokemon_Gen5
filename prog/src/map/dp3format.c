@@ -248,6 +248,7 @@ u16 DP3MAP_GetLayoutRotate(const int index,const LayoutFormat* pLayout )
  */
 //-----------------------------------------------------------------------------
 
+#if 0
 BOOL DP3MAP_GetLayoutBillboard(const int index,const LayoutFormat* pLayout )
 {
     PositionSt* objStatus = (PositionSt*)&pLayout->posData;
@@ -255,6 +256,7 @@ BOOL DP3MAP_GetLayoutBillboard(const int index,const LayoutFormat* pLayout )
     GF_ASSERT(pLayout->count > index );
     return objStatus[index].billboard;
 }
+#endif
 
 //-----------------------------------------------------------------------------
 /**

@@ -47,7 +47,8 @@ typedef struct{
     fx32	ypos;
     fx32	zpos;
     u16		rotate;
-    u8		billboard;
+    //u8		billboard;
+    u8    resourceIDupper;
     u8		resourceID;
 } PositionSt;
 
