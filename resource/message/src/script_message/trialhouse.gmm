@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kawada_koji" host="W00215" date="2010-03-05T14:44:04"/>
+	<create user="morimoto" host="W00220" date="2010-03-06T19:18:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,7 +337,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1371" top="207" right="2076" bottom="835" maximized="no" rayout="Vertical2">
+	<dialog left="1724" top="197" right="2429" bottom="825" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="291" right="1280" bottom="689" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -368,10 +368,10 @@
 	<row id="msg_trialhouse_001">
 		<language name="JPN" width="256">バトルけんていで　あなたの　バトルを
 しんだん　しちゃいますよ！▼
-チャレンジ　しちゃう？</language>
+いかが　いたしましょう？</language>
 		<language name="JPN_KANJI" width="256">バトルけんていで　あなたの　バトルを
 しんだん　しちゃいますよ！▼
-チャレンジ　しちゃう？</language>
+いかが　いたしましょう？</language>
 	</row>
 
 	<row id="msg_trialhouse_002">
@@ -392,12 +392,14 @@
 		<language name="JPN" width="256">ごめんなさい…▼
 あなたに　バトルけんていは
 まだ　はやいわ▼
-チャンピオンに　かってから
+すべてのことを　おわらせて
+もっと　つよく　なってから▽
 またきて　ちょーだい</language>
 		<language name="JPN_KANJI" width="256">ごめんなさい…▼
 あなたに　バトルけんていは
 まだ　はやいわ▼
-チャンピオンに　かってから
+すべてのことを　おわらせて
+もっと　つよく　なってから▽
 またきて　ちょーだい</language>
 	</row>
 
@@ -585,7 +587,7 @@
 たたかって　そのけっかから▽
 バトルけんていの　しんだんを▽
 おこなっちゃいますよ！▼
-さっそく　チャレンジ　しちゃう？</language>
+いかが　いたしましょう？</language>
 		<language name="JPN_KANJI" width="256">バトルけんていでは
 シングルなら　ポケモン　３ひき▽
 ダブルなら　ポケモン　４ひきで▽
@@ -598,7 +600,7 @@
 たたかって　そのけっかから▽
 バトルけんていの　しんだんを▽
 おこなっちゃいますよ！▼
-さっそく　チャレンジ　しちゃう？</language>
+いかが　いたしましょう？</language>
 	</row>
 
 	<row id="msg_trialhouse_029" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -621,11 +623,11 @@
 		<language name="JPN" width="256">げんざい　はいしんされている
 バトルけんていは　すでに▽
 チャレンジされて　いるようです。▼
-どうする？</language>
+いかが　いたしましょう？</language>
 		<language name="JPN_KANJI" width="256">げんざい　はいしんされている
 バトルけんていは　すでに▽
 チャレンジされて　いるようです。▼
-どうする？</language>
+いかが　いたしましょう？</language>
 	</row>
 
 	<row id="msg_trialhouse_032" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
