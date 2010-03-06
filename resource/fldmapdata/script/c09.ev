@@ -24,13 +24,14 @@ _EVENT_DATA    ev_c09_veteranm_02
 _EVENT_DATA    ev_pos_c09_firstvisit
 _EVENT_DATA    ev_zone_c09
 _EVENT_DATA    ev_pos_c09_forbidden
+_EVENT_DATA    ev_reserve_c09_entry		//D09(チャンピオンロード)からきた際のカメラ演出
 _EVENT_DATA_END
 
 
 //------------------------！注意！------------------------------//
 //																//
-//		LOCALWORK10をPOSイベントの起動に使用しています			//
-//		ゾーン内での使用を禁止します							//
+//	LOCALWORK10をPOSイベントの起動に使用しています				//
+//	ゾーン内での使用を禁止します								//
 //																//
 //--------------------------------------------------------------//
 
@@ -52,6 +53,40 @@ INIT_EVENT_START	ev_zone_c09
 	ENDIF
 	
 INIT_EVENT_END
+
+
+/************************************************************/
+/*						予約スクリプト						*/
+/************************************************************/
+EVENT_START	ev_reserve_c09_entry
+	
+	//チャンピオンロードから移動してきたならカメラ演出
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラパージ
+	_CAMERA_MOVE(2918,0,2109440,2129920,1052672,3899392, 1 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	_MAP_FADE_BLACK_IN()	//暗転復帰開始
+	_DISP_FADE_END_CHECK()	//暗転復帰待ち
+	
+	_TIME_WAIT( 16 )
+	_CAMERA_DEF_MOVE( 90 )		//カメラ主人公位置に復帰
+	_TIME_WAIT( 80 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：奥へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_01
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
 
 
 /************************************************************/
@@ -103,7 +138,7 @@ EVENT_START	ev_pos_c09_firstvisit
 	
 	_CAMERA_START()				//カメラ操作開始---------------------------▽
 	_CAMERA_PURGE()				//対象物とカメラのバインドを解く
-	_CAMERA_MOVE( 472,0,1888256,1568768,0,3874816,30 )	//カメラを動かす
+	_CAMERA_MOVE( 4454,0,2109440,1277952,0,3244032,30 )	//カメラを動かす
 	
 	//全てのトレーナーにとって
 	_PLAINWIN_MSG_UP( msg_c09_veteranm2_01 )

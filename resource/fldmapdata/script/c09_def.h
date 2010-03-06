@@ -10,5 +10,6 @@
 #define SCRID_POS_C09_FIRSTVISIT (3)
 #define SCRID_ZONE_C09 (4)
 #define SCRID_POS_C09_FORBIDDEN (5)
+#define SCRID_RESERVE_C09_ENTRY (6)
 
 #endif //_C09_DEF_H_
