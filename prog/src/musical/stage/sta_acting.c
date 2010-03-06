@@ -339,7 +339,7 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
 
   STA_ACT_InitTransEffect( work );
   
-  INFOWIN_Init( ACT_FRAME_SUB_INFO,ACT_PAL_INFO,NULL,work->heapId);
+  //INFOWIN_Init( ACT_FRAME_SUB_INFO,ACT_PAL_INFO,NULL,work->heapId);
 
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
   GFL_NET_ReloadIcon();
@@ -399,7 +399,7 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
   G2_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE , GX_BLEND_PLANEMASK_NONE , 31 , 31 );
   GX_SetVisibleWnd( GX_WNDMASK_NONE ); 
 
-  INFOWIN_Exit();
+  //INFOWIN_Exit();
 
   STA_ACT_TermTransEffect( work );
   
@@ -560,7 +560,7 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
     
   }
 
-  INFOWIN_Update();
+  //INFOWIN_Update();
   STA_ACT_UpdateScroll(work);
 
   STA_BUTTON_UpdateSystem( work->buttonSys );

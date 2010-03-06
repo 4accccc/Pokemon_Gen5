@@ -482,7 +482,7 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   DUP_EFFECT_InitCell( work );
   DUP_FIT_InitMessage( work );
 
-  INFOWIN_Init( FIT_FRAME_MAIN_INFO,FIT_PAL_INFO,NULL,work->heapId);
+  //INFOWIN_Init( FIT_FRAME_MAIN_INFO,FIT_PAL_INFO,NULL,work->heapId);
   work->vBlankTcb = GFUser_VIntr_CreateTCB( DUP_FIT_VBlankFunc , work , 8 );
   
   WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
@@ -530,7 +530,7 @@ void  DUP_FIT_TermFitting( FITTING_WORK *work )
 
   PMSND_StopBGM();
 
-  INFOWIN_Exit();
+  //INFOWIN_Exit();
   DUP_FIT_TermMessage( work );
 
   DUP_EFFECT_TermCell( work );
@@ -715,7 +715,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   MUS_POKE_DRAW_UpdateSystem( work->drawSys ); 
   MUS_ITEM_DRAW_UpdateSystem( work->itemDrawSys ); 
   
-  INFOWIN_Update();
+  //INFOWIN_Update();
 
   //OBJÇÃçXêV
   GFL_CLACT_SYS_Main();
