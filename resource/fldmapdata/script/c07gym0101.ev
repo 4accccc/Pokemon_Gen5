@@ -122,6 +122,9 @@ EVENT_START		ev_c07gym0101_leader7_01
 		//c07 リュウラセンのイベント起動
 		$WK_SCENE_C07 = 2
 		
+		//D07R0401のライバルを非表示
+		_FLAG_SET( FV_D07R0401RIVAL_01 )
+		
 		//C07のライバル・サポートを表示
 		_FLAG_RESET( FV_C07_RIVAL_01 )
 		

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d07r0401.h"
-  //.include  "d07r0401.h"
+  .include  "d07r0401.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,165 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d07r0401
+_EVENT_DATA    ev_pos_d07r0401_rival_01
+_EVENT_DATA    ev_d07r0401_rival_02
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*POSイベント：ライバルとプラズマ団                            */
 /**************************************************************/
-//ev_d07r0401_flag_change:
-//  _END
+EVENT_START   ev_pos_d07r0401_rival_01
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+
+	//カメラ操作　カメラをイベントの中央に
+	_CAMERA_MOVE( 9688,0,970752,3620864,0,950272,30 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//プラズマ団（１）あとずさる
+	_OBJ_ANIME( D07R0401_HAKAIM_01 , anm_pls_plasma01_backstep_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//プラズマ団（１）：くっ、つよいな
+	_BALLOONWIN_OBJMSG(d07r0401_hakaim1_01,D07R0401_HAKAIM_01)
+	_BALLOONWIN_CLOSE()
+	
+	//ライバル：…だからきみたちが
+	_BALLOONWIN_OBJMSG(d07r0401_black_01,D07R0401_RIVAL_01)
+	_BALLOONWIN_CLOSE()
+	
+	//階段ＳＥ
+	_SE_PLAY(SEQ_SE_KAIDAN)
+	_SE_WAIT()
+	//後続プラズマ団表示
+	_OBJ_ADD_EX( 61, 14, DIR_LEFT, MMDL_ID_EVENTOBJ_00, HAKAIM, MV_DMY )
+	
+	//プラズマ団（２）、プラズマ団（１）に隣接
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_pls_plasma02_come_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//プラズマ団（１）：上を向く
+	_OBJ_ANIME( D07R0401_HAKAIM_01 , anm_pls_plasma01_look_up )
+	_OBJ_ANIME_WAIT()
+	
+	//プラズマ団（２）：おお仲間よ
+	_BALLOONWIN_OBJMSG(d07r0401_hakaim2_01,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//プラズマ団（１）（２）ライバルを見る
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_pls_plasma01_look_left )
+	_OBJ_ANIME( D07R0401_HAKAIM_01 , anm_pls_plasma01_look_left )
+	_OBJ_ANIME_WAIT()
+	
+	//プラズマ団（２）：いいか！プラズマ団は
+	_BALLOONWIN_OBJMSG(d07r0401_hakaim2_02,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//プラズマ団（１）その場歩き
+	_OBJ_ANIME( D07R0401_HAKAIM_01 , anm_pls_plasma01_look_left )
+	_OBJ_ANIME_WAIT()
+	
+	//プラズマ団（１）：そうとも！
+	_BALLOONWIN_OBJMSG(d07r0401_hakaim1_02,D07R0401_HAKAIM_01)
+	_BALLOONWIN_CLOSE()
+	
+	//画面暗転・プラズマ団OB削除
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	
+	_OBJ_DEL(D07R0401_HAKAIM_01)
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 20 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
+	//ライバル：…あいつら
+	_BALLOONWIN_OBJMSG(d07r0401_black_02,D07R0401_RIVAL_01)
+	_BALLOONWIN_CLOSE()
+	
+	//ライバル主人公のほうを向いて
+	_OBJ_ANIME( D07R0401_RIVAL_01 , anm_pls_rival_look_player_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：ぼくはもうすこしここにいるよ
+	_BALLOONWIN_OBJMSG(d07r0401_black_03,D07R0401_RIVAL_01)
+	_BALLOONWIN_CLOSE()
+	
+
+	//========================================//
+	
+	//フラグ操作：D07R0401のPOSを無効に
+	$WK_SCENE_D07R0401 = 1
+	
+	//プラズマ団を非表示に
+	_FLAG_SET(FV_D07R0401PLASMA_01)
+
+	//========================================//
+EVENT_END
+
+//--------------------------------------------------------------
+//	プラズマ団後ずさる
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_pls_plasma01_backstep_01
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	プラズマ団02隣接
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_pls_plasma02_come_01
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	プラズマ団01仲間を見る
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_pls_plasma01_look_up
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	プラズマ団ライバルを見る
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_pls_plasma01_look_left
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバル主人公を見る
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_pls_rival_look_player_01
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
-/*                                                            */
+/*  RIVALに直接話しかけ*/
 /**************************************************************/
-ev_d07r0401:
-  //とりあえず最初のラベルだけ生成している
-  _END
-
+EVENT_START   ev_d07r0401_rival_02
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	_EASY_BALLOONWIN_TALKOBJ_MSG( d07r0401_black_03 )
+EVENT_END
