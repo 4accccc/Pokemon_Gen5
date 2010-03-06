@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2010-03-06T19:52:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="303"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,11 +292,126 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="d07r0401_hakaim1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・pos起動（GRIDX=52、GRIDZ=13~15）
+・ライバル　　GRIDX=54、GRIDZ=14
+・プラズマ団　GRIDX=56、GRIDZ=14辺り
+・続けてblack_01</comment>
+		<attribute name="キャラ指定">プラズマ団その１</attribute>
+		<language name="JPN" width="256">プラズマだん『……くっ　つよいな▼
+だが　その　つよさは
+おまえら　トレーナーが▼
+ポケモンを　しはいすることで
+じつげん　している　つよさだよな！？▼</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『……くっ　強いな▼
+だが　その　強さは
+おまえら　トレーナーが▼
+ポケモンを　支配することで
+実現している　強さ　だよな！？▼</language>
+	</row>
+
+	<row id="d07r0401_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、プラズマ団その２が洞窟外から登場
+　プラズマ団その1の上に隣接
+・続けてhakaim2_01</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『……だから　きみたちが
+ポケモンを　じゆうに　したい……▼
+そう　のぞむなら
+きみたちは　そうすれば　いいよ▼
+だけどね　ちからづくで
+みんなの　ポケモンを　うばって▽
+にがすだなんて　まちがっているよね▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……だから　きみたちが
+ポケモンを　自由に　したい……▼
+そう　望むなら
+きみたちは　そうすれば　いいよ▼
+だけどね　ちからづくで
+みんなの　ポケモンを　奪って▽
+逃がすだなんて　間違っているよね▼</language>
+	</row>
+
+	<row id="d07r0401_hakaim2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・プラズマ団どうし向き合ってメッセージ表示
+・続けてhakaim2_02</comment>
+		<attribute name="キャラ指定">プラズマ団その２</attribute>
+		<language name="JPN" width="256">プラズマだん『おお　なかまよ
+ここに　いたか！▼
+れいの　モノが　みつかったぞ
+さあ　われわれも　とうに　むかおう！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『おお　仲間よ
+ここに　いたか！▼
+例の　モノが　みつかったぞ
+さあ　われわれも　塔に　向かおう！▼</language>
+	</row>
+
+	<row id="d07r0401_hakaim2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ライバルを向いてメッセージ表示
+・続けてhakaim1_02</comment>
+		<attribute name="キャラ指定">プラズマ団その２</attribute>
+		<language name="JPN" width="256">いいか！　プラズマだんは
+ポケモンが　しはい　されている▽
+この　せかいを　かえるための▽
+ちからを　てにいれた！▼</language>
+		<language name="JPN_KANJI" width="256">いいか！　プラズマ団は
+ポケモンが　支配されている▽
+この　世界を　変えるための▽
+力を　手に入れた！▼</language>
+	</row>
+
+	<row id="d07r0401_hakaim1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・ライバルを向いてメッセージ表示
+・メッセージ後、画面暗転してプラズマ団削除
+・続けてblack_02</comment>
+		<attribute name="キャラ指定">プラズマ団その１</attribute>
+		<language name="JPN" width="256">プラズマだん『そうとも！▼
+まちがった　せかいを　ただすためなら
+ちからづくも　とうぜん　だ！▼
+さて　われらの　おうさま
+Ｎさまの　もとに　つどおう！！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『そうとも！▼
+間違った　世界を　ただすためなら
+ちからづくも　当然だ！▼
+さて　われらの　王様
+Ｎ様の　もとに　集おう！！▼</language>
+	</row>
+
+	<row id="d07r0401_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・出口方向を見ながら
+・続けてblack_03</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『あいつら……
+なにを　てにいれたか　しらないけど▼
+つよく……　なる　って
+ああいう　ことじゃ　ないよね……！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『あいつら……
+なにを　手に入れたか　知らないけど▼
+強く……　なる　って
+ああいう　ことじゃ　ないよね……！▼</language>
+	</row>
+
+	<row id="d07r0401_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・主人公と向き合ってメッセージ表示
+・表示後からc07ジムクリア後イベントまで繰り返し
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]……▼
+ぼくは　もうすこし　ここにいるよ
+ちょっと　かんがえたいんだ▼
+アデクさんに　いわれたこと……
+ぼくが　なにをしたいか　ってこと……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]……▼
+ぼくは　もうすこし　ここにいるよ
+ちょっと　考えたいんだ▼
+アデクさんに　いわれたこと……
+ぼくが　なにをしたいか　ってこと……</language>
 	</row>
 
 	<flowchart-group-list>
