@@ -45,15 +45,20 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 .ncl.NCLR:
 	g2dcvtr $<
+	rename	$< $*.nclr
 
 .ncg.NCGR:
 	g2dcvtr $< -bg
+	ntrcomp -l 2 -o $*_lz.ncgr $<
 
 .nsc.NSCR:
 	g2dcvtr $<
+	ntrcomp -l 2 -o $*_lz.nscr $<
 
 .nce.NCER:
 	g2dcvtr $<
+	ntrcomp -l 2 -o $*_lz.nanr $*.NANR
+	ntrcomp -l 2 -o $*_lz.ncer $*.NCER
 
 endif
 
@@ -93,6 +98,11 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NSCR
 	rm -f *.NCGR
 	rm -f *.NCLR
+	rm -f *.nanr
+	rm -f *.ncer
+	rm -f *.nscr
+	rm -f *.ncgr
+	rm -f *.nclr
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc
