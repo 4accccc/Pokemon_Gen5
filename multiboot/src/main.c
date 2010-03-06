@@ -203,7 +203,8 @@ static  void  GameInit(void)
   NetErr_SystemCreate(HEAPID_NET_ERR);//※check　とりあえずゲーム中、ずっとシステムが存在するようにしている
 
   /* グローバルメッセージデータ＆フォント初期化 */
-  GLOBALMSG_Init( GFL_HEAPID_SYSTEM );
+  // ファイルの展開が違うからサイズでかいので・・・
+  GLOBALMSG_Init( GFL_HEAPID_APP );
 
   /* poketoolシステム初期化 */
   POKETOOL_InitSystem( GFL_HEAPID_SYSTEM );

@@ -1238,12 +1238,17 @@ static void MB_PARENT_SaveInit( MB_PARENT_WORK *work )
   u8 i;
   SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork(work->initWork->gameData);
   BOX_MANAGER *boxMng = GAMEDATA_GetBoxManager(work->initWork->gameData);
+  ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( work->initWork->gameData );
   const u8 pokeNum = MB_COMM_GetPostPokeNum( work->commWork );
   MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_PAERNT_07 );
   for( i=0;i<pokeNum;i++ )
   {
     const POKEMON_PASO_PARAM *ppp = MB_COMM_GetPostPokeData( work->commWork , i );
     const BOOL ret = BOXDAT_PutPokemon( boxMng , ppp );
+    POKEMON_PARAM *pp = PP_CreateByPPP( ppp , work->heapId );
+    ZUKANSAVE_SetPokeGet( zukan_savedata , pp );
+    GFL_HEAP_FreeMemory( pp );
+    
     GF_ASSERT_MSG( ret == TRUE , "Multiboot parent Box is full!!\n");
 #if DEB_ARI
     {

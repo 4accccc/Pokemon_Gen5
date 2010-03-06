@@ -361,7 +361,7 @@ void MB_COMM_InitChild( MB_COMM_WORK* commWork , u8 *macAddress )
   GFL_NET_InitClientAndConnectToParent( macAddress );
   commWork->state = MCS_REQ_NEGOTIATION;
 
-  GFL_NET_LDATA_CreatePostBuffer( 0x78000 , 0 , HEAPID_MULTIBOOT_DATA );
+  GFL_NET_LDATA_CreatePostBuffer( 0x6F000 , 0 , HEAPID_MULTIBOOT_DATA );
 }
 
 //--------------------------------------------------------------
