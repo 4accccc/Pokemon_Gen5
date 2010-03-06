@@ -45,7 +45,13 @@ extern const GFL_PROC_DATA    TH_AWARD_ProcData;
 //-------------------------------------
 /// PROC パラメータ
 //=====================================
-typedef struct _TH_AWARD_PARAM TH_AWARD_PARAM;
+typedef struct
+{
+  u8                   sex;           ///< [in] プレイヤーの性別  // PM_MALE or PM_FEMALE  // include/pm_version.h
+  const THSV_WORK*     thsv;          ///< [in] トライアルハウスセーブデータ
+  BOOL                 b_download;    ///< [in] ダウンロードデータを表示するときTRUE
+}
+TH_AWARD_PARAM;
 
 
 //=============================================================================
