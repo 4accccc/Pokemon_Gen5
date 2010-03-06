@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-02T11:32:08"/>
+	<create user="matsumiya" host="W00224" date="2010-03-06T20:32:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -484,7 +484,7 @@
 　主人公
 　GRIDX=786、GRIDZ=658まで移動
 ・続けてゲーチス登場し
-　演説イベント＝msg_t02_sage1_01開始
+　演説イベント＝sage1_01開始
 
 ・0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -494,21 +494,17 @@
 こっち　だよ！▼</language>
 	</row>
 
-	<row id="msg_t02_sage1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t02_sage1_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてmsg_t02_boodle_01表示</comment>
 		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
-		<language name="JPN" width="256">わたくしの　なまえは
-ゲーチス▼
-プラズマだん　という　そしきで
-しどうしゃを　している　ものです▼
+		<language name="JPN" width="256">わたくしは　ゲーチス▼
+プラズマだんの　ゲーチスです▼
 きょう　みなさんに
 おはなしするのは　ポケモンを▽
 じゆうに　しましょう　ということです▼</language>
-		<language name="JPN_KANJI" width="256">わたくしの　名前は
-ゲーチス▼
-プラズマ団という　組織で
-指導者を　している　ものです▼
+		<language name="JPN_KANJI" width="256">わたくしの　名前は　ゲーチス▼
+プラズマ団の　ゲーチスです▼
 今日　みなさんに　お話しするのは
 ポケモン解放について　です▼</language>
 	</row>
@@ -516,7 +512,7 @@
 	<row id="msg_t02_boodle_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・サブウインドウで表示
-・続けてmsg_t02_boodle_01a</comment>
+・続けてboodle_01a</comment>
 		<attribute name="キャラ指定">群集</attribute>
 		<language name="JPN" width="256">えっ？</language>
 		<language name="JPN_KANJI" width="256">えっ？</language>
@@ -525,7 +521,7 @@
 	<row id="msg_t02_boodle_01a" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・サブウインドウで表示
-・続けてmsg_t02_sage2_02表示</comment>
+・続けてsage2_02表示</comment>
 		<attribute name="キャラ指定">群集</attribute>
 		<language name="JPN" width="256">なに？</language>
 		<language name="JPN_KANJI" width="256">なに？</language>
@@ -534,7 +530,7 @@
 	<row id="msg_t02_sage2_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ゲーチス、上下に動くアニメ
-・続けてmsg_t02_sage2_03表示</comment>
+・続けてsage2_03表示</comment>
 		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『われわれ　にんげんは　
 ポケモンと　いっしょに▽
@@ -565,7 +561,7 @@
 
 	<row id="msg_t02_sage3_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・続けてmsg_t02_boodle_01a</comment>
+・続けてboodle_01a</comment>
 		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">トレーナーは
 ポケモンに　すきかって▽
@@ -586,7 +582,7 @@
 	<row id="msg_t02_boodle_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・サブウインドウで表示
-・続けてmsg_t02_boodle_01b</comment>
+・続けてboodle_01b</comment>
 		<attribute name="キャラ指定">群集</attribute>
 		<language name="JPN" width="256">ドキ！</language>
 		<language name="JPN_KANJI" width="256">ドキ！</language>
@@ -595,7 +591,7 @@
 	<row id="msg_t02_boodle_02a" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・サブウインドウで表示
-・続けてmsg_t02_boodle_01c</comment>
+・続けて_boodle_01c</comment>
 		<attribute name="キャラ指定">群集</attribute>
 		<language name="JPN" width="256">そんな</language>
 		<language name="JPN_KANJI" width="256">そんな</language>
@@ -604,7 +600,7 @@
 	<row id="msg_t02_boodle_02b" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・サブウインドウで表示
-・続けてmsg_t02_sage2_04表示</comment>
+・続けてsage2_04表示</comment>
 		<attribute name="キャラ指定">群集</attribute>
 		<language name="JPN" width="256">わからんよ</language>
 		<language name="JPN_KANJI" width="256">わからんよ</language>
@@ -612,7 +608,7 @@
 
 	<row id="msg_t02_sage4_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・続けてmsg_t02_sage2_05表示</comment>
+・続けてsage2_05表示</comment>
 		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『いいですか
 みなさん▼
@@ -639,7 +635,7 @@
 	<row id="msg_t02_boodle_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・サブウインドウで表示
-・続けてmsg_t02_sage4_05表示</comment>
+・続けてsage4_05表示</comment>
 		<attribute name="キャラ指定">群集</attribute>
 		<language name="JPN" width="256">なあに？</language>
 		<language name="JPN_KANJI" width="256">なあに？</language>
@@ -648,7 +644,7 @@
 	<row id="msg_t02_boodle_03a" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・サブウインドウで表示
-･続けてmsg_t02_sage4_05</comment>
+･続けてsage4_05</comment>
 		<attribute name="キャラ指定">群集</attribute>
 		<language name="JPN" width="256">かいほう？</language>
 		<language name="JPN_KANJI" width="256">解放？</language>
@@ -658,7 +654,7 @@
 		<comment>♂
 ・メッセージ表示後
 　ゲーチスとしたっぱたち退場
-・続けてmsg_t02_boodle_04</comment>
+・続けてboodle_04</comment>
 		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『そうです！
 ポケモンを　じゆうに　することです！！▼
@@ -688,7 +684,7 @@
 
 	<row id="msg_t02_boodle_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・続けてmsg_t02_boodle_05
+・続けてboodle_05
 （できれば動作モデルも移動しながら）</comment>
 		<attribute name="キャラ指定">群集</attribute>
 		<language name="JPN" width="256">おじいさん『いまの　はなし……
@@ -699,7 +695,7 @@
 
 	<row id="msg_t02_boodle_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・続けてmsg_t02_boss_01
+・続けてboss_01
 （できれば動作モデルも移動しながら）</comment>
 		<attribute name="キャラ指定">群集</attribute>
 		<language name="JPN" width="256">おにいさん『ポケモンを　かいほうって
@@ -712,7 +708,7 @@
 		<comment>♂
 ・演説イベント後、NPCが移動した後
 　主人公に隣接してこのメッセージ表示
-・続けてmsg_t02_black_03</comment>
+・続けてblack_03</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">？？？『[BE:09:速度コントロール:1]キミの　ポケモンかな？▼
 いま　トレーナーへの
@@ -724,7 +720,7 @@
 
 	<row id="msg_t02_black_03" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてmsg_t02_boss_02</comment>
+・続けてboss_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『……ずいぶんと
 はやくちな　ひと　ですね▼
@@ -740,7 +736,7 @@
 
 	<row id="msg_t02_boss_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
-・続けてmsg_t02_black_04</comment>
+・続けてblack_04</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">？？？『[BE:09:速度コントロール:1]ああ　はなしているよ▼
 そうか
@@ -756,7 +752,7 @@
 
 	<row id="msg_t02_black_04" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてmsg_t02_boss_03</comment>
+・続けてboss_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『……ぼくは　チェレン
 こちらは　[1:00:トレーナー名:0]▼
@@ -822,10 +818,10 @@
 ・戦闘後、フィールドに復帰したとき
 　このメッセージを表示
 ・メッセージ表示後、N、2番道路へ
-・画面外に消えるとmsg_t02_black_05表示</comment>
+・画面外に消えるとblack_05表示</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……まけたか
-ボクの　ともだちよ　ありがとう▼
+トモダチよ　ありがとう▼
 キミの　ポケモンは　どうしてだか
 キミを　しんじている　らしい▼
 だけどね　さきほどの
@@ -840,7 +836,7 @@
 キミの　ポケモンが
 なにを　おもっているか　しりたいね[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……負けたか
-ボクの　友達よ　ありがとう▼
+トモダチよ　ありがとう▼
 キミの　ポケモンは　どうしてだか
 キミを　信じているらしい▼
 だけどね
@@ -881,154 +877,88 @@
 じゃあね▼</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀：3すくみの説明
-・はい/いいえの選択肢表示</comment>
+	<row id="msg_t01_babygirl1_01" text-color="#ffffff,,,#ffffff,,#ffffff,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">女の子</attribute>
-		<language name="JPN" width="256">ねえねえ
-ポケモンじゃんけん　しようよ！</language>
-		<language name="JPN_KANJI" width="256">ねえねえ
-ポケモンじゃんけん　しようよ！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01_babygirl1_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・いいえ選択時
-・再度話しかけるとmsg_t01_babygirl1_01</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">女の子</attribute>
-		<language name="JPN" width="256">なんだ　がっかり……
-つまんないの</language>
-		<language name="JPN_KANJI" width="256">なんだ　がっかり……
-つまんないの</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01_babygirl1_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・はい選択時
-・メッセージ表示後
-　ほのお/みず/くさ　の三択</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">女の子</attribute>
-		<language name="JPN" width="256">じゃあ　いくよ！
-ポケモン　じゃんけん　いっせーの……</language>
-		<language name="JPN_KANJI" width="256">じゃあ　いくよ！
-ポケモン　じゃんけん　いっせーの……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01_babygirl1_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・ほのお選択で主人公の勝ち</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">女の子</attribute>
-		<language name="JPN" width="256">あなたが　ほのおで
-あたしは　くさ……▼
-くさタイプは
-ほのおタイプに　よわい……▽
-ということで　あたしの　まけね</language>
-		<language name="JPN_KANJI" width="256">あなたが　ほのおで
-あたしは　くさ……▼
-くさタイプは
-ほのおタイプに　よわい……▽
-ということで　あたしの　まけね</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01_babygirl1_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・ほのお選択で主人公の負け</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">女の子</attribute>
-		<language name="JPN" width="256">あなたが　ほのおで
-あたしは　みず……▼
-ほのおタイプは
-みずタイプに　よわい！▽
-ということで　あたしの　かち！</language>
-		<language name="JPN_KANJI" width="256">あなたが　ほのおで
-あたしは　みず……▼
-ほのおタイプは
-みずタイプに　よわい！▽
-ということで　あたしの　かち！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01_babygirl1_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・みず選択で主人公の勝ち</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">女の子</attribute>
-		<language name="JPN" width="256">あなたが　みずで
-あたしは　ほのお……▼
-ほのおタイプは
-みずタイプに　よわい……▽
-ということで　あたしの　まけね</language>
-		<language name="JPN_KANJI" width="256">あなたが　みずで
-あたしは　ほのお……▼
-ほのおタイプは
-みずタイプに　よわい……▽
-ということで　あたしの　まけね</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01_babygirl1_07" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・みず選択で主人公の負け</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">女の子</attribute>
-		<language name="JPN" width="256">あなたが　みずで
-あたしは　くさ……▼
-みずタイプは
-くさタイプに　よわい！▽
-ということで　あたしの　かち！</language>
-		<language name="JPN_KANJI" width="256">あなたが　みずで
-あたしは　くさ……▼
-みずタイプは
-くさタイプに　よわい！▽
-ということで　あたしの　かち！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01_babygirl1_08" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・くさ選択で主人公の勝ち</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">女の子</attribute>
-		<language name="JPN" width="256">あなたが　くさで
-あたしは　みず……▼
-みずタイプは
-くさタイプに　よわい……▽
-ということで　あたしの　まけね</language>
-		<language name="JPN_KANJI" width="256">あなたが　くさで
-あたしは　みず……▼
-みずタイプは
-くさタイプに　よわい……▽
-ということで　あたしの　まけね</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01_babygirl1_09" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・くさ選択で主人公の負け</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">女の子</attribute>
-		<language name="JPN" width="256">あなたが　くさで
-あたしは　みず……▼
-みずタイプは
-くさタイプに　よわい！▽
-ということで　あたしの　かち！</language>
-		<language name="JPN_KANJI" width="256">あなたが　くさで
-あたしは　みず……▼
-みずタイプは
-くさタイプに　よわい！▽
-ということで　あたしの　かち！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01_babygirl1_10" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>三択ウインドウ用</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">ほのお</language>
-		<language name="JPN_KANJI" width="256">ほのお</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01_babygirl1_11" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>三択ウインドウ用</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">くさ</language>
-		<language name="JPN_KANJI" width="256">くさ</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01_babygirl1_12" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>三択ウインドウ用</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">みず</language>
-		<language name="JPN_KANJI" width="256">みず</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01_woman1_01" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
