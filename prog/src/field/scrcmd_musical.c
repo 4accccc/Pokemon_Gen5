@@ -419,6 +419,20 @@ VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
       }
     }
     break;
+  case MUSICAL_VALUE_IS_EQUIP_ANY_DRESSUP:      //何か装備しているか？(試着室有効
+    {
+      u8 i;
+      MUSICAL_EQUIP_SAVE *mus_bef_save = MUSICAL_SAVE_GetBefEquipData( musSave );
+      *ret_wk = 0;
+      for( i=0;i<MUSICAL_ITEM_EQUIP_MAX;i++ )
+      {
+        if( mus_bef_save->equipData[i].pos != MUS_POKE_EQU_INVALID )
+        {
+          *ret_wk = 1;
+        }
+      }
+    }
+    break;
 
     //以下控え室用
   case MUSICAL_VALUE_WR_SELF_IDX:  //自分の参加番号

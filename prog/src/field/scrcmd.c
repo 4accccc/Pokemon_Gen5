@@ -81,6 +81,7 @@
 #include "scrcmd_beacon.h"
 #include "scrcmd_elevator.h"
 #include "scrcmd_trial_house.h"
+#include "scrcmd_pdw.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

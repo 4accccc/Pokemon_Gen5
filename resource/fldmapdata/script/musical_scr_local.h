@@ -66,6 +66,7 @@
 #define MUSICAL_VALUE_LAST_CONDITION_2ND (10) //最終コンディション(２位)(同点はその他で返る
 #define MUSICAL_VALUE_COUNT_MUSICAL_POKE (11) //参加可能なポケがいるか？
 #define MUSICAL_VALUE_CHECK_MUSICAL_POKE (12) //Partyでポケが参加できるか？
+#define MUSICAL_VALUE_IS_EQUIP_ANY_DRESSUP (13)    //何か装備しているか？(試着有効
 //全部※(控え室のみ有効です！)
 //しかもそれぞれドレスアップ後・ショー後のみ有効な物があるので有泉以外使用禁止
 #define MUSICAL_VALUE_WR_SELF_IDX  (30) //自分の参加番号

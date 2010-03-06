@@ -3613,6 +3613,22 @@
 
 //--------------------------------------------------------------
 /**
+ *  _GET_MUSICAL_VALUE_IS_EQUIP_ANY_DRESSUP ミュージカル：何か装備しているか？(試着室有効
+ *  @param ret_val  戻り値  (０ない:１ある
+ */
+//--------------------------------------------------------------
+#define _GET_MUSICAL_VALUE_IS_EQUIP_ANY_DRESSUP( retVal ) \
+    _ASM_GET_MUSICAL_VALUE_IS_EQUIP_ANY_DRESSUP retVal
+
+  .macro  _ASM_GET_MUSICAL_VALUE_IS_EQUIP_ANY_DRESSUP pos, retVal
+  .short EV_SEQ_GET_MUSICAL_VALUE
+  .byte 13
+  .short 0
+  .short \retVal
+  .endm
+
+//--------------------------------------------------------------
+/**
  *  _GET_MUSICAL_FAN_VALUE ミュージカル：ミュージカル数値取得(ファン用
  *      基本的に下にあるラッパーを呼んでください
  *  @param pos  立ち位置(0～4
@@ -8603,3 +8619,58 @@
   .endm
   
 
+//--------------------------------------------------------------
+/**
+ *  _PDW_COMMON_TOOLS PDW汎用ツール
+ *  @param val1  取得用番号
+ *  @param val2  取得用番号
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _PDW_COMMON_TOOLS( type, val1, val2, ret_val ) \
+    _ASM_PDW_COMMON_TOOLS type, val1, val2, ret_val 
+  
+  .macro _ASM_PDW_COMMON_TOOLS type, val1, val2, ret_val 
+  .short EV_SEQ_PDW_COMMON_TOOLS
+  .short \type
+  .short \val1
+  .short \val2
+  .short \ret_val
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ *  _PDW_FURNITURE_TOOLS PDW家具メニュー：汎用ツール
+ *  @param val1  取得用番号
+ *  @param val2  取得用番号
+ *  @param ret_val  戻り値
+ */
+//--------------------------------------------------------------
+#define _PDW_FURNITURE_TOOLS( type, val1, val2, ret_val ) \
+    _ASM_PDW_FURNITURE_TOOLS type, val1, val2, ret_val 
+  
+  .macro _ASM_PDW_FURNITURE_TOOLS type, val1, val2, ret_val 
+  .short EV_SEQ_PDW_FURNITURE_TOOLS
+  .short \type
+  .short \val1
+  .short \val2
+  .short \ret_val
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ *  _PDW_SET_FURNITURE_TOOLS PDW家具メニュー：家具名セット
+ * @param idx セットするタグナンバー
+ * @param val セットする家具番号
+ */
+//--------------------------------------------------------------
+#define _PDW_SET_FURNITURE_WORD( idx, val ) \
+    _ASM_PDW_SET_FURNITURE_WORD idx, val
+
+  .macro _ASM_PDW_SET_FURNITURE_WORD idx, val
+  .short EV_SEQ_PDW_SET_FURNITURE_WORD
+  .short \idx
+  .short \val
+  .endm
