@@ -1327,11 +1327,7 @@ static void LISTDATA_CallWifiBattleMatch( DEBUG_NAGI_MAIN_WORK *p_wk )
 	p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_RANDOM;
 	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
 	{	
-    p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_WIFI;
-	}
-	else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
-	{	
-		p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_LIVE;
+    p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_MAINMENU;
 	}
 
 	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(wifibattlematch_sys), &WifiBattleMatch_ProcData, &p_wk->wifibattlematch_param );

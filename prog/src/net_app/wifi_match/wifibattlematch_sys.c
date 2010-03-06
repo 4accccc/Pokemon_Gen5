@@ -127,29 +127,29 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main
 ///	サブプロセス用引数の解放、破棄関数
 //=====================================
 //メインメニュー＋LIVE用フロープロセス
-static void *BC_CORE_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc, HEAPID heapID, void *p_wk_adrs );
-static BOOL BC_CORE_FreeParam(  const WBM_SYS_SUBPROC_WORK *cp_subproc, void *p_param_adrs, void *p_wk_adrs );
+static void *BC_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc, HEAPID heapID, void *p_wk_adrs );
+static BOOL BC_CORE_FreeParam(  WBM_SYS_SUBPROC_WORK *p_subproc, void *p_param_adrs, void *p_wk_adrs );
 //WIFIフローメインプロセス
-static void *WBM_CORE_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs );
-static BOOL WBM_CORE_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param_adrs, void *p_wk_adrs );
+static void *WBM_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs );
+static BOOL WBM_CORE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs );
 //リスト＋ステータス
-static void *POKELIST_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs );
-static BOOL POKELIST_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param_adrs, void *p_wk_adrs );
+static void *POKELIST_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs );
+static BOOL POKELIST_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs );
 //バトル＋デモ
-static void *BATTLE_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs );
-static BOOL BATTLE_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param_adrs, void *p_wk_adrs );
+static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs );
+static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs );
 //WIFIログイン
-static void *LOGIN_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs );
-static BOOL LOGIN_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param_adrs, void *p_wk_adrs );
+static void *LOGIN_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs );
+static BOOL LOGIN_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs );
 //リスト＋ステータス～バトル＋デモへのつなぎプロセス
-static void *WBM_LISTAFTER_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs );
-static BOOL WBM_LISTAFTER_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param_adrs, void *p_wk_adrs );
+static void *WBM_LISTAFTER_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs );
+static BOOL WBM_LISTAFTER_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs );
 //録画
-static void *WBM_BTLREC_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs );
-static BOOL WBM_BTLREC_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param_adrs, void *p_wk_adrs );
+static void *WBM_BTLREC_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs );
+static BOOL WBM_BTLREC_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs );
 //WIFIログアウト
-static void *LOGOUT_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs );
-static BOOL LOGOUT_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param_adrs, void *p_wk_adrs );
+static void *LOGOUT_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs );
+static BOOL LOGOUT_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs );
 
 //-------------------------------------
 ///	データバッファ作成
@@ -166,8 +166,8 @@ static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk );
 //-------------------------------------
 ///	サブプロセス初期化・解放関数コールバック
 //=====================================
-typedef void *(*WBM_SYS_SUBPROC_ALLOC_FUNCTION)( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs );
-typedef BOOL (*WBM_SYS_SUBPROC_FREE_FUNCTION)( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param, void *p_wk_adrs );
+typedef void *(*WBM_SYS_SUBPROC_ALLOC_FUNCTION)( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs );
+typedef BOOL (*WBM_SYS_SUBPROC_FREE_FUNCTION)( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param, void *p_wk_adrs );
 
 //-------------------------------------
 ///	サブプロセス設定構造体
@@ -537,7 +537,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
  *	@return	引数
  */
 //-----------------------------------------------------------------------------
-static void *BC_CORE_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs )
+static void *BC_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs )
 {	
   BATTLE_CHAMPIONSHIP_CORE_PARAM  *p_param;
   WIFIBATTLEMATCH_SYS             *p_wk     = p_wk_adrs;
@@ -546,7 +546,7 @@ static void *BC_CORE_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID h
 	GFL_STD_MemClear( p_param, sizeof(BATTLE_CHAMPIONSHIP_CORE_PARAM) );
   p_param->p_gamedata = p_wk->param.p_game_data;
 
-  switch( WBM_SYS_SUBPROC_GetPreProcID( cp_subproc ) )
+  switch( WBM_SYS_SUBPROC_GetPreProcID( p_subproc ) )
   { 
   case SUBPROCID_LOGOUT:
     //ログアウトから着ていたら、WIFI大会（ランダムマッチはここへこないので）
@@ -576,7 +576,7 @@ static void *BC_CORE_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID h
  *	@param	*p_wk_adrs								ワーク
  */
 //-----------------------------------------------------------------------------
-static BOOL BC_CORE_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param_adrs, void *p_wk_adrs )
+static BOOL BC_CORE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs )
 {	
   WIFIBATTLEMATCH_SYS             *p_wk     = p_wk_adrs;
   BATTLE_CHAMPIONSHIP_CORE_PARAM  *p_param  = p_param_adrs;
@@ -584,23 +584,22 @@ static BOOL BC_CORE_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_pa
   switch( p_param->ret )
   { 
   case BATTLE_CHAMPIONSHIP_CORE_RET_TITLE:   //タイトルへ行く
-    /* processがないと終了 */
+    WBM_SYS_SUBPROC_End( p_subproc );
     break;
   case BATTLE_CHAMPIONSHIP_CORE_RET_WIFICUP: //WIFI大会へ行く
     p_wk->type  = WIFIBATTLEMATCH_TYPE_WIFICUP;
-    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_LOGIN );
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
     break;
   case BATTLE_CHAMPIONSHIP_CORE_RET_LIVEBTL: //LIVE用バトルへ行く
     p_wk->type  = WIFIBATTLEMATCH_TYPE_LIVECUP;
-    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_POKELIST );
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_POKELIST );
     break;
   case BATTLE_CHAMPIONSHIP_CORE_RET_LIVEREC: //LIVE用録画へ行く
     p_wk->type  = WIFIBATTLEMATCH_TYPE_LIVECUP;
-    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_BTLREC );
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_BTLREC );
     break;
   default:
     GF_ASSERT( 0 );
-
   }
 
 	GFL_HEAP_FreeMemory( p_param );
@@ -617,7 +616,7 @@ static BOOL BC_CORE_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_pa
  *	@return	引数
  */
 //-----------------------------------------------------------------------------
-static void *WBM_CORE_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs )
+static void *WBM_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs )
 {	
 
   WIFIBATTLEMATCH_CORE_PARAM  *p_param;
@@ -646,7 +645,7 @@ static void *WBM_CORE_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID 
  *	@param	*p_wk_adrs								ワーク
  */
 //-----------------------------------------------------------------------------
-static BOOL WBM_CORE_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param_adrs, void *p_wk_adrs )
+static BOOL WBM_CORE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs )
 {	
   WIFIBATTLEMATCH_SYS         *p_wk     = p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_param_adrs;
@@ -668,20 +667,21 @@ static BOOL WBM_CORE_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_p
   switch( p_param->result )
   { 
   case WIFIBATTLEMATCH_CORE_RESULT_NEXT_BATTLE:
-    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_POKELIST );
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_POKELIST );
     break;
     
   case WIFIBATTLEMATCH_CORE_RESULT_NEXT_REC:
-    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_BTLREC );
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_BTLREC );
     break;
   
   case WIFIBATTLEMATCH_CORE_RESULT_ERR_NEXT_LOGIN:
-    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_LOGIN );
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
     break;
 
   case WIFIBATTLEMATCH_CORE_RESULT_FINISH:
-    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_LOGOUT );
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGOUT );
     break;
+
   default:
     GF_ASSERT( 0 );
   }
@@ -700,7 +700,7 @@ static BOOL WBM_CORE_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_p
  *	@return	引数
  */
 //-----------------------------------------------------------------------------
-static void *POKELIST_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs )
+static void *POKELIST_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_SUBPROC_PARAM    *p_param;
   WIFIBATTLEMATCH_SYS               *p_wk   = p_wk_adrs;
@@ -800,18 +800,18 @@ static void *POKELIST_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID 
  *	@param	*p_wk_adrs								ワーク
  */
 //-----------------------------------------------------------------------------
-static BOOL POKELIST_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param_adrs, void *p_wk_adrs )
+static BOOL POKELIST_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_SYS             *p_wk     = p_wk_adrs;
   WIFIBATTLEMATCH_SUBPROC_PARAM   *p_param  = p_param_adrs;
 
   if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS )
   { 
-    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_LISTAFTER );
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LISTAFTER );
   }
   else if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN )
   { 
-    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_LOGIN );
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
   }
   GFL_HEAP_FreeMemory( p_param->regulation );
   GFL_HEAP_FreeMemory( p_param );
@@ -828,7 +828,7 @@ static BOOL POKELIST_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_p
  *	@return	引数
  */
 //-----------------------------------------------------------------------------
-static void *BATTLE_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs )
+static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_BATTLELINK_PARAM  *p_param;
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
@@ -1010,7 +1010,7 @@ static void *BATTLE_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID he
  *	@param	*p_wk_adrs								ワーク
  */
 //-----------------------------------------------------------------------------
-static BOOL BATTLE_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param_adrs, void *p_wk_adrs )
+static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
   WIFIBATTLEMATCH_BATTLELINK_PARAM  *p_param  = p_param_adrs;
@@ -1033,18 +1033,18 @@ static BOOL BATTLE_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_par
   {
   case WIFIBATTLEMATCH_BATTLELINK_RESULT_SUCCESS:
     p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE;
-    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_CORE );
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
     break;
 
   case WIFIBATTLEMATCH_BATTLELINK_RESULT_DISCONNECT:
     //切断された
     p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
-    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_CORE );
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
     break;
     
   case WIFIBATTLEMATCH_BATTLELINK_RESULT_EVIL:
     p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
-    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_CORE );
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
     break;
   }
 
@@ -1060,7 +1060,7 @@ static BOOL BATTLE_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_par
  *	@return	引数
  */
 //-----------------------------------------------------------------------------
-static void *LOGIN_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs )
+static void *LOGIN_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs )
 { 
   WIFILOGIN_PARAM *p_param;
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
@@ -1083,7 +1083,7 @@ static void *LOGIN_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID hea
  *	@param	*p_wk_adrs								ワーク
  */
 //-----------------------------------------------------------------------------
-static BOOL LOGIN_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param_adrs, void *p_wk_adrs )
+static BOOL LOGIN_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
   WIFILOGIN_PARAM  *p_param     = p_param_adrs;
@@ -1095,12 +1095,11 @@ static BOOL LOGIN_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_para
   { 
   case WIFILOGIN_RESULT_LOGIN:
     p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_START;
-    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_CORE );
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
     break;
 
   case WIFILOGIN_RESULT_CANCEL:
-    //PROCが全て死ぬと終了するので
-    //なにもよばないで終わる
+    WBM_SYS_SUBPROC_End( p_subproc );
     break;
   }
 
@@ -1116,7 +1115,7 @@ static BOOL LOGIN_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_para
  *	@return	引数
  */
 //-----------------------------------------------------------------------------
-static void *WBM_LISTAFTER_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs )
+static void *WBM_LISTAFTER_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_LISTAFTER_PARAM *p_param;
   WIFIBATTLEMATCH_SYS             *p_wk     = p_wk_adrs;
@@ -1137,7 +1136,7 @@ static void *WBM_LISTAFTER_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HE
  *	@param	*p_wk_adrs								ワーク
  */
 //-----------------------------------------------------------------------------
-static BOOL WBM_LISTAFTER_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param_adrs, void *p_wk_adrs )
+static BOOL WBM_LISTAFTER_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_SYS               *p_wk     = p_wk_adrs;
   WIFIBATTLEMATCH_LISTAFTER_PARAM   *p_param  = p_param_adrs;
@@ -1148,11 +1147,11 @@ static BOOL WBM_LISTAFTER_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void
   switch( result )
   { 
   case WIFIBATTLEMATCH_LISTAFTER_RESULT_SUCCESS:
-    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_BATTLE );
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_BATTLE );
     break;
 
   case WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_NEXT_LOGIN:
-    WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_LOGIN );
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
     break;
   }
 
@@ -1168,7 +1167,7 @@ static BOOL WBM_LISTAFTER_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void
  *	@return	引数
  */
 //-----------------------------------------------------------------------------
-static void *WBM_BTLREC_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs )
+static void *WBM_BTLREC_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_SYS             *p_wk     = p_wk_adrs;
   BTL_REC_SEL_PARAM               *p_param;
@@ -1194,7 +1193,7 @@ static void *WBM_BTLREC_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPI
  *	@param	*p_wk_adrs								ワーク
  */
 //-----------------------------------------------------------------------------
-static BOOL WBM_BTLREC_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param_adrs, void *p_wk_adrs )
+static BOOL WBM_BTLREC_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_SYS             *p_wk     = p_wk_adrs;
   BTL_REC_SEL_PARAM               *p_param  = p_param_adrs;
@@ -1206,7 +1205,7 @@ static BOOL WBM_BTLREC_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p
 
   //次のPROC
   p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDREC;
-  WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_CORE );
+  WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
 
   return TRUE;
 }
@@ -1219,7 +1218,7 @@ static BOOL WBM_BTLREC_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p
  *	@param	*p_wk_adrs								ワーク
  */
 //-----------------------------------------------------------------------------
-static void *LOGOUT_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID heapID, void *p_wk_adrs )
+static void *LOGOUT_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
   WIFILOGOUT_PARAM    *p_param;
@@ -1241,12 +1240,12 @@ static void *LOGOUT_AllocParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,HEAPID he
  *	@param	*p_wk_adrs								ワーク
  */
 //-----------------------------------------------------------------------------
-static BOOL LOGOUT_FreeParam( const WBM_SYS_SUBPROC_WORK *cp_subproc,void *p_param_adrs, void *p_wk_adrs )
+static BOOL LOGOUT_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs )
 { 
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
   WIFILOGOUT_PARAM    *p_param  = p_param_adrs;
 
-  WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_MAINMENU );
+  WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
 
   GFL_HEAP_FreeMemory( p_param );
 
