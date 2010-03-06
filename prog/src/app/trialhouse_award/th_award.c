@@ -526,6 +526,8 @@ static GFL_PROC_RESULT Th_Award_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
     break;
   }
 
+  PRINTSYS_QUE_Main( work->print_que );
+
   // ƒƒCƒ“
   Th_Award_TextMain( work );
 
