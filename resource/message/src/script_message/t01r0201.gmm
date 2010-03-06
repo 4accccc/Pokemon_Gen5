@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-06T16:35:08"/>
+	<create user="matsumiya" host="W00224" date="2010-03-06T20:37:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="191"/>
+		<comment position="4" width="229"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1467" top="286" right="2172" bottom="906" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -298,8 +298,7 @@
 　カメラ移動してこのメッセージ表示
 ・メッセージ表示後
 　室外へ出おうとするアニメ
-・主人公と隣接したとき
-　msg_t01r0301_white_02</comment>
+・主人公と隣接したときwhite_02</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ベル『あたしだって……[BE:01:ページ切り替え（クリア）]
 ポケモンを　もらった
