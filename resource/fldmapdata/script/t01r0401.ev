@@ -24,6 +24,7 @@ _EVENT_DATA		ev_bg_t01r0401_book_01
 _EVENT_DATA		ev_bg_t01r0401_book_02
 _EVENT_DATA		ev_bg_t01r0401_book_03
 _EVENT_DATA		ev_bg_t01r0401_note_01
+_EVENT_DATA		ev_t01r0401_pokemon_01
 _EVENT_DATA_END
 
 
@@ -78,6 +79,9 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	ELSE
 		//いいえの処理
 
+		//ニックネームつけるか再確認
+
+
 		//ニックネームをつけないんだね
 		_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_06 , T01R0401_HAKASE2_01 )
 		_BALLOONWIN_CLOSE()
@@ -120,15 +124,8 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
 
-	//はい/いいえで分岐
-	IF $SCWK_ANSWER == SCR_YES THEN
-		//はいの処理
-		
-		//よし！最高の返事だ！
-		_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_12,T01R0401_HAKASE2_01 ) 
-		_BALLOONWIN_CLOSE()
-		
-	ELSE
+	//いいえなら再質問
+	IF $SCWK_ANSWER == SCR_NO THEN
 		//いいえの処理
 		
 		//再質問にyesと答えるまでループ
@@ -154,6 +151,21 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 		ENDWHILE
 	
 	ENDIF
+
+	//はいの処理
+
+	//はーい！
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_white_04, T01R0401_SUPPORT_01, POS_DL )
+	_MSGWIN_CLOSE()
+
+	//こちらこそよろしくお願いします！
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_black_05, T01R0401_RIVAL_01, POS_DR )
+	_MSGWIN_CLOSE()
+
+	//よし！最高の返事だ！
+	_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_12,T01R0401_HAKASE2_01 ) 
+	_BALLOONWIN_CLOSE()
+
 
 //********************ポケモン図鑑入手処理*******************//
 	//ポケモン図鑑入手フラグをセット
@@ -193,10 +205,11 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 
 	//博士：退室
 	_OBJ_ANIME( T01R0401_HAKASE2_01,anm_zukan_doc_goaway_02 )
+	_TIME_WAIT( 16 )
 	//友達ズ：見送る
-	_OBJ_ANIME( T01R0401_RIVAL_01,anm_zukan_friends_look_01 )
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_zukan_friends_look_01 )
-	_OBJ_ANIME( T01R0401_SUPPORT_01,anm_zukan_friends_look_01 )
+	_OBJ_ANIME( T01R0401_RIVAL_01,anm_stay_walk_d )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_stay_walk_d )
+	_OBJ_ANIME( T01R0401_SUPPORT_01,anm_stay_walk_d )
 	_OBJ_ANIME_WAIT()
 
 	//博士：消す
@@ -251,21 +264,43 @@ ev_name_input:
 
 	//ローカル変数を定義
 	{
-	DEFINE_LOCAL	NAME_RET
+	DEFINE_LOCAL	lwk_name_ret
+	DEFINE_LOCAL	lwk_name_while
 
+	WHILE $lwk_name_while != 555
 
-	//名前入力画面呼び出し（インデックスは１匹しかいないはずなので固定値）
-	_PARTY_POKE_NAME_INPUT( NAME_RET, 0 )
+		//名前入力画面呼び出し（インデックスは１匹しかいないはずなので固定値）
+		_PARTY_POKE_NAME_INPUT( lwk_name_ret, 0 )
 
-	_CAMERA_END()		//カメラ操作終了
-	_CAMERA_START()		//カメラ操作開始
-	_CAMERA_PURGE()		//カメラパージ
-	//カメラ初期化されてしまうので再度カメラ操作
-	_CAMERA_MOVE(9688,0,970752,294912,0,335872, 20)
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+		_CAMERA_END()		//カメラ操作終了
+		_CAMERA_START()		//カメラ操作開始
+		_CAMERA_PURGE()		//カメラパージ
+		//カメラ初期化されてしまうので再度カメラ操作
+		_CAMERA_MOVE(9688,0,970752,294912,0,335872, 20)
+		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+		//入力ありなら確認
+		IF $lwk_name_ret == TRUE THEN
+			//そのニックネームで良いですか？
+			_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_04, T01R0401_HAKASE2_01, POS_UP )
+			_YES_NO_WIN( SCWK_ANSWER )
+			_MSGWIN_CLOSE()
+
+			IF $SCWK_ANSWER == SCR_YES THEN
+				//はいなら繰り返し処理から抜ける
+				$lwk_name_while = 555
+			ENDIF
+
+		ELSE
+			//入力無しなら繰り返し処理から抜ける
+			$lwk_name_while = 555
+
+		ENDIF
+
+	ENDWHILE
 
 	//名前入力の有無で分岐
-	IF $NAME_RET == TRUE THEN
+	IF $lwk_name_ret == TRUE THEN
 		//入力アリ
 		
 		//～～と言うのか
@@ -374,14 +409,6 @@ _ANIME_LABEL	anm_zukan_player_move_01
 _ANIME_LABEL	anm_zukan_doc_goaway_02
 	_ANIME_DATA	AC_WALK_D_8F,5
 	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//友達ズ：見送る
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_zukan_friends_look_01
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-
 
 //--------------------------------------------------------------------
 //ライバル：退室
@@ -543,6 +570,14 @@ EVENT_START   ev_bg_t01r0401_note_01
 	_PLAINWIN_MSG_DOWN( msg_t01r0401_photo_06 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*						ミネズミ							*/
+/************************************************************/
+EVENT_START   ev_t01r0401_pokemon_01
+	_EASY_TALK_POKEVOICE( MONSNO_537, msg_t01r0401_pokemon_01 )
 EVENT_END
 
 

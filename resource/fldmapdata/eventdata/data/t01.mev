@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/19 16:06:30
+#save date:2010/03/04 17:26:38
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01.wms
 #SECTION START:OBJ_EVENT
@@ -283,7 +283,7 @@ DOOR_ID_T01_EXIT01
 #Next Zone ID Name
 ZONE_ID_T01R0101
 #Next Door ID Name
-DOOR_ID_T01R0101_EXIT02
+DOOR_ID_T01R0101_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
@@ -300,7 +300,7 @@ DOOR_ID_T01_EXIT02
 #Next Zone ID Name
 ZONE_ID_T01R0201
 #Next Door ID Name
-DOOR_ID_T01R0201_EXIT02
+DOOR_ID_T01R0201_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
@@ -317,7 +317,7 @@ DOOR_ID_T01_EXIT03
 #Next Zone ID Name
 ZONE_ID_T01R0301
 #Next Door ID Name
-DOOR_ID_T01R0301_EXIT02
+DOOR_ID_T01R0301_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
@@ -334,7 +334,7 @@ DOOR_ID_T01_EXIT04
 #Next Zone ID Name
 ZONE_ID_T01R0401
 #Next Door ID Name
-DOOR_ID_T01R0401_EXIT02
+DOOR_ID_T01R0401_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type

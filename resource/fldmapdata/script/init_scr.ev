@@ -204,6 +204,11 @@ init_flags:
 	_FLAG_SET( FV_MUSICAL_FUN_04 )
 	_FLAG_SET( FV_MUSICAL_FUN_05 )
 	
+	//ポケモン研究所のミネズミ。T02のポケセンイベント後に表示
+	_FLAG_SET( FV_T01R0401_POKEMON_01 )
+	//ポケモン研究所の博士（父）。C06のイベント後に表示
+	_FLAG_SET( FV_T01R0401_HAKASE1 )
+
 }
 _RET
 
