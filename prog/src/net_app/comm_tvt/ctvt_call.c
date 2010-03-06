@@ -159,6 +159,7 @@ struct _CTVT_CALL_WORK
   BOOL isUpdateBarPos;
   BOOL isHoldScroll;
   u8   barNum;
+  u8   befbarNum; //誰も居ない時Msg更新用
   
   CTVT_CALL_BAR_STATE barState;
   APP_TASKMENU_WIN_WORK *barMenuWork;
@@ -189,6 +190,8 @@ static void CTVT_CALL_UpdateBar( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork 
 static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , CTVT_CALL_BAR_WORK *barWork , const u8 idx );
 static void CTVT_CALL_UpdateBarPosFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , CTVT_CALL_BAR_WORK *barWork , const u8 idx );
 static void CTVT_CALL_UpdateBarMenu( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork );
+
+static void CTVT_CALL_UpdateNoMemberMsg( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork );
 
 static const BOOL CTVT_CALL_CheckRegistFriendData( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , const STRCODE *name , const u32 id , const u32 sex );
 static void CTVT_CALL_DispMessage( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , const u16 msgId );
@@ -336,6 +339,7 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   callWork->scrollOfs = 0;
   callWork->scrollBarPos = 0;
   callWork->barNum = 0;
+  callWork->befbarNum = 0xFF;  //強制更新
   callWork->isUpdateBarPos = FALSE;
   callWork->isHoldScroll = FALSE;
   callWork->isUpdateMsgWin = FALSE;
@@ -362,7 +366,8 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
     }
     else
     {
-      CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
+      //メッセージのアップデートで出す
+      //CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
     }
   }
 }
@@ -479,6 +484,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     
   case CCS_MAIN:
     CTVT_CALL_UpdateTP( work , callWork );
+    CTVT_CALL_UpdateNoMemberMsg( work , callWork );
     break;
     
   case CCS_WAIT_ANIME:
@@ -643,7 +649,8 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         GFL_BMPWIN_ClearTransWindow( callWork->callMsgWin );
 
         GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN );
-        CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
+        //メッセージのアップデートで出す
+        //CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
         callWork->barState = CCBS_NONE;
       }
     }
@@ -1155,11 +1162,6 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       isUpdate = TRUE;
     }
   }
-  if( isUpdateBar == TRUE &&
-      callWork->state == CCS_MAIN )
-  {
-    CTVT_CALL_UpdateBarMenu( work , callWork );
-  }
   
   if( isUpdate == TRUE )
   {
@@ -1190,6 +1192,12 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     CTVT_CALL_UpdateBar( work , callWork );
     callWork->isUpdateBarPos = TRUE;
     
+  }
+  //バーの数が必要なのでここでやる。
+  if( isUpdateBar == TRUE &&
+      callWork->state == CCS_MAIN )
+  {
+    CTVT_CALL_UpdateBarMenu( work , callWork );
   }
 }
 //--------------------------------------------------------------
@@ -1481,11 +1489,58 @@ static void CTVT_CALL_UpdateBarMenu( COMM_TVT_WORK *work , CTVT_CALL_WORK *callW
         APP_TASKMENU_WIN_Delete( callWork->barMenuWork );
         callWork->barMenuWork = NULL;
       }
-
-      CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
+      
+      if( callWork->barNum > 0 )
+      {
+        CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
+      }
       callWork->barState = CCBS_NONE;
     }
   }  
+}
+
+//誰も居ない時Msg更新
+static void CTVT_CALL_UpdateNoMemberMsg( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
+{
+  if( callWork->barNum != callWork->befbarNum )
+  {
+    if( callWork->barNum == 0 )
+    {
+      callWork->callAnmCnt = 0;
+      callWork->callAnmIdx = 0;
+      CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_15 );
+
+      GFL_BMPWIN_ClearTransWindow_VBlank( callWork->msgWin );
+      BmpWinFrame_Clear( callWork->msgWin , WINDOW_TRANS_ON_V );
+    }
+    else
+    if( callWork->befbarNum == 0 &&
+        callWork->barNum > 0 )
+    {
+      CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
+
+      BmpWinFrame_Clear( callWork->callMsgWin , WINDOW_TRANS_ON_V );
+      GFL_BMPWIN_ClearTransWindow( callWork->callMsgWin );
+    }
+    
+    callWork->befbarNum = callWork->barNum;
+  }
+
+  if( callWork->barNum == 0 )
+  {
+    callWork->callAnmCnt++;
+    if( callWork->callAnmCnt > CTVT_CALL_MSG_ANM_SPEED )
+    {
+      callWork->callAnmCnt = 0;
+      callWork->callAnmIdx++;
+      if( callWork->callAnmIdx >= CTVT_CALL_MSG_ANM_NUM )
+      {
+        callWork->callAnmIdx = 0;
+      }
+      CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_15+callWork->callAnmIdx );
+    }
+  }
+
 }
 
 static const BOOL CTVT_CALL_CheckRegistFriendData( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , const STRCODE *name , const u32 id , const u32 sex )
