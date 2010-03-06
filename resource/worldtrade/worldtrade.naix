@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-03-06T19:59:04
+	Update:2010-03-06T20:23:36
  *****************************************************************************/
 
 #ifndef NARC_WORLDTRADE_NAIX_
@@ -58,10 +58,7 @@ enum {
 	NARC_worldtrade_worldtrade_obj_s_lz_ncgr = 44,
 	NARC_worldtrade_worldtrade_obj_s_NCER = 45,
 	NARC_worldtrade_worldtrade_obj_s_NANR = 46,
-	NARC_worldtrade_worldtrade_obj_s_NCGR = 47,
-	NARC_worldtrade_btower_obj_lz_ncgr = 48,
-	NARC_worldtrade_btower_obj_lz_ncer = 49,
-	NARC_worldtrade_btower_obj_lz_nanr = 50
+	NARC_worldtrade_worldtrade_obj_s_NCGR = 47
 };
 
 /* NARC_WORLDTRADE_NAIX_ */
