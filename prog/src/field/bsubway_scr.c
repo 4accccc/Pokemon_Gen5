@@ -380,10 +380,12 @@ u16 BSUBWAY_SCRWORK_SetNGScore( GAMESYS_WORK *gsys )
   BSUBWAY_SCOREDATA_ResetStageNo( scoreData, play_mode );
   
   //レコード挑戦中フラグを落とす
+#if 0 //wb null
   BSUBWAY_SCOREDATA_SetFlag( scoreData,
     BSWAY_SCOREDATA_FLAG_SINGLE_RECORD + play_mode,
     BSWAY_SETMODE_reset );
-  
+#endif
+
   //連勝記録クリア
   BSUBWAY_SCOREDATA_ResetRenshou( scoreData, play_mode );
   

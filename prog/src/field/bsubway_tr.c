@@ -341,112 +341,266 @@ static BSP_TRAINER_DATA * create_BSP_TRAINER_DATA( HEAPID heapID )
 BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 {
-  u16 play_mode;
+  int i;
   BATTLE_SETUP_PARAM *dst;
   BTL_FIELD_SITUATION sit;
-  GAMEDATA *gameData = GAMESYSTEM_GetGameData( gsys );
+  BTL_CLIENT_ID client;
+  POKEPARTY *party;
+  POKEMON_PARAM *pp;
+  POKEMON_PARAM *entry_pp;
+  BSP_TRAINER_DATA *tr_data;
+  BSUBWAY_PARTNER_DATA *bsw_partner;
+  BSUBWAY_TRAINER *bsw_trainer;
   
-  play_mode = wk->play_mode;
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
+  u16 play_mode = wk->play_mode;
   
   dst = BATTLE_PARAM_Create( HEAPID_PROC );
   
+  BTL_FIELD_SITUATION_Init( &sit );
+  MI_CpuCopy8( &sit, &dst->fieldSituation, sizeof(BTL_FIELD_SITUATION) );
+  
+  dst->netHandle = NULL;
+  dst->commMode = BTL_COMM_NONE;
+  dst->commPos = 0;
+  dst->multiMode = BTL_MULTIMODE_NONE;
+  dst->recBuffer = NULL;
+  dst->fRecordPlay = FALSE;
+  dst->competitor = BTL_COMPETITOR_SUBWAY;
+  
+  dst->party[BTL_CLIENT_PLAYER] = NULL;
+  dst->party[BTL_CLIENT_ENEMY1] = NULL;
+  dst->party[BTL_CLIENT_PARTNER] = NULL;
+  dst->party[BTL_CLIENT_ENEMY2] = NULL;
+  dst->playerStatus[BTL_CLIENT_PLAYER] = NULL;
+  dst->playerStatus[BTL_CLIENT_ENEMY1] = NULL;
+  dst->playerStatus[BTL_CLIENT_PARTNER] = NULL;
+  dst->playerStatus[BTL_CLIENT_ENEMY2] = NULL;
+  
+  dst->itemData     = GAMEDATA_GetMyItem( gdata );
+  dst->bagCursor    = GAMEDATA_GetBagCursor( gdata );
+  dst->zukanData    = GAMEDATA_GetZukanSave( gdata );
+//dst->commSupport  = GAMEDATA_GetCommPlayerSupportPtr( gdata );
+  dst->commSupport  = NULL;
+  
+  dst->musicDefault = SEQ_BGM_VS_NORAPOKE;
+  dst->musicPinch = SEQ_BGM_BATTLEPINCH;
+  dst->result = BTL_RESULT_WIN;
+  
   {
-    BTL_FIELD_SITUATION_Init( &sit );
-      
-    dst->netHandle = NULL;
-    dst->commMode = BTL_COMM_NONE;
-    dst->commPos = 0;
-    dst->multiMode = 0;
-    dst->recBuffer = NULL;
-    dst->fRecordPlay = FALSE;
-    
-    switch( play_mode ){
-    case BSWAY_PLAYMODE_MULTI:
-    case BSWAY_PLAYMODE_S_MULTI:
-      dst->multiMode = 1;
-      break;
-    case BSWAY_PLAYMODE_COMM_MULTI:
-    case BSWAY_PLAYMODE_S_COMM_MULTI:
-      dst->multiMode = TRUE;
-      dst->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      dst->commMode = BTL_COMM_DS;
-      
-      if( GFL_NET_SystemGetCurrentID() == GFL_NET_NO_PARENTMACHINE ){
-        dst->commPos = 0;
-      }else{
-        dst->commPos = 2;
-      }
-      break;
-    }
-    
-    dst->party[BTL_CLIENT_PLAYER] = NULL;
-    dst->party[BTL_CLIENT_ENEMY1] = NULL;
-    dst->party[BTL_CLIENT_PARTNER] = NULL;
-    dst->party[BTL_CLIENT_ENEMY2] = NULL;
-    
-    if( play_mode == BSWAY_MODE_COMM_MULTI ||
-        play_mode == BSWAY_MODE_S_COMM_MULTI ){
-      dst->competitor = BTL_COMPETITOR_COMM;
-    }else{
-      dst->competitor = BTL_COMPETITOR_SUBWAY;
-    }
-    
-    dst->playerStatus[BTL_CLIENT_PLAYER] = GAMEDATA_GetMyStatus( gameData );
-    dst->playerStatus[BTL_CLIENT_ENEMY1] = NULL;
-    dst->playerStatus[BTL_CLIENT_PARTNER] = NULL;
-    dst->playerStatus[BTL_CLIENT_ENEMY2] = NULL;
-    
-    if( play_mode == BSWAY_PLAYMODE_COMM_MULTI ||
-        play_mode == BSWAY_PLAYMODE_S_COMM_MULTI ){
-      dst->playerStatus[BTL_CLIENT_PARTNER] = &wk->mystatus_fr;
-    }
-    
-    dst->itemData     = GAMEDATA_GetMyItem( gameData );
-    dst->bagCursor    = GAMEDATA_GetBagCursor( gameData );
-    dst->zukanData    = GAMEDATA_GetZukanSave( gameData );
-//  dst->commSupport  = GAMEDATA_GetCommPlayerSupportPtr( gameData );
-    dst->commSupport  = NULL;
-    
-    {
-      SAVE_CONTROL_WORK *saveCtrl = GAMEDATA_GetSaveControlWork( gameData );
-      dst->configData = SaveData_GetConfig( saveCtrl );
-    }
-    
-    MI_CpuCopy8( &sit, &dst->fieldSituation, sizeof(BTL_FIELD_SITUATION) );
-
-    dst->musicDefault = SEQ_BGM_VS_NORAPOKE;
-    dst->musicPinch = SEQ_BGM_BATTLEPINCH;
-    dst->result = BTL_RESULT_WIN;
+    SAVE_CONTROL_WORK *saveCtrl = GAMEDATA_GetSaveControlWork( gdata );
+    dst->configData = SaveData_GetConfig( saveCtrl );
   }
   
-  BTL_SETUP_SetSubwayMode( dst );
+  dst->rule = BTL_RULE_SINGLE;
   
-  switch( play_mode )
-  {
-  case BSWAY_MODE_SINGLE:
-  case BSWAY_MODE_WIFI:
-  case BSWAY_MODE_S_SINGLE:
-    dst->rule = BTL_RULE_SINGLE;
-    break;
+  switch( play_mode ){
   case BSWAY_MODE_DOUBLE:
   case BSWAY_MODE_MULTI:
   case BSWAY_MODE_COMM_MULTI:
   case BSWAY_MODE_S_DOUBLE:
-  case BSWAY_MODE_S_MULTI:
   case BSWAY_MODE_S_COMM_MULTI:
     dst->rule = BTL_RULE_DOUBLE;
     break;
-  default:
-    GF_ASSERT( 0 );
   }
   
-  { //トレーナーデータ確保
-    dst->tr_data[BTL_CLIENT_PLAYER] = create_BSP_TRAINER_DATA( HEAPID_PROC );
-    dst->tr_data[BTL_CLIENT_ENEMY1] = create_BSP_TRAINER_DATA( HEAPID_PROC );
+  switch( play_mode ){
+  case BSWAY_PLAYMODE_MULTI:
+  case BSWAY_PLAYMODE_S_MULTI:
+    dst->multiMode = BTL_MULTIMODE_PA_AA;
+    break;
+  case BSWAY_PLAYMODE_COMM_MULTI:
+  case BSWAY_PLAYMODE_S_COMM_MULTI:
+    dst->multiMode = BTL_MULTIMODE_PP_AA;
+    dst->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
+    dst->commMode = BTL_COMM_DS;
+    dst->competitor = BTL_COMPETITOR_COMM;
+    dst->playerStatus[BTL_CLIENT_PARTNER] = &wk->mystatus_fr;
+     
+    if( GFL_NET_SystemGetCurrentID() == GFL_NET_NO_PARENTMACHINE ){
+      dst->commPos = 0;
+    }else{
+      dst->commPos = 2;
+    }
+    break;
   }
   
-  if( play_mode == BSWAY_MODE_WIFI ){ //WiFiの場合は
+  { //プレイヤー設定
+    POKEPARTY *myparty = GAMEDATA_GetMyPokemon( gdata );
+    client = BTL_CLIENT_PLAYER;
+    
+    //MyStatus
+    dst->playerStatus[client] = mystatus;
+    
+    //トレーナーデータ
+    dst->tr_data[client] = create_BSP_TRAINER_DATA( HEAPID_PROC );
+    tr_data = dst->tr_data[client];
+    
+    MyStatus_CopyNameString( mystatus, tr_data->name );
+    tr_data->tr_type = TRTYPE_HERO + MyStatus_GetMySex( mystatus );
+    
+    //ポケモンパーティ
+    dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
+    party = dst->party[client];
+    PokeParty_Init( party, TEMOTI_POKEMAX );
+    
+    entry_pp = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, POKETOOL_GetWorkSize() );
+    
+    for( i = 0; i < wk->member_num; i++ ){
+      pp = PokeParty_GetMemberPointer( myparty, wk->member[i] );
+      POKETOOL_CopyPPtoPP( pp, entry_pp );
+      
+      if( PP_Get(pp,ID_PARA_level,NULL) != 50 ){
+        u32 exp = POKETOOL_GetMinExp(
+              PP_Get(pp,ID_PARA_monsno,NULL),
+              PP_Get(pp,ID_PARA_form_no,NULL),
+              50 );
+        
+        PP_Put( entry_pp, ID_PARA_exp, exp );
+        PP_Renew( entry_pp );
+      }
+      
+      PokeParty_Add( party, entry_pp );
+    }
+    
+    GFL_HEAP_FreeMemory( entry_pp );
+  }
 
+  { //敵トレーナー設定
+    client = BTL_CLIENT_ENEMY1;
+    
+    //トレーナーデータ
+    dst->tr_data[client] = create_BSP_TRAINER_DATA( HEAPID_PROC );
+    tr_data = dst->tr_data[client];
+    
+    bsw_partner = &wk->tr_data[0];
+    bsw_trainer = &bsw_partner->bt_trd;
+    
+    tr_data->tr_id = bsw_trainer->player_id;
+    tr_data->tr_type = bsw_trainer->tr_type;
+    tr_data->ai_bit = 0xFFFFFFFF;  //最強
+    
+    //トレーナーデータ　name
+    GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
+    
+    //トレーナーデータ　word
+#if 0 //正規データがまだ
+    tr_data->win_word = (PMS_DATA*)bsw_trainer->win_word;
+    tr_data->lose_word = (PMS_DATA*)bsw_trainer->lose_word;
+#else
+    PMSDAT_Clear( &tr_data->win_word );
+    PMSDAT_Clear( &tr_data->lose_word );
+#endif
+    
+    //ポケモンパーティ
+    dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
+    party = dst->party[client];
+    PokeParty_Init( party, TEMOTI_POKEMAX );
+    
+    entry_pp = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, POKETOOL_GetWorkSize() );
+    
+    for( i = 0; i < wk->member_num; i++ ){
+      make_PokePara( &(bsw_partner->btpwd[i]), entry_pp );
+      PokeParty_Add( party, entry_pp );
+    }
+    
+    GFL_HEAP_FreeMemory( entry_pp );
+  }
+  
+  if( dst->multiMode != BTL_MULTIMODE_NONE ) //マルチ
+  { //敵トレーナー２設定
+    client = BTL_CLIENT_ENEMY2;
+    
+    dst->tr_data[client] = create_BSP_TRAINER_DATA( HEAPID_PROC );
+    tr_data = dst->tr_data[client];
+    
+    bsw_partner = &wk->tr_data[1];
+    bsw_trainer = &bsw_partner->bt_trd;
+    
+    tr_data->tr_id = bsw_trainer->player_id;
+    tr_data->tr_type = bsw_trainer->tr_type;
+    tr_data->ai_bit = 0xFFFFFFFF;  //最強
+    
+    //トレーナーデータ　name
+    GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
+    
+    //トレーナーデータ　word
+#if 0 //正規データがまだ
+    tr_data->win_word = (PMS_DATA*)bsw_trainer->win_word;
+    tr_data->lose_word = (PMS_DATA*)bsw_trainer->lose_word;
+#else
+    PMSDAT_Clear( &tr_data->win_word );
+    PMSDAT_Clear( &tr_data->lose_word );
+#endif
+    
+    //ポケモンパーティ
+    dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
+    party = dst->party[client];
+    PokeParty_Init( party, TEMOTI_POKEMAX );
+    
+    entry_pp = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, POKETOOL_GetWorkSize() );
+    
+    for( i = 0; i < wk->member_num; i++ ){
+      make_PokePara( &(bsw_partner->btpwd[i]), entry_pp );
+      PokeParty_Add( party, entry_pp );
+    }
+    
+    GFL_HEAP_FreeMemory( entry_pp );
+  }
+  
+  if( dst->multiMode == BTL_MULTIMODE_PA_AA ) //AIマルチ
+  { //AIパートナー設定
+    client = BTL_CLIENT_PARTNER;
+    
+    //トレーナーデータ
+    dst->tr_data[client] = create_BSP_TRAINER_DATA( HEAPID_PROC );
+    tr_data = dst->tr_data[client];
+    
+    bsw_partner = &wk->five_data[wk->partner];
+    bsw_trainer = &bsw_partner->bt_trd;
+    
+    tr_data->tr_id = bsw_trainer->player_id;
+    tr_data->tr_type = bsw_trainer->tr_type;
+    tr_data->ai_bit = 0xFFFFFFFF;  //最強
+    
+    //トレーナーデータ　name
+    GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
+    
+    //トレーナーデータ　word
+#if 0 //正規データがまだ
+    tr_data->win_word = (PMS_DATA*)bsw_trainer->win_word;
+    tr_data->lose_word = (PMS_DATA*)bsw_trainer->lose_word;
+#else
+    PMSDAT_Clear( &tr_data->win_word );
+    PMSDAT_Clear( &tr_data->lose_word );
+#endif
+    
+    //ポケモンパーティ
+    dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
+    party = dst->party[client];
+    PokeParty_Init( party, TEMOTI_POKEMAX );
+    
+    entry_pp = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, POKETOOL_GetWorkSize() );
+    
+    for( i = 0; i < wk->member_num; i++ ){
+      make_PokePara( &(bsw_partner->btpwd[i]), entry_pp );
+      PokeParty_Add( party, entry_pp );
+    }
+    
+    GFL_HEAP_FreeMemory( entry_pp );
+  }
+#if 0
+  else if( dst->multiMode == BTL_MULTIMODE_PP_AA ) //通信マルチ
+  { //通信マルチパートナー設定
+  }
+#endif
+  
+  return dst;
+}
+
+#if 0  
+  if( play_mode == BSWAY_MODE_WIFI ){ //WiFiの場合は
   }
 
   { //敵トレーナーセット
@@ -568,9 +722,10 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   default:
     break;
   }
-  
+
   return dst;
 }
+#endif
 
 #if 0
   dst->musicDefault = SEQ_BGM_VS_NORAPOKE;

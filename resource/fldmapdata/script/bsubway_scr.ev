@@ -472,6 +472,8 @@ _RET
 //--------------------------------------------------------------
 sub_receipt_challenge_multi_ai:
 {
+  DEFINE_LOCAL partner_no
+  
   //サポート登場
   _CALL sub_receipt_anm_partner_in
   
@@ -484,6 +486,8 @@ sub_receipt_challenge_multi_ai:
   _BMPMENU_MAKE_LIST( msg_bsw_scr_65, 2 ) //バランス重視
   _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 3 ) //やめる
   _BMPMENU_START()
+  
+  $partner_no = $SCWK_ANSWER
   
   SWITCH $SCWK_ANSWER
   CASE 0 THEN //攻撃
@@ -506,6 +510,9 @@ sub_receipt_challenge_multi_ai:
   
   _AB_KEYWAIT()
   
+  //パートナーナンバーセット
+  _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, partner_no, BSW_NULL, BSW_NULL )
+
   //パートナーロード
   _BSUBWAY_TOOL( BSWSUB_CHOICE_BTL_SEVEN, BSW_NULL, BSW_NULL, BSW_NULL )
   

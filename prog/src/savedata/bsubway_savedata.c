@@ -70,41 +70,7 @@ struct _BSUBWAY_SCOREDATA
   u8 wifi_lose;  ///<連続敗戦カウント
   u8 wifi_rank;  ///<WiFiランク
   
-  union{
-    struct{
-    u32  silver_get:1;    ///<シルバートロフィーゲット
-    u32  gold_get:1;      ///<ゴールドトロフィーゲット
-    u32  silver_ready:1;    ///<シルバー貰えます
-    u32  gold_ready:1;    ///<ゴールド貰えます
-    u32  wifi_lose_f:1;    ///<wifi連続敗戦フラグ
-    u32  wifi_update:1;    ///<wifi成績アップロードフラグ
-    u32  wifi_poke_data:1;  ///<wifiポケモンデータストック有りナシフラグ
-    u32  single_poke_data:1;  ///<singleポケモンデータストック有りナシフラグ
-    u32  single_record:1;  ///<シングルレコード挑戦中フラグ
-    u32  double_record:1;  ///<ダブルレコード挑戦中フラグ
-    u32  multi_record:1;    ///<マルチレコード挑戦中フラグ
-    u32  cmulti_record:1;  ///<通信マルチレコード挑戦中フラグ
-    u32  wifi_record:1;    ///<Wifiレコード挑戦中フラグ
-    u32  copper_get:1;    ///<カッパートロフィーゲット
-    u32  copper_ready:1;    ///<カッパー貰えます
-    u32  wifi_multi_record; ///<Wifiマルチレコード挑戦中フラグ
-    u32  boss_clear_single:1;  ///<ボスクリアフラグ　シングル
-    u32  boss_clear_double:1;  ///<ボスクリアフラグ　ダブル
-    u32  boss_clear_multi:1;  ///<ボスクリアフラグ マルチ
-    u32  boss_clear_comm_multi:1;  ///<ボスクリアフラグ マルチ
-    u32  boss_clear_wifi:1;  ///<ボスクリアフラグ　Wifi
-    u32  boss_clear_wifi_multi:1;  ///<ボスクリアフラグ　Wifi
-    u32  boss_clear_single_s:1;  ///<ボスクリアフラグ　シングル
-    u32  boss_clear_double_s:1;  ///<ボスクリアフラグ　ダブル
-    u32  boss_clear_multi_s:1;  ///<ボスクリアフラグ マルチ
-    u32  boss_clear_comm_multi_s:1;  ///<ボスクリアフラグ マルチ
-    u32  boss_clear_wifi_s:1;  ///<ボスクリアフラグ　Wifi
-    u32  boss_clear_wifi_multi_s:1;  ///<ボスクリアフラグ　Wifi
-    u32  ai_support_encount_end:1; ///<サポート遭遇済みフラグ
-    u32  dummy:3;
-    };
-    u32  flags;
-  };
+  u32  flags;
   
   //連勝記録
   u16 renshou[BSWAY_PLAYMODE_MAX];
@@ -704,21 +670,25 @@ u8 BSUBWAY_SCOREDATA_GetWifiRank( const BSUBWAY_SCOREDATA *bsw_score )
 u8 BSUBWAY_SCOREDATA_SetWifiLoseCount(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode )
 {
+  BSWAY_SCOREDATA_FLAG flag = BSWAY_SCOREDATA_FLAG_WIFI_LOSE_F;
+
   switch(mode){
   case BSWAY_SETMODE_reset:
+    BSUBWAY_SCOREDATA_SetFlag( bsw_score, flag, BSWAY_SETMODE_reset );
     bsw_score->wifi_lose = 0;
-    bsw_score->wifi_lose_f = 0;
     break;
   case BSWAY_SETMODE_inc:
-    if( bsw_score->wifi_lose_f ){
-      //連続敗戦中
-      bsw_score->wifi_lose += 1;
+    if( BSUBWAY_SCOREDATA_SetFlag(bsw_score,flag,BSWAY_SETMODE_get) ){
+      if( bsw_score->wifi_lose < 0xff ){
+        bsw_score->wifi_lose++; //連続敗戦中
+      }
     }else{
+      BSUBWAY_SCOREDATA_SetFlag( bsw_score, flag, BSWAY_SETMODE_set );
       bsw_score->wifi_lose = 1;
-      bsw_score->wifi_lose_f = 1;
     }
     break;
   }
+  
   //get
   return bsw_score->wifi_lose;
 }

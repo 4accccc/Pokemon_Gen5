@@ -13,7 +13,7 @@
 //======================================================================
 //  define
 //======================================================================
-#define DEBUG_BSW_COMM_MULTI_BTL_SKIP //定義で通信マルチバトルをスキップ
+//#define DEBUG_BSW_COMM_MULTI_BTL_SKIP //定義で通信マルチバトルをスキップ
 
 #ifdef DEBUG_ONLY_FOR_kagaya
 //#define DEBUG_BSW_CLEAR_1 //定義で1回戦闘のみでクリア
