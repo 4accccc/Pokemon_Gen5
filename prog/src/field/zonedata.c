@@ -127,7 +127,7 @@ void ZONEDATA_Open( HEAPID heap_id )
  * @brief アーカイブハンドル・クローズ
  */
 //------------------------------------------------------------------
-void ZONEDATA_Close()
+void ZONEDATA_Close( void )
 {
   if( data_handle != NULL )
   {
@@ -735,6 +735,23 @@ BOOL ZONEDATA_IsMusicalWaitingRoom(u16 zone_id)
   zone_id = ControlZoneID(zone_id);
   return (zone_id == ZONE_ID_C04R0202);
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief グループの代表となるゾーンIDを取得する
+ * @param  zoneid ゾーン指定ID
+ * @return  ゾーンID
+ *
+ * @note  タウンマップ上での表示位置が同じゾーンのIDを返す。
+ */
+//------------------------------------------------------------------
+u16 ZONEDATA_GetGroupID( u16 zone_id)
+{
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->zone_group;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief  地名メッセージのIDを取得
