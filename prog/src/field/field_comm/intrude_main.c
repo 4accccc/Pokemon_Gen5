@@ -30,6 +30,7 @@
 #include "poke_tool/monsno_def.h"
 #include "field/field_status_local.h"  // for FIELD_STATUS_
 #include "intrude_work.h"
+#include "savedata/symbol_save_notwifi.h"
 
 
 //==============================================================================
@@ -48,6 +49,7 @@ static void Intrude_CheckTalkAnswerNG(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckWfbcReq(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_ConvertPlayerPos(INTRUDE_COMM_SYS_PTR intcomm, ZONEID mine_zone_id, fx32 mine_x, INTRUDE_STATUS *target);
 static int Intrude_GetPalaceOffsetNo(const INTRUDE_COMM_SYS_PTR intcomm, int palace_area);
+static void _SendBufferCreate_SymbolData(INTRUDE_COMM_SYS_PTR intcomm,const SYMBOL_DATA_REQ *p_sdr);
 
 //==============================================================================
 //  データ
@@ -231,7 +233,8 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
   }
   //WFBC送信リクエストがあれば送信
   Intrude_CheckWfbcReq(intcomm);
-
+  //シンボルエンカウント要求
+  
   //プレイヤーステータス送信
   if(intcomm->send_status == TRUE){
     IntrudeSend_PlayerStatus(intcomm, &intcomm->intrude_status_mine);
@@ -376,6 +379,88 @@ static void Intrude_CheckWfbcReq(INTRUDE_COMM_SYS_PTR intcomm)
       FIELD_WFBC_COMM_DATA_ClearSendCommReqData(&intcomm->wfbc_comm_data);
     }
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * シンボルデータ要求リクエストがあれば送信
+ *
+ * @param   intcomm		
+ */
+//--------------------------------------------------------------
+static void Intrude_CheckSymbolReq(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  FIELD_WFBC_COMM_NPC_ANS npc_ans;
+  FIELD_WFBC_COMM_NPC_REQ npc_req;
+  NetID net_id;
+  
+  if(intcomm->wfbc_req != 0){
+    if(IntrudeSend_Wfbc(intcomm, intcomm->wfbc_req, GAMEDATA_GetMyWFBCCoreData(gamedata)) == TRUE){
+      intcomm->wfbc_req = 0;
+    }
+  }
+  
+  for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
+    if(intcomm->req_symbol_data[net_id].occ == TRUE){
+      _SendBufferCreate_SymbolData(intcomm, &intcomm->req_symbol_data[net_id]);
+      if(IntrudeSend_SymbolData(intcomm, net_id) == TRUE){
+        intcomm->req_symbol_data[net_id].occ = FALSE;
+      }
+    }
+  }
+  
+  if(intcomm->send_symbol_change.occ == TRUE){
+    if(IntrudeSend_SymbolDataChange(&intcomm->send_symbol_change) == TRUE){
+      intcomm->send_symbol_change.occ = FALSE;
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 送信バッファ作成：シンボルエンカウントデータ
+ *
+ * @param   intcomm		
+ * @param   p_sdr		  要求されているデータ
+ */
+//--------------------------------------------------------------
+static void _SendBufferCreate_SymbolData(INTRUDE_COMM_SYS_PTR intcomm,const SYMBOL_DATA_REQ *p_sdr)
+{
+  INTRUDE_SYMBOL_WORK *sendbuf = &intcomm->intrude_send_symbol;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(gamedata);
+  SYMBOL_SAVE_WORK *symbol_save = SymbolSave_GetSymbolData(sv_ctrl);
+  u8 occ_num;
+  
+  switch(p_sdr->zone_type){
+  default:
+    GF_ASSERT(0);
+    //break through
+  case SYMBOL_ZONE_TYPE_KEEP_LARGE:
+    SymbolSave_GetKeepLargeSymbolPokemon(symbol_save, sendbuf->spoke_array, 
+      SYMBOL_MAP_STOCK_MAX, &occ_num);
+    break;
+  case SYMBOL_ZONE_TYPE_KEEP_SMALL:
+    SymbolSave_GetKeepSmallSymbolPokemon(symbol_save, sendbuf->spoke_array, 
+      SYMBOL_MAP_STOCK_MAX, &occ_num);
+    break;
+  case SYMBOL_ZONE_TYPE_FREE_LARGE:
+    SymbolSave_GetFreeLargeSymbolPokemon(symbol_save, sendbuf->spoke_array, 
+      SYMBOL_MAP_STOCK_MAX, p_sdr->map_no, &occ_num);
+    break;
+  case SYMBOL_ZONE_TYPE_FREE_SMALL:
+    SymbolSave_GetFreeSmallSymbolPokemon(symbol_save, sendbuf->spoke_array, 
+      SYMBOL_MAP_STOCK_MAX, p_sdr->map_no, &occ_num);
+    break;
+  }
+  
+  sendbuf->num = occ_num;
+  sendbuf->map_level_small = SymbolSave_GetMapLevelSmall(symbol_save);
+  sendbuf->map_level_large = SymbolSave_GetMapLevelLarge(symbol_save);
+  sendbuf->net_id = GFL_NET_SystemGetCurrentID();
+  sendbuf->zone_type = p_sdr->zone_type;
+  sendbuf->map_no = p_sdr->map_no;
 }
 
 

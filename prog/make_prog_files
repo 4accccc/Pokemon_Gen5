@@ -383,6 +383,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/field_comm/intrude_work.c \
         field/field_comm/intrude_mission.c \
         field/field_comm/intrude_battle.c \
+        field/field_comm/intrude_symbol.c \
         field/field_wfbc_data.c \
         field/eventdata_system.c \
         field/fldmmdl_move.c \
@@ -396,6 +397,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/event_beacon_detail.c \
         field/field_comm/game_beacon_search.c \
 				gamesystem/game_beacon_accessor.c \
+				savedata/symbol_save_field.c \
         field/pleasure_boat_st.c \
         field/scrcmd_pl_boat_init.c \
         field/united_nations_st.c \
@@ -408,6 +410,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         debug/debug_mystery_card.c \
         field/event_research_radar.c \
         app/research_radar/questionnaire_index.c \
+				savedata/symbol_save_notwifi.c \
         field/bsubway_comm.c \
         field/fld_btl_inst_tool.c \
 				field/c_gear/event_cgearget.c \

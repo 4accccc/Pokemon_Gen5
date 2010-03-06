@@ -15,6 +15,7 @@
 #include "savedata/intrude_save.h"  //OCCUPY_INFO
 #include "field/field_comm/mission_types.h"
 #include "field/field_wfbc_data.h"
+#include "field/intrude_symbol.h"
 
 
 //==============================================================================
@@ -219,6 +220,13 @@ typedef struct _INTRUDE_COMM_SYS{
   BINGO_SYSTEM bingo;         ///<ビンゴシステムワーク
   
   WFBC_COMM_DATA wfbc_comm_data;  ///<WFBC通信ワーク
+  
+  INTRUDE_SYMBOL_WORK intrude_symbol;        ///<侵入先のシンボルワーク
+  INTRUDE_SYMBOL_WORK intrude_send_symbol;   ///<送信バッファ：シンボルワーク
+  SYMBOL_DATA_REQ req_symbol_data[FIELD_COMM_MEMBER_MAX]; ///<シンボルデータリクエスト
+  SYMBOL_DATA_CHANGE send_symbol_change;     ///<送信バッファ：シンボルデータ変更
+  u8 recv_symbol_flag;            ///<TRUE:シンボルデータを受信した
+  u8 recv_symbol_change_flag;     ///<TRUE:シンボルデータの変更通知を受け取った
   
 //  BOOL comm_act_vanish[FIELD_COMM_MEMBER_MAX];   ///<TRUE:非表示
   u8 invalid_netid;           ///<侵入先ROMのnet_id

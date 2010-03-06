@@ -776,8 +776,9 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
     pWork->lvup = 10;
     
     //ポケモンシンボルエンカウント
-    SymbolSave_Set(SymbolSave_GetSymbolData(pWork->pSaveData), pDream->findPokemon,
-                   pDream->findPokemonTecnique, pDream->findPokemonSex, pDream->findPokemonForm);
+    SymbolSave_SetFreeZone(SymbolSave_GetSymbolData(pWork->pSaveData), pDream->findPokemon,
+                   pDream->findPokemonTecnique, pDream->findPokemonSex, pDream->findPokemonForm,
+                   SYMBOL_ZONE_TYPE_FREE_SMALL);  //@todo ※check ポケモンNOからSMALL,LARGE判別を加える
     //サインイン
     DREAMWORLD_SV_SetSignin(pDreamSave,pDream->signin);
     // 家具

@@ -53,6 +53,9 @@ static void _IntrudeRecv_WfbcReq(const int netID, const int size, const void* pD
 static void _IntrudeRecv_Wfbc(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_WfbcNpcAns(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_WfbcNpcReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_SymbolDataReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_SymbolData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_SymbolDataChange(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -91,6 +94,9 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_Wfbc, NULL},                   //INTRUDE_CMD_WFBC
   {_IntrudeRecv_WfbcNpcAns, NULL},             //INTRUDE_CMD_WFBC_NPC_ANS
   {_IntrudeRecv_WfbcNpcReq, NULL},             //INTRUDE_CMD_WFBC_NPC_REQ
+  {_IntrudeRecv_SymbolDataReq, NULL},          //INTRUDE_CMD_SYMBOL_DATA_REQ
+  {_IntrudeRecv_SymbolData, NULL},             //INTRUDE_CMD_SYMBOL_DATA
+  {_IntrudeRecv_SymbolDataChange, NULL},       //INTRUDE_CMD_SYMBOL_DATA_CHANGE
 };
 SDK_COMPILER_ASSERT(NELEMS(Intrude_CommPacketTbl) == INTRUDE_CMD_NUM);
 
@@ -1699,7 +1705,7 @@ static void _IntrudeRecv_WfbcNpcReq(const int netID, const int size, const void*
  * データ送信：WFBCパラメータ：FIELD_WFBC_COMM_NPC_REQ
  *
  * @param   intcomm		
- * @param   send_netid_bit		送信先(Bit指定)
+ * @param   send_netid    		送信先
  * @param   wfbc_core		      WFBCパラメータへのポインタ
  *
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
@@ -1720,4 +1726,158 @@ BOOL IntrudeSend_WfbcNpcReq(const FIELD_WFBC_COMM_NPC_REQ *npc_req, NetID send_n
     OS_TPrintf("SEND：WFBCパラメータ:NPC_REQ\n");
   }
   return ret;
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：シンボルエンカウントデータを要求
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_SymbolDataReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const SYMBOL_DATA_REQ *p_sdr = pData;
+  
+  intcomm->req_symbol_data[netID] = *p_sdr;
+  MATSUDA_Printf("RECV: symbol_req netID = %d\n", netID);
+}
+
+//==================================================================
+/**
+ * データ送信：シンボルエンカウントデータを要求
+ *
+ * @param   intcomm		
+ * @param   send_netid    		送信先
+ * @param   wfbc_core		      WFBCパラメータへのポインタ
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_SymbolDataReq(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, const SYMBOL_DATA_REQ *p_sdr)
+{
+  BOOL ret;
+
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+  
+  MATSUDA_Printf("SEND: symbol_req\n");
+  
+  intcomm->recv_symbol_flag = FALSE;
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), 
+    send_netid, INTRUDE_CMD_SYMBOL_DATA_REQ, sizeof(SYMBOL_DATA_REQ), p_sdr, 
+    FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：シンボルエンカウントデータ
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_SymbolData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const INTRUDE_SYMBOL_WORK *p_symboldata = pData;
+  
+  intcomm->intrude_symbol = *p_symboldata;
+  intcomm->recv_symbol_flag = TRUE;
+  intcomm->recv_symbol_change_flag = FALSE;
+  MATSUDA_Printf("RECV: symbol_data netID = %d\n", netID);
+}
+
+//==================================================================
+/**
+ * データ送信：シンボルエンカウントデータ
+ *
+ * @param   intcomm		
+ * @param   send_netid_bit		送信先
+ * @param   wfbc_core		      WFBCパラメータへのポインタ
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_SymbolData(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid)
+{
+  if(_OtherPlayerExistence() == FALSE){
+    return TRUE;
+  }
+  
+  MATSUDA_Printf("SEND: symbol_data net_id\n", send_netid);
+  
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), 
+    send_netid, INTRUDE_CMD_SYMBOL_DATA, sizeof(INTRUDE_SYMBOL_WORK), 
+    &intcomm->intrude_send_symbol, FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：自分のシンボルエンカウントデータが変更した事を知らせる
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_SymbolDataChange(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const SYMBOL_DATA_CHANGE *p_sdc = pData;
+  const INTRUDE_SYMBOL_WORK *now_symbol = &intcomm->intrude_symbol;
+  
+  MATSUDA_Printf("RECV: symbol_change net_id=%d", netID);
+  if(now_symbol->net_id != netID || now_symbol->zone_type != p_sdc->zone_type
+      || now_symbol->map_no != p_sdc->map_no){
+    MATSUDA_Printf("違うマップの為無視\n");
+    return;
+  }
+  
+  MATSUDA_Printf("\n");
+  intcomm->recv_symbol_change_flag = TRUE;
+}
+
+//==================================================================
+/**
+ * データ送信：自分のシンボルエンカウントデータが変更した事を知らせる
+ *
+ * @param   intcomm		
+ * @param   send_netid_bit		送信先(Bit指定)
+ * @param   wfbc_core		      WFBCパラメータへのポインタ
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_SymbolDataChange(const SYMBOL_DATA_CHANGE *p_sdc)
+{
+  BOOL ret;
+
+  if(_OtherPlayerExistence() == FALSE){
+    return TRUE;
+  }
+  
+  MATSUDA_Printf("SEND: symbol_change\n");
+  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+    INTRUDE_CMD_SYMBOL_DATA_CHANGE, sizeof(SYMBOL_DATA_CHANGE), p_sdc);
 }
