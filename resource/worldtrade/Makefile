@@ -43,22 +43,26 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
 .SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce
 
+#なぜサフィックスの大文字を小文字にしているかというと、
+#HGSSから移植してきたGTSがそうだったから
 .ncl.NCLR:
 	g2dcvtr $<
-	rename	$< $*.nclr
+	rename	$*.NCLR $*.nclr
 
 .ncg.NCGR:
 	g2dcvtr $< -bg
-	ntrcomp -l 2 -o $*_lz.ncgr $<
+	ntrcomp -l 2 -o $*_lz.ncgr $*.NCGR
 
 .nsc.NSCR:
 	g2dcvtr $<
-	ntrcomp -l 2 -o $*_lz.nscr $<
+	ntrcomp -l 2 -o $*_lz.nscr $*.NSCR
 
 .nce.NCER:
 	g2dcvtr $<
 	ntrcomp -l 2 -o $*_lz.nanr $*.NANR
 	ntrcomp -l 2 -o $*_lz.ncer $*.NCER
+	ntrcomp -l 2 -o $*_lz.ncgr $*.NCGR
+	rename	$*.NCLR $*.nclr
 
 endif
 
