@@ -527,10 +527,10 @@ static void InitCellActor(WORLDTRADE_WORK *wk, const GFL_DISP_VRAM * vram )
 
 
   //chara“Ç‚Ýž‚Ý
-  wk->resObjTbl[SUB_LCD][CLACT_U_CHAR_RES] = GFL_CLGRP_CGR_Register( p_handle, NARC_worldtrade_hero_lz_ncgr, 1, CLSYS_DRAW_SUB, HEAPID_WORLDTRADE);
+  wk->resObjTbl[SUB_LCD][CLACT_U_CHAR_RES] = GFL_CLGRP_CGR_Register( p_handle, NARC_worldtrade_worldtrade_obj_s_lz_ncgr, 1, CLSYS_DRAW_SUB, HEAPID_WORLDTRADE);
 
   //pal“Ç‚Ýž‚Ý
-  wk->resObjTbl[SUB_LCD][CLACT_U_PLTT_RES] = GFL_CLGRP_PLTT_Register(p_handle, NARC_worldtrade_hero_nclr, CLSYS_DRAW_SUB, /*10*0x20*/0, HEAPID_WORLDTRADE);
+  wk->resObjTbl[SUB_LCD][CLACT_U_PLTT_RES] = GFL_CLGRP_PLTT_Register(p_handle, NARC_worldtrade_worldtrade_obj_s_nclr, CLSYS_DRAW_SUB, /*10*0x20*/0, HEAPID_WORLDTRADE);
 
   //cell“Ç‚Ýž‚Ý
   wk->resObjTbl[SUB_LCD][CLACT_U_CELL_RES] = GFL_CLGRP_CELLANIM_Register(p_handle, NARC_worldtrade_worldtrade_obj_s_NCER, NARC_worldtrade_worldtrade_obj_s_NANR, HEAPID_WORLDTRADE);
