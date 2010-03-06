@@ -279,4 +279,5 @@
   ARCID_TIMEICON_GRA  "time_icon_gra.narc" #タイマーアイコングラフィック
   ARCID_LEADER_BOARD  "leader_board.narc" #Wifiリーダーボード画像
   ARCID_FIELD_SAVE_ICON  "fieldmap/save_icon.narc" #フィールドセーブ時ICON
+  ARCID_TRIALHOUSE_GRA  "trialhouse_gra.narc"  # トライアルハウス検定結果のグラフィックデータ
 

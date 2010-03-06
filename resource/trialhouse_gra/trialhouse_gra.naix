@@ -1,0 +1,25 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: trialhouse_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_TRIALHOUSE_GRA_NAIX_
+#define NARC_TRIALHOUSE_GRA_NAIX_
+
+enum {
+	NARC_trialhouse_gra_trial_bg_NCLR = 0,
+	NARC_trialhouse_gra_trial_obj_NCLR = 1,
+	NARC_trialhouse_gra_trial_bg_NCGR = 2,
+	NARC_trialhouse_gra_trial_obj_NCGR = 3,
+	NARC_trialhouse_gra_trial_bg1_NSCR = 4,
+	NARC_trialhouse_gra_trial_bg2_NSCR = 5,
+	NARC_trialhouse_gra_trial_obj_NCER = 6,
+	NARC_trialhouse_gra_trial_obj_NANR = 7
+};
+
+/* NARC_TRIALHOUSE_GRA_NAIX_ */
+#endif

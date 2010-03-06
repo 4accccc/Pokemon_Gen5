@@ -857,7 +857,8 @@ SRCS_OVERLAY_UI_COMMON = ui/ui_scene.c \
                          ui/print_tool.c \
 												 ui/msgsearch.c \
 												 ui/yesno_menu.c \
-                         ui/frame_list.c
+                         ui/frame_list.c \
+                         ui/nogear_subscreen.c
 
 
 # コンフィグ画面
@@ -1839,8 +1840,14 @@ SRCS_OVERLAY_UN_SELECT = app/un_select/un_select.c \
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_GEONET = net_app/wifi_earth/wifi_earth.c
 
+# トライアルハウス検定結果
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_TH_AWARD = app/trialhouse_award/th_award.c \
+                        app/trialhouse_award/th_award_graphic.c
+
 # 川田デバッグ
 #===> SRCS_OVERLAY_UI_COMMON
 #===> SRCS_OVERLAY_ZUKAN_TOROKU
+#===> SRCS_OVERLAY_TH_AWARD
 SRCS_OVERLAY_KAWADA_DEBUG = test/kawada/d_kawada.c
 

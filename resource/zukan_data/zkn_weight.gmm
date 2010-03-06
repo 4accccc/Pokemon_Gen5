@@ -3046,13 +3046,13 @@
 	</row>
 
 	<row id="ZKN_WEIGHT_540_000">
-		<language name="JPN">０．０ｋｇ</language>
-		<language name="JPN_KANJI">０．０ｋｇ</language>
+		<language name="JPN">５１．０ｋｇ</language>
+		<language name="JPN_KANJI">５１．０ｋｇ</language>
 	</row>
 
 	<row id="ZKN_WEIGHT_541_000">
-		<language name="JPN">０．０ｋｇ</language>
-		<language name="JPN_KANJI">０．０ｋｇ</language>
+		<language name="JPN">５５．５ｋｇ</language>
+		<language name="JPN_KANJI">５５．５ｋｇ</language>
 	</row>
 
 	<row id="ZKN_WEIGHT_542_000">
@@ -3416,13 +3416,13 @@
 	</row>
 
 	<row id="ZKN_WEIGHT_614_000">
-		<language name="JPN">０．０ｋｇ</language>
-		<language name="JPN_KANJI">０．０ｋｇ</language>
+		<language name="JPN">８．５ｋｇ</language>
+		<language name="JPN_KANJI">８．５ｋｇ</language>
 	</row>
 
 	<row id="ZKN_WEIGHT_615_000">
-		<language name="JPN">０．０ｋｇ</language>
-		<language name="JPN_KANJI">０．０ｋｇ</language>
+		<language name="JPN">２６０．０ｋｇ</language>
+		<language name="JPN_KANJI">２６０．０ｋｇ</language>
 	</row>
 
 	<row id="ZKN_WEIGHT_616_000">
@@ -3911,11 +3911,6 @@
 	</row>
 
 	<row id="ZKN_WEIGHT_493_016">
-		<language name="JPN">３２０．０ｋｇ</language>
-		<language name="JPN_KANJI">３２０．０ｋｇ</language>
-	</row>
-
-	<row id="ZKN_WEIGHT_493_017">
 		<language name="JPN">３２０．０ｋｇ</language>
 		<language name="JPN_KANJI">３２０．０ｋｇ</language>
 	</row>

@@ -3046,13 +3046,13 @@
 	</row>
 
 	<row id="ZKN_HEIGHT_540_000">
-		<language name="JPN">０．０ｍ</language>
-		<language name="JPN_KANJI">０．０ｍ</language>
+		<language name="JPN">１．４ｍ</language>
+		<language name="JPN_KANJI">１．４ｍ</language>
 	</row>
 
 	<row id="ZKN_HEIGHT_541_000">
-		<language name="JPN">０．０ｍ</language>
-		<language name="JPN_KANJI">０．０ｍ</language>
+		<language name="JPN">１．３ｍ</language>
+		<language name="JPN_KANJI">１．３ｍ</language>
 	</row>
 
 	<row id="ZKN_HEIGHT_542_000">
@@ -3416,13 +3416,13 @@
 	</row>
 
 	<row id="ZKN_HEIGHT_614_000">
-		<language name="JPN">０．０ｍ</language>
-		<language name="JPN_KANJI">０．０ｍ</language>
+		<language name="JPN">０．５ｍ</language>
+		<language name="JPN_KANJI">０．５ｍ</language>
 	</row>
 
 	<row id="ZKN_HEIGHT_615_000">
-		<language name="JPN">０．０ｍ</language>
-		<language name="JPN_KANJI">０．０ｍ</language>
+		<language name="JPN">２．６ｍ</language>
+		<language name="JPN_KANJI">２．６ｍ</language>
 	</row>
 
 	<row id="ZKN_HEIGHT_616_000">
@@ -3911,11 +3911,6 @@
 	</row>
 
 	<row id="ZKN_HEIGHT_493_016">
-		<language name="JPN">３．２ｍ</language>
-		<language name="JPN_KANJI">３．２ｍ</language>
-	</row>
-
-	<row id="ZKN_HEIGHT_493_017">
 		<language name="JPN">３．２ｍ</language>
 		<language name="JPN_KANJI">３．２ｍ</language>
 	</row>

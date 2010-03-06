@@ -25,19 +25,29 @@
 
 #include "arc_def.h"  //ARCID_MESSAGE
 #include "message.naix"
+
+
 #include "msg/msg_d_kawada.h"
 
+// 図鑑登録
 #include "app/zukan_toroku.h"
+
+// トライアルハウス結果
+#include "pm_version.h"
+#include "app/th_award.h"
+#include "savedata/trialhouse_save.h"
+#include "../../savedata/trialhouse_save_local.h"
 
 
 // オーバーレイ
 FS_EXTERN_OVERLAY(zukan_toroku);
+FS_EXTERN_OVERLAY(th_award);
 
 
 //============================================================================================
 //	定数定義
 //============================================================================================
-#define	TOP_MENU_SIZ	( 1 )
+#define	TOP_MENU_SIZ	( 2 )
 
 typedef struct {
 	u32	main_seq;
@@ -57,8 +67,13 @@ typedef struct {
 
   GFL_PROCSYS*  local_procsys;
 
+  // 図鑑登録
   ZUKAN_TOROKU_PARAM* zukan_toroku_param;
   POKEMON_PARAM*      pp;
+
+  // トライアルハウス結果
+  THSV_WORK*          thsv;
+  TH_AWARD_PARAM*     th_award_param;
 
 }KAWADA_MAIN_WORK;
 
@@ -69,9 +84,11 @@ enum {
 
   // ここから
 	MAIN_SEQ_ZUKAN_TOROKU_CALL,  // top_menu00
+	MAIN_SEQ_TH_AWARD_CALL,
   // ここまで
 
 	MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN,
+	MAIN_SEQ_TH_AWARD_CALL_RETURN,
 	
   MAIN_SEQ_END,
 };
@@ -92,6 +109,15 @@ static void BgExit(void);
 
 static void TopMenuInit( KAWADA_MAIN_WORK * wk );
 static void TopMenuExit( KAWADA_MAIN_WORK * wk );
+
+
+// 図鑑登録
+static void ZukanTorokuInit( KAWADA_MAIN_WORK* wk );
+static void ZukanTorokuExit( KAWADA_MAIN_WORK* wk );
+
+// トライアルハウス結果
+static void ThAwardInit( KAWADA_MAIN_WORK* wk );
+static void ThAwardExit( KAWADA_MAIN_WORK* wk );
 
 
 //============================================================================================
@@ -144,8 +170,14 @@ static GFL_PROC_RESULT MainProcInit( GFL_PROC * proc, int * seq, void * pwk, voi
 
   wk->local_procsys = GFL_PROC_LOCAL_boot( wk->heapID );
 
+#if 0
+  // フェードインありでスタート
 	FadeInSet( wk, MAIN_SEQ_INIT );
 	wk->main_seq  = MAIN_SEQ_FADE_MAIN;
+#else
+  // フェードインなしでスタート
+  wk->main_seq  = MAIN_SEQ_INIT;
+#endif
 
   return GFL_PROC_RES_FINISH;
 }
@@ -201,29 +233,31 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
 
 
+  // 図鑑登録
 	case MAIN_SEQ_ZUKAN_TOROKU_CALL:
-    GFL_OVERLAY_Load(FS_OVERLAY_ID(zukan_toroku));
-    wk->pp = PP_Create( 1, 1, 0, wk->heapID );
-    wk->zukan_toroku_param = ZUKAN_TOROKU_AllocParam(
-        wk->heapID,
-        ZUKAN_TOROKU_LAUNCH_TOROKU,
-        wk->pp,
-        NULL,
-        NULL,
-        0 );
-    GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ZUKAN_TOROKU_ProcData, wk->zukan_toroku_param );
+    ZukanTorokuInit(wk);
 		wk->main_seq = MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN;
 		break;
-
-
-
   case MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN:
-    GFL_HEAP_FreeMemory( wk->pp );
-    ZUKAN_TOROKU_FreeParam( wk->zukan_toroku_param );
-    GFL_OVERLAY_Unload(FS_OVERLAY_ID(zukan_toroku));
+    ZukanTorokuExit(wk);
 		FadeInSet( wk, MAIN_SEQ_INIT );
 		wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
+
+
+  // トライアルハウス結果
+  case MAIN_SEQ_TH_AWARD_CALL:
+    ThAwardInit(wk); 
+		wk->main_seq = MAIN_SEQ_TH_AWARD_CALL_RETURN;
+    break;
+  case MAIN_SEQ_TH_AWARD_CALL_RETURN:
+    ThAwardExit(wk); 
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+
+
+
 
 	}
 
@@ -343,5 +377,115 @@ static void TopMenuExit( KAWADA_MAIN_WORK * wk )
 	GFL_MSG_Delete( wk->mman );
 
 	GFL_BMPWIN_Exit();
+}
+
+// 図鑑登録
+static void ZukanTorokuInit( KAWADA_MAIN_WORK* wk )
+{
+    GFL_OVERLAY_Load(FS_OVERLAY_ID(zukan_toroku));
+    wk->pp = PP_Create( 1, 1, 0, wk->heapID );
+    wk->zukan_toroku_param = ZUKAN_TOROKU_AllocParam(
+        wk->heapID,
+        ZUKAN_TOROKU_LAUNCH_TOROKU,
+        wk->pp,
+        NULL,
+        NULL,
+        0 );
+    GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ZUKAN_TOROKU_ProcData, wk->zukan_toroku_param );
+}
+static void ZukanTorokuExit( KAWADA_MAIN_WORK* wk )
+{
+    GFL_HEAP_FreeMemory( wk->pp );
+    ZUKAN_TOROKU_FreeParam( wk->zukan_toroku_param );
+    GFL_OVERLAY_Unload(FS_OVERLAY_ID(zukan_toroku));
+}
+
+// トライアルハウス結果
+static void ThAwardInit( KAWADA_MAIN_WORK* wk )
+{
+      u8 sex = PM_MALE;
+      u8 type = 0;  // 0=ローカルシングル; 1=ローカルダブル; 2=ダウンロードシングル; 3=ダウンロードダブル;
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) sex = PM_FEMALE;
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) type = 1;
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ) type = 2;
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ) type = 3;
+
+      GFL_OVERLAY_Load(FS_OVERLAY_ID(th_award));
+      wk->thsv = GFL_HEAP_AllocMemory( wk->heapID, sizeof(THSV_WORK) );
+      {
+        u8 i;
+#if 0 
+        u16 name[17] = L"あいうえおかきくけこさしすせそた";
+        name[16] = 0xffff;  // gflib/src/string/strbuf.c  // EOMCode
+#else
+        u16 name[17] = L"あいうえおかきく";
+        name[8] = 0xffff;  // gflib/src/string/strbuf.c  // EOMCode
+#endif
+
+        wk->thsv->CommonData[0].Valid              = 1;
+        wk->thsv->CommonData[0].IsDouble           = 0;
+        wk->thsv->CommonData[0].Point              = 6000;
+        wk->thsv->CommonData[0].MonsData[0].MonsNo = 1;
+        wk->thsv->CommonData[0].MonsData[0].FormNo = 0;
+        wk->thsv->CommonData[0].MonsData[0].Sex    = 0;
+        wk->thsv->CommonData[0].MonsData[1].MonsNo = 2;
+        wk->thsv->CommonData[0].MonsData[1].FormNo = 0;
+        wk->thsv->CommonData[0].MonsData[1].Sex    = 0;
+        wk->thsv->CommonData[0].MonsData[2].MonsNo = 3;
+        wk->thsv->CommonData[0].MonsData[2].FormNo = 0;
+        wk->thsv->CommonData[0].MonsData[2].Sex    = 0;
+        wk->thsv->CommonData[0].MonsData[3].MonsNo = 6;
+        wk->thsv->CommonData[0].MonsData[3].FormNo = 0;
+        wk->thsv->CommonData[0].MonsData[3].Sex    = 0;
+
+        wk->thsv->CommonData[1].Valid              = 1;
+        wk->thsv->CommonData[1].IsDouble           = 0;
+        wk->thsv->CommonData[1].Point              = 0xFFFF;
+        wk->thsv->CommonData[1].MonsData[0].MonsNo = 1;
+        wk->thsv->CommonData[1].MonsData[0].FormNo = 0;
+        wk->thsv->CommonData[1].MonsData[0].Sex    = 0;
+        wk->thsv->CommonData[1].MonsData[1].MonsNo = 2;
+        wk->thsv->CommonData[1].MonsData[1].FormNo = 0;
+        wk->thsv->CommonData[1].MonsData[1].Sex    = 0;
+        wk->thsv->CommonData[1].MonsData[2].MonsNo = 3;
+        wk->thsv->CommonData[1].MonsData[2].FormNo = 0;
+        wk->thsv->CommonData[1].MonsData[2].Sex    = 0;
+        wk->thsv->CommonData[1].MonsData[3].MonsNo = 6;
+        wk->thsv->CommonData[1].MonsData[3].FormNo = 0;
+        wk->thsv->CommonData[1].MonsData[3].Sex    = 0;
+
+        for( i=0; i<16; i++ ) wk->thsv->DownloadBits[i] = 0;
+        GFL_STD_MemCopy( name, wk->thsv->Name, 34 );
+
+        switch(type)
+        {
+        case 0:
+          {
+          }
+          break;
+        case 1:
+          {
+            wk->thsv->CommonData[0].IsDouble           = 1;
+          }
+          break;
+        case 2:
+          {
+          }
+          break;
+        case 3:
+          {
+            wk->thsv->CommonData[1].IsDouble           = 1;
+          }
+          break;
+        }
+      }
+      wk->th_award_param = TH_AWARD_AllocParam( wk->heapID, sex, wk->thsv, (type==2||type==3)?TRUE:FALSE );
+      GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &TH_AWARD_ProcData, wk->th_award_param );
+}
+static void ThAwardExit( KAWADA_MAIN_WORK* wk )
+{
+      TH_AWARD_FreeParam( wk->th_award_param );
+      GFL_HEAP_FreeMemory( wk->thsv );
+      GFL_OVERLAY_Unload(FS_OVERLAY_ID(th_award));
 }
 

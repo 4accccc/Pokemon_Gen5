@@ -151,7 +151,8 @@ SUBDIRS	=	wmi \
 			dowsing_gra \
 			leader_board \
             report \
-            time_icon
+            time_icon \
+            trialhouse_gra
 
 include $(RESOURCE_MACRO)
 

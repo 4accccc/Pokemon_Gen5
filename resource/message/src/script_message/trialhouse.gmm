@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-03-05T11:20:27"/>
+	<create user="kawada_koji" host="W00215" date="2010-03-05T14:44:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,9 +337,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="155" right="1998" bottom="783" maximized="no" rayout="Vertical2">
+	<dialog left="1371" top="207" right="2076" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="291" right="1280" bottom="689" visible="no"/>
+		<tag-palette left="807" top="291" right="1280" bottom="689" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -747,6 +747,12 @@
 	<row id="msg_trialhouse_str21" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<language name="JPN" width="256">ビギナーランク</language>
 		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_trialhouse_str22" back-color="#80ff80,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
+		<comment>ポイントの数値</comment>
+		<language name="JPN" width="256">[2:03:４桁:0]</language>
+		<language name="JPN_KANJI" width="256">[2:03:４桁:0]</language>
 	</row>
 
 	<flowchart-group-list>
