@@ -180,6 +180,7 @@
 #define WK_SCENE_C08_GYMCLEAR            16568 /* 0x40b8 ソウリュウシティジム：イベント用ワーク */
 #define WK_SCENE_C11GUIDE                16569 /* 0x40b9 国連（内部）：初回誘導イベント用のワーク */
 #define WK_SCENE_C07R0105                16570 /* 0x40ba タワーオブヘブン5F：イベント用ワーク */
+#define WK_SCENE_D07R0401                16571 /* 0x40bb ネジ山：プラズマ団とライバル遭遇イベント */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 

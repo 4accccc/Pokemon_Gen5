@@ -47,7 +47,6 @@ EVENT_START   ev_wc10r0101_oldman1
 		IF FLAG_OFF( FE_WC10R0101_OLDMAN ) THEN
 		
 			_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_01 , WC10R0101_OLDMAN1 )
-			_BALLOONWIN_CLOSE()
 			
 			//==================================//
 			
@@ -76,7 +75,6 @@ EVENT_START   ev_wc10r0101_oldman1
 			
 			//村長：最近このあたりで（目標ポケモン）を見かける
 			_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_02 , WC10R0101_OLDMAN1 )
-			_BALLOONWIN_CLOSE()
 			
 			//手持ちに条件に一致するポケモンがいるかチェック
 			DEFINE_LOCAL LWK_NO_MATCH
@@ -89,7 +87,6 @@ EVENT_START   ev_wc10r0101_oldman1
 				
 				//村長：おお！それは（目標ポケモン）！
 				_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_03 , WC10R0101_OLDMAN1 )
-				_BALLOONWIN_CLOSE() 
 				
 				//日付チェック
 				IF $LWK_DAY_MATCH == TRUE THEN
@@ -103,6 +100,7 @@ EVENT_START   ev_wc10r0101_oldman1
 				
 					//村長：また来てね
 					_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_05 , WC10R0101_OLDMAN1 )
+					_LAST_KEYWAIT()
 					_BALLOONWIN_CLOSE() 
 					
 					//==================================//
@@ -117,6 +115,7 @@ EVENT_START   ev_wc10r0101_oldman1
 				
 					//村長：しかし今日捕まえたやつじゃないな
 					_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_09 , WC10R0101_OLDMAN1 )
+					_LAST_KEYWAIT()
 					_BALLOONWIN_CLOSE() 
 				
 				ENDIF
@@ -126,6 +125,7 @@ EVENT_START   ev_wc10r0101_oldman1
 			
 				//村長：見つけたら見せてね
 				_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_08 , WC10R0101_OLDMAN1 )
+				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE() 
 				
 			ENDIF
@@ -135,6 +135,7 @@ EVENT_START   ev_wc10r0101_oldman1
 		
 			//村長：最近はポケモンがいない
 			_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_07 , WC10R0101_OLDMAN1 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE() 
 		
 		ENDIF

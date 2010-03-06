@@ -105,7 +105,6 @@ EVENT_START   ev_bc10r0401_boss
 	IF $LWK_BATTLECOUNT >= 1000 THEN
 	
 		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_07 , BC10R0401_BOSS )
-		_BALLOONWIN_CLOSE()
 		
 	ELSE
 	
@@ -115,7 +114,6 @@ EVENT_START   ev_bc10r0401_boss
 	IF FLAG_OFF( FE_BC10R0401_BOSS ) THEN
 	
 		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_01 , BC10R0401_BOSS )
-		_BALLOONWIN_CLOSE()
 		
 		//==================================//
 		
@@ -138,7 +136,6 @@ EVENT_START   ev_bc10r0401_boss
 	
 	//街には活きがいいのがそろってる
 	_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_02 , BC10R0401_BOSS )
-	_BALLOONWIN_CLOSE()
 	
 	//目標数に勝利数が達しているか？チェック
 	
@@ -160,8 +157,8 @@ EVENT_START   ev_bc10r0401_boss
 		_NUMBER( 3 , LWK_MONEY , 5 )
 		
 		//10000円受け取った！
-		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_05 , BC10R0401_BOSS )
-		_BALLOONWIN_CLOSE()
+		_SYSWIN_MSG_ALLPUT( msg_bc10r0401_gentleman_05 , POS_DEFAULT )
+		_SYSWIN_CLOSE()
 		
 		//お金を増やす
 		_ADD_GOLD ( LWK_MONEY )
@@ -172,6 +169,10 @@ EVENT_START   ev_bc10r0401_boss
 		_WFBC_GET_DATA(  WFBC_GET_PARAM_BC_NPC_WIN_TARGET, LWK_BATTLETARGET )
 		//目標人数を格納
 		_NUMBER( 4 , LWK_BATTLETARGET , 5 )
+		
+		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_06 , BC10R0401_BOSS )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
 	
 	ELSE
 
@@ -180,6 +181,7 @@ EVENT_START   ev_bc10r0401_boss
 		
 		//今倒した人数は（勝利数）人か。がんばりな！
 		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_03 , BC10R0401_BOSS )
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF

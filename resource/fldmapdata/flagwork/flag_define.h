@@ -160,7 +160,7 @@
 #define FE_C06R0101_ITEMGET_01             144 /* 0x0090 C06R0101フキヨセシティ民家のアイテム入手フラグ（アイテム未定） */
 #define FE_D04R0201_KASEKIGET              145 /* 0x0091 D04遺跡でカセキ入手した */
 #define FE_D04R0201_KASEKITALK             146 /* 0x0092 D04遺跡でカセキくれる人に話しかけた */
-#define FE_C05PC0101_WAZA                  147 /* 0x0093 C05PC0101：ホモエドシティPC、なみのり入手フラグ */
+#define FE_C05PC0101_ITEM                  147 /* 0x0093 C05PC0101：ホモエドシティPC、アイテム入手フラグ */
 #define FE_C02R0301_POKETRADE              148 /* 0x0094 C02R0301のゲーム内交換フラグ */
 #define FE_PALPARK_FIRSTTALK               149 /* 0x0095 パルパーク受付の初回会話フラグ（説明有り） */
 #define FE_REMIND_FIRSTTALK                150 /* 0x0096 技思い出しオヤジの初回会話フラグ（説明有り） */
@@ -698,8 +698,8 @@
 #define FV_MUSICAL_FUN_05                  674 /* 0x02a2 ミュージカルホール：出待ちのファン５人目 */
 #define FV_T01R0401_POKEMON_01             675 /* 0x02a3 研究所のミネズミ */
 #define FV_R070105_LEADER6_01              676 /* 0x02a4 タワーオブヘブン5Fのフウロ */
-		/* not used   677(0x02a5) */
-		/* not used   678(0x02a6) */
+#define FV_D07R0401PLASMA_01               677 /* 0x02a5 ネジ山出口前：プラズマ団 */
+#define FV_D07R0401RIVAL_01                678 /* 0x02a6 ネジ山出口前：ライバル */
 		/* not used   679(0x02a7) */
 		/* not used   680(0x02a8) */
 		/* not used   681(0x02a9) */
