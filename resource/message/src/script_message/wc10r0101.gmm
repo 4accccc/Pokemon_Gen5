@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T12:58:24"/>
+	<create user="matsumiya" host="W00224" date="2010-03-06T20:00:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="261"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="63" top="333" right="768" bottom="953" maximized="no" rayout="Vertical2">
+	<dialog left="1371" top="158" right="2076" bottom="778" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="258" right="1280" bottom="656" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -302,7 +302,7 @@
 それが　このホワイトフォレスト[BE:01:ページ切り替え（クリア）]
 きみも　もりのこえを　きいてみなさい
 ウエルカムと　いっておるよ[BE:01:ページ切り替え（クリア）]
-ホッ　ホッ　フォッー</language>
+ホッ　ホッ　フォッー▼</language>
 		<language name="JPN_KANJI" width="256">ホッ　ホッ　フォッ
 ホワイトフォレストへ　ようこそ[BE:01:ページ切り替え（クリア）]
 自然と　共に　
@@ -310,29 +310,29 @@
 それが　このホワイトフォレスト[BE:01:ページ切り替え（クリア）]
 きみも　森の声を　聞いてみなさい
 ウエルカムと　いっておるよ[BE:01:ページ切り替え（クリア）]
-ホッ　ホッ　フォッー</language>
+ホッ　ホッ　フォッー▼</language>
 	</row>
 
 	<row id="msg_wc10r0101_oldman1_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">わたしは　このもりと　ともにいきる
+		<language name="JPN" width="256">わたしは　この　もりと　ともにいきる
 ポケモンを　しらべておるんだが[BE:01:ページ切り替え（クリア）]
 [1:01:ポケモン種族名:0]が　このもりに
-すんでいる　はずなんだ</language>
+すんでいる　はずなんだ▼</language>
 		<language name="JPN_KANJI" width="256">わたしは　この森と　共に生きる
 ポケモンを　調べておるんだが[BE:01:ページ切り替え（クリア）]
 [1:01:ポケモン種族名:0]が　この森に
-住んでいる　はずなんだ</language>
+住んでいる　はずなんだ▼</language>
 	</row>
 
 	<row id="msg_wc10r0101_oldman1_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">フォー！
 それは　[1:01:ポケモン種族名:0]！[BE:01:ページ切り替え（クリア）]
-このもりに　すんでたんだ！</language>
+この　もりに　すんでたんだ！▼</language>
 		<language name="JPN_KANJI" width="256">フォー！
 それは　[1:01:ポケモン種族名:0]！[BE:01:ページ切り替え（クリア）]
-この森に　住んでたんだ！</language>
+この森に　住んでたんだ！▼</language>
 	</row>
 
 	<row id="msg_wc10r0101_oldman1_04" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -342,15 +342,15 @@
 そうかそうか　このホワイトフォレストにも[BE:00:ページ切り替え（行送り）]
 [1:01:ポケモン種族名:0]が　いるなんてなぁ[BE:00:ページ切り替え（行送り）]
 フォッ　フォッ　フォッ[BE:01:ページ切り替え（クリア）]
-そんな　きみに　これを
-あげちゃおう</language>
+そんな　きみに
+これを　あげちゃおう▼</language>
 		<language name="JPN_KANJI" width="256">しかも　今日　つかまえたんだ[BE:01:ページ切り替え（クリア）]
 ホホー
 そうかそうか　このホワイトフォレストにも[BE:00:ページ切り替え（行送り）]
 [1:01:ポケモン種族名:0]が　いるなんてなぁ[BE:00:ページ切り替え（行送り）]
 フォッ　フォッ　フォッ[BE:01:ページ切り替え（クリア）]
-そんな　きみに　これを
-あげちゃおう</language>
+そんな　きみに
+これを　あげちゃおう▼</language>
 	</row>
 
 	<row id="msg_wc10r0101_oldman1_05" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -358,11 +358,11 @@
 		<language name="JPN" width="256">また　あした
 ここに　きておくれ[BE:01:ページ切り替え（クリア）]
 もりも　ウエルカムを
-いってくれる　だろうから</language>
+いってくれる　だろうから▼</language>
 		<language name="JPN_KANJI" width="256">また　明日
 ここに　来ておくれ[BE:01:ページ切り替え（クリア）]
 森も　ウエルカムを
-いってくれる　だろうから</language>
+いってくれる　だろうから▼</language>
 	</row>
 
 	<row id="msg_wc10r0101_oldman1_06" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -371,12 +371,12 @@
 ありがとう[BE:01:ページ切り替え（クリア）]
 また　あしたな
 シーユー　トゥモロー！[BE:00:ページ切り替え（行送り）]
-と　もりが　ささやいておる</language>
+と　もりが　ささやいておる▼</language>
 		<language name="JPN_KANJI" width="256">今日は　本当に
 ありがとう[BE:01:ページ切り替え（クリア）]
 また　明日な
 シーユー　トゥモロー！[BE:00:ページ切り替え（行送り）]
-と　森が　ささやいておる</language>
+と　森が　ささやいておる▼</language>
 	</row>
 
 	<row id="msg_wc10r0101_oldman1_07" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -384,23 +384,23 @@
 		<language name="JPN" width="256">わたしは　このもりと　ともにいきる
 ポケモンを　しらべておるんだが[BE:01:ページ切り替え（クリア）]
 さいきんは　ポケモンが　いなくてな
-もりも　かなしんでおる……</language>
+もりも　かなしんでおる……▼</language>
 		<language name="JPN_KANJI" width="256">わたしは　この森と　共に生きる
 ポケモンを　調べておるんだが[BE:01:ページ切り替え（クリア）]
 最近は　ポケモンが　いなくてな
-森も　悲しんでおる……</language>
+森も　悲しんでおる……▼</language>
 	</row>
 
 	<row id="msg_wc10r0101_oldman1_08" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">もし　このもりで[1:01:ポケモン種族名:0]を
+		<language name="JPN" width="256">もし　この　もりで　[1:01:ポケモン種族名:0]を
 みかけたら　わたしに　みせておくれ[BE:01:ページ切り替え（クリア）]
-それは　このもりと　ポケモンが
-いきている　しょうこなんだ</language>
-		<language name="JPN_KANJI" width="256">もし　この森で[1:01:ポケモン種族名:0]を
+それは　この　もりと　ポケモンが
+いきている　しょうこなんだ▼</language>
+		<language name="JPN_KANJI" width="256">もし　この森で　[1:01:ポケモン種族名:0]を
 見かけたら　わたしに　見せておくれ[BE:01:ページ切り替え（クリア）]
 それは　この森と　ポケモンが
-生きている　証拠なんだ</language>
+生きている　証拠なんだ▼</language>
 	</row>
 
 	<row id="msg_wc10r0101_oldman1_09" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -408,13 +408,13 @@
 		<language name="JPN" width="256">しかし　きょう　つかまえた
 [1:01:ポケモン種族名:0]では　ないな[BE:01:ページ切り替え（クリア）]
 いまでも　[1:01:ポケモン種族名:0]は
-このもりと　ともに　いきているのか……[BE:00:ページ切り替え（行送り）]
-もりも　それを　しりたがっておる</language>
+この　もりと　ともに　いきているのか……[BE:00:ページ切り替え（行送り）]
+もりも　それを　しりたがっておる▼</language>
 		<language name="JPN_KANJI" width="256">しかし　今日　つかまえた
 [1:01:ポケモン種族名:0]では　ないな[BE:01:ページ切り替え（クリア）]
 今でも　[1:01:ポケモン種族名:0]は
 この森と共に　生きているのか……[BE:00:ページ切り替え（行送り）]
-森も　それを　知りたがっておる</language>
+森も　それを　知りたがっておる▼</language>
 	</row>
 
 	<row id="msg_wc10r0101_boy2_01">

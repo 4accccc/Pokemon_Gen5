@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T13:38:06"/>
+	<create user="matsumiya" host="W00224" date="2010-03-06T19:57:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -237,7 +237,7 @@
 		<number position="-1" width="100"/>
 		<comment position="4" width="124"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="141">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1988" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="527"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="694"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -301,13 +301,13 @@
 ……よくぼうの　まちさ[BE:01:ページ切り替え（クリア）]
 そして　おれは
 そんな　よくぼう　うずまく▽
-ブラックシティの　ボスなのさ</language>
+ブラックシティの　ボスなのさ▼</language>
 		<language name="JPN_KANJI" width="256">……
 ブラックシティへ　ようこそ……[BE:01:ページ切り替え（クリア）]
 ここは　夢と　欲望　そして
 ……欲望の　街さ[BE:01:ページ切り替え（クリア）]
 そして　おれは　そんな　欲望うずまく
-ブラックシティの　ボスなのさ</language>
+ブラックシティの　ボスなのさ▼</language>
 	</row>
 
 	<row id="msg_bc10r0401_gentleman_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -319,7 +319,7 @@
 そんな　いきのいい　ヤツらを[BE:00:ページ切り替え（行送り）]
 [2:04:５桁:0]にん　たおしてみな[BE:01:ページ切り替え（クリア）]
 そしたら　おまえの
-よくぼうも　かなえてやるよ……</language>
+よくぼうも　かなえてやるよ……▼</language>
 		<language name="JPN_KANJI" width="256">この街には
 欲望の　かたまりのような▽
 活きのいい　奴らが　そろっている……[BE:01:ページ切り替え（クリア）]
@@ -327,7 +327,7 @@
 そんな　活きのいい　奴らを[BE:00:ページ切り替え（行送り）]
 [2:04:５桁:0]にん　倒してみな[BE:01:ページ切り替え（クリア）]
 そしたら　おまえの
-欲望も　かなえてやるよ……</language>
+欲望も　かなえてやるよ……▼</language>
 	</row>
 
 	<row id="msg_bc10r0401_gentleman_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -335,11 +335,11 @@
 		<language name="JPN" width="256">いま　おまえが　たおしたにんずうは
 [2:04:５桁:1]にん[BE:01:ページ切り替え（クリア）]
 ハンッ
-まあ　がんばりな</language>
+まあ　がんばりな▼</language>
 		<language name="JPN_KANJI" width="256">いま　おまえが　倒した人数は
 [2:04:５桁:1]にん[BE:01:ページ切り替え（クリア）]
 ハンッ
-まあ　がんばりな</language>
+まあ　がんばりな▼</language>
 	</row>
 
 	<row id="msg_bc10r0401_gentleman_04" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -350,22 +350,22 @@
 いがいに　よくぶかい　ヤツだな[BE:00:ページ切り替え（行送り）]
 はらのそこが　ギラギラしてるぜ[BE:01:ページ切り替え（クリア）]
 きにいった！
-その　よくぼう　かなえてやるよ</language>
+その　よくぼう　かなえてやるよ▼</language>
 		<language name="JPN_KANJI" width="256">おお？
 もう　[2:04:５桁:0]人も　倒したのか……▼
 おまえ……
 以外に　欲深い　奴だな[BE:00:ページ切り替え（行送り）]
 腹の底が　ギラギラしてるぜ[BE:01:ページ切り替え（クリア）]
 気に入った！
-その欲望　かなえてやるよ</language>
+その欲望　かなえてやるよ▼</language>
 	</row>
 
 	<row id="msg_bc10r0401_gentleman_05" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GENTLEMAN(BCのボス）</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:2]は
-[2:04:５桁:3]円を　うけとった！</language>
+[2:04:５桁:3]円を　うけとった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:2]は
-[2:04:５桁:3]円を　受け取った！</language>
+[2:04:５桁:3]円を　受け取った！▼</language>
 	</row>
 
 	<row id="msg_bc10r0401_gentleman_06" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -373,11 +373,11 @@
 		<language name="JPN" width="256">つぎは　[2:04:５桁:4]にんまで
 たおしてみな[BE:01:ページ切り替え（クリア）]
 そして　おまえの　よくぶかい
-はらのそこ　みせてくれよ</language>
+はらのそこ　みせてくれよ▼</language>
 		<language name="JPN_KANJI" width="256">次は　[2:04:５桁:4]人まで
 倒してみな[BE:01:ページ切り替え（クリア）]
 そして　おまえの　欲深い
-腹の底　見せてくれよ</language>
+腹の底　見せてくれよ▼</language>
 	</row>
 
 	<row id="msg_bc10r0401_gentleman_07" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -387,13 +387,13 @@
 まさに
 ブラック　オブ　ブラック！[BE:01:ページ切り替え（クリア）]
 このまちで　いちばん
-まっくろな　ヤツさ！</language>
+まっくろな　ヤツさ！▼</language>
 		<language name="JPN_KANJI" width="256">よう！
 おまえは　最高だな！[BE:01:ページ切り替え（クリア）]
 まさに
 ブラック　オブ　ブラック！[BE:01:ページ切り替え（クリア）]
 この街で　一番
-まっくろな　奴さ！</language>
+まっくろな　奴さ！▼</language>
 	</row>
 
 	<row id="msg_bc10r0401_boy4_01">
