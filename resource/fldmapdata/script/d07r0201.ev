@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d07r0201.h"
-  //.include  "d07r0201.h"
+  .include  "d07r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,315 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d07r0201
+_EVENT_DATA    ev_pos_d07r0201_leader5_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/* POS：ヤーコン遭遇イベント                           */
 /**************************************************************/
-//ev_d07r0201_flag_change:
-//  _END
+EVENT_START     ev_pos_d07r0201_leader5_01
+	
+	//ライバル気づく
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_llook_player_01 )
+	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
+	//カメラ操作　ライバル中心に
+	_CAMERA_MOVE( 9688,0,970752,294912,0,3174400,30 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//チェレン：あ、こっちきてよ！
+	_BALLOONWIN_OBJMSG(msg_d07r0201_black_01 , D07R0201_RIVAL_01)
+	_BALLOONWIN_CLOSE()
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_d07r0201:
-  //とりあえず最初のラベルだけ生成している
-  _END
+	{
+	//主人公の座標を見て移動
+	DEFINE_LOCAL  LCW_POSX
+	DEFINE_LOCAL  LCW_POSZ
+	_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
+	//プレイヤーが通る4グリッド分を用意
+	SWITCH $LCW_POSX
+	CASE 3 THEN
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_come_x3 )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_to_leader5_x3 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_to_leader5_x3 )
+	_OBJ_ANIME_WAIT()
+		
+	CASE 4 THEN
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_come_x4 )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_to_leader5_x4 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_to_leader5_x4 )
+	_OBJ_ANIME_WAIT()
+		
+	CASE 5 THEN
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_come_x5 )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_to_leader5_x5 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_to_leader5_x5 )
+	_OBJ_ANIME_WAIT()
+		
+	DEFAULT //正面に立った時と同じ処理
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_come_x4 )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_to_leader5_x4 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_to_leader5_x4 )
+	_OBJ_ANIME_WAIT()
+	
+	ENDSWITCH
+	}
+	
+	//ヤーコン：ネジやまをしさつしていて
+	_BALLOONWIN_OBJMSG(msg_d07r0201_leader5_01 , D07R0201_LEADER5_01)
+	_BALLOONWIN_CLOSE()
+	
+	//チェレンSTAY_STEP
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_step_u )
+	_OBJ_ANIME_WAIT()
+	
+	//チェレン：…どーも
+	_BALLOONWIN_OBJMSG(msg_d07r0201_black_02 , D07R0201_RIVAL_01)
+	_BALLOONWIN_CLOSE()
+	
+	//ヤーコン：ところでおまえたち
+	_BALLOONWIN_OBJMSG(msg_d07r0201_leader5_02 , D07R0201_LEADER5_01)
+	_BALLOONWIN_CLOSE()
+	
+	//画面右を向いて
+	_OBJ_ANIME( D07R0201_LEADER5_01, anm_led5_leader5_look_right )
+	_OBJ_ANIME_WAIT()
+	
+	//ヤーコン：ネジ山はいいぞ！
+	_BALLOONWIN_OBJMSG(msg_d07r0201_leader5_03 , D07R0201_LEADER5_01)
+	_BALLOONWIN_CLOSE()
+	
+	//画面下を向いて
+	_OBJ_ANIME( D07R0201_LEADER5_01, anm_led5_leader5_look_down )
+	_OBJ_ANIME_WAIT()
+	
+	//ヤーコン：じゃあな ヒヨッコども！
+	_BALLOONWIN_OBJMSG(msg_d07r0201_leader5_04 , D07R0201_LEADER5_01)
+	_BALLOONWIN_CLOSE()
+	
+	//ヤーコン退場、主人公達押しのけられる
+	_OBJ_ANIME( D07R0201_LEADER5_01, anm_led5_leader5_goodbye_01 )
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_aside_01 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_aside_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ヤーコン退場、主人公見送る
+	_OBJ_ANIME( D07R0201_LEADER5_01, anm_led5_leader5_goodbye_02 )
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_aside_02 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_rival_aside_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//チェレン；またなにか無理難題を押し付けられるのかと
+	_BALLOONWIN_OBJMSG(msg_d07r0201_black_03 , D07R0201_RIVAL_01)
+	_BALLOONWIN_CLOSE()
+	
+	//チェレン退場
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_goodbye_01 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_look_rival_01 )
+	
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (10) 
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
+	_OBJ_ANIME_WAIT()
+	
+	//OBJ削除
+	_OBJ_DEL( D07R0201_RIVAL_01 )
+	_OBJ_DEL( D07R0201_LEADER5_01 )
+	
+	//======================================//
+	
+	//D07R0201のフラグをSETして以降非表示に
+	_FLAG_SET(FV_D07R0201_GYMLEADER05_01)
+	
+	//***フラグ操作：D07R0201の全てのイベントを無効に***
+	$WK_SCENE_D07R0201 = 1
+	
+	//======================================//
+EVENT_END
+
+//--------------------------------------------------------------
+//	ライバル主人公に気づく
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_rival_llook_player_01
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバル主人公に隣接x3
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_rival_come_x3
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバル主人公に隣接x4
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_rival_come_x4
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバル主人公に隣接x5
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_rival_come_x5
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバルヤーコンの前に戻るx3
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_rival_to_leader5_x3
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバルヤーコンの前に戻るx4
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_rival_to_leader5_x4
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバルヤーコンの前に戻るx5
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_rival_to_leader5_x5
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	主人公ヤーコンの前にx3
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_player_to_leader5_x3
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	主人公ヤーコンの前にx4
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_player_to_leader5_x4
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	主人公ヤーコンの前にx5
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_player_to_leader5_x5
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバルもじもじする
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_rival_step_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------
+//	ヤーコン画面右を見る
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_leader5_look_right
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ヤーコン下を見る
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_leader5_look_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ヤーコン退場
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_leader5_goodbye_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバル押しのけられる
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_rival_aside_01
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	主人公押しのけられる
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_player_aside_01
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバルとリーダー主人公を見送る
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_rival_aside_02
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ヤーコン退場
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_leader5_goodbye_02
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバル退場
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_rival_goodbye_01
+	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	退場するライバルを主人公見送る
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_player_look_rival_01
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
