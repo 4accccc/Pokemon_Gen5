@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-02-26T16:21:22"/>
+	<create user="morimoto" host="W00220" date="2010-03-06T18:29:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -268,8 +268,8 @@
 		<tag-palette left="753" top="172" right="1226" bottom="570" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="548"/>
-		<band id="3" index="4" style="0000" width="147"/>
+		<band id="2" index="3" style="0000" width="543"/>
+		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
@@ -928,16 +928,16 @@
 
 	<row id="msg_bsw_scr_57">
 		<comment>マルチ　パートナー男</comment>
-		<language name="JPN" width="256">こんにちは！　わたし○○○○○！[BE:01:ページ切り替え（クリア）]
-あなた　マルチトレインに
+		<language name="JPN" width="256">こんにちは！　ぼく○○○○○！[BE:01:ページ切り替え（クリア）]
+きみ　マルチトレインに
 ちょうせんするの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
 マルチトレインに　ちょうせんするには
-パートナーが　ひつようなのよ</language>
-		<language name="JPN_KANJI" width="256">こんにちは！　わたし○○○○○！[BE:01:ページ切り替え（クリア）]
-あなた　マルチトレインに
+パートナーが　ひつようなんだ</language>
+		<language name="JPN_KANJI" width="256">こんにちは！　ぼく○○○○○！[BE:01:ページ切り替え（クリア）]
+きみ　マルチトレインに
 ちょうせんするの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
 マルチトレインに　ちょうせんするには
-パートナーが　ひつようなのよ</language>
+パートナーが　ひつようなんだ</language>
 	</row>
 
 	<row id="msg_bsw_scr_58">
@@ -956,10 +956,10 @@
 
 	<row id="msg_bsw_scr_59">
 		<comment>マルチ　パートナー男</comment>
-		<language name="JPN" width="256">こんにちは！　○○○○○くん！
-また　あったわね！</language>
-		<language name="JPN_KANJI" width="256">こんにちは！　○○○○○くん！
-また　あったわね！</language>
+		<language name="JPN" width="256">こんにちは！　○○○○○ちゃん！
+また　あったね！</language>
+		<language name="JPN_KANJI" width="256">こんにちは！　○○○○○ちゃん！
+また　あったね！</language>
 	</row>
 
 	<row id="msg_bsw_scr_60">
@@ -973,14 +973,14 @@
 	<row id="msg_bsw_scr_61">
 		<comment>マルチ　パートナー男</comment>
 		<language name="JPN" width="256">もしかして　きょうはひとり？？[BE:01:ページ切り替え（クリア）]
-だったら　わたしと　パートナーを
-くもうよ！　うん　うん　それがいいわ[BE:01:ページ切り替え（クリア）]
-じゃ　わたしは　どんな　ポケモンを
+だったら　ぼくと　パートナーを
+くもうよ！　うん　うん　それがいい[BE:01:ページ切り替え（クリア）]
+じゃ　ぼくは　どんな　ポケモンを
 さんか　させればいい？</language>
 		<language name="JPN_KANJI" width="256">もしかして　きょうはひとり？？[BE:01:ページ切り替え（クリア）]
-だったら　わたしと　パートナーを
-くもうよ！　うん　うん　それがいいわ[BE:01:ページ切り替え（クリア）]
-じゃ　わたしは　どんな　ポケモンを
+だったら　ぼくと　パートナーを
+くもうよ！　うん　うん　それがいい[BE:01:ページ切り替え（クリア）]
+じゃ　ぼくは　どんな　ポケモンを
 さんか　させればいい？</language>
 	</row>
 
@@ -1018,26 +1018,26 @@
 
 	<row id="msg_bsw_scr_66">
 		<comment>マルチ　パートナー男</comment>
-		<language name="JPN" width="256">わかったわ　こうげきじゅうしね！
-じゃ　はじめましょ！</language>
-		<language name="JPN_KANJI" width="256">わかったわ　こうげきじゅうしね！
-じゃ　はじめましょ！</language>
+		<language name="JPN" width="256">わかった　こうげきじゅうしだね！
+じゃ　はじめよう！</language>
+		<language name="JPN_KANJI" width="256">わかった　こうげきじゅうしだね！
+じゃ　はじめよう！</language>
 	</row>
 
 	<row id="msg_bsw_scr_67">
 		<comment>マルチ　パートナー男</comment>
-		<language name="JPN" width="256">わかったわ　ぼうぎょじゅうしね！
-じゃ　はじめましょ！</language>
-		<language name="JPN_KANJI" width="256">わかったわ　ぼうぎょじゅうしね！
-じゃ　はじめましょ！</language>
+		<language name="JPN" width="256">わかった　ぼうぎょじゅうしだね！
+じゃ　はじめよう！</language>
+		<language name="JPN_KANJI" width="256">わかった　ぼうぎょじゅうしだね！
+じゃ　はじめよう！</language>
 	</row>
 
 	<row id="msg_bsw_scr_68">
 		<comment>マルチ　パートナー男</comment>
-		<language name="JPN" width="256">わかったわ　バランスじゅうしね！
-じゃ　はじめましょ！</language>
-		<language name="JPN_KANJI" width="256">わかったわ　バランスじゅうしね！
-じゃ　はじめましょ！</language>
+		<language name="JPN" width="256">わかった　バランスじゅうしだね！
+じゃ　はじめよう！</language>
+		<language name="JPN_KANJI" width="256">わかった　バランスじゅうしだね！
+じゃ　はじめよう！</language>
 	</row>
 
 	<row id="msg_bsw_scr_69">
@@ -1066,9 +1066,9 @@
 
 	<row id="msg_bsw_scr_72">
 		<comment>マルチ　パートナー男</comment>
-		<language name="JPN" width="256">えー　わたしと　くむき　ないの？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">えー　ぼくと　くむき　ないの？[BE:01:ページ切り替え（クリア）]
 さよなら……</language>
-		<language name="JPN_KANJI" width="256">えー　わたしと　くむき　ないの？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">えー　ぼくと　くむき　ないの？[BE:01:ページ切り替え（クリア）]
 さよなら……</language>
 	</row>
 
