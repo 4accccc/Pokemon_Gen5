@@ -37,6 +37,8 @@
 #include "poke_tool/pokerus.h"
 #include "eventwork.h"
 
+#include "sheimi_normalform.h"
+
 //============================================================================================
 //============================================================================================
 
@@ -205,16 +207,14 @@ static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
  */
 //------------------------------------------------------------------
 static void UpdateMinuteEvent(GAMEDATA * gdata, s32 diff_minute, const RTCTime * now)
-{
+{  
 	//夜になった(経過した)ならば変わった手持ちシェイミのフォルムを戻す
 	{
-#if 0
 		POKEPARTY *ppt;
-
-		ppt=SaveData_GetTemotiPokemon(gdata->savedata);
-		PokePartySheimiNormalFormChange_TimeUpdate(ppt, diff_minute, now);
-#endif
-	}
+    SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork(gdata);
+		ppt = SaveData_GetTemotiPokemon(sv);
+		SHEIMI_NFORM_ChangeNormal_TimeUpdate(ppt, diff_minute, now);
+	}  
 }
 
 
