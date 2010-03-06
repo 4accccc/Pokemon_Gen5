@@ -83,7 +83,8 @@ EVENT_END
 EVENT_START ev_musical_recept_comm
 
   _MUSICAL_TOOLS( MUSICAL_TOOL_INIT, 0,0,0 )
-
+  _TALK_OBJ_START()
+  
   _CALL ev_musical_recept_comm_core
 
 EVENT_END
@@ -529,12 +530,14 @@ fan_main_routine:
   DEFINE_LOCAL msg_id   // メッセージID
   DEFINE_LOCAL gift_type  // 贈り物種類
   DEFINE_LOCAL gift_number// 贈り物番号(アイテム・グッズ
-
+
+  _TALK_OBJ_START()
+  
   //本来見た目の処理はココでやるべきではないと思うが、仮処理
   _GET_MUSICAL_FAN_VALUE_TYPE( fan_number , fan_type )
   IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
     _BALLOONWIN_TALKOBJ_MSG( msg_musical_fan_none )
-    _LAST_KEYWAIT()
+    _AB_KEYWAIT ()
     _BALLOONWIN_CLOSE()
   ELSE
     
@@ -542,7 +545,7 @@ fan_main_routine:
     _GET_MUSICAL_FAN_VALUE_CHEER_MSG( fan_number , msg_id )
     _PLAYER_NAME( 0 )
     _BALLOONWIN_TALKOBJ_MSG( msg_id )
-    _LAST_KEYWAIT()
+    _AB_KEYWAIT ()
     _BALLOONWIN_CLOSE()
     
     _GET_MUSICAL_FAN_VALUE_GIFT_TYPE( fan_number , gift_type )
@@ -559,12 +562,12 @@ fan_main_routine:
       _MUSICAL_WORD_GOODS_NAME( 0 , gift_number )
       //贈るメッセージ
       _BALLOONWIN_TALKOBJ_MSG( msg_id )
-      _LAST_KEYWAIT()
+      _AB_KEYWAIT ()
       _BALLOONWIN_CLOSE()
       
       //仮メッセージ
-            _SYSWIN_MSG( msg_musical_fan_get_goods , POS_DOWN )
-        _LAST_KEYWAIT()
+      _SYSWIN_MSG( msg_musical_fan_get_goods , POS_DOWN )
+      _AB_KEYWAIT ()
       _SYSWIN_CLOSE()
       
       //追加処理

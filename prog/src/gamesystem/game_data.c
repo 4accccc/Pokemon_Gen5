@@ -1761,3 +1761,15 @@ MUSICAL_SCRIPT_WORK* GAMEDATA_GetMusicalScrWork(GAMEDATA * gamedata)
   GF_ASSERT_MSG( gamedata->musicalScrWork != NULL , "ミュージカルワークがNULL！" );
   return gamedata->musicalScrWork;
 }
+
+//----------------------------------------------------------
+/**
+ * @brief   PDWのセーブ取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  DREAMWORLD_SAVEDATA*
+ */
+//----------------------------------------------------------
+DREAMWORLD_SAVEDATA* GAMEDATA_GetDreamWorkdSaveWork(GAMEDATA * gamedata)
+{
+  return DREAMWORLD_SV_GetDreamWorldSaveData( gamedata->sv_control_ptr );
+}

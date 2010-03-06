@@ -6,6 +6,7 @@
   .text
 
   .include  "scr_seq_def.h"
+  .include  "msg_pdw_scr.h"
   .include  "pdw_scr_local.h"
 
 
@@ -26,7 +27,89 @@ _EVENT_DATA_END
 EVENT_START ev_pdw_furniture_menu
 { 
 
+  _TALK_OBJ_START()  
+
+  _PDW_COMMON_TOOLS( PDW_TOOLS_CHECK_ACCOUNT , 0 , 0 , SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == FALSE THEN //PDWアカウントが無い！
+    //"かぐカタログが　かんきょうが　ととのってなくて　とどかないのよね"
+    _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_01 )
+    _AB_KEYWAIT ()
+    _BALLOONWIN_CLOSE()
+  ELSE
+    _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_CHECK_LIST , 0 , 0 , SCWK_ANSWER )
+    IF $SCWK_ANSWER == FALSE THEN //家具リストが無い！
+      //"家具のカタログがまだ届かないのよね"
+      _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_02 )
+      _AB_KEYWAIT ()
+      _BALLOONWIN_CLOSE()
+    ELSE
+      
+      _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_CHECK_SELECT , 0 , 0 , SCWK_ANSWER )
+      IF $SCWK_ANSWER == TRUE THEN //もうリストを選んでる
+        //"家具選んでくれて ありがとうね次回のカタログもお楽しみに"
+        _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_03 )
+        _AB_KEYWAIT ()
+        _BALLOONWIN_CLOSE()
+      ELSE
+        _CALL furniture_select_routine
+      ENDIF
+    ENDIF
+  ENDIF
 }
 EVENT_END 
 
+/**************************************************************/
+/*PDW：家具メニューコア部分*/
+/**************************************************************/
+furniture_select_routine:
 
+  DEFINE_LOCAL selectNo
+    
+  _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_IS_SYNC_FURNITURE , 0 , 0 , SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN //前回選んだ家具を送ってる
+    //"こないだは選んでくれてありがとう！あれやっぱりステキだったなー"
+    _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_04 )
+    _AB_KEYWAIT ()
+    _BALLOONWIN_CLOSE()
+    //フラグ落とす
+    _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_RESET_SYNC_FURNITURE , 0 , 0 , 0 )
+  ENDIF
+  
+  _PDW_SET_FURNITURE_WORD( 0 , 0 )
+  _PDW_SET_FURNITURE_WORD( 1 , 1 )
+  _PDW_SET_FURNITURE_WORD( 2 , 2 )
+  _PDW_SET_FURNITURE_WORD( 3 , 3 )
+  _PDW_SET_FURNITURE_WORD( 4 , 4 )
+  
+  //通常選択処理
+  _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_05 )
+  //メニュー作成
+  _BMPMENU_INIT_EX( 1, 1, 0, 1, selectNo )
+  //リスト追加
+  _BMPMENU_MAKE_LIST( pdw_furniture_menu_sys_01, 0 )
+  _BMPMENU_MAKE_LIST( pdw_furniture_menu_sys_02, 1 )
+  _BMPMENU_MAKE_LIST( pdw_furniture_menu_sys_03, 2 )
+  _BMPMENU_MAKE_LIST( pdw_furniture_menu_sys_04, 3 )
+  _BMPMENU_MAKE_LIST( pdw_furniture_menu_sys_05, 4 )
+  _BMPMENU_MAKE_LIST( pdw_furniture_menu_sys_06, 5 ) //やめる
+  //メニュー表示
+  _BMPMENU_START()
+  _BALLOONWIN_CLOSE()
+  
+  IF $selectNo == 5 || $selectNo == EV_WIN_B_CANCEL THEN //やめる
+    //"やめるの？また後で選んでね"
+    _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_06 )
+    _AB_KEYWAIT ()
+    _BALLOONWIN_CLOSE()
+    _RET
+  ENDIF
+  
+  //家具番号の設定
+  _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_SET_SELECT_FURNITURE , SCWK_ANSWER , 0 , 0)
+  //"こんな家具だったら夢に出るくらいステキねきっと"
+  _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_07 )
+  _AB_KEYWAIT ()
+  _BALLOONWIN_CLOSE()
+    
+_RET

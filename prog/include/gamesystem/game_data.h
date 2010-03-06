@@ -37,6 +37,7 @@
 #include "savedata/musical_save.h"  //MUSICAL_SAVE
 #include "musical/musical_define.h"  //MUSICAL_SCRIPT_WORK
 #include "gamesystem/comm_player_support.h"
+#include "savedata/dreamworld_data.h"  //DREAMWORLD_SAVEDATA
 
 #include "field/bsubway_scr_proc.h"
 
@@ -689,3 +690,12 @@ extern void GAMEDATA_SetMusicalScrWork(GAMEDATA * gamedata, MUSICAL_SCRIPT_WORK*
  */
 //----------------------------------------------------------
 extern MUSICAL_SCRIPT_WORK* GAMEDATA_GetMusicalScrWork(GAMEDATA * gamedata);
+
+//----------------------------------------------------------
+/**
+ * @brief   PDWのセーブ取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  DREAMWORLD_SAVEDATA*
+ */
+//----------------------------------------------------------
+extern DREAMWORLD_SAVEDATA* GAMEDATA_GetDreamWorkdSaveWork(GAMEDATA * gamedata);

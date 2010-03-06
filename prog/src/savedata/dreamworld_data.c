@@ -46,12 +46,19 @@ DREAMWORLD_SAVEDATA* DREAMWORLD_SV_AllocWork(HEAPID heapID)
 
 void DREAMWORLD_SV_Init(DREAMWORLD_SAVEDATA* pSV)
 {
+  u8 i;
 	GFL_STD_MemClear(pSV, DREAMWORLD_SV_GetWorkSize());
   DREAMWORLD_SV_SetTime(pSV , GFDATE_Set(2010,1,1,0));
 
   pSV->musicalNo = DREAM_WORLD_NOPICTURE;
   pSV->cgearNo = DREAM_WORLD_NOPICTURE;
   pSV->zukanNo = DREAM_WORLD_NOPICTURE;
+  pSV->furnitureNo = DREAM_WORLD_NOFURNITURE;
+  
+  for( i=0;i<DREAM_WORLD_DATA_MAX_FURNITURE;i++ )
+  {
+    pSV->furnitureID[i].id = DREAM_WORLD_INVALID_FURNITURE;
+  }
 }
 
 
@@ -487,6 +494,30 @@ void DREAMWORLD_SV_SetSelectFurnitureNo(DREAMWORLD_SAVEDATA* pSV,int no)
     return;
   }
   pSV->furnitureNo = no;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   ‰Æ‹ï‚ðSync‚Å‘—‚Á‚½‚©H
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @return	BOOL
+ */
+//--------------------------------------------------------------------------------------------
+BOOL DREAMWORLD_SV_GetIsSyncFurniture(DREAMWORLD_SAVEDATA* pSV)
+{
+  return pSV->isSyncFurniture;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   ‰Æ‹ï‚ðSync‚Å‘—‚Á‚½‚©H
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @param	  BOOL
+ */
+//--------------------------------------------------------------------------------------------
+void DREAMWORLD_SV_SetIsSyncFurniture(DREAMWORLD_SAVEDATA* pSV,BOOL flg)
+{
+  pSV->isSyncFurniture = flg;
 }
 
 
