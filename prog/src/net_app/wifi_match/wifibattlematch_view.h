@@ -18,6 +18,7 @@
 #include "savedata/regulation.h"
 #include "savedata/battle_box_save.h"
 #include "system/gf_date.h"
+#include "print/wordset.h"
 //-------------------------------------
 ///	デバッグ
 //=====================================
