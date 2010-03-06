@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c02r0701.h"
-  //.include  "c02r0701.h"
+  .include  "c02r0701.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c02r0701
+_EVENT_DATA    ev_c02r0701_infomationw_01
+_EVENT_DATA    ev_c02r0701_girl2_01
+_EVENT_DATA    ev_c02r0701_girl1_01
 _EVENT_DATA		ev_bg_c02r0701_board_01
 _EVENT_DATA_END
 
@@ -31,11 +33,94 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  C02R0701 GIRL1の会話用イベントスクリプト                      */
 /**************************************************************/
-ev_c02r0701:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_c02r0701_girl1_01
+
+	_TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_MSG(msg_c02r0701_girl1_01)
+	
+	_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 0, SCWK_ANSWER )
+	
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_c02r0701_choice0, 1 )	
+	_BMPMENU_MAKE_LIST( msg_c02r0701_choice1, 2 )	
+	_BMPMENU_MAKE_LIST( msg_c02r0701_choice2, 3 )	
+	
+	//メニュー表示
+	_BMPMENU_START()
+	
+	//性格診断1
+	IF$SCWK_ANSWER == 1 THEN
+		$SCWK_TEMP0 = 1 
+	ELSIF$SCWK_ANSWER == 2 THEN
+		$SCWK_TEMP0 = 2
+	ELSIF$SCWK_ANSWER == 3 THEN
+		$SCWK_TEMP0 = 3
+	ENDIF
+
+	_BALLOONWIN_TALKOBJ_MSG(msg_c02r0701_girl1_02)
+
+	_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 0, SCWK_ANSWER )
+	
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_c02r0701_choice3, 1 )	
+	_BMPMENU_MAKE_LIST( msg_c02r0701_choice4, 2 )	
+	_BMPMENU_MAKE_LIST( msg_c02r0701_choice2, 3 )	
+
+	//メニュー表示
+	_BMPMENU_START()
+	
+	//性格診断2
+	IF$SCWK_ANSWER == 1 THEN
+		$SCWK_TEMP1 = 1
+	ELSIF$SCWK_ANSWER == 2 THEN
+		$SCWK_TEMP1 = 2
+	ELSIF$SCWK_ANSWER == 3 THEN
+		$SCWK_TEMP1 = 3
+	ENDIF
+	
+	_BALLOONWIN_TALKOBJ_MSG(msg_c02r0701_girl1_03)
+	
+	//性格診断の結果によってメッセージ分岐
+	IF$SCWK_TEMP0 == 3 || $SCWK_TEMP1 == 3 THEN
+		_BALLOONWIN_TALKOBJ_MSG(msg_c02r0701_girl1_04)
+		_UN_SET_MY_NATURE( NATURE_DEF )
+	ELSE
+		IF$SCWK_TEMP0 == 1 && $SCWK_TEMP1== 1 THEN
+			_BALLOONWIN_TALKOBJ_MSG(msg_c02r0701_girl1_05)
+			_UN_SET_MY_NATURE( NATURE_LEADER )
+		ELSIF$SCWK_TEMP0 == 1 && $SCWK_TEMP1== 2 THEN
+			_BALLOONWIN_TALKOBJ_MSG(msg_c02r0701_girl1_06)
+			_UN_SET_MY_NATURE( NATURE_SCHOLAR )
+		ELSIF$SCWK_TEMP0 == 2 && $SCWK_TEMP1== 1 THEN
+			_BALLOONWIN_TALKOBJ_MSG(msg_c02r0701_girl1_07)
+			_UN_SET_MY_NATURE( NATURE_QUIET )
+		ELSIF$SCWK_TEMP0 == 2 && $SCWK_TEMP1== 2 THEN
+			_BALLOONWIN_TALKOBJ_MSG(msg_c02r0701_girl1_08)
+			_UN_SET_MY_NATURE( NATURE_STRANGER )	
+		ENDIF
+	ENDIF
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+/**************************************************************/
+/*  C02R0701 GIRL2の会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c02r0701_girl2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c02r0701_GIRL2_01)
+EVENT_END
+
+/**************************************************************/
+/*  C02R0701 INFOMATIONWの会話用イベントスクリプト            */
+/**************************************************************/
+EVENT_START   ev_c02r0701_infomationw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c02r0701_infomationw_01)
+EVENT_END
+
   
 /**************************************************************/
 /*  電光掲示板のイベントスクリプト*/

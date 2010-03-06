@@ -687,7 +687,7 @@ EVENT_START   ev_debug_murakami
 			
 		ELSIF $SCWK_TEMP1 == 11 THEN
 			//R02のママを表示する
-			_FLAG_RESET  ( FV_R02_MOTHER  )  
+//			_FLAG_RESET  ( FV_R02_MOTHER  )  
 	
 			//R02のランニングシューズイベントを有効にする
 			$WK_SCENE_R02 = 0
