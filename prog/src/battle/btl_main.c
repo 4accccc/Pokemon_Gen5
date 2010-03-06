@@ -130,6 +130,7 @@ struct _BTL_MAIN_MODULE {
   u8        MultiAIDataSeq;
   u8        MultiAIClientNum;
   u8        MultiAIClientID;
+  u8        fCommError;
 
 };
 
@@ -243,6 +244,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->LimitTimeGame = wk->setupParam->LimitTimeGame;
       wk->LimitTimeCommand = wk->setupParam->LimitTimeCommand;
       wk->fBonusMoneyFixed = FALSE;
+      wk->fCommError = FALSE;
       wk->MultiAIClientNum = 0;
 
       wk->bonusMoney = calcBonusMoneyBase( setup_param );
@@ -1705,47 +1707,63 @@ static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk )
 
 static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
 {
-  BOOL quitFlag = FALSE;
-  int i;
-
-  quitFlag = BTL_SERVER_Main( wk->server );
-  if( quitFlag ){
-    wk->escapeClientID = BTL_SERVER_GetEscapeClientID( wk->server );
-  }
-
-  for(i=0; i<BTL_CLIENT_MAX; i++)
+  if( BTL_NET_CheckError() )
   {
-    if( wk->client[i] )
-    {
-      BTL_CLIENT_Main( wk->client[i] );
-    }
+    wk->fCommError = TRUE;
+    return TRUE;
   }
+  else
+  {
+    BOOL quitFlag = FALSE;
+    int i;
 
-  BTLV_CORE_Main( wk->viewCore );
+    quitFlag = BTL_SERVER_Main( wk->server );
+    if( quitFlag ){
+      wk->escapeClientID = BTL_SERVER_GetEscapeClientID( wk->server );
+    }
 
-  return quitFlag;
+    for(i=0; i<BTL_CLIENT_MAX; i++)
+    {
+      if( wk->client[i] )
+      {
+        BTL_CLIENT_Main( wk->client[i] );
+      }
+    }
+
+    BTLV_CORE_Main( wk->viewCore );
+
+    return quitFlag;
+  }
 }
 
 static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk )
 {
-  BOOL quitFlag = FALSE;
-  int i;
-
-  for(i=0; i<BTL_CLIENT_MAX; i++)
+  if( BTL_NET_CheckError() )
   {
-    if( wk->client[i] )
+    wk->fCommError = TRUE;
+    return TRUE;
+  }
+  else
+  {
+    BOOL quitFlag = FALSE;
+    int i;
+
+    for(i=0; i<BTL_CLIENT_MAX; i++)
     {
-      if( BTL_CLIENT_Main(wk->client[i]) )
+      if( wk->client[i] )
       {
-        wk->escapeClientID = BTL_CLIENT_GetEscapeClientID( wk->client[i] );
-        quitFlag = TRUE;
+        if( BTL_CLIENT_Main(wk->client[i]) )
+        {
+          wk->escapeClientID = BTL_CLIENT_GetEscapeClientID( wk->client[i] );
+          quitFlag = TRUE;
+        }
       }
     }
+
+    BTLV_CORE_Main( wk->viewCore );
+
+    return quitFlag;
   }
-
-  BTLV_CORE_Main( wk->viewCore );
-
-  return quitFlag;
 }
 
 
@@ -4072,7 +4090,11 @@ static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
   // 種々メッセージのタグ解釈不備を解消すべし
   BtlResult result;
 
-  if( wk->setupParam->capturedPokeIdx != TEMOTI_POKEMAX )
+  if( wk->fCommError )
+  {
+    result = BTL_RESULT_COMM_ERROR;
+  }
+  else if( wk->setupParam->capturedPokeIdx != TEMOTI_POKEMAX )
   {
     result = BTL_RESULT_CAPTURE;
   }

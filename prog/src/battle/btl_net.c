@@ -10,6 +10,7 @@
 #include <net.h>
 
 #include "net\network_define.h"
+#include "system\net_err.h"
 
 #include "btl_common.h"
 #include "btl_server_cmd.h"
@@ -238,6 +239,16 @@ void BTL_NET_QuitSystem( void )
   {
     GFL_HEAP_FreeMemory( Sys );
   }
+}
+/**
+ *  通信エラーが発生したかチェック
+ */
+BOOL BTL_NET_CheckError( void )
+{
+  if( Sys ){
+    return NetErr_App_CheckError() != NET_ERR_CHECK_NONE;
+  }
+  return FALSE;
 }
 
 // 自分のクライアントIDとサーババージョンを全マシンで相互に送受信

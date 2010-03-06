@@ -109,6 +109,7 @@ typedef enum {
   BTL_RESULT_RUN,         ///< 逃げた
   BTL_RESULT_RUN_ENEMY,   ///< 相手が逃げた（野生のみ）
   BTL_RESULT_CAPTURE,     ///< 捕まえた（野生のみ）
+  BTL_RESULT_COMM_ERROR,  ///< 通信エラーによる
 
   BTL_RESULT_MAX,
 

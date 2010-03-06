@@ -13655,7 +13655,7 @@ static u8 scproc_HandEx_swapPoke( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
         s16 posIdx2 = BTL_PARTY_FindMember( party, bpp2 );
         if( (posIdx1 >= 0) && (posIdx2 >= 0) )
         {
-          scproc_MoveCore( wk, clientID, posIdx1, posIdx2, TRUE  );
+          scproc_MoveCore( wk, clientID, posIdx1, posIdx2, TRUE );
           handexSub_putString( wk, &param->exStr );
           return 1;
         }

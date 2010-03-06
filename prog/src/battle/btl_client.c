@@ -21,6 +21,7 @@
 #include "btl_pokeselect.h"
 #include "btl_rec.h"
 #include "btl_server_cmd.h"
+#include "btl_net.h"
 
 #include "app\b_bag.h"
 #include "app\b_plist.h"

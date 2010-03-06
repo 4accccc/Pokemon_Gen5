@@ -72,6 +72,7 @@ extern BOOL BTL_CLIENT_IsGameTimeOver( const BTL_CLIENT* wk );
 
 extern BTL_ADAPTER* BTL_CLIENT_GetAdapter( BTL_CLIENT* client );
 
+
 extern void BTL_CLIENT_AttachViewCore( BTL_CLIENT* wk, BTLV_CORE* viewCore );
 
 extern BOOL BTL_CLIENT_Main( BTL_CLIENT* client );

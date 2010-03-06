@@ -77,10 +77,11 @@ struct _BTL_SERVER {
   BTL_RECTOOL           recTool;
   STRBUF*               strbuf;
 
-  u8          enemyPutPokeID;
-  u8          quitStep;
   u32         escapeClientID;
   u32         exitTimer;
+  u8          enemyPutPokeID;
+  u8          quitStep;
+
 
   BTL_SERVER_CMD_QUE  queBody;
   BTL_SERVER_CMD_QUE* que;
@@ -437,7 +438,6 @@ static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
       {
         if( Svcl_IsEnable(&server->client[i]) )
         {
-//          dir = BTL_ADAPTER_GetReturnData( server->client[i].adapter, NULL );
           u8 rnd = BTL_CALC_GetRand( NELEMS(dirTbl) );
           dirAry[ i ] = dirTbl [rnd ];
           BTL_SVFLOW_CreateRotationCommand( server->flowWork, i, dirAry[ i ] );
@@ -1136,6 +1136,7 @@ static BOOL WaitAllAdapterReply( BTL_SERVER* server )
 {
   int i;
   BOOL ret = TRUE;
+
   for(i=0; i<BTL_CLIENT_MAX; i++)
   {
     if( Svcl_IsEnable(&server->client[i]) )
@@ -1145,6 +1146,7 @@ static BOOL WaitAllAdapterReply( BTL_SERVER* server )
       }
     }
   }
+
   return ret;
 }
 //----------------------------------------------------------------------------------
