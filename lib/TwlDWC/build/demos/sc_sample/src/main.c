@@ -1,6 +1,5 @@
 #include <nitro.h>
 #include <dwc.h>
-#include <dwc_gdb.h>
 #include  <cstring>
 
 #include "main.h"
@@ -18,22 +17,18 @@
 // define
 //----------------------------------------------------------------------------
 
-#define GAME_NAME        "syachi2ds" // このサンプルが使用するゲーム名
-//#define GAME_SECRET_KEY  "EdD7Ve"  // このサンプルが使用するシークレットキー
-//#define GAME_PRODUCTID   11735     // このサンプルが使用するプロダクトID
-
-#define GAME_SECRET_KEY		"tXH2sN"					// 使用するシークレットキー
-#define GAME_PRODUCTID		12230							// 使用するプロダクトID
-
+#define GAME_NAME        "ninTest1" // このサンプルが使用するゲーム名
+#define GAME_SECRET_KEY  "EdD7Ve"  // このサンプルが使用するシークレットキー
+#define GAME_PRODUCTID   11735     // このサンプルが使用するプロダクトID
 
 //#define GAME_NAME        "dwctest" // このサンプルが使用するゲーム名
-#define INITIAL_CODE     'IRBJ'    // このサンプルが仕様するイニシャルコード
+#define INITIAL_CODE     'NTRJ'    // このサンプルが仕様するイニシャルコード
 //#define GAME_SECRET_KEY  "d4q9GZ"  // このサンプルが使用するシークレットキー
 //#define GAME_PRODUCTID   10824     // このサンプルが使用するプロダクトID
-#define	MAX_PLAYERS		 2	       // 自分も含めた接続人数
+#define	MAX_PLAYERS		 4	       // 自分も含めた接続人数
 #define APP_CONNECTION_KEEPALIVE_TIME 300000 // キープアライブ時間
 #define KEEPALIVE_INTERVAL (APP_CONNECTION_KEEPALIVE_TIME/5) // キー入力を待たずデータを転送する時間
-#define FILTER_STRING "syachi_filter"	// フィルタ文字列. 適宜変更してください
+#define FILTER_STRING "sample_filter"	// フィルタ文字列. 適宜変更してください
 #define FILTER_KEY "str_key"
 #define GAME_FRAME       1         // 想定するゲームフレーム（1/60を1とする）
 #define GAME_NUM_MATCH_KEYS 3      // マッチメイク用追加キー個数
@@ -88,7 +83,7 @@ static BOOL stCloseFlag = FALSE;    // 自分でクローズした場合はTRUE
 static GameMatchExtKeys stMatchKeys[GAME_NUM_MATCH_KEYS] = { 0, };
 
 // ユーザデータを格納する構造体。
-DWCUserData stUserData;
+static DWCUserData stUserData;
 static DWCInetControl stConnCtrl;
 
 // デバッグ出力のオーバーライド
@@ -233,7 +228,7 @@ static GameSequence gameSeqList[GAME_MODE_NUM] =
         "GAME LOGON MODE",
         GameLogonMain,
         LogonModeDispCallback,
-        9,
+        7,
         {
             "Connect to anybody", GAME_MODE_CONNECTED, TRUE,
             "Connect to friends", GAME_MODE_CONNECTED, TRUE,
@@ -241,9 +236,7 @@ static GameSequence gameSeqList[GAME_MODE_NUM] =
             "Connect to game server", GAME_MODE_CONNECTED, TRUE,
             "GroupID reconnect", GAME_MODE_CONNECTED, TRUE,
             "Set Topology type", GAME_MODE_TOPOLOGY, FALSE,
-            "Logout", GAME_MODE_MAIN, FALSE,
-            "DBCreate", GAME_MODE_TOPOLOGY, TRUE,
-            "DBView", GAME_MODE_TOPOLOGY, TRUE
+            "Logout", GAME_MODE_MAIN, FALSE
         },
     },
     {
@@ -495,7 +488,11 @@ void NitroMain ()
     DWC_SetReportLevel((unsigned long)(DWC_REPORTFLAG_ALL));
 
     // DWCライブラリ初期化
+#if defined( USE_AUTHSERVER_PRODUCTION )
+    ret = DWC_InitForProduction( GAME_NAME, INITIAL_CODE, AllocFunc, FreeFunc );
+#else
     ret = DWC_InitForDevelopment( GAME_NAME, INITIAL_CODE, AllocFunc, FreeFunc );
+#endif
     
     OS_TPrintf( "DWC_InitFor*() result = %d\n", ret );
 
@@ -943,27 +940,6 @@ static GameMode GameRegisterFriendMain(void)
 }
 
 
-//typedef void(*) DWCGdbGetRecordsCallback(int record_num,
-  //           DWCGdbField **records,
-    //         void *user_param);
-//typedef struct DWCGdbField {
-//    char * name;
- //   DWCGdbFieldType type;
-//    DWCGdbValue value;
-//} DWCGdbField;
-
-static void get_records_callback(int record_num, DWCGdbField **records, void *user_param)
-{
-  int i;
-  for(i=0;i<record_num;i++){
-    OS_TPrintf("name %s\n",records[i]->name);
-    OS_TPrintf("type %d\n",records[i]->type);
-    OS_TPrintf("value %d\n",records[i]->value.int_s32);
-    
-  }
-}
-
-
 /*---------------------------------------------------------------------------*
   ログイン後メイン関数
  *---------------------------------------------------------------------------*/
@@ -1127,51 +1103,6 @@ static GameMode GameLogonMain(void)
             case 6:  // ログアウト
                 DWC_ShutdownFriendsMatch();   // DWC FriendsMatchライブラリ終了
                 break;
-
-            case 7://データベース作成
-              //データベースライブラリ初期化
-              {
-                int res = DWC_GdbInitialize(2911,&stUserData, DWC_GDB_SSL_TYPE_NONE);
-                OS_TPrintf("DWC_GdbInitialize%d\n",res);
-                if (res != DWC_GDB_ERROR_NONE){
-                  return returnSeq;
-                }
-              }
-              break;
-            case 8:
-              {
-                int state,res;
-                const char* field_names[4] = {"GameStats_v1","PlayerStats_v1","StaticStats_v1","TeamStats_v1"};  // 検索で取得するフィールド名
-                int field_num = sizeof(field_names)/sizeof(field_names[0]);  // 上記で設定したフィールド名の総数
-                
-                res = DWC_GdbGetMyRecordsAsync(GAME_NAME, field_names, field_num, &get_records_callback, &field_num);
-
-                if (res != DWC_GDB_ERROR_NONE)
-                {
-                  OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbError[%d] in DWC_GdbGetMyRecordsAsync().  %s line[%d]\n",res,__FILE__,__LINE__);
-                  return returnSeq;
-                }
-                while(1){
-                  int modori=DWC_GdbGetAsyncResult();
-                  if(DWC_GDB_ASYNC_RESULT_SUCCESS == modori){
-                    break;
-                  }
-                  else if( DWC_GDB_ASYNC_RESULT_NONE !=modori){
-                    OS_TPrintf(" DWC_GdbGetAsyncResult[%d]  %s line[%d]\n",modori,__FILE__,__LINE__);
-                    break;
-                  }
-                  OS_Sleep( 13 );
-                  DWC_GdbProcess();
-                }
-                if ((state = DWC_GdbGetState()) != DWC_GDB_STATE_IDLE)
-                {
-                  OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbState[%d] is improper state here.  %s line[%d]\n",state,__FILE__,__LINE__);
-                  return returnSeq;
-                }
-                
-              }
-              break;
-              
             default:
                 break;
             }
@@ -2544,10 +2475,6 @@ static GameMode NetConfigMain(void)
     sPrintOverride = FALSE; // OS_TPrintf()の出力を一時的に元に戻す。
     dbs_DemoFinalize();
 
-#if defined( USE_AUTHSERVER_RELEASE )
-    DWC_SetAuthServer( DWC_CONNECTINET_AUTH_RELEASE );
-#endif
-
 #if defined( NETCONFIG_USE_HEAP )
     {
         void* work = OS_Alloc(DWC_UTILITY_WORK_SIZE);
@@ -2588,10 +2515,6 @@ static GameMode StartIPMain(void)
 	DWCApInfo apinfo;
 	
     DWC_InitInet( &stConnCtrl );
-
-#if defined( USE_AUTHSERVER_RELEASE )
-    DWC_SetAuthServer(DWC_CONNECTINET_AUTH_RELEASE);
-#endif
 
     
     DWC_ConnectInetAsync();

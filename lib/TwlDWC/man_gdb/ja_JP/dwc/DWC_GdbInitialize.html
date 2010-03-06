@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<h1 id="dwc__gdb_8h_1fe1cac3e1fb94f1191d3e1d65b187b93" align="left">DWC_GdbInitialize</h1>
+<h1 id="dwc__gdb_8h_154ac61368c624a7e5196c29ee85c0f5e" align="left">DWC_GdbInitialize</h1>
 <h2>構文</h2>
 
 <dl>
@@ -17,7 +17,7 @@
   <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
   <PRE><CODE><a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86">DWCGdbError</a> DWC_GdbInitialize(int game_id,
                               const DWCUserData *userdata,
-                              <a href="Macro.html#dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b99">DWCGdbSSLType</a> ssl_type);</CODE></PRE></dd> 
+                              <a href="Macro.html#dwc__ssl_8h_1cd1c18b88545b3e2827b68992e223da5">DWCSSLType</a> ssl_type);</CODE></PRE></dd> 
 </dl>
 
 <h2>引数</h2>
@@ -37,7 +37,7 @@
 
     <TR>
       <TD width="13%"><EM><STRONG>ssl_type</STRONG></EM></TD>
-      <TD width="87%">通信にSSLを使用するか否かを設定します。製品では必ずSSLを使用するようにして下さい。認証サーバが本番向けの場合、<a href="Macro.html#dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b99accf87451a2db3accc627529ac0ee488">DWC_GDB_SSL_TYPE_NONE</a>を指定すると、<a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86d9c67158331d0e451dd21f08217604f5">DWC_GDB_ERROR_BAD_INPUT</a>エラーが返ります。</TD>
+      <TD width="87%">SSLのタイプを設定します。Nitro/Twlでは<a href="Macro.html#dwc__ssl_8h_1cd1c18b88545b3e2827b68992e223da5208689406b23713c797560902f565eed">DWC_SSL_TYPE_SERVER_AUTH</a>を指定して下さい。</TD>
     </TR>
 
   </TBODY>
@@ -54,6 +54,9 @@
 
 <H2>履歴</H2>
 <DL>
+
+<DT>5.3patch1_sslgdb3</DT>
+<DD>非SSL通信の機能が削除されたこと、ssl_typeに指定する定義名がDWC_SSL*になったことに対応。</DD>
 
 </DL>
 <p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GdbInitialize_tag">こちら</a>　　</p>

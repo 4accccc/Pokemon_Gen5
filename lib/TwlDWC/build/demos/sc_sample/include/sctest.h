@@ -31,15 +31,15 @@ typedef struct PlayerData
 /**
  * 初期化処理
  *
- * Return value:  成功したか
+ * @return 成功したか
  */
 BOOL ScInitialize();
 
 /**
  * メイン処理
  *
- * Param:  host ホストモードで動作するか
- * Return value:  成功したか
+ * @param host ホストモードで動作するか
+ * @return 成功したか
  */
 BOOL ScMain( BOOL host );
 
@@ -51,10 +51,10 @@ void ScFinalize();
 /**
  * DWCからのデータ受信コールバック関数。
  *
- * Param:  aid データ送信元aid
- * Param:  buffer 受信バッファアドレス
- * Param:  size 受信サイズ
- * Param:  param 属性データ
+ * @param aid データ送信元aid
+ * @param buffer 受信バッファアドレス
+ * @param size 受信サイズ
+ * @param param 属性データ
  */
 void ScReceiveDataEvent( u8 aid, u8* buffer, int size, void* param );
 

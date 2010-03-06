@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GdbCancelRequest</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__gdb_8h_11085e82c85f5e48f76499c67d9de98f6" align="left">DWC_GdbCancelRequest</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86">DWCGdbError</a> DWC_GdbCancelRequest();</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<p>エラーの内容</p>
+
+<H2>説明</H2>
+
+<p>非同期処理をキャンセルします。返値として<a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86e9779fbe6ad274d2016ee2ab66a08582">DWC_GDB_ERROR_NONE</a>が返された場合は、キャンセル処理が開始していて、<a href="DWC_GdbGetState.html#dwc__gdb_8h_1369bfca6c2cd6e2e2893c03c94a5e2db">DWC_GdbGetState</a>関数で得られるステートは、<a href="Macro.html#dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb09c71c110e8d73ebcb824481f1aa7116">DWC_GDB_STATE_IN_CANCEL_PROCESS</a>に遷移します。<a href="DWC_GdbGetState.html#dwc__gdb_8h_1369bfca6c2cd6e2e2893c03c94a5e2db">DWC_GdbGetState</a>関数が<a href="Macro.html#dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb09c71c110e8d73ebcb824481f1aa7116">DWC_GDB_STATE_IN_CANCEL_PROCESS</a>を返さなくなくなるまで、<a href="DWC_GdbProcess.html#dwc__gdb_8h_1d9e136becc9e570857ceae474e0e040a">DWC_GdbProcess</a>関数を定期的に呼んでキャンセル処理を進めて下さい。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.3patch1_sslgdb1</DT>
+<DD>新規追加</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GdbCancelRequest_tag">こちら</a>　　</p>
+</body>
+</html>

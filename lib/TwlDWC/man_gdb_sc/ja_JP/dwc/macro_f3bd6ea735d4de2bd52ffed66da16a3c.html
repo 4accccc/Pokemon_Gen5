@@ -86,6 +86,12 @@ enum DWCReportFlag {
     DWC_REPORTFLAG_ALL                      =  0xffffffff,
 };
 
+enum DWCSSLType {
+    DWC_SSL_TYPE_SERVER_AUTH,
+    DWC_SSL_TYPE_SERVER_CLIENT_AUTH,
+    DWC_SSL_TYPE_NUM,
+};
+
 		</CODE></PRE>
 	</DD>
 </DL>
@@ -427,6 +433,30 @@ enum DWCReportFlag {
 <DD>デバッグ情報出力用フラグに関する説明を追加しました。</DD>
 
 </DL>
+
+<a id="dwc__ssl_8h_1cd1c18b88545b3e2827b68992e223da5"></a>
+<H2 id="TAG_ENUM_4">SSL通信の状態を示す列挙型です。</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SSL_TYPE_SERVER_AUTH</CODE></STRONG></EM></TD>
+	  <TD>サーバ認証を行いSSLで通信します。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SSL_TYPE_SERVER_CLIENT_AUTH</CODE></STRONG></EM></TD>
+	  <TD>サーバ認証とクライアント認証を行いSSLで通信します。※Nitro,Twlでは使用できません。</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SSL_TYPE_NUM</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
 
 </body>
 </html>

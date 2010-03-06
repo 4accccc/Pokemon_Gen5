@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCGdbProgressCallback</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__gdb_8h_1eb93c7179e6e166bf335abcd96e8f1f4" align="left">DWCGdbProgressCallback</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>typedef void(*) DWCGdbProgressCallback(int bytesDone,
+             int totalBytes,
+             void *user_param);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>bytesDone</parametername></STRONG></EM></TD>
+      <TD width="87%">送信/受信したデータの総バイト数</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>totalBytes</parametername></STRONG></EM></TD>
+      <TD width="87%">総送受信サイズ。不明な場合は-1</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>user_param</parametername></STRONG></EM></TD>
+      <TD width="87%">非同期処理の実行時に与えたパラメータです。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p>ファイル送受信の進行状況取得コールバックです。<br>ファイルアップロードの際は、総送信サイズが、<a href="Macro.html#dwc__gdb_8h_1fe10c8f7d2558227a3a0f34eb7e67238">DWC_GDB_UPLOADHEADER_SIZE</a>+(ファイル名の長さ)*2だけ増えますので注意して下さい。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.3patch1_sslgdb2</DT>
+<DD>ファイルアップロードの際の総送信サイズについて注意点を追記</DD>
+
+<DT>5.3patch1_sslgdb1</DT>
+<DD>新規追加</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCGdbProgressCallback_tag">こちら</a>　　</p>
+</body>
+</html>

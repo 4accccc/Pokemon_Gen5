@@ -2,7 +2,7 @@
 #----------------------------------------------------------------------------
 # Project:  TWLDWC
 #
-# Copyright 2005-2009 Nintendo.  All rights reserved.
+# Copyright $(dwc_packed_year) Nintendo.  All rights reserved.
 #
 # These coded instructions, statements, and computer programs contain
 # proprietary information of Nintendo of America Inc. and/or Nintendo

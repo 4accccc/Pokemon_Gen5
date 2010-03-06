@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------*
   Project:  DWC
 
-  Copyright 2005-2009 Nintendo.  All rights reserved.
+  Copyright 2005-2010 Nintendo.  All rights reserved.
 
   These coded instructions, statements, and computer programs contain
   proprietary information of Nintendo of America Inc. and/or Nintendo
@@ -24,22 +24,16 @@ extern "C"
     /* -------------------------------------------------------------------------
             define
        ------------------------------------------------------------------------- */
-
+    /**
+     *  ファイルアップロードの際に内部的に付加されるヘッダサイズ
+     *
+     */
+#define DWC_GDB_UPLOADHEADER_SIZE 178
 
 
     /* -------------------------------------------------------------------------
             enum
        ------------------------------------------------------------------------- */
-    
-    /// SSL通信の状態を示す列挙型です。
-    typedef enum
-    {
-        DWC_GDB_SSL_TYPE_NONE,                  ///< SSLを使用しません。
-        DWC_GDB_SSL_TYPE_SERVER_AUTH,           ///< サーバ認証を行いSSLで通信します。
-        DWC_GDB_SSL_TYPE_SERVER_CLIENT_AUTH,    ///< サーバ認証とクライアント認証を行いSSLで通信します。※Nitro,Twlでは使えません。
-        DWC_GDB_SSL_TYPE_NUM
-    } DWCGdbSSLType;
-
     
     /// フィールドの型を示す列挙型です。
     typedef enum
@@ -57,7 +51,10 @@ extern "C"
         DWC_GDB_FIELD_TYPE_NUM_FIELD_TYPES
     } DWCGdbFieldType;
 
-    /// エラーを示す列挙型です。
+    /**
+     *  エラーを示す列挙型です。
+     *  
+     */
     typedef enum
     {
         DWC_GDB_ERROR_NONE = 0,                 ///< 正常に終了しました。
@@ -82,10 +79,14 @@ extern "C"
         DWC_GDB_ERROR_NOT_INITIALIZED = 19,     ///< 初期化が行われていません。
         DWC_GDB_ERROR_IN_ASYNC_PROCESS = 20,    ///< 非同期処理中です。
         DWC_GDB_ERROR_GHTTP = 21,               ///< GHTTPのエラーが発生しました。
-        DWC_GDB_ERROR_IN_DWC_ERROR = 22         ///< DWCのエラーが起こっています。エラーの対処を行ってください。
+        DWC_GDB_ERROR_IN_DWC_ERROR = 22,        ///< DWCのエラーが起こっています。エラーの対処を行ってください。
+        DWC_GDB_ERROR_IN_CANCEL_PROCESS = 23    ///< 非同期処理のキャンセル中です。
     } DWCGdbError;
 
-    /// 非同期処理の結果を示す列挙型です。
+    /**
+     *  非同期処理の結果を示す列挙型です。
+     *  
+     */
     typedef enum
     {
         DWC_GDB_ASYNC_RESULT_NONE = 0,                  ///< 非同期処理がまだ終了していません。
@@ -119,15 +120,20 @@ extern "C"
         DWC_GDB_ASYNC_RESULT_FILE_UNKNOWN_ERROR = 28,
         DWC_GDB_ASYNC_RESULT_GHTTP_ERROR = 29,          ///< GHTTPのエラーが発生しました。
         DWC_GDB_ASYNC_RESULT_TARGET_FILTER_INVALID = 30,
-        DWC_GDB_ASYNC_RESULT_SERVER_ERROR = 31
+        DWC_GDB_ASYNC_RESULT_SERVER_ERROR = 31,
+        DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED = 32
     } DWCGdbAsyncResult;
 
-    /// DWCGdbライブラリの状態を示す列挙型です。
+    /**
+     *  DWCGdbライブラリの状態を示す列挙型です。
+     *  
+     */
     typedef enum
     {
         DWC_GDB_STATE_UNINITIALIZED,    ///< 未初期化状態
         DWC_GDB_STATE_IDLE,             ///< 初期化が終了し、非同期処理が行われていない状態
         DWC_GDB_STATE_IN_ASYNC_PROCESS, ///< 非同期処理を行っている状態
+        DWC_GDB_STATE_IN_CANCEL_PROCESS,///< 非同期処理のキャンセルを行っている状態
         DWC_GDB_STATE_ERROR_OCCURED     ///< エラーが発生した状態
     } DWCGdbState;
 
@@ -207,6 +213,20 @@ extern "C"
     */
     typedef void (*DWCGdbGetRecordsCallback)(int record_num, DWCGdbField** records, void* user_param);
 
+
+    /**
+     *  ファイル送受信の進行状況取得コールバックです。
+     *  
+     *  ファイル送受信の進行状況取得コールバックです。
+     *  ファイルアップロードの際は、総送信サイズが、DWC_GDB_UPLOADHEADER_SIZE + (ファイル名の長さ)*2 だけ増えますので注意して下さい。
+     *  
+     *  Param:  bytesDone    送信/受信したデータの総バイト数
+     *  Param:  totalBytes   総送受信サイズ。不明な場合は-1
+     *  Param:  user_param   非同期処理の実行時に与えたパラメータです。
+     *
+     */
+    typedef void (*DWCGdbProgressCallback)(int bytesDone, int totalBytes, void* user_param);
+
     /**
      *  非同期処理の結果、ファイルを取得する際のコールバックです。
      *
@@ -225,7 +245,8 @@ extern "C"
        ------------------------------------------------------------------------- */
 
     //--- Auto Function Prototype --- Don't comment here.
-    extern DWCGdbError DWC_GdbInitialize(int game_id, const DWCUserData* userdata, DWCGdbSSLType ssl_type);
+    extern DWCGdbError DWC_GdbInitialize(int game_id, const DWCUserData* userdata, DWCSSLType ssl_type);
+    extern DWCGdbError DWC_GdbCancelRequest();
     extern DWCGdbError DWC_GdbShutdown();
     extern void DWC_GdbProcess();
     extern DWCGdbState DWC_GdbGetState();
@@ -234,8 +255,8 @@ extern "C"
     extern DWCGdbError DWC_GdbCreateRecordAsync(const char* table_name, DWCGdbField* fields, int field_num, int* record_id);
     extern DWCGdbError DWC_GdbDeleteRecordAsync(const char* table_name, int record_id);
     extern DWCGdbError DWC_GdbUpdateRecordAsync(const char* table_name, int record_id, DWCGdbField* fields, int field_num);
-    extern DWCGdbError DWC_GdbDownloadFileAsync(int file_id, int buf_size, BOOL clear_buf, DWCGdbDownloadFileCallback callback, void* user_param);
-    extern DWCGdbError DWC_GdbUploadFileAsync(const void* data, int size, const char* file_name, int* file_id);
+    extern DWCGdbError DWC_GdbDownloadFileAsync(int file_id, int buf_size, BOOL clear_buf, DWCGdbProgressCallback progress_callback, DWCGdbDownloadFileCallback callback, void* user_param);
+    extern DWCGdbError DWC_GdbUploadFileAsync(const void* data, int size, const char* file_name, int* file_id, DWCGdbProgressCallback progress_callback);
     extern DWCGdbError DWC_GdbGetMyRecordsAsync(const char* table_name, const char** field_names, int field_num, DWCGdbGetRecordsCallback callback, void* user_param);
     extern DWCGdbError DWC_GdbGetRecordLimitAsync(const char* table_name, int* limit_num, int* owned_num);
     extern DWCGdbError DWC_GdbGetRecordsAsync(const char* table_name, const int* record_ids, int record_num, const char** field_names, int field_num, DWCGdbGetRecordsCallback callback, void* user_param);

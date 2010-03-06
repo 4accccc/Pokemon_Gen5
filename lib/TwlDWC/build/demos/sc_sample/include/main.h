@@ -90,7 +90,7 @@ typedef struct tagGameSequence
     GameSeqFunc seqFunc;   // 対応する関数
     GameAddedDispCallback dispCallback;  // 対応する追加表示コールバック
     int numMenu;           // メニューの数
-    GameMenuElement menuList[10];  // メニューリスト
+    GameMenuElement menuList[8];  // メニューリスト
 } GameSequence;
 
 

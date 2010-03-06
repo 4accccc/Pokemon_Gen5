@@ -17,13 +17,7 @@
 		<PRE><CODE>
 #include &lt;dwc.h&gt;
 
-
-enum DWCGdbSSLType {
-    DWC_GDB_SSL_TYPE_NONE,
-    DWC_GDB_SSL_TYPE_SERVER_AUTH,
-    DWC_GDB_SSL_TYPE_SERVER_CLIENT_AUTH,
-    DWC_GDB_SSL_TYPE_NUM,
-};
+#define   DWC_GDB_UPLOADHEADER_SIZE               178
 
 enum DWCGdbFieldType {
     DWC_GDB_FIELD_TYPE_BYTE,
@@ -63,6 +57,7 @@ enum DWCGdbError {
     DWC_GDB_ERROR_IN_ASYNC_PROCESS          =  20,
     DWC_GDB_ERROR_GHTTP                     =  21,
     DWC_GDB_ERROR_IN_DWC_ERROR              =  22,
+    DWC_GDB_ERROR_IN_CANCEL_PROCESS         =  23,
 };
 
 enum DWCGdbAsyncResult {
@@ -98,12 +93,14 @@ enum DWCGdbAsyncResult {
     DWC_GDB_ASYNC_RESULT_GHTTP_ERROR        =  29,
     DWC_GDB_ASYNC_RESULT_TARGET_FILTER_INVALID =  30,
     DWC_GDB_ASYNC_RESULT_SERVER_ERROR       =  31,
+    DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED  =  32,
 };
 
 enum DWCGdbState {
     DWC_GDB_STATE_UNINITIALIZED,
     DWC_GDB_STATE_IDLE,
     DWC_GDB_STATE_IN_ASYNC_PROCESS,
+    DWC_GDB_STATE_IN_CANCEL_PROCESS,
     DWC_GDB_STATE_ERROR_OCCURED,
 };
 
@@ -111,43 +108,21 @@ enum DWCGdbState {
 	</DD>
 </DL>
 
+<H2>定数</H2>
+
 <TABLE border="1">
 	<TBODY>
 
-	</TBODY>
-</TABLE>
-
-<a id="dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b99"></a>
-<H2 id="TAG_ENUM_1">SSL通信の状態を示す列挙型です。</H2>
-<TABLE border="1">
-	<TBODY>
-
-	<TR>
-	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_NONE</CODE></STRONG></EM></TD>
-	  <TD>SSLを使用しません。</TD>
-	</TR>
-
-	<TR>
-	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_SERVER_AUTH</CODE></STRONG></EM></TD>
-	  <TD>サーバ認証を行いSSLで通信します。</TD>
-	</TR>
-
-	<TR>
-	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_SERVER_CLIENT_AUTH</CODE></STRONG></EM></TD>
-	  <TD>サーバ認証とクライアント認証を行いSSLで通信します。※Nitro,Twlでは使えません。</TD>
-	</TR>
-
-	<TR>
-	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_NUM</CODE></STRONG></EM></TD>
-	  <TD></TD>
-	</TR>
+		<TR>
+			<TH width="25%">DWC_GDB_UPLOADHEADER_SIZE</TH>
+			<TD>ファイルアップロードの際に内部的に付加されるヘッダサイズ</TD>
+		</TR>
 
 	</TBODY>
 </TABLE>
-
 
 <a id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a"></a>
-<H2 id="TAG_ENUM_2">フィールドの型を示す列挙型です。</H2>
+<H2 id="TAG_ENUM_1">フィールドの型を示す列挙型です。</H2>
 <TABLE border="1">
 	<TBODY>
 
@@ -211,7 +186,7 @@ enum DWCGdbState {
 
 
 <a id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86"></a>
-<H2 id="TAG_ENUM_3">エラーを示す列挙型です。</H2>
+<H2 id="TAG_ENUM_2">エラーを示す列挙型です。</H2>
 <TABLE border="1">
 	<TBODY>
 
@@ -330,12 +305,25 @@ enum DWCGdbState {
 	  <TD>DWCのエラーが起こっています。エラーの対処を行ってください。</TD>
 	</TR>
 
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_IN_CANCEL_PROCESS</CODE></STRONG></EM></TD>
+	  <TD>非同期処理のキャンセル中です。</TD>
+	</TR>
+
 	</TBODY>
 </TABLE>
 
 
+<H3>履歴</H3>
+<DL>
+
+<DT>5.3patch1_sslgdb1</DT>
+<DD><a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86f23656a1bfca6e2b21a2d0100bc37ed1">DWC_GDB_ERROR_IN_CANCEL_PROCESS</a>を追加</DD>
+
+</DL>
+
 <a id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492"></a>
-<H2 id="TAG_ENUM_4">非同期処理の結果を示す列挙型です。</H2>
+<H2 id="TAG_ENUM_3">非同期処理の結果を示す列挙型です。</H2>
 <TABLE border="1">
 	<TBODY>
 
@@ -499,12 +487,25 @@ enum DWCGdbState {
 	  <TD></TD>
 	</TR>
 
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED</CODE></STRONG></EM></TD>
+	  <TD></TD>
+	</TR>
+
 	</TBODY>
 </TABLE>
 
 
+<H3>履歴</H3>
+<DL>
+
+<DT>5.3patch1_sslgdb1</DT>
+<DD><a href="Macro.html#dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4922d0c918cf9850be313bde6c7b0a061e1">DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED</a>を追加</DD>
+
+</DL>
+
 <a id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb"></a>
-<H2 id="TAG_ENUM_5">DWCGdbライブラリの状態を示す列挙型です。</H2>
+<H2 id="TAG_ENUM_4">DWCGdbライブラリの状態を示す列挙型です。</H2>
 <TABLE border="1">
 	<TBODY>
 
@@ -524,6 +525,11 @@ enum DWCGdbState {
 	</TR>
 
 	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_STATE_IN_CANCEL_PROCESS</CODE></STRONG></EM></TD>
+	  <TD>非同期処理のキャンセルを行っている状態</TD>
+	</TR>
+
+	<TR>
 	  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_STATE_ERROR_OCCURED</CODE></STRONG></EM></TD>
 	  <TD>エラーが発生した状態</TD>
 	</TR>
@@ -531,6 +537,14 @@ enum DWCGdbState {
 	</TBODY>
 </TABLE>
 
+
+<H3>履歴</H3>
+<DL>
+
+<DT>5.3patch1_sslgdb1</DT>
+<DD><a href="Macro.html#dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb09c71c110e8d73ebcb824481f1aa7116">DWC_GDB_STATE_IN_CANCEL_PROCESS</a>を追加</DD>
+
+</DL>
 
 </body>
 </html>

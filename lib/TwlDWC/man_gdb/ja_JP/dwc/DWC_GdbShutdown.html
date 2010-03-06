@@ -28,11 +28,14 @@
 
 <H2>説明</H2>
 
-<p>簡易データベースライブラリの使用を終了します。</p><p>非同期処理中に呼ばれた場合は、全ての通信を中断します。</p>
+<p>簡易データベースライブラリの使用を終了します。</p><p>非同期処理中に呼ぶことはできません。</p>
 
 
 <H2>履歴</H2>
 <DL>
+
+<DT>5.3patch1_sslgdb1</DT>
+<DD>非同期処理中のキャンセルは、<a href="DWC_GdbCancelRequest.html#dwc__gdb_8h_11085e82c85f5e48f76499c67d9de98f6">DWC_GdbCancelRequest</a>関数を使用するように仕様変更したため、関連する記述を修正。</DD>
 
 </DL>
 <p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GdbShutdown_tag">こちら</a>　　</p>

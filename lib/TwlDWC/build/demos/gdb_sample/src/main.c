@@ -37,13 +37,16 @@
 //---------------------------------------------------------
 #define FRIEND_LIST_LEN  64
 #define TABLE_NAME "demotable"
+#define TIMEOUT_MSEC (20*1000)
 
 // 簡易データベースライブラリテスト用アカウント（本番では変える必要があります）
-#define GAME_NAME        "syachi2ds"
-#define SECRET_KEY       "tXH2sN"	// このサンプルが使用するシークレットキー
-#define GAME_PRODUCTID   12230		// このサンプルが使用するプロダクトID
-#define GAME_ID           2911       // このサンプルが使用するゲームID
-#define INITIAL_CODE     'IRBJ'     // イニシャルコード
+#define GAME_NAME        "dwctest"
+#define SECRET_KEY       "d4q9GZ"	// このサンプルが使用するシークレットキー
+#define GAME_PRODUCTID   10824		// このサンプルが使用するプロダクトID
+#define GAME_ID           1408       // このサンプルが使用するゲームID
+#define INITIAL_CODE     'NTRJ'     // イニシャルコード
+
+#define CREATE_NUM  4
 
 //#define USE_AUTHSERVER_PRODUCTION // 製品向け認証サーバを使用する場合有効にする
 
@@ -64,6 +67,7 @@ static void gdb_demo_exit(void);
 static void get_records_callback(int record_num, DWCGdbField** records, void* user_param);
 static void print_field(DWCGdbField* field);
 static void download_file_callback(const void* data, int size, void* user_param);
+static void file_progress_callback(int bytesDone, int totalBytes, void* user_param);
 
 
 /*---------------------------------------------------------------------------*
@@ -201,20 +205,35 @@ login_callback(DWCError error, int profileid, void *param)
 static DWCError
 wait_async_end()
 {
-    DWCError err = DWC_ERROR_NONE;    
+    OSTick start_time = OS_GetTick();
+    DWCError err = DWC_ERROR_NONE;
+    int cancelflag = 1;
     
-    while (DWC_GdbGetState() == DWC_GDB_STATE_IN_ASYNC_PROCESS)
+    for (;;)
     {
-        // スタック溢れチェック
-        OS_CheckStack(OS_GetCurrentThread());
+        DWCGdbState state  =  DWC_GdbGetState();
+        if(state != DWC_GDB_STATE_IN_ASYNC_PROCESS &&
+           state != DWC_GDB_STATE_IN_CANCEL_PROCESS)
+        {
+            break;
+        }
         
-        OS_WaitVBlankIntr();
         DWC_ProcessFriendsMatch();
         if ((err = DWC_GetLastError(NULL)) != DWC_ERROR_NONE)
 	    {
             return err;
 	    }
+	    
         DWC_GdbProcess();
+        
+        // タイムアウト確認
+        if(OS_TicksToMilliSeconds(OS_GetTick() - start_time) > TIMEOUT_MSEC && cancelflag)
+        {
+            OS_TPrintf("gdb_sample_DEBUG: wait async timeout.\n");
+            DWC_GdbCancelRequest();
+            cancelflag = 0;
+        }
+        OS_WaitVBlankIntr();
     }
     return err;
 }
@@ -234,11 +253,11 @@ gdb_demo_exit()
     {
         OS_TPrintf("gdb_sample_DEBUG: Error code %d   DWCErrorType[%d].\n", errorCode, errorType );
     }
-    
     DWC_GdbShutdown();           // 簡易データベースライブラリの終了
     DWC_ShutdownFriendsMatch();  // Friendマッチライブラリの終了
+    DWC_CleanupInet();
     OS_TPrintf("gdb_sample_DEBUG: OS Terminated.\n");
-    OS_Terminate();              // 終了
+    Heap_Dump();
 
 }
 
@@ -317,6 +336,18 @@ download_file_callback(const void* data, int size, void* user_param)
 }
 
 
+/*---------------------------------------------------------------------------*
+  ファイル送受信時の進行状況取得コールバック関数　-　簡易データベースライブラリ
+ *---------------------------------------------------------------------------*/
+static void
+file_progress_callback(int bytesDone, int totalBytes, void* user_param)
+{
+#pragma unused(user_param)
+
+    OS_TPrintf("gdb_sample_DEBUG: bytesDone: %d totalBytes: %d \n", bytesDone, totalBytes);
+}
+
+
 //=============================================================================
 /*!
  *    @brief    メイン
@@ -336,7 +367,9 @@ void NitroMain()
     
     DWCError    err = DWC_ERROR_NONE;   // 非同期通信待ち状態時のエラー取得用
 
-    int record_id;                  // 最後に作成したレコードのIDを保持する。（レコード作成ループ終了後）
+    int record_id[CREATE_NUM];      // レコードの作成デモで作成したレコードID
+    int record_id_file;             // ファイルアップロード用のレコードID
+    
     DWCGdbField fields_create[2];   // レコードを作成する際に設定するレコード情報
     DWCGdbField fields_update[2];   // レコードを更新する際に設定するレコード情報
 
@@ -345,10 +378,8 @@ void NitroMain()
     //-----------------------------------------------------------------------
     OS_Init();
 
-    // スタック溢れチェック初期設定
-    OS_SetThreadStackWarningOffset(OS_GetCurrentThread(), 0x100);
-
     Heap_Init();
+    Heap_SetDebug(TRUE);
 
     GX_Init();
 
@@ -413,52 +444,10 @@ void NitroMain()
     // もそもその場合はGameSpyのサーバー資源を使用できません。
     //
 
-#if 1
-  {
-    u16 card_lock_id;
-    int end;
-    int last_result;
-    ret = OS_GetLockID();
-    if (ret == OS_LOCK_ID_ERROR)
-    {
-        OS_Panic("demo fatal error! OS_GetLockID() failed");
-    }
-    card_lock_id = (u16)ret;
 
-    CARD_LockBackup((u16)card_lock_id);
-    end = CARD_IdentifyBackup(CARD_BACKUP_TYPE_FLASH_2MBITS);
-    if(!end)
-    {
-      last_result = CARD_GetResultCode();
-    }
-    CARD_UnlockBackup(card_lock_id);
-
-    CARD_LockBackup((u16)card_lock_id);
-    if (CARD_IsBackupFlash())
-    {
-      CARD_ReadFlash(0, &userdata, sizeof(userdata) );
-      CARD_ReadFlash(sizeof(userdata), &friendlist, sizeof(friendlist));
-    }
-    CARD_UnlockBackup(card_lock_id);
-    last_result = CARD_GetResultCode();
-    
-    if (last_result != CARD_RESULT_SUCCESS)
-    {
-      OS_TPrintf("Error occur with %d\n", last_result);
-    }
-    else
-    {
-      OS_TPrintf("Load OK!\n");
-    }
-  }
-
-#else
-  
     // ユーザデータを作成する
     OS_TPrintf("gdb_sample_DEBUG: Creating new UserData\n");
     DWC_CreateUserData( &userdata );
-
-#endif
 
     // 友達リスト初期化
     memset( &friendlist, 0, sizeof( friendlist ) );
@@ -493,8 +482,7 @@ void NitroMain()
 
     // 簡易データベースライブラリを初期化
     //-----------------------------------------------------------------------
-    //res = DWC_GdbInitialize(GAME_ID, &userdata, DWC_GDB_SSL_TYPE_SERVER_AUTH);
-    res = DWC_GdbInitialize(GAME_ID, &userdata, DWC_GDB_SSL_TYPE_NONE);
+    res = DWC_GdbInitialize(GAME_ID, &userdata, DWC_SSL_TYPE_SERVER_AUTH);
     
     if (res == DWC_GDB_ERROR_NONE)
     {
@@ -508,10 +496,12 @@ void NitroMain()
     }
 
 
-#if 0
+
     // レコードを新規に作成する非同期処理
     //-----------------------------------------------------------------------
     OS_Printf("*********  DEMO_1  *********  create record\n");
+
+    MI_CpuClear8(record_id,sizeof(record_id));
 
     fields_create[0].name = "demoscore";
     fields_create[0].type = DWC_GDB_FIELD_TYPE_INT;
@@ -521,9 +511,9 @@ void NitroMain()
     fields_create[1].value.int_u8 = 5;
 
 
-    for (i=0; i<4; i++) // 後に続く検索などのデモのため、レコードを新規に４つ作成します。
+    for (i=0; i<CREATE_NUM; i++) // 後に続く検索などのデモのため、レコードを新規に４つ作成します。
     {
-        res = DWC_GdbCreateRecordAsync(TABLE_NAME, fields_create, 2, &record_id);
+        res = DWC_GdbCreateRecordAsync(TABLE_NAME, fields_create, 2, &record_id[i]);
 
         if (res != DWC_GDB_ERROR_NONE)
         {
@@ -546,7 +536,8 @@ void NitroMain()
             return;
         }
 
-        if ((result = DWC_GdbGetAsyncResult()) != DWC_GDB_ASYNC_RESULT_SUCCESS)
+        result = DWC_GdbGetAsyncResult();
+        if (result != DWC_GDB_ASYNC_RESULT_SUCCESS && result != DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED )
         {
             OS_Printf("error!! DWCGdbAsyncResult[%d].  LINE[%d]\n",result,__LINE__);
             gdb_demo_exit();
@@ -559,92 +550,104 @@ void NitroMain()
     // レコードを削除する非同期処理
     //-----------------------------------------------------------------------
     OS_Printf("*********  DEMO_2  *********  delete record\n");
-
-    res = DWC_GdbDeleteRecordAsync(TABLE_NAME, record_id);// 最後に作成されたレコードを削除
-
-    if (res != DWC_GDB_ERROR_NONE)
+    
+    if(record_id[0] != 0)
     {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbError[%d] in DWC_GdbDeleteRecordAsync().  %s line[%d]\n",res,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
+        res = DWC_GdbDeleteRecordAsync(TABLE_NAME, record_id[0]);// 最初に作成されたレコードを削除
+    
+        if (res != DWC_GDB_ERROR_NONE)
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbError[%d] in DWC_GdbDeleteRecordAsync().  %s line[%d]\n",res,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
+    
+        if ((err = wait_async_end()) != DWC_ERROR_NONE)
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCError[%d]   %s line[%d]\n",err,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
+    
+        if ((state = DWC_GdbGetState()) != DWC_GDB_STATE_IDLE)
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbState[%d] is improper state here.  %s line[%d]\n",state,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
+    
+        result = DWC_GdbGetAsyncResult();
+        if (result != DWC_GDB_ASYNC_RESULT_SUCCESS && result != DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED )
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
     }
-
-    if ((err = wait_async_end()) != DWC_ERROR_NONE)
+    else
     {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCError[%d]   %s line[%d]\n",err,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
+        OS_TPrintf("gdb_sample_DEBUG: Target record is not found. skip.\n");
     }
-
-    if ((state = DWC_GdbGetState()) != DWC_GDB_STATE_IDLE)
-    {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbState[%d] is improper state here.  %s line[%d]\n",state,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
-    }
-
-    if ((result = DWC_GdbGetAsyncResult()) != DWC_GDB_ASYNC_RESULT_SUCCESS)
-    {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
-    }
-
 
 
     // レコードを更新する非同期処理
     //-----------------------------------------------------------------------
     OS_Printf("*********  DEMO_3  *********  update record\n");
-
-    fields_update[0].name = "demoscore";
-    fields_update[0].type = DWC_GDB_FIELD_TYPE_INT;
-    fields_update[0].value.int_s32 = 1500;    // 1000 だったものを、1500 に更新する
-    fields_update[1].name = "demostage";
-    fields_update[1].type = DWC_GDB_FIELD_TYPE_SHORT;
-    fields_update[1].value.int_u8 = 10;        // 5 だったものを、10 に更新する
-
-    res = DWC_GdbUpdateRecordAsync(TABLE_NAME, (record_id - 1), fields_update, 2); // ３番目に作成したレコードを更新
-
-    if (res != DWC_GDB_ERROR_NONE)
-    {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbError[%d] in DWC_GdbUpdateRecordAsync().  %s line[%d]\n",res,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
-    }
-
-    if ((err = wait_async_end()) != DWC_ERROR_NONE)
-    {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCError[%d]   %s line[%d]\n",err,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
-    }
     
-    if ((state = DWC_GdbGetState()) != DWC_GDB_STATE_IDLE)
+    if(record_id[1] != 0)
     {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbState[%d] is improper state here.  %s line[%d]\n",state,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
+        fields_update[0].name = "demoscore";
+        fields_update[0].type = DWC_GDB_FIELD_TYPE_INT;
+        fields_update[0].value.int_s32 = 1500;    // 1000 だったものを、1500 に更新する
+        fields_update[1].name = "demostage";
+        fields_update[1].type = DWC_GDB_FIELD_TYPE_SHORT;
+        fields_update[1].value.int_u8 = 10;        // 5 だったものを、10 に更新する
+    
+        res = DWC_GdbUpdateRecordAsync(TABLE_NAME, record_id[1], fields_update, 2); // 2番目に作成したレコードを更新
+    
+        if (res != DWC_GDB_ERROR_NONE)
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbError[%d] in DWC_GdbUpdateRecordAsync().  %s line[%d]\n",res,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
+    
+        if ((err = wait_async_end()) != DWC_ERROR_NONE)
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCError[%d]   %s line[%d]\n",err,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
+        
+        if ((state = DWC_GdbGetState()) != DWC_GDB_STATE_IDLE)
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbState[%d] is improper state here.  %s line[%d]\n",state,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
+    
+        result = DWC_GdbGetAsyncResult();
+        if (result != DWC_GDB_ASYNC_RESULT_SUCCESS && result != DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED )
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
+    }
+    else
+    {
+        OS_TPrintf("gdb_sample_DEBUG: Target record is not found. skip.\n");
     }
 
-    if ((result = DWC_GdbGetAsyncResult()) != DWC_GDB_ASYNC_RESULT_SUCCESS)
-    {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
-    }
-
-#endif
 
     // 自分のレコードを全て取得する非同期処理
     //-----------------------------------------------------------------------
     OS_Printf("*********  DEMO_4  *********  get my all records\n");
     {
-      const char* field_names[7] = {"TOTAL_MATCHES_COUNTER","CAREER_WINS","CAREER_LOSSES","ARENA_ELO_RATING_1V1",
-      "DISCONNECTS_COUNTER","COMPLETE_MATCHES_COUNTER","DISCONNECT_RATE"};  // 検索で取得するフィールド名
-      //  const char* field_names[4] = {"recordid","ownerid","demostage","demoscore"};  // 検索で取得するフィールド名
+        const char* field_names[4] = {"recordid","ownerid","demostage","demoscore"};  // 検索で取得するフィールド名
         int field_num = sizeof(field_names)/sizeof(field_names[0]);  // 上記で設定したフィールド名の総数
 
-        res = DWC_GdbGetMyRecordsAsync("PlayerStats_v1", field_names, field_num, get_records_callback, &field_num);
+        res = DWC_GdbGetMyRecordsAsync(TABLE_NAME, field_names, field_num, get_records_callback, &field_num);
 
         if (res != DWC_GDB_ERROR_NONE)
         {
@@ -667,7 +670,8 @@ void NitroMain()
             return;
         }
 
-        if ((result = DWC_GdbGetAsyncResult()) != DWC_GDB_ASYNC_RESULT_SUCCESS)
+        result = DWC_GdbGetAsyncResult();
+        if (result != DWC_GDB_ASYNC_RESULT_SUCCESS && result != DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED )
         {
             OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
             gdb_demo_exit();
@@ -680,50 +684,59 @@ void NitroMain()
     // 指定したレコードIDのレコードを点数付けする非同期処理
     //-----------------------------------------------------------------------
     OS_Printf("*********  DEMO_5  *********  rate record\n");
-
-    DWC_GdbRateRecordAsync(TABLE_NAME, (record_id - 1), 5); // ３番目に作成したレコードを評価する（５点）
-
-    if (res != DWC_GDB_ERROR_NONE)
-    {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbError[%d] in DWC_GdbRateRecordAsync().  %s line[%d]\n",res,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
-    }
-
-    if ((err = wait_async_end()) != DWC_ERROR_NONE)
-    {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCError[%d]   %s line[%d]\n",err,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
-    }
     
-    if ((state = DWC_GdbGetState()) != DWC_GDB_STATE_IDLE)
+    if(record_id[2] != 0)
     {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbState[%d] is improper state here.  %s line[%d]\n",state,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
+        res = DWC_GdbRateRecordAsync(TABLE_NAME, record_id[2], 5); // 3番目に作成したレコードを評価する（5点）
+    
+        if (res != DWC_GDB_ERROR_NONE)
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbError[%d] in DWC_GdbRateRecordAsync().  %s line[%d]\n",res,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
+    
+        if ((err = wait_async_end()) != DWC_ERROR_NONE)
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCError[%d]   %s line[%d]\n",err,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
+        
+        if ((state = DWC_GdbGetState()) != DWC_GDB_STATE_IDLE)
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbState[%d] is improper state here.  %s line[%d]\n",state,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
+    
+        result = DWC_GdbGetAsyncResult();
+        if (result != DWC_GDB_ASYNC_RESULT_SUCCESS && result != DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED )
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
     }
-
-    if ((result = DWC_GdbGetAsyncResult()) != DWC_GDB_ASYNC_RESULT_SUCCESS)
+    else
     {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
+        OS_TPrintf("gdb_sample_DEBUG: Target record is not found. skip.\n");
     }
-
 
 
     // 指定したレコードIDのレコードを取得する非同期処理
     //-----------------------------------------------------------------------
     OS_Printf("*********  DEMO_6  *********  ged specified record\n");
+    
+    if(record_id[1] != 0 && record_id[2] != 0)
     {
         const char* field_names[3] = { "recordid", "num_ratings", "average_rating" }; //　取得したいフィールド名の設定
         int field_num = sizeof(field_names)/sizeof(field_names[0]);    // 上記で設定したフィールド名の総数
         int record_ids[2];
 
-        // ２番目と３番目に作成したレコード
-        record_ids[0] = (record_id-2);
-        record_ids[1] = (record_id-1);
+        // 2番目と3番目に作成したレコード
+        record_ids[0] = record_id[1];
+        record_ids[1] = record_id[2];
 
         DWC_GdbGetRecordsAsync( TABLE_NAME,
                                 record_ids,
@@ -754,12 +767,17 @@ void NitroMain()
             return;
         }
 
-        if ((result = DWC_GdbGetAsyncResult()) != DWC_GDB_ASYNC_RESULT_SUCCESS)
+        result = DWC_GdbGetAsyncResult();
+        if (result != DWC_GDB_ASYNC_RESULT_SUCCESS && result != DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED )
         {
             OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
             gdb_demo_exit();
             return;
         }
+    }
+    else
+    {
+        OS_TPrintf("gdb_sample_DEBUG: Target record is not found. skip.\n");
     }
 
 
@@ -796,7 +814,8 @@ void NitroMain()
             return;
         }
 
-        if ((result = DWC_GdbGetAsyncResult()) != DWC_GDB_ASYNC_RESULT_SUCCESS)
+        result = DWC_GdbGetAsyncResult();
+        if (result != DWC_GDB_ASYNC_RESULT_SUCCESS && result != DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED )
         {
             OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
             gdb_demo_exit();
@@ -838,7 +857,8 @@ void NitroMain()
             return;
         }
 
-        if ((result = DWC_GdbGetAsyncResult()) != DWC_GDB_ASYNC_RESULT_SUCCESS)
+        result = DWC_GdbGetAsyncResult();
+        if (result != DWC_GDB_ASYNC_RESULT_SUCCESS && result != DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED )
         {
             OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
             gdb_demo_exit();
@@ -867,7 +887,7 @@ void NitroMain()
 
         // ファイルをアップロードする非同期処理を開始
         //-----------------------------------------------------------------------
-        res = DWC_GdbUploadFileAsync(&data, sizeof(s64), filename, &file_id);
+        res = DWC_GdbUploadFileAsync(&data, sizeof(s64), filename, &file_id, file_progress_callback);
 
         if (res != DWC_GDB_ERROR_NONE)
         {
@@ -890,7 +910,8 @@ void NitroMain()
             return;
         }
 
-        if ((result = DWC_GdbGetAsyncResult()) != DWC_GDB_ASYNC_RESULT_SUCCESS)
+        result = DWC_GdbGetAsyncResult();
+        if (result != DWC_GDB_ASYNC_RESULT_SUCCESS && result != DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED )
         {
             OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
             gdb_demo_exit();
@@ -898,81 +919,89 @@ void NitroMain()
         }
 
 
-
-        // ファイルIDをデータベースへ登録する非同期処理を開始
-        // （レコードを新規に作成する非同期処理）
-        //-----------------------------------------------------------------------
-
-        fields[0].name = "demofile";                    // <=--------------------------------
-        fields[0].type = DWC_GDB_FIELD_TYPE_INT;        // <=  ファイルID登録用レコード情報
-        fields[0].value.int_s32 = file_id;              // <=--------------------------------
-        
-        res = DWC_GdbCreateRecordAsync(TABLE_NAME, fields, 1, &record_id);
-        OS_TPrintf("gdb_sample_DEBUG: creating a record for fileid = %d\n",file_id);
-
-        if (res != DWC_GDB_ERROR_NONE)
+        record_id_file = 0;
+        if(file_id != 0)
         {
-            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbError[%d] in DWC_GdbCreateRecordAsync().  %s line[%d]\n",res,__FILE__,__LINE__);
-            gdb_demo_exit();
-            return;
+            // ファイルIDをデータベースへ登録する非同期処理を開始
+            // （レコードを新規に作成する非同期処理）
+            //-----------------------------------------------------------------------
+    
+            fields[0].name = "demofile";                    // <=--------------------------------
+            fields[0].type = DWC_GDB_FIELD_TYPE_INT;        // <=  ファイルID登録用レコード情報
+            fields[0].value.int_s32 = file_id;              // <=--------------------------------
+            
+            res = DWC_GdbCreateRecordAsync(TABLE_NAME, fields, 1, &record_id_file);
+            OS_TPrintf("gdb_sample_DEBUG: creating a record for fileid = %d\n",file_id);
+    
+            if (res != DWC_GDB_ERROR_NONE)
+            {
+                OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbError[%d] in DWC_GdbCreateRecordAsync().  %s line[%d]\n",res,__FILE__,__LINE__);
+                gdb_demo_exit();
+                return;
+            }
+    
+            if ((err = wait_async_end()) != DWC_ERROR_NONE)
+            {
+                OS_TPrintf("gdb_sample_DEBUG: error!! DWCError[%d]   %s line[%d]\n",err,__FILE__,__LINE__);
+                gdb_demo_exit();
+                return;
+            }
+    
+            if ((state = DWC_GdbGetState()) != DWC_GDB_STATE_IDLE)
+            {
+                OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbState[%d] is improper state here.  %s line[%d]\n",state,__FILE__,__LINE__);
+                gdb_demo_exit();
+                return;
+            }
+    
+            result = DWC_GdbGetAsyncResult();
+            if (result != DWC_GDB_ASYNC_RESULT_SUCCESS && result != DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED )
+            {
+                OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
+                gdb_demo_exit();
+                return;
+            }
+    
+    
+    
+            // ファイルをダウンロードする非同期処理
+            //-----------------------------------------------------------------------
+    
+            res = DWC_GdbDownloadFileAsync(file_id, 2048, TRUE, file_progress_callback, download_file_callback, NULL);
+    
+            if (res != DWC_GDB_ERROR_NONE)
+            {
+                OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbError[%d] in DWC_GdbDownloadFileAsync().  %s line[%d]\n",res,__FILE__,__LINE__);
+                gdb_demo_exit();
+                return;
+            }
+    
+            if ((err = wait_async_end()) != DWC_ERROR_NONE)
+            {
+                OS_TPrintf("gdb_sample_DEBUG: error!! DWCError[%d]   %s line[%d]\n",err,__FILE__,__LINE__);
+                gdb_demo_exit();
+                return;
+            }
+    
+            if ((state = DWC_GdbGetState()) != DWC_GDB_STATE_IDLE)
+            {
+                OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbState[%d] is improper state here.  %s line[%d]\n",state,__FILE__,__LINE__);
+                gdb_demo_exit();
+                return;
+            }
+    
+            result = DWC_GdbGetAsyncResult();
+            if (result != DWC_GDB_ASYNC_RESULT_SUCCESS && result != DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED )
+            {
+                OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
+                gdb_demo_exit();
+                return;
+            }
         }
-
-        if ((err = wait_async_end()) != DWC_ERROR_NONE)
+        else
         {
-            OS_TPrintf("gdb_sample_DEBUG: error!! DWCError[%d]   %s line[%d]\n",err,__FILE__,__LINE__);
-            gdb_demo_exit();
-            return;
+            OS_TPrintf("gdb_sample_DEBUG: Target record is not found. skip.\n");
         }
-
-        if ((state = DWC_GdbGetState()) != DWC_GDB_STATE_IDLE)
-        {
-            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbState[%d] is improper state here.  %s line[%d]\n",state,__FILE__,__LINE__);
-            gdb_demo_exit();
-            return;
-        }
-
-        if ((result = DWC_GdbGetAsyncResult()) != DWC_GDB_ASYNC_RESULT_SUCCESS)
-        {
-            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
-            gdb_demo_exit();
-            return;
-        }
-
-
-
-        // ファイルをダウンロードする非同期処理
-        //-----------------------------------------------------------------------
-
-        res = DWC_GdbDownloadFileAsync(file_id, 2048, TRUE, download_file_callback, NULL);
-
-        if (res != DWC_GDB_ERROR_NONE)
-        {
-            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbError[%d] in DWC_GdbDownloadFileAsync().  %s line[%d]\n",res,__FILE__,__LINE__);
-            gdb_demo_exit();
-            return;
-        }
-
-        if ((err = wait_async_end()) != DWC_ERROR_NONE)
-        {
-            OS_TPrintf("gdb_sample_DEBUG: error!! DWCError[%d]   %s line[%d]\n",err,__FILE__,__LINE__);
-            gdb_demo_exit();
-            return;
-        }
-
-        if ((state = DWC_GdbGetState()) != DWC_GDB_STATE_IDLE)
-        {
-            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbState[%d] is improper state here.  %s line[%d]\n",state,__FILE__,__LINE__);
-            gdb_demo_exit();
-            return;
-        }
-
-        if ((result = DWC_GdbGetAsyncResult()) != DWC_GDB_ASYNC_RESULT_SUCCESS)
-        {
-            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
-            gdb_demo_exit();
-            return;
-        }
-
 
     }
 
@@ -1009,7 +1038,8 @@ void NitroMain()
             return;
         }
 
-        if ((result = DWC_GdbGetAsyncResult()) != DWC_GDB_ASYNC_RESULT_SUCCESS)
+        result = DWC_GdbGetAsyncResult();
+        if (result != DWC_GDB_ASYNC_RESULT_SUCCESS && result != DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED )
         {
             OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
             gdb_demo_exit();
@@ -1066,7 +1096,8 @@ void NitroMain()
             return;
         }
 
-        if ((result = DWC_GdbGetAsyncResult()) != DWC_GDB_ASYNC_RESULT_SUCCESS)
+        result = DWC_GdbGetAsyncResult();
+        if (result != DWC_GDB_ASYNC_RESULT_SUCCESS && result != DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED )
         {
             OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
             gdb_demo_exit();
@@ -1117,40 +1148,47 @@ void NitroMain()
     //-----------------------------------------------------------------------
     OS_Printf("*********  DEMO_fin  *********  delete file id from the database to finalize this demo..\n");
 
-    res = DWC_GdbDeleteRecordAsync(TABLE_NAME, record_id); // 最後に作成されたレコードを削除
-
-    if (res != DWC_GDB_ERROR_NONE)
+    if(record_id_file != 0)
     {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbError[%d] in DWC_GdbDeleteRecordAsync().  %s line[%d]\n",res,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
+        res = DWC_GdbDeleteRecordAsync(TABLE_NAME, record_id_file);
+    
+        if (res != DWC_GDB_ERROR_NONE)
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbError[%d] in DWC_GdbDeleteRecordAsync().  %s line[%d]\n",res,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
+    
+        if ((err = wait_async_end()) != DWC_ERROR_NONE)
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCError[%d]   %s line[%d]\n",err,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
+    
+        if ((state = DWC_GdbGetState()) != DWC_GDB_STATE_IDLE)
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbState[%d] is improper state here.  %s line[%d]\n",state,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
+    
+        result = DWC_GdbGetAsyncResult();
+        if (result != DWC_GDB_ASYNC_RESULT_SUCCESS && result != DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED )
+        {
+            OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
+            gdb_demo_exit();
+            return;
+        }
     }
-
-    if ((err = wait_async_end()) != DWC_ERROR_NONE)
+    else
     {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCError[%d]   %s line[%d]\n",err,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
+        OS_TPrintf("gdb_sample_DEBUG: Target record is not found. skip.\n");
     }
-
-    if ((state = DWC_GdbGetState()) != DWC_GDB_STATE_IDLE)
-    {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbState[%d] is improper state here.  %s line[%d]\n",state,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
-    }
-
-    if ((result = DWC_GdbGetAsyncResult()) != DWC_GDB_ASYNC_RESULT_SUCCESS)
-    {
-        OS_TPrintf("gdb_sample_DEBUG: error!! DWCGdbAsyncResult[%d].  %s line[%d]\n",result,__FILE__,__LINE__);
-        gdb_demo_exit();
-        return;
-    }
-
 
 
 //デモ終了
     gdb_demo_exit();
-
+    OS_Terminate();
 
 }

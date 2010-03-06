@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>コンペティション - 定数</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">コンペティション - 定数</h1>
+<H2>定義</H2>
+<DL>
+	<DD>
+		<PRE><CODE>
+#include &lt;dwc.h&gt;
+
+
+enum DWCScResult {
+    DWC_SC_RESULT_NO_ERROR                  =  0,
+    DWC_SC_RESULT_NO_AVAILABILITY_CHECK,
+    DWC_SC_RESULT_INVALID_PARAMETERS,
+    DWC_SC_RESULT_NOT_INITIALIZED,
+    DWC_SC_RESULT_CORE_NOT_INITIALIZED,
+    DWC_SC_RESULT_OUT_OF_MEMORY,
+    DWC_SC_RESULT_CALLBACK_PENDING,
+    DWC_SC_RESULT_HTTP_ERROR,
+    DWC_SC_RESULT_UNKNOWN_RESPONSE,
+    DWC_SC_RESULT_RESPONSE_INVALID,
+    DWC_SC_RESULT_INVALID_DATATYPE,
+    DWC_SC_RESULT_REPORT_INCOMPLETE,
+    DWC_SC_RESULT_REPORT_INVALID,
+    DWC_SC_RESULT_SUBMISSION_FAILED,
+    DWC_SC_RESULT_UNKNOWN_ERROR,
+    DWC_SC_RESULT_MAX,
+};
+
+enum DWCScGameResult {
+    DWC_SC_GAME_RESULT_WIN,
+    DWC_SC_GAME_RESULT_LOSS,
+    DWC_SC_GAME_RESULT_DRAW,
+    DWC_SC_GAME_RESULT_DISCONNECT,
+    DWC_SC_GAME_RESULT_DESYNC,
+    DWC_SC_GAME_RESULT_NONE,
+    DWC_SC_GAME_RESULT_MAX,
+};
+
+enum DWCScGameStatus {
+    DWC_SC_GAME_STATUS_COMPLETE,
+    DWC_SC_GAME_STATUS_PARTIAL,
+    DWC_SC_GAME_STATUS_BROKEN,
+    DWC_SC_GAME_STATUS_MAX,
+};
+
+		</CODE></PRE>
+	</DD>
+</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+	</TBODY>
+</TABLE>
+
+<a id="dwc__sc_8h_1dca53ef710261d3406ae316e692e498d"></a>
+<H2 id="TAG_ENUM_1">エラーおよび失敗について示します。</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_NO_ERROR</CODE></STRONG></EM></TD>
+	  <TD>エラーは発生しませんでした</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_NO_AVAILABILITY_CHECK</CODE></STRONG></EM></TD>
+	  <TD>初期化の前に、標準のGameSpy可用性チェックが実行されませんでした</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_INVALID_PARAMETERS</CODE></STRONG></EM></TD>
+	  <TD>インターフェース関数に渡されたパラメータが無効です</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_NOT_INITIALIZED</CODE></STRONG></EM></TD>
+	  <TD>SDKが初期化されませんでした</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_CORE_NOT_INITIALIZED</CODE></STRONG></EM></TD>
+	  <TD>コアが初期化されませんでした</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_OUT_OF_MEMORY</CODE></STRONG></EM></TD>
+	  <TD>SDKはリソースにメモリを割り当てられませんでした</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_CALLBACK_PENDING</CODE></STRONG></EM></TD>
+	  <TD>アプリケーションに対し、操作が保留中であることを伝えます</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_HTTP_ERROR</CODE></STRONG></EM></TD>
+	  <TD>バックエンドが適正なHTTPによるレスポンスに失敗した場合のエラー発生</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_UNKNOWN_RESPONSE</CODE></STRONG></EM></TD>
+	  <TD>SDKが結果を理解できない場合のエラー発生</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_RESPONSE_INVALID</CODE></STRONG></EM></TD>
+	  <TD>SDKがバックエンドからのレスポンスを読み取れない場合のエラー発生</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_INVALID_DATATYPE</CODE></STRONG></EM></TD>
+	  <TD>無効なデータタイプ</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_REPORT_INCOMPLETE</CODE></STRONG></EM></TD>
+	  <TD>レポートが不完全です</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_REPORT_INVALID</CODE></STRONG></EM></TD>
+	  <TD>レポートの一部またはすべてが無効です</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_SUBMISSION_FAILED</CODE></STRONG></EM></TD>
+	  <TD>レポートの送信に失敗しました</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_UNKNOWN_ERROR</CODE></STRONG></EM></TD>
+	  <TD>SDKが認識できないエラー</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_RESULT_MAX</CODE></STRONG></EM></TD>
+	  <TD>返される可能性のある結果コードの合計数</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__sc_8h_1a051f537a3cbef748129b45b81890f5e"></a>
+<H2 id="TAG_ENUM_2">対戦結果がどのように終了したかを表します。</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_RESULT_WIN</CODE></STRONG></EM></TD>
+	  <TD>勝利</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_RESULT_LOSS</CODE></STRONG></EM></TD>
+	  <TD>敗北</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_RESULT_DRAW</CODE></STRONG></EM></TD>
+	  <TD>引き分け</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_RESULT_DISCONNECT</CODE></STRONG></EM></TD>
+	  <TD>切断</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_RESULT_DESYNC</CODE></STRONG></EM></TD>
+	  <TD>同期ミス</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_RESULT_NONE</CODE></STRONG></EM></TD>
+	  <TD>未定義</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_RESULT_MAX</CODE></STRONG></EM></TD>
+	  <TD>ゲームの結果コードの合計数</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+<a id="dwc__sc_8h_11737e72b29c2e06c7c7c461214b651e8"></a>
+<H2 id="TAG_ENUM_3">ゲームセッションがどのように終了しているかを示します。</H2>
+<TABLE border="1">
+	<TBODY>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_STATUS_COMPLETE</CODE></STRONG></EM></TD>
+	  <TD>ゲームセッションが、中断（切断、非同期化など）されることなく予定通りに終了しました。このステータスは、すべてのプレイヤーがゲーム結果を入手できることを示しています</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_STATUS_PARTIAL</CODE></STRONG></EM></TD>
+	  <TD>ゲームセッションは予定通りに終了しましたが、1人以上のプレイヤーが予想外に中止または切断しました。接続切断されたプレイヤーがゲーム結果で明確にレポートされ、正規化中、可能性のあるペナルティメトリックに使用されます</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_STATUS_BROKEN</CODE></STRONG></EM></TD>
+	  <TD>ゲームセッションは予想通りのエンドポイントに達せず、完了しませんでした。これは、終了結果が確定できないイベントが検出された場合にレポートされる必要があります</TD>
+	</TR>
+
+	<TR>
+	  <TD width="25%"><EM><STRONG><CODE>DWC_SC_GAME_STATUS_MAX</CODE></STRONG></EM></TD>
+	  <TD>ゲームステータスコードの合計数</TD>
+	</TR>
+
+	</TBODY>
+</TABLE>
+
+
+</body>
+</html>

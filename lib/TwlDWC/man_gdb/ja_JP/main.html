@@ -10,7 +10,7 @@
 <body>
     <h1 class="title">TWL-DWC 関数リファレンスマニュアル<br>(日本語版)</h1>
     <p align="right">
-    <span class="version">TWL-DWC[-DL] 5.4 test1 対応</span>
+    <span class="version">TWL-DWC[-DL] 5.3 patch1_sslgdb3 対応</span>
     </p>
     <p class="caution">[注意]　このドキュメントの内容は、秘密情報であるため、厳重な取扱い、管理を行なってください。</p>
     <p class="copyright">&copy;2005-2009 Nintendo Co.,Ltd. All rights reserved.</p>
@@ -328,10 +328,60 @@
             <DL>
 
             <p>
-            <DT>5.4pr1</DT>
+            <DT>5.3patch1_sslgdb3</DT>
+
+                <DD>
+                    <a href="dwc/DWC_GdbInitialize.html#dwc__gdb_8h_154ac61368c624a7e5196c29ee85c0f5e">DWC_GdbInitialize</a> : 非SSL通信の機能が削除されたこと、ssl_typeに指定する定義名がDWC_SSL*になったことに対応。
+                </DD>
+
+            </p>
+
+            <p>
+            <DT>5.3patch1_sslgdb2</DT>
+
+                <DD>
+                    <a href="dwc/DWCGdbProgressCallback.html#dwc__gdb_8h_1eb93c7179e6e166bf335abcd96e8f1f4">DWCGdbProgressCallback</a> : ファイルアップロードの際の総送信サイズについて注意点を追記
+                </DD>
+
+            </p>
+
+            <p>
+            <DT>5.3patch1_sslgdb1</DT>
+
+                <DD>
+                    <a href="dwc/DWCGdbProgressCallback.html#dwc__gdb_8h_1eb93c7179e6e166bf335abcd96e8f1f4">DWCGdbProgressCallback</a> : 新規追加
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_GdbCancelRequest.html#dwc__gdb_8h_11085e82c85f5e48f76499c67d9de98f6">DWC_GdbCancelRequest</a> : 新規追加
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_GdbShutdown.html#dwc__gdb_8h_118dcb273ec08a49b8f9363bfca444c83">DWC_GdbShutdown</a> : 非同期処理中のキャンセルは、<a href="dwc/DWC_GdbCancelRequest.html#dwc__gdb_8h_11085e82c85f5e48f76499c67d9de98f6">DWC_GdbCancelRequest</a>関数を使用するように仕様変更したため、関連する記述を修正。
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_GdbDownloadFileAsync.html#dwc__gdb_8h_1ca12c8e303697e670ac44caf42341e4d">DWC_GdbDownloadFileAsync</a> : 進行状況を取得するコールバック関数を設定できるようになったことに対応。
+                </DD>
+
+                <DD>
+                    <a href="dwc/DWC_GdbUploadFileAsync.html#dwc__gdb_8h_1607acf37686a175e8f9cca440f92dcfe">DWC_GdbUploadFileAsync</a> : 進行状況を取得するコールバック関数を設定できるようになったことに対応。
+                </DD>
 
                 <DD>
                     <a href="dwc/DWC_CheckProfanityAsync.html#dwc__prof_8h_16e8029f668632188e74681738be0aa20">DWC_CheckProfanityAsync</a> : 全リージョン&#39;A&#39;を指定したときの例で、不正文字を示す結果を修正
+                </DD>
+
+                <DD>
+                    <a href="dwc/Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86">DWCGdbError</a> : <a href="dwc/Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86f23656a1bfca6e2b21a2d0100bc37ed1">DWC_GDB_ERROR_IN_CANCEL_PROCESS</a>を追加
+                </DD>
+
+                <DD>
+                    <a href="dwc/Macro.html#dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492">DWCGdbAsyncResult</a> : <a href="dwc/Macro.html#dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4922d0c918cf9850be313bde6c7b0a061e1">DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED</a>を追加
+                </DD>
+
+                <DD>
+                    <a href="dwc/Macro.html#dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb">DWCGdbState</a> : <a href="dwc/Macro.html#dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb09c71c110e8d73ebcb824481f1aa7116">DWC_GDB_STATE_IN_CANCEL_PROCESS</a>を追加
                 </DD>
 
             </p>

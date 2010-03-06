@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<h1 id="dwc__gdb_8h_13844663e211e1a5b1648cc3396825a90" align="left">DWC_GdbUploadFileAsync</h1>
+<h1 id="dwc__gdb_8h_1607acf37686a175e8f9cca440f92dcfe" align="left">DWC_GdbUploadFileAsync</h1>
 <h2>構文</h2>
 
 <dl>
@@ -18,7 +18,8 @@
   <PRE><CODE><a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86">DWCGdbError</a> DWC_GdbUploadFileAsync(const void *data,
                                    int size,
                                    const char *file_name,
-                                   int *file_id);</CODE></PRE></dd> 
+                                   int *file_id,
+                                   <a href="DWCGdbProgressCallback.html#dwc__gdb_8h_1eb93c7179e6e166bf335abcd96e8f1f4">DWCGdbProgressCallback</a> progress_callback);</CODE></PRE></dd> 
 </dl>
 
 <h2>引数</h2>
@@ -46,6 +47,11 @@
       <TD width="87%">ファイルIDを受け取る領域のポインタ</TD>
     </TR>
 
+    <TR>
+      <TD width="13%"><EM><STRONG>progress_callback</STRONG></EM></TD>
+      <TD width="87%">アップロード状況を取得するコールバック。使用しない場合はNULL。</TD>
+    </TR>
+
   </TBODY>
 </TABLE>
 
@@ -55,11 +61,14 @@
 
 <H2>説明</H2>
 
-<p>ファイルをアップロードする非同期処理を開始します。</p><p>処理が成功すると、ファイルがサーバにアップロードされ、ファイルIDが返されます。</p><p>返値として<a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86e9779fbe6ad274d2016ee2ab66a08582">DWC_GDB_ERROR_NONE</a>が返された場合は、非同期処理が開始しています。<a href="DWC_GdbGetState.html#dwc__gdb_8h_1369bfca6c2cd6e2e2893c03c94a5e2db">DWC_GdbGetState</a>関数が<a href="Macro.html#dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb605bb3a74ef4c38439052c43bdae07ce">DWC_GDB_STATE_IN_ASYNC_PROCESS</a>を返さなくなくなるまで待ってください。</p><p>処理の結果は、<a href="DWC_GdbGetAsyncResult.html#dwc__gdb_8h_1f700899219d0635bc4e4430fa9b7e840">DWC_GdbGetAsyncResult</a>関数で取得できます。</p><p>簡易データベースライブラリの非同期処理は、通信の切断等により、稀にいつまでたっても終わらなくなる可能性がありますので、必ずアプリケーションでタイムアウトを設定するようにして下さい。</p>
+<p>ファイルをアップロードする非同期処理を開始します。</p><p>処理が成功すると、ファイルがサーバにアップロードされ、ファイルIDが返されます。</p><p>返値として<a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86e9779fbe6ad274d2016ee2ab66a08582">DWC_GDB_ERROR_NONE</a>が返された場合は、非同期処理が開始しています。<a href="DWC_GdbGetState.html#dwc__gdb_8h_1369bfca6c2cd6e2e2893c03c94a5e2db">DWC_GdbGetState</a>関数が<a href="Macro.html#dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb605bb3a74ef4c38439052c43bdae07ce">DWC_GDB_STATE_IN_ASYNC_PROCESS</a>を返さなくなくなるまで待ってください。</p><p>処理の結果は、<a href="DWC_GdbGetAsyncResult.html#dwc__gdb_8h_1f700899219d0635bc4e4430fa9b7e840">DWC_GdbGetAsyncResult</a>関数で取得できます。</p><p>簡易データベースライブラリの非同期処理は、通信の切断等により、稀にいつまでたっても終わらなくなる可能性があります。必ずアプリケーションでタイムアウトを設定し、タイムアウトした場合は、<a href="DWC_GdbCancelRequest.html#dwc__gdb_8h_11085e82c85f5e48f76499c67d9de98f6">DWC_GdbCancelRequest</a>関数で非同期処理のキャンセルを行ってください。</p>
 
 
 <H2>履歴</H2>
 <DL>
+
+<DT>5.3patch1_sslgdb1</DT>
+<DD>進行状況を取得するコールバック関数を設定できるようになったことに対応。</DD>
 
 </DL>
 <p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GdbUploadFileAsync_tag">こちら</a>　　</p>

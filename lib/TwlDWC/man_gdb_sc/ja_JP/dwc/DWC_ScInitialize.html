@@ -9,13 +9,14 @@
 </head>
 
 <body>
-<h1 id="dwc__sc_8h_1e39742728253d1eede7cbb393877187c" align="left">DWC_ScInitialize</h1>
+<h1 id="dwc__sc_8h_1e65a0f0dcd1f0bd3225f4b6b7b642b21" align="left">DWC_ScInitialize</h1>
 <h2>構文</h2>
 
 <dl>
   <dd>
   <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
-  <PRE><CODE><a href="Macro.html#dwc__sc_8h_1dca53ef710261d3406ae316e692e498d">DWCScResult</a> DWC_ScInitialize(int theGameId);</CODE></PRE></dd> 
+  <PRE><CODE><a href="Macro.html#dwc__sc_8h_1dca53ef710261d3406ae316e692e498d">DWCScResult</a> DWC_ScInitialize(int theGameId,
+                             <a href="Macro.html#dwc__ssl_8h_1cd1c18b88545b3e2827b68992e223da5">DWCSSLType</a> ssl_type);</CODE></PRE></dd> 
 </dl>
 
 <h2>引数</h2>
@@ -26,6 +27,11 @@
     <TR>
       <TD width="13%"><EM><STRONG>theGameId</STRONG></EM></TD>
       <TD width="87%">GameSpyから与えたゲームIDを与えてください。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>ssl_type</STRONG></EM></TD>
+      <TD width="87%">SSLのタイプを設定します。Nitro/Twlでは<a href="Macro.html#dwc__ssl_8h_1cd1c18b88545b3e2827b68992e223da5208689406b23713c797560902f565eed">DWC_SSL_TYPE_SERVER_AUTH</a>を指定して下さい。</TD>
     </TR>
 
   </TBODY>
@@ -42,6 +48,9 @@
 
 <H2>履歴</H2>
 <DL>
+
+<DT>5.3patch1_sslgdb3</DT>
+<DD>SSL通信のため、引数ssl_typeが追加されたことに対応。</DD>
 
 </DL>
 <p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_ScInitialize_tag">こちら</a>　　</p>

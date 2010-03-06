@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------*
   Project:  DWC
 
-  Copyright 2005-2009 Nintendo.  All rights reserved.
+  Copyright 2005-2010 Nintendo.  All rights reserved.
 
   These coded instructions, statements, and computer programs contain
   proprietary information of Nintendo of America Inc. and/or Nintendo
@@ -45,6 +45,8 @@ typedef OSTick  DWCTick;
 u64 DWCi_Np_GetConsoleId( void );
 const char* DWCi_Np_GetConsoleName( void );
 const char* DWCi_Np_GetAppGameName( void );
+BOOL    DWCi_Np_SetRootCAList( const char *url );
+BOOL    DWCi_Np_CleanupRootCAList( const char *url );
 
 static inline DWCTick DWCi_Np_GetTick(void)
 {

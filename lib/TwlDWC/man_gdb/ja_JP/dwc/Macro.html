@@ -22,6 +22,7 @@
 
 <span id="dwc__common_8h_158d3f39e6cd9417cdd95717aeab8933e">#define   DWC_COMMONSTR_MAX_KEY_VALUE_LEN         4096</span>
 <span id="dwc__friend_8h_102dc5b4389418a1a27f1c512a63aaf01">#define   DWC_FRIEND_STATUS_STRING_LEN            (256)</span>
+<span id="dwc__gdb_8h_1fe10c8f7d2558227a3a0f34eb7e67238">#define   DWC_GDB_UPLOADHEADER_SIZE               178</span>
 <span id="dwc__main_8h_1d0a7c6de725f5971b01378e162671d5b">#define   DWC_MAX_PLAYER_NAME                     26</span>
 <span id="dwc__main_8h_140d1ea4526f0887e7d67830ff74d9626">#define   DWC_INVALID_AID                         (0xff)</span>
 <span id="dwc__match_8h_1136535c9d6074238bd4c3ec9be863b59">#define   DWC_MAX_CONNECTIONS                     32</span>
@@ -65,6 +66,11 @@
 		<TR>
 			<TH width="25%">DWC_FRIEND_STATUS_STRING_LEN</TH>
 			<TD><a href="DWC_GetOwnStatusString.html#dwc__friend_8h_102c7ea3da0c73733bbdfdc14e3085ca5">DWC_GetOwnStatusString</a>関数や<a href="DWC_SetOwnStatusString.html#dwc__friend_8h_14cd20cf1fd60674999b9496e9cccbb5d">DWC_SetOwnStatusString</a>関数や<a href="DWC_GetFriendStatusSC.html#dwc__friend_8h_153cfc54e21a73f2fb78a2ab37f6fbad6">DWC_GetFriendStatusSC</a>関数で指定できるステータス文字列の長さ(NULL終端含む)</TD>
+		</TR>
+
+		<TR>
+			<TH width="25%">DWC_GDB_UPLOADHEADER_SIZE</TH>
+			<TD>ファイルアップロードの際に内部的に付加されるヘッダサイズ</TD>
 		</TR>
 
 		<TR>
@@ -1039,46 +1045,6 @@
 </TABLE>
 
 
-<span id="dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b99accf87451a2db3accc627529ac0ee488"></span><span id="dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b99ef6d997b7776ec79dba470a38f08e597"></span><span id="dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b9979e37ffec943d53e1eeed2020a4c9286"></span><span id="dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b99e532407fa4cb2602fa3f2f95ab7bad6f"></span>
-<H3 id="dwc__gdb_8h_10aa8159d80833f71954f89c9272d6b99">SSL通信の状態を示す列挙型です。</H3>
-        <DL>
-            <DD>
-				<PRE><CODE>enum DWCGdbSSLType {
-    DWC_GDB_SSL_TYPE_NONE,
-    DWC_GDB_SSL_TYPE_SERVER_AUTH,
-    DWC_GDB_SSL_TYPE_SERVER_CLIENT_AUTH,
-    DWC_GDB_SSL_TYPE_NUM,
-};</CODE></PRE>
-			</DD>
-		</DL>
-
-<TABLE border="1">
-	<TBODY>
-
-		<TR>
-		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_NONE</CODE></STRONG></EM></TD>
-		  <TD>SSLを使用しません。</TD>
-		</TR>
-
-		<TR>
-		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_SERVER_AUTH</CODE></STRONG></EM></TD>
-		  <TD>サーバ認証を行いSSLで通信します。</TD>
-		</TR>
-
-		<TR>
-		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_SERVER_CLIENT_AUTH</CODE></STRONG></EM></TD>
-		  <TD>サーバ認証とクライアント認証を行いSSLで通信します。※Nitro,Twlでは使えません。</TD>
-		</TR>
-
-		<TR>
-		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_SSL_TYPE_NUM</CODE></STRONG></EM></TD>
-		  <TD></TD>
-		</TR>
-
-	</TBODY>
-</TABLE>
-
-
 <span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a3ae6ab45abcc3857483bf41a0793b177"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a33629b8eaebb990e354693c52234f3fc"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a481b3edf2d4044df2f13fe4797718bb0"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a7617a3593fd4f7481327b824b30eb216"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a9f1cc29c03399d6f2de8f3cda0d91036"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a058507b9aa1ac33c35bf5605d35c025f"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4ace98bba1d72bbf41ad60cf09f9842eae"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a6278229c15d477a84d8930dee00fb6fb"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a6e4cfa86823d7ab75751f04e7a601c77"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4ab77c1bfe3006a1952bfa5efd2815a0a6"></span><span id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4aea72e24b8cedbc1d63d31bfbb3a15b81"></span>
 <H3 id="dwc__gdb_8h_1f869042e8384689f34819a181037ed4a">フィールドの型を示す列挙型です。</H3>
         <DL>
@@ -1161,7 +1127,7 @@
 </TABLE>
 
 
-<span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86e9779fbe6ad274d2016ee2ab66a08582"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a8609d960ea7f626a750e856dca94bb8a7e"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86fb7833f79337fbea64f6040b987208f8"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a865c0906199233e658adee86bb72263735"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a861f6ff2e76fcb883d3646c4a92a403da1"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a8620c98f93663c044d6d43f068eef57f3b"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86d9c67158331d0e451dd21f08217604f5"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a867dc04f92726183de489ceee3814a653f"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86f4646ec9f6485759a76a7062fb6b6a32"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a867168de93939685b70ca1635c31e6ac31"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86e1207cc2506c0d726b4baed0c44ad681"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86052a3a4b58b1d89563955b69b454263a"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a863dc5a85600c9dbb923b71c4ce879f2bb"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86ee3bd215178571d38447c8645a5c3a20"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a8689d0d3e1158b9f32a59a0255aa45d0b1"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86fefb66f5925fdc654df571a8550e6827"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a861e4338ccd1b73d20cc2af7858c8ac6ae"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86b3285d92e1674f68b6271237cda7c58f"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a866ef0868a7a29170f0103fbfc38c46757"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a864378e1bc7feac65ba9b8730d908ece2a"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86c5827e448700d344fb4a3a7f54da3b31"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a860d4084c0afaea8fa7bf063bdbc8405bf"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a8668aa233fe2cb55050e065be47f22f5ee"></span>
+<span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86e9779fbe6ad274d2016ee2ab66a08582"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a8609d960ea7f626a750e856dca94bb8a7e"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86fb7833f79337fbea64f6040b987208f8"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a865c0906199233e658adee86bb72263735"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a861f6ff2e76fcb883d3646c4a92a403da1"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a8620c98f93663c044d6d43f068eef57f3b"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86d9c67158331d0e451dd21f08217604f5"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a867dc04f92726183de489ceee3814a653f"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86f4646ec9f6485759a76a7062fb6b6a32"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a867168de93939685b70ca1635c31e6ac31"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86e1207cc2506c0d726b4baed0c44ad681"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86052a3a4b58b1d89563955b69b454263a"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a863dc5a85600c9dbb923b71c4ce879f2bb"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86ee3bd215178571d38447c8645a5c3a20"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a8689d0d3e1158b9f32a59a0255aa45d0b1"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86fefb66f5925fdc654df571a8550e6827"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a861e4338ccd1b73d20cc2af7858c8ac6ae"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86b3285d92e1674f68b6271237cda7c58f"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a866ef0868a7a29170f0103fbfc38c46757"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a864378e1bc7feac65ba9b8730d908ece2a"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86c5827e448700d344fb4a3a7f54da3b31"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a860d4084c0afaea8fa7bf063bdbc8405bf"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a8668aa233fe2cb55050e065be47f22f5ee"></span><span id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86f23656a1bfca6e2b21a2d0100bc37ed1"></span>
 <H3 id="dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86">エラーを示す列挙型です。</H3>
         <DL>
             <DD>
@@ -1189,6 +1155,7 @@
     DWC_GDB_ERROR_IN_ASYNC_PROCESS       =  20,
     DWC_GDB_ERROR_GHTTP                  =  21,
     DWC_GDB_ERROR_IN_DWC_ERROR           =  22,
+    DWC_GDB_ERROR_IN_CANCEL_PROCESS      =  23,
 };</CODE></PRE>
 			</DD>
 		</DL>
@@ -1311,11 +1278,24 @@
 		  <TD>DWCのエラーが起こっています。エラーの対処を行ってください。</TD>
 		</TR>
 
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ERROR_IN_CANCEL_PROCESS</CODE></STRONG></EM></TD>
+		  <TD>非同期処理のキャンセル中です。</TD>
+		</TR>
+
 	</TBODY>
 </TABLE>
 
 
-<span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a49239582be56f1785d631810373fa064a4c"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4924afd9eda2e6676392b21a965c2db2361"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4925eaf2e3b2d401a1337aa757abb3353c3"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4929a937701e15ecf0f86f0c278f174a656"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a49214d2cf2e6c12821e15a026e6fb708d39"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492c371de846ada1ddb6b0ddbeb992b2110"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a49288b05de03139c9f4fb3ed8f458fe10b5"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4929a1434edfda178e4560ac09593dd9f0e"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492faa457de6eb1ecf4e5371dac4798ee89"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492cb57b4eac8558a5448a3fbcb4fc4e5a1"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4925b61d51648199c84d9f10147d58fae09"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492b6b0195c175de57f8af717489f3cd57f"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a49255da3e7bf5d2e7837d66746ff7bd8633"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4929242ed1fc90c85c89cfe16123d916a37"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a49264eb22c56674f3ae51462fd52c5cfdcf"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492208250040efa2fb81da8f6c74404fa27"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4922529a129ed45f2b10a593b711e22e442"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492b7c2701f3a90972958e2c806d79a07b4"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492029bd09d532e35784baedf9307846086"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492321fb4eaafdc9ef75aafc230faf57524"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492e99c97b47357cb94849347e38a266c94"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492bda323d6cc560a4b0f1848f6dcaa1ac5"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492f9f0a33bd83b8d0735a2d344c2bc9e25"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492cedf1d713d3801eb5de2c75e61cbad98"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4921485315052bc9dc56b62dd1f8ac05bc2"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492185a71b85746eedc07d880925f14fa78"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492a6375a94f467544b65bc2dd7e8bbfa0a"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492b74599cbf85532473779a3978e26b599"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4929e61f0c502afeb03b98553a4705c2dc4"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492424d077c2450b9240a30f57e5ff24efd"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4923422310e6fef7b6d6de5d592f47877c7"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4925d37cf8fb137071f2f42476bef8ba96a"></span>
+<H4>履歴</H3>
+<DL>
+
+<DT>5.3patch1_sslgdb1</DT>
+<DD><a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86f23656a1bfca6e2b21a2d0100bc37ed1">DWC_GDB_ERROR_IN_CANCEL_PROCESS</a>を追加</DD>
+
+</DL>
+
+<span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a49239582be56f1785d631810373fa064a4c"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4924afd9eda2e6676392b21a965c2db2361"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4925eaf2e3b2d401a1337aa757abb3353c3"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4929a937701e15ecf0f86f0c278f174a656"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a49214d2cf2e6c12821e15a026e6fb708d39"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492c371de846ada1ddb6b0ddbeb992b2110"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a49288b05de03139c9f4fb3ed8f458fe10b5"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4929a1434edfda178e4560ac09593dd9f0e"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492faa457de6eb1ecf4e5371dac4798ee89"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492cb57b4eac8558a5448a3fbcb4fc4e5a1"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4925b61d51648199c84d9f10147d58fae09"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492b6b0195c175de57f8af717489f3cd57f"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a49255da3e7bf5d2e7837d66746ff7bd8633"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4929242ed1fc90c85c89cfe16123d916a37"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a49264eb22c56674f3ae51462fd52c5cfdcf"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492208250040efa2fb81da8f6c74404fa27"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4922529a129ed45f2b10a593b711e22e442"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492b7c2701f3a90972958e2c806d79a07b4"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492029bd09d532e35784baedf9307846086"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492321fb4eaafdc9ef75aafc230faf57524"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492e99c97b47357cb94849347e38a266c94"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492bda323d6cc560a4b0f1848f6dcaa1ac5"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492f9f0a33bd83b8d0735a2d344c2bc9e25"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492cedf1d713d3801eb5de2c75e61cbad98"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4921485315052bc9dc56b62dd1f8ac05bc2"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492185a71b85746eedc07d880925f14fa78"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492a6375a94f467544b65bc2dd7e8bbfa0a"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492b74599cbf85532473779a3978e26b599"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4929e61f0c502afeb03b98553a4705c2dc4"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492424d077c2450b9240a30f57e5ff24efd"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4923422310e6fef7b6d6de5d592f47877c7"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4925d37cf8fb137071f2f42476bef8ba96a"></span><span id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4922d0c918cf9850be313bde6c7b0a061e1"></span>
 <H3 id="dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a492">非同期処理の結果を示す列挙型です。</H3>
         <DL>
             <DD>
@@ -1352,6 +1332,7 @@
     DWC_GDB_ASYNC_RESULT_GHTTP_ERROR              =  29,
     DWC_GDB_ASYNC_RESULT_TARGET_FILTER_INVALID    =  30,
     DWC_GDB_ASYNC_RESULT_SERVER_ERROR             =  31,
+    DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED        =  32,
 };</CODE></PRE>
 			</DD>
 		</DL>
@@ -1519,11 +1500,24 @@
 		  <TD></TD>
 		</TR>
 
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
 	</TBODY>
 </TABLE>
 
 
-<span id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb75bc98568e49f3a6eb33393882b57c3a"></span><span id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849ebb3a8a9018de84cb0de5bf917fa9f7b16"></span><span id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb605bb3a74ef4c38439052c43bdae07ce"></span><span id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb4ac82fc695b0ad32b22ff4a229225132"></span>
+<H4>履歴</H3>
+<DL>
+
+<DT>5.3patch1_sslgdb1</DT>
+<DD><a href="Macro.html#dwc__gdb_8h_104c1312ce8060c68c53d0d1ebc52a4922d0c918cf9850be313bde6c7b0a061e1">DWC_GDB_ASYNC_RESULT_REQUEST_CANCELLED</a>を追加</DD>
+
+</DL>
+
+<span id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb75bc98568e49f3a6eb33393882b57c3a"></span><span id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849ebb3a8a9018de84cb0de5bf917fa9f7b16"></span><span id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb605bb3a74ef4c38439052c43bdae07ce"></span><span id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb09c71c110e8d73ebcb824481f1aa7116"></span><span id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb4ac82fc695b0ad32b22ff4a229225132"></span>
 <H3 id="dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb">DWCGdbライブラリの状態を示す列挙型です。</H3>
         <DL>
             <DD>
@@ -1531,6 +1525,7 @@
     DWC_GDB_STATE_UNINITIALIZED,
     DWC_GDB_STATE_IDLE,
     DWC_GDB_STATE_IN_ASYNC_PROCESS,
+    DWC_GDB_STATE_IN_CANCEL_PROCESS,
     DWC_GDB_STATE_ERROR_OCCURED,
 };</CODE></PRE>
 			</DD>
@@ -1555,6 +1550,11 @@
 		</TR>
 
 		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_STATE_IN_CANCEL_PROCESS</CODE></STRONG></EM></TD>
+		  <TD>非同期処理のキャンセルを行っている状態</TD>
+		</TR>
+
+		<TR>
 		  <TD width="25%"><EM><STRONG><CODE>DWC_GDB_STATE_ERROR_OCCURED</CODE></STRONG></EM></TD>
 		  <TD>エラーが発生した状態</TD>
 		</TR>
@@ -1562,6 +1562,14 @@
 	</TBODY>
 </TABLE>
 
+
+<H4>履歴</H3>
+<DL>
+
+<DT>5.3patch1_sslgdb1</DT>
+<DD><a href="Macro.html#dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb09c71c110e8d73ebcb824481f1aa7116">DWC_GDB_STATE_IN_CANCEL_PROCESS</a>を追加</DD>
+
+</DL>
 
 <span id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f8221243cddc87940fb402ce1bf3739a6"></span><span id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f14ffe72054f5c005d1a4d0d7f716badd"></span><span id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f569337c439d12f04430d24a405071c32"></span><span id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f224ee0aecf6fc57322c88ac6f36ea799"></span><span id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f4bce8a960c389b720072a491c83cf00d"></span><span id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f00dbaa831456ceeb69cfad1bf519a279"></span><span id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f75614e7aad8b7afc4d124666ca8fb925"></span>
 <H3 id="dwc__login_8h_167c3f1961a1c645d9f330db0e75a858f">ログイン進行状況列挙子</H3>
@@ -2845,6 +2853,40 @@
 <DD>デバッグ情報出力用フラグに関する説明を追加しました。</DD>
 
 </DL>
+
+<span id="dwc__ssl_8h_1cd1c18b88545b3e2827b68992e223da5208689406b23713c797560902f565eed"></span><span id="dwc__ssl_8h_1cd1c18b88545b3e2827b68992e223da5bb615496126fc18d97bed62737324cb5"></span><span id="dwc__ssl_8h_1cd1c18b88545b3e2827b68992e223da54442e183db0c0fbf72f32cd1f74c3359"></span>
+<H3 id="dwc__ssl_8h_1cd1c18b88545b3e2827b68992e223da5">SSL通信の状態を示す列挙型です。</H3>
+        <DL>
+            <DD>
+				<PRE><CODE>enum DWCSSLType {
+    DWC_SSL_TYPE_SERVER_AUTH,
+    DWC_SSL_TYPE_SERVER_CLIENT_AUTH,
+    DWC_SSL_TYPE_NUM,
+};</CODE></PRE>
+			</DD>
+		</DL>
+
+<TABLE border="1">
+	<TBODY>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SSL_TYPE_SERVER_AUTH</CODE></STRONG></EM></TD>
+		  <TD>サーバ認証を行いSSLで通信します。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SSL_TYPE_SERVER_CLIENT_AUTH</CODE></STRONG></EM></TD>
+		  <TD>サーバ認証とクライアント認証を行いSSLで通信します。※Nitro,Twlでは使用できません。</TD>
+		</TR>
+
+		<TR>
+		  <TD width="25%"><EM><STRONG><CODE>DWC_SSL_TYPE_NUM</CODE></STRONG></EM></TD>
+		  <TD></TD>
+		</TR>
+
+	</TBODY>
+</TABLE>
+
 
 <span id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426c7fb7891ff1ed0a35f4e76ea7d10c6cda"></span><span id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426c0b0b42a1d7e1ae802ada2fea0e34b342"></span><span id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426ccb5731f2169fff2b24aa869980a962c7"></span><span id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426c019427c33fa7875cb41798902e9a8b80"></span><span id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426ce69951c5455e621beaed772d4075af48"></span><span id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426cb6ebccb1501c28fa2d2477cff9bcf810"></span><span id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426ca31d3699c23806a2b76722e0dbb2401d"></span>
 <H3 id="dwc__svl_8h_1eac74605ac413c74cd6b770894fe426c">サービスロケータ情報取得中のステートを示す列挙型</H3>

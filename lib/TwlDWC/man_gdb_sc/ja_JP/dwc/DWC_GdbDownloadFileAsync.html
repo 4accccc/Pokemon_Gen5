@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<h1 id="dwc__gdb_8h_1ec9c42c94fd2891995d1778d7f8af9af" align="left">DWC_GdbDownloadFileAsync</h1>
+<h1 id="dwc__gdb_8h_1ca12c8e303697e670ac44caf42341e4d" align="left">DWC_GdbDownloadFileAsync</h1>
 <h2>構文</h2>
 
 <dl>
@@ -18,6 +18,7 @@
   <PRE><CODE><a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86">DWCGdbError</a> DWC_GdbDownloadFileAsync(int file_id,
                                      int buf_size,
                                      BOOL clear_buf,
+                                     <a href="DWCGdbProgressCallback.html#dwc__gdb_8h_1eb93c7179e6e166bf335abcd96e8f1f4">DWCGdbProgressCallback</a> progress_callback,
                                      <a href="DWCGdbDownloadFileCallback.html#dwc__gdb_8h_1659e238c0c880dcd74d1bdd420dc377a">DWCGdbDownloadFileCallback</a> callback,
                                      void *user_param);</CODE></PRE></dd> 
 </dl>
@@ -43,6 +44,11 @@
     </TR>
 
     <TR>
+      <TD width="13%"><EM><STRONG>progress_callback</STRONG></EM></TD>
+      <TD width="87%">ダウンロードの進行状況を取得するコールバック。使用しない場合はNULL。</TD>
+    </TR>
+
+    <TR>
       <TD width="13%"><EM><STRONG>callback</STRONG></EM></TD>
       <TD width="87%">ダウンロードしたファイルを受け取るコールバック</TD>
     </TR>
@@ -61,11 +67,14 @@
 
 <H2>説明</H2>
 
-<p>ファイルをダウンロードする非同期処理を開始します。</p><p>処理が成功すると、引数callbackで指定したコールバック関数が呼ばれ、file_idで指定したIDのファイルが取得されます。<br>処理が失敗した場合はコールバックが呼ばれませんのでご注意ください。</p><p>返値として<a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86e9779fbe6ad274d2016ee2ab66a08582">DWC_GDB_ERROR_NONE</a>が返された場合は、非同期処理が開始しています。<a href="DWC_GdbGetState.html#dwc__gdb_8h_1369bfca6c2cd6e2e2893c03c94a5e2db">DWC_GdbGetState</a>関数が<a href="Macro.html#dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb605bb3a74ef4c38439052c43bdae07ce">DWC_GDB_STATE_IN_ASYNC_PROCESS</a>を返さなくなくなるまで待ってください。</p><p>処理の結果は、<a href="DWC_GdbGetAsyncResult.html#dwc__gdb_8h_1f700899219d0635bc4e4430fa9b7e840">DWC_GdbGetAsyncResult</a>関数で取得できます。</p><p>簡易データベースライブラリの非同期処理は、通信の切断等により、稀にいつまでたっても終わらなくなる可能性がありますので、必ずアプリケーションでタイムアウトを設定するようにして下さい。</p>
+<p>ファイルをダウンロードする非同期処理を開始します。</p><p>処理が成功すると、引数callbackで指定したコールバック関数が呼ばれ、file_idで指定したIDのファイルが取得されます。<br>処理が失敗した場合はコールバックが呼ばれませんのでご注意ください。</p><p>返値として<a href="Macro.html#dwc__gdb_8h_1cb77329e259246f72c99a77edee22a86e9779fbe6ad274d2016ee2ab66a08582">DWC_GDB_ERROR_NONE</a>が返された場合は、非同期処理が開始しています。<a href="DWC_GdbGetState.html#dwc__gdb_8h_1369bfca6c2cd6e2e2893c03c94a5e2db">DWC_GdbGetState</a>関数が<a href="Macro.html#dwc__gdb_8h_1eb0cda4da19d6df37e71df9d0de849eb605bb3a74ef4c38439052c43bdae07ce">DWC_GDB_STATE_IN_ASYNC_PROCESS</a>を返さなくなくなるまで待ってください。</p><p>処理の結果は、<a href="DWC_GdbGetAsyncResult.html#dwc__gdb_8h_1f700899219d0635bc4e4430fa9b7e840">DWC_GdbGetAsyncResult</a>関数で取得できます。</p><p>簡易データベースライブラリの非同期処理は、通信の切断等により、稀にいつまでたっても終わらなくなる可能性があります。必ずアプリケーションでタイムアウトを設定し、タイムアウトした場合は、<a href="DWC_GdbCancelRequest.html#dwc__gdb_8h_11085e82c85f5e48f76499c67d9de98f6">DWC_GdbCancelRequest</a>関数で非同期処理のキャンセルを行ってください。</p>
 
 
 <H2>履歴</H2>
 <DL>
+
+<DT>5.3patch1_sslgdb1</DT>
+<DD>進行状況を取得するコールバック関数を設定できるようになったことに対応。</DD>
 
 </DL>
 <p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GdbDownloadFileAsync_tag">こちら</a>　　</p>

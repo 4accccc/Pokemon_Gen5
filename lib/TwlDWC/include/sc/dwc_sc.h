@@ -143,7 +143,7 @@ typedef void (*DWCScSubmitReportCallback)(DWCScResult theResult, void* theUserDa
         function - external
    ------------------------------------------------------------------------- */
 
-extern DWCScResult DWC_ScInitialize(int theGameId);
+extern DWCScResult DWC_ScInitialize(int theGameId, DWCSSLType ssl_type);
 extern DWCScResult DWC_ScShutdown();
 extern DWCScResult DWC_ScProcess();
 extern DWCScResult DWC_ScCreateSessionAsync(DWCScCreateSessionCallback theCallback, u32 theTimeoutMs, void* theUserData);

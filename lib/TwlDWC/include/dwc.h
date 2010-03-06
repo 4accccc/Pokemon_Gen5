@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------*
   Project:  TwlDWC
 
-  Copyright 2005-2009 Nintendo.  All rights reserved.
+  Copyright 2005-2010 Nintendo.  All rights reserved.
 
   These coded instructions, statements, and computer programs contain
   proprietary information of Nintendo of America Inc. and/or Nintendo
@@ -28,6 +28,7 @@
 #include <common/dwc_init.h>
 #include <common/dwc_memfunc.h>
 #include <common/dwc_report.h>
+#include <common/dwc_ssl.h>
 
 // 認証サーバ関連
 #include <auth/dwc_nas.h>

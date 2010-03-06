@@ -2,7 +2,7 @@
 #----------------------------------------------------------------------------
 # Project:  TWLDWC
 #
-# Copyright 2005-2009 Nintendo.  All rights reserved.
+# Copyright 2005-2010 Nintendo.  All rights reserved.
 #
 # These coded instructions, statements, and computer programs contain
 # proprietary information of Nintendo of America Inc. and/or Nintendo
@@ -35,7 +35,7 @@ TWLDWC_LIB_MODULES_   ?= ac auth bm common nonport nas nd util
 endif
 
 ifndef TWLDWC_NOGS
-TWLDWC_LIB_GSMODULES_ ?= common ghttp gp gstats gt2 natneg qr2 serverbrowsing sake chat sc webservices
+TWLDWC_LIB_GSMODULES_ ?= common ghttp GP gstats gt2 natneg qr2 serverbrowsing sake Chat sc webservices
 endif
 
 # peer, gsoap modules are not supported now.
@@ -92,7 +92,7 @@ LLIBRARY_DIRS   += $(TWLDWC_LIBDIR) $(TWLDWC_GSLIBDIR)
 LLIBRARIES      += $(TWLDWC_LIBS) $(TWLDWC_GSLIBS)
 
 # NHTTP library
-## 大野がコメント
+##大野がコメント
 ##LLIBRARIES     += libnhttp$(TWIFI_LIBSUFFIX).a
 LLIBRARY_DIRS  += $(TWIFI_ROOT)/lib/$(TWIFI_LIBTYPE)
 
