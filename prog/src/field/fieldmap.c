@@ -126,6 +126,8 @@
 //======================================================================
 #ifdef PM_DEBUG
 
+#define DEBUG_FIELDMAP_SPEED_CHECK
+
 #define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK    // フィールドマップ描画にかかる処理時間を求める
 
 #define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
@@ -448,6 +450,66 @@ FS_EXTERN_OVERLAY(field_intrude);
 
 
 //======================================================================
+//======================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+#ifdef DEBUG_FIELDMAP_SPEED_CHECK
+
+#define CHECK_MAX 20
+
+typedef struct {
+  u64 checks[CHECK_MAX];
+  const char * mark_str[CHECK_MAX];
+  u32 check_count;
+  OSTick _start_tick;
+  OSTick _end_tick;
+}DEBUG_SPEED_WORK;
+
+static DEBUG_SPEED_WORK debugSpeedWork;
+
+static void SET_CHECK(const char * str){
+  if (debugSpeedWork.check_count >= CHECK_MAX) return;
+  debugSpeedWork.checks[debugSpeedWork.check_count] = OS_GetTick();
+  debugSpeedWork.mark_str[debugSpeedWork.check_count] = str;
+  debugSpeedWork.check_count ++;
+}
+
+static void INIT_CHECK( void )
+{
+  debugSpeedWork.check_count = 0;
+  debugSpeedWork._start_tick = OS_GetTick(); 
+  SET_CHECK("INIT_CHECK");
+}
+
+static u32 TAIL_CHECK( void )
+{
+  OSTick _end_tick = OS_GetTick() - debugSpeedWork._start_tick;
+
+  return _end_tick;
+}
+
+static void PUT_CHECK( void )
+{
+  int i;
+  u64 value;
+  for (i = 1; i < debugSpeedWork.check_count; i++) {
+    OS_TPrintf("%8ld:", debugSpeedWork.checks[i] );
+    value = debugSpeedWork.checks[i] - debugSpeedWork.checks[i-1];
+    OS_TPrintf("%8ld", value);
+    OS_TPrintf(" %s\n", debugSpeedWork.mark_str[i-1]);
+  }
+}
+
+#else
+
+#define INIT_CHECK()  /* DO NOTHING */
+#define SET_CHECK(word)   /* DO NOTHING */
+#define TAIL_CHECK()  /* DO NOTHING */
+#define PUT_CHECK()   /* DO NOTHING */
+
+#endif
+ 
+//======================================================================
 //	フィールドマップ　生成　削除
 //======================================================================
 //--------------------------------------------------------------
@@ -588,6 +650,8 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 {
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
 
+  INIT_CHECK();
+
   //フラグ操作：フィールドマップ生成タイミング
   FIELD_FLAGCONT_INIT_FieldIn( gdata, fieldWork->map_id );
 
@@ -600,6 +664,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   // 地名表示システム作成
   fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
 
+  SET_CHECK("setup: camera & scene");  //デバッグ：処理負荷計測
   // フラッシュチェック
   {
     FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
@@ -636,9 +701,11 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   // 季節の時間帯生成
   fieldWork->fieldSeasonTime = FLD_SEASON_TIME_Create( GAMEDATA_GetSeasonID(gdata), fieldWork->heapID );
 
+  SET_CHECK("setup: nogrid mapper");  //デバッグ：処理負荷計測
   // NOGRIDマッパー生成
   fieldWork->nogridMapper = FLDNOGRID_MAPPER_Create( fieldWork->heapID, fieldWork->camera_control, fieldWork->sceneArea, fieldWork->sceneAreaLoader );
 
+  SET_CHECK("setup: fldmapper");  //デバッグ：処理負荷計測
   {
     FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( fieldWork->g3Dmapper );
     
@@ -647,6 +714,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
         &fieldWork->map_res,
         GAMEDATA_GetMapMatrix(fieldWork->gamedata) );
 
+  SET_CHECK("setup: bmodel load");  //デバッグ：処理負荷計測
     //ここで配置モデルリストをセットする
     FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id, fieldWork->areadata);
 
@@ -654,6 +722,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     setupWfbc( gdata, fieldWork, fieldWork->map_id );
   }
 
+  SET_CHECK("setup: resistdata");  //デバッグ：処理負荷計測
   //フィールドマップ用ロケーション作成
 
   LOCATION_Set( &fieldWork->location, fieldWork->map_id, 0, 0, LOCATION_DEFAULT_EXIT_OFS,
@@ -674,6 +743,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //CAMERA_AREAの反映
   setupCameraArea( fieldWork, fieldWork->map_id, fieldWork->heapID );
   
+  SET_CHECK("setup: fldeff");  //デバッグ：処理負荷計測
   //動作モデル初期化
   fldmapMain_MMDL_Init(fieldWork);
   
@@ -694,6 +764,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     fieldWork->union_eff = UNION_EFF_SystemSetup(fieldWork->heapID);
   }
   
+  SET_CHECK("setup: create_func");  //デバッグ：処理負荷計測
   {
     PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork(gsys);
     const u16 dir = PLAYERWORK_getDirection_Type( pw );
@@ -716,6 +787,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     TAMADA_Printf("start X,Y,Z=%d,%d,%d\n", FX_Whole(pos->x), FX_Whole(pos->y), FX_Whole(pos->z));
     TAMADA_Printf( "Start Dir = %04x\n", pw->direction );
   }
+  SET_CHECK("setup: gimmicks");  //デバッグ：処理負荷計測
 
   //ギミックテンポラリワーク初期化
   InitGmkTmpWork(&fieldWork->GmkTmpWork);
@@ -762,11 +834,13 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //フィールドギミックセットアップ
   FLDGMK_SetUpFieldGimmick(fieldWork);
   
+  SET_CHECK("setup: subscreen");  //デバッグ：処理負荷計測
   //情報バーの初期化
 	{
 		fieldWork->fieldSubscreenWork = FIELD_SUBSCREEN_Init(fieldWork->heapID, fieldWork, GAMEDATA_GetSubScreenMode(gdata));
 	}
   
+  SET_CHECK("setup: 3dsystem");  //デバッグ：処理負荷計測
   //フィールドエンカウント初期化
   fieldWork->encount = FIELD_ENCOUNT_Create( fieldWork );
   
@@ -799,6 +873,13 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   {
     zoneChangeScene( fieldWork, fieldWork->map_id );
   }
+
+  SET_CHECK("setup: tail");  //デバッグ：処理負荷計測
+  {
+    OSTick _end_tick = TAIL_CHECK();
+    OS_Printf("mainSeqFunc_setup:total %ld\n", OS_TicksToMicroSeconds( _end_tick ) );
+    PUT_CHECK();
+  }
   
   //3Ｄ描画モードは通常でセットアップ
   fieldWork->Draw3DMode = DRAW3DMODE_NORMAL;
@@ -812,6 +893,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
+  OS_TPrintf("mainSeqFunc_ready\n");
 	fldmap_G3D_Control( fieldWork );
 	fldmap_G3D_Draw_top( fieldWork );
 	fldmap_G3D_Draw_tail( fieldWork );
@@ -821,8 +903,9 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   
   if(fieldWork->debugWork){ FIELD_DEBUG_UpdateProc( fieldWork->debugWork ); }
  
-  if( FLDMAPPER_CheckTrans(fieldWork->g3Dmapper) == FALSE ){
-    return MAINSEQ_RESULT_CONTINUE;
+  while( FLDMAPPER_CheckTrans(fieldWork->g3Dmapper) == FALSE ){
+    FLDMAPPER_MainTail( fieldWork->g3Dmapper );
+    //return MAINSEQ_RESULT_CONTINUE;
   }
    
   if( fieldWork->fldMMdlSys != NULL ){
@@ -1268,7 +1351,9 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 
   MAINSEQ_RESULT result;
   FIELDMAP_MAIN_FUNC func;
-
+#ifdef  PM_DEBUG
+  OSTick debug_tick = OS_GetTick(); 
+#endif
 
   GF_ASSERT(fieldWork->seq < NELEMS(mainfuncTable));
 	fieldWork->timer++;
@@ -1279,6 +1364,14 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
   { 
     result = func(gsys, fieldWork);
   }
+#ifdef  PM_DEBUG
+  if ( fieldWork->seq != FLDMAPSEQ_UPDATE )
+  {
+    debug_tick = OS_GetTick() - debug_tick;
+    OS_Printf("FIELDMAP seq:%d tick:%ld\n", fieldWork->seq,  debug_tick );
+    OS_Printf("FIELDMAP seq:%d micro:%ld\n", fieldWork->seq, OS_TicksToMicroSeconds( debug_tick ) );
+  }
+#endif
 
   switch (result) 
   { 
@@ -2414,32 +2507,6 @@ static BOOL fldmap_CheckMoveZoneChange( FIELDMAP_WORK *fieldWork )
 	return( FALSE );
 }
 
-#ifdef DEBUG_FIELDMAP_ZONE_CHANGE_SYNC
-static u64 checks[20];
-static u32 check_count;
-static void init_checks(void){check_count = 0;}
-static void SET_CHECK(void){
-  if (check_count >= NELEMS(checks)) return;
-  checks[check_count] = OS_GetTick();
-  check_count ++;
-}
-static void put_checks(OSTick start)
-{
-  int i;
-  u64 value;
-  for (i = 1; i < check_count; i++) {
-    OS_Printf("%6ld:", checks[i] );
-    value = checks[i] - checks[i-1];
-    OS_Printf("%6ld\n", value);
-  }
-}
-
-#else
-
-#define SET_CHECK()   /* DO NOTHING */
-
-#endif
- 
 //--------------------------------------------------------------
 /**
  * ゾーン切り替え時の処理
@@ -2459,12 +2526,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	u32 new_zone_id;
 	u32 old_zone_id = lc->zone_id;
 
-#ifdef DEBUG_FIELDMAP_ZONE_CHANGE_SYNC
-  OSTick debug_fieldmap_start_tick = OS_GetTick(); 
-  OSTick debug_fieldmap_end_tick;
-  init_checks();
-  SET_CHECK();
-#endif
+  INIT_CHECK();   //デバッグ：処理負荷計測用
 
   //エフェクトエンカウント破棄
   EFFECT_ENC_EffectDelete( fieldWork->encount );
@@ -2479,12 +2541,12 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 
   TOMOYA_Printf( "zone change start %d\n", new_zone_id );
 
-  SET_CHECK();
+  SET_CHECK("zonechange:delete mmdl");
 	
 	//旧ゾーン配置動作モデル削除
 	MMDLSYS_DeleteZoneUpdateMMdl( fmmdlsys );
 
-  SET_CHECK();
+  SET_CHECK("zonechange:event load");
 	
 	//次のイベントデータをロード
 	EVENTDATA_SYS_Load( evdata, new_zone_id, GAMEDATA_GetSeasonID(gdata) );
@@ -2492,26 +2554,26 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
   //歩いてゾーンが変更した場合のフラグ初期化
   FIELD_FLAGCONT_INIT_WalkStepOver( gdata, fieldWork );
 	
-  SET_CHECK();
+  SET_CHECK("zonechange:set mmdl");
 	//新規ゾーンに配置する動作モデルセット
 	zoneChange_SetMMdl( gdata, fmmdlsys, evdata, new_zone_id );
 	
-  SET_CHECK();
+  SET_CHECK("zonechange:bgm");
 	//BGM切り替え
 	zoneChange_SetBGM( fieldWork, old_zone_id, new_zone_id );
 
-  SET_CHECK();
+  SET_CHECK("zonechange: weather");
 	// ZONEフォグライト設定
 	zoneChange_SetZoneFogLight( fieldWork, new_zone_id );
 	
 	//天候リクエスト
 	zoneChange_SetWeather( fieldWork, new_zone_id );
 
-  SET_CHECK();
+  SET_CHECK("zonechange: camera area");
   //カメラエリアの設定
   zoneChange_SetCameraArea( fieldWork, new_zone_id );
 	
-  SET_CHECK();
+  SET_CHECK("zonechange: scene area");
 	//PLAYER_WORK更新
 	zoneChange_UpdatePlayerWork( gdata, new_zone_id );
 
@@ -2521,7 +2583,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	// 地名表示システムに, ゾーンの切り替えを通達
   if(fieldWork->placeNameSys){ FIELD_PLACE_NAME_Display( fieldWork->placeNameSys, new_zone_id ); }
 
-  SET_CHECK();
+  SET_CHECK("zonechange: script");
 	//ゾーンID更新
 	lc->zone_id = new_zone_id;
 	
@@ -2531,19 +2593,18 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
   //特殊スクリプト呼び出し：ゾーン切り替え
   SCRIPT_CallZoneChangeScript( fieldWork->gsys, HEAPID_PROC );
 
-  SET_CHECK();
+  SET_CHECK("zonechange:tail");
+
 #ifdef DEBUG_FIELDMAP_ZONE_CHANGE_SYNC
-  debug_fieldmap_end_tick = OS_GetTick();
-  debug_fieldmap_end_tick -= debug_fieldmap_start_tick;
-
-  debug_fieldmap_end_tick = OS_TicksToMicroSeconds( debug_fieldmap_end_tick );
-
+  {
+  OSTick debug_fieldmap_end_tick = OS_TicksToMicroSeconds (TAIL_CHECK() );
   if( debug_fieldmap_end_tick > 10000 )
   {
     OS_TPrintf( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" );
     OS_TPrintf( "!!!!!!zone_change TickOver  [%d] micro second !!!!!!\n", debug_fieldmap_end_tick );
     OS_TPrintf( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" );
-    put_checks(debug_fieldmap_start_tick);
+    PUT_CHECK();
+  }
   }
 #endif
 
