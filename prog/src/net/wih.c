@@ -1160,11 +1160,11 @@ static BOOL WH_StateInStartParentMP(void)
 
   WH_ChangeSysState(WH_SYSSTATE_CONNECTED);
 
-  {
-    int recvS = WM_GetMPReceiveBufferSize();
-    int sendS = WM_GetMPSendBufferSize();
-    NET_PRINT("WH_StateInStartParentMP  %d %d\n",recvS,sendS);
-  }
+//  {
+//    int recvS = WM_GetMPReceiveBufferSize();
+//    int sendS = WM_GetMPSendBufferSize();
+//    NET_PRINT("WH_StateInStartParentMP  %d %d\n",recvS,sendS);
+//  }
 
   if(_pWmInfo->sRecvBuffer!=NULL){
     GFL_NET_Align32Free(_pWmInfo->sRecvBuffer);
@@ -1295,7 +1295,6 @@ static void WH_StateOutEndParentMP(void *arg)
   }
 
   _pWmInfo->nextFunc2 = &WH_StateInEndParent;
-  _pWmInfo->nextFunc2Flg=3;
 }
 
 /* ----------------------------------------------------------------------
@@ -3544,18 +3543,13 @@ void WH_StepScan(void)
   }
 
   if(_pWmInfo->nextFunc2){
-    if(_pWmInfo->nextFunc2Flg){
-      _pWmInfo->nextFunc2Flg--;
+    if (!_pWmInfo->nextFunc2() )
+    {   // 自動的に、終了処理を開始します。
+      WH_TRACE("WH_StateInEndParent failed\n");
+      WH_Reset();
     }
-    else{
-      if (!_pWmInfo->nextFunc2() )
-      {   // 自動的に、終了処理を開始します。
-        WH_TRACE("WH_StateInEndParent failed\n");
-        WH_Reset();
-      }
-      _pWmInfo->nextFunc2 = NULL;
-      return;
-    }
+    _pWmInfo->nextFunc2 = NULL;
+    return;
   }
 
 

@@ -351,7 +351,7 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 	if(pGF->pause){
 		return FALSE;  // ポーズ中の親機はBEACON無視
 	}
-	NET_PRINT("debugNo %d %d\n",pGF->debugAloneTest , _DEBUG_ALONETEST);
+//	NET_PRINT("debugNo %d %d\n",pGF->debugAloneTest , _DEBUG_ALONETEST);
 
 #ifdef PM_DEBUG  // デバッグの時だけ、上に定義がある人は基本他の人とつながらない
 	if(pGF->debugAloneTest != pNetWL->mineDebugNo){
@@ -405,7 +405,7 @@ static BOOL _scanCallback(WMBssDesc *bssdesc)
 
 	int serviceNo = pInit->gsid;
 
-	NET_PRINT("_scanCallback\n");
+//	NET_PRINT("_scanCallback\n");
 
 	if(FALSE == _scanCheck(bssdesc)){
 		return FALSE;
@@ -441,7 +441,7 @@ static BOOL _scanCallback(WMBssDesc *bssdesc)
 	pNetWL->bconUnCatchTime[i] = DEFAULT_TIMEOUT_FRAME;
 	MI_CpuCopy8( bssdesc, &pNetWL->sBssDesc[i],sizeof(WMBssDesc));
 	pNetWL->bScanCallBack = TRUE;
-	NET_PRINT("_scanCallback追加\n");
+//	NET_PRINT("_scanCallback追加\n");
 
 	return TRUE;
 }
