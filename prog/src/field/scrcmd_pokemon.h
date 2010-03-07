@@ -14,6 +14,7 @@
 //  ÉcÅ[Éãä÷êî
 //======================================================================
 extern BOOL SCRCMD_GetTemotiPP( SCRCMD_WORK * work, u16 pos, POKEMON_PARAM ** poke_para );
+extern u32 SCRCMD_GetTemotiPPValue( SCRCMD_WORK * work, u16 pos, int param_id );
 extern BOOL SCRCMD_CheckTemotiWaza( const POKEMON_PARAM * pp, u16 wazano );
 
 
@@ -59,4 +60,6 @@ extern VMCMD_RESULT EvCmdCheckRemaindWaza( VMHANDLE* core, void* wk );
 
 extern VMCMD_RESULT EvCmdCheckPartyPokeGetPlace( VMHANDLE* core, void* wk );
 extern VMCMD_RESULT EvCmdGetPartyPokeGetDate( VMHANDLE* core, void* wk );
+
+extern VMCMD_RESULT EvCmdGetPartyPokeParameter( VMHANDLE* core, void* wk );
 

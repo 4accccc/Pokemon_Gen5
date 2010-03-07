@@ -4726,6 +4726,27 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_TEMOTI_POKE_PARAM
+ * @brief
+ * @param ret_wk      結果を受け取るワーク
+ * @param para_id     取得したいパラメータ指定ID（script_def.hのSCR_POKEPARA_～）
+ * @param pos         モンスターナンバーを調べる手持ちポケモン番号
+ *
+ * @note
+ */
+//--------------------------------------------------------------
+#define _GET_PARTY_POKE_PARAM( ret_wk, pos, para_id ) \
+    _ASM_GET_PARTY_POKE_PARAM ret_wk, pos, para_id
+
+    .macro  _ASM_GET_PARTY_POKE_PARAM ret_wk, pos, para_id
+    .short  EV_SEQ_GET_PARTY_POKE_PARAMETER
+    .short  \ret_wk
+    .short  \pos
+    .short  \para_id
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _GET_PARTY_POKE_MONSNO
  * @brief 指定した手持ちポケモンのモンスターナンバーを取得する
  * @param ret_wk 結果を受け取るワーク

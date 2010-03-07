@@ -149,6 +149,27 @@
 #define POKECOUNT_MODE_ONLY_DAME_EGG (4)  // 駄目タマゴの数
 #define POKECOUNT_MODE_EMPTY         (5)  // 空いている数
 
+//--------------------------------------------------------------
+//
+//--------------------------------------------------------------
+#define SCR_POKEPARA_MONSNO           (5) ///< ポケモンナンバー
+#define SCR_POKEPARA_ITEMNO           (6) ///< 保持アイテムナンバー
+#define SCR_POKEPARA_COUNTRY_CODE     (12)  ///< 国コード
+#define SCR_POKEPARA_SEX              (110) ///<性別
+#define SCR_POKEPARA_FORMNO           (111) ///<フォルムナンバー
+#define SCR_POKEPARA_SEIKAKU          (112) ///<性格
+#define SCR_POKEPARA_GET_ROM          (119) ///<捕まえたロム
+#define SCR_POKEPARA_GET_YEAR         (143) ///<捕獲した時の年
+#define SCR_POKEPARA_GET_MONTH        (144) ///<捕獲した時の月
+#define SCR_POKEPARA_GET_DAY          (145) ///<捕獲した時の日
+#define SCR_POKEPARA_BIRTH_YEAR       (146) ///<生まれた年
+#define SCR_POKEPARA_BIRTH_MONTH      (147) ///<生まれた月
+#define SCR_POKEPARA_BIRTH_DAY        (148) ///<生まれた日
+#define SCR_POKEPARA_GET_PLACE        (149) ///<捕獲した場所
+#define SCR_POKEPARA_BIRTH_PLACE      (150) ///<生まれた場所
+#define SCR_POKEPARA_GET_LEVEL        (153) ///<捕獲した時のレベル
+#define SCR_POKEPARA_OYA_SEX          (154) ///<親の性別
+#define SCR_POKEPARA_LEVEL            (158) ///<現在のレベル
 
 //--------------------------------------------------------------
 // ポケモン捕獲場所　チェック

@@ -91,6 +91,27 @@ BOOL SCRCMD_GetTemotiPP( SCRCMD_WORK * work, u16 pos, POKEMON_PARAM ** poke_para
 
 //--------------------------------------------------------------
 /**
+ * @brief ツール関数：指定位置の手持ちポケモンのパラメータを取得する
+ * @param work
+ * @param pos
+ * @param param_id
+ * @return  u32   取得したパラメータ
+ *
+ * 名前など、u32で返すことができない物を取得しようとするとアクセス例外になる
+ */
+//--------------------------------------------------------------
+u32 SCRCMD_GetTemotiPPValue( SCRCMD_WORK * work, u16 pos, int param_id )
+{
+  POKEMON_PARAM * pp;
+  if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == TRUE )
+  {
+    return PP_Get( pp, param_id, NULL );
+  }
+  return 0;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief ツール関数：指定したわざを持っているか？のチェック
  * @param pp
  * @param wazano
@@ -404,12 +425,22 @@ VMCMD_RESULT EvCmdGetPartyPokeMonsNo( VMHANDLE * core, void *wk )
   SCRCMD_WORK*    work = (SCRCMD_WORK*)wk;
   u16*          ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
   u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
+#if 0
   GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
   POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
   POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
-
   *ret_wk = (u16)PP_Get( param, ID_PARA_monsno, NULL );
   OBATA_Printf( "EvCmdGetPartyPokeMonsNo : %d\n", *ret_wk );
+#endif
+  POKEMON_PARAM* pp;
+  if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == TRUE )
+  {
+    *ret_wk = PP_Get( pp, ID_PARA_monsno, NULL );
+  }
+  else
+  {
+    *ret_wk = 0;
+  }
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -426,12 +457,23 @@ VMCMD_RESULT EvCmdGetPartyPokeFormNo( VMHANDLE * core, void *wk )
   SCRCMD_WORK*    work = (SCRCMD_WORK*)wk;
   u16*          ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
   u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
+#if 0
   GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
   POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
   POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
 
   *ret_wk = (u16)PP_Get( param, ID_PARA_form_no, NULL );
   OBATA_Printf( "EvCmdGetPartyPokeFormNo : %d\n", *ret_wk );
+#endif
+  POKEMON_PARAM * pp;
+  if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == TRUE )
+  {
+    *ret_wk = PP_Get( pp, ID_PARA_form_no, NULL );
+  }
+  else
+  {
+    *ret_wk = 0;
+  }
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -850,19 +892,25 @@ VMCMD_RESULT EvCmdGetPokemonWazaNum( VMHANDLE *core, void *wk )
   u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
   u16                 pos = SCRCMD_GetVMWorkValue( core, work );       // コマンド第2引数
 
+#if 0
   SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
   POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
+#endif
   int          waza_count = 0;
+  POKEMON_PARAM *pp;
   
-  POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , pos );
-  for( i=0; i<PTL_WAZA_MAX; i++ )
+  //POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , pos );
+  if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == TRUE )
   {
-    const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+i , NULL );
-    if( wazaNo != 0 )
+    for( i=0; i<PTL_WAZA_MAX; i++ )
     {
-      waza_count++;
+      const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+i , NULL );
+      if( wazaNo != 0 )
+      {
+        waza_count++;
+      }
     }
   }
   *ret_wk = waza_count;
@@ -986,12 +1034,15 @@ VMCMD_RESULT EvCmdCheckPokeOwner( VMHANDLE *core, void *wk )
   u16*         ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
   u16             pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
   GAMEDATA*     gdata = SCRCMD_WORK_GetGameData( work );
+#if 0
   POKEPARTY*    party = GAMEDATA_GetMyPokemon( gdata );
   int             max = PokeParty_GetPokeCountMax( party );
+#endif
   MYSTATUS*   status = GAMEDATA_GetMyStatus( gdata );
   u32     id = 0;
   POKEMON_PARAM* param = NULL;
 
+#if 0
   // ポケモン指定に対する例外処理
   if( (pos < 0) || (max <= pos) )
   {
@@ -1002,6 +1053,8 @@ VMCMD_RESULT EvCmdCheckPokeOwner( VMHANDLE *core, void *wk )
   // ID取得
   param       = PokeParty_GetMemberPointer( party, pos );
   id = PP_Get( param, ID_PARA_id_no, NULL );
+#endif
+  id = SCRCMD_GetTemotiPPValue( work, pos, ID_PARA_id_no );
 
   NOZOMU_Printf("poke_id = %d\n",id);
   NOZOMU_Printf("my_id = %d\n",MyStatus_GetID(status) );
@@ -1096,19 +1149,25 @@ VMCMD_RESULT EvCmdChgRotomFormNo( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdCheckRemaindWaza( VMHANDLE* core, void* wk )
 {
   SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+#if 0
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
   POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
+#endif
   u16*             ret_wk = SCRCMD_GetVMWork( core, work );     // コマンド第一引数(結果を受け取るワーク)
   u16            poke_pos = SCRCMD_GetVMWorkValue( core, work );// コマンド第二引数(手持ち位置)
-  POKEMON_PARAM*     poke = PokeParty_GetMemberPointer( party, poke_pos );
+  //POKEMON_PARAM*     poke = PokeParty_GetMemberPointer( party, poke_pos );
   HEAPID          heap_id = SCRCMD_WORK_GetHeapID( work );
   u16*               waza = NULL;
+  POKEMON_PARAM*     poke;
 
+  if ( SCRCMD_GetTemotiPP( work, poke_pos, &poke ) == TRUE )
+  {
   // 思い出し技の有無を返す
-  waza = WAZAOSHIE_GetRemaindWaza( poke, heap_id );
-  *ret_wk = WAZAOSHIE_WazaTableChack( waza );
-  GFL_HEAP_FreeMemory( waza );
+    waza = WAZAOSHIE_GetRemaindWaza( poke, heap_id );
+    *ret_wk = WAZAOSHIE_WazaTableChack( waza );
+    GFL_HEAP_FreeMemory( waza );
+  }
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -1127,9 +1186,11 @@ VMCMD_RESULT EvCmdCheckPartyPokeGetPlace( VMHANDLE* core, void* wk )
   u16*          ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
   u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
   u16              type = SCRCMD_GetVMWorkValue( core, wk );  // POKE_GET_PLACE_CHECK_～
+#if 0
   GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
   POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
   POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
+#endif
   u16 place;
   static const u16 POKE_GET_PLACE_CHECK_PLACE[POKE_GET_PLACE_CHECK_MAX] = 
   {
@@ -1138,7 +1199,8 @@ VMCMD_RESULT EvCmdCheckPartyPokeGetPlace( VMHANDLE* core, void* wk )
 
   GF_ASSERT( type < POKE_GET_PLACE_CHECK_MAX );
   
-  place = (u16)PP_Get( param, ID_PARA_get_place, NULL );
+  place = SCRCMD_GetTemotiPPValue( work, pos, ID_PARA_get_place );
+  //place = (u16)PP_Get( param, ID_PARA_get_place, NULL );
   
   if( place == POKE_GET_PLACE_CHECK_PLACE[ type ] ){
     *ret_wk = TRUE;
@@ -1164,13 +1226,93 @@ VMCMD_RESULT EvCmdGetPartyPokeGetDate( VMHANDLE* core, void* wk )
   u16*          ret_month = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
   u16*          ret_day = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
   u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
+#if 0
   GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
   POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
   POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
+#endif
+  POKEMON_PARAM* param;
+  if ( SCRCMD_GetTemotiPP( work, pos, &param ) == TRUE )
+  {
+    *ret_year = (u16)PP_Get( param, ID_PARA_get_year, NULL );
+    *ret_month = (u16)PP_Get( param, ID_PARA_get_month, NULL );
+    *ret_day = (u16)PP_Get( param, ID_PARA_get_day, NULL );
+  }
+  else
+  {
+    *ret_year = 0;
+    *ret_month = 0;
+    *ret_day = 0;
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
 
-  *ret_year = (u16)PP_Get( param, ID_PARA_get_year, NULL );
-  *ret_month = (u16)PP_Get( param, ID_PARA_get_month, NULL );
-  *ret_day = (u16)PP_Get( param, ID_PARA_get_day, NULL );
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+//  定義とのズレがあればコンパイル時エラーにする
+//--------------------------------------------------------------
+SDK_COMPILER_ASSERT( SCR_POKEPARA_MONSNO == ID_PARA_monsno );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_ITEMNO == ID_PARA_item );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_COUNTRY_CODE == ID_PARA_country_code );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_SEX == ID_PARA_sex );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_FORMNO == ID_PARA_form_no );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_SEIKAKU == ID_PARA_seikaku );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_GET_YEAR == ID_PARA_get_year );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_GET_MONTH == ID_PARA_get_month );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_GET_DAY == ID_PARA_get_day );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_BIRTH_YEAR == ID_PARA_birth_year );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_BIRTH_MONTH == ID_PARA_birth_month );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_BIRTH_DAY == ID_PARA_birth_day );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_GET_ROM == ID_PARA_get_cassette );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_GET_PLACE == ID_PARA_get_place );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_BIRTH_PLACE == ID_PARA_birth_place );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_GET_LEVEL == ID_PARA_get_level );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_OYA_SEX == ID_PARA_oyasex );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_LEVEL == ID_PARA_level );
+
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちポケモンのパラメータ取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetPartyPokeParameter( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*    work = (SCRCMD_WORK*)wk;
+  u16*          ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
+  u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
+  u16               id = SCRCMD_GetVMWorkValue( core, wk );  // 
+  static const u8 id_tbl[] = {
+    SCR_POKEPARA_MONSNO,
+    SCR_POKEPARA_ITEMNO,
+    SCR_POKEPARA_COUNTRY_CODE,
+    SCR_POKEPARA_SEX,
+    SCR_POKEPARA_FORMNO,
+    SCR_POKEPARA_SEIKAKU,
+    SCR_POKEPARA_GET_ROM,
+    SCR_POKEPARA_GET_YEAR,
+    SCR_POKEPARA_GET_MONTH,
+    SCR_POKEPARA_GET_DAY,
+    SCR_POKEPARA_BIRTH_YEAR,
+    SCR_POKEPARA_BIRTH_MONTH,
+    SCR_POKEPARA_BIRTH_DAY,
+    SCR_POKEPARA_GET_PLACE,
+    SCR_POKEPARA_BIRTH_PLACE,
+    SCR_POKEPARA_GET_LEVEL,
+    SCR_POKEPARA_OYA_SEX,
+    SCR_POKEPARA_LEVEL
+  };
+  int i;
+  for ( i = 0; i < NELEMS(id_tbl); i++ )
+  {
+    if ( id == id_tbl[i] )
+    {
+      *ret_wk = SCRCMD_GetTemotiPPValue( work, pos, id );
+      return VMCMD_RESULT_CONTINUE;
+    }
+  }
+  GF_ASSERT_MSG(0, "SCRCMD:POKEMON PARAMETER id=%dは未対応\n", id );
+  *ret_wk = 0;  //エラーよけ
   return VMCMD_RESULT_CONTINUE;
 }
 
