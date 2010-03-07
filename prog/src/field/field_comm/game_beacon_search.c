@@ -313,6 +313,7 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
   if(gbs->status == GBS_STATUS_INIT){
 //    GFL_NET_StartBeaconScan();
     GFL_NET_Changeover(NULL);
+    GFL_NET_ChangeoverChangeSpeed(GFL_NET_CROSS_SPEED_SLOW);  //フィールド処理負荷減の為遅くする
     gbs->status = GBS_STATUS_UPDATE;
     return NULL;
   }
