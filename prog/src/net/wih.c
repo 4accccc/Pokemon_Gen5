@@ -533,9 +533,9 @@ typedef struct{
   /* 親機検索用 */
   WHStartScanCallbackFunc sScanCallback;
 
-  WHNextFunc nextFunc;
+//  WHNextFunc nextFunc;
   WHNextFunc nextFunc2;
-  BOOL nextFunc2Flg;
+//  BOOL nextFunc2Flg;
 
   // エラーコード格納用
   int sErrCode;
@@ -1132,7 +1132,9 @@ static void WH_StateOutStartParent(void *arg)
     // StartParentの処理が終了
   case WM_STATECODE_PARENT_START:
     {
-      _pWmInfo->nextFunc = &WH_StateInStartParentMP;
+      if (!WH_StateInStartParentMP()){
+        WH_ChangeSysState(WH_SYSSTATE_ERROR);
+      }
     }
     break;
 
@@ -3533,13 +3535,6 @@ void WH_StepScan(void)
         _pWmInfo->startScan=1; //スキャンを戻す
       }
     }
-  }
-  if(_pWmInfo->nextFunc){
-    if (!_pWmInfo->nextFunc())
-    {
-      WH_ChangeSysState(WH_SYSSTATE_ERROR);
-    }
-    _pWmInfo->nextFunc = NULL;
   }
 
   if(_pWmInfo->nextFunc2){
