@@ -24,8 +24,8 @@
 #define	TRTYPE_LEADER1C    ( 11 )    //ジムリーダー1C
 #define	TRTYPE_LEADER1B    ( 12 )    //ジムリーダー1B
 #define	TRTYPE_CHILDCARE    ( 13 )    //ほいくし
-#define	TRTYPE_KINDERGARTENW    ( 14 )    //ようちえん♀
-#define	TRTYPE_KINDERGARTENM    ( 15 )    //ようちえん♂
+#define	TRTYPE_KINDERGARTENW    ( 14 )    //えんじ♀
+#define	TRTYPE_KINDERGARTENM    ( 15 )    //えんじ♂
 #define	TRTYPE_FUTAGO    ( 16 )    //ふたごちゃん
 #define	TRTYPE_BREEDERM    ( 17 )    //ポケモンブリーダー♂
 #define	TRTYPE_BREEDERW    ( 18 )    //ポケモンブリーダー♀

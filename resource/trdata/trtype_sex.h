@@ -25,8 +25,8 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_MALE,		//ジムリーダー1C
 	PTL_SEX_MALE,		//ジムリーダー1B
 	PTL_SEX_FEMALE,		//ほいくし
-	PTL_SEX_FEMALE,		//ようちえん♀
-	PTL_SEX_MALE,		//ようちえん♂
+	PTL_SEX_FEMALE,		//えんじ♀
+	PTL_SEX_MALE,		//えんじ♂
 	PTL_SEX_FEMALE,		//ふたごちゃん
 	PTL_SEX_MALE,		//ポケモンブリーダー♂
 	PTL_SEX_FEMALE,		//ポケモンブリーダー♀
