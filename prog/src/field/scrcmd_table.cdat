@@ -516,7 +516,7 @@
   DEF_CMD( EvCmdGetGymVictoryInfo, EV_SEQ_GET_GYM_VICTORY_INFO )
 
   DEF_CMD( EvCmdGetBreederJudgeResult, EV_SEQ_GET_BREEDER_JUDGE_RESULT )
-  NO_CMD()
+  DEF_CMD( EvCmdWazaMachineLot, EV_SEQ_WAZAMACHINE_LOT )
   NO_CMD()
   NO_CMD()
 

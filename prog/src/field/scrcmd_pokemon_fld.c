@@ -36,6 +36,8 @@
 #include "event_egg_birth.h"  // for EVENT_EggBirth
 #include "fld_trade.h"  // for EVENT_FieldPokeTrade
 
+#include "item/item.h"  //ITEM_GetWazaNo
+
 
 #include "fieldmap.h"
 //======================================================================
@@ -949,6 +951,35 @@ VMCMD_RESULT EvCmdFieldPokeTrade( VMHANDLE *core, void *wk )
 }
 
 
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief ‚í‚´ƒ}ƒVƒ“‚ÅŽ‚Á‚Ä‚¢‚é‚à‚Ì‚ð’Š‘I‚·‚é
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWazaMachineLot( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK * work = wk;
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  MYITEM_PTR myitem = GAMEDATA_GetMyItem( gamedata );
+
+  int max = MYITEM_GetItemPocketNumber( myitem, ITEMPOCKET_WAZA );
+  int pos = GFUser_GetPublicRand( max );
+
+  if ( max == 0 )
+  {
+    *ret_wk = 0;
+  }
+  else
+  {
+    ITEM_ST * item_st = MYITEM_PosItemGet( myitem, ITEMPOCKET_WAZA, pos );
+    *ret_wk = ITEM_GetWazaNo( item_st->id );
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
 
 
 

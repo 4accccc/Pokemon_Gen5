@@ -4496,6 +4496,21 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_WAZAMACHINE_LOT
+ * @brief 保持わざマシンから抽選する
+ * @param	ret_wk		抽選された技ナンバー（０の時、対象なし）
+ */
+//--------------------------------------------------------------
+#define _WAZAMACHINE_LOT( ret_wk ) \
+    _ASM_WAZAMACHINE_LOT ret_wk
+
+    .macro  _ASM_WAZAMACHINE_LOT ret_wk
+    .short  EV_SEQ_WAZAMACHINE_LOT
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _GET_ZUKAN_HYOUKA
  * @brief ずかん評価用メッセージID取得
  * @param mode      ずかん評価モード（script_def.hのSCR_ZUKAN_HYOUKA_MODE_～を参照）
