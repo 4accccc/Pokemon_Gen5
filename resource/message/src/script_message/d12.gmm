@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsushima" host="W00181" date="2010-03-07T18:13:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,15 +229,15 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="180"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="253"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="111">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="122" right="711" bottom="742" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,257 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d12_mariner_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>ポジション（GRIDX=293/GRIDZ=749）
+左向き
+
+●破壊中のセリフ
+●「はい／いいえ」ウインドウ表示
+　「はい」→msg_mapscript_d12_mariner_02
+　「いいえ」→msg_mapscript_d12_mariner_03</comment>
+		<attribute name="キャラ指定">船員</attribute>
+		<language name="JPN" width="256">ヒウンシティに　もどって
+たたかいに　そなえますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ヒウンシティに　もどって
+たたかいに　そなえますか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d12_mariner_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>●「はい」の場合
+
+・このあと画面暗転。
+・ヒウンシティに戻ります。
+※船の出港デモはカット</comment>
+		<attribute name="キャラ指定">船員</attribute>
+		<language name="JPN" width="256">わかりました！　いそいで
+ヒウンシティに　もどりましょう！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">わかりました！　いそいで
+ヒウンシティに　もどりましょう！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d12_mariner_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>●「いいえ」の場合</comment>
+		<attribute name="キャラ指定">船員</attribute>
+		<language name="JPN" width="256">ヒウンシティに　もどりたいときは
+いつでも　こえを　かけて　ください！</language>
+		<language name="JPN_KANJI" width="256">ヒウンシティに　もどりたいときは
+いつでも　こえを　かけて　ください！</language>
+	</row>
+
+	<row id="msg_d12_mariner_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>●イベント終了後のセリフ
+
+●「はい／いいえ」ウインドウ表示
+　「はい」→そのまま画面暗転。出航デモはカット
+　「いいえ」→msg_mapscript_d12_mariner_03</comment>
+		<attribute name="キャラ指定">船員</attribute>
+		<language name="JPN" width="256">ヒウンシティに　もどりますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ヒウンシティに　もどりますか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d12_visitor01_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ポジション（GRIDX=295/GRIDZ=750）
+下向き
+
+●破壊中のセリフ</comment>
+		<attribute name="キャラ指定">BACKPACKERM</attribute>
+		<language name="JPN" width="256">プラズマだんの　れんちゅうが…[BE:01:ページ切り替え（クリア）]
+なんて　ひどいことを　するんだ…！</language>
+		<language name="JPN_KANJI" width="256">プラズマだんの　れんちゅうが…[BE:01:ページ切り替え（クリア）]
+なんて　ひどいことを　するんだ…！</language>
+	</row>
+
+	<row id="msg_d12_visitor01_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>●イベント終了後のセリフ</comment>
+		<attribute name="キャラ指定">BACKPACKERM</attribute>
+		<language name="JPN" width="256">うみの　かおりが　ここちいいねー！</language>
+		<language name="JPN_KANJI" width="256">うみの　かおりが　ここちいいねー！</language>
+	</row>
+
+	<row id="msg_d12_visitor02_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ポジション（GRIDX=296/GRIDZ=749）
+下向き
+
+●破壊中のセリフ</comment>
+		<attribute name="キャラ指定">BABYBOY1</attribute>
+		<language name="JPN" width="256">うわーん　こわいよー！</language>
+		<language name="JPN_KANJI" width="256">うわーん　こわいよー！</language>
+	</row>
+
+	<row id="msg_d12_visitor02_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●イベント終了後のセリフ
+※主人公が♂</comment>
+		<attribute name="キャラ指定">BABYBOY1</attribute>
+		<language name="JPN" width="256">おにいちゃんが　わるものを
+やっつけてくれたんだね！</language>
+		<language name="JPN_KANJI" width="256">おにいちゃんが　わるものを
+やっつけてくれたんだね！</language>
+	</row>
+
+	<row id="msg_d12_visitor02_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●イベント終了後のセリフ
+※主人公が♀</comment>
+		<attribute name="キャラ指定">BABYBOY1</attribute>
+		<language name="JPN" width="256">おねえちゃんが　わるものを
+やっつけてくれたんだね！</language>
+		<language name="JPN_KANJI" width="256">おねえちゃんが　わるものを
+やっつけてくれたんだね！</language>
+	</row>
+
+	<row id="msg_d12_visitor03_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<comment>ポジション（GRIDX=297/GRIDZ=750）
+右向き（向き固定）
+
+●破壊中のセリフ</comment>
+		<attribute name="キャラ指定">OLDWOMAN1</attribute>
+		<language name="JPN" width="256">わしの　まごを　なかしおって！
+としよりだと　おもって　なめてたら…[BE:00:ページ切り替え（行送り）]
+フガ　フガ…！</language>
+		<language name="JPN_KANJI" width="256">わしの　まごを　なかしおって！
+としよりだと　おもって　なめてたら…[BE:00:ページ切り替え（行送り）]
+フガ　フガ…！</language>
+	</row>
+
+	<row id="msg_d12_visitor03_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<comment>●イベント終了後のセリフ</comment>
+		<attribute name="キャラ指定">OLDWOMAN1</attribute>
+		<language name="JPN" width="256">まごを　たすけれくれて
+ほんとに　ありがとうよ</language>
+		<language name="JPN_KANJI" width="256">まごを　たすけれくれて
+ほんとに　ありがとうよ</language>
+	</row>
+
+	<row id="msg_d12_plasma01_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>ポジション（GRIDX=298/GRIDZ=750）
+左向き（向き固定）
+
+●破壊中のセリフ</comment>
+		<attribute name="キャラ指定">HAKAIM</attribute>
+		<language name="JPN" width="256">ええい　うるさい！[BE:01:ページ切り替え（クリア）]
+ここで　おとなしくしてれば
+てあらな　ことは　しない！</language>
+		<language name="JPN_KANJI" width="256">ええい　うるさい！[BE:01:ページ切り替え（クリア）]
+ここで　おとなしくしてれば
+てあらな　ことは　しない！</language>
+	</row>
+
+	<row id="msg_d12_visitor04_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>ポジション（GRIDX=299/GRIDZ=749）
+下向き
+
+●破壊中のセリフ</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
+		<language name="JPN" width="256">しまを　せんきょして
+なにを　しようと　してるんだ…？[BE:00:ページ切り替え（行送り）]
+まったく　アヤシイ　れんちゅうだ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">しまを　せんきょして
+なにを　しようと　してるんだ…？[BE:00:ページ切り替え（行送り）]
+まったく　アヤシイ　れんちゅうだ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d12_visitor04_02" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>●イベント終了後のセリフ</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
+		<language name="JPN" width="256">しまの　ひみつを　もっと　はやく
+しっていれば　オレさまが…[BE:01:ページ切り替え（クリア）]
+いやいや　なんでも　ない！
+ひとりごと　ひとりごと…！</language>
+		<language name="JPN_KANJI" width="256">しまの　ひみつを　もっと　はやく
+しっていれば　オレさまが…[BE:01:ページ切り替え（クリア）]
+いやいや　なんでも　ない！
+ひとりごと　ひとりごと…！</language>
+	</row>
+
+	<row id="msg_d12_visitor05_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>ポジション（GRIDX=298/GRIDZ=745）
+下向き
+
+●破壊中のセリフ</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">ふるい　とうだいしか　ないような
+きねん　こうえんで[BE:00:ページ切り替え（行送り）]
+なにを　しようと　してるのかしら…？</language>
+		<language name="JPN_KANJI" width="256">ふるい　とうだいしか　ないような
+きねん　こうえんで[BE:00:ページ切り替え（行送り）]
+なにを　しようと　してるのかしら…？</language>
+	</row>
+
+	<row id="msg_d12_visitor05_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">ポケモンを　あくじに　つかうひとが
+おおすぎるのよ…！</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　あくじに　つかうひとが
+おおすぎるのよ…！</language>
+	</row>
+
+	<row id="msg_d12_police01_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ポジション（GRIDX=308/GRIDZ=746）
+右向き
+
+●破壊中のセリフ</comment>
+		<attribute name="キャラ指定">POLICEMAN</attribute>
+		<language name="JPN" width="256">ほんかんの　ポケモンでは
+たちうち　できなかった…！[BE:00:ページ切り替え（行送り）]
+プラズマだんの　ヤツラめ！</language>
+		<language name="JPN_KANJI" width="256">ほんかんの　ポケモンでは
+たちうち　できなかった…！[BE:00:ページ切り替え（行送り）]
+プラズマだんの　ヤツラめ！</language>
+	</row>
+
+	<row id="msg_d12_police01_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●イベント終了後のセリフ</comment>
+		<attribute name="キャラ指定">POLICEMAN</attribute>
+		<language name="JPN" width="256">キミのような　つよい　トレーナーが
+いてくれて　ほんとうに　たすかった！</language>
+		<language name="JPN_KANJI" width="256">キミのような　つよい　トレーナーが
+いてくれて　ほんとうに　たすかった！</language>
+	</row>
+
+	<row id="msg_d12_police01_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●再上陸のセリフ</comment>
+		<attribute name="キャラ指定">POLICEMAN</attribute>
+		<language name="JPN" width="256">さいきんは　かんこうきゃくが
+すくなくなったから　たいくつだ…</language>
+		<language name="JPN_KANJI" width="256">さいきんは　かんこうきゃくが
+すくなくなったから　たいくつだ…</language>
+	</row>
+
+	<row id="msg_d12_sign_01" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,#ff00ff,,">
+		<attribute name="キャラ指定">看板・桟橋</attribute>
+		<language name="JPN" width="256">…２００ねんまえ
+だいふごうが　しまを　かいとり[BE:00:ページ切り替え（行送り）]
+ひとと　ポケモンが　じゆうに　くらせる[BE:00:ページ切り替え（行送り）]
+せかいを　ねがって[BE:00:ページ切り替え（行送り）]
+リバティ　アイランドと　なづけました</language>
+		<language name="JPN_KANJI" width="256">…２００ねんまえ
+だいふごうが　しまを　かいとり[BE:00:ページ切り替え（行送り）]
+ひとと　ポケモンが　じゆうに　くらせる[BE:00:ページ切り替え（行送り）]
+せかいを　ねがって[BE:00:ページ切り替え（行送り）]
+リバティ　アイランドと　なづけました</language>
+	</row>
+
+	<row id="msg_d12_sign_02" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,#ff00ff,,">
+		<attribute name="キャラ指定">看板・灯台前</attribute>
+		<language name="JPN" width="256">じゆうの　ひかりを　ともす　とうだい[BE:01:ページ切り替え（クリア）]
+かんけいしゃ　いがいの
+たちいりを　きんし　します</language>
+		<language name="JPN_KANJI" width="256">じゆうの　ひかりを　ともす　とうだい[BE:01:ページ切り替え（クリア）]
+かんけいしゃ　いがいの
+たちいりを　きんし　します</language>
+	</row>
+
+	<row id="msg_d12_police02_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ポジション（GRIDX=304/GRIDZ=756）
+右向き
+
+●再上陸のセリフ</comment>
+		<attribute name="キャラ指定">POLICEMAN</attribute>
+		<language name="JPN" width="256">あの　ポケモンは　げんきかい？[BE:01:ページ切り替え（クリア）]
+あの　じけん　いらい
+しまは　しずかな　もんだよ</language>
+		<language name="JPN_KANJI" width="256">あの　ポケモンは　げんきかい？[BE:01:ページ切り替え（クリア）]
+あの　じけん　いらい
+しまは　しずかな　もんだよ</language>
 	</row>
 
 	<flowchart-group-list>
