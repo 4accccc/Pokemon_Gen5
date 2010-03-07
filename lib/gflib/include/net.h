@@ -191,6 +191,19 @@ enum{
   GFL_NET_CHANGEOVER_MODE_FIX_CHILD,    ///<子固定
 };
 
+
+
+//ビーコンスキャン速度変更
+enum{
+  GFL_NET_CROSS_SPEED_FAST,   //早い
+  GFL_NET_CROSS_SPEED_SLOW,   //遅い
+  GFL_NET_CROSS_SPEED_PAUSE,  //休止
+};
+
+
+
+
+
 typedef u8 GameServiceID;  ///< ゲームサービスID  通信の種類
 typedef u8 ConnectID;      ///< 接続するためのID  0-16 まで
 typedef u8 NetID;          ///< 通信ID  0-16 まで
@@ -399,7 +412,6 @@ extern void GFL_NET_InitClientAndConnectToParent(u8* macAddress);
 //==============================================================================
 /**
  * @brief   指定した親機に接続する（子機初期化済み）
- * @param   GFL_NETHANDLE  通信ハンドルのポインタ
  * @param   macAddress     マックアドレスのバッファ
  * @return  none
  */
@@ -408,7 +420,7 @@ extern void GFL_NET_ConnectToParent(u8* macAddress);
 //==============================================================================
 /**
  * @brief   子機になりビーコンを集める
- * @param   pHandle  通信ハンドルのポインタ
+ * @param   none
  * @return  none
  */
 //==============================================================================
@@ -416,7 +428,7 @@ extern void GFL_NET_StartBeaconScan(void);
 //==============================================================================
 /**
  * @brief    親機になり待ち受ける
- * @param    pHandle  通信ハンドルのポインタ
+ * @param    none
  * @return   none
  */
 //==============================================================================
@@ -424,11 +436,20 @@ extern void GFL_NET_InitServer(void);
 //==============================================================================
 /**
  * @brief    親機子機を繰り返し、誰でもいいので接続する
- * @param    pHandle  通信ハンドルのポインタ
+ * @param    接続コールバック
  * @return   none
  */
 //==============================================================================
 extern void GFL_NET_ChangeoverConnect(NetStepEndCallback callback);
+//==============================================================================
+/**
+ * @brief    親機子機を繰り返しするのを速度変更
+ * @param    num GFL_NET_CROSS_SPEED_XXX
+ * @return   none
+ */
+//==============================================================================
+extern void GFL_NET_ChangeoverChangeSpeed(int num);
+
 //==============================================================================
 /**
  * @brief    親機子機を繰り返し、誰でもいいので接続する 赤外線無線専用

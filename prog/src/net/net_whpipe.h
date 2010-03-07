@@ -499,3 +499,13 @@ extern GameServiceID GFL_NET_WLGetGameServiceID(u8 index);
 //-------------------------------------------------------------
 
 extern void GFL_NET_WLFIXScan(int index);
+
+//-------------------------------------------------------------
+/**
+ * @brief   スキャンする速度の変更
+ * @param   BOOL bSlow 遅くする時TRUE
+ */
+//-------------------------------------------------------------
+
+extern void GFL_NET_WLChangeScanSpeed(BOOL bSlow);
+

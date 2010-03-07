@@ -113,7 +113,9 @@ static GFLNetDevTable netDevTbl={
   NULL,	//DevConnectWorkInitFunc
 	_DevSetClinetConnect, //DevSetClientConnectFunc DevSetClientConnect; ///< 子機がつながってよいかどうかハードレベルで調整
   NULL, //DevCrossScanFunc
+  NULL, //DevCrossScanChangeSpeedFunc
 
+#if 0
   //-- 以下、Wi-Fi広場専用
   _DevLobbyLogin,	//DevLobbyLoginFunc
   _DevDebugSetRoom,	//DevDebugSetRoomFunc
@@ -128,6 +130,7 @@ static GFLNetDevTable netDevTbl={
   _DevLobbyMgEndConnect,    //DevLobbyMgEndConnectFunc
   _DevLobbyMgMyParent,    //DevLobbyMgMyParentFunc
   _DevLobbyMgEndRecruit,    //DevLobbyMgEndRecruitFunc
+#endif
 };
 
 //--------------------------------------------

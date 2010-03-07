@@ -56,6 +56,7 @@ static int _DevGetError(void);  ///< エラーを得る
 static void _DevSetNoChildErrorSet(BOOL bOn);
 static void _DevSetClinetConnect(BOOL bEnable);
 static BOOL _DevCrossScan(void);
+static void _DevCrossScanChangeSpeed(int num);
 
 //--------------------------------------------
 // 構造体
@@ -110,7 +111,9 @@ static GFLNetDevTable netDevTbl={
 	NULL, //DevConnectWorkInitFunc DevConnectWorkInit;           ///<初めての接続後のワーク設定
 	_DevSetClinetConnect, //DevSetClientConnectFunc DevSetClientConnect; ///< 子機がつながってよいかどうかハードレベルで調整
   _DevCrossScan, //すれ違い通信
+  _DevCrossScanChangeSpeed, //すれ違い速度変更
 
+#if 0
 	NULL, //DevLobbyLoginFunc DevLobbyLogin;		///<Wi-Fi広場にログイン	DWC_LOBBY_Login
 	NULL, //DevDebugSetRoomFunc DevDebugSetRoom;	///<デバッグ用 部屋データ設定 DWC_LOBBY_DEBUG_SetRoomData
 	NULL, //DevLobbyUpdateErrorCheckFunc DevLobbyUpdateErrorCheck;	///<DWCロビー更新 DWC_LOBBY_UpdateErrorCheck
@@ -124,7 +127,7 @@ static GFLNetDevTable netDevTbl={
 	NULL, //DevLobbyMgEndConnectFunc DevLobbyMgEndConnect; ///<DWC_LOBBY_MG_EndConnect
 	NULL, //DevLobbyMgMyParentFunc DevLobbyMgMyParent;  ///<DWC_LOBBY_MG_MyParent
 	NULL, //DevLobbyMgEndRecruitFunc DevLobbyMgEndRecruit;  ///<DWC_LOBBY_MG_EndRecruit
-
+#endif
 };
 
 //--------------------------------------------
@@ -195,7 +198,7 @@ static BOOL _DevStartFunc(NetDevEndCallback callback)
 //------------------------------------------------------------------------------
 static int _DevMainFunc(u16 bitmap)
 {
-	GFI_NET_MLProcess(bitmap);
+  GFI_NET_MLProcess(bitmap);
 	return TRUE;
 }
 
@@ -626,4 +629,21 @@ static BOOL _DevCrossScan(void)
 {
   return GFL_NET_WLCrossoverInit();
 }
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   すれ違い通信速度変更
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _DevCrossScanChangeSpeed(int num)
+{
+  GFL_NET_WLChangeScanSpeed(num);
+}
+
+
+
+
+
 

@@ -297,6 +297,7 @@ typedef BOOL (*WHBeaconScanCallBack)(WMBssDesc* bd);
 typedef u16 (*WHParentWEPKeyGeneratorFunc) (u16 *wepkey, const WMParentParam *parentParam);
 typedef u16 (*WHChildWEPKeyGeneratorFunc) (u16 *wepkey, const WMBssDesc *bssDesc);
 
+typedef BOOL (*WHNextFunc)(void);
 
 
 /**************************************************************************

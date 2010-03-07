@@ -80,6 +80,7 @@ typedef BOOL (*DevGetSendLockFlagFunc)(void); ///< 送信ロックフラグを取得
 typedef void (*DevConnectWorkInitFunc)(void); ///< 初めての接続後のワーク設定
 typedef void (*DevSetClientConnectFunc)(BOOL bEnable); ///< 子機がつながってよいかどうかハードレベルで調整
 typedef BOOL (*DevCrossScanFunc)(void); ///< すれ違い通信開始
+typedef void (*DevCrossScanChangeSpeedFunc)(int num); ///< すれ違い速度変更
 
 typedef BOOL (*DevLobbyLoginFunc)(const void* cp_loginprofile); ///<Wi-Fi広場にログイン	DWC_LOBBY_Login
 typedef void (*DevDebugSetRoomFunc)( u32 locktime, u32 random, u8 roomtype, u8 season ); ///<デバッグ用 部屋データ設定DWC_LOBBY_DEBUG_SetRoomData
@@ -150,7 +151,9 @@ typedef struct{
   DevConnectWorkInitFunc DevConnectWorkInit;           ///<初めての接続後のワーク設定
   DevSetClientConnectFunc DevSetClientConnect; ///< 子機がつながってよいかどうかハードレベルで調整
   DevCrossScanFunc DevCrossScan; ///<  すれ違い通信開始
-  
+  DevCrossScanChangeSpeedFunc DevCrossScanChangeSpeed; ///<  すれ違い通信速度変更
+
+#if 0
   //-- 以下、Wi-Fi広場専用
   DevLobbyLoginFunc DevLobbyLogin;		///<Wi-Fi広場にログイン	DWC_LOBBY_Login
   DevDebugSetRoomFunc DevDebugSetRoom;	///<デバッグ用 部屋データ設定 DWC_LOBBY_DEBUG_SetRoomData
@@ -165,6 +168,7 @@ typedef struct{
   DevLobbyMgEndConnectFunc DevLobbyMgEndConnect; ///<DWC_LOBBY_MG_EndConnect
   DevLobbyMgMyParentFunc DevLobbyMgMyParent;  ///<DWC_LOBBY_MG_MyParent
   DevLobbyMgEndRecruitFunc DevLobbyMgEndRecruit;  ///<DWC_LOBBY_MG_EndRecruit
+#endif
   
 } GFLNetDevTable;
 

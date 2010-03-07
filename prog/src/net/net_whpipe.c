@@ -117,6 +117,9 @@ typedef struct _NET_WL_WORK  GFL_NETWL;
 /// コールバック関数の書式 内部ステート遷移用
 typedef void (*PTRStateFunc)(GFL_NETWL* pState);
 
+/// 時間取得
+typedef int (*PTRTimeGet)(void);
+
 
 //管理構造体定義
 struct _NET_WL_WORK {
@@ -126,6 +129,8 @@ struct _NET_WL_WORK {
 	u8  backupBssid[GFL_NET_MACHINE_MAX][WM_SIZE_BSSID];   // 今まで接続していた
 	u16 bconUnCatchTime[SCAN_PARENT_COUNT_MAX]; ///< 親機のビーコンを拾わなかった時間+データがあるかどうか
 	PTRPARENTFIND_CALLBACK pCallback;
+  PTRTimeGet parentTime;
+  PTRTimeGet childTime;
 	void* pUserWork;
 	u16 _sTgid;
 	u16 errCheckBitmap;      ///< このBITMAPが食い違うとエラーになる
@@ -225,7 +230,9 @@ static void _changeState(GFL_NETWL* pState,PTRStateFunc state)
 #ifdef GFL_NET_DEBUG
 static void _changeStateDebug(GFL_NETWL* pState,PTRStateFunc state, int line)
 {
+#ifdef DEBUG_WH_BEACON_PRINT_ON
 	NET_PRINT("whpipe: %d\n",line);
+#endif
 	_changeState(pState, state);
 }
 #endif
@@ -268,8 +275,9 @@ BOOL GFL_NET_WLInitialize(HEAPID heapID,NetDevEndCallback callback, void* pUserW
 	pNetWL->mineDebugNo = _DEBUG_ALONETEST;
 	pNetWL->_sTgid = WM_GetNextTgid();
 
+#ifdef DEBUG_WH_BEACON_PRINT_ON
 	NET_PRINT("%d %d\n",WM_SIZE_USER_GAMEINFO , sizeof(_GF_BSS_DATA_INFO) );
-
+#endif
 	GF_ASSERT(WM_SIZE_USER_GAMEINFO == sizeof(_GF_BSS_DATA_INFO));
 	return TRUE;
 }
@@ -1136,7 +1144,10 @@ static int _connectNum(void)
 BOOL GFL_NET_WLIsConnectStalth(void)
 {
 	GFL_NETWL* pNetWL = _pNetWL;
-	if(pNetWL && (pNetWL->disconnectType == _DISCONNECT_STEALTH)){
+
+  GF_ASSERT(0);
+
+  if(pNetWL && (pNetWL->disconnectType == _DISCONNECT_STEALTH)){
 		return TRUE;
 	}
 	return FALSE;
@@ -1901,7 +1912,7 @@ static void _crossScanShootEndWait(GFL_NETWL* pNetWL)
     }
 		NET_WHPIPE_BeaconSetInfo();
     if( WH_ParentConnect(WH_CONNECTMODE_MP_PARENT, pNetWL->_sTgid, ch[pNetWL->crossChannel], 1 )){
-      pNetWL->CrossRand = 60 + GFUser_GetPublicRand(152);
+      pNetWL->CrossRand = pNetWL->parentTime();
 //      pNetWL->CrossRand= GFUser_GetPublicRand(5);
       _CHANGE_STATE(_crossScanWait);  // 親機になる
     }
@@ -1929,7 +1940,7 @@ static void _crossScanShootStart(GFL_NETWL* pNetWL)
 {
   if(WH_GetSystemState() == WH_SYSSTATE_IDLE){
     if(WH_StartScan(_scanCallback, NULL, 0)){
-      pNetWL->CrossRand = 60+GFUser_GetPublicRand(40);
+      pNetWL->CrossRand = pNetWL->childTime();
       _CHANGE_STATE(_crossScanShootWait);  // スキャン待ち
 #ifdef DEBUG_WH_BEACON_PRINT_ON
       OS_TPrintf( "scan on\n" );
@@ -1952,6 +1963,7 @@ BOOL GFL_NET_WLCrossoverInit(void)
 	if(pNetWL == NULL){
 		return FALSE;
   }
+  GFL_NET_WLChangeScanSpeed(GFL_NET_CROSS_SPEED_FAST);
 
   _commInit(pNetWL);
 
@@ -2014,4 +2026,48 @@ void GFL_NET_WLFIXScan(int index)
 {
   WIH_FixScanMode(_pNetWL->sBssDesc[index].channel, _pNetWL->sBssDesc[index].bssid );
 }
+
+
+static int _parentFastTime(void)
+{
+  return 60 + GFUser_GetPublicRand(152);
+}
+
+static int _childFastTime(void)
+{
+  return 60+GFUser_GetPublicRand(40);
+}
+
+static int _parentSlowTime(void)
+{
+  return (60 + GFUser_GetPublicRand(152))*3;
+}
+
+static int _childSlowTime(void)
+{
+  return (60+GFUser_GetPublicRand(40))*3;
+}
+
+
+
+
+//-------------------------------------------------------------
+/**
+ * @brief   スキャンする速度の変更
+ * @param   num   2:はやい(default) 1:おそい  0:とまっている
+ */
+//-------------------------------------------------------------
+
+void GFL_NET_WLChangeScanSpeed(int num)
+{
+  if(num == GFL_NET_CROSS_SPEED_FAST){
+    _pNetWL->parentTime = &_parentSlowTime;
+    _pNetWL->childTime = &_childSlowTime;
+  }
+  else{
+    _pNetWL->parentTime = &_parentFastTime;
+    _pNetWL->childTime = &_childFastTime;
+  }
+}
+
 
