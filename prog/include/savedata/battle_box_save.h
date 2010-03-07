@@ -25,6 +25,19 @@
 #define BATTLE_BOX_NAME_BUFSIZE (20)	// 日本語８文字＋EOM。海外版用の余裕も見てこの程度。
 
 //======================================================================
+//	enum
+//======================================================================
+typedef enum
+{ 
+
+  BATTLE_BOX_LOCK_BIT_WIFI = 1<<0,  //WIFI大会用ロック
+  BATTLE_BOX_LOCK_BIT_LIVE = 1<<1,  //LIVE大会用ロック
+
+  BATTLE_BOX_LOCK_BIT_NONE = 0,      //ロックされていない
+  BATTLE_BOX_LOCK_BIT_BOTH = BATTLE_BOX_LOCK_BIT_WIFI|BATTLE_BOX_LOCK_BIT_LIVE//両方LOCK
+}BATTLE_BOX_LOCK_BIT;
+
+//======================================================================
 //	typedef struct
 //======================================================================
 
@@ -98,16 +111,18 @@ extern BOOL BATTLE_BOX_SAVE_IsIn( BATTLE_BOX_SAVE * sv );
 /**
  * @brief		バトルボックスをロックする
  * @param		btlBoxSave				バトルボックスのセーブデータ
- * @param  	flg       ロックする場合TRUE
+ * @param  	flg       ロックするフラグ
  */
 //--------------------------------------------------------------------------------------------
-extern void BATTLE_BOX_SAVE_SetLockFlg( BATTLE_BOX_SAVE *btlBoxSave,int flg );
+extern void BATTLE_BOX_SAVE_OnLockFlg( BATTLE_BOX_SAVE *btlBoxSave,BATTLE_BOX_LOCK_BIT flg );
+extern void BATTLE_BOX_SAVE_OffLockFlg( BATTLE_BOX_SAVE *btlBoxSave,BATTLE_BOX_LOCK_BIT flg );
 
 //--------------------------------------------------------------------------------------------
 /**
  * @brief		バトルボックスがロックされているかどうか
  * @param		btlBoxSave				バトルボックスのセーブデータ
- * @return	ロックしてたらTRUE
+ * @return	FALSEならばロックされていない
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL BATTLE_BOX_SAVE_GetLockFlg( BATTLE_BOX_SAVE *btlBoxSave );
+extern BOOL BATTLE_BOX_SAVE_GetLockType( const BATTLE_BOX_SAVE *btlBoxSave, BATTLE_BOX_LOCK_BIT flg );

@@ -30,6 +30,7 @@ typedef enum
   LIVEBATTLEMATCH_FLOW_RET_LIVEMENU,  //ライブ大会メニューへ
   LIVEBATTLEMATCH_FLOW_RET_BATTLE,    //バトルへ
   LIVEBATTLEMATCH_FLOW_RET_REC,       //録画へ
+  LIVEBATTLEMATCH_FLOW_RET_BTLREC,    //録画再生へ
 } LIVEBATTLEMATCH_FLOW_RET;
 
 //-------------------------------------
@@ -38,6 +39,7 @@ typedef enum
 typedef enum
 {
   LIVEBATTLEMATCH_FLOW_MODE_START,  //最初から開始
+  LIVEBATTLEMATCH_FLOW_MODE_MENU,    //ライブ大会メインメニューから開始
   LIVEBATTLEMATCH_FLOW_MODE_BTL,    //バトル後から開始
   LIVEBATTLEMATCH_FLOW_MODE_REC,    //録画後から開始
 

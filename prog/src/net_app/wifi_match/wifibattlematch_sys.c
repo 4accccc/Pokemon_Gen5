@@ -338,25 +338,24 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(WIFIBATTLEMATCH_SYS), HEAPID_WIFIBATTLEMATCH_SYS );
 	GFL_STD_MemClear( p_wk, sizeof(WIFIBATTLEMATCH_SYS) );
   GFL_STD_MemCopy( p_param_adrs, &p_wk->param, sizeof(WIFIBATTLEMATCH_PARAM) );
+
+  //ゲームデータ自動生成のときは作成
   if( p_wk->param.p_game_data == NULL )
   { 
     p_wk->param.p_game_data = GAMEDATA_Create( GFL_HEAPID_APP );
     p_wk->is_create_gamedata  = TRUE;
   }
-  if( p_wk->p_player_btl_party == NULL )
-  { 
-    p_wk->p_player_btl_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
-  }
-  if( p_wk->p_enemy_btl_party == NULL )
-  { 
-    p_wk->p_enemy_btl_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
-  }
+
+  //戦闘用パーティ作成
+  p_wk->p_player_btl_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
+  p_wk->p_enemy_btl_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
 
   OS_Printf( "ランダムマッチ引数 使用ポケ%d ルール%d\n", p_wk->param.poke, p_wk->param.btl_rule );
 
   p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_START;
 
   //データバッファ作成
+  BattleRec_Init( HEAPID_WIFIBATTLEMATCH_SYS );
   DATA_CreateBuffer( p_wk, HEAPID_WIFIBATTLEMATCH_SYS );
 
   //モジュール作成
@@ -398,6 +397,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
 
   //データバッファ破棄
   DATA_DeleteBuffer( p_wk );
+  BattleRec_Exit();
 
   if( p_wk->p_enemy_btl_party )
   { 
@@ -993,7 +993,6 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
   //録画情報にバトル情報を設定
-  BattleRec_Init( HEAPID_WIFIBATTLEMATCH_SYS );
   BattleRec_LoadToolModule();
   BattleRec_StoreSetupParam( p_param->p_btl_setup_param );
   BattleRec_UnloadToolModule();
@@ -1199,9 +1198,6 @@ static BOOL WBM_BTLREC_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_
   BTL_REC_SEL_PARAM               *p_param  = p_param_adrs;
 
   GFL_HEAP_FreeMemory( p_param );
-
-  //録画バッファ終了
-  BattleRec_Exit();
 
   //次のPROC
   p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDREC;

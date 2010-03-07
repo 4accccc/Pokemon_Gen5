@@ -90,6 +90,13 @@ struct _LIVEBATTLEMATCH_FLOW_WORK
 static void SEQFUNC_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_End( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
+static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_BtlAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
 //-------------------------------------
 ///	便利関数
 //=====================================
@@ -207,6 +214,24 @@ LIVEBATTLEMATCH_FLOW_RET LIVEBATTLEMATCH_FLOW_IsEnd( const LIVEBATTLEMATCH_FLOW_
 static void SEQFUNC_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   LIVEBATTLEMATCH_FLOW_WORK *p_wk = p_wk_adrs;
+
+  switch( p_wk->param.mode )
+  { 
+  case LIVEBATTLEMATCH_FLOW_MODE_START:  //最初から開始
+    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_RecvCard );
+    break;
+  case LIVEBATTLEMATCH_FLOW_MODE_MENU:    //メインメニューから開始
+    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_StartCup );
+    break;
+  case LIVEBATTLEMATCH_FLOW_MODE_BTL:    //バトル後から開始
+    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_BtlAfter );
+    break;
+  case LIVEBATTLEMATCH_FLOW_MODE_REC:    //録画後から開始
+    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_RecAfter );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
   
 }
 //----------------------------------------------------------------------------
@@ -223,6 +248,418 @@ static void SEQFUNC_End( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   //終了
   WBM_SEQ_End( p_seqwk );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief	選手証受信シーケンス
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_CHECK_CARD,       //選手証の存在チェック
+    SEQ_START_MSG_NOLOCK, //すでに選手証があって、バトルボックスがロックされていない
+    SEQ_START_MSG_LOCK,   //すでに選手証があって、バトルボックスがロックされている
+
+    SEQ_START_MSG_RECVCARD, //選手証受け取り
+    SEQ_START_RECVCARD,
+    SEQ_WAIT_RECVCARD,
+
+    SEQ_CHECK_RECVCARD, //受け取った選手証をチェック
+
+    SEQ_START_SAVE, //選手証が正しかったのでサインアップしてセーブ
+    SEQ_WAIT_SAVE,
+
+    SEQ_START_MSG_RETIRE,   //リタイアした大会を受け取っていた,
+    SEQ_START_MSG_FINISH,   //終了した大会を受け取っていた,
+
+    SEQ_SUCCESS_END,      //成功したので次へ
+    SEQ_DIRTY_END,        //失敗したので戻る
+
+    SEQ_WAIT_MSG,       //メッセージ待ち
+  };
+
+  LIVEBATTLEMATCH_FLOW_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_CHECK_CARD:       //選手証の存在チェック
+    break;
+  case SEQ_START_MSG_NOLOCK: //すでに選手証があって、バトルボックスがロックされていない
+    break;
+  case SEQ_START_MSG_LOCK:   //すでに選手証があって、バトルボックスがロックされている
+    break;
+
+  case SEQ_START_MSG_RECVCARD: //選手証受け取り
+    break;
+  case SEQ_START_RECVCARD:
+    break;
+  case SEQ_WAIT_RECVCARD:
+    break;
+
+  case SEQ_CHECK_RECVCARD: //受け取った選手証をチェック
+    break;
+
+  case SEQ_START_SAVE: //選手証が正しかったのでサインアップしてセーブ
+    break;
+  case SEQ_WAIT_SAVE:
+    break;
+
+  case SEQ_START_MSG_RETIRE:   //リタイアした大会を受け取っていた:
+    break;
+  case SEQ_START_MSG_FINISH:   //終了した大会を受け取っていた:
+    break;
+
+  case SEQ_SUCCESS_END:      //成功したので次へ
+    break;
+  case SEQ_DIRTY_END:        //失敗したので戻る
+    break;
+
+  case SEQ_WAIT_MSG:       //メッセージ待ち
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	大会登録シーケンス
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_DRAW_CARD,  //選手証とバトルボックス表示
+    SEQ_WAIT_DRAW_CARD,
+    SEQ_START_MSG_REG,     //バトルボックスのポケモンを登録します
+    SEQ_START_LIST_REG_YESNO,
+    SEQ_WAIT_LIST_REG_YESNO,
+
+    SEQ_START_MSG_CANCEL,     //参加ポケモンの登録をやめますか
+    SEQ_START_LIST_CANCEL_YESNO,
+    SEQ_WAIT_LIST_CANCEL_YESNO,
+
+    SEQ_MOVE_BTLBOX,      //バトルボックス離脱
+    SEQ_CHECK_REG,        //バトルボックスのポケモンがレギュレーションと一致するかチェック
+    SEQ_START_MSG_DIRTY_REG,  //レギュレーションと一致しなかった
+    SEQ_LOCK_BTLBOX,      //バトルボックスをロック
+
+    SEQ_START_SAVE,        //登録完了セーブ,
+    SEQ_WAIT_SAVE,
+
+    SEQ_START_MSG_COMPLATE, //完了メッセージ
+
+    SEQ_SUCCESS_END,      //成功したので次へ
+    SEQ_DIRTY_END,        //失敗したので戻る
+
+    SEQ_WAIT_MSG,       //メッセージ待ち 
+  };
+
+  LIVEBATTLEMATCH_FLOW_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START_DRAW_CARD:  //選手証とバトルボックス表示
+    break;
+  case SEQ_WAIT_DRAW_CARD:
+    break;
+  case SEQ_START_MSG_REG:     //バトルボックスのポケモンを登録します
+    break;
+  case SEQ_START_LIST_REG_YESNO:
+    break;
+  case SEQ_WAIT_LIST_REG_YESNO:
+    break;
+
+  case SEQ_START_MSG_CANCEL:     //参加ポケモンの登録をやめますか
+    break;
+  case SEQ_START_LIST_CANCEL_YESNO:
+    break;
+  case SEQ_WAIT_LIST_CANCEL_YESNO:
+    break;
+
+  case SEQ_MOVE_BTLBOX:      //バトルボックス離脱
+    break;
+  case SEQ_CHECK_REG:        //バトルボックスのポケモンがレギュレーションと一致するかチェック
+    break;
+  case SEQ_START_MSG_DIRTY_REG:  //レギュレーションと一致しなかった
+    break;
+  case SEQ_LOCK_BTLBOX:      //バトルボックスをロック
+    break;
+
+  case SEQ_START_SAVE:        //登録完了セーブ:
+    break;
+  case SEQ_WAIT_SAVE:
+    break;
+
+  case SEQ_START_MSG_COMPLATE: //完了メッセージ
+    break;
+
+  case SEQ_SUCCESS_END:      //成功したので次へ
+    break;
+  case SEQ_DIRTY_END:        //失敗したので戻る
+    break;
+
+  case SEQ_WAIT_MSG:       //メッセージ待ち 
+    break;
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	大会開始シーケンス
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_DRAW_CARD,  //選手証表示
+    SEQ_WAIT_DRAW_CARD,
+    
+    SEQ_START_MSG_MENU,   //メインメニュー
+    SEQ_START_LIST_MENU,
+    SEQ_WAIT_LIST_MENU,
+
+    SEQ_START_MSG_UNREG,  //参加を解除する
+    SEQ_START_LIST_UNREG,
+    SEQ_WAIT_LIST_UNREG,
+    SEQ_START_MSG_DECIDE, //本当に～
+    SEQ_START_LIST_DECIDE,
+    SEQ_WAIT_LIST_DECIDE,
+    SEQ_UNREGISTER,
+    SEQ_START_SAVE,
+    SEQ_WAIT_SAVE,
+    SEQ_START_MSG_UNLOCK,
+  
+    SEQ_START_MSG_LOOKBACK, //振り返る
+
+    SEQ_LOOKBACK_END,     //振り返るために終了
+    SEQ_MATCHING_END,     //マッチングへ
+    SEQ_UNREGISTER_END,   //解除して終了した
+
+    SEQ_WAIT_MSG,         //メッセージ待ち 
+  };
+
+  LIVEBATTLEMATCH_FLOW_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START_DRAW_CARD:  //選手証表示
+		break;
+  case SEQ_WAIT_DRAW_CARD:
+		break;
+    
+  case SEQ_START_MSG_MENU:   //メインメニュー
+		break;
+  case SEQ_START_LIST_MENU:
+		break;
+  case SEQ_WAIT_LIST_MENU:
+		break;
+
+  case SEQ_START_MSG_UNREG:  //参加を解除する
+		break;
+  case SEQ_START_LIST_UNREG:
+		break;
+  case SEQ_WAIT_LIST_UNREG:
+		break;
+  case SEQ_START_MSG_DECIDE: //本当に～
+		break;
+  case SEQ_START_LIST_DECIDE:
+		break;
+  case SEQ_WAIT_LIST_DECIDE:
+		break;
+  case SEQ_UNREGISTER:
+		break;
+  case SEQ_START_SAVE:
+		break;
+  case SEQ_WAIT_SAVE:
+		break;
+  case SEQ_START_MSG_UNLOCK:
+		break;
+  
+  case SEQ_START_MSG_LOOKBACK: //振り返る
+		break;
+
+  case SEQ_LOOKBACK_END:     //振り返るために終了
+		break;
+  case SEQ_MATCHING_END:     //マッチングへ
+		break;
+  case SEQ_UNREGISTER_END:   //解除して終了した
+		break;
+
+  case SEQ_WAIT_MSG:         //メッセージ待ち 
+		break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	マッチング処理シーケンス
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_MSG_MATCHING, //マッチング開始
+    SEQ_WAIT_MATCHING,      //マッチング中
+
+    SEQ_START_MSG_CANCEL_MATCHING, //マッチングやめる
+    SEQ_START_CANCEL_MATCHING,
+    SEQ_WAIT_CANCEL_MATCHING,
+
+    SEQ_CHECK_MATCH,      //マッチングした
+    SEQ_START_MSG_NOCUP,  //大会が違う
+    SEQ_START_MSG_OK,     //マッチング相手が見つかった！
+    SEQ_START_DRAW_OTHERCARD,
+    SEQ_WAIT_DRAW_OTHERCARD,
+    SEQ_WAIT_SYNC,
+    SEQ_START_MSG_WAIT,
+    SEQ_WAIT_KEY,
+
+    SEQ_BATTLE_END,       //バトルへ
+    SEQ_LIST_END,         //リストへ
+
+    SEQ_WAIT_MSG,         //メッセージ待ち 
+  };
+
+  LIVEBATTLEMATCH_FLOW_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START_MSG_MATCHING: //マッチング開始
+		break;
+  case SEQ_WAIT_MATCHING:      //マッチング中
+		break;
+
+  case SEQ_START_MSG_CANCEL_MATCHING: //マッチングやめる
+		break;
+  case SEQ_START_CANCEL_MATCHING:
+		break;
+  case SEQ_WAIT_CANCEL_MATCHING:
+		break;
+
+  case SEQ_CHECK_MATCH:      //マッチングした
+		break;
+  case SEQ_START_MSG_NOCUP:  //大会が違う
+		break;
+  case SEQ_START_MSG_OK:     //マッチング相手が見つかった！
+		break;
+  case SEQ_START_DRAW_OTHERCARD:
+		break;
+  case SEQ_WAIT_DRAW_OTHERCARD:
+		break;
+  case SEQ_WAIT_SYNC:
+		break;
+  case SEQ_START_MSG_WAIT:
+		break;
+  case SEQ_WAIT_KEY:
+		break;
+
+  case SEQ_BATTLE_END:       //バトルへ
+		break;
+  case SEQ_LIST_END:         //リストへ
+		break;
+
+  case SEQ_WAIT_MSG:         //メッセージ待ち 
+		break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	戦闘後シーケンス
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_BtlAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_MSG_SAVE,
+    SEQ_START_SAVE,
+    SEQ_WAIT_SAVE,
+    SEQ_REC_END,  //録画へ
+
+    SEQ_WAIT_MSG,         //メッセージ待ち 
+  };
+
+  LIVEBATTLEMATCH_FLOW_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_START_MSG_SAVE:
+		break;
+  case SEQ_START_SAVE:
+		break;
+  case SEQ_WAIT_SAVE:
+		break;
+  case SEQ_REC_END:  //録画へ
+		break;
+
+  case SEQ_WAIT_MSG:         //メッセージ待ち 
+		break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	録画後シーケンス
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_CHECK_BTLCNT, //規定回数戦った
+    SEQ_START_SAVE,
+    SEQ_WAIT_SAVE,
+
+    SEQ_END,      //大戦終了
+    SEQ_RETURN,   //まだ戦える
+
+    SEQ_WAIT_MSG,         //メッセージ待ち 
+  };
+  LIVEBATTLEMATCH_FLOW_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_CHECK_BTLCNT: //規定回数戦った
+		break;
+  case SEQ_START_SAVE:
+		break;
+  case SEQ_WAIT_SAVE:
+		break;
+
+  case SEQ_END:      //大戦終了
+		break;
+  case SEQ_RETURN:   //まだ戦える
+		break;
+
+  case SEQ_WAIT_MSG:         //メッセージ待ち 
+		break;
+  }
+}
+
 
 //=============================================================================
 /**

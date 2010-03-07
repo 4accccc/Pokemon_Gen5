@@ -503,8 +503,9 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
       REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, p_wk->param.type ); 
       BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+      BATTLE_BOX_LOCK_BIT bit = (p_wk->param.type == REGULATION_CARD_TYPE_WIFI) ? BATTLE_BOX_LOCK_BIT_WIFI:BATTLE_BOX_LOCK_BIT_LIVE;
 
-      BATTLE_BOX_SAVE_SetLockFlg( p_bbox_save, FALSE );
+      BATTLE_BOX_SAVE_OffLockFlg( p_bbox_save, bit );
       Regulation_SetCardParam( p_reg, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_RETIRE );
       *p_seq  = SEQ_START_SAVE;
     }
