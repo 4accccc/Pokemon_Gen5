@@ -104,6 +104,7 @@ enum{
   GMDATA_ID_QUESTIONNAIRE,    // すれ違いアンケート
   GMDATA_ID_UNSV,             // 国連
   GMDATA_ID_THSV,             // トライアルハウスランキング表示用
+  GMDATA_ID_LIVEMATCH,        // ライブマッチ
 
 	GMDATA_ID_MAX,
 };
