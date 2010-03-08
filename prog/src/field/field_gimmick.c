@@ -29,6 +29,7 @@
 #include "field_gimmick_league_front02.h"
 #include "field_gimmick_bgate_jet.h"
 #include "field_gimmick_bsubway.h"
+#include "field_gimmick_r04d03.h"
 
 extern void GYM_SetupTest(FIELDMAP_WORK *fieldWork);
 extern void GYM_EndTest(FIELDMAP_WORK *fieldWork);
@@ -47,6 +48,7 @@ FS_EXTERN_OVERLAY(field_gym_dragon);
 FS_EXTERN_OVERLAY(field_gimmick_gate);
 FS_EXTERN_OVERLAY(field_gimmick_h01);
 FS_EXTERN_OVERLAY(field_gimmick_h03);
+FS_EXTERN_OVERLAY(field_gimmick_r04d03);
 
 const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
 	NULL,					//0:–³‚µ
@@ -95,6 +97,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(field_gimmick_gate),  // R15R0101
   FS_OVERLAY_ID(field_gimmick_gate),  // R11R0101
   FS_OVERLAY_ID(field_gimmick_gate),  // R12R0101
+  FS_OVERLAY_ID(field_gimmick_r04d03),  // R04 and D03
 };
 
 const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
@@ -144,6 +147,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_Setup,  // R15R0101
   GATE_GIMMICK_Setup,  // R11R0101
   GATE_GIMMICK_Setup,  // R12R0101
+  R04D03_GIMMICK_Setup,    //R04 and D03
 };
 
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
@@ -193,6 +197,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_End,  // R15R0101
   GATE_GIMMICK_End,  // R11R0101
   GATE_GIMMICK_End,  // R12R0101
+  R04D03_GIMMICK_End,    //R04 and D03
 };
 
 const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
@@ -242,6 +247,7 @@ const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_Move,  // R15R0101
   GATE_GIMMICK_Move,  // R11R0101
   GATE_GIMMICK_Move,  // R12R0101
+  R04D03_GIMMICK_Move,    //R04 and D03
 };
 
 #if 0
