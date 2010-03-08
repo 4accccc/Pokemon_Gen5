@@ -733,7 +733,6 @@ static u8 GetWidthProportionalFont( const GFL_FONT* wk, u32 glyphIndex )
     widthIdx = (bitTable[ byteIdx ] >> shift) & 0x03;
 
     if( widthIdx < 3 ){
-      TAYA_Printf("  lots3 ... width=%d\n", wtbl->lotsWidth[ widthIdx ] );
       return wtbl->lotsWidth[ widthIdx ];
     }
   }
@@ -751,7 +750,6 @@ static u8 GetWidthProportionalFont( const GFL_FONT* wk, u32 glyphIndex )
     hashCode = ((glyphIndex & 0x1ff) ^ (keyBit << 3)) % HASH_SIZE;
 
     if( hashTable[hashCode] >= 0 ){
-      TAYA_Printf("  hashTbl ... width=%d (hashCode=%d)\n", hashTable[hashCode], hashCode );
       return hashTable[ hashCode ];
     }else{
       dupIdx = hashTable[ hashCode ] * -1;
@@ -773,7 +771,6 @@ static u8 GetWidthProportionalFont( const GFL_FONT* wk, u32 glyphIndex )
         index = (*chainTable << 8) | *(chainTable+1);
         if( glyphIndex == index ){
           u8 width = *(chainTable + 2);
-          TAYA_Printf("  directWidth ... width=%d \n", width );
           return width;
         }
         else{
