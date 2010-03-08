@@ -27,6 +27,37 @@ _EVENT_DATA  ev_hide_item_005
 _EVENT_DATA  ev_hide_item_006
 _EVENT_DATA  ev_hide_item_007
 _EVENT_DATA  ev_hide_item_008
+_EVENT_DATA  ev_hide_item_009
+_EVENT_DATA  ev_hide_item_010
+_EVENT_DATA  ev_hide_item_011
+_EVENT_DATA  ev_hide_item_012
+_EVENT_DATA  ev_hide_item_013
+_EVENT_DATA  ev_hide_item_014
+_EVENT_DATA  ev_hide_item_015
+_EVENT_DATA  ev_hide_item_016
+_EVENT_DATA  ev_hide_item_017
+_EVENT_DATA  ev_hide_item_018
+_EVENT_DATA  ev_hide_item_019
+_EVENT_DATA  ev_hide_item_020
+_EVENT_DATA  ev_hide_item_021
+_EVENT_DATA  ev_hide_item_022
+_EVENT_DATA  ev_hide_item_023
+_EVENT_DATA  ev_hide_item_024
+_EVENT_DATA  ev_hide_item_025
+_EVENT_DATA  ev_hide_item_026
+_EVENT_DATA  ev_hide_item_027
+_EVENT_DATA  ev_hide_item_028
+_EVENT_DATA  ev_hide_item_029
+_EVENT_DATA  ev_hide_item_030
+_EVENT_DATA  ev_hide_item_031
+_EVENT_DATA  ev_hide_item_032
+_EVENT_DATA  ev_hide_item_033
+_EVENT_DATA  ev_hide_item_034
+_EVENT_DATA  ev_hide_item_035
+_EVENT_DATA  ev_hide_item_036
+_EVENT_DATA  ev_hide_item_037
+_EVENT_DATA  ev_hide_item_038
+_EVENT_DATA  ev_hide_item_039
 //--------------------------------------------------------------
 //               スクリプト本体 開始
 //--------------------------------------------------------------
@@ -73,6 +104,161 @@ EVENT_END
 EVENT_START ev_hide_item_008
 //ヤグルマの森 ( 626, 614 )
 	_ITEM_EVENT_HIDEITEM( 38, 1, FLAG_HIDEITEM_008 )// ピーピーエイド
+EVENT_END
+
+EVENT_START ev_hide_item_009
+//侵入先ライモンシティ ( 405, 468 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_009 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_010
+//侵入先ホモドシティ ( 187, 413 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_010 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_011
+//侵入先フキヨセシティ ( 108, 305 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_011 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_012
+//侵入先セッカシティ ( 184, 196 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_012 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_013
+//侵入先ソウリュウシティ ( 425, 173 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_013 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_014
+//侵入先カゴメタウン ( 657, 185 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_014 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_015
+//侵入先サザナミタウン ( 760, 300 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_015 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_016
+//侵入先ブラックシティ ( 43, 37 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_016 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_017
+//侵入先ホワイトフォレスト ( 43, 37 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_017 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_018
+//侵入先ライモンシティ ( 429, 464 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_018 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_019
+//侵入先ホモドシティ ( 178, 430 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_019 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_020
+//侵入先フキヨセシティ ( 100, 296 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_020 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_021
+//侵入先セッカシティ ( 174, 206 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_021 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_022
+//侵入先ソウリュウシティ ( 392, 173 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_022 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_023
+//侵入先ソウリュウシティ ( 439, 173 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_023 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_024
+//侵入先カゴメタウン ( 648, 175 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_024 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_025
+//侵入先サザナミタウン ( 748, 300 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_025 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_026
+//侵入先ブラックシティ ( 48, 36 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_026 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_027
+//侵入先ホワイトフォレスト ( 48, 36 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_027 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_028
+//侵入先５番道路 ( 370, 437 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_028 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_029
+//侵入先６番道路 ( 157, 404 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_029 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_030
+//侵入先７番道路 ( 120, 281 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_030 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_031
+//侵入先８番道路 ( 210, 187 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_031 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_032
+//侵入先９番道路 ( 349, 173 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_032 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_033
+//侵入先１１番道路 ( 466, 173 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_033 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_034
+//侵入先１２番道路 ( 592, 174 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_034 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_035
+//侵入先１３番道路 ( 682, 175 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_035 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_036
+//侵入先１４番道路 ( 744, 330 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_036 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_037
+//侵入先１５番道路 ( 629, 426 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_037 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_038
+//侵入先１５番道路 ( 593, 434 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_038 )// パレスだま
+EVENT_END
+
+EVENT_START ev_hide_item_039
+//侵入先１６番道路 ( 458, 436 )
+	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_039 )// パレスだま
 EVENT_END
 
 //--------------------------------------------------------------
