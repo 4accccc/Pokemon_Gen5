@@ -21,6 +21,7 @@
 #include "test/testmode.h"
 #include "test/performance.h"
 #include "backup_erase.h"
+#include "app/mictest.h"
 
 #include "title.naix"
 #include "title1.naix"
@@ -37,6 +38,7 @@
 /// 入力トリガマスク
 #define NEXT_PROC_MASK		( PAD_BUTTON_START | PAD_BUTTON_A )
 #define	BACKUP_ERASE_MASK	( PAD_KEY_UP | PAD_BUTTON_SELECT | PAD_BUTTON_B )
+#define	MIC_TEST_MASK			( PAD_KEY_DOWN | PAD_BUTTON_X | PAD_BUTTON_Y )
 
 #define TOTAL_WAIT			(60*20)
 
@@ -57,6 +59,7 @@ enum {
 	END_SELECT = 0,
 	END_TIMEOUT,
 	END_BACKUP_ERASE,
+	END_MIC_TEST,
 #ifdef	PM_DEBUG
 	END_DEBUG_CALL,
 #endif	// PM_DEBUG
@@ -256,6 +259,12 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 			tw->seq = SEQ_NEXT;
 			break;
 		}
+		// マイクテスト
+		if( GFL_UI_KEY_GetCont() == MIC_TEST_MASK ){
+			tw->mode = END_MIC_TEST;
+			tw->seq = SEQ_NEXT;
+			break;
+		}
 #ifdef	PM_DEBUG
 		// デバッグメニューへ
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
@@ -320,6 +329,8 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &StartMenuProcData, NULL);
 	}else if( mode == END_BACKUP_ERASE ){
 		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &BACKUP_ERASE_ProcData, NULL);
+	}else if( mode == END_MIC_TEST ){
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(mictest), &TitleMicTestProcData, NULL);
 #ifdef PM_DEBUG	// デバッグ用スキップ処理
 	}else if( mode == END_DEBUG_CALL ){
 		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, NULL );
