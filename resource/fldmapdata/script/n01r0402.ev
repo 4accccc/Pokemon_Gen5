@@ -19,19 +19,104 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_bg_n01r0402_goods_01
+_EVENT_DATA		ev_bg_n01r0402_goods_01
+_EVENT_DATA		ev_bg_n01r0402_goods_02
+_EVENT_DATA		ev_bg_n01r0402_goods_03
+_EVENT_DATA		ev_bg_n01r0402_goods_04
+_EVENT_DATA		ev_bg_n01r0402_goods_05
+_EVENT_DATA		ev_bg_n01r0402_goods_06
+_EVENT_DATA		ev_bg_n01r0402_goods_07
+_EVENT_DATA		ev_bg_n01r0402_goods_08
+_EVENT_DATA		ev_bg_n01r0402_goods_09
 _EVENT_DATA_END
 
-
 /************************************************************/
-/*						スケボー							*/
+/*					バスケットボール						*/
 /************************************************************/
 EVENT_START	ev_bg_n01r0402_goods_01
-	_TALK_START_SE_PLAY()
-	
+_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN( msg_n01r0402_bg_01 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
-	
+EVENT_END
+
+/************************************************************/
+/*					バスケットゴール						*/
+/************************************************************/
+EVENT_START	ev_bg_n01r0402_goods_02
+_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_n01r0402_bg_02 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					トイボックス１							*/
+/************************************************************/
+EVENT_START	ev_bg_n01r0402_goods_03
+_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_n01r0402_bg_03 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					スケートボード							*/
+/************************************************************/
+EVENT_START	ev_bg_n01r0402_goods_04
+_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_n01r0402_bg_04 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					ハーフパイプ							*/
+/************************************************************/
+EVENT_START	ev_bg_n01r0402_goods_05
+_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_n01r0402_bg_05 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					アートパネル							*/
+/************************************************************/
+EVENT_START	ev_bg_n01r0402_goods_06
+_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_n01r0402_bg_06 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					アートパネルオンダーツ					*/
+/************************************************************/
+EVENT_START	ev_bg_n01r0402_goods_07
+_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_n01r0402_bg_07 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					でんしゃ								*/
+/************************************************************/
+EVENT_START	ev_bg_n01r0402_goods_08
+_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_n01r0402_bg_08)
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					トイボックス２							*/
+/************************************************************/
+EVENT_START	ev_bg_n01r0402_goods_09
+_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_n01r0402_bg_09 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 

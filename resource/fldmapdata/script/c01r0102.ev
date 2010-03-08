@@ -116,6 +116,8 @@ EVENT_START   ev_scene_c01r0102_pdwguide_01
 	//CƒMƒA“üŽèƒtƒ‰ƒO
 	_FLAG_SET( FE_CGEAR_GET )
 	
+	$WK_SCENE_D01R0101_POKE = 1
+	
 	//======================================//
 
 EVENT_END

@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/14 23:19:03
+#save date:2010/03/08 18:06:45
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\n01r0402.wms
 #SECTION START:OBJ_EVENT
@@ -19,23 +19,36 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\n01r0402.wms
 #hold event type:
 1
 #hold event number:
-2
+43
 #event number: 0
 #Bg Event Label
-BG_N01R0402_GOODS_01l
+BG_N01R0402_GOODS_02
 #Bg Event Type
 BG_TALK_TYPE_NORMAL
 #Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
+BG_TALK_DIR_RIGHT
 #Bg Script Name
-SCRID_BG_N01R0402_GOODS_01
+SCRID_BG_N01R0402_GOODS_02
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 0 120
+-232 0 40
 #event number: 1
 #Bg Event Label
-BG_N01R0402_GOODS_01r
+BG_N01R0402_GOODS_06
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_06
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 216
+#event number: 2
+#Bg Event Label
+BG_N01R0402_GOODS_01
 #Bg Event Type
 BG_TALK_TYPE_NORMAL
 #Bg Event Reaction Direction ID
@@ -45,7 +58,527 @@ SCRID_BG_N01R0402_GOODS_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 120
+-184 0 40
+#event number: 3
+#Bg Event Label
+BG_N01R0402_GOODS_03
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_RIGHT
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_03
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 184
+#event number: 4
+#Bg Event Label
+BG_N01R0402_GOODS_03A
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_RIGHT
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_03
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 200
+#event number: 5
+#Bg Event Label
+BG_N01R0402_GOODS_04
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_04
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-232 0 104
+#event number: 6
+#Bg Event Label
+BG_N01R0402_GOODS_04A
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_04
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-216 0 104
+#event number: 7
+#Bg Event Label
+BG_N01R0402_GOODS_04B
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_04
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 0 104
+#event number: 8
+#Bg Event Label
+BG_N01R0402_GOODS_04C
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_04
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 104
+#event number: 9
+#Bg Event Label
+BG_N01R0402_GOODS_05
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_05
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 104
+#event number: 10
+#Bg Event Label
+BG_N01R0402_GOODS_05A
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_05
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 104
+#event number: 11
+#Bg Event Label
+BG_N01R0402_GOODS_05B
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_05
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 104
+#event number: 12
+#Bg Event Label
+BG_N01R0402_GOODS_05C
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_05
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 104
+#event number: 13
+#Bg Event Label
+BG_N01R0402_GOODS_05D
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_05
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 104
+#event number: 14
+#Bg Event Label
+BG_N01R0402_GOODS_05E
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_05
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 104
+#event number: 15
+#Bg Event Label
+BG_N01R0402_GOODS_05F
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_05
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 104
+#event number: 16
+#Bg Event Label
+BG_N01R0402_GOODS_05G
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_05
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 104
+#event number: 17
+#Bg Event Label
+BG_N01R0402_GOODS_06A
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_06
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 216
+#event number: 18
+#Bg Event Label
+BG_N01R0402_GOODS_06B
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_06
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 216
+#event number: 19
+#Bg Event Label
+BG_N01R0402_GOODS_07
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_07
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 216
+#event number: 20
+#Bg Event Label
+BG_N01R0402_GOODS_08F
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 56
+#event number: 21
+#Bg Event Label
+BG_N01R0402_GOODS_08E
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 56
+#event number: 22
+#Bg Event Label
+BG_N01R0402_GOODS_08D
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 56
+#event number: 23
+#Bg Event Label
+BG_N01R0402_GOODS_08C
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 56
+#event number: 24
+#Bg Event Label
+BG_N01R0402_GOODS_08B
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 56
+#event number: 25
+#Bg Event Label
+BG_N01R0402_GOODS_08A
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 56
+#event number: 26
+#Bg Event Label
+BG_N01R0402_GOODS_08R
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 40
+#event number: 27
+#Bg Event Label
+BG_N01R0402_GOODS_08S
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 24
+#event number: 28
+#Bg Event Label
+BG_N01R0402_GOODS_08Q
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 24
+#event number: 29
+#Bg Event Label
+BG_N01R0402_GOODS_08P
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 8
+#event number: 30
+#Bg Event Label
+BG_N01R0402_GOODS_08O
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 -8
+#event number: 31
+#Bg Event Label
+BG_N01R0402_GOODS_08N
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 -8
+#event number: 32
+#Bg Event Label
+BG_N01R0402_GOODS_08M
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 -8
+#event number: 33
+#Bg Event Label
+BG_N01R0402_GOODS_08L
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 8
+#event number: 34
+#Bg Event Label
+BG_N01R0402_GOODS_08K
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 24
+#event number: 35
+#Bg Event Label
+BG_N01R0402_GOODS_08J
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 8
+#event number: 36
+#Bg Event Label
+BG_N01R0402_GOODS_08I
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 8
+#event number: 37
+#Bg Event Label
+BG_N01R0402_GOODS_08H
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 24
+#event number: 38
+#Bg Event Label
+BG_N01R0402_GOODS_08G
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_08
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 40
+#event number: 39
+#Bg Event Label
+BG_N01R0402_GOODS_09
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_LEFT
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_09
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 88
+#event number: 40
+#Bg Event Label
+BG_N01R0402_GOODS_09A
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_LEFT
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_09
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 72
+#event number: 41
+#Bg Event Label
+BG_N01R0402_GOODS_09B
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_09
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 56
+#event number: 42
+#Bg Event Label
+BG_N01R0402_GOODS_09C
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_N01R0402_GOODS_09
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 0 56
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
