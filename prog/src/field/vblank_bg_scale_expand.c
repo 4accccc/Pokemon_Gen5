@@ -15,15 +15,26 @@
 #include "vblank_bg_scale_expand.h"
 #include "system/gfl_use.h"
 
-#define SCALE_UP_SPEED (FX32_CONST(0.003f))
-#define MAX_SCALE      (FX32_CONST(0.8f))
-#define CENTER_X       (128)
-#define CENTER_Y       (92)
-#define SCROLL_X       (0)
-#define SCROLL_Y       (0)
+#define MAX_SCALE (1.0f)
+#define MAX_FRAME (150)
+#define CENTER_X  (128)
+#define CENTER_Y  (92)
+#define SCROLL_X  (0)
+#define SCROLL_Y  (0)
 
-static fx32 BGScale;  // BG拡大率
 
+static int   waitCount;  // 待ち時間カウンタ
+static int   scaleCount; // フレームカウンタ
+static float scale;      // 拡大率
+
+int   waitFrame = 0;
+int   maxFrame  = 180;
+float maxScale  = 1.8f;
+float minScale  = 1.0f;
+float scaleUpSpeed = 0.0044f;
+
+BOOL  scrollFlag = FALSE;
+float scrollSize = 60;
 
 //-----------------------------------------------------------------------------
 /**
@@ -33,17 +44,53 @@ static fx32 BGScale;  // BG拡大率
 static void VBlankFunc_BGExpand( void )
 {
   MtxFx22 matrix;
+  fx32 fxScale;
+  float frame = 0;
+  int scrollY;
+
+  waitCount++;
+  if( waitCount < waitFrame ){ return; }
+
+//-------------------------------------------------------------------
+
+#if 0 // 2010.03.08 拡大率の上限をなくす → 補間でなく, 単純に加算する
+  // 拡大率更新
+  scaleCount++; 
+  frame = scaleCount;
+  if( maxFrame < frame ){ frame = maxFrame; }
+  OS_Printf( "scaleCount = %d\n", scaleCount );
 
   // VBlank期間外
   if( GX_IsVBlank() == FALSE ){ return; }
 
-  // 拡大
-  BGScale -= SCALE_UP_SPEED;
-  if( BGScale < MAX_SCALE ){ BGScale = MAX_SCALE; }
+  // 実拡大率を算出
+  {
+    float t, offset;
+    t = frame / (float)maxFrame;
+    scale = minScale + t * (maxScale - minScale);
+    fxScale = FX32_CONST( 1.0f / scale );
+  }
+#endif
+  // VBlank期間外
+  if( GX_IsVBlank() == FALSE ){ return; }
+
+  // 実拡大率を算出
+  scale += scaleUpSpeed;
+  fxScale = FX32_CONST( 1.0f / scale );
+
+//-------------------------------------------------------------------
+
+  // スクロール幅を決定
+  if( scrollFlag ) {
+    scrollY = scrollSize * frame / (float)maxFrame;
+  }
+  else {
+    scrollY = 0;
+  }
 
   // アフィン変換
-  MTX_Scale22( &matrix, BGScale, BGScale );
-  G2_SetBG2Affine( &matrix, CENTER_X, CENTER_Y, SCROLL_X, SCROLL_Y );
+  MTX_Scale22( &matrix, fxScale, fxScale );
+  G2_SetBG2Affine( &matrix, CENTER_X, CENTER_Y, SCROLL_X, scrollY );
 }
 
 
@@ -55,7 +102,9 @@ static void VBlankFunc_BGExpand( void )
 void StartVBlankBGExpand()
 {
   // 拡大率を初期化
-  BGScale = FX32_ONE;
+  scale      = 1.0f;
+  scaleCount = 0;
+  waitCount  = 0;
 
   // VBlank関数を登録
   GFUser_SetVIntrFunc( VBlankFunc_BGExpand );
