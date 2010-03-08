@@ -56,6 +56,7 @@
 #include "savedata/un_savedata.h"
 #include "savedata/zukan_wp_savedata.h"
 #include "savedata/trialhouse_save.h"
+#include "savedata/livematch_savedata.h"
 
 //==============================================================================
 //  定数定義
@@ -434,6 +435,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_THSV,
     (FUNC_GET_SIZE)THSV_GetWorkSize,
     (FUNC_INIT_WORK)THSV_Init,
+  },
+  { //ライブマッチ
+    GMDATA_ID_LIVEMATCH,
+    (FUNC_GET_SIZE)LIVEMATCH_GetWorkSize,
+    (FUNC_INIT_WORK)LIVEMATCH_Init,
   },
 };
 
