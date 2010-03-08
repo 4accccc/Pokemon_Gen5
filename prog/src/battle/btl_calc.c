@@ -722,7 +722,7 @@ u32 BTL_CALC_CalcBaseExp( const BTL_POKEPARAM* bpp )
   u16 level  = BPP_GetValue( bpp, BPP_LEVEL );
 
   u32 exp = POKETOOL_GetPersonalParam( monsno, formNo, POKEPER_ID_give_exp );
-  exp = exp * level / 7;
+  exp = exp * level / 6;
 
   return exp;
 }
