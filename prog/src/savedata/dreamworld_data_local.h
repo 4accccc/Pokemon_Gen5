@@ -25,7 +25,7 @@
 
 struct _DREAMWORLD_SAVEDATA {
   GFDATE gsyncTime;  //最終アクセス時間
-  int uploadCount;   //預けた回数  値を入れる。同じ物をダウンロードしたら値を反映しない
+  u32 uploadCount;   //預けた回数  値を入れる。同じ物をダウンロードしたら値を反映しない
   POKEMON_PARAM pp;   ///< 眠るポケモン
   u16 itemID[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///持ち帰ったアイテム
   u8 itemNum[DREAM_WORLD_DATA_MAX_ITEMBOX];

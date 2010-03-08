@@ -245,8 +245,8 @@ static void _cameraSetTrade01(POKEMON_TRADE_WORK* pWork)
   GFL_G3D_CAMERA_SetNear( pWork->camera, &near );
   GFL_G3D_CAMERA_SetFar( pWork->camera, &far );
   tarpos.x = 0;
-  tarpos.y = FX32_ONE;
-  tarpos.z = 0;
+  tarpos.y = 16*FX32_ONE;
+  tarpos.z = FX32_ONE;
 
   GFL_G3D_CAMERA_SetCamUp( pWork->camera, &tarpos );
 }
@@ -458,6 +458,7 @@ void POKEMONTRADE_DEMO_ICA_Init(POKEMONTRADE_DEMO_WORK* pWork,int type)
       pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_short_up_cameraichi_bin, 10 );
     pWork->icaTarget = ICA_ANIME_CreateStreamingAlloc(
       pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_short_up_camerachusiten_bin, 10 );
+//      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_icatarget_bin, 10 );
     pWork->icaBallin = ICA_ANIME_CreateStreamingAlloc(
       pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_ball_001_bin, 10 );
     break;

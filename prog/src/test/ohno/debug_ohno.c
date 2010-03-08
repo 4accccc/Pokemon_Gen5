@@ -713,14 +713,29 @@ static void _fushigiDataSet(DEBUG_OHNO_CONTROL * pDOC)
 
   pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aInit.pData;
 
-  DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
   DEBUG_MYSTERY_SetGiftPokeData(&pDG->data);
+  DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
   pDG->version = 0;  //０なので全員受信できる
   pDG->event_text[0] = L'て';
   pDG->event_text[1] = L'す';
   pDG->event_text[2] = L'と';
   pDG->event_text[3] = 0xffff;
 
+
+  {
+    int i,j;
+    for(j=0;j<pDOC->aInit.datasize;){
+      for(i=0;i<16;i++){
+        OS_TPrintf("%x ",pDOC->aInit.pData[j]);
+        j++;
+      }
+      OS_TPrintf("\n");
+    }
+  }
+
+
+
+  
 }
 
 //親機なのでビーコン送信を行っているだけ
@@ -1002,12 +1017,12 @@ static void _fushigiDataIRCSet(DEBUG_OHNO_CONTROL * pDOC)
 
   pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aIRCInit.pData;
 
-  DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
   DEBUG_MYSTERY_SetGiftPokeData(&pDG->data);
-  pDG->version = 12;
-  pDG->event_text[0] = L'I';
-  pDG->event_text[1] = L'R';
-  pDG->event_text[2] = L'C';
+  DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
+  pDG->version = 0;
+  pDG->event_text[0] = L'で';
+  pDG->event_text[1] = L'ば';
+  pDG->event_text[2] = L'ぐ';
   pDG->event_text[3] = 0xffff;
 
   {

@@ -59,7 +59,7 @@ struct DREAM_WORLD_SERVER_CREATE_DATA{
 
 /// ダウンロードデータ構造体
 typedef struct {
-  int uploadCount;     ///< アップロード回数
+  u32 uploadCount;     ///< アップロード回数
   u16 sleepPokemonLv;   ///< 寝ていたポケモンのレベルアップ値
   u16 findPokemon;         ///< であったポケモン番号
   u16 findPokemonTecnique; ///< であったポケモンに覚えさせる技
