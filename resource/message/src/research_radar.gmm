@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-08T12:18:06"/>
+	<create user="ohmori" host="W00223" date="2010-03-08T12:22:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -454,7 +454,7 @@
 		<language name="JPN">[BD:03:Ｘ右寄せ:68]データ
 [BD:03:Ｘ右寄せ:20]こうしんちゅう</language>
 		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:68]データ
-[BD:03:Ｘ右寄せ:32]更新中</language>
+[BD:03:Ｘ右寄せ:46]更新中</language>
 	</row>
 
 	<row id="str_check_analyze_button" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
