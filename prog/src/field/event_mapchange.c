@@ -1942,7 +1942,7 @@ static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID)
   typedef struct GMK_ASSIGN_DATA_tag
   {
     u32 ZoneID;
-    u16 ResNum;
+    u16 Assign;
     u16 ObjNum;
   }GMK_ASSIGN_DATA;
 
@@ -1968,7 +1968,7 @@ static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID)
     for (i=0;i<num;i++){
       if ( data[i].ZoneID == inZoneID){
         //ギミック発見。アサインする
-        GIMMICKWORK_Assign(work, i+1);
+        GIMMICKWORK_Assign(work, data[i].Assign);
         break;
       }
     }
