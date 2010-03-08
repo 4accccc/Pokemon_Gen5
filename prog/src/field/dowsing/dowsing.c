@@ -17,6 +17,7 @@
 #include "system/main.h"
 
 #include "gamesystem/gamesystem.h"
+#include "system/palanm.h"
 #include "sound/pm_sndsys.h"
 #include "infowin/infowin.h"
 #include "app/app_menu_common.h"
@@ -380,6 +381,23 @@ STATE;
 #define ABOVE_SE_PITCH (384)
 #define ABOVE_SE_WAIT  (6)
 
+// パレットフェード
+#define PF_TCBSYS_TASK_MAX  (2)
+typedef enum
+{
+  PF_REQ_NONE,
+  PF_REQ_NORMAL,
+  PF_REQ_HALF_BLACK,
+}
+PF_REQ;
+
+typedef enum
+{
+  PF_STATE_NORMAL,
+  PF_STATE_HALF_BLACK,
+}
+PF_STATE;
+
 
 //=============================================================================
 /**
@@ -501,6 +519,15 @@ struct _DOWSING_WORK
 
   u8                          rear_pal_pos;
 
+  // アクティブ/パッシブ
+  BOOL                        update_active;
+  // パレットフェード
+  GFL_TCBSYS*                 pf_tcbsys;
+  void*                       pf_tcbsys_wk;
+  PALETTE_FADE_PTR            pfp;
+  PF_REQ                      pf_req;
+  PF_STATE                    pf_state;
+
   // アイテムサーチ
   ITEM_SEARCH_WORK*           item_search_wk;
 };
@@ -530,6 +557,11 @@ static void Dowsing_ObjExit( DOWSING_WORK* work );
 static void Dowsing_TouchbarInit( DOWSING_WORK* work );
 static void Dowsing_TouchbarExit( DOWSING_WORK* work );
 static void Dowsing_TouchbarMain( DOWSING_WORK* work );
+
+// パレットフェード
+static void Dowsing_PaletteFadeInit( DOWSING_WORK* work );  // VRAMのパレット内容をコピーするので、全パレットの用意が済んでから呼ぶこと
+static void Dowsing_PaletteFadeExit( DOWSING_WORK* work );
+static void Dowsing_PaletteFadeAndKitAnmMain( DOWSING_WORK* work );
 
 
 //=============================================================================
@@ -592,6 +624,11 @@ DOWSING_WORK*    DOWSING_Init(
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Dowsing_VBlankFunc, work, 1 );
 
   work->rear_pal_pos = 0;
+
+  // アクティブ/パッシブ
+  work->update_active = TRUE;
+  // パレットフェード
+  Dowsing_PaletteFadeInit( work );
 
   // 初期状態にする
   work->rod_prev       = ROD_MAX;    // 初期状態で描画が更新されるように、rod_currとは異なる値にしておく
@@ -681,6 +718,9 @@ void DOWSING_Exit( DOWSING_WORK* work )
   // アイテムサーチ
   ItemSearchExit( work->item_search_wk );
 
+  // パレットフェード
+  Dowsing_PaletteFadeExit( work );
+
   // VBlank中TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );
 
@@ -726,6 +766,17 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
   BOOL            zone_id_field;  // zone_idがフィールドマップのゾーンIDならTRUE
 
   BOOL            search;
+
+  // タスクのアクティブ/パッシブを切り替えるために、activeの値を覚えておく
+  work->update_active = active;
+  // 見た目の明暗を切り替えるので、パレットフェードだけはパッシブでも実行する
+  if( work->update_active ) work->pf_req = PF_REQ_NORMAL;
+  else                      work->pf_req = PF_REQ_HALF_BLACK;
+  // infowinはアクティブじゃなくても更新しなければならない
+  // INFOWIN
+  {
+    INFOWIN_Update();
+  }
 
   if( !active ) return;
 
@@ -1070,6 +1121,9 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
 //------------------------------------------------------------------
 void DOWSING_Draw( DOWSING_WORK* work, BOOL active )
 {
+  // 見た目の明暗を切り替えるので、パレットフェードだけはパッシブでも実行する
+  Dowsing_PaletteFadeAndKitAnmMain( work );
+
   if( !active ) return;
 
   // 前回のOBJの表示と今回のOBJの表示が異なる場合、描画を更新する
@@ -1117,15 +1171,21 @@ void DOWSING_Draw( DOWSING_WORK* work, BOOL active )
 static void Dowsing_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   DOWSING_WORK* work = (DOWSING_WORK*)wk;
+  
+  // 見た目の明暗を切り替えるので、パレットフェードだけはパッシブでも実行する
+  PaletteFadeTrans( work->pfp );
 
-  // 背景のパレットを変更して、背景をチカチカさせる
-  u8 pal_pos;
-  if( work->rear_pal_pos >= 4 ) work->rear_pal_pos = 0;
-  if( work->rear_pal_pos < 2 ) pal_pos = 0;
-  else                         pal_pos = 1;
-  work->rear_pal_pos++;
-  GFL_BG_ChangeScreenPalette( BG_FRAME_S_REAR, 0, 0, 32, 24, pal_pos );
-  GFL_BG_LoadScreenReq( BG_FRAME_S_REAR );
+  if( work->update_active )
+  {
+    // 背景のパレットを変更して、背景をチカチカさせる
+    u8 pal_pos;
+    if( work->rear_pal_pos >= 4 ) work->rear_pal_pos = 0;
+    if( work->rear_pal_pos < 2 ) pal_pos = 0;
+    else                         pal_pos = 1;
+    work->rear_pal_pos++;
+    GFL_BG_ChangeScreenPalette( BG_FRAME_S_REAR, 0, 0, 32, 24, pal_pos );
+    GFL_BG_LoadScreenReq( BG_FRAME_S_REAR );
+  }
 }
 
 // グラフィック
@@ -1455,10 +1515,11 @@ static void Dowsing_TouchbarExit( DOWSING_WORK* work )
 }
 static void Dowsing_TouchbarMain( DOWSING_WORK* work )
 {
-  // INFOWIN
-  {
-    INFOWIN_Update();
-  }
+// infowinはアクティブじゃなくても更新しなければならないので、更新場所を変更
+//  // INFOWIN
+//  {
+//    INFOWIN_Update();
+//  }
 
   // タッチバー
   {
@@ -1526,6 +1587,137 @@ static void Dowsing_TouchbarMain( DOWSING_WORK* work )
         // 何もしないで終了を待つ
       }
       break;
+    }
+  }
+}
+
+// パレットフェード
+static void Dowsing_PaletteFadeInit( DOWSING_WORK* work )  // VRAMのパレット内容をコピーするので、全パレットの用意が済んでから呼ぶこと
+{
+  u32 bg_size   = 3 * 0x20;  // BGはinfowin以外はパレットフェードの対象にする  // バイト
+  u32 obj_size  = 4 * 0x20;  // OBJは全てパレットフェードの対象にする  // バイト
+
+  // タスク
+  work->pf_tcbsys_wk    = GFL_HEAP_AllocClearMemory( work->heap_id, GFL_TCB_CalcSystemWorkSize(PF_TCBSYS_TASK_MAX) );
+  work->pf_tcbsys       = GFL_TCB_Init( PF_TCBSYS_TASK_MAX, work->pf_tcbsys_wk );
+
+  // パレットフェード
+  work->pfp = PaletteFadeInit( work->heap_id );
+  PaletteTrans_AutoSet( work->pfp, TRUE );
+  PaletteFadeWorkAllocSet( work->pfp, FADE_SUB_BG, bg_size, work->heap_id );
+  PaletteFadeWorkAllocSet( work->pfp, FADE_SUB_OBJ, obj_size, work->heap_id );
+
+  // 現在VRAMにあるパレットを壊さないように、VRAMからパレット内容をコピーする
+  PaletteWorkSet_VramCopy( work->pfp, FADE_SUB_BG, 0, bg_size );
+  PaletteWorkSet_VramCopy( work->pfp, FADE_SUB_OBJ, 0, obj_size );
+
+  // パレットフェード要求なしで初期化
+  work->pf_req = PF_REQ_NONE;
+
+  // パレットフェード現在の状態
+  work->pf_state = PF_STATE_NORMAL;
+}
+static void Dowsing_PaletteFadeExit( DOWSING_WORK* work )
+{
+  // パレットフェード
+  PaletteFadeWorkAllocFree( work->pfp, FADE_SUB_BG );
+  PaletteFadeWorkAllocFree( work->pfp, FADE_SUB_OBJ );
+  PaletteFadeFree( work->pfp );
+
+  // タスク
+  GFL_TCB_Exit( work->pf_tcbsys );
+  GFL_HEAP_FreeMemory( work->pf_tcbsys_wk );
+}
+static void Dowsing_PaletteFadeAndKitAnmMain( DOWSING_WORK* work )
+{
+  // タスク
+  GFL_TCB_Main( work->pf_tcbsys );
+
+  // パレットフェード
+  if( work->pf_req != PF_REQ_NONE )
+  {
+    u8 i;
+    u16 req_bit;
+
+    u32 bg_num   = 3;  // BGはinfowin以外はパレットフェードの対象にする  // 本
+    u32 obj_num  = 4;  // OBJは全てパレットフェードの対象にする  // 本
+
+    if( PaletteFadeCheck(work->pfp) == 0 )
+    {
+      switch( work->pf_req )
+      {
+      case PF_REQ_NORMAL:
+        {
+          if( work->pf_state != PF_STATE_NORMAL )
+          {
+            req_bit = 0;
+            for( i=0; i<bg_num; i++ ) req_bit |= 1<<i;
+            PaletteFadeReq(
+              work->pfp,
+              PF_BIT_SUB_BG,
+              req_bit,
+              0,
+              0, 0, 0x0000,
+              work->pf_tcbsys
+            );
+
+            req_bit = 0;
+            for( i=0; i<obj_num; i++ ) req_bit |= 1<<i;
+            PaletteFadeReq(
+              work->pfp,
+              PF_BIT_SUB_OBJ,
+              req_bit,
+              0,
+              0, 0, 0x0000,
+              work->pf_tcbsys
+            );
+            work->pf_state = PF_STATE_NORMAL;
+
+            // OBJのアニメを再開する
+            for( i=0; i<KIT_MAX; i++ )
+            {
+              GFL_CLACT_WK_StartAnm( work->kit_set[i].clwk );
+            }
+          }
+        }
+        break;
+      case PF_REQ_HALF_BLACK:
+        {
+          if( work->pf_state != PF_STATE_HALF_BLACK )
+          {
+            req_bit = 0;
+            for( i=0; i<bg_num; i++ ) req_bit |= 1<<i;
+            PaletteFadeReq(
+              work->pfp,
+              PF_BIT_SUB_BG,
+              req_bit,
+              0,
+              8, 8, 0x0000,
+              work->pf_tcbsys
+            );
+
+            req_bit = 0;
+            for( i=0; i<obj_num; i++ ) req_bit |= 1<<i;
+            PaletteFadeReq(
+              work->pfp,
+              PF_BIT_SUB_OBJ,
+              req_bit,
+              0,
+              8, 8, 0x0000,
+              work->pf_tcbsys
+            );
+            work->pf_state = PF_STATE_HALF_BLACK;
+
+            // OBJのアニメを止める
+            for( i=0; i<KIT_MAX; i++ )
+            {
+              GFL_CLACT_WK_StopAnm( work->kit_set[i].clwk );
+            }
+          }
+        }
+        break;
+      }
+      work->pf_req = PF_REQ_NONE;
     }
   }
 }
