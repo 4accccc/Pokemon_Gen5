@@ -1,4 +1,5 @@
 #include <gflib.h>
+#include "gmk_tmp_wk.h"
 #include "fieldmap.h"
 #include "field_gimmick_h03.h" 
 #include "gamesystem/iss_3ds_sys.h"
@@ -18,10 +19,10 @@
 #define ANIME_BUF_INTVL  (10) // アニメーションデータの読み込み間隔[frame]
 #define EXPOBJ_UNIT_IDX  (0)  // フィールド拡張オブジェクトのユニット登録インデックス
 #define ISS_3DS_UNIT_NUM (10) // 3Dユニット数
+#define GIMMICK_WORK_ASSIGN_ID (0) // ギミックワークのアサインID
 
 // 音源オブジェクトのインデックス
-typedef enum
-{
+typedef enum {
   SOBJ_TRAIN_1, // 電車1
   SOBJ_TRAIN_2, // 電車2
   SOBJ_NUM 
@@ -32,8 +33,7 @@ typedef enum
 // ■3Dリソース
 //==========================================================================================
 // リソース
-typedef enum
-{
+typedef enum {
   RES_TRAIN_NSBMD,  // 電車のモデル
   RES_NUM
 } RES_INDEX;
@@ -43,8 +43,7 @@ static const GFL_G3D_UTIL_RES res_table[RES_NUM] =
 };
 
 // オブジェクト
-typedef enum
-{
+typedef enum {
   OBJ_TRAIN_1,  // 電車1
   OBJ_TRAIN_2,  // 電車2
   OBJ_NUM
@@ -101,25 +100,18 @@ void H03_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   H03WORK* work;  // H03ギミック管理ワーク
   HEAPID                heap_id = FIELDMAP_GetHeapID( fieldmap );
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
-  GAMESYS_WORK*            gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA*               gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*          gmkwork = GAMEDATA_GetGimmickWork(gdata);
 
   // 拡張オブジェクトのユニットを追加
   FLD_EXP_OBJ_AddUnit( exobj_cnt, &setup, EXPOBJ_UNIT_IDX );
 
   // ギミック管理ワークを作成
-  work = (H03WORK*)GFL_HEAP_AllocMemory( heap_id, sizeof(H03WORK) );
+  work = (H03WORK*)GMK_TMP_WK_AllocWork( fieldmap, GIMMICK_WORK_ASSIGN_ID, heap_id, sizeof(H03WORK) );
 
   // ギミック管理ワークを初期化 
   InitWork( work, fieldmap );
 
   // ロード
   LoadGimmick( work, fieldmap );
-
-  // ギミック管理ワークのアドレスを保存(セーブデータをクリア)
-  gmk_save    = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
-  gmk_save[0] = (int)work;
 }
 
 //------------------------------------------------------------------------------------------
@@ -132,11 +124,7 @@ void H03_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 void H03_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 {
   int i;
-  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
-  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
-  H03WORK*         work = (H03WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+  H03WORK* work = (H03WORK*)GMK_TMP_WK_GetWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
 
   // セーブ
   SaveGimmick( work, fieldmap );
@@ -148,7 +136,7 @@ void H03_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   }
 
   // ギミック管理ワークを破棄
-  GFL_HEAP_FreeMemory( work );
+  GMK_TMP_WK_FreeWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
 }
 
 //------------------------------------------------------------------------------------------
@@ -161,11 +149,7 @@ void H03_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 void H03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 {
   int i;
-  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
-  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
-  H03WORK*         work = (H03WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+  H03WORK* work = (H03WORK*)GMK_TMP_WK_GetWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
 
   // 観測者の位置を設定
   {

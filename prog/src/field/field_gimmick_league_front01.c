@@ -7,6 +7,7 @@
  */
 //////////////////////////////////////////////////////////////////////////////////////////// 
 #include "fieldmap.h"
+#include "gmk_tmp_wk.h"
 #include "field_gimmick_league_front01.h"
 #include "gamesystem/game_event.h"
 #include "gamesystem/gamesystem.h"
@@ -27,6 +28,9 @@
 //==========================================================================================
 // ■定数
 //==========================================================================================
+// ギミックワークのアサインID
+#define GIMMICK_WORK_ASSIGN_ID (0)
+
 // ギミックデータのアーカイブID
 #define ARCID (ARCID_LEAGUE_FRONT_GIMMICK)  
 
@@ -35,7 +39,6 @@
 
 // ギミックワークのデータインデックス
 typedef enum{
-  GIMMICKWORK_DATA_WORK_ADRS,  // LF01ギミック管理ワークのアドレス
   GIMMICKWORK_DATA_NUM,
   GIMMICKWORK_DATA_MAX = GIMMICKWORK_DATA_NUM - 1
 } GIMMICKWORK_DATA_INDEX;
@@ -271,16 +274,12 @@ void LEAGUE_FRONT_01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 
   // ギミック管理ワーク作成
   heap_id      = FIELDMAP_GetHeapID( fieldmap );
-  work         = (LF01WORK*)GFL_HEAP_AllocMemory( heap_id, sizeof(LF01WORK) );
+  work         = (LF01WORK*)GMK_TMP_WK_AllocWork( fieldmap, GIMMICK_WORK_ASSIGN_ID,  heap_id, sizeof(LF01WORK) );
   work->heapID = heap_id; 
 
   // ギミック初期化
   InitGimmick( work, fieldmap );
   LoadGimmick( work, fieldmap ); 
-
-  // LF01ギミック管理ワークのアドレスを保存
-  Save( fieldmap, GIMMICKWORK_DATA_WORK_ADRS, (u32)work );
-
 }
 
 //------------------------------------------------------------------------------------------
@@ -295,11 +294,11 @@ void LEAGUE_FRONT_01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   LF01WORK* work;
 
   // セーブ
-  work = (LF01WORK*)Load( fieldmap, GIMMICKWORK_DATA_WORK_ADRS );
+  work = GMK_TMP_WK_GetWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
   SaveGimmick( work, fieldmap );
 
   // ギミック管理ワーク破棄
-  GFL_HEAP_FreeMemory( work );
+  GMK_TMP_WK_FreeWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
 
   // DEBUG:
   OBATA_Printf( "GIMMICK-LF01: end\n" );
@@ -663,7 +662,7 @@ GMEVENT* LEAGUE_FRONT_01_GIMMICK_GetLiftDownEvent( GAMESYS_WORK* gsys,
 {
   GMEVENT* event;
   LIFTDOWN_EVENTWORK* evwork;
-  LF01WORK* gmkwork = (LF01WORK*)Load( fieldmap, GIMMICKWORK_DATA_WORK_ADRS );
+  LF01WORK* gmkwork = GMK_TMP_WK_GetWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
 
   // 生成
   event = GMEVENT_Create( gsys, NULL, LiftDownEvent, sizeof(LIFTDOWN_EVENTWORK) );

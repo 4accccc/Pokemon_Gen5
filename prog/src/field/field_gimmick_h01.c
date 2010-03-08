@@ -2,6 +2,7 @@
 #include "fieldmap.h" 
 #include "field_gimmick_h01.h"
 #include "field_gimmick_def.h"
+#include "gmk_tmp_wk.h"
 #include "gamesystem/iss_3ds_sys.h"
 #include "savedata/gimmickwork.h"
 #include "sound/pm_sndsys.h"
@@ -21,6 +22,7 @@
 #define EXPOBJ_UNIT_IDX  (0)  // フィールド拡張オブジェクトのユニット登録インデックス
 #define ISS_3DS_UNIT_NUM (10) // 3Dユニット数
 #define TAIL_INTERVAL    (1)  // 前部分が発射してから後部分が発射するまでの間隔
+#define GIMMICK_WORK_ASSIGN_ID (0) // ギミックワークのアサインID
 
 // 音源オブジェクトのインデックス
 typedef enum {
@@ -126,29 +128,21 @@ static void UpdateWindVolume( FIELDMAP_WORK* fieldmap, H01WORK* work );
 //------------------------------------------------------------------------------------------
 void H01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 {
-  u32* gmk_save;  // ギミックの実セーブデータ
   H01WORK* work;  // H01ギミック管理ワーク
-  HEAPID                heapID = FIELDMAP_GetHeapID( fieldmap );
+  HEAPID              heapID    = FIELDMAP_GetHeapID( fieldmap );
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
-  GAMESYS_WORK*            gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA*               gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*          gmkwork = GAMEDATA_GetGimmickWork(gdata);
 
   // 拡張オブジェクトのユニットを追加
   FLD_EXP_OBJ_AddUnit( exobj_cnt, &setup, EXPOBJ_UNIT_IDX );
 
   // ギミック管理ワークを作成
-  work = (H01WORK*)GFL_HEAP_AllocMemory( heapID, sizeof(H01WORK) );
+  work = (H01WORK*)GMK_TMP_WK_AllocWork( fieldmap, GIMMICK_WORK_ASSIGN_ID, heapID, sizeof(H01WORK) );
 
   // ギミック管理ワークを初期化 
   InitWork( work, fieldmap );
 
   // ロード
   LoadGimmick( work, fieldmap );
-
-  // ギミック管理ワークのアドレスを保存
-  gmk_save    = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
-  gmk_save[0] = (int)work;
 
   // DEBUG:
   OBATA_Printf( "GIMMICK-H01: set up\n" );
@@ -164,11 +158,7 @@ void H01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 {
   int i;
-  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
-  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
-  H01WORK*         work = (H01WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+  H01WORK* work = (H01WORK*)GMK_TMP_WK_GetWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
 
   // 風を止める
   PMSND_ChangeBGMVolume( work->wind_data.trackBit, 0 );
@@ -183,7 +173,7 @@ void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   }
 
   // ギミック管理ワークを破棄
-  GFL_HEAP_FreeMemory( work );
+  GMK_TMP_WK_FreeWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
 
   // DEBUG:
   OBATA_Printf( "GIMMICK-H01: end\n" );
@@ -199,11 +189,7 @@ void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 void H01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 {
   int i;
-  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
-  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
-  H01WORK*         work = (H01WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+  H01WORK* work = (H01WORK*)GMK_TMP_WK_GetWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
 
   // 観測者の位置を設定
   {
