@@ -398,14 +398,8 @@ static u32 calcBonusMoneyBase( const BATTLE_SETUP_PARAM* sp )
   {
     u32 sum = 0;
 
-    if( PokeParty_GetPokeCount(sp->party[BTL_CLIENT_ENEMY1]) )
-    {
-      sum += calcBonusSub( sp->tr_data[ BTL_CLIENT_ENEMY1], sp->party[BTL_CLIENT_ENEMY1] );
-    }
-    if( PokeParty_GetPokeCount(sp->party[BTL_CLIENT_ENEMY2]) )
-    {
-      sum += calcBonusSub( sp->tr_data[ BTL_CLIENT_ENEMY2], sp->party[BTL_CLIENT_ENEMY2] );
-    }
+    sum += calcBonusSub( sp->tr_data[ BTL_CLIENT_ENEMY1], sp->party[BTL_CLIENT_ENEMY1] );
+    sum += calcBonusSub( sp->tr_data[ BTL_CLIENT_ENEMY2], sp->party[BTL_CLIENT_ENEMY2] );
 
     return sum;
   }
