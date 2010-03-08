@@ -69,10 +69,6 @@ INIT_EVENT_END
 EVENT_START   ev_scene_t02pc0101_hakaseguide_01
 	//ポケセン案内イベント
 	
-	//博士：気付く、近づく
-	_OBJ_ANIME( T02PC0101_HAKASE2_01, anm_hakase_tikaduku )
-	_OBJ_ANIME_WAIT()
-	
 	//ここがポケモンセンター！
 	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_01, T02PC0101_HAKASE2_01, POS_DL )
 	_BALLOONWIN_CLOSE()
@@ -221,6 +217,12 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	//博士BGM開始
 	_START_EVENT_BGM( SEQ_BGM_E_TSURETEKE2 )
 
+	//自機・サポート：博士の方を向く
+	_OBJ_ANIME( T02PC0101_HAKASE2_01, anm_stay_r )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_stay_l )
+	_OBJ_ANIME( T02PC0101_SUPPORT_01,anm_stay_l )
+	_OBJ_ANIME_WAIT()
+
 	//オーケイ！　ポケモン　げんきに　なったわね！
 	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_03b, T02PC0101_HAKASE2_01, POS_DL )
 	_BALLOONWIN_CLOSE()
@@ -236,13 +238,18 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	_BALLOONWIN_CLOSE()
 	
 	//サポート：博士の方に向く
-	_OBJ_ANIME( T02PC0101_SUPPORT_01,anm_support_jump )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+	_OBJ_ANIME( T02PC0101_SUPPORT_01,anm_stay_l )
 	_OBJ_ANIME_WAIT()
 	
 	//はかせ……　がめんの「だれかのパソコン」って
 	_BALLOONWIN_OBJMSG( msg_t02pc0101_white_01,T02PC0101_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 	
+	//自機：博士の方に向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+	_OBJ_ANIME_WAIT()
+
 	//なるほど……　いい　しつもんだ
 	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_05, T02PC0101_HAKASE2_01, POS_DL )
 	_BALLOONWIN_CLOSE()
@@ -253,12 +260,10 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	_OBJ_ANIME( T02PC0101_SUPPORT_01,anm_support_friendly )
 	_OBJ_ANIME_WAIT()
 
-
-
 	//こちらは　フレンドリィショップ！
 	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_06, T02PC0101_HAKASE2_01, POS_DL )
 	_BALLOONWIN_CLOSE()
-	
+
 	//よーしよしよし！
 	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_07, T02PC0101_HAKASE2_01, POS_DL )
 	_BALLOONWIN_CLOSE()
@@ -355,7 +360,7 @@ _ANIME_LABEL	anm_support_pc
 //     サポート、博士のほうに向く
 //-------------------------------------------------------------
 _ANIME_LABEL	anm_support_jump
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //-------------------------------------------------------------
@@ -376,7 +381,7 @@ _ANIME_LABEL	anm_player_friendly
 	_ANIME_DATA	AC_WAIT_4F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,5
-	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 	
@@ -421,7 +426,39 @@ _ANIME_LABEL	anm_player_muku
 _ANIME_LABEL	anm_support_shop
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
-	
+
+//--------------------------------------------------------------------
+//共通スクリプト：上を向く                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：下を向く                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：右を向く                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：左を向く                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 /**************************************************************/
 /*    T02 WOMAN1の会話用イベントスクリプト                    */
 /**************************************************************/

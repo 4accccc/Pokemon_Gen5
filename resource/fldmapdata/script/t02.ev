@@ -487,7 +487,7 @@ t02_speech:
 	_CAMERA_PURGE()		//カメラのバインドを解く
 
 	//カメラ操作　サポートの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,51400704,0,43028480,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_MOVE( 9688,0,970752,51478528,0,42958848,30 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//ライバル、広場の方へ向く
@@ -507,12 +507,6 @@ t02_speech:
 	
 	//わたくしの　なまえは　ゲーチス
 	_BALLOONWIN_OBJMSG_POS( msg_t02_sage1_01 , T02_SAGE_01 ,POS_DL )
-	
-	//群集「えっ？」
-	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_01 , 20 , 5 , 1 ) 
-	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_01a , 22 , 10 , 2 )
 
 	//群集見つめあう
 	_OBJ_ANIME( T02_BOODLE_02A, anm_stay_d )
@@ -525,11 +519,28 @@ t02_speech:
 	_OBJ_ANIME( T02_BOODLE_07, anm_stay_l )
 	_OBJ_ANIME_WAIT()
 
+	//群集「えっ？」
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_t02_boodle_01 , 20 , 5 , 1 ) 
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_t02_boodle_01a , 22 , 10 , 2 )
+
 	//サブウィン・MSGウィンクローズ
 	_AB_KEYWAIT_MARK()
 	_BALLOONWIN_CLOSE()
 	_SUBWIN_CLOSE( 1 )
 	_SUBWIN_CLOSE( 2 )
+
+	//ゲーチスの方を向く
+	_OBJ_ANIME( T02_BOODLE_01A, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_02A, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_03, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_04, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_05, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_06, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_07, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_08, anm_stay_l )
+	_OBJ_ANIME_WAIT()
 
 	//ゲーチス移動１
 	_OBJ_ANIME( T02_SAGE_01, anm_sage_move1 )
@@ -545,14 +556,6 @@ t02_speech:
 
 	//トレーナーは　ポケモンに　好き勝手　命令している
 	_BALLOONWIN_OBJMSG_POS( msg_t02_sage3_03 , T02_SAGE_01,POS_DL )
-	
-	//群集：ざわざわ……
-	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_02 , 16 , 5 , 3 ) 
-	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_02a , 18 , 12 , 4 )
-	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_02b , 20 , 7 , 5)
 
 	//群集見つめあう
 	_OBJ_ANIME( T02_BOODLE_02A, anm_stay_d )
@@ -564,6 +567,14 @@ t02_speech:
 	_OBJ_ANIME( T02_BOODLE_01A, anm_stay_l )
 	_OBJ_ANIME( T02_BOODLE_07, anm_stay_l )
 	_OBJ_ANIME_WAIT()
+
+	//群集：ざわざわ……
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_t02_boodle_02 , 18 , 10 , 3 ) 
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_t02_boodle_02a , 22 , 15 , 4 )
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_t02_boodle_02b , 20 , 5 , 5)
 
 	//サブウィン・MSGウィンクローズ
 	_AB_KEYWAIT_MARK()
@@ -572,18 +583,23 @@ t02_speech:
 	_SUBWIN_CLOSE( 4 )
 	_SUBWIN_CLOSE( 5 )
 
+	//ゲーチスの方を向く
+	_OBJ_ANIME( T02_BOODLE_01A, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_02A, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_03, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_04, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_05, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_06, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_07, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_08, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+
 	//ゲーチス移動３
 	_OBJ_ANIME( T02_SAGE_01, anm_sage_move3 )
 	_OBJ_ANIME_WAIT()
 
 	//いいですか　みなさん　ポケモンは　人間とは　異なり
 	_BALLOONWIN_OBJMSG_POS( msg_t02_sage4_04 , T02_SAGE_01,POS_DL )
-	
-	//群集：？
-	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_03 , 17 , 5 , 6 ) 
-	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_03a , 20 , 10 , 7 )
 
 	//群集見つめあう
 	_OBJ_ANIME( T02_BOODLE_02A, anm_stay_d )
@@ -596,11 +612,28 @@ t02_speech:
 	_OBJ_ANIME( T02_BOODLE_07, anm_stay_l )
 	_OBJ_ANIME_WAIT()
 
+	//群集：？
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_t02_boodle_03 , 17 , 5 , 6 ) 
+	_TIME_WAIT( 10 )
+	_SUBWIN_MSG( msg_t02_boodle_03a , 20 , 10 , 7 )
+
 	//10フレーム待機した後ウィンドウを消す
 	_AB_KEYWAIT_MARK()
 	_BALLOONWIN_CLOSE()
 	_SUBWIN_CLOSE( 6 )
 	_SUBWIN_CLOSE( 7 )
+
+	//ゲーチスの方を向く
+	_OBJ_ANIME( T02_BOODLE_01A, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_02A, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_03, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_04, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_05, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_06, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_07, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_08, anm_stay_l )
+	_OBJ_ANIME_WAIT()
 
 	//ゲーチス移動４
 	_OBJ_ANIME( T02_SAGE_01, anm_sage_move4 )
@@ -633,17 +666,25 @@ t02_speech:
 	_OBJ_DEL( T02_HAKAIM_05 )
 	_OBJ_DEL( T02_HAKAIM_06 )
 
-	//自機にカメラを戻す
-	_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-	_CAMERA_END()		//カメラ操作終了
+	//群集見つめあう
+	_OBJ_ANIME( T02_BOODLE_02A, anm_stay_d )
+	_OBJ_ANIME( T02_BOODLE_03, anm_stay_u )
+	_OBJ_ANIME( T02_BOODLE_08, anm_stay_d )
+	_OBJ_ANIME( T02_BOODLE_06, anm_stay_u )
+	_OBJ_ANIME( T02_BOODLE_04, anm_stay_r )
+	_OBJ_ANIME( T02_BOODLE_05, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_01A, anm_stay_l )
+	_OBJ_ANIME( T02_BOODLE_07, anm_stay_l )
+	_OBJ_ANIME_WAIT()
 
 	//BGM終了
 	_END_EVENT_BGM()
 
+	_CAMERA_MOVE( 9688,0,970752,51544064,0,42958848,10 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
 	//群集おじいさん：キョロキョロ
-	_OBJ_ANIME( T02_BOODLE_08, anm_boodle2_look )
+	_OBJ_ANIME( T02_BOODLE_08, anm_boodle1_look )
 
 	//Ｎ：右向き
 	_OBJ_ANIME( T02_N_01, anm_dir_r )
@@ -655,7 +696,7 @@ t02_speech:
 	_BALLOONWIN_CLOSE()
 
 	//群集おにいさん：キョロキョロ
-	_OBJ_ANIME( T02_BOODLE_02A, anm_boodle1_look )
+	_OBJ_ANIME( T02_BOODLE_02A, anm_boodle2_look )
 	
 	//ポケモンを　解放って　そんな話　ありえないでしょ！
 	_BALLOONWIN_OBJMSG( msg_t02_boodle_05 , T02_BOODLE_02A )
@@ -676,6 +717,12 @@ t02_speech:
 	//画面暗転
 	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
+	
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 1 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
 
 	_OBJ_ANIME_WAIT()
 	_TIME_WAIT( 10 )
@@ -753,9 +800,6 @@ t02_speech:
 	_PLAINWIN_MSG_DOWN( msg_t02_boss_03a )
 	_PLAINWIN_CLOSE()
 
-	//BGM終了
-	_END_EVENT_BGM()
-
 	//Ｎのアップ絵終了
 	_END_FACEUP()
 
@@ -769,9 +813,6 @@ t02_speech:
 	ELSE
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
-
-	//NのBGM再生
-	_START_EVENT_BGM( SEQ_BGM_E_N )
 
 	//……負けたか　ボクの　友達たち　ありがとう
 	_BALLOONWIN_OBJMSG( msg_t02_boss_04 , T02_N_01 )
