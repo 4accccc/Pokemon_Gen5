@@ -418,6 +418,10 @@ static int MainSeq_StartSort( ZKNSEARCHMAIN_WORK * wk )
 		ZKNSEARCHBMP_ClearMainPageLabel( wk );
 	}
 
+	if( wk->loadingCnt == 100 ){
+		PMSND_StopSE();
+	}
+
 	if( wk->loadingCnt == (60*2+1) ){
 		wk->loadingCnt = 0;
 		wk->dat->listMax = ZUKAN_SEARCH_ENGINE_Search(
@@ -426,11 +430,11 @@ static int MainSeq_StartSort( ZKNSEARCHMAIN_WORK * wk )
 												HEAPID_ZUKAN_SYS,
 												&wk->dat->list );
 		if( wk->dat->listMax != 0 ){
-			PMSND_StopSE();
+//			PMSND_StopSE();
 			PMSND_PlaySE( ZKNSEARCH_SE_HIT );
 			ZKNSEARCHBMP_SearchComp( wk );
 		}else{
-			PMSND_StopSE();
+//			PMSND_StopSE();
 			PMSND_PlaySE( ZKNSEARCH_SE_ERROR );
 			ZKNSEARCHBMP_SearchError( wk );
 		}
