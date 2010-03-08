@@ -564,6 +564,6 @@
 #define		WAZANO_HONOONOMAI			( 552 )		//ほのおのまい
 #define		WAZANO_HURIIZUBORUTO	( 553 )		//フリーズボルト
 #define		WAZANO_KOORUDOHUREA		( 554 )		//コールドフレア
-#define		WAZANO_DONARITUKERU		( 555 )		//どなりつける
+#define		WAZANO_BAAKUAUTO			( 555 )		//バークアウト
 #define		WAZANO_TURARAOTOSI		( 556 )		//つららおとし
 #define		WAZANO_MAX						( 557 )
