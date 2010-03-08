@@ -2,9 +2,9 @@
 #include "pm_define.h"
 
 ///すれ違い：自己紹介メッセージ長
-#define SAVE_SURETIGAI_SELFINTRODUCTION_LEN   (10 + 1)  //EOM込み
+#define SAVE_SURETIGAI_SELFINTRODUCTION_LEN   (8 + 1)  //EOM込み
 ///すれ違い：お礼メッセージ長
-#define SAVE_SURETIGAI_THANKYOU_LEN           (10 + 1)  //EOM込み
+#define SAVE_SURETIGAI_THANKYOU_LEN           (8 + 1)  //EOM込み
 
 #define GYM_MAX     (8)
 
