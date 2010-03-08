@@ -9,6 +9,7 @@
 
 #include <gflib.h>
 
+#include "pm_define.h"
 #include "arc_def.h"
 #include "system/main.h"
 #include "message.naix"
@@ -27,9 +28,23 @@
 
 //============================================================================================
 //============================================================================================
+//-------------------------------------
+///	  デジタル選手証見た目情報
+//=====================================
+struct _REGULATION_VIEWDATA
+{
+  u16 mons_no[ TEMOTI_POKEMAX ];
+  u8  form_no[ TEMOTI_POKEMAX ];
+  u8  item_flag[ TEMOTI_POKEMAX ];
+} ;
+
+//-------------------------------------
+///	  セーブデータ本体
+//=====================================
 struct _REGULATION_SAVEDATA
 { 
   REGULATION_CARDDATA card_data[ REGULATION_CARD_TYPE_MAX ];
+  REGULATION_VIEWDATA view_data[ REGULATION_CARD_TYPE_MAX ];
 };
 
 
@@ -690,6 +705,97 @@ void RegulationSaveData_SetRegulation(REGULATION_SAVEDATA *p_save, const REGULAT
   GF_ASSERT( type < REGULATION_CARD_TYPE_MAX );
   GFL_STD_MemCopy(pReg, &p_save->card_data[ type ], sizeof(REGULATION_CARDDATA) );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初期化
+ *
+ *	@param	* my  ワーク
+ */
+//-----------------------------------------------------------------------------
+void RegulationView_Init(REGULATION_VIEWDATA * my)
+{ 
+  GFL_STD_MemClear( my, sizeof(REGULATION_VIEWDATA) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レギュレーション見た目データ取得
+ *
+ *	@param	REGULATION_SAVEDATA *p_save セーブデータ
+ *	@param	REGULATION_CARD_TYPE type   タイプ
+ *
+ *	@return 見た目データ
+ */
+//-----------------------------------------------------------------------------
+REGULATION_VIEWDATA* RegulationSaveData_GetRegulationView( REGULATION_SAVEDATA *p_save, const REGULATION_CARD_TYPE type )
+{ 
+  GF_ASSERT( type < REGULATION_CARD_TYPE_MAX );
+  return &p_save->view_data[ type ];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ取得
+ *
+ *	@param	const REGULATION_VIEWDATA *pView  ワーク
+ *	@param	type                              取得タイプ
+ *	@param	idx                               インデックス（６まで）
+ *
+ *	@return データ
+ */
+//-----------------------------------------------------------------------------
+int RegulationView_GetParam( const REGULATION_VIEWDATA *pView, REGULATION_VIEW_PARAM_TYPE type, u8 idx )
+{ 
+  GF_ASSERT( idx < TEMOTI_POKEMAX );
+
+  switch( type )
+  { 
+  case REGULATION_VIEW_MONS_NO:
+    return pView->mons_no[ idx ];
+
+  case REGULATION_VIEW_FROM_NO:
+    return pView->form_no[ idx ];
+
+  case REGULATION_VIEW_ITEM_FLAG:
+    return pView->item_flag[ idx ];
+
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ設定
+ *
+ *	@param	REGULATION_VIEWDATA *pView  ワーク
+ *	@param	type                        取得タイプ
+ *	@param	idx                         インデックス
+ *	@param	param                       設定するデータ
+ */
+//-----------------------------------------------------------------------------
+void RegulationView_SetParam( REGULATION_VIEWDATA *pView, REGULATION_VIEW_PARAM_TYPE type, u8 idx, int param )
+{ 
+  GF_ASSERT( idx < TEMOTI_POKEMAX );
+
+  switch( type )
+  { 
+  case REGULATION_VIEW_MONS_NO:
+    pView->mons_no[ idx ]   = param;
+
+  case REGULATION_VIEW_FROM_NO:
+    pView->form_no[ idx ]   = param;
+
+  case REGULATION_VIEW_ITEM_FLAG:
+    pView->item_flag[ idx ] = param;
+
+  default:
+    GF_ASSERT(0);
+  }
+}
+
+
 
 //----------------------------------------------------------------------------
 /**

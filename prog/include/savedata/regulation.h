@@ -103,6 +103,13 @@ typedef enum  {
   REGULATION_CARD_STATUS,      ///< 大会状態：net/dreamworld_netdata.hのDREAM_WORLD_MATCHUP_TYPEの値
 } REGULATION_CARD_PARAM_TYPE;
 
+typedef enum {  
+  REGULATION_VIEW_MONS_NO,
+  REGULATION_VIEW_FROM_NO,
+  REGULATION_VIEW_ITEM_FLAG,
+
+} REGULATION_VIEW_PARAM_TYPE;
+
 typedef enum {
   REGULATION_CARD_TYPE_WIFI,   //WIFI大会で使用
   REGULATION_CARD_TYPE_LIVE,   //ライブ大会で使用
@@ -165,6 +172,9 @@ typedef struct {
   u16 crc;  //整合性検査
 } REGULATION_CARDDATA;
 
+//選手証の見た目情報
+typedef struct _REGULATION_VIEWDATA REGULATION_VIEWDATA;
+
 //セーブデータ
 typedef struct _REGULATION_SAVEDATA REGULATION_SAVEDATA;
 
@@ -220,6 +230,19 @@ extern int Regulation_GetCardParam(const REGULATION_CARDDATA* pReg, REGULATION_C
 extern void Regulation_SetCardParam(REGULATION_CARDDATA * pReg, REGULATION_CARD_PARAM_TYPE type, int param);
 
 extern BOOL Regulation_CheckCrc( const REGULATION_CARDDATA* pReg );
+
+//----------------------------------------------------------
+//	REGULATION_VIEWDATA操作のための関数 デジタル選手証の見た目（登録ポケモンとか）
+//----------------------------------------------------------
+extern void RegulationView_Init(REGULATION_VIEWDATA * my);
+
+//ワーク取得
+extern REGULATION_VIEWDATA* RegulationSaveData_GetRegulationView( REGULATION_SAVEDATA *p_save, const REGULATION_CARD_TYPE type );
+
+//データ取得・設定
+extern int RegulationView_GetParam( const REGULATION_VIEWDATA *pView, REGULATION_VIEW_PARAM_TYPE type, u8 idx );
+extern void RegulationView_SetParam( REGULATION_VIEWDATA *pView, REGULATION_VIEW_PARAM_TYPE type, u8 idx, int param );
+
 
 
 //----------------------------------------------------------
