@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-04T18:04:50"/>
+	<create user="ohmori" host="W00223" date="2010-03-08T12:18:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -390,10 +390,10 @@
 	</row>
 
 	<row id="str_check_examining" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]まだ　ちょうさが
+		<language name="JPN">[BD:02:Ｘセンタリング]まだ　ちょうさ
 [BD:02:Ｘセンタリング]できていません</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]まだ　調査が
-[BD:02:Ｘセンタリング]出来ていません</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]まだ調査
+[BD:02:Ｘセンタリング]できていません</language>
 	</row>
 
 	<row id="str_check_analyzing" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
@@ -407,54 +407,54 @@
 	</row>
 
 	<row id="str_check_answer" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:03:Ｘ右寄せ:0][2:01:２桁:0]ばん：[1:00:トレーナー名:1]
-[BD:03:Ｘ右寄せ:0][2:03:４桁:2]にん
-[BD:03:Ｘ右寄せ:0][2:03:４桁:3]％</language>
-		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0][2:01:２桁:0]番：[1:00:トレーナー名:1]
-[BD:03:Ｘ右寄せ:0][2:03:４桁:2]人
-[BD:03:Ｘ右寄せ:0][2:03:４桁:3]％</language>
+		<language name="JPN">[BD:03:Ｘ右寄せ:12][2:01:２桁:0]ばん：[1:00:トレーナー名:1]
+[BD:03:Ｘ右寄せ:12][2:03:４桁:2]にん
+[BD:03:Ｘ右寄せ:12][2:03:４桁:3]％</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:12][2:01:２桁:0]番：[1:00:トレーナー名:1]
+[BD:03:Ｘ右寄せ:12][2:03:４桁:2]人
+[BD:03:Ｘ右寄せ:12][2:03:４桁:3]％</language>
 	</row>
 
 	<row id="str_check_my_answer" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:03:Ｘ右寄せ:0]じぶんは
-[BD:03:Ｘ右寄せ:0][1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]自分は
-[BD:03:Ｘ右寄せ:0][1:00:トレーナー名:0]</language>
+		<language name="JPN">[BD:03:Ｘ右寄せ:12]じぶんは
+[BD:03:Ｘ右寄せ:12][1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:12]自分は
+[BD:03:Ｘ右寄せ:12][1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="str_check_today_count" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:03:Ｘ右寄せ:0]きょうのにんずう
-[BD:03:Ｘ右寄せ:0][2:03:４桁:0]にん</language>
-		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]今日の人数
-[BD:03:Ｘ右寄せ:0][2:03:４桁:0]人</language>
+		<language name="JPN">[BD:03:Ｘ右寄せ:12]きょうのにんずう
+[BD:03:Ｘ右寄せ:12][2:03:４桁:0]にん</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:12]今日の人数
+[BD:03:Ｘ右寄せ:12][2:03:４桁:0]人</language>
 	</row>
 
 	<row id="str_check_today_count01" text-color=",,,#c0c0c0,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:03:Ｘ右寄せ:0]きょうのにんずうを
-[BD:03:Ｘ右寄せ:0]ひょうじします</language>
-		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]今日の人数を
-[BD:03:Ｘ右寄せ:0]表示します</language>
+		<language name="JPN">[BD:03:Ｘ右寄せ:8]きょうのにんずうを
+[BD:03:Ｘ右寄せ:8]ひょうじします</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:8]今日の人数を
+[BD:03:Ｘ右寄せ:8]表示します</language>
 	</row>
 
 	<row id="str_check_total_count" text-color=",,,#c0c0c0,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:03:Ｘ右寄せ:0]ごうけいにんずう
-[BD:03:Ｘ右寄せ:0][2:03:４桁:0]にん</language>
-		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]合計人数
-[BD:03:Ｘ右寄せ:0][2:03:４桁:0]人</language>
+		<language name="JPN">[BD:03:Ｘ右寄せ:12]ごうけいにんずう
+[BD:03:Ｘ右寄せ:12][2:03:４桁:0]にん</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:12]合計人数
+[BD:03:Ｘ右寄せ:12][2:03:４桁:0]人</language>
 	</row>
 
 	<row id="str_check_total_count01" text-color=",,,#c0c0c0,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:03:Ｘ右寄せ:0]ごうけいにんずうを
-[BD:03:Ｘ右寄せ:0]ひょうじします</language>
-		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:0]合計人数を
-[BD:03:Ｘ右寄せ:0]表示します</language>
+		<language name="JPN">[BD:03:Ｘ右寄せ:8]ごうけいにんずうを
+[BD:03:Ｘ右寄せ:8]ひょうじします</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:8]合計人数を
+[BD:03:Ｘ右寄せ:8]表示します</language>
 	</row>
 
 	<row id="str_check_data_receive" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]データ
-しゅとくちゅう</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]データ
-取得中</language>
+		<language name="JPN">[BD:03:Ｘ右寄せ:68]データ
+[BD:03:Ｘ右寄せ:20]こうしんちゅう</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:68]データ
+[BD:03:Ｘ右寄せ:32]更新中</language>
 	</row>
 
 	<row id="str_check_analyze_button" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
