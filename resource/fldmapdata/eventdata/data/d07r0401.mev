@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/06 21:35:42
+#save date:2010/03/08 13:03:32
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d07r0401.wms
 #SECTION START:OBJ_EVENT
@@ -49,7 +49,7 @@ TR_KARATE_02
 #OBJ CODE Number
 FIGHTERM
 #MOVE CODE Number
-MV_DMY
+MV_RT2
 #EVENT TYPE Number
 EV_TYPE_TRAINER_SPIN_STOP_R
 #Flag Name
@@ -61,17 +61,17 @@ DIR_DOWN
 #Parameter 0 Number
 2
 #Parameter 1 Number
-3
+2
 #Parameter 2 Number
 0
 #Move Limit X Number
-6
+0
 #Move Limit Z Number
 6
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-520 0 120
+-8 0 120
 #event number: 2
 #type
 1
