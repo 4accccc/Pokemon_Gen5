@@ -15,11 +15,19 @@
 
 #include "gamesystem/pm_weather.h"
 
+#include "fieldmap/zone_id.h"
+
 #include "field/move_pokemon.h"
 #include "field/calender.h"
 
 #include "field/palace_weather.cdat"
 #include "field/zonedata.h"
+
+
+
+#include "field/eventwork.h"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
+
 
 #include "field/field_comm/intrude_work.h"
 
@@ -41,6 +49,7 @@
 */
 //-----------------------------------------------------------------------------
 static u16 PM_WEATHER_GetPalaceWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id );
+static u16 PM_WEATHER_GetEventWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id );
 
 //----------------------------------------------------------------------------
 /**
@@ -66,6 +75,13 @@ u8 PM_WEATHER_GetZoneWeatherNo( GAMESYS_WORK* p_gamesystem, int zone_id )
 
   // パレスチェック
   weather = PM_WEATHER_GetPalaceWeather( p_gamesystem, p_data, zone_id );
+  if( weather != WEATHER_NO_NONE )
+  {
+    return weather;
+  }
+
+  // イベントによる、天気書き換え
+  weather = PM_WEATHER_GetEventWeather( p_gamesystem, p_data, zone_id );
   if( weather != WEATHER_NO_NONE )
   {
     return weather;
@@ -160,5 +176,38 @@ static u16 PM_WEATHER_GetPalaceWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_
   return WEATHER_NO_NONE;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベントの天気を取得
+ *
+ *	@param	p_gamesystem    ゲームシステム
+ *	@param	p_data          データ
+ *	@param	zone_id         ゾーンID
+ *
+ *	@return イベント起動：天気
+ */
+//-----------------------------------------------------------------------------
+static u16 PM_WEATHER_GetEventWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id )
+{
+	EVENTWORK * p_ev;
+	p_ev = GAMEDATA_GetEventWork( p_data );
+
+  // R07  移動ポケモン
+  if( zone_id == ZONE_ID_R07 )
+  {
+    if( EVENTWORK_CheckEventFlag( p_ev, SYS_FLAG_WEATHER_R07 ) )
+    {
+      // BLACK = カザカミ
+      // WHITE = ライカミ
+      if( GetVersion() == VERSION_BLACK ){
+        return WEATHER_NO_KAZAKAMI;
+      }
+      return WEATHER_NO_RAIKAMI;
+    }
+  }
+
+  return WEATHER_NO_NONE;
+}
 
 
