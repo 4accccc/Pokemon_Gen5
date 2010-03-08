@@ -206,20 +206,20 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
   u32 i;
 
 
-  BTL_Printf("rec seek start RP= %d\n", wk->readPtr);
+  BTL_N_Printf( DBGSTR_REC_ReadActStart, wk->readPtr);
   while( wk->readPtr < wk->dataSize )
   {
     ReadRecFieldTag( wk->recordData[wk->readPtr++], &type, &numClient );
     if( (wk->readPtr >= wk->dataSize) ){ break; }
     if( type != BTL_RECFIELD_ACTION )
     {
-      BTL_Printf("rec seek RotateData skip %d byte\n", numClient);
+      BTL_N_Printf( DBGSTR_REC_ReadActSkip, numClient);
       wk->readPtr += numClient;
     }
     else
     {
       const BTL_ACTION_PARAM* returnPtr = NULL;
-      BTL_Printf("rec seek numClient=%d\n", numClient);
+      BTL_Printf( DBGSTR_REC_SeekClient, numClient);
       for(i=0; i<numClient; ++i)
       {
         ReadClientActionTag( wk->recordData[wk->readPtr++], &readClientID, &readNumAction );
@@ -233,7 +233,7 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
           returnPtr = (const BTL_ACTION_PARAM*)(&wk->recordData[wk->readPtr]);
           GFL_STD_MemCopy( returnPtr, wk->buf, readNumAction * sizeof(BTL_ACTION_PARAM) );
           returnPtr = (const BTL_ACTION_PARAM*)(wk->buf);
-          BTL_Printf("rec ReadPtr=%d, act=%d, waza=%d\n", wk->readPtr, returnPtr->gen.cmd, returnPtr->fight.waza);
+          BTL_N_Printf( DBGSTR_REC_ReadActParam, wk->readPtr, returnPtr->gen.cmd, returnPtr->fight.waza);
           wk->readPtr += (sizeof(BTL_ACTION_PARAM) * readNumAction);
           *numAction = readNumAction;
         }

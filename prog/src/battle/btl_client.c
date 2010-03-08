@@ -879,20 +879,21 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
 {
   u8 numAction;
+
   const BTL_ACTION_PARAM* act = BTL_RECREADER_ReadAction( &wk->btlRecReader, wk->myID, &numAction );
 
   wk->returnDataPtr = act;
   wk->returnDataSize = numAction * sizeof(BTL_ACTION_PARAM);
 
-  BTL_Printf("REC return Action count=%d\n", numAction);
+  BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct, wk->myID, numAction);
   if( act->gen.cmd  == BTL_ACTION_FIGHT ){
-    BTL_Printf("   action=Fight, waza=%d\n", act->fight.waza);
+    BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct_Fight, act->fight.waza);
   }
   if( act->gen.cmd  == BTL_ACTION_CHANGE ){
-    BTL_Printf("   action=Change, nextPokeIdx=%d\n", act->change.memberIdx);
+    BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct_Change, act->change.memberIdx);
   }
   if( act->gen.cmd  == BTL_ACTION_MOVE ){
-    BTL_Printf("   action=Move!\n");
+    BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct_Move );
   }
 
   return TRUE;

@@ -140,7 +140,7 @@ struct _BTL_MAIN_MODULE {
 static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
-static u32 calcBonusSub( const POKEPARTY * party );
+static u32 calcBonusSub( const BSP_TRAINER_DATA* trData, const POKEPARTY * party );
 static u32 calcBonusMoneyBase( const BATTLE_SETUP_PARAM* sp );
 static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
 static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
@@ -378,19 +378,16 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
 //======================================================================================================
 
 
-static u32 calcBonusSub( const POKEPARTY * party )
+static u32 calcBonusSub( const BSP_TRAINER_DATA* trData, const POKEPARTY * party )
 {
-  enum {
-    BASE_MONEY_RATIO = 10,  // @todo 本来はトレーナーごとにレートが変動する
-  };
-
   if( party )
   {
     u8 poke_cnt = PokeParty_GetPokeCount( party );
     if( poke_cnt )
     {
       const POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, poke_cnt-1 );
-      return (PP_Get(pp, ID_PARA_level, NULL) * BASE_MONEY_RATIO * 4);
+      u32 tr_money_ratio = TT_TrainerDataParaGet( trData->tr_id, ID_TD_gold );
+      return (PP_Get(pp, ID_PARA_level, NULL) * tr_money_ratio * 4);
     }
   }
   return 0;
@@ -401,8 +398,14 @@ static u32 calcBonusMoneyBase( const BATTLE_SETUP_PARAM* sp )
   {
     u32 sum = 0;
 
-    sum += calcBonusSub( sp->party[BTL_CLIENT_ENEMY1] );
-    sum += calcBonusSub( sp->party[BTL_CLIENT_ENEMY2] );
+    if( PokeParty_GetPokeCount(sp->party[BTL_CLIENT_ENEMY1]) )
+    {
+      sum += calcBonusSub( sp->tr_data[ BTL_CLIENT_ENEMY1], sp->party[BTL_CLIENT_ENEMY1] );
+    }
+    if( PokeParty_GetPokeCount(sp->party[BTL_CLIENT_ENEMY2]) )
+    {
+      sum += calcBonusSub( sp->tr_data[ BTL_CLIENT_ENEMY2], sp->party[BTL_CLIENT_ENEMY2] );
+    }
 
     return sum;
   }
@@ -512,7 +515,7 @@ static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup )
 static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp )
 {
 //  wk->myClientID = sp->commPos;
-  wk->myClientID = BTL_CLIENT_PLAYER;
+  wk->myClientID = sp->commPos;;
   wk->myOrgPos = BTL_MAIN_GetClientPokePos( wk, wk->myClientID, 0 );
   {
     u8 relation_0 = CommClientRelation( wk->myClientID, 0 );
@@ -3006,9 +3009,12 @@ void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk )
 //=============================================================================================
 void  BTL_MAIN_DecrementPlayerItem( const BTL_MAIN_MODULE* wk, u8 clientID, u16 itemID )
 {
-  if( clientID == wk->myClientID )
+  if( wk->setupParam->fRecordPlay == FALSE )
   {
-    MYITEM_SubItem( (MYITEM_PTR)(wk->setupParam->itemData), itemID, 1, wk->heapID );
+    if( clientID == wk->myClientID )
+    {
+      MYITEM_SubItem( (MYITEM_PTR)(wk->setupParam->itemData), itemID, 1, wk->heapID );
+    }
   }
 }
 //=============================================================================================

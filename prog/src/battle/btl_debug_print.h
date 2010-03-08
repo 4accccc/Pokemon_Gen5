@@ -65,6 +65,10 @@ typedef enum {
   DBGSTR_CLIENT_ReplyToQuitCmd,
   DBGSTR_CLIENT_StartRotAct,
   DBGSTR_CLIENT_EndRotAct,
+  DBGSTR_CLIENT_ReadRecAct,
+  DBGSTR_CLIENT_ReadRecAct_Fight,
+  DBGSTR_CLIENT_ReadRecAct_Change,
+  DBGSTR_CLIENT_ReadRecAct_Move,
 
   DBGSTR_BPP_NemuriWakeCheck,
 
@@ -215,6 +219,10 @@ typedef enum {
   DBGSTR_Item_PinchReactOn,
   DBGSTR_HANDWAZA_CombiWazaExe,
 
+  DBGSTR_REC_ReadActStart,
+  DBGSTR_REC_ReadActSkip,
+  DBGSTR_REC_SeekClient,
+  DBGSTR_REC_ReadActParam,
 
   DBGSTR_csv,
   DBGSTR_done,

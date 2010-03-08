@@ -111,6 +111,10 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_ReplyToQuitCmd:       return "Client(%d), バトル終了コマンドに対し返信完了\n";
   case DBGSTR_CLIENT_StartRotAct:          return "ローテーション動作開始 clientID=%d, dir=%d\n";
   case DBGSTR_CLIENT_EndRotAct:            return "ローテーション動作終了 clientID=%d, dir=%d\n";
+  case DBGSTR_CLIENT_ReadRecAct:           return "録画データ読み込み clientID=%d, Action count=%d\n";
+  case DBGSTR_CLIENT_ReadRecAct_Fight:     return "   action=Fight, waza=%d\n";
+  case DBGSTR_CLIENT_ReadRecAct_Change:    return "   action=Change, nextPokeIdx=%d\n";
+  case DBGSTR_CLIENT_ReadRecAct_Move:      return "   action=Move!\n";
 
   case DBGSTR_BPP_NemuriWakeCheck:        return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
 
@@ -253,6 +257,11 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_Item_PinchReactItem:      return "PokeID=%d, 最大HP=%d, 現HP=%d, n=%d ... ";
   case DBGSTR_Item_PinchReactOn:        return "反応あり";
   case DBGSTR_HANDWAZA_CombiWazaExe:    return "ポケ(%d)がポケ(%d）のワザ(%d)に続けて合体ワザ発動->効果=%d\n";
+
+  case DBGSTR_REC_ReadActStart:         return "rec seek start RP= %d\n";
+  case DBGSTR_REC_ReadActSkip:          return "rec seek RotateData skip %d byte\n";
+  case DBGSTR_REC_SeekClient:           return "rec seek numClient=%d\n";
+  case DBGSTR_REC_ReadActParam:         return "rec ReadPtr=%d, act=%d, waza=%d\n";
 
 
   case DBGSTR_csv:  return "%d,";
