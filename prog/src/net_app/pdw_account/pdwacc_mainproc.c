@@ -28,6 +28,7 @@ typedef struct {
   WIFILOGIN_PARAM     login;
   GAMEDATA      *gameData;
   PDWACC_PROCWORK pwdaccWork;
+  DWCSvlResult aSVL;
   HEAPID heapID;
   int state;
 } PDWACCMAIN_WORK;
@@ -91,6 +92,7 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
     pWork->login.gamedata = pWork->gameData;
     pWork->login.bg       = WIFILOGIN_BG_NORMAL;
     pWork->login.display  = WIFILOGIN_DISPLAY_UP;
+    pWork->login.pSvl = &pWork->aSVL;
 
     GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &pWork->login);
 
@@ -101,7 +103,7 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
     if(pWork->login.result!=WIFILOGIN_RESULT_CANCEL){
       pWork->pwdaccWork.gameData = pWork->gameData;
       pWork->pwdaccWork.heapID = pWork->heapID;
-      
+      pWork->pwdaccWork.pSvl = &pWork->aSVL;
       GFL_PROC_SysCallProc(FS_OVERLAY_ID(pdw_acc), &PDW_ACC_ProcData, &pWork->pwdaccWork);
     }
     pWork->state++;

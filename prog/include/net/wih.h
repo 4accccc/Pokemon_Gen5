@@ -833,3 +833,6 @@ extern void WHSetScanWaitFrame(int no);
 extern void WIH_FixScanMode(int channe, void* pMac );
 
 
+
+extern void WIH_SetBeaconPause(BOOL bPause);
+

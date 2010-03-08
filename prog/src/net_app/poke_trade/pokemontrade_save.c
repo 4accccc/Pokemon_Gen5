@@ -126,7 +126,6 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
 
 
 
-
   
   if(pWork->bEncountMessageEach){
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_30, pWork->pMessageStrBufEx );
@@ -146,6 +145,7 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
   POKETRADE_MESSAGE_WindowOpen(pWork);
   _setNextAnim(pWork, 0);
+  POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_THROUGH);
 
   GFL_BG_SetVisible( GFL_BG_FRAME2_S , TRUE );
 
@@ -163,8 +163,6 @@ static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork)
   if(pWork->anmCount < 100){
     return;
   }
-
-//  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_50, pWork->pMessageStrBufEx );
   {
     POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
     WORDSET_RegisterPokeNickName( pWork->pWordSet, 1,  pp );
@@ -184,6 +182,7 @@ static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork)
   if(pWork->anmCount < 100){
     return;
   }
+  POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_KEY);
   PMSND_PopBGM();
   PMSND_FadeInBGM( 24 );
 

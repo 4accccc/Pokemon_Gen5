@@ -236,6 +236,12 @@ void POKETRADE_MESSAGE_WindowOpenCustom(POKEMON_TRADE_WORK* pWork,BOOL bFast,BOO
 }
 
 
+void POKETRADE_MESSAGE_ChangeStreamType(POKEMON_TRADE_WORK* pWork,int type)
+{
+  APP_PRINTSYS_COMMON_PrintStreamInit(&pWork->trgWork, APP_PRINTSYS_COMMON_TYPE_THROUGH );
+}
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   メッセージウインドウ開く 下画面
@@ -367,7 +373,7 @@ void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   メッセージの終了待ち
+ * @brief   メッセージの終了待ち  APP_PRINTSYS_COMMON_TYPE_THROUGH
  * @retval  none
  */
 //------------------------------------------------------------------------------

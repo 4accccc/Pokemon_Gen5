@@ -194,6 +194,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
       else{
         PMSND_PushBGM();
         dbw->push=TRUE;
+        dbw->aLoginWork.pSvl = &dbw->aSVL;
         GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &dbw->aLoginWork);
         (*seq)++;
       }

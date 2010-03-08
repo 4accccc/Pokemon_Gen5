@@ -473,7 +473,7 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
   pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
   pWork->pGameData = pParent->gameData;
   pWork->profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pParent->gameData) );
-  pWork->pNHTTPRap = NHTTP_RAP_Init(pParent->heapID, pWork->profileID, NULL);
+  pWork->pNHTTPRap = NHTTP_RAP_Init(pParent->heapID, pWork->profileID, pParent->pSvl);
   OS_TPrintf("profileID %x\n",pWork->profileID);
   
   pWork->pDispWork = PDWACC_DISP_Init(pWork->heapID);

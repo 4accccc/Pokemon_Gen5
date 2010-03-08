@@ -32,7 +32,8 @@ typedef struct {
   GAMESYS_WORK * gsys;
   GAMEDATA * gameData;
   SAVE_CONTROL_WORK *ctrl;
-  BATTLE_SETUP_PARAM para;
+//  BATTLE_SETUP_PARAM para;
+  DWCSvlResult aSVL;
   int selectType;
   BOOL push;
   u16 boxNo;

@@ -21,6 +21,7 @@ typedef enum{
   DREAM_WORLD_SERVER_CHEAT_DATA,		  // アップロードされたデータが不正です
   DREAM_WORLD_SERVER_NO_DATA,		      // サーバにデータがありません
   DREAM_WORLD_SERVER_END,             // サービスが終了している
+  DREAM_WORLD_SERVER_ILLEGAL_TOKEN,   // 認証トークンに問題がある
   DREAM_WORLD_SERVER_ERROR_ETC,       // その他サーバがエラーの場合 これ以上の値が来ても同様にエラーにする
   DREAM_WORLD_SERVER_ERROR_MAX
 } DREAM_WORLD_SERVER_ERROR_TYPE;   /// サーバから返ってくるサーバの状態

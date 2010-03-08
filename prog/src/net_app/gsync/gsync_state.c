@@ -1562,7 +1562,7 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
     pWork->pGameData = pParent->gameData;
     pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
     profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pParent->gameData) );
-    pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, profileID, NULL);
+    pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, profileID, &pParent->aSVL);
     pWork->pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(pParent->gsys));
     pWork->trayno = pParent->boxNo;
     pWork->indexno = pParent->boxIndex;

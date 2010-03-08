@@ -84,7 +84,29 @@ typedef enum
   _TIMING_POKECOLOR,
   _TIMING_RETURN,     //あいてが交換したがっていて、相手がやめたい時は同期をとって元のシーケンスに戻る
 
+  POKETRADE_FACTOR_TIMING_A,   ///->初期状態POKETRADE_FACTOR_NONEにするタイミング
+  POKETRADE_FACTOR_TIMING_B,   ///->POKETRADE_FACTOR_SINGLECHANGE かPOKETRADE_FACTOR_TRI_SELECTか POKETRADE_FACTOR_ENDのタイミング
+  POKETRADE_FACTOR_TIMING_C,   //  POKETRADE_FACTOR_SINGLE_OK  かPOKETRADE_FACTOR_SINGLE_NGか  POKETRADE_FACTOR_EGG
+  POKETRADE_FACTOR_TIMING_D,  ///->POKETRADE_FACTOR_TRI_DECIDEかPOKETRADE_FACTOR_TRI_ENDのタイミング
 } NET_TIMING_ENUM;
+
+
+typedef enum
+{
+  POKETRADE_FACTOR_NONE,            //まだ選んで無い
+  POKETRADE_FACTOR_SINGLECHANGE,    //一体選択みせあい
+  POKETRADE_FACTOR_SINGLE_OK,    //一体選択OK
+  POKETRADE_FACTOR_SINGLE_NG,    //一体選択NG
+  POKETRADE_FACTOR_END,            //終わり選択
+  POKETRADE_FACTOR_EGG,        // たまごと最後の手持ち交換
+  POKETRADE_FACTOR_TRI_SELECT,   //  ３体選択にすすむ
+  POKETRADE_FACTOR_TRI_DECIDE,   //  ３たい交換する
+  POKETRADE_FACTOR_TRI_END,     //  三対選択後やめた
+}POKETRADE_FACTOR_ENUM;
+
+
+
+
 
 #define BOX_VERTICAL_NUM (5)
 #define BOX_HORIZONTAL_NUM (6)
@@ -219,6 +241,9 @@ typedef enum
 
 
 typedef void (StateFunc)(POKEMON_TRADE_WORK* pState);
+
+
+
 
 
 
@@ -626,6 +651,7 @@ struct _POKEMON_TRADE_WORK{
   PROGVAL_PEZIER_WORK aCutMullRom;
   APP_PRINTSYS_COMMON_WORK trgWork;  //キーの制御を行うワーク
   s16 SuckedCount;
+  u8 changeFactor[2];
   u8 BGClearFlg;
   u8 DemoBGClearFlg;
   u8 bByebyeMessageEach;  //送り先IDと送信ポケモン一致
@@ -806,7 +832,8 @@ extern int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex);
 
 ///通信コマンド
 typedef enum {
-  _NETCMD_SELECT_POKEMON = GFL_NET_CMD_IRCTRADE,
+  _NETCMD_CHANGEFACTOR = GFL_NET_CMD_IRCTRADE,
+  _NETCMD_SELECT_POKEMON,
   _NETCMD_CHANGE_POKEMON,
   _NETCMD_EGG_AND_BATTLE,
   _NETCMD_LOOKATPOKE,
@@ -859,6 +886,7 @@ extern void POKETRADE_MESSAGE_ResetPokemonMyStDisp(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork);
 extern void POKETRADE_MESSAGE_CreatePokemonParamDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* pp);
 extern void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork,int frame);
+extern void POKETRADE_MESSAGE_ChangeStreamType(POKEMON_TRADE_WORK* pWork,int type);
 
 //ポケモン２Ｄ
 extern void POKETRADE_2D_GTSPokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, POKEMON_PARAM* pp, int hilow);

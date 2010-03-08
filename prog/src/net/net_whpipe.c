@@ -152,7 +152,7 @@ struct _NET_WL_WORK {
 	u8 bChange;   ///<ビーコン変更フラグ
   u8 crossChannel;
   u8 CrossRand;
-  u8 dummy;
+  u8 PauseScan;
   //u8 = 16byte
 } ;
 
@@ -1062,6 +1062,17 @@ void GFI_NET_MLProcess(u16 bitmap)
 	if(_pNetWL && GFL_NET_WLIsChildStateScan() ){
 		_WLParentBconCheck();
 	}
+  if(_pNetWL){
+    if(GFL_UI_KEY_GetCont() & (PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_KEY_UP|PAD_KEY_DOWN)){
+      WIH_SetBeaconPause(TRUE);
+      _pNetWL->PauseScan=TRUE;
+    }
+    else{
+      WIH_SetBeaconPause(FALSE);
+      _pNetWL->PauseScan=FALSE;
+    }
+  }
+  
   WH_StepScan();
 }
 
@@ -1889,14 +1900,12 @@ static void _crossScanShootStart(GFL_NETWL* pNetWL);
 
 static void _crossScanWait(GFL_NETWL* pNetWL)
 {
-  pNetWL->CrossRand--;
-  
-  if( pNetWL->CrossRand == 0){
-//  if(pNetWL->CrossRand < WHGetBeaconSendNum()){
-    WH_Finalize();
-  //  OS_TPrintf("_crossScanWait %d \n",OS_GetVBlankCount()/60);
-    
-    _CHANGE_STATE(_crossScanShootStart);
+  if(!_pNetWL->PauseScan){   //親機固定＝ビーコン発信のみ
+    pNetWL->CrossRand--;
+    if( pNetWL->CrossRand == 0){
+      WH_Finalize();
+      _CHANGE_STATE(_crossScanShootStart);
+    }
   }
 }
 
@@ -1905,7 +1914,6 @@ static void _crossScanShootEndWait(GFL_NETWL* pNetWL)
 {
   if(GFL_NET_WLIsStateIdle()){
     u8 ch[]={1,7,13};
-//    pNetWL->crossChannel++;
     pNetWL->crossChannel = GFUser_GetPublicRand(elementof(ch));
     if(pNetWL->crossChannel >= elementof(ch)){
       pNetWL->crossChannel=0;
@@ -1913,7 +1921,6 @@ static void _crossScanShootEndWait(GFL_NETWL* pNetWL)
 		NET_WHPIPE_BeaconSetInfo();
     if( WH_ParentConnect(WH_CONNECTMODE_MP_PARENT, pNetWL->_sTgid, ch[pNetWL->crossChannel], 1 )){
       pNetWL->CrossRand = pNetWL->parentTime();
-//      pNetWL->CrossRand= GFUser_GetPublicRand(5);
       _CHANGE_STATE(_crossScanWait);  // 親機になる
     }
   }
@@ -1926,7 +1933,6 @@ static void _crossScanShootWait(GFL_NETWL* pNetWL)
   pNetWL->CrossRand--;
   
   if( pNetWL->CrossRand == 0){
-//  if( pNetWL->CrossRand < WHGetBeaconScanNum()){
     WH_EndScan(); //スキャン終了
     _CHANGE_STATE(_crossScanShootEndWait);  // スキャン終了待ち
 #ifdef DEBUG_WH_BEACON_PRINT_ON

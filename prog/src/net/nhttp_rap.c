@@ -53,17 +53,17 @@ typedef void (StateFunc)(G_SYNC_WORK* pState);
 //#define GETURL1 "https://pokemon-ds.basementfactorysystems.com/bindata-test/data1.php"
 
 
-const static char ACCOUNT_INFOURL[] = "https://pokemon-ds.basementfactorysystems.com/gs?p=account.playstatus&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0";  //GET
-const static char POKEMONLISTURL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=sleepily.bitlist&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0";  //GET
-const static char DOWNLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=savedata.download&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0";  //GET
-const static char UPLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=savedata.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0";  //POST
-const static char ACCOUNT_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=account.createdata\0"; //POST
-const static char BTL_DL_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=worldbattle.download&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0"; //GET
-const static char BTL_UP_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=worldbattle.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0"; //POST
+const static char ACCOUNT_INFOURL[] = "https://pokemon-ds.basementfactorysystems.com/gs?p=account.playstatus&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0";  //GET
+const static char POKEMONLISTURL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=sleepily.bitlist&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0";  //GET
+const static char DOWNLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=savedata.download&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0";  //GET
+const static char DOWNLOADEND_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=savedata.download.finish&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0";  //POST
+const static char UPLOAD_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=savedata.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0";  //POST
+const static char ACCOUNT_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=account.createdata&tok=%s\0"; //POST
+const static char BTL_DL_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=worldbattle.download&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0"; //GET
+const static char BTL_UP_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=worldbattle.upload&gsid=%d&rom=%d&langcode=%d&dreamw=%d&tok=%s\0"; //POST
 
 //const static char POKECHK_URL[] ="http://125.206.241.227/pokemon/validate"; //POST
 const static char POKECHK_URL[] ="https://pkvldttest.nintendo.co.jp/pokemon/validate"; //POST
-const static char DOWNLOADEND_URL[] ="https://pokemon-ds.basementfactorysystems.com/gs?p=savedata.download.finish&gsid=%d&rom=%d&langcode=%d&dreamw=%d\0";  //POST
 
 
 //const static char ACCOUNT_URL[] ="http://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsyncget.cgi?p=account.createdata\0"; //POST
@@ -98,7 +98,7 @@ static CPSCaInfo* cainfos[] = {
 };
 
 #define _GET_MAXSIZE  (1024)
-#define _URL_BUFFER   (200)
+#define _URL_BUFFER   (400)
 
 
 struct _NHTTP_RAP_WORK {
@@ -156,7 +156,7 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
   u32                     receivedCurrent = 0, receivedPrevious = 0;
   u32                     contentLength;
   u32                     averageSpeed = 0, currentSpeed = 0, maxSpeed = 0;
-  char pidbuff[_URL_BUFFER];
+  //char pidbuff[_URL_BUFFER];
 
   if(0!=NHTTPStartup(AllocForNhttp, FreeForNhttp, 12)){
     GF_ASSERT(0);
@@ -166,11 +166,16 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
 
 
   GFL_STD_MemClear(pWork->urlbuff,sizeof(_URL_BUFFER));
-  GFL_STD_MemClear(pidbuff,_URL_BUFFER);
+//  GFL_STD_MemClear(pidbuff,_URL_BUFFER);
 
-  STD_StrCpy(pidbuff, urltable[urlno].url );
+//  STD_StrCpy(pidbuff, urltable[urlno].url );
 
-  STD_TSNPrintf(pWork->urlbuff, _URL_BUFFER, pidbuff, pWork->profileid, PM_VERSION, PM_LANG, NET_DREAMWORLD_VER);
+  if(urlno==NHTTPRAP_URL_ACCOUNT_CREATE){
+    STD_TSNPrintf(pWork->urlbuff, _URL_BUFFER, urltable[urlno].url, pWork->pSvl->svltoken);
+  }
+  else{
+    STD_TSNPrintf(pWork->urlbuff, _URL_BUFFER, urltable[urlno].url, pWork->profileid, PM_VERSION, PM_LANG, NET_DREAMWORLD_VER, pWork->pSvl->svltoken);
+  }
  // GFL_STD_StrCat(pWork->urlbuff,pidbuff,sizeof(_URL_BUFFER));
 
   

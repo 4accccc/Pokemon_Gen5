@@ -533,10 +533,6 @@ typedef struct{
   /* 親機検索用 */
   WHStartScanCallbackFunc sScanCallback;
 
-//  WHNextFunc nextFunc;
-  WHNextFunc nextFunc2;
-//  BOOL nextFunc2Flg;
-
   // エラーコード格納用
   int sErrCode;
   // 乱数用
@@ -565,7 +561,8 @@ typedef struct{
   u16 scanWaitFrame;
   /* 親機接続時に使用する設定 */
   u8 sConnectionSsid[(WM_SIZE_CHILD_SSID/4)*4];
-  u16 scanFixNo;
+  u8 scanFixNo;
+  u8 pauseScan;
 } _WM_INFO_STRUCT;
 
 static _WM_INFO_STRUCT* _pWmInfo;  //通信用構造体
@@ -672,7 +669,7 @@ static void _MainLoopScanBeaconData(void);
    debug codes
    ====================================================================== */
 
-//#define WMHIGH_DEBUG
+#define WMHIGH_DEBUG
 
 
 #if defined(WMHIGH_DEBUG)
@@ -1296,7 +1293,11 @@ static void WH_StateOutEndParentMP(void *arg)
     return;
   }
 
-  _pWmInfo->nextFunc2 = &WH_StateInEndParent;
+  if (!WH_StateInEndParent() )
+  {   // 自動的に、終了処理を開始します。
+    WH_TRACE("WH_StateInEndParent failed\n");
+    WH_Reset();
+  }
 }
 
 /* ----------------------------------------------------------------------
@@ -1553,7 +1554,19 @@ void WIH_FixScanMode(int channel, void* pMac )
              _pWmInfo->sScanExParam.ssid[2],_pWmInfo->sScanExParam.ssid[3],
              _pWmInfo->sScanExParam.ssid[4],_pWmInfo->sScanExParam.ssid[5]
              );
+  _pWmInfo->scanFixNo=1;
+}
 
+/*---------------------------------------------------------------------*
+  Name:         WIH_SetBeaconPause
+  Description:  スキャンを一時停止する
+  Arguments:    bPause  停止する場合TRUE
+  Arguments:    指定mac
+ *--------------------------------------------------------------------*/
+
+void WIH_SetBeaconPause(BOOL bPause)
+{
+  _pWmInfo->pauseScan = bPause;
 }
 
 
@@ -3525,7 +3538,7 @@ void WH_StepScan(void)
     else{
       _pWmInfo->startScan--;
     }
-    if(_pWmInfo->startScan==0){
+    if(_pWmInfo->startScan==0 && !_pWmInfo->pauseScan){
       if (_pWmInfo->sSysState == WH_SYSSTATE_SCANNING){
         if (!WH_StateInStartScan()) {
           WH_ChangeSysState(WH_SYSSTATE_ERROR);
@@ -3535,16 +3548,6 @@ void WH_StepScan(void)
         _pWmInfo->startScan=1; //スキャンを戻す
       }
     }
-  }
-
-  if(_pWmInfo->nextFunc2){
-    if (!_pWmInfo->nextFunc2() )
-    {   // 自動的に、終了処理を開始します。
-      WH_TRACE("WH_StateInEndParent failed\n");
-      WH_Reset();
-    }
-    _pWmInfo->nextFunc2 = NULL;
-    return;
   }
 
 

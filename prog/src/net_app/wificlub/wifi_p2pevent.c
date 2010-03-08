@@ -113,6 +113,8 @@ enum{
   P2P_EXIT,
   P2P_FREE,
   P2P_SETEND,
+  P2P_NETENDCALL,
+  P2P_NETEND,
 
   P2P_NOP
 };
@@ -206,40 +208,6 @@ static void _pokeListWorkMake(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 ga
   PokeParty_InitWork(ep2p->pPokeParty);
   initWork->p_party = ep2p->pPokeParty;
 
-/*
-  PLIST_DATA* plist = &ep2p->PokeList;
-  
-  plist->reg = ep2p->pMatchParam->pRegulation;
-  plist->pp = ep2p->pMatchParam->pPokeParty[my_net_id];
-  plist->mode = PL_MODE_BATTLE_WIFI;
-  plist->myitem = GAMEDATA_GetMyItem(pGameData);
-  plist->cfg = SaveData_GetConfig(GAMEDATA_GetSaveControlWork(pGameData));
-  plist->is_disp_party = TRUE;
-  plist->use_tile_limit = FALSE;
-  plist->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_A].pp = ep2p->pMatchParam->pPokeParty[1-my_net_id];
-  plist->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_A].name = MyStatus_GetMyName(pTarget);
-  plist->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_A].sex = MyStatus_GetMySex(pTarget);
-  plist->comm_type = PL_COMM_SINGLE;
-
-  switch(gamemode){
-  case WIFI_GAME_BATTLE_SINGLE_ALL:
-  case WIFI_GAME_BATTLE_SINGLE_FLAT:
-    plist->type = PL_TYPE_SINGLE;
-    break;
-  case WIFI_GAME_BATTLE_DOUBLE_ALL:
-  case WIFI_GAME_BATTLE_DOUBLE_FLAT:
-    plist->type = PL_TYPE_DOUBLE;
-    break;
-  case WIFI_GAME_BATTLE_TRIPLE_ALL:
-  case WIFI_GAME_BATTLE_TRIPLE_FLAT:
-    plist->type = PL_TYPE_TRIPLE;
-    break;
-  case WIFI_GAME_BATTLE_ROTATION_ALL:
-  case WIFI_GAME_BATTLE_ROTATION_FLAT:
-    plist->type = PL_TYPE_ROTATION;
-    break;
-  }
-*/
 }
 
 //==============================================================================
@@ -247,22 +215,6 @@ static void _pokeListWorkMake(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 ga
 //==============================================================================
 static void _pokeListWorkOut(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 gamemode)
 {
-/*
-  int entry_no;
-  int my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-  MYSTATUS* pTarget = GAMEDATA_GetMyStatusPlayer(pGameData,1-my_net_id);
-  PLIST_DATA* plist = &ep2p->PokeList;
-
-  PokeParty_InitWork(ep2p->pPokeParty);
-
-  for(entry_no = 0; entry_no < TEMOTI_POKEMAX; entry_no++){
-    if(plist->in_num[entry_no] == 0){
-      break;
-    }
-    PokeParty_Add(ep2p->pPokeParty, 
-                  PokeParty_GetMemberPointer(plist->pp, plist->in_num[entry_no] - 1));
-  }
-*/
 }
 
 
@@ -288,16 +240,17 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
       ep2p->login.nsid = WB_NET_WIFICLUB;
     }
     GMEVENT_CallProc(pClub->event, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &ep2p->login);
-//    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &ep2p->login);
-   // GFL_PROC_SysCallProc( FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &ep2p->login);
     break;
   case P2P_LOGIN:
-    if( ep2p->login.result == WIFILOGIN_RESULT_LOGIN ){
-        ep2p->seq = P2P_MATCH_BOARD;
-      }
-      else{ 
-        ep2p->seq = P2P_EXIT;
-      }
+    if(WifiList_GetFriendDataNum(GAMEDATA_GetWiFiList(ep2p->pGameData)) == 0){
+      ep2p->seq = P2P_NETENDCALL;
+    }
+    else if( ep2p->login.result == WIFILOGIN_RESULT_LOGIN ){
+      ep2p->seq = P2P_MATCH_BOARD;
+    }
+    else{ 
+      ep2p->seq = P2P_EXIT;
+    }
     break;
   case P2P_MATCH_BOARD:
     GFL_OVERLAY_Load(FS_OVERLAY_ID(wificlub));
@@ -430,7 +383,15 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   case P2P_TVT_END:
     ep2p->seq = P2P_MATCH_BOARD;
     break;
-
+  case P2P_NETENDCALL:
+    GFL_NET_Exit(NULL);
+    ep2p->seq = P2P_NETEND;
+    break;
+  case P2P_NETEND:
+    if(GFL_NET_IsResetEnable()){
+      return TRUE;
+    }
+    break;
   case P2P_EXIT:
   case P2P_SETEND:
   case P2P_FREE:

@@ -97,6 +97,9 @@ static BOOL App_PrintSys_IsTrg( APP_PRINTSYS_COMMON_TYPE type )
 {
   BOOL is_trg = FALSE;
 
+  if(type == APP_PRINTSYS_COMMON_TYPE_THROUGH){
+    is_trg  = TRUE;
+  }
   //ÉLÅ[ÇÃèÍçá
   if( type & APP_PRINTSYS_COMMON_TYPE_KEY ){ 
     if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
@@ -125,6 +128,10 @@ static BOOL App_PrintSys_IsTrg( APP_PRINTSYS_COMMON_TYPE type )
 static BOOL App_PrintSys_IsCont( APP_PRINTSYS_COMMON_TYPE type )
 {   
   BOOL is_cont = FALSE;
+  
+  if(type == APP_PRINTSYS_COMMON_TYPE_THROUGH){
+    is_cont  = TRUE;
+  }
   if( type & APP_PRINTSYS_COMMON_TYPE_KEY ){ 
     if( GFL_UI_KEY_GetCont() & APP_PRINTSYS_COMMON_TRG_KEY ){ 
       is_cont  = TRUE;
@@ -153,6 +160,12 @@ static BOOL App_PrintSys_IsCont( APP_PRINTSYS_COMMON_TYPE type )
 static BOOL App_PrintSys_IsRelease( APP_PRINTSYS_COMMON_TYPE type )
 { 
   BOOL is_release = FALSE;
+
+
+  if(type == APP_PRINTSYS_COMMON_TYPE_THROUGH){
+    is_release  = TRUE;
+  }
+
   if( type & APP_PRINTSYS_COMMON_TYPE_KEY ){ 
     if( GFL_UI_KEY_GetCont() == 0 ){ 
       is_release  = TRUE;

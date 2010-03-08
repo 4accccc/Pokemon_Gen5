@@ -526,7 +526,9 @@ static void _networkFriendsStandbyWait2(POKEMON_TRADE_WORK* pWork)
 static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
 {
   int i;
-  int targetID = 1 - GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  int msgno;
+  int myID = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  int targetID = 1 - myID;
 
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
@@ -534,7 +536,42 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   if(!CheckNegoWaitTimer(pWork)){
     return;
   }
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_D, WB_NET_TRADE_SERVICEID)){
+      return;
+    }
+  }
+
+  if((pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_DECIDE) &&
+     (pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_DECIDE)){
+    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_20, pWork->pMessageStrBufEx );
+    for(i=0;i<2;i++){
+      POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, i);
+      WORDSET_RegisterPokeNickName( pWork->pWordSet, i,  pp );
+    }
+    WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx  );
+    POKETRADE_MESSAGE_WindowOpen(pWork);
+    _CHANGE_STATE(pWork,_networkFriendsStandbyWait2);
+    return;
+  }
+  else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_END){
+    msgno = POKETRADE_STR_97;
+  }
+  else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_END){
+    msgno = POKETRADE_STR2_04;
+  }
+  GFL_MSG_GetString( pWork->pMsgData, msgno, pWork->pMessageStrBuf );
+  POKETRADE_MESSAGE_WindowOpen(pWork);
+  pWork->changeFactor[0] = POKETRADE_FACTOR_NONE;
+  pWork->changeFactor[1] = POKETRADE_FACTOR_NONE;
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID);
+  _CHANGE_STATE(pWork, _NEGO_Select6CancelWait3);  //@todo
+
+
   
+
+
+#if 0
   if(pWork->userNetCommand[targetID]==_NETCMD_LOOKATPOKE){
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_13, pWork->pMessageStrBufEx );
     for(i=0;i<2;i++){
@@ -552,7 +589,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
     pWork->pokemonGTSSeqSend = POKEMONTORADE_SEQ_SELECTNG;
     _CHANGE_STATE(pWork,_NEGO_Select6CancelWait3);
   }
-  
+#endif
 }
 
 
@@ -561,7 +598,11 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
 
 static void _networkFriendsStandbyWait_Send(POKEMON_TRADE_WORK* pWork)
 {
-  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_LOOKATPOKE, 0,NULL)){
+  ///@todo
+  u8 cmd = POKETRADE_FACTOR_TRI_DECIDE;
+  
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd)){
+    GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_D,WB_NET_TRADE_SERVICEID );
     _CHANGE_STATE(pWork, _networkFriendsStandbyWait);// あいても選ぶまで待つ
   }
 }
@@ -868,30 +909,7 @@ static void _NEGO_Select6CancelWait5(POKEMON_TRADE_WORK* pWork)
 }
 
 
-//相手側の終了を待つ
-static void _NEGO_Select6CancelWait4(POKEMON_TRADE_WORK* pWork)
-{
-  BOOL bEnd=FALSE;
-
-  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    if(pWork->pokemonGTSSeq == POKEMONTORADE_SEQ_SELECTNG){
-      bEnd = TRUE;
-    }
-    else if(pWork->pokemonGTSSeq == POKEMONTORADE_SEQ_SELECTOK){
-      bEnd = TRUE;
-    }
-  }
-  else{
-    bEnd = TRUE;
-  }
-  if(bEnd){
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-    _CHANGE_STATE(pWork, _NEGO_Select6CancelWait5);
-  }
-}
-
-//NGだった事を送信
+//終了を待つ
 static void _NEGO_Select6CancelWait3(POKEMON_TRADE_WORK* pWork)
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
@@ -900,13 +918,20 @@ static void _NEGO_Select6CancelWait3(POKEMON_TRADE_WORK* pWork)
     return;
   }
 
-  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    if( GFL_NET_SendData(pNet, _NETCMD_GTSSEQNO,1,&pWork->pokemonGTSSeqSend)){
-      _CHANGE_STATE(pWork, _NEGO_Select6CancelWait4);
-    }
-  }
-  else{
-    _CHANGE_STATE(pWork, _NEGO_Select6CancelWait4);
+  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
+                  WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+  _CHANGE_STATE(pWork, _NEGO_Select6CancelWait5);
+}
+
+
+
+static void _NEGO_Select6CancelWait22(POKEMON_TRADE_WORK* pWork)
+{
+  u8 cmd = POKETRADE_FACTOR_TRI_END;
+
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd)){
+    GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_D,WB_NET_TRADE_SERVICEID );
+    _CHANGE_STATE(pWork, _networkFriendsStandbyWait);// あいても選ぶまで待つ
   }
 }
 
@@ -926,8 +951,7 @@ static void _NEGO_Select6CancelWait2(POKEMON_TRADE_WORK* pWork)
       GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
       pWork->NegoWaitTime = _GTSINFO04_WAIT;
-      pWork->pokemonGTSSeqSend = POKEMONTORADE_SEQ_SELECTNG;
-      _CHANGE_STATE(pWork,_NEGO_Select6CancelWait3);
+      _CHANGE_STATE(pWork, _NEGO_Select6CancelWait22);
       break;
     default: //いいえ
       POKETRADE_MESSAGE_WindowClear(pWork);
@@ -1206,15 +1230,43 @@ void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork)
 
 static void _Select6MessageInit8(POKEMON_TRADE_WORK* pWork)
 {
+  int i;
+  int msgno;
+  int myID = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  int targetID = 1 - myID;
 
-  if(pWork->pokemonGTSSeq==POKEMONTORADE_SEQ_KAISHIOK){
+
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_B, WB_NET_TRADE_SERVICEID)){
+      return;
+    }
+  }
+  if((pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_SELECT) &&
+     (pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_SELECT)){
     //@todo  不正検査    GTSネゴは今度なので今は書かない
     _CHANGE_STATE(pWork, POKE_GTS_Select6Init);
+    return;
   }
-  else if(pWork->pokemonGTSSeq==POKEMONTORADE_SEQ_KAISHING){
-    pWork->pokemonGTSSeqSend =POKEMONTORADE_SEQ_NONE;
-    _CHANGE_STATE(pWork, _Select6MessageInitEnd);
+  else if((pWork->changeFactor[myID]==POKETRADE_FACTOR_END) &&
+          (pWork->changeFactor[targetID]==POKETRADE_FACTOR_END)){
+    pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
+    _CHANGE_STATE(pWork, POKEMONTRADE_PROC_FadeoutStart);
+    return;
   }
+  else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_END){
+    msgno = POKETRADE_STR_97;
+  }
+  else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_END){
+    msgno = POKETRADE_STR2_04;
+  }
+  GFL_MSG_GetString( pWork->pMsgData, msgno, pWork->pMessageStrBuf );
+  POKETRADE_MESSAGE_WindowOpen(pWork);
+
+  pWork->changeFactor[0] = POKETRADE_FACTOR_NONE;
+  pWork->changeFactor[1] = POKETRADE_FACTOR_NONE;
+
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID);
+  _CHANGE_STATE(pWork, _Select6MessageInitEnd);
 }
 
 
@@ -1228,13 +1280,17 @@ static void _Select6MessageInit6(POKEMON_TRADE_WORK* pWork)
 
   
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    u8 flg = POKEMONTORADE_SEQ_KAISHIOK;
-    if( GFL_NET_SendData(pNet, _NETCMD_GTSSEQNO,1,&flg)){
+    u8 flg = POKETRADE_FACTOR_TRI_SELECT;
+//    if( GFL_NET_SendData(pNet, _NETCMD_GTSSEQNO,1,&flg)){     ////@todo
+    if( GFL_NET_SendData(pNet, _NETCMD_CHANGEFACTOR,1,&flg)){     ////@todo
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_B,WB_NET_TRADE_SERVICEID);
       _CHANGE_STATE(pWork, _Select6MessageInit8);
     }
   }
   else{
-    pWork->pokemonGTSSeq=POKEMONTORADE_SEQ_KAISHIOK;
+//    pWork->pokemonGTSSeq=POKEMONTORADE_SEQ_KAISHIOK;
+    pWork->changeFactor[0]=POKETRADE_FACTOR_TRI_SELECT;
+    pWork->changeFactor[1]=POKETRADE_FACTOR_TRI_SELECT;
     _CHANGE_STATE(pWork, _Select6MessageInit8);
   }
 }
@@ -1248,9 +1304,11 @@ static void _Select6MessageInitEnd(POKEMON_TRADE_WORK* pWork)
     return;
   }
 
-  
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    if( GFL_NET_SendData(pNet, _NETCMD_GTSSEQNO,1,&pWork->pokemonGTSSeqSend)){
+    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),
+                                 POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID)){
+
+
       _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
     }
   }
@@ -1273,6 +1331,16 @@ static void _Select6MessageInitEndNoSend(POKEMON_TRADE_WORK* pWork)
   else if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_RETURN,WB_NET_TRADE_SERVICEID)){
     _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
   }
+}
+
+static void _Select6MessageInitEndNoSend2(POKEMON_TRADE_WORK* pWork)
+{
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
+  _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
 }
 
 
@@ -1303,8 +1371,8 @@ static void _Select6MessageInit5(POKEMON_TRADE_WORK* pWork)
       break;
     default: //いいえ
       POKETRADE_MESSAGE_WindowClear(pWork);
-      pWork->pokemonGTSSeqSend = POKEMONTORADE_SEQ_KAISHING;
-      _CHANGE_STATE(pWork,_Select6MessageInitEnd);
+//      pWork->pokemonGTSSeqSend = POKEMONTORADE_SEQ_KAISHING;
+      _CHANGE_STATE(pWork,_Select6MessageInitEndNoSend2);
       break;
     }
   }

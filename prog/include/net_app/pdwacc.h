@@ -28,6 +28,7 @@ typedef enum{
 
 typedef struct {
   GAMEDATA  *gameData;
+  DWCSvlResult* pSvl;
   HEAPID heapID;
   int type;
 } PDWACC_PROCWORK;
