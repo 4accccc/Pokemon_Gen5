@@ -379,7 +379,7 @@ sub_rndmatch_try_check:
     
     $reg_return = SEQ_SUB_RNDMATCH_TRY_CHECK
   ELSE
-    $reg_return = SEQ_SUB_RNDMATCH_RETURN
+    $reg_return = SEQ_SUB_RNDMATCH_TRY_SELECT
   ENDIF
 }
 _RET
@@ -413,8 +413,10 @@ sub_rndmatch_try:
   _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
   IF $i_ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
     $reg_return = SEQ_SUB_RNDMATCH_EXIT
+    _RET
   ELSIF $i_ret == SCR_FIELD_COMM_EXIT_ERROR THEN
     $reg_return = SEQ_SUB_RNDMATCH_RETRY
+    _RET
   ENDIF
 
   // レポートを書く
@@ -650,8 +652,10 @@ sub_gts_normal_exchange:
   _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
   IF $i_ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
     $reg_return = SEQ_SUB_GTS_NORMAL_EXIT
+    _RET
   ELSIF $i_ret == SCR_FIELD_COMM_EXIT_ERROR THEN
     $reg_return = SEQ_SUB_GTS_NORMAL_RETRY
+    _RET
   ENDIF
 
   // レポートを書く
@@ -808,8 +812,10 @@ sub_gts_nego_exchange:
   _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
   IF $i_ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
     $reg_return = SEQ_SUB_GTS_NEGO_EXIT
+    _RET
   ELSIF $i_ret == SCR_FIELD_COMM_EXIT_ERROR THEN
     $reg_return = SEQ_SUB_GTS_NEGO_RETRY
+    _RET
   ENDIF
 
   // レポートを書く
@@ -931,8 +937,10 @@ sub_btl_recorder_call:
   _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
   IF $i_ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
     $reg_return = SEQ_GOODBYE
+    _RET
   ELSIF $i_ret == SCR_FIELD_COMM_EXIT_ERROR THEN
     $reg_return = SEQ_RETRY
+    _RET
   ENDIF
 
   // レポートを書く
