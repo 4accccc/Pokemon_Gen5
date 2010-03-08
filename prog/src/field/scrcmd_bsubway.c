@@ -22,6 +22,7 @@
 #include "savedata/save_tbl.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_SPEXIT_REQUEST
 #include "fieldmap.h"
+#include "field_player.h"
 
 #include "script.h"
 #include "script_local.h"
@@ -514,6 +515,26 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWTOOL_DOWN_WIFI_RANK:
     *ret_wk = BSUBWAY_SCRWORK_SetWifiRank(
             scoreData, gsys, BSWAY_SETMODE_dec );
+    break;
+  //ステージ数取得
+  case BSWTOOL_GET_STAGE_NO:
+    *ret_wk = BSUBWAY_SCOREDATA_GetStageNo( scoreData, param0 );
+    break;
+  //パートナーOBJコード取得
+  case BSWTOOL_GET_OBJCODE_PARTNER:
+    {
+      PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+      u32 sex = MyStatus_GetMySex( &player->mystatus );
+      
+      if( sex == PM_MALE ){
+        sex = PM_FEMALE;
+      }else{
+        sex = PM_MALE;
+      }
+      
+      *ret_wk = FIELD_PLAYER_GetMoveFormToOBJCode(
+          sex, PLAYER_MOVE_FORM_NORMAL );
+    }
     break;
   //----TOOL Wifi関連
   //Wifiアップロードフラグをセット

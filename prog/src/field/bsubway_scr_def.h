@@ -16,7 +16,7 @@
 //#define DEBUG_BSW_COMM_MULTI_BTL_SKIP //定義で通信マルチバトルをスキップ
 
 #ifdef DEBUG_ONLY_FOR_kagaya
-//#define DEBUG_BSW_CLEAR_1 //定義で1回戦闘のみでクリア
+#define DEBUG_BSW_CLEAR_1 //定義で1回戦闘のみでクリア
 //#define DEBUG_BSW_BTL_SKIP //定義で戦闘スキップ
 //#define DEBUG_BSW_NORMAL_CLEAR //定義で即ノーマルクリア
 #define DEBUG_BSW_FORCE_BTL_WIN //定義で強制勝ち状態
@@ -173,7 +173,9 @@
 #define BSWTOOL_GET_WIFI_RANK (29)
 #define BSWTOOL_UP_WIFI_RANK (30)
 #define BSWTOOL_DOWN_WIFI_RANK (31)
-#define BSWTOOL_END_NO (32)
+#define BSWTOOL_GET_STAGE_NO (32)
+#define BSWTOOL_GET_OBJCODE_PARTNER (33)
+#define BSWTOOL_END_NO (34)
 
 #define BSWTOOL_WIFI_START_NO (40)
 #define BSWTOOL_WIFI_SET_UPLOAD_FLAG (BSWTOOL_WIFI_START_NO+0)

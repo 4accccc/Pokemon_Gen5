@@ -55,22 +55,18 @@ INIT_EVENT_END
 sub_init_add_trainer:
 {
   DEFINE_LOCAL ver
+  DEFINE_LOCAL round
 
   //トレーナー抽選
   _BSUBWAY_TOOL( BSWSUB_CHOICE_BTL_PARTNER, BSW_NULL, BSW_NULL, BSW_NULL )
    
-  //ボス戦闘の場合は特殊コード
-  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-  
-  IF $SCWK_ANSWER == LEADER_SET_1ST THEN
+  //ボスステージか
+  _BSUBWAY_TOOL( BSWTOOL_GET_NOW_ROUND, BSW_NULL, BSW_NULL, round )
+  _CALL sub_common_check_boss_stage
+   
+  IF $SCWK_ANSWER == TRUE && $round == BSWAY_CLEAR_WINCNT THEN
     _GET_ROM_VERSION( ver )
-    IF $ver == VERSION_WHITE THEN
-      $OBJCHRWORK2 = TBOSS
-    ELSE
-      $OBJCHRWORK2 = TBOSSBL
-    ENDIF
-  ELSIF $SCWK_ANSWER == LEADER_SET_2ND THEN
-    _GET_ROM_VERSION( ver )
+    
     IF $ver == VERSION_WHITE THEN
       $OBJCHRWORK2 = TBOSS
     ELSE
@@ -93,22 +89,18 @@ _RET
 sub_init_add_trainer_multi:
 {
   DEFINE_LOCAL ver
-
+  DEFINE_LOCAL round
+  
   //トレーナー抽選
   _BSUBWAY_TOOL( BSWSUB_CHOICE_BTL_PARTNER, BSW_NULL, BSW_NULL, BSW_NULL )
-  
-  //ボス戦闘の場合は特殊コード
-  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-  
-  IF $SCWK_ANSWER == LEADER_SET_1ST THEN
+   
+  //ボスステージか
+  _BSUBWAY_TOOL( BSWTOOL_GET_NOW_ROUND, BSW_NULL, BSW_NULL, round )
+  _CALL sub_common_check_boss_stage
+   
+  IF $SCWK_ANSWER == TRUE && $round == BSWAY_CLEAR_WINCNT THEN
     _GET_ROM_VERSION( ver )
-    IF $ver == VERSION_WHITE THEN
-      $OBJCHRWORK2 = TBOSS
-    ELSE
-      $OBJCHRWORK2 = TBOSSBL
-    ENDIF
-  ELSIF $SCWK_ANSWER == LEADER_SET_2ND THEN
-    _GET_ROM_VERSION( ver )
+    
     IF $ver == VERSION_WHITE THEN
       $OBJCHRWORK2 = TBOSS
     ELSE
@@ -145,8 +137,8 @@ EVENT_START ev_train_entry_first
   IF $multi_flag == TRUE THEN //マルチか？
     _BSUBWAY_TOOL( BSWTOOL_GET_MINE_OBJ, BSW_NULL, BSW_NULL, OBJCHRWORK0 )
     _OBJ_ADD_EX( 4, 4, DIR_RIGHT, BSW_TRAIN_OBJID_JIKI, WKOBJCODE00, MV_DMY )
-    
-    $OBJCHRWORK1 = SUPPORT
+    //パートナー
+    _BSUBWAY_TOOL( BSWTOOL_GET_OBJCODE_PARTNER, BSW_NULL, BSW_NULL, OBJCHRWORK1 )
     _OBJ_ADD_EX( 4, 3, DIR_RIGHT, BSW_TRAIN_OBJID_PARTNER, WKOBJCODE01, MV_DMY )
   ELSE //その他
     _BSUBWAY_TOOL( BSWTOOL_GET_MINE_OBJ, BSW_NULL, BSW_NULL, OBJCHRWORK0 )
@@ -282,13 +274,12 @@ _ANIME_LABEL  anm_player_in_continue
 sub_anm_player_in_continue_multi:
 {
   _BSUBWAY_TOOL( BSWTOOL_GET_MINE_OBJ, BSW_NULL, BSW_NULL, OBJCHRWORK0 )
-  $OBJCHRWORK1 = SUPPORT
   
   _OBJ_ADD_EX( 0, 4, DIR_UP, BSW_TRAIN_OBJID_JIKI, WKOBJCODE00, MV_DMY )
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_player_in_continue_multi0 )
   _OBJ_ANIME_WAIT()
   
-  $OBJCHRWORK1 = SUPPORT
+  _BSUBWAY_TOOL( BSWTOOL_GET_OBJCODE_PARTNER, BSW_NULL, BSW_NULL, OBJCHRWORK1 )
   _OBJ_ADD_EX( 0, 4, DIR_UP, BSW_TRAIN_OBJID_PARTNER, WKOBJCODE01, MV_DMY )
   
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_player_in_continue_multi1 )
@@ -360,7 +351,7 @@ sub_train_battle:
   
   //対戦結果
   IF $win_lose == 0 THEN //負け
-    _CALL sub_retmap_lose_retire
+    _CALL sub_common_retmap_lose_retire
   ELSE //勝ち
     _CALL sub_train_battle_win
   ENDIF
@@ -394,44 +385,44 @@ sub_train_battle_win_clear:
 {
   DEFINE_LOCAL play_mode
   DEFINE_LOCAL multi_flag
-  
+  DEFINE_LOCAL b_clear
+
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  _BSUBWAY_TOOL( BSWTOOL_CHK_MODE_MULTI, play_mode, BSW_NULL, multi_flag )
+  
+  //ボスクリアフラグOFF
+  $b_clear = FALSE
+  
+  //ボスステージチェック
+  _CALL sub_common_check_boss_stage
+  
+  IF $SCWK_ANSWER == TRUE THEN
+    $b_clear = TRUE
+  ENDIF
+  
+  //ボスクリアフラグセット
+	_BSUBWAY_TOOL( BSWSUB_SET_PLAY_BOSS_CLEAR, b_clear, BSW_NULL, BSW_NULL )
+  
+  //クリアした状況を反映
+  _BSUBWAY_TOOL( BSWSUB_SET_CLEAR_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //退場アニメ
+  _BSUBWAY_TOOL( BSWTOOL_CHK_MODE_MULTI, play_mode, BSW_NULL, multi_flag )
+  
   IF $multi_flag == TRUE THEN //マルチか？
     _CALL sub_anm_train_battle_win_clear_multi
   ELSE //その他
     _CALL sub_anm_train_battle_win_clear
   ENDIF
   
-  //ボスクリアフラグOFF
-	_BSUBWAY_TOOL( BSWSUB_SET_PLAY_BOSS_CLEAR, FALSE, BSW_NULL, BSW_NULL )
-
-  //連勝数チェック
-  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-  
-  //連勝数によりボスクリアフラグをセット
-  IF $SCWK_ANSWER == LEADER_SET_1ST THEN
-	  _BSUBWAY_TOOL( BSWSUB_SET_PLAY_BOSS_CLEAR, TRUE, BSW_NULL, BSW_NULL )
-  ELSIF $SCWK_ANSWER == LEADER_SET_2ND THEN
-	  _BSUBWAY_TOOL( BSWSUB_SET_PLAY_BOSS_CLEAR, TRUE, BSW_NULL, BSW_NULL )
-  ENDIF
-  
-  //クリアした状況を反映
-  _BSUBWAY_TOOL( BSWSUB_SET_CLEAR_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
-  
+  //アニメを少し表示しながらフェードアウト
   _TIME_WAIT( 55 )
-
-  //マップフェードアウト
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
-
+  
   //OBJアニメ待ち
   _OBJ_ANIME_WAIT()
 
   //フラグセット
-  _CALL sub_set_obj_vanish_flag
   $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_GAME_CLEAR //クリア状態に
   
   //マップ遷移
@@ -586,8 +577,6 @@ sub_train_battle_win_next_menu:
       _MAP_FADE_BLACK_OUT()
       _MAP_FADE_END_CHECK()
       
-      //OBJバニッシュ
-      _CALL sub_set_obj_vanish_flag
       //シーン制御を継続に
       $WK_OTHER_BSUBWAY_TRAIN = BSWAY_SCENE_TRAIN_CONTINUE
       //マップチェンジ
@@ -627,7 +616,7 @@ sub_train_battle_win_next_menu:
       _SYSWIN_CLOSE()
       
       IF $SCWK_ANSWER == 0 THEN
-        _CALL sub_retmap_lose_retire //受付へ
+        _CALL sub_common_retmap_lose_retire //受付へ
         $loop = 0
       ENDIF
     ENDSWITCH
@@ -693,15 +682,13 @@ sub_train_battle_win_next_menu_comm_multi:
         _TIME_WAIT( 30 )
         _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_RETIRE_WAIT, BSW_NULL, BSW_NULL )
         _SYSWIN_CLOSE()
-        _CALL sub_retmap_lose_retire //受付へ
+        _CALL sub_common_retmap_lose_retire //受付へ
       ELSE //相手続ける
         //移動アニメ
         _CALL sub_anm_jiki_next_car_multi
         //フェードアウト
         _MAP_FADE_BLACK_OUT()
         _MAP_FADE_END_CHECK()
-        //OBJバニッシュ
-        _CALL sub_set_obj_vanish_flag
         //シーン制御を継続に
         $WK_OTHER_BSUBWAY_TRAIN = BSWAY_SCENE_TRAIN_CONTINUE
         //マップチェンジ
@@ -737,7 +724,7 @@ sub_train_battle_win_next_menu_comm_multi:
         _TIME_WAIT( 30 )
         _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_RETIRE_WAIT, BSW_NULL, BSW_NULL )
         _SYSWIN_CLOSE()
-        _CALL sub_retmap_lose_retire //受付へ
+        _CALL sub_common_retmap_lose_retire //受付へ
         $loop = 0
       ENDIF
     ENDIF
@@ -899,19 +886,9 @@ _RET
 //  共通処理
 //======================================================================
 //--------------------------------------------------------------
-//  OBJバニッシュフラグセット
-//--------------------------------------------------------------
-sub_set_obj_vanish_flag:
-{
-//  _FLAG_SET( FV_C04R0110_TRAINER )
-//  _FLAG_SET( FV_C04R0110_PLAYER )
-}
-_RET
-
-//--------------------------------------------------------------
 //  敗北、リタイア共通　受付戻り
 //--------------------------------------------------------------
-sub_retmap_lose_retire:
+sub_common_retmap_lose_retire:
 {
   DEFINE_LOCAL play_mode
   
@@ -923,7 +900,7 @@ sub_retmap_lose_retire:
   
   //通信マルチの際は終了同期
   IF $play_mode == BSWAY_MODE_COMM_MULTI || $play_mode == BSWAY_MODE_S_COMM_MULTI THEN
-	  _TIME_WAIT( 30 )
+    _TIME_WAIT( 30 )
     _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_EXIT_WAIT, BSW_NULL, BSW_NULL )
     
     //通信切断
@@ -935,11 +912,51 @@ sub_retmap_lose_retire:
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
   
-  //OBJバニッシュ
-  _CALL sub_set_obj_vanish_flag
-  
   //マップ遷移　受付へ戻る
   _CHG_COMMON_SCR SCRID_BSW_RETMAP_RECEIPT
+}
+_RET
+
+//--------------------------------------------------------------
+//  ボスステージかどうかチェック
+//  @retval SCWK_ANSWER TRUE=ボスステージ
+//--------------------------------------------------------------
+sub_common_check_boss_stage:
+{
+  DEFINE_LOCAL stage
+  DEFINE_LOCAL play_mode
+  DEFINE_LOCAL boss_stage
+  
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_TOOL( BSWTOOL_GET_STAGE_NO, play_mode, BSW_NULL, stage )
+  
+  //ノーマルは3(2)ステージ、スーパーは7(6)ステージ
+  $boss_stage = 255 //none
+  
+  SWITCH $play_mode
+  CASE BSWAY_MODE_SINGLE THEN
+    $boss_stage = 2
+  CASE BSWAY_MODE_DOUBLE THEN
+    $boss_stage = 2
+  CASE BSWAY_MODE_MULTI THEN
+    $boss_stage = 2
+  CASE BSWAY_MODE_COMM_MULTI THEN
+    $boss_stage = 2
+  CASE BSWAY_MODE_S_SINGLE THEN
+    $boss_stage = 6
+  CASE BSWAY_MODE_S_DOUBLE THEN
+    $boss_stage = 6
+  CASE BSWAY_MODE_S_MULTI THEN
+    $boss_stage = 6
+  CASE BSWAY_MODE_S_COMM_MULTI THEN
+    $boss_stage = 6
+  ENDSWITCH
+  
+  $SCWK_ANSWER = FALSE
+  
+  IF $stage == $boss_stage THEN
+	  $SCWK_ANSWER = TRUE
+  ENDIF
 }
 _RET
 

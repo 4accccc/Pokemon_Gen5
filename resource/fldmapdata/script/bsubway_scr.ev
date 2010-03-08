@@ -355,6 +355,12 @@ sub_receipt_challenge:
     _CALL sub_receipt_challenge_multi
   CASE BSWAY_MODE_WIFI THEN
     _CALL sub_receipt_challenge_wifi
+  CASE BSWAY_MODE_S_SINGLE THEN
+    _CALL sub_receipt_challenge_single_double
+  CASE BSWAY_MODE_S_DOUBLE THEN
+    _CALL sub_receipt_challenge_single_double
+  CASE BSWAY_MODE_S_MULTI THEN
+    _CALL sub_receipt_challenge_multi
   ENDSWITCH
 }
 _RET
@@ -1686,7 +1692,7 @@ sub_receipt_common_add_partner:
   _BSUBWAY_TOOL( BSWTOOL_CHK_EXIST_OBJ, objid, BSW_NULL, ret )
   
   IF $ret == FALSE THEN
-    $OBJCHRWORK0 = SUPPORT
+    _BSUBWAY_TOOL( BSWTOOL_GET_OBJCODE_PARTNER, BSW_NULL, BSW_NULL, OBJCHRWORK0 )
     _OBJ_ADD( objid )
   ENDIF
 }
