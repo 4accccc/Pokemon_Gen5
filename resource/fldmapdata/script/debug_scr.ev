@@ -279,7 +279,7 @@ ev_event_off:
 		$WK_SCENE_C09R0501 = 1
 		_FLAG_SET( FV_C09R0501_BOSS_01 )
 		_FLAG_SET( FV_C09R0501_CHAMPION_01 )
-		_MAP_CHANGE( ZONE_ID_C09R0501, 16, 18, DIR_UP )
+		_MAP_CHANGE( ZONE_ID_C09R0501, 16, 37, DIR_UP )
 
 	ELSIF $SCWK_ANSWER == 1 THEN
 		//T01の初回イベントを全部OFF
@@ -307,7 +307,10 @@ ev_event_off:
 		$WK_SCENE_N01R0101 = 2
 		//Ｎの城２Ｆのダークトリニティイベント無効
 		$WK_SCENE_N01R0201 = 1
-		_MAP_CHANGE( ZONE_ID_N01R0101, 20, 20, DIR_UP )
+		//Ｎの城・謁見の間イベント無効
+		$WK_SCENE_N01R0502 = 5
+		
+		_MAP_CHANGE( ZONE_ID_N01R0502, 20, 20, DIR_UP )
 
 	ELSIF $SCWK_ANSWER == 3 THEN
 		//ポケモンリーグ手前の初回誘導POSイベントを無効
