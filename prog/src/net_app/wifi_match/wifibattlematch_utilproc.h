@@ -45,3 +45,4 @@ typedef struct
 //FS_EXTERN_OVERLAY( wifibattlematch_core );  //core.h‚ÅŒÄ‚Î‚ê‚Ä‚¢‚é
 //ƒŠƒXƒgŒã‚Ìˆ—
 extern const GFL_PROC_DATA	WifiBattleMatch_ListAfter_ProcData;
+

@@ -305,6 +305,7 @@ extern u32 WIFIBATTLEMATCH_GDB_GetRecordID( const WIFIBATTLEMATCH_NET_WORK *cp_w
 //=====================================
 //お互いの情報を送りあう
 extern BOOL WIFIBATTLEMATCH_NET_StartEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, const void *cp_buff );
+//なぜ＊＊を渡すかというと、WIFIBATTLEMATCH_ENEMYDATAはフレキシブルな構造体なのでポインタを受け取り、外でMemCopyしてもらうためです。
 extern BOOL WIFIBATTLEMATCH_NET_WaitEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_ENEMYDATA **pp_data );
 //ポケパーテイを送りあう
 extern BOOL WIFIBATTLEMATCH_NET_SendPokeParty( WIFIBATTLEMATCH_NET_WORK *p_wk, const POKEPARTY *cp_party );

@@ -214,7 +214,7 @@ const GFL_PROC_DATA	WifiBattleMatch_ProcData =
 //-------------------------------------
 ///	サブプロセス移動データ
 //=====================================
-typedef enum
+enum
 {	
 	SUBPROCID_MAINMENU,
 	SUBPROCID_CORE,
@@ -226,7 +226,7 @@ typedef enum
   SUBPROCID_LOGOUT,
 
 	SUBPROCID_MAX
-} SUBPROC_ID;
+};
 static const WBM_SYS_SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
 {	
 	//SUBPROCID_MAINMENU,
@@ -544,7 +544,9 @@ static void *BC_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, 
 
   p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(BATTLE_CHAMPIONSHIP_CORE_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(BATTLE_CHAMPIONSHIP_CORE_PARAM) );
-  p_param->p_gamedata = p_wk->param.p_game_data;
+  p_param->p_gamedata     = p_wk->param.p_game_data;
+  p_param->p_player_data  = p_wk->p_player_data;
+  p_param->p_enemy_data   = p_wk->p_enemy_data;
 
   switch( WBM_SYS_SUBPROC_GetPreProcID( p_subproc ) )
   { 

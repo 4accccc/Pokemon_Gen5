@@ -19,7 +19,7 @@
 #include "pokeicon/pokeicon.h"
 #include "gamesystem/game_data.h"
 #include "system/net_err.h"
-#include "battle/btl_net.h"
+#include "battle/btl_net.h" //BTL_NET_SERVER_VERSION
 
 //	アーカイブ
 #include "arc_def.h"

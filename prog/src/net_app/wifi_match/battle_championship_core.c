@@ -482,12 +482,14 @@ static void SEQFUNC_LiveCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
       GFL_STD_MemClear( &param, sizeof(LIVEBATTLEMATCH_FLOW_PARAM ) );
       param.p_text      = p_wk->text;
       param.p_font      = p_wk->fontHandle;
-      param.p_msg       = p_wk->msgHandle;
       param.p_que       = p_wk->taskMenuQue;
+      param.p_msg       = p_wk->msgHandle;
       param.p_view      = p_wk->p_view;
       param.p_graphic   = p_wk->p_graphic;
       param.p_gamedata  = p_wk->p_param->p_gamedata;
       param.mode  = LIVEBATTLEMATCH_FLOW_MODE_START;
+      param.p_player_data = p_wk->p_param->p_player_data;
+      param.p_enemy_data  = p_wk->p_param->p_enemy_data;
 
       p_wk->p_flow  = LIVEBATTLEMATCH_FLOW_Init( &param, HEAPID_BATTLE_CHAMPIONSHIP );
     }

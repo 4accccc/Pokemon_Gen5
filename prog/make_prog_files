@@ -1586,11 +1586,12 @@ SRCS_OVERLAY_WIFIBATTLEMATCH_CORE = net_app/wifi_match/wifibattlematch_core.c \
 
 # バトル大会メインメニュー＋LIVEバトルマッチングフロー周り＋IRCネット部分
 # バトル大会メニュー
-#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = net_app/wifi_match/battle_championship_core.c \
         net_app/wifi_match/battle_championship_flow.c \
         net_app/wifi_match/livebattlematch_flow.c \
-        net_app/wifi_match/digitalcardcheck.c
+        net_app/wifi_match/digitalcardcheck.c \
+        net_app/wifi_match/livebattlematch_irc.c
 
 #バトルマッチ描画＋汎用モジュール部分
 #===> SRCS_OVERLAY_WIFIBATTLEMATCH_CORE

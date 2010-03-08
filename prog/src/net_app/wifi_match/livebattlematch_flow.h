@@ -55,6 +55,7 @@ typedef enum
 //=====================================
 typedef struct _LIVEBATTLEMATCH_FLOW_WORK LIVEBATTLEMATCH_FLOW_WORK;
 
+
 //-------------------------------------
 ///	引数
 //=====================================
@@ -68,6 +69,12 @@ typedef struct
   WIFIBATTLEMATCH_VIEW_RESOURCE *p_view;      //[in ]リソース共通モジュール
   WIFIBATTLEMATCH_GRAPHIC_WORK  *p_graphic;   //[in ]描画共通モジュール
   GAMEDATA                      *p_gamedata;  //[in ]ゲームデータ
+  BOOL                          is_rec;       //[in ]前回の対戦が録画してあるかどうか
+
+   //以下、[in ]常駐データ置き場
+  WIFIBATTLEMATCH_ENEMYDATA     *p_player_data;
+  WIFIBATTLEMATCH_ENEMYDATA     *p_enemy_data; 
+
 } LIVEBATTLEMATCH_FLOW_PARAM;
 
 //=============================================================================

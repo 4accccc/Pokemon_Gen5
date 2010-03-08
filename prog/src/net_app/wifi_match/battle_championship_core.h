@@ -11,6 +11,7 @@
 #pragma once
 //ライブラリ
 #include <gflib.h>
+#include "net_app/wifi_match/wifibattlematch_data.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -54,6 +55,11 @@ typedef struct
   GAMEDATA                      *p_gamedata;  //[in ]ゲームデータ
   BATTLE_CHAMPIONSHIP_CORE_MODE mode;         //[in ]モードどこから開始するか
   BATTLE_CHAMPIONSHIP_CORE_RET  ret;          //[out]戻り値どこへいくか
+
+  //以下、[in ]常駐データ
+  WIFIBATTLEMATCH_ENEMYDATA     *p_player_data;
+  WIFIBATTLEMATCH_ENEMYDATA     *p_enemy_data;
+
 } BATTLE_CHAMPIONSHIP_CORE_PARAM;
 
 

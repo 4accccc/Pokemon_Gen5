@@ -2,7 +2,12 @@
 /**
  *
  *	@file		wifibattlematch.h
- *	@brief	WIFIのバトルマッチ画面
+ *	@brief	バトルマッチ画面
+ *	        （以前はWIFIだけだったがライブ大会とバトルメニューも包括したため、名前があっていません。）
+ *	        ・ポケセンのWIFIカウンターからいくランダムマッチ
+ *	        ・タイトルからいくバトル大会メニュー
+ *	        ・バトル大会メニューからいくWIFI大会
+ *	        ・バトル大会メニューからいくライブ大会
  *	@author	Toru=Nagihashi
  *	@date		2009.11.02
  *
@@ -68,17 +73,17 @@ typedef enum
 //=============================================================================
 //-------------------------------------
 ///	PROCパラメータ
-//    下記は上位PROCで持ち続けられない状況があるので、
+//    パラメータを上位PROCで持ち続けられない状況があるので、
 //    その場合はis_auto_releaseをTRUEにして引数を渡すことで、
 //    内部で解放する
 //=====================================
 typedef struct 
 {
-  GAMEDATA                  *p_game_data; //[in ]ゲームデータ NULLの場合は内部で作成する
-  WIFIBATTLEMATCH_BTLRULE   btl_rule;     //[in ]バトルルール
-	WIFIBATTLEMATCH_MODE	    mode;         //[in ]起動モード
-  WIFIBATTLEMATCH_POKE      poke;         //[in ]選択用パーティ（手持ちorバトルボックスのはず）
-  BOOL                      is_auto_release;//[in]アドレスを内部解放するフラグ
+  GAMEDATA                  *p_game_data;   //[in ]ゲームデータ NULLの場合は内部で作成する（タイトルの場合ゲームデータがないため）
+  WIFIBATTLEMATCH_BTLRULE   btl_rule;       //[in ]バトルルール
+	WIFIBATTLEMATCH_MODE	    mode;           //[in ]起動モード
+  WIFIBATTLEMATCH_POKE      poke;           //[in ]選択用パーティ（手持ちorバトルボックスのはず）
+  BOOL                      is_auto_release;//[in ]このパラメータを内部解放するフラグ
 } WIFIBATTLEMATCH_PARAM;
 
 
