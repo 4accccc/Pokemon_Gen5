@@ -18,8 +18,21 @@
 _EVENT_DATA    ev_t01r0201_middleman1_01
 _EVENT_DATA    ev_t01r0201_middlewoman1_01
 _EVENT_DATA    ev_scene_t01r0201_support_01
+_EVENT_DATA    ev_init_t01r0201
 _EVENT_DATA_END
 
+
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_t01r0201
+
+	//初回訪問時のみ、イベント用にパパの位置を変更
+	IF $WK_SCENE_T01R0201 == 0 THEN
+		_OBJ_POS_CHANGE( T01R0201_MIDDLEMAN1_01, 8, 0, 4, DIR_LEFT )
+	ENDIF
+
+INIT_EVENT_END
 
 /************************************************************/
 /*					SCENE_CHANGE_LABEL						*/
@@ -27,15 +40,15 @@ _EVENT_DATA_END
 EVENT_START	ev_scene_t01r0201_support_01
 //初めてサポートの家に入ったとき、出発イベント
 
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	//カメラ操作
+	_CAMERA_MOVE( 9688,0,970752,425984,0,311296, 36 )	//一番最後の引数は移動にかかるフレーム数
+
 	//主人公：前へ歩く
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01 )
 	_OBJ_ANIME_WAIT()
-	
-	_CAMERA_START()		//カメラ操作開始
-	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
-	
-	//カメラ操作
-	_CAMERA_MOVE( 9688,0,970752,425984,0,233472,30 )	//一番最後の引数は移動にかかるフレーム数
+
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	_TIME_WAIT( 16 )
@@ -45,38 +58,40 @@ EVENT_START	ev_scene_t01r0201_support_01
 	_OBJ_ANIME_WAIT()
 
 	//あたしだって…
-	_BALLOONWIN_OBJMSG( msg_t01r0201_white_01 , T01R0201_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0201_white_01 , T01R0201_SUPPORT_01, POS_UL )
 	_BALLOONWIN_CLOSE()
 
-	//自機にカメラを戻す
-   	_CAMERA_RECV_MOVE( 30 )
+	_CAMERA_MOVE( 9688,0,970752,425984,0,425984, 16 )
 
 	//サポート：外に出ようとする
 	_OBJ_ANIME( T01R0201_SUPPORT_01, anm_heroine_goaway_01 )
 	_OBJ_ANIME_WAIT()
 
-    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	_CAMERA_BIND()		//カメラバインド
-	_CAMERA_END()		//カメラ操作終了
-
 	//あっ　～～くん！
-	_BALLOONWIN_OBJMSG( msg_t01r0201_white_02 , T01R0201_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0201_white_02 , T01R0201_SUPPORT_01, POS_UL )
 	_BALLOONWIN_CLOSE()
 
 	//サポート：退出
 	_OBJ_ANIME( T01R0201_SUPPORT_01, anm_heroine_goaway_02 )
 	_TIME_WAIT( 32 )
+
+	//自機にカメラを戻す
+   	_CAMERA_DEF_MOVE( 16 )
+
 	//主人公：見送る
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_02 )
 	_OBJ_ANIME_WAIT()
 
-	//サポート：消す（バニッシュフラグもたちます）
+	//サポート：消す
 	_OBJ_DEL( T01R0201_SUPPORT_01 )
 
 	//階段SE
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
 
+    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
 
 //================フラグ操作==================//
 
@@ -113,7 +128,7 @@ _ANIME_LABEL	anm_heroine_move_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_heroine_goaway_01
 	_ANIME_DATA	AC_WALK_D_8F,2
-//	_ANIME_DATA	AC_MARK_GYOE,1	//【仮】！マーク中に足が動いたままになるので外します
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -140,10 +155,18 @@ _ANIME_LABEL	anm_player_move_02
 EVENT_START   ev_t01r0201_middleman1_01
 	_TALK_OBJ_START()
 
-	//【仮】図鑑入手までこのメッセージ
-	_BALLOONWIN_TALKOBJ_MSG( msg_t01r0201_middleman1_02 )
+	//C04のイベント後ならメッセージ分岐
+	IF $WK_SCENE_C04 < 3 THEN
+		//イベント前
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0201_middleman1_02 )
+	ELSE
+		//イベント後
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0201_middleman1_03 )
+	ENDIF
+	
 	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+	_MSGWIN_CLOSE()
+	
 EVENT_END
 
 /************************************************************/
