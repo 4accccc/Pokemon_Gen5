@@ -196,12 +196,15 @@ sub_challenge_continue_comm_multi:
   
   //お友達の選択を待っています
   _SYSWIN_MSG( msg_c04r0111_19, WIN_DOWN )
+
+  //受信バッファクリア
+  _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //選択結果送信開始同期
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_MENU_SELECT, BSW_NULL, BSW_NULL )
   
   $LOCALWORK0 = BSWAY_COMM_HOME_SEL_NEXT
    
-  //受信バッファクリア
-  _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
   //選択結果送信
   _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_RETIRE_SELECT, LOCALWORK0, BSW_NULL )
   //選択結果受信
@@ -252,6 +255,9 @@ sub_challenge_continue_comm_multi:
     //戻り場所を受付に
     _BSUBWAY_TOOL( BSWSUB_SET_PLAY_MODE_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
   
+    //受信バッファクリア
+    _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
+
     //トレーナーセット開始
     _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_BTL_TRAINER_SET, BSW_NULL, BSW_NULL )
   
@@ -261,8 +267,6 @@ sub_challenge_continue_comm_multi:
     IF $ret == 0 THEN //親機なら対戦トレーナーセット
       //トレーナー抽選
       _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET, BSW_NULL, BSW_NULL, BSW_NULL )
-      //受信バッファクリア
-      _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
       //子機に選んだデータを送信
       _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_TR_DATA, BSW_NULL, ret )
     ELSE //子機は親からデータを受け取る
@@ -317,12 +321,15 @@ sub_mapchg_receipt:
     IF $comm_flag == TRUE THEN
       //お友達の選択を待っています
       _SYSWIN_MSG( msg_c04r0111_19, WIN_DOWN )
+      
+      //受信バッファクリア
+      _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
+      
+      //選択開始同期
       _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_MENU_SELECT, BSW_NULL, BSW_NULL )
       
       $LOCALWORK0 = BSWAY_COMM_HOME_SEL_END
       
-      //受信バッファクリア
-      _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
       //選択結果送信
       _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_RETIRE_SELECT, LOCALWORK0, BSW_NULL )
       //選択結果受信

@@ -106,7 +106,7 @@ struct _TAG_BSUBWAY_SCRWORK
   COMM_ENTRY_BEACON commBeaconData; //ビーコンデータ
   COMM_ENTRY_MENU_PTR pCommEntryMenu; //通信マルチ参加メニュー
   u16 *pCommEntryResult; //通信マルチ参加メニュー結果格納先
-  u8  comm_recieve_count; //受信カウント
+  u8  comm_receive_count; //受信カウント
   u8  comm_mode; //通信モード
   u8  first_btl_flag;    //初戦をおこなったかフラグ
   u8  comm_timing_no; //通信タイミング番号

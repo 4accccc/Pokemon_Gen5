@@ -732,6 +732,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //受信バッファクリア
   case BSWSUB_RECV_BUF_CLEAR:
+    bsw_scr->comm_receive_count = 0; //受信カウントクリア
     MI_CpuClear8( bsw_scr->recv_buf, BSWAY_SIO_BUF_LEN );
     break;
   //トレーナー対戦前メッセージ表示

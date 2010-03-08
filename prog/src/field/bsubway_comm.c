@@ -320,7 +320,7 @@ u16 BSUBWAY_SCRWORK_CommReceivePlayerData(
  * @retval u16
  */
 //--------------------------------------------------------------
-u16 BSUBWAY_SCRWORK_CommReciveTrainerData(
+u16 BSUBWAY_SCRWORK_CommReceiveTrainerData(
     BSUBWAY_SCRWORK *bsw_scr, const u16* recv_buf )
 {
   if( GFL_NET_SystemGetCurrentID() == GFL_NET_NO_PARENTMACHINE ){
@@ -353,7 +353,7 @@ u16 BSUBWAY_SCRWORK_CommReciveTrainerData(
  * @retval  1  リタイアする
  */
 //--------------------------------------------------------------
-u16 BSUBWAY_SCRWORK_CommReciveRetireSelect(
+u16 BSUBWAY_SCRWORK_CommReceiveRetireSelect(
     BSUBWAY_SCRWORK *bsw_scr, const u16 *recv_buf )
 {
   OS_Printf( "sio multi retire = %d,%d\n",
@@ -508,7 +508,7 @@ BOOL BSUBWAY_SCRWORK_CommRecieveData( BSUBWAY_SCRWORK *bsw_scr, u16 *ret_buf )
   
   //データ受信待ち
   switch( bsw_scr->comm_mode ){
-  case BSWAY_COMM_TR_DATA:
+  case BSWAY_COMM_TR_DATA: //トレーナーデータは親だけ送信、子だけ受信
     check_num = 1;
     break;
   default:
@@ -516,13 +516,13 @@ BOOL BSUBWAY_SCRWORK_CommRecieveData( BSUBWAY_SCRWORK *bsw_scr, u16 *ret_buf )
     break;
   }
   
-  if( bsw_scr->comm_recieve_count == check_num ){
+  if( bsw_scr->comm_receive_count == check_num ){
     KAGAYA_Printf(
         "BSUBWAY データ受信完了 comm_mode = %d, recieve_count = %d\n",
         bsw_scr->comm_mode,
-        bsw_scr->comm_recieve_count );
+        bsw_scr->comm_receive_count );
 
-    bsw_scr->comm_recieve_count = 0;
+    bsw_scr->comm_receive_count = 0;
     
 
     if( ret_buf != NULL ){
@@ -708,10 +708,10 @@ static void commCmd_RecvBufPlayerData(
   
   ret = 0;
   num = 0;
-  bsw_scr->comm_recieve_count++;
+  bsw_scr->comm_receive_count++;
   
-  OS_Printf( "bsw_scr->comm_recieve_count = %d\n",
-      bsw_scr->comm_recieve_count );
+  OS_Printf( "bsw_scr->comm_receive_count = %d\n",
+      bsw_scr->comm_receive_count );
 
   //自分のデータは受け取らない
   if( GFL_NET_SystemGetCurrentID() == netID ){
@@ -765,10 +765,10 @@ static void commCmd_FrWiFiCounterTowerRecvBufTrainerData(
   OS_Printf( "自分id = %d\n", GFL_NET_SystemGetCurrentID() );
   
   num = 0;
-  bsw_scr->comm_recieve_count++;
+  bsw_scr->comm_receive_count++;
 
-  OS_Printf( "bsw_scr->comm_recieve_count = %d\n",
-      bsw_scr->comm_recieve_count );
+  OS_Printf( "bsw_scr->comm_receive_count = %d\n",
+      bsw_scr->comm_receive_count );
   
   //自分のデータは受け取らない
   if( GFL_NET_SystemGetCurrentID() == netID ){
@@ -820,10 +820,10 @@ static void commCmd_FrWiFiCounterTowerRecvBufRetireSelect(
   
   num = 0;
   bsw_scr->comm_check_work = 0;
-  bsw_scr->comm_recieve_count++;
+  bsw_scr->comm_receive_count++;
 
-  OS_Printf( "bsw_scr->comm_recieve_count = %d\n",
-      bsw_scr->comm_recieve_count );
+  OS_Printf( "bsw_scr->comm_receive_count = %d\n",
+      bsw_scr->comm_receive_count );
 
   //自分のデータは受け取らない
   if( GFL_NET_SystemGetCurrentID() == netID ){
@@ -861,10 +861,10 @@ static void commCmd_FrRecvMyStatusData(
   OS_Printf( "自分id = %d\n", GFL_NET_SystemGetCurrentID() );
   
   num = 0;
-  bsw_scr->comm_recieve_count++;
+  bsw_scr->comm_receive_count++;
 
-  OS_Printf( "bsw_scr->comm_recieve_count = %d\n",
-      bsw_scr->comm_recieve_count );
+  OS_Printf( "bsw_scr->comm_receive_count = %d\n",
+      bsw_scr->comm_receive_count );
   
   //自分のデータは受け取らない
   if( GFL_NET_SystemGetCurrentID() == netID ){
