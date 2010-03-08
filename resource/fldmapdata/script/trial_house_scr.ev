@@ -228,8 +228,6 @@ charange:
     _RET
   ENDIF
 
-  $SCWK_ANSWER = TRUE   //@todo
-/**
   //「でははじめるよ」
   _BALLOONWIN_OBJMSG_POS(msg_trialhouse_013, SCWK_TARGET_OBJID, POS_DL )
   _BALLOONWIN_CLOSE()
@@ -255,7 +253,6 @@ charange:
   //受付係もどる
   _OBJ_ANIME( C04R0901_RECEPTION_01, anm_recep_close )
   _OBJ_ANIME_WAIT()
-*/  
 
   IF $SCWK_ANSWER == TRUE THEN
    DEFINE_LOCAL result_rank
@@ -551,5 +548,56 @@ _ANIME_LABEL	anm_recep_center2
 //               ランキング掲示板
 //----------------------------------------------------------------------
 EVENT_START ev_tri_house_rank_disp
+  DEFINE_LOCAL dl_flg
+  DEFINE_LOCAL app_call
+  DEFINE_LOCAL state
+  //ランキングセーブデータの状態を取得
+  $state = 0 //@todo
+
+  //アプリコールフラグ初期化
+  $app_call = FALSE
+  IF $state == 0 THEN   //データなし
+    //「データないよ」
+    _SYSWIN_MSG_ALLPUT_DOWN( msg_trialhouse_032 )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+  ELSIF $state == 1 THEN   //ＲＯＭデータのみ
+    $app_call = TRUE
+    $dl_flg = FALSE
+  ELSIF $state == 2 THEN   //ダウンロードのみ
+    $app_call = TRUE
+    $dl_flg = TRUE
+  ELSE                //両方あり
+    //「どっちみる？」
+    _SYSWIN_MSG_ALLPUT_DOWN( msg_trialhouse_033 )
+    //選択しだす
+    _BMPMENU_INIT_EX( 1,1,0,1,SCWK_ANSWER )
+    _BMPMENU_MAKE_LIST( msg_trialhouse_str9, 0 )    //ROM
+    _BMPMENU_MAKE_LIST( msg_trialhouse_str10, 1 )    //ダウンロード
+    _BMPMENU_MAKE_LIST( msg_trialhouse_str3, 2 )    //やめる
+    _BMPMENU_START()
+    _SYSWIN_CLOSE()
+     SWITCH $SCWK_ANSWER
+     CASE 0 THEN   //ＲＯＭ
+      $app_call = TRUE
+      $dl_flg = FALSE
+     CASE 1 THEN  //ダウンロード
+      $app_call = TRUE
+      $dl_flg = TRUE
+     ENDSWITCH
+  ENDIF
+
+  IF $app_call == TRUE THEN
+  //評価アプリ起動
+  {
+    _MAP_FADE_BLACK_OUT()
+    _MAP_FADE_END_CHECK()
+    _FIELD_CLOSE()
+    _TH_CALL_RANK_APP(dl_flg)
+    _FIELD_OPEN()
+    _MAP_FADE_BLACK_IN()
+    _MAP_FADE_END_CHECK()
+  }
+  ENDIF
 EVENT_END
 
