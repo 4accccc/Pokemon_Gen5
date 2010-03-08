@@ -79,6 +79,9 @@ u32 TT_TrainerDataParaGet( TrainerID tr_id, int id )
   case ID_TD_hp_recover_flag: //戦闘後回復するか？
     ret = td.hp_recover_flag;
 		break;
+  case ID_TD_gold:            //おこづかい係数
+    ret = td.gold;
+    break;
   case ID_TD_gift_item:       //贈呈するアイテム
     ret = td.gift_item;
 		break;
