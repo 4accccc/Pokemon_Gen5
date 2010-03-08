@@ -537,10 +537,6 @@ static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* ioEfp, const WEATHER_NO weather
   case TOKUSYU_HUKUGAN:
     ioEfp->spa_item_rate_up = TRUE;
     return;
-  ///<ŽèŽ‚¿‚Æ“¯‚¶«Ši(ƒVƒ“ƒNƒ‘¼)
-  case TOKUSYU_SINKURO:
-    ioEfp->spa_chr_fix = TRUE;
-    return;
   }
 
   //”­“®—¦2/3
@@ -572,6 +568,10 @@ static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* ioEfp, const WEATHER_NO weather
   case TOKUSYU_IKAKU:
   case TOKUSYU_SURUDOIME:
     ioEfp->spa_low_lv_rm = TRUE;
+    return;
+  ///<ŽèŽ‚¿‚Æ“¯‚¶«Ši(ƒVƒ“ƒNƒ‘¼)
+  case TOKUSYU_SINKURO:
+    ioEfp->spa_chr_fix = TRUE;
     return;
   }
 }
