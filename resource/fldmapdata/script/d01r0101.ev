@@ -42,14 +42,11 @@ INIT_EVENT_START	ev_init_d01r0101
 	
 
 	//夢ポケモンイベントの値によってサポートの初期位置を変更する
-	IF $WK_SCENE_D01R0101_POKE == 1 THEN
+	IF $WK_SCENE_D01R0101_POKE == 2 THEN
 		_OBJ_POS_CHANGE( D01R0101_SUPPORT, 23, 0, 22, DIR_DOWN )
 	
-	ELSIF $WK_SCENE_D01R0101_POKE == 2 THEN
-		_OBJ_POS_CHANGE( D01R0101_SUPPORT, 24, 0, 22, DIR_RIGHT )
-	
 	ELSIF $WK_SCENE_D01R0101_POKE == 3 THEN
-		_OBJ_POS_CHANGE( D01R0101_SUPPORT, 27, 0, 15, DIR_UP )
+		_OBJ_POS_CHANGE( D01R0101_SUPPORT, 24, 0, 22, DIR_RIGHT )
 	
 	ELSIF $WK_SCENE_D01R0101_POKE == 4 THEN
 		_OBJ_POS_CHANGE( D01R0101_SUPPORT, 27, 0, 12, DIR_DOWN )
@@ -69,11 +66,6 @@ _TALK_OBJ_START()
 
 //状態により会話を分岐
 	IF $WK_SCENE_D01R0101 == 0 THEN
-		
-		//初回会話時にC01R0501のライバルと話したかチェックを行う
-		IF FLAG_ON( FE_C01R0501_RIVALTALK ) THEN
-		
-		ENDIF
 		
 		//最初に選択した三匹で台詞内にセットする名前を変える
 		IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
@@ -311,7 +303,7 @@ EVENT_START   ev_pos_d01r0101_support_01
 	//======================================//
 	
 	//ポケモンの鳴き声に気づくPOS起動
-	$WK_SCENE_D01R0101_POKE = 1
+	$WK_SCENE_D01R0101_POKE = 2
 	
 	//D01R0101夢ポケモンイベントOBJ表示
 	_FLAG_RESET( FV_D01R0101_POKE_01 )
@@ -332,15 +324,15 @@ EVENT_START   ev_d01r0101_support_02
 	//状況ごとに話すことを変える
 
 	//イベント進行前
-	IF $WK_SCENE_D01R0101_POKE == 1 THEN
+	IF $WK_SCENE_D01R0101_POKE == 2 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_02)
 
 	//物音に気づいた後
-	ELSIF $WK_SCENE_D01R0101_POKE == 2 THEN
+	ELSIF $WK_SCENE_D01R0101_POKE == 3 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_03)
 
 	//イベント終了時
-	ELSIF $WK_SCENE_D01R0101_POKE == 3 THEN
+	ELSIF $WK_SCENE_D01R0101_POKE == 4 THEN
 		//プレイヤーネームを格納
 		_PLAYER_NAME(0)
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_12)
@@ -396,7 +388,7 @@ EVENT_START   ev_pos_d01r0101_support_03
 	//======================================//
 	
 	//ポケモンの姿を見るPOS起動
-	$WK_SCENE_D01R0101_POKE = 2
+	$WK_SCENE_D01R0101_POKE = 3
 	
 	//======================================//
 
@@ -677,7 +669,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	//======================================//
 	
 	//夢イベント終了フラグ
-	$WK_SCENE_D01R0101_POKE = 3
+	$WK_SCENE_D01R0101_POKE = 4
 	
 	//夢ポケモン非表示
 	_FLAG_SET(FV_D01R0101_POKE_01)
@@ -798,6 +790,7 @@ _ANIME_LABEL	anm_d01r0101_hakai_to_down
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_hakaim_kick
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -849,7 +842,7 @@ _ANIME_LABEL	anm_d01r0101_support_to_item
 //	R01　夢イベント用：マコモ登場
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_inventor_coming
-	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -857,7 +850,7 @@ _ANIME_LABEL	anm_d01r0101_inventor_coming
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_inventor_to_support
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA AC_STAY_JUMP_U_8F,2
 	_ANIME_DATA	ACMD_END,0

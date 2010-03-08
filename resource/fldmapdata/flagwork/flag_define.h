@@ -206,7 +206,7 @@
 #define FE_C01R0501_QUIZ                   190 /* 0x00be トレーナーズスクール：クイズのごほうび入手フラグ */
 #define FE_C03R0302_ITEM                   191 /* 0x00bf C0３ヒウンシティ：バトルカンパニーアイテム入手フラグ */
 #define FE_C01R0501_RIVALBATTLE            192 /* 0x00c0 C01トレーナーズスクールのライバルと戦闘した */
-		/* not used   193(0x00c1) */
+#define FE_C05R0701_WAZALADY               193 /* 0x00c1 C05ホドモエシティ：日替わりわざ見せお嬢様初回会話フラグ */
 		/* not used   194(0x00c2) */
 		/* not used   195(0x00c3) */
 		/* not used   196(0x00c4) */
