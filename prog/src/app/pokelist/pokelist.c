@@ -142,7 +142,7 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       {
         u8 i,p;
         //ƒŒƒMƒ…ƒŒ[ƒVƒ‡ƒ“ì¬
-        plData->reg = (void*)PokeRegulation_LoadDataAlloc( REG_LV50_SINGLE , HEAPID_POKELIST );
+        plData->reg = (void*)PokeRegulation_LoadDataAlloc( REG_RND_SINGLE , HEAPID_POKELIST );
         for( i=0;i<6;i++ )
         {
           plData->in_num[i] = 0;

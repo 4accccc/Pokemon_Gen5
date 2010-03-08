@@ -3833,6 +3833,7 @@ void PLIST_ForceExit_Timeup( PLIST_WORK *work )
       REGULATION *reg = (REGULATION*)work->plData->reg;
       
       OS_TPrintf("AutoSelect Start!!\n");
+      OS_TPrintf("Min[%d]Max[%d]\n",reg->NUM_LO,reg->NUM_HI);
       while( isFinish == FALSE )
       {
         num = 0;

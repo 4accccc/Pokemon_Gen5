@@ -8,6 +8,7 @@
   .include  "scr_seq_def.h"
   .include  "msg_pdw_scr.h"
   .include  "pdw_scr_local.h"
+  .include  "pdw_scr_def.h"
 
 
 //--------------------------------------------------------------
@@ -18,6 +19,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA ev_pdw_furniture_menu
+_EVENT_DATA ev_pdw_furniture_select_routine
 _EVENT_DATA_END
 
 
@@ -52,7 +54,8 @@ EVENT_START ev_pdw_furniture_menu
         _AB_KEYWAIT ()
         _BALLOONWIN_CLOSE()
       ELSE
-        _CALL furniture_select_routine
+        _CHG_COMMON_SCR SCRID_PDW_FURNITURE_SELECT_ROUTINE
+        //_CALL furniture_select_routine
       ENDIF
     ENDIF
   ENDIF
@@ -62,7 +65,7 @@ EVENT_END
 /**************************************************************/
 /*PDW：家具メニューコア部分*/
 /**************************************************************/
-furniture_select_routine:
+ev_pdw_furniture_select_routine:
 
   DEFINE_LOCAL selectNo
     
@@ -111,5 +114,7 @@ furniture_select_routine:
   _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_07 )
   _AB_KEYWAIT ()
   _BALLOONWIN_CLOSE()
-    
-_RET
+
+  _CHG_LOCAL_SCR                // ローカルスクリプトに切り替え
+
+_END 
