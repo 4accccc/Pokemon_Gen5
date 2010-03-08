@@ -61,7 +61,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 #ifdef PM_DEBUG
 
 
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#if defined(DEBUG_ONLY_FOR_toru_nagihashi)||defined(DEBUG_ONLY_FOR_shimoyamada)
 #define GPF_FLAG_ON             //GPFÉtÉâÉOÇã≠êßONÇ…Ç∑ÇÈ
 #endif
 

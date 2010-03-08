@@ -58,7 +58,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 #ifdef PM_DEBUG
 #define DEBUGWIN_USE
 
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#if defined(DEBUG_ONLY_FOR_toru_nagihashi)||defined(DEBUG_ONLY_FOR_shimoyamada)
 #define DEBUG_GPF_PASS
 #endif
 
