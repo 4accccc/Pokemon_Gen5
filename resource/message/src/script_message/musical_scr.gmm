@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T22:35:35"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-06T21:59:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1723" top="259" right="2223" bottom="762" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="67" right="1280" bottom="465" visible="no"/>
-		<band id="0" index="1" style="0000" width="492"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="492"/>
-		<band id="4" index="0" style="0000" width="591"/>
+		<band id="3" index="4" style="0000" width="370"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -717,9 +717,281 @@ msg_musical_recept_06を
 赤外線通信orワイヤレス通信が成功して終了した場合
 アプリへ移行</comment>
 		<language name="JPN" width="256">おまたせいたしました
-それでは　こちらへ　どうぞ！▼</language>
+それでは　ひかえしつへ　どうぞ！▼</language>
 		<language name="JPN_KANJI" width="256">お待たせいたしました
-それでは　こちらへ　どうぞ！▼</language>
+それでは　控え室へ　どうぞ！▼</language>
+	</row>
+
+	<row id="msg_musical_fitting_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ミュージカル試着室専用受付メッセージ
+参加確認・ポケモン選択後</comment>
+		<language name="JPN">ポケモンミュージカルへ　ようこそ！▼
+こちらは　ドレスアップのみを
+おこなう　しちゃくしつに　なります▽
+ドレスアップ　されますか？▼</language>
+		<language name="JPN_KANJI">ポケモンミュージカルへ　ようこそ！▼
+こちらは　ドレスアップのみを
+行う　試着室に　なります▽
+ドレスアップ　されますか？▼</language>
+	</row>
+
+	<row id="msg_musical_fitting_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ミュージカル試着室専用受付メッセージ</comment>
+		<language name="JPN">それでは　しちゃくしつへ　どうぞ！▼</language>
+		<language name="JPN_KANJI">それでは　試着室へ　どうぞ！▼</language>
+	</row>
+
+	<row id="msg_musical_info_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>選択肢表示中のメッセージウインドウの内容
+このメッセージの表示後、選択肢をシステムウインドウで
+表示します。
+順番に表示しますが、表示後は共存しています。
+選択肢決定後は、このメッセージを表示している
+メッセージウインドウを用いて説明の本文を表示します。</comment>
+		<language name="JPN">どの　せつめいを　ききますか？</language>
+		<language name="JPN_KANJI">どの　せつめいを　ききますか？</language>
+	</row>
+
+	<row id="msg_musical_info_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>選択肢
+選択するとmsg_musical_info_03</comment>
+		<language name="JPN">ミュージカルとは</language>
+		<language name="JPN_KANJI">ミュージカルとは</language>
+	</row>
+
+	<row id="msg_musical_info_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ミュージカルの概要説明
+メッセージ終了後、選択肢へ戻る</comment>
+		<language name="JPN">ミュージカル　とは
+グッズで　きかざった　ポケモンが▽
+ステージに　あがって▼
+えんもくに　あわせた　えんぎを
+おこなう　ようすを　たのしむ▼
+いっぱんさんかがたの
+エンターテイメントです！▼
+トレーナーの　みなさんは
+ぜひとも　おおくの　ひとに▼
+ごじぶんの　ポケモンの　みりょくを
+アピールして　あげてください▼
+ミュージカルに　おとずれる
+おきゃくさんは▼
+あなたの　コーディネートと
+きかざった　ポケモンの▽
+えんぎを　たのしみにしています！</language>
+		<language name="JPN_KANJI">ミュージカル　とは
+グッズで　着飾った　ポケモンが▽
+ステージに　あがって▼
+演目に　あわせた　演技を
+行う　様子を　楽しむ▼
+一般参加型の
+エンターテイメントです！▼
+トレーナーの　みなさんは
+ぜひとも　多くの　人に▼
+ご自分の　ポケモンの　魅力を
+アピールして　あげてください▼
+ミュージカルに　訪れる
+お客さんは▼
+あなたの　コーディネートと
+着飾った　ポケモンの▽
+演技を　楽しみにしています！</language>
+	</row>
+
+	<row id="msg_musical_info_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>選択肢
+選択するとmsg_musical_info_05</comment>
+		<language name="JPN">さんかについて</language>
+		<language name="JPN_KANJI">さんかについて</language>
+	</row>
+
+	<row id="msg_musical_info_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ミュージカルの参加についての説明
+メッセージ終了後、選択肢へ戻る</comment>
+		<language name="JPN">ミュージカルには
+エントランスの　３つの　うけつけから▽
+さんかすることが　できます▼
+むかって　まんなかが　おひとりで
+さんかする　ときの　うけつけです▼
+おひとりで　さんかした　ばあいは
+いっぱんの　トレーナーの　かたと▽
+さんかすることに　なります▼
+むかって　ひだりがわが　おともだちと
+さんかする　ときの　うけつけです▼
+おともだちと　いっしょに
+さんかする　ばあいは▼
+リーダーとなった　ひとが
+さんかする　えんもくを　えらびます▼
+むかって　みぎがわは
+ドレスアップ　のみを▽
+おこなう　ことができる　うけつけです</language>
+		<language name="JPN_KANJI">ミュージカルには
+エントランスの　３つの　受付から▽
+参加することが　できます▼
+向かって　真ん中が　おひとりで
+参加する　ときの　受付です▼
+おひとりで　参加した　場合は
+一般の　トレーナーの　方と▽
+参加することに　なります▼
+向かって　左側が　お友だちと
+参加する　ときの　受付です▼
+お友だちと　一緒に
+参加する　場合は▼
+リーダーとなった　人が
+参加する　演目を　えらびます▼
+向かって　右側は
+ドレスアップ　のみを▽
+行う　ことができる　受付です</language>
+	</row>
+
+	<row id="msg_musical_info_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>選択肢
+選択するとmsg_musical_info_07</comment>
+		<language name="JPN">さんかポケモン</language>
+		<language name="JPN_KANJI">参加ポケモン</language>
+	</row>
+
+	<row id="msg_musical_info_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ミュージカルのドレスアップ部分の説明
+メッセージ終了後、選択肢へ戻る</comment>
+		<language name="JPN">ミュージカルには　えんぎが　とくいで
+さんかが　できる　ポケモンと▼
+えんぎが　にがてで　さんかを
+いやがる　ポケモンが　います▼
+てもちの　ポケモンが　ミュージカルに
+さんかかのうか　どうかは▼
+さんかうけつけの　ときに
+かくにんして　ください</language>
+		<language name="JPN_KANJI">ミュージカルには　演技が　得意で
+参加が　できる　ポケモンと▼
+演技が　苦手で　参加を
+いやがる　ポケモンが　います▼
+手持ちの　ポケモンが　ミュージカルに
+参加可能か　どうかは▼
+参加受付の　ときに
+確認して　ください</language>
+	</row>
+
+	<row id="msg_musical_info_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>選択肢
+選択するとmsg_musical_info_09</comment>
+		<language name="JPN">ドレスアップ</language>
+		<language name="JPN_KANJI">ドレスアップ</language>
+	</row>
+
+	<row id="msg_musical_info_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ミュージカルのドレスアップ部分の説明
+メッセージ終了後、選択肢へ戻る</comment>
+		<language name="JPN">ドレスアップ　とは
+グッズケースに　あつめた　グッズを▼
+えんもくに　さんかする　ポケモンに
+きかざって　あげる　ことです▼
+グッズには　クール　キュートや
+エレガント　ユニーク　という▽
+ことなった　イメージが　あります▼
+さんかする　えんもくの　イメージに
+あわせて　グッズを　きかざると▼
+おきゃくさんの　ちゅうもくを
+あつめることも　できますよ▼
+また　あえて　イメージに
+あわない　グッズも　きかざることで▼
+それが　ワンポイントと　なって
+きになる　ということも▽
+あるようです▼
+いろいろ　ためしてみては
+いかがでしょうか▼</language>
+		<language name="JPN_KANJI">ドレスアップ　とは
+グッズケースに　あつめた　グッズを▼
+演目に　参加する　ポケモンに
+着飾って　あげる　ことです▼
+グッズには　クール　キュート
+エレガント　ユニーク　という▽
+異なった　イメージが　あります▼
+参加する　演目の　イメージに
+あわせて　グッズを　着飾ると▼
+お客さんの　注目を
+集めることも　できますよ▼
+また　あえて　イメージに
+あわない　グッズも　着飾ることで▼
+それが　ワンポイントと　なって
+気になる　ということも▽
+あるようです▼
+いろいろ　試してみては
+いかがでしょうか▼</language>
+	</row>
+
+	<row id="msg_musical_info_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>選択肢
+選択するとmsg_musical_info_11</comment>
+		<language name="JPN">えんもく</language>
+		<language name="JPN_KANJI">えんもく</language>
+	</row>
+
+	<row id="msg_musical_info_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ミュージカルの演目部分の説明
+メッセージ終了後、選択肢へ戻る</comment>
+		<language name="JPN">えんもく　とは
+ドレスアップした▽
+みなさんの　ポケモンが▼
+ぶたいの　うえで　おこなう　えんぎの
+テーマとなる　おんがくの　ことです▼
+きほんてきに　えんもくちゅうは
+トレーナーの　みなさんが▽
+ポケモンに　めいれいを　あたえる▽
+ひつようは　ございませんが▼
+ごじぶんの　ポケモンに
+グッズを　つかった　アピールを▽
+させることが　できます▼
+ドレスアップの　いしょうしだいで
+おきゃくさんの　はんのうや▽
+アピールが　かわることも▽
+ありますので　おためしください！▼</language>
+		<language name="JPN_KANJI">演目　とは
+ドレスアップした▽
+みなさんの　ポケモンが▼
+舞台の　上で　行う　演技の
+テーマとなる　音楽の　ことです▼
+基本的に　演目中は
+トレーナーの　みなさんが▽
+ポケモンに　命令を　あたえる▽
+必要は　ございませんが▼
+ご自分の　ポケモンに
+グッズを　使った　アピールを▽
+させることが　できます▼
+ドレスアップの　衣装次第で
+お客さんの　反応や▽
+アピールが　変わることも▽
+ありますので　お試しください！▼</language>
+	</row>
+
+	<row id="msg_musical_info_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>選択肢
+選択するとmsg_musical_info_13</comment>
+		<language name="JPN">グッズ</language>
+		<language name="JPN_KANJI">グッズ</language>
+	</row>
+
+	<row id="msg_musical_info_13" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>グッズ取得に関するヒント＋ミュージカル攻略ヒント
+メッセージ終了後、選択肢へ戻る</comment>
+		<language name="JPN">ミュージカルを　たのしむ　ためには
+より　おおくの　グッズを▽
+あつめましょう！▼
+えんもくにあう　ドレスアップや
+ぶたいの　うえで　うまく　アピール▽
+することが　できれば▼
+ミュージカルに　おとずれた
+おきゃくさんが▼
+ファンに　なってくれて　グッズを
+くれるかも　しれませんよ！</language>
+		<language name="JPN_KANJI">ミュージカルを　楽しむ　ためには
+より　多くの　グッズを▽
+集めましょう！▼
+演目にあう　ドレスアップや
+舞台の　上で　上手く　アピール▽
+することが　できれば▼
+ミュージカルに　訪れた
+お客さんが▼
+ファンに　なってくれて　グッズを
+くれるかも　しれませんよ！</language>
 	</row>
 
 	<flowchart-group-list>
