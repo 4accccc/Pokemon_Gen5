@@ -301,7 +301,7 @@ MICResult SND_MIC_ManualSampling(MICSamplingType type ,void* heap,MICCallback ca
  * @retval	"それ以外				何らかの原因で失敗"
  */
 //--------------------------------------------------------------
-MICResult SND_PERAP_VoiceRecStart( void )
+MICResult SND_PERAP_VoiceRecStart( void * cbFunc, void * cbWork )
 {
 	MICAutoParam mic;	//マイクパラメータ
 
@@ -327,10 +327,10 @@ MICResult SND_PERAP_VoiceRecStart( void )
 	mic.loop_enable		= FALSE;
 
 	//バッファが飽和した際に呼び出すコールバック関数へのポインタ
-	mic.full_callback	= NULL;
+	mic.full_callback	= cbFunc;
 
 	//バッファが飽和した際に呼び出すコールバック関数へ渡す引数
-	mic.full_arg		= NULL;
+	mic.full_arg		= cbWork;
 
 	return SND_MIC_StartAutoSampling( &mic );		//録音開始
 }

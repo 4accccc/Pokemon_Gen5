@@ -17,6 +17,7 @@
 #include "fskill_amaikaori.h"
 #include "fskill_sorawotobu.h"
 #include "fieldskill_mapeff.h"
+#include "fskill_osyaberi.h"
 #include "eventwork.h"
 #include "field/zonedata.h"
 
@@ -973,6 +974,44 @@ static GMEVENT_RESULT GMEVENT_Diving( GMEVENT *event, int *seq, void *wk )
   return GMEVENT_RES_CONTINUE;
 }
 
+//======================================================================
+//  おしゃべり
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * おしゃべり使用チェック
+ * @param scwk  FLDSKILL_CHECK_WORK
+ * @retval FLDSLILL_RET
+ */
+//--------------------------------------------------------------
+static FLDSKILL_RET SkillCheck_Osyaberi( const FLDSKILL_CHECK_WORK * scwk)
+{
+  //コロシアム・ユニオンルームチェック
+#if 0 //wb 現状無視
+  if( CheckMapModeUse(scwk) == TRUE ){
+    return FLDSKILL_RET_USE_NG;
+  }
+#endif
+  return FLDSKILL_RET_USE_OK;
+}
+
+//--------------------------------------------------------------
+/**
+ * おしゃべり使用
+ * @param head FLDSKILL_USE_HEADER
+ * @parama  scwk FLDSKILL_CHECK_WORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static GMEVENT * SkillUse_Osyaberi(
+    const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk )
+{
+  GMEVENT *event;
+  HIDEN_SCR_WORK *hsw;
+  
+  event = EVENT_FieldSkillOsyaberi( scwk->gsys, scwk->fieldmap, head->poke_pos );
+  return event;
+}
 
 //======================================================================
 //======================================================================
@@ -1173,6 +1212,6 @@ static const FLDSKILL_FUNC_DATA SkillFuncTable[FLDSKILL_IDX_MAX] =
   {SkillUse_Teleport,SkillCheck_Teleport},    // 09 :テレポート
   {SkillUse_Anawohoru,SkillCheck_Anawohoru},    // 10 :あなをほる
   {SkillUse_Amaikaori,SkillCheck_Amaikaori},   // 11 :あまいかおり
-  {SkillUse_Dummy,SkillCheck_Dummy},    // 12 :おしゃべり
+  {SkillUse_Osyaberi,SkillCheck_Osyaberi},    // 12 :おしゃべり
   {SkillUse_Diving, SkillCheck_Diving}, // 13 :ダイビング
 };
