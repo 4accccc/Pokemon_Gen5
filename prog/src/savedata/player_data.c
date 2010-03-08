@@ -18,6 +18,12 @@
 #include "savedata/player_data.h"
 
 
+//==============================================================================
+//  定数定義
+//==============================================================================
+///外部セーブの存在有無を示すマジックキー
+#define EXTRA_SAVE_MAGIC_KEY    (0xc21e)
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -31,6 +37,9 @@ struct PLAYER_DATA {
 	PLAYTIME playtime;
 	u8 now_save_mode_setup;    ///<TRUE:初回セットアップしかしていない状態(FALSE:正規のセーブ移行はずっとFALSE状態)
 	u8 padding[3];
+	
+	u16 extra_magic_key[SAVE_EXTRA_ID_MAX]; ///<外部セーブのマジックキー
+	u32 extra_link[SAVE_EXTRA_ID_MAX];      ///<外部セーブへのリンク情報
 };
 
 //============================================================================================
@@ -153,6 +162,60 @@ void SaveData_SetNowSaveModeSetupOFF(SAVE_CONTROL_WORK *sv)
 	PLAYER_DATA * pd = SaveControl_DataPtrGet(sv, GMDATA_ID_PLAYER_DATA);
 	pd->now_save_mode_setup = FALSE;
 }
+
+//==================================================================
+/**
+ * 指定した外部セーブの存在チェック
+ *
+ * @param   sv		
+ * @param   extra_id		外部セーブID
+ *
+ * @retval  BOOL		外部セーブが存在する
+ * @retval  BOOL		外部セーブが存在しない
+ */
+//==================================================================
+BOOL SaveData_CheckExtraMagicKey(SAVE_CONTROL_WORK *sv, SAVE_EXTRA_ID extra_id)
+{
+	PLAYER_DATA * pd = SaveControl_DataPtrGet(sv, GMDATA_ID_PLAYER_DATA);
+	if(pd->extra_magic_key[extra_id] != EXTRA_SAVE_MAGIC_KEY){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//==================================================================
+/**
+ * 指定した外部セーブの存在チェック
+ *
+ * @param   sv		
+ * @param   extra_id		外部セーブID
+ *
+ * @retval  BOOL		外部セーブが存在する
+ * @retval  BOOL		外部セーブが存在しない
+ */
+//==================================================================
+void SaveData_SetExtraMagicKey(SAVE_CONTROL_WORK *sv, SAVE_EXTRA_ID extra_id)
+{
+	PLAYER_DATA * pd = SaveControl_DataPtrGet(sv, GMDATA_ID_PLAYER_DATA);
+	pd->extra_magic_key[extra_id] = EXTRA_SAVE_MAGIC_KEY;
+}
+
+//==================================================================
+/**
+ * 指定した外部セーブのリンク情報バッファへのポインタを取得
+ *
+ * @param   sv		
+ * @param   extra_id		外部セーブID
+ *
+ * @retval  u16     外部セーブのCRC
+ */
+//==================================================================
+u32 * SaveData_GetExtraLinkPtr(SAVE_CONTROL_WORK *sv, SAVE_EXTRA_ID extra_id)
+{
+	PLAYER_DATA * pd = SaveControl_DataPtrGet(sv, GMDATA_ID_PLAYER_DATA);
+	return &pd->extra_link[extra_id];
+}
+
 
 
 //==============================================================================

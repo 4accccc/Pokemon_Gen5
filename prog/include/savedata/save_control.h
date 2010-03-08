@@ -29,15 +29,21 @@
 //--------------------------------------------------------------
 #define FST_NORMAL_NG_BIT			(1<<0)		//通常セーブ：ミラーリングNG
 #define FST_NORMAL_BREAK_BIT		(1<<1)		//通常セーブ：破壊
-#define FST_FRONTIER_NG_BIT			(1<<2)		//外部フロンティアセーブ：ミラーリングNG
-#define FST_FRONTIER_BREAK_BIT		(1<<3)		//外部フロンティアセーブ：破壊
-#define FST_VIDEO_NG_BIT			(1<<4)		//外部ビデオセーブ：ミラーリングNG
-#define FST_VIDEO_BREAK_BIT			(1<<5)		//外部ビデオセーブ：破壊
+#define FST_EXTRA_START         (2)
+#define FST_EXTRA_REC_MINE_BREAK_BIT		(1<<2)		//外部セーブ：自分の録画：破壊
+#define FST_EXTRA_REC_DL_0_BREAK_BIT		(1<<3)		//外部セーブ：録画DL0：破壊
+#define FST_EXTRA_REC_DL_1_BREAK_BIT		(1<<4)		//外部セーブ：録画DL1：破壊
+#define FST_EXTRA_REC_DL_2_BREAK_BIT		(1<<5)		//外部セーブ：録画DL2：破壊
+#define FST_EXTRA_CGEAR_PICTURE_BREAK_BIT		    (1<<6)		//外部セーブ：CGEAR：破壊
+#define FST_EXTRA_BATTLE_EXAMINATION_BREAK_BIT	(1<<7)		//外部セーブ：バトル検定：破壊
+#define FST_EXTRA_STREAMING_BREAK_BIT		        (1<<8)		//外部セーブ：ミュージカル：破壊
+#define FST_EXTRA_ZUKAN_WALLPAPER_BREAK_BIT	  	(1<<9)		//外部セーブ：図鑑壁紙：破壊
 
 //--------------------------------------------------------------
 //  外部セーブ番号
 //--------------------------------------------------------------
 //※SaveParamExtraTblと並びを同じにしておくこと！！
+//※FST_EXTRA_への追加もすること！
 typedef enum{
   SAVE_EXTRA_ID_REC_MINE,
   SAVE_EXTRA_ID_REC_DL_0,

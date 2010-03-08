@@ -51,7 +51,8 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 {
 	SAVE_CONTROL_WORK *ctrl;
 	LOAD_RESULT load_ret;
-
+  SAVE_EXTRA_ID extra_id;
+  
 	ctrl = GFL_HEAP_AllocClearMemory(heap_id, sizeof(SAVE_CONTROL_WORK));
 	SaveControlWork = ctrl;
 	ctrl->new_data_flag = TRUE;			//新規データ
@@ -87,26 +88,24 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 			ctrl->first_status |= FST_NORMAL_NG_BIT;
 		}
 
-	#if 0	//※check　外部が出来るまで後回し
-		//外部セーブの存在チェック
-		{
-			LOAD_RESULT frontier_result, video_result;
-			
-			ExtraNewCheckLoadData(sv, &frontier_result, &video_result);
-			if(frontier_result == LOAD_RESULT_BREAK){
-				ctrl->first_status |= FST_FRONTIER_BREAK_BIT;
-			}
-			else if(frontier_result == LOAD_RESULT_NG){
-				ctrl->first_status |= FST_FRONTIER_NG_BIT;
-			}
-			if(video_result == LOAD_RESULT_BREAK){
-				ctrl->first_status |= FST_VIDEO_BREAK_BIT;
-			}
-			else if(video_result == LOAD_RESULT_NG){
-				ctrl->first_status |= FST_VIDEO_NG_BIT;
-			}
-		}
-	#endif
+	  for(extra_id = 0; extra_id < SAVE_EXTRA_ID_MAX; extra_id++){
+      if(SaveData_CheckExtraMagicKey(ctrl, extra_id) == TRUE){  //セーブ経験のある外部だけチェック
+        u32 *link_ptr = SaveData_GetExtraLinkPtr(ctrl, extra_id);
+        LOAD_RESULT extra_result;
+        extra_result = SaveControl_Extra_Load(ctrl, extra_id, HEAPID_SAVE_TEMP);
+        SaveControl_Extra_Unload(ctrl, extra_id);
+        switch(extra_result){
+      	case LOAD_RESULT_OK:				///<データ正常読み込み
+      	case LOAD_RESULT_NG:				///<データ異常
+      	  break;
+      	case LOAD_RESULT_NULL:  		///<データなし
+      	case LOAD_RESULT_BREAK:			///<破壊、復旧不能
+      	case LOAD_RESULT_ERROR:			///<機器故障などで読み取り不能
+    			ctrl->first_status |= 1 << (FST_EXTRA_START + extra_id);
+      	  break;
+      	}
+      }
+    }
 		break;
 	case LOAD_RESULT_BREAK:			///<破壊、復旧不能
 		OS_TPrintf("LOAD:データ破壊\n");
@@ -422,10 +421,18 @@ void SaveControl_GetActualSize(SAVE_CONTROL_WORK *ctrl, u32 *actual_size, u32 *t
 LOAD_RESULT SaveControl_Extra_Load(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, HEAPID heap_id)
 {
 	LOAD_RESULT load_ret;
+  u32 *link_ptr;
 
   GF_ASSERT(ctrl->sv_extra[extra_id] == NULL);
 	ctrl->sv_extra[extra_id] = GFL_SAVEDATA_Create(&SaveParam_ExtraTbl[extra_id], heap_id);
-	load_ret = GFL_BACKUP_Load(ctrl->sv_extra[extra_id], heap_id);
+	
+	if(SaveData_CheckExtraMagicKey(ctrl, extra_id) == FALSE){
+    //現在の内部セーブに関連付けられている外部は無い為、システムだけ作成し、ロード処理は行わない
+    return LOAD_RESULT_NULL;
+  }
+	
+  link_ptr = SaveData_GetExtraLinkPtr(ctrl, extra_id);
+	load_ret = GFL_BACKUP_Extra_Load(ctrl->sv_extra[extra_id], heap_id, *link_ptr);
 	
 	OS_TPrintf("外部セーブロード結果 extra_id = %d, load_ret = %d\n", extra_id, load_ret);
 	return load_ret;
@@ -482,11 +489,19 @@ BOOL SaveControl_Extra_CheckLoad(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id
 LOAD_RESULT SaveControl_Extra_LoadWork(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, HEAPID heap_id, void *work, u32 work_size)
 {
 	LOAD_RESULT load_ret;
-
+  u32 *link_ptr;
+  
   GF_ASSERT(ctrl->sv_extra[extra_id] == NULL);
   ctrl->sv_extra[extra_id] 
     = GFL_SAVEDATA_CreateEx(&SaveParam_ExtraTbl[extra_id], heap_id, work, work_size, TRUE );
-	load_ret = GFL_BACKUP_Load(ctrl->sv_extra[extra_id], heap_id);
+
+	if(SaveData_CheckExtraMagicKey(ctrl, extra_id) == FALSE){
+    //現在の内部セーブに関連付けられている外部は無い為、システムだけ作成し、ロード処理は行わない
+    return LOAD_RESULT_NULL;
+  }
+
+  link_ptr = SaveData_GetExtraLinkPtr(ctrl, extra_id);
+	load_ret = GFL_BACKUP_Extra_Load(ctrl->sv_extra[extra_id], heap_id, *link_ptr);
 	
 	OS_TPrintf("外部セーブロード結果 extra_id = %d, load_ret = %d\n", extra_id, load_ret);
 	return load_ret;
@@ -545,7 +560,10 @@ void SaveControl_Extra_UnloadWork(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_i
 void SaveControl_Extra_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id)
 {
   GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
-	GFL_BACKUP_SAVEASYNC_Init(ctrl->sv_extra[extra_id]);
+  
+  SaveData_SetExtraMagicKey(ctrl, extra_id);
+  GFL_BACKUP_SAVEASYNC_EXTRA_Init(ctrl->sv_normal, ctrl->sv_extra[extra_id], 
+    SaveData_GetExtraLinkPtr(ctrl, extra_id));
 }
 
 //--------------------------------------------------------------
@@ -561,7 +579,7 @@ SAVE_RESULT SaveControl_Extra_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_
 	SAVE_RESULT result;
 	
   GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
-	result = GFL_BACKUP_SAVEASYNC_Main(ctrl->sv_extra[extra_id]);
+  result = GFL_BACKUP_SAVEASYNC_EXTRA_Main(ctrl->sv_normal, ctrl->sv_extra[extra_id]);
 	return result;
 }
 
