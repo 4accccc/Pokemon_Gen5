@@ -191,9 +191,6 @@ enum {
 	BOX2UI_ITEM_MAIN_MENU2,				// 37: バッグへ or もたせる
 	BOX2UI_ITEM_MAIN_CLOSE,				// 38: とじる
 
-	// 旧
-	BOX2UI_ITEM_A_MAIN_CHANGE,		// 34: 持ち物整理
-
 	// 持ち物整理・手持ちポケモン
 	BOX2UI_ITEM_PARTY_POKE1 = 0,	// 00: 手持ちポケモン
 	BOX2UI_ITEM_PARTY_POKE2,
