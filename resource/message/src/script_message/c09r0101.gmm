@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-26T16:36:10"/>
+	<create user="matsumiya" host="W00224" date="2010-03-08T22:38:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1401" top="205" right="2106" bottom="825" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -360,7 +360,7 @@
 ポケモンには　ポケモンの▽
 ものがたりが　あるんです！▼
 そして　ひとだけ……
-ポケモンだけ　よりも▼
+ポケモンだけの　おはなし　よりも▼
 ひとと　ポケモンが　たすけあう
 おはなしの　ほうが▽
 ぜったいに　おもしろいんです！</language>
@@ -368,7 +368,7 @@
 ポケモンには　ポケモンの▽
 物語が　あるんです！▼
 そして　人だけ……
-ポケモンだけ　よりも▼
+ポケモンだけの　お話　よりも▼
 人と　ポケモンが　助け合う
 お話の　ほうが▽
 絶対に　おもしろいんです！</language>
