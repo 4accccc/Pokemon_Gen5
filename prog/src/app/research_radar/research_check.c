@@ -541,8 +541,8 @@ static void MainSeq_SETUP( RESEARCH_CHECK_WORK* work )
   SetupBmpOamSystem( work );
   CreateBmpOamActors( work );
 
-  //SetupResearchData( work );   // 調査データを取得
-  Debug_SetupResearchData( work ); // TEST:
+  SetupResearchData( work );   // 調査データを取得
+  //Debug_SetupResearchData( work ); // TEST:
   //DebugPrint_researchData( work ); // TEST: 
   CreateCircleGraph( work );       // 円グラフ 作成
   CreateArrow( work );             // 矢印 作成
@@ -1313,8 +1313,8 @@ static void InitSeq_UPDATE( RESEARCH_CHECK_WORK* work )
   work->updateFlag = TRUE;
 
   // 調査データを再セットアップ
-  //SetupResearchData( work );
-  Debug_SetupResearchData( work ); // TEST:
+  SetupResearchData( work );
+  //Debug_SetupResearchData( work ); // TEST:
 
   // 表示を更新
   SetMenuCursorOff( work );           // カーソルが乗っていない状態にする
