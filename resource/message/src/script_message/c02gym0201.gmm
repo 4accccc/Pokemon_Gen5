@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-05T19:56:20"/>
+	<create user="matsumiya" host="W00224" date="2010-03-08T12:52:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -442,7 +442,7 @@
 いちばん　おくの　ほんだなね▼
 よむひとが　おおい　ほんね
 たちよみを　している　ひとも　いたわ</language>
-		<language name="JPN_KANJI" width="256">「子供を　げんきに　育てる」ね▼
+		<language name="JPN_KANJI" width="256">「子供を　元気に　育てる」ね▼
 社会コーナー　だから
 一番　奥の　本棚ね▼
 読む人が　多い　本ね
@@ -512,9 +512,9 @@
 このほんを　よみたくなったら
 わたしに　いってね</language>
 		<language name="JPN_KANJI" width="256">今　読んでいるのは
-「子供を　げんきに　育てる」よ▼
+「子供を　元気に　育てる」よ▼
 この本を　読みたくなったら
-私に　言ってね</language>
+私に　いってね</language>
 	</row>
 
 	<row id="msg_c02gym0101_assitantw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
