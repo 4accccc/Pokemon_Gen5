@@ -2330,8 +2330,8 @@
 #define SYS_FLAG_BIGFOUR_ESPWIN           2412 /* 0x096c 四天王(エスパー)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
 #define SYS_FLAG_PCNAME                   2413 /* 0x096d 「だれかのパソコン」→「○○○のパソコン」の表示切替フラグ */
 #define SYS_FLAG_ZENKOKU_GET              2414 /* 0x096e 全国図鑑入手フラグ */
-		/* not used  2415(0x096f) */
-		/* not used  2416(0x0970) */
+#define SYS_FLAG_WEATHER_R07              2415 /* 0x096f 移動ポケモン用天候フラグ：イベント中R07の天気が大荒れになる */
+#define SYS_FLAG_BGM_TOUNAN               2416 /* 0x0970 BGM変更フラグ：盗難イベント中にゾーンBGMを変更する */
 		/* not used  2417(0x0971) */
 		/* not used  2418(0x0972) */
 		/* not used  2419(0x0973) */
