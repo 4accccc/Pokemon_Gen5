@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-03-08T17:51:50"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-08T18:18:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="370"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -331,12 +331,14 @@
 ・ミュージカル確認用
 　テスト受付メッセージ</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
-		<language name="JPN">やあ　ぼく　きゃくほんか！[BE:01:ページ切り替え（クリア）]
-さんかしたい　えんもくが　あれば
-ぼくが　えんもくを　へんこうするよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI">やあ　僕　脚本家！[BE:01:ページ切り替え（クリア）]
-参加したい　演目が　あれば
-僕が　演目を　変更するよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN">やあ　ぼく　きゃくほんか！▼
+もうすぐうけつけと　へいごうするけど
+さんかしたい　えんもくが　あれば▽
+ぼくが　えんもくを　へんこうするよ！▼</language>
+		<language name="JPN_KANJI">やあ　ぼく　きゃくほんか！▼
+もうすぐうけつけと　へいごうするけど
+さんかしたい　えんもくが　あれば▽
+ぼくが　えんもくを　へんこうするよ！▼</language>
 	</row>
 
 	<row id="msg_musical_test_05">
