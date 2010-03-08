@@ -20,8 +20,7 @@
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "pokeicon/pokeicon.h"
-#include "ui/ui_easy_clwk.h"
-#include "ui/nogear_subscreen.h"
+#include "app/app_nogear_subscreen.h"
 
 #include "savedata/trialhouse_save.h"
 #include "../../savedata/trialhouse_save_local.h"
@@ -39,7 +38,6 @@
 // サウンド
 
 // オーバーレイ
-FS_EXTERN_OVERLAY(ui_common);
 
 
 //=============================================================================
@@ -386,9 +384,6 @@ static GFL_PROC_RESULT Th_Award_ProcInit( GFL_PROC* proc, int* seq, void* pwk, v
 {
   TH_AWARD_WORK*     work;
 
-  // オーバーレイ
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
-
   // ヒープ、パラメータなど
   {
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TH_AWARD, HEAP_SIZE );
@@ -421,8 +416,8 @@ static GFL_PROC_RESULT Th_Award_ProcInit( GFL_PROC* proc, int* seq, void* pwk, v
   Th_Award_TextInit( work );
 
   // サブBG
-  NOGEAR_SUBSCREEN_Init();
-  NOGEAR_SUBSCREEN_Trans( work->heap_id, work->param->sex );
+  APP_NOGEAR_SUBSCREEN_Init();
+  APP_NOGEAR_SUBSCREEN_Trans( work->heap_id, work->param->sex );
 
   // フェードイン(黒→見える)
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
@@ -438,7 +433,7 @@ static GFL_PROC_RESULT Th_Award_ProcExit( GFL_PROC* proc, int* seq, void* pwk, v
   TH_AWARD_WORK*     work     = (TH_AWARD_WORK*)mywk;
 
   // サブBG
-  NOGEAR_SUBSCREEN_Exit();
+  APP_NOGEAR_SUBSCREEN_Exit();
 
   // 破棄
   Th_Award_TextExit( work );
@@ -461,9 +456,6 @@ static GFL_PROC_RESULT Th_Award_ProcExit( GFL_PROC* proc, int* seq, void* pwk, v
     GFL_PROC_FreeWork( proc );
     GFL_HEAP_DeleteHeap( HEAPID_TH_AWARD );
   }
-
-  // オーバーレイ
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
 
   return GFL_PROC_RES_FINISH;
 }

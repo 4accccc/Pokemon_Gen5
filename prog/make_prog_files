@@ -864,8 +864,7 @@ SRCS_OVERLAY_UI_COMMON = ui/ui_scene.c \
                          ui/print_tool.c \
 												 ui/msgsearch.c \
 												 ui/yesno_menu.c \
-                         ui/frame_list.c \
-                         ui/nogear_subscreen.c
+                         ui/frame_list.c
 
 
 # コンフィグ画面
