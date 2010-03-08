@@ -272,7 +272,6 @@ enum
 
 // 文字数
 #define STRBUF_POKENAME_LENGTH  ( 64 )  // [ポケモン種族名]のぶんぷ  // buflen.hで確認する必要あり！
-#define STRBUF_UNKNOWN_LENGTH   ( 64 )  // せいそくちふめい
 
 // ポケアイコンの位置
 static const u8 pokeicon_pos[4] = { 56, 112 +8*8,     // スクロール前(陸上、水上、釣りアイコンが見えていないとき)
@@ -378,12 +377,67 @@ typedef enum
 }
 HABITAT;
 
+// 草原、水、釣りのアイコン
+enum
+{
+  PLACE_ICON_GROUND,
+  PLACE_ICON_WATER,
+  PLACE_ICON_FISHING,
+  PLACE_ICON_MAX,
+};
+// 草原、水、釣りのアイコンのパレット
+static u8 place_icon_bg_pal_pos[PLACE_ICON_MAX][2] =  // 0=OFF, 1=ON
+{
+  { BG_PAL_POS_S_PLACE   + 5,    BG_PAL_POS_S_PLACE   + 2 },
+  { BG_PAL_POS_S_PLACE   + 6,    BG_PAL_POS_S_PLACE   + 0 },
+  { BG_PAL_POS_S_PLACE   + 7,    BG_PAL_POS_S_PLACE   + 4 },
+};
+// 草原、水、釣りのアイコンのスクリーンのキャラ座標、サイズ
+static u8 place_icon_screen_chr[PLACE_ICON_MAX][4] =  // 0=X, 1=Y, 2=W, 3=H
+{
+  {  7, 28,  4,  3 },
+  { 14, 28,  4,  3 },
+  { 21, 28,  4,  3 },
+};
+
 
 //=============================================================================
 /**
 *  構造体宣言
 */
 //=============================================================================
+//-------------------------------------
+/// 分布データ(ポケモン1匹分)
+//=====================================
+enum
+{
+  PLACE_BITFLAG_NONE         = 0,
+  PLACE_BITFLAG_GROUND_L     = 1<< 0,
+  PLACE_BITFLAG_GROUND_H     = 1<< 1, 
+  PLACE_BITFLAG_GROUND_SP    = 1<< 2,
+  PLACE_BITFLAG_WATER        = 1<< 3,
+  PLACE_BITFLAG_WATER_SP     = 1<< 4,
+  PLACE_BITFLAG_FISHING      = 1<< 5,
+  PLACE_BITFLAG_FISHING_SP   = 1<< 6,
+
+  PLACE_BITFLAG_GROUND_ALL   = ( PLACE_BITFLAG_GROUND_L | PLACE_BITFLAG_GROUND_H | PLACE_BITFLAG_GROUND_SP ),
+  PLACE_BITFLAG_WATER_ALL    = ( PLACE_BITFLAG_WATER | PLACE_BITFLAG_WATER_SP ),
+  PLACE_BITFLAG_FISHING_ALL  = ( PLACE_BITFLAG_FISHING | PLACE_BITFLAG_FISHING_SP ),
+};
+typedef struct
+{
+  u8    unknown;  // 0のとき不明でない、1のとき不明
+  u8    place_bitflag[TOWNMAP_DATA_MAX];  // TOWNMAP_DATAのインデックスを配列添え字に使えるように並べてある
+}
+AREA_SEASON_DATA;
+typedef struct
+{
+  u8                 year;  // 0のとき一年中同じでない、1のとき一年中同じ(なので春のデータだけ見ればよい)
+  AREA_SEASON_DATA   season_data[PMSEASON_TOTAL];  // PMSEASON_SPRING PMSEASON_SUMMER PMSEASON_AUTUMN PMSEASON_WINTER
+}
+AREA_DATA;
+
+
 //-------------------------------------
 /// PROC ワーク
 //=====================================
@@ -418,6 +472,7 @@ typedef struct
   // 各ポケモンの情報
   APPEAR_RULE                 appear_rule;
   HABITAT                     habitat;
+  AREA_DATA*                  area_data;
 
   // OBJ
   u32                         obj_res[OBJ_RES_MAX];
@@ -514,8 +569,14 @@ static void Zukan_Detail_Map_ChangePoke( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DE
 static void Zukan_Detail_Map_ChangePlace( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
+// 分布データ
+static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id );
+static void Zukan_Detail_Map_AreaDataUnload( AREA_DATA* area_data );
+
 // 何度も出てくる処理
 static void Zukan_Detail_Map_UtilPrintSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_UtilDrawSeasonArea( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_UtilBrightenPlaceIcon( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 
 //=============================================================================
@@ -602,6 +663,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcInit( ZKNDTL_PROC* proc, int* seq
   // NULL初期化
   {
     work->pokeicon_clwk = NULL;
+    work->area_data     = NULL;
   }
 
   // 状態初期化
@@ -645,6 +707,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcExit( ZKNDTL_PROC* proc, int* seq
 {
   ZUKAN_DETAIL_MAP_PARAM*    param    = (ZUKAN_DETAIL_MAP_PARAM*)pwk;
   ZUKAN_DETAIL_MAP_WORK*     work     = (ZUKAN_DETAIL_MAP_WORK*)mywk;
+
+  // 分布データ
+  Zukan_Detail_Map_AreaDataUnload( work->area_data );
 
   // ポケアイコン
   BLOCK_POKEICON_EXIT( &work->pokeicon_res, work->pokeicon_clwk )
@@ -903,6 +968,101 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
 
   // フェード
   ZKNDTL_COMMON_FadeMain( work->fade_wk_m, work->fade_wk_s );
+
+
+#if 1
+  {
+    // 生息する場所に置くOBJのアニメ指定、位置指定
+    if(    *seq >= SEQ_PREPARE
+        && work->state == STATE_SELECT )
+    {
+      do
+      {
+        static u8 idx = 0;
+      
+        // 現在 
+        u16 anmseq = GFL_CLACT_WK_GetAnmSeq( work->obj_exist_clwk[idx] );
+        u16 anmseq_num = GFL_CLACT_WK_GetAnmSeqNum( work->obj_exist_clwk[idx] );
+        GFL_CLACTPOS pos;
+        GFL_CLACT_WK_GetPos( work->obj_exist_clwk[idx], &pos, CLSYS_DEFREND_MAIN );
+      
+        // 情報表示
+        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+        {
+          GFL_CLACT_WK_GetPos( work->obj_exist_clwk[idx], &pos, CLSYS_DEFREND_MAIN );
+          OS_Printf( "idx=%d, zkn_anm=%d, zkn_pos_x=%d, zkn_pos_y=%d\n",
+              idx,
+              anmseq, 
+              pos.x,
+              pos.y
+          );
+        }
+        // idx切り替え
+        else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )  // Up
+        {
+          idx++;
+          if( idx >= TOWNMAP_DATA_MAX )
+            idx = 0;
+          break;  // idxを変更したので終了
+        }
+        else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )  // Down
+        {
+          if( idx == 0 )
+            idx = TOWNMAP_DATA_MAX -1;
+          else
+            idx--;
+          break;  // idxを変更したので終了
+        }
+        // アニメ切り替え
+        else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )  // Up
+        {
+          anmseq++;
+          if( anmseq >= anmseq_num )
+            anmseq = 0;
+        }
+        else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )  // Down
+        {
+          if( anmseq == 0 )
+            anmseq = anmseq_num -1;
+          else
+            anmseq--;
+        }
+        // 移動
+        else
+        {
+          if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT )
+          {
+            if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+              pos.x++;
+            if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+              pos.x--;
+            if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+              pos.y--;
+            if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+              pos.y++;
+          }
+          else
+          {
+            if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
+              pos.x++;
+            if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
+              pos.x--;
+            if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
+              pos.y--;
+            if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )
+              pos.y++;
+          }
+        }
+
+        // 次
+        GFL_CLACT_WK_SetAnmSeq( work->obj_exist_clwk[idx], anmseq );
+        GFL_CLACT_WK_SetPos( work->obj_exist_clwk[idx], &pos, CLSYS_DEFREND_MAIN );
+      }
+      while(0);
+    }
+  }
+#endif
+
 
   return ZKNDTL_PROC_RES_CONTINUE;
 }
@@ -1230,13 +1390,16 @@ static void Zukan_Detail_Map_ObjExistInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
     GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
  
     for( i=0; i<TOWNMAP_DATA_MAX; i++ )
-    {	
+    {
+      cldata.pos_x = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_ZKN_POS_X );
+      cldata.pos_y = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_ZKN_POS_Y );
+
       work->obj_exist_clwk[i] = GFL_CLACT_WK_Create(
                              work->clunit,
                              work->obj_res[OBJ_RES_EXIST_NCG], work->obj_res[OBJ_RES_EXIST_NCL], work->obj_res[OBJ_RES_EXIST_NCE],
                              &cldata, CLSYS_DEFREND_MAIN, param->heap_id );
 
-      GFL_CLACT_WK_SetAnmSeq( work->obj_exist_clwk[i], 0 );
+      GFL_CLACT_WK_SetAnmSeq( work->obj_exist_clwk[i], TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_ZKN_ANM ) );
       GFL_CLACT_WK_SetAutoAnmFlag( work->obj_exist_clwk[i], TRUE );
       GFL_CLACT_WK_SetBgPri( work->obj_exist_clwk[i], BG_FRAME_PRI_M_ROOT );
       GFL_CLACT_WK_SetSoftPri( work->obj_exist_clwk[i], softpri );
@@ -1786,6 +1949,11 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
                 && SEASON_R_ARROW_POS_Y<=y&&y<SEASON_R_ARROW_POS_Y+SEASON_R_ARROW_SIZE_Y )
             {
               work->ktst = GFL_APP_KTST_TOUCH;
+              
+              // 変更後の季節にする
+              work->season_id++;
+              if( work->season_id >= PMSEASON_TOTAL ) work->season_id = PMSEASON_SPRING;
+
               Zukan_Detail_Map_ChangeSeason( param, work, cmn );
               PMSND_PlaySE( SEQ_SE_DECIDE1 );
             }
@@ -1821,6 +1989,11 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
               && SEASON_R_ARROW_POS_Y<=y&&y<SEASON_R_ARROW_POS_Y+SEASON_R_ARROW_SIZE_Y )
           {
             work->ktst = GFL_APP_KTST_TOUCH;
+
+            // 変更後の季節にする
+            work->season_id++;
+            if( work->season_id >= PMSEASON_TOTAL ) work->season_id = PMSEASON_SPRING;
+
             Zukan_Detail_Map_ChangeSeason( param, work, cmn );
             PMSND_PlaySE( SEQ_SE_DECIDE1 );
             select_enable = FALSE;
@@ -1850,6 +2023,9 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
 {
   u32 x, y;
 
+  // 生息地が不明のときは、マップ上の拠点を選べないことにしておく 
+  if( work->habitat == HABITAT_UNKNOWN ) return;
+
   // キー or タッチの変更
   if( work->ktst == GFL_APP_KTST_KEY )
   {
@@ -1867,12 +2043,20 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
   {
     if( GFL_UI_KEY_GetTrg() )
     {
-      work->ktst = GFL_APP_KTST_KEY;
-      // カーソルを配置する
-      Zukan_Detail_Map_SetCursor( param, work, cmn );
-      Zukan_Detail_Map_ChangePlace( param, work, cmn );
-      // キーに変更になった場合は、キーに変更しただけで処理を終える
-      return;
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )  // 戻るボタンのときは何もしないで戻る
+      {
+        work->ktst = GFL_APP_KTST_KEY;
+        return;
+      }
+      else
+      {
+        work->ktst = GFL_APP_KTST_KEY;
+        // カーソルを配置する
+        Zukan_Detail_Map_SetCursor( param, work, cmn );
+        Zukan_Detail_Map_ChangePlace( param, work, cmn );
+        // キーに変更になった場合は、キーに変更しただけで処理を終える
+        return;
+      }
     }
   }
 
@@ -2029,6 +2213,9 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
 static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn,
                  STATE state )
 {
+  // 遷移前のSTATE = work->state
+  // 遷移後のSTATE = state 
+  
   ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
  
   // 遷移前の状態 
@@ -2095,13 +2282,26 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
 
 static void Zukan_Detail_Map_ChangePoke( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  // 変更前のポケモン = 取得不可
+  // 変更後のポケモン = ZKNDTL_COMMON_GetCurrPoke(cmn)
+
   // ポケモンを変更したとき
 
   // 変更後のポケモン
   u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
 
-  work->appear_rule  = APPEAR_RULE_SEASON;
-  work->habitat      = HABITAT_KNOWN;
+  Zukan_Detail_Map_AreaDataUnload( work->area_data );
+  work->area_data = Zukan_Detail_Map_AreaDataLoad( monsno, param->heap_id );
+
+  work->appear_rule  = ( work->area_data->year == 0 )?( APPEAR_RULE_SEASON ):( APPEAR_RULE_YEAR );
+  if( work->appear_rule == APPEAR_RULE_YEAR )
+  {
+    work->habitat      = ( work->area_data->season_data[PMSEASON_SPRING].unknown == 0 )?( HABITAT_KNOWN ):( HABITAT_UNKNOWN );  // 一年中同じときは春のデータしか見ない
+  }
+  else
+  {
+    work->habitat      = ( work->area_data->season_data[work->season_id].unknown == 0 )?( HABITAT_KNOWN ):( HABITAT_UNKNOWN );
+  }
 
   // ポケアイコン
   {
@@ -2153,12 +2353,6 @@ static void Zukan_Detail_Map_ChangePoke( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DE
     GFL_STR_DeleteBuffer( strbuf );
   }
 
-  // 生息地不明
-  // 前のをクリア
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_UNKNOWN]), 0 );
-  GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_UNKNOWN] );
-  GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_UNKNOWN], FALSE );
-
   // 季節表示
   // 前のをクリア
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_SEASON]), 0 );
@@ -2182,41 +2376,15 @@ static void Zukan_Detail_Map_ChangePoke( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DE
     GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON_R], TRUE );
   }
 
-  // 今の季節の生息地が不明のとき
-  if( work->habitat == HABITAT_UNKNOWN )
-  {
-    WORDSET* wordset;
-    STRBUF* src_strbuf;
-    STRBUF* strbuf;
-    u16     str_width;
-    u16     bmp_width;
-    u16     x;
-    wordset = WORDSET_Create( param->heap_id );
-    src_strbuf = GFL_MSG_CreateString( work->msgdata[MSG_ZUKAN], ZNK_RANGE_00 );
-    strbuf = GFL_STR_CreateBuffer( STRBUF_UNKNOWN_LENGTH, param->heap_id );
-    WORDSET_RegisterPokeMonsNameNo( wordset, 0, monsno );
-    WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
-    GFL_STR_DeleteBuffer( src_strbuf );
-    WORDSET_Delete( wordset );
-    str_width = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
-    bmp_width = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_UNKNOWN]) );
-    x = ( bmp_width - str_width ) / 2;
-    PRINTSYS_PrintQueColor( work->print_que, GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_UNKNOWN]),
-                            x, 1, strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
-    GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[TEXT_UNKNOWN] );
-    GFL_STR_DeleteBuffer( strbuf );
-
-    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_UNKNOWN], TRUE );
-  }
-  // 今の季節の生息地が判明しているとき
-  else
-  {
-    // 生息場所を表示する
-  }
+  // 今の季節の生息地を表示する
+  Zukan_Detail_Map_UtilDrawSeasonArea( param, work, cmn );
 }
 
 static void Zukan_Detail_Map_ChangePlace( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  // 変更前の場所 = 取得不可
+  // 変更後の場所 = work->select_data_idx
+  
   // 場所を変更したとき
   
   // 前のをクリア
@@ -2245,17 +2413,29 @@ static void Zukan_Detail_Map_ChangePlace( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
       GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_RING_CUR], TRUE );
     }
   }
+
+  // 草原、水、釣りのアイコンの明るさを変更する
+  Zukan_Detail_Map_UtilBrightenPlaceIcon( param, work, cmn );
 }
 
 static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  // 変更前の季節 = 取得不可
+  // 変更後の季節 = work->season_id
+
   // 季節を変更したとき
 
   // 1年中同じ分布のときは、この関数は呼び出されない
 
-  // 変更後の季節にする
-  work->season_id++;
-  if( work->season_id >= PMSEASON_TOTAL ) work->season_id = PMSEASON_SPRING;
+  // 変更後の季節
+  if( work->appear_rule == APPEAR_RULE_YEAR )
+  {
+    work->habitat      = ( work->area_data->season_data[PMSEASON_SPRING].unknown == 0 )?( HABITAT_KNOWN ):( HABITAT_UNKNOWN );  // 一年中同じときは春のデータしか見ない
+  }
+  else
+  {
+    work->habitat      = ( work->area_data->season_data[work->season_id].unknown == 0 )?( HABITAT_KNOWN ):( HABITAT_UNKNOWN );
+  }
 
   // 季節表示
   // 前のをクリア
@@ -2271,6 +2451,89 @@ static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
   {
     GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_CURSOR], FALSE );
   }
+
+  // 今の季節の生息地を表示する
+  Zukan_Detail_Map_UtilDrawSeasonArea( param, work, cmn );
+
+  // 草原、水、釣りのアイコンの明るさを変更する
+  Zukan_Detail_Map_UtilBrightenPlaceIcon( param, work, cmn );
+}
+
+//-------------------------------------
+/// 分布データ
+//=====================================
+static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id )
+{
+#if 0
+  u32 size;
+  AREA_DATA* area_data = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_AREA, NARC_zukan_area_zkn_area_monsno_001_dat + monsno -1, FALSE, heap_id, &size );
+  GF_ASSERT_MSG( sizeof(AREA_DATA) == size, "ZUKAN_DETAIL_MAP : AREA_DATAのサイズが異なります。\n" );
+  return area_data;
+#elif 0
+  // 仮データ
+  AREA_DATA* area_data = GFL_HEAP_AllocClearMemory( heap_id, sizeof(AREA_DATA) );
+  s32 case_no = monsno %3;
+  if( monsno == 517 ) case_no = 0;
+  if( monsno == 534 ) case_no = 1;
+  if( monsno == 569 ) case_no = 2;
+  switch( case_no )
+  {
+  case 0:
+    {
+      area_data->year = 0;
+      area_data->season_data[PMSEASON_SPRING].unknown = 0;
+      area_data->season_data[PMSEASON_SPRING].place_bitflag[0] = PLACE_BITFLAG_GROUND_L | PLACE_BITFLAG_WATER | PLACE_BITFLAG_FISHING;
+      area_data->season_data[PMSEASON_SPRING].place_bitflag[1] = PLACE_BITFLAG_GROUND_L;
+      area_data->season_data[PMSEASON_SPRING].place_bitflag[2] = PLACE_BITFLAG_WATER;
+      area_data->season_data[PMSEASON_SPRING].place_bitflag[3] = PLACE_BITFLAG_FISHING;
+      area_data->season_data[PMSEASON_SPRING].place_bitflag[4] = PLACE_BITFLAG_WATER | PLACE_BITFLAG_FISHING;
+      area_data->season_data[PMSEASON_SPRING].place_bitflag[5] = PLACE_BITFLAG_GROUND_L | PLACE_BITFLAG_FISHING;
+      area_data->season_data[PMSEASON_SPRING].place_bitflag[6] = PLACE_BITFLAG_GROUND_L | PLACE_BITFLAG_WATER;
+      area_data->season_data[PMSEASON_SUMMER].unknown = 0;
+      area_data->season_data[PMSEASON_AUTUMN].unknown = 1;
+    }
+    break;
+  case 1:
+    {
+      area_data->year = 1;
+      area_data->season_data[PMSEASON_SPRING].unknown = 0;
+      area_data->season_data[PMSEASON_SPRING].place_bitflag[0] = PLACE_BITFLAG_GROUND_L | PLACE_BITFLAG_WATER | PLACE_BITFLAG_FISHING;
+      area_data->season_data[PMSEASON_SPRING].place_bitflag[1] = PLACE_BITFLAG_GROUND_L;
+      area_data->season_data[PMSEASON_SPRING].place_bitflag[2] = PLACE_BITFLAG_WATER;
+      area_data->season_data[PMSEASON_SPRING].place_bitflag[3] = PLACE_BITFLAG_FISHING;
+      area_data->season_data[PMSEASON_SPRING].place_bitflag[4] = PLACE_BITFLAG_WATER | PLACE_BITFLAG_FISHING;
+      area_data->season_data[PMSEASON_SPRING].place_bitflag[5] = PLACE_BITFLAG_GROUND_L | PLACE_BITFLAG_FISHING;
+      area_data->season_data[PMSEASON_SPRING].place_bitflag[6] = PLACE_BITFLAG_GROUND_L | PLACE_BITFLAG_WATER;
+    }
+    break;
+  case 2:
+    {
+      area_data->year = 1;
+      area_data->season_data[PMSEASON_SPRING].unknown = 1;
+    }
+    break;
+  }
+  return area_data;
+#else
+  // 生息する場所に置くOBJのアニメ指定、位置指定用のデータ
+  AREA_DATA* area_data = GFL_HEAP_AllocClearMemory( heap_id, sizeof(AREA_DATA) );
+  u8 i;
+  {
+    area_data->year = 1;
+    area_data->season_data[PMSEASON_SPRING].unknown = 0;
+
+    for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+    {
+      area_data->season_data[PMSEASON_SPRING].place_bitflag[i] = PLACE_BITFLAG_GROUND_ALL | PLACE_BITFLAG_WATER_ALL | PLACE_BITFLAG_FISHING_ALL;
+    }
+  }
+  return area_data;
+#endif
+}
+static void Zukan_Detail_Map_AreaDataUnload( AREA_DATA* area_data )
+{
+  if( area_data ) GFL_HEAP_FreeMemory( area_data );
+  area_data = NULL;
 }
 
 //-------------------------------------
@@ -2292,3 +2555,100 @@ static void Zukan_Detail_Map_UtilPrintSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUK
   GFL_STR_DeleteBuffer( strbuf );
 }
 
+static void Zukan_Detail_Map_UtilDrawSeasonArea( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u8 i;
+
+  // 前のをクリア
+  
+  // 生息地不明
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_UNKNOWN]), 0 );
+  GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_UNKNOWN] );
+  GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_UNKNOWN], FALSE );
+
+  // 生息地判明
+  for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+  {
+    GFL_CLACT_WK_SetDrawEnable( work->obj_exist_clwk[i], FALSE );
+  }
+
+
+  // 今の季節の生息地を表示する
+  
+  // 今の季節の生息地が不明のとき
+  if( work->habitat == HABITAT_UNKNOWN )
+  {
+    STRBUF* strbuf;
+    u16     str_width;
+    u16     bmp_width;
+    u16     x;
+    strbuf = GFL_MSG_CreateString( work->msgdata[MSG_ZUKAN], ZNK_RANGE_00 );
+    str_width = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
+    bmp_width = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_UNKNOWN]) );
+    x = ( bmp_width - str_width ) / 2;
+    PRINTSYS_PrintQueColor( work->print_que, GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_UNKNOWN]),
+                            x, 1, strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[TEXT_UNKNOWN] );
+    GFL_STR_DeleteBuffer( strbuf );
+
+    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_UNKNOWN], TRUE );
+  }
+  // 今の季節の生息地が判明しているとき
+  else
+  {
+    u8 season_id = ( work->appear_rule == APPEAR_RULE_YEAR )?(PMSEASON_SPRING):(work->season_id);  // 一年中同じときは春のデータしか見ない
+        
+    // 生息場所にOBJを表示する
+    for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+    {
+      if( work->area_data->season_data[season_id].place_bitflag[i] != PLACE_BITFLAG_NONE )
+      {
+        GFL_CLACT_WK_SetDrawEnable( work->obj_exist_clwk[i], TRUE );
+      }
+    }
+  }
+}
+
+static void Zukan_Detail_Map_UtilBrightenPlaceIcon( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 草原、水、釣りのアイコンの明るさを変更する
+
+  u8 i;
+  u8 brighten[PLACE_ICON_MAX] = { 0, 0, 0 };
+
+  // 今の季節の生息地が判明しているとき
+  if( work->habitat == HABITAT_KNOWN )
+  {
+    if( work->select_data_idx != DATA_IDX_NONE )
+    {
+      u8 season_id = ( work->appear_rule == APPEAR_RULE_YEAR )?(PMSEASON_SPRING):(work->season_id);  // 一年中同じときは春のデータしか見ない
+    
+      if( work->area_data->season_data[season_id].place_bitflag[work->select_data_idx] & PLACE_BITFLAG_GROUND_ALL )
+      {
+        brighten[PLACE_ICON_GROUND] = 1;
+      }
+      if( work->area_data->season_data[season_id].place_bitflag[work->select_data_idx] & PLACE_BITFLAG_WATER_ALL )
+      {
+        brighten[PLACE_ICON_WATER] = 1;
+      }
+      if( work->area_data->season_data[season_id].place_bitflag[work->select_data_idx] & PLACE_BITFLAG_FISHING_ALL )
+      {
+        brighten[PLACE_ICON_FISHING] = 1;
+      }
+    }
+  }
+
+  // アイコンの明るさを変更する
+  for( i=0; i<PLACE_ICON_MAX; i++ )
+  {
+    GFL_BG_ChangeScreenPalette(
+        BG_FRAME_S_PLACE,
+        place_icon_screen_chr[i][0],
+        place_icon_screen_chr[i][1],
+        place_icon_screen_chr[i][2],
+        place_icon_screen_chr[i][3],
+        place_icon_bg_pal_pos[i][brighten[i]] );
+  }
+
+  GFL_BG_LoadScreenV_Req( BG_FRAME_S_PLACE );
+}

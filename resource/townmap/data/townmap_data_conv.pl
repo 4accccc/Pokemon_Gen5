@@ -427,10 +427,10 @@ foreach $line ( @TOWNMAP_XLS_DATA )
 				push( @DATA_PLACE6, $val );
 			}
 			#図鑑分布アニメ番号
-			if( $tag eq "#zkn_anm" )
+			elsif( $tag eq "#zkn_anm" )
 			{
 				&UndefAssert( $w );
-				push( @DATA_ZKN_ANM, $val );
+				push( @DATA_ZKN_ANM, $w );
 			}
 			#図鑑分布配置座標X
 			elsif( $tag eq "#zkn_pos_x" )
