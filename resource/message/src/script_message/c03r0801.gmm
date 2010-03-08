@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-02-23T18:58:36"/>
+	<create user="matsumiya" host="W00224" date="2010-03-08T14:39:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,13 +263,13 @@
 		</language>
 	</columns>
 
-	<dialog left="504" top="143" right="1209" bottom="763" maximized="no" rayout="Vertical2">
+	<dialog left="1537" top="198" right="2242" bottom="818" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="8" top="31" right="481" bottom="429" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="548"/>
-		<band id="3" index="4" style="0000" width="147"/>
+		<band id="2" index="3" style="0000" width="543"/>
+		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
@@ -413,7 +413,7 @@ msg_c03r0801_hint_02</comment>
 		<language name="JPN" width="256">うみの　うえを　はしっている！
 そんな　ふしぎな　ことが　できてしまう</language>
 		<language name="JPN_KANJI" width="256">海の上を　走っている！
-そんな　不思議な　事が　出来てしまう！</language>
+そんな不思議な　ことが　できてしまう！</language>
 	</row>
 
 	<row id="msg_c03r0801_vistor_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -506,7 +506,7 @@ msg_c03r0801_hint_02</comment>
 おもしろかったよ　ありがとう！</language>
 		<language name="JPN_KANJI" width="256">あぁ！　汽笛が　鳴ってる！
 ごめんよ　引き止めちゃって……[BE:01:ページ切り替え（クリア）]
-でも　話しが　できて
+でも　話が　できて
 面白かったよ　ありがとう！</language>
 	</row>
 
@@ -563,7 +563,7 @@ msg_c03r0801_hint_02</comment>
 		<language name="JPN" width="256">ふねに　ゆられて　ポケモンしょうぶ
 すごく　しんせん　だったよ</language>
 		<language name="JPN_KANJI" width="256">船に　ゆられて　ポケモン勝負
-すごく　新鮮　だったよ</language>
+すごく　新鮮だったよ</language>
 	</row>
 
 	<row id="msg_c03r0801_trainerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -695,7 +695,7 @@ msg_c03r0801_hint_02</comment>
 つきあわせちゃって……[BE:00:ページ切り替え（行送り）]
 でも　たのしかった　ありがと！</language>
 		<language name="JPN_KANJI" width="256">あ！　汽笛！[BE:01:ページ切り替え（クリア）]
-ごめんね　私の　話しに
+ごめんね　私の　話に
 付き合わせちゃって……[BE:00:ページ切り替え（行送り）]
 でも　楽しかった　ありがと！</language>
 	</row>
@@ -784,9 +784,9 @@ msg_c03r0801_hint_02</comment>
 もうしぶんは　ないのですが[BE:01:ページ切り替え（クリア）]
 きゃくしつの　ふんいきも
 わたくし　おきにいり　ですの</language>
-		<language name="JPN_KANJI" width="256">そとの　うつくしい　景色も
-もうしぶんは　ないのですが[BE:01:ページ切り替え（クリア）]
-客室の　ふんいきも
+		<language name="JPN_KANJI" width="256">外の　美しい　景色も
+申し分は　ないのですが[BE:01:ページ切り替え（クリア）]
+客室の　雰囲気も
 わたくし　お気に入り　ですの</language>
 	</row>
 
@@ -966,7 +966,7 @@ msg_c03r0801_hint_02</comment>
 ……　……　……　というわけさ</language>
 		<language name="JPN_KANJI" width="256">きみ！　おじさんに　話しかけたのかい
 ちょうど　よかった！[BE:01:ページ切り替え（クリア）]
-すごく　面白い　話しが　あってね
+すごく　おもしろい　話が　あってね
 ぜひ　だれかに　聞いてもらいたかった[BE:01:ページ切り替え（クリア）]
 ……　……　……　……　……
 ……　……　……　なのだ[BE:01:ページ切り替え（クリア）]
@@ -1132,8 +1132,8 @@ msg_c03r0801_hint_02</comment>
 あなたは……　おめでとうございます！[BE:01:ページ切り替え（クリア）]
 すべての　トレーナーを
 お倒しに　なられたの　ですね！[BE:01:ページ切り替え（クリア）]
-ふねは　お出港　していますが
-ふねから　お降りに　なられますか？</language>
+船は　出港　していますが
+船から　お降りに　なられますか？</language>
 	</row>
 
 	<flowchart-group-list>
