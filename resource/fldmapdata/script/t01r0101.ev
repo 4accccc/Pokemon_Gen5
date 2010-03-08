@@ -35,7 +35,7 @@ EVENT_START ev_scene_t01r0101_first_01
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラパージ
 	
-	_CAMERA_MOVE(9688,0,970752,229376,0,409600, 30)		//カメラ移動開始
+	_CAMERA_MOVE(9688,0,970752,360448,0,360448, 30)		//カメラ移動開始
 	
 	//主人公：下を見る
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
@@ -48,21 +48,47 @@ EVENT_START ev_scene_t01r0101_first_01
 	_OBJ_ANIME( T01R0101_RIVAL_01, anm_stay_walk_r )
 	_OBJ_ANIME_WAIT()
 
-	//ライバルＭＳＧ：おばさん　それでは失礼します
-	_PLAINWIN_MSG_DOWN( msg_t01r0101_black_01 )
+	//ライバルＭＳＧ：騒がしくしてすみませんでした
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_black_01, T01R0101_RIVAL_01, POS_DL )
+	_MSGWIN_CLOSE()
+
+	//サポート：ママの前へ
+	_OBJ_ANIME( T01R0101_SUPPORT_01, anm_home_support_move_01 )
+	_OBJ_ANIME_WAIT()
+
+	//サポート：おかたづけ……
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_white_01, T01R0101_SUPPORT_01, POS_UL )
+	_MSGWIN_CLOSE()
+
+	//ママＭＳＧ：かたづけ？いいのいいの
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_01a, T01R0101_MAMA_01, POS_UR )
+	_MSGWIN_CLOSE()
+
+	//ライバルＭＳＧ：はい！じゃあ…
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_black_02, T01R0101_RIVAL_01, POS_DL )
+	_MSGWIN_CLOSE()
+
+	//ライバル：主人公を見て
+	_OBJ_ANIME( T01R0101_RIVAL_01, anm_home_rival_move_01 )
+	_OBJ_ANIME_WAIT()
+
+	//ライバルＭＳＧ：ポケモン研究所の前で待ってる
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_black_03, T01R0101_RIVAL_01, POS_UL )
+	_MSGWIN_CLOSE()
+
+	//サポート：！マーク
+	_OBJ_ANIME( T01R0101_SUPPORT_01, anm_mark_gyoe )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( T01R0101_SUPPORT_01, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
+
+	//サポートＭＳＧ：あっ あたし家に戻るね
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_white_02, T01R0101_SUPPORT_01, POS_DR )
 	_MSGWIN_CLOSE()
 
 	//ライバル：去る
 	_OBJ_ANIME( T01R0101_RIVAL_01, anm_home_rival_goaway_01 )
-	//サポート：ママの前へ
-	_OBJ_ANIME( T01R0101_SUPPORT_01, anm_home_support_move_01 )
-
-	//サポート：おじゃましました！
-	_PLAINWIN_MSG_DOWN( msg_t01r0101_white_01 )
-	_MSGWIN_CLOSE()
-
-	_OBJ_ANIME_WAIT()
-
+	_TIME_WAIT( 12 )
 	//サポート：去る
 	_OBJ_ANIME( T01R0101_SUPPORT_01, anm_home_support_goaway_01 )
 	_OBJ_ANIME_WAIT()
@@ -95,18 +121,18 @@ EVENT_START ev_scene_t01r0101_first_01
 
 	//ママ：何があったの？
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_01, T01R0101_MAMA_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_01, T01R0101_MAMA_01, POS_DR )
 	_BALLOONWIN_CLOSE()
 
 	//ちょっとウェイト
 	_TIME_WAIT( 15 )
 
 	//ママ：ポケモンをもらって勝負してたのね
-	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_02, T01R0101_MAMA_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_02, T01R0101_MAMA_01, POS_DR )
 	_BALLOONWIN_CLOSE()
 
 	//ママ：ポケモンを休ませないと
-	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_03, T01R0101_MAMA_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_03, T01R0101_MAMA_01, POS_DR )
 	_BALLOONWIN_CLOSE()
 
 	//暗転して手持ちポケモンを回復
@@ -118,15 +144,18 @@ EVENT_START ev_scene_t01r0101_first_01
 	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 
-	//【仮】ママ再会話時に回復処理にならないように回復済みチェックワークに値を代入
+	//ママ再会話時に回復処理にならないように回復済みチェックワークに値を代入
 	$LOCALWORK15 = 999
 
 	//ＴＶトランシーバーよ
-	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_04, T01R0101_MAMA_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_04, T01R0101_MAMA_01, POS_DR )
 	_BALLOONWIN_CLOSE()
 
+	//ＴＶトランシーバー入手
+	_ITEM_EVENT_KEYWAIT( ITEM_RAIBUKYASUTAA, 1 )
+
 	//いってらっしゃい
-	_BALLOONWIN_OBJMSG( msg_t01r0101_mama_04_01, T01R0101_MAMA_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_04_01, T01R0101_MAMA_01, POS_DR )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
@@ -146,55 +175,70 @@ EVENT_START ev_scene_t01r0101_first_01
 EVENT_END
 
 //--------------------------------------------------------------------
+//！マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mark_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
 //その場歩き
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_stay_walk_r
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+_ANIME_LABEL	anm_stay_walk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_stay_walk_d
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------------
-//ライバル：去る
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_home_rival_goaway_01
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,3
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_VANISH_ON,1
+_ANIME_LABEL	anm_stay_walk_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //サポート：ママの前へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_home_support_move_01
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル：主人公を見て
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_home_rival_move_01
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_home_rival_goaway_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //サポート：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_home_support_goaway_01
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,3
-	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //ママ：主人公の前へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_home_mama_walk_01
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
-
 
 
 /************************************************************/	
@@ -209,6 +253,8 @@ EVENT_START ev_t01r0101_mother_01
 		_CALL		ev_everyday
 	
 	ELSE
+		//図鑑入手するまで
+
 		//アララギ博士によろしくね
 		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_04_01 )
 		_LAST_KEYWAIT()
@@ -230,34 +276,63 @@ ev_everyday:
 		_BALLOONWIN_CLOSE()
 
 	ELSE
+		//回復処理
+		
+		//シナリオ進行でメッセージ分岐
+		IF $WK_SCENE_R02 == 0 THEN
+			//ランニングシューズ入手前なら
 
-		//【仮】図鑑入手前後で分岐　システムフラグが未実装
+			//ふう！ お片づけはちょっと休憩
+			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_05 )
+			_MSGWIN_CLOSE()
+
+			_CALL	ev_kaifuku		//回復処理
+
+			//これであたなもポケモンも元気いっぱい！
+			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_06 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
 
 
-		//～～のポケモンは元気？
-		_PLAYER_NAME( 0 )
-		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_05 )
-		_BALLOONWIN_CLOSE()
+		ELSE
+			//ランニングシューズ入手後
 
-		//暗転して手持ちポケモンを回復
-		_BLACK_OUT()
-		_DISP_FADE_END_CHECK()
-		_TEMOTI_POKEMON_KAIFUKU()		//回復処理
-		_ME_PLAY( SEQ_ME_ASA )
-		_ME_WAIT()
-		_BLACK_IN()
-		_DISP_FADE_END_CHECK()
+			//ポケモンは元気？
+			_PLAYER_NAME( 0 )
+			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_08 )
+			_MSGWIN_CLOSE()
 
-		//回復済みチェック用にローカルワークに値を代入
-		$LOCALWORK15 = 999
+			_CALL	ev_kaifuku		//回復処理
 
-		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_06 )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+			//ランダムでメッセージ分岐（５パターン）
+			$SCWK_TEMP0 = msg_t01r0101_mama_09a
+			_GET_RND( SCWK_TEMP1, 5 )
+			$SCWK_TEMP0 += SCWK_TEMP1
+			_BALLOONWIN_TALKOBJ_MSG( SCWK_TEMP0 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+
+		ENDIF
 
 	ENDIF
 
 _RET
+
+//回復処理
+ev_kaifuku:
+	//暗転して手持ちポケモンを回復
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	_TEMOTI_POKEMON_KAIFUKU()		//回復処理
+	_ME_PLAY( SEQ_ME_ASA )
+	_ME_WAIT()
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+
+	//回復済みチェック用にローカルワークに値を代入
+	$LOCALWORK15 = 999
+_RET
+
 
 /************************************************************/	
 /*				ゲームオーバー復帰時	                    				*/
