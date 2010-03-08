@@ -1959,13 +1959,13 @@ static void TransPokeIconCharaPal( int pokeno, int form, int tamago, int no, GFL
 
 	// ポケモンアイコンのキャラデータをバッファの読み込む
 
-	buf = CharDataGetbyHandle( handle, PokeIconCgxArcIndexGetByMonsNumber( pokeno, tamago, form ), 
+	buf = CharDataGetbyHandle( handle, POKEICON_GetCgxArcIndexByMonsNumber( pokeno, tamago, form ), 
 								&chara, HEAPID_WORLDTRADE );
 	// VBLANK中にキャラクタを転送するための準備
 	MI_CpuCopyFast(chara->pRawData, pbuf->chbuf, POKEICON_TRANS_SIZE);
 	pbuf->vadrs = (POKEICON_VRAM_OFFSET+no*POKEICON_TRANS_CHARA)*0x20;
 	pbuf->icon = icon;
-	pbuf->palno = PokeIconPalNumGet( pokeno, form, tamago )+POKEICON_PAL_OFFSET;
+	pbuf->palno = POKEICON_GetPalNum( pokeno, form, tamago )+POKEICON_PAL_OFFSET;
 	GFL_HEAP_FreeMemory(buf);
 }
 

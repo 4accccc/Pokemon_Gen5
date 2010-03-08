@@ -184,14 +184,6 @@ static inline void SaveData_GetPokeRegister( SAVE_CONTROL_WORK *sv, POKEMON_PARA
  *					à»â∫ÅAíPèÉÇ…íuÇ´ä∑Ç¶ÇΩä÷êî
 */
 //=============================================================================
-static inline int PokeIconCgxArcIndexGetByMonsNumber( int pokeno, int tamago, int form )
-{
-	return POKEICON_GetCgxArcIndexByMonsNumber( pokeno, form, tamago ); 
-}
-static inline int PokeIconPalNumGet( int pokeno, int form, int tamago )
-{
-	return POKEICON_GetPalNum( pokeno, form, tamago );
-}
 static inline int PokePersonalParaGet(int mons_no, int param )
 { 
 	u32 ret;
