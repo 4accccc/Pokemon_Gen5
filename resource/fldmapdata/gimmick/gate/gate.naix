@@ -22,7 +22,23 @@ enum {
 	NARC_gate_gelboard01_7_nsbta = 8,
 	NARC_gate_gelboard01_tv01_nsbtp = 9,
 	NARC_gate_gelboard01_tv02_nsbtp = 10,
-	NARC_gate_gelboard01_tv03_nsbtp = 11
+	NARC_gate_gelboard01_tv03_nsbtp = 11,
+	NARC_gate_gelboard01_tv04_nsbtp = 12,
+	NARC_gate_gelboard01_tv05_nsbtp = 13,
+	NARC_gate_gelboard01_tv06_nsbtp = 14,
+	NARC_gate_gelboard01_tv07_nsbtp = 15,
+	NARC_gate_gelboard01_tv08_nsbtp = 16,
+	NARC_gate_gelboard01_tv09_nsbtp = 17,
+	NARC_gate_gelboard01_tv10_nsbtp = 18,
+	NARC_gate_gelboard01_tv11_nsbtp = 19,
+	NARC_gate_gelboard01_tv12_nsbtp = 20,
+	NARC_gate_gelboard01_tv13_nsbtp = 21,
+	NARC_gate_gelboard01_tv14_nsbtp = 22,
+	NARC_gate_gelboard01_tv15_nsbtp = 23,
+	NARC_gate_gelboard01_tv16_nsbtp = 24,
+	NARC_gate_gelboard01_tv17_nsbtp = 25,
+	NARC_gate_gelboard01_tv18_nsbtp = 26,
+	NARC_gate_gelboard01_tv19_nsbtp = 27
 };
 
 /* NARC_GATE_NAIX_ */

@@ -53,7 +53,23 @@ CONVERTDATA_GATE   = $(GRAPHIC_BIN)/gelboard01.nsbmd \
 							       $(GRAPHIC_BIN)/gelboard01_7.nsbta \
 							       $(GRAPHIC_BIN)/gelboard01_tv01.nsbtp \
 							       $(GRAPHIC_BIN)/gelboard01_tv02.nsbtp \
-							       $(GRAPHIC_BIN)/gelboard01_tv03.nsbtp
+							       $(GRAPHIC_BIN)/gelboard01_tv03.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv04.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv05.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv06.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv07.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv08.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv09.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv10.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv11.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv12.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv13.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv14.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv15.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv16.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv17.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv18.nsbtp \
+							       $(GRAPHIC_BIN)/gelboard01_tv19.nsbtp
 CONVERTDATA_ZONE   = $(ELBOARD_ZONE_DATA)
 CONVERTDATA_SPNEWS = $(ELBOARD_SPNEWS_DATA)
 
@@ -86,6 +102,22 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv01.itp -o $(GRAPHIC_BIN)/gelboard01_tv01.nsbtp
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv02.itp -o $(GRAPHIC_BIN)/gelboard01_tv02.nsbtp
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv03.itp -o $(GRAPHIC_BIN)/gelboard01_tv03.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv04.itp -o $(GRAPHIC_BIN)/gelboard01_tv04.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv05.itp -o $(GRAPHIC_BIN)/gelboard01_tv05.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv06.itp -o $(GRAPHIC_BIN)/gelboard01_tv06.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv07.itp -o $(GRAPHIC_BIN)/gelboard01_tv07.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv08.itp -o $(GRAPHIC_BIN)/gelboard01_tv08.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv09.itp -o $(GRAPHIC_BIN)/gelboard01_tv09.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv10.itp -o $(GRAPHIC_BIN)/gelboard01_tv10.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv11.itp -o $(GRAPHIC_BIN)/gelboard01_tv11.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv12.itp -o $(GRAPHIC_BIN)/gelboard01_tv12.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv13.itp -o $(GRAPHIC_BIN)/gelboard01_tv13.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv14.itp -o $(GRAPHIC_BIN)/gelboard01_tv14.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv15.itp -o $(GRAPHIC_BIN)/gelboard01_tv15.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv16.itp -o $(GRAPHIC_BIN)/gelboard01_tv16.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv17.itp -o $(GRAPHIC_BIN)/gelboard01_tv17.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv18.itp -o $(GRAPHIC_BIN)/gelboard01_tv18.nsbtp
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv19.itp -o $(GRAPHIC_BIN)/gelboard01_tv19.nsbtp
 # タブ区切り
 $(SETTING_SOURCE)/elboard_zone_data.txt: $(SETTING_SOURCE)/elboard_zone_data.xls
 	ruby $(XLSCONV) $< > $@ 
