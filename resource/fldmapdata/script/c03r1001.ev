@@ -26,7 +26,7 @@ _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
 //																	//
-//	ジムギミックに LOCALWORK10を使用ししています。					//
+//	マッサージお姉さんに LOCALWORK10を使用ししています。			//
 //	同マップ内の使用を禁止します。									//
 //	LOCALWORK10 ⇒ なつき度の確率を格納								//
 //																	//
@@ -62,14 +62,19 @@ EVENT_START		ev_c03r1001_woman3_01
 			
 			//ポケモンを選択した
 			IF $LWK_SELECT_RESULT == TRUE THEN
-		
+			
 				//それでははじめますね！
 				_BALLOONWIN_OBJMSG( msg_c03r1001_woman3_03 , C03R1001_WOMAN3_01 )
 				_BALLOONWIN_CLOSE()
-		
+				
 				//暗転処理
 				_BLACK_OUT()
 				_DISP_FADE_END_CHECK()
+				
+				//【仮】ME再生
+				_ME_PLAY( SEQ_ME_ASA )
+				_ME_WAIT()
+				
 				_BLACK_IN()
 				_DISP_FADE_END_CHECK()
 				

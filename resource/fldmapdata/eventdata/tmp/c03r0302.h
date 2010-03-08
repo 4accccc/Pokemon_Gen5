@@ -13,6 +13,8 @@
 #define TR_C03R0302_OL_01                  2
 #define TR_C03R0302_BUSINESS1_02           3
 #define TR_C03R0302_SCIENTISTM_02          4
+#define C03R0302_SCIENTISTM_03             5
+#define C03R0302_BUSINESS1_02              6
 
 #endif //ZONE_C03R0302_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r0302.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

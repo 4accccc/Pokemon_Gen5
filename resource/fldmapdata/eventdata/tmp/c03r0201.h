@@ -27,5 +27,7 @@
 #define BG_C03R0201_PAINTING5_01          6
 #define BG_C03R0201_PAINTING5_02          7
 #define BG_C03R0201_PAINTING6_01          8
+#define BG_C03R0201_PAINTING6_02          9
+#define BG_C03R0201_PAINTING6_03         10
 
 #endif //ZONE_C03R0201_EVB_H

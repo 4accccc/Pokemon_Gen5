@@ -178,6 +178,7 @@ EVENT_START		ev_c03r0201_clown_01
 						
 						//また明日も来てね
 						_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_03 ,C03R0201_CLOWN_01)
+						_LAST_KEYWAIT()
 						_BALLOONWIN_CLOSE()
 						
 						//==================================//
@@ -190,6 +191,7 @@ EVENT_START		ev_c03r0201_clown_01
 					//選択したポケモンと指定タイプが一致しない
 					ELSE
 						_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_06 ,C03R0201_CLOWN_01)
+						_LAST_KEYWAIT()
 						_BALLOONWIN_CLOSE()
 					ENDIF
 					
@@ -199,6 +201,7 @@ EVENT_START		ev_c03r0201_clown_01
 			ELSE
 				//（指定ポケモン）タイプを捕まえてたら見せてね
 				_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_05 , C03R0201_CLOWN_01 )
+				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			ENDIF
 		
@@ -206,12 +209,14 @@ EVENT_START		ev_c03r0201_clown_01
 		ELSE
 			//（指定ポケモン）タイプを捕まえてたら見せてね
 			_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_05 , C03R0201_CLOWN_01 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 		ENDIF
 		
 	//今日のイベントは既に終えている
 	ELSE
 		_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_04 , C03R0201_CLOWN_01 )
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	ENDIF
 	

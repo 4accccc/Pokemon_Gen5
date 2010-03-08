@@ -49,6 +49,35 @@ _EVENT_DATA_END
 /*POSイベント：ジムリーダーと会話                             */
 /**************************************************************/
 EVENT_START   ev_pos_c05_gymleader_01
+	
+	{
+	//自機座標取得変数定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+	
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+	
+	//主人公座標に応じてサポートに隣接
+	SWITCH $POSZ
+	CASE 430 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_leader_z430 )
+		_OBJ_ANIME_WAIT()
+	CASE 431 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_leader_z431 )
+		_OBJ_ANIME_WAIT()
+	CASE 432 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_leader_z432 )
+	_OBJ_ANIME_WAIT()
+	CASE 433 THEN  //目の前に立った時
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_leader_z433 )
+		 _OBJ_ANIME_WAIT()
+	CASE 434 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_leader_z434 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_leader_z432 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
 
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
@@ -75,8 +104,15 @@ EVENT_START   ev_pos_c05_gymleader_01
 	_BALLOONWIN_OBJMSG( msg_c05_black_03 , C05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 	//主人公の方を見る
-	_OBJ_ANIME( C05_RIVAL_01 , anm_c05_contact_rival_01 )
-	_OBJ_ANIME_WAIT()
+	
+	IF $POSZ >= 432 THEN
+		_OBJ_ANIME( C05_RIVAL_01 , anm_c05_contact_rival_look_down )
+		_OBJ_ANIME_WAIT()
+	ELSE
+		_OBJ_ANIME( C05_RIVAL_01 , anm_c05_contact_rival_look_up )
+		_OBJ_ANIME_WAIT()
+	ENDIF
+
 	//ライバル：それじゃ先に行くね
 	_BALLOONWIN_OBJMSG( msg_c05_black_03a , C05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
@@ -87,7 +123,7 @@ EVENT_START   ev_pos_c05_gymleader_01
 	//OBJ削除
 	_OBJ_DEL( C05_RIVAL_01 )
 	_OBJ_DEL( C05_GYMLEADER_01 )
-	
+	}
 	//=======================================//
 	
 	//C05イベント（１）のキャラクターを非表示にする
@@ -99,6 +135,47 @@ EVENT_START   ev_pos_c05_gymleader_01
 	//======================================//
 
 EVENT_END
+
+//--------------------------------------------------------------
+//	C05ジムリーダーとの出会い：主人公、z座標に応じてライバルに隣接z430
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_player_to_leader_z430
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C05ジムリーダーとの出会い：主人公、z座標に応じてライバルに隣接z431
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_player_to_leader_z431
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C05ジムリーダーとの出会い：主人公、z座標に応じてライバルに隣接z432
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_player_to_leader_z432
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C05ジムリーダーとの出会い：主人公、z座標に応じてライバルに隣接z433
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_player_to_leader_z433
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C05ジムリーダーとの出会い：主人公、z座標に応じてライバルに隣接z434
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_player_to_leader_z434
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	C05ジムリーダーとの出会い：ヤーコン3歩左へ行って、右に振り向く
@@ -113,14 +190,21 @@ _ANIME_LABEL	anm_c05_contact_leader8_01
 //	C05ジムリーダーとの出会い：ヤーコン去って行く
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c05_contact_leader8_02
-	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	C05ジムリーダーとの出会い：ライバル主人公のほうを見る
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_c05_contact_rival_01
-	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+_ANIME_LABEL	anm_c05_contact_rival_look_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C05ジムリーダーとの出会い：ライバル主人公のほうを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_contact_rival_look_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -367,11 +451,11 @@ EVENT_START   ev_pos_c05_support_01
 	//サポート主人公に隣接
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c05_support_hello )
 	_OBJ_ANIME_WAIT()
-
+	{
 	//自機座標取得変数定義
 	DEFINE_LOCAL  POSX
 	DEFINE_LOCAL  POSZ
-
+	
 	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
 	
 	//主人公座標に応じてサポートに隣接
@@ -392,7 +476,7 @@ EVENT_START   ev_pos_c05_support_01
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_supportz405 )
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
-	
+	}
 	//サポート：ねえねえ！ひょっとして
 	_BALLOONWIN_OBJMSG(msg_c05_white_02,MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
