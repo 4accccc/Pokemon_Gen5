@@ -204,7 +204,7 @@
 #define FE_ZUKAN_COMPLETE_LOCAL_SEE        188 /* 0x00bc 地方図鑑「みた」モードを完成 */
 #define FE_C01_ITEMGET_02                  189 /* 0x00bd C01サンヨウシティ：ビル裏の人アイテム入手フラグ */
 #define FE_C01R0501_QUIZ                   190 /* 0x00be トレーナーズスクール：クイズのごほうび入手フラグ */
-		/* not used   191(0x00bf) */
+#define FE_C03R0302_ITEM                   191 /* 0x00bf C0３ヒウンシティ：バトルカンパニーアイテム入手フラグ */
 		/* not used   192(0x00c0) */
 		/* not used   193(0x00c1) */
 		/* not used   194(0x00c2) */

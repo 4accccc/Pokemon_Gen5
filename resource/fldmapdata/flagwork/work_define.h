@@ -120,7 +120,7 @@
 #define WK_SCENE_R01                     16508 /* 0x407c １番道路：イベント用ワーク */
 #define WK_SCENE_R02                     16509 /* 0x407d ２番道路：イベント用ワーク */
 #define WK_SCENE_R03                     16510 /* 0x407e ３番道路：イベント用ワーク */
-#define WK_SCENE_D01                     16511 /* 0x407f 廃墟：イベント用ワーク */
+		/* not used 16511(0x407f) */
 #define WK_SCENE_T01                     16512 /* 0x4080 カノコタウン（フィールド）：イベント用ワーク */
 #define WK_SCENE_T01R0102                16513 /* 0x4081 主人公宅２階：イベント用ワーク */
 #define WK_SCENE_C01GYM0101              16514 /* 0x4082 C01ジム（三色ジム）：イベント用ワーク */
@@ -141,7 +141,7 @@
 		/* not used 16529(0x4091) */
 #define WK_SCENE_C02                     16530 /* 0x4092 C02フィールド：イベント用ワーク */
 #define WK_SCENE_R05                     16531 /* 0x4093 ５番道路：イベント用ワーク */
-#define WK_SCENE_D01R0101_POKE           16532 /* 0x4094 廃墟：夢ポケモン探しイベント用ワーク */
+#define WK_SCENE_D01R0101_POKE           16532 /* 0x4094 夢の跡地：夢ポケモン探しイベント用ワーク */
 #define WK_SCENE_R03_PLASMA              16533 /* 0x4095 ３番道路：プラズマ団誘拐イベント用ワーク */
 #define WK_SCENE_D07R0201                16534 /* 0x4096 D07ネジ山：ヤーコンと遭遇イベント */
 #define WK_SCENE_C07                     16535 /* 0x4097 C07セッカシティ：イベント用ワーク */
@@ -181,6 +181,7 @@
 #define WK_SCENE_C11GUIDE                16569 /* 0x40b9 国連（内部）：初回誘導イベント用のワーク */
 #define WK_SCENE_C07R0105                16570 /* 0x40ba タワーオブヘブン5F：イベント用ワーク */
 #define WK_SCENE_D07R0401                16571 /* 0x40bb ネジ山：プラズマ団とライバル遭遇イベント */
+#define WK_SCENE_C02R0101                16572 /* 0x40bc シッポウシティ：インテリアショップイベント */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 
