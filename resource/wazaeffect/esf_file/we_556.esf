@@ -5,6 +5,11 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_556.spa
 #001
 %00
 カメラ移動	追従	防御側	12	0	8
+制御モード変更	継続
+SE再生	SEQ_SE_W540_KYUN	SE1	防御側	20:0:50	0:0:0
+SE再生	SEQ_SE_FLD_03	SE2	防御側	40:0:127	0:0:0
+SE再生	SEQ_SE_FLD_03	SE3	防御側	60:0:127	0:0:0
+制御モード変更	逐次
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_556
 パーティクル再生	w_556	W_556_556_TSURARA_DOWN	防御側	方向無し	2:0:0	1:1:1	1

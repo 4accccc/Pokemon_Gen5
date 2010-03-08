@@ -10,7 +10,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_182.spa
 パーティクル再生	w_182	W_182_182_MAMORU_BALL	攻撃側	方向無し	2:0:0	1:1:1	1
 制御モード変更	継続
 SE再生	SEQ_SE_W112_02	SE1	攻撃側	0:0:115	0:0:0
-SE再生	SEQ_SE_DECIDE3	SE2	攻撃側	0:0:80	0:0:0
+SE再生	SEQ_SE_DECIDE3	SE3	攻撃側	20:0:80	0:0:0
 制御モード変更	逐次
 エフェクト終了待ち	すべて
 カメラ移動	追従	初期位置	16	0	8

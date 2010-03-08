@@ -4,6 +4,10 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_069.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_069_earth.NSCR
 #001
 %00
+制御モード変更	継続
+SE再生	SEQ_SE_FLD_127	SE1	防御側	20:0:127	0:0:0
+SE再生	SEQ_SE_FLD_127	SE2	防御側	50:0:127	0:0:0
+制御モード変更	逐次
 BGのパレットフェード	お盆＋フィールド	0	13	1	0:0:0
 エフェクト終了待ち	すべて
 BGのロード	bg_069_earth
