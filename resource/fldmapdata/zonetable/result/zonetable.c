@@ -10332,7 +10332,7 @@ static const ZONEDATA ZoneData[] = {
 		RSC_GRID_PALACE,
 		MMLID_SAMPLEOBJ,
 		AREA_ID_OUT25,
-		MATRIX_ID_PALACE02,
+		MATRIX_ID_PALACE01,
 		NARC_script_seq_palace01_bin,
 		NARC_script_seq_sp_palace01_bin,	//NARC_script_seq_sp_palace01_bin,
 		NARC_script_message_palace01_dat,
