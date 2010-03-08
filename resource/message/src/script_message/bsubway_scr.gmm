@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-03-08T20:59:16"/>
+	<create user="kagaya" host="W00143" date="2010-03-08T21:30:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -868,11 +868,11 @@
 
 	<row id="msg_bsw_scr_52">
 		<comment>wifi</comment>
-		<language name="JPN" width="256">ランク○○　バトルルーム○○○の
+		<language name="JPN" width="256">ランク[2:01:２桁:0]　バトルルーム[2:02:３桁:1]の
 れきだいの　きろくを　うけとりました[BE:01:ページ切り替え（クリア）]
 おもてに　せっちされた　せいせき
 モニターで　ごかくにん　ください</language>
-		<language name="JPN_KANJI" width="256">ランク○○　バトルルーム○○○の
+		<language name="JPN_KANJI" width="256">ランク[2:01:２桁:0]　バトルルーム[2:02:３桁:1]の
 れきだいの　きろくを　うけとりました[BE:01:ページ切り替え（クリア）]
 おもてに　せっちされた　せいせき
 モニターで　ごかくにん　ください</language>

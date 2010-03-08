@@ -615,6 +615,14 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     }
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
+  //WiFi DLした歴代情報のランク取得
+  case BSWTOOL_WIFI_GET_DL_SCDATA_RANK:
+    *ret_wk = BSUBWAY_WIFIDATA_GetLeaderRank( wifiData );
+    break;
+  //WiFi DLした歴代情報の部屋番号取得
+  case BSWTOOL_WIFI_GET_DL_SCDATA_ROOM:
+    *ret_wk = BSUBWAY_WIFIDATA_GetLeaderRoomNo( wifiData );
+    break;
   //----ワーク依存
   //プレイモード別復帰位置セット
   case BSWSUB_SET_PLAY_MODE_LOCATION:

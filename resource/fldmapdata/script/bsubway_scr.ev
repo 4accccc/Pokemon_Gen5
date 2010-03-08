@@ -254,6 +254,11 @@ sub_receipt_rekidai_download:
       _AB_KEYWAIT()
     ELSE
       _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_SCDATA, BSW_NULL, BSW_NULL, BSW_NULL )
+      //○○の歴代情報をダウンロードしました
+      _BSUBWAY_TOOL(BSWTOOL_WIFI_GET_DL_SCDATA_RANK, BSW_NULL, BSW_NULL, ret )
+      _NUMBER( 0, ret, 2 )
+      _BSUBWAY_TOOL(BSWTOOL_WIFI_GET_DL_SCDATA_ROOM, BSW_NULL, BSW_NULL, ret )
+      _NUMBER( 1, ret, 3 )
       _SYSWIN_MSG( msg_bsw_scr_52, WIN_DOWN )
       _AB_KEYWAIT()
     ENDIF
