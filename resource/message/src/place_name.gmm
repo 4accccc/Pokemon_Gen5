@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-02-18T16:52:42"/>
+	<create user="matsumiya" host="W00224" date="2010-03-08T18:17:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="417" top="432" right="1122" bottom="1052" maximized="no" rayout="Vertical2">
+	<dialog left="1567" top="216" right="2272" bottom="808" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -605,9 +605,9 @@
 		<language name="JPN_KANJI" width="256">ホワイトフォレスト</language>
 	</row>
 
-	<row id="MAPNAME_C11" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
-		<language name="JPN" width="256">こくさいれんごう</language>
-		<language name="JPN_KANJI" width="256">国際連合（仮）</language>
+	<row id="MAPNAME_C11" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ユナイテッドタワー</language>
+		<language name="JPN_KANJI" width="256">ユナイテッドタワー</language>
 	</row>
 
 	<row id="MAPNAME_D14" text-color="#0000ff,,,#0000ff,,,,,,,,,,,,,,">
@@ -665,8 +665,8 @@
 
 	<row id="MAPNAME_R16R01" text-color="#0000ff,,,#ff0000,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>MAPNAME_R15R0301</comment>
-		<language name="JPN" width="256">パルゲート</language>
-		<language name="JPN_KANJI" width="256">パルゲート</language>
+		<language name="JPN" width="256">シフトファクトリー</language>
+		<language name="JPN_KANJI" width="256">シフトファクトリー</language>
 	</row>
 
 	<row id="MAPNAME_D10" text-color="#0000ff,,,#0000ff,,,,,,,,,,,,,,">
@@ -764,8 +764,8 @@
 	</row>
 
 	<row id="MAPNAME_R15R0301" text-color="#0000ff,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">パルゲート</language>
-		<language name="JPN_KANJI" width="256">パルゲート</language>
+		<language name="JPN" width="256">シフトファクトリー</language>
+		<language name="JPN_KANJI" width="256">シフトファクトリー</language>
 	</row>
 
 	<flowchart-group-list>
