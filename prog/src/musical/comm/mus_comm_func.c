@@ -1086,8 +1086,8 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
     }
     else
     {
-      work->distData->strmData = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_STRM , pkt->value );
-      work->distData->strmDataSize = pkt->value;
+      work->distData->midiData = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_STRM , pkt->value );
+      work->distData->midiDataSize = pkt->value;
     }
     
     break;
@@ -1414,7 +1414,7 @@ static void MUS_COMM_Update_SendStrmData( MUS_COMM_WORK *work )
     case MCDS_START:
       {
         const BOOL ret = MUS_COMM_Send_FlagServer( work , MCFT_STRM_SIZE , 
-                                      work->distData->strmDataSize , 
+                                      work->distData->midiDataSize , 
                                       GFL_NET_SENDID_ALLUSER );
         if( ret == TRUE )
         {
@@ -1439,8 +1439,9 @@ static void MUS_COMM_Update_SendStrmData( MUS_COMM_WORK *work )
       {
         if( work->isSendingStrmData == FALSE )
         {
-          if( (work->strmDivIdx)*MUS_COMM_DIV_SIZE >= work->distData->strmDataSize )
+          if( (work->strmDivIdx)*MUS_COMM_DIV_SIZE >= work->distData->midiDataSize )
           {
+
             work->isSendStrmMode = FALSE;
           }
           else
@@ -1458,11 +1459,11 @@ static void MUS_COMM_Update_SendStrmData( MUS_COMM_WORK *work )
 const BOOL MUS_COMM_Send_StrmData( MUS_COMM_WORK *work , const u8 idx )
 {
   
-  void *startAdr = (void*)(((u32)work->distData->strmData)+(idx*MUS_COMM_DIV_SIZE));
+  void *startAdr = (void*)(((u32)work->distData->midiData)+(idx*MUS_COMM_DIV_SIZE));
   u16 dataSize;
-  if( (idx+1)*MUS_COMM_DIV_SIZE > work->distData->strmDataSize )
+  if( (idx+1)*MUS_COMM_DIV_SIZE > work->distData->midiDataSize )
   {
-    dataSize = work->distData->strmDataSize%MUS_COMM_DIV_SIZE;
+    dataSize = work->distData->midiDataSize%MUS_COMM_DIV_SIZE;
   }
   else
   {
@@ -1489,13 +1490,25 @@ static void MUS_COMM_Post_StrmData( const int netID, const int size , const void
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
   work->strmDivIdx++;
   work->isSendingStrmData = FALSE;
-  ARI_TPrintf("MusComm Finish Post StrmData[%d][%d][%d].\n",netID,work->strmDivIdx,work->distData->strmDataSize);
+
+  ARI_TPrintf("MusComm Finish Post StrmData[%d][%d][%d].\n",netID,work->strmDivIdx,work->distData->midiDataSize);
+  if( (work->strmDivIdx)*MUS_COMM_DIV_SIZE >= work->distData->midiDataSize )
+  {
+    //データを各ポインタに設定
+    MUS_DIST_MIDI_HEADER *midHeader = work->distData->midiData;
+    work->distData->midiSeqData  = (void*)((u32)work->distData->midiData + sizeof(MUS_DIST_MIDI_HEADER) );
+    work->distData->midiBnkData  = (void*)((u32)work->distData->midiData + sizeof(MUS_DIST_MIDI_HEADER) + midHeader->seqSize );
+    work->distData->midiWaveData = (void*)((u32)work->distData->midiData + sizeof(MUS_DIST_MIDI_HEADER) + midHeader->seqSize + midHeader->bankSize );
+
+    ARI_TPrintf("MusComm FinishPostMidiData[%d][%d][%d].\n",midHeader->seqSize,midHeader->bankSize,midHeader->waveSize);
+  }
+
 
 }
 static u8*    MUS_COMM_Post_StrmDataBuff( int netID, void* pWork , int size )
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
-  void *startAdd = (void*)(((u32)work->distData->strmData)+(work->strmDivIdx*MUS_COMM_DIV_SIZE));
+  void *startAdd = (void*)(((u32)work->distData->midiData)+(work->strmDivIdx*MUS_COMM_DIV_SIZE));
   
   ARI_TPrintf("MusComm Start Post StrmData[%d][%d][%d].\n",netID,work->strmDivIdx,size);
   return startAdd;
@@ -1503,7 +1516,7 @@ static u8*    MUS_COMM_Post_StrmDataBuff( int netID, void* pWork , int size )
 
 const BOOL MUS_COMM_CheckFinishSendStrm( MUS_COMM_WORK *work )
 {
-  if( (work->distData->strmDataSize/MUS_COMM_DIV_SIZE) < work->strmDivIdx )
+  if( (work->distData->midiDataSize/MUS_COMM_DIV_SIZE) < work->strmDivIdx )
   {
     return TRUE;
   }

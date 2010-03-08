@@ -47,16 +47,27 @@ typedef enum
 //データパック
 typedef struct
 {
+  u32 seqSize;
+  u32 bankSize;
+  u32 waveSize;
+}MUS_DIST_MIDI_HEADER;
+
+typedef struct
+{
   u8 programNo;
   
   void *programData;
   void *messageData;
   void *scriptData;
-  void *strmData;
+  void *midiData; //↓三つ＋サイズヘッダをパックしてある
+  void *midiSeqData;
+  void *midiBnkData;
+  void *midiWaveData;
+
   u32  programDataSize;
   u32  messageDataSize;
   u32  scriptDataSize;
-  u32  strmDataSize;
+  u32  midiDataSize;
 }MUSICAL_DISTRIBUTE_DATA;
 
 MUSICAL_DISTRIBUTE_DATA* MUSICAL_SYSTEM_InitDistributeData( HEAPID workHeapId );

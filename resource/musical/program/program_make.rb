@@ -13,10 +13,13 @@ PRAGRAM_DATA_EXCEL = "program_data.xls"
 #演目データ出力名
 PRAGRAM_BIN_NAME = "program_data.bin"
 #演目アーカイブ名
-NARC_NAME_BASE = "mus_prog_data"
+NARC_NAME_BASE = "mus_prog_data.narc"
+#Midi外部Waveパックデータ
+WAVE_ARC_NAME = "wave_pack.swar"
+WAVE_LIST_NAME = "wave_list.list"
 
 #ストリーミングコンバータ
-STREAMING_CONVERT = "waveconv -c "
+STREAMING_CONVERT = "waveconv -a "
 #gmmコンバータ
 MESSAGE_CONVERT = "perl -I ../../message ../../message/msgconv.pl "
 MESSAGE_CONVERT_LANG = "JPN JPN_KANJI"
@@ -36,15 +39,21 @@ NARC_CONVERT = "nnsarc -c -l -n "
 #file1の方が新しければ1を返す
 def CompFileDate( file1 , file2 )
   retVal = 0
+  #print( file1 + " " + file2 + "\n")
+
   
   unless( FileTest.exist?(file2) )
     retVal = 1
   else
-    state1 = File::stat(file1)
-    state2 = File::stat(file2)
-    
-    if( state1.mtime > state2.mtime )
-      retVal = 1
+    unless( FileTest.exist?(file1) )
+      retVal = 0
+    else
+      state1 = File::stat(file1)
+      state2 = File::stat(file2)
+      
+      if( state1.mtime > state2.mtime )
+        retVal = 1
+      end
     end
   end
 
@@ -74,14 +83,18 @@ alias sfn get_short_path_name
 
 index = 1
 progBinName = ""
-strmDataName = ""
 gmmDataName = ""
 scriptDataName = ""
+sbnkDataName = ""
+sseqDataName = ""
+wavDataName = []
 
 while index <= PROGRAM_NUM
 
   isRefreshFile = 0
+  isRefreshWave = 0
   pathName = sprintf("p%02d",index)
+  narcFileName = pathName + "/" + NARC_NAME_BASE
 
   #フォルダが無い場合フォルダを作る
   unless FileTest.exist?(pathName)
@@ -94,25 +107,6 @@ while index <= PROGRAM_NUM
   if( CompFileDate( PRAGRAM_DATA_EXCEL , progBinName ) == 1 )
     ProgramExcelConv.conv(index,PRAGRAM_DATA_EXCEL,progBinName)
     isRefreshFile = 1
-  end
-  
-  #ストリーミング変換
-  cnt = 0
-  searchName = pathName + "/*.wav"
-  Dir::glob(searchName).each{|fileName|
-    cnt = cnt + 1
-    strmDataName = fileName.sub(/.wav/,".swav")
-    if( CompFileDate( fileName , strmDataName ) == 1 )
-      system(STREAMING_CONVERT + fileName )
-      isRefreshFile = 1
-    end
-  }
-
-  if( cnt != 1 )
-    print("ストリーミングデータのコンバートでエラーが発生しました。\n")
-    print("wavが無いか、wavが2個以上あります。\n")
-    print("ディレクトリ[" + pathName + "]\n")
-    exit
   end
 
   #gmm変換
@@ -163,18 +157,88 @@ while index <= PROGRAM_NUM
     print("ディレクトリ[" + pathName + "]\n")
     exit
   end
+  
+  #Midiチェック(sbnk)(コンバート済み
+  cnt = 0
+  searchName = pathName + "/*.sbnk"
+  Dir::glob(searchName).each{|fileName|
+    sbnkDataName = fileName
+    cnt = cnt + 1
+    if( CompFileDate( sbnkDataName , scriptDataName ) == 1 )
+      isRefreshFile = 1
+    end
+  }
+
+  if( cnt != 1 )
+    print("Midiデータのコンバートでエラーが発生しました。\n")
+    print("sbnkが無いか、sbnkが2個以上あります。\n")
+    print("ディレクトリ[" + pathName + "]\n")
+    exit
+  end
+
+  #Midiチェック(sseq)(コンバート済み
+  cnt = 0
+  searchName = pathName + "/*.sseq"
+  Dir::glob(searchName).each{|fileName|
+    sseqDataName = fileName
+    cnt = cnt + 1
+    if( CompFileDate( sseqDataName , scriptDataName ) == 1 )
+      isRefreshFile = 1
+    end
+  }
+
+  if( cnt != 1 )
+    print("Midiデータのコンバートでエラーが発生しました。\n")
+    print("sseqが無いか、sseqが2個以上あります。\n")
+    print("ディレクトリ[" + pathName + "]\n")
+    exit
+  end
+
+
+  #Midiチェック(swav)(コンバート済み
+  waveListName = pathName + "/" + WAVE_LIST_NAME
+  waveArcName = pathName + "/" + WAVE_ARC_NAME
+  File.open(waveListName,"w"){|file|
+    cnt = 0
+    searchName = pathName + "/*.swav"
+    Dir::glob(searchName).each{|fileName|
+      if( CompFileDate( fileName , waveArcName ) == 1 )
+        isRefreshWave = 1
+      end
+      cnt = cnt+1
+      file.puts File.basename(fileName)
+    }
+  }
+
+  #Waveのパック
+  if( isRefreshWave == 1 )
+    commandStr = "wavearc --update -o " + waveArcName + " " + waveListName
+    for element in wavDataName
+      commandStr = commandStr + element + " "
+    end
+    system(commandStr)
+    
+    isRefreshFile = 1
+  end
+
+  if( cnt == 0 )
+    print("Midiデータのコンバートでエラーが発生しました。\n")
+    print("swaveが無いです。\n")
+    print("ディレクトリ[" + pathName + "]\n")
+    exit
+  end
 
   #narc作成
   if( isRefreshFile == 1 )
     system("pause")
-    narcFileName = pathName + "/" + NARC_NAME_BASE
-    system(NARC_CONVERT + narcFileName + ".narc " + progBinName + " " + gmmDataName + " " + scriptDataName + " " + strmDataName )
+    system(NARC_CONVERT + narcFileName + " " + progBinName + " " + gmmDataName + " " + scriptDataName + " " + sbnkDataName + " " + sseqDataName + " " + waveArcName )
     #narcサイズチェック
-    state = File::stat( narcFileName + ".narc")
+    state = File::stat( narcFileName )
     print( "アーカイブを作成しました。\n" )
     print( "Name[" + narcFileName + "]\n" )
     print( "Size[" + state.size.to_s + "byte(" + ((state.size/1024).to_i).to_s + "kb)]\n" )
-    if( state.size > 512*1024 )
+    if( state.size > 124*1024 )
+      #ヘッダ分の余裕を持って124
       print( "------------------------\n" )
       print( "サイズオーバーです！！！\n" )
       print( "------------------------\n" )

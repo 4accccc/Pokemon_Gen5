@@ -358,17 +358,14 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   {
     work->seqData = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_mus_wb_msl_dl_01_sseq , FALSE , work->heapId );
     work->bankData = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_mus_wb_msl_dl_01_sbnk , FALSE , work->heapId );
-    work->waveData[0] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_msl_voice_01_adpcm_swav , FALSE , work->heapId );
-    work->waveData[1] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_msl_voice_02_adpcm_swav , FALSE , work->heapId );
-    work->waveData[2] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_msl_voice_03_adpcm_swav , FALSE , work->heapId );
-    work->waveData[3] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_msl_voice_04_adpcm_swav , FALSE , work->heapId );
+    work->waveData[0] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_voice_swar , FALSE , work->heapId );
     
     //PMDSND_PresetExtraMusic( work->seqData , work->bankData , WAVE_MUS_WB_MSL_DL_DUMMY_01 );
-    PMDSND_PresetExtraMusic2( work->seqData , work->bankData , SEQ_BGM_MSL_DL_01 );
-    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 15 , work->waveData[0] );
-    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 16 , work->waveData[1] );
-    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 17, work->waveData[2] );
-    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 18 , work->waveData[3] );
+    PMDSND_PresetExtraMusic( work->seqData , work->bankData , SEQ_BGM_MSL_DL_01 );
+    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 11 , work->waveData[0] , 0 );
+    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 12 , work->waveData[0] , 1 );
+    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 13 , work->waveData[0] , 2 );
+    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 14 , work->waveData[0] , 3 );
   }
 #endif //MUSICAL_ACT_DL_TEST
   
@@ -385,9 +382,6 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
 #if MUSICAL_ACT_DL_TEST
 	PMDSND_StopExtraMusic();
 	PMDSND_ReleaseExtraMusic();
-  GFL_HEAP_FreeMemory( work->waveData[3] );
-  GFL_HEAP_FreeMemory( work->waveData[2] );
-  GFL_HEAP_FreeMemory( work->waveData[1] );
   GFL_HEAP_FreeMemory( work->waveData[0] );
   GFL_HEAP_FreeMemory( work->bankData );
   GFL_HEAP_FreeMemory( work->seqData );
@@ -1386,20 +1380,20 @@ void STA_ACT_SetUpdateAttention( ACTING_WORK *work )
 //--------------------------------------------------------------
 void  STA_ACT_StartBgm( ACTING_WORK *work )
 {
-  //SND_STRM_SetUp( ARCID_SNDSTRM, NARC_snd_strm_poketari_swav, SND_STRM_PCM8, SND_STRM_8KHZ, work->heapId );
-  SND_STRM_SetUpStraightData( SND_STRM_PCM8, 
-                               SND_STRM_8KHZ, 
-                               work->heapId , 
-                               work->initWork->distData->strmData , 
-                               work->initWork->distData->strmDataSize );
-  ARI_TPrintf("[%d]\n",work->initWork->distData->strmDataSize);
-  SND_STRM_Play();
+//  SND_STRM_SetUp( ARCID_SNDSTRM, NARC_snd_strm_poketari_swav, SND_STRM_PCM8, SND_STRM_8KHZ, work->heapId );
+//  SND_STRM_SetUpStraightData( SND_STRM_PCM8, 
+//                               SND_STRM_8KHZ, 
+//                               work->heapId , 
+//                               work->initWork->distData->strmData , 
+//                               work->initWork->distData->strmDataSize );
+//  ARI_TPrintf("[%d]\n",work->initWork->distData->strmDataSize);
+//  SND_STRM_Play();
 }
 
 void  STA_ACT_StopBgm( ACTING_WORK *work )
 {
-  SND_STRM_Stop();
-  SND_STRM_Release();
+//  SND_STRM_Stop();
+//  SND_STRM_Release();
 }
 
 #pragma mark [> itemUse func

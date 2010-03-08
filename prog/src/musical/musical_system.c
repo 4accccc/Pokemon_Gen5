@@ -77,7 +77,9 @@ enum
   MUSICAL_ARCDATAID_PROGDATA = 0,
   MUSICAL_ARCDATAID_GMMDATA = 1,
   MUSICAL_ARCDATAID_SCRIPTDATA = 2,
-  MUSICAL_ARCDATAID_STRMDATA = 3,
+  MUSICAL_ARCDATAID_SBNKDATA = 3,
+  MUSICAL_ARCDATAID_SSEQDATA = 4,
+  MUSICAL_ARCDATAID_SWAVDATA = 5,
 };
 
 //======================================================================
@@ -233,7 +235,10 @@ MUSICAL_DISTRIBUTE_DATA* MUSICAL_SYSTEM_InitDistributeData( HEAPID workHeapId )
   distData->programData = NULL;
   distData->messageData = NULL;
   distData->scriptData = NULL;
-  distData->strmData = NULL;
+  distData->midiData = NULL;
+  distData->midiSeqData = NULL;
+  distData->midiBnkData = NULL;
+  distData->midiWaveData = NULL;
 
   return distData;
 }
@@ -252,10 +257,12 @@ void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData )
   {
     GFL_HEAP_FreeMemory( distData->scriptData );
   }
-  if( distData->strmData != NULL )
+  //Seq・Bnk・Waveはパックしてある
+  if( distData->midiData != NULL )
   {
-    GFL_HEAP_FreeMemory( distData->strmData );
+    GFL_HEAP_FreeMemory( distData->midiData );
   }
+
   GFL_HEAP_FreeMemory( distData );
 }
 
@@ -289,16 +296,45 @@ void MUSICAL_SYSTEM_LoadDistributeData_Script( MUSICAL_DISTRIBUTE_DATA *distData
 }
 void MUSICAL_SYSTEM_LoadDistributeData_Strm( MUSICAL_DISTRIBUTE_DATA *distData , const u8 programNo , HEAPID heapId )
 {
+  ARCHANDLE *arcHandle;
+  MUS_DIST_MIDI_HEADER midiSizeHeader;
+  MUS_DIST_MIDI_HEADER *pMidiSizeHeader;
+
   distData->programNo = programNo;
   if( programNo >= MUS_PROGRAM_LOCAL_NUM )
   {
     //FIXME:セーブデータからの取得
-    distData->strmData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_STRMDATA , FALSE , heapId , &distData->strmDataSize );
+    arcHandle = GFL_ARC_OpenDataHandle( ARCID_MUSICAL_PROGRAM_01 , GFL_HEAP_LOWID(heapId) );
   }
   else
   {
-    distData->strmData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01+programNo , MUSICAL_ARCDATAID_STRMDATA , FALSE , heapId , &distData->strmDataSize );
+    arcHandle = GFL_ARC_OpenDataHandle( ARCID_MUSICAL_PROGRAM_01+programNo , GFL_HEAP_LOWID(heapId) );
   }
+
+  midiSizeHeader.seqSize  = GFL_ARC_GetDataSizeByHandle( arcHandle , MUSICAL_ARCDATAID_SSEQDATA );
+  midiSizeHeader.bankSize = GFL_ARC_GetDataSizeByHandle( arcHandle , MUSICAL_ARCDATAID_SBNKDATA );
+  midiSizeHeader.waveSize = GFL_ARC_GetDataSizeByHandle( arcHandle , MUSICAL_ARCDATAID_SWAVDATA );
+  
+  distData->midiDataSize = sizeof(MUS_DIST_MIDI_HEADER) + midiSizeHeader.seqSize + midiSizeHeader.bankSize + midiSizeHeader.waveSize;
+  
+  distData->midiData = GFL_HEAP_AllocClearMemory( heapId , distData->midiDataSize );
+  
+  pMidiSizeHeader = distData->midiData;
+  distData->midiSeqData  = (void*)((u32)distData->midiData + sizeof(MUS_DIST_MIDI_HEADER));
+  distData->midiBnkData  = (void*)((u32)distData->midiData + sizeof(MUS_DIST_MIDI_HEADER) + midiSizeHeader.seqSize );
+  distData->midiWaveData = (void*)((u32)distData->midiData + sizeof(MUS_DIST_MIDI_HEADER) + midiSizeHeader.seqSize + midiSizeHeader.bankSize );
+  
+  pMidiSizeHeader->seqSize  = midiSizeHeader.seqSize;
+  pMidiSizeHeader->bankSize = midiSizeHeader.bankSize;
+  pMidiSizeHeader->waveSize = midiSizeHeader.waveSize;
+  
+  GFL_ARC_LoadDataByHandle( arcHandle , MUSICAL_ARCDATAID_SSEQDATA , distData->midiSeqData );
+  GFL_ARC_LoadDataByHandle( arcHandle , MUSICAL_ARCDATAID_SBNKDATA , distData->midiBnkData );
+  GFL_ARC_LoadDataByHandle( arcHandle , MUSICAL_ARCDATAID_SWAVDATA , distData->midiWaveData );
+  
+  GFL_ARC_CloseDataHandle( arcHandle );
+
+  ARI_TPrintf("MusicalSystem LoadMidiData[%d][%d][%d].\n",pMidiSizeHeader->seqSize,pMidiSizeHeader->bankSize,pMidiSizeHeader->waveSize);
 }
 
 #pragma mark [>proc 
