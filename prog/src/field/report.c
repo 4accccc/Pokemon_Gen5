@@ -154,6 +154,7 @@ enum {
 #define	TIMEMARK_PY		( 174 )
 #define	TIMEMARK_SX		( 12 )
 
+#define	TIMEMARK_WAIT	( 8 )
 
 struct _REPORT_WORK {
 	GAMESYS_WORK * gameSys;				// ゲームシステム
@@ -176,7 +177,8 @@ struct _REPORT_WORK {
 	u32	totalSize;				// セーブデータサイズ
 	u32	overSize;					// セーブしたサイズ
 	u32	timeSize;					// カウンタサイズ
-	u32	objCount;					// OBJ変更カウンタ
+	u16	objCount;					// OBJ変更カウンタ
+	u16	objWait;					// OBJ変更ウェイト
 
 	int	seq;
 
@@ -360,8 +362,9 @@ void REPORT_SetSaveSize( REPORT_WORK * wk )
 	wk->sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(wk->gameSys) );
 	SaveControl_GetActualSize( wk->sv, &wk->actualSize, &wk->totalSize );
 	wk->timeSize  = wk->actualSize * 2 / 10;
-	wk->overSize = wk->timeSize;
+	wk->overSize  = wk->timeSize;
 	wk->objCount  = 0;
+	wk->objWait   = 0;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -410,16 +413,21 @@ void REPORT_StartSave( REPORT_WORK * wk )
  *
  * @param		wk		レポート下画面ワーク
  *
- * @return	none
+ * @retval	"TRUE = 終了"
+ * @retval	"FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-void REPORT_EndSave( REPORT_WORK * wk )
+BOOL REPORT_EndSave( REPORT_WORK * wk )
 {
-	u32	i;
-
-	wk->save_active = FALSE;
+	if( wk->objCount == 10 ){
+		wk->save_active = FALSE;
+		return TRUE;
+	}
+	return FALSE;
 
 /*
+	u32	i;
+
 	for( i=OBJID_TIME01; i<=OBJID_TIME10; i++ ){
 		GFL_CLACT_WK_SetAnmFrame( wk->clwk[i], 0 );
 		GFL_CLACT_WK_SetAnmSeq( wk->clwk[i], 1 );
@@ -427,6 +435,19 @@ void REPORT_EndSave( REPORT_WORK * wk )
 */
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * セーブ強制終了
+ *
+ * @param		wk		レポート下画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void REPORT_BreakSave( REPORT_WORK * wk )
+{
+	wk->save_active = FALSE;
+}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -815,14 +836,21 @@ static void VBlankTask_SaveTimeMarkObj( GFL_TCB * tcb, void * work )
 
 	now_size = SaveControl_GetSaveAsyncMain_WritingSize( wk->sv );
 
+	if( wk->objWait != TIMEMARK_WAIT ){
+		wk->objWait++;
+	}
+
 	if( now_size >= wk->overSize ){
-		if( wk->objCount < 10 ){
-			GFL_CLACT_WK_SetAnmFrame( wk->clwk[OBJID_TIME01+wk->objCount], 0 );
-			GFL_CLACT_WK_SetAnmSeq( wk->clwk[OBJID_TIME01+wk->objCount], 1 );
-			GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[OBJID_TIME01+wk->objCount], TRUE );
-			wk->objCount++;
+		if( wk->objWait == TIMEMARK_WAIT ){
+			if( wk->objCount < 10 ){
+				wk->overSize += wk->timeSize;
+				wk->objWait = 0;
+				GFL_CLACT_WK_SetAnmFrame( wk->clwk[OBJID_TIME01+wk->objCount], 0 );
+				GFL_CLACT_WK_SetAnmSeq( wk->clwk[OBJID_TIME01+wk->objCount], 1 );
+				GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[OBJID_TIME01+wk->objCount], TRUE );
+				wk->objCount++;
+			}
 		}
-		wk->overSize += wk->timeSize;
 	}
 
 	GFL_CLACT_SYS_Main();

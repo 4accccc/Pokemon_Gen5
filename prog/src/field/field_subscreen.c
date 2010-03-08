@@ -1330,9 +1330,15 @@ void FIELD_SUBSCREEN_SetReportStart( FIELD_SUBSCREEN_WORK * pWork )
 }
 
 // セーブ終了
-void FIELD_SUBSCREEN_SetReportEnd( FIELD_SUBSCREEN_WORK * pWork )
+BOOL FIELD_SUBSCREEN_SetReportEnd( FIELD_SUBSCREEN_WORK * pWork )
 {
-	REPORT_EndSave( pWork->reportWork );
+	return REPORT_EndSave( pWork->reportWork );
+}
+
+// セーブ強制終了（失敗時）
+void FIELD_SUBSCREEN_SetReportBreak( FIELD_SUBSCREEN_WORK * pWork )
+{
+	REPORT_BreakSave( pWork->reportWork );
 }
 
 // セーブタイプ取得（たくさん書くか）

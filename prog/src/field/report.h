@@ -115,7 +115,19 @@ extern void REPORT_StartSave( REPORT_WORK * wk );
  *
  * @param		wk		レポート下画面ワーク
  *
+ * @retval	"TRUE = 終了"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL REPORT_EndSave( REPORT_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * セーブ強制終了
+ *
+ * @param		wk		レポート下画面ワーク
+ *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void REPORT_EndSave( REPORT_WORK * wk );
+extern void REPORT_BreakSave( REPORT_WORK * wk );

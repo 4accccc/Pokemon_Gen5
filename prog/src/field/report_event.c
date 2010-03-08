@@ -48,6 +48,7 @@ enum {
 	REPORT_SEQ_PALYER_ANM_CHG,					// 主人公アニメ変更
 	REPORT_SEQ_SAVE_INIT,								// セーブ初期設定
 	REPORT_SEQ_SAVE_MAIN,								// セーブ実行
+	REPORT_SEQ_RESULT_OK_BAR_WAIT,			// セーブ成功バー待ち
 	REPORT_SEQ_RESULT_OK_WAIT,					// セーブ成功メッセージ待ち
 	REPORT_SEQ_RESULT_SE_WAIT,					// ＳＥ待ち
 	REPORT_SEQ_RESULT_NG_WAIT,					// セーブ失敗メッセージ待ち
@@ -87,8 +88,10 @@ struct _REPORT_EVENT_LOCAL {
 	GFL_TCBLSYS * tcbl;
 
   GFL_MSGDATA * msgData;
-	GFL_BMPWIN * win;
+//	GFL_BMPWIN * win;
+	PRINT_UTIL	util;
 	PRINT_STREAM * stream;
+	PRINT_QUE * que;						// プリントキュー
 	STRBUF * strBuff;
 	APP_KEYCURSOR_WORK * kcwk;	// メッセージ送りカーソル
 	BOOL stream_clear_flg;
@@ -113,6 +116,8 @@ static void ExitReportBmpWin( FMENU_REPORT_EVENT_WORK * wk );
 static void SetReportMsg( FMENU_REPORT_EVENT_WORK * wk, u32 strIdx );
 static void SetReportMsgBuff( FMENU_REPORT_EVENT_WORK * wk );
 static BOOL MainReportMsg( FMENU_REPORT_EVENT_WORK * wk );
+static void MsgPrint( FMENU_REPORT_EVENT_WORK * wk, u32 strIdx );
+static BOOL CheckMsgPrint( FMENU_REPORT_EVENT_WORK * wk );
 static void SetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * work );
 static void ResetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * work );
 static BOOL CheckPlayerAnime( FMENU_REPORT_EVENT_WORK * wk );
@@ -153,6 +158,7 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 			wk->local->strBuff = GFL_STR_CreateBuffer( REPORT_STR_LEN, wk->heapID );
 			wk->local->tcbl = GFL_TCBL_Init( wk->heapID, wk->heapID, 1, 4 );
 			wk->local->kcwk = APP_KEYCURSOR_Create( 15, TRUE, TRUE, wk->heapID );
+			wk->local->que  = PRINTSYS_QUE_Create( wk->heapID );
 			wk->local->wait = 0;
 			InitReportBmpWin( wk );
 			InitReportYesNo( wk );
@@ -191,7 +197,7 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 */
 			// セーブ
 			}else{
-				BmpWinFrame_Clear( wk->local->win, WINDOW_TRANS_ON_V );
+				BmpWinFrame_Clear( wk->local->util.win, WINDOW_TRANS_ON_V );
 				*seq = REPORT_SEQ_SAVE_SIZE_CHECK;
 			}
 			break;
@@ -228,15 +234,18 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 		PLAYTIME_SetSaveTime( SaveData_GetPlayTime(wk->sv) );
 		FIELD_SUBSCREEN_SetReportSize( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
 		if( FIELD_SUBSCREEN_CheckReportType(FIELDMAP_GetFieldSubscreenWork(wk->fieldWork)) == TRUE ){
-			SetReportMsg( wk, msg_common_report_09 );
+				MsgPrint( wk, msg_common_report_09 );
+//			SetReportMsg( wk, msg_common_report_09 );
 		}else{
-			SetReportMsg( wk, msg_common_report_03 );
+				MsgPrint( wk, msg_common_report_03 );
+//			SetReportMsg( wk, msg_common_report_03 );
 		}
 		*seq = REPORT_SEQ_PALYER_ANM_CHG;
 		break;
 
 	case REPORT_SEQ_PALYER_ANM_CHG:					// 主人公アニメ変更
-		if( MainReportMsg( wk ) == FALSE ){
+//		if( MainReportMsg( wk ) == FALSE ){
+		if( CheckMsgPrint( wk ) == TRUE ){
 			SetReportPlayerAnime( wk );
 			*seq = REPORT_SEQ_SAVE_INIT;
 		}
@@ -248,7 +257,7 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 		}
 		wk->local->timeIcon = TIMEICON_Create(
 														GFUser_VIntr_GetTCBSYS(),
-														wk->local->win, 15, TIMEICON_DEFAULT_WAIT, wk->heapID );
+														wk->local->util.win, 15, TIMEICON_DEFAULT_WAIT, wk->heapID );
 		FIELD_SUBSCREEN_SetReportStart( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
 		SetReportBgAnime( wk );
 		GAMEDATA_SaveAsyncStart( GAMESYSTEM_GetGameData(wk->gsys) );
@@ -262,6 +271,7 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 			break;
       
 		case SAVE_RESULT_OK:
+/*
 			FIELD_SUBSCREEN_SetReportEnd( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
       ResetReportBgAnime( wk );
 			ResetReportPlayerAnime( wk );
@@ -278,16 +288,38 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 			SetReportMsgBuff( wk );
 			TILEICON_Exit( wk->local->timeIcon );
 			*seq = REPORT_SEQ_RESULT_OK_WAIT;
+*/
+			*seq = REPORT_SEQ_RESULT_OK_BAR_WAIT;
 			break;
 
 		case SAVE_RESULT_NG:
-			FIELD_SUBSCREEN_SetReportEnd( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
+			FIELD_SUBSCREEN_SetReportBreak( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
       ResetReportBgAnime( wk );
 			ResetReportPlayerAnime( wk );
 			SetReportMsg( wk, msg_common_report_06 );
 			TILEICON_Exit( wk->local->timeIcon );
 			*seq = REPORT_SEQ_RESULT_NG_WAIT;
 			break;
+		}
+		break;
+
+	case REPORT_SEQ_RESULT_OK_BAR_WAIT:			// セーブ成功バー待ち
+		if( FIELD_SUBSCREEN_SetReportEnd( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) ) == TRUE ){
+      ResetReportBgAnime( wk );
+			ResetReportPlayerAnime( wk );
+			{
+				WORDSET * wset;
+				STRBUF * str;
+				wset = WORDSET_Create( wk->heapID );
+				str  = GFL_MSG_CreateString( wk->local->msgData, msg_common_report_04 );
+				WORDSET_RegisterPlayerName( wset, 0, GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(wk->gsys)) );
+				WORDSET_ExpandStr( wset, wk->local->strBuff, str );
+				GFL_STR_DeleteBuffer( str );
+				WORDSET_Delete( wset );
+			}
+			SetReportMsgBuff( wk );
+			TILEICON_Exit( wk->local->timeIcon );
+			*seq = REPORT_SEQ_RESULT_OK_WAIT;
 		}
 		break;
 
@@ -390,6 +422,7 @@ static void ReleaseLocalWork( FMENU_REPORT_EVENT_WORK * wk )
 {
 	ExitReportYesNo( wk );
 	ExitReportBmpWin( wk );
+	PRINTSYS_QUE_Delete( wk->local->que );
 	APP_KEYCURSOR_Delete( wk->local->kcwk );
   GFL_TCBL_Exit( wk->local->tcbl );
 	GFL_STR_DeleteBuffer( wk->local->strBuff );
@@ -408,8 +441,9 @@ static void ReleaseLocalWork( FMENU_REPORT_EVENT_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void InitReportBmpWin( FMENU_REPORT_EVENT_WORK * wk )
 {
-	wk->local->win = GFL_BMPWIN_Create(
-							GFL_BG_FRAME2_S, MSG_PX, MSG_PY, MSG_SX, MSG_SY, BGPAL_MSGFNT, GFL_BMP_CHRAREA_GET_B );
+	wk->local->util.win = GFL_BMPWIN_Create(
+													GFL_BG_FRAME2_S, MSG_PX, MSG_PY,
+													MSG_SX, MSG_SY, BGPAL_MSGFNT, GFL_BMP_CHRAREA_GET_B );
 
 	BmpWinFrame_GraphicSet(
 		GFL_BG_FRAME2_S, WINFRM_CGXNUM, BGPAL_WINFRM, MENU_TYPE_SYSTEM, wk->heapID );
@@ -429,7 +463,7 @@ static void InitReportBmpWin( FMENU_REPORT_EVENT_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void ExitReportBmpWin( FMENU_REPORT_EVENT_WORK * wk )
 {
-	GFL_BMPWIN_Delete( wk->local->win );
+	GFL_BMPWIN_Delete( wk->local->util.win );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -459,11 +493,11 @@ static void SetReportMsg( FMENU_REPORT_EVENT_WORK * wk, u32 strIdx )
 //--------------------------------------------------------------------------------------------
 static void SetReportMsgBuff( FMENU_REPORT_EVENT_WORK * wk )
 {
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->local->win), 15 );
-	BmpWinFrame_Write( wk->local->win, WINDOW_TRANS_OFF, WINFRM_CGXNUM, BGPAL_WINFRM );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->local->util.win), 15 );
+	BmpWinFrame_Write( wk->local->util.win, WINDOW_TRANS_OFF, WINFRM_CGXNUM, BGPAL_WINFRM );
 
 	wk->local->stream = PRINTSYS_PrintStream(
-									wk->local->win,
+									wk->local->util.win,
 									0, 0, wk->local->strBuff,
 									FLDMSGBG_GetFontHandle(wk->msgBG),
 									MSGSPEED_GetWait(),
@@ -474,7 +508,7 @@ static void SetReportMsgBuff( FMENU_REPORT_EVENT_WORK * wk )
 
 	wk->local->stream_clear_flg = FALSE;
 
-	GFL_BMPWIN_MakeTransWindow_VBlank( wk->local->win );
+	GFL_BMPWIN_MakeTransWindow_VBlank( wk->local->util.win );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -492,8 +526,8 @@ static BOOL MainReportMsg( FMENU_REPORT_EVENT_WORK * wk )
   GFL_TCBL_Main( wk->local->tcbl );
   GFL_TCBL_Main( wk->local->tcbl );
 
-	APP_KEYCURSOR_Main( wk->local->kcwk, wk->local->stream, wk->local->win );
-	APP_KEYCURSOR_Main( wk->local->kcwk, wk->local->stream, wk->local->win );
+	APP_KEYCURSOR_Main( wk->local->kcwk, wk->local->stream, wk->local->util.win );
+	APP_KEYCURSOR_Main( wk->local->kcwk, wk->local->stream, wk->local->util.win );
 
   switch( PRINTSYS_PrintStreamGetState(wk->local->stream) ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
@@ -521,6 +555,48 @@ static BOOL MainReportMsg( FMENU_REPORT_EVENT_WORK * wk )
 
 	return TRUE;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * メッセージ一括描画
+ *
+ * @param		wk			ワーク
+ * @param		strIdx	文字列インデックス
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void MsgPrint( FMENU_REPORT_EVENT_WORK * wk, u32 strIdx )
+{
+	STRBUF * str;
+
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->local->util.win), 15 );
+	BmpWinFrame_Write( wk->local->util.win, WINDOW_TRANS_OFF, WINFRM_CGXNUM, BGPAL_WINFRM );
+
+	str = GFL_MSG_CreateString( wk->local->msgData, strIdx );
+	PRINT_UTIL_Print( &wk->local->util, wk->local->que, 0, 0, str, FLDMSGBG_GetFontHandle(wk->msgBG) );
+	GFL_STR_DeleteBuffer( str );
+
+	GFL_BMPWIN_MakeTransWindow_VBlank( wk->local->util.win );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * メッセージ一括描画待ち
+ *
+ * @param		wk			ワーク
+ *
+ * @retval	"TRUE = 描画終了"
+ * @retval	"FALSE = 描画中"
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL CheckMsgPrint( FMENU_REPORT_EVENT_WORK * wk )
+{
+	PRINTSYS_QUE_Main( wk->local->que );
+	PRINT_UTIL_Trans( &wk->local->util, wk->local->que );
+	return PRINTSYS_QUE_IsFinished( wk->local->que );
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
