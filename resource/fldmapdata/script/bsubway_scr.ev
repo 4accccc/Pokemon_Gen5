@@ -1517,6 +1517,8 @@ sub_receipt_common_report_error:
   IF $play_mode == BSWAY_MODE_WIFI THEN
     //ランクダウン処理
     _BSUBWAY_TOOL( BSWTOOL_DOWN_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
+    //ランク文字列に
+    _NUMBER( 0, ret, 2 )
     //ランクが下がった
     _SYSWIN_MSG( msg_bsw_scr_79, WIN_DOWN )
     _AB_KEYWAIT()
