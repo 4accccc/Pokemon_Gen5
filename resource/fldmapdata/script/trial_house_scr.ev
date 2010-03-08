@@ -552,19 +552,19 @@ EVENT_START ev_tri_house_rank_disp
   DEFINE_LOCAL app_call
   DEFINE_LOCAL state
   //ランキングセーブデータの状態を取得
-  $state = 0 //@todo
+  _TH_GET_RDAT_STATE(state)
 
   //アプリコールフラグ初期化
   $app_call = FALSE
-  IF $state == 0 THEN   //データなし
+  IF $state == TH_RDAT_ST_NONE THEN   //データなし
     //「データないよ」
     _SYSWIN_MSG_ALLPUT_DOWN( msg_trialhouse_032 )
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
-  ELSIF $state == 1 THEN   //ＲＯＭデータのみ
+  ELSIF $state == TH_RDAT_ST_ROM THEN   //ＲＯＭデータのみ
     $app_call = TRUE
     $dl_flg = FALSE
-  ELSIF $state == 2 THEN   //ダウンロードのみ
+  ELSIF $state == TH_RDAT_ST_DL THEN   //ダウンロードのみ
     $app_call = TRUE
     $dl_flg = TRUE
   ELSE                //両方あり
