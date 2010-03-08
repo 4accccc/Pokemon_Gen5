@@ -239,7 +239,6 @@ EVENT_START		ev_pos_r04_rival_01
 	_BALLOONWIN_OBJMSG( msg_r04_black_02 , R04_RIVAL_01 )
 	_MSGWIN_CLOSE()
 	
-	//【仮】ライバルと戦闘
 	//水タイプを選択している場合
 	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_MIZU THEN
 	
