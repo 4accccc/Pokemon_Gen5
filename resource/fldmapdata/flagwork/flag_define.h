@@ -2460,8 +2460,8 @@
 #define TMFLG_C02R0601_ITEM               2736 /* 0x0ab0 １日１個入手制限アイテム */
 #define TMFLG_D02_ROCK_01                 2737 /* 0x0ab1 ヤグルマの森：試しの岩１イベント */
 #define TMFLG_D02_ROCK_02                 2738 /* 0x0ab2 ヤグルマの森：試しの岩２イベント */
-		/* not used  2739(0x0ab3) */
-		/* not used  2740(0x0ab4) */
+#define TMFLG_C05R0701_WAZA_NO            2739 /* 0x0ab3 日替わり技見せ：本日の技ナンバー */
+#define TMFLG_C05R0701_WAZA_CLEAR         2740 /* 0x0ab4 日替わり技見せ：クリア判定 */
 		/* not used  2741(0x0ab5) */
 		/* not used  2742(0x0ab6) */
 		/* not used  2743(0x0ab7) */
