@@ -1140,6 +1140,7 @@ DEP_TEXSET_IMD_OUTDOOR031 = \
 	$(SRCDIR)/o_table_01.imd \
 	$(SRCDIR)/searock_01.imd \
 	$(SRCDIR)/searock_02.imd \
+	$(SRCDIR)/d7_inaba_01.imd \
 	$(SRCDIR)/plant_01.imd \
 	$(SRCDIR)/door_pc.imd \
 	$(SRCDIR)/door01.imd \
