@@ -23,15 +23,15 @@ typedef struct{
 struct RECORD{
 	u32 large_rec[LARGE_REC_NUM]; //(70+1)x4 byte = 284 byte
 	u16 small_rec[SMALL_REC_NUM]; //(49+28)x2 byte = 154 byte
-	u8 Rank; //WBトライアルハウスランキングデータ　1 byte   th_rank_def.h 参照
+	u8 Rank; //WBトライアルハウス最高ランキングデータ　1 byte   th_rank_def.h 参照
   u8 padding; //1 byte
-	
+  u32 TrialScore; //WBトライアルハウス最高スコア 4 byte
 	//これは必ず最後
 	RECORD_CRC crc;		//CRC & 暗号化キー   4 byte
 };
 #ifdef _NITRO
 // 構造体が想定のサイズとなっているかチェック
-SDK_COMPILER_ASSERT(sizeof(RECORD) == 284+154+1+1+4);	//+=プラチナ追加分
+SDK_COMPILER_ASSERT(sizeof(RECORD) == 284+154+1+1+4+4);	//+=プラチナ追加分
 #endif
 
 //==============================================================================
