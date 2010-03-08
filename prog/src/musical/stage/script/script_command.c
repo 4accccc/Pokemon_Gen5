@@ -27,8 +27,8 @@
 #pragma mark [> define
 
 #if USE_MUS_SCRIPT_PRINT
-#define SCRIPT_TPrintf(...) ARI_TPrintf(...)
-#define SCRIPT_Printf(...) ARI_Printf(...)
+#define SCRIPT_TPrintf(...) ARI_TPrintf(__VA_ARGS__)
+#define SCRIPT_Printf(...) ARI_Printf(__VA_ARGS__)
 #else
 //#define SCRIPT_TPrintf ARI_TPrintf
 //#define SCRIPT_Printf ARI_Printf
