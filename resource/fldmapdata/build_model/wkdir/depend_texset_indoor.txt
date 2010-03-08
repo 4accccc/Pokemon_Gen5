@@ -1214,7 +1214,8 @@ DEP_TEXSET_IMD_INDOOR025 = \
 	$(SRCDIR)/warp01.imd \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
-	$(SRCDIR)/shelf06.imd
+	$(SRCDIR)/shelf06.imd \
+	$(SRCDIR)/monitor01.imd
 
 texset/indoor025.imd: $(DEP_TEXSET_IMD_INDOOR025) texset/tmp/indoor025.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor025.list
@@ -2277,7 +2278,8 @@ DEP_TEXSET_IMD_INDOOR049 = \
 	$(SRCDIR)/warp01.imd \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
-	$(SRCDIR)/shelf06.imd
+	$(SRCDIR)/shelf06.imd \
+	$(SRCDIR)/monitor01.imd
 
 texset/indoor049.imd: $(DEP_TEXSET_IMD_INDOOR049) texset/tmp/indoor049.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor049.list
