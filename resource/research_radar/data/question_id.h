@@ -14,7 +14,7 @@
 #define QUESTION_ID_SEASON (12) //「・どの　きせつが　すき？」
 #define QUESTION_ID_FOOD (13) //「・どんな　たべものが　すき？」
 #define QUESTION_ID_CHARACTER (14) //「・すきな　にんげんの　タイプは？」
-#define QUESTION_ID_ (15) //「・ポケモンの　おもしろいところは？」
+#define QUESTION_ID_POKEMON (15) //「・ポケモンの　おもしろいところは？」
 #define QUESTION_ID_STRONG_CLASS (16) //「・すきな　べんきょうは？」
 #define QUESTION_ID_WEAK_CLASS (17) //「・にがてな　べんきょうは？」
 #define QUESTION_ID_DREAM (18) //「・もし　なれるとしたら？」

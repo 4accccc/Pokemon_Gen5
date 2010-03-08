@@ -16,7 +16,7 @@ static const u32 StringID_question[ QUESTION_ID_NUM ] =
   str_question_12,  // [QUESTION_ID_SEASON]
   str_question_13,  // [QUESTION_ID_FOOD]
   str_question_14,  // [QUESTION_ID_CHARACTER]
-  str_question_15,  // [QUESTION_ID_]
+  str_question_15,  // [QUESTION_ID_POKEMON]
   str_question_16,  // [QUESTION_ID_STRONG_CLASS]
   str_question_17,  // [QUESTION_ID_WEAK_CLASS]
   str_question_18,  // [QUESTION_ID_DREAM]

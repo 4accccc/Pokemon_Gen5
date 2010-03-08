@@ -16,7 +16,7 @@ static const u32 CaptionStringID_question[ QUESTION_ID_NUM ] =
   str_question_12_caption,  // [QUESTION_ID_SEASON]
   str_question_13_caption,  // [QUESTION_ID_FOOD]
   str_question_14_caption,  // [QUESTION_ID_CHARACTER]
-  str_question_15_caption,  // [QUESTION_ID_]
+  str_question_15_caption,  // [QUESTION_ID_POKEMON]
   str_question_16_caption,  // [QUESTION_ID_STRONG_CLASS]
   str_question_17_caption,  // [QUESTION_ID_WEAK_CLASS]
   str_question_18_caption,  // [QUESTION_ID_DREAM]

@@ -16,7 +16,7 @@ static const u8 AnswerNum_question[ QUESTION_ID_NUM ] =
   4,  // [QUESTION_ID_SEASON]
   4,  // [QUESTION_ID_FOOD]
   4,  // [QUESTION_ID_CHARACTER]
-  4,  // [QUESTION_ID_]
+  4,  // [QUESTION_ID_POKEMON]
   4,  // [QUESTION_ID_STRONG_CLASS]
   4,  // [QUESTION_ID_WEAK_CLASS]
   4,  // [QUESTION_ID_DREAM]

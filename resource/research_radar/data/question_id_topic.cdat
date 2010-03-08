@@ -10,7 +10,7 @@ static const u8 Question1_topic[ TOPIC_ID_NUM ] =
   QUESTION_ID_MUSIC,  // [TOPIC_ID_HOBBY]
   QUESTION_ID_FAVORITE_CLASS,  // [TOPIC_ID_SCOOL]
   QUESTION_ID_PLAY_SPOT,  // [TOPIC_ID_PLAY]
-  QUESTION_ID_,  // [TOPIC_ID_DETAIL]
+  QUESTION_ID_POKEMON,  // [TOPIC_ID_DETAIL]
 };
 static const u8 Question2_topic[ TOPIC_ID_NUM ] = 
 {
