@@ -2813,6 +2813,10 @@ static void zoneChangeScene( FIELDMAP_WORK *fieldWork, u32 zone_id )
   u32 id = ZONEDATA_GetSceneAreaID( zone_id );
   if( id != ZONEDATA_NO_SCENEAREA_ID ) 
   {
+    // まずクリア
+    FLD_SCENEAREA_Release( fieldWork->sceneArea );
+    FLD_SCENEAREA_LOADER_Clear( fieldWork->sceneAreaLoader );
+    
     // シーンエリアを読み込んで設定
     FLD_SCENEAREA_LOADER_LoadOriginal( fieldWork->sceneAreaLoader, ARCID_GRID_CAMERA_SCENE, id, fieldWork->heapID );
 
@@ -2824,7 +2828,6 @@ static void zoneChangeScene( FIELDMAP_WORK *fieldWork, u32 zone_id )
   }
   else if( !ZONEDATA_IsRailMap( zone_id ) )
   {
-
     FLD_SCENEAREA_Release( fieldWork->sceneArea );
     FLD_SCENEAREA_LOADER_Clear( fieldWork->sceneAreaLoader );
   }
