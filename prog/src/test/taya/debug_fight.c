@@ -40,6 +40,7 @@
 #include "battle\battle.h"
 #include "field\zonedata.h"
 #include "fieldmap\zone_id.h"
+#include "system\net_err.h"
 
 // local includes ---------------------
 #include "msg\msg_debug_fight.h"
@@ -2224,11 +2225,16 @@ FS_EXTERN_OVERLAY(battle);
   case SEQ_BTL_RETURN:
     if( GFL_PROC_LOCAL_Main(wk->subProc) != GFL_PROC_MAIN_VALID )
     {
-      changeScene_recover( wk );
-      PMSND_StopBGM();
-      if( wk->fNetConnect ){
+      if(NetErr_App_CheckError() != NET_ERR_STATUS_NULL){
+        NetErr_App_ReqErrorDisp();
+        NetErr_DispCall(FALSE);
+        wk->fNetConnect = FALSE;
+      }
+      else if( wk->fNetConnect ){
         GFL_NET_Exit( btlExitConnectCallback );
       }
+      changeScene_recover( wk );
+      PMSND_StopBGM();
       (*seq) = SEQ_NET_EXIT_WAIT;
     }
     break;

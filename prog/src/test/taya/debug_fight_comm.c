@@ -169,6 +169,7 @@ static BOOL _NetTestParent(void* pCtl)
 
   if(GFL_NET_GetConnectNum()==(pDOC->num-1)){
     if(GFL_NET_HANDLE_RequestNegotiation()){    
+      GFL_NET_SetNoChildErrorCheck(TRUE);
       GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15);
       _CHANGE_STATE( NetTestRecvTiming );
     }
@@ -237,6 +238,7 @@ void DFC_NET_Init(const GFLNetInitializeStruct* pNetInit, NetStepEndCallback cal
   DebugOhnoControl.bParent = bParent;
   DebugOhnoControl.num=num;
   GFL_NET_Init(pNetInit, _initCallBack, pWork);
+  GFL_NET_SetNoChildErrorCheck(TRUE);
 }
 
 
