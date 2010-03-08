@@ -280,7 +280,11 @@ GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc )
   }else{
     event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_EFFECT );
   }
-  GF_ASSERT( event );
+  if( event == NULL){
+    effect_EffectDelete( enc, eff_wk );
+    return NULL;
+  }
+//  GF_ASSERT( event );
 
   if(ev_no){
     effect_EffectDelete( enc, eff_wk );
