@@ -51,7 +51,8 @@
 #define	ID_TD_use_item4		    ( 7 )		//使用道具4
 #define	ID_TD_aibit			      ( 8 )		//AIパターン
 #define	ID_TD_hp_recover_flag ( 9 )		//戦闘後回復するか？
-#define	ID_TD_gift_item       ( 10 )  //贈呈するアイテム
+#define	ID_TD_gold            ( 10 )	//おこづかい係数
+#define	ID_TD_gift_item       ( 11 )  //贈呈するアイテム
 
 //トレーナー持ちポケモンパラメータ
 #define DATATYPE_NORMAL   ( 0 )
@@ -84,10 +85,11 @@ typedef struct{
 
 	u32	aibit;						    //AIパターン
 
-  u16 hp_recover_flag :1;   //戦闘後回復するか？
-  u16                 :15;  
+  u8  hp_recover_flag :1;   //戦闘後回復するか？
+  u8                  :7;  
+  u8  gold;                 //おこづかい係数  
 
-  u16 gift_item;
+  u16 gift_item;            //戦闘後もらえるアイテム
 }TRAINER_DATA;
 
 //トレーナー持ちポケモンパラメータ（データタイプノーマル）
