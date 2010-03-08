@@ -33,6 +33,7 @@
 #define R04_FLD_ITEM_04                   18
 #define R04_FLD_ITEM_05                   19
 #define R04_FLD_ITEM_06                   20
+#define TR_PARASOL_07                     21
 
 #endif //ZONE_R04_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

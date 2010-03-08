@@ -18,6 +18,9 @@
 #define D02_FLD_ITEM_02                    6
 #define D02_FLD_ITEM_03                    7
 #define D02_FLD_ITEM_04                    8
+#define TR_KINDERGARTENM_05                9
+#define TR_KIDERGARTENW_04                10
+#define TR_BATTLEG_03                     11
 
 #endif //ZONE_D02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

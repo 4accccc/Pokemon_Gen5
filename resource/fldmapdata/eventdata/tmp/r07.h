@@ -24,6 +24,8 @@
 #define R07_FLD_ITEM_02                   10
 #define R07_FLD_ITEM_03                   11
 #define R07_FLD_ITEM_04                   12
+#define TR_JUGGLING_08                    13
+#define TR_JUGGLING_09                    14
 
 #endif //ZONE_R07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

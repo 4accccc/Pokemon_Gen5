@@ -39,6 +39,7 @@
 #define R03_POKE4_01                      24
 #define R03_FLD_ITEM_04                   25
 #define R03_FLD_ITEM_05                   26
+#define TR_SCHOOLG_04                     27
 
 #endif //ZONE_R03_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r03.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
