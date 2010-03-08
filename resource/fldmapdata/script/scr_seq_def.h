@@ -8667,6 +8667,20 @@
   .short EV_SEQ_TH_CALL_RANK_APP
   .short \dl
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief トライアルハウス　ランキングデータ状況
+ * @param state   ステート格納バッファ  trial_house_scr_def.h参照
+ * @param none
+ */
+//--------------------------------------------------------------
+#define _TH_GET_RDAT_STATE( state ) _ASM_TH_GET_RDAT_STATE state
+  
+  .macro _ASM_TH_GET_RDAT_STATE state
+  .short EV_SEQ_TH_GET_RDAT_STATE
+  .short \state
+  .endm
   
 //--------------------------------------------------------------
 /**
