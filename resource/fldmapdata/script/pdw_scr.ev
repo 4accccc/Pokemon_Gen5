@@ -46,16 +46,27 @@ EVENT_START ev_pdw_furniture_menu
       _AB_KEYWAIT ()
       _BALLOONWIN_CLOSE()
     ELSE
-      
-      _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_CHECK_SELECT , 0 , 0 , SCWK_ANSWER )
-      IF $SCWK_ANSWER == TRUE THEN //もうリストを選んでる
-        //"家具選んでくれて ありがとうね次回のカタログもお楽しみに"
-        _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_03 )
+      IF $WK_SCENE_C02R0101 == FALSE THEN
+        //初回イベント
+        //"その　ポケモン……▼なかなかの　センスの　持ち主▼・・・"
+        _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_08 )
         _AB_KEYWAIT ()
         _BALLOONWIN_CLOSE()
-      ELSE
+        
+        $WK_SCENE_C02R0101 = TRUE
+        
         _CHG_COMMON_SCR SCRID_PDW_FURNITURE_SELECT_ROUTINE
-        //_CALL furniture_select_routine
+      ELSE
+        _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_CHECK_SELECT , 0 , 0 , SCWK_ANSWER )
+        IF $SCWK_ANSWER == TRUE THEN //もうリストを選んでる
+          //"あたらしい　カタログが　とどいたらまた　えらんでくださいね！！"
+          _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_03 )
+          _AB_KEYWAIT ()
+          _BALLOONWIN_CLOSE()
+        ELSE
+          _CHG_COMMON_SCR SCRID_PDW_FURNITURE_SELECT_ROUTINE
+          //_CALL furniture_select_routine
+        ENDIF
       ENDIF
     ENDIF
   ENDIF
@@ -71,12 +82,13 @@ ev_pdw_furniture_select_routine:
     
   _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_IS_SYNC_FURNITURE , 0 , 0 , SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN //前回選んだ家具を送ってる
-    //"こないだは選んでくれてありがとう！あれやっぱりステキだったなー"
+    //"アナタの　ステキセンスを　みこんでまたまた　おねがいしたいのです！▼この　カタログから　さいこうのかぐを　１つ　えらんでほしいの！"
     _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_04 )
-    _AB_KEYWAIT ()
-    _BALLOONWIN_CLOSE()
     //フラグ落とす
     _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_RESET_SYNC_FURNITURE , 0 , 0 , 0 )
+  ELSE
+    //"この　カタログから　さいこうのかぐを　１つ　えらんでほしいの！"
+    _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_05 )
   ENDIF
   
   _PDW_SET_FURNITURE_WORD( 0 , 0 )
@@ -85,8 +97,6 @@ ev_pdw_furniture_select_routine:
   _PDW_SET_FURNITURE_WORD( 3 , 3 )
   _PDW_SET_FURNITURE_WORD( 4 , 4 )
   
-  //通常選択処理
-  _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_05 )
   //メニュー作成
   _BMPMENU_INIT_EX( 1, 1, 0, 1, selectNo )
   //リスト追加
@@ -101,7 +111,7 @@ ev_pdw_furniture_select_routine:
   _BALLOONWIN_CLOSE()
   
   IF $selectNo == 5 || $selectNo == EV_WIN_B_CANCEL THEN //やめる
-    //"やめるの？また後で選んでね"
+    //"そそそそんなあああッ……！アタシを　見捨てないで　くださああい"
     _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_06 )
     _AB_KEYWAIT ()
     _BALLOONWIN_CLOSE()
@@ -110,7 +120,7 @@ ev_pdw_furniture_select_routine:
   
   //家具番号の設定
   _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_SET_SELECT_FURNITURE , SCWK_ANSWER , 0 , 0)
-  //"こんな家具だったら夢に出るくらいステキねきっと"
+  //"なるほど！　こんなに　ステキなら夢にも　でてきそうですよね！"
   _BALLOONWIN_TALKOBJ_MSG( pdw_furniture_menu_07 )
   _AB_KEYWAIT ()
   _BALLOONWIN_CLOSE()
