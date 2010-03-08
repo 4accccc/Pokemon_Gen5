@@ -855,6 +855,11 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       BSUBWAY_SCRWORK_ChoiceBtlSeven( bsw_scr );
     }
     break;
+  //選択メンバーのポケモン番号を取得
+  case BSWSUB_GET_MEMBER_POKENO:
+    GF_ASSERT( param0 < BSUBWAY_STOCK_MEMBER_MAX );
+    *ret_wk = bsw_scr->mem_poke[param0];
+    break;
   //----ワーク依存　通信関連
   //通信開始
   case BSWSUB_COMM_START:
@@ -916,6 +921,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWSUB_COMM_GET_CURRENT_ID:
     *ret_wk = GFL_NET_SystemGetCurrentID();
     break;
+  //----ERROR
   //未対応コマンドエラー
   default:
     OS_Printf( "渡されたcom_id = %d\n", com_id );

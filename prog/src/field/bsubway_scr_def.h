@@ -13,13 +13,14 @@
 //======================================================================
 //  define
 //======================================================================
-//#define DEBUG_BSW_COMM_MULTI_BTL_SKIP //定義で通信マルチバトルをスキップ
 
 #ifdef DEBUG_ONLY_FOR_kagaya
 #define DEBUG_BSW_CLEAR_1 //定義で1回戦闘のみでクリア
+//#define DEBUG_BSW_COMM_MULTI_BTL_SKIP //定義で通信マルチバトルをスキップ
 //#define DEBUG_BSW_BTL_SKIP //定義で戦闘スキップ
 //#define DEBUG_BSW_NORMAL_CLEAR //定義で即ノーマルクリア
 #define DEBUG_BSW_FORCE_BTL_WIN //定義で強制勝ち状態
+#define DEBUG_BSW_COMM_IGNORE_POKE_OVERLAP //定義で通信ポケモン被り無視
 #endif
 
 #define BSUBWAY_SCRWORK_MAGIC  (0x12345678) ///<マジックナンバー
@@ -233,7 +234,8 @@
 #define BSWSUB_SET_HOME_WORK (BSWSUB_START_NO+33)
 #define BSWSUB_SET_TRAIN_BGM_ROUND_SW (BSWSUB_START_NO+34)
 #define BSWSUB_CHOICE_BTL_SEVEN (BSWSUB_START_NO+35)
-#define BSWSUB_END_NO (BSWSUB_START_NO+36)
+#define BSWSUB_GET_MEMBER_POKENO (BSWSUB_START_NO+36) 
+#define BSWSUB_END_NO (BSWSUB_START_NO+37)
 
 #define BSWSUB_COMM_START_NO (200)
 #define BSWSUB_COMM_START (BSWSUB_COMM_START_NO+0)

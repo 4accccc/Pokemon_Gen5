@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-03-06T18:29:25"/>
+	<create user="kagaya" host="W00143" date="2010-03-08T20:59:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -893,23 +893,23 @@
 	<row id="msg_bsw_scr_54">
 		<comment>マルチ</comment>
 		<language name="JPN" width="256">おともだちと　おなじ
-○○○○○を　えらんで　います！▼[BE:01:ページ切り替え（クリア）]
+[1:01:ポケモン種族名:0]を　えらんで　います！▼[BE:01:ページ切り替え（クリア）]
 おともだちと　そうだん　してから
 また　おこし　ください</language>
 		<language name="JPN_KANJI" width="256">おともだちと　おなじ
-○○○○○を　えらんで　います！▼[BE:01:ページ切り替え（クリア）]
+[1:01:ポケモン種族名:0]を　えらんで　います！▼[BE:01:ページ切り替え（クリア）]
 おともだちと　そうだん　してから
 また　おこし　ください</language>
 	</row>
 
 	<row id="msg_bsw_scr_55">
-		<comment>マルチ</comment>
-		<language name="JPN" width="256">おともだちと　おなじ　○○○○○や
-○○○○○を　えらんで　います！[BE:01:ページ切り替え（クリア）]
+		<comment>マルチ　同ポケモン複数</comment>
+		<language name="JPN" width="256">おともだちと　おなじ　[1:01:ポケモン種族名:0]や
+[1:01:ポケモン種族名:1]を　えらんで　います！[BE:01:ページ切り替え（クリア）]
 おともだちと　そうだん　してから
 また　おこし　ください</language>
-		<language name="JPN_KANJI" width="256">おともだちと　おなじ　○○○○○や
-○○○○○を　えらんで　います！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">おともだちと　おなじ　[1:01:ポケモン種族名:0]や
+[1:01:ポケモン種族名:1]を　えらんで　います！[BE:01:ページ切り替え（クリア）]
 おともだちと　そうだん　してから
 また　おこし　ください</language>
 	</row>

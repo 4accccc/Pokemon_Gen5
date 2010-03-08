@@ -739,6 +739,10 @@ static void commCmd_RecvBufPlayerData(
     ret += 2;
   }
   
+#ifdef DEBUG_BSW_COMM_IGNORE_POKE_OVERLAP
+  ret = 0;
+#endif
+
   bsw_scr->comm_check_work = ret;
 }
 

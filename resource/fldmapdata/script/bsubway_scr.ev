@@ -623,18 +623,20 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_PLAYER_DATA, BSW_NULL, BSW_NULL )
   _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_PLAYER_DATA, BSW_NULL, ret )
   
-  SWITCH $ret
-  CASE 1 THEN //同じポケモン 1
-    _SYSWIN_MSG( msg_bsw_scr_54 , WIN_DOWN )
-  CASE 2 THEN //同じポケモン 2
-    _SYSWIN_MSG( msg_bsw_scr_54 , WIN_DOWN )
-  CASE 3 THEN //同じポケモン 3
-    _SYSWIN_MSG( msg_bsw_scr_54 , WIN_DOWN )
-  ENDSWITCH
-  
-  $ret = 0 //kari
-
+  //ポケモン被りで終了
   IF $ret != 0 THEN
+    IF $ret == 1 THEN //一体のみ
+      _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_POKENO, 0, BSW_NULL, ret )
+      _MONS_NAME( 0, ret )
+      _SYSWIN_MSG( msg_bsw_scr_54 , WIN_DOWN )
+    ELSE //複数化振り
+      _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_POKENO, 0, BSW_NULL, ret )
+      _MONS_NAME( 0, ret )
+      _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_POKENO, 1, BSW_NULL, ret )
+      _MONS_NAME( 1, ret )
+      _SYSWIN_MSG( msg_bsw_scr_55 , WIN_DOWN )
+    ENDIF
+    
     _CALL sub_receipt_common_comm_exit
     _RET
   ENDIF
