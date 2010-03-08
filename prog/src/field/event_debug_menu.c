@@ -2582,7 +2582,6 @@ static BOOL debugMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk )
  * @retval  BOOL TRUE=イベント継続
  */
 //--------------------------------------------------------------
-
 static BOOL debugMenuCallProc_SetBtlBox( DEBUG_MENU_EVENT_WORK *wk )
 {
 #if 1
@@ -2598,44 +2597,79 @@ static BOOL debugMenuCallProc_SetBtlBox( DEBUG_MENU_EVENT_WORK *wk )
   BATTLE_BOX_SAVE_InitWork(btlbox);
 
 
-  { 
-    int i;
 
-    //一体目フシギダネ  たいあたり
-    //二体目ゼニガメ    たいあたり
-    //三体目ヒコザル    ひっかく
-    //四体目ピカチュウ  １０まんボルト
-    //五体目カビゴン    のしかかる
-    //六体目ラプラス    なみのり
-    static const u16 monsno_tbl[] =
+  { 
+    int i,j;
+
+    static const u16 monsno_tbl1[] =
     { 
-      MONSNO_HUSIGIDANE,
-      MONSNO_ZENIGAME,
-      MONSNO_HIKOZARU,
-      MONSNO_PIKATYUU,
-      MONSNO_KABIGON,
-      MONSNO_RAPURASU
+      MONSNO_KORATTA,
+      MONSNO_OTATI,
+      MONSNO_POTIENA,
+      MONSNO_BIPPA,
+      MONSNO_PHI,
+      MONSNO_ZIGUZAGUMA,
     };
-    static const u16 waza_tbl[] =
+    static const u16 waza_tbl1[] =
     { 
-      WAZANO_TAIATARI,
       WAZANO_TAIATARI,
       WAZANO_HIKKAKU,
-      WAZANO_10MANBORUTO,
-      WAZANO_NOSIKAKARI,
-      WAZANO_NAMINORI,
+      WAZANO_TAIATARI,
+      WAZANO_TAIATARI,
+      WAZANO_HATAKU,
+      WAZANO_TAIATARI,
+    };
+    static const u16 monsno_tbl2[] =
+    { 
+      MONSNO_KAIRIKII,
+      MONSNO_OKORIZARU,
+      MONSNO_GOUKAZARU,
+      MONSNO_HARITEYAMA,
+      MONSNO_HERAKUROSU,
+      MONSNO_RUKARIO,
+    };
+    static const u16 waza_tbl2[] =
+    { 
+      WAZANO_BAKURETUPANTI,
+      WAZANO_INFAITO,
+      WAZANO_INFAITO,
+      WAZANO_INFAITO,
+      WAZANO_INFAITO,
+      WAZANO_INFAITO,
+      WAZANO_INFAITO,
     };
     u16 poke_name[6] =
       L"デバグポケ";
+
+    const u16 *p_monsno;
+    const u16 *p_waza;
+    u32 pow = 0;
+
     poke_name[ 5 ]  = 0xFFFF;
-    
+
+
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+    { 
+      p_monsno  = monsno_tbl1;
+      p_waza    =waza_tbl1;
+      pow       =0;
+    }
+    else
+    { 
+      p_monsno  = monsno_tbl2;
+      p_waza    =waza_tbl2;
+      pow       =252;
+    }
+
+
     for(i=0;i < PokeParty_GetPokeCountMax(party);i++){
-      POKEMON_PARAM *p_temp = PP_Create( monsno_tbl[ i ], 100, 0, HEAPID_PROC ); 
-      PP_Put( p_temp, ID_PARA_waza1, waza_tbl[ i ] );
+      POKEMON_PARAM *p_temp = PP_Create( p_monsno[ i ], 100, 0, HEAPID_PROC ); 
+      PP_Put( p_temp, ID_PARA_waza1, p_waza[ i ] );
       PP_Put( p_temp, ID_PARA_waza2, WAZANO_NULL );
       PP_Put( p_temp, ID_PARA_waza3, WAZANO_NULL );
       PP_Put( p_temp, ID_PARA_waza4, WAZANO_NULL );
       PP_Put( p_temp, ID_PARA_oyaname_raw, (u32)poke_name );
+      PP_Put( p_temp, ID_PARA_pow_exp, pow );
 
       PP_Renew( p_temp );
       PokeParty_Add( party, p_temp );
