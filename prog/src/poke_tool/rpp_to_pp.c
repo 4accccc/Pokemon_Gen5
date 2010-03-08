@@ -32,7 +32,7 @@
  * @param   pp    •ÏŠ·Œã‚Ìƒf[ƒ^‘ã“üæ
  */
 //--------------------------------------------------------------
-void POKETOOL_RecPokePara_to_PokePara(REC_POKEPARA *rec, POKEMON_PARAM *pp)
+void POKETOOL_RecPokePara_to_PokePara( REC_POKEPARA *rec, POKEMON_PARAM *pp)
 {
   POKEMON_PASO_PARAM  *ppp;
   POKEMON_PASO_PARAM1 *ppp1;
@@ -40,7 +40,6 @@ void POKETOOL_RecPokePara_to_PokePara(REC_POKEPARA *rec, POKEMON_PARAM *pp)
   POKEMON_PASO_PARAM3 *ppp3;
   POKEMON_PASO_PARAM4 *ppp4;
   int i;
-
 
   TAYA_Printf("RPPtoPP : line=%d\n", __LINE__);
 //  PokeParaInit(pp);
@@ -94,6 +93,7 @@ void POKETOOL_RecPokePara_to_PokePara(REC_POKEPARA *rec, POKEMON_PARAM *pp)
   ppp2->event_get_flag = rec->event_get_flag;
   ppp2->sex = rec->sex;
   ppp2->form_no = rec->form_no;
+  ppp2->seikaku = rec->seikaku;
   TAYA_Printf("RPPtoPP : line=%d\n", __LINE__);
 
   //ppp3

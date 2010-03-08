@@ -615,7 +615,6 @@ extern  BOOL  PP_FastModeOff( POKEMON_PARAM *pp, BOOL flag );
 extern  BOOL  PPP_FastModeOn( POKEMON_PASO_PARAM *ppp );
 extern  BOOL  PPP_FastModeOff( POKEMON_PASO_PARAM *ppp, BOOL flag );
 
-
 extern  void  PP_Setup( POKEMON_PARAM *pp, u16 mons_no, u16 level, u64 ID );
 extern  void  PP_SetupEx( POKEMON_PARAM *pp, u16 mons_no, u16 level, u64 ID, PtlSetupPow pow, u64 rnd );
 extern  void  PPP_Setup( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 ID );
@@ -718,8 +717,8 @@ extern void  *POKETOOL_ppp_get_param_block( POKEMON_PASO_PARAM *ppp, u32 rnd, u8
 extern u16 POKETOOL_make_checksum( const void *data, u32 size );
 
 // êÌì¨ò^âÊóp
-extern void POKETOOL_PokePara_to_RecPokePara(POKEMON_PARAM *pp, REC_POKEPARA *rec);
-extern void POKETOOL_RecPokePara_to_PokePara(REC_POKEPARA *rec, POKEMON_PARAM *pp);
+extern void POKETOOL_PokePara_to_RecPokePara( POKEMON_PARAM *pp, REC_POKEPARA *rec);
+extern void POKETOOL_RecPokePara_to_PokePara( REC_POKEPARA *rec, POKEMON_PARAM *pp);
 
 //ÉåÉxÉãï‚ê≥
 extern void POKETOOL_MakeLevelRevise(POKEMON_PARAM *pp, u32 level);

@@ -18,6 +18,7 @@
 #include "print/printsys.h"
 #include "system/selbox.h"
 #include "system/net_err.h"
+#include "pm_define.h"
 
 #include <dpw_common.h>
 
@@ -81,7 +82,6 @@
 #define COMM_ERROR_RESET_GTS  (3)	//gflib/src/network/net_state.hÇ…íËã`Ç™Ç†ÇÈ
 #define COMM_ERROR_RESET_OTHER (4)
 #define COMM_ERRORTYPE_POWEROFF (1)   // ìdåπÇêÿÇÁÇ»Ç¢Ç∆Ç¢ÇØÇ»Ç¢
-#define TEMOTI_POKEMAX				(6)
 #define PARA_UNK							(2)
 #define PARA_MALE							(0)
 #define PARA_FEMALE						(1)

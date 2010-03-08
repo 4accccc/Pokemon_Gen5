@@ -32,7 +32,7 @@
  * @param   rec   •ÏŠ·Œã‚Ìƒf[ƒ^‘ã“üæ
  */
 //--------------------------------------------------------------
-void POKETOOL_PokePara_to_RecPokePara(POKEMON_PARAM *pp, REC_POKEPARA *rec)
+void POKETOOL_PokePara_to_RecPokePara( POKEMON_PARAM *pp, REC_POKEPARA *rec)
 {
   POKEMON_PASO_PARAM *ppp;
   POKEMON_PASO_PARAM1 *ppp1;
@@ -41,6 +41,8 @@ void POKETOOL_PokePara_to_RecPokePara(POKEMON_PARAM *pp, REC_POKEPARA *rec)
   POKEMON_PASO_PARAM4 *ppp4;
   int i;
   u16 sum;
+
+  GFL_STD_MemClear( rec, sizeof(REC_POKEPARA) );
 
   //ˆÃ†•œ†
   if(pp->ppp.pp_fast_mode==0){
@@ -59,6 +61,7 @@ void POKETOOL_PokePara_to_RecPokePara(POKEMON_PARAM *pp, REC_POKEPARA *rec)
   rec->pp_fast_mode = 0;//ppp->pp_fast_mode;
   rec->ppp_fast_mode = 0;//ppp->ppp_fast_mode;
   rec->fusei_tamago_flag = ppp->fusei_tamago_flag;
+  rec->seikaku = ppp2->seikaku;
 
   //ppp1
   rec->monsno = ppp1->monsno;
