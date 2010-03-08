@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_d03r0201_infomationw_01
 _EVENT_DATA		ev_d03r0201_boy3_01
+_EVENT_DATA		ev_bg_d03r0201_elboard_01
 _EVENT_DATA_END
 
 
@@ -42,4 +43,13 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_d03r0201_boy3_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0201_boy3_01 )
+EVENT_END
+
+/**************************************************************/
+/*  電光掲示板のイベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_bg_d03r0201_elboard_01
+
+	_LOOK_ELBOARD( 45 )
+
 EVENT_END

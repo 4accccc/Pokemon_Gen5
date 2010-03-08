@@ -18,5 +18,6 @@
 #ifndef ZONE_D03R0201_EVB_H
 #define ZONE_D03R0201_EVB_H
 
+#define BG_D03R0201_ELBOARD_01            0
 
 #endif //ZONE_D03R0201_EVB_H
