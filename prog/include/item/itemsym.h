@@ -123,18 +123,18 @@
 #define ITEM_HAKKINDAMA		( 112 )		// はっきんだま
 #define ITEM_KONGOUDAMA		( 135 )		// こんごうだま
 #define ITEM_SIRATAMA		( 136 )		// しらたま
-#define ITEM_GURASUMEERU		( 137 )		// グラスメール
-#define ITEM_HUREIMUMEERU		( 138 )		// フレイムメール
-#define ITEM_BURUUMEERU		( 139 )		// ブルーメール
-#define ITEM_BURUUMUMEERU		( 140 )		// ブルームメール
-#define ITEM_TONNERUMEERU		( 141 )		// トンネルメール
-#define ITEM_SUTIIRUMEERU		( 142 )		// スチールメール
-#define ITEM_RABURABUMEERU		( 143 )		// ラブラブメール
-#define ITEM_BURIZAADOMEERU		( 144 )		// ブリザードメール
-#define ITEM_SUPEESUMEERU		( 145 )		// スペースメール
-#define ITEM_EAMEERU		( 146 )		// エアメール
-#define ITEM_MOZAIKUMEERU		( 147 )		// モザイクメール
-#define ITEM_BURIKKUMEERU		( 148 )		// ブリックメール
+#define ITEM_HAZIMETEMEERU		( 137 )		// はじめてメール
+#define ITEM_DAISUKIMEERU		( 138 )		// だいすきメール
+#define ITEM_OSASOIMEERU		( 139 )		// おさそいメール
+#define ITEM_KANSYAMEERU		( 140 )		// かんしゃメール
+#define ITEM_SITUMONMEERU		( 141 )		// しつもんメール
+#define ITEM_OSUSUMEMEERU		( 142 )		// おすすめメール
+#define ITEM_OKAESIMEERU		( 143 )		// おかえしメール
+#define ITEM_BURIZZIMEERUs		( 144 )		// ブリッジメールＳ
+#define ITEM_BURIZZIMEERUh		( 145 )		// ブリッジメールＨ
+#define ITEM_BURIZZIMEERUc		( 146 )		// ブリッジメールＣ
+#define ITEM_BURIZZIMEERUv		( 147 )		// ブリッジメールＶ
+#define ITEM_BURIZZIMEERUw		( 148 )		// ブリッジメールＷ
 #define ITEM_KURABONOMI		( 149 )		// クラボのみ
 #define ITEM_KAGONOMI		( 150 )		// カゴのみ
 #define ITEM_MOMONNOMI		( 151 )		// モモンのみ
@@ -611,10 +611,22 @@
 #define ITEM_HAITATUBUTU2		( 622 )		// はいたつぶつ２
 #define ITEM_HAITATUBUTU3		( 623 )		// はいたつぶつ３
 #define ITEM_DORAGONNOHONE		( 624 )		// ドラゴンのホネ
+#define ITEM_GURASUMEERU		( 625 )		// グラスメール
+#define ITEM_HUREIMUMEERU		( 626 )		// フレイムメール
+#define ITEM_BURUUMEERU		( 627 )		// ブルーメール
+#define ITEM_BURUUMUMEERU		( 628 )		// ブルームメール
+#define ITEM_TONNERUMEERU		( 629 )		// トンネルメール
+#define ITEM_SUTIIRUMEERU		( 630 )		// スチールメール
+#define ITEM_RABURABUMEERU		( 631 )		// ラブラブメール
+#define ITEM_BURIZAADOMEERU		( 632 )		// ブリザードメール
+#define ITEM_SUPEESUMEERU		( 633 )		// スペースメール
+#define ITEM_EAMEERU		( 634 )		// エアメール
+#define ITEM_MOZAIKUMEERU		( 635 )		// モザイクメール
+#define ITEM_BURIKKUMEERU		( 636 )		// ブリックメール
 
-#define ITEM_DATA_MAX		( 624 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 636 )		// アイテム最大数
 
-#define ITEM_MAIL_MAX	( 12 )	// メール数
+#define ITEM_MAIL_MAX	( 24 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数
 
 #endif // ITEMSYM_H

@@ -5751,6 +5751,114 @@
 ポケモンの　あたまの　ホネ。</language>
 	</row>
 
+	<row id="ITEMINFO_625">
+		<language name="JPN" width="256">かりメッセージ１
+はじめてメール
+なまえをかえると　エラーになる</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+はじめてメール
+なまえをかえると　エラーになる</language>
+	</row>
+
+	<row id="ITEMINFO_626">
+		<language name="JPN" width="256">かりメッセージ１
+だいすきメール
+なまえをかえると　エラーになる</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+だいすきメール
+なまえをかえると　エラーになる</language>
+	</row>
+
+	<row id="ITEMINFO_627">
+		<language name="JPN" width="256">かりメッセージ１
+おさそいメール
+なまえをかえると　エラーになる</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+おさそいメール
+なまえをかえると　エラーになる</language>
+	</row>
+
+	<row id="ITEMINFO_628">
+		<language name="JPN" width="256">かりメッセージ１
+かんしゃメール
+なまえをかえると　エラーになる</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+かんしゃメール
+なまえをかえると　エラーになる</language>
+	</row>
+
+	<row id="ITEMINFO_629">
+		<language name="JPN" width="256">かりメッセージ１
+しつもんメール
+なまえをかえると　エラーになる</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+しつもんメール
+なまえをかえると　エラーになる</language>
+	</row>
+
+	<row id="ITEMINFO_630">
+		<language name="JPN" width="256">かりメッセージ１
+おすすめメール
+なまえをかえると　エラーになる</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+おすすめメール
+なまえをかえると　エラーになる</language>
+	</row>
+
+	<row id="ITEMINFO_631">
+		<language name="JPN" width="256">かりメッセージ１
+おかえしメール
+なまえをかえると　エラーになる</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+おかえしメール
+なまえをかえると　エラーになる</language>
+	</row>
+
+	<row id="ITEMINFO_632">
+		<language name="JPN" width="256">かりメッセージ１
+ブリッジメールＳ
+なまえをかえると　エラーになる</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+ブリッジメールＳ
+なまえをかえると　エラーになる</language>
+	</row>
+
+	<row id="ITEMINFO_633">
+		<language name="JPN" width="256">かりメッセージ１
+ブリッジメールＨ
+なまえをかえると　エラーになる</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+ブリッジメールＨ
+なまえをかえると　エラーになる</language>
+	</row>
+
+	<row id="ITEMINFO_634">
+		<language name="JPN" width="256">かりメッセージ１
+ブリッジメールＣ
+なまえをかえると　エラーになる</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+ブリッジメールＣ
+なまえをかえると　エラーになる</language>
+	</row>
+
+	<row id="ITEMINFO_635">
+		<language name="JPN" width="256">かりメッセージ１
+ブリッジメール１
+なまえをかえると　エラーになる</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+ブリッジメール１
+なまえをかえると　エラーになる</language>
+	</row>
+
+	<row id="ITEMINFO_636">
+		<language name="JPN" width="256">かりメッセージ１
+ブリッジメール２
+なまえをかえると　エラーになる</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+ブリッジメール２
+なまえをかえると　エラーになる</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

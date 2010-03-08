@@ -816,63 +816,63 @@
 	</row>
 
 	<row id="ITEMNAME_137">
-		<language name="JPN" width="256">グラスメール</language>
-		<language name="JPN_KANJI" width="256">グラスメール</language>
+		<language name="JPN" width="256">はじめてメール</language>
+		<language name="JPN_KANJI" width="256">はじめてメール</language>
 	</row>
 
 	<row id="ITEMNAME_138">
-		<language name="JPN" width="256">フレイムメール</language>
-		<language name="JPN_KANJI" width="256">フレイムメール</language>
+		<language name="JPN" width="256">だいすきメール</language>
+		<language name="JPN_KANJI" width="256">だいすきメール</language>
 	</row>
 
 	<row id="ITEMNAME_139">
-		<language name="JPN" width="256">ブルーメール</language>
-		<language name="JPN_KANJI" width="256">ブルーメール</language>
+		<language name="JPN" width="256">おさそいメール</language>
+		<language name="JPN_KANJI" width="256">おさそいメール</language>
 	</row>
 
 	<row id="ITEMNAME_140">
-		<language name="JPN" width="256">ブルームメール</language>
-		<language name="JPN_KANJI" width="256">ブルームメール</language>
+		<language name="JPN" width="256">かんしゃメール</language>
+		<language name="JPN_KANJI" width="256">かんしゃメール</language>
 	</row>
 
 	<row id="ITEMNAME_141">
-		<language name="JPN" width="256">トンネルメール</language>
-		<language name="JPN_KANJI" width="256">トンネルメール</language>
+		<language name="JPN" width="256">しつもんメール</language>
+		<language name="JPN_KANJI" width="256">しつもんメール</language>
 	</row>
 
 	<row id="ITEMNAME_142">
-		<language name="JPN" width="256">スチールメール</language>
-		<language name="JPN_KANJI" width="256">スチールメール</language>
+		<language name="JPN" width="256">おすすめメール</language>
+		<language name="JPN_KANJI" width="256">おすすめメール</language>
 	</row>
 
 	<row id="ITEMNAME_143">
-		<language name="JPN" width="256">ラブラブメール</language>
-		<language name="JPN_KANJI" width="256">ラブラブメール</language>
+		<language name="JPN" width="256">おかえしメール</language>
+		<language name="JPN_KANJI" width="256">おかえしメール</language>
 	</row>
 
 	<row id="ITEMNAME_144">
-		<language name="JPN" width="256">ブリザードメール</language>
-		<language name="JPN_KANJI" width="256">ブリザードメール</language>
+		<language name="JPN" width="256">ブリッジメールＳ</language>
+		<language name="JPN_KANJI" width="256">ブリッジメールＳ</language>
 	</row>
 
 	<row id="ITEMNAME_145">
-		<language name="JPN" width="256">スペースメール</language>
-		<language name="JPN_KANJI" width="256">スペースメール</language>
+		<language name="JPN" width="256">ブリッジメールＨ</language>
+		<language name="JPN_KANJI" width="256">ブリッジメールＨ</language>
 	</row>
 
 	<row id="ITEMNAME_146">
-		<language name="JPN" width="256">エアメール</language>
-		<language name="JPN_KANJI" width="256">エアメール</language>
+		<language name="JPN" width="256">ブリッジメールＣ</language>
+		<language name="JPN_KANJI" width="256">ブリッジメールＣ</language>
 	</row>
 
 	<row id="ITEMNAME_147">
-		<language name="JPN" width="256">モザイクメール</language>
-		<language name="JPN_KANJI" width="256">モザイクメール</language>
+		<language name="JPN" width="256">ブリッジメールＶ</language>
+		<language name="JPN_KANJI" width="256">ブリッジメールＶ</language>
 	</row>
 
 	<row id="ITEMNAME_148">
-		<language name="JPN" width="256">ブリックメール</language>
-		<language name="JPN_KANJI" width="256">ブリックメール</language>
+		<language name="JPN" width="256">ブリッジメールＷ</language>
+		<language name="JPN_KANJI" width="256">ブリッジメールＷ</language>
 	</row>
 
 	<row id="ITEMNAME_149">
@@ -3253,6 +3253,66 @@
 	<row id="ITEMNAME_624">
 		<language name="JPN" width="256">ドラゴンのホネ</language>
 		<language name="JPN_KANJI" width="256">ドラゴンのホネ</language>
+	</row>
+
+	<row id="ITEMNAME_625">
+		<language name="JPN" width="256">グラスメール</language>
+		<language name="JPN_KANJI" width="256">グラスメール</language>
+	</row>
+
+	<row id="ITEMNAME_626">
+		<language name="JPN" width="256">フレイムメール</language>
+		<language name="JPN_KANJI" width="256">フレイムメール</language>
+	</row>
+
+	<row id="ITEMNAME_627">
+		<language name="JPN" width="256">ブルーメール</language>
+		<language name="JPN_KANJI" width="256">ブルーメール</language>
+	</row>
+
+	<row id="ITEMNAME_628">
+		<language name="JPN" width="256">ブルームメール</language>
+		<language name="JPN_KANJI" width="256">ブルームメール</language>
+	</row>
+
+	<row id="ITEMNAME_629">
+		<language name="JPN" width="256">トンネルメール</language>
+		<language name="JPN_KANJI" width="256">トンネルメール</language>
+	</row>
+
+	<row id="ITEMNAME_630">
+		<language name="JPN" width="256">スチールメール</language>
+		<language name="JPN_KANJI" width="256">スチールメール</language>
+	</row>
+
+	<row id="ITEMNAME_631">
+		<language name="JPN" width="256">ラブラブメール</language>
+		<language name="JPN_KANJI" width="256">ラブラブメール</language>
+	</row>
+
+	<row id="ITEMNAME_632">
+		<language name="JPN" width="256">ブリザードメール</language>
+		<language name="JPN_KANJI" width="256">ブリザードメール</language>
+	</row>
+
+	<row id="ITEMNAME_633">
+		<language name="JPN" width="256">スペースメール</language>
+		<language name="JPN_KANJI" width="256">スペースメール</language>
+	</row>
+
+	<row id="ITEMNAME_634">
+		<language name="JPN" width="256">エアメール</language>
+		<language name="JPN_KANJI" width="256">エアメール</language>
+	</row>
+
+	<row id="ITEMNAME_635">
+		<language name="JPN" width="256">モザイクメール</language>
+		<language name="JPN_KANJI" width="256">モザイクメール</language>
+	</row>
+
+	<row id="ITEMNAME_636">
+		<language name="JPN" width="256">ブリックメール</language>
+		<language name="JPN_KANJI" width="256">ブリックメール</language>
 	</row>
 
 
