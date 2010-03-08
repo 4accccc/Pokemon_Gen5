@@ -33,3 +33,14 @@ void THSV_Init(THSV_WORK * work)
 	MI_CpuClear8(work, sizeof(THSV_WORK));
 }
 
+//---------------------------------------------------------------------------
+/**
+ * @brief	セーブポインタを返す
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+THSV_WORK * THSV_GetSvPtr( SAVE_CONTROL_WORK *sv )
+{
+  return SaveControl_DataPtrGet(sv, GMDATA_ID_THSV);
+}
+

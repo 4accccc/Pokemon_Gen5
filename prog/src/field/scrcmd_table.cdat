@@ -906,7 +906,7 @@
 
   DEF_CMD( EvCmdTH_GetDLDataType, EV_SEQ_TH_GET_DL_DATA_TYPE )
   DEF_CMD( EvCmdTH_ClearDLData, EV_SEQ_TH_CLEAR_DL_DATA )
-  NO_CMD()
+  DEF_CMD( EvCmdTH_CallRankApp, EV_SEQ_TH_CALL_RANK_APP )
   NO_CMD()
   
   //PDW—p

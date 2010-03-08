@@ -317,8 +317,8 @@ VMCMD_RESULT EvCmdTH_CalcBtlResult( VMHANDLE *core, void *wk )
 
   rank = SCRCMD_GetVMWork( core, work );
   point = SCRCMD_GetVMWork( core, work );
-  //計算してランクを返す
-  TRIAL_HOUSE_CalcBtlResult( *ptr, rank, point );
+  //計算してランクを返すセーブデータも書く
+  TRIAL_HOUSE_CalcBtlResult( gsys, *ptr, rank, point );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -368,6 +368,32 @@ VMCMD_RESULT EvCmdTH_ClearDLData( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * トライアルハウス ランク確認アプリコール
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdTH_CallRankApp( VMHANDLE *core, void *wk )
+{
+  u16 dl;
+  GMEVENT* event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
+
+  dl = SCRCMD_GetVMWorkValue( core, work );
+
+  event = TRIAL_HOUSE_CreateRankAppEvt( gsys, dl );
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
 
 
 

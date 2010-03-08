@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_TRI_HOUSE_RECEPTION (10430)
+#define SCRID_TRI_HOUSE_RANK_DISP (10431)
 
 #endif //_TRIAL_HOUSE_SCR_DEF_H_

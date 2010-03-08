@@ -16,6 +16,7 @@
 //----------------------------------------------------------------------
 
 _EVENT_DATA   ev_tri_house_reception
+_EVENT_DATA   ev_tri_house_rank_disp
 _EVENT_DATA_END
 
 DEFINE_LOCAL loop
@@ -23,7 +24,9 @@ DEFINE_LOCAL exit
 DEFINE_LOCAL btl_count    //戦闘回数
 DEFINE_LOCAL download_flg
 
-//受付
+//----------------------------------------------------------------------
+//               受付
+//----------------------------------------------------------------------
 EVENT_START ev_tri_house_reception
 
   DEFINE_LOCAL dl_data_valid
@@ -225,6 +228,8 @@ charange:
     _RET
   ENDIF
 
+  $SCWK_ANSWER = TRUE   //@todo
+/**
   //「でははじめるよ」
   _BALLOONWIN_OBJMSG_POS(msg_trialhouse_013, SCWK_TARGET_OBJID, POS_DL )
   _BALLOONWIN_CLOSE()
@@ -250,11 +255,11 @@ charange:
   //受付係もどる
   _OBJ_ANIME( C04R0901_RECEPTION_01, anm_recep_close )
   _OBJ_ANIME_WAIT()
-  
+*/  
 
   IF $SCWK_ANSWER == TRUE THEN
    DEFINE_LOCAL result_rank
-   DEFINE_LOCAL point
+   DEFINE_LOCAL point       //@note 引数にとっているけど、戻り値としては使用しなくなった。
    DEFINE_LOCAL rank_msg
     //「おつかれさま」
     _BALLOONWIN_OBJMSG_POS(msg_trialhouse_014, SCWK_TARGET_OBJID, POS_DL )
@@ -262,8 +267,16 @@ charange:
 
     _TH_CALC_BTL_RESULT( result_rank, point )
 
-    //評価アプリ起動 @todo
-
+    //評価アプリ起動
+    {
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _FIELD_CLOSE()
+      _TH_CALL_RANK_APP(download_flg)
+      _FIELD_OPEN()
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+    }
     SWITCH $result_rank
     CASE TH_RANK_BEGINNER THEN
       //「ビギナー」
@@ -532,4 +545,11 @@ _ANIME_LABEL	anm_recep_center2
   _ANIME_DATA	AC_WALK_L_8F,2
   _ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+
+//----------------------------------------------------------------------
+//               ランキング掲示板
+//----------------------------------------------------------------------
+EVENT_START ev_tri_house_rank_disp
+EVENT_END
 

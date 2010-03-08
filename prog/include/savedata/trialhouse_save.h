@@ -22,3 +22,4 @@ typedef struct _THSV_WORK THSV_WORK;
 
 extern int THSV_GetWorkSize(void);
 extern void THSV_Init(THSV_WORK * work);
+extern THSV_WORK * THSV_GetSvPtr( SAVE_CONTROL_WORK *sv );

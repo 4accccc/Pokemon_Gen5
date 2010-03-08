@@ -17,18 +17,16 @@
 #define BATTLE_EXAMINATION_MAGIC_KEY (3432)   //u16
 
 #define BATTLE_EXAMINATION_MAX (5)   ///< バトル検定の人数
-#define BATTLE_EXAMINATION_TITLE_MSG_MAX (34+2)   ///< メッセージの数
+#define BATTLE_EXAMINATION_TITLE_MSG_MAX (16+1)   ///< メッセージの数
 
 //通信で使用するので外部公開していますが、アクセス関数を使用してください
 typedef struct {
   BSUBWAY_PARTNER_DATA trainer[BATTLE_EXAMINATION_MAX];
-  STRCODE titleName[BATTLE_EXAMINATION_TITLE_MSG_MAX];
+  STRCODE titleName[BATTLE_EXAMINATION_TITLE_MSG_MAX];    //34byte
   u16 bActive;
+  u16 padding;
   u16 crc;
 }BATTLE_EXAMINATION_SAVEDATA;
-
-
-
 
 extern int BATTLE_EXAMINATION_SAVE_GetWorkSize(void);
 extern BATTLE_EXAMINATION_SAVEDATA* BATTLE_EXAMINATION_SAVE_AllocWork(HEAPID heapID);

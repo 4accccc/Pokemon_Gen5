@@ -8653,8 +8653,21 @@
   .macro _ASM_TH_CLEAR_DL_DATA
   .short EV_SEQ_TH_CLEAR_DL_DATA
   .endm
-  
 
+//--------------------------------------------------------------
+/**
+ * @brief トライアルハウス　ランキング確認アプリコール
+ * @param dl
+ * @param none
+ */
+//--------------------------------------------------------------
+#define _TH_CALL_RANK_APP( dl ) _ASM_TH_CALL_RANK_APP dl
+  
+  .macro _ASM_TH_CALL_RANK_APP dl
+  .short EV_SEQ_TH_CALL_RANK_APP
+  .short \dl
+  .endm
+  
 //--------------------------------------------------------------
 /**
  *  _PDW_COMMON_TOOLS PDW汎用ツール

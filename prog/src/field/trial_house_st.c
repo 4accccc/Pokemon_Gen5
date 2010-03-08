@@ -17,6 +17,7 @@
 #include "script_def.h"
 
 #include "savedata/battle_box_save.h"   //for BATTLE_BOX_SAVE
+#include "app/th_award.h"   //for TH_AWARD_PARAM
 
 //------------------------------------------------------------------
 /**
@@ -40,7 +41,20 @@ typedef struct
   TRIAL_HOUSE_WORK_PTR HouseWorkPtr;
 }TH_POKESEL_WORK;
 
+//------------------------------------------------------------------
+/**
+ * @brief 評価画面呼び出しワーク
+ */
+//------------------------------------------------------------------
+typedef struct TH_RANK_WORK_tag
+{
+  GAMESYS_WORK*      gsys;  // ゲームシステム
+	FIELDMAP_WORK* fieldmap;  // フィールドマップ
+  TH_AWARD_PARAM Param;
+}TH_RANK_WORK;
+
 static GMEVENT_RESULT PokeSelEvt(GMEVENT * event, int * seq, void * work);
+static GMEVENT_RESULT CallRankAppEvt( GMEVENT* event, int* seq, void* work );
 
 //--------------------------------------------------------------
 /**
@@ -222,5 +236,70 @@ void TRIAL_HOUSE_AddBtlPoint( TRIAL_HOUSE_WORK_PTR ptr, BATTLE_SETUP_PARAM *prm 
     ptr->PointWork.RestHpPer += per;      //５戦あるので足しこんでいくと最大で500％になる
     NOZOMU_Printf( "per = %d, total_per = %d\n",per, ptr->PointWork.RestHpPer );
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * ランキング確認アプリイベント
+ * @param gsys          ゲームシステムポインタ
+ * @param inIsDL    確認するのはダウンロードデータか？
+ * @retval GMEVENT      イベントポインタ
+ */
+//--------------------------------------------------------------
+GMEVENT *TRIAL_HOUSE_CreateRankAppEvt( GAMESYS_WORK * gsys, const BOOL inIsDL )
+{
+  GMEVENT* event;
+	TH_RANK_WORK* work;
+  GAMEDATA*  gdata = GAMESYSTEM_GetGameData( gsys );
+
+  // イベント生成
+  event = GMEVENT_Create(gsys, NULL, CallRankAppEvt, sizeof(TH_RANK_WORK));
+  work = GMEVENT_GetEventWork(event);
+	work->gsys = gsys;
+	work->fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  //アプリ受け渡しワークセット
+  {
+    //自分の性別
+    {
+      MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
+      work->Param.sex = MyStatus_GetMySex(mystatus);
+    }
+    //セーブデータポインタ
+    {
+      SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gdata);
+      work->Param.thsv = THSV_GetSvPtr(sv);
+    }
+    //ダウンロードフラグ
+    work->Param.b_download = inIsDL;
+  }
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   国選択アプリコールイベント
+ * @param	  event   イベントポインタ
+ * @param   seq     シーケンサ
+ * @param   work    ワークポインタ
+ * @return  GMEVENT_RESULT  イベント結果
+*/
+//--------------------------------------------------------------
+static GMEVENT_RESULT CallRankAppEvt( GMEVENT* event, int* seq, void* work )
+{
+  TH_RANK_WORK *evt_work;
+  evt_work = GMEVENT_GetEventWork(event);
+
+  switch(*seq){
+  case 0:
+    //デモプロック
+    GMEVENT_CallProc( event, FS_OVERLAY_ID(th_award), &TH_AWARD_ProcData, &evt_work->Param );
+    (*seq)++;
+    break;
+  case 1:
+    //イベント終了
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
 }
 

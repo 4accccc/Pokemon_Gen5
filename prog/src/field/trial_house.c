@@ -19,6 +19,9 @@
 
 #include "net/delivery_beacon.h"
 
+#include "savedata/trialhouse_save_local.h"
+#include "savedata/trialhouse_save.h"
+
 //ビーコンサーチワーク
 typedef struct
 {
@@ -452,7 +455,9 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
       //バッファからセーブへデータコピー
 //      GFL_STD_MemCopy( evt_wk->Ptr->CommBuf, exa, BATTLE_EXAMINATION_SAVE_GetWorkSize() );
       NOZOMU_Printf("外部セーブにデータを保存\n");
+/**   //仮コメントアウト　処理をフックしておく   
       BATTLE_EXAMINATION_SAVE_Write(sv, evt_wk->Ptr->CommBuf, GFL_HEAP_LOWID(HEAPID_PROC));
+*/
       NOZOMU_Printf("データ受け取り成功\n");
       //受け取りの結果をセット
       *(evt_wk->Ret) = TRUE;    //成功
@@ -479,13 +484,14 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
 //--------------------------------------------------------------
 /**
  * ランク計算
+ * @param   gsys    ゲームシステムポインタ
  * @param   ptr      TRIAL_HOUSE_WORK_PTR
  * @param   outRank   算出ランク格納バッファ
  * @param   outPoint  得点格納バッファ
  * @retval  none
  */
 //--------------------------------------------------------------
-void TRIAL_HOUSE_CalcBtlResult( TRIAL_HOUSE_WORK_PTR ptr, u16 *outRank, u16 *outPoint )
+void TRIAL_HOUSE_CalcBtlResult( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, u16 *outRank, u16 *outPoint )
 {
   int val;
   u16 rank;
@@ -518,6 +524,66 @@ void TRIAL_HOUSE_CalcBtlResult( TRIAL_HOUSE_WORK_PTR ptr, u16 *outRank, u16 *out
 
   *outRank = rank;
   *outPoint = val;
+
+  //ランキングセーブデータに書き込み
+  {
+    int i;
+    TH_SV_COMMON_WK *cm_dat;
+    THSV_WORK *sv_wk;
+    u8 idx;
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+    SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+    sv_wk = THSV_GetSvPtr( sv );
+
+    if ( ptr->DLDataType == TH_DL_DATA_TYPE_NONE ) idx = 0; //ＲＯＭデータ
+    else idx = 1;
+    
+    cm_dat = &sv_wk->CommonData[idx];
+    cm_dat->Valid = 1;
+    
+    if ( ptr->MemberNum == 3 ) cm_dat->IsDouble = 0;
+    else if ( ptr->MemberNum == 4 ) cm_dat->IsDouble = 1;
+    else
+    {
+      GF_ASSERT_MSG(0,"member error %d", ptr->MemberNum);
+      cm_dat->IsDouble = 0;
+    }
+    
+    cm_dat->Point = val;
+    //モンスターデータクリア
+    MI_CpuClear8( cm_dat->MonsData, sizeof(TH_MONS_DATA)*TH_MONS_DATA_MAX );
+    for(i=0;i<ptr->MemberNum;i++)
+    {
+      TH_MONS_DATA *mons_dat = &cm_dat->MonsData[i];
+      POKEMON_PARAM *pp = PokeParty_GetMemberPointer( ptr->Party, i );
+      mons_dat->MonsNo = PP_Get(pp, ID_PARA_monsno, NULL);
+      mons_dat->FormNo = PP_Get(pp, ID_PARA_form_no, NULL);
+      mons_dat->Sex = PP_Get(pp, ID_PARA_sex, NULL);;
+    }
+
+    //ダウンロードデータの場合はタイトルを取得
+    if ( ptr->DLDataType != TH_DL_DATA_TYPE_NONE )
+    {
+      BATTLE_EXAMINATION_SAVEDATA *exa;
+      GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+      SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+      void *tmp_wk = GFL_HEAP_AllocClearMemory(GFL_HEAP_LOWID(HEAPID_PROC), SAVESIZE_EXTRA_BATTLE_EXAMINATION);
+      //外部データをロード
+      if ( LOAD_RESULT_OK == SaveControl_Extra_LoadWork(sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION, GFL_HEAP_LOWID(HEAPID_PROC),
+                                                   tmp_wk, SAVESIZE_EXTRA_BATTLE_EXAMINATION) )
+      {
+        OS_Printf("トライアルハウス外部データロード\n");
+        exa = SaveControl_Extra_DataPtrGet( sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION, 0);
+        //タイトル取得
+        GFL_STD_MemCopy( exa->titleName, sv_wk->Name,
+            BATTLE_EXAMINATION_TITLE_MSG_MAX * sizeof( STRCODE ) );
+      }
+      else GF_ASSERT(0);
+
+      GFL_HEAP_FreeMemory( tmp_wk );
+      SaveControl_Extra_UnloadWork(sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION);
+    }
+  }
 }
 
 //--------------------------------------------------------------
