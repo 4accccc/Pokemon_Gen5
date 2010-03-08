@@ -283,8 +283,20 @@ void FLDNOGRID_MAPPER_Main( FLDNOGRID_MAPPER* p_mapper )
   FIELD_RAIL_MAN_Update( p_mapper->p_railMan );
   if( p_mapper->rail_camera_stop == FALSE )
   {
-    FIELD_RAIL_MAN_UpdateCamera( p_mapper->p_railMan );
+    FIELD_RAIL_MAN_UpdateCamera( p_mapper->p_railMan, FALSE );
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラアップデート
+ *
+ *	@param	p_mapper  マッパー
+ */
+//-----------------------------------------------------------------------------
+void FLDNOGRID_MAPPER_UpdateCamera( FLDNOGRID_MAPPER* p_mapper )
+{
+  FIELD_RAIL_MAN_UpdateCamera( p_mapper->p_railMan, TRUE );
 }
 
 
@@ -362,6 +374,21 @@ MAPATTR FLDNOGRID_MAPPER_GetAttr( const FLDNOGRID_MAPPER* cp_mapper, const RAIL_
 {
   GF_ASSERT( cp_mapper );
   return RAIL_ATTR_GetAttribute( cp_mapper->p_attr, cp_location );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールロケーションでのカメラパラメータを　FIELD_CAMERAに設定
+ *
+ *	@param	p_mapper        マッパー
+ *	@param	cp_location     ロケーション
+ */
+//-----------------------------------------------------------------------------
+void FLDNOGRID_MAPPER_SetUpLocationCamera( FLDNOGRID_MAPPER* p_mapper, const RAIL_LOCATION* cp_location )
+{
+  GF_ASSERT( p_mapper );
+
+  FIELD_RAIL_MAN_SetUpLocationCameraParam( p_mapper->p_railMan, cp_location );
 }
 
 //----------------------------------------------------------------------------

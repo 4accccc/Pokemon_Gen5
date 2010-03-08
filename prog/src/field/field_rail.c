@@ -549,11 +549,13 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man)
 /**
  * @brief カメラ状態のアップデート
  *
+ * @param force 強制
+ *
  * @retval  TRUE  カメラ状態の更新
  * @retval  FALSE カメラ状態を変えなかった
  */
 //------------------------------------------------------------------
-BOOL FIELD_RAIL_MAN_UpdateCamera(FIELD_RAIL_MAN * man)
+BOOL FIELD_RAIL_MAN_UpdateCamera(FIELD_RAIL_MAN * man, BOOL force)
 {
   const FIELD_RAIL_WORK * work = man->camera_bind_work;
 	const RAIL_CAMERA_SET* camera_set;
@@ -580,7 +582,7 @@ BOOL FIELD_RAIL_MAN_UpdateCamera(FIELD_RAIL_MAN * man)
   }
 
   // 動作したフレームかチェック
-  if( (FIELD_RAIL_WORK_IsLastAction( work ) == FALSE) && (man->camera_update == FALSE) )
+  if( (FIELD_RAIL_WORK_IsLastAction( work ) == FALSE) && (man->camera_update == FALSE) && (force == FALSE) )
   {
     return FALSE;
   }
@@ -974,6 +976,58 @@ u32 FIELD_RAIL_MAN_GetLocationWidthGrid(const FIELD_RAIL_MAN * man, const RAIL_L
   FIELD_RAIL_WORK_SetLocation( man->calc_work, location );
   return RAIL_OFS_TO_GRID( man->calc_work->width_ofs_max );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ロケーションのカメラパラメータをセットアップ
+ *
+ *	@param	man         マネージャ
+ *	@param	location    ロケーション
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_MAN_SetUpLocationCameraParam(FIELD_RAIL_MAN * man, const RAIL_LOCATION* location)
+{
+  const FIELD_RAIL_WORK * work;
+  const FIELD_RAIL_WORK * tmp;
+	const RAIL_CAMERA_SET* camera_set;
+  RAIL_CAMERA_FUNC * func = NULL;
+
+  GF_ASSERT( man );
+  GF_ASSERT( location );
+
+  FIELD_RAIL_WORK_SetLocation( man->calc_work, location );
+
+  tmp = man->camera_bind_work;
+  man->camera_bind_work = man->calc_work;
+  work = man->calc_work;
+
+  switch (work->type)
+  {
+  case FIELD_RAIL_TYPE_POINT:
+    if (work->point->camera_set != RAIL_TBL_NULL)
+    {
+			camera_set = getRailDatCamera( work->rail_dat, work->point->camera_set );
+      func = getRailDatCameraFunc( work->rail_dat, camera_set->func_index );
+    }
+    break;
+  case FIELD_RAIL_TYPE_LINE:
+    if (work->line->camera_set != RAIL_TBL_NULL)
+    {
+			camera_set = getRailDatCamera( work->rail_dat, work->line->camera_set );
+      func = getRailDatCameraFunc( work->rail_dat, camera_set->func_index );
+    }
+    break;
+  default:
+    GF_ASSERT(0); //NO TYPE;
+  }
+  if (func)
+  {
+    func(man);
+  }
+
+  man->camera_bind_work = tmp;
+}
+
 
 
 //============================================================================================

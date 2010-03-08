@@ -87,6 +87,9 @@ extern BOOL FLDNOGRID_MAPPER_IsResistData( const FLDNOGRID_MAPPER* cp_mapper );
 // メイン管理
 extern void FLDNOGRID_MAPPER_Main( FLDNOGRID_MAPPER* p_mapper );
 
+// カメラの反映処理のみ行う
+extern void FLDNOGRID_MAPPER_UpdateCamera( FLDNOGRID_MAPPER* p_mapper );
+
 // レールワークの取得・返却
 extern FIELD_RAIL_WORK* FLDNOGRID_MAPPER_CreateRailWork( FLDNOGRID_MAPPER* p_mapper );
 extern void FLDNOGRID_MAPPER_DeleteRailWork( FLDNOGRID_MAPPER* p_mapper, FIELD_RAIL_WORK* p_railWork );
@@ -98,6 +101,10 @@ extern void FLDNOGRID_MAPPER_UnBindCameraWork( FLDNOGRID_MAPPER* p_mapper );
 
 // アトリビュート情報の取得
 extern MAPATTR FLDNOGRID_MAPPER_GetAttr( const FLDNOGRID_MAPPER* cp_mapper, const RAIL_LOCATION* cp_location );
+
+
+// RAIL_LOCATIONでのカメラアングルをFIELD_CAEMRAに設定する
+extern void FLDNOGRID_MAPPER_SetUpLocationCamera( FLDNOGRID_MAPPER* p_mapper, const RAIL_LOCATION* cp_location );
 
 
 // レールライン分岐の管理

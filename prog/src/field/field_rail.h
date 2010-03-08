@@ -262,7 +262,7 @@ extern void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern BOOL FIELD_RAIL_MAN_UpdateCamera(FIELD_RAIL_MAN * man);
+extern BOOL FIELD_RAIL_MAN_UpdateCamera(FIELD_RAIL_MAN * man, BOOL force);
 
 //------------------------------------------------------------------
 // ３Ｄポジションから、レールロケーションの取得
@@ -298,6 +298,7 @@ extern BOOL FIELD_RAIL_MAN_CalcRailKeyLocation(const FIELD_RAIL_MAN * man, const
 extern void FIELD_RAIL_MAN_GetLocationPosition(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * location, VecFx32* pos );
 extern u32 FIELD_RAIL_MAN_GetLocationLineOfsMaxGrid(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * location );
 extern u32 FIELD_RAIL_MAN_GetLocationWidthGrid(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * location );
+extern void FIELD_RAIL_MAN_SetUpLocationCameraParam(FIELD_RAIL_MAN * man, const RAIL_LOCATION* location); // FIELD_CAMERAに設定情報が入ります。
 
 
 //------------------------------------------------------------------

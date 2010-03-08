@@ -34,6 +34,7 @@
 enum
 {
   EV_RAILSLIPDOWN_SARCH_LOCATION, // ロケーションＳＥＡＲＣＨ
+  EV_RAILSLIPDOWN_WAIT_CAMERA_TRACE, // ロケーションＳＥＡＲＣＨ
   EV_RAILSLIPDOWN_JUMP_START,     // ジャンプ
   EV_RAILSLIPDOWN_JUMP_WAIT,
   EV_RAILSLIPDOWN_SLIPDOWN_START, // ずり落ち
@@ -76,12 +77,20 @@ typedef struct
   FIELD_RAIL_WORK* p_player_rail;
   FIELD_PLAYER* p_player;
   FLDEFF_CTRL*  p_effctrl;
+  FIELD_CAMERA* p_camera;
+
+  FIELD_RAIL_MAN* p_railman;
 
   VecFx32 start_pos;
   VecFx32 end_pos;
   VecFx16 way;
   s32 count;
   u32 count_max;
+
+  VecFx32 camera_start;
+  VecFx32 target_start;
+  VecFx32 camera_move;
+  VecFx32 target_move;
 
   RAIL_LOCATION target_location;
   
@@ -129,6 +138,7 @@ GMEVENT* EVENT_RailSlipDown(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
   p_slipdown->p_player          = FIELDMAP_GetFieldPlayer( fieldmap );
   p_slipdown->p_player_rail     = FIELD_PLAYER_GetNoGridRailWork( p_slipdown->p_player );
   p_slipdown->p_effctrl         = FIELDMAP_GetFldEffCtrl( fieldmap );
+  p_slipdown->p_camera          = FIELDMAP_GetFieldCamera( fieldmap );
 
   // 自機の強制停止
   FIELD_PLAYER_ForceStop( p_slipdown->p_player );
@@ -222,6 +232,39 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
         return GMEVENT_RES_FINISH;
       }
 
+      // 場所は、ターゲットロケーションのwidthで一番UPのほうにする
+      {
+        int i;
+        u16 roop_num;
+        RAIL_LOCATION location = p_slipdown->target_location;
+        int width = FIELD_RAIL_MAN_GetLocationWidthGrid( cp_railMan, &p_slipdown->target_location );
+        MAPATTR attr;
+        MAPATTR_FLAG attr_flag;
+        
+
+        // 奥＝マイナス方向
+        roop_num = width + location.width_grid;
+        
+        // アトリビュートがあるかチェックする
+        for( i=0; i<roop_num; i++ ){
+          
+          location.width_grid --;
+
+          attr = FLDNOGRID_MAPPER_GetAttr( p_slipdown->p_mapper, &location );
+          attr_flag = MAPATTR_GetAttrFlag( attr );
+
+          if( attr_flag & MAPATTR_FLAGBIT_HITCH ){
+            break;
+          }
+
+          // 
+          p_slipdown->target_location = location;
+        }
+
+        // 求めたロケーションの座標を設定
+        FIELD_RAIL_MAN_GetLocationPosition( cp_railMan, &p_slipdown->target_location, &p_slipdown->end_pos );
+      }
+
      
       // 移動カウントを求める
       // 方向なども求める
@@ -249,11 +292,61 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
 
       p_slipdown->count = 0;
 
-      PMSND_PlaySE( RAILSLIPDOWN_SE );
+      // カメラトレースOFF
+      FIELD_CAMERA_StopTraceRequest( p_slipdown->p_camera );
 
-      (*p_seq) = EV_RAILSLIPDOWN_SLIPDOWN_START;
+      (*p_seq) = EV_RAILSLIPDOWN_WAIT_CAMERA_TRACE;
     }
     
+    break;
+
+  case EV_RAILSLIPDOWN_WAIT_CAMERA_TRACE:// ロケーションＳＥＡＲＣＨ
+    if( FIELD_CAMERA_CheckTrace( p_slipdown->p_camera ) == FALSE ){
+
+      // カメラ追従OFF
+      // こうしないとちゃんとしたターゲット座標が計算できない。
+      FIELD_CAMERA_FreeTarget( p_slipdown->p_camera );
+
+      // 今のカメラ情報と、移動先のカメラ情報から、
+      // カメラの移動値を計算。
+      {
+        // 今のカメラアングル取得
+        FIELD_CAMERA_ChangeMode( p_slipdown->p_camera, FIELD_CAMERA_MODE_DIRECT_POS );
+        FIELD_CAMERA_GetCameraPos( p_slipdown->p_camera, &p_slipdown->camera_start );
+        FIELD_CAMERA_GetTargetPos( p_slipdown->p_camera, &p_slipdown->target_start );
+        
+        // 移動先でのアングルを取得
+        FLDNOGRID_MAPPER_SetUpLocationCamera( p_slipdown->p_mapper, &p_slipdown->target_location );
+        if( FIELD_CAMERA_GetWatchTarget( p_slipdown->p_camera ) != NULL ){
+          FIELD_CAMERA_SetTargetPos( p_slipdown->p_camera, &p_slipdown->end_pos );
+          FIELD_CAMERA_FreeTarget( p_slipdown->p_camera );
+        }
+        FIELD_CAMERA_ChangeMode( p_slipdown->p_camera, FIELD_CAMERA_MODE_DIRECT_POS );
+        FIELD_CAMERA_GetCameraPos( p_slipdown->p_camera, &p_slipdown->camera_move );
+        FIELD_CAMERA_GetTargetPos( p_slipdown->p_camera, &p_slipdown->target_move );
+
+        // 移動値を求める
+        VEC_Subtract( &p_slipdown->camera_move, &p_slipdown->camera_start, &p_slipdown->camera_move );
+        VEC_Subtract( &p_slipdown->target_move, &p_slipdown->target_start, &p_slipdown->target_move );
+      }
+
+      // Nogrid側のカメラ操作をOFFにする。
+      FLDNOGRID_MAPPER_SetRailCameraActive( p_slipdown->p_mapper, FALSE );
+
+      // カメラを絶対値モードにする。
+      FIELD_CAMERA_SetMode( p_slipdown->p_camera, FIELD_CAMERA_MODE_DIRECT_POS );
+
+      // カメラ追従OFF
+      FIELD_CAMERA_FreeTarget( p_slipdown->p_camera );
+
+      // カメラ座標を設定
+      FIELD_CAMERA_SetTargetPos( p_slipdown->p_camera, &p_slipdown->target_start );
+      FIELD_CAMERA_SetCameraPos( p_slipdown->p_camera, &p_slipdown->camera_start );
+
+      PMSND_PlaySE( RAILSLIPDOWN_SE );
+      
+      (*p_seq) = EV_RAILSLIPDOWN_SLIPDOWN_START;
+    }
     break;
 
   case EV_RAILSLIPDOWN_JUMP_START:     // ジャンプ
@@ -295,6 +388,27 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
       // 座標設定
       FIELD_PLAYER_SetPos( p_slipdown->p_player, &pos );    
 
+      // カメラ設定
+      {
+        VecFx32 camera;
+        VecFx32 target;
+
+        VEC_Set( &camera, 
+            p_slipdown->camera_start.x + FX_Div( FX_Mul( p_slipdown->camera_move.x, (p_slipdown->count<<FX32_SHIFT) ), p_slipdown->count_max<<FX32_SHIFT ),
+            p_slipdown->camera_start.y + FX_Div( FX_Mul( p_slipdown->camera_move.y, (p_slipdown->count<<FX32_SHIFT) ), p_slipdown->count_max<<FX32_SHIFT ),
+            p_slipdown->camera_start.z + FX_Div( FX_Mul( p_slipdown->camera_move.z, (p_slipdown->count<<FX32_SHIFT) ), p_slipdown->count_max<<FX32_SHIFT ) );
+
+        VEC_Set( &target, 
+            p_slipdown->target_start.x + FX_Div( FX_Mul( p_slipdown->target_move.x, (p_slipdown->count<<FX32_SHIFT) ), p_slipdown->count_max<<FX32_SHIFT ),
+            p_slipdown->target_start.y + FX_Div( FX_Mul( p_slipdown->target_move.y, (p_slipdown->count<<FX32_SHIFT) ), p_slipdown->count_max<<FX32_SHIFT ),
+            p_slipdown->target_start.z + FX_Div( FX_Mul( p_slipdown->target_move.z, (p_slipdown->count<<FX32_SHIFT) ), p_slipdown->count_max<<FX32_SHIFT ) );
+
+
+        // カメラ座標を設定
+        FIELD_CAMERA_SetTargetPos( p_slipdown->p_camera, &target );
+        FIELD_CAMERA_SetCameraPos( p_slipdown->p_camera, &camera );
+      }
+
     }
     break;
     
@@ -320,6 +434,11 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
       // 座標をプレイヤーに設定
       FIELD_PLAYER_SetPos( p_slipdown->p_player, &pos );    
     }
+
+
+    // カメラアップデート開始
+    FLDNOGRID_MAPPER_SetRailCameraActive( p_slipdown->p_mapper, TRUE );
+    FLDNOGRID_MAPPER_UpdateCamera( p_slipdown->p_mapper );
     return GMEVENT_RES_FINISH;
 
   default:

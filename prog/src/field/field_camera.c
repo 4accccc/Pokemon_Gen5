@@ -1064,7 +1064,14 @@ static void modeChange_CalcTargetPos( FIELD_CAMERA * camera )
 //-----------------------------------------------------------------------------
 static void modeChange_CalcDirectPos( FIELD_CAMERA * camera )
 {
-  // 何もする必要なし
+  // カメラモードから、求めるべき座標を計算
+  if( camera->mode == FIELD_CAMERA_MODE_CALC_CAMERA_POS ){
+    updateTargetBinding( camera );
+    updateAngleCameraPos(camera);
+  }else if( camera->mode == FIELD_CAMERA_MODE_CALC_TARGET_POS ){
+    updateCamPosBinding( camera );
+    updateAngleTargetPos(camera);
+  }
 }
 
 

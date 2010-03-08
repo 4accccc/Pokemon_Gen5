@@ -44,7 +44,7 @@
 //-------------------------------------
 ///	ロケーションあたり判定　Ｗｉｄｔｈ誤差値
 //=====================================
-#define HIT_LOCATION_WIDHT_AREA ( RAIL_WALK_OFS*1 ) // 4グリッド分
+#define HIT_LOCATION_WIDHT_AREA ( RAIL_WALK_OFS*1 )
 
 
 
