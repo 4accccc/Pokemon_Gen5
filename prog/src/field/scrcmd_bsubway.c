@@ -90,7 +90,7 @@ static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys );
 
 static const FLDEFF_BTRAIN_TYPE data_TrainModeType[BSWAY_MODE_MAX];
 static const VecFx32 data_TrainPosTbl[BTRAIN_POS_MAX];
-
+static const u16 data_ModeBossClearFlag[BSWAY_MODE_MAX];
 const HOME_NPC_DATA data_HomeNpcTbl[];
 
 //======================================================================
@@ -364,27 +364,31 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //ボスクリア済みフラグ取得
   case BSWTOOL_GET_BOSS_CLEAR_FLAG:
-    *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
-        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param0,
-        BSWAY_SETMODE_get );
-    break;
-  //スーパーボスクリア済みフラグ取得
-  case BSWTOOL_GET_S_BOSS_CLEAR_FLAG:
-    *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
-        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param0,
-        BSWAY_SETMODE_get );
+    {
+      u16 flag = data_ModeBossClearFlag[param0];
+      
+      if( flag == BSWAY_SCOREDATA_FLAG_MAX ){
+        GF_ASSERT( 0 );
+        *ret_wk = 1;
+      }else{
+        *ret_wk = BSUBWAY_SCOREDATA_SetFlag(
+            scoreData, flag, BSWAY_SETMODE_get );
+      }
+    }
     break;
   //ボスクリア済みフラグセット
   case BSWTOOL_SET_BOSS_CLEAR_FLAG:
-    BSUBWAY_SCOREDATA_SetFlag( scoreData,
-        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param0,
-        BSWAY_SETMODE_set );
-    break;
-  //スーパーボスクリア済みフラグセット
-  case BSWTOOL_SET_S_BOSS_CLEAR_FLAG:
-    BSUBWAY_SCOREDATA_SetFlag( scoreData,
-        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param0,
-        BSWAY_SETMODE_set );
+    {
+      u16 flag = data_ModeBossClearFlag[param0];
+      
+      if( flag == BSWAY_SCOREDATA_FLAG_MAX ){
+        GF_ASSERT( 0 );
+        *ret_wk = 1;
+      }else{
+        *ret_wk = BSUBWAY_SCOREDATA_SetFlag(
+            scoreData, flag, BSWAY_SETMODE_set );
+      }
+    }
     break;
   //サポート遭遇フラグ取得
   case BSWTOOL_GET_SUPPORT_ENCOUNT_END:
@@ -796,6 +800,10 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       #else
       *ret_wk = SCR_BATTLE_RESULT_WIN;
       #endif
+      
+      #ifdef DEBUG_BSW_FORCE_BTL_WIN
+      *ret_wk = SCR_BATTLE_RESULT_WIN;
+      #endif
     }
     break;
   //ホームに着いた際に行うワークセット
@@ -838,7 +846,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //通信同期
   case BSWSUB_COMM_TIMSYNC:
-    KAGAYA_Printf( "BSUBWAY 通信同期 No.%d\n", param0 );
+    KAGAYA_Printf( "BSUBWAY 通信同期開始 No.%d\n", param0 );
     bsw_scr->comm_timing_no = param0;
     BSUBWAY_COMM_TimingSyncStart( bsw_scr->comm_timing_no );
     VMCMD_SetWait( core, evCommTimingSync );
@@ -918,6 +926,7 @@ static BOOL evCommTimingSync( VMHANDLE *core, void *wk )
   BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
   
   if( BSUBWAY_COMM_IsTimingSync(bsw_scr->comm_timing_no) == TRUE ){
+    KAGAYA_Printf("BSUBWAY 通信同期完了 No.%d\n",bsw_scr->comm_timing_no);
     return( TRUE );
   }
   return( FALSE );
@@ -1204,6 +1213,22 @@ static const VecFx32 data_TrainPosTbl[BTRAIN_POS_MAX] =
     GRID_SIZE_FX32(-3),
     GRID_SIZE_FX32(9) + GRID_HALF_FX32,
   },
+};
+
+//--------------------------------------------------------------
+//  バトルサブウェイ　モード別クリアフラグ
+//--------------------------------------------------------------
+static const u16 data_ModeBossClearFlag[BSWAY_MODE_MAX] =
+{
+  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE, //single
+  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_DOUBLE, //double
+  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_MULTI, //multi
+  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_MULTI, //comm_multi
+  BSWAY_SCOREDATA_FLAG_MAX, //wifi
+  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_S_SINGLE, //super single
+  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_S_DOUBLE, //super double
+  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_S_MULTI, //super multi
+  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_S_MULTI, //super comm multi
 };
 
 //--------------------------------------------------------------

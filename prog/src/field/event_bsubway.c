@@ -577,6 +577,11 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
   case SEQ_BATTLE_END:
     OS_TPrintf("ƒoƒgƒ‹Š®—¹\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+#if 0    
+    BattleRec_LoadToolModule();                       // ˜^‰æ
+    BattleRec_StoreSetupParam( bcw->btl_setup_prm );  // ˜^‰æ
+    BattleRec_UnloadToolModule();                     // ˜^‰æ
+#endif
     (*seq) = SEQ_END;
     break;
   case SEQ_END:

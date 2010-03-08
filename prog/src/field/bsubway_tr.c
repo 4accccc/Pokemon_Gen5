@@ -416,7 +416,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     dst->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
     dst->commMode = BTL_COMM_DS;
     dst->competitor = BTL_COMPETITOR_COMM;
-    dst->playerStatus[BTL_CLIENT_PARTNER] = &wk->mystatus_fr;
+//  dst->playerStatus[BTL_CLIENT_PARTNER] = &wk->mystatus_fr;
      
     if( GFL_NET_SystemGetCurrentID() == GFL_NET_NO_PARENTMACHINE ){
       dst->commPos = 0;

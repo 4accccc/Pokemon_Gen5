@@ -517,8 +517,14 @@ BOOL BSUBWAY_SCRWORK_CommRecieveData( BSUBWAY_SCRWORK *bsw_scr, u16 *ret_buf )
   }
   
   if( bsw_scr->comm_recieve_count == check_num ){
+    KAGAYA_Printf(
+        "BSUBWAY データ受信完了 comm_mode = %d, recieve_count = %d\n",
+        bsw_scr->comm_mode,
+        bsw_scr->comm_recieve_count );
+
     bsw_scr->comm_recieve_count = 0;
     
+
     if( ret_buf != NULL ){
       *ret_buf = bsw_scr->comm_check_work;
     }
@@ -809,8 +815,8 @@ static void commCmd_FrWiFiCounterTowerRecvBufRetireSelect(
   BSUBWAY_SCRWORK *bsw_scr = pWork;
   const u16 *recv_buf = pData;
   
-  OS_Printf( "WIFI受付 バトルサブウェイ　トレーナーNoを受信\n" );
-  OS_Printf( "id_no = %d\n", netID );
+  OS_Printf( "WIFI受付 バトルサブウェイ　リタイア結果を受信\n" );
+  OS_Printf( "id_no = %d, result = %d\n", netID, recv_buf[0] );
   
   num = 0;
   bsw_scr->comm_check_work = 0;

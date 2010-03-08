@@ -323,7 +323,8 @@ _ANIME_LABEL  anm_player_in_continue_multi2
 sub_train_battle:
 {
   DEFINE_LOCAL play_mode
-  
+  DEFINE_LOCAL win_lose
+
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   //対戦へ
@@ -348,6 +349,8 @@ sub_train_battle:
     _CALL sub_battle_single_double
   ENDSWITCH
   
+  $win_lose = $SCWK_ANSWER
+  
   //戦闘復帰　マップフェードイン
 //  _MAP_FADE_BLACK_IN()
 //  _MAP_FADE_END_CHECK()
@@ -356,7 +359,7 @@ sub_train_battle:
   _TEMOTI_POKEMON_KAIFUKU()
   
   //対戦結果
-  IF $SCWK_ANSWER == 0 THEN //負け
+  IF $win_lose == 0 THEN //負け
     _CALL sub_retmap_lose_retire
   ELSE //勝ち
     _CALL sub_train_battle_win
@@ -443,7 +446,7 @@ sub_anm_train_battle_win_clear:
 {
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_train_battle_win_clear_jiki )
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_0, anm_train_battle_win_clear_trainer )
-//  _OBJ_ANIME_WAIT() //呼び先で待つ
+// _OBJ_ANIME_WAIT() //呼び先で待つ
 }
 _RET
 
@@ -528,9 +531,9 @@ sub_train_battle_win_next:
   _ME_WAIT()
   
   IF $play_mode == BSWAY_MODE_COMM_MULTI THEN
-    _CALL sub_train_battle_win_next_menu //通信専用
+    _CALL sub_train_battle_win_next_menu_comm_multi //通信専用
   ELSIF $play_mode == BSWAY_MODE_S_COMM_MULTI THEN
-    _CALL sub_train_battle_win_next_menu //通信専用
+    _CALL sub_train_battle_win_next_menu_comm_multi //通信専用
   ELSE
     _CALL sub_train_battle_win_next_menu //通常メニュー
   ENDIF
@@ -645,6 +648,9 @@ sub_train_battle_win_next_menu_comm_multi:
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   _BSUBWAY_TOOL( BSWTOOL_CHK_MODE_MULTI, play_mode, BSW_NULL, multi_flag )
   
+  //メニュー表示前の同期
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_MENU_START, BSW_NULL, BSW_NULL )
+  
   $loop = 1
   
   WHILE $loop == 1
@@ -663,14 +669,17 @@ sub_train_battle_win_next_menu_comm_multi:
     
     $LOCALWORK0 = 0
     
-    SWITCH $SCWK_ANSWER
-    CASE 0 THEN //続ける
+    IF $SCWK_ANSWER == 0 THEN //続ける
       //お友達の選択を待っています
       _SYSWIN_MSG( msg_c04r0110_10 , WIN_DOWN )
       
       //選択待ち通信同期
-      _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_NEXT_SELECT, BSW_NULL, BSW_NULL )
-    
+      _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_MENU_SELECT, BSW_NULL, BSW_NULL )
+      
+      $LOCALWORK0 = BSWAY_COMM_ROUND_SEL_NEXT
+      
+      //受信バッファクリア
+      _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
       //選択結果送信
       _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_RETIRE_SELECT, LOCALWORK0, BSW_NULL )
       //選択結果受信
@@ -678,13 +687,13 @@ sub_train_battle_win_next_menu_comm_multi:
       
       _SYSWIN_CLOSE()
       
-      IF $LOCALWORK0 == 1 THEN //リタイア
+      IF $LOCALWORK0 == BSWAY_COMM_ROUND_SEL_RETIRE THEN //相手リタイア
         _SYSWIN_MSG( msg_c04r0110_12 , WIN_DOWN )
         _TIME_WAIT( 30 )
-        _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RETIRE_WAIT, BSW_NULL, BSW_NULL )
+        _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_RETIRE_WAIT, BSW_NULL, BSW_NULL )
         _SYSWIN_CLOSE()
         _CALL sub_retmap_lose_retire //受付へ
-      ELSE //続ける
+      ELSE //相手続ける
         //移動アニメ
         _CALL sub_anm_jiki_next_car_multi
         //フェードアウト
@@ -699,21 +708,23 @@ sub_train_battle_win_next_menu_comm_multi:
       ENDIF
       
       $loop = 0
-    CASE 3 THEN //リタイア
-      $LOCALWORK0 = 1
-      
+    ELSE //リタイア
       //リタイアするか
       _SYSWIN_MSG( msg_c04r0110_06 , WIN_DOWN )
       _YES_NO_WIN( SCWK_ANSWER )
       _SYSWIN_CLOSE()
       
-      IF $SCWK_ANSWER == 0 THEN
+      IF $SCWK_ANSWER == SCR_YES THEN
         //お友達の選択を待っています
         _SYSWIN_MSG( msg_c04r0110_10 , WIN_DOWN )
-      
+        
         //選択待ち通信同期
-        _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_NEXT_SELECT, BSW_NULL, BSW_NULL )
-    
+        _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_MENU_SELECT, BSW_NULL, BSW_NULL )
+        
+        $LOCALWORK0 = BSWAY_COMM_ROUND_SEL_RETIRE
+        
+        //受信バッファクリア
+        _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
         //選択結果送信
         _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_RETIRE_SELECT, LOCALWORK0, BSW_NULL )
         //選択結果受信
@@ -722,12 +733,12 @@ sub_train_battle_win_next_menu_comm_multi:
         //戻ります
         _SYSWIN_MSG( msg_c04r0110_12 , WIN_DOWN )
         _TIME_WAIT( 30 )
-        _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RETIRE_WAIT, BSW_NULL, BSW_NULL )
+        _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_RETIRE_WAIT, BSW_NULL, BSW_NULL )
         _SYSWIN_CLOSE()
         _CALL sub_retmap_lose_retire //受付へ
         $loop = 0
       ENDIF
-    ENDSWITCH
+    ENDIF
   ENDWHILE
 }
 _RET
@@ -872,7 +883,7 @@ sub_battle_comm_multi:
   _CALL sub_anm_battle_start_multi
   
   //通信同期
-  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_BATTLE_START, BSW_NULL, BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_BATTLE_START, BSW_NULL, BSW_NULL )
   
   //バトル呼び出し
   _BSUBWAY_TOOL( BSWSUB_LOCAL_BTL_CALL, BSW_NULL, BSW_NULL, BSW_NULL )
@@ -911,10 +922,10 @@ sub_retmap_lose_retire:
   //通信マルチの際は終了同期
   IF $play_mode == BSWAY_MODE_COMM_MULTI || $play_mode == BSWAY_MODE_S_COMM_MULTI THEN
 	  _TIME_WAIT( 30 )
-    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_EXIT_WAIT, BSW_NULL, BSW_NULL )
+    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_EXIT_WAIT, BSW_NULL, BSW_NULL )
     
     //通信切断
-    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_SIO_END, BSW_NULL, BSW_NULL )
+    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_SIO_END, BSW_NULL, BSW_NULL )
     _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
   ENDIF
   

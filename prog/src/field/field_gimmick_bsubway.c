@@ -356,9 +356,6 @@ static void moveProc_ShakeTrain( BSW_GMK *bsw_gmk, FIELDMAP_WORK *fldmap )
       work->seq_no++;
       FLDMAPPER_SetDrawOffset( mapper, &scroll );
     }else{
-      KAGAYA_Printf(
-          "BGƒXƒNƒ[ƒ‹ = %d\n", GFL_BG_GetScrollY(FLDBG_MFRM_3D) );
-      
       scroll.y = NUM_FX32( work->shake_y );
       FLDMAPPER_SetDrawOffset( mapper, &scroll );
 
