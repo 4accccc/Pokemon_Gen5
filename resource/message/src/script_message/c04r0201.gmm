@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-02-25T23:53:27"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-08T17:34:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="271" top="-9" right="771" bottom="610" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="505"/>
+		<tag-palette left="879" top="-3" right="1352" bottom="395" visible="yes"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="190"/>
-		<band id="2" index="3" style="0000" width="240"/>
-		<band id="3" index="4" style="0000" width="455"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="2" index="3" style="0000" width="300"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -316,14 +316,14 @@
 		<language name="JPN" width="256">やあ　きみたち！
 はじめまして！▼
 わたしは　この　ミュージカルの
-オーナーです　よろしく！▼</language>
+オーナーです　よろしく！</language>
 		<language name="JPN_KANJI" width="256">やあ　きみたち！
 はじめまして！▼
 わたしは　この　ミュージカルの
-オーナーです　よろしく！▼</language>
+オーナーです　よろしく！</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_demo_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・主人公とサポートの前方を行ったりきたりした後メッセージ
 ・メッセージ表示後
@@ -333,25 +333,21 @@
 ＝オーナー</attribute>
 		<language name="JPN" width="256">ふーむ！　なんというか　きみたち
 いい　かんじの　トレーナーですねえ！▼
-ミュージカルでは
-ポケモンを　きかざってあげる▽
-ドレスアップが　ございます！▼
-きみたち！　ぜひ
-やってくれませんか▼
+ポケモンに　グッズを　きかざることを
+ドレスアップと　いうのですが▽
+ぜひ　やってみて　くれませんか？▼
 こちらの　グッズケースを
 プレゼント　しますから！▼</language>
 		<language name="JPN_KANJI" width="256">ふーむ！　なんというか　きみたち
 いい感じの　トレーナーですねえ！▼
-ミュージカルでは
-ポケモンを　着飾ってあげる▽
-ドレスアップが　ございます！▼
-きみたち！　ぜひ
-やってくれませんか▼
+ポケモンに　グッズを　着飾ることを
+ドレスアップと　いうのですが▽
+ぜひ　やってみて　くれませんか？▼
 こちらの　グッズケースを
 プレゼント　しますから！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_demo_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・メッセージ表示後 ポケモン選択画面へ
 ・ポケモンを選択したらドレスアップのみのアプリへ
@@ -365,18 +361,18 @@
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">その　グッズケースの　なかに
-ポケモンに　つけてあげられる▽
+ポケモンに　きかざる　ための▽
 グッズが　はいっています！▼
 では　まずは　ポケモンを
 えらんで　くださいませ！▼</language>
 		<language name="JPN_KANJI" width="256">その　グッズケースの　中に
-ポケモンに　つけてあげられる▽
+ポケモンに　着飾る　ための▽
 グッズが　入っています！▼
 では　まずは　ポケモンを
 選んで　くださいませ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_03a" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0201_owner_demo_03a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてowner_demo_05</comment>
 		<language name="JPN" width="256">おっと！　ざんねん　ですが
@@ -391,7 +387,7 @@
 ドレスアップして　くださいませ▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_03b" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0201_owner_demo_03b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてowner_demo_05</comment>
 		<language name="JPN" width="256">なるほど！　なにもつけずに
@@ -406,22 +402,22 @@
 ドレスアップしたほうが　受けますよ▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_03c" back-color="#80ff80,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c04r0201_owner_demo_03c" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・メッセージ表示後、再度ポケモン選択画面へ</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
-		<language name="JPN" width="256">そんなこと　いわずに
-ドレスアップ　してくださいませ！▼
+		<language name="JPN" width="256">いやいや　そんなこと　いわずに
+えらんでくださいよ！▼
 それそれ　きを　とりなおして
-レッツ　ドレスアップで　ございます！▼</language>
-		<language name="JPN_KANJI" width="256">そんなこと　いわずに
-ドレスアップ　してくださいませ！▼
-それそれ　気を　取り直して
-レッツ　ドレスアップで　ございます！▼</language>
+ポケモンを　えらんでくださいませ！▼</language>
+		<language name="JPN_KANJI" width="256">いやいや　そんなこと　いわずに
+選んでくださいよ！▼
+それそれ　気を　取りなおして
+ポケモンを　えらんでくださいませ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_03d" back-color="#80ff80,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c04r0201_owner_demo_03d" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、再度ポケモン選択画面へ</comment>
 		<attribute name="キャラ指定">GENTLEMAN
@@ -436,19 +432,21 @@
 		<comment>♂
 ・ドレスアップアプリが終わると
 　フィールド画面に復帰してこのメッセージ
+・ドレスアップアプリ中にグッズをつけたか否かで
+　owner_demo_03bかowner_demo_04に分岐
 ・コンディションを引っ張ってくるタグは未完成（発注済）
 ・続けてowner_demo_05</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">おおお！　ふたりとも
 すばらしい　コーディネートでしたよ▽
-とても　キュート　でございます！▼</language>
+とても　みりょくてき　でございます！▼</language>
 		<language name="JPN_KANJI" width="256">おおお！　２人とも
 すばらしい　コーディネートでしたよ▽
-とても　キュート　でございます！▼</language>
+とても　魅力的　でございます！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_demo_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・表示後、そのまま左に向かって歩いて行きフェードアウト
 　初期配置箇所に戻る
@@ -457,24 +455,22 @@
 　msg_c04r0201_owner_01を表示</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
-		<language name="JPN" width="256">わたしはね　ドレスアップした
-ポケモンが　さらに　かがやけるよう▽
-ミュージカルを　しております！▼
+		<language name="JPN" width="256">そうやって　きかざった　ポケモンが
+さんかするのが　ミュージカルです！▼
 きみたちも　ミュージカルに
-ぜひ　さんか　してほしいのです▼
-もし　さんかするなら　このさきで
-うけつけを　してくださいませ▼
+ぜひ　さんか　してくださいませ！▼
+ミュージカルに　ついての　せつめいは
+うけつけでも　きけます▼
 では　ぶたいで　あえる　ひを
-たのしみに　しております▼</language>
-		<language name="JPN_KANJI" width="256">わたしはね　ドレスアップした
-ポケモンが　さらに　輝けるよう▽
-ミュージカルを　しております！▼
+たのしみに　しておりますよ！▼</language>
+		<language name="JPN_KANJI" width="256">そうやって　着飾った　ポケモンが
+参加するのが　ミュージカルです！▼
 きみたちも　ミュージカルに
-ぜひ　参加して　ほしいのです▼
-もし　参加するなら　この先で
-受付を　してくださいませ▼
-では　舞台で　会える日を
-楽しみに　しております▼</language>
+ぜひ　参加　してくださいませ！▼
+ミュージカルに　ついての　説明は
+受付でも　聞けます▼
+では　舞台で　会える　日を
+楽しみに　しておりますよ！▼</language>
 	</row>
 
 	<row id="msg_c04r0201_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
