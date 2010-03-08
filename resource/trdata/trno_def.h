@@ -513,7 +513,10 @@
 #define	TRID_SUPPORT_12   ( 500 ) 
 #define	TRID_KINDERGARTENW_04   ( 501 ) 
 #define	TRID_KINDERGARTENM_05   ( 502 ) 
-#define TRID_MAX  ( 503 )
+#define	TRID_JUGGLING_08   ( 503 ) 
+#define	TRID_JUGGLING_09   ( 504 ) 
+#define	TRID_PARASOL_07   ( 505 ) 
+#define TRID_MAX  ( 506 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
