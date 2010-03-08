@@ -584,6 +584,8 @@ void TRIAL_HOUSE_CalcBtlResult( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, u1
       SaveControl_Extra_UnloadWork(sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION);
     }
   }
+
+  //最高得点、最高ランク更新処理(シングル、ダブルの区別無し)
 }
 
 //--------------------------------------------------------------
@@ -620,6 +622,36 @@ void TRIAL_HOUSE_InvalidDLData( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
   GFL_STD_MemClear( &exa_data, size );
   BATTLE_EXAMINATION_SAVE_Write(sv, &exa_data, ptr->HeapID);
 }
+
+//--------------------------------------------------------------
+/**
+ * 検定データを無効状態にしてセーブする
+ * @param   gsys      ゲームシステムポインタ
+ * @retval  データステート trial_house_scr_def.h参照
+ * @note 戻り値はTH_RDAT_ST_～
+ */
+//--------------------------------------------------------------
+u32 TRIAL_HOUSE_GetRankDataState( GAMESYS_WORK *gsys )
+{
+  u32 state;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+  THSV_WORK *sv_wk = THSV_GetSvPtr( sv );
+
+  if ( sv_wk->CommonData[0].Valid )
+  {
+    if ( sv_wk->CommonData[1].Valid ) state = TH_RDAT_ST_BOTH;    //両方データある
+    else  state = TH_RDAT_ST_ROM;   //ＲＯＭデータのみ
+  }
+  else
+  {
+    if ( sv_wk->CommonData[1].Valid ) state = TH_RDAT_ST_DL;  //ダウンロードデータのみ
+    else state = TH_RDAT_ST_NONE; //データなし
+  }
+
+  return state;
+}
+
 
 
 

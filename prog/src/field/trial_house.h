@@ -33,6 +33,6 @@ extern void TRIAL_HOUSE_CalcBtlResult( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR 
 extern u32 TRIAL_HOUSE_GetDLDataType( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr );
 extern void TRIAL_HOUSE_InvalidDLData( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr );
 extern GMEVENT *TRIAL_HOUSE_CreateRankAppEvt( GAMESYS_WORK * gsys, const BOOL inIsDL );
-
+extern u32 TRIAL_HOUSE_GetRankDataState( GAMESYS_WORK * gsys );
 
 

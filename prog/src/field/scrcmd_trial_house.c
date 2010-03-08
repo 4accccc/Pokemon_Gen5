@@ -394,6 +394,31 @@ VMCMD_RESULT EvCmdTH_CallRankApp( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * トライアルハウス ランクデータ状況取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdTH_GetRankDataState( VMHANDLE *core, void *wk )
+{
+  u16* state;
+  GMEVENT* event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
+
+  state = SCRCMD_GetVMWork( core, work );
+  *state = TRIAL_HOUSE_GetRankDataState( gsys );
+
+  return VMCMD_RESULT_CONTINUE;
+
+}
+
+
 
 
 
