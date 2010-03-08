@@ -98,6 +98,7 @@
 #include "savedata/battle_box_save.h"
 #include "event_geonet.h"
 #include "app/name_input.h"
+#include "waza_tool\wazano_def.h"
 
 FS_EXTERN_OVERLAY( d_iwasawa );
 
@@ -2585,6 +2586,9 @@ static BOOL debugMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk )
 static BOOL debugMenuCallProc_SetBtlBox( DEBUG_MENU_EVENT_WORK *wk )
 {
 #if 1
+//フシギダネ
+//LV１００♂
+//たいあたりの技のみ
 static unsigned  char pokemonBinary[0xDC] =
 {
  0x1F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x85, 0xD1,
@@ -2622,11 +2626,53 @@ static unsigned  char pokemonBinary[0xDC] =
   { 
     int i;
     POKEMON_PARAM *p_data = (POKEMON_PARAM *)pokemonBinary;
+
+
+
+
+    //一体目フシギダネ  たいあたり
+    //二体目ゼニガメ    たいあたり
+    //三体目ヒコザル    ひっかく
+    //四体目ピカチュウ  １０まんボルト
+    //五体目カビゴン    のしかかる
+    //六体目ラプラス    なみのり
+    static const u16 monsno_tbl[] =
+    { 
+      MONSNO_HUSIGIDANE,
+      MONSNO_ZENIGAME,
+      MONSNO_HIKOZARU,
+      MONSNO_PIKATYUU,
+      MONSNO_KABIGON,
+      MONSNO_RAPURASU
+    };
+    static const u16 waza_tbl[] =
+    { 
+      WAZANO_TAIATARI,
+      WAZANO_TAIATARI,
+      WAZANO_HIKKAKU,
+      WAZANO_10MANBORUTO,
+      WAZANO_NOSIKAKARI,
+      WAZANO_NAMINORI,
+    };
+    u16 poke_name[6] =
+      L"デバグポケ";
+    poke_name[ 5 ]  = 0xFFFF;
     
     for(i=0;i < PokeParty_GetPokeCountMax(party);i++){
-        PokeParty_Add( party, p_data );
+      POKEMON_PARAM *p_temp = PP_Create( monsno_tbl[ i ], 100, 0, HEAPID_PROC ); 
+      PP_Put( p_temp, ID_PARA_waza1, waza_tbl[ i ] );
+      PP_Put( p_temp, ID_PARA_waza2, WAZANO_NULL );
+      PP_Put( p_temp, ID_PARA_waza3, WAZANO_NULL );
+      PP_Put( p_temp, ID_PARA_waza4, WAZANO_NULL );
+      PP_Put( p_temp, ID_PARA_oyaname_raw, (u32)poke_name );
+
+      PP_Renew( p_temp );
+      PokeParty_Add( party, p_temp );
+
+      GFL_HEAP_FreeMemory( p_temp );
     }
     BATTLE_BOX_SAVE_SetPokeParty( btlbox, party );
+
   }
 #else
   {
