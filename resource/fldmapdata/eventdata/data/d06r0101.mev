@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/02 12:27:56
+#save date:2010/03/08 16:27:38
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06r0101.wms
 #hold event type:
 1
 #hold event number:
-14
+15
 #event number: 0
 #type
 1
@@ -421,7 +421,7 @@ TR_ELITEM_02
 #OBJ CODE Number
 TRAINERM
 #MOVE CODE Number
-MV_RND_V
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -429,7 +429,38 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_ELITEM_02
 #Direction Type Number
-DIR_UP
+DIR_LEFT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+712 16 -104
+#event number: 14
+#type
+1
+#ID name
+TR_MOUNT_02
+#OBJ CODE Number
+MOUNTMAN
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_MOUNT_02
+#Direction Type Number
+DIR_DOWN
 #Parameter 0 Number
 1
 #Parameter 1 Number
@@ -443,7 +474,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-552 0 -408
+536 0 -408
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
