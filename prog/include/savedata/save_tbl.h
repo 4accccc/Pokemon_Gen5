@@ -97,14 +97,13 @@ enum{
   GMDATA_ID_BSUBWAY_PLAYDATA, // バトルサブウェイ　プレイデータ
   GMDATA_ID_BSUBWAY_SCOREDATA,// バトルサブウェイ　スコアデータ
   GMDATA_ID_BSUBWAY_WIFIDATA, // バトルサブウェイ WiFiデータ
-  GMDATA_ID_RNDMATCH,         // ランダムマッチ
+  GMDATA_ID_BATTLEMATCH,      // バトル大会
   GMDATA_ID_RADAR,            // 調査レーダー
   GMDATA_ID_SYMBOL,           // シンボルエンカウント
   GMDATA_ID_MYPMS,            // 主人公の挨拶文データ
   GMDATA_ID_QUESTIONNAIRE,    // すれ違いアンケート
   GMDATA_ID_UNSV,             // 国連
   GMDATA_ID_THSV,             // トライアルハウスランキング表示用
-  GMDATA_ID_LIVEMATCH,        // ライブマッチ
 
 	GMDATA_ID_MAX,
 };

@@ -10,8 +10,6 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
-#include "savedata/save_control.h"
-
 //=============================================================================
 /**
  *					定数宣言
@@ -71,11 +69,7 @@ typedef struct _RNDMATCH_DATA RNDMATCH_DATA;
 extern int RNDMATCH_GetWorkSize( void );
 extern void RNDMATCH_Init( RNDMATCH_DATA *p_wk );
 
-//----------------------------------------------------------
-//セーブデータ取得のための関数
-//----------------------------------------------------------
-extern const RNDMATCH_DATA * SaveData_GetRndMatchConst( const SAVE_CONTROL_WORK * cp_sv );
-extern RNDMATCH_DATA * SaveData_GetRndMatch( SAVE_CONTROL_WORK * p_sv );
+//ワーク取得は。バトル大会用セーブデータbattlematch_savedata.hにあります
 
 //----------------------------------------------------------
 //取得、操作する関数

@@ -14,6 +14,9 @@
 //セーブデータ
 #include "savedata/save_tbl.h"
 
+//内部
+#include "battlematch_savedata_def.h"
+
 //外部公開
 #include "savedata/rndmatch_savedata.h"
 
@@ -28,13 +31,7 @@
  *					構造体宣言
 */
 //=============================================================================
-//-------------------------------------
-///	セーブデータ不完全型
-//=====================================
-struct _RNDMATCH_DATA
-{ 
-  u16 data  [RNDMATCH_TYPE_MAX][RNDMATCH_PARAM_IDX_MAX];
-};
+
 
 //=============================================================================
 /**
@@ -70,33 +67,6 @@ int RNDMATCH_GetWorkSize( void )
 void RNDMATCH_Init( RNDMATCH_DATA *p_wk )
 { 
   GFL_STD_MemClear( p_wk, sizeof(RNDMATCH_DATA) );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  コンスト版のランダムバトルマッチ取得
- *
- *	@param	const SAVE_CONTROL_WORK * cp_sv   セーブデータ
- *
- *	@return コンスト版のランダムバトルマッチ
- */
-//-----------------------------------------------------------------------------
-const RNDMATCH_DATA * SaveData_GetRndMatchConst( const SAVE_CONTROL_WORK * cp_sv )
-{ 
-  return SaveData_GetRndMatch( (SAVE_CONTROL_WORK *)cp_sv );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  ランダムバトルマッチ取得
- *
- *	@param	const SAVE_CONTROL_WORK * cp_sv   セーブデータ
- *
- *	@return ランダムバトルマッチ
- */
-//-----------------------------------------------------------------------------
-RNDMATCH_DATA * SaveData_GetRndMatch( SAVE_CONTROL_WORK * p_sv )
-{ 
-  return SaveControl_DataPtrGet(p_sv, GMDATA_ID_RNDMATCH );
 }
 
 //----------------------------------------------------------------------------

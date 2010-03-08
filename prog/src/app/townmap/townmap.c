@@ -40,7 +40,7 @@
 
 //debug
 #include "debug/debugwin_sys.h"
-
+#include "debug/debug_str_conv.h"
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -57,10 +57,17 @@ FS_EXTERN_OVERLAY(ui_common);
 #define DEBUG_PRINT_USE
 #define DEBUG_POS_CHECK
 #define DEBUG_GAMESYS_NONE
+#define DEBUG_CURSOR_POS
 static GFL_POINT s_debug_pos	=
 {	
 	80, 25
 };
+
+static GFL_POINT s_cursor_pos   =
+{ 
+  0, 0
+};
+static BOOL s_is_print_debug  = FALSE;
 #endif //PM_DEBUG
 
 
@@ -441,7 +448,6 @@ typedef struct
 	BOOL	is_scale;
 	
 #ifdef PM_DEBUG
-	BOOL	is_print_debug;
 	BOOL	is_place_visible_debug;
 	BOOL	is_arrive_debug;
 	BOOL	is_checkpos_debug;
@@ -560,6 +566,7 @@ static void INFO_Clear( INFO_WORK *p_wk );
 static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe, GFL_FONT *p_font, const GFL_MSGDATA *cp_msg, u8 x, u8 y, u8 w, u8 h, HEAPID heapID );
 static void MSGWND_Exit( MSGWND_WORK* p_wk );
 static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, u16 x, u16 y );
+static void MSGWND_PrintCode( MSGWND_WORK* p_wk, const STRCODE *cp_code, u16 x, u16 y );
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
 //-------------------------------------
 ///	PLACEWND
@@ -1898,6 +1905,11 @@ static void CURSOR_Main( CURSOR_WORK *p_wk, const PLACE_WORK *cp_place )
 			}
 		}
 	}
+
+#ifdef PM_DEBUG
+  s_cursor_pos.x  = p_wk->pos.x;
+  s_cursor_pos.y  = p_wk->pos.y;
+#endif 
 
 }
 //----------------------------------------------------------------------------
@@ -3525,6 +3537,29 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, u16 x, u16 y )
 
 	GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->p_bmpwin );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージ面	プリント
+ *
+ *	@param	MSGWND_WORK* p_wk	ワーク
+ *	@param	strID							文字列ID
+ *	@param	x									座標X
+ *	@param	y									座標Y
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_PrintCode( MSGWND_WORK* p_wk, const STRCODE *cp_code, u16 x, u16 y )
+{	
+	//一端消去
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
+
+	//文字列作成
+  GFL_STR_SetStringCode( p_wk->p_strbuf, cp_code );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), x, y, p_wk->p_strbuf, p_wk->p_font );
+
+	GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->p_bmpwin );
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	消去
@@ -3601,6 +3636,13 @@ static void PLACEWND_Exit( PLACEWND_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void PLACEWND_Main( PLACEWND_WORK *p_wk )
 {	
+#ifdef DEBUG_CURSOR_POS
+  if( s_is_print_debug )
+  { 
+    p_wk->is_update = TRUE;
+  }
+#endif
+
 	//アップデートチェック
 	if( p_wk->is_start )
 	{	
@@ -3629,9 +3671,23 @@ static void PLACEWND_Main( PLACEWND_WORK *p_wk )
 			zoneID	= PLACEDATA_GetParam( p_wk->cp_data, TOWNMAP_DATA_PARAM_ZONE_ID );
 			GF_ASSERT( zoneID != TOWNMAP_DATA_ERROR );
 
-			//文字描画
-			MSGWND_Print( &p_wk->msgwnd, ZONEDATA_GetPlaceNameID( zoneID ), PLACEWND_STR_X, PLACEWND_STR_Y );
-			//アニメストップ
+#ifdef DEBUG_CURSOR_POS
+      if( s_is_print_debug )
+      { 
+        char  str[32] = { 0 };
+        STRCODE strCode[32];
+        STD_TSNPrintf( str , 32-1, "カーソルいちX[%d]Y[%d]", s_cursor_pos.x, s_cursor_pos.y );
+        DEB_STR_CONV_SjisToStrcode( str, strCode , 32-1 );
+        MSGWND_PrintCode( &p_wk->msgwnd, strCode, PLACEWND_STR_X, PLACEWND_STR_Y );
+      }
+      else
+#endif 
+      { 
+        //文字描画
+        MSGWND_Print( &p_wk->msgwnd, ZONEDATA_GetPlaceNameID( zoneID ), PLACEWND_STR_X, PLACEWND_STR_Y );
+      }
+
+      //アニメストップ
 			GFL_CLACT_WK_StopAnm( p_wk->p_clwk ); 
 
 			//メイン処理終了
@@ -4208,7 +4264,7 @@ static void DEBUGPRINT_Update( DEBUG_PRINT_WORK *p_print, TOWNMAP_WORK *p_wk )
 	{	
 		GFL_POINT pos;
 		CURSOR_GetPos( &p_wk->cursor, &pos );
-		DEBUGPRINT_Print( p_print, L"カーソル座標 ", 32, 32 );
+		DEBUGPRINT_Print( p_print, L"カーソル ", 32, 32 );
 		DEBUGPRINT_PrintNumber( p_print, L"X=[%d]", pos.x, 80, 32 );
 		DEBUGPRINT_PrintNumber( p_print, L"Y=[%d]", pos.y, 120, 32 );
 	}
@@ -4311,6 +4367,7 @@ static void DEBUGMENU_UPDATE_Print( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {	
+#if 0
 		if( p_wk->is_print_debug )
 		{	
 			DEBUGPRINT_Clear(sp_dp_wk);
@@ -4327,7 +4384,8 @@ static void DEBUGMENU_UPDATE_Print( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 			DEBUGPRINT_Open(sp_dp_wk);
 			DEBUGPRINT_Update(sp_dp_wk, p_wk_adrs );
 		}
-		p_wk->is_print_debug	^= TRUE;
+#endif
+		s_is_print_debug	^= TRUE;
 		DEBUGWIN_RefreshScreen();
 	}
 }
@@ -4343,13 +4401,13 @@ static void DEBUGMENU_DRAW_Print( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {	
 	TOWNMAP_WORK	*p_wk	= p_wk_adrs;
 
-	if( p_wk->is_print_debug )
+	if( s_is_print_debug )
 	{	
-		DEBUGWIN_ITEM_SetNameV( p_item, "デバッグ表示[現在：ON]" );
+		DEBUGWIN_ITEM_SetNameV( p_item, "カーソルいち[ON]" );
 	}
 	else
 	{	
-		DEBUGWIN_ITEM_SetNameV( p_item, "デバッグ表示[現在：OFF]" );
+		DEBUGWIN_ITEM_SetNameV( p_item, "カーソルいち[OFF]" );
 	}
 }
 
@@ -4402,11 +4460,11 @@ static void DEBUGMENU_DRAW_CheckPos( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 
 	if( p_wk->is_checkpos_debug )
 	{	
-		DEBUGWIN_ITEM_SetNameV( p_item, "位置表示[現在：ON]" );
+		DEBUGWIN_ITEM_SetNameV( p_item, "あたりはんてい[ON]" );
 	}
 	else
 	{	
-		DEBUGWIN_ITEM_SetNameV( p_item, "位置表示[現在：OFF]" );
+		DEBUGWIN_ITEM_SetNameV( p_item, "あたりはんてい[OFF]" );
 	}
 }
 
@@ -4445,7 +4503,7 @@ static void DEBUGMENU_UPDATE_CheckPosNum( void* p_wk_adrs, DEBUGWIN_ITEM* p_item
 static void DEBUGMENU_DRAW_CheckPosNum( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {	
 	TOWNMAP_WORK	*p_wk	= p_wk_adrs;
-	DEBUGWIN_ITEM_SetNameV( p_item, "位置強調[現在：%d]", p_wk->checkpos_num_debug );
+	DEBUGWIN_ITEM_SetNameV( p_item, "きょうちょう[%d]", p_wk->checkpos_num_debug );
 }
 
 //----------------------------------------------------------------------------
@@ -4481,11 +4539,11 @@ static void DEBUGMENU_DRAW_VisiblePlace( void* p_wk_adrs, DEBUGWIN_ITEM* p_item 
 
 	if( p_wk->is_place_visible_debug )
 	{	
-		DEBUGWIN_ITEM_SetName( p_item, "場所OBJ表示[現在：ON]" );
+		DEBUGWIN_ITEM_SetName( p_item, "OBJぜんぶひょうじ[ON]" );
 	}
 	else
 	{	
-		DEBUGWIN_ITEM_SetName( p_item, "場所OBJ表示[現在：OFF]" );	
+		DEBUGWIN_ITEM_SetName( p_item, "OBJぜんぶひょうじ[OFF]" );	
 	}
 }
 //----------------------------------------------------------------------------
@@ -4509,6 +4567,12 @@ static void DEBUGMENU_UPDATE_ArriveFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item 
 	PLACE_WORK		*p_place	= &p_wk->place;
 	PLACE_DATA		*p_data;
 	int i;
+  u16 arrive_flag;
+  GAMEDATA	*p_gdata;
+  EVENTWORK	*p_ev;
+
+  p_gdata	= GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
+  p_ev		= GAMEDATA_GetEventWork( p_gdata );
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {	
@@ -4521,8 +4585,9 @@ static void DEBUGMENU_UPDATE_ArriveFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item 
 			for( i = 0; i < p_place->data_num; i++ )
 			{	
 				p_data	= &p_place->p_place[ i ];
-				p_data->is_sky	= p_data->is_arrive && TOWNMAP_DATA_GetParam( p_data->cp_data, p_data->data_idx, TOWNMAP_DATA_PARAM_SKY_FLAG );
-;
+        arrive_flag	= TOWNMAP_DATA_GetParam( p_data->cp_data, i, TOWNMAP_DATA_PARAM_ARRIVE_FLAG );
+        p_data->is_arrive = EVENTWORK_CheckEventFlag( p_ev, arrive_flag );
+				p_data->is_sky	  = p_data->is_arrive && TOWNMAP_DATA_GetParam( p_data->cp_data, p_data->data_idx, TOWNMAP_DATA_PARAM_SKY_FLAG );
 			}
 			break;
 		case DEBUGMENU_ARRIVE_ON:
@@ -4530,6 +4595,7 @@ static void DEBUGMENU_UPDATE_ArriveFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item 
 			{	
 				p_data	= &p_place->p_place[ i ];
 				p_data->is_sky	= TRUE;
+        p_data->is_arrive = TRUE;
 			}
 			break;
 		case DEBUGMENU_ARRIVE_OFF:
@@ -4537,6 +4603,7 @@ static void DEBUGMENU_UPDATE_ArriveFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item 
 			{	
 				p_data	= &p_place->p_place[ i ];
 				p_data->is_sky	= FALSE;
+        p_data->is_arrive = FALSE;
 			}
 			break;
 		}
@@ -4559,13 +4626,13 @@ static void DEBUGMENU_DRAW_ArriveFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 	switch( p_wk->is_arrive_debug )
 	{	
 	case DEBUGMENU_ARRIVE_NORMAL:
-		DEBUGWIN_ITEM_SetName( p_item, "到着フラグ操作[現在：通常]" );
+		DEBUGWIN_ITEM_SetName( p_item, "とうちゃくフラグ[NORMAL]" );
 		break;
 	case DEBUGMENU_ARRIVE_ON:
-		DEBUGWIN_ITEM_SetName( p_item, "到着フラグ操作[現在：全てON]" );	
+		DEBUGWIN_ITEM_SetName( p_item, "とうちゃくフラグ[ON]" );	
 		break;
 	case DEBUGMENU_ARRIVE_OFF:
-		DEBUGWIN_ITEM_SetName( p_item, "到着フラグ操作[現在：全てOFF]" );
+		DEBUGWIN_ITEM_SetName( p_item, "とうちゃくフラグ[OFF]" );
 		break;
 	}
 }

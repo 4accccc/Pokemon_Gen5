@@ -47,7 +47,7 @@
 #include "savedata/encount_sv.h"
 #include "savedata/c_gear_picture.h"
 #include "savedata/bsubway_savedata.h"
-#include "savedata/rndmatch_savedata.h"
+#include "savedata/battlematch_savedata.h"
 #include "savedata/radar_save.h"
 #include "savedata/symbol_save.h"
 #include "savedata/my_pms_data.h"
@@ -56,7 +56,6 @@
 #include "savedata/un_savedata.h"
 #include "savedata/zukan_wp_savedata.h"
 #include "savedata/trialhouse_save.h"
-#include "savedata/livematch_savedata.h"
 
 //==============================================================================
 //  定数定義
@@ -400,11 +399,10 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     (FUNC_GET_SIZE)BSUBWAY_WIFIDATA_GetWorkSize,
     (FUNC_INIT_WORK)BSUBWAY_WIFIDATA_Init,
   },
-  { 
-    //ランダムマッチセーブデータ
-    GMDATA_ID_RNDMATCH,
-    (FUNC_GET_SIZE)RNDMATCH_GetWorkSize,
-    (FUNC_INIT_WORK)RNDMATCH_Init,
+  { //バトル大会セーブデータ
+    GMDATA_ID_BATTLEMATCH,
+    (FUNC_GET_SIZE)BATTLEMATCH_GetWorkSize,
+    (FUNC_INIT_WORK)BATTLEMATCH_Init,
   },
   { //調査レーダー
     GMDATA_ID_RADAR,
@@ -435,11 +433,6 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_THSV,
     (FUNC_GET_SIZE)THSV_GetWorkSize,
     (FUNC_INIT_WORK)THSV_Init,
-  },
-  { //ライブマッチ
-    GMDATA_ID_LIVEMATCH,
-    (FUNC_GET_SIZE)LIVEMATCH_GetWorkSize,
-    (FUNC_INIT_WORK)LIVEMATCH_Init,
   },
 };
 

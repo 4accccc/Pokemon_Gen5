@@ -36,6 +36,7 @@
 #include "br_musicalsend_proc.h"
 
 //セーブデータ
+#include "savedata/battlematch_savedata.h"
 #include "savedata/battle_rec.h"
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
@@ -782,7 +783,10 @@ static void BR_RNDMATCH_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, co
   p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
-  p_param->p_rndmatch = SaveData_GetRndMatch( p_sv_ctrl );
+  {
+    BATTLEMATCH_DATA  *p_btlmatch_sv  = SaveData_GetBattleMatch( p_sv_ctrl );
+    p_param->p_rndmatch = BATTLEMATCH_GetRndMatch( p_btlmatch_sv );
+  }
 }
 //----------------------------------------------------------------------------
 /**

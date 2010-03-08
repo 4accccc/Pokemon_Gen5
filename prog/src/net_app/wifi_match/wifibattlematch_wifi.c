@@ -1421,13 +1421,9 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     //=====================================
   case SEQ_CHECK_RATING:
     { 
-      const RNDMATCH_DATA *cp_match_data;
-      SAVE_CONTROL_WORK *p_sv;
       u32 my_rate ;
 
-      p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
-      cp_match_data = SaveData_GetRndMatchConst( p_sv );
-      my_rate = RNDMATCH_GetParam( cp_match_data, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_RATE );
+      my_rate = RNDMATCH_GetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_RATE );
       if( p_wk->sake_data.rate != my_rate )
       { 
         //シャチとサーバーが一緒ならば
@@ -1448,14 +1444,9 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_START_SAVE_RENEWAL:
     { 
-      RNDMATCH_DATA *p_match_data;
-      SAVE_CONTROL_WORK *p_sv;
-
-      p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
-      p_match_data = SaveData_GetRndMatch( p_sv );
-      RNDMATCH_SetParam( p_match_data, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_RATE, p_wk->sake_data.rate );
-      RNDMATCH_SetParam( p_match_data, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_WIN, p_wk->sake_data.win );
-      RNDMATCH_SetParam( p_match_data, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_LOSE, p_wk->sake_data.lose );
+      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_RATE, p_wk->sake_data.rate );
+      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_WIN, p_wk->sake_data.win );
+      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_LOSE, p_wk->sake_data.lose );
 
       GAMEDATA_SaveAsyncStart( p_param->p_param->p_game_data );
       *p_seq  = SEQ_WAIT_SAVE_RENEWAL;

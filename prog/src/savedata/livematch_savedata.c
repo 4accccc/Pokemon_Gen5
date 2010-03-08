@@ -14,6 +14,9 @@
 //セーブデータ
 #include "savedata/save_tbl.h"
 
+//内部
+#include "battlematch_savedata_def.h"
+
 //外部公開
 #include "savedata/livematch_savedata.h"
 
@@ -28,27 +31,7 @@
  *					構造体宣言
 */
 //=============================================================================
-//-------------------------------------
-///	対戦相手情報
-//=====================================
-typedef struct 
-{
-  u8  mac_addr[6];
-  u8  param[LIVEMATCH_FOEDATA_PARAM_MAX];
-} LIVEMATCH_FOEDATA;
 
-//-------------------------------------
-///	セーブデータ不完全型
-//=====================================
-struct _LIVEMATCH_DATA
-{ 
-  //自分の情報
-  u8  mac_addr[6];
-  u8  param[LIVEMATCH_MYDATA_PARAM_MAX];
-  
-  //対戦相手のデータ
-  LIVEMATCH_FOEDATA foe[LIVEMATCH_FOEDATA_MAX];
-};
 //=============================================================================
 /**
  *					プロトタイプ宣言
@@ -86,37 +69,6 @@ void LIVEMATCH_Init( LIVEMATCH_DATA *p_wk )
 {
   GFL_STD_MemClear( p_wk, sizeof(LIVEMATCH_DATA) );
   OS_GetMacAddress( p_wk->mac_addr );
-}
-
-//----------------------------------------------------------
-//セーブデータ取得のための関数
-//----------------------------------------------------------
-//----------------------------------------------------------------------------
-/**
- *	@brief  ライブマッチのセーブデータ取得  const版
- *
- *	@param	const SAVE_CONTROL_WORK * cp_sv ワーク
- *
- *	@return セーブデータ
- */
-//-----------------------------------------------------------------------------
-const LIVEMATCH_DATA * SaveData_GetLiveMatchConst( const SAVE_CONTROL_WORK * cp_sv )
-{
-  return SaveData_GetLiveMatch( (SAVE_CONTROL_WORK*)cp_sv );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  ライブマッチのセーブデータ取得
- *
- *	@param	const SAVE_CONTROL_WORK * cp_sv ワーク
- *
- *	@return セーブデータ
- */
-//-----------------------------------------------------------------------------
-LIVEMATCH_DATA * SaveData_GetLiveMatch( SAVE_CONTROL_WORK * p_sv )
-{
-  return SaveControl_DataPtrGet(p_sv, GMDATA_ID_LIVEMATCH );
 }
 
 

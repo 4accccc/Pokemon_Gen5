@@ -29,6 +29,7 @@
 #include "print/wordset.h"
 
 //  セーブデータ
+#include "savedata/battlematch_savedata.h"
 #include "savedata/rndmatch_savedata.h"
 
 //  WIFIバトルマッチのモジュール
@@ -796,12 +797,15 @@ static void Util_PlayerInfo_Create( DIGITALCARD_CHECK_WORK *p_wk )
 
     REGULATION_SAVEDATA* p_reg_sv  = SaveData_GetRegulationSaveData(GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata ));
     const REGULATION_CARDDATA *cp_reg_card  = RegulationSaveData_GetRegulationCard(p_reg_sv, p_wk->param.type );
+    BATTLEMATCH_DATA  *p_btlmatch_sv;
 
     p_my    = GAMEDATA_GetMyStatus( p_wk->param.p_gamedata); 
     p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->param.p_graphic );
     p_sv    = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
     p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-    cp_match_save  = SaveData_GetRndMatchConst( p_sv );
+
+    p_btlmatch_sv = SaveData_GetBattleMatch( p_sv );
+    cp_match_save  = BATTLEMATCH_GetRndMatchConst( p_btlmatch_sv );
 
 
     //自分のデータを表示

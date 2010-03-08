@@ -35,6 +35,7 @@
 //セーブデータ
 #include "savedata/battle_box_save.h"
 #include "savedata/wifihistory.h"
+#include "savedata/battlematch_savedata.h"
 #include "savedata/my_pms_data.h"
 
 //自分のモジュール
@@ -633,7 +634,10 @@ static void *WBM_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID,
   p_param->p_player_data  = p_wk->p_player_data;
   p_param->p_enemy_data   = p_wk->p_enemy_data;
   p_param->p_svl_result   = &p_wk->svl_result;
-  p_param->p_rndmatch     = SaveData_GetRndMatch( GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data ) );
+  { 
+    BATTLEMATCH_DATA  *p_btlmatch_sv  = SaveData_GetBattleMatch( GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data ) );
+    p_param->p_rndmatch     =  BATTLEMATCH_GetRndMatch( p_btlmatch_sv );
+  }
 
   PMSND_PlayBGM( WBM_SND_SEQ_MAIN );
 		

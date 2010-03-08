@@ -10,8 +10,6 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
-#include "savedata/save_control.h"
-
 //=============================================================================
 /**
  *					定数宣言
@@ -67,11 +65,7 @@ typedef struct _LIVEMATCH_DATA LIVEMATCH_DATA;
 extern int LIVEMATCH_GetWorkSize( void );
 extern void LIVEMATCH_Init( LIVEMATCH_DATA *p_wk );
 
-//----------------------------------------------------------
-//セーブデータ取得のための関数
-//----------------------------------------------------------
-extern const LIVEMATCH_DATA * SaveData_GetLiveMatchConst( const SAVE_CONTROL_WORK * cp_sv );
-extern LIVEMATCH_DATA * SaveData_GetLiveMatch( SAVE_CONTROL_WORK * p_sv );
+//ワーク取得は。バトル大会用セーブデータbattlematch_savedata.hにあります
 
 //----------------------------------------------------------
 //取得、操作する関数
