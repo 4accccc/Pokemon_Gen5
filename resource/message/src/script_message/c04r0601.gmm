@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T21:05:36"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T21:06:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -310,7 +310,7 @@
 この先　４番道路です！</language>
 	</row>
 
-	<row id="msg_c04r0601_oldman_01">
+	<row id="msg_c04r0601_oldman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ｒ04ゲート
 ・仮メッセージ</comment>
