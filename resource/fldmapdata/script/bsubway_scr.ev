@@ -477,7 +477,7 @@ sub_receipt_challenge_multi:
     _BSUBWAY_TOOL( BSWSUB_SET_COMM_IRC_FLAG, 0, BSW_NULL, BSW_NULL )
     
     //赤外線、ワイヤレス選択
-    _SYSWIN_MSG( msg_bsw_scr_90 , WIN_DOWN )
+    _SYSWIN_MSG( msg_bsw_scr_87 , WIN_DOWN )
     _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
     _BMPMENU_MAKE_LIST( msg_bsw_scr_88, 1 ) //赤外線
     _BMPMENU_MAKE_LIST( msg_bsw_scr_89, 0 ) //ワイヤレス
