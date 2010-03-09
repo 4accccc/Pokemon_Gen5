@@ -221,6 +221,13 @@ struct _WEATHER_TASK {
 	WEATHER_OBJ_WORK*	p_objlist;
 	u32					active_objnum;
 
+  // フォグフェード、Multi時のフェードアウトチェック
+  u8         fog_fade_in_reserve; // 予約
+  u8         fog_fade_in_slope;   
+  u8         fog_fade_in_timing;
+  u8         fog_fade_in_pad;
+  s32        fog_fade_in_offset;  
+
 };
 
 //-----------------------------------------------------------------------------
@@ -285,6 +292,14 @@ static GFL_CLWK* WEATHER_OBJ_WK_GetClWk( const WEATHER_OBJ_WORK* cp_wk );
 static void WEATHER_SND_LOOP_Play( WEATHER_TASK_SND_LOOP* p_wk, int snd_no );
 static void WEATHER_SND_LOOP_Stop( WEATHER_TASK_SND_LOOP* p_wk );
 
+
+//-------------------------------------
+///	FOGフェードイン　予約
+//=====================================
+static void WEATHER_FOGFADEIN_RESERVE_Set( WEATHER_TASK* p_wk, FIELD_FOG_SLOPE fog_slope, int fog_offs, int timing );
+static void WEATHER_FOGFADEIN_RESERVE_Clear( WEATHER_TASK* p_wk);
+static BOOL WEATHER_FOGFADEIN_RESERVE_IsReserve( const WEATHER_TASK* cp_wk );
+static void WEATHER_FOGFADEIN_RESERVE_StartFadeIn( WEATHER_TASK* p_wk );
 
 //-------------------------------------
 ///	ツール
@@ -356,6 +371,15 @@ void WEATHER_TASK_Exit( WEATHER_TASK* p_wk )
 //-----------------------------------------------------------------------------
 void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 {
+
+  // FOGフェード予約反映処理
+  if( WEATHER_FOGFADEIN_RESERVE_IsReserve( p_wk ) ){
+    if( FIELD_FOG_FADE_IsFade( p_wk->p_fog ) == FALSE ){
+      WEATHER_FOGFADEIN_RESERVE_StartFadeIn( p_wk ); 
+      WEATHER_FOGFADEIN_RESERVE_Clear( p_wk );
+    }
+  }
+
 	// 処理分岐
 	switch( p_wk->seq ){
 	// なし
@@ -487,6 +511,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 		GF_ASSERT(0);
 		break;
 	}
+
 }
 
 
@@ -1129,9 +1154,19 @@ void WEATHER_TASK_FogClear( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE mode )
 //-----------------------------------------------------------------------------
 void WEATHER_TASK_FogFadeIn_Init( WEATHER_TASK* p_wk, FIELD_FOG_SLOPE fog_slope, int fog_offs, int timing, WEATHER_TASK_FOG_MODE mode )
 {
-	if( mode != WEATHER_TASK_FOG_NONE ){
-		FIELD_FOG_FADE_Init( p_wk->p_fog, fog_offs, fog_slope, timing );
-	}
+	if( mode == WEATHER_TASK_FOG_USE ){
+    FIELD_FOG_FADE_Init( p_wk->p_fog, fog_offs, fog_slope, timing );
+	}else if( mode == WEATHER_TASK_FOG_WITH ){
+    // slopeが同じなら、そのままフェード
+    // 違ったら、まずフェードアウト
+    if( fog_slope == FIELD_FOG_GetSlope( p_wk->p_fog ) ){
+      FIELD_FOG_FADE_Init( p_wk->p_fog, fog_offs, fog_slope, timing );
+    }else{
+      FIELD_FOG_FADE_Init( p_wk->p_fog, WEATHER_FOG_DEPTH_DEFAULT_START, FIELD_FOG_GetSlope( p_wk->p_fog ), timing/2 );
+
+      WEATHER_FOGFADEIN_RESERVE_Set( p_wk, fog_slope, fog_offs, timing/2 );
+    }
+  }
 }
 	
 //----------------------------------------------------------------------------
@@ -1164,8 +1199,11 @@ void WEATHER_TASK_FogFadeOut_Init( WEATHER_TASK* p_wk, int fog_offs, int timing,
 extern BOOL WEATHER_TASK_FogFade_IsFade( const WEATHER_TASK* cp_wk )
 {
 	if( FIELD_FOG_FADE_IsFade( cp_wk->p_fog ) ){
-		return FALSE;	
+  	return FALSE;	
 	}
+  if( WEATHER_FOGFADEIN_RESERVE_IsReserve( cp_wk ) ){
+    return FALSE;
+  }
 	return TRUE;
 }
 
@@ -2477,6 +2515,67 @@ static void WEATHER_SND_LOOP_Stop( WEATHER_TASK_SND_LOOP* p_wk )
 
     PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID( p_wk->snd_no ) );
   }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードイン　予約　設定
+ *
+ *	@param	p_wk        ワーク
+ *	@param	fog_slope   スロープ
+ *	@param	fog_offs    オフセット
+ *	@param	timing      タイミング
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_FOGFADEIN_RESERVE_Set( WEATHER_TASK* p_wk, FIELD_FOG_SLOPE fog_slope, int fog_offs, int timing )
+{
+  p_wk->fog_fade_in_reserve   = TRUE;
+  p_wk->fog_fade_in_slope     = fog_slope;
+  p_wk->fog_fade_in_offset    = fog_offs;
+  p_wk->fog_fade_in_timing    = timing/2;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードイン　予約　クリア
+ *
+ *	@param	p_wk
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_FOGFADEIN_RESERVE_Clear( WEATHER_TASK* p_wk )
+{
+  p_wk->fog_fade_in_reserve   = FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードインが予約されているか？
+ *
+ *	@param	cp_wk   ワーク
+ *
+ *	@retval TRUE  されている
+ *	@retval FALSE されていない
+ */
+//-----------------------------------------------------------------------------
+static BOOL WEATHER_FOGFADEIN_RESERVE_IsReserve( const WEATHER_TASK* cp_wk )
+{
+  return cp_wk->fog_fade_in_reserve;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードインを開始する
+ *
+ *	@param	p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_FOGFADEIN_RESERVE_StartFadeIn( WEATHER_TASK* p_wk )
+{
+  GF_ASSERT( p_wk->fog_fade_in_reserve );
+  GF_ASSERT( FIELD_FOG_FADE_IsFade( p_wk->p_fog ) == FALSE );
+
+  FIELD_FOG_FADE_InitEx( p_wk->p_fog, WEATHER_FOG_DEPTH_DEFAULT_START, p_wk->fog_fade_in_offset, p_wk->fog_fade_in_slope, p_wk->fog_fade_in_slope, p_wk->fog_fade_in_timing );
 }
 
 

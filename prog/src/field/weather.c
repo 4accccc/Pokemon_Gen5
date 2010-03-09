@@ -287,6 +287,11 @@ static void FIELD_WEATHER_CHANGE_Normal( FIELD_WEATHER* p_sys, HEAPID heapID );
 static void FIELD_WEATHER_CHANGE_Multi( FIELD_WEATHER* p_sys, HEAPID heapID );
 
 
+//-------------------------------------
+///	天気切り替えタイプの取得
+//=====================================
+static u32 FIELD_WEATHER_GetChangeType( u16 now_weather, u16 next_weather );
+
 
 
 //----------------------------------------------------------------------------
@@ -509,7 +514,7 @@ void FIELD_WEATHER_Change( FIELD_WEATHER* p_sys, WEATHER_NO weather_no )
   //TOMOYA_Printf( "change_weather %d\n", weather_no );
 	
 	// フェードアウト＋フェードイン
-	p_sys->change_type	= FIELD_WEATHER_CHANGETYPE_NORMAL;
+	p_sys->change_type	= FIELD_WEATHER_GetChangeType( p_sys->now_weather, p_sys->next_weather );
 	p_sys->seq			= FIELD_WEATHER_NORMAL_SEQ_NOW_FADEOUT;
 }
 
@@ -702,5 +707,46 @@ static void FIELD_WEATHER_CHANGE_Multi( FIELD_WEATHER* p_sys, HEAPID heapID )
 		GF_ASSERT(0);
 		break;
 	}
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  今の天気からnext天気に変更するときの変更タイプを取得
+ *
+ *	@param	now_weather
+ *	@param	next_weather 
+ *
+ *	@return 天気　変更　タイプ
+ */
+//-----------------------------------------------------------------------------
+static u32 FIELD_WEATHER_GetChangeType( u16 now_weather, u16 next_weather )
+{
+  u32 ret = FIELD_WEATHER_CHANGETYPE_NORMAL;
+  
+  switch( now_weather ){
+  case WEATHER_NO_SNOW:
+    if( (next_weather == WEATHER_NO_SNOWSTORM) || 
+        (next_weather == WEATHER_NO_ARARE) ){
+      ret = FIELD_WEATHER_CHANGETYPE_MULTI;
+    }
+    break;
+
+  case WEATHER_NO_SNOWSTORM:
+    if( (next_weather == WEATHER_NO_SNOW) || 
+        (next_weather == WEATHER_NO_ARARE) ){
+      ret = FIELD_WEATHER_CHANGETYPE_MULTI;
+    }
+    break;
+
+  case WEATHER_NO_ARARE:
+    if( (next_weather == WEATHER_NO_SNOWSTORM) || 
+        (next_weather == WEATHER_NO_SNOW) ){
+      ret = FIELD_WEATHER_CHANGETYPE_MULTI;
+    }
+    break;
+  }
+
+  return ret;
 }
 
