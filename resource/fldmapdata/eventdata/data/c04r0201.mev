@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/08 18:14:50
+#save date:2010/03/09 18:53:04
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0201.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0201.wms
 #hold event type:
 1
 #hold event number:
-18
+23
 #event number: 0
 #type
 1
@@ -71,7 +71,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 48 56
+8 0 56
 #event number: 2
 #type
 1
@@ -102,7 +102,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 48 24
+-72 0 24
 #event number: 3
 #type
 1
@@ -111,7 +111,7 @@ C04R0201_FAN_05
 #OBJ CODE Number
 WKOBJCODE05
 #MOVE CODE Number
-MV_DOWN
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 48 8
+8 0 24
 #event number: 4
 #type
 1
@@ -164,7 +164,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 48 56
+-104 0 40
 #event number: 5
 #type
 1
@@ -195,7 +195,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 48 24
+-40 0 24
 #event number: 6
 #type
 1
@@ -568,6 +568,161 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 40 0 72
+#event number: 18
+#type
+1
+#ID name
+C04R0201_FAN_07
+#OBJ CODE Number
+WKOBJCODE02
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_MUSICAL_FUN_02
+#Event Script Name
+SCRID_MUSICAL_FAN_02
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 40
+#event number: 19
+#type
+1
+#ID name
+C04R0201_FAN_06
+#OBJ CODE Number
+WKOBJCODE01
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_MUSICAL_FUN_01
+#Event Script Name
+SCRID_MUSICAL_FAN_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 56
+#event number: 20
+#type
+1
+#ID name
+C04R0201_FAN_08
+#OBJ CODE Number
+WKOBJCODE03
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_MUSICAL_FUN_03
+#Event Script Name
+SCRID_MUSICAL_FAN_03
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 -8
+#event number: 21
+#type
+1
+#ID name
+C04R0201_FAN_09
+#OBJ CODE Number
+WKOBJCODE04
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_MUSICAL_FUN_04
+#Event Script Name
+SCRID_MUSICAL_FAN_04
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 -24
+#event number: 22
+#type
+1
+#ID name
+C04R0201_FAN_10
+#OBJ CODE Number
+WKOBJCODE05
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_MUSICAL_FUN_05
+#Event Script Name
+SCRID_MUSICAL_FAN_05
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 8
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
