@@ -69,6 +69,7 @@ EVENT_START	ev_c02gym0202_leader2_01
 	_FLAG_RESET(FV_C02GYM0101_HAKAI)	//博物館のプラズマ団を表示
 	_FLAG_RESET(FV_C02_LEADER2)	//C02ジムリーダーアロエがC02町に出現
 	_FLAG_RESET(FV_C02_POSEVENT_01)	//ライバル・サポート・C03ジムリーダー・アーティがC02町に出現
+	_FLAG_SET(SYS_FLAG_BGM_TOUNAN) //盗難事件のBGMを発動する
 	
 	//盗難事件のPOSイベントを有効にする
 	//C02gym0101のイベント

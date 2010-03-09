@@ -27,6 +27,7 @@
 #define C06_MONSTERBALL_01                 8
 #define C06_BOY2_01                        9
 #define C06_BABYGIRL1_01                  10
+#define C06_SUNGLASSES_01                 11
 
 #endif //ZONE_C06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

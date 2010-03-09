@@ -16,5 +16,6 @@
 #define SCRID_C06_MONSTERBALL_01 (9)
 #define SCRID_BG_C06_SIGN2_01 (10)
 #define SCRID_BG_C06_SIGN3_01 (11)
+#define SCRID_C06_SUNGLASSES_01 (12)
 
 #endif //_C06_DEF_H_
