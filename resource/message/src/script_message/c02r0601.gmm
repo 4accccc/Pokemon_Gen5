@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-01T14:55:38"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T20:52:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c02r0601_waitress_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0601_waitress_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・水曜日以外</comment>
 		<attribute name="キャラ指定">WAITRESS
@@ -303,7 +303,7 @@
 カフェ　ソーコへ　ようこそ！！</language>
 	</row>
 
-	<row id="msg_c02r0601_waitress_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0601_waitress_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・水曜日
 ・メッセージ表示後
@@ -324,7 +324,7 @@
 味を　お試しください！▼</language>
 	</row>
 
-	<row id="msg_c02r0601_waitress_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0601_waitress_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・水曜日
 　モーモーミルク入手後</comment>

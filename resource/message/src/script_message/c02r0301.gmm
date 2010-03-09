@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T16:34:57"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T20:50:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1488" top="194" right="2193" bottom="822" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c02r0301_woman2_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0301_woman2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ポケモン交換前
 ・はい/いいえの選択肢表示
@@ -312,7 +312,7 @@
 あなたの　[1:01:ポケモン種族名:0]　交換しよ？</language>
 	</row>
 
-	<row id="msg_c02r0301_woman2_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0301_woman2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・はい選択
 　ポケモン選択画面で条件を満たすポケモンを選択
@@ -332,7 +332,7 @@
 [1:01:ポケモン種族名:0]　大事にするから！</language>
 	</row>
 
-	<row id="msg_c02r0301_woman2_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0301_woman2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ポケモン交換
 ・0＝渡すポケモン</comment>
@@ -415,7 +415,7 @@
 まだまだ　これからって　感じね</language>
 	</row>
 
-	<row id="msg_c02r0301_poke_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02r0301_poke_01">
 		<comment>ポケモン
 ・あわせて鳴き声SE</comment>
 		<attribute name="キャラ指定">ポケモン
@@ -424,7 +424,7 @@
 		<language name="JPN_KANJI" width="256">きゅっきゅ！</language>
 	</row>
 
-	<row id="msg_c02r0301_boy1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c02r0301_boy1_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">BOY1</attribute>
 		<language name="JPN" width="256">ひとと　こうかんした
