@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-05T22:42:08"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T22:38:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="199"/>
+		<comment position="4" width="238"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1300" top="372" right="2005" bottom="992" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -300,15 +300,15 @@
 フィーリングうらないし▼
 よのなか　Ｃギアを　つかって
 フィーリングチェックを　している▽
-ひとが　おおいんですってね</language>
+ヒトが　おおいんですってね</language>
 		<language name="JPN_KANJI" width="256">わたしは
-フィーリングうらないし▼
-よのなか　Ｃギアを　つかって
+フィーリング占い師▼
+世の中　Ｃギアを　使って
 フィーリングチェックを　している▽
-ひとが　おおいんですってね</language>
+ヒトが　多いんですってね</language>
 	</row>
 
-	<row id="msg_c03r0501_middlewoman2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0501_middlewoman2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・フィーリングチェックのデータがある
 ・はい/いいえの選択肢
@@ -323,14 +323,14 @@
 あなたの　きょうの　ラッキーマンを▽
 ずばっと　あてちゃうわ！▼
 どう　あなた
-うらない　してみる？</language>
+うらなってみる？</language>
 		<language name="JPN_KANJI" width="256">わたしは
-フィーリングうらないし▼
-フィーリングチェックの　せいせきから
-あなたの　きょうの　ラッキーマンを▽
-ずばっと　あてちゃうわ！▼
+フィーリング占い師▼
+フィーリングチェックの　成績から
+あなたの　今日の　ラッキーマンを▽
+ずばっと　当てちゃうわ！▼
 どう　あなた
-うらない　してみる？</language>
+占ってみる？</language>
 	</row>
 
 	<row id="msg_c03r0501_middlewoman2_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -338,21 +338,21 @@
 ・はい選択時</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
 		<language name="JPN" width="256">きょうの　あなたが　とんでもなく
-ハッピーに　すごせる　ひとは……▼
-ずばり　[1:00:トレーナー名:0]ね！</language>
-		<language name="JPN_KANJI" width="256">きょうの　あなたが　とんでもなく
-ハッピーに　すごせる　ひとは……▼
-ずばり　[1:00:トレーナー名:0]ね！</language>
+ハッピーに　すごせる　ヒトは……▼
+ずばり　[1:00:トレーナー名:0]　ね！</language>
+		<language name="JPN_KANJI" width="256">今日の　あなたが　とんでもなく
+ハッピーに　すごせる　ヒトは……▼
+ずばり　[1:00:トレーナー名:0]　ね！</language>
 	</row>
 
-	<row id="msg_c03r0501_middlewoman2_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0501_middlewoman2_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
 		<language name="JPN" width="256">あら　えんりょ　しなくていいのよ
 タダで　うらなってあげるのに</language>
-		<language name="JPN_KANJI" width="256">あら　えんりょ　しなくていいのよ
-タダで　うらなってあげるのに</language>
+		<language name="JPN_KANJI" width="256">あら　遠慮しなくていいのよ
+タダで　占ってあげるのに</language>
 	</row>
 
 	<row id="msg_c03r0501_middlewoman2_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -360,21 +360,21 @@
 ・データが1つしかないとき</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
 		<language name="JPN" width="256">きょうの　あなたが　とんでもなく
-ハッピーに　すごせる　ひとは……▼
+ハッピーに　すごせる　ヒトは……▼
 あら　[1:00:トレーナー名:0]さん　としか
 フィーリングチェックを　していないのね▼
-いろんな　ひとと
+いろんな　ヒトと
 フィーリングチェックを　すると　いいわ！</language>
-		<language name="JPN_KANJI" width="256">きょうの　あなたが　とんでもなく
-ハッピーに　すごせる　ひとは……▼
+		<language name="JPN_KANJI" width="256">今日の　あなたが　とんでもなく
+ハッピーに　すごせる　ヒトは……▼
 あら　[1:00:トレーナー名:0]さん　としか
 フィーリングチェックを　していないのね▼
-いろんな　ひとと
+いろんな　ヒトと
 フィーリングチェックを　すると　いいわ！</language>
 	</row>
 
 	<row id="msg_c03r0501_mountain_01">
-		<comment>（汎用ビル）
+		<comment>♂
 ・仮メッセージ
 ・姓名判断師のテキストは
 　namechange.gmm</comment>
@@ -386,8 +386,7 @@
 	</row>
 
 	<row id="msg_c03r0501_poke_01">
-		<comment>（汎用ビル）
-・ポケモン</comment>
+		<comment>ポケモン</comment>
 		<attribute name="キャラ指定">POKE</attribute>
 		<language name="JPN" width="256">おだいじに『……ぎゅぎゅーーん？</language>
 		<language name="JPN_KANJI" width="256">おだいじに『……ぎゅぎゅーーん？</language>
