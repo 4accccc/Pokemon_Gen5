@@ -21,6 +21,7 @@
 
 #include "event_field_proclink.h"
 #include "demo/comm_btl_demo.h"
+#include "net_app/irc_match.h"
 
 //======================================================================
 //  define
@@ -62,8 +63,8 @@ struct _TAG_BSUBWAY_SCRWORK
   u8 prize_f:1;  ///<ご褒美フラグ
   u8 partner:3;  ///<パートナーNo
   u8 comm_sio_f:1; ///<通信中フラグ
-  u8 padding0:7; ///<余り
-  u8 padding1; ///<余り
+  u8 comm_irc_f:1; ///<赤外線通信フラグ
+  u16 padding:14; ///<余り
   
   u16 pare_poke[2];  ///<通信マルチパートナーが持つポケモンNo
   
@@ -115,6 +116,7 @@ struct _TAG_BSUBWAY_SCRWORK
   
   MYSTATUS mystatus_fr; //通信パートナーのMYSTATUS
   COMM_BTL_DEMO_PARAM comm_btl_demo_param;
+  IRC_MATCH_WORK irc_match;
   
   //プラチナで追加
 //  int winlose_flag; //(LOCATION_WORKを消して、そこに入れることも可能？)

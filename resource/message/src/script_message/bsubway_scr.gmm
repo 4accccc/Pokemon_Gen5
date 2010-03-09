@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-03-08T21:38:49"/>
+	<create user="kagaya" host="W00143" date="2010-03-09T17:59:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1120,26 +1120,47 @@
 	</row>
 
 	<row id="msg_bsw_scr_87">
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<language name="JPN" width="256">せきがいせん　つうしんと　ワイヤレス
+つうしん　どちらに　されますか？</language>
+		<language name="JPN_KANJI" width="256">せきがいせん　つうしんと　ワイヤレス
+つうしん　どちらに　されますか？</language>
 	</row>
 
 	<row id="msg_bsw_scr_88">
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<comment>通信選択メニュー</comment>
+		<language name="JPN" width="256">せきがいせん</language>
+		<language name="JPN_KANJI" width="256">せきがいせん</language>
 	</row>
 
 	<row id="msg_bsw_scr_89">
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<comment>通信選択メニュー</comment>
+		<language name="JPN" width="256">ワイヤレス</language>
+		<language name="JPN_KANJI" width="256">ワイヤレス</language>
 	</row>
 
 	<row id="msg_bsw_scr_90">
+		<language name="JPN" width="256">せきがいせん　つうしんを
+かいし　しますか？</language>
+		<language name="JPN_KANJI" width="256">せきがいせん　つうしんを
+かいし　しますか？</language>
+	</row>
+
+	<row id="msg_bsw_scr_91">
 		<language name="JPN" width="256">test</language>
 		<language name="JPN_KANJI" width="256">test</language>
 	</row>
 
-	<row id="msg_bsw_scr_91">
+	<row id="msg_bsw_scr_92">
+		<language name="JPN" width="256">test</language>
+		<language name="JPN_KANJI" width="256">test</language>
+	</row>
+
+	<row id="msg_bsw_scr_93">
+		<language name="JPN" width="256">test</language>
+		<language name="JPN_KANJI" width="256">test</language>
+	</row>
+
+	<row id="msg_bsw_scr_94">
 		<language name="JPN" width="256">test</language>
 		<language name="JPN_KANJI" width="256">test</language>
 	</row>

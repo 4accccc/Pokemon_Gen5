@@ -50,11 +50,13 @@
 
 #include "event_wifi_bsubway.h"
 
+#include "net_app/irc_match.h"
+FS_EXTERN_OVERLAY(ircbattlematch);
+extern const GFL_PROC_DATA IrcBattleMatchProcData;
+
 //======================================================================
 //  define
 //======================================================================
-//歴代データがダウンロード済みか
-//歴代ビューアー
 
 //======================================================================
 //  struct
@@ -91,6 +93,8 @@ static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys );
 
 static const FLDEFF_BTRAIN_TYPE data_TrainModeType[BSWAY_MODE_MAX];
 static const VecFx32 data_TrainPosTbl[BTRAIN_POS_MAX];
+static const u32 data_PlayModeZoneID[BSWAY_MODE_MAX];
+static const VecFx32 data_PlayModeRecoverPos[BSWAY_MODE_MAX];
 static const u16 data_ModeBossClearFlag[BSWAY_MODE_MAX];
 const HOME_NPC_DATA data_HomeNpcTbl[];
 
@@ -626,43 +630,15 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //----ワーク依存
   //プレイモード別復帰位置セット
   case BSWSUB_SET_PLAY_MODE_LOCATION:
-    {
-      VecFx32 pos;
+    if( play_mode < BSWAY_MODE_MAX ){
       LOCATION loc;
-      FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
-      
-      FIELD_PLAYER_GetPos( fld_player, &pos );
-      
-      switch( bsw_scr->play_mode ){
-      case BSWAY_MODE_SINGLE:
-        LOCATION_SetDirect( &loc, ZONE_ID_C04R0102, DIR_RIGHT, 11, 0, 15 );
-        break;
-      case BSWAY_MODE_S_SINGLE:
-        LOCATION_SetDirect( &loc, ZONE_ID_C04R0103, DIR_RIGHT, 11, 0, 15 );
-        break;
-      case BSWAY_MODE_DOUBLE:
-        LOCATION_SetDirect( &loc, ZONE_ID_C04R0104, DIR_RIGHT, 11, 0, 15 );
-        break;
-      case BSWAY_MODE_S_DOUBLE:
-        LOCATION_SetDirect( &loc, ZONE_ID_C04R0105, DIR_RIGHT, 11, 0, 15 );
-        break;
-      case BSWAY_MODE_MULTI:
-      case BSWAY_MODE_COMM_MULTI:
-        LOCATION_SetDirect( &loc, ZONE_ID_C04R0106, DIR_RIGHT, 11, 0, 15 );
-        break;
-      case BSWAY_MODE_S_MULTI:
-      case BSWAY_MODE_S_COMM_MULTI:
-        LOCATION_SetDirect( &loc, ZONE_ID_C04R0107, DIR_RIGHT, 11, 0, 15 );
-        break;
-      case BSWAY_MODE_WIFI:
-        LOCATION_SetDirect( &loc, ZONE_ID_C04R0108, DIR_RIGHT, 11, 0, 15 );
-        break;
-      default:
-        GF_ASSERT( 0 );
-      }
-      
+      u32 zone_id = data_PlayModeZoneID[play_mode];
+      const VecFx32 *pos = &data_PlayModeRecoverPos[play_mode];
+      LOCATION_SetDirect( &loc, zone_id, DIR_RIGHT, pos->x, pos->y, pos->z );
       GAMEDATA_SetSpecialLocation( gdata, &loc );
       EVENTWORK_SetEventFlag( event, SYS_FLAG_SPEXIT_REQUEST );
+    }else{
+      GF_ASSERT( 0 );
     }
     break;
   //ポケモン選択画面へ
@@ -868,6 +844,14 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     GF_ASSERT( param0 < BSUBWAY_STOCK_MEMBER_MAX );
     *ret_wk = bsw_scr->mem_poke[param0];
     break;
+  //赤外線通信を行うフラグセット
+  case BSWSUB_SET_COMM_IRC_FLAG:
+    bsw_scr->comm_irc_f = param0;
+    break;
+  //赤外線通信を行うフラグ取得
+  case BSWSUB_GET_COMM_IRC_FLAG:
+    *ret_wk = bsw_scr->comm_irc_f;
+    break;
   //----ワーク依存　通信関連
   //通信開始
   case BSWSUB_COMM_START:
@@ -929,6 +913,23 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWSUB_COMM_GET_CURRENT_ID:
     *ret_wk = GFL_NET_SystemGetCurrentID();
     break;
+  //赤外線通信開始
+  case BSWSUB_COMM_IRC_ENTRY:
+    {
+      GMEVENT *irc_event;
+      
+      MI_CpuClear8( &bsw_scr->irc_match, sizeof(IRC_MATCH_WORK) );
+      bsw_scr->irc_match.gamedata = gdata;
+      bsw_scr->irc_match.selectType = EVENTIRCBTL_ENTRYMODE_SUBWAY;
+      
+      irc_event = EVENT_FieldSubProc_Callback(
+          gsys, fieldmap, FS_OVERLAY_ID(ircbattlematch), 
+          &IrcBattleMatchProcData, &bsw_scr->irc_match,
+          NULL, NULL );
+      SCRIPT_CallEvent( sc, irc_event );
+    }
+    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
+    return( VMCMD_RESULT_SUSPEND );
   //----ERROR
   //未対応コマンドエラー
   default:
@@ -1249,6 +1250,38 @@ static const VecFx32 data_TrainPosTbl[BTRAIN_POS_MAX] =
     GRID_SIZE_FX32(-3),
     GRID_SIZE_FX32(9) + GRID_HALF_FX32,
   },
+};
+
+//--------------------------------------------------------------
+/// バトルサブウェイ　モード別ゾーンID
+//--------------------------------------------------------------
+static const u32 data_PlayModeZoneID[BSWAY_MODE_MAX] =
+{
+  ZONE_ID_C04R0102,
+  ZONE_ID_C04R0103,
+  ZONE_ID_C04R0104,
+  ZONE_ID_C04R0104,
+  ZONE_ID_C04R0105,
+  ZONE_ID_C04R0106,
+  ZONE_ID_C04R0107,
+  ZONE_ID_C04R0108,
+  ZONE_ID_C04R0108,
+};
+
+//--------------------------------------------------------------
+/// バトルサブウェイ　モード別受付復帰位置
+//--------------------------------------------------------------
+static const VecFx32 data_PlayModeRecoverPos[BSWAY_MODE_MAX] =
+{
+  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
+  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
+  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
+  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
+  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
+  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
+  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
+  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
+  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
 };
 
 //--------------------------------------------------------------
