@@ -267,10 +267,10 @@
 #define FE_C07R0401_ITEM_GET_LV01          251 /* 0x00fb セッカシティだいすきクラブ：レベル差ごほうび25&#xff5e;49 */
 #define FE_C07R0401_ITEM_GET_LV02          252 /* 0x00fc セッカシティだいすきクラブ：レベル差ごほうび50&#xff5e;98 */
 #define FE_C07R0401_ITEM_GET_LV03          253 /* 0x00fd セッカシティだいすきクラブ：レベル差ごほうび99 */
-		/* not used   254(0x00fe) */
-		/* not used   255(0x00ff) */
-		/* not used   256(0x0100) */
-		/* not used   257(0x0101) */
+#define FE_RES_LEADER_FIRSTTALK            254 /* 0x00fe すれ違い調査隊隊長の初回会話フラグ */
+#define FE_RES_QUESTION_FIRSTTALK          255 /* 0x00ff すれ違い調査隊アンケート隊員の初回会話フラグ */
+#define FE_RES_HELLO_FIRSTTALK             256 /* 0x0100 すれ違い調査隊挨拶隊員の初回会話フラグ */
+#define FE_RES_THANKS_FIRSTTALK            257 /* 0x0101 すれ違い調査隊お礼隊員の初回会話フラグ */
 		/* not used   258(0x0102) */
 		/* not used   259(0x0103) */
 		/* not used   260(0x0104) */
@@ -707,7 +707,7 @@
 #define FV_T01R0102_TROPHY_01              683 /* 0x02ab 自宅２F：バトルサブウェイのトロフィ１ */
 #define FV_T01R0102_TROPHY_02              684 /* 0x02ac 自宅２F：バトルサブウェイのトロフィ２ */
 #define FV_T01R0102_TROPHY_03              685 /* 0x02ad 自宅２F：バトルサブウェイのトロフィ３ */
-		/* not used   686(0x02ae) */
+#define FV_C06_GYM_STOPPER                 686 /* 0x02ae ホドモエのジムストッパー */
 		/* not used   687(0x02af) */
 		/* not used   688(0x02b0) */
 		/* not used   689(0x02b1) */
