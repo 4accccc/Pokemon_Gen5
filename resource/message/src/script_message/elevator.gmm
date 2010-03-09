@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2010-02-15T18:58:22"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T14:59:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="146"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -293,23 +293,26 @@
 
 
 	<row id="msg_elevator_cancel">
+		<comment>システムメッセージ</comment>
 		<language name="JPN">やめる</language>
 		<language name="JPN_KANJI">やめる</language>
 	</row>
 
 	<row id="msg_elevator_1f">
-		<comment>？？？</comment>
+		<comment>システムメッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">１かい</language>
 		<language name="JPN_KANJI" width="256">１階</language>
 	</row>
 
 	<row id="msg_elevator_2f">
+		<comment>システムメッセージ</comment>
 		<language name="JPN" width="256">２かい</language>
 		<language name="JPN_KANJI" width="256">２階</language>
 	</row>
 
 	<row id="msg_elevator_3f">
+		<comment>システムメッセージ</comment>
 		<language name="JPN" width="256">３かい</language>
 		<language name="JPN_KANJI" width="256">３階</language>
 	</row>

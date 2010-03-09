@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-03T17:55:05"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T14:57:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -576,7 +576,7 @@
 	</row>
 
 	<row id="msg_dragon_01w">
-		<comment>♂：ドラゴン技教え
+		<comment>♀：ドラゴン技教え
 ・はい／いいえの選択肢表示
 　はいを選択
 　→おぼえられるポケモンが……
@@ -605,7 +605,7 @@
 	</row>
 
 	<row id="msg_dragon_02w">
-		<comment>♂：ドラゴン技教え
+		<comment>♀：ドラゴン技教え
 ・いいえを選択</comment>
 		<attribute name="キャラ指定">ジムリーダー
 アイリス</attribute>
@@ -616,7 +616,7 @@
 	</row>
 
 	<row id="msg_dragon_03w">
-		<comment>♂：ドラゴン技教え
+		<comment>♀：ドラゴン技教え
 ・はいを選択
 　覚えられるポケモンがいるが
 　なつき度がＭＡＸではない
@@ -640,7 +640,7 @@
 	</row>
 
 	<row id="msg_dragon_04w">
-		<comment>♂：ドラゴン技教え
+		<comment>♀：ドラゴン技教え
 ・はいを選択
 　だが覚えられるポケモンがいない</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -656,7 +656,7 @@
 	</row>
 
 	<row id="msg_dragon_05w">
-		<comment>♂：ドラゴン技教え
+		<comment>♀：ドラゴン技教え
 ・はいを選択
 　覚えられるポケモンがいる
 ・メッセージ表示後、ポケモン選択画面に</comment>
@@ -669,7 +669,7 @@
 	</row>
 
 	<row id="msg_dragon_06w">
-		<comment>♂：ドラゴン技教え
+		<comment>♀：ドラゴン技教え
 ・ポケモン選択後
 　おぼえられない</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -683,7 +683,7 @@
 	</row>
 
 	<row id="msg_dragon_07w">
-		<comment>♂：ドラゴン技教え
+		<comment>♀：ドラゴン技教え
 ・ポケモン選択時にタマゴ選択</comment>
 		<attribute name="キャラ指定">ジムリーダー
 アイリス</attribute>
@@ -704,7 +704,7 @@
 	</row>
 
 	<row id="msg_dragon_08w">
-		<comment>♂：ドラゴン技教え
+		<comment>♀：ドラゴン技教え
 ・ポケモン選択後、すでに習得済み
 ・0＝技名</comment>
 		<attribute name="キャラ指定">ジムリーダー
