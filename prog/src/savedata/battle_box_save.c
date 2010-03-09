@@ -216,5 +216,5 @@ BOOL BATTLE_BOX_SAVE_GetLockFlg( BATTLE_BOX_SAVE *btlBoxSave )
 }
 BOOL BATTLE_BOX_SAVE_GetLockType( const BATTLE_BOX_SAVE *btlBoxSave, BATTLE_BOX_LOCK_BIT flg )
 { 
-  return btlBoxSave->lockFlg & flg;
+  return (btlBoxSave->lockFlg & flg) != 0;
 }
