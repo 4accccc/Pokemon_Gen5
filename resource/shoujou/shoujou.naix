@@ -1,0 +1,29 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: shoujou.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_SHOUJOU_NAIX_
+#define NARC_SHOUJOU_NAIX_
+
+enum {
+	NARC_shoujou_syoujyou_i_bg_NCLR = 0,
+	NARC_shoujou_syoujyou_z_bg_NCLR = 1,
+	NARC_shoujou_wb_syoujyou_i_NCLR = 2,
+	NARC_shoujou_wb_syoujyou_z_NCLR = 3,
+	NARC_shoujou_syoujyou_i_bg_NCGR = 4,
+	NARC_shoujou_syoujyou_z_bg_NCGR = 5,
+	NARC_shoujou_wb_syoujyou_i_NCGR = 6,
+	NARC_shoujou_wb_syoujyou_z_NCGR = 7,
+	NARC_shoujou_syoujyou_i_bg_NSCR = 8,
+	NARC_shoujou_syoujyou_z_bg_NSCR = 9,
+	NARC_shoujou_wb_syoujyou_i_NSCR = 10,
+	NARC_shoujou_wb_syoujyou_z_NSCR = 11
+};
+
+/* NARC_SHOUJOU_NAIX_ */
+#endif

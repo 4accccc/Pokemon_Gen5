@@ -1,0 +1,8 @@
+
+answer00,アームハンマー
+
+answer01,おじいさん
+answer02,ダウジング
+answer03,デジタル
+
+

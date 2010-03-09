@@ -271,6 +271,11 @@ sub main {
 
 		output_input_data($ARGV[0]);
 		output_word_data($ARGV[1]);
+
+    if( @ARGV == 4 )
+    {
+      output_answer_data( $ARGV[2], "dummy", $ARGV[3] );
+    }
 	}
 }
 
@@ -285,6 +290,10 @@ sub check_mode {
 	{
 		return MODE_WORD;
 	}
+  elsif( @arg == 4 )
+  {
+		return MODE_WORD;
+  }
 
 	return MODE_ERROR;
 }
@@ -295,6 +304,7 @@ sub usage {
 	print "<outputfile>\n";
 	print "   1つの時：makefileが参照するリストファイル\n";
 	print "   2つの時：１つめが入力画面用データテーブル、２つめが簡易会話システム用データテーブル\n";
+	print "   4つの時：１つめが入力画面用データテーブル、２つめが簡易会話システム用データテーブル、３つめが入力解答テキストshiftjisフルパスファイル、４つめが出力解答ヘッダーファイル\n";
 }
 #===============================================================
 # 高速化のため、イニシャルごとのインデックス値テーブルを作っておく
@@ -937,5 +947,155 @@ sub output_list {
 	{
 		print "$file が出力できない\n";
 	}
+}
+
+#===============================================================
+# 解答ファイル
+#===============================================================
+sub output_answer_data
+{
+  local( $answer_src_full_path_file_name, $answer_dat_file_name, $answer_header_file_name ) = @_;
+
+  # $answer_src_full_path_file_name
+  # answer_id_01,ピカチュウ
+  # answer_id_02,こんにちは
+  # answer_id_03,ほのお
+  # answer_id_04,デジタル
+
+  # ピカチュウ→  30
+  # こんにちは→ 150
+  # ほのお    → 820
+  # デジタル  →1470
+
+  # $answer_dat_file_name
+  #   30  150  820 1470
+
+  # 古
+  # $answer_header_file_name
+  # #define answer_id_01 (0)
+  # #define answer_id_02 (1)
+  # #define answer_id_03 (2)
+  # #define answer_id_04 (3)
+
+  # 新
+  # $answer_header_file_name
+  # #define answer_id_01 (30)
+  # #define answer_id_02 (150)
+  # #define answer_id_03 (820)
+  # #define answer_id_04 (1470)
+
+  open( FILE_IN_SRC,     "<", $answer_src_full_path_file_name );   # shiftjis
+=pod
+  バイナリファイルは出力せず、ヘッダーファイルだけで全てを済ますことになった。
+  open( FILE_OUT_DAT,    ">", $answer_dat_file_name );             # u16リトルエンディアンのバイナリ
+  binmode FILE_OUT_DAT;
+=cut
+  open( FILE_OUT_HEADER, ">", $answer_header_file_name );          # shiftjis
+
+  my $answer_num = 0;
+  my @answer_tbl = ();  # 0<= <$answer_num
+
+  # $answer_src_full_path_file_nameを読み込む
+  while( <FILE_IN_SRC> )
+  {
+    my $line = Encode::decode( 'shiftjis', $_ );
+    #my $line = Encode::decode( 'utf8', $_ );
+    #my $line = $_;
+    #chomp( $line );  # 改行コードを削除する  # chompは環境に依存するため、\rが残ってしまうのでダメ
+    $line =~ s/\r\n//g;  # \r\nを削除
+    my @elem = split( /\,/, $line );  # ,で分割
+    if( @elem == 2 )
+    {
+      $answer_tbl[$answer_num][0] = $elem[0];  # answer_id_01
+      $answer_tbl[$answer_num][1] = $elem[1];  # ピカチュウ
+      $answer_tbl[$answer_num][2] = 0xFFFF;    #   30           # 初期化
+      $answer_num++;
+    }
+  }
+
+=pod
+  # $answer_src_full_path_file_nameの内容確認
+  for( my $i=0; $i<$answer_num; $i++ )
+  {
+    printf "%s,%s\r\n", $answer_tbl[$i][0], $answer_tbl[$i][1];
+  }
+  printf "%d\r\n", $answer_num;
+=cut
+
+  # 番号を決定する
+  foreach my $tmp (@CategoryParam)
+  {
+    my @datStrID = CreateCategoryIdxTable($tmp);
+    my @datStr;
+    GetSortTable(\@datStr, \@datStrID);
+
+    for( my $j=0; $j<@datStrID; $j++ )
+    {
+      for( my $i=0; $i<$answer_num; $i++ )
+      {
+        if( $answer_tbl[$i][2] == 0xFFFF )  # 初期化した値のままなら、まだ見付けていない
+        {
+          if( $answer_tbl[$i][1] eq $datStr[$j] )
+          {
+            $answer_tbl[$i][2] = $datStrID[$j];
+            $answer_tbl[$i][2] =~ s/\,//g;  # $datStrID[$j]は,が付いた文字列なので、,を削除
+          }
+        }
+      }
+    }
+  }
+
+#=pod
+  # $answer_dat_file_nameの内容確認
+  for( my $i=0; $i<$answer_num; $i++ )
+  {
+    printf "%s,%s,%d\r\n", $answer_tbl[$i][0], $answer_tbl[$i][1], $answer_tbl[$i][2];
+  }
+  printf "%d\r\n", $answer_num;
+#=cut
+
+=pod
+  バイナリファイルは出力せず、ヘッダーファイルだけで全てを済ますことになった。
+  # $answer_dat_file_nameを出力する
+  for( my $i=0; $i<$answer_num; $i++ )
+  {
+    if( $answer_tbl[$i][2] == 0xFFFF )  # 初期化した値のままなら、見付けられなかったので、エラー
+    {
+      die "answer \"$answer_tbl[$i][0],$answer_tbl[$i][1]\" error, stopped";
+    }
+    else
+    {
+      my $buf = pack "v", $answer_tbl[$i][2];  # 符号なし16ビット整数。リトルエンディアン。
+      print FILE_OUT_DAT "$buf";
+    }
+  }
+=cut
+
+  # $answer_header_file_nameを出力する
+  printf FILE_OUT_HEADER "//============================================================================\r\n";
+  printf FILE_OUT_HEADER "/**\r\n";
+  printf FILE_OUT_HEADER " *  \@file   %s\r\n", $answer_header_file_name;
+  printf FILE_OUT_HEADER " *  \@brief  クイズの答えを記したヘッダーファイル\r\n";
+  printf FILE_OUT_HEADER " *  \@author %s\r\n", "pmsconv.pl";
+  printf FILE_OUT_HEADER " *  \@date   \r\n";
+  printf FILE_OUT_HEADER " *  \@note   %sで生成されました。\r\n", "pmsconv.pl";
+  printf FILE_OUT_HEADER " *\r\n";
+  printf FILE_OUT_HEADER " *  モジュール名：\r\n";
+  printf FILE_OUT_HEADER " */\r\n";
+  printf FILE_OUT_HEADER "//============================================================================\r\n";
+  printf FILE_OUT_HEADER "#pragma once\r\n";
+  printf FILE_OUT_HEADER "\r\n";
+
+  for( my $i=0; $i<$answer_num; $i++ )
+  {
+    printf FILE_OUT_HEADER "#define %s (%d) // %s\r\n", $answer_tbl[$i][0], $answer_tbl[$i][2], $answer_tbl[$i][1];  # 0D 0A
+  }
+
+  close( FILE_IN_SRC );
+=pod
+  バイナリファイルは出力せず、ヘッダーファイルだけで全てを済ますことになった。
+  close( FILE_OUT_DAT );
+=cut
+  close( FILE_OUT_HEADER );
 }
 

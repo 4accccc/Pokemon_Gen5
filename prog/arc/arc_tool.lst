@@ -280,4 +280,5 @@
   ARCID_LEADER_BOARD  "leader_board.narc" #Wifiリーダーボード画像
   ARCID_FIELD_SAVE_ICON  "fieldmap/save_icon.narc" #フィールドセーブ時ICON
   ARCID_TRIALHOUSE_GRA  "trialhouse_gra.narc"  # トライアルハウス検定結果のグラフィックデータ
+  ARCID_SHOUJOU  "shoujou.narc"  # 図鑑賞状（地方、全国）のグラフィックデータ
 

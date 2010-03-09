@@ -152,7 +152,8 @@ SUBDIRS	=	wmi \
 			leader_board \
             report \
             time_icon \
-            trialhouse_gra
+            trialhouse_gra \
+            shoujou
 
 include $(RESOURCE_MACRO)
 

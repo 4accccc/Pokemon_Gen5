@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-02T18:02:10"/>
+	<create user="kawada_koji" host="W00215" date="2010-03-08T21:00:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,9 +327,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="75" top="299" right="780" bottom="927" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -359,7 +359,7 @@
 		<comment>ヘッダ（左寄せ）
 ・0＝主人公名前</comment>
 		<language name="JPN" width="256">プレイヤー　[1:00:トレーナー名:0]さま</language>
-		<language name="JPN_KANJI" width="256">プレイヤー　[1:03:ポケモンタイプ:0]さま</language>
+		<language name="JPN_KANJI" width="256">プレイヤー　[1:00:トレーナー名:0]さま</language>
 	</row>
 
 	<row id="msg_award_02">
