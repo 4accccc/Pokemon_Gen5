@@ -200,6 +200,12 @@ void FLDSKILL_InitCheckWork(
       scwk->enable_skill |= ( 1 << FLDSKILL_IDX_DIVING );
     }
   }
+
+  //パレス＆裏フィールドにいるときは、すべてのフィールド技を使えないようにする
+  if ( GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData( scwk->gsys ) ) == TRUE )
+  {
+    scwk->enable_skill = 0;
+  }
 }
 
 //--------------------------------------------------------------
