@@ -110,9 +110,9 @@ static const u8 bmpwin_setup[TEXT_MAX][9] =
 {
   // frmnum           posx  posy  sizx  sizy  palnum          dir                    x  y (x,yは無視してセンタリングすることもある)
   {  BG_FRAME_M_TEXT,    0,    0,    1,    1, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    5,    3,   20,    2, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    5,    7,   20,    8, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,   12,   17,   13,    2, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    6,    4,   20,    2, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    6,    8,   20,    8, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,   12,   18,   14,    4, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
 };
 
 // フェード
@@ -431,7 +431,7 @@ static void Zenkoku_Zukan_Award_BgInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
   // REAR
   GFL_ARCHDL_UTIL_TransVramPalette(
       handle,
-      NARC_shoujou_syoujyou_i_bg_NCLR,
+      NARC_shoujou_syoujyou_z_bg_NCLR,
       PALTYPE_MAIN_BG,
       BG_PAL_POS_M_GRA_REAR * 0x20,
       BG_PAL_NUM_M_GRA_REAR * 0x20,
@@ -439,7 +439,7 @@ static void Zenkoku_Zukan_Award_BgInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
 
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
       handle,
-      NARC_shoujou_syoujyou_i_bg_NCGR,
+      NARC_shoujou_syoujyou_z_bg_NCGR,
       BG_FRAME_M_REAR,
 			0,
       0,  // 全転送
@@ -448,7 +448,7 @@ static void Zenkoku_Zukan_Award_BgInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
 
   GFL_ARCHDL_UTIL_TransVramScreen(
       handle,
-      NARC_shoujou_syoujyou_i_bg_NSCR,
+      NARC_shoujou_syoujyou_z_bg_NSCR,
       BG_FRAME_M_REAR,
       0,
       0,  // 全転送
@@ -458,7 +458,7 @@ static void Zenkoku_Zukan_Award_BgInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
   // FRONT
   GFL_ARCHDL_UTIL_TransVramPalette(
       handle,
-      NARC_shoujou_wb_syoujyou_i_NCLR,
+      NARC_shoujou_wb_syoujyou_z_NCLR,
       PALTYPE_MAIN_BG,
       BG_PAL_POS_M_GRA_FRONT * 0x20,
       BG_PAL_NUM_M_GRA_FRONT * 0x20,
@@ -466,7 +466,7 @@ static void Zenkoku_Zukan_Award_BgInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
 
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
       handle,
-      NARC_shoujou_wb_syoujyou_i_NCGR,
+      NARC_shoujou_wb_syoujyou_z_NCGR,
       BG_FRAME_M_FRONT,
 			0,
       0,  // 全転送
@@ -475,7 +475,7 @@ static void Zenkoku_Zukan_Award_BgInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
 
   GFL_ARCHDL_UTIL_TransVramScreen(
       handle,
-      NARC_shoujou_wb_syoujyou_i_NSCR,
+      NARC_shoujou_wb_syoujyou_z_NSCR,
       BG_FRAME_M_FRONT,
       0,
       0,  // 全転送
@@ -576,7 +576,7 @@ static void Zenkoku_Zukan_Award_TextInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
 
   // ここに証明します
   {
-    STRBUF*  strbuf       = GFL_MSG_CreateString( work->msgdata, msg_award_02 );
+    STRBUF*  strbuf       = GFL_MSG_CreateString( work->msgdata, msg_award_03 );
     u16      str_width    = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
     PRINTSYS_PrintQueColor(
         work->print_que,
@@ -602,6 +602,12 @@ static void Zenkoku_Zukan_Award_TextInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
         work->font,
         PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
     GFL_STR_DeleteBuffer( strbuf );
+  }
+
+  // 済んでいないかもしれないが、1度呼んでおく
+  for( i=TEXT_DUMMY +1; i<TEXT_MAX; i++ )
+  {
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[i] );
   }
 
   // 既に済んでいるかもしれないので、Mainを1度呼んでおく

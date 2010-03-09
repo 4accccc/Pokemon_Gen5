@@ -39,7 +39,9 @@
 #include "../../savedata/trialhouse_save_local.h"
 
 // ’n•û}ŠÓÜó
+#include "savedata/mystatus.h"
 #include "app/chihou_zukan_award.h"
+
 // ‘S‘}ŠÓÜó
 #include "app/zenkoku_zukan_award.h"
 
@@ -82,6 +84,7 @@ typedef struct {
   TH_AWARD_PARAM*     th_award_param;
 
   // ’n•û}ŠÓÜó
+  MYSTATUS*                    mystatus;
   CHIHOU_ZUKAN_AWARD_PARAM*    chihou_zukan_award_param;
   // ‘S‘}ŠÓÜó
   ZENKOKU_ZUKAN_AWARD_PARAM*   zenkoku_zukan_award_param;
@@ -136,10 +139,10 @@ static void ThAwardExit( KAWADA_MAIN_WORK* wk );
 
 // ’n•û}ŠÓÜó
 static void ChihouZukanAwardInit( KAWADA_MAIN_WORK* wk );
-static void ZenkokuZukanAwardExit( KAWADA_MAIN_WORK* wk );
+static void ChihouZukanAwardExit( KAWADA_MAIN_WORK* wk );
 
 // ‘S‘}ŠÓÜó
-static void ChihouZukanAwardInit( KAWADA_MAIN_WORK* wk );
+static void ZenkokuZukanAwardInit( KAWADA_MAIN_WORK* wk );
 static void ZenkokuZukanAwardExit( KAWADA_MAIN_WORK* wk );
 
 
@@ -280,6 +283,28 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     break;
 
 
+  // ’n•û}ŠÓÜó
+  case MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL:
+    ChihouZukanAwardInit(wk);
+		wk->main_seq = MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL_RETURN;
+    break;
+  case MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL_RETURN:
+    ChihouZukanAwardExit(wk); 
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+
+
+  // ‘S‘}ŠÓÜó
+  case MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL:
+    ZenkokuZukanAwardInit(wk);
+		wk->main_seq = MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL_RETURN;
+    break;
+  case MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL_RETURN:
+    ZenkokuZukanAwardExit(wk); 
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
 
 
 	}
@@ -510,5 +535,61 @@ static void ThAwardExit( KAWADA_MAIN_WORK* wk )
       TH_AWARD_FreeParam( wk->th_award_param );
       GFL_HEAP_FreeMemory( wk->thsv );
       GFL_OVERLAY_Unload(FS_OVERLAY_ID(th_award));
+}
+
+// ’n•û}ŠÓÜó
+static void ChihouZukanAwardInit( KAWADA_MAIN_WORK* wk )
+{
+  u8 i;
+  u16 name[6] = L"ƒSƒ‚ƒWƒmƒR";
+  name[5] = 0xffff;  // gflib/src/string/strbuf.c  // EOMCode
+
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(chihou_zukan_award));
+  
+  wk->mystatus = GFL_HEAP_AllocMemory( wk->heapID, MYSTATUS_SAVE_SIZE );
+  
+  for( i=0; i<6; i++ )
+  {
+    wk->mystatus->name[i] = name[i];
+  }
+  wk->mystatus->sex = PM_MALE;
+
+  wk->chihou_zukan_award_param = CHIHOU_ZUKAN_AWARD_AllocParam( wk->heapID, wk->mystatus );
+  
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &CHIHOU_ZUKAN_AWARD_ProcData, wk->chihou_zukan_award_param );
+}
+static void ChihouZukanAwardExit( KAWADA_MAIN_WORK* wk )
+{
+  CHIHOU_ZUKAN_AWARD_FreeParam( wk->chihou_zukan_award_param );
+  GFL_HEAP_FreeMemory( wk->mystatus );
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(chihou_zukan_award));
+}
+
+// ‘S‘}ŠÓÜó
+static void ZenkokuZukanAwardInit( KAWADA_MAIN_WORK* wk )
+{
+  u8 i;
+  u16 name[6] = L"ƒSƒ‚ƒWƒmƒR";
+  name[5] = 0xffff;  // gflib/src/string/strbuf.c  // EOMCode
+
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(zenkoku_zukan_award));
+  
+  wk->mystatus = GFL_HEAP_AllocMemory( wk->heapID, MYSTATUS_SAVE_SIZE );
+  
+  for( i=0; i<6; i++ )
+  {
+    wk->mystatus->name[i] = name[i];
+  }
+  wk->mystatus->sex = PM_FEMALE;
+
+  wk->zenkoku_zukan_award_param = ZENKOKU_ZUKAN_AWARD_AllocParam( wk->heapID, wk->mystatus );
+  
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ZENKOKU_ZUKAN_AWARD_ProcData, wk->zenkoku_zukan_award_param );
+}
+static void ZenkokuZukanAwardExit( KAWADA_MAIN_WORK* wk )
+{
+  ZENKOKU_ZUKAN_AWARD_FreeParam( wk->zenkoku_zukan_award_param );
+  GFL_HEAP_FreeMemory( wk->mystatus );
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(zenkoku_zukan_award));
 }
 

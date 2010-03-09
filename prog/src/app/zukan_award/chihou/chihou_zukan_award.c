@@ -110,9 +110,9 @@ static const u8 bmpwin_setup[TEXT_MAX][9] =
 {
   // frmnum           posx  posy  sizx  sizy  palnum          dir                    x  y (x,yは無視してセンタリングすることもある)
   {  BG_FRAME_M_TEXT,    0,    0,    1,    1, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    5,    3,   20,    2, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    5,    7,   20,    8, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,   12,   17,   13,    2, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    6,    4,   20,    2, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    6,    8,   20,    8, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,   12,   18,   14,    4, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
 };
 
 // フェード
@@ -602,6 +602,12 @@ static void Chihou_Zukan_Award_TextInit( CHIHOU_ZUKAN_AWARD_WORK* work )
         work->font,
         PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
     GFL_STR_DeleteBuffer( strbuf );
+  }
+
+  // 済んでいないかもしれないが、1度呼んでおく
+  for( i=TEXT_DUMMY +1; i<TEXT_MAX; i++ )
+  {
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[i] );
   }
 
   // 既に済んでいるかもしれないので、Mainを1度呼んでおく
