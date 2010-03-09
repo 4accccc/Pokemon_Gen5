@@ -386,6 +386,8 @@ VMCMD_RESULT EvCmdCamera_Shake( VMHANDLE *core, void *wk )
     wk->Time = time;
     wk->NowSync = 0;
 
+    OS_Printf("w= %x h= %x\n",FX32_CONST(width), FX32_CONST(height));
+
     SCRIPT_CallEvent( sc, call_event );
   }
 
@@ -532,6 +534,11 @@ static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* work )
 
       if (end)
       {
+        //カメラオフセットクリア
+        {
+          VecFx32 cam_ofs = {0,0,0};
+          FIELD_CAMERA_SetCamPosOffset( camera, &cam_ofs );
+        }
         //際バインド
         FIELD_CAMERA_BindTarget(camera, wk->WatchTarget);
         //トレース再開
@@ -542,13 +549,20 @@ static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* work )
       {
         fx32 w, h;
         VecFx32 target;
+        VecFx32 cam_ofs;
         w = wk->Width * FX_SinIdx(rad);
         h = wk->Height * FX_SinIdx(rad);
         target = *wk->WatchTarget;
         target.x += w;
         target.y += h;
+        cam_ofs.x = w;
+        cam_ofs.y = h;
+        cam_ofs.z = 0;
+        OS_Printf("info rad %x w=%x h=%x \n",rad,w,h);
+
         //座標セット
         FIELD_CAMERA_SetTargetPos( camera, &target );
+        FIELD_CAMERA_SetCamPosOffset( camera, &cam_ofs );
       }
     }
     break;
