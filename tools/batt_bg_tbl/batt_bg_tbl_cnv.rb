@@ -83,7 +83,7 @@ class	ZoneSpecParam
       #p @zone_spec_name
       #printf("attr_bg:%s %d\n",str,@attr_bg.size)
       #p @attr_max
-      print "アトリビュートの追加が最大値を超えました\n"
+      print "bg:アトリビュートの追加が最大値を超えました\n"
       exit( 1 )
     end
   end
@@ -94,7 +94,7 @@ class	ZoneSpecParam
       #p @zone_spec_name
       #printf("attr_stage:%s %d\n",str,@attr_stage.size)
       #p @attr_max
-      print "アトリビュートの追加が最大値を超えました\n"
+      print "stage:アトリビュートの追加が最大値を超えました\n"
       exit( 1 )
     end
   end
@@ -236,7 +236,7 @@ end
   while str = fp_r.gets
     str = str.tr( "\"\r\n", "" )
     split_data = str.split(/,/)
-    if split_data[ ZONE_SPEC ] == nil
+    if split_data[ ZONE_SPEC ] == "#"
       break
     end
     zone_spec.add_zone_spec( split_data[ ZONE_SPEC ], attribute.size )
@@ -306,7 +306,7 @@ end
     str = str.tr( "\"\r\n", "" )
     split_data = str.split(/,/)
     next if split_data[ ATTR_NAME ] == "" && split_data[ FILE_KIND ] == ""
-    if split_data[ ATTR_NAME ] == nil
+    if split_data[ ATTR_NAME ] == "#"
       break
     end
     if split_data[ ATTR_NAME ] != ""
@@ -405,7 +405,7 @@ end
     end
     for j in 0..(attribute.size-1)
       attr_stage = zone_spec.get_zone_spec_index( i ).get_attr_stage( j )
-      if bg_hash[ attr_stage ] == nil
+      if stage_hash[ attr_stage ] == nil
         write_data = [ 0 ].pack("C")
       else
         write_data = [ stage_hash[ attr_stage ] ].pack("C")
