@@ -139,7 +139,7 @@ def file_write_grid( name,
 
   file_make_depend.printf( "\t@echo create_nsbmd %s\n", name )
   
-  file_make_depend.printf( "\t@%s %s/%s.imd -o %s/%s.nsbmd\n\n",
+  file_make_depend.printf( "\t@%s %s/%s.imd -emdl -o %s/%s.nsbmd\n\n",
     STR_G3DCVTR, DIRSTR_RES, name, DIRSTR_TEMP, name )
 
   #land_make_depend wbbin
@@ -233,7 +233,7 @@ def file_write_cross( name,
 
   file_make_depend.printf( "\t@echo create_nsbmd %s\n", name )
   
-  file_make_depend.printf( "\t@%s %s/%s.imd -o %s/%s.nsbmd\n\n",
+  file_make_depend.printf( "\t@%s %s/%s.imd -emdl -o %s/%s.nsbmd\n\n",
     STR_G3DCVTR, DIRSTR_RES, name, DIRSTR_TEMP, name )
 
 
@@ -352,7 +352,7 @@ def file_write_random( name,
 
   file_make_depend.printf( "\t@echo create_nsbmd %s\n", name )
   
-  file_make_depend.printf( "\t@%s %s/%s.imd -o %s/%s.nsbmd\n\n",
+  file_make_depend.printf( "\t@%s %s/%s.imd -emdl -o %s/%s.nsbmd\n\n",
     STR_G3DCVTR, DIRSTR_RES, name, DIRSTR_TEMP, name )
   
   #land_make_depend exist file check
