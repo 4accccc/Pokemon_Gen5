@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2010 03/06 (Sat) 14:03
+ * @date  2010 03/09 (Tue) 17:37
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -73,9 +73,6 @@
 #define ID_SHOP_SCR_OFFSET               (10110) //フレンドリィショップ用スクリプト
 #define ID_SHOP_SCR_OFFSET_END           (10119)
 
-#define ID_MUSICAL_SCR_OFFSET            (10120) //ミュージカル用スクリプト
-#define ID_MUSICAL_SCR_OFFSET_END        (10129)
-
 #define ID_FIELD_EV_SCR_OFFSET           (10130) //各種フィールドイベント用
 #define ID_FIELD_EV_SCR_OFFSET_END       (10149)
 
@@ -135,6 +132,9 @@
 
 #define ID_PDW_SCR_OFFSET                (10435) //PDW家具屋用スクリプト
 #define ID_PDW_SCR_OFFSET_END            (10439)
+
+#define ID_MUSICAL_SCR_OFFSET            (10440) //ミュージカル用スクリプト
+#define ID_MUSICAL_SCR_OFFSET_END        (10459)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)

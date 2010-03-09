@@ -57,9 +57,6 @@ wifi_counter_scr_def.h: wifi_counter_scr.ev
 shop_scr_def.h: shop_scr.ev
 	$(EV_DEF) shop_scr.ev $(SCR_OFFS_ID_H)
 
-musical_scr_def.h: musical_scr.ev
-	$(EV_DEF) musical_scr.ev $(SCR_OFFS_ID_H)
-
 field_ev_scr_def.h: field_ev_scr.ev
 	$(EV_DEF) field_ev_scr.ev $(SCR_OFFS_ID_H)
 
@@ -119,6 +116,9 @@ trial_house_scr_def.h: trial_house_scr.ev
 
 pdw_scr_def.h: pdw_scr.ev
 	$(EV_DEF) pdw_scr.ev $(SCR_OFFS_ID_H)
+
+musical_scr_def.h: musical_scr.ev
+	$(EV_DEF) musical_scr.ev $(SCR_OFFS_ID_H)
 
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
