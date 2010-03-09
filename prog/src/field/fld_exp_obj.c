@@ -256,7 +256,7 @@ GFL_G3D_OBJSTATUS *FLD_EXP_OBJ_GetUnitObjStatus(FLD_EXP_OBJ_CNT_PTR ptr,
     GF_ASSERT_MSG(0,"%d UNIT IDX OVER\n",inUnitIdx);
     return NULL;
   }
-  GF_ASSERT(GFL_HEAP_CheckHeapSafe(ptr->HeapID) == TRUE);
+//  GF_ASSERT(GFL_HEAP_CheckHeapSafe(ptr->HeapID) == TRUE);
   return &ptr->Unit[inUnitIdx].ExpObjStatus[inObjIdx].ObjStatus;
 }
 
