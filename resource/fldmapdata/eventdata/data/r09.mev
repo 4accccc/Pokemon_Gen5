@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/02 16:15:20
+#save date:2010/03/09 22:36:41
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r09.wms
 #SECTION START:OBJ_EVENT
@@ -9,39 +9,8 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r09.wms
 #hold event type:
 1
 #hold event number:
-9
+8
 #event number: 0
-#type
-1
-#ID name
-R09_BAKER_01
-#OBJ CODE Number
-BAKER
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_R09_BAKER_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-88 0 -24
-#event number: 1
 #type
 1
 #ID name
@@ -72,7 +41,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 216 0 -8
-#event number: 2
+#event number: 1
 #type
 1
 #ID name
@@ -103,7 +72,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 424 0 40
-#event number: 3
+#event number: 2
 #type
 1
 #ID name
@@ -134,7 +103,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 248 0 40
-#event number: 4
+#event number: 3
 #type
 1
 #ID name
@@ -165,7 +134,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 568 0 104
-#event number: 5
+#event number: 4
 #type
 1
 #ID name
@@ -196,7 +165,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 184 0 120
-#event number: 6
+#event number: 5
 #type
 1
 #ID name
@@ -227,7 +196,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 264 0 40
-#event number: 7
+#event number: 6
 #type
 1
 #ID name
@@ -258,7 +227,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 200 0 -120
-#event number: 8
+#event number: 7
 #type
 1
 #ID name
