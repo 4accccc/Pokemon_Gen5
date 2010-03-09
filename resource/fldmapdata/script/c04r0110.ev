@@ -455,7 +455,7 @@ _ANIME_LABEL  anm_train_battle_win_clear_jiki
 //  _ANIME_DATA  AC_STAY_WALK_D_8F,1
 //  _ANIME_DATA  AC_VANISH_ON,1
   _ANIME_DATA  ACMD_END,0
-
+ 
 //--------------------------------------------------------------
 //  対戦　勝ち　クリア　自機退場アニメ　マルチ
 //--------------------------------------------------------------
@@ -465,7 +465,7 @@ sub_anm_train_battle_win_clear_multi:
   _OBJ_ANIME( BSW_TRAIN_OBJID_PARTNER, anm_train_battle_win_clear_multi_partner )
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_0, anm_train_battle_win_clear_multi_trainer0 )
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_1, anm_train_battle_win_clear_multi_trainer1 )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_train_battle_win_scroll_jiki )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_train_battle_win_clear_scroll_jiki )
   
 //  _OBJ_ANIME_WAIT() 呼び先で待つ
 }
@@ -497,9 +497,11 @@ _ANIME_LABEL  anm_train_battle_win_clear_multi_partner
   _ANIME_DATA  ACMD_END,0
 
 //スクロール用自機アニメ
-_ANIME_LABEL anm_train_battle_win_scroll_jiki
+_ANIME_LABEL anm_train_battle_win_clear_scroll_jiki
   _ANIME_DATA AC_WAIT_4F,1
-  _ANIME_DATA AC_WALK_R_8F,5
+  _ANIME_DATA AC_WAIT_8F,1
+  _ANIME_DATA AC_WALK_R_8F,6
+  _ANIME_DATA  AC_WALK_D_8F,4
   _ANIME_DATA ACMD_END,0
   
 //--------------------------------------------------------------
@@ -760,6 +762,14 @@ _ANIME_LABEL  anm_train_battle_win_heal_jiki
   _ANIME_DATA  AC_WALK_U_8F,2
   _ANIME_DATA  ACMD_END,0
 
+//スクロール用自機アニメ
+_ANIME_LABEL anm_train_battle_win_scroll_jiki
+  _ANIME_DATA AC_WAIT_4F,1
+  _ANIME_DATA AC_WAIT_8F,1
+  _ANIME_DATA AC_WALK_R_8F,6
+  _ANIME_DATA AC_WALK_U_8F,2
+  _ANIME_DATA ACMD_END,0
+
 //--------------------------------------------------------------
 //  対戦　勝ち　PC回復移動アニメ マルチ
 //--------------------------------------------------------------
@@ -792,13 +802,14 @@ _ANIME_LABEL  anm_train_battle_win_heal_multi_pt
   _ANIME_DATA  AC_WALK_R_8F,7
   _ANIME_DATA  AC_WALK_U_8F,1
   _ANIME_DATA  ACMD_END,0
-  
+ 
 //--------------------------------------------------------------
 //  対戦　勝ち　次の車両へ　自機を次の車両へ移動するアニメ
 //--------------------------------------------------------------
 sub_anm_jiki_next_car:
 {
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_jiki_next_car )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_jiki_next_car_scroll )
   _OBJ_ANIME_WAIT()
 }
 _RET
@@ -807,6 +818,7 @@ sub_anm_jiki_next_car_multi:
 {
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_jiki_next_car )
   _OBJ_ANIME( BSW_TRAIN_OBJID_PARTNER, anm_jiki_next_car_pt )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_jiki_next_car_scroll )
   _OBJ_ANIME_WAIT()
 }
 _RET
@@ -823,6 +835,12 @@ _ANIME_LABEL anm_jiki_next_car_pt
   _ANIME_DATA AC_WALK_R_8F,1
   _ANIME_DATA AC_STAY_WALK_R_16F,1
   _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA ACMD_END,0
+
+//スクロール用アニメ
+_ANIME_LABEL anm_jiki_next_car_scroll
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_WALK_R_8F,1
   _ANIME_DATA ACMD_END,0
 
 //======================================================================
