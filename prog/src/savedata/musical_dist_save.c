@@ -64,6 +64,10 @@ void MUSICAL_DIST_SAVE_UnloadData( SAVE_CONTROL_WORK *sv )
   //SaveControl_Extra_Unload( sv , EXGMDATA_ID_STREAMING );
 }
 
+void MUSICAL_DIST_SAVE_SetMusicalArchive( MUSICAL_DIST_SAVE *distSave , void *arcData , const u32 size )
+{
+}
+
 #pragma mark [> proto
 #include "arc_def.h"
 void* MUSICAL_DIST_SAVE_GetProgramData( MUSICAL_DIST_SAVE *distSave , const HEAPID heapId , u32 *dataSize )

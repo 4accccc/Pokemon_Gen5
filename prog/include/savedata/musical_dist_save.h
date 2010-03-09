@@ -36,6 +36,9 @@ extern void MUSICAL_DIST_SAVE_UnloadData( SAVE_CONTROL_WORK *sv );
 //----------------------------------------------------------
 //	データ操作のための関数
 //----------------------------------------------------------
+//データの設定
+extern void MUSICAL_DIST_SAVE_SetMusicalArchive( MUSICAL_DIST_SAVE *distSave , void *arcData , const u32 size );
+//データの取得
 extern void* MUSICAL_DIST_SAVE_GetProgramData( MUSICAL_DIST_SAVE *distSave , const HEAPID heapId , u32 *dataSize );
 extern void* MUSICAL_DIST_SAVE_GetMessageData( MUSICAL_DIST_SAVE *distSave , const HEAPID heapId , u32 *dataSize );
 extern void* MUSICAL_DIST_SAVE_GetScriptData( MUSICAL_DIST_SAVE *distSave , const HEAPID heapId , u32 *dataSize );
