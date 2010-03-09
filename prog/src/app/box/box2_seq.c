@@ -1474,7 +1474,7 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_INIT) );
 
 	case BOX2UI_ARRANGE_MAIN_RETURN1:	// 34: –ß‚é‚P
-		PMSND_PlaySE( SE_BOX2_CANCEL );
+		PMSND_PlaySE( SE_BOX2_CLOSE );
 //		BOX2MAIN_PokeInfoOff( syswk );
 		syswk->dat->retMode = BOX_END_MODE_C_GEAR;
 		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_END, 8, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
@@ -2366,7 +2366,7 @@ static int MainSeq_ArrangePartyMain( BOX2_SYS_WORK * syswk )
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
 
 	case BOX2UI_ARRANGE_PARTY_RETURN1:	// 07: –ß‚é‚Piƒ{ƒbƒNƒX‰æ–ÊI—¹j
-		PMSND_PlaySE( SE_BOX2_CANCEL );
+		PMSND_PlaySE( SE_BOX2_CLOSE );
 //		BOX2MAIN_PokeInfoOff( syswk );
 		syswk->dat->retMode = BOX_END_MODE_C_GEAR;
 		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_END, 8, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
@@ -3097,7 +3097,7 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_INIT) );
 
 	case BOX2UI_BATTLEBOX_MAIN_RETURN1:	// 34: –ß‚é‚P
-		PMSND_PlaySE( SE_BOX2_CANCEL );
+		PMSND_PlaySE( SE_BOX2_CLOSE );
 //		BOX2MAIN_PokeInfoOff( syswk );
 		syswk->dat->retMode = BOX_END_MODE_C_GEAR;
 		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_END, 8, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
@@ -3370,7 +3370,7 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_END) );
 
 	case BOX2UI_BATTLEBOX_PARTY_RETURN1:		// 07: –ß‚é‚P
-		PMSND_PlaySE( SE_BOX2_CANCEL );
+		PMSND_PlaySE( SE_BOX2_CLOSE );
 		syswk->dat->retMode = BOX_END_MODE_C_GEAR;
 		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_END, 8, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
 
@@ -3624,7 +3624,7 @@ static int MainSeq_PartyInMain( BOX2_SYS_WORK * syswk )
 		return TrayRightScrollSet( syswk, BOX2SEQ_MAINSEQ_PARTYIN_MAIN );
 
 	case BOX2UI_PTIN_MAIN_RETURN1:		// 33: –ß‚é‚P
-		PMSND_PlaySE( SE_BOX2_CANCEL );
+		PMSND_PlaySE( SE_BOX2_CLOSE );
 		syswk->dat->retMode = BOX_END_MODE_C_GEAR;
 		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_END, 8, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
 
@@ -3963,7 +3963,7 @@ static int MainSeq_PartyOutMain( BOX2_SYS_WORK * syswk )
 
 	switch( ret ){
 	case BOX2UI_PTOUT_MAIN_RETURN1:		// 06: –ß‚é‚P
-		PMSND_PlaySE( SE_BOX2_CANCEL );
+		PMSND_PlaySE( SE_BOX2_CLOSE );
 //		BOX2MAIN_PokeInfoOff( syswk );
 		syswk->dat->retMode = BOX_END_MODE_C_GEAR;
 		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_END, 8, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
@@ -4505,7 +4505,7 @@ static int MainSeq_ItemMain( BOX2_SYS_WORK * syswk )
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_INIT) );
 
 	case BOX2UI_ITEM_MAIN_RETURN1:			// 34: –ß‚é‚P
-		PMSND_PlaySE( SE_BOX2_CANCEL );
+		PMSND_PlaySE( SE_BOX2_CLOSE );
 //		BOX2MAIN_PokeInfoOff( syswk );
 		syswk->dat->retMode = BOX_END_MODE_C_GEAR;
 		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_END, 8, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );
@@ -5402,7 +5402,7 @@ static int MainSeq_ItemPartyMain( BOX2_SYS_WORK * syswk )
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
 
 	case BOX2UI_ITEM_PARTY_RETURN1:		// 07: –ß‚é‚P
-		PMSND_PlaySE( SE_BOX2_CANCEL );
+		PMSND_PlaySE( SE_BOX2_CLOSE );
 //		BOX2MAIN_PokeInfoOff( syswk );
 		syswk->dat->retMode = BOX_END_MODE_C_GEAR;
 		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_END, 8, BOX2SEQ_MAINSEQ_BOXEND_DIRECT );

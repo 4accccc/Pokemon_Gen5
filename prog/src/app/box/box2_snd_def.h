@@ -32,6 +32,7 @@
 #define  SE_BOX2_MOVE_CURSOR			( SEQ_SE_SELECT1 )		// カーソル移動
 #define  SE_BOX2_DECIDE						( SEQ_SE_DECIDE1 )		// 決定音
 #define  SE_BOX2_CANCEL						( SEQ_SE_CANCEL1 )		// キャンセル音
+#define  SE_BOX2_CLOSE						( SEQ_SE_CLOSE1 )			// Ｘボタン
 #define  SE_BOX2_CHANGE_TRAY			( SEQ_SE_SELECT1 )		// トレイ切り替え
 
 #define  SE_BOX2_WARNING					( SEQ_SE_BEEP )		// 警告音(最後の1匹を逃がそうとした時)
