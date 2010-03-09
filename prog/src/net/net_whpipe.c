@@ -83,6 +83,9 @@
 #define _BEACON_FIXHEAD_SIZE (6)
 #define _BEACON_USER_SIZE_MAX (WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX)
 
+
+#define _BEACON_DOWNCOUNT  (30)   //すれ違いを一時停止するフレーム
+
 /**
  *  @brief ビーコン構造体
  */
@@ -131,11 +134,12 @@ struct _NET_WL_WORK {
 	u8  backupBssid[GFL_NET_MACHINE_MAX][WM_SIZE_BSSID];   // 今まで接続していた
 	u16 bconUnCatchTime[SCAN_PARENT_COUNT_MAX]; ///< 親機のビーコンを拾わなかった時間+データがあるかどうか
 	PTRPARENTFIND_CALLBACK pCallback;
-  PTRTimeGet parentTime;
-  PTRTimeGet childTime;
+ // PTRTimeGet parentTime;
+//  PTRTimeGet childTime;
 	void* pUserWork;
 	u16 _sTgid;
 	u16 errCheckBitmap;      ///< このBITMAPが食い違うとエラーになる
+  u16 crossTimer;
 	u8 gameInfoBuff[WM_SIZE_USER_GAMEINFO];  //送信するビーコンデータ
 	u8 connectMac[WM_SIZE_BSSID];
 	u8 mineDebugNo;       ///< 通信識別子、デバッグ用 本番では０
@@ -1065,14 +1069,18 @@ void GFI_NET_MLProcess(u16 bitmap)
 		_WLParentBconCheck();
 	}
   if(_pNetWL){
-    if(GFL_UI_KEY_GetCont() & (PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_KEY_UP|PAD_KEY_DOWN)){
+//    OS_TPrintf("%d --\n",_pNetWL->crossTimer);
+/*    
+    if(_pNetWL->crossTimer){
       WIH_SetBeaconPause(TRUE);
       _pNetWL->PauseScan=TRUE;
+      _pNetWL->crossTimer--;
     }
     else{
       WIH_SetBeaconPause(FALSE);
       _pNetWL->PauseScan=FALSE;
     }
+   */
   }
   
   WH_StepScan();
@@ -1902,13 +1910,13 @@ static void _crossScanShootStart(GFL_NETWL* pNetWL);
 
 static void _crossScanWait(GFL_NETWL* pNetWL)
 {
-  if(!_pNetWL->PauseScan){   //親機固定＝ビーコン発信のみ
+//  if(!_pNetWL->PauseScan){   //親機固定＝ビーコン発信のみ
     pNetWL->CrossRand--;
     if( pNetWL->CrossRand == 0){
       WH_Finalize();
       _CHANGE_STATE(_crossScanShootStart);
     }
-  }
+ // }
 }
 
 
@@ -1922,7 +1930,7 @@ static void _crossScanShootEndWait(GFL_NETWL* pNetWL)
     }
 		NET_WHPIPE_BeaconSetInfo();
     if( WH_ParentConnect(WH_CONNECTMODE_MP_PARENT, pNetWL->_sTgid, ch[pNetWL->crossChannel], 1 )){
-      pNetWL->CrossRand = pNetWL->parentTime();
+      pNetWL->CrossRand = 60 + GFUser_GetPublicRand(152);
       _CHANGE_STATE(_crossScanWait);  // 親機になる
     }
   }
@@ -1948,7 +1956,7 @@ static void _crossScanShootStart(GFL_NETWL* pNetWL)
 {
   if(WH_GetSystemState() == WH_SYSSTATE_IDLE){
     if(WH_StartScan(_scanCallback, NULL, 0)){
-      pNetWL->CrossRand = pNetWL->childTime();
+      pNetWL->CrossRand = 60+GFUser_GetPublicRand(40);
       _CHANGE_STATE(_crossScanShootWait);  // スキャン待ち
 #ifdef DEBUG_WH_BEACON_PRINT_ON
       OS_TPrintf( "scan on\n" );
@@ -2036,29 +2044,6 @@ void GFL_NET_WLFIXScan(int index)
 }
 
 
-static int _parentFastTime(void)
-{
-  return 60 + GFUser_GetPublicRand(152);
-}
-
-static int _childFastTime(void)
-{
-  return 60+GFUser_GetPublicRand(40);
-}
-
-static int _parentSlowTime(void)
-{
-  return (60 + GFUser_GetPublicRand(152))*3;
-}
-
-static int _childSlowTime(void)
-{
-  return (60+GFUser_GetPublicRand(40))*3;
-}
-
-
-
-
 //-------------------------------------------------------------
 /**
  * @brief   スキャンする速度の変更
@@ -2068,14 +2053,17 @@ static int _childSlowTime(void)
 
 void GFL_NET_WLChangeScanSpeed(int num)
 {
-  if(num == GFL_NET_CROSS_SPEED_FAST){
-    _pNetWL->parentTime = &_parentSlowTime;
-    _pNetWL->childTime = &_childSlowTime;
+
+  if(_pNetWL){
+    _pNetWL->crossTimer = _BEACON_DOWNCOUNT;
   }
-  else{
-    _pNetWL->parentTime = &_parentFastTime;
-    _pNetWL->childTime = &_childFastTime;
-  }
+
 }
 
+//-------------------------------------------------------------
+/**
+ * @brief   すれ違いを一時停止する
+ * @param   
+ */
+//-------------------------------------------------------------
 

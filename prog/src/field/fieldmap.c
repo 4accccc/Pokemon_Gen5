@@ -2114,6 +2114,7 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 	map_load_start = FLDMAPPER_Main( fieldWork->g3Dmapper );
   if (map_load_start)
   {
+    GFL_NET_ChangeoverChangeSpeed(GFL_NET_CROSS_SPEED_PAUSE);  //すれ違い一時停止
     NOZOMU_Printf("マップロード開始\n");
   }
 	GFL_BBDACT_Main( fieldWork->bbdActSys );
