@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T11:49:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="266"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1525" top="130" right="2230" bottom="749" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,11 +292,212 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_h01r0301_fising_01">
+		<comment>♂
+・初回
+・はい/いいえの選択肢表示
+　はい→fising_04
+　いいえ→fising_03
+
+※ツリーズ→釣り’S</comment>
+		<attribute name="キャラ指定">FISHING</attribute>
+		<language name="JPN" width="256">オー！　トレーナー！▼
+いきなりだけど　オレ
+チーム　ツリーズの　メンバーなのよ▼
+その　なのとおり
+つりをする　チーム！▼
+キミも　ツリーズに　はいって
+つりを　たのしまないか？　</language>
+		<language name="JPN_KANJI" width="256">オー！　トレーナー！▼
+いきなりだけど　オレ
+チーム　ツリーズの　メンバーなのよ▼
+その名の通り
+釣りをする　チーム！▼
+キミも　ツリーズに　はいって
+釣りを　楽しまないか？　</language>
+	</row>
+
+	<row id="msg_h01r0301_fising_02">
+		<comment>♂
+・fising_01表示後にいいえ選択後に再度会話
+・はい/いいえの選択肢表示
+　はい→fising_04
+　いいえ→fising_03</comment>
+		<attribute name="キャラ指定">FISHING</attribute>
+		<language name="JPN" width="256">オー！　トレーナー！▼
+キミも　チーム　ツリーズに　はいって
+つりを　たのしまないか？　</language>
+		<language name="JPN_KANJI" width="256">オー！　トレーナー！▼
+キミも　チーム　ツリーズに　はいって
+釣りを　楽しまないか？　</language>
+	</row>
+
+	<row id="msg_h01r0301_fising_03">
+		<comment>♂
+・いいえ選択時
+・再度会話したときはfising_02から</comment>
+		<attribute name="キャラ指定">FISHING</attribute>
+		<language name="JPN" width="256">オー！　なんてこったい！
+きょうの　なみは　あれもよう！▼
+いやいや　こんなことで　あきらめない
+キミ　きがかわれば　またきてくれよ！</language>
+		<language name="JPN_KANJI" width="256">オー！　なんてこったい！
+今日の　波は　荒れ模様！▼
+いやいや　こんなことで　あきらめない
+キミ　気が変われば　また来てくれよ！</language>
+	</row>
+
+	<row id="msg_h01r0301_fising_04">
+		<comment>♂
+・はい選択時
+・続けてfising_05</comment>
+		<attribute name="キャラ指定">FISHING</attribute>
+		<language name="JPN" width="256">よーし！　これで　キミも
+チーム　ツリーズの▽
+メンバー　だい２ごう　だ！▼</language>
+		<language name="JPN_KANJI" width="256">よーし！　これで　キミも
+チーム　ツリーズの▽
+メンバー　第２号だ！▼</language>
+	</row>
+
+	<row id="msg_h01r0301_fising_05">
+		<comment>♂
+・出題
+・0＝ポケモン名
+　WBの釣りテーブルからランダム選出</comment>
+		<attribute name="キャラ指定">FISHING</attribute>
+		<language name="JPN" width="256">さっそく　チーム　ツリーズの
+テーマを　はっぴょう　するぜ！▼
+ほんじつ　つりたい　ポケモンは
+[1:01:ポケモン種族名:0]　だ！▽
+つったら　オレに　みせてくれよ！</language>
+		<language name="JPN_KANJI" width="256">さっそく　チーム　ツリーズの
+テーマを　発表するぜ！▼
+本日　釣りたい　ポケモンは
+[1:01:ポケモン種族名:0]　だ！▽
+釣ったら　オレに　みせてくれよ！</language>
+	</row>
+
+	<row id="msg_h01r0301_fising_06">
+		<comment>♂
+・fising_05表示後に会話したとき
+・はい/いいえの選択肢表示
+　はい→fising_07
+　いいえ→fising_11
+・0＝ポケモン名</comment>
+		<attribute name="キャラ指定">FISHING</attribute>
+		<language name="JPN" width="256">ほんじつの　テーマの　ポケモンは
+[1:01:ポケモン種族名:0]　だ！▽
+それとも　もう　つってきたとか？</language>
+		<language name="JPN_KANJI" width="256">本日の　テーマの　ポケモンは
+[1:01:ポケモン種族名:0]　だ！▽
+それとも　もう　釣ってきたとか？</language>
+	</row>
+
+	<row id="msg_h01r0301_fising_07">
+		<comment>♂
+・メッセージ表示後、ポケモン選択画面へ</comment>
+		<attribute name="キャラ指定">FISHING</attribute>
+		<language name="JPN" width="256">どの　どの　どの　ポケモンか
+オレに　おしえてくれよ！▼</language>
+		<language name="JPN_KANJI" width="256">どの　どの　どの　ポケモンか
+オレに　教えてくれよ！▼</language>
+	</row>
+
+	<row id="msg_h01r0301_fising_08">
+		<comment>♂
+・オーダーに合致かつ当日捕獲された場合
+・メッセージ表示後、アイテム入手処理
+　「ハートのウロコ｣暫定
+・アイテム入手後、日付変更までfising_12表示
+・0＝ポケモン名</comment>
+		<attribute name="キャラ指定">FISHING</attribute>
+		<language name="JPN" width="256">オー！　こいつは　みごとな
+[1:01:ポケモン種族名:0]　じゃないか！！▼
+さすが　チーム　ツリーズ
+メンバー　だい２ごう　だな！▼
+よーし
+これを　もっていきなよ！▼</language>
+		<language name="JPN_KANJI" width="256">オー！　こいつは　見事な
+[1:01:ポケモン種族名:0]　じゃないか！！▼
+さすが　チーム　ツリーズ
+メンバー　第２号だな！▼
+よーし
+これを　もっていきなよ！▼</language>
+	</row>
+
+	<row id="msg_h01r0301_fising_09">
+		<comment>♂
+・オーダーに合致だが当日捕獲されていない場合</comment>
+		<attribute name="キャラ指定">FISHING</attribute>
+		<language name="JPN" width="256">オー！　こいつは　みごとな
+[1:01:ポケモン種族名:0]　じゃないか！！▼
+だけど　ざんねんなことに
+ほんじつ　つった　ポケモンじゃない▼
+オレが　みたいのは
+ほんじつ　つられた　ポケモンだぜ！</language>
+		<language name="JPN_KANJI" width="256">オー！　こいつは　見事な
+[1:01:ポケモン種族名:0]　じゃないか！！▼
+だけど　残念なことに
+本日　釣った　ポケモンじゃない▼
+オレが　みたいのは
+本日　釣られた　ポケモンだぜ！</language>
+	</row>
+
+	<row id="msg_h01r0301_fising_10">
+		<comment>♂
+・オーダーに合致していない場合</comment>
+		<attribute name="キャラ指定">FISHING</attribute>
+		<language name="JPN" width="256">オー！　こいつは　みごとな
+[1:01:ポケモン種族名:0]　じゃないか！！▼
+だけどよ　オレが　テーマにえらんだ
+ポケモンじゃあ　ないよな</language>
+		<language name="JPN_KANJI" width="256">オー！　こいつは　見事な
+[1:01:ポケモン種族名:0]　じゃないか！！▼
+だけどよ　オレが　テーマに選んだ
+ポケモンじゃあ　ないよな</language>
+	</row>
+
+	<row id="msg_h01r0301_fising_11">
+		<comment>♂
+・fising_06でいいえ選択
+・再度会話したときはfising_06から</comment>
+		<attribute name="キャラ指定">FISHING</attribute>
+		<language name="JPN" width="256">ほんじつ　つりたい　ポケモンは
+[1:01:ポケモン種族名:0]　だ！▽
+たのむぜ！　メンバー　だい２ごう！</language>
+		<language name="JPN_KANJI" width="256">ほんじつ　つりたい　ポケモンは
+[1:01:ポケモン種族名:0]　だ！▽
+たのむぜ！　メンバー　第２号！</language>
+	</row>
+
+	<row id="msg_h01r0301_fising_12">
+		<comment>♂
+・オーダーを達成した後、日付が変わるまで</comment>
+		<attribute name="キャラ指定">FISHING</attribute>
+		<language name="JPN" width="256">つりの　みりょく……▼
+あれこれ　かたるよりも
+じっさいに　つれば　わかるさ！▽
+そうだろ？　メンバー　だい２ごう！</language>
+		<language name="JPN_KANJI" width="256">釣りの　魅力……▼
+あれこれ　語るよりも
+じっさいに　釣れば　わかるさ！▽
+そうだろ？　メンバー　第２号！</language>
+	</row>
+
+	<row id="msg_h01r0301_fising_13">
+		<comment>♂
+・オーダー発表後に、日付が変更した場合
+・続けて</comment>
+		<attribute name="キャラ指定">FISHING</attribute>
+		<language name="JPN" width="256">よう！　メンバー　だい２ごう
+じだいは　かわったのさ……▼
+そう　ひづけが　かわったから
+つりの　テーマも　チェンジしたよ▼</language>
+		<language name="JPN_KANJI" width="256">よう！　メンバー　第２号
+時代は　変わったのさ……▼
+そう　日付が　変わったから
+釣りの　テーマも　チェンジしたよ▼</language>
 	</row>
 
 	<flowchart-group-list>
