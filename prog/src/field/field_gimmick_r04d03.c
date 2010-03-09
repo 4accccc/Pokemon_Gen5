@@ -10,23 +10,45 @@
 #include "fieldmap.h" 
 #include "field_gimmick_r04d03.h"
 #include "field_gimmick_def.h"
-//#include "gamesystem/iss_3ds_sys.h"
 #include "savedata/gimmickwork.h"
 //#include "sound/pm_sndsys.h"
 #include "system/gfl_use.h"
-//#include "sound_obj.h" 
+
+#include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 
 #include "arc/arc_def.h"
 #include "arc/h01.naix"
+#include "gmk_tmp_wk.h"
 
 #define EXPOBJ_UNIT_IDX (0)
 #define ARCID (ARCID_H01_GIMMICK) // ギミックデータのアーカイブID
+#define R04D03_TMP_ASSIGN_ID  (1)
+
+#define TRAINER_TAIL_OFS (6*FIELD_CONST_GRID_FX32_SIZE)
+#define TRAINER_Y (FIELD_CONST_GRID_FX32_SIZE*1)
+#define TRAINER_RIGHT_X (447*FIELD_CONST_GRID_FX32_SIZE)
+#define TRAINER_LEFT_X (338*FIELD_CONST_GRID_FX32_SIZE)
+#define TRAINER_TAIL_RIGHT_X  (TRAINER_RIGHT_X+TRAINER_TAIL_OFS)
+#define TRAINER_TAIL_LEFT_X   (TRAINER_LEFT_X-TRAINER_TAIL_OFS)
+
+
+#define TRAINER1_Z (526*FIELD_CONST_GRID_FX32_SIZE)
+#define TRAINER2_Z (520*FIELD_CONST_GRID_FX32_SIZE)
+
+
+#define TRAINER_SPEED (FIELD_CONST_GRID_FX32_SIZE)
+
+#define TRAINER_MAX (2)
+
+#include "debug/debug_tick_dump.h"
+
 //==========================================================================================
 // ■ギミックワーク
 //==========================================================================================
 typedef struct
 { 
-  HEAPID            heapID; // 使用するヒープID
+  int Frame[TRAINER_MAX];
+  int Wait[TRAINER_MAX];
 } GMK_WORK;
 
 //==========================================================================================
@@ -66,6 +88,7 @@ static const GFL_G3D_UTIL_OBJ obj_table[OBJ_NUM] =
 static GFL_G3D_UTIL_SETUP setup = { res_table, RES_NUM, obj_table, OBJ_NUM };
 
 
+static void InitWork( GMK_WORK* work, FIELDMAP_WORK* fieldmap );
 
 //------------------------------------------------------------------------------------------
 /**
@@ -84,15 +107,16 @@ void R04D03_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   GAMEDATA*               gdata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK*          gmkwork = GAMEDATA_GetGimmickWork(gdata);
 
+  //汎用ワーク確保
+  GMK_TMP_WK_AllocWork
+      (fieldmap, R04D03_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldmap), sizeof(GMK_WORK));
+  work = GMK_TMP_WK_GetWork(fieldmap, R04D03_TMP_ASSIGN_ID);
   // 拡張オブジェクトのユニットを追加
   FLD_EXP_OBJ_AddUnit( exobj_cnt, &setup, EXPOBJ_UNIT_IDX );
-/**
-  // ギミック管理ワークを作成
-  work = (H01WORK*)GFL_HEAP_AllocMemory( heapID, sizeof(H01WORK) );
 
   // ギミック管理ワークを初期化 
   InitWork( work, fieldmap );
-
+/**
   // ロード
   LoadGimmick( work, fieldmap );
 
@@ -139,7 +163,9 @@ void R04D03_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   GFL_HEAP_FreeMemory( work );
 */
   //ユニット破棄
-  FLD_EXP_OBJ_DelUnit( exobj_cnt, EXPOBJ_UNIT_IDX );
+  FLD_EXP_OBJ_DelUnit( exobj_cnt, EXPOBJ_UNIT_IDX );  
+  //汎用ワーク解放
+  GMK_TMP_WK_FreeWork(fieldmap, R04D03_TMP_ASSIGN_ID);
   // DEBUG:
   NOZOMU_Printf( "GIMMICK: end\n" );
 }
@@ -154,9 +180,42 @@ void R04D03_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 {
   int i;
+  int *frame;
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+  GMK_WORK* work = GMK_TMP_WK_GetWork(fieldmap, R04D03_TMP_ASSIGN_ID);
+  
+  work->Frame[0]++;
+  frame = &work->Frame[0];
+  { // トレーラー1(前)
+    GFL_G3D_OBJSTATUS* status;
+    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_HEAD );
+    status->trans.x = TRAINER_LEFT_X + TRAINER_SPEED * (*frame);
+    if ( status->trans.x >= TRAINER_RIGHT_X) (*frame) = 0;
+  }
+  { // トレーラー1(後)
+    GFL_G3D_OBJSTATUS* status;
+    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_TAIL );
+    status->trans.x = TRAINER_TAIL_LEFT_X + TRAINER_SPEED * (*frame);
+    if ( status->trans.x >= TRAINER_RIGHT_X) (*frame) = 0;
+  }
+
+  work->Frame[1]++;
+  frame = &work->Frame[1];
+  { // トレーラー2(前)
+    GFL_G3D_OBJSTATUS* status;
+    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_HEAD );
+    status->trans.x = TRAINER_RIGHT_X - TRAINER_SPEED * (*frame);
+    if ( status->trans.x <= TRAINER_LEFT_X) (*frame) = 0;
+  }
+  { // トレーラー2(後)
+    GFL_G3D_OBJSTATUS* status;
+    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_TAIL );
+    status->trans.x = TRAINER_TAIL_RIGHT_X - TRAINER_SPEED * (*frame);
+    if ( status->trans.x <= TRAINER_LEFT_X) (*frame) = 0;
+  }
 /**  
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
   GMK_WORK*         work = (H01WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
@@ -209,5 +268,92 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   // 風を更新
   UpdateWindVolume( fieldmap, work );
 */  
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief ギミック管理ワークを初期化する
+ *
+ * @param work     初期化対象ワーク
+ * @param fieldmap 依存するフィールドマップ
+ */
+//------------------------------------------------------------------------------------------
+static void InitWork( GMK_WORK* work, FIELDMAP_WORK* fieldmap )
+{
+  int i;
+  HEAPID                heapID = FIELDMAP_GetHeapID( fieldmap );
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+
+  // オブジェクトを作成
+  { // トレーラー1(前)
+    GFL_G3D_OBJSTATUS* status;
+    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_HEAD );
+    status->trans.x = TRAINER_LEFT_X;
+    status->trans.y = TRAINER_Y;
+    status->trans.z = TRAINER1_Z;
+    //90°回転
+    {
+      fx32 sin = FX_SinIdx(0x4000);
+      fx32 cos = FX_CosIdx(0x4000);
+      MTX_RotY33( &status->rotate, sin, cos );
+    }
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_HEAD, TRUE);
+  }  
+  { // トレーラー1(後)
+    GFL_G3D_OBJSTATUS* status;
+    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_TAIL );
+    status->trans.x = TRAINER_TAIL_LEFT_X;
+    status->trans.y = TRAINER_Y;
+    status->trans.z = TRAINER1_Z;
+    //90°回転
+    {
+      fx32 sin = FX_SinIdx(0x4000);
+      fx32 cos = FX_CosIdx(0x4000);
+      MTX_RotY33( &status->rotate, sin, cos );
+    }
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_TAIL, TRUE);
+  }
+  { // トレーラー2(前)
+    GFL_G3D_OBJSTATUS* status;
+    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_HEAD );
+    status->trans.x = TRAINER_RIGHT_X;
+    status->trans.y = TRAINER_Y;
+    status->trans.z = TRAINER2_Z;
+    //270°回転
+    {
+      fx32 sin = FX_SinIdx(0x4000*3);
+      fx32 cos = FX_CosIdx(0x4000*3);
+      MTX_RotY33( &status->rotate, sin, cos );
+    }
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_HEAD, TRUE);
+  }  
+  { // トレーラー2(後)
+    GFL_G3D_OBJSTATUS* status;
+    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_TAIL );
+    status->trans.x = TRAINER_TAIL_RIGHT_X;
+    status->trans.y = TRAINER_Y;
+    status->trans.z = TRAINER2_Z;
+    //270°回転
+    {
+      fx32 sin = FX_SinIdx(0x4000*3);
+      fx32 cos = FX_CosIdx(0x4000*3);
+      MTX_RotY33( &status->rotate, sin, cos );
+    }
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_TAIL, TRUE);
+  }
+#if 0  
+
+  // 動作待機カウンタ
+  for( i=0; i<SOBJ_NUM; i++ ){ work->wait[i] = 0; }
+
+  // 待機時間
+  LoadWaitTime( work );
+  // 風データ
+  LoadWindData( work );
+#endif  
 }
 
