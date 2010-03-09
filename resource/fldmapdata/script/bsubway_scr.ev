@@ -478,7 +478,7 @@ sub_receipt_challenge_multi:
     
     //赤外線、ワイヤレス選択
     _SYSWIN_MSG( msg_bsw_scr_87 , WIN_DOWN )
-    _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+    _BMPMENU_INIT_EX( 1, 1, 0, 0, SCWK_ANSWER )
     _BMPMENU_MAKE_LIST( msg_bsw_scr_88, 1 ) //赤外線
     _BMPMENU_MAKE_LIST( msg_bsw_scr_89, 0 ) //ワイヤレス
     _BMPMENU_START()
@@ -608,8 +608,16 @@ sub_receipt_challenge_multi_comm:
   _SYSWIN_CLOSE()
   
   IF $irc == TRUE THEN //IRC通信
+    //irc接続
     _BSUBWAY_TOOL( BSWSUB_COMM_IRC_ENTRY, BSW_NULL, BSW_NULL, BSW_NULL )
-    //結果により分岐が入る
+    
+    //結果
+    _BSUBWAY_TOOL( BSWSUB_COMM_IRC_ENTRY_RESULT, BSW_NULL, BSW_NULL, ret )
+    
+    IF $ret != BSWAY_COMM_IRC_RESULT_OK THEN //エラー
+      _CALL sub_receipt_common_exit
+      _RET
+    ENDIF
     
     //通信開始
     _BSUBWAY_TOOL( BSWSUB_COMM_START, BSW_NULL, BSW_NULL, BSW_NULL )

@@ -930,6 +930,23 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     }
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
+  //赤外線通信結果
+  case BSWSUB_COMM_IRC_ENTRY_RESULT:
+    switch( bsw_scr->irc_match.selectType ){
+    case EVENTIRCBTL_ENTRYMODE_SUBWAY:
+      *ret_wk = BSWAY_COMM_IRC_RESULT_OK;
+      break;
+    case EVENTIRCBTL_ENTRYMODE_EXIT:
+      *ret_wk = BSWAY_COMM_IRC_RESULT_EXIT;
+      break;
+    case EVENTIRCBTL_ENTRYMODE_RETRY:
+      *ret_wk = BSWAY_COMM_IRC_RESULT_RETRY;
+      break;
+    default:
+      GF_ASSERT( 0 );
+      *ret_wk = BSWAY_COMM_IRC_RESULT_EXIT;
+    }
+    break;
   //----ERROR
   //未対応コマンドエラー
   default:
