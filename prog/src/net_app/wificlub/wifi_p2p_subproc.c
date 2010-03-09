@@ -20,6 +20,7 @@
 #include "net/dwc_error.h"
 
 #include "wifi_p2p_subproc.h"
+#include "poke_tool/poke_regulation.h"
 
 //======================================================================
 //	define
@@ -289,6 +290,10 @@ static void WIFICLUB_BATTLE_SUBPROC_InitListData( WIFICLUB_BATTLE_SUBPROC_PARAM 
   
   //plData->pp = procWork->pokeParty;
   plData->pp = p_param->selfPokeParty;
+
+  //レギュレーションにそったレベル補正を行います
+  PokeRegulation_ModifyLevelPokeParty( reg, plData->pp );
+
   plData->myitem = NULL;
   plData->mailblock = NULL;
   plData->cfg = SaveData_GetConfig(svWork);
