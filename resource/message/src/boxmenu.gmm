@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-02-24T15:29:33"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-03-09T19:01:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="116" top="176" right="821" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="157" top="209" right="862" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -676,57 +676,75 @@
 	</row>
 
 	<row id="mes_boxmenu_04_23" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
-		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:small" width="60">こころ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="60">こころ</language>
+		<comment>選択項目：追加壁紙カテゴリ名</comment>
+		<language name="JPN" font=" 1:small" width="60">スペシャル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">スペシャル</language>
 	</row>
 
 	<row id="mes_boxmenu_04_24" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
-		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:small" width="60">たましい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="60">たましい</language>
+		<comment>選択項目：追加壁紙の名前</comment>
+		<language name="JPN" font=" 1:small" width="60">スペシャル１</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">スペシャル１</language>
 	</row>
 
 	<row id="mes_boxmenu_04_25" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
-		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:small" width="60">おにいさん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="60">おにいさん</language>
+		<comment>選択項目：追加壁紙の名前</comment>
+		<language name="JPN" font=" 1:small" width="60">スペシャル２</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">スペシャル２</language>
 	</row>
 
 	<row id="mes_boxmenu_04_26" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
-		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:small" width="60">ポケスロン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="60">ポケスロン</language>
+		<comment>選択項目：追加壁紙の名前</comment>
+		<language name="JPN" font=" 1:small" width="60">スペシャル３</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">スペシャル３</language>
 	</row>
 
 	<row id="mes_boxmenu_04_27" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
-		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:small" width="60">さんびき</language>
-		<language name="JPN_KANJI" font=" 1:small" width="60">さんびき</language>
+		<comment>選択項目：追加壁紙の名前</comment>
+		<language name="JPN" font=" 1:small" width="60">スペシャル４</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">スペシャル４</language>
 	</row>
 
 	<row id="mes_boxmenu_04_28" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
-		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:small" width="60">ギザぴか</language>
-		<language name="JPN_KANJI" font=" 1:small" width="60">ギザぴか</language>
+		<comment>選択項目：追加壁紙の名前</comment>
+		<language name="JPN" font=" 1:small" width="60">スペシャル５</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">スペシャル５</language>
 	</row>
 
 	<row id="mes_boxmenu_04_29" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
-		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:small" width="60">まいこはん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="60">まいこはん</language>
+		<comment>選択項目：追加壁紙の名前</comment>
+		<language name="JPN" font=" 1:small" width="60">スペシャル６</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">スペシャル６</language>
 	</row>
 
 	<row id="mes_boxmenu_04_30" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
-		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:small" width="60">ふっかつ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="60">ふっかつ</language>
+		<comment>選択項目：追加壁紙の名前</comment>
+		<language name="JPN" font=" 1:small" width="60">スペシャル７</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">スペシャル７</language>
 	</row>
 
-	<row id="mes_boxmenu_04_31" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+	<row id="mes_boxmenu_04_31" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffffff,#ffff80,,,#ffff80,,">
+		<comment>選択項目：追加壁紙の名前</comment>
+		<language name="JPN" font=" 1:small" width="60">スペシャル８</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">スペシャル８</language>
+	</row>
+
+	<row id="mes_boxmenu_04_32" back-color="#00ffff,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
 		<comment>壁紙メニュー</comment>
 		<language name="JPN" font=" 1:small" width="60">もどる</language>
 		<language name="JPN_KANJI" font=" 1:small" width="60">もどる</language>
+	</row>
+
+	<row id="mes_boxmenu_04_33" back-color="#00ffff,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
+		<comment>壁紙メニュー</comment>
+		<language name="JPN" font=" 1:small" width="60">まえへ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">まえへ</language>
+	</row>
+
+	<row id="mes_boxmenu_04_34" back-color="#00ffff,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
+		<comment>壁紙メニュー</comment>
+		<language name="JPN" font=" 1:small" width="60">つぎへ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">つぎへ</language>
 	</row>
 
 	<row id="mes_boxbutton_01_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">

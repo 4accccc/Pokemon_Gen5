@@ -959,7 +959,10 @@ BOOL BOXDAT_GetExWallPaperFlag( BOX_MANAGER * box, u32 flag )
 
 	GF_ASSERT( flag == BOX_EX_WALLPAPER_SET_FLAG_1 || flag == BOX_EX_WALLPAPER_SET_FLAG_2 );
 
-	return ( boxData->daisukiBitFlag & flag );
+	if( ( boxData->daisukiBitFlag & flag ) != 0 ){
+		return TRUE;
+	}
+	return FALSE;
 }
 
 

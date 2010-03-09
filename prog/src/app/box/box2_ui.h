@@ -237,7 +237,8 @@ enum {
 	BOX2UI_WALLPAPER_MENU2,				// 01: メニュー２
 	BOX2UI_WALLPAPER_MENU3,				// 02: メニュー３
 	BOX2UI_WALLPAPER_MENU4,				// 03: メニュー４
-	BOX2UI_WALLPAPER_MENU5,				// 04: もどる
+	BOX2UI_WALLPAPER_MENU5,				// 04: メニュー５
+	BOX2UI_WALLPAPER_MENU6,				// 05: もどる
 
 	// マーキング
 	BOX2UI_MARKING_MARK1 = 0,		// 00: ●

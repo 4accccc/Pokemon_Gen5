@@ -636,7 +636,18 @@ static const BOX2BMP_BUTTON_LIST WallPaperMenuStrTbl[] =
 	{ mes_boxmenu_04_02, BOX2BMP_BUTTON_TYPE_WHITE },			// ふうけい２
 	{ mes_boxmenu_04_03, BOX2BMP_BUTTON_TYPE_WHITE },			// ふうけい３
 	{ mes_boxmenu_04_04, BOX2BMP_BUTTON_TYPE_WHITE },			// エトセトラ
-	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
+	{ mes_boxmenu_04_32, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
+};
+
+// メニュー文字テーブル：壁紙メニュー（追加壁紙あり）
+static const BOX2BMP_BUTTON_LIST WallPaperMenuSpecialStrTbl[] =
+{
+	{ mes_boxmenu_04_23, BOX2BMP_BUTTON_TYPE_WHITE },			// スペシャル
+	{ mes_boxmenu_04_01, BOX2BMP_BUTTON_TYPE_WHITE },			// ふうけい１
+	{ mes_boxmenu_04_02, BOX2BMP_BUTTON_TYPE_WHITE },			// ふうけい２
+	{ mes_boxmenu_04_03, BOX2BMP_BUTTON_TYPE_WHITE },			// ふうけい３
+	{ mes_boxmenu_04_04, BOX2BMP_BUTTON_TYPE_WHITE },			// エトセトラ
+	{ mes_boxmenu_04_32, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
 };
 
 // メニュー文字テーブル：壁紙メニュー（ふうけい１）
@@ -646,7 +657,7 @@ static const BOX2BMP_BUTTON_LIST WPLabel1MenuStrTbl[] =
 	{ mes_boxmenu_04_08, BOX2BMP_BUTTON_TYPE_WHITE },			// シティ
 	{ mes_boxmenu_04_09, BOX2BMP_BUTTON_TYPE_WHITE },			// さばく
 	{ mes_boxmenu_04_10, BOX2BMP_BUTTON_TYPE_WHITE },			// サバンナ
-	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
+	{ mes_boxmenu_04_32, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
 };
 
 // メニュー文字テーブル：壁紙メニュー（ふうけい２）
@@ -656,7 +667,7 @@ static const BOX2BMP_BUTTON_LIST WPLabel2MenuStrTbl[] =
 	{ mes_boxmenu_04_12, BOX2BMP_BUTTON_TYPE_WHITE },			// かざん
 	{ mes_boxmenu_04_13, BOX2BMP_BUTTON_TYPE_WHITE },			// ゆきやま
 	{ mes_boxmenu_04_14, BOX2BMP_BUTTON_TYPE_WHITE },			// どうくつ
-	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
+	{ mes_boxmenu_04_32, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
 };
 
 // メニュー文字テーブル：壁紙メニュー（ふうけい３）
@@ -666,7 +677,7 @@ static const BOX2BMP_BUTTON_LIST WPLabel3MenuStrTbl[] =
 	{ mes_boxmenu_04_16, BOX2BMP_BUTTON_TYPE_WHITE },			// かいてい
 	{ mes_boxmenu_04_17, BOX2BMP_BUTTON_TYPE_WHITE },			// かわ
 	{ mes_boxmenu_04_18, BOX2BMP_BUTTON_TYPE_WHITE },			// そら
-	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
+	{ mes_boxmenu_04_32, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
 };
 
 // メニュー文字テーブル：壁紙メニュー（エトセトラ）
@@ -676,7 +687,39 @@ static const BOX2BMP_BUTTON_LIST WPLabel4MenuStrTbl[] =
 	{ mes_boxmenu_04_20, BOX2BMP_BUTTON_TYPE_WHITE },			// きんぞく
 	{ mes_boxmenu_04_21, BOX2BMP_BUTTON_TYPE_WHITE },			// チェック
 	{ mes_boxmenu_04_22, BOX2BMP_BUTTON_TYPE_WHITE },			// シンプル
-	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
+	{ mes_boxmenu_04_32, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
+};
+
+// メニュー文字テーブル：壁紙メニュー（スペシャル１のみ）
+static const BOX2BMP_BUTTON_LIST WPLabelS01MenuStrTbl[] =
+{
+	{ mes_boxmenu_04_24, BOX2BMP_BUTTON_TYPE_WHITE },			// スペシャル１
+	{ mes_boxmenu_04_25, BOX2BMP_BUTTON_TYPE_WHITE },			// スペシャル２
+	{ mes_boxmenu_04_26, BOX2BMP_BUTTON_TYPE_WHITE },			// スペシャル３
+	{ mes_boxmenu_04_27, BOX2BMP_BUTTON_TYPE_WHITE },			// スペシャル４
+	{ mes_boxmenu_04_32, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
+};
+
+// メニュー文字テーブル：壁紙メニュー（スペシャル２あり）
+static const BOX2BMP_BUTTON_LIST WPLabelS11MenuStrTbl[] =
+{
+	{ mes_boxmenu_04_24, BOX2BMP_BUTTON_TYPE_WHITE },			// スペシャル１
+	{ mes_boxmenu_04_25, BOX2BMP_BUTTON_TYPE_WHITE },			// スペシャル２
+	{ mes_boxmenu_04_26, BOX2BMP_BUTTON_TYPE_WHITE },			// スペシャル３
+	{ mes_boxmenu_04_27, BOX2BMP_BUTTON_TYPE_WHITE },			// スペシャル４
+	{ mes_boxmenu_04_34, BOX2BMP_BUTTON_TYPE_WHITE },			// つぎへ
+	{ mes_boxmenu_04_32, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
+};
+
+// メニュー文字テーブル：壁紙メニュー（スペシャル２）
+static const BOX2BMP_BUTTON_LIST WPLabelS02MenuStrTbl[] =
+{
+	{ mes_boxmenu_04_28, BOX2BMP_BUTTON_TYPE_WHITE },			// スペシャル５
+	{ mes_boxmenu_04_29, BOX2BMP_BUTTON_TYPE_WHITE },			// スペシャル６
+	{ mes_boxmenu_04_30, BOX2BMP_BUTTON_TYPE_WHITE },			// スペシャル７
+	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_WHITE },			// スペシャル８
+	{ mes_boxmenu_04_33, BOX2BMP_BUTTON_TYPE_WHITE },			// つぎへ
+	{ mes_boxmenu_04_32, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
 };
 
 // メニュー文字列テーブル：バトルボックス
@@ -7003,7 +7046,11 @@ static int MainSeq_BoxThemaWallPaperInit( BOX2_SYS_WORK * syswk )
 
 	case 1:
 		if( syswk->app->wp_menu == 0 ){
-			BOX2BMP_MenuStrPrint( syswk, WallPaperMenuStrTbl, 5 );
+			if( BOXDAT_GetExWallPaperFlag( syswk->dat->sv_box, BOX_EX_WALLPAPER_SET_FLAG_1 ) == TRUE ){
+				BOX2BMP_MenuStrPrint( syswk, WallPaperMenuSpecialStrTbl, 6 );
+			}else{
+				BOX2BMP_MenuStrPrint( syswk, WallPaperMenuStrTbl, 5 );
+			}
 		}else if( syswk->app->wp_menu == 1 ){
 			BOX2BMP_MenuStrPrint( syswk, WPLabel1MenuStrTbl, 5 );
 		}else if( syswk->app->wp_menu == 2 ){
@@ -7012,6 +7059,14 @@ static int MainSeq_BoxThemaWallPaperInit( BOX2_SYS_WORK * syswk )
 			BOX2BMP_MenuStrPrint( syswk, WPLabel3MenuStrTbl, 5 );
 		}else if( syswk->app->wp_menu == 4 ){
 			BOX2BMP_MenuStrPrint( syswk, WPLabel4MenuStrTbl, 5 );
+		}else if( syswk->app->wp_menu == 5 ){
+			if( BOXDAT_GetExWallPaperFlag( syswk->dat->sv_box, BOX_EX_WALLPAPER_SET_FLAG_2 ) == TRUE ){
+				BOX2BMP_MenuStrPrint( syswk, WPLabelS11MenuStrTbl, 6 );
+			}else{
+				BOX2BMP_MenuStrPrint( syswk, WPLabelS01MenuStrTbl, 5 );
+			}
+		}else if( syswk->app->wp_menu == 6 ){
+			BOX2BMP_MenuStrPrint( syswk, WPLabelS02MenuStrTbl, 6 );
 		}
 		BOX2BGWFRM_PokeMenuInSet( syswk->app->wfrm );
 		syswk->app->sub_seq++;
@@ -7024,9 +7079,28 @@ static int MainSeq_BoxThemaWallPaperInit( BOX2_SYS_WORK * syswk )
 		}else{
 			BOX2BMP_BoxThemaMsgPut( syswk, BOX2BMP_MSGID_THEMA_WALL, BOX2BMPWIN_ID_MSG1 );
 		}
-		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_WALLPAPER_CHG, 0 );
+		{	// カーソル移動設定
+			BOOL	flg = FALSE;
+			// メニュー１を無効にする
+			if( syswk->app->wp_menu == 0 ){
+				if( BOXDAT_GetExWallPaperFlag( syswk->dat->sv_box, BOX_EX_WALLPAPER_SET_FLAG_1 ) == FALSE ){
+					flg = TRUE;
+				}
+			}else if( syswk->app->wp_menu == 5 ){
+				if( BOXDAT_GetExWallPaperFlag( syswk->dat->sv_box, BOX_EX_WALLPAPER_SET_FLAG_2 ) == FALSE ){
+					flg = TRUE;
+				}
+			}else if( syswk->app->wp_menu != 6 ){
+				flg = TRUE;
+			}
+			if( flg == TRUE ){
+				BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_WALLPAPER_CHG, BOX2UI_WALLPAPER_MENU2 );
+				CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_WALLPAPER_MENU1 );
+			}else{
+				BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_WALLPAPER_CHG, BOX2UI_WALLPAPER_MENU1 );
+			}
+		}
 		return BOX2SEQ_MAINSEQ_BOXTHEMA_WALLPAPER_MAIN;
-
 	}
 
 	return BOX2SEQ_MAINSEQ_BOXTHEMA_WALLPAPER_INIT;
@@ -7048,37 +7122,59 @@ static int MainSeq_BoxThemaWallPaperMain( BOX2_SYS_WORK * syswk )
 	switch( CURSORMOVE_MainCont(syswk->app->cmwk) ){
 	case BOX2UI_WALLPAPER_MENU1:			// 00: メニュー１
 		PMSND_PlaySE( SE_BOX2_DECIDE );
+		// トップメニュー
 		if( syswk->app->wp_menu == 0 ){
-			syswk->app->wp_menu = 1;
-			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU2, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BOXTHEMA_WALLPAPER_INIT) );
+			syswk->app->wp_menu = 5;
+			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU1, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BOXTHEMA_WALLPAPER_INIT) );
 		}
 		return SetWallPaperChange( syswk, 0 );
 
 	case BOX2UI_WALLPAPER_MENU2:			// 01: メニュー２
 		PMSND_PlaySE( SE_BOX2_DECIDE );
 		if( syswk->app->wp_menu == 0 ){
-			syswk->app->wp_menu = 2;
-			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU3, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BOXTHEMA_WALLPAPER_INIT) );
+			syswk->app->wp_menu = 1;
+			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU2, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BOXTHEMA_WALLPAPER_INIT) );
 		}
 		return SetWallPaperChange( syswk, 1 );
 
 	case BOX2UI_WALLPAPER_MENU3:			// 02: メニュー３
 		PMSND_PlaySE( SE_BOX2_DECIDE );
 		if( syswk->app->wp_menu == 0 ){
-			syswk->app->wp_menu = 3;
-			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU4, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BOXTHEMA_WALLPAPER_INIT) );
+			syswk->app->wp_menu = 2;
+			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU3, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BOXTHEMA_WALLPAPER_INIT) );
 		}
 		return SetWallPaperChange( syswk, 2 );
 
 	case BOX2UI_WALLPAPER_MENU4:			// 03: メニュー４
 		PMSND_PlaySE( SE_BOX2_DECIDE );
 		if( syswk->app->wp_menu == 0 ){
-			syswk->app->wp_menu = 4;
-			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BOXTHEMA_WALLPAPER_INIT) );
+			syswk->app->wp_menu = 3;
+			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU4, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BOXTHEMA_WALLPAPER_INIT) );
 		}
 		return SetWallPaperChange( syswk, 3 );
 
-	case BOX2UI_WALLPAPER_MENU5:			// 04: やめる
+	case BOX2UI_WALLPAPER_MENU5:			// 04: メニュー５
+		PMSND_PlaySE( SE_BOX2_DECIDE );
+		// トップメニュー
+		if( syswk->app->wp_menu == 0 ){
+			syswk->app->wp_menu = 4;
+			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BOXTHEMA_WALLPAPER_INIT) );
+		}
+		// スペシャル１
+		if( syswk->app->wp_menu == 5 ){
+			if( BOXDAT_GetExWallPaperFlag( syswk->dat->sv_box, BOX_EX_WALLPAPER_SET_FLAG_2 ) == TRUE ){
+				syswk->app->wp_menu = 6;
+				return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BOXTHEMA_WALLPAPER_INIT) );
+			}
+		}
+		// スペシャル２
+		if( syswk->app->wp_menu == 6 ){
+			syswk->app->wp_menu = 5;
+			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU5, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BOXTHEMA_WALLPAPER_INIT) );
+		}
+		return SetWallPaperChange( syswk, 4 );
+
+	case BOX2UI_WALLPAPER_MENU6:			// 05: やめる
 		PMSND_PlaySE( SE_BOX2_DECIDE );
 		if( syswk->app->wp_menu == 0 ){
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BOXTHEMA_EXIT) );
@@ -9358,8 +9454,13 @@ static void MarkingSwitch( BOX2_SYS_WORK * syswk, u32 pos )
 //--------------------------------------------------------------------------------------------
 static int SetWallPaperChange( BOX2_SYS_WORK * syswk, u32 pos )
 {
-	syswk->app->wallpaper_pos = ( syswk->app->wp_menu - 1 ) * 4 + pos;
-	return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU2+pos, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BOXTHEMA_WALLPAPER_CHANGE) );
+	if( syswk->app->wp_menu <= 4 ||
+			( syswk->app->wp_menu == 5 && BOXDAT_GetExWallPaperFlag(syswk->dat->sv_box,BOX_EX_WALLPAPER_SET_FLAG_2) == FALSE ) ){
+		syswk->app->wallpaper_pos = ( syswk->app->wp_menu - 1 ) * 4 + pos - 1;
+	}else{
+		syswk->app->wallpaper_pos = ( syswk->app->wp_menu - 1 ) * 4 + pos;
+	}
+	return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU1+pos, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BOXTHEMA_WALLPAPER_CHANGE) );
 }
 
 //--------------------------------------------------------------------------------------------

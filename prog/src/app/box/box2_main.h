@@ -408,8 +408,9 @@ typedef struct {
 	s8	wall_px;
 	u8	wall_area;
 
-	u8	wallpaper_pos;				// 壁紙選択位置
+	u8	wallpaper_pos;	// 壁紙選択位置
 	u8	wp_menu;				// 壁紙メニュー番号
+	u8	wp_special;			// 追加壁紙フラグ
 
 	u8	poke_put_key;		// キーでの配置位置
 	u8	chg_tray_pos;		// 切り替えるトレイ

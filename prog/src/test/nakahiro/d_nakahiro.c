@@ -260,6 +260,12 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		wk->box_data.myitem    = GAMEDATA_GetMyItem( wk->gamedata );
 		wk->box_data.mystatus  = GAMEDATA_GetMyStatus( wk->gamedata );
 		wk->box_data.callMode  = BOX_MODE_SEIRI;
+		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+			BOXDAT_SetExWallPaperFlag( wk->box_data.sv_box, BOX_EX_WALLPAPER_SET_FLAG_1 );
+		}
+		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+			BOXDAT_SetExWallPaperFlag( wk->box_data.sv_box, BOX_EX_WALLPAPER_SET_FLAG_2 );
+		}
 		SetBoxPoke( wk );
 		SetPartyPoke( wk );
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(box), &BOX2_ProcData, &wk->box_data );
