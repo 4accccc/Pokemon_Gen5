@@ -273,14 +273,15 @@ void	FLDMAPPER_Delete( FLDMAPPER* g3Dmapper )
  * @brief	３Ｄマップコントロールシステムメイン
  */
 //------------------------------------------------------------------
-void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
+BOOL	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 {
 	int i;
+  BOOL map_load_start;
 
 	GF_ASSERT( g3Dmapper );
 
 	if( g3Dmapper->blocks == NULL ){
-		return;
+		return FALSE;
 	}
 	for( i=0; i<g3Dmapper->blockNum; i++ ){
     BLOCKINFO_init(&g3Dmapper->blockNew[i].newBlockInfo);
@@ -303,10 +304,16 @@ void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 	}
 	ReloadMapperBlock( g3Dmapper, g3Dmapper->blockNew );
 
+  map_load_start = FALSE;
 	//ブロック制御メイン
   // 描画ブロック数を求める
   WRITEBLOCK_Control_Clear( g3Dmapper );
 	for( i=0; i<g3Dmapper->blockNum; i++ ){
+    {
+      FLD_G3D_MAP_LOAD_STATUS* ldst;
+      FLD_G3D_MAP_GetLoadStatusPointer( g3Dmapper->blockWk[i].g3Dmap, &ldst );
+      if (ldst->seq == FLD_G3D_MAP_LOAD_START) map_load_start = TRUE;
+    }
 		FLD_G3D_MAP_Main( g3Dmapper->blockWk[i].g3Dmap );
     WRITEBLOCK_Control_SetOneBlock( g3Dmapper, g3Dmapper->blockWk[i].g3Dmap, i );
 	}
@@ -325,6 +332,8 @@ void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 	if( g3Dmapper->granime ){
 		FIELD_GRANM_Main( g3Dmapper->granime );
 	}
+
+  return map_load_start;
 }
 
 //------------------------------------------------------------------

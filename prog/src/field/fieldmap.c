@@ -1014,7 +1014,6 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   if(fieldWork->union_eff != NULL){
     UNION_EFF_SystemUpdate(fieldWork->union_eff);
   }
-
 	// フィールドマップ用制御タスクシステム
 	FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );
   if(fieldWork->fldMsgBG ){ FLDMSGBG_PrintMain( fieldWork->fldMsgBG ); }
@@ -1037,7 +1036,6 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
     PL_BOAT_WORK_PTR *wk_ptr = GAMEDATA_GetPlBoatWorkPtr(fieldWork->gamedata);
     PL_BOAT_Main(*wk_ptr);
   }
-
 
 
   // ----------------------top側3D描画処理---------------------------------------
@@ -1361,7 +1359,7 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
   result = MAINSEQ_RESULT_CONTINUE;
   func = mainfuncTable[fieldWork->seq][fieldWork->seq_switch];
   if (func != NULL) 
-  { 
+  {
     result = func(gsys, fieldWork);
   }
 #ifdef  PM_DEBUG
@@ -2112,7 +2110,12 @@ static void fldmap_G3D_Load( FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 {
-	FLDMAPPER_Main( fieldWork->g3Dmapper );
+  BOOL map_load_start;
+	map_load_start = FLDMAPPER_Main( fieldWork->g3Dmapper );
+  if (map_load_start)
+  {
+    NOZOMU_Printf("マップロード開始\n");
+  }
 	GFL_BBDACT_Main( fieldWork->bbdActSys );
   
   // NOGRID動作制御

@@ -72,7 +72,7 @@ extern FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID );
  * @brief	３Ｄマップコントロールシステムメイン
  */
 //------------------------------------------------------------------
-extern void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper );
+extern BOOL	FLDMAPPER_Main( FLDMAPPER* g3Dmapper );
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップコントロールシステムメイン後半
