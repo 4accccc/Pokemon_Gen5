@@ -26,8 +26,7 @@ _EVENT_DATA_END
 /*  C01R0201 BIGMANの会話用イベントスクリプト				  */
 /**************************************************************/
 EVENT_START   ev_c01r0201_bigman_01
-	//【仮】アイテムは仮です。ピントレンズをあげています。
-	_EASY_TALK_ITEM_EVENT( ITEM_PINTORENZU, 1, FE_C01R0201_ITEM_GET, msg_c01r0201_bigman_01, msg_c01r0201_bigman_02, msg_c01r0201_bigman_02)
+	_EASY_TALK_ITEM_EVENT( ITEM_SUUPAABOORU, 1, FE_C01R0201_ITEM_GET, msg_c01r0201_bigman_01, msg_c01r0201_bigman_02, msg_c01r0201_bigman_02)
 EVENT_END
 
 /**************************************************************/
