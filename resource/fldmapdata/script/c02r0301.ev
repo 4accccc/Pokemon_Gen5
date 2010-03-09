@@ -20,7 +20,7 @@
 //--------------------------------------------------------------
 
 _EVENT_DATA    ev_c02r0301_woman2_01
-_EVENT_DATA    ev_c02r0301_poke2_01
+_EVENT_DATA    ev_c02r0301_poke18_01
 _EVENT_DATA    ev_c02r0301_girl1_01
 _EVENT_DATA		ev_c02r0301_boy1_01
 _EVENT_DATA_END
@@ -149,23 +149,28 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c02r0301_girl1_01
 
-	DEFINE_LOCAL	nathuki_check
+	DEFINE_LOCAL	LWK_NATHUKI_CHECK
+	DEFINE_LOCAL	LWK_POKE_POS
+	
+	_GET_PARTY_FRONT_POKEMON( LWK_POKE_POS, POKECOUNT_MODE_BATTLE_ENABLE )
 	
 	//手持ちポケモン先頭（0番）のなつき度を保存
-	_GET_TEMOTI_NATSUKI( nathuki_check, 0 )
+	_GET_TEMOTI_NATSUKI( LWK_NATHUKI_CHECK, LWK_POKE_POS )
+	//手持ちポケモンの種族名をセット
+	_TEMOTI_MONS_NAME( 0, LWK_POKE_POS )
 	
 	_TALK_OBJ_START()
 	_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_01 )
 	
 	//手持ちポケモン先頭（0番）のなつき度で分岐
 	
-	IF $nathuki_check < 70 THEN
+	IF $LWK_NATHUKI_CHECK < 70 THEN
   		//なつき度が0～69の処理
   		//まだまだ　これからって　かんじね
   		
 		_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_04 )
 		
-  	ELSIF $nathuki_check < 120 THEN
+  	ELSIF $LWK_NATHUKI_CHECK  < 120 THEN
   		//なつき度が70～119の処理
   		//うん　すこし　なついている
   			
@@ -186,9 +191,9 @@ EVENT_END
 /**************************************************************/
 /*  C02R0301 POKEの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c02r0301_poke2_01
+EVENT_START   ev_c02r0301_poke18_01
 
-	_EASY_TALK_POKEVOICE( MONSNO_HUSIGIDANE, msg_c02r0301_poke_01 )	//【仮】フシギダネの鳴き声。
+	_EASY_TALK_POKEVOICE( MONSNO_517, msg_c02r0301_poke_01 )
 
 EVENT_END
 /**************************************************************/

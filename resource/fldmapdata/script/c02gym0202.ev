@@ -98,6 +98,7 @@ EVENT_END
 //ジムリーダー戦
 ev_leader2_btl:
 	//リーダー：戦闘前メッセージ
+
 	_TALK_OBJ_START()
 	//いらっしゃい！
 	_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_01 )

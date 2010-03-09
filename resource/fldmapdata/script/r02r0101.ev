@@ -23,6 +23,7 @@
 
 
 _EVENT_DATA    ev_r02r0101_woman1_01
+_EVENT_DATA    ev_r02r0101_infomationw_01
 _EVENT_DATA 	ev_bg_r02r0101_board_01
 _EVENT_DATA_END
 
@@ -33,6 +34,15 @@ _EVENT_DATA_END
 EVENT_START   ev_r02r0101_woman1_01
 
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r02r0101_woman1_01 ) //ゲートの説明
+
+EVENT_END
+
+/**************************************************************/
+/*  R02R0101 インフォメーションの会話用イベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_r02r0101_infomationw_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r02r0101_infomationw_01 )
 
 EVENT_END
 

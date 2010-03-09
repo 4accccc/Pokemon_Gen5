@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/21 14:03:56
+#save date:2010/03/08 22:01:25
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r08r0201.wms
 #SECTION START:OBJ_EVENT
@@ -57,7 +57,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_R08R0201_ASSISTANTM_01
 #Direction Type Number
-DIR_UP
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -71,7 +71,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 0 88
+-120 0 200
 #event number: 2
 #type
 1
@@ -88,7 +88,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_R08R0201_BACKPACKERM_01
 #Direction Type Number
-DIR_UP
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -102,7 +102,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 0 88
+-136 0 200
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
