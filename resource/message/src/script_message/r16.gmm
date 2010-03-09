@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T12:03:07"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T14:34:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1479" top="291" right="2184" bottom="911" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="156" right="1998" bottom="784" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,34 +292,44 @@
 	</lock>
 
 
-	<row id="msg_r16_stop_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>？？？
+	<row id="msg_r16_stop_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
 ・h05ストッパー
-・クリア前</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+　話しかけ時
+・エンディングを見ると削除</comment>
+		<attribute name="キャラ指定">WORKER</attribute>
+		<language name="JPN" width="256">ワンダーブリッジは
+てんけんちゅう　だってさ！</language>
+		<language name="JPN_KANJI" width="256">ワンダーブリッジは
+てんけんちゅう　だってさ！</language>
 	</row>
 
-	<row id="msg_r16_stop_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>？？？
+	<row id="msg_r16_stop_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
 ・h05ストッパー
-・クリア後</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+　場合によってはpos用
+・エンディングを見ると削除</comment>
+		<attribute name="キャラ指定">WORKER</attribute>
+		<language name="JPN" width="256">ワンダーブリッジは
+てんけんちゅう　だってさ！▼</language>
+		<language name="JPN_KANJI" width="256">ワンダーブリッジは
+てんけんちゅう　だってさ！▼</language>
 	</row>
 
-	<row id="msg_r16_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r16_sign1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">１６ばんどうろ</language>
 		<language name="JPN_KANJI" width="256">１６番道路</language>
 	</row>
 
-	<row id="msg_r16_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r16_sign2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
-		<language name="JPN" width="256">このさき　ワンダーブリッジ</language>
-		<language name="JPN_KANJI" width="256">このさき　ワンダーブリッジ</language>
+		<language name="JPN" width="256">このさき　ワンダーブリッジ
+まさにワンダー！　そしてブリッジ！</language>
+		<language name="JPN_KANJI" width="256">この先　ワンダーブリッジ
+まさにワンダー！　そしてブリッジ！</language>
 	</row>
 
 	<flowchart-group-list>
