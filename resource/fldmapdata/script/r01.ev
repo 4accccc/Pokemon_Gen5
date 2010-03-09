@@ -280,24 +280,24 @@ _ANIME_LABEL	anm_R01_pokeget_rival_look_hakase
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R01　捕獲デモ用：ライバル・サポート・主人公、上に三歩歩いてついていく
+//	R01　捕獲デモ用：ライバル・サポート・主人公、上に1歩歩いてついていく
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_R01_pokeget_up
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R01　捕獲デモ用：博士、草むらに入る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_R01_pokeget1
-	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R01　捕獲デモ用：博士、草むらからでる
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_R01_pokeget1a
-	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	ACMD_END,0
 

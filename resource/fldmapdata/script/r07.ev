@@ -34,13 +34,11 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*  【仮】わざマシンくれる格闘家女子                          */
+/*  わざマシンくれる格闘家女子                          */
 /**************************************************************/
 
-//もらえるわざマシンが仮
-
 EVENT_START   ev_r07_fightrew_01
-  _EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN01, 1, FE_R07_FIGHTREW_01, msg_r07_fighterw_01, msg_r07_fighterw_02, msg_r07_fighterw_02 )
+  _EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN57, 1, FE_R07_FIGHTREW_01, msg_r07_fighterw_01, msg_r07_fighterw_02, msg_r07_fighterw_02 )
 EVENT_END
 
 /**************************************************************/

@@ -20,6 +20,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA 	ev_bg_r01r0101_board_01
+_EVENT_DATA 	ev_r01r0101_informationw_01
+_EVENT_DATA 	ev_r01r0101_backpackerw_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -31,3 +33,17 @@ EVENT_START   ev_bg_r01r0101_board_01
 
 EVENT_END
 
+/**************************************************************/
+/* INFORMATIONW_01                                             */
+/**************************************************************/
+EVENT_START   ev_r01r0101_informationw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r01r0101_infomationw_01 )
+EVENT_END
+
+/**************************************************************/
+/* BACKPACKERW_01                                             */
+/**************************************************************/
+EVENT_START   ev_r01r0101_backpackerw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r01r0101_backpackerw_01 )
+EVENT_END
+	

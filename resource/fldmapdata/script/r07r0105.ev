@@ -76,6 +76,9 @@ EVENT_START   ev_pos_r07r0105_leader6_01
 	//R070105POSを無効に
 	$WK_SCENE_C07R0105 = 1
 	
+	//C07のジムストッパーを削除
+	_FLAG_SET(FV_C06_GYM_STOPPER)
+	
 	//======================================//
 EVENT_END
 

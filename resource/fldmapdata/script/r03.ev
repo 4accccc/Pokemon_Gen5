@@ -853,8 +853,8 @@ ev_r03_babygirl_thanks:
 	_OBJ_ANIME( R03_BABYGIRL_02 , anm_babygirl_gift_01 )
 	_OBJ_ANIME_WAIT()
 	
-	//【仮】アイテム入手
-	_ITEM_EVENT_KEYWAIT(ITEM_MONSUTAABOORU, 5)
+	//アイテム入手
+	_ITEM_EVENT_KEYWAIT(ITEM_HIIRUBOORU, 3)
 	
 	//バイバーイ。サポートとBABYRIRL退場
 	_BALLOONWIN_OBJMSG( msg_r03_white_08 , R03_SUPPORT_01 )
