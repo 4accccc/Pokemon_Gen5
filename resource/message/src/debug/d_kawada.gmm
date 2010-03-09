@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kawada_koji" host="W00215" date="2010-03-05T11:52:56"/>
+	<create user="kawada_koji" host="W00215" date="2010-03-08T22:19:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -351,18 +351,18 @@
 	</row>
 
 	<row id="top_menu02">
-		<language name="JPN" width="256">ボックスあずける</language>
-		<language name="JPN_KANJI" width="256">ボックスあずける</language>
+		<language name="JPN" width="256">イッシュしょうじょう</language>
+		<language name="JPN_KANJI" width="256">イッシュ賞状</language>
 	</row>
 
 	<row id="top_menu03">
-		<language name="JPN" width="256">ボックスもちもの</language>
-		<language name="JPN_KANJI" width="256">ボックスもちもの</language>
+		<language name="JPN" width="256">ぜんこくしょうじょう</language>
+		<language name="JPN_KANJI" width="256">全国賞状</language>
 	</row>
 
 	<row id="top_menu04">
-		<language name="JPN" width="256">バトルボックス</language>
-		<language name="JPN_KANJI" width="256">バトルボックス</language>
+		<language name="JPN" width="256">ちかてつろせんず</language>
+		<language name="JPN_KANJI" width="256">地下鉄路線図</language>
 	</row>
 
 	<row id="top_menu05">

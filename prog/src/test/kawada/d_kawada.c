@@ -38,16 +38,22 @@
 #include "savedata/trialhouse_save.h"
 #include "../../savedata/trialhouse_save_local.h"
 
+// 地方図鑑賞状
+#include "app/chihou_zukan_award.h"
+// 全国図鑑賞状
+#include "app/zenkoku_zukan_award.h"
 
 // オーバーレイ
 FS_EXTERN_OVERLAY(zukan_toroku);
 FS_EXTERN_OVERLAY(th_award);
+FS_EXTERN_OVERLAY(chihou_zukan_award);
+FS_EXTERN_OVERLAY(zenkoku_zukan_award);
 
 
 //============================================================================================
 //	定数定義
 //============================================================================================
-#define	TOP_MENU_SIZ	( 2 )
+#define	TOP_MENU_SIZ	( 4 )
 
 typedef struct {
 	u32	main_seq;
@@ -75,6 +81,11 @@ typedef struct {
   THSV_WORK*          thsv;
   TH_AWARD_PARAM*     th_award_param;
 
+  // 地方図鑑賞状
+  CHIHOU_ZUKAN_AWARD_PARAM*    chihou_zukan_award_param;
+  // 全国図鑑賞状
+  ZENKOKU_ZUKAN_AWARD_PARAM*   zenkoku_zukan_award_param;
+
 }KAWADA_MAIN_WORK;
 
 enum {
@@ -85,10 +96,14 @@ enum {
   // ここから
 	MAIN_SEQ_ZUKAN_TOROKU_CALL,  // top_menu00
 	MAIN_SEQ_TH_AWARD_CALL,
+	MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL,
+	MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL,
   // ここまで
 
 	MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN,
 	MAIN_SEQ_TH_AWARD_CALL_RETURN,
+	MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL_RETURN,
+	MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL_RETURN,
 	
   MAIN_SEQ_END,
 };
@@ -118,6 +133,14 @@ static void ZukanTorokuExit( KAWADA_MAIN_WORK* wk );
 // トライアルハウス結果
 static void ThAwardInit( KAWADA_MAIN_WORK* wk );
 static void ThAwardExit( KAWADA_MAIN_WORK* wk );
+
+// 地方図鑑賞状
+static void ChihouZukanAwardInit( KAWADA_MAIN_WORK* wk );
+static void ZenkokuZukanAwardExit( KAWADA_MAIN_WORK* wk );
+
+// 全国図鑑賞状
+static void ChihouZukanAwardInit( KAWADA_MAIN_WORK* wk );
+static void ZenkokuZukanAwardExit( KAWADA_MAIN_WORK* wk );
 
 
 //============================================================================================

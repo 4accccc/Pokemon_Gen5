@@ -1864,9 +1864,21 @@ SRCS_OVERLAY_GEONET = net_app/wifi_earth/wifi_earth.c
 SRCS_OVERLAY_TH_AWARD = app/trialhouse_award/th_award.c \
                         app/trialhouse_award/th_award_graphic.c
 
+# 地方図鑑賞状
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_CHIHOU_ZUKAN_AWARD = app/zukan_award/chihou/chihou_zukan_award.c \
+                                  app/zukan_award/chihou/chihou_zukan_award_graphic.c
+
+# 地方図鑑賞状
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_ZENKOKU_ZUKAN_AWARD = app/zukan_award/zenkoku/zenkoku_zukan_award.c \
+                                   app/zukan_award/zenkoku/zenkoku_zukan_award_graphic.c
+
 # 川田デバッグ
 #===> SRCS_OVERLAY_UI_COMMON
 #===> SRCS_OVERLAY_ZUKAN_TOROKU
 #===> SRCS_OVERLAY_TH_AWARD
+#===> SRCS_OVERLAY_CHIHOU_ZUKAN_AWARD
+#===> SRCS_OVERLAY_ZENKOKU_ZUKAN_AWARD
 SRCS_OVERLAY_KAWADA_DEBUG = test/kawada/d_kawada.c
 

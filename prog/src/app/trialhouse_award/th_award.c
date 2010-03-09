@@ -488,10 +488,12 @@ static GFL_PROC_RESULT Th_Award_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
       u32 x, y;
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
       {
+        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         b_end = TRUE;
       }
       else if( GFL_UI_TP_GetPointTrg( &x, &y ) )
       {
+        GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
         b_end = TRUE;
       }
 
@@ -1062,6 +1064,12 @@ static void Th_Award_TextInit( TH_AWARD_WORK* work )
         work->font,
         PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
     GFL_STR_DeleteBuffer( strbuf );
+  }
+
+  // 済んでいないかもしれないが、1度呼んでおく
+  for( i=TEXT_DUMMY +1; i<TEXT_MAX; i++ )
+  {
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[i] );
   }
 
   // 既に済んでいるかもしれないので、Mainを1度呼んでおく

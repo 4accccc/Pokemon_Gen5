@@ -163,7 +163,7 @@ static const struct
 		TRUE,	//初期表示
 	},
 
-#if 0  // サブスクリーンはnogear_subscreenを利用する
+#if 0  // サブスクリーンはapp_nogear_subscreenを利用する
 	//SUB---------------------------
 	{	
 		GFL_BG_FRAME0_S,	//設定するフレーム
