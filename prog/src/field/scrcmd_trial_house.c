@@ -408,8 +408,6 @@ VMCMD_RESULT EvCmdTH_GetRankDataState( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
-  TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
 
   state = SCRCMD_GetVMWork( core, work );
   *state = TRIAL_HOUSE_GetRankDataState( gsys );
