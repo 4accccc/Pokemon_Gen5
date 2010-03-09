@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-28T12:32:16"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T11:01:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -339,6 +339,7 @@
 	<row id="msg_rotom_01">
 		<comment>ロトム：フォルムチェンジ処理
 ・ロトムいない</comment>
+		<attribute name="キャラ指定">BGメッセージ</attribute>
 		<language name="JPN" width="256">なかに　でんかせいひんの　はいった
 ダンボールが　たくさん　おかれている</language>
 		<language name="JPN_KANJI" width="256">中に　電化製品の　はいった
@@ -352,6 +353,7 @@
 　はい→msg_rotom_08
 　はい＆ロトム複数→msg_rotom_04
 　いいえ→msg_rotom_03</comment>
+		<attribute name="キャラ指定">BGメッセージ</attribute>
 		<language name="JPN" width="256">なかに　でんかせいひんの　はいった
 ダンボールが　たくさん　おかれている[BE:01:ページ切り替え（クリア）]
 おや？　ロトムが　でんかせいひんの
@@ -370,6 +372,7 @@
 		<comment>ロトム：フォルムチェンジ処理
 ・msg_rotom_02表示後に
 　いいえ選択</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">ロトムは　モーターの　なかに
 はいるのを　あきらめた……</language>
 		<language name="JPN_KANJI" width="256">ロトムは　モーターの　中に
@@ -381,6 +384,7 @@
 ・msg_rotom_02表示後に
 　はい選択＆ロトム複数
 ・メッセージ表示後、ポケモン選択画面に</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">どの　ロトムを
 モーターに　いれてあげますか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">どの　ロトムを
@@ -391,6 +395,7 @@
 		<comment>ロトム：フォルムチェンジ処理
 ・ポケモン選択でロトム以外のポケモン選択
 ・続けてmsg_rotom_04</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">そのポケモンでは　モーターの　なかに
 はいることが　できません</language>
 		<language name="JPN_KANJI" width="256">そのポケモンでは　モーターの　中に
@@ -401,6 +406,7 @@
 		<comment>ロトム：フォルムチェンジ処理
 ・ポケモン選択でタマゴ選択
 ・続けてmsg_rotom_04</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">タマゴでは　モーターの　なかに
 はいることが　できません</language>
 		<language name="JPN_KANJI" width="256">タマゴでは　モーターの　中に
@@ -412,6 +418,7 @@
 ・はい選択でロトム1匹orポケモンリストでロトム選択後
 ・選択肢表示
 ・0＝ロトムのニックネーム</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">どの　でんかせいひんの　モーターに
 [1:02:ポケモンニックネーム:0]を　いれてあげますか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">どの　電化製品の　モーターに
@@ -421,6 +428,7 @@
 	<row id="msg_rotom_window_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>ロトム：フォルムチェンジ処理
 ・選択肢</comment>
+		<attribute name="キャラ指定">メニュー</attribute>
 		<language name="JPN" width="256">レンジ</language>
 		<language name="JPN_KANJI" width="256">レンジ</language>
 	</row>
@@ -428,6 +436,7 @@
 	<row id="msg_rotom_window_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>ロトム：フォルムチェンジ処理
 ・選択肢</comment>
+		<attribute name="キャラ指定">メニュー</attribute>
 		<language name="JPN" width="256">せんたくき</language>
 		<language name="JPN_KANJI" width="256">せんたくき</language>
 	</row>
@@ -435,6 +444,7 @@
 	<row id="msg_rotom_window_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>ロトム：フォルムチェンジ処理
 ・選択肢</comment>
+		<attribute name="キャラ指定">メニュー</attribute>
 		<language name="JPN" width="256">せんぷうき</language>
 		<language name="JPN_KANJI" width="256">せんぷうき</language>
 	</row>
@@ -442,6 +452,7 @@
 	<row id="msg_rotom_window_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>ロトム：フォルムチェンジ処理
 ・選択肢</comment>
+		<attribute name="キャラ指定">メニュー</attribute>
 		<language name="JPN" width="256">そうじき</language>
 		<language name="JPN_KANJI" width="256">そうじき</language>
 	</row>
@@ -449,6 +460,7 @@
 	<row id="msg_rotom_window_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>ロトム：フォルムチェンジ処理
 ・選択肢</comment>
+		<attribute name="キャラ指定">メニュー</attribute>
 		<language name="JPN" width="256">しばかりき</language>
 		<language name="JPN_KANJI" width="256">しばかりき</language>
 	</row>
@@ -457,6 +469,7 @@
 		<comment>ロトム：フォルムチェンジ処理
 ・選択肢
 ※フォルムチェンジしたロトム選択時のみ表示かどうか検討</comment>
+		<attribute name="キャラ指定">メニュー</attribute>
 		<language name="JPN" width="256">もとにもどす</language>
 		<language name="JPN_KANJI" width="256">もとにもどす</language>
 	</row>
@@ -464,6 +477,7 @@
 	<row id="msg_rotom_cancel" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>ロトム：フォルムチェンジ処理
 ・選択肢</comment>
+		<attribute name="キャラ指定">メニュー</attribute>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
@@ -476,6 +490,7 @@
 　いいえ→msg_rotom_waza_02
 ・0＝ロトムのニックネーム
 ・1＝技名</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 モーターの　なかに　はいりこんだ！[BE:01:ページ切り替え（クリア）]
 [1:02:ポケモンニックネーム:0]は　あたらしく
@@ -500,6 +515,7 @@
 ・はい→msg_rotom_waza_03
 　いいえ→msg_rotom_waza_04
 ・1＝技名</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">それでは　[1:07:わざ名:1]を
 おぼえさせるのを　あきらめますか？</language>
 		<language name="JPN_KANJI" width="256">それでは　[1:07:わざ名:1]を
@@ -510,6 +526,7 @@
 		<comment>ロトム：フォルムチェンジ処理
 ・msg_rotom_waza_02で
 　はい選択時</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]を
 おぼえずに　おわった！[BE:01:ページ切り替え（クリア）]
 [1:02:ポケモンニックネーム:0]は
@@ -526,6 +543,7 @@
 ・はい→msg_rotom_waza_05
 　いいえ→msg_rotom_waza_02
 ・1＝技名</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:07:わざ名:1]を
 わすれさせて　よろしいですね？</language>
 		<language name="JPN_KANJI" width="256">[1:07:わざ名:1]を
@@ -535,6 +553,7 @@
 	<row id="msg_rotom_waza_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ロトム：フォルムチェンジ処理
 ・続けてmsg_rotom_waza_06</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">１[2:01:２桁:20]　２の[2:01:２桁:20]　…[2:01:２桁:20]…[2:01:２桁:20]　ポカン！</language>
 		<language name="JPN_KANJI" width="256">１[2:01:２桁:20]　２の[2:01:２桁:20]　…[2:01:２桁:20]…[2:01:２桁:20]　ポカン！</language>
 	</row>
@@ -544,6 +563,7 @@
 ・続けてmsg_rotom_waza_07
 ・0＝ロトムのニックネーム
 ・1＝技名</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
 つかいかたを　きれいにわすれた！▼
 そして……！</language>
@@ -557,6 +577,7 @@
 ・終了
 ・0＝ロトムのニックネーム
 ・2＝技名</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は　あたらしく
 [1:07:わざ名:2]を　おぼえた！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は　あたらしく
@@ -568,6 +589,7 @@
 ・「もとにもどす」選択で、技を忘れたとき
 ・0＝ロトムのニックネーム
 ・2＝技名</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:2]を　わすれた……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
@@ -579,6 +601,7 @@
 　すでにその電化製品に応じたフォルムのとき
 ・続けてmsg_rotom_07
 ・0＝ロトムのニックネーム</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">えらんだ　[1:02:ポケモンニックネーム:0]は　すでに
 その　でんかせいひんの[BE:00:ページ切り替え（行送り）]
 モーターに　はいっています！</language>
@@ -595,6 +618,7 @@
 　わざスロットがゼロになるときは
 　No484「でんきショック」を覚えさせておく
 ・0＝ロトムのニックネーム</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 モーターから　でてきた！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
@@ -606,6 +630,7 @@
 　もとにもどる選択時
 ・ただし選んだロトムがノーマルフォルムのとき
 ・続けてmsg_rotom_07</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 モーターに　はいっていません！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
@@ -616,6 +641,7 @@
 		<comment>ロトム：フォルムチェンジ処理
 ・msg_rotom_07表示後に
 　いいえ選択</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は　モーターの　なかに
 はいるのを　あきらめた……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は　モーターの　中に
