@@ -23,7 +23,7 @@
 #define SPECIAL_BGM_NONE (0xffffffff)  // 特殊BGMなし
 #define MAX_VOLUME       (127)         // 最大ボリューム
 #define APP_HOLD_VOLUME  (100)         // アプリ時のボリューム
-#define APP_FADE_FRAME   (60)          // アプリ時のフェード フレーム数
+#define APP_FADE_FRAME   (18)          // アプリ時のフェード フレーム数
 
 
 //================================================================================= 
@@ -443,7 +443,7 @@ static GMEVENT_RESULT PushPlayJingleBGMEvent( GMEVENT* event, int* seq, void* wk
   switch( *seq )
   {
   case 0:  // リクエスト発行
-    FIELD_SOUND_RegisterRequest_PUSH( fieldSound, FSND_FADE_NONE );
+    FIELD_SOUND_RegisterRequest_PUSH( fieldSound, FSND_FADE_SHORT );
     FIELD_SOUND_RegisterRequest_FORCE_PLAY( fieldSound, work->soundIdx );
     (*seq)++;
     break;
@@ -741,7 +741,7 @@ void FSND_ChangeBGM_byPlayerFormChange( FIELD_SOUND* fieldSound,
   soundIdx = GetFieldBGM( gameData, zoneID );
 
   // リクエスト登録
-  FIELD_SOUND_RegisterRequest_CHANGE( fieldSound, soundIdx, FSND_FADE_LONG, FSND_FADE_NONE );
+  FIELD_SOUND_RegisterRequest_CHANGE( fieldSound, soundIdx, FSND_FADE_NORMAL, FSND_FADE_NONE );
 }
 
 
