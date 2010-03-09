@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T11:56:28"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T12:45:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="160" right="1996" bottom="784" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="695"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -553,9 +553,9 @@
 		<attribute name="キャラ指定">WOMAN2
 お洒落姉さん</attribute>
 		<language name="JPN" width="256">とびっきり　なついているのね！
-みてる　あたしが　ジェラシーよ！▼</language>
+みてる　あたしが　ジェラシーよ！</language>
 		<language name="JPN_KANJI" width="256">とびっきり　なついているのね！
-みてる　あたしが　ジェラシーよ！▼</language>
+みてる　あたしが　ジェラシーよ！</language>
 	</row>
 
 	<row id="msg_c07r0401_woman2_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -564,9 +564,9 @@
 		<attribute name="キャラ指定">WOMAN2
 お洒落姉さん</attribute>
 		<language name="JPN" width="256">かなり　なついているわね！
-あなた　やさしい　ひとなのね！▼</language>
+あなた　やさしい　ひとなのね！</language>
 		<language name="JPN_KANJI" width="256">かなり　なついているわね！
-あなた　優しい　人なのね！▼</language>
+あなた　優しい　人なのね！</language>
 	</row>
 
 	<row id="msg_c07r0401_woman2_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -575,9 +575,9 @@
 		<attribute name="キャラ指定">WOMAN2
 お洒落姉さん</attribute>
 		<language name="JPN" width="256">なついてるわね
-あなたといるのが　うれしいのね▼</language>
+あなたといるのが　うれしいのね</language>
 		<language name="JPN_KANJI" width="256">なついてるわね
-あなたといるのが　うれしいのね▼</language>
+あなたといるのが　うれしいのね</language>
 	</row>
 
 	<row id="msg_c07r0401_woman2_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -586,9 +586,9 @@
 		<attribute name="キャラ指定">WOMAN2
 お洒落姉さん</attribute>
 		<language name="JPN" width="256">うん　すこし　なついてる……
-そんな　ふんいき　ね▼</language>
+そんな　ふんいき　ね</language>
 		<language name="JPN_KANJI" width="256">うん　すこし　なついてる……
-そんな　雰囲気ね▼</language>
+そんな　雰囲気ね</language>
 	</row>
 
 	<row id="msg_c07r0401_woman2_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -608,9 +608,9 @@
 		<attribute name="キャラ指定">WOMAN2
 お洒落姉さん</attribute>
 		<language name="JPN" width="256">うーん……
-あんまり　すかれていないかも▼</language>
+あんまり　すかれていないかも</language>
 		<language name="JPN_KANJI" width="256">うーん……
-あんまり　好かれていないかも▼</language>
+あんまり　好かれていないかも</language>
 	</row>
 
 	<row id="msg_c07r0401_woman2_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -620,10 +620,10 @@
 お洒落姉さん</attribute>
 		<language name="JPN" width="256">ひょっとして　あなた……▼
 とっても　きびしい　ひと？
-すごく　きらわれている　かんじ……▼</language>
+すごく　きらわれている　かんじ……</language>
 		<language name="JPN_KANJI" width="256">ひょっとして　あなた……▼
 とっても　厳しい　人？
-すごく　嫌われている　感じ……▼</language>
+すごく　嫌われている　感じ……</language>
 	</row>
 
 	<row id="msg_c07r0401_woman2_12" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
