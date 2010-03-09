@@ -2462,7 +2462,7 @@
 #define TMFLG_D02_ROCK_02                 2738 /* 0x0ab2 ヤグルマの森：試しの岩２イベント */
 #define TMFLG_C05R0701_WAZA_NO            2739 /* 0x0ab3 日替わり技見せ：本日の技ナンバー */
 #define TMFLG_C05R0701_WAZA_CLEAR         2740 /* 0x0ab4 日替わり技見せ：クリア判定 */
-		/* not used  2741(0x0ab5) */
+#define TMFLG_C07R0201_QUIZ               2741 /* 0x0ab5 セッカシティ民家：クイズ家挑戦フラグ */
 		/* not used  2742(0x0ab6) */
 		/* not used  2743(0x0ab7) */
 		/* not used  2744(0x0ab8) */
