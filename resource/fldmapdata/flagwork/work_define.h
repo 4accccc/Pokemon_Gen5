@@ -182,6 +182,7 @@
 #define WK_SCENE_C07R0105                16570 /* 0x40ba タワーオブヘブン5F：イベント用ワーク */
 #define WK_SCENE_D07R0401                16571 /* 0x40bb ネジ山：プラズマ団とライバル遭遇イベント */
 #define WK_SCENE_C02R0101                16572 /* 0x40bc シッポウシティ：インテリアショップイベント */
+#define WK_SCENE_D04R0201                16573 /* 0x40bd 古代の城２F：イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 
