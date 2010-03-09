@@ -553,7 +553,18 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_OBJ_WORK) );
 
 	//システム作成
-	GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, cp_vram_bank, heapID );
+  {
+    const GFL_CLSYS_INIT sc_clsys_init = {
+      0, 0,
+      0, 512,
+      4, 124,
+      4, 124,
+      0,
+      32,32,32,32,
+      16, 16,
+    };
+    GFL_CLACT_SYS_Create( &sc_clsys_init, cp_vram_bank, heapID );
+  }
 
 	//汎用UNIT
 	{	

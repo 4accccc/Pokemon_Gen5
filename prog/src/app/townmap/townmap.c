@@ -58,6 +58,8 @@ FS_EXTERN_OVERLAY(ui_common);
 #define DEBUG_POS_CHECK
 #define DEBUG_GAMESYS_NONE
 #define DEBUG_CURSOR_POS
+#define DEBUG_NOT_PULL
+#define DEBUG_OBJ_ALLVISIBLE
 static GFL_POINT s_debug_pos	=
 {	
 	80, 25
@@ -68,6 +70,8 @@ static GFL_POINT s_cursor_pos   =
   0, 0
 };
 static BOOL s_is_print_debug  = FALSE;
+static BOOL s_is_notpull_debug  = FALSE;
+static BOOL	s_is_place_visible_debug  = FALSE;
 #endif //PM_DEBUG
 
 
@@ -448,7 +452,6 @@ typedef struct
 	BOOL	is_scale;
 	
 #ifdef PM_DEBUG
-	BOOL	is_place_visible_debug;
 	BOOL	is_arrive_debug;
 	BOOL	is_checkpos_debug;
 	u32		checkpos_num_debug;
@@ -704,6 +707,8 @@ static void DEBUGMENU_UPDATE_VisiblePlace( void* p_wk_adrs, DEBUGWIN_ITEM* p_ite
 static void DEBUGMENU_DRAW_VisiblePlace( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void DEBUGMENU_UPDATE_ArriveFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void DEBUGMENU_DRAW_ArriveFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void DEBUGMENU_UPDATE_NotPullFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void DEBUGMENU_DRAW_NotPullFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 #endif //DEBUG_MENU_USE
 
 //=============================================================================
@@ -901,6 +906,8 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 			DEBUGPRINT_SAVE_TYPE_HEAP, HEAPID_TOWNMAP );
 	DEBUGWIN_AddItemToGroupEx( DEBUGMENU_UPDATE_Print, DEBUGMENU_DRAW_Print, p_wk, 0, HEAPID_TOWNMAP );
 	DEBUGWIN_AddItemToGroupEx( DEBUGMENU_UPDATE_ArriveFlag, DEBUGMENU_DRAW_ArriveFlag, p_wk, 0, HEAPID_TOWNMAP );
+	DEBUGWIN_AddItemToGroupEx( DEBUGMENU_UPDATE_NotPullFlag, DEBUGMENU_DRAW_NotPullFlag, p_wk, 0, HEAPID_TOWNMAP );
+//	DEBUGWIN_AddItemToGroupEx( DEBUGMENU_UPDATE_VisiblePlace, DEBUGMENU_DRAW_VisiblePlace, p_wk, 0, HEAPID_TOWNMAP );
 
 #ifdef DEBUG_POS_CHECK
 	DEBUGWIN_AddItemToGroupEx( DEBUGMENU_UPDATE_CheckPos, DEBUGMENU_DRAW_CheckPos, p_wk, 0, HEAPID_TOWNMAP );
@@ -1817,7 +1824,11 @@ static void CURSOR_Main( CURSOR_WORK *p_wk, const PLACE_WORK *cp_place )
 
 	//吸い込まれる処理
 	//吸い込み範囲内ならば吸い込まれる
+#ifdef DEBUG_NOT_PULL
+  if( !s_is_notpull_debug &&  p_wk->is_pull )
+#else
 	if( p_wk->is_pull )
+#endif
 	{	
 		const PLACE_DATA* cp_placedata;
 		cp_placedata	= PLACE_PullHit( cp_place, p_wk );
@@ -2635,6 +2646,7 @@ static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 d
 	}
 
 	//セル作成
+  if( PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_PLACE_TYPE ) != TOWNMAP_PLACETYPE_ROAD )
 	{
 		GFL_CLWK_DATA cldata;
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
@@ -2644,8 +2656,7 @@ static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 d
 
 		GFL_CLACT_WK_SetAffineParam( p_wk->p_clwk, CLSYS_AFFINETYPE_DOUBLE );
 		GFL_CLACT_WK_SetBgPri( p_wk->p_clwk, TOWNMAP_BG_PRIORITY_BAR_M+1 );
-		GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk, OBJ_PRIORITY_MAPOBJ );
-	GFL_CLACT_WK_SetAffineParam( p_wk->p_clwk, CLSYS_AFFINETYPE_DOUBLE );
+    GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk, OBJ_PRIORITY_MAPOBJ );
 	}
 
 	//最初はノンアクティブ
@@ -2682,8 +2693,8 @@ static void PlaceData_SetVisible( PLACE_DATA *p_wk, BOOL is_visible )
 	if( p_wk->p_clwk )
 	{	
 		if( p_wk->now_anm != PLACEDATA_ANIME_SEQ_VANISH )
-		{	
-			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, is_visible );
+		{	   
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, is_visible );
 		}
 	}
 }
@@ -2895,7 +2906,10 @@ static void PlaceData_SetAnmSeq(PLACE_DATA *p_wk, u16 seq )
 	}
 	else
 	{	
-		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
+    if( p_wk->p_clwk )
+		{	
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
+    }
 	}
 	
 }
@@ -2909,6 +2923,13 @@ static void PlaceData_SetAnmSeq(PLACE_DATA *p_wk, u16 seq )
 //-----------------------------------------------------------------------------
 static void PlaceData_Active( PLACE_DATA *p_wk )
 {	
+#ifdef DEBUG_OBJ_ALLVISIBLE
+  if( s_is_place_visible_debug )
+  { 
+    return ;
+  }
+#endif
+
 	if( p_wk->is_arrive )
 	{	
 		PlaceData_SetVisible( p_wk, TRUE );
@@ -2928,6 +2949,13 @@ static void PlaceData_Active( PLACE_DATA *p_wk )
 //-----------------------------------------------------------------------------
 static void PlaceData_NonActive( PLACE_DATA *p_wk )
 {	
+#ifdef DEBUG_OBJ_ALLVISIBLE
+  if( s_is_place_visible_debug )
+  { 
+    return ;
+  }
+#endif
+
 	if( p_wk->is_arrive )
 	{	
 		if( p_wk->p_clwk )
@@ -3640,6 +3668,9 @@ static void PLACEWND_Main( PLACEWND_WORK *p_wk )
   if( s_is_print_debug )
   { 
     p_wk->is_update = TRUE;
+    p_wk->is_start  = FALSE;
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
+    GFL_CLACT_WK_SetAnmIndex( p_wk->p_clwk, 3 );
   }
 #endif
 
@@ -3676,7 +3707,7 @@ static void PLACEWND_Main( PLACEWND_WORK *p_wk )
       { 
         char  str[32] = { 0 };
         STRCODE strCode[32];
-        STD_TSNPrintf( str , 32-1, "カーソルいちX[%d]Y[%d]", s_cursor_pos.x, s_cursor_pos.y );
+        STD_TSNPrintf( str , 32-1, "カーソルX[%d]Y[%d]", s_cursor_pos.x, s_cursor_pos.y );
         DEB_STR_CONV_SjisToStrcode( str, strCode , 32-1 );
         MSGWND_PrintCode( &p_wk->msgwnd, strCode, PLACEWND_STR_X, PLACEWND_STR_Y );
       }
@@ -3704,9 +3735,11 @@ static void PLACEWND_Main( PLACEWND_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void PLACEWND_Start( PLACEWND_WORK *p_wk, const PLACE_DATA *cp_data )
 {	
+
 	GF_ASSERT( cp_data );
 	p_wk->is_start	= TRUE;
 	p_wk->cp_data		= cp_data;
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -3718,7 +3751,7 @@ static void PLACEWND_Start( PLACEWND_WORK *p_wk, const PLACE_DATA *cp_data )
 //-----------------------------------------------------------------------------
 static void PLACEWND_SetVisible( PLACEWND_WORK *p_wk, BOOL is_visible )
 {	
-	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, is_visible );
+  GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, is_visible );
 	if( is_visible == FALSE )
 	{	
 		//メイン処理を止める
@@ -4520,9 +4553,30 @@ static void DEBUGMENU_UPDATE_VisiblePlace( void* p_wk_adrs, DEBUGWIN_ITEM* p_ite
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {	
-		p_wk->is_place_visible_debug	^= TRUE;
-		PLACE_SetVisible( &p_wk->place, p_wk->is_place_visible_debug );
-		DEBUGWIN_RefreshScreen();
+    s_is_place_visible_debug	^= TRUE;
+
+    if( s_is_place_visible_debug )
+    { 
+      int i;
+      PLACE_WORK *p_place  = &p_wk->place;
+      PLACE_DATA *p_data;
+
+
+      for( i = 0; i < p_place->data_num; i++ )
+      { 
+        p_data	= &p_place->p_place[ i ];
+        if( p_data->p_clwk )
+        { 
+          GFL_CLACT_WK_SetDrawEnable( p_data->p_clwk, TRUE );
+          if( p_data->active_anm != PLACEDATA_ANIME_SEQ_VANISH )
+          { 
+            PlaceData_SetAnmSeq( p_data,  p_data->active_anm );
+          }
+        }
+      }
+    }
+
+    DEBUGWIN_RefreshScreen();
 	}
 }
 //----------------------------------------------------------------------------
@@ -4537,13 +4591,13 @@ static void DEBUGMENU_DRAW_VisiblePlace( void* p_wk_adrs, DEBUGWIN_ITEM* p_item 
 {	
 	TOWNMAP_WORK	*p_wk	= p_wk_adrs;
 
-	if( p_wk->is_place_visible_debug )
+	if( s_is_place_visible_debug )
 	{	
-		DEBUGWIN_ITEM_SetName( p_item, "OBJぜんぶひょうじ[ON]" );
+		DEBUGWIN_ITEM_SetName( p_item, "OBJひょうじ[ON]" );
 	}
 	else
 	{	
-		DEBUGWIN_ITEM_SetName( p_item, "OBJぜんぶひょうじ[OFF]" );	
+		DEBUGWIN_ITEM_SetName( p_item, "OBJひょうじ[OFF]" );	
 	}
 }
 //----------------------------------------------------------------------------
@@ -4634,6 +4688,43 @@ static void DEBUGMENU_DRAW_ArriveFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 	case DEBUGMENU_ARRIVE_OFF:
 		DEBUGWIN_ITEM_SetName( p_item, "とうちゃくフラグ[OFF]" );
 		break;
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	到着フラグ用処理関数
+ *
+ *	@param	void* p_wk_adrs	ワーク
+ *	@param	p_item					アイテム
+ */
+//----------------------------------------------------------------------------
+static void DEBUGMENU_UPDATE_NotPullFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{ 
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {	
+    s_is_notpull_debug  ^=  TRUE;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	到着フラグ用処理関数
+ *
+ *	@param	void* p_wk_adrs	ワーク
+ *	@param	p_item					アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGMENU_DRAW_NotPullFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{ 
+	TOWNMAP_WORK	*p_wk	= p_wk_adrs;
+
+	if( s_is_notpull_debug )
+	{	
+		DEBUGWIN_ITEM_SetName( p_item, "すいこみなくす[ON]" );
+	}
+	else
+	{	
+		DEBUGWIN_ITEM_SetName( p_item, "すいこみなくす[OFF]" );	
 	}
 }
 
