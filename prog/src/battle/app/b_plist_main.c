@@ -785,12 +785,14 @@ static int BPL_SeqPokeSelect( BPLIST_WORK * wk )
           wk->chg_pos1 = pos1;
           wk->chg_pos2 = pos2;
           wk->btn_seq = 0;
-          PMSND_PlaySE( wk->cancelSE );
+//          PMSND_PlaySE( wk->cancelSE );
+          PMSND_PlaySE( SEQ_SE_CANCEL1 );
           return SEQ_BPL_POKECHG_DEAD;
         }
       // キャンセル無効以外
       }else if( wk->dat->mode != BPL_MODE_NO_CANCEL ){
-        PMSND_PlaySE( wk->cancelSE );
+//        PMSND_PlaySE( wk->cancelSE );
+				PMSND_PlaySE( SEQ_SE_CANCEL1 );
         BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
         SetSelPosCancel( wk );
         return SEQ_BPL_ENDSET;
@@ -1050,17 +1052,20 @@ static int BPL_SeqPokeIrekae( BPLIST_WORK * wk )
     return SEQ_BPL_BUTTON_WAIT;
 
   case BPLIST_UI_CHG_RETURN:      // もどる
+/*
     if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
       PMSND_PlaySE( SEQ_SE_CANCEL2 );
     }else{
       PMSND_PlaySE( SEQ_SE_DECIDE2 );
     }
+*/
+		PMSND_PlaySE( SEQ_SE_CANCEL1 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->ret_seq = SEQ_BPL_PAGE1_CHG;
     return SEQ_BPL_BUTTON_WAIT;
 
   case CURSORMOVE_CANCEL:         // キャンセル
-    PMSND_PlaySE( SEQ_SE_CANCEL2 );
+		PMSND_PlaySE( SEQ_SE_CANCEL1 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->ret_seq = SEQ_BPL_PAGE1_CHG;
     return SEQ_BPL_BUTTON_WAIT;
@@ -1170,18 +1175,21 @@ static int BPL_SeqStatusMain( BPLIST_WORK * wk )
     return SEQ_BPL_BUTTON_WAIT;
 
   case BPLIST_UI_STATUS_RETURN:   // もどる
+/*
     if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
       PMSND_PlaySE( SEQ_SE_CANCEL2 );
     }else{
       PMSND_PlaySE( SEQ_SE_DECIDE2 );
     }
+*/
+		PMSND_PlaySE( SEQ_SE_CANCEL1 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->chg_page_cp = 1;    // 入れ替えページのカーソル位置を「強さを見る」へ
     wk->ret_seq = SEQ_BPL_PAGECHG_IREKAE;
     return SEQ_BPL_BUTTON_WAIT;
 
   case CURSORMOVE_CANCEL:         // キャンセル
-    PMSND_PlaySE( SEQ_SE_CANCEL2 );
+		PMSND_PlaySE( SEQ_SE_CANCEL1 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->chg_page_cp = 1;    // 入れ替えページのカーソル位置を「強さを見る」へ
     wk->ret_seq = SEQ_BPL_PAGECHG_IREKAE;
@@ -1318,18 +1326,21 @@ static int BPL_SeqWazaSelect( BPLIST_WORK * wk )
     return SEQ_BPL_BUTTON_WAIT;
 
   case BPLIST_UI_WAZA_RETURN:   // もどる
+/*
     if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
       PMSND_PlaySE( SEQ_SE_CANCEL2 );
     }else{
       PMSND_PlaySE( SEQ_SE_DECIDE2 );
     }
+*/
+		PMSND_PlaySE( SEQ_SE_CANCEL1 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->chg_page_cp = 2;    // 入れ替えページのカーソル位置を「技を見る」へ
     wk->ret_seq = SEQ_BPL_PAGECHG_IREKAE;
     return SEQ_BPL_BUTTON_WAIT;
 
   case CURSORMOVE_CANCEL:       // キャンセル
-    PMSND_PlaySE( SEQ_SE_CANCEL2 );
+		PMSND_PlaySE( SEQ_SE_CANCEL1 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->chg_page_cp = 2;    // 入れ替えページのカーソル位置を「技を見る」へ
     wk->ret_seq = SEQ_BPL_PAGECHG_IREKAE;
@@ -1408,17 +1419,20 @@ static int BPL_SeqStInfoWaza( BPLIST_WORK * wk )
     return SEQ_BPL_PAGECHG_WAZAINFO;
 
   case BPLIST_UI_WAZAINFO_RETURN:   // もどる
+/*
     if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
       PMSND_PlaySE( SEQ_SE_CANCEL2 );
     }else{
       PMSND_PlaySE( SEQ_SE_DECIDE2 );
     }
+*/
+		PMSND_PlaySE( SEQ_SE_CANCEL1 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->ret_seq = SEQ_BPL_PAGECHG_WAZASEL;
     return SEQ_BPL_BUTTON_WAIT;
 
   case CURSORMOVE_CANCEL:         // キャンセル
-    PMSND_PlaySE( SEQ_SE_CANCEL2 );
+		PMSND_PlaySE( SEQ_SE_CANCEL1 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->ret_seq = SEQ_BPL_PAGECHG_WAZASEL;
     return SEQ_BPL_BUTTON_WAIT;
@@ -1507,18 +1521,21 @@ static int BPL_SeqWazaDelSelect( BPLIST_WORK * wk )
     return SEQ_BPL_BUTTON_WAIT;
 
   case BPLIST_UI_WAZADEL_RETURN:  // もどる
+/*
     if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
       PMSND_PlaySE( SEQ_SE_CANCEL2 );
     }else{
       PMSND_PlaySE( SEQ_SE_DECIDE2 );
     }
+*/
+		PMSND_PlaySE( SEQ_SE_CANCEL1 );
     wk->dat->sel_wp = BPL_SEL_WP_CANCEL;
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->ret_seq = SEQ_BPL_ENDSET;
     return SEQ_BPL_BUTTON_WAIT;
 
   case CURSORMOVE_CANCEL:         // キャンセル
-    PMSND_PlaySE( SEQ_SE_CANCEL2 );
+		PMSND_PlaySE( SEQ_SE_CANCEL1 );
     wk->dat->sel_wp = BPL_SEL_WP_CANCEL;
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->ret_seq = SEQ_BPL_ENDSET;
@@ -1616,18 +1633,21 @@ static int BPL_SeqWazaDelMain( BPLIST_WORK * wk )
     return SEQ_BPL_BUTTON_WAIT;
 
   case BPLIST_UI_DELINFO_RETURN:  // もどる
+/*
     if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
       PMSND_PlaySE( SEQ_SE_CANCEL2 );
     }else{
       PMSND_PlaySE( SEQ_SE_DECIDE2 );
     }
+*/
+		PMSND_PlaySE( SEQ_SE_CANCEL1 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->wwm_page_cp = 0;
     wk->ret_seq = SEQ_BPL_PAGECHG_WAZASET_S;
     return SEQ_BPL_BUTTON_WAIT;
 
   case CURSORMOVE_CANCEL:         // キャンセル
-    PMSND_PlaySE( SEQ_SE_CANCEL2 );
+		PMSND_PlaySE( SEQ_SE_CANCEL1 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->wwm_page_cp = 0;
     wk->ret_seq = SEQ_BPL_PAGECHG_WAZASET_S;
@@ -1754,17 +1774,20 @@ static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk )
     }
 
   case BPLIST_UI_PPRCV_RETURN:    // もどる
+/*
     if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
       PMSND_PlaySE( SEQ_SE_CANCEL2 );
     }else{
       PMSND_PlaySE( SEQ_SE_DECIDE2 );
     }
+*/
+		PMSND_PlaySE( SEQ_SE_CANCEL1 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->ret_seq = SEQ_BPL_PAGE1_CHG;
     return SEQ_BPL_BUTTON_WAIT;
 
   case CURSORMOVE_CANCEL:         // キャンセル
-    PMSND_PlaySE( SEQ_SE_CANCEL2 );
+		PMSND_PlaySE( SEQ_SE_CANCEL1 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->ret_seq = SEQ_BPL_PAGE1_CHG;
     return SEQ_BPL_BUTTON_WAIT;
@@ -2682,16 +2705,18 @@ static u8 BPL_PokemonSelect( BPLIST_WORK * wk )
     break;
 
   case BPLIST_UI_LIST_RETURN:
+/*
     if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
       wk->cancelSE = SEQ_SE_CANCEL2;
     }else{
       wk->cancelSE = SEQ_SE_DECIDE2;
     }
+*/
     wk->dat->sel_poke = BPL_SEL_EXIT;
     return TRUE;
 
   case CURSORMOVE_CANCEL:         // キャンセル
-    wk->cancelSE = SEQ_SE_CANCEL2;
+//    wk->cancelSE = SEQ_SE_CANCEL2;
     wk->dat->sel_poke = BPL_SEL_EXIT;
     return TRUE;
 
@@ -3911,7 +3936,8 @@ static int BPL_SeqPokeSelDead( BPLIST_WORK * wk )
 
   if( BPL_PokemonSelect( wk ) == TRUE ){
     if( wk->dat->sel_poke == BPL_SEL_EXIT ){
-      PMSND_PlaySE( wk->cancelSE );
+//      PMSND_PlaySE( wk->cancelSE );
+      PMSND_PlaySE( SEQ_SE_CANCEL1 );
       BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
       wk->dat->sel_poke = wk->chg_poke_sel;
       wk->ret_seq = SEQ_BPL_PAGECHG_IREKAE;

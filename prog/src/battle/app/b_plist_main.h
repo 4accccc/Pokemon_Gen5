@@ -482,7 +482,7 @@ typedef struct {
 	u32	palRes[BPLIST_PALRES_MAX];
 	u32	celRes[BPLIST_CELRES_MAX];
 
-	u32	cancelSE;			// キャンセル用ＳＥ
+//	u32	cancelSE;			// キャンセル用ＳＥ
 
 	const u8 * putWin;
 
