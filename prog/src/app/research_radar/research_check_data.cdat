@@ -33,6 +33,7 @@ static const u32 MessageDataID[ MESSAGE_NUM ] =
 {
   NARC_message_research_radar_dat,  // 定型文
   NARC_message_questionnaire_dat,   // アンケート関連
+  NARC_message_answer_dat,          // 回答
 }; 
 
 

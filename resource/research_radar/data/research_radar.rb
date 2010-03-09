@@ -334,9 +334,23 @@ questions.each do |question|
   stringJPN_KANJI << question.captionStringJPN_KANJI
 end
 
+# gmm 生成
+GenerateGMM( directory, fileName, stringLavel, stringJPN, stringJPN_KANJI )
+
+
+#===================================================================================
+# ■main
+# □gmm 出力 ( answer.gmm )
+#=================================================================================== 
+directory       = GMM_OUTPUT_DEST
+fileName        = "answer.gmm"
+stringLavel     = Array.new
+stringJPN       = Array.new
+stringJPN_KANJI = Array.new
+
 # 回答
 answers.each do |answer|
-  stringLavel     << answer.stringID_lavel
+  stringLavel     << "answer_%d" % answer.ID
   stringJPN       << answer.stringJPN
   stringJPN_KANJI << answer.stringJPN_KANJI
 end
@@ -483,26 +497,6 @@ outData << "#define TOPIC_ID_DUMMY (0xff)              // 調査項目IDのダミー値"
 
 # 出力
 file = File.open( "topic_id.h", "w" )
-file.puts( outData )
-file.close
-
-
-#=================================================================================== 
-# ■main
-# □回答ID ⇒ 文字列 テーブル出力
-#===================================================================================
-# 出力データ作成
-outData = Array.new
-outData << "// コンバータにより生成"
-outData << "static const u32 StringID_answer[ ANSWER_ID_NUM ] = "
-outData << "{"
-answers.each do |answer|
-  outData << "  #{answer.stringID_lavel},  // [#{answer.ID_lavel}]"
-end
-outData << "};"
-
-# 出力
-file = File.open( "string_id_answer.cdat", "w" )
 file.puts( outData )
 file.close
 

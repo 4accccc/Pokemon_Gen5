@@ -48,7 +48,6 @@
 #include "answer_id_question.cdat"         // for AnswerID_question[17][]
 #include "answer_num_question.cdat"        // for AnswerNum_question[]
 #include "question_id_topic.cdat"          // for QuestionX_topic[]
-#include "string_id_answer.cdat"           // for StringID_answer[]
 #include "string_id_question.cdat"         // for StringID_question[]
 #include "string_id_topic_title.cdat"      // for StringID_topicTitle[]
 #include "string_id_topic_caption.cdat"    // for StringID_topicCaption[]
@@ -2522,7 +2521,7 @@ static void UpdateBGFont_Answer( RESEARCH_CHECK_WORK* work )
   // ”’l‚â‰ñ“š‚ð•¶Žš—ñ‚É“WŠJ
   {
     strbuf_plain  = GFL_MSG_CreateString( work->message[ MESSAGE_STATIC ], str_check_answer );
-    strbuf_answer = GFL_MSG_CreateString( work->message[ MESSAGE_QUESTIONNAIRE ], StringID_answer[ answerID ] );
+    strbuf_answer = GFL_MSG_CreateString( work->message[ MESSAGE_ANSWER ], answerID );
     strbuf_expand = GFL_STR_CreateBuffer( 128, work->heapID );
     WORDSET_RegisterNumber( work->wordset, 0, answerRank+1, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT ); // ‰½”Ô–Ú‚©
     WORDSET_RegisterWord( work->wordset, 1, strbuf_answer, 0, TRUE, PM_LANG ); // ‰ñ“š•¶Žš—ñ
@@ -2568,7 +2567,7 @@ static void UpdateBGFont_MyAnswer( RESEARCH_CHECK_WORK* work )
   // ‰ñ“š•¶Žš—ñ‚ð“WŠJ
   {
     strbuf_plain    = GFL_MSG_CreateString( work->message[ MESSAGE_STATIC ], str_check_my_answer );
-    strbuf_myAnswer = GFL_MSG_CreateString( work->message[ MESSAGE_QUESTIONNAIRE ], StringID_answer[ answerID ] );
+    strbuf_myAnswer = GFL_MSG_CreateString( work->message[ MESSAGE_ANSWER ], answerID );
     strbuf_expand   = GFL_STR_CreateBuffer( 128, work->heapID );
     WORDSET_RegisterWord( work->wordset, 0, strbuf_myAnswer, 0, TRUE, PM_LANG );
     WORDSET_ExpandStr( work->wordset, strbuf_expand, strbuf_plain );

@@ -41,12 +41,12 @@ DATA_SOURCE         = .
 DATA_BIN            = bin
 DATA_DEBUG          = debug
 GMM_QUESTIONNAIRE   = questionnaire.gmm
+GMM_ANSWER          = answer.gmm
 GMM_HOBBY           = hobby.gmm
 GMM_JOB             = job.gmm
 TOPIC_ID_DEF        = topic_id.h
 QUESTION_ID_DEF     = question_id.h
 ANSWER_ID_DEF       = answer_id.h
-STRID_ANSWER        = string_id_answer.cdat
 STRID_QUESTION      = string_id_question.cdat
 STRID_QUESTION_CAPTION = caption_string_id_question.cdat
 STRID_TOPIC_C       = string_id_topic_caption.cdat
@@ -72,12 +72,12 @@ endif
 #------------------------------------------------------------------------------
 do-build:	subdir \
 	        $(GMM_COPY_DIR)/$(GMM_QUESTIONNAIRE) \
+	        $(GMM_COPY_DIR)/$(GMM_ANSWER) \
 					$(GMM_COPY_DIR)/$(GMM_HOBBY) \
 					$(GMM_COPY_DIR)/$(GMM_JOB) \
 					$(DEF_COPY_DIR)/$(TOPIC_ID_DEF) \
 					$(DEF_COPY_DIR)/$(QUESTION_ID_DEF) \
 					$(DEF_COPY_DIR)/$(ANSWER_ID_DEF) \
-					$(DEF_COPY_DIR)/$(STRID_ANSWER) \
 					$(DEF_COPY_DIR)/$(STRID_QUESTION) \
 					$(DEF_COPY_DIR)/$(STRID_QUESTION_CAPTION) \
 					$(DEF_COPY_DIR)/$(STRID_TOPIC_C) \
@@ -106,6 +106,9 @@ endif
 $(GMM_COPY_DIR)/$(GMM_QUESTIONNAIRE): $(GMM_QUESTIONNAIRE)
 	$(COPY) $(GMM_QUESTIONNAIRE) $(GMM_COPY_DIR)
 
+$(GMM_COPY_DIR)/$(GMM_ANSWER): $(GMM_ANSWER)
+	$(COPY) $(GMM_ANSWER) $(GMM_COPY_DIR)
+
 # gmm コピー
 $(GMM_COPY_DIR)/$(GMM_HOBBY): $(GMM_HOBBY)
 	$(COPY) $(GMM_HOBBY) $(GMM_COPY_DIR)
@@ -124,9 +127,6 @@ $(DEF_COPY_DIR)/$(ANSWER_ID_DEF): $(ANSWER_ID_DEF)
 	$(COPY) $(ANSWER_ID_DEF) $(DEF_COPY_DIR)
 
 # strid コピー
-$(DEF_COPY_DIR)/$(STRID_ANSWER): $(STRID_ANSWER)
-	$(COPY) $(STRID_ANSWER) $(DEF_COPY_DIR)
-
 $(DEF_COPY_DIR)/$(STRID_QUESTION): $(STRID_QUESTION)
 	$(COPY) $(STRID_QUESTION) $(DEF_COPY_DIR)
 
@@ -170,4 +170,5 @@ clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 endif
 	rm -f $(GMM_COPY_DIR)/$(GMM_QUESTIONNAIRE)
+	rm -f $(GMM_COPY_DIR)/$(GMM_ANSWER)
 	rm -f $(GMM_COPY_DIR)/$(GMM_HOBBY) 

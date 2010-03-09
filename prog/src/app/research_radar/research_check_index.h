@@ -67,6 +67,7 @@ typedef enum {
 typedef enum {
   MESSAGE_STATIC,         // 定型文
   MESSAGE_QUESTIONNAIRE,  // アンケート関連
+  MESSAGE_ANSWER,         // 回答
   MESSAGE_NUM,            // 総数
 } MESSAGE_INDEX;
 
