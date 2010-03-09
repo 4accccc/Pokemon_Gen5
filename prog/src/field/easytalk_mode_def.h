@@ -12,6 +12,7 @@
 #define EASYTALK_MODE_LOSE (2)
 #define EASYTALK_MODE_TOP (3)
 #define EASYTALK_MODE_QUES (4)
+#define EASYTALK_MODE_PASSWORD (5)
 
 
 
