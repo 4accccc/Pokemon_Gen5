@@ -41,14 +41,12 @@ EVENT_END
 /*  C01R0302 POKE1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c01r0302_poke1_01
-	//【仮】ポケモンの鳴き声は仮です
-	_EASY_TALK_POKEVOICE( MONSNO_PIKATYUU, msg_c01r0302_poke1_01 )
+	_EASY_TALK_POKEVOICE( MONSNO_517, msg_c01r0302_poke1_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C01R0302 POKE2の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c01r0302_poke2_01
-	//【仮】ポケモンの鳴き声は仮です
-	_EASY_TALK_POKEVOICE( MONSNO_PIKATYUU, msg_c01r0302_poke2_01 )
+	_EASY_TALK_POKEVOICE( MONSNO_537, msg_c01r0302_poke2_01 )
 EVENT_END
