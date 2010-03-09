@@ -117,13 +117,13 @@ static const u16 fs_stage6[] = {
 };
 #define FS_STAGE6_MAX	(NELEMS(fs_stage6))
 
-// タウン１
+// カラクサラウン
 static const u16 t02_fs[] = {
 		ITEM_EAMEERU,
 };
 #define T02_FS_MAX	(NELEMS(t02_fs))
 
-// シティ１
+// サンヨウシティ
 static const u16 c01_fs[] = {
 		ITEM_WAZAMASIN01,
 		ITEM_WAZAMASIN02,
@@ -140,43 +140,43 @@ static const u16 c01_fs[] = {
 };
 #define C01_FS_MAX	(NELEMS(c01_fs))
 
-// シティ２
+// シッポウシティ
 static const u16 c02_fs[] = {
 		ITEM_EAMEERU,
 };
 #define C02_FS_MAX	(NELEMS(c02_fs))
 
-// シティ３
+// ヒウンシティ
 static const u16 c03_fs[] = {
 		ITEM_EAMEERU,
 };
 #define C03_FS_MAX	(NELEMS(c03_fs))
 
-// シティ４
+// ライモンシティ
 static const u16 c04_fs[] = {
 		ITEM_EAMEERU,
 };
 #define C04_FS_MAX	(NELEMS(c04_fs))
 
-// シティ５
+// ホドモシティ
 static const u16 c05_fs[] = {
 		ITEM_EAMEERU,
 };
 #define C05_FS_MAX	(NELEMS(c05_fs))
 
-// シティ６
+// フキヨシティ
 static const u16 c06_fs[] = {
 		ITEM_EAMEERU,
 };
 #define C06_FS_MAX	(NELEMS(c06_fs))
 
-// シティ７
+// セッカシティ
 static const u16 c07_fs[] = {
 		ITEM_EAMEERU,
 };
 #define C07_FS_MAX	(NELEMS(c07_fs))
 
-// シティ８
+// ソウリュウシティ
 static const u16 c08_fs[] = {
 		ITEM_EAMEERU,
 };
@@ -200,7 +200,7 @@ static const u16 t04_fs[] = {
 };
 #define T04_FS_MAX	(NELEMS(t04_fs))
 
-// Ｃ１０ＷＦＢＣ
+// ブラック／ホワイトシティ
 static const u16 c10_fs[] = {
 		ITEM_MONSUTAABOORU,
 };
