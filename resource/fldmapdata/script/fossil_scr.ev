@@ -24,37 +24,44 @@ DEFINE_LOCAL RECOVER_POKE     //復元してもらったポケモン
 
 EVENT_START ev_fossil
   _TALK_OBJ_START()
-  //「化石研究している」
-  _BALLOONWIN_TALKOBJ_MSG( msg_kaseki_01 )
-  _BALLOONWIN_CLOSE()
 
-  //復元依頼しているか?
-  IF $WK_OTHER_KASEKI_NUM != 0 THEN
-    //依頼中
-    _CALL order
+  //盗難イベント中の場合全ての処理をフックする
+  IF FLAG_ON( FE_MUSEUM_TOUNAN ) THEN
+    //「復元待って」
+    $END_MSG = msg_kaseki_12
+    _CALL end_msg
   ELSE
-    //所持している化石の数を取得
-    _CALL search_fossil           //output:FOSSIL_TYPE_NUM  FOSSIL_ITEM_NO(化石を一種類しか持っていないとき、有効な値が入る)
-    //化石持ってるか？
-    IF $FOSSIL_TYPE_NUM != 0 THEN    //持ってる
-      //「復元する？」
-      _BALLOONWIN_TALKOBJ_MSG( msg_kaseki_02 )
-      _YES_NO_WIN( SCWK_ANSWER )
-      _BALLOONWIN_CLOSE()
-      IF $SCWK_ANSWER == 0 THEN     //復元する
-        _CALL recover_fossil        //input:FOSSIL_TYPE_NUM io:FOSSIL_ITEM_NO(化石を一種類しか持っていないとき、inputとして使用)
-      ELSE                          //復元しない
-        //「バイバイ」
-        $END_MSG = msg_kaseki_05
+    //「化石研究している」
+    _BALLOONWIN_TALKOBJ_MSG( msg_kaseki_01 )
+    _BALLOONWIN_CLOSE()
+
+    //復元依頼しているか?
+    IF $WK_OTHER_KASEKI_NUM != 0 THEN
+      //依頼中
+      _CALL order
+    ELSE
+      //所持している化石の数を取得
+      _CALL search_fossil           //output:FOSSIL_TYPE_NUM  FOSSIL_ITEM_NO(化石を一種類しか持っていないとき、有効な値が入る)
+      //化石持ってるか？
+      IF $FOSSIL_TYPE_NUM != 0 THEN    //持ってる
+        //「復元する？」
+        _BALLOONWIN_TALKOBJ_MSG( msg_kaseki_02 )
+        _YES_NO_WIN( SCWK_ANSWER )
+        _BALLOONWIN_CLOSE()
+        IF $SCWK_ANSWER == 0 THEN     //復元する
+          _CALL recover_fossil        //input:FOSSIL_TYPE_NUM io:FOSSIL_ITEM_NO(化石を一種類しか持っていないとき、inputとして使用)
+        ELSE                          //復元しない
+          //「バイバイ」
+          $END_MSG = msg_kaseki_05
+          _CALL end_msg
+        ENDIF
+      ELSE                  //持っていない
+        //「化石もってきて」
+        $END_MSG = msg_kaseki_11
         _CALL end_msg
       ENDIF
-    ELSE                  //持っていない
-      //「化石もってきて」
-      $END_MSG = msg_kaseki_11
-      _CALL end_msg
     ENDIF
-  ENDIF
-
+  ENDIF  
 EVENT_END
 
 //最終メッセージ共通
