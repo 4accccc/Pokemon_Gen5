@@ -345,6 +345,9 @@ int Regulation_GetParam(const REGULATION* pReg, REGULATION_PARAM_TYPE type)
     break;
   case REGULATION_BATTLETYPE:  //   バトルタイプ
     ret = pReg->BATTLE_TYPE;
+    break;  
+  case REGULATION_BTLCOUNT:  ///<  戦闘規定回数
+    ret = pReg->BTL_COUNT;
     break;
   }
   return ret;
@@ -493,6 +496,9 @@ void Regulation_SetParam(REGULATION* pReg, REGULATION_PARAM_TYPE type, int param
     }
     pReg->BATTLE_TYPE = param;
     break;
+  case REGULATION_BTLCOUNT:  ///<  戦闘規定回数
+    pReg->BTL_COUNT = param;
+    break;
   }
 }
 
@@ -518,6 +524,11 @@ BOOL Regulation_CheckParamBit(const REGULATION* pReg, REGULATION_PARAM_TYPE type
     break;
   case REGULATION_VETO_ITEM:
     if(pReg->VETO_ITEM[buffno] & (0x1<<bitno)){
+      return TRUE;
+    }
+    break;
+  case REGULATION_VETO_SHOOTER_ITEM:  ///<  シューター禁止道具
+    if(pReg->VETO_SHOOTER_ITEM[buffno] & (0x1<<bitno)){
       return TRUE;
     }
     break;
@@ -665,7 +676,7 @@ void Regulation_SetCardParam(REGULATION_CARDDATA* pReg, REGULATION_CARD_PARAM_TY
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  レギュレーションカードのCRCチェック
+ *	@brief  レギュレーションカードのCRCチェック (開催ワーク statusに値が書かれているとチェックできません)
  *
  *	@param	const REGULATION* pReg  チェックするもの
  *
@@ -703,7 +714,7 @@ REGULATION_CARDDATA* RegulationSaveData_GetRegulationCard( REGULATION_SAVEDATA *
 void RegulationSaveData_SetRegulation(REGULATION_SAVEDATA *p_save, const REGULATION_CARD_TYPE type, const REGULATION_CARDDATA* pReg)
 {
   GF_ASSERT( type < REGULATION_CARD_TYPE_MAX );
-  GFL_STD_MemCopy(pReg, &p_save->card_data[ type ], sizeof(REGULATION_CARDDATA) );
+  p_save->card_data[ type ] = *pReg;
 }
 
 //----------------------------------------------------------------------------
@@ -855,6 +866,7 @@ void Regulation_SetDebugData( REGULATION_CARDDATA* pReg )
     p_data->SHOW_POKE   = 1;
     p_data->SHOW_POKE_TIME  = 99;
     p_data->BATTLE_TYPE = REGULATION_BATTLE_SINGLE;
+    GFL_STD_MemClear( p_data->VETO_SHOOTER_ITEM, REG_SHOOTER_ITEMNUM_MAX_BYTE );
   }
   GFL_STD_MemClear( pReg->cupname, sizeof(STRCODE)*(WIFI_PLAYER_TIX_CUPNAME_MOJINUM + EOM_SIZE) );
   pReg->cupname[ 0] = L'デ';

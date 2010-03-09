@@ -336,8 +336,8 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
   },
   { //REGULATION
     GMDATA_ID_REGULATION_DATA,
-    (FUNC_GET_SIZE)RegulationData_GetWorkSize,
-    (FUNC_INIT_WORK)RegulationSaveData_GetWorkSize,
+    (FUNC_GET_SIZE)RegulationSaveData_GetWorkSize,
+    (FUNC_INIT_WORK)RegulationSaveData_Init,
   },
   { //フィールドギミックワーク
     GMDATA_ID_GIMMICK_WORK,
