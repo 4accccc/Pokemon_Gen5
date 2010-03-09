@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T20:33:47"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T20:36:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="176" right="1996" bottom="804" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="156" right="1998" bottom="784" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -329,9 +329,19 @@
 		<language name="JPN_KANJI" width="256">Hello, Trainer!</language>
 	</row>
 
-	<row id="msg_c03r1302_girl3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r1302_girl3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・仮メッセージ</comment>
+・仮メッセージ
+・メッセージ表示後、アイテム入手処理
+　No000「メロメロ」</comment>
+		<attribute name="キャラ指定">GIRL3</attribute>
+		<language name="JPN" width="256">かりメッセージ！</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ！</language>
+	</row>
+
+	<row id="msg_c03r1302_girl3_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・アイテム入手後</comment>
 		<attribute name="キャラ指定">GIRL3</attribute>
 		<language name="JPN" width="256">かりメッセージ！</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ！</language>
@@ -358,9 +368,8 @@
 ステキよね！　しびれちゃう！</language>
 	</row>
 
-	<row id="msg_c03r1302_rangerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_c03r1302_rangerw_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">RANGERW</attribute>
 		<language name="JPN" width="256">あたしの　かれし
 めざめが　わるくって……▽
@@ -377,9 +386,7 @@
 	<row id="msg_c03r1302_trainerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ
-・外国語にする
-※外国産設定のポケモン交換にして
-　国連へいく動機にしたい</comment>
+・外国語にする</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
 		<language name="JPN" width="256">How do you do?</language>
 		<language name="JPN_KANJI" width="256">How do you do?</language>
