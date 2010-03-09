@@ -433,8 +433,20 @@ VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
       }
     }
     break;
-
+  case MUSICAL_VALUE_IS_ENABLE_DIST_DATA:
+    if( MUSICAL_SAVE_IsEnableDistributData( musSave ) == TRUE )
+    {
+      *ret_wk = 1;
+    }
+    else
+    {
+      *ret_wk = 0;
+    }
+    break;
+  
+    //--------------------------------------------------------------------
     //以下控え室用
+    //--------------------------------------------------------------------
   case MUSICAL_VALUE_WR_SELF_IDX:  //自分の参加番号
     *ret_wk = MUSICAL_EVENT_GetSelfIndex( evWork );
     ARI_TPrintf("MusValWR:SelfIdx[%d]\n",*ret_wk);
@@ -590,6 +602,7 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
   {
   case MUSICAL_WORD_TITLE:        //セーブにある演目
     {
+      /*
       GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
       SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gdata );
       MUSICAL_DIST_SAVE* musDistSave = MUSICAL_DIST_SAVE_LoadData( svWork , heapId );
@@ -604,6 +617,7 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
       GFL_STR_DeleteBuffer( tmpBuf );
       GFL_MSG_Delete( msgHandle );
       GFL_HEAP_FreeMemory( msgData );
+      */
     }
     break;
   case MUSICAL_WORD_GOODS:        //グッズ名
