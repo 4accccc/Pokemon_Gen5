@@ -262,11 +262,11 @@
 #define FE_RES_QUESTION_SCHOOL             246 /* 0x00f6 調査隊アンケート『がっこうせいかつ』に回答 */
 #define FE_RES_QUESTION_PLAY               247 /* 0x00f7 調査隊アンケート『どんな　あそびがすきか』に回答 */
 #define FE_RES_QUESTION_POKEMON            248 /* 0x00f8 調査隊アンケート『ポケモン』に回答 */
-		/* not used   249(0x00f9) */
-		/* not used   250(0x00fa) */
-		/* not used   251(0x00fb) */
-		/* not used   252(0x00fc) */
-		/* not used   253(0x00fd) */
+#define FE_C08R0201_BATTLE                 249 /* 0x00f9 ソウリュウシティ：トリプル／ローテーションバトルの館初回話しかけ */
+#define FE_C07R0401_GENTLEMAN_FIRST        250 /* 0x00fa セッカシティだいすきクラブ：会長初回話しかけ */
+#define FE_C07R0401_ITEM_GET_LV01          251 /* 0x00fb セッカシティだいすきクラブ：レベル差ごほうび25&#xff5e;49 */
+#define FE_C07R0401_ITEM_GET_LV02          252 /* 0x00fc セッカシティだいすきクラブ：レベル差ごほうび50&#xff5e;98 */
+#define FE_C07R0401_ITEM_GET_LV03          253 /* 0x00fd セッカシティだいすきクラブ：レベル差ごほうび99 */
 		/* not used   254(0x00fe) */
 		/* not used   255(0x00ff) */
 		/* not used   256(0x0100) */
