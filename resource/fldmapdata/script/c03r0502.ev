@@ -28,7 +28,101 @@ _EVENT_DATA_END
 /*					システムエンジニア（ASSISTANTM）		*/
 /************************************************************/
 EVENT_START	ev_c03r0502_engineer_01
+  _TALK_OBJ_START()
+  
+  //タイトルからのスタートメニューオープンチェック
+  _GET_STARTMENU_FLAG( SCR_STARTMENU_FLAG_MACHINE, SCWK_ANSWER )
+  //転送マシンを実行した後か？
+  IF $SCWK_ANSWER == TRUE THEN
+    DEFINE_LOCAL msg
+    //項目は「ＮＥＷ」か？@todo
+    IF $SCWK_ANSWER == TRUE THEN
+      //「ためしてみて」＞＞　終了
+      $msg = msg_c03r0502_engineer_04
+    ELSE
+      //「つかうの　かんたん」　＞＞　終了
+      $msg = msg_c03r0502_engineer_06
+    ENDIF
+      _BALLOONWIN_TALKOBJ_MSG( msg )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+  ELSE
+    _CALL pass_input_start
+  ENDIF
 EVENT_END
+
+pass_input_start:
+  DEFINE_LOCAL pass_word_clear
+  DEFINE_LOCAL easy_talk_word1
+  DEFINE_LOCAL easy_talk_word2
+
+  //「パスワードおしえて」
+  _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_engineer_01 )
+  _BALLOONWIN_CLOSE()
+  //簡易会話アプリ
+  {
+    _MAP_FADE_BLACK_OUT()
+    _MAP_FADE_END_CHECK()
+    _FIELD_CLOSE()
+    _CALL_EASY_TALK_APP( EASYTALK_MODE_PASSWORD, easy_talk_word1, easy_talk_word2, SCWK_ANSWER )
+    _FIELD_OPEN()
+    _MAP_FADE_BLACK_IN()
+    _MAP_FADE_END_CHECK()
+  }
+  IF $SCWK_ANSWER != TRUE THEN
+    $pass_word_clear = FALSE
+  ELSE
+    //答え比較
+    _MACHINE_PASSWORD(1, easy_talk_word1, easy_talk_word2, pass_word_clear)
+  ENDIF
+
+  //1つめパスワードはクリアした？
+  IF $pass_word_clear != TRUE THEN
+    //「なにかかんちがいを・・」  ＞＞　終了
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_engineer_05 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+    _RET
+  ENDIF
+
+  //「つづきを・・」
+  _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_engineer_02 )
+  _BALLOONWIN_CLOSE()
+  //簡易会話アプリ
+  {
+    _MAP_FADE_BLACK_OUT()
+    _MAP_FADE_END_CHECK()
+    _FIELD_CLOSE()
+    _CALL_EASY_TALK_APP( EASYTALK_MODE_PASSWORD, easy_talk_word1, easy_talk_word2, SCWK_ANSWER )
+    _FIELD_OPEN()
+    _MAP_FADE_BLACK_IN()
+    _MAP_FADE_END_CHECK()
+  }
+  IF $SCWK_ANSWER != TRUE THEN
+    $pass_word_clear = FALSE
+  ELSE 
+    //答え比較
+    _MACHINE_PASSWORD(2, easy_talk_word1, easy_talk_word2, pass_word_clear)    
+  ENDIF
+
+  //2つめスワードはクリアした？
+  IF $pass_word_clear != TRUE THEN
+    //「なにかかんちがいを・・」  ＞＞　終了
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_engineer_05 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+    _RET
+  ENDIF
+
+  //メニュー解禁
+  _SET_STARTMENU_FLAG( SCR_STARTMENU_FLAG_MACHINE )
+
+  //「うむ、ただしい」
+  _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_engineer_03 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+
+_RET
 
 
 /************************************************************/
