@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-06T20:32:03"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T21:11:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1448" top="251" right="2153" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -502,11 +502,11 @@
 プラズマだんの　ゲーチスです▼
 きょう　みなさんに
 おはなしするのは　ポケモンを▽
-じゆうに　しましょう　ということです▼</language>
+じゆうに　しましょう　ということです</language>
 		<language name="JPN_KANJI" width="256">わたくしの　名前は　ゲーチス▼
 プラズマ団の　ゲーチスです▼
 今日　みなさんに　お話しするのは
-ポケモン解放について　です▼</language>
+ポケモン解放について　です</language>
 	</row>
 
 	<row id="msg_t02_boodle_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -527,7 +527,7 @@
 		<language name="JPN_KANJI" width="256">なに？</language>
 	</row>
 
-	<row id="msg_t02_sage2_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t02_sage2_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ゲーチス、上下に動くアニメ
 ・続けてsage2_03表示</comment>
@@ -536,7 +536,7 @@
 ポケモンと　いっしょに▽
 くらして　きました▼
 おたがいを　もとめあい
-ひつようとしあう　パートナー▽
+ひつようとしあう　パートナー▼
 そうおもって　おられる
 ひと　ばかりでしょう▼
 ですが
@@ -544,7 +544,7 @@
 われわれ　にんげんが
 そう　おもいこんでいるだけ……▼
 そんな　ふうに
-かんがえたことは　ありませんか？</language>
+かんがえたことは　ありませんか？▼</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『われわれ　人間は　
 ポケモンと　ともに▽
 暮らしてきました▼
@@ -556,10 +556,10 @@
 われわれ　人間が
 そう　思い込んでいるだけ……▼
 そんな　ふうに
-考えたことは　ありませんか？</language>
+考えたことは　ありませんか？▼</language>
 	</row>
 
-	<row id="msg_t02_sage3_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t02_sage3_03" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてboodle_01a</comment>
 		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
@@ -569,14 +569,14 @@
 しごとの　パートナーとしても
 こきつかっている……▼
 そんなことはないと　だれが
-はっきりと　いいきれるのでしょうか▼</language>
+はっきりと　いいきれるのでしょうか</language>
 		<language name="JPN_KANJI" width="256">トレーナーは
 ポケモンに　好き勝手▽
 命令している……▼
 仕事の　パートナーとしても
 こきつかっている……▼
 そんなことはないと　だれが
-はっきりと　言い切れるのでしょうか▼</language>
+はっきりと　言い切れるのでしょうか</language>
 	</row>
 
 	<row id="msg_t02_boodle_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -606,7 +606,7 @@
 		<language name="JPN_KANJI" width="256">わからんよ</language>
 	</row>
 
-	<row id="msg_t02_sage4_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t02_sage4_04" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてsage2_05表示</comment>
 		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
@@ -619,7 +619,7 @@
 かずおおく　もつ　そんざいなのです▼
 そんな　ポケモンたちに　たいし
 わたしたち　にんげんが▽
-すべきことは　なんでしょうか▼</language>
+すべきことは　なんでしょうか</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『いいですか
 みなさん▼
 ポケモンは　人間とは　異なり
@@ -629,7 +629,7 @@
 数多く　持つ　存在なのです▼
 そんな　ポケモンたちに対し
 わたしたち　人間が▽
-すべきことは　なんでしょうか▼</language>
+すべきことは　なんでしょうか</language>
 	</row>
 
 	<row id="msg_t02_boodle_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
