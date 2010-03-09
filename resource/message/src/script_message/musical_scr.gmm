@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-03-08T18:18:44"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-09T17:49:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="857" top="141" right="1562" bottom="769" maximized="no" rayout="Vertical2">
+	<dialog left="881" top="468" right="1564" bottom="1096" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="67" right="1280" bottom="465" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="1090" top="57" right="1563" bottom="455" visible="yes"/>
+		<band id="0" index="1" style="0000" width="508"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="370"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="3" index="4" style="0000" width="348"/>
+		<band id="4" index="0" style="0000" width="675"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -438,6 +438,94 @@
 オレも　もう一度　山に登るよ！</language>
 	</row>
 
+	<row id="msg_musical_fan_cheer_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>♀
+･条件を満たすと出現
+・アイテムくれない
+0＝主人公名前</comment>
+		<attribute name="キャラ指定">FIGHTERW
+＝ファンその６</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さん！
+ほんじつも　おつかれさまっす！
+[1:00:トレーナー名:0]さんの　ぶたい
+なんど　みても　かんどうするっす！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん！
+本日も　お疲れさまっす！
+[1:00:トレーナー名:0]さんの　舞台
+何度　みても　感動するっす！</language>
+	</row>
+
+	<row id="msg_musical_fan_cheer_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>♀
+･条件を満たすと出現
+・アイテムくれない
+0＝主人公名前</comment>
+		<attribute name="キャラ指定">OL
+＝ファンその７</attribute>
+		<language name="JPN" width="256">わたしの　しょくばでは
+[1:00:トレーナー名:0]さんの　えいきょうで▽
+ミュージカルが　ブーム　なんです！▼
+これからも　ステキな
+ドレスアップ　してくださいね！</language>
+		<language name="JPN_KANJI" width="256">私の　職場では
+[1:00:トレーナー名:0]さんの　影響で▽
+ミュージカルが　ブーム　なんです！▼
+これからも　ステキな
+ドレスアップ　してくださいね！</language>
+	</row>
+
+	<row id="msg_musical_fan_cheer_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>♂
+･条件を満たすと出現
+・アイテムくれない
+0＝主人公名前</comment>
+		<attribute name="キャラ指定">BADMAN
+＝ファンその８</attribute>
+		<language name="JPN" width="256">オレは　いま　もうれつに
+かんどう　してるぜ！▼
+[1:00:トレーナー名:0]さんの
+ぶたいに　であえて　よかった！▽
+おおげさじゃ　ねえよ！</language>
+		<language name="JPN_KANJI" width="256">オレは　いま　猛烈に
+感動　してるぜ！▼
+[1:00:トレーナー名:0]さんの
+舞台に　出会えて　よかった！▽
+おおげさじゃ　ねえよ！</language>
+	</row>
+
+	<row id="msg_musical_fan_cheer_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>♀
+･条件を満たすと出現
+・アイテムくれない</comment>
+		<attribute name="キャラ指定">ESPW
+＝ファンその９</attribute>
+		<language name="JPN" width="256">あなたの　ぶたい……
+おもわず　みとれて　しまうわ▼
+まるで　なにか　ふしぎな
+チカラが　あるみたい……</language>
+		<language name="JPN_KANJI" width="256">あなたの　舞台……
+思わず　みとれて　しまうわ▼
+まるで　何か　ふしぎな
+チカラが　あるみたい……</language>
+	</row>
+
+	<row id="msg_musical_fan_cheer_10" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>♂（げいじゅつかイメージ）
+･条件を満たすと出現
+・アイテムくれない
+0＝主人公名前</comment>
+		<attribute name="キャラ指定">MIDDLEMAN1
+＝ファンその１０</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの　ぶたいは
+もはや　げいじゅつ　ですな！▼
+げいじゅつかの　わたくしが
+いうのだから　まちがいありませんよ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの　舞台は
+もはや　芸術　ですな！▼
+すばらしい　という　以外の
+いうのだから　間違いありませんよ！</language>
+	</row>
+
 	<row id="msg_musical_fan_gift_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>♂
 ・アイテムくれる</comment>
@@ -457,7 +545,7 @@
 		<language name="JPN" width="256">もし　よろしければ
 このグッズ　つかってください！▼</language>
 		<language name="JPN_KANJI" width="256">もし　よろしければ
-このアクセ　つかってください！▼</language>
+このグッズ　つかってください！▼</language>
 	</row>
 
 	<row id="msg_musical_fan_gift_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -491,6 +579,61 @@
 これ　もらってくれ！▼</language>
 		<language name="JPN_KANJI" width="256">迷惑じゃなかったら
 これ　もらってくれ！▼</language>
+	</row>
+
+	<row id="msg_musical_fan_gift_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>♀
+・アイテムくれる</comment>
+		<attribute name="キャラ指定">FIGHTERW
+＝ファンその６</attribute>
+		<language name="JPN" width="256">こ　これ！
+よければ　つかって　くださいっす！▼</language>
+		<language name="JPN_KANJI" width="256">こ　これ！
+よければ　使って　くださいっす！▼</language>
+	</row>
+
+	<row id="msg_musical_fan_gift_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>♀
+・アイテムくれる</comment>
+		<attribute name="キャラ指定">OL
+＝ファンその７</attribute>
+		<language name="JPN" width="256">もし　よろしければ
+このグッズ　つかってください！▼</language>
+		<language name="JPN_KANJI" width="256">もし　よろしければ
+このグッズ　つかってください！▼</language>
+	</row>
+
+	<row id="msg_musical_fan_gift_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>♂
+・アイテムくれる</comment>
+		<attribute name="キャラ指定">BADMAN
+＝ファンその８</attribute>
+		<language name="JPN" width="256">こんなものしか　ねえけどよ
+イヤじゃ　なけりゃ　もらってくれ！▼</language>
+		<language name="JPN_KANJI" width="256">こんなものしか　ねえけどよ
+イヤじゃ　なけりゃ　もらってくれ！▼</language>
+	</row>
+
+	<row id="msg_musical_fan_gift_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>♀
+・アイテムくれる</comment>
+		<attribute name="キャラ指定">ESPW
+＝ファンその９</attribute>
+		<language name="JPN" width="256">これ……
+おまじない　しておいたから▼</language>
+		<language name="JPN_KANJI" width="256">これ……
+おまじない　しておいたから▼</language>
+	</row>
+
+	<row id="msg_musical_fan_gift_10" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>♂
+・アイテムくれる</comment>
+		<attribute name="キャラ指定">MIDDLEMAN1
+＝ファンその１０</attribute>
+		<language name="JPN" width="256">よろしければ　このグッズ
+うけとって　くだされ！▼</language>
+		<language name="JPN_KANJI" width="256">よろしければ　このグッズ
+うけとって　くだされ！▼</language>
 	</row>
 
 	<row id="msg_musical_fan_none" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -777,8 +920,8 @@ msg_musical_recept_06を
 アピールして　あげてください▼
 ミュージカルに　おとずれる
 おきゃくさんは▼
-あなたの　コーディネートと
-きかざった　ポケモンの▽
+あなたの　ドレスアップと
+ドレスアップした　ポケモンの▽
 えんぎを　たのしみにしています！</language>
 		<language name="JPN_KANJI">ミュージカル　とは
 グッズで　着飾った　ポケモンが▽
@@ -793,8 +936,8 @@ msg_musical_recept_06を
 アピールして　あげてください▼
 ミュージカルに　訪れる
 お客さんは▼
-あなたの　コーディネートと
-着飾った　ポケモンの▽
+あなたの　ドレスアップと
+ドレスアップした　ポケモンの▽
 演技を　楽しみにしています！</language>
 	</row>
 
@@ -886,11 +1029,10 @@ msg_musical_recept_06を
 グッズケースに　あつめた　グッズを▼
 えんもくに　さんかする　ポケモンに
 きかざって　あげる　ことです▼
-グッズには　クール　キュートや
-エレガント　ユニーク　という▽
-ことなった　イメージが　あります▼
 さんかする　えんもくの　イメージに
 あわせて　グッズを　きかざると▼
+ポケモンが　ぶたいに
+あがった　ときに▼
 おきゃくさんの　ちゅうもくを
 あつめることも　できますよ▼
 また　あえて　イメージに
@@ -904,11 +1046,10 @@ msg_musical_recept_06を
 グッズケースに　あつめた　グッズを▼
 演目に　参加する　ポケモンに
 着飾って　あげる　ことです▼
-グッズには　クール　キュート
-エレガント　ユニーク　という▽
-異なった　イメージが　あります▼
 参加する　演目の　イメージに
 あわせて　グッズを　着飾ると▼
+ポケモンが　舞台に
+あがった　ときに
 お客さんの　注目を
 集めることも　できますよ▼
 また　あえて　イメージに
