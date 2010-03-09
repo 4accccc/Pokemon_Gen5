@@ -106,14 +106,10 @@ static void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
 	PokeParty_Add(party, pp);
 	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
 
-  PP_Setup(pp, MONSNO_TIRAAMHI, 100, myID);
+  PP_Setup(pp, MONSNO_GOBITTO, 100, myID);
   PP_Put( pp , ID_PARA_id_no, myID );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
-  PP_SetWazaPos( pp , WAZANO_NAMINORI , 0 );
-  PP_SetWazaPos( pp , WAZANO_TAKINOBORI , 1 );
-  PP_SetWazaPos( pp , WAZANO_KAIRIKI , 2 );
-  PP_SetWazaPos( pp , WAZANO_IAIGIRI , 3 );
 	PokeParty_Add(party, pp);
 	ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave(gamedata), pp );
 #endif

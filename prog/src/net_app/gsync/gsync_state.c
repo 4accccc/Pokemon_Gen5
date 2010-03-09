@@ -520,10 +520,15 @@ static void _zukansave(G_SYNC_WORK* pWork)
 
 }
 
-static void _musicalsave(G_SYNC_WORK* pWork)
+static void _musicalsave(G_SYNC_WORK* pWork,int size)
 {
   //@todo
   pWork->musicalNo=DREAM_WORLD_NOPICTURE;
+
+
+
+
+
 }
 
 
@@ -557,7 +562,7 @@ static void _downloadcgear6(G_SYNC_WORK* pWork)
       _cgearsave(pWork);
       break;
     case _DOWNLOAD_MUSICAL:
-      _musicalsave(pWork);
+      _musicalsave(pWork,GSYNC_DOWNLOAD_GetSize(pWork->pDownload));
       break;
     case _DOWNLOAD_ZUKAN:
       _zukansave(pWork);
@@ -675,7 +680,7 @@ static void _downloadcgear(G_SYNC_WORK* pWork)
     pWork->pDownload = GSYNC_DOWNLOAD_Create(pWork->heapID, CGEAR_PICTURE_SAVE_GetWorkSize() + 2); //CRC
     break;
   case _DOWNLOAD_MUSICAL:
-    pWork->pDownload = GSYNC_DOWNLOAD_Create(pWork->heapID, MUSICAL_DIST_SAVE_GetWorkSize() + 2); //CRC
+    pWork->pDownload = GSYNC_DOWNLOAD_Create(pWork->heapID, 128*1024 ); //CRC‚±‚Ý‚Å128K
     break;
   case _DOWNLOAD_ZUKAN:
     pWork->pDownload = GSYNC_DOWNLOAD_Create(pWork->heapID, ZUKANWP_SAVEDATA_GetWorkSize() + 2); //CRC

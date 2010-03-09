@@ -455,9 +455,9 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
       //バッファからセーブへデータコピー
 //      GFL_STD_MemCopy( evt_wk->Ptr->CommBuf, exa, BATTLE_EXAMINATION_SAVE_GetWorkSize() );
       NOZOMU_Printf("外部セーブにデータを保存\n");
-/**   //仮コメントアウト　処理をフックしておく   
+      //仮コメントアウト　処理をフックしておく   
       BATTLE_EXAMINATION_SAVE_Write(sv, evt_wk->Ptr->CommBuf, GFL_HEAP_LOWID(HEAPID_PROC));
-*/
+
       NOZOMU_Printf("データ受け取り成功\n");
       //受け取りの結果をセット
       *(evt_wk->Ret) = TRUE;    //成功

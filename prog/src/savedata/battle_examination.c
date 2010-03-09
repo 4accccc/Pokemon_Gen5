@@ -126,10 +126,14 @@ BSUBWAY_PARTNER_DATA *BATTLE_EXAMINATION_SAVE_GetData(BATTLE_EXAMINATION_SAVEDAT
 void BATTLE_EXAMINATION_SAVE_Write(SAVE_CONTROL_WORK * pSave , BATTLE_EXAMINATION_SAVEDATA* pBattleEx, HEAPID heapID)
 {
 
+  void* pWork = GFL_HEAP_AllocMemory(heapID,SAVESIZE_EXTRA_BATTLE_EXAMINATION);
+  
   SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_BATTLE_EXAMINATION, heapID,
-                             pBattleEx,SAVESIZE_EXTRA_BATTLE_EXAMINATION);
+                             pWork, SAVESIZE_EXTRA_BATTLE_EXAMINATION);
 
-  SaveControl_Extra_SaveAsyncInit(pSave,SAVESIZE_EXTRA_BATTLE_EXAMINATION);
+  GFL_STD_MemCopy(pBattleEx, pWork, sizeof(BATTLE_EXAMINATION_SAVEDATA));
+
+  SaveControl_Extra_SaveAsyncInit(pSave,SAVE_EXTRA_ID_BATTLE_EXAMINATION);
   while(1){
     if(SAVE_RESULT_OK==SaveControl_Extra_SaveAsyncMain(pSave,SAVE_EXTRA_ID_BATTLE_EXAMINATION)){
       break;
@@ -137,6 +141,8 @@ void BATTLE_EXAMINATION_SAVE_Write(SAVE_CONTROL_WORK * pSave , BATTLE_EXAMINATIO
     OS_WaitIrq(TRUE, OS_IE_V_BLANK);
   }
   SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_BATTLE_EXAMINATION);
+
+  GFL_HEAP_FreeMemory(pWork);
 }
 
 

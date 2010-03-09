@@ -245,4 +245,9 @@ void GSYNC_DOWNLOAD_Main(GSYNC_DOWNLOAD_WORK* pWork)
 }
 
 
+int GSYNC_DOWNLOAD_GetSize(GSYNC_DOWNLOAD_WORK* pWork)
+{
+  return pWork->fileInfo.size;
+}
+
 
