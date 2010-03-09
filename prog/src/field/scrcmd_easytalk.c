@@ -31,6 +31,7 @@
 #include "savedata/my_pms_data.h"
 
 #include "easytalk_mode_def.h"
+#include "app/pms_input.h"  //for PMSI_MODE
 
 typedef struct EASYTALK_EVT_WORK_tag
 {
@@ -41,6 +42,7 @@ typedef struct EASYTALK_EVT_WORK_tag
 //  PMS_SELECT_PARAM  PmsParam;
   PMSI_PARAM *pmsi;
   MYPMS_PMS_TYPE PmsType;
+  BOOL NeedSave;
 }EASYTALK_EVT_WORK;
 
 static GMEVENT_RESULT EasyTalkAppCallEvt( GMEVENT* event, int* seq, void* work );
@@ -74,6 +76,7 @@ VMCMD_RESULT EvCmdCallEasyTalkApp( VMHANDLE *core, void *wk )
 
   event = GMEVENT_Create( gsys, NULL, EasyTalkAppCallEvt, size );
   {
+    PMSI_MODE pmsi_mode;
     u32 guidance;
     EASYTALK_EVT_WORK *evt_work;
     SAVE_CONTROL_WORK *save_ctrl;
@@ -90,19 +93,32 @@ VMCMD_RESULT EvCmdCallEasyTalkApp( VMHANDLE *core, void *wk )
     case EASYTALK_MODE_READY:
       guidance = PMSI_GUIDANCE_BATTLE_READY;  ///< 対戦前         <<@todo
       evt_work->PmsType = MYPMS_PMS_TYPE_BATTLE_READY;  //バトル勝負前挨拶
+      evt_work->NeedSave = TRUE;
+      pmsi_mode = PMSI_MODE_SENTENCE;
       break;
     case EASYTALK_MODE_WIN:
       guidance = PMSI_GUIDANCE_BATTLE_WON;    ///< 勝った時のコメント <<@todo
       evt_work->PmsType = MYPMS_PMS_TYPE_BATTLE_WON;    //バトル勝ち時セリフ
+      evt_work->NeedSave = TRUE;
+      pmsi_mode = PMSI_MODE_SENTENCE;
       break;
     case EASYTALK_MODE_LOSE:
       guidance = PMSI_GUIDANCE_BATTLE_LOST; 	///< 負けたときコメント <<@todo
       evt_work->PmsType = MYPMS_PMS_TYPE_BATTLE_LOST;   //バトル負け時セリフ
+      evt_work->NeedSave = TRUE;
+      pmsi_mode = PMSI_MODE_SENTENCE;
       break;
     case EASYTALK_MODE_TOP:
       guidance = PMSI_GUIDANCE_DEFAULT;   //<<@todo
       evt_work->PmsType = MYPMS_PMS_TYPE_BATTLE_TOP;    ///<　一番になったとき
+      evt_work->NeedSave = TRUE;
+      pmsi_mode = PMSI_MODE_SENTENCE;
       break;
+    case EASYTALK_MODE_PASSWORD:
+      guidance = PMSI_GUIDANCE_DEFAULT;   //<<@todo
+      evt_work->PmsType = MYPMS_PMS_TYPE_BATTLE_TOP;    ///<　パスワード
+      evt_work->NeedSave = FALSE;
+      pmsi_mode = PMSI_MODE_DOUBLE;
     default:
       GF_ASSERT(0);
       evt_work->pmsi = NULL;
@@ -111,8 +127,9 @@ VMCMD_RESULT EvCmdCallEasyTalkApp( VMHANDLE *core, void *wk )
     }
 
     save_ctrl = GAMEDATA_GetSaveControlWork( gdata );
-    evt_work->pmsi = PMSI_PARAM_Create(PMSI_MODE_SENTENCE, guidance, NULL, FALSE, save_ctrl, GFL_HEAPID_APP );
+    evt_work->pmsi = PMSI_PARAM_Create(pmsi_mode, guidance, NULL, FALSE, save_ctrl, GFL_HEAPID_APP );
     //起動時の単語セット
+    if (evt_work->NeedSave)
     {
       MYPMS_DATA *my_pms;
       PMS_DATA  pms;
@@ -163,6 +180,7 @@ static GMEVENT_RESULT EasyTalkAppCallEvt( GMEVENT* event, int* seq, void* work )
       
       PMSI_PARAM_GetInputDataSentence( prm, &pms );
       //セーブする
+      if ( evt_work->NeedSave )
       {
         GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
         SAVE_CONTROL_WORK* sv;
