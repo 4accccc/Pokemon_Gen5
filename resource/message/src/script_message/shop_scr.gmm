@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-03-05T11:24:49"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T11:00:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -293,6 +293,7 @@
 
 
 	<row id="msg_shop_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">♂♀共有</attribute>
 		<language name="JPN" width="256">ようこそ！
 おかいもの　ですね？</language>
 		<language name="JPN_KANJI" width="256">ようこそ！
@@ -300,6 +301,7 @@
 	</row>
 
 	<row id="msg_shop_02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">♂♀共有</attribute>
 		<language name="JPN" width="256">その　ほかに　わたしどもで
 なにか　おちからに　なれることは？</language>
 		<language name="JPN_KANJI" width="256">その他に　私どもで
@@ -307,26 +309,31 @@
 	</row>
 
 	<row id="msg_shop_03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">♂♀共有</attribute>
 		<language name="JPN" width="256">また　どうぞ！</language>
 		<language name="JPN_KANJI" width="256">また　どうぞ！</language>
 	</row>
 
 	<row id="msg_shop_greeting" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">♂♀共有</attribute>
 		<language name="JPN" width="256">いらっしゃいませ！</language>
 		<language name="JPN_KANJI" width="256">いらっしゃいませ！</language>
 	</row>
 
 	<row id="msg_shop_menu01_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">メニュー用</attribute>
 		<language name="JPN" width="256">かいに　きた</language>
 		<language name="JPN_KANJI" width="256">買いにきた</language>
 	</row>
 
 	<row id="msg_shop_menu01_02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">メニュー用</attribute>
 		<language name="JPN" width="256">うりに　きた</language>
 		<language name="JPN_KANJI" width="256">売りにきた</language>
 	</row>
 
 	<row id="msg_shop_menu01_03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">メニュー用</attribute>
 		<language name="JPN" width="256">なんでもないです</language>
 		<language name="JPN_KANJI" width="256">なんでもないです</language>
 	</row>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T15:14:41"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T10:58:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="249" right="1996" bottom="877" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -362,6 +362,7 @@
 　当たると　→　msg_vender_03
 　この場合、でてくる道具は最初に選んだもの
 ・荷物が一杯になるときは作動しない</comment>
+		<attribute name="キャラ指定">自動販売機</attribute>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]が　でてきた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]が　でてきた！▼</language>
 	</row>
@@ -369,6 +370,7 @@
 	<row id="msg_vender_03">
 		<comment>自動販売機
 ・当たり</comment>
+		<attribute name="キャラ指定">自動販売機</attribute>
 		<language name="JPN" width="256">あたりだ！　もういっぽん
 [1:09:どうぐ名:0]が　でてきた！▼</language>
 		<language name="JPN_KANJI" width="256">当たりだ！　もう一本
@@ -378,6 +380,7 @@
 	<row id="msg_vender_04">
 		<comment>自動販売機
 ・料金不足</comment>
+		<attribute name="キャラ指定">自動販売機</attribute>
 		<language name="JPN" width="256">おかねが　たりない！</language>
 		<language name="JPN_KANJI" width="256">おかねが　たりない！</language>
 	</row>
@@ -385,6 +388,7 @@
 	<row id="msg_vender_05">
 		<comment>自動販売機
 ・キャンセル</comment>
+		<attribute name="キャラ指定">自動販売機</attribute>
 		<language name="JPN" width="256">……やっぱり　やめた！</language>
 		<language name="JPN_KANJI" width="256">……やっぱり　やめた！</language>
 	</row>
@@ -393,6 +397,7 @@
 		<comment>自動販売機
 ・購入後
 ・はい/いいえの選択肢表示</comment>
+		<attribute name="キャラ指定">自動販売機</attribute>
 		<language name="JPN" width="256">もういっぽん　かう？</language>
 		<language name="JPN_KANJI" width="256">もう一本　買う？</language>
 	</row>

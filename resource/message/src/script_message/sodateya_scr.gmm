@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-17T12:56:30"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T10:59:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="249" right="1996" bottom="877" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -357,6 +357,7 @@
 		<comment>♂：育て屋じいさん
 ・タマゴなし
 ・預けているポケモン＝１匹</comment>
+		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">よくきたな！
 [1:01:ポケモン種族名:0]は　げんきじゃぞ！</language>
 		<language name="JPN_KANJI" width="256">よく来たな！
@@ -369,6 +370,7 @@
 ・預けているポケモン＝２匹
 ・７０％の確率で生まれる
 　キー待ちあり</comment>
+		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">２ひきの　なかは
 とっても　よいようじゃ！</language>
 		<language name="JPN_KANJI" width="256">２匹の　仲は
@@ -381,6 +383,7 @@
 ・預けているポケモン＝２匹
 ・５０％の確率で生まれる
 　キー待ちあり</comment>
+		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">２ひきの　なかは
 まずまずの　ようじゃ</language>
 		<language name="JPN_KANJI" width="256">２匹の　仲は
@@ -393,6 +396,7 @@
 ・預けているポケモン＝２匹
 ・２０％の確率で生まれる
 　キー待ちあり</comment>
+		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">２ひきの　なかは
 それほど　よくないがなあ</language>
 		<language name="JPN_KANJI" width="256">２匹の　仲は
@@ -405,6 +409,7 @@
 ・預けているポケモン＝２匹
 ・０％の確率で生まれる
 　キー待ちあり</comment>
+		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">２ひきは　おたがいに
 ちがう　ポケモンたちと▽
 あそんでおるがなあ……</language>
@@ -420,6 +425,7 @@
 　はい＋手持ち空きあり→oldman_08
 　はい＋手持ち空きなし→oldman_09
 　いいえ→oldman_10</comment>
+		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">おお！　あんたか▼
 あずかっていた　ポケモンを
 そだてていたら……　なんと！▼
@@ -444,6 +450,7 @@
 		<comment>♂：育て屋じいさん
 ・タマゴあり
 ・はい＋手持ち空きあり</comment>
+		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　そだてや　じいさんから
 タマゴを　もらった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　育て屋じいさんから
@@ -451,6 +458,7 @@
 	</row>
 
 	<row id="msg_sodateya_oldman_08_01">
+		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">だいじに　そだてなさいよ！</language>
 		<language name="JPN_KANJI" width="256">大事に　育てなさいよ！</language>
 	</row>
@@ -459,6 +467,7 @@
 		<comment>♂：育て屋じいさん
 ・タマゴあり
 ・はい＋手持ち空きなし</comment>
+		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">てもちが　いっぱいの　ようじゃな……▼
 てもちの　ポケモンを
 せいりしてから　またきなさい</language>
@@ -471,6 +480,7 @@
 		<comment>♂：育て屋じいさん
 ・タマゴあり
 ・いいえ選択時</comment>
+		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">それじゃ　わしが　もらおう
 ありがとよ</language>
 		<language name="JPN_KANJI" width="256">それじゃ　わしが　もらおう
@@ -495,6 +505,7 @@
 		<comment>♀：育て屋ばあさん
 ・2回目以降
 ・タマゴなし</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">わしは　そだてや　ばあさんじゃ▼
 おまえさんの　かわりに　ポケモンを
 そだてて　あげるよ▼
@@ -509,6 +520,7 @@
 		<comment>♀：育て屋ばあさん
 ・メニュー表示後
 　「やめる」選択時/Bキャンセル時</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">それじゃ　また　きておくれ</language>
 		<language name="JPN_KANJI" width="256">それじゃ　また　来ておくれ</language>
 	</row>
@@ -517,6 +529,7 @@
 		<comment>♀：育て屋ばあさん
 ・2回目以降
 ・タマゴあり</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">おお！　じいさんが
 あんたを　さがして　おったぞ</language>
 		<language name="JPN_KANJI" width="256">おお！　じいさんが
@@ -528,6 +541,7 @@
 ・メニュー表示後
 　「あずける」選択時
 ・手持ちの中に戦えるポケモンが1匹</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">その　ポケモンを　あずけると
 たたかえなく　なるぞ▼
 また　きなさいよ</language>
@@ -541,6 +555,7 @@
 ・メニュー表示後
 　「あずける」選択時
 ・手持ちが２匹以上</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">どのこを　そだてて　みるかね？▼</language>
 		<language name="JPN_KANJI" width="256">どのこを　育てて　みるかね？▼</language>
 	</row>
@@ -549,6 +564,7 @@
 		<comment>♀：育て屋ばあさん
 ・メニュー表示後
 　「あずける」選択後、タマゴを選択</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">おやおや　おまえさん
 それは　タマゴ　じゃぞ！</language>
 		<language name="JPN_KANJI" width="256">おやおや　おまえさん
@@ -557,6 +573,7 @@
 
 	<row id="msg_sodateya_oldwoman_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>♀：育て屋ばあさん</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">それでは　[1:00:トレーナー名:0]を
 しばらく　あずかるぞ▼</language>
 		<language name="JPN_KANJI" width="256">それでは　[1:00:トレーナー名:0]を
@@ -565,6 +582,7 @@
 
 	<row id="msg_sodateya_oldwoman_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>♀：育て屋ばあさん</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">てきとうに　じかんが
 たったら　また　きなさい</language>
 		<language name="JPN_KANJI" width="256">適当に　時間が
@@ -573,6 +591,7 @@
 
 	<row id="msg_sodateya_oldwoman_10" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>♀：育て屋ばあさん</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">２ひき　までなら　あずかれるけど
 もう　１ぴき　そだててみるかい？</language>
 		<language name="JPN_KANJI" width="256">２匹までなら　預かれるけど
@@ -584,6 +603,7 @@
 ・メニュー表示
 　預けているポケモンのリスト
 ・ポケモンを選択時→oldwoman_12</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">おお　あんたか！　よくきたな
 おまえさんの　ポケモンは　ゲンキじゃ▼
 どうする？　ひきとるかい？</language>
@@ -595,6 +615,7 @@
 	<row id="msg_sodateya_oldwoman_12" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>♀：育て屋ばあさん
 ・続けてoldwoman_13</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">[1:01:ポケモン種族名:0]は　レベルで　いうと
 [2:01:２桁:1]くらい　そだって　おるぞ▼</language>
 		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]は　レベルで　いうと
@@ -607,6 +628,7 @@
 　はい→
 　はい＋所持金不足→oldwoman_14
 　いいえ→oldwoman_03</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">[1:01:ポケモン種族名:0]を　ひきとるなら
 りょうきんは　[2:03:４桁:1]円　だよ▽
 ひきとるかい？</language>
@@ -618,6 +640,7 @@
 	<row id="msg_sodateya_oldwoman_14" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>♀：育て屋ばあさん
 ・引き取るときに所持金不足</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">おかねが　たりない　ようじゃのう……</language>
 		<language name="JPN_KANJI" width="256">お金が　たりない　ようじゃのう……</language>
 	</row>
@@ -627,6 +650,7 @@
 ・預けているポケモンが
 　いる→oldwoman_16
 　いない→oldwoman_03</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は　そだてや　ばあさんから
 [1:01:ポケモン種族名:0]を　ひきとった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は　育て屋ばあさん　から
@@ -638,6 +662,7 @@
 ・はい/いいえ
 　はい→oldwoman_11
 　いいえ→oldwoman_03</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">もう　１ぴきも　ひきとるかい？</language>
 		<language name="JPN_KANJI" width="256">もう　１匹も　ひきとるかい？</language>
 	</row>
@@ -649,6 +674,7 @@
 ・手持ちとボックスを合わせて２匹しかいない
 ※ハマリ防止策として、
 　交換用に２匹未満にできないようにする</comment>
+		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">おや？　おまえさん
 その　ポケモンを　あずけると▼
 ぜんぶで　ポケモンが　１ひき　だけに
