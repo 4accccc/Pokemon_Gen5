@@ -1966,6 +1966,11 @@ static BOOL PartyMoveCheck( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_pos )
 
 	// バトルボックス専用処理
 	if( syswk->dat->callMode == BOX_MODE_BATTLE ){
+		// バトルボックスがロックされている　※実際はここにはこない
+		if( syswk->dat->bbRockFlg == TRUE ){
+			syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_ROCK;
+			return FALSE;
+		}
 		// タマゴをトレイから手持ちに配置しようとしたとき
 		if( get_pos < BOX2OBJ_POKEICON_TRAY_MAX &&
 				put_pos >= BOX2OBJ_POKEICON_TRAY_MAX && put_pos < BOX2OBJ_POKEICON_PUT_MAX &&
@@ -4144,6 +4149,11 @@ int BOX2MAIN_VFuncGetPokeMoveParty( BOX2_SYS_WORK * syswk )
 				}
 			}else if( ret1 == 0 ){
 				put_pos = PartyPokePutAreaCheck( syswk->app->tpx, syswk->app->tpy, PartyPokeAreaLeft );
+			}
+			// バトルボックスがロックされているときは移動させない
+			if( syswk->dat->callMode == BOX_MODE_BATTLE && syswk->dat->bbRockFlg == TRUE ){
+				put_pos = BOX2MAIN_GETPOS_NONE;
+				syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_ROCK;
 			}
 
 			PokeIconMoveBoxPartyDataMake( syswk, syswk->get_pos, put_pos );
@@ -6880,6 +6890,11 @@ int BOX2MAIN_VFuncGetPokeMoveBattleBoxMain( BOX2_SYS_WORK * syswk )
 			// 参照中のトレイ
 			if( put_pos == BOX2MAIN_GETPOS_NONE ){
 				put_pos = TrayPokePutAreaCheck( syswk->app->tpx, syswk->app->tpy );
+			}
+			// バトルボックスがロックされているときは移動させない
+			if( syswk->dat->callMode == BOX_MODE_BATTLE && syswk->dat->bbRockFlg == TRUE ){
+				put_pos = BOX2MAIN_GETPOS_NONE;
+				syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_ROCK;
 			}
 /*
 			if( put_pos == BOX2MAIN_GETPOS_NONE ){

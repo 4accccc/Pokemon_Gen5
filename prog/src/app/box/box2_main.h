@@ -630,6 +630,7 @@ enum {
 	BOX2MAIN_ERR_CODE_MAIL,				// メールを持っている
 	BOX2MAIN_ERR_CODE_BATTLE,			// 戦えるポケモンがいなくなる
 	BOX2MAIN_ERR_CODE_EGG,				// タマゴはえらべない（バトルボックス専用）
+	BOX2MAIN_ERR_CODE_ROCK,				// ロックされている（バトルボックス専用）
 };
 
 

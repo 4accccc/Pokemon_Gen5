@@ -38,6 +38,7 @@ typedef struct {
 	POKEPARTY * pokeparty;			// 手持ちモケモン
 	MYITEM_PTR	myitem;					// 所持アイテム（バッグで使用）
 	MYSTATUS * mystatus;				// プレイヤーデータ（バッグで使用）
+	BOOL	bbRockFlg;						// バトルボックスロックフラグ
 
   CONFIG * cfg;								// コンフィグデータ
   u32	zknMode;								// 図鑑ナンバー表示モード

@@ -317,6 +317,11 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		wk->box_data.myitem    = GAMEDATA_GetMyItem( wk->gamedata );
 		wk->box_data.mystatus  = GAMEDATA_GetMyStatus( wk->gamedata );
 		wk->box_data.callMode  = BOX_MODE_BATTLE;
+		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+			wk->box_data.bbRockFlg = TRUE;
+		}else{
+			wk->box_data.bbRockFlg = FALSE;
+		}
 		SetBoxPoke( wk );
 //		SetPartyPoke( wk );
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(box), &BOX2_ProcData, &wk->box_data );
@@ -653,4 +658,8 @@ static void SetZukanData( NAKAHIRO_MAIN_WORK * wk, u32 mode )
 	for( i=600; i<=608; i++ ){
 		SetZukanDataOne( wk, i, 0 );
 	}
+	SetZukanDataOne( wk, MONSNO_KIMORI, 0 );
+	SetZukanDataOne( wk, MONSNO_PATTIIRU, 0 );
+
+	ZUKANSAVE_SetZenkokuZukanFlag( GAMEDATA_GetZukanSave( wk->gamedata ) );
 }

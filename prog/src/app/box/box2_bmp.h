@@ -509,3 +509,14 @@ extern void BOX2BMP_PutPokeMoveErrMsg( BOX2_SYS_WORK * syswk, u32 errID, u32 win
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2BMP_SleepSelectMsgPut( BOX2_SYS_WORK * syswk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		「バトルボックス」用ロック済みメッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2BMP_BattleBoxRockMsgPut( BOX2_SYS_WORK * syswk );

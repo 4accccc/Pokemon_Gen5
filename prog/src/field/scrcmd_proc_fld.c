@@ -117,6 +117,7 @@ VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
   box_param->cfg       = SaveData_GetConfig( sv );
   box_param->zknMode   = 0;
   box_param->callMode  = box_mode;
+	box_param->bbRockFlg = FALSE;
   
   // バトルボックスのパーティーをセット
   if( box_mode == BOX_MODE_BATTLE )
@@ -124,6 +125,7 @@ VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
     BATTLE_BOX_SAVE* bbox_save;
     bbox_save = BATTLE_BOX_SAVE_GetBattleBoxSave( sv );
     box_param->pokeparty = BATTLE_BOX_SAVE_MakePokeParty( bbox_save, HEAPID_PROC );
+		box_param->bbRockFlg = BATTLE_BOX_SAVE_GetLockType( bbox_save, BATTLE_BOX_LOCK_BIT_BOTH );
   }
 
   // コールバックのパラメータを作成

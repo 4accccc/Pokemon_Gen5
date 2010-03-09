@@ -140,6 +140,7 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk );
 static int MainSeq_BattleBoxPartyEnd( BOX2_SYS_WORK * syswk );
 static int MainSeq_BattleBoxPartyMenuClose( BOX2_SYS_WORK * syswk );
 static int MainSeq_BattleBoxPartyPokeChgEnd( BOX2_SYS_WORK * syswk );
+static int MainSeq_BattleBoxRock( BOX2_SYS_WORK * syswk );
 static int MainSeq_PartyInMain( BOX2_SYS_WORK * syswk );
 static int MainSeq_PartyInMenuClose( BOX2_SYS_WORK * syswk );
 static int MainSeq_PartyInSelect( BOX2_SYS_WORK * syswk );
@@ -339,6 +340,8 @@ static const pBOX2_FUNC MainSeq[] = {
 	MainSeq_BattleBoxPartyEnd,
 	MainSeq_BattleBoxPartyMenuClose,
 	MainSeq_BattleBoxPartyPokeChgEnd,
+
+	MainSeq_BattleBoxRock,
 
 	// つれていく
 	MainSeq_PartyInMain,
@@ -2163,6 +2166,12 @@ static int MainSeq_ArrangePokeGetDataChange( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_SetHandCursorOnOff( syswk, FALSE );
 		BOX2BMP_PutPokeMoveErrMsg( syswk, BOX2MAIN_ERR_CODE_EGG, BOX2BMPWIN_ID_MSG1 );
 		return BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_DATA_CHANGE_ERR;
+
+	case BOX2MAIN_ERR_CODE_ROCK:			// ロックされている（バトルボックス専用）
+		PMSND_PlaySE( SE_BOX2_WARNING );
+		BOX2OBJ_SetHandCursorOnOff( syswk, FALSE );
+		BOX2BMP_BattleBoxRockMsgPut( syswk );
+		return BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_DATA_CHANGE_ERR;
 	}
 
 	if( syswk->dat->callMode == BOX_MODE_SEIRI ){
@@ -2196,7 +2205,12 @@ static int MainSeq_ArrangePokeGetDataChangeErr( BOX2_SYS_WORK * syswk )
 
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
 
-	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
+	// ロックされている（バトルボックス専用）
+	if( syswk->app->mv_err_code == BOX2MAIN_ERR_CODE_ROCK ){
+		BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG4 );
+	}else{
+		BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
+	}
 	BOX2MAIN_ResetTouchBar( syswk );
 
 	if( syswk->dat->callMode == BOX_MODE_SEIRI ){
@@ -2646,6 +2660,16 @@ static int MainSeq_ArrangePartyPokeGetInit( BOX2_SYS_WORK * syswk )
 		return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
 
 	case 1:
+		// バトルボックスがロックされているとき
+		if( syswk->dat->callMode == BOX_MODE_BATTLE && syswk->dat->bbRockFlg == TRUE ){
+			PMSND_PlaySE( SE_BOX2_WARNING );
+			BOX2BMP_BattleBoxRockMsgPut( syswk );
+			syswk->mv_cnv_mode  = 0;
+			syswk->app->sub_seq = 0;
+			syswk->next_seq     = BOX2SEQ_MAINSEQ_BATTLEBOX_ROCK;
+			return BOX2SEQ_MAINSEQ_TRGWAIT;
+		}
+
 		syswk->app->sub_seq++;
 		if( BOX2BGWFRM_CheckPartyPokeFrameLeft( syswk->app->wfrm ) == TRUE ){
 			BOX2BGWFRM_PartyPokeFrameRightMoveSet( syswk->app->wfrm );
@@ -3541,6 +3565,39 @@ static int MainSeq_BattleBoxPartyPokeChgEnd( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF );
 	BOX2BMP_PokeSelectMsgPut( syswk, syswk->get_pos, BOX2BMP_MSGID_PARTYIN_MENU, BOX2BMPWIN_ID_MSG1 );
 	return BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_MAIN;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：バトルボックスがロックされているとき
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	次のシーケンス
+ *
+ *	定義：BOX2SEQ_MAINSEQ_BATTLEBOX_ROCK
+ */
+//--------------------------------------------------------------------------------------------
+static int MainSeq_BattleBoxRock( BOX2_SYS_WORK * syswk )
+{
+	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG4 );
+	BOX2OBJ_PokeCursorVanish( syswk, FALSE );
+	BOX2MAIN_ResetTouchBar( syswk );
+	if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
+		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
+	}
+
+	if( BOX2BGWFRM_CheckPartyPokeFrameLeft( syswk->app->wfrm ) == TRUE ){
+		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos-BOX2OBJ_POKEICON_TRAY_MAX );
+		BOX2UI_PutHandCursor( syswk, syswk->get_pos-BOX2OBJ_POKEICON_TRAY_MAX );
+		BOX2BGWFRM_BoxListButtonOn( syswk->app );
+		return BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_MAIN;
+	}
+
+	CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos );
+	BOX2UI_PutHandCursor( syswk, syswk->get_pos );
+	BOX2BGWFRM_TemochiButtonOn( syswk->app );
+	return BOX2SEQ_MAINSEQ_BATTLEBOX_MAIN;
 }
 
 

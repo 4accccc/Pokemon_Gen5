@@ -1945,6 +1945,19 @@ void BOX2BMP_SleepSelectMsgPut( BOX2_SYS_WORK * syswk )
 	SysMesPut( syswk, msg_boxmes_06_08, BOX2BMPWIN_ID_MSG4 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		「バトルボックス」用ロック済みメッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_BattleBoxRockMsgPut( BOX2_SYS_WORK * syswk )
+{
+	SysMesPut( syswk, msg_boxmes_07_01, BOX2BMPWIN_ID_MSG4 );
+}
 
 
 
