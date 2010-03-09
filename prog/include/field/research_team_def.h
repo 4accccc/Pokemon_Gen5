@@ -8,6 +8,9 @@
 /////////////////////////////////////////////////////////////////////
 #pragma once
 
+// 1‚Â‚Ì’²¸ˆË—Š‚Å’²‚×‚éŽ¿–â‚ÌÅ‘å”
+#define MAX_QNUM_PER_RESEARCH_REQ (3)
+
 // ’²¸‘àƒ‰ƒ“ƒN
 #define RESEARCH_MEMBER_RANK_C  (0) // ƒ‰ƒ“ƒNC
 #define RESEARCH_MEMBER_RANK_B  (1) // ƒ‰ƒ“ƒNB

@@ -45,7 +45,7 @@ struct _MISC
 
   // ‚·‚êˆá‚¢’²¸‘à
   u8  research_request_id;  // ó‚¯‚Ä‚¢‚é’²¸ˆË—ŠID
-  u16 research_start_count; // ’²¸ˆË—Š‚ğó‚¯‚½‚Ì‰ñ“šl”
+  u16 research_start_count[MAX_QNUM_PER_RESEARCH_REQ]; // ’²¸ˆË—Š‚ğó‚¯‚½‚Ì‰ñ“šl”
   s64 research_start_time;  // ’²¸ˆË—Š‚ğó‚¯‚½‚ÌŠÔ[•b]
 
   u8 padding[3];

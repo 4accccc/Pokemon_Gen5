@@ -12,6 +12,7 @@
 
 #include "savedata/save_control.h"
 #include "system/pms_data.h"
+#include "field/research_team_def.h"
 
 //=============================================================================
 /**
@@ -114,7 +115,7 @@ extern u8 MISC_GetStartMenuFlag( const MISC * misc, MISC_STARTMENU_TYPE type );
 // Ç∑ÇÍà·Ç¢í≤ç∏ë‡
 extern u8 MISC_GetResearchRequestID( const MISC* misc );
 extern void MISC_SetResearchRequestID( MISC* misc, u8 id );
-extern u16 MISC_GetResearchStartCount( const MISC* misc );
-extern void MISC_SetResearchStartCount( MISC* misc, u16 count );
+extern u16 MISC_GetResearchStartCount( const MISC* misc, u8 idx );
+extern void MISC_SetResearchStartCount( MISC* misc, u8 idx, u16 count );
 extern s64 MISC_GetResearchStartTimeBySecond( const MISC* misc );
 extern void MISC_SetResearchStartTimeBySecond( MISC* misc, s64 time );

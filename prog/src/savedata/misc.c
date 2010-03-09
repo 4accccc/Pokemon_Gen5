@@ -586,13 +586,15 @@ void MISC_SetResearchRequestID( MISC* misc, u8 id )
  * @brief 調査依頼を受けた時の回答人数を取得する
  *
  * @param misc
+ * @param idx  調査依頼内の質問インデックス ( 0 ～ MAX_QNUM_PER_RESEARCH_REQ-1 )
  *
  * @return 調査開始時点の回答人数
  */
 //----------------------------------------------------------
-u16 MISC_GetResearchStartCount( const MISC* misc )
+u16 MISC_GetResearchStartCount( const MISC* misc, u8 idx )
 {
-  return misc->research_start_count;
+  GF_ASSERT( idx < MAX_QNUM_PER_RESEARCH_REQ );
+  return misc->research_start_count[ idx ];
 }
 
 //----------------------------------------------------------
@@ -600,12 +602,14 @@ u16 MISC_GetResearchStartCount( const MISC* misc )
  * @brief 調査依頼を受けた時の回答人数をセットする
  *
  * @param misc
+ * @param idx   調査依頼内の質問インデックス ( 0 ～ MAX_QNUM_PER_RESEARCH_REQ-1 ) 
  * @param count 調査開始時点の回答人数
  */
 //----------------------------------------------------------
-void MISC_SetResearchStartCount( MISC* misc, u16 count )
+void MISC_SetResearchStartCount( MISC* misc, u8 idx, u16 count )
 {
-  misc->research_start_count = count;
+  GF_ASSERT( idx < MAX_QNUM_PER_RESEARCH_REQ );
+  misc->research_start_count[idx] = count;
 }
 
 //----------------------------------------------------------
