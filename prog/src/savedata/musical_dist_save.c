@@ -16,6 +16,10 @@
 //	define
 //======================================================================
 #pragma mark [> define
+//確保するサイズ
+#define MUSICAL_DIST_SAVE_SIZE (127*1024)
+//Allocするサイズ
+#define MUSICAL_DIST_SAVE_WORK_SIZE (128*1024)
 
 //======================================================================
 //	enum
@@ -40,6 +44,9 @@ struct _MUSICAL_DIST_SAVE
   int  saveSeq;
   DIST_DATA_HEADER dataHeader;
   void *saveData;
+  
+  DIST_DATA_HEADER *saveDataHeader;
+  void *saveDataArc;
   SAVE_CONTROL_WORK *sv;
 };
 
@@ -47,11 +54,12 @@ struct _MUSICAL_DIST_SAVE
 //	proto
 //======================================================================
 #pragma mark [> proto
+
 int MUSICAL_DIST_SAVE_GetWorkSize(void)
 {
   //ヘッダ分減らしておく
   //殿堂入りでさらに減るかも
-	return (127*1024);
+	return MUSICAL_DIST_SAVE_SIZE;
 }
 
 void MUSICAL_DIST_SAVE_InitWork(MUSICAL_DIST_SAVE *musDistSave)
@@ -63,8 +71,8 @@ MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_LoadData( SAVE_CONTROL_WORK *sv , HEAPID he
 {
   MUSICAL_DIST_SAVE *distSave = GFL_HEAP_AllocClearMemory( heapId , sizeof(distSave) );
   LOAD_RESULT ret;
-  distSave->saveData = GFL_HEAP_AllocClearMemory( heapId , MUSICAL_DIST_SAVE_GetWorkSize() );
-  ret = SaveControl_Extra_LoadWork( sv , EXGMDATA_ID_MUSICAL_DIST , heapId , distSave->saveData , MUSICAL_DIST_SAVE_GetWorkSize() );
+  distSave->saveData = GFL_HEAP_AllocClearMemory( heapId , MUSICAL_DIST_SAVE_WORK_SIZE );
+  ret = SaveControl_Extra_LoadWork( sv , SAVE_EXTRA_ID_MUSICAL_DIST , heapId , distSave->saveData , MUSICAL_DIST_SAVE_WORK_SIZE );
   
   distSave->sv = sv;
   distSave->saveSeq = 0;
@@ -72,7 +80,9 @@ MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_LoadData( SAVE_CONTROL_WORK *sv , HEAPID he
   {
     //データがある
     distSave->isEnableData = TRUE;
-    distSave->saveData = SaveControl_Extra_DataPtrGet( sv , EXGMDATA_ID_MUSICAL_DIST , 0 );
+    distSave->saveData = SaveControl_Extra_DataPtrGet( sv , SAVE_EXTRA_ID_MUSICAL_DIST , EXGMDATA_ID_MUSICAL_DIST );
+    distSave->saveDataHeader = distSave->saveData;
+    distSave->saveDataArc = (void*)((u32)distSave->saveData + sizeof(DIST_DATA_HEADER));
   }
   else
   if( ret == LOAD_RESULT_NULL || 
@@ -80,7 +90,9 @@ MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_LoadData( SAVE_CONTROL_WORK *sv , HEAPID he
   {
     //データが無い
     distSave->isEnableData = FALSE;
-    distSave->saveData = SaveControl_Extra_DataPtrGet( sv , EXGMDATA_ID_MUSICAL_DIST , 0 );
+    distSave->saveData = SaveControl_Extra_DataPtrGet( sv , SAVE_EXTRA_ID_MUSICAL_DIST , EXGMDATA_ID_MUSICAL_DIST );
+    distSave->saveDataHeader = distSave->saveData;
+    distSave->saveDataArc = (void*)((u32)distSave->saveData + sizeof(DIST_DATA_HEADER));
   }
   else
   {
@@ -94,7 +106,7 @@ MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_LoadData( SAVE_CONTROL_WORK *sv , HEAPID he
 
 void MUSICAL_DIST_SAVE_UnloadData( MUSICAL_DIST_SAVE *distSave )
 {
-  SaveControl_Extra_Unload( distSave->sv , EXGMDATA_ID_MUSICAL_DIST );
+  SaveControl_Extra_Unload( distSave->sv , SAVE_EXTRA_ID_MUSICAL_DIST );
   GFL_HEAP_FreeMemory( distSave );
 }
 
@@ -106,7 +118,7 @@ MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( SAVE_CONTROL_WORK 
   {
     distSave->dataHeader.size = size;
     GFL_STD_MemCopy( &distSave->dataHeader , distSave->saveData , sizeof( DIST_DATA_HEADER ) );
-    GFL_STD_MemCopy( arcData , (void*)((u32)distSave->saveData + sizeof( DIST_DATA_HEADER ) ) , size );
+    GFL_STD_MemCopy( arcData , distSave->saveDataArc , size );
   }
   return distSave;
 }
@@ -125,17 +137,17 @@ const BOOL MUSICAL_DIST_SAVE_SaveMusicalArchive_Main( MUSICAL_DIST_SAVE *distSav
     }
     else
     {
-      SaveControl_Extra_SaveAsyncInit( distSave->sv , EXGMDATA_ID_MUSICAL_DIST );
+      MUSICAL_SAVE* musSave = MUSICAL_SAVE_GetMusicalSave( distSave->sv );
+      MUSICAL_SAVE_SetEnableDistributData( musSave , TRUE );
+      SaveControl_Extra_SaveAsyncInit( distSave->sv , SAVE_EXTRA_ID_MUSICAL_DIST );
       distSave->saveSeq++;
     }
     break;
   case 1:
     {
-      const SAVE_RESULT ret = SaveControl_Extra_SaveAsyncMain( distSave->sv , EXGMDATA_ID_MUSICAL_DIST );
+      const SAVE_RESULT ret = SaveControl_Extra_SaveAsyncMain( distSave->sv , SAVE_EXTRA_ID_MUSICAL_DIST );
       if( ret == SAVE_RESULT_OK )
       {
-        MUSICAL_SAVE* musSave = MUSICAL_SAVE_GetMusicalSave( distSave->sv );
-        MUSICAL_SAVE_SetEnableDistributData( musSave , TRUE );
         MUSICAL_DIST_SAVE_UnloadData( distSave );
         return TRUE;
       }
@@ -148,24 +160,12 @@ const BOOL MUSICAL_DIST_SAVE_SaveMusicalArchive_Main( MUSICAL_DIST_SAVE *distSav
 
 
 #pragma mark [> proto
-#include "arc_def.h"
-void* MUSICAL_DIST_SAVE_GetProgramData( MUSICAL_DIST_SAVE *distSave , const HEAPID heapId , u32 *dataSize )
+
+void* MUSICAL_DIST_SAVE_GetMusicalArc( MUSICAL_DIST_SAVE *distSave )
 {
-  //仮
-  return GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , 0 , FALSE , heapId , dataSize);
+  return distSave->saveDataArc;
 }
-void* MUSICAL_DIST_SAVE_GetMessageData( MUSICAL_DIST_SAVE *distSave , const HEAPID heapId , u32 *dataSize )
+const u32 MUSICAL_DIST_SAVE_GetMusicalArcSize( MUSICAL_DIST_SAVE *distSave )
 {
-  //仮
-  return GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , 1 , FALSE , heapId , dataSize);
-}
-void* MUSICAL_DIST_SAVE_GetScriptData( MUSICAL_DIST_SAVE *distSave , const HEAPID heapId , u32 *dataSize )
-{
-  //仮
-  return GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , 2 , FALSE , heapId , dataSize);
-}
-void* MUSICAL_DIST_SAVE_GetStreamingData( MUSICAL_DIST_SAVE *distSave , const HEAPID heapId , u32 *dataSize )
-{
-  //仮
-  return GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , 3 , FALSE , heapId , dataSize);
+  return distSave->saveDataHeader->size;
 }

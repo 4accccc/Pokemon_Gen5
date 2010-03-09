@@ -9,6 +9,7 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "gamesystem/game_data.h"
 #include "arc_def.h"
 #include "font/font.naix"
 #include "mus_debug.naix"
@@ -120,6 +121,7 @@ typedef struct
   HEAPID        heapId;
   STAGE_INIT_WORK  *actInitWork;
   ACTING_WORK     *actWork;
+  GAMEDATA *gameData;
   
   MSC_SEQ       mcsSeq;
   
@@ -214,7 +216,7 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
 {
   int ePos;
   MUS_EDIT_LOCAL_WORK *work;
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0xa0000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x80000 );
 
   work = GFL_PROC_AllocWork( proc, sizeof(MUS_EDIT_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
   work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_STAGE , NULL );
@@ -242,6 +244,9 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
   
   OS_TPrintf("Heap[%x]\n",GFL_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
   
+  work->gameData = GAMEDATA_Create( GFL_HEAPID_APP );
+  SaveControl_Load(GAMEDATA_GetSaveControlWork(work->gameData));
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -249,6 +254,7 @@ static GFL_PROC_RESULT MusicalEditProc_Term( GFL_PROC * proc, int * seq , void *
 {
   MUS_EDIT_LOCAL_WORK *work = mywk;
   
+  GAMEDATA_Delete( work->gameData );
   MUSICAL_STAGE_DeleteStageWork( work->actInitWork );
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STAGE );
@@ -1058,7 +1064,7 @@ static const BOOL MusicalSetting_Main( MUS_EDIT_LOCAL_WORK *work )
   case 1:
     {
       FS_InitFile( &work->arcFile );
-      FS_OpenFileEx( &work->arcFile , "a/1/3/6" , FS_FILEMODE_R );
+      FS_OpenFileEx( &work->arcFile , "a/1/4/0" , FS_FILEMODE_R );
       work->arcSize = FS_GetFileLength( &work->arcFile );
       work->musicalArc = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( work->heapId ) , work->arcSize );
       FS_ReadFile( &work->arcFile , work->musicalArc , work->arcSize );
@@ -1070,7 +1076,7 @@ static const BOOL MusicalSetting_Main( MUS_EDIT_LOCAL_WORK *work )
   case 2:
     {
       //SaveControl_GetPointer() デバッグ使用
-      work->distSave = MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( SaveControl_GetPointer() , work->musicalArc , work->arcSize , GFL_HEAP_LOWID( work->heapId ) );
+      work->distSave = MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( GAMEDATA_GetSaveControlWork(work->gameData) , work->musicalArc , work->arcSize , GFL_HEAP_LOWID( work->heapId ) );
 
       ARI_TPrintf("セーブ展開・保存開始\n");
       work->distSaveSeq++;
@@ -1082,11 +1088,17 @@ static const BOOL MusicalSetting_Main( MUS_EDIT_LOCAL_WORK *work )
       if( ret == TRUE )
       {
         work->distSaveSeq++;
-        ARI_TPrintf("セーブ完了\n");
+        ARI_TPrintf("配信データセーブ完了\n");
       }
     }
     break;
   case 4:
+    work->distSaveSeq++;
+    //GAMEDATA_Save( work->gameData );
+    //ARI_TPrintf("通常データセーブ完了\n");
+    break;
+
+  case 5:
     GFL_HEAP_FreeMemory( work->musicalArc );
     work->distSaveSeq = 0;
     ARI_TPrintf("開放完了\n");
