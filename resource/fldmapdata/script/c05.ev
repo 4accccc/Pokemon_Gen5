@@ -38,6 +38,7 @@ _EVENT_DATA    ev_pos_c05_support_01
 _EVENT_DATA    ev_bg_c05_board_03
 _EVENT_DATA    ev_bg_c05_board_04
 _EVENT_DATA    ev_bg_c05_board_05
+_EVENT_DATA    ev_c05_man2_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -723,4 +724,11 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_c05_board_05
   _EASY_BGWIN_MSG( msg_c05_gymsign_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/*  C05 MAN2の会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c05_man2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_man2_01)
 EVENT_END

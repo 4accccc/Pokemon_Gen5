@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/26 12:11:40
+#save date:2010/03/09 11:25:14
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02r0101.wms
 #SECTION START:OBJ_EVENT
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_FURNITURE_STORE
+SCRID_PDW_FURNITURE_MENU
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number

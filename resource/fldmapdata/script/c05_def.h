@@ -24,5 +24,6 @@
 #define SCRID_BG_C05_BOARD_03 (17)
 #define SCRID_BG_C05_BOARD_04 (18)
 #define SCRID_BG_C05_BOARD_05 (19)
+#define SCRID_C05_MAN2_01 (20)
 
 #endif //_C05_DEF_H_

@@ -46,6 +46,7 @@
 #define C05_HAKAI_07                      22
 #define C05_HAKAI_08                      23
 #define C05_HAKAI_09                      24
+#define C05_MAN2_01                       25
 
 #endif //ZONE_C05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
