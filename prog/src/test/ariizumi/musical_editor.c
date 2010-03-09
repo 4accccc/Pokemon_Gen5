@@ -31,6 +31,7 @@
 #include "musical/stage/sta_acting.h"
 #include "musical/stage/sta_act_poke.h"
 #include "musical/musical_camera_def.h"
+#include "savedata/musical_dist_save.h"
 
 #include "debug/gf_mcs.h"
 #include "debug/debug_str_conv.h"
@@ -136,6 +137,7 @@ typedef struct
   u8    befObjId;
   u8    lightNum;
   u8    befLightState;
+  u8    distSaveSeq;
   BOOL  isInitMcs;
 
   //Setting時
@@ -144,6 +146,12 @@ typedef struct
   BOOL  isItemAuto;
   BOOL  isPokeAnime;
   BOOL  isDrawEPos;
+  
+  //セーブテスト用
+  FSFile arcFile;
+  void  *musicalArc;
+  u32   arcSize;
+  MUSICAL_DIST_SAVE *distSave;
   
   MUS_POKE_DRAW_SYSTEM *pokeSys;
   MUS_POKE_DRAW_WORK   *pokeWork;
@@ -846,6 +854,7 @@ static void MusicalSetting_Init( MUS_EDIT_LOCAL_WORK *work )
   work->isItemAuto = TRUE;
   work->isPokeAnime = FALSE;
   work->isDrawEPos = FALSE;
+  work->distSaveSeq = 0;
   work->pokeWork = NULL;
   
   GFL_DISP_GX_InitVisibleControl();
@@ -1013,24 +1022,76 @@ static void MusicalSetting_Term( MUS_EDIT_LOCAL_WORK *work )
 
 static const BOOL MusicalSetting_Main( MUS_EDIT_LOCAL_WORK *work )
 {
-  MusicalSetting_UpdateTouch( work );
-  MusicalSetting_UpdatePoke( work );
-  
-  MUS_POKE_DRAW_UpdateSystem( work->pokeSys );
-  MUS_ITEM_DRAW_UpdateSystem( work->itemDrawSys ); 
-
-  //3D描画  
-  GFL_G3D_DRAW_Start();
-  GFL_G3D_DRAW_SetLookAt();
+  //if( work->distSaveSeq == 0 )
   {
-    MUS_POKE_DRAW_DrawSystem( work->pokeSys ); 
-    GFL_BBD_Draw( work->bbdSys , work->camera , NULL );
-    if( work->isDrawEPos == TRUE )
+    MusicalSetting_UpdateTouch( work );
+    MusicalSetting_UpdatePoke( work );
+    
+    MUS_POKE_DRAW_UpdateSystem( work->pokeSys );
+    MUS_ITEM_DRAW_UpdateSystem( work->itemDrawSys ); 
+
+    //3D描画  
+    GFL_G3D_DRAW_Start();
+    GFL_G3D_DRAW_SetLookAt();
     {
-      MusicalSetting_DrawEquipPos( work );
+      MUS_POKE_DRAW_DrawSystem( work->pokeSys ); 
+      GFL_BBD_Draw( work->bbdSys , work->camera , NULL );
+      if( work->isDrawEPos == TRUE )
+      {
+        MusicalSetting_DrawEquipPos( work );
+      }
     }
+    GFL_G3D_DRAW_End();
   }
-  GFL_G3D_DRAW_End();
+
+  //セーブのテスト
+  switch( work->distSaveSeq )
+  {
+  case 0:
+    if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_L) &&
+        (GFL_UI_KEY_GetTrg() & PAD_BUTTON_R) )
+    {
+      ARI_TPrintf("配信データセーブテストを開始します。\n");
+      work->distSaveSeq++;
+    }
+    break;
+  case 1:
+    {
+      FS_InitFile( &work->arcFile );
+      FS_OpenFileEx( &work->arcFile , "a/1/3/6" , FS_FILEMODE_R );
+      work->arcSize = FS_GetFileLength( &work->arcFile );
+      work->musicalArc = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( work->heapId ) , work->arcSize );
+      FS_ReadFile( &work->arcFile , work->musicalArc , work->arcSize );
+      FS_CloseFile( &work->arcFile );
+      ARI_TPrintf("アーカイブ仮ロード size[%d]\n",work->arcSize);
+      work->distSaveSeq++;
+    }
+    break;
+  case 2:
+    {
+      //SaveControl_GetPointer() デバッグ使用
+      work->distSave = MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( SaveControl_GetPointer() , work->musicalArc , work->arcSize , GFL_HEAP_LOWID( work->heapId ) );
+
+      ARI_TPrintf("セーブ展開・保存開始\n");
+      work->distSaveSeq++;
+    }
+    break;
+  case 3:
+    {
+      const BOOL ret = MUSICAL_DIST_SAVE_SaveMusicalArchive_Main( work->distSave );
+      if( ret == TRUE )
+      {
+        work->distSaveSeq++;
+        ARI_TPrintf("セーブ完了\n");
+      }
+    }
+    break;
+  case 4:
+    GFL_HEAP_FreeMemory( work->musicalArc );
+    work->distSaveSeq = 0;
+    ARI_TPrintf("開放完了\n");
+    break;
+  }
 
   return  work->isFinishSetting;
 ;

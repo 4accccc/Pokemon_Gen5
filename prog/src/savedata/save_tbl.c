@@ -496,10 +496,10 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_BattleExamination[] = {
     (FUNC_INIT_WORK)BATTLE_EXAMINATION_SAVE_Init,
   },
 };
-///ストリーミング
-static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_Streaming[] = {
+///ミュージカル配信
+static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_MusicalDist[] = {
   {
-    EXGMDATA_ID_STREAMING,
+    EXGMDATA_ID_MUSICAL_DIST,
     (FUNC_GET_SIZE)MUSICAL_DIST_SAVE_GetWorkSize,
     (FUNC_INIT_WORK)MUSICAL_DIST_SAVE_InitWork,
   },
@@ -586,9 +586,9 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     SAVESIZE_EXTRA_BATTLE_EXAMINATION,       //使用するバックアップ領域の大きさ
     MAGIC_NUMBER,
   },
-  {//外部セーブパラメータテーブル：ストリーミング(ミラーリング無)
-    SaveDataTbl_Extra_Streaming,
-    NELEMS(SaveDataTbl_Extra_Streaming),
+  {//外部セーブパラメータテーブル：ミュージカル配信(ミラーリング無)
+    SaveDataTbl_Extra_MusicalDist,
+    NELEMS(SaveDataTbl_Extra_MusicalDist),
     EXTRA_MM_STREAMING,             //バックアップ領域先頭アドレス
     EXTRA_MM_STREAMING,             //ミラーリング領域先頭アドレス ※ミラー無し指定
     SAVESIZE_EXTRA_STREAMING,       //使用するバックアップ領域の大きさ

@@ -18,17 +18,19 @@ struct _MUSICAL_SAVE {
 	//前回装備
 	MUSICAL_EQUIP_SAVE	befEquip;
 	
-	//アイテム所持bit
-	u8 itemBit[MUS_SAVE_ITEM_BIT_MAX];
-  //Newアイテムbit
-	u8 itemNewBit[MUS_SAVE_ITEM_BIT_MAX];
-
   MUSICAL_FAN_STATE fanState[MUS_SAVE_FAN_NUM];
 
   //参加回数
   u16 entryNum; 
   //トップ回数
   u16 topNum;
+  //累計得点
+  u16 sumPoint;
+
+	//アイテム所持bit
+	u8 itemBit[MUS_SAVE_ITEM_BIT_MAX];
+  //Newアイテムbit
+	u8 itemNewBit[MUS_SAVE_ITEM_BIT_MAX];
   
   //前回コンディション
   u8 befCondition[MCT_MAX];
@@ -37,6 +39,9 @@ struct _MUSICAL_SAVE {
   
   //選択している演目番号
   u8 programNumber;
+  
+  //配信データのチェック
+  u8 enableDistData;
   
   u8 padding[2];
 };

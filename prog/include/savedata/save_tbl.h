@@ -139,9 +139,9 @@ enum{
   EXGMDATA_ID_BATTLE_EXAMINATION,
 };
 
-///外部セーブデータ識別ID：ストリーミング
+///外部セーブデータ識別ID：ミュージカル配信
 enum{
-  EXGMDATA_ID_STREAMING,
+  EXGMDATA_ID_MUSICAL_DIST,
 };
 
 ///外部セーブデータ識別ID：図鑑壁紙

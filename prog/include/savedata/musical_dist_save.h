@@ -31,13 +31,14 @@ extern void MUSICAL_DIST_SAVE_InitWork(MUSICAL_DIST_SAVE * musSave);
 //	データのセーブ・ロード
 //----------------------------------------------------------
 extern MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_LoadData( SAVE_CONTROL_WORK *sv , HEAPID heapId );
-extern void MUSICAL_DIST_SAVE_UnloadData( SAVE_CONTROL_WORK *sv );
+extern void MUSICAL_DIST_SAVE_UnloadData( MUSICAL_DIST_SAVE *distSave );
 
 //----------------------------------------------------------
 //	データ操作のための関数
 //----------------------------------------------------------
-//データの設定
-extern void MUSICAL_DIST_SAVE_SetMusicalArchive( MUSICAL_DIST_SAVE *distSave , void *arcData , const u32 size );
+//データの設定(セーブ、Load・UnLoad込み)
+extern MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( SAVE_CONTROL_WORK *sv , void *arcData , const u32 size , const HEAPID heapId );
+extern const BOOL MUSICAL_DIST_SAVE_SaveMusicalArchive_Main( MUSICAL_DIST_SAVE *distSave );
 //データの取得
 extern void* MUSICAL_DIST_SAVE_GetProgramData( MUSICAL_DIST_SAVE *distSave , const HEAPID heapId , u32 *dataSize );
 extern void* MUSICAL_DIST_SAVE_GetMessageData( MUSICAL_DIST_SAVE *distSave , const HEAPID heapId , u32 *dataSize );

@@ -19,7 +19,7 @@
 #define MUS_SAVE_ITEM_MAX (256)
 #define MUS_SAVE_ITEM_BIT_MAX (MUS_SAVE_ITEM_MAX/8)
 #define MUS_SAVE_ENTRY_NUM_MAX (65535)
-#define MUS_SAVE_FAN_NUM (5)
+#define MUS_SAVE_FAN_NUM (10)
 
 //======================================================================
 //	typedef struct
@@ -90,5 +90,8 @@ extern const u8 MUSICAL_SAVE_GetBefPoint( const MUSICAL_SAVE *musSave );
 extern void MUSICAL_SAVE_SetBefPoint( MUSICAL_SAVE *musSave , const u8 point );
 extern const u8 MUSICAL_SAVE_GetProgramNumber( const MUSICAL_SAVE *musSave );
 extern void MUSICAL_SAVE_SetProgramNumber( MUSICAL_SAVE *musSave , const u8 num );
+
+extern const BOOL MUSICAL_SAVE_IsEnableDistributData( const MUSICAL_SAVE *musSave );
+extern void MUSICAL_SAVE_SetEnableDistributData( MUSICAL_SAVE *musSave , const BOOL isEnable );
 
 

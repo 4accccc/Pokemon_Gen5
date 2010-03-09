@@ -48,6 +48,7 @@ void MUSICAL_SAVE_InitWork(MUSICAL_SAVE *musSave)
     musSave->fanState[i].type = MCT_MAX;
   }
   musSave->programNumber = 0;
+  musSave->enableDistData = 0;
   
   MUSICAL_SAVE_AddItem( musSave , 48 );
   MUSICAL_SAVE_AddItem( musSave , 70 );
@@ -259,5 +260,15 @@ const u8 MUSICAL_SAVE_GetProgramNumber( const MUSICAL_SAVE *musSave )
 void MUSICAL_SAVE_SetProgramNumber( MUSICAL_SAVE *musSave , const u8 num )
 {
   musSave->programNumber = num;
+}
+
+const BOOL MUSICAL_SAVE_IsEnableDistributData( const MUSICAL_SAVE *musSave )
+{
+  return musSave->enableDistData;
+}
+
+void MUSICAL_SAVE_SetEnableDistributData( MUSICAL_SAVE *musSave , const BOOL isEnable )
+{
+  musSave->enableDistData = isEnable;
 }
 
