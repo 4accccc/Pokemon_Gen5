@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00131" date="2010-03-09T17:27:26"/>
+	<create user="nakamura_akira" host="W00131" date="2010-03-09T19:25:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="144" right="711" bottom="772" maximized="no" rayout="Vertical2">
+	<dialog left="151" top="4" right="856" bottom="632" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -2068,6 +2068,31 @@ assistantm_01_15へ続く
 ポケモン一筋に　生きることにした！▼
 ポケモンの
 面白さを　研究するのだ！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_14x" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>・隊長
+『いらいをうける』を選択し、依頼一覧から『にんずうちょうさ』を選択し、
+各依頼を選択時に対象の調査レーダーの人数がカンスト（9999）
+している場合に表示
+
+assistantm_01_15へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">この　ちょうさは……ん？▼
+すでに　この　ちょうさに　ひつような
+データを　しらべているじゃないか！▼
+さすがは　[1:00:トレーナー名:1]たいいんだ▼
+このまま　ちょうさいらいを　うけて
+すぐに　わたしに　ほうこくしてくれ！</language>
+		<language name="JPN_KANJI" width="256">この　調査は……ん？▼
+すでに　この　調査に　必要な　データを
+調べているじゃないか！▼
+さすがは　[1:00:トレーナー名:1]隊員だ▼
+このまま　調査依頼を　受けて
+すぐに　わたしに　報告してくれ！</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_15" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
