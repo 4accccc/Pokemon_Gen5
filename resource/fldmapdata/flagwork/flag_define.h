@@ -207,61 +207,61 @@
 #define FE_C03R0302_ITEM                   191 /* 0x00bf C0３ヒウンシティ：バトルカンパニーアイテム入手フラグ */
 #define FE_C01R0501_RIVALBATTLE            192 /* 0x00c0 C01トレーナーズスクールのライバルと戦闘した */
 #define FE_C05R0701_WAZALADY               193 /* 0x00c1 C05ホドモエシティ：日替わりわざ見せお嬢様初回会話フラグ */
-		/* not used   194(0x00c2) */
-		/* not used   195(0x00c3) */
-		/* not used   196(0x00c4) */
-		/* not used   197(0x00c5) */
-		/* not used   198(0x00c6) */
-		/* not used   199(0x00c7) */
-		/* not used   200(0x00c8) */
-		/* not used   201(0x00c9) */
-		/* not used   202(0x00ca) */
-		/* not used   203(0x00cb) */
-		/* not used   204(0x00cc) */
-		/* not used   205(0x00cd) */
-		/* not used   206(0x00ce) */
-		/* not used   207(0x00cf) */
-		/* not used   208(0x00d0) */
-		/* not used   209(0x00d1) */
-		/* not used   210(0x00d2) */
-		/* not used   211(0x00d3) */
-		/* not used   212(0x00d4) */
-		/* not used   213(0x00d5) */
-		/* not used   214(0x00d6) */
-		/* not used   215(0x00d7) */
-		/* not used   216(0x00d8) */
-		/* not used   217(0x00d9) */
-		/* not used   218(0x00da) */
-		/* not used   219(0x00db) */
-		/* not used   220(0x00dc) */
-		/* not used   221(0x00dd) */
-		/* not used   222(0x00de) */
-		/* not used   223(0x00df) */
-		/* not used   224(0x00e0) */
-		/* not used   225(0x00e1) */
-		/* not used   226(0x00e2) */
-		/* not used   227(0x00e3) */
-		/* not used   228(0x00e4) */
-		/* not used   229(0x00e5) */
-		/* not used   230(0x00e6) */
-		/* not used   231(0x00e7) */
-		/* not used   232(0x00e8) */
-		/* not used   233(0x00e9) */
-		/* not used   234(0x00ea) */
-		/* not used   235(0x00eb) */
-		/* not used   236(0x00ec) */
-		/* not used   237(0x00ed) */
-		/* not used   238(0x00ee) */
-		/* not used   239(0x00ef) */
-		/* not used   240(0x00f0) */
-		/* not used   241(0x00f1) */
-		/* not used   242(0x00f2) */
-		/* not used   243(0x00f3) */
-		/* not used   244(0x00f4) */
-		/* not used   245(0x00f5) */
-		/* not used   246(0x00f6) */
-		/* not used   247(0x00f7) */
-		/* not used   248(0x00f8) */
+#define FE_RES_REQ_WB_COUNT                194 /* 0x00c2 すれ違い調査「ブラックと　ホワイト　おおいのは？」( 人数 )を達成 */
+#define FE_RES_REQ_WB_TIME                 195 /* 0x00c3 すれ違い調査「ブラックと　ホワイト　おおいのは？」( 時間 )を達成 */
+#define FE_RES_REQ_FIRST_POKE_COUNT        196 /* 0x00c4 すれ違い調査「えらんだ　さいしょのポケモンは？」( 人数 )を達成 */
+#define FE_RES_REQ_FIRST_POKE_TIME         197 /* 0x00c5 すれ違い調査「えらんだ　さいしょのポケモンは？」( 時間 )を達成 */
+#define FE_RES_REQ_PLAY_TIME_COUNT         198 /* 0x00c6 すれ違い調査「いちばんおおい　プレイじかんは？」( 人数 )を達成 */
+#define FE_RES_REQ_PLAY_TIME_TIME          199 /* 0x00c7 すれ違い調査「いちばんおおい　プレイじかんは？」( 時間 )を達成 */
+#define FE_RES_REQ_SEX_COUNT               200 /* 0x00c8 すれ違い調査「おとこのこと　おんなのこ　おおいのは？」( 人数 )を達成 */
+#define FE_RES_REQ_SEX_TIME                201 /* 0x00c9 すれ違い調査「おとこのこと　おんなのこ　おおいのは？」( 時間 )を達成 */
+#define FE_RES_REQ_JOB_COUNT               202 /* 0x00ca すれ違い調査「いちばんおおい　しごとは？」( 人数 )を達成 */
+#define FE_RES_REQ_JOB_TIME                203 /* 0x00cb すれ違い調査「いちばんおおい　しごとは？」( 時間 )を達成 */
+#define FE_RES_REQ_HOBBY_COUNT             204 /* 0x00cc すれ違い調査「いちばんおおい　しゅみは？」( 人数 )を達成 */
+#define FE_RES_REQ_HOBBY_TIME              205 /* 0x00cd すれ違い調査「いちばんおおい　しゅみは？」( 時間 )を達成 */
+#define FE_RES_REQ_BTL_OR_TRD_COUNT        206 /* 0x00ce すれ違い調査「たいせんと　こうかん　にんきがあるのは？」( 人数 )を達成 */
+#define FE_RES_REQ_BTL_OR_TRD_TIME         207 /* 0x00cf すれ違い調査「たいせんと　こうかん　にんきがあるのは？」( 時間 )を達成 */
+#define FE_RES_REQ_FAV_POKE_COUNT          208 /* 0x00d0 すれ違い調査「すきな　ポケモンは？」( 人数 )を達成 */
+#define FE_RES_REQ_FAV_POKE_TIME           209 /* 0x00d1 すれ違い調査「すきな　ポケモンは？」( 時間 )を達成 */
+#define FE_RES_REQ_POKE_TYPE_COUNT         210 /* 0x00d2 すれ違い調査「すきな　ポケモンのタイプは？」( 人数 )を達成 */
+#define FE_RES_REQ_POKE_TYPE_TIME          211 /* 0x00d3 すれ違い調査「すきな　ポケモンのタイプは？」( 時間 )を達成 */
+#define FE_RES_REQ_PLACE_COUNT             212 /* 0x00d4 すれ違い調査「とかいと　いなか　すみたいのは？」( 人数 )を達成 */
+#define FE_RES_REQ_PLACE_TIME              213 /* 0x00d5 すれ違い調査「とかいと　いなか　すみたいのは？」( 時間 )を達成 */
+#define FE_RES_REQ_PRECIOUS_COUNT          214 /* 0x00d6 すれ違い調査「だいじにしているものに　ついて」( 人数 )を達成 */
+#define FE_RES_REQ_PRECIOUS_TIME           215 /* 0x00d7 すれ違い調査「だいじにしているものに　ついて」( 時間 )を達成 */
+#define FE_RES_REQ_PARTNER_COUNT           216 /* 0x00d8 すれ違い調査「ひとのみりょくに　ついて」( 人数 )を達成 */
+#define FE_RES_REQ_PARTNER_TIME            217 /* 0x00d9 すれ違い調査「ひとのみりょくに　ついて」( 時間 )を達成 */
+#define FE_RES_REQ_SEASON_COUNT            218 /* 0x00da すれ違い調査「きせつに　ついて」( 人数 )を達成 */
+#define FE_RES_REQ_SEASON_TIME             219 /* 0x00db すれ違い調査「きせつに　ついて」( 時間 )を達成 */
+#define FE_RES_REQ_ART_COUNT               220 /* 0x00dc すれ違い調査「げいじゅつに　ついて」( 人数 )を達成 */
+#define FE_RES_REQ_ART_TIME                221 /* 0x00dd すれ違い調査「げいじゅつに　ついて」( 時間 )を達成 */
+#define FE_RES_REQ_MUSIC_COUNT             222 /* 0x00de すれ違い調査「いちばんすきな　おんがくは？」( 人数 )を達成 */
+#define FE_RES_REQ_MUSIC_TIME              223 /* 0x00df すれ違い調査「いちばんすきな　おんがくは？」( 時間 )を達成 */
+#define FE_RES_REQ_MOVIE_COUNT             224 /* 0x00e0 すれ違い調査「えいぞうに　ついて」( 人数 )を達成 */
+#define FE_RES_REQ_MOVIE_TIME              225 /* 0x00e1 すれ違い調査「えいぞうに　ついて」( 時間 )を達成 */
+#define FE_RES_REQ_SCHOOL_COUNT            226 /* 0x00e2 すれ違い調査「いちばんすきな　がっこうのじかんは？」( 人数 )を達成 */
+#define FE_RES_REQ_SCHOOL_TIME             227 /* 0x00e3 すれ違い調査「いちばんすきな　がっこうのじかんは？」( 時間 )を達成 */
+#define FE_RES_REQ_STUDY_COUNT             228 /* 0x00e4 すれ違い調査「べんきょうに　ついて」( 人数 )を達成 */
+#define FE_RES_REQ_STUDY_TIME              229 /* 0x00e5 すれ違い調査「べんきょうに　ついて」( 時間 )を達成 */
+#define FE_RES_REQ_STORTS_COUNT            230 /* 0x00e6 すれ違い調査「いちばんにんきのある　スポーツは？」( 人数 )を達成 */
+#define FE_RES_REQ_STORTS_TIME             231 /* 0x00e7 すれ違い調査「いちばんにんきのある　スポーツは？」( 時間 )を達成 */
+#define FE_RES_REQ_DAY_OFF_COUNT           232 /* 0x00e8 すれ違い調査「きゅうじつに　ついて」( 人数 )を達成 */
+#define FE_RES_REQ_DAY_OFF_TIME            233 /* 0x00e9 すれ違い調査「きゅうじつに　ついて」( 時間 )を達成 */
+#define FE_RES_REQ_DREAM_COUNT             234 /* 0x00ea すれ違い調査「いちばんなりたいものは？」( 人数 )を達成 */
+#define FE_RES_REQ_DREAM_TIME              235 /* 0x00eb すれ違い調査「いちばんなりたいものは？」( 時間 )を達成 */
+#define FE_RES_REQ_LEADER_COUNT            236 /* 0x00ec すれ違い調査「いちばんにんきのある　ジムリーダーは？」( 人数 )を達成 */
+#define FE_RES_REQ_LEADER_TIME             237 /* 0x00ed すれ違い調査「いちばんにんきのある　ジムリーダーは？」( 時間 )を達成 */
+#define FE_RES_REQ_FUN_COUNT               238 /* 0x00ee すれ違い調査「ポケモンのおもしろいところは？」( 人数 )を達成 */
+#define FE_RES_REQ_FUN_TIME                239 /* 0x00ef すれ違い調査「ポケモンのおもしろいところは？」( 時間 ) を達成 */
+#define FE_RES_QUESTION_YOU                240 /* 0x00f0 調査隊アンケート『どんなひとが　いるか』に回答 */
+#define FE_RES_QUESTION_FAVARITE           241 /* 0x00f1 調査隊アンケート『すきなポケモン』に回答 */
+#define FE_RES_QUESTION_WISH               242 /* 0x00f2 調査隊アンケート『みんなの　りそう』に回答 */
+#define FE_RES_QUESTION_PARTNER            243 /* 0x00f3 調査隊アンケート『すきなひと』に回答 */
+#define FE_RES_QUESTION_TASTE              244 /* 0x00f4 調査隊アンケート『みんなの　このみ』に回答 */
+#define FE_RES_QUESTION_HOBBY              245 /* 0x00f5 調査隊アンケート『みんなの　しゅみ』に回答 */
+#define FE_RES_QUESTION_SCHOOL             246 /* 0x00f6 調査隊アンケート『がっこうせいかつ』に回答 */
+#define FE_RES_QUESTION_PLAY               247 /* 0x00f7 調査隊アンケート『どんな　あそびがすきか』に回答 */
+#define FE_RES_QUESTION_POKEMON            248 /* 0x00f8 調査隊アンケート『ポケモン』に回答 */
 		/* not used   249(0x00f9) */
 		/* not used   250(0x00fa) */
 		/* not used   251(0x00fb) */
@@ -700,13 +700,13 @@
 #define FV_R070105_LEADER6_01              676 /* 0x02a4 タワーオブヘブン5Fのフウロ */
 #define FV_D07R0401PLASMA_01               677 /* 0x02a5 ネジ山出口前：プラズマ団 */
 #define FV_D07R0401RIVAL_01                678 /* 0x02a6 ネジ山出口前：ライバル */
-		/* not used   679(0x02a7) */
-		/* not used   680(0x02a8) */
-		/* not used   681(0x02a9) */
-		/* not used   682(0x02aa) */
-		/* not used   683(0x02ab) */
-		/* not used   684(0x02ac) */
-		/* not used   685(0x02ad) */
+#define FV_T01_MAMA_01                     679 /* 0x02a7 うずまき島のルギア */
+#define FV_T01R0102_PRESENT                680 /* 0x02a8 自宅２F：ポケモン３匹選択のギフトボックス */
+#define FV_T01R0102_AWARD_01               681 /* 0x02a9 自宅２F：イッシュ図鑑完成の表彰状 */
+#define FV_T01R0102_AWARD_02               682 /* 0x02aa 自宅２F：全国図鑑完成の表彰状 */
+#define FV_T01R0102_TROPHY_01              683 /* 0x02ab 自宅２F：バトルサブウェイのトロフィ１ */
+#define FV_T01R0102_TROPHY_02              684 /* 0x02ac 自宅２F：バトルサブウェイのトロフィ２ */
+#define FV_T01R0102_TROPHY_03              685 /* 0x02ad 自宅２F：バトルサブウェイのトロフィ３ */
 		/* not used   686(0x02ae) */
 		/* not used   687(0x02af) */
 		/* not used   688(0x02b0) */
