@@ -119,6 +119,7 @@ VMCMD_RESULT EvCmdCallEasyTalkApp( VMHANDLE *core, void *wk )
       evt_work->PmsType = MYPMS_PMS_TYPE_BATTLE_TOP;    ///<　パスワード
       evt_work->NeedSave = FALSE;
       pmsi_mode = PMSI_MODE_DOUBLE;
+      break;
     default:
       GF_ASSERT(0);
       evt_work->pmsi = NULL;
@@ -179,6 +180,7 @@ static GMEVENT_RESULT EasyTalkAppCallEvt( GMEVENT* event, int* seq, void* work )
       PMS_DATA   pms;
       
       PMSI_PARAM_GetInputDataSentence( prm, &pms );
+      NOZOMU_Printf("input w1=%d w2=%d\n",pms.word[0],pms.word[1]);
       //セーブする
       if ( evt_work->NeedSave )
       {

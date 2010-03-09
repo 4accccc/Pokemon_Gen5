@@ -8737,3 +8737,23 @@
   .short \idx
   .short \val
   .endm
+
+//--------------------------------------------------------------
+/**
+ *  _MACHINE_PASSWORD     パスワード答え合わせ
+ * @param no    問題番号　1　or 2
+ * @param word1   １つ目ワードコード
+ * @param word2   ２つ目ワードコード
+ * @param ret     結果　TRUEで正解
+ */
+//--------------------------------------------------------------
+#define _MACHINE_PASSWORD( no, word1, word2, ret ) \
+    _ASM_MACHINE_PASSWORD no, word1, word2, ret
+
+  .macro _ASM_MACHINE_PASSWORD no, word1, word2, ret
+  .short EV_SEQ_MACHINE_PASSWORD
+  .short \no
+  .short \word1
+  .short \word2
+  .short \ret
+  .endm

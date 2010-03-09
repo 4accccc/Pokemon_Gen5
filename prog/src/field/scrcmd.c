@@ -82,6 +82,7 @@
 #include "scrcmd_elevator.h"
 #include "scrcmd_trial_house.h"
 #include "scrcmd_pdw.h"
+#include "scrcmd_password.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

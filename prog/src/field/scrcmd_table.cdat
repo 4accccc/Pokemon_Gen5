@@ -915,6 +915,12 @@
   DEF_CMD( EvCmdPDW_SetFurnitureWord, EV_SEQ_PDW_SET_FURNITURE_WORD )
   NO_CMD()
 
+  //パスワード
+  DEF_CMD( EvCmdCheckPassword, EV_SEQ_MACHINE_PASSWORD )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
 
   //スクリプトコマンドテーブル終了
