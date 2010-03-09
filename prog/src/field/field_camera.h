@@ -287,6 +287,25 @@ extern void	FIELD_CAMERA_GetTargetOffset( const FIELD_CAMERA* camera, VecFx32* t
 extern void	FIELD_CAMERA_SetTargetOffset( FIELD_CAMERA* camera, const VecFx32* target_offset );
 
 //------------------------------------------------------------------
+/**
+ * @brief	カメラ座標　補正座標の取得
+ * @param	camera		    FIELDカメラ制御ポインタ
+ * @param	campos_offset	カメラ座標を補正する座標受け取るVecFx32へのポインタ
+ */
+//------------------------------------------------------------------
+extern void	FIELD_CAMERA_GetCamPosOffset( const FIELD_CAMERA* camera, VecFx32* target_offset );
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	カメラ座標　補正座標の取得
+ * @param	camera		        FIELDカメラ制御ポインタ
+ * @param	campos_offset			カメラ座標を補正する座標渡すVecFx32へのポインタ
+ */
+//------------------------------------------------------------------
+extern void	FIELD_CAMERA_SetCamPosOffset( FIELD_CAMERA* camera, const VecFx32* campos_offset );
+
+//------------------------------------------------------------------
 //  カメラ位置の取得・セット
 //  カメラ動作状態によっては正しく反映されていないので注意
 //------------------------------------------------------------------
@@ -296,6 +315,26 @@ extern void FIELD_CAMERA_GetCameraPos( const FIELD_CAMERA * camera, VecFx32 * ca
 //	FIELD_CAMERA_MODE_CALC_TARGET_POS,		// ターゲット座標をカメラ座標とアングルから計算する
 //	FIELD_CAMERA_MODE_DIRECT_POS,					// カメラ座標、ターゲット座標　直接指定
 extern void FIELD_CAMERA_SetCameraPos( FIELD_CAMERA * camera, const VecFx32 * camPos);
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	カメラ座標　補正座標の取得
+ * @param	camera		    FIELDカメラ制御ポインタ
+ * @param	campos_offset	カメラ座標を補正する座標受け取るVecFx32へのポインタ
+ */
+//------------------------------------------------------------------
+extern void	FIELD_CAMERA_GetCamPosOffset( const FIELD_CAMERA* camera, VecFx32* campos_offset );
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	カメラ座標　補正座標の取得
+ * @param	camera		        FIELDカメラ制御ポインタ
+ * @param	campos_offset			カメラ座標を補正する座標渡すVecFx32へのポインタ
+ */
+//------------------------------------------------------------------
+extern void	FIELD_CAMERA_SetCamPosOffset( FIELD_CAMERA* camera, const VecFx32* campos_offset );
 
 
 //------------------------------------------------------------------

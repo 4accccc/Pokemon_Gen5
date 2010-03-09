@@ -133,6 +133,7 @@ struct _FIELD_CAMERA {
   const VecFx32 *   watch_camera; ///<追随するカメラ位置へのポインタ
 
   VecFx32       camPos;             ///<カメラ位置用ワーク
+	VecFx32				campos_offset;			///<カメラ位置用補正座標
   VecFx32       campos_write;       ///<カメラ位置用実際に画面反映した値
 
 	VecFx32				target;			        ///<注視点用ワーク
@@ -310,6 +311,7 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
   VEC_Set( &camera->camPos, 0, 0, 0 );
 	VEC_Set( &camera->target, 0, 0, 0 );
   VEC_Set( &camera->target_before, 0, 0, 0 );
+  VEC_Set( &camera->campos_offset, 0, 0, 0 );
 
   camera->angle_yaw = 0;
   camera->angle_pitch = 0;
@@ -782,14 +784,16 @@ static void updateCameraArea(FIELD_CAMERA * camera)
 static void updateG3Dcamera(FIELD_CAMERA * camera)
 {
 	VecFx32 cameraTarget;
+	VecFx32 cameraPos;
 
 #ifndef PM_DEBUG
 	// カメラターゲット補正
   VEC_Add( &camera->target_write, &camera->target_offset, &cameraTarget );
+  VEC_Add( &camera->campos_write, &camera->campos_offset, &cameraPos );
   
 
 	GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &cameraTarget );
-	GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->campos_write );
+	GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &cameraPos );
 
   traceUpdate( camera );
   updateGlobalAngleYaw( camera, &cameraTarget, &camera->campos_write );
@@ -800,9 +804,10 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
     // 通常のカメラターゲット
     // カメラターゲット補正
     VEC_Add( &camera->target_write, &camera->target_offset, &cameraTarget );
+    VEC_Add( &camera->campos_write, &camera->campos_offset, &cameraPos );
 
     GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &cameraTarget );
-	  GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->campos_write );
+	  GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &cameraPos );
 
     updateGlobalAngleYaw( camera, &cameraTarget, &camera->campos_write );
 
@@ -1353,6 +1358,35 @@ void FIELD_CAMERA_SetCameraPos( FIELD_CAMERA * camera, const VecFx32 * camPos)
 	GF_ASSERT( (camera->mode == FIELD_CAMERA_MODE_DIRECT_POS) || (camera->mode == FIELD_CAMERA_MODE_CALC_TARGET_POS) );
   camera->camPos = *camPos;
 }
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	カメラ座標　補正座標の取得
+ * @param	camera		    FIELDカメラ制御ポインタ
+ * @param	campos_offset	カメラ座標を補正する座標受け取るVecFx32へのポインタ
+ */
+//------------------------------------------------------------------
+void	FIELD_CAMERA_GetCamPosOffset( const FIELD_CAMERA* camera, VecFx32* campos_offset )
+{
+  *campos_offset = camera->campos_offset;
+}
+
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	カメラ座標　補正座標の取得
+ * @param	camera		        FIELDカメラ制御ポインタ
+ * @param	campos_offset			カメラ座標を補正する座標渡すVecFx32へのポインタ
+ */
+//------------------------------------------------------------------
+void	FIELD_CAMERA_SetCamPosOffset( FIELD_CAMERA* camera, const VecFx32* campos_offset )
+{
+  camera->campos_offset = *campos_offset;
+}
+
+
 
 //----------------------------------------------------------------------------
 /**
