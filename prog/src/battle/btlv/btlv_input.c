@@ -649,7 +649,7 @@ static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT
 static  void  BTLV_INPUT_DeleteBallGauge( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_CreateCursorOBJ( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_DeleteCursorOBJ( BTLV_INPUT_WORK* biw );
-static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, int hit );
+static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, int hit );
 static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl );
 static  int   BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int pltt );
 static  void  TCB_ButtonReaction( GFL_TCB* tcb, void* work );
@@ -1261,7 +1261,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   if( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE )
   {
     hit = GFL_UI_TP_HitTrg( RotateTouchData.hit_tbl );
-    hit = BTLV_INPUT_CheckKey( biw, RotateTouchData.hit_tbl, RotateKeyData[ biw->rotate_scr ], hit );
+    hit = BTLV_INPUT_CheckKey( biw, &RotateTouchData, RotateKeyData[ biw->rotate_scr ], hit );
     if( hit != GFL_UI_TP_HIT_NONE )
     {
       if( biw->button_exist[ hit ] == FALSE )
@@ -1295,7 +1295,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   GF_ASSERT( key_tbl != NULL );
 
   hit = hit_tp = GFL_UI_TP_HitTrg( tp_tbl->hit_tbl );
-  hit = BTLV_INPUT_CheckKey( biw, tp_tbl->hit_tbl, key_tbl, hit );
+  hit = BTLV_INPUT_CheckKey( biw, tp_tbl, key_tbl, hit );
 
   if( hit != GFL_UI_TP_HIT_NONE )
   {
@@ -3336,7 +3336,7 @@ static  void  BTLV_INPUT_DeleteCursorOBJ( BTLV_INPUT_WORK* biw )
  * @param[in] hit     キータッチがあったかどうか？
  */
 //--------------------------------------------------------------
-static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, int hit )
+static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, int hit )
 {
   int trg = GFL_UI_KEY_GetTrg();
   BOOL decide_flag = FALSE;
@@ -3344,13 +3344,13 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
   if( biw->cursor_decide )
   {
     biw->cursor_decide = 0;
-    switch( biw->type ){
+    switch( biw->scr_type ){
     case BTLV_INPUT_SCRTYPE_COMMAND:
     case BTLV_INPUT_SCRTYPE_WAZA:
     case BTLV_INPUT_SCRTYPE_DIR:
-      if( biw->button_exist[ biw->decide_pos[ biw->type ] ] == TRUE )
+      if( biw->button_exist[ biw->decide_pos[ biw->scr_type ] ] == TRUE )
       { 
-        biw->cursor_pos = biw->decide_pos[ biw->type ];
+        biw->cursor_pos = biw->decide_pos[ biw->scr_type ];
       }
       else
       { 
@@ -3361,7 +3361,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
       biw->cursor_pos = 0;
       break;
     }
-    BTLV_INPUT_PutCursorOBJ( biw, tp_tbl, key_tbl );
+    BTLV_INPUT_PutCursorOBJ( biw, tp_tbl->hit_tbl, key_tbl );
     GFL_CLACT_UNIT_SetDrawEnable( biw->cursor_clunit, TRUE );
   }
 
@@ -3370,7 +3370,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
     *(biw->cursor_mode) = 0;
     biw->cursor_pos = 0;
     biw->old_cursor_pos = CURSOR_NOMOVE;
-    BTLV_INPUT_PutCursorOBJ( biw, tp_tbl, key_tbl );
+    BTLV_INPUT_PutCursorOBJ( biw, tp_tbl->hit_tbl, key_tbl );
     return hit;
   }
 
@@ -3401,7 +3401,14 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
       if( trg == PAD_BUTTON_A )
       {
         hit = tbl->a_button;
-        SePlayDecide( biw );
+        if( tp_tbl->cancel_flag[ hit ] == FALSE )
+        { 
+          SePlayDecide( biw );
+        }
+        else
+        { 
+          SePlayCancel( biw );
+        }
         decide_flag = TRUE;
       }
       else
@@ -3438,16 +3445,19 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
     {
       *(biw->cursor_mode) = 1;
     }
-    BTLV_INPUT_PutCursorOBJ( biw, tp_tbl, key_tbl );
+    BTLV_INPUT_PutCursorOBJ( biw, tp_tbl->hit_tbl, key_tbl );
   }
 
   if( decide_flag == TRUE )
   {
-    switch( biw->type ){
+    switch( biw->scr_type ){
     case BTLV_INPUT_SCRTYPE_COMMAND:
     case BTLV_INPUT_SCRTYPE_WAZA:
     case BTLV_INPUT_SCRTYPE_DIR:
-      biw->decide_pos[ biw->type ] = biw->cursor_pos;
+      if( tp_tbl->cancel_flag[ biw->cursor_pos ] == FALSE )
+      { 
+        biw->decide_pos[ biw->scr_type ] = biw->cursor_pos;
+      }
     default:
       break;
     }
