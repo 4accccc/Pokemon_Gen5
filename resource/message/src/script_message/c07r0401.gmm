@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T17:15:08"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T11:56:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="384" right="1998" bottom="1012" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -503,7 +503,7 @@
 ・はい/いいえの選択肢
 ・はい→ポケモンリスト画面へ
 　　　　　（所有ポケモンのみで選択ウインドウ表示できるか?）
-　いいえ→終了</comment>
+　いいえ→woman2_12</comment>
 		<attribute name="キャラ指定">WOMAN2
 お洒落姉さん</attribute>
 		<language name="JPN" width="256">だいすきクラブへ　ようこそ！▼
@@ -514,7 +514,7 @@
 どれだけ　仲良しか　みましょうか？</language>
 	</row>
 
-	<row id="msg_c07r0401_woman2_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0401_woman2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>・はい/いいえの選択肢
 ・はい→ポケモンリスト画面へ
 　いいえ→終了</comment>
@@ -549,7 +549,7 @@
 
 	<row id="msg_c07r0401_woman2_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・なつき度255
-・続けてmsg_c07r0401_woman2_02</comment>
+・続けてwoman2_02</comment>
 		<attribute name="キャラ指定">WOMAN2
 お洒落姉さん</attribute>
 		<language name="JPN" width="256">とびっきり　なついているのね！
@@ -560,7 +560,7 @@
 
 	<row id="msg_c07r0401_woman2_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・なつき度200～254
-・続けてmsg_c07r0401_woman2_02</comment>
+・続けてwoman2_02</comment>
 		<attribute name="キャラ指定">WOMAN2
 お洒落姉さん</attribute>
 		<language name="JPN" width="256">かなり　なついているわね！
@@ -571,7 +571,7 @@
 
 	<row id="msg_c07r0401_woman2_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・なつき度150～199
-・続けてmsg_c07r0401_woman2_02</comment>
+・続けてwoman2_02</comment>
 		<attribute name="キャラ指定">WOMAN2
 お洒落姉さん</attribute>
 		<language name="JPN" width="256">なついてるわね
@@ -582,7 +582,7 @@
 
 	<row id="msg_c07r0401_woman2_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・なつき度100～149
-・続けてmsg_c07r0401_woman2_02</comment>
+・続けてwoman2_02</comment>
 		<attribute name="キャラ指定">WOMAN2
 お洒落姉さん</attribute>
 		<language name="JPN" width="256">うん　すこし　なついてる……
@@ -593,7 +593,7 @@
 
 	<row id="msg_c07r0401_woman2_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・なつき度50～99
-・続けてmsg_c07r0401_woman2_02</comment>
+・続けてwoman2_02</comment>
 		<attribute name="キャラ指定">WOMAN2
 お洒落姉さん</attribute>
 		<language name="JPN" width="256">よくも　わるくもなく……
@@ -604,7 +604,7 @@
 
 	<row id="msg_c07r0401_woman2_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・なつき度1～49
-・続けてmsg_c07r0401_woman2_02</comment>
+・続けてwoman2_02</comment>
 		<attribute name="キャラ指定">WOMAN2
 お洒落姉さん</attribute>
 		<language name="JPN" width="256">うーん……
@@ -615,7 +615,7 @@
 
 	<row id="msg_c07r0401_woman2_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・なつき度0
-・続けてmsg_c07r0401_woman2_02</comment>
+・続けてwoman2_02</comment>
 		<attribute name="キャラ指定">WOMAN2
 お洒落姉さん</attribute>
 		<language name="JPN" width="256">ひょっとして　あなた……▼
@@ -624,6 +624,16 @@
 		<language name="JPN_KANJI" width="256">ひょっとして　あなた……▼
 とっても　厳しい　人？
 すごく　嫌われている　感じ……▼</language>
+	</row>
+
+	<row id="msg_c07r0401_woman2_12" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>・いいえ選択時</comment>
+		<attribute name="キャラ指定">WOMAN2
+お洒落姉さん</attribute>
+		<language name="JPN" width="256">もう　てれやさん……！
+かくさずに　おねえさんに　みせてよ</language>
+		<language name="JPN_KANJI" width="256">もう　照れ屋さん……！
+隠さずに　お姉さんに　みせてよ</language>
 	</row>
 
 	<flowchart-group-list>
