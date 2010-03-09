@@ -8042,9 +8042,9 @@
 		<language name="JPN" width="256">W547-INIMELO</language>
 		<language name="JPN_KANJI" width="256">W547-INIMELO</language>
 	</row>
-	<row id="msg_seq_se_dmy_250">
-		<language name="JPN" width="256">DMY-250</language>
-		<language name="JPN_KANJI" width="256">DMY-250</language>
+	<row id="msg_seq_se_sys_85">
+		<language name="JPN" width="256">SYS-85</language>
+		<language name="JPN_KANJI" width="256">SYS-85</language>
 	</row>
 	<row id="msg_seq_se_dmy_251">
 		<language name="JPN" width="256">DMY-251</language>
