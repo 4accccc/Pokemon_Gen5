@@ -116,7 +116,6 @@ VMCMD_RESULT EvCmdCallEasyTalkApp( VMHANDLE *core, void *wk )
       break;
     case EASYTALK_MODE_PASSWORD:
       guidance = PMSI_GUIDANCE_DEFAULT;   //<<@todo
-      evt_work->PmsType = MYPMS_PMS_TYPE_BATTLE_TOP;    ///<　パスワード
       evt_work->NeedSave = FALSE;
       pmsi_mode = PMSI_MODE_DOUBLE;
       break;
@@ -175,24 +174,32 @@ static GMEVENT_RESULT EasyTalkAppCallEvt( GMEVENT* event, int* seq, void* work )
     if ( PMSI_PARAM_CheckCanceled(prm) ) *(evt_work->Ret) = FALSE;
     else
     {
-      MYPMS_DATA *my_pms;
-      MYPMS_PMS_TYPE type;
-      PMS_DATA   pms;
-      
-      PMSI_PARAM_GetInputDataSentence( prm, &pms );
-      NOZOMU_Printf("input w1=%d w2=%d\n",pms.word[0],pms.word[1]);
-      //セーブする
-      if ( evt_work->NeedSave )
+      if (evt_work->Mode == EASYTALK_MODE_PASSWORD)
       {
-        GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
-        SAVE_CONTROL_WORK* sv;
-        sv = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys));
-        my_pms = SaveData_GetMyPmsData( sv);
-        MYPMS_SetPms( my_pms, evt_work->PmsType, &pms );
+        PMS_WORD word[2];
+        PMSI_PARAM_GetInputDataDouble( prm, word );
+        *(evt_work->Word1) = word[0];
+        *(evt_work->Word2) = word[1];
+      }
+      else
+      {
+        MYPMS_DATA *my_pms;
+        PMS_DATA   pms;
+        PMSI_PARAM_GetInputDataSentence( prm, &pms );
+        //セーブする
+        if ( evt_work->NeedSave )
+        {
+          GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+          SAVE_CONTROL_WORK* sv;
+          sv = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys));
+          my_pms = SaveData_GetMyPmsData( sv);
+          MYPMS_SetPms( my_pms, evt_work->PmsType, &pms );
+        }
+        *(evt_work->Word1) = pms.word[0];
+        *(evt_work->Word2) = pms.word[1];
       }
       *(evt_work->Ret) = TRUE;
-      *(evt_work->Word1) = pms.word[0];
-      *(evt_work->Word2) = pms.word[1];
+      NOZOMU_Printf("input w1=%d w2=%d\n",*(evt_work->Word1),*(evt_work->Word2));
     }
     //解放
     PMSI_PARAM_Delete( evt_work->pmsi );
