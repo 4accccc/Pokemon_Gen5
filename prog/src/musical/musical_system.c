@@ -17,6 +17,7 @@
 #include "snd_strm.naix"
 
 #include "savedata/musical_save.h"
+#include "savedata/musical_dist_save.h"
 #include "musical/musical_system.h"
 #include "musical/musical_local.h"
 #include "musical/musical_program.h"
@@ -266,50 +267,29 @@ void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData )
   GFL_HEAP_FreeMemory( distData );
 }
 
-void MUSICAL_SYSTEM_LoadDistributeData_Data( MUSICAL_DISTRIBUTE_DATA *distData , const u8 programNo , HEAPID heapId )
-{
-  distData->programNo = programNo;
-  if( programNo >= MUS_PROGRAM_LOCAL_NUM )
-  {
-    //FIXME:セーブデータからの取得
-    distData->programData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_PROGDATA , FALSE , heapId , &distData->programDataSize );
-  }
-  else
-  {
-    distData->programData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01+programNo , MUSICAL_ARCDATAID_PROGDATA , FALSE , heapId , &distData->programDataSize );
-  }
-}
-void MUSICAL_SYSTEM_LoadDistributeData_Script( MUSICAL_DISTRIBUTE_DATA *distData , const u8 programNo , HEAPID heapId )
-{
-  distData->programNo = programNo;
-  if( programNo >= MUS_PROGRAM_LOCAL_NUM )
-  {
-    //FIXME:セーブデータからの取得
-    distData->messageData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_GMMDATA , FALSE , heapId , &distData->messageDataSize );
-    distData->scriptData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01 , MUSICAL_ARCDATAID_SCRIPTDATA , FALSE , heapId , &distData->scriptDataSize );
-  }
-  else
-  {
-    distData->messageData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01+programNo , MUSICAL_ARCDATAID_GMMDATA , FALSE , heapId , &distData->messageDataSize );
-    distData->scriptData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM_01+programNo , MUSICAL_ARCDATAID_SCRIPTDATA , FALSE , heapId , &distData->scriptDataSize );
-  }
-}
-void MUSICAL_SYSTEM_LoadDistributeData_Strm( MUSICAL_DISTRIBUTE_DATA *distData , const u8 programNo , HEAPID heapId )
+void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , SAVE_CONTROL_WORK *saveWork , const u8 programNo , HEAPID heapId )
 {
   ARCHANDLE *arcHandle;
+  MUSICAL_DIST_SAVE *distSave;
   MUS_DIST_MIDI_HEADER midiSizeHeader;
   MUS_DIST_MIDI_HEADER *pMidiSizeHeader;
-
   distData->programNo = programNo;
   if( programNo >= MUS_PROGRAM_LOCAL_NUM )
   {
-    //FIXME:セーブデータからの取得
-    arcHandle = GFL_ARC_OpenDataHandle( ARCID_MUSICAL_PROGRAM_01 , GFL_HEAP_LOWID(heapId) );
+    void *musArc;
+    u32 arcSize;
+    distSave = MUSICAL_DIST_SAVE_LoadData( saveWork , heapId );
+    musArc = MUSICAL_DIST_SAVE_GetMusicalArc( distSave );
+    arcSize = MUSICAL_DIST_SAVE_GetMusicalArcSize( distSave );
+    arcHandle = GFL_ARC_OpenDataHandleByMemory( musArc , arcSize , GFL_HEAP_LOWID(heapId) );
   }
   else
   {
     arcHandle = GFL_ARC_OpenDataHandle( ARCID_MUSICAL_PROGRAM_01+programNo , GFL_HEAP_LOWID(heapId) );
   }
+  distData->programData = GFL_ARCHDL_UTIL_LoadEx( arcHandle , MUSICAL_ARCDATAID_PROGDATA , FALSE , heapId , &distData->programDataSize );
+  distData->messageData = GFL_ARCHDL_UTIL_LoadEx( arcHandle , MUSICAL_ARCDATAID_GMMDATA , FALSE , heapId , &distData->messageDataSize );
+  distData->scriptData = GFL_ARCHDL_UTIL_LoadEx( arcHandle , MUSICAL_ARCDATAID_SCRIPTDATA , FALSE , heapId , &distData->scriptDataSize );
 
   midiSizeHeader.seqSize  = GFL_ARC_GetDataSizeByHandle( arcHandle , MUSICAL_ARCDATAID_SSEQDATA );
   midiSizeHeader.bankSize = GFL_ARC_GetDataSizeByHandle( arcHandle , MUSICAL_ARCDATAID_SBNKDATA );
@@ -333,6 +313,10 @@ void MUSICAL_SYSTEM_LoadDistributeData_Strm( MUSICAL_DISTRIBUTE_DATA *distData ,
   GFL_ARC_LoadDataByHandle( arcHandle , MUSICAL_ARCDATAID_SWAVDATA , distData->midiWaveData );
   
   GFL_ARC_CloseDataHandle( arcHandle );
+  if( programNo >= MUS_PROGRAM_LOCAL_NUM )
+  {
+    MUSICAL_DIST_SAVE_UnloadData( distSave );
+  }
 
   ARI_TPrintf("MusicalSystem LoadMidiData[%d][%d][%d].\n",pMidiSizeHeader->seqSize,pMidiSizeHeader->bankSize,pMidiSizeHeader->waveSize);
 }

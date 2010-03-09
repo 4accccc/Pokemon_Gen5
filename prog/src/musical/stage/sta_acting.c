@@ -181,11 +181,9 @@ struct _ACTING_WORK
   s8 ofsCol[3][16];
   u16 transPal[16];
   
-#if MUSICAL_ACT_DL_TEST
-  void* seqData;
-  void* bankData;
-  void* waveData[4];
-#endif //MUSICAL_ACT_DL_TEST
+  void* bgmSeqData;
+  void* bgmBankData;
+  void* bgmWaveData;
 };
 
 //======================================================================
@@ -352,22 +350,11 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
 
   STA_ACT_LoadBg( work , 0 );
   
-  SND_STRM_Init( work->heapId );
   
-#if MUSICAL_ACT_DL_TEST
-  {
-    work->seqData = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_mus_wb_msl_dl_01_sseq , FALSE , work->heapId );
-    work->bankData = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_mus_wb_msl_dl_01_sbnk , FALSE , work->heapId );
-    work->waveData[0] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_voice_swar , FALSE , work->heapId );
-    
-    //PMDSND_PresetExtraMusic( work->seqData , work->bankData , WAVE_MUS_WB_MSL_DL_DUMMY_01 );
-    PMDSND_PresetExtraMusic( work->seqData , work->bankData , SEQ_BGM_MSL_DL_01 );
-    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 11 , work->waveData[0] , 0 );
-    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 12 , work->waveData[0] , 1 );
-    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 13 , work->waveData[0] , 2 );
-    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 14 , work->waveData[0] , 3 );
-  }
-#endif //MUSICAL_ACT_DL_TEST
+  work->bgmSeqData = work->initWork->distData->midiSeqData;
+  work->bgmBankData = work->initWork->distData->midiBnkData;
+  work->bgmWaveData = work->initWork->distData->midiWaveData;
+  PMDSND_PresetExtraMusic( work->bgmSeqData , work->bgmBankData , SEQ_BGM_MSL_DL_01 );
   
   return work;
 }
@@ -379,13 +366,7 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
   DEBUGWIN_ExitProc();
 #endif  //USE_DEBUGWIN_SYSTEM
   
-#if MUSICAL_ACT_DL_TEST
-	PMDSND_StopExtraMusic();
 	PMDSND_ReleaseExtraMusic();
-  GFL_HEAP_FreeMemory( work->waveData[0] );
-  GFL_HEAP_FreeMemory( work->bankData );
-  GFL_HEAP_FreeMemory( work->seqData );
-#endif //MUSICAL_ACT_DL_TEST
 
   //フェードないので仮処理
   GX_SetMasterBrightness(-16);  
@@ -404,7 +385,6 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
   {
     STA_ACT_StopBgm( work );
   }
-  SND_STRM_Exit();
 
   if( work->msgStr != NULL )
   {
@@ -598,8 +578,6 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
   GFL_G3D_DRAW_End();
   //OBJの更新
   GFL_CLACT_SYS_Main();
-
-  SND_STRM_Main();
 
 #if PM_DEBUG
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
@@ -1380,20 +1358,21 @@ void STA_ACT_SetUpdateAttention( ACTING_WORK *work )
 //--------------------------------------------------------------
 void  STA_ACT_StartBgm( ACTING_WORK *work )
 {
-//  SND_STRM_SetUp( ARCID_SNDSTRM, NARC_snd_strm_poketari_swav, SND_STRM_PCM8, SND_STRM_8KHZ, work->heapId );
-//  SND_STRM_SetUpStraightData( SND_STRM_PCM8, 
-//                               SND_STRM_8KHZ, 
-//                               work->heapId , 
-//                               work->initWork->distData->strmData , 
-//                               work->initWork->distData->strmDataSize );
-//  ARI_TPrintf("[%d]\n",work->initWork->distData->strmDataSize);
-//  SND_STRM_Play();
+  PMDSND_PlayExtraMusic(SEQ_BGM_MSL_DL_01);
+  //NNS_SndArcPlayerStartSeq( SOUNDMAN_GetHierarchyPlayerSndHandle(), SEQ_BGM_MSL_DL_01 );
 }
 
 void  STA_ACT_StopBgm( ACTING_WORK *work )
 {
-//  SND_STRM_Stop();
-//  SND_STRM_Release();
+  PMDSND_StopExtraMusic();
+  //NNS_SndPlayerStopSeq(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0);
+  //SOUNDMAN_UnloadHierarchyPlayer();
+}
+
+void  STA_ACT_SetBgmLinkNumber(  ACTING_WORK *work , const u16 dstNum , const u16 srcNum )
+{
+  ARI_TPrintf("LinkSeqWaveData[%d][%d]\n",dstNum,srcNum);
+  PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , dstNum , work->bgmWaveData , srcNum );
 }
 
 #pragma mark [> itemUse func

@@ -72,4 +72,5 @@ SCRIPT_FUNC_DEF( SeqBgmStart )	//1 //SEQ_BGM開始
 SCRIPT_FUNC_DEF( SeqBgmStop )	//1 //SEQ_BGM開始
 SCRIPT_FUNC_DEF( PokeAppealScript )	//2 //アピールスクリプト
 SCRIPT_FUNC_DEF( PokeSubScript )	//2 //サブスクリプト
+SCRIPT_FUNC_DEF( BgmSetDataLink )	//2	//配信BGM：データ関連付け
 

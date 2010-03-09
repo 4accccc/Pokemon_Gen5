@@ -733,7 +733,7 @@ BOOL ZONEDATA_IsWfbc(u16 zone_id)
 BOOL ZONEDATA_IsMusicalWaitingRoom(u16 zone_id)
 {
   zone_id = ControlZoneID(zone_id);
-  return (zone_id == ZONE_ID_C04R0202);
+  return (zone_id == ZONE_ID_C04R0202)||(zone_id == ZONE_ID_C04R0201);
 }
 
 //------------------------------------------------------------------

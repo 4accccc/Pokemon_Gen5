@@ -165,6 +165,8 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
   GMEVENT *event;
   MUSICAL_EVENT_WORK *evWork;
   
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, GFL_HEAP_LOWID(HEAPID_MUSICAL_STRM) , 0x40000 );
+
   ARI_TPrintf("CreateMusicalEvent[%d]\n",isComm);
   
   event = GMEVENT_Create(
@@ -190,7 +192,12 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
   evWork->musSave = MUSICAL_SAVE_GetMusicalSave( evWork->saveCtrl );
   
   evWork->distData = MUSICAL_SYSTEM_InitDistributeData( HEAPID_PROC_WRAPPER );
-
+  if( evWork->isComm == FALSE || 
+      MUS_COMM_GetMode( evWork->scriptWork->commWork ) == MCM_PARENT )
+  {
+    MUSICAL_SYSTEM_LoadDistributeData( evWork->distData , evWork->saveCtrl , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
+  }
+  
   if( evWork->isComm == TRUE )
   {
     evWork->state = MES_ENTER_WAITROOM_FIRST_BEF_COMM;
@@ -221,7 +228,6 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
       evWork->selfIdx = evWork->musicalIndex[0];
       
       //マップ遷移前に演目のデータだけ必要(NPCキャラを出すため
-      MUSICAL_SYSTEM_LoadDistributeData_Data( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_PROC_WRAPPER );
       evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
 
     }
@@ -259,7 +265,6 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
       u32 conPointArr = 0;
       if( MUS_COMM_GetMode( evWork->scriptWork->commWork ) == MCM_PARENT )
       {
-        MUSICAL_SYSTEM_LoadDistributeData_Data( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_PROC_WRAPPER );
         evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
         conPointArr = MUSICAL_PROGRAM_GetConditionPointArr( evWork->progWork );
       }
@@ -283,6 +288,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     break;
     
   case MES_ENTER_WAITROOM_FIRST:
+    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( GFL_HEAPID_APP );
     GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_PROC );
     MUSICAL_EVENT_JumpWaitingRoom( event , evWork );
     evWork->state = MES_WAITROOM_FIRST;
@@ -447,6 +453,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     //FIXME 仮生成処理
     GFL_HEAP_FreeMemory( evWork->pokePara );
     GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_PROC );
+    GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STRM );
     return GMEVENT_RES_FINISH;
   }
 
@@ -460,22 +467,15 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
 //--------------------------------------------------------------
 static void MUSICAL_EVENT_InitMusical( MUSICAL_EVENT_WORK *evWork )
 {
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STRM|HEAPDIR_MASK, 0x80000 );
-  //GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_PROC|HEAPDIR_MASK, 0x8000 );
-
   evWork->musPoke = MUSICAL_SYSTEM_InitMusPoke( evWork->pokePara , HEAPID_PROC_WRAPPER );
   
   if( evWork->isComm == FALSE )
   {
-    MUSICAL_SYSTEM_LoadDistributeData_Script( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
-    MUSICAL_SYSTEM_LoadDistributeData_Strm( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
   }
   else
   {
     if( MUS_COMM_GetMode( evWork->scriptWork->commWork ) == MCM_PARENT )
     {
-      MUSICAL_SYSTEM_LoadDistributeData_Script( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
-      MUSICAL_SYSTEM_LoadDistributeData_Strm( evWork->distData , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
     }
     MUS_COMM_StartSendProgram_Script( evWork->scriptWork->commWork );
   }
@@ -504,8 +504,6 @@ static void MUSICAL_EVENT_TermMusical( MUSICAL_EVENT_WORK *evWork )
   
   MUSICAL_PROGRAM_TermProgramData( evWork->progWork );
   evWork->scriptWork->eventWork = NULL;
-  GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STRM );
-  //GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_PROC );
 
 }
 

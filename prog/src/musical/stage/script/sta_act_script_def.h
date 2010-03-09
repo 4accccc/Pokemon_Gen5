@@ -110,6 +110,7 @@ extern void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const u8 
 extern void STA_ACT_HideMessage( ACTING_WORK *work );
 extern void  STA_ACT_StartBgm(  ACTING_WORK *work );
 extern void  STA_ACT_StopBgm(  ACTING_WORK *work );
+extern void  STA_ACT_SetBgmLinkNumber(  ACTING_WORK *work , const u16 dstNum , const u16 srcNum );
 
 //--------------------------------------------------------------
 //	スクリプト用に外部提供関数

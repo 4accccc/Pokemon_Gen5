@@ -85,8 +85,6 @@ MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_LoadData( SAVE_CONTROL_WORK *sv , HEAPID he
     distSave->saveDataArc = (void*)((u32)distSave->saveData + sizeof(DIST_DATA_HEADER));
   }
   else
-  if( ret == LOAD_RESULT_NULL || 
-      ret == LOAD_RESULT_NG )
   {
     //ƒf[ƒ^‚ª–³‚¢
     distSave->isEnableData = FALSE;
@@ -94,19 +92,16 @@ MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_LoadData( SAVE_CONTROL_WORK *sv , HEAPID he
     distSave->saveDataHeader = distSave->saveData;
     distSave->saveDataArc = (void*)((u32)distSave->saveData + sizeof(DIST_DATA_HEADER));
   }
-  else
-  {
-    //”j‰ó
-    distSave->isEnableData = FALSE;
-    GFL_HEAP_FreeMemory( distSave->saveData );
-    distSave->saveData = NULL;
-  }
   return distSave;
 }
 
 void MUSICAL_DIST_SAVE_UnloadData( MUSICAL_DIST_SAVE *distSave )
 {
   SaveControl_Extra_Unload( distSave->sv , SAVE_EXTRA_ID_MUSICAL_DIST );
+  if( distSave->saveData != NULL )
+  {
+    GFL_HEAP_FreeMemory( distSave->saveData );
+  }
   GFL_HEAP_FreeMemory( distSave );
 }
 

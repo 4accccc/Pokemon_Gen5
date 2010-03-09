@@ -60,16 +60,22 @@ EVENT_START ev_musical_recept_single
     IF $SCWK_ANSWER == FALSE THEN //  選ばなかった
       _CALL ev_musical_exit_common
     ELSE
-      _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_02 )
-      _BALLOONWIN_CLOSE()
+      _CALL recept_select_program
 
-      //入場アニメ
-      _CALL recept_move_obj_solo
+      IF $SCWK_ANSWER == FALSE THEN //  選ばなかった
+        _CALL ev_musical_exit_common
+      ELSE
+        _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_02 )
+        _BALLOONWIN_CLOSE()
 
-      //FIXME ポケモンインデックス設定！
-        _MUSICAL_CALL(selectPoke,MUSICAL_CALL_LOCAL) //ミュージカル呼び出し
-      //ここから処理は帰ってきません。
-      //細かい開放はプログラムで行います。
+        //入場アニメ
+        _CALL recept_move_obj_solo
+
+        //FIXME ポケモンインデックス設定！
+          _MUSICAL_CALL(selectPoke,MUSICAL_CALL_LOCAL) //ミュージカル呼び出し
+        //ここから処理は帰ってきません。
+        //細かい開放はプログラムで行います。
+      ENDIF
     ENDIF
   ELSE
     _CALL ev_musical_exit_common
@@ -189,6 +195,7 @@ ev_musical_recept_comm_core:
   {
     DEFINE_LOCAL isLoop1
     DEFINE_LOCAL isLoop2
+    DEFINE_LOCAL isLoop3
     $isLoop1 = TRUE
     
     WHILE $isLoop1 == TRUE
@@ -203,10 +210,7 @@ ev_musical_recept_comm_core:
       _BMPMENU_START()
       _BALLOONWIN_CLOSE()
 
-      IF $ret == 2 THEN //やめる
-        _CALL ev_musical_exit_common
-        _RET
-      ELSIF $ret == EV_WIN_B_CANCEL THEN
+      IF $ret == 2 || $ret == EV_WIN_B_CANCEL THEN //やめる
         _CALL ev_musical_exit_common
         _RET
       ENDIF
@@ -224,61 +228,69 @@ ev_musical_recept_comm_core:
         _BMPMENU_START()
         _BALLOONWIN_CLOSE()
         
-        IF $retParentChild == 2 THEN //やめる
-          $isLoop2 = FALSE
-        ELSIF $retParentChild == EV_WIN_B_CANCEL THEN
+        IF $retParentChild == 2||$retParentChild == EV_WIN_B_CANCEL  THEN //やめる
           $isLoop2 = FALSE
         ELSE
-          //実際の通信ロビー処理
-          IF $ret == 0 THEN
-            //通信開始
-            //第2引数はWLorIrc
-            _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 1, 0, 0 )
-            _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,1,0,0 )
-
-            //リーダー、グループ別参加処理
-            IF $retParentChild == 0 THEN //リーダー
-              _CALL ev_musical_receipt_comm_connect_ir_parent
-            ELSE //グループ
-              _CALL ev_musical_receipt_comm_connect_ir_child
-            ENDIF
-
-            IF $SCWK_ANSWER == FALSE THEN //接続失敗
-              //通信切って選びなおし
-              _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_EXIT, 1, 0, 0 )
-            ENDIF
-
-          ELSIF $ret == 1 THEN
-            //--------------------------
-            //ここからワイヤレス受付処理
-
-            //通信開始
-            //第2引数はWLorIrc
-            _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 0, 0, 0 )
-            _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,0,0,0 )
-
-            //リーダー、グループ別参加処理
-            IF $retParentChild == 0 THEN //リーダー
-              _CALL ev_musical_receipt_comm_connect_parent
-            ELSE //グループ
-              _CALL ev_musical_receipt_comm_connect_child
-            ENDIF
-
-            IF $SCWK_ANSWER == FALSE THEN //接続失敗
-              //通信切って選びなおし
-              _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_EXIT, 0, 0, 0 )
-            ENDIF
-            //ここまでワイヤレス受付処理
-            //--------------------------
+        
+          IF $retParentChild == 0 THEN
+            //親なので演目選択
+            _CALL recept_select_program
+          ELSE
+            $SCWK_ANSWER = TRUE
           ENDIF
+          
+          IF $SCWK_ANSWER == TRUE THEN
+            //実際の通信ロビー処理
+            IF $ret == 0 THEN
+              //通信開始
+              //第2引数はWLorIrc
+              _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 1, 0, 0 )
+              _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,1,0,0 )
 
-          //WLだけ切断処理するのでここでは成功時のみ
-          IF $SCWK_ANSWER == TRUE THEN //接続成功
-            $isLoop1 = FALSE
-            $isLoop2 = FALSE
+              //リーダー、グループ別参加処理
+              IF $retParentChild == 0 THEN //リーダー
+                _CALL ev_musical_receipt_comm_connect_ir_parent
+              ELSE //グループ
+                _CALL ev_musical_receipt_comm_connect_ir_child
+              ENDIF
+
+              IF $SCWK_ANSWER == FALSE THEN //接続失敗
+                //通信切って選びなおし
+                _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_EXIT, 1, 0, 0 )
+              ENDIF
+
+            ELSIF $ret == 1 THEN
+              //--------------------------
+              //ここからワイヤレス受付処理
+
+              //通信開始
+              //第2引数はWLorIrc
+              _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 0, 0, 0 )
+              _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,0,0,0 )
+
+              //リーダー、グループ別参加処理
+              IF $retParentChild == 0 THEN //リーダー
+                _CALL ev_musical_receipt_comm_connect_parent
+              ELSE //グループ
+                _CALL ev_musical_receipt_comm_connect_child
+              ENDIF
+
+              IF $SCWK_ANSWER == FALSE THEN //接続失敗
+                //通信切って選びなおし
+                _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_EXIT, 0, 0, 0 )
+              ENDIF
+              //ここまでワイヤレス受付処理
+              //--------------------------
+            ENDIF
+
+            //WLだけ切断処理するのでここでは成功時のみ
+            IF $SCWK_ANSWER == TRUE THEN //接続成功
+              $isLoop1 = FALSE
+              $isLoop2 = FALSE
+            ENDIF
+
+            //実際の通信ロビー処理ここまで
           ENDIF
-
-          //実際の通信ロビー処理ここまで
         ENDIF
       }//WHILE isLoop2
       ENDWHILE
@@ -430,6 +442,42 @@ ev_musical_select_poke:
  _RET
 
 /*************************************************************/
+/*            演目選択ルーチン */
+/*************************************************************/
+recept_select_program:
+
+  DEFINE_LOCAL enableDist
+
+  _GET_MUSICAL_VALUE( MUSICAL_VALUE_IS_ENABLE_DIST_DATA , 0 , enableDist )
+  
+  _TALK_OBJ_START()
+
+  _BALLOONWIN_OBJMSG_POS( msg_musical_test_04, SCWK_TARGET_OBJID, POS_DL )
+  //メニュー作成
+  _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+  //リスト追加
+  _BMPMENU_MAKE_LIST( msg_musical_program_01, 0 )
+  _BMPMENU_MAKE_LIST( msg_musical_program_02, 1 )
+  _BMPMENU_MAKE_LIST( msg_musical_program_03, 2 )
+  _BMPMENU_MAKE_LIST( msg_musical_program_04, 3 )
+  IF $enableDist == TRUE THEN
+    _BMPMENU_MAKE_LIST( msg_musical_program_05, 4 )
+  ENDIF
+  _BMPMENU_MAKE_LIST( msg_musical_program_06, 5 ) //やめる
+  //メニュー表示
+  _BMPMENU_START()
+  _BALLOONWIN_CLOSE()
+
+  IF $SCWK_ANSWER == 5 || $SCWK_ANSWER == EV_WIN_B_CANCEL THEN
+    $SCWK_ANSWER = FALSE
+  ELSE
+    _SET_MUSICAL_VALUE_SELECT_PROGRAM( SCWK_ANSWER )
+    $SCWK_ANSWER = TRUE
+  ENDIF
+
+_RET
+
+/*************************************************************/
 /*            受付演出(一人)          */
 /*************************************************************/
 recept_move_obj_solo:
@@ -513,7 +561,7 @@ EVENT_START ev_musical_change_program
   _BMPMENU_START()
   _BALLOONWIN_CLOSE()
 
-  IF $SCWK_ANSWER == 6 THEN
+  IF $SCWK_ANSWER == 5 || $SCWK_ANSWER == EV_WIN_B_CANCEL THEN
     //NoFunction!
   ELSE
     _SET_MUSICAL_VALUE_SELECT_PROGRAM( SCWK_ANSWER )

@@ -1974,6 +1974,20 @@ SCRIPT_FUNC_DEF( BgmStop )
 
   return SFT_CONTINUE;
 }
+SCRIPT_FUNC_DEF( BgmSetDataLink )
+{
+  STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+  STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  const s32 dstNo = ScriptFunc_GetValueS32();
+  const s32 scrNo = ScriptFunc_GetValueS32();
+
+  SCRIPT_PRINT_LABEL(BgmSetDataLink);
+  
+  STA_ACT_SetBgmLinkNumber( work->actWork , dstNo , scrNo );
+  
+  return SFT_CONTINUE;
+}
+
 #include "sound/sound_manager.h"
 
 SCRIPT_FUNC_DEF( SeqBgmStart )  //SEQ_BGM開始
@@ -1982,12 +1996,7 @@ SCRIPT_FUNC_DEF( SeqBgmStart )  //SEQ_BGM開始
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
   const s32 bgmNo = ScriptFunc_GetValueS32();
 
-#if MUSICAL_ACT_DL_TEST
-  //PMDSND_PlayExtraMusic();
-  NNS_SndArcPlayerStartSeq( SOUNDMAN_GetHierarchyPlayerSndHandle(), SEQ_BGM_MSL_DL_01 );
-#else
   PMSND_PlayBGM( bgmNo );
-#endif //MUSICAL_ACT_DL_TEST
 
 
   return SFT_CONTINUE;
@@ -1998,13 +2007,7 @@ SCRIPT_FUNC_DEF( SeqBgmStop )   //SEQ_BGM開始
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
   
-#if MUSICAL_ACT_DL_TEST
-  NNS_SndPlayerStopSeq(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0);
-  SOUNDMAN_UnloadHierarchyPlayer();
-  //PMDSND_StopExtraMusic();
-#else
   PMSND_StopBGM( );
-#endif //MUSICAL_ACT_DL_TEST
 
   return SFT_CONTINUE;
 }

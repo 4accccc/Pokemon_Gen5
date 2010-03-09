@@ -68,7 +68,8 @@
 #define SCRIPT_ENUM_SeqBgmStop   (49)
 #define SCRIPT_ENUM_PokeAppealScript (50)
 #define SCRIPT_ENUM_PokeSubScript (51)
-#define SEQ_END             (52)
+#define SCRIPT_ENUM_BgmSetDataLink (52)
+#define SEQ_END             (53)
 
 #ifndef __C_NO_DEF_
 
@@ -1004,6 +1005,23 @@
 //======================================================================
   .macro  ComBgmStop
   .short  SCRIPT_ENUM_BgmStop
+  .endm
+//======================================================================
+/**
+ * @brief BGM：データ関連付け
+ *
+ * #param_num 2
+ * @param dstIdx Bankの方の番号
+ * @param srcIdx Waveの方の番号
+ *
+ * #param VALUE_INT dstIdx
+ * #param VALUE_INT srcIdx
+ */
+//======================================================================
+  .macro  ComBgmSetDataLink dstIdx srcIdx
+  .short  SCRIPT_ENUM_BgmSetDataLink
+  .long \dstIdx
+  .long \srcIdx
   .endm
 
 //======================================================================
