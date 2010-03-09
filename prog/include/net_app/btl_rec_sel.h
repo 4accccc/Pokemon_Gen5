@@ -47,8 +47,9 @@ extern const GFL_PROC_DATA    BTL_REC_SEL_ProcData;
 //=====================================
 typedef struct _BTL_REC_SEL_PARAM
 {
-  GAMEDATA*         gamedata;           ///< [in,out]  GAMEDATA
-  BOOL              b_rec;              ///< [in]      録画セーブ可能のときTRUE
+  GAMEDATA*         gamedata;           ///< [in,out]  GAMEDATA  // 性別判定、バトルレコーダーの有無判定、セーブデータ取得
+  BOOL              b_rec;              ///< [in]      サーバーバージョンを比較した結果、録画セーブ可能のときTRUE
+  BOOL              b_sync;             ///< [in]      同期を取る必要があるときTRUE
 }
 BTL_REC_SEL_PARAM;
 

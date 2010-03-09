@@ -15,4 +15,3 @@
 #define answer01 (1436) // おじいさん
 #define answer02 (1680) // ダウジング
 #define answer03 (1683) // デジタル
-#define answer04 (1683) // デジタル

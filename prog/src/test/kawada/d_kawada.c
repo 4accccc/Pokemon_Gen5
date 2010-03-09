@@ -45,17 +45,27 @@
 // 全国図鑑賞状
 #include "app/zenkoku_zukan_award.h"
 
+// 通信対戦後の録画選択画面
+#include "net_app/btl_rec_sel.h"
+
+// 二択簡易会話
+// 一択簡易会話
+#include "app/pms_input.h"
+
+
 // オーバーレイ
 FS_EXTERN_OVERLAY(zukan_toroku);
 FS_EXTERN_OVERLAY(th_award);
 FS_EXTERN_OVERLAY(chihou_zukan_award);
 FS_EXTERN_OVERLAY(zenkoku_zukan_award);
+FS_EXTERN_OVERLAY(btl_rec_sel);
+FS_EXTERN_OVERLAY(pmsinput);
 
 
 //============================================================================================
 //	定数定義
 //============================================================================================
-#define	TOP_MENU_SIZ	( 4 )
+#define	TOP_MENU_SIZ	( 7 )
 
 typedef struct {
 	u32	main_seq;
@@ -89,6 +99,13 @@ typedef struct {
   // 全国図鑑賞状
   ZENKOKU_ZUKAN_AWARD_PARAM*   zenkoku_zukan_award_param;
 
+  // 通信対戦後の録画選択画面
+  BTL_REC_SEL_PARAM*     btl_rec_sel_param;
+
+  // 二択簡易会話
+  // 一択簡易会話
+  PMSI_PARAM*    pmsi_param;
+
 }KAWADA_MAIN_WORK;
 
 enum {
@@ -101,12 +118,18 @@ enum {
 	MAIN_SEQ_TH_AWARD_CALL,
 	MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL,
 	MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL,
+	MAIN_SEQ_BTL_REC_SEL_CALL,
+	MAIN_SEQ_PMS_INPUT_DOUBLE_CALL,
+	MAIN_SEQ_PMS_INPUT_SINGLE_CALL,
   // ここまで
 
 	MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN,
 	MAIN_SEQ_TH_AWARD_CALL_RETURN,
 	MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL_RETURN,
 	MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL_RETURN,
+	MAIN_SEQ_BTL_REC_SEL_CALL_RETURN,
+	MAIN_SEQ_PMS_INPUT_DOUBLE_CALL_RETURN,
+	MAIN_SEQ_PMS_INPUT_SINGLE_CALL_RETURN,
 	
   MAIN_SEQ_END,
 };
@@ -144,6 +167,18 @@ static void ChihouZukanAwardExit( KAWADA_MAIN_WORK* wk );
 // 全国図鑑賞状
 static void ZenkokuZukanAwardInit( KAWADA_MAIN_WORK* wk );
 static void ZenkokuZukanAwardExit( KAWADA_MAIN_WORK* wk );
+
+// 通信対戦後の録画選択画面
+static void BtlRecSelInit( KAWADA_MAIN_WORK* wk );
+static void BtlRecSelExit( KAWADA_MAIN_WORK* wk );
+
+// 二択簡易会話
+static void PmsInputDoubleInit( KAWADA_MAIN_WORK* wk );
+static void PmsInputDoubleExit( KAWADA_MAIN_WORK* wk );
+
+// 一択簡易会話
+static void PmsInputSingleInit( KAWADA_MAIN_WORK* wk );
+static void PmsInputSingleExit( KAWADA_MAIN_WORK* wk );
 
 
 //============================================================================================
@@ -302,6 +337,42 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     break;
   case MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL_RETURN:
     ZenkokuZukanAwardExit(wk); 
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+
+
+  // 通信対戦後の録画選択画面
+  case MAIN_SEQ_BTL_REC_SEL_CALL:
+    BtlRecSelInit(wk);
+		wk->main_seq = MAIN_SEQ_BTL_REC_SEL_CALL_RETURN;
+    break;
+  case MAIN_SEQ_BTL_REC_SEL_CALL_RETURN:
+    BtlRecSelExit(wk); 
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+
+
+  // 二択簡易会話
+  case MAIN_SEQ_PMS_INPUT_DOUBLE_CALL:
+    PmsInputDoubleInit(wk);
+		wk->main_seq = MAIN_SEQ_PMS_INPUT_DOUBLE_CALL_RETURN;
+    break;
+  case MAIN_SEQ_PMS_INPUT_DOUBLE_CALL_RETURN:
+    PmsInputDoubleExit(wk); 
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+
+
+  // 一択簡易会話
+  case MAIN_SEQ_PMS_INPUT_SINGLE_CALL:
+    PmsInputSingleInit(wk);
+		wk->main_seq = MAIN_SEQ_PMS_INPUT_SINGLE_CALL_RETURN;
+    break;
+  case MAIN_SEQ_PMS_INPUT_SINGLE_CALL_RETURN:
+    PmsInputSingleExit(wk); 
 		FadeInSet( wk, MAIN_SEQ_INIT );
 		wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
@@ -591,5 +662,95 @@ static void ZenkokuZukanAwardExit( KAWADA_MAIN_WORK* wk )
   ZENKOKU_ZUKAN_AWARD_FreeParam( wk->zenkoku_zukan_award_param );
   GFL_HEAP_FreeMemory( wk->mystatus );
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(zenkoku_zukan_award));
+}
+
+// 通信対戦後の録画選択画面
+static void BtlRecSelInit( KAWADA_MAIN_WORK* wk )
+{
+  BOOL        b_rec       = TRUE;
+  BOOL        b_sync      = TRUE;
+  MYSTATUS*   mystatus    = GAMEDATA_GetMyStatus( wk->gamedata );
+  MYITEM_PTR  myitem_ptr  = GAMEDATA_GetMyItem( wk->gamedata );
+  if( MYITEM_CheckItem( myitem_ptr, ITEM_BATORUREKOODAA, 1, wk->heapID ) )
+  {
+    MYITEM_SubItem( myitem_ptr, ITEM_BATORUREKOODAA, 1, wk->heapID );
+  }
+
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(btl_rec_sel));
+
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) b_rec = FALSE;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ) b_sync = FALSE;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  {
+    mystatus->sex = 0;
+  }
+  else
+  {
+    mystatus->sex = 1;
+  }
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+  {
+    MYITEM_AddItem( myitem_ptr, ITEM_BATORUREKOODAA, 1, wk->heapID );
+  }
+
+  wk->btl_rec_sel_param = BTL_REC_SEL_AllocParam( wk->heapID, wk->gamedata, b_rec );
+  wk->btl_rec_sel_param->b_sync = b_sync;
+  
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &BTL_REC_SEL_ProcData, wk->btl_rec_sel_param );
+}
+static void BtlRecSelExit( KAWADA_MAIN_WORK* wk )
+{
+  BTL_REC_SEL_FreeParam( wk->btl_rec_sel_param );
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(btl_rec_sel));
+}
+
+// 二択簡易会話
+static void PmsInputDoubleInit( KAWADA_MAIN_WORK* wk )
+{
+  SAVE_CONTROL_WORK*  sv  = GAMEDATA_GetSaveControlWork( wk->gamedata );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(pmsinput) );
+  wk->pmsi_param = PMSI_PARAM_Create( PMSI_MODE_DOUBLE, PMSI_GUIDANCE_DEFAULT, NULL, TRUE, sv, wk->heapID );
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ProcData_PMSInput, wk->pmsi_param );
+}
+static void PmsInputDoubleExit( KAWADA_MAIN_WORK* wk )
+{
+  if( PMSI_PARAM_CheckModified( wk->pmsi_param ) )
+  { 
+    //PMS_DATA pms;
+    //PMSI_PARAM_GetInputDataSentence( wk->pmsi_param, &pms );
+    //OS_Printf( "%d, %d\n", pms.word[0], pms.word[1] );
+    PMS_WORD word[2];
+    PMSI_PARAM_GetInputDataDouble(  wk->pmsi_param, word );
+    OS_Printf( "double: %d, %d\n", word[0], word[1] );
+  }
+  else
+  {
+    OS_Printf( "double: not modified\n" );
+  }
+  PMSI_PARAM_Delete( wk->pmsi_param );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(pmsinput) );
+}
+
+// 一択簡易会話
+static void PmsInputSingleInit( KAWADA_MAIN_WORK* wk )
+{
+  SAVE_CONTROL_WORK*  sv  = GAMEDATA_GetSaveControlWork( wk->gamedata );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(pmsinput) );
+  wk->pmsi_param = PMSI_PARAM_Create( PMSI_MODE_SINGLE, PMSI_GUIDANCE_DEFAULT, NULL, TRUE, sv, wk->heapID );
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ProcData_PMSInput, wk->pmsi_param );
+}
+static void PmsInputSingleExit( KAWADA_MAIN_WORK* wk )
+{
+  if( PMSI_PARAM_CheckModified( wk->pmsi_param ) )
+  { 
+    PMS_WORD word = PMSI_PARAM_GetInputDataSingle( wk->pmsi_param );
+    OS_Printf( "single: %d\n", word );
+  }
+  else
+  {
+    OS_Printf( "single: not modified\n" );
+  }
+  PMSI_PARAM_Delete( wk->pmsi_param );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(pmsinput) );
 }
 

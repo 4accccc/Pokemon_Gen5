@@ -9,7 +9,7 @@
  *  モジュール名：BTL_REC_SEL
  */
 //============================================================================
-//#define OFFLINE_TEST
+#define OFFLINE_TEST
 
 
 // インクルード
@@ -249,6 +249,7 @@ typedef struct
   GFL_BMPWIN*                 fix_bmpwin[FIX_MAX];
   u32                         fix_frame;
   u32                         fix_wait_count;
+  BOOL                        fix_pause;   // TRUEのとき一時停止中
   BOOL                        fix_timeup;  // TRUEのとき時間切れ
   PRINT_UTIL*                 fix_print_util_pre;
   PRINT_UTIL*                 fix_print_util_pre_title;
@@ -519,6 +520,8 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
     Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
         GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
     Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_REC, msg_record_01_01, TRUE );
+    Btl_Rec_Sel_FixStartTime( param, work, 30, work->qa_non );
+    work->fix_pause = TRUE;
   }
   else
   {
@@ -598,7 +601,10 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
   case SEQ_FADE:
     { 
       if( !GFL_FADE_CheckFade() )
+      {
+        work->fix_pause = TRUE;
         (*seq) = work->fade_next_seq;
+      }
     }
     break;
   case SEQ_QA_INIT:
@@ -612,7 +618,6 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       if( Btl_Rec_Sel_TextWaitStream( param, work ) )
       {
         Btl_Rec_Sel_YnStartSel( param, work );
-        Btl_Rec_Sel_FixStartTime( param, work, 30, work->qa_non );
         (*seq) = work->qa_next_seq;
       }
     }
@@ -628,37 +633,37 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       u32 ret = BmpMenu_YesNoSelectMain( work->yn_wk );
       if( ret != BMPMENU_NULL )
       {
-        Btl_Rec_Sel_FixEndTime( param, work, work->qa_non );
-      }
-      else
-      {
-        if( work->fix_timeup )
-        {
-          ret = BMPMENU_CANCEL;
-          BmpMenu_YesNoMenuExit( work->yn_wk );
-        }
-      }
-
-      if( ret != BMPMENU_NULL )
-      {
         if( ret == 0 )
         {
           LOAD_RESULT result;
 #ifdef OFFLINE_TEST
-          BOOL ret = TRUE; 
+          BOOL btl_data = TRUE; 
 #else
-          BOOL ret = BattleRec_DataOccCheck( sv, work->heap_id, &result, LOADDATA_MYREC ); 
+          BOOL btl_data = BattleRec_DataOccCheck( sv, work->heap_id, &result, LOADDATA_MYREC ); 
           // resultがRECLOAD_RESULT_OKならTRUEが返ってくるようだ
 #endif
 
-          if( ret )  // 録画データがある場合
+          if( btl_data )  // 録画データがある場合
+          {
+            work->fix_pause = TRUE;
             Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_PRE_SHOW_ON,
                 GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, INSIDE_FADE_OUT_WAIT );
+          }
           else
+          {
+            Btl_Rec_Sel_FixEndTime( param, work, work->qa_non );
             (*seq) = SEQ_SAVE_INIT;
+          }
         }
         else
+        {
           Btl_Rec_Sel_ChangeSeqQa( seq, param, work, SEQ_QA_ANS_NOREC, msg_record_02_01, TRUE );
+        }
+      }
+      else if( work->fix_timeup )
+      {
+        BmpMenu_YesNoMenuExit( work->yn_wk );
+        (*seq) = SEQ_WAIT_INIT;
       }
     }
     break;
@@ -667,23 +672,20 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       u32 ret = BmpMenu_YesNoSelectMain( work->yn_wk );
       if( ret != BMPMENU_NULL )
       {
-        Btl_Rec_Sel_FixEndTime( param, work, work->qa_non );
-      }
-      else
-      {
-        if( work->fix_timeup )
+        if( ret == 0 )
         {
-          ret = BMPMENU_CANCEL;
-          BmpMenu_YesNoMenuExit( work->yn_wk );
+          Btl_Rec_Sel_FixEndTime( param, work, work->qa_non );
+          (*seq) = SEQ_WAIT_INIT;
+        } 
+        else
+        {
+          Btl_Rec_Sel_ChangeSeqQa( seq, param, work, SEQ_QA_ANS_REC, msg_record_01_01, TRUE );
         }
       }
-
-      if( ret != BMPMENU_NULL )
+      else if( work->fix_timeup )
       {
-        if( ret == 0 )
-          (*seq) = SEQ_WAIT_INIT;
-        else
-          Btl_Rec_Sel_ChangeSeqQa( seq, param, work, SEQ_QA_ANS_REC, msg_record_01_01, TRUE );
+        BmpMenu_YesNoMenuExit( work->yn_wk );
+        (*seq) = SEQ_WAIT_INIT;
       }
     }
     break;
@@ -1200,6 +1202,8 @@ static void Btl_Rec_Sel_FixMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wor
 {
   u8 i;
 
+  if( work->fix_pause ) return;
+
   if( work->fix_frame >= FPS || work->fix_wait_count > 0 )
   {
     // 残り時間表示を更新する
@@ -1357,6 +1361,7 @@ static void Btl_Rec_Sel_FixStartTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK
 {
   work->fix_frame = sec * FPS + (FPS-1);
   work->fix_wait_count = FPS /2;
+  work->fix_pause = FALSE;
   work->fix_timeup = FALSE;
 
   if( b_y_ori )
