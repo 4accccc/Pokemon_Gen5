@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-04T15:45:21"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T19:51:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -451,7 +451,7 @@
 次に会うときは　ぼくが勝つよ▼</language>
 	</row>
 
-	<row id="msg_r07_fighterw1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r07_fighterw1_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">FIGHTREW
@@ -464,17 +464,23 @@
 おちちゃうから　とまらないでね！</language>
 	</row>
 
-	<row id="msg_r07_fighterw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07_fighterw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・仮配置
 ・技マシン入手前
-　アイテム入手処理</comment>
+　アイテム入手処理
+　No384「チャージビーム」</comment>
 		<attribute name="キャラ指定">FIGHTREW
 格闘家♀</attribute>
-		<language name="JPN" width="256">かりメッセージ
-この　わざマシンを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ
-この　わざマシンを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">むむ！　この　わたしに
+はなしかけるとは……▼
+なかなかの　トレーナーね
+あなた　きにいったわ！▽
+わざマシンを　うけとりなさい！▼</language>
+		<language name="JPN_KANJI" width="256">むむ！　この　わたしに
+話しかけるとは……▼
+なかなかの　トレーナーね
+あなた　気に入ったわ！▽
+わざマシンを　受け取りなさい！▼</language>
 	</row>
 
 	<row id="msg_r07_fighterw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -482,10 +488,16 @@
 ・技マシン入手後</comment>
 		<attribute name="キャラ指定">FIGHTREW
 格闘家♀</attribute>
-		<language name="JPN" width="256">かりメッセージ
-もらった　わざマシンの　かいせつ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ
-もらった　わざマシンの　解説</language>
+		<language name="JPN" width="256">チャージビームは　つかった
+ポケモンの　とくこうを▽
+たまに　あげることが　あるの▼
+うまくいけば　どんどん
+いりょくが　あがっていくのよ！</language>
+		<language name="JPN_KANJI" width="256">チャージビームは　使った
+ポケモンの　特攻を▽
+たまに　あげることが　あるの▼
+うまくいけば　どんどん
+技の　威力が　あがっていくのよ！</language>
 	</row>
 
 	<row id="msg_r07_oldwoman_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">

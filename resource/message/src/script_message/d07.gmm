@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-04T17:28:02"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T19:53:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -404,7 +404,7 @@
 		<comment>♂
 ・主人公と隣接してメッセージ表示
 ・アイテム入手処理
-　No328「わざマシン０１」（暫定）
+　No367「つばめがえし」
 ・続けてchampion_05</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
 		<language name="JPN" width="256">ほら　おまえさんも▼</language>
@@ -416,11 +416,17 @@
 ・表示後、画面左に移動
 ・続けてblack_04</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『じゃあな
+		<language name="JPN" width="256">アデク『その　わざ
+つばめがえしは　かならず▽
+あいてに　あたる　わざよ！▼
+じゃあな
 わかき　トレーナーたち▼
 ともにあゆむ　ポケモンが
 なにをのぞむか　わすれるなよ！▼</language>
-		<language name="JPN_KANJI" width="256">アデク『じゃあな
+		<language name="JPN_KANJI" width="256">アデク『その　技
+つばめがえしは　必ず▽
+相手に　当たる　技よ！▼
+じゃあな
 若き　トレーナーたち▼
 ともに歩む　ポケモンが
 なにを望むか　忘れるなよ！▼</language>
