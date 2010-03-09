@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-10-15T14:52:36" source="gate_01.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-03-09T12:34:08"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -22,12 +22,199 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="1 1"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
 <box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
+
+<tex_image_array size="8">
+	<tex_image index="0" name="h_kage"
+		width="8" height="8" original_width="8" original_height="8"
+		format="a3i5"
+		palette_name="h_kage_pl"
+		path="C:/home/wb_data3d/field/in46/chip/tex/h_kage.tga"
+	>
+		<bitmap size="32">
+			2020 2020 2020 2020 2020 2020 2020 2020
+			4040 4040 4040 4040 4040 4040 4040 4040
+			4040 4040 4040 4040 4040 4040 4040 4040
+			4040 4040 4040 4040 4040 4040 4040 4040
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="in04_wlab10"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="color"
+		palette_name="in04_wlab10_pl"
+		path="C:/home/wb_data3d/field/in04/chip/tex/in04_wlab10.tga"
+	>
+		<bitmap size="8">
+			0000 0000 5555 aaaa aaaa aaaa aaaa aaaa
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="in46_ph01"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="in46_ph01_pl"
+		path="C:/home/wb_data3d/field/in46/chip/tex/in46_ph01.tga"
+	>
+		<bitmap size="32">
+			0000 0000 5554 1555 5554 1555 aa94 16aa
+			a954 16aa a954 16aa aa94 155a aa94 155a
+			aa94 16aa aa94 16aa 5594 16aa 5594 16aa
+			aa94 16aa 5554 1555 5554 1555 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="in46_ph02"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in46_ph02_pl"
+		path="C:/home/wb_data3d/field/in46/chip/tex/in46_ph02.tga"
+	>
+		<bitmap size="256">
+			0011 0000 0000 0000 0000 0000 0000 1100
+			0141 0000 0000 0000 0000 0000 0000 1410
+			1441 1111 1111 1111 1111 1111 1111 1441
+			4411 3331 3333 3333 3333 3333 1333 1144
+			4112 3314 3333 3333 3333 3333 4133 2114
+			1124 3144 3333 3333 3333 3333 4413 4211
+			1124 1441 3333 3333 3333 3333 1441 4211
+			3124 4411 3331 3333 3333 1333 1144 4213
+			3124 4113 3314 3333 3333 4133 3114 4213
+			3124 1133 3144 3333 3333 4413 3311 4213
+			3124 1333 1441 3333 3333 1441 3331 4213
+			3124 3333 4411 3331 1333 1144 3333 4213
+			3124 3333 4113 3314 4133 3114 3333 4213
+			3124 3333 1133 3144 4413 3311 3333 4213
+			1124 1111 1111 1441 1441 1111 1111 4211
+			3124 3333 3333 4411 1144 3333 3333 4213
+			3124 3333 3333 4113 3114 3333 3333 4213
+			3124 3333 3333 4413 3144 3333 3333 4213
+			3124 3333 3333 1441 1441 3333 3333 4213
+			1124 1111 1111 1144 4411 1111 1111 4211
+			3124 3333 4133 3114 4113 3314 3333 4213
+			3124 3333 4413 3311 1133 3144 3333 4213
+			3124 3333 1441 3331 1333 1441 3333 4213
+			3124 1333 1144 3333 3333 4411 3331 4213
+			3124 4133 3114 3333 3333 4113 3314 4213
+			3124 4413 3311 3333 3333 1133 3144 4213
+			3124 1441 3331 3333 3333 1333 1441 4213
+			1124 1144 3333 3333 3333 3333 4411 4211
+			4124 3114 3333 3333 3333 3333 4113 4214
+			4414 4411 4444 4444 4444 4444 1144 4144
+			1441 1111 1111 1111 1111 1111 1111 1441
+			1141 1111 1111 1111 1111 1111 1111 1411
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="in46_ph03"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in46_ph03_pl"
+		path="C:/home/wb_data3d/field/in46/chip/tex/in46_ph03.tga"
+	>
+		<bitmap size="64">
+			2211 0012 5544 3355 2211 0012 5544 3355
+			2211 0012 5544 3355 2211 0012 5544 3355
+			2211 0012 5544 3355 2211 0012 5544 3355
+			2211 0012 5544 3355 2211 0012 5544 3355
+			2211 0012 5544 3355 2211 0012 5544 3355
+			2211 0012 5544 3355 2211 0012 5544 3355
+			2211 0012 5544 3355 2211 0012 5544 3355
+			2211 0012 5544 3355 2211 0012 5544 3355
+		</bitmap>
+	</tex_image>
+	<tex_image index="5" name="in46_ph04"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in46_ph04_pl"
+		path="C:/home/wb_data3d/field/in46/chip/tex/in46_ph04.tga"
+	>
+		<bitmap size="64">
+			3377 6644 1166 9991 3377 6644 1166 9991
+			0000 0000 0000 0000 0000 0000 0000 0000
+			2200 2222 2222 0022 5520 7777 7777 0255
+			7520 8887 8888 0258 7520 8888 8888 0288
+			7520 8888 8887 0288 7520 7888 8877 0288
+			7520 8888 8887 0278 7520 8887 7888 0277
+			7520 7777 7777 0257 5520 7777 7777 0255
+			2200 2222 2222 0022 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="6" name="in46_ph05"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in46_ph05_pl"
+		path="C:/home/wb_data3d/field/in46/chip/tex/in46_ph05.tga"
+	>
+		<bitmap size="128">
+			1100 0000 0000 0011 4410 0001 1000 0144
+			3310 1111 1111 0133 2310 4431 1344 0123
+			2310 3321 1233 0123 2310 1111 1111 0123
+			2310 0001 1000 0123 2310 0001 1000 0123
+			2310 0001 1000 0123 2310 0001 1000 0123
+			2310 1111 1111 0123 2310 4431 1344 0123
+			2310 3321 1233 0123 2310 1111 1111 0123
+			2310 0001 1000 0123 2310 0001 1000 0123
+			2310 0001 1000 0123 2310 0001 1000 0123
+			2310 1111 1111 0123 2310 4431 1344 0123
+			2310 3321 1233 0123 2310 1111 1111 0123
+			2310 0001 1000 0123 2310 0001 1000 0123
+			2310 0001 1000 0123 2310 0001 1000 0123
+			2310 1111 1111 0123 2310 4431 1344 0123
+			2310 3321 1233 0123 2310 1111 1111 0123
+			2310 0001 1000 0123 1100 0000 0000 0011
+		</bitmap>
+	</tex_image>
+	<tex_image index="7" name="m_h03_05"
+		width="8" height="16" original_width="8" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="m_h03_05_pl"
+		path="C:/home/wb_data3d/field/in01/chip/tex/m_h03_05.tga"
+	>
+		<bitmap size="32">
+			3210 0123 1100 0011 3210 0123 3210 0123
+			3210 0123 3210 0123 3210 0123 3210 0123
+			3210 0123 3210 0123 3210 0123 3210 0123
+			3210 0123 3210 0123 4321 1234 3210 0123
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="8">
+	<tex_palette index="0" name="h_kage_pl" color_size="8">
+		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="in04_wlab10_pl" color_size="4">
+		298a 31cb 35ed 7fff
+	</tex_palette>
+	<tex_palette index="2" name="in46_ph01_pl" color_size="4">
+		466e 4a8f 4eb0 7fff
+	</tex_palette>
+	<tex_palette index="3" name="in46_ph02_pl" color_size="8">
+		4ef6 5b39 5f5a 637a 679c 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="4" name="in46_ph03_pl" color_size="8">
+		3e9a 46db 4f1c 5f56 6377 6798 7fff 7fff
+	</tex_palette>
+	<tex_palette index="5" name="in46_ph04_pl" color_size="16">
+		0000 398c 3d6b 3f3a 4f9d 5e31 63ff 6ed5
+		7b5a 7f9c 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="6" name="in46_ph05_pl" color_size="8">
+		0000 314a 398c 49f0 5252 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="7" name="m_h03_05_pl" color_size="8">
+		154b 1d6c 21cf 2a12 3274 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
 
 <material_array size="1">
 	<material index="0" name="lambert1"
@@ -131,6 +318,39 @@
 
 <output_info vertex_size="24" polygon_size="6"
 	triangle_size="0" quad_size="6"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="V‹KƒV[" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="8">
+		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="6" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="7" disp_pos="0.000000 0.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="8">
+		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="6" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="7" disp_pos="0.000000 0.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="1">
+		<ex_material index="0" disp_pos="0.000000 240.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="1">
+		<ex_polygon index="0" disp_pos="0.000000 180.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="1">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
