@@ -37,9 +37,6 @@ EVENT_START   ev_gameover_recover_pokecen
   DEFINE_LOCAL  i_pz
   DEFINE_LOCAL  i_target_get
 
-  _ME_PLAY( SEQ_ME_ASA )
-  _ME_WAIT()
-
 //マップフェードイン
 	_MAP_FADE_BLACK_IN_FORCE( )
 	_MAP_FADE_END_CHECK()
