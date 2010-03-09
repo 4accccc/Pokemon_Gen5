@@ -60,6 +60,8 @@ typedef enum  {
   REGULATION_SHOW_POKE,  ///<    #ポケモン見せ合いONOFF
   REGULATION_SHOW_POKE_TIME,  ///<    #ポケモン見せ合い制限時間 0は無制限
   REGULATION_BATTLETYPE,  ///<  バトルタイプ
+  REGULATION_BTLCOUNT,  ///<  戦闘規定回数
+  REGULATION_VETO_SHOOTER_ITEM,  ///<  シューター禁止道具
 } REGULATION_PARAM_TYPE;
 
 typedef enum  {
@@ -126,6 +128,7 @@ typedef enum {
 
 #define REG_POKENUM_MAX_BYTE (656/8)  //##このくらいに増えるかも ８２バイト
 #define REG_ITEMNUM_MAX_BYTE (608/8)  //##このくらいにふえるかも
+#define REG_SHOOTER_ITEMNUM_MAX_BYTE  (56/8)  //##このくらいにふえるかも
 
 
 typedef struct{
@@ -151,6 +154,8 @@ typedef struct{
   u8 SHOW_POKE;  ///<    #ポケモン見せ合い
   u8 SHOW_POKE_TIME;  ///<ポケモン見せ合い時間
   u8 BATTLE_TYPE;    ///< バトルタイプ  230
+  u8 BTL_COUNT;     ///< 戦闘規定回数 231
+  u8 VETO_SHOOTER_ITEM[REG_SHOOTER_ITEMNUM_MAX_BYTE]; ///<    #持ち込み禁止道具 238
 } REGULATION;
 
 
@@ -257,4 +262,7 @@ extern REGULATION_SAVEDATA* SaveData_GetRegulationSaveData(SAVE_CONTROL_WORK* pS
 #ifdef PM_DEBUG
 extern void Regulation_SetDebugData( REGULATION_CARDDATA* pReg );
 extern void Regulation_PrintDebug( const REGULATION_CARDDATA* cpReg );
+#else
+#define Regulation_SetDebugData(x) /*  */
+#define Regulation_PrintDebug(x)  /*  */
 #endif //PM_DEBUG
