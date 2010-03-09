@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-03-02T21:47:38" source="m_bbuill01_00_00c.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-03-09T12:03:06" source="m_bbuill01_00_00c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2010-03-02T21:47:38" source="m_bbuill01_00_00c.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2010-03-09T12:03:06" source="m_bbuill01_00_00c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -30,33 +30,7 @@
 <box_test pos_scale="5" xyz="-6.000000 0.000000 -6.750000" whd="6.000000 3.000000 6.750000"/>
 
 <tex_image_array size="9">
-	<tex_image index="0" name="in32kabe03"
-		width="32" height="16" original_width="32" original_height="16"
-		format="palette16"
-		color0_mode="color"
-		palette_name="in32kabe03_pl"
-		path="C:/home/wb_data3d/field/in33/chip/tex/in32kabe03.tga"
-	>
-		<bitmap size="128">
-			6666 6666 6666 6666 6666 6666 6666 6666
-			6666 6666 6666 6666 6666 6666 6666 6666
-			5555 5555 5555 5555 5555 5555 5555 5555
-			4432 4444 4444 4444 4444 4444 4444 2344
-			3332 3333 3333 3333 3333 3333 3333 2333
-			2222 2222 2222 2222 2222 2222 2222 2222
-			0000 0000 0000 0000 0000 0000 0000 0000
-			7777 7777 7777 7777 7777 7777 7777 7777
-			8888 8888 8888 8888 8888 8888 8888 8888
-			8888 8888 8888 8888 8888 8888 8888 8888
-			7777 7777 7777 7777 7777 7777 7777 7777
-			1110 1111 1111 1111 1111 1111 1111 0111
-			2210 2222 2222 2222 2222 2222 2222 0122
-			3210 3333 3333 3333 3333 3333 3333 0123
-			3210 4444 4444 4444 4444 4444 4444 0123
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="1" name="in33_stair_1"
+	<tex_image index="0" name="in33_stair_1"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -74,7 +48,7 @@
 			5410 5555 5555 5555 4441 4444 4444 5544
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="in33_stair_2"
+	<tex_image index="1" name="in33_stair_2"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette16"
 		color0_mode="color"
@@ -86,7 +60,7 @@
 			2121 2121 0202 0202 1010 1010 0101 0101
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="in33kabe01"
+	<tex_image index="2" name="in33kabe01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -128,7 +102,7 @@
 			7777 7777 7777 7777 7777 7777 7777 7777
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="in33kabe02"
+	<tex_image index="3" name="in33kabe02"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -151,6 +125,32 @@
 			0000 0000 0000 0000 4444 4444 4444 4444
 			4444 4444 4444 4444 2222 2222 2222 2222
 			1111 1111 1111 1111 1111 1111 1111 1111
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="in33kabe03"
+		width="32" height="16" original_width="32" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in33kabe03_pl"
+		path="C:/home/wb_data3d/field/in33/chip/tex/in33kabe03.tga"
+	>
+		<bitmap size="128">
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			5555 5555 5555 5555 5555 5555 5555 5555
+			4432 4444 4444 4444 4444 4444 4444 2344
+			3332 3333 3333 3333 3333 3333 3333 2333
+			2222 2222 2222 2222 2222 2222 2222 2222
+			0000 0000 0000 0000 0000 0000 0000 0000
+			7777 7777 7777 7777 7777 7777 7777 7777
+			8888 8888 8888 8888 8888 8888 8888 8888
+			8888 8888 8888 8888 8888 8888 8888 8888
+			7777 7777 7777 7777 7777 7777 7777 7777
+			1110 1111 1111 1111 1111 1111 1111 0111
+			2210 2222 2222 2222 2222 2222 2222 0122
+			3210 3333 3333 3333 3333 3333 3333 0123
+			3210 4444 4444 4444 4444 4444 4444 0123
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
@@ -238,22 +238,22 @@
 </tex_image_array>
 
 <tex_palette_array size="9">
-	<tex_palette index="0" name="in32kabe03_pl" color_size="16">
-		14a5 18c6 1ce7 2108 2529 2d6b 3def 7680
-		7f60 7fff 7fff 7fff 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="1" name="in33_stair_1_pl" color_size="8">
+	<tex_palette index="0" name="in33_stair_1_pl" color_size="8">
 		1084 1ce7 2108 2529 2d6b 39ce 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="in33_stair_2_pl" color_size="8">
+	<tex_palette index="1" name="in33_stair_2_pl" color_size="8">
 		14a5 18c6 1d07 2108 2128 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="3" name="in33kabe01_pl" color_size="8">
+	<tex_palette index="2" name="in33kabe01_pl" color_size="8">
 		2108 2927 3966 49a5 5a03 6a42 7680 7f60
 	</tex_palette>
-	<tex_palette index="4" name="in33kabe02_pl" color_size="16">
+	<tex_palette index="3" name="in33kabe02_pl" color_size="16">
 		18c6 1ce7 2108 2927 318c 3966 49a5 5a03
 		6a42 7680 7f60 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="4" name="in33kabe03_pl" color_size="16">
+		14a5 18c6 1ce7 2108 2529 2d6b 3def 7680
+		7f60 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="5" name="in33light_pl" color_size="8">
 		49a4 5a03 6e61 7ea0 7f60 7fff 7fff 7fff
@@ -288,7 +288,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
+		tex_image_idx="4" tex_palette_idx="4"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -301,7 +301,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="31"
+		polygon_id="8"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -312,7 +312,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="1"
+		tex_image_idx="0" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -336,7 +336,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="2"
+		tex_image_idx="1" tex_palette_idx="1"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -360,7 +360,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="3"
+		tex_image_idx="2" tex_palette_idx="2"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -384,7 +384,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="4"
+		tex_image_idx="3" tex_palette_idx="3"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
