@@ -10,7 +10,7 @@
 
 #pragma once
 
-#define  ZONE_SPEC_ATTR_MAX  ( 13 )
+#define  ZONE_SPEC_ATTR_MAX  ( 15 )
 #define  BATT_BG_TBL_NO_FILE     ( 0xffffffff )
 #define  BATT_BG_TBL_FILE_MAX  ( 4 )
 

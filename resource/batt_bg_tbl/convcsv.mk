@@ -57,7 +57,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 do-build: out_end
 
 out_end: wb_battle_bg.xls ../../tools/batt_bg_tbl/batt_bg_tbl_cnv.rb
-	ruby ../../tools/exceltool/xls2xml/tab_out.rb -c wb_battle_bg.xls > wb_battle_bg.csv
+	ruby ../../tools/exceltool/xls2xml/tab_out_direct.rb wb_battle_bg.xls -s > wb_battle_bg.csv
 	ruby ../../tools/batt_bg_tbl/batt_bg_tbl_cnv.rb wb_battle_bg.csv ./
 endif
 
