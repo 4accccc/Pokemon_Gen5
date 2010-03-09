@@ -1257,7 +1257,7 @@ static void  FIELD_MENU_UpdateTP( FIELD_MENU_WORK* work )
   {
     work->cursorPosX = ret%2;
     work->cursorPosY = ret/2;
-    work->isUpdateCursor = TRUE;
+//    work->isUpdateCursor = TRUE;
     work->isDispCursor = FALSE;
     GFL_CLACT_WK_SetDrawEnable( work->cellCursor, FALSE );
 
@@ -1265,6 +1265,7 @@ static void  FIELD_MENU_UpdateTP( FIELD_MENU_WORK* work )
     if(ret==MENU_BUTTON_END){
       _cancel_func_set( work, TRUE );
     }else{
+      work->isUpdateCursor = TRUE;
       _cancel_func_set( work, FALSE );
     }
   }
