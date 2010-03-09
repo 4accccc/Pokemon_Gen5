@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-02T22:01:13"/>
+	<create user="nakamura_akira" host="W00131" date="2010-03-09T17:27:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1601" top="215" right="2304" bottom="842" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="144" right="711" bottom="772" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="528"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="541"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="695"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -576,7 +576,7 @@ assistantm_01_15へ続く</comment>
 はじめようと　おもってね▽
 にんきのあるほうを　しりたいんだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-わたし　からの依頼だな▼
+わたし　からの　依頼だな▼
 ２時間以上　調査して
 ブラックと　ホワイト▽
 どちらが　多いかを▽
@@ -598,7 +598,7 @@ assistantm_01_15へ続く</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-とある　ポケモンはかせ　からの▽
+とある　ポケモンはかせ　からの
 いらい　だな▼
 ２じかんいじょう　ちょうさして
 いちばん　えらばれた▽
@@ -607,7 +607,7 @@ assistantm_01_15へ続く</comment>
 ちょうさの　けっかを
 けんきゅうに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　ポケモン博士からの▽
+とある　ポケモン博士　からの
 依頼だな▼
 ２時間以上　調査して
 １番　選ばれた▽
@@ -638,7 +638,7 @@ assistantm_01_15へ続く</comment>
 こどもの　プレイじかんと▽
 くらべたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　母親からの依頼だな▼
+とある　母親　からの　依頼だな▼
 ４時間以上　調査して
 １番多い　プレイ時間を▼
 調べてくる　調査だ▼
@@ -668,7 +668,7 @@ assistantm_01_15へ続く</comment>
 ちょうさの　けっかを
 あすの　ちょうかんに　したいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　新聞社からの依頼だな▼
+とある　新聞社　からの　依頼だな▼
 ４時間以上　調査して
 男の子と　女の子▽
 どっちが　多いかを
@@ -697,7 +697,7 @@ assistantm_01_15へ続く</comment>
 ちょうさけっかを
 とくしゅうきじに　したいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　雑誌記者　からの依頼だな▼
+とある　雑誌記者　からの　依頼だな▼
 ４時間以上　調査して
 １番多い　仕事を▽
 調べてくる　調査だ▼
@@ -717,7 +717,7 @@ assistantm_01_15へ続く</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-とある　レジャーかいしゃからの
+とある　レジャーかいしゃ　からの
 いらい　だな▼
 ４じかんいじょう　ちょうさして
 いちばん　おおい　しゅみを▽
@@ -725,7 +725,7 @@ assistantm_01_15へ続く</comment>
 ちょうさの　けっかを
 きかくの　さんこうに　したいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　レジャー会社からの
+とある　レジャー会社　からの
 依頼だな▼
 ４時間以上　調査して
 一番多い　趣味を▽
@@ -754,7 +754,7 @@ assistantm_01_15へ続く</comment>
 さいきん　ポケモンに　はまっていてね
 みんなの　あそびかたを　しりたいんだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-わたし　からの依頼だな▼
+わたし　からの　依頼だな▼
 ８時間以上　調査して
 対戦と　交換　どっちが人気かを▽
 調べてくる　調査だ▼
@@ -784,7 +784,7 @@ assistantm_01_15へ続く</comment>
 しゅくだい　として▽
 ていしゅつ　したいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　女の子からの依頼だな▼
+とある　女の子　からの　依頼だな▼
 ８時間以上　調査して
 どんな　ポケモンが▽
 １番　人気が　あるかを▽
@@ -805,7 +805,7 @@ assistantm_01_15へ続く</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-とある　トレーナーからの
+とある　トレーナー　からの
 いらい　だな▼
 ８じかんいじょう　ちょうさして
 いちばん　にんきのある▽
@@ -814,7 +814,7 @@ assistantm_01_15へ続く</comment>
 ちょうさの　けっかを
 たいせんに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　トレーナーからの依頼だな▼
+とある　トレーナー　からの　依頼だな▼
 ８時間以上　調査して
 １番　人気のある▽
 ポケモンの　タイプを▽
@@ -844,7 +844,7 @@ assistantm_01_15へ続く</comment>
 ちょうさけっかを
 しごとに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　不動産屋からの依頼だな▼
+とある　不動産屋　からの　依頼だな▼
 ８時間以上　調査して
 都会と　田舎▽
 どっちに　住みたいかを▽
@@ -875,7 +875,7 @@ assistantm_01_15へ続く</comment>
 それを　しりたくてな……▼
 え？　りゆうは　いえんな</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-わたし　からの依頼だな▼
+わたし　からの　依頼だな▼
 １２時間以上　調査して
 時間とお金　どっちが欲しいかと
 １番大事に　思っているものを▽
@@ -898,7 +898,7 @@ assistantm_01_15へ続く</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-わたし　からのいらいだな▼
+わたし　からの　いらいだな▼
 １２じかんいじょう　ちょうさして▽
 あたまが　いいと
 うんどうが　できる▽
@@ -913,7 +913,7 @@ assistantm_01_15へ続く</comment>
 べ　べつに　なにもない……
 きにするな！</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-わたし　からの依頼だな▼
+わたし　からの　依頼だな▼
 １２時間以上　調査して
 頭がいいと　運動ができる▽
 どっちが　人気かと▼
@@ -949,7 +949,7 @@ assistantm_01_15へ続く</comment>
 だれに？
 それは　ひみつだ！</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-わたし　からの依頼だな▼
+わたし　からの　依頼だな▼
 １２時間以上　調査して
 １番好きな　季節と▽
 １番好きな　食べ物を▽
@@ -972,7 +972,8 @@ assistantm_01_15へ続く</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-とある　げいじゅつか　からのいらいだな▼
+とある　げいじゅつか　からの
+いらいだな▼
 １２じかんいじょう　ちょうさして
 いちばんすきな　いろと▽
 いちばんすきな　おんがくを▽
@@ -980,7 +981,7 @@ assistantm_01_15へ続く</comment>
 ちょうさの　けっかを
 さくひんに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　芸術家からの依頼だな▼
+とある　芸術家　からの　依頼だな▼
 １２時間以上　調査して
 １番好きな　色と▽
 １番好きな　音楽を▽
@@ -1009,7 +1010,7 @@ assistantm_01_15へ続く</comment>
 ちょうさの　けっかを
 しんきょくに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　アイドル歌手からの
+とある　アイドル歌手　からの
 依頼だな▼
 １６時間以上　調査して
 １番　好きな　音楽を▽
@@ -1030,7 +1031,7 @@ assistantm_01_15へ続く</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-わたし　からのいらいだな▼
+わたし　からの　いらいだな▼
 １６じかんいじょう　ちょうさして
 いちばんすきな　ＴＶばんぐみと▽
 いちばんすきな　えいがを▽
@@ -1039,7 +1040,7 @@ assistantm_01_15へ続く</comment>
 おとこに　なりたいからな▽
 いまの　はやりを　しりたいんだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-わたし　からの依頼だな▼
+わたし　からの　依頼だな▼
 １６時間以上　調査して
 １番好きな　ＴＶ番組と▽
 １番好きな　映画を▽
@@ -1067,7 +1068,7 @@ assistantm_01_15へ続く</comment>
 ちょうさの　けっかを
 がっこうせいかつに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　学生　からの依頼だな▼
+とある　学生　からの　依頼だな▼
 １６時間以上　調査して
 １番好きな　学校の時間を▽
 調べてくる　調査だ▼
@@ -1096,7 +1097,7 @@ assistantm_01_15へ続く</comment>
 ちょうさの　けっかを
 じゅぎょうに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　先生からの依頼だな▼
+とある　先生　からの　依頼だな▼
 １６時間以上　調査して
 １番好きな　勉強と▽
 １番苦手な　勉強を▽
@@ -1125,7 +1126,8 @@ assistantm_01_15へ続く</comment>
 ちょうさの　けっかを
 しあいに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　スポーツ選手からの依頼だな▼
+とある　スポーツ選手　からの
+依頼だな▼
 ２０時間以上　調査して
 １番人気のある　スポーツを▽
 調べてくる　調査だ▼
@@ -1145,7 +1147,7 @@ assistantm_01_15へ続く</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-わたし　からのいらいだな▼
+わたし　からの　いらいだな▼
 ２０じかんいじょう　ちょうさして
 いちばん　にんきのある▽
 きゅうじつの　すごしかたと▼
@@ -1156,7 +1158,7 @@ assistantm_01_15へ続く</comment>
 はやりの　ばしょを
 しらべて　おきたいんだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-わたし　からの依頼だな▼
+わたし　からの　依頼だな▼
 ２０時間以上　調査して
 １番人気のある　休日の過ごし方と▽
 １番人気のある　遊び場を▽
@@ -1188,7 +1190,8 @@ assistantm_01_15へ続く</comment>
 ポケモンの　せんでんに▽
 やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　ポケモンファンからの依頼だな▼
+とある　ポケモンファン　からの
+依頼だな▼
 ２０時間以上　調査して
 １番なりたいものを▽
 調べてくる　調査だ▼
@@ -1208,7 +1211,7 @@ assistantm_01_15へ続く</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-とある　ジムリーダーからの
+とある　ジムリーダー　からの
 いらいだな▼
 ２４じかんいじょう　ちょうさして
 いちばん　にんきのある▽
@@ -1217,7 +1220,8 @@ assistantm_01_15へ続く</comment>
 ちょうさの　けっかを
 ジムのうんえいに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　ジムリーダーからの依頼だな▼
+とある　ジムリーダー　からの
+依頼だな▼
 ２４時間以上　調査して
 １番人気のある　ジムリーダーを▽
 調べてくる　調査だ▼
@@ -1237,7 +1241,7 @@ assistantm_01_15へ続く</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-わたし　からのいらいだな▼
+わたし　からの　いらいだな▼
 ２４じかんいじょう　ちょうさして
 いちばんだと　おもう▽
 ポケモンの　おもしろいところを▽
@@ -1248,7 +1252,7 @@ assistantm_01_15へ続く</comment>
 ポケモンの　おもしろさを
 けんきゅう　するのだ！</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-わたし　からの依頼だな▼
+わたし　からの　依頼だな▼
 ２４時間以上　調査して
 １番だと　思う▽
 ポケモンの　面白いところを▽
@@ -1320,7 +1324,8 @@ assistantm_01_15へ続く
 ちょうさのけっかを
 けんきゅうに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　ポケモン博士からの　依頼だな▼
+とある　ポケモン博士　からの
+依頼だな▼
 [2:03:４桁:2]人以上と　すれ違って
 １番選ばれた　最初のポケモンを▽
 調べてくる　調査だ▼
@@ -1353,7 +1358,7 @@ assistantm_01_15へ続く
 こどもの　プレイじかんと▽
 くらべたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　母親からの依頼だな▼
+とある　母親　からの　依頼だな▼
 [2:03:４桁:3]人以上と　すれ違って
 １番多い　プレイ時間を▽
 調べてくる　調査だ▼
@@ -1386,7 +1391,7 @@ assistantm_01_15へ続く
 ちょうさの　けっかを
 あすの　ちょうかんに　したいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　新聞社からの依頼だな▼
+とある　新聞社　からの　依頼だな▼
 [2:03:４桁:4]人以上と　すれ違って
 男の子と　女の子▽
 どっちが　多いかを▽
@@ -1419,7 +1424,7 @@ assistantm_01_15へ続く
 ちょうさけっかを
 とくしゅうきじに　したいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　雑誌記者からの依頼だな▼
+とある　雑誌記者　からの　依頼だな▼
 [2:03:４桁:5]人以上と　すれ違って
 １番多い　仕事を▽
 調べてくる　調査だ▼
@@ -1451,7 +1456,8 @@ assistantm_01_15へ続く
 ちょうさの　けっかを
 きかくの　さんこうに　したいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　レジャー会社からの依頼だな▼
+とある　レジャー会社　からの
+依頼だな▼
 [2:03:４桁:6]人以上と　すれ違って
 一番多い　趣味を▽
 調べてくる　調査だ▼
@@ -1475,7 +1481,7 @@ assistantm_01_15へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-わたし　からのいらいだな▼
+わたし　からの　いらいだな▼
 [2:03:４桁:7]にんいじょうと　すれちがって
 たいせんと　こうかん▽
 どっちが　にんきかを▽
@@ -1483,7 +1489,7 @@ assistantm_01_15へ続く
 さいきん　ポケモンに　はまっていてね
 みんなの　あそびかたを　しりたいんだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-わたし　からの依頼だな▼
+わたし　からの　依頼だな▼
 [2:03:４桁:7]人以上と　すれ違って
 対戦と　交換　どっちが人気かを▽
 調べてくる　調査だ▼
@@ -1517,7 +1523,7 @@ assistantm_01_15へ続く
 しゅくだい　として▽
 ていしゅつ　したいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　女の子からの依頼だな▼
+とある　女の子からの　依頼だな▼
 [2:03:４桁:8]人以上と　すれ違って
 どんな　ポケモンが▽
 １番　人気が　あるかを▽
@@ -1551,7 +1557,7 @@ assistantm_01_15へ続く
 ちょうさの　けっかを
 たいせんに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　トレーナーからの依頼だな▼
+とある　トレーナーからの　依頼だな▼
 [2:03:４桁:9]人以上と　すれ違って
 １番　人気のある▽
 ポケモンの　タイプを▽
@@ -1585,7 +1591,7 @@ assistantm_01_15へ続く
 ちょうさけっかを
 しごとに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　不動産屋からの依頼だな▼
+とある　不動産屋からの　依頼だな▼
 [2:03:４桁:10]人以上と　すれ違って
 都会と　田舎▽
 どっちに　住みたいかを▽
@@ -1611,7 +1617,7 @@ assistantm_01_15へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-わたし　からのいらいだな▼
+わたし　からの　いらいだな▼
 [2:03:４桁:11]にんいじょうと　すれちがって
 じかんとおかね　どっちがほしいかと▽
 いちばんだいじに　おもっているものを▽
@@ -1622,7 +1628,7 @@ assistantm_01_15へ続く
 え？
 りゆうは　いえんな</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-わたし　からの依頼だな▼
+わたし　からの　依頼だな▼
 [2:03:４桁:11]人以上と　すれ違って
 時間とお金　どっちが欲しいかと
 １番大事に　思っているものを▽
@@ -1650,7 +1656,7 @@ assistantm_01_15へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-わたし　からのいらいだな▼
+わたし　からの　いらいだな▼
 [2:03:４桁:12]にんいじょうと　すれちがって
 あたまが　いいと
 うんどうが　できる▽
@@ -1665,7 +1671,7 @@ assistantm_01_15へ続く
 べ　べつに　なにもない……
 きにするな</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-わたし　からの依頼だな▼
+わたし　からの　依頼だな▼
 [2:03:４桁:12]人以上と　すれ違って
 頭がいいと　運動ができる▽
 どっちが　人気かと▼
@@ -1695,7 +1701,7 @@ assistantm_01_15へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-わたし　からのいらいだな▼
+わたし　からの　いらいだな▼
 [2:03:４桁:1]にんいじょうと　すれちがって
 いちばんすきな　きせつと▽
 いちばんすきな　たべものを▽
@@ -1705,7 +1711,7 @@ assistantm_01_15へ続く
 だれに？
 それは　ひみつだ！</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-わたし　からの依頼だな▼
+わたし　からの　依頼だな▼
 [2:03:４桁:13]人以上と　すれ違って
 １番好きな　季節と▽
 １番好きな　食べ物を▽
@@ -1742,7 +1748,7 @@ assistantm_01_15へ続く
 ちょうさの　けっかを
 さくひんに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　芸術家からの依頼だな▼
+とある　芸術家からの　依頼だな▼
 [2:03:４桁:14]人以上と　すれ違って
 １番好きな　色と▽
 １番好きな　音楽を▽
@@ -1775,7 +1781,8 @@ assistantm_01_15へ続く
 ちょうさの　けっかを
 しんきょくに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　アイドル歌手からの依頼だな▼
+とある　アイドル歌手からの
+依頼だな▼
 [2:03:４桁:15]人以上と　すれ違って
 １番　好きな　音楽を▽
 調べてくる　調査だ▼
@@ -1800,7 +1807,7 @@ assistantm_01_15へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-わたし　からのいらいだな▼
+わたし　からの　いらいだな▼
 [2:03:４桁:16]にんいじょうと　すれちがって
 いちばんすきな　ＴＶばんぐみと▽
 いちばんすきな　えいがを▽
@@ -1809,7 +1816,7 @@ assistantm_01_15へ続く
 おとこに　なりたいからな▽
 いまの　はやりを　しりたいんだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-わたし　からの依頼だな▼
+わたし　からの　依頼だな▼
 [2:03:４桁:16]人以上と　すれ違って
 １番好きな　ＴＶ番組と▽
 １番好きな　映画を▽
@@ -1842,7 +1849,7 @@ assistantm_01_15へ続く
 ちょうさの　けっかを
 がっこうせいかつに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　学生からの依頼だな▼
+とある　学生からの　依頼だな▼
 [2:03:４桁:17]人以上と　すれ違って
 １番好きな　学校の時間を▽
 調べてくる　調査だ▼
@@ -1876,7 +1883,7 @@ assistantm_01_15へ続く
 ちょうさの　けっかを
 じゅぎょうに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　先生からの依頼だな▼
+とある　先生からの　依頼だな▼
 [2:03:４桁:18]人以上と　すれ違って
 １番好きな　勉強と▽
 １番苦手な　勉強を▽
@@ -1909,7 +1916,8 @@ assistantm_01_15へ続く
 ちょうさの　けっかを
 しあいに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　スポーツ選手からの依頼だな▼
+とある　スポーツ選手からの
+依頼だな▼
 [2:03:４桁:19]人以上と　すれ違って
 １番人気のある　スポーツを▽
 調べてくる　調査だ▼
@@ -1934,7 +1942,7 @@ assistantm_01_15へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-わたし　からのいらいだな▼
+わたし　からの　いらいだな▼
 [2:03:４桁:20]にんいじょうと　すれちがって
 いちばん　にんきのある▽
 きゅうじつの　すごしかたと▼
@@ -1945,7 +1953,7 @@ assistantm_01_15へ続く
 はやりの　ばしょを
 しらべて　おきたいんだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-わたし　からの依頼だな▼
+わたし　からの　依頼だな▼
 [2:03:４桁:20]人以上と　すれ違って
 １番人気のある　休日の過ごし方と▽
 １番人気のある　遊び場を▽
@@ -1981,7 +1989,7 @@ assistantm_01_15へ続く
 ポケモンの　せんでんに▽
 やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　ポケモンファンからの依頼だな▼
+とある　ポケモンファンからの　依頼だな▼
 [2:03:４桁:21]人以上と　すれ違って
 １番なりたいものを▽
 調べてくる　調査だ▼
@@ -2014,7 +2022,8 @@ assistantm_01_15へ続く
 ちょうさの　けっかを
 ジムのうんえいに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-とある　ジムリーダーからの依頼だな▼
+とある　ジムリーダー　からの
+依頼だな▼
 [2:03:４桁:22]人以上と　すれ違って
 １番人気のある　ジムリーダーを▽
 調べてくる　調査だ▼
@@ -2038,7 +2047,7 @@ assistantm_01_15へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
-わたし　からのいらいだな▼
+わたし　からの　いらいだな▼
 [2:03:４桁:23]にんいじょうと　すれちがって
 いちばんだと　おもう▽
 ポケモンの　おもしろいところを▽
@@ -2049,7 +2058,7 @@ assistantm_01_15へ続く
 ポケモンの　おもしろさを
 けんきゅう　するのだ！</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
-わたし　からの依頼だな▼
+わたし　からの　依頼だな▼
 [2:03:４桁:23]人以上と　すれ違って
 １番だと　思う▽
 ポケモンの　面白いところを▽
@@ -2066,7 +2075,7 @@ assistantm_01_15へ続く
 各依頼の説明文の表示後、表示
 このメッセージの表示後、選択ウインドウを表示
 
-『はい』　⇒　assistantm_01_16へ
+『はい』　⇒　assistantm_01_16○へ
 『いいえ』　⇒　assistantm_01_18へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
@@ -2075,22 +2084,434 @@ assistantm_01_15へ続く
 		<language name="JPN_KANJI" width="256">この　調査依頼を　受けるのか？▼</language>
 	</row>
 
-	<row id="msg_c03r0101_assistantm_01_16" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0101_assistantm_01_16a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・隊長
 依頼を受ける確認メッセージで『はい』を選択後、表示
 依頼を受けた状態になる
 
 assistantm_01_17へ続く
 
-[簡易会話単語:1]＝依頼タイトル
 [トレーナー名:1]＝主人公名</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-『[1:1C:簡易会話単語:1]』の▽
+『ブラックと　ホワイト▽
+おおいのは？』の▽
 ちょうさ　いらいをうけた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
-『[1:1C:簡易会話単語:1]』の▽
+『ブラックと　ホワイト▽
+多いのは？』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『えらんだ　さいしょの▽
+ポケモンは？』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『選んだ　最初の　ポケモンは？』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『いちばんおおい▽
+プレイじかんは？』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『１番多い　プレイ時間は？』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『おとこのこと　おんなのこ▽
+おおいのは？』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『男の子と　女の子　多いのは？』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16e" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『いちばんおおい　しごとは？』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『１番多い　仕事は？』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16f" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『いちばんおおい　しゅみは？』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『１番多い　趣味は？』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16g" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『たいせんと　こうかん▽
+にんきが　あるのは？』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『対戦と　交換▽
+人気が　あるのは？』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16h" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『すきな　ポケモンは？』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『好きな　ポケモンは？』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16i" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『すきな　ポケモンの▽
+タイプは？』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『好きな　ポケモンの▽
+タイプは？』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16j" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『とかいと　いなか▽
+すみたいのは？』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『都会と　田舎　住みたいのは？』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16k" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『だいじに　しているものに▽
+ついて』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『大事に　しているものに▽
+ついて』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16l" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『ひとの　みりょくに　ついて』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『人の　魅力に　ついて』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16m" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『きせつに　ついて』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『季節に　ついて』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16n" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『げいじゅつに　ついて』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『芸術に　ついて』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16o" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『いちばんすきな　おんがくは？』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『１番好きな　音楽は？』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16p" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『えいぞうに　ついて』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『映像に　ついて』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16q" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『いちばんすきな　がっこうの▽
+じかんは？』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『１番好きな　学校の　時間は？』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16r" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『べんきょうに　ついて』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『勉強に　ついて』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16s" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『いちばんにんきのある▽
+スポーツは？』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『１番人気のある　スポーツは？』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16t" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『きゅうじつに　ついて』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『休日に　ついて』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16u" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『いちばんなりたいものは？』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『１番なりたいものは？』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16v" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『いちばんにんきのある▽
+ジムリーダーは？』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『１番人気のある▽
+ジムリーダーは？』の▽
+調査　依頼を受けた！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_16w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+依頼を受ける確認メッセージで『はい』を選択後、表示
+依頼を受けた状態になる
+
+assistantm_01_17へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『ポケモンの▽
+おもしろい　ところは？』の▽
+ちょうさ　いらいをうけた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『ポケモンの　面白い　ところは？』の▽
 調査　依頼を受けた！</language>
 	</row>
 
@@ -2128,7 +2549,7 @@ assistantm_01_17へ続く
 している場合に表示
 各依頼ごとの内容メッセージ表示へ
 
-各依頼　⇒　assistantm_01_23へ</comment>
+各依頼　⇒　assistantm_01_23○へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">ちょうさは　ぶじに　おわったようだな
@@ -2137,7 +2558,7 @@ assistantm_01_17へ続く
 調査内容を　報告してくれ</language>
 	</row>
 
-	<row id="msg_c03r0101_assistantm_01_20" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0101_assistantm_01_20a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・隊長
 『いらいのほうこく』を選択し、受けている依頼が達成
 していない場合に表示
@@ -2147,19 +2568,83 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[簡易会話単語:1]＝依頼タイトル
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『[1:1C:簡易会話単語:1]』の
-ちょうさが　おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『ブラックと　ホワイト
+おおいのは？』の　ちょうさが▽
+おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさをする　ひつようがあるぞ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『[1:1C:簡易会話単語:1]』の
+		<language name="JPN_KANJI" width="256">まだ　『ブラックと　ホワイト
+多いのは？』の　調査が▽
+終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『えらんだ　さいしょの
+ポケモンは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『選んだ　最初の
+ポケモンは？』の　調査が▽
+終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんおおい
+プレイじかんは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『１番多い　プレイ時間は？』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査する　必要があるぞ▼
@@ -2168,7 +2653,7 @@ assistantm_01_17へ続く
 依頼を　キャンセルするか？▼</language>
 	</row>
 
-	<row id="msg_c03r0101_assistantm_01_21" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0101_assistantm_01_20d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・隊長
 『いらいのほうこく』を選択し、受けている依頼が達成
 していない場合に表示
@@ -2178,11 +2663,850 @@ assistantm_01_17へ続く
 『はい』　⇒　assistantm_01_10へ
 『いいえ』　⇒　assistantm_01_12へ
 
-[簡易会話単語:1]＝依頼タイトル
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『おとこのこと　おんなのこ
+おおいのは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『男の子と　女の子　多いのは？』の
+調査が　終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20e" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんおおい
+しごとは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『１番多い　仕事は？』の
+調査が　終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20f" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんおおい
+しゅみは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『１番多い　趣味は？』の
+調査が　終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20g" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『たいせんと　こうかん
+にんきが　あるのは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『対戦と　交換
+人気が　あるのは？』の　調査が▽
+終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20h" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『すきな　ポケモンは？』の
+ちょうさが　おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『好きな　ポケモンは？』の
+調査が　終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20i" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『すきな　ポケモンの
+タイプは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『好きな　ポケモンの
+タイプは？』の　調査が▽
+終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20j" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『とかいと　いなか
+すみたいのは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『都会と　田舎
+住みたいのは？』の　調査が▽
+終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20k" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『だいじに　しているものに
+ついて』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『大事に　しているものに
+ついて』の　調査が▽
+終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20l" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『ひとの　みりょくに
+ついて』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『人の　魅力に　ついて』の
+調査が　終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20m" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『きせつに　ついて』の
+ちょうさが　おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『季節に　ついて』の
+調査が　終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20n" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『げいじゅつに　ついて』の
+ちょうさが　おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『芸術に　ついて』の
+調査が　終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20o" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんすきな
+おんがくは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『１番好きな　音楽は？』の
+調査が　終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20p" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『えいぞうに　ついて』の
+ちょうさが　おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『映像に　ついて』の
+調査が　終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20q" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんすきな　がっこうの
+じかんは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『１番好きな　学校の　時間は？』の
+調査が　終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20r" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『べんきょうに　ついて』の
+ちょうさが　おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『勉強に　ついて』の
+調査が　終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20s" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんにんきのある
+スポーツは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『１番人気のある
+スポーツは？』の　調査が▽
+終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20t" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『きゅうじつに　ついて』の
+ちょうさが　おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『休日に　ついて』の
+調査が　終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20u" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんなりたいものは？』の
+ちょうさが　おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『１番なりたいものは？』の
+調査が　終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20v" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんにんきのある
+ジムリーダーは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『１番人気のある
+ジムリーダーは？』の　調査が▽
+終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_20w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[2桁:2]＝残りの調査必要時間</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『ポケモンの　おもしろい
+ところは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:01:２桁:2]じかんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『ポケモンの　面白い
+ところは？』の　調査が▽
+終わっていないぞ▼
+あと　[2:01:２桁:2]時間は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『[1:1C:簡易会話単語:1]』の
+		<language name="JPN" width="256">まだ　『ブラックと　ホワイト
+おおいのは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『ブラックと　ホワイト
+多いのは？』の　調査が▽
+終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『えらんだ　さいしょの
+ポケモンは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『選んだ　最初の
+ポケモンは？』の　調査が▽
+終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんおおい
+プレイじかんは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『１番多い　プレイ時間は？』の
+調査が　終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『おとこのこと　おんなのこ
+おおいのは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『男の子と　女の子　多いのは？』の
+調査が　終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21e" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんおおい
+しごとは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『１番多い　仕事は？』の
+調査が　終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21f" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんおおい
+しゅみは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『１番多い　趣味は？』の
+調査が　終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21g" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『たいせんと　こうかん
+にんきが　あるのは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『対戦と　交換
+人気が　あるのは？』の　調査が▽
+終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21h" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『すきな　ポケモンは？』の
 ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんは
 ちょうさをする　ひつようがあるぞ▼
@@ -2190,8 +3514,473 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『[1:1C:簡易会話単語:1]』の
+		<language name="JPN_KANJI" width="256">まだ　『好きな　ポケモンは？』の
 調査が　終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21i" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『すきな　ポケモンの
+タイプは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『好きな　ポケモンの
+タイプは？』の　調査が▽
+終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21j" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『とかいと　いなか
+すみたいのは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『都会と　田舎
+住みたいのは？』の　調査が▽
+終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21k" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『だいじに　しているものに
+ついて』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『大事に　しているものに
+ついて』の　調査が▽
+終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21l" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『ひとの　みりょくに
+ついて』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『人の　魅力に　ついて』の
+調査が　終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21m" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『きせつに　ついて』の
+ちょうさが　おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『季節に　ついて』の
+調査が　終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21n" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『げいじゅつに　ついて』の
+ちょうさが　おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『芸術に　ついて』の
+調査が　終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21o" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんすきな
+おんがくは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『１番好きな　音楽は？』の
+調査が　終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21p" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『えいぞうに　ついて』の
+ちょうさが　おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『映像に　ついて』の
+調査が　終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21q" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんすきな　がっこうの
+じかんは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『１番好きな　学校の　時間は？』の
+調査が　終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21r" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『べんきょうに　ついて』の
+ちょうさが　おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『勉強に　ついて』の
+調査が　終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21s" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんにんきのある
+スポーツは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『１番人気のある
+スポーツは？』の　調査が▽
+終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21t" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『きゅうじつに　ついて』の
+ちょうさが　おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『休日に　ついて』の
+調査が　終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21u" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんなりたいものは？』の
+ちょうさが　おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『１番なりたいものは？』の
+調査が　終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21v" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『いちばんにんきのある
+ジムリーダーは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『一番人気のある
+ジムリーダーは？』の　調査が▽
+終わっていないぞ▼
+あと　[2:02:３桁:1]人は
+調査する　必要があるぞ▼
+がんばって　調査を　続けてくれ▼
+それとも　受けている
+依頼を　キャンセルするか？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_21w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼が達成
+していない場合に表示
+時間調査で受けた依頼の名前と残りの時間を表示
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　assistantm_01_10へ
+『いいえ』　⇒　assistantm_01_12へ
+
+[3桁:1]＝残りのすれ違い必要人数</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">まだ　『ポケモンの　おもしろい
+ところは？』の　ちょうさが▽
+おわっていないぞ▼
+あと　[2:02:３桁:1]にんは
+ちょうさをする　ひつようがあるぞ▼
+がんばって　ちょうさを
+つづけてくれ▼
+それとも　うけている
+いらいを　キャンセルするか？▼</language>
+		<language name="JPN_KANJI" width="256">まだ　『ポケモンの　面白い
+ところは？』の　調査が▽
+終わっていないぞ▼
 あと　[2:02:３桁:1]人は
 調査する　必要があるぞ▼
 がんばって　調査を　続けてくれ▼
@@ -2213,21 +4002,373 @@ assistantm_01_17へ続く
 また来てくれ</language>
 	</row>
 
-	<row id="msg_c03r0101_assistantm_01_23" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c03r0101_assistantm_01_23a" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>・隊長
 『いらいのほうこく』を選択し、受けている依頼ごとの
 タイトルを表示
 各依頼ごとの報告メッセージ表示へ
 
-各依頼　⇒　assistantm_01_24○へ
-
-[簡易会話単語:1]＝依頼タイトル</comment>
+依頼報告　⇒　assistantm_01_24aへ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">『[1:1C:簡易会話単語:1]』の
+		<language name="JPN" width="256">『ブラックと　ホワイト
+おおいのは？』の　ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『ブラックと　ホワイト
+多いのは？』の　調査を▽
+隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23b" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24bへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『えらんだ　さいしょの
+ポケモンは？』の　ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『選んだ　最初の　ポケモンは？』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23c" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24cへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『いちばんおおい
+プレイじかんは？』の　ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『１番多い　プレイ時間は？』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23d" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24dへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『おとこのこと　おんなのこ
+おおいのは？』の　ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『男の子と　女の子　多いのは？』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23e" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24eへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『いちばんおおい　しごとは？』の
 ちょうさを▽
 たいちょうに　ほうこくした！</language>
-		<language name="JPN_KANJI" width="256">『[1:1C:簡易会話単語:1]』の
+		<language name="JPN_KANJI" width="256">『１番多い　仕事は？』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23f" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24fへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『いちばんおおい　しゅみは？』の
+ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『１番多い　趣味は？』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23g" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24gへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『たいせんと　こうかん　にんきが
+あるのは？』の　ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『対戦と　交換　人気が
+あるのは？』の　調査を▽
+隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23h" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24hへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『すきな　ポケモンは？』の
+ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『好きな　ポケモンは？』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23i" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24iへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『すきな　ポケモンの
+タイプは？』の　ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『好きな　ポケモンの
+タイプは？』の　調査を▽
+隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23j" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24jへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『とかいと　いなか
+すみたいのは？』の　ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『都会と　田舎　住みたいのは？』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23k" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24kへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『だいじに　しているものに
+ついて』の　ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『大事に　しているものに　ついて』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23l" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24lへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『ひとの　みりょくに　ついて』の
+ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『人の　魅力に　ついて』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23m" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24mへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『きせつに　ついて』の　ちょうさを
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『季節に　ついて』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23n" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24nへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『げいじゅつに　ついて』の
+ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『芸術に　ついて』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23o" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24oへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『いちばんすきな　おんがくは？』の
+ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『１番好きな　音楽は？』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23p" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24pへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『えいぞうに　ついて』の　ちょうさを
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『映像に　ついて』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23q" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24qへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『いちばんすきな　がっこうの
+じかんは？』の　ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『１番好きな　学校の　時間は？』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23r" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24rへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『べんきょうに　ついて』の
+ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『勉強に　ついて』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23s" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24sへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『いちばんにんきのある
+スポーツは？』の　ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『１番人気のある　スポーツは？』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23t" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24tへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『きゅうじつに　ついて』の
+ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『休日に　ついて』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23u" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24uへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『いちばんなりたいものは？』の
+ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『１番なりたいものは？』の
+調査を　隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23v" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24vへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『いちばんにんきのある
+ジムリーダーは？』の　ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『１番人気のある
+ジムリーダーは？』の　調査を▽
+隊長に　報告した！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_23w" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・隊長
+『いらいのほうこく』を選択し、受けている依頼ごとの
+タイトルを表示
+各依頼ごとの報告メッセージ表示へ
+
+依頼報告　⇒　assistantm_01_24wへ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">『ポケモンの　おもしろい
+ところは？』の　ちょうさを▽
+たいちょうに　ほうこくした！</language>
+		<language name="JPN_KANJI" width="256">『ポケモンの　面白い　ところは？』の
 調査を　隊長に　報告した！</language>
 	</row>
 
@@ -2853,16 +4994,17 @@ assistantm_01_25へ続く
 
 	<row id="msg_c03r0101_assistantm_01_25" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・隊長
-依頼の報告後、表示
-メッセージの表示後、依頼ごとの報酬アイテム入手
-アイテム入手処理
+依頼の報告後、表示。
+メッセージの表示後、報酬アイテム入手
+アイテム入手処理後、分岐
 
-アイテムの入手処理後、分岐
-隊員ランクアップ　⇒　assistantm_01_26へ
-達成回数が足らずランクアップしない　⇒　assistantm_01_28へ
-すでにSS隊員でランクアップしない　⇒　assistantm_01_29へ
-
-[トレーナー名:1]＝主人公名</comment>
+Bランクアップ　⇒　assistantm_01_26a
+Aランクアップ　⇒　assistantm_01_26b
+Sランクアップ　⇒　assistantm_01_26c
+SSランクアップ　⇒　assistantm_01_26d
+ランクアップしない　⇒　assistantm_01_28○
+すでにSS隊員　⇒　assistantm_01_29
+全依頼達成　⇒　assistantm_01_30</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">すばらしい　ちょうさだ▼
@@ -2877,70 +5019,220 @@ assistantm_01_25へ続く
 受け取ってくれ</language>
 	</row>
 
-	<row id="msg_c03r0101_assistantm_01_26" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0101_assistantm_01_26a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・隊長
 隊員ラックアップの条件を満たしていると表示
 
-assistantm_01_27へ続く
-
-[簡易会話単語:32]＝隊員ランクを表示
-</comment>
+assistantm_01_27aへ続く</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">それにしても　キミの　かつやくには
 まいかい　おどろかされるな▼
 よろしい！　きょうから　キミは
-[1:1C:簡易会話単語:32]たいいんだ！</language>
+『Ｂランクたいいん』だ！</language>
 		<language name="JPN_KANJI" width="256">それにしても　キミの活躍には
 毎回　驚かされるな▼
 よろしい！　今日から　キミは
-[1:1C:簡易会話単語:32]隊員だ！</language>
+『Ｂランク隊員』だ！</language>
 	</row>
 
-	<row id="msg_c03r0101_assistantm_01_27" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0101_assistantm_01_26b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+隊員ラックアップの条件を満たしていると表示
+
+assistantm_01_27bへ続く</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">それにしても　キミの　かつやくには
+まいかい　おどろかされるな▼
+よろしい！　きょうから　キミは
+『Ａランクたいいん』だ！</language>
+		<language name="JPN_KANJI" width="256">それにしても　キミの活躍には
+毎回　驚かされるな▼
+よろしい！　今日から　キミは
+『Ａランク隊員』だ！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_26c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+隊員ラックアップの条件を満たしていると表示
+
+assistantm_01_27cへ続く</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">それにしても　キミの　かつやくには
+まいかい　おどろかされるな▼
+よろしい！　きょうから　キミは
+『Ｓランクたいいん』だ！</language>
+		<language name="JPN_KANJI" width="256">それにしても　キミの活躍には
+毎回　驚かされるな▼
+よろしい！　今日から　キミは
+『Ｓランク隊員』だ！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_26d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+隊員ラックアップの条件を満たしていると表示
+
+assistantm_01_27dへ続く</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">それにしても　キミの　かつやくには
+まいかい　おどろかされるな▼
+よろしい！　きょうから　キミは
+『ＳＳランクたいいん』だ！</language>
+		<language name="JPN_KANJI" width="256">それにしても　キミの活躍には
+毎回　驚かされるな▼
+よろしい！　今日から　キミは
+『ＳＳランク隊員』だ！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_27a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・隊長
 隊員ラックアップの条件を満たしていると表示
 
 隊員ランクアップ処理後、分岐
-全ての依頼を達成した　⇒　assistantm_01_30へ
-全ての依頼を達成していない　⇒　assistantm_01_29へ
+assistantm_01_29へ
 
-[トレーナー名:1]＝主人公名
-
-[簡易会話単語:32]＝隊員ランクを表示
-</comment>
+[トレーナー名:1]＝主人公名</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-[1:1C:簡易会話単語:32]たいいんに▽
+『Ｂランクたいいん』に▽
 にんめい　された！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
-[1:1C:簡易会話単語:32]隊員に　任命された！</language>
+『Ｂランク隊員』に　任命された！</language>
 	</row>
 
-	<row id="msg_c03r0101_assistantm_01_28" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0101_assistantm_01_27b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+隊員ラックアップの条件を満たしていると表示
+
+隊員ランクアップ処理後、分岐
+assistantm_01_29へ
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『Ａランクたいいん』に▽
+にんめい　された！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『Ａランク隊員』に　任命された！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_27c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+隊員ラックアップの条件を満たしていると表示
+
+隊員ランクアップ処理後、分岐
+ssistantm_01_29へ
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『Ｓランクたいいん』に▽
+にんめい　された！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『Ｓランク隊員』に　任命された！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_27d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+隊員ラックアップの条件を満たしていると表示
+
+隊員ランクアップ処理後、分岐
+ssistantm_01_29へ
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
+『ＳＳランクたいいん』に▽
+にんめい　された！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
+『ＳＳランク隊員』に　任命された！</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_28a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・隊長
 隊員ラックアップの条件を満たしていないと表示
 
 assistantm_01_29へ続く
 
 [2桁:1]＝ランクアップまでの残り依頼回数
-
-[簡易会話単語:32]＝隊員ランクを表示
 </comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">あと[2:01:２桁:1]かい
 いらいを　たっせいすれば▽
-[1:1C:簡易会話単語:32]たいいんだ　がんばりたまえ</language>
+『Ｂランクたいいん』だ▽
+がんばりたまえ</language>
 		<language name="JPN_KANJI" width="256">あと[2:01:２桁:1]回　依頼を　達成すれば
-[1:1C:簡易会話単語:32]隊員だ　がんばりたまえ</language>
+『Ｂランク隊員』だ　がんばりたまえ</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_28b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+隊員ラックアップの条件を満たしていないと表示
+
+assistantm_01_29へ続く
+
+[2桁:1]＝ランクアップまでの残り依頼回数
+</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">あと[2:01:２桁:1]かい
+いらいを　たっせいすれば▽
+『Ａランクたいいん』だ▽
+がんばりたまえ</language>
+		<language name="JPN_KANJI" width="256">あと[2:01:２桁:1]回　依頼を　達成すれば
+『Ａランク隊員』だ　がんばりたまえ</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_28c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+隊員ラックアップの条件を満たしていないと表示
+
+assistantm_01_29へ続く
+
+[2桁:1]＝ランクアップまでの残り依頼回数
+</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">あと[2:01:２桁:1]かい
+いらいを　たっせいすれば▽
+『Ｓランクたいいん』だ▽
+がんばりたまえ</language>
+		<language name="JPN_KANJI" width="256">あと[2:01:２桁:1]回　依頼を　達成すれば
+『Ｓランク隊員』だ　がんばりたまえ</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_28d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+隊員ラックアップの条件を満たしていないと表示
+
+assistantm_01_29へ続く
+
+[2桁:1]＝ランクアップまでの残り依頼回数
+</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">あと[2:01:２桁:1]かい
+いらいを　たっせいすれば▽
+『ＳＳランクたいいん』だ▽
+がんばりたまえ</language>
+		<language name="JPN_KANJI" width="256">あと[2:01:２桁:1]回　依頼を　達成すれば
+『ＳＳランク隊員』だ　がんばりたまえ</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_29" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・隊長
 依頼達成報告の終了時に表示
-会話終了</comment>
+会話終了
+
+[トレーナー名:1]＝主人公名</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">つぎの　ちょうさも
@@ -2957,7 +5249,9 @@ assistantm_01_29へ続く
 アイテム入手処理
 
 アイテムの入手処理後、
-assistantm_01_31へ続く</comment>
+assistantm_01_31へ続く
+
+[トレーナー名:1]＝主人公名</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">……これで　すべての
@@ -3080,7 +5374,7 @@ assistantm_01_31へ続く</comment>
 一度でもアンケートを受けているときに表示
 このメッセージの表示後、選択ウインドウを表示
 
-『はい』　⇒　woman2_10へ
+『はい』　⇒　woman2_10○へ（a以降のもの）
 『いいえ』　⇒　woman2_05へ
 全てのアンケートに答えている　⇒　woman2_06へ</comment>
 		<attribute name="キャラ指定">WOMAN2
@@ -3169,22 +5463,142 @@ assistantm_01_31へ続く</comment>
 回答を　変えたくなったら　いってね</language>
 	</row>
 
-	<row id="msg_c03r0101_woman2_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r0101_woman2_10a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・アンケート隊員
 アンケートに協力するで、『はい』を選択、もしくは、答える
 アンケートを選ぶと、アンケートごとのタイトルを表示
 各アンケートの質問メッセージ表示へ
 
-各アンケート　⇒　msg_c03r0101_woman2_11へ
-
-[簡易会話単語:33]＝アンケートタイトル表示
-</comment>
+各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">こんかいの　アンケートは
-『[1:1C:簡易会話単語:33]』に　ついてよ</language>
+『どんなひとが　いるか』に▽
+ついてよ</language>
 		<language name="JPN_KANJI" width="256">今回の　アンケートは
-『[1:1C:簡易会話単語:33]』に　ついてよ</language>
+『どんな人が　いるか』に　ついてよ</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_10b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+アンケートに協力するで、『はい』を選択、もしくは、答える
+アンケートを選ぶと、アンケートごとのタイトルを表示
+各アンケートの質問メッセージ表示へ
+
+各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">こんかいの　アンケートは
+『すきなポケモン』に　ついてよ</language>
+		<language name="JPN_KANJI" width="256">今回の　アンケートは
+『好きなポケモン』に　ついてよ</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_10c" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+アンケートに協力するで、『はい』を選択、もしくは、答える
+アンケートを選ぶと、アンケートごとのタイトルを表示
+各アンケートの質問メッセージ表示へ
+
+各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">こんかいの　アンケートは
+『みんなの　りそう』に　ついてよ</language>
+		<language name="JPN_KANJI" width="256">今回の　アンケートは
+『みんなの　理想』に　ついてよ</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_10d" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+アンケートに協力するで、『はい』を選択、もしくは、答える
+アンケートを選ぶと、アンケートごとのタイトルを表示
+各アンケートの質問メッセージ表示へ
+
+各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">こんかいの　アンケートは
+『すきなひと』に　ついてよ</language>
+		<language name="JPN_KANJI" width="256">今回の　アンケートは
+『好きな人』に　ついてよ</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_10e" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+アンケートに協力するで、『はい』を選択、もしくは、答える
+アンケートを選ぶと、アンケートごとのタイトルを表示
+各アンケートの質問メッセージ表示へ
+
+各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">こんかいの　アンケートは
+『みんなの　好み』に　ついてよ</language>
+		<language name="JPN_KANJI" width="256">今回の　アンケートは
+『みんなの　好み』に　ついてよ</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_10f" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+アンケートに協力するで、『はい』を選択、もしくは、答える
+アンケートを選ぶと、アンケートごとのタイトルを表示
+各アンケートの質問メッセージ表示へ
+
+各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">こんかいの　アンケートは
+『みんなの　しゅみ』に　ついてよ</language>
+		<language name="JPN_KANJI" width="256">今回の　アンケートは
+『みんなの　趣味』に　ついてよ</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_10g" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+アンケートに協力するで、『はい』を選択、もしくは、答える
+アンケートを選ぶと、アンケートごとのタイトルを表示
+各アンケートの質問メッセージ表示へ
+
+各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">こんかいの　アンケートは
+『がっこうせいかつ』に　ついてよ</language>
+		<language name="JPN_KANJI" width="256">今回の　アンケートは
+『学校生活』に　ついてよ</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_10h" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+アンケートに協力するで、『はい』を選択、もしくは、答える
+アンケートを選ぶと、アンケートごとのタイトルを表示
+各アンケートの質問メッセージ表示へ
+
+各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">こんかいの　アンケートは
+『どんな　あそびが　すきか』に▽
+ついてよ</language>
+		<language name="JPN_KANJI" width="256">今回の　アンケートは
+『どんな　遊びが　好きか』に▽
+ついてよ</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_10i" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+アンケートに協力するで、『はい』を選択、もしくは、答える
+アンケートを選ぶと、アンケートごとのタイトルを表示
+各アンケートの質問メッセージ表示へ
+
+各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">こんかいの　アンケートは
+『ポケモン』に　ついてよ</language>
+		<language name="JPN_KANJI" width="256">今回の　アンケートは
+『ポケモン』に　ついてよ</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -3266,7 +5680,7 @@ assistantm_01_31へ続く</comment>
 	<row id="msg_c03r0101_woman2_16" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・アンケート隊員
 
-woman2_17へ続く</comment>
+woman2_17○へ続く（それぞれ対応したものへ）</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">そうだ　このアンケートようし
@@ -3275,21 +5689,145 @@ woman2_17へ続く</comment>
 アナタにも　あげるわ</language>
 	</row>
 
-	<row id="msg_c03r0101_woman2_17" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0101_woman2_17a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・アンケート隊員
 メッセージの表示後、調査レーダーに
 対応アンケート追加処理
 
-woman2_18へ続く
-
-[簡易会話単語:37]＝調査レーダー用アンケートタイトル</comment>
+woman2_18へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">ちょうさレーダーに
-『[1:1C:簡易会話単語:33]』が▽
+『どんなひとが　いるかの▽
+ちょうさ』が　ふえた！</language>
+		<language name="JPN_KANJI" width="256">調査レーダーに
+『どんな人が　いるかの　調査』が▽
+増えた！</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_17b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・アンケート隊員
+メッセージの表示後、調査レーダーに
+対応アンケート追加処理
+
+woman2_18へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">ちょうさレーダーに
+『すきなポケモンの　ちょうさ』が▽
 ふえた！</language>
 		<language name="JPN_KANJI" width="256">調査レーダーに
-『[1:1C:簡易会話単語:33]』が▽
+『好きなポケモンの　調査』が▽
+増えた！</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_17c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・アンケート隊員
+メッセージの表示後、調査レーダーに
+対応アンケート追加処理
+
+woman2_18へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">ちょうさレーダーに
+『みんなの　りそうを　ちょうさ』が▽
+ふえた！</language>
+		<language name="JPN_KANJI" width="256">調査レーダーに
+『みんなの　理想を　調査』が▽
+増えた！</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_17d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・アンケート隊員
+メッセージの表示後、調査レーダーに
+対応アンケート追加処理
+
+woman2_18へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">ちょうさレーダーに
+『すきなひとの　ちょうさ』が▽
+ふえた！</language>
+		<language name="JPN_KANJI" width="256">調査レーダーに
+『好きな人の　調査』が　増えた！</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_17e" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・アンケート隊員
+メッセージの表示後、調査レーダーに
+対応アンケート追加処理
+
+woman2_18へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">ちょうさレーダーに
+『みんなの　このみを　ちょうさ』が▽
+ふえた！</language>
+		<language name="JPN_KANJI" width="256">調査レーダーに
+『みんなの　好みを　調査』が▽
+増えた！</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_17f" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・アンケート隊員
+メッセージの表示後、調査レーダーに
+対応アンケート追加処理
+
+woman2_18へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">ちょうさレーダーに
+『みんなの　しゅみを　ちょうさ』が▽
+ふえた！</language>
+		<language name="JPN_KANJI" width="256">調査レーダーに
+『みんなの　趣味を　調査』が▽
+増えた！</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_17g" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・アンケート隊員
+メッセージの表示後、調査レーダーに
+対応アンケート追加処理
+
+woman2_18へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">ちょうさレーダーに
+『がっこうせいかつを　ちょうさ』が▽
+ふえた！</language>
+		<language name="JPN_KANJI" width="256">調査レーダーに
+『学校生活を　調査』が　増えた！</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_17h" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・アンケート隊員
+メッセージの表示後、調査レーダーに
+対応アンケート追加処理
+
+woman2_18へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">ちょうさレーダーに
+『どんな　あそびが　すきか
+ちょうさ』が　ふえた！</language>
+		<language name="JPN_KANJI" width="256">調査レーダーに
+『どんな　遊びが　好きか　調査』が▽
+増えた！</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_17i" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・アンケート隊員
+メッセージの表示後、調査レーダーに
+対応アンケート追加処理
+
+woman2_18へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">ちょうさレーダーに
+『ポケモンのことを　くわしく▽
+ちょうさ』が　ふえた！</language>
+		<language name="JPN_KANJI" width="256">調査レーダーに
+『ポケモンのことを　詳しく　調査』が▽
 増えた！</language>
 	</row>
 
@@ -4061,22 +6599,89 @@ girl4_04へ続く
 詳細は　隊長まで！</language>
 	</row>
 
-	<row id="msg_c03r0101_none_debug_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0101_none_debug_02a" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>・机の書類
 隊員になった後に、机を調べるとメッセージ表示
 プレイヤー名と現在の隊員ランクを表示
 ランクが上がるとランクを連動して変更
 
-[トレーナー名:1]＝主人公名
-[簡易会話単語:32]＝隊員ランクを表示</comment>
+[トレーナー名:1]＝主人公名</comment>
 		<attribute name="キャラ指定">NONE
 机の書類</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]▼
 たいいんばんごう　３ばん
-たいいんランク　[1:1C:簡易会話単語:32]たいいん</language>
+たいいんランク　Ｃランクたいいん</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]▼
 隊員番号　３番
-隊員ランク　[1:1C:簡易会話単語:32]隊員</language>
+隊員ランク　Ｃランク隊員</language>
+	</row>
+
+	<row id="msg_c03r0101_none_debug_02b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>・机の書類
+隊員になった後に、机を調べるとメッセージ表示
+プレイヤー名と現在の隊員ランクを表示
+ランクが上がるとランクを連動して変更
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">NONE
+机の書類</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]▼
+たいいんばんごう　３ばん
+たいいんランク　Ｂランクたいいん</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]▼
+隊員番号　３番
+隊員ランク　Ｂランク隊員</language>
+	</row>
+
+	<row id="msg_c03r0101_none_debug_02c" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>・机の書類
+隊員になった後に、机を調べるとメッセージ表示
+プレイヤー名と現在の隊員ランクを表示
+ランクが上がるとランクを連動して変更
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">NONE
+机の書類</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]▼
+たいいんばんごう　３ばん
+たいいんランク　Ａランクたいいん</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]▼
+隊員番号　３番
+隊員ランク　Ａランク隊員</language>
+	</row>
+
+	<row id="msg_c03r0101_none_debug_02d" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>・机の書類
+隊員になった後に、机を調べるとメッセージ表示
+プレイヤー名と現在の隊員ランクを表示
+ランクが上がるとランクを連動して変更
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">NONE
+机の書類</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]▼
+たいいんばんごう　３ばん
+たいいんランク　Ｓランクたいいん</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]▼
+隊員番号　３番
+隊員ランク　Ｓランク隊員</language>
+	</row>
+
+	<row id="msg_c03r0101_none_debug_02e" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>・机の書類
+隊員になった後に、机を調べるとメッセージ表示
+プレイヤー名と現在の隊員ランクを表示
+ランクが上がるとランクを連動して変更
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">NONE
+机の書類</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]▼
+たいいんばんごう　３ばん
+たいいんランク　ＳＳランクたいいん</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]▼
+隊員番号　３番
+隊員ランク　ＳＳランク隊員</language>
 	</row>
 
 	<flowchart-group-list>
