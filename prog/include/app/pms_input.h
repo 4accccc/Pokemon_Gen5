@@ -24,11 +24,11 @@ typedef  struct _PMSI_PARAM		PMSI_PARAM;
  *  入力モード
  */
 //------------------------------------------------------
-enum PMSI_MODE {
+typedef enum {
 	PMSI_MODE_SINGLE,	///< 単語１個モード
 	PMSI_MODE_DOUBLE,	///< 単語２個モード
 	PMSI_MODE_SENTENCE,	///< 文章モード
-};
+}PMSI_MODE;
 
 
 //------------------------------------------------------
