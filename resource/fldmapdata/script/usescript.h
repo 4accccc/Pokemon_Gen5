@@ -125,6 +125,8 @@
 //自分の性格
 #include "../../../prog/include/savedata/nature_def.h"
 
+// すれ違い調査隊関連 ( 調査依頼ID・調査アンケートID )
+#include "../../../prog/include/field/research_team_def.h"
 
 //======================================================================
 //  共通メッセージ関連
