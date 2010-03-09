@@ -111,4 +111,10 @@ extern void MISC_GetGymVictoryInfo( const MISC * misc, int gym_id, u16 * monsnos
 //タイトルメニュー
 extern void MISC_SetStartMenuFlag( MISC * misc, MISC_STARTMENU_TYPE type, MISC_STARTMENU_FLAG flg );
 extern u8 MISC_GetStartMenuFlag( const MISC * misc, MISC_STARTMENU_TYPE type );
-
+// すれ違い調査隊
+extern u8 MISC_GetResearchRequestID( const MISC* misc );
+extern void MISC_SetResearchRequestID( MISC* misc, u8 id );
+extern u16 MISC_GetResearchStartCount( const MISC* misc );
+extern void MISC_SetResearchStartCount( MISC* misc, u16 count );
+extern s64 MISC_GetResearchStartTimeBySecond( const MISC* misc );
+extern void MISC_SetResearchStartTimeBySecond( MISC* misc, s64 time );

@@ -43,7 +43,12 @@ struct _MISC
 	//タイトルメニュー
 	u8	start_menu_open;		///<メニュー表示
 
-  u8 padding[2];
+  // すれ違い調査隊
+  u8  research_request_id;  // 受けている調査依頼ID
+  u16 research_start_count; // 調査依頼を受けた時の回答人数
+  s64 research_start_time;  // 調査依頼を受けた時の時間[秒]
+
+  u8 padding[3];
 
   //ジムリーダー戦勝利時の手持ち記録
   u16 gym_win_monsno[GYM_MAX][TEMOTI_POKEMAX];

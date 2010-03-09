@@ -13,6 +13,7 @@
 #include "savedata/save_tbl.h"
 
 #include "app/name_input.h" //NAMEIN_POKEMONのため
+#include "field/research_team_def.h" // for RESEARCH_REQ_ID_xxxx
 
 //=============================================================================
 /**
@@ -549,3 +550,87 @@ u8 MISC_GetStartMenuFlag( const MISC * misc, MISC_STARTMENU_TYPE type )
 	return ( ( misc->start_menu_open >> (type<<1) ) & (MISC_STARTMENU_FLAG_OPEN|MISC_STARTMENU_FLAG_VIEW) );
 }
 
+
+//==============================================================================
+// すれ違い調査隊
+//==============================================================================
+//----------------------------------------------------------
+/**
+ * @brief 受けている調査依頼IDを取得する
+ *
+ * @param misc
+ *
+ * @return 調査依頼ID ( RESEARCH_REQUEST_ID_xxxx )
+ */
+//----------------------------------------------------------
+u8 MISC_GetResearchRequestID( const MISC* misc )
+{
+  return misc->research_request_id;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief 受けている調査依頼IDをセットする
+ *
+ * @param misc
+ * @param id セットする調査依頼ID ( RESEARCH_REQUEST_ID_xxxx )
+ */
+//----------------------------------------------------------
+void MISC_SetResearchRequestID( MISC* misc, u8 id )
+{
+  GF_ASSERT( id < RESEARCH_REQ_ID_NUM );
+  misc->research_request_id = id;
+}
+//----------------------------------------------------------
+/**
+ * @brief 調査依頼を受けた時の回答人数を取得する
+ *
+ * @param misc
+ *
+ * @return 調査開始時点の回答人数
+ */
+//----------------------------------------------------------
+u16 MISC_GetResearchStartCount( const MISC* misc )
+{
+  return misc->research_start_count;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief 調査依頼を受けた時の回答人数をセットする
+ *
+ * @param misc
+ * @param count 調査開始時点の回答人数
+ */
+//----------------------------------------------------------
+void MISC_SetResearchStartCount( MISC* misc, u16 count )
+{
+  misc->research_start_count = count;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief 調査依頼を受けた時の時間[秒]を取得する
+ *
+ * @param misc
+ *
+ * @return 調査開始時点での時間[秒]
+ */
+//----------------------------------------------------------
+s64 MISC_GetResearchStartTimeBySecond( const MISC* misc )
+{
+  return misc->research_start_time;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief 調査依頼を受けた時の時間[秒]をセットする
+ *
+ * @param misc
+ * @param time 調査開始時点の時間[秒]
+ */
+//----------------------------------------------------------
+void MISC_SetResearchStartTimeBySecond( MISC* misc, s64 time )
+{
+  misc->research_start_time = time;
+}
