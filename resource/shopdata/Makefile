@@ -63,7 +63,7 @@ $(TARGETDIR)/bpshop.cdat: bpshop.cdat
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetname).cdat: fs_item.xls bp_item.xls
-#	$(COPY) $(PROJECT_PROGDIR)include/item/itemsym.h ./itemsym.h
+	$(COPY) $(PROJECT_PROGDIR)include/item/itemsym.h ./itemsym.h
 	ruby $(CSVCVTR) -c fs_item.xls >fs_item.csv
 	ruby shopdata.rb fs_item.csv itemsym.h $(targetname).cdat $(targetname)_index.h
 	ruby $(CSVCVTR) -c bp_item.xls >bp_item.csv
