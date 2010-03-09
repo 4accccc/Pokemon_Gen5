@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-05T14:38:08"/>
+	<create user="matsumiya" host="W00224" date="2010-03-09T20:16:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="257" top="368" right="962" bottom="988" maximized="no" rayout="Vertical2">
+	<dialog left="1327" top="299" right="2032" bottom="919" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -291,6 +291,36 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_h03_00_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手処理
+　No355「ニトロチャージ」
+・とにかく走り回って移動させてください＞担当の方</comment>
+		<language name="JPN" width="256">てつどうに　まけないよう
+はしって　はしりまわっていたら▽
+あつくなって　きたわーっ！▼
+ボー！　もう　とにかく
+これを　うけとって　ちょーだい！▼</language>
+		<language name="JPN_KANJI" width="256">鉄道に　負けないよう
+走って　走りまわっていたら▽
+熱くなって　きたわーっ！▼
+ボー！　もう　とにかく
+これを　受け取って　ちょーだい！▼</language>
+	</row>
+
+	<row id="msg_h03_00_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手後</comment>
+		<language name="JPN" width="256">その　わざマシンの　なかみは
+ニトロチャージ！▽
+わざが　あたれば　すばやさ　アップ！▽
+いつのまにか　ゴボウぬきよ！</language>
+		<language name="JPN_KANJI" width="256">その　わざマシンの　なかみは
+ニトロチャージ！▽
+技が　当たれば　すばやさ　アップ！▽
+いつのまにか　ゴボウ抜きよ！</language>
+	</row>
 
 	<row id="msg_h03_sage2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
