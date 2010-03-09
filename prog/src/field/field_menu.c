@@ -7,6 +7,8 @@
  */
 //======================================================================
 #include <gflib.h>
+#include <calctool.h>
+
 #include "system/main.h"
 #include "system/gfl_use.h"
 
@@ -189,6 +191,7 @@ struct _FIELD_MENU_WORK
   PRINT_QUE *printQue;
   
   GFL_TCB *vBlankTcb;
+  int     palanm_count;
 };
 
 //======================================================================
@@ -225,7 +228,9 @@ static const u16 FIELD_MENU_ITEM_MSG_ARR[FMIT_MAX] =
   FLDMAPMENU_STR_ITEM06,    // 「せってい」
   FLDMAPMENU_STR_ITEM09,    // 「」空白
 };
-static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX][3] =
+
+
+static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX+1][3] =
 {
   //ダミー
   { NARC_field_menu_menu_obj_common_NCGR, 
@@ -239,7 +244,7 @@ static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX][3] =
   { NARC_field_menu_menu_icon_zukan_NCGR,
     NARC_field_menu_menu_icon_zukan_NCER,
     NARC_field_menu_menu_icon_zukan_NANR},
-  // バッグ
+  // バッグ(男の子）
   { NARC_field_menu_menu_icon_itembag_NCGR,
     NARC_field_menu_menu_icon_itembag_NCER,
     NARC_field_menu_menu_icon_itembag_NANR},
@@ -259,9 +264,13 @@ static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX][3] =
   { NARC_field_menu_menu_icon_poke_NCGR, 
     NARC_field_menu_menu_icon_poke_NCER,
     NARC_field_menu_menu_icon_poke_NANR},
-
-
+  // バッグ(女の子）
+  { NARC_field_menu_menu_icon_itembag2_NCGR,
+    NARC_field_menu_menu_icon_itembag2_NCER,
+    NARC_field_menu_menu_icon_itembag2_NANR},
 };
+
+#define GIRLS_BAG_RES   ( 8 )
 
 //--------------------------------------------------------------
 //  初期化
@@ -340,7 +349,7 @@ static void _return_brightness( FIELD_MENU_WORK *work )
   // フィールドメニューをキャンセルしたか、レポート画面決定で終了するのでなければ
   if(work->isCancel==TRUE || (work->isCancel==FALSE && work->funcType!=FMIT_REPORT)){
     // 上画面に掛けていた輝度オフを戻す
-		FIELD_SUBSCREEN_MainDispBrightnessOff();
+    FIELD_SUBSCREEN_MainDispBrightnessOff();
   }
 }
 
@@ -600,7 +609,7 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
   0, 0, 0x1000, 0,
   GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
   GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000, 0x5800,
-  GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+  GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
   };
   static const GFL_BG_BGCNT_HEADER bgCont_BackGround = {
   0, 0, 0x800, 0,
@@ -642,9 +651,11 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
 
 
   // セルアクターリソース転送(カーソル）
-  work->objRes[FMO_COM_PLT] = GFL_CLGRP_PLTT_Register( arcHandle , 
-                                  NARC_field_menu_menu_obj_common_NCLR ,
-                                  CLSYS_DRAW_SUB , 0 , work->heapId );
+//  work->objRes[FMO_COM_PLT] = GFL_CLGRP_PLTT_Register( arcHandle , 
+//                                  NARC_field_menu_menu_obj_common_NCLR ,
+//                                  CLSYS_DRAW_SUB , 0 , work->heapId );
+  work->objRes[FMO_COM_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle, NARC_field_menu_menu_obj_common_NCLR, 
+                                                         CLSYS_DRAW_SUB, 0, 0, 11, work->heapId );
   
   work->objRes[FMO_COM_CHR] = GFL_CLGRP_CGR_Register( arcHandle , 
                                   NARC_field_menu_menu_obj_common_NCGR ,
@@ -662,7 +673,7 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
 //                                    APP_COMMON_GetBarIconPltArcIdx(),
 //                                    CLSYS_DRAW_SUB, 0 , work->heapId );
     work->objRes[TOUCHBAR_PLT] = GFL_CLGRP_PLTT_RegisterEx( commonHandle, APP_COMMON_GetBarIconPltArcIdx(), 
-                                                            CLSYS_DRAW_SUB, 2*32, 0, 4, work->heapId );
+                                                            CLSYS_DRAW_SUB, 11*32, 0, 2, work->heapId );
   
     work->objRes[TOUCHBAR_CHR] = GFL_CLGRP_CGR_Register( commonHandle, 
                                     APP_COMMON_GetBarIconCharArcIdx(),
@@ -711,7 +722,8 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
     GFL_CLACT_WK_SetAutoAnmSpeed( work->cellCursor, FX32_ONE );
     GFL_CLACT_WK_SetAutoAnmFlag( work->cellCursor, TRUE );
     GFL_CLACT_WK_SetDrawEnable( work->cellCursor, FALSE );
-
+    GFL_CLACT_WK_SetBgPri( work->cellCursor, 2 );
+    
     //タッチバーの「×」
     cellInitData.pos_x = 224;
     cellInitData.pos_y = 168;
@@ -943,12 +955,19 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, 
       //通常
       initWork.cursorPosX = 64 + (i%2)*128;
       initWork.cursorPosY = 44 + (i/2)*48;
-      initWork.iconPosX = initWork.cursorPosX - 32;
-      initWork.iconPosY = initWork.cursorPosY;
-      initWork.arcHandle = arcHandle;
-      initWork.ncgArcIdx = FIELD_MENU_ITEM_ICON_RES_ARR[itemType][0];
-      initWork.nceArcIdx = FIELD_MENU_ITEM_ICON_RES_ARR[itemType][1];
-      initWork.anmArcIdx = FIELD_MENU_ITEM_ICON_RES_ARR[itemType][2];
+      initWork.iconPosX   = initWork.cursorPosX - 32;
+      initWork.iconPosY   = initWork.cursorPosY;
+      initWork.arcHandle  = arcHandle;
+      initWork.ncgArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[itemType][0];
+      initWork.nceArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[itemType][1];
+      initWork.anmArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[itemType][2];
+      
+      // バッグで女の子の時はリソースを差し替えて登録
+      if(itemType==FMIT_ITEMMENU && MyStatus_GetMySex( work->my )==1){
+        initWork.ncgArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[GIRLS_BAG_RES][0];
+        initWork.nceArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[GIRLS_BAG_RES][1];
+        initWork.anmArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[GIRLS_BAG_RES][2];
+      }
     }
     else
     {
@@ -977,9 +996,52 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, 
 
 }
 
+// カーソルをパレットフェードさせるためのテーブル
+static const int paltbl[2][2][3]={
+  {
+    {9,31,18},  { 17,31,23 },
+  },
+  {
+    {0,25,18},  { 31,31,31 },
+  }
+};
+
+#define PALETTE_BLINK_SPEED  ( 6 )
+#define PALPOS_10_1          ( 10*32+1*2 )   
+#define PALPOS_10_15         ( 10*32+15*2 )   
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief Vblankタスク（カーソルパレットを転送）
+ *
+ * @param   tcb   
+ * @param   userWork    
+ */
+//----------------------------------------------------------------------------------
 static void FIELD_MENU_VBlankTCB( GFL_TCB *tcb , void *userWork )
 {
   FIELD_MENU_WORK *work = userWork;
+  int n,r,g,b;
+  u16 pal1, pal15;
+
+  // カーソルのパレットフェードを転送
+  n = GFL_CALC_Sin360R( work->palanm_count ) + 4096;
+  r = paltbl[0][0][0] + (paltbl[0][1][0] - paltbl[0][0][0])*n/8192;
+  g = paltbl[0][0][1] + (paltbl[0][1][1] - paltbl[0][0][1])*n/8192;
+  b = paltbl[0][0][2] + (paltbl[0][1][2] - paltbl[0][0][2])*n/8192;
+  pal1 = (g<<10 | b<<5 | r);
+  GXS_LoadOBJPltt( &pal1, PALPOS_10_1, 2);    // 10列目1番目
+
+  r = paltbl[1][0][0] + (paltbl[1][1][0] - paltbl[1][0][0])*n/8192;
+  g = paltbl[1][0][1] + (paltbl[1][1][1] - paltbl[1][0][1])*n/8192;
+  b = paltbl[1][0][2] + (paltbl[1][1][2] - paltbl[1][0][2])*n/8192;
+  pal15 = (g<<10 | b<<5 | r);
+  GXS_LoadOBJPltt( &pal15, PALPOS_10_15, 2);  // 10列目15番目
+
+  work->palanm_count+=PALETTE_BLINK_SPEED;
+
+//  OS_Printf(" count=%d, n=%d , r=%d, g=%d, b=%d\n ", work->palanm_count, n,r,g,b);
+
 }
 
 static void FIELD_MENU_InitScrollIn( FIELD_MENU_WORK* work )
