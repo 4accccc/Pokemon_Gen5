@@ -478,6 +478,16 @@ static inline void* Scu_GetProcWork( BTLV_SCU* wk, u32 size )
 }
 
 
+
+/**
+ *  フェード終了チェック
+ */
+static BOOL Fade_CheckEnd( BTLV_SCU* wk )
+{
+  return GFL_FADE_CheckFade() == FALSE;
+}
+
+
 //=============================================================================================
 /**
  * バトル画面初期セットアップ完了までの演出を開始する
@@ -620,7 +630,7 @@ static BOOL btlin_skip_core( BTLV_SCU* wk, int* seq, const u8* vposAry, u8 vposC
     }
     break;
   case 1:
-    btlin_startFade(0);
+    btlin_startFade(-3);
     (*seq)++;
     break;
   case 2:
@@ -1013,7 +1023,6 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_Encount_Wild2, 2, subwk->pokeID[0], subwk->pokeID[1] );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
-//      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
       btlin_startFade( BTLIN_STD_FADE_WAIT );
       (*seq)++;
     }
@@ -3605,6 +3614,22 @@ void BTLV_SCU_ClearCommWaitInfo( BTLV_SCU* wk )
 {
 //  GFL_BMP_Clear( wk->bmp, 0x0f );
 //  GFL_BMPWIN_TransVramCharacter( wk->win );
+}
+
+
+//=============================================================================================
+//  録画再生モードのフェードアウト処理
+//=============================================================================================
+
+void BTLV_SCU_RecPlayFadeOut_Start( BTLV_SCU* wk )
+{
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, -3 );
+}
+
+BOOL BTLV_SCU_RecPlayFadeOut_Wait( BTLV_SCU* wk )
+{
+//  GFL_FADE_Main
+  return Fade_CheckEnd( wk );
 }
 
 //=============================================================================================

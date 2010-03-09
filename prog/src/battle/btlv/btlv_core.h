@@ -341,6 +341,10 @@ extern BOOL BTLV_LvupWin_WaitFwd( BTLV_CORE* wk );
 extern void BTLV_LvupWin_StartHide( BTLV_CORE* wk );
 extern BOOL BTLV_LvupWin_WaitHide( BTLV_CORE* wk );
 
+// 録画再生時フェードアウト
+extern void BTLV_RecPlayFadeOut_Start( BTLV_CORE* wk );
+extern BOOL BTLV_RecPlayFadeOut_Wait( BTLV_CORE* wk );
+
 //=============================================================================================
 //  時間制限によるアクション選択の強制終了対応
 //=============================================================================================

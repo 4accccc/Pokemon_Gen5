@@ -16,17 +16,19 @@
 
 
 
-static inline u8 MakeRecFieldTag( BtlRecFieldType type, u8 numClient )
+static inline u8 MakeRecFieldTag( BtlRecFieldType type, u8 numClient, u8 fChapter )
 {
   GF_ASSERT(numClient < 16);
-  GF_ASSERT(type < 16);
+  GF_ASSERT(type < 8);
+  GF_ASSERT(fChapter < 2);
 
-  return (type << 4) | (numClient);
+  return ((fChapter&1) << 7) | ((type&0x07) << 4) | ((numClient)&0x0f);
 }
-static inline void ReadRecFieldTag( u8 tagCode, BtlRecFieldType* type, u8* numClient )
+static inline void ReadRecFieldTag( u8 tagCode, BtlRecFieldType* type, u8* numClient, u8* fChapter )
 {
-  *type = ((tagCode >> 4) & 0x0f);
   *numClient = tagCode & 0x0f;
+  *type = ((tagCode >> 4) & 0x07);
+  *fChapter = ((tagCode>>7)&0x01);
 }
 
 
@@ -179,27 +181,17 @@ void BTL_RECREADER_Init( BTL_RECREADER* wk, const void* recordData, u32 dataSize
 
 //=============================================================================================
 /**
- *
- *
- * @param   wk
- * @param   clientID      対象クライアントID
- * @param   type          [out] 戻り値データ種別
- *
- * @retval  const void*   １件分のデータ先頭ポインタ
- */
-//=============================================================================================
-//=============================================================================================
-/**
  * アクションデータ１件読み込み
  *
  * @param   wk
  * @param   clientID    対象クライアントID
  * @param   numAction   [out] アクションデータ数
+ * @param   fChapter    [out] チャプター（区切り）コードが埋め込まれていたらTRUE
  *
  * @retval  const BTL_ACTION_PARAM*   読み込んだアクションデータ先頭
  */
 //=============================================================================================
-const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID, u8 *numAction )
+const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID, u8 *numAction, u8* fChapter )
 {
   BtlRecFieldType type;
   u8 numClient, readClientID, readNumAction;
@@ -209,7 +201,7 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
   BTL_N_Printf( DBGSTR_REC_ReadActStart, wk->readPtr);
   while( wk->readPtr < wk->dataSize )
   {
-    ReadRecFieldTag( wk->recordData[wk->readPtr++], &type, &numClient );
+    ReadRecFieldTag( wk->recordData[wk->readPtr++], &type, &numClient, fChapter );
     if( (wk->readPtr >= wk->dataSize) ){ break; }
     if( type != BTL_RECFIELD_ACTION )
     {
@@ -250,7 +242,6 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
     clientID, type, wk->readPtr, wk->dataSize);
   return NULL;
 }
-extern BtlRotateDir BTL_RECREADER_ReadRotation( BTL_RECREADER* wk, u8 clientID );
 
 //=============================================================================================
 /**
@@ -266,13 +257,13 @@ extern BtlRotateDir BTL_RECREADER_ReadRotation( BTL_RECREADER* wk, u8 clientID )
 BtlRotateDir BTL_RECREADER_ReadRotation( BTL_RECREADER* wk, u8 clientID )
 {
   BtlRecFieldType type;
-  u8 numClient, readClientID, readNumAction;
+  u8 numClient, readClientID, readNumAction, fChapter;
   u32 i;
 
   BTL_Printf("rec seek start RP= %d\n", wk->readPtr);
   while( wk->readPtr < wk->dataSize )
   {
-    ReadRecFieldTag( wk->recordData[wk->readPtr++], &type, &numClient );
+    ReadRecFieldTag( wk->recordData[wk->readPtr++], &type, &numClient, &fChapter );
     if( (wk->readPtr >= wk->dataSize) ){ break; }
     if( type != BTL_RECFIELD_ROTATION )
     {
@@ -306,6 +297,47 @@ BtlRotateDir BTL_RECREADER_ReadRotation( BTL_RECREADER* wk, u8 clientID )
   return BTL_ROTATEDIR_STAY;
 }
 
+//=============================================================================================
+/**
+ * 記録されているターン数を数える
+ *
+ * @param   wk
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_RECREADER_GetTurnCount( const BTL_RECREADER* wk )
+{
+  u32 p = 0;
+  u32 turnCount = 0;
+
+  BtlRecFieldType type;
+  u8 fChapter, numClient, readClientID, readNumAction;
+
+  while( p < wk->dataSize )
+  {
+    ReadRecFieldTag( wk->recordData[p++], &type, &numClient, &fChapter );
+    if( fChapter ){
+      ++turnCount;
+    }
+    if( (p >= wk->dataSize) ){ break; }
+    if( type != BTL_RECFIELD_ACTION )
+    {
+      p += numClient;
+    }
+    else
+    {
+      u32 i;
+      for(i=0; i<numClient; ++i)
+      {
+        ReadClientActionTag( wk->recordData[p++], &readClientID, &readNumAction );
+        p += (sizeof(BTL_ACTION_PARAM) * readNumAction);
+        if( (p >= wk->dataSize) ){ break; }
+      }
+    }
+  }
+  return turnCount;
+}
 
 
 
@@ -322,11 +354,13 @@ BtlRotateDir BTL_RECREADER_ReadRotation( BTL_RECREADER* wk, u8 clientID )
  * RECTOOL 初期化
  *
  * @param   recTool
+ * @param   fChapter    チャプター（ターン先頭）フラグ
  */
 //=============================================================================================
-void BTL_RECTOOL_Init( BTL_RECTOOL* recTool )
+void BTL_RECTOOL_Init( BTL_RECTOOL* recTool, BOOL fChapter )
 {
   GFL_STD_MemClear( recTool, sizeof(BTL_RECTOOL) );
+  recTool->fChapter = fChapter;
 }
 
 //=============================================================================================
@@ -388,7 +422,7 @@ void* BTL_RECTOOL_FixSelActionData( BTL_RECTOOL* recTool, u32* dataSize )
 
   if( recTool->fError == 0 )
   {
-    recTool->buffer[0] = MakeRecFieldTag( recTool->type, recTool->numClients );
+    recTool->buffer[0] = MakeRecFieldTag( recTool->type, recTool->numClients, recTool->fChapter );
     *dataSize = recTool->writePtr;
     return recTool->buffer;
   }
@@ -432,7 +466,6 @@ void BTL_RECTOOL_PutRotationData( BTL_RECTOOL* recTool, u8 clientID, BtlRotateDi
   {
     GF_ASSERT_MSG(0, "client_%d のデータ書き込みが２度発生している", clientID);
   }
-
 }
 
 //=============================================================================================
@@ -451,7 +484,7 @@ void* BTL_RECTOOL_FixRotationData( BTL_RECTOOL* recTool, u32* dataSize )
 
   if( recTool->fError == 0 )
   {
-    recTool->buffer[0] = MakeRecFieldTag( recTool->type, recTool->numClients );
+    recTool->buffer[0] = MakeRecFieldTag( recTool->type, recTool->numClients, recTool->fChapter );
     *dataSize = recTool->writePtr;
     return recTool->buffer;
   }

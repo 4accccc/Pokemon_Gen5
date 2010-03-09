@@ -2416,6 +2416,19 @@ BOOL BTLV_LvupWin_WaitHide( BTLV_CORE* wk )
   return BTLV_SCU_LvupWin_WaitHide( wk->scrnU );
 }
 
+//=============================================================================================
+//  録画再生時フェードアウト処理
+//=============================================================================================
+
+void BTLV_RecPlayFadeOut_Start( BTLV_CORE* wk )
+{
+  BTLV_SCU_RecPlayFadeOut_Start( wk->scrnU );
+}
+BOOL BTLV_RecPlayFadeOut_Wait( BTLV_CORE* wk )
+{
+  return BTLV_SCU_RecPlayFadeOut_Wait( wk->scrnU );
+}
+
 
 //=============================================================================================
 //  時間制限によるアクション選択の強制終了対応

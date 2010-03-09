@@ -37,15 +37,16 @@ typedef struct {
 
   u8  writePtr;         ///< 書き込みポインタ
   u8  clientBit;        ///< クライアント毎の書き込み完了ビット
-  u8  numClients : 3;   ///< 書き込んだクライアント数
-  u8  type       : 4;   ///< 書き込み中のデータタイプ
+  u8  numClients;       ///< 書き込んだクライアント数
+  u8  type       : 6;   ///< 書き込み中のデータタイプ
+  u8  fChapter   : 1;   ///< チャプターフラグ
   u8  fError     : 1;   ///< エラー発生フラグ
 
   u8  buffer[ BTL_RECTOOL_BUFSIZE ];   ///< 書き込みバッファ
 
 }BTL_RECTOOL;
 
-extern void BTL_RECTOOL_Init( BTL_RECTOOL* recTool );
+extern void BTL_RECTOOL_Init( BTL_RECTOOL* recTool, BOOL fChapter );
 extern void BTL_RECTOOL_PutSelActionData( BTL_RECTOOL* recTool, u8 clientID, const BTL_ACTION_PARAM* action, u8 numAction );
 extern void* BTL_RECTOOL_FixSelActionData( BTL_RECTOOL* recTool, u32* dataSize );
 extern void BTL_RECTOOL_PutRotationData( BTL_RECTOOL* recTool, u8 clientID, BtlRotateDir dir );
@@ -82,6 +83,7 @@ typedef struct {
 
 
 extern void BTL_RECREADER_Init( BTL_RECREADER* wk, const void* recordData, u32 dataSize );
-extern const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID, u8 *numAction );
+extern const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID, u8 *numAction, u8* fChapter );
 extern BtlRotateDir BTL_RECREADER_ReadRotation( BTL_RECREADER* wk, u8 clientID );
+extern u32 BTL_RECREADER_GetTurnCount( const BTL_RECREADER* wk );
 

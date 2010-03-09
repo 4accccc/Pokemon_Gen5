@@ -66,6 +66,30 @@ typedef struct {
   u8  counter[ BTL_CANTESC_MAX ][ BTL_POKEID_MAX ];
 }CANT_ESC_CONTROL;
 
+/**
+ *  録画データコントロールコード
+ */
+typedef enum {
+  RECCTRL_NONE = 0,   ///< 操作無し
+  RECCTRL_QUIT,       ///< 再生終了
+  RECCTRL_CHAPTER,    ///< チャプター移動
+}RecCtrlCode;
+
+
+
+/**
+ *  録画データ再生コントロール構造体
+ */
+typedef struct {
+  u8   seq;
+  u8   ctrlCode;
+  u8   fFadeOutDone;
+  u8   fTurnIncrement;
+  u16  turnCount;
+  u16  nextTurnCount;
+  u16  maxTurnCount;
+}RECPLAYER_CONTROL;
+
 //--------------------------------------------------------------
 /**
  *  クライアントモジュール構造定義
@@ -79,6 +103,7 @@ struct _BTL_CLIENT {
   BTL_ACTION_PARAM*     procAction;
   BTL_REC*              btlRec;
   BTL_RECREADER         btlRecReader;
+  RECPLAYER_CONTROL     recPlayer;
 
   BTL_ADAPTER*    adapter;
   BTLV_CORE*      viewCore;
@@ -236,6 +261,7 @@ static BOOL scProc_ACT_SimpleHP( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Kinomi( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_ResetMove( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp );
 static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args );
@@ -245,7 +271,6 @@ static BOOL scProc_ACT_FakeDisable( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_EffectByVector( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ChangeForm( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_ACT_ResetMove( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
@@ -297,6 +322,12 @@ static BOOL _cec_check_arijigoku( BTL_CLIENT* wk );
 static BOOL _cec_check_jiryoku( BTL_CLIENT* wk );
 static u8 countFrontPokeTokusei( BTL_CLIENT* wk, PokeTokusei tokusei );
 static u8 countFrontPokeType( BTL_CLIENT* wk, PokeType type );
+static void RecPlayer_Init( RECPLAYER_CONTROL* ctrl );
+static void RecPlayer_Setup( RECPLAYER_CONTROL* ctrl, u32 turnCnt );
+static BOOL RecPlayer_CheckBlackOut( const RECPLAYER_CONTROL* ctrl );
+static void RecPlayer_TurnIncReq( RECPLAYER_CONTROL* ctrl );
+static RecCtrlCode RecPlayer_GetCtrlCode( RECPLAYER_CONTROL* ctrl );
+static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl );
 
 
 
@@ -336,6 +367,8 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->bagMode = bagMode;
   wk->escapeClientID = BTL_CLIENTID_NULL;
 
+  RecPlayer_Init( &wk->recPlayer );
+
   BTL_CALC_BITFLG_Construction( wk->fieldEffectFlag, sizeof(wk->fieldEffectFlag) );
 
   if( (wk->myType == BTL_CLIENT_TYPE_UI)
@@ -372,8 +405,13 @@ const void* BTL_CLIENT_GetRecordData( BTL_CLIENT* wk, u32* size )
 
 void BTL_CLIENT_SetRecordPlayType( BTL_CLIENT* wk, const void* recordData, u32 dataSize )
 {
-  wk->myType = BTL_CLIENT_TYPE_REC;
+  u32 turnCnt;
+
+  wk->myType = BTL_CLIENT_TYPE_RECPLAY;
   BTL_RECREADER_Init( &wk->btlRecReader, recordData, dataSize );
+  turnCnt = BTL_RECREADER_GetTurnCount( &wk->btlRecReader );
+  TAYA_Printf("記録ターン数 = %d\n", turnCnt );
+  RecPlayer_Setup( &wk->recPlayer, turnCnt );
 }
 
 //=============================================================================================
@@ -878,9 +916,12 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 
 static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
 {
-  u8 numAction;
+  u8 numAction, fChapter;
 
-  const BTL_ACTION_PARAM* act = BTL_RECREADER_ReadAction( &wk->btlRecReader, wk->myID, &numAction );
+  const BTL_ACTION_PARAM* act = BTL_RECREADER_ReadAction( &wk->btlRecReader, wk->myID, &numAction, &fChapter );
+  if( fChapter ){
+    RecPlayer_TurnIncReq( &wk->recPlayer );
+  }
 
   wk->returnDataPtr = act;
   wk->returnDataSize = numAction * sizeof(BTL_ACTION_PARAM);
@@ -2374,10 +2415,10 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
   }
   else
   {
-      BTL_Printf("myID=%d 誰も死んでない\n", wk->myID);
-      BTL_ACTION_SetNULL( &wk->actionParam[0] );
-      wk->returnDataPtr = &(wk->actionParam[0]);
-      wk->returnDataSize = sizeof(wk->actionParam[0]);
+     BTL_Printf("myID=%d 誰も死んでない\n", wk->myID);
+     BTL_ACTION_SetNULL( &wk->actionParam[0] );
+     wk->returnDataPtr = &(wk->actionParam[0]);
+     wk->returnDataSize = sizeof(wk->actionParam[0]);
   }
   return TRUE;
 }
@@ -2717,6 +2758,7 @@ static BOOL SubProc_REC_ServerCmd( BTL_CLIENT* wk, int* seq )
 {
   if( wk->viewCore )
   {
+    RecPlayerCtrl_Main( wk, &wk->recPlayer );
     return SubProc_UI_ServerCmd( wk, seq );
   }
   return TRUE;
@@ -2830,6 +2872,13 @@ restart:
     if( SCQUE_IsFinishRead(wk->cmdQue) )
     {
       BTL_Printf("サーバコマンド読み終わり\n");
+      (*seq) = 4;
+      return TRUE;
+    }
+    // 録画再生処理チェック
+    else if( RecPlayer_CheckBlackOut(&wk->recPlayer) )
+    {
+      BTL_N_Printf( DBGSTR_CLIENT_RecPlayerBlackOut );
       return TRUE;
     }
     (*seq)++;
@@ -2847,7 +2896,7 @@ restart:
 
       if( i == NELEMS(scprocTbl) )
       {
-        BTL_Printf("用意されていないコマンドNo[%d]！\n", wk->serverCmd);
+        BTL_N_Printf( DBGSTR_CLIENT_UnknownServerCmd, wk->serverCmd);
         (*seq)=1;
         goto restart;
       }
@@ -2865,6 +2914,9 @@ restart:
       goto restart;
     }
     break;
+
+  case 4:
+    return TRUE;
   }
 
   return FALSE;
@@ -5005,5 +5057,94 @@ BtlPokePos BTL_CLIENT_GetProcPokePos( const BTL_CLIENT* client )
 
 
 
+//------------------------------------------------------------------------------------------------------
+// 録画データプレイヤー
+//------------------------------------------------------------------------------------------------------
 
+/**
+ *  領域初期化（再生時でなくても、これを呼び出して初期化する必要がある）
+ */
+static void RecPlayer_Init( RECPLAYER_CONTROL* ctrl )
+{
+  ctrl->ctrlCode = RECCTRL_NONE;
+  ctrl->seq = 0;
+  ctrl->fTurnIncrement = FALSE;
+  ctrl->fFadeOutDone = FALSE;
+  ctrl->turnCount = 0;
+  ctrl->nextTurnCount = 0;
+  ctrl->maxTurnCount = 0;
+}
+/**
+ *  再生準備処理（再生時にのみ呼び出す）
+ */
+static void RecPlayer_Setup( RECPLAYER_CONTROL* ctrl, u32 turnCnt )
+{
+  ctrl->maxTurnCount = turnCnt;
+}
+/**
+ *  停止またはチャプター送り前のブラックアウトが発生したか判定
+ */
+static BOOL RecPlayer_CheckBlackOut( const RECPLAYER_CONTROL* ctrl )
+{
+  return ctrl->fFadeOutDone;
+}
+/**
+ *  ターンカウンタインクリメントリクエスト
+ */
+static void RecPlayer_TurnIncReq( RECPLAYER_CONTROL* ctrl )
+{
+  ctrl->fTurnIncrement = TRUE;
+}
 
+/**
+ *  状態取得
+ */
+static RecCtrlCode RecPlayer_GetCtrlCode( RECPLAYER_CONTROL* ctrl )
+{
+  return ctrl->ctrlCode;
+}
+
+/**
+ *  メインコントロール（キー・タッチパネルに反応、状態遷移する）
+ */
+static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
+{
+  if( ctrl->maxTurnCount )
+  {
+    enum {
+      SEQ_INIT = 0,
+      SEQ_FADEOUT,
+      SEQ_STAY,
+    };
+
+    if( ctrl->fTurnIncrement )
+    {
+      if( ctrl->turnCount < ctrl->maxTurnCount ){
+        ++(ctrl->turnCount);
+      }
+      ctrl->fTurnIncrement = FALSE;
+    }
+
+    switch( ctrl->seq ){
+    case SEQ_INIT:
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+      {
+        ctrl->ctrlCode = RECCTRL_QUIT;
+        BTLV_RecPlayFadeOut_Start( wk->viewCore );
+        ctrl->seq = SEQ_FADEOUT;
+        break;
+      }
+      break;
+
+    case SEQ_FADEOUT:
+      if( BTLV_RecPlayFadeOut_Wait(wk->viewCore) ){
+        ctrl->fFadeOutDone = TRUE;
+        ctrl->seq = SEQ_STAY;
+      }
+      break;
+
+    case SEQ_STAY:
+      break;
+    }
+  }
+}

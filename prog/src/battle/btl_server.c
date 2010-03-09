@@ -103,6 +103,7 @@ static void setMainProc_Root( BTL_SERVER* server );
 static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq );
+static BOOL check_acton_chapter( BTL_SERVER* server );
 static BOOL ServerMain_ConfirmChangeOrEscape( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq );
 static BOOL Irekae_IsNeedConfirm( BTL_SERVER* server );
@@ -111,9 +112,9 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForTrainer( BTL_SERVER* server, int* seq );
-static BOOL SendActionRecord( BTL_SERVER* server );
+static BOOL SendActionRecord( BTL_SERVER* server, BOOL fChapter );
 static BOOL SendRotateRecord( BTL_SERVER* server, const BtlRotateDir* dirAry );
-static void* MakeSelectActionRecord( BTL_SERVER* server, u32* dataSize );
+static void* MakeSelectActionRecord( BTL_SERVER* server, BOOL fChapter, u32* dataSize );
 static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize, const BtlRotateDir* dirAry );
 static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd );
 static void SetAdapterCmdEx( BTL_SERVER* server, BtlAdapterCmd cmd, const void* sendData, u32 dataSize );
@@ -529,10 +530,11 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         setMainProc( server, ServerMain_BattleTimeOver );
         break;
       }
+
       server->flowResult = BTL_SVFLOW_StartTurn( server->flowWork );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult);
 
-      if( SendActionRecord(server) ){
+      if( SendActionRecord(server, check_acton_chapter(server)) ){
         (*seq)++;
       }else{
         (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
@@ -606,6 +608,26 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 
   return FALSE;
 }
+/**
+ *  録画データ（アクションコマンド用）のチャプターを打つか判定
+ */
+static BOOL check_acton_chapter( BTL_SERVER* server )
+{
+  // ローテーション以外なら常にチャプター打つ
+  if( BTL_MAIN_GetRule(server->mainModule) != BTL_RULE_ROTATION ){
+    return TRUE;
+  }
+  // ローテーションは最初のターンのみ打つ
+  // （２ターン目以降はローテーションコマンドにチャプターを打つため）
+  else
+  {
+    if( BTL_SVFTOOL_GetTurnCount(server->flowWork) == 0 ){
+      return TRUE;
+    }
+    return FALSE;
+  }
+}
+
 //----------------------------------------------------------------------------------
 /**
  * サーバメインループ：自分のポケモンが倒れた時、逃げるか入れ替えるかを選択（野生シングルのみ）
@@ -695,7 +717,7 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
       server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
 
-      if( SendActionRecord(server) ){
+      if( SendActionRecord(server, FALSE) ){
         (*seq)++;
       }else{
         (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
@@ -811,7 +833,7 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
       server->flowResult = BTL_SVFLOW_ContinueAfterPokeChange( server->flowWork );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
 
-      if( SendActionRecord(server) ){
+      if( SendActionRecord(server, FALSE) ){
         (*seq)++;
       }else{
         (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
@@ -980,11 +1002,11 @@ static BOOL ServerMain_ExitBattle_ForTrainer( BTL_SERVER* server, int* seq )
 /**
  *  アクション記録データ送信開始
  */
-static BOOL SendActionRecord( BTL_SERVER* server )
+static BOOL SendActionRecord( BTL_SERVER* server, BOOL fChapter )
 {
   void* recData;
   u32   recDataSize;
-  recData = MakeSelectActionRecord( server, &recDataSize );
+  recData = MakeSelectActionRecord( server, fChapter, &recDataSize );
   if( recData != NULL ){
 //  BTL_Printf("アクション記録データを送信する (%dbytes)\n", recDataSize);
     SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
@@ -1012,15 +1034,16 @@ static BOOL SendRotateRecord( BTL_SERVER* server, const BtlRotateDir* dirAry )
  * アクション記録データを生成
  *
  * @param   server
+ * @param   fChapter   TRUEならターン区切りコードを記録データに埋め込む
  * @param   dataSize   [out] 生成されたデータサイズ
  *
  * @retval  void*   正しく生成できたら送信データポインタ / できない場合NULL
  */
-static void* MakeSelectActionRecord( BTL_SERVER* server, u32* dataSize )
+static void* MakeSelectActionRecord( BTL_SERVER* server, BOOL fChapter, u32* dataSize )
 {
   u32 ID;
 
-  BTL_RECTOOL_Init( &server->recTool );
+  BTL_RECTOOL_Init( &server->recTool, fChapter );
 
   for(ID=0; ID<BTL_CLIENT_MAX; ++ID)
   {
@@ -1048,7 +1071,7 @@ static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize, const BtlRot
 {
   u32 ID;
 
-  BTL_RECTOOL_Init( &server->recTool );
+  BTL_RECTOOL_Init( &server->recTool, TRUE );
 
   for(ID=0; ID<BTL_CLIENT_MAX; ++ID)
   {

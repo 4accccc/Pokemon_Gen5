@@ -92,7 +92,7 @@ typedef enum {
 
   BTL_CLIENT_TYPE_UI = 0,   ///< ƒvƒŒƒCƒ„[
   BTL_CLIENT_TYPE_AI,       ///< AI
-  BTL_CLIENT_TYPE_REC,      ///< ˜^‰æÄ¶
+  BTL_CLIENT_TYPE_RECPLAY,  ///< ˜^‰æÄ¶
 
   BTL_CLIENT_TYPE_MAX,
   BTL_CLIENT_TYPE_NONE = BTL_CLIENT_TYPE_MAX,

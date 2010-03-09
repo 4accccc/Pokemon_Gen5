@@ -69,6 +69,8 @@ typedef enum {
   DBGSTR_CLIENT_ReadRecAct_Fight,
   DBGSTR_CLIENT_ReadRecAct_Change,
   DBGSTR_CLIENT_ReadRecAct_Move,
+  DBGSTR_CLIENT_UnknownServerCmd,
+  DBGSTR_CLIENT_RecPlayerBlackOut,
 
   DBGSTR_BPP_NemuriWakeCheck,
 
