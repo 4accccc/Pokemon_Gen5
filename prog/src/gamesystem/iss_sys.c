@@ -138,8 +138,7 @@ void ISS_SYS_Update( ISS_SYS* sys )
 	BGMChangeCheck( sys );
 
   // 各ISSの更新
-	if( sys->frame++ % 2 == 0 )
-  {
+	if( sys->frame++ % 2 == 0 ) {
     ISS_ROAD_SYS_Update( sys->issR );  // 道路ISS (30フレームで動作)
     ISS_CITY_SYS_Main( sys->issC );    // 街ISS (30フレームで動作)
     ISS_3DS_SYS_Main( sys->issB );     // 橋ISS (30フレームで動作)
@@ -169,9 +168,9 @@ void ISS_SYS_ZoneChange( ISS_SYS* sys, u16 nextZoneID )
 	player = GAMEDATA_GetMyPlayerWork( sys->gameData );
 	form   = PLAYERWORK_GetMoveForm( player ); 
 	// 自転車に乗っている ==> ISS変更無し
-	if( form == PLAYER_MOVE_FORM_CYCLE ) return;
+	if( form == PLAYER_MOVE_FORM_CYCLE ) { return; }
   // なみのり中 ==> ISS変更無し
-	if( form == PLAYER_MOVE_FORM_SWIM ) return;
+	if( form == PLAYER_MOVE_FORM_SWIM ) { return; }
 
   // 各ISSシステムにゾーンチェンジを通知
 	ISS_CITY_SYS_ZoneChange( sys->issC, nextZoneID );    // 街ISS 
