@@ -778,7 +778,8 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
     {
       const u32 monsNo = PP_Get( work->selectPokePara , ID_PARA_monsno , NULL );
       const u16 evoMonsNo = SHINKA_Check( work->plData->pp , work->selectPokePara , SHINKA_TYPE_LEVELUP , 0 , NULL , work->heapId );
-      if( monsNo != evoMonsNo )
+      OS_TFPrintf(3,"[%d][%d]\n",monsNo,evoMonsNo);
+      if( evoMonsNo != 0 )
       {
         work->mainSeq = PSMS_FADEOUT;
         work->plData->ret_sel = work->pokeCursor;
