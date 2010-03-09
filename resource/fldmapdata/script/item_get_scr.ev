@@ -200,6 +200,7 @@ ev_item_event_field_core:
   $SCWK_TEMP1 = $SCWK_PARAM1
 
   _CALL sub_pocket_me_set
+  _TIME_WAIT( ITEM_GET_FORM_TIMING )
   _CALL sub_item_get_player_form_set
 
   _ADD_ITEM_CHK( SCWK_PARAM0, SCWK_PARAM1, i_get)
@@ -481,6 +482,7 @@ EVENT_START ev_item_event_intrude_secret
   $SCWK_TEMP1 = $SCWK_PARAM1
 
   _CALL sub_pocket_me_set
+  _TIME_WAIT( ITEM_GET_FORM_TIMING )
   _CALL sub_item_get_player_form_set
 
 //  メッセージ「～をみつけた！」

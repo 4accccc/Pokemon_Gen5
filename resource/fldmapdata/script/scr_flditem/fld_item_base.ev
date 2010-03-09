@@ -31,6 +31,7 @@ _RET
 ev_itemget_flditem_true:
   _CHG_COMMON_SCR SCRID_POCKET_ME_SET //MEセット
   
+  _TIME_WAIT( ITEM_GET_FORM_TIMING )
   //話し掛け対象のイベントフラグを取得しセット
   _GET_OBJ_EV_FLAG( SCWK_TARGET_OBJID, SCWK_ANSWER )
   _FLAG_SET( SCWK_ANSWER )
