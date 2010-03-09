@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/24 12:44:25
+#save date:2010/03/09 17:23:25
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -334,7 +334,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-46
+10
 #event number: 0
 #Pos Event Label
 POSID_C01GYM0101_LEADER_BATTLE
@@ -354,23 +354,6 @@ EVENTDATA_POSTYPE_GRID
 3 1
 #event number: 1
 #Pos Event Label
-POSID_C01GYM0101_BUTTON_HONOO_OFF_01
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_HONOO1_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK10
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 0 -328
-#size
-1 1
-#event number: 2
-#Pos Event Label
 POSID_C01GYM0101_BUTTON_KUSA_02
 #Pos Script Name
 SCRID_POS_C01GYM0101_BUTTON_KUSA_02
@@ -386,7 +369,7 @@ EVENTDATA_POSTYPE_GRID
 -104 0 -168
 #size
 1 1
-#event number: 3
+#event number: 2
 #Pos Event Label
 POSID_C01GYM0101_BUTTON_KUSA_03
 #Pos Script Name
@@ -403,7 +386,7 @@ EVENTDATA_POSTYPE_GRID
 -104 0 -8
 #size
 1 1
-#event number: 4
+#event number: 3
 #Pos Event Label
 POSID_C01GYM0101_BUTTON_HONOO_01
 #Pos Script Name
@@ -420,7 +403,7 @@ EVENTDATA_POSTYPE_GRID
 -56 0 -328
 #size
 1 1
-#event number: 5
+#event number: 4
 #Pos Event Label
 POSID_C01GYM0101_BUTTON_HONOO_02
 #Pos Script Name
@@ -437,7 +420,7 @@ EVENTDATA_POSTYPE_GRID
 -56 0 -168
 #size
 1 1
-#event number: 6
+#event number: 5
 #Pos Event Label
 POSID_C01GYM0101_BUTTON_HONOO_03
 #Pos Script Name
@@ -454,7 +437,7 @@ EVENTDATA_POSTYPE_GRID
 -56 0 -8
 #size
 1 1
-#event number: 7
+#event number: 6
 #Pos Event Label
 POSID_C01GYM0101_BUTTON_MIZU_01
 #Pos Script Name
@@ -471,7 +454,7 @@ EVENTDATA_POSTYPE_GRID
 -8 0 -328
 #size
 1 1
-#event number: 8
+#event number: 7
 #Pos Event Label
 POSID_C01GYM0101_BUTTON_MIZU_02
 #Pos Script Name
@@ -488,7 +471,7 @@ EVENTDATA_POSTYPE_GRID
 -8 0 -168
 #size
 1 1
-#event number: 9
+#event number: 8
 #Pos Event Label
 POSID_C01GYM0101_BUTTON_MIZU_03
 #Pos Script Name
@@ -505,7 +488,7 @@ EVENTDATA_POSTYPE_GRID
 -8 0 -8
 #size
 1 1
-#event number: 10
+#event number: 9
 #Pos Event Label
 POSID_C01GYM0101_BUTTON_KUSA_01
 #Pos Script Name
@@ -520,601 +503,6 @@ LOCALWORK10
 EVENTDATA_POSTYPE_GRID
 #position
 -104 0 -328
-#size
-1 1
-#event number: 11
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_KUSA_OFF_01
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_KUSA1_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK10
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--120 0 -328
-#size
-1 1
-#event number: 12
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_KUSA_OFF_02
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_KUSA1_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK10
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--104 0 -312
-#size
-1 1
-#event number: 13
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_KUSA_OFF_03
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_KUSA1_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK10
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--88 0 -328
-#size
-1 1
-#event number: 14
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_KUSA_OFF_04
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_KUSA1_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK10
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--104 0 -344
-#size
-1 1
-#event number: 15
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_KUSA_OFF_09
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_KUSA3_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK15
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--120 0 -8
-#size
-1 1
-#event number: 16
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_KUSA_OFF_10
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_KUSA3_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK15
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--104 0 8
-#size
-1 1
-#event number: 17
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_KUSA_OFF_11
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_KUSA3_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK15
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--88 0 -8
-#size
-1 1
-#event number: 18
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_KUSA_OFF_12
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_KUSA3_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK15
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--104 0 -24
-#size
-1 1
-#event number: 19
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_KUSA_OFF_05
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_KUSA2_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK14
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--120 0 -168
-#size
-1 1
-#event number: 20
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_KUSA_OFF_06
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_KUSA2_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK14
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--104 0 -152
-#size
-1 1
-#event number: 21
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_KUSA_OFF_07
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_KUSA2_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK14
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--88 0 -168
-#size
-1 1
-#event number: 22
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_KUSA_OFF_08
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_KUSA2_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK14
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--104 0 -184
-#size
-1 1
-#event number: 23
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_HONOO_OFF_02
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_HONOO1_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK10
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--56 0 -312
-#size
-1 1
-#event number: 24
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_HONOO_OFF_03
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_HONOO1_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK10
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 0 -328
-#size
-1 1
-#event number: 25
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_HONOO_OFF_04
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_HONOO1_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK10
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--56 0 -344
-#size
-1 1
-#event number: 26
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_HONOO_OFF_09
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_HONOO3_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK15
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 0 -8
-#size
-1 1
-#event number: 27
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_HONOO_OFF_10
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_HONOO3_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK15
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--56 0 8
-#size
-1 1
-#event number: 28
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_HONOO_OFF_11
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_HONOO3_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK15
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 0 -8
-#size
-1 1
-#event number: 29
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_HONOO_OFF_12
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_HONOO3_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK15
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--56 0 -24
-#size
-1 1
-#event number: 30
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_HONOO_OFF_05
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_HONOO2_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK14
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 0 -168
-#size
-1 1
-#event number: 31
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_HONOO_OFF_06
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_HONOO2_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK14
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--56 0 -152
-#size
-1 1
-#event number: 32
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_HONOO_OFF_07
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_HONOO2_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK14
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 0 -168
-#size
-1 1
-#event number: 33
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_HONOO_OFF_08
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_HONOO2_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK14
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--56 0 -184
-#size
-1 1
-#event number: 34
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_MIZU_OFF_01
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_MIZU1_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK10
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--24 0 -328
-#size
-1 1
-#event number: 35
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_MIZU_OFF_02
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_MIZU1_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK10
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 0 -312
-#size
-1 1
-#event number: 36
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_MIZU_OFF_03
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_MIZU1_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK10
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 0 -328
-#size
-1 1
-#event number: 37
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_MIZU_OFF_04
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_MIZU1_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK10
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 0 -344
-#size
-1 1
-#event number: 38
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_MIZU_OFF_09
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_MIZU3_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK15
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--24 0 -8
-#size
-1 1
-#event number: 39
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_MIZU_OFF_10
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_MIZU3_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK15
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 0 8
-#size
-1 1
-#event number: 40
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_MIZU_OFF_11
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_MIZU3_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK15
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 0 -8
-#size
-1 1
-#event number: 41
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_MIZU_OFF_12
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_MIZU3_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK15
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 0 -24
-#size
-1 1
-#event number: 42
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_MIZU_OFF_05
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_MIZU2_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK14
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--24 0 -168
-#size
-1 1
-#event number: 43
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_MIZU_OFF_06
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_MIZU2_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK14
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 0 -152
-#size
-1 1
-#event number: 44
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_MIZU_OFF_07
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_MIZU2_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK14
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 0 -168
-#size
-1 1
-#event number: 45
-#Pos Event Label
-POSID_C01GYM0101_BUTTON_MIZU_OFF_08
-#Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_MIZU2_OFF
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK14
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 0 -184
 #size
 1 1
 #Map Event List Data End
