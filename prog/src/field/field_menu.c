@@ -305,7 +305,7 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , const HEAPID tempHea
   
   arcHandle = GFL_ARC_OpenDataHandle( ARCID_FIELD_MENU , work->tempHeapId );
   //メニューの種類取得
-  menuType = FIELDMENU_GetMenuType( work->ev, work->zoneId );
+  menuType = FIELDMENU_GetMenuType( gameData, work->ev, work->zoneId );
   work->menuType = menuType;
 
   FIELD_MENU_InitGraphic( work , arcHandle, menuType);
@@ -766,13 +766,14 @@ void FIELDMENU_RewriteInfoScreen( HEAPID heapId )
 /**
  * @brief 現在のメニュータイプを取得する
  *
- * @param   ev     EVENTWORK
- * @param   zoneId ゾーンID
+ * @param   gamedata  GAMEDATA
+ * @param   ev        EVENTWORK
+ * @param   zoneId    ゾーンID
  *
  * @retval  int     FIELD_MENU_NORMAL～FIELD_MENU_PLEASURE_BOAT( field_menu.h )
  */
 //----------------------------------------------------------------------------------
-int FIELDMENU_GetMenuType( EVENTWORK *ev, int zoneId )
+int FIELDMENU_GetMenuType( GAMEDATA * gamedata, EVENTWORK *ev, int zoneId )
 {
   int type=FIELD_MENU_NORMAL;   // 通常
 
@@ -785,6 +786,9 @@ int FIELDMENU_GetMenuType( EVENTWORK *ev, int zoneId )
   }else if(ZONEDATA_IsPlBoat(zoneId)){
     type = FIELD_MENU_PLEASURE_BOAT; 
   
+  }else if(GAMEDATA_GetIntrudeReverseArea(gamedata)){
+    type = FIELD_MENU_PALACE;
+
   // ゲーム開始時チェック
   }else if( EVENTWORK_CheckEventFlag(ev,SYS_FLAG_FIRST_POKE_GET) == FALSE ){
     OS_Printf("図鑑なし・ポケモン無し\n");
@@ -826,7 +830,7 @@ int FIELDMENU_GetMenuType( EVENTWORK *ev, int zoneId )
 // --------------------------------------------------
 // menuType毎の項目列
 // --------------------------------------------------
-static const FIELD_MENU_ITEM_TYPE typeArr[][7] =
+static const FIELD_MENU_ITEM_TYPE typeArr[FIELD_MENU_TYPE_MAX][7] =
 {
   { //通常
     FMIT_POKEMON,
@@ -865,6 +869,15 @@ static const FIELD_MENU_ITEM_TYPE typeArr[][7] =
     FMIT_EXIT,
   },
   { //遊覧船
+    FMIT_POKEMON,
+    FMIT_ZUKAN,
+    FMIT_ITEMMENU,
+    FMIT_TRAINERCARD,
+    FMIT_CONFING,
+    FMIT_NONE,
+    FMIT_EXIT,
+  },
+  { //パレス
     FMIT_POKEMON,
     FMIT_ZUKAN,
     FMIT_ITEMMENU,

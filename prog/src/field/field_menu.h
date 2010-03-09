@@ -21,6 +21,9 @@ enum{
   FIELD_MENU_NO_ZUKAN,              // 図鑑無し
   FIELD_MENU_NO_POKEMON_NO_ZUKAN,   // 図鑑無し・ポケモン無し
   FIELD_MENU_PLEASURE_BOAT,         // 遊覧船内
+  FIELD_MENU_PALACE,                ///< パレス・裏フィールドにいる場合
+
+  FIELD_MENU_TYPE_MAX,
 };
 
 
@@ -35,7 +38,7 @@ extern void FIELD_MENU_DrawMenu( FIELD_MENU_WORK* work );
 extern const FIELD_MENU_ITEM_TYPE FIELD_MENU_GetMenuItemNo( FIELD_MENU_WORK* work );
 extern void FIELD_MENU_SetMenuItemNo( FIELD_MENU_WORK* work , const FIELD_MENU_ITEM_TYPE itemType );
 extern void FIELDMENU_RewriteInfoScreen( HEAPID heapId );
-extern int  FIELDMENU_GetMenuType( EVENTWORK *ev, int zoneId );
+extern int FIELDMENU_GetMenuType( GAMEDATA * gamedata, EVENTWORK *ev, int zoneId );
 
 
 

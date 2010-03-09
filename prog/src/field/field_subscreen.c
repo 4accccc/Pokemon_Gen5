@@ -899,7 +899,7 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
   GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
   
   pWork->fieldMenuWork = FIELD_MENU_InitMenu( HEAPID_FIELD_SUBSCREEN , pWork->heapID , pWork , pWork->fieldmap , isScrollIn );
-  if(FIELDMENU_GetMenuType(ev,zoneId)!=FIELD_MENU_UNION){
+  if(FIELDMENU_GetMenuType(gameData,ev,zoneId)!=FIELD_MENU_UNION){
     INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , commSys , pWork->heapID);
   }
   // INFOWINのスクリーン下部分にタッチバーを書き込む(のでINFOWIN_Initの後に置いてね）
@@ -918,7 +918,7 @@ static void exit_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork )
   GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
   EVENTWORK *ev = GAMEDATA_GetEventWork( gameData );
 
-  if(FIELDMENU_GetMenuType(ev,zoneId)!=FIELD_MENU_UNION){
+  if(FIELDMENU_GetMenuType(gameData,ev,zoneId)!=FIELD_MENU_UNION){
     INFOWIN_Exit();
   }
   FIELD_MENU_ExitMenu( pWork->fieldMenuWork );
