@@ -17,5 +17,6 @@
 #ifndef ZONE_C04R0901_EVB_H
 #define ZONE_C04R0901_EVB_H
 
+#define BG_TRIAL_RANK_DISP                0
 
 #endif //ZONE_C04R0901_EVB_H
