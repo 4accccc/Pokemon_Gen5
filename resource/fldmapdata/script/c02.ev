@@ -286,16 +286,10 @@ EVENT_START   ev_pos_c02_boss_01
 	ENDIF
 	
 	_END_FACEUP()	//Ｎバストアップ表示終了----------------------------------
-
-	//BGM終了
-	_END_EVENT_BGM()
 	
 	//Nとの戦闘
 	_CALL		ev_boss_btl
-
-	//NのBGM再生
-	_START_EVENT_BGM( SEQ_BGM_E_N )
-
+	
 	_TIME_WAIT(16)
 	//Ｎバストアップ表示開始---------------------------------------------------
 	_START_FACEUP( FLD_FACEUP_BG_CITY, FLD_FACEUP_CHAR_BOSS )
