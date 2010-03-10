@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T13:03:08"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T14:29:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="266"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1462" top="206" right="2167" bottom="834" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,82 @@
 	</lock>
 
 
-	<row id="msg_c03p12_sign1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03p12_sunglasses_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・GRIDX=13、GRIDZ=49に配置
+・pos起動と話しかけ起動の２つ
+・pos起動（GRIDX=14～18、GRIDZ=49）を踏むと
+　まずメッセージ表示</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
+		<language name="JPN" width="256">ドリャーッ！！▼</language>
+		<language name="JPN_KANJI" width="256">ドリャーッ！！▼</language>
+	</row>
+
+	<row id="msg_c03p12_sunglasses_02" text-color="#ff0000,,,#ff0000,,#ff0000,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・主人公に隣接してメッセージ表示
+・アイテム入手処理
+　No000「フラッシュ」</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
+		<language name="JPN" width="256">ははは！　おどろいたか！▼
+おどろかせて　もうしわけないので
+おまえには　これを　やろう▼</language>
+		<language name="JPN_KANJI" width="256">ははは！　おどろいたか！▼
+おどろかせて　申し訳ないので
+おまえには　これを　やろう▼</language>
+	</row>
+
+	<row id="msg_c03p12_sunglasses_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・話しかけたとき
+・アイテム入手処理
+　No000「フラッシュ」</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
+		<language name="JPN" width="256">にゃあ！
+よく　オレさまを　みつけたな！▼
+そんな　すごい
+おまえには　これを　やろう▼</language>
+		<language name="JPN_KANJI" width="256">にゃあ！
+よく　オレさまを　みつけたな！▼
+そんな　すごい
+おまえには　これを　やろう▼</language>
+	</row>
+
+	<row id="msg_c03p12_sunglasses_04" text-color="#ff0000,,,#ff0000,,#ff0000,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
+		<language name="JPN" width="256">フラッシュの　わざを　つかえば
+あいての　わざの▽
+めいちゅうりつが　さがる……▽
+たおされる　かくりつが　へるぜ▼
+もっと　ひかりを……　ってことさ</language>
+		<language name="JPN_KANJI" width="256">フラッシュの　技を　使えば
+相手の　技の▽
+命中率が　下がる……▽
+倒される　確率が　減るぜ▼
+もっと　ひかりを……　ってことさ</language>
+	</row>
+
+	<row id="msg_c03p12_badman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>♂
+・GRIDX=18、GRIDZ=30、下向き固定
+・話しかけても主人公を向かない</comment>
+		<attribute name="キャラ指定">BADMAN</attribute>
+		<language name="JPN" width="256">にやにや……！</language>
+		<language name="JPN_KANJI" width="256">にやにや……！</language>
+	</row>
+
+	<row id="msg_c03p12_badman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>♂
+・GRIDX=18、GRIDZ=31、上向き固定
+・話しかけても主人公を向かない</comment>
+		<attribute name="キャラ指定">BADMAN</attribute>
+		<language name="JPN" width="256">えへへ</language>
+		<language name="JPN_KANJI" width="256">えへへ</language>
+	</row>
+
+	<row id="msg_c03p12_sign1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ＢＧメッセージ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">看板</attribute>
