@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-19T16:09:27"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T11:39:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="269"/>
+		<comment position="4" width="338"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="32">
 		</attribute>
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1465" top="111" right="2170" bottom="731" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -338,7 +338,7 @@
 
 	<row id="msg_item_get_01">
 		<comment>アイテムゲット時……ノーマル
-0＝アイテム名</comment>
+・0＝アイテム名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 [FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　てにいれた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
@@ -346,13 +346,13 @@
 	</row>
 
 	<row id="msg_item_get_02">
-		<comment>アイテムゲット時……たいせつなもの
-0＝主人公名
-1＝道具名</comment>
+		<comment>アイテムゲット時……たいせつなもの(青文字）
+・0＝主人公名
+・1＝道具名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-[1:09:どうぐ名:1]を　てにいれた！</language>
+[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　てにいれた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-[1:09:どうぐ名:1]を　手に入れた！</language>
+[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　手に入れた！</language>
 	</row>
 
 	<row id="msg_item_get_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -367,9 +367,9 @@
 
 	<row id="msg_item_get_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>アイテムゲット時……わざマシン
-0＝主人公名
-1＝道具名
-2＝わざ名</comment>
+・0＝主人公名
+・1＝道具名
+・2＝わざ名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　[1:09:どうぐ名:1]
 「[1:07:わざ名:2]」を　てにいれた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　[1:09:どうぐ名:1]
@@ -377,19 +377,19 @@
 	</row>
 
 	<row id="msg_item_get_field_01">
-		<comment>アイテムゲット時……フィールドアイテムたいせつなもの
-0＝主人公名
-1＝道具名</comment>
+		<comment>アイテムゲット時……フィールドアイテムたいせつなもの(青文字）
+・0＝主人公名
+・1＝道具名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-[FF:00:色:1][1:09:どうぐ名:1][FF:00:色:0]を　みつけた！</language>
+[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　みつけた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-[FF:00:色:1][1:09:どうぐ名:1][FF:00:色:0]を　みつけた！</language>
+[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　みつけた！</language>
 	</row>
 
 	<row id="msg_item_get_field_02">
 		<comment>アイテムゲット時……フィールドアイテム　ノーマル
-0＝主人公名
-1＝道具名</comment>
+・0＝主人公名
+・1＝道具名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 [FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　みつけた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
@@ -398,9 +398,9 @@
 
 	<row id="msg_item_get_field_03">
 		<comment>アイテムゲット時……フィールドアイテム技マシン
-0＝主人公名
-1＝道具名
-2＝わざ名</comment>
+・0＝主人公名
+・1＝道具名
+・2＝わざ名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　[1:09:どうぐ名:1]
 「[1:07:わざ名:2]」を　みつけた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　[1:09:どうぐ名:1]
@@ -425,7 +425,7 @@
 
 	<row id="msg_item_get_fail_field">
 		<comment>アイテムゲット時……フィールドアイテム取得失敗
-0＝主人公名</comment>
+・0＝主人公名</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　てにいれた！[BE:01:ページ切り替え（クリア）]
 ざんねん！
 バッグが　いっぱいだ……</language>
@@ -436,9 +436,9 @@
 
 	<row id="msg_item_get_pocket_keywait">
 		<comment>アイテムをポケットにしまう時（送りカーソル有り）
-0＝主人公名
-1＝道具名
-2＝バッグポケット名</comment>
+・0＝主人公名
+・1＝道具名
+・2＝バッグポケット名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　[1:09:どうぐ名:1]を[FF:00:色:2]
 [1:12:バッグのポケット名:2][FF:00:色:0]ポケットに　しまった[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　[1:09:どうぐ名:1]を[FF:00:色:2]
@@ -447,9 +447,9 @@
 
 	<row id="msg_item_get_pocket_nowait">
 		<comment>アイテムをポケットにしまう時（送りカーソルなし）
-0＝主人公名
-1＝道具名
-2＝バッグポケット名</comment>
+・0＝主人公名
+・1＝道具名
+・2＝バッグポケット名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　[1:09:どうぐ名:1]を[FF:00:色:2]
 [1:12:バッグのポケット名:2][FF:00:色:0]ポケットに　しまった</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　[1:09:どうぐ名:1]を[FF:00:色:2]
@@ -467,16 +467,16 @@
 
 	<row id="msg_intrude_secret_item_01">
 		<comment>隠されアイテム入手後メッセージ
-3＝隠したトレーナー名</comment>
+・3＝隠したトレーナー名</comment>
 		<language name="JPN" width="256">どうやら　[1:00:トレーナー名:3]が
-かくしていった　ようだ</language>
+かくして　いったようだ</language>
 		<language name="JPN_KANJI" width="256">どうやら　[1:00:トレーナー名:3]が
-隠していったようだ</language>
+隠して　いったようだ</language>
 	</row>
 
 	<row id="msg_intrude_secret_item_fail">
 		<comment>隠されアイテム入手できなかったときのメッセージ
-0＝主人公名</comment>
+・0＝主人公名</comment>
 		<language name="JPN" width="256">ざんねん！
 バッグが　いっぱい　だ！▼
 [1:00:トレーナー名:0]は
