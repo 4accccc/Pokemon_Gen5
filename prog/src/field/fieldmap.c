@@ -303,7 +303,8 @@ struct _FIELDMAP_WORK
 	
 	GAMEMODE gamemode;
 	FLDMAPSEQ seq;
-  u32 seq_switch;
+  u8 subseq;
+  u8 seq_switch;
 	int timer;
 	u16 map_id;
 	LOCATION location;
@@ -649,230 +650,254 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  BOOL continue_flag = TRUE;
 
   INIT_CHECK();
 
-  //フラグ操作：フィールドマップ生成タイミング
-  FIELD_FLAGCONT_INIT_FieldIn( gdata, fieldWork->map_id );
-
-  //フィールド3Ｄカットインヒープ確保
-  GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, HEAPID_FLD3DCUTIN, FLD3DCUTIN_SIZE );
-
-  fieldWork->fldMsgBG = FLDMSGBG_Create( fieldWork->heapID, fieldWork->g3Dcamera );
-  fieldWork->goldMsgWin = NULL;
-
-  // 地名表示システム作成
-  fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
-
-  SET_CHECK("setup: camera & scene");  //デバッグ：処理負荷計測
-  // フラッシュチェック
+  switch( fieldWork->subseq )
   {
-    FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
-    fieldWork->fieldskill_mapeff = FIELDSKILL_MAPEFF_Create( 
-        FIELD_STATUS_GetFieldSkillMapEffectMsk(fldstatus), fieldWork->heapID ); 
+  case 0:
+    //フラグ操作：フィールドマップ生成タイミング
+    FIELD_FLAGCONT_INIT_FieldIn( gdata, fieldWork->map_id );
 
-    // 整合性チェック
+    //フィールド3Ｄカットインヒープ確保
+    GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, HEAPID_FLD3DCUTIN, FLD3DCUTIN_SIZE );
+
+    fieldWork->fldMsgBG = FLDMSGBG_Create( fieldWork->heapID, fieldWork->g3Dcamera );
+    fieldWork->goldMsgWin = NULL;
+
+    // 地名表示システム作成
+    fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
+
+    SET_CHECK("setup: camera & scene");  //デバッグ：処理負荷計測
+    // フラッシュチェック
+    {
+      FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
+      fieldWork->fieldskill_mapeff = FIELDSKILL_MAPEFF_Create( 
+          FIELD_STATUS_GetFieldSkillMapEffectMsk(fldstatus), fieldWork->heapID ); 
+
+      // 整合性チェック
 #ifdef PM_DEBUG
-    {
-      u32 msk = FIELD_STATUS_GetFieldSkillMapEffectMsk(fldstatus);
-      BOOL flash = FIELD_STATUS_IsFieldSkillFlash(fldstatus);
-      msk = FIELDSKILL_MAPEFF_MSK_IS_ON( msk, FIELDSKILL_MAPEFF_MSK_FLASH_FAR );
-      if( msk )
       {
-        msk = TRUE;
+        u32 msk = FIELD_STATUS_GetFieldSkillMapEffectMsk(fldstatus);
+        BOOL flash = FIELD_STATUS_IsFieldSkillFlash(fldstatus);
+        msk = FIELDSKILL_MAPEFF_MSK_IS_ON( msk, FIELDSKILL_MAPEFF_MSK_FLASH_FAR );
+        if( msk )
+        {
+          msk = TRUE;
+        }
+        GF_ASSERT( msk == flash );
       }
-      GF_ASSERT( msk == flash );
-    }
 #endif
-  }
-
-  fieldWork->camera_control = FIELD_CAMERA_Create(
-      ZONEDATA_GetCameraID(fieldWork->map_id),
-			FIELD_CAMERA_MODE_CALC_CAMERA_POS,
-      fieldWork->g3Dcamera,
-      &fieldWork->now_pos,
-      fieldWork->heapID );
-  
-  // シーンエリア
-  fieldWork->sceneArea        = FLD_SCENEAREA_Create( fieldWork->heapID, fieldWork->camera_control );
-  fieldWork->sceneAreaLoader  = FLD_SCENEAREA_LOADER_Create( fieldWork->heapID );
-
-
-  // 季節の時間帯生成
-  fieldWork->fieldSeasonTime = FLD_SEASON_TIME_Create( GAMEDATA_GetSeasonID(gdata), fieldWork->heapID );
-
-  SET_CHECK("setup: nogrid mapper");  //デバッグ：処理負荷計測
-  // NOGRIDマッパー生成
-  fieldWork->nogridMapper = FLDNOGRID_MAPPER_Create( fieldWork->heapID, fieldWork->camera_control, fieldWork->sceneArea, fieldWork->sceneAreaLoader );
-
-  SET_CHECK("setup: fldmapper");  //デバッグ：処理負荷計測
-  {
-    FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( fieldWork->g3Dmapper );
-    
-    FIELDDATA_SetMapperData(fieldWork->map_id,
-        fieldWork->areadata,
-        &fieldWork->map_res,
-        GAMEDATA_GetMapMatrix(fieldWork->gamedata) );
-
-  SET_CHECK("setup: bmodel load");  //デバッグ：処理負荷計測
-    //ここで配置モデルリストをセットする
-    FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id, fieldWork->areadata);
-
-    // WFBC街情報を設定
-    setupWfbc( gdata, fieldWork, fieldWork->map_id );
-  }
-
-  SET_CHECK("setup: resistdata");  //デバッグ：処理負荷計測
-  //フィールドマップ用ロケーション作成
-
-  LOCATION_Set( &fieldWork->location, fieldWork->map_id, 0, 0, LOCATION_DEFAULT_EXIT_OFS,
-      fieldWork->now_pos.x, fieldWork->now_pos.y, fieldWork->now_pos.z );
-
-  
-  //マップデータ登録
-  FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res );
-
-  //NOGRIDマップデータ登録
-  {
-    u32 raildata = ZONEDATA_GetRailDataID(fieldWork->map_id);
-    if ( raildata != ZONEDATA_NO_RAILDATA_ID ){
-      FLDNOGRID_MAPPER_ResistDataArc( fieldWork->nogridMapper, raildata, fieldWork->heapID );  
-    }
-  }
-
-  //CAMERA_AREAの反映
-  setupCameraArea( fieldWork, fieldWork->map_id, fieldWork->heapID );
-  
-  SET_CHECK("setup: fldeff");  //デバッグ：処理負荷計測
-  //動作モデル初期化
-  fldmapMain_MMDL_Init(fieldWork);
-  
-  //フィールドエフェクト初期化
-  fieldWork->fldeff_ctrl = FLDEFF_CTRL_Create(
-      fieldWork, FLDEFF_PROCID_MAX, fieldWork->heapID );
-  
-  //フィールドエフェクト　パラメタ初期化
-  FLDEFF_CTRL_SetTaskParam( fieldWork->fldeff_ctrl, FLDEFF_TASK_MAX );
-  
-  //フィールドエフェクト　登録
-  FLDEFF_CTRL_RegistEffect( fieldWork->fldeff_ctrl,
-    DATA_FLDEFF_RegistEffectGroundTbl, DATA_FLDEFF_RegistEffectGroundTblNum );
-
-  //ユニオンルームならユニオンエフェクト制御システムを作成
-  if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
-      || ZONEDATA_IsColosseum( fieldWork->map_id ) == TRUE ){
-    fieldWork->union_eff = UNION_EFF_SystemSetup(fieldWork->heapID);
-  }
-  
-  SET_CHECK("setup: create_func");  //デバッグ：処理負荷計測
-  {
-    PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork(gsys);
-    const u16 dir = PLAYERWORK_getDirection_Type( pw );
-    const VecFx32 *pos = &pw->position;
-
-    //自機作成
-    {
-      MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
-      int sex = MyStatus_GetMySex( mystatus );
-      fieldWork->field_player = FIELD_PLAYER_Create(
-          pw, fieldWork, pos, sex, fieldWork->heapID );
     }
 
-    //登録テーブルごとに個別の初期化処理を呼び出し
-    fieldWork->now_pos = *pos;
-    fieldWork->func_tbl->create_func(fieldWork, &fieldWork->now_pos, dir);
-
-    FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
-    
-    TAMADA_Printf("start X,Y,Z=%d,%d,%d\n", FX_Whole(pos->x), FX_Whole(pos->y), FX_Whole(pos->z));
-    TAMADA_Printf( "Start Dir = %04x\n", pw->direction );
-  }
-  SET_CHECK("setup: gimmicks");  //デバッグ：処理負荷計測
-
-  //ギミックテンポラリワーク初期化
-  InitGmkTmpWork(&fieldWork->GmkTmpWork);
-
-  //拡張3Ｄオブジェクトモジュール作成
-  fieldWork->ExpObjCntPtr = FLD_EXP_OBJ_Create ( EXP_OBJ_RES_MAX, EXP_OBJ_MAX, fieldWork->heapID );
-  
-  //エッジマーキング設定セットアップ
-  FIELD_EDGEMARK_Setup( fieldWork->areadata );
-
-  // フォグシステム生成
-  fieldWork->fog	= FIELD_FOG_Create( fieldWork->heapID );
-	
-  // ゾーンフォグシステム生成
-	fieldWork->zonefog = FIELD_ZONEFOGLIGHT_Create( fieldWork->heapID );
-	FIELD_ZONEFOGLIGHT_Load( fieldWork->zonefog, ZONEDATA_GetFog(fieldWork->map_id), ZONEDATA_GetLight(fieldWork->map_id), fieldWork->heapID );
-
-  // ライトシステム生成
-  {
-    fieldWork->light = FIELD_LIGHT_Create( AREADATA_GetLightType( fieldWork->areadata ), 
-        GFL_RTC_GetTimeBySecond(), 
-        fieldWork->fog, fieldWork->g3Dlightset, fieldWork->heapID );
-  }
-
-  // 天気システム生成
-  {
-    const FIELD_SOUND* fsnd;
-    fsnd = GAMEDATA_GetFieldSound( fieldWork->gamedata );
-    
-    fieldWork->weather_sys = FIELD_WEATHER_Init(
-        fieldWork->camera_control,
-        fieldWork->light,
-        fieldWork->fog,
-  			fieldWork->zonefog, 
-        fsnd,
-        fieldWork->fieldSeasonTime,
+    fieldWork->camera_control = FIELD_CAMERA_Create(
+        ZONEDATA_GetCameraID(fieldWork->map_id),
+        FIELD_CAMERA_MODE_CALC_CAMERA_POS,
+        fieldWork->g3Dcamera,
+        &fieldWork->now_pos,
         fieldWork->heapID );
+    
+    // シーンエリア
+    fieldWork->sceneArea        = FLD_SCENEAREA_Create( fieldWork->heapID, fieldWork->camera_control );
+    fieldWork->sceneAreaLoader  = FLD_SCENEAREA_LOADER_Create( fieldWork->heapID );
+
+
+    // 季節の時間帯生成
+    fieldWork->fieldSeasonTime = FLD_SEASON_TIME_Create( GAMEDATA_GetSeasonID(gdata), fieldWork->heapID );
+
+    break;
+
+  case 1:
+    SET_CHECK("setup: nogrid mapper");  //デバッグ：処理負荷計測
+    // NOGRIDマッパー生成
+    fieldWork->nogridMapper = FLDNOGRID_MAPPER_Create( fieldWork->heapID, fieldWork->camera_control, fieldWork->sceneArea, fieldWork->sceneAreaLoader );
+
+    SET_CHECK("setup: fldmapper");  //デバッグ：処理負荷計測
+    {
+      FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( fieldWork->g3Dmapper );
+      
+      FIELDDATA_SetMapperData(fieldWork->map_id,
+          fieldWork->areadata,
+          &fieldWork->map_res,
+          GAMEDATA_GetMapMatrix(fieldWork->gamedata) );
+
+    SET_CHECK("setup: bmodel load");  //デバッグ：処理負荷計測
+      //ここで配置モデルリストをセットする
+      FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id, fieldWork->areadata);
+
+      // WFBC街情報を設定
+      setupWfbc( gdata, fieldWork, fieldWork->map_id );
+    }
+
+    break;
+
+  case 2:
+    SET_CHECK("setup: resistdata");  //デバッグ：処理負荷計測
+    //フィールドマップ用ロケーション作成
+
+    LOCATION_Set( &fieldWork->location, fieldWork->map_id, 0, 0, LOCATION_DEFAULT_EXIT_OFS,
+        fieldWork->now_pos.x, fieldWork->now_pos.y, fieldWork->now_pos.z );
+
+    
+    //マップデータ登録
+    FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res );
+
+    //NOGRIDマップデータ登録
+    {
+      u32 raildata = ZONEDATA_GetRailDataID(fieldWork->map_id);
+      if ( raildata != ZONEDATA_NO_RAILDATA_ID ){
+        FLDNOGRID_MAPPER_ResistDataArc( fieldWork->nogridMapper, raildata, fieldWork->heapID );  
+      }
+    }
+
+    //CAMERA_AREAの反映
+    setupCameraArea( fieldWork, fieldWork->map_id, fieldWork->heapID );
+    break;
+
+  case 3:
+    SET_CHECK("setup: fldeff");  //デバッグ：処理負荷計測
+    //動作モデル初期化
+    fldmapMain_MMDL_Init(fieldWork);
+    
+    //フィールドエフェクト初期化
+    fieldWork->fldeff_ctrl = FLDEFF_CTRL_Create(
+        fieldWork, FLDEFF_PROCID_MAX, fieldWork->heapID );
+    
+    //フィールドエフェクト　パラメタ初期化
+    FLDEFF_CTRL_SetTaskParam( fieldWork->fldeff_ctrl, FLDEFF_TASK_MAX );
+    
+    //フィールドエフェクト　登録
+    FLDEFF_CTRL_RegistEffect( fieldWork->fldeff_ctrl,
+      DATA_FLDEFF_RegistEffectGroundTbl, DATA_FLDEFF_RegistEffectGroundTblNum );
+
+    //ユニオンルームならユニオンエフェクト制御システムを作成
+    if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
+        || ZONEDATA_IsColosseum( fieldWork->map_id ) == TRUE ){
+      fieldWork->union_eff = UNION_EFF_SystemSetup(fieldWork->heapID);
+    }
+    
+    break;
+
+  case 4:
+    SET_CHECK("setup: create_func");  //デバッグ：処理負荷計測
+    {
+      PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork(gsys);
+      const u16 dir = PLAYERWORK_getDirection_Type( pw );
+      const VecFx32 *pos = &pw->position;
+
+      //自機作成
+      {
+        MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
+        int sex = MyStatus_GetMySex( mystatus );
+        fieldWork->field_player = FIELD_PLAYER_Create(
+            pw, fieldWork, pos, sex, fieldWork->heapID );
+      }
+
+      //登録テーブルごとに個別の初期化処理を呼び出し
+      fieldWork->now_pos = *pos;
+      fieldWork->func_tbl->create_func(fieldWork, &fieldWork->now_pos, dir);
+
+      FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
+      
+      TAMADA_Printf("start X,Y,Z=%d,%d,%d\n", FX_Whole(pos->x), FX_Whole(pos->y), FX_Whole(pos->z));
+      TAMADA_Printf( "Start Dir = %04x\n", pw->direction );
+    }
+    SET_CHECK("setup: gimmicks");  //デバッグ：処理負荷計測
+
+    //ギミックテンポラリワーク初期化
+    InitGmkTmpWork(&fieldWork->GmkTmpWork);
+
+    //拡張3Ｄオブジェクトモジュール作成
+    fieldWork->ExpObjCntPtr = FLD_EXP_OBJ_Create ( EXP_OBJ_RES_MAX, EXP_OBJ_MAX, fieldWork->heapID );
+    
+    //エッジマーキング設定セットアップ
+    FIELD_EDGEMARK_Setup( fieldWork->areadata );
+
+    // フォグシステム生成
+    fieldWork->fog	= FIELD_FOG_Create( fieldWork->heapID );
+    
+    // ゾーンフォグシステム生成
+    fieldWork->zonefog = FIELD_ZONEFOGLIGHT_Create( fieldWork->heapID );
+    FIELD_ZONEFOGLIGHT_Load( fieldWork->zonefog, ZONEDATA_GetFog(fieldWork->map_id), ZONEDATA_GetLight(fieldWork->map_id), fieldWork->heapID );
+
+    // ライトシステム生成
+    {
+      fieldWork->light = FIELD_LIGHT_Create( AREADATA_GetLightType( fieldWork->areadata ), 
+          GFL_RTC_GetTimeBySecond(), 
+          fieldWork->fog, fieldWork->g3Dlightset, fieldWork->heapID );
+    }
+
+    // 天気システム生成
+    {
+      const FIELD_SOUND* fsnd;
+      fsnd = GAMEDATA_GetFieldSound( fieldWork->gamedata );
+      
+      fieldWork->weather_sys = FIELD_WEATHER_Init(
+          fieldWork->camera_control,
+          fieldWork->light,
+          fieldWork->fog,
+          fieldWork->zonefog, 
+          fsnd,
+          fieldWork->fieldSeasonTime,
+          fieldWork->heapID );
+    }
+    
+    // 天気晴れ
+    FIELD_WEATHER_Set(
+        fieldWork->weather_sys, GAMEDATA_GetWeatherNo( fieldWork->gamedata ), fieldWork->heapID );
+
+    //フィールドギミックセットアップ
+    FLDGMK_SetUpFieldGimmick(fieldWork);
+    break;
+
+  case 5:
+    
+    SET_CHECK("setup: subscreen");  //デバッグ：処理負荷計測
+    //情報バーの初期化
+    {
+      fieldWork->fieldSubscreenWork = FIELD_SUBSCREEN_Init(fieldWork->heapID, fieldWork, GAMEDATA_GetSubScreenMode(gdata));
+    }
+    break;
+  case 6:
+    
+    SET_CHECK("setup: 3dsystem");  //デバッグ：処理負荷計測
+    //フィールドエンカウント初期化
+    fieldWork->encount = FIELD_ENCOUNT_Create( fieldWork );
+    
+    //通信初期化コールバック呼び出し
+    {
+      GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+      GameCommSys_Callback_FieldCreate( game_comm, fieldWork );
+    }
+
+    // フィールドマップ用制御タスクシステム
+    fieldWork->fldmapFuncSys = FLDMAPFUNC_Sys_Create( fieldWork, fieldWork->heapID, FLDMAPFUNC_TASK_MAX );
+
+    fieldWork->debugWork = NULL;
+
+    //フィールドパーティクル
+    fieldWork->FldPrtclSys = FLD_PRTCL_Init(HEAPID_FLD3DCUTIN);
+    //フィールド3Dカットイン
+    fieldWork->Fld3dCiPtr = FLD3D_CI_Init(HEAPID_FLD3DCUTIN, fieldWork->FldPrtclSys);
+    //エンカウントエフェクト
+    fieldWork->EncEffCntPtr = ENCEFF_CreateCntPtr(fieldWork->heapID, fieldWork);
+
+    // 育て屋
+    {
+      SAVE_CONTROL_WORK* scw = GAMEDATA_GetSaveControlWork( fieldWork->gamedata );
+      SODATEYA_WORK* work = SODATEYA_WORK_GetSodateyaWork( scw );
+      fieldWork->sodateya = SODATEYA_Create( fieldWork->heapID, fieldWork, work );
+    }
+
+    // scenearea
+    {
+      zoneChangeScene( fieldWork, fieldWork->map_id );
+    }
+    continue_flag = FALSE;  //setup処理の最後！
+    break;
   }
-  
-  // 天気晴れ
-  FIELD_WEATHER_Set(
-			fieldWork->weather_sys, GAMEDATA_GetWeatherNo( fieldWork->gamedata ), fieldWork->heapID );
-
-  //フィールドギミックセットアップ
-  FLDGMK_SetUpFieldGimmick(fieldWork);
-  
-  SET_CHECK("setup: subscreen");  //デバッグ：処理負荷計測
-  //情報バーの初期化
-	{
-		fieldWork->fieldSubscreenWork = FIELD_SUBSCREEN_Init(fieldWork->heapID, fieldWork, GAMEDATA_GetSubScreenMode(gdata));
-	}
-  
-  SET_CHECK("setup: 3dsystem");  //デバッグ：処理負荷計測
-  //フィールドエンカウント初期化
-  fieldWork->encount = FIELD_ENCOUNT_Create( fieldWork );
-  
-  //通信初期化コールバック呼び出し
-  {
-    GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-    GameCommSys_Callback_FieldCreate( game_comm, fieldWork );
-  }
-
-	// フィールドマップ用制御タスクシステム
-	fieldWork->fldmapFuncSys = FLDMAPFUNC_Sys_Create( fieldWork, fieldWork->heapID, FLDMAPFUNC_TASK_MAX );
-
-  fieldWork->debugWork = NULL;
-
-  //フィールドパーティクル
-  fieldWork->FldPrtclSys = FLD_PRTCL_Init(HEAPID_FLD3DCUTIN);
-  //フィールド3Dカットイン
-  fieldWork->Fld3dCiPtr = FLD3D_CI_Init(HEAPID_FLD3DCUTIN, fieldWork->FldPrtclSys);
-  //エンカウントエフェクト
-  fieldWork->EncEffCntPtr = ENCEFF_CreateCntPtr(fieldWork->heapID, fieldWork);
-
-  // 育て屋
-  {
-    SAVE_CONTROL_WORK* scw = GAMEDATA_GetSaveControlWork( fieldWork->gamedata );
-    SODATEYA_WORK* work = SODATEYA_WORK_GetSodateyaWork( scw );
-    fieldWork->sodateya = SODATEYA_Create( fieldWork->heapID, fieldWork, work );
-  }
-
-  // scenearea
-  {
-    zoneChangeScene( fieldWork, fieldWork->map_id );
-  }
+  fieldWork->subseq ++;
 
   SET_CHECK("setup: tail");  //デバッグ：処理負荷計測
   {
@@ -885,7 +910,11 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   fieldWork->Draw3DMode = DRAW3DMODE_NORMAL;
 
 
-  return MAINSEQ_RESULT_NEXTSEQ;
+  if ( continue_flag ) {
+    return MAINSEQ_RESULT_CONTINUE;
+  } else {
+    return MAINSEQ_RESULT_NEXTSEQ;
+  }
 }
 
 
@@ -1378,6 +1407,7 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
     break;
   case MAINSEQ_RESULT_NEXTSEQ:
     fieldWork->seq ++;
+    fieldWork->subseq = 0;
     fieldWork->seq_switch = 0;
     break;
   case MAINSEQ_RESULT_FINISH:
