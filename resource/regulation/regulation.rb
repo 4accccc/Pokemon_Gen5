@@ -11,6 +11,8 @@
 require "jcode"
 require 'nkf'
 
+require "#{ENV["PROJECT_ROOT"]}resource/shooter_item/shooter_item_hash.rb" #シューターのハッシュテーブルを取得
+
 
 COL_NO = 0    #No
 COL_CUPNAME = 1    #カップ名
@@ -28,20 +30,20 @@ COL_VETO_ITEM = 12    #持ち込み禁止道具
 COL_MUST_POKE = 13    #必須ポケモン
 COL_MUST_POKE_FORM = 14    #必須ポケモンフォルム
 COL_SHOOTER = 15    #シューター
-COL_TIME_VS = 16    #対戦時間
-COL_TIME_COMMAND = 17    #入力時間
-COL_NICKNAME = 18    #ニックネーム表示
-COL_AGE_LO = 19    #年齢制限以上
-COL_AGE_HI = 20    #年齢制限以下
-COL_SHOW_POKE = 21    #ポケモン見せ合い
-COL_TIME_SHOW_POKE = 22 #ポケモン見せ合い時間
-COL_BTL_TYPE = 23 #バトルタイプ
-COL_BTL_COUNT = 24 #戦闘規定回数
-COL_VETO_SHOOTER_ITEM = 25 #シューター禁止道具
+COL_VETO_SHOOTER_ITEM = 16 #シューター禁止道具
+COL_TIME_VS = 17    #対戦時間
+COL_TIME_COMMAND = 18    #入力時間
+COL_NICKNAME = 19    #ニックネーム表示
+COL_AGE_LO = 20    #年齢制限以上
+COL_AGE_HI = 21    #年齢制限以下
+COL_SHOW_POKE = 22    #ポケモン見せ合い
+COL_TIME_SHOW_POKE = 23 #ポケモン見せ合い時間
+COL_BTL_TYPE = 24 #バトルタイプ
+COL_BTL_COUNT = 25 #戦闘規定回数
 
 POKENUM_MAX_BYTE = (656/8)  ##このくらいに増えるかも ８２バイト
 ITEMNUM_MAX_BYTE = (608/8)  ##このくらいにふえるかも
-SHOOTER_ITEMNUM_MAX_BYTE = (56/8)  ##このくらいにふえるかも
+SHOOTER_ITEMNUM_MAX_BYTE = 7  
 
 
 
@@ -202,6 +204,15 @@ class RegulationBin
     when COL_SHOOTER    #シューター
       num = @HashOKNG[value]
       outFH.write([num].pack("c"))
+    when COL_VETO_SHOOTER_ITEM #シューター禁止道具
+      if value =~ /なし/
+        num = 0
+        for i in 1..SHOOTER_ITEMNUM_MAX_BYTE
+          outFH.write([num].pack("c"))
+        end
+      else
+        bitingmm(value,outFH, SHOOTER_ITEMNUM_MAX_BYTE ,$shooter_item_hash)
+      end 
     when COL_TIME_VS    #対戦時間
       num = value.to_i
       outFH.write([num].pack("c"))
@@ -230,16 +241,6 @@ class RegulationBin
     when COL_BTL_COUNT    #戦闘規定回数
       num = value.to_i
       outFH.write([num].pack("c"))
-    when COL_VETO_SHOOTER_ITEM #シューター禁止道具
-      #@todo
-#      if value =~ /なし/
-#        num = 0
-#       for i in 1..SHOOTER_ITEMNUM_MAX_BYTE
-#          outFH.write([num].pack("c"))
-#        end
-#      else
-#        bitingmm(value,outFH, SHOOTER_ITEMNUM_MAX_BYTE ,@HashShooterItemGmm)
-      end        
     else
     end
     

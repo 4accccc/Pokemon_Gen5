@@ -160,6 +160,7 @@ end
 begin
   CREATE_HEADER_NAME  = "shooter_item_data.h"
   CREATE_CDAT_NAME  = "shooter_item_data.cdat"
+  CREATE_RB_HASH_NAME  = "shooter_item_hash.rb"
   
 
   #引数エラー
@@ -240,7 +241,22 @@ begin
   #フッタ書き込み
   cdat_build.write_fotter
 
-  #ヘッダ作成
+  #ダット作成
   cdat_build.genelate( CREATE_CDAT_NAME )
+
+
+  #シューターアイテムハッシュ書き込み
+  rbhash_build  = HeaderBuilder.new
+  
+  rbhash_build.write( "#! ruby -Ks\n" )
+  rbhash_build.write( "\n" )
+  rbhash_build.write( "$shooter_item_hash = {\n" )
+  for i in 0..csv_conv.row_length-1
+    rbhash_build.write( "\t\"#{name_buffer[i]}\"=>#{number_buffer[i]},\n" )
+  end
+  rbhash_build.write( "}\n" )
+
+  #シューターアイテムハッシュ作成
+  rbhash_build.genelate( CREATE_RB_HASH_NAME )
 
 end

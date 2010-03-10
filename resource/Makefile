@@ -27,6 +27,7 @@ SUBDIRS	=	wmi \
 			tokusei\
 			waza_tbl\
 			itemconv\
+			shooter_item \
 			personal\
 			trdata \
 			trmsg \
@@ -153,8 +154,7 @@ SUBDIRS	=	wmi \
             report \
             time_icon \
             trialhouse_gra \
-            shoujou \
-			shooter_item
+            shoujou
 
 include $(RESOURCE_MACRO)
 

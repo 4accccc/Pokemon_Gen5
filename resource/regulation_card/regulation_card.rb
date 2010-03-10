@@ -11,6 +11,7 @@
 require "jcode"
 require 'nkf'
 
+require "#{ENV["PROJECT_ROOT"]}resource/shooter_item/shooter_item_hash.rb" #シューターのハッシュテーブルを取得
 
 COL_NO = 0    #No
 COL_CUPNAME = 1    #カップ名
@@ -28,30 +29,32 @@ COL_VETO_ITEM = 12    #持ち込み禁止道具
 COL_MUST_POKE = 13    #必須ポケモン
 COL_MUST_POKE_FORM = 14    #必須ポケモンフォルム
 COL_SHOOTER = 15    #シューター
-COL_TIME_VS = 16    #対戦時間
-COL_TIME_COMMAND = 17    #入力時間
-COL_NICKNAME = 18    #ニックネーム表示
-COL_AGE_LO = 19    #年齢制限以上
-COL_AGE_HI = 20    #年齢制限以下
-COL_SHOW_POKE = 21    #ポケモン見せ合い
-COL_TIME_SHOW_POKE = 22 #ポケモン見せ合い時間
-COL_BTL_TYPE = 23 #バトルタイプ
-COL_ROM_CODE = 24 #ROMコード
-COL_WORLDCUP_NAME = 25 #大会名
-COL_WORLDCUP_NO = 26 #大会番号
-COL_LANG_CODE = 27 #言語コード
-COL_START_YEAR = 28 #開始年
-COL_START_MONTH = 29 #開始月
-COL_START_DAY = 30 #開始日
-COL_END_YEAR = 31 #終了年
-COL_END_MONTH = 32 #終了月
-COL_END_DAY = 33 #終了日
+COL_VETO_SHOOTER_ITEM = 16 #シューター禁止道具
+COL_TIME_VS = 17    #対戦時間
+COL_TIME_COMMAND = 18    #入力時間
+COL_NICKNAME = 19    #ニックネーム表示
+COL_AGE_LO = 20    #年齢制限以上
+COL_AGE_HI = 21    #年齢制限以下
+COL_SHOW_POKE = 22    #ポケモン見せ合い
+COL_TIME_SHOW_POKE = 23 #ポケモン見せ合い時間
+COL_BTL_TYPE = 24 #バトルタイプ
+COL_BTL_COUNT = 25 #戦闘規定回数
+COL_ROM_CODE = 26 #ROMコード
+COL_WORLDCUP_NAME = 27 #大会名
+COL_WORLDCUP_NO = 28 #大会番号
+COL_LANG_CODE = 29 #言語コード
+COL_START_YEAR = 30 #開始年
+COL_START_MONTH = 31 #開始月
+COL_START_DAY = 32 #開始日
+COL_END_YEAR = 33 #終了年
+COL_END_MONTH = 34 #終了月
+COL_END_DAY = 35 #終了日
 
 
 
 POKENUM_MAX_BYTE = (656/8)  ##このくらいに増えるかも ８２バイト
 ITEMNUM_MAX_BYTE = (608/8)  ##このくらいにふえるかも
-
+SHOOTER_ITEMNUM_MAX_BYTE = 7  
 
 
 
@@ -194,6 +197,15 @@ class RegulationBin
     when COL_SHOOTER    #シューター
       num = @HashOKNG[value]
       outFH.write([num].pack("c"))
+    when COL_VETO_SHOOTER_ITEM #シューター禁止道具
+      if value =~ /なし/
+        num = 0
+        for i in 1..SHOOTER_ITEMNUM_MAX_BYTE
+          outFH.write([num].pack("c"))
+        end
+      else
+        bitingmm(value,outFH, SHOOTER_ITEMNUM_MAX_BYTE ,$shooter_item_hash)
+      end 
     when COL_TIME_VS    #対戦時間
       num = value.to_i
       outFH.write([num].pack("c"))
@@ -217,6 +229,9 @@ class RegulationBin
       outFH.write([num].pack("c"))
     when COL_BTL_TYPE  #バトルタイプ
       num = @HashBATTLE[value]
+      outFH.write([num].pack("c"))
+    when COL_BTL_COUNT    #戦闘規定回数
+      num = value.to_i
       outFH.write([num].pack("c"))
     when COL_WORLDCUP_NAME    #カップ名
       msg = NKF.nkf("-m0 -S --utf16",value)
