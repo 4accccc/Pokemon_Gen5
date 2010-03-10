@@ -345,11 +345,12 @@ _RET
 //--------------------------------------------------------------
 sub_receipt_challenge:
 {
+  DEFINE_LOCAL ret 
   DEFINE_LOCAL play_mode
   
   //ゾーン別プレイモード取得
   _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  
+   
   //プレイモード別に選択処理
   SWITCH $play_mode
   CASE BSWAY_MODE_SINGLE THEN
@@ -384,9 +385,9 @@ sub_receipt_challenge_single_double:
   _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, play_mode )
   
   //手持ちorバトルボックス選択
-  _CALL sub_receipt_common_select_temoti_bbox
+  _CALL sub_receipt_common_select_btl_box
   
-  IF $SCWK_ANSWER == 0 THEN //参加不可
+  IF $SCWK_ANSWER == FALSE THEN //参加不可
     _CALL sub_receipt_common_exit
     _RET
   ENDIF
@@ -437,9 +438,10 @@ sub_receipt_challenge_multi:
   _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, play_mode )
   
   //手持ちorバトルボックス選択
-  _CALL sub_receipt_common_select_temoti_bbox
+  _CALL sub_receipt_common_select_btl_box
   
-  IF $SCWK_ANSWER == 0 THEN //参加不可
+  IF $SCWK_ANSWER == FALSE THEN //参加不可
+    _CALL sub_receipt_common_exit
     _RET
   ENDIF
   
@@ -792,9 +794,9 @@ sub_receipt_challenge_wifi:
   _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, BSWAY_MODE_WIFI )
   
   //手持ちorバトルボックス選択
-  _CALL sub_receipt_common_select_temoti_bbox
+  _CALL sub_receipt_common_select_btl_box
   
-  IF $SCWK_ANSWER == 0 THEN //参加不可
+  IF $SCWK_ANSWER == FALSE THEN //参加不可
     _CALL sub_receipt_common_exit
     _RET
   ENDIF
@@ -1587,33 +1589,6 @@ sub_receipt_common_map_change_train:
 _RET
 
 //--------------------------------------------------------------
-//  受付　手持ち、もしくはバトルボックス選択
-//  @retval SCWK_ANSWER 0=参加不可
-//--------------------------------------------------------------
-sub_receipt_common_select_temoti_bbox:
-{
-  DEFINE_LOCAL b_box
-  
-  //手持ち or バトルボックス選択
-  $b_box = FALSE
-  
-  IF $b_box == FALSE THEN //手持ちチェック
-    _BSUBWAY_TOOL( BSWTOOL_CHK_ENTRY_POKE_NUM, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-  ELSE //バトルボックスチェック
-    _NOP //まだ
-  ENDIF
-  
-  IF $SCWK_ANSWER != 0 THEN //選択結果を反映
-    _BSUBWAY_TOOL( BSWSUB_SET_USE_BBOX, b_box, BSW_NULL, BSW_NULL )
-  ELSE //参加不可
-    _CALL sub_receipt_msg_poke_error
-    _CALL sub_receipt_common_exit
-  ENDIF
-}
-_RET
-
-
-//--------------------------------------------------------------
 //  受付　ポケモン参加選択
 //  @retval SCWK_ANSWER 0=参加不可
 //--------------------------------------------------------------
@@ -1767,6 +1742,51 @@ sub_receipt_common_del_partner:
   
   IF $ret == TRUE THEN
     _OBJ_DEL( objid )
+  ENDIF
+}
+_RET
+
+//--------------------------------------------------------------
+//  受付　手持ちorバトルボックス選択、事前レギュチェック
+//  @retval SCWK_ANSWER TRUE=完了 FALSE=キャンセル、エラー
+//--------------------------------------------------------------
+sub_receipt_common_select_btl_box:
+{
+  DEFINE_LOCAL ret
+  
+  $SCWK_ANSWER = TRUE
+
+  //バトルボックス、ポケモン居るか
+  _BSUBWAY_TOOL( BSWTOOL_CHK_BTL_BOX_IN, BSW_NULL, BSW_NULL, ret )
+  
+  IF $ret == TRUE THEN
+    _SYSWIN_MSG( msg_bsw_scr_44, WIN_DOWN )
+    _BMPMENU_INIT_EX( 1, 1, 0, 1, ret )
+    _BMPMENU_MAKE_LIST( msg_bsw_scr_45, 0 )    //手持ち
+    _BMPMENU_MAKE_LIST( msg_bsw_scr_46, 1 )    //バトルボックス
+    _BMPMENU_MAKE_LIST( msg_bsw_scr_47, 2 )    //やめる
+    _BMPMENU_START()
+    _SYSWIN_CLOSE()
+    
+    IF $ret == 0 THEN //手持ち使用
+      _BSUBWAY_TOOL( BSWSUB_SET_USE_BTL_BOX_FLAG, FALSE, BSW_NULL, ret )
+    ELSIF $ret == 1 THEN
+      _BSUBWAY_TOOL( BSWSUB_SET_USE_BTL_BOX_FLAG, TRUE, BSW_NULL, ret )
+    ELSE //キャンセル
+      $SCWK_ANSWER = FALSE
+    ENDIF
+  ELSE //バトルボックスポケモン居ない
+    _BSUBWAY_TOOL( BSWSUB_SET_USE_BTL_BOX_FLAG, FALSE, BSW_NULL, ret )
+  ENDIF
+  
+  //事前レギュレーションチェック
+  IF $SCWK_ANSWER == TRUE THEN 
+    _BSUBWAY_TOOL( BSWSUB_CHK_REGULATION, BSW_NULL, BSW_NULL, ret )
+    
+    IF $ret == FALSE THEN //エラーメッセージ
+      _CALL sub_receipt_msg_poke_error
+      $SCWK_ANSWER = FALSE
+    ENDIF
   ENDIF
 }
 _RET

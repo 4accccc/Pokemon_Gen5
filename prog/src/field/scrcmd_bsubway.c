@@ -50,6 +50,8 @@
 
 #include "event_wifi_bsubway.h"
 
+#include "savedata/battle_box_save.h"
+
 #include "net_app/irc_match.h"
 FS_EXTERN_OVERLAY(ircbattlematch);
 extern const GFL_PROC_DATA IrcBattleMatchProcData;
@@ -345,13 +347,6 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       }
     }
     break;
-  //レギュレーションチェック
-  case BSWTOOL_CHK_REGULATION:
-    *ret_wk = 0; //ok
-    if( bsway_CheckRegulation(param0,gsys) == FALSE ){
-      *ret_wk = 1;
-    }
-    break;
   //現在ラウンド数取得
   case BSWTOOL_GET_NOW_ROUND:
     *ret_wk = BSUBWAY_PLAYDATA_GetRoundNo( playData ) + 1;
@@ -538,6 +533,18 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       
       *ret_wk = FIELD_PLAYER_GetMoveFormToOBJCode(
           sex, PLAYER_MOVE_FORM_NORMAL );
+    }
+    break;
+  //バトルボックスにポケモンがいるか
+  case BSWTOOL_CHK_BTL_BOX_IN:
+    {
+      BATTLE_BOX_SAVE *bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( save );
+      
+      *ret_wk = FALSE;
+      
+      if( BATTLE_BOX_SAVE_IsIn(bb_save) == TRUE ){
+        *ret_wk = TRUE;
+      }
     }
     break;
   //----TOOL Wifi関連
@@ -755,7 +762,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     BSUBWAY_SCRWORK_LoadPokemonMember( bsw_scr, gsys );
     break;
   //バトルボックス使用するか
-  case BSWSUB_SET_USE_BBOX:
+  case BSWSUB_SET_USE_BTL_BOX_FLAG:
     {
       u8 buf = param0;
       BSUBWAY_PLAYDATA_SetData( playData,
@@ -851,6 +858,56 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //赤外線通信を行うフラグ取得
   case BSWSUB_GET_COMM_IRC_FLAG:
     *ret_wk = bsw_scr->comm_irc_f;
+    break;
+  //手持ち、バトルボックスの事前レギュレーションチェック
+  case BSWSUB_CHK_REGULATION:
+    *ret_wk = FALSE; //error
+    
+    {
+      u32 ret = 0;
+      REGULATION *regu;
+      POKEPARTY *check_party = NULL, *btl_party = NULL, *my_party = NULL;
+      int type = REG_SUBWAY_SINGLE;
+      u32 use_bbox = (u32)BSUBWAY_PLAYDATA_GetData(
+        playData, BSWAY_PLAYDATA_ID_use_battle_box, NULL );
+      
+      switch( play_mode ){
+      case BSWAY_MODE_DOUBLE:
+      case BSWAY_MODE_S_DOUBLE:
+        type = REG_SUBWAY_DOUBLE;
+        break;
+      case BSWAY_MODE_MULTI:
+      case BSWAY_MODE_S_MULTI:
+      case BSWAY_MODE_COMM_MULTI:
+      case BSWAY_MODE_S_COMM_MULTI:
+        type = REG_SUBWAY_MALTI;
+        break;
+      }
+      
+      regu = (REGULATION*)PokeRegulation_LoadDataAlloc( type, HEAPID_PROC );
+      
+      if( use_bbox == TRUE ){
+        BATTLE_BOX_SAVE *bb_save;
+        bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( save );
+        btl_party = BATTLE_BOX_SAVE_MakePokeParty( bb_save, HEAPID_PROC );
+        check_party = btl_party;
+      }else{
+        my_party = GAMEDATA_GetMyPokemon( gdata ); 
+        check_party = my_party;
+      }
+
+      ret = PokeRegulationMatchPartialPokeParty( regu, check_party );
+      
+      GFL_HEAP_FreeMemory( regu );
+      
+      if( btl_party != NULL ){
+        GFL_HEAP_FreeMemory( btl_party );
+      }
+      
+      if( ret == POKE_REG_OK || ret == POKE_REG_TOTAL_LV_FAILED ){
+        *ret_wk = TRUE; //ok
+      }
+    }
     break;
   //----ワーク依存　通信関連
   //通信開始
@@ -1190,6 +1247,7 @@ static BOOL bsway_CheckEntryPokeNum(
   return( TRUE );
 }
 
+#if 0
 //--------------------------------------------------------------
 /**
  * レギュレーションチェック
@@ -1198,7 +1256,8 @@ static BOOL bsway_CheckEntryPokeNum(
  * @retval BOOL TRUE=OK
  */
 //--------------------------------------------------------------
-static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys )
+static BOOL bsway_CheckRegulation(
+    int mode, int use_bbox, GAMESYS_WORK *gsys )
 {
   int reg_type,ret;
   GAMEDATA *gdata;
@@ -1231,6 +1290,7 @@ static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys )
   
   return( FALSE );
 }
+#endif
 
 //======================================================================
 //  data
