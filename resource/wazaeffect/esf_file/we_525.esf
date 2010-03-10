@@ -7,7 +7,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_525.spa
 カメラ移動	追従	防御側	16	0	8
 エフェクト終了待ち	すべて
 制御モード変更	継続
-SE再生	SEQ_SE_W017_01	SE1	防御側	0:0:120	0:0:0
+SE再生	SEQ_SE_W017_01	SE1	防御側	0:500:127	0:0:0
 SE再生	SEQ_SE_W121_01	SE2	防御側	15:0:120	0:0:0
 制御モード変更	逐次
 パーティクルデータロード	w_525
