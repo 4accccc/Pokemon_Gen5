@@ -153,7 +153,8 @@ SUBDIRS	=	wmi \
             report \
             time_icon \
             trialhouse_gra \
-            shoujou
+            shoujou \
+			shooter_item
 
 include $(RESOURCE_MACRO)
 

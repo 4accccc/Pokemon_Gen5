@@ -36,9 +36,12 @@ COL_AGE_HI = 20    #年齢制限以下
 COL_SHOW_POKE = 21    #ポケモン見せ合い
 COL_TIME_SHOW_POKE = 22 #ポケモン見せ合い時間
 COL_BTL_TYPE = 23 #バトルタイプ
+COL_BTL_COUNT = 24 #戦闘規定回数
+COL_VETO_SHOOTER_ITEM = 25 #シューター禁止道具
 
 POKENUM_MAX_BYTE = (656/8)  ##このくらいに増えるかも ８２バイト
 ITEMNUM_MAX_BYTE = (608/8)  ##このくらいにふえるかも
+SHOOTER_ITEMNUM_MAX_BYTE = (56/8)  ##このくらいにふえるかも
 
 
 
@@ -57,6 +60,7 @@ class RegulationBin
     @TempNum = "0"
     @HashPokeGmm = Hash.new
     @HashItemGmm = Hash.new
+    @HashShooterItemGmm = Hash.new
   end
   
   
@@ -223,6 +227,19 @@ class RegulationBin
       p value
       num = @HashBATTLE[value]
       outFH.write([num].pack("c"))
+    when COL_BTL_COUNT    #戦闘規定回数
+      num = value.to_i
+      outFH.write([num].pack("c"))
+    when COL_VETO_SHOOTER_ITEM #シューター禁止道具
+      #@todo
+#      if value =~ /なし/
+#        num = 0
+#       for i in 1..SHOOTER_ITEMNUM_MAX_BYTE
+#          outFH.write([num].pack("c"))
+#        end
+#      else
+#        bitingmm(value,outFH, SHOOTER_ITEMNUM_MAX_BYTE ,@HashShooterItemGmm)
+      end        
     else
     end
     
@@ -308,6 +325,7 @@ class RegulationBin
   
     gmmread(pokegmm, @HashPokeGmm)
     gmmread(itemgmm, @HashItemGmm)
+  #  gmmread(itemgmm, @HashShooterItemGmm)
   end
   
 end

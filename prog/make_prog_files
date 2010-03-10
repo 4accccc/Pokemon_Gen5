@@ -225,7 +225,8 @@ SRCS  +=    $(SOUNDSRC) \
         savedata/undata_update.c \
         system/scroll_bar.c \
         system/time_icon.c \
-        demo/demo3d/demo3d_param.c
+        demo/demo3d/demo3d_param.c \
+        item/shooter_item.c
 
 
 #================================================
@@ -1593,6 +1594,7 @@ SRCS_OVERLAY_WIFIBATTLEMATCH_CORE = net_app/wifi_match/wifibattlematch_core.c \
 # バトル大会メインメニュー＋LIVEバトルマッチングフロー周り＋IRCネット部分
 # バトル大会メニュー
 #===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_NOTWIFI
 SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = net_app/wifi_match/battle_championship_core.c \
         net_app/wifi_match/battle_championship_flow.c \
         net_app/wifi_match/livebattlematch_flow.c \
@@ -1716,10 +1718,12 @@ SRCS_OVERLAY_NAKAHIRO_DEBUG = test/nakahiro/d_nakahiro.c
 
 #	名木橋デバッグ
 #===> SRCS_OVERLAY_UI_DEBUG
+#===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 																test/nagihashi/debug_irc_name.c \
 																test/nagihashi/debug_template.c \
-																test/nagihashi/debug_poke2dcheck.c
+																test/nagihashi/debug_poke2dcheck.c \
+                                test/nagihashi/debug_utilproc.c
 
 # 保坂デバッグ
 #===> GROUP_OVERLAY_UNION_INTRUDE

@@ -155,7 +155,7 @@ typedef struct{
   u8 SHOW_POKE_TIME;  ///<ポケモン見せ合い時間
   u8 BATTLE_TYPE;    ///< バトルタイプ  230
   u8 BTL_COUNT;     ///< 戦闘規定回数 231
-  u8 VETO_SHOOTER_ITEM[REG_SHOOTER_ITEMNUM_MAX_BYTE]; ///<    #持ち込み禁止道具 238
+  u8 VETO_SHOOTER_ITEM[REG_SHOOTER_ITEMNUM_MAX_BYTE]; ///<    #シューター禁止道具 238
 } REGULATION;
 
 
