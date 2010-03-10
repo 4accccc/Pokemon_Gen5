@@ -204,7 +204,7 @@
 #define FE_ZUKAN_COMPLETE_LOCAL_SEE        188 /* 0x00bc 地方図鑑「みた」モードを完成 */
 #define FE_C01_ITEMGET_02                  189 /* 0x00bd C01サンヨウシティ：ビル裏の人アイテム入手フラグ */
 #define FE_C01R0501_QUIZ                   190 /* 0x00be トレーナーズスクール：クイズのごほうび入手フラグ */
-#define FE_C03R0302_ITEM                   191 /* 0x00bf C0３ヒウンシティ：バトルカンパニーアイテム入手フラグ */
+#define FE_C03R0302_ITEM_01                191 /* 0x00bf C0３ヒウンシティ：バトルカンパニーアイテム入手フラグ（ピントレンズ） */
 #define FE_C01R0501_RIVALBATTLE            192 /* 0x00c0 C01トレーナーズスクールのライバルと戦闘した */
 #define FE_C05R0701_WAZALADY               193 /* 0x00c1 C05ホドモエシティ：日替わりわざ見せお嬢様初回会話フラグ */
 #define FE_RES_REQ_WB_COUNT                194 /* 0x00c2 すれ違い調査「ブラックと　ホワイト　おおいのは？」( 人数 )を達成 */
@@ -277,9 +277,9 @@
 #define FE_R06R0301_ITEMGET_01             261 /* 0x0105 ６番道路民家：アイテム入手フラグ */
 #define FE_R09R0201_ITEMGET_01             262 /* 0x0106 ショッピングモール：アイテム入手フラグ */
 #define FE_R10_ITEMGET_01                  263 /* 0x0107 10番道路：アイテム入手フラグ */
-		/* not used   264(0x0108) */
-		/* not used   265(0x0109) */
-		/* not used   266(0x010a) */
+#define FE_C05R0201_ITEMGET_01             264 /* 0x0108 ホドモエシティ図鑑評価アイテム入手フラグ */
+#define FE_C03R1002_ITEMGET_01             265 /* 0x0109 ヒウンシティR1002：アイテム入手フラグ */
+#define FE_C03R0302_ITEM_02                266 /* 0x010a C0３ヒウンシティ：バトルカンパニーアイテム入手フラグ（ボール） */
 		/* not used   267(0x010b) */
 		/* not used   268(0x010c) */
 		/* not used   269(0x010d) */
@@ -598,7 +598,7 @@
 #define FV_R03R0301_RIVAL_01               574 /* 0x023e R030101：プラズマ団・ライバル */
 #define FV_D07R0201_GYMLEADER05_01         575 /* 0x023f ネジ山：ヤーコンとライバル */
 #define FV_C07_RIVAL_01                    576 /* 0x0240 C07セッカシティ：ライバル・サポート */
-#define FV_C07_HAKAIM_01                   577 /* 0x0241 C07セッカシティ：プラズマ団たち */
+		/* not used   577(0x0241) */
 #define FV_C07_READER7                     578 /* 0x0242 C07セッカシティ：ハチク */
 #define FV_C07_HAKASE1                     579 /* 0x0243 C07セッカシティジム：アララギ（父） */
 #define FV_C07GYM0101_READER7_01           580 /* 0x0244 C07GYM0101セッカシティジム：ハチク */
