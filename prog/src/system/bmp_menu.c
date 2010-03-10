@@ -702,7 +702,12 @@ static BMPMENU_WORK * BmpMenu_YesNoSelectInitCore
   hed.font_handle = GFL_FONT_Create
 								(ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heap );
   hed.font_size_y = GFL_FONT_GetLineHeight(hed.font_handle);
-  hed.font_size_x = hed.font_size_y; //←この値だと文字左端がカーソル移動で消えてしまう
+  hed.font_size_x = 2+8;//hed.font_size_y; //←この値だと文字左端がカーソル移動で消えてしまう
+    // 2+8の理由(defineにしたほうがいい) 
+    // prog/src/system/bmp_cursor.c
+    // void BmpCursor_Print( const BMPCURSOR *bmpCursor, u32 x, u32 y,
+		//                 PRINT_UTIL *printUtil, PRINT_QUE *printQue, GFL_FONT *fontHandle )
+    // GFL_BMP_Print( bmpCursor->bmp, bmp, 0, 0, x+2, y+2, 8, 8, 0x0f );
   PRINT_UTIL_Setup(hed.print_util, hed.win);
   hed.print_que = PRINTSYS_QUE_Create( heap );
 //  GFL_MSGDATA *msgdata; //表示に使用するメッセージバッファ

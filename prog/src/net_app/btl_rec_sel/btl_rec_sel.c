@@ -148,10 +148,10 @@ enum
 };
 
 // 1•bŠÔ‚ÌƒtƒŒ[ƒ€”
-#define FPS (60)
+#define FPS (30)
 
 // ‘Ò‚¿ŽžŠÔ
-#define COUNT_TIME_SEC_MAX (30)  // second
+#define COUNT_TIME_SEC_MAX (60)  // second
 
 // •¶Žš”
 #define STRBUF_FIX_TIME_LENGTH       (  8)  // ??:??
@@ -1320,6 +1320,7 @@ static void Btl_Rec_Sel_TextExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wo
 static void Btl_Rec_Sel_TextMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
   GFL_TCBL_Main( work->text_tcblsys );
+  if( FPS == 30 ) GFL_TCBL_Main( work->text_tcblsys );
 }
 static void Btl_Rec_Sel_TextShowWinFrm( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
