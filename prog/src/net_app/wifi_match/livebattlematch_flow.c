@@ -537,7 +537,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
     UTIL_TEXT_Print( p_wk, LIVE_STR_17 );
     *p_seq       = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_REG_YESNO );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_CANCEL );
     break;
   case SEQ_START_LIST_CANCEL:
     UTIL_LIST_Create( p_wk, LVM_MENU_TYPE_YESNO ); 
