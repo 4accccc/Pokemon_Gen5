@@ -1410,7 +1410,7 @@ static int BPL_SeqStInfoWaza( BPLIST_WORK * wk )
   case BPLIST_UI_WAZAINFO_SEL2:     // ‹Z‚Q
   case BPLIST_UI_WAZAINFO_SEL3:     // ‹Z‚R
   case BPLIST_UI_WAZAINFO_SEL4:     // ‹Z‚S
-    if( wk->dat->sel_wp != ret &&
+    if( wk->dat->sel_wp == ret ||
       wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[ret].id == 0 ){
       break;
     }
