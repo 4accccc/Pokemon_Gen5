@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T22:19:58"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T22:31:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -589,11 +589,11 @@
 なにか　発見が　あるかもよ</language>
 	</row>
 
-	<row id="msg_c01_fising_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01_fising_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・GRIDX=740、GRIDZ=582、右向き
 ・アイテム入手処理
-・入手アイテム未定（暫定でわざマシン01）</comment>
+　No089「おおきなしんじゅ」</comment>
 		<attribute name="キャラ指定">FISING</attribute>
 		<language name="JPN" width="256">よく　きたな
 そんな　おまえに　これをやろう▼</language>
@@ -601,10 +601,9 @@
 そんな　おまえに　これをやろう▼</language>
 	</row>
 
-	<row id="msg_c01_fising_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01_fising_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・アイテム入手後
-※仮メッセージ</comment>
+・アイテム入手後</comment>
 		<attribute name="キャラ指定">FISING</attribute>
 		<language name="JPN" width="256">ここで　つりを　しながら
 しずかに　くらしたいのだ</language>
