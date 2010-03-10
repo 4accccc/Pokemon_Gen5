@@ -20,6 +20,17 @@ typedef struct _MUSICAL_DIST_SAVE MUSICAL_DIST_SAVE;
 //======================================================================
 //	proto
 //======================================================================
+//ミュージカル配信データはnaixを持っていないし、コンバータで順番固定で出力しているので
+//ココでenum定義
+enum
+{
+  MUSICAL_ARCDATAID_PROGDATA = 0,
+  MUSICAL_ARCDATAID_GMMDATA = 1,
+  MUSICAL_ARCDATAID_SCRIPTDATA = 2,
+  MUSICAL_ARCDATAID_SBNKDATA = 3,
+  MUSICAL_ARCDATAID_SSEQDATA = 4,
+  MUSICAL_ARCDATAID_SWAVDATA = 5,
+};
 
 //----------------------------------------------------------
 //	セーブデータシステムが依存する関数

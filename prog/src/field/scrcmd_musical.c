@@ -602,22 +602,17 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
   {
   case MUSICAL_WORD_TITLE:        //セーブにある演目
     {
-      /*
       GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
       SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gdata );
-      MUSICAL_DIST_SAVE* musDistSave = MUSICAL_DIST_SAVE_LoadData( svWork , heapId );
-      void *msgData = MUSICAL_DIST_SAVE_GetMessageData( musDistSave , heapId , NULL );
+      MUSICAL_SAVE* musSave = MUSICAL_SAVE_GetMusicalSave( svWork );
 
-      STRBUF * tmpBuf;
-      GFL_MSGDATA *msgHandle = GFL_MSG_Construct( msgData , heapId );
+      STRBUF *tmpBuf = GFL_STR_CreateBuffer( MUSICAL_PROGRAM_NAME_MAX , heapId );
 
-      tmpBuf = GFL_MSG_CreateString( msgHandle , 0 );
+      GFL_STR_SetStringCodeOrderLength( tmpBuf , MUSICAL_SAVE_GetDistributTitle(musSave) , MUSICAL_PROGRAM_NAME_MAX );
+
       WORDSET_RegisterWord( wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
 
       GFL_STR_DeleteBuffer( tmpBuf );
-      GFL_MSG_Delete( msgHandle );
-      GFL_HEAP_FreeMemory( msgData );
-      */
     }
     break;
   case MUSICAL_WORD_GOODS:        //グッズ名

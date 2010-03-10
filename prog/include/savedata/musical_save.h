@@ -93,5 +93,6 @@ extern void MUSICAL_SAVE_SetProgramNumber( MUSICAL_SAVE *musSave , const u8 num 
 
 extern const BOOL MUSICAL_SAVE_IsEnableDistributData( const MUSICAL_SAVE *musSave );
 extern void MUSICAL_SAVE_SetEnableDistributData( MUSICAL_SAVE *musSave , const BOOL isEnable );
+extern STRCODE* MUSICAL_SAVE_GetDistributTitle( MUSICAL_SAVE *musSave );
 
 

@@ -272,3 +272,8 @@ void MUSICAL_SAVE_SetEnableDistributData( MUSICAL_SAVE *musSave , const BOOL isE
   musSave->enableDistData = isEnable;
 }
 
+STRCODE* MUSICAL_SAVE_GetDistributTitle( MUSICAL_SAVE *musSave )
+{
+  return musSave->distTitle;
+}
+

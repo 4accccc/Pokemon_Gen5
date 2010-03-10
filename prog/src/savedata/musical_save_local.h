@@ -19,13 +19,20 @@ struct _MUSICAL_SAVE {
 	MUSICAL_EQUIP_SAVE	befEquip;
 	
   MUSICAL_FAN_STATE fanState[MUS_SAVE_FAN_NUM];
-
+  
+  //配信演目名
+  STRCODE distTitle[MUSICAL_PROGRAM_NAME_MAX];  //37
+  
   //参加回数
   u16 entryNum; 
+
+
   //トップ回数
   u16 topNum;
   //累計得点
   u16 sumPoint;
+
+
 
 	//アイテム所持bit
 	u8 itemBit[MUS_SAVE_ITEM_BIT_MAX];
@@ -36,6 +43,8 @@ struct _MUSICAL_SAVE {
   u8 befCondition[MCT_MAX];
   //前回評価点
   u8 befPoint;
+
+
   
   //選択している演目番号
   u8 programNumber;

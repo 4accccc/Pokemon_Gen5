@@ -461,6 +461,7 @@ recept_select_program:
   _BMPMENU_MAKE_LIST( msg_musical_program_03, 2 )
   _BMPMENU_MAKE_LIST( msg_musical_program_04, 3 )
   IF $enableDist == TRUE THEN
+    _MUSICAL_WORD_PROGRAM_TITLE(0)
     _BMPMENU_MAKE_LIST( msg_musical_program_05, 4 )
   ENDIF
   _BMPMENU_MAKE_LIST( msg_musical_program_06, 5 ) //‚â‚ß‚é

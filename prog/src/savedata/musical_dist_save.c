@@ -40,6 +40,7 @@ typedef struct
 
 struct _MUSICAL_DIST_SAVE
 {
+  HEAPID heapId;
   BOOL isEnableData;
   int  saveSeq;
   DIST_DATA_HEADER dataHeader;
@@ -74,6 +75,7 @@ MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_LoadData( SAVE_CONTROL_WORK *sv , HEAPID he
   distSave->saveData = GFL_HEAP_AllocClearMemory( heapId , MUSICAL_DIST_SAVE_WORK_SIZE );
   ret = SaveControl_Extra_LoadWork( sv , SAVE_EXTRA_ID_MUSICAL_DIST , heapId , distSave->saveData , MUSICAL_DIST_SAVE_WORK_SIZE );
   
+  distSave->heapId = heapId;
   distSave->sv = sv;
   distSave->saveSeq = 0;
   if( ret == LOAD_RESULT_OK )
@@ -133,7 +135,24 @@ const BOOL MUSICAL_DIST_SAVE_SaveMusicalArchive_Main( MUSICAL_DIST_SAVE *distSav
     else
     {
       MUSICAL_SAVE* musSave = MUSICAL_SAVE_GetMusicalSave( distSave->sv );
+      //有効フラグの設定
       MUSICAL_SAVE_SetEnableDistributData( musSave , TRUE );
+      //演目タイトルの退避
+      {
+        u32 msgDataSize;
+        ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandleByMemory( distSave->saveDataArc , distSave->dataHeader.size , GFL_HEAP_LOWID(distSave->heapId) );
+        void *msgData = GFL_ARCHDL_UTIL_LoadEx( arcHandle , MUSICAL_ARCDATAID_GMMDATA , FALSE , GFL_HEAP_LOWID(distSave->heapId) , &msgDataSize );
+        GFL_MSGDATA *msgHandle = GFL_MSG_Construct( msgData, GFL_HEAP_LOWID(distSave->heapId) );
+        STRBUF *tmpBuf = GFL_MSG_CreateString( msgHandle , 0 );
+        STRCODE *saveBuf = MUSICAL_SAVE_GetDistributTitle( musSave );
+
+        GFL_STR_GetStringCode( tmpBuf , saveBuf , MUSICAL_PROGRAM_NAME_MAX );
+
+        GFL_STR_DeleteBuffer( tmpBuf );
+        GFL_MSG_Delete( msgHandle );
+        GFL_HEAP_FreeMemory( msgData );
+        GFL_ARC_CloseDataHandle( arcHandle );
+      }
       SaveControl_Extra_SaveAsyncInit( distSave->sv , SAVE_EXTRA_ID_MUSICAL_DIST );
       distSave->saveSeq++;
     }

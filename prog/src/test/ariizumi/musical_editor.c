@@ -1097,6 +1097,7 @@ static const BOOL MusicalSetting_Main( MUS_EDIT_LOCAL_WORK *work )
     break;
 
   case 5:
+    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( work->heapId );
     GFL_HEAP_FreeMemory( work->musicalArc );
     work->distSaveSeq = 0;
     ARI_TPrintf("ŠJ•úŠ®—¹\n");
