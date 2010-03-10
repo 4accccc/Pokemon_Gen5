@@ -10,8 +10,7 @@
 
 #define SND_MAIL_SELECT (SEQ_SE_DECIDE1)  ///<選択
 #define SND_MAIL_DECIDE (SEQ_SE_DECIDE2)  ///<通常の決定
-#define SND_MAIL_CANCEL (SEQ_SE_DECIDE2)  ///<キャンセル
-//#define SND_MAIL_FINISH (SEQ_SE_DP_PIRORIRO)  ///<メール作成終了
+#define SND_MAIL_CANCEL (SEQ_SE_CANCEL1)  ///<キャンセル
 #define SND_MAIL_FINISH (SEQ_SE_DECIDE3)  ///<メール作成終了
 
 #endif  //__H_MAIL_SND_DEF_H__
