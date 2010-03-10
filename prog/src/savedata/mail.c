@@ -68,7 +68,7 @@ typedef struct _MAIL_BLOCK{
 
 
 ///ポケモンアイコンの最大CGXID(金銀でアイコンが増えるならここも変える必要がある)
-#define ICON_CGXID_MAX    (NARC_poke_icon_poke_icon_519_05_NCGR)
+#define ICON_CGXID_MAX    (NARC_poke_icon_poke_icon_656_freeze_f_NCGR)
 
 #if 0
 ///プラチナ以降で追加されたポケモンのcgx_id変換テーブル
@@ -481,7 +481,7 @@ u16 MailData_GetIconParamByIndex(const MAIL_DATA* dat,u8 index,u8 mode, u16 form
     }
 #endif
     if(mi.cgxID > ICON_CGXID_MAX){
-      mi.cgxID = NARC_poke_icon_poke_icon_000_NCGR;
+      mi.cgxID = NARC_poke_icon_poke_icon_000_m_NCGR;
       mi.palID = 0;
     }
     switch(mode){
