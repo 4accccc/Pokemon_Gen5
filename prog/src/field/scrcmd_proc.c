@@ -48,6 +48,8 @@
 
 #include "demo/demo3d.h"  //Demo3DProcData etc.
 #include "app/local_tvt_sys.h"  //LocalTvt_ProcData etc.
+#include "app/chihou_zukan_award.h"
+#include "app/zenkoku_zukan_award.h"
 
 #include "app/mailbox.h"
 FS_EXTERN_OVERLAY(app_mail);
@@ -499,6 +501,39 @@ VMCMD_RESULT EvCmdCallTVTDemo( VMHANDLE *core, void *wk )
   param->gameData = SCRCMD_WORK_GetGameData( work );
   EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, param, NULL, NULL );
 
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   図鑑コンプリート賞状画面＆路線図画面
+ * @param core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCallZukanAward( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  MYSTATUS*      mystatus = GAMEDATA_GetMyStatus( gdata );
+
+  u16 demo_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 patern  = SCRCMD_GetVMWorkValue( core, wk );
+
+  // コマンドが０なら地方図鑑賞状。１なら全国図鑑賞状
+  if(demo_id==0){
+    CHIHOU_ZUKAN_AWARD_PARAM* param = CHIHOU_ZUKAN_AWARD_AllocParam( HEAPID_PROC, mystatus );
+    EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(chihou_zukan_award), &CHIHOU_ZUKAN_AWARD_ProcData, param, NULL, NULL );
+  }else{
+    ZENKOKU_ZUKAN_AWARD_PARAM* param = ZENKOKU_ZUKAN_AWARD_AllocParam( HEAPID_PROC, mystatus );
+    EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(chihou_zukan_award), &ZENKOKU_ZUKAN_AWARD_ProcData, param, NULL, NULL );
+  }
   return VMCMD_RESULT_SUSPEND;
 }
 
