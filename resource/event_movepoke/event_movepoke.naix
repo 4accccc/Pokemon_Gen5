@@ -12,7 +12,9 @@
 
 enum {
 	NARC_event_movepoke_rai_kaza_01_bin = 0,
-	NARC_event_movepoke_rai_kaza_02_bin = 1
+	NARC_event_movepoke_rai_kaza_02_bin = 1,
+	NARC_event_movepoke_tuti_01_bin = 2,
+	NARC_event_movepoke_tuti_02_bin = 3
 };
 
 /* NARC_EVENT_MOVEPOKE_NAIX_ */

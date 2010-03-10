@@ -51,19 +51,6 @@ enum
 
 
 
-//-------------------------------------
-///	モデル登録ヘッダー
-//=====================================
-static MMDL_HEADER s_MMDL_HEADER = {
-  MMDL_ID_EVENTOBJ_00,
-  0,
-  MV_DMY,
-  0,
-  0,
-  DIR_DOWN,
-  0,0,0,0,0,
-  MMDL_HEADER_POSTYPE_GRID,
-};
 
 //-----------------------------------------------------------------------------
 /**
@@ -80,8 +67,7 @@ struct _EV_MOVEPOKE_WORK
   ICA_ANIME* p_anime;
   FLDMAPFUNC_WORK * p_task;
 
-  u16 grid_x;
-  u16 grid_z;
+  VecFx32 offset;
 
   u8 anime_req;
   u8 anime_no;
@@ -97,7 +83,7 @@ struct _EV_MOVEPOKE_WORK
 */
 //-----------------------------------------------------------------------------
 // 位置と回転を設定
-static void MOVEPOKE_SetUpMMdl( const ICA_ANIME* cp_anime, MMDL* p_mmdl, u16 grid_ofs_x, u16 grid_ofs_z );
+static void MOVEPOKE_SetUpMMdl( const ICA_ANIME* cp_anime, MMDL* p_mmdl, const VecFx32* cp_pos );
 
 
 
@@ -124,15 +110,14 @@ static const FLDMAPFUNC_DATA sc_MAPFUNC_DATA = {
  *	@brief  移動ポケモン  ワーククリエイト
  *
  *	@param	p_fieldmap    フィールドマップ
- *	@param  objcode       オブジェコード
- *	@param  grid_x        xグリッド座標 配置
- *	@param  grid_z        zグリッド座標
+ *	@param  id            識別ID
+ *	@param  cp_pos        主人公位置
  *	@param	heapID        ヒープID
  *
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-EV_MOVEPOKE_WORK* EVENT_MOVEPOKE_Create( FIELDMAP_WORK* p_fieldmap, u32 objcode, u16 grid_x, u16 grid_z, HEAPID heapID )
+EV_MOVEPOKE_WORK* EVENT_MOVEPOKE_Create( FIELDMAP_WORK* p_fieldmap, u16 id, const VecFx32* cp_pos, HEAPID heapID )
 {
   EV_MOVEPOKE_WORK* p_wk;
   MMDLSYS* p_fos = FIELDMAP_GetMMdlSys( p_fieldmap );
@@ -145,15 +130,11 @@ EV_MOVEPOKE_WORK* EVENT_MOVEPOKE_Create( FIELDMAP_WORK* p_fieldmap, u32 objcode,
   p_wk->p_task    = p_funcwk;
   p_wk->heapID    = heapID;
 
-  p_wk->grid_x    = grid_x;
-  p_wk->grid_z    = grid_z;
+  p_wk->offset    = *cp_pos;
 
-  s_MMDL_HEADER.obj_code = objcode;
-  p_wk->p_poke = MMDLSYS_AddMMdl(
-	  p_fos, &s_MMDL_HEADER, FIELDMAP_GetZoneID(p_fieldmap) );
-
-  // 非表示
-  MMDL_SetStatusBitVanish( p_wk->p_poke, TRUE );
+  // オブジェをSEARCH
+  p_wk->p_poke = MMDLSYS_SearchOBJID(
+	  p_fos, id );
 
   return p_wk;
 }
@@ -167,10 +148,6 @@ EV_MOVEPOKE_WORK* EVENT_MOVEPOKE_Create( FIELDMAP_WORK* p_fieldmap, u32 objcode,
 //-----------------------------------------------------------------------------
 void EVENT_MOVEPOKE_Delete( EV_MOVEPOKE_WORK* p_wk )
 {
-  // モデル破棄
-  MMDL_Delete( p_wk->p_poke );
-  p_wk->p_poke = NULL;
-
   // タスク破棄
   FLDMAPFUNC_Delete( p_wk->p_task );
 }
@@ -196,11 +173,7 @@ void EVENT_MOVEPOKE_StartAnime( EV_MOVEPOKE_WORK* p_wk, EV_MOVEPOKE_ANIME_TYPE a
   // アニメーション開始
   p_wk->anime_status = ANIME_STATUS_DOING;
 
-  // ポケモンの表示ON
-  MMDL_SetStatusBitVanish( p_wk->p_poke, FALSE );
-
-
-  MOVEPOKE_SetUpMMdl( p_wk->p_anime, p_wk->p_poke, p_wk->grid_x, p_wk->grid_z );
+  MOVEPOKE_SetUpMMdl( p_wk->p_anime, p_wk->p_poke, &p_wk->offset );
 }
 
 //----------------------------------------------------------------------------
@@ -258,7 +231,7 @@ static void MOVEPOKE_Update( FLDMAPFUNC_WORK* p_taskwk, FIELDMAP_WORK* p_fieldma
       result = ICA_ANIME_IncAnimeFrame( p_wk->p_anime, FX32_ONE );
       
       // 反映
-      MOVEPOKE_SetUpMMdl( p_wk->p_anime, p_wk->p_poke, p_wk->grid_x, p_wk->grid_z );
+      MOVEPOKE_SetUpMMdl( p_wk->p_anime, p_wk->p_poke, &p_wk->offset );
       
       if( result == TRUE ){
 
@@ -294,7 +267,7 @@ static void MOVEPOKE_Draw( FLDMAPFUNC_WORK* p_taskwk, FIELDMAP_WORK* p_fieldmap,
  *	@param	p_mmdl    動作モデル
  */
 //-----------------------------------------------------------------------------
-static void MOVEPOKE_SetUpMMdl( const ICA_ANIME* cp_anime, MMDL* p_mmdl, u16 grid_ofs_x, u16 grid_ofs_z )
+static void MOVEPOKE_SetUpMMdl( const ICA_ANIME* cp_anime, MMDL* p_mmdl, const VecFx32* cp_pos )
 {
   VecFx32 trans;
   VecFx32 rotate;
@@ -302,8 +275,7 @@ static void MOVEPOKE_SetUpMMdl( const ICA_ANIME* cp_anime, MMDL* p_mmdl, u16 gri
   ICA_ANIME_GetTranslate( cp_anime, &trans );
   ICA_ANIME_GetRotate( cp_anime, &rotate );
 
-  trans.x += GRID_TO_FX32( grid_ofs_x );
-  trans.z += GRID_TO_FX32( grid_ofs_z );
+  VEC_Add( &trans, cp_pos, &trans );
   
   // 位置反映
   MMDL_SetVectorPos( p_mmdl, &trans );

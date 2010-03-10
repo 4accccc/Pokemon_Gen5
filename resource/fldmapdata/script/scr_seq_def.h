@@ -7830,15 +7830,15 @@
 /**
  * @def _EV_MOVEPOKE_CREATE
  * @brief 移動ポケモン  管理ワーク　生成
- * @param objcode 見た目
+ * @param id      識別ID
  */
 //--------------------------------------------------------------
-#define _EV_MOVEPOKE_CREATE( objcode ) \
-    _ASM_EV_MOVEPOKE_CREATE objcode
+#define _EV_MOVEPOKE_CREATE( id ) \
+    _ASM_EV_MOVEPOKE_CREATE id
 
-  .macro  _ASM_EV_MOVEPOKE_CREATE objcode
+  .macro  _ASM_EV_MOVEPOKE_CREATE id
   .short  EV_SEQ_EV_MOVEPOKE_CREATE
-  .short \objcode
+  .short \id
   .endm
 
 
@@ -7861,6 +7861,10 @@
  * @def _EV_MOVEPOKE_START_ANIME
  * @brief 移動ポケモン  管理ワーク　アニメーション開始
  * @param anime_index アニメーションナンバー
+#define SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_INSIDE (0)   ライカミ　カザカミ　登場
+#define SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_OUTSIDE (1)  ライカミ　カザカミ　退場
+#define SCR_EV_MOVEPOKE_ANIME_TUCHI_INSIDE  (2)     ツチノカミ　登場１
+#define SCR_EV_MOVEPOKE_ANIME_TUCHI_OUTSIDE (3)     ツチノカミ  登場２
  */
 //--------------------------------------------------------------
 #define _EV_MOVEPOKE_START_ANIME( anime_index ) \

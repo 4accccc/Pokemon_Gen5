@@ -62,16 +62,15 @@ VMCMD_RESULT EvCmdMovePoke_Create( VMHANDLE *core, void *wk )
   EV_MOVEPOKE_WORK* p_movepoke;
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   HEAPID heapID = FIELDMAP_GetHeapID( fparam->fieldMap );
-  u16 index = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+  u16 id = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
   FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( fparam->fieldMap );
-  const MMDL* cp_mmdl = FIELD_PLAYER_GetMMdl( p_player );
-  u16 grid_x, grid_z;
+  VecFx32 pos;
+
 
   // 自機の位置を基準に動く
-  grid_x = MMDL_GetGridPosX( cp_mmdl );
-  grid_z = MMDL_GetGridPosZ( cp_mmdl );
+  FIELD_PLAYER_GetPos( p_player, &pos );
 
-  p_movepoke = EVENT_MOVEPOKE_Create( fparam->fieldMap, index, grid_x, grid_z, heapID );
+  p_movepoke = EVENT_MOVEPOKE_Create( fparam->fieldMap, id, &pos, heapID );
   SCRIPT_SetMovePokeWork( sc, p_movepoke );
 
   return VMCMD_RESULT_CONTINUE;

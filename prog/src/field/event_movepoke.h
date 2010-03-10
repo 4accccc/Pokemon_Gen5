@@ -55,7 +55,7 @@ typedef struct _EV_MOVEPOKE_WORK EV_MOVEPOKE_WORK;
 */
 //-----------------------------------------------------------------------------
 // 各ポケモン動作イベント
-extern EV_MOVEPOKE_WORK* EVENT_MOVEPOKE_Create( FIELDMAP_WORK* p_fieldmap, u32 objcode, u16 grid_x, u16 grid_z, HEAPID heapID );
+extern EV_MOVEPOKE_WORK* EVENT_MOVEPOKE_Create( FIELDMAP_WORK* p_fieldmap, u16 id, const VecFx32* cp_pos, HEAPID heapID );
 extern void EVENT_MOVEPOKE_Delete( EV_MOVEPOKE_WORK* p_wk );
 
 extern void EVENT_MOVEPOKE_StartAnime( EV_MOVEPOKE_WORK* p_wk, EV_MOVEPOKE_ANIME_TYPE anime_no );
