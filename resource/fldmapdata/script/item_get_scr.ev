@@ -408,12 +408,18 @@ _END
 //--------------------------------------------------------------------
 sub_pocket_me_set:
 {
+  //特殊処理・神秘的なアイテム==ダークストーンor ライトストーン入手では特別なMEを鳴らす
+  IF $SCWK_TEMP0 == ITEM_RAITOSUTOON || $SCWK_TEMP0 == ITEM_DAAKUSUTOON THEN
+    _ME_PLAY( SEQ_ME_ITEM_MYSTERY )
+    _RET
+  ENDIF
+
 	//ポケットナンバーをSCWK_ANSWERに代入
 	_GET_POCKET_ID(	SCWK_TEMP0,SCWK_ANSWER )
 
   SWITCH    $SCWK_ANSWER
   CASE    ITEMPOCKET_EVENT THEN
-	    _ME_PLAY(	SEQ_ME_KEYITEM )
+    _ME_PLAY(	SEQ_ME_KEYITEM )
 
   //CASE    BAG_POKE_NORMAL, BAG_POKE_NUTS, BAG_POKE_DRUG, BAG_POKE_BALL, BAG_POKE_BATTLE THEN
   CASE    ITEMPOCKET_NORMAL, ITEMPOCKET_NUTS, ITEMPOCKET_DRUG THEN
