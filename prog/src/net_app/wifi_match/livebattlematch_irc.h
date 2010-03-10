@@ -89,10 +89,10 @@ extern BOOL LIVEBATTLEMATCH_IRC_WaitEnemyData( LIVEBATTLEMATCH_IRC_WORK *p_wk, W
 extern BOOL LIVEBATTLEMATCH_IRC_SendPokeParty( LIVEBATTLEMATCH_IRC_WORK *p_wk, const POKEPARTY *cp_party );
 extern BOOL LIVEBATTLEMATCH_IRC_RecvPokeParty( LIVEBATTLEMATCH_IRC_WORK *p_wk, POKEPARTY *p_party );
 
-//レギュレーションを受け取る
-extern BOOL LIVEBATTLEMATCH_IRC_RecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk, REGULATION_CARDDATA *p_recv );
 
-#ifdef PM_DEBUG
-//レギュレーション送信
-extern BOOL LIVEBATTLEMATCH_IRC_SendRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk, const REGULATION_CARDDATA *cp_reg );
-#endif
+//-------------------------------------
+///	レギュレーション配信
+//=====================================
+//レギュレーションを受け取る
+extern void LIVEBATTLEMATCH_IRC_StartRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk, REGULATION_CARDDATA *p_recv );
+extern BOOL LIVEBATTLEMATCH_IRC_WaitRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk );

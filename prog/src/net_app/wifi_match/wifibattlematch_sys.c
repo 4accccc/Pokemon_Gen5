@@ -151,6 +151,9 @@ static BOOL WBM_BTLREC_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_
 //WIFIログアウト
 static void *LOGOUT_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs );
 static BOOL LOGOUT_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs );
+//録画再生
+static void *RECPLAY_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs );
+static BOOL RECPLAY_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs );
 
 //-------------------------------------
 ///	データバッファ作成
@@ -158,12 +161,12 @@ static BOOL LOGOUT_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
 static void DATA_CreateBuffer( WIFIBATTLEMATCH_SYS *p_wk, HEAPID heapID );
 static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk );
 
-//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//=============================================================================
 /**
  *				  サブプロセス
  *				    ・プロセスを行き来するシステム
-*/
-//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+ */
+//=============================================================================
 //-------------------------------------
 ///	サブプロセス初期化・解放関数コールバック
 //=====================================
@@ -225,6 +228,7 @@ enum
   SUBPROCID_LISTAFTER,
   SUBPROCID_BTLREC,
   SUBPROCID_LOGOUT,
+  SUBPROCID_RECPLAY,
 
 	SUBPROCID_MAX
 };
@@ -285,6 +289,13 @@ static const WBM_SYS_SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
     &WiFiLogout_ProcData,
     LOGOUT_AllocParam,
     LOGOUT_FreeParam,
+  },
+  //SUBPROCID_RECPLAY,
+  { 
+    NO_OVERLAY_ID,
+    &BtlProcData,
+    RECPLAY_AllocParam,
+    RECPLAY_FreeParam,
   },
 };
 
@@ -400,17 +411,11 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
   DATA_DeleteBuffer( p_wk );
   BattleRec_Exit();
 
-  if( p_wk->p_enemy_btl_party )
-  { 
-    GFL_HEAP_FreeMemory( p_wk->p_enemy_btl_party );
-    p_wk->p_enemy_btl_party = NULL;
-  }
-  if( p_wk->p_player_btl_party )
-  { 
-    GFL_HEAP_FreeMemory( p_wk->p_player_btl_party );
-    p_wk->p_player_btl_party = NULL;
-  }
+  //パーティの破棄
+  GFL_HEAP_FreeMemory( p_wk->p_enemy_btl_party );
+  GFL_HEAP_FreeMemory( p_wk->p_player_btl_party );
 
+  //ゲームデータを自分で作成していたら破棄
   if( p_wk->is_create_gamedata )
   { 
     GAMEDATA_Delete( p_wk->param.p_game_data );
@@ -422,6 +427,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
     GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
   }
 
+  //引数自動破棄フラグを設定されていたら破棄
   if( p_wk->param.is_auto_release )
   { 
     GFL_HEAP_FreeMemory( p_param_adrs );
@@ -556,14 +562,28 @@ static void *BC_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, 
     p_param->mode       = BATTLE_CHAMPIONSHIP_CORE_MODE_WIFI_MENU;
     break;
 
+  case SUBPROCID_RECPLAY:
+    //再生から着ていたら、LIVE大会メインメニュー
+    p_param->mode       = BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_FLOW_MENU;
+    break;
+
+  case SUBPROCID_BATTLE:
+    //バトルからきていたら、LIVE大会バトル後処理
+    p_param->mode       = BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_FLOW_BTLEND;
+    break;
+
+  case SUBPROCID_BTLREC:
+    //録画からきていたら、LIVE大会録画後処理
+    p_param->mode       = BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_FLOW_RECEND;
+    break;
+
   case 0:
     //初期化値0ならば一番最初にここへきた＝メインメニュー
     p_param->mode       = BATTLE_CHAMPIONSHIP_CORE_MODE_MAIN_MEMU;
     break;
 
   default:
-    //@todo
-    p_param->mode       = BATTLE_CHAMPIONSHIP_CORE_MODE_WIFI_MENU;
+    GF_ASSERT(0);
     break;
   }
 
@@ -600,6 +620,10 @@ static BOOL BC_CORE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adr
   case BATTLE_CHAMPIONSHIP_CORE_RET_LIVEREC: //LIVE用録画へ行く
     p_wk->type  = WIFIBATTLEMATCH_TYPE_LIVECUP;
     WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_BTLREC );
+    break;
+  case BATTLE_CHAMPIONSHIP_CORE_RET_LIVERECPLAY: //LIVE用録画再生へ行く
+    p_wk->type  = WIFIBATTLEMATCH_TYPE_LIVECUP;
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_RECPLAY );
     break;
   default:
     GF_ASSERT( 0 );
@@ -1034,23 +1058,32 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
 	GFL_HEAP_FreeMemory( p_param );
 
   //次のPROC
-  switch( result )
+  if( WBM_SYS_SUBPROC_GetPreProcID( p_subproc ) == SUBPROCID_MAINMENU )
+  { 
+    //ライブマッチはメインメニューからくるのでライブまっちへ戻る
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
+  }
+  else
   {
-  case WIFIBATTLEMATCH_BATTLELINK_RESULT_SUCCESS:
-    p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE;
-    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
-    break;
+    //ランダムマッチとWIFIはCOREからくる
+    switch( result )
+    {
+    case WIFIBATTLEMATCH_BATTLELINK_RESULT_SUCCESS:
+      p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE;
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
+      break;
 
-  case WIFIBATTLEMATCH_BATTLELINK_RESULT_DISCONNECT:
-    //切断された
-    p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
-    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
-    break;
-    
-  case WIFIBATTLEMATCH_BATTLELINK_RESULT_EVIL:
-    p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
-    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
-    break;
+    case WIFIBATTLEMATCH_BATTLELINK_RESULT_DISCONNECT:
+      //切断された
+      p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
+      break;
+
+    case WIFIBATTLEMATCH_BATTLELINK_RESULT_EVIL:
+      p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
+      break;
+    }
   }
 
   return TRUE;
@@ -1206,8 +1239,16 @@ static BOOL WBM_BTLREC_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_
   GFL_HEAP_FreeMemory( p_param );
 
   //次のPROC
-  p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDREC;
-  WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
+  if( WBM_SYS_SUBPROC_GetPreProcID( p_subproc ) == SUBPROCID_MAINMENU )
+  { 
+    //ライブマッチはメインメニューからくるのでライブまっちへ戻る
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
+  }
+  else
+  { 
+    p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDREC;
+    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
+  }
 
   return TRUE;
 }
@@ -1263,6 +1304,54 @@ static BOOL LOGOUT_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
 
   GFL_HEAP_FreeMemory( p_param );
 
+  return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	録画再生プロセスの引数	破棄
+ *
+ *	@param	void *p_param_adrs				引数
+ *	@param	*p_wk_adrs								ワーク
+ */
+//-----------------------------------------------------------------------------
+static void *RECPLAY_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, void *p_wk_adrs )
+{ 
+  BATTLE_SETUP_PARAM  *p_param;
+  WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
+  
+  //バトル設定パラメータ
+  p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(BATTLE_SETUP_PARAM) );
+	GFL_STD_MemClear( p_param, sizeof(BATTLE_SETUP_PARAM) );
+
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
+  BATTLE_PARAM_Init( p_param );
+  BTL_SETUP_InitForRecordPlay( p_param, p_wk->param.p_game_data, heapID );
+  BattleRec_RestoreSetupParam( p_param, heapID );
+
+  //デモパラメータ
+	return p_param;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	録画再生プロセスの引数  破棄
+ *
+ *	@param	void *p_param_adrs				引数
+ *	@param	*p_wk_adrs								ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL RECPLAY_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs, void *p_wk_adrs )
+{ 
+  BATTLE_SETUP_PARAM  *p_param  = p_param_adrs;
+  WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
+
+  BTL_SETUP_QuitForRecordPlay( p_param );
+  BATTLE_PARAM_Release( p_param );
+  GFL_HEAP_FreeMemory( p_param );
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+
+  WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
   return TRUE;
 }
 

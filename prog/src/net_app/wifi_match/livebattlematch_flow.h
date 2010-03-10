@@ -64,7 +64,6 @@ typedef struct
   LIVEBATTLEMATCH_FLOW_MODE     mode;         //[in ]開始のフロー
   WBM_TEXT_WORK                 *p_text;      //[in ]テキスト表示モジュール
   GFL_FONT                      *p_font;      //[in ]フォント
-  GFL_MSGDATA                   *p_msg;       //[in ]メッセージ
   PRINT_QUE                     *p_que;       //[in ]プリントキュー
   WIFIBATTLEMATCH_VIEW_RESOURCE *p_view;      //[in ]リソース共通モジュール
   WIFIBATTLEMATCH_GRAPHIC_WORK  *p_graphic;   //[in ]描画共通モジュール

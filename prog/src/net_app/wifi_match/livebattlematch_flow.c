@@ -49,10 +49,13 @@
 //外部公開
 #include "livebattlematch_flow.h"
 
+FS_EXTERN_OVERLAY( ui_common );
+
 //-------------------------------------
 ///	DEBUG
 //=====================================
 #ifdef PM_DEBUG
+#define DEBUG_REGULATIONCRC_PASS  //レギュレーションのCRCチェックを通過する
 #endif //PM_DEBUG
 
 //=============================================================================
@@ -101,6 +104,9 @@ struct _LIVEBATTLEMATCH_FLOW_WORK
   //ライブ大会用メッセージ
   GFL_MSGDATA                   *p_msg;
 
+  //選手証用メッセージ(wifi_matchと共用)
+  GFL_MSGDATA                   *p_wifi_msg;
+
   //ポケモンのレベル・性別マーク表示のみで使用しているフォント
 	GFL_FONT			                *p_small_font; 
 
@@ -110,8 +116,13 @@ struct _LIVEBATTLEMATCH_FLOW_WORK
   //ポケパーティテンポラリ
   POKEPARTY                     *p_party;
 
-  //デジタル選手証
+  //ライブマッチセーブデータ
+  LIVEMATCH_DATA                *p_livematch;
+
+  //デジタル選手証  セーブデータ
   REGULATION_CARDDATA           *p_regulation;
+
+  //デジタル選手証　受信バッファ
   REGULATION_CARDDATA           regulation_temp;
 
   //戻り値
@@ -119,9 +130,6 @@ struct _LIVEBATTLEMATCH_FLOW_WORK
 
   //引数
   LIVEBATTLEMATCH_FLOW_PARAM    param;
-
-  //ライブマッチ
-  LIVEMATCH_DATA                *p_livematch;
 
   //ヒープID
   HEAPID                        heapID;
@@ -182,8 +190,6 @@ static BOOL UTIL_BTLBOX_MoveOut( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
 static void UTIL_DATA_GetBtlBoxParty( LIVEBATTLEMATCH_FLOW_WORK *p_wk, POKEPARTY *p_dst );
 //自分のデータ作成
 static void UTIL_DATA_SetupMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, LIVEBATTLEMATCH_FLOW_WORK *p_wk );
-//スコアをクリアー
-static void UTIL_DATA_ClearScore( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
 //=============================================================================
 /**
  *					データ
@@ -208,6 +214,9 @@ LIVEBATTLEMATCH_FLOW_WORK *LIVEBATTLEMATCH_FLOW_Init( const LIVEBATTLEMATCH_FLOW
 { 
   LIVEBATTLEMATCH_FLOW_WORK *p_wk;
 
+  //WIFIBATTLEMATCH_VIEWのPLAYERINFO_LIVE_Initの中で使用するため
+  GFL_OVERLAY_Load(  FS_OVERLAY_ID( ui_common ) );
+
   //ワーク作成
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(LIVEBATTLEMATCH_FLOW_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(LIVEBATTLEMATCH_FLOW_WORK) );
@@ -216,7 +225,8 @@ LIVEBATTLEMATCH_FLOW_WORK *LIVEBATTLEMATCH_FLOW_Init( const LIVEBATTLEMATCH_FLOW
 
   //共通モジュール作成
   p_wk->p_word  = WORDSET_Create( heapID );
-  p_wk->p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_live_match_dat, heapID );
+  p_wk->p_msg       = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_live_match_dat, heapID );
+  p_wk->p_wifi_msg  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_match_dat, heapID );
 
   //共通フォント作成
 	p_wk->p_small_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_num_gftr,
@@ -225,6 +235,14 @@ LIVEBATTLEMATCH_FLOW_WORK *LIVEBATTLEMATCH_FLOW_Init( const LIVEBATTLEMATCH_FLOW
   //モジュール作成
   p_wk->p_seq = WBM_SEQ_Init( p_wk, SEQFUNC_Start, heapID );
   p_wk->p_irc = LIVEBATTLEMATCH_IRC_Init( p_wk->param.p_gamedata, heapID );
+
+  //待機アイコン
+  { 
+    GFL_CLUNIT  *p_unit;
+    p_unit  = WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->param.p_graphic );
+    p_wk->p_wait  = WBM_WAITICON_Init( p_unit, p_wk->param.p_view, heapID );
+    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+  }
 
   //LIVE大会用レギュレーションセーブアドレス
   { 
@@ -258,13 +276,17 @@ void LIVEBATTLEMATCH_FLOW_Exit( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
   GFL_HEAP_FreeMemory( p_wk->p_party );
 
   //モジュール破棄
+  WBM_WAITICON_Exit( p_wk->p_wait );
   LIVEBATTLEMATCH_IRC_Exit( p_wk->p_irc );
   WBM_SEQ_Exit( p_wk->p_seq);
 
   //共通モジュール破棄
   GFL_FONT_Delete( p_wk->p_small_font );
+  GFL_MSG_Delete( p_wk->p_wifi_msg );
   GFL_MSG_Delete( p_wk->p_msg );
   WORDSET_Delete( p_wk->p_word );
+
+  GFL_OVERLAY_Unload(  FS_OVERLAY_ID( ui_common ) );
 
   //ワーク破棄
   GFL_HEAP_FreeMemory( p_wk );
@@ -284,6 +306,9 @@ void LIVEBATTLEMATCH_FLOW_Main( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
   //ネットメイン
   LIVEBATTLEMATCH_IRC_Main( p_wk->p_irc );
 
+  //待機アイコン
+  WBM_WAITICON_Main( p_wk->p_wait );
+
   //文字表示
   if( p_wk->p_playerinfo )
   { 
@@ -292,6 +317,10 @@ void LIVEBATTLEMATCH_FLOW_Main( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
   if( p_wk->p_matchinfo )
   { 
     MATCHINFO_PrintMain( p_wk->p_matchinfo, p_wk->param.p_que );
+  }
+  if( p_wk->p_btlbox )
+  { 
+    WBM_BTLBOX_PrintMain( p_wk->p_btlbox, p_wk->param.p_que );
   }
 }
 
@@ -382,11 +411,8 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_START_MSG_LOCK,   //すでに選手証があって、バトルボックスがロックされている
 
     SEQ_START_MSG_RECVCARD, //選手証受け取り
-    SEQ_START_CONNECT,
-    SEQ_WAIT_CONNECT,
-    SEQ_RECV_RECVCARD,
-    SEQ_START_DISCONNECT,
-    SEQ_WAIT_DISCONNECT,
+    SEQ_START_RECVCARD,
+    SEQ_WAIT_RECVCARD,
 
     SEQ_CHECK_RECVCARD, //受け取った選手証をチェック
 
@@ -394,6 +420,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_START_SAVE,
     SEQ_WAIT_SAVE,
 
+    SEQ_START_MSG_DIRTY,    //不正なレギュレーションをうけとった
     SEQ_START_MSG_RETIRE,   //リタイアした大会を受け取っていた,
     SEQ_START_MSG_FINISH,   //終了した大会を受け取っていた,
 
@@ -461,65 +488,60 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_START_MSG_RECVCARD: //選手証受け取り
     UTIL_TEXT_Print( p_wk, LIVE_STR_03 );
     *p_seq       = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_CONNECT );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_RECVCARD );
     break;
-  case SEQ_START_CONNECT:
-    if( LIVEBATTLEMATCH_IRC_StartConnect( p_wk->p_irc ) )
-    { 
-      *p_seq  = SEQ_WAIT_CONNECT;
-    }
+  case SEQ_START_RECVCARD:
+    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
+    LIVEBATTLEMATCH_IRC_StartRecvRegulation( p_wk->p_irc, &p_wk->regulation_temp );
+    *p_seq  = SEQ_WAIT_RECVCARD;
     break;
-  case SEQ_WAIT_CONNECT:
-    if( LIVEBATTLEMATCH_IRC_WaitConnect( p_wk->p_irc ) )
+  case SEQ_WAIT_RECVCARD:
+    if( LIVEBATTLEMATCH_IRC_WaitRecvRegulation( p_wk->p_irc ) )
     { 
-      *p_seq  = SEQ_RECV_RECVCARD;
-    }
-    break;
-  case SEQ_RECV_RECVCARD:
-    if( LIVEBATTLEMATCH_IRC_RecvRegulation( p_wk->p_irc, &p_wk->regulation_temp ) )
-    { 
-      *p_seq  = SEQ_START_DISCONNECT;
-    }
-    break;
-  case SEQ_START_DISCONNECT:
-    if( LIVEBATTLEMATCH_IRC_StartDisConnect( p_wk->p_irc ) )
-    { 
-      *p_seq  = SEQ_WAIT_DISCONNECT;
-    }
-    break;
-  case SEQ_WAIT_DISCONNECT:
-    if( LIVEBATTLEMATCH_IRC_WaitDisConnect( p_wk->p_irc ) )
-    { 
+      //Regulation_PrintDebug( &p_wk->regulation_temp );
+      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
       *p_seq  = SEQ_CHECK_RECVCARD;
     }
     break;
 
   case SEQ_CHECK_RECVCARD: //受け取った選手証をチェック
-    if( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO) ==
-        Regulation_GetCardParam( &p_wk->regulation_temp, REGULATION_CARD_CUPNO) )
+#ifdef DEBUG_REGULATIONCRC_PASS
+    if(1)
+#else
+    if( Regulation_CheckCrc( &p_wk->regulation_temp ) )
+#endif
     { 
-      //同じなので同じ大会に登録しようとした
-      switch( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS) )
-      {   
-      case DREAM_WORLD_MATCHUP_RETIRE:  // 途中で解除
-        *p_seq  = SEQ_START_MSG_RETIRE;
-        break;
+      if( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO) ==
+          Regulation_GetCardParam( &p_wk->regulation_temp, REGULATION_CARD_CUPNO) )
+      { 
+        //同じなので同じ大会に登録しようとした
+        switch( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS) )
+        {   
+        case DREAM_WORLD_MATCHUP_RETIRE:  // 途中で解除
+          *p_seq  = SEQ_START_MSG_RETIRE;
+          break;
 
-      case DREAM_WORLD_MATCHUP_END:	    // 大会終了
-        *p_seq  = SEQ_START_MSG_FINISH;
-        break;
+        case DREAM_WORLD_MATCHUP_END:	    // 大会終了
+          *p_seq  = SEQ_START_MSG_FINISH;
+          break;
 
-      default:
-        //基本ここにはこないが念のため
-        //大会NOは同じだが参加中なので次へいく
+        default:
+          //基本ここにはこないが念のため
+          //大会NOは同じだが参加中なので次へいく
+          *p_seq  = SEQ_START_MSG_SAVE;
+          break;
+        }
+      }
+      else
+      { 
+        //大会NOが違うので、大丈夫
         *p_seq  = SEQ_START_MSG_SAVE;
-        break;
       }
     }
     else
     { 
-      //大会NOが違うので、大丈夫
-      *p_seq  = SEQ_START_MSG_SAVE;
+      //CRCが間違っていた
+      *p_seq  = SEQ_START_MSG_DIRTY;
     }
     break;
 
@@ -536,9 +558,19 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       //開催状態をサインアップにしてからセーブ
       Regulation_SetCardParam( &p_wk->regulation_temp, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_SIGNUP );
       //新規大会なのでスコアもクリアする
-      UTIL_DATA_ClearScore( p_wk );
+      LIVEMATCH_Init( p_wk->p_livematch );
 
+      OS_TPrintf( "セット前\n" );
+      OS_TPrintf( "テンポラリ\n" );
+      Regulation_PrintDebug( &p_wk->regulation_temp );
+      OS_TPrintf( "セーブ\n" );
+      Regulation_PrintDebug( p_wk->p_regulation );
       RegulationSaveData_SetRegulation(p_reg_sv, REGULATION_CARD_TYPE_LIVE, &p_wk->regulation_temp);
+      OS_TPrintf( "セット後\n" );
+      OS_TPrintf( "テンポラリ\n" );
+      Regulation_PrintDebug( &p_wk->regulation_temp );
+      OS_TPrintf( "セーブ\n" );
+      Regulation_PrintDebug( p_wk->p_regulation );
     }
 
     GAMEDATA_SaveAsyncStart(p_wk->param.p_gamedata);
@@ -560,6 +592,11 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     } 
     break;
 
+  case SEQ_START_MSG_DIRTY:    //不正なレギュレーションをうけとった
+    UTIL_TEXT_Print( p_wk, LIVE_STR_22 );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_DIRTY_END );
+    break;
   case SEQ_START_MSG_RETIRE:   //リタイアした大会を受け取っていた:
     UTIL_TEXT_Print( p_wk, LIVE_STR_04 );
     *p_seq       = SEQ_WAIT_MSG;
@@ -572,6 +609,9 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_SUCCESS_END:      //成功したので次へ
+
+    OS_TPrintf( "セーブ後\n" );
+    Regulation_PrintDebug( p_wk->p_regulation );
     WBM_SEQ_SetNext( p_seqwk, SEQFUNC_Register );
     break;
   case SEQ_DIRTY_END:        //失敗したので戻る
@@ -1088,6 +1128,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_START_CONNECT:
     if( LIVEBATTLEMATCH_IRC_StartConnect( p_wk->p_irc ) )
     { 
+      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
       *p_seq  = SEQ_WAIT_CONNECT;
     }
     break;
@@ -1132,6 +1173,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         switch( select )
         { 
         case 0: //はい
+          WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           WBM_SEQ_SetNext( p_seqwk, SEQFUNC_StartCup );
           break;
 
@@ -1158,10 +1200,12 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_CHECK_MATCH:      //マッチングした
     if( p_wk->param.p_player_data->wificup_no == p_wk->param.p_enemy_data->wificup_no )
     { 
+      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
       *p_seq  = SEQ_START_MSG_OK;
     }
     else
     { 
+      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
       *p_seq  = SEQ_START_MSG_NOCUP;
     }
 		break;
@@ -1208,7 +1252,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_CHECK_SHOW:        //見せ合いはあるか
     { 
       REGULATION      *p_reg  = RegulationData_GetRegulation( p_wk->p_regulation );
-      if( Regulation_GetParam( p_reg, REGULATION_SHOW_POKE)  )
+      if( Regulation_GetParam( p_reg, REGULATION_SHOW_POKE) )
       { 
         //あり
         *p_seq  = SEQ_LIST_END;
@@ -1325,13 +1369,18 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   switch( *p_seq )
   { 
   case SEQ_CHECK_BTLCNT: //規定回数戦った
-    if(1)
-    { 
-      *p_seq  = SEQ_START_MSG_SAVE;
-    }
-    else
-    { 
-      *p_seq  = SEQ_RETURN;
+    {
+      REGULATION  *p_reg  = RegulationData_GetRegulation( p_wk->p_regulation );
+      u32 now = LIVEMATCH_DATA_GetMyParam( p_wk->p_livematch, LIVEMATCH_MYDATA_PARAM_BTLCNT );
+      u32 max = Regulation_GetParam( p_reg, REGULATION_BTLCOUNT);
+      if( now >= max )
+      { 
+        *p_seq  = SEQ_START_MSG_SAVE;
+      }
+      else
+      { 
+        *p_seq  = SEQ_RETURN;
+      }
     }
 		break;
   case SEQ_START_MSG_SAVE:
@@ -1367,8 +1416,10 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_END );
     break;
   case SEQ_END:      //対戦終了
+    UTIL_FLOW_End( p_wk, LIVEBATTLEMATCH_FLOW_RET_LIVEMENU );
 		break;
   case SEQ_RETURN:   //まだ戦える
+    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_StartCup );
 		break;
 
   case SEQ_WAIT_MSG:         //メッセージ待ち 
@@ -1434,7 +1485,7 @@ static void UTIL_LIST_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk, LVM_MENU_TYPE typ
     else
     { 
       setup.strID[0]= LIVE_SELECT_02;
-      setup.strID[1]= LIVE_SELECT_03;
+      setup.strID[1]= LIVE_SELECT_04;
       setup.list_max= 2;
     }
     pos = POS_CENTER;
@@ -1565,11 +1616,13 @@ static void UTIL_PLAYERINFO_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
     p_my  = GAMEDATA_GetMyStatus( p_wk->param.p_gamedata); 
     p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->param.p_graphic );
 
-    GFL_STD_MemClear( &info_setup, sizeof(PLAYERINFO_RANDOMMATCH_DATA) );
+    GFL_STD_MemClear( &info_setup, sizeof(PLAYERINFO_LIVECUP_DATA) );
+
+    //Regulation_PrintDebug( p_wk->p_regulation );
 
     info_setup.win_cnt  = LIVEMATCH_DATA_GetMyParam( p_wk->p_livematch, LIVEMATCH_MYDATA_PARAM_WIN );
     info_setup.lose_cnt = LIVEMATCH_DATA_GetMyParam( p_wk->p_livematch, LIVEMATCH_MYDATA_PARAM_LOSE );
-    info_setup.btl_cnt  = info_setup.win_cnt + info_setup.lose_cnt;
+    info_setup.btl_cnt  = LIVEMATCH_DATA_GetMyParam( p_wk->p_livematch, LIVEMATCH_MYDATA_PARAM_BTLCNT );
     info_setup.trainerID  = MyStatus_GetTrainerView( p_my );
 
     GFL_STD_MemCopy( Regulation_GetCardCupNamePointer( p_wk->p_regulation ),
@@ -1587,7 +1640,7 @@ static void UTIL_PLAYERINFO_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
         Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_END_DAY ),
           0);
 
-    p_wk->p_playerinfo	= PLAYERINFO_LIVE_Init( &info_setup, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->param.p_msg, p_wk->p_word, p_btlbox_sv, p_wk->heapID );
+    p_wk->p_playerinfo	= PLAYERINFO_LIVE_Init( &info_setup, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_wifi_msg, p_wk->p_word, p_btlbox_sv, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
@@ -1629,7 +1682,7 @@ static BOOL UTIL_PLAYERINFO_Move( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void UTIL_PLAYERINFO_RenewalData( LIVEBATTLEMATCH_FLOW_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_TYPE type )
 { 
-  PLAYERINFO_WIFI_RenewalData( p_wk->p_playerinfo, type, p_wk->param.p_msg, p_wk->param.p_que, p_wk->param.p_font, p_wk->heapID );
+  PLAYERINFO_LIVE_RenewalData( p_wk->p_playerinfo, type, p_wk->p_wifi_msg, p_wk->param.p_que, p_wk->param.p_font, p_wk->heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1644,7 +1697,7 @@ static void UTIL_MATCHINFO_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk, const WIFIBA
   if( p_wk->p_matchinfo == NULL )
   { 
     GFL_CLUNIT  *p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->param.p_graphic );
-    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->param.p_msg, p_wk->p_word, WIFIBATTLEMATCH_TYPE_LIVECUP, FALSE, p_wk->heapID );
+    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_wifi_msg, p_wk->p_word, WIFIBATTLEMATCH_TYPE_LIVECUP, FALSE, p_wk->heapID );
   }
 }
 
@@ -1691,7 +1744,26 @@ static void UTIL_BTLBOX_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
     GFL_CLUNIT  *p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->param.p_graphic );
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
     BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-    p_wk->p_btlbox  = WBM_BTLBOX_Init( p_bbox_save, p_unit, p_wk->param.p_view, p_wk->p_small_font, p_wk->param.p_que, p_wk->param.p_msg, p_wk->heapID );
+
+#ifdef PM_DEBUG
+    { 
+      int i;
+      POKEPARTY *p_party  = BATTLE_BOX_SAVE_MakePokeParty( p_bbox_save, p_wk->heapID );
+      for( i = 0; i < PokeParty_GetPokeCount(p_party); i++ )
+      { 
+        POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( p_party, i );
+        if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) )
+        { 
+          NAGI_Printf( "monsno[%d]\n",  PP_Get( p_pp, ID_PARA_monsno, NULL ) );
+          NAGI_Printf( "formno[%d]\n",  PP_Get( p_pp, ID_PARA_form_no, NULL ) );
+          NAGI_Printf( "item[%d]\n",  PP_Get( p_pp, ID_PARA_item, NULL ) );
+        }
+      }
+      GFL_HEAP_FreeMemory( p_party );
+    }
+#endif //PM_DEBUG
+
+    p_wk->p_btlbox  = WBM_BTLBOX_Init( p_bbox_save, p_unit, p_wk->param.p_view, p_wk->p_small_font, p_wk->param.p_que, p_wk->p_wifi_msg, p_wk->heapID );
   }
 }
 
@@ -1800,15 +1872,4 @@ static void UTIL_DATA_SetupMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, LIVEBAT
   { 
     p_my_data->wificup_no = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS);
   }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  新規試合のためにスコアをクリアする
- *
- *	@param	LIVEBATTLEMATCH_FLOW_WORK *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void UTIL_DATA_ClearScore( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
-{ 
-  LIVEMATCH_Init( p_wk->p_livematch );
 }

@@ -49,8 +49,10 @@ static void _RecvDeliveryData(const int netID, const int size, const void* pData
 static u8* _getDeliveryData(int netID, void* pWk, int size);
 static void _Recvcrc16Data(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
+#define _NET_CMD(x) (x<<8)  //ネットワークサービスIDからコマンドへの変換マクロ
+
 enum{
-  _DELIVERY_DATA=GFL_NET_CMD_MYSTERY,
+  _DELIVERY_DATA, //この値に上記マクロを足す
   _CRCCCTI_DATA,
 };
 
@@ -203,7 +205,7 @@ static void _sendInit3(DELIVERY_IRC_WORK* pWork)
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_START2, pWork->aInit.NetDevID) ){
     if(pWork->bSend){
       if( GFL_NET_SendDataEx( GFL_NET_HANDLE_GetCurrentHandle() , GFL_NET_SENDID_ALLUSER ,
-                              _DELIVERY_DATA , pWork->aInit.datasize ,
+                              _DELIVERY_DATA + _NET_CMD( pWork->aInit.NetDevID ), pWork->aInit.datasize ,
                               pWork->aInit.pData , FALSE , FALSE , TRUE )){
         _CHANGE_STATE(_sendInit4);
       }
@@ -214,8 +216,6 @@ static void _sendInit3(DELIVERY_IRC_WORK* pWork)
   }
 }
 
-
-
 static void _sendInit25(DELIVERY_IRC_WORK* pWork)
 
 {
@@ -223,7 +223,7 @@ static void _sendInit25(DELIVERY_IRC_WORK* pWork)
     if( pWork->bSend ){
       u16 crc=0;
       crc = GFL_STD_CrcCalc( pWork->aInit.pData, pWork->aInit.datasize);
-      if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle() , _CRCCCTI_DATA , sizeof(u16) ,  &crc )){
+      if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle() , _CRCCCTI_DATA + _NET_CMD( pWork->aInit.NetDevID ), sizeof(u16) ,  &crc )){
         GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  _TIMING_START2, pWork->aInit.NetDevID);
         pWork->bNego=FALSE;
         _CHANGE_STATE(_sendInit3);
@@ -253,7 +253,6 @@ static void _sendInit1(DELIVERY_IRC_WORK* pWork)
   _CHANGE_STATE(_sendInit2);
 }
 
-
 //初期化完了
 static void _sendInit(DELIVERY_IRC_WORK* pWork)
 {
@@ -261,7 +260,6 @@ static void _sendInit(DELIVERY_IRC_WORK* pWork)
     _CHANGE_STATE(_sendInit1);
   }
 }
-
 
 //--------------------------------------------------------------
 /**
@@ -390,7 +388,10 @@ int DELIVERY_IRC_RecvCheck(DELIVERY_IRC_WORK* pWork)
 
 void DELIVERY_IRC_Main(DELIVERY_IRC_WORK*  pWork)
 {
-  pWork->state(pWork);
+  if( pWork->state )
+  { 
+    pWork->state(pWork);
+  }
 }
 
 

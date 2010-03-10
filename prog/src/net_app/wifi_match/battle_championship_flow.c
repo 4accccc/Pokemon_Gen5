@@ -889,7 +889,7 @@ static void SEQFUNC_RestrictUGC( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_WAIT_MSG:
     if( UTIL_TEXT_IsEnd( p_wk ) == TRUE )
     {
-      WBM_SEQ_SetNext( p_seqwk, SEQFUNC_WifiMenu );
+      WBM_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
     }
     break;
   }
@@ -923,7 +923,7 @@ static void SEQFUNC_EnableWireless( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   case SEQ_WAIT_MSG:
     if( UTIL_TEXT_IsEnd( p_wk ) == TRUE )
     {
-      WBM_SEQ_SetNext( p_seqwk, SEQFUNC_WifiMenu );
+      WBM_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
     }
     break;
   }

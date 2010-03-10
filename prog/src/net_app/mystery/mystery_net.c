@@ -837,7 +837,7 @@ static void SEQFUNC_ExitBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
 
   case SEQ_EXIT_WAIT:
-    if( !GFL_NET_IsInit() )
+    if( GFL_NET_IsResetEnable() )
 		{
       *p_seq = SEQ_END;
     }
@@ -956,7 +956,7 @@ static void SEQFUNC_ExitIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_EXIT_WAIT:
-    if( !GFL_NET_IsInit() )
+    if( GFL_NET_IsResetEnable() )
 		{
       *p_seq = SEQ_END;
     }

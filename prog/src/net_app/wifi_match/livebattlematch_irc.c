@@ -17,7 +17,7 @@
 //ネット
 #include "net/network_define.h"
 #include "net/dreamworld_netdata.h"
-
+#include "net/delivery_irc.h"
 
 //外部公開
 #include "livebattlematch_irc.h"
@@ -55,8 +55,10 @@ enum
 struct _LIVEBATTLEMATCH_IRC_WORK 
 { 
   u32 seq;
+  HEAPID  heapID;
   u8  recv_buffer[LIVEBATTLEMATCH_IRC_RECV_BUFFER_LEN];
   BOOL is_recv[LIVEBATTLEMATCH_IRC_RECV_FLAG_MAX];
+  DELIVERY_IRC_WORK *p_delivery;
 };
 
 //=============================================================================
@@ -116,8 +118,10 @@ static const NetRecvFuncTable LIVEBATTLEMATCH_IRC_RecvFuncTable[] =
 LIVEBATTLEMATCH_IRC_WORK *LIVEBATTLEMATCH_IRC_Init( GAMEDATA *p_gamedata, HEAPID heapID )
 {
   LIVEBATTLEMATCH_IRC_WORK *p_wk;
+
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(LIVEBATTLEMATCH_IRC_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(LIVEBATTLEMATCH_IRC_WORK) );
+  p_wk->heapID  = heapID;
 
   //このモジュールはネット接続中に初期化と破棄を行うので、
   //毎回コマンドテーブルを追加・破棄することで、
@@ -145,6 +149,7 @@ void LIVEBATTLEMATCH_IRC_Exit( LIVEBATTLEMATCH_IRC_WORK *p_wk )
   }
 
   GFL_HEAP_FreeMemory( p_wk );
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -498,47 +503,81 @@ BOOL LIVEBATTLEMATCH_IRC_RecvPokeParty( LIVEBATTLEMATCH_IRC_WORK *p_wk, POKEPART
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  レギュレーションを受信する
+ *	@brief  レギュレーションを受信開始  GFL_NET_Initされていないこと
  *
  *	@param	LIVEBATTLEMATCH_IRC_WORK *p_wk  ワーク
  *	@param	*p_recv                         受信データ受け取り
  *
- *	@return TRUEで終了  FALSEで処理中
  */
 //-----------------------------------------------------------------------------
-BOOL LIVEBATTLEMATCH_IRC_RecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk, REGULATION_CARDDATA *p_recv )
-{
-  BOOL ret;
-  ret = p_wk->is_recv[LIVEBATTLEMATCH_IRC_RECV_FLAG_REGULATION];
+void LIVEBATTLEMATCH_IRC_StartRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk, REGULATION_CARDDATA *p_recv )
+{ 
+  DELIVERY_IRC_INIT init;
+  GFL_STD_MemClear( &init, sizeof(DELIVERY_IRC_INIT) );
+  init.NetDevID = WB_NET_IRC_BATTLE;
+  init.datasize = sizeof(REGULATION_CARDDATA);
+  init.pData  = (u8*)p_recv;
+  init.ConfusionID  = 0;
+  init.heapID = p_wk->heapID;
 
-  if( ret )
-  { 
-    GFL_STD_MemCopy( p_wk->recv_buffer, p_recv, RegulationData_GetWorkSize() );
-  }
-  return ret;
+  GF_ASSERT( p_wk->p_delivery == NULL );
+  p_wk->p_delivery  = DELIVERY_IRC_Init(&init);
+  p_wk->seq = 0; 
 }
-
-#ifdef PM_DEBUG
 //----------------------------------------------------------------------------
 /**
- *	@brief  レギュレーションを送信する
- *  
+ *	@brief  レギュレーションを受信終了
+ *
  *	@param	LIVEBATTLEMATCH_IRC_WORK *p_wk  ワーク
- *	@param	REGULATION_CARDDATA *cp_recv    送信データ
  *
  *	@return TRUEで終了  FALSEで処理中
  */
 //-----------------------------------------------------------------------------
-BOOL LIVEBATTLEMATCH_IRC_SendRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk, const REGULATION_CARDDATA *cp_reg )
+BOOL LIVEBATTLEMATCH_IRC_WaitRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk )
 { 
-  NetID netID;
+  enum
+  { 
+    SEQ_START_RECV,
+    SEQ_WAIT_RECV,
+    SEQ_DELETE,
+    SEQ_END,
+  };
 
-  //相手にのみ送信
-  netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
-  netID = netID == 0? 1: 0;
-  return GFL_NET_SendDataEx( GFL_NET_HANDLE_GetCurrentHandle(), netID, LIVEBATTLEMATCH_IRC_SEND_CMD_REGULATION, RegulationData_GetWorkSize(), cp_reg, TRUE, TRUE, TRUE );
+  if( p_wk->p_delivery )
+  { 
+    DELIVERY_IRC_Main( p_wk->p_delivery );
+  }
+
+  switch( p_wk->seq )
+  { 
+  case SEQ_START_RECV:
+    DELIVERY_IRC_RecvStart(p_wk->p_delivery);
+    p_wk->seq++;
+    break;
+
+  case SEQ_WAIT_RECV:
+    if( DELIVERY_IRC_RecvCheck( p_wk->p_delivery ) )
+    { 
+      p_wk->seq++;
+    }
+    break;
+
+  case SEQ_DELETE:
+    DELIVERY_IRC_End( p_wk->p_delivery );
+    p_wk->p_delivery  = NULL;
+    p_wk->seq++;
+    break;
+
+  case SEQ_END:
+    if( GFL_NET_IsResetEnable() )
+    { 
+      return TRUE;
+    }
+  }
+
+  return FALSE;
 }
-#endif
+
 
 //=============================================================================
 /**

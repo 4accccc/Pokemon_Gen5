@@ -136,33 +136,8 @@ WIFIBATTLEMATCH_VIEW_RESOURCE *WIFIBATTLEMATCH_VIEW_LoadResource( GFL_CLUNIT *p_
 		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifimatch_gra_bg_back_NCGR, 
 				BG_FRAME_S_BACK, 0, 0, FALSE, GFL_HEAP_LOWID( heapID ) );
 
-		//SCR
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifimatch_gra_back_NSCR,
-				BG_FRAME_M_BACK, 0, 0, FALSE, GFL_HEAP_LOWID( heapID ) );
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifimatch_gra_back2_NSCR,
-				BG_FRAME_S_BACK, 0, 0, FALSE, GFL_HEAP_LOWID( heapID ) );
-
-
-
-    switch( mode )
-    { 
-    case WIFIBATTLEMATCH_VIEW_RES_MODE_RANDOM:
-      GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifimatch_gra_random_card_NSCR,
-				BG_FRAME_S_CARD, 0, 0, FALSE, GFL_HEAP_LOWID( heapID ) );
-      break;
-
-    case WIFIBATTLEMATCH_VIEW_RES_MODE_DIGITALCARD:
-      GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifimatch_gra_wcs_card_NSCR,
-				BG_FRAME_M_CARD, 0, 0, FALSE, GFL_HEAP_LOWID( heapID ) );
-      break;
-
-    case WIFIBATTLEMATCH_VIEW_RES_MODE_WIFI:
-      /* fallthr */
-    case WIFIBATTLEMATCH_VIEW_RES_MODE_LIVE:
-      GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifimatch_gra_wcs_card_NSCR,
-				BG_FRAME_S_CARD, 0, 0, FALSE, GFL_HEAP_LOWID( heapID ) );
-      break;
-    }
+		//SCR読み込み
+		WIFIBATTLEMATCH_VIEW_LoadScreen( p_wk, mode, heapID );
 
     //●--OBJ--
     p_wk->res[ WIFIBATTLEMATCH_VIEW_RES_TYPE_OBJ_PLT_M ] = 
@@ -246,6 +221,52 @@ void WIFIBATTLEMATCH_VIEW_UnLoadResource( WIFIBATTLEMATCH_VIEW_RESOURCE *p_wk )
   //ワーク破棄
 	GFL_HEAP_FreeMemory( p_wk ); 
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリーン読み込み
+ *	        キャラは共通なのでスクリーン読み込みだけで背景の差し替えができる
+ *
+ *	@param	WIFIBATTLEMATCH_VIEW_RESOURCE *p_wk   ワーク
+ *	@param	mode                                  読み込むタイプ
+ *	@param	heapID                                ヒープID
+ */
+//-----------------------------------------------------------------------------
+void WIFIBATTLEMATCH_VIEW_LoadScreen( WIFIBATTLEMATCH_VIEW_RESOURCE *p_wk, WIFIBATTLEMATCH_VIEW_RES_MODE mode, HEAPID heapID )
+{ 
+  ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_WIFIMATCH_GRA, GFL_HEAP_LOWID( heapID ) );
+
+  //SCR
+  GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifimatch_gra_back_NSCR,
+      BG_FRAME_M_BACK, 0, 0, FALSE, GFL_HEAP_LOWID( heapID ) );
+  GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifimatch_gra_back2_NSCR,
+      BG_FRAME_S_BACK, 0, 0, FALSE, GFL_HEAP_LOWID( heapID ) );
+
+
+
+  switch( mode )
+  { 
+  case WIFIBATTLEMATCH_VIEW_RES_MODE_RANDOM:
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifimatch_gra_random_card_NSCR,
+        BG_FRAME_S_CARD, 0, 0, FALSE, GFL_HEAP_LOWID( heapID ) );
+    break;
+
+  case WIFIBATTLEMATCH_VIEW_RES_MODE_DIGITALCARD:
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifimatch_gra_wcs_card_NSCR,
+        BG_FRAME_M_CARD, 0, 0, FALSE, GFL_HEAP_LOWID( heapID ) );
+    break;
+
+  case WIFIBATTLEMATCH_VIEW_RES_MODE_WIFI:
+    /* fallthr */
+  case WIFIBATTLEMATCH_VIEW_RES_MODE_LIVE:
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifimatch_gra_wcs_card_NSCR,
+        BG_FRAME_S_CARD, 0, 0, FALSE, GFL_HEAP_LOWID( heapID ) );
+    break;
+  }
+
+  GFL_ARC_CloseDataHandle( p_handle );
+}
+ 
 
 //----------------------------------------------------------------------------
 /**
@@ -683,13 +704,13 @@ PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, c
 	p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(PLAYERINFO_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(PLAYERINFO_WORK) );
 
-    p_wk->frm = PLAYERINFO_BG_FRAME;
-    p_wk->plt = PLAYERINFO_PLT_BG_FONT;
-    p_wk->pokemonicon_plt = PLAYERINFO_PLT_OBJ_POKEICON;
-    p_wk->trainer_plt = PLAYERINFO_PLT_OBJ_TRAINER;
-    p_wk->cl_draw_type  = CLSYS_DRAW_SUB;
+  p_wk->frm = PLAYERINFO_BG_FRAME;
+  p_wk->plt = PLAYERINFO_PLT_BG_FONT;
+  p_wk->pokemonicon_plt = PLAYERINFO_PLT_OBJ_POKEICON;
+  p_wk->trainer_plt = PLAYERINFO_PLT_OBJ_TRAINER;
+  p_wk->cl_draw_type  = CLSYS_DRAW_SUB;
 
-    G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, PLAYERINFO_ALPHA_EV1, PLAYERINFO_ALPHA_EV2);
+  G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, PLAYERINFO_ALPHA_EV1, PLAYERINFO_ALPHA_EV2);
 
   //BMPWIN作成
   PlayerInfo_Bmpwin_Live_Create( p_wk, cp_data, p_my, p_font, p_que, p_msg, p_word, heapID );
@@ -707,6 +728,9 @@ PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, c
   }
   G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, PLAYERINFO_ALPHA_EV1, PLAYERINFO_ALPHA_EV2);
 
+  //鍵作成
+  PlayerInfo_LOCK_Cleate( p_wk, p_unit, cp_res, heapID );
+
   return p_wk;
 }
 //----------------------------------------------------------------------------
@@ -720,11 +744,76 @@ void PLAYERINFO_LIVE_Exit( PLAYERINFO_WORK *p_wk )
 { 
   G2S_BlendNone();
 
+  PlayerInfo_LOCK_Delete( p_wk );
+
 	PlayerInfo_POKEICON_Delete( p_wk );
 
 	PlayerInfo_Bmpwin_Delete( p_wk );
 
 	GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  LIVE大会プレイヤー情報  データ更新
+ *
+ *	@param	PLAYERINFO_WORK *p_wk ワーク
+ *	@param	type                  更新タイプ
+ *
+ */
+//-----------------------------------------------------------------------------
+void PLAYERINFO_LIVE_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_TYPE type, GFL_MSGDATA *p_msg, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID )
+{ 
+  int i;
+  STRBUF	*p_strbuf;
+
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_wk->p_bmpwin[9]), 0 );
+
+  switch( type )
+  { 
+  case PLAYERINFO_WIFI_UPDATE_TYPE_LOCK:
+    for( i = 0; i < p_wk->clwk_max; i++ )
+		{	
+      if( p_wk->p_clwk[i] )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+      }
+		}
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_LOCK], TRUE );
+
+    p_strbuf  = GFL_MSG_CreateString( p_msg, WIFIMATCH_STR_017 );
+    PRINT_UTIL_PrintColor( &p_wk->print_util[9], p_que, 0, 0, p_strbuf, p_font, PLAYERINFO_STR_COLOR_WHITE );
+    break;
+
+  case PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK:
+    for( i = 0; i < p_wk->clwk_max; i++ )
+		{	
+      if( p_wk->p_clwk[i] )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+      }
+		}
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_LOCK], FALSE );
+
+    p_strbuf  = GFL_MSG_CreateString( p_msg, WIFIMATCH_STR_017_01 );
+    PRINT_UTIL_PrintColor( &p_wk->print_util[9], p_que, 0, 0, p_strbuf, p_font, PLAYERINFO_STR_COLOR_WHITE );
+    break;
+
+  case PLAYERINFO_WIFI_UPDATE_TYPE_UNREGISTER:
+    for( i = 0; i < p_wk->clwk_max; i++ )
+		{	
+      if( p_wk->p_clwk[i] )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+      }
+		}
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_LOCK], FALSE );
+
+    p_strbuf  = GFL_MSG_CreateString( p_msg, WIFIMATCH_STR_017_02 );
+    PRINT_UTIL_PrintColor( &p_wk->print_util[9], p_que, 0, 0, p_strbuf, p_font, PLAYERINFO_STR_COLOR_WHITE );
+    break;
+  }
+
+  GFL_STR_DeleteBuffer( p_strbuf );
 }
 //=============================================================================
 /**
@@ -1241,48 +1330,47 @@ static void PlayerInfo_Bmpwin_Live_Create( PLAYERINFO_WORK * p_wk, const PLAYERI
 		u8 y;
 		u8 w;
 		u8 h;
-		u32 mode;	//表示モード
 	}sc_bmpwin_range[PLAYERINFO_LIVE_BMPWIN_MAX]	=
 	{	
 		//大会名表示
 		{	
-			1,1,30,4,
+			2,1,28,4,
 		},
 		//開催日時
 		{	
-			1,6,30,2,
+			2,6,28,2,
 		},
 		//プレイヤー名
 		{
-			1,9,9,2,
+			2,9,9,2,
 		},
 		//勝った数
 		{
-			11,9,12,2,
+			10,9,12,2,
 		},
 		//勝った数の数値
 		{	
-			25,9, 6, 2,
+			25,9, 5, 2,
 		},
 		//負けた数
 		{	
-			11,12,12,2,
+			10,12,12,2,
 		},
 		//負けた数の数値
 		{	
-			25,12, 6, 2,
+			25,12, 5, 2,
 		},
 		//対戦回数
 		{	
-			11,15,12,2,
+			10,15,12,2,
 		},
 		//対戦回数の数値
 		{	
-			25,15,6, 2,
+			25,15,5, 2,
 		},
 		//登録ポケモン
 		{	
-			1,18,30,2,
+			5,18,28,2,
 		},
 	};
 	//BMPWIN登録個数
@@ -1293,10 +1381,10 @@ static void PlayerInfo_Bmpwin_Live_Create( PLAYERINFO_WORK * p_wk, const PLAYERI
 		int i;
 		for( i = 0; i < p_wk->bmpwin_max; i++ )
 		{	
-			p_wk->p_bmpwin[i]	= GFL_BMPWIN_Create( PLAYERINFO_BG_FRAME, 
+			p_wk->p_bmpwin[i]	= GFL_BMPWIN_Create( p_wk->frm, 
 					sc_bmpwin_range[i].x, sc_bmpwin_range[i].y, sc_bmpwin_range[i].w, sc_bmpwin_range[i].h,
-					PLAYERINFO_PLT_BG_FONT, GFL_BMP_CHRAREA_GET_B );
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0xE );
+					p_wk->plt, GFL_BMP_CHRAREA_GET_B );
+			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0 );
 			GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin[i] );
 
 			if( p_wk->p_bmpwin[i] )
@@ -1311,6 +1399,7 @@ static void PlayerInfo_Bmpwin_Live_Create( PLAYERINFO_WORK * p_wk, const PLAYERI
 		int i;
 		STRBUF	*p_src;
 		STRBUF	*p_str;
+    PRINTSYS_LSB color;
 
 		BOOL	is_print;
 
@@ -1319,11 +1408,14 @@ static void PlayerInfo_Bmpwin_Live_Create( PLAYERINFO_WORK * p_wk, const PLAYERI
 
 		for( i = 0; i < PLAYERINFO_LIVE_BMPWIN_MAX; i++ )
 		{	
+      color = PLAYERINFO_STR_COLOR_BLACK;
+
 			is_print	= TRUE;
 			switch( i )
 			{	
 			case PLAYERINFO_LIVE_BMPWIN_CUPNAME:
 				GFL_STR_SetStringCode( p_str, cp_data->cup_name );
+        color = PLAYERINFO_STR_COLOR_WHITE;
 				break;
 			case PLAYERINFO_LIVE_BMPWIN_TIME:
 				{	
@@ -1347,10 +1439,12 @@ static void PlayerInfo_Bmpwin_Live_Create( PLAYERINFO_WORK * p_wk, const PLAYERI
 					WORDSET_RegisterNumber( p_word, 4, e_m, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 					WORDSET_RegisterNumber( p_word, 5, e_d, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 					WORDSET_ExpandStr( p_word, p_str, p_src );
+          color = PLAYERINFO_STR_COLOR_WHITE;
 				}
 				break;
 			case PLAYERINFO_LIVE_BMPWIN_PLAYERNAME:
-				//MyStatus_CopyNameString( p_my, p_str );
+        MyStatus_CopyNameString( p_my, p_str );
+        color = PLAYERINFO_STR_COLOR_WHITE;
 				break;
 			case PLAYERINFO_LIVE_BMPWIN_WIN_LABEL:
 				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_012, p_str );
@@ -1374,16 +1468,17 @@ static void PlayerInfo_Bmpwin_Live_Create( PLAYERINFO_WORK * p_wk, const PLAYERI
 			case PLAYERINFO_LIVE_BMPWIN_BTLCNT_NUM:
 				PRINTTOOL_PrintFraction(
 						&p_wk->print_util[i], p_que, p_font,
-						sc_bmpwin_range[i].w*4, 0, cp_data->btl_cnt, cp_data->btl_max, heapID );
+						sc_bmpwin_range[i].w*8/2, 0, cp_data->btl_cnt, cp_data->btl_max, heapID );
 				is_print =FALSE;
 				break;
 			case PLAYERINFO_LIVE_BMPWIN_REGPOKE:
 				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_017, p_str );
+        color = PLAYERINFO_STR_COLOR_WHITE;
 				break;
 			}
 			if( is_print )
 			{	
-			PRINT_UTIL_Print( &p_wk->print_util[i], p_que, 0, 0, p_str,  p_font );
+				PRINT_UTIL_PrintColor( &p_wk->print_util[i], p_que, 0, 0, p_str,  p_font, color );
 			}
 		}
 
@@ -2703,9 +2798,12 @@ WBM_BTLBOX_WORK	* WBM_BTLBOX_Init( BATTLE_BOX_SAVE * cp_btl_box, GFL_CLUNIT *p_u
       for( i = 0; i < PokeParty_GetPokeCount( p_party ); i++ )
       {
         p_pp  = PokeParty_GetMemberPointer( p_party, i );
-        p_wk->res[ WBM_BTLBOX_RESID_POKEICON_CGR_TOP + i ]		= GFL_CLGRP_CGR_Register( 
-            p_handle, POKEICON_GetCgxArcIndex( PP_GetPPPPointerConst(p_pp) ),
-            FALSE, CLSYS_DRAW_MAIN, GFL_HEAP_LOWID(heapID) ); 
+        if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) )
+        { 
+          p_wk->res[ WBM_BTLBOX_RESID_POKEICON_CGR_TOP + i ]		= GFL_CLGRP_CGR_Register( 
+              p_handle, POKEICON_GetCgxArcIndex( PP_GetPPPPointerConst(p_pp) ),
+              FALSE, CLSYS_DRAW_MAIN, GFL_HEAP_LOWID(heapID) ); 
+        }
       }
       GFL_ARC_CloseDataHandle( p_handle );
     }
@@ -2747,36 +2845,39 @@ WBM_BTLBOX_WORK	* WBM_BTLBOX_Init( BATTLE_BOX_SAVE * cp_btl_box, GFL_CLUNIT *p_u
 		{	
       //ポケモン
       p_pp  = PokeParty_GetMemberPointer( p_party, i );
-			clwk_data.pos_x	= 24 + i * 40;
-			p_wk->p_clwk[ WBM_BTLBOX_CLWCKID_POKE_TOP + i]	= GFL_CLACT_WK_Create( p_unit,
-					p_wk->res[ WBM_BTLBOX_RESID_POKEICON_CGR_TOP + i ],
-					p_wk->res[ WBM_BTLBOX_RESID_POKEICON_PLT ],
-					p_wk->res[ WBM_BTLBOX_RESID_POKEICON_CEL ],
-					&clwk_data,
-					CLSYS_DRAW_MAIN,
-					heapID );
-
-			GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk[ WBM_BTLBOX_CLWCKID_POKE_TOP + i],
-					POKEICON_GetPalNumGetByPPP( PP_GetPPPPointerConst(p_pp) ), 
-					CLWK_PLTTOFFS_MODE_OAM_COLOR );
-
-      //道具アイコン
-      if( PP_Get( p_pp, ID_PARA_item, NULL) != 0 )
+      if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) )
       { 
-        clwk_item_data  = clwk_data;
-        clwk_item_data.pos_x  += 12;
-        clwk_item_data.pos_y  += 12;
-        clwk_item_data.softpri  = 1;
-        clwk_item_data.anmseq   = 0;
-        p_wk->p_clwk[ WBM_BTLBOX_CLWCKID_ITEM_TOP + i]	= GFL_CLACT_WK_Create( p_unit,
-          p_wk->res[ WBM_BTLBOX_RESID_POKEITEM_CGR ],
-          p_wk->res[ WBM_BTLBOX_RESID_POKEITEM_PLT ],
-					p_wk->res[ WBM_BTLBOX_RESID_POKEITEM_CEL ],
+        clwk_data.pos_x	= 24 + i * 40;
+        p_wk->p_clwk[ WBM_BTLBOX_CLWCKID_POKE_TOP + i]	= GFL_CLACT_WK_Create( p_unit,
+            p_wk->res[ WBM_BTLBOX_RESID_POKEICON_CGR_TOP + i ],
+            p_wk->res[ WBM_BTLBOX_RESID_POKEICON_PLT ],
+            p_wk->res[ WBM_BTLBOX_RESID_POKEICON_CEL ],
+            &clwk_data,
+            CLSYS_DRAW_MAIN,
+            heapID );
+
+        GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk[ WBM_BTLBOX_CLWCKID_POKE_TOP + i],
+            POKEICON_GetPalNumGetByPPP( PP_GetPPPPointerConst(p_pp) ), 
+            CLWK_PLTTOFFS_MODE_OAM_COLOR );
+
+        //道具アイコン
+        if( PP_Get( p_pp, ID_PARA_item, NULL) != 0 )
+        { 
+          clwk_item_data  = clwk_data;
+          clwk_item_data.pos_x  += 12;
+          clwk_item_data.pos_y  += 12;
+          clwk_item_data.softpri  = 1;
+          clwk_item_data.anmseq   = 0;
+          p_wk->p_clwk[ WBM_BTLBOX_CLWCKID_ITEM_TOP + i]	= GFL_CLACT_WK_Create( p_unit,
+              p_wk->res[ WBM_BTLBOX_RESID_POKEITEM_CGR ],
+              p_wk->res[ WBM_BTLBOX_RESID_POKEITEM_PLT ],
+              p_wk->res[ WBM_BTLBOX_RESID_POKEITEM_CEL ],
 					&clwk_item_data,
-					CLSYS_DRAW_MAIN,
-					heapID );
+          CLSYS_DRAW_MAIN,
+          heapID );
+        }
       }
-		}
+    }
   }
 
   //文字描画（性別とレベル）
@@ -2802,29 +2903,32 @@ WBM_BTLBOX_WORK	* WBM_BTLBOX_Init( BATTLE_BOX_SAVE * cp_btl_box, GFL_CLUNIT *p_u
     {
       p_pp  = PokeParty_GetMemberPointer( p_party, i );
 
-      //BMPWIN作成
-      w = 5;
-      x = 1 + i * w; 
-      p_wk->p_bmpwin[i]  = GFL_BMPWIN_Create( BG_FRAME_M_FONT, x, 4, w, 6, PLT_FONT_M, GFL_BMP_CHRAREA_GET_B );
-      GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin[i] );
-      PRINT_UTIL_Setup( &p_wk->print_util[i], p_wk->p_bmpwin[i] );
-
-      //性別描画
-      if( PTL_SEX_MALE == PP_Get( p_pp, ID_PARA_sex, NULL ) )
+      if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) )
       { 
-        PRINT_UTIL_PrintColor( &p_wk->print_util[i], p_que, 32, 0, p_male_src, p_font, PRINTSYS_LSB_Make( 5, 6, 0 ) );
-      }
-      else if( PTL_SEX_FEMALE == PP_Get( p_pp, ID_PARA_sex, NULL ) )
-      { 
-        PRINT_UTIL_PrintColor( &p_wk->print_util[i], p_que, 32, 0, p_female_src, p_font, PRINTSYS_LSB_Make( 3, 4, 0 ) );
-      }
+        //BMPWIN作成
+        w = 5;
+        x = 1 + i * w; 
+        p_wk->p_bmpwin[i]  = GFL_BMPWIN_Create( BG_FRAME_M_FONT, x, 4, w, 6, PLT_FONT_M, GFL_BMP_CHRAREA_GET_B );
+        GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin[i] );
+        PRINT_UTIL_Setup( &p_wk->print_util[i], p_wk->p_bmpwin[i] );
 
-      //レベル描画
-      lv  = PP_Get( p_pp, ID_PARA_level, NULL );
-      WORDSET_RegisterNumber( p_word, 0, lv, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-      WORDSET_ExpandStr( p_word, p_strbuf, p_lv_src );
-      x = 40 /2 - PRINTSYS_GetStrWidth( p_strbuf, p_font, 0 )/2;
-      PRINT_UTIL_PrintColor( &p_wk->print_util[i], p_que, x, 36, p_strbuf, p_font, PRINTSYS_LSB_Make( 1, 2, 0 ) );
+        //性別描画
+        if( PTL_SEX_MALE == PP_Get( p_pp, ID_PARA_sex, NULL ) )
+        { 
+          PRINT_UTIL_PrintColor( &p_wk->print_util[i], p_que, 32, 0, p_male_src, p_font, PRINTSYS_LSB_Make( 5, 6, 0 ) );
+        }
+        else if( PTL_SEX_FEMALE == PP_Get( p_pp, ID_PARA_sex, NULL ) )
+        { 
+          PRINT_UTIL_PrintColor( &p_wk->print_util[i], p_que, 32, 0, p_female_src, p_font, PRINTSYS_LSB_Make( 3, 4, 0 ) );
+        }
+
+        //レベル描画
+        lv  = PP_Get( p_pp, ID_PARA_level, NULL );
+        WORDSET_RegisterNumber( p_word, 0, lv, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+        WORDSET_ExpandStr( p_word, p_strbuf, p_lv_src );
+        x = 40 /2 - PRINTSYS_GetStrWidth( p_strbuf, p_font, 0 )/2;
+        PRINT_UTIL_PrintColor( &p_wk->print_util[i], p_que, x, 36, p_strbuf, p_font, PRINTSYS_LSB_Make( 1, 2, 0 ) );
+      }
     }
 
     GFL_STR_DeleteBuffer( p_female_src );

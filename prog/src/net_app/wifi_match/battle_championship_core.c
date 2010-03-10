@@ -483,13 +483,28 @@ static void SEQFUNC_LiveCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
       param.p_text      = p_wk->text;
       param.p_font      = p_wk->fontHandle;
       param.p_que       = p_wk->taskMenuQue;
-      param.p_msg       = p_wk->msgHandle;
       param.p_view      = p_wk->p_view;
       param.p_graphic   = p_wk->p_graphic;
       param.p_gamedata  = p_wk->p_param->p_gamedata;
-      param.mode  = LIVEBATTLEMATCH_FLOW_MODE_START;
       param.p_player_data = p_wk->p_param->p_player_data;
       param.p_enemy_data  = p_wk->p_param->p_enemy_data;
+
+      switch( p_wk->p_param->mode )
+      { 
+      default:
+      case BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_FLOW_START:
+        param.mode  = LIVEBATTLEMATCH_FLOW_MODE_START;
+        break;
+      case BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_FLOW_BTLEND:
+        param.mode  = LIVEBATTLEMATCH_FLOW_MODE_BTL;
+        break;
+      case BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_FLOW_RECEND:
+        param.mode  = LIVEBATTLEMATCH_FLOW_MODE_REC;
+        break;
+      case BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_FLOW_MENU:
+        param.mode  = LIVEBATTLEMATCH_FLOW_MODE_MENU;
+        break;
+      }
 
       p_wk->p_flow  = LIVEBATTLEMATCH_FLOW_Init( &param, HEAPID_BATTLE_CHAMPIONSHIP );
     }
@@ -499,8 +514,20 @@ static void SEQFUNC_LiveCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     LIVEBATTLEMATCH_FLOW_Main( p_wk->p_flow );
     switch( LIVEBATTLEMATCH_FLOW_IsEnd( p_wk->p_flow ) )
     { 
-    case LIVEBATTLEMATCH_FLOW_RET_LIVEMENU:   //ライブ大会へ 
+    case LIVEBATTLEMATCH_FLOW_RET_LIVEMENU:   //バトル大会ライブ大会メニューへ 
       (*p_seq)  = SEQ_NEXT;
+      break;
+    case LIVEBATTLEMATCH_FLOW_RET_BATTLE:    //バトルへ
+      p_wk->p_param->ret  = BATTLE_CHAMPIONSHIP_CORE_RET_LIVEBTL;
+      (*p_seq)  = SEQ_EXIT;
+      break;
+    case LIVEBATTLEMATCH_FLOW_RET_REC:       //録画へ
+      p_wk->p_param->ret  = BATTLE_CHAMPIONSHIP_CORE_RET_LIVEREC;
+      (*p_seq)  = SEQ_EXIT;
+      break;
+    case LIVEBATTLEMATCH_FLOW_RET_BTLREC:    //録画再生へ
+      p_wk->p_param->ret  = BATTLE_CHAMPIONSHIP_CORE_RET_LIVERECPLAY;
+      (*p_seq)  = SEQ_EXIT;
       break;
     }
     break;
