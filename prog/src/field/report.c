@@ -38,56 +38,56 @@
 #define	BMPWIN_TITLE_PY		( 0 )
 #define	BMPWIN_TITLE_SX		( 15 )
 #define	BMPWIN_TITLE_SY		( 3 )
-#define	BMPWIN_TITLE_PAL	( 0 )
+#define	BMPWIN_TITLE_PAL	( 2 )
 // 日付
 #define	BMPWIN_DATE_FRM		( GFL_BG_FRAME1_S )
 #define	BMPWIN_DATE_PX		( 3 )
 #define	BMPWIN_DATE_PY		( 7 )
 #define	BMPWIN_DATE_SX		( 10 )
 #define	BMPWIN_DATE_SY		( 2 )
-#define	BMPWIN_DATE_PAL		( 0 )
+#define	BMPWIN_DATE_PAL		( 2 )
 // 時間
 #define	BMPWIN_DATE2_FRM	( GFL_BG_FRAME1_S )
 #define	BMPWIN_DATE2_PX		( 14 )
 #define	BMPWIN_DATE2_PY		( 7 )
 #define	BMPWIN_DATE2_SX		( 5 )
 #define	BMPWIN_DATE2_SY		( 2 )
-#define	BMPWIN_DATE2_PAL	( 0 )
+#define	BMPWIN_DATE2_PAL	( 2 )
 // 場所
 #define	BMPWIN_PLACE_FRM	( GFL_BG_FRAME1_S )
 #define	BMPWIN_PLACE_PX		( 3 )
 #define	BMPWIN_PLACE_PY		( 9 )
 #define	BMPWIN_PLACE_SX		( 15 )
 #define	BMPWIN_PLACE_SY		( 2 )
-#define	BMPWIN_PLACE_PAL	( 0 )
+#define	BMPWIN_PLACE_PAL	( 2 )
 // ジムバッジ
 #define	BMPWIN_BADGE_FRM	( GFL_BG_FRAME1_S )
 #define	BMPWIN_BADGE_PX		( 3 )
 #define	BMPWIN_BADGE_PY		( 16 )
 #define	BMPWIN_BADGE_SX		( 12 )
 #define	BMPWIN_BADGE_SY		( 2 )
-#define	BMPWIN_BADGE_PAL	( 0 )
+#define	BMPWIN_BADGE_PAL	( 2 )
 // 図鑑
 #define	BMPWIN_ZUKAN_FRM	( GFL_BG_FRAME1_S )
 #define	BMPWIN_ZUKAN_PX		( 16 )
 #define	BMPWIN_ZUKAN_PY		( 16 )
 #define	BMPWIN_ZUKAN_SX		( 12 )
 #define	BMPWIN_ZUKAN_SY		( 2 )
-#define	BMPWIN_ZUKAN_PAL	( 0 )
+#define	BMPWIN_ZUKAN_PAL	( 2 )
 // プレイ時間
 #define	BMPWIN_TIME_FRM		( GFL_BG_FRAME1_S )
 #define	BMPWIN_TIME_PX		( 3 )
 #define	BMPWIN_TIME_PY		( 18 )
 #define	BMPWIN_TIME_SX		( 16 )
 #define	BMPWIN_TIME_SY		( 2 )
-#define	BMPWIN_TIME_PAL		( 0 )
+#define	BMPWIN_TIME_PAL		( 2 )
 // 前回のレポート
 #define	BMPWIN_REPORT_FRM	( GFL_BG_FRAME1_S )
 #define	BMPWIN_REPORT_PX	( 1 )
 #define	BMPWIN_REPORT_PY	( 21 )
 #define	BMPWIN_REPORT_SX	( 30 )
-#define	BMPWIN_REPORT_SY	( 2 )
-#define	BMPWIN_REPORT_PAL	( 0 )
+#define	BMPWIN_REPORT_SY	( 3 )
+#define	BMPWIN_REPORT_PAL	( 2 )
 
 // BMPWIN INDEX
 enum {
@@ -143,7 +143,8 @@ enum {
 	OBJID_MAX,
 };
 
-#define FCOL_P00WN		( PRINTSYS_LSB_Make(15,14,0) )	// フォントカラー：００白抜
+#define FCOL_P02BN		( PRINTSYS_LSB_Make(15,14,0) )	// フォントカラー：０２黒抜
+#define FCOL_P02WN		( PRINTSYS_LSB_Make(13,12,0) )	// フォントカラー：０２白抜
 
 // ポケモンアイコン表示座標
 #define	POKEICON_PX		( 40 )
@@ -151,7 +152,7 @@ enum {
 #define	POKEICON_SX		( 32 )
 // セーブ状況マーク表示座標
 #define	TIMEMARK_PX		( 74 )
-#define	TIMEMARK_PY		( 174 )
+#define	TIMEMARK_PY		( 180 )
 #define	TIMEMARK_SX		( 12 )
 
 #define	TIMEMARK_WAIT	( 8 )
@@ -535,7 +536,7 @@ static void LoadBgGraphic( HEAPID heapID )
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_REPORT_GRA, heapID );
 
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_report_gra_base_bg_NCLR, PALTYPE_SUB_BG, 0, 0x20, heapID );
+		ah, NARC_report_gra_base_bg_NCLR, PALTYPE_SUB_BG, 0, 0x20*3, heapID );
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0 );
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
@@ -595,7 +596,7 @@ static void InitBmp( REPORT_WORK * wk )
 	str = GFL_MSG_CreateString( mman, REPORT_STR_01 );
 	WORDSET_RegisterPlayerName( wset, 0, GAMEDATA_GetMyStatus(gd) );
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_TITLE], wk->que, 0, 4, exp, font, FCOL_P00WN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_TITLE], wk->que, 0, 4, exp, font, FCOL_P02WN );
 	GFL_STR_DeleteBuffer( str );
 
 	// 日付
@@ -608,7 +609,7 @@ static void InitBmp( REPORT_WORK * wk )
 		WORDSET_RegisterNumber( wset, 2, date.day, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_DATE], wk->que, 0, 0, exp, font, FCOL_P00WN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_DATE], wk->que, 0, 0, exp, font, FCOL_P02BN );
 	GFL_STR_DeleteBuffer( str );
 	// 時間
 	str = GFL_MSG_CreateString( mman, REPORT_STR_03 );
@@ -619,7 +620,7 @@ static void InitBmp( REPORT_WORK * wk )
 		WORDSET_RegisterNumber( wset, 1, time.minute, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_DATE2], wk->que, 0, 0, exp, font, FCOL_P00WN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_DATE2], wk->que, 0, 0, exp, font, FCOL_P02BN );
 	GFL_STR_DeleteBuffer( str );
 
 	// 場所
@@ -629,7 +630,7 @@ static void InitBmp( REPORT_WORK * wk )
 		WORDSET_RegisterPlaceName( wset, 0, num );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_PLACE], wk->que, 0, 0, exp, font, FCOL_P00WN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_PLACE], wk->que, 0, 0, exp, font, FCOL_P02BN );
 	GFL_STR_DeleteBuffer( str );
 
 	// ジムバッジ
@@ -639,7 +640,7 @@ static void InitBmp( REPORT_WORK * wk )
 		WORDSET_RegisterNumber( wset, 0, num, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_BADGE], wk->que, 0, 0, exp, font, FCOL_P00WN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_BADGE], wk->que, 0, 0, exp, font, FCOL_P02BN );
 	GFL_STR_DeleteBuffer( str );
 
 	// 図鑑
@@ -649,7 +650,7 @@ static void InitBmp( REPORT_WORK * wk )
 		WORDSET_RegisterNumber( wset, 0, num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_ZUKAN], wk->que, 0, 0, exp, font, FCOL_P00WN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_ZUKAN], wk->que, 0, 0, exp, font, FCOL_P02BN );
 	GFL_STR_DeleteBuffer( str );
 
 	// プレイ時間
@@ -660,7 +661,7 @@ static void InitBmp( REPORT_WORK * wk )
 		WORDSET_RegisterNumber( wset, 1, PLAYTIME_GetMinute(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_TIME], wk->que, 0, 0, exp, font, FCOL_P00WN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_TIME], wk->que, 0, 0, exp, font, FCOL_P02BN );
 	GFL_STR_DeleteBuffer( str );
 
 	// 前回のレポート
@@ -674,7 +675,7 @@ static void InitBmp( REPORT_WORK * wk )
 		WORDSET_RegisterNumber( wset, 3, PLAYTIME_GetSaveHour(ptime), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 		WORDSET_RegisterNumber( wset, 4, PLAYTIME_GetSaveMinute(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 		WORDSET_ExpandStr( wset, exp, str );
-		PRINT_UTIL_PrintColor( &wk->win[BMPWIN_REPORT], wk->que, 0, 0, exp, font, FCOL_P00WN );
+		PRINT_UTIL_PrintColor( &wk->win[BMPWIN_REPORT], wk->que, 0, 4, exp, font, FCOL_P02WN );
 		GFL_STR_DeleteBuffer( str );
 	}
 
