@@ -271,12 +271,12 @@
 #define FE_RES_QUESTION_FIRSTTALK          255 /* 0x00ff すれ違い調査隊アンケート隊員の初回会話フラグ */
 #define FE_RES_HELLO_FIRSTTALK             256 /* 0x0100 すれ違い調査隊挨拶隊員の初回会話フラグ */
 #define FE_RES_THANKS_FIRSTTALK            257 /* 0x0101 すれ違い調査隊お礼隊員の初回会話フラグ */
-		/* not used   258(0x0102) */
-		/* not used   259(0x0103) */
-		/* not used   260(0x0104) */
-		/* not used   261(0x0105) */
-		/* not used   262(0x0106) */
-		/* not used   263(0x0107) */
+#define FE_R08_ITEMGET_01                  258 /* 0x0102 ８番道路：アイテム入手フラグ */
+#define FE_R09_ITEMGET_01                  259 /* 0x0103 ９番道路：アイテム入手フラグ */
+#define FE_H03_ITEMGET_01                  260 /* 0x0104 シリンダーブリッジ：アイテム入手フラグ */
+#define FE_R06R0301_ITEMGET_01             261 /* 0x0105 ６番道路民家：アイテム入手フラグ */
+#define FE_R09R0201_ITEMGET_01             262 /* 0x0106 ショッピングモール：アイテム入手フラグ */
+#define FE_R10_ITEMGET_01                  263 /* 0x0107 10番道路：アイテム入手フラグ */
 		/* not used   264(0x0108) */
 		/* not used   265(0x0109) */
 		/* not used   266(0x010a) */
