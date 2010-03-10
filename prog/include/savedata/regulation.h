@@ -10,7 +10,7 @@
 
 
 #include <gflib.h>
-
+#include "item/shooter_item.h"
 //============================================================================================
 //============================================================================================
 
@@ -128,7 +128,6 @@ typedef enum {
 
 #define REG_POKENUM_MAX_BYTE (656/8)  //##このくらいに増えるかも ８２バイト
 #define REG_ITEMNUM_MAX_BYTE (608/8)  //##このくらいにふえるかも
-#define REG_SHOOTER_ITEMNUM_MAX_BYTE  (56/8)  //##このくらいにふえるかも
 
 
 typedef struct{
@@ -146,6 +145,7 @@ typedef struct{
   u16 MUST_POKE;   ///<    #必須ポケモン
   u8 MUST_POKE_FORM;   ///<    #必須ポケモンフォルム
   u8 SHOOTER;    ///<    #シューター
+  u8 VETO_SHOOTER_ITEM[SHOOTER_ITEM_BIT_TBL_MAX]; ///<    #シューター禁止道具 7byte
   u8 TIME_VS;     ///<    #対戦時間
   u8 TIME_COMMAND; ///<    #入力時間
   u8 NICKNAME; ///<    #ニックネーム表示
@@ -153,9 +153,8 @@ typedef struct{
   u8 AGE_HI;  ///<    #年齢制限以下
   u8 SHOW_POKE;  ///<    #ポケモン見せ合い
   u8 SHOW_POKE_TIME;  ///<ポケモン見せ合い時間
-  u8 BATTLE_TYPE;    ///< バトルタイプ  230
-  u8 BTL_COUNT;     ///< 戦闘規定回数 231
-  u8 VETO_SHOOTER_ITEM[REG_SHOOTER_ITEMNUM_MAX_BYTE]; ///<    #シューター禁止道具 238
+  u8 BATTLE_TYPE;    ///< バトルタイプ
+  u8 BTL_COUNT;     ///< 戦闘規定回数 238 
 } REGULATION;
 
 
