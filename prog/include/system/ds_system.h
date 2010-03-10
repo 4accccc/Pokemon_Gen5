@@ -43,3 +43,12 @@ const BOOL DS_SYSTEM_IsRestrictUGC( void );
 //  @return BOOL FALSE ’ÊM•s‰Â
 //--------------------------------------------------------------
 const BOOL DS_SYSTEM_IsAvailableWireless( void );
+
+
+//--------------------------------------------------------------
+//	@berif DS‚Ì’a¶“úİ’è‚Ìæ“¾
+//
+//	@param  month ŒŠi”[æ
+//	@param  day   “úŠi”[æ
+//--------------------------------------------------------------
+void DS_SYSTEM_GetBirthDay( u8* month, u8* day );

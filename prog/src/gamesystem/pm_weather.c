@@ -13,6 +13,8 @@
 
 #include "gflib.h"
 
+#include "system/ds_system.h"
+
 #include "gamesystem/pm_weather.h"
 
 #include "fieldmap/zone_id.h"
@@ -50,6 +52,7 @@
 //-----------------------------------------------------------------------------
 static u16 PM_WEATHER_GetPalaceWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id );
 static u16 PM_WEATHER_GetEventWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id );
+static u16 PM_WEATHER_GetBirthDayWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id );
 
 //----------------------------------------------------------------------------
 /**
@@ -82,6 +85,13 @@ u8 PM_WEATHER_GetZoneWeatherNo( GAMESYS_WORK* p_gamesystem, int zone_id )
 
   // イベントによる、天気書き換え
   weather = PM_WEATHER_GetEventWeather( p_gamesystem, p_data, zone_id );
+  if( weather != WEATHER_NO_NONE )
+  {
+    return weather;
+  }
+
+  // 誕生日による天気書き換え
+  weather = PM_WEATHER_GetBirthDayWeather( p_gamesystem, p_data, zone_id );
   if( weather != WEATHER_NO_NONE )
   {
     return weather;
@@ -211,3 +221,35 @@ static u16 PM_WEATHER_GetEventWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_d
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  誕生日の天気を取得
+ *
+ *	@param	p_gamesystem  ゲームシステム
+ *	@param	p_data        ゲームデータ
+ *	@param	zone_id       ゾーンID
+ *
+ *	@return 誕生日：天気
+ */
+//-----------------------------------------------------------------------------
+static u16 PM_WEATHER_GetBirthDayWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id )
+{
+  RTCDate data;
+  u8 month;
+  u8 day;
+  
+  if( zone_id == ZONE_ID_R15 ){
+    // 今日の日にちを取得
+    GFL_RTC_GetDate( &data );
+
+    // 誕生日を取得
+    DS_SYSTEM_GetBirthDay( &month, &day );
+
+    // 日にちと誕生日が一致したら、晴れにする
+    if( (data.month == month) && (data.day == day) )
+    {
+      return WEATHER_NO_SUNNY;
+    }
+  }
+  return WEATHER_NO_NONE;
+}

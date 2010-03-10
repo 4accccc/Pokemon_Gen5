@@ -105,3 +105,20 @@ const BOOL DS_SYSTEM_IsAvailableWireless( void )
   return TRUE;
 #endif
 }
+
+//--------------------------------------------------------------
+//	@berif DS‚Ì’a¶“úİ’è‚Ìæ“¾
+//
+//	@param  month ŒŠi”[æ
+//	@param  day   “úŠi”[æ
+//--------------------------------------------------------------
+void DS_SYSTEM_GetBirthDay( u8* month, u8* day )
+{
+  OSOwnerInfo info;
+  OS_GetOwnerInfo( &info );
+  *month   = info.birthday.month;
+  *day     = info.birthday.day;
+}
+
+
+
