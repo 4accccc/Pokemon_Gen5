@@ -126,9 +126,5 @@ extern void	PMVOICE_Stop( u32 voicePlayerIdx );			//–Â‚«º‚ğ’â~
 //------------------------------------------------------------------
 extern BOOL	PMVOICE_CheckPlay( u32 voicePlayerIdx );	//–Â‚«ºI—¹ŒŸo(TRUE:Ä¶’†)
 
-
-
-
-
 #endif
 
