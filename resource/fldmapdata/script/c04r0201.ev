@@ -32,6 +32,7 @@ _EVENT_DATA    ev_c04r0201_man2_01
 _EVENT_DATA    ev_c04R0201_init
 _EVENT_DATA    ev_scene_c04r0201_musical_first
 _EVENT_DATA    ev_bg_c04r0201_musical_shot
+_EVENT_DATA    ev_c04r0201_girl4_01
 _EVENT_DATA_END
 
 
@@ -411,4 +412,15 @@ EVENT_START		ev_c04r0201_man2_01
 EVENT_END
 
 //ÅyâºÅzèåèÇ≈åæìÆÇ™ïœâªÇ∑ÇÈNPC
+
+/************************************************************/
+/*							è≠èóÇS							*/
+/************************************************************/
+EVENT_START		ev_c04r0201_girl4_01
+
+	_EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN49, 1, FE_C04R0201_ITEM_01, msg_c04r0201_girl4_01, msg_c04r0201_girl4_02, msg_c04r0201_girl4_03 )
+
+EVENT_END
+
+//ÇÌÇ¥É}ÉVÉìÇÇ≠ÇÍÇÈNPC
 

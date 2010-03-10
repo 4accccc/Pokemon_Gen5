@@ -16,23 +16,23 @@
 #define C04R0201_FAN_05                    3
 #define C04R0201_FAN_02                    4
 #define C04R0201_FAN_03                    5
-#define MUSICAL_CHANGE_PROGRAM             6
-#define C04R0201_LADY_01                   7
-#define C04R0201_DANCER_02                 8
-#define C04R0201_MAID_01                   9
-#define C04R0201_MAN2_01                  10
-#define C04R0201_STYLISTPOKE_01           11
-#define C04R0201_OWNER_01                 12
-#define C04R0201_GIRL3_01                 13
-#define C04R0201_MIDDLEMAN1_01            14
-#define C04R0201_GENTLEMAN_01             15
-#define MUSICAL_RECEPT_COMM               16
-#define DUMMY_OBJ                         17
-#define C04R0201_FAN_07                   18
-#define C04R0201_FAN_06                   19
-#define C04R0201_FAN_08                   20
-#define C04R0201_FAN_09                   21
-#define C04R0201_FAN_10                   22
+#define C04R0201_LADY_01                   6
+#define C04R0201_DANCER_02                 7
+#define C04R0201_MAID_01                   8
+#define C04R0201_MAN2_01                   9
+#define C04R0201_STYLISTPOKE_01           10
+#define C04R0201_OWNER_01                 11
+#define C04R0201_GIRL3_01                 12
+#define C04R0201_MIDDLEMAN1_01            13
+#define C04R0201_GENTLEMAN_01             14
+#define MUSICAL_RECEPT_COMM               15
+#define DUMMY_OBJ                         16
+#define C04R0201_FAN_07                   17
+#define C04R0201_FAN_06                   18
+#define C04R0201_FAN_08                   19
+#define C04R0201_FAN_09                   20
+#define C04R0201_FAN_10                   21
+#define C04R0201_GIRL4_01                 22
 
 #endif //ZONE_C04R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

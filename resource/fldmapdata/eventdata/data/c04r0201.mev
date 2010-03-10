@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/09 18:53:04
+#save date:2010/03/10 18:26:37
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0201.wms
 #SECTION START:OBJ_EVENT
@@ -200,37 +200,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-MUSICAL_CHANGE_PROGRAM
-#OBJ CODE Number
-GENTLEMAN
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_MUSICAL_CHANGE_PROGRAM
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-120 0 104
-#event number: 7
-#type
-1
-#ID name
 C04R0201_LADY_01
 #OBJ CODE Number
 LADY
@@ -258,7 +227,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 168 96 152
-#event number: 8
+#event number: 7
 #type
 1
 #ID name
@@ -289,7 +258,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -216 48 184
-#event number: 9
+#event number: 8
 #type
 1
 #ID name
@@ -320,7 +289,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -72 96 136
-#event number: 10
+#event number: 9
 #type
 1
 #ID name
@@ -351,7 +320,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -136 0 56
-#event number: 11
+#event number: 10
 #type
 1
 #ID name
@@ -382,7 +351,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -152 0 56
-#event number: 12
+#event number: 11
 #type
 1
 #ID name
@@ -413,7 +382,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 24 96 200
-#event number: 13
+#event number: 12
 #type
 1
 #ID name
@@ -444,7 +413,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 168 0 56
-#event number: 14
+#event number: 13
 #type
 1
 #ID name
@@ -475,7 +444,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 168 0 40
-#event number: 15
+#event number: 14
 #type
 1
 #ID name
@@ -506,7 +475,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 136 96 184
-#event number: 16
+#event number: 15
 #type
 1
 #ID name
@@ -537,7 +506,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -88 0 72
-#event number: 17
+#event number: 16
 #type
 1
 #ID name
@@ -568,7 +537,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 40 0 72
-#event number: 18
+#event number: 17
 #type
 1
 #ID name
@@ -599,7 +568,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 -8 0 40
-#event number: 19
+#event number: 18
 #type
 1
 #ID name
@@ -630,7 +599,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 -120 0 56
-#event number: 20
+#event number: 19
 #type
 1
 #ID name
@@ -661,7 +630,7 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 -56 0 -8
-#event number: 21
+#event number: 20
 #type
 1
 #ID name
@@ -692,7 +661,7 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 -104 0 -24
-#event number: 22
+#event number: 21
 #type
 1
 #ID name
@@ -723,6 +692,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -120 0 8
+#event number: 22
+#type
+1
+#ID name
+C04R0201_GIRL4_01
+#OBJ CODE Number
+GIRL4
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C04R0201_GIRL4_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
