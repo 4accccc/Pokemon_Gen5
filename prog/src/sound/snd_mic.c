@@ -191,7 +191,11 @@ MICResult SND_MIC_StartAutoSampling( MICAutoParam* p )
   
   GF_ASSERT( sp_SndMic );
 
+#ifdef SDK_TWL
+	ret = MIC_StartLimitedSampling( p );
+#else
 	ret = MIC_StartAutoSampling( p );
+#endif	// SDK_TWL
 
 	if( ret != MIC_RESULT_SUCCESS ){
 		OS_Printf( "StartMicAutoSamoling Failed ret=%d \n", ret );
@@ -223,7 +227,11 @@ MICResult SND_MIC_StopAutoSampling(void)
   // オートサンプリング停止
   sp_SndMic->isAutoSampStart = FALSE;
 
+#ifdef SDK_TWL
+	ret = MIC_StopLimitedSampling();
+#else
 	ret = MIC_StopAutoSampling();
+#endif	// SDK_TWL
 
 	if( ret != MIC_RESULT_SUCCESS ){
 		OS_Printf( "MicStopAutoSampling Failed ret=%d \n", ret );
@@ -244,7 +252,11 @@ void SND_MIC_StopSleep(void)
   if( sp_SndMic->isAutoSampStart )
   {
 	  MICResult ret;
+#ifdef SDK_TWL
+		ret = MIC_StopLimitedSampling();
+#else
 	  ret = MIC_StopAutoSampling();
+#endif	// SDK_TWL
     GF_ASSERT( ret == MIC_RESULT_SUCCESS );
   }
 }
@@ -261,7 +273,11 @@ void SND_MIC_ReStartSleep(void)
   if( sp_SndMic->isAutoSampStart )
   {
 	  MICResult ret;
+#ifdef SDK_TWL
+		ret = MIC_StartLimitedSampling( &sp_SndMic->AutoParamBuff );
+#else
 	  ret = MIC_StartAutoSampling( &sp_SndMic->AutoParamBuff );
+#endif	// SDK_TWL
     GF_ASSERT( ret == MIC_RESULT_SUCCESS );
   }
 
@@ -312,7 +328,6 @@ MICResult SND_PERAP_VoiceRecStart( void * cbFunc, void * cbWork )
 
 	//バッファは32バイトアラインされたアドレスでないとダメ！
 	mic.buffer		= Snd_GetWaveBufAdrs();
-
 	mic.size			= PERAP_SAMPLING_SIZE;
 
 	if( (mic.size&0x1f) != 0 ){
@@ -320,8 +335,12 @@ MICResult SND_PERAP_VoiceRecStart( void * cbFunc, void * cbWork )
 	}
 
 	//代表的なサンプリングレートをARM7のタイマー周期に換算した値の定義
-	//mic.rate			= MIC_SAMPLING_RATE_8K;
-	mic.rate			= HW_CPU_CLOCK_ARM7 / PERAP_SAMPLING_RATE;
+#ifdef SDK_TWL
+	mic.rate = MIC_SAMPLING_RATE_8180;
+#else
+	mic.rate			= MIC_SAMPLING_RATE_8K;
+//	mic.rate			= HW_CPU_CLOCK_ARM7 / PERAP_SAMPLING_RATE;
+#endif	// SDK_TWL
 
 	//連続サンプリング時にバッファをループさせるフラグ
 	mic.loop_enable		= FALSE;
@@ -401,4 +420,3 @@ static void* Snd_GetWaveBufAdrs( void )
 
   return (void*)MATH_ROUNDUP32( (int)(p_buf) );
 }
-
