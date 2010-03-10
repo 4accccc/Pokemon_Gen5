@@ -246,7 +246,8 @@ typedef struct
   GFL_MSGDATA*                msgdata;
   GFL_BMPWIN*                 text_bmpwin[TEXT_MAX];
   BOOL                        text_finish[TEXT_MAX];  // bmpwinの転送が済んでいればTRUE
-  
+  BOOL                        text_finish_all;  // PRINTSYS_QUE_MainがTRUEを返したときTRUEにする
+
   // スター
   u8                          star_num;
   u32                         obj_res[OBJ_RES_MAX];
@@ -520,7 +521,21 @@ static GFL_PROC_RESULT Th_Award_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
     break;
   }
 
-  PRINTSYS_QUE_Main( work->print_que );
+  {
+    if( PRINTSYS_QUE_Main( work->print_que ) )
+    {
+      if( !work->text_finish_all )
+      {
+        u8 i;
+        // 済んでいるかもしれないが、1度呼んでおく
+        for( i=TEXT_DUMMY +1; i<TEXT_MAX; i++ )
+        {
+          GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[i] );
+        }
+        work->text_finish_all = TRUE;
+      }
+    }
+  }
 
   // メイン
   Th_Award_TextMain( work );
@@ -863,6 +878,7 @@ static void Th_Award_TextInit( TH_AWARD_WORK* work )
   {
     work->text_bmpwin[i] = NULL;
     work->text_finish[i] = FALSE;
+    work->text_finish_all = FALSE;
   }
   work->text_finish[TEXT_DUMMY] = TRUE;  // ダミーは済んでいることにしておく
 
