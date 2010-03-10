@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T21:19:12"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T17:24:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,9 +294,7 @@
 
 	<row id="msg_c05r0201_oldman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・仮メッセージ
-・アイテムをくれる？
-　条件を満たしていないとき</comment>
+・条件を満たしていないとき</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">ほう！　おぬし
 ポケモンずかんを　もっておるのか[BE:01:ページ切り替え（クリア）]
@@ -314,9 +312,10 @@
 
 	<row id="msg_c05r0201_oldman1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・仮メッセージ
-・アイテムをくれる？
-　条件を満たしているとき</comment>
+・条件を満たしているとき
+・アイテム入手処理
+　No253「かいがらのすず」</comment>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">ほう！　おぬし
 ポケモンずかんを　もっておるのか[BE:01:ページ切り替え（クリア）]
 それで　みつけた　ポケモンの　かずは
@@ -333,17 +332,25 @@
 
 	<row id="msg_c05r0201_oldman1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
-		<language name="JPN" width="256">この　せかいには
-おおくの　ポケモンが　いて▽
-さまざまな　にんげんが　いる！▽
-それは　すばらしいこと　なんじゃ！</language>
-		<language name="JPN_KANJI" width="256">この世界には　多くの　ポケモンがいて
-さまざまな　人間がいる！[BE:00:ページ切り替え（行送り）]
-それは　すばらしいこと　なんじゃ！</language>
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256">かいがらのすずを　みにつけた
+ポケモンは　たたかいのとき▼
+ちょっとずつ　たいりょくが
+かいふく　していくんじゃよ！▼
+それよりも　おまえさん
+その　ポケモンずかん　は▽
+はかせに　みせておるのかい？</language>
+		<language name="JPN_KANJI" width="256">かいがらのすずを　身につけた
+ポケモンは　戦いのとき▼
+ちょっとずつ　体力が
+回復して　いくんじゃよ！▼
+それよりも　おまえさん
+その　ポケモン図鑑は▽
+博士に　みせておるのかい？</language>
 	</row>
 
-	<row id="msg_c05r0201_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_c05r0201_woman2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・アイテム入手条件を満たしていないとき
@@ -358,7 +365,7 @@
 シアワセ気分に　なれるでしょ？</language>
 	</row>
 
-	<row id="msg_c05r0201_woman2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_c05r0201_woman2_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・10種以上</comment>
@@ -372,7 +379,7 @@
 じゃあ　アタシは　これをあげる！</language>
 	</row>
 
-	<row id="msg_c05r0201_woman2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_c05r0201_woman2_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・50種以上</comment>
@@ -386,7 +393,7 @@
 じゃあ　アタシは　これをあげる！</language>
 	</row>
 
-	<row id="msg_c05r0201_woman2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_c05r0201_woman2_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・100種以上</comment>
@@ -400,7 +407,7 @@
 じゃあ　アタシは　これをあげる！</language>
 	</row>
 
-	<row id="msg_c05r0201_woman2_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_c05r0201_woman2_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・150種以上</comment>
@@ -414,7 +421,7 @@
 じゃあ　アタシは　これをあげる！</language>
 	</row>
 
-	<row id="msg_c05r0201_woman2_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_c05r0201_woman2_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・200種以上</comment>
