@@ -50,6 +50,9 @@ struct _POKEMONTRADE_DEMO_WORK{
   GFL_EMIT_PTR pBallInPer;
   GFL_EMIT_PTR pBallOutPer;
 
+  BOOL bCamera;
+  BOOL bTarget;
+  
   GFL_CLWK* pPokeCreateCLWK;   //ポケモン登場エフェクトCLACT
   
   HEAPID heapID;

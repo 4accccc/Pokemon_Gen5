@@ -3532,9 +3532,8 @@ void WH_StepScan(void)
       else{
         _pWmInfo->startScan--;
       }
-//      if(_pWmInfo->startScan==0 && !_pWmInfo->pauseScan){
-      if(_pWmInfo->startScan==0){
-        if (_pWmInfo->sSysState == WH_SYSSTATE_SCANNING){
+      if(_pWmInfo->startScan==0 ){
+        if ((_pWmInfo->sSysState == WH_SYSSTATE_SCANNING) && !_pWmInfo->pauseScan){
           if (!WH_StateInStartScan()) {
             WH_ChangeSysState(WH_SYSSTATE_ERROR);
           }

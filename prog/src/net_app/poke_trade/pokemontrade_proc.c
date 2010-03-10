@@ -48,6 +48,7 @@
 #include "net_app/connect_anm.h"
 #include "net_app/gtsnego.h"
 #include "net/dwc_rapfriend.h"
+#include "system/net_err.h"
 
 #include "item/item.h"
 
@@ -1011,8 +1012,8 @@ void POKETRE_MAIN_ChangePokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
     }
   }
   else{
-    pWork->userNetCommand[0]=_NETCMD_CHANGE_POKEMON;
-    pWork->userNetCommand[1]=_NETCMD_CHANGE_POKEMON;
+    pWork->changeFactor[0]=POKETRADE_FACTOR_SINGLE_OK;
+    pWork->changeFactor[1]=POKETRADE_FACTOR_SINGLE_OK;
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
     _CHANGE_STATE(pWork,_changeWaitState);
@@ -1623,6 +1624,8 @@ static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
   POKETRADE_MESSAGE_WindowOpen(pWork);
   pWork->changeFactor[0] = POKETRADE_FACTOR_NONE;
   pWork->changeFactor[1] = POKETRADE_FACTOR_NONE;
+  
+  
   GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID);
   _CHANGE_STATE(pWork, _endCancelState);
 }
@@ -3073,6 +3076,10 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   POKEMONTRADE_PARAM* pParentWork = pwk;
   POKEMON_TRADE_WORK *pWork = mywk;
 
+  if(GFL_NET_IsInit()){
+    GFL_NET_SetAutoErrorCheck(TRUE);
+    GFL_NET_SetNoChildErrorCheck(TRUE);
+  }
   //オーバーレイ読み込み
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
   GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
@@ -3396,6 +3403,13 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
   IRC_POKETRADEDEMO_Main(pWork);
 
   GFL_G3D_DRAW_End();
+
+
+
+  if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+    retCode = GFL_PROC_RES_CONTINUE;
+
+  }
 
 
   //  ConnectBGPalAnm_Main(&pWork->cbp);

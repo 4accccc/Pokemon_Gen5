@@ -61,6 +61,10 @@ SEQ_SE_SYS_26			ポケモン眠る
 */
 #define _ZZZCOUNT (110)
 
+#define _UPLOAD_PROCESS_PERCENT  (50)
+#define _UPSAVE_PROCESS_PERCENT  (100)
+
+
 typedef void (StateFunc)(G_SYNC_WORK* pState);
 
 #define _DOWNLOAD_ERROR  (GSYNC_ERR008-GSYNC_ERR001+1)
@@ -124,6 +128,7 @@ struct _G_SYNC_WORK {
   BOX_MANAGER * pBox;
   SAVE_CONTROL_WORK* pSaveData;
   GAMEDATA* pGameData;
+  MUSICAL_DIST_SAVE* pMusical;
   void* pTopAddr;
   int trayno;
   int indexno;
@@ -136,6 +141,7 @@ struct _G_SYNC_WORK {
   int zzzCount;
   int notNetEffect;  ///< 通信して無い場合のエフェクト
   int lvup;
+  int percent;
   DREAM_WORLD_SERVER_ERROR_TYPE ErrorNo;   ///エラーがあった場合の番号
   u8 musicalNo;      ///< webで選択した番号  無い場合 0xff
   u8 cgearNo;        ///< webで選択した番号  無い場合 0xff
@@ -150,6 +156,7 @@ static void _ghttpKeyWait(G_SYNC_WORK* pWork);
 static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork);
 static void _networkClose(G_SYNC_WORK* pWork);
 static void _downloadcheck(G_SYNC_WORK* pWork);
+static void _downloadcgearend(G_SYNC_WORK* pWork);
 
 
 //------------------------------------------------------------------------------
@@ -441,8 +448,16 @@ static void _wakeupAction_1(G_SYNC_WORK* pWork)
 
 //------------------------------------------------------------------
 
-
-
+static void _exsaveEnd(G_SYNC_WORK* pWork)
+{
+  if(GSYNC_DOWNLOAD_ExitAsync(pWork->pDownload)){
+    _CHANGE_STATE(_downloadcgearend);
+  }
+  else{
+    pWork->ErrorNo = _DOWNLOAD_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+  }
+}
 
 
 static void _cgearsave(G_SYNC_WORK* pWork)
@@ -520,17 +535,37 @@ static void _zukansave(G_SYNC_WORK* pWork)
 
 }
 
+
+static void _musicalsaveMain(G_SYNC_WORK* pWork)
+{
+
+  if( MUSICAL_DIST_SAVE_SaveMusicalArchive_Main( pWork->pMusical )){
+    pWork->pMusical=NULL;
+    _CHANGE_STATE(_exsaveEnd);
+  }
+} 
+
 static void _musicalsave(G_SYNC_WORK* pWork,int size)
 {
-  //@todo
   pWork->musicalNo=DREAM_WORLD_NOPICTURE;
 
+  {
+    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(pWork->pGameData);
 
+    u16* pCRC = GSYNC_DOWNLOAD_GetData(pWork->pDownload);
+    int sizeh = size/2;
+    u16 crc;
+    
+    //crc検査 pCRC
+    crc = GFL_STD_CrcCalc( pCRC, size );
+    OS_TPrintf("crc%x crc%x",crc,pCRC[sizeh]);
+    GF_ASSERT(crc == pCRC[sizeh]);
 
-
-
+    //ミュージカルセーブ
+    pWork->pMusical = MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( pSave , pCRC, size, pWork->heapID);
+    _CHANGE_STATE(_musicalsaveMain);
+  }
 }
-
 
 
 static void _downloadcgearend(G_SYNC_WORK* pWork)
@@ -560,24 +595,19 @@ static void _downloadcgear6(G_SYNC_WORK* pWork)
     switch(pWork->downloadType){
     case _DOWNLOAD_CGEAR:
       _cgearsave(pWork);
+      _CHANGE_STATE(_exsaveEnd);
       break;
     case _DOWNLOAD_MUSICAL:
-      _musicalsave(pWork,GSYNC_DOWNLOAD_GetSize(pWork->pDownload));
+      _musicalsave(pWork,GSYNC_DOWNLOAD_GetSize(pWork->pDownload)-2);
       break;
     case _DOWNLOAD_ZUKAN:
       _zukansave(pWork);
+      _CHANGE_STATE(_exsaveEnd);
       break;
-    }
-
-    if(GSYNC_DOWNLOAD_ExitAsync(pWork->pDownload)){
-      _CHANGE_STATE(_downloadcgearend);
-    }
-    else{
-      pWork->ErrorNo = _DOWNLOAD_ERROR;
-      _CHANGE_STATE(_ErrorDisp);
     }
   }
 }
+
 
 
 static void _downloadcgear5(G_SYNC_WORK* pWork)
@@ -776,8 +806,8 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
     
     //@test
     pWork->cgearNo = DREAM_WORLD_NOPICTURE;
-    pWork->musicalNo = DREAM_WORLD_NOPICTURE;
-    pWork->zukanNo = 1;
+    pWork->musicalNo = 1;
+    pWork->zukanNo = DREAM_WORLD_NOPICTURE;
     pWork->lvup = 10;
     
     //ポケモンシンボルエンカウント
@@ -1282,6 +1312,8 @@ static void _upeffectLoop6(G_SYNC_WORK* pWork)
     GFL_HEAP_FreeMemory(pWork->pTopAddr);
     pWork->pTopAddr = NULL;
   }
+  pWork->percent = _UPSAVE_PROCESS_PERCENT;
+  GSYNC_DISP_SetPerfomance(pWork->pDispWork, pWork->percent);
 
   GSYNC_MESSAGE_NickNameMessageDisp( pWork->pMessageWork, GSYNC_007,0, pWork->pp );
   GSYNC_MESSAGE_MessageDisp(pWork->pMessageWork);
@@ -1298,6 +1330,11 @@ static void _upeffectLoop6(G_SYNC_WORK* pWork)
 
 static void _updateSave2(G_SYNC_WORK* pWork)
 {
+  if(pWork->percent < _UPSAVE_PROCESS_PERCENT){
+    pWork->percent++;
+  }
+  GSYNC_DISP_SetPerfomance(pWork->pDispWork, pWork->percent);
+
   if(GAMEDATA_SaveAsyncMain(pWork->pGameData) == SAVE_RESULT_OK){
     _CHANGE_STATE(_upeffectLoop6);
   }
@@ -1314,6 +1351,7 @@ static void _updateSave(G_SYNC_WORK* pWork)
     GFL_RTC_GetDate( &date );
     DREAMWORLD_SV_SetTime(pDream , GFDATE_Set(date.year,date.month,date.day,date.week));
   }
+  pWork->percent=_UPLOAD_PROCESS_PERCENT;
 
   GAMEDATA_SaveAsyncStart(pWork->pGameData);
   
@@ -1334,12 +1372,16 @@ static void _updateSave(G_SYNC_WORK* pWork)
 
 static void _upeffectLoop5(G_SYNC_WORK* pWork)
 {
-  int percent;
+ // int percent;
   
   if(GFL_NET_IsInit()){
-    percent = NHTTP_RAP_ProcessPercent(pWork->pNHTTPRap);
+//    percent = NHTTP_RAP_ProcessPercent(pWork->pNHTTPRap);
+//    percent = 0;
+    if(pWork->percent < _UPLOAD_PROCESS_PERCENT){
+      pWork->percent++;
+    }
 
-    GSYNC_DISP_SetPerfomance(pWork->pDispWork, percent);
+    GSYNC_DISP_SetPerfomance(pWork->pDispWork, pWork->percent);
 
     if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
       NET_PRINT("終了\n");
@@ -1349,7 +1391,7 @@ static void _upeffectLoop5(G_SYNC_WORK* pWork)
         int d,j;
         u32 size;
         NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
-#if DEBUG_ONLY_FOR_ohno   //セーブデータを上げたつもり
+#if DEBUG_ONLY_FOR_ohno   //セーブデータを上げたつもり  @todo サーバ待ち
         _CHANGE_STATE(_updateSave);
 #else
         if(pRep->ret_cd == DREAM_WORLD_SERVER_ERROR_NONE){  //成功
@@ -1393,6 +1435,7 @@ static void _upeffectLoop4(G_SYNC_WORK* pWork)
       u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
       NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), topAddr, 0x80000 );
       GSYNC_DISP_SetPerfomance(pWork->pDispWork,0);
+      pWork->percent=0;
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
         _CHANGE_STATE(_upeffectLoop5);
       }
@@ -1571,6 +1614,9 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
     pWork->pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(pParent->gsys));
     pWork->trayno = pParent->boxNo;
     pWork->indexno = pParent->boxIndex;
+
+//    pParent->selectType=GSYNC_CALLTYPE_BOXSET;//@todo
+
     switch(pParent->selectType){
     case GSYNC_CALLTYPE_INFO:      //起こす
       GF_ASSERT(profileID);

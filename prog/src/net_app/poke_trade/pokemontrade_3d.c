@@ -330,8 +330,12 @@ static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus
   MTX_Identity33( &pStatus->rotate );
 
   if(pWork->pPokemonTradeDemo){
-    ICA_CAMERA_SetCameraPos( pWork->camera ,pWork->pPokemonTradeDemo->icaCamera );
-    ICA_CAMERA_SetTargetPos( pWork->camera ,pWork->pPokemonTradeDemo->icaTarget );
+    if(!pWork->pPokemonTradeDemo->bCamera){
+      ICA_CAMERA_SetCameraPos( pWork->camera ,pWork->pPokemonTradeDemo->icaCamera );
+    }
+    if(!pWork->pPokemonTradeDemo->bTarget){
+      ICA_CAMERA_SetTargetPos( pWork->camera ,pWork->pPokemonTradeDemo->icaTarget );
+    }
   }
 
 #if 0  //カメラ位置確認用
@@ -476,7 +480,7 @@ void POKEMONTRADE_DEMO_ICA_Init(POKEMONTRADE_DEMO_WORK* pWork,int type)
     pWork->icaBallout = ICA_ANIME_CreateStreamingAlloc(
       pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_ball_002_bin, 10 );
 //後半部分から再生
-     ICA_ANIME_SetAnimeFrame( pWork->icaBallout, FX32_ONE*_POKESPLASH_WHITEIN_START );
+     ICA_ANIME_SetAnimeFrame( pWork->icaBallout, FX32_ONE*_POKECHANGE_WHITEIN_START );
     
     break;
   }
@@ -899,8 +903,12 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
 
   if(pWork->pPokemonTradeDemo){
     if(pWork->pPokemonTradeDemo->icaCamera){
-      ICA_ANIME_IncAnimeFrame( pWork->pPokemonTradeDemo->icaCamera, anime_speed );
-      ICA_ANIME_IncAnimeFrame( pWork->pPokemonTradeDemo->icaTarget, anime_speed );
+      if(!pWork->pPokemonTradeDemo->bCamera){
+        pWork->pPokemonTradeDemo->bCamera = ICA_ANIME_IncAnimeFrame( pWork->pPokemonTradeDemo->icaCamera, anime_speed );
+      }
+      if(!pWork->pPokemonTradeDemo->bTarget){
+        pWork->pPokemonTradeDemo->bTarget = ICA_ANIME_IncAnimeFrame( pWork->pPokemonTradeDemo->icaTarget, anime_speed );
+      }
     }
     if(pWork->pPokemonTradeDemo->icaBallout){
       ICA_ANIME_IncAnimeFrame( pWork->pPokemonTradeDemo->icaBallout, anime_speed );
@@ -1459,4 +1467,24 @@ static void _polygondraw(POKEMON_TRADE_WORK *pWork)
   
 }
 
+#endif
+
+
+#if 0
+static void _paletteLoad(POKEMON_TRADE_WORK *pWork)
+{
+
+	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BOX2_GRA, pWork->heapID );
+  int ncgr,nscr;
+
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    nscr = NARC_trade_wb_gts_bg01_back_NSCR;
+  }
+  else{
+    nscr = NARC_trade_wb_trade_bg01_back_NSCR;
+  }
+  arcData = GFL_ARCHDL_UTIL_Load( p_handle, NARC_box_gra_box_tray_NCLR, FALSE, pWork->heapID );
+
+  GFL_ARC_CloseDataHandle( p_handle );
+}
 #endif

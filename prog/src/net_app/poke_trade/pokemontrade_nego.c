@@ -564,32 +564,12 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   POKETRADE_MESSAGE_WindowOpen(pWork);
   pWork->changeFactor[0] = POKETRADE_FACTOR_NONE;
   pWork->changeFactor[1] = POKETRADE_FACTOR_NONE;
-  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID);
-  _CHANGE_STATE(pWork, _NEGO_Select6CancelWait3);  //@todo
-
-
   
-
-
-#if 0
-  if(pWork->userNetCommand[targetID]==_NETCMD_LOOKATPOKE){
-    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_13, pWork->pMessageStrBufEx );
-    for(i=0;i<2;i++){
-      POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, i);
-      WORDSET_RegisterPokeNickName( pWork->pWordSet, i,  pp );
-    }
-    WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx  );
-    POKETRADE_MESSAGE_WindowOpen(pWork);
-    _CHANGE_STATE(pWork,_networkFriendsStandbyWait2);
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID);
   }
+  _CHANGE_STATE(pWork, _NEGO_Select6CancelWait3);
 
-  if(pWork->pokemonGTSSeq == POKEMONTORADE_SEQ_SELECTNG){  //ƒLƒƒƒ“ƒZƒ‹Žž
-    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_14, pWork->pMessageStrBuf );
-    POKETRADE_MESSAGE_WindowOpen(pWork);
-    pWork->pokemonGTSSeqSend = POKEMONTORADE_SEQ_SELECTNG;
-    _CHANGE_STATE(pWork,_NEGO_Select6CancelWait3);
-  }
-#endif
 }
 
 
@@ -598,7 +578,6 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
 
 static void _networkFriendsStandbyWait_Send(POKEMON_TRADE_WORK* pWork)
 {
-  ///@todo
   u8 cmd = POKETRADE_FACTOR_TRI_DECIDE;
   
   if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd)){
@@ -612,33 +591,22 @@ static void _networkFriendsStandbyWait_Send(POKEMON_TRADE_WORK* pWork)
 static void _friendSelectWait(POKEMON_TRADE_WORK* pWork)
 {
 
-#if PM_DEBUG
-  if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    POKE_MAIN_Pokemonset(pWork, 1, pWork->GTSSelectPP[1][0]);
-    {
-      const STRCODE *name;
-      POKEMON_PARAM* pp2; 
-
-      pp2 = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
-      name = MyStatus_GetMyName( pWork->pMy );
-      PP_Put( pp2 , ID_PARA_oyaname_raw , (u32)name );
-      PP_Put( pp2 , ID_PARA_oyasex , MyStatus_GetMySex( pWork->pMy ) );
-      POKE_MAIN_Pokemonset(pWork,1,pp2); 
-      GFL_STD_MemCopy(pp2,pWork->recvPoke[1],POKETOOL_GetWorkSize());
-      GFL_HEAP_FreeMemory(pp2);
-    }
-  }
-#endif
-  if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    pWork->userNetCommand[0]=_NETCMD_LOOKATPOKE;
-    pWork->userNetCommand[1]=_NETCMD_LOOKATPOKE;
-  }
 
   GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
   POKETRADE_MESSAGE_WindowOpen(pWork);
   pWork->NegoWaitTime = _GTSINFO13_WAIT;
 
   if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    pWork->changeFactor[0]=POKETRADE_FACTOR_TRI_DECIDE;
+    pWork->changeFactor[1]=POKETRADE_FACTOR_TRI_DECIDE;
+
+    {
+      int trgno = 3;
+      POKEMON_PARAM* pp = pWork->GTSSelectPP[1-(trgno/GTS_NEGO_POKESLT_MAX)][trgno%GTS_NEGO_POKESLT_MAX];
+      POKE_MAIN_Pokemonset(pWork, trgno/GTS_NEGO_POKESLT_MAX, pp);
+      GFL_STD_MemCopy(pp, IRC_POKEMONTRADE_GetRecvPP(pWork,1) ,POKETOOL_GetWorkSize());
+    }
+    
     _CHANGE_STATE(pWork, _networkFriendsStandbyWait);// ‚ ‚¢‚Ä‚à‘I‚Ô‚Ü‚Å‘Ò‚Â
   }
   else{
@@ -801,7 +769,7 @@ static void _menuMyPokemon(POKEMON_TRADE_WORK* pWork)
     pWork->pAppTask=NULL;
     switch(selectno){
     case 0:  //‚±‚¤‚©‚ñ
-      _CHANGE_STATE(pWork, _friendSelectWait);//POKETRE_MAIN_ChangePokemonSendDataNetwork);
+      _CHANGE_STATE(pWork, _friendSelectWait);
       break;
     case 1:  //‚Â‚æ‚³‚ð‚Ý‚é
       _CHANGE_STATE(pWork, _pokemonStatusStart);

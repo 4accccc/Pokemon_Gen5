@@ -172,7 +172,7 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   POKEMONTRADE_DEMO_ICA_Init(pWork->pPokemonTradeDemo,_DEMO_TYPE_DOWN);  //ICAƒ_ƒEƒ“—p
 
 
-  _setNextAnim(pWork, _POKESPLASH_WHITEIN_START);
+  _setNextAnim(pWork, _POKECHANGE_WHITEIN_START);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade3);
 
   G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BD,0,0);
@@ -213,30 +213,39 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 
   if(pWork->anmCount == ANMCNTC(_BALL_PARTICLE_START)){
     GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO1], DERMO_TEX001, NULL, pWork);
+    OS_TPrintf("_BALL_PARTICLE_START\n");
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO2_START)){
     GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO2], DEMO_TEX002, NULL, pWork);
+    OS_TPrintf("_PARTICLE_DEMO2_START\n");
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO3_START)){
     GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO3], DEMO_TEX003, NULL, pWork);
+    OS_TPrintf("_PARTICLE_DEMO3_START\n");
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO3_START2)){
     GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_ORG], DEMO_TEX003, NULL, pWork);
+    OS_TPrintf("_PARTICLE_DEMO3_START2\n");
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO4_START)){
     GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO4], DEMO_TEX004,  NULL, pWork);
+    OS_TPrintf("_PARTICLE_DEMO4_START\n");
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO4_START2)){
     GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO8], DEMO_TEX004,  NULL, pWork);
+    OS_TPrintf("_PARTICLE_DEMO4_START2\n");
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO5_START)){
     GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO5], DEMO_TEX005, _ballinEmitFunc, pWork);
+    OS_TPrintf("_PARTICLE_DEMO5_START\n");
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO6_START)){
     GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO6], DEMO_TEX006, NULL, pWork);
+    OS_TPrintf("_PARTICLE_DEMO6_START\n");
   }
   if(pWork->anmCount == ANMCNTC(_PARTICLE_DEMO7_START)){
     GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO7], DEMO_TEX007,_balloutEmitFunc, pWork);
+    OS_TPrintf("_PARTICLE_DEMO7_START\n");
   }
 
   if(pWork->anmCount == ANMCNTC(_OAM_POKECREATE_START2)){

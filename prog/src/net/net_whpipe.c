@@ -84,7 +84,7 @@
 #define _BEACON_USER_SIZE_MAX (WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX)
 
 
-#define _BEACON_DOWNCOUNT  (30)   //すれ違いを一時停止するフレーム
+#define _BEACON_DOWNCOUNT  (20)   //すれ違いを一時停止するフレーム
 
 /**
  *  @brief ビーコン構造体
@@ -1070,7 +1070,7 @@ void GFI_NET_MLProcess(u16 bitmap)
 	}
   if(_pNetWL){
 //    OS_TPrintf("%d --\n",_pNetWL->crossTimer);
-/*    
+    
     if(_pNetWL->crossTimer){
       WIH_SetBeaconPause(TRUE);
       _pNetWL->PauseScan=TRUE;
@@ -1080,7 +1080,7 @@ void GFI_NET_MLProcess(u16 bitmap)
       WIH_SetBeaconPause(FALSE);
       _pNetWL->PauseScan=FALSE;
     }
-   */
+   
   }
   
   WH_StepScan();
@@ -1910,13 +1910,13 @@ static void _crossScanShootStart(GFL_NETWL* pNetWL);
 
 static void _crossScanWait(GFL_NETWL* pNetWL)
 {
-//  if(!_pNetWL->PauseScan){   //親機固定＝ビーコン発信のみ
+  if(!_pNetWL->PauseScan){   //親機固定＝ビーコン発信のみ
     pNetWL->CrossRand--;
     if( pNetWL->CrossRand == 0){
       WH_Finalize();
       _CHANGE_STATE(_crossScanShootStart);
     }
- // }
+  }
 }
 
 
