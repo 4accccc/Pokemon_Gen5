@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-26T16:11:15"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T15:14:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="209"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="283" right="1995" bottom="911" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -316,6 +316,115 @@
 		<language name="JPN_KANJI" width="256">アーティストで　ありながら
 ヒウンの　ジムリーダーでも　ある[BE:00:ページ切り替え（行送り）]
 アーティさんは　おれらの　あこがれだよ</language>
+	</row>
+
+	<row id="msg_c02r0501_trainerw_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・アイテム入手前
+・選択肢表示</comment>
+		<attribute name="キャラ指定">TRAINERW</attribute>
+		<language name="JPN" width="256">きみの　もってる　ソレって
+ポケモンずかん　でしょ！▼
+へえ！　すっごいじゃん！
+ポケモンを　あつめてるんだ！▼
+わかった！
+あたしも　てつだうね▼
+ねーねー　さいしょに　えらんだ
+ポケモンは　なーにー？▼</language>
+		<language name="JPN_KANJI" width="256">きみの　持ってる　ソレって
+ポケモン図鑑　でしょ！▼
+へえ！　すっごいじゃん！
+ポケモンを　集めてるんだ！▼
+わかった！
+あたしも　手伝うね▼
+ねーねー　最初に　選んだ
+ポケモンは　なーにー？▼</language>
+	</row>
+
+	<row id="msg_c02r0501_trainerw_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ツタージャ(草）選択
+・アイテム入手処理
+　No239「きせきのタネ」</comment>
+		<attribute name="キャラ指定">TRAINERW</attribute>
+		<language name="JPN" width="256">ツタージャね！
+じゃあ　これを　あげる！▼
+ポケモンに　もたせると　くさタイプの
+わざの　いりょくが　あがるんだ！</language>
+		<language name="JPN_KANJI" width="256">ツタージャね！
+じゃあ　これを　あげる！▼
+ポケモンに　持たせると　くさタイプの
+技の　威力が　あがるんだ！</language>
+	</row>
+
+	<row id="msg_c02r0501_trainerw_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ミジュマル(水）選択
+・アイテム入手処理
+　No243「しんぴのしずく」</comment>
+		<attribute name="キャラ指定">TRAINERW</attribute>
+		<language name="JPN" width="256">ミジュマルね！
+じゃあ　これを　あげる！▼
+ポケモンに　もたせると　みずタイプの
+わざの　いりょくが　あがるんだ！</language>
+		<language name="JPN_KANJI" width="256">ミジュマルね！
+じゃあ　これを　あげる！▼
+ポケモンに　持たせると　みずタイプの
+技の　威力が　あがるんだ！</language>
+	</row>
+
+	<row id="msg_c02r0501_trainerw_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ポカブ(炎）選択
+・アイテム入手処理
+　No249「もくたん」
+※コイツだけ売るとお得だなあ</comment>
+		<attribute name="キャラ指定">TRAINERW</attribute>
+		<language name="JPN" width="256">ポカブね！
+じゃあ　これを　あげる！▼
+ポケモンに　もたせると　ほのおタイプの
+わざの　いりょくが　あがるんだ！</language>
+		<language name="JPN_KANJI" width="256">ポカブね！
+じゃあ　これを　あげる！▼
+ポケモンに　持たせると　ほのおタイプの
+技の　威力が　あがるんだ！</language>
+	</row>
+
+	<row id="msg_c02r0501_trainerw_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">TRAINERW</attribute>
+		<language name="JPN" width="256">ポケモンに　もたせることで
+こうかを　はっきする　どうぐって▽
+たっくさん　あるから　さがしてみて！
+じゃあ　ポケモンずかん
+がんばって　ページを　うめてね！</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせることで
+こうかを　発揮する　道具って▽
+たっくさん　あるから　探してみて！▼
+じゃあ　ポケモン図鑑
+がんばって　ページを　埋めてね！</language>
+	</row>
+
+	<row id="msg_c02r0501_select_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>・選ぶとtrainerw_02</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ツタージャ</language>
+		<language name="JPN_KANJI" width="256">ツタージャ</language>
+	</row>
+
+	<row id="msg_c02r0501_select_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>・選ぶとtrainerw_03</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ミジュマル</language>
+		<language name="JPN_KANJI" width="256">ミジュマル</language>
+	</row>
+
+	<row id="msg_c02r0501_select_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>・選ぶとtrainerw_04</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ポカブ</language>
+		<language name="JPN_KANJI" width="256">ポカブ</language>
 	</row>
 
 	<flowchart-group-list>
