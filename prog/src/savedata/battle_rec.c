@@ -196,7 +196,7 @@ static BOOL _BattleRec_LoadCommon(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *wk
 
   //データをwk_brsにロード
   *result = SaveControl_Extra_LoadWork(
-    sv, SAVE_EXTRA_ID_REC_MINE + num, heapID, wk_brs, sizeof(BATTLE_REC_SAVEDATA));
+    sv, SAVE_EXTRA_ID_REC_MINE + num, heapID, wk_brs, SAVESIZE_EXTRA_BATTLE_REC);
 
   //wk_brsに展開されたのでセーブシステムは破棄
   SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
