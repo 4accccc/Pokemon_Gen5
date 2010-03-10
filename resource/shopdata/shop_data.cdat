@@ -301,7 +301,7 @@ static const u16 c10_fs[] = {
 #define C10_FS_MAX	(NELEMS(c10_fs))
 
 // シッポウシティその２
-static const u16 c02_ps[] = {
+static const u16 c02_rl[] = {
 		ITEM_SUPIIDAA,
 		ITEM_PURASUPAWAA,
 		ITEM_DHIFENDAA,
@@ -311,16 +311,16 @@ static const u16 c02_ps[] = {
 		ITEM_SUPESYARUAPPU,
 		ITEM_SUPESYARUGAADO,
 };
-#define C02_PS_MAX	(NELEMS(c02_ps))
+#define C02_RL_MAX	(NELEMS(c02_rl))
 
 // ホドモエシティその２
-static const u16 c05_ps[] = {
+static const u16 c05_rl[] = {
 		ITEM_BANNOUGONA,
 		ITEM_TIKARANOKONA,
 		ITEM_TIKARANONEKKO,
 		ITEM_HUKKATUSOU,
 };
-#define C05_PS_MAX	(NELEMS(c05_ps))
+#define C05_RL_MAX	(NELEMS(c05_rl))
 
 
 
@@ -345,8 +345,8 @@ static const u16 *shop_data_table[]={
 	t03_fs,
 	t04_fs,
 	c10_fs,
-	c02_ps,
-	c05_ps,
+	c02_rl,
+	c05_rl,
 };
 
 
@@ -371,6 +371,6 @@ static const u8 shop_itemnum_table[]={
 	T03_FS_MAX,
 	T04_FS_MAX,
 	C10_FS_MAX,
-	C02_PS_MAX,
-	C05_PS_MAX,
+	C02_RL_MAX,
+	C05_RL_MAX,
 };
