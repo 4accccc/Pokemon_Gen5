@@ -6483,6 +6483,21 @@
   .short  EV_SEQ_CALL_GEONET_PROC
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _CALL_ZUKAN_AWARD
+ * @brief   図鑑完成表彰状アプリ呼び出し
+ */
+//--------------------------------------------------------------
+#define _CALL_ZUKAN_AWARD( demo_id, pattern ) \
+    _ASM_CALL_ZUKAN_AWARD demo_id, pattern
+
+  .macro  _ASM_CALL_ZUKAN_AWARD demo_id, pattern
+  .short  EV_SEQ_CALL_ZUKAN_AWARD
+  .short  \demo_id
+  .short  \pattern
+  .endm
+
 //======================================================================
 //  ショップ関連
 //======================================================================
