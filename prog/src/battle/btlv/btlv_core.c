@@ -109,6 +109,7 @@ static void ForceQuitSelect_Common( BTLV_CORE* core );
 static BOOL subprocDamageEffect( int* seq, void* wk_adrs );
 static BOOL subprocMemberIn( int* seq, void* wk_adrs );
 static void StrParamToString( const BTLV_STRPARAM* param, STRBUF* dst );
+static void PutMsgToSCU( BTLV_CORE* wk, const STRBUF* buf, u16 wait );
 static BOOL subprocMoveMember( int* seq, void* wk_adrs );
 static BOOL subprocRotateMember( int* seq, void* wk_adrs );
 
@@ -304,8 +305,11 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
     break;
 
   case 1:
-    BTLV_SCU_StartBtlIn( core->scrnU );
-    (*seq)++;
+    {
+      BOOL fShortMode = BTL_CLIENT_IsChapterSkipMode( core->myClient );
+      BTLV_SCU_StartBtlIn( core->scrnU, fShortMode );
+      (*seq)++;
+    }
     break;
 
   case 2:
@@ -367,7 +371,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     break;
 
   case 1:
-    BTLV_SCU_StartBtlIn( core->scrnU );
+    BTLV_SCU_StartBtlIn( core->scrnU, FALSE );
     (*seq)++;
     break;
 
@@ -473,7 +477,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     {
       //たいりょくがへったでしょメッセージ
       GFL_MSG_GetString( cdw->msg, msg_cappture_demo_01, core->strBuf );
-      BTLV_SCU_StartMsg( core->scrnU, core->strBuf, 0 );
+      PutMsgToSCU( core, core->strBuf, 0 );
       cdw->wait = CAPTURE_DEMO_MSG_WAIT;
       (*seq)++;
     }
@@ -501,7 +505,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     {
       //ボールなげメッセージ
       GFL_MSG_GetString( cdw->msg, msg_cappture_demo_02, core->strBuf );
-      BTLV_SCU_StartMsg( core->scrnU, core->strBuf, 0 );
+      PutMsgToSCU( core, core->strBuf, 0 );
       (*seq)++;
     }
     break;
@@ -1393,14 +1397,14 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
     if( subwk->affinity < BTL_TYPEAFF_100 )
     {
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
-      BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+      PutMsgToSCU( wk, wk->strBuf, BTLV_MSGWAIT_STD );
 
       PMSND_PlaySE( SEQ_SE_KOUKA_L );
     }
     else if ( subwk->affinity > BTL_TYPEAFF_100 )
     {
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
-      BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+      PutMsgToSCU( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       PMSND_PlaySE( SEQ_SE_KOUKA_H );
     }
     else{
@@ -1465,14 +1469,10 @@ BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk )
 
       if( subwk->affAbout == BTL_TYPEAFF_ABOUT_ADVANTAGE )
       {
-//        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
-//        BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
         PMSND_PlaySE( SEQ_SE_KOUKA_H );
       }
       else if( subwk->affAbout == BTL_TYPEAFF_ABOUT_DISADVANTAGE )
       {
-//        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
-//        BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
         PMSND_PlaySE( SEQ_SE_KOUKA_L );
       }
       else
@@ -1738,7 +1738,7 @@ static void StrParamToString( const BTLV_STRPARAM* param, STRBUF* dst )
 void BTLV_StartMsg( BTLV_CORE* wk, const BTLV_STRPARAM* param )
 {
   StrParamToString( param, wk->strBuf );
-  BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, param->wait );
+  PutMsgToSCU( wk, wk->strBuf, param->wait );
 }
 //=============================================================================================
 /**
@@ -1752,7 +1752,7 @@ void BTLV_StartMsg( BTLV_CORE* wk, const BTLV_STRPARAM* param )
 void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args )
 {
   BTL_STR_MakeStringStdWithArgArray( wk->strBuf, strID, args );
-  BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+  PutMsgToSCU( wk, wk->strBuf, BTLV_MSGWAIT_STD );
 }
 
 //=============================================================================================
@@ -1767,7 +1767,7 @@ void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args )
 void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args )
 {
   BTL_STR_MakeStringSet( wk->strBuf, strID, args );
-  BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+  PutMsgToSCU( wk, wk->strBuf, BTLV_MSGWAIT_STD );
 }
 
 //=============================================================================================
@@ -1786,7 +1786,7 @@ BOOL BTLV_StartMsgTrainer( BTLV_CORE* wk, u32 trainerID, int param )
   if( TT_TrainerMessageCheck( trainerID, param, wk->heapID ) )
   {
     TT_TrainerMessageGet( trainerID, param, wk->strBuf, wk->heapID );
-    BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+    PutMsgToSCU( wk, wk->strBuf, BTLV_MSGWAIT_STD );
   }
   else
   {
@@ -1798,7 +1798,7 @@ BOOL BTLV_StartMsgTrainer( BTLV_CORE* wk, u32 trainerID, int param )
 void BTLV_StartMsgWaza( BTLV_CORE* wk, u8 pokeID, u16 waza )
 {
   BTL_STR_MakeStringWaza( wk->strBuf, pokeID, waza );
-  BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+  PutMsgToSCU( wk, wk->strBuf, BTLV_MSGWAIT_STD );
 }
 
 BOOL BTLV_WaitMsg( BTLV_CORE* wk )
@@ -1811,6 +1811,16 @@ BOOL BTLV_IsJustDoneMsg( BTLV_CORE* wk )
 }
 
 
+/**
+ *  メインメッセージウィンドウへの出力共通
+ */
+static void PutMsgToSCU( BTLV_CORE* wk, const STRBUF* buf, u16 wait )
+{
+  if( !BTL_CLIENT_IsChapterSkipMode(wk->myClient) )
+  {
+    BTLV_SCU_StartMsg( wk->scrnU, buf, wait );
+  }
+}
 
 //=============================================================================================
 /**

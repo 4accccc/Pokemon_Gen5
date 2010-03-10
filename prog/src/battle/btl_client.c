@@ -484,6 +484,19 @@ void BTL_CLIENT_SetChapterSkip( BTL_CLIENT* wk, u32 nextTurnNum )
   RecPlayer_ChapterSkipOn( &wk->recPlayer, nextTurnNum );
   ChangeMainProc( wk, ClientMain_ChapterSkip );
 }
+//=============================================================================================
+/**
+ * チャプタースキップモードで動作しているか判定
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_CLIENT_IsChapterSkipMode( const BTL_CLIENT* wk )
+{
+  return (wk->mainProc == ClientMain_ChapterSkip);
+}
 
 /**
  *  メインループ関数を差し替える
@@ -736,6 +749,8 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
   GF_ASSERT(0);
   return NULL;
 }
+
+
 
 //=============================================================================================
 /**
@@ -3333,6 +3348,10 @@ static BOOL scProc_MSG_Std( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ){
   case 0:
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
+    }
+
     BTLV_StartMsgStd( wk->viewCore, args[0], &args[1] );
     (*seq)++;
     break;
@@ -3348,6 +3367,10 @@ static BOOL scProc_MSG_StdSE( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ){
   case 0:
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
+    }
+
     BTLV_StartMsgStd( wk->viewCore, args[0], &args[2] );
     (*seq)++;
     break;
@@ -3368,6 +3391,10 @@ static BOOL scProc_MSG_Set( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ){
   case 0:
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
+    }
+
     BTLV_StartMsgSet( wk->viewCore, args[0], &args[1] );
     (*seq)++;
     break;
@@ -3384,10 +3411,11 @@ static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ){
   case 0:
-    {
-      // args[0] = pokeID, args[1] = wazaID
-      BTLV_StartMsgWaza( wk->viewCore, args[0], args[1] );
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
     }
+
+    BTLV_StartMsgWaza( wk->viewCore, args[0], args[1] );
     (*seq)++;
     break;
   case 1:
@@ -3407,6 +3435,13 @@ static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ) {
   case 0:
+    if( BTL_CLIENT_IsGameTimeOver(wk) ){
+      return TRUE;
+    }
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
+    }
+
     if( BTL_MAIN_IsWazaEffectEnable(wk->mainModule) )
     {
       WazaID waza;
@@ -3696,6 +3731,10 @@ static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
 
   switch( *seq ){
   case 0:
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
+    }
+
     BTLV_StartRankDownEffect( wk->viewCore, vpos );
     (*seq)++;
     break;
@@ -3716,6 +3755,10 @@ static BOOL scProc_ACT_RankUp( BTL_CLIENT* wk, int* seq, const int* args )
 
   switch( *seq ){
   case 0:
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
+    }
+
     BTLV_StartRankUpEffect( wk->viewCore, vpos );
     (*seq)++;
     break;
@@ -3791,6 +3834,10 @@ static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args )
 
   switch( *seq ){
   case 0:
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
+    }
+
     if( weather < NELEMS(ParamTbl) )
     {
       BTLV_EFFECT_Add( ParamTbl[weather].effectID );
@@ -4633,6 +4680,10 @@ static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args )
 
   switch( *seq ){
   case 0:
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
+    }
+
     BTLV_AddEffectByPos( wk->viewCore, vpos, args[1] );
     (*seq)++;
     break;
@@ -4655,6 +4706,10 @@ static BOOL scProc_ACT_EffectByVector( BTL_CLIENT* wk, int* seq, const int* args
 {
   switch( *seq ){
   case 0:
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
+    }
+
     {
       BtlvMcssPos vpos_from = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
       BtlvMcssPos vpos_to   = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[1] );
@@ -4717,6 +4772,10 @@ static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args )
   BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
   switch( *seq ){
   case 0:
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
+    }
+
     BTLV_TokWin_DispStart( wk->viewCore, pos, TRUE );
     (*seq)++;
     break;

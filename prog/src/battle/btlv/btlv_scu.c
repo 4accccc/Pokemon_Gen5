@@ -64,7 +64,7 @@ enum {
 
   MSGWIN_EVA_MAX = 31,
   MSGWIN_EVA_MIN = 0,
-  MSGWIN_EVB_MIN = 3,
+  MSGWIN_EVB_MIN = 7,
   MSGWIN_EVB_MAX = 16,
   MSGWIN_VISIBLE_STEP = 6,
 
@@ -225,6 +225,7 @@ struct _BTLV_SCU {
   u16           printWaitOrg;
   u8            msgwinVisibleFlag;
   u8            btlinSeq;
+  u8            btlinSkipFlag;
   u16           msgwinVisibleSeq;
   MSGWIN_VISIBLE   msgwinVisibleWork;
 
@@ -294,7 +295,7 @@ static BOOL tokwin_hide_progress( TOK_WIN* tokwin );
 static void tokwin_renew_start( TOK_WIN* tokwin, BtlPokePos pos );
 static BOOL tokwin_renew_progress( TOK_WIN* tokwin );
 static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID, BTLV_BALL_GAUGE_TYPE type );
-static BOOL lvupWinProc_Disp( int* seq, void* wk_adrs );
+  static BOOL lvupWinProc_Disp( int* seq, void* wk_adrs );
 static BOOL lvupWinProc_Fwd( int* seq, void* wk_adrs );
 static BOOL lvupWinProc_Hide( int* seq, void* wk_adrs );
 
@@ -493,14 +494,16 @@ static BOOL Fade_CheckEnd( BTLV_SCU* wk )
  * バトル画面初期セットアップ完了までの演出を開始する
  *
  * @param   wk
- *
+ * @param   fChapterSkipMode    チャプタスキップモード（ポケモン配置のみ行う）
  */
 //=============================================================================================
-void BTLV_SCU_StartBtlIn( BTLV_SCU* wk )
+void BTLV_SCU_StartBtlIn( BTLV_SCU* wk, BOOL fChapterSkipMode )
 {
   BtlCompetitor  competitor = BTL_MAIN_GetCompetitor( wk->mainModule );
 
   wk->btlinSeq = 0;
+  wk->btlinSkipFlag = fChapterSkipMode;
+  TAYA_Printf(" BtlInSkipFlag = %d\n", wk->btlinSkipFlag );
 
   switch( BTL_MAIN_GetRule(wk->mainModule) ){
   case BTL_RULE_SINGLE:
@@ -705,6 +708,10 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   }
   #endif
 
+  if( wk->btlinSkipFlag ){
+    return btlin_skip_single( wk, seq );
+  }
+
   switch( *seq ){
   case 0:
     subwk->viewPos = BTLV_MCSS_POS_BB;
@@ -830,6 +837,10 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     return btlin_skip_single( wk, seq );
   }
   #endif
+
+  if( wk->btlinSkipFlag ){
+    return btlin_skip_single( wk, seq );
+  }
 
   switch( *seq ){
   case 0:
@@ -973,6 +984,10 @@ static BOOL btlin_comm_single( int* seq, void* wk_adrs )
 
   BTLV_SCU* wk = wk_adrs;
 
+  if( wk->btlinSkipFlag ){
+    return btlin_skip_single( wk, seq );
+  }
+
   if( wk->btlinSeq < NELEMS(funcs) )
   {
     u8 myClientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
@@ -1009,6 +1024,11 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
     return btlin_skip_double( wk, seq );
   }
   #endif
+
+
+  if( wk->btlinSkipFlag ){
+    return btlin_skip_double( wk, seq );
+  }
 
   switch( *seq ){
   case 0:
@@ -1120,6 +1140,11 @@ static BOOL btlin_trainer_double( int* seq, void* wk_adrs )
   }
   #endif
 
+  if( wk->btlinSkipFlag ){
+    return btlin_skip_double( wk, seq );
+  }
+
+
   if( wk->btlinSeq < NELEMS(funcs) )
   {
     if( funcs[wk->btlinSeq](wk, seq) ){
@@ -1154,6 +1179,11 @@ static BOOL btlin_trainer_multi( int* seq, void* wk_adrs )
   }
   #endif
 
+  if( wk->btlinSkipFlag ){
+    return btlin_skip_double( wk, seq );
+  }
+
+
   if( wk->btlinSeq < NELEMS(funcs) )
   {
     if( funcs[wk->btlinSeq](wk, seq) ){
@@ -1184,6 +1214,10 @@ static BOOL btlin_comm_double( int* seq, void* wk_adrs )
 
   BTLV_SCU* wk = wk_adrs;
 
+  if( wk->btlinSkipFlag ){
+    return btlin_skip_double( wk, seq );
+  }
+
   if( wk->btlinSeq < NELEMS(funcs) )
   {
     u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
@@ -1212,6 +1246,10 @@ static BOOL btlin_comm_double_multi( int* seq, void* wk_adrs )
   };
 
   BTLV_SCU* wk = wk_adrs;
+
+  if( wk->btlinSkipFlag ){
+    return btlin_skip_double( wk, seq );
+  }
 
   if( wk->btlinSeq < NELEMS(funcs) )
   {
@@ -1247,6 +1285,11 @@ static BOOL btlin_trainer_triple( int* seq, void* wk_adrs )
   }
   #endif
 
+  if( wk->btlinSkipFlag ){
+    return btlin_skip_triple( wk, seq );
+  }
+
+
   if( wk->btlinSeq < NELEMS(funcs) )
   {
     if( funcs[wk->btlinSeq](wk, seq) ){
@@ -1274,6 +1317,11 @@ static BOOL btlin_comm_triple( int* seq, void* wk_adrs )
   };
 
   BTLV_SCU* wk = wk_adrs;
+
+  if( wk->btlinSkipFlag ){
+    return btlin_skip_triple( wk, seq );
+  }
+
 
   if( wk->btlinSeq < NELEMS(funcs) )
   {
