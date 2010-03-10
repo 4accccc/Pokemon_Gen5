@@ -12,7 +12,8 @@
 
 enum {
 	NARC_grid_camera_scene_camera_scene_C04_dat = 0,
-	NARC_grid_camera_scene_camera_scene_T05_dat = 1
+	NARC_grid_camera_scene_camera_scene_R04_dat = 1,
+	NARC_grid_camera_scene_camera_scene_T05_dat = 2
 };
 
 /* NARC_GRID_CAMERA_SCENE_NAIX_ */
