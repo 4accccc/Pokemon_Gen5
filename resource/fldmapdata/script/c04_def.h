@@ -27,5 +27,6 @@
 #define SCRID_SCENE_C04_SUPPORT_01 (20)
 #define SCRID_INIT_C04 (21)
 #define SCRID_BG_C04_BOARD_07 (22)
+#define SCRID_BG_C04_BOARD_08 (23)
 
 #endif //_C04_DEF_H_

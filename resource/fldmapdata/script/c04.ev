@@ -42,6 +42,7 @@ _EVENT_DATA    ev_c04_support_01
 _EVENT_DATA    ev_scene_c04_support_01		//サポートとパパのイベント
 _EVENT_DATA    ev_init_c04
 _EVENT_DATA    ev_bg_c04_board_07
+_EVENT_DATA    ev_bg_c04_board_08
 _EVENT_DATA_END
 
 
@@ -1168,5 +1169,15 @@ EVENT_END
 EVENT_START	ev_bg_c04_board_07
 	_EASY_BGWIN_MSG( msg_c04_sign7_01, TYPE_INFO )
 EVENT_END
+
+
+/************************************************************/
+/*							看板							*/
+/************************************************************/
+//トライアルハウス
+EVENT_START	ev_bg_c04_board_08
+	_EASY_BGWIN_MSG( msg_c04_sign8_01, TYPE_POST )
+EVENT_END
+
 
 
