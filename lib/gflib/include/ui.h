@@ -210,7 +210,7 @@ extern void GFL_UI_SleepGoSetFunc(GFL_UI_SLEEPRELEASE_FUNC* pFunc, void* pWork);
 
 //------------------------------------------------------------------
 /**
- * @brief   スリープ解除時に呼ばれる関数をセットする
+ * @brief   スリープ解除時に呼ばれるサウンド専用関数をセットする
  * @param   pFunc   スリープ解除時に呼ばれる関数
  * @param   pWork   呼ばれる際に渡すワーク
  * @return  none
@@ -220,7 +220,7 @@ extern void GFL_UI_SleepSoundReleaseSetFunc(GFL_UI_SLEEPRELEASE_FUNC* pFunc, voi
 
 //------------------------------------------------------------------
 /**
- * @brief   スリープ直前時に呼ばれる関数をセットする
+ * @brief   スリープ直前時に呼ばれるサウンド専用関数をセットする
  * @param   pFunc   スリープ直前時に呼ばれる関数
  * @param   pWork   呼ばれる際に渡すワーク
  * @return  none
