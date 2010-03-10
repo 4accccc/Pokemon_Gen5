@@ -288,6 +288,7 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
       {
         bcw->btl_rec_sel_param.gamedata  = bcw->gdata;
         bcw->btl_rec_sel_param.b_rec     = b_rec;
+        bcw->btl_rec_sel_param.b_sync    = TRUE;
         GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID( btl_rec_sel ), &BTL_REC_SEL_ProcData, &bcw->btl_rec_sel_param );
       }
       (*seq) = SEQ_BGM_POP;

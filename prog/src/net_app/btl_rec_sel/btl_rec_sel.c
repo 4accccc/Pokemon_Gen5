@@ -9,7 +9,7 @@
  *  モジュール名：BTL_REC_SEL
  */
 //============================================================================
-#define OFFLINE_TEST
+//#define OFFLINE_TEST
 
 
 // インクルード
@@ -31,6 +31,7 @@
 #include "pokeicon/pokeicon.h"
 #include "ui/ui_easy_clwk.h"
 #include "net/network_define.h"
+#include "item/itemsym.h"
 #include "app/app_nogear_subscreen.h"
 
 #include "btl_rec_sel_graphic.h"
@@ -120,6 +121,13 @@ enum
 #define INSIDE_FADE_OUT_WAIT   (0)         ///< 内部で表示を切り替える際のフェードアウトのスピード
 #define INSIDE_FADE_IN_WAIT    (0)         ///< 内部で表示を切り替える際のフェードインのスピード
 
+typedef enum
+{
+  FADE_TYPE_OUTSIDE,  // 呼び出し元との接続のフェード
+  FADE_TYPE_INSIDE,   // 内部で表示を切り替える際のフェード(パレットフェードを使用する)
+}
+FADE_TYPE;
+
 // ポケアイコン
 enum
 {
@@ -168,59 +176,81 @@ enum
   SEQ_END,
 };
 
-static const u8 battle_mode_str_id_tbl[BATTLE_MODE_MAX] =  // include/savedata/battle_rec.h  BATTLE_MODE
+// バトルモードごとの情報
+static const u8 battle_mode_info_tbl[BATTLE_MODE_MAX][2] =  // include/savedata/battle_rec.h  BATTLE_MODE
 {
-                       // //コロシアム：シングル
-  msg_record_title01,  // BATTLE_MODE_COLOSSEUM_SINGLE_FREE,
-  msg_record_title02,  // BATTLE_MODE_COLOSSEUM_SINGLE_50,
-  msg_record_title03,  // BATTLE_MODE_COLOSSEUM_SINGLE_FREE_SHOOTER,
-  msg_record_title04,  // BATTLE_MODE_COLOSSEUM_SINGLE_50_SHOOTER,
-                       // //コロシアム：ダブル
-  msg_record_title05,  // BATTLE_MODE_COLOSSEUM_DOUBLE_FREE,
-  msg_record_title06,  // BATTLE_MODE_COLOSSEUM_DOUBLE_50,
-  msg_record_title07,  // BATTLE_MODE_COLOSSEUM_DOUBLE_FREE_SHOOTER,
-  msg_record_title08,  // BATTLE_MODE_COLOSSEUM_DOUBLE_50_SHOOTER,
-                       // //コロシアム：トリプル
-  msg_record_title09,  // BATTLE_MODE_COLOSSEUM_TRIPLE_FREE,
-  msg_record_title10,  // BATTLE_MODE_COLOSSEUM_TRIPLE_50,
-  msg_record_title11,  // BATTLE_MODE_COLOSSEUM_TRIPLE_FREE_SHOOTER,
-  msg_record_title12,  // BATTLE_MODE_COLOSSEUM_TRIPLE_50_SHOOTER,
-                       // //コロシアム：ローテーション
-  msg_record_title13,  // BATTLE_MODE_COLOSSEUM_ROTATION_FREE,
-  msg_record_title14,  // BATTLE_MODE_COLOSSEUM_ROTATION_50,
-  msg_record_title15,  // BATTLE_MODE_COLOSSEUM_ROTATION_FREE_SHOOTER,
-  msg_record_title16,  // BATTLE_MODE_COLOSSEUM_ROTATION_50_SHOOTER,
-                       // //コロシアム：マルチ
-  msg_record_title17,  // BATTLE_MODE_COLOSSEUM_MULTI_FREE,
-  msg_record_title18,  // BATTLE_MODE_COLOSSEUM_MULTI_50,
-  msg_record_title19,  // BATTLE_MODE_COLOSSEUM_MULTI_FREE_SHOOTER,
-  msg_record_title20,  // BATTLE_MODE_COLOSSEUM_MULTI_50_SHOOTER,
-                       // //地下鉄
-  msg_record_title21,  // BATTLE_MODE_SUBWAY_SINGLE,     //WIFI DL含む
-  msg_record_title22,  // BATTLE_MODE_SUBWAY_DOUBLE,
-  msg_record_title23,  // BATTLE_MODE_SUBWAY_MULTI,      //NPC, COMM, WIFI
-                       // //ランダムマッチ：フリー
-  msg_record_title24,  // BATTLE_MODE_RANDOM_FREE_SINGLE,
-  msg_record_title25,  // BATTLE_MODE_RANDOM_FREE_DOUBLE,
-  msg_record_title26,  // BATTLE_MODE_RANDOM_FREE_TRIPLE,
-  msg_record_title27,  // BATTLE_MODE_RANDOM_FREE_ROTATION,
-  msg_record_title28,  // BATTLE_MODE_RANDOM_FREE_SHOOTER,
-                       // //ランダムマッチ：レーティング
-  msg_record_title29,  // BATTLE_MODE_RANDOM_RATING_SINGLE,
-  msg_record_title30,  // BATTLE_MODE_RANDOM_RATING_DOUBLE,
-  msg_record_title31,  // BATTLE_MODE_RANDOM_RATING_TRIPLE,
-  msg_record_title32,  // BATTLE_MODE_RANDOM_RATING_ROTATION,
-  msg_record_title33,  // BATTLE_MODE_RANDOM_RATING_SHOOTER,
-                       // //大会
-  msg_record_title34,  // BATTLE_MODE_COMPETITION_SINGLE,
-  msg_record_title36,  // BATTLE_MODE_COMPETITION_DOUBLE,
-  msg_record_title38,  // BATTLE_MODE_COMPETITION_TRIPLE,
-  msg_record_title40,  // BATTLE_MODE_COMPETITION_ROTATION,
-  msg_record_title35,  // BATTLE_MODE_COMPETITION_SINGLE_SHOOTER,
-  msg_record_title37,  // BATTLE_MODE_COMPETITION_DOUBLE_SHOOTER,
-  msg_record_title39,  // BATTLE_MODE_COMPETITION_TRIPLE_SHOOTER,
-  msg_record_title41,  // BATTLE_MODE_COMPETITION_ROTATION_SHOOTER,
+  // { str_id,  0=2人  1=4人 }
+                              // //コロシアム：シングル
+  { msg_record_title01, 0 },  // BATTLE_MODE_COLOSSEUM_SINGLE_FREE,
+  { msg_record_title02, 0 },  // BATTLE_MODE_COLOSSEUM_SINGLE_50,
+  { msg_record_title03, 0 },  // BATTLE_MODE_COLOSSEUM_SINGLE_FREE_SHOOTER,
+  { msg_record_title04, 0 },  // BATTLE_MODE_COLOSSEUM_SINGLE_50_SHOOTER,
+                              // //コロシアム：ダブル
+  { msg_record_title05, 0 },  // BATTLE_MODE_COLOSSEUM_DOUBLE_FREE,
+  { msg_record_title06, 0 },  // BATTLE_MODE_COLOSSEUM_DOUBLE_50,
+  { msg_record_title07, 0 },  // BATTLE_MODE_COLOSSEUM_DOUBLE_FREE_SHOOTER,
+  { msg_record_title08, 0 },  // BATTLE_MODE_COLOSSEUM_DOUBLE_50_SHOOTER,
+                              // //コロシアム：トリプル
+  { msg_record_title09, 0 },  // BATTLE_MODE_COLOSSEUM_TRIPLE_FREE,
+  { msg_record_title10, 0 },  // BATTLE_MODE_COLOSSEUM_TRIPLE_50,
+  { msg_record_title11, 0 },  // BATTLE_MODE_COLOSSEUM_TRIPLE_FREE_SHOOTER,
+  { msg_record_title12, 0 },  // BATTLE_MODE_COLOSSEUM_TRIPLE_50_SHOOTER,
+                              // //コロシアム：ローテーション
+  { msg_record_title13, 0 },  // BATTLE_MODE_COLOSSEUM_ROTATION_FREE,
+  { msg_record_title14, 0 },  // BATTLE_MODE_COLOSSEUM_ROTATION_50,
+  { msg_record_title15, 0 },  // BATTLE_MODE_COLOSSEUM_ROTATION_FREE_SHOOTER,
+  { msg_record_title16, 0 },  // BATTLE_MODE_COLOSSEUM_ROTATION_50_SHOOTER,
+                              // //コロシアム：マルチ
+  { msg_record_title17, 1 },  // BATTLE_MODE_COLOSSEUM_MULTI_FREE,
+  { msg_record_title18, 1 },  // BATTLE_MODE_COLOSSEUM_MULTI_50,
+  { msg_record_title19, 1 },  // BATTLE_MODE_COLOSSEUM_MULTI_FREE_SHOOTER,
+  { msg_record_title20, 1 },  // BATTLE_MODE_COLOSSEUM_MULTI_50_SHOOTER,
+                              // //地下鉄
+  { msg_record_title21, 0 },  // BATTLE_MODE_SUBWAY_SINGLE,     //WIFI DL含む
+  { msg_record_title22, 0 },  // BATTLE_MODE_SUBWAY_DOUBLE,
+  { msg_record_title23, 1 },  // BATTLE_MODE_SUBWAY_MULTI,      //NPC, COMM, WIFI
+                              // //ランダムマッチ：フリー
+  { msg_record_title24, 0 },  // BATTLE_MODE_RANDOM_FREE_SINGLE,
+  { msg_record_title25, 0 },  // BATTLE_MODE_RANDOM_FREE_DOUBLE,
+  { msg_record_title26, 0 },  // BATTLE_MODE_RANDOM_FREE_TRIPLE,
+  { msg_record_title27, 0 },  // BATTLE_MODE_RANDOM_FREE_ROTATION,
+  { msg_record_title28, 0 },  // BATTLE_MODE_RANDOM_FREE_SHOOTER,
+                              // //ランダムマッチ：レーティング
+  { msg_record_title29, 0 },  // BATTLE_MODE_RANDOM_RATING_SINGLE,
+  { msg_record_title30, 0 },  // BATTLE_MODE_RANDOM_RATING_DOUBLE,
+  { msg_record_title31, 0 },  // BATTLE_MODE_RANDOM_RATING_TRIPLE,
+  { msg_record_title32, 0 },  // BATTLE_MODE_RANDOM_RATING_ROTATION,
+  { msg_record_title33, 0 },  // BATTLE_MODE_RANDOM_RATING_SHOOTER,
+                              // //大会
+  { msg_record_title34, 0 },  // BATTLE_MODE_COMPETITION_SINGLE,
+  { msg_record_title36, 0 },  // BATTLE_MODE_COMPETITION_DOUBLE,
+  { msg_record_title38, 0 },  // BATTLE_MODE_COMPETITION_TRIPLE,
+  { msg_record_title40, 0 },  // BATTLE_MODE_COMPETITION_ROTATION,
+  { msg_record_title35, 0 },  // BATTLE_MODE_COMPETITION_SINGLE_SHOOTER,
+  { msg_record_title37, 0 },  // BATTLE_MODE_COMPETITION_DOUBLE_SHOOTER,
+  { msg_record_title39, 0 },  // BATTLE_MODE_COMPETITION_TRIPLE_SHOOTER,
+  { msg_record_title41, 0 },  // BATTLE_MODE_COMPETITION_ROTATION_SHOOTER,
 };
+
+// パレットフェード
+#define PF_TCBSYS_TASK_MAX  (2)
+#define PF_BG_M_NUM   (14)  // 0<= <14  // 何かに使うかもしれない最後のパレット以外全て
+#define PF_OBJ_M_NUM  (14)  // 0<= <14  // 通信アイコン以外全て
+typedef enum
+{
+  PF_REQ_NONE,
+  PF_REQ_FADE_IN,
+  PF_REQ_FADE_OUT,
+}
+PF_REQ;
+typedef enum
+{
+  PF_STATE_BLACK,
+  PF_STATE_FADE_IN,
+  PF_STATE_COLOR,
+  PF_STATE_FADE_OUT,
+}
+PF_STATE;
 
 
 //=============================================================================
@@ -259,6 +289,7 @@ typedef struct
   int                         fade_start_evy;
   int                         fade_end_evy;
   int                         fade_wait;
+  FADE_TYPE                   fade_type;
 
   int                         qa_next_seq;
   u32                         qa_str_id;
@@ -271,6 +302,10 @@ typedef struct
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
+
+  // バトルレコーダーの有無
+  BOOL                        b_battle_recorder;  // TRUEのときバトルレコーダーを所持している
+  BOOL                        b_end_immediately;  // 直ちに終了させるときTRUE
 
   // メッセージ
   GFL_MSGDATA*                msgdata_rec;
@@ -313,6 +348,15 @@ typedef struct
 
   // BG Main
   GFL_ARCUTIL_TRANSINFO       bg_m_tinfo;
+
+  // パレットフェード
+  UI_EASY_CLWK_RES            pf_dummy_pi_res;
+  GFL_CLWK*                   pf_dummy_pi_clwk;
+  GFL_TCBSYS*                 pf_tcbsys;
+  void*                       pf_tcbsys_wk;
+  PALETTE_FADE_PTR            pf_ptr;
+  PF_REQ                      pf_req;
+  PF_STATE                    pf_state;
 }
 BTL_REC_SEL_WORK;
 
@@ -325,7 +369,8 @@ BTL_REC_SEL_WORK;
 // シーケンス処理用
 static void Btl_Rec_Sel_ChangeSeqFade( int* seq,
                 BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,
-                int next_seq, int mode, int start_evy, int end_evy, int wait );
+                int next_seq, int mode, int start_evy, int end_evy, int wait,
+                FADE_TYPE type );
 static void Btl_Rec_Sel_ChangeSeqQa( int* seq,
                 BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,
                 int next_seq, u32 str_id, BOOL non );
@@ -388,6 +433,14 @@ void Btl_Rec_Sel_BgMClear( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 void Btl_Rec_Sel_BgSInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 void Btl_Rec_Sel_BgSExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 
+// パレットフェード
+void Btl_Rec_Sel_PfCreateDummyPokeicon( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+void Btl_Rec_Sel_PfDeleteDummyPokeicon( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+void Btl_Rec_Sel_PfInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+void Btl_Rec_Sel_PfExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+void Btl_Rec_Sel_PfMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+void Btl_Rec_Sel_PfVBlankFunc( BTL_REC_SEL_WORK* work );
+
 
 //=============================================================================
 /**
@@ -416,8 +469,9 @@ const GFL_PROC_DATA    BTL_REC_SEL_ProcData =
  *  @brief       PROC パラメータ生成
  *
  *  @param[in]   heap_id       ヒープID
- *  @param[in]   gamedata      GAMEDATA
- *  @param[in]   b_rec         録画セーブ可能のときTRUE
+ *  @param[in]   gamedata      GAMEDATA  // 性別判定、バトルレコーダーの有無判定、セーブデータ取得
+ *  @param[in]   b_rec         サーバーバージョンを比較した結果、録画セーブ可能のときTRUE
+ *  @param[in]   b_sync        同期を取る必要があるときTRUE
  *
  *  @retval      BTL_REC_SEL_PARAM
  */
@@ -425,10 +479,11 @@ const GFL_PROC_DATA    BTL_REC_SEL_ProcData =
 BTL_REC_SEL_PARAM*  BTL_REC_SEL_AllocParam(
                             HEAPID           heap_id,
                             GAMEDATA*        gamedata,
-                            BOOL             b_rec )
+                            BOOL             b_rec,
+                            BOOL             b_sync )
 {
   BTL_REC_SEL_PARAM* param = GFL_HEAP_AllocMemory( heap_id, sizeof( BTL_REC_SEL_PARAM ) );
-  BTL_REC_SEL_InitParam( param, gamedata, b_rec );
+  BTL_REC_SEL_InitParam( param, gamedata, b_rec, b_sync );
   return param;
 }
 
@@ -452,8 +507,9 @@ void             BTL_REC_SEL_FreeParam(
  *  @brief           PROC パラメータを設定する
  *
  *  @param[in,out]   param      BTL_REC_SEL_PARAM
- *  @param[in]       gamedata   GAMEDATA
- *  @param[in]       b_rec      録画セーブ可能のときTRUE
+ *  @param[in]       gamedata   GAMEDATA  // 性別判定、バトルレコーダーの有無判定、セーブデータ取得
+ *  @param[in]       b_rec      サーバーバージョンを比較した結果、録画セーブ可能のときTRUE
+ *  @param[in]       b_sync     同期を取る必要があるときTRUE
  *
  *  @retval          
  */
@@ -461,10 +517,12 @@ void             BTL_REC_SEL_FreeParam(
 void             BTL_REC_SEL_InitParam(
                             BTL_REC_SEL_PARAM*  param,
                             GAMEDATA*           gamedata,
-                            BOOL                b_rec )
+                            BOOL                b_rec,
+                            BOOL                b_sync )
 {
   param->gamedata    = gamedata;
   param->b_rec       = b_rec;
+  param->b_sync      = b_sync;
 }
 
 
@@ -510,6 +568,13 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
     work->print_que     = PRINTSYS_QUE_Create( work->heap_id );
   }
 
+  // バトルレコーダーの有無
+  { 
+    MYITEM_PTR  myitem_ptr  = GAMEDATA_GetMyItem( param->gamedata );
+    work->b_battle_recorder = MYITEM_CheckItem( myitem_ptr, ITEM_BATORUREKOODAA, 1, work->heap_id );  // TRUEのときバトルレコーダーを所持している
+    work->b_end_immediately = FALSE;  // 直ちに終了させるときTRUE
+  }
+
   // VBlank中TCB
   {
     work->vblank_tcb = GFUser_VIntr_CreateTCB( Btl_Rec_Sel_VBlankFunc, work, 1 );
@@ -550,20 +615,45 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 16, 0 );
 
   // シーケンス処理用
-  if( param->b_rec )
+  if( work->b_battle_recorder )
   {
-    Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
-        GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
-    Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_REC, msg_record_01_01, TRUE );
-    Btl_Rec_Sel_FixStartTime( param, work, 30 );
-    Btl_Rec_Sel_BgMCreateNon( param, work );
-    work->fix_pause = TRUE;
+    if( param->b_rec )
+    {
+      Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT,
+          FADE_TYPE_OUTSIDE );
+      Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_REC, msg_record_01_01, TRUE );
+      Btl_Rec_Sel_FixStartTime( param, work, 30 );
+      Btl_Rec_Sel_BgMCreateNon( param, work );
+      work->fix_pause = TRUE;
+    }
+    else
+    {
+      Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_WAIT_INIT,
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT,
+          FADE_TYPE_OUTSIDE );
+    }
   }
   else
   {
-    Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_WAIT_INIT,
-        GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
+    {
+      if( param->b_sync )
+      {
+        Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_WAIT_INIT,
+            GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT,
+            FADE_TYPE_OUTSIDE );
+      }
+      else
+      {
+        work->b_end_immediately = TRUE;
+      }
+    }
   }
+
+  // パレットフェード
+  Btl_Rec_Sel_PfCreateDummyPokeicon( param, work );
+  Btl_Rec_Sel_PfInit( param, work );
+  Btl_Rec_Sel_PfDeleteDummyPokeicon( param, work );
 
   // 通信アイコン
   GFL_NET_WirelessIconEasy_HoldLCD( TRUE, work->heap_id );
@@ -579,6 +669,12 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcExit( GFL_PROC* proc, int* seq, void* pwk
 {
   BTL_REC_SEL_PARAM*    param    = (BTL_REC_SEL_PARAM*)pwk;
   BTL_REC_SEL_WORK*     work     = (BTL_REC_SEL_WORK*)mywk;
+
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_DefaultLCD();
+
+  // パレットフェード
+  Btl_Rec_Sel_PfExit( param, work );
 
   // 固定テキスト
   Btl_Rec_Sel_FixExit( param, work );
@@ -633,14 +729,54 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
   {
   case SEQ_FADE_INIT:
     {
-      // フェードイン(黒16→見える0) / フェードアウト(見える0→黒16)
-      GFL_FADE_SetMasterBrightReq( work->fade_mode, work->fade_start_evy, work->fade_end_evy, work->fade_wait );
+      // 特別処理
+      if( work->b_end_immediately )  // 直ちに終了させるときTRUE
+      {
+        (*seq) = SEQ_END;
+        break;
+      }
+
+      // 内部フェード
+      if( work->fade_type == FADE_TYPE_INSIDE )
+      {
+        if( work->fade_start_evy == 0 )  // フェードアウト(見える0→黒16)
+        {
+          work->pf_req = PF_REQ_FADE_OUT;
+        }
+        else  // フェードイン(黒16→見える0)
+        {
+          work->pf_req = PF_REQ_FADE_IN;
+        }
+      }
+      // 外部フェード
+      else
+      {
+        // フェードイン(黒16→見える0) / フェードアウト(見える0→黒16)
+        GFL_FADE_SetMasterBrightReq( work->fade_mode, work->fade_start_evy, work->fade_end_evy, work->fade_wait );
+      } 
       (*seq) = SEQ_FADE;
     }
     break;
   case SEQ_FADE:
-    { 
-      if( !GFL_FADE_CheckFade() )
+    {
+      BOOL b_finish = FALSE;
+      // 内部フェード
+      if( work->fade_type == FADE_TYPE_INSIDE )
+      {
+        if( work->pf_state == PF_STATE_BLACK || work->pf_state == PF_STATE_COLOR )
+        {
+          b_finish = TRUE;
+        }
+      }
+      // 外部フェード
+      else
+      {
+        if( !GFL_FADE_CheckFade() )
+        {
+          b_finish = TRUE;
+        }
+      }
+      if( b_finish )
       {
         work->fix_pause = FALSE;
         (*seq) = work->fade_next_seq;
@@ -688,7 +824,8 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
           {
             work->fix_pause = TRUE;
             Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_PRE_SHOW_ON,
-                GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, INSIDE_FADE_OUT_WAIT );
+                GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, INSIDE_FADE_OUT_WAIT,
+                FADE_TYPE_INSIDE );
           }
           else
           {
@@ -747,14 +884,16 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
         }
         Btl_Rec_Sel_FixEndTime( param, work );
         Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_PRE_SHOW_OFF,
-           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, INSIDE_FADE_OUT_WAIT );
+           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, INSIDE_FADE_OUT_WAIT,
+           FADE_TYPE_INSIDE );
       }
       else if( work->fix_timeup )
       {
         BmpMenu_YesNoMenuExit( work->yn_wk );
         work->next_seq = SEQ_WAIT_INIT;
         Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_PRE_SHOW_OFF,
-           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, INSIDE_FADE_OUT_WAIT );
+           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, INSIDE_FADE_OUT_WAIT,
+           FADE_TYPE_INSIDE );
       }
     }
     break;
@@ -789,7 +928,8 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
         Btl_Rec_Sel_BgMCreateVs4( param, work );
 
       Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT );
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT,
+          FADE_TYPE_INSIDE );
       Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_PRE, msg_record_03_01, FALSE );
 #else
       // ここで録画データを表示
@@ -831,13 +971,15 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
           Btl_Rec_Sel_BgMCreateVs4( param, work );
 
         Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
-            GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT );
+            GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT,
+            FADE_TYPE_INSIDE );
         Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_PRE, msg_record_03_01, FALSE );
       }
       else
       {
         Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_SAVE_INIT,
-            GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT );
+            GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT,
+            FADE_TYPE_INSIDE );
       }
 
       BattleRec_ExitWork( work->battle_rec_savedata );
@@ -852,7 +994,8 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       Btl_Rec_Sel_BgMClear( param, work );
       
       Btl_Rec_Sel_ChangeSeqFade( seq, param, work, work->next_seq,
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT );
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT,
+          FADE_TYPE_INSIDE );
       
       Btl_Rec_Sel_TextClearWinIn( param, work );
      
@@ -940,12 +1083,60 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
     break;
   case SEQ_WAIT_INIT:
     {
-      Btl_Rec_Sel_TextStartStream( param, work, msg_record_07_01 );
+      u32 str_id;
+      if( work->b_battle_recorder )
       {
+        if( param->b_rec )
+        {
+          if( param->b_sync )
+          {
+            str_id = msg_record_07_01;
+          }
+          else
+          {
+            // 何も表示せずに終了
+            (*seq) = SEQ_END;
+            break;
+          }
+        }
+        else
+        {
+          if( param->b_sync )
+          {
+            str_id = msg_record_07_02;
+          }
+          else
+          {
+            str_id = msg_record_07_03;
+          }
+        }
+      }
+      else
+      {
+        {
+          if( param->b_sync )
+          {
+            str_id = msg_record_07_01;
+          }
+          else
+          {
+            // ここには来ないようにInitで判定している
+            // 何も表示せずに終了
+            (*seq) = SEQ_END;
+            break;
+          }
+        }
+      }
+
+      Btl_Rec_Sel_TextStartStream( param, work, str_id );
+      {
+        if( param->b_sync )
+        {
 #ifndef OFFLINE_TEST
-        GFL_NETHANDLE* nethandle = GFL_NET_HANDLE_GetCurrentHandle();
-        GFL_NET_HANDLE_TimeSyncStart( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO, WB_NET_BTL_REC_SEL );
+          GFL_NETHANDLE* nethandle = GFL_NET_HANDLE_GetCurrentHandle();
+          GFL_NET_HANDLE_TimeSyncStart( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO, WB_NET_BTL_REC_SEL );
 #endif
+        }
       }
       (*seq) = SEQ_WAIT;
     }
@@ -955,14 +1146,18 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       if( Btl_Rec_Sel_TextWaitStream( param, work ) )
       {
         BOOL ret = TRUE;
+        if( param->b_sync )
+        {
 #ifndef OFFLINE_TEST
-        GFL_NETHANDLE* nethandle = GFL_NET_HANDLE_GetCurrentHandle();
-        ret = GFL_NET_HANDLE_IsTimeSync( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO, WB_NET_BTL_REC_SEL );
+          GFL_NETHANDLE* nethandle = GFL_NET_HANDLE_GetCurrentHandle();
+          ret = GFL_NET_HANDLE_IsTimeSync( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO, WB_NET_BTL_REC_SEL );
 #endif
+        }
         if( ret )  // 相手待ち終了
         {
           Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_END,
-              GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FADE_OUT_WAIT );
+              GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FADE_OUT_WAIT,
+              FADE_TYPE_OUTSIDE );
         }
       }
     }
@@ -976,6 +1171,9 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
 
   Btl_Rec_Sel_TextMain( param, work );
   Btl_Rec_Sel_FixMain( param, work );
+
+  // パレットフェード
+  Btl_Rec_Sel_PfMain( param, work );
 
   PRINTSYS_QUE_Main( work->print_que );
 
@@ -999,7 +1197,8 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
 //=====================================
 static void Btl_Rec_Sel_ChangeSeqFade( int* seq,
                 BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,
-                int next_seq, int mode, int start_evy, int end_evy, int wait )
+                int next_seq, int mode, int start_evy, int end_evy, int wait,
+                FADE_TYPE type )
 {
   (*seq) = SEQ_FADE_INIT;
   work->fade_next_seq    = next_seq;
@@ -1007,6 +1206,7 @@ static void Btl_Rec_Sel_ChangeSeqFade( int* seq,
   work->fade_start_evy   = start_evy;
   work->fade_end_evy     = end_evy;
   work->fade_wait        = wait;
+  work->fade_type        = type;
 }
 
 static void Btl_Rec_Sel_ChangeSeqQa( int* seq,
@@ -1045,6 +1245,8 @@ static void Btl_Rec_Sel_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   BTL_REC_SEL_WORK* work = (BTL_REC_SEL_WORK*)wk;
 
+  // パレットフェード
+  Btl_Rec_Sel_PfVBlankFunc( work );
 }
 
 //-------------------------------------
@@ -1690,10 +1892,10 @@ static void Btl_Rec_Sel_DecideFromBattleMode( BTL_REC_SEL_PARAM* param, BTL_REC_
   if( m >= BATTLE_MODE_MAX ) m = 0;
 
   // テキストID
-  work->battle_mode_str_id = battle_mode_str_id_tbl[m];
+  work->battle_mode_str_id = battle_mode_info_tbl[m][0];
 
   // ポケアイコンの並べ方
-  if( BATTLE_MODE_COLOSSEUM_SINGLE_FREE <= work->battle_rec_mode && work->battle_rec_mode <= BATTLE_MODE_COLOSSEUM_SINGLE_50_SHOOTER )
+  if( battle_mode_info_tbl[m][1] == 0 )
   {
     work->battle_mode_arrange_two = TRUE;
   }
@@ -1827,5 +2029,156 @@ void Btl_Rec_Sel_BgSExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
                             GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_s_tinfo ),
                             GFL_ARCUTIL_TRANSINFO_GetSize( work->bg_s_tinfo ) );
 #endif
+}
+
+// パレットフェード
+void Btl_Rec_Sel_PfCreateDummyPokeicon( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  GFL_CLUNIT* clunit = BTL_REC_SEL_GRAPHIC_GetClunit( work->graphic );
+  
+  work->pf_dummy_pi_clwk = CreatePokeicon(
+                               clunit, work->heap_id, CLSYS_DRAW_MAIN, OBJ_PAL_POS_M_PI,
+                               1, 0,
+                               FALSE, &(work->pf_dummy_pi_res),
+                               0, 0, 0, 1 );
+}
+void Btl_Rec_Sel_PfDeleteDummyPokeicon( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  DeletePokeicon( &(work->pf_dummy_pi_res), work->pf_dummy_pi_clwk );
+}
+void Btl_Rec_Sel_PfInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  // タスク
+  work->pf_tcbsys_wk    = GFL_HEAP_AllocClearMemory( work->heap_id, GFL_TCB_CalcSystemWorkSize(PF_TCBSYS_TASK_MAX) );
+  work->pf_tcbsys       = GFL_TCB_Init( PF_TCBSYS_TASK_MAX, work->pf_tcbsys_wk );
+
+  // パレットフェード
+  work->pf_ptr = PaletteFadeInit( work->heap_id );
+  PaletteTrans_AutoSet( work->pf_ptr, TRUE );
+  PaletteFadeWorkAllocSet( work->pf_ptr, FADE_MAIN_BG, PF_BG_M_NUM*0x20, work->heap_id );
+  PaletteFadeWorkAllocSet( work->pf_ptr, FADE_MAIN_OBJ, PF_OBJ_M_NUM*0x20, work->heap_id );
+
+  // 現在VRAMにあるパレットを壊さないように、VRAMからパレット内容をコピーする
+  PaletteWorkSet_VramCopy( work->pf_ptr, FADE_MAIN_BG, 0, PF_BG_M_NUM*0x20 );
+  PaletteWorkSet_VramCopy( work->pf_ptr, FADE_MAIN_OBJ, 0, PF_OBJ_M_NUM*0x20 );
+
+  // 初期化
+  work->pf_state = PF_STATE_COLOR;
+  work->pf_req = PF_REQ_NONE;
+}
+void Btl_Rec_Sel_PfExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  // パレットフェード
+  PaletteFadeWorkAllocFree( work->pf_ptr, FADE_MAIN_BG );
+  PaletteFadeWorkAllocFree( work->pf_ptr, FADE_MAIN_OBJ );
+  PaletteFadeFree( work->pf_ptr );
+
+  // タスク
+  GFL_TCB_Exit( work->pf_tcbsys );
+  GFL_HEAP_FreeMemory( work->pf_tcbsys_wk );
+}
+void Btl_Rec_Sel_PfMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  // タスク
+  GFL_TCB_Main( work->pf_tcbsys );
+
+  // パレットフェード
+  {
+    u8 i;
+    u16 req_bit;
+
+    if( PaletteFadeCheck(work->pf_ptr) == 0 )
+    {
+      // 状態
+      switch( work->pf_state )
+      {
+      case PF_STATE_FADE_IN:
+        {
+          work->pf_state = PF_STATE_COLOR;
+        }
+        break;
+      case PF_STATE_FADE_OUT:
+        {
+          work->pf_state = PF_STATE_BLACK;
+        }
+        break;
+      }
+
+      // 要求
+      switch( work->pf_req )
+      {
+      case PF_REQ_FADE_IN:
+        {
+          if( work->pf_state != PF_STATE_FADE_IN )
+          {
+            // ブラック→カラー
+
+            req_bit = 0;
+            for( i=0; i<PF_BG_M_NUM; i++ ) req_bit |= 1<<i;
+            PaletteFadeReq(
+              work->pf_ptr,
+              PF_BIT_MAIN_BG,
+              req_bit,
+              INSIDE_FADE_IN_WAIT,
+              16, 0, 0x0000,
+              work->pf_tcbsys
+            );
+
+            req_bit = 0;
+            for( i=0; i<PF_OBJ_M_NUM; i++ ) req_bit |= 1<<i;
+            PaletteFadeReq(
+              work->pf_ptr,
+              PF_BIT_MAIN_OBJ,
+              req_bit,
+              INSIDE_FADE_IN_WAIT,
+              16, 0, 0x0000,
+              work->pf_tcbsys
+            );
+
+            work->pf_state = PF_STATE_FADE_IN;
+            work->pf_req = PF_REQ_NONE;
+          }
+        }
+        break;
+      case PF_REQ_FADE_OUT:
+        {
+          if( work->pf_state != PF_STATE_FADE_OUT )
+          {
+            // カラー→ブラック
+            
+            req_bit = 0;
+            for( i=0; i<PF_BG_M_NUM; i++ ) req_bit |= 1<<i;
+            PaletteFadeReq(
+              work->pf_ptr,
+              PF_BIT_MAIN_BG,
+              req_bit,
+              INSIDE_FADE_OUT_WAIT,
+              0, 16, 0x0000,
+              work->pf_tcbsys
+            );
+
+            req_bit = 0;
+            for( i=0; i<PF_OBJ_M_NUM; i++ ) req_bit |= 1<<i;
+            PaletteFadeReq(
+              work->pf_ptr,
+              PF_BIT_MAIN_OBJ,
+              req_bit,
+              INSIDE_FADE_OUT_WAIT,
+              0, 16, 0x0000,
+              work->pf_tcbsys
+            );
+
+            work->pf_state = PF_STATE_FADE_OUT;
+            work->pf_req = PF_REQ_NONE;
+          }
+        }
+        break;
+      }
+    }
+  }
+}
+void Btl_Rec_Sel_PfVBlankFunc( BTL_REC_SEL_WORK* work )
+{
+  PaletteFadeTrans( work->pf_ptr );
 }
 

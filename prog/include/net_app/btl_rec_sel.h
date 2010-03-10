@@ -65,7 +65,8 @@ BTL_REC_SEL_PARAM;
 extern BTL_REC_SEL_PARAM*  BTL_REC_SEL_AllocParam(
                             HEAPID           heap_id,
                             GAMEDATA*        gamedata,
-                            BOOL             b_rec );
+                            BOOL             b_rec,
+                            BOOL             b_sync );
 
 //-------------------------------------
 /// PROC ÉpÉâÉÅÅ[É^âï˙
@@ -79,4 +80,5 @@ extern void             BTL_REC_SEL_FreeParam(
 extern void             BTL_REC_SEL_InitParam(
                             BTL_REC_SEL_PARAM*  param,
                             GAMEDATA*           gamedata,
-                            BOOL                b_rec );
+                            BOOL                b_rec,
+                            BOOL                b_sync );
