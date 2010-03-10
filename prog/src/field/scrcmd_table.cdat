@@ -118,9 +118,9 @@
   DEF_CMD( EvCmdLoadWkWk, EV_SEQ_LD_WK_WK )
 
   DEF_CMD( EvCmdLoadWkWkValue, EV_SEQ_LD_WK_WKVAL )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdWkMul, EV_SEQ_MUL_WK )
+  DEF_CMD( EvCmdWkDiv, EV_SEQ_DIV_WK )
+  DEF_CMD( EvCmdWkMod, EV_SEQ_MOD_WK )
   
   //フィールドイベント共通処理
   DEF_CMD( EvCmdCommonProcFieldEventStart, EV_SEQ_COMMON_PROC_FIELD_EVENT_START )

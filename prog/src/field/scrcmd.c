@@ -1103,6 +1103,54 @@ static VMCMD_RESULT EvCmdWkSub( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * ワークから値を引く
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdWkMul( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  u16 * work_val;
+  work_val = SCRCMD_GetVMWork( core, work );
+  *work_val *= SCRCMD_GetVMWorkValue( core, work );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ワークから値を引く
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdWkDiv( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  u16 * work_val;
+  work_val = SCRCMD_GetVMWork( core, work );
+  *work_val /= SCRCMD_GetVMWorkValue( core, work );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ワークから値を引く
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdWkMod( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  u16 * work_val;
+  work_val = SCRCMD_GetVMWork( core, work );
+  *work_val %= SCRCMD_GetVMWorkValue( core, work );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
  * ワークに値を格納
  * @param  core    仮想マシン制御構造体へのポインタ
  * @return  VMCMD_RESULT
