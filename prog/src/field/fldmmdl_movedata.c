@@ -1517,14 +1517,14 @@ int (* const * const DATA_RailAcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_RailDummy,                  //AC_WALKGU_R_2F
   DATA_AC_RailDummy,              //AC_MARK_GYOE_TWAIT
   DATA_AC_HeroItemGet_Tbl,              // AC_HERO_ITEMGET
-  DATA_AC_RailDummy,                  //
-  DATA_AC_RailDummy,                  //
-  DATA_AC_RailDummy,                  //
-  DATA_AC_RailDummy,                  //
-  DATA_AC_RailDummy,                  //
-  DATA_AC_RailDummy,                  //
-  DATA_AC_RailDummy,                  //
-  DATA_AC_RailDummy,                  //
+  DATA_AC_RailDummy,                  // AC_SANDWALK_U_16F
+  DATA_AC_RailDummy,                  // AC_SANDWALK_D_16F
+  DATA_AC_RailDummy,                  // AC_SANDWALK_L_16F
+  DATA_AC_RailDummy,                  // AC_SANDWALK_R_16F
+  DATA_AC_RailDummy,                  // AC_MARK_HATENA
+  DATA_AC_RailDummy,                  // AC_MARK_ONPU
+  DATA_AC_RailDummy,                  // AC_MARK_TENTEN
+  DATA_AC_HeroCutin_Tbl,                  // AC_HERO_CUTIN
 
   DATA_AC_RailDummy,                  //AC_DASH_U_6F
   DATA_AC_RailDummy,                  //AC_DASH_D_6F
