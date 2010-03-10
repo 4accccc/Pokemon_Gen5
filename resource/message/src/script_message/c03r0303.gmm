@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T14:36:34"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T18:17:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1489" top="216" right="2194" bottom="836" maximized="no" rayout="Vertical2">
+	<dialog left="1394" top="302" right="2099" bottom="930" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,7 +294,6 @@
 
 	<row id="msg_c03r0303_cleaningm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・仮メッセージ
 ・メッセージ表示後、戦闘に</comment>
 		<attribute name="キャラ指定">CLEANINGM
 清掃員</attribute>
@@ -318,19 +317,39 @@
 
 	<row id="msg_c03r0303_cleaningm_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・戦闘後
-・仮メッセージ
-　何かもらえるようにするかも</comment>
+・アイテム入手処理
+　No216「がくしゅうそうち」</comment>
 		<attribute name="キャラ指定">CLEANINGM
 清掃員</attribute>
-		<language name="JPN" width="256">ホッホー！
-いい　しょうぶを　させてもらったよ▼
-きみ！　おおきくなったら
-ここで　はたらいて　みないか？</language>
-		<language name="JPN_KANJI" width="256">ホッホー！
-いい　勝負を　させてもらったよ▼
-きみ！　大きくなったら
-ここで　働いてみないか？</language>
+		<language name="JPN" width="256">ここにくる　トレーナーが
+どんな　じんぶつか　みたくて▼
+そうじの　おじさんの　まねをするが
+いやいや　たのしかったよ！！▼
+これは　ほんの　おれいだ！
+どーんと　うけとってくれたまえ！▼</language>
+		<language name="JPN_KANJI" width="256">ここに来る　トレーナーが
+どんな　人物か　みたくて▼
+掃除の　おじさんの　マネをするが
+いやいや　愉快だったよ！！▼
+これは　ほんの　お礼だ！
+どーんと　受け取ってくれたまえ！▼</language>
+	</row>
+
+	<row id="msg_c03r0303_cleaningm_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">CLEANINGM
+清掃員</attribute>
+		<language name="JPN" width="256">がくしゅうそうちを　もった
+ポケモンは　たたかわなくても▽
+けいけんちを　わけてもらえるよ！▼
+そう！　よわい　ポケモンを
+そだてるのに　やくだつかもね！</language>
+		<language name="JPN_KANJI" width="256">がくしゅうそうちを　持たせて
+ポケモンは　戦わなくても▽
+経験値を　わけて　もらえるよ！▼
+そう！　弱い　ポケモンを
+育てるのに　役立つかもね！</language>
 	</row>
 
 	<flowchart-group-list>

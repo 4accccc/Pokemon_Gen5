@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T22:39:50"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T18:06:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="178"/>
+		<comment position="4" width="201"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="139">
 		</attribute>
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1304" top="257" right="2009" bottom="885" maximized="no" rayout="Vertical2">
+	<dialog left="1367" top="229" right="2071" bottom="856" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="696"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,48 +294,74 @@
 
 	<row id="msg_c03r0302_assistantm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・仮メッセージ
 ・アイテム入手処理
-　No216「がくしゅうそうち」</comment>
+　No232「ピントレンズ」</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">ここは　けんきゅう　かいはつフロア！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">わたしは　かいはつ　たんとう！[BE:01:ページ切り替え（クリア）]
 けんがくに　きてくれた
 きみに　これを　あげよう！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ここは　研究開発フロア！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">私は　開発担当！[BE:01:ページ切り替え（クリア）]
 見学に　来てくれた
 君に　これを　あげよう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03r0302_assistantm_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
+・アイテム入手後</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">がくしゅうそうちを　もたせた
-ポケモンは　たたかわなくても▽
-けいけんちを　わけてもらえる！▼
-よわい　ポケモンを　そだてるのには
-もってこいの　どうぐ　だよ</language>
-		<language name="JPN_KANJI" width="256">がくしゅうそうちを　持たせた
-ポケモンは　戦わなくても▽
-経験値を　わけてもらえる！▼
-弱い　ポケモンを　育てるのには
-もってこいの　道具だよ</language>
+		<language name="JPN" width="256">ピントレンズは　わざの
+めいちゅうりつを　あげる　どうぐ！▼
+どんな　すばらしい　わざでも
+あたらないと　いみ　ないからねー！</language>
+		<language name="JPN_KANJI" width="256">ピントレンズは　技の
+命中率を　あげる　道具！▼
+どんな　すばらしい　技でも
+当たらないと　意味ないからねー！</language>
 	</row>
 
 	<row id="msg_c03r0302_businessman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
+・アイテム入手処理
+　No015「クイックボール」×３
+・入手後続けてbusinessman_02</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
-		<language name="JPN" width="256">いやあ……　いつも　おこされるとき
-ポケモンの　めざましビンタ　でして▽
-ちょいと　ボロボロ　なんです▼
-でも　おこしてくれる　かのじょのため
-きょうも　はりきって　がんばりますよ！</language>
-		<language name="JPN_KANJI" width="256">いやあ……　いつも　起こされるとき
-ポケモンの　めざましビンタ　でして▽
-ちょいと　ボロボロ　なんです▼
-でも　起こしてくれる　彼女のため
-今日も　はりきって　がんばりますよ！</language>
+		<language name="JPN" width="256">おっ！？　かいしゃけんがく？
+それとも　ポケモン　しゅぎょう？▼
+なんにせよ　きてくれて　うれしいよ
+うれしいから　プレゼントだよ！▼</language>
+		<language name="JPN_KANJI" width="256">おっ！？　会社見学？
+それとも　ポケモン　修行？▼
+なんにせよ　来てくれて　うれしいよ
+うれしいから　プレゼントだよ！▼</language>
+	</row>
+
+	<row id="msg_c03r0302_businessman_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・アイテム入手処理
+　No010「タイマーボール」×３</comment>
+		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+		<language name="JPN" width="256">ものすごく　うれしいから
+さらに　プレゼントだよ！▼</language>
+		<language name="JPN_KANJI" width="256">ものすごく　うれしいから
+さらに　プレゼントだよ！▼</language>
+	</row>
+
+	<row id="msg_c03r0302_businessman_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+		<language name="JPN" width="256">クイックボールは　ポケモンと
+であって　すぐに　なげたほうが▽
+つかまえやすさが　アップ！▼
+タイマーボールは　ポケモンと
+ながく　たたかった　ほうが▽
+つかまえやすさが　アップするんだ！</language>
+		<language name="JPN_KANJI" width="256">クイックボールは　ポケモンと
+であって　すぐに　投げたほうが▽
+捕まえやすさが　アップ！▼
+タイマーボールは　ポケモンと
+長く　たたかった　ほうが▽
+捕まえやすさが　アップするんだ！</language>
 	</row>
 
 	<flowchart-group-list>

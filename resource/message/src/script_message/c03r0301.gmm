@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-01T17:29:21"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T18:19:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="218"/>
+		<comment position="4" width="295"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="283" right="1995" bottom="911" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,12 +292,11 @@
 	</lock>
 
 
-	<row id="msg_c03r0301_cleaningm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0301_cleaningm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・入り口近くの
 　pos（GIRDX=6~8、GRIZ=10）を踏むと
-　！マーク表示後に隣接してメッセージ表示
-・その後、２Fにあがっていく</comment>
+　！マーク表示後に隣接してメッセージ表示</comment>
 		<attribute name="キャラ指定">CLEANINGM
 清掃員</attribute>
 		<language name="JPN" width="256">この　ビルで　はたらく
@@ -312,13 +311,46 @@
 あがるなら　気を　つけなさいよ▼</language>
 	</row>
 
+	<row id="msg_c03r0301_cleaningm_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・画面外に消えるとこのメッセージ表示
+・その後、エレベータの音を鳴らし終えると
+　主人公、操作可能に</comment>
+		<attribute name="キャラ指定">CLEANINGM
+清掃員</attribute>
+		<language name="JPN" width="256">わたしは　おそうじおじさん♪
+こころも　きれいに　したいのよ♪▼</language>
+		<language name="JPN_KANJI" width="256">わたしは　おそうじおじさん♪
+こころも　きれいに　したいのよ♪▼</language>
+	</row>
+
 	<row id="msg_c03r0301_infomationw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">INFOMATIONW
 受付</attribute>
-		<language name="JPN" width="256">いらっしゃいませ</language>
-		<language name="JPN_KANJI" width="256">いらっしゃいませ</language>
+		<language name="JPN" width="256">いらっしゃいませ！▼
+エレベータを　おつかいに　なるなら
+よこにある　スイッチを▽
+おして　くださいませ</language>
+		<language name="JPN_KANJI" width="256">いらっしゃいませ！▼
+エレベータを　お使いになるなら
+隣の　コンパネを　押してくださいませ</language>
+	</row>
+
+	<row id="msg_c03r0301_businessman_10" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+		<language name="JPN" width="256">いやあ……　いつも　おこされるとき
+ポケモンの　めざましビンタ　でして▽
+ちょいと　ボロボロ　なんです▼
+でも　おこしてくれる　かのじょのため
+きょうも　はりきって　がんばりますよ！</language>
+		<language name="JPN_KANJI" width="256">いやあ……　いつも　起こされるとき
+ポケモンの　めざましビンタ　でして▽
+ちょいと　ボロボロ　なんです▼
+でも　起こしてくれる　彼女のため
+今日も　はりきって　がんばりますよ！</language>
 	</row>
 
 	<row id="msg_c03r0301_statue_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -334,8 +366,10 @@
 		<comment>BGメッセージ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">絵画？</attribute>
-		<language name="JPN" width="256">なんだか　よく　わからない　え</language>
-		<language name="JPN_KANJI" width="256">なんだか　よく　わからない絵</language>
+		<language name="JPN" width="256">えの　すみっこに
+アーティの　サインが　しるされている</language>
+		<language name="JPN_KANJI" width="256">えの　すみっこに
+アーティの　サインが　しるされている</language>
 	</row>
 
 	<flowchart-group-list>
