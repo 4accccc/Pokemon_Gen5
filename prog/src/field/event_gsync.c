@@ -224,6 +224,9 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
       if(dbw->selectType==GAMESYNC_RETURNMODE_BOXJUMP){
         (*seq)=_GAMESYNC_CALLBOX;
       }
+      else if(dbw->selectType==GAMESYNC_RETURNMODE_BOXJUMP_NOACC){
+        (*seq)=_GAMESYNC_CALLBOX;
+      }
       else if(dbw->selectType==GAMESYNC_RETURNMODE_EXIT){
         GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
         (*seq)=_CALL_GAMESYNC_MENU;
@@ -257,7 +260,12 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
       *seq = _NETEND;
     }
     else{
-      dbw->selectType = GSYNC_CALLTYPE_BOXSET;  // ポケモンセット後
+      if(dbw->selectType == GAMESYNC_RETURNMODE_BOXJUMP_NOACC){
+        dbw->selectType = GSYNC_CALLTYPE_BOXSET_NOACC;  // ポケモンセット後
+      }
+      else{
+        dbw->selectType = GSYNC_CALLTYPE_BOXSET;  // ポケモンセット後
+      }
       (*seq) = _GAMESYNC_MAINPROC;
     }
     break;

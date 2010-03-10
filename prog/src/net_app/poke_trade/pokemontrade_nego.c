@@ -1047,6 +1047,21 @@ static void POKETRADE_NEGO_Select6keywaitMsg(POKEMON_TRADE_WORK* pWork)
 
 static void POKETRADE_NEGO_Select6keywaitMsgFade(POKEMON_TRADE_WORK* pWork)
 {
+  // スライド演出
+  if( !POKEMONTRADE_NEGOBG_Select6Scroll(pWork)){
+    return;
+  }
+
+  if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
+    POKEMONTRADE_StartPokeSelectSixButton(pWork, -1);
+    pWork->pokemonselectno=-1;
+  }
+  else{
+    POKEMONTRADE_StartPokeSelectSixButton(pWork, 0);
+    pWork->pokemonselectno=0;
+  }
+
+  
   if(WIPE_SYS_EndCheck()){
     G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ , -8 );
     if(1){
@@ -1120,14 +1135,6 @@ static void _Select6Init(POKEMON_TRADE_WORK* pWork)
 
   POKETRADE_MESSAGE_SixStateDisp(pWork , GFL_BG_FRAME2_S);//６体表示
   
-  if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
-    POKEMONTRADE_StartPokeSelectSixButton(pWork, -1);
-    pWork->pokemonselectno=-1;
-  }
-  else{
-    POKEMONTRADE_StartPokeSelectSixButton(pWork, 0);
-    pWork->pokemonselectno=0;
-  }
   
   pWork->bgscroll=0;
   pWork->bgscrollRenew = TRUE;

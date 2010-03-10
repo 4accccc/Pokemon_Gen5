@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-03-05T21:18:22"/>
+	<create user="ohno" host="W00141" date="2010-03-10T16:44:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -458,9 +458,9 @@
 
 	<row id="GSYNC_015">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
-[2:01:２桁:1]つレベルアップしました</language>
+レベルが[2:01:２桁:1]アップしました</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
-[2:01:２桁:1]つレベルアップしました</language>
+レベルが[2:01:２桁:1]アップしました</language>
 	</row>
 
 	<row id="GSYNC_016">
@@ -563,9 +563,16 @@
 		<language name="JPN_KANJI" width="256">サーバとせつぞくできませんでした</language>
 	</row>
 
-	<row id="GSYNC_ERR008">
-		<language name="JPN" width="256">ダウンロードにしっぱいしました</language>
-		<language name="JPN_KANJI" width="256">ダウンロードにしっぱいしました</language>
+	<row id="GSYNC_ERR008" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>追加</comment>
+		<language name="JPN" width="256">アカウントがありません</language>
+		<language name="JPN_KANJI" width="256">アカウントがありません</language>
+	</row>
+
+	<row id="GSYNC_ERR009" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>追加</comment>
+		<language name="JPN" width="256">ゲームシンクに失敗しました</language>
+		<language name="JPN_KANJI" width="256">ゲームシンクに失敗しました</language>
 	</row>
 
 	<flowchart-group-list>

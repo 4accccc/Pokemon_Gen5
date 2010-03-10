@@ -156,7 +156,6 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
   u32                     receivedCurrent = 0, receivedPrevious = 0;
   u32                     contentLength;
   u32                     averageSpeed = 0, currentSpeed = 0, maxSpeed = 0;
-  //char pidbuff[_URL_BUFFER];
 
   if(0!=NHTTPStartup(AllocForNhttp, FreeForNhttp, 12)){
     GF_ASSERT(0);
@@ -166,9 +165,6 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
 
 
   GFL_STD_MemClear(pWork->urlbuff,sizeof(_URL_BUFFER));
-//  GFL_STD_MemClear(pidbuff,_URL_BUFFER);
-
-//  STD_StrCpy(pidbuff, urltable[urlno].url );
 
   if(urlno==NHTTPRAP_URL_ACCOUNT_CREATE){
     STD_TSNPrintf(pWork->urlbuff, _URL_BUFFER, urltable[urlno].url, pWork->pSvl->svltoken);
@@ -176,7 +172,6 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
   else{
     STD_TSNPrintf(pWork->urlbuff, _URL_BUFFER, urltable[urlno].url, pWork->profileid, PM_VERSION, PM_LANG, NET_DREAMWORLD_VER, pWork->pSvl->svltoken);
   }
- // GFL_STD_StrCat(pWork->urlbuff,pidbuff,sizeof(_URL_BUFFER));
 
   
   NET_PRINT(" Target URL: %s\n", pWork->urlbuff);

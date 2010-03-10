@@ -651,6 +651,7 @@ struct _POKEMON_TRADE_WORK{
   PROGVAL_PEZIER_WORK aCutMullRom;
   APP_PRINTSYS_COMMON_WORK trgWork;  //キーの制御を行うワーク
   s16 SuckedCount;
+  s16 countNEGOSlideScroll;
   u8 changeFactor[2];
   u8 BGClearFlg;
   u8 DemoBGClearFlg;
@@ -768,6 +769,7 @@ extern BOOL POKE_GTS_IsMyIn(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_WindowOpenXY(POKEMON_TRADE_WORK* pWork,BOOL bFast,int x,int y,int xm,int ym);
 extern int POKEMONTRADE_GetFriendBoxNum(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_NEGOBG_Select6Create(POKEMON_TRADE_WORK* pWork);
+extern BOOL POKEMONTRADE_NEGOBG_Select6Scroll(POKEMON_TRADE_WORK* pWork);
 
 
 #if _TRADE_DEBUG

@@ -2933,6 +2933,117 @@ void POKEMONTRADE_RemovePokeSelectSixButton(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   ネゴシエーション
+ * @param   POKEMON_TRADE_WORK
+ * @param   index 表示場所
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+BOOL POKEMONTRADE_NEGOBG_Select6Scroll(POKEMON_TRADE_WORK* pWork)
+{
+  int i;
+  const int scrollnum=4;
+
+  if(pWork->countNEGOSlideScroll <128){
+    pWork->countNEGOSlideScroll+=scrollnum;
+  }
+  else{
+    return TRUE;
+  }
+//  if(GFL_UI_KEY_GetRepeat() == PAD_KEY_UP){
+//    pWork->countNEGOSlideScroll++;
+//  }
+//  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_DOWN){
+//    pWork->countNEGOSlideScroll--;
+//  }
+//  OS_Printf("Count %d\n",pWork->countNEGOSlideScroll);
+
+
+  for(i=0;i<GTS_SEL6MSG_NUM;i++){
+    GFL_CLACTPOS pos;
+    GFL_CLACT_WK_GetPos(pWork->select6Msg[i], &pos,CLSYS_DRAW_SUB);
+    if(i/3){
+      pos.x += scrollnum;
+    }
+    else{
+      pos.x -= scrollnum;
+    }
+    GFL_CLACT_WK_SetPos(pWork->select6Msg[i], &pos,CLSYS_DRAW_SUB);
+  }
+
+
+  for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
+    if(pWork->pokeIconGTS[0][i]){
+      GFL_CLACTPOS pos;
+      GFL_CLACT_WK_GetPos(pWork->pokeIconGTS[0][i], &pos,CLSYS_DRAW_SUB);
+      pos.x -= scrollnum;
+      GFL_CLACT_WK_SetPos(pWork->pokeIconGTS[0][i], &pos,CLSYS_DRAW_SUB);
+    }
+  }
+  for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
+    if(pWork->pokeIconGTS[1][i]){
+      GFL_CLACTPOS pos;
+      GFL_CLACT_WK_GetPos(pWork->pokeIconGTS[1][i], &pos,CLSYS_DRAW_SUB);
+      pos.x += scrollnum;
+      GFL_CLACT_WK_SetPos(pWork->pokeIconGTS[1][i], &pos,CLSYS_DRAW_SUB);
+    }
+  }
+  
+  //pWork->pokeIconGTS[side][no]
+
+  
+  GFL_BG_SetScroll(GFL_BG_FRAME1_S,GFL_BG_SCROLL_X_SET, -pWork->countNEGOSlideScroll);
+  GFL_BG_SetScroll(GFL_BG_FRAME0_S,GFL_BG_SCROLL_X_SET, -128+pWork->countNEGOSlideScroll);
+  return FALSE;
+}
+
+
+// 最初位置を変更し  スクロールで元に戻す
+static void _initreverce(POKEMON_TRADE_WORK* pWork)
+{
+  int i;
+  
+  for(i=0;i<GTS_SEL6MSG_NUM;i++){
+    GFL_CLACTPOS pos;
+    GFL_CLACT_WK_GetPos(pWork->select6Msg[i], &pos,CLSYS_DRAW_SUB);
+    if(i/3){
+      pos.x -= 128;
+      GFL_CLACT_WK_SetBgPri(pWork->select6Msg[i],3);
+      
+    }
+    else{
+      pos.x += 128;
+    }
+    GFL_CLACT_WK_SetPos(pWork->select6Msg[i], &pos,CLSYS_DRAW_SUB);
+  }
+
+  for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
+    if(pWork->pokeIconGTS[0][i]){
+      GFL_CLACTPOS pos;
+      GFL_CLACT_WK_GetPos(pWork->pokeIconGTS[0][i], &pos,CLSYS_DRAW_SUB);
+      pos.x += 128;
+      GFL_CLACT_WK_SetPos(pWork->pokeIconGTS[0][i], &pos,CLSYS_DRAW_SUB);
+    }
+  }
+  for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
+    if(pWork->pokeIconGTS[1][i]){
+      GFL_CLACTPOS pos;
+      GFL_CLACT_WK_GetPos(pWork->pokeIconGTS[1][i], &pos,CLSYS_DRAW_SUB);
+      pos.x -= 128;
+      GFL_CLACT_WK_SetPos(pWork->pokeIconGTS[1][i], &pos,CLSYS_DRAW_SUB);
+      GFL_CLACT_WK_SetBgPri(pWork->pokeIconGTS[1][i],3);
+    }
+  }
+
+  GFL_BG_SetPriority( GFL_BG_FRAME0_S , 2 );
+  GFL_BG_SetPriority( GFL_BG_FRAME1_S , 3 );
+
+
+}
+
 
 
 void POKEMONTRADE_NEGOBG_Select6Create(POKEMON_TRADE_WORK* pWork)
@@ -2982,6 +3093,11 @@ void POKEMONTRADE_NEGOBG_Select6Create(POKEMON_TRADE_WORK* pWork)
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
 																				 pWork->heapID);
   GFL_ARC_CloseDataHandle( p_handle );
+  pWork->countNEGOSlideScroll=0;
+  _initreverce(pWork);
+
+  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+
 }
 
 

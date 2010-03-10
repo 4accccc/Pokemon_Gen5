@@ -22,6 +22,7 @@
 typedef enum{
   GSYNC_CALLTYPE_INFO,    // 状態を確認>ダウンロード
   GSYNC_CALLTYPE_BOXSET,  // BOXポケモンセット後
+  GSYNC_CALLTYPE_BOXSET_NOACC,// BOXポケモンセット後NOACC
   GSYNC_CALLTYPE_POKELIST,    // 選択可能なポケモンダウンロード
   GSYNC_CALLTYPE_BOXNULL,    // BOXにポケモンがから
 } GSYNC_CALLTYPE_ENUM;
