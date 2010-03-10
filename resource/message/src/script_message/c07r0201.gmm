@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-04T19:23:01"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-03-10T17:38:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -459,19 +459,6 @@
 元気に　拾って！▼</language>
 	</row>
 
-	<row id="msg_quiz_right_answer_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♀
-・終了
-・主人公フリームーブに</comment>
-		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
-		<language name="JPN" width="256">ナンデヤ『わくわく　ドキドキ！
-クイズで　ハップン！▼
-また　あした　おあいしましょうー！▼</language>
-		<language name="JPN_KANJI" width="256">ナンデヤ『わくわく　ドキドキ！
-クイズで　ハップン！▼
-また　明日　お会いしましょうー！▼</language>
-	</row>
-
 	<row id="msg_quiz_wrong_answer_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・不正解のとき
@@ -520,7 +507,7 @@
 どうぞ　拾って！▼</language>
 	</row>
 
-	<row id="msg_quiz_wrong_answer_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_quiz_finish_01">
 		<comment>♀
 ・終了
 ・主人公フリームーブに</comment>
@@ -533,7 +520,7 @@
 また　明日　お会いしましょうー！▼</language>
 	</row>
 
-	<row id="msg_quiz_end_01">
+	<row id="msg_quiz_end_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・クイズ後</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
@@ -541,7 +528,7 @@
 		<language name="JPN_KANJI" width="256">ワカルデ『クイズ番組　好きかい？</language>
 	</row>
 
-	<row id="msg_quiz_end_02">
+	<row id="msg_quiz_end_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・クイズ後</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
@@ -549,7 +536,7 @@
 		<language name="JPN_KANJI" width="256">ナンデヤ『はやく　テレビに　でたいわ！</language>
 	</row>
 
-	<row id="msg_quiz_end_03">
+	<row id="msg_quiz_end_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・クイズ後</comment>
 		<attribute name="キャラ指定">GIRL3</attribute>
@@ -567,16 +554,6 @@
 ポケモン　なーんだ！？▼</language>
 	</row>
 
-	<row id="msg_quiz_01_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>・正解は
-　ローソクン（仮）</comment>
-		<attribute name="キャラ指定">ヒントその１</attribute>
-		<language name="JPN" width="256">ヒント！
-それは　ポケモンです！▼</language>
-		<language name="JPN_KANJI" width="256">ヒント！
-それは　ポケモンです！▼</language>
-	</row>
-
 	<row id="msg_quiz_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・正解は
 　ココロモリ（仮）</comment>
@@ -585,16 +562,6 @@
 なにに　なるかな？▼</language>
 		<language name="JPN_KANJI" width="256">コロモリは　しんかすると
 なにに　なるかな？▼</language>
-	</row>
-
-	<row id="msg_quiz_02_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>・正解は
-　ココロモリ（仮）</comment>
-		<attribute name="キャラ指定">ヒントその２</attribute>
-		<language name="JPN" width="256">ヒント！
-それは　ポケモンです！▼</language>
-		<language name="JPN_KANJI" width="256">ヒント！
-それは　ポケモンです！▼</language>
 	</row>
 
 	<row id="msg_quiz_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -607,16 +574,6 @@
 なにに　なるかな？▼</language>
 	</row>
 
-	<row id="msg_quiz_03_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>・正解は
-　ゴリダルマ（仮）</comment>
-		<attribute name="キャラ指定">ヒントその３</attribute>
-		<language name="JPN" width="256">ヒント！
-ゆきだるまでは　ありません！▼</language>
-		<language name="JPN_KANJI" width="256">ヒント！
-ゆきだるまでは　ありません！▼</language>
-	</row>
-
 	<row id="msg_quiz_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・正解は
 　おかね</comment>
@@ -625,16 +582,6 @@
 なにを　はらうの　かな？</language>
 		<language name="JPN_KANJI" width="256">かいものを　したら
 なにを　はらうの　かな？</language>
-	</row>
-
-	<row id="msg_quiz_04_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>・正解は
-　おかね</comment>
-		<attribute name="キャラ指定">ヒントその４</attribute>
-		<language name="JPN" width="256">ヒント！
-おさいふに　はいっています！▼</language>
-		<language name="JPN_KANJI" width="256">ヒント！
-おさいふに　はいっています！▼</language>
 	</row>
 
 	<row id="msg_quiz_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -647,16 +594,6 @@
 さかさに　いうと？▼</language>
 	</row>
 
-	<row id="msg_quiz_05_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>・正解は
-　ラブラブ</comment>
-		<attribute name="キャラ指定">ヒントその５</attribute>
-		<language name="JPN" width="256">ヒント！
-ラ　から　はじまります！▼</language>
-		<language name="JPN_KANJI" width="256">ヒント！
-ラ　から　はじまります！▼</language>
-	</row>
-
 	<row id="msg_quiz_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・正解は
 　おじさん</comment>
@@ -665,16 +602,6 @@
 なんと　よぶかな？▼</language>
 		<language name="JPN_KANJI" width="256">おとうさんの　おとうとを
 なんと　よぶかな？▼</language>
-	</row>
-
-	<row id="msg_quiz_06_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>・正解は
-　おじさん</comment>
-		<attribute name="キャラ指定">ヒントその６</attribute>
-		<language name="JPN" width="256">ヒント！
-おにいさんじゃ　ありません！▼</language>
-		<language name="JPN_KANJI" width="256">ヒント！
-おにいさんじゃ　ありません！▼</language>
 	</row>
 
 	<row id="msg_quiz_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -687,16 +614,6 @@
 すすめる　わざは　なにかな？▼</language>
 	</row>
 
-	<row id="msg_quiz_07_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>・正解は
-　なみのり</comment>
-		<attribute name="キャラ指定">ヒントその７</attribute>
-		<language name="JPN" width="256">ヒント！
-そらは　とびません！▼</language>
-		<language name="JPN_KANJI" width="256">ヒント！
-そらは　とびません！▼</language>
-	</row>
-
 	<row id="msg_quiz_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・正解は
 　じてんしゃ</comment>
@@ -705,16 +622,6 @@
 どうぐは　なにかな？▼</language>
 		<language name="JPN_KANJI" width="256">のれば　はやく　すすめる
 どうぐは　なにかな？▼</language>
-	</row>
-
-	<row id="msg_quiz_08_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>・正解は
-　じてんしゃ</comment>
-		<attribute name="キャラ指定">ヒントその８</attribute>
-		<language name="JPN" width="256">ヒント！
-ポケモンでは　ありません！▼</language>
-		<language name="JPN_KANJI" width="256">ヒント！
-ポケモンでは　ありません！▼</language>
 	</row>
 
 	<row id="msg_quiz_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -727,7 +634,243 @@
 メールと　カメール　どちら？▼</language>
 	</row>
 
-	<row id="msg_quiz_09_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_quiz_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその10</attribute>
+		<language name="JPN" width="256">クイズの　もんだい１０</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題１０</language>
+	</row>
+
+	<row id="msg_quiz_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその11</attribute>
+		<language name="JPN" width="256">クイズの　もんだい１１</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題１１</language>
+	</row>
+
+	<row id="msg_quiz_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその12</attribute>
+		<language name="JPN" width="256">クイズの　もんだい１２</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題１２</language>
+	</row>
+
+	<row id="msg_quiz_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその13</attribute>
+		<language name="JPN" width="256">クイズの　もんだい１３</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題１３</language>
+	</row>
+
+	<row id="msg_quiz_14" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその14</attribute>
+		<language name="JPN" width="256">クイズの　もんだい１４</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題１４</language>
+	</row>
+
+	<row id="msg_quiz_15" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその15</attribute>
+		<language name="JPN" width="256">クイズの　もんだい１５</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題１５</language>
+	</row>
+
+	<row id="msg_quiz_16" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその16</attribute>
+		<language name="JPN" width="256">クイズの　もんだい１６</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題１６</language>
+	</row>
+
+	<row id="msg_quiz_17" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその17</attribute>
+		<language name="JPN" width="256">クイズの　もんだい１７</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題１７</language>
+	</row>
+
+	<row id="msg_quiz_18" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその18</attribute>
+		<language name="JPN" width="256">クイズの　もんだい１８</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題１８</language>
+	</row>
+
+	<row id="msg_quiz_19" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその19</attribute>
+		<language name="JPN" width="256">クイズの　もんだい１９</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題１９</language>
+	</row>
+
+	<row id="msg_quiz_20" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその20</attribute>
+		<language name="JPN" width="256">クイズの　もんだい２０</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題２０</language>
+	</row>
+
+	<row id="msg_quiz_21" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその21</attribute>
+		<language name="JPN" width="256">クイズの　もんだい２１</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題２１</language>
+	</row>
+
+	<row id="msg_quiz_22" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその22</attribute>
+		<language name="JPN" width="256">クイズの　もんだい２２</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題２２</language>
+	</row>
+
+	<row id="msg_quiz_23" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその23</attribute>
+		<language name="JPN" width="256">クイズの　もんだい２３</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題２３</language>
+	</row>
+
+	<row id="msg_quiz_24" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその24</attribute>
+		<language name="JPN" width="256">クイズの　もんだい２４</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題２４</language>
+	</row>
+
+	<row id="msg_quiz_25" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその25</attribute>
+		<language name="JPN" width="256">クイズの　もんだい２５</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題２５</language>
+	</row>
+
+	<row id="msg_quiz_26" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその26</attribute>
+		<language name="JPN" width="256">クイズの　もんだい２６</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題２６</language>
+	</row>
+
+	<row id="msg_quiz_27" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその27</attribute>
+		<language name="JPN" width="256">クイズの　もんだい２７</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題２７</language>
+	</row>
+
+	<row id="msg_quiz_28" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその28</attribute>
+		<language name="JPN" width="256">クイズの　もんだい２８</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題２８</language>
+	</row>
+
+	<row id="msg_quiz_29" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその29</attribute>
+		<language name="JPN" width="256">クイズの　もんだい２９</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題２９</language>
+	</row>
+
+	<row id="msg_quiz_30" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">クイズその30</attribute>
+		<language name="JPN" width="256">クイズの　もんだい３０</language>
+		<language name="JPN_KANJI" width="256">クイズの　問題３０</language>
+	</row>
+
+	<row id="msg_quiz_31" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>・正解は
+　たんじょうび
+※誕生日に出題する</comment>
+		<attribute name="キャラ指定">クイズその31</attribute>
+		<language name="JPN" width="256">きょうは　なんのひ　かな？▼</language>
+		<language name="JPN_KANJI" width="256">きょうは　なんのひ　かな？▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は
+　ローソクン（仮）</comment>
+		<attribute name="キャラ指定">ヒントその１</attribute>
+		<language name="JPN" width="256">ヒント！
+それは　ポケモンです！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！
+それは　ポケモンです！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は
+　ココロモリ（仮）</comment>
+		<attribute name="キャラ指定">ヒントその２</attribute>
+		<language name="JPN" width="256">ヒント！
+それは　ポケモンです！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！
+それは　ポケモンです！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は
+　ゴリダルマ（仮）</comment>
+		<attribute name="キャラ指定">ヒントその３</attribute>
+		<language name="JPN" width="256">ヒント！
+ゆきだるまでは　ありません！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！
+ゆきだるまでは　ありません！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は
+　おかね</comment>
+		<attribute name="キャラ指定">ヒントその４</attribute>
+		<language name="JPN" width="256">ヒント！
+おさいふに　はいっています！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！
+おさいふに　はいっています！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は
+　ラブラブ</comment>
+		<attribute name="キャラ指定">ヒントその５</attribute>
+		<language name="JPN" width="256">ヒント！
+ラ　から　はじまります！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！
+ラ　から　はじまります！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は
+　おじさん</comment>
+		<attribute name="キャラ指定">ヒントその６</attribute>
+		<language name="JPN" width="256">ヒント！
+おにいさんじゃ　ありません！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！
+おにいさんじゃ　ありません！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は
+　なみのり</comment>
+		<attribute name="キャラ指定">ヒントその７</attribute>
+		<language name="JPN" width="256">ヒント！
+そらは　とびません！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！
+そらは　とびません！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は
+　じてんしゃ</comment>
+		<attribute name="キャラ指定">ヒントその８</attribute>
+		<language name="JPN" width="256">ヒント！
+ポケモンでは　ありません！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！
+ポケモンでは　ありません！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・正解は
 　メール</comment>
 		<attribute name="キャラ指定">ヒントその９</attribute>
@@ -737,18 +880,157 @@
 カメールでは　ありません！▼</language>
 	</row>
 
-	<row id="msg_quiz_birthday" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
-		<comment>・正解は
-　たんじょうび</comment>
-		<attribute name="キャラ指定">クイズその1０</attribute>
-		<language name="JPN" width="256">きょうは　なんのひ　かな？▼</language>
-		<language name="JPN_KANJI" width="256">きょうは　なんのひ　かな？▼</language>
+	<row id="msg_quiz_hint_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその10</attribute>
+		<language name="JPN" width="256">ヒント！　その１０！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その１０！▼</language>
 	</row>
 
-	<row id="msg_quiz_birthday_01" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_quiz_hint_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその11</attribute>
+		<language name="JPN" width="256">ヒント！　その１１！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その１１！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその12</attribute>
+		<language name="JPN" width="256">ヒント！　その１２！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その１２！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_13" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその13</attribute>
+		<language name="JPN" width="256">ヒント！　その１３！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その１３！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_14" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその14</attribute>
+		<language name="JPN" width="256">ヒント！　その１４！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その１４！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_15" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその15</attribute>
+		<language name="JPN" width="256">ヒント！　その１５！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その１５！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_16" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその16</attribute>
+		<language name="JPN" width="256">ヒント！　その１６！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その１６！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_17" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその17</attribute>
+		<language name="JPN" width="256">ヒント！　その１７！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その１７！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_18" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその18</attribute>
+		<language name="JPN" width="256">ヒント！　その１８！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その１８！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_19" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその19</attribute>
+		<language name="JPN" width="256">ヒント！　その１９！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その１９！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_20" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその20</attribute>
+		<language name="JPN" width="256">ヒント！　その２０！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その２０！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_21" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその21</attribute>
+		<language name="JPN" width="256">ヒント！　その２１！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その２１！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_22" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその22</attribute>
+		<language name="JPN" width="256">ヒント！　その２２！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その２２！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_23" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその23</attribute>
+		<language name="JPN" width="256">ヒント！　その２３！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その２３！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_24" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその24</attribute>
+		<language name="JPN" width="256">ヒント！　その２４！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その２４！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_25" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその25</attribute>
+		<language name="JPN" width="256">ヒント！　その２５！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その２５！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_26" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその26</attribute>
+		<language name="JPN" width="256">ヒント！　その２６！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その２６！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_27" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその27</attribute>
+		<language name="JPN" width="256">ヒント！　その２７！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その２７！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_28" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその28</attribute>
+		<language name="JPN" width="256">ヒント！　その２８！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その２８！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_29" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその29</attribute>
+		<language name="JPN" width="256">ヒント！　その２９！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その２９！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_30" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・正解は</comment>
+		<attribute name="キャラ指定">ヒントその30</attribute>
+		<language name="JPN" width="256">ヒント！　その３０！▼</language>
+		<language name="JPN_KANJI" width="256">ヒント！　その３０！▼</language>
+	</row>
+
+	<row id="msg_quiz_hint_31" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<comment>・正解は
 　たんじょうび</comment>
-		<attribute name="キャラ指定">ヒントその1０</attribute>
+		<attribute name="キャラ指定">ヒントその31</attribute>
 		<language name="JPN" width="256">ヒント！
 [1:00:トレーナー名:0]さんに▽
 かんけい　ありまーす！▼</language>
