@@ -26,21 +26,21 @@
 #define ARCID (ARCID_H01_GIMMICK) // ギミックデータのアーカイブID
 #define R04D03_TMP_ASSIGN_ID  (1)
 
-#define TRAINER_TAIL_OFS (6*FIELD_CONST_GRID_FX32_SIZE)
-#define TRAINER_Y (FIELD_CONST_GRID_FX32_SIZE*5)
-#define TRAINER_RIGHT_X (447*FIELD_CONST_GRID_FX32_SIZE)
-#define TRAINER_LEFT_X (384*FIELD_CONST_GRID_FX32_SIZE)
-#define TRAINER_TAIL_RIGHT_X  (TRAINER_RIGHT_X+TRAINER_TAIL_OFS)
-#define TRAINER_TAIL_LEFT_X   (TRAINER_LEFT_X-TRAINER_TAIL_OFS)
+#define TRAILER_TAIL_OFS (6*FIELD_CONST_GRID_FX32_SIZE)
+#define TRAILER_Y (FIELD_CONST_GRID_FX32_SIZE*5)
+#define TRAILER_RIGHT_X (447*FIELD_CONST_GRID_FX32_SIZE)
+#define TRAILER_LEFT_X (384*FIELD_CONST_GRID_FX32_SIZE)
+#define TRAILER_TAIL_RIGHT_X  (TRAILER_RIGHT_X+TRAILER_TAIL_OFS)
+#define TRAILER_TAIL_LEFT_X   (TRAILER_LEFT_X-TRAILER_TAIL_OFS)
 
 
-#define TRAINER1_Z ((527+2)*FIELD_CONST_GRID_FX32_SIZE)
-#define TRAINER2_Z ((522+2)*FIELD_CONST_GRID_FX32_SIZE)
+#define TRAILER1_Z ((527+2)*FIELD_CONST_GRID_FX32_SIZE)
+#define TRAILER2_Z ((522+2)*FIELD_CONST_GRID_FX32_SIZE)
 
 
-#define TRAINER_SPEED (FIELD_CONST_GRID_FX32_SIZE)
+#define TRAILER_SPEED (FIELD_CONST_GRID_FX32_SIZE)
 
-#define TRAINER_MAX (2)
+#define TRAILER_MAX (2)
 
 #define SE_BAND_Z_MIN (0)   //SEの聞こえる幅Ｚ最小値
 #define SE_BAND_Z_MAX (0)   //SEの聞こえる幅Ｚ最大値
@@ -60,8 +60,8 @@ typedef struct GNK_OBJ_tag
 
 typedef struct
 { 
-  int Frame[TRAINER_MAX];
-  GMK_OBJ GmkObj[TRAINER_MAX];
+  int Frame[TRAILER_MAX];
+  GMK_OBJ GmkObj[TRAILER_MAX];
 } GMK_WORK;
 
 //==========================================================================================
@@ -194,14 +194,14 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   { // トレーラー1(前)
     GFL_G3D_OBJSTATUS* status;
     status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_HEAD );
-    status->trans.x = TRAINER_LEFT_X + TRAINER_SPEED * (*frame);
-    if ( status->trans.x >= TRAINER_RIGHT_X) (*frame) = 0;
+    status->trans.x = TRAILER_LEFT_X + TRAILER_SPEED * (*frame);
+    if ( status->trans.x >= TRAILER_RIGHT_X) (*frame) = 0;
   }
   { // トレーラー1(後)
     GFL_G3D_OBJSTATUS* status;
     status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_TAIL );
-    status->trans.x = TRAINER_TAIL_LEFT_X + TRAINER_SPEED * (*frame);
-    if ( status->trans.x >= TRAINER_RIGHT_X) (*frame) = 0;
+    status->trans.x = TRAILER_TAIL_LEFT_X + TRAILER_SPEED * (*frame);
+    if ( status->trans.x >= TRAILER_RIGHT_X) (*frame) = 0;
   }
 
   gmkobj = &work->GmkObj[1];
@@ -210,14 +210,14 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   { // トレーラー2(前)
     GFL_G3D_OBJSTATUS* status;
     status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_HEAD );
-    status->trans.x = TRAINER_RIGHT_X - TRAINER_SPEED * (*frame);
-    if ( status->trans.x <= TRAINER_LEFT_X) (*frame) = 0;
+    status->trans.x = TRAILER_RIGHT_X - TRAILER_SPEED * (*frame);
+    if ( status->trans.x <= TRAILER_LEFT_X) (*frame) = 0;
   }
   { // トレーラー2(後)
     GFL_G3D_OBJSTATUS* status;
     status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_TAIL );
-    status->trans.x = TRAINER_TAIL_RIGHT_X - TRAINER_SPEED * (*frame);
-    if ( status->trans.x <= TRAINER_LEFT_X) (*frame) = 0;
+    status->trans.x = TRAILER_TAIL_RIGHT_X - TRAILER_SPEED * (*frame);
+    if ( status->trans.x <= TRAILER_LEFT_X) (*frame) = 0;
   }
 
   //自機の位置座表を取得
@@ -261,9 +261,9 @@ static void InitWork( GMK_WORK* work, FIELDMAP_WORK* fieldmap )
   { // トレーラー1(前)
     GFL_G3D_OBJSTATUS* status;
     status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_HEAD );
-    status->trans.x = TRAINER_LEFT_X;
-    status->trans.y = TRAINER_Y;
-    status->trans.z = TRAINER1_Z;
+    status->trans.x = TRAILER_LEFT_X;
+    status->trans.y = TRAILER_Y;
+    status->trans.z = TRAILER1_Z;
     //90°回転
     {
       fx32 sin = FX_SinIdx(0x4000);
@@ -276,9 +276,9 @@ static void InitWork( GMK_WORK* work, FIELDMAP_WORK* fieldmap )
   { // トレーラー1(後)
     GFL_G3D_OBJSTATUS* status;
     status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_TAIL );
-    status->trans.x = TRAINER_TAIL_LEFT_X;
-    status->trans.y = TRAINER_Y;
-    status->trans.z = TRAINER1_Z;
+    status->trans.x = TRAILER_TAIL_LEFT_X;
+    status->trans.y = TRAILER_Y;
+    status->trans.z = TRAILER1_Z;
     //90°回転
     {
       fx32 sin = FX_SinIdx(0x4000);
@@ -291,9 +291,9 @@ static void InitWork( GMK_WORK* work, FIELDMAP_WORK* fieldmap )
   { // トレーラー2(前)
     GFL_G3D_OBJSTATUS* status;
     status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_HEAD );
-    status->trans.x = TRAINER_RIGHT_X;
-    status->trans.y = TRAINER_Y;
-    status->trans.z = TRAINER2_Z;
+    status->trans.x = TRAILER_RIGHT_X;
+    status->trans.y = TRAILER_Y;
+    status->trans.z = TRAILER2_Z;
     //270°回転
     {
       fx32 sin = FX_SinIdx(0x4000*3);
@@ -306,9 +306,9 @@ static void InitWork( GMK_WORK* work, FIELDMAP_WORK* fieldmap )
   { // トレーラー2(後)
     GFL_G3D_OBJSTATUS* status;
     status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_TAIL );
-    status->trans.x = TRAINER_TAIL_RIGHT_X;
-    status->trans.y = TRAINER_Y;
-    status->trans.z = TRAINER2_Z;
+    status->trans.x = TRAILER_TAIL_RIGHT_X;
+    status->trans.y = TRAILER_Y;
+    status->trans.z = TRAILER2_Z;
     //270°回転
     {
       fx32 sin = FX_SinIdx(0x4000*3);
