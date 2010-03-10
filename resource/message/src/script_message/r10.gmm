@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T11:55:00"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T14:13:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -481,34 +481,37 @@
 お互い　がんばろうね！！▼</language>
 	</row>
 
-	<row id="msg_r10_white_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r10_veteranm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・GRIDX=442、GRIDZ=110、右向き
 ・アイテム入手処理
 　No108「やみのいし」</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">……よく　ここまで　くるよな
 たいした　もんだ▼
-そんな　おまえに　そんけいの　ねんを
-いだいた　オレは　これを　くれてやる▼</language>
+そんな　おまえに
+そんけいの　ねんを　いだいた▽
+オレは　これを　くれてやるのだ▼</language>
 		<language name="JPN_KANJI" width="256">……よく　ここまで　来るよな
 たいした　もんだ▼
 そんな　おまえに　尊敬の念を抱いた
-オレは　これを　くれてやる▼</language>
+オレは　これを　くれてやるのだ▼</language>
 	</row>
 
-	<row id="msg_r10_white_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r10_veteranm_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・アイテム入手後</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">……やみのいし▼
 ある　きまった　ポケモンを
-しんかさせる　どうぐさ▼
+しんかさせる　どうぐ　なのだ▼
 オレは　タワーオブヘブンで
-つかまえた　ランプらーに　つかったよ</language>
+つかまえた　ランプラーに　つかったよ</language>
 		<language name="JPN_KANJI" width="256">……やみのいし▼
 ある　決まった　ポケモンを
-進化させる　どうぐさ▼
+進化させる　道具なのだ▼
 オレは　タワーオブヘブンで
-捕まえた　ランプらーに　使ったよ</language>
+捕まえた　ランプラーに　使ったよ</language>
 	</row>
 
 	<row id="msg_r10_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
