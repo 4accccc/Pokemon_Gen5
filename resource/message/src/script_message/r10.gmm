@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T15:54:20"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T11:55:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -479,6 +479,36 @@
 いえたら　いいのに……▼
 えーっと！
 お互い　がんばろうね！！▼</language>
+	</row>
+
+	<row id="msg_r10_white_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・GRIDX=442、GRIDZ=110、右向き
+・アイテム入手処理
+　No108「やみのいし」</comment>
+		<language name="JPN" width="256">……よく　ここまで　くるよな
+たいした　もんだ▼
+そんな　おまえに　そんけいの　ねんを
+いだいた　オレは　これを　くれてやる▼</language>
+		<language name="JPN_KANJI" width="256">……よく　ここまで　来るよな
+たいした　もんだ▼
+そんな　おまえに　尊敬の念を抱いた
+オレは　これを　くれてやる▼</language>
+	</row>
+
+	<row id="msg_r10_white_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・アイテム入手後</comment>
+		<language name="JPN" width="256">……やみのいし▼
+ある　きまった　ポケモンを
+しんかさせる　どうぐさ▼
+オレは　タワーオブヘブンで
+つかまえた　ランプらーに　つかったよ</language>
+		<language name="JPN_KANJI" width="256">……やみのいし▼
+ある　決まった　ポケモンを
+進化させる　どうぐさ▼
+オレは　タワーオブヘブンで
+捕まえた　ランプらーに　使ったよ</language>
 	</row>
 
 	<row id="msg_r10_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
