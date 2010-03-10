@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T13:08:06"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T15:37:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="195"/>
+		<comment position="4" width="235"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1488" top="190" right="2193" bottom="810" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,91 @@
 	</lock>
 
 
-	<row id="msg_c03p17_badman_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c03p17_assistantm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手前
+・メッセージ表示後、選択肢表示</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">ブロッコ　スチック　ファウン　の
+３びきは　とくべつな　いしで▽
+しんかをする　ポケモンなんだ！▼
+きみなら　どの　ポケモンを
+しんか　させてみたい？▼</language>
+		<language name="JPN_KANJI" width="256">ブロッコ　スチック　ファウン　の
+３匹は　特別な　石を　使うことで▽
+進化をする　ポケモンなんだ！▼
+きみなら　どの　ポケモンを
+進化させて　みたい？▼</language>
+	</row>
+
+	<row id="msg_c03p17_assistantm_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手処理
+　No085「リーフのいし」</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">ブロッコ　か……
+それじゃあ　リーフのいし　だね▼</language>
+		<language name="JPN_KANJI" width="256">ブロッコ　か……
+それじゃあ　リーフのいし　だね▼</language>
+	</row>
+
+	<row id="msg_c03p17_assistantm_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手処理
+　No082「ほのおのいし」</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">スチック　か……
+それじゃあ　ほのおのいし　だね▼</language>
+		<language name="JPN_KANJI" width="256">スチック　か……
+それじゃあ　ほのおのいし　だね▼</language>
+	</row>
+
+	<row id="msg_c03p17_assistantm_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手処理
+　No084「みずのいし」</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">ファウン　か……
+それじゃあ　みずのいし　だね▼</language>
+		<language name="JPN_KANJI" width="256">ファウン　か……
+それじゃあ　みずのいし　だね▼</language>
+	</row>
+
+	<row id="msg_c03p17_assistantm_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手後
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">ポケモンを　しんか　させる
+どうぐは　いし　いがいにも▽
+いろいろ　あるらしいね</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　進化させる
+道具は　石　以外にも▽
+いろいろ　あるらしいね</language>
+	</row>
+
+	<row id="msg_c03p17_select_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+		<comment>・続けてassistantm_02</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ブロッコ</language>
+		<language name="JPN_KANJI" width="256">ブロッコ</language>
+	</row>
+
+	<row id="msg_c03p17_select_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+		<comment>・続けてassistantm_03</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">スチック</language>
+		<language name="JPN_KANJI" width="256">スチック</language>
+	</row>
+
+	<row id="msg_c03p17_select_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+		<comment>・続けてassistantm_04</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ファウン</language>
+		<language name="JPN_KANJI" width="256">ファウン</language>
+	</row>
+
+	<row id="msg_c03p17_badman_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BADMAN</attribute>
