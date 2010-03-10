@@ -143,7 +143,6 @@ EVENT_START		ev_c03r0201_clown_01
 		//今日は（指定ポケモン）タイプが見たい！見せてくれる？
 		_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_01 , C03R0201_CLOWN_01 )
 		_YES_NO_WIN( SCWK_ANSWER )
-		_BALLOONWIN_CLOSE()
 		
 		//はい
 		IF $SCWK_ANSWER == 0 THEN
@@ -171,6 +170,7 @@ EVENT_START		ev_c03r0201_clown_01
 				//【仮】タマゴの場合の台詞
 				IF $LWK_EGG_RESULT == TRUE THEN
 					_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_06 ,C03R0201_CLOWN_01)
+					_LAST_KEYWAIT()
 					_BALLOONWIN_CLOSE()
 		
 				//タマゴ以外の場合
@@ -185,12 +185,82 @@ EVENT_START		ev_c03r0201_clown_01
 					//選択したポケモンと指定タイプが一致していた
 					IF $WK_OTHER_C03R0201_GALLERY == $LWK_POKE_TYPE01 || $WK_OTHER_C03R0201_GALLERY == $LWK_POKE_TYPE02 THEN
 					
-						//ありがとう！お礼にこれをあげよう！
+						//ありがとう！お礼はどれがいいかな？
 						_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_02 ,C03R0201_CLOWN_01)
-						_BALLOONWIN_CLOSE()
 						
-						//アイテム入手処理
-						_ITEM_EVENT_KEYWAIT ( ITEM_ORENNOMI , 1  )
+							//ローカル変数を定義
+							DEFINE_LOCAL	LWK_STATE_SELECT
+							
+							//分岐
+							_BMPMENU_INIT_EX( 1, 1, 0, 0, LWK_STATE_SELECT )
+							
+							_BMPMENU_MAKE_LIST( msg_c03r0201_select_01, 0 )	//クラボ
+							_BMPMENU_MAKE_LIST( msg_c03r0201_select_02, 1 )	//カゴ
+							_BMPMENU_MAKE_LIST( msg_c03r0201_select_03, 2 )	//モモン
+							_BMPMENU_MAKE_LIST( msg_c03r0201_select_04, 3 )	//チーゴ
+							_BMPMENU_MAKE_LIST( msg_c03r0201_select_05, 4 )	//ナナシ
+							
+							//メニュー表示
+							_BMPMENU_START()
+								
+							//選択結果で分岐
+								
+								//クラボ選択
+								IF $LWK_STATE_SELECT == 0 THEN
+									
+									//アイテム名を格納
+									_ITEM_NAME  	( 0,ITEM_KURABONOMI )
+									//はい たしかにー！
+									_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_07 ,C03R0201_CLOWN_01)
+									_BALLOONWIN_CLOSE()
+									//アイテム入手処理
+									_ITEM_EVENT_KEYWAIT ( ITEM_KURABONOMI , 1)
+										
+								//カゴ選択
+								ELSIF $LWK_STATE_SELECT == 1 THEN
+									
+									//アイテム名を格納
+									_ITEM_NAME  	( 0,ITEM_KAGONOMI )
+									//はい たしかにー！
+									_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_07 ,C03R0201_CLOWN_01)
+									_BALLOONWIN_CLOSE()
+									//アイテム入手処理
+									_ITEM_EVENT_KEYWAIT ( ITEM_KAGONOMI , 1)
+										
+								//モモン選択
+								ELSIF $LWK_STATE_SELECT == 2 THEN
+								
+									//アイテム名を格納
+									_ITEM_NAME  	( 0,ITEM_MOMONNOMI )
+									//はい たしかにー！
+									_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_07 ,C03R0201_CLOWN_01)
+									_BALLOONWIN_CLOSE()
+									//アイテム入手処理
+									_ITEM_EVENT_KEYWAIT ( ITEM_MOMONNOMI , 1)
+									
+								//チーゴ選択
+								ELSIF $LWK_STATE_SELECT == 3 THEN
+									
+									//アイテム名を格納
+									_ITEM_NAME  	( 0,ITEM_TIIGONOMI )
+									//はい たしかにー！
+									_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_07 ,C03R0201_CLOWN_01)
+									_BALLOONWIN_CLOSE()
+									//アイテム入手処理
+									_ITEM_EVENT_KEYWAIT ( ITEM_TIIGONOMI , 1)
+									
+								//ナナシ選択
+								ELSIF $LWK_STATE_SELECT == 4 THEN
+									
+									//アイテム名を格納
+									_ITEM_NAME  	( 0,ITEM_NANASINOMI )
+									//はい たしかにー！
+									_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_07 ,C03R0201_CLOWN_01)
+									_BALLOONWIN_CLOSE()
+									//アイテム入手処理
+									_ITEM_EVENT_KEYWAIT ( ITEM_NANASINOMI , 1)
+								
+								ENDIF
 						
 						//また明日も来てね
 						_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_03 ,C03R0201_CLOWN_01)

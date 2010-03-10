@@ -21,6 +21,8 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c03r0301_infomationw_01
 _EVENT_DATA		ev_pos_c03r0301_cleaningm_01
+_EVENT_DATA		ev_bg_c03r0301_statue_01
+_EVENT_DATA		ev_bg_c03r0301_painting_01
 _EVENT_DATA_END
 
 
@@ -41,18 +43,67 @@ EVENT_END
 /* 			POS：会長		C03R0301						  */
 /**************************************************************/
 EVENT_START		ev_pos_c03r0301_cleaningm_01
-
-	//【仮】会長隣接（POS位置による処理が仮です）
-	_OBJ_ANIME( C03R0301_CLEANINGM_01 , anm_cleaningm_come )
-	_OBJ_ANIME_WAIT()
+	{
+	//自機座標取得変数定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
 	
-	//
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+	
+	//主人公座標に応じてサポートに隣接
+	SWITCH $POSX
+	CASE 6 THEN
+		_OBJ_ANIME( C03R0301_CLEANINGM_01,anm_cleaningm_come_x6 )
+		_OBJ_ANIME_WAIT()
+	CASE 7 THEN
+		_OBJ_ANIME( C03R0301_CLEANINGM_01,anm_cleaningm_come_x7 )
+		_OBJ_ANIME_WAIT()
+	CASE 8 THEN
+		_OBJ_ANIME( C03R0301_CLEANINGM_01,anm_cleaningm_come_x8 )
+	_OBJ_ANIME_WAIT()
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		_OBJ_ANIME( C03R0301_CLEANINGM_01,anm_cleaningm_come_x7 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	//このビルではたらく
 	_BALLOONWIN_OBJMSG( msg_c03r0301_cleaningm_01,C03R0301_CLEANINGM_01)
 	_BALLOONWIN_CLOSE()
 	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+
+	//カメラ操作　サポートの位置にカメラを合わせる
+	_CAMERA_MOVE( 9777,0,969632,491520,0,364544,30 )
+	
 	//会長退場01
-	_OBJ_ANIME( C03R0301_CLEANINGM_01 , anm_cleaningm_bye01 )
+	SWITCH $POSX
+	CASE 6 THEN
+		_OBJ_ANIME( C03R0301_CLEANINGM_01,anm_cleaningm_bye01_x6 )
+		_OBJ_ANIME_WAIT()
+	CASE 7 THEN
+		_OBJ_ANIME( C03R0301_CLEANINGM_01,anm_cleaningm_bye01_x7 )
+		_OBJ_ANIME_WAIT()
+	CASE 8 THEN
+		_OBJ_ANIME( C03R0301_CLEANINGM_01,anm_cleaningm_bye01_x8 )
 	_OBJ_ANIME_WAIT()
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		_OBJ_ANIME( C03R0301_CLEANINGM_01,anm_cleaningm_bye01_x7 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_OBJ_ANIME_WAIT()
+	
+	//12フレーム待ち
+	_TIME_WAIT ( 12 )
+	
+	//エレベータ到着音
+	_SE_PLAY( SEQ_SE_FLD_23 )
+	_TIME_WAIT ( 8 )
+	_SE_STOP( ) 
+	_SE_PLAY( SEQ_SE_FLD_87 )
+	_SE_WAIT()
 	
 	//ドア開ける
 	DEFINE_LOCAL	DOOR_ANIME_ID
@@ -72,36 +123,104 @@ EVENT_START		ev_pos_c03r0301_cleaningm_01
 	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
 	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
 	
+	//エレベータ移動音
+	_SE_PLAY( SEQ_SE_FLD_23 )
+	_TIME_WAIT ( 12 )
+	_SE_STOP( ) 
+	
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
 	//==================================//
 
 	//会長を非表示
 	_FLAG_SET( FV_C03R0301_CLEANINGM_01 )
 
-	//R01の全てのPOSを無効に
+	//C03R0301の全てのPOSを無効に
 	$WK_SCENE_C03R0301 = 1
 
 	//==================================//
-	
+	}
+EVENT_END
+
+/**************************************************************/
+/* 			石像		C03R0301						  */
+/**************************************************************/
+EVENT_START		ev_bg_c03r0301_statue_01
+	_PLAINWIN_MSG_DOWN( msg_c03r0301_statue_01 )
+	_LAST_KEYWAIT()	
+	_PLAINWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/* 			絵		C03R0301						  */
+/**************************************************************/
+EVENT_START		ev_bg_c03r0301_painting_01
+	_PLAINWIN_MSG_DOWN( msg_c03r0301_painting1_01 )
+	_LAST_KEYWAIT()	
+	_PLAINWIN_CLOSE()
 EVENT_END
 
 //--------------------------------------------------------------
-//	会長：隣接
+//	会長：隣接x6
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_cleaningm_come
+_ANIME_LABEL	anm_cleaningm_come_x6
 	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------
-//	会長：退場
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_cleaningm_bye01
-	_ANIME_DATA	AC_WALK_U_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	会長：退場
+//	会長：隣接x6
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_cleaningm_come_x7
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	会長：隣接x6
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_cleaningm_come_x8
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	会長：退場x6
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_cleaningm_bye01_x6
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	会長：退場x6
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_cleaningm_bye01_x7
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	会長：退場x6
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_cleaningm_bye01_x8
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	会長：退場02
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_cleaningm_bye02
+	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
