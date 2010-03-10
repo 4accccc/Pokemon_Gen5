@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T22:33:03"/>
+	<create user="iwasawa" host="W00157" date="2010-03-10T15:01:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1447" top="182" right="2152" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="785" top="91" right="1258" bottom="715" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -351,55 +351,48 @@
 	</row>
 
 	<row id="msg_wonderpower_effect_06">
-		<language name="JPN" width="256">どこかで　ポケモンが
-たいりょうはっせい　した！</language>
-		<language name="JPN_KANJI" width="256">どこかで　ポケモンが
-大量発生した！</language>
-	</row>
-
-	<row id="msg_wonderpower_effect_07">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
 たいりょくが　かいふくした！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
 体力が回復した！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_08">
+	<row id="msg_wonderpower_effect_07">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
 ＰＰが　かいふくした！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
 ＰＰが回復した！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_09">
+	<row id="msg_wonderpower_effect_08">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンは
 けいけんちを　もらいやすくなった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンは
 経験値を　もらいやすくなった！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_10">
+	<row id="msg_wonderpower_effect_09">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンは
 けいけんちを　もらいづらくなった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンは
 経験値を　もらいづらくなった！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_11">
+	<row id="msg_wonderpower_effect_10">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　おこづかいを
 もらいやすくなった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　おこづかいを
 もらいやすくなった！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_12">
+	<row id="msg_wonderpower_effect_11">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　ポケモンを
 つかまえやすくなった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　ポケモンを
 捕まえやすくなった！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_13">
+	<row id="msg_wonderpower_effect_12">
 		<language name="JPN" width="256">パレスの　ツリーに
 なにかが　うみだされた！</language>
 		<language name="JPN_KANJI" width="256">パレスの　ツリーに
