@@ -982,3 +982,62 @@ static u32 GetFieldBGM( GAMEDATA* gameData, u32 zoneID )
 
   return soundIdx;
 }
+
+
+
+
+//=================================================================================
+// ■環境音
+//=================================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  環境音の再生
+ *
+ *	@param	fieldSound    フィールドサウンド
+ *	@param	soundIdx      サウンドインデックス
+ */
+//-----------------------------------------------------------------------------
+void FSND_PlayEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
+{
+  FIELD_SOUND_PlayEnvSE( fieldSound, soundIdx );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  環境音の停止
+ *
+ *	@param	fieldSound  フィールドサウンド
+ *	@param	soundIdx    サウンドインデックス
+ */
+//-----------------------------------------------------------------------------
+void FSND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
+{
+  FIELD_SOUND_StopEnvSE( fieldSound, soundIdx );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  環境音の一時停止
+ *
+ *	@param	fieldSound  フィールドサウンド
+ */
+//-----------------------------------------------------------------------------
+void FSND_PauseEnvSE( FIELD_SOUND* fieldSound )
+{
+  FIELD_SOUND_PauseEnvSE( fieldSound );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  環境音の再始動
+ *
+ *	@param	fieldSound  フィールドサウンド
+ */
+//-----------------------------------------------------------------------------
+void FSND_RePlayEnvSE( FIELD_SOUND* fieldSound )
+{
+  FIELD_SOUND_RePlayEnvSE( fieldSound );
+}
+
+
+

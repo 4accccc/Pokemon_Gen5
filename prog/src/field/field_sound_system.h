@@ -98,3 +98,17 @@ extern void FIELD_SOUND_Reset( FIELD_SOUND* fieldSound );
 // 　field_sound.h に宣言されている関数を使ってください。
 //=================================================================================
 extern void FIELD_SOUND_ChangePlayerVolume( FIELD_SOUND* fieldSound, u8 volume, u8 fadeFrame );
+
+
+
+//=================================================================================
+// ■環境音
+//=================================================================================
+// 環境音の再生
+extern void FIELD_SOUND_PlayEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx );
+// 環境音の停止
+extern void FIELD_SOUND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx );
+// 環境音の一時停止
+extern void FIELD_SOUND_PauseEnvSE( FIELD_SOUND* fieldSound );
+// 環境音の再始動
+extern void FIELD_SOUND_RePlayEnvSE( FIELD_SOUND* fieldSound );

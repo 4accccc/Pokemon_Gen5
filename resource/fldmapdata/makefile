@@ -43,6 +43,7 @@ SUBDIRS	=	zonetable/zoneindex \
 					pushrock \
 					eventdata/binary \
 					crowd_people \
+					envse \
 					diving_spot \
 					zonetable/fieldskill_mapeffect \
 					zonetable

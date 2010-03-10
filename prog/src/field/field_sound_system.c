@@ -10,6 +10,8 @@
 #include "sound/pm_sndsys.h"
 #include "player_volume_fader.h"
 
+#include "field_envse_data.h"
+
 
 //================================================================================= 
 // ■定数
@@ -98,6 +100,18 @@ typedef struct
 } FSND_REQUEST_DATA;
 
 
+//=================================================================================
+// ■環境音SE管理
+//=================================================================================
+#define FSND_ENVSE_PLAYER_MAX (2)
+#define FSND_ENVSE_NONE (0xffffffff)  // SEなし用定数
+typedef struct 
+{
+  u32 envse_tbl[ FSND_ENVSE_PLAYER_MAX ];
+  BOOL pause;
+} FSND_ENVSE_DATA;
+
+
 //================================================================================= 
 // ■フィールドサウンド管理ワーク
 //================================================================================= 
@@ -126,6 +140,9 @@ struct _FIELD_SOUND
 
   // プレイヤーボリューム管理
   PLAYER_VOLUME_FADER* playerVolumeFader;
+
+  // 環境SE管理
+  FSND_ENVSE_DATA envse;
 };
 
 
@@ -444,6 +461,121 @@ void FIELD_SOUND_ChangePlayerVolume( FIELD_SOUND* fieldSound, u8 volume, u8 fade
 }
 
 
+
+
+
+//=================================================================================
+// ■環境音
+//=================================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  環境音SEの再生
+ *
+ *	@param	fieldSound    フィールドサウンド
+ *	@param	soundIdx      サウンドID
+ */
+//-----------------------------------------------------------------------------
+void FIELD_SOUND_PlayEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
+{
+  // 環境音SEかチェック
+  if( FLD_ENVSE_DATA_IsEnvSE( soundIdx ) == FALSE ){
+    GF_ASSERT( 0 );
+    //環境音SEじゃないので、鳴らす
+    PMSND_PlaySE( soundIdx );
+  }else{
+
+    // ループサウンドなら保存
+    if( FLD_ENVSE_DATA_IsLoopSE( soundIdx ) ){
+      SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( soundIdx );
+      fieldSound->envse.envse_tbl[ player_ID - SEPLAYER_SE1 ] = soundIdx;
+    }
+
+    // Pauseではないときにだけ鳴らす
+    if( fieldSound->envse.pause == FALSE ){
+      PMSND_PlaySE( soundIdx );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  環境音を停止する
+ *
+ *	@param	fieldSound  フィールドサウンド
+ *	@param	soundIdx    サウンド
+ */   
+//-----------------------------------------------------------------------------
+void FIELD_SOUND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
+{
+  SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( soundIdx );
+
+  // 環境音SEかチェック
+  if( FLD_ENVSE_DATA_IsEnvSE( soundIdx ) == FALSE ){
+    GF_ASSERT( 0 );
+    //環境音SEじゃないけれど停止する
+    PMSND_StopSE_byPlayerID( player_ID );
+  }else{
+
+    // ループサウンドテーブルから破棄
+    if( FLD_ENVSE_DATA_IsLoopSE( soundIdx ) ){
+
+      // 一致したら破棄
+      if( fieldSound->envse.envse_tbl[ player_ID - SEPLAYER_SE1 ] == soundIdx ){
+        fieldSound->envse.envse_tbl[ player_ID - SEPLAYER_SE1 ] = FSND_ENVSE_NONE;
+      }
+    }
+
+    //環境音SE停止
+    PMSND_StopSE_byPlayerID( player_ID );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  環境音SEを停止する
+ *
+ *	@param	fieldSound  フィールドサウンド
+ */
+//-----------------------------------------------------------------------------
+void FIELD_SOUND_PauseEnvSE( FIELD_SOUND* fieldSound )
+{
+  int i;
+  
+  fieldSound->envse.pause = TRUE;
+  
+  // 停止
+  for( i=0; i<FSND_ENVSE_PLAYER_MAX; i++ ){
+    if( fieldSound->envse.envse_tbl[ i+SEPLAYER_SE1 ] != FSND_ENVSE_NONE ){
+      // SE停止
+      PMSND_StopSE_byPlayerID( i+SEPLAYER_SE1 );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  環境音SEの再始動
+ *
+ *	@param	fieldSound  フィールドサウンド
+ */
+//-----------------------------------------------------------------------------
+void FIELD_SOUND_RePlayEnvSE( FIELD_SOUND* fieldSound )
+{
+  int i;
+  
+  if( fieldSound->envse.pause == TRUE ){
+
+    fieldSound->envse.pause= FALSE;
+
+    for( i=0; i<FSND_ENVSE_PLAYER_MAX; i++ ){
+      if( fieldSound->envse.envse_tbl[ i ] != FSND_ENVSE_NONE ){
+        PMSND_PlaySE( fieldSound->envse.envse_tbl[ i ] );
+      }
+    }
+  }
+}
+
+
 //================================================================================= 
 // ■非公開関数
 //================================================================================= 
@@ -480,6 +612,13 @@ static void InitFieldSoundSystem( FIELD_SOUND* fieldSound )
 
   fieldSound->requestHeadPos = 0;
   fieldSound->requestTailPos = 0;
+
+  // 環境音SE管理ワークの初期化
+  for( i=0; i<FSND_ENVSE_PLAYER_MAX; i++ )
+  {
+    fieldSound->envse.envse_tbl[i] = FSND_ENVSE_NONE;
+  }
+  fieldSound->envse.pause = FALSE;
 }
 
 //---------------------------------------------------------------------------------

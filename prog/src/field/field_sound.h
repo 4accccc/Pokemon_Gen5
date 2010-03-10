@@ -88,3 +88,16 @@ extern u32 FSND_GetFieldBGM( GAMEDATA* gdata, u32 zoneID );
 
 // トレーナー視線 BGM No.
 extern u32 FSND_GetTrainerEyeBGM( u32 trType ); 
+
+
+//=================================================================================
+// ■環境音
+//=================================================================================
+// 環境音の再生
+extern void FSND_PlayEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx );
+// 環境音の停止
+extern void FSND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx );
+// 環境音の一時停止
+extern void FSND_PauseEnvSE( FIELD_SOUND* fieldSound );
+// 環境音の再始動
+extern void FSND_RePlayEnvSE( FIELD_SOUND* fieldSound );
