@@ -269,6 +269,7 @@ extern void PLAYERINFO_LIVE_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_
 //=====================================
 extern BOOL PLAYERINFO_PrintMain( PLAYERINFO_WORK * p_wk, PRINT_QUE *p_que );
 extern BOOL PLAYERINFO_MoveMain( PLAYERINFO_WORK * p_wk );
+extern BOOL PLAYERINFO_MoveOutMain( PLAYERINFO_WORK * p_wk );
 
 #ifdef DEBUG_DATA_CREATE
 extern void PLAYERINFO_DEBUG_CreateRndData( WIFIBATTLEMATCH_TYPE mode, void *p_data_adrs );

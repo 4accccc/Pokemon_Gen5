@@ -111,7 +111,8 @@ static void DC_SEQFUNC_End( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 //プレイヤー情報
 static void Util_PlayerInfo_Create( DIGITALCARD_CHECK_WORK *p_wk );
 static void Util_PlayerInfo_Delete( DIGITALCARD_CHECK_WORK *p_wk );
-static BOOL Util_PlayerInfo_Move( DIGITALCARD_CHECK_WORK *p_wk );
+static BOOL Util_PlayerInfo_MoveIn( DIGITALCARD_CHECK_WORK *p_wk );
+static BOOL Util_PlayerInfo_MoveOut( DIGITALCARD_CHECK_WORK *p_wk );
 static void Util_PlayerInfo_RenewalData( DIGITALCARD_CHECK_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_TYPE type );
 //選択肢
 typedef enum
@@ -290,6 +291,7 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     SEQ_WAIT_MSG,
     SEQ_START_LIST_RETURN,
     SEQ_WAIT_LIST_RETURN,
+    SEQ_WAIT_MOVEOUT_PLAYERINFO,
     SEQ_PROC_END,
   };
   DIGITALCARD_CHECK_WORK	  *p_wk	    = p_wk_adrs;
@@ -302,7 +304,7 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     break;
 
   case SEQ_WAIT_DRAW_PLAYERINFO:
-    if( Util_PlayerInfo_Move( p_wk ) )
+    if( Util_PlayerInfo_MoveIn( p_wk ) )
     { 
       *p_seq  = SEQ_WAIT_PUSH;
     }
@@ -341,9 +343,16 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
         Util_List_Delete( p_wk );
         if( select == 0 )
         { 
-          *p_seq  = SEQ_PROC_END;
+          *p_seq  = SEQ_WAIT_MOVEOUT_PLAYERINFO;
         }
       }
+    }
+    break;
+
+  case SEQ_WAIT_MOVEOUT_PLAYERINFO:
+    if( Util_PlayerInfo_MoveOut( p_wk ) )
+    { 
+      *p_seq  = SEQ_PROC_END;
     }
     break;
     
@@ -386,6 +395,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_WAIT_SAVE,
     SEQ_START_MSG_UNLOCK,
 
+    SEQ_WAIT_MOVEOUT_PLAYERINFO,
     SEQ_PROC_END,
     SEQ_WAIT_MSG,
   };
@@ -399,7 +409,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_WAIT_DRAW_PLAYERINFO:
-    if( Util_PlayerInfo_Move( p_wk ) )
+    if( Util_PlayerInfo_MoveIn( p_wk ) )
     { 
       *p_seq  = SEQ_WAIT_PUSH;
     }
@@ -436,7 +446,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         }
         else if( select == 1 )  //もどる
         { 
-          *p_seq  = SEQ_PROC_END;
+          *p_seq  = SEQ_WAIT_MOVEOUT_PLAYERINFO;
         }
       }
     }
@@ -463,7 +473,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         }
         else if( select == 1 )  //いいえ
         { 
-          *p_seq  = SEQ_PROC_END;
+          *p_seq  = SEQ_WAIT_MOVEOUT_PLAYERINFO;
         }
       }
     }
@@ -489,7 +499,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         }
         else if( select == 1 )  //いいえ
         { 
-          *p_seq  = SEQ_PROC_END;
+          *p_seq  = SEQ_WAIT_MOVEOUT_PLAYERINFO;
         }
       }
     }
@@ -517,16 +527,14 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     
   case SEQ_START_SAVE:
     { 
-      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
-      SaveControl_SaveAsyncInit(p_sv);
+      GAMEDATA_SaveAsyncStart( p_wk->param.p_gamedata );
       *p_seq  = SEQ_WAIT_SAVE;
     }
     break;
   case SEQ_WAIT_SAVE:
     {
       SAVE_RESULT ret;
-      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
-      ret = SaveControl_SaveAsyncMain(p_sv);
+      ret = GAMEDATA_SaveAsyncMain( p_wk->param.p_gamedata );
       if( ret == SAVE_RESULT_OK )
       { 
         *p_seq  = SEQ_START_MSG_UNLOCK;
@@ -540,7 +548,14 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_START_MSG_UNLOCK:
     Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_05 );
     *p_seq  = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_PROC_END );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_WAIT_MOVEOUT_PLAYERINFO );
+    break;
+
+  case SEQ_WAIT_MOVEOUT_PLAYERINFO:
+    if( Util_PlayerInfo_MoveOut( p_wk ) )
+    { 
+      *p_seq  = SEQ_PROC_END;
+    }
     break;
 
   case SEQ_PROC_END:
@@ -576,6 +591,7 @@ static void DC_SEQFUNC_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     SEQ_WAIT_MSG,
     SEQ_START_LIST_RETURN,
     SEQ_WAIT_LIST_RETURN,
+    SEQ_WAIT_MOVEOUT_PLAYERINFO,
     SEQ_PROC_END,
   };
   DIGITALCARD_CHECK_WORK	  *p_wk	    = p_wk_adrs;
@@ -588,7 +604,7 @@ static void DC_SEQFUNC_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     break;
 
   case SEQ_WAIT_DRAW_PLAYERINFO:
-    if( Util_PlayerInfo_Move( p_wk ) )
+    if( Util_PlayerInfo_MoveIn( p_wk ) )
     { 
       *p_seq  = SEQ_WAIT_PUSH;
     }
@@ -627,9 +643,16 @@ static void DC_SEQFUNC_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
         Util_List_Delete( p_wk );
         if( select == 0 )
         { 
-          *p_seq  = SEQ_PROC_END;
+          *p_seq  = SEQ_WAIT_MOVEOUT_PLAYERINFO;
         }
       }
+    }
+    break;
+
+  case SEQ_WAIT_MOVEOUT_PLAYERINFO:
+    if( Util_PlayerInfo_MoveOut( p_wk ) )
+    { 
+      *p_seq  = SEQ_PROC_END;
     }
     break;
     
@@ -658,6 +681,7 @@ static void DC_SEQFUNC_Retire( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     SEQ_WAIT_MSG,
     SEQ_START_LIST_RETURN,
     SEQ_WAIT_LIST_RETURN,
+    SEQ_WAIT_MOVEOUT_PLAYERINFO,
     SEQ_PROC_END,
   };
   DIGITALCARD_CHECK_WORK	  *p_wk	    = p_wk_adrs;
@@ -670,7 +694,7 @@ static void DC_SEQFUNC_Retire( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     break;
 
   case SEQ_WAIT_DRAW_PLAYERINFO:
-    if( Util_PlayerInfo_Move( p_wk ) )
+    if( Util_PlayerInfo_MoveIn( p_wk ) )
     { 
       *p_seq  = SEQ_WAIT_PUSH;
     }
@@ -709,9 +733,16 @@ static void DC_SEQFUNC_Retire( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
         Util_List_Delete( p_wk );
         if( select == 0 )
         { 
-          *p_seq  = SEQ_PROC_END;
+          *p_seq  = SEQ_WAIT_MOVEOUT_PLAYERINFO;
         }
       }
+    }
+    break;
+
+  case SEQ_WAIT_MOVEOUT_PLAYERINFO:
+    if( Util_PlayerInfo_MoveOut( p_wk ) )
+    { 
+      *p_seq  = SEQ_PROC_END;
     }
     break;
     
@@ -836,6 +867,8 @@ static void Util_PlayerInfo_Create( DIGITALCARD_CHECK_WORK *p_wk )
     }
 
     p_wk->p_playerinfo	= PLAYERINFO_WIFI_Init( &info_setup, FALSE, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_msg, p_wk->p_word, p_bbox_save, TRUE, p_wk->heapID );
+
+    Util_Text_SetVisible( p_wk, FALSE );
   }
 }
 //----------------------------------------------------------------------------
@@ -862,9 +895,22 @@ static void Util_PlayerInfo_Delete( DIGITALCARD_CHECK_WORK *p_wk )
  *	@return TRUEで完了  FALSEで処理中
  */
 //-----------------------------------------------------------------------------
-static BOOL Util_PlayerInfo_Move( DIGITALCARD_CHECK_WORK *p_wk )
+static BOOL Util_PlayerInfo_MoveIn( DIGITALCARD_CHECK_WORK *p_wk )
 { 
-  return PLAYERINFO_MoveMain( p_wk->p_playerinfo );
+  return PLAYERINFO_MoveMain( p_wk->p_playerinfo );;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分のカードをスライドアウト
+ *
+ *	@param	DIGITALCARD_CHECK_WORK *p_wk  ワーク
+ *
+ *	@return TRUEで完了  FALSEで処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL Util_PlayerInfo_MoveOut( DIGITALCARD_CHECK_WORK *p_wk )
+{ 
+  return PLAYERINFO_MoveOutMain( p_wk->p_playerinfo );
 }
 //----------------------------------------------------------------------------
 /**
@@ -876,7 +922,14 @@ static BOOL Util_PlayerInfo_Move( DIGITALCARD_CHECK_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void Util_PlayerInfo_RenewalData( DIGITALCARD_CHECK_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_TYPE type )
 { 
-  PLAYERINFO_WIFI_RenewalData( p_wk->p_playerinfo, type, p_wk->p_msg, p_wk->param.p_que, p_wk->param.p_font, p_wk->heapID );
+  if( p_wk->param.type == REGULATION_CARD_TYPE_WIFI )
+  { 
+    PLAYERINFO_WIFI_RenewalData( p_wk->p_playerinfo, type, p_wk->p_msg, p_wk->param.p_que, p_wk->param.p_font, p_wk->heapID );
+  }
+  else
+  { 
+    PLAYERINFO_LIVE_RenewalData( p_wk->p_playerinfo, type, p_wk->p_msg, p_wk->param.p_que, p_wk->param.p_font, p_wk->heapID );
+  }
 }
 //----------------------------------------------------------------------------
 /**

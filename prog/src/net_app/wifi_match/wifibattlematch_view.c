@@ -264,6 +264,13 @@ void WIFIBATTLEMATCH_VIEW_LoadScreen( WIFIBATTLEMATCH_VIEW_RESOURCE *p_wk, WIFIB
     break;
   }
 
+  //カードは横にずらしておく
+  GFL_BG_SetScroll( BG_FRAME_M_CARD, GFL_BG_SCROLL_X_SET, -WBM_CARD_INIT_POS_X );
+  GFL_BG_SetScroll( BG_FRAME_M_FONT, GFL_BG_SCROLL_X_SET, -WBM_CARD_INIT_POS_X );
+  GFL_BG_SetScroll( BG_FRAME_S_CARD, GFL_BG_SCROLL_X_SET, -WBM_CARD_INIT_POS_X );
+  GFL_BG_SetScroll( BG_FRAME_S_FONT, GFL_BG_SCROLL_X_SET, -WBM_CARD_INIT_POS_X );
+
+
   GFL_ARC_CloseDataHandle( p_handle );
 }
  
@@ -890,6 +897,67 @@ BOOL PLAYERINFO_MoveMain( PLAYERINFO_WORK * p_wk )
     if( p_wk->cnt++ >= CARD_WAIT_SYNC )
     { 
       x = 0;
+      p_wk->cnt = 0;
+      ret = TRUE;
+    }
+
+    GFL_BG_SetScrollReq( p_wk->frm+1, GFL_BG_SCROLL_X_SET, x );
+    GFL_BG_SetScrollReq( p_wk->frm, GFL_BG_SCROLL_X_SET, x );
+    return ret;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カードをスライドアウト
+ *
+ *	@param	PLAYERINFO_WORK *p_wk  ワーク
+ *
+ *	@return TRUEで完了  FALSEで処理中
+ */
+//-----------------------------------------------------------------------------
+BOOL PLAYERINFO_MoveOutMain( PLAYERINFO_WORK * p_wk )
+{ 
+
+  { 
+    BOOL ret  = FALSE;
+  
+    s32 x;
+
+    if( p_wk->cnt == 0 )
+    { 
+      int i;
+      GFL_CLACTPOS  pos;
+      for( i = 0; i < PLAYERINFO_CLWK_MAX; i++ )
+      { 
+        if( p_wk->p_clwk[i] )
+        { 
+          GFL_CLACT_WK_GetPos( p_wk->p_clwk[i], &pos, p_wk->cl_draw_type );
+          p_wk->clwk_x[i]  = pos.x;
+        }
+      }
+
+      PMSND_PlaySE( WBM_SND_SE_CARD_SLIDE );
+    }
+
+    x =  WBM_CARD_INIT_POS_X * p_wk->cnt / CARD_WAIT_SYNC;
+
+    { 
+      int i;
+      GFL_CLACTPOS  pos;
+      for( i = 0; i < PLAYERINFO_CLWK_MAX; i++ )
+      { 
+        if( p_wk->p_clwk[i] )
+        { 
+          GFL_CLACT_WK_GetPos( p_wk->p_clwk[i], &pos, p_wk->cl_draw_type );
+          pos.x = p_wk->clwk_x[i] - WBM_CARD_INIT_POS_X * p_wk->cnt / CARD_WAIT_SYNC;
+          GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &pos, p_wk->cl_draw_type );
+        }
+      }
+    }
+
+    if( p_wk->cnt++ >= CARD_WAIT_SYNC )
+    { 
+      x = WBM_CARD_INIT_POS_X;
       p_wk->cnt = 0;
       ret = TRUE;
     }

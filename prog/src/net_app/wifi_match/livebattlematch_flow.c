@@ -56,6 +56,7 @@ FS_EXTERN_OVERLAY( ui_common );
 //=====================================
 #ifdef PM_DEBUG
 #define DEBUG_REGULATIONCRC_PASS  //レギュレーションのCRCチェックを通過する
+#define DEBUG_REGULATION_RECVCHECK_PASS  //レギュレーションの受信チェックを通過する
 #endif //PM_DEBUG
 
 //=============================================================================
@@ -530,7 +531,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_WAIT_CANCEL:    //キャンセル
     if( LIVEBATTLEMATCH_IRC_WaitCancelRecvRegulation( p_wk->p_irc ) )
     { 
-      *p_seq  = SEQ_WAIT_CANCEL;
+      *p_seq  = SEQ_START_MSG_CANCEL;
     }
     break;
   case SEQ_START_MSG_CANCEL:
@@ -573,6 +574,12 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       if( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO) ==
           Regulation_GetCardParam( &p_wk->regulation_temp, REGULATION_CARD_CUPNO) )
       { 
+#ifdef DEBUG_REGULATION_RECVCHECK_PASS
+        { 
+          *p_seq  = SEQ_START_MSG_SAVE;
+          break;
+        }
+#endif 
         //同じなので同じ大会に登録しようとした
         switch( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS) )
         {   
