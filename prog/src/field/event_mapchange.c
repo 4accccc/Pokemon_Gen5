@@ -1296,6 +1296,7 @@ GMEVENT* EVENT_ChangeMapToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecFx32
     setNowLoaction( &return_loc, fieldWork );
     GAMEDATA_SetPalaceReturnLocation(gamedata, &return_loc);
   }
+  GAMEDATA_SetIntrudeReverseArea(gamedata, TRUE);
   event = EVENT_ChangeMapPos(gsys, fieldWork, zone_id, pos, DIR_UP, FALSE);
   return event;
 }
@@ -1308,16 +1309,19 @@ GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
 {
   MAPCHANGE_WORK* work;
   GMEVENT* event;
-
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gameSystem);
+  
   event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK) );
   work  = GMEVENT_GetEventWork( event );
 
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem );
   //覚えておいた戻り先をそのまま代入
-  work->loc_req = *(GAMEDATA_GetPalaceReturnLocation( GAMESYSTEM_GetGameData(gameSystem) ) );
+  work->loc_req = *(GAMEDATA_GetPalaceReturnLocation( gamedata ) );
   work->exit_type          = EXIT_TYPE_NONE;
   work->seasonUpdateEnable = FALSE;
+
+  GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
 
   return event;
 }
@@ -1864,7 +1868,8 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
 
   //※check　スクリプトでマップ作成前に実行できるタイミングが出来れば、そこで行うようにしたい
 //  if(ZONEDATA_IsPalaceField(loc_req->zone_id) || ZONEDATA_IsBingo(loc_req->zone_id)){
-  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
+  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE 
+      && ZONEDATA_IsPalace(loc_req->zone_id) == FALSE){ //パレス島では白黒にしない
     FIELD_STATUS_SetMapMode( GAMEDATA_GetFieldStatus( gamedata ), MAPMODE_INTRUDE );
     //GAMEDATA_SetMapMode(gamedata, MAPMODE_INTRUDE);
   }

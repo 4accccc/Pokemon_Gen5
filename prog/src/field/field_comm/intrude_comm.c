@@ -383,7 +383,7 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
       COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
       FIELD_WFBC_COMM_DATA_Exit(&intcomm->wfbc_comm_data);
       GAMEDATA_ClearPalaceWFBCCoreData( gamedata );
-      GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
+      //GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
       CommPlayer_Exit(intcomm->cps);
       GFL_HEAP_FreeMemory(intcomm);
       GFL_HEAP_FreeMemory(pwk);

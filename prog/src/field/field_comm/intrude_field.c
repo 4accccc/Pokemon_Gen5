@@ -767,12 +767,14 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     OS_TPrintf("new_palace_area = %d new_pos_x = %x\n", new_area, new_pos.x);
     intcomm->intrude_status_mine.palace_area = new_area;
     intcomm->send_status = TRUE;
+  #if 0 //パレス島に来ただけでフラグONにするようにした 2010.03.10(水)
     if(GAMEDATA_GetIntrudeMyID(gamedata) == new_area){
       GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
     }
     else{
       GAMEDATA_SetIntrudeReverseArea(gamedata, TRUE);
     }
+  #endif
 
     // WFBCCOMMに新通信先を通知
     FIELD_WFBC_COMM_DATA_SetIntrudeNetID( &intcomm->wfbc_comm_data, new_area );
