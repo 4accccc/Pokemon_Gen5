@@ -28,7 +28,23 @@ _EVENT_DATA   ev_bg_t01_board_02
 _EVENT_DATA   ev_bg_t01_board_03
 _EVENT_DATA   ev_bg_t01_board_04
 _EVENT_DATA   ev_bg_t01_board_05
+_EVENT_DATA   ev_scene_t01_mama_01		//タウンマップ入手イベント
+_EVENT_DATA   ev_init_t01
 _EVENT_DATA_END //データ終端を指定しています。
+
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START   ev_init_t01
+
+	//研究所で図鑑をもらった直後なら、ライバルとサポートの位置を変更
+	IF $WK_SCENE_T01 == 1 THEN
+		_OBJ_POS_CHANGE( T01_RIVAL_01, 776, 0, 741, DIR_DOWN )
+		_OBJ_POS_CHANGE( T01_SUPPORT_01, 778, 0, 741, DIR_DOWN )
+	ENDIF
+
+INIT_EVENT_END
 
 
 /**************************************************************/
@@ -84,14 +100,7 @@ EVENT_START	ev_t01_rival_01
 	IF $WK_SCENE_T01R0201 >= 1 THEN
 		//イベント後なら研究所案内イベント
 
-		//ライバル：サポートを見てから再度主人公を見る
-		_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_l )
-		_OBJ_ANIME_WAIT()
-
-		_TIME_WAIT( 8 )
-		_TURN_HERO_SITE()	//主人公の方を向く
-
-		//ん…何かあった？
+		//さ！博士に合おう
 		_BALLOONWIN_TALKOBJ_MSG( msg_t01_black_03 )
 		_BALLOONWIN_CLOSE()
 
@@ -136,12 +145,6 @@ EVENT_START	ev_t01_rival_01
 		_OBJ_DEL( T01_RIVAL_01 )
 		_OBJ_DEL( T01_SUPPORT_01 )
 
-		//================フラグ操作==================//
-		//ライバル、サポートの非表示フラグon
-		_FLAG_SET( FV_T01_RIVAL )
-		_FLAG_SET( FV_T01_SUPPORT )
-		//================フラグ操作==================//
-
 		//マップ遷移処理
 		_MAP_CHANGE( ZONE_ID_T01R0401, 4, 11, DIR_UP )
 
@@ -166,8 +169,16 @@ _ANIME_LABEL	anm_stay_walk_u
 	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_stay_walk_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 _ANIME_LABEL	anm_stay_walk_l
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -196,6 +207,204 @@ _ANIME_LABEL	anm_labo_player_move_01b
 	_ANIME_DATA	AC_WAIT_8F,4
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*				ママ：タウンマップ入手イベント				*/
+/************************************************************/
+EVENT_START	ev_scene_t01_mama_01
+	//ママ気づく
+	_OBJ_ANIME( T01_MAMA_01, anm_scene_mama_look_01 )
+	_OBJ_ANIME_WAIT()
+
+	//いたいた！
+	_BALLOONWIN_OBJMSG_POS( msg_t01_mama_01, T01_MAMA_01, POS_DR )
+
+	//なーんてね
+	_BALLOONWIN_OBJMSG_POS( msg_t01_mama_02, T01_MAMA_01, POS_DR )
+	_MSGWIN_CLOSE()
+
+	//ママ：主人公前へ
+	_OBJ_ANIME( T01_MAMA_01, anm_scene_mama_move_00 )
+	_OBJ_ANIME_WAIT()
+
+	//というわけで
+	_BALLOONWIN_OBJMSG_POS( msg_t01_mama_03, T01_MAMA_01, POS_DR )
+	_MSGWIN_CLOSE()
+
+	//タウンマップ入手処理
+	_ITEM_EVENT_KEYWAIT( ITEM_TAUNMAPPU, 1 )
+
+	//ママ：ライバル前へ
+	_OBJ_ANIME( T01_MAMA_01, anm_scene_mama_move_01 )
+	_OBJ_ANIME_WAIT()
+
+	//はい チェレン
+	_BALLOONWIN_OBJMSG_POS( msg_t01_mama_04, T01_MAMA_01, POS_DL )
+	_MSGWIN_CLOSE()
+
+	//ライバル：その場歩き
+	_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+
+	//大切に使います！
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_04, T01_RIVAL_01, POS_UL )
+	_MSGWIN_CLOSE()
+
+	//ママ：サポート前へ
+	_OBJ_ANIME( T01_MAMA_01, anm_scene_mama_move_02 )
+	_OBJ_ANIME_WAIT()
+
+	//ほら ベルも
+	_BALLOONWIN_OBJMSG_POS( msg_t01_mama_05, T01_MAMA_01, POS_DR )
+	_MSGWIN_CLOSE()
+
+	//サポート：その場歩き
+	_OBJ_ANIME( T01_SUPPORT_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+
+	//ありがとうございます
+	_BALLOONWIN_OBJMSG_POS( msg_t01_white_02, T01_SUPPORT_01, POS_UR )
+	_MSGWIN_CLOSE()
+
+	//ママ：一歩さがって
+	_OBJ_ANIME( T01_MAMA_01, anm_scene_mama_move_03 )
+	_OBJ_ANIME_WAIT()
+
+	//あと部屋のことは気にしないで
+	_BALLOONWIN_OBJMSG_POS( msg_t01_mama_06, T01_MAMA_01, POS_DR )
+	_MSGWIN_CLOSE()
+
+	//ママ：主人公前へ
+	_OBJ_ANIME( T01_MAMA_01, anm_scene_mama_move_04 )
+	_OBJ_ANIME_WAIT()
+
+	//それにしてもポケモンってすごいね
+	_BALLOONWIN_OBJMSG_POS( msg_t01_mama_07, T01_MAMA_01, POS_DR )
+
+	//あなたたちのパパやママには
+	_BALLOONWIN_OBJMSG_POS( msg_t01_mama_08, T01_MAMA_01, POS_DR )
+	_MSGWIN_CLOSE()
+
+	//ママ：去る
+	_OBJ_ANIME( T01_MAMA_01, anm_scene_mama_goaway_01 )
+	_OBJ_ANIME_WAIT()
+
+	//ママ：消す
+	_OBJ_DEL( T01_MAMA_01 )
+
+	//一同：見合わせる
+	_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_r )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+	_OBJ_ANIME( T01_SUPPORT_01, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+
+	//１番道路に行くよ！
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_05, T01_RIVAL_01, POS_DL )
+	_MSGWIN_CLOSE()
+
+	//サポート：その場歩き
+	_OBJ_ANIME( T01_SUPPORT_01, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+
+	//あっ待ってよ
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_white_03, T01_SUPPORT_01, POS_DR )
+	_MSGWIN_CLOSE()
+
+	//ライバル＆サポート：去る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
+	_OBJ_ANIME( T01_RIVAL_01, anm_scene_rival_goaway_01 )
+	_OBJ_ANIME( T01_SUPPORT_01, anm_scene_support_goaway_01 )
+	_OBJ_ANIME_WAIT()
+
+	//ライバル＆サポート消す
+	_OBJ_DEL( T01_RIVAL_01 )
+	_OBJ_DEL( T01_SUPPORT_01 )
+
+	//================フラグ操作==================//
+	//ライバル、サポートの非表示フラグon
+	_FLAG_SET( FV_T01_RIVAL )
+	_FLAG_SET( FV_T01_SUPPORT )
+	
+	//イベント無効
+	$WK_SCENE_T01 = 2
+	
+	//================フラグ操作==================//
+	
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//ママ：気づく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_scene_mama_look_01
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ママ：主人公前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_scene_mama_move_00
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ママ：ライバル前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_scene_mama_move_01
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ママ：サポート前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_scene_mama_move_02
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ママ：一歩さがって
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_scene_mama_move_03
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ママ：主人公前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_scene_mama_move_04
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ママ：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_scene_mama_goaway_01
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_scene_rival_goaway_01
+	_ANIME_DATA	AC_WALK_D_6F,1
+	_ANIME_DATA	AC_WALK_R_6F,10
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_scene_support_goaway_01
+	_ANIME_DATA	AC_WALK_R_8F,9
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -236,7 +445,7 @@ EVENT_START ev_pos_t01_stopper_01
 	_BALLOONWIN_OBJMSG( msg_t01_black_01, T01_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
-	//ライバル：走って去る
+	//ライバル：去る
 	_OBJ_ANIME( T01_RIVAL_01, anm_stopper_rival_goaway_01 )
 	_OBJ_ANIME_WAIT()
 
@@ -258,14 +467,14 @@ _ANIME_LABEL	anm_stopper_player_move_01
 //ライバル：走ってくる
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_stopper_rival_come_01
-	_ANIME_DATA	AC_WALK_R_4F,6
+	_ANIME_DATA	AC_WALK_R_6F,6
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//ライバル：走って去る
+//ライバル：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_stopper_rival_goaway_01
-	_ANIME_DATA	AC_WALK_L_4F,6
+	_ANIME_DATA	AC_WALK_L_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 
