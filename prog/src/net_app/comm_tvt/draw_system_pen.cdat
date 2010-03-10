@@ -185,10 +185,10 @@ static const DRAW_SYS_PEN_DATA DRAW_SYS_PEN_ARR[DSPS_MAX] =
 };
 
 #else
-#define DSPD_BIT_DOWN  ( 1)
-#define DSPD_BIT_LEFT  ( 2)
-#define DSPD_BIT_UP    ( 4)
-#define DSPD_BIT_RIGHT ( 8)
+#define DSPD_BIT_UP    ( 1)
+#define DSPD_BIT_RIGHT ( 2)
+#define DSPD_BIT_DOWN  ( 4)
+#define DSPD_BIT_LEFT  ( 8)
 #define DSPD_BIT_NONE  (16)
 
 static const DRAW_SYS_PEN_DATA DRAW_SYS_PEN_ARR[DSPS_MAX] =

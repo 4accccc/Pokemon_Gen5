@@ -37,7 +37,8 @@
 #define CTVT_COMM_JPG_QUALITY  (70)
 
 //お絵描きバッファ
-#define CTVT_COMM_DRAW_BUF_NUM (5)
+#define CTVT_COMM_DRAW_BUF_NUM (64)
+#define CTVT_COMM_DRAW_BUF_SEND_NUM (8) //8*個数
 
 #define CTVT_COMM_ADD_COMMAND_SYNC (8)
 #define CTVT_COMM_RELEASE_COMMAND_SYNC (9)
@@ -150,7 +151,8 @@ struct _CTVT_COMM_WORK
   void *postWaveBuf;  //Wave受信バッファ
   void *decodeWaveBuf;      //デコード後データ
   
-  u8   drawBufNum;
+  u8   drawBufSetPos;
+  u8   drawBufSendPos;
   DRAW_SYS_PEN_INFO   drawBuf[CTVT_COMM_DRAW_BUF_NUM];
   //親機から子機へ共有する処理
   u8  talkMember;
@@ -255,7 +257,8 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   commWork->isFinishPostWave = FALSE;
   commWork->postWaveBuf = GFL_HEAP_AllocClearMemory( heapId , sizeof(CTVT_COMM_WAVE_HEADER)+CTVT_SEND_WAVE_SIZE_ONE_REAL );
   commWork->decodeWaveBuf = GFL_HEAP_AllocClearMemory( heapId , CTVT_SEND_WAVE_SIZE );
-  commWork->drawBufNum = 0;
+  commWork->drawBufSetPos = 0;
+  commWork->drawBufSendPos = 0;
   
   commWork->talkMember = CTVT_COMM_INVALID_MEMBER;
   
@@ -804,13 +807,10 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       }
       
       //お絵描き
-      if( commWork->drawBufNum > 0 )
+      if( commWork->drawBufSetPos != commWork->drawBufSendPos )
       {
-        const BOOL ret = CTVT_COMM_SendDrawData( work , commWork );
-        if( ret == TRUE )
-        {
-          commWork->drawBufNum = 0;
-        }
+        //バッファの移動処理は内部で行う
+        CTVT_COMM_SendDrawData( work , commWork );
       }
       
       if( commWork->reqSendMemberData == TRUE )
@@ -1292,20 +1292,44 @@ static void CTVT_COMM_Post_WaveData( const int netID, const int size , const voi
 static const BOOL CTVT_COMM_SendDrawData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  u8 sendNum;
   
-  CTVT_TPrintf("Send Draw[%d].\n",commWork->drawBufNum );
+  CTVT_TPrintf("Send Draw[%d][%d].\n",commWork->drawBufSetPos,commWork->drawBufSendPos );
   
+  if( commWork->drawBufSendPos > commWork->drawBufSetPos )
+  {
+    sendNum = CTVT_COMM_DRAW_BUF_NUM-commWork->drawBufSendPos;
+  }
+  else
+  {
+    sendNum = commWork->drawBufSetPos-commWork->drawBufSendPos;
+  }
+  if( sendNum > CTVT_COMM_DRAW_BUF_SEND_NUM )
+  {
+    sendNum = CTVT_COMM_DRAW_BUF_SEND_NUM;
+  }
+  
+  if( sendNum > 0 )
   {
     const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
-      CCST_SEND_DRAW , sizeof(DRAW_SYS_PEN_INFO)*commWork->drawBufNum , 
-      (void*)commWork->drawBuf , TRUE , TRUE , FALSE );
+      CCST_SEND_DRAW , sizeof(DRAW_SYS_PEN_INFO)*sendNum , 
+      (void*)&commWork->drawBuf[commWork->drawBufSendPos] , TRUE , TRUE , FALSE );
     
     if( ret == FALSE )
     {
       CTVT_TPrintf("Send Draw failue!\n");
     }
+    else
+    {
+      commWork->drawBufSendPos += sendNum;
+      if( commWork->drawBufSendPos >= CTVT_COMM_DRAW_BUF_NUM )
+      {
+        commWork->drawBufSendPos -= CTVT_COMM_DRAW_BUF_NUM;
+      }
+    }
     return ret;
   }
+  return TRUE;
 }
 
 //--------------------------------------------------------------
@@ -1498,21 +1522,31 @@ const BOOL CTVT_COMM_CanUseCameraMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
 //お絵描きバッファ取得
 DRAW_SYS_PEN_INFO* CTVT_COMM_GetDrawBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , BOOL *isFull )
 {
-  if( commWork->drawBufNum == CTVT_COMM_DRAW_BUF_NUM )
+  u8 nextPos = commWork->drawBufSetPos + 1;
+  if( nextPos >= CTVT_COMM_DRAW_BUF_NUM )
+  {
+    nextPos -= CTVT_COMM_DRAW_BUF_NUM;
+  }
+  if( nextPos == commWork->drawBufSendPos )
   {
     *isFull = TRUE;
-    return &commWork->drawBuf[CTVT_COMM_DRAW_BUF_NUM-1];
+    return NULL;
   }
-  *isFull = FALSE;
-  return &commWork->drawBuf[commWork->drawBufNum];
+  else
+  {
+    *isFull = FALSE;
+    return &commWork->drawBuf[commWork->drawBufSetPos];
+  }
+  
 }
 
 //お絵描きバッファ追加通知
 void CTVT_COMM_AddDrawBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
-  if( commWork->drawBufNum < CTVT_COMM_DRAW_BUF_NUM )
+  commWork->drawBufSetPos++;
+  if( commWork->drawBufSetPos >= CTVT_COMM_DRAW_BUF_NUM )
   {
-    commWork->drawBufNum++;
+    commWork->drawBufSetPos -= CTVT_COMM_DRAW_BUF_NUM;
   }
 }
 

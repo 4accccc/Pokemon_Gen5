@@ -198,11 +198,11 @@ CTVT_DRAW_WORK* CTVT_DRAW_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   drawWork->stampType = DSPS_STAMP_HEART;
 
   //バージョンで白黒を変える
-//  if( GET_VERSION() == VERSION_BLACK )
+  if( GET_VERSION() == VERSION_BLACK )
   {
     drawWork->penCol = 0x0000+0x8000;  //最上位ビットがα
   }
-//  else
+  else
   {
     drawWork->penCol = 0x7FFF+0x8000;  //最上位ビットがα
   }
@@ -942,21 +942,23 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
     CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
     DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( work );
     DRAW_SYS_PEN_INFO *info = CTVT_COMM_GetDrawBuf(work,commWork,&isFull);
-
-    info->startX = tpx;
-    info->startY = tpy;
-    info->endX = tpx;
-    info->endY = tpy;
-    info->penType = drawWork->stampType;
-    info->col  = drawWork->penCol;
-    
-    if( connectNum == 1 )
+    if( isFull == FALSE )
     {
-      DRAW_SYS_SetPenInfo( drawSys , info );
-    }
-    else
-    {
-      CTVT_COMM_AddDrawBuf( work , commWork );
+      info->startX = tpx;
+      info->startY = tpy;
+      info->endX = tpx;
+      info->endY = tpy;
+      info->penType = drawWork->stampType;
+      info->col  = drawWork->penCol;
+      
+      if( connectNum == 1 )
+      {
+        DRAW_SYS_SetPenInfo( drawSys , info );
+      }
+      else
+      {
+        CTVT_COMM_AddDrawBuf( work , commWork );
+      }
     }
   }
   
@@ -1036,36 +1038,39 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
               CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
               DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( work );
               DRAW_SYS_PEN_INFO *info = CTVT_COMM_GetDrawBuf(work,commWork,&isFull);
-              if( isFull == FALSE ||
-                  connectNum == 1 )
+              if( isFull == FALSE )
               {
                 info->startX = drawWork->befPenX;
                 info->startY = drawWork->befPenY;
+                if( drawWork->befPenX != drawWork->tpData.TPDataTbl[i].x ||
+                    drawWork->befPenY != drawWork->tpData.TPDataTbl[i].y )
+                {
+                  info->endX = drawWork->tpData.TPDataTbl[i].x;
+                  info->endY = drawWork->tpData.TPDataTbl[i].y;
+                  info->penType = drawWork->penSize;
+                  if( drawWork->editMode == CDED_KESHIGOMU )
+                  {
+                    info->col = 0;
+                    info->penType = DSPS_CIRCLE_8;
+                  }
+                  else
+                  {
+                    info->col  = drawWork->penCol;
+                  }
+                  
+                  if( connectNum == 1 )
+                  {
+                    DRAW_SYS_SetPenInfo( drawSys , info );
+                  }
+                  else
+                  {
+                    CTVT_COMM_AddDrawBuf( work , commWork );
+                  }
+                }
               }
-              if( drawWork->befPenX != drawWork->tpData.TPDataTbl[i].x ||
-                  drawWork->befPenY != drawWork->tpData.TPDataTbl[i].y )
+              else //isFull == TRUE
               {
-                info->endX = drawWork->tpData.TPDataTbl[i].x;
-                info->endY = drawWork->tpData.TPDataTbl[i].y;
-                info->penType = drawWork->penSize;
-                if( drawWork->editMode == CDED_KESHIGOMU )
-                {
-                  info->col = 0;
-                  info->penType = DSPS_CIRCLE_8;
-                }
-                else
-                {
-                  info->col  = drawWork->penCol;
-                }
-                
-                if( connectNum == 1 )
-                {
-                  DRAW_SYS_SetPenInfo( drawSys , info );
-                }
-                else
-                {
-                  CTVT_COMM_AddDrawBuf( work , commWork );
-                }
+                drawWork->isHold = FALSE+
               }
             }
             drawWork->befPenX = drawWork->tpData.TPDataTbl[i].x;
@@ -1092,32 +1097,35 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
         CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
         DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( work );
         DRAW_SYS_PEN_INFO *info = CTVT_COMM_GetDrawBuf(work,commWork,&isFull);
-        if( isFull == FALSE ||
-            connectNum == 1 )
+        if( isFull == FALSE )
         {
           info->startX = drawWork->befPenX;
           info->startY = drawWork->befPenY;
+          info->endX = tpx;
+          info->endY = tpy;
+          info->penType = drawWork->penSize;
+          if( drawWork->editMode == CDED_KESHIGOMU )
+          {
+            info->col = 0;
+            info->penType = DSPS_CIRCLE_8;
+          }
+          else
+          {
+            info->col  = drawWork->penCol;
+          }
+          
+          if( connectNum == 1 )
+          {
+            DRAW_SYS_SetPenInfo( drawSys , info );
+          }
+          else
+          {
+            CTVT_COMM_AddDrawBuf( work , commWork );
+          }
         }
-        info->endX = tpx;
-        info->endY = tpy;
-        info->penType = drawWork->penSize;
-        if( drawWork->editMode == CDED_KESHIGOMU )
+        else//isFull == TRUE
         {
-          info->col = 0;
-          info->penType = DSPS_CIRCLE_8;
-        }
-        else
-        {
-          info->col  = drawWork->penCol;
-        }
-        
-        if( connectNum == 1 )
-        {
-          DRAW_SYS_SetPenInfo( drawSys , info );
-        }
-        else
-        {
-          CTVT_COMM_AddDrawBuf( work , commWork );
+          drawWork->isHold = FALSE;
         }
       }
       drawWork->befPenX = tpx;

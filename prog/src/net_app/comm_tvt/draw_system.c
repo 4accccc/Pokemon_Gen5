@@ -145,7 +145,7 @@ static void DRAW_SYS_DrawLine( DRAW_SYS_WORK* work , void *vramAdr , const u16 x
     u8 x,y;
     const int posX = baseX + (subX>>FX32_SHIFT);
     const int posY = baseY + (subY>>FX32_SHIFT);
-    if( i < loopNum-1 )
+    if( i > 0 )
     {
       drawBit = 0;
       if( posX != befX )
@@ -161,6 +161,7 @@ static void DRAW_SYS_DrawLine( DRAW_SYS_WORK* work , void *vramAdr , const u16 x
     {
       drawBit = 31;
     }
+    /*
     OS_TFPrintf(3,"---------------------------------------------[%d]\n",drawBit);
     for( y=0;y<penData->sizeY;y++ )
     {
@@ -168,7 +169,6 @@ static void DRAW_SYS_DrawLine( DRAW_SYS_WORK* work , void *vramAdr , const u16 x
       {
         if( penData->penData[y][x] & drawBit )
         {
-          DRAW_SYS_DrawDot_DirectBmp( work , vramAdr , posX+x , posY+y , col );
           OS_TFPrintf(3,"o");
         }
         else
@@ -179,6 +179,17 @@ static void DRAW_SYS_DrawLine( DRAW_SYS_WORK* work , void *vramAdr , const u16 x
       OS_TFPrintf(3,"\n");
     }
     OS_TFPrintf(3,"---------------------------------------------\n");
+    //*/
+    for( y=0;y<penData->sizeY;y++ )
+    {
+      for( x=0;x<penData->sizeX;x++ )
+      {
+        if( penData->penData[y][x] & drawBit )
+        {
+          DRAW_SYS_DrawDot_DirectBmp( work , vramAdr , posX+x , posY+y , col );
+        }
+      }
+    }
     subX += addX;
     subY += addY;
     
@@ -210,7 +221,7 @@ void DRAW_SYS_SetPenInfo( DRAW_SYS_WORK* work , const DRAW_SYS_PEN_INFO *info )
   GFL_STD_MemCopy( info , setPos , sizeof(DRAW_SYS_PEN_INFO) );
   
   //OS_TPrintf("[%d][%d][%d][%d][%x]\n",setPos->startX,setPos->startY,setPos->endX,setPos->endX,setPos->col);
-  //OS_TPrintf("[%d][%d][%d][%d][%x]\n",info->startX,info->startY,info->endX,info->endX,info->col);
+  //OS_TFPrintf(3,"[%d][%d][%d][%d][%x]\n",info->startX,info->startY,info->endX,info->endX,info->col);
   DRAW_SYS_IncBufCnt( work , &work->topBuffer );
 
 }
