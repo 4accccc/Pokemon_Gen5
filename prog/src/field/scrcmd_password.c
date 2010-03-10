@@ -55,6 +55,11 @@ VMCMD_RESULT EvCmdCheckPassword( VMHANDLE *core, void *wk )
   u16 word2 = SCRCMD_GetVMWorkValue( core, work );
   u16 *ret = SCRCMD_GetVMWork( core, work );
 
+  //１１ビットマスクして、純粋な単語コードにする
+  {
+    word1 &= 0x7ff;   //11ビットマスク
+    word2 &= 0x7ff;   //11ビットマスク
+  }
   NOZOMU_Printf("w1=%d w2=%d\n",word1,word2);
 
   //答え比較
