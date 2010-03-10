@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00131" date="2010-03-09T19:25:29"/>
+	<create user="nakamura_akira" host="W00131" date="2010-03-10T17:44:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -443,16 +443,44 @@ assistantm_01_06へ続く
 
 	<row id="msg_c03r0101_assistantm_01_06">
 		<comment>・隊長
-依頼を受けるときに経由
+依頼を受ける、報告時に経由
 このメッセージの表示後、選択ウインドウを表示
 
-『いらいをうける』　⇒　assistantm_01_07へ
-『いらいのほうこく』　⇒　assistantm_01_19へ
-『なんでもないです』　⇒　assistantm_01_0へ</comment>
+⇒　choice_01○へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">さて　きょうは　どうする？▼</language>
 		<language name="JPN_KANJI" width="256">さて　今日は　どうする？▼</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_01a">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『いらいをうける』　⇒　assistantm_01_07へ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">いらいをうける</language>
+		<language name="JPN_KANJI" width="256">依頼を受ける</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_01b">
+		<comment>・選択肢
+依頼を報告するときに経由
+
+『いらいのほうこく』　⇒　assistantm_01_19へ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">いらいのほうこく</language>
+		<language name="JPN_KANJI" width="256">依頼の報告</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_01c">
+		<comment>・選択肢
+隊長との会話をやめたいときに経由
+
+『なんでもないです』　⇒　assistantm_01_0へ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">なんでもないです</language>
+		<language name="JPN_KANJI" width="256">なんでもないです</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -464,15 +492,43 @@ assistantm_01_06へ続く
 『にんずうちょうさか』選択肢を表示
 選択肢の選択後、各依頼の一覧が表示される
 
-やめる　⇒　　assistantm_01_08へ
-じかんちょうさ　⇒　assistantm_01_13○へ
-にんずうちょうさ　⇒　assistantm_01_14○へ</comment>
+⇒　choice_02○へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">ちょうさいらいを　うけるんだな？
 では　ちょうさいらいを　えらんでくれ▼</language>
 		<language name="JPN_KANJI" width="256">調査依頼を　受けるんだな？
 では　調査依頼を　選んでくれ▼</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_02a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『じかんちょうさ』　⇒　choice_03○</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">じかんちょうさ</language>
+		<language name="JPN_KANJI" width="256">時間調査</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_02b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『にんずうちょうさ』　⇒　choice_03○</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">にんずうちょうさ</language>
+		<language name="JPN_KANJI" width="256">人数調査</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_02c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+隊長との会話をやめたいときに経由
+
+『やめる』　⇒　　assistantm_01_08へ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -553,6 +609,282 @@ assistantm_01_06へ続く
 ちょうさを　つづけてくれ</language>
 		<language name="JPN_KANJI" width="256">では　引き続き
 調査を　続けてくれ</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『ブラックと　ホワイト　おおいのは？』　
+時間調査　⇒　assistantm_01_13a
+人数調査　⇒　assistantm_01_14a</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ブラックと　ホワイト　おおいのは？</language>
+		<language name="JPN_KANJI" width="256">ブラックと　ホワイト　多いのは？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『えらんだ　さいしょの　ポケモンは？』　
+時間調査　⇒　assistantm_01_13b
+人数調査　⇒　assistantm_01_14b</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">えらんだ　さいしょの　ポケモンは？</language>
+		<language name="JPN_KANJI" width="256">選んだ　最初の　ポケモンは？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『いちばんおおい　プレイじかんは？』　
+時間調査　⇒　assistantm_01_13c
+人数調査　⇒　assistantm_01_14c</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">いちばんおおい　プレイじかんは？</language>
+		<language name="JPN_KANJI" width="256">１番多い　プレイ時間は？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『おとこのこと　おんなのこ　おおいのは？』　
+時間調査　⇒　assistantm_01_13d
+人数調査　⇒　assistantm_01_14d</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">おとこのこと　おんなのこ　おおいのは？</language>
+		<language name="JPN_KANJI" width="256">男の子と　女の子　多いのは？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03e" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『いちばんおおい　しごとは？』　
+時間調査　⇒　assistantm_01_13e
+人数調査　⇒　assistantm_01_14e</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">いちばんおおい　しごとは？</language>
+		<language name="JPN_KANJI" width="256">１番多い　仕事は？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03f" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『いちばんおおい　しゅみは？』　
+時間調査　⇒　assistantm_01_13f
+人数調査　⇒　assistantm_01_14f</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">いちばんおおい　しゅみは？</language>
+		<language name="JPN_KANJI" width="256">１番多い　趣味は？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03g" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『たいせんと　こうかん　にんきが　あるのは？』　
+時間調査　⇒　assistantm_01_13g
+人数調査　⇒　assistantm_01_14g</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">たいせんと　こうかん　にんきが　あるのは？</language>
+		<language name="JPN_KANJI" width="256">対戦と　交換　人気が　あるのは？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03h" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『すきな　ポケモンは？』　
+時間調査　⇒　assistantm_01_13h
+人数調査　⇒　assistantm_01_14h</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">すきな　ポケモンは？</language>
+		<language name="JPN_KANJI" width="256">好きな　ポケモンは？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03i" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『すきな　ポケモンの　タイプは？』　
+時間調査　⇒　assistantm_01_13i
+人数調査　⇒　assistantm_01_14i</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">すきな　ポケモンの　タイプは？</language>
+		<language name="JPN_KANJI" width="256">好きな　ポケモンの　タイプは？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03j" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『とかいと　いなか　すみたいのは？』　
+時間調査　⇒　assistantm_01_13j
+人数調査　⇒　assistantm_01_14j</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">とかいと　いなか　すみたいのは？</language>
+		<language name="JPN_KANJI" width="256">都会と　田舎　住みたいのは？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03k" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『だいじに　しているものに　ついて』　
+時間調査　⇒　assistantm_01_13k
+人数調査　⇒　assistantm_01_14k</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">だいじに　しているものに　ついて</language>
+		<language name="JPN_KANJI" width="256">大事に　しているものに　ついて</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03l" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『ひとの　みりょくに　ついて』　
+時間調査　⇒　assistantm_01_13l
+人数調査　⇒　assistantm_01_14l</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ひとの　みりょくに　ついて</language>
+		<language name="JPN_KANJI" width="256">人の　魅力に　ついて</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03m" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『きせつに　ついて』　
+時間調査　⇒　assistantm_01_13m
+人数調査　⇒　assistantm_01_14m</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">きせつに　ついて</language>
+		<language name="JPN_KANJI" width="256">季節に　ついて</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03n" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『げいじゅつに　ついて』　
+時間調査　⇒　assistantm_01_13n
+人数調査　⇒　assistantm_01_14n</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">げいじゅつに　ついて</language>
+		<language name="JPN_KANJI" width="256">芸術に　ついて</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03o" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『いちばんすきな　おんがくは？』　
+時間調査　⇒　assistantm_01_13o
+人数調査　⇒　assistantm_01_14o</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">いちばんすきな　おんがくは？</language>
+		<language name="JPN_KANJI" width="256">１番好きな　音楽は？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03p" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『えいぞうに　ついて』　
+時間調査　⇒　assistantm_01_13p
+人数調査　⇒　assistantm_01_14p</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">えいぞうに　ついて</language>
+		<language name="JPN_KANJI" width="256">映像に　ついて</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03q" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『いちばんすきな　がっこうの　じかんは？』　
+時間調査　⇒　assistantm_01_13q
+人数調査　⇒　assistantm_01_14q</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">いちばんすきな　がっこうの　じかんは？</language>
+		<language name="JPN_KANJI" width="256">１番好きな　学校の　時間は？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03r" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『べんきょうに　ついて』　
+時間調査　⇒　assistantm_01_13r
+人数調査　⇒　assistantm_01_14r</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">べんきょうに　ついて</language>
+		<language name="JPN_KANJI" width="256">勉強に　ついて</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03s" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『いちばんにんきのある　スポーツは？』　
+時間調査　⇒　assistantm_01_13s
+人数調査　⇒　assistantm_01_14s</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">いちばんにんきのある　スポーツは？</language>
+		<language name="JPN_KANJI" width="256">１番人気のある　スポーツは？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03t" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『きゅうじつに　ついて』　
+時間調査　⇒　assistantm_01_13t
+人数調査　⇒　assistantm_01_14t</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">きゅうじつに　ついて</language>
+		<language name="JPN_KANJI" width="256">休日に　ついて</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03u" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『いちばんなりたいものは？』　
+時間調査　⇒　assistantm_01_13u
+人数調査　⇒　assistantm_01_14u</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">いちばんなりたいものは？</language>
+		<language name="JPN_KANJI" width="256">１番なりたいものは？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03v" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『いちばんにんきのある　ジムリーダーは？』　
+時間調査　⇒　assistantm_01_13v
+人数調査　⇒　assistantm_01_14v</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">いちばんにんきのある　ジムリーダーは？</language>
+		<language name="JPN_KANJI" width="256">１番人気のある　ジムリーダーは？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+依頼を受けるときに経由
+
+『ポケモンの　おもしろい　ところは？』　
+時間調査　⇒　assistantm_01_13w
+人数調査　⇒　assistantm_01_14w</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ポケモンの　おもしろい　ところは？</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　面白い　ところは？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_13a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -5363,8 +5695,8 @@ assistantm_01_31へ続く
 『いいえ』　⇒　woman2_05へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">そうだ　アナタに
-ちょっと　たのみたいことがあるの▼
+		<language name="JPN" width="256">そうだ　アナタに　ちょっと
+たのみたいことが　あるの▼
 じつは　いま　たいいんの　みんなに
 アンケートを　おねがいしているの▼
 アンケートに
@@ -5379,8 +5711,8 @@ assistantm_01_31へ続く
 ないようも　ふえるってわけ▼
 どう？　アナタも
 きょうりょく　してくれない？▼</language>
-		<language name="JPN_KANJI" width="256">そうだ　アナタに
-ちょっと　頼みたいことがあるの▼
+		<language name="JPN_KANJI" width="256">そうだ　アナタに　ちょっと
+頼みたいことが　あるの▼
 実は　今　隊員の　みんなに
 アンケートを　お願いしているの▼
 アンケートに　協力してくれたら
@@ -5451,7 +5783,7 @@ assistantm_01_31へ続く
 アンケートを自由に選べる
 アンケートを選択
 
-アンケートを選んだ　⇒　woman2_08へ
+アンケートを選択　⇒　choice_04○へ
 やめるを選んだ　⇒　woman2_09へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
@@ -5461,12 +5793,111 @@ assistantm_01_31へ続く
 選んでくれる？▼</language>
 	</row>
 
+	<row id="msg_c03r0101__choice_04a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+答えるアンケートを選択するときに経由
+
+『どんなひとが　いるか』　
+⇒　woman2_08へ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">どんなひとが　いるか</language>
+		<language name="JPN_KANJI" width="256">どんな人が　いるか</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_04b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+答えるアンケートを選択するときに経由
+
+『すきな　ポケモン』　
+⇒　woman2_08へ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">すきな　ポケモン</language>
+		<language name="JPN_KANJI" width="256">好きな　ポケモン</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_04c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+答えるアンケートを選択するときに経由
+
+『みんなの　りそう』　
+⇒　woman2_08へ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">みんなの　りそう</language>
+		<language name="JPN_KANJI" width="256">みんなの　理想</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_04d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+答えるアンケートを選択するときに経由
+
+『すきな　ひと』　
+⇒　woman2_08へ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">すきな　ひと</language>
+		<language name="JPN_KANJI" width="256">好きな　人</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_04e" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+答えるアンケートを選択するときに経由
+
+『みんなの　このみ』　
+⇒　woman2_08へ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">みんなの　このみ</language>
+		<language name="JPN_KANJI" width="256">みんなの　好み</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_04f" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+答えるアンケートを選択するときに経由
+
+『みんなの　しゅみ』　
+⇒　woman2_08へ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">みんなの　しゅみ</language>
+		<language name="JPN_KANJI" width="256">みんなの　趣味</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_04g" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+答えるアンケートを選択するときに経由
+
+『がっこうせいかつ』　
+⇒　woman2_08へ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">がっこうせいかつ</language>
+		<language name="JPN_KANJI" width="256">学校生活</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_04h" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+答えるアンケートを選択するときに経由
+
+『どんな　あそびが　すきか』　
+⇒　woman2_08へ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">どんな　あそびが　すきか</language>
+		<language name="JPN_KANJI" width="256">どんな　遊びが　好きか</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_04i" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+答えるアンケートを選択するときに経由
+
+『ポケモン』　
+⇒　woman2_08へ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ポケモン</language>
+		<language name="JPN_KANJI" width="256">ポケモン</language>
+	</row>
+
 	<row id="msg_c03r0101_woman2_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・アンケート隊員
 アンケートを選択後、表示
 このメッセージの表示後、選択ウインドウを表示
 
-『はい』　⇒　woman2_10へ
+『はい』　⇒　woman2_10○へ
 『いいえ』　⇒　woman2_09へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
@@ -5514,9 +5945,9 @@ assistantm_01_31へ続く
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">こんかいの　アンケートは
-『すきなポケモン』に　ついてよ</language>
+『すきな　ポケモン』に　ついてよ</language>
 		<language name="JPN_KANJI" width="256">今回の　アンケートは
-『好きなポケモン』に　ついてよ</language>
+『好きな　ポケモン』に　ついてよ</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_10c" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -5544,9 +5975,9 @@ assistantm_01_31へ続く
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">こんかいの　アンケートは
-『すきなひと』に　ついてよ</language>
+『すきな　ひと』に　ついてよ</language>
 		<language name="JPN_KANJI" width="256">今回の　アンケートは
-『好きな人』に　ついてよ</language>
+『好きな　人』に　ついてよ</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_10e" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -5559,7 +5990,7 @@ assistantm_01_31へ続く
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">こんかいの　アンケートは
-『みんなの　好み』に　ついてよ</language>
+『みんなの　このみ』に　ついてよ</language>
 		<language name="JPN_KANJI" width="256">今回の　アンケートは
 『みんなの　好み』に　ついてよ</language>
 	</row>
