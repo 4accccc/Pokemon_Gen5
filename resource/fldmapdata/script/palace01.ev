@@ -60,8 +60,8 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START	ev_scene_change_palace01
   //パレスIN時の強制変装イベント
-  _EASY_MSG( msg_palace01_in_000 )
-  _PALACE_IN_DISGUISE()
+//  _EASY_MSG( msg_palace01_in_000 )
+//  _PALACE_IN_DISGUISE()
   $LOCALWORK0 = 1
 EVENT_END
 
