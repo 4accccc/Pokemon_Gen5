@@ -30,8 +30,11 @@
 #include "../../../resource/quiz/pms_answer.h"
 #include "../../../resource/message/dst/script/msg_c07r0201.h"
 
+#include "ev_time.h"
+#include "savedata/system_data.h"
+
 #define NORMAL_QUIZ_NUM_MAX  (30)
-#define QUIZ_NUM_MAX  (NORMAL_QUIZ_NUM_MAX+1)
+#define QUIZ_NUM_MAX  (NORMAL_QUIZ_NUM_MAX+1)   //í èÌ30ñ‚+íaê∂ì˙ñ‚ëË1ñ‚
 
 
 //--------------------------------------------------------------
@@ -43,7 +46,11 @@
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetQuiz( VMHANDLE *core, void *wk )
 {
+  int ev_month, ev_day;
+  int sys_birth_month, sys_birth_day;
+
   SCRCMD_WORK*   work     = (SCRCMD_WORK*)wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
   
   u16 *quiz = SCRCMD_GetVMWork( core, work );
   u16 *hint = SCRCMD_GetVMWork( core, work );
@@ -59,8 +66,16 @@ VMCMD_RESULT EvCmdGetQuiz( VMHANDLE *core, void *wk )
     answer30,
   };
 
+  {
+    SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork( gdata );
+    SYSTEMDATA *sys_dat = SaveData_GetSystemData( sv );
+    ev_month = EVTIME_GetMonth(gdata);
+    ev_day = EVTIME_GetDay(gdata);
+    sys_birth_month = SYSTEMDATA_GetBirthMonth(sys_dat);
+    sys_birth_day = SYSTEMDATA_GetBirthDay(sys_dat);
+  }
   //ç°ì˙ÇÕé©ï™ÅiÇcÇrÇ≈ê›íËÇµÇΩÅjíaê∂ì˙Ç©?
-  if (0)
+  if ( (ev_day == sys_birth_day)&&(ev_month == sys_birth_month) )
   {
     *quiz = msg_quiz_31;
     *hint = msg_quiz_hint_31;
