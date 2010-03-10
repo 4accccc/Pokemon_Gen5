@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T20:04:52"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T20:12:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -372,21 +372,30 @@
 大事だったり　するからさ</language>
 	</row>
 
-	<row id="msg_c03gym0101_leader_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03gym0101_leader_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・leader_05表示後</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
-		<language name="JPN" width="256">むしポケモンの
-デザインの　うつくしさ……[BE:00:ページ切り替え（行送り）]
-ボク　なんじかんでも　みていられるよ[BE:01:ページ切り替え（クリア）]
-こういうのを　しると
-せかいって　ふしぎで　みちていて[BE:00:ページ切り替え（行送り）]
-それって　すごいことなんだよね</language>
-		<language name="JPN_KANJI" width="256">むしポケモンの　機能美……
-ボク　何時間でも　みていられるよ[BE:01:ページ切り替え（クリア）]
-こういうのを　知ると
-世界って　不思議で　満ちていて[BE:00:ページ切り替え（行送り）]
-それって　すごいことなんだよね</language>
+		<language name="JPN" width="256">きみは　たびに　でてから
+どれだけの　はっけんを　した？▼
+ボクはね　こどものころに
+むしポケモンの　うつくしさに▽
+じゅんじょうハートを　うばわれ▼
+えをかいたり　しょうぶしたりを
+ずっと　くりかえして……　それでも▽
+いまだに　はっけんが　あるんだ▼
+ほんと　せかいは
+ふしぎで　みちているんだー</language>
+		<language name="JPN_KANJI" width="256">きみは　旅に　でてから
+どれだけの　発見を　した？▼
+ボクはね　子供のころに
+むしポケモンの　美しさに▽
+純情ハートを　奪われ▼
+絵を描いたり　勝負したりを
+ずっと　繰り返して……　それでも▽
+いまだに　発見が　あるんだ▼
+ほんと　世界は
+不思議で　満ちているんだー</language>
 	</row>
 
 	<row id="msg_c03gym0101_leader_07" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
