@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-03T17:12:27"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T18:26:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1303" top="210" right="2008" bottom="838" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="802" top="136" right="1280" bottom="534" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03r0201_sunglasses_01" text-color=",,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c03r0201_sunglasses_01">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
@@ -304,7 +304,7 @@
 作品を　展示しております</language>
 	</row>
 
-	<row id="msg_c03r0201_lady_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0201_lady_01">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">LADY</attribute>
@@ -317,7 +317,7 @@
 あそこは　ちょっとした　美術館よね！</language>
 	</row>
 
-	<row id="msg_c03r0201_painting1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0201_painting1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・GRIDX=8~9、GRIDZ=10の絵画</comment>
 		<attribute name="キャラ指定">絵画</attribute>
@@ -325,7 +325,7 @@
 		<language name="JPN_KANJI" width="256">タイトル「理想と真実」</language>
 	</row>
 
-	<row id="msg_c03r0201_painting2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0201_painting2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・GRIDX=11、GRIDZ=10の絵画</comment>
 		<attribute name="キャラ指定">絵画</attribute>
@@ -333,7 +333,7 @@
 		<language name="JPN_KANJI" width="256">タイトル「舞い上がる　白い竜」</language>
 	</row>
 
-	<row id="msg_c03r0201_painting3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0201_painting3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・GRIDX=7~8、GRIDZ=5の絵画</comment>
 		<attribute name="キャラ指定">絵画</attribute>
@@ -341,7 +341,7 @@
 		<language name="JPN_KANJI" width="256">タイトル「白き炎」</language>
 	</row>
 
-	<row id="msg_c03r0201_painting4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0201_painting4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・GRIDX=10、GRIDZ=5の絵画</comment>
 		<attribute name="キャラ指定">絵画</attribute>
@@ -349,7 +349,7 @@
 		<language name="JPN_KANJI" width="256">タイトル「舞い降りる　黒い竜」</language>
 	</row>
 
-	<row id="msg_c03r0201_painting5_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0201_painting5_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・GRIDX=12~13、GRIDZ=5の絵画</comment>
 		<attribute name="キャラ指定">絵画</attribute>
@@ -357,7 +357,7 @@
 		<language name="JPN_KANJI" width="256">タイトル「黒い稲妻」</language>
 	</row>
 
-	<row id="msg_c03r0201_painting6_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0201_painting6_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・GRIDX=2、GRIDZ=9の絵画</comment>
 		<attribute name="キャラ指定">絵画</attribute>
@@ -365,7 +365,7 @@
 		<language name="JPN_KANJI" width="256">タイトル「双子の英雄」</language>
 	</row>
 
-	<row id="msg_c03r0201_juggling_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0201_juggling_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・はい/いいえの選択肢
 　はい→juggling_01a
@@ -386,7 +386,7 @@
 連れているか　みせてくれない？</language>
 	</row>
 
-	<row id="msg_c03r0201_juggling_01a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0201_juggling_01a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・はい選択時
 ・メッセージ表示後、リスト画面へ</comment>
@@ -397,23 +397,73 @@
 ポケモンを　みせてくださーい！▼</language>
 	</row>
 
-	<row id="msg_c03r0201_juggling_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0201_juggling_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・リスト画面で合致したポケモンを選択
-・アイテム入手処理
-　No155「オレンのみ」（暫定）</comment>
+・選択肢表示</comment>
 		<attribute name="キャラ指定">JUGGLING</attribute>
 		<language name="JPN" width="256">オー！　いるじゃん！
 なんだか　インスパイアされたね！[BE:01:ページ切り替え（クリア）]
 ありがとう！
-おれいに　これを　あげよう！！[BE:01:ページ切り替え（クリア）]</language>
+おれいは　どれが　いいかな？▼</language>
 		<language name="JPN_KANJI" width="256">オー！　いるじゃん！
 なんだか　インスパイアされたね！[BE:01:ページ切り替え（クリア）]
 ありがとう！
-お礼に　これを　あげよう！！[BE:01:ページ切り替え（クリア）]</language>
+おれいは　どれが　いいかな？▼</language>
 	</row>
 
-	<row id="msg_c03r0201_juggling_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0201_select_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>選択後、juggling_07へ
+No149「クラボのみ」</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">クラボのみ</language>
+		<language name="JPN_KANJI" width="256">クラボのみ</language>
+	</row>
+
+	<row id="msg_c03r0201_select_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>選択後、juggling_07へ
+No150「カゴのみ」</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">カゴのみ</language>
+		<language name="JPN_KANJI" width="256">カゴのみ</language>
+	</row>
+
+	<row id="msg_c03r0201_select_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>選択後、juggling_07へ
+No151「モモンのみ」</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">モモンのみ</language>
+		<language name="JPN_KANJI" width="256">モモンのみ</language>
+	</row>
+
+	<row id="msg_c03r0201_select_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>選択後、juggling_07へ
+No152「チーゴのみ」</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">チーゴのみ</language>
+		<language name="JPN_KANJI" width="256">チーゴのみ</language>
+	</row>
+
+	<row id="msg_c03r0201_select_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>選択後、juggling_07へ
+No153「ナナシのみ」</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ナナシのみ</language>
+		<language name="JPN_KANJI" width="256">ナナシのみ</language>
+	</row>
+
+	<row id="msg_c03r0201_juggling_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・表示後、アイテム入手処理
+・0＝道具名</comment>
+		<attribute name="キャラ指定">JUGGLING</attribute>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　１コ！
+はい　たしかにー！▼</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　１コ！
+はい　たしかにー！▼</language>
+	</row>
+
+	<row id="msg_c03r0201_juggling_03" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手後自動で表示</comment>
 		<attribute name="キャラ指定">JUGGLING</attribute>
@@ -423,7 +473,7 @@
 また　明日も　ここに来てよ！</language>
 	</row>
 
-	<row id="msg_c03r0201_juggling_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0201_juggling_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・juggling_03表示後、日付が変わるまで
 ・日付が変わった後に話しかければ
@@ -435,7 +485,7 @@
 うまいとか　ヘタとか　関係ないね</language>
 	</row>
 
-	<row id="msg_c03r0201_juggling_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0201_juggling_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・0＝ポケモンのタイプ</comment>
@@ -448,7 +498,7 @@
 ちょっとしたモノ　あげるからねー</language>
 	</row>
 
-	<row id="msg_c03r0201_juggling_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0201_juggling_06" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・選んだけど一致していない
 ・0＝ポケモンのタイプ</comment>
