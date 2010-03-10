@@ -261,7 +261,7 @@ extern const BOOL COMM_TVT_GetSusspendDraw( COMM_TVT_WORK *work );
 extern void COMM_TVT_SetSusspendDraw( COMM_TVT_WORK *work , const BOOL flg );
 extern const BOOL COMM_TVT_GetFinishReq( COMM_TVT_WORK *work );
 extern void COMM_TVT_SetFinishReq( COMM_TVT_WORK *work , const BOOL flg );
-
+extern const BOOL COMM_TVT_IsWifi( COMM_TVT_WORK *work );
 
 //UTIL
 extern const BOOL COMM_TVT_IsTwlMode( void );

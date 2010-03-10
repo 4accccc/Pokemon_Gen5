@@ -161,7 +161,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
                                                work->fontHandle ,
                                                work->printQue , 
                                                work->heapId );
-    
+  
   work->camWork = CTVT_CAMERA_Init( work , work->heapId );
   work->commWork = CTVT_COMM_InitSystem( work , work->heapId );
   
@@ -1029,6 +1029,15 @@ const BOOL COMM_TVT_GetFinishReq( COMM_TVT_WORK *work )
 void COMM_TVT_SetFinishReq( COMM_TVT_WORK *work , const BOOL flg )
 {
   work->isReqFinish = flg;
+}
+
+const BOOL COMM_TVT_IsWifi( COMM_TVT_WORK *work )
+{
+  if( work->initWork->mode == CTM_WIFI )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 #pragma mark [>util func

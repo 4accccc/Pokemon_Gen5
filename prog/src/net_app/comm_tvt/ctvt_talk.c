@@ -895,46 +895,54 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
   case CTSS_REC_TRANS:
     {
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
-      const BOOL isSendWave = CTVT_COMM_GetCommWaveData( work , commWork );
-      const u32 recSize = CTVT_MIC_GetRecSize( talkWork->micWork );
-      if( talkWork->reqSendWave == FALSE && isSendWave == FALSE )
+      if( CTVT_COMM_CanSendWaveBuf( work , commWork ) == TRUE )
       {
-        if( recSize >= CTVT_SEND_WAVE_SIZE_ONE*(talkWork->sendCnt+1) ||
-            talkWork->subState == CTSS_REC_TRANS)
+        const BOOL isSendWave = CTVT_COMM_GetCommWaveData( work , commWork );
+        const u32 recSize = CTVT_MIC_GetRecSize( talkWork->micWork );
+        if( talkWork->reqSendWave == FALSE && isSendWave == FALSE )
         {
-          //エンコード
-          void* recBuffer = CTVT_MIC_GetRecBuffer( talkWork->micWork );
-          void* sendTopBuf = (void*)((u32)recBuffer+talkWork->sendCnt*CTVT_SEND_WAVE_SIZE_ONE );
-          const u32 endSize = CTVT_MIC_EncodeData( talkWork->micWork , sendTopBuf , talkWork->sendWaveBufTop , CTVT_SEND_WAVE_SIZE_ONE );
-          //送信
-          talkWork->sendWaveData->dataNo = talkWork->sendCnt;
-          talkWork->sendWaveData->encSize = endSize;
-          talkWork->sendWaveData->recSize = recSize;
-          talkWork->sendWaveData->pitch = talkWork->sliderPos;
-          if( talkWork->subState == CTSS_REC_TRANS && 
-            recSize <= CTVT_SEND_WAVE_SIZE_ONE*(talkWork->sendCnt+1) )
+          if( recSize >= CTVT_SEND_WAVE_SIZE_ONE*(talkWork->sendCnt+1) ||
+              talkWork->subState == CTSS_REC_TRANS)
           {
-            talkWork->sendWaveData->isLast = TRUE;
+            //エンコード
+            void* recBuffer = CTVT_MIC_GetRecBuffer( talkWork->micWork );
+            void* sendTopBuf = (void*)((u32)recBuffer+talkWork->sendCnt*CTVT_SEND_WAVE_SIZE_ONE );
+            const u32 endSize = CTVT_MIC_EncodeData( talkWork->micWork , sendTopBuf , talkWork->sendWaveBufTop , CTVT_SEND_WAVE_SIZE_ONE );
+            //送信
+            talkWork->sendWaveData->dataNo = talkWork->sendCnt;
+            talkWork->sendWaveData->encSize = endSize;
+            talkWork->sendWaveData->recSize = recSize;
+            talkWork->sendWaveData->pitch = talkWork->sliderPos;
+            if( talkWork->subState == CTSS_REC_TRANS && 
+              recSize <= CTVT_SEND_WAVE_SIZE_ONE*(talkWork->sendCnt+1) )
+            {
+              talkWork->sendWaveData->isLast = TRUE;
+            }
+            else
+            {
+              talkWork->sendWaveData->isLast = FALSE;
+            }
+                
+            talkWork->reqSendWave = TRUE;
           }
-          else
-          {
-            talkWork->sendWaveData->isLast = FALSE;
-          }
-              
-          talkWork->reqSendWave = TRUE;
         }
-      }
-      
-      if( talkWork->reqSendWave == TRUE )
-      {
-        const BOOL ret = CTVT_COMM_SendWave( work , commWork , talkWork->sendWaveData );
-        if( ret == TRUE )
+        
+        if( talkWork->reqSendWave == TRUE )
         {
-          talkWork->sendCnt++;
-          talkWork->reqSendWave = FALSE;
-          if( talkWork->sendWaveData->isLast == TRUE )
+          const BOOL ret = CTVT_COMM_SendWave( work , commWork , talkWork->sendWaveData );
+          if( ret == TRUE )
           {
-            talkWork->subState = CTSS_REQ_PLAY;
+            talkWork->sendCnt++;
+            talkWork->reqSendWave = FALSE;
+            if( talkWork->sendWaveData->isLast == TRUE )
+            {
+              talkWork->subState = CTSS_REQ_PLAY;
+            }
+            else
+            if( COMM_TVT_IsWifi(work) == TRUE )
+            {
+              CTVT_COMM_SetCanSendWaveBuf( work , commWork , FALSE );
+            }
           }
         }
       }

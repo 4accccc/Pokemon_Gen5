@@ -312,7 +312,7 @@ void MB_COMM_InitComm( MB_COMM_WORK* commWork )
   commWork->isPermitFinishSave = FALSE;
   commWork->isInitLowerData = TRUE;
 
-  GFL_NET_LDATA_InitSystem( commWork->heapId );
+  GFL_NET_LDATA_InitSystem( commWork->heapId , FALSE );
 }
 
 //--------------------------------------------------------------

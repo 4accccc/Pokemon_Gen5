@@ -168,6 +168,13 @@ struct _CTVT_COMM_WORK
   BOOL postDrawBuffer;
 #endif //CTVT_COMM_SHARE_DRAW_BUFF
 
+  //Wifi用お絵描きバッファ送信制御
+  BOOL canSendDrawBuf;
+  BOOL reqPermitSendDrawBuf;
+  //Wifi用Waveバッファ送信制御
+  BOOL canSendWaveBuf;
+  BOOL reqPermitSendWaveBuf;
+
   u16 beaconDataTime;
   
   BOOL updateTalkMember;
@@ -272,6 +279,10 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   commWork->postDrawBuffer = FALSE;
 #endif //CTVT_COMM_SHARE_DRAW_BUFF
   commWork->updateTalkMember = FALSE;
+  commWork->canSendDrawBuf = TRUE;
+  commWork->reqPermitSendDrawBuf = FALSE;
+  commWork->canSendWaveBuf = TRUE;
+  commWork->reqPermitSendWaveBuf = FALSE;
   commWork->tempTalkMember = CTVT_COMM_INVALID_MEMBER;
   
   {
@@ -307,7 +318,7 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   }
   
   commWork->isLowerDataInit = TRUE;
-  GFL_NET_LDATA_InitSystem( heapId );
+  GFL_NET_LDATA_InitSystem( heapId , COMM_TVT_IsWifi(work) );
   
   return commWork;
 }
@@ -357,7 +368,6 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
       if( commWork->nextMode == CCIM_CONNECTED )
       {
         GFL_NET_SetWifiBothNet(FALSE);
-      
         commWork->state = CCS_ADD_COMMAND;
         commWork->mode = commWork->nextMode;
       }
@@ -809,10 +819,32 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       //お絵描き
       if( commWork->drawBufSetPos != commWork->drawBufSendPos )
       {
-        //バッファの移動処理は内部で行う
-        CTVT_COMM_SendDrawData( work , commWork );
+        if( commWork->canSendDrawBuf == TRUE )
+        {
+          //バッファの移動処理は内部で行う
+          CTVT_COMM_SendDrawData( work , commWork );
+        }
+      }
+      if( commWork->reqPermitSendDrawBuf == TRUE )
+      {
+        const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_PERMIT_SEND_DRAW , 0 );
+        if( ret == TRUE )
+        {
+          commWork->reqPermitSendDrawBuf = FALSE;
+        }
       }
       
+      //音声
+      if( commWork->reqPermitSendWaveBuf == TRUE )
+      {
+        const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_PERMIT_SEND_WAVE , 0 );
+        if( ret == TRUE )
+        {
+          commWork->reqPermitSendWaveBuf = FALSE;
+        }
+      }
+
+      //メンバーデータ
       if( commWork->reqSendMemberData == TRUE )
       {
         const BOOL ret = CTVT_COMM_SendMemberData( work , commWork );
@@ -1164,6 +1196,19 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
       COMM_TVT_SetDoubleMode_Flag( commWork->parentWork , pkt->value );
     }
     break;
+  
+  case CCFT_PERMIT_SEND_DRAW:
+    if( netID != selfId )
+    {
+      commWork->canSendDrawBuf = TRUE;
+    }
+    break;
+  case CCFT_PERMIT_SEND_WAVE:
+    if( netID != selfId )
+    {
+      commWork->canSendWaveBuf = TRUE;
+    }
+    break;
   //外で使う
   case CCFT_REQ_TALK:  //会話要求通知
     if( selfId == 0 )
@@ -1257,6 +1302,7 @@ static void CTVT_COMM_Post_WaveData( const int netID, const int size , const voi
   CTVT_MIC_WORK *micWork = COMM_TVT_GetMicWork(commWork->parentWork);
   const CTVT_COMM_WAVE_HEADER *header = commWork->postWaveBuf;
   void *waveBuffet = (void*)((u32)commWork->postWaveBuf+sizeof(CTVT_COMM_WAVE_HEADER));
+  const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
   CTVT_TPrintf("Post Wave[%d]\n",header->dataNo );
   
@@ -1282,6 +1328,11 @@ static void CTVT_COMM_Post_WaveData( const int netID, const int size , const voi
     }
     
   }
+  if( COMM_TVT_IsWifi(commWork->parentWork) == TRUE &&
+      netID != selfId )
+  {
+    commWork->reqPermitSendWaveBuf = TRUE;
+  }
   commWork->isCommWave = FALSE;
   
 }
@@ -1294,7 +1345,7 @@ static const BOOL CTVT_COMM_SendDrawData( COMM_TVT_WORK *work , CTVT_COMM_WORK *
   GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
   u8 sendNum;
   
-  CTVT_TPrintf("Send Draw[%d][%d].\n",commWork->drawBufSetPos,commWork->drawBufSendPos );
+  CTVT_TPrintf("Send Draw[%d][%d].\n",commWork->drawBufSendPos,commWork->drawBufSetPos );
   
   if( commWork->drawBufSendPos > commWork->drawBufSetPos )
   {
@@ -1326,6 +1377,11 @@ static const BOOL CTVT_COMM_SendDrawData( COMM_TVT_WORK *work , CTVT_COMM_WORK *
       {
         commWork->drawBufSendPos -= CTVT_COMM_DRAW_BUF_NUM;
       }
+      if( COMM_TVT_IsWifi(work) == TRUE )
+      {
+        //Wifiの場合はOKをもらうまで次を送らない
+        commWork->canSendDrawBuf = FALSE;
+      }
     }
     return ret;
   }
@@ -1341,12 +1397,19 @@ static void CTVT_COMM_PostDrawData( const int netID, const int size , const void
   DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys(commWork->parentWork);
   const DRAW_SYS_PEN_INFO *drawBuf = pData;
   const u8 num = size/sizeof(DRAW_SYS_PEN_INFO);
+  const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   u8 i;
 
   CTVT_TPrintf("Post Draw[%d]\n",num );
   for( i=0;i<num;i++ )
   {
     DRAW_SYS_SetPenInfo( drawSys , &drawBuf[i] );
+  }
+  if( COMM_TVT_IsWifi(commWork->parentWork) == TRUE &&
+      netID != selfId )
+  {
+    //Wifiの時は送信許可を返す
+    commWork->reqPermitSendDrawBuf = TRUE;
   }
   
 }
@@ -1564,3 +1627,11 @@ const BOOL CTVT_COMM_IsEndBeaconTime( COMM_TVT_WORK *work , CTVT_COMM_WORK *comm
   return FALSE;
 }
 
+const BOOL CTVT_COMM_CanSendWaveBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  return commWork->canSendWaveBuf;
+}
+void CTVT_COMM_SetCanSendWaveBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const BOOL flg )
+{
+  commWork->canSendWaveBuf = flg;
+}

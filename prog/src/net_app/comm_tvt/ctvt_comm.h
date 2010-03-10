@@ -39,6 +39,8 @@ typedef enum
   CCFT_TALK_MEMBER,
   CCFT_CHANGE_DOUBLE,
   CCFT_DRAW_BUFFER_NO,
+  CCFT_PERMIT_SEND_DRAW,
+  CCFT_PERMIT_SEND_WAVE,
     
   //外で使う
   CCFT_REQ_TALK,  //会話要求通知
@@ -126,3 +128,5 @@ extern void CTVT_COMM_AddDrawBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
 
 extern void CTVT_COMM_ResetBeaconTime( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 extern const BOOL CTVT_COMM_IsEndBeaconTime( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
+extern const BOOL CTVT_COMM_CanSendWaveBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
+extern void CTVT_COMM_SetCanSendWaveBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const BOOL flg );

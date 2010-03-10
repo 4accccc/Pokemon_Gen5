@@ -1104,9 +1104,10 @@ extern int GFL_NET_GetErrorCode(void);
  * @brief   低優先度送信：システム作成(送信側
  *
  * @param   heapId システム作成用HEAP
+ * @param   isWifi Wifiモード(二人用・次のデータ送信に許可を待つ
  */
 //--------------------------------------------------------------
-extern void GFL_NET_LDATA_InitSystem( const HEAPID heapId );
+extern void GFL_NET_LDATA_InitSystem( const HEAPID heapId , const BOOL isWifi );
 //--------------------------------------------------------------
 /**
  * @brief   低優先度送信：システム削除
