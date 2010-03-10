@@ -112,13 +112,13 @@ static void PutPokeWin( OSYABERI_WORK * wk );
 static void DelPokeWin( OSYABERI_WORK * wk );
 static BOOL MainPerapAnm( OSYABERI_WORK * wk );
 
+/*
 extern u16 PMV_DBG_CustomVoicePlay( void*	wave,				// [in]波形データ
 															u32		size,				// [in]波形サイズ(MAX 26000)
 															int		rate,				// [in]波形再生レート
 															int		speed,			// [in]波形再生スピード
 															s8		volume);			// [in]再生ボリューム
-extern u8 * SND_MIC_GetTestBuffer(void);
-
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -228,7 +228,6 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 
 	case SEQ_START_MSG:			// 開始メッセージ
 		if( FLDMSGWIN_STREAM_Print( wk->msgWin ) == TRUE ){
-/*
 			if( SND_PERAP_VoiceRecStart( VoiceRec_CallBack, &wk->recFlag ) == MIC_RESULT_SUCCESS ){
 				*seq = SEQ_MAIN;
 			}else{
@@ -243,7 +242,7 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 				PMSND_PauseBGM( FALSE );
 				*seq = SEQ_REC_ERR;		// 失敗
 			}
-*/
+/*
 			MICAutoParam mic;
 			wk->testBuff = GFL_HEAP_AllocClearMemory( HEAPID_FIELDMAP, 10000 );
 			mic.type			= MIC_SAMPLING_TYPE_SIGNED_8BIT;	//サンプリング種別
@@ -261,6 +260,7 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 				OS_Printf( "mic = 0x%08x, buf = 0x%08x\n", mic.buffer, wk->testBuff );
 			}
 			*seq = SEQ_MAIN;
+*/
 		}
 		break;
 
@@ -294,16 +294,18 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 
 	case SEQ_VOICE_PLAY:		// 再生
 		{
-//			PMV_REF	pmvRef;
-//	    PMV_MakeRefDataMine( &pmvRef );
+			PMV_REF	pmvRef;
+	    PMV_MakeRefDataMine( &pmvRef );
 //			OS_Printf( "addr = 0x%08x\n", wk->sv );
+			wk->voicePlayer = PMVOICE_Play( MONSNO_PERAPPU, 0, 64, FALSE, 0, 0, FALSE, (u32)&pmvRef );
+/*
 			wk->voicePlayer = PMV_DBG_CustomVoicePlay(
 													(void*)MATH_ROUNDUP32( (int)(wk->testBuff) ),
 													8000,
 													MIC_SAMPLING_RATE_8180,//MIC_SAMPLING_RATE_8K,
 													32768,
 													127 );
-//			wk->voicePlayer = PMVOICE_Play( MONSNO_PERAPPU, 0, 64, FALSE, 0, 0, FALSE, (u32)&pmvRef );
+*/
 		}
 		*seq = SEQ_VOICE_WAIT;
 		break;
