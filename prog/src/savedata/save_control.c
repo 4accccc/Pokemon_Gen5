@@ -12,6 +12,7 @@
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
 #include "savedata/player_data.h"
+#include "savedata/musical_save.h"
 
 
 //==============================================================================
@@ -90,20 +91,31 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 
 	  for(extra_id = 0; extra_id < SAVE_EXTRA_ID_MAX; extra_id++){
       if(SaveData_CheckExtraMagicKey(ctrl, extra_id) == TRUE){  //セーブ経験のある外部だけチェック
-        u32 *link_ptr = SaveData_GetExtraLinkPtr(ctrl, extra_id);
         LOAD_RESULT extra_result;
         extra_result = SaveControl_Extra_Load(ctrl, extra_id, HEAPID_SAVE_TEMP);
         SaveControl_Extra_Unload(ctrl, extra_id);
         switch(extra_result){
       	case LOAD_RESULT_OK:				///<データ正常読み込み
       	case LOAD_RESULT_NG:				///<データ異常
+          if(extra_id == SAVE_EXTRA_ID_MUSICAL_DIST){
+            MUSICAL_SAVE* mus_save = MUSICAL_SAVE_GetMusicalSave( ctrl );
+            MUSICAL_SAVE_SetEnableDistributData( mus_save, TRUE );
+          }
       	  break;
       	case LOAD_RESULT_NULL:  		///<データなし
       	case LOAD_RESULT_BREAK:			///<破壊、復旧不能
       	case LOAD_RESULT_ERROR:			///<機器故障などで読み取り不能
     			ctrl->first_status |= 1 << (FST_EXTRA_START + extra_id);
+          if(extra_id == SAVE_EXTRA_ID_MUSICAL_DIST){
+            MUSICAL_SAVE* mus_save = MUSICAL_SAVE_GetMusicalSave( ctrl );
+            MUSICAL_SAVE_SetEnableDistributData( mus_save, FALSE );
+          }
       	  break;
       	}
+      }
+      else if(extra_id == SAVE_EXTRA_ID_MUSICAL_DIST){
+        MUSICAL_SAVE* mus_save = MUSICAL_SAVE_GetMusicalSave( ctrl );
+        MUSICAL_SAVE_SetEnableDistributData( mus_save, FALSE );
       }
     }
 		break;
@@ -180,6 +192,21 @@ LOAD_RESULT SaveControl_Load(SAVE_CONTROL_WORK *ctrl)
 	case LOAD_RESULT_OK:
 	case LOAD_RESULT_NG:
 		ctrl->data_exists = TRUE;
+    {
+      MUSICAL_SAVE* mus_save = MUSICAL_SAVE_GetMusicalSave( ctrl );
+      MUSICAL_SAVE_SetEnableDistributData( mus_save, FALSE );
+      if(SaveData_CheckExtraMagicKey(ctrl, SAVE_EXTRA_ID_MUSICAL_DIST) == TRUE){
+        LOAD_RESULT extra_result;
+        extra_result = SaveControl_Extra_Load(ctrl, SAVE_EXTRA_ID_MUSICAL_DIST, HEAPID_SAVE_TEMP);
+        SaveControl_Extra_Unload(ctrl, SAVE_EXTRA_ID_MUSICAL_DIST);
+        switch(extra_result){
+      	case LOAD_RESULT_OK:				///<データ正常読み込み
+      	case LOAD_RESULT_NG:				///<データ異常
+          MUSICAL_SAVE_SetEnableDistributData( mus_save, TRUE );
+          break;
+        }
+      }
+    }
 		break;
 	}
 	return result;
