@@ -52,7 +52,7 @@ _TALK_OBJ_START()
 			_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_11 )
 			
 			//分岐・トライ・ベーシック……　やめる
-			_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 0, LWK_BADGE_SELECT )
+			_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, LWK_BADGE_SELECT )
 	
 			_BMPMENU_MAKE_LIST( msg_c03r1202_select_01, 0 )	//トライバッジ
 			_BMPMENU_MAKE_LIST( msg_c03r1202_select_02, 1 )	//ベーシックバッジ
@@ -105,6 +105,12 @@ _TALK_OBJ_START()
 				_MSGWIN_CLOSE()
 				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_02 )
 				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+				//========================================/
+				//繰り返し脱出
+				$LWK_REPEAT = 1
+				//========================================/
+			DEFAULT
 				_MSGWIN_CLOSE()
 				//========================================/
 				//繰り返し脱出

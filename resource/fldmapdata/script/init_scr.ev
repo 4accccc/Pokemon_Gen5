@@ -210,6 +210,8 @@ init_flags:
 	//T01フィールドのママ。図鑑入手イベント後に表示。
 	_FLAG_SET( FV_T01_MAMA_01 )
 
+	//D04R0201:七賢人２　D03R0101ライバルイベント時に表示
+	_FLAG_SET( FV_D04R0201_SAGE2 )
 }
 _RET
 

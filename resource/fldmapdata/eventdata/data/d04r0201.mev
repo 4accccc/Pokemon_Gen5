@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/10 11:34:48
+#save date:2010/03/10 12:59:41
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d04r0201.wms
 #SECTION START:OBJ_EVENT
@@ -53,7 +53,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D04R0201_SAGE2
 #Event Script Name
 SCRID_D04R0201_SAGE2_01
 #Direction Type Number
@@ -71,7 +71,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -72
+88 0 -56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

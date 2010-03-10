@@ -1,5 +1,5 @@
 #../data/c03p02.mev
-../tmp/c03p02.bin:../data/c03p02.mev $(UNIQ_SCRIPTHEADER) ../tmp/c03p02.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/C03P02_def.h ../../flagwork/work_define.h 
+../tmp/c03p02.bin:../data/c03p02.mev $(UNIQ_SCRIPTHEADER) ../tmp/c03p02.h ../../flagwork/work_define.h ../../../../prog/include/field/eventdata_type.h ../../script/C03P02_def.h 
 	@echo ../data/c03p02.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c03p02.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/C03P02_def.h ../../flagwork/work_define.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c03p02.h ../../flagwork/work_define.h ../../../../prog/include/field/eventdata_type.h ../../script/C03P02_def.h 
 

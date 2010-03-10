@@ -208,6 +208,7 @@ _TALK_OBJ_START()
 		
 		//わざマシンの解説
 		_BALLOONWIN_OBJMSG( msg_c06gym0101_leader_05 , C06GYM0101_LEADER6_01 )
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
 		//========================================/
@@ -219,6 +220,9 @@ _TALK_OBJ_START()
 		_TRAINER_FLAG_SET( TRID_PILOT_02 )
 		_TRAINER_FLAG_SET( TRID_WORKER2_11 )
 		
+		//D07のストッパー解除
+		_FLAG_SET(FV_D07_WORKMAN_STOPPER)
+		
 		//========================================/
 
 	//ジムバッジを取得している場合
@@ -228,6 +232,7 @@ _TALK_OBJ_START()
 			
 				//……そういえばなんだけど　セッカシティを　とんだとき
 				_BALLOONWIN_OBJMSG( msg_c06gym0101_leader_06 , C06GYM0101_LEADER6_01 )
+				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			
 			//D07のイベントをクリアしている場合
@@ -235,6 +240,7 @@ _TALK_OBJ_START()
 			
 				//どう　げんきに　してる？
 				_BALLOONWIN_OBJMSG( msg_c06gym0101_leader_07 , C06GYM0101_LEADER6_01 )
+				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			
 			ENDIF

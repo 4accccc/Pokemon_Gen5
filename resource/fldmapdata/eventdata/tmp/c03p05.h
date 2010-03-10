@@ -10,11 +10,6 @@
 #ifndef ZONE_C03P05_EVC_H
 #define ZONE_C03P05_EVC_H
 
-#define C03CT_OL_02                        0
-#define C03CT_OL_01                        1
-#define C03CT_BUSINESSMAN_01               2
-#define C03CT_BUSINESSMAN_02               3
-#define C03CT_BUSINESSMAN_03               4
 
 #endif //ZONE_C03P05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03p05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

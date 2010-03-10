@@ -196,6 +196,9 @@ EVENT_START		ev_pos_d03r0101_event_01
 	//D04R0101のストッパー解除
 	$WK_SCENE_D04R0101 = 1
 	
+	//七賢人２のバニシュフラグリセット
+	_FLAG_RESET( FV_D04R0201_SAGE2 )
+	
 	//========================================/
 
 EVENT_END
