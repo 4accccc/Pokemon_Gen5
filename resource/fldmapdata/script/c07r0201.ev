@@ -20,15 +20,256 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c07r0201_middlewoman2_01		//アシスタント役
-_EVENT_DATA    ev_c07r0201_middleman2_01		//司会者役
-_EVENT_DATA    ev_c07r0201_girl3_01				//観客役
+_EVENT_DATA    ev_c07r0201_middleman2_01		  //司会者役
+_EVENT_DATA    ev_c07r0201_girl3_01				    //観客役
+_EVENT_DATA    ev_zone_c07r0201				        //ゾーンチェンジ
+_EVENT_DATA    ev_scene_c07r0201_game_start   //シーンスクリプト
+_EVENT_DATA    ev_init_c07r0201               //イニットラベル
 _EVENT_DATA_END
+
+//------------------------------注意--------------------------------//
+//
+//	LOCALWORK0⇒イベント起動条件に使用
+//　　　1のとき起動　0のとき無効
+//
+//------------------------------------------------------------------//
+
+
+/**************************************************************/
+/*            ZONE_CHANGE_SCRIPT                               */
+/**************************************************************/
+INIT_EVENT_START ev_zone_c07r0201
+  IF FLAG_OFF( TMFLG_C07R0201_QUIZ ) THEN
+    //ローカルワーク0に1をセット  イベント有効
+    $LOCALWORK0 = 1
+  ELSE
+    //ローカルワーク0に0をセット　イベント無効
+    $LOCALWORK0 = 0
+  ENDIF
+  _FLAG_SET ( TMFLG_C07R0201_QUIZ )
+INIT_EVENT_END
+
+/**************************************************************/
+/*            FIELD_INIT_LABEL                               */
+/**************************************************************/
+INIT_EVENT_START  ev_init_c07r0201
+  IF $LOCALWORK0 == 1 THEN
+  {
+    DEFINE_LOCAL x
+    DEFINE_LOCAL z
+    //家族みんな入り口の方向いている
+    _OBJ_POS_GET( C07R0201_MIDDLEWOMAN2_01, x, z )
+    _OBJ_POS_CHANGE( C07R0201_MIDDLEWOMAN2_01, x, 0, z, DIR_DOWN )
+    _OBJ_POS_GET( C07R0201_GIRL3_01, x, z )
+    _OBJ_POS_CHANGE( C07R0201_GIRL3_01, x, 0, z, DIR_DOWN )
+    _OBJ_POS_GET( C07R0201_MIDDLEMAN2_01, x, z )
+    _OBJ_POS_CHANGE( C07R0201_MIDDLEMAN2_01, x, 0, z, DIR_DOWN )
+  }  
+  ENDIF
+
+INIT_EVENT_END
+
+
+//シーンスクリプト ゲーム開始
+EVENT_START ev_scene_c07r0201_game_start
+  DEFINE_LOCAL easy_talk_word1
+  DEFINE_LOCAL easy_talk_word2
+  DEFINE_LOCAL item
+  DEFINE_LOCAL quiz_msg
+  DEFINE_LOCAL hint_msg
+  DEFINE_LOCAL ans
+
+  //ローカルワークに0をセット　イベント無効
+  $LOCALWORK0 = 0
+
+  //問題抽選
+  _GET_QUIZ(quiz_msg, hint_msg, ans)
+  //誕生日問題のとき使用するので、タグ番号0にプレーヤー名をセット
+  _PLAYER_NAME(0)
+
+  //ナンデヤ「！」
+  _OBJ_ANIME( C07R0201_MIDDLEWOMAN2_01, anm_gyoe )
+  _OBJ_ANIME_WAIT()
+
+  //イベントＢＧＭ開始
+  _START_EVENT_BGM( SEQ_BGM_E_TSURETEKE2 )
+  
+  //ナンデヤ近づく
+  _OBJ_ANIME( C07R0201_MIDDLEWOMAN2_01, anm_nandeya_mv1 )
+  _OBJ_ANIME_WAIT()
+
+  //「こちらへどうぞ」
+  _BALLOONWIN_OBJMSG(msg_quiz_start_01, C07R0201_MIDDLEWOMAN2_01) //話し手：ナンデヤ
+  _BALLOONWIN_CLOSE()
+  
+  //ナンデヤ自機誘導
+  _OBJ_ANIME( C07R0201_MIDDLEWOMAN2_01, anm_nandeya_mv2 )
+  //自機強制移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mv1 )
+  _OBJ_ANIME_WAIT()
+  //ワカルデ右向き、セヤナ左向き
+  _OBJ_ANIME( C07R0201_MIDDLEMAN2_01, anm_wakarude_mv1 )
+  _OBJ_ANIME( C07R0201_GIRL3_01, anm_seyana_mv1 )
+  _OBJ_ANIME_WAIT()
+
+  //ナンデヤ定位置に移動
+  _OBJ_ANIME( C07R0201_MIDDLEWOMAN2_01, anm_nandeya_mv3 )
+  _OBJ_ANIME_WAIT()
+
+  //「わくわくドキドキ」
+  _BALLOONWIN_OBJMSG(msg_quiz_start_02, C07R0201_MIDDLEWOMAN2_01) //話し手：ナンデヤ
+  _BALLOONWIN_CLOSE()
+  //「ようこそ」
+  _BALLOONWIN_OBJMSG(msg_quiz_start_03, C07R0201_MIDDLEMAN2_01) //話し手：ワカルデ
+  _BALLOONWIN_CLOSE()
+
+  //セヤナじたばた
+  _OBJ_ANIME( C07R0201_GIRL3_01, anm_seyana_mv2 )
+  _OBJ_ANIME_WAIT()
+
+  //「がんばって」
+  _BALLOONWIN_OBJMSG(msg_quiz_start_04, C07R0201_GIRL3_01) //話し手：セヤナ
+  _BALLOONWIN_CLOSE()
+  //「問題」
+  _BALLOONWIN_OBJMSG(msg_quiz_start_05, C07R0201_MIDDLEMAN2_01) //話し手：ワカルデ
+  //問題表示
+  _BALLOONWIN_OBJMSG(quiz_msg, C07R0201_MIDDLEMAN2_01) //話し手：ワカルデ
+  _BALLOONWIN_CLOSE()
+
+  //ナンデヤおろおろ
+  _OBJ_ANIME( C07R0201_MIDDLEWOMAN2_01, anm_nandeya_mv4 )
+  _OBJ_ANIME_WAIT()
+
+  //「むずかしい」
+  _BALLOONWIN_OBJMSG(msg_quiz_start_06, C07R0201_MIDDLEWOMAN2_01) //話し手：ナンデヤ
+  _BALLOONWIN_CLOSE()
+
+  //セヤナジャンプ
+  _OBJ_ANIME( C07R0201_GIRL3_01, anm_seyana_mv3 )
+  _OBJ_ANIME_WAIT()
+
+  //「ヒント」
+  _BALLOONWIN_OBJMSG(msg_quiz_start_07, C07R0201_GIRL3_01) //話し手：セヤナ
+  _BALLOONWIN_CLOSE()
+  //「ヒントのさいそくだ」
+  _BALLOONWIN_OBJMSG(msg_quiz_start_08, C07R0201_MIDDLEMAN2_01) //話し手：ワカルデ
+  _BALLOONWIN_CLOSE()
+  //「オーケー」
+  _BALLOONWIN_OBJMSG(msg_quiz_start_09, C07R0201_MIDDLEWOMAN2_01) //話し手：ナンデヤ
+  //ヒント表示
+  _BALLOONWIN_OBJMSG(hint_msg, C07R0201_MIDDLEWOMAN2_01) //話し手：ナンデヤ
+  _BALLOONWIN_CLOSE()
+  //「いいヒントだね」
+  _BALLOONWIN_OBJMSG(msg_quiz_start_10, C07R0201_MIDDLEMAN2_01) //話し手：ワカルデ
+  //問題表示
+  _BALLOONWIN_OBJMSG(quiz_msg, C07R0201_MIDDLEMAN2_01) //話し手：ワカルデ
+  _BALLOONWIN_CLOSE()
+
+  //簡易会話アプリコール
+  {
+    _MAP_FADE_BLACK_OUT()
+    _MAP_FADE_END_CHECK()
+    _FIELD_CLOSE()
+    _CALL_EASY_TALK_APP( EASYTALK_MODE_QUIZ, easy_talk_word1, easy_talk_word2, SCWK_ANSWER )
+    _FIELD_OPEN()
+    _MAP_FADE_BLACK_IN()
+    _MAP_FADE_END_CHECK()
+  }
+
+  IF $SCWK_ANSWER == TRUE THEN
+    //答え比較
+    IF $easy_talk_word1 == $ans THEN
+      $SCWK_ANSWER = TRUE
+    ELSE
+      $SCWK_ANSWER = FALSE
+    ENDIF  
+  ENDIF
+
+  IF $SCWK_ANSWER == TRUE THEN    //正解
+    //正解ＳＥ
+    _SE_PLAY( SEQ_SE_FLD_41 )
+    _SE_WAIT()
+    //「せいかい」
+    _BALLOONWIN_OBJMSG(msg_quiz_right_answer_01, C07R0201_MIDDLEMAN2_01) //話し手：ワカルデ
+    _BALLOONWIN_CLOSE()
+
+    //ナンデヤジャンプ
+    _OBJ_ANIME( C07R0201_MIDDLEWOMAN2_01, anm_nandeya_mv5 )
+    _OBJ_ANIME_WAIT()
+
+    //「すごい」
+    _BALLOONWIN_OBJMSG(msg_quiz_right_answer_02, C07R0201_MIDDLEWOMAN2_01) //話し手：ナンデヤ
+    _BALLOONWIN_CLOSE()
+
+    //セヤナジャンプ
+    _OBJ_ANIME( C07R0201_GIRL3_01, anm_seyana_mv3 )
+    _OBJ_ANIME_WAIT()
+
+    //「ひゅー」
+    _BALLOONWIN_OBJMSG(msg_quiz_right_answer_03, C07R0201_GIRL3_01) //話し手：セヤナ
+    _BALLOONWIN_CLOSE()
+    //「おめでとう　毒消し」
+    _BALLOONWIN_OBJMSG(msg_quiz_right_answer_04, C07R0201_MIDDLEMAN2_01) //話し手：ワカルデ
+    _BALLOONWIN_CLOSE()
+    //アイテムセット
+    $item = ITEM_DOKUKESI
+  ELSE                            //不正解
+    //不正解ＳＥ
+    _SE_PLAY( SEQ_SE_FLD_42 )
+    _SE_WAIT()
+    //「ざんねん」
+    _BALLOONWIN_OBJMSG(msg_quiz_wrong_answer_01, C07R0201_MIDDLEMAN2_01) //話し手：ワカルデ
+    _BALLOONWIN_CLOSE()
+
+    //ナンデヤおろおろ
+    _OBJ_ANIME( C07R0201_MIDDLEWOMAN2_01, anm_nandeya_mv6 )
+    _OBJ_ANIME_WAIT()
+
+    //「なんてこと」
+    _BALLOONWIN_OBJMSG(msg_quiz_wrong_answer_02, C07R0201_MIDDLEWOMAN2_01) //話し手：ナンデヤ
+    _BALLOONWIN_CLOSE()
+
+    //セヤナジャンプ
+    _OBJ_ANIME( C07R0201_GIRL3_01, anm_seyana_mv3 )
+    _OBJ_ANIME_WAIT()
+
+    //「ナイガン」
+    _BALLOONWIN_OBJMSG(msg_quiz_wrong_answer_03, C07R0201_GIRL3_01) //話し手：セヤナ
+    _BALLOONWIN_CLOSE()
+    //「ナイガン　まひなおし」
+    _BALLOONWIN_OBJMSG(msg_quiz_wrong_answer_04, C07R0201_MIDDLEMAN2_01) //話し手：ワカルデ
+    _BALLOONWIN_CLOSE()
+    //アイテムセット
+    $item = ITEM_MAHINAOSI
+  ENDIF
+  //アイテムボール出現
+  _OBJ_ADD_EX( 4, 5, DIR_DOWN, MMDL_ID_EVENTOBJ_00, MONSTERBALL, MV_DMY )
+  //自機アイテムボールに近づく
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mv2 )
+  _OBJ_ANIME_WAIT()
+  //アイテムボール消す
+  _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
+
+  //アイテム入手処理
+  _ITEM_EVENT_KEYWAIT( item, 1 )
+
+  //「わくわくドキドキ」
+  _BALLOONWIN_OBJMSG(msg_quiz_finish_01, C07R0201_MIDDLEWOMAN2_01) //話し手：ナンデヤ
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+  
+  //イベントBGM終了
+	_END_EVENT_BGM()
+
+
+EVENT_END
 
 
 /************************************************************/
 /*					ナンデヤ：アシスタント役				*/
 /************************************************************/
 EVENT_START	ev_c07r0201_middlewoman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_quiz_end_02 )
 EVENT_END
 
 
@@ -36,6 +277,7 @@ EVENT_END
 /*						ワカルデ：司会者役					*/
 /************************************************************/
 EVENT_START	ev_c07r0201_middleman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_quiz_end_01 )
 EVENT_END
 
 
@@ -43,6 +285,126 @@ EVENT_END
 /*						セヤナ：観客役						*/
 /************************************************************/
 EVENT_START	ev_c07r0201_girl3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_quiz_end_03 )
 EVENT_END
 
+//--------------------------------------------------------------------
+//「！」マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gyoe
+  _ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//ナンデヤ近づく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_nandeya_mv1
+  _ANIME_DATA	AC_STAY_WALK_D_4F,3
+  _ANIME_DATA	AC_WALK_D_4F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ナンデヤ自機を誘導
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_nandeya_mv2
+  _ANIME_DATA	AC_WALK_U_8F,4
+  _ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公強制移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_mv1
+  _ANIME_DATA	AC_WALK_U_8F,4
+  _ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ナンデヤ定位置に移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_nandeya_mv3
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公アイテムに近づく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_mv2
+  _ANIME_DATA AC_WAIT_8F, 1
+  _ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ワカルデ右向き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_wakarude_mv1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//セヤナ左向き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_seyana_mv1
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//セヤナじたばた
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_seyana_mv2
+  _ANIME_DATA	AC_STAY_WALK_L_4F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ナンデヤおろおろ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_nandeya_mv4
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA AC_WAIT_4F, 1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA AC_WAIT_4F, 1
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA AC_WAIT_4F, 1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA AC_WAIT_4F, 1
+  _ANIME_DATA	AC_WALK_L_4F,1
+  _ANIME_DATA	AC_WALK_R_4F,2
+  _ANIME_DATA	AC_WALK_L_4F,1
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//セヤナジャンプ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_seyana_mv3
+  _ANIME_DATA	AC_STAY_JUMP_L_8F,1
+  _ANIME_DATA AC_WAIT_2F, 1
+  _ANIME_DATA	AC_STAY_JUMP_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ナンデヤジャンプ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_nandeya_mv5
+  _ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ナンデヤ不正解時おろおろ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_nandeya_mv6
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA AC_WAIT_4F, 1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA AC_WAIT_4F, 1
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA AC_WAIT_4F, 1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA AC_WAIT_4F, 1
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+  
+  
+  
+  

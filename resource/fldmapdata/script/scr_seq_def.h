@@ -8895,3 +8895,21 @@
   .short \word2
   .short \ret
   .endm
+
+//--------------------------------------------------------------
+/**
+ *  _GET_QUIZ     クイズ取得
+ * @param quiz  クイズ
+ * @param hint  ヒント
+ * @param ans   答え簡易会話単語コード
+ */
+//--------------------------------------------------------------
+#define _GET_QUIZ( quiz, hint, ans ) \
+    _ASM_GET_QUIZ quiz, hint, ans
+
+  .macro _ASM_GET_QUIZ quiz, hint, ans
+  .short EV_SEQ_GET_QUIZ
+  .short \quiz
+  .short \hint
+  .short \ans
+  .endm  

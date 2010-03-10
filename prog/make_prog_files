@@ -703,9 +703,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_movepoke.c \
         field/scrcmd_subscreen.c \
         field/fskill_osyaberi.c \
-        field/scrcmd_password.c
-
-
+        field/scrcmd_password.c \
+        field/scrcmd_quiz.c
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置
 #===> GROUP_OVERLAY_UNION_INTRUDE

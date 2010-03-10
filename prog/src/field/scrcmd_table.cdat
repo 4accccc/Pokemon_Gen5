@@ -922,6 +922,13 @@
   NO_CMD()
   NO_CMD()
 
+  //クイズ
+  DEF_CMD( EvCmdGetQuiz, EV_SEQ_GET_QUIZ )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+
   END_CMD
 
   //スクリプトコマンドテーブル終了

@@ -85,6 +85,7 @@
 #include "scrcmd_password.h"
 #include "scrcmd_movepoke.h"
 #include "scrcmd_subscreen.h"
+#include "scrcmd_quiz.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

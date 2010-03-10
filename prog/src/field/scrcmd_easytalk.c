@@ -114,6 +114,11 @@ VMCMD_RESULT EvCmdCallEasyTalkApp( VMHANDLE *core, void *wk )
       evt_work->NeedSave = TRUE;
       pmsi_mode = PMSI_MODE_SENTENCE;
       break;
+    case EASYTALK_MODE_QUIZ:
+      guidance = PMSI_GUIDANCE_DEFAULT;   //<<@todo
+      evt_work->NeedSave = FALSE;
+      pmsi_mode = PMSI_MODE_SINGLE;
+      break;  
     case EASYTALK_MODE_PASSWORD:
       guidance = PMSI_GUIDANCE_DEFAULT;   //<<@todo
       evt_work->NeedSave = FALSE;
@@ -180,6 +185,13 @@ static GMEVENT_RESULT EasyTalkAppCallEvt( GMEVENT* event, int* seq, void* work )
         PMSI_PARAM_GetInputDataDouble( prm, word );
         *(evt_work->Word1) = word[0];
         *(evt_work->Word2) = word[1];
+      }
+      else if (evt_work->Mode == EASYTALK_MODE_QUIZ)
+      {
+        PMS_WORD word;
+        word = PMSI_PARAM_GetInputDataSingle( prm );
+        *(evt_work->Word1) = word;
+        *(evt_work->Word2) = 0;
       }
       else
       {

@@ -45,9 +45,9 @@ VMCMD_RESULT EvCmdGetQuiz( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK*   work     = (SCRCMD_WORK*)wk;
   
-  u16 quiz = SCRCMD_GetVMWorkValue( core, work );
-  u16 hint = SCRCMD_GetVMWorkValue( core, work );
-  u16 ans = SCRCMD_GetVMWorkValue( core, work );
+  u16 *quiz = SCRCMD_GetVMWork( core, work );
+  u16 *hint = SCRCMD_GetVMWork( core, work );
+  u16 *ans = SCRCMD_GetVMWork( core, work );
 
   u16 answer[QUIZ_NUM_MAX] = {
     answer00,answer01,answer02,answer03,answer04,
@@ -62,18 +62,18 @@ VMCMD_RESULT EvCmdGetQuiz( VMHANDLE *core, void *wk )
   //ç°ì˙ÇÕé©ï™ÅiÇcÇrÇ≈ê›íËÇµÇΩÅjíaê∂ì˙Ç©?
   if (0)
   {
-    quiz = msg_quiz_birthday;
-    hint = msg_quiz_birthday_01;
-    ans = answer[QUIZ_NUM_MAX-1];
+    *quiz = msg_quiz_31;
+    *hint = msg_quiz_hint_31;
+    *ans = answer[QUIZ_NUM_MAX-1];
   }
   else
   {
     u32 rnd;
     //0Å`29ÇÃóêêîÇÇ∆ÇÈ
     rnd = GFUser_GetPublicRand(NORMAL_QUIZ_NUM_MAX);
-    quiz = msg_quiz_01 + rnd;
-    hint = msg_quiz_01_01 + rnd;
-    ans = answer[rnd];
+    *quiz = msg_quiz_01 + rnd;
+    *hint = msg_quiz_hint_01 + rnd;
+    *ans = answer[rnd];
   }
 
   return VMCMD_RESULT_CONTINUE;
