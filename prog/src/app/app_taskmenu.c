@@ -116,7 +116,7 @@ struct _APP_TASKMENU_WORK
 	const APP_TASKMENU_RES *res;
 };
 
-//縦メニュー用ワーク
+//横メニュー用ワーク
 struct _APP_TASKMENU_WIN_WORK
 {
   GFL_BMPWIN *bmpwin;
@@ -456,7 +456,15 @@ static void APP_TASKMENU_UpdateKey( APP_TASKMENU_WORK *work )
     if( trg & PAD_BUTTON_A )
     {
       work->isDecide = TRUE;
-      PMSND_PlaySystemSE( APP_TASKMENU_SND_DECIDE );
+      
+      if( work->itemWork[ work->cursorPos ].type == APP_TASKMENU_WIN_TYPE_RETURN )
+      { 
+        PMSND_PlaySystemSE( APP_TASKMENU_SND_CANCEL );
+      }
+      else
+      { 
+        PMSND_PlaySystemSE( APP_TASKMENU_SND_DECIDE );
+      }
     }
     else
     if( trg & PAD_BUTTON_B )

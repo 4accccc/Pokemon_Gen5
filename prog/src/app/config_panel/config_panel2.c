@@ -2640,7 +2640,7 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
     else if(  COLLISION_IsRectXPos( &sc_appbar_rect[APPBAR_WIN_CANCEL], &pos )
         && p_wk->select != APPBAR_WIN_CANCEL )
     {
-      PMSND_PlaySE( CONFIG_SE_DECIDE );
+      PMSND_PlaySE( CONFIG_SE_CANCEL );
       p_wk->select  = APPBAR_WIN_CANCEL;
       p_wk->is_decide = TRUE;
     }
@@ -2680,7 +2680,14 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
   case UI_INPUT_TRG_DECIDE:
     if( p_wk->select != APPBAR_WIN_NULL )
     {
-      PMSND_PlaySE( CONFIG_SE_DECIDE );
+      if( p_wk->select == APPBAR_WIN_CANCEL )
+      { 
+        PMSND_PlaySE( CONFIG_SE_CANCEL );
+      }
+      else
+      { 
+        PMSND_PlaySE( CONFIG_SE_DECIDE );
+      }
       p_wk->is_decide = TRUE;
       is_update = TRUE;
     }
