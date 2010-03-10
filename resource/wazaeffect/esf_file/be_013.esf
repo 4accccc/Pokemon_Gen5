@@ -1,0 +1,16 @@
+EFFSEQ
+#001
+%00
+パーティクルデータロード	be_m_ball_01_kaiten
+エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	放物線	0:-2:10	防御側	2.399902:35:5	1:1:0
+SE再生	SEQ_SE_NAGERU	SE1	防御側	0:0:127	0:0:0
+SEパン	SE1	追従	攻撃側	防御側	0	35:0:0
+タイマーによるウエイト	27
+SE再生	SEQ_SE_KON	SE1	防御側	0:0:127	0:0:0
+制御モード変更	継続
+パーティクルデータ削除	be_m_ball_01_kaiten
+パーティクルデータロード	be_m_ball_01_kaiten
+エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	直線	0.007324219:4.823242:-8.756104	攻撃側	0:16:0	1:1:0
+エフェクト終了待ち	すべて
+エフェクト終了
+&
