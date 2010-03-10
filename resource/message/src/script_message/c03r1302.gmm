@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-03-10T22:22:27"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T22:29:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="213"/>
+		<comment position="4" width="235"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="383" top="75" right="1088" bottom="703" maximized="no" rayout="Vertical2">
+	<dialog left="1606" top="208" right="2311" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,37 +292,36 @@
 	</lock>
 
 
-	<row id="msg_c03r1302_gentleman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c03r1302_gentleman_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
-		<language name="JPN" width="256">ようこそ！▼
+		<language name="JPN" width="256">ようこそ！
+わたくしの　パーティに！！▼
 どうぞ　ごじゆうに　うごきまわって
 たのしんでいって　くださいな！</language>
-		<language name="JPN_KANJI" width="256">ようこそ！▼
+		<language name="JPN_KANJI" width="256">ようこそ！
+わたくしの　パーティに！！▼
 どうぞ　ご自由に　動きまわって
 楽しんでいって　くださいな！</language>
 	</row>
 
-	<row id="msg_c03r1302_man3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c03r1302_man3_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
-		<language name="JPN" width="256">ぼく　このあいだ　くるまを　かったんだよ！▼
+		<language name="JPN" width="256">このまえ　くるまを　かったんだよ！▼
 これで　ジムバッジが　なくても
 つぎの　まちまで　ひとっとび！▼
 ……まぁ　めんきょが
 とれたらの　はなしだけど</language>
-		<language name="JPN_KANJI" width="256">ぼく　この間　車を　買ったんだよ！▼
+		<language name="JPN_KANJI" width="256">このまえ　車を　買ったんだよ！▼
 これで　ジムバッジが　なくても
-次の　町まで　ひとっとび！▼
+次の　街まで　ひとっとび！▼
 ……まぁ　免許が
 とれたらの　話だけど</language>
 	</row>
 
-	<row id="msg_c03r1302_middleman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c03r1302_middleman2_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
 		<language name="JPN" width="256">やぁ　きみは　ヒウンアイスを
 たべたことが　あるかい？▼
@@ -336,9 +335,8 @@
 なかなか　買えないんだよねぇ</language>
 	</row>
 
-	<row id="msg_c03r1302_dancer_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r1302_dancer_01">
 		<comment>♂
-・仮メッセージ
 ・外国語にする</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
 		<language name="JPN" width="256">Hey, Trainer!
@@ -347,11 +345,10 @@ Check out my moves!</language>
 Check out my moves!</language>
 	</row>
 
-	<row id="msg_c03r1302_girl3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1302_girl3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・仮メッセージ
 ・メッセージ表示後、アイテム入手処理
-　No000「メロメロ」</comment>
+　No372「メロメロ」</comment>
 		<attribute name="キャラ指定">GIRL3</attribute>
 		<language name="JPN" width="256">やーん　あなたのポケモン
 すっごく　チャーミングじゃなーい！▼
@@ -363,7 +360,7 @@ Check out my moves!</language>
 ぜひ　これを　使って　ほしいわ！▼</language>
 	</row>
 
-	<row id="msg_c03r1302_girl3_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1302_girl3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">GIRL3</attribute>
@@ -398,7 +395,7 @@ Check out my moves!</language>
 ステキよね！　しびれちゃう！▼</language>
 	</row>
 
-	<row id="msg_c03r1302_rangerw_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_c03r1302_rangerw_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">RANGERW</attribute>
 		<language name="JPN" width="256">あたしの　かれし
@@ -413,9 +410,8 @@ Check out my moves!</language>
 だしてもらって　起こしているの！</language>
 	</row>
 
-	<row id="msg_c03r1302_trainerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r1302_trainerw_01">
 		<comment>♀
-・仮メッセージ
 ・外国語にする</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
 		<language name="JPN" width="256">Hi there,
@@ -439,10 +435,10 @@ having a good time?</language>
 ・上記動作モデルとテーブルでしゃべっている</comment>
 		<attribute name="キャラ指定">RANGERM</attribute>
 		<language name="JPN" width="256">おれ　さいきんさ
-あさ　おきると　かおが　はれてるんだよな▽
+おきると　かおが　はれてるんだよな▽
 なんでだろう？　むくみってやつか？</language>
 		<language name="JPN_KANJI" width="256">おれ　最近さ
-朝起きると　顔が　はれてるんだよな▽
+起きると　顔が　はれてるんだよな▽
 なんでだろう？　むくみってやつか？</language>
 	</row>
 
