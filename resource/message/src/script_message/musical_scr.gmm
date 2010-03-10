@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-09T22:51:57"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-10T13:30:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,15 +349,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1383" top="274" right="2088" bottom="902" maximized="no" rayout="Vertical2">
+	<dialog left="1078" top="28" right="1578" bottom="656" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="57" right="1280" bottom="455" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="224"/>
-		<band id="3" index="4" style="0000" width="471"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="3" style="0000" width="325"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -415,16 +415,14 @@
 	<row id="msg_musical_test_04">
 		<comment>♂
 ・ミュージカル確認用
-　テスト受付メッセージ</comment>
+　テスト受付メッセージ
+
+・脚本家と同じメッセージを参照している</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
-		<language name="JPN">やあ　ぼく　きゃくほんか！▼
-もうすぐうけつけと　へいごうするけど
-さんかしたい　えんもくが　あれば▽
-ぼくが　えんもくを　へんこうするよ！▼</language>
-		<language name="JPN_KANJI">やあ　ぼく　きゃくほんか！▼
-もうすぐうけつけと　へいごうするけど
-さんかしたい　えんもくが　あれば▽
-ぼくが　えんもくを　へんこうするよ！▼</language>
+		<language name="JPN">さんかする　えんもくを
+えらんでください▼</language>
+		<language name="JPN_KANJI">参加する　演目を
+選んでください▼</language>
 	</row>
 
 	<row id="msg_musical_test_05">
@@ -433,9 +431,9 @@
 ポケモン選択後セーブ処理
 やめた場合はmsg_musical_test_03へ</comment>
 		<language name="JPN" width="256">それでは　さんかする
-ポケモンを　えらんでください</language>
+チラーミィを　えらんでください▼</language>
 		<language name="JPN_KANJI" width="256">それでは　参加する
-ポケモンを　選んでください</language>
+チラーミィを　選んでください▼</language>
 	</row>
 
 	<row id="msg_musical_fan_cheer_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -1184,38 +1182,6 @@ msg_musical_recept_06を
 お客さんの　反応や▽
 アピールが　変わることも▽
 ありますので　お試しください！▼</language>
-	</row>
-
-	<row id="msg_musical_info_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>選択肢
-選択するとmsg_musical_info_13</comment>
-		<language name="JPN">グッズ</language>
-		<language name="JPN_KANJI">グッズ</language>
-	</row>
-
-	<row id="msg_musical_info_13" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>グッズ取得に関するヒント＋ミュージカル攻略ヒント
-メッセージ終了後、選択肢へ戻る</comment>
-		<language name="JPN">ミュージカルを　たのしむ　ためには
-より　おおくの　グッズを▽
-あつめましょう！▼
-えんもくにあう　ドレスアップや
-ぶたいの　うえで　うまく　アピール▽
-することが　できれば▼
-ミュージカルに　おとずれた
-おきゃくさんが▼
-ファンに　なってくれて　グッズを
-くれるかも　しれませんよ！</language>
-		<language name="JPN_KANJI">ミュージカルを　楽しむ　ためには
-より　多くの　グッズを▽
-集めましょう！▼
-演目にあう　ドレスアップや
-舞台の　上で　上手く　アピール▽
-することが　できれば▼
-ミュージカルに　訪れた
-お客さんが▼
-ファンに　なってくれて　グッズを
-くれるかも　しれませんよ！</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-03-08T17:34:46"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-10T13:29:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="271" top="-9" right="771" bottom="610" maximized="no" rayout="Vertical2">
+	<dialog left="1072" top="420" right="1572" bottom="1030" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="879" top="-3" right="1352" bottom="395" visible="yes"/>
+		<tag-palette left="1072" top="4" right="1545" bottom="402" visible="yes"/>
 		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="190"/>
 		<band id="2" index="3" style="0000" width="300"/>
 		<band id="3" index="4" style="0000" width="492"/>
 		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -323,7 +323,7 @@
 オーナーです　よろしく！</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c04r0201_owner_demo_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>♂
 ・主人公とサポートの前方を行ったりきたりした後メッセージ
 ・メッセージ表示後
@@ -347,7 +347,7 @@
 プレゼント　しますから！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c04r0201_owner_demo_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>♂
 ・メッセージ表示後 ポケモン選択画面へ
 ・ポケモンを選択したらドレスアップのみのアプリへ
@@ -402,7 +402,7 @@
 ドレスアップしたほうが　受けますよ▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_03c" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c04r0201_owner_demo_03c" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>♂
 ・メッセージ表示後、再度ポケモン選択画面へ</comment>
 		<attribute name="キャラ指定">GENTLEMAN
@@ -446,7 +446,7 @@
 とても　魅力的　でございます！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_demo_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c04r0201_owner_demo_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>♂
 ・表示後、そのまま左に向かって歩いて行きフェードアウト
 　初期配置箇所に戻る
@@ -460,17 +460,17 @@
 きみたちも　ミュージカルに
 ぜひ　さんか　してくださいませ！▼
 ミュージカルに　ついての　せつめいは
-うけつけでも　きけます▼
+うけつけでも　きけますよ▼
 では　ぶたいで　あえる　ひを
-たのしみに　しておりますよ！▼</language>
+たのしみに　しております！▼</language>
 		<language name="JPN_KANJI" width="256">そうやって　着飾った　ポケモンが
 参加するのが　ミュージカルです！▼
 きみたちも　ミュージカルに
 ぜひ　参加　してくださいませ！▼
 ミュージカルに　ついての　説明は
-受付でも　聞けます▼
+受付でも　聞けますよ▼
 では　舞台で　会える　日を
-楽しみに　しておりますよ！▼</language>
+楽しみに　しております！▼</language>
 	</row>
 
 	<row id="msg_c04r0201_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1059,6 +1059,55 @@
 [1:00:トレーナー名:1]は
 [1:0A:グッズ名:0]を▽
 グッズケースの　なかに　しまった！</language>
+	</row>
+
+	<row id="msg_c04r0201_girl4_01">
+		<comment>♀
+ワザマシン49「エコーボイス」をくれる
+ワザマシン入手前</comment>
+		<attribute name="キャラ指定">GIRL3</attribute>
+		<language name="JPN" width="256">ミュージカルで　かつやくすると
+ファンに　なってくれて▽
+グッズを　くれるひとが　いるわ▼
+わたしは　グッズを　もっていないから
+かわりに　これを　あげる！▼</language>
+		<language name="JPN_KANJI" width="256">ミュージカルで　活躍すると
+ファンに　なってくれて▽
+グッズを　くれる人が　いるわ▼
+わたしは　グッズを　もっていないから
+かわりに　これを　あげる！▼</language>
+	</row>
+
+	<row id="msg_c04r0201_girl4_02">
+		<comment>♀
+ワザマシン49「エコーボイス」をくれる
+ワザマシン49「エコーボイス」の説明</comment>
+		<attribute name="キャラ指定">GIRL3</attribute>
+		<language name="JPN" width="256">「エコーボイス」は　まいターン
+だれかが　つかいつづける　ことで▼
+どんどん　いりょくが
+あがっていく　わざよ！▼
+みんなで　つかうと　べんりかもね！</language>
+		<language name="JPN_KANJI" width="256">「エコーボイス」は　毎ターン
+だれかが　使い続ける　ことで▼
+どんどん　威力が
+上がっていく　わざよ！▼
+みんなで　使うと　便利かもね！</language>
+	</row>
+
+	<row id="msg_c04r0201_girl4_03">
+		<comment>♀
+ワザマシン49「エコーボイス」をくれる
+ワザマシン49「エコーボイス」入手後</comment>
+		<attribute name="キャラ指定">GIRL3</attribute>
+		<language name="JPN" width="256">ミュージカルも　エコーボイスも
+つづけて　いくことが　だいじね！▼
+ミュージカルなら　ファンがふえる！
+エコーボイスなら　ダメージがふえる！</language>
+		<language name="JPN_KANJI" width="256">ミュージカルも　エコーボイスも
+続けて　いくことが　大事ね！▼
+ミュージカルなら　ファンがふえる！
+エコーボイスなら　ダメージがふえる！</language>
 	</row>
 
 	<flowchart-group-list>
