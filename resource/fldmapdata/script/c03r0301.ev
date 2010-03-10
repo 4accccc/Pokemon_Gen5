@@ -50,12 +50,27 @@ EVENT_START		ev_pos_c03r0301_cleaningm_01
 	_BALLOONWIN_OBJMSG( msg_c03r0301_cleaningm_01,C03R0301_CLEANINGM_01)
 	_BALLOONWIN_CLOSE()
 	
-	//会長退場
-	_OBJ_ANIME( C03R0301_CLEANINGM_01 , anm_cleaningm_bye )
+	//会長退場01
+	_OBJ_ANIME( C03R0301_CLEANINGM_01 , anm_cleaningm_bye01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ドア開ける
+	DEFINE_LOCAL	DOOR_ANIME_ID
+	_BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 7, 1 )
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	
+	//会長退場02
+	_OBJ_ANIME( C03R0301_CLEANINGM_01 , anm_cleaningm_bye02 )
 	_OBJ_ANIME_WAIT()
 	
 	//会長OBJ非表示
 	_OBJ_DEL( C03R0301_CLEANINGM_01 )
+	
+	//ドア閉じる
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
 	
 	//==================================//
 
@@ -80,6 +95,13 @@ _ANIME_LABEL	anm_cleaningm_come
 //--------------------------------------------------------------
 //	会長：退場
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_cleaningm_bye
+_ANIME_LABEL	anm_cleaningm_bye01
 	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	会長：退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_cleaningm_bye02
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0

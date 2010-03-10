@@ -48,6 +48,13 @@ EVENT_START		ev_c03r0303_cleaningm_01
 		_BALLOONWIN_OBJMSG( msg_c03r0303_cleaningm_02 , C03R0303_CLEANINGM_01 )
 		_BALLOONWIN_CLOSE()
 		
+		//アイテム入手処理：がくしゅうそうち
+		_ITEM_EVENT_KEYWAIT ( ITEM_GAKUSYUUSOUTI , 1)
+		
+		_BALLOONWIN_OBJMSG( msg_c03r0303_cleaningm_03 , C03R0303_CLEANINGM_01 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
 		//==================================//
 		
 		//会長との戦闘完了
@@ -58,7 +65,8 @@ EVENT_START		ev_c03r0303_cleaningm_01
 	//既に戦闘していたら
 	ELSE
 	
-		_BALLOONWIN_OBJMSG( msg_c03r0303_cleaningm_02 , C03R0303_CLEANINGM_01 )
+		_BALLOONWIN_OBJMSG( msg_c03r0303_cleaningm_03 , C03R0303_CLEANINGM_01 )
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF
