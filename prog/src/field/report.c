@@ -263,9 +263,10 @@ REPORT_WORK * REPORT_Init( GAMESYS_WORK * gs, HEAPID heapID )
 
 	wk = GFL_HEAP_AllocMemory( heapID, sizeof(REPORT_WORK) );
 
-	wk->gameSys = gs;
-	wk->heapID  = heapID;
-	wk->seq     = 0;
+	wk->gameSys     = gs;
+	wk->heapID      = heapID;
+	wk->save_active = FALSE;
+	wk->seq         = 0;
 
 	InitBg( wk->heapID );
 	LoadBgGraphic( wk->heapID );
