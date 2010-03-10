@@ -645,7 +645,7 @@ void MBOBJ_PokeIconPut( MAILBOX_SYS_WORK * syswk )
 
   for( i=0; i<MAILDAT_ICONMAX; i++ ){
     mi.dat = MailData_GetIconParamByIndex( md, i, MAIL_ICONPRM_ALL, MailData_GetFormBit(md) );
-    if( mi.dat == MAIL_ICON_NULL || mi.cgxID == NARC_poke_icon_poke_icon_000_NCGR ){
+    if( mi.dat == MAIL_ICON_NULL || mi.cgxID == NARC_poke_icon_poke_icon_000_m_NCGR ){
       MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_POKEICON1+i, FALSE );
       continue;
     }
