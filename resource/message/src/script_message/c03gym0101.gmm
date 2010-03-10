@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T12:55:57"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T20:04:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,24 +292,26 @@
 	</lock>
 
 
-	<row id="msg_c03gym0101_leader_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>戦闘前メッセージ</comment>
+	<row id="msg_c03gym0101_leader_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘前メッセージ</comment>
 		<attribute name="キャラ指定">LEADER3
 アーティ</attribute>
-		<language name="JPN" width="256">まちくたびれたよ！！▼
+		<language name="JPN" width="256">まちくたびれたー！▼
 ボクの　むしポケモンが　キミと
 たたかいたいって　さわいでさ[BE:01:ページ切り替え（クリア）]
-じゃあ
+ではでは
 さっそくだけど　しょうぶ　だね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">待ちくたびれたよ！！▼
+		<language name="JPN_KANJI" width="256">待ちくたびれたー！▼
 ボクの　むしポケモンが　キミと
 戦いたいって　騒いでさ[BE:01:ページ切り替え（クリア）]
-じゃあ
-さっそくだけど　勝負だね[BE:01:ページ切り替え（クリア）]</language>
+ではでは
+早速だけど　勝負だね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03gym0101_leader_02" text-color=",,,#000000,,,,,,,,,,,,,,,">
-		<comment>戦闘後メッセージ</comment>
+		<comment>♂
+・戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">あうう
 まけちゃったよ……[BE:01:ページ切り替え（クリア）]
@@ -335,18 +337,19 @@
 	</row>
 
 	<row id="msg_c03gym0101_leader_04" text-color=",,,#000000,,,,,,,,,,,,,,,">
-		<comment>アイテム入手処理</comment>
+		<comment>♂
+・アイテム入手処理</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">ビートルバッジ
 かっこいいでしょ！[BE:01:ページ切り替え（クリア）]
-それに　バッジを　３こ　もっていれば
+それに　バッジを　３コ　もっていれば
 レベル４０までの　ポケモンは▽
 いうことを　きいてくれるしね▼
 えーっと　そうだ
 これも　あげるよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ビートルバッジ
 かっこいいでしょ！[BE:01:ページ切り替え（クリア）]
-それに　バッジを　３こ　持っていれば
+それに　バッジを　３個　持っていれば
 レベル４０までの　ポケモンは▽
 いうことを　きいてくれるしね▼
 えーっと　そうだ
@@ -354,8 +357,8 @@
 	</row>
 
 	<row id="msg_c03gym0101_leader_05" text-color=",,,#000000,,,,,,,,,,,,,,,">
-		<comment>アイテム入手処理後
-</comment>
+		<comment>♂
+・アイテム入手処理後</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">「むしのていこう」は
 ダメージを　あたえた　あいての▽
@@ -364,15 +367,14 @@
 だいじ　だったり　するからさ</language>
 		<language name="JPN_KANJI" width="256">「むしのていこう」は
 ダメージを　与えた　相手の▽
-特攻も　下げるんだよね▼
+特攻も　さげるんだよね▼
 そういう　なんでもないような　ことが
 大事だったり　するからさ</language>
 	</row>
 
 	<row id="msg_c03gym0101_leader_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
-		<comment>msg_c03gym0101_leader_05
-表示後に再度会話したとき
-・トランシーバー持っている</comment>
+		<comment>♂
+・leader_05表示後</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">むしポケモンの
 デザインの　うつくしさ……[BE:00:ページ切り替え（行送り）]
@@ -387,7 +389,7 @@
 それって　すごいことなんだよね</language>
 	</row>
 
-	<row id="msg_c03gym0101_leader_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03gym0101_leader_07" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>msg_c03gym0101_leader_05
 表示後に再度会話したとき
 ・トランシーバー持っていない</comment>
