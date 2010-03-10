@@ -866,7 +866,7 @@ void Regulation_SetDebugData( REGULATION_CARDDATA* pReg )
     p_data->SHOW_POKE   = 1;
     p_data->SHOW_POKE_TIME  = 99;
     p_data->BATTLE_TYPE = REGULATION_BATTLE_SINGLE;
-    GFL_STD_MemClear( p_data->VETO_SHOOTER_ITEM, REG_SHOOTER_ITEMNUM_MAX_BYTE );
+    GFL_STD_MemClear( p_data->VETO_SHOOTER_ITEM,SHOOTER_ITEM_BIT_TBL_MAX );
   }
   GFL_STD_MemClear( pReg->cupname, sizeof(STRCODE)*(WIFI_PLAYER_TIX_CUPNAME_MOJINUM + EOM_SIZE) );
   pReg->cupname[ 0] = L'ƒf';
@@ -878,7 +878,7 @@ void Regulation_SetDebugData( REGULATION_CARDDATA* pReg )
   pReg->cupname[ 6] = L'‚©';
   pReg->cupname[ 7] = L'‚¢';
   pReg->cupname[ 8] = 0xFFFF;
-  pReg->ver         = PM_VERSION;
+  pReg->ver         = 0xFFFFFFFF;
   pReg->no          = 1;
   pReg->start_year  = 10;
   pReg->start_month = 1;
