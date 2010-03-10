@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-02T21:10:04"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T22:19:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -371,7 +371,7 @@
 それでは　中で　待っていますね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01_leader1_01a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01_leader1_01a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・d01r0101でポケモンをもらっていないとき</comment>
 		<attribute name="キャラ指定">LEADER1
@@ -612,11 +612,11 @@
 静かに　暮らしたいのだ</language>
 	</row>
 
-	<row id="msg_c01_badman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c01_badman1_01">
 		<comment>♂
 ・GRIDX=795、GRIDZ=601
 ・アイテム入手処理
-・入手アイテム未定（暫定でダークボール）</comment>
+　No013ダークボール</comment>
 		<attribute name="キャラ指定">BADMAN
 不良</attribute>
 		<language name="JPN" width="256">くらいところにも　ポケモンはいる
@@ -627,10 +627,9 @@
 おまえにも　ひとつ　わけてやるよ！▼</language>
 	</row>
 
-	<row id="msg_c01_badman1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c01_badman1_02">
 		<comment>♂
-・アイテム入手後
-※仮メッセージ</comment>
+・アイテム入手後</comment>
 		<attribute name="キャラ指定">BADMAN
 不良</attribute>
 		<language name="JPN" width="256">よるや　どうくつのなかで
@@ -667,7 +666,7 @@
 トレーナーズ　スクール</language>
 	</row>
 
-	<row id="msg_c01_gymsign_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c01_gymsign_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ポケモンジム</comment>
 		<attribute name="キャラ指定">ポケモンジム</attribute>
 		<language name="JPN" width="256">サンヨウシティ　ポケモンジム
