@@ -22,6 +22,7 @@
 #include "gamesystem/g_power.h"
 #include "app_menu_common.naix"
 #include "app/app_menu_common.h"
+#include "sound/pm_sndsys.h"
 
 
 //==============================================================================
@@ -425,6 +426,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     }
     
     if(mpw->decide_cursor_pos != _CURSOR_POS_NONE){
+      PMSND_PlaySE( SEQ_SE_FLD_133 );
       *seq = SEQ_DECIDE_STREAM;
     }
     break;

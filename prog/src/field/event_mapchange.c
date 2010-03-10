@@ -1295,6 +1295,7 @@ GMEVENT* EVENT_ChangeMapToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecFx32
     LOCATION return_loc;
     setNowLoaction( &return_loc, fieldWork );
     GAMEDATA_SetPalaceReturnLocation(gamedata, &return_loc);
+    PMSND_PlaySE( SEQ_SE_FLD_131 ); //SEの確認用にエフェクトは無いけどあてておく
   }
   GAMEDATA_SetIntrudeReverseArea(gamedata, TRUE);
   event = EVENT_ChangeMapPos(gsys, fieldWork, zone_id, pos, DIR_UP, FALSE);
@@ -1322,6 +1323,7 @@ GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
   work->seasonUpdateEnable = FALSE;
 
   GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
+  PMSND_PlaySE( SEQ_SE_FLD_131 ); //SEの確認用にエフェクトは無いけどあてておく
 
   return event;
 }
