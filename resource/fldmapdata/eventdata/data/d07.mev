@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/25 22:55:13
+#save date:2010/03/10 12:10:23
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d07.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d07.wms
 #hold event type:
 1
 #hold event number:
-1
+4
 #event number: 0
 #type
 1
@@ -41,6 +41,99 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 56 80 56
+#event number: 1
+#type
+1
+#ID name
+D07_CHAMPION_01
+#OBJ CODE Number
+CHAMPION
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D07_RIVAL_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 80 56
+#event number: 2
+#type
+1
+#ID name
+D07_RIVAL_01
+#OBJ CODE Number
+RIVEL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D07_RIVAL_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 -120
+#event number: 3
+#type
+1
+#ID name
+D07_WORKMAN1_01
+#OBJ CODE Number
+WORKMAN
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D07_WORKMAN_STOPPER
+#Event Script Name
+SCRID_D07_WORKMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 80 72
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -73,7 +166,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POS_D07_RIVAL_01
+#Pos Script Name
+SCRID_POS_D07_RIVAL_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D07_RIVAL_01
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 24
+#size
+1 3
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

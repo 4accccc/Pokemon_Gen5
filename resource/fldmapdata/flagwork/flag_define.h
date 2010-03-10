@@ -679,7 +679,7 @@
 #define FV_D06R0101_HAKAI                  655 /* 0x028f 電気洞窟内のダークトリニティ３人 */
 #define FV_T01R0401_HAKASE1                656 /* 0x0290 カノコタウン研究所：博士（父） */
 #define FV_POSTMAN                         657 /* 0x0291 不思議な贈り物配達員 */
-#define FV_R07_RIVAL_01                    658 /* 0x0292 ７番道路：ライバルとチャンピオン */
+#define FV_D07_RIVAL_01                    658 /* 0x0292 ネジ山入り口：ライバルとチャンピオン */
 #define FV_D08R0101_HAKAI                  659 /* 0x0293 リュウラセンの塔入り口（破壊前）：プラズマ団 */
 #define FV_N01R0502_LEGEND_01              660 /* 0x0294 N城謁見の間：奥側に表示するパッケージポケモン */
 #define FV_N01R0502_LEGEND_02              661 /* 0x0295 N城謁見の間：手前側に表示するパッケージポケモン */
@@ -707,8 +707,8 @@
 #define FV_T01R0102_TROPHY_01              683 /* 0x02ab 自宅２F：バトルサブウェイのトロフィ１ */
 #define FV_T01R0102_TROPHY_02              684 /* 0x02ac 自宅２F：バトルサブウェイのトロフィ２ */
 #define FV_T01R0102_TROPHY_03              685 /* 0x02ad 自宅２F：バトルサブウェイのトロフィ３ */
-#define FV_C06_GYM_STOPPER                 686 /* 0x02ae ホドモエのジムストッパー */
-		/* not used   687(0x02af) */
+#define FV_C06_GYM_STOPPER                 686 /* 0x02ae フキヨセのジムストッパー */
+#define FV_D07_WORKMAN_STOPPER             687 /* 0x02af ネジ山ストッパー */
 		/* not used   688(0x02b0) */
 		/* not used   689(0x02b1) */
 		/* not used   690(0x02b2) */

@@ -10,6 +10,9 @@
 #define ZONE_D07_EVC_H
 
 #define TR_MOUNT_03                        0
+#define D07_CHAMPION_01                    1
+#define D07_RIVAL_01                       2
+#define D07_WORKMAN1_01                    3
 
 #endif //ZONE_D07_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d07.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

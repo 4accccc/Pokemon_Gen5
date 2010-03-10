@@ -173,7 +173,7 @@
 #define WK_SCENE_C03R0301                16561 /* 0x40b1 ヒウンシティ（バトルカンパニーF1）：イベント用ワーク */
 #define WK_SCENE_C03R1301_SUNGLASSES     16562 /* 0x40b2 ヒウンシティ（お金持ちの家１F）：ボディチェックイベント用ワーク */
 #define WK_SCENE_C04R0201                16563 /* 0x40b3 ミュージカルホール：イベント用ワーク */
-#define WK_SCENE_R07_RIVAL_01            16564 /* 0x40b4 7番道路：イベント用ワーク */
+#define WK_SCENE_D07_RIVAL_01            16564 /* 0x40b4 ネジ山入り口：イベント用ワーク */
 #define WK_SCENE_H01R0201                16565 /* 0x40b5 スカイアローブリッジC03側ゲート：ライバルＰＯＳイベント */
 #define WK_SCENE_N01R0502                16566 /* 0x40b6 Ｎの城 謁見の間：イベント用ワーク */
 #define WK_SCENE_R06R0202                16567 /* 0x40b7 ６番道路洞窟のイベント用ワーク */
