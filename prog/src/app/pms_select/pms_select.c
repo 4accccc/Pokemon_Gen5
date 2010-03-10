@@ -357,6 +357,7 @@ typedef struct
 
   void*                     subproc_work;   ///< サブPROC用ワーク保存領域
 
+  u8    select_id_prev;   ///< 1つ前に選択していたID
   u8    select_id;        ///< 選択したID  // SELECT_ID_NULLのとき何も選ばれていない
   u8    list_head_id;     ///< リストの先頭ID
   u8    list_max;         ///< リストの項目数  // 「あたらしく　メッセージを　ついかする」は除いた個数
@@ -603,6 +604,7 @@ static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
       data = PMSW_GetDataEntry( wk->pmsw_save, 0 );
       if( PMSDAT_IsComplete( data, wk->heapID ) == FALSE )
       {
+        wk->select_id_prev = wk->select_id;
         wk->select_id = 0;  // 0番目のプレートに簡易会話を当てはめるようこれから編集する
         ChangeSeq( seq, wk, SEQ_CALL_EDIT_INIT ); // いきなり編集画面へ
        
@@ -789,6 +791,7 @@ static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
 static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
 { 
   // 初期状態
+  wk->select_id = SELECT_ID_NULL;
   wk->select_id = SELECT_ID_NULL;  // キー入力でここへ来ていた場合、最初に何かを選んでおいたほうがよさそう
   wk->list_head_id = 0;  // 簡易会話編集から戻ってきた場合、プレートの見えているものを、編集していたものにしておいたほうがよさそう
   wk->b_listbar = FALSE;
@@ -1292,7 +1295,7 @@ static APP_TASKMENU_WORK * PMSSelect_TASKMENU_Init( APP_TASKMENU_RES *menu_res, 
 	APP_TASKMENU_WORK			*menu;	
 
   static u8 strtbl[] = {
-    str_decide,
+    str_use,
     str_edit,
     str_cancel,
   };
@@ -1747,6 +1750,7 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
   // セレクト無効状態でキー入力されたら
   if( GFL_UI_KEY_GetTrg() && wk->select_id == SELECT_ID_NULL )
   {
+    wk->select_id_prev = wk->select_id; //先頭を選択
     wk->select_id = wk->list_head_id; //先頭を選択
     wk->b_touch = FALSE;
 
@@ -1768,6 +1772,7 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
   {
     if( wk->select_id > 0 )
     {
+      wk->select_id_prev = wk->select_id;
       wk->select_id--;
 
       // リストの先頭を選択していた場合はリストごと移動
@@ -1799,6 +1804,7 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
   {
     if( wk->select_id < wk->list_max_add-1 )
     {
+      wk->select_id_prev = wk->select_id;
       wk->select_id++;
 
       // リストの末尾を選択していた場合はリストごと移動
@@ -1860,6 +1866,7 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
       {
         wk->b_touch = TRUE;
 
+        wk->select_id_prev =  wk->select_id;
         wk->select_id =  wk->list_head_id + list_pos;
 
         HOSAKA_Printf("list_pos = %d, select_id = %d \n", list_pos, wk->select_id );
@@ -1885,6 +1892,7 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
           
           if( LIST_BAR_CheckTouching( wk ) || wk->select_id != SELECT_ID_NULL )  // 最初のタッチ位置をチェックする
           {
+            wk->select_id_prev = wk->select_id;
             wk->select_id = SELECT_ID_NULL; ///< 右端のスライドバーのバーアイコンをタッチしたので、選択を無効化
             
             // 移動があった場合、または、選択されていたものが無効化された場合、は更新

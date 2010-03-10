@@ -487,7 +487,7 @@ static GFL_PROC_RESULT Th_Award_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
     {
       BOOL b_end = FALSE;
       u32 x, y;
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
       {
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         b_end = TRUE;
@@ -524,7 +524,7 @@ static GFL_PROC_RESULT Th_Award_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
   {
     if( PRINTSYS_QUE_Main( work->print_que ) )
     {
-      if( !work->text_finish_all )
+      if( !(work->text_finish_all) )
       {
         u8 i;
         // 済んでいるかもしれないが、1度呼んでおく
@@ -878,9 +878,9 @@ static void Th_Award_TextInit( TH_AWARD_WORK* work )
   {
     work->text_bmpwin[i] = NULL;
     work->text_finish[i] = FALSE;
-    work->text_finish_all = FALSE;
   }
   work->text_finish[TEXT_DUMMY] = TRUE;  // ダミーは済んでいることにしておく
+  work->text_finish_all = FALSE;
 
   // セーブデータ
   // ダウンロードデータ

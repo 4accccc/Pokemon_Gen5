@@ -103,6 +103,13 @@ enum{
 	TPED_SBTN_PX1 = TPED_SBTN_PX0 + TPED_SBTN_SX * 6,
 	TPED_SBTN_PY = 21*8,
 
+  // エディット画面のエディットエリアの左右矢印
+	TPED_ARROW_SX   =  20,
+	TPED_ARROW_SY   =  32,
+	TPED_ARROW_PX_L =   0,
+	TPED_ARROW_PX_R = 256 - TPED_ARROW_SX,
+	TPED_ARROW_PY   =   8,
+
 /*
 	TPCA_RET_PX = 24*8+4,
 	TPCA_RET_PY = 20*8+4,
@@ -961,6 +968,7 @@ static int edit_double_touch(PMS_INPUT_WORK* wk)
  *	@retval
  */
 //-----------------------------------------------------------------------------
+#define  edit_sentence_touch_Btn_TpRect_num  (6)
 static int edit_sentence_touch(PMS_INPUT_WORK* wk)
 {
 	int ret,num,i;
@@ -975,7 +983,13 @@ static int edit_sentence_touch(PMS_INPUT_WORK* wk)
 //		{TPED_WORD_PY,TPED_WORD_PY+TPED_WORD_SY,TPED_WORD2_PX1,TPED_WORD2_PX1+TPED_WORD_SX},
 		{TPED_SBTN_PY,TPED_SBTN_PY+TPED_SBTN_SY,TPED_SBTN_PX0,TPED_SBTN_PX0+TPED_SBTN_SX},  // 左
 		{TPED_SBTN_PY,TPED_SBTN_PY+TPED_SBTN_SY,TPED_SBTN_PX1,TPED_SBTN_PX1+TPED_SBTN_SX},  // 右
-		{GFL_UI_TP_HIT_END,0,0,0}
+
+    {TPED_ARROW_PY,TPED_ARROW_PY+TPED_ARROW_SY-1,TPED_ARROW_PX_L,TPED_ARROW_PX_L+TPED_ARROW_SX-1},  // エディット画面のエディットエリアの左矢印
+		{TPED_ARROW_PY,TPED_ARROW_PY+TPED_ARROW_SY-1,TPED_ARROW_PX_R,TPED_ARROW_PX_R+TPED_ARROW_SX-1},  // エディット画面のエディットエリアの右矢印
+   
+    // ここまででedit_sentence_touch_Btn_TpRect_num個
+
+    {GFL_UI_TP_HIT_END,0,0,0}
 	};
 
   if(GFL_UI_TP_GetTrg() == 0)
@@ -990,7 +1004,7 @@ static int edit_sentence_touch(PMS_INPUT_WORK* wk)
      // 文章固定モードは左右無効
     if( PMSI_PARAM_GetLockFlag( wk->input_param ) )
     {
-      if( ret == 2 || ret == 3 )
+      if( ret == 2 || ret == 3 || ret == 4 || ret == 5 )
       {
         HOSAKA_Printf("lock mode scroll failed! \n");
         return GFL_UI_TP_HIT_NONE;
@@ -1013,7 +1027,7 @@ static int edit_sentence_touch(PMS_INPUT_WORK* wk)
 	for(i = 0;i < num;i++){
 		PMSIView_GetSentenceWordArea( wk->vwk ,&tbl[0],i);
 		if(GFL_UI_TP_HitSelf( tbl, tpx , tpy ) != GFL_UI_TP_HIT_NONE ){
-			return i+4;
+			return i+edit_sentence_touch_Btn_TpRect_num;
 		}
 
 	}
@@ -1623,6 +1637,7 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 			*seq = SEQ_EDS_TO_SUBPROC_OK+ret;
 			break;
 		case 2:	// 左
+    case 4:
 #if PMS_USE_SND
 			GFL_SOUND_PlaySE(SOUND_CHANGE_SENTENCE);
 #endif //PMS_USE_SND
@@ -1634,6 +1649,7 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 			(*seq) = SEQ_EDS_WAIT_EDITAREA_UPDATE;
 			break;
 		case 3: // 右
+    case 5:
 #if PMS_USE_SND
 			GFL_SOUND_PlaySE(SOUND_CHANGE_SENTENCE);
 #endif //PMS_USE_SND
@@ -1644,13 +1660,13 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
       PMSIView_TouchEditButton( wk->vwk, EDIT_BUTTON_ID_RIGHT );
 			(*seq) = SEQ_EDS_WAIT_EDITAREA_UPDATE;
 			break;
-		case 4:	//単語選択
-		case 5:
+		case edit_sentence_touch_Btn_TpRect_num:	//単語選択
+    case edit_sentence_touch_Btn_TpRect_num +1:
 #if PMS_USE_SND
 			GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 			wk->category_pos = 0;
-			wk->edit_pos = ret-4;
+			wk->edit_pos = ret-edit_sentence_touch_Btn_TpRect_num;
 			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_CATEGORY );
 			*seq = SEQ_EDS_TO_SELECT_CATEGORY;
 			break;

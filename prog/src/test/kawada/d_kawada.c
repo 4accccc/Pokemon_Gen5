@@ -522,12 +522,18 @@ static void ZukanTorokuExit( KAWADA_MAIN_WORK* wk )
 // トライアルハウス結果
 static void ThAwardInit( KAWADA_MAIN_WORK* wk )
 {
+  SAVE_CONTROL_WORK*  sv  = GAMEDATA_GetSaveControlWork( wk->gamedata );
+  CONFIG*             cf  = SaveData_GetConfig( sv );
+
       u8 sex = PM_MALE;
       u8 type = 0;  // 0=ローカルシングル; 1=ローカルダブル; 2=ダウンロードシングル; 3=ダウンロードダブル;
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) sex = PM_FEMALE;
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) type = 1;
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ) type = 2;
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ) type = 3;
+
+  CONFIG_SetMojiMode( cf, MOJIMODE_HIRAGANA );
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT ) CONFIG_SetMojiMode( cf, MOJIMODE_KANJI );
 
       GFL_OVERLAY_Load(FS_OVERLAY_ID(th_award));
       wk->thsv = GFL_HEAP_AllocMemory( wk->heapID, sizeof(THSV_WORK) );
@@ -611,12 +617,20 @@ static void ThAwardExit( KAWADA_MAIN_WORK* wk )
 // 地方図鑑賞状
 static void ChihouZukanAwardInit( KAWADA_MAIN_WORK* wk )
 {
+  SAVE_CONTROL_WORK*  sv  = GAMEDATA_GetSaveControlWork( wk->gamedata );
+  CONFIG*             cf  = SaveData_GetConfig( sv );
+  BOOL b_fix = FALSE;
+
   u8 i;
   u16 name[6] = L"ゴモジノコ";
   name[5] = 0xffff;  // gflib/src/string/strbuf.c  // EOMCode
 
   GFL_OVERLAY_Load(FS_OVERLAY_ID(chihou_zukan_award));
-  
+
+  CONFIG_SetMojiMode( cf, MOJIMODE_HIRAGANA );
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) CONFIG_SetMojiMode( cf, MOJIMODE_KANJI );
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) b_fix = TRUE;
+
   wk->mystatus = GFL_HEAP_AllocMemory( wk->heapID, MYSTATUS_SAVE_SIZE );
   
   for( i=0; i<6; i++ )
@@ -625,7 +639,7 @@ static void ChihouZukanAwardInit( KAWADA_MAIN_WORK* wk )
   }
   wk->mystatus->sex = PM_MALE;
 
-  wk->chihou_zukan_award_param = CHIHOU_ZUKAN_AWARD_AllocParam( wk->heapID, wk->mystatus );
+  wk->chihou_zukan_award_param = CHIHOU_ZUKAN_AWARD_AllocParam( wk->heapID, wk->mystatus, b_fix );
   
   GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &CHIHOU_ZUKAN_AWARD_ProcData, wk->chihou_zukan_award_param );
 }
@@ -639,12 +653,20 @@ static void ChihouZukanAwardExit( KAWADA_MAIN_WORK* wk )
 // 全国図鑑賞状
 static void ZenkokuZukanAwardInit( KAWADA_MAIN_WORK* wk )
 {
+  SAVE_CONTROL_WORK*  sv  = GAMEDATA_GetSaveControlWork( wk->gamedata );
+  CONFIG*             cf  = SaveData_GetConfig( sv );
+  BOOL b_fix = FALSE;
+
   u8 i;
   u16 name[6] = L"ゴモジノコ";
   name[5] = 0xffff;  // gflib/src/string/strbuf.c  // EOMCode
 
   GFL_OVERLAY_Load(FS_OVERLAY_ID(zenkoku_zukan_award));
-  
+
+  CONFIG_SetMojiMode( cf, MOJIMODE_HIRAGANA );
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) CONFIG_SetMojiMode( cf, MOJIMODE_KANJI );
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) b_fix = TRUE;
+
   wk->mystatus = GFL_HEAP_AllocMemory( wk->heapID, MYSTATUS_SAVE_SIZE );
   
   for( i=0; i<6; i++ )
@@ -653,7 +675,7 @@ static void ZenkokuZukanAwardInit( KAWADA_MAIN_WORK* wk )
   }
   wk->mystatus->sex = PM_FEMALE;
 
-  wk->zenkoku_zukan_award_param = ZENKOKU_ZUKAN_AWARD_AllocParam( wk->heapID, wk->mystatus );
+  wk->zenkoku_zukan_award_param = ZENKOKU_ZUKAN_AWARD_AllocParam( wk->heapID, wk->mystatus, b_fix );
   
   GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ZENKOKU_ZUKAN_AWARD_ProcData, wk->zenkoku_zukan_award_param );
 }

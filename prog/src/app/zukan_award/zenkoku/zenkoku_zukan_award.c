@@ -199,19 +199,22 @@ const GFL_PROC_DATA    ZENKOKU_ZUKAN_AWARD_ProcData =
  *
  *  @param[in]       heap_id       ヒープID
  *  @param[in]       mystatus      自分状態データ(名前と性別を使用)
+ *  @param[in]       b_fix         飾ってあるのを見るときTRUE
  *
  *  @retval          ZENKOKU_ZUKAN_AWARD_PARAM
  */
 //------------------------------------------------------------------
 ZENKOKU_ZUKAN_AWARD_PARAM*  ZENKOKU_ZUKAN_AWARD_AllocParam(
                                 HEAPID               heap_id,
-                                const MYSTATUS*      mystatus
+                                const MYSTATUS*      mystatus,
+                                BOOL                 b_fix
                            )
 {
   ZENKOKU_ZUKAN_AWARD_PARAM* param = GFL_HEAP_AllocMemory( heap_id, sizeof( ZENKOKU_ZUKAN_AWARD_PARAM ) );
   ZENKOKU_ZUKAN_AWARD_InitParam(
       param,
-      mystatus );
+      mystatus,
+      b_fix );
   return param;
 }
 
@@ -236,16 +239,19 @@ void            ZENKOKU_ZUKAN_AWARD_FreeParam(
  *
  *  @param[in,out]   param         ZENKOKU_ZUKAN_AWARD_PARAM
  *  @param[in]       mystatus      自分状態データ(名前と性別を使用)
+ *  @param[in]       b_fix         飾ってあるのを見るときTRUE
  *
  *  @retval          
  */
 //------------------------------------------------------------------
 void  ZENKOKU_ZUKAN_AWARD_InitParam(
                   ZENKOKU_ZUKAN_AWARD_PARAM*      param,
-                  const MYSTATUS*                mystatus 
+                  const MYSTATUS*                 mystatus,
+                  BOOL                            b_fix
                          )
 {
   param->mystatus          = mystatus;
+  param->b_fix             = b_fix;
 }
 
 
@@ -359,7 +365,7 @@ static GFL_PROC_RESULT Zenkoku_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, v
     {
       BOOL b_end = FALSE;
       u32 x, y;
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
       {
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         b_end = TRUE;

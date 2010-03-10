@@ -528,10 +528,10 @@ VMCMD_RESULT EvCmdCallZukanAward( VMHANDLE *core, void *wk )
 
   // コマンドが０なら地方図鑑賞状。１なら全国図鑑賞状
   if(demo_id==0){
-    CHIHOU_ZUKAN_AWARD_PARAM* param = CHIHOU_ZUKAN_AWARD_AllocParam( HEAPID_PROC, mystatus );
+    CHIHOU_ZUKAN_AWARD_PARAM* param = CHIHOU_ZUKAN_AWARD_AllocParam( HEAPID_PROC, mystatus, TRUE );
     EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(chihou_zukan_award), &CHIHOU_ZUKAN_AWARD_ProcData, param, NULL, NULL );
   }else{
-    ZENKOKU_ZUKAN_AWARD_PARAM* param = ZENKOKU_ZUKAN_AWARD_AllocParam( HEAPID_PROC, mystatus );
+    ZENKOKU_ZUKAN_AWARD_PARAM* param = ZENKOKU_ZUKAN_AWARD_AllocParam( HEAPID_PROC, mystatus, TRUE );
     EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(chihou_zukan_award), &ZENKOKU_ZUKAN_AWARD_ProcData, param, NULL, NULL );
   }
   return VMCMD_RESULT_SUSPEND;
