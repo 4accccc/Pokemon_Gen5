@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T14:46:18"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T20:21:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="156" right="1998" bottom="784" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="101" right="1261" bottom="499" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,10 +292,24 @@
 	</lock>
 
 
+	<row id="msg_r01_white_00" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・捕獲デモ用のposを踏んだときに
+　下を向いてメッセージ表示(チェレンも下を向く）
+・表示後、主人公、所定の位置へ
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『おうい！
+[1:00:トレーナー名:0]　こっち！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『おうい！
+[1:00:トレーナー名:0]　こっち！▼</language>
+	</row>
+
 	<row id="msg_r01_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>画面上（博士）をみながらメッセージ表示
-ついで主人公を向き合いながら
-次のメッセージ表示</comment>
+		<comment>♂
+・画面上（博士）をみながらメッセージ表示
+　ついで主人公を向き合いながら
+　次のメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『はかせ
 みんな　そろいましたよ[BE:01:ページ切り替え（クリア）]</language>
@@ -303,7 +317,7 @@
 みんな　そろいましたよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_hakase2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r01_hakase2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：捕獲デモ</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
@@ -329,12 +343,12 @@
 ポケモンを　捕まえてみせまーす！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_hakase2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r01_hakase2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・捕獲デモ後、フィールドに復帰すると
 　このメッセージ表示
-・アイテムNo004「モンスターボール」
-　５個入手（個数は仮）</comment>
+・アイテム入手処理
+　No004「モンスターボール」×5</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
 		<language name="JPN" width="256">アララギ『いまの　みてくれた？[BE:01:ページ切り替え（クリア）]
@@ -361,7 +375,7 @@
 モンスターボールも　プレゼント！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_test_01">
+	<row id="msg_r01_test_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>アイテム入手
 ・0＝プレイヤー名
 ・1＝道具名
@@ -599,7 +613,7 @@
 ちょっと　厳しいかもね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_black_11" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r01_black_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・表示後、ＴＶトランシーバーのコール音再生</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -611,17 +625,18 @@
 博士も　待っているし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_black_11a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r01_black_11a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてmsg_r01_tvt_01</comment>
+・続けてmsg_r01_tvt_01
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">……？　きみの
+		<language name="JPN" width="256">……？　[1:00:トレーナー名:0]　きみの
 ライブキャスターも　なっているよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">……？　きみの
+		<language name="JPN_KANJI" width="256">……？　[1:00:トレーナー名:0]　きみの
 ライブキャスターも　なっているよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_tvt_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r01_tvt_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・続けて
 　tvt.gmmのmsg_transceiver_r01_01呼び出し
 ・0＝主人公名前</comment>
