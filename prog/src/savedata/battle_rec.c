@@ -495,23 +495,21 @@ SAVE_RESULT BattleRec_SaveDataErase(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int n
  * @param   temoti_max    éËéùÇøç≈ëÂêîë„ì¸êÊ
  */
 //--------------------------------------------------------------
-void BattleRec_ClientTemotiGet(const BATTLE_REC_WORK_PTR rec, int *client_max, int *temoti_max)
+void BattleRec_ClientTemotiGet(BATTLE_MODE rec_mode, int *client_max, int *temoti_max)
 {
-  int i;
-
-  *client_max = 0;
-
-  for(i = 0; i < BTL_CLIENT_MAX; i++){
-    if(rec->clientStatus[i].type != BTLREC_CLIENTSTATUS_NONE){
-      (*client_max)++;
-    }
-  }
-
-  if((*client_max) == BTL_CLIENT_MAX){
+  switch(rec_mode){
+  case BATTLE_MODE_COLOSSEUM_MULTI_FREE:
+  case BATTLE_MODE_COLOSSEUM_MULTI_50:
+  case BATTLE_MODE_COLOSSEUM_MULTI_FREE_SHOOTER:
+  case BATTLE_MODE_COLOSSEUM_MULTI_50_SHOOTER:
+  case BATTLE_MODE_SUBWAY_MULTI:
+    *client_max = 4;
     *temoti_max = TEMOTI_POKEMAX / 2;
-  }
-  else{
+    break;
+  default:
+    *client_max = 2;
     *temoti_max = TEMOTI_POKEMAX;
+    break;
   }
 }
 
@@ -532,16 +530,18 @@ static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, cons
 
   GFL_STD_MemClear(head, sizeof(BATTLE_REC_HEADER));
 
-  BattleRec_ClientTemotiGet(rec, &client_max, &temoti_max);
+  BattleRec_ClientTemotiGet(rec_mode, &client_max, &temoti_max);
 
   n = 0;
-
+  
+  OS_TPrintf("aaa client_max = %d, temoti_max = %d\n", client_max, temoti_max);
   for(client = 0; client < client_max; client++){
     for(temoti = 0; temoti < temoti_max; temoti++){
       para = &(rec->rec_party[client].member[temoti]);
       if(para->tamago_flag == 0 && para->fusei_tamago_flag == 0){
         head->monsno[n] = para->monsno;
         head->form_no[n] = para->form_no;
+        OS_TPrintf("client %d temoti %d n %d\n", client, temoti, n);
       }
       n++;
     }
