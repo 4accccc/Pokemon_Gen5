@@ -32,7 +32,7 @@
 
 // FAR scale alpha
 #define FLASH_FAR_SCALE  ( 0xAA00 )
-#define FLASH_FAR_ALPHA  ( 28 )
+#define FLASH_FAR_ALPHA  ( 31 )
 
 // OFF scale
 #define FLASH_OFF_SCALE  ( 0 )
