@@ -79,6 +79,7 @@ typedef struct {
 	u32	voicePlayer;
 	BOOL	recFlag;
 
+	void * testBuff;
 
 //	u8	subSeq;
 //	u8	bgPri[4];
@@ -111,6 +112,12 @@ static void PutPokeWin( OSYABERI_WORK * wk );
 static void DelPokeWin( OSYABERI_WORK * wk );
 static BOOL MainPerapAnm( OSYABERI_WORK * wk );
 
+extern u16 PMV_DBG_CustomVoicePlay( void*	wave,				// [in]波形データ
+															u32		size,				// [in]波形サイズ(MAX 26000)
+															int		rate,				// [in]波形再生レート
+															int		speed,			// [in]波形再生スピード
+															s8		volume);			// [in]再生ボリューム
+extern u8 * SND_MIC_GetTestBuffer(void);
 
 
 //--------------------------------------------------------------------------------------------
@@ -132,7 +139,7 @@ GMEVENT * EVENT_FieldSkillOsyaberi( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldma
 	event = GMEVENT_Create( gsys, NULL, MainEvent, sizeof(OSYABERI_WORK) );
 
 	wk = GMEVENT_GetEventWork( event );
-	MI_CpuClear8( wk, sizeof(OSYABERI_WORK) );
+	GFL_STD_MemClear( wk, sizeof(OSYABERI_WORK) );
 
 	wk->gsys  = gsys;
 	wk->gdata = GAMESYSTEM_GetGameData( gsys );
@@ -212,6 +219,7 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 	case SEQ_MIC_INIT_WAIT:	// マイク準備待ち
 		SND_MIC_Main();
 		if( SND_MIC_IsAmpOnWaitFlag() == TRUE ){
+			PMSND_PauseBGM( TRUE );
 			FLDMSGWIN_STREAM_ClearMessage( wk->msgWin );
 			FLDMSGWIN_STREAM_PrintStart( wk->msgWin, 0, 0, perap_msg_01 );
 			*seq = SEQ_START_MSG;
@@ -220,6 +228,7 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 
 	case SEQ_START_MSG:			// 開始メッセージ
 		if( FLDMSGWIN_STREAM_Print( wk->msgWin ) == TRUE ){
+/*
 			if( SND_PERAP_VoiceRecStart( VoiceRec_CallBack, &wk->recFlag ) == MIC_RESULT_SUCCESS ){
 				*seq = SEQ_MAIN;
 			}else{
@@ -231,31 +240,37 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 				FLDMSGWIN_STREAM_PrintStrBufStart( wk->msgWin, 0, 0, wk->exp );
 				SND_MIC_Exit();
 				GFL_UI_SleepEnable( GFL_UI_SLEEP_MIC );		// スリープ許可
+				PMSND_PauseBGM( FALSE );
 				*seq = SEQ_REC_ERR;		// 失敗
 			}
+*/
+			MICAutoParam mic;
+			wk->testBuff = GFL_HEAP_AllocClearMemory( HEAPID_FIELDMAP, 10000 );
+			mic.type			= MIC_SAMPLING_TYPE_SIGNED_8BIT;	//サンプリング種別
+			mic.buffer		= (void*)MATH_ROUNDUP32( (int)(wk->testBuff) );
+			mic.size			= 8000;
+//			mic.rate			= MIC_SAMPLING_RATE_8K;
+			mic.rate      = MIC_SAMPLING_RATE_8180;
+			mic.loop_enable   = FALSE;
+			mic.full_callback = VoiceRec_CallBack;
+			mic.full_arg      = &wk->recFlag;
+			{
+//				MICResult	ret = MIC_StartAutoSampling( &mic );
+				MICResult	ret = MIC_StartLimitedSampling( &mic );
+				OS_Printf( "ret = %d\n", ret );
+				OS_Printf( "mic = 0x%08x, buf = 0x%08x\n", mic.buffer, wk->testBuff );
+			}
+			*seq = SEQ_MAIN;
 		}
 		break;
 
 	case SEQ_MAIN:					// 覚えさせる
 		if( wk->recFlag == TRUE ){
-			if( SND_PERAP_VoiceRecStop() == MIC_RESULT_SUCCESS ){
-				SND_PERAP_VoiceDataSave( wk->sv );
-				*seq = SEQ_ANM;
-			}else{
-/*
-				STRBUF * str = GFL_MSG_CreateString( wk->msgData, perap_msg_03 );
-				WORDSET_RegisterPokeNickName( wk->wset, 0, wk->pp );
-				WORDSET_ExpandStr( wk->wset, wk->exp, str );
-				GFL_STR_DeleteBuffer( str );
-				FLDMSGWIN_STREAM_ClearMessage( wk->msgWin );
-				FLDMSGWIN_STREAM_PrintStrBufStart( wk->msgWin, 0, 0, wk->exp );
-				*seq = SEQ_REC_ERR;		// 失敗
-*/
-				SND_PERAP_VoiceDataSave( wk->sv );
-				*seq = SEQ_ANM;
-			}
+			SND_PERAP_VoiceDataSave( wk->sv );
 			SND_MIC_Exit();
 			GFL_UI_SleepEnable( GFL_UI_SLEEP_MIC );		// スリープ許可
+			PMSND_PauseBGM( FALSE );
+			*seq = SEQ_ANM;
 		}
 		break;
 
@@ -279,17 +294,23 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 
 	case SEQ_VOICE_PLAY:		// 再生
 		{
-			PMV_REF	pmvRef;
-	    PMV_MakeRefDataMine( &pmvRef );
-			OS_Printf( "addr = 0x%08x\n", wk->sv );
-			wk->voicePlayer = PMVOICE_Play( MONSNO_PERAPPU, 0, 64, FALSE, 0, 0, FALSE, (u32)&pmvRef );
+//			PMV_REF	pmvRef;
+//	    PMV_MakeRefDataMine( &pmvRef );
+//			OS_Printf( "addr = 0x%08x\n", wk->sv );
+			wk->voicePlayer = PMV_DBG_CustomVoicePlay(
+													(void*)MATH_ROUNDUP32( (int)(wk->testBuff) ),
+													8000,
+													MIC_SAMPLING_RATE_8180,//MIC_SAMPLING_RATE_8K,
+													32768,
+													127 );
+//			wk->voicePlayer = PMVOICE_Play( MONSNO_PERAPPU, 0, 64, FALSE, 0, 0, FALSE, (u32)&pmvRef );
 		}
-//		*seq = SEQ_RELEASE;
 		*seq = SEQ_VOICE_WAIT;
 		break;
 
 	case SEQ_VOICE_WAIT:		// 鳴き声終了待ち
 		if( PMVOICE_CheckPlay( wk->voicePlayer ) == FALSE ){
+			GFL_HEAP_FreeMemory( wk->testBuff );
 			*seq = SEQ_RELEASE;
 		}
 		break;

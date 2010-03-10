@@ -724,9 +724,9 @@ static void reverseBuf( u8* buf, u32 size )
  *
  *
  */
-void PMV_DBG_CustomVoicePlay(	void*, u32, int, int, s8 );
+u16 PMV_DBG_CustomVoicePlay(	void*, u32, int, int, s8 );
 //============================================================================================
-void PMV_DBG_CustomVoicePlay(	void*	wave,				// [in]波形データ
+u16 PMV_DBG_CustomVoicePlay(	void*	wave,				// [in]波形データ
 															u32		size,				// [in]波形サイズ(MAX 26000)
 															int		rate,				// [in]波形再生レート
 															int		speed,			// [in]波形再生スピード
@@ -754,6 +754,8 @@ void PMV_DBG_CustomVoicePlay(	void*	wave,				// [in]波形データ
 	voicePlayer->speedSubDiff = 0;
 
 	playWave(voicePlayer);
+
+	return voicePlayerIdx;
 }
 
 
