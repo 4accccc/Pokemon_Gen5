@@ -369,47 +369,21 @@ SAVE_RESULT Local_BattleRecSave(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *work
 
   switch(*seq){
   case 0:
-#if 0 //※check　未作成　録画データの仕様が決まってから 2009.11.18(水)
-    sys_SoftResetNG(SOFTRESET_TYPE_VIDEO);
-    sys_SioErrorNG_PtrSet(HEAPID_WORLD);
-#endif
-
     //セーブ対象の外部セーブ領域のセーブシステムを作成(セーブワークの実体はbrsを渡す)
     SaveControl_Extra_SystemSetup(sv, SAVE_EXTRA_ID_REC_MINE + num, heap_id, brs, SAVESIZE_EXTRA_BATTLE_REC);
 
     SaveControl_Extra_SaveAsyncInit(sv, SAVE_EXTRA_ID_REC_MINE + num);
-    do{
-      result = SaveControl_Extra_SaveAsyncMain(sv, SAVE_EXTRA_ID_REC_MINE + num);
-    }while(result == SAVE_RESULT_CONTINUE || result == SAVE_RESULT_LAST);
-
-    //外部セーブ完了。セーブシステムを破棄
-    SaveControl_Extra_UnloadWork(sv, SAVE_EXTRA_ID_REC_MINE + num);
-
-#if 0 //※check　未作成　通常セーブは外部との繋がりがしっかりしてから
-    if(result == SAVE_RESULT_OK){
-      //result = SaveData_Save(sv);
-      SaveData_DivSave_Init(sv, SVBLK_ID_MAX);
-      (*seq)++;
-      return SAVE_RESULT_CONTINUE;
-    }
-#endif
-
-#if 0 //※check　未作成　録画データの仕様が決まってから 2009.11.18(水)
-    sys_SoftResetOK(SOFTRESET_TYPE_VIDEO);
-#endif
-    return result;
-  case 1:
-#if 0 //※check　未作成　通常セーブは外部との繋がりがしっかりしてから
-    result = SaveData_DivSave_Main(sv);
-    if(result == SAVE_RESULT_OK || result == SAVE_RESULT_NG){
-      (*seq) = 0;
-      sys_SioErrorNG_PtrFree();
-      sys_SoftResetOK(SOFTRESET_TYPE_VIDEO);
-    }
-    return result;
-#else
+    (*seq)++;
     break;
-#endif
+  case 1:
+    result = SaveControl_Extra_SaveAsyncMain(sv, SAVE_EXTRA_ID_REC_MINE + num);
+    
+    if(result == SAVE_RESULT_OK || result == SAVE_RESULT_NG){
+      //外部セーブ完了。セーブシステムを破棄
+      SaveControl_Extra_UnloadWork(sv, SAVE_EXTRA_ID_REC_MINE + num);
+      return result;
+    }
+    break;
   }
   return SAVE_RESULT_CONTINUE;
 }
