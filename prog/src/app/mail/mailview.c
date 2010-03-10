@@ -1673,7 +1673,7 @@ static void MailView_PokeIconInit(MAIL_VIEW_DAT* wk)
 
     // メール作成モードではポケモンアイコンを表示させない
     // (CLACT初期化共通化のため設定はしている)
-    if( wk->mode == MAIL_MODE_VIEW && wk->dat->icon[i].cgxID!=NARC_poke_icon_poke_icon_000_NCGR){
+    if( wk->mode == MAIL_MODE_VIEW && wk->dat->icon[i].cgxID!=NARC_poke_icon_poke_icon_000_m_NCGR){
       GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], TRUE );
     }else{
       GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
