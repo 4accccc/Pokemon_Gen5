@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-16T18:38:54"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T11:17:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="206"/>
+		<comment position="4" width="270"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1282" top="349" right="1987" bottom="977" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -317,6 +317,115 @@
 ポケモン　嫌がっちゃうみたいなの</language>
 	</row>
 
+	<row id="msg_waitress_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：ウェートレス
+・以下の選択肢表示
+　１ほん
+　１ダース
+　いらない
+
+・「１ほん」or「1ダース」選択→waitress_02
+・「１ほん」or「1ダース」選択、バッグがいっぱい→waitress_03
+・「１ほん」or「1ダース」選択、お金がない→waitress_04
+・いらない→waitress_05</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">いらっしゃいませ！
+さんちちょくそう　でーす！[BE:01:ページ切り替え（クリア）]
+モーモーミルク　いっぽん　５００えん
+たびのおともに　いかがですか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">いらっしゃいませ！
+産地直送　でーす！[BE:01:ページ切り替え（クリア）]
+モーモーミルク　１本　５００円
+旅のお供に　いかがですか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_waitress_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・「１ほん」選択
+　続けてアイテム入手処理</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">モーモーミルク　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">モーモーミルク　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_waitress_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・「１ほん」or「1ダース」選択、バッグがいっぱい</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">あらららら！
+バッグが　いっぱいですね！</language>
+		<language name="JPN_KANJI" width="256">あらららら！
+バッグが　いっぱいですね！</language>
+	</row>
+
+	<row id="msg_waitress_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・「１ほん」or「1ダース」、お金がない</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">あらららら！
+おかねが　たりないですね！</language>
+		<language name="JPN_KANJI" width="256">あらららら！
+おかねが　たりないですね！</language>
+	</row>
+
+	<row id="msg_waitress_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・「いらない」選択</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">また　こんど
+かってくださいね！[BE:01:ページ切り替え（クリア）]
+ちなみに　うちの　モーモーミルクは
+しぼりたて　しんせん　なんですよ！</language>
+		<language name="JPN_KANJI" width="256">また　今度
+買ってくださいね！[BE:01:ページ切り替え（クリア）]
+ちなみに　うちの　モーモーミルクは
+搾りたて　新鮮　なんですよ！</language>
+	</row>
+
+	<row id="msg_waitress_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・「１ダース」選択
+続けてアイテム入手処理</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">１ダース　１２ほんの
+モーモーミルク　どうぞです！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">１ダース　１２本の
+モーモーミルク　どうぞです！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_waitress_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・waitress_01表示後の選択肢</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">１ほん</language>
+		<language name="JPN_KANJI" width="256">１本</language>
+	</row>
+
+	<row id="msg_waitress_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・waitress_01表示後の選択肢</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">１ダース</language>
+		<language name="JPN_KANJI" width="256">１ダース</language>
+	</row>
+
+	<row id="msg_waitress_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・waitress_01表示後の選択肢</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウェートレス</attribute>
+		<language name="JPN" width="256">いらない</language>
+		<language name="JPN_KANJI" width="256">いらない</language>
+	</row>
+
 	<row id="msg_c05r0601_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ
@@ -328,10 +437,8 @@
 なんでも　みていってくださいね</language>
 	</row>
 
-	<row id="msg_c05r0601_badman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ
-・売り子その３</comment>
+	<row id="msg_c05r0601_badman_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除</comment>
 		<attribute name="キャラ指定">BADMAN</attribute>
 		<language name="JPN" width="256">らっしゃえ！
 きょうは　おかいどく　だよ！</language>
@@ -350,14 +457,7 @@
 なんでも　かってけー！</language>
 	</row>
 
-	<row id="msg_c05r0601_trainerw_01" text-color="#ffffff,,,#ffffff,,#ffffff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>・このメッセージラベルは削除</comment>
-		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c05r0601_trainerw_01w">
+	<row id="msg_c05r0601_trainerw_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・WHITEver</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
@@ -368,7 +468,7 @@
 きっと　便利な　街が　あるわ</language>
 	</row>
 
-	<row id="msg_c05r0601_trainerw_01b">
+	<row id="msg_c05r0601_trainerw_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・BLACKver</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
@@ -380,13 +480,6 @@
 ゆったりとして　街が　あるの▼
 そこから　いろいろ
 輸出　しているんだって！</language>
-	</row>
-
-	<row id="msg_c05r0601_nurse_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>・このメッセージラベルは削除</comment>
-		<attribute name="キャラ指定">NURSE</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c05r0601_nurse_01w">
@@ -415,14 +508,7 @@
 そろっているのって　すごいよね</language>
 	</row>
 
-	<row id="msg_c05r0601_workman_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>・このメッセージラベルは削除</comment>
-		<attribute name="キャラ指定">WORKMAN</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c05r0601_workman_01w">
+	<row id="msg_c05r0601_workman_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・WHITEver</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
@@ -436,7 +522,7 @@
 どこかに　つながっているんだよな</language>
 	</row>
 
-	<row id="msg_c05r0601_workman_01b">
+	<row id="msg_c05r0601_workman_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・BLACKver</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>

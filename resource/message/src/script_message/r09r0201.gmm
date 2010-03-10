@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T12:34:31"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T11:32:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1406" top="219" right="2111" bottom="847" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -343,17 +343,8 @@
 そんな　雰囲気が　しない？</language>
 	</row>
 
-	<row id="msg_r09r0201_waitress_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀：ウェートレス
-・以下の選択肢表示
-　１ほん
-　１ダース
-　いらない
-
-・「１ほん」or「1ダース」選択→waitress_02
-・「１ほん」or「1ダース」選択、バッグがいっぱい→waitress_03
-・「１ほん」or「1ダース」選択、お金がない→waitress_04
-・いらない→waitress_05</comment>
+	<row id="msg_r09r0201_waitress_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除</comment>
 		<attribute name="キャラ指定">WAITRESS
 ウェートレス</attribute>
 		<language name="JPN" width="256">いらっしゃいませ！[BE:01:ページ切り替え（クリア）]
@@ -364,35 +355,30 @@
 旅のお供に　いかがですか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r09r0201_waitress_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・「１ほん」選択
-　続けてアイテム入手処理</comment>
+	<row id="msg_r09r0201_waitress_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除</comment>
 		<language name="JPN" width="256">モーモーミルク　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">モーモーミルク　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r09r0201_waitress_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・「１ほん」or「1ダース」選択、バッグがいっぱい</comment>
+	<row id="msg_r09r0201_waitress_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除</comment>
 		<language name="JPN" width="256">あらららら！
 バッグが　いっぱいですね！</language>
 		<language name="JPN_KANJI" width="256">あらららら！
 バッグが　いっぱいですね！</language>
 	</row>
 
-	<row id="msg_r09r0201_waitress_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・「１ほん」or「1ダース」、お金がない</comment>
+	<row id="msg_r09r0201_waitress_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除</comment>
 		<language name="JPN" width="256">あらららら！
 おかねが　たりないですね！</language>
 		<language name="JPN_KANJI" width="256">あらららら！
 おかねが　たりないですね！</language>
 	</row>
 
-	<row id="msg_r09r0201_waitress_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・「いらない」選択</comment>
+	<row id="msg_r09r0201_waitress_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除</comment>
 		<language name="JPN" width="256">また　こんど
 かってくださいね！[BE:01:ページ切り替え（クリア）]
 ちなみに　うちの　モーモーミルクは
@@ -403,33 +389,28 @@
 搾りたて　新鮮　なんですよ！</language>
 	</row>
 
-	<row id="msg_r09r0201_waitress_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・「１ダース」選択
-続けてアイテム入手処理</comment>
+	<row id="msg_r09r0201_waitress_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除</comment>
 		<language name="JPN" width="256">１ダース　１２ほんの
 モーモーミルク　どうぞです！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">１ダース　１２本の
 モーモーミルク　どうぞです！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r09r0201_waitress_07" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
-		<comment>♀
-・waitress_01表示後の選択肢</comment>
+	<row id="msg_r09r0201_waitress_07" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除</comment>
 		<language name="JPN" width="256">１ほん</language>
 		<language name="JPN_KANJI" width="256">１本</language>
 	</row>
 
-	<row id="msg_r09r0201_waitress_08" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
-		<comment>♀
-・waitress_01表示後の選択肢</comment>
+	<row id="msg_r09r0201_waitress_08" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除</comment>
 		<language name="JPN" width="256">１ダース</language>
 		<language name="JPN_KANJI" width="256">１ダース</language>
 	</row>
 
-	<row id="msg_r09r0201_waitress_09" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
-		<comment>♀
-・waitress_01表示後の選択肢</comment>
+	<row id="msg_r09r0201_waitress_09" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除</comment>
 		<language name="JPN" width="256">いらない</language>
 		<language name="JPN_KANJI" width="256">いらない</language>
 	</row>
@@ -483,6 +464,69 @@
 どうくつが　あるんだってね▼
 どこに　あって
 なにが　いるのか　しらないけどさ</language>
+	</row>
+
+	<row id="msg_r09r0201_workman_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・はい/いいえ選択肢
+・はい→workman_02
+　いいえ→workman_03</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">オッス！
+ポケモントレーナー！▼
+おまえさん　かみなりのいし　って
+どうぐ　しっているかい？▼</language>
+		<language name="JPN_KANJI" width="256">オッス！
+ポケモントレーナー！▼
+おまえさん　かみなりのいし　って
+道具　知っているかい？▼</language>
+	</row>
+
+	<row id="msg_r09r0201_workman_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・はい選択時
+　続けてworkman_04</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">さっすがー！　かみなりのいしが
+ある　ポケモンを　しんかさせると▽
+しってるなんて　すごいよな▼</language>
+		<language name="JPN_KANJI" width="256">さっすがー！　かみなりのいしが
+ある　ポケモンを　進化させると▽
+知ってるなんて　すごいよな▼</language>
+	</row>
+
+	<row id="msg_r09r0201_workman_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・いいえ選択時
+　続けてworkman_04</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">じゃあ　おしえてやろう！▼
+かみなりのいしを　つかうと
+ある　ポケモンを　しんかするんだ！▼</language>
+		<language name="JPN_KANJI" width="256">じゃあ　教えてやろう！▼
+かみなりのいしを　使うと
+ある　ポケモンを　進化するんだ！▼</language>
+	</row>
+
+	<row id="msg_r09r0201_workman_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手処理
+　No083「かみなりのいし」</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">まあ　ここで　であったの
+なにかの　えんだ！　もってけ！▼</language>
+		<language name="JPN_KANJI" width="256">まあ　ここで　出会ったの
+なにかの　縁だ！　持ってけ！▼</language>
+	</row>
+
+	<row id="msg_r09r0201_workman_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">なんでも　エレクスって　ポケモンが
+かみなりのいしで　しんかするってよ！</language>
+		<language name="JPN_KANJI" width="256">なんでも　エレクスって　ポケモンが
+かみなりのいしで　進化するってよ！</language>
 	</row>
 
 	<row id="msg_r09r0201_statue_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
