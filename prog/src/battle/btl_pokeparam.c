@@ -239,6 +239,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->wazaContCounter   = 0;
   bpp->combiWazaID = WAZANO_NULL;
   bpp->combiPokeID = BTL_POKEID_NULL;
+  bpp->criticalRank = 0;
 
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );

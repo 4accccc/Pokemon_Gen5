@@ -46,8 +46,6 @@ typedef enum {
   SC_OP_SET_STATUS,         ///< 能力値（攻撃、防御等）を書き換え
   SC_OP_SET_WEIGHT,         ///< 体重設定
   SC_OP_WAZASICK_TURNCHECK, ///<
-  SC_OP_CANTESCAPE_ADD,     ///< にげ・交換禁止コードの追加を全クライアントに通知 [ClientID, CantCode]
-  SC_OP_CANTESCAPE_SUB,     ///< にげ・交換禁止コードの削除を全クライアントに通知 [ClientID, CantCode]
   SC_OP_CHANGE_POKETYPE,    ///< 【計算】ポケモンのタイプ変更（ pokeID, type ）
   SC_OP_CONSUME_ITEM,       ///< 所有アイテム削除
   SC_OP_UPDATE_USE_WAZA,    ///< ワザプロセス終了情報
@@ -250,14 +248,6 @@ static inline void SCQUE_PUT_OP_WazaSickTurnCheck( BTL_SERVER_CMD_QUE* que, u8 p
   SCQUE_PUT_Common( que, SC_OP_WAZASICK_TURNCHECK, pokeID );
 }
 
-static inline void SCQUE_PUT_OP_CantEscape_Add( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 cantCode )
-{
-  SCQUE_PUT_Common( que, SC_OP_CANTESCAPE_ADD, clientID, cantCode );
-}
-static inline void SCQUE_PUT_OP_CantEscape_Sub( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 cantCode )
-{
-  SCQUE_PUT_Common( que, SC_OP_CANTESCAPE_SUB, clientID, cantCode );
-}
 static inline void SCQUE_PUT_OP_ChangePokeType( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 typePair )
 {
   SCQUE_PUT_Common( que, SC_OP_CHANGE_POKETYPE, pokeID, typePair );

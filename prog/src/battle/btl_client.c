@@ -44,6 +44,7 @@ enum {
 
 enum {
   CANTESC_COUNT_MAX = 8,    ///< とりあえず少なめギリギリなとこでASSERTかけてみる
+  AI_ITEM_MAX = 4,          ///< AIトレーナーが使用するアイテム数
 
   EMPTY_POS_NONE = -1,
 
@@ -128,6 +129,8 @@ struct _BTL_CLIENT {
   u32            dummyReturnData;
   u16            cmdLimitTime;
   u16            gameLimitTime;
+
+  u16            AIItem[ AI_ITEM_MAX ];
 
 
   const BTL_PARTY*  myParty;
@@ -296,8 +299,6 @@ static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_CurePokeSick( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_CureWazaSick( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_MemberIn( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_OP_EscapeCodeAdd( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_OP_EscapeCodeSub( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ChangePokeType( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ConsumeItem( BTL_CLIENT* wk, int* seq, const int* args );
@@ -322,14 +323,12 @@ static BOOL scProc_OP_SetFakeSrc( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ClearConsumedItem( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetStatus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetWeight( BTL_CLIENT* wk, int* seq, const int* args );
-static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
-static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
-static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, const BTL_POKEPARAM* procPoke, BtlCantEscapeCode code, BTL_CLIENT* wk );
-static BOOL _cec_check_kagefumi( BTL_CLIENT* wk );
-static BOOL _cec_check_arijigoku( BTL_CLIENT* wk );
-static BOOL _cec_check_jiryoku( BTL_CLIENT* wk );
 static u8 countFrontPokeTokusei( BTL_CLIENT* wk, PokeTokusei tokusei );
 static u8 countFrontPokeType( BTL_CLIENT* wk, PokeType type );
+static void AIItem_Setup( BTL_CLIENT* wk );
+static u16 AIItem_CheckUse( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, const BTL_PARTY* party );
+static BOOL check_status_up_item( u16 itemID, const BTL_POKEPARAM* bpp );
+static BOOL check_cure_sick_item( u16 itemID, const BTL_POKEPARAM* bpp );
 static void RecPlayer_Init( RECPLAYER_CONTROL* ctrl );
 static void RecPlayer_Setup( RECPLAYER_CONTROL* ctrl, u32 turnCnt );
 static BOOL RecPlayer_CheckBlackOut( const RECPLAYER_CONTROL* ctrl );
@@ -374,7 +373,6 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->shooterEnergy = 0;
   wk->cmdLimitTime = 0;
   wk->gameLimitTime = 0;
-  // @todo デバッグ用一時措置（シューターフル充電）
 //  wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
 
   wk->bagMode = bagMode;
@@ -383,6 +381,8 @@ BTL_CLIENT* BTL_CLIENT_Create(
   RecPlayer_Init( &wk->recPlayer );
 
   BTL_CALC_BITFLG_Construction( wk->fieldEffectFlag, sizeof(wk->fieldEffectFlag) );
+
+  AIItem_Setup( wk );
 
   if( (wk->myType == BTL_CLIENT_TYPE_UI)
   &&  (BTL_MAIN_IsRecordEnable(wk->mainModule))
@@ -2281,8 +2281,19 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
       u8 wazaCount, wazaIdx, targetPos;
       u32 ai_bit = 0;
 
+      // 行動選択できないチェック
       if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
         continue;
+      }
+
+      // アイテム使用チェック
+      {
+        u16 itemID = AIItem_CheckUse( wk, wk->procPoke, wk->myParty );
+        if( itemID != ITEM_DUMMY_DATA )
+        {
+          BTL_ACTION_SetItemParam( wk->procAction, itemID, i, 0 );
+          continue;
+        }
       }
 
       if( BPP_CheckSick(pp, WAZASICK_ENCORE)
@@ -2290,7 +2301,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
       ){
         WazaID waza = BPP_GetPrevWazaID( pp );
         BtlPokePos pos = BPP_GetPrevTargetPos( pp );
-        BTL_ACTION_SetFightParam( &wk->actionParam[i], waza, pos );
+        BTL_ACTION_SetFightParam( wk->procAction, waza, pos );
         continue;
       }
 
@@ -2977,8 +2988,6 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_MEMBER_IN,          scProc_OP_MemberIn        },
     { SC_OP_SET_STATUS,         scProc_OP_SetStatus       },
     { SC_OP_SET_WEIGHT,         scProc_OP_SetWeight       },
-    { SC_OP_CANTESCAPE_ADD,     scProc_OP_EscapeCodeAdd   },
-    { SC_OP_CANTESCAPE_SUB,     scProc_OP_EscapeCodeSub   },
     { SC_OP_CHANGE_POKETYPE,    scProc_OP_ChangePokeType  },
     { SC_OP_WAZASICK_TURNCHECK, scProc_OP_WSTurnCheck     },
     { SC_OP_CONSUME_ITEM,       scProc_OP_ConsumeItem     },
@@ -4933,16 +4942,6 @@ static BOOL scProc_OP_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
   }
   return TRUE;
 }
-static BOOL scProc_OP_EscapeCodeAdd( BTL_CLIENT* wk, int* seq, const int* args )
-{
-  cec_addCode( &wk->cantEscCtrl, args[0], args[1] );
-  return TRUE;
-}
-static BOOL scProc_OP_EscapeCodeSub( BTL_CLIENT* wk, int* seq, const int* args )
-{
-  cec_subCode( &wk->cantEscCtrl, args[0], args[1] );
-  return TRUE;
-}
 static BOOL scProc_OP_ChangePokeType( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
@@ -5121,86 +5120,6 @@ static BOOL scProc_OP_SetWeight( BTL_CLIENT* wk, int* seq, const int* args )
 
 
 
-
-//------------------------------------------------------------------------------------------------------
-// 逃げ交換禁止管理ワーク
-//------------------------------------------------------------------------------------------------------
-
-static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code )
-{
-  GF_ASSERT(code < BTL_CANTESC_MAX);
-  GF_ASSERT(pokeID < BTL_POKEID_MAX);
-
-  if( ctrl->counter[ code ][ pokeID ] < CANTESC_COUNT_MAX )
-  {
-    ctrl->counter[ code ][ pokeID ]++;
-  }
-  else{
-    GF_ASSERT(0);
-  }
-}
-
-static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code )
-{
-  GF_ASSERT(code < BTL_CANTESC_MAX);
-  GF_ASSERT(pokeID < BTL_POKEID_MAX);
-
-  if( ctrl->counter[ code ][ pokeID ] )
-  {
-    ctrl->counter[ code ][ pokeID ]--;
-  }
-  else{
-    GF_ASSERT(0);
-  }
-}
-
-static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, const BTL_POKEPARAM* procPoke, BtlCantEscapeCode code, BTL_CLIENT* wk )
-{
-  GF_ASSERT(code < BTL_CANTESC_MAX);
-  {
-    int i;
-    for(i=0; i<BTL_POKEID_MAX; ++i)
-    {
-      if( ctrl->counter[code][i] )
-      {
-        u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( i );
-        if( !BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myID, clientID) ){ continue; }
-        switch( code ){
-        case BTL_CANTESC_KAGEFUMI:  if( _cec_check_kagefumi(wk) ){ return i; }
-        case BTL_CANTESC_ARIJIGOKU: if( _cec_check_arijigoku(wk) ){ return i; }
-        case BTL_CANTESC_JIRYOKU:   if( _cec_check_jiryoku(wk) ){ return i; }
-        }
-      }
-    }
-  }
-  return BTL_POKEID_NULL;
-}
-// とくせい「かげふみ」が自分に効くかチェック
-static BOOL _cec_check_kagefumi( BTL_CLIENT* wk )
-{
-  return TRUE;
-}
-// とくせい「ありじごく」が自分に効くかチェック
-static BOOL _cec_check_arijigoku( BTL_CLIENT* wk )
-{
-  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) )
-  {
-    return TRUE;
-  }
-  else if (
-      (countFrontPokeTokusei(wk, POKETOKUSEI_FUYUU) == 0)
-  &&  (countFrontPokeType(wk, POKETYPE_HIKOU) == 0)
-  ){
-    return TRUE;
-  }
-  return FALSE;
-}
-// とくせい「じりょく」が自分に効くかチェック
-static BOOL _cec_check_jiryoku( BTL_CLIENT* wk )
-{
-  return countFrontPokeType( wk, POKETYPE_HAGANE );
-}
-
 //------------------------------------------------------------------------------------------------------
 // 戦闘中ポケモンの所有とくせい・タイプ等チェック
 //------------------------------------------------------------------------------------------------------
@@ -5264,7 +5183,152 @@ BtlPokePos BTL_CLIENT_GetProcPokePos( const BTL_CLIENT* client )
   return client->basePos + client->procPokeIdx*2;
 }
 
+//------------------------------------------------------------------------------------------------------
+// AIアイテム
+//------------------------------------------------------------------------------------------------------
 
+/**
+ *  ワーク初期化
+ */
+static void AIItem_Setup( BTL_CLIENT* wk )
+{
+  u16 trID = BTL_MAIN_GetClientTrainerID( wk->mainModule, wk->myID );
+  u32 i;
+
+  if( trID != TRID_NULL )
+  {
+    for(i=0; i<NELEMS(wk->AIItem); ++i){
+      wk->AIItem[i] = TT_TrainerDataParaGet( trID, ID_TD_use_item1+i );
+    }
+  }
+  else
+  {
+    for(i=0; i<NELEMS(wk->AIItem); ++i){
+      wk->AIItem[i] = ITEM_DUMMY_DATA;
+    }
+  }
+}
+/**
+ *  使用アイテムチェック
+ */
+static u16 AIItem_CheckUse( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, const BTL_PARTY* party )
+{
+  static const u8 borderMembers[] = {
+    BTL_PARTY_MEMBER_MAX, 4, 2, 1,
+  };
+  u32 i, numMembers = BTL_PARTY_GetMemberCount( party );
+
+  for(i=0; i<NELEMS(wk->AIItem); ++i)
+  {
+    if( borderMembers[i] < numMembers ){
+      break;
+    }
+    if( wk->AIItem[i] != ITEM_DUMMY_DATA )
+    {
+      BOOL fUse = FALSE;
+      // HP回復系
+      if( BTL_CALC_ITEM_GetParam(wk->AIItem[i], ITEM_PRM_HP_RCV) )
+      {
+        u32 hp = BPP_GetValue( bpp, BPP_HP );
+        if( hp <= BTL_CALC_QuotMaxHP(bpp, 4) ){
+          fUse = TRUE;
+        }
+        else{
+          continue;
+        }
+      }
+      // 能力ランクアップ系
+      else if( check_status_up_item(wk->AIItem[i], bpp) )
+      {
+        fUse = TRUE;
+      }
+      // 状態異常回復系
+      else if( check_cure_sick_item(wk->AIItem[i], bpp) )
+      {
+        fUse = TRUE;
+      }
+
+      if( fUse )
+      {
+        u16 useItem = wk->AIItem[i];
+        wk->AIItem[i] = ITEM_DUMMY_DATA;
+        return useItem;
+      }
+    }
+  }
+
+  return ITEM_DUMMY_DATA;
+}
+/**
+ *  能力ランクアップ系アイテムである＆使って効果がある判定
+ */
+static BOOL check_status_up_item( u16 itemID, const BTL_POKEPARAM* bpp )
+{
+  static const struct {
+    u8 itemParamID;
+    u8 rankID;
+  }check_tbl[] = {
+    { ITEM_PRM_ATTACK_UP,     BPP_ATTACK_RANK     },   // 攻撃力アップ
+    { ITEM_PRM_DEFENCE_UP,    BPP_DEFENCE_RANK    },   // 防御力アップ
+    { ITEM_PRM_SP_ATTACK_UP,  BPP_SP_ATTACK_RANK  },   // 特攻アップ
+    { ITEM_PRM_SP_DEFENCE_UP, BPP_SP_DEFENCE_RANK },   // 特防アップ
+    { ITEM_PRM_AGILITY_UP,    BPP_AGILITY_RANK    },   // 素早さアップ
+    { ITEM_PRM_HIT_UP,        BPP_HIT_RATIO       },   // 命中率アップ
+  };
+  u32 i;
+
+  for(i=0; i<NELEMS(check_tbl); ++i)
+  {
+    if( BTL_CALC_ITEM_GetParam(itemID, check_tbl[i].itemParamID) )
+    {
+      if( BPP_IsRankEffectValid(bpp, check_tbl[i].rankID, 1) ){
+        return TRUE;
+      }
+    }
+  }
+
+ // クリティカルだけ別判定
+  if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_CRITICAL_UP) )
+  {
+    if( BPP_GetCriticalRank(bpp) == 0 ){
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
+/**
+ *  状態異常回復系アイテムである＆使って効果がある判定
+ */
+static BOOL check_cure_sick_item( u16 itemID, const BTL_POKEPARAM* bpp )
+{
+  static const struct {
+    u8 itemParamID;
+    u8 sickID;
+  }check_tbl[] = {
+    { ITEM_PRM_SLEEP_RCV,     WAZASICK_NEMURI      },   // 眠り回復
+    { ITEM_PRM_POISON_RCV,    WAZASICK_DOKU        },   // 毒回復
+    { ITEM_PRM_BURN_RCV,      WAZASICK_YAKEDO      },   // 火傷回復
+    { ITEM_PRM_ICE_RCV,       WAZASICK_KOORI       },   // 氷回復
+    { ITEM_PRM_PARALYZE_RCV,  WAZASICK_MAHI        },   // 麻痺回復
+    { ITEM_PRM_PANIC_RCV,     WAZASICK_KONRAN      },   // 混乱回復
+    { ITEM_PRM_MEROMERO_RCV,  WAZASICK_MEROMERO    },   // メロメロ回復
+  };
+  u32 i;
+
+  for(i=0; i<NELEMS(check_tbl); ++i)
+  {
+    if( BTL_CALC_ITEM_GetParam(itemID, check_tbl[i].itemParamID) )
+    {
+      if( BPP_CheckSick(bpp, check_tbl[i].sickID) ){
+        return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
+}
 
 //------------------------------------------------------------------------------------------------------
 // 録画データプレイヤー
