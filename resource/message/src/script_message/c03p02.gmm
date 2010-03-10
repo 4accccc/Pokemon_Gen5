@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-11T21:00:44"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T20:07:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,59 +292,11 @@
 	</lock>
 
 
-	<row id="msg_vender_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>自動販売機
-・選択肢表示
-　おいしいみず　２００円
-　サイコソーダ　３００円
-　ミックスオレ　５００円
-　やめる
-
-・購入可能→msg_vender_02
-・料金不足→msg_vender_04
-・キャンセル→msg_vender_05</comment>
-		<attribute name="キャラ指定">自動販売機</attribute>
-		<language name="JPN" width="256">じどう　はんばいき　がある！
-ほしい　のみもの　は……</language>
-		<language name="JPN_KANJI" width="256">自動販売機　がある！
-欲しい　のみもの　は……</language>
-	</row>
-
-	<row id="msg_vender_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>自動販売機
-・購入可能
-
-・当たりかどうかの判定をおこないます
-　当たり確率１／３２
-・運が良ければ連続して当たります
-　当たると　→　msg_vender_03
-　この場合、でてくる道具は最初に選んだもの
-・荷物が一杯になるときは作動しない</comment>
-		<language name="JPN" width="256">[1:09:どうぐ名:0]が　でてきた！▼</language>
-		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]が　でてきた！▼</language>
-	</row>
-
-	<row id="msg_vender_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>自動販売機
-・当たり</comment>
-		<language name="JPN" width="256">あたりだ！　もういっぽん
-[1:09:どうぐ名:0]が　でてきた！▼</language>
-		<language name="JPN_KANJI" width="256">当たりだ！　もう一本
-[1:09:どうぐ名:0]が　でてきた！▼</language>
-	</row>
-
-	<row id="msg_vender_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>自動販売機
-・料金不足</comment>
-		<language name="JPN" width="256">おかねが　たりない！</language>
-		<language name="JPN_KANJI" width="256">おかねが　たりない！</language>
-	</row>
-
-	<row id="msg_vender_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>自動販売機
-・キャンセル</comment>
-		<language name="JPN" width="256">……やっぱり　やめた！</language>
-		<language name="JPN_KANJI" width="256">……やっぱり　やめた！</language>
+	<row id="msg_mapscript_dummy">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<flowchart-group-list>
