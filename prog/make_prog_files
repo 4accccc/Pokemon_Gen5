@@ -1574,7 +1574,8 @@ SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
 #===> SRCS_OVERLAY_VS_MULTI_LIST
 SRCS_OVERLAY_WIFIBATTLEMATCH_SYS  = net_app/wifi_match/wifibattlematch_sys.c \
                                     net_app/wifi_match/wifibattlematch_subproc.c \
-                                    net_app/wifi_match/wifibattlematch_battle.c
+                                    net_app/wifi_match/wifibattlematch_battle.c \
+                                    net_app/wifi_match/wifibattlematch_utilproc.c
 
 # WIFIバトルマッチングフロー周り＋WIFネット部分
 #===> SRCS_OVERLAY_DPW_COMMON
@@ -1589,8 +1590,7 @@ SRCS_OVERLAY_WIFIBATTLEMATCH_CORE = net_app/wifi_match/wifibattlematch_core.c \
                 net_app/wifi_match/wifibattlematch_wifi.c \
                 net_app/wifi_match/wifibattlematch_net.c \
                 net_app/wifi_match/atlas_syachi2ds_v1.c \
-                net_app/wifi_match/debug/debug_wifi_match.c \
-                net_app/wifi_match/wifibattlematch_utilproc.c
+                net_app/wifi_match/debug/debug_wifi_match.c
 
 # バトル大会メインメニュー＋LIVEバトルマッチングフロー周り＋IRCネット部分
 # バトル大会メニュー

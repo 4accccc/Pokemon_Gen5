@@ -953,7 +953,7 @@ static void UTIL_LIST_Create( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, BC_MENU_TYPE 
   } pos;
 
   u8 x,y,w,h;
-  REGULATION_SAVEDATA*  p_sv = SaveData_GetRegulationSaveData(SaveControl_GetPointer());
+  REGULATION_SAVEDATA*  p_sv = SaveData_GetRegulationSaveData( GAMEDATA_GetSaveControlWork(p_wk->param.p_gamedata) );
 
   WBM_LIST_SETUP  setup;
   GFL_STD_MemClear( &setup, sizeof(WBM_LIST_SETUP) );

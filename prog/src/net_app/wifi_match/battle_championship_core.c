@@ -280,7 +280,21 @@ static void BATTLE_CHAMPIONSHIP_UpdateMessage( BATTLE_CHAMPIONSHIP_WORK *p_wk )
 static void SEQFUNC_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   BATTLE_CHAMPIONSHIP_WORK *p_wk = p_wk_adrs;
-  WBM_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
+
+  switch( p_wk->p_param->mode )
+  { 
+  case BATTLE_CHAMPIONSHIP_CORE_MODE_MAIN_MEMU: //メインメニューへいく
+  case BATTLE_CHAMPIONSHIP_CORE_MODE_WIFI_MENU: //WIFIメニューへいく
+  case BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_MENU: //LIVEメニューへいく
+    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
+    break;
+  case BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_FLOW_START: //ライブ大会フロー開始へいく（いらない？）
+  case BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_FLOW_BTLEND: //ライブ大会フローバトル終了後へいく
+  case BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_FLOW_RECEND: //ライブ大会フロー録画終了後へいく
+  case BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_FLOW_MENU:   //ライブ大会フローメインメニューへいく
+    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_LiveCup );
+    break;
+  }
 }
 //----------------------------------------------------------------------------
 /**

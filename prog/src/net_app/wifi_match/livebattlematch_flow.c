@@ -223,6 +223,9 @@ LIVEBATTLEMATCH_FLOW_WORK *LIVEBATTLEMATCH_FLOW_Init( const LIVEBATTLEMATCH_FLOW
   p_wk->param   = *cp_param;
   p_wk->heapID  = heapID;
 
+  //リソース追加
+  WIFIBATTLEMATCH_VIEW_LoadScreen( p_wk->param.p_view, WIFIBATTLEMATCH_VIEW_RES_MODE_LIVE, heapID );
+
   //共通モジュール作成
   p_wk->p_word  = WORDSET_Create( heapID );
   p_wk->p_msg       = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_live_match_dat, heapID );
@@ -276,6 +279,8 @@ void LIVEBATTLEMATCH_FLOW_Exit( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
   GFL_HEAP_FreeMemory( p_wk->p_party );
 
   //モジュール破棄
+  UTIL_PLAYERINFO_Delete( p_wk );
+  UTIL_MATCHINFO_Delete( p_wk );
   WBM_WAITICON_Exit( p_wk->p_wait );
   LIVEBATTLEMATCH_IRC_Exit( p_wk->p_irc );
   WBM_SEQ_Exit( p_wk->p_seq);
@@ -1102,13 +1107,17 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_SEND_ENEMYDATA,      //情報交換
     SEQ_RECV_ENEMYDATA,      //情報交換
     SEQ_CHECK_MATCH,      //マッチングした
-    SEQ_START_MSG_NOCUP,  //大会が違う
+    SEQ_START_DISCONNECT_NOCUP,  //大会が違うため切断
+    SEQ_WAIT_DISCONNECT_NOCUP,
+    SEQ_START_MSG_NOCUP,  //大会が違うメッセージ
     SEQ_START_MSG_OK,     //マッチング相手が見つかった！
     SEQ_START_MSG_CNT,
     SEQ_START_DRAW_OTHERCARD,
     SEQ_WAIT_DRAW_OTHERCARD,
     SEQ_WAIT_SYNC,
     SEQ_START_MSG_WAIT,
+    SEQ_START_TIMING,
+    SEQ_WAIT_TIMING,
 
     SEQ_CHECK_SHOW,       //みせあいはあるか
     SEQ_LIST_END,         //リストへ
@@ -1192,24 +1201,42 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     break;
   case SEQ_RECV_ENEMYDATA:      //情報交換
-    if( LIVEBATTLEMATCH_IRC_StartEnemyData( p_wk->p_irc, p_wk->param.p_enemy_data ) )
     { 
-      *p_seq  = SEQ_CHECK_MATCH;
+      WIFIBATTLEMATCH_ENEMYDATA *p_buff_adrs; 
+      if( LIVEBATTLEMATCH_IRC_WaitEnemyData( p_wk->p_irc, &p_buff_adrs ) )
+      { 
+        GFL_STD_MemCopy( p_buff_adrs, p_wk->param.p_enemy_data, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
+        *p_seq  = SEQ_CHECK_MATCH;
+      }
     }
     break;
   case SEQ_CHECK_MATCH:      //マッチングした
     if( p_wk->param.p_player_data->wificup_no == p_wk->param.p_enemy_data->wificup_no )
     { 
+      OS_TPrintf( "自分の大会 %d 相手の大会 %d\n", p_wk->param.p_player_data->wificup_no, p_wk->param.p_enemy_data->wificup_no );
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
       *p_seq  = SEQ_START_MSG_OK;
     }
     else
     { 
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
-      *p_seq  = SEQ_START_MSG_NOCUP;
+      *p_seq  = SEQ_START_DISCONNECT_NOCUP;
     }
 		break;
-  case SEQ_START_MSG_NOCUP:  //大会が違う
+
+  case SEQ_START_DISCONNECT_NOCUP:  //大会が違うため切断
+    if( LIVEBATTLEMATCH_IRC_StartDisConnect(p_wk->p_irc))
+    { 
+      *p_seq  = SEQ_WAIT_DISCONNECT_NOCUP;
+    }
+    break;
+  case SEQ_WAIT_DISCONNECT_NOCUP:
+    if( LIVEBATTLEMATCH_IRC_WaitDisConnect(p_wk->p_irc))
+    { 
+      *p_seq  = SEQ_START_MSG_NOCUP;
+    }
+    break;
+  case SEQ_START_MSG_NOCUP:  //大会が違うメッセージ
     UTIL_TEXT_Print( p_wk, LIVE_STR_18 );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_MATCHING );
@@ -1243,11 +1270,25 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       *p_seq  = SEQ_START_MSG_WAIT;
     }
 		break;
+
   case SEQ_START_MSG_WAIT:
+    GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
     UTIL_TEXT_Print( p_wk, LIVE_STR_20 );
     *p_seq       = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_CHECK_SHOW );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_TIMING );
 		break;
+    
+  case SEQ_START_TIMING:
+    GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),71, WB_NET_IRC_BATTLE );
+    *p_seq  = SEQ_WAIT_TIMING;
+    break;
+
+  case SEQ_WAIT_TIMING:
+    if( GFL_NET_HANDLE_IsTimeSync( GFL_NET_HANDLE_GetCurrentHandle(),71, WB_NET_IRC_BATTLE) )
+    { 
+      *p_seq  = SEQ_CHECK_SHOW;
+    }
+    break;
 
   case SEQ_CHECK_SHOW:        //見せ合いはあるか
     { 
@@ -1290,6 +1331,8 @@ static void SEQFUNC_BtlAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 { 
   enum
   { 
+    SEQ_START_DISCONNECT,
+    SEQ_WAIT_DISCONNECT,
     SEQ_START_MSG_SAVE,
     SEQ_START_SAVE,
     SEQ_WAIT_SAVE,
@@ -1302,6 +1345,18 @@ static void SEQFUNC_BtlAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   switch( *p_seq )
   {
+  case SEQ_START_DISCONNECT:
+    if( LIVEBATTLEMATCH_IRC_StartDisConnect(p_wk->p_irc))
+    { 
+      *p_seq  = SEQ_WAIT_DISCONNECT;
+    }
+    break;
+  case SEQ_WAIT_DISCONNECT:
+    if( LIVEBATTLEMATCH_IRC_WaitDisConnect(p_wk->p_irc))
+    { 
+      *p_seq  = SEQ_START_MSG_SAVE;
+    }
+    break;
   case SEQ_START_MSG_SAVE:
     UTIL_TEXT_Print( p_wk, LIVE_STR_09 );
     *p_seq       = SEQ_WAIT_MSG;

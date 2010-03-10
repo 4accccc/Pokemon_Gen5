@@ -153,6 +153,9 @@ DIGITALCARD_CHECK_WORK *DIGITALCARD_CHECK_Init( const DIGITALCARD_CHECK_PARAM *c
   p_wk->param         = *cp_param;
   p_wk->heapID        = heapID;
 
+  //リソース追加
+  WIFIBATTLEMATCH_VIEW_LoadScreen( p_wk->param.p_view, WIFIBATTLEMATCH_VIEW_RES_MODE_DIGITALCARD, heapID );
+
   //共通モジュール作成
   p_wk->p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
         NARC_message_wifi_match_dat, heapID );

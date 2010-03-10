@@ -271,7 +271,7 @@ static const WBM_SYS_SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
   },
   //SUBPROCID_LISTAFTER,
   { 
-		FS_OVERLAY_ID( wifibattlematch_core ),
+		NO_OVERLAY_ID,
 		&WifiBattleMatch_ListAfter_ProcData,
 		WBM_LISTAFTER_AllocParam,
 		WBM_LISTAFTER_FreeParam,
@@ -350,6 +350,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(WIFIBATTLEMATCH_SYS), HEAPID_WIFIBATTLEMATCH_SYS );
 	GFL_STD_MemClear( p_wk, sizeof(WIFIBATTLEMATCH_SYS) );
   GFL_STD_MemCopy( p_param_adrs, &p_wk->param, sizeof(WIFIBATTLEMATCH_PARAM) );
+  p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_START;
 
   //ゲームデータ自動生成のときは作成
   if( p_wk->param.p_game_data == NULL )
@@ -364,8 +365,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
 
   OS_Printf( "ランダムマッチ引数 使用ポケ%d ルール%d\n", p_wk->param.poke, p_wk->param.btl_rule );
 
-  p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_START;
-
   //データバッファ作成
   BattleRec_Init( HEAPID_WIFIBATTLEMATCH_SYS );
   DATA_CreateBuffer( p_wk, HEAPID_WIFIBATTLEMATCH_SYS );
@@ -373,6 +372,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   //モジュール作成
 	p_wk->p_subproc = WBM_SYS_SUBPROC_Init( sc_subproc_data, SUBPROCID_MAX, p_wk, HEAPID_WIFIBATTLEMATCH_SYS );
 
+  //開始モード
   switch( p_wk->param.mode )
   { 
   case WIFIBATTLEMATCH_MODE_MAINMENU:  //タイトルから進む、メインメニュー
@@ -792,8 +792,8 @@ static void *POKELIST_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID,
     GF_ASSERT(0);
   }
 
-  p_param->p_select_party    = p_wk->p_player_btl_party;
-  p_param->gameData           = p_wk->param.p_game_data;
+  p_param->p_select_party   = p_wk->p_player_btl_party;
+  p_param->gameData         = p_wk->param.p_game_data;
 
   //自分のデータ
   { 
@@ -835,13 +835,20 @@ static BOOL POKELIST_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_ad
   WIFIBATTLEMATCH_SYS             *p_wk     = p_wk_adrs;
   WIFIBATTLEMATCH_SUBPROC_PARAM   *p_param  = p_param_adrs;
 
-  if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS )
+  if( GFL_NET_GetNETInitStruct()->bNetType == GFL_NET_TYPE_IRC )
   { 
     WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LISTAFTER );
   }
-  else if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN )
+  else
   { 
-    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
+    if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS )
+    { 
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LISTAFTER );
+    }
+    else if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN )
+    { 
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
+    }
   }
   GFL_HEAP_FreeMemory( p_param->regulation );
   GFL_HEAP_FreeMemory( p_param );
@@ -1058,7 +1065,7 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
 	GFL_HEAP_FreeMemory( p_param );
 
   //次のPROC
-  if( WBM_SYS_SUBPROC_GetPreProcID( p_subproc ) == SUBPROCID_MAINMENU )
+  if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
   { 
     //ライブマッチはメインメニューからくるのでライブまっちへ戻る
     WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
@@ -1163,6 +1170,15 @@ static void *WBM_LISTAFTER_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID he
   p_param->p_player_btl_party = p_wk->p_player_btl_party;
   p_param->p_enemy_btl_party  = p_wk->p_enemy_btl_party;
 
+  if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
+  { 
+    p_param->type = WIFIBATTLEMATCH_LISTAFTER_NETTYPE_IRC;
+  }
+  else
+  { 
+    p_param->type = WIFIBATTLEMATCH_LISTAFTER_NETTYPE_WIFI;
+  }
+
   return p_param;
 }
 
@@ -1182,15 +1198,22 @@ static BOOL WBM_LISTAFTER_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_par
 
   GFL_HEAP_FreeMemory( p_param );
 
-  switch( result )
+  if( GFL_NET_GetNETInitStruct()->bNetType == GFL_NET_TYPE_IRC )
   { 
-  case WIFIBATTLEMATCH_LISTAFTER_RESULT_SUCCESS:
     WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_BATTLE );
-    break;
+  }
+  else
+  { 
+    switch( result )
+    { 
+    case WIFIBATTLEMATCH_LISTAFTER_RESULT_SUCCESS:
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_BATTLE );
+      break;
 
-  case WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_NEXT_LOGIN:
-    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
-    break;
+    case WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_NEXT_LOGIN:
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
+      break;
+    }
   }
 
   return TRUE;
@@ -1239,7 +1262,7 @@ static BOOL WBM_BTLREC_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_
   GFL_HEAP_FreeMemory( p_param );
 
   //次のPROC
-  if( WBM_SYS_SUBPROC_GetPreProcID( p_subproc ) == SUBPROCID_MAINMENU )
+  if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
   { 
     //ライブマッチはメインメニューからくるのでライブまっちへ戻る
     WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );

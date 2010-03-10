@@ -13,7 +13,7 @@
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *					リスト後プロセス
- *					    タイミングをとってバトルパラムを送るだけ
+ *					    タイミングをとってパーティを送るだけ
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
@@ -26,11 +26,22 @@ typedef enum
 } WIFIBATTLEMATCH_LISTAFTER_RESULT;
 
 //-------------------------------------
+///	通信タイプ
+//=====================================
+typedef enum
+{
+  WIFIBATTLEMATCH_LISTAFTER_NETTYPE_WIFI,
+  WIFIBATTLEMATCH_LISTAFTER_NETTYPE_IRC,
+} WIFIBATTLEMATCH_LISTAFTER_NETTYPE;
+
+
+//-------------------------------------
 ///	リスト後プロセスの引数
 //=====================================
 typedef struct
 {
   WIFIBATTLEMATCH_PARAM             *p_param;     //[in ]外部引数
+  WIFIBATTLEMATCH_LISTAFTER_NETTYPE type;         //[in ]通信タイプ
   WIFIBATTLEMATCH_LISTAFTER_RESULT  result;       //[out]戻り値
 
   //以下、[in ]常駐データ置き場
