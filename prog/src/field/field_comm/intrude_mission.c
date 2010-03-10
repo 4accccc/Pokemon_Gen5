@@ -1017,6 +1017,7 @@ void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mi
   u32 md_array_max;
   int palace_level;
   const OCCUPY_INFO *occupy;
+  u8 monolith_type;
   
   list = &mission->list[palace_area];
   if(list->occ == TRUE){
@@ -1025,6 +1026,12 @@ void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mi
   
   occupy = Intrude_GetOccupyInfo(intcomm, palace_area);
   palace_level = occupy->intrude_level;
+  if(MyStatus_GetRomCode( Intrude_GetMyStatus(intcomm, palace_area) ) == VERSION_BLACK){
+    monolith_type = MONOLITH_TYPE_BLACK;
+  }
+  else{
+    monolith_type = MONOLITH_TYPE_WHITE;
+  }
   
   cdata = MISSIONDATA_Load();
   md_array_max = MISSIONDATA_GetArrayMax();
@@ -1036,6 +1043,7 @@ void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mi
     MISSIONDATA_ExtraParamSet(intcomm, &list->md[type], accept_netid);
     list->md[type].accept_netid = INTRUDE_NETID_NULL;
     list->md[type].palace_area = palace_area;
+    list->md[type].monolith_type = monolith_type;
   }
 
   MISSIONDATA_Unload(cdata);

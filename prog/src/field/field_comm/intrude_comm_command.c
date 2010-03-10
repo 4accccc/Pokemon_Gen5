@@ -765,7 +765,6 @@ static void _IntrudeRecv_MissionListReq(const int netID, const int size, const v
  * データ送信：ミッション選択候補リスト要求
  *
  * @param   intcomm         
- * @param   monolith_type		MONOLITH_TYPE_???
  * @param   zone_id		      ミニモノリスがあるゾーンID
  *
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗

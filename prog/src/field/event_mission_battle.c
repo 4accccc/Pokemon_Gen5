@@ -33,6 +33,7 @@
 #include "event_intrude.h"
 #include "event_comm_common.h"
 #include "event_mission_battle.h"
+#include "field/intrude_snd_def.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -203,8 +204,12 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     SEQ_SEND_ACHIEVE,
     SEQ_RECV_WAIT,
     SEQ_BATTLE_START_WAIT,
+    SEQ_BATTLE_START_TIMING_WAIT,
+    SEQ_BATTLE_BGM,
+    SEQ_ENCEFF,
     SEQ_BATTLE_PROC,
     SEQ_BATTLE_AFTER,
+    SEQ_BATTLE_AFTER_NEXT,
     SEQ_BATTLE_NG,
     SEQ_TALK_CANCEL,
     SEQ_LAST_MSG_WAIT,
@@ -285,23 +290,39 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
       }
     }
     break;
-  case SEQ_BATTLE_PROC:
+  case SEQ_BATTLE_START_TIMING_WAIT:
     if(Intrude_GetTargetTimingNo(intcomm, INTRUDE_TIMING_MISSION_BATTLE_BEFORE, talk->ccew.talk_netid) == TRUE){
       IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
-      {
-        GMEVENT *child_event;
-        
-        talk->ibp.gsys = gsys;
-        talk->ibp.target_netid = talk->ccew.talk_netid;
-        talk->ibp.flat_level = d_vic->battle_level;
-        child_event = EVENT_FieldSubProc(
-          gsys, talk->ccew.fieldWork, NO_OVERLAY_ID, &IntrudeBattleProcData, &talk->ibp);
-        GMEVENT_CallEvent(event, child_event);
-      }
-  	  *seq = SEQ_BATTLE_AFTER;
-  	}
+      (*seq)++;
+    }
+    break;
+  case SEQ_BATTLE_BGM:
+    // í“¬—p‚a‚f‚lƒZƒbƒg
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, SND_INTRUDE_BATTLE_BGM));
+    (*seq)++;
+    break;
+  case SEQ_ENCEFF:
+    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(talk->ccew.fieldWork), event, ENCEFFID_TR_NORMAL);
+    (*seq)++;
+    break;
+  case SEQ_BATTLE_PROC:
+    {
+      GMEVENT *child_event;
+      
+      talk->ibp.gsys = gsys;
+      talk->ibp.target_netid = talk->ccew.talk_netid;
+      talk->ibp.flat_level = d_vic->battle_level;
+      child_event = EVENT_FieldSubProc(
+        gsys, talk->ccew.fieldWork, NO_OVERLAY_ID, &IntrudeBattleProcData, &talk->ibp);
+      GMEVENT_CallEvent(event, child_event);
+    }
+	  *seq = SEQ_BATTLE_AFTER;
   	break;
   case SEQ_BATTLE_AFTER:
+    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NORMAL, FSND_FADE_NORMAL));
+    (*seq)++;
+    break;
+  case SEQ_BATTLE_AFTER_NEXT:
     IntrudeEventPrint_SetupFieldMsg(&talk->ccew.iem, gsys);
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
       MissionBattleMsgID.mission_battle_after[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
@@ -380,8 +401,12 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     SEQ_BATTLE_YES,
     SEQ_BATTLE_YES_MSG,
     SEQ_BATTLE_YES_WAIT,
+    SEQ_BATTLE_START_TIMING_WAIT,
+    SEQ_BATTLE_BGM,
+    SEQ_ENCEFF,
     SEQ_BATTLE_PROC,
     SEQ_BATTLE_AFTER,
+    SEQ_BATTLE_AFTER_NEXT,
     SEQ_BATTLE_NG,
     SEQ_TALK_CANCEL,   //‰ï˜bƒLƒƒƒ“ƒZƒ‹
     SEQ_LAST_MSG_WAIT,
@@ -457,23 +482,39 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
       }
     }
     break;
-  case SEQ_BATTLE_PROC:
+  case SEQ_BATTLE_START_TIMING_WAIT:
     if(Intrude_GetTargetTimingNo(intcomm, INTRUDE_TIMING_MISSION_BATTLE_BEFORE, talk->ccew.talk_netid) == TRUE){
       IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
-      {
-        GMEVENT *child_event;
-        
-        talk->ibp.gsys = gsys;
-        talk->ibp.target_netid = talk->ccew.talk_netid;
-        talk->ibp.flat_level = d_vic->battle_level;
-        child_event = EVENT_FieldSubProc(
-          gsys, talk->ccew.fieldWork, NO_OVERLAY_ID, &IntrudeBattleProcData, &talk->ibp);
-        GMEVENT_CallEvent(event, child_event);
-      }
-  	  *seq = SEQ_BATTLE_AFTER;
-  	}
-  	break;
+      (*seq)++;
+    }
+    break;
+  case SEQ_BATTLE_BGM:
+    // í“¬—p‚a‚f‚lƒZƒbƒg
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, SND_INTRUDE_BATTLE_BGM));
+    (*seq)++;
+    break;
+  case SEQ_ENCEFF:
+    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(talk->ccew.fieldWork), event, ENCEFFID_TR_NORMAL);
+    (*seq)++;
+    break;
+  case SEQ_BATTLE_PROC:
+    {
+      GMEVENT *child_event;
+      
+      talk->ibp.gsys = gsys;
+      talk->ibp.target_netid = talk->ccew.talk_netid;
+      talk->ibp.flat_level = d_vic->battle_level;
+      child_event = EVENT_FieldSubProc(
+        gsys, talk->ccew.fieldWork, NO_OVERLAY_ID, &IntrudeBattleProcData, &talk->ibp);
+      GMEVENT_CallEvent(event, child_event);
+    }
+	  *seq = SEQ_BATTLE_AFTER;
+    break;
   case SEQ_BATTLE_AFTER:
+    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NORMAL, FSND_FADE_NORMAL));
+    (*seq)++;
+    break;
+  case SEQ_BATTLE_AFTER_NEXT:
     IntrudeEventPrint_SetupFieldMsg(&talk->ccew.iem, gsys);
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
       MissionBattleMsgID.target_battle_after[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);

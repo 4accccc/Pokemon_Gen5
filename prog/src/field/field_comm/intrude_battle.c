@@ -16,6 +16,8 @@
 #include "intrude_main.h"
 #include "intrude_comm_command.h"
 #include "intrude_work.h"
+#include "sound/pm_sndsys.h"
+#include "field/intrude_snd_def.h"
 
 
 //==============================================================================
@@ -95,6 +97,7 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
   switch(*seq){
   case 0:
     BTL_SETUP_Single_Comm(&ibs->para, gamedata, GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, HEAPID_PROC );
+    ibs->para.musicDefault = SND_INTRUDE_BATTLE_BGM;
     (*seq)++;
     break;
   case 1:
@@ -130,7 +133,6 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
     break;
   case 6:
     if(proc_status != GFL_PROC_MAIN_NULL){
-      OS_TPrintf("..バトル終了待ち\n");
       break;
     }
     OS_TPrintf("バトル完了\n");

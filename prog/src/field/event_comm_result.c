@@ -34,11 +34,19 @@
 #include "event_comm_common.h"
 #include "event_comm_result.h"
 #include "sound/pm_sndsys.h"
+#include "savedata/intrude_save_field.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
 #include "poke_tool/status_rcv.h"
 
+
+
+//==============================================================================
+//  定数定義
+//==============================================================================
+///ミッション達成で上がるレベル数
+#define MISSION_ACHIEVE_ADD_LEVEL   (1)
 
 
 //======================================================================
@@ -143,6 +151,8 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     SEQ_POINT_GET_CHECK,   //報酬ゲットしたか
     SEQ_POINT_GET,         //報酬ゲット
     SEQ_POINT_GET_MSG_WAIT,
+    SEQ_LEVELUP_MSG,
+    SEQ_LEVELUP_MSG_WAIT,
     SEQ_POINT_GET_MSG_END_BUTTON_WAIT,
     SEQ_MISSION_FAIL,    //ミッション失敗
     SEQ_DISGUISE_START,  //変装戻す
@@ -171,12 +181,12 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
 
   case SEQ_POINT_GET_CHECK:   //報酬ゲットしたか
     if(talk->mission_result == TRUE){   //成功
-      IntrudeEventPrint_Print(&talk->iem, msg_invasion_mission_03, 0, 0);
+      IntrudeEventPrint_Print(&talk->iem, msg_invasion_mission_sys004, 0, 0);
       GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM(gsys, SEQ_ME_MISSION_CLEAR ));
       *seq = SEQ_POINT_GET;
     }
     else{   //失敗
-      IntrudeEventPrint_Print(&talk->iem, msg_invasion_mission_04, 0, 0);
+      IntrudeEventPrint_Print(&talk->iem, msg_invasion_mission_sys002, 0, 0);
       GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM(gsys, SEQ_ME_MISSION_FAILED ));
       *seq = SEQ_MISSION_FAIL;
     }
@@ -185,17 +195,55 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     if( PMSND_CheckPlayBGM() == FALSE ){
       GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_SHORT));
 
+      { //パレス球
+        MYITEM_PTR myitem = GAMEDATA_GetMyItem(gdata);
+        u16 now_num = MYITEM_GetItemNum( myitem, ITEM_PARESUDAMA, talk->heapID);
+        int add_num = talk->point;
+        
+        if(MYITEM_GetItemMax( ITEM_PARESUDAMA ) < now_num + add_num){
+          add_num = ITEM_PARESUDAMA - now_num;
+        }
+        MYITEM_AddItem(myitem, ITEM_PARESUDAMA, add_num, talk->heapID);
+      }
+      { //白黒レベル
+        OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gdata);
+        if(talk->mresult.mission_data.monolith_type == MONOLITH_TYPE_BLACK){
+          INTRUDE_OCCUPY_FIELD_LevelUpBlack(occupy, MISSION_ACHIEVE_ADD_LEVEL);
+        }
+        else{
+          INTRUDE_OCCUPY_FIELD_LevelUpWhite(occupy, MISSION_ACHIEVE_ADD_LEVEL);
+        }
+      }
+
       WORDSET_RegisterNumber( talk->iem.wordset, 0, talk->point, 
         3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-      IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_clear_01);
+      IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_sys003);
+
       (*seq)++;
     }
     break;
   case SEQ_POINT_GET_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_LEVELUP_MSG:
+    WORDSET_RegisterNumber( talk->iem.wordset, 0, MISSION_ACHIEVE_ADD_LEVEL, 
+      3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    if(talk->mresult.mission_data.monolith_type == MONOLITH_TYPE_BLACK){
+      IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_clear_03);
+    }
+    else{
+      IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_clear_02);
+    }
+    (*seq)++;
+    break;
+  case SEQ_LEVELUP_MSG_WAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
       *seq = SEQ_POINT_GET_MSG_END_BUTTON_WAIT;
     }
     break;
+
   case SEQ_POINT_GET_MSG_END_BUTTON_WAIT:
     if(IntrudeEventPrint_LastKeyWait() == TRUE){
       if(MISSION_AddPoint(gdata, &talk->mresult, talk->point) == TRUE){

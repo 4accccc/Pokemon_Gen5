@@ -76,3 +76,10 @@ extern void ISC_SAVE_GetItem(INTRUDE_SAVE_WORK *intsave, int work_no, INTRUDE_SE
  */
 //==================================================================
 extern const INTRUDE_SECRET_ITEM_POSDATA * ISC_SAVE_GetItemPosData(INTRUDE_SAVE_WORK *intsave, int *work_no);
+
+
+//==============================================================================
+//  
+//==============================================================================
+extern void INTRUDE_OCCUPY_FIELD_LevelUpWhite(OCCUPY_INFO *occupy, int add_level);
+extern void INTRUDE_OCCUPY_FIELD_LevelUpBlack(OCCUPY_INFO *occupy, int add_level);

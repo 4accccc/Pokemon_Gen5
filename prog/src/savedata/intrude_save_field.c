@@ -119,3 +119,42 @@ const INTRUDE_SECRET_ITEM_POSDATA * ISC_SAVE_GetItemPosData(INTRUDE_SAVE_WORK *i
   return NULL;
 }
 
+
+//==============================================================================
+//  
+//==============================================================================
+//==================================================================
+/**
+ * 白レベルアップ
+ *
+ * @param   occupy		
+ * @param   add_level		レベル加算値
+ */
+//==================================================================
+void INTRUDE_OCCUPY_FIELD_LevelUpWhite(OCCUPY_INFO *occupy, int add_level)
+{
+  if(occupy->white_level + add_level > OCCUPY_LEVEL_MAX){
+    occupy->white_level = OCCUPY_LEVEL_MAX;
+  }
+  else{
+    occupy->white_level += add_level;
+  }
+}
+
+//==================================================================
+/**
+ * 黒レベルアップ
+ *
+ * @param   occupy		
+ * @param   add_level		レベル加算値
+ */
+//==================================================================
+void INTRUDE_OCCUPY_FIELD_LevelUpBlack(OCCUPY_INFO *occupy, int add_level)
+{
+  if(occupy->black_level + add_level > OCCUPY_LEVEL_MAX){
+    occupy->black_level = OCCUPY_LEVEL_MAX;
+  }
+  else{
+    occupy->black_level += add_level;
+  }
+}
