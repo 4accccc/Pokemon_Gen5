@@ -11,6 +11,8 @@
 #ifndef ZONE_D04R0201_EVC_H
 #define ZONE_D04R0201_EVC_H
 
+#define TR_HAKAIM5_01                      0
+#define D04R0201_SAGE2_01                  1
 
 #endif //ZONE_D04R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d04r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

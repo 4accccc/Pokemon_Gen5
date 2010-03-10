@@ -21,6 +21,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_d04r0201_sandstream_1
+_EVENT_DATA		ev_d04r0201_sage2_01
+_EVENT_DATA		ev_pos_d04r0201_sage_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -36,3 +38,71 @@ EVENT_START		ev_d04r0201_sandstream_1
 	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0301, 22, 17 )
 EVENT_END
 
+
+/**************************************************************g
+/*		賢者２												  */
+/**************************************************************/
+EVENT_START		ev_d04r0201_sage2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d04r0201_sage2_02 )
+EVENT_END
+
+/**************************************************************/
+/*		賢者２ＰＯＳイベント								  */
+/**************************************************************/
+EVENT_START		ev_pos_d04r0201_sage_01
+
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	
+	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ )
+	
+	SWITCH $LWK_POSZ
+	CASE 18 THEN
+		_OBJ_ANIME( D04R0201_SAGE2_01, anm_sage_18 )
+		_OBJ_ANIME_WAIT()
+	CASE 19 THEN
+		_OBJ_ANIME( D04R0201_SAGE2_01, anm_sage_19 )
+		_OBJ_ANIME_WAIT()
+	CASE 20 THEN
+		_OBJ_ANIME( D04R0201_SAGE2_01, anm_sage_20 )
+		_OBJ_ANIME_WAIT()
+	CASE 21 THEN
+		_OBJ_ANIME( D04R0201_SAGE2_01, anm_sage_21 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	//ゲーチスさまは　いわれた
+	_BALLOONWIN_OBJMSG( msg_d04r0201_sage2_01 , D04R0201_SAGE2_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+	//========================================/
+	
+	//ＰＯＳイベント終了
+	$WK_SCENE_D04R0201 = 1
+	
+	//========================================/
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//		賢者２アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sage_18
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sage_19
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sage_20
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sage_21
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0

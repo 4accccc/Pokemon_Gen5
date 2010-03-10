@@ -12,6 +12,8 @@
 
 #define D04R0401_FLD_ITEM_01               0
 #define D04R0401_FLD_ITEM_02               1
+#define TR_HAKAIM1_07                      2
+#define TR_HAKAIW1_02                      3
 
 #endif //ZONE_D04R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d04r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
