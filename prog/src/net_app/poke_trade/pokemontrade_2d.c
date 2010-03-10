@@ -648,7 +648,7 @@ void IRC_POKETRADE_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork)
         cellInitData.softpri = _CLACT_SOFTPRI_POKELIST;
         cellInitData.bgpri = 3;
 
-        pWork->pokeIconNcgRes[line][i] = GFL_CLGRP_CGR_Register( arcHandlePoke ,NARC_poke_icon_poke_icon_tam_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+        pWork->pokeIconNcgRes[line][i] = GFL_CLGRP_CGR_Register( arcHandlePoke ,NARC_poke_icon_poke_icon_egg_normal_m_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
         pWork->pokeIcon[line][i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                         pWork->pokeIconNcgRes[line][i],
                                                         pWork->cellRes[PLT_POKEICON],
@@ -1172,8 +1172,9 @@ static void  _PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
   GF_ASSERT(MONSNO_MAX < 660);
   pWork->pCharMem = GFL_HEAP_AllocMemory(pWork->heapID, 4*8*4*4*660 );
   
-  for(i=0;i < MONSNO_MAX; i++){ //@todo フォルム違いを持ってくる必要あり
+  for(i=0;i < MONSNO_MAX; i++){ //@todo フォルム違いを持ってくる必要あり、雌雄書き分けにも対応する必要あり
   
+    //arcIndex = POKEICON_GetCgxArcIndexByMonsNumber( i, 0, 0, 0 );
     arcIndex = POKEICON_GetCgxArcIndexByMonsNumber( i, 0, 0 );
     pMem = GFL_ARCHDL_UTIL_LoadBGCharacter(pokeicon_ah, arcIndex, FALSE, &pCharData, pWork->heapID);
 
