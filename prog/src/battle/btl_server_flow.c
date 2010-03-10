@@ -276,6 +276,7 @@ struct _BTL_SVFLOW_WORK {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static clearWorks( BTL_SVFLOW_WORK* wk );
 static void clearPokeCantActionFlag( BTL_SVFLOW_WORK* wk );
 static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx );
 static BOOL ActOrderProc_PokeIn( BTL_SVFLOW_WORK* wk );
@@ -788,10 +789,25 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->getPokePos = BTL_POS_NULL;
   wk->nigeruCount = 0;
   wk->sinkaArcHandle = SHINKA_GetArcHandle( heapID );
+
+  clearWorks( wk );
+
+  return wk;
+}
+
+
+void BTL_SVFLOW_ResetSystem( BTL_SVFLOW_WORK* wk )
+{
+  clearWorks( wk );
+
+}
+
+static clearWorks( BTL_SVFLOW_WORK* wk )
+{
   BTL_WAZAREC_Init( &wk->wazaRec );
   BTL_DEADREC_Init( &wk->deadRec );
   {
-    BtlRule rule = BTL_MAIN_GetRule( mainModule );
+    BtlRule rule = BTL_MAIN_GetRule( wk->mainModule );
     BTL_POSPOKE_InitWork( &wk->pospokeWork, wk->mainModule, wk->pokeCon, rule );
   }
 
@@ -799,14 +815,9 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   GFL_STD_MemClear( wk->pokeInFlag, sizeof(wk->pokeInFlag) );
 
   Hem_Init( &wk->HEManager );
-
   eventWork_Init( &wk->eventWork );
-
   BTL_HANDLER_SIDE_InitSystem();
-
-  return wk;
 }
-
 
 void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk )
 {

@@ -84,6 +84,7 @@ extern BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   BTL_SERVER* server, BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon,
   BTL_SERVER_CMD_QUE* que, BtlBagMode bagMode, HEAPID heapID );
 
+extern void BTL_SVFLOW_ResetSystem( BTL_SVFLOW_WORK* wk );
 extern void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk );
 
 extern BOOL BTL_SVFLOW_MakeShooterChargeCommand( BTL_SVFLOW_WORK* wk );

@@ -53,6 +53,7 @@ enum {
 /*--------------------------------------------------------------------------*/
 /* Typedefs                                                                 */
 /*--------------------------------------------------------------------------*/
+typedef BOOL (*ClientMainProc)( BTL_CLIENT* );
 typedef BOOL (*ClientSubProc)( BTL_CLIENT*, int* );
 typedef BOOL (*ServerCmdProc)( BTL_CLIENT*, int*, const int* );
 
@@ -83,11 +84,14 @@ typedef enum {
 typedef struct {
   u8   seq;
   u8   ctrlCode;
-  u8   fFadeOutDone;
-  u8   fTurnIncrement;
+  u8   fChapterSkip    : 1;
+  u8   fFadeOutDone    : 1;
+  u8   fTurnIncrement  : 1;
+  u16  chapterTimer;
   u16  turnCount;
   u16  nextTurnCount;
   u16  maxTurnCount;
+  u16  skipTurnCount;
 }RECPLAYER_CONTROL;
 
 //--------------------------------------------------------------
@@ -104,6 +108,7 @@ struct _BTL_CLIENT {
   BTL_REC*              btlRec;
   BTL_RECREADER         btlRecReader;
   RECPLAYER_CONTROL     recPlayer;
+  ClientMainProc        mainProc;
 
   BTL_ADAPTER*    adapter;
   BTLV_CORE*      viewCore;
@@ -172,6 +177,9 @@ struct _BTL_CLIENT {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static void ChangeMainProc( BTL_CLIENT* wk, ClientMainProc proc );
+static BOOL ClientMain_Normal( BTL_CLIENT* wk );
+static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk );
 static void setDummyReturnData( BTL_CLIENT* wk );
 static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd );
 static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq );
@@ -326,7 +334,11 @@ static void RecPlayer_Init( RECPLAYER_CONTROL* ctrl );
 static void RecPlayer_Setup( RECPLAYER_CONTROL* ctrl, u32 turnCnt );
 static BOOL RecPlayer_CheckBlackOut( const RECPLAYER_CONTROL* ctrl );
 static void RecPlayer_TurnIncReq( RECPLAYER_CONTROL* ctrl );
-static RecCtrlCode RecPlayer_GetCtrlCode( RECPLAYER_CONTROL* ctrl );
+static RecCtrlCode RecPlayer_GetCtrlCode( const RECPLAYER_CONTROL* ctrl );
+static void RecPlayer_ChapterSkipOn( RECPLAYER_CONTROL* ctrl, u32 nextTurnNum );
+static void RecPlayer_ChapterSkipOff( RECPLAYER_CONTROL* ctrl );
+static BOOL RecPlayer_CheckChapterSkipEnd( const RECPLAYER_CONTROL* ctrl );
+static u32 RecPlayer_GetNextTurn( const RECPLAYER_CONTROL* ctrl );
 static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl );
 
 
@@ -355,8 +367,9 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->viewCore = NULL;
   wk->EnemyPokeHPBase = 0;
   wk->cmdQue = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_SERVER_CMD_QUE) );
-
+  wk->mainProc = ClientMain_Normal;
   wk->myState = 0;
+
   wk->commWaitInfoOn = FALSE;
   wk->shooterEnergy = 0;
   wk->cmdLimitTime = 0;
@@ -410,7 +423,6 @@ void BTL_CLIENT_SetRecordPlayType( BTL_CLIENT* wk, const void* recordData, u32 d
   wk->myType = BTL_CLIENT_TYPE_RECPLAY;
   BTL_RECREADER_Init( &wk->btlRecReader, recordData, dataSize );
   turnCnt = BTL_RECREADER_GetTurnCount( &wk->btlRecReader );
-  TAYA_Printf("記録ターン数 = %d\n", turnCnt );
   RecPlayer_Setup( &wk->recPlayer, turnCnt );
 }
 
@@ -444,7 +456,6 @@ BTL_ADAPTER* BTL_CLIENT_GetAdapter( BTL_CLIENT* wk )
   return wk->adapter;
 }
 
-
 //=============================================================================================
 /**
  * クライアントメインループ
@@ -456,8 +467,51 @@ BTL_ADAPTER* BTL_CLIENT_GetAdapter( BTL_CLIENT* wk )
 //=============================================================================================
 BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
 {
+  return wk->mainProc( wk );
+}
+
+//=============================================================================================
+/**
+ * チャプタスキップ
+ *
+ * @param   wk
+ * @param   fChapterSkipMode
+ */
+//=============================================================================================
+void BTL_CLIENT_SetChapterSkip( BTL_CLIENT* wk, u32 nextTurnNum )
+{
+  BTL_RECREADER_Reset( &wk->btlRecReader );
+  RecPlayer_ChapterSkipOn( &wk->recPlayer, nextTurnNum );
+  ChangeMainProc( wk, ClientMain_ChapterSkip );
+}
+
+/**
+ *  メインループ関数を差し替える
+ */
+static void ChangeMainProc( BTL_CLIENT* wk, ClientMainProc proc )
+{
+  wk->mainProc = proc;
+  wk->myState = 0;
+}
+
+/**
+ *  メインループ：通常時
+ */
+static BOOL ClientMain_Normal( BTL_CLIENT* wk )
+{
+  enum {
+    SEQ_READ_ACMD = 0,
+    SEQ_EXEC_CMD,
+    SEQ_RETURN_TO_SV,
+    SEQ_RETURN_TO_SV_QUIT,
+    SEQ_RECPLAY_CTRL,
+    SEQ_QUIT,
+  };
+
+  RecPlayerCtrl_Main( wk, &wk->recPlayer );
+
   switch( wk->myState ){
-  case 0:
+  case SEQ_READ_ACMD:
     {
       BtlAdapterCmd  cmd = BTL_ADAPTER_RecvCmd(wk->adapter);
       if( cmd == BTL_ACMD_QUIT_BTL )
@@ -468,7 +522,7 @@ BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
         BTL_N_Printf( DBGSTR_CLIENT_RecvedQuitCmd, wk->myID );
         setDummyReturnData( wk );
         wk->subSeq = 0;
-        wk->myState = 3;
+        wk->myState = SEQ_RETURN_TO_SV_QUIT;
         break;
       }
       if( cmd != BTL_ACMD_NONE )
@@ -476,42 +530,138 @@ BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
         wk->subProc = getSubProc( wk, cmd );
         if( wk->subProc != NULL ){
           BTL_N_Printf( DBGSTR_CLIENT_StartCmd, wk->myID, cmd );
+          if( cmd == BTL_ACMD_WAIT_SETUP )
+          {
+            TAYA_Printf("SetupWait rp=%d\n", wk->btlRecReader.readPtr );
+          }
+          wk->myState = SEQ_EXEC_CMD;
           wk->subSeq = 0;
-          wk->myState = 1;
         }
         else
         {
           setDummyReturnData( wk );
           wk->subSeq = 0;
-          wk->myState = 2;
+          wk->myState = SEQ_RETURN_TO_SV;
         }
       }
     }
     break;
 
-  case 1:
-    if( wk->subProc(wk, &wk->subSeq) ){
-      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_RETURN_CMD_START, wk->myID );
-      wk->myState++;
+  case SEQ_EXEC_CMD:
+    if( wk->subProc(wk, &wk->subSeq) )
+    {
+      if( RecPlayer_CheckBlackOut(&wk->recPlayer) )
+      {
+        wk->myState = SEQ_RECPLAY_CTRL;
+      }
+      else
+      {
+        BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_RETURN_CMD_START, wk->myID );
+        wk->myState = SEQ_RETURN_TO_SV;
+      }
     }
     break;
 
-  case 2:
+  case SEQ_RETURN_TO_SV:
     if( BTL_ADAPTER_ReturnCmd(wk->adapter, wk->returnDataPtr, wk->returnDataSize) ){
-      wk->myState = 0;
+      wk->myState = SEQ_READ_ACMD;
       BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_RETURN_CMD_DONE, wk->myID );
     }
     break;
 
-  case 3:
+  case SEQ_RETURN_TO_SV_QUIT:
     if( BTL_ADAPTER_ReturnCmd(wk->adapter, wk->returnDataPtr, wk->returnDataSize) ){
-      wk->myState = 4;
+      wk->myState = SEQ_QUIT;
       BTL_N_Printf( DBGSTR_CLIENT_ReplyToQuitCmd, wk->myID );
     }
     break;
 
-  case 4:
+  // 録画再生コントロール：ブラックアウト後
+  // @todo ここ、描画と非描画クライアントでズレが１フレーム分生じる -> Reader は共通１コにするか？
+  case SEQ_RECPLAY_CTRL:
+    if( RecPlayer_GetCtrlCode(&wk->recPlayer) == RECCTRL_QUIT )
+    {
+      wk->myState = SEQ_QUIT;
+    }
+    else
+    {
+      // nextTurn を引数にして全クライアントの BTL_CLIENT_SetChapterSkip がコールバックされる
+      u32 nextTurn = RecPlayer_GetNextTurn( &wk->recPlayer );
+      BTL_MAIN_ResetForRecPlay( wk->mainModule, nextTurn );
+    }
+    break;
+
+
+  case SEQ_QUIT:
     return TRUE;
+  }
+  return FALSE;
+}
+/**
+ *  メインループ：チャプタスキップ時
+ */
+static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
+{
+  enum {
+    SEQ_RECPLAY_READ_ACMD = 0,
+    SEQ_RECPLAY_EXEC_CMD,
+    SEQ_RECPLAY_RETURN_TO_SV,
+
+    SEQ_RECPLAY_QUIT,
+  };
+
+  RecPlayerCtrl_Main( wk, &wk->recPlayer );
+
+  switch( wk->myState ){
+
+  case SEQ_RECPLAY_READ_ACMD:
+    if( RecPlayer_CheckChapterSkipEnd(&wk->recPlayer) )
+    {
+      RecPlayer_ChapterSkipOff( &wk->recPlayer );
+      ChangeMainProc( wk, ClientMain_Normal );
+      // 今読んだコマンドを１回だけ実行しておかないとズレる
+      TAYA_Printf("client(%d), 指定チャプタに到達した..\n", wk->myID);
+      return wk->mainProc( wk );
+    }
+    else
+    {
+      BtlAdapterCmd  cmd = BTL_ADAPTER_RecvCmd(wk->adapter);
+      if( cmd != BTL_ACMD_NONE )
+      {
+        TAYA_Printf("RecPlay acmd=%d\n", cmd);
+        wk->subProc = getSubProc( wk, cmd );
+        if( wk->subProc != NULL ){
+          wk->myState = SEQ_RECPLAY_EXEC_CMD;
+          wk->subSeq = 0;
+        }
+        else
+        {
+          setDummyReturnData( wk );
+          wk->myState = SEQ_RECPLAY_RETURN_TO_SV;
+          wk->subSeq = 0;
+        }
+      }
+    }
+    break;
+
+  case SEQ_RECPLAY_EXEC_CMD:
+    if( wk->subProc(wk, &wk->subSeq) )
+    {
+      wk->myState = SEQ_RECPLAY_RETURN_TO_SV;
+      wk->subSeq = 0;
+    }
+    break;
+
+  case SEQ_RECPLAY_RETURN_TO_SV:
+    if( BTL_ADAPTER_ReturnCmd(wk->adapter, wk->returnDataPtr, wk->returnDataSize) ){
+      wk->myState = SEQ_RECPLAY_READ_ACMD;
+      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_RETURN_CMD_DONE, wk->myID );
+    }
+    break;
+
+  case SEQ_RECPLAY_QUIT:
+    return TRUE;
+
   }
   return FALSE;
 }
@@ -920,6 +1070,7 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
 
   const BTL_ACTION_PARAM* act = BTL_RECREADER_ReadAction( &wk->btlRecReader, wk->myID, &numAction, &fChapter );
   if( fChapter ){
+    TAYA_Printf("チャプター記録->ターン数更新へ\n");
     RecPlayer_TurnIncReq( &wk->recPlayer );
   }
 
@@ -2758,7 +2909,6 @@ static BOOL SubProc_REC_ServerCmd( BTL_CLIENT* wk, int* seq )
 {
   if( wk->viewCore )
   {
-    RecPlayerCtrl_Main( wk, &wk->recPlayer );
     return SubProc_UI_ServerCmd( wk, seq );
   }
   return TRUE;
@@ -5070,9 +5220,12 @@ static void RecPlayer_Init( RECPLAYER_CONTROL* ctrl )
   ctrl->seq = 0;
   ctrl->fTurnIncrement = FALSE;
   ctrl->fFadeOutDone = FALSE;
+  ctrl->fChapterSkip = FALSE;
   ctrl->turnCount = 0;
   ctrl->nextTurnCount = 0;
   ctrl->maxTurnCount = 0;
+  ctrl->skipTurnCount = 0;
+  ctrl->chapterTimer = 0;
 }
 /**
  *  再生準備処理（再生時にのみ呼び出す）
@@ -5099,9 +5252,41 @@ static void RecPlayer_TurnIncReq( RECPLAYER_CONTROL* ctrl )
 /**
  *  状態取得
  */
-static RecCtrlCode RecPlayer_GetCtrlCode( RECPLAYER_CONTROL* ctrl )
+static RecCtrlCode RecPlayer_GetCtrlCode( const RECPLAYER_CONTROL* ctrl )
 {
   return ctrl->ctrlCode;
+}
+/**
+ *  チャプタースキップモードへ切り替え
+ */
+static void RecPlayer_ChapterSkipOn( RECPLAYER_CONTROL* ctrl, u32 nextTurnNum )
+{
+  ctrl->fChapterSkip = TRUE;
+  ctrl->skipTurnCount = 0;
+  ctrl->turnCount = nextTurnNum;
+  ctrl->fFadeOutDone = FALSE;
+}
+/**
+ *
+ */
+static void RecPlayer_ChapterSkipOff( RECPLAYER_CONTROL* ctrl )
+{
+  ctrl->seq = 0;
+  ctrl->fChapterSkip = FALSE;
+}
+/**
+ *
+ */
+static BOOL RecPlayer_CheckChapterSkipEnd( const RECPLAYER_CONTROL* ctrl )
+{
+  return ( ctrl->skipTurnCount == ctrl->turnCount );
+}
+/**
+ *
+ */
+static u32 RecPlayer_GetNextTurn( const RECPLAYER_CONTROL* ctrl )
+{
+  return ctrl->turnCount;
 }
 
 /**
@@ -5109,29 +5294,88 @@ static RecCtrlCode RecPlayer_GetCtrlCode( RECPLAYER_CONTROL* ctrl )
  */
 static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
 {
-  if( ctrl->maxTurnCount )
-  {
+  enum {
+    CHAPTER_CTRL_FRAMES = 45,
+  };
+
+  if( (wk->myType == BTL_CLIENT_TYPE_RECPLAY)
+  &&  (ctrl->maxTurnCount)
+  ){
     enum {
-      SEQ_INIT = 0,
+      SEQ_DEFAULT = 0,
       SEQ_FADEOUT,
       SEQ_STAY,
     };
 
     if( ctrl->fTurnIncrement )
     {
-      if( ctrl->turnCount < ctrl->maxTurnCount ){
-        ++(ctrl->turnCount);
-      }
       ctrl->fTurnIncrement = FALSE;
+
+      if( ctrl->fChapterSkip == FALSE )
+      {
+        if( ctrl->turnCount < ctrl->maxTurnCount ){
+          ++(ctrl->turnCount);
+          TAYA_Printf("--- Increment Turn = %d/%d\n", ctrl->turnCount, ctrl->maxTurnCount);
+        }
+      }
+      else
+      {
+        if( ctrl->skipTurnCount < ctrl->turnCount ){
+          ctrl->skipTurnCount++;
+          TAYA_Printf("--- Chapter Skip Turn = %d/%d\n", ctrl->skipTurnCount, ctrl->turnCount);
+          if( ctrl->skipTurnCount == ctrl->turnCount ){
+            TAYA_Printf("Skip Chapter done ->%d\n", ctrl->skipTurnCount );
+          }
+          return;
+        }
+      }
+    }
+
+    // 最初のチャプタまで何もしない（入場エフェクト待ち）
+    if( ctrl->turnCount == 0 ){
+      return;
+    }
+
+    // ここから先、描画クライアント以外は何もしない
+    if( wk->viewCore == NULL) {
+      return;
     }
 
     switch( ctrl->seq ){
-    case SEQ_INIT:
+    case SEQ_DEFAULT:
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
       {
         ctrl->ctrlCode = RECCTRL_QUIT;
         BTLV_RecPlayFadeOut_Start( wk->viewCore );
         ctrl->seq = SEQ_FADEOUT;
+        break;
+      }
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+      {
+        if( ctrl->turnCount > 1 ){
+          ctrl->turnCount--;
+          TAYA_Printf("*** Ctrl Turn = %d/%d\n", ctrl->turnCount, ctrl->maxTurnCount);
+        }
+        ctrl->chapterTimer = CHAPTER_CTRL_FRAMES;
+        break;
+      }
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+      {
+        if( ctrl->turnCount < ctrl->maxTurnCount ){
+          ctrl->turnCount++;
+          TAYA_Printf("*** Ctrl Turn = %d/%d\n", ctrl->turnCount, ctrl->maxTurnCount);
+        }
+        ctrl->chapterTimer = CHAPTER_CTRL_FRAMES;
+        break;
+      }
+      if( ctrl->chapterTimer )
+      {
+        if( --(ctrl->chapterTimer) == 0 )
+        {
+          ctrl->ctrlCode = RECCTRL_CHAPTER;
+          BTLV_RecPlayFadeOut_Start( wk->viewCore );
+          ctrl->seq = SEQ_FADEOUT;
+        }
         break;
       }
       break;

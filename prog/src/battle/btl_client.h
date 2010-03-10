@@ -87,5 +87,7 @@ extern BtlWeather BTL_CLIENT_GetWeather( const BTL_CLIENT* client );
 extern const void* BTL_CLIENT_GetRecordData( BTL_CLIENT* wk, u32* size );
 extern void BTL_CLIENT_SetRecordPlayType( BTL_CLIENT* wk, const void* recordData, u32 dataSize );
 
+extern void BTL_CLIENT_SetChapterSkip( BTL_CLIENT* wk, u32 nextTurnNum );
+
 
 #endif

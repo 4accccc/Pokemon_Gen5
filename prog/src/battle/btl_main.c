@@ -178,10 +178,10 @@ static u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos );
 static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos, u8* clientID, u8* posIdx );
 static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos );
 static u8 PokeID_to_ClientID( u8 pokeID );
-static void PokeCon_Clear( BTL_POKE_CONTAINER* pokeCon );
 static BOOL PokeCon_IsInitialized( const BTL_POKE_CONTAINER* pokeCon );
 static BOOL PokeCon_CheckForServer( const BTL_POKE_CONTAINER* pokeCon );
 static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModule, BOOL fForServer );
+static void PokeCon_Clear( BTL_POKE_CONTAINER* pokecon );
 static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID );
 static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon );
 static int PokeCon_FindPokemon( const BTL_POKE_CONTAINER* pokecon, u8 clientID, u8 pokeID );
@@ -508,7 +508,6 @@ static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup )
  */
 static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp )
 {
-//  wk->myClientID = sp->commPos;
   wk->myClientID = sp->commPos;;
   wk->myOrgPos = BTL_MAIN_GetClientPokePos( wk, wk->myClientID, 0 );
   {
@@ -919,7 +918,6 @@ static BOOL setup_alone_triple( int* seq, void* work )
     BTL_CLIENT_SetRecordPlayType( wk->client[0], sp->recBuffer, sp->recDataSize );
     BTL_CLIENT_SetRecordPlayType( wk->client[1], sp->recBuffer, sp->recDataSize );
   }
-
 
   // 描画エンジン生成
   wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
@@ -3158,21 +3156,6 @@ BtlResult BTL_MAIN_ChecBattleResult( BTL_MAIN_MODULE* wk )
 // BTL_POKE_CONTAINER
 //=======================================================================================================
 
-static void PokeCon_Clear( BTL_POKE_CONTAINER* pokeCon )
-{
-  int i;
-
-  pokeCon->mainModule = NULL;
-
-  for(i=0; i<NELEMS(pokeCon->party); ++i){
-    BTL_PARTY_Initialize( &pokeCon->party[ i ] );
-  }
-
-  for(i=0; i<NELEMS(pokeCon->pokeParam); ++i){
-    pokeCon->pokeParam[ i ] = NULL;
-  }
-}
-
 static BOOL PokeCon_IsInitialized( const BTL_POKE_CONTAINER* pokeCon )
 {
   return (pokeCon->mainModule != NULL);
@@ -3195,6 +3178,22 @@ static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModu
   }
   for(i=0; i<NELEMS(pokecon->pokeParam); ++i){
     pokecon->pokeParam[i] = NULL;
+  }
+}
+static void PokeCon_Clear( BTL_POKE_CONTAINER* pokecon )
+{
+  int i;
+  for(i=0; i<NELEMS(pokecon->pokeParam); ++i)
+  {
+    if( pokecon->pokeParam[i] != NULL )
+    {
+      BTL_POKEPARAM_Delete( pokecon->pokeParam[i] );
+      pokecon->pokeParam[i] = NULL;
+    }
+  }
+
+  for(i=0; i<NELEMS(pokecon->party); ++i){
+    BTL_PARTY_Initialize( &pokecon->party[i] );
   }
 }
 
@@ -4252,4 +4251,40 @@ static u8 CommClientRelation( u8 myClientID, u8 targetClientID )
     }
   }
 }
+
+//=============================================================================================
+/**
+ * 録画再生リセット（パーティデータ、サーバ初期化など）
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTL_MAIN_ResetForRecPlay( BTL_MAIN_MODULE* wk, u32 nextTurnNum )
+{
+  u32 i;
+
+  BTL_CALC_ResetSys( &wk->randomContext );
+
+  PokeCon_Clear( &wk->pokeconForClient );
+  PokeCon_Clear( &wk->pokeconForServer );
+  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  {
+    if( BTL_MAIN_IsExistClient(wk, i) )
+    {
+      PokeCon_AddParty( &wk->pokeconForServer, wk, i );
+      PokeCon_AddParty( &wk->pokeconForClient, wk, i );
+
+      BTL_CLIENT_SetChapterSkip( wk->client[i], nextTurnNum );
+    }
+  }
+
+  BTLV_Delete( wk->viewCore );
+  wk->viewCore = BTLV_Create( wk, wk->client[wk->setupParam->commPos], &wk->pokeconForClient, HEAPID_BTL_VIEW );
+  BTL_CLIENT_AttachViewCore( wk->client[wk->setupParam->commPos], wk->viewCore );
+
+  // Server 始動
+  BTL_SERVER_Startup( wk->server );
+
+}
+
 

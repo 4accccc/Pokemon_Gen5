@@ -169,6 +169,9 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, const GFL_STD_RandCo
     }
   }
 
+  sv->flowWork = BTL_SVFLOW_InitSystem( sv, sv->mainModule, sv->pokeCon,
+        &sv->queBody, sv->bagMode, sv->heapID );
+
   setMainProc( sv, ServerMain_WaitReady );
 
   return sv;
@@ -241,9 +244,8 @@ void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GF
 //--------------------------------------------------------------------------------------
 void BTL_SERVER_Startup( BTL_SERVER* server )
 {
-  GF_ASSERT(server->flowWork==NULL);
-  server->flowWork = BTL_SVFLOW_InitSystem( server, server->mainModule, server->pokeCon,
-        &server->queBody, server->bagMode, server->heapID );
+  setMainProc( server, ServerMain_WaitReady );
+  ResetAdapterCmd( server );
 }
 //--------------------------------------------------------------------------------------
 /**

@@ -290,7 +290,7 @@ u32 BTL_ADAPTER_GetReturnDataSize( BTL_ADAPTER* wk )
 //--------------------------------------------------------------------------------------
 void BTL_ADAPTER_ResetCmd( BTL_ADAPTER *wk )
 {
-  GF_ASSERT(wk->myState == AS_FREE || wk->myState == AS_DONE);
+//  GF_ASSERT(wk->myState == AS_FREE || wk->myState == AS_DONE);
   wk->myState = AS_FREE;
 
 //

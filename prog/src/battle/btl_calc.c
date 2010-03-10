@@ -33,8 +33,20 @@ static u16* gWazaStoreWork = NULL;
 void BTL_CALC_InitSys( const GFL_STD_RandContext* randContext, HEAPID heapID )
 {
   gRandContext = *randContext;
-  gWazaStoreWork = GFL_HEAP_AllocMemory( heapID, WAZANO_MAX * sizeof(u16) );
+  gWazaStoreWork = GFL_HEAP_AllocClearMemory( heapID, WAZANO_MAX * sizeof(u16) );
 }
+//=============================================================================================
+/**
+ *
+ *
+ * @param   randContext
+ */
+//=============================================================================================
+void BTL_CALC_ResetSys( const GFL_STD_RandContext* randContext )
+{
+  gRandContext = *randContext;
+}
+
 //=============================================================================================
 /**
  * システム終了
@@ -42,7 +54,8 @@ void BTL_CALC_InitSys( const GFL_STD_RandContext* randContext, HEAPID heapID )
 //=============================================================================================
 void BTL_CALC_QuitSys( void )
 {
-  if( gWazaStoreWork ){
+  if( gWazaStoreWork )
+  {
     GFL_HEAP_FreeMemory( gWazaStoreWork );
     gWazaStoreWork = NULL;
   }

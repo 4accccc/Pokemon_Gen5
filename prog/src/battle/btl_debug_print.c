@@ -72,7 +72,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_MAIN_SendAIPartyStart:         return "AIクライアント数=%d, パーティデータ送受信開始\n";
   case DBGSTR_MAIN_SendAIPartyParam:         return "AI Client=%d パーティ送信完了（ポケ数=%d\n";
   case DBGSTR_MAIN_GetFrontPokeData:         return "戦闘位置[%d] のポケモン... ";
-  case DBGSTR_MAIN_GetFrontPokeDataResult:   return "クライアント[%d]の %d 番目のポケを返す\n";
+  case DBGSTR_MAIN_GetFrontPokeDataResult:   return "    クライアント[%d]の %d 番目のポケを返す\n";
 
   case DBGSTR_CLIENT_RETURN_CMD_START:       return "ID[%d], 返信開始へ\n";
   case DBGSTR_CLIENT_RETURN_CMD_DONE:        return "ID[%d], 返信しました\n";

@@ -862,7 +862,7 @@ void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ...
 ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
 {
   enum {
-    PRINT_FLAG = TRUE,
+    PRINT_FLAG = FALSE,
   };
 
   ServerCmd cmd = scque_read2byte( que );
