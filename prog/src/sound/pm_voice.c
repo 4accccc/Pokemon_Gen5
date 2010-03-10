@@ -547,7 +547,7 @@ u32		PMVOICE_LoadOnly
 #endif	
 	// 波形データカスタマイズ(TRUE: コールバック内で生成された)
 	waveLoadFlag = pmvSys.CallBackCustomWave(	pokeNo, pokeFormNo, userParam,
-													&voicePlayer->waveData, 
+													&voicePlayer->waveDataBegin, 
 													&voicePlayer->waveSize, 
 													&voicePlayer->waveRate, 
 													&voicePlayer->speed,
@@ -741,7 +741,7 @@ u16 PMV_DBG_CustomVoicePlay(	void*	wave,				// [in]波形データ
 
 	if(voicePlayer->active == TRUE){ stopWave(voicePlayer); };
 
-	voicePlayer->waveData = wave;
+	voicePlayer->waveDataBegin = wave,		// 波形データアドレス
 	voicePlayer->waveSize = size;
 	voicePlayer->waveRate = rate; 
 	voicePlayer->speed = speed;
