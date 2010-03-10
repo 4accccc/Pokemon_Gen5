@@ -8046,9 +8046,13 @@
 		<language name="JPN" width="256">SYS-85</language>
 		<language name="JPN_KANJI" width="256">SYS-85</language>
 	</row>
-	<row id="msg_seq_se_dmy_251">
-		<language name="JPN" width="256">DMY-251</language>
-		<language name="JPN_KANJI" width="256">DMY-251</language>
+	<row id="msg_seq_se_fld_140">
+		<language name="JPN" width="256">FLD-140</language>
+		<language name="JPN_KANJI" width="256">FLD-140</language>
+	</row>
+	<row id="msg_seq_se_fld_141">
+		<language name="JPN" width="256">FLD-141</language>
+		<language name="JPN_KANJI" width="256">FLD-141</language>
 	</row>
 	<row id="msg_seq_se_dmy_252">
 		<language name="JPN" width="256">DMY-252</language>
