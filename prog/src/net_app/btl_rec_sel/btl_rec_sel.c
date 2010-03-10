@@ -31,6 +31,7 @@
 #include "pokeicon/pokeicon.h"
 #include "ui/ui_easy_clwk.h"
 #include "net/network_define.h"
+#include "app/app_nogear_subscreen.h"
 
 #include "btl_rec_sel_graphic.h"
 #include "net_app/btl_rec_sel.h"
@@ -62,8 +63,6 @@ FS_EXTERN_OVERLAY(ui_common);
 #define BG_FRAME_M_TIME              (GFL_BG_FRAME3_M)        // プライオリティ1
 #define BG_FRAME_M_TEXT              (GFL_BG_FRAME1_M)        // プライオリティ0
 
-#define BG_FRAME_S_BACK              (GFL_BG_FRAME0_S)        // プライオリティ0
-
 // BGパレット
 // 本数
 enum
@@ -86,17 +85,6 @@ enum
   BG_PAL_POS_M_MAX           = BG_PAL_POS_M_YN          + BG_PAL_NUM_M_YN              ,  // 12  // ここから空き
 
   BG_PAL_POS_M_BACK_FONT     = 9,  // BACKのパレットのここをフォントのパレットとして使う
-};
-// 本数
-enum
-{
-  BG_PAL_NUM_S_BACK          = 15,
-};
-// 位置
-enum
-{
-  BG_PAL_POS_S_BACK          = 0                                                      ,  // 0
-  BG_PAL_POS_S_MAX           = BG_PAL_POS_S_BACK        + BG_PAL_NUM_S_BACK           ,  // 1  // ここから空き
 };
 
 // OBJパレット
@@ -178,6 +166,70 @@ enum
   SEQ_WAIT_INIT,
   SEQ_WAIT,
   SEQ_END,
+};
+
+static const u8 battle_mode_str_id_tbl[BATTLE_MODE_MAX] =  // include/savedata/battle_rec.h  BATTLE_MODE
+{
+                       // //コロシアム：シングル
+  msg_record_title01,  // BATTLE_MODE_COLOSSEUM_SINGLE_FREE,
+  msg_record_title01,  // BATTLE_MODE_COLOSSEUM_SINGLE_STANDARD,
+  msg_record_title02,  // BATTLE_MODE_COLOSSEUM_SINGLE_50,
+  msg_record_title03,  // BATTLE_MODE_COLOSSEUM_SINGLE_FREE_SHOOTER,
+  msg_record_title03,  // BATTLE_MODE_COLOSSEUM_SINGLE_STANDARD_SHOOTER,
+  msg_record_title04,  // BATTLE_MODE_COLOSSEUM_SINGLE_50_SHOOTER,
+                       // //コロシアム：ダブル
+  msg_record_title05,  // BATTLE_MODE_COLOSSEUM_DOUBLE_FREE,
+  msg_record_title05,  // BATTLE_MODE_COLOSSEUM_DOUBLE_STANDARD,
+  msg_record_title06,  // BATTLE_MODE_COLOSSEUM_DOUBLE_50,
+  msg_record_title07,  // BATTLE_MODE_COLOSSEUM_DOUBLE_FREE_SHOOTER,
+  msg_record_title07,  // BATTLE_MODE_COLOSSEUM_DOUBLE_STANDARD_SHOOTER,
+  msg_record_title08,  // BATTLE_MODE_COLOSSEUM_DOUBLE_50_SHOOTER,
+                       // //コロシアム：トリプル
+  msg_record_title09,  // BATTLE_MODE_COLOSSEUM_TRIPLE_FREE,
+  msg_record_title09,  // BATTLE_MODE_COLOSSEUM_TRIPLE_STANDARD,
+  msg_record_title10,  // BATTLE_MODE_COLOSSEUM_TRIPLE_50,
+  msg_record_title11,  // BATTLE_MODE_COLOSSEUM_TRIPLE_FREE_SHOOTER,
+  msg_record_title11,  // BATTLE_MODE_COLOSSEUM_TRIPLE_STANDARD_SHOOTER,
+  msg_record_title12,  // BATTLE_MODE_COLOSSEUM_TRIPLE_50_SHOOTER,
+                       // //コロシアム：ローテーション
+  msg_record_title13,  // BATTLE_MODE_COLOSSEUM_ROTATION_FREE,
+  msg_record_title13,  // BATTLE_MODE_COLOSSEUM_ROTATION_STANDARD,
+  msg_record_title14,  // BATTLE_MODE_COLOSSEUM_ROTATION_50,
+  msg_record_title15,  // BATTLE_MODE_COLOSSEUM_ROTATION_FREE_SHOOTER,
+  msg_record_title15,  // BATTLE_MODE_COLOSSEUM_ROTATION_STANDARD_SHOOTER,
+  msg_record_title16,  // BATTLE_MODE_COLOSSEUM_ROTATION_50_SHOOTER,
+                       // //コロシアム：マルチ
+  msg_record_title17,  // BATTLE_MODE_COLOSSEUM_MULTI_FREE,
+  msg_record_title17,  // BATTLE_MODE_COLOSSEUM_MULTI_STANDARD,
+  msg_record_title18,  // BATTLE_MODE_COLOSSEUM_MULTI_50,
+  msg_record_title19,  // BATTLE_MODE_COLOSSEUM_MULTI_FREE_SHOOTER,
+  msg_record_title19,  // BATTLE_MODE_COLOSSEUM_MULTI_STANDARD_SHOOTER,
+  msg_record_title20,  // BATTLE_MODE_COLOSSEUM_MULTI_50_SHOOTER,
+                       // //地下鉄
+  msg_record_title21,  // BATTLE_MODE_SUBWAY_SINGLE,     //WIFI DL含む
+  msg_record_title22,  // BATTLE_MODE_SUBWAY_DOUBLE,
+  msg_record_title23,  // BATTLE_MODE_SUBWAY_MULTI,      //NPC, COMM, WIFI
+                       // //ランダムマッチ：フリー
+  msg_record_title24,  // BATTLE_MODE_RANDOM_FREE_SINGLE,
+  msg_record_title25,  // BATTLE_MODE_RANDOM_FREE_DOUBLE,
+  msg_record_title26,  // BATTLE_MODE_RANDOM_FREE_TRIPLE,
+  msg_record_title27,  // BATTLE_MODE_RANDOM_FREE_ROTATION,
+  msg_record_title28,  // BATTLE_MODE_RANDOM_FREE_SHOOTER,
+                       // //ランダムマッチ：レーティング
+  msg_record_title29,  // BATTLE_MODE_RANDOM_RATING_SINGLE,
+  msg_record_title30,  // BATTLE_MODE_RANDOM_RATING_DOUBLE,
+  msg_record_title31,  // BATTLE_MODE_RANDOM_RATING_TRIPLE,
+  msg_record_title32,  // BATTLE_MODE_RANDOM_RATING_ROTATION,
+  msg_record_title33,  // BATTLE_MODE_RANDOM_RATING_SHOOTER,
+                       // //大会
+  msg_record_title34,  // BATTLE_MODE_COMPETITION_SINGLE,
+  msg_record_title36,  // BATTLE_MODE_COMPETITION_DOUBLE,
+  msg_record_title38,  // BATTLE_MODE_COMPETITION_TRIPLE,
+  msg_record_title40,  // BATTLE_MODE_COMPETITION_ROTATION,
+  msg_record_title35,  // BATTLE_MODE_COMPETITION_SINGLE_SHOOTER,
+  msg_record_title37,  // BATTLE_MODE_COMPETITION_DOUBLE_SHOOTER,
+  msg_record_title39,  // BATTLE_MODE_COMPETITION_TRIPLE_SHOOTER,
+  msg_record_title41,  // BATTLE_MODE_COMPETITION_ROTATION_SHOOTER,
 };
 
 
@@ -271,9 +323,6 @@ typedef struct
 
   // BG Main
   GFL_ARCUTIL_TRANSINFO       bg_m_tinfo;
-  
-  // BG Sub
-  GFL_ARCUTIL_TRANSINFO       bg_s_tinfo;
 }
 BTL_REC_SEL_WORK;
 
@@ -323,8 +372,8 @@ static void Btl_Rec_Sel_FixExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wor
 static void Btl_Rec_Sel_FixMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_FixShowOnPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_FixShowOffPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
-static void Btl_Rec_Sel_FixStartTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec, BOOL b_y_ori );
-static void Btl_Rec_Sel_FixEndTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, BOOL b_y_ori );
+static void Btl_Rec_Sel_FixStartTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec );
+static void Btl_Rec_Sel_FixEndTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec );
 
 // ポケアイコン
@@ -499,14 +548,10 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
     GFL_BG_SetPriority( BG_FRAME_M_TIME              , 1 );
     GFL_BG_SetPriority( BG_FRAME_M_TEXT              , 0 );  // 最前面
 
-    GFL_BG_SetPriority( BG_FRAME_S_BACK              , 0 );  // 最前面
-
     GFL_BG_SetVisible( BG_FRAME_M_BACK               , VISIBLE_ON );
     GFL_BG_SetVisible( BG_FRAME_M_TIME               , VISIBLE_ON );
     GFL_BG_SetVisible( BG_FRAME_M_TEXT               , VISIBLE_ON );
   
-    GFL_BG_SetVisible( BG_FRAME_S_BACK               , VISIBLE_ON );
-
     GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
     GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x0000 );
   }
@@ -520,7 +565,8 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
     Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
         GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
     Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_REC, msg_record_01_01, TRUE );
-    Btl_Rec_Sel_FixStartTime( param, work, 30, work->qa_non );
+    Btl_Rec_Sel_FixStartTime( param, work, 30 );
+    Btl_Rec_Sel_BgMCreateNon( param, work );
     work->fix_pause = TRUE;
   }
   else
@@ -602,7 +648,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
     { 
       if( !GFL_FADE_CheckFade() )
       {
-        work->fix_pause = TRUE;
+        work->fix_pause = FALSE;
         (*seq) = work->fade_next_seq;
       }
     }
@@ -633,6 +679,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       u32 ret = BmpMenu_YesNoSelectMain( work->yn_wk );
       if( ret != BMPMENU_NULL )
       {
+        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         if( ret == 0 )
         {
           LOAD_RESULT result;
@@ -651,7 +698,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
           }
           else
           {
-            Btl_Rec_Sel_FixEndTime( param, work, work->qa_non );
+            Btl_Rec_Sel_FixEndTime( param, work );
             (*seq) = SEQ_SAVE_INIT;
           }
         }
@@ -672,9 +719,10 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       u32 ret = BmpMenu_YesNoSelectMain( work->yn_wk );
       if( ret != BMPMENU_NULL )
       {
+        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         if( ret == 0 )
         {
-          Btl_Rec_Sel_FixEndTime( param, work, work->qa_non );
+          Btl_Rec_Sel_FixEndTime( param, work );
           (*seq) = SEQ_WAIT_INIT;
         } 
         else
@@ -694,23 +742,23 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       u32 ret = BmpMenu_YesNoSelectMain( work->yn_wk );
       if( ret != BMPMENU_NULL )
       {
-        Btl_Rec_Sel_FixEndTime( param, work, work->qa_non );
-      }
-      else
-      {
-        if( work->fix_timeup )
-        {
-          ret = BMPMENU_CANCEL;
-          BmpMenu_YesNoMenuExit( work->yn_wk );
-        }
-      }
-
-      if( ret != BMPMENU_NULL )
-      {
+        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         if( ret == 0 )
+        {
           work->next_seq = SEQ_SAVE_INIT;
+        }
         else
+        {
           work->next_seq = SEQ_WAIT_INIT;
+        }
+        Btl_Rec_Sel_FixEndTime( param, work );
+        Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_PRE_SHOW_OFF,
+           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, INSIDE_FADE_OUT_WAIT );
+      }
+      else if( work->fix_timeup )
+      {
+        BmpMenu_YesNoMenuExit( work->yn_wk );
+        work->next_seq = SEQ_WAIT_INIT;
         Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_PRE_SHOW_OFF,
            GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, INSIDE_FADE_OUT_WAIT );
       }
@@ -734,6 +782,10 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
         work->battle_rec_mode = BATTLE_MODE_COLOSSEUM_SINGLE_FREE;
         //work->battle_rec_mode = BATTLE_MODE_COLOSSEUM_MULTI_FREE;
       }
+
+      Btl_Rec_Sel_BgMClear( param, work );  // 前の背景を消しておく
+      Btl_Rec_Sel_TextClearWinIn( param, work );
+
       Btl_Rec_Sel_DecideFromBattleMode( param, work );
       Btl_Rec_Sel_FixShowOnPre( param, work );
       Btl_Rec_Sel_PiInit( param, work );
@@ -742,17 +794,17 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       else
         Btl_Rec_Sel_BgMCreateVs4( param, work );
 
-
       Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT );
       Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_PRE, msg_record_03_01, FALSE );
-      
-      Btl_Rec_Sel_TextClearWinIn( param, work );
 #else
       // ここで録画データを表示
       LOAD_RESULT result;
       work->battle_rec_savedata = BattleRec_LoadAlloc( sv, work->heap_id, &result, LOADDATA_MYREC );
       // 必ずTRUEが返ってくる 
+
+      Btl_Rec_Sel_BgMClear( param, work );  // 前の背景を消しておく
+      Btl_Rec_Sel_TextClearWinIn( param, work );
 
       if( result == RECLOAD_RESULT_OK )
       {
@@ -795,8 +847,6 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       }
 
       BattleRec_ExitWork( work->battle_rec_savedata );
-      
-      Btl_Rec_Sel_TextClearWinIn( param, work );
 #endif
     }
     break;
@@ -811,6 +861,9 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT );
       
       Btl_Rec_Sel_TextClearWinIn( param, work );
+     
+      // フェードインする前に時間表示も消しておく(タイムアップしたときの0表示が長く残っているので、ここで消しておく必要がある)
+      Btl_Rec_Sel_FixEndTime( param, work );
     }
     break;
   case SEQ_SAVE_INIT:
@@ -1228,7 +1281,7 @@ static void Btl_Rec_Sel_FixMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wor
       if( work->fix_wait_count == 0 )
       {
         // SELECT TIME ??を非表示にする
-        Btl_Rec_Sel_FixEndTime( param, work, work->qa_non );
+        Btl_Rec_Sel_FixEndTime( param, work );
       }
     }
   }
@@ -1357,29 +1410,16 @@ static void Btl_Rec_Sel_FixShowOffPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WOR
   //GFL_HEAP_FreeMemory( work->fix_print_util_pre );
 }
 
-static void Btl_Rec_Sel_FixStartTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec, BOOL b_y_ori )
+static void Btl_Rec_Sel_FixStartTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec )
 {
   work->fix_frame = sec * FPS + (FPS-1);
   work->fix_wait_count = FPS /2;
   work->fix_pause = FALSE;
   work->fix_timeup = FALSE;
 
-  if( b_y_ori )
-  {
-    //GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_X_SET, 0 );
-    GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_Y_SET, 0 );
-   
-    Btl_Rec_Sel_BgMCreateNon( param, work );
-  }
-  else
-  {
-    //GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_X_SET, 0 );
-    GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_Y_SET, -8 );
-  }
-
   Btl_Rec_Sel_FixUpdateTime( param, work, sec );
 }
-static void Btl_Rec_Sel_FixEndTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, BOOL b_y_ori )
+static void Btl_Rec_Sel_FixEndTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
   u8 i;
 
@@ -1392,8 +1432,8 @@ static void Btl_Rec_Sel_FixEndTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* 
     GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
   }
 
-  if( b_y_ori )
-  {
+  if( work->qa_non )  // non背景(SELECT TIMEを表示する枠しかない背景)の場合は、文字を消すのと同時に背景のクリアも行う
+  {                   // non背景でないときはフェードしてから背景クリアをしなければならないので、専用のクリアに任せる
     Btl_Rec_Sel_BgMClear( param, work );
   }
 }
@@ -1625,8 +1665,11 @@ static void DeletePokeicon( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk )
 //=====================================
 static void Btl_Rec_Sel_DecideFromBattleMode( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
+  u8 m = work->battle_rec_mode;
+  if( m >= BATTLE_MODE_MAX ) m = 0;
+
   // テキストID
-  work->battle_mode_str_id = msg_record_title01 + work->battle_rec_mode;
+  work->battle_mode_str_id = battle_mode_str_id_tbl[m];
 
   // ポケアイコンの並べ方
   if( BATTLE_MODE_COLOSSEUM_SINGLE_FREE <= work->battle_rec_mode && work->battle_rec_mode <= BATTLE_MODE_COLOSSEUM_SINGLE_50_SHOOTER )
@@ -1684,6 +1727,8 @@ void Btl_Rec_Sel_BgMCreateNon( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work 
 
   //GFL_BG_LoadScreenReq( BG_FRAME_M_BACK );
   GFL_BG_LoadScreenV_Req( BG_FRAME_M_BACK );
+
+  GFL_BG_SetScrollReq( BG_FRAME_M_TIME, GFL_BG_SCROLL_Y_SET, 0 );
 }
 void Btl_Rec_Sel_BgMCreateVs2( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
@@ -1696,6 +1741,8 @@ void Btl_Rec_Sel_BgMCreateVs2( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work 
                                 work->heap_id );
  
   GFL_BG_LoadScreenV_Req( BG_FRAME_M_BACK );
+ 
+  GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_Y_SET, -8 );
 }
 void Btl_Rec_Sel_BgMCreateVs4( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
@@ -1708,6 +1755,8 @@ void Btl_Rec_Sel_BgMCreateVs4( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work 
                                 work->heap_id );
  
   GFL_BG_LoadScreenV_Req( BG_FRAME_M_BACK );
+  
+  GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_Y_SET, -8 );
 }
 void Btl_Rec_Sel_BgMClear( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
@@ -1719,6 +1768,13 @@ void Btl_Rec_Sel_BgMClear( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 //=====================================
 void Btl_Rec_Sel_BgSInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
+  MYSTATUS*   mystatus    = GAMEDATA_GetMyStatus( param->gamedata );
+  u8          sex         = (u8)MyStatus_GetMySex(mystatus);
+  
+  APP_NOGEAR_SUBSCREEN_Init();
+  APP_NOGEAR_SUBSCREEN_Trans( work->heap_id, sex );
+
+#if 0
   // Cギア入手前の下画面を使う
 
   ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, work->heap_id );
@@ -1739,11 +1795,16 @@ void Btl_Rec_Sel_BgSInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
   GFL_ARC_CloseDataHandle( handle );
 
   GFL_BG_LoadScreenReq( BG_FRAME_S_BACK );
+#endif
 }
 void Btl_Rec_Sel_BgSExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
+  APP_NOGEAR_SUBSCREEN_Exit();
+
+#if 0
   GFL_BG_FreeCharacterArea( BG_FRAME_S_BACK,
                             GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_s_tinfo ),
                             GFL_ARCUTIL_TRANSINFO_GetSize( work->bg_s_tinfo ) );
+#endif
 }
 
