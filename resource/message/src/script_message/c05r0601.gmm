@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T11:17:14"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-03-10T22:10:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1304" top="235" right="2009" bottom="863" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -317,7 +317,7 @@
 ポケモン　嫌がっちゃうみたいなの</language>
 	</row>
 
-	<row id="msg_waitress_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05r0601_waitress_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：ウェートレス
 ・以下の選択肢表示
 　１ほん
@@ -340,7 +340,7 @@
 旅のお供に　いかがですか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_waitress_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05r0601_waitress_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・「１ほん」選択
 　続けてアイテム入手処理</comment>
@@ -350,7 +350,7 @@
 		<language name="JPN_KANJI" width="256">モーモーミルク　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_waitress_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05r0601_waitress_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・「１ほん」or「1ダース」選択、バッグがいっぱい</comment>
 		<attribute name="キャラ指定">WAITRESS
@@ -361,7 +361,7 @@
 バッグが　いっぱいですね！</language>
 	</row>
 
-	<row id="msg_waitress_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05r0601_waitress_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・「１ほん」or「1ダース」、お金がない</comment>
 		<attribute name="キャラ指定">WAITRESS
@@ -372,7 +372,7 @@
 おかねが　たりないですね！</language>
 	</row>
 
-	<row id="msg_waitress_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05r0601_waitress_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・「いらない」選択</comment>
 		<attribute name="キャラ指定">WAITRESS
@@ -387,7 +387,7 @@
 搾りたて　新鮮　なんですよ！</language>
 	</row>
 
-	<row id="msg_waitress_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05r0601_waitress_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・「１ダース」選択
 続けてアイテム入手処理</comment>
@@ -399,7 +399,7 @@
 モーモーミルク　どうぞです！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_waitress_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_waitress_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
 		<comment>♀
 ・waitress_01表示後の選択肢</comment>
 		<attribute name="キャラ指定">WAITRESS
@@ -408,7 +408,7 @@
 		<language name="JPN_KANJI" width="256">１本</language>
 	</row>
 
-	<row id="msg_waitress_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_waitress_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
 		<comment>♀
 ・waitress_01表示後の選択肢</comment>
 		<attribute name="キャラ指定">WAITRESS
@@ -417,7 +417,7 @@
 		<language name="JPN_KANJI" width="256">１ダース</language>
 	</row>
 
-	<row id="msg_waitress_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_waitress_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
 		<comment>♀
 ・waitress_01表示後の選択肢</comment>
 		<attribute name="キャラ指定">WAITRESS
