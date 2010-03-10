@@ -381,7 +381,7 @@ void BSUBWAY_SCRWORK_CommSendPlayerData(
   int i;
   POKEMON_PARAM *pp;
   MYSTATUS *my = GAMEDATA_GetMyStatus( gdata );
-  const POKEPARTY *party = GAMEDATA_GetMyPokemon( gdata );
+  const POKEPARTY *party = BSUBWAY_SCRWORK_GetPokePartyUse( bsw_scr );
   
   bsw_scr->send_buf[0] = MyStatus_GetMySex( my );
   

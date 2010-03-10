@@ -427,7 +427,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   }
   
   { //ÉvÉåÉCÉÑÅ[ê›íË
-    POKEPARTY *myparty = GAMEDATA_GetMyPokemon( gdata );
+    const POKEPARTY *myparty = BSUBWAY_SCRWORK_GetPokePartyUse( wk );
     client = BTL_CLIENT_PLAYER;
     
     //MyStatus

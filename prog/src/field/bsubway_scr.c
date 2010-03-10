@@ -27,6 +27,8 @@
 #include "bsubway_scrwork.h"
 #include "bsubway_tr.h"
 
+#include "savedata/battle_box_save.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -132,6 +134,12 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     
     bsw_scr->member_num = get_MemberNum( bsw_scr->play_mode );
     
+    //バトルボックス使用であれば準備
+    if( (u32)BSUBWAY_PLAYDATA_GetData( bsw_scr->playData,
+          BSWAY_PLAYDATA_ID_use_battle_box,NULL) != FALSE ){
+      BSUBWAY_SCRWORK_PreparBattleBox( bsw_scr );
+    }
+    
     //選ばれているポケモンNo
     BSUBWAY_PLAYDATA_GetData( bsw_scr->playData,
         BSWAY_PLAYDATA_ID_pokeno, bsw_scr->member );
@@ -191,6 +199,11 @@ void BSUBWAY_SCRWORK_ReleaseWork(
 {
   if( bsw_scr != NULL ){
     GF_ASSERT( bsw_scr->magicNo == BSUBWAY_SCRWORK_MAGIC );
+    
+    if( bsw_scr->btl_box_party != NULL ){
+      GFL_HEAP_FreeMemory( bsw_scr->btl_box_party );
+    }
+    
     MI_CpuClear8( bsw_scr, sizeof(BSUBWAY_SCRWORK) );
     GFL_HEAP_FreeMemory( bsw_scr );
   }
@@ -285,7 +298,7 @@ void BSUBWAY_SCRWORK_LoadPokemonMember(
     BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys )
 {
   int i;
-  POKEPARTY *party;
+  const POKEPARTY *party;
   POKEMON_PARAM *pp;
   
   bsw_scr->member_num = get_MemberNum( bsw_scr->play_mode );
@@ -293,10 +306,11 @@ void BSUBWAY_SCRWORK_LoadPokemonMember(
   BSUBWAY_PLAYDATA_GetData( bsw_scr->playData, //選んだポケモンNo
       BSWAY_PLAYDATA_ID_pokeno, bsw_scr->member );
   
-  party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(gsys) );
+  party = BSUBWAY_SCRWORK_GetPokePartyUse( bsw_scr );
   
   for( i = 0; i < bsw_scr->member_num; i++ ){ //選択ポケモン手持ちNo
-    pp = PokeParty_GetMemberPointer( party, bsw_scr->member[i] );
+    pp = PokeParty_GetMemberPointer(
+        (POKEPARTY *)party, bsw_scr->member[i] );
     bsw_scr->mem_poke[i] = PP_Get( pp, ID_PARA_monsno, NULL );  
     bsw_scr->mem_item[i] = PP_Get( pp, ID_PARA_item, NULL );  
   }
@@ -746,19 +760,20 @@ BOOL BSUBWAY_SCRWORK_GetEntryPoke( BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys 
   else
   {
     u16  i = 0;
-    POKEPARTY *party;
+    const POKEPARTY *party;
     POKEMON_PARAM *pp;
 
-    party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(gsys) );
-  
+    party = BSUBWAY_SCRWORK_GetPokePartyUse( bsw_scr );
+    
     for( i = 0; i < bsw_scr->member_num; i++ ){ //ポケモン選択の手持ちNo
       if( (bsw_scr->pokelist_select_num[i]-1) >= 6 ){
         GF_ASSERT( 0 );
         bsw_scr->pokelist_select_num[i] = 1;
       }
-    
+      
       bsw_scr->member[i] = bsw_scr->pokelist_select_num[i] - 1;
-      pp = PokeParty_GetMemberPointer( party, bsw_scr->member[i] );
+      pp = PokeParty_GetMemberPointer(
+          (POKEPARTY*)party, bsw_scr->member[i] );
       bsw_scr->mem_poke[i] = PP_Get( pp, ID_PARA_monsno, NULL );  
       bsw_scr->mem_item[i] = PP_Get( pp, ID_PARA_item, NULL );  
     }
@@ -1045,6 +1060,59 @@ u16 BSUBWAY_SCRWORK_SetWifiRank(
 }
 #endif
 
+//--------------------------------------------------------------
+/**
+ * バトルボックス使用準備
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_PreparBattleBox( BSUBWAY_SCRWORK *bsw_scr )
+{
+  GF_ASSERT( BSUBWAY_PLAYDATA_GetData(
+        bsw_scr->playData,BSWAY_PLAYDATA_ID_use_battle_box, NULL ) );
+
+  if( bsw_scr->btl_box_party != NULL ){
+    GF_ASSERT( 0 );
+  }else{
+    SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( bsw_scr->gdata );
+    BATTLE_BOX_SAVE *bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( save );
+    bsw_scr->btl_box_party =
+      BATTLE_BOX_SAVE_MakePokeParty( bb_save, HEAPID_PROC );
+  }
+  
+  {
+    u16 i;
+    for( i = 0; i < bsw_scr->member_num; i++ ){
+      bsw_scr->pokelist_select_num[i] = i + 1;
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 使用するPOKEPARTY取得
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @retval POKEPARTY*
+ */
+//--------------------------------------------------------------
+const POKEPARTY * BSUBWAY_SCRWORK_GetPokePartyUse(
+    const BSUBWAY_SCRWORK *bsw_scr )
+{
+  const POKEPARTY *party;
+  u32 use_bbox = (u32)BSUBWAY_PLAYDATA_GetData(
+      bsw_scr->playData, BSWAY_PLAYDATA_ID_use_battle_box, NULL );
+  
+  if( use_bbox == FALSE ){
+    party = GAMEDATA_GetMyPokemon( bsw_scr->gdata ); 
+  }else{
+    party = bsw_scr->btl_box_party; //バトルボックス用POKEPARTY
+  }
+  
+  GF_ASSERT( party != NULL );
+  return( party );
+}
+
 //======================================================================
 //  parts
 //======================================================================
@@ -1059,13 +1127,16 @@ static u8 get_MemberNum( u16 mode )
 {
   switch(mode){
   case BSWAY_MODE_SINGLE:
+  case BSWAY_MODE_S_SINGLE:
   case BSWAY_MODE_WIFI:
     return 3;
   case BSWAY_MODE_DOUBLE:
+  case BSWAY_MODE_S_DOUBLE:
     return 4;
   case BSWAY_MODE_MULTI:
+  case BSWAY_MODE_S_MULTI:
   case BSWAY_MODE_COMM_MULTI:
-//  case BSWAY_MODE_WIFI_MULTI:
+  case BSWAY_MODE_S_COMM_MULTI:
     return 2;
   }
   GF_ASSERT( 0 );

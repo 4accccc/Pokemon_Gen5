@@ -55,6 +55,9 @@ extern u16 BSUBWAY_SCRWORK_GetTrainerOBJCode( BSUBWAY_SCRWORK *bsw_scr, u16 idx 
 extern u16 BSUBWAY_SCRWORK_SetWifiRank(
     BSUBWAY_SCOREDATA *score, GAMESYS_WORK *gsys, BSWAY_SETMODE mode );
 extern void BSUBWAY_SCRWORK_ChoiceBtlSeven( BSUBWAY_SCRWORK *wk );
+extern void BSUBWAY_SCRWORK_PreparBattleBox( BSUBWAY_SCRWORK *bsw_scr );
+extern const POKEPARTY * BSUBWAY_SCRWORK_GetPokePartyUse(
+    const BSUBWAY_SCRWORK *bsw_scr );
 
 //bsubway_tr.h
 extern COMM_BTL_DEMO_PARAM * BSUBWAY_SCRWORK_CreateBattleDemoParam(

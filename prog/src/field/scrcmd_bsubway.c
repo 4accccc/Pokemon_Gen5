@@ -89,8 +89,6 @@ static void bsway_SetHomeNPC(
 static u16 bsway_GetHomeNPCMsgID( const MMDL *mmdl );
 
 
-static BOOL bsway_CheckEntryPokeNum(
-    u16 num, GAMESYS_WORK *gsys, BOOL item_flag );
 static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys );
 
 static const FLDEFF_BTRAIN_TYPE data_TrainModeType[BSWAY_MODE_MAX];
@@ -271,15 +269,6 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //プレイデータクリア
   case BSWTOOL_CLEAR_PLAY_DATA:
     BSUBWAY_PLAYDATA_Init( playData );
-    break;
-  //手持ちポケモン数チェック
-  case BSWTOOL_CHK_ENTRY_POKE_NUM:
-    if( param0 == 0 ){
-      GF_ASSERT( bsw_scr != NULL );
-      *ret_wk = bsway_CheckEntryPokeNum( bsw_scr->member_num, gsys, 1 );
-    }else{
-      *ret_wk = bsway_CheckEntryPokeNum( param0, gsys, 1 );
-    }
     break;
   //セーブされているか
   case BSWTOOL_IS_SAVE_DATA_ENABLE:
@@ -909,6 +898,10 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       }
     }
     break;
+  //バトルボックス使用準備
+  case BSWSUB_PREPAR_BTL_BOX:
+    BSUBWAY_SCRWORK_PreparBattleBox( bsw_scr );
+    break;
   //----ワーク依存　通信関連
   //通信開始
   case BSWSUB_COMM_START:
@@ -1226,6 +1219,7 @@ static u16 bsway_GetHomeNPCMsgID( const MMDL *mmdl )
 //======================================================================
 //  parts
 //======================================================================
+#if 0
 //--------------------------------------------------------------
 /**
  * 参加可能なポケモン数のチェック
@@ -1246,6 +1240,7 @@ static BOOL bsway_CheckEntryPokeNum(
   
   return( TRUE );
 }
+#endif
 
 #if 0
 //--------------------------------------------------------------

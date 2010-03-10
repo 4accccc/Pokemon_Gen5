@@ -145,7 +145,7 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
   EVENT_WORK_POKE_LIST *work;
   
   gdata = GAMESYSTEM_GetGameData( gsys );
-  pp = GAMEDATA_GetMyPokemon( gdata );
+  pp = GAMEDATA_GetMyPokemon( gdata ); //バトルボックスの際はここにこない
   fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   
   event = GMEVENT_Create( gsys, NULL,

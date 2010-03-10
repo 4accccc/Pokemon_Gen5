@@ -118,6 +118,8 @@ struct _TAG_BSUBWAY_SCRWORK
   COMM_BTL_DEMO_PARAM comm_btl_demo_param;
   IRC_MATCH_WORK irc_match;
   
+  POKEPARTY *btl_box_party; //バトルボックス用POKEPARTY
+
   //プラチナで追加
 //  int winlose_flag; //(LOCATION_WORKを消して、そこに入れることも可能？)
 // void *p_work; //(LOCATION_WORKを消して、そこに入れることも可能？)
