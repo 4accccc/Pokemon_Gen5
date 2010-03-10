@@ -70,5 +70,43 @@ BOOL SHOOTER_ITEM_IsUse( const SHOOTER_ITEM_BIT_WORK *cp_wk, u32 shooter_item )
 u32  SHOOTER_ITEM_ShooterIndexToItemIndex( u32 shooter_item )
 { 
   GF_ASSERT( shooter_item < SHOOTER_ITEM_MAX );
-  return sc_shooter_item_to_item[ shooter_item ];
+  return sc_shooter_item_to_item[ shooter_item ].name;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  シューターアイテムからコストを取得する
+ *
+ *	@param	u32 shooter_item  シューターアイテムのインデックス
+ *
+ *	@return コスト
+ */
+//-----------------------------------------------------------------------------
+u32  SHOOTER_ITEM_ShooterIndexToCost( u32 shooter_item )
+{ 
+  GF_ASSERT( shooter_item < SHOOTER_ITEM_MAX );
+  return sc_shooter_item_to_item[ shooter_item ].cost;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムからコストを取得する
+ *
+ *	@param	u32 item  アイテム
+ *
+ *	@return コスト
+ */
+//-----------------------------------------------------------------------------
+u32  SHOOTER_ITEM_ItemIndexToCost( u32 item )
+{ 
+  int i;
+  for( i = 0; i < SHOOTER_ITEM_MAX; i++ )
+  { 
+    if( sc_shooter_item_to_item[ i ].name == item )
+    { 
+      return sc_shooter_item_to_item[ i ].cost;
+    }
+  }
+
+  GF_ASSERT_MSG( 0, "登録されていないシューターアイテムです %d", item );
+  return 0;
 }

@@ -194,13 +194,16 @@ begin
   name_buffer   = Array.new( csv_conv.row_length )
   define_buffer  = Array.new( csv_conv.row_length )
   number_buffer  = Array.new( csv_conv.row_length )
+  cost_buffer  = Array.new( csv_conv.row_length )
   for i in 0..csv_conv.row_length-1
-    itemname  = csv_conv.get( i, 0 )
+    itemname  = csv_conv.get( i, 0 )  #アイテムの名前
+    cost  = csv_conv.get( i, 1 )      #コスト
     define , number = item_header.search( itemname )
  
     name_buffer[ i ]    = itemname;
     define_buffer[ i ]  = define;
     number_buffer[ i ]  = number;
+    cost_buffer[ i ]    = cost;
   end
 
   #ヘッダ書き込み
@@ -231,9 +234,12 @@ begin
   cdat_build.write( "\n" )
 
   #内容
-  cdat_build.write( "static const u32 sc_shooter_item_to_item[SHOOTER_ITEM_MAX] = {\n" )
+  cdat_build.write( "static const struct {\n" )
+  cdat_build.write( "u16 name;\n" )
+  cdat_build.write( "u16 cost;\n" )
+  cdat_build.write( "} sc_shooter_item_to_item[SHOOTER_ITEM_MAX] = {\n" )
   for i in 0..csv_conv.row_length-1
-    cdat_build.write( "\t#{number_buffer[i]}, //#{name_buffer[i]}\n" )
+    cdat_build.write( "\t{#{number_buffer[i]}, #{cost_buffer[i]} }, //#{name_buffer[i]}\n" )
   end
   cdat_build.write( "};\n" )
   cdat_build.write( "\n" )

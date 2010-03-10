@@ -55,3 +55,11 @@ extern BOOL SHOOTER_ITEM_IsUse( const SHOOTER_ITEM_BIT_WORK *cp_wk, u32 shooter_
 //    上記インデックスをアイテムに変換します
 //=====================================
 extern u32  SHOOTER_ITEM_ShooterIndexToItemIndex( u32 shooter_item );
+//-------------------------------------
+//  シューターインデックスからシューターのコストを取得
+//=====================================
+extern u32  SHOOTER_ITEM_ShooterIndexToCost( u32 shooter_item );
+//-------------------------------------
+//  アイテムインデックスからシューターのコストを取得
+//=====================================
+extern u32  SHOOTER_ITEM_ItemIndexToCost( u32 item );
