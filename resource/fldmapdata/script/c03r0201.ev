@@ -61,7 +61,7 @@ EVENT_END
 EVENT_START		ev_bg_c03r0201_painting1_01
 	_PLAINWIN_MSG_DOWN( msg_c03r0201_painting1_01)
 	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+	_PLAINWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
@@ -70,7 +70,7 @@ EVENT_END
 EVENT_START		ev_bg_c03r0201_painting2_01
 	_PLAINWIN_MSG_DOWN( msg_c03r0201_painting2_01)
 	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+	_PLAINWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
@@ -79,7 +79,7 @@ EVENT_END
 EVENT_START		ev_bg_c03r0201_painting3_01
 	_PLAINWIN_MSG_DOWN( msg_c03r0201_painting3_01)
 	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+	_PLAINWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
@@ -88,7 +88,7 @@ EVENT_END
 EVENT_START		ev_bg_c03r0201_painting4_01
 	_PLAINWIN_MSG_DOWN( msg_c03r0201_painting4_01)
 	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+	_PLAINWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
@@ -97,7 +97,7 @@ EVENT_END
 EVENT_START		ev_bg_c03r0201_painting5_01
 	_PLAINWIN_MSG_DOWN( msg_c03r0201_painting5_01)
 	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+	_PLAINWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
@@ -106,7 +106,7 @@ EVENT_END
 EVENT_START		ev_bg_c03r0201_painting6_01
 	_PLAINWIN_MSG_DOWN( msg_c03r0201_painting6_01)
 	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+	_PLAINWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/

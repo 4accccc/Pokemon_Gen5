@@ -42,6 +42,14 @@ EVENT_START   ev_r01_poke_getdemo_01
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 	
+	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget_rival_look_player )
+	_OBJ_ANIME( R01_SUPPORT_01,anm_R01_pokeget_rival_look_player )
+	_OBJ_ANIME_WAIT()
+	
+	//サポート：おうい！（プレイヤー名）こっちよ！
+	_PLAINWIN_MSG_DOWN( msg_r01_white_00)
+	_PLAINWIN_CLOSE()
+	
 //POSイベント、POSごとに主人公移動アニメ
   { //ここからローカル変数の参照制限範囲開始
     DEFINE_LOCAL  POSX   /* ローカル変数定義 */
@@ -50,11 +58,9 @@ EVENT_START   ev_r01_poke_getdemo_01
     _PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
     SWITCH $POSX
     CASE 786 THEN
-        _OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget_rival_look_player )
         _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x786 )
         _OBJ_ANIME_WAIT()
     CASE 787 THEN
-        _OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget_rival_look_player )
         _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x787 )
         _OBJ_ANIME_WAIT()
     CASE 788 THEN  //目の前に立ったケース
@@ -62,20 +68,16 @@ EVENT_START   ev_r01_poke_getdemo_01
         _OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget_rival_look_player )
         _OBJ_ANIME_WAIT()
     CASE 789 THEN
-        _OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget_rival_look_player )
         _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x789 )
         _OBJ_ANIME_WAIT()
     CASE 790 THEN
-        _OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget_rival_look_player )
         _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x790 )
         _OBJ_ANIME_WAIT()
     CASE 791 THEN
-        _OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget_rival_look_player )
         _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_x791 )
         _OBJ_ANIME_WAIT()
     DEFAULT  //目の前に立ったケースと同じ処理を行う
         //なし
-        _OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget_rival_look_player )
         _OBJ_ANIME_WAIT()
     ENDSWITCH
   } //ローカル変数の参照制限範囲、ここまで。
@@ -86,6 +88,7 @@ EVENT_START   ev_r01_poke_getdemo_01
 
 //ライバル、アニメ＋メッセージ
 	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget_rival_look_hakase )
+	_OBJ_ANIME( R01_SUPPORT_01,anm_R01_pokeget_support_look_hakase )
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_POS( msg_r01_black_01,R01_RIVAL_01 , POS_DL )
 	_BALLOONWIN_CLOSE()
@@ -156,40 +159,40 @@ EVENT_START   ev_r01_poke_getdemo_01
 //ライバル、アニメ＋メッセージ
 	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget3 )
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG( msg_r01_black_02,R01_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r01_black_02,R01_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 
 	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget4 )
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG( msg_r01_black_03,R01_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r01_black_03,R01_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 
 //サポート、アニメ＋メッセージ
-	_BALLOONWIN_OBJMSG( msg_r01_white_01,R01_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r01_white_01,R01_SUPPORT_01 , POS_UR )
 	_BALLOONWIN_CLOSE()
 
 	_OBJ_ANIME( R01_SUPPORT_01,anm_R01_pokeget5 )
 	_OBJ_ANIME_WAIT()
 
-	_BALLOONWIN_OBJMSG( msg_r01_white_02,R01_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r01_white_02,R01_SUPPORT_01 , POS_UR )
 	_BALLOONWIN_CLOSE()
 
 //ライバル
-	_BALLOONWIN_OBJMSG( msg_r01_black_04,R01_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r01_black_04,R01_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 
 //サポート
-	_BALLOONWIN_OBJMSG( msg_r01_white_03,R01_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r01_white_03,R01_SUPPORT_01 , POS_UR )
 	_BALLOONWIN_CLOSE()
 
 //ライバル
 	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget4_2 )
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG( msg_r01_black_05,R01_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r01_black_05,R01_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 
 //サポート
-	_BALLOONWIN_OBJMSG( msg_r01_white_04,R01_SUPPORT_01 ) //本来であればポケモン名
+	_BALLOONWIN_OBJMSG_POS( msg_r01_white_04,R01_SUPPORT_01 , POS_UR )
 	_BALLOONWIN_CLOSE()
 
 //ライバル、サポート退場アニメ
@@ -266,7 +269,7 @@ EVENT_END
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R01　捕獲デモ用：ライバルが主人公を見る  
+//	R01　捕獲デモ用：ライバルとサポートが主人公を見る  
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_R01_pokeget_rival_look_player
 	_ANIME_DATA	AC_STAY_WALK_D_8F,0
@@ -278,6 +281,14 @@ _ANIME_LABEL	anm_R01_pokeget_rival_look_player
 _ANIME_LABEL	anm_R01_pokeget_rival_look_hakase
 	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　捕獲デモ用：ライバルが博士を見る  
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_R01_pokeget_support_look_hakase
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------
 //	R01　捕獲デモ用：ライバル・サポート・主人公、上に1歩歩いてついていく
@@ -405,6 +416,9 @@ EVENT_END
 /**************************************************************/
 
 EVENT_START   ev_r01_rivel_02
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
 	//カウント勝負によって返答を分岐
 	IF $WK_SCENE_R01 == 1 THEN
 	//カウント前
