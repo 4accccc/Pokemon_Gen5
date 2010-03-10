@@ -716,3 +716,44 @@ static void reverseBuf( u8* buf, u32 size )
 }
 
 
+//============================================================================================
+/**
+ *
+ *
+ * @brief	波形再生デバッグ用
+ *
+ *
+ */
+void PMV_DBG_CustomVoicePlay(	void*, u32, int, int, s8 );
+//============================================================================================
+void PMV_DBG_CustomVoicePlay(	void*	wave,				// [in]波形データ
+															u32		size,				// [in]波形サイズ(MAX 26000)
+															int		rate,				// [in]波形再生レート
+															int		speed,			// [in]波形再生スピード
+															s8		volume)			// [in]再生ボリューム
+{
+	PMVOICE_PLAYER* voicePlayer;
+	u16		voicePlayerIdx;
+
+	// 再生プレーヤー取得
+	voicePlayerIdx = getPlayerIdx();
+	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
+
+	if(voicePlayer->active == TRUE){ stopWave(voicePlayer); };
+
+	voicePlayer->waveData = wave;
+	voicePlayer->waveSize = size;
+	voicePlayer->waveRate = rate; 
+	voicePlayer->speed = speed;
+	voicePlayer->volume = volume;
+
+	// 各種設定
+	voicePlayer->pan = 64;
+	voicePlayer->subWaveUse = FALSE;
+	voicePlayer->volumeSubDiff = 0;
+	voicePlayer->speedSubDiff = 0;
+
+	playWave(voicePlayer);
+}
+
+
