@@ -121,3 +121,31 @@ VMCMD_RESULT EvCmdAvailableWireless( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------------
+/**
+ * @brief 常時通信時のビーコンサーチを再開する
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdRebootBeaconSearch( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK * work = wk;
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
+
+  if ( GAMESYSTEM_GetAlwaysNetFlag( gsys ) == TRUE )
+  {
+    if ( GameCommSys_BootCheck( gcsp ) == GAME_COMM_NO_NULL )
+    {
+      GameCommSys_Boot( gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH, gsys );
+    }
+    else
+    {
+      OS_TPrintf("!!!起動不可の状態でビーコンサーチを起動しようとした!!!\n");
+    }
+  }
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
+
+

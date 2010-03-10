@@ -13,3 +13,4 @@
 
 extern VMCMD_RESULT EvCmdFieldCommExitWait( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdAvailableWireless( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdRebootBeaconSearch( VMHANDLE * core, void * wk );
