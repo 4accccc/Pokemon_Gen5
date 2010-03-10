@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/05 17:00:01
+#save date:2010/03/09 22:57:01
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r02.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r02.wms
 #hold event type:
 1
 #hold event number:
-14
+13
 #event number: 0
 #type
 1
@@ -107,37 +107,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-R02_MAMA_01
-#OBJ CODE Number
-MAMA
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_R02_MOTHER
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-168 0 -392
-#event number: 4
-#type
-1
-#ID name
 TR_TANPAN_01
 #OBJ CODE Number
 BOY2
@@ -165,7 +134,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 40 0 -152
-#event number: 5
+#event number: 4
 #type
 1
 #ID name
@@ -196,7 +165,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 360 0 -152
-#event number: 6
+#event number: 5
 #type
 1
 #ID name
@@ -226,8 +195,8 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-536 0 72
-#event number: 7
+520 0 56
+#event number: 6
 #type
 1
 #ID name
@@ -258,7 +227,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 200 0 -40
-#event number: 8
+#event number: 7
 #type
 1
 #ID name
@@ -289,7 +258,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 680 32 -136
-#event number: 9
+#event number: 8
 #type
 1
 #ID name
@@ -320,7 +289,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -72 0 -504
-#event number: 10
+#event number: 9
 #type
 1
 #ID name
@@ -351,7 +320,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 728 32 -152
-#event number: 11
+#event number: 10
 #type
 1
 #ID name
@@ -382,7 +351,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 56 0 -296
-#event number: 12
+#event number: 11
 #type
 1
 #ID name
@@ -413,7 +382,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 344 0 88
-#event number: 13
+#event number: 12
 #type
 1
 #ID name
@@ -502,7 +471,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Pos Event Label
 POS_R02_MAMA_01
@@ -520,6 +489,23 @@ EVENTDATA_POSTYPE_GRID
 40 0 -376
 #size
 1 4
+#event number: 1
+#Pos Event Label
+POS_R02_SUPPORT_01
+#Pos Script Name
+SCRID_POS_R02_SUPPORT_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_R02
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+520 0 168
+#size
+6 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
