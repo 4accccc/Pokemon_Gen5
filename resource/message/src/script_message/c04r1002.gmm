@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T22:51:59"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T12:16:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="214"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1388" top="194" right="2093" bottom="814" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,18 +292,78 @@
 	</lock>
 
 
-	<row id="msg_c04r1001_trainerm_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r1001_trainerm_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手処理
+　No080「たいようのいし」</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">ライモンの　かがやきを　たとえるなら
+まさに　たいよう！　そう　たいよう！▼
+そういうことなんでね
+きみに　これを　プレゼントだ！▼</language>
+		<language name="JPN_KANJI" width="256">ライモンの　輝きを　たとえるなら
+まさに　太陽！　そう　太陽！▼
+そういうことなんでね
+きみに　これを　プレゼントだ！▼</language>
+	</row>
+
+	<row id="msg_c04r1001_trainerm_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・WHITEver
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">たいようのいしは　きまった
+ポケモンを　しんかさせる　いし！▼
+ボクは　チュリネに
+プレゼントして　あげたんだ！</language>
+		<language name="JPN_KANJI" width="256">たいようのいしは　決まった
+ポケモンを　進化させる　石！▼
+ボクは　チュリネに
+プレゼントして　あげたんだ！</language>
+	</row>
+
+	<row id="msg_c04r1001_trainerm_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・BLACKver
+・アイテム入手後
+※モンメンとチュリネ、逆かも</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">たいようのいしは　きまった
+ポケモンを　しんかさせる　いし！▼
+ボクは　チュリネに
+プレゼントして　あげたんだ！</language>
+		<language name="JPN_KANJI" width="256">たいようのいしは　決まった
+ポケモンを　進化させる　石！▼
+ボクは　モンメンに
+プレゼントして　あげたんだ！</language>
+	</row>
+
+	<row id="msg_c04r1001_woman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">WOMAN1</attribute>
+		<language name="JPN" width="256">だいすきな　ポケモンなら
+すがたかたちが　かわったとしても▽
+こころは　つうじあった　ままよね</language>
+		<language name="JPN_KANJI" width="256">大好きな　ポケモンなら
+姿かたちが　変わったとしても▽
+心は　通じ合った　ままよね</language>
+	</row>
+
+	<row id="msg_c04r1001_oldman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
-		<attribute name="キャラ指定">TRAINERM</attribute>
-		<language name="JPN" width="256">はてさて
-じてんしゃで　さばくを　こえる……[BE:01:ページ切り替え（クリア）]
-そんな　チャレンジを　こころみる
-オレの　ともだちは　きっと　すごいな</language>
-		<language name="JPN_KANJI" width="256">はてさて
-じてんしゃで　砂漠を　越える……[BE:01:ページ切り替え（クリア）]
-そんな　チャレンジを　試みる
-オレの　友達は　きっと　すごいな</language>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256">ポケモンは　しんか　させると
+みためが　おおきく　かわり▽
+きほんてきに　ちからづよく　なる▼
+しんかさせないと　そのぶん
+わざを　はやく　おぼえたりするぞ！</language>
+		<language name="JPN_KANJI" width="256">ポケモンは　進化させると
+見た目が　大きく　変わり▽
+基本的に　力強くなる▼
+進化させないときは　そのぶん
+わざを　早く　覚えたりするぞ！</language>
 	</row>
 
 	<flowchart-group-list>
