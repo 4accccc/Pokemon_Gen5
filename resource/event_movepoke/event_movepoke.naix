@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: event_movepoke.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_EVENT_MOVEPOKE_NAIX_
+#define NARC_EVENT_MOVEPOKE_NAIX_
+
+enum {
+	NARC_event_movepoke_rai_kaza_01_bin = 0,
+	NARC_event_movepoke_rai_kaza_02_bin = 1
+};
+
+/* NARC_EVENT_MOVEPOKE_NAIX_ */
+#endif

@@ -342,3 +342,19 @@
 #define SCR_STARTMENU_FLAG_MACHINE   (3)    ///<「転送マシンをつかう」
 
 
+//--------------------------------------------------------------
+//  移動ポケモン
+//  src/field/event_movepoke.hの定義と一致している必要がある。
+//--------------------------------------------------------------
+#define SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_INSIDE (0)
+#define SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_OUTSIDE (1)
+#define SCR_EV_MOVEPOKE_ANIME_TUCHI_INSIDE  (2)
+#define SCR_EV_MOVEPOKE_ANIME_TUCHI_OUTSIDE (3)
+
+
+//--------------------------------------------------------------
+//  サブスクリーン操作
+//--------------------------------------------------------------
+#define SCR_EV_SUBSCREEN_MODE_SAVE  (0) // セーブ画面にする
+#define SCR_EV_SUBSCREEN_MODE_MAX  (1)
+

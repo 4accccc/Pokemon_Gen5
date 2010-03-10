@@ -187,6 +187,9 @@ sub_report_event_call:
   //   この後に表示するシステムウィンドウも一緒に閉じられてしまう.
   //_TIME_WAIT(5)
 
+  // サブ画面を変更
+  _CHNAGE_SUBSCREEN( SCR_EV_SUBSCREEN_MODE_SAVE )
+
   //「かいても いいですか？」
   _SYSWIN_MSG( msg_common_report_01 , POS_DOWN )
   _YES_NO_WIN( temp_work )
@@ -249,6 +252,10 @@ sub_report_event_call:
   IF $do_save_flag != TRUE THEN
     $SCWK_PARAM0 = SCR_REPORT_CANCEL  // 結果を返す
   ENDIF
+
+
+  // サブ画面を元に戻す
+  _BACK_SUBSCREEN_NORMAL()
 
   _RET
 }

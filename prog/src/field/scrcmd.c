@@ -83,6 +83,8 @@
 #include "scrcmd_trial_house.h"
 #include "scrcmd_pdw.h"
 #include "scrcmd_password.h"
+#include "scrcmd_movepoke.h"
+#include "scrcmd_subscreen.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
@@ -137,6 +139,7 @@ static const SCR_END_CHECK_FUNC CheckEndFuncTbl[] = {
   SCREND_CheckEndSubWin,
   SCREND_CheckEndSpWin,
   SCREND_CheckEndFaceup,
+  SCREND_CheckEndSubScreenChange,
   /*ここにスクリプト終了時の終了関数を追加してください*/
   NULL,   //テーブル終了検出用
 };
@@ -1387,13 +1390,29 @@ static BOOL EvWaitSave(VMHANDLE * core, void *wk )
   if( ret == TRUE )
   {
     SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+    GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+    FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
     FIELD_SAVEANIME* saveanime = SCRIPT_GetSaveAnimeWork( sc );
+    FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork( fieldmap );
 
     GF_ASSERT( saveanime );
 
     FIELD_SAVEANIME_End( saveanime );
     FIELD_SAVEANIME_Delete( saveanime );
     SCRIPT_SetSaveAnimeWork( sc, NULL );
+
+
+    // もし下画面がレポートであれば、セーブ終了処理
+    if( FIELD_SUBSCREEN_GetMode( subscreen ) == FIELD_SUBSCREEN_REPORT ){
+      if( result == SAVE_RESULT_OK ){
+        // 下画面の表示が終わるまで待つ。
+        if( FIELD_SUBSCREEN_SetReportEnd( subscreen ) == FALSE ){
+          ret = FALSE;
+        }
+      }else{
+        FIELD_SUBSCREEN_SetReportBreak( subscreen );
+      }
+    }
   }
   
   return ret;
@@ -1416,6 +1435,7 @@ static VMCMD_RESULT EvCmdReportCall( VMHANDLE * core, void *wk )
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   HEAPID heapID = FIELDMAP_GetHeapID( fieldmap );
   FIELD_SAVEANIME *saveanime;
+  FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork( fieldmap );
 
 #ifdef  PM_DEBUG
   if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableReport) ) {
@@ -1427,6 +1447,13 @@ static VMCMD_RESULT EvCmdReportCall( VMHANDLE * core, void *wk )
 
   saveanime = FIELD_SAVEANIME_Create( heapID, fieldmap );
   FIELD_SAVEANIME_Start( saveanime );
+
+  // もし下画面がレポートであれば、セーブ演出開始
+  if( FIELD_SUBSCREEN_GetMode( subscreen ) == FIELD_SUBSCREEN_REPORT ){
+    FIELD_SUBSCREEN_SetReportSize( subscreen );
+    FIELD_SUBSCREEN_SetReportStart( subscreen );
+  }
+  
   // 保存
   SCRIPT_SetSaveAnimeWork( sc, saveanime );
   

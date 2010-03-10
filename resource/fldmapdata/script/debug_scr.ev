@@ -826,6 +826,16 @@ EVENT_END
 /*                                                            */
 /**************************************************************/
 EVENT_START   ev_debug_tomoya
+
+  _EV_MOVEPOKE_CREATE( POKE22 )
+
+  _EV_MOVEPOKE_START_ANIME( 0 )
+
+  _EV_MOVEPOKE_CHECK_ANIME_END()
+
+  _EV_MOVEPOKE_DELETE()
+
+
 EVENT_END
 
 /**************************************************************/

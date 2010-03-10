@@ -613,10 +613,11 @@
   DEF_CMD( EvCmdBSubwayWorkRelease, EV_SEQ_BSUBWAY_WORK_RELEASE )
   DEF_CMD( EvCmdBSubwayTool, EV_SEQ_BSUBWAY_TOOL )
   
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  // 移動ポケモンイベント
+  DEF_CMD( EvCmdMovePoke_Create, EV_SEQ_EV_MOVEPOKE_CREATE )
+  DEF_CMD( EvCmdMovePoke_Delete, EV_SEQ_EV_MOVEPOKE_DELETE )
+  DEF_CMD( EvCmdMovePoke_StartAnime, EV_SEQ_EV_MOVEPOKE_START_ANIME )
+  DEF_CMD( EvCmdMovePoke_IsEnd, EV_SEQ_EV_MOVEPOKE_CHECK_ANIME_END )
  
   //Wi-Fiクラブ/Wi-Fi受付関連
   DEF_CMD( EvCmdWifiCheckMyGSID ,EV_SEQ_WIFI_CHECK_MY_GSID )
@@ -682,8 +683,8 @@
 
   //CGear関連
   DEF_CMD( EvCmdCallCGearGetDemo, EV_SEQ_CALL_CGEAR_GET_DEMO )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdSubScreenChnage, EV_SEQ_CHANGE_SUBSCREEN )
+  DEF_CMD( EvCmdSubScreenBack, EV_SEQ_BACK_SUBSCREEN_NORMAL )
   NO_CMD()
 
   //フィールドカットイン関連

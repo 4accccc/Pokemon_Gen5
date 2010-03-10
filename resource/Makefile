@@ -154,7 +154,8 @@ SUBDIRS	=	wmi \
             report \
             time_icon \
             trialhouse_gra \
-            shoujou
+            shoujou \
+						event_movepoke
 
 include $(RESOURCE_MACRO)
 

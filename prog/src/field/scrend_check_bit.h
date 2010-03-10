@@ -30,6 +30,7 @@ typedef enum
   SCREND_CHK_SUBWIN_OPEN,
   SCREND_CHK_SPWIN_OPEN,
   SCREND_CHK_FACEUP,
+  SCREND_CHK_SUBSCREEN_CHANGE,
   /*‚±‚±‚É’è‹`‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢*/
   SCREND_CHK_MAX
 }SCREND_CHK;

@@ -4601,6 +4601,40 @@
     .short  \mode
     .endm
 
+
+//--------------------------------------------------------------
+/**
+ * @def _CHNAGE_SUBSCREEN
+ * @brief サブスクリーンを変更
+ * @param mode  サブスクリーンのモード
+ * mode 
+ *  SCR_EV_SUBSCREEN_MODE_SAVE    セーブ画面にする
+ */
+//--------------------------------------------------------------
+#define _CHNAGE_SUBSCREEN( mode ) \
+    _ASM_CHNAGE_SUBSCREEN mode
+
+    .macro  _ASM_CHNAGE_SUBSCREEN mode
+    .short  EV_SEQ_CHANGE_SUBSCREEN
+    .short  \mode
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _BACK_SUBSCREEN_NORMAL
+ * @brief サブスクリーンを通常状態に戻す
+ */
+//--------------------------------------------------------------
+#define _BACK_SUBSCREEN_NORMAL() \
+    _ASM_BACK_SUBSCREEN_NORMAL
+
+    .macro  _ASM_BACK_SUBSCREEN_NORMAL
+    .short  EV_SEQ_BACK_SUBSCREEN_NORMAL
+    .endm
+
+
+
+
 //======================================================================
 //
 //
@@ -7786,6 +7820,70 @@
   .short \ret_wk
   .endm
 
+
+//======================================================================
+//
+//  移動ポケモン　イベント
+//
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @def _EV_MOVEPOKE_CREATE
+ * @brief 移動ポケモン  管理ワーク　生成
+ * @param objcode 見た目
+ */
+//--------------------------------------------------------------
+#define _EV_MOVEPOKE_CREATE( objcode ) \
+    _ASM_EV_MOVEPOKE_CREATE objcode
+
+  .macro  _ASM_EV_MOVEPOKE_CREATE objcode
+  .short  EV_SEQ_EV_MOVEPOKE_CREATE
+  .short \objcode
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ * @def _EV_MOVEPOKE_DELETE
+ * @brief 移動ポケモン  管理ワーク　生成
+ * @param objcode 見た目
+ */
+//--------------------------------------------------------------
+#define _EV_MOVEPOKE_DELETE() \
+    _ASM_EV_MOVEPOKE_DELETE
+
+  .macro  _ASM_EV_MOVEPOKE_DELETE
+  .short  EV_SEQ_EV_MOVEPOKE_DELETE
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _EV_MOVEPOKE_START_ANIME
+ * @brief 移動ポケモン  管理ワーク　アニメーション開始
+ * @param anime_index アニメーションナンバー
+ */
+//--------------------------------------------------------------
+#define _EV_MOVEPOKE_START_ANIME( anime_index ) \
+    _ASM_EV_MOVEPOKE_START_ANIME anime_index
+
+  .macro  _ASM_EV_MOVEPOKE_START_ANIME anime_index
+  .short  EV_SEQ_EV_MOVEPOKE_START_ANIME
+  .short  \anime_index
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _EV_MOVEPOKE_CHECK_ANIME_END
+ * @brief 移動ポケモン  管理ワーク　アニメーション終了待ち
+ */
+//--------------------------------------------------------------
+#define _EV_MOVEPOKE_CHECK_ANIME_END() \
+    _ASM_EV_MOVEPOKE_CHECK_ANIME_END
+
+  .macro  _ASM_EV_MOVEPOKE_CHECK_ANIME_END
+  .short  EV_SEQ_EV_MOVEPOKE_CHECK_ANIME_END
+  .endm
+
  
 //======================================================================
 //
@@ -8189,6 +8287,7 @@
 /**
  * @brief 天気変更
  * @param weather_id  WEATHER_NO_RAIKAMI：ライカミ  WEATHER_NO_KAZAKAMI：カザカミ 
+ * prog/include/field/weather_no.h　参照
  */
 //--------------------------------------------------------------
 #define _WEATHER_CHANGE( weather_id ) \

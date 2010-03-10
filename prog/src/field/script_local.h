@@ -19,6 +19,7 @@
 #include "scrcmd_work.h"      //for SCRCMD_WORK
 
 #include "field_saveanime.h"      //for FIELD_SAVEANIME
+#include "event_movepoke.h"      //for EV_MOVEPOKE_WORK
 
 //--------------------------------------------------------------
 ///	SCRIPT_FLDPARAM スクリプト制御ワーク　フィールドパラメータ
@@ -222,3 +223,11 @@ extern u16 SCRIPT_GetStartScriptID( const SCRIPT_WORK * sc );
 //-----------------------------------------------------------------------------
 extern void SCRIPT_SetSaveAnimeWork( SCRIPT_WORK * sc, FIELD_SAVEANIME * wk );
 extern FIELD_SAVEANIME * SCRIPT_GetSaveAnimeWork( SCRIPT_WORK * sc ); 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動ポケモンアニメーションワークの管理
+ */
+//-----------------------------------------------------------------------------
+extern void SCRIPT_SetMovePokeWork( SCRIPT_WORK * sc, EV_MOVEPOKE_WORK * wk );
+extern EV_MOVEPOKE_WORK * SCRIPT_GetMovePokeWork( SCRIPT_WORK * sc ); 

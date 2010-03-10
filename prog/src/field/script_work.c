@@ -111,6 +111,9 @@ struct _TAG_SCRIPT_WORK
 	u16 scrTempWork[TEMP_WORK_SIZE];		//ワーク(ANSWORK,TMPWORKなどの代わり)
 
   FIELD_SAVEANIME* bg_saveanime;
+  
+  EV_MOVEPOKE_WORK* movepoke;
+
 };
 
 //============================================================================================
@@ -697,6 +700,32 @@ void SCRIPT_SetSaveAnimeWork( SCRIPT_WORK * sc, FIELD_SAVEANIME * wk )
 FIELD_SAVEANIME * SCRIPT_GetSaveAnimeWork( SCRIPT_WORK * sc )
 {
   return sc->bg_saveanime;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動ポケモンアニメーションワークの管理
+ */
+//-----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動ポケモンアニメーションワークの設定
+ */
+//-----------------------------------------------------------------------------
+void SCRIPT_SetMovePokeWork( SCRIPT_WORK * sc, EV_MOVEPOKE_WORK * wk )
+{
+  sc->movepoke = wk;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動ポケモンアニメーションワークの取得
+ */
+//-----------------------------------------------------------------------------
+EV_MOVEPOKE_WORK * SCRIPT_GetMovePokeWork( SCRIPT_WORK * sc )
+{
+  return sc->movepoke;
 }
 
 
