@@ -14,6 +14,19 @@ static u8 * EVENTWORK_GetEventFlagAdrs( EVENTWORK * ev, u16 flag_no );
 //======================================================================
 //	定義
 //======================================================================
+enum {
+  //  全セーブフラグ占有ワークサイズ
+  EVENT_FLAG_AREA_MAX =  ( MATH_ROUNDUP(FLAGS_TOTAL_MAX, 8) / 8),
+
+  //  全フラグエリア占有フラグサイズ
+  EVENT_WORK_AREA_MAX = WK_AREA_END - WORKS_TOTAL_MIN,
+
+};
+
+SDK_COMPILER_ASSERT( EVENT_WORK_AREA_MAX < 320 );
+SDK_COMPILER_ASSERT( FLAGS_TOTAL_MAX % 8 == 0 );
+SDK_COMPILER_ASSERT( EVENT_FLAG_AREA_MAX <= 364 );
+
 //------------------------------------------------------------------
 /**
  * @brief	イベントワーク構造体の定義
