@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-02T12:08:32"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T22:22:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -415,7 +415,7 @@
 	<row id="msg_c06gym0101_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手前
-・No???「おいしいみず」入手</comment>
+・No030「おいしいみず」入手</comment>
 		<attribute name="キャラ指定">GLASSES
 サングラス</attribute>
 		<language name="JPN" width="256">この　おいしいみず

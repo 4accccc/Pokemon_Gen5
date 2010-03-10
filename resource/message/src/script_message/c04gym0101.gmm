@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T13:05:19"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T22:21:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="177" right="2001" bottom="805" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -536,7 +536,7 @@ princess_01</attribute>
 ・ジムバッジ取得前＋アイテム入手前
 ・ジムに入ると
 　主人公に隣接してメッセージ表示
-・No???「おいしいみず」入手</comment>
+・No030「おいしいみず」入手</comment>
 		<attribute name="キャラ指定">ダンペイ</attribute>
 		<language name="JPN" width="256">どうっすか？
 おどろいたでしょう！？[BE:01:ページ切り替え（クリア）]
