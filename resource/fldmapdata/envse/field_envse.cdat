@@ -1,0 +1,21 @@
+// Ç±ÇÃÉÅ[ÉXÇÕresource/fldmapdata/envse/conv.plÇ©ÇÁèoóÕÇ≥ÇÍÇƒÇ¢Ç‹Ç∑ÅB
+
+
+const FLD_ENVSE_DATA c_FLD_ENVSE_DATA[] = {
+{ SEQ_SE_FLD_25, TRUE},
+{ SEQ_SE_FLD_31, TRUE},
+{ SEQ_SE_FLD_32, TRUE},
+{ SEQ_SE_FLD_33, FALSE},
+{ SEQ_SE_FLD_34, FALSE},
+{ SEQ_SE_FLD_84, TRUE},
+{ SEQ_SE_FLD_85, TRUE},
+{ SEQ_SE_FLD_98, FALSE},
+{ SEQ_SE_FLD_99, FALSE},
+{ SEQ_SE_FLD_100, TRUE},
+{ SEQ_SE_FLD_108, FALSE},
+{ SEQ_SE_FLD_111, TRUE},
+{ SEQ_SE_FLD_116, TRUE},
+{ SEQ_SE_FLD_130, FALSE},
+{ SEQ_SE_FLD_140, FALSE},
+{ SEQ_SE_FLD_141, FALSE},
+};
