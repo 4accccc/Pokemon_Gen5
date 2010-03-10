@@ -172,38 +172,28 @@ static const u8 battle_mode_str_id_tbl[BATTLE_MODE_MAX] =  // include/savedata/b
 {
                        // //コロシアム：シングル
   msg_record_title01,  // BATTLE_MODE_COLOSSEUM_SINGLE_FREE,
-  msg_record_title01,  // BATTLE_MODE_COLOSSEUM_SINGLE_STANDARD,
   msg_record_title02,  // BATTLE_MODE_COLOSSEUM_SINGLE_50,
   msg_record_title03,  // BATTLE_MODE_COLOSSEUM_SINGLE_FREE_SHOOTER,
-  msg_record_title03,  // BATTLE_MODE_COLOSSEUM_SINGLE_STANDARD_SHOOTER,
   msg_record_title04,  // BATTLE_MODE_COLOSSEUM_SINGLE_50_SHOOTER,
                        // //コロシアム：ダブル
   msg_record_title05,  // BATTLE_MODE_COLOSSEUM_DOUBLE_FREE,
-  msg_record_title05,  // BATTLE_MODE_COLOSSEUM_DOUBLE_STANDARD,
   msg_record_title06,  // BATTLE_MODE_COLOSSEUM_DOUBLE_50,
   msg_record_title07,  // BATTLE_MODE_COLOSSEUM_DOUBLE_FREE_SHOOTER,
-  msg_record_title07,  // BATTLE_MODE_COLOSSEUM_DOUBLE_STANDARD_SHOOTER,
   msg_record_title08,  // BATTLE_MODE_COLOSSEUM_DOUBLE_50_SHOOTER,
                        // //コロシアム：トリプル
   msg_record_title09,  // BATTLE_MODE_COLOSSEUM_TRIPLE_FREE,
-  msg_record_title09,  // BATTLE_MODE_COLOSSEUM_TRIPLE_STANDARD,
   msg_record_title10,  // BATTLE_MODE_COLOSSEUM_TRIPLE_50,
   msg_record_title11,  // BATTLE_MODE_COLOSSEUM_TRIPLE_FREE_SHOOTER,
-  msg_record_title11,  // BATTLE_MODE_COLOSSEUM_TRIPLE_STANDARD_SHOOTER,
   msg_record_title12,  // BATTLE_MODE_COLOSSEUM_TRIPLE_50_SHOOTER,
                        // //コロシアム：ローテーション
   msg_record_title13,  // BATTLE_MODE_COLOSSEUM_ROTATION_FREE,
-  msg_record_title13,  // BATTLE_MODE_COLOSSEUM_ROTATION_STANDARD,
   msg_record_title14,  // BATTLE_MODE_COLOSSEUM_ROTATION_50,
   msg_record_title15,  // BATTLE_MODE_COLOSSEUM_ROTATION_FREE_SHOOTER,
-  msg_record_title15,  // BATTLE_MODE_COLOSSEUM_ROTATION_STANDARD_SHOOTER,
   msg_record_title16,  // BATTLE_MODE_COLOSSEUM_ROTATION_50_SHOOTER,
                        // //コロシアム：マルチ
   msg_record_title17,  // BATTLE_MODE_COLOSSEUM_MULTI_FREE,
-  msg_record_title17,  // BATTLE_MODE_COLOSSEUM_MULTI_STANDARD,
   msg_record_title18,  // BATTLE_MODE_COLOSSEUM_MULTI_50,
   msg_record_title19,  // BATTLE_MODE_COLOSSEUM_MULTI_FREE_SHOOTER,
-  msg_record_title19,  // BATTLE_MODE_COLOSSEUM_MULTI_STANDARD_SHOOTER,
   msg_record_title20,  // BATTLE_MODE_COLOSSEUM_MULTI_50_SHOOTER,
                        // //地下鉄
   msg_record_title21,  // BATTLE_MODE_SUBWAY_SINGLE,     //WIFI DL含む
@@ -575,6 +565,10 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
         GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
   }
 
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, work->heap_id );
+  GFL_NET_ReloadIcon();
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -881,6 +875,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
     break;
   case SEQ_SAVE:
     {
+#if 0
 #ifdef OFFLINE_TEST
       work->battle_rec_new_save_result = SAVE_RESULT_OK;
 #else
@@ -904,6 +899,32 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
         }
       }
     }
+#else
+      // セーブ中は画面が止まってしまうので、メッセージの表示が完了してからセーブを開始することにした。
+      if( Btl_Rec_Sel_TextWaitStream( param, work ) )
+      {
+#ifdef OFFLINE_TEST
+        work->battle_rec_new_save_result = SAVE_RESULT_OK;
+#else
+        if( work->battle_rec_new_save_result != SAVE_RESULT_OK && work->battle_rec_new_save_result != SAVE_RESULT_NG )
+        {
+          work->battle_rec_new_save_result = BattleRec_Save( sv, work->heap_id,
+              work->battle_rec_new_mode, 0, LOADDATA_MYREC,  // fight_countはバトルサブウェイ以外では使わないので0でいい
+              &(work->battle_rec_new_work0), &(work->battle_rec_new_work1) );
+        }
+#endif
+
+        if( work->battle_rec_new_save_result == SAVE_RESULT_OK )  // セーブ正常終了
+        {
+          Btl_Rec_Sel_ChangeSeqStm( seq, param, work, SEQ_SAVEOK, msg_record_05_01 );
+        }
+        else if( work->battle_rec_new_save_result == SAVE_RESULT_NG )  // セーブ異常終了
+        {
+          Btl_Rec_Sel_ChangeSeqStm( seq, param, work, SEQ_SAVENG, msg_record_06_01 );
+        }
+      }
+    }
+#endif
     break;
   case SEQ_SAVEOK:
     {
