@@ -7,18 +7,7 @@
  */
 //============================================================================================
 #include <gflib.h>
-/*↑[GS_CONVERT_TAG]*/
-/*
-#include "system/msgdata.h"
-#include "system/numfont.h"
-#include "system/wordset.h"
-*/
-//#include "system/clact_tool.h"
-/*↑[GS_CONVERT_TAG]*/
-/*
-#include "battle/battle_common.h"
-#include "itemtool/myitem.h"
-*/
+
 #include "b_app_tool.h"
 
 #include "b_bag.h"
@@ -26,16 +15,29 @@
 #include "b_bag_item.h"
 
 
+//============================================================================================
+//	定数定義
+//============================================================================================
+#define	TEST_SHOOTER_ITEM
+
+#ifdef TEST_SHOOTER_ITEM
 typedef struct {
 	u16	item;
 	u16	cost;
 }SHOOTER_ITEM;
+#endif	// TEST_SHOOTER_ITEM
+
+//============================================================================================
+//	グローバル
+//============================================================================================
 
 // ポケットIDテーブル
 static const u8 PocketNum[] = {
 	2, 3, 0, 1, 0
 };
 
+
+#ifdef TEST_SHOOTER_ITEM
 // シューター用アイテムテーブル
 static const SHOOTER_ITEM ShooterItemTable[] =
 {
@@ -104,7 +106,7 @@ static const SHOOTER_ITEM ShooterItemTable[] =
 
 	{ ITEM_DUMMY_DATA, 0 },				// 終了
 };
-
+#endif	// TEST_SHOOTER_ITEM
 
 
 //--------------------------------------------------------------------------------------------
@@ -198,8 +200,18 @@ void BattleBag_PocketInit( BBAG_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * アイテムを戦闘ポケットに振り分ける（シューター用）
+ *
+ * @param		wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void BattleBag_ShooterPocketInit( BBAG_WORK * wk )
 {
+#ifdef TEST_SHOOTER_ITEM
 	ITEM_ST	item;
 	u32	i, j, k;
 	s32	prm;
@@ -216,8 +228,29 @@ void BattleBag_ShooterPocketInit( BBAG_WORK * wk )
 	}
 
 	wk->scr_max[0] = (wk->item_max[0]-1) / 6;
+#else
+	u32	i;
+
+	for( i=0; i<SHOOTER_ITEM_MAX; i++ ){
+		if( SHOOTER_ITEM_IsUse( wk->dat->shooter_item_bit, i ) == TRUE ){
+			wk->pocket[0][wk->item_max[0]].id = SHOOTER_ITEM_ShooterIndexToItemIndex( i );
+			wk->pocket[0][wk->item_max[0]].no = 1;
+			wk->item_max[0]++;
+		}
+	}
+	wk->scr_max[0] = (wk->item_max[0]-1) / 6;
+#endif	// #ifdef TEST_SHOOTER_ITEM
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * アイテムを戦闘ポケットに振り分ける（捕獲デモ用）
+ *
+ * @param		wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void BattleBag_GetDemoPocketInit( BBAG_WORK * wk )
 {
 	wk->pocket[2][0].id = ITEM_MONSUTAABOORU;
@@ -273,6 +306,7 @@ u8 BattleBag_ItemUseCheck( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 u16 BBAGITEM_GetCost( u16 item )
 {
+#ifdef TEST_SHOOTER_ITEM
 	u32	i = 0;
 
 	while(1){
@@ -285,4 +319,7 @@ u16 BBAGITEM_GetCost( u16 item )
 		i++;
 	}
 	return ShooterItemTable[i].cost;
+#else
+	return SHOOTER_ITEM_ItemIndexToCost( item );
+#endif
 }

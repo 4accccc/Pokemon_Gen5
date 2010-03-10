@@ -11,6 +11,7 @@
 
 #include "print/printsys.h"
 #include "savedata/myitem_savedata.h"
+#include "item/shooter_item.h"
 
 
 //============================================================================================
@@ -47,6 +48,8 @@ typedef struct {
   GFL_FONT*   font;   ///< 使用フォントハンドル
   BtlBagMode  mode;   ///< 制御モード
   HEAPID      heap;   ///< ヒープID
+
+	SHOOTER_ITEM_BIT_WORK * shooter_item_bit;		///< シューター用アイテムワーク
   u8  energy;         ///< エネルギー値（シューター用）
   u8  reserved_energy;///< 現ターン中に既に選択したアイテムの総コスト値（シューター用）
 
