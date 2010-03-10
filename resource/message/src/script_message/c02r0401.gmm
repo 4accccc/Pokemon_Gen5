@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T14:41:35"/>
+	<create user="matsumiya" host="W00224" date="2010-03-10T15:46:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -324,16 +324,18 @@
 		<language name="JPN_KANJI" width="256">・デッキについて</language>
 	</row>
 
-	<row id="msg_c02r0401_shopm_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0401_shopm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてショップの処理へ
 ・購入できるのは
 　クリティカッターなど</comment>
 		<attribute name="キャラ指定">SHOPM</attribute>
-		<language name="JPN" width="256">やあ！　この　そうこで
-おみせを　はじめたんですよ</language>
-		<language name="JPN_KANJI" width="256">やあ！　この　倉庫で
-お店を　始めたんですよ</language>
+		<language name="JPN" width="256">この　そうこで　いちじてきに
+おみせを　はじめたんだ▽
+よければ　なにか　かっていってよ！▼</language>
+		<language name="JPN_KANJI" width="256">この倉庫で　一時的に
+お店を　始めたんだ▽
+よければ　なにか　買っていってよ！▼</language>
 	</row>
 
 	<flowchart-group-list>
