@@ -1,7 +1,7 @@
 //======================================================================
 /**
  * @file  field_gimmick_r04d03.c
- * @brief  4番道路+リゾートデザート
+ * @brief  4番道路+リゾートデザート ギミック
  * @author  Saito
  */
 //======================================================================
@@ -20,33 +20,48 @@
 #include "arc/h01.naix"
 #include "gmk_tmp_wk.h"
 
+#include "field_gimmick_r04d03_se_def.h"
+
 #define EXPOBJ_UNIT_IDX (0)
 #define ARCID (ARCID_H01_GIMMICK) // ギミックデータのアーカイブID
 #define R04D03_TMP_ASSIGN_ID  (1)
 
 #define TRAINER_TAIL_OFS (6*FIELD_CONST_GRID_FX32_SIZE)
-#define TRAINER_Y (FIELD_CONST_GRID_FX32_SIZE*1)
+#define TRAINER_Y (FIELD_CONST_GRID_FX32_SIZE*5)
 #define TRAINER_RIGHT_X (447*FIELD_CONST_GRID_FX32_SIZE)
-#define TRAINER_LEFT_X (338*FIELD_CONST_GRID_FX32_SIZE)
+#define TRAINER_LEFT_X (384*FIELD_CONST_GRID_FX32_SIZE)
 #define TRAINER_TAIL_RIGHT_X  (TRAINER_RIGHT_X+TRAINER_TAIL_OFS)
 #define TRAINER_TAIL_LEFT_X   (TRAINER_LEFT_X-TRAINER_TAIL_OFS)
 
 
-#define TRAINER1_Z (526*FIELD_CONST_GRID_FX32_SIZE)
-#define TRAINER2_Z (520*FIELD_CONST_GRID_FX32_SIZE)
+#define TRAINER1_Z ((527+2)*FIELD_CONST_GRID_FX32_SIZE)
+#define TRAINER2_Z ((522+2)*FIELD_CONST_GRID_FX32_SIZE)
 
 
 #define TRAINER_SPEED (FIELD_CONST_GRID_FX32_SIZE)
 
 #define TRAINER_MAX (2)
 
+#define SE_BAND_Z_MIN (0)   //SEの聞こえる幅Ｚ最小値
+#define SE_BAND_Z_MAX (0)   //SEの聞こえる幅Ｚ最大値
+#define SE_RANGE_X (0)      //SEの聞こえる距離
+
+
+
 //==========================================================================================
 // ■ギミックワーク
 //==========================================================================================
+typedef struct GNK_OBJ_tag
+{
+  int Frame;
+  int Wait;
+  BOOL SeFlg;
+}GMK_OBJ;
+
 typedef struct
 { 
   int Frame[TRAINER_MAX];
-  int Wait[TRAINER_MAX];
+  GMK_OBJ GmkObj[TRAINER_MAX];
 } GMK_WORK;
 
 //==========================================================================================
@@ -143,22 +158,9 @@ void R04D03_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 /**
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
   GMK_WORK*         work = (GMK_WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
-*/
-
-/**
-  // 風を止める
-  PMSND_ChangeBGMVolume( work->wind_data.trackBit, 0 );
-
   // セーブ
   SaveGimmick( work, fieldmap );
 
-  // 音源オブジェクトを破棄
-  for( i=0; i<SOBJ_NUM; i++ )
-  {
-    SOUNDOBJ_Delete( work->sobj[i] );
-  }
-  // ギミック管理ワークを破棄
-  GFL_HEAP_FreeMemory( work );
 */
   //ユニット破棄
   FLD_EXP_OBJ_DelUnit( exobj_cnt, EXPOBJ_UNIT_IDX );  
@@ -184,9 +186,11 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
   GMK_WORK* work = GMK_TMP_WK_GetWork(fieldmap, R04D03_TMP_ASSIGN_ID);
-  
-  work->Frame[0]++;
-  frame = &work->Frame[0];
+  GMK_OBJ *gmkobj;
+
+  gmkobj = &work->GmkObj[0];
+  gmkobj->Frame++;
+  frame = &gmkobj->Frame;
   { // トレーラー1(前)
     GFL_G3D_OBJSTATUS* status;
     status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_HEAD );
@@ -200,8 +204,9 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
     if ( status->trans.x >= TRAINER_RIGHT_X) (*frame) = 0;
   }
 
-  work->Frame[1]++;
-  frame = &work->Frame[1];
+  gmkobj = &work->GmkObj[1];
+  gmkobj->Frame++;
+  frame = &gmkobj->Frame;
   { // トレーラー2(前)
     GFL_G3D_OBJSTATUS* status;
     status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_HEAD );
@@ -214,58 +219,28 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
     status->trans.x = TRAINER_TAIL_RIGHT_X - TRAINER_SPEED * (*frame);
     if ( status->trans.x <= TRAINER_LEFT_X) (*frame) = 0;
   }
-/**  
-  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
-  GMK_WORK*         work = (H01WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
-*/
-/**
-  // 観測者の位置を設定
+
+  //自機の位置座表を取得
+  ;
+  //SEを鳴らすＺバンド幅に自機がいるか？
+  if (0)      //いる場合
   {
-    FIELD_CAMERA* fieldCamera;
-    VecFx32 cameraPos, targetPos;
-
-    fieldCamera = FIELDMAP_GetFieldCamera( fieldmap );
-    FIELD_CAMERA_GetCameraPos( fieldCamera, &cameraPos );
-    FIELD_CAMERA_GetTargetPos( fieldCamera, &targetPos );
-    ISS_3DS_SYS_SetObserverPos( work->iss3dsSys, &cameraPos, &targetPos );
-  }
-
-  // すべての音源オブジェクトを動かす
-  for( i=0; i<SOBJ_NUM; i++ )
-  { 
-    // 待機状態 ==> 発車カウントダウン
-    if( 0 < work->wait[i] )
+    //一台目のトレーラー（右から左に動くトレーラー）のＸ座標を取得
+    ;
+    //自機よりも右にいて、なおかつ、ＳＥ再生距離にいるか？
+    if(0)   //いる場合
     {
-      // カウントダウン終了 ==> 発車
-      if( --work->wait[i] <= 0 )
-      {
-        MoveStart( work, i );
-        // 後部分を前部分に追従させる
-        switch(i)
-        {
-        case SOBJ_TRAILER_1_HEAD:
-          work->wait[SOBJ_TRAILER_1_TAIL] = TAIL_INTERVAL;
-          break;
-        case SOBJ_TRAILER_2_HEAD:
-          work->wait[SOBJ_TRAILER_2_TAIL] = TAIL_INTERVAL;
-          break;
-        }
-      }
+      ;
     }
-    // 動作中 ==> アニメーションを更新
-    else
+
+    //二台目のトレーラー（左から右に動くトレーラー）のＸ座標を取得
+    ;
+    //自機よりも左にいて、なおかつ、ＳＥ再生距離にいるか？
+    if(0)   //いる場合
     {
-      // アニメーション再生が終了 ==> 待機状態へ
-      if( SOUNDOBJ_IncAnimeFrame( work->sobj[i], FX32_ONE ) )
-      {
-        SetStandBy( work, i );
-      }
+      ;
     }
   }
-
-  // 風を更新
-  UpdateWindVolume( fieldmap, work );
-*/  
 }
 
 //------------------------------------------------------------------------------------------
