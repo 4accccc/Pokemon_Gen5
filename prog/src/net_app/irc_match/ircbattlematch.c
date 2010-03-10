@@ -666,6 +666,7 @@ static void _modeCheckStart4(IRC_BATTLE_MATCH* pWork)
     switch(pWork->selectType){
     case EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER:
     case EVENTIRCBTL_ENTRYMODE_MUSICAL:
+    case EVENTIRCBTL_ENTRYMODE_SUBWAY:
       _CHANGE_STATE(pWork,_modeFadeoutStart);
       break;
     default:
