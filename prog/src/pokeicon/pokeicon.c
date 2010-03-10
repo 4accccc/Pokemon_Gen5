@@ -2,7 +2,7 @@
 /**
  * @file	pokeicon.c
  * @brief	ポケモンアイコン
- * @author	matsuda
+ * @author	matsuda changed by soga（シャチでのフォルム違いとオスメス書き分けに対応）
  * @date	2008.11.25(火)
  */
 //==============================================================================
@@ -15,44 +15,23 @@
 #include "pokeicon/pokeicon.h"
 #include "poke_icon.naix"
 
+//#define GENDER_VER
 
 //============================================================================================
 //	定数定義
 //============================================================================================
-#define	POKEICON_GetPAL_TAMAGO			( 1 )	// タマゴのパレット番号
-#define	POKEICON_GetPAL_TAMAGO_MNF		( 2 )	// マナフィのタマゴのパレット番号
 
-//フォルムによってパレットが変わるポケモンのIconPalAtrテーブル参照番号
-#define	POKEICON_GetTAMAGO		( 494 )		// タマゴ
-#define	POKEICON_GetTAMAGO_MNF	( 495 )		// マナフィのタマゴ
-#define	POKEICON_GetDEOKISISU	( 496 )		// デオキシス
-#define	POKEICON_GetANNOON		( 499 )		// アンノーン
-#define	POKEICON_GetMINOMUTTI	( 527 )		// ミノムッチ
-#define	POKEICON_GetMINOMESU	( 529 )		// ミノメス
-#define	POKEICON_GetSIIUSI		( 531 )		// シーウシ
-#define	POKEICON_GetSIIDORUGO	( 532 )		// シードルゴ
-#define	POKEICON_GetGIRATHINA	( 533 )		// ギラティナ
-#define	POKEICON_GetSHEIMI		( 534 )		// シェイミ
-#define	POKEICON_GetROTOMU		( 535 )		// ロトム
-#define	POKEICON_GetPOWARUN		( 540 )		// ポワルン
-#define	POKEICON_GetTHERIMU		( 543 )		// チェリム
+enum{ 
+  POKEICON_M_NCGR = 0,
+  POKEICON_F_NCGR,
 
+  POKEICON_FILE_MAX,
+};
 
 //==============================================================================
 //	データ
 //==============================================================================
 #include "pokeicon.dat"
-
-
-// ポケモンアイコンがないので、アルセウス以降のポケモンは？？？を表示します
-static u32 TestMonsConv( u32 mons )
-{
-	if( mons > MONSNO_ARUSEUSU ){
-		mons = 0;
-	}
-	return mons;
-}
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -70,14 +49,20 @@ u32 POKEICON_GetCgxArcIndex( const POKEMON_PASO_PARAM* ppp )
 	u32  arcIndex;
 	BOOL fastMode;
 	u32  form_no;
+	u32  sex;
 	u32  egg;
 
-	fastMode = PPP_FastModeOn((POKEMON_PASO_PARAM*)ppp);
-	monsno = PPP_Get(ppp, ID_PARA_monsno, NULL );
-	egg = PPP_Get(ppp, ID_PARA_tamago_flag, NULL );
-	form_no = POKEICON_GetCgxForm(ppp);
+	fastMode  = PPP_FastModeOn((POKEMON_PASO_PARAM*)ppp);
+	monsno    = PPP_Get(ppp, ID_PARA_monsno, NULL );
+	form_no   = PPP_Get( (POKEMON_PASO_PARAM*)ppp, ID_PARA_form_no, NULL );
+	sex       = PPP_Get( (POKEMON_PASO_PARAM*)ppp, ID_PARA_sex, NULL );
+	egg       = PPP_Get(ppp, ID_PARA_tamago_flag, NULL );
 
+#ifdef GENDER_VER
+	arcIndex = POKEICON_GetCgxArcIndexByMonsNumber( monsno, form_no, sex, egg );
+#else
 	arcIndex = POKEICON_GetCgxArcIndexByMonsNumber( monsno, form_no, egg );
+#endif
 	PPP_FastModeOff((POKEMON_PASO_PARAM*)ppp, fastMode);
 	return arcIndex;
 }
@@ -86,16 +71,19 @@ u32 POKEICON_GetCgxArcIndex( const POKEMON_PASO_PARAM* ppp )
 /**
  * キャラのアーカイブインデックス取得
  *
- * @param	mons		ポケモン番号
- * @param	form_no		フォルム番号
+ * @param	mons_no	ポケモン番号
+ * @param	form_no	フォルム番号
+ * @param	sex		  性別
  * @param	egg			タマゴフラグ(TRUE=タマゴ)
  *
  * @return	アーカイブインデックス
- *
- *	form_noはデオキシスやアンノーンに使用
  */
 //--------------------------------------------------------------------------------------------
-u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons, u32 form_no, BOOL egg )
+#ifdef GENDER_VER
+u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons_no, u32 form_no, u32 sex, BOOL egg )
+#else
+u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons_no, u32 form_no, BOOL egg )
+#endif
 {
 #ifdef PM_DEBUG
 #if 0
@@ -115,148 +103,141 @@ u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons, u32 form_no, BOOL egg )
 	}
 #endif
 #endif	//PM_DEBUG
+	u32 file_start;
 
-	if( egg == TRUE ){
-		if( mons == MONSNO_MANAFI ){
-			return NARC_poke_icon_poke_icon_mnf_NCGR;
-		}else{
-			return NARC_poke_icon_poke_icon_tam_NCGR;
-		}
-	}
+  file_start	= NARC_poke_icon_poke_icon_000_m_NCGR + POKEICON_FILE_MAX * mons_no;
 
-	mons = TestMonsConv( mons );
+  //タマゴチェック
+  if( egg )
+  { 
+    if( mons_no == MONSNO_MANAFI )
+    { 
+      form_no = 1;
+    }
+    else
+    { 
+      form_no = 0;
+    }
+    file_start = POKEICON_FILE_MAX * ( MONSNO_TAMAGO + form_no );
+  }
+  //別フォルム処理
+  else if( form_no )
+  { 
+    int gra_index = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_form_gra_index );
+    int pltt_only = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_pltt_only );
+    int form_max = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_form_max );
+    if( form_no >= form_max )
+    { 
+      form_no = 0;
+    }
+    if( pltt_only )
+    { 
+#if 0
+      //@todo アイコンの方のアルセウスをどうするか決まってないので現状は変化なしにする
+      if( pltt_only_offset )
+      { 
+        *pltt_only_offset = POKEICON_FILE_MAX * ( MONSNO_MAX + OTHER_FORM_MAX + 1 ) + 13 + POKEGRA_PLTT_ONLY_MAX * ( gra_index + form_no - 1 ) + rare;
+      }
+#else
+      file_start = NARC_poke_icon_poke_icon_000_m_NCGR + POKEICON_FILE_MAX * ( MONSNO_MAX + 1 ) + POKEICON_FILE_MAX * ( gra_index + form_no - 1 );
+#endif
+    }
+    else
+    { 
+      file_start = NARC_poke_icon_poke_icon_000_m_NCGR + POKEICON_FILE_MAX * ( MONSNO_MAX + 1 ) + POKEICON_FILE_MAX * ( gra_index + form_no - 1 );
+    }
+  }
 
-//	form_no = PokeFuseiFormNoCheck(mons, form_no);
+#ifdef GENDER_VER
+  //性別のチェック
+  switch( sex ){
+  case PTL_SEX_MALE:
+    break;
+  case PTL_SEX_FEMALE:
+    //オスメス書き分けしているかチェックする（サイズが０なら書き分けなし）
+    sex = ( GFL_ARC_GetDataSize( ARCID_POKEICON, file_start + POKEICON_F_NCGR ) == 0 ) ? PTL_SEX_MALE : PTL_SEX_FEMALE;
+    break;
+  case PTL_SEX_UNKNOWN:
+    //性別なしは、オス扱いにする
+    sex = PTL_SEX_MALE;
+    break;
+  default:
+    //ありえない性別
+    GF_ASSERT(0);
+    break;
+  }
 
-	if( form_no != 0 ){
-		if( mons == MONSNO_DEOKISISU ){
-			return ( NARC_poke_icon_poke_icon_d01_NCGR + form_no - 1 );
-		}
-		if( mons == MONSNO_ANNOON ){
-			return ( NARC_poke_icon_poke_icon_u02_NCGR + form_no - 1 );
-		}
-		if( mons == MONSNO_MINOMUTTI ){
-			return ( NARC_poke_icon_poke_icon_455_01_NCGR + form_no - 1 );
-		}
-		if( mons == MONSNO_MINOMADAMU ){
-			return ( NARC_poke_icon_poke_icon_457_01_NCGR + form_no - 1 );
-		}
-		if( mons == MONSNO_KARANAKUSI ){
-			return ( NARC_poke_icon_poke_icon_458_01_NCGR + form_no - 1 );
-		}
-		if( mons == MONSNO_TORITODON ){
-			return ( NARC_poke_icon_poke_icon_459_01_NCGR + form_no - 1 );
-		}
-		if( mons == MONSNO_GIRATHINA ){
-			return ( NARC_poke_icon_poke_icon_509_01_NCGR + form_no - 1 );
-		}
-		if( mons == MONSNO_SHEIMI ){
-			return ( NARC_poke_icon_poke_icon_516_01_NCGR + form_no - 1 );
-		}
-		if( mons == MONSNO_ROTOMU ){
-			return ( NARC_poke_icon_poke_icon_519_01_NCGR + form_no - 1 );
-		}
-		// ポワルン（HG/SSから追加）
-		if( mons == MONSNO_POWARUN ){
-			return ( NARC_poke_icon_poke_icon_351_rain_NCGR + form_no - 1 );
-		}
-		// チェリム（HG/SSから追加）
-		if( mons == MONSNO_THERIMU ){
-			return ( NARC_poke_icon_poke_icon_483_sun_NCGR + form_no - 1 );
-		}
-	}
-
-	if( mons > MONSNO_END ){ mons = 0; }
-
-	return ( NARC_poke_icon_poke_icon_000_NCGR + mons );
-}
-
-//------------------------------------------------------------------
-/**
- * キャラの拡張パターンナンバーを取得
- *
- * @param   ppp		
- *
- * @retval  u16		格調パターンナンバー
- */
-//------------------------------------------------------------------
-u16 POKEICON_GetCgxForm( const POKEMON_PASO_PARAM* ppp )
-{
-	u32 monsno;
-
-	monsno = PPP_Get( ppp, ID_PARA_monsno_egg, NULL );
-
-	switch( monsno ){
-	case MONSNO_ANNOON:
-	case MONSNO_DEOKISISU:
-	case MONSNO_MINOMUTTI:
-	case MONSNO_MINOMADAMU:
-	case MONSNO_KARANAKUSI:
-	case MONSNO_TORITODON:
-	case MONSNO_GIRATHINA:
-	case MONSNO_SHEIMI:
-	case MONSNO_ROTOMU:
-	case MONSNO_POWARUN:	// ポワルン（HG/SSから追加）
-	case MONSNO_THERIMU:	// チェリム（HG/SSから追加）
-		return PPP_Get( (POKEMON_PASO_PARAM*)ppp, ID_PARA_form_no, NULL );
-
-	default:
-		return 0;
-	}
-	return 0;
+	return ( file_start + sex );
+#else
+	return ( file_start );
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
 /**
  * パレット番号取得
  *
- * @param	mons		ポケモン番号
- * @param	form		フォルム番号
- * @param	egg			タマゴフラグ(TRUE:タマゴ)
+ * @param	mons_no		ポケモン番号
+ * @param	form_no		フォルム番号
+ * @param	sex		    性別
+ * @param	egg			  タマゴフラグ(TRUE:タマゴ)
  *
  * @return	パレット番号
  */
 //--------------------------------------------------------------------------------------------
-const u8 POKEICON_GetPalNum( u32 mons, u32 form, BOOL egg )
+#ifdef GENDER_VER
+const u8 POKEICON_GetPalNum( u32 mons_no, u32 form_no, u32 sex, BOOL egg )
+#else
+const u8 POKEICON_GetPalNum( u32 mons_no, u32 form_no, BOOL egg )
+#endif
 {
-	if( egg == 1 ){
-		if( mons == MONSNO_MANAFI ){
-			mons = POKEICON_GetTAMAGO_MNF;
-		}else{
-			mons = POKEICON_GetTAMAGO;
-		}
-	}else if( mons > MONSNO_END ){
-		mons = 0;
-	}else if( form != 0 ){
-		if( mons == MONSNO_DEOKISISU ){
-			mons = POKEICON_GetDEOKISISU + form - 1;
-		}else if( mons == MONSNO_ANNOON ){
-			mons = POKEICON_GetANNOON + form - 1;
-		}else if( mons == MONSNO_MINOMUTTI ){
-			mons = POKEICON_GetMINOMUTTI + form - 1;
-		}else if( mons == MONSNO_MINOMADAMU ){
-			mons = POKEICON_GetMINOMESU + form - 1;
-		}else if( mons == MONSNO_KARANAKUSI ){
-			mons = POKEICON_GetSIIUSI + form - 1;
-		}else if( mons == MONSNO_TORITODON ){
-			mons = POKEICON_GetSIIDORUGO + form - 1;
-		}else if( mons == MONSNO_GIRATHINA ){
-			mons = POKEICON_GetGIRATHINA + form - 1;
-		}else if( mons == MONSNO_SHEIMI ){
-			mons = POKEICON_GetSHEIMI + form - 1;
-		}else if( mons == MONSNO_ROTOMU ){
-			mons = POKEICON_GetROTOMU + form - 1;
-		// ポワルン（HG/SSから追加）
-		}else if( mons == MONSNO_POWARUN ){
-			mons = POKEICON_GetPOWARUN + form - 1;
-		// チェリム（HG/SSから追加）
-		}else if( mons == MONSNO_THERIMU ){
-			mons = POKEICON_GetTHERIMU + form - 1;
-		}
-	}else{
-		mons = TestMonsConv( mons );
-	}
-	return IconPalAtr[mons];
+  //タマゴチェック
+  if( egg )
+  { 
+    if( mons_no == MONSNO_MANAFI )
+    { 
+      form_no = 1;
+    }
+    else
+    { 
+      form_no = 0;
+    }
+    mons_no = MONSNO_TAMAGO + form_no;
+  }
+  //別フォルム処理
+  else if( form_no )
+  { 
+    int gra_index = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_form_gra_index );
+    int pltt_only = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_pltt_only );
+    int form_max = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_form_max );
+    if( form_no >= form_max )
+    { 
+      form_no = 0;
+    }
+    if( pltt_only )
+    { 
+#if 0
+      //@todo アイコンの方のアルセウスをどうするか決まってないので現状は変化なしにする
+      if( pltt_only_offset )
+      { 
+        *pltt_only_offset = POKEICON_FILE_MAX * ( MONSNO_MAX + OTHER_FORM_MAX + 1 ) + 13 + POKEGRA_PLTT_ONLY_MAX * ( gra_index + form_no - 1 ) + rare;
+      }
+#else
+      mons_no = POKEICON_FILE_MAX * ( MONSNO_MAX + 1 ) + POKEICON_FILE_MAX * ( gra_index + form_no - 1 );
+#endif
+    }
+    else
+    { 
+      mons_no = POKEICON_FILE_MAX * ( MONSNO_MAX + 1 ) + POKEICON_FILE_MAX * ( gra_index + form_no - 1 );
+    }
+  }
+#ifdef GENDER_VER
+  if( sex )
+  { 
+	  return ( IconPalAtr[ mons_no ] & 0xf0 ) >> 4;
+  }
+#endif
+	return IconPalAtr[ mons_no ] & 0x0f;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -273,17 +254,23 @@ u8 POKEICON_GetPalNumGetByPPP( const POKEMON_PASO_PARAM * ppp )
 	BOOL fast;
 	u32  mons;
 	u32  form;
+	u32  sex;
 	u32  egg;
 
 	fast = PPP_FastModeOn( (POKEMON_PASO_PARAM *)ppp );
 
-	form = POKEICON_GetCgxForm( ppp );
 	mons = PPP_Get( (POKEMON_PASO_PARAM*)ppp, ID_PARA_monsno, NULL );
+	form = PPP_Get( (POKEMON_PASO_PARAM*)ppp, ID_PARA_form_no, NULL );
+	sex  = PPP_Get( (POKEMON_PASO_PARAM*)ppp, ID_PARA_sex, NULL );
 	egg  = PPP_Get( (POKEMON_PASO_PARAM*)ppp, ID_PARA_tamago_flag, NULL );
 
 	PPP_FastModeOff( (POKEMON_PASO_PARAM *)ppp, fast );
 
+#ifdef GENDER_VER
+	return POKEICON_GetPalNum( mons, form, sex, egg );
+#else
 	return POKEICON_GetPalNum( mons, form, egg );
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
