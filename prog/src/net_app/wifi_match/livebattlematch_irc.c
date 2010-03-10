@@ -578,6 +578,62 @@ BOOL LIVEBATTLEMATCH_IRC_WaitRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk )
   return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レギュレーション受信をキャンセル  開始
+ *
+ *	@param	LIVEBATTLEMATCH_IRC_WORK *p_wk  ワーク
+ *
+ *	@return TRUEで終了  FALSEで処理中
+ */
+//-----------------------------------------------------------------------------
+void LIVEBATTLEMATCH_IRC_StartCancelRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk )
+{ 
+  p_wk->seq = 0; 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レギュレーション受信をキャンセル  終了
+ *
+ *	@param	LIVEBATTLEMATCH_IRC_WORK *p_wk  ワーク
+ *
+ *	@return TRUEで終了  FALSEで処理中
+ */
+//-----------------------------------------------------------------------------
+BOOL LIVEBATTLEMATCH_IRC_WaitCancelRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk )
+{ 
+  enum
+  { 
+    SEQ_START,
+    SEQ_WAIT,
+  };
+
+  if( p_wk->p_delivery )
+  { 
+    DELIVERY_IRC_Main( p_wk->p_delivery );
+  }
+
+  switch( p_wk->seq )
+  { 
+  case SEQ_START:
+    if( p_wk->p_delivery )
+    { 
+      DELIVERY_IRC_End( p_wk->p_delivery );
+      p_wk->p_delivery  = NULL;
+    }
+    p_wk->seq++;
+    break;
+
+  case SEQ_WAIT:
+    if( GFL_NET_IsResetEnable() )
+    { 
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
 
 //=============================================================================
 /**

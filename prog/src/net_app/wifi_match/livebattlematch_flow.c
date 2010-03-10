@@ -163,6 +163,7 @@ typedef enum
 { 
   LVM_MENU_TYPE_YESNO,
   LVM_MENU_TYPE_MENU,
+  LVM_MENU_TYPE_END,
 }LVM_MENU_TYPE;
 static void UTIL_LIST_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk, LVM_MENU_TYPE type );
 static void UTIL_LIST_Delete( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
@@ -419,6 +420,12 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_START_RECVCARD,
     SEQ_WAIT_RECVCARD,
 
+    SEQ_START_CANCEL,   //キャンセル
+    SEQ_WAIT_CANCEL,    //キャンセル
+    SEQ_START_MSG_CANCEL,
+    SEQ_START_LIST_CANCEL,
+    SEQ_WAIT_LIST_CANCEL,
+
     SEQ_CHECK_RECVCARD, //受け取った選手証をチェック
 
     SEQ_START_MSG_SAVE, //選手証が正しかったのでサインアップしてセーブ
@@ -501,11 +508,58 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     *p_seq  = SEQ_WAIT_RECVCARD;
     break;
   case SEQ_WAIT_RECVCARD:
+    //受信中
     if( LIVEBATTLEMATCH_IRC_WaitRecvRegulation( p_wk->p_irc ) )
     { 
       //Regulation_PrintDebug( &p_wk->regulation_temp );
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
       *p_seq  = SEQ_CHECK_RECVCARD;
+    }
+
+    //Bキャンセル
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    { 
+      *p_seq  = SEQ_START_CANCEL;
+    }
+    break;
+
+  case SEQ_START_CANCEL:   //キャンセル
+    LIVEBATTLEMATCH_IRC_StartCancelRecvRegulation( p_wk->p_irc );
+    *p_seq  = SEQ_WAIT_CANCEL;
+    break;
+  case SEQ_WAIT_CANCEL:    //キャンセル
+    if( LIVEBATTLEMATCH_IRC_WaitCancelRecvRegulation( p_wk->p_irc ) )
+    { 
+      *p_seq  = SEQ_WAIT_CANCEL;
+    }
+    break;
+  case SEQ_START_MSG_CANCEL:
+    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_17 );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_REG_YESNO );
+    break;
+  case SEQ_START_LIST_CANCEL:
+    UTIL_LIST_Create( p_wk, LVM_MENU_TYPE_YESNO ); 
+    *p_seq  = SEQ_WAIT_LIST_CANCEL;
+    break;
+  case SEQ_WAIT_LIST_CANCEL:
+    { 
+      const u32 select  = UTIL_LIST_Main( p_wk ); 
+      if( select != WBM_LIST_SELECT_NULL )
+      { 
+        UTIL_LIST_Delete( p_wk );
+        switch( select )
+        { 
+        case 0: //はい
+          *p_seq  = SEQ_DIRTY_END;
+          break;
+
+        case 1: //いいえ
+          *p_seq  = SEQ_START_MSG_RECVCARD;
+          break;
+        }
+      }
     }
     break;
 
@@ -1408,12 +1462,18 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 { 
   enum
   { 
+    SEQ_CHECK_LAST,   //最後のふりかえりかをチェック
     SEQ_CHECK_BTLCNT, //規定回数戦った
     SEQ_START_MSG_SAVE,
     SEQ_START_SAVE,
     SEQ_WAIT_SAVE,
+    SEQ_START_MSG_UNLOCK,
+    SEQ_START_MSG_LOOKBACK,
+    SEQ_START_LIST_LOOKBACK,
+    SEQ_WAIT_LIST_LOOKBACK,
     SEQ_START_MSG_END,
 
+    SEQ_LOOKBACK_END, //振り返る
     SEQ_END,      //対戦終了
     SEQ_RETURN,   //まだ戦える
 
@@ -1423,6 +1483,17 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   switch( *p_seq )
   { 
+  case SEQ_CHECK_LAST:  //最後の振り返りかをチェック
+    if( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS) == DREAM_WORLD_MATCHUP_END )
+    { 
+      *p_seq  = SEQ_START_MSG_LOOKBACK;
+    }
+    else
+    { 
+      *p_seq  = SEQ_CHECK_BTLCNT;
+    }
+    break;
+
   case SEQ_CHECK_BTLCNT: //規定回数戦った
     {
       REGULATION  *p_reg  = RegulationData_GetRegulation( p_wk->p_regulation );
@@ -1459,17 +1530,68 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         break;
       case SAVE_RESULT_OK:
       case SAVE_RESULT_NG:
-        *p_seq  = SEQ_START_MSG_END;
+        *p_seq  = SEQ_START_MSG_UNLOCK;
         break;
       }
     } 
 		break;
 
-  case SEQ_START_MSG_END:
+  case SEQ_START_MSG_UNLOCK:
     UTIL_TEXT_Print( p_wk, LIVE_STR_21 );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_LOOKBACK );
+    break;
+    
+  case SEQ_START_MSG_LOOKBACK:
+    UTIL_TEXT_Print( p_wk, LIVE_STR_23 );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_LOOKBACK );
+    break;
+  case SEQ_START_LIST_LOOKBACK:
+    UTIL_LIST_Create( p_wk, LVM_MENU_TYPE_END );
+    *p_seq  = SEQ_WAIT_LIST_LOOKBACK;
+    break;
+
+  case SEQ_WAIT_LIST_LOOKBACK:
+    { 
+      const u32 select  = UTIL_LIST_Main( p_wk ); 
+      if( select != WBM_LIST_SELECT_NULL )
+      { 
+        UTIL_LIST_Delete( p_wk );
+        if( p_wk->param.is_rec )
+        { 
+          switch( select )
+          { 
+          case 0: //ふりかえる
+            *p_seq  = SEQ_LOOKBACK_END;
+            break;
+
+          case 1: //おわる
+            *p_seq  = SEQ_START_MSG_END;
+            break;
+          }
+        }
+        else
+        { 
+          switch( select )
+          { 
+          case 0: //おわる
+            *p_seq  = SEQ_START_MSG_END;
+            break;
+          }
+        }
+      }
+    }
+    break;
+
+  case SEQ_START_MSG_END:
+    UTIL_TEXT_Print( p_wk, LIVE_STR_24 );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_END );
     break;
+  case SEQ_LOOKBACK_END:      //振り返る
+    UTIL_FLOW_End( p_wk, LIVEBATTLEMATCH_FLOW_RET_BTLREC );
+		break;
   case SEQ_END:      //対戦終了
     UTIL_FLOW_End( p_wk, LIVEBATTLEMATCH_FLOW_RET_LIVEMENU );
 		break;
@@ -1542,6 +1664,20 @@ static void UTIL_LIST_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk, LVM_MENU_TYPE typ
       setup.strID[0]= LIVE_SELECT_02;
       setup.strID[1]= LIVE_SELECT_04;
       setup.list_max= 2;
+    }
+    pos = POS_CENTER;
+    break;
+  case LVM_MENU_TYPE_END:
+    if( p_wk->param.is_rec )
+    { 
+      setup.strID[0]= LIVE_SELECT_03;
+      setup.strID[1]= LIVE_SELECT_05;
+      setup.list_max= 2;
+    }
+    else
+    { 
+      setup.strID[0]= LIVE_SELECT_05;
+      setup.list_max= 1;
     }
     pos = POS_CENTER;
     break;

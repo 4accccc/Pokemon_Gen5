@@ -96,6 +96,9 @@ typedef struct
   //フロー
   void            *p_flow;
 
+  //シーケンスつなぎ
+  BOOL            is_ret_live;
+
 }BATTLE_CHAMPIONSHIP_WORK;
 
 
@@ -425,14 +428,22 @@ static void SEQFUNC_MainMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       param.p_graphic   = p_wk->p_graphic;
       param.p_gamedata  = p_wk->p_param->p_gamedata;
 
-      switch( p_wk->p_param->mode )
+      if( p_wk->is_ret_live )
       { 
-      case BATTLE_CHAMPIONSHIP_CORE_MODE_MAIN_MEMU:
-        param.mode  = BATTLE_CHAMPIONSHIP_FLOW_MODE_MAINMENU;
-        break;
-      case BATTLE_CHAMPIONSHIP_CORE_MODE_WIFI_MENU:
-        param.mode  = BATTLE_CHAMPIONSHIP_FLOW_MODE_WIFIMENU;
-        break;
+        p_wk->is_ret_live = FALSE;
+        param.mode        = BATTLE_CHAMPIONSHIP_FLOW_MODE_LIVEMENU;
+      }
+      else
+      {
+        switch( p_wk->p_param->mode )
+        { 
+        case BATTLE_CHAMPIONSHIP_CORE_MODE_MAIN_MEMU:
+          param.mode  = BATTLE_CHAMPIONSHIP_FLOW_MODE_MAINMENU;
+          break;
+        case BATTLE_CHAMPIONSHIP_CORE_MODE_WIFI_MENU:
+          param.mode  = BATTLE_CHAMPIONSHIP_FLOW_MODE_WIFIMENU;
+          break;
+        }
       }
 
       p_wk->p_flow  = BATTLE_CHAMPIONSHIP_FLOW_Init( &param, HEAPID_BATTLE_CHAMPIONSHIP );
@@ -551,6 +562,7 @@ static void SEQFUNC_LiveCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     break;
 
   case SEQ_NEXT:
+    p_wk->is_ret_live = TRUE;
     LIVEBATTLEMATCH_FLOW_Exit( p_wk->p_flow );
     WBM_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
     break;

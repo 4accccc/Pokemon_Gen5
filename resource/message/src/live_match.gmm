@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-03-09T19:24:17"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-03-10T22:02:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -346,9 +346,9 @@
 		</language>
 	</columns>
 
-	<dialog left="-1189" top="134" right="-484" bottom="762" maximized="no" rayout="Vertical2">
+	<dialog left="-1257" top="137" right="-552" bottom="763" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -603,6 +603,23 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 しっぱい　しました[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">選手証の　受信に
 失敗　しました[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="LIVE_STR_23">
+		<language name="JPN" width="256">たいかいを　しゅうりょうします</language>
+		<language name="JPN_KANJI" width="256">大会を　終了します</language>
+	</row>
+
+	<row id="LIVE_SELECT_05">
+		<language name="JPN" width="256">おわる</language>
+		<language name="JPN_KANJI" width="256">おわる</language>
+	</row>
+
+	<row id="LIVE_STR_24">
+		<language name="JPN" width="256">たいかいを　しゅうりょうします
+おつかれさまでした[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">大会を　終了します
+お疲れさまでした[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
