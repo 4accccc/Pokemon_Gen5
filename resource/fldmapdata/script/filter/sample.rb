@@ -16,7 +16,7 @@ module PmScript
 
   class Parser < Racc::Parser
 
-module_eval <<'..end sp4.y modeval..ide9e7a3badd', 'sp4.y', 571
+module_eval <<'..end sp4.y modeval..idcae1dc7fea', 'sp4.y', 572
 
 def initialize
 end
@@ -120,7 +120,7 @@ def parse( f )
           # ”äŠr‰‰ŽZŽq
 					pushq [ $&, $& ]
 
-        when /\A\+=/, /\A\-=/
+        when /\A\+=/, /\A\-=/, /\A\*=/, /\A\/=/, /\A\%=/
           # •¡‡‘ã“ü‰‰ŽZŽq
           pushq [ :OP_COMP_ASSIGN, $& ]
 
@@ -172,7 +172,7 @@ def on_error( t, v, values )
   end
 
 
-..end sp4.y modeval..ide9e7a3badd
+..end sp4.y modeval..idcae1dc7fea
 
 ##### racc 1.4.5 generates ###
 
@@ -245,7 +245,7 @@ racc_reduce_table = [
  2, 75, :_reduce_65,
  4, 77, :_reduce_66,
  0, 76, :_reduce_none,
- 2, 76, :_reduce_none,
+ 2, 76, :_reduce_68,
  3, 65, :_reduce_69,
  3, 65, :_reduce_70,
  3, 65, :_reduce_71,
@@ -981,7 +981,7 @@ module_eval <<'.,.,', 'sp4.y', 364
 
 module_eval <<'.,.,', 'sp4.y', 373
   def _reduce_62( val, _values, result )
-            result = SwitchNode.new(val[1].sub(/\A\$/,""), val[3])
+            result = SwitchNode.new(val[1].sub(/\A\$/,""), val[3], val[4])
    result
   end
 .,.,
@@ -1016,93 +1016,98 @@ module_eval <<'.,.,', 'sp4.y', 401
 
  # reduce 67 omitted
 
- # reduce 68 omitted
+module_eval <<'.,.,', 'sp4.y', 413
+  def _reduce_68( val, _values, result )
+            result = val[1]
+   result
+  end
+.,.,
 
-module_eval <<'.,.,', 'sp4.y', 423
+module_eval <<'.,.,', 'sp4.y', 424
   def _reduce_69( val, _values, result )
 						result = AssignNode.new(val[0], val[2], :VARREF)
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 427
+module_eval <<'.,.,', 'sp4.y', 428
   def _reduce_70( val, _values, result )
 						result = AssignNode.new(val[0], val[2], nil)
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 431
+module_eval <<'.,.,', 'sp4.y', 432
   def _reduce_71( val, _values, result )
 						result = AssignNode.new(val[0], val[2], funcall)
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 441
+module_eval <<'.,.,', 'sp4.y', 442
   def _reduce_72( val, _values, result )
               result = CompoundAssignNode.new(val[0], val[2], val[1])
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 445
+module_eval <<'.,.,', 'sp4.y', 446
   def _reduce_73( val, _values, result )
               result = CompoundAssignNode.new(val[0], val[2], val[1])
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 454
+module_eval <<'.,.,', 'sp4.y', 455
   def _reduce_74( val, _values, result )
 						result = [val[0],val[1]]
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 458
+module_eval <<'.,.,', 'sp4.y', 459
   def _reduce_75( val, _values, result )
 						result = [val[0], ['('] + val[2] + [')'] ]
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 462
+module_eval <<'.,.,', 'sp4.y', 463
   def _reduce_76( val, _values, result )
             result = [ val[0], "()" ]
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 466
+module_eval <<'.,.,', 'sp4.y', 467
   def _reduce_77( val, _values, result )
 						result = [val[0],val[1]]
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 470
+module_eval <<'.,.,', 'sp4.y', 471
   def _reduce_78( val, _values, result )
             result = [ val[0], nil ]
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 474
+module_eval <<'.,.,', 'sp4.y', 475
   def _reduce_79( val, _values, result )
             result = [ val[0], val[1] ]
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 478
+module_eval <<'.,.,', 'sp4.y', 479
   def _reduce_80( val, _values, result )
             result = [ val[0], nil ]
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 487
+module_eval <<'.,.,', 'sp4.y', 488
   def _reduce_81( val, _values, result )
             result = DefLocalVarNode.new( val[1] )
    result
@@ -1111,35 +1116,35 @@ module_eval <<'.,.,', 'sp4.y', 487
 
  # reduce 82 omitted
 
-module_eval <<'.,.,', 'sp4.y', 501
+module_eval <<'.,.,', 'sp4.y', 502
   def _reduce_83( val, _values, result )
 						result = val
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 505
+module_eval <<'.,.,', 'sp4.y', 506
   def _reduce_84( val, _values, result )
 						result = val
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 509
+module_eval <<'.,.,', 'sp4.y', 510
   def _reduce_85( val, _values, result )
 						result = val
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 513
+module_eval <<'.,.,', 'sp4.y', 514
   def _reduce_86( val, _values, result )
 						result = val
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 517
+module_eval <<'.,.,', 'sp4.y', 518
   def _reduce_87( val, _values, result )
 						result = val
    result
@@ -1156,14 +1161,14 @@ module_eval <<'.,.,', 'sp4.y', 517
 
  # reduce 92 omitted
 
-module_eval <<'.,.,', 'sp4.y', 546
+module_eval <<'.,.,', 'sp4.y', 547
   def _reduce_93( val, _values, result )
 						result = val
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'sp4.y', 551
+module_eval <<'.,.,', 'sp4.y', 552
   def _reduce_94( val, _values, result )
 						result.push val[1]
 						result.push val[2]

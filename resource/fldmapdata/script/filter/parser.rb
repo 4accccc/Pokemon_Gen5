@@ -16,7 +16,7 @@ module PmScript
 
   class Parser < Racc::Parser
 
-module_eval <<'..end sp4.y modeval..id704a6e4c76', 'sp4.y', 572
+module_eval <<'..end sp4.y modeval..idc6e4d9ae1b', 'sp4.y', 572
 
 def initialize
 end
@@ -120,7 +120,7 @@ def parse( f )
           # ”äŠr‰‰ŽZŽq
 					pushq [ $&, $& ]
 
-        when /\A\+=/, /\A\-=/
+        when /\A\+=/, /\A\-=/, /\A\*=/, /\A\/=/, /\A\%=/
           # •¡‡‘ã“ü‰‰ŽZŽq
           pushq [ :OP_COMP_ASSIGN, $& ]
 
@@ -136,7 +136,7 @@ def parse( f )
 					raise RuntimeError, "#{@fname}:#{@nowlineno}: fatal error! \{#{line_org}\}"
 				end
 				line = $'
-				printf( "\#NOW LINE(%4d) #{line}\n", @nowlineno)
+				printf( "\#NOW LINE(%4d) %s\n", @nowlineno, line)
 			end
 		end
 		pushq [ :EOL, nil ]
@@ -172,7 +172,7 @@ def on_error( t, v, values )
   end
 
 
-..end sp4.y modeval..id704a6e4c76
+..end sp4.y modeval..idc6e4d9ae1b
 
 ##### racc 1.4.5 generates ###
 

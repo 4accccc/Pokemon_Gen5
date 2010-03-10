@@ -672,7 +672,7 @@ def parse( f )
           # ”äŠr‰‰Zq
 					pushq [ $&, $& ]
 
-        when /\A\+=/, /\A\-=/
+        when /\A\+=/, /\A\-=/, /\A\*=/, /\A\/=/, /\A\%=/
           # •¡‡‘ã“ü‰‰Zq
           pushq [ :OP_COMP_ASSIGN, $& ]
 
@@ -688,7 +688,7 @@ def parse( f )
 					raise RuntimeError, "#{@fname}:#{@nowlineno}: fatal error! \{#{line_org}\}"
 				end
 				line = $'
-				printf( "\#NOW LINE(%4d) #{line}\n", @nowlineno)
+				printf( "\#NOW LINE(%4d) %s\n", @nowlineno, line)
 			end
 		end
 		pushq [ :EOL, nil ]
