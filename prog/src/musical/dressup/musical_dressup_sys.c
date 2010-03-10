@@ -73,13 +73,15 @@ static GFL_PROC_RESULT DressUpProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 
   work = GFL_PROC_AllocWork( proc, sizeof(DRESSUP_LOCAL_WORK), HEAPID_MUSICAL_DRESSUP );
   work->fitInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_DRESSUP , sizeof(FITTING_INIT_WORK) );
-  
+
+#if PM_DEBUG
   if( pwk == NULL )
   {
     POKEMON_PARAM *pokePara = PP_Create( MONSNO_PURUNSU , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_DRESSUP );
     MUSICAL_POKE_PARAM *musPoke = MUSICAL_SYSTEM_InitMusPoke( pokePara , HEAPID_MUSICAL_DRESSUP );
-    initWork = MUSICAL_DRESSUP_CreateInitWork( HEAPID_MUSICAL_DRESSUP , musPoke , SaveControl_GetPointer() );
+    initWork = MUSICAL_DRESSUP_CreateInitWork( HEAPID_MUSICAL_DRESSUP , musPoke , SaveControl_GetPointer(/*デバッグ用*/) );
   }
+#endif
   
   work->initWork = initWork;
 
@@ -92,14 +94,14 @@ static GFL_PROC_RESULT DressUpProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 static GFL_PROC_RESULT DressUpProc_Term( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   DRESSUP_LOCAL_WORK *work = mywk;
-
+#if PM_DEBUG
   if( pwk == NULL )
   {
     GFL_HEAP_FreeMemory( work->initWork->musPoke->pokePara );
     GFL_HEAP_FreeMemory( work->initWork->musPoke );
     GFL_HEAP_FreeMemory( work->initWork );
   }
-
+#endif
   GFL_HEAP_FreeMemory( work->fitInitWork );
   GFL_PROC_FreeWork( proc );
 
