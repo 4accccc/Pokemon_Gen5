@@ -101,7 +101,7 @@
 #define WK_SYS_AREA_END                  16495 /* 0x406f  */
 
 
-/* flags "scene_work.xls" 16496 ～ 16687 */
+/* flags "scene_work.xls" 16496 ～ 16655 */
 
 #define WK_SCENE_AREA_START              16496 /* 0x4070  */
 
@@ -184,13 +184,45 @@
 #define WK_SCENE_C02R0101                16572 /* 0x40bc シッポウシティ：インテリアショップイベント */
 #define WK_SCENE_D04R0201                16573 /* 0x40bd 古代の城２F：イベント用ワーク */
 
-#define WK_SCENE_AREA_END                16687 /* 0x412f  */
+#define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
 
-/* flags "other_work.xls" 16688 ～ 16702 */
+/* flags "other_work.xls" 16656 ～ 16702 */
 
-#define WK_AREA_START                    16688 /* 0x4130  */
+#define WK_AREA_START                    16656 /* 0x4110  */
 
+		/* not used 16656(0x4110) */
+		/* not used 16657(0x4111) */
+		/* not used 16658(0x4112) */
+		/* not used 16659(0x4113) */
+		/* not used 16660(0x4114) */
+		/* not used 16661(0x4115) */
+		/* not used 16662(0x4116) */
+		/* not used 16663(0x4117) */
+		/* not used 16664(0x4118) */
+		/* not used 16665(0x4119) */
+		/* not used 16666(0x411a) */
+		/* not used 16667(0x411b) */
+		/* not used 16668(0x411c) */
+		/* not used 16669(0x411d) */
+		/* not used 16670(0x411e) */
+		/* not used 16671(0x411f) */
+		/* not used 16672(0x4120) */
+		/* not used 16673(0x4121) */
+		/* not used 16674(0x4122) */
+		/* not used 16675(0x4123) */
+		/* not used 16676(0x4124) */
+		/* not used 16677(0x4125) */
+		/* not used 16678(0x4126) */
+		/* not used 16679(0x4127) */
+		/* not used 16680(0x4128) */
+		/* not used 16681(0x4129) */
+		/* not used 16682(0x412a) */
+		/* not used 16683(0x412b) */
+		/* not used 16684(0x412c) */
+		/* not used 16685(0x412d) */
+		/* not used 16686(0x412e) */
+		/* not used 16687(0x412f) */
 #define WK_OTHER_BSUBWAY_RECEIPT         16688 /* 0x4130 バトルサブウェイ、受付制御 */
 #define WK_OTHER_BSUBWAY_TEST            16689 /* 0x4131 バトルサブウェイ、テスト */
 #define WK_OTHER_BSUBWAY_TRAIN           16690 /* 0x4132 バトルサブウェイ、列車内制御 */
@@ -205,6 +237,7 @@
 #define WK_OTHER_C05R0701_WAZA           16699 /* 0x413b 日替わり指定わざ見せ用ワーク */
 		/* not used 16700(0x413c) */
 		/* not used 16701(0x413d) */
+		/* not used 16702(0x413e) */
 
 #define WK_AREA_END                      16702 /* 0x413e  */
 
