@@ -230,10 +230,12 @@ static void MOVEPOKE_Update( FLDMAPFUNC_WORK* p_taskwk, FIELDMAP_WORK* p_fieldma
       // アニメーションを進めて反映
       result = ICA_ANIME_IncAnimeFrame( p_wk->p_anime, FX32_ONE );
       
-      // 反映
-      MOVEPOKE_SetUpMMdl( p_wk->p_anime, p_wk->p_poke, &p_wk->offset );
       
-      if( result == TRUE ){
+      if( result == FALSE ){
+        // 反映
+        MOVEPOKE_SetUpMMdl( p_wk->p_anime, p_wk->p_poke, &p_wk->offset );
+
+      }else{
 
         // 終了
         ICA_ANIME_Delete( p_wk->p_anime );
@@ -276,11 +278,26 @@ static void MOVEPOKE_SetUpMMdl( const ICA_ANIME* cp_anime, MMDL* p_mmdl, const V
   ICA_ANIME_GetRotate( cp_anime, &rotate );
 
   VEC_Add( &trans, cp_pos, &trans );
+
+//  OS_TPrintf( "trans x[%d] y[%d] z[%d]\n", FX_Whole( trans.x ), FX_Whole( trans.y ), FX_Whole( trans.z ) );
   
   // 位置反映
   MMDL_SetVectorPos( p_mmdl, &trans );
 
   // 角度から、方向反映
+  // rotate.yの値で方向を管理
+  if( rotate.y == 0 ){
+    MMDL_SetDirAll( p_mmdl, DIR_DOWN );
+  }
+  else if( rotate.y == FX32_CONST(90) ){
+    MMDL_SetDirAll( p_mmdl, DIR_RIGHT );
+  }
+  else if( rotate.y == FX32_CONST(180) ){
+    MMDL_SetDirAll( p_mmdl, DIR_UP );
+  }
+  else if( rotate.y == FX32_CONST(270) ){
+    MMDL_SetDirAll( p_mmdl, DIR_LEFT );
+  }
 
 }
 
