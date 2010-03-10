@@ -116,10 +116,12 @@ typedef struct
 { 
   BTLV_MCSS_WORK* bmw;
   BtlvMcssPos     position;
-  fx32            angle;               //角度
-  int             shift;              //回転シフト
-	fx32	          radius;             //半径
-	int		          frame;              //1回転何フレームか
+  VecFx32         pos;              //移動基準座標
+	int		          dir;              //方向
+  fx32            angle;            //角度
+  fx32            speed;            //速度
+	fx32	          radius;           //半径
+	int		          frame;            //フレーム
 }BTLV_MCSS_MOVE_SIN_PARAM;
 
 extern  BTLV_MCSS_WORK* BTLV_MCSS_Init( BtlRule rule, GFL_TCBSYS *tcb_sys, HEAPID heapID );
@@ -153,6 +155,7 @@ extern  void            BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, 
 extern  void            BTLV_MCSS_MoveAlpha( BTLV_MCSS_WORK *bmw, int position, int type,
                                              int alpha, int frame, int wait, int count );
 extern  void            BTLV_MCSS_MoveCircle( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_CIRCLE_PARAM* bmmcp );
+extern  void            BTLV_MCSS_MoveSin( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_SIN_PARAM* bmmsp );
 extern  void            BTLV_MCSS_MoveMosaic( BTLV_MCSS_WORK *bmw, int position, int type,
                                               int mosaic, int frame, int wait, int count );
 extern  BOOL            BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position );

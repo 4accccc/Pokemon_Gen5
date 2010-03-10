@@ -136,6 +136,7 @@ static  void  TCB_BTLV_MCSS_Rotate( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_Alpha( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_MoveCircle( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_MCSS_MoveSin( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_Mosaic( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_StopAnime( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work );
@@ -958,6 +959,28 @@ void  BTLV_MCSS_MoveCircle( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_CIRCLE_PARAM* bm
 
 //============================================================================================
 /**
+ * @brief ポケモン円運動
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] bmmcp     円運動パラメータ構造体
+ */
+//============================================================================================
+void  BTLV_MCSS_MoveSin( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_SIN_PARAM* bmmsp )
+{
+  BTLV_MCSS_MOVE_SIN_PARAM* bmmsp_p = GFL_HEAP_AllocMemory( bmw->heapID, sizeof( BTLV_MCSS_MOVE_SIN_PARAM ) );
+  int index = BTLV_MCSS_GetIndex( bmw, bmmsp->position );
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+
+  *bmmsp_p      = *bmmsp;
+  bmmsp_p->bmw  = bmw;
+  MCSS_GetPosition( bmw->btlv_mcss[ index ].mcss, &bmmsp_p->pos );
+
+  GFL_TCB_AddTask( bmw->tcb_sys, TCB_BTLV_MCSS_MoveSin, bmmsp_p, 0 );
+  bmw->mcss_tcb_move_execute |= BTLV_EFFTOOL_Pos2Bit( bmmsp_p->position );
+}
+
+//============================================================================================
+/**
  * @brief ポケモンモザイク
  *
  * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
@@ -1719,6 +1742,48 @@ static  void  TCB_BTLV_MCSS_MoveCircle( GFL_TCB *tcb, void *work )
   }
   if( bmmcp->count == 0 ){
     bmw->mcss_tcb_move_execute &= ( BTLV_EFFTOOL_Pos2Bit( bmmcp->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
+    GFL_HEAP_FreeMemory( work );
+    GFL_TCB_DeleteTask( tcb );
+  }
+}
+
+//============================================================================================
+/**
+ * @brief ポケモンSIN移動タスク
+ */
+//============================================================================================
+static  void  TCB_BTLV_MCSS_MoveSin( GFL_TCB *tcb, void *work )
+{ 
+  BTLV_MCSS_MOVE_SIN_PARAM*  bmmsp = ( BTLV_MCSS_MOVE_SIN_PARAM * )work;
+  BTLV_MCSS_WORK *bmw = bmmsp->bmw;
+  VecFx32 pos;
+  int   idx;
+  fx32  value;
+  int   index = BTLV_MCSS_GetIndex( bmw, bmmsp->position );
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+
+  bmmsp->angle += bmmsp->speed;
+  idx = ( bmmsp->angle & 0x0ffff000 ) >> FX32_SHIFT;
+  value = FX_F32_TO_FX32( FX_FX16_TO_F32( FX_SinIdx( idx ) ) );
+  value = FX_Mul( value, bmmsp->radius );
+
+  pos.x = bmmsp->pos.x;
+  pos.y = bmmsp->pos.y;
+  pos.z = bmmsp->pos.z;
+
+  if( bmmsp->dir )
+  { 
+    pos.y += value;
+  }
+  else
+  { 
+    pos.x += value;
+  }
+
+  MCSS_SetPosition( bmw->btlv_mcss[ index ].mcss, &pos );
+
+  if( --bmmsp->frame == 0 ){
+    bmw->mcss_tcb_move_execute &= ( BTLV_EFFTOOL_Pos2Bit( bmmsp->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
   }

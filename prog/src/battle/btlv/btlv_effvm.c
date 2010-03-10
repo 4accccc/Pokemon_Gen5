@@ -1544,35 +1544,34 @@ static VMCMD_RESULT VMEC_POKEMON_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work 
 static VMCMD_RESULT VMEC_POKEMON_SIN_MOVE( VMHANDLE *vmh, void *context_work )
 { 
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  BTLV_MCSS_MOVE_CIRCLE_PARAM bmmcp;
+  BTLV_MCSS_MOVE_SIN_PARAM bmmsp;
   BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
-  int pos_cnt = EFFVM_GetPokePosition( bevw, ( int )VMGetU32( vmh ), pos );
+  int   pos_cnt = EFFVM_GetPokePosition( bevw, ( int )VMGetU32( vmh ), pos );
+  int   dir           = ( int )VMGetU32( vmh );
+  fx32  start_angle   = ( fx32 )VMGetU32( vmh );
+  fx32  end_angle     = ( fx32 )VMGetU32( vmh );
+  fx32  radius        = ( fx32 )VMGetU32( vmh );
+  int   frame         = ( int )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_POKEMON_SIN_MOVE\n");
 #endif DEBUG_OS_PRINT
 
-  bmmcp.axis              = ( int )VMGetU32( vmh );
-  bmmcp.shift             = ( int )VMGetU32( vmh );
-  bmmcp.radius_h          = ( fx32 )VMGetU32( vmh );
-	bmmcp.radius_v          = ( fx32 )VMGetU32( vmh );
-	bmmcp.frame             = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
-  bmmcp.rotate_wait       = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
-  bmmcp.count             = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
-	bmmcp.rotate_after_wait = ( int )VMGetU32( vmh );
+  bmmsp.dir     = dir;
+  bmmsp.angle   = start_angle;
+  bmmsp.radius  = radius;
+	bmmsp.frame   = frame;
+	bmmsp.speed   = FX_Div( ( end_angle - start_angle ), ( frame << FX32_SHIFT ) );
 
   //立ち位置情報がないときは、コマンド実行しない
   if( pos_cnt )
   {
-    if( bmmcp.count )
-    { 
-      int i;
+    int i;
 
-      for( i = 0 ; i < pos_cnt ; i++ )
-      { 
-        bmmcp.position = pos[ i ];
-        BTLV_MCSS_MoveCircle( BTLV_EFFECT_GetMcssWork(), &bmmcp );
-      }
+    for( i = 0 ; i < pos_cnt ; i++ )
+    { 
+      bmmsp.position = pos[ i ];
+      BTLV_MCSS_MoveSin( BTLV_EFFECT_GetMcssWork(), &bmmsp );
     }
   }
 
@@ -4304,13 +4303,32 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
       beemw->speed = FX_Div( ( 0x8000 << FX32_SHIFT ), beeiw->move_frame );
     }
     beemw->radius_x = VEC_Distance( &src, &dst ) / 2;
-    if( beeiw->move_type == BTLEFF_EMITTER_MOVE_STRAIGHT )
+    if( ( beeiw->move_type == BTLEFF_EMITTER_MOVE_STRAIGHT ) ||
+        ( beeiw->move_type == BTLEFF_EMITTER_MOVE_OFFSET ) )
     {
       beemw->radius_y = 0;
     }
     else
     {
       beemw->radius_y = beeiw->top;
+    }
+
+    if( beeiw->move_type == BTLEFF_EMITTER_MOVE_OFFSET )
+    { 
+      fx32  work;
+
+      work  = src.x;
+      src.x = dst.x;
+      dst.x = work;
+      work  = src.y;
+      src.y = dst.y;
+      dst.y = work;
+      work  = src.z;
+      src.z = dst.z;
+      dst.z = work;
+      dst.x += src.x;
+      dst.y += src.y;
+      dst.z += src.z;
     }
 
     line_vec.x = dst.x - src.x;
@@ -5056,6 +5074,13 @@ static  void  EFFVM_FreeTcb( BTLV_EFFVM_WORK* bevw )
 static  ARCDATID  EFFVM_ConvDatID( BTLV_EFFVM_WORK* bevw, ARCDATID datID )
 { 
   ARCDATID  ofs = 0;
+#ifdef PM_DEBUG
+  //デバッグ読み込みの場合はそのまま返す
+  if( bevw->debug_flag == TRUE )
+  {
+    return datID;
+  }
+#endif
 
   if( bevw->ball_mode == BTLEFF_CAPTURE_BALL_ATTACK )
   { 
