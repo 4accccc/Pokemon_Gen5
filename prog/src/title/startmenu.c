@@ -410,9 +410,11 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 {
   START_MENU_WORK * wk;
 	u8	result;
+	u8	continueRet;
 	
 	wk = mywk;
 	result = wk->listResult;
+	continueRet = wk->continueRet;
 
 	GFL_PROC_FreeWork( proc );
 	GFL_HEAP_DeleteHeap( HEAPID_STARTMENU );
@@ -420,7 +422,7 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 	switch( result ){
 	case LIST_ITEM_CONTINUE:			// ‘±‚«‚©‚ç
 //		GameStart_Continue();
-		if( wk->continueRet == 0 ){
+		if( continueRet == 0 ){
 			GameStart_ContinueNet();
 		}else{
 			GameStart_ContinueNetOff();
