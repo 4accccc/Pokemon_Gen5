@@ -711,6 +711,7 @@ void BTL_SETUP_InitForRecordPlay( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, H
   }
   // configデータをallocしているので別途解放が必要になる
   dst->configData = CONFIG_AllocWork( heapID );
+  dst->zukanData    = GAMEDATA_GetZukanSave( gameData );
   dst->fRecordPlay = TRUE;
   BTL_SETUP_AllocRecBuffer( dst, heapID );
 }
