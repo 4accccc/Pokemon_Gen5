@@ -100,6 +100,7 @@ static const char* const CommandStr[] = {
                   "シーケンスBGM停止",
                   "アピールスクリプト",
                   "サブスクリプト",
+                  "配信BGM関連付け",
                   };
 #else
 #define SCRIPT_PRINT_LABEL(str) 
