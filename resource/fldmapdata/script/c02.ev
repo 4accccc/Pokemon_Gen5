@@ -608,6 +608,10 @@ EVENT_START   ev_scene_c02_leader02_01
 	_OBJ_ANIME(MMDL_ID_PLAYER, anm_common_turn_u)
 	_OBJ_ANIME_WAIT()
 	
+	//階段ＳＥ
+	_SE_PLAY(SEQ_SE_KAIDAN)
+	_SE_WAIT()
+	
 	_OBJ_ANIME(C02_SUPPORT_01, anm_common_turn_u)
 	_OBJ_ANIME_WAIT()
 	
@@ -624,6 +628,10 @@ EVENT_START   ev_scene_c02_leader02_01
 	_TIME_WAIT(16)
 	_OBJ_ANIME(MMDL_ID_PLAYER, anm_common_turn_u)
 	_OBJ_ANIME_WAIT()
+	
+	//階段ＳＥ
+	_SE_PLAY(SEQ_SE_KAIDAN)
+	_SE_WAIT()
 	
 	//ライバル・サポート・アーティを消す
 	_OBJ_DEL( C02_RIVAL_02 )
@@ -778,7 +786,7 @@ _ANIME_LABEL	anm_rival_02_turn
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_02_back 
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,8
+	_ANIME_DATA	AC_WALK_U_8F,7
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -803,7 +811,7 @@ _ANIME_LABEL	anm_player_tachidomeru
 _ANIME_LABEL	anm_support_back
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,8
+	_ANIME_DATA	AC_WALK_U_8F,7
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/

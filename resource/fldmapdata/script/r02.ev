@@ -135,7 +135,6 @@ EVENT_START   ev_pos_r02_support_01
     DEFAULT  
     ENDSWITCH
    
-
 	//ƒvƒŒƒCƒ„[‚ªU‚èŒü‚­
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d)
     _OBJ_ANIME_WAIT()
