@@ -13,7 +13,7 @@
 #define ZONE_C05R0601_EVC_H
 
 #define C05R0601_MAN3_01                   0
-#define C05R0601_BADMAN_01                 1
+#define C05R0601_WAITRESS_01               1
 #define C05R0601_SUNGLASSES_01             2
 #define C05R0601_WOMAN2_01                 3
 #define C05R0601_NURSE_01                  4
