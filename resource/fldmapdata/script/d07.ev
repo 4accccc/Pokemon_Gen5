@@ -182,7 +182,7 @@ EVENT_START  ev_pos_d07_rival_01
 	_OBJ_ANIME_WAIT()
 
 	//ライバル：だれかとおもえば
-	_BALLOONWIN_OBJMSG(msg_d07_black_02,D07_RIVAL_01  )
+	_BALLOONWIN_OBJMSG_POS(msg_d07_black_02,D07_RIVAL_01  , POS_DR )
 	_BALLOONWIN_CLOSE()
 	
 	//アテグ：まったくとげのある
@@ -190,7 +190,7 @@ EVENT_START  ev_pos_d07_rival_01
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル：…つよくなれば
-	_BALLOONWIN_OBJMSG(msg_d07_black_03,D07_RIVAL_01  )
+	_BALLOONWIN_OBJMSG_POS(msg_d07_black_03,D07_RIVAL_01  , POS_DR )
 	_BALLOONWIN_CLOSE()
 	
 	//アテグ：ふむう
@@ -222,15 +222,14 @@ EVENT_START  ev_pos_d07_rival_01
 	
 	//アテグ退場
 	_OBJ_ANIME( D07_CHAMPION_01,anm_d07_champion_goodbye )
-	_OBJ_ANIME_WAIT()
-	
 	//ライバル画面下を見る
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_d07_rival_look_champion02 )
 	_OBJ_ANIME( D07_RIVAL_01,anm_d07_rival_look_champion02 )
 	_OBJ_ANIME_WAIT()
 	
+	
 	//ライバル：なにが したいか…
-	_BALLOONWIN_OBJMSG(msg_d07_black_04,D07_RIVAL_01  )
+	_BALLOONWIN_OBJMSG_POS(msg_d07_black_04,D07_RIVAL_01 , POS_DR )
 	_BALLOONWIN_CLOSE()
 	
 	//主人公とライバル向き合う
@@ -238,7 +237,7 @@ EVENT_START  ev_pos_d07_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル：じゃあね
-	_BALLOONWIN_OBJMSG(msg_d07_black_05,D07_RIVAL_01  )
+	_BALLOONWIN_OBJMSG_POS(msg_d07_black_05,D07_RIVAL_01  , POS_DR )
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル退場
