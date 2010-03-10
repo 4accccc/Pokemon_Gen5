@@ -22,6 +22,7 @@
 #define R010_FLD_ITEM_01                   9
 #define R10_FLD_ITEM_02                   10
 #define R010_FLD_ITEM_03                  11
+#define R10_VETERANM_01                   12
 
 #endif //ZONE_R10_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r10.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

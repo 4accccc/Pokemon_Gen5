@@ -22,10 +22,11 @@
 _EVENT_DATA    ev_pos_r10_rival_01
 _EVENT_DATA    ev_bg_r10_board_01
 _EVENT_DATA    ev_bg_r10_board_02
+_EVENT_DATA    ev_r10_veteranm_01
 _EVENT_DATA_END
 
 /**************************************************************/
-/*【仮】POS：ライバルがチャンピオンの事を心配する             */
+/*POS：ライバルがチャンピオンの事を心配する             */
 /**************************************************************/
 
 EVENT_START   ev_pos_r10_rival_01
@@ -300,3 +301,10 @@ EVENT_START  ev_bg_r10_board_02
 	_EASY_BGWIN_MSG  	( msg_r10_sign2_01 , TYPE_POST )
 EVENT_END
 
+/**************************************************************/
+/*  VETERANM101                          */
+/**************************************************************/
+
+EVENT_START   ev_r10_veteranm_01
+  _EASY_TALK_ITEM_EVENT(ITEM_YAMINOISI, 1, FE_R10_ITEMGET_01, msg_r10_veteranm_01, msg_r10_veteranm_02, msg_r10_veteranm_02 )
+EVENT_END
