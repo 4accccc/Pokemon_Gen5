@@ -150,6 +150,9 @@ enum
 // 1秒間のフレーム数
 #define FPS (60)
 
+// 待ち時間
+#define COUNT_TIME_SEC_MAX (30)  // second
+
 // 文字数
 #define STRBUF_FIX_TIME_LENGTH       (  8)  // ??:??
 #define STRBUF_LENGTH                (256)  // この文字数で足りるかbuflen.hで要確認
@@ -623,8 +626,8 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
           GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT,
           FADE_TYPE_OUTSIDE );
       Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_REC, msg_record_01_01, TRUE );
-      Btl_Rec_Sel_FixStartTime( param, work, 30 );
-      Btl_Rec_Sel_BgMCreateNon( param, work );
+      Btl_Rec_Sel_FixStartTime( param, work, COUNT_TIME_SEC_MAX );
+      if( param->b_sync ) Btl_Rec_Sel_BgMCreateNon( param, work );
       work->fix_pause = TRUE;
     }
     else
@@ -1094,8 +1097,10 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
           }
           else
           {
-            // 何も表示せずに終了
-            (*seq) = SEQ_END;
+            // 下画面のフェードだけして、他は何もせずに終了
+            Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_END,
+                GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FADE_OUT_WAIT,
+                FADE_TYPE_OUTSIDE );
             break;
           }
         }
@@ -1120,7 +1125,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
           }
           else
           {
-            // ここには来ないようにInitで判定している
+            // ここには来ないようにBtl_Rec_Sel_ProcInitで判定している
             // 何も表示せずに終了
             (*seq) = SEQ_END;
             break;
@@ -1478,6 +1483,8 @@ static void Btl_Rec_Sel_FixMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wor
 {
   u8 i;
 
+  if( !(param->b_sync) ) return;
+
   if( work->fix_pause ) return;
 
   if( work->fix_frame >= FPS || work->fix_wait_count > 0 )
@@ -1666,6 +1673,8 @@ static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WOR
   GFL_BMP_DATA* bmp_data;
   PRINTSYS_LSB color;
   u8 i;
+
+  if( !(param->b_sync) ) return;
 
   // 一旦消去
   for( i=FIX_SEL_TIME; i<=FIX_TIME; i++ )
