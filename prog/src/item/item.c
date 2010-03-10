@@ -286,7 +286,7 @@ s32 ITEM_GetParam( u16 item, u16 param, HEAPID heap_id )
   ITEMDATA * dat;
   s32 ret;
 
-  dat = (ITEMDATA *)ITEM_GetItemArcData( item, ITEM_GET_DATA, heap_id );
+  dat = (ITEMDATA *)ITEM_GetItemArcData( item, ITEM_GET_DATA, GFL_HEAP_LOWID(heap_id) );
   ret = ITEM_GetBufParam( dat, param );
   GFL_HEAP_FreeMemory(dat);
 
