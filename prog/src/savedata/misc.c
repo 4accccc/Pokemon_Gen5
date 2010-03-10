@@ -165,14 +165,16 @@ static void MISC_InitNameIn( MISC *p_misc )
  * @param   monsno		ポケモン番号
  * @param   form_no		フォルム番号
  * @param   egg_flag	タマゴフラグ
+ * @param   sex       性別
  */
 //--------------------------------------------------------------
-void MISC_SetFavoriteMonsno(MISC * misc, int monsno, int form_no, int egg_flag)
+void MISC_SetFavoriteMonsno(MISC * misc, int monsno, int form_no, int egg_flag, int sex )
 {
-  OS_TPrintf( "お気に入りポケモンは%dでフォルムは%dで、タマゴフラグ%dです\n", monsno, form_no, egg_flag );
+  OS_TPrintf( "お気に入りポケモンは%dでフォルムは%dで、性別は %d、タマゴフラグ%dです\n", monsno, form_no, egg_flag );
 	misc->favorite_monsno = monsno;
 	misc->favorite_form_no = form_no;
 	misc->favorite_egg_flag = egg_flag;
+  misc->favorite_sex  = sex;
 }
 
 //--------------------------------------------------------------
@@ -183,13 +185,15 @@ void MISC_SetFavoriteMonsno(MISC * misc, int monsno, int form_no, int egg_flag)
  * @param   monsno		ポケモン番号(お気に入りを設定していない場合は0)
  * @param   form_no		フォルム番号
  * @param   egg_flag	タマゴフラグ
+ * @param   p_sex     性別
  */
 //--------------------------------------------------------------
-void MISC_GetFavoriteMonsno(const MISC * misc, int *monsno, int *form_no, int *egg_flag)
+void MISC_GetFavoriteMonsno(const MISC * misc, int *monsno, int *form_no, int *egg_flag, int *p_sex )
 {
 	*monsno = misc->favorite_monsno;
 	*form_no = misc->favorite_form_no;
 	*egg_flag = misc->favorite_egg_flag;
+  *p_sex    = misc->favorite_sex;
 }
 
 //--------------------------------------------------------------

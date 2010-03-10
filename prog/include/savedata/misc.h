@@ -79,8 +79,8 @@ extern MISC * SaveData_GetMisc( SAVE_CONTROL_WORK * p_sv);
 extern void MISC_SetNameInMode( MISC *p_misc, u32 mode, u8 input_type );
 extern u8 MISC_GetNameInMode( const MISC *cp_misc, u32 mode );
 //GDS
-extern void MISC_SetFavoriteMonsno(MISC * misc, int monsno, int form_no, int egg_flag);
-extern void MISC_GetFavoriteMonsno(const MISC * misc, int *monsno, int *form_no, int *egg_flag);
+extern void MISC_SetFavoriteMonsno(MISC * misc, int monsno, int form_no, int egg_flag, int sex );
+extern void MISC_GetFavoriteMonsno(const MISC * misc, int *monsno, int *form_no, int *egg_flag, int *p_sex );
 //palpark
 extern const u32  MISC_GetPalparkHighscore(const MISC *misc);
 extern void  MISC_SetPalparkHighscore(MISC *misc , u32 score);

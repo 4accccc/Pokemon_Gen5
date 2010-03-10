@@ -94,13 +94,13 @@ void GDS_Profile_MyDataSet(GDS_PROFILE_PTR gpp, SAVE_CONTROL_WORK *sv)
 	WIFI_HISTORY *wh = SaveData_GetWifiHistory(sv);
 	const MISC * misc = SaveData_GetMiscConst(sv);
   const MYPMS_DATA * mypms  = SaveData_GetMyPmsDataConst(sv);
-	int monsno, form_no, egg_flag;
+	int monsno, form_no, egg_flag, sex;
 	int i;
 	OSOwnerInfo info;
 
 	OS_GetOwnerInfo(&info);
 	
-	MISC_GetFavoriteMonsno(misc, &monsno, &form_no, &egg_flag);
+	MISC_GetFavoriteMonsno(misc, &monsno, &form_no, &egg_flag, &sex );
 
 	GFL_STD_MemClear(gpp, sizeof(GDS_PROFILE));
 
@@ -111,6 +111,7 @@ void GDS_Profile_MyDataSet(GDS_PROFILE_PTR gpp, SAVE_CONTROL_WORK *sv)
 	gpp->monsno = monsno;
 	gpp->form_no = form_no;
 	gpp->egg_flag = egg_flag;
+  gpp->sex  = sex;
 	gpp->country_code = MyStatus_GetMyNation(my);
 	gpp->local_code = MyStatus_GetMyArea(my);
 	

@@ -24,9 +24,11 @@ struct _MISC
   u32 gold;         //お金
   u32 badge;     //バッチBIT
 
+  //お気に入りポケモン
   u16 favorite_monsno;		//お気に入りポケモン
-	u8  favorite_form_no:7;		//お気に入りポケモンのフォルム番号
+	u8  favorite_form_no:6;		//お気に入りポケモンのフォルム番号
 	u8  favorite_egg_flag:1;	//お気に入りポケモンのタマゴフラグ
+  u8  favorite_sex:1;       //お気に入りポケモンの性別
 	u8	namein_mode[NAMEIN_SAVEMODE_MAX];	//8つ
 
 	//パルパーク

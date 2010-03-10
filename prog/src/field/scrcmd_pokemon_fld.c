@@ -72,8 +72,9 @@ VMCMD_RESULT EvCmdSetFavoritePoke( VMHANDLE * core, void *wk )
     u16 monsno = PP_Get( pp, ID_PARA_monsno, NULL );
     u16 form_no = PP_Get( pp, ID_PARA_form_no, NULL );
     u16 egg_flag = PP_Get( pp, ID_PARA_tamago_flag, NULL );
+    u16 sex = PP_Get( pp, ID_PARA_sex, NULL );
 
-    MISC_SetFavoriteMonsno( misc, monsno, form_no, egg_flag );
+    MISC_SetFavoriteMonsno( misc, monsno, form_no, egg_flag, sex );
   }
   return VMCMD_RESULT_CONTINUE;
 }
