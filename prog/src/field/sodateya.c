@@ -19,6 +19,7 @@
 #include "savedata/sodateya_work.h" 
 #include "fieldmap.h"
 #include "sodateya.h" 
+#include "print/global_msg.h"
 
 #include "arc/arc_def.h"  // for ARCID_PMSTBL
 #include "arc/kowaza.naix"
@@ -1339,6 +1340,15 @@ static void EggCordinate_finish( POKEMON_PARAM* egg, SODATEYA* sodateya )
   {
     STRBUF* name = MyStatus_CreateNameString( mystatus, sodateya->heapID );
     PP_Put( egg, ID_PARA_oyaname, (u32)name );
+    GFL_STR_DeleteBuffer( name );
+  } 
+
+  // ニックネーム ( タマゴ )
+  {
+    STRBUF* name;
+
+    name = GFL_MSG_CreateString( GlobalMsg_PokeName, MONSNO_TAMAGO );
+    PP_Put( egg, ID_PARA_nickname, (u32)name );
     GFL_STR_DeleteBuffer( name );
   } 
 

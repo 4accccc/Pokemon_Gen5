@@ -3,6 +3,7 @@
 #include "event_debug_menu_make_egg.h"
 
 #include "field/field_msgbg.h"
+#include "print/global_msg.h"
 #include "event_debug_local.h"
 
 #include "arc/message.naix"
@@ -207,6 +208,15 @@ static POKEMON_PARAM* CreateEgg( GAMEDATA* gameData, HEAPID heapID, u32 monsno )
 
   // タマゴフラグ
   PP_Put( egg, ID_PARA_tamago_flag, TRUE );
+
+  // ニックネーム ( タマゴ )
+  {
+    STRBUF* name;
+
+    name = GFL_MSG_CreateString( GlobalMsg_PokeName, MONSNO_TAMAGO );
+    PP_Put( egg, ID_PARA_nickname, (u32)name );
+    GFL_STR_DeleteBuffer( name );
+  } 
 
   PP_Renew( egg );
   return egg;
