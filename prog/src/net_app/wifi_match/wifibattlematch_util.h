@@ -31,6 +31,7 @@ typedef enum
 {
   WBM_TEXT_TYPE_QUE,     //プリントキューを使う
   WBM_TEXT_TYPE_STREAM,  //ストリームを使う
+  WBM_TEXT_TYPE_WAIT,  //待機する
 
   WBM_TEXT_TYPE_MAX,    //c内部にて使用
 } WBM_TEXT_TYPE;

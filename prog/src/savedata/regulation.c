@@ -845,6 +845,7 @@ void RegulationView_SetEazy( REGULATION_VIEWDATA *pView, const POKEPARTY *cp_par
       RegulationView_SetParam( pView, REGULATION_VIEW_MONS_NO, i, PP_Get( p_pp, ID_PARA_monsno, NULL ) );
       RegulationView_SetParam( pView, REGULATION_VIEW_FROM_NO, i, PP_Get( p_pp, ID_PARA_form_no, NULL ) );
       RegulationView_SetParam( pView, REGULATION_VIEW_ITEM_FLAG, i, PP_Get( p_pp, ID_PARA_item, NULL ) != 0 );
+      RegulationView_SetParam( pView, REGULATION_VIEW_SEX, i, PP_Get( p_pp, ID_PARA_sex, NULL ) );
 
     }
   }

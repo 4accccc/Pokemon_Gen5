@@ -1752,7 +1752,7 @@ static void PlayerInfo_POKEICON_Create( PLAYERINFO_WORK * p_wk, GFL_CLUNIT *p_un
               p_wk->res[ PLAYERINFO_RESID_ITEM_PLT ],
               p_wk->res[ PLAYERINFO_RESID_ITEM_CELL ],
               &clwk_item_data,
-              CLSYS_DRAW_MAIN,
+              p_wk->cl_draw_type,
               heapID );
         }
         else
