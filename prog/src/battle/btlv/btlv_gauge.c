@@ -222,6 +222,8 @@ struct _BTLV_GAUGE_CLWK
   u32           move_cnt      :4;
   u32           yure_req      :1;
   u32                         :11;
+
+  u32           add_dec;
 };
 
 struct _BTLV_GAUGE_WORK
@@ -754,6 +756,22 @@ void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, GFL_CLACTPOS* of
 void  BTLV_GAUGE_CalcHP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
 {
   Gauge_InitCalcHP( &bgw->bgcl[ pos ], value );
+  bgw->bgcl[ pos ].add_dec = 1;
+}
+
+//============================================================================================
+/**
+ *  @brief  HPゲージ計算
+ *
+ *  @param[in] bgw    BTLV_GAUGE_WORK管理構造体へのポインタ
+ *  @param[in] pos    立ち位置
+ *  @param[in] value  最終的に到達する値
+ */
+//============================================================================================
+void  BTLV_GAUGE_CalcHPAtOnce( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
+{
+  Gauge_InitCalcHP( &bgw->bgcl[ pos ], value );
+  bgw->bgcl[ pos ].add_dec = 0;
 }
 
 //============================================================================================
@@ -878,7 +896,7 @@ static  void  Gauge_CalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
 {
   s32 calc_hp;
 
-  calc_hp = GaugeProc( bgcl->hpmax, bgcl->hp, bgcl->damage, &bgcl->hp_work, BTLV_GAUGE_HP_CHARMAX, 1 );
+  calc_hp = GaugeProc( bgcl->hpmax, bgcl->hp, bgcl->damage, &bgcl->hp_work, BTLV_GAUGE_HP_CHARMAX, bgcl->add_dec );
   PutGaugeOBJ( bgw, bgcl, BTLV_GAUGE_REQ_HP );
   if( calc_hp == -1 ){
     //計算終了時にゲージワークのhpパラメータを最新の値(ダメージ計算後)で更新しておく
@@ -1027,7 +1045,7 @@ static s32 GaugeProc(s32 MaxHP, s32 NowHP, s32 beHP, s32 *HP_Work, u8 GaugeMax, 
     if( beHP < 0 ){ //ｹﾞｰｼﾞ回復
       *HP_Work += add_hp;
       ret = *HP_Work >> 8;
-      if( ret >= endHP ){ //少数を扱っているのでｵｰﾊﾞｰﾌﾛｰﾁｪｯｸ
+      if( ( ret >= endHP ) || ( add_dec == 0 ) ){ //少数を扱っているのでｵｰﾊﾞｰﾌﾛｰﾁｪｯｸ
         *HP_Work = endHP << 8;
         ret = endHP;
       }
@@ -1039,7 +1057,7 @@ static s32 GaugeProc(s32 MaxHP, s32 NowHP, s32 beHP, s32 *HP_Work, u8 GaugeMax, 
       {
         ret++;
       }
-      if( ret <= endHP )    //少数を扱っているのでｵｰﾊﾞｰﾌﾛｰﾁｪｯｸ
+      if( ( ret <= endHP ) || ( add_dec == 0 ) )    //少数を扱っているのでｵｰﾊﾞｰﾌﾛｰﾁｪｯｸ
       {
         *HP_Work = endHP << 8;
         ret = endHP;
@@ -1049,14 +1067,14 @@ static s32 GaugeProc(s32 MaxHP, s32 NowHP, s32 beHP, s32 *HP_Work, u8 GaugeMax, 
   else{
     if( beHP < 0 ){   //ｹﾞｰｼﾞ回復
       *HP_Work += add_dec;
-      if( *HP_Work > endHP )
+      if( ( *HP_Work > endHP ) || ( add_dec == 0 ) )
       {
         *HP_Work = endHP;
       }
     }
     else{       //ｹﾞｰｼﾞ減少
       *HP_Work -= add_dec;
-      if( *HP_Work < endHP )
+      if( ( *HP_Work < endHP ) || ( add_dec == 0 ) )
       {
         *HP_Work = endHP;
       }

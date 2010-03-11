@@ -158,6 +158,7 @@ extern  void              BTLV_EFFECT_DelTrainer( int position );
 extern  void              BTLV_EFFECT_SetGauge( const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp, int position );
 extern  void              BTLV_EFFECT_DelGauge( int position );
 extern  void              BTLV_EFFECT_CalcGaugeHP( int position, int value );
+extern  void              BTLV_EFFECT_CalcGaugeHPAtOnce( int position, int value );
 extern  void              BTLV_EFFECT_CalcGaugeEXP( int position, int value );
 extern  void              BTLV_EFFECT_CalcGaugeEXPLevelUp( int position, const BTL_POKEPARAM* bpp );
 extern  void              BTLV_EFFECT_BallThrow( int position, u16 item_no, u8 yure_cnt, BOOL f_success, BOOL f_critical );

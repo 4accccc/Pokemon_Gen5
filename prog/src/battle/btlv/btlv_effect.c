@@ -734,6 +734,19 @@ void  BTLV_EFFECT_CalcGaugeHP( int position, int value )
 
 //============================================================================================
 /**
+ * @brief  指定された位置のHPゲージ計算（ゲージの増減エフェクトなしですぐ反映）
+ *
+ * @param[in] position  計算するゲージ位置
+ * @param[in] value     計算量
+ */
+//============================================================================================
+void  BTLV_EFFECT_CalcGaugeHPAtOnce( int position, int value )
+{
+  BTLV_GAUGE_CalcHPAtOnce( bew->bgw, position, value );
+}
+
+//============================================================================================
+/**
  * @brief  指定された位置のEXPゲージ計算
  *
  * @param[in] position  計算するゲージ位置

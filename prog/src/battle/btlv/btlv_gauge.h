@@ -36,6 +36,7 @@ extern  void              BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_M
 extern  void              BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos );
 extern  void              BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, GFL_CLACTPOS* ofs );
 extern  void              BTLV_GAUGE_CalcHP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int damage );
+extern  void              BTLV_GAUGE_CalcHPAtOnce( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value );
 extern  void              BTLV_GAUGE_CalcEXP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int add_exp );
 extern  void              BTLV_GAUGE_CalcEXPLevelUp( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BtlvMcssPos pos );
 extern  BOOL              BTLV_GAUGE_CheckExecute( BTLV_GAUGE_WORK *bgw );
