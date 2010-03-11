@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-04T13:02:54"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T21:39:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1056,6 +1056,60 @@
 人が　一緒に　暮らしています▼
 ポケモンを　たたかわせる人を
 ポケモントレーナーと　いいます</language>
+	</row>
+
+	<row id="msg_t01r0102_award1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・続けて表彰状アプリ呼び出し</comment>
+		<attribute name="キャラ指定">地方図鑑の表彰状</attribute>
+		<language name="JPN" width="256">イッシュずかん　かんせいの
+ひょうしょうじょう　だ！▼</language>
+		<language name="JPN_KANJI" width="256">イッシュ図鑑　完成の　表彰状だ！▼</language>
+	</row>
+
+	<row id="msg_t01r0102_award2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・続けて表彰状アプリ呼び出し</comment>
+		<attribute name="キャラ指定">全国図鑑の表彰状</attribute>
+		<language name="JPN" width="256">ぜんこくずかん　かんせいの
+ひょうしょうじょう　だ！▼</language>
+		<language name="JPN_KANJI" width="256">全国図鑑　完成の　表彰状だ！▼</language>
+	</row>
+
+	<row id="msg_t01r0102_trophy1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">バトルサブウェイのトロフィ
+・シングル</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+シングル　マスターに　しょうりした▽
+あかしの　トロフィーだ！</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+シングル　マスターに　勝利した▽
+証の　トロフィーだ！</language>
+	</row>
+
+	<row id="msg_t01r0102_trophy2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">バトルサブウェイのトロフィ
+・ダブル</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+ダブル　マスターに　しょうりした▽
+あかしの　トロフィーだ！</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+ダブル　マスターに　勝利した▽
+証の　トロフィーだ！</language>
+	</row>
+
+	<row id="msg_t01r0102_trophy3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">バトルサブウェイのトロフィ
+・マルチ</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+マルチ　マスターを　しょうりした▽
+あかしの　トロフィーだ！</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+マルチ　マスターを　勝利した▽
+証の　トロフィーだ！</language>
 	</row>
 
 	<flowchart-group-list>
