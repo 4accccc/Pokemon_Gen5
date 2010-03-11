@@ -31,6 +31,7 @@ extern u32 GDS_Profile_GetID(const GDS_PROFILE_PTR gpp);
 extern u32 GDS_Profile_GetSex(const GDS_PROFILE_PTR gpp);
 extern int GDS_Profile_GetMonsNo(const GDS_PROFILE_PTR gpp);
 extern int GDS_Profile_GetFormNo(const GDS_PROFILE_PTR gpp);
+extern int GDS_Profile_GetPokeSex(const GDS_PROFILE_PTR gpp);
 extern int GDS_Profile_GetNation(const GDS_PROFILE_PTR gpp);
 extern int GDS_Profile_GetArea(const GDS_PROFILE_PTR gpp);
 extern int GDS_Profile_GetMonthBirthday(const GDS_PROFILE_PTR gpp);

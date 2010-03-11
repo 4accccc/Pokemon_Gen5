@@ -21,6 +21,10 @@ enum {
 ///録画ヘッダに格納するポケモン番号の最大要素数
 #define HEADER_MONSNO_MAX   (12)
 
+#define HEADER_FORM_NO_MASK ( 0x7f )      ///<フォルムナンバーを取り出すためのマスク値
+#define HEADER_GENDER_MASK  ( 0x80 )      ///<性別を取り出すためのマスク値
+#define HEADER_GENDER_SHIFT ( 7 )         ///<性別を取り出すためのシフト値
+
 ///データナンバーの型
 typedef u64 DATA_NUMBER;
 
@@ -130,6 +134,7 @@ typedef enum{
 #define RECHEAD_IDX_MODE      (3)   ///<録画施設
 #define RECHEAD_IDX_DATA_NUMBER   (4)   ///<データナンバー
 #define RECHEAD_IDX_SECURE      (5)   ///<安全視聴済み
+#define RECHEAD_IDX_GENDER      (6)   ///<性別
 
 
 

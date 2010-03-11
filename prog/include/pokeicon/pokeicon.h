@@ -11,6 +11,7 @@
 
 #include "poke_tool/poke_tool.h"
 
+#define GENDER_VER
 
 //==============================================================================
 //	íËêîíËã`
@@ -41,9 +42,13 @@ enum {
 //	äOïîä÷êîêÈåæ
 //==============================================================================
 extern u32 POKEICON_GetCgxArcIndex( const POKEMON_PASO_PARAM* ppp );
+#ifdef GENDER_VER
+extern u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons, u32 form_no, u32 sex, BOOL egg );
+extern const u8 POKEICON_GetPalNum( u32 mons, u32 form, u32 sex, BOOL egg );
+#else
 extern u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons, u32 form_no, BOOL egg );
-extern u16 POKEICON_GetCgxForm( const POKEMON_PASO_PARAM* ppp );
 extern const u8 POKEICON_GetPalNum( u32 mons, u32 form, BOOL egg );
+#endif
 extern const u8 POKEICON_GetPalNumByPPP( const POKEMON_PASO_PARAM * ppp );
 extern u8 POKEICON_GetPalNumGetByPPP( const POKEMON_PASO_PARAM * ppp );
 extern u32 POKEICON_GetPalArcIndex(void);
