@@ -187,6 +187,7 @@ FMMDL_RESLIST_NCGIMD = \
 	sprock.imd \
 	tbossbl.imd \
 	present.imd \
+	poke24.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \
