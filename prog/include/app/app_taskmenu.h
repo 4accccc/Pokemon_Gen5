@@ -107,3 +107,6 @@ extern BOOL APP_TASKMENU_WIN_IsDecide( const APP_TASKMENU_WIN_WORK *wk );
 extern const BOOL APP_TASKMENU_WIN_IsFinish( const APP_TASKMENU_WIN_WORK *work );
 extern const BOOL APP_TASKMENU_WIN_IsTrg( const APP_TASKMENU_WIN_WORK *wk );
 extern void APP_TASKMENU_WIN_ResetDecide( APP_TASKMENU_WIN_WORK *wk );
+extern void APP_TASKMENU_WIN_SetPaletteAndAnimeColor( APP_TASKMENU_WIN_WORK *wk, APP_TASKMENU_RES *res,
+                                               u8 plt, GXRgb animeColS, GXRgb animeColE );
+

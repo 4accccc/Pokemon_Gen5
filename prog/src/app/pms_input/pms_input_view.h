@@ -74,6 +74,8 @@ enum {
 	
   PALNUM_MAIN_BUTTON = 0x0a, // @TODO 使ってないので消す
 
+  PALNUM_MAIN_TASKMENU_PASSIVE  = 0x0a,
+
   // サブ画面のBGのパレットのRAMの位置
   PALNUM_SUB_ALL         = 0,  // 全体(5本)
   PALNUM_SUB_EXPLAIN     = 5,  // 上画面説明欄(1本)
@@ -411,6 +413,7 @@ extern void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk );
 extern void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk );
 extern void PMSIV_MENU_SetupWordWin( PMSIV_MENU* wk );
 extern void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk );
+extern void PMSIV_MENU_UpdateEditTaskMenu( PMSIV_MENU* wk );
 extern void PMSIV_MENU_TaskMenuSetActive( PMSIV_MENU* wk, u8 pos, BOOL is_on );
 extern BOOL PMSIV_MENU_TaskMenuIsFinish( PMSIV_MENU* wk, u8 pos );
 extern void PMSIV_MENU_TaskMenuSetDecide( PMSIV_MENU* wk, u8 pos, BOOL is_on );

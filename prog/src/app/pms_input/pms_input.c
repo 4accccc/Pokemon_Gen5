@@ -392,6 +392,16 @@ GFL_PROC_RESULT PMSInput_Init( GFL_PROC * proc, int * seq , void *pwk, void *myw
 			{
 				wk->sentence_edit_pos_max = 0;
 			}
+
+      // 最初はEditAreaから始まるので、そのキー/タッチ切替を行っておく
+	    PMSIView_SetCommand( wk->vwk, VCMD_KTCHANGE_EDITAREA);
+      (*seq)++;
+    }
+    break;
+  case 2:
+    wk = mywk;
+		if( PMSIView_WaitCommandAll( wk->vwk ) )
+    {
 			return GFL_PROC_RES_FINISH;
 		}
 		break;
@@ -682,7 +692,7 @@ static int KeyStatusChange(PMS_INPUT_WORK* wk,int* seq)
 				(wk->cb_ktchg_func)(wk,seq);
 			}
 			wk->key_mode = GFL_APP_KTST_TOUCH;
-			return 0;
+			return 1;
 		}
 	}
 	return 0;
@@ -1374,6 +1384,10 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 
 		if( wk->key_trg & PAD_KEY_UP )
 		{
+#if PMS_USE_SND
+				GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
+#endif //PMS_USE_SND
+
       if( wk->edit_pos == 0 )
       {
         // 回り込み
@@ -1383,9 +1397,6 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
       }
 			else if( wk->sentence_edit_pos_max > 1 && wk->edit_pos > 0 )
 			{
-#if PMS_USE_SND
-				GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
-#endif //PMS_USE_SND
 				wk->edit_pos--;
 				PMSIView_SetCommand( wk->vwk, VCMD_MOVE_EDITAREA_CURSOR );
 			}
@@ -1525,14 +1536,25 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 			break;
 		}
 		if( wk->key_trg & PAD_BUTTON_A ){
-#if PMS_USE_SND
-			GFL_SOUND_PlaySE(SOUND_DECIDE);
-#endif //PMS_USE_SND
-
 			if( wk->cmd_button_pos == BUTTON_POS_DECIDE ){
+        if( check_input_complete( wk ) )
+        {
+#if PMS_USE_SND
+		  	  GFL_SOUND_PlaySE(SOUND_DECIDE);
+#endif //PMS_USE_SND
+        }
+        else
+        {
+#if PMS_USE_SND
+		  	  GFL_SOUND_PlaySE(SOUND_DISABLE_BUTTON);
+#endif //PMS_USE_SND
+        }
 				(*seq) = SEQ_EDS_TO_SUBPROC_OK;
 				break;
 			}else{
+#if PMS_USE_SND
+				GFL_SOUND_PlaySE(SOUND_CANCEL);
+#endif //PMS_USE_SND
 				(*seq) = SEQ_EDS_TO_SUBPROC_CANCEL;
 					break;
 				}
@@ -1540,7 +1562,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 
 			if( wk->key_trg & PAD_BUTTON_B ){
 #if PMS_USE_SND
-				GFL_SOUND_PlaySE(SOUND_DECIDE);
+				GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 				(*seq) = SEQ_EDS_TO_SUBPROC_CANCEL;
 				break;
@@ -1621,11 +1643,21 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 
 		switch(ret){
 		case 0:	//決定
+      if( check_input_complete( wk ) )
+      {
 #if PMS_USE_SND
-			GFL_SOUND_PlaySE(SOUND_DECIDE);
+		   GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
+      }
+      else
+      {
+#if PMS_USE_SND
+		   GFL_SOUND_PlaySE(SOUND_DISABLE_BUTTON);
+#endif //PMS_USE_SND
+      }
 			wk->cmd_button_pos = BUTTON_POS_DECIDE;
-			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON );  // 編集エリアじゃなく「けってい/やめるボタン」のところにいるかもしれないが、ボタンを光らせたいのでこのコマンドを呼んでおく。
+			//PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON );  // 編集エリアじゃなく「けってい/やめるボタン」のところにいるかもしれないが、ボタンを光らせたいのでこのコマンドを呼んでおく。
+			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON_TOUCH );  // 編集エリアじゃなく「けってい/やめるボタン」のところにいるかもしれないが、今いる場所を編集エリアからボタン領域へ移動させたいのでこのコマンドを呼んでおく。
 			*seq = SEQ_EDS_TO_SUBPROC_OK+ret;
 			break;
     case 1:	//やめる
@@ -1633,7 +1665,8 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 			GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 			wk->cmd_button_pos = BUTTON_POS_CANCEL;
-			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON );  // 編集エリアじゃなく「けってい/やめるボタン」のところにいるかもしれないが、ボタンを光らせたいのでこのコマンドを呼んでおく。
+			//PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON );  // 編集エリアじゃなく「けってい/やめるボタン」のところにいるかもしれないが、ボタンを光らせたいのでこのコマンドを呼んでおく。
+			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON_TOUCH );  // 編集エリアじゃなく「けってい/やめるボタン」のところにいるかもしれないが、今いる場所を編集エリアからボタン領域へ移動させたいのでこのコマンドを呼んでおく。
 			*seq = SEQ_EDS_TO_SUBPROC_OK+ret;
 			break;
 		case 2:	// 左
@@ -1794,7 +1827,10 @@ static GFL_PROC_RESULT mp_input_sentence( PMS_INPUT_WORK* wk, int* seq )
 		*seq == SEQ_EDS_KEYWAIT ||
 		*seq == SEQ_EDS_BUTTON_KEYWAIT){
 		if(KeyStatusChange(wk,seq)){
-			return GFL_PROC_RES_CONTINUE;
+	    if(wk->key_mode == GFL_APP_KTST_KEY)  // タッチ→キーに変更したときだけ(KeyStatusChange関数内でwk->cb_ktchg_funcを呼ぶ以外は)何もせずに戻る
+      {
+			  return GFL_PROC_RES_CONTINUE;
+      }
 		}
 	}
 	if(wk->key_mode == GFL_APP_KTST_KEY){
@@ -3398,8 +3434,9 @@ static void SubProc_CommandOK( PMS_INPUT_WORK* wk, int* seq )
 	case SEQ_INIT:
 		if( PMSIView_WaitCommandAll( wk->vwk ) )
     {
-  		if( CheckModified( wk ) || PMSI_PARAM_GetNotEditEgnoreFlag(wk->input_param) )
-  		{
+  		//if( CheckModified( wk ) || PMSI_PARAM_GetNotEditEgnoreFlag(wk->input_param) )
+  	  if( 1 )  // 変更していなくても、決定が選べていい	
+      {
   			if( check_input_complete( wk ) )
   			{
   				InitMenuState( &wk->menu, MENU_RESULT_POS_MAX, MENU_RESULT_POS_YES );
@@ -3411,13 +3448,14 @@ static void SubProc_CommandOK( PMS_INPUT_WORK* wk, int* seq )
   			{
           /// @TODO このままでは何もメッセージが出ない
   				PMSIView_SetCommand( wk->vwk, VCMD_DISP_MESSAGE_WARN );
-  				(*seq) = SEQ_WAIT_ANYKEY;
+  				//(*seq) = SEQ_WAIT_ANYKEY;
+  				(*seq) = SEQ_RETURN;
   			}
   		}
   		else
   		{
         // 無効なボタンタッチ音
-        GFL_SOUND_PlaySE( SOUND_DISABLE_BUTTON );
+//音はメインプロセスで鳴らす        GFL_SOUND_PlaySE( SOUND_DISABLE_BUTTON );
 
   			PMSIView_SetCommand( wk->vwk, VCMD_ERASE_MENU );
   			(*seq) = SEQ_RETURN;
@@ -3462,7 +3500,7 @@ static void SubProc_CommandOK( PMS_INPUT_WORK* wk, int* seq )
 		switch(ret){
 		case 0:
 #if PMS_USE_SND
-			GFL_SOUND_PlaySE(SOUND_CANCEL);
+	//音はメインプロセスで鳴らす		GFL_SOUND_PlaySE(SOUND_CANCEL);
 #endif //PMS_USE_SND
 
 			PMSIView_SetCommand( wk->vwk, VCMD_ERASE_MENU );
@@ -3470,7 +3508,7 @@ static void SubProc_CommandOK( PMS_INPUT_WORK* wk, int* seq )
 			break;
 		case 1:
 #if PMS_USE_SND
-			GFL_SOUND_PlaySE(SOUND_DECIDE);
+	//音はメインプロセスで鳴らす		GFL_SOUND_PlaySE(SOUND_DECIDE);
 #endif //PMS_USE_SND
 			if( wk->input_mode == PMSI_MODE_SENTENCE )
 			{
@@ -3801,7 +3839,7 @@ STRBUF* PMSI_GetEditSourceString( const PMS_INPUT_WORK* wk, u32 heapID )
 
 //------------------------------------------------------------------
 /**
-	* 編集エリアのカーソル位置を返す
+	* 編集エリアのカーソル位置を返す(編集エリア中の定型文に単語を当てはめる領域のカーソル位置)
 	*
 	* @param   wk		
 	*
@@ -3815,7 +3853,7 @@ u32 PMSI_GetEditAreaCursorPos( const PMS_INPUT_WORK* wk )
 
 //------------------------------------------------------------------
 /**
-	* ボタンカーソル位置取得
+	* ボタンカーソル位置取得(編集エリア中のタスクメニュー(決定/やめる)領域のカーソル位置)
 	*
 	* @param   wk		
 	*
@@ -3825,6 +3863,37 @@ u32 PMSI_GetEditAreaCursorPos( const PMS_INPUT_WORK* wk )
 u32 PMSI_GetButtonCursorPos( const PMS_INPUT_WORK* wk )
 {
 	return wk->cmd_button_pos;
+}
+
+//------------------------------------------------------------------
+/**
+	* 編集エリア中で、編集領域(定型文に単語を当てはめる)にいるか、ボタン領域(タスクメニュー(決定/やめる))にいるかを返す
+	*
+	* @param   wk		
+	*
+	* @retval  編集領域にいるときTRUEを返す	
+	*/
+//------------------------------------------------------------------
+BOOL PMSI_GetEditAreaOrButton( const PMS_INPUT_WORK* wk )
+{
+  if(    wk->input_mode == PMSI_MODE_SINGLE     ///< 単語１個モード
+      || wk->input_mode == PMSI_MODE_DOUBLE )   ///< 単語２個モード
+  {
+	  if(    wk->main_seq == SEQ_EDW_BUTTON_KEYWAIT
+        || wk->main_seq == SEQ_EDW_TO_SUBPROC_OK
+        || wk->main_seq == SEQ_EDW_TO_SUBPROC_CANCEL
+        || wk->main_seq == SEQ_EDW_RETURN_SUBPROC )
+      return FALSE;
+  }
+  else  // if( wk->input_mode == PMSI_MODE_SENTENCE )    ///< 文章モード
+  {
+    if(    wk->main_seq == SEQ_EDS_BUTTON_KEYWAIT
+        || wk->main_seq == SEQ_EDS_TO_SUBPROC_OK
+        || wk->main_seq == SEQ_EDS_TO_SUBPROC_CANCEL
+        || wk->main_seq == SEQ_EDS_RETURN_SUBPROC )
+	    return FALSE;
+  }
+  return TRUE;
 }
 
 //------------------------------------------------------------------
@@ -4046,4 +4115,16 @@ void PMSI_GetSearchResultString( const PMS_INPUT_WORK* wk, u32 result_idx, STRBU
   PMSI_SEARCH_GetResultString( wk->swk, result_idx, dst_buf );
 }
 
-
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  文章として完成しているかチェック
+ *
+ *	@param	const PMS_INPUT_WORK* wk ワーク
+ *
+ *	@retval 文章として完成していればTRUE
+ */
+//-----------------------------------------------------------------------------
+BOOL PMSI_CheckInputComplete( const PMS_INPUT_WORK* wk )
+{
+  return check_input_complete( (PMS_INPUT_WORK*)wk );  // constはずしはイヤだが、check_input_completeでwkを変更してないからまあよしとする
+}

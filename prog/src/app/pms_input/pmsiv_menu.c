@@ -76,6 +76,37 @@ typedef enum {
 
 } TASKMENU_WIN;
 
+// タスクメニューのプレートのアニメ
+// アクティブ  // prog/src/app/app_taskmenu.c参照
+#define ACTIVE_TASKMENU_ANIME_S_R (5)
+#define ACTIVE_TASKMENU_ANIME_S_G (10)
+#define ACTIVE_TASKMENU_ANIME_S_B (13)
+#define ACTIVE_TASKMENU_ANIME_E_R (12)
+#define ACTIVE_TASKMENU_ANIME_E_G (25)
+#define ACTIVE_TASKMENU_ANIME_E_B (30)
+// パッシブ 
+#define PASSIVE_TASKMENU_ANIME_S_R (0)
+#define PASSIVE_TASKMENU_ANIME_S_G (0)
+#define PASSIVE_TASKMENU_ANIME_S_B (0)
+#define PASSIVE_TASKMENU_ANIME_E_R (0)
+#define PASSIVE_TASKMENU_ANIME_E_G (10)
+#define PASSIVE_TASKMENU_ANIME_E_B (15)
+
+static const GXRgb active_taskmenu_anime_s = GX_RGB( ACTIVE_TASKMENU_ANIME_S_R,
+                                                     ACTIVE_TASKMENU_ANIME_S_G,
+                                                     ACTIVE_TASKMENU_ANIME_S_B );
+static const GXRgb active_taskmenu_anime_e = GX_RGB( ACTIVE_TASKMENU_ANIME_E_R,
+                                                     ACTIVE_TASKMENU_ANIME_E_G,
+                                                     ACTIVE_TASKMENU_ANIME_E_B );
+
+static const GXRgb passive_taskmenu_anime_s = GX_RGB( PASSIVE_TASKMENU_ANIME_S_R,
+                                                      PASSIVE_TASKMENU_ANIME_S_G,
+                                                      PASSIVE_TASKMENU_ANIME_S_B );
+static const GXRgb passive_taskmenu_anime_e = GX_RGB( PASSIVE_TASKMENU_ANIME_E_R,
+                                                      PASSIVE_TASKMENU_ANIME_E_G,
+                                                      PASSIVE_TASKMENU_ANIME_E_B );
+
+
 //--------------------------------------------------------------
 ///	CLWKボタン定義
 //==============================================================
@@ -121,7 +152,8 @@ struct _PMSIV_MENU {
   PMSIV_CELL_RES          resCell;
   TOUCHBAR_WORK*          touchbar;
 	GFL_MSGDATA*            msgman;
-  APP_TASKMENU_RES*       menu_res;
+  //APP_TASKMENU_RES*       menu_res;
+  APP_TASKMENU_RES*       menu_res_win[ TASKMENU_WIN_MAX ];  // APP_TASKMENU_WIN_WORKごとに異なるAPP_TASKMENU_RESを用意する。
   APP_TASKMENU_ITEMWORK   menu_item[ TASKMENU_WIN_MAX ];
   APP_TASKMENU_WIN_WORK*  menu_win[ TASKMENU_WIN_MAX ];
   GFL_CLWK*               clwk_icon[ MENU_CLWKICON_MAX ];
@@ -173,11 +205,36 @@ PMSIV_MENU* PMSIV_MENU_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, c
       NARC_message_pms_input_dat, HEAPID_PMS_INPUT_VIEW );
     
   // リソース展開
-  wk->menu_res = APP_TASKMENU_RES_Create( 
+  //wk->menu_res = APP_TASKMENU_RES_Create( 
+  //      FRM_MAIN_TASKMENU, PALNUM_MAIN_TASKMENU, 
+  //      PMSIView_GetFontHandle(wk->vwk),
+  //      PMSIView_GetPrintQue(wk->vwk),
+  //      HEAPID_PMS_INPUT_VIEW );
+
+  // タスクメニューで決定できないボタンの色を変更するために、タスクメニューのリソースをウィンドウの数だけ用意する
+  {
+    int i;
+    for( i=0; i<TASKMENU_WIN_MAX; i++ )
+    {
+      wk->menu_res_win[i] = APP_TASKMENU_RES_Create( 
         FRM_MAIN_TASKMENU, PALNUM_MAIN_TASKMENU, 
         PMSIView_GetFontHandle(wk->vwk),
         PMSIView_GetPrintQue(wk->vwk),
         HEAPID_PMS_INPUT_VIEW );
+    }
+  }
+  // タスクメニューで決定できないボタンの色を転送する
+  {
+    // ARCID_APP_MENU_COMMON, NARC_app_menu_common_task_menu_NCLRと同じ構成のパレットを転送する
+    // prog/src/app/app_taskmenu.c  APP_TASKMENU_RES_Create  参考
+    GFL_ARC_UTIL_TransVramPalette(
+        ARCID_PMSI_GRAPHIC,
+			  NARC_pmsi_pms_task_menu_passive_NCLR,
+        PALTYPE_MAIN_BG,
+        PALNUM_MAIN_TASKMENU_PASSIVE*32,
+        32*2,
+        HEAPID_PMS_INPUT_VIEW );	
+  }
 
   // タッチバー
   wk->touchbar = _touchbar_init( PMSIView_GetCellUnit(wk->vwk), HEAPID_PMS_INPUT_VIEW );
@@ -208,7 +265,16 @@ void PMSIV_MENU_Delete( PMSIV_MENU* wk )
   TOUCHBAR_Exit( wk->touchbar );
 
   // タスクメニュー リソース開放
-  APP_TASKMENU_RES_Delete( wk->menu_res );
+  //APP_TASKMENU_RES_Delete( wk->menu_res );
+
+  // タスクメニューで決定できないボタンの色を変更するために、ウィンドウの数だけ用意していたリソースを開放する
+  {
+    int i;
+    for( i=0; i<TASKMENU_WIN_MAX; i++ )
+    {
+      APP_TASKMENU_RES_Delete( wk->menu_res_win[i] );
+    }
+  }
 
   _mark_delete( wk );
   _clwk_delete( wk );
@@ -318,14 +384,19 @@ void PMSIV_MENU_SetupEdit( PMSIV_MENU* wk )
 		wk->menu_item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;
 		wk->menu_item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL + (i==TASKMENU_WIN_EDIT_CANCEL);
 
-    wk->menu_win[i] = APP_TASKMENU_WIN_Create( wk->menu_res, &wk->menu_item[i], 
+    wk->menu_win[i] = APP_TASKMENU_WIN_Create( wk->menu_res_win[i], &wk->menu_item[i], 
         TASKMENU_WIN_EDIT_X,
         TASKMENU_WIN_EDIT_Y + TASKMENU_WIN_EDIT_H * i, 
         TASKMENU_WIN_EDIT_W,
         HEAPID_PMS_INPUT_VIEW );
-      
+     
+    APP_TASKMENU_WIN_SetPaletteAndAnimeColor( wk->menu_win[i], wk->menu_res_win[i],
+        PALNUM_MAIN_TASKMENU, active_taskmenu_anime_s, active_taskmenu_anime_e );  // パレットを通常のものにしておく
+
     HOSAKA_Printf("create win[%d] \n",i);
   }
+
+  PMSIV_MENU_UpdateEditTaskMenu( wk );
 
   GFL_BG_LoadScreenReq( FRM_MAIN_TASKMENU );
 
@@ -427,6 +498,34 @@ void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk )
     _clwk_setanm( wk, iconIdx[i], is_on );
   }
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  エディットモードのタスクメニューを更新
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void PMSIV_MENU_UpdateEditTaskMenu( PMSIV_MENU* wk )
+{
+  if( PMSI_CheckInputComplete( wk->mwk ) )
+  {
+    APP_TASKMENU_WIN_SetPaletteAndAnimeColor(
+        wk->menu_win[TASKMENU_WIN_EDIT_DECIDE],
+        wk->menu_res_win[TASKMENU_WIN_EDIT_DECIDE],
+        PALNUM_MAIN_TASKMENU, active_taskmenu_anime_s, active_taskmenu_anime_e );  // パレットを通常のものにしておく
+  }
+  else
+  {
+    APP_TASKMENU_WIN_SetPaletteAndAnimeColor(
+        wk->menu_win[TASKMENU_WIN_EDIT_DECIDE],
+        wk->menu_res_win[TASKMENU_WIN_EDIT_DECIDE],
+        PALNUM_MAIN_TASKMENU_PASSIVE, passive_taskmenu_anime_s, passive_taskmenu_anime_e );  // パレットをパッシブのものにしておく
+  }
+}
+
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -1004,11 +1103,14 @@ static void _setup_category_initial( PMSIV_MENU* wk )
 		wk->menu_item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;
 		wk->menu_item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL + (i==TASKMENU_WIN_INITIAL_CANCEL);
 
-    wk->menu_win[i] = APP_TASKMENU_WIN_Create( wk->menu_res, &wk->menu_item[i], 
+    wk->menu_win[i] = APP_TASKMENU_WIN_Create( wk->menu_res_win[i], &wk->menu_item[i], 
         TASKMENU_WIN_INITIAL_X + TASKMENU_WIN_INITIAL_W * i,
         TASKMENU_WIN_INITIAL_Y, 
         TASKMENU_WIN_INITIAL_W,
         HEAPID_PMS_INPUT_VIEW );
+    
+    APP_TASKMENU_WIN_SetPaletteAndAnimeColor( wk->menu_win[i], wk->menu_res_win[i],
+        PALNUM_MAIN_TASKMENU, active_taskmenu_anime_s, active_taskmenu_anime_e );  // パレットを通常のものにしておく
   }
 
   GFL_BG_LoadScreenReq( FRM_MAIN_TASKMENU );

@@ -27,7 +27,8 @@ enum {
 	VCMD_KTCHANGE_EDITAREA,		///< 編集領域キー/タッチ切替
 	VCMD_KTCHANGE_CATEGORY,		///< カテゴリ領域キー/タッチ切替
 	VCMD_KTCHANGE_WORDWIN,		///< ワードウィンドウ領域キー/タッチ切替
-	VCMD_EDITAREA_TO_BUTTON,	///< 編集領域からコマンドボタンへ
+	VCMD_EDITAREA_TO_BUTTON,	///< 編集領域からコマンドボタンへ(キー入力)
+	VCMD_EDITAREA_TO_BUTTON_TOUCH,	///< 編集領域からコマンドボタンへ(タッチ入力)
 	VCMD_BUTTON_TO_EDITAREA,	///< コマンドボタンから編集領域へ
 	VCMD_EDITAREA_TO_CATEGORY,	///< 編集領域からカテゴリ選択へ
 	VCMD_CATEGORY_TO_EDITAREA,	///< カテゴリ選択から編集領域へ
@@ -244,6 +245,7 @@ extern STRBUF* PMSI_GetEditSourceString( const PMS_INPUT_WORK* wk, u32 heapID );
 extern u32 PMSI_GetGuidanceType( const PMS_INPUT_WORK* wk );
 extern u32 PMSI_GetEditAreaCursorPos( const PMS_INPUT_WORK* wk );
 extern u32 PMSI_GetButtonCursorPos( const PMS_INPUT_WORK* wk );
+extern BOOL PMSI_GetEditAreaOrButton( const PMS_INPUT_WORK* wk );
 extern u32 PMSI_GetCategoryCursorPos( const PMS_INPUT_WORK* wk );
 extern u32 PMSI_GetCategoryWordMax( const PMS_INPUT_WORK* wk );
 extern void PMSI_GetCategoryWord( const PMS_INPUT_WORK* wk, u32 word_num, STRBUF* buf );
@@ -258,6 +260,9 @@ extern BOOL PMSI_GetLockFlag( const PMS_INPUT_WORK* wk );
 
 extern GFL_TCBSYS* PMSI_GetTcbSystem( const PMS_INPUT_WORK* wk );
 extern void PMSI_GetInputWord( const PMS_INPUT_WORK* wk, STRBUF* out_buf );
+
+extern BOOL PMSI_CheckInputComplete( const PMS_INPUT_WORK* wk );
+
 
 //------------------------------------------------------
 /**

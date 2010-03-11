@@ -129,6 +129,10 @@ struct _APP_TASKMENU_WIN_WORK
 	u16 transAnmCnt;
   GXRgb transCol;
 	const APP_TASKMENU_RES *res;
+ 
+  // プレートのアニメの色
+  GXRgb animeColS;  // 開始色
+  GXRgb animeColE;  // 終了色
 };
 
 //======================================================================
@@ -139,6 +143,7 @@ static void APP_TASKMENU_CreateMenuWin( APP_TASKMENU_WORK *work, const APP_TASKM
 static void APP_TASKMENU_TransFrame( GFL_BMPWIN *bmpwin, const APP_TASKMENU_RES *res, APP_TASKMENU_WIN_TYPE type );
 static void APP_TASKMENU_SetActiveItem( GFL_BMPWIN *bmpwin, const APP_TASKMENU_RES *res, const BOOL isActive );
 static void APP_TASKMENU_UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , u8 bgFrame , u8 pltNo );
+static void APP_TASKMENU_UpdatePalletAnimeEx( u16 *anmCnt , u16 *transBuf , u8 bgFrame , u8 pltNo, GXRgb colS, GXRgb colE );
 static void APP_TASKMENU_ResetPallet( u16 *transBuf, u8 bgFrame , u8 pltNo );
 static void APP_TASKMENU_UpdateKey( APP_TASKMENU_WORK *work );
 static void APP_TASKMENU_UpdateTP( APP_TASKMENU_WORK *work );
@@ -381,6 +386,52 @@ static void APP_TASKMENU_UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , u8 bgF
     }
   }
 }
+
+//--------------------------------------------------------------
+//	パレットアニメーションの更新(開始色、終了色指定版)
+//--------------------------------------------------------------
+static void APP_TASKMENU_UpdatePalletAnimeEx( u16 *anmCnt , u16 *transBuf , u8 bgFrame , u8 pltNo, GXRgb colS, GXRgb colE )
+{
+  u8 s_r = ( colS & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+  u8 s_g = ( colS & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+  u8 s_b = ( colS & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+  u8 e_r = ( colE & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+  u8 e_g = ( colE & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+  u8 e_b = ( colE & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+
+  //プレートアニメ
+  if( *anmCnt + APP_TASKMENU_ANIME_VALUE >= 0x10000 )
+  {
+    *anmCnt = *anmCnt+APP_TASKMENU_ANIME_VALUE-0x10000;
+  }
+  else
+  {
+    *anmCnt += APP_TASKMENU_ANIME_VALUE;
+  }
+  {
+    //1～0に変換
+    const fx16 cos = (FX_CosIdx(*anmCnt)+FX16_ONE)/2;
+    const u8 r = s_r + (((e_r-s_r)*cos)>>FX16_SHIFT);
+    const u8 g = s_g + (((e_g-s_g)*cos)>>FX16_SHIFT);
+    const u8 b = s_b + (((e_b-s_b)*cos)>>FX16_SHIFT);
+    
+    *transBuf = GX_RGB(r, g, b);
+    
+    if( bgFrame <= GFL_BG_FRAME3_M )
+    {
+      NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
+                                          pltNo * 32 + APP_TASKMENU_ANIME_COL*2 ,
+                                          transBuf , 2 );
+    }
+    else
+    {
+      NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                          pltNo * 32 + APP_TASKMENU_ANIME_COL*2 ,
+                                          transBuf , 2 );
+    }
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  パレットアニメをした後、リソースを使い続ける際の、パレット初期化
@@ -666,6 +717,10 @@ APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, 
                 8+2 , 4+2 , item->str , res->fontHandle , item->msgColor );
 	GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmpwin );
 
+  // プレートのアニメの色
+  wk->animeColS = GX_RGB( APP_TASKMENU_ANIME_S_R, APP_TASKMENU_ANIME_S_G, APP_TASKMENU_ANIME_S_B );
+  wk->animeColE = GX_RGB( APP_TASKMENU_ANIME_E_R, APP_TASKMENU_ANIME_E_G, APP_TASKMENU_ANIME_E_B );
+
 	return wk;
 }
 //----------------------------------------------------------------------------
@@ -718,8 +773,9 @@ void APP_TASKMENU_WIN_Update( APP_TASKMENU_WIN_WORK *wk )
     }
     wk->anmCnt++;
   }
-  
-  APP_TASKMENU_UpdatePalletAnime( &wk->transAnmCnt , &wk->transCol , wk->res->frame, wk->res->plt );
+ 
+  //APP_TASKMENU_UpdatePalletAnime( &wk->transAnmCnt , &wk->transCol , wk->res->frame, wk->res->plt );
+  APP_TASKMENU_UpdatePalletAnimeEx( &wk->transAnmCnt , &wk->transCol , wk->res->frame, wk->res->plt , wk->animeColS , wk->animeColE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -819,6 +875,35 @@ void APP_TASKMENU_WIN_ResetDecide( APP_TASKMENU_WIN_WORK *wk )
 {
 	wk->isDecide	= 0;
   wk->anmCnt    = 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	パレットとプレートのアニメの色を設定する
+ *
+ *	@param	APP_TASKMENU_WIN_WORK *wk	        ワーク
+ *	@param	APP_TASKMENU_WIN_WORK *res	      窓のリソース
+ *	@param                        plt				  パレット番号
+
+ *	@param                        animeColS		プレートのアニメの開始色
+ *	@param                        animeColE		プレートのアニメの終了色
+ 
+ 
+ *	@note   resはwkを生成する際に渡したものと同じものを渡して下さい。
+ *	@note   pltとplt+1を使用します。
+ */
+//-----------------------------------------------------------------------------
+void APP_TASKMENU_WIN_SetPaletteAndAnimeColor( APP_TASKMENU_WIN_WORK *wk, APP_TASKMENU_RES *res,
+                                               u8 plt, GXRgb animeColS, GXRgb animeColE )
+{
+  res->plt = plt;
+
+  wk->animeColS = animeColS;
+  wk->animeColE = animeColE;
+
+  GFL_BMPWIN_SetPalette( wk->bmpwin , plt+1 );  // +1しているのはAPP_TASKMENU_WIN_CreateEx参考
+  GFL_BMPWIN_MakeScreen( wk->bmpwin );
+  GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(wk->bmpwin) );
 }
 
 

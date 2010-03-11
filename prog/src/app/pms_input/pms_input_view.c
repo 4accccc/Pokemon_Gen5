@@ -126,6 +126,7 @@ static void Cmd_ChangeKTEditArea( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_ChangeKTCategory( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_ChangeKTWordWin( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_EditAreaToButton( GFL_TCB *tcb, void* wk_adrs );
+static void Cmd_EditAreaToButtonTouch( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_ButtonToEditArea( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_EditAreaToCategory( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_ChangeCategoryModeDisable( GFL_TCB *tcb, void* wk_adrs );
@@ -233,6 +234,8 @@ PMS_INPUT_VIEW*  PMSIView_Create(const PMS_INPUT_WORK* main_wk, const PMS_INPUT_
     // 上画面説明欄に表示するメッセージのウィンドウ
     vwk->explain_bmpwin_trans_req     = FALSE;
 
+    // 最初は編集エリアにカーソルがある
+	  vwk->status = PMSI_ST_EDIT;
 	}
 
 	return vwk;
@@ -367,6 +370,7 @@ void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 		Cmd_ChangeKTCategory,
 		Cmd_ChangeKTWordWin,
 		Cmd_EditAreaToButton,
+		Cmd_EditAreaToButtonTouch,
 		Cmd_ButtonToEditArea,
 		Cmd_EditAreaToCategory,
 		Cmd_CategoryToEditArea,
@@ -913,9 +917,12 @@ static void Cmd_UpdateEditArea( GFL_TCB *tcb, void* wk_adrs )
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
-	PMSIV_EDIT_UpdateEditArea( vwk->edit_wk );
+	vwk->status = PMSI_ST_EDIT;
+	
+  PMSIV_EDIT_UpdateEditArea( vwk->edit_wk );
 	PMSIV_EDIT_MoveCursor( vwk->edit_wk, PMSI_GetEditAreaCursorPos( wk->mwk ) );
   PMSIV_MENU_UpdateEditIcon( vwk->menu_wk );
+  PMSIV_MENU_UpdateEditTaskMenu( vwk->menu_wk );
 
 	DeleteCommand( wk );
 }
@@ -934,16 +941,29 @@ static void Cmd_ChangeKTEditArea( GFL_TCB *tcb, void* wk_adrs )
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
+  // 編集領域にいるか、ボタン領域にいるかを更新する
+  {
+    BOOL is_edit_area = PMSI_GetEditAreaOrButton( vwk->main_wk );
+    //if( is_edit_area ) vwk->status == PMSI_ST_EDIT;
+    //else               vwk->status == PMSI_ST_BUTTON;
+    // vwk->statusには常に正しい値が入っていると期待して、更新しないことにする
+  }
+
 	if(*vwk->p_key_mode == GFL_APP_KTST_TOUCH){	//キーからタッチへ
-		//PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );  // 編集エリアのカーソルは(他のボタンにカーソルが移動しない限り)表示したままにしておく
+		PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );  // 編集エリアのカーソルはカテゴリ選択(ポケモンやステータスなど、あいうえおなど)やワードウィン選択(ピカチュウなど)に移行している間は表示しておくが、編集エリア内では選ばない限り消しておく。
+    PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), FALSE );
 //		PMSIV_BUTTON_VisibleCursor( vwk->button_wk, FALSE );
 	}else{	//タッチからキーへ
 		if(vwk->status == PMSI_ST_BUTTON){
+      PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );
+      PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), TRUE );
 //			PMSIV_BUTTON_VisibleCursor( vwk->button_wk, TRUE );
 		}else{
 			PMSIV_EDIT_VisibleCursor( vwk->edit_wk, TRUE );
+      PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), FALSE );
 		}
 	}
+
 	DeleteCommand( wk );
 }
 
@@ -1003,7 +1023,7 @@ static void Cmd_ChangeKTWordWin( GFL_TCB *tcb, void* wk_adrs )
 
 //----------------------------------------------------------------------------------------------
 /**
-	* 描画コマンド：編集エリアからコマンドボタンへ
+	* 描画コマンド：編集エリアからコマンドボタンへ(キー入力のとき)
 	*
 	* @param   tcb		
 	* @param   wk_adrs		
@@ -1027,6 +1047,34 @@ static void Cmd_EditAreaToButton( GFL_TCB *tcb, void* wk_adrs )
 
 	DeleteCommand( wk );
 }
+
+//----------------------------------------------------------------------------------------------
+/**
+	* 描画コマンド：編集エリアからコマンドボタンへ(タッチ入力のとき)
+	*
+	* @param   tcb		
+	* @param   wk_adrs		
+	*
+	*/
+//----------------------------------------------------------------------------------------------
+static void Cmd_EditAreaToButtonTouch( GFL_TCB *tcb, void* wk_adrs )
+{
+	COMMAND_WORK* wk = wk_adrs;
+	PMS_INPUT_VIEW* vwk = wk->vwk;
+
+	vwk->status = PMSI_ST_BUTTON;
+
+	PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );
+	PMSIV_EDIT_StopArrow( vwk->edit_wk );
+
+  PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), FALSE );
+
+//	PMSIV_BUTTON_VisibleCursor( vwk->button_wk, TRUE );
+//	PMSIV_BUTTON_MoveCursor( vwk->button_wk, PMSI_GetButtonCursorPos(vwk->main_wk) );
+
+	DeleteCommand( wk );
+}
+
 //----------------------------------------------------------------------------------------------
 /**
 	* 描画コマンド：コマンドボタンから編集エリアへ
