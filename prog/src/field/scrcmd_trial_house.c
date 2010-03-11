@@ -364,7 +364,8 @@ VMCMD_RESULT EvCmdTH_ClearDLData( VMHANDLE *core, void *wk )
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
   TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
 
-  //データクリア @todo
+  //データクリア
+  TRIAL_HOUSE_InvalidDLData(gsys, *ptr);
 
   return VMCMD_RESULT_CONTINUE;
 }
