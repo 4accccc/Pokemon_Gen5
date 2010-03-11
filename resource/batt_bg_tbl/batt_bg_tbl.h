@@ -10,7 +10,7 @@
 
 #pragma once
 
-#define  ZONE_SPEC_ATTR_MAX  ( 15 )
+#define  ZONE_SPEC_ATTR_MAX  ( 22 )
 #define  BATT_BG_TBL_NO_FILE     ( 0xffffffff )
 #define  BATT_BG_TBL_FILE_MAX  ( 4 )
 
@@ -30,6 +30,7 @@ typedef struct
 	u8 season;
 	u8 bg_file[ ZONE_SPEC_ATTR_MAX ];
 	u8 stage_file[ ZONE_SPEC_ATTR_MAX ];
+	u8 padding[ 2 ];
 }BATT_BG_TBL_ZONE_SPEC_TABLE;
 
 typedef struct
