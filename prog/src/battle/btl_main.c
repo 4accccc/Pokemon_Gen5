@@ -4287,4 +4287,16 @@ void BTL_MAIN_ResetForRecPlay( BTL_MAIN_MODULE* wk, u32 nextTurnNum )
 
 }
 
+void BTL_MAIN_NotifyChapterSkipEnd( BTL_MAIN_MODULE* wk )
+{
+  u32 i;
+
+  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  {
+    if( BTL_MAIN_IsExistClient(wk, i) )
+    {
+      BTL_CLIENT_StopChapterSkip( wk->client[i] );
+    }
+  }
+}
 

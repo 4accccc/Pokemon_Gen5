@@ -217,6 +217,7 @@ struct _BTLV_SCU {
   const BTL_MAIN_MODULE*  mainModule;
   const BTL_POKE_CONTAINER* pokeCon;
   HEAPID        heapID;
+  u8            printAtOnceFlag;
   u8            printSeq;
   u8            playerClientID;
   u8            printJustDoneFlag;
@@ -276,7 +277,7 @@ static void taskFakeDisable( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskChangeForm( GFL_TCBL* tcbl, void* wk_adrs );
 static void msgWinVisible_Init( MSGWIN_VISIBLE* wk, GFL_BMPWIN* win );
 static void msgWinVisible_Hide( MSGWIN_VISIBLE* wk );
-static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk );
+static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk, BOOL printAtOnceFlag );
 static BOOL msgWinVisible_Update( MSGWIN_VISIBLE* wk );
 static void statwin_setupAll( BTLV_SCU* wk );
 static void statwin_cleanupAll( BTLV_SCU* wk );
@@ -503,7 +504,6 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk, BOOL fChapterSkipMode )
 
   wk->btlinSeq = 0;
   wk->btlinSkipFlag = fChapterSkipMode;
-  TAYA_Printf(" BtlInSkipFlag = %d\n", wk->btlinSkipFlag );
 
   switch( BTL_MAIN_GetRule(wk->mainModule) ){
   case BTL_RULE_SINGLE:
@@ -633,6 +633,14 @@ static BOOL btlin_skip_core( BTLV_SCU* wk, int* seq, const u8* vposAry, u8 vposC
     }
     break;
   case 1:
+    // チャプタスキップ時はここでフェードインしない
+    // @todo デバッグ措置->一時的にフェードインさせる
+    /*
+    if( wk->btlinSkipFlag ){
+      return TRUE;
+    }
+    */
+    // フェードインするのはデバッグ時のみ
     btlin_startFade(-3);
     (*seq)++;
     break;
@@ -2286,6 +2294,30 @@ static u16 btlfinEffsub_getOpponentPokeInStrID( BTLV_SCU* wk, u8 pokeCount )
   }
 }
 
+
+//=============================================================================================
+/**
+ * メッセージ表示（一括）
+ *
+ * @param   wk
+ * @param   str     表示文字列
+ *
+ */
+//=============================================================================================
+void BTLV_SCU_PrintMsgAtOnce( BTLV_SCU* wk, const STRBUF* str )
+{
+  GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
+  GFL_FONTSYS_SetColor( COLIDX_MSGWIN_LETTER, COLIDX_MSGWIN_SHADOW, COLIDX_MSGWIN_CLEAR );
+  PRINTSYS_Print( wk->bmp, 0, 0, str, wk->defaultFont );
+  GFL_BMPWIN_TransVramCharacter( wk->win );
+
+  wk->printSeq = 0;
+  wk->printWait = 0;
+  wk->printWaitOrg = 0;
+  wk->printAtOnceFlag = TRUE;
+  wk->printJustDoneFlag = FALSE;
+}
+
 //=============================================================================================
 /**
  * メッセージ表示開始
@@ -2301,7 +2333,6 @@ void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait )
   GF_ASSERT( wk->printStream == NULL );
 
   GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
-
   GFL_FONTSYS_SetColor( COLIDX_MSGWIN_LETTER, COLIDX_MSGWIN_SHADOW, COLIDX_MSGWIN_CLEAR );
 
   wk->printStream = PRINTSYS_PrintStream(
@@ -2311,6 +2342,7 @@ void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait )
   PRINTSYS_PrintStreamStop( wk->printStream );
 
   wk->printSeq = 0;
+  wk->printAtOnceFlag = FALSE;
   wk->printWait = wait;
   wk->printWaitOrg = wait;
   wk->printJustDoneFlag = FALSE;
@@ -2355,18 +2387,27 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
 
   switch( wk->printSeq ){
   case SEQ_START_MSGWIN_VISIBLE:
-    msgWinVisible_Disp( &wk->msgwinVisibleWork );
+    msgWinVisible_Disp( &wk->msgwinVisibleWork, wk->printAtOnceFlag );
     wk->printSeq++;
     /* fallthru */
   case SEQ_WAIT_MSGWIN_VISIBLE:
     if( !msgWinVisible_Update(&wk->msgwinVisibleWork) ){
       break;
-    }else{
-      if( wk->printStream )
+    }
+    else
+    {
+      if( wk->printAtOnceFlag )
       {
-        PRINTSYS_PrintStreamRun( wk->printStream );
+        wk->printSeq = SEQ_DONE;
+        break;
       }
-      wk->printSeq++;
+      else
+      {
+        if( wk->printStream ){
+          PRINTSYS_PrintStreamRun( wk->printStream );
+        }
+        wk->printSeq++;
+      }
     }
     /* fallthru */
   case SEQ_WAIT_STREAM_RUNNING:
@@ -2744,15 +2785,24 @@ typedef struct {
  *
  * @param   wk
  * @param   pos
+ * @param   fSkipEffect   演出なし、一瞬でゲージを書き換える場合はTRUE（チャプタスキップ時に使用を想定）
  *
  */
 //=============================================================================================
-void BTLV_SCU_StartHPGauge( BTLV_SCU* wk, BtlPokePos pos )
+void BTLV_SCU_StartHPGauge( BTLV_SCU* wk, BtlPokePos pos, BOOL fSkipEffect )
 {
   const BTL_POKEPARAM*  bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
   int                   value = BPP_GetValue( bpp, BPP_HP );
+  BtlvMcssPos           vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
 
-  BTLV_EFFECT_CalcGaugeHP( BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos ), value );
+  if( fSkipEffect )
+  {
+    BTLV_EFFECT_CalcGaugeHPAtOnce( vpos, value );
+  }
+  else
+  {
+    BTLV_EFFECT_CalcGaugeHP( vpos, value );
+  }
 }
 //=============================================================================================
 /**
@@ -3067,14 +3117,17 @@ static void msgWinVisible_Hide( MSGWIN_VISIBLE* wk )
     wk->state = MSGWIN_STATE_TO_HIDE;
   }
 }
-static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk )
+static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk, BOOL printAtOnceFlag )
 {
   if( wk->state == MSGWIN_STATE_HIDE
   ||  wk->state == MSGWIN_STATE_TO_HIDE
   ){
-    GFL_BMP_DATA* bmp = GFL_BMPWIN_GetBmp( wk->win );
-    GFL_BMP_Clear( bmp, COLIDX_MSGWIN_CLEAR );
-    GFL_BMPWIN_TransVramCharacter( wk->win );
+    if( !printAtOnceFlag )
+    {
+      GFL_BMP_DATA* bmp = GFL_BMPWIN_GetBmp( wk->win );
+      GFL_BMP_Clear( bmp, COLIDX_MSGWIN_CLEAR );
+      GFL_BMPWIN_TransVramCharacter( wk->win );
+    }
 
     wk->eva = FX32_CONST( MSGWIN_EVA_MIN );
     wk->evb = FX32_CONST( MSGWIN_EVB_MAX );
@@ -3675,6 +3728,17 @@ void BTLV_SCU_RecPlayFadeOut_Start( BTLV_SCU* wk )
 }
 
 BOOL BTLV_SCU_RecPlayFadeOut_Wait( BTLV_SCU* wk )
+{
+//  GFL_FADE_Main
+  return Fade_CheckEnd( wk );
+}
+
+void BTLV_SCU_RecPlayFadeIn_Start( BTLV_SCU* wk )
+{
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, -3 );
+}
+
+BOOL BTLV_SCU_RecPlayFadeIn_Wait( BTLV_SCU* wk )
 {
 //  GFL_FADE_Main
   return Fade_CheckEnd( wk );

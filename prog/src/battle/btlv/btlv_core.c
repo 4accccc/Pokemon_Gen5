@@ -110,6 +110,7 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs );
 static BOOL subprocMemberIn( int* seq, void* wk_adrs );
 static void StrParamToString( const BTLV_STRPARAM* param, STRBUF* dst );
 static void PutMsgToSCU( BTLV_CORE* wk, const STRBUF* buf, u16 wait );
+static void PutMsgToSCUatOnce( BTLV_CORE* wk, const STRBUF* buf );
 static BOOL subprocMoveMember( int* seq, void* wk_adrs );
 static BOOL subprocRotateMember( int* seq, void* wk_adrs );
 
@@ -384,21 +385,19 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
       BTLV_STRPARAM_Setup( &sp, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
       BTLV_STRPARAM_AddArg( &sp, BPP_GetID( pp ) );
       BTLV_STRPARAM_SetWait( &sp, 0 );
-      BTLV_StartMsg( core, &sp );
+      BTLV_PrintMsgAtOnce( core, &sp );
+//      BTLV_StartMsg( core, &sp );
       (*seq)++;
     }
     break;
   case 3:
-    if( BTLV_WaitMsg( core ) )
-    {
-      core->procPokeParam = get_btl_pokeparam( core, BTLV_MCSS_POS_AA );
-      core->procPokeID = BPP_GetID( core->procPokeParam );
-      core->actionParam = NULL;
-      core->playerAction = BTL_ACTION_NULL;
-      core->fActionPrevButton = FALSE;
-      BTLV_SCD_StartActionSelectDemoCapture( core->scrnD, core->procPokeParam, core->fActionPrevButton, core->actionParam );
-      (*seq)++;
-    }
+    core->procPokeParam = get_btl_pokeparam( core, BTLV_MCSS_POS_AA );
+    core->procPokeID = BPP_GetID( core->procPokeParam );
+    core->actionParam = NULL;
+    core->playerAction = BTL_ACTION_NULL;
+    core->fActionPrevButton = FALSE;
+    BTLV_SCD_StartActionSelectDemoCapture( core->scrnD, core->procPokeParam, core->fActionPrevButton, core->actionParam );
+    (*seq)++;
     break;
   case 4:
     //下画面演出終了待ち
@@ -1524,7 +1523,9 @@ void BTLV_ACT_TameWazaHide( BTLV_CORE* wk, BtlvMcssPos vpos, BTLV_MCSS_VANISH_FL
 //=============================================================================================
 void BTLV_ACT_SimpleHPEffect_Start( BTLV_CORE* wk, BtlPokePos pokePos )
 {
-  BTLV_SCU_StartHPGauge( wk->scrnU, pokePos );
+  BOOL fSkipEffect = BTL_CLIENT_IsChapterSkipMode( wk->myClient );
+
+  BTLV_SCU_StartHPGauge( wk->scrnU, pokePos, fSkipEffect );
 }
 BOOL BTLV_ACT_SimpleHPEffect_Wait( BTLV_CORE* wk )
 {
@@ -1742,6 +1743,20 @@ void BTLV_StartMsg( BTLV_CORE* wk, const BTLV_STRPARAM* param )
 }
 //=============================================================================================
 /**
+ * メッセージ表示（一括）
+ *
+ * @param   wk
+ * @param   param
+ */
+//=============================================================================================
+void BTLV_PrintMsgAtOnce( BTLV_CORE* wk, const BTLV_STRPARAM* param )
+{
+  StrParamToString( param, wk->strBuf );
+  PutMsgToSCUatOnce( wk, wk->strBuf );
+}
+
+//=============================================================================================
+/**
 
  *
  * @param   wk
@@ -1820,6 +1835,10 @@ static void PutMsgToSCU( BTLV_CORE* wk, const STRBUF* buf, u16 wait )
   {
     BTLV_SCU_StartMsg( wk->scrnU, buf, wait );
   }
+}
+static void PutMsgToSCUatOnce( BTLV_CORE* wk, const STRBUF* buf )
+{
+  BTLV_SCU_PrintMsgAtOnce( wk->scrnU, buf );
 }
 
 //=============================================================================================
@@ -2436,7 +2455,15 @@ void BTLV_RecPlayFadeOut_Start( BTLV_CORE* wk )
 }
 BOOL BTLV_RecPlayFadeOut_Wait( BTLV_CORE* wk )
 {
-  return BTLV_SCU_RecPlayFadeOut_Wait( wk->scrnU );
+  return BTLV_SCU_RecPlayFadeIn_Wait( wk->scrnU );
+}
+void BTLV_RecPlayFadeIn_Start( BTLV_CORE* wk )
+{
+  BTLV_SCU_RecPlayFadeIn_Start( wk->scrnU );
+}
+BOOL BTLV_RecPlayFadeIn_Wait( BTLV_CORE* wk )
+{
+  return BTLV_SCU_RecPlayFadeIn_Wait( wk->scrnU );
 }
 
 

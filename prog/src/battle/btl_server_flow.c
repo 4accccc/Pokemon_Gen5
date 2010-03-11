@@ -276,7 +276,7 @@ struct _BTL_SVFLOW_WORK {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static clearWorks( BTL_SVFLOW_WORK* wk );
+static void clearWorks( BTL_SVFLOW_WORK* wk );
 static void clearPokeCantActionFlag( BTL_SVFLOW_WORK* wk );
 static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx );
 static BOOL ActOrderProc_PokeIn( BTL_SVFLOW_WORK* wk );
@@ -802,7 +802,7 @@ void BTL_SVFLOW_ResetSystem( BTL_SVFLOW_WORK* wk )
 
 }
 
-static clearWorks( BTL_SVFLOW_WORK* wk )
+static void clearWorks( BTL_SVFLOW_WORK* wk )
 {
   BTL_WAZAREC_Init( &wk->wazaRec );
   BTL_DEADREC_Init( &wk->deadRec );
@@ -8583,7 +8583,7 @@ static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
   {
     if( BPP_IsDead(poke) )
     {
-      BTL_Printf("ƒ|ƒP[ID=%d]‚µ‚É‚Ü‚·\n", pokeID);
+      BTL_N_Printf( DBGSTR_SVFL_PokeDead, pokeID);
       wk->pokeDeadFlag[pokeID] = 1;
       BTL_DEADREC_Add( &wk->deadRec, pokeID );
 
@@ -12050,10 +12050,10 @@ BtlCompetitor BTL_SVFTOOL_GetCompetitor( BTL_SVFLOW_WORK* wk )
  * @retval  BtlBgType
  */
 //--------------------------------------------------------------------------------------
-BtlBgType BTL_SVFTOOL_GetLandForm( BTL_SVFLOW_WORK* wk )
+BtlBgAttr BTL_SVFTOOL_GetLandForm( BTL_SVFLOW_WORK* wk )
 {
   const BTL_FIELD_SITUATION* sit = BTL_MAIN_GetFieldSituation( wk->mainModule );
-  return sit->bgType;
+  return sit->bgAttr;
 }
 //--------------------------------------------------------------------------------------
 /**

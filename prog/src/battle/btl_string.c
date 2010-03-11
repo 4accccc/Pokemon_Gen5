@@ -236,6 +236,7 @@ static void register_TrainerName( WORDSET* wset, u8 bufIdx, u8 clientID )
 {
   if( clientID != BTL_CLIENTID_COMM_SUPPORT )
   {
+    // @todo トレーナー名は直接strbufを貰っているのでソレを使うべきなのだ
     u32 trainerID = BTL_MAIN_GetClientTrainerID( SysWork.mainModule, clientID );
     if( trainerID != TRID_NULL ){
       WORDSET_RegisterTrainerName( wset, bufIdx, trainerID );

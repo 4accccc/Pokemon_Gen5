@@ -484,6 +484,14 @@ void BTL_CLIENT_SetChapterSkip( BTL_CLIENT* wk, u32 nextTurnNum )
   RecPlayer_ChapterSkipOn( &wk->recPlayer, nextTurnNum );
   ChangeMainProc( wk, ClientMain_ChapterSkip );
 }
+
+void BTL_CLIENT_StopChapterSkip( BTL_CLIENT* wk )
+{
+//  ChangeMainProc( wk, ClientMain_Normal );
+  RecPlayer_ChapterSkipOff( &wk->recPlayer );
+  ChangeMainProc( wk, ClientMain_Normal );
+}
+
 //=============================================================================================
 /**
  * チャプタースキップモードで動作しているか判定
@@ -619,6 +627,7 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
     SEQ_RECPLAY_READ_ACMD = 0,
     SEQ_RECPLAY_EXEC_CMD,
     SEQ_RECPLAY_RETURN_TO_SV,
+    SEQ_RECPLAY_FADEIN,
 
     SEQ_RECPLAY_QUIT,
   };
@@ -628,31 +637,35 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
   switch( wk->myState ){
 
   case SEQ_RECPLAY_READ_ACMD:
-    if( RecPlayer_CheckChapterSkipEnd(&wk->recPlayer) )
     {
-      RecPlayer_ChapterSkipOff( &wk->recPlayer );
-      ChangeMainProc( wk, ClientMain_Normal );
-      // 今読んだコマンドを１回だけ実行しておかないとズレる
-      TAYA_Printf("client(%d), 指定チャプタに到達した..\n", wk->myID);
-      return wk->mainProc( wk );
-    }
-    else
-    {
-      BtlAdapterCmd  cmd = BTL_ADAPTER_RecvCmd(wk->adapter);
-      if( cmd != BTL_ACMD_NONE )
+      BOOL fSkipEnd = RecPlayer_CheckChapterSkipEnd( &wk->recPlayer );
+      if( !fSkipEnd )
       {
-        TAYA_Printf("RecPlay acmd=%d\n", cmd);
-        wk->subProc = getSubProc( wk, cmd );
-        if( wk->subProc != NULL ){
-          wk->myState = SEQ_RECPLAY_EXEC_CMD;
-          wk->subSeq = 0;
-        }
-        else
+        BtlAdapterCmd  cmd = BTL_ADAPTER_RecvCmd( wk->adapter );
+        if( cmd != BTL_ACMD_NONE )
         {
-          setDummyReturnData( wk );
-          wk->myState = SEQ_RECPLAY_RETURN_TO_SV;
-          wk->subSeq = 0;
+          TAYA_Printf("RecPlay acmd=%d\n", cmd);
+          wk->subProc = getSubProc( wk, cmd );
+          if( wk->subProc != NULL ){
+            wk->myState = SEQ_RECPLAY_EXEC_CMD;
+            wk->subSeq = 0;
+          }
+          else
+          {
+            setDummyReturnData( wk );
+            wk->myState = SEQ_RECPLAY_RETURN_TO_SV;
+            wk->subSeq = 0;
+          }
         }
+      }
+
+      if( fSkipEnd )
+      {
+        TAYA_Printf("client(%d), 指定チャプタ[%d]に到達した..\n", wk->myID, wk->recPlayer.turnCount);
+        if( wk->viewCore ){
+          BTLV_RecPlayFadeIn_Start( wk->viewCore );
+        }
+        wk->myState = SEQ_RECPLAY_FADEIN;
       }
     }
     break;
@@ -669,6 +682,16 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
     if( BTL_ADAPTER_ReturnCmd(wk->adapter, wk->returnDataPtr, wk->returnDataSize) ){
       wk->myState = SEQ_RECPLAY_READ_ACMD;
       BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_RETURN_CMD_DONE, wk->myID );
+    }
+    break;
+
+  case SEQ_RECPLAY_FADEIN:
+    if( wk->viewCore != NULL )
+    {
+      if( BTLV_RecPlayFadeIn_Wait(wk->viewCore) )
+      {
+        BTL_MAIN_NotifyChapterSkipEnd( wk->mainModule );
+      }
     }
     break;
 
@@ -1277,7 +1300,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
       BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
       BTLV_STRPARAM_SetWait( &wk->strParam, 0 );
-      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      BTLV_PrintMsgAtOnce( wk->viewCore, &wk->strParam );
       wk->fStdMsgChanged = FALSE;
       wk->prevPokeIdx = wk->procPokeIdx;
       (*seq)++;
@@ -1695,6 +1718,7 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
       BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
       BTLV_STRPARAM_SetWait( &wk->strParam, 0 );
+      BTLV_PrintMsgAtOnce( wk->viewCore, &wk->strParam );
       (*seq)++;
     }
     break;
@@ -5449,8 +5473,8 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
           if( ctrl->skipTurnCount == ctrl->turnCount ){
             TAYA_Printf("Skip Chapter done ->%d\n", ctrl->skipTurnCount );
           }
-          return;
         }
+        return;
       }
     }
 

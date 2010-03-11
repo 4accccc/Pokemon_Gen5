@@ -218,6 +218,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_StartAfterPokeIn:    return "空き位置にポケモン投入後のサーバーコマンド生成を開始する\n";
   case DBGSTR_SVFL_AfterPokeIn_Alive:   return "生きているポケモンとの入れ替えが発生 Pos %d <-> %d\n";
   case DBGSTR_SVFL_AfterPokeIn_Dead:    return "ひんしポケモンの空きを埋める入れ替えが発生 Pos %d <-> %d\n";
+  case DBGSTR_SVFL_PokeDead:            return "ポケ(%d) しにます\n";
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";

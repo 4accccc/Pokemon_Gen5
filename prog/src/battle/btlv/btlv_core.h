@@ -63,13 +63,13 @@ typedef enum {
 
 //--------------------------------------------------------------
 /**
- *  メッセージウェイト指定
+ *  メッセージキー待ちウェイト指定
  */
 //--------------------------------------------------------------
 enum {
 
-  BTLV_MSGWAIT_NONE = 0,
-  BTLV_MSGWAIT_STD = 80,
+  BTLV_MSGWAIT_NONE = 0,  ///< キーを待たず、即時終了
+  BTLV_MSGWAIT_STD = 80,  ///< 標準ウェイトフレーム数（この分待ったら、キー押下なくても終了）
 
 };
 
@@ -229,6 +229,8 @@ extern void BTLV_ForceQuitPokeSelect( BTLV_CORE* wk );
 //=============================================================================================
 extern void BTLV_StartMsg( BTLV_CORE* wk, const BTLV_STRPARAM* param );
 extern void BTLV_StartMsgWaza( BTLV_CORE* wk, u8 pokeID, u16 waza );
+extern void BTLV_PrintMsgAtOnce( BTLV_CORE* wk, const BTLV_STRPARAM* param );
+
 
 extern void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args );
 extern void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args );
@@ -344,6 +346,8 @@ extern BOOL BTLV_LvupWin_WaitHide( BTLV_CORE* wk );
 // 録画再生時フェードアウト
 extern void BTLV_RecPlayFadeOut_Start( BTLV_CORE* wk );
 extern BOOL BTLV_RecPlayFadeOut_Wait( BTLV_CORE* wk );
+extern void BTLV_RecPlayFadeIn_Start( BTLV_CORE* wk );
+extern BOOL BTLV_RecPlayFadeIn_Wait( BTLV_CORE* wk );
 
 //=============================================================================================
 //  時間制限によるアクション選択の強制終了対応
