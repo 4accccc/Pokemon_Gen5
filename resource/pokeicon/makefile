@@ -18,6 +18,7 @@ targetname = poke_icon
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)
+RES_DIR = ./graphic/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -28,8 +29,8 @@ SUBDIRS	=
 include	$(PROJECT_RSCDIR)\macro_define
 
 # 自動でリソースを集める
-lsources:=$(wildcard *.ncl)
-gsources:=$(wildcard *.ncg)
+lsources:=$(wildcard $(RES_DIR)*.ncl)
+gsources:=$(wildcard $(RES_DIR)*.ncg)
 esources:=$(wildcard *.nce)
 ssources:=$(wildcard *.nsc)
 isources:=$(wildcard *.imd)
@@ -61,7 +62,8 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lsources) $(gsources) $(esources) $(ssources) $(isources) $(icasources) *.bat makefile
+$(targetname).narc: $(gsources)
+#$(lsources) $(gsources) $(esources) $(ssources) $(isources) $(icasources) *.bat makefile
 	icon_conv.bat
 	$(NAIXCUT) $(targetname).naix
 endif

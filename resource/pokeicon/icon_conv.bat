@@ -18,10 +18,10 @@ rem アイコンのパレット番号テーブル生成
 rem picon_attr_cnv attr_list.txt
 
 rem 上三つのバッチファイルを１つのRubyスクリプトで実行する
-ruby poke_icon_conv.rb attr_list.txt
+ruby poke_icon_conv.rb attr_list.txt ..\poke_icon.narc
 
-del *.naix
-del *.narc
+rem del *.naix
+rem del *.narc
 
 echo g2dコンバート
 g2dcvtr poke_icon_32k.nce -br
@@ -34,10 +34,10 @@ echo narc作成
 nnsarc -c -l -n -i poke_icon -S pokeicon_all.scr
 
 echo g2dファイル削除
-del *_????.NCGR
-del *_????.NCER
-del *_????.NANR
-del poke_icon.NCLR
+rem del *_????.NCGR
+rem del *_????.NCER
+rem del *_????.NANR
+rem del poke_icon.NCLR
 rem del icon_???.NCLR
 rem del icon_*.ncl
 del *.nce

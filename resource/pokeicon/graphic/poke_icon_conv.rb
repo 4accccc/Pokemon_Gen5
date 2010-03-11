@@ -36,24 +36,22 @@ def get_palette( read_file )
   size -= 16
     
   pltt = 0
-  size.times {|j|
-    data = fp_r.read( 1 )
-    pal = data.unpack( "C" )
-    if pal[ 0 ] != 0
-      pltt = pal[ 0 ]
-      break
-    end
-  }
+  data = fp_r.read( 5 )
+  data = fp_r.read( 1 )
+  pal = data.unpack( "C" )
+  pltt = pal[ 0 ]
   pltt
 end
 
-	if ARGV.size < 1
-		print "error: ruby poke_icon_conv.rb file_list\n"
+	if ARGV.size < 2
+		print "error: ruby poke_icon_conv.rb file_list tsc_file\n"
 		print "file_list:読み込むファイルリスト\n"
+		print "tsc_file:タイムスタンプチェックするファイル\n"
 		exit( 1 )
 	end
 
   ARGV_READ_FILE = 0
+  ARGV_TSC_FILE = 1
 
   file_list = []
   cnt = 0
@@ -85,6 +83,10 @@ end
     next if i == 0
     file_name = file_list[ i ].sub( ".NCGR", ".ncg" )
 
+    if File::exist?( ARGV[ ARGV_TSC_FILE ] ) == true
+      next if File::stat( ARGV[ ARGV_TSC_FILE ] ).mtime.tv_sec >= File::stat( file_name ).mtime.tv_sec
+    end
+
     #オスファイルコンバート
     cmd = "./nce_lnk poke_icon_128k.nce " + file_name
     system( cmd )
@@ -111,7 +113,7 @@ end
     else
       fp_w = open( file_name.sub( ".ncg", ".NCGR" ), "w" )
       fp_w.close
-      mesu_pltt = 0
+      mesu_pltt = osu_pltt
     end
     fp_pal.printf("\t0x%d%d,\t\t// %d : %s\n", mesu_pltt, osu_pltt, i - 1, file_list[ i ].sub( ".NCGR", "" ) )
   }
