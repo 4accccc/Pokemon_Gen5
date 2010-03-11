@@ -44,6 +44,7 @@ enum {
   RSC_GRID_FOURKINGS = 15,     // 四天王部屋用
   RSC_GRID_NOSCROLL = 16,     // グリッド　スクロールなし動作
   RSC_GRID_CABIN = 17,     // グリッド　客室用　1x5
+  RSC_GRID_H04 = 18,     // グリッド　H04 スクロールなし動作
 
 	//NO_GRID_SAMPLE = 2,
 	//GRID_GS_SAMPLE = 3,
