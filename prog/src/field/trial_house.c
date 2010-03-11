@@ -454,10 +454,8 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
 //      exa = SaveControl_Extra_DataPtrGet( sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION, 0);
       //バッファからセーブへデータコピー
 //      GFL_STD_MemCopy( evt_wk->Ptr->CommBuf, exa, BATTLE_EXAMINATION_SAVE_GetWorkSize() );
-      NOZOMU_Printf("外部セーブにデータを保存\n");
-      //仮コメントアウト　処理をフックしておく   
+      NOZOMU_Printf("外部セーブにデータを保存\n");   
       BATTLE_EXAMINATION_SAVE_Write(sv, evt_wk->Ptr->CommBuf, GFL_HEAP_LOWID(HEAPID_PROC));
-
       NOZOMU_Printf("データ受け取り成功\n");
       //受け取りの結果をセット
       *(evt_wk->Ret) = TRUE;    //成功
@@ -585,7 +583,7 @@ void TRIAL_HOUSE_CalcBtlResult( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, u1
     }
   }
 
-  //最高得点、最高ランク更新処理(シングル、ダブルの区別無し)
+  //最高得点、最高ランク更新処理(シングル、ダブルの区別無し) @todo
 }
 
 //--------------------------------------------------------------
