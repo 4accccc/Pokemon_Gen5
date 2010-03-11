@@ -647,12 +647,14 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       else
       { 
         //VERSION‚ªŠÔˆá‚Á‚Ä‚¢‚½
+        OS_TPrintf( "ƒo[ƒWƒ‡ƒ“‚ªˆá‚¤‚æ\n" );
         *p_seq  = SEQ_START_MSG_DIRTY_VER;
       }
     }
     else
     { 
       //CRC‚ªŠÔˆá‚Á‚Ä‚¢‚½
+      OS_TPrintf( "CRC‚ªˆá‚¤‚æ\n" );
       *p_seq  = SEQ_START_MSG_DIRTY_CRC;
     }
     break;

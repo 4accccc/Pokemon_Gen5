@@ -428,6 +428,8 @@ struct _PLAYERINFO_WORK
   u8          trainer_plt;
   CLSYS_DRAW_TYPE cl_draw_type;
   REGULATION_VIEWDATA * p_reg_view;
+  HEAPID      heapID;
+  GFL_CLUNIT *p_unit;
 };
 
 //=============================================================================
@@ -485,13 +487,13 @@ PLAYERINFO_WORK *PLAYERINFO_RND_Init( const PLAYERINFO_RANDOMMATCH_DATA *cp_data
 	p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(PLAYERINFO_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(PLAYERINFO_WORK) );
 
-    p_wk->frm = PLAYERINFO_BG_FRAME;
-    p_wk->plt = PLAYERINFO_PLT_BG_FONT;
-    p_wk->pokemonicon_plt = PLAYERINFO_PLT_OBJ_POKEICON;
-    p_wk->trainer_plt = PLAYERINFO_PLT_OBJ_TRAINER;
-    p_wk->cl_draw_type  = CLSYS_DRAW_SUB;
+  p_wk->frm = PLAYERINFO_BG_FRAME;
+  p_wk->plt = PLAYERINFO_PLT_BG_FONT;
+  p_wk->pokemonicon_plt = PLAYERINFO_PLT_OBJ_POKEICON;
+  p_wk->trainer_plt = PLAYERINFO_PLT_OBJ_TRAINER;
+  p_wk->cl_draw_type  = CLSYS_DRAW_SUB;
 
-    G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, PLAYERINFO_ALPHA_EV1, PLAYERINFO_ALPHA_EV2);
+  G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, PLAYERINFO_ALPHA_EV1, PLAYERINFO_ALPHA_EV2);
 
   //BMPWIN作成
   rank  = CalcRank( cp_data->btl_cnt, cp_data->win_cnt, cp_data->lose_cnt );
@@ -565,6 +567,8 @@ PLAYERINFO_WORK *PLAYERINFO_WIFI_Init( const PLAYERINFO_WIFICUP_DATA *cp_data, B
 	p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(PLAYERINFO_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(PLAYERINFO_WORK) );
   p_wk->p_reg_view  = p_reg_view;
+  p_wk->heapID      = heapID;
+  p_wk->p_unit      = p_unit;
 
   //メインとサブで読み込み先変更
   if( is_main )
@@ -643,6 +647,9 @@ void PLAYERINFO_WIFI_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_
   STRBUF	*p_strbuf;
 
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_wk->p_bmpwin[7]), 0 );
+
+  PlayerInfo_POKEICON_Delete( p_wk );
+  PlayerInfo_POKEICON_Create( p_wk, p_wk->p_unit, p_wk->p_reg_view, p_wk->heapID );
 
   switch( type )
   { 
@@ -729,7 +736,9 @@ PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, c
   //ワーク作成
 	p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(PLAYERINFO_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(PLAYERINFO_WORK) );
-  p_wk->p_reg_view  = p_reg_view;
+  p_wk->p_reg_view  = p_reg_view; 
+  p_wk->heapID      = heapID;
+  p_wk->p_unit      = p_unit;
 
   p_wk->frm = PLAYERINFO_BG_FRAME;
   p_wk->plt = PLAYERINFO_PLT_BG_FONT;
@@ -794,6 +803,9 @@ void PLAYERINFO_LIVE_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_
   STRBUF	*p_strbuf;
 
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_wk->p_bmpwin[9]), 0 );
+
+  PlayerInfo_POKEICON_Delete( p_wk );
+  PlayerInfo_POKEICON_Create( p_wk, p_wk->p_unit, p_wk->p_reg_view, p_wk->heapID );
 
   switch( type )
   { 
