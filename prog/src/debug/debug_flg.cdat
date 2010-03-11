@@ -24,7 +24,7 @@ DEBUG_FLG_DEF( RestricUGC , "Restric UGC")          //DSiİ’èƒyƒAƒŒƒ“ƒ^ƒ‹ƒRƒ“ƒgƒ
 DEBUG_FLG_DEF( ShortcutBtlIn , "Shortcut BtlIn")
 DEBUG_FLG_DEF( DisableWL , "Disable WL")            //DSiİ’è–³ü’ÊMOFF
 //Page2
-DEBUG_FLG_DEF( TestFlg10, "DisableEULA")
+DEBUG_FLG_DEF( DisableEULA, "DisableEULA")
 DEBUG_FLG_DEF( TestFlg11, "ƒeƒXƒg11")
 DEBUG_FLG_DEF( TestFlg12, "ƒeƒXƒg12")
 DEBUG_FLG_DEF( TestFlg13, "ƒeƒXƒg13")
