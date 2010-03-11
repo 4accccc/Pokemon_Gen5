@@ -14,6 +14,7 @@
 #define T01R0102_BALL1                     2
 #define T01R0102_RIVAL_01                  3
 #define T01R0102_SUPPORT_01                4
+#define T01R0102_PRESENT_01                5
 
 #endif //ZONE_T01R0102_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t01r0102.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

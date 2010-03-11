@@ -35,6 +35,7 @@ _EVENT_DATA    ev_scene_t01r0102_gamestart		//ゲーム開始時のイベント
 _EVENT_DATA    ev_pos_t01r0102_stopper			//ポケモン３匹入手イベントのライバルストッパー
 _EVENT_DATA    ev_t01r0102_rival_01
 _EVENT_DATA    ev_t01r0102_support_01
+_EVENT_DATA    ev_t01r0102_present_01
 
 
 _EVENT_DATA_END
@@ -61,12 +62,17 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_TIME_WAIT( 8 )
 	
 	//ライバル：階段をみて
-	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_r )
+	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_u )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル会話：ベルはまた？
 	_BALLOONWIN_OBJMSG( msg_t01r0102_black_01a , T01R0102_RIVAL_01 )
 	_MSGWIN_CLOSE()
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラパージ
+	_CAMERA_MOVE(9688,0,970752,491520,0,229376, 40)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//サポート：表示
 	_FLAG_RESET( FV_T01R0102_SUPPORT )
@@ -92,7 +98,7 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_OBJ_ANIME( T01R0102_RIVAL_01, anm_gamestart_rival_look_01 )
 	_OBJ_ANIME_WAIT()
 	
-	//サポート：ボールの横へ
+	//サポート：プレゼントの前へ
 	_OBJ_ANIME( T01R0102_SUPPORT_01, anm_gamestart_support_move_02 )
 	_OBJ_ANIME( T01R0102_RIVAL_01, anm_gamestart_rival_look_02 )
 	
@@ -100,7 +106,11 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_BALLOONWIN_OBJMSG( msg_t01r0102_black_02 , T01R0102_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 	
-	//演出実験
+	_OBJ_ANIME_WAIT()
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//サポート：ライバルを見て
+	_OBJ_ANIME( T01R0102_SUPPORT_01, anm_stay_walk_r )
 	_OBJ_ANIME_WAIT()
 	
 	//サポート会話：ごめんなさい ポケモン届いたの？
@@ -112,8 +122,13 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_BALLOONWIN_OBJMSG( msg_t01r0102_black_03, T01R0102_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 	
-	//ライバル：プレゼントを見る
-	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_l )
+	//ライバル：プレゼント前へ
+	_OBJ_ANIME( T01R0102_RIVAL_01, anm_gamestart_rival_move_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//主人公＆サポート：プレゼントを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
+	_OBJ_ANIME( T01R0102_SUPPORT_01, anm_stay_walk_d )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル会話：ボールを調べなよ
@@ -154,16 +169,17 @@ _ANIME_LABEL	anm_gamestart_support_move_01
 //ライバル：サポートを見る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_gamestart_rival_look_01
-	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //サポート：ボールの横へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_gamestart_support_move_02
-	_ANIME_DATA	AC_WALK_D_8F,4
-	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -171,6 +187,15 @@ _ANIME_LABEL	anm_gamestart_support_move_02
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_gamestart_rival_look_02
 	_ANIME_DATA	AC_WAIT_8F,4
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル：プレゼント前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gamestart_rival_move_02
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -178,6 +203,21 @@ _ANIME_LABEL	anm_gamestart_rival_look_02
 /************************************************************/
 /*					初期３匹選択イベント					*/
 /************************************************************/
+EVENT_START	ev_t01r0102_present_01
+
+
+
+
+EVENT_END
+
+
+
+
+
+
+
+
+
 //【仮】最初の３匹選択　炎タイプ
 EVENT_START   ev_t01r0102_poke_get0
 
