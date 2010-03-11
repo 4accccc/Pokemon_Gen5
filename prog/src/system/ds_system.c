@@ -107,6 +107,35 @@ const BOOL DS_SYSTEM_IsAvailableWireless( void )
 }
 
 //--------------------------------------------------------------
+//	@berif Wifiの使用規約同意チェック
+//         ここでTRUEでもWifi接続時のチェック・バージョン更新などでつなげない時もある。
+//
+//  @return BOOL TRUE 同意済み
+//  @return BOOL FALSE 同意してない
+//--------------------------------------------------------------
+const BOOL DS_SYSTEM_IsAgreeEULA( void )
+{
+  if( DEBUG_FLG_GetFlg( DEBUG_FLG_DisableEULA ) == TRUE )
+  {
+    return FALSE;
+  }
+
+#if (defined(SDK_TWL))
+  if( DS_SYSTEM_IsRunOnTwl() == TRUE )
+  {
+    return OS_IsAgreeEULA();
+  }
+  else
+  {
+    //本来だとDSの場合FALSEを返すが、利便性のためTRUE
+    return TRUE;
+  }
+#else
+  return TRUE;
+#endif
+}
+
+//--------------------------------------------------------------
 //	@berif DSの誕生日設定の取得
 //
 //	@param  month 月格納先
