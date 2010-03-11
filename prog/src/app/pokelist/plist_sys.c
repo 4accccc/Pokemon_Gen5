@@ -37,6 +37,7 @@
 #include "plist_battle.h"
 #include "plist_item.h"
 #include "plist_demo.h"
+#include "plist_comm.h"
 #include "plist_snd_def.h"
 #include "poke_tool/status_rcv.h"
 
@@ -244,8 +245,10 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->clwkExitButton = NULL;
   work->btlMenuWin[0] = NULL;
   work->btlMenuWin[1] = NULL; 
+  work->isDecideParty = FALSE;
   work->demoType = PDT_NONE;
   work->isCallForceExit = FALSE;
+  work->isComm = FALSE;
 
   for( i=0;i<PCR_MAX;i++ )
   {
@@ -278,6 +281,10 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   {
     work->plData->mode = PL_MODE_BATTLE;
     work->isFinishSync = TRUE;
+    PLIST_COMM_InitComm( work );
+    
+    //この場合中で操作するので
+    work->plData->comm_selected_num = 0;
   }
   else
   {
@@ -490,17 +497,19 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
       {
         if( work->isFinishSync == TRUE )
         {
-          //通信同期をとる
-          work->mainSeq = PSMS_FINISH_SYNC_INIT;
-          //メニューを消す
-          PLIST_MENU_DeleteMenuWin_BattleMenu( work->btlMenuWin[0] );
-          PLIST_MENU_DeleteMenuWin_BattleMenu( work->btlMenuWin[1] );
-          work->btlMenuWin[0] = NULL;
-          work->btlMenuWin[1] = NULL;
-          PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
-          PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_13_07 );
-          
-
+          const BOOL ret = PLIST_COMM_SendFlg( work , PCFT_FINISH_SELECT , 0 );
+          if( ret == TRUE )
+          {
+            //通信同期をとる
+            work->mainSeq = PSMS_FINISH_SYNC_INIT;
+            //メニューを消す
+            PLIST_MENU_DeleteMenuWin_BattleMenu( work->btlMenuWin[0] );
+            PLIST_MENU_DeleteMenuWin_BattleMenu( work->btlMenuWin[1] );
+            work->btlMenuWin[0] = NULL;
+            work->btlMenuWin[1] = NULL;
+            PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
+            PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_13_07 );
+          }
         }
         else
         {
@@ -528,16 +537,14 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
 
   case PSMS_FINISH_SYNC_INIT:  //Wifiバトル終了通信同期
     {
-      GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      GFL_NET_HANDLE_TimeSyncStart( selfHandle , 128 , WB_NET_POKELIST );
+      PLIST_COMM_ReqExitComm( work );
       work->mainSeq = PSMS_FINISH_SYNC_WAIT;
     }
     break;
 
   case PSMS_FINISH_SYNC_WAIT:
     {
-      GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      if( GFL_NET_HANDLE_IsTimeSync( selfHandle , 128 , WB_NET_POKELIST ) == TRUE )
+      if( PLIST_COMM_IsExitComm( work ) == TRUE )
       {
         work->mainSeq = PSMS_FADEOUT;
       }
@@ -592,6 +599,9 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
 
   //OBJの更新
   GFL_CLACT_SYS_Main();
+  
+  //通信チェックは中で
+  PLIST_COMM_UpdateComm( work );
 
   return FALSE;
 }
@@ -2283,6 +2293,7 @@ static void PLIST_SelectPokeTerm_BattleDecide( PLIST_WORK *work )
     work->mainSeq = PSMS_BATTLE_ANM_WAIT;
     work->plData->ret_sel = PL_SEL_POS_ENTER;
     work->plData->ret_mode = PL_RET_NORMAL;
+    work->isDecideParty = TRUE;
 
     PMSND_PlaySystemSE( PLIST_SND_DECIDE );
     
@@ -3819,12 +3830,20 @@ void PLIST_ForceExit_Timeup( PLIST_WORK *work )
     }
     
     work->isCallForceExit = TRUE;
-    work->mainSeq = PSMS_FADEOUT_FORCE;
+    if( work->isComm == TRUE )
+    {
+      work->mainSeq = PSMS_FINISH_SYNC_INIT;
+    }
+    else
+    {
+      work->mainSeq = PSMS_FADEOUT_FORCE;
+    }
     work->plData->ret_sel = PL_SEL_POS_ENTER;
     work->plData->ret_mode = PL_RET_NORMAL;
     
 
     //強制選択
+    if( work->isDecideParty == FALSE )
     {
       u8 i;
       u8 ofs = 0;

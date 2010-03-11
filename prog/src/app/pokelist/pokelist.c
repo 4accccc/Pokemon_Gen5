@@ -147,7 +147,8 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         {
           plData->in_num[i] = 0;
         }
-        plData->mode = PL_MODE_BATTLE_WIFI;
+        plData->mode = PL_MODE_BATTLE;
+        //plData->mode = PL_MODE_BATTLE_WIFI;
         //plData->mode = PL_MODE_BATTLE_SUBWAY;
         for( p=0;p<3;p++ )
         {
@@ -179,7 +180,7 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         plData->is_disp_party = TRUE;
         plData->use_tile_limit = TRUE;
         plData->time_limit = 30;
-        plData->comm_selected_num = 1;
+        plData->comm_selected_num = 0;
       }
       else
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )

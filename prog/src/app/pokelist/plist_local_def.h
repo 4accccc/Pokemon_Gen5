@@ -262,6 +262,7 @@ struct _PLIST_WORK
   u16 btlMenuAnmCnt;       //↑のアニメ用
   u16 btlMenuTransBuf;
   u8  btlTermAnmCnt;
+  BOOL isDecideParty;
 
   //HPアニメ処理
   u16 befHp;  //回復前のHP
@@ -326,6 +327,10 @@ struct _PLIST_WORK
 	u8   demoCnt;
 	u8   demoChangeTimming;
 	BOOL demoIsChange;
+
+  //通信用
+  BOOL isComm;
+  u8   commState;
 
   PLIST_DATA *plData;
 #if USE_DEBUGWIN_SYSTEM

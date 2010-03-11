@@ -171,7 +171,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
     }
   }
 
-  procWork->plData.comm_selected_num  = p_param->comm_selected_num;
+  //List内で制御するのでコメントアウト Ari100310
+  //procWork->plData.comm_selected_num  = p_param->comm_selected_num;
   
   
   switch( procWork->state )

@@ -532,6 +532,7 @@ static void PLIST_BATTLE_DispWaitingMessage( PLIST_WORK *work )
   if( work->plData->comm_selected_num == 0 )
   {
     //’N‚àŒˆ‚ß‚Ä‚È‚¢
+    //•\Ž¦‚Í–³‚µ‚ÅOK
   }
   else
   {
