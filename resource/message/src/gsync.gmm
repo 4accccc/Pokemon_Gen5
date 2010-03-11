@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-03-10T16:44:12"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T10:57:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="96" top="212" right="800" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1469" top="241" right="2173" bottom="862" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="529"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="696"/>
 		<band id="3" index="3" style="0000" width="696"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -560,7 +560,7 @@
 	<row id="GSYNC_ERR007" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
 		<language name="JPN" width="256">サーバとせつぞくできませんでした</language>
-		<language name="JPN_KANJI" width="256">サーバとせつぞくできませんでした</language>
+		<language name="JPN_KANJI" width="256">サーバと接続できませんでした</language>
 	</row>
 
 	<row id="GSYNC_ERR008" back-color=",,,#ffff00,,,,,,,,,,,,,,">
