@@ -2338,13 +2338,20 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
     //↑やっぱしない。
     if( trg != 0 )
     {
-      //カーソルを0の位置に表示
-      //PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
-      //work->pokeCursor = PL_SEL_POS_POKE1;
-      PLIST_SelectPokeSetCursor( work , work->pokeCursor );
-      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
-
-      //PLIST_PLATE_SetActivePlatePos( work , work->pokeCursor );
+      if( work->pokeCursor <= PL_SEL_POS_POKE6 )
+      {
+        //プレート
+        PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+        PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
+      }
+      else
+      {
+        //バトル時決定・戻る
+        const u8 idx = work->pokeCursor - PL_SEL_POS_ENTER;
+        PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[idx] , TRUE );
+        
+        GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
+      }
       
       work->ktst = GFL_APP_KTST_KEY;
     }
@@ -2897,6 +2904,7 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
     
   case PMIT_RET_JOIN:
     {
+      BOOL isFullMember = FALSE;
       REGULATION *reg = (REGULATION*)work->plData->reg;
       const PLIST_PLATE_CAN_BATTLE ret = PLIST_PLATE_CanJoinBattle( work , work->plateWork[work->pokeCursor] );
       if( ret == PPCB_OK )
@@ -2906,7 +2914,7 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
         PLIST_InitMode_Select( work );
         if( work->btlJoinNum == reg->NUM_HI )
         {
-          work->pokeCursor = PL_SEL_POS_ENTER;
+          isFullMember = TRUE;
         }
         work->mainSeq = PSMS_SELECT_POKE;
       }
@@ -2929,9 +2937,25 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
         PMSND_PlaySystemSE( PLIST_SND_ERROR );
       }
       
-      
-      PLIST_SelectPokeSetCursor( work , work->pokeCursor );
       work->selectPokePara = NULL;
+      if( isFullMember == TRUE )
+      {
+        PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
+        work->pokeCursor = PL_SEL_POS_ENTER;
+        if( work->ktst == GFL_APP_KTST_KEY )
+        {
+
+          //バトル時決定・戻る
+          const u8 idx = work->pokeCursor - PL_SEL_POS_ENTER;
+          PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[idx] , TRUE );
+          
+          GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
+        }
+      }
+      else
+      {
+        PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+      }
     }
     break;
     
