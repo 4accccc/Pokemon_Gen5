@@ -32,6 +32,7 @@ struct _SITUATION {
   u8  pad[3];             ///<padding
   u32 egg_step_count;     ///<タマゴ孵化カウンタ
   u16 friendly_step_count;  ///<なつき度上昇用カウンタ
+  u16 sea_temple_count;   ///<海底神殿歩行カウンタ
 
 	//PLAYER_WORKからセーブに必要なものだけを抜粋
 	PLAYERWORK_SAVE plsv;
@@ -332,4 +333,33 @@ void Situation_SetFriendlyStepCount( SITUATION * st, u16 step_count )
 {
   st->friendly_step_count = step_count;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  海底神殿ステップカウント  設定
+ *
+ *	@param	st        シチュエーションワーク
+ *	@param	count     カウント数
+ */
+//-----------------------------------------------------------------------------
+void Situation_SetSeaTempleStepCount(SITUATION * st, u32 count)
+{
+  st->sea_temple_count = count;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  海底神殿ステップカウント　取得
+ *
+ *	@param	st  シチュエーションワーク
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+u16 Situation_GetSeaTempleStepCount(const SITUATION * st)
+{
+  return st->sea_temple_count;
+}
+
+
 

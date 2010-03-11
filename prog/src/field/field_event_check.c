@@ -48,6 +48,7 @@
 #include "event_subscreen.h"      //EVENT_ChangeSubScreen
 #include "event_shortcut_menu.h"	//EVENT_ShortCutMenu
 #include "event_research_radar.h"  //EVENT_ResearchRadar
+#include "event_seatemple.h"  //EVENT_SeaTemple～
 
 #include "system/main.h"    //HEAPID_FIELDMAP
 #include "isdbglib.h"
@@ -187,6 +188,8 @@ static GMEVENT* CheckGPowerEffectEnd( GAMESYS_WORK* gsys );
 static void updatePartyEgg( GAMEDATA * gamedata, POKEPARTY* party );
 static BOOL checkPartyEgg( POKEPARTY* party );
 static void updateFriendyStepCount( GAMEDATA * gamedata, FIELDMAP_WORK * fieldmap );
+
+static GMEVENT* CheckSeaTemple( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, u16 zone_id );
 
 static GMEVENT * checkExit(EV_REQUEST * req,
     FIELDMAP_WORK *fieldWork, const VecFx32 *now_pos );
@@ -1634,6 +1637,10 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
   }
   updateFriendyStepCount( req->gamedata, fieldWork );
 
+  //海底神殿チェック
+  event = CheckSeaTemple( gsys, fieldWork, req->map_id );
+  if( event != NULL) return event;
+
   //育て屋チェック
   event = CheckSodateya( req, fieldWork, gsys, gdata );
   if( event != NULL) return event;
@@ -1800,6 +1807,40 @@ static void updateFriendyStepCount( GAMEDATA * gamedata, FIELDMAP_WORK * fieldma
       NATSUKI_CalcTsurearuki( pp, zone_id, heapID );
     }
   }
+}
+
+
+
+//======================================================================
+//======================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  海底神殿　歩数イベントチェック
+ *
+ *	@param	gsys  ゲームシステム
+ *
+ *	@return ゲームイベント
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT* CheckSeaTemple( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, u16 zone_id )
+{
+  GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK* saveData = GAMEDATA_GetSaveControlWork(gdata);
+  SITUATION* situation = SaveData_GetSituation( saveData );
+  u16 count;
+  GMEVENT * event = NULL;
+
+  if( ZONEDATA_IsSeaTempleDungeon( zone_id ) ){
+    // 歩数のスクリプト起動
+    event = EVENT_SeaTemple_GetStepEvent( gsys, fieldmap );
+  
+    // 歩数カウント
+    count = Situation_GetSeaTempleStepCount( situation );
+    count ++;
+    Situation_SetSeaTempleStepCount( situation, count );
+  }
+
+  return event;
 }
 
 //======================================================================

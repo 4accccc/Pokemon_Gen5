@@ -120,6 +120,9 @@ pdw_scr_def.h: pdw_scr.ev
 musical_scr_def.h: musical_scr.ev
 	$(EV_DEF) musical_scr.ev $(SCR_OFFS_ID_H)
 
+seatemple_scr_def.h: seatemple_scr.ev
+	$(EV_DEF) seatemple_scr.ev $(SCR_OFFS_ID_H)
+
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 

@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2010 03/09 (Tue) 17:37
+ * @date  2010 03/11 (Thu) 18:04
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -17,6 +17,12 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       ID_DEBUG_SCR_OFFSET_END,        //(12199),
       NARC_script_seq_debug_scr_bin,
       NARC_script_message_debug_scr_dat
+    },
+    {//海底神殿用スクリプト
+      ID_SEATEMPLE_SCR_OFFSET,        //(10460),
+      ID_SEATEMPLE_SCR_OFFSET_END,    //(10469),
+      NARC_script_seq_seatemple_scr_bin,
+      NARC_script_message_seatemple_scr_dat
     },
     {//ミュージカル用スクリプト
       ID_MUSICAL_SCR_OFFSET,          //(10440),

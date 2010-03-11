@@ -65,4 +65,8 @@ extern void Situation_GetEggStepCount(SITUATION * st, u32 * count);
 extern u16 Situation_GetFriendlyStepCount( const SITUATION * st );
 extern void Situation_SetFriendlyStepCount( SITUATION * st, u16 step_count );
 
+
+extern void Situation_SetSeaTempleStepCount(SITUATION * st, u32 count);
+extern u16 Situation_GetSeaTempleStepCount(const SITUATION * st);
+
 #endif	//__SITUATION_H__

@@ -3,7 +3,7 @@
 # @file  uniq_script.list
 # @bfief 非マップ依存のスクリプトリスト
 # @author  tamada GAMEFREAK inc.
-# @date  2010 03/09 (Tue) 17:37
+# @date  2010 03/11 (Thu) 18:04
 #
 #  このファイルはコンバータにより自動生成されています
 #
@@ -50,6 +50,7 @@ UNIQ_SCRIPTFILES = \
 	trial_house_scr.ev \
 	pdw_scr.ev \
 	musical_scr.ev \
+	seatemple_scr.ev \
 	debug_scr.ev 
 
 #イベントデータで指定され直接呼ばれるスクリプトファイル
@@ -96,6 +97,7 @@ UNIQ_SUB_EVENT_SCRFILES = \
 	field_ev_scr.ev \
 	gate_scr.ev \
 	hyouka_scr.ev \
+	seatemple_scr.ev \
 	debug_scr.ev 
 
 

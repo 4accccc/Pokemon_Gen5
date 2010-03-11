@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2010 03/09 (Tue) 17:37
+ * @date  2010 03/11 (Thu) 18:04
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -135,6 +135,9 @@
 
 #define ID_MUSICAL_SCR_OFFSET            (10440) //ミュージカル用スクリプト
 #define ID_MUSICAL_SCR_OFFSET_END        (10459)
+
+#define ID_SEATEMPLE_SCR_OFFSET          (10460) //海底神殿用スクリプト
+#define ID_SEATEMPLE_SCR_OFFSET_END      (10469)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)

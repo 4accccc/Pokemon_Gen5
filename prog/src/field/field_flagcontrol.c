@@ -21,6 +21,8 @@
 #include "field_flagcontrol.h"
 #include "script_hideitem.h"
 
+#include "savedata/situation.h"
+
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 //-----------------------------------------------------------------------------
@@ -120,6 +122,15 @@ void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata, u16 zone_id)
 
     //‰B‚µƒAƒCƒeƒ€•œŠˆˆ—
     HIDEITEM_Revival( eventwork );
+  }
+
+  // ŠC’ê_“a•à”
+  {
+    if( ZONEDATA_IsSeaTempleDungeon(zone_id) == FALSE ){
+      SAVE_CONTROL_WORK* saveData = GAMEDATA_GetSaveControlWork(gdata);
+      SITUATION* situation = SaveData_GetSituation( saveData );
+      Situation_SetSeaTempleStepCount( situation, 0 );
+    }
   }
 
 
