@@ -830,10 +830,11 @@ void PLAYERINFO_LIVE_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_
 
   { 
     GFL_CLACTPOS  pos;
+    int x = GFL_BG_GetScrollX( p_wk->frm );
     for( i = 0; i < TEMOTI_POKEMAX; i++ )
     {
       pos.y = PLAYERINFO_POKEICON_Y;
-      pos.x = PLAYERINFO_POKEICON_START_X + PLAYERINFO_POKEICON_DIFF_X*i;
+      pos.x = -x + PLAYERINFO_POKEICON_START_X + PLAYERINFO_POKEICON_DIFF_X*i;
       if( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i] )
       { 
         GFL_CLACT_WK_SetPos( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i], &pos, p_wk->cl_draw_type );

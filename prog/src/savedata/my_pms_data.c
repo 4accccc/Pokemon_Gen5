@@ -68,11 +68,11 @@ int MYPMS_GetWorkSize( void )
 //-----------------------------------------------------------------------------
 void MYPMS_Init( MYPMS_DATA *p_wk )
 {
-  PMSDAT_Init( &p_wk->pms[MYPMS_PMS_TYPE_INTRODUCTION], PMS_TYPE_BATTLE_READY );
+  PMSDAT_Init( &p_wk->pms[MYPMS_PMS_TYPE_INTRODUCTION], PMS_TYPE_UNION );
   PMSDAT_Init( &p_wk->pms[MYPMS_PMS_TYPE_BATTLE_READY], PMS_TYPE_BATTLE_READY );
   PMSDAT_Init( &p_wk->pms[MYPMS_PMS_TYPE_BATTLE_WON], PMS_TYPE_BATTLE_WON );
   PMSDAT_Init( &p_wk->pms[MYPMS_PMS_TYPE_BATTLE_LOST], PMS_TYPE_BATTLE_LOST );
-  PMSDAT_Init( &p_wk->pms[MYPMS_PMS_TYPE_BATTLE_LOST], PMS_TYPE_BATTLE_WON );
+  PMSDAT_Init( &p_wk->pms[MYPMS_PMS_TYPE_BATTLE_TOP], PMS_TYPE_BATTLE_WON );
 }
 
 //----------------------------------------------------------

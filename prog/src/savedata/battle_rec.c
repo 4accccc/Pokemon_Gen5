@@ -168,9 +168,10 @@ BOOL BattleRec_DataExistCheck(void)
 BOOL BattleRec_DataSetCheck(void)
 { 
   BATTLE_REC_WORK *rec = &brs->rec;
-  BATTLE_REC_HEADER *head = &brs->head;
 
-  if(rec->magic_key == REC_OCC_MAGIC_KEY && head->magic_key == REC_OCC_MAGIC_KEY){
+  //‰½‚à‚©‚«‚±‚Ü‚ê‚Ä‚¢‚È‚¯‚ê‚ÎFALSE
+  if( GFL_STD_CODED_CheckSum( rec, sizeof(BATTLE_REC_WORK) ) > 0 )
+  {
     return TRUE;
   }
   return FALSE;

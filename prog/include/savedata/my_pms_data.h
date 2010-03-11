@@ -22,8 +22,8 @@
 //=====================================
 typedef enum
 {
-  MYPMS_PMS_TYPE_INTRODUCTION,  //自己紹介
-  MYPMS_PMS_TYPE_BATTLE_READY,  //バトル勝負前挨拶
+  MYPMS_PMS_TYPE_INTRODUCTION,  //自己紹介(トレーナーカードでいれる)
+  MYPMS_PMS_TYPE_BATTLE_READY,  //バトル勝負前挨拶（以下４つはスクリプトからいれる）
   MYPMS_PMS_TYPE_BATTLE_WON,    //バトル勝ち時セリフ
   MYPMS_PMS_TYPE_BATTLE_LOST,   //バトル負け時セリフ
   MYPMS_PMS_TYPE_BATTLE_TOP,    //バトル１番になったとき
