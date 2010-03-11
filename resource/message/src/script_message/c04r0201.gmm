@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-03-10T13:29:39"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T17:05:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1072" top="420" right="1572" bottom="1030" maximized="no" rayout="Vertical2">
+	<dialog left="1417" top="187" right="2241" bottom="791" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1072" top="4" right="1545" bottom="402" visible="yes"/>
-		<band id="0" index="1" style="0000" width="492"/>
+		<tag-palette left="807" top="4" right="1280" bottom="402" visible="yes"/>
+		<band id="0" index="1" style="0000" width="624"/>
 		<band id="1" index="2" style="0000" width="190"/>
 		<band id="2" index="3" style="0000" width="300"/>
-		<band id="3" index="4" style="0000" width="492"/>
-		<band id="4" index="0" style="0000" width="591"/>
+		<band id="3" index="4" style="0000" width="514"/>
+		<band id="4" index="0" style="0000" width="816"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1061,7 +1061,7 @@
 グッズケースの　なかに　しまった！</language>
 	</row>
 
-	<row id="msg_c04r0201_girl4_01">
+	<row id="msg_c04r0201_girl4_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ワザマシン49「エコーボイス」をくれる
 ワザマシン入手前</comment>
@@ -1078,7 +1078,7 @@
 かわりに　これを　あげる！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_girl4_02">
+	<row id="msg_c04r0201_girl4_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ワザマシン49「エコーボイス」をくれる
 ワザマシン49「エコーボイス」の説明</comment>
@@ -1095,7 +1095,7 @@
 みんなで　使うと　便利かもね！</language>
 	</row>
 
-	<row id="msg_c04r0201_girl4_03">
+	<row id="msg_c04r0201_girl4_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ワザマシン49「エコーボイス」をくれる
 ワザマシン49「エコーボイス」入手後</comment>
@@ -1108,6 +1108,16 @@
 続けて　いくことが　大事ね！▼
 ミュージカルなら　ファンがふえる！
 エコーボイスなら　ダメージがふえる！</language>
+	</row>
+
+	<row id="msg_c04r0201_statue_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・ジムバッジ取得前</comment>
+		<attribute name="キャラ指定">ポケモン像</attribute>
+		<language name="JPN" width="256">ミュージカル　ホール
+グッズ＋おんがく＋ダンス＝かんどう！</language>
+		<language name="JPN_KANJI" width="256">ミュージカル　ホール
+グッズ＋音楽＋ダンス＝感動！</language>
 	</row>
 
 	<flowchart-group-list>
