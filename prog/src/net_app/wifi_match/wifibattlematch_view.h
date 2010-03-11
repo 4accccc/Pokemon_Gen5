@@ -162,6 +162,8 @@ extern void WIFIBATTLEMATCH_VIEW_Main( WIFIBATTLEMATCH_VIEW_RESOURCE *p_wk );
 #define PLAYERINFO_PLT_OBJ_TRAINER_MAIN 	(PLT_OBJ_TRAINER_M)
 #define PLAYERINFO_PLT_OBJ_ITEM_MAIN   	  (PLT_OBJ_POKEITEM_M)
 
+#define PLAYERINFO_POKEITEM_X_OFS					(12)
+#define PLAYERINFO_POKEITEM_Y_OFS					(12)
 
 #define PLAYERINFO_POKEICON_START_X		(32)
 #define PLAYERINFO_POKEICON_DIFF_X		(32)
@@ -264,7 +266,7 @@ extern void PLAYERINFO_WIFI_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_
 //-------------------------------------
 ///	LIVE‘å‰ï
 //=====================================
-extern PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, REGULATION_VIEWDATA * p_reg_view, HEAPID heapID );
+extern PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, REGULATION_VIEWDATA * p_reg_view, BOOL is_main, HEAPID heapID );
 extern void PLAYERINFO_LIVE_Exit( PLAYERINFO_WORK *p_wk );
 extern void PLAYERINFO_LIVE_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_TYPE type, GFL_MSGDATA *p_msg, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID );
 //-------------------------------------

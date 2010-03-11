@@ -158,8 +158,7 @@ DIGITALCARD_CHECK_WORK *DIGITALCARD_CHECK_Init( const DIGITALCARD_CHECK_PARAM *c
   WIFIBATTLEMATCH_VIEW_LoadScreen( p_wk->param.p_view, WIFIBATTLEMATCH_VIEW_RES_MODE_DIGITALCARD, heapID );
 
   //共通モジュール作成
-  p_wk->p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-        NARC_message_wifi_match_dat, heapID );
+  p_wk->p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_match_dat, heapID );
 	p_wk->p_word	= WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, WORDSET_COUNTRY_BUFLEN, heapID );
 
   //モジュール作成
@@ -300,6 +299,7 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   { 
   case SEQ_START_DRAW_PLAYERINFO:
     Util_PlayerInfo_Create( p_wk );
+    Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNREGISTER );
     *p_seq  = SEQ_WAIT_DRAW_PLAYERINFO;
     break;
 
@@ -405,6 +405,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   { 
   case SEQ_START_DRAW_PLAYERINFO:
     Util_PlayerInfo_Create( p_wk );
+    Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_LOCK );
     *p_seq  = SEQ_WAIT_DRAW_PLAYERINFO;
     break;
 
@@ -600,6 +601,7 @@ static void DC_SEQFUNC_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   { 
   case SEQ_START_DRAW_PLAYERINFO:
     Util_PlayerInfo_Create( p_wk );
+    Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
     *p_seq  = SEQ_WAIT_DRAW_PLAYERINFO;
     break;
 
@@ -690,6 +692,7 @@ static void DC_SEQFUNC_Retire( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   { 
   case SEQ_START_DRAW_PLAYERINFO:
     Util_PlayerInfo_Create( p_wk );
+    Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
     *p_seq  = SEQ_WAIT_DRAW_PLAYERINFO;
     break;
 
@@ -870,6 +873,7 @@ static void Util_PlayerInfo_Create( DIGITALCARD_CHECK_WORK *p_wk )
       info_setup.btl_cnt  = LIVEMATCH_DATA_GetMyParam( p_livematch, LIVEMATCH_MYDATA_PARAM_BTLCNT );
       info_setup.btl_max  = Regulation_GetParam( p_reg, REGULATION_BTLCOUNT );
 
+      info_setup.trainerID  = MyStatus_GetTrainerView( p_my );
 
       info_setup.start_date = GFDATE_Set( 
           Regulation_GetCardParam( p_reg_card, REGULATION_CARD_START_YEAR ),
@@ -883,7 +887,7 @@ static void Util_PlayerInfo_Create( DIGITALCARD_CHECK_WORK *p_wk )
           Regulation_GetCardParam( p_reg_card, REGULATION_CARD_END_DAY ),
           0);
 
-      p_wk->p_playerinfo	= PLAYERINFO_LIVE_Init( &info_setup, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_msg, p_wk->p_word, p_reg_view, p_wk->heapID );
+      p_wk->p_playerinfo	= PLAYERINFO_LIVE_Init( &info_setup, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_msg, p_wk->p_word, p_reg_view, TRUE, p_wk->heapID );
     }
 
 
@@ -911,6 +915,10 @@ static void Util_PlayerInfo_Delete( DIGITALCARD_CHECK_WORK *p_wk )
     }
     p_wk->p_playerinfo  = NULL;
   }
+
+  GFL_BG_ClearScreen( PLAYERINFO_BG_FRAME_MAIN );
+  GFL_BG_LoadScreenReq( PLAYERINFO_BG_FRAME_MAIN );
+
 }
 //----------------------------------------------------------------------------
 /**

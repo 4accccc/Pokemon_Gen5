@@ -50,6 +50,7 @@
 //-------------------------------------
 ///	OVERLAYエクスターン
 //=====================================
+FS_EXTERN_OVERLAY( ui_common );
 FS_EXTERN_OVERLAY(wifibattlematch_view);
 
 //======================================================================
@@ -163,6 +164,8 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcInit( GFL_PROC * proc, int * seq 
   p_wk->p_param = pwk;
   p_wk->heapId = HEAPID_BATTLE_CHAMPIONSHIP;
 
+  
+  GFL_OVERLAY_Load(  FS_OVERLAY_ID( ui_common ) );//WIFIBATTLEMATCH_VIEWのPLAYERINFO_LIVE_Initの中で使用するため
   GFL_OVERLAY_Load( FS_OVERLAY_ID(wifibattlematch_view) );
 
   BATTLE_CHAMPIONSHIP_InitGraphic( p_wk );
@@ -190,6 +193,7 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcTerm( GFL_PROC * proc, int * seq 
   BATTLE_CHAMPIONSHIP_TermGraphic( p_wk );
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifibattlematch_view) );
+  GFL_OVERLAY_Unload(  FS_OVERLAY_ID( ui_common ) );
 
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_BATTLE_CHAMPIONSHIP );

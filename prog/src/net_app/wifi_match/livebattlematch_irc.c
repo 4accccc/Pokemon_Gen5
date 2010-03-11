@@ -326,6 +326,8 @@ void LIVEBATTLEMATCH_IRC_StartCancelConnect( LIVEBATTLEMATCH_IRC_WORK *p_wk )
   { 
     GFL_NET_DelCommandTable( GFL_NET_CMD_IRC_BATTLE );
   }
+
+  p_wk->seq = 0;
 }
 //----------------------------------------------------------------------------
 /**

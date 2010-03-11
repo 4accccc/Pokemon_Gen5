@@ -49,8 +49,6 @@
 //外部公開
 #include "livebattlematch_flow.h"
 
-FS_EXTERN_OVERLAY( ui_common );
-
 //-------------------------------------
 ///	DEBUG
 //=====================================
@@ -226,9 +224,6 @@ LIVEBATTLEMATCH_FLOW_WORK *LIVEBATTLEMATCH_FLOW_Init( const LIVEBATTLEMATCH_FLOW
 { 
   LIVEBATTLEMATCH_FLOW_WORK *p_wk;
 
-  //WIFIBATTLEMATCH_VIEWのPLAYERINFO_LIVE_Initの中で使用するため
-  GFL_OVERLAY_Load(  FS_OVERLAY_ID( ui_common ) );
-
   //ワーク作成
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(LIVEBATTLEMATCH_FLOW_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(LIVEBATTLEMATCH_FLOW_WORK) );
@@ -304,7 +299,6 @@ void LIVEBATTLEMATCH_FLOW_Exit( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
   GFL_MSG_Delete( p_wk->p_msg );
   WORDSET_Delete( p_wk->p_word );
 
-  GFL_OVERLAY_Unload(  FS_OVERLAY_ID( ui_common ) );
 
   //ワーク破棄
   GFL_HEAP_FreeMemory( p_wk );
@@ -801,7 +795,7 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   { 
   case SEQ_START_DRAW_CARD:  //選手証とバトルボックス表示
     UTIL_PLAYERINFO_Create( p_wk );
-    UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_LOCK );
+    UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNREGISTER );
     UTIL_BTLBOX_Create( p_wk );
     *p_seq  = SEQ_WAIT_DRAW_CARD;
     break;
@@ -934,7 +928,6 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_START_MSG_SAVE:     //登録完了セーブ
-    UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_LOCK );
     UTIL_TEXT_Print( p_wk, LIVE_STR_09 );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE ); 
@@ -962,6 +955,7 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_START_MSG_COMPLATE: //完了メッセージ
+    UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_LOCK );
     UTIL_TEXT_Print( p_wk, LIVE_STR_10 );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_SUCCESS_END ); 
@@ -2025,7 +2019,7 @@ static void UTIL_PLAYERINFO_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
         Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_END_DAY ),
           0);
 
-    p_wk->p_playerinfo	= PLAYERINFO_LIVE_Init( &info_setup, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_wifi_msg, p_wk->p_word, p_reg_view, p_wk->heapID );
+    p_wk->p_playerinfo	= PLAYERINFO_LIVE_Init( &info_setup, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_wifi_msg, p_wk->p_word, p_reg_view, FALSE, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
