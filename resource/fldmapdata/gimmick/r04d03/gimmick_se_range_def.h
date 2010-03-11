@@ -9,7 +9,7 @@
 
 #pragma once
 
-#define SE_BAND_Z_MIN_GRID  (514)
-#define SE_BAND_Z_MAX_GRID  (532)
-#define SE_RANGE_X_GRID     (4)
+#define SE_BAND_Z_MIN_GRID  (514)     //ＳＥ再生条件　Ｚ最小値
+#define SE_BAND_Z_MAX_GRID  (532)     //ＳＥ再生条件　Ｚ最大値
+#define SE_RANGE_X_GRID     (4)       //ＳＥ再生条件　トレーラーと自機の距離
 
