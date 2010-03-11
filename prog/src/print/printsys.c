@@ -1207,6 +1207,11 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
           if( STR_TOOL_GetTagGroup(wk->sp) == TAGTYPE_STREAM_CTRL )
           {
             ctrlStreamTag( wk );
+
+            if( wk->callback_func ){
+              wk->callbackResult = wk->callback_func( wk->arg );
+            }
+
             if( wk->state != PRINTSTREAM_STATE_RUNNING ){
               i = wk->current_putPerFrame;  // for loop out
             }
