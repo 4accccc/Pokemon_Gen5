@@ -104,10 +104,12 @@ typedef struct
 // ■環境音SE管理
 //=================================================================================
 #define FSND_ENVSE_PLAYER_MAX (2)
-#define FSND_ENVSE_NONE (0xffffffff)  // SEなし用定数
+#define FSND_ENVSE_NONE (0xffff)  // SEなし用定数
+#define FSND_ENVSE_VOL_NONE (0xffff)  // SEボリュームなし用定数
 typedef struct 
 {
-  u32 envse_tbl[ FSND_ENVSE_PLAYER_MAX ];
+  u16 envse_tbl[ FSND_ENVSE_PLAYER_MAX ];
+  u16 envse_vol_tbl[ FSND_ENVSE_PLAYER_MAX ];
   BOOL pause;
 } FSND_ENVSE_DATA;
 
@@ -488,6 +490,7 @@ void FIELD_SOUND_PlayEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
     if( FLD_ENVSE_DATA_IsLoopSE( soundIdx ) ){
       SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( soundIdx );
       fieldSound->envse.envse_tbl[ player_ID - SEPLAYER_SE1 ] = soundIdx;
+      fieldSound->envse.envse_vol_tbl[ player_ID - SEPLAYER_SE1 ] = FSND_ENVSE_VOL_NONE;
     }
 
     // Pauseではないときにだけ鳴らす
@@ -517,15 +520,44 @@ void FIELD_SOUND_PlayEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol )
 
     // ループサウンドなら保存
     if( FLD_ENVSE_DATA_IsLoopSE( soundIdx ) ){
-      // 非対応
-      GF_ASSERT(0);
-      //  ここはならさない
-      return ;
+      SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( soundIdx );
+      fieldSound->envse.envse_tbl[ player_ID - SEPLAYER_SE1 ] = soundIdx;
+      fieldSound->envse.envse_vol_tbl[ player_ID - SEPLAYER_SE1 ] = vol;
     }
 
     // Pauseではないときにだけ鳴らす
     if( fieldSound->envse.pause == FALSE ){
       PMSND_PlaySEVolume( soundIdx, vol );
+    }
+  }
+}
+
+// 環境音のボリューム操作
+//----------------------------------------------------------------------------
+/**
+ *	@brief  環境音ボリューム操作
+ *
+ *	@param	fieldSound  フィールドサウンド
+ *	@param	soundIdx    SEインデックス
+ *	@param	vol         ボリューム
+ */
+//-----------------------------------------------------------------------------
+void FIELD_SOUND_SetEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol )
+{
+  int i;
+  // 環境音SEかチェック
+  if( FLD_ENVSE_DATA_IsEnvSE( soundIdx ) == FALSE ){
+    GF_ASSERT( 0 );
+    return ;
+  }
+  
+  // ボリューム変更
+  for( i=0; i<FSND_ENVSE_PLAYER_MAX; i++ ){
+    if( fieldSound->envse.envse_tbl[ i+SEPLAYER_SE1 ] == soundIdx ){
+      // ボリューム変更
+      PMSND_PlayerSetInitialVolume( i+SEPLAYER_SE1, vol );
+      fieldSound->envse.envse_vol_tbl[ i+SEPLAYER_SE1 ] = vol;
+      break;
     }
   }
 }
@@ -556,6 +588,7 @@ void FIELD_SOUND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
       // 一致したら破棄
       if( fieldSound->envse.envse_tbl[ player_ID - SEPLAYER_SE1 ] == soundIdx ){
         fieldSound->envse.envse_tbl[ player_ID - SEPLAYER_SE1 ] = FSND_ENVSE_NONE;
+        fieldSound->envse.envse_vol_tbl[ player_ID - SEPLAYER_SE1 ] = FSND_ENVSE_VOL_NONE;
       }
     }
 
@@ -603,7 +636,12 @@ void FIELD_SOUND_RePlayEnvSE( FIELD_SOUND* fieldSound )
 
     for( i=0; i<FSND_ENVSE_PLAYER_MAX; i++ ){
       if( fieldSound->envse.envse_tbl[ i ] != FSND_ENVSE_NONE ){
-        PMSND_PlaySE( fieldSound->envse.envse_tbl[ i ] );
+        if( fieldSound->envse.envse_vol_tbl[ i ] == FSND_ENVSE_VOL_NONE ){
+          PMSND_PlaySE( fieldSound->envse.envse_tbl[ i ] );
+        }else{
+          PMSND_PlaySEVolume( fieldSound->envse.envse_tbl[ i ], 
+              fieldSound->envse.envse_vol_tbl[ i ] );
+        }
       }
     }
   }

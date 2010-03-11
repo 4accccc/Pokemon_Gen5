@@ -106,7 +106,9 @@ extern void FIELD_SOUND_ChangePlayerVolume( FIELD_SOUND* fieldSound, u8 volume, 
 //=================================================================================
 // ŠÂ‹«‰¹‚ÌÄ¶
 extern void FIELD_SOUND_PlayEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx );
-extern void FIELD_SOUND_PlayEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol ); // ’P”­‚Ì‚İ‘Î‰
+extern void FIELD_SOUND_PlayEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol );
+// ŠÂ‹«‰¹‚Ìƒ{ƒŠƒ…[ƒ€‘€ì
+extern void FIELD_SOUND_SetEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol );
 // ŠÂ‹«‰¹‚Ì’â~
 extern void FIELD_SOUND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx );
 // ŠÂ‹«‰¹‚Ìˆê’â~

@@ -95,7 +95,9 @@ extern u32 FSND_GetTrainerEyeBGM( u32 trType );
 //=================================================================================
 // 環境音の再生
 extern void FSND_PlayEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx );
-extern void FSND_PlayEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol ); // （単発のみ対応）
+extern void FSND_PlayEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol );
+// 環境音のボリューム操作
+extern void FSND_SetEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol );
 // 環境音の停止
 extern void FSND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx );
 // 環境音の一時停止
