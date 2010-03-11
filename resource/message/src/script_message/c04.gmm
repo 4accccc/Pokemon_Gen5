@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-06T20:52:47"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T14:15:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -431,12 +431,14 @@
 ・続けてwhite_04</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">ライモンシティって
+		<language name="JPN" width="256">はかせに　おしえてもらったけど
+ライモンシティって▽
 みどころ　いっぱい　なんでしょ！▼
 ゆうえんち　でしょ
 ビッグスタジアムに　リトルコート▼
 それに　バトルサブウェイ！▼</language>
-		<language name="JPN_KANJI" width="256">ライモンシティって
+		<language name="JPN_KANJI" width="256">博士に　教えてもらったけど
+ライモンシティって▽
 見所　いっぱい　なんでしょ！▼
 遊園地　でしょ
 ビッグスタジアムに　リトルコート▼
