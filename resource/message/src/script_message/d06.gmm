@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-04T17:27:07"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T19:35:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -301,9 +301,12 @@
 ふさがれていて　中に　入れない</language>
 	</row>
 
-	<row id="msg_d06_leader_01">
-		<comment>・c05ジムクリア後
-・pos（GRIDX=718、GRIDZ=561~565）で発動</comment>
+	<row id="msg_d06_leader_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・c05ジムクリア後に巣を調べるとメッセージだけ表示
+・メッセージ後、主人公！マーク表示して
+　下向きになり一歩下へ移動
+・ヤーコン登場する</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
 		<language name="JPN" width="256">ヤーコン『またせたな[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ヤーコン『待たせたな[BE:01:ページ切り替え（クリア）]</language>
@@ -320,15 +323,13 @@
 なんで　こんな　ところに
 すが　あるのか　わからんが[BE:00:ページ切り替え（行送り）]
 でんきタイプには　じめんタイプが[BE:00:ページ切り替え（行送り）]
-こうかばつぐん　よ[BE:01:ページ切り替え（クリア）]
-おら　ミネズミ！！[BE:01:ページ切り替え（クリア）]</language>
+こうかばつぐん　よ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">これは　デンチュラという
 でんきタイプ　ポケモンの　巣だな[BE:01:ページ切り替え（クリア）]
 なんで　こんな　ところに
 巣があるのか　わからんが[BE:00:ページ切り替え（行送り）]
 でんきタイプには　じめんタイプが[BE:00:ページ切り替え（行送り）]
-効果抜群　よ[BE:01:ページ切り替え（クリア）]
-おら　ミネズミ！！[BE:01:ページ切り替え（クリア）]</language>
+効果抜群　よ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d06_leader_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
