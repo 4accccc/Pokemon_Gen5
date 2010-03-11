@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-11T18:04:15"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T19:31:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -637,10 +637,10 @@
 また　のちほど　いらしてください</language>
 	</row>
 
-	<row id="msg_c05_white_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_white_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・c05ジムバッジ入手後に発動
-・pos起動（GRIDX=179、GRIDZ=404~407）
+・pos起動（GRIDX=168、GRIDZ=403~407）
 　メッセージのみ表示
 ・続けてwhite_02
 ・0＝主人公名前</comment>
@@ -683,7 +683,7 @@
 こういうときは　勝負よね！▼</language>
 	</row>
 
-	<row id="msg_c05_white_04" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_white_04" text-color="#000000,,,,,#000000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・戦闘後、フィールド復帰時に自動で表示
 ・No603「わざマシン９７「そらをとぶ」」入手
@@ -710,7 +710,7 @@
 [1:00:トレーナー名:0]にも　わけてあげるね▼</language>
 	</row>
 
-	<row id="msg_c05_white_05" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05_white_05" text-color="#000000,,,,,#000000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・アイテム入手処理後、自動で表示
 ・その後画面外（ポケセン方向）へ移動
@@ -877,7 +877,7 @@
 つなぐ　シンボル　なんだから！</language>
 	</row>
 
-	<row id="msg_c05_sign1_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c05_sign1_01" text-color="#000000,,,,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>橋看板</comment>
 		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">ホドモエのはねばし</language>
@@ -892,7 +892,7 @@
 		<language name="JPN_KANJI" width="256">ようこそ　ホドモエシティへ！</language>
 	</row>
 
-	<row id="msg_c05_sign3_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+	<row id="msg_c05_sign3_01" text-color="#000000,,,,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
 		<comment>街看板</comment>
 		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">ホドモエが　あらわしているのは
@@ -909,7 +909,7 @@
 		<language name="JPN_KANJI" width="256">ホドモエの　マーケット</language>
 	</row>
 
-	<row id="msg_c05_gymsign_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c05_gymsign_01" text-color="#000000,,,,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ポケモンジム</comment>
 		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">ホドモエシティ　ポケモンジム
