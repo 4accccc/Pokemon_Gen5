@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/20 18:56:11
+#save date:2010/03/10 20:13:00
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01r0102.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01r0102.wms
 #hold event type:
 1
 #hold event number:
-5
+6
 #event number: 0
 #type
 1
@@ -40,7 +40,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 0 152
+-216 0 168
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 0 152
+-216 0 152
 #event number: 2
 #type
 1
@@ -102,7 +102,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--200 0 152
+-216 0 184
 #event number: 3
 #type
 1
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 0 184
+-152 0 168
 #event number: 4
 #type
 1
@@ -165,6 +165,37 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 -104 0 216
+#event number: 5
+#type
+1
+#ID name
+T01R0102_PRESENT_01
+#OBJ CODE Number
+PRESENT
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_T01R0102_PRESENT
+#Event Script Name
+SCRID_T01R0102_PRESENT_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 8 120
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -226,7 +257,7 @@ SCRID_BG_T01R0102_PC_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--232 0 120
+-232 0 136
 #event number: 4
 #Bg Event Label
 BGID_T01R0102_BED1

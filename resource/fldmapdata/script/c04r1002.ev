@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c04r1002.h"
-  //.include  "c04r1002.h"
+  .include  "c04r1002.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,6 +20,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c04r1002_trainerm_01
+_EVENT_DATA    ev_c04r1002_woman1_01
+_EVENT_DATA    ev_c04r1002_oldman1_01
 _EVENT_DATA_END
 
 
@@ -27,6 +29,37 @@ _EVENT_DATA_END
 /*					エリートトレーナー男性					*/
 /************************************************************/
 EVENT_START	ev_c04r1002_trainerm_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r1001_trainerm_02 )
+	_TALK_OBJ_START()
+
+	//初回話しかけ時に「たいようのいし」をもらう
+	IF FLAG_OFF( FE_C04R1002_ITEMGET_01 ) THEN
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r1001_trainerm_02 )
+		_MSGWIN_CLOSE()
+		//たいようのいし入手
+		_ITEM_EVENT_KEYWAIT( ITEM_TAIYOUNOISI, 1 )
+	ENDIF
+
+	//バージョンによってメッセージを分岐
+	_BALLOONWIN_OBJMSG_WB( msg_c04r1001_trainerm_03, msg_c04r1001_trainerm_04, C04R1002_TRAINERM_01, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
 EVENT_END
+
+
+/************************************************************/
+/*							女性１							*/
+/************************************************************/
+EVENT_START	ev_c04r1002_woman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r1001_woman1_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							老人１							*/
+/************************************************************/
+EVENT_START	ev_c04r1002_oldman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r1001_oldman1_01 )
+EVENT_END
+
 
