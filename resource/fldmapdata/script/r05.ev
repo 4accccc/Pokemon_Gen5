@@ -593,23 +593,37 @@ EVENT_START	ev_pos_r05_h02demo_01
 	_OBJ_ANIME_WAIT()
 	
 	//カミツレ：さてと…
-	_BALLOONWIN_OBJMSG( msg_r05_leader_05 , R05_LEADER4_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_leader_05 , R05_LEADER4_01, POS_UL )
 	_MSGWIN_CLOSE()
+	
+	_CAMERA_START()		//カメラ操作開始--------------------------------------
+	_CAMERA_PURGE()		//カメラパージ
+	_CAMERA_MOVE(9688,0,970752,21856256,0,28344320, 30)
 	
 	//カミツレ：前へ
 	_OBJ_ANIME( R05_LEADER4_01, anm_leader_move_03 )
 	_OBJ_ANIME_WAIT()
 	
-	//TVT着信音を再生
-	_SE_PLAY( SEQ_SE_SYS_35 )
-	_SE_WAIT()
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//カミツレ：上を向く
 	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_u )
 	_OBJ_ANIME_WAIT()
 	
+	//TVT発信音を再生
+	_SE_PLAY( SEQ_SE_SYS_71 )
+	_SE_WAIT()
+	
+	_TIME_WAIT( 30 )
+	
+	_SE_PLAY( SEQ_SE_SYS_71 )
+	_TIME_WAIT( 15 )
+	
+	_SE_PLAY( SEQ_SE_SYS_72 )
+	_SE_WAIT()
+	
 	//アタシです はねばし降ろしてよ
-	_BALLOONWIN_OBJMSG( msg_r05_leader_06 , R05_LEADER4_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_leader_06 , R05_LEADER4_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//カミツレ：主人公の横へ
@@ -617,7 +631,7 @@ EVENT_START	ev_pos_r05_h02demo_01
 	_OBJ_ANIME_WAIT()
 	
 	//さ みてて！
-	_BALLOONWIN_OBJMSG( msg_r05_leader_07 , R05_LEADER4_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_leader_07 , R05_LEADER4_01, POS_UR )
 	_MSGWIN_CLOSE()
 	
 	//H02デモ呼び出し
@@ -625,6 +639,10 @@ EVENT_START	ev_pos_r05_h02demo_01
 	_DISP_FADE_END_CHECK()
 	
 	_CALL_3D_DEMO( DEMO3D_ID_RIZA_BRIDGE )
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラパージ
+	_CAMERA_MOVE(9688,0,970752,21921792,0,28344320, 1)
 	
 	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
@@ -639,6 +657,8 @@ EVENT_START	ev_pos_r05_h02demo_01
 	_BALLOONWIN_OBJMSG_POS( msg_r05_leader_08 , R05_LEADER4_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
+	_CAMERA_DEF_MOVE(30)		//カメラ主人公位置に復帰
+	
 	//カミツレ：去る
 	_OBJ_ANIME( R05_LEADER4_01, anm_leader_goaway_01 )
 	_TIME_WAIT( 16 )
@@ -648,6 +668,10 @@ EVENT_START	ev_pos_r05_h02demo_01
 	
 	//カミツレ消す
 	_OBJ_DEL( R05_LEADER4_01 )
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
 	
 	//ライバル：主人公を見て
 	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_d )
