@@ -346,6 +346,8 @@ SCRIPTFILES += \
 	sp_c11.ev \
 	c11r0101.ev \
 	sp_c11r0101.ev \
+	c11r0201.ev \
+	sp_c11r0201.ev \
 	closseum.ev \
 	sp_closseum.ev \
 	closseum02.ev \
@@ -564,6 +566,14 @@ SCRIPTFILES += \
 	sp_d20r0501.ev \
 	d20r0601.ev \
 	sp_d20r0601.ev \
+	d20r0701.ev \
+	sp_d20r0701.ev \
+	d20r0801.ev \
+	sp_d20r0801.ev \
+	d20r0901.ev \
+	sp_d20r0901.ev \
+	d20r1001.ev \
+	sp_d20r1001.ev \
 	gt.ev \
 	sp_gt.ev \
 	h01.ev \
@@ -630,6 +640,22 @@ SCRIPTFILES += \
 	sp_palace01.ev \
 	palace02.ev \
 	sp_palace02.ev \
+	palace03.ev \
+	sp_palace03.ev \
+	palace04.ev \
+	sp_palace04.ev \
+	palace05.ev \
+	sp_palace05.ev \
+	palace06.ev \
+	sp_palace06.ev \
+	palace07.ev \
+	sp_palace07.ev \
+	palace08.ev \
+	sp_palace08.ev \
+	palace09.ev \
+	sp_palace09.ev \
+	palace10.ev \
+	sp_palace10.ev \
 	palacetest.ev \
 	sp_palacetest.ev \
 	plc04.ev \
@@ -692,6 +718,8 @@ SCRIPTFILES += \
 	sp_plt04.ev \
 	r01.ev \
 	sp_r01.ev \
+	r01r0101.ev \
+	sp_r01r0101.ev \
 	r02.ev \
 	sp_r02.ev \
 	r02r0101.ev \
@@ -744,6 +772,8 @@ SCRIPTFILES += \
 	sp_r07r0105.ev \
 	r07r0201.ev \
 	sp_r07r0201.ev \
+	r07r0301.ev \
+	sp_r07r0301.ev \
 	r08.ev \
 	sp_r08.ev \
 	r08r0101.ev \
@@ -920,35 +950,7 @@ SCRIPTFILES += \
 	sp_wc10pcr0101.ev \
 	wc10r0101.ev \
 	sp_wc10r0101.ev \
-	c11r0201.ev \
-	sp_c11r0201.ev \
-	palace03.ev \
-	sp_palace03.ev \
-	palace04.ev \
-	sp_palace04.ev \
-	palace05.ev \
-	sp_palace05.ev \
-	palace06.ev \
-	sp_palace06.ev \
-	palace07.ev \
-	sp_palace07.ev \
-	palace08.ev \
-	sp_palace08.ev \
-	palace09.ev \
-	sp_palace09.ev \
-	palace10.ev \
-	sp_palace10.ev \
-	r07r0301.ev \
-	sp_r07r0301.ev \
-	d20r0701.ev \
-	sp_d20r0701.ev \
-	d20r0801.ev \
-	sp_d20r0801.ev \
-	d20r0901.ev \
-	sp_d20r0901.ev \
-	d20r1001.ev \
-	sp_d20r1001.ev \
-	r01r0101.ev \
-	sp_r01r0101.ev \
+	r05r0101.ev \
+	sp_r05r0101.ev \
 
 #é©ìÆê∂ê¨ÉtÉ@ÉCÉã zone_script.list ññîˆ

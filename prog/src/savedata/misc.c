@@ -13,7 +13,8 @@
 #include "savedata/save_tbl.h"
 
 #include "app/name_input.h" //NAMEIN_POKEMONのため
-#include "field/research_team_def.h" // for RESEARCH_REQ_ID_xxxx
+#include "field/research_team_def.h"
+#include "../../../resource/research_radar/data/question_id.h" // for QUESTION_ID_xxxx
 
 //=============================================================================
 /**
@@ -70,6 +71,11 @@ void MISC_Init( MISC *p_msc )
 	p_msc->palpark_highscore = 100; //仮
 	
 	p_msc->self_introduction[0] = GFL_STR_GetEOMCode();
+
+  p_msc->research_request_id = RESEARCH_REQ_ID_NONE;
+  p_msc->research_question_id[0] = QUESTION_ID_DUMMY;
+  p_msc->research_question_id[1] = QUESTION_ID_DUMMY;
+  p_msc->research_question_id[2] = QUESTION_ID_DUMMY;
 }
 
 //=============================================================================
@@ -564,7 +570,7 @@ u8 MISC_GetStartMenuFlag( const MISC * misc, MISC_STARTMENU_TYPE type )
  *
  * @param misc
  *
- * @return 調査依頼ID ( RESEARCH_REQUEST_ID_xxxx )
+ * @return 調査依頼ID ( RESEARCH_REQ_ID_xxxx )
  */
 //----------------------------------------------------------
 u8 MISC_GetResearchRequestID( const MISC* misc )
@@ -574,16 +580,48 @@ u8 MISC_GetResearchRequestID( const MISC* misc )
 
 //----------------------------------------------------------
 /**
- * @brief 受けている調査依頼IDをセットする
+ * @brief 調査隊として調べている調査依頼IDをセットする
  *
  * @param misc
- * @param id セットする調査依頼ID ( RESEARCH_REQUEST_ID_xxxx )
+ * @param id  セットする調査依頼ID ( RESEARCH_REQ_ID_xxxx )
  */
 //----------------------------------------------------------
 void MISC_SetResearchRequestID( MISC* misc, u8 id )
 {
-  GF_ASSERT( id < RESEARCH_REQ_ID_NUM );
+  GF_ASSERT( id <= RESEARCH_REQ_ID_MAX );
   misc->research_request_id = id;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief 調査隊として調べている質問IDを取得する
+ *
+ * @param misc
+ * @param idx  取得するインデックス
+ *
+ * @return 質問ID ( QUESTION_ID_xxxx )
+ */
+//----------------------------------------------------------
+u8 MISC_GetResearchQuestionID( const MISC* misc, u8 idx )
+{
+  GF_ASSERT( idx < MAX_QNUM_PER_RESEARCH_REQ );
+  return misc->research_question_id[ idx ];
+}
+
+//----------------------------------------------------------
+/**
+ * @brief 調査隊として調べている質問IDをセットする
+ *
+ * @param misc
+ * @param idx セットするインデックス
+ * @param id  セットする調査依頼ID ( QUESTION_ID_xxxx )
+ */
+//----------------------------------------------------------
+void MISC_SetResearchQuestionID( MISC* misc, u8 idx, u8 id )
+{
+  GF_ASSERT( idx < MAX_QNUM_PER_RESEARCH_REQ );
+  GF_ASSERT( id <= QUESTION_ID_MAX );
+  misc->research_question_id[ idx ] = id;
 }
 //----------------------------------------------------------
 /**

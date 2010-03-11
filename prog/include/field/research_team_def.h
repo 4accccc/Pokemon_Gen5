@@ -21,6 +21,7 @@
 // 調査タイプ
 #define RESEARCH_REQ_TYPE_COUNT (0) // 人数調査
 #define RESEARCH_REQ_TYPE_TIME  (1) // 時間調査
+#define RESEARCH_REQ_TYPE_NUM   (2) // 総数
 
 // 調査依頼ID
 #define RESEARCH_REQ_ID_NONE                 (0) // ダミー ( 依頼を受けていない )
@@ -71,6 +72,7 @@
 #define RESEARCH_REQ_ID_FUN_count           (45) //「ポケモンのおもしろいところは？」( 人数 )
 #define RESEARCH_REQ_ID_FUN_time            (46) //「ポケモンのおもしろいところは？」( 時間 )
 #define RESEARCH_REQ_ID_NUM                 (47) // 総数
+#define RESEARCH_REQ_ID_MAX                 (RESEARCH_REQ_ID_NUM-1) // 最大値
 
 // アンケートID
 #define RESEARCH_QUESTIONNAIRE_ID_YOU           (0) // どんなひとが　いるか

@@ -197,7 +197,7 @@
   DEF_CMD( EvCmdHobbyName , EV_SEQ_HOBBY_NAME )
   DEF_CMD( EvCmdGPowerName, EV_SEQ_GPOWER_NAME )
   DEF_CMD( EvCmdTrTypeName, EV_SEQ_TRAINER_TYPE_NAME )
-  NO_CMD()
+  DEF_CMD( EvCmdAnswerName, EV_SEQ_ANSWER_NAME )
 
   //ìÆçÏÉÇÉfÉã
   DEF_CMD( EvCmdObjAnime, EV_SEQ_OBJ_ANIME )      
@@ -928,6 +928,16 @@
   NO_CMD()
   NO_CMD()
 
+  // Ç∑ÇÍà·Ç¢í≤ç∏ë‡ä÷òA
+  DEF_CMD( EvCmdStartResearch, EV_SEQ_START_RESEARCH )
+  DEF_CMD( EvCmdFinishResearch, EV_SEQ_FINISH_RESEARCH )
+  DEF_CMD( EvCmdGetResearchRequestID, EV_SEQ_GET_RESEARCH_REQUEST_ID )
+  DEF_CMD( EvCmdGetResearchQuestionID, EV_SEQ_GET_RESEARCH_QUESTION_ID )
+
+  DEF_CMD( EvCmdGetMajorityAnswerOfQuestion, EV_SEQ_GET_MAJORITY_ANSWER_OF_QUESTION ) 
+  DEF_CMD( EvCmdGetTotalCountOfQuestion, EV_SEQ_GET_TOTAL_COUNT_OF_QUESTION )
+  DEF_CMD( EvCmdGetStartCountOfQuestion, EV_SEQ_GET_START_COUNT_OF_QUESTION ) 
+  DEF_CMD( EvCmdGetResearchPassedTime, EV_SEQ_GET_RESEARCH_PASSED_TIME ) 
 
   END_CMD
 

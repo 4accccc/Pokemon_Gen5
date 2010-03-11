@@ -642,6 +642,9 @@ c11_def.h: c11.ev
 c11r0101_def.h: c11r0101.ev
 	$(EV_DEF) c11r0101.ev $(SCR_OFFS_ID_H)
 
+c11r0201_def.h: c11r0201.ev
+	$(EV_DEF) c11r0201.ev $(SCR_OFFS_ID_H)
+
 closseum_def.h: closseum.ev
 	$(EV_DEF) closseum.ev $(SCR_OFFS_ID_H)
 
@@ -969,6 +972,18 @@ d20r0501_def.h: d20r0501.ev
 d20r0601_def.h: d20r0601.ev
 	$(EV_DEF) d20r0601.ev $(SCR_OFFS_ID_H)
 
+d20r0701_def.h: d20r0701.ev
+	$(EV_DEF) d20r0701.ev $(SCR_OFFS_ID_H)
+
+d20r0801_def.h: d20r0801.ev
+	$(EV_DEF) d20r0801.ev $(SCR_OFFS_ID_H)
+
+d20r0901_def.h: d20r0901.ev
+	$(EV_DEF) d20r0901.ev $(SCR_OFFS_ID_H)
+
+d20r1001_def.h: d20r1001.ev
+	$(EV_DEF) d20r1001.ev $(SCR_OFFS_ID_H)
+
 gt_def.h: gt.ev
 	$(EV_DEF) gt.ev $(SCR_OFFS_ID_H)
 
@@ -1068,6 +1083,30 @@ palace01_def.h: palace01.ev
 palace02_def.h: palace02.ev
 	$(EV_DEF) palace02.ev $(SCR_OFFS_ID_H)
 
+palace03_def.h: palace03.ev
+	$(EV_DEF) palace03.ev $(SCR_OFFS_ID_H)
+
+palace04_def.h: palace04.ev
+	$(EV_DEF) palace04.ev $(SCR_OFFS_ID_H)
+
+palace05_def.h: palace05.ev
+	$(EV_DEF) palace05.ev $(SCR_OFFS_ID_H)
+
+palace06_def.h: palace06.ev
+	$(EV_DEF) palace06.ev $(SCR_OFFS_ID_H)
+
+palace07_def.h: palace07.ev
+	$(EV_DEF) palace07.ev $(SCR_OFFS_ID_H)
+
+palace08_def.h: palace08.ev
+	$(EV_DEF) palace08.ev $(SCR_OFFS_ID_H)
+
+palace09_def.h: palace09.ev
+	$(EV_DEF) palace09.ev $(SCR_OFFS_ID_H)
+
+palace10_def.h: palace10.ev
+	$(EV_DEF) palace10.ev $(SCR_OFFS_ID_H)
+
 palacetest_def.h: palacetest.ev
 	$(EV_DEF) palacetest.ev $(SCR_OFFS_ID_H)
 
@@ -1161,6 +1200,9 @@ plt04_def.h: plt04.ev
 r01_def.h: r01.ev
 	$(EV_DEF) r01.ev $(SCR_OFFS_ID_H)
 
+r01r0101_def.h: r01r0101.ev
+	$(EV_DEF) r01r0101.ev $(SCR_OFFS_ID_H)
+
 r02_def.h: r02.ev
 	$(EV_DEF) r02.ev $(SCR_OFFS_ID_H)
 
@@ -1238,6 +1280,9 @@ r07r0105_def.h: r07r0105.ev
 
 r07r0201_def.h: r07r0201.ev
 	$(EV_DEF) r07r0201.ev $(SCR_OFFS_ID_H)
+
+r07r0301_def.h: r07r0301.ev
+	$(EV_DEF) r07r0301.ev $(SCR_OFFS_ID_H)
 
 r08_def.h: r08.ev
 	$(EV_DEF) r08.ev $(SCR_OFFS_ID_H)
@@ -1503,48 +1548,6 @@ wc10pcr0101_def.h: wc10pcr0101.ev
 wc10r0101_def.h: wc10r0101.ev
 	$(EV_DEF) wc10r0101.ev $(SCR_OFFS_ID_H)
 
-c11r0201_def.h: c11r0201.ev
-	$(EV_DEF) c11r0201.ev $(SCR_OFFS_ID_H)
-
-palace03_def.h: palace03.ev
-	$(EV_DEF) palace03.ev $(SCR_OFFS_ID_H)
-
-palace04_def.h: palace04.ev
-	$(EV_DEF) palace04.ev $(SCR_OFFS_ID_H)
-
-palace05_def.h: palace05.ev
-	$(EV_DEF) palace05.ev $(SCR_OFFS_ID_H)
-
-palace06_def.h: palace06.ev
-	$(EV_DEF) palace06.ev $(SCR_OFFS_ID_H)
-
-palace07_def.h: palace07.ev
-	$(EV_DEF) palace07.ev $(SCR_OFFS_ID_H)
-
-palace08_def.h: palace08.ev
-	$(EV_DEF) palace08.ev $(SCR_OFFS_ID_H)
-
-palace09_def.h: palace09.ev
-	$(EV_DEF) palace09.ev $(SCR_OFFS_ID_H)
-
-palace10_def.h: palace10.ev
-	$(EV_DEF) palace10.ev $(SCR_OFFS_ID_H)
-
-r07r0301_def.h: r07r0301.ev
-	$(EV_DEF) r07r0301.ev $(SCR_OFFS_ID_H)
-
-d20r0701_def.h: d20r0701.ev
-	$(EV_DEF) d20r0701.ev $(SCR_OFFS_ID_H)
-
-d20r0801_def.h: d20r0801.ev
-	$(EV_DEF) d20r0801.ev $(SCR_OFFS_ID_H)
-
-d20r0901_def.h: d20r0901.ev
-	$(EV_DEF) d20r0901.ev $(SCR_OFFS_ID_H)
-
-d20r1001_def.h: d20r1001.ev
-	$(EV_DEF) d20r1001.ev $(SCR_OFFS_ID_H)
-
-r01r0101_def.h: r01r0101.ev
-	$(EV_DEF) r01r0101.ev $(SCR_OFFS_ID_H)
+r05r0101_def.h: r05r0101.ev
+	$(EV_DEF) r05r0101.ev $(SCR_OFFS_ID_H)
 

@@ -414,6 +414,25 @@ VMCMD_RESULT EvCmdHobbyName( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 回答名をバッファに登録
+ * @param  core  仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//------------------------------------------------------------------------------------------
+VMCMD_RESULT EvCmdAnswerName( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK* work     = wk;
+  SCRIPT_WORK* sc       = SCRCMD_WORK_GetScriptWork( work );
+	WORDSET*     wordset  = SCRIPT_GetWordSet( sc );
+  u8           bufIdx   = VMGetU8( core );                      // 第一引数: バッファインデックス
+  u16          answerID = SCRCMD_GetVMWorkValue( core, work );  // 第二引数: 回答ID ( ANSWER_ID_xxxx )
+
+  WORDSET_RegisterAnswerName( wordset, bufIdx, answerID );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //--------------------------------------------------------------------
 /**
  * @brief Gパワー名をバッファに展開する 

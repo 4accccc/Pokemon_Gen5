@@ -1,5 +1,6 @@
 
 #include "pm_define.h"
+#include "field/research_team_def.h"
 
 ///すれ違い：自己紹介メッセージ長
 #define SAVE_SURETIGAI_SELFINTRODUCTION_LEN   (8 + 1)  //EOM込み
@@ -46,11 +47,10 @@ struct _MISC
 	u8	start_menu_open;		///<メニュー表示
 
   // すれ違い調査隊
-  u8  research_request_id;  // 受けている調査依頼ID
-  u16 research_start_count[MAX_QNUM_PER_RESEARCH_REQ]; // 調査依頼を受けた時の回答人数
+  u8  research_request_id; // 受けている調査依頼ID
+  u8  research_question_id[MAX_QNUM_PER_RESEARCH_REQ]; // 調べている質問ID (3つ)
+  u16 research_start_count[MAX_QNUM_PER_RESEARCH_REQ]; // 調査依頼を受けた時の回答人数 (3つ)
   s64 research_start_time;  // 調査依頼を受けた時の時間[秒]
-
-  u8 padding[3];
 
   //ジムリーダー戦勝利時の手持ち記録
   u16 gym_win_monsno[GYM_MAX][TEMOTI_POKEMAX];

@@ -15,6 +15,7 @@
 #include "tr_tool/trtype_def.h" // for TRTYPE_xxxx
 #include "../../../resource/research_radar/data/hobby_id.h"  // for HOBBY_ID_xxxx
 #include "../../../resource/research_radar/data/job_id.h"  // for JOB_ID_xxxx
+#include "../../../resource/research_radar/data/answer_id.h"  // for ANSWER_ID_xxxx
 
 #include "arc_def.h"
 #include "message.naix"
@@ -839,6 +840,35 @@ void WORDSET_RegisterHobbyName( WORDSET* wordset, u32 bufID, u8 hobbyID )
   if( msg )
   {
     GFL_MSG_GetString( msg, hobbyID, wordset->tmpBuf );
+    RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+    GFL_MSG_Delete( msg );
+  }
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 指定バッファに回答名を登録
+ *
+ * @param bufID    バッファID
+ * @param answerID 回答ID ( ANSWER_ID_xxxx )
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterAnswerName( WORDSET* wordset, u32 bufID, u8 answerID )
+{
+  GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+      ARCID_MESSAGE, NARC_message_answer_dat, wordset->heapID );
+
+  // 回答IDエラー
+  if( ANSWER_ID_MAX < answerID )
+  {
+    GF_ASSERT(0);
+    ClearBuffer( wordset, bufID );
+    return;
+  }
+
+  if( msg )
+  {
+    GFL_MSG_GetString( msg, answerID, wordset->tmpBuf );
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
     GFL_MSG_Delete( msg );
   }

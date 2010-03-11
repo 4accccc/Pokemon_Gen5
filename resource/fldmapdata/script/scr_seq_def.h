@@ -2138,6 +2138,23 @@
   .short  \tr_id
   .endm
   
+//--------------------------------------------------------------
+/**
+ * 回答をバッファにセット
+ * @param idx      セットするタグナンバー
+ * @param answerID 回答ID ( ANSWER_ID_xxxx )
+ *  
+ * ◆趣味ID は resource/research_radar/data/answer_id.h で定義
+ */
+//--------------------------------------------------------------
+#define _ANSWER_NAME( idx, answerID ) \
+    _ASM_ANSWER_NAME idx, answerID
+
+  .macro _ASM_ANSWER_NAME idx, answerID
+  .short EV_SEQ_ANSWER_NAME
+  .byte  \idx
+  .short \answerID
+  .endm
 
 //======================================================================
 //  視線トレーナー関連
@@ -8951,3 +8968,142 @@
   .short \hint
   .short \ans
   .endm  
+
+//======================================================================
+// すれ違い調査隊関連
+//======================================================================
+
+//--------------------------------------------------------------
+/**
+ * @brief すれ違い調査隊としての調査を開始する
+ *
+ * @param req [in] 開始する調査依頼ID ( RESEARCH_REQ_ID_xxxx )
+ * @param q1  [in] 調査する質問ID ( QUESTION_ID_xxxx )
+ * @param q2  [in] 調査する質問ID ( QUESTION_ID_xxxx )
+ * @param q3  [in] 調査する質問ID ( QUESTION_ID_xxxx )
+ */
+//--------------------------------------------------------------
+#define _START_RESEARCH( req, q1, q2, q3 ) \
+    _ASM_START_RESEARCH req, q1, q2, q3
+
+  .macro _ASM_START_RESEARCH req, q1, q2, q3 
+  .short EV_SEQ_START_RESEARCH
+  .short \req
+  .short \q1
+  .short \q2
+  .short \q3
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief すれ違い調査隊としての調査を終了する
+ */
+//--------------------------------------------------------------
+#define _FINISH_RESEARCH() \
+    _ASM_FINISH_RESEARCH
+
+  .macro _ASM_FINISH_RESEARCH
+  .short EV_SEQ_FINISH_RESEARCH
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief すれ違い調査隊として調査中の調査依頼IDを取得する
+ *
+ * @param ret [out] 調査中の調査依頼IDの格納先 ( 存在しない場合, RESEARCH_REQ_ID_NONE )
+ */
+//--------------------------------------------------------------
+#define _GET_RESEARCH_REQUEST_ID( ret ) \
+    _ASM_GET_RESEARCH_REQUEST_ID ret
+
+  .macro _ASM_GET_RESEARCH_REQUEST_ID ret
+  .short EV_SEQ_GET_RESEARCH_REQUEST_ID
+  .short \ret
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief すれ違い調査隊として調査中の質問IDを取得する
+ *
+ * @param ret_q1 [out] 調査中の質問IDの格納先 ( 存在しない場合, QUESTION_ID_DUMMY )
+ * @param ret_q2 [out] 調査中の質問IDの格納先 ( 存在しない場合, QUESTION_ID_DUMMY )
+ * @param ret_q3 [out] 調査中の質問IDの格納先 ( 存在しない場合, QUESTION_ID_DUMMY )
+ */
+//--------------------------------------------------------------
+#define _GET_RESEARCH_QUESTION_ID( ret_q1, ret_q2, ret_q3 ) \
+    _ASM_GET_RESEARCH_QUESTION_ID ret_q1, ret_q2, ret_q3
+
+  .macro _ASM_GET_RESEARCH_QUESTION_ID ret_q1, ret_q2, ret_q3 
+  .short EV_SEQ_GET_RESEARCH_QUESTION_ID
+  .short \ret_q1
+  .short \ret_q2
+  .short \ret_q3
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 質問に対する, 最も多数派の回答IDを取得する
+ *
+ * @param qID [in]  質問ID ( QUESTION_ID_xxxx )
+ * @param ret [out] 回答IDの格納先
+ */
+//--------------------------------------------------------------
+#define _GET_MAJORITY_ANSWER_OF_QUESTION( qID, ret ) \
+    _ASM_GET_MAJORITY_ANSWER_OF_QUESTION qID, ret
+
+  .macro _ASM_GET_MAJORITY_ANSWER_OF_QUESTION qID, ret
+  .short EV_SEQ_GET_MAJORITY_ANSWER_OF_QUESTION
+  .short \qID
+  .short \ret
+  .endm 
+
+//--------------------------------------------------------------
+/**
+ * @brief 質問に対する, いままでの回答人数を取得する
+ *
+ * @param qID [in]  質問ID ( QUESTION_ID_xxxx )
+ * @param ret [out] 回答人数の格納先
+ */
+//--------------------------------------------------------------
+#define _GET_TOTAL_COUNT_OF_QUESTION( qID, ret ) \
+    _ASM_GET_TOTAL_COUNT_OF_QUESTION qID, ret
+
+  .macro _ASM_GET_TOTAL_COUNT_OF_QUESTION qID, ret
+  .short EV_SEQ_GET_TOTAL_COUNT_OF_QUESTION
+  .short \qID
+  .short \ret
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 質問に対する, 調査開始時の回答人数を取得する
+ *
+ * @param qID [in]  質問ID ( QUESTION_ID_xxxx )
+ * @param ret [out] 回答人数の格納先
+ */
+//--------------------------------------------------------------
+#define _GET_START_COUNT_OF_QUESTION( qID, ret ) \
+    _ASM_GET_START_COUNT_OF_QUESTION qID, ret
+
+  .macro _ASM_GET_START_COUNT_OF_QUESTION qID, ret
+  .short EV_SEQ_GET_START_COUNT_OF_QUESTION
+  .short \qID
+  .short \ret
+  .endm 
+
+//--------------------------------------------------------------
+/**
+ * @brief 調査隊の調査について, 経過した時間[h]を取得する
+ *
+ * @param ret [out] 経過時間の格納先
+ *
+ * ※戻り値は最大24!!
+ */
+//--------------------------------------------------------------
+#define _GET_RESEARCH_PASSED_TIME( ret ) \
+    _ASM_GET_RESEARCH_PASSED_TIME ret
+
+  .macro _ASM_GET_RESEARCH_PASSED_TIME ret
+  .short EV_SEQ_GET_RESEARCH_PASSED_TIME
+  .short \ret
+  .endm 
