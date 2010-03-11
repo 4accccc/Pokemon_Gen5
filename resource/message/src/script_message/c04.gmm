@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-11T17:01:21"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T17:09:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -372,10 +372,10 @@
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
 		<language name="JPN" width="256">プラズマだん『なんだ　コイツ！
 ひとまず　にげると　するか！[BE:01:ページ切り替え（クリア）]
-ゆうえんちで　まちあわせ　だぜ[BE:01:ページ切り替え（クリア）]</language>
+ゆうえんちで　やりすごそう！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『なんだ　コイツ！
 ひとまず　逃げると　するか！[BE:01:ページ切り替え（クリア）]
-遊園地で　待ち合わせ　だぜ[BE:01:ページ切り替え（クリア）]</language>
+遊園地で　やり過ごそう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c04_oldman_03">
