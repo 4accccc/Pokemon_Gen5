@@ -46,10 +46,10 @@ SUBDIRS	=	wmi \
 			fldmmdl \
 			encount \
 			fld3d_ci \
+			battle\
 			batt_bg_tbl\
 			fldmapdata\
 			pokegra\
-			battle\
 			net_err\
 			font\
 			itemicon\
