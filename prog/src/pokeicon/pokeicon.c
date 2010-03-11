@@ -116,7 +116,7 @@ u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons_no, u32 form_no, BOOL egg )
     { 
       form_no = 0;
     }
-    file_start = POKEICON_FILE_MAX * ( MONSNO_TAMAGO + form_no );
+    file_start = NARC_poke_icon_poke_icon_000_m_NCGR + POKEICON_FILE_MAX * ( MONSNO_TAMAGO + form_no );
   }
   //ï ÉtÉHÉãÉÄèàóù
   else if( form_no )
