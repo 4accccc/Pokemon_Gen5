@@ -573,7 +573,7 @@ static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* work )
   return GMEVENT_RES_CONTINUE;
 
 }
-
+#if 0
 #ifdef PM_DEBUG
 
 void DEBUG_CreateCamShakeEvt(GAMESYS_WORK *gsys, u16 width, u16 height, u16 sync, u16 time)
@@ -596,4 +596,4 @@ void DEBUG_CreateCamShakeEvt(GAMESYS_WORK *gsys, u16 width, u16 height, u16 sync
   GAMESYSTEM_SetEvent(gsys, event);
 }
 #endif
-
+#endif
