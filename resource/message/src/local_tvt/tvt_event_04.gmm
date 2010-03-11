@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T22:36:17"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T12:26:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1519" top="258" right="2224" bottom="878" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -362,16 +362,54 @@
 	<row id="msg_transceiver_r04_01">
 		<comment>■　r04：４番道路イベント用メッセージ
 ・博士の口ぱくアニメーション再生
-・続けて</comment>
+・続けてr04_02</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">ハーイ！
 [1:00:トレーナー名:0]▼
 ちょっと　つきあってくれない？
-リゾートデザートに　いるからさ▼</language>
+いまね　ライモンシティの▽
+てまえの　ゲートに　いるからさ▼</language>
 		<language name="JPN_KANJI" width="256">ハーイ！
 [1:00:トレーナー名:0]▼
 ちょっと　つきあってくれない？
 リゾートデザートに　いるからさ▼</language>
+	</row>
+
+	<row id="msg_transceiver_r04_02">
+		<comment>・ライバルの口ぱくアニメーション再生
+・続けてr04_03</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">アララギはかせ
+なにか　ごよう　ですか▼</language>
+		<language name="JPN_KANJI" width="256">あっ　博士！▼</language>
+	</row>
+
+	<row id="msg_transceiver_r04_03">
+		<comment>・博士の口ぱくアニメーション再生
+・続けてr04_04</comment>
+		<attribute name="キャラ指定">博士（娘）</attribute>
+		<language name="JPN" width="256">……ベルは　よびだしに
+きづいて　いないのよねー▽
+なにに　むちゅう　なのかしら？▼
+あとで　べつに
+れんらく　するしか　ないわねー▼
+じゃ！　おふたりさん
+ゲートで　まってるわね！▼</language>
+		<language name="JPN_KANJI" width="256">……ベルは　呼び出しに
+気づいて　いないのよねー▽
+何に　夢中なのかしら？▼
+あとで　別に
+連絡するしか　ないわねー▼
+じゃ！　おふたりさん
+ゲートで　待ってるわね！▼</language>
+	</row>
+
+	<row id="msg_transceiver_r04_04">
+		<comment>・ライバルの口ぱくアニメーション再生
+・終了</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">……あ　あの！？▼</language>
+		<language name="JPN_KANJI" width="256">……あ　あの！？▼</language>
 	</row>
 
 	<flowchart-group-list>
