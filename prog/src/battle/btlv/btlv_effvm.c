@@ -597,6 +597,7 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   GF_ASSERT_MSG( bevw->sequence == NULL, "すでにエフェクトが起動中です" ); 
 
   bevw->sequence = NULL;
+  EFFVM_FreeTcb( bevw );
 
   if( param != NULL )
   { 
@@ -5286,6 +5287,8 @@ void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, co
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
   int *start_ofs = (int *)&start[ script_table[ from ][ to ] ] ;
   int i;
+
+  EFFVM_FreeTcb( bevw );
 
   if( bevw->pause_flag )
   { 
