@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-11T21:27:07"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T21:49:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -497,20 +497,27 @@
 キミを　待っているよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d06r0101_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d06r0101_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：シーン1
 ・pos（GRIDX=11、GRIDZ=45~47）で発動
-　ｒ06側から登場
-　GRIDX=9、GRIDZ=46に配置
+・メッセージ表示後、主人公に！マーク</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">おーい！▼</language>
+		<language name="JPN_KANJI" width="256">おーい！▼</language>
+	</row>
+
+	<row id="msg_d06r0101_white_01a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀：シーン1
+・ｒ06側から登場
+　所定の位置（GRIDX=9、GRIDZ=46）に
+　移動してメッセージ表示
 ・メッセージ表示後、下を向いてwhite_02表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『おーい！
-[1:00:トレーナー名:0]　しってる？▼
+		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]　しってる？▼
 ういている　いしは
 おせば　うごくんだよ▼</language>
-		<language name="JPN_KANJI" width="256">ベル『おーい！
-[1:00:トレーナー名:0]　知ってる？▼
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]　知ってる？▼
 浮いている　石は
 押せば　動くんだよ▼</language>
 	</row>
