@@ -67,34 +67,27 @@
 //==========================================================================================
 // リソースインデックス
 typedef enum {
-  RES_ELBOARD_NSBMD,    // 掲示板のモデル
-  RES_ELBOARD_NSBTX,    // 掲示板のテクスチャ
-  RES_ELBOARD_NSBTA_1,  // ニュース・スクロール・アニメーション1
-  RES_ELBOARD_NSBTA_2,  // ニュース・スクロール・アニメーション2
-  RES_ELBOARD_NSBTA_3,  // ニュース・スクロール・アニメーション3
-  RES_ELBOARD_NSBTA_4,  // ニュース・スクロール・アニメーション4
-  RES_ELBOARD_NSBTA_5,  // ニュース・スクロール・アニメーション5
-  RES_ELBOARD_NSBTA_6,  // ニュース・スクロール・アニメーション6
-  RES_ELBOARD_NSBTA_7,  // ニュース・スクロール・アニメーション7
-  RES_MONITOR_NSBTP_1,  // モニター・テクスチャパターン・アニメーション1
-  RES_MONITOR_NSBTP_2,  // モニター・テクスチャパターン・アニメーション2
-  RES_MONITOR_NSBTP_3,  // モニター・テクスチャパターン・アニメーション3
-  RES_MONITOR_NSBTP_4,  // モニター・テクスチャパターン・アニメーション4
-  RES_MONITOR_NSBTP_5,  // モニター・テクスチャパターン・アニメーション5
-  RES_MONITOR_NSBTP_6,  // モニター・テクスチャパターン・アニメーション6
-  RES_MONITOR_NSBTP_7,  // モニター・テクスチャパターン・アニメーション7
-  RES_MONITOR_NSBTP_8,  // モニター・テクスチャパターン・アニメーション8
-  RES_MONITOR_NSBTP_9,  // モニター・テクスチャパターン・アニメーション9
-  RES_MONITOR_NSBTP_10, // モニター・テクスチャパターン・アニメーション10
-  RES_MONITOR_NSBTP_11, // モニター・テクスチャパターン・アニメーション11
-  RES_MONITOR_NSBTP_12, // モニター・テクスチャパターン・アニメーション12
-  RES_MONITOR_NSBTP_13, // モニター・テクスチャパターン・アニメーション13
-  RES_MONITOR_NSBTP_14, // モニター・テクスチャパターン・アニメーション14
-  RES_MONITOR_NSBTP_15, // モニター・テクスチャパターン・アニメーション15
-  RES_MONITOR_NSBTP_16, // モニター・テクスチャパターン・アニメーション16
-  RES_MONITOR_NSBTP_17, // モニター・テクスチャパターン・アニメーション17
-  RES_MONITOR_NSBTP_18, // モニター・テクスチャパターン・アニメーション18
-  RES_MONITOR_NSBTP_19, // モニター・テクスチャパターン・アニメーション19
+  RES_ELBOARD_NSBMD,      // 掲示板のモデル
+  RES_ELBOARD_NSBTX,      // 掲示板のテクスチャ
+  RES_ELBOARD_NSBTA_1,    // ニュース・スクロール・アニメーション1
+  RES_ELBOARD_NSBTA_2,    // ニュース・スクロール・アニメーション2
+  RES_ELBOARD_NSBTA_3,    // ニュース・スクロール・アニメーション3
+  RES_ELBOARD_NSBTA_4,    // ニュース・スクロール・アニメーション4
+  RES_ELBOARD_NSBTA_5,    // ニュース・スクロール・アニメーション5
+  RES_ELBOARD_NSBTA_6,    // ニュース・スクロール・アニメーション6
+  RES_ELBOARD_NSBTA_7,    // ニュース・スクロール・アニメーション7
+  RES_MONITOR_NSBTP_C01,  // モニター・テクスチャパターン・アニメーション ( モニタ情報C01 )
+  RES_MONITOR_NSBTP_C02,  // モニター・テクスチャパターン・アニメーション ( モニタ情報C02 )
+  RES_MONITOR_NSBTP_C03,  // モニター・テクスチャパターン・アニメーション ( モニタ情報C03 )
+  RES_MONITOR_NSBTP_C04,  // モニター・テクスチャパターン・アニメーション ( モニタ情報C04 )
+  RES_MONITOR_NSBTP_C05,  // モニター・テクスチャパターン・アニメーション ( モニタ情報C05 )
+  RES_MONITOR_NSBTP_C08W, // モニター・テクスチャパターン・アニメーション ( モニタ情報C08W )
+  RES_MONITOR_NSBTP_C08B, // モニター・テクスチャパターン・アニメーション ( モニタ情報C08B )
+  RES_MONITOR_NSBTP_D03,  // モニター・テクスチャパターン・アニメーション ( モニタ情報D03 )
+  RES_MONITOR_NSBTP_TG,   // モニター・テクスチャパターン・アニメーション ( モニタ情報TG )
+  RES_MONITOR_NSBTP_ST,   // モニター・テクスチャパターン・アニメーション ( モニタ情報ST )
+  RES_MONITOR_NSBTP_WF,   // モニター・テクスチャパターン・アニメーション ( モニタ情報WF )
+  RES_MONITOR_NSBTP_BC,   // モニター・テクスチャパターン・アニメーション ( モニタ情報BC )
   RES_NUM
 } RES_INDEX;
 static const GFL_G3D_UTIL_RES res_table[ RES_NUM ] = 
@@ -108,25 +101,18 @@ static const GFL_G3D_UTIL_RES res_table[ RES_NUM ] =
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_5_nsbta, GFL_G3D_UTIL_RESARC },    // ニュース・スクロール・アニメーション5
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_6_nsbta, GFL_G3D_UTIL_RESARC },    // ニュース・スクロール・アニメーション6
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_7_nsbta, GFL_G3D_UTIL_RESARC },    // ニュース・スクロール・アニメーション7
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv01_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション1
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv02_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション2
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv03_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション3
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv04_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション4
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv05_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション5
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv06_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション6
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv07_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション7
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv08_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション8
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv09_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション9
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv10_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション10
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv11_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション11
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv12_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション12
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv13_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション13
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv14_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション14
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv15_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション15
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv16_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション16
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv17_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション17
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv18_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション18
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv19_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション19
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv01_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報C01 )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv02_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報C02 )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv03_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報C03 )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv04_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報C04 )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv05_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報C05 )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv08_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報C08W )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv09_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報C08B )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv10_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報D03 )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv11_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報TG )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv12_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報ST )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv13_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報WF )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv14_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報BC )
 };
 
 // アニメインデックス
@@ -138,56 +124,42 @@ typedef enum {
   ANM_ELBOARD_INFO_B,       // 掲示板ニュース・スクロール・情報B
   ANM_ELBOARD_INFO_C,       // 掲示板ニュース・スクロール・情報C
   ANM_ELBOARD_CM,           // 掲示板ニュース・スクロール・一言CM
-  ANM_MONITOR_1,            // モニター・テクスチャ・アニメーション1
-  ANM_MONITOR_2,            // モニター・テクスチャ・アニメーション2
-  ANM_MONITOR_3,            // モニター・テクスチャ・アニメーション3
-  ANM_MONITOR_4,            // モニター・テクスチャ・アニメーション4
-  ANM_MONITOR_5,            // モニター・テクスチャ・アニメーション5
-  ANM_MONITOR_6,            // モニター・テクスチャ・アニメーション6
-  ANM_MONITOR_7,            // モニター・テクスチャ・アニメーション7
-  ANM_MONITOR_8,            // モニター・テクスチャ・アニメーション8
-  ANM_MONITOR_9,            // モニター・テクスチャ・アニメーション9
-  ANM_MONITOR_10,           // モニター・テクスチャ・アニメーション10
-  ANM_MONITOR_11,           // モニター・テクスチャ・アニメーション11
-  ANM_MONITOR_12,           // モニター・テクスチャ・アニメーション12
-  ANM_MONITOR_13,           // モニター・テクスチャ・アニメーション13
-  ANM_MONITOR_14,           // モニター・テクスチャ・アニメーション14
-  ANM_MONITOR_15,           // モニター・テクスチャ・アニメーション15
-  ANM_MONITOR_16,           // モニター・テクスチャ・アニメーション16
-  ANM_MONITOR_17,           // モニター・テクスチャ・アニメーション17
-  ANM_MONITOR_18,           // モニター・テクスチャ・アニメーション18
-  ANM_MONITOR_19,           // モニター・テクスチャ・アニメーション19
+  ANM_MONITOR_C01,          // モニター・テクスチャ・アニメーション ( モニタ情報C01 )
+  ANM_MONITOR_C02,          // モニター・テクスチャ・アニメーション ( モニタ情報C02 )
+  ANM_MONITOR_C03,          // モニター・テクスチャ・アニメーション ( モニタ情報C03 )
+  ANM_MONITOR_C04,          // モニター・テクスチャ・アニメーション ( モニタ情報C04 )
+  ANM_MONITOR_C05,          // モニター・テクスチャ・アニメーション ( モニタ情報C05 )
+  ANM_MONITOR_C08W,         // モニター・テクスチャ・アニメーション ( モニタ情報C08W )
+  ANM_MONITOR_C08B,         // モニター・テクスチャ・アニメーション ( モニタ情報C08B )
+  ANM_MONITOR_D03,          // モニター・テクスチャ・アニメーション ( モニタ情報D03 )
+  ANM_MONITOR_TG,           // モニター・テクスチャ・アニメーション ( モニタ情報TG )
+  ANM_MONITOR_ST,           // モニター・テクスチャ・アニメーション ( モニタ情報ST )
+  ANM_MONITOR_WF,           // モニター・テクスチャ・アニメーション ( モニタ情報WF )
+  ANM_MONITOR_BC,           // モニター・テクスチャ・アニメーション ( モニタ情報BC )
   ANM_NUM
 } ANM_INDEX;
 static const GFL_G3D_UTIL_ANM anm_table[ ANM_NUM ] = 
 {
   // アニメリソースID, アニメデータID(リソース内部INDEX)
-  { RES_ELBOARD_NSBTA_1, 0 },   // 掲示板ニュース・スクロール・日付
-  { RES_ELBOARD_NSBTA_2, 0 },   // 掲示板ニュース・スクロール・天気
-  { RES_ELBOARD_NSBTA_3, 0 },   // 掲示板ニュース・スクロール・大量発生
-  { RES_ELBOARD_NSBTA_4, 0 },   // 掲示板ニュース・スクロール・情報A
-  { RES_ELBOARD_NSBTA_5, 0 },   // 掲示板ニュース・スクロール・情報B
-  { RES_ELBOARD_NSBTA_6, 0 },   // 掲示板ニュース・スクロール・情報C
-  { RES_ELBOARD_NSBTA_7, 0 },   // 掲示板ニュース・スクロール・一言CM
-  { RES_MONITOR_NSBTP_1, 0 },   // モニター・テクスチャ・アニメーション1
-  { RES_MONITOR_NSBTP_2, 0 },   // モニター・テクスチャ・アニメーション2
-  { RES_MONITOR_NSBTP_3, 0 },   // モニター・テクスチャ・アニメーション3
-  { RES_MONITOR_NSBTP_4, 0 },   // モニター・テクスチャ・アニメーション4
-  { RES_MONITOR_NSBTP_5, 0 },   // モニター・テクスチャ・アニメーション5
-  { RES_MONITOR_NSBTP_6, 0 },   // モニター・テクスチャ・アニメーション6
-  { RES_MONITOR_NSBTP_7, 0 },   // モニター・テクスチャ・アニメーション7
-  { RES_MONITOR_NSBTP_8, 0 },   // モニター・テクスチャ・アニメーション8
-  { RES_MONITOR_NSBTP_9, 0 },   // モニター・テクスチャ・アニメーション9
-  { RES_MONITOR_NSBTP_10, 0 },  // モニター・テクスチャ・アニメーション10
-  { RES_MONITOR_NSBTP_11, 0 },  // モニター・テクスチャ・アニメーション11
-  { RES_MONITOR_NSBTP_12, 0 },  // モニター・テクスチャ・アニメーション12
-  { RES_MONITOR_NSBTP_13, 0 },  // モニター・テクスチャ・アニメーション13
-  { RES_MONITOR_NSBTP_14, 0 },  // モニター・テクスチャ・アニメーション14
-  { RES_MONITOR_NSBTP_15, 0 },  // モニター・テクスチャ・アニメーション15
-  { RES_MONITOR_NSBTP_16, 0 },  // モニター・テクスチャ・アニメーション16
-  { RES_MONITOR_NSBTP_17, 0 },  // モニター・テクスチャ・アニメーション17
-  { RES_MONITOR_NSBTP_18, 0 },  // モニター・テクスチャ・アニメーション18
-  { RES_MONITOR_NSBTP_19, 0 },  // モニター・テクスチャ・アニメーション19
+  { RES_ELBOARD_NSBTA_1, 0 },     // 掲示板ニュース・スクロール・日付
+  { RES_ELBOARD_NSBTA_2, 0 },     // 掲示板ニュース・スクロール・天気
+  { RES_ELBOARD_NSBTA_3, 0 },     // 掲示板ニュース・スクロール・大量発生
+  { RES_ELBOARD_NSBTA_4, 0 },     // 掲示板ニュース・スクロール・情報A
+  { RES_ELBOARD_NSBTA_5, 0 },     // 掲示板ニュース・スクロール・情報B
+  { RES_ELBOARD_NSBTA_6, 0 },     // 掲示板ニュース・スクロール・情報C
+  { RES_ELBOARD_NSBTA_7, 0 },     // 掲示板ニュース・スクロール・一言CM
+  { RES_MONITOR_NSBTP_C01, 0 },   // モニター・テクスチャ・アニメーション ( モニタ情報C01 )
+  { RES_MONITOR_NSBTP_C02, 0 },   // モニター・テクスチャ・アニメーション ( モニタ情報C02 )
+  { RES_MONITOR_NSBTP_C03, 0 },   // モニター・テクスチャ・アニメーション ( モニタ情報C03 )
+  { RES_MONITOR_NSBTP_C04, 0 },   // モニター・テクスチャ・アニメーション ( モニタ情報C04 )
+  { RES_MONITOR_NSBTP_C05, 0 },   // モニター・テクスチャ・アニメーション ( モニタ情報C05 )
+  { RES_MONITOR_NSBTP_C08W, 0 },  // モニター・テクスチャ・アニメーション ( モニタ情報C08W )
+  { RES_MONITOR_NSBTP_C08B, 0 },  // モニター・テクスチャ・アニメーション ( モニタ情報C08B )
+  { RES_MONITOR_NSBTP_D03, 0 },   // モニター・テクスチャ・アニメーション ( モニタ情報D03 )
+  { RES_MONITOR_NSBTP_TG, 0 },    // モニター・テクスチャ・アニメーション ( モニタ情報TG )
+  { RES_MONITOR_NSBTP_ST, 0 },    // モニター・テクスチャ・アニメーション ( モニタ情報ST )
+  { RES_MONITOR_NSBTP_WF, 0 },    // モニター・テクスチャ・アニメーション ( モニタ情報WF )
+  { RES_MONITOR_NSBTP_BC, 0 },    // モニター・テクスチャ・アニメーション ( モニタ情報BC )
 };
 
 // オブジェクトインデックス
@@ -308,51 +280,37 @@ static const NEWS_INDEX gym_news_idx[GYM_NEWS_MAX_NUM] =
 //==========================================================================================
 // アニメーション番号
 typedef enum {
-  MONITOR_ANIME_1,
-  MONITOR_ANIME_2,
-  MONITOR_ANIME_3,
-  MONITOR_ANIME_4,
-  MONITOR_ANIME_5,
-  MONITOR_ANIME_6,
-  MONITOR_ANIME_7,
-  MONITOR_ANIME_8,
-  MONITOR_ANIME_9,
-  MONITOR_ANIME_10,
-  MONITOR_ANIME_11,
-  MONITOR_ANIME_12,
-  MONITOR_ANIME_13,
-  MONITOR_ANIME_14,
-  MONITOR_ANIME_15,
-  MONITOR_ANIME_16,
-  MONITOR_ANIME_17,
-  MONITOR_ANIME_18,
-  MONITOR_ANIME_19,
-  MONITOR_ANIME_NUM,
+  MONITOR_ANIME_C01,  // ( モニタ情報C01 )
+  MONITOR_ANIME_C02,  // ( モニタ情報C02 )
+  MONITOR_ANIME_C03,  // ( モニタ情報C03 )
+  MONITOR_ANIME_C04,  // ( モニタ情報C04 )
+  MONITOR_ANIME_C05,  // ( モニタ情報C05 )
+  MONITOR_ANIME_C08W, // ( モニタ情報C08W )
+  MONITOR_ANIME_C08B, // ( モニタ情報C08B )
+  MONITOR_ANIME_D03,  // ( モニタ情報D03 )
+  MONITOR_ANIME_TG,   // ( モニタ情報TG )
+  MONITOR_ANIME_ST,   // ( モニタ情報ST )
+  MONITOR_ANIME_WF,   // ( モニタ情報WF )
+  MONITOR_ANIME_BC,   // ( モニタ情報BC )
+  MONITOR_ANIME_NUM,  // 総数
   MONITOR_ANIME_MAX = MONITOR_ANIME_NUM - 1
 } MONITOR_ANIME_INDEX;
 
 // 実アニメーション番号
-static u16 monitor_anime[MONITOR_ANIME_NUM] = 
+static u16 monitor_anime[ MONITOR_ANIME_NUM ] = 
 { 
-  ANM_MONITOR_1,
-  ANM_MONITOR_2,
-  ANM_MONITOR_3,
-  ANM_MONITOR_4,
-  ANM_MONITOR_5,
-  ANM_MONITOR_6,
-  ANM_MONITOR_7,
-  ANM_MONITOR_8,
-  ANM_MONITOR_9,
-  ANM_MONITOR_10,
-  ANM_MONITOR_11,
-  ANM_MONITOR_12,
-  ANM_MONITOR_13,
-  ANM_MONITOR_14,
-  ANM_MONITOR_15,
-  ANM_MONITOR_16,
-  ANM_MONITOR_17,
-  ANM_MONITOR_18,
-  ANM_MONITOR_19,
+  ANM_MONITOR_C01,  // ( モニタ情報C01 )
+  ANM_MONITOR_C02,  // ( モニタ情報C02 )
+  ANM_MONITOR_C03,  // ( モニタ情報C03 )
+  ANM_MONITOR_C04,  // ( モニタ情報C04 )
+  ANM_MONITOR_C05,  // ( モニタ情報C05 )
+  ANM_MONITOR_C08W, // ( モニタ情報C08W )
+  ANM_MONITOR_C08B, // ( モニタ情報C08B )
+  ANM_MONITOR_D03,  // ( モニタ情報D03 )
+  ANM_MONITOR_TG,   // ( モニタ情報TG )
+  ANM_MONITOR_ST,   // ( モニタ情報ST )
+  ANM_MONITOR_WF,   // ( モニタ情報WF )
+  ANM_MONITOR_BC,   // ( モニタ情報BC )
 };
 
 
