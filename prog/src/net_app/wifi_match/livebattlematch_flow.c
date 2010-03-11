@@ -57,6 +57,7 @@ FS_EXTERN_OVERLAY( ui_common );
 #ifdef PM_DEBUG
 #define DEBUG_REGULATIONCRC_PASS  //レギュレーションのCRCチェックを通過する
 #define DEBUG_REGULATION_RECVCHECK_PASS  //レギュレーションの受信チェックを通過する
+#define DEBUG_REGULATION_RECV_A_PASS  //レギュレーションの受信をAボタンで進む
 #endif //PM_DEBUG
 
 //=============================================================================
@@ -137,6 +138,9 @@ struct _LIVEBATTLEMATCH_FLOW_WORK
 
   //汎用カウンタ
   u32                           cnt;
+
+  //ふりかえり用対戦録画があるか
+  BOOL                          is_rec;
 };
 
 //=============================================================================
@@ -224,6 +228,7 @@ LIVEBATTLEMATCH_FLOW_WORK *LIVEBATTLEMATCH_FLOW_Init( const LIVEBATTLEMATCH_FLOW
   GFL_STD_MemClear( p_wk, sizeof(LIVEBATTLEMATCH_FLOW_WORK) );
   p_wk->param   = *cp_param;
   p_wk->heapID  = heapID;
+  p_wk->is_rec  = BattleRec_DataSetCheck();
 
   //リソース追加
   WIFIBATTLEMATCH_VIEW_LoadScreen( p_wk->param.p_view, WIFIBATTLEMATCH_VIEW_RES_MODE_LIVE, heapID );
@@ -420,6 +425,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_START_MSG_RECVCARD, //選手証受け取り
     SEQ_START_RECVCARD,
     SEQ_WAIT_RECVCARD,
+    SEQ_WAIT_RECV_DEBUG,
 
     SEQ_START_CANCEL,   //キャンセル
     SEQ_WAIT_CANCEL,    //キャンセル
@@ -433,7 +439,8 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_START_SAVE,
     SEQ_WAIT_SAVE,
 
-    SEQ_START_MSG_DIRTY,    //不正なレギュレーションをうけとった
+    SEQ_START_MSG_DIRTY_CRC,    //不正なレギュレーションをうけとった CRC不正
+    SEQ_START_MSG_DIRTY_VER,    //不正なレギュレーションをうけとった VERSION不正
     SEQ_START_MSG_RETIRE,   //リタイアした大会を受け取っていた,
     SEQ_START_MSG_FINISH,   //終了した大会を受け取っていた,
 
@@ -512,6 +519,8 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     //受信中
     if( LIVEBATTLEMATCH_IRC_WaitRecvRegulation( p_wk->p_irc ) )
     { 
+      //@todo 言語コードが違う場合はまたもらいに行く
+
       //Regulation_PrintDebug( &p_wk->regulation_temp );
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
       *p_seq  = SEQ_CHECK_RECVCARD;
@@ -521,6 +530,24 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
     { 
       *p_seq  = SEQ_START_CANCEL;
+    }
+
+#ifdef DEBUG_REGULATION_RECV_A_PASS
+    //Aで進む
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    { 
+      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+      LIVEBATTLEMATCH_IRC_StartCancelRecvRegulation( p_wk->p_irc );
+      *p_seq  = SEQ_WAIT_RECV_DEBUG;
+    }
+#endif
+    break;
+
+  case SEQ_WAIT_RECV_DEBUG:
+    if( LIVEBATTLEMATCH_IRC_WaitCancelRecvRegulation( p_wk->p_irc ) )
+    { 
+      Regulation_SetDebugData( &p_wk->regulation_temp );
+      *p_seq  = SEQ_CHECK_RECVCARD;
     }
     break;
 
@@ -568,46 +595,57 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 #ifdef DEBUG_REGULATIONCRC_PASS
     if(1)
 #else
+    //CRCは正しいか
     if( Regulation_CheckCrc( &p_wk->regulation_temp ) )
 #endif
     { 
-      if( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO) ==
-          Regulation_GetCardParam( &p_wk->regulation_temp, REGULATION_CARD_CUPNO) )
+      //VERSIONは正しいか
+      if( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_ROMVER) & GET_VERSION() )
       { 
-#ifdef DEBUG_REGULATION_RECVCHECK_PASS
+        //すでに受けとっているか
+        if( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO) ==
+            Regulation_GetCardParam( &p_wk->regulation_temp, REGULATION_CARD_CUPNO) )
         { 
-          *p_seq  = SEQ_START_MSG_SAVE;
-          break;
-        }
+#ifdef DEBUG_REGULATION_RECVCHECK_PASS
+          { 
+            *p_seq  = SEQ_START_MSG_SAVE;
+            break;
+          }
 #endif 
-        //同じなので同じ大会に登録しようとした
-        switch( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS) )
-        {   
-        case DREAM_WORLD_MATCHUP_RETIRE:  // 途中で解除
-          *p_seq  = SEQ_START_MSG_RETIRE;
-          break;
+          //同じなので同じ大会に登録しようとした
+          switch( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS) )
+          {   
+          case DREAM_WORLD_MATCHUP_RETIRE:  // 途中で解除
+            *p_seq  = SEQ_START_MSG_RETIRE;
+            break;
 
-        case DREAM_WORLD_MATCHUP_END:	    // 大会終了
-          *p_seq  = SEQ_START_MSG_FINISH;
-          break;
+          case DREAM_WORLD_MATCHUP_END:	    // 大会終了
+            *p_seq  = SEQ_START_MSG_FINISH;
+            break;
 
-        default:
-          //基本ここにはこないが念のため
-          //大会NOは同じだが参加中なので次へいく
+          default:
+            //基本ここにはこないが念のため
+            //大会NOは同じだが参加中なので次へいく
+            *p_seq  = SEQ_START_MSG_SAVE;
+            break;
+          }
+        }
+        else
+        { 
+          //大会NOが違うので、大丈夫
           *p_seq  = SEQ_START_MSG_SAVE;
-          break;
         }
       }
       else
       { 
-        //大会NOが違うので、大丈夫
-        *p_seq  = SEQ_START_MSG_SAVE;
+        //VERSIONが間違っていた
+        *p_seq  = SEQ_START_MSG_DIRTY_VER;
       }
     }
     else
     { 
       //CRCが間違っていた
-      *p_seq  = SEQ_START_MSG_DIRTY;
+      *p_seq  = SEQ_START_MSG_DIRTY_CRC;
     }
     break;
 
@@ -658,11 +696,18 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     } 
     break;
 
-  case SEQ_START_MSG_DIRTY:    //不正なレギュレーションをうけとった
-    UTIL_TEXT_Print( p_wk, LIVE_STR_22 );
+  case SEQ_START_MSG_DIRTY_CRC:    //不正なレギュレーションをうけとった
+    UTIL_TEXT_Print( p_wk, LIVE_STR_22_1 );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_DIRTY_END );
     break;
+
+  case SEQ_START_MSG_DIRTY_VER:    //不正なレギュレーションをうけとった
+    UTIL_TEXT_Print( p_wk, LIVE_STR_22_2 );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_DIRTY_END );
+    break;
+
   case SEQ_START_MSG_RETIRE:   //リタイアした大会を受け取っていた:
     UTIL_TEXT_Print( p_wk, LIVE_STR_04 );
     *p_seq       = SEQ_WAIT_MSG;
@@ -990,7 +1035,7 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       if( select != WBM_LIST_SELECT_NULL )
       { 
         UTIL_LIST_Delete( p_wk );
-        if( p_wk->param.is_rec )
+        if( p_wk->is_rec )
         { 
           switch( select )
           { 
@@ -1113,6 +1158,7 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     } 
 		break;
   case SEQ_START_MSG_UNLOCK:
+    UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
     UTIL_TEXT_Print( p_wk, LIVE_STR_15 );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_UNREGISTER_END );
@@ -1524,6 +1570,13 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_START_SAVE:
     //開催状態を終了にしてからセーブ
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_END );
+
+    //ロック解除してからセーブ
+    { 
+      SAVE_CONTROL_WORK   *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
+      BATTLE_BOX_SAVE     *p_btlbox_sv  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv_ctrl ); 
+      BATTLE_BOX_SAVE_OffLockFlg( p_btlbox_sv, BATTLE_BOX_LOCK_BIT_LIVE );
+    }
     GAMEDATA_SaveAsyncStart(p_wk->param.p_gamedata);
     *p_seq  = SEQ_WAIT_SAVE;
 		break;
@@ -1544,6 +1597,7 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 		break;
 
   case SEQ_START_MSG_UNLOCK:
+    UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
     UTIL_TEXT_Print( p_wk, LIVE_STR_21 );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_LOOKBACK );
@@ -1565,7 +1619,7 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       if( select != WBM_LIST_SELECT_NULL )
       { 
         UTIL_LIST_Delete( p_wk );
-        if( p_wk->param.is_rec )
+        if( p_wk->is_rec )
         { 
           switch( select )
           { 
@@ -1659,7 +1713,7 @@ static void UTIL_LIST_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk, LVM_MENU_TYPE typ
     break;
 
   case LVM_MENU_TYPE_MENU:
-    if( p_wk->param.is_rec )
+    if( p_wk->is_rec )
     { 
       setup.strID[0]= LIVE_SELECT_02;
       setup.strID[1]= LIVE_SELECT_03;
@@ -1675,7 +1729,7 @@ static void UTIL_LIST_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk, LVM_MENU_TYPE typ
     pos = POS_CENTER;
     break;
   case LVM_MENU_TYPE_END:
-    if( p_wk->param.is_rec )
+    if( p_wk->is_rec )
     { 
       setup.strID[0]= LIVE_SELECT_03;
       setup.strID[1]= LIVE_SELECT_05;

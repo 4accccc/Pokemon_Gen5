@@ -869,6 +869,8 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
 { 
   WIFIBATTLEMATCH_BATTLELINK_PARAM  *p_param;
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
+  REGULATION* p_reg;
+  BOOL is_alloc = FALSE;
   
   //デモバトル接続ワーク
   p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(WIFIBATTLEMATCH_BATTLELINK_PARAM) );
@@ -907,34 +909,45 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   if( p_wk->type == WIFIBATTLEMATCH_TYPE_RNDRATE
       ||  p_wk->type == WIFIBATTLEMATCH_TYPE_RNDFREE )
   { 
+    int reg_no;
+
+
     switch( p_wk->param.btl_rule )
     {
     case WIFIBATTLEMATCH_BTLRULE_SINGLE:    ///< シングル
+      reg_no  = REG_RND_SINGLE;
       BTL_SETUP_Single_Comm( p_param->p_btl_setup_param, p_wk->param.p_game_data, 
           GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
       break;
 
     case WIFIBATTLEMATCH_BTLRULE_DOUBLE:    ///< ダブル
+      reg_no  = REG_RND_DOUBLE;
       BTL_SETUP_Double_Comm( p_param->p_btl_setup_param, p_wk->param.p_game_data, 
           GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
       break;
 
     case WIFIBATTLEMATCH_BTLRULE_TRIPLE:    ///< トリプル
+      reg_no  = REG_RND_TRIPLE;
       BTL_SETUP_Triple_Comm( p_param->p_btl_setup_param, p_wk->param.p_game_data, 
           GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
       break;
 
     case WIFIBATTLEMATCH_BTLRULE_ROTATE:  ///< ローテーション
+      reg_no  = REG_RND_ROTATION;
       BTL_SETUP_Rotation_Comm( p_param->p_btl_setup_param, p_wk->param.p_game_data, 
           GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
       break;
     case WIFIBATTLEMATCH_BTLRULE_SHOOTER:  ///< シューター
+      reg_no  = REG_RND_TRIPLE_SHOOTER;
       BTL_SETUP_Triple_Comm( p_param->p_btl_setup_param, p_wk->param.p_game_data, 
           GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
       //@todo 
       GF_ASSERT( 0 );
 
       break;
+
+      p_reg = (REGULATION*)PokeRegulation_LoadDataAlloc( reg_no, heapID );
+      is_alloc  = TRUE;
     }
   }
   //WiFI大会のバトル設定
@@ -943,7 +956,7 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
     SAVE_CONTROL_WORK *p_sv       = GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data );
     REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
     REGULATION_CARDDATA *p_reg_card    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_WIFI );
-    REGULATION* p_reg        = RegulationData_GetRegulation( p_reg_card );
+    p_reg        = RegulationData_GetRegulation( p_reg_card );
 
     switch( Regulation_GetParam( p_reg, REGULATION_BATTLETYPE ) )
     {
@@ -981,7 +994,7 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
     SAVE_CONTROL_WORK *p_sv       = GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data );
     REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
     REGULATION_CARDDATA *p_reg_card    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_LIVE );
-    REGULATION* p_reg        = RegulationData_GetRegulation( p_reg_card );
+    p_reg        = RegulationData_GetRegulation( p_reg_card );
 
     switch( Regulation_GetParam( p_reg, REGULATION_BATTLETYPE ) )
     {
@@ -1019,9 +1032,14 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
     GF_ASSERT(0);
   }
 
-
+  p_param->p_btl_setup_param->LimitTimeGame    = Regulation_GetParam( p_reg , REGULATION_TIME_VS );
+  p_param->p_btl_setup_param->LimitTimeCommand = Regulation_GetParam( p_reg , REGULATION_TIME_COMMAND );
   p_param->p_btl_setup_param->musicDefault  = WBM_SND_SEQ_BATTLE;
   p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
+
+  //@todoシューター設定 （フラグと禁止道具）
+
+
   BATTLE_PARAM_SetPokeParty( p_param->p_btl_setup_param, p_wk->p_player_btl_party, BTL_CLIENT_PLAYER ); 
 
   //録画準備
@@ -1029,10 +1047,12 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
-  //録画情報にバトル情報を設定
-  BattleRec_LoadToolModule();
-  BattleRec_StoreSetupParam( p_param->p_btl_setup_param );
-  BattleRec_UnloadToolModule();
+
+
+  if( is_alloc )
+  { 
+    GFL_HEAP_FreeMemory( p_reg );
+  }
 
   //デモパラメータ
 	return p_param;
@@ -1058,11 +1078,18 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
   p_wk->btl_rule  = p_btl_param->rule;
   OS_FPrintf( 3, "バトル結果 %d \n", p_wk->btl_result);
 
+  //録画情報にバトル情報を設定
+  BattleRec_LoadToolModule();
+  BattleRec_StoreSetupParam( p_param->p_btl_setup_param );
+  BattleRec_UnloadToolModule();
+
   //破棄
   BATTLE_PARAM_Release( p_param->p_btl_setup_param );
 	GFL_HEAP_FreeMemory( p_param->p_btl_setup_param );
 	GFL_HEAP_FreeMemory( p_param->p_demo_param );
 	GFL_HEAP_FreeMemory( p_param );
+
+
 
   //次のPROC
   if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
@@ -1237,6 +1264,7 @@ static void *WBM_BTLREC_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapI
 
   p_param->gamedata   = p_wk->param.p_game_data;
   p_param->b_rec        = TRUE;
+  p_param->b_sync       = FALSE;
 
   if( p_wk->p_enemy_data->btl_server_version != p_wk->p_player_data->btl_server_version )
   { 
@@ -1349,7 +1377,13 @@ static void *RECPLAY_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, 
   GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
   BATTLE_PARAM_Init( p_param );
   BTL_SETUP_InitForRecordPlay( p_param, p_wk->param.p_game_data, heapID );
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+  BattleRec_LoadToolModule();
   BattleRec_RestoreSetupParam( p_param, heapID );
+  BattleRec_UnloadToolModule();
+
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
 
   //デモパラメータ
 	return p_param;

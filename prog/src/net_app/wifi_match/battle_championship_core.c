@@ -463,6 +463,7 @@ static void SEQFUNC_MainMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       (*p_seq)  = SEQ_EXIT;
       break;
     case BATTLE_CHAMPIONSHIP_FLOW_RET_LIVECUP:   //ƒ‰ƒCƒu‘å‰ï‚Ö 
+      p_wk->p_param->mode = BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_FLOW_START;
       (*p_seq)  = SEQ_NEXT;
       break;
     }

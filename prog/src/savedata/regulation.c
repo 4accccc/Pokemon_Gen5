@@ -863,9 +863,10 @@ void Regulation_SetDebugData( REGULATION_CARDDATA* pReg )
     p_data->NICKNAME    = 1;
     p_data->AGE_LO      = 0;
     p_data->AGE_HI      = 0;
-    p_data->SHOW_POKE   = 1;
+    p_data->SHOW_POKE   = 0;
     p_data->SHOW_POKE_TIME  = 99;
     p_data->BATTLE_TYPE = REGULATION_BATTLE_SINGLE;
+    p_data->BTL_COUNT = 3;
     GFL_STD_MemClear( p_data->VETO_SHOOTER_ITEM,SHOOTER_ITEM_BIT_TBL_MAX );
   }
   GFL_STD_MemClear( pReg->cupname, sizeof(STRCODE)*(WIFI_PLAYER_TIX_CUPNAME_MOJINUM + EOM_SIZE) );

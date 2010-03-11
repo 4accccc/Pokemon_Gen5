@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-03-10T22:02:00"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-03-11T12:50:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -320,7 +320,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="132"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -346,7 +346,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1257" top="137" right="-552" bottom="763" maximized="no" rayout="Vertical2">
+	<dialog left="-1257" top="137" right="-552" bottom="765" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -598,11 +598,25 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 ロックを　解除　しました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="LIVE_STR_22">
+	<row id="LIVE_STR_22_1">
+		<comment>CRCが違う</comment>
 		<language name="JPN" width="256">せんしゅしょうの　じゅしんに　
 しっぱい　しました[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">選手証の　受信に
 失敗　しました[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="LIVE_STR_22_2">
+		<comment>ROMバージョンが違う</comment>
+		<language name="JPN" width="256">せんしゅしょうの　じゅしんに　
+しっぱい　しました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">選手証の　受信に
+失敗　しました[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="LIVE_STR_22_3">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<row id="LIVE_STR_23">

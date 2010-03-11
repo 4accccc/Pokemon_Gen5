@@ -158,6 +158,23 @@ BOOL BattleRec_DataExistCheck(void)
 {
   return (brs!=NULL);
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  対戦録画データのメモリ上に録画データがセットされているかチェック
+ *
+ *	@return TRUE録画データがセットされている　FALSE録画データがセットされていない
+ */
+//-----------------------------------------------------------------------------
+BOOL BattleRec_DataSetCheck(void)
+{ 
+  BATTLE_REC_WORK *rec = &brs->rec;
+  BATTLE_REC_HEADER *head = &brs->head;
+
+  if(rec->magic_key == REC_OCC_MAGIC_KEY && head->magic_key == REC_OCC_MAGIC_KEY){
+    return TRUE;
+  }
+  return FALSE;
+}
 
 //--------------------------------------------------------------
 /**

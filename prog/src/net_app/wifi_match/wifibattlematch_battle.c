@@ -17,6 +17,7 @@
 #include "gamesystem/btl_setup.h"
 #include "poke_tool/pokeparty.h"
 #include "net/dwc_error.h"
+#include "sound/pm_sndsys.h"
 
 //WIFIバトルマッチのモジュール
 #include "wifibattlematch_net.h"
@@ -171,6 +172,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
 
   switch (*p_seq) {
   case SEQ_CALL_START_DEMO:
+    PMSND_FadeOutBGM( 16 );
     // 通信バトル前デモ呼び出し
     {
       p_param->p_demo_param->type = COMM_BTL_DEMO_TYPE_NORMAL_START;
@@ -201,6 +203,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
     }
     break;
   case SEQ_BATTLE_INIT:
+    PMSND_PlayBGM( p_param->p_btl_setup_param->musicDefault );
     GFL_PROC_LOCAL_CallProc(p_wk->p_procsys, NO_OVERLAY_ID, &BtlProcData, p_param->p_btl_setup_param);
     (*p_seq) = SEQ_BATTLE_WAIT;
     break;
@@ -210,6 +213,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
     }
     break;
   case SEQ_BATTLE_END:
+    PMSND_StopBGM();
     OS_TPrintf("バトル完了\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
