@@ -781,6 +781,7 @@ extern void POKEMONTRADE_NEGOBG_SlideMessage(POKEMON_TRADE_WORK *pWork, int side
 extern void POKEMONTRADE_NEGOBG_SlideMessageDel(POKEMON_TRADE_WORK *pWork,int side);
 extern void POKEMONTRADE_NEGO_SlideInit(POKEMON_TRADE_WORK* pWork,int side,POKEMON_PARAM* pp);
 extern void POKEMONTRADE_NEGO_SlideMain(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_2D_GTSPokemonIconVisible(POKEMON_TRADE_WORK* pWork,int side, BOOL onoff);
 
 
 #if _TRADE_DEBUG

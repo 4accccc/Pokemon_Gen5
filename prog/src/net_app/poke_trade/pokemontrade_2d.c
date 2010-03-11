@@ -2358,11 +2358,30 @@ void IRC_POKETRADE_StatusWindowMessagePaletteTrans(POKEMON_TRADE_WORK* pWork, in
 
 void POKETRADE_2D_GTSPokemonIconReset(POKEMON_TRADE_WORK* pWork,int side, int no)
 {
-  OS_TPrintf("%d %d\n",side,no);
   if(pWork->pokeIconGTS[side][no]){
     GFL_CLACT_WK_Remove( pWork->pokeIconGTS[side][no]);
     pWork->pokeIconGTS[side][no]=NULL;
     GFL_CLGRP_CGR_Release( pWork->pokeIconNcgResGTS[side][no] );
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ＧＴＳ用ポケモンアイコンを消す
+ * @param   POKEMON_TRADE_WORK
+ * @param   palno      パレットを送る番号
+ * @param   palType   パレット転送タイプ MAINかSUB
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKETRADE_2D_GTSPokemonIconVisible(POKEMON_TRADE_WORK* pWork,int side, BOOL onoff)
+{
+  int i;
+  for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
+    if(pWork->pokeIconGTS[side][i]){
+      GFL_CLACT_WK_SetDrawEnable( pWork->pokeIconGTS[side][i], onoff);
+    }
   }
 }
 

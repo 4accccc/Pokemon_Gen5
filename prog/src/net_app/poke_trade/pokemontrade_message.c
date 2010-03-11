@@ -1102,7 +1102,7 @@ void POKEMONTRADE_NEGOBG_SlideMessageDel(POKEMON_TRADE_WORK *pWork,int side)
 {
   GFL_BMPWIN_Delete(pWork->StatusWin1[side]);
   GFL_BMPWIN_Delete(pWork->StatusWin2[side]);
-  
+  UITemplate_BALLICON_DeleteCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS]);
   pWork->StatusWin1[side]=NULL;
   pWork->StatusWin2[side]=NULL;
 }

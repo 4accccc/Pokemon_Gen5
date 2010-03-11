@@ -634,6 +634,7 @@ static void _recvThreePokemon(const int netID, const int size, const void* pData
   if(PP_Get( pWork->TempBuffer[netID], ID_PARA_poke_exist, NULL  )){
     POKE_GTS_DirectAddPokemon(pWork, num, pWork->TempBuffer[netID]);
     POKETRADE_2D_GTSPokemonIconSet(pWork, 1, num, pWork->TempBuffer[netID],TRUE);
+    POKEMONTRADE_NEGO_SlideInit(pWork, 1, pWork->TempBuffer[netID]);
   }
   else{
     GF_ASSERT(0);
@@ -1194,6 +1195,17 @@ static void _networkFriendsStandbyWait2(POKEMON_TRADE_WORK* pWork)
 
 }
 
+static void _preFadeOut(POKEMON_TRADE_WORK* pWork)
+{
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
+  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+    POKETRADE_MESSAGE_WindowClear(pWork);
+    _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
+  }
+}
+
 
 //‚±‚¤‚©‚ñ‚É‚¾‚·@’ÊM‘ŠŽè‚Ì€”õ‘Ò‚¿
 static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
@@ -1226,7 +1238,9 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   else if((pWork->changeFactor[myID]==POKETRADE_FACTOR_END) &&
           (pWork->changeFactor[targetID]==POKETRADE_FACTOR_END)){
     pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
-    _CHANGE_STATE(pWork, POKEMONTRADE_PROC_FadeoutStart);
+    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_08, pWork->pMessageStrBuf );
+    POKETRADE_MESSAGE_WindowOpen(pWork);
+    _CHANGE_STATE(pWork, _preFadeOut);
     return;
   }
   else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_END){

@@ -325,6 +325,7 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
   int xdotpos[]={0,128};
   int i=0,lv;
   int frame = GFL_BG_FRAME3_M;
+  int msgno;
   GFL_BMPWIN* pWin;
   MYSTATUS* aStBuf[2];
 
@@ -361,12 +362,18 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
 
   for(side = 0 ; side < GTS_PLAYER_WORK_NUM; side++){
     if(aStBuf[side]){
+      if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
+        msgno = POKETRADE_STR2_16;
+      }
+      else{
+        msgno = POKETRADE_STR2_27;
+      }
       GFL_FONTSYS_SetColor( 1, 2, 0x0 );
-      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_16, pWork->pExStrBuf );
+      GFL_MSG_GetString( pWork->pMsgData, msgno, pWork->pExStrBuf );
       WORDSET_RegisterPlayerName( pWork->pWordSet, 0,  aStBuf[side]  );
       WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
       PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8, 2, pWork->pStrBuf, pWork->pFontHandle);
-
+      
       if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
         GFL_FONTSYS_SetColor( 3, 4, 0x0 );
         GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_17 + pWork->GTStype[side], pWork->pStrBuf );
@@ -1275,6 +1282,9 @@ static void _Select6MessageInit6(POKEMON_TRADE_WORK* pWork)
 }
 
 
+
+
+
 static void _Select6MessageInitEnd(POKEMON_TRADE_WORK* pWork)
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
@@ -1282,17 +1292,17 @@ static void _Select6MessageInitEnd(POKEMON_TRADE_WORK* pWork)
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
-
-  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),
-                                 POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID)){
-
-
+  if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
+    POKETRADE_MESSAGE_WindowClear(pWork);
+    if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+      if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),
+                                   POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID)){
+        _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
+      }
+    }
+    else{
       _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
     }
-  }
-  else{
-    _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
   }
 }
 
@@ -1394,20 +1404,20 @@ static void _Select6MessageInit3(POKEMON_TRADE_WORK* pWork)
 
   if(CheckNegoWaitTimer(pWork)){
 
-    if( pWork->userNetCommand[targetID] == _NETCMD_END){
+/*    if( pWork->userNetCommand[targetID] == _NETCMD_END){
       //‚ ‚¢‚Ä‚Íƒ|ƒPƒ‚ƒ“ŒðŠ·‚µ‚½‚ª‚Á‚Ä‚¢‚é‚æ‚¤‚Å‚· ‚Å‚à‚Ç‚·
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_04, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_RETURN,WB_NET_TRADE_SERVICEID);
       _CHANGE_STATE(pWork, _Select6MessageInitEndNoSend);
       return;
-    }
+    }*/
     if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-      if(pWork->pokemonGTSSeq==POKEMONTORADE_SEQ_MISERUOK){
+//      if(pWork->pokemonGTSSeq==POKEMONTORADE_SEQ_MISERUOK){
         GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_04, pWork->pMessageStrBuf );
         POKETRADE_MESSAGE_WindowOpen(pWork);
         _CHANGE_STATE(pWork,_Select6MessageInit4);
-      }
+//      }
     }
     else{
       GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_04, pWork->pMessageStrBuf );
@@ -1787,7 +1797,8 @@ void POKEMONTRADE_NEGO_SlideInit(POKEMON_TRADE_WORK* pWork,int side,POKEMON_PARA
   POKEMONTRADE_NEGOBG_SlideMessage(pWork, side, pp);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
   IRCPOKETRADE_PokeCreateMcss(pWork, side, 1-side, pp, TRUE);
-  
+
+  POKETRADE_2D_GTSPokemonIconVisible(pWork, side, FALSE);
 }
 
 //------------------------------------------------------------------------------
@@ -1807,11 +1818,14 @@ void POKEMONTRADE_NEGO_SlideMain(POKEMON_TRADE_WORK* pWork)
   for(i=0;i<2;i++){
     if( pWork->SlideWindowTimer[i] > 0){
       pWork->SlideWindowTimer[i]--;
+      POKETRADE_2D_GTSPokemonIconVisible(pWork, i, FALSE);
+
       if(pWork->SlideWindowTimer[i]==0){
         POKEMONTRADE_NEGOBG_SlideMessageDel(pWork, i);
         GFL_BG_FillScreen( GFL_BG_FRAME1_M, 0x0000, i*16, 0, 16, 24, GFL_BG_SCRWRT_PALNL );
         GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
         IRCPOKETRADE_PokeDeleteMcss(pWork, i);
+        POKETRADE_2D_GTSPokemonIconVisible(pWork, i, TRUE);
       }
     }
   }
