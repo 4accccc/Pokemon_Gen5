@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-02-25T20:55:11"/>
+	<create user="matsushima" host="W00181" date="2010-03-11T15:38:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="75" top="92" right="780" bottom="737" maximized="no" rayout="Vertical2">
+	<dialog left="71" top="105" right="776" bottom="750" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="796" top="425" right="1269" bottom="823" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -463,11 +463,7 @@ msg_c03r0401_girl1_04</comment>
 		<comment>・「はい／いいえ」選択肢
 
 ●「はい」の場合
-　→バッグ画面に切り替わる。
-　　・ボールが選ばれたらイベントが進行します。
-　　→msg_c03r0401_girl1_09へ。
-　　・ボールが選ばれなかった場合は、
-　　この選択肢に戻ります。
+　→msg_c03r0401_girl1_13_1（または13_2）
 ●「いいえ」の場合
 　→msg_c03r0401_girl1_11</comment>
 		<attribute name="キャラ指定">ナレーション</attribute>
@@ -556,6 +552,46 @@ msg_c03r0401_girl1_04</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ゾロアが　まってるよ！</language>
 		<language name="JPN_KANJI" width="256">ゾロアが　まってるよ！</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_13_1" text-color="#000000,,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●ゾロアを仲間にするとき。♂のセリフ
+・この後、バッグ画面に切り替わる。
+　・ボールが選ばれたらイベントが進行します。
+　　→msg_c03r0401_girl1_09へ。
+　・ボール以外が選ばれた場合、
+　　またはキャンセルされた場合は
+　　→msg_c03r0401_girl1_14へ。</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">おにいちゃん
+モンスターボール　もってる？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おにいちゃん
+モンスターボール　もってる？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_13_2" text-color="#000000,,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●ゾロアを仲間にするとき。♀のセリフ
+・この後、バッグ画面に切り替わる。
+　・ボールが選ばれたらイベントが進行します。
+　　→msg_c03r0401_girl1_09へ。
+　・ボール以外が選ばれた場合、
+　　またはキャンセルされた場合は
+　　→msg_c03r0401_girl1_14へ。</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">おねえちゃん
+モンスターボール　もってる？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おねえちゃん
+モンスターボール　もってる？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_14" text-color="#000000,,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●この後、仲間にするかどうかの選択肢に戻ります。
+　→msg_c03r0401_narrator_01</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">……この子コを
+つれていって　あげられないの？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">……この子コを
+つれていって　あげられないの？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
