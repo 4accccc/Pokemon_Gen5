@@ -41,8 +41,8 @@ typedef int (*pZKNTOP_FUNC)(ZKNTOPMAIN_WORK*);
 
 #define	HEAPID_ZUKAN_TOP_L	( GFL_HEAP_LOWID(HEAPID_ZUKAN_TOP) )
 
-#define	BG_PALNUM_FRAME		( 1 )
-#define	BG_PALNUM_GRAPHIC	( 2 )
+//#define	BG_PALNUM_FRAME		( 1 )
+//#define	BG_PALNUM_GRAPHIC	( 2 )
 
 #define	AUTO_START_TIME		( 60*5 )
 
@@ -146,7 +146,7 @@ static void InitBg(void)
 
 	{	// メイン画面：フレーム
 		GFL_BG_BGCNT_HEADER cnth= {
-			0, 27*8, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
+			0, 29*8, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_256,
 			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, 0x8000,
 			GX_BG_EXTPLTT_01, 2, 1, 0, FALSE
 		};
@@ -164,7 +164,7 @@ static void InitBg(void)
 	}
 	{	// メイン画面：
 		GFL_BG_BGCNT_HEADER cnth= {
-			0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
+			0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_256,
 			GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x00000, 0x8000,
 			GX_BG_EXTPLTT_01, 0, 1, 0, FALSE
 		};
@@ -174,7 +174,7 @@ static void InitBg(void)
 
 	{	// サブ画面：背景
 		GFL_BG_BGCNT_HEADER cnth= {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
 			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,
 			GX_BG_EXTPLTT_01, 1, 1, 0, FALSE
 		};
@@ -183,7 +183,7 @@ static void InitBg(void)
 	}
 	{	// サブ画面：フレーム
 		GFL_BG_BGCNT_HEADER cnth= {
-			0, 3*8, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
+			0, 3*8, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_256,
 			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,
 			GX_BG_EXTPLTT_01, 0, 1, 0, FALSE
 		};
@@ -218,9 +218,9 @@ static void LoadBgGraphic(void)
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_TOP_L );
 
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_MAIN_BG, 0, 0x20*2, HEAPID_ZUKAN_TOP );
+		ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_ZUKAN_TOP );
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_SUB_BG, 0, 0x20*2, HEAPID_ZUKAN_TOP );
+		ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_SUB_BG, 0, 0, HEAPID_ZUKAN_TOP );
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_zukan_gra_top_zkn_top_cover_NCGR, GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
@@ -272,11 +272,9 @@ static void LoadSaveGraphic( ZKNTOPMAIN_WORK * wk )
 				pal = ZUKANWP_SAVEDATA_GetCustomGraphicPalette( exsv );
 				GFL_BG_LoadCharacter( GFL_BG_FRAME1_M, chr, ZUKANWP_SAVEDATA_CHAR_SIZE, 0 );
 				GFL_BG_LoadPalette(
-					GFL_BG_FRAME1_M, pal, ZUKANWP_SAVEDATA_PAL_SIZE*2, BG_PALNUM_GRAPHIC*0x20 );
-
-				pal = ZUKANWP_SAVEDATA_GetFramePalette( exsv );
+					GFL_BG_FRAME1_M, pal, ZUKANWP_SAVEDATA_PAL_SIZE*2, 0 );
 				GFL_BG_LoadPalette(
-					GFL_BG_FRAME1_M, pal, ZUKANWP_SAVEDATA_PAL_SIZE*2, BG_PALNUM_FRAME*0x20 );
+					GFL_BG_FRAME1_S, pal, ZUKANWP_SAVEDATA_PAL_SIZE*2, 0 );
 			}
 		}
 	}
@@ -383,7 +381,7 @@ static int MainSeq_Main( ZKNTOPMAIN_WORK * wk )
 }
 
 #define	DEMO_SCROLL_SPEED				( 8 )
-#define	DEMO_SCROLL_COUNT				( 192/DEMO_SCROLL_SPEED )
+#define	DEMO_SCROLL_COUNT				( 208/DEMO_SCROLL_SPEED )
 #define	DEMO_SCROLL_END_WAIT		( 32 )
 
 

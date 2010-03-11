@@ -23,8 +23,6 @@ struct _ZUKANWP_SAVEDATA {
 	u8	customChar[ZUKANWP_SAVEDATA_CHAR_SIZE];
 	// カスタムグラフィックパレット
 	u16	customPalette[ZUKANWP_SAVEDATA_PAL_SIZE];
-	// フレームパレット
-	u16	framePalette[ZUKANWP_SAVEDATA_PAL_SIZE];
 	// データ有無フラグ
 	BOOL	flg;
 };
@@ -84,20 +82,6 @@ u8 * ZUKANWP_SAVEDATA_GetCustomGraphicCharacter( ZUKANWP_SAVEDATA * sv )
 u16 * ZUKANWP_SAVEDATA_GetCustomGraphicPalette( ZUKANWP_SAVEDATA * sv )
 {
 	return sv->customPalette;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		フレームパレット取得
- *
- * @param		sv		セーブデータ
- *
- * @return	パレットデータ
- */
-//--------------------------------------------------------------------------------------------
-u16 * ZUKANWP_SAVEDATA_GetFramePalette( ZUKANWP_SAVEDATA * sv )
-{
-	return sv->framePalette;
 }
 
 //--------------------------------------------------------------------------------------------

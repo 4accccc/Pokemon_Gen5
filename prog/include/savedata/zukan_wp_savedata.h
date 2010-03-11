@@ -20,8 +20,8 @@
 
 // グラフィックのキャラデータサイズ
 #define	ZUKANWP_SAVEDATA_CHAR_SIZE	( ZUKANWP_SAVEDATA_CHAR_SIZE_X*ZUKANWP_SAVEDATA_CHAR_SIZE_Y*0x20 )
-// パレットサイズ
-#define	ZUKANWP_SAVEDATA_PAL_SIZE	( 16 )
+// グラフィックのパレット数
+#define	ZUKANWP_SAVEDATA_PAL_SIZE		( 256 )
 
 
 typedef struct _ZUKANWP_SAVEDATA	ZUKANWP_SAVEDATA;
@@ -74,17 +74,6 @@ extern u8 * ZUKANWP_SAVEDATA_GetCustomGraphicCharacter( ZUKANWP_SAVEDATA * sv );
  */
 //--------------------------------------------------------------------------------------------
 extern u16 * ZUKANWP_SAVEDATA_GetCustomGraphicPalette( ZUKANWP_SAVEDATA * sv );
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		フレームパレット取得
- *
- * @param		sv		セーブデータ
- *
- * @return	パレットデータ
- */
-//--------------------------------------------------------------------------------------------
-extern u16 * ZUKANWP_SAVEDATA_GetFramePalette( ZUKANWP_SAVEDATA * sv );
 
 //--------------------------------------------------------------------------------------------
 /**
