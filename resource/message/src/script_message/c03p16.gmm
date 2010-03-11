@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T13:06:43"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-11T13:26:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1298" top="116" right="2003" bottom="736" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -317,10 +317,10 @@
 仮OBJです</attribute>
 		<language name="JPN" width="256">ロイヤルイッシュごうは　１にち１かい
 ゆうがたのみに　しゅっこう　する[BE:00:ページ切り替え（行送り）]
-クルーズタイプの　きゃくせん　です</language>
+クルーズタイプの　きゃくせん　です[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ロイヤルイッシュ号は　１日１回
 夕方のみに　出港する[BE:00:ページ切り替え（行送り）]
-クルーズタイプの　客船　です</language>
+クルーズタイプの　客船　です[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03p16_cabinguide_01b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
