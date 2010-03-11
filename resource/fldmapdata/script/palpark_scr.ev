@@ -134,10 +134,10 @@ play_palpark:
   _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
 
   IF $i_ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
-    //キャンセル todo
+    //キャンセル
     _RET
   ELSIF $i_ret == SCR_FIELD_COMM_EXIT_ERROR THEN
-    //エラー todo
+    //エラー
     _RET
   ENDIF
 
