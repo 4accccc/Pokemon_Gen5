@@ -16,6 +16,7 @@
 #include "system/gfl_use.h"
 #include "system/bmp_winframe.h"
 #include "sound/pm_sndsys.h"
+#include "savedata/perapvoice.h"
 #include "font/font.naix"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/pokerus.h"
@@ -1649,6 +1650,36 @@ void BOX2MAIN_FormChangeSheimi( BOX2_SYS_WORK * syswk, u32 b_pos, u32 a_pos )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		地方図鑑番号テーブル読み込み
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2MAIN_LoadLocalNoList( BOX2_SYS_WORK * syswk )
+{
+	syswk->app->localNo     = POKE_PERSONAL_GetZenkokuToChihouArray( HEAPID_BOX_APP, NULL );
+	syswk->app->zenkokuFlag = ZUKANSAVE_GetZenkokuZukanFlag(
+															GAMEDATA_GetZukanSave(syswk->dat->gamedata));
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		地方図鑑番号テーブル解放
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2MAIN_FreeLocalNoList( BOX2_SYS_WORK * syswk )
+{
+	GFL_HEAP_FreeMemory( syswk->app->localNo );
+}
+
 
 //============================================================================================
 //	ポケモンアイコン
@@ -2982,6 +3013,37 @@ BOOL BOX2MAIN_PokeFreeWazaCheck( BOX2_SYS_WORK * syswk )
 		}
 	}
 	return TRUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 終了時に手持ちにペラップがいない場合はぺタップボイスの存在フラグを落とす
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2MAIN_CheckPartyPerapu( BOX2_SYS_WORK * syswk )
+{
+	u32	i;
+
+	// バトルボックスと寝かせる場合はチェックしない
+	if( syswk->dat->callMode == BOX_MODE_BATTLE || syswk->dat->callMode == BOX_MODE_SLEEP ){
+		return;
+	}
+
+	for( i=0; i<PokeParty_GetPokeCount(syswk->dat->pokeparty); i++ ){
+		POKEMON_PARAM * pp = PokeParty_GetMemberPointer( syswk->dat->pokeparty, i );
+		if( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_PERAPPU ){
+			return;
+		}
+	}
+
+	{
+		PERAPVOICE * sv = SaveData_GetPerapVoice( GAMEDATA_GetSaveControlWork(syswk->dat->gamedata) );
+		PERAPVOICE_ClearExistFlag( sv );
+	}
 }
 
 

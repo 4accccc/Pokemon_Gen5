@@ -318,15 +318,8 @@ typedef struct {
 	BMPOAM_SYS_PTR	fntoam;
 	BOX2_FONTOAM	fobj[BOX2MAIN_FNTOAM_MAX];
 
-/*
-	// はい・いいえ関連
-	TOUCH_SW_SYS * tsw;		// タッチウィンドウ
-	u16	ynID;				// はい・いいえＩＤ
+//	u16	obj_trans_stop;		// VBLANKでのOBJ描画を停止するフラグ ( 1 = stop )
 
-	u16	obj_trans_stop;		// VBLANKでのOBJ描画を停止するフラグ ( 1 = stop )
-
-
-*/
 	int	key_repeat_speed;
 	int	key_repeat_wait;
 
@@ -351,6 +344,9 @@ typedef struct {
 	PRINT_UTIL	win[BOX2BMPWIN_ID_MAX];		// BMPWIN
 
 	GFL_ARCUTIL_TRANSINFO	syswinInfo;
+
+	BOOL	zenkokuFlag;
+	u16 * localNo;
 
 	// はい・いいえ関連
 //	TOUCH_SW_SYS * tsw;		// タッチウィンドウ
@@ -1155,6 +1151,28 @@ extern void BOX2MAIN_FormChangeSheimi( BOX2_SYS_WORK * syswk, u32 b_pos, u32 a_p
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		地方図鑑番号テーブル読み込み
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2MAIN_LoadLocalNoList( BOX2_SYS_WORK * syswk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		地方図鑑番号テーブル解放
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2MAIN_FreeLocalNoList( BOX2_SYS_WORK * syswk );
+
+//--------------------------------------------------------------------------------------------
+/**
  * 取得アイテムを指定場所のポケモンにセットできるかチェック
  *
  * @param	syswk		ボックス画面システムワーク
@@ -1205,6 +1223,17 @@ extern void BOX2MAIN_PokeFreeExit( BOX2_SYS_WORK * syswk );
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL BOX2MAIN_PokeFreeWazaCheck( BOX2_SYS_WORK * syswk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 終了時に手持ちにペラップがいない場合はぺタップボイスの存在フラグを落とす
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2MAIN_CheckPartyPerapu( BOX2_SYS_WORK * syswk );
 
 
 //============================================================================================

@@ -838,6 +838,8 @@ static int MainSeq_Init( BOX2_SYS_WORK * syswk )
 
 	BOX2MAIN_MsgInit( syswk );
 
+	BOX2MAIN_LoadLocalNoList( syswk );
+
 	BOX2BMP_Init( syswk );
 
 	BOX2OBJ_Init( syswk );
@@ -889,8 +891,6 @@ static int MainSeq_Release( BOX2_SYS_WORK * syswk )
 
 	TCB_Delete( syswk->app->vtask );
 
-
-
 	BOX2MAIN_BgFrameWorkExit( syswk->app );
 */
 	BOX2MAIN_YesNoWinExit( syswk );
@@ -902,6 +902,8 @@ static int MainSeq_Release( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_Exit( syswk->app );
 
 	BOX2BMP_Exit( syswk );
+
+	BOX2MAIN_FreeLocalNoList( syswk );
 
 	BOX2MAIN_MsgExit( syswk );
 
@@ -7617,6 +7619,7 @@ static int BoxItemArg_RetBagYes( BOX2_SYS_WORK * syswk )
 static int BoxArg_BoxEndYes( BOX2_SYS_WORK * syswk )
 {
 	PMSND_PlaySE( SE_BOX2_LOG_OFF );
+	BOX2MAIN_CheckPartyPerapu( syswk );			// ペラップボイス
 	syswk->next_seq = BOX2SEQ_MAINSEQ_END;
 	return FadeOutSet( syswk, BOX2SEQ_MAINSEQ_RELEASE );
 }
@@ -7710,6 +7713,7 @@ static int BoxArg_BoxEndNo( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int BoxArg_SleepYes( BOX2_SYS_WORK * syswk )
 {
+	BOX2MAIN_CheckPartyPerapu( syswk );			// ペラップボイス
 	syswk->dat->retTray = syswk->tray;
 	syswk->dat->retPoke = syswk->get_pos;
 	syswk->next_seq = BOX2SEQ_MAINSEQ_END;

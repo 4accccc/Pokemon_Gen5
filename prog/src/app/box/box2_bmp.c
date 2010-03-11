@@ -875,9 +875,11 @@ static void PokeNumberPut( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info, u32
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[winID].win), 0 );
 
 	if( info->tamago == 0 ){
-//		mode = PMNumber_GetMode( syswk->dat->savedata );
-//		num  = PMNumber_GetPokeNumber( mode, info->mons );
-		num = 999;
+		if( syswk->app->zenkokuFlag == TRUE ){
+			num = info->mons;
+		}else{
+			num = syswk->app->localNo[info->mons];
+		}
 
 		if( num != 0 ){
 			u32	npx;
