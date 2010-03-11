@@ -34,6 +34,7 @@ typedef enum
 typedef enum
 {
   LIVEBATTLEMATCH_IRC_ERROR_REPAIR_NONE,  //ê≥èÌ
+  LIVEBATTLEMATCH_IRC_ERROR_REPAIR_DISCONNECT,  //êÿíf
 } LIVEBATTLEMATCH_IRC_ERROR_REPAIR_TYPE;
 
 //=============================================================================

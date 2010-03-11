@@ -13,6 +13,7 @@
 
 //システム
 #include "system/main.h"
+#include "system/net_err.h"
 
 //ネット
 #include "net/network_define.h"
@@ -177,7 +178,22 @@ void LIVEBATTLEMATCH_IRC_Main( LIVEBATTLEMATCH_IRC_WORK *p_wk )
 //-----------------------------------------------------------------------------
 LIVEBATTLEMATCH_IRC_ERROR_REPAIR_TYPE LIVEBATTLEMATCH_IRC_CheckErrorRepairType( LIVEBATTLEMATCH_IRC_WORK *p_wk )
 {
-  //@todo
+  if( NET_ERR_CHECK_NONE != NetErr_App_CheckError() )
+  { 
+    //フロー内でのエラーはもう一度フローに戻ることを考えてPUSHPOP式
+    //syachiのエラー処理に違反しますが、松田さんに許可いただきました 2010/03/11
+
+    if( p_wk->p_delivery )
+    { 
+      DELIVERY_IRC_End( p_wk->p_delivery );
+      p_wk->p_delivery  = NULL;
+    }
+
+    NetErr_ExitNetSystem();
+    NetErr_DispCallPushPop();
+    return LIVEBATTLEMATCH_IRC_ERROR_REPAIR_DISCONNECT;
+  }
+
   return  LIVEBATTLEMATCH_IRC_ERROR_REPAIR_NONE;
 }
 

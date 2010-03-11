@@ -61,6 +61,7 @@ typedef struct
   //以下、[in ]常駐データ
   WIFIBATTLEMATCH_ENEMYDATA     *p_player_data;
   WIFIBATTLEMATCH_ENEMYDATA     *p_enemy_data;
+  BATTLEMATCH_BATTLE_SCORE      *p_btl_score;
 
 } BATTLE_CHAMPIONSHIP_CORE_PARAM;
 

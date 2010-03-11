@@ -34,8 +34,11 @@
 //=====================================
 typedef struct 
 {
-  int dummy;
-} LIVEBATTLEMATCH_BATTLE_SCORE;
+  BtlResult result;       //自分の勝敗
+  u8 enemy_rest_poke;     //対戦相手の残りポケモン数
+  u8 enemy_rest_hp;       //対戦相手の残りHP（全てのポケモンでのパーセンテージ）
+  BOOL is_error;          //エラーが起こったか
+} BATTLEMATCH_BATTLE_SCORE;
 
 //-------------------------------------
 /// 保存データ
@@ -43,6 +46,8 @@ typedef struct
 typedef struct 
 {
   u8        mystatus[MYSTATUS_SAVE_SIZE];
+  u8        mac_address[ 6 ];
+  u8        dummy[ 2 ];
   u32       win_cnt;
   u32       lose_cnt;
   u32       btl_cnt;

@@ -311,7 +311,7 @@ void LIVEBATTLEMATCH_FLOW_Exit( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 void LIVEBATTLEMATCH_FLOW_Main( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
-{ 
+{
   //シーケンスメイン
   WBM_SEQ_Main( p_wk->p_seq );
 
@@ -320,6 +320,7 @@ void LIVEBATTLEMATCH_FLOW_Main( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
 
   //待機アイコン
   WBM_WAITICON_Main( p_wk->p_wait );
+
 
   //文字表示
   if( p_wk->p_playerinfo )
@@ -524,6 +525,13 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       //Regulation_PrintDebug( &p_wk->regulation_temp );
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
       *p_seq  = SEQ_CHECK_RECVCARD;
+    }
+
+    //エラー処理
+    if( LIVEBATTLEMATCH_IRC_ERROR_REPAIR_DISCONNECT == LIVEBATTLEMATCH_IRC_CheckErrorRepairType( p_wk->p_irc ) )
+    { 
+      *p_seq  = SEQ_START_MSG_RECVCARD;
+      break;
     }
 
     //Bキャンセル
@@ -889,9 +897,22 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   case SEQ_LOCK_BTLBOX:      //バトルボックスをロック
     { 
+      //バトルボックスのロックと、ロック時のポケモン情報をセーブする
       SAVE_CONTROL_WORK   *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
-      BATTLE_BOX_SAVE     *p_btlbox_sv  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv_ctrl ); 
-      BATTLE_BOX_SAVE_OnLockFlg( p_btlbox_sv, BATTLE_BOX_LOCK_BIT_LIVE );
+      { 
+        BATTLE_BOX_SAVE     *p_btlbox_sv  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv_ctrl ); 
+        REGULATION_SAVEDATA *p_save = SaveData_GetRegulationSaveData( p_sv_ctrl );
+        REGULATION_VIEWDATA *p_view_sv =  RegulationSaveData_GetRegulationView( p_save, BATTLE_BOX_LOCK_BIT_LIVE );
+        POKEPARTY *p_party  = BATTLE_BOX_SAVE_MakePokeParty( p_btlbox_sv, GFL_HEAP_LOWID(HEAPID_WIFIBATTLEMATCH_SYS) );
+
+        BATTLE_BOX_SAVE_OnLockFlg( p_btlbox_sv, BATTLE_BOX_LOCK_BIT_LIVE );
+
+
+        RegulationView_SetEazy( p_view_sv, p_party );
+
+        GFL_HEAP_FreeMemory( p_party );
+        
+      }
     }
     *p_seq  = SEQ_START_MSG_SAVE;
     break;
@@ -970,6 +991,9 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   { 
     SEQ_START_DRAW_CARD,  //選手証表示
     SEQ_WAIT_DRAW_CARD,
+
+    SEQ_CHECK_ERR,      //エラーをして戻ってきたか？
+    SEQ_START_MSG_ERR,
     
     SEQ_START_MSG_MENU,   //メインメニュー
     SEQ_START_LIST_MENU,
@@ -1016,9 +1040,26 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_WAIT_DRAW_CARD:
     if( UTIL_PLAYERINFO_Move( p_wk ) )
     { 
-      *p_seq  = SEQ_START_MSG_MENU;
+      *p_seq  = SEQ_CHECK_ERR;
     }
 		break;
+
+  case SEQ_CHECK_ERR:      //エラーをして戻ってきたか？
+    if( p_wk->param.p_btl_score->is_error )
+    { 
+      *p_seq  = SEQ_START_MSG_ERR;
+    }
+    else
+    { 
+      *p_seq  = SEQ_START_MSG_MENU;
+    }
+    break;
+
+  case SEQ_START_MSG_ERR:
+    UTIL_TEXT_Print( p_wk, LIVE_ERR_01 );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_MENU );
+    break;
     
   case SEQ_START_MSG_MENU:   //メインメニュー
     UTIL_TEXT_Print( p_wk, LIVE_STR_11 );
@@ -1035,7 +1076,7 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       if( select != WBM_LIST_SELECT_NULL )
       { 
         UTIL_LIST_Delete( p_wk );
-        if( p_wk->is_rec )
+        if( p_wk->is_rec  && !p_wk->param.p_btl_score->is_error )
         { 
           switch( select )
           { 
@@ -1234,6 +1275,15 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   LIVEBATTLEMATCH_FLOW_WORK *p_wk = p_wk_adrs;
 
+
+  //エラー処理
+  if( LIVEBATTLEMATCH_IRC_ERROR_REPAIR_DISCONNECT == LIVEBATTLEMATCH_IRC_CheckErrorRepairType( p_wk->p_irc ) )
+  { 
+    p_wk->param.p_btl_score->is_error = TRUE;
+    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_StartCup );
+  }
+
+  //シーケンス
   switch( *p_seq )
   { 
   case SEQ_START_MSG_MATCHING: //マッチング開始
@@ -1245,6 +1295,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     if( LIVEBATTLEMATCH_IRC_StartConnect( p_wk->p_irc ) )
     { 
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
+
       *p_seq  = SEQ_WAIT_CONNECT;
     }
     break;
@@ -1450,6 +1501,13 @@ static void SEQFUNC_BtlAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   LIVEBATTLEMATCH_FLOW_WORK *p_wk = p_wk_adrs;
 
+  //エラー処理
+  if( LIVEBATTLEMATCH_IRC_ERROR_REPAIR_DISCONNECT == LIVEBATTLEMATCH_IRC_CheckErrorRepairType( p_wk->p_irc ) )
+  { 
+    p_wk->param.p_btl_score->is_error = TRUE;
+    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_StartCup );
+  }
+
   switch( *p_seq )
   {
   case SEQ_START_DISCONNECT:
@@ -1470,7 +1528,46 @@ static void SEQFUNC_BtlAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE );
 		break;
   case SEQ_START_SAVE:
-    //@todo ここで　対戦相手戦績セーブ  ＋　自分のスコアアップ
+
+    //対戦相手の情報セーブ
+    { 
+      u8 idx  = LIVEMATCH_DATA_GetMyParam( p_wk->p_livematch, LIVEMATCH_MYDATA_PARAM_BTLCNT );
+      LIVEMATCH_DATA_SetFoeMacAddr( p_wk->p_livematch, idx, p_wk->param.p_enemy_data->mac_address );
+      LIVEMATCH_DATA_SetFoeParam( p_wk->p_livematch, idx, LIVEMATCH_FOEDATA_PARAM_REST_POKE, p_wk->param.p_btl_score->enemy_rest_poke );
+      LIVEMATCH_DATA_SetFoeParam( p_wk->p_livematch, idx, LIVEMATCH_FOEDATA_PARAM_REST_HP, p_wk->param.p_btl_score->enemy_rest_hp );
+
+      OS_TPrintf( "▼対戦相手のデータ\n" );
+      OS_TPrintf( "mac_addr [%s]\n", p_wk->param.p_enemy_data->mac_address );
+      OS_TPrintf( "rest_poke[%d]\n", p_wk->param.p_btl_score->enemy_rest_poke );
+      OS_TPrintf( "rest_hp  [%d]\n", p_wk->param.p_btl_score->enemy_rest_hp );
+    }
+
+    //自分のスコアセーブ
+    { 
+      u8  win  = 0;
+      u8  lose  = 0;
+      switch( p_wk->param.p_btl_score->result )
+      { 
+      case BTL_RESULT_RUN_ENEMY:
+        /* fallthrough */
+      case BTL_RESULT_WIN:
+        win = 1;
+        break;
+      case BTL_RESULT_RUN:
+        /* fallthrough */
+      case BTL_RESULT_LOSE:
+        lose  = 1;
+        break;
+      case BTL_RESULT_DRAW:
+        break;
+      default:
+        GF_ASSERT_MSG(0, "バトル結果不正値 %d\n", p_wk->param.p_btl_score->result );
+      }
+
+      LIVEMATCH_DATA_AddMyParam( p_wk->p_livematch, LIVEMATCH_MYDATA_PARAM_WIN,    win );
+      LIVEMATCH_DATA_AddMyParam( p_wk->p_livematch, LIVEMATCH_MYDATA_PARAM_LOSE,   lose );
+      LIVEMATCH_DATA_AddMyParam( p_wk->p_livematch, LIVEMATCH_MYDATA_PARAM_BTLCNT, 1 );
+    }
 
     GAMEDATA_SaveAsyncStart(p_wk->param.p_gamedata);
     *p_seq  = SEQ_WAIT_SAVE;
@@ -1619,7 +1716,7 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       if( select != WBM_LIST_SELECT_NULL )
       { 
         UTIL_LIST_Delete( p_wk );
-        if( p_wk->is_rec )
+        if( p_wk->is_rec  && !p_wk->param.p_btl_score->is_error )
         { 
           switch( select )
           { 
@@ -1713,7 +1810,7 @@ static void UTIL_LIST_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk, LVM_MENU_TYPE typ
     break;
 
   case LVM_MENU_TYPE_MENU:
-    if( p_wk->is_rec )
+    if( p_wk->is_rec  && !p_wk->param.p_btl_score->is_error )
     { 
       setup.strID[0]= LIVE_SELECT_02;
       setup.strID[1]= LIVE_SELECT_03;
@@ -1729,7 +1826,7 @@ static void UTIL_LIST_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk, LVM_MENU_TYPE typ
     pos = POS_CENTER;
     break;
   case LVM_MENU_TYPE_END:
-    if( p_wk->is_rec )
+    if( p_wk->is_rec  && !p_wk->param.p_btl_score->is_error )
     { 
       setup.strID[0]= LIVE_SELECT_03;
       setup.strID[1]= LIVE_SELECT_05;
@@ -1864,6 +1961,9 @@ static void UTIL_PLAYERINFO_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
     PLAYERINFO_LIVECUP_DATA info_setup;
     SAVE_CONTROL_WORK   *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
     BATTLE_BOX_SAVE     *p_btlbox_sv  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv_ctrl );
+    REGULATION  *p_reg  = RegulationData_GetRegulation(p_wk->p_regulation);
+    REGULATION_SAVEDATA *p_reg_sv   = SaveData_GetRegulationSaveData( p_sv_ctrl );
+    REGULATION_VIEWDATA *p_reg_view = RegulationSaveData_GetRegulationView( p_reg_sv, REGULATION_CARD_TYPE_LIVE ); 
 
     p_my  = GAMEDATA_GetMyStatus( p_wk->param.p_gamedata); 
     p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->param.p_graphic );
@@ -1875,6 +1975,7 @@ static void UTIL_PLAYERINFO_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
     info_setup.win_cnt  = LIVEMATCH_DATA_GetMyParam( p_wk->p_livematch, LIVEMATCH_MYDATA_PARAM_WIN );
     info_setup.lose_cnt = LIVEMATCH_DATA_GetMyParam( p_wk->p_livematch, LIVEMATCH_MYDATA_PARAM_LOSE );
     info_setup.btl_cnt  = LIVEMATCH_DATA_GetMyParam( p_wk->p_livematch, LIVEMATCH_MYDATA_PARAM_BTLCNT );
+    info_setup.btl_max  = Regulation_GetParam( p_reg, REGULATION_BTLCOUNT );
     info_setup.trainerID  = MyStatus_GetTrainerView( p_my );
 
     GFL_STD_MemCopy( Regulation_GetCardCupNamePointer( p_wk->p_regulation ),
@@ -1892,7 +1993,7 @@ static void UTIL_PLAYERINFO_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
         Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_END_DAY ),
           0);
 
-    p_wk->p_playerinfo	= PLAYERINFO_LIVE_Init( &info_setup, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_wifi_msg, p_wk->p_word, p_btlbox_sv, p_wk->heapID );
+    p_wk->p_playerinfo	= PLAYERINFO_LIVE_Init( &info_setup, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_wifi_msg, p_wk->p_word, p_reg_view, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
@@ -2097,6 +2198,10 @@ static void UTIL_DATA_SetupMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, LIVEBAT
     MYSTATUS  *p_my;
     p_my  = GAMEDATA_GetMyStatus(p_gamedata);
     GFL_STD_MemCopy( p_my, p_my_data->mystatus, MyStatus_GetWorkSize() );
+  }
+  //MACアドレス
+  { 
+    OS_GetMacAddress( p_my_data->mac_address );
   }
   //PMS
   { 

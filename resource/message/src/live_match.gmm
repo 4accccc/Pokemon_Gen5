@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-03-11T12:50:09"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-03-11T21:21:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -346,9 +346,9 @@
 		</language>
 	</columns>
 
-	<dialog left="-1257" top="137" right="-552" bottom="765" maximized="no" rayout="Vertical2">
+	<dialog left="-1155" top="379" right="-450" bottom="1007" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -516,9 +516,9 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 
 	<row id="LIVE_STR_12">
 		<language name="JPN" width="256">さいごの　たいせんの　バトルビデオを
-さいせい　します</language>
+さいせい　します[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">最後の　対戦の　バトルビデオを
-再生　します</language>
+再生　します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_STR_13">
@@ -620,8 +620,8 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 	</row>
 
 	<row id="LIVE_STR_23">
-		<language name="JPN" width="256">たいかいを　しゅうりょうします</language>
-		<language name="JPN_KANJI" width="256">大会を　終了します</language>
+		<language name="JPN" width="256">たいかいを　しゅうりょうします[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">大会を　終了します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_SELECT_05">
@@ -634,6 +634,15 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 おつかれさまでした[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">大会を　終了します
 お疲れさまでした[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="LIVE_ERR_01">
+		<language name="JPN" width="256">エラーが　はっせいしたため
+たいせんを　しゅうりょうしました[BE:00:ページ切り替え（行送り）]
+かかりいんの　しじに　したがってください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">エラーが　発生したため
+対戦を　終了しました[BE:00:ページ切り替え（行送り）]
+係員の　指示に　従ってください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>

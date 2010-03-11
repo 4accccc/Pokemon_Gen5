@@ -35,7 +35,13 @@ struct _REGULATION_VIEWDATA
 {
   u16 mons_no[ TEMOTI_POKEMAX ];
   u8  form_no[ TEMOTI_POKEMAX ];
+  u8  item_flag;  //6体分のビット
+  u8  sex_flag;  //6対分のビット  ポケモンアイコン用の性別なので♀が１その他が０
+  u8  dummy[ 10 ];
+  /* 下記の節約
+   *
   u8  item_flag[ TEMOTI_POKEMAX ];
+  u8  sex[ TEMOTI_POKEMAX ];*/
 } ;
 
 //-------------------------------------
@@ -769,7 +775,10 @@ int RegulationView_GetParam( const REGULATION_VIEWDATA *pView, REGULATION_VIEW_P
     return pView->form_no[ idx ];
 
   case REGULATION_VIEW_ITEM_FLAG:
-    return pView->item_flag[ idx ];
+    return (pView->item_flag >> idx) & 0x1;
+
+  case REGULATION_VIEW_SEX:
+    return (pView->sex_flag >> idx) & 0x1;
 
   default:
     GF_ASSERT(0);
@@ -794,19 +803,52 @@ void RegulationView_SetParam( REGULATION_VIEWDATA *pView, REGULATION_VIEW_PARAM_
   { 
   case REGULATION_VIEW_MONS_NO:
     pView->mons_no[ idx ]   = param;
+    break;
 
   case REGULATION_VIEW_FROM_NO:
     pView->form_no[ idx ]   = param;
+    break;
 
   case REGULATION_VIEW_ITEM_FLAG:
-    pView->item_flag[ idx ] = param;
+    pView->item_flag |= ((param == TRUE)<<idx);
+    break;
+
+  case REGULATION_VIEW_SEX:
+    //ポケモンアイコン用の性別なので♀のみオン
+    pView->sex_flag |= ((param == PTL_SEX_FEMALE)<<idx);
+    break;
 
   default:
     GF_ASSERT(0);
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  簡単データ設定  （バトルボックスのポケモンパーティから設定する）
+ *
+ *	@param	REGULATION_VIEWDATA *pView  ワーク
+ *	@param	POKEPARTY *cp_party         ポケモンパーティ
+ */
+//-----------------------------------------------------------------------------
+void RegulationView_SetEazy( REGULATION_VIEWDATA *pView, const POKEPARTY *cp_party )
+{ 
+  int i;
 
+  RegulationView_Init( pView );
+
+  for( i = 0; i < PokeParty_GetPokeCount( cp_party);i ++ )
+  { 
+    POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( cp_party, i );
+    if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) )
+    { 
+      RegulationView_SetParam( pView, REGULATION_VIEW_MONS_NO, i, PP_Get( p_pp, ID_PARA_monsno, NULL ) );
+      RegulationView_SetParam( pView, REGULATION_VIEW_FROM_NO, i, PP_Get( p_pp, ID_PARA_form_no, NULL ) );
+      RegulationView_SetParam( pView, REGULATION_VIEW_ITEM_FLAG, i, PP_Get( p_pp, ID_PARA_item, NULL ) != 0 );
+
+    }
+  }
+}
 
 //----------------------------------------------------------------------------
 /**

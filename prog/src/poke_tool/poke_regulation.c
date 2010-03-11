@@ -13,6 +13,7 @@
 #include "poke_tool/poke_regulation.h"
 #include "poke_tool/pokeparty.h"
 #include "item/itemsym.h"
+#include "print/global_msg.h"
 
 #include "poke_tool/monsno_def.h"
 
@@ -492,6 +493,32 @@ void PokeRegulation_ModifyLevelPokeParty( const REGULATION* pReg, POKEPARTY *par
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンパーティへニックネームフラグに応じた名前修正を行う
+ *
+ *	@param	const REGULATION* pReg  レギュレーション
+ *	@param	*party                  ポケモンパーティ
+ */
+//-----------------------------------------------------------------------------
+void PokeRegulation_ModifyNickName( const REGULATION* pReg, POKEPARTY *party )
+{ 
+  if( Regulation_GetParam( pReg , REGULATION_NICKNAME ) )
+  { 
+    int i;
+    for( i = 0; i < PokeParty_GetPokeCount( party);i ++ )
+    { 
+      POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( party, i );
+      if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) )
+      { 
+        STRBUF  *p_name = GFL_MSG_CreateString( GlobalMsg_PokeName, PP_Get( p_pp, ID_PARA_monsno, NULL ) );
+        PP_Put( p_pp, ID_PARA_nickname, (u32)p_name );
+
+        GFL_HEAP_FreeMemory( p_name );
+      }
+    }
+  }
+}
 //------------------------------------------------------------------
 /**
  * @brief   ROMからレギュレーションデータを得る

@@ -180,7 +180,7 @@ void MISC_SetFavoriteMonsno(MISC * misc, int monsno, int form_no, int egg_flag, 
 	misc->favorite_monsno = monsno;
 	misc->favorite_form_no = form_no;
 	misc->favorite_egg_flag = egg_flag;
-  misc->favorite_sex  = sex;
+  misc->favorite_sex  = (sex == PTL_SEX_FEMALE);  //ポケモンアイコン用の性別なので♀のときのみON
 }
 
 //--------------------------------------------------------------

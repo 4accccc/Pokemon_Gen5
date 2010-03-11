@@ -69,13 +69,14 @@ enum
   PLT_OBJ_PMS_M = 5,
 
   PLT_OBJ_POKEMON_M = PLT_OBJ_PMS_M,  //同時に表示しないので同じ位置
-  PLT_OBJ_POKEITEM_M  = PLT_OBJ_POKEMON_M + POKEICON_PAL_MAX,
+  PLT_OBJ_POKEITEM_M  = PLT_OBJ_POKEMON_M + POKEICON_PAL_MAX, //＋１はアイテムアイコン分
   PLT_OBJ_TRAINER_M,
 	
 	//サブ画面OBJ
   PLT_OBJ_S   = 0,  //wifi_match common 3line
   PLT_OBJ_POKEMON_S = 3,  //pokemon 3line
-  PLT_OBJ_TRAINER_S = PLT_OBJ_POKEMON_S + POKEICON_PAL_MAX,  //pokemon 1tainer 
+  PLT_OBJ_POKEITEM_S = PLT_OBJ_POKEMON_S + POKEICON_PAL_MAX,  //pokemon 1tainer 
+  PLT_OBJ_TRAINER_S,
 } ;
 
 //-------------------------------------
@@ -152,12 +153,14 @@ extern void WIFIBATTLEMATCH_VIEW_Main( WIFIBATTLEMATCH_VIEW_RESOURCE *p_wk );
 #define PLAYERINFO_PLT_BG_FONT	    (PLT_FONT_S)
 #define PLAYERINFO_PLT_OBJ_POKEICON	(PLT_OBJ_POKEMON_S)
 #define PLAYERINFO_PLT_OBJ_TRAINER	(PLT_OBJ_TRAINER_S)
+#define PLAYERINFO_PLT_OBJ_ITEM   	(PLT_OBJ_POKEITEM_S)
 
 //メインの場合
 #define PLAYERINFO_BG_FRAME_MAIN	        (BG_FRAME_M_FONT)
 #define PLAYERINFO_PLT_BG_FONT_MAIN	      (PLT_FONT_M)
 #define PLAYERINFO_PLT_OBJ_POKEICON_MAIN	(PLT_OBJ_POKEMON_M)
 #define PLAYERINFO_PLT_OBJ_TRAINER_MAIN 	(PLT_OBJ_TRAINER_M)
+#define PLAYERINFO_PLT_OBJ_ITEM_MAIN   	  (PLT_OBJ_POKEITEM_M)
 
 
 #define PLAYERINFO_POKEICON_START_X		(32)
@@ -248,7 +251,7 @@ extern void PLAYERINFO_RND_Exit( PLAYERINFO_WORK *p_wk );
 //-------------------------------------
 ///	WIFI大会
 //=====================================
-extern PLAYERINFO_WORK *PLAYERINFO_WIFI_Init( const PLAYERINFO_WIFICUP_DATA *cp_data, BOOL is_limit, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, BATTLE_BOX_SAVE * p_btlbox_sv, BOOL is_main, HEAPID heapID );
+extern PLAYERINFO_WORK *PLAYERINFO_WIFI_Init( const PLAYERINFO_WIFICUP_DATA *cp_data, BOOL is_limit, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, REGULATION_VIEWDATA * p_reg_view, BOOL is_main, HEAPID heapID );
 extern void PLAYERINFO_WIFI_Exit( PLAYERINFO_WORK *p_wk );
 
 typedef enum
@@ -261,7 +264,7 @@ extern void PLAYERINFO_WIFI_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_
 //-------------------------------------
 ///	LIVE大会
 //=====================================
-extern PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, BATTLE_BOX_SAVE * p_btlbox_sv, HEAPID heapID );
+extern PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, REGULATION_VIEWDATA * p_reg_view, HEAPID heapID );
 extern void PLAYERINFO_LIVE_Exit( PLAYERINFO_WORK *p_wk );
 extern void PLAYERINFO_LIVE_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_TYPE type, GFL_MSGDATA *p_msg, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID );
 //-------------------------------------

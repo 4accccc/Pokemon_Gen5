@@ -821,52 +821,71 @@ static void Util_PlayerInfo_Create( DIGITALCARD_CHECK_WORK *p_wk )
 { 
   if( p_wk->p_playerinfo == NULL )
   {
-    MYSTATUS    *p_my;
-    GFL_CLUNIT	*p_unit;
-    SAVE_CONTROL_WORK *p_sv;
-    BATTLE_BOX_SAVE   *p_bbox_save;
-    const RNDMATCH_DATA *cp_match_save;
+    SAVE_CONTROL_WORK   *p_sv = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
+    REGULATION_SAVEDATA *p_reg_sv  = SaveData_GetRegulationSaveData(GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata ));
+    REGULATION_CARDDATA *p_reg_card  = RegulationSaveData_GetRegulationCard(p_reg_sv, p_wk->param.type );
+    REGULATION_VIEWDATA *p_reg_view  = RegulationSaveData_GetRegulationView( p_reg_sv, p_wk->param.type );
+    REGULATION          *p_reg  = RegulationData_GetRegulation( p_reg_card );
+    BATTLEMATCH_DATA    *p_btlmatch_sv = SaveData_GetBattleMatch( p_sv );
+    MYSTATUS            *p_my       = GAMEDATA_GetMyStatus( p_wk->param.p_gamedata); 
+    GFL_CLUNIT	        *p_unit     = WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->param.p_graphic );
 
-    PLAYERINFO_WIFICUP_DATA info_setup;
-
-    REGULATION_SAVEDATA* p_reg_sv  = SaveData_GetRegulationSaveData(GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata ));
-    const REGULATION_CARDDATA *cp_reg_card  = RegulationSaveData_GetRegulationCard(p_reg_sv, p_wk->param.type );
-    BATTLEMATCH_DATA  *p_btlmatch_sv;
-
-    p_my    = GAMEDATA_GetMyStatus( p_wk->param.p_gamedata); 
-    p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->param.p_graphic );
-    p_sv    = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
-    p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-
-    p_btlmatch_sv = SaveData_GetBattleMatch( p_sv );
-    cp_match_save  = BATTLEMATCH_GetRndMatchConst( p_btlmatch_sv );
-
-
-    //自分のデータを表示
-    GFL_STD_MemClear( &info_setup, sizeof(PLAYERINFO_WIFICUP_DATA) );
-    GFL_STD_MemCopy( Regulation_GetCardCupNamePointer( cp_reg_card ), info_setup.cup_name, 2*(WIFI_PLAYER_TIX_CUPNAME_MOJINUM + EOM_SIZE) );
-
-    info_setup.start_date = GFDATE_Set( 
-        Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_START_YEAR ),
-        Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_START_MONTH ), 
-        Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_START_DAY ),
-          0);
-
-    info_setup.end_date = GFDATE_Set( 
-        Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_END_YEAR ),
-        Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_END_MONTH ), 
-        Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_END_DAY ),
-          0);
-
-    info_setup.trainerID  = MyStatus_GetTrainerView( p_my );
-
+    if( p_wk->param.type == REGULATION_CARD_TYPE_WIFI )
     {
+      const RNDMATCH_DATA *cp_match_save;
+      PLAYERINFO_WIFICUP_DATA info_setup;
+      GFL_STD_MemClear( &info_setup, sizeof(PLAYERINFO_WIFICUP_DATA) );
+      GFL_STD_MemCopy( Regulation_GetCardCupNamePointer( p_reg_card ), info_setup.cup_name, 2*(WIFI_PLAYER_TIX_CUPNAME_MOJINUM + EOM_SIZE) );
+
+      cp_match_save  = BATTLEMATCH_GetRndMatchConst( p_btlmatch_sv );
       info_setup.rate = RNDMATCH_GetParam( cp_match_save, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_RATE );
-      info_setup.btl_cnt = RNDMATCH_GetParam( cp_match_save, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_WIN )
-        + RNDMATCH_GetParam( cp_match_save, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_LOSE );
+      info_setup.btl_cnt = RNDMATCH_GetParam( cp_match_save, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_WIN ) + RNDMATCH_GetParam( cp_match_save, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_LOSE );
+
+      info_setup.trainerID  = MyStatus_GetTrainerView( p_my );
+
+      info_setup.start_date = GFDATE_Set( 
+          Regulation_GetCardParam( p_reg_card, REGULATION_CARD_START_YEAR ),
+          Regulation_GetCardParam( p_reg_card, REGULATION_CARD_START_MONTH ), 
+          Regulation_GetCardParam( p_reg_card, REGULATION_CARD_START_DAY ),
+          0);
+
+      info_setup.end_date = GFDATE_Set( 
+          Regulation_GetCardParam( p_reg_card, REGULATION_CARD_END_YEAR ),
+          Regulation_GetCardParam( p_reg_card, REGULATION_CARD_END_MONTH ), 
+          Regulation_GetCardParam( p_reg_card, REGULATION_CARD_END_DAY ),
+          0);
+
+      p_wk->p_playerinfo	= PLAYERINFO_WIFI_Init( &info_setup, FALSE, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_msg, p_wk->p_word, p_reg_view, TRUE, p_wk->heapID );
+    }
+    else
+    { 
+      const LIVEMATCH_DATA *p_livematch;
+      PLAYERINFO_LIVECUP_DATA info_setup;
+      GFL_STD_MemClear( &info_setup, sizeof(PLAYERINFO_LIVECUP_DATA) );
+      GFL_STD_MemCopy( Regulation_GetCardCupNamePointer( p_reg_card ), info_setup.cup_name, 2*(WIFI_PLAYER_TIX_CUPNAME_MOJINUM + EOM_SIZE) );
+
+      p_livematch = BATTLEMATCH_GetLiveMatch( p_btlmatch_sv );
+      info_setup.win_cnt  = LIVEMATCH_DATA_GetMyParam( p_livematch, LIVEMATCH_MYDATA_PARAM_WIN );
+      info_setup.lose_cnt = LIVEMATCH_DATA_GetMyParam( p_livematch, LIVEMATCH_MYDATA_PARAM_LOSE );
+      info_setup.btl_cnt  = LIVEMATCH_DATA_GetMyParam( p_livematch, LIVEMATCH_MYDATA_PARAM_BTLCNT );
+      info_setup.btl_max  = Regulation_GetParam( p_reg, REGULATION_BTLCOUNT );
+
+
+      info_setup.start_date = GFDATE_Set( 
+          Regulation_GetCardParam( p_reg_card, REGULATION_CARD_START_YEAR ),
+          Regulation_GetCardParam( p_reg_card, REGULATION_CARD_START_MONTH ), 
+          Regulation_GetCardParam( p_reg_card, REGULATION_CARD_START_DAY ),
+          0);
+
+      info_setup.end_date = GFDATE_Set( 
+          Regulation_GetCardParam( p_reg_card, REGULATION_CARD_END_YEAR ),
+          Regulation_GetCardParam( p_reg_card, REGULATION_CARD_END_MONTH ), 
+          Regulation_GetCardParam( p_reg_card, REGULATION_CARD_END_DAY ),
+          0);
+
+      p_wk->p_playerinfo	= PLAYERINFO_LIVE_Init( &info_setup, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_msg, p_wk->p_word, p_reg_view, p_wk->heapID );
     }
 
-    p_wk->p_playerinfo	= PLAYERINFO_WIFI_Init( &info_setup, FALSE, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_msg, p_wk->p_word, p_bbox_save, TRUE, p_wk->heapID );
 
     Util_Text_SetVisible( p_wk, FALSE );
   }
@@ -882,7 +901,14 @@ static void Util_PlayerInfo_Delete( DIGITALCARD_CHECK_WORK *p_wk )
 { 
   if( p_wk->p_playerinfo )
   { 
-    PLAYERINFO_WIFI_Exit( p_wk->p_playerinfo );
+    if( p_wk->param.type == REGULATION_CARD_TYPE_WIFI )
+    { 
+      PLAYERINFO_WIFI_Exit( p_wk->p_playerinfo );
+    }
+    else
+    { 
+      PLAYERINFO_LIVE_Exit( p_wk->p_playerinfo );
+    }
     p_wk->p_playerinfo  = NULL;
   }
 }

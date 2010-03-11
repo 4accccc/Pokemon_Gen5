@@ -3641,7 +3641,8 @@ static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
     MYSTATUS    *p_my;
     GFL_CLUNIT	*p_unit;
     SAVE_CONTROL_WORK *p_sv;
-    BATTLE_BOX_SAVE   *p_bbox_save;
+    REGULATION_SAVEDATA *p_reg_sv;
+    REGULATION_VIEWDATA *p_reg_view;
 
     PLAYERINFO_WIFICUP_DATA info_setup;
 
@@ -3650,7 +3651,8 @@ static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
     p_my  = GAMEDATA_GetMyStatus( p_wk->p_param->p_param->p_game_data); 
     p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic );
     p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_game_data );
-    p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+    p_reg_sv  = SaveData_GetRegulationSaveData( p_sv );
+    p_reg_view  = RegulationSaveData_GetRegulationView( p_reg_sv, REGULATION_CARD_TYPE_WIFI );
 
     //自分のデータを表示
     GFL_STD_MemClear( &info_setup, sizeof(PLAYERINFO_WIFICUP_DATA) );
@@ -3673,7 +3675,7 @@ static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
     info_setup.rate = p_wk->sake_data.rate;
     info_setup.btl_cnt = p_wk->sake_data.win + p_wk->sake_data.lose;
 
-    p_wk->p_playerinfo	= PLAYERINFO_WIFI_Init( &info_setup, FALSE, p_my, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, p_bbox_save, FALSE, HEAPID_WIFIBATTLEMATCH_CORE );
+    p_wk->p_playerinfo	= PLAYERINFO_WIFI_Init( &info_setup, FALSE, p_my, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, p_reg_view, FALSE, HEAPID_WIFIBATTLEMATCH_CORE );
   }
 }
 //----------------------------------------------------------------------------

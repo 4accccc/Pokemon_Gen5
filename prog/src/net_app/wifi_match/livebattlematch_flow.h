@@ -72,7 +72,7 @@ typedef struct
    //以下、[in ]常駐データ置き場
   WIFIBATTLEMATCH_ENEMYDATA     *p_player_data;
   WIFIBATTLEMATCH_ENEMYDATA     *p_enemy_data; 
-
+  BATTLEMATCH_BATTLE_SCORE      *p_btl_score;
 } LIVEBATTLEMATCH_FLOW_PARAM;
 
 //=============================================================================

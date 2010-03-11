@@ -11,6 +11,7 @@
 
 #include <gflib.h>
 #include "item/shooter_item.h"
+#include "poke_tool/pokeparty.h" //RegulationView_SetEazy のためだけに呼んでます‥
 //============================================================================================
 //============================================================================================
 
@@ -109,6 +110,7 @@ typedef enum {
   REGULATION_VIEW_MONS_NO,
   REGULATION_VIEW_FROM_NO,
   REGULATION_VIEW_ITEM_FLAG,
+  REGULATION_VIEW_SEX,
 
 } REGULATION_VIEW_PARAM_TYPE;
 
@@ -246,7 +248,7 @@ extern REGULATION_VIEWDATA* RegulationSaveData_GetRegulationView( REGULATION_SAV
 //データ取得・設定
 extern int RegulationView_GetParam( const REGULATION_VIEWDATA *pView, REGULATION_VIEW_PARAM_TYPE type, u8 idx );
 extern void RegulationView_SetParam( REGULATION_VIEWDATA *pView, REGULATION_VIEW_PARAM_TYPE type, u8 idx, int param );
-
+extern void RegulationView_SetEazy( REGULATION_VIEWDATA *pView, const POKEPARTY *cp_party );
 
 
 //----------------------------------------------------------

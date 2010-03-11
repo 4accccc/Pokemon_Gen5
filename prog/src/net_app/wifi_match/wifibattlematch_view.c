@@ -380,6 +380,8 @@ enum
 	PLAYERINFO_CLWK_LOCK,
   PLAYERINFO_CLWK_STAR_TOP,
   PLAYERINFO_CLWK_STAR_END = PLAYERINFO_CLWK_STAR_TOP + PLAYERINFO_STAR_MAX,
+	PLAYERINFO_CLWK_ITEM_TOP,
+	PLAYERINFO_CLWK_ITEM_END  = PLAYERINFO_CLWK_ITEM_TOP + TEMOTI_POKEMAX,
 	PLAYERINFO_CLWK_MAX,
 };
 enum
@@ -391,6 +393,10 @@ enum
 	PLAYERINFO_RESID_TRAINER_PLT,
 	PLAYERINFO_RESID_TRAINER_CGR,
 	PLAYERINFO_RESID_TRAINER_CELL,
+
+	PLAYERINFO_RESID_ITEM_PLT,
+	PLAYERINFO_RESID_ITEM_CGR,
+	PLAYERINFO_RESID_ITEM_CELL,
 	PLAYERINFO_RESID_MAX,
 };
 
@@ -414,7 +420,6 @@ struct _PLAYERINFO_WORK
 	PRINT_UTIL	print_util[ PLAYERINFO_BMPWIN_MAX ];
 	GFL_CLWK		*p_clwk[ PLAYERINFO_CLWK_MAX ];
 	u32					res[PLAYERINFO_RESID_MAX];
-	u32					clwk_max;
   u32         cnt;
   s16         clwk_x[ PLAYERINFO_CLWK_MAX ];
   u8          frm;
@@ -422,6 +427,7 @@ struct _PLAYERINFO_WORK
   u8          pokemonicon_plt;
   u8          trainer_plt;
   CLSYS_DRAW_TYPE cl_draw_type;
+  REGULATION_VIEWDATA * p_reg_view;
 };
 
 //=============================================================================
@@ -440,7 +446,7 @@ static void PlayerInfo_Bmpwin_Delete( PLAYERINFO_WORK * p_wk );
 //-------------------------------------
 ///	CLWK作成
 //=====================================
-static void PlayerInfo_POKEICON_Create( PLAYERINFO_WORK * p_wk, GFL_CLUNIT *p_unit, BATTLE_BOX_SAVE * p_btlbox_sv, HEAPID heapID );
+static void PlayerInfo_POKEICON_Create( PLAYERINFO_WORK * p_wk, GFL_CLUNIT *p_unit, REGULATION_VIEWDATA * p_reg_view, HEAPID heapID );
 static void PlayerInfo_POKEICON_Delete( PLAYERINFO_WORK * p_wk );
 
 static void PlayerInfo_TRAINER_Cleate( PLAYERINFO_WORK * p_wk, u32 trainerID, GFL_CLUNIT *p_unit, HEAPID heapID );
@@ -551,13 +557,14 @@ void PLAYERINFO_RND_Exit( PLAYERINFO_WORK *p_wk )
  *	@return	ワーク
  */
 //-----------------------------------------------------------------------------
-PLAYERINFO_WORK *PLAYERINFO_WIFI_Init( const PLAYERINFO_WIFICUP_DATA *cp_data, BOOL is_limit, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, BATTLE_BOX_SAVE * p_btlbox_sv, BOOL is_main, HEAPID heapID )
+PLAYERINFO_WORK *PLAYERINFO_WIFI_Init( const PLAYERINFO_WIFICUP_DATA *cp_data, BOOL is_limit, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, REGULATION_VIEWDATA * p_reg_view, BOOL is_main, HEAPID heapID )
 { 
   PLAYERINFO_WORK	*	p_wk;
 
   //ワーク作成
 	p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(PLAYERINFO_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(PLAYERINFO_WORK) );
+  p_wk->p_reg_view  = p_reg_view;
 
   //メインとサブで読み込み先変更
   if( is_main )
@@ -585,7 +592,7 @@ PLAYERINFO_WORK *PLAYERINFO_WIFI_Init( const PLAYERINFO_WIFICUP_DATA *cp_data, B
   PlayerInfo_Bmpwin_Wifi_Create( p_wk, is_limit, cp_data, p_my, p_font, p_que, p_msg, p_word, heapID );
 
   //ポケアイコン作成
-  PlayerInfo_POKEICON_Create( p_wk, p_unit, p_btlbox_sv, heapID );
+  PlayerInfo_POKEICON_Create( p_wk, p_unit, p_reg_view, heapID );
 
   //トレーナー作成
   PlayerInfo_TRAINER_Cleate( p_wk, cp_data->trainerID, p_unit, heapID );
@@ -640,11 +647,15 @@ void PLAYERINFO_WIFI_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_
   switch( type )
   { 
   case PLAYERINFO_WIFI_UPDATE_TYPE_LOCK:
-    for( i = 0; i < p_wk->clwk_max; i++ )
+    for( i = 0; i < TEMOTI_POKEMAX; i++ )
 		{	
-      if( p_wk->p_clwk[i] )
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP+i] )
       { 
-        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP+i], TRUE );
+      }
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i] )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i], TRUE );
       }
 		}
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_LOCK], TRUE );
@@ -654,11 +665,15 @@ void PLAYERINFO_WIFI_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_
     break;
 
   case PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK:
-    for( i = 0; i < p_wk->clwk_max; i++ )
+    for( i = 0; i < TEMOTI_POKEMAX; i++ )
 		{	
-      if( p_wk->p_clwk[i] )
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP+i] )
       { 
-        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP+i], TRUE );
+      }
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i] )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i], TRUE );
       }
 		}
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_LOCK], FALSE );
@@ -668,11 +683,15 @@ void PLAYERINFO_WIFI_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_
     break;
 
   case PLAYERINFO_WIFI_UPDATE_TYPE_UNREGISTER:
-    for( i = 0; i < p_wk->clwk_max; i++ )
+    for( i = 0; i < TEMOTI_POKEMAX; i++ )
 		{	
-      if( p_wk->p_clwk[i] )
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP+i] )
       { 
-        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP+i], FALSE );
+      }
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i] )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i], FALSE );
       }
 		}
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_LOCK], FALSE );
@@ -703,13 +722,14 @@ void PLAYERINFO_WIFI_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_
  *	@return	ワーク
  */
 //-----------------------------------------------------------------------------
-PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, BATTLE_BOX_SAVE * p_btlbox_sv, HEAPID heapID )
+PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, REGULATION_VIEWDATA * p_reg_view, HEAPID heapID )
 { 
   PLAYERINFO_WORK	*	p_wk;
 
   //ワーク作成
 	p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(PLAYERINFO_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(PLAYERINFO_WORK) );
+  p_wk->p_reg_view  = p_reg_view;
 
   p_wk->frm = PLAYERINFO_BG_FRAME;
   p_wk->plt = PLAYERINFO_PLT_BG_FONT;
@@ -723,7 +743,7 @@ PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, c
   PlayerInfo_Bmpwin_Live_Create( p_wk, cp_data, p_my, p_font, p_que, p_msg, p_word, heapID );
 
   //ポケアイコン作成
-  PlayerInfo_POKEICON_Create( p_wk, p_unit, p_btlbox_sv, heapID );
+  PlayerInfo_POKEICON_Create( p_wk, p_unit, p_reg_view, heapID );
 
   //トレーナー作成
   PlayerInfo_TRAINER_Cleate( p_wk, cp_data->trainerID, p_unit, heapID );
@@ -778,11 +798,15 @@ void PLAYERINFO_LIVE_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_
   switch( type )
   { 
   case PLAYERINFO_WIFI_UPDATE_TYPE_LOCK:
-    for( i = 0; i < p_wk->clwk_max; i++ )
+    for( i = 0; i < TEMOTI_POKEMAX; i++ )
 		{	
-      if( p_wk->p_clwk[i] )
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP+i] )
       { 
-        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP+i], TRUE );
+      }
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i] )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i], TRUE );
       }
 		}
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_LOCK], TRUE );
@@ -792,11 +816,15 @@ void PLAYERINFO_LIVE_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_
     break;
 
   case PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK:
-    for( i = 0; i < p_wk->clwk_max; i++ )
+    for( i = 0; i < TEMOTI_POKEMAX; i++ )
 		{	
-      if( p_wk->p_clwk[i] )
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP+i] )
       { 
-        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP+i], TRUE );
+      }
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i] )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i], TRUE );
       }
 		}
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_LOCK], FALSE );
@@ -806,11 +834,15 @@ void PLAYERINFO_LIVE_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_
     break;
 
   case PLAYERINFO_WIFI_UPDATE_TYPE_UNREGISTER:
-    for( i = 0; i < p_wk->clwk_max; i++ )
+    for( i = 0; i < TEMOTI_POKEMAX; i++ )
 		{	
-      if( p_wk->p_clwk[i] )
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP+i] )
       { 
-        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP+i], FALSE );
+      }
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i] )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i], FALSE );
       }
 		}
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_LOCK], FALSE );
@@ -1614,13 +1646,12 @@ static void PlayerInfo_Bmpwin_Delete( PLAYERINFO_WORK * p_wk )
  *	@param	heapID				ヒープＩＤ
  */
 //-----------------------------------------------------------------------------
-static void PlayerInfo_POKEICON_Create( PLAYERINFO_WORK * p_wk, GFL_CLUNIT *p_unit, BATTLE_BOX_SAVE * p_btlbox_sv, HEAPID heapID )
+static void PlayerInfo_POKEICON_Create( PLAYERINFO_WORK * p_wk, GFL_CLUNIT *p_unit,REGULATION_VIEWDATA * p_reg_view, HEAPID heapID )
 {	
-  POKEPARTY       *p_party;
-  POKEMON_PARAM   *p_pp;
-
-  p_party = BATTLE_BOX_SAVE_MakePokeParty( p_btlbox_sv, GFL_HEAP_LOWID(heapID) );
-  p_wk->clwk_max	= PokeParty_GetPokeCount( p_party );
+  u16 mons_no;
+  u8 form_no;
+  u8  sex;
+  u8  item;
 
 	//リソース読みこみ
 	{	
@@ -1634,16 +1665,34 @@ static void PlayerInfo_POKEICON_Create( PLAYERINFO_WORK * p_wk, GFL_CLUNIT *p_un
     p_wk->res[ PLAYERINFO_RESID_POKEICON_CELL ]	= GFL_CLGRP_CELLANIM_Register( 
 						p_handle, POKEICON_GetCellArcIndex(), POKEICON_GetAnmArcIndex(), heapID ); 
 
-		for( i = PLAYERINFO_CLWK_POKEICON_TOP; i < p_wk->clwk_max; i++ )
+		for( i = 0; i < TEMOTI_POKEMAX; i++ )
 		{
-      p_pp  = PokeParty_GetMemberPointer( p_party, i );
+      mons_no = RegulationView_GetParam( p_reg_view, REGULATION_VIEW_MONS_NO, i );
+      form_no = RegulationView_GetParam( p_reg_view, REGULATION_VIEW_FROM_NO, i );
+      sex     = RegulationView_GetParam( p_reg_view, REGULATION_VIEW_SEX, i );
+      mons_no = (mons_no == 0) ? 1: mons_no;
 
-				p_wk->res[ PLAYERINFO_RESID_POKEICON_CGR_TOP + i ]		= GFL_CLGRP_CGR_Register( 
-						p_handle, POKEICON_GetCgxArcIndex( PP_GetPPPPointerConst(p_pp) ),
-						FALSE, p_wk->cl_draw_type, GFL_HEAP_LOWID(heapID) ); 
+      p_wk->res[ PLAYERINFO_RESID_POKEICON_CGR_TOP + i ]		=
+        GFL_CLGRP_CGR_Register( 
+            p_handle, POKEICON_GetCgxArcIndexByMonsNumber( mons_no, form_no, sex, FALSE ),
+            FALSE, p_wk->cl_draw_type, GFL_HEAP_LOWID(heapID) ); 
 		}
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
+
+  { 
+		ARCHANDLE	*p_handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heapID );
+    p_wk->res[ PLAYERINFO_RESID_ITEM_PLT ] = GFL_CLGRP_PLTT_RegisterEx( p_handle,
+          APP_COMMON_GetPokeItemIconPltArcIdx(), p_wk->cl_draw_type, 
+          (p_wk->pokemonicon_plt+POKEICON_PAL_MAX)*0x20, 0, 1, GFL_HEAP_LOWID(heapID) );
+    p_wk->res[ PLAYERINFO_RESID_ITEM_CGR ] = GFL_CLGRP_CGR_Register( 
+        p_handle, APP_COMMON_GetPokeItemIconCharArcIdx(),
+        FALSE, p_wk->cl_draw_type, GFL_HEAP_LOWID(heapID) ); 
+    p_wk->res[ PLAYERINFO_RESID_ITEM_CELL ]  = GFL_CLGRP_CELLANIM_Register( 
+        p_handle, APP_COMMON_GetPokeItemIconCellArcIdx( APP_COMMON_MAPPING_128K),
+        APP_COMMON_GetPokeItemIconAnimeArcIdx( APP_COMMON_MAPPING_128K ), heapID ); 
+		GFL_ARC_CloseDataHandle( p_handle );
+  }
 
 	//CLWK作成
 	{	
@@ -1654,26 +1703,57 @@ static void PlayerInfo_POKEICON_Create( PLAYERINFO_WORK * p_wk, GFL_CLUNIT *p_un
 		clwk_data.pos_y		= PLAYERINFO_POKEICON_Y;
 		clwk_data.anmseq	= POKEICON_ANM_HPMAX;
     clwk_data.bgpri   = 1;
-		for( i = 0; i < p_wk->clwk_max; i++ )
+    clwk_data.softpri = 1;
+		for( i = 0; i < TEMOTI_POKEMAX; i++ )
 		{	
-      p_pp  = PokeParty_GetMemberPointer( p_party, i );
+      mons_no = RegulationView_GetParam( p_reg_view, REGULATION_VIEW_MONS_NO, i );
+      form_no = RegulationView_GetParam( p_reg_view, REGULATION_VIEW_FROM_NO, i );
+      sex     = RegulationView_GetParam( p_reg_view, REGULATION_VIEW_SEX, i );
+      item    = RegulationView_GetParam( p_reg_view, REGULATION_VIEW_ITEM_FLAG, i ); 
 
-			clwk_data.pos_x	= WBM_CARD_INIT_POS_X + PLAYERINFO_POKEICON_START_X + PLAYERINFO_POKEICON_DIFF_X*i;
-			p_wk->p_clwk[i]	= GFL_CLACT_WK_Create( p_unit,
-					p_wk->res[ PLAYERINFO_RESID_POKEICON_CGR_TOP + i ],
-					p_wk->res[ PLAYERINFO_RESID_POKEICON_PLT ],
-					p_wk->res[ PLAYERINFO_RESID_POKEICON_CELL ],
-					&clwk_data,
-					p_wk->cl_draw_type,
-					heapID );
+      if( mons_no != 0 )
+      { 
+        clwk_data.pos_x	= WBM_CARD_INIT_POS_X + PLAYERINFO_POKEICON_START_X + PLAYERINFO_POKEICON_DIFF_X*i;
+        p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i]	= GFL_CLACT_WK_Create( p_unit,
+            p_wk->res[ PLAYERINFO_RESID_POKEICON_CGR_TOP + i ],
+            p_wk->res[ PLAYERINFO_RESID_POKEICON_PLT ],
+            p_wk->res[ PLAYERINFO_RESID_POKEICON_CELL ],
+            &clwk_data,
+            p_wk->cl_draw_type,
+            heapID );
 
-			GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk[i],
-					POKEICON_GetPalNumGetByPPP( PP_GetPPPPointerConst(p_pp) ), 
-					CLWK_PLTTOFFS_MODE_OAM_COLOR );
-		}
+        GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk[i],
+            POKEICON_GetPalNum( mons_no, form_no, sex, FALSE ), 
+            CLWK_PLTTOFFS_MODE_OAM_COLOR );
+
+        //道具アイコン
+        if( item )
+        { 
+          GFL_CLWK_DATA clwk_item_data;
+          clwk_item_data  = clwk_data;
+          clwk_item_data.pos_x  += 12;
+          clwk_item_data.pos_y  += 12;
+          clwk_item_data.softpri  = 0;
+          clwk_item_data.anmseq   = 0;
+          p_wk->p_clwk[ PLAYERINFO_CLWK_ITEM_TOP + i]	= GFL_CLACT_WK_Create( p_unit,
+              p_wk->res[ PLAYERINFO_RESID_ITEM_CGR ],
+              p_wk->res[ PLAYERINFO_RESID_ITEM_PLT ],
+              p_wk->res[ PLAYERINFO_RESID_ITEM_CELL ],
+              &clwk_item_data,
+              CLSYS_DRAW_MAIN,
+              heapID );
+        }
+        else
+        { 
+          p_wk->p_clwk[ PLAYERINFO_CLWK_ITEM_TOP + i] = NULL;
+        }
+      }
+      else
+      { 
+        p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i] = NULL;
+      }
+    }
 	}
-
-  GFL_HEAP_FreeMemory( p_party );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1688,9 +1768,18 @@ static void PlayerInfo_POKEICON_Delete( PLAYERINFO_WORK * p_wk )
 	//CLWK破棄
 	{	
 		int i;
-		for( i = 0; i < p_wk->clwk_max; i++ )
+		for( i = 0; i < TEMOTI_POKEMAX; i++ )
 		{	
-			GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP +i] )
+      { 
+        GFL_CLACT_WK_Remove( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP +i] );
+        p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i] = NULL;
+      }
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP +i] )
+      { 
+        GFL_CLACT_WK_Remove( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP +i] );
+        p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP +i] = NULL;
+      }
 		}
 	}
 
@@ -1699,7 +1788,7 @@ static void PlayerInfo_POKEICON_Delete( PLAYERINFO_WORK * p_wk )
 		int i;
 
 
-		for( i = 0; i < p_wk->clwk_max; i++ )
+		for( i = 0; i < TEMOTI_POKEMAX; i++ )
 		{	
 			GFL_CLGRP_CGR_Release( p_wk->res[ PLAYERINFO_RESID_POKEICON_CGR_TOP + i ] );
 		}	
@@ -1707,6 +1796,9 @@ static void PlayerInfo_POKEICON_Delete( PLAYERINFO_WORK * p_wk )
     GFL_CLGRP_CELLANIM_Release( p_wk->res[ PLAYERINFO_RESID_POKEICON_CELL ] );
 		GFL_CLGRP_PLTT_Release( p_wk->res[ PLAYERINFO_RESID_POKEICON_PLT ] );
 	
+    GFL_CLGRP_CGR_Release( p_wk->res[ PLAYERINFO_RESID_ITEM_CGR ] );
+    GFL_CLGRP_PLTT_Release( p_wk->res[ PLAYERINFO_RESID_ITEM_PLT ] );
+    GFL_CLGRP_CELLANIM_Release( p_wk->res[ PLAYERINFO_RESID_ITEM_CELL ] );
 	}
 }
 

@@ -62,6 +62,8 @@ extern int PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, POKEPARTY 
 //ポケパーティをレギュレーションにそったレベル補正をかける
 extern void PokeRegulation_ModifyLevelPokeParty( const REGULATION* pReg, POKEPARTY *party );
 
+//ポケパーティをレギュレーションにそったニックネーム補正をかける
+extern void PokeRegulation_ModifyNickName( const REGULATION* pReg, POKEPARTY *party );
 
 //==============================================================================
 //  メッセージ取得

@@ -514,6 +514,7 @@ static void SEQFUNC_LiveCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
       param.p_gamedata  = p_wk->p_param->p_gamedata;
       param.p_player_data = p_wk->p_param->p_player_data;
       param.p_enemy_data  = p_wk->p_param->p_enemy_data;
+      param.p_btl_score = p_wk->p_param->p_btl_score;
 
       switch( p_wk->p_param->mode )
       { 

@@ -101,7 +101,7 @@ typedef struct
   POKEPARTY                   *p_player_btl_party;//自分で決めたパーティ
   POKEPARTY                   *p_enemy_btl_party; //相手の決めたパーティ
   DWCSvlResult                svl_result;         //WIFIログイン時に得るサービスロケータ
-
+  BATTLEMATCH_BATTLE_SCORE    btl_score;          //バトルの成績
 #if 0
   DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *p_gpf_data;
   WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA   *p_sake_data;
@@ -554,6 +554,7 @@ static void *BC_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, 
   p_param->p_gamedata     = p_wk->param.p_game_data;
   p_param->p_player_data  = p_wk->p_player_data;
   p_param->p_enemy_data   = p_wk->p_enemy_data;
+  p_param->p_btl_score    = &p_wk->btl_score;
 
   switch( WBM_SYS_SUBPROC_GetPreProcID( p_subproc ) )
   { 
@@ -877,6 +878,12 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
 	GFL_STD_MemClear( p_param, sizeof(WIFIBATTLEMATCH_BATTLELINK_PARAM) );
   p_param->p_gamedata  = p_wk->param.p_game_data;
 
+  //録画バッファをクリア
+  BattleRec_DataClear();
+
+  //相手の戦績をクリア
+  GFL_STD_MemClear( &p_wk->btl_score, sizeof(BATTLEMATCH_BATTLE_SCORE) );
+
   //デモパラメータ
   p_param->p_demo_param = GFL_HEAP_AllocMemory( heapID, sizeof(COMM_BTL_DEMO_PARAM) );
 	GFL_STD_MemClear( p_param->p_demo_param, sizeof(COMM_BTL_DEMO_PARAM) );
@@ -1040,13 +1047,16 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   //@todoシューター設定 （フラグと禁止道具）
 
 
-  BATTLE_PARAM_SetPokeParty( p_param->p_btl_setup_param, p_wk->p_player_btl_party, BTL_CLIENT_PLAYER ); 
+  //ポケモンパーティを設定（ニックネームフラグがOFFならば名前を書き換える）
+  PokeRegulation_ModifyNickName( p_reg, p_wk->p_player_btl_party );
+
+  //ポケモン設定
+  BATTLE_PARAM_SetPokeParty( p_param->p_btl_setup_param, p_wk->p_player_btl_party, BTL_CLIENT_PLAYER );
 
   //録画準備
   BTL_SETUP_AllocRecBuffer( p_param->p_btl_setup_param, heapID );
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-
 
 
   if( is_alloc )
@@ -1076,6 +1086,31 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
   //受け取り
   p_wk->btl_result  = p_btl_param->result;
   p_wk->btl_rule  = p_btl_param->rule;
+
+  p_wk->btl_score.result  = p_btl_param->result;
+  { 
+    int i;
+    u32 now_hp_all;
+    u32 max_hp_all;
+    POKEPARTY *p_party  = p_param->p_btl_setup_param->party[ BTL_CLIENT_ENEMY1 ];
+
+    p_wk->btl_score.enemy_rest_poke = PokeParty_GetPokeCountBattleEnable( p_party );
+    
+    now_hp_all  = 0;
+    max_hp_all  = 0;
+    for( i = 0; i < PokeParty_GetPokeCount( p_party ); i++ )
+    { 
+      POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( p_party, i );
+      if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) && !PP_Get( p_pp, ID_PARA_tamago_flag, NULL ) )
+      { 
+        now_hp_all  += PP_Get( p_pp, ID_PARA_hp, NULL );
+        max_hp_all  += PP_Get( p_pp, ID_PARA_hpmax, NULL );
+      }
+    }
+
+    p_wk->btl_score.enemy_rest_hp   = 100 * now_hp_all / max_hp_all;
+  }
+
   OS_FPrintf( 3, "バトル結果 %d \n", p_wk->btl_result);
 
   //録画情報にバトル情報を設定
@@ -1088,8 +1123,6 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
 	GFL_HEAP_FreeMemory( p_param->p_btl_setup_param );
 	GFL_HEAP_FreeMemory( p_param->p_demo_param );
 	GFL_HEAP_FreeMemory( p_param );
-
-
 
   //次のPROC
   if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
