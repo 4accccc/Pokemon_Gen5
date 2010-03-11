@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohnishi_shinichi" host="W00207" date="2010-03-11T11:42:56" source="c5_house_02.mb"/>
+	<create user="ohnishi_shinichi" host="W00207" date="2010-03-11T12:29:25" source="c5_house_02c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohnishi_shinichi" host="W00207" date="2010-03-11T11:42:56" source="c5_house_02.mb"/>
+<original_create user="ohnishi_shinichi" host="W00207" date="2010-03-11T12:29:25" source="c5_house_02c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -182,7 +182,7 @@
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="31 31 31"
-		ambient="19 19 19"
+		ambient="25 25 25"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -308,7 +308,7 @@
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
 					<tex st="16.000000 16.000000"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xyz xyz="-2.703857 0.662109 0.719727"/>
 					<tex st="16.000000 0.000000"/>
 					<pos_xy xy="-2.703857 2.058105"/>
@@ -917,7 +917,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="h" kind="mesh"
+	<node index="0" name="h2" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
