@@ -396,8 +396,6 @@ download:
     _YES_NO_WIN( SCWK_ANSWER )
     _BALLOONWIN_CLOSE()
     IF $SCWK_ANSWER == 0 THEN //特別な検定やる
-      //フィールド通信を終了
-      _FIELD_COMM_EXIT_EVENT_CALL( SCWK_ANSWER )
       IF $SCWK_ANSWER == SCR_FIELD_COMM_EXIT_CANCEL THEN
         _RET
       ELSIF $SCWK_ANSWER == SCR_FIELD_COMM_EXIT_ERROR THEN
@@ -406,6 +404,7 @@ download:
 
       //ビーコンサーチ処理
       _TH_SEARCH_BEACON( SCWK_ANSWER )
+
       IF $SCWK_ANSWER == FALSE THEN
         //「ダウンロードするものがない」
         _BALLOONWIN_OBJMSG_POS(msg_trialhouse_024, SCWK_TARGET_OBJID, POS_DL )
@@ -422,13 +421,8 @@ download:
       _YES_NO_WIN( SCWK_ANSWER )
       _BALLOONWIN_CLOSE()
       IF $SCWK_ANSWER == 0 THEN //ダウンロード挑戦
-        //「チャレンジするのね。ちょっとまって」  @todo
-//        _BALLOONWIN_OBJMSG_POS(msg_trialhouse_003, SCWK_TARGET_OBJID, POS_DL )
-//        _BALLOONWIN_CLOSE()
-
         $download_flg = TRUE
         _CALL charange
-        
       ELSE                      //挑戦しない
         //ラストメッセージ「じゃああとで」
         _BALLOONWIN_OBJMSG_POS(msg_trialhouse_027, SCWK_TARGET_OBJID, POS_DL )
