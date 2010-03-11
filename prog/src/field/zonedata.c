@@ -667,6 +667,26 @@ BOOL ZONEDATA_IsPlBoat(u16 zone_id)
   return (zone_id == ZONE_ID_C03R0801);
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief ビーコンサーチ禁止マップかどうかのチェック
+ * @param  zoneid ゾーン指定ID
+ * @retval  ビーコンサーチ禁止マップの場合、TRUE
+ *
+ * APP_CONTROLを使用している、別の通信が起動しているなどの理由で
+ * ビーコンサーチの起動を禁止したいマップの判定を行っている。
+ *
+ * @todo  ゾーンIDの列挙でなく、マップ管理表での指定など外部化を模索する
+ */
+//------------------------------------------------------------------
+BOOL ZONEDATA_IsFieldBeaconNG(u16 zone_id)
+{
+  return ( ZONEDATA_IsUnionRoom(zone_id)
+      || ZONEDATA_IsColosseum(zone_id)
+      || ZONEDATA_IsPlBoat(zone_id)
+      );
+}
+
 //==================================================================
 /**
  * パレスマップかどうかのチェック

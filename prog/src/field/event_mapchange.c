@@ -475,15 +475,51 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
   GAMESYS_WORK*   gameSystem = work->gameSystem;
   FIELDMAP_WORK*  fieldmap   = work->fieldmap;
   GAMEDATA*       gameData   = work->gameData;
+  GAME_COMM_SYS_PTR gcsp     = GAMESYSTEM_GetGameCommSysPtr(gameSystem);
+  enum {
+    MAPCORE_SEQ_FIELD_CLOSE = 0,
+    MAPCORE_SEQ_COMM_CHECK,
+    MAPCORE_SEQ_COMM_EXIT_WAIT,
+    MAPCORE_SEQ_UPDATE_DATA,
+    MAPCORE_SEQ_FIELD_OPEN,
+    MAPCORE_SEQ_BGM_FADE_WAIT,
+    MAPCORE_SEQ_FINISH,
+  };
 
   switch( *seq )
   {
-  case 0:
+  case MAPCORE_SEQ_FIELD_CLOSE:
     //フィールドマップを終了待ち
     GMEVENT_CallEvent( event, EVENT_FieldClose_FieldProcOnly(gameSystem, fieldmap) );
     (*seq)++;
     break;
-  case 1:
+
+  case MAPCORE_SEQ_COMM_CHECK:
+    if ( ZONEDATA_IsFieldBeaconNG(work->loc_req.zone_id ) == TRUE )
+    { 
+      GAME_COMM_NO comm_no = GameCommSys_BootCheck(gcsp);
+      if ( comm_no == GAME_COMM_NO_FIELD_BEACON_SEARCH
+          || comm_no == GAME_COMM_NO_INVASION )
+      {
+        //特定マップで、侵入orビーコンサーチ状態の場合は
+        //通信の停止処理を実行
+        GameCommSys_ExitReq(gcsp);
+        *seq = MAPCORE_SEQ_COMM_EXIT_WAIT;
+        break;
+      }
+    }
+    *seq = MAPCORE_SEQ_UPDATE_DATA;
+    break;
+
+  case MAPCORE_SEQ_COMM_EXIT_WAIT:
+    //通信停止処理ウェイト
+    if (GameCommSys_BootCheck(gcsp) == GAME_COMM_STATUS_NULL)
+    {
+      *seq = MAPCORE_SEQ_UPDATE_DATA;
+    }
+    break;
+
+  case MAPCORE_SEQ_UPDATE_DATA:
     //マップモードなど機能指定を解除する
     MAPCHG_releaseMapTools( gameSystem );
 
@@ -522,17 +558,17 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     }
     (*seq)++;
     break;
-  case 2:
+  case MAPCORE_SEQ_FIELD_OPEN:
     //フィールドマップを開始待ち
     GMEVENT_CallEvent( event, EVENT_FieldOpen_FieldProcOnly(gameSystem) );
     (*seq) ++;
     break;
-  case 3:
+  case MAPCORE_SEQ_BGM_FADE_WAIT:
     // BGM フェード完了待ち
     GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMFade(gameSystem) );
     (*seq) ++;
     break;
-  case 4:
+  case MAPCORE_SEQ_FINISH:
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;

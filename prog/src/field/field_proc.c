@@ -97,7 +97,7 @@ static GFL_PROC_RESULT FieldMapProcInit
     {
       GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
       u16 zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
-      if(ZONEDATA_IsUnionRoom(zone_id) == FALSE && ZONEDATA_IsColosseum(zone_id) == FALSE
+      if(ZONEDATA_IsFieldBeaconNG(zone_id) == FALSE
           && NetErr_App_CheckError() == NET_ERR_CHECK_NONE){
         if(GFL_NET_IsInit() == FALSE){
           if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == TRUE){
