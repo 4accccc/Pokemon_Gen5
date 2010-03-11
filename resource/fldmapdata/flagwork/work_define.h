@@ -184,6 +184,7 @@
 #define WK_SCENE_C02R0101                16572 /* 0x40bc シッポウシティ：インテリアショップイベント */
 #define WK_SCENE_D04R0201                16573 /* 0x40bd 古代の城２F：イベント用ワーク */
 #define WK_SCENE_C03P12                  16574 /* 0x40be ヒウンシティ路地：イベント用ワーク */
+#define WK_SCENE_C03P09_SWEETS           16575 /* 0x40bf ヒウンシティ路地：イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
