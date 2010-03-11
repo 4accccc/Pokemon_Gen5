@@ -814,18 +814,13 @@ static void _itemInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_D
 
 static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream,gs_response* pRep )
 {
-#if 0  //@todo BFSとの話が終わってから有効
   if(pRep->ret_cd != DREAM_WORLD_SERVER_ERROR_NONE){
     pWork->ErrorNo = pRep->ret_cd;
     _CHANGE_STATE(_ErrorDisp);
     return;
   }
-#endif
-#if 0  //@todo BFSとの話が終わってから有効
-  if(!pDream->bGet && (DREAMWORLD_SV_GetUploadCount() != pDream->uploadCount))
-#endif
+  if(!pDream->bGet && (DREAMWORLD_SV_GetUploadCount(pDreamSave) != pDream->uploadCount))
   {
-    //pDreamSave->sleepPokemonState;  ///< 寝ているポケモンの状態はあまりかんけいない
     
     pWork->musicalNo = pDream->musicalNo;      ///< webで選択した番号  無い場合 0xff
     pWork->cgearNo = pDream->cgearNo; //  u8 cgearNo;        ///< webで選択した番号  無い場合 0xff
@@ -842,12 +837,6 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
       pWork->msgBit = pWork->msgBit | 0x04;
     }
 
-    //@todo  test
-    pWork->cgearNo = DREAM_WORLD_NOPICTURE;
-    pWork->musicalNo = 1;
-    pWork->zukanNo = DREAM_WORLD_NOPICTURE;
-    pWork->lvup = 10;
-    
     //ポケモンシンボルエンカウント
     SymbolSave_SetFreeZone(SymbolSave_GetSymbolData(pWork->pSaveData), pDream->findPokemon,
                    pDream->findPokemonTecnique, pDream->findPokemonSex, pDream->findPokemonForm,
