@@ -27,6 +27,8 @@
 #include "field/field_beacon_message.h"
 #include "gamesystem/game_beacon_accessor.h"
 
+#include "../field_sound.h"
+
 
 #define _NET_DEBUG (1)  //ƒfƒoƒbƒOŽž‚Í‚P
 #define _BRIGHTNESS_SYNC (0)  // ƒtƒF[ƒh‚Ì‚r‚x‚m‚b‚Í—v’²®
@@ -1954,10 +1956,11 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
           st = GAME_COMM_STATUS_WIFI_LOCK;
           _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 2);
         }
-
         if(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR){
-          if(!PMSND_CheckPlayingSEIdx(SEQ_SE_SYS_35) && pWork->bAction){
-            PMSND_PlaySE( SEQ_SE_SYS_35 );
+          if(pWork->bAction){
+            FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
+            FSND_RequestTVTRingTone( fsnd);
+//            PMSND_PlaySE( SEQ_SE_SYS_35 );
           }
           st = GAME_COMM_STATUS_WIRELESS_TR;
           _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 1);
@@ -1974,12 +1977,12 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
           st = GAME_COMM_STATUS_WIRELESS_FU;
           _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 1);
         }
-        if(!(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR)){
-          if(PMSND_CheckPlayingSEIdx(SEQ_SE_SYS_35)){
-            NET_PRINT("-‚¯‚µ‚½-----\n");
-            PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
-          }
-        }
+ //       if(!(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR)){
+  //        if(PMSND_CheckPlayingSEIdx(SEQ_SE_SYS_35)){
+   //         NET_PRINT("-‚¯‚µ‚½-----\n");
+     //       PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
+       //   }
+   //     }
 
       }
     }
