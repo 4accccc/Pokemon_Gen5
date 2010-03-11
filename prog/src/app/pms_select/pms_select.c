@@ -96,7 +96,11 @@ enum
   LIST_BAR_SY = 10,  // バーアイコンの長さ
   LIST_BAR_SY_CENTER = LIST_BAR_SY / 2,
 
-  // スクロールバーのタッチ可能範囲
+  // スクロールバーのタッチ可能範囲X
+  LIST_BAR_TOUCH_MIN_X = LIST_BAR_STD_PX,   // LIST_BAR_TOUCH_MIN_X<= <=LIST_BAR_TOUCH_MAX_X  // ここはMAXも=含みます
+  LIST_BAR_TOUCH_MAX_X = LIST_BAR_STD_PX + 8 -1,
+
+  // スクロールバーのタッチ可能範囲Y
   LIST_BAR_TOUCH_MIN = LIST_BAR_STD_PY,     // LIST_BAR_TOUCH_MIN<= <=LIST_BAR_TOUCH_MAX  // ここはMAXも=含みます
   LIST_BAR_TOUCH_MAX = GX_LCD_SIZE_Y - 8*4 -1,
 
@@ -130,10 +134,14 @@ enum
   // 初期化処理
   SEQ_INIT                    = 0,
 
-  // プレート選択
-  SEQ_PLATE_SELECT_INIT,
+  // プレート選択                   // 選択PROCとはこのPROCのことを指しています
+  SEQ_PLATE_SELECT_INIT,            // 黒画面の中で初期化処理(選択PROC起動直後の時、簡易会話入力画面PROCから復帰した時に呼ばれる)
+  SEQ_PLATE_SELECT_FADE_IN_START,
+  SEQ_PLATE_SELECT_FADE_IN_WAIT,
   SEQ_PLATE_SELECT_MAIN,
-  SEQ_PLATE_SELECT_END,
+  SEQ_PLATE_SELECT_FADE_OUT_START,  // 選択PROCを終了することが決まった際のフェードアウト
+  SEQ_PLATE_SELECT_FADE_OUT_WAIT,
+  SEQ_PLATE_SELECT_END,             // 黒画面の中で終了処理(選択PROC終了直前の時に呼ばれる)
 
   // タスクメニュー選択
   SEQ_CMD_SELECT_INIT,
@@ -141,13 +149,11 @@ enum
   SEQ_CMD_SELECT_END,
 
   // 簡易会話入力画面PROCの呼び出し＆復帰
-  SEQ_CALL_EDIT_FADE_OUT_START,
+  SEQ_CALL_EDIT_FADE_OUT_START,     // 選択PROCから簡易会話入力画面PROCへ行くことが決まった際のフェードアウト
   SEQ_CALL_EDIT_FADE_OUT_WAIT,
   SEQ_CALL_EDIT_INIT,
   SEQ_CALL_EDIT_MAIN,
   SEQ_CALL_EDIT_END,
-  SEQ_CALL_EDIT_FADE_IN_START,
-  SEQ_CALL_EDIT_FADE_IN_WAIT,
 
   // 終了処理
   SEQ_EXIT,
@@ -298,12 +304,17 @@ typedef struct
   NNSG2dScreenData* platescrnData;
   u16   transAnmCnt;
   GXRgb transCol[COL_CHANGE_MAX];
+  BOOL  isDecide;     // TRUEのとき、決定アニメをする
+  u8    decideCount;  // isDecideがTRUEのときに決定アニメをカウントする
 
   // 上画面説明欄に表示するメッセージのウィンドウ
   GFL_BMPWIN*  explain_s_bmpwin;
   BOOL         explain_s_bmpwin_trans_req;
 
 } PMS_SELECT_BG_WORK;
+
+#define PMS_SELECT_DECIDE_COUNT_MAX       (16)
+#define PMS_SELECT_DECIDE_COUNT_INTERVAL  (4)
 
 #ifdef PMS_SELECT_PMSDRAW
 #define PMS_SELECT_PMSDRAW_NUM (4) ///< 簡易会話の個数
@@ -367,6 +378,8 @@ typedef struct
   
   int  sub_seq;  // 1階層下のシーケンス 
   int  sub_res;  // 1階層下の結果
+
+  BOOL b_can_input;  // 下段のタッチバーでアイコンが選ばれたらFALSEにし、アイコンのアニメーション中入力できないようにしておく
 
   BOOL b_touch;  // タッチ操作のときTRUE、キー操作のときFALSE 
 
@@ -445,6 +458,7 @@ static void PLATE_UNIT_DrawLastMessage( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id
 static void PLATE_UNIT_DrawNormal( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id, u8 data_id, BOOL is_select );
 
 static int TOUCH_GetListPos( void );
+static void LIST_BAR_SetPosFromKey( PMS_SELECT_MAIN_WORK* wk, BOOL b_force );
 
 
 //=============================================================================
@@ -490,19 +504,19 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
       GXS_SetMasterBrightness(-16);
   }
 
-  // 速度設定
+  // キーリピート速度設定
   //GFL_UI_KEY_SetRepeatSpeed( 4, 8 );
 	
 	//引数取得
 	param	= pwk;
 
 	//ヒープ作成
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_UI_DEBUG, PMS_SELECT_HEAP_SIZE );
-  wk = GFL_PROC_AllocWork( proc, sizeof(PMS_SELECT_MAIN_WORK), HEAPID_UI_DEBUG );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PMS_SELECT, PMS_SELECT_HEAP_SIZE );
+  wk = GFL_PROC_AllocWork( proc, sizeof(PMS_SELECT_MAIN_WORK), HEAPID_PMS_SELECT );
   GFL_STD_MemClear( wk, sizeof(PMS_SELECT_MAIN_WORK) );
 
   // 初期化
-  wk->heapID    = HEAPID_UI_DEBUG;
+  wk->heapID    = HEAPID_PMS_SELECT;
   wk->save_ctrl = param->save_ctrl;
   wk->pmsw_save = SaveData_GetPMSW( param->save_ctrl );
   wk->out_param = param;
@@ -517,11 +531,15 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 	//PRINT_QUE作成
 	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
 
-  // グラフィックロード
-  PMSSelect_GRAPHIC_Load( wk );
-
   // ローカルPROCシステムを作成
   wk->local_procsys = GFL_PROC_LOCAL_boot( wk->heapID );
+
+  // 選択の初期状態
+  wk->select_id_prev = SELECT_ID_NULL;
+  wk->select_id      = SELECT_ID_NULL;  // キー入力でここへ来た場合、最初に何を選んでおくかはPMSSelect_GRAPHIC_Loadで決める
+
+  // グラフィックロード
+  PMSSelect_GRAPHIC_Load( wk );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -542,26 +560,27 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 { 
 	PMS_SELECT_MAIN_WORK* wk = mywk;
 
+  // グラフィックアンロード
+  PMSSelect_GRAPHIC_UnLoad( wk );
+  
   // ローカルPROCシステムを破棄
   GFL_PROC_LOCAL_Exit( wk->local_procsys ); 
 
-  PMSSelect_GRAPHIC_UnLoad( wk );
+  //PRINT_QUE
+	PRINTSYS_QUE_Delete( wk->print_que );
 
 	//メッセージ破棄
 	GFL_MSG_Delete( wk->msg );
 
-	//PRINT_QUE
-	PRINTSYS_QUE_Delete( wk->print_que );
-
 	//FONT
 	GFL_FONT_Delete( wk->font );
 
-  // 元にもどす
+  // キーリピート速度設定を元にもどす
   //GFL_UI_KEY_SetRepeatSpeed( 8, 15 );
 
 	//PROC用メモリ解放
   GFL_PROC_FreeWork( proc );
-  GFL_HEAP_DeleteHeap( wk->heapID );
+  GFL_HEAP_DeleteHeap( HEAPID_PMS_SELECT );
 	
   //オーバーレイ破棄
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
@@ -604,18 +623,13 @@ static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
       data = PMSW_GetDataEntry( wk->pmsw_save, 0 );
       if( PMSDAT_IsComplete( data, wk->heapID ) == FALSE )
       {
-        wk->select_id_prev = wk->select_id;
-        wk->select_id = 0;  // 0番目のプレートに簡易会話を当てはめるようこれから編集する
+        wk->select_id = 0;  // 0番目のプレートに簡易会話を当てはめるようこれから編集する  // タッチの場合select_idにSELECT_ID_NULLが設定されていることがあるので、ここで0を設定する
         ChangeSeq( seq, wk, SEQ_CALL_EDIT_INIT ); // いきなり編集画面へ
        
         HOSAKA_Printf("初回なので直接編集画面へ\n");
       }
       else
       {
-        //@TODO	フェードシーケンスがないので
-        GX_SetMasterBrightness(0);
-        GXS_SetMasterBrightness(0);
-        
         ChangeSeq( seq, wk, SEQ_PLATE_SELECT_INIT );
       }
     }
@@ -623,6 +637,21 @@ static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
   case SEQ_PLATE_SELECT_INIT:
     {
       if( ScenePlateSelect_Init( &(wk->sub_seq), wk ) )
+      {
+        ChangeSeq( seq, wk, SEQ_PLATE_SELECT_FADE_IN_START );
+      }
+    }
+    break;
+  case SEQ_PLATE_SELECT_FADE_IN_START:
+    {
+      // フェードイン(黒→見える)
+      GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0);
+      ChangeSeq( seq, wk, SEQ_PLATE_SELECT_FADE_IN_WAIT );
+    }
+    break;
+  case SEQ_PLATE_SELECT_FADE_IN_WAIT:
+    {
+      if( !GFL_FADE_CheckFade() )
       {
         ChangeSeq( seq, wk, SEQ_PLATE_SELECT_MAIN );
       }
@@ -633,6 +662,21 @@ static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
       if( ScenePlateSelect_Main( &(wk->sub_seq), wk ) )
       {
         ChangeSeq( seq, wk, wk->sub_res );
+      }
+    }
+    break;
+  case SEQ_PLATE_SELECT_FADE_OUT_START:
+    {
+      // フェードアウト(見える→黒)
+      GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0);
+      ChangeSeq( seq, wk, SEQ_PLATE_SELECT_FADE_OUT_WAIT );
+    }
+    break;
+  case SEQ_PLATE_SELECT_FADE_OUT_WAIT:
+    {
+      if( !GFL_FADE_CheckFade() )
+      {
+        ChangeSeq( seq, wk, SEQ_PLATE_SELECT_END );
       }
     }
     break;
@@ -670,7 +714,7 @@ static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
     break;
   case SEQ_CALL_EDIT_FADE_OUT_START:
     {
-       // フェードイン(見える→黒)
+       // フェードアウト(見える→黒)
       GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0);
       ChangeSeq( seq, wk, SEQ_CALL_EDIT_FADE_OUT_WAIT );
     }
@@ -719,26 +763,11 @@ static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
           // グラフィックリロード
           PMSSelect_GRAPHIC_Load( wk );
       
-          ChangeSeq( seq, wk, SEQ_CALL_EDIT_FADE_IN_START );
+          ChangeSeq( seq, wk, SEQ_PLATE_SELECT_INIT );
         }
       }
       
       return GFL_PROC_RES_CONTINUE;
-    }
-    break;
-  case SEQ_CALL_EDIT_FADE_IN_START:
-    {
-      // フェードイン(黒→見える)
-      GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0);
-      ChangeSeq( seq, wk, SEQ_CALL_EDIT_FADE_IN_WAIT );
-    }
-    break;
-  case SEQ_CALL_EDIT_FADE_IN_WAIT:
-    {
-      if( !GFL_FADE_CheckFade() )
-      {
-        ChangeSeq( seq, wk, SEQ_PLATE_SELECT_INIT );
-      }
     }
     break;
   case SEQ_EXIT:
@@ -791,11 +820,40 @@ static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
 static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
 { 
   // 初期状態
-  wk->select_id = SELECT_ID_NULL;
-  wk->select_id = SELECT_ID_NULL;  // キー入力でここへ来ていた場合、最初に何かを選んでおいたほうがよさそう
-  wk->list_head_id = 0;  // 簡易会話編集から戻ってきた場合、プレートの見えているものを、編集していたものにしておいたほうがよさそう
   wk->b_listbar = FALSE;
-  wk->b_touch = TRUE;    // キー入力でここへ来ていた場合、これを適切にしなければならない
+  wk->b_can_input = TRUE;
+
+  // 選択PROCに来た時or簡易会話入力画面PROCから復帰した時に現在のタッチorキーをチェックしておく
+  wk->b_touch = ( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH );
+
+  // 選択の初期状態
+  wk->select_id_prev = wk->select_id;
+  if( wk->select_id == SELECT_ID_NULL )  // 選択PROCのInitからここへ来た
+  {
+    if( wk->b_touch )  // タッチ入力
+    {
+      // wk->select_idはSELECT_ID_NULLのまま
+      wk->list_head_id = 0;
+    }
+    else                // キー入力
+    {
+      wk->select_id = 0;  // 先頭を選んでおく
+      wk->list_head_id = 0;
+    }
+  }
+  else  // 簡易会話入力画面PROCから復帰してここへ来た
+  {
+    if( wk->b_touch )  // タッチ入力
+    {
+      wk->select_id = SELECT_ID_NULL;
+      // wk->list_head_idは設定してあるままで変更しない
+    }
+    else                // キー入力
+    {
+      // wk->select_idは設定してあるままで変更しない
+      // wk->list_head_idは設定してあるままで変更しない
+    }
+  }
 
 	//描画設定初期化
 	wk->graphic	= PMS_SELECT_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
@@ -829,6 +887,11 @@ static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
 
 	//BGリソース読み込み
 	PMSSelect_BG_LoadResource( &wk->wk_bg, wk->heapID, wk->font, wk->print_que, wk->msg );
+
+  // BGの初期値設定
+  PMSSelect_BG_PlateAnimeReset( &wk->wk_bg );
+  wk->wk_bg.isDecide = FALSE;
+  wk->wk_bg.decideCount = 0;
 
 #ifdef PMS_SELECT_TOUCHBAR
 	//タッチバーの初期化
@@ -881,6 +944,9 @@ static void PMSSelect_GRAPHIC_UnLoad( PMS_SELECT_MAIN_WORK* wk )
 
 	//描画設定破棄
 	PMS_SELECT_GRAPHIC_Exit( wk->graphic );
+
+  // 選択PROC終了or選択PROCを中断して簡易会話入力画面PROCに行く前に現在のタッチorキーをセットしておく
+  GFL_UI_SetTouchOrKey( wk->b_touch?GFL_APP_END_TOUCH:GFL_APP_END_KEY );
 }
 
 //-----------------------------------------------------------------------------
@@ -1146,6 +1212,24 @@ static void _UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , const PAL_ANIM_SET
 //-----------------------------------------------------------------------------
 static void PMSSelect_BG_PlateMain( PMS_SELECT_BG_WORK* wk )
 {
+  if( wk->isDecide )
+  {
+    BOOL b_on = TRUE;
+    if( wk->decideCount < PMS_SELECT_DECIDE_COUNT_MAX )
+    {
+      b_on = ( wk->decideCount/PMS_SELECT_DECIDE_COUNT_INTERVAL ) % 2;
+      wk->decideCount++;
+    }
+    if( b_on ) 
+    {
+      wk->transAnmCnt = 0x10000 - PLATE_PLTT_ANIME_VALUE;
+    }
+    else
+    {
+      wk->transAnmCnt = 0x10000 /2 - PLATE_PLTT_ANIME_VALUE;
+    }
+  }
+
   _UpdatePalletAnime( &wk->transAnmCnt, wk->transCol, pal_anim_set, NELEMS(pal_anim_set) );
 }
 
@@ -1422,6 +1506,9 @@ static void PMSSelect_PMSDRAW_Init( PMS_SELECT_MAIN_WORK* wk )
 
   // 簡易会話描画 初期化
   PLATE_CNT_Setup( wk );
+
+  // バーアイコンの位置を適切にする
+  LIST_BAR_SetPosFromKey( wk, TRUE );
 }
 
 //-----------------------------------------------------------------------------
@@ -1555,11 +1642,12 @@ static void PLATE_CNT_UpdateCore( PMS_SELECT_MAIN_WORK* wk, BOOL is_check_print_
  *	@brief  キー移動よるバーアイコンの位置変更
  *
  *	@param	PMS_SELECT_MAIN_WORK* wk 
+ *	@param  b_force  強制的にその位置にバーアイコンを移動させるときはTRUE、その位置を含む範囲内に既にあるときバーアイコンを移動させなくてもいいならFALSE
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void LIST_BAR_SetPosFromKey( PMS_SELECT_MAIN_WORK* wk )
+static void LIST_BAR_SetPosFromKey( PMS_SELECT_MAIN_WORK* wk, BOOL b_force )
 {
   // wk->list_head_idが正しい値に更新されてから、この関数が呼び出される
 
@@ -1576,7 +1664,41 @@ static void LIST_BAR_SetPosFromKey( PMS_SELECT_MAIN_WORK* wk )
 
   moveable_num = wk->list_max_add - LIST_BAR_ENABLE_LISTNUM +1;  // バーアイコンが出ているなら、ここは必ず正になる
   pos_id = wk->list_head_id;
-  
+
+  // その位置を含む範囲内に既にあるときバーアイコンを移動させなくてもいい
+  if( !b_force )
+  {
+    // その位置を含む範囲内にバーアイコンがあるか否か
+    s16 clpos_curr = GFL_CLACT_WK_GetWldTypePos( wk->clwk_bar, CLSYS_MAT_Y );
+
+    int min = LIST_BAR_AREA_MIN + ( LIST_BAR_AREA_SIZE * pos_id ) / moveable_num;  // min<= <max
+    int max = LIST_BAR_AREA_MIN + ( LIST_BAR_AREA_SIZE * (pos_id+1) ) / moveable_num;  // ここのmaxは、次のプレートの位置になるので、=を含まない
+ 
+    if( pos_id==0 )
+    {
+      if( clpos_curr < max )
+      {
+        return;
+      }
+    }
+    else if( pos_id==moveable_num -1 )
+    {
+      if( clpos_curr >= min )
+      {
+        return;
+      }
+    }
+    else
+    {
+      if( min<=clpos_curr && clpos_curr<max )
+      {
+        return;
+      }
+    }
+  }
+
+  // 強制的にその位置にバーアイコンを移動させるとき or その位置を含む範囲内にバーアイコンがないとき
+
   // MIN
   if( pos_id == 0 )
   {
@@ -1625,7 +1747,7 @@ static BOOL LIST_BAR_SetPosFromTouch( PMS_SELECT_MAIN_WORK* wk )
     return FALSE;
   }
 
-  if( tx >= LIST_BAR_STD_PX && tx < GX_LCD_SIZE_X )
+  if( tx >= LIST_BAR_TOUCH_MIN_X && tx <= LIST_BAR_TOUCH_MAX_X )
   { 
     if( ty <= LIST_BAR_TOUCH_MAX && ty >= LIST_BAR_TOUCH_MIN ) 
     {
@@ -1745,168 +1867,191 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
   BOOL b_decide = FALSE;
   BOOL b_input = TRUE;
 
- if( b_input )
- {
-  // セレクト無効状態でキー入力されたら
-  if( GFL_UI_KEY_GetTrg() && wk->select_id == SELECT_ID_NULL )
+  if( b_input )
   {
-    wk->select_id_prev = wk->select_id; //先頭を選択
-    wk->select_id = wk->list_head_id; //先頭を選択
-    wk->b_touch = FALSE;
+    // セレクト無効状態でキー入力されたら
+    BOOL key_without_b = FALSE;
+    if( GFL_UI_KEY_GetTrg() & (~PAD_BUTTON_B) )
+    {
+      key_without_b = TRUE;
+    }
+    
+    if( key_without_b && wk->select_id == SELECT_ID_NULL )
+    {
+      if( wk->select_id_prev == SELECT_ID_NULL )
+      {
+        wk->select_id = wk->list_head_id; //先頭を選択
+      }
+      else
+      {
+        if( wk->list_head_id <= wk->select_id_prev && wk->select_id_prev < wk->list_head_id + LIST_BAR_ENABLE_LISTNUM )  // 見える範囲内にあるなら
+        {
+          wk->select_id = wk->select_id_prev; // 前選んでいたものを選択
+        }
+        else
+        {
+          wk->select_id = wk->list_head_id; //先頭を選択
+        }
+      }
+      wk->select_id_prev = SELECT_ID_NULL;
 
-    PLATE_CNT_UpdateAll( wk );
+      wk->b_touch = FALSE;
 
-    b_input = FALSE;
+      PLATE_CNT_UpdateAll( wk );
+
+      b_input = FALSE;
+    }
   }
- }
  
  if( b_input )
  {
-  // キー入力
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
-  {
-    b_decide = TRUE;
-    b_input = FALSE;
-  }
-  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
-  {
-    if( wk->select_id > 0 )
+    // キー入力
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
     {
-      wk->select_id_prev = wk->select_id;
-      wk->select_id--;
-
-      // リストの先頭を選択していた場合はリストごと移動
-      if( wk->select_id+1 == wk->list_head_id )
-      {
-        wk->list_head_id--;
-
-        GF_ASSERT( wk->list_head_id >= 0 );
-      }
-
-      LIST_BAR_SetPosFromKey( wk );
-
-      //@TODO 重いようなら、
-      //1:ページ全体が更新されない時はUpdateAllをスクリーンのカラーを置換する処理にする
-      //2:移動の時はコピーを使う。
-      PLATE_CNT_UpdateAll( wk );
-
-      GFL_SOUND_PlaySE( SE_MOVE_CURSOR );
-      
-      HOSAKA_Printf("list_head_id=%d select_id=%d \n", wk->list_head_id, wk->select_id );
-    }
-    else
-    {
-      // ブブーって音を鳴らすならここで
-    }
-    b_input = FALSE;
-  }
-  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
-  {
-    if( wk->select_id < wk->list_max_add-1 )
-    {
-      wk->select_id_prev = wk->select_id;
-      wk->select_id++;
-
-      // リストの末尾を選択していた場合はリストごと移動
-      if( ( wk->select_id == wk->list_head_id + PMS_SELECT_PMSDRAW_NUM - 1 ) )
-      {
-        wk->list_head_id++;
-
-        GF_ASSERT( wk->list_head_id >= 0 );
-      }
-
-      LIST_BAR_SetPosFromKey( wk );
-        
-      PLATE_CNT_UpdateAll( wk );
-
-      GFL_SOUND_PlaySE( SE_MOVE_CURSOR );
-     
-      HOSAKA_Printf("list_head_id=%d select_id=%d \n", wk->list_head_id, wk->select_id );
-    }
-    else
-    {
-      // ブブーって音を鳴らすならここで
-    }
-    b_input = FALSE;
-  }
- }
-
- if( b_input )
- {
-  // タッチ入力
-  {
-    // 右端のスライドバーのバーアイコンを操作している最中なら
-    if( wk->b_listbar )
-    {
-      if( LIST_BAR_CheckTouching( wk ) )
-      {
-        // 移動があった場合は更新
-        PLATE_CNT_UpdateAll( wk );
-        GFL_SOUND_PlaySE( SE_MOVE_LISTBAR_ICON );
-      }
+      b_decide = TRUE;
+      wk->b_touch = FALSE;
       b_input = FALSE;
     }
-    // 右端のスライドバーのバーアイコンを操作していないなら
-    else
+    else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
     {
-      int list_pos = TOUCH_GetListPos();
-
-      // タッチしたところにプレートが存在しているか
-      if( list_pos != -1 )
+      if( wk->select_id > 0 )
       {
-        if( list_pos > wk->list_max_add -1 )
+        wk->select_id_prev = wk->select_id;
+        wk->select_id--;
+
+        // リストの先頭を選択していた場合はリストごと移動
+        if( wk->select_id+1 == wk->list_head_id )
         {
-          // タッチしたところにプレートは存在しないので、list_posを-1に書き換えておく
-          list_pos = -1;
+          wk->list_head_id--;
+
+          GF_ASSERT( wk->list_head_id >= 0 );
         }
-      }
 
-      // タッチしたプレートを選択
-      if( list_pos != -1 )
-      {
-        wk->b_touch = TRUE;
+        LIST_BAR_SetPosFromKey( wk, FALSE );
 
-        wk->select_id_prev =  wk->select_id;
-        wk->select_id =  wk->list_head_id + list_pos;
-
-        HOSAKA_Printf("list_pos = %d, select_id = %d \n", list_pos, wk->select_id );
-      
+        //@TODO 重いようなら、
+        //1:ページ全体が更新されない時はUpdateAllをスクリーンのカラーを置換する処理にする
+        //2:移動の時はコピーを使う。
         PLATE_CNT_UpdateAll( wk );
-        
-        b_input = FALSE;
-        b_decide = TRUE;
+
+        GFL_SOUND_PlaySE( SE_MOVE_CURSOR );
+      
+        HOSAKA_Printf("list_head_id=%d select_id=%d \n", wk->list_head_id, wk->select_id );
       }
-      // バーをタッチでプレート移動
       else
       {
-        // リストバーが動作していなければ開始判定
-        if( wk->b_listbar == FALSE )
+        // ブブーって音を鳴らすならここで
+      }
+      wk->b_touch = FALSE;
+      b_input = FALSE;
+    }
+    else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+    {
+      if( wk->select_id < wk->list_max_add-1 )
+      {
+        wk->select_id_prev = wk->select_id;
+        wk->select_id++;
+
+        // リストの末尾を選択していた場合はリストごと移動
+        if( ( wk->select_id == wk->list_head_id + PMS_SELECT_PMSDRAW_NUM - 1 ) )
         {
-          LIST_BAR_SetPosFromTouch( wk );
+          wk->list_head_id++;
+
+          GF_ASSERT( wk->list_head_id >= 0 );
         }
-      
-        // 右端のスライドバーのバーアイコンを操作し始めたなら
-        if( wk->b_listbar == TRUE )
+
+        LIST_BAR_SetPosFromKey( wk, FALSE );
+        
+        PLATE_CNT_UpdateAll( wk );
+
+        GFL_SOUND_PlaySE( SE_MOVE_CURSOR );
+     
+        HOSAKA_Printf("list_head_id=%d select_id=%d \n", wk->list_head_id, wk->select_id );
+      }
+      else
+      {
+        // ブブーって音を鳴らすならここで
+      }
+      wk->b_touch = FALSE;
+      b_input = FALSE;
+    }
+  }
+
+  if( b_input )
+  {
+    // タッチ入力
+    {
+      // 右端のスライドバーのバーアイコンを操作している最中なら
+      if( wk->b_listbar )
+      {
+        if( LIST_BAR_CheckTouching( wk ) )
         {
-          wk->b_touch = TRUE;
-          
-          if( LIST_BAR_CheckTouching( wk ) || wk->select_id != SELECT_ID_NULL )  // 最初のタッチ位置をチェックする
-          {
-            wk->select_id_prev = wk->select_id;
-            wk->select_id = SELECT_ID_NULL; ///< 右端のスライドバーのバーアイコンをタッチしたので、選択を無効化
-            
-            // 移動があった場合、または、選択されていたものが無効化された場合、は更新
-            PLATE_CNT_UpdateAll( wk );
-          }
+          // 移動があった場合は更新
+          PLATE_CNT_UpdateAll( wk );
           GFL_SOUND_PlaySE( SE_MOVE_LISTBAR_ICON );
+        }
+        wk->b_touch = TRUE;
+        b_input = FALSE;
+      }
+      // 右端のスライドバーのバーアイコンを操作していないなら
+      else
+      {
+        int list_pos = TOUCH_GetListPos();
+
+        // タッチしたところにプレートが存在しているか
+        if( list_pos != -1 )
+        {
+          if( list_pos > wk->list_max_add -1 )
+          {
+            // タッチしたところにプレートは存在しないので、list_posを-1に書き換えておく
+            list_pos = -1;
+          }
+        }
+
+        // タッチしたプレートを選択
+        if( list_pos != -1 )
+        {
+          wk->select_id_prev =  wk->select_id;
+          wk->select_id =  wk->list_head_id + list_pos;
+
+          HOSAKA_Printf("list_pos = %d, select_id = %d \n", list_pos, wk->select_id );
+      
+          PLATE_CNT_UpdateAll( wk );
+        
+          wk->b_touch = TRUE;
           b_input = FALSE;
+          b_decide = TRUE;
+        }
+        // バーをタッチでプレート移動
+        else
+        {
+          // リストバーが動作していなければ開始判定
+          if( wk->b_listbar == FALSE )
+          {
+            LIST_BAR_SetPosFromTouch( wk );
+          }
+      
+          // 右端のスライドバーのバーアイコンを操作し始めたなら
+          if( wk->b_listbar == TRUE )
+          {
+            if( LIST_BAR_CheckTouching( wk ) || wk->select_id != SELECT_ID_NULL )  // 最初のタッチ位置をチェックする
+            {
+              wk->select_id_prev = wk->select_id;
+              wk->select_id = SELECT_ID_NULL; ///< 右端のスライドバーのバーアイコンをタッチしたので、選択を無効化
+            
+              // 移動があった場合、または、選択されていたものが無効化された場合、は更新
+              PLATE_CNT_UpdateAll( wk );
+            }
+            GFL_SOUND_PlaySE( SE_MOVE_LISTBAR_ICON );
+            wk->b_touch = TRUE;
+            b_input = FALSE;
+          }
         }
       }
     }
   }
- }
 
- return b_decide;
+  return b_decide;
 }
 
 //-----------------------------------------------------------------------------
@@ -1945,7 +2090,7 @@ static BOOL PLATE_UNIT_Trans( PRINT_QUE* print_que, GFL_BMPWIN* win, BOOL *trans
 
   if( *transReq == TRUE && !PRINTSYS_QUE_IsExistTarget( print_que, bmp ) )
   {
-    GFL_BMPWIN_MakeTransWindow( win );
+    GFL_BMPWIN_MakeTransWindow_VBlank( win );
 //    GFL_BMPWIN_TransVramCharacter( win );
     *transReq = FALSE;
     return TRUE;
@@ -2130,44 +2275,82 @@ static BOOL ScenePlateSelect_Main( int* seq , void* work )
 { 
   PMS_SELECT_MAIN_WORK* wk = work;
   TOUCHBAR_ICON result;
-  BOOL b_decide;
+  BOOL b_menu = FALSE;
 
   PMSSelect_BG_PlateMain( &wk->wk_bg );
 
-	//タッチバーメイン処理
-	PMSSelect_TOUCHBAR_Main( wk->touchbar );
-
-  // タッチバー入力状態取得
-  result = TOUCHBAR_GetTrg( wk->touchbar );
-
-  // タッチバー入力判定
-  switch( result )
+  if( !(wk->wk_bg.isDecide) )
   {
-  case TOUCHBAR_ICON_RETURN :
-    // キャンセルフラグON
-    wk->out_param->out_cancel_flag  = TRUE;
-    wk->out_param->out_pms_data     = NULL;
-    wk->sub_res = SEQ_PLATE_SELECT_END;
-    return TRUE;
+    BOOL b_decide = FALSE;
+    
+    // タッチバー
+    {
+      // タッチバーの処理の前に現在のタッチorキーをセットしておく
+	    GFL_UI_SetTouchOrKey( wk->b_touch?GFL_APP_KTST_TOUCH:GFL_APP_KTST_KEY );
+	
+      //タッチバーメイン処理
+	    PMSSelect_TOUCHBAR_Main( wk->touchbar );
 
-  // @TODO 左右と項目アイコン
+      // 選択されたものを取得	アニメ前の１F
+      result = TOUCHBAR_GetTouch( wk->touchbar );
+      if( result != TOUCHBAR_SELECT_NONE )
+        wk->b_can_input = FALSE;  // 下段のタッチバーでアイコンが選ばれたらFALSEにし、アイコンのアニメーション中入力できないようにしておく
+      
+      // タッチバー入力状態取得
+      result = TOUCHBAR_GetTrg( wk->touchbar );
+      if( result != TOUCHBAR_SELECT_NONE )
+        wk->b_can_input = TRUE;  // 下段のタッチバーでアイコンが選ばれたアニメーションが終了したので、入力可能に戻しておくが、このフレームこの直後で直ちに次にどうするかを決め、ユーザに入力の隙を与えないようにしておく
 
-  case TOUCHBAR_ICON_CUTSOM1 :
-  case TOUCHBAR_SELECT_NONE :
-    break;
+      // タッチバーの処理の後に現在のタッチorキーをチェックしておく
+      wk->b_touch = ( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH );
+    }
 
-  default : GF_ASSERT(0);
+    // タッチバー入力判定
+    switch( result )
+    {
+    case TOUCHBAR_ICON_RETURN :
+      // キャンセルフラグON
+      wk->out_param->out_cancel_flag  = TRUE;
+      wk->out_param->out_pms_data     = NULL;
+      wk->sub_res = SEQ_PLATE_SELECT_FADE_OUT_START;
+      return TRUE;
+
+    // @TODO 左右と項目アイコン
+
+    case TOUCHBAR_ICON_CUTSOM1 :
+    case TOUCHBAR_SELECT_NONE :
+      break;
+
+    default : GF_ASSERT(0);
+    }
+
+    if( wk->b_can_input )  // 下段のタッチバーでアイコンが選ばれていなければ、入力可能
+    {
+      // プレート操作
+      b_decide = PLATE_CNT_Main( wk );
+    }
+
+    // メニューを開く前に決定アニメをする
+    if( b_decide )
+    {
+      GFL_SOUND_PlaySE( SE_DECIDE );  // 音は押した瞬間に鳴らしたいのでここで鳴らす
+      wk->wk_bg.isDecide = TRUE;
+    }
+  }
+  else
+  {
+    if( wk->wk_bg.decideCount == PMS_SELECT_DECIDE_COUNT_MAX )
+    {
+      b_menu = TRUE;
+    }
   }
 
-  // プレート操作
-  b_decide = PLATE_CNT_Main( wk );
-    
   // メニューを開く
-  if( b_decide )
+  if( b_menu )
   {
     PMS_DATA* pms;
 
-    GFL_SOUND_PlaySE( SE_DECIDE );
+    //GFL_SOUND_PlaySE( SE_DECIDE );  // 音は押した瞬間に鳴らすのでここでは鳴らさない
     
     pms = PMSW_GetDataEntry( wk->pmsw_save, wk->select_id );
 
@@ -2221,6 +2404,9 @@ static BOOL SceneCmdSelect_Init( int* seq, void* work )
 {
   PMS_SELECT_MAIN_WORK* wk = work;
 
+  // タスクメニューの処理の前に現在のタッチorキーをセットしておく
+  GFL_UI_SetTouchOrKey( wk->b_touch?GFL_APP_KTST_TOUCH:GFL_APP_KTST_KEY );
+	
   wk->menu = PMSSelect_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
 
   SetBrightness( BG_MENU_BRIGHT, BG_MENU_MASK_PLANE, BG_MENU_MASK_DISP );
@@ -2253,7 +2439,7 @@ static BOOL SceneCmdSelect_Main( int* seq, void* work )
     {
     case TASKMENU_ID_DECIDE :
       // けってい → 終了
-      wk->sub_res = SEQ_PLATE_SELECT_END;
+      wk->sub_res = SEQ_PLATE_SELECT_FADE_OUT_START;
       // 選択されたPMS_DATAを保存
       wk->out_param->out_pms_data     = PMSW_GetDataEntry( wk->pmsw_save, wk->select_id );
       wk->out_param->out_cancel_flag  = FALSE;
@@ -2290,10 +2476,33 @@ static BOOL SceneCmdSelect_End( int* seq, void* work )
   // wk->sub_resをSceneCmdSelect_Mainの結果から変更せずに残しておく
 
   PMS_SELECT_MAIN_WORK* wk = work;
-  
-  SetBrightness( 0, BG_MENU_MASK_PLANE, BG_MENU_MASK_DISP );
 
 	PMSSelect_TASKMENU_Exit( wk->menu );
+
+  // タスクメニューの処理の後に現在のタッチorキーをチェックしておく
+  wk->b_touch = ( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH );
+
+  // キャンセル → 選択に戻る 場合だけ
+  if( wk->sub_res == SEQ_PLATE_SELECT_MAIN )
+  {
+    // 背面の輝度を戻す
+    SetBrightness( 0, BG_MENU_MASK_PLANE, BG_MENU_MASK_DISP );
+    
+    // 決定状態を止める
+    PMSSelect_BG_PlateAnimeReset( &wk->wk_bg );
+    wk->wk_bg.isDecide = FALSE;
+    wk->wk_bg.decideCount = 0;
+
+    // タッチの場合は選んでいたものをなしにする
+    if( wk->b_touch )
+    {
+      wk->select_id_prev = wk->select_id;
+      wk->select_id = SELECT_ID_NULL;
+    
+      // 選択されていたものが無効化されたので更新
+      PLATE_CNT_UpdateAll( wk );
+    }
+  }
 
   return TRUE;
 }
