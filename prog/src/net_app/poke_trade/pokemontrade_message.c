@@ -1052,3 +1052,58 @@ void POKEMON_TRADE_MaskCommon(POKEMON_TRADE_WORK* pWork)
     GXS_SetVisibleWnd( GX_WNDMASK_W0|GX_WNDMASK_W1 );
   }
 }
+
+
+void POKEMONTRADE_NEGOBG_SlideMessage(POKEMON_TRADE_WORK *pWork, int side,POKEMON_PARAM* pp)
+{
+  int i=0,lv;
+  int frame = GFL_BG_FRAME1_M;
+  int sidex[] = {1, 17};
+  int xdotpos[]={0,128};
+  int palette[]={9,8,11,10 };
+  
+  BOOL bEgg = PP_Get(pp,ID_PARA_tamago_flag,NULL);
+
+  if(pWork->StatusWin1[side]){
+    GFL_BMPWIN_Delete(pWork->StatusWin1[side]);
+    GFL_BMPWIN_Delete(pWork->StatusWin2[side]);
+  }
+  pWork->StatusWin1[side] = GFL_BMPWIN_Create(frame,	sidex[side],  0,14, 5,	_POKEMON_MAIN_FRIENDGIVEMSG_PAL, GFL_BMP_CHRAREA_GET_F);
+  pWork->StatusWin2[side] = GFL_BMPWIN_Create(frame,	sidex[side], 17,13, 2,	_POKEMON_MAIN_FRIENDGIVEMSG_PAL, GFL_BMP_CHRAREA_GET_F);
+
+
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(pWork->StatusWin1[side]), WINCLR_COL(palette[side*2]) );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(pWork->StatusWin2[side]), WINCLR_COL(palette[side*2+1]) );
+
+  GFL_FONTSYS_SetColor( 1, 2, palette[side*2] );
+
+  _pokeNickNameMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin1[side]), 2*8, 4, bEgg, pWork);
+  if(!bEgg){
+    _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin1[side]), 10*8, 4, pWork);
+    _pokeLvMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin1[side]), 16, 19, pWork);
+    GFL_FONTSYS_SetColor( 1, 2, palette[side*2+1] );
+    _pokePocketItemMsgDisp(pp, pWork->StatusWin2[side], 16, 16*8, pWork);
+    UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS], pp, pWork->cellUnit,
+                                    xdotpos[side]+16, 16, CLSYS_DRAW_MAIN, pWork->heapID,PLTID_OBJ_BALLICON_M );
+  }
+  GFL_BMPWIN_TransVramCharacter(pWork->StatusWin1[side]);
+  GFL_BMPWIN_TransVramCharacter(pWork->StatusWin2[side]);
+
+  GFL_BMPWIN_MakeScreen(pWork->StatusWin1[side]);
+  GFL_BMPWIN_MakeScreen(pWork->StatusWin2[side]);
+  GFL_BG_LoadScreenV_Req( frame );
+
+  pWork->SlideWindowTimer[side] = _SLIDE_END_TIME;
+  
+
+}
+
+void POKEMONTRADE_NEGOBG_SlideMessageDel(POKEMON_TRADE_WORK *pWork,int side)
+{
+  GFL_BMPWIN_Delete(pWork->StatusWin1[side]);
+  GFL_BMPWIN_Delete(pWork->StatusWin2[side]);
+  
+  pWork->StatusWin1[side]=NULL;
+  pWork->StatusWin2[side]=NULL;
+}
+

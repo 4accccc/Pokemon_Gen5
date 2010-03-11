@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T19:58:32"/>
+	<create user="ohno" host="W00141" date="2010-03-11T20:13:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -782,6 +782,16 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">Ｗｉ－Ｆｉひろばで　つうしんエラーが
 はっせい　しました
 （[2:04:５桁:0]）</language>
+	</row>
+
+	<row id="dwc_message_0018">
+		<comment>AgreeEULA</comment>
+		<language name="JPN" font=" 1:small" width="216">利用規約に同意する必要があります。
+本体設定で利用規約に
+同意してください。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">利用規約に同意する必要があります。
+本体設定で利用規約に
+同意してください。</language>
 	</row>
 
 	<flowchart-group-list>

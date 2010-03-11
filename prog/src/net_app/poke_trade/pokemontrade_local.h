@@ -238,6 +238,8 @@ typedef enum
 
 #define _STARTDOT_OFFSET (-80)
 
+//GTS交換でステータスを見せる秒数
+#define _SLIDE_END_TIME (120)
 
 
 typedef void (StateFunc)(POKEMON_TRADE_WORK* pState);
@@ -467,6 +469,8 @@ struct _POKEMON_TRADE_WORK{
   POKEMONTRADE_DEMO_WORK* pPokemonTradeDemo;
   u8 FriendPokemonCol[2][BOX_POKESET_MAX + TEMOTI_POKEMAX];         ///< 相手のポケモンBOXにあるポケモン色
   GFL_BMPWIN* StatusWin[2];     ///< ステータス表示
+  GFL_BMPWIN* StatusWin1[2];     ///< ステータス表示
+  GFL_BMPWIN* StatusWin2[2];     ///< ステータス表示
   GFL_BMPWIN* GTSInfoWindow;     ///< GTSネゴシエーション説明
   GFL_BMPWIN* GTSInfoWindow2;     ///< GTSネゴシエーション説明
   POKEMON_PARAM* recvPoke[2];  ///< 受け取ったポケモンを格納する場所
@@ -653,6 +657,7 @@ struct _POKEMON_TRADE_WORK{
   s16 SuckedCount;
   s16 countNEGOSlideScroll;
   u8 changeFactor[2];
+  u8 SlideWindowTimer[2];
   u8 BGClearFlg;
   u8 DemoBGClearFlg;
   u8 bByebyeMessageEach;  //送り先IDと送信ポケモン一致
@@ -771,6 +776,12 @@ extern int POKEMONTRADE_GetFriendBoxNum(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_NEGOBG_Select6Create(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_NEGOBG_Select6Scroll(POKEMON_TRADE_WORK* pWork);
 
+extern void POKEMONTRADE_NEGOBG_SlideInit(POKEMON_TRADE_WORK* pWork,int side, POKEMON_PARAM* pp);
+extern void POKEMONTRADE_NEGOBG_SlideMessage(POKEMON_TRADE_WORK *pWork, int side,POKEMON_PARAM* pp);
+extern void POKEMONTRADE_NEGOBG_SlideMessageDel(POKEMON_TRADE_WORK *pWork,int side);
+extern void POKEMONTRADE_NEGO_SlideInit(POKEMON_TRADE_WORK* pWork,int side,POKEMON_PARAM* pp);
+extern void POKEMONTRADE_NEGO_SlideMain(POKEMON_TRADE_WORK* pWork);
+
 
 #if _TRADE_DEBUG
 
@@ -852,6 +863,7 @@ typedef enum {
   _NETCMD_POKEMONCOLOR,
   _NETCMD_GTSSEQNO,
   _NETCMD_FRIENDBOXNUM,
+  _NETCMD_TRIOK,
 } _POKEMON_TRADE_SENDCMD;
 
 

@@ -1956,7 +1956,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
         }
 
         if(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR){
-          if(!PMSND_CheckPlayingSEIdx(SEQ_SE_SYS_35)){
+          if(!PMSND_CheckPlayingSEIdx(SEQ_SE_SYS_35) && pWork->bAction){
             PMSND_PlaySE( SEQ_SE_SYS_35 );
           }
           st = GAME_COMM_STATUS_WIRELESS_TR;

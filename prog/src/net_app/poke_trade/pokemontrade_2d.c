@@ -3208,3 +3208,60 @@ void POKEMONTRADE_MessageOAMWriteVram(POKEMON_TRADE_WORK* pWork)
   }
 #endif
 }
+
+
+
+
+
+
+void POKEMONTRADE_NEGOBG_SlideInit(POKEMON_TRADE_WORK* pWork,int side,POKEMON_PARAM* pp)
+{
+  ARCHANDLE* p_handle;
+  void* pArc;
+  NNSG2dScreenData* scrnData;
+  u16*scr;
+  int i;
+
+  
+  p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
+
+  if(side==0){
+    pArc = GFL_ARCHDL_UTIL_LoadScreen(p_handle,NARC_trade_wb_gts_bg02_NSCR,FALSE,&scrnData,pWork->heapID);
+  }
+  else{
+    pArc = GFL_ARCHDL_UTIL_LoadScreen(p_handle,NARC_trade_wb_gts_bg03_NSCR,FALSE,&scrnData,pWork->heapID);
+  }
+
+    
+  scr=(u16 *)&scrnData->rawData;
+  for(i=0;i<scrnData->szByte/2;i++){
+    scr[i] += GFL_ARCUTIL_TRANSINFO_GetPos( pWork->subchar);
+  }
+  if(side==0){
+    GFL_BG_WriteScreen(GFL_BG_FRAME1_M, scr, 0,0,16,24);
+  }
+  else{
+    GFL_BG_WriteScreen(GFL_BG_FRAME1_M, scrnData->rawData, 16,0,16,24);
+  }
+  GFL_HEAP_FreeMemory(pArc);
+
+  GFL_BG_SetPriority( GFL_BG_FRAME3_M , 2 );
+  GFL_BG_SetPriority( GFL_BG_FRAME2_M , 3 );
+  GFL_BG_SetPriority( GFL_BG_FRAME1_M , 1 );
+  GFL_BG_SetPriority( GFL_BG_FRAME0_M , 0 );
+
+
+  GFL_ARC_CloseDataHandle( p_handle );
+
+
+
+  
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
+
+
+//  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+
+}
+
+
+

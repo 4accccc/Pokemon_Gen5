@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-10T12:05:43"/>
+	<create user="ohno" host="W00141" date="2010-03-11T13:45:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -922,13 +922,13 @@
 	</row>
 
 	<row id="POKETRADE_STR2_14">
-		<language name="JPN" width="256">[BD:02:Ｘセンタリング]えらびちゅう</language>
-		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]選択中</language>
+		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:0]えらびちゅう</language>
+		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:0]選択中</language>
 	</row>
 
 	<row id="POKETRADE_STR2_15">
-		<language name="JPN" width="256">[BD:02:Ｘセンタリング]けっていずみ</language>
-		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]決定済み</language>
+		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:0]けっていずみ</language>
+		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:0]決定済み</language>
 	</row>
 
 	<row id="POKETRADE_STR2_16">

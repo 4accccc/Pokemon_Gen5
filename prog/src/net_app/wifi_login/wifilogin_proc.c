@@ -367,6 +367,16 @@ static void _exitEnd( WIFILOGIN_WORK* pWork)
   }
 }
 
+static void _exitEnd2( WIFILOGIN_WORK* pWork)
+{
+  if( !WIFILOGIN_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork) ){
+    return;
+  }
+  if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)){
+    _CHANGE_STATE(pWork, _modeFadeStart);
+  }
+}
+
 //------------------------------------------------------------------
 /**
  * $brief   終了確認メッセージ  WIFIP2PMATCH_MODE_EXIT_WAIT
@@ -799,8 +809,12 @@ static void _modeDifferDSWait(WIFILOGIN_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _profileIDCheck(WIFILOGIN_WORK* pWork)
 {
+  if(0){  ///EURA検査
+    WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0018);
+    _CHANGE_STATE(pWork,_exitEnd2);
+  }
   // 初めての場合
-  if( !DWC_CheckHasProfile( WifiList_GetMyUserInfo(pWork->pList) ) )
+  else if( !DWC_CheckHasProfile( WifiList_GetMyUserInfo(pWork->pList) ) )
   {
     pWork->bInitMessage=TRUE;
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0003);

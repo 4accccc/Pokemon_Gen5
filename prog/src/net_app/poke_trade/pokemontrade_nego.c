@@ -169,6 +169,7 @@ void POKE_GTS_DirectAddPokemon(POKEMON_TRADE_WORK* pWork,int index,const POKEMON
     pWork->GTSSelectPP[1][index] = GFL_HEAP_AllocClearMemory( pWork->heapID, POKETOOL_GetWorkSize() );
   }
   GFL_STD_MemCopy(pp,pWork->GTSSelectPP[1][index],POKETOOL_GetWorkSize());
+
 }
 
 //ポケモン追加
@@ -186,6 +187,9 @@ static int _addPokemon(POKEMON_TRADE_WORK* pWork,int side,int index,int boxno,co
         pWork->GTSSelectPP[side][i] = GFL_HEAP_AllocClearMemory( pWork->heapID, POKETOOL_GetWorkSize() );
       }
       GFL_STD_MemCopy(pp,pWork->GTSSelectPP[side][i],POKETOOL_GetWorkSize());
+
+      POKEMONTRADE_NEGO_SlideInit(pWork, side, (POKEMON_PARAM*)pp);
+
       return i;
     }
   }
@@ -388,7 +392,7 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
 
 void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL bSelected)
 {
-  int sidex[] = {5, 21};
+  int sidex[] = {4, 21};
   int i=0,lv;
   int frame = GFL_BG_FRAME3_M;
   GFL_BMPWIN* pWin;
@@ -403,7 +407,7 @@ void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL 
   if(pWork->StatusWin[side]){
     GFL_BMPWIN_Delete(pWork->StatusWin[side]);
   }
-  pWork->StatusWin[side] = GFL_BMPWIN_Create(frame,	sidex[side], 16, 14, 2,	_POKEMON_MAIN_FRIENDGIVEMSG_PAL, GFL_BMP_CHRAREA_GET_F);
+  pWork->StatusWin[side] = GFL_BMPWIN_Create(frame,	sidex[side], 16, 10, 2,	_POKEMON_MAIN_FRIENDGIVEMSG_PAL, GFL_BMP_CHRAREA_GET_F);
 
   pWin = pWork->StatusWin[side];
   GFL_FONTSYS_SetColor( 5, 6, 0x0 );
@@ -1450,6 +1454,7 @@ static void _Select6MessageInit2(POKEMON_TRADE_WORK* pWork)
     case 0:  //はい
       GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
+      POKE_GTS_SelectStatusMessageDisp(pWork, 0, TRUE);
       pWork->NegoWaitTime = _GTSINFO03_WAIT;
       _CHANGE_STATE(pWork,_Select6MessageInit11);
       break;
@@ -1765,4 +1770,51 @@ void POKE_GTS_InitEruptedIconResource(POKEMON_TRADE_WORK* pWork)
     IRC_POKETRADE_InitMainObj(pWork);
   }
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   スライド初期化
+ * @param   
+ * @param   
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKEMONTRADE_NEGO_SlideInit(POKEMON_TRADE_WORK* pWork,int side,POKEMON_PARAM* pp)
+{
+
+  POKEMONTRADE_NEGOBG_SlideInit(pWork, side, pp);
+  POKEMONTRADE_NEGOBG_SlideMessage(pWork, side, pp);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
+  IRCPOKETRADE_PokeCreateMcss(pWork, side, 1-side, pp, TRUE);
+  
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   スライドメイン
+ * @param   
+ * @param   
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+
+void POKEMONTRADE_NEGO_SlideMain(POKEMON_TRADE_WORK* pWork)
+{
+  int i;
+
+  for(i=0;i<2;i++){
+    if( pWork->SlideWindowTimer[i] > 0){
+      pWork->SlideWindowTimer[i]--;
+      if(pWork->SlideWindowTimer[i]==0){
+        POKEMONTRADE_NEGOBG_SlideMessageDel(pWork, i);
+        GFL_BG_FillScreen( GFL_BG_FRAME1_M, 0x0000, i*16, 0, 16, 24, GFL_BG_SCRWRT_PALNL );
+        GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
+        IRCPOKETRADE_PokeDeleteMcss(pWork, i);
+      }
+    }
+  }
+}
+
 
