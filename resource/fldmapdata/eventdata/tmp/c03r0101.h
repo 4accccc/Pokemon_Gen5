@@ -9,6 +9,7 @@
 #ifndef ZONE_C03R0101_EVC_H
 #define ZONE_C03R0101_EVC_H
 
+#define C03R0101_BLACKMONO_01              0
 
 #endif //ZONE_C03R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
