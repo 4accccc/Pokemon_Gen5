@@ -347,6 +347,16 @@ EVENT_START ev_union
     ENDIF
   ENDIF
 
+  // レポート処理
+  IF $room_in == TRUE THEN
+    // レポートを書く
+    _REPORT_EVENT_CALL_WIRELESS( ret )
+    // 書き込みに失敗
+    IF $ret != SCR_REPORT_OK THEN
+      $room_in = FALSE
+    ENDIF
+  ENDIF
+
   // フィールドマップ通信終了処理
   IF $room_in == TRUE THEN
     _FIELD_COMM_EXIT_EVENT_CALL( ret )
@@ -354,16 +364,6 @@ EVENT_START ev_union
     IF $ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
       $room_in = FALSE
     ELSIF $ret == SCR_FIELD_COMM_EXIT_ERROR THEN
-      $room_in = FALSE
-    ENDIF
-  ENDIF
-
-  // レポート処理
-  IF $room_in == TRUE THEN
-    // レポートを書く
-    _REPORT_EVENT_CALL_WIRELESS( ret )
-    // 書き込みに失敗
-    IF $ret != SCR_REPORT_OK THEN
       $room_in = FALSE
     ENDIF
   ENDIF
