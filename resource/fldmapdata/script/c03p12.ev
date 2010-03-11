@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c03p12.h"
-  //.include  "c03p12.h"
+  .include  "c03p12.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,11 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c03p12
+_EVENT_DATA		ev_c03p12_badman1_01
+_EVENT_DATA		ev_c03p12_badman2_01
+_EVENT_DATA		ev_bg_c03p12_sign1_01
+_EVENT_DATA		ev_c03p12_sunglasses_01
+_EVENT_DATA		ev_pos_c03p12_sunglasses_01
 _EVENT_DATA_END
 
 
@@ -30,9 +34,183 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*			BADMAN  C03P12									  */
 /**************************************************************/
-ev_c03p12:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_c03p12_badman1_01
+_TALK_START_TURN_NOT()
+	_BALLOONWIN_OBJMSG_POS( msg_c03p12_badman1_01 , C03P12_BADMAN1_01 ,POS_UL )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
 
+/**************************************************************/
+/*			BADMAN2  C03P12									  */
+/**************************************************************/
+EVENT_START		ev_c03p12_badman2_01
+_TALK_START_TURN_NOT()
+	_BALLOONWIN_OBJMSG_POS( msg_c03p12_badman2_01 , C03P12_BADMAN2_01 ,POS_UL )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*			BG SIGN1	C03P12								  */
+/**************************************************************/
+EVENT_START		ev_bg_c03p12_sign1_01
+	_EASY_BGWIN_MSG( msg_c03p12_sign1_01,TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/*		SUNGLASSES		C03P12								  */
+/**************************************************************/
+EVENT_START		ev_c03p12_sunglasses_01
+_TALK_OBJ_START()
+	//フラッシュを未取得なら
+	IF $WK_SCENE_C03P12 == 0 THEN
+		_BALLOONWIN_OBJMSG_POS( msg_c03p12_sunglasses_03, C03P12_SUNGLASSES_01 ,POS_UL )
+		_MSGWIN_CLOSE()
+		
+		_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN70, 1 )
+		
+		_BALLOONWIN_OBJMSG_POS( msg_c03p12_sunglasses_04, C03P12_SUNGLASSES_01 ,POS_UL )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+		//========================================/
+		
+		//POS解除
+		$WK_SCENE_C03P12 = 1
+		
+		//========================================/
+	
+	ELSE
+	//フラッシュ取得済みなら
+		_BALLOONWIN_OBJMSG_POS( msg_c03p12_sunglasses_04, C03P12_SUNGLASSES_01 ,POS_UL )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		SUNGLASSES	POSイベント								  */
+/**************************************************************/
+EVENT_START		ev_pos_c03p12_sunglasses_01
+
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	
+	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ )
+
+	//ドリャー！
+	_GIZAWIN_OBJMSG_POS( msg_c03p12_sunglasses_01 , C03P12_SUNGLASSES_01, POS_UL )
+	_GIZAWIN_CLOSE()
+
+	SWITCH $LWK_POSX
+	CASE 14 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_gyoe )
+		_OBJ_ANIME( C03P12_SUNGLASSES_01, anm_sun_come14 )
+		_OBJ_ANIME_WAIT()
+	CASE 15 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_gyoe )
+		_OBJ_ANIME( C03P12_SUNGLASSES_01, anm_sun_come15 )
+		_OBJ_ANIME_WAIT()
+	CASE 16 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_gyoe )
+		_OBJ_ANIME( C03P12_SUNGLASSES_01, anm_sun_come16 )
+		_OBJ_ANIME_WAIT()
+	CASE 17 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_gyoe )
+		_OBJ_ANIME( C03P12_SUNGLASSES_01, anm_sun_come17 )
+		_OBJ_ANIME_WAIT()
+	CASE 18 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_gyoe )
+		_OBJ_ANIME( C03P12_SUNGLASSES_01, anm_sun_come18 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+
+	_BALLOONWIN_OBJMSG_POS( msg_c03p12_sunglasses_02, C03P12_SUNGLASSES_01 ,POS_UL )
+	_MSGWIN_CLOSE()
+	
+	//フラッシュ入手
+	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN70, 1 )
+
+	_BALLOONWIN_OBJMSG_POS( msg_c03p12_sunglasses_04, C03P12_SUNGLASSES_01 ,POS_UL )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+	SWITCH $LWK_POSX
+	CASE 15 THEN
+		_OBJ_ANIME( C03P12_SUNGLASSES_01, anm_sun_leave15 )
+		_OBJ_ANIME_WAIT()
+	CASE 16 THEN
+		_OBJ_ANIME( C03P12_SUNGLASSES_01, anm_sun_leave16 )
+		_OBJ_ANIME_WAIT()
+	CASE 17 THEN
+		_OBJ_ANIME( C03P12_SUNGLASSES_01, anm_sun_leave17 )
+		_OBJ_ANIME_WAIT()
+	CASE 18 THEN
+		_OBJ_ANIME( C03P12_SUNGLASSES_01, anm_sun_leave18 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+
+	//========================================/
+	
+	//POS解除
+	$WK_SCENE_C03P12 = 1
+	
+	//========================================/
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//		アニメ処理
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sun_come14
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sun_come15
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sun_come16
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sun_come17
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sun_come18
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sun_leave15
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sun_leave16
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sun_leave17
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sun_leave18
+	_ANIME_DATA	AC_WALK_L_8F,4
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0

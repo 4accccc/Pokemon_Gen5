@@ -837,6 +837,13 @@ EVENT_START		ev_pos_d02r0101_event_05
 	_OBJ_ANIME( D02R0101_LEADER3_01, anm_up_walk )
 	_OBJ_ANIME_WAIT()
 
+	//========================================/
+	
+	//
+	_FLAG_RESET(SYS_FLAG_BGM_TOUNAN) //ìêìÔéñåèÇÃBGMÇÉäÉZÉbÉg
+	
+	//========================================/
+
 	_OBJ_DEL(D02R0101_SAGE5_01)
 	_OBJ_DEL(D02R0101_HAKAIM1_01)
 	_OBJ_DEL(D02R0101_HAKAIW1_01)

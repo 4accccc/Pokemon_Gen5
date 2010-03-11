@@ -53,7 +53,7 @@ EVENT_END
 /*	H01R0101	MOUNTAINの会話スクリプト					  */
 /**************************************************************/
 EVENT_START		ev_h01r0101_mountain_01
-	_EASY_TALK_ITEM_EVENT(ITEM_SENSEINOTUME, 1, FH_01, msg_h01r0101_mountain_01, msg_h01r0101_mountain_02, msg_h01r0101_mountain_01 )
+	_EASY_TALK_ITEM_EVENT(ITEM_SENSEINOTUME, 1, FE_H01R0101_ITEMGET_01, msg_h01r0101_mountain_01, msg_h01r0101_mountain_02, msg_h01r0101_mountain_02 )
 EVENT_END
 
 /**************************************************************/

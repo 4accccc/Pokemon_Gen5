@@ -22,6 +22,7 @@ _EVENT_DATA		ev_c03p17_badman_01
 _EVENT_DATA   ev_zone_c03p17
 _EVENT_DATA   ev_init_c03p17
 _EVENT_DATA   ev_recover_c03p17
+_EVENT_DATA		ev_c03p17_assistantm_01
 _EVENT_DATA_END
 
 
@@ -70,3 +71,66 @@ EVENT_START		ev_c03p17_badman_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_badman_01 )
 EVENT_END
 
+/**************************************************************/
+/* 			ASSISTANTM	C03P17									  */
+/**************************************************************/
+EVENT_START		ev_c03p17_assistantm_01
+_TALK_OBJ_START()
+	
+	//いしを貰った場合
+	IF FLAG_ON( FE_C03P17_ITEMGET_01 ) THEN
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_assistantm_05 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	//もらっていない場合
+	ELSE
+		DEFINE_LOCAL	LWK_SELECT
+		//ブロッコ　スチック　ファウンの３びきは
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_assistantm_01 )
+		//三択表示・ブロッコ　スチック　ファウン
+   		_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, LWK_SELECT )
+	
+		_BMPMENU_MAKE_LIST( msg_c03p17_select_01, 0 )	//『ブロッコ』
+		_BMPMENU_MAKE_LIST( msg_c03p17_select_02, 1 )	//『スチック』
+		_BMPMENU_MAKE_LIST( msg_c03p17_select_03, 2 )	//『ファウン』
+		// メニュー表示
+		_BMPMENU_START()
+		_MSGWIN_CLOSE()
+
+		SWITCH $LWK_SELECT
+		CASE 0 THEN
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_assistantm_02 )
+			_MSGWIN_CLOSE()
+			
+			_ITEM_EVENT_KEYWAIT( ITEM_RIIHUNOISI, 1 )
+			_FLAG_SET( FE_C03P17_ITEMGET_01 )
+
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_assistantm_05 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+		CASE 1 THEN
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_assistantm_03 )
+			_MSGWIN_CLOSE()
+			
+			_ITEM_EVENT_KEYWAIT( ITEM_HONOONOISI, 1 )
+			_FLAG_SET( FE_C03P17_ITEMGET_01 )
+
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_assistantm_05 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		CASE 2 THEN
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_assistantm_04 )
+			_MSGWIN_CLOSE()
+			
+			_ITEM_EVENT_KEYWAIT( ITEM_MIZUNOISI, 1 )
+			_FLAG_SET( FE_C03P17_ITEMGET_01 )
+
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_assistantm_05 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		ENDSWITCH
+	
+	ENDIF
+
+EVENT_END
