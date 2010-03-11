@@ -501,9 +501,9 @@ const u8 IconPalAtr[] = {
 	0x00,		// 491 : poke_icon_491_m
 	0x01,		// 492 : poke_icon_492_land_m
 	0x00,		// 493 : poke_icon_493_normal_m
-	0x00,		// 494 : poke_icon_551_m
-	0x00,		// 495 : poke_icon_552_m
-	0x00,		// 496 : poke_icon_553_m
+	0x01,		// 494 : poke_icon_551_m
+	0x01,		// 495 : poke_icon_552_m
+	0x01,		// 496 : poke_icon_553_m
 	0x00,		// 497 : poke_icon_554_m
 	0x00,		// 498 : poke_icon_555_m
 	0x00,		// 499 : poke_icon_556_m
@@ -517,18 +517,18 @@ const u8 IconPalAtr[] = {
 	0x00,		// 507 : poke_icon_592_m
 	0x00,		// 508 : poke_icon_546_m
 	0x00,		// 509 : poke_icon_547_m
-	0x00,		// 510 : poke_icon_593_m
-	0x00,		// 511 : poke_icon_594_m
-	0x00,		// 512 : poke_icon_595_m
-	0x00,		// 513 : poke_icon_596_m
+	0x01,		// 510 : poke_icon_593_m
+	0x01,		// 511 : poke_icon_594_m
+	0x02,		// 512 : poke_icon_595_m
+	0x02,		// 513 : poke_icon_596_m
 	0x00,		// 514 : poke_icon_597_m
 	0x00,		// 515 : poke_icon_598_m
 	0x00,		// 516 : poke_icon_540_m
 	0x00,		// 517 : poke_icon_516_m
 	0x00,		// 518 : poke_icon_514_m
 	0x00,		// 519 : poke_icon_518_m
-	0x00,		// 520 : poke_icon_512_m
-	0x00,		// 521 : poke_icon_548_m
+	0x10,		// 520 : poke_icon_512_m
+	0x01,		// 521 : poke_icon_548_m
 	0x00,		// 522 : poke_icon_549_m
 	0x00,		// 523 : poke_icon_550_m
 	0x00,		// 524 : poke_icon_570_m
@@ -549,13 +549,13 @@ const u8 IconPalAtr[] = {
 	0x00,		// 539 : poke_icon_588_m
 	0x00,		// 540 : poke_icon_575_m
 	0x00,		// 541 : poke_icon_576_m
-	0x00,		// 542 : poke_icon_507_m
-	0x00,		// 543 : poke_icon_524_m
-	0x00,		// 544 : poke_icon_508_m
+	0x01,		// 542 : poke_icon_507_m
+	0x01,		// 543 : poke_icon_524_m
+	0x01,		// 544 : poke_icon_508_m
 	0x00,		// 545 : poke_icon_521_m
 	0x00,		// 546 : poke_icon_522_m
-	0x00,		// 547 : poke_icon_517_m
-	0x00,		// 548 : poke_icon_519_m
+	0x01,		// 547 : poke_icon_517_m
+	0x01,		// 548 : poke_icon_519_m
 	0x00,		// 549 : poke_icon_603_black_m
 	0x00,		// 550 : poke_icon_528_m
 	0x00,		// 551 : poke_icon_503_action_m
@@ -583,9 +583,9 @@ const u8 IconPalAtr[] = {
 	0x00,		// 573 : poke_icon_606_m
 	0x00,		// 574 : poke_icon_607_m
 	0x00,		// 575 : poke_icon_608_m
-	0x00,		// 576 : poke_icon_583_m
-	0x00,		// 577 : poke_icon_584_m
-	0x00,		// 578 : poke_icon_585_m
+	0x01,		// 576 : poke_icon_583_m
+	0x01,		// 577 : poke_icon_584_m
+	0x01,		// 578 : poke_icon_585_m
 	0x00,		// 579 : poke_icon_577_m
 	0x00,		// 580 : poke_icon_578_m
 	0x00,		// 581 : poke_icon_560_m
@@ -600,9 +600,9 @@ const u8 IconPalAtr[] = {
 	0x00,		// 590 : poke_icon_572_m
 	0x00,		// 591 : poke_icon_580_m
 	0x00,		// 592 : poke_icon_581_m
-	0x00,		// 593 : poke_icon_541_m
-	0x00,		// 594 : poke_icon_542_m
-	0x00,		// 595 : poke_icon_509_m
+	0x01,		// 593 : poke_icon_541_m
+	0x01,		// 594 : poke_icon_542_m
+	0x02,		// 595 : poke_icon_509_m
 	0x00,		// 596 : poke_icon_513_m
 	0x00,		// 597 : poke_icon_536_m
 	0x00,		// 598 : poke_icon_501_m
@@ -616,9 +616,9 @@ const u8 IconPalAtr[] = {
 	0x00,		// 606 : poke_icon_579_m
 	0x00,		// 607 : poke_icon_619_m
 	0x00,		// 608 : poke_icon_620_m
-	0x00,		// 609 : poke_icon_563_m
-	0x00,		// 610 : poke_icon_564_m
-	0x00,		// 611 : poke_icon_565_m
+	0x02,		// 609 : poke_icon_563_m
+	0x02,		// 610 : poke_icon_564_m
+	0x02,		// 611 : poke_icon_565_m
 	0x00,		// 612 : poke_icon_529_m
 	0x00,		// 613 : poke_icon_530_m
 	0x00,		// 614 : poke_icon_531_m
@@ -635,7 +635,7 @@ const u8 IconPalAtr[] = {
 	0x00,		// 625 : poke_icon_582_m
 	0x00,		// 626 : poke_icon_632_m
 	0x00,		// 627 : poke_icon_633_m
-	0x00,		// 628 : poke_icon_566_m
+	0x01,		// 628 : poke_icon_566_m
 	0x00,		// 629 : poke_icon_567_m
 	0x00,		// 630 : poke_icon_636_m
 	0x00,		// 631 : poke_icon_639_m
