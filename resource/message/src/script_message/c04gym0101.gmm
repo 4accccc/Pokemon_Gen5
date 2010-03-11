@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T22:21:53"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T18:36:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -361,13 +361,13 @@
 ほかの　ポケモンと　いれかわるの▼
 もっとも
 ほかの　ポケモンが　いないときは▽
-そのまま　なんだけど</language>
+そのまま　なんだけど▼</language>
 		<language name="JPN_KANJI" width="256">その「ボルトチェンジ」はね……▼
 相手に　攻撃を　したあと
 他の　ポケモンと　入れ替わるの▼
 もっとも
 他の　ポケモンが　いないときは▽
-そのまま　なんだけど</language>
+そのまま　なんだけど▼</language>
 	</row>
 
 	<row id="msg_c04gym0101_leader_06">
@@ -439,10 +439,10 @@ prince_01</attribute>
 prince_01</attribute>
 		<language name="JPN" width="256">きみの　たたかいかた
 カミツレさまに　みおとり　しないな！[BE:00:ページ切り替え（行送り）]
-まさに　エレガントで　ゴージャスだ</language>
+まさに　エレガントで　ゴージャスだ▼</language>
 		<language name="JPN_KANJI" width="256">きみの　闘い方
 カミツレさまに　見劣りしないな！[BE:00:ページ切り替え（行送り）]
-まさに　エレガントで　ゴージャスだ</language>
+まさに　エレガントで　ゴージャスだ▼</language>
 	</row>
 
 	<row id="msg_c04gym0101_prince1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -495,10 +495,10 @@ princess_01</attribute>
 princess_01</attribute>
 		<language name="JPN" width="256">アナタのような　けだかく　つよい
 トレーナーの　おあいてが　できて[BE:00:ページ切り替え（行送り）]
-あたくし　こうえい　ですわ！</language>
+あたくし　こうえい　ですわ！▼</language>
 		<language name="JPN_KANJI" width="256">アナタのような　気高く　強い
 トレーナーの　お相手が　できて[BE:00:ページ切り替え（行送り）]
-あたくし　光栄ですわ！</language>
+あたくし　光栄ですわ！▼</language>
 	</row>
 
 	<row id="msg_c04gym0101_princess1_04">
