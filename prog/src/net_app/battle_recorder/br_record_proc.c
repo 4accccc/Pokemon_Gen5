@@ -553,11 +553,13 @@ static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, 
 	int i;
 	int monsno;
 	int form;
+	int gender;
 	int no = 0;
 	
 	int gra_id;
 	int monsno_tbl[ HEADER_MONSNO_MAX ];
 	int form_tbl[ HEADER_MONSNO_MAX ];
+	int gender_tbl[ HEADER_MONSNO_MAX ];
 	int type;
   ARCHANDLE *p_handle;
   GFL_CLWK_DATA cldata;
@@ -592,6 +594,7 @@ static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, 
 		int temp_no = 0;
 		int temp_monsno = 0;
 		int temp_form = 0;
+		int temp_gender = 0;
 		int add = 6;
 		int si = 0;
 		int ei = add;
@@ -610,17 +613,20 @@ static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, 
 				
 				temp_monsno = RecHeader_ParamGet( p_header, RECHEAD_IDX_MONSNO, i );
 				temp_form	= RecHeader_ParamGet( p_header, RECHEAD_IDX_FORM_NO, i );
+				temp_gender	= RecHeader_ParamGet( p_header, RECHEAD_IDX_GENDER, i );
 
 				if ( temp_monsno == 0 ){ continue; }
 				
 				monsno_tbl[ temp_no ] = temp_monsno;
 				form_tbl[ temp_no]	  = temp_form;
+				gender_tbl[ temp_no]	  = temp_gender;
 				
 				temp_no++;
 			}
 			for ( i = temp_no; i < ei; i++ ){	
 				monsno_tbl[ temp_no ] = 0;
 				form_tbl[ temp_no ]	  = 0;
+				gender_tbl[ temp_no ]	  = 0;
 				temp_no++;
 			}		
 			si += add;
@@ -639,10 +645,10 @@ static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, 
 		if ( monsno == 0 ){ continue; }		///< ‚½‚Ü‚²–³‚µ
 		
 		form = form_tbl[ i ];
-		
+		gender = gender_tbl[ i ];
 
     p_wk->res_icon_chr[i] = GFL_CLGRP_CGR_Register( p_handle,
-              POKEICON_GetCgxArcIndexByMonsNumber( monsno, form, 0 ),
+              POKEICON_GetCgxArcIndexByMonsNumber( monsno, form, gender, 0 ),
               FALSE, CLSYS_DRAW_MAIN, heapID );
   
     GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
@@ -655,7 +661,7 @@ static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, 
           p_wk->res_icon_chr[i],p_wk->res_icon_plt,p_wk->res_icon_cel,
             &cldata, CLSYS_DEFREND_MAIN, heapID );
 		
-    GFL_CLACT_WK_SetPlttOffs( p_wk->p_icon[ no ], POKEICON_GetPalNum( monsno, form, 0 ),
+    GFL_CLACT_WK_SetPlttOffs( p_wk->p_icon[ no ], POKEICON_GetPalNum( monsno, form, gender, 0 ),
         CLWK_PLTTOFFS_MODE_OAM_COLOR );
 
 		

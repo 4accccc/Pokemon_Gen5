@@ -122,7 +122,7 @@ typedef struct _BATTLE_REC_WORK {
 //--------------------------------------------------------------
 typedef struct _BATTLE_REC_HEADER{
   u16 monsno[HEADER_MONSNO_MAX];  ///< ポケモン番号(表示する必要がないのでタマゴの場合は0)
-  u8  form_no[HEADER_MONSNO_MAX]; ///< ポケモンのフォルム番号
+  u8  form_no_and_sex[HEADER_MONSNO_MAX]; ///< 6..0bit目ポケモンのフォルム番号　7bit目性別（0：♂orなし 1：♀）
 
   u16 battle_counter; ///< 連勝数
   u8  mode;           ///< 戦闘モード(ファクトリー50、ファクトリー100、通信対戦...)

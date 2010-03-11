@@ -1309,7 +1309,7 @@ static void CreateClactResource( VSMLIST_WORK * wk )
     if( wk->pp[i] != NULL ){
 			index =  POKEICON_GetCgxArcIndex( PP_GetPPPPointerConst(wk->pp[i]) );
 		}else{
-			index =  POKEICON_GetCgxArcIndexByMonsNumber( 0, 0, 0 );
+			index =  POKEICON_GetCgxArcIndexByMonsNumber( 0, 0, 0, 0 );
 		}
 		res[i] = GFL_CLGRP_CGR_Register( ah, index, FALSE, CLSYS_DRAW_MAIN, HEAPID_VS_MULTI_LIST );
 	}

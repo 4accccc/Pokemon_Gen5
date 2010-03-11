@@ -421,7 +421,7 @@ static void BPL_ClactPokeLoad( BPLIST_WORK * wk )
     }else{
       res[i] = GFL_CLGRP_CGR_Register(
                 ah,
-                POKEICON_GetCgxArcIndexByMonsNumber(0,0,0),
+                POKEICON_GetCgxArcIndexByMonsNumber(0,0,0,0),
                 FALSE,
                 CLSYS_DRAW_SUB,
                 wk->dat->heap );
@@ -823,7 +823,7 @@ static void BPL_PokeIconPaletteChg( BPLIST_WORK * wk )
 // CLWK_PLTTOFFS_MODE_OAM_COLOR
     GFL_CLACT_WK_SetPlttOffs(
       wk->clwk[BPL_CA_POKE1+i],
-      POKEICON_GetPalNum(wk->poke[pos].mons,wk->poke[pos].form,wk->poke[pos].egg),
+      POKEICON_GetPalNum(wk->poke[pos].mons,wk->poke[pos].form,wk->poke[pos].sex,wk->poke[pos].egg),
       CLWK_PLTTOFFS_MODE_PLTT_TOP );
   }
 }

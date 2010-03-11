@@ -164,7 +164,7 @@ GMEVENT * EVENT_NameInput_PartyPoke(
     POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, party_index );
     MISC        *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gdata) );
     u32        monsno = PP_Get( pp, ID_PARA_monsno, NULL );
-    u32        formno = PP_Get( pp, ID_PARA_form_no, NULL );
+    u32        formno = PP_Get( pp, ID_PARA_form_no, NULL ) | ( PP_Get( pp, ID_PARA_sex, NULL ) << 8 );
     GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
     work->nameInParam = NAMEIN_AllocParam( 
         HEAPID_PROC, NAMEIN_POKEMON, monsno, formno, NAMEIN_POKEMON_LENGTH, NULL, misc );

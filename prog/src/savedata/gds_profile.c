@@ -177,6 +177,14 @@ int GDS_Profile_GetFormNo(const GDS_PROFILE_PTR gpp)
 #endif
 }
 
+int GDS_Profile_GetPokeSex(const GDS_PROFILE_PTR gpp)
+{
+	if(gpp->sex != PM_MALE && gpp->sex != PM_FEMALE){
+		return PM_MALE;	//ƒGƒ‰[ˆ—
+	}
+	return gpp->sex;
+}
+
 int GDS_Profile_GetEggFlag(const GDS_PROFILE_PTR gpp)
 {
 	if(gpp->egg_flag > 1){

@@ -129,7 +129,7 @@ static inline void DEBUG_BR_OUTLINE_SetData( BR_OUTLINE_DATA *p_data )
     for( j = 0 ; j < GT_HEADER_MONSNO_MAX; j++ )
     {
       p_data->data[i].head.monsno[j]  = i+1;
-      p_data->data[i].head.form_no[j] = 0;
+      p_data->data[i].head.form_no_and_sex[j] = 0;
     }
   }
   p_data->data_num  = i;

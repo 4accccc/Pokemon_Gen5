@@ -82,9 +82,10 @@ typedef enum
 typedef struct{
   BTLV_INPUT_DIR_PARAM          bidp[ 2 ][ BTLV_INPUT_DIR_MAX ];
   BTLV_INPUT_CENTER_BUTTON_TYPE center_button_type;
-  BOOL                          trainer_flag;                    //対戦相手がトレーナーかどうか
+  BOOL                          trainer_flag;                         //対戦相手がトレーナーかどうか
   int                           mons_no[ BTLV_INPUT_POKEICON_MAX ];   //繰り出しているポケモンナンバー
   int                           form_no[ BTLV_INPUT_POKEICON_MAX ];   //繰り出しているポケモンのフォルムナンバー
+  int                           sex[ BTLV_INPUT_POKEICON_MAX ];       //繰り出しているポケモンの性別
   BtlvMcssPos                   pos;
 }BTLV_INPUT_COMMAND_PARAM;
 

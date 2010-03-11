@@ -728,7 +728,7 @@ static void Th_Award_PokeiconInit( TH_AWARD_WORK* work )
       }
       work->pokeicon_res[i][OBJ_RES_NCG] = GFL_CLGRP_CGR_Register(
                                        handle,
-                                       POKEICON_GetCgxArcIndexByMonsNumber( monsno, formno, egg ),
+                                       POKEICON_GetCgxArcIndexByMonsNumber( monsno, formno, sex, egg ),
                                        FALSE,
                                        CLSYS_DRAW_MAIN,
                                        work->heap_id );
@@ -751,7 +751,7 @@ static void Th_Award_PokeiconInit( TH_AWARD_WORK* work )
       GFL_CLACT_WK_SetAnmSeq( work->pokeicon_clwk[i], 1 );  // アニメシーケンス( 0=瀕死, 1=HP最大, 2=HP緑, 3=HP黄, 4=HP赤, 5=状態異常 )
       GFL_CLACT_WK_SetAutoAnmFlag( work->pokeicon_clwk[i], FALSE );
       {
-        u8 pal_num = POKEICON_GetPalNum( monsno, formno, egg );
+        u8 pal_num = POKEICON_GetPalNum( monsno, formno, sex, egg );
         GFL_CLACT_WK_SetPlttOffs( work->pokeicon_clwk[i], pal_num, CLWK_PLTTOFFS_MODE_OAM_COLOR );
       }
     }

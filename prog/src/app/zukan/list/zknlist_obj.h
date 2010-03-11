@@ -222,12 +222,13 @@ extern void ZKNLISTOBJ_PutListPosPokeGra( ZKNLISTMAIN_WORK * wk, s16 pos );
  * @param		wk			図鑑リストワーク
  * @param		idx			OBJ Index
  * @param		form		フォルム
+ * @param		sex		  性別
  * @param		disp		表示画面
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void ZKNLISTOBJ_ChgPokeIcon( ZKNLISTMAIN_WORK * wk, u32 idx, u16 mons, u16 form, BOOL disp );
+extern void ZKNLISTOBJ_ChgPokeIcon( ZKNLISTMAIN_WORK * wk, u32 idx, u16 mons, u16 form, u16 sex, BOOL disp );
 
 //extern void ZKNLISTOBJ_ScrollPokeIcon( ZKNLISTMAIN_WORK * wk, s16 mv );
 

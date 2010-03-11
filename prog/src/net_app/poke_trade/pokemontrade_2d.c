@@ -1174,8 +1174,7 @@ static void  _PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
   
   for(i=0;i < MONSNO_MAX; i++){ //@todo フォルム違いを持ってくる必要あり、雌雄書き分けにも対応する必要あり
   
-    //arcIndex = POKEICON_GetCgxArcIndexByMonsNumber( i, 0, 0, 0 );
-    arcIndex = POKEICON_GetCgxArcIndexByMonsNumber( i, 0, 0 );
+    arcIndex = POKEICON_GetCgxArcIndexByMonsNumber( i, 0, 0, 0 );
     pMem = GFL_ARCHDL_UTIL_LoadBGCharacter(pokeicon_ah, arcIndex, FALSE, &pCharData, pWork->heapID);
 
     GFL_STD_MemCopy(pCharData->pRawData,&pWork->pCharMem[4*8*4*4*i] , 4*8*4*4);

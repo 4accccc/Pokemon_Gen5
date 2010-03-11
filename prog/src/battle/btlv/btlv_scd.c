@@ -482,6 +482,7 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
         {
           bicp.mons_no[ 0 ] = BPP_GetMonsNo( bpp );
           bicp.form_no[ 0 ] = BPP_GetValue( bpp, BPP_FORM );
+          bicp.sex[ 0 ]     = BPP_GetValue( bpp, BPP_SEX );
         }
         break;
       case BTL_RULE_TRIPLE:    ///< トリプル
@@ -490,6 +491,7 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
         {
           bicp.mons_no[ 2 ] = BPP_GetMonsNo( bpp );
           bicp.form_no[ 2 ] = BPP_GetValue( bpp, BPP_FORM );
+          bicp.sex[ 2 ]     = BPP_GetValue( bpp, BPP_SEX );
         }
       /* fallthru */
       case BTL_RULE_DOUBLE:    ///< ダブル
@@ -499,12 +501,14 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
         {
           bicp.mons_no[ 0 ] = BPP_GetMonsNo( bpp );
           bicp.form_no[ 0 ] = BPP_GetValue( bpp, BPP_FORM );
+          bicp.sex[ 0 ]     = BPP_GetValue( bpp, BPP_SEX );
         }
         bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_MAIN_ViewPosToBtlPos( wk->mainModule, BTLV_MCSS_POS_C ) );
         if( BPP_IsDead( bpp ) == FALSE )
         {
           bicp.mons_no[ 1 ] = BPP_GetMonsNo( bpp );
           bicp.form_no[ 1 ] = BPP_GetValue( bpp, BPP_FORM );
+          bicp.sex[ 1 ]     = BPP_GetValue( bpp, BPP_SEX );
         }
         bicp.pos = ( bicp.pos - BTLV_MCSS_POS_A ) / 2;
         break;

@@ -21,6 +21,10 @@
 ///録画ヘッダに格納するポケモン番号の最大要素数
 #define GT_HEADER_MONSNO_MAX		(12)
 
+#define GT_HEADER_FORM_NO_MASK ( 0x7f )      ///<フォルムナンバーを取り出すためのマスク値
+#define GT_HEADER_GENDER_MASK  ( 0x80 )      ///<性別を取り出すためのマスク値
+#define GT_HEADER_GENDER_SHIFT ( 7 )         ///<性別を取り出すためのシフト値
+
 #define	GT_WAZA_TEMOTI_MAX		(4)		///<1体のポケモンがもてる技の最大値
 
 #define GT_PERSON_NAME_SIZE	7	// 人物の名前の長さ（自分も含む）

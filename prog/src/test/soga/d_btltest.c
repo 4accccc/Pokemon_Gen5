@@ -340,9 +340,17 @@ static GFL_PROC_RESULT DebugBattleTestProcMain( GFL_PROC * proc, int * seq, void
 
   if( trg & PAD_BUTTON_A )
   {
-    STRBUF*  str = GFL_STR_CreateBuffer( 100, wk->heapID );
-    TT_TrainerMessageGet( 1, 0, str, wk->heapID );
-    GFL_STR_DeleteBuffer( str );
+    set_pokemon( wk );
+  }
+
+  if( trg & PAD_BUTTON_B )
+  { 
+    del_pokemon( wk );
+  }
+
+  if( trg & PAD_BUTTON_Y )
+  { 
+    BTLV_MCSS_SetPaletteFade( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_BB, 16, 0, 0, 0 );
   }
 
   MoveCamera( wk );
@@ -596,6 +604,7 @@ static  void  set_pokemon( SOGA_WORK *wk )
     PP_Put( pp, ID_PARA_id_no, 0x10 );
     BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_AA );
     BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_BB );
+    BTLV_MCSS_SetPaletteFade( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_BB, 16, 16, 0, 0 );
 //    BTLV_EFFECT_SetGauge( pp, BTLV_MCSS_POS_AA );
 //    BTLV_EFFECT_SetGauge( pp, BTLV_MCSS_POS_BB );
 #else
@@ -614,8 +623,10 @@ static  void  set_pokemon( SOGA_WORK *wk )
 
 static  void  del_pokemon( SOGA_WORK *wk )
 {
-  BTLV_MCSS_Del( wk->bmw, pokemon_pos_table[ wk->position ][ 0 ] );
-  BTLV_MCSS_Del( wk->bmw, pokemon_pos_table[ wk->position ][ 1 ] );
+  BTLV_EFFECT_DelPokemon( BTLV_MCSS_POS_AA );
+  BTLV_EFFECT_DelPokemon( BTLV_MCSS_POS_BB );
+  //BTLV_MCSS_Del( wk->bmw, pokemon_pos_table[ wk->position ][ 0 ] );
+  //BTLV_MCSS_Del( wk->bmw, pokemon_pos_table[ wk->position ][ 1 ] );
 }
 
 #if 0

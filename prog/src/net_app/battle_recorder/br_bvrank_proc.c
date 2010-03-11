@@ -527,6 +527,7 @@ static void Br_Rank_CreatePokeIcon( BR_RANK_WORK *p_wk, GFL_CLUNIT *p_unit, HEAP
   ARCHANDLE *p_handle;
   u32 mons_tbl[ TEMOTI_POKEMAX ];
   u32 form_tbl[ TEMOTI_POKEMAX ];
+  u32 gender_tbl[ TEMOTI_POKEMAX ];
 
   //共通リソース読み込み
   p_handle  = GFL_ARC_OpenDataHandle( ARCID_POKEICON, GFL_HEAP_LOWID(heapID) );
@@ -552,20 +553,24 @@ static void Br_Rank_CreatePokeIcon( BR_RANK_WORK *p_wk, GFL_CLUNIT *p_unit, HEAP
       int idx;
       int monsno;
       int formno;
+      int gender;
       GFL_STD_MemClear( mons_tbl, sizeof(u32) * TEMOTI_POKEMAX );
       GFL_STD_MemClear( form_tbl, sizeof(u32) * TEMOTI_POKEMAX );
+      GFL_STD_MemClear( gender_tbl, sizeof(u32) * TEMOTI_POKEMAX );
       idx = 0;
       //@todo ダブルとシングルで詰め方が違う　
       for( k = 0; k < TEMOTI_POKEMAX; k++ )
       { 
         monsno  = p_wk->cp_data->data[ i ].head.monsno[ k ];
-        formno  = p_wk->cp_data->data[ i ].head.form_no[ k ];
+        formno  = p_wk->cp_data->data[ i ].head.form_no_and_sex[ k ] & GT_HEADER_FORM_NO_MASK;
+        gender  = ( p_wk->cp_data->data[ i ].head.form_no_and_sex[ k ] & GT_HEADER_GENDER_MASK ) >> GT_HEADER_GENDER_SHIFT;
         if( monsno == 0 )
         { 
           continue;
         }
         mons_tbl[idx]  = monsno;
         form_tbl[idx]  = formno;
+        gender_tbl[idx]  = gender;
         idx++;
       }
     }
@@ -575,7 +580,7 @@ static void Br_Rank_CreatePokeIcon( BR_RANK_WORK *p_wk, GFL_CLUNIT *p_unit, HEAP
       NAGI_Printf( "i %d j %d\n", i, j );
       //リソースをBR_RANK_LIST_LINE * TEMOTI_POKEMAX分読み込む
       p_wk->cgr[i][j] = GFL_CLGRP_CGR_Register( p_handle,
-					POKEICON_GetCgxArcIndexByMonsNumber( mons_tbl[j] == 0 ? 1: mons_tbl[j], form_tbl[i], FALSE ),
+					POKEICON_GetCgxArcIndexByMonsNumber( mons_tbl[j] == 0 ? 1: mons_tbl[j], form_tbl[i], gender_tbl[i], FALSE ),
           FALSE, CLSYS_DRAW_MAIN, heapID );
 
       //CLWK作成
@@ -584,7 +589,7 @@ static void Br_Rank_CreatePokeIcon( BR_RANK_WORK *p_wk, GFL_CLUNIT *p_unit, HEAP
       p_wk->p_poke[i][j]  = GFL_CLACT_WK_Create( p_unit,
             p_wk->cgr[i][j], p_wk->plt, p_wk->cel,
             &cldata, CLSYS_DRAW_MAIN, heapID );
-      GFL_CLACT_WK_SetPlttOffs( p_wk->p_poke[i][j], POKEICON_GetPalNum(mons_tbl[j] == 0 ? 1: mons_tbl[j], form_tbl[j], FALSE) , CLWK_PLTTOFFS_MODE_OAM_COLOR );
+      GFL_CLACT_WK_SetPlttOffs( p_wk->p_poke[i][j], POKEICON_GetPalNum(mons_tbl[j] == 0 ? 1: mons_tbl[j], form_tbl[j], gender_tbl[j], FALSE) , CLWK_PLTTOFFS_MODE_OAM_COLOR );
       GFL_CLACT_WK_SetObjMode( p_wk->p_poke[i][j], GX_OAM_MODE_XLU );
     }
   }
@@ -636,6 +641,7 @@ static void Br_Rank_ScrollPokeIcon( BR_RANK_WORK *p_wk, u32 list, s8 dir, HEAPID
   ARCHANDLE *p_handle;
   u32 mons_tbl[ TEMOTI_POKEMAX ];
   u32 form_tbl[ TEMOTI_POKEMAX ];
+  u32 gender_tbl[ TEMOTI_POKEMAX ];
   NNSG2dCharacterData *p_chr_data;
   void *p_chr_buff;
 
@@ -648,20 +654,24 @@ static void Br_Rank_ScrollPokeIcon( BR_RANK_WORK *p_wk, u32 list, s8 dir, HEAPID
       int idx;
       int monsno;
       int formno;
+      int gender;
       GFL_STD_MemClear( mons_tbl, sizeof(u32) * TEMOTI_POKEMAX );
       GFL_STD_MemClear( form_tbl, sizeof(u32) * TEMOTI_POKEMAX );
+      GFL_STD_MemClear( gender_tbl, sizeof(u32) * TEMOTI_POKEMAX );
       idx = 0;
       //@todo ダブルとシングルで詰め方が違う　
       for( k = 0; k < TEMOTI_POKEMAX; k++ )
       { 
         monsno  = p_wk->cp_data->data[ i + list ].head.monsno[ k ];
-        formno  = p_wk->cp_data->data[ i + list ].head.form_no[ k ];
+        formno  = p_wk->cp_data->data[ i + list ].head.form_no_and_sex[ k ] & GT_HEADER_FORM_NO_MASK;
+        gender  = ( p_wk->cp_data->data[ i + list ].head.form_no_and_sex[ k ] & GT_HEADER_GENDER_MASK ) >> GT_HEADER_GENDER_SHIFT;
         if( monsno == 0 )
         { 
           continue;
         }
         mons_tbl[idx]  = monsno;
         form_tbl[idx]  = formno;
+        gender_tbl[idx]  = gender;
         idx++;
       }
     }
@@ -725,31 +735,35 @@ static void Br_Rank_ScrollPokeIcon( BR_RANK_WORK *p_wk, u32 list, s8 dir, HEAPID
       int idx;
       int monsno;
       int formno;
+      int gender;
       GFL_STD_MemClear( mons_tbl, sizeof(u32) * TEMOTI_POKEMAX );
       GFL_STD_MemClear( form_tbl, sizeof(u32) * TEMOTI_POKEMAX );
+      GFL_STD_MemClear( gender_tbl, sizeof(u32) * TEMOTI_POKEMAX );
       idx = 0;
       //@todo ダブルとシングルで詰め方が違う　
       for( k = 0; k < TEMOTI_POKEMAX; k++ )
       { 
-        monsno  = p_wk->cp_data->data[i + list ].head.monsno[ k ];
-        formno  = p_wk->cp_data->data[i + list ].head.form_no[ k ];
+        monsno  = p_wk->cp_data->data[ i + list ].head.monsno[ k ];
+        formno  = p_wk->cp_data->data[ i + list ].head.form_no_and_sex[ k ] & GT_HEADER_FORM_NO_MASK;
+        gender  = ( p_wk->cp_data->data[ i + list ].head.form_no_and_sex[ k ] & GT_HEADER_GENDER_MASK ) >> GT_HEADER_GENDER_SHIFT;
         if( monsno == 0 )
         { 
           continue;
         }
         mons_tbl[idx]  = monsno;
         form_tbl[idx]  = formno;
+        gender_tbl[idx]  = gender;
         idx++;
       }
     }
 
     {
       NNSG2dImageProxy  img;
-      p_chr_buff  = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, POKEICON_GetCgxArcIndexByMonsNumber( mons_tbl[j] == 0 ? 1: mons_tbl[j], form_tbl[j], FALSE ), FALSE, &p_chr_data, GFL_HEAP_LOWID(heapID) );
+      p_chr_buff  = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, POKEICON_GetCgxArcIndexByMonsNumber( mons_tbl[j] == 0 ? 1: mons_tbl[j], form_tbl[j], gender_tbl[j], FALSE ), FALSE, &p_chr_data, GFL_HEAP_LOWID(heapID) );
       GFL_CLGRP_CGR_Replace( p_wk->cgr[ p_wk->cgr_idx ][j], p_chr_data );
       GFL_CLGRP_CGR_GetProxy( p_wk->cgr[ p_wk->cgr_idx ][j], &img );
       GFL_CLACT_WK_SetImgProxy( p_wk->p_poke[i][j], &img );
-      GFL_CLACT_WK_SetPlttOffs( p_wk->p_poke[i][j], POKEICON_GetPalNum(mons_tbl[j] == 0 ? 1: mons_tbl[j], form_tbl[j], FALSE) , CLWK_PLTTOFFS_MODE_OAM_COLOR );
+      GFL_CLACT_WK_SetPlttOffs( p_wk->p_poke[i][j], POKEICON_GetPalNum(mons_tbl[j] == 0 ? 1: mons_tbl[j], form_tbl[j], gender_tbl[j], FALSE) , CLWK_PLTTOFFS_MODE_OAM_COLOR );
       GFL_HEAP_FreeMemory( p_chr_buff );
     }
   }

@@ -1646,7 +1646,7 @@ static u32 MYSTERY_CARD_DATA_GetPltOfs( const MYSTERY_CARD_DATA *cp_wk )
     { 
       const GIFT_PACK_DATA *cp_data = MYSTERY_CARD_DATA_GetGiftBackData(cp_wk );
       const GIFT_PRESENT_POKEMON *cp_pokemon = &cp_data->data.pokemon;
-      return POKEICON_GetPalNum( cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->egg );
+      return POKEICON_GetPalNum( cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->egg );
     }
 
   default:
@@ -1670,7 +1670,7 @@ static u32 MYSTERY_CARD_DATA_GetResCgx( const MYSTERY_CARD_DATA *cp_wk )
     { 
       const GIFT_PACK_DATA *cp_data = MYSTERY_CARD_DATA_GetGiftBackData(cp_wk );
       const GIFT_PRESENT_POKEMON *cp_pokemon = &cp_data->data.pokemon;
-      return POKEICON_GetCgxArcIndexByMonsNumber( cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->egg );
+      return POKEICON_GetCgxArcIndexByMonsNumber( cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->egg );
     }
 
   case MYSTERYGIFT_TYPE_ITEM:

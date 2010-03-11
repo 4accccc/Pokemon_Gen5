@@ -380,7 +380,7 @@ static void PokeAdjustOfsPos( MCSS_WORK* poke_wk );
 static void PokeGetCompareRelativePosition( MCSS_WORK* poke_wk, VecFx32* pos );
 
 // ポケアイコン
-static GFL_CLWK* PokeiconInit( UI_EASY_CLWK_RES* res, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, BOOL egg );
+static GFL_CLWK* PokeiconInit( UI_EASY_CLWK_RES* res, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, u32 sex, BOOL egg );
 static void PokeiconExit( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk );
 // マクロ
 #define BLOCK_POKEICON_EXIT(res,clwk)                     \
@@ -1527,7 +1527,7 @@ static void PokeGetCompareRelativePosition( MCSS_WORK* poke_wk, VecFx32* pos )
 //-------------------------------------
 /// ポケアイコン
 //=====================================
-static GFL_CLWK* PokeiconInit( UI_EASY_CLWK_RES* res, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, BOOL egg )
+static GFL_CLWK* PokeiconInit( UI_EASY_CLWK_RES* res, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, u32 sex, BOOL egg )
 {
   GFL_CLWK* clwk;
   
@@ -1536,7 +1536,7 @@ static GFL_CLWK* PokeiconInit( UI_EASY_CLWK_RES* res, GFL_CLUNIT* clunit, HEAPID
   prm.comp_flg     = UI_EASY_CLWK_RES_COMP_NCLR;
   prm.arc_id       = ARCID_POKEICON;
   prm.pltt_id      = POKEICON_GetPalArcIndex();
-  prm.ncg_id       = POKEICON_GetCgxArcIndexByMonsNumber( mons, form_no, egg );
+  prm.ncg_id       = POKEICON_GetCgxArcIndexByMonsNumber( mons, form_no, sex, egg );
   prm.cell_id      = POKEICON_GetCellArcIndex(); 
   prm.anm_id       = POKEICON_GetAnmArcIndex();
   prm.pltt_line    = OBJ_PAL_POS_S_POKEICON;
@@ -1555,7 +1555,7 @@ static GFL_CLWK* PokeiconInit( UI_EASY_CLWK_RES* res, GFL_CLUNIT* clunit, HEAPID
   GFL_CLACT_WK_SetAutoAnmFlag( clwk, FALSE );
 
   {
-    u8 pal_num = POKEICON_GetPalNum( mons, form_no, egg );
+    u8 pal_num = POKEICON_GetPalNum( mons, form_no, sex, egg );
     GFL_CLACT_WK_SetPlttOffs( clwk, pal_num, CLWK_PLTTOFFS_MODE_OAM_COLOR );
   }
 
@@ -1774,6 +1774,7 @@ static void Zukan_Detail_Form_PokeiconInitFromDiffInfo( ZUKAN_DETAIL_FORM_PARAM*
 {
   u32 mons;
   u32 form_no;
+  u32 sex = 0;  //@todo 後ほど正しい値を取得
 
   mons = ZKNDTL_COMMON_GetCurrPoke(cmn);
 
@@ -1796,7 +1797,7 @@ static void Zukan_Detail_Form_PokeiconInitFromDiffInfo( ZUKAN_DETAIL_FORM_PARAM*
     break;
   }
 
-  work->pokeicon_clwk = PokeiconInit( &work->pokeicon_res, work->clunit, param->heap_id, mons, form_no, 0 );
+  work->pokeicon_clwk = PokeiconInit( &work->pokeicon_res, work->clunit, param->heap_id, mons, form_no, sex, 0 );
 }
 
 //-------------------------------------

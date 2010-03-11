@@ -425,7 +425,7 @@ static void _PokeIcon_ResourceFree(PARTY_SELECT_LIST_PTR psl)
 static void _PokeIcon_ActorAdd(PARTY_SELECT_LIST_PTR psl)
 {
   int i, temoti_max, bbox_max, palno;
-  u32 monsno, form, egg;
+  u32 monsno, form, egg, sex;
   POKEMON_PARAM *pp;
   GFL_CLWK_DATA head = {
     0, POKEICON_POS_Y, 
@@ -445,7 +445,8 @@ static void _PokeIcon_ActorAdd(PARTY_SELECT_LIST_PTR psl)
     monsno = PP_Get(pp, ID_PARA_monsno, NULL);
     form = PP_Get(pp, ID_PARA_form_no, NULL);
     egg = (PP_Get(pp, ID_PARA_monsno_egg, NULL) == MONSNO_TAMAGO) ? TRUE : FALSE;
-    palno = POKEICON_GetPalNum( monsno, form, egg );
+    sex = PP_Get(pp, ID_PARA_sex, NULL);
+    palno = POKEICON_GetPalNum( monsno, form, sex, egg );
     GFL_CLACT_WK_SetPlttOffs( psl->temoti_clwk[i], palno, CLWK_PLTTOFFS_MODE_PLTT_TOP );
     GFL_CLACT_WK_SetDrawEnable( psl->temoti_clwk[i], FALSE );
   }
@@ -462,7 +463,8 @@ static void _PokeIcon_ActorAdd(PARTY_SELECT_LIST_PTR psl)
       monsno = PP_Get(pp, ID_PARA_monsno, NULL);
       form = PP_Get(pp, ID_PARA_form_no, NULL);
       egg = (PP_Get(pp, ID_PARA_monsno_egg, NULL) == MONSNO_TAMAGO) ? TRUE : FALSE;
-      palno = POKEICON_GetPalNum( monsno, form, egg );
+      sex = PP_Get(pp, ID_PARA_sex, NULL);
+      palno = POKEICON_GetPalNum( monsno, form, sex, egg );
       GFL_CLACT_WK_SetPlttOffs( psl->bbox_clwk[i], palno, CLWK_PLTTOFFS_MODE_PLTT_TOP );
       GFL_CLACT_WK_SetDrawEnable( psl->bbox_clwk[i], FALSE );
     }

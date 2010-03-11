@@ -2890,9 +2890,11 @@ static  void  BTLV_INPUT_CreateRotatePokeIcon( BTLV_INPUT_WORK* biw )
     {
       int mons_no = PP_Get( biw->rotate_pp[ i ], ID_PARA_monsno, NULL );
       int form_no = PP_Get( biw->rotate_pp[ i ], ID_PARA_form_no, NULL );
+      int sex     = PP_Get( biw->rotate_pp[ i ], ID_PARA_sex, NULL );
       biw->pokeicon_charID[ i ] = GFL_CLGRP_CGR_Register( hdl,
                                                           POKEICON_GetCgxArcIndexByMonsNumber( mons_no,
                                                                                                form_no,
+                                                                                               sex,
                                                                                                FALSE ),
                                                           FALSE, CLSYS_DRAW_SUB, biw->heapID );
       biw->pokeicon_wk[ i ].clwk = GFL_CLACT_WK_Create( biw->pokeicon_clunit, biw->pokeicon_charID[ i ],
@@ -2902,7 +2904,7 @@ static  void  BTLV_INPUT_CreateRotatePokeIcon( BTLV_INPUT_WORK* biw )
       GFL_CLACT_WK_SetAutoAnmFlag( biw->pokeicon_wk[ i ].clwk, TRUE );
       GFL_CLACT_WK_SetAnmSeq( biw->pokeicon_wk[ i ].clwk, 1 );
       GFL_CLACT_WK_SetPlttOffs( biw->pokeicon_wk[ i ].clwk,
-                                POKEICON_GetPalNum( mons_no, form_no, FALSE ), CLWK_PLTTOFFS_MODE_OAM_COLOR );
+                                POKEICON_GetPalNum( mons_no, form_no, sex, FALSE ), CLWK_PLTTOFFS_MODE_OAM_COLOR );
       GFL_CLACT_WK_SetDrawEnable( biw->pokeicon_wk[ i ].clwk, FALSE );
     }
   }
@@ -3050,6 +3052,7 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
         biw->pokeicon_charID[ i ] = GFL_CLGRP_CGR_Register( hdl,
                                                             POKEICON_GetCgxArcIndexByMonsNumber( bicp->mons_no[ i ],
                                                                                                  bicp->form_no[ i ],
+                                                                                                 bicp->sex[ i ],
                                                                                                  FALSE ),
                                                             FALSE, CLSYS_DRAW_SUB, biw->heapID );
         biw->pokeicon_wk[ i ].clwk = GFL_CLACT_WK_Create( biw->pokeicon_clunit, biw->pokeicon_charID[ i ],
@@ -3076,7 +3079,7 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
           }
         }
         GFL_CLACT_WK_SetPlttOffs( biw->pokeicon_wk[ i ].clwk,
-                                  POKEICON_GetPalNum( bicp->mons_no[ i ], bicp->form_no[ i ], FALSE ),
+                                  POKEICON_GetPalNum( bicp->mons_no[ i ], bicp->form_no[ i ], bicp->sex[ i ], FALSE ),
                                   CLWK_PLTTOFFS_MODE_OAM_COLOR );
       }
     }

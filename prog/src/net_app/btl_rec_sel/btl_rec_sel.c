@@ -266,6 +266,7 @@ typedef struct
 {
   u32                monsno;  // 0のときなし
   u32                formno;
+  u32                sex;
   BOOL               egg;
   UI_EASY_CLWK_RES   res;
   GFL_CLWK*          clwk;
@@ -418,7 +419,7 @@ static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WOR
 static void Btl_Rec_Sel_PiInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_PiExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static GFL_CLWK* CreatePokeicon( GFL_CLUNIT* clunit, HEAPID heap_id, CLSYS_DRAW_TYPE draw_type, u8 pltt_line,
-                     u32 monsno, u32 formno, BOOL egg, UI_EASY_CLWK_RES* res, u8 x, u8 y, u8 anim, u8 bg_pri );
+                     u32 monsno, u32 formno, u32 sex, BOOL egg, UI_EASY_CLWK_RES* res, u8 x, u8 y, u8 anim, u8 bg_pri );
 static void DeletePokeicon( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk );
 
 // バトルモードから表示するテキストID、ポケアイコンの並べ方を決める
@@ -913,6 +914,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
           {
             work->pi_data[j][i].monsno = PI_PARTY_NUM * j + i + 1;
             work->pi_data[j][i].formno = 0;
+            work->pi_data[j][i].sex    = 0;
           }
         }
         work->battle_rec_mode = BATTLE_MODE_COLOSSEUM_SINGLE_FREE;
@@ -952,15 +954,19 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
         {
           u32 monsno;
           u32 formno = 0;
+          u32 sex = 0;
           hp = RecHeader_ParamGet( head, RECHEAD_IDX_MONSNO, i );
           monsno = (u32)hp;
           if( monsno != 0 )
           {
             hp = RecHeader_ParamGet( head, RECHEAD_IDX_FORM_NO, i );
             formno = (u32)hp;
+            hp = RecHeader_ParamGet( head, RECHEAD_IDX_GENDER, i );
+            sex = (u32)hp;
           }
           work->pi_data[i/PI_PARTY_NUM][i%PI_PARTY_NUM].monsno = monsno;
           work->pi_data[i/PI_PARTY_NUM][i%PI_PARTY_NUM].formno = formno;
+          work->pi_data[i/PI_PARTY_NUM][i%PI_PARTY_NUM].sex    = sex;
         }
         hp = RecHeader_ParamGet( head, RECHEAD_IDX_MODE, i );
         work->battle_rec_mode = (int)hp;
@@ -1828,7 +1834,7 @@ static void Btl_Rec_Sel_PiInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work
       {
         work->pi_data[j][i].clwk = CreatePokeicon(
                                        clunit, work->heap_id, CLSYS_DRAW_MAIN, OBJ_PAL_POS_M_PI,
-                                       work->pi_data[j][i].monsno, work->pi_data[j][i].formno,
+                                       work->pi_data[j][i].monsno, work->pi_data[j][i].formno, work->pi_data[j][i].sex,
                                        work->pi_data[j][i].egg, &(work->pi_data[j][i].res),
                                        work->pi_data[j][i].x, work->pi_data[j][i].y, work->pi_data[j][i].anim, 1 );
       }
@@ -1850,7 +1856,7 @@ static void Btl_Rec_Sel_PiExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work
   }
 }
 static GFL_CLWK* CreatePokeicon( GFL_CLUNIT* clunit, HEAPID heap_id, CLSYS_DRAW_TYPE draw_type, u8 pltt_line,
-                     u32 monsno, u32 formno, BOOL egg, UI_EASY_CLWK_RES* res, u8 x, u8 y, u8 anim, u8 bg_pri )
+                     u32 monsno, u32 formno, u32 sex, BOOL egg, UI_EASY_CLWK_RES* res, u8 x, u8 y, u8 anim, u8 bg_pri )
 {
   GFL_CLWK* clwk;
 
@@ -1860,7 +1866,7 @@ static GFL_CLWK* CreatePokeicon( GFL_CLUNIT* clunit, HEAPID heap_id, CLSYS_DRAW_
   res_param.comp_flg        = UI_EASY_CLWK_RES_COMP_NCLR;
   res_param.arc_id          = ARCID_POKEICON;
   res_param.pltt_id         = POKEICON_GetPalArcIndex();
-  res_param.ncg_id          = POKEICON_GetCgxArcIndexByMonsNumber( monsno, formno, egg );
+  res_param.ncg_id          = POKEICON_GetCgxArcIndexByMonsNumber( monsno, formno, sex, egg );
   res_param.cell_id         = POKEICON_GetCellArcIndex(); 
   res_param.anm_id          = POKEICON_GetAnmArcIndex();
   res_param.pltt_line       = pltt_line;
@@ -1881,7 +1887,7 @@ static GFL_CLWK* CreatePokeicon( GFL_CLUNIT* clunit, HEAPID heap_id, CLSYS_DRAW_
   GFL_CLACT_WK_SetAutoAnmFlag( clwk, TRUE );
 
   {
-    u8 pal_num = POKEICON_GetPalNum( monsno, formno, egg );
+    u8 pal_num = POKEICON_GetPalNum( monsno, formno, sex, egg );
     GFL_CLACT_WK_SetPlttOffs( clwk, pal_num, CLWK_PLTTOFFS_MODE_OAM_COLOR );
   }
 
@@ -2048,7 +2054,7 @@ void Btl_Rec_Sel_PfCreateDummyPokeicon( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WO
   
   work->pf_dummy_pi_clwk = CreatePokeicon(
                                clunit, work->heap_id, CLSYS_DRAW_MAIN, OBJ_PAL_POS_M_PI,
-                               1, 0,
+                               1, 0, 0,
                                FALSE, &(work->pf_dummy_pi_res),
                                0, 0, 0, 1 );
 }

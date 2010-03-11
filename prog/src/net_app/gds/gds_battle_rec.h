@@ -39,7 +39,7 @@ typedef struct {
 //--------------------------------------------------------------
 typedef struct {
 	u16 monsno[GT_HEADER_MONSNO_MAX];	///<ポケモン番号(表示する必要がないのでタマゴの場合は0)	24
-	u8 form_no[GT_HEADER_MONSNO_MAX];	///<ポケモンのフォルム番号								12
+	u8 form_no_and_sex[GT_HEADER_MONSNO_MAX];	///<6..0bit目：ポケモンのフォルム番号　7bit目：ポケモンの性別		12
 
 	u16 battle_counter;		///<連勝数												2
 	u8 mode;				///<戦闘モード(ファクトリー50、ファクトリー100、通信対戦...)

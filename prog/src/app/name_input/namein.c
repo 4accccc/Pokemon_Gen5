@@ -840,7 +840,7 @@ NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_PARAM *
   if( p_param->pp )
   { 
     p_param->mons_no  = PP_Get( pp, ID_PARA_monsno, NULL );
-    p_param->form     = PP_Get( pp, ID_PARA_form_no, NULL );
+    p_param->form     = PP_Get( pp, ID_PARA_form_no, NULL ) | ( PP_Get( pp, ID_PARA_sex, NULL ) << 8 );
   }
 
   //バッファ作成
@@ -4712,7 +4712,7 @@ static void PS_SetupBox( PS_WORK* p_wk, MSGWND_WORK* p_msgwnd_wk, NAMEIN_PARAM* 
  *      param2  …  未使用
  *    ICON_TYPE_POKEの場合
  *      param1  …  モンスター番号
- *      param2  …  フォルム
+ *      param2  …  下位8bit：フォルム　上位8bit：性別
  *    ICON_TYPE_BOXの場合
  *      param1  …  未使用
  *      param2  …  未使用
@@ -4754,7 +4754,7 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
     case ICON_TYPE_POKE:
       arcID = ARCID_POKEICON;
       plt   = POKEICON_GetPalArcIndex();
-      chr   = POKEICON_GetCgxArcIndexByMonsNumber( param1, param2, FALSE );
+      chr   = POKEICON_GetCgxArcIndexByMonsNumber( param1, param2 & 0x00ff, ( param2 & 0xff00 ) >> 8, FALSE );
       cel   = POKEICON_GetCellArcIndex();
       anm   = POKEICON_GetAnmArcIndex();
       is_comp = TRUE;
@@ -4828,7 +4828,7 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
     case ICON_TYPE_POKE:
       GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, POKEICON_ANM_HPMAX );
       GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk, 
-          POKEICON_GetPalNum( param1, param2, FALSE ),
+          POKEICON_GetPalNum( param1, param2 & 0x00ff, ( param2 & 0xff00 ) >> 8, FALSE ),
           CLWK_PLTTOFFS_MODE_OAM_COLOR );
       break;
     case ICON_TYPE_BOX:

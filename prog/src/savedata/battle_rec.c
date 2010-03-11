@@ -540,7 +540,7 @@ static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, cons
       para = &(rec->rec_party[client].member[temoti]);
       if(para->tamago_flag == 0 && para->fusei_tamago_flag == 0){
         head->monsno[n] = para->monsno;
-        head->form_no[n] = para->form_no;
+        head->form_no_and_sex[n] = ( para->form_no & HEADER_FORM_NO_MASK ) | ( para->sex << HEADER_GENDER_MASK );
         OS_TPrintf("client %d temoti %d n %d\n", client, temoti, n);
       }
       n++;
@@ -1122,7 +1122,7 @@ u64 RecHeader_ParamGet(BATTLE_REC_HEADER_PTR head, int index, int param)
     return head->monsno[param];
   case RECHEAD_IDX_FORM_NO:
     GF_ASSERT(param < HEADER_MONSNO_MAX);
-    return head->form_no[param];
+    return head->form_no_and_sex[param] & HEADER_FORM_NO_MASK;
 
   case RECHEAD_IDX_COUNTER:
     if ( head->battle_counter > REC_COUNTER_MAX ){
@@ -1139,6 +1139,9 @@ u64 RecHeader_ParamGet(BATTLE_REC_HEADER_PTR head, int index, int param)
     return head->data_number;
   case RECHEAD_IDX_SECURE:
     return head->secure;
+  case RECHEAD_IDX_GENDER:
+    GF_ASSERT(param < HEADER_MONSNO_MAX);
+    return ( head->form_no_and_sex[param] & HEADER_GENDER_MASK ) >> HEADER_GENDER_SHIFT;
   }
 
   GF_ASSERT(0); //•s–¾‚ÈINDEX

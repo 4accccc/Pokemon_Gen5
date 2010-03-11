@@ -1180,6 +1180,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
     const int egg   = GDS_Profile_GetEggFlag(cp_profile);
     const int mons   = GDS_Profile_GetMonsNo(cp_profile);
     const int form   = GDS_Profile_GetFormNo(cp_profile);
+    const int sex   = GDS_Profile_GetPokeSex(cp_profile);
 
     if( mons != 0 )
     { 
@@ -1192,7 +1193,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
         p_wk->res_icon_cel = GFL_CLGRP_CELLANIM_Register( p_handle,
             POKEICON_GetCellArcIndex(), POKEICON_GetAnmArcIndex(), heapID );
         p_wk->res_icon_chr  = GFL_CLGRP_CGR_Register( p_handle,
-            POKEICON_GetCgxArcIndexByMonsNumber( mons, form, egg ),
+            POKEICON_GetCgxArcIndexByMonsNumber( mons, form, sex, egg ),
             FALSE, CLSYS_DRAW_MAIN, heapID );
         GFL_ARC_CloseDataHandle( p_handle );
       }
@@ -1205,7 +1206,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
         p_wk->p_pokeicon  = GFL_CLACT_WK_Create( p_unit,
             p_wk->res_icon_chr,p_wk->res_icon_plt,p_wk->res_icon_cel,
             &data, CLSYS_DEFREND_MAIN, heapID );
-        GFL_CLACT_WK_SetPlttOffs( p_wk->p_pokeicon, POKEICON_GetPalNum( mons, form, egg ), CLWK_PLTTOFFS_MODE_OAM_COLOR );
+        GFL_CLACT_WK_SetPlttOffs( p_wk->p_pokeicon, POKEICON_GetPalNum( mons, form, sex, egg ), CLWK_PLTTOFFS_MODE_OAM_COLOR );
       }
     }
   }

@@ -75,7 +75,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk);
 static int SubSeq_MessageWait( WORLDTRADE_WORK *wk );
 static int SubSeq_MessageClearWait( WORLDTRADE_WORK *wk );
 static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int flag, u16 dat, int winflag );
-static void TransPokeIconCharaPal( int pokeno, int form, int tamago, int no, GFL_CLWK* icon, ARCHANDLE* handle, WORLDTRADE_POKEBUF *pbuf );
+static void TransPokeIconCharaPal( int pokeno, int form, int gender, int tamago, int no, GFL_CLWK* icon, ARCHANDLE* handle, WORLDTRADE_POKEBUF *pbuf );
 static void NowBoxPageInfoGet( WORLDTRADE_WORK *wk, int now);
 static int RoundWork( int num, int max, int move );
 static void CursorControl( WORLDTRADE_WORK *wk );
@@ -1944,6 +1944,7 @@ static void* CharDataGetbyHandle( ARCHANDLE *handle, u32 dataIdx, NNSG2dCharacte
  *
  * @param   pokeno	ポケモンNO
  * @param   form	フォルム
+ * @param   gender	性別
  * @param   tamago	タマゴフラグ（1:タマゴ
  * @param   no		転送先オフセット（ボックス分あるので0-29）
  * @param   icon	ポケモンアイコンのセルアクターのポインタ
@@ -1951,7 +1952,7 @@ static void* CharDataGetbyHandle( ARCHANDLE *handle, u32 dataIdx, NNSG2dCharacte
  * @param   pbuf	書き込み先のVBLANK転送用バッファ
  */
 //----------------------------------------------------------------------------------
-static void TransPokeIconCharaPal( int pokeno, int form, int tamago, int no, GFL_CLWK* icon, ARCHANDLE* handle, WORLDTRADE_POKEBUF *pbuf )
+static void TransPokeIconCharaPal( int pokeno, int form, int gender, int tamago, int no, GFL_CLWK* icon, ARCHANDLE* handle, WORLDTRADE_POKEBUF *pbuf )
 {
 	u8 *pokepal;
 	u8 *buf;
@@ -1959,13 +1960,13 @@ static void TransPokeIconCharaPal( int pokeno, int form, int tamago, int no, GFL
 
 	// ポケモンアイコンのキャラデータをバッファの読み込む
 
-	buf = CharDataGetbyHandle( handle, POKEICON_GetCgxArcIndexByMonsNumber( pokeno, tamago, form ), 
+	buf = CharDataGetbyHandle( handle, POKEICON_GetCgxArcIndexByMonsNumber( pokeno, form, gender, tamago ), 
 								&chara, HEAPID_WORLDTRADE );
 	// VBLANK中にキャラクタを転送するための準備
 	MI_CpuCopyFast(chara->pRawData, pbuf->chbuf, POKEICON_TRANS_SIZE);
 	pbuf->vadrs = (POKEICON_VRAM_OFFSET+no*POKEICON_TRANS_CHARA)*0x20;
 	pbuf->icon = icon;
-	pbuf->palno = POKEICON_GetPalNum( pokeno, form, tamago )+POKEICON_PAL_OFFSET;
+	pbuf->palno = POKEICON_GetPalNum( pokeno, form, gender, tamago )+POKEICON_PAL_OFFSET;
 	GFL_HEAP_FreeMemory(buf);
 }
 
@@ -2051,7 +2052,7 @@ static void PokemonIconSet( POKEMON_PASO_PARAM *paso, GFL_CLWK* icon,
 	PPP_FastModeOff(paso,TRUE);
 	
 	if(flag){
-		TransPokeIconCharaPal( *no, form, tamago, pos, icon, handle, pbuf );
+		TransPokeIconCharaPal( *no, form, dat->gender, tamago, pos, icon, handle, pbuf );
 		GFL_CLACT_WK_SetDrawEnable( icon, 1 );
 
 		// アイテムを持っているか

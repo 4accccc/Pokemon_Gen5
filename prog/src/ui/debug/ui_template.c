@@ -346,7 +346,7 @@ static void UITemplate_ITEM_ICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
 //-------------------------------------
 ///	ポケアイコン
 //=====================================
-static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons, u32 form_no, BOOL egg, GFL_CLUNIT* unit, HEAPID heapID );
+static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons, u32 form_no, u32 sex, BOOL egg, GFL_CLUNIT* unit, HEAPID heapID );
 static void UITemplate_POKE_ICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
 #endif //UI_TEMPLATE_POKE_ICON
 
@@ -509,7 +509,7 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
   // ポケアイコンの読み込み
   {
 		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
-    UITemplate_POKE_ICON_CreateCLWK( wk, MONSNO_HUSIGIDANE, 0, FALSE, clunit, wk->heapID );
+    UITemplate_POKE_ICON_CreateCLWK( wk, MONSNO_HUSIGIDANE, 0, 0, FALSE, clunit, wk->heapID );
   }
 #endif //UI_TEMPLATE_POKE_ICON
 
@@ -1278,7 +1278,7 @@ static void UITemplate_ITEM_ICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk )
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons, u32 form_no, BOOL egg, GFL_CLUNIT* unit, HEAPID heapID )
+static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons, u32 form_no, u32 sex, BOOL egg, GFL_CLUNIT* unit, HEAPID heapID )
 {
   // ポケアイコン本体
   {
@@ -1289,7 +1289,7 @@ static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons
     prm.arc_id    = ARCID_POKEICON;
     prm.pltt_id   = POKEICON_GetPalArcIndex();
   //  prm.ncg_id    = POKEICON_GetCgxArcIndex(ppp);
-    prm.ncg_id    = POKEICON_GetCgxArcIndexByMonsNumber( mons, form_no, egg );
+    prm.ncg_id    = POKEICON_GetCgxArcIndexByMonsNumber( mons, form_no, sex, egg );
     prm.cell_id   = POKEICON_GetCellArcIndex(); 
     prm.anm_id    = POKEICON_GetAnmArcIndex();
     prm.pltt_line = PLTID_OBJ_POKEICON_M;
@@ -1308,7 +1308,7 @@ static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons
     GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk_poke_icon, TRUE );
 
     {
-      u8 pal_num = POKEICON_GetPalNum( mons, form_no, egg );
+      u8 pal_num = POKEICON_GetPalNum( mons, form_no, sex, egg );
       GFL_CLACT_WK_SetPlttOffs( wk->clwk_poke_icon, pal_num, CLWK_PLTTOFFS_MODE_OAM_COLOR );
     }
   }

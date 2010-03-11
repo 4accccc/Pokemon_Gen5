@@ -485,7 +485,7 @@ static void InitResource( ZKNLISTMAIN_WORK * wk )
 	cel = &wk->celRes[ ZKNLISTOBJ_CELRES_POKEICON ];
 	for( i=0; i<ZKNLISTOBJ_MAIN_POKEICON_MAX; i++ ){
 		chr[i] = GFL_CLGRP_CGR_Register(
-							ah, POKEICON_GetCgxArcIndexByMonsNumber(0,0,FALSE),
+							ah, POKEICON_GetCgxArcIndexByMonsNumber(0,0,0,FALSE),
 							FALSE, CLSYS_DRAW_MAIN, HEAPID_ZUKAN_LIST );
 	}
   *pal = GFL_CLGRP_PLTT_RegisterComp(
@@ -502,7 +502,7 @@ static void InitResource( ZKNLISTMAIN_WORK * wk )
 	cel = &wk->celRes[ ZKNLISTOBJ_CELRES_POKEICON_S ];
 	for( i=0; i<ZKNLISTOBJ_MAIN_POKEICON_MAX; i++ ){
 		chr[i] = GFL_CLGRP_CGR_Register(
-							ah, POKEICON_GetCgxArcIndexByMonsNumber(0,0,FALSE),
+							ah, POKEICON_GetCgxArcIndexByMonsNumber(0,0,0,FALSE),
 							FALSE, CLSYS_DRAW_SUB, HEAPID_ZUKAN_LIST );
 	}
   *pal = GFL_CLGRP_PLTT_RegisterComp(
@@ -800,12 +800,13 @@ static void AddPokeIcon( ZKNLISTMAIN_WORK * wk )
  * @param		wk			図鑑リストワーク
  * @param		idx			OBJ Index
  * @param		form		フォルム
+ * @param		sex		  性別
  * @param		disp		表示画面
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void ZKNLISTOBJ_ChgPokeIcon( ZKNLISTMAIN_WORK * wk, u32 idx, u16 mons, u16 form, BOOL disp )
+void ZKNLISTOBJ_ChgPokeIcon( ZKNLISTMAIN_WORK * wk, u32 idx, u16 mons, u16 form, u16 sex, BOOL disp )
 {
 	ARCHANDLE * ah;
 	NNSG2dCharacterData * chr;
@@ -814,7 +815,7 @@ void ZKNLISTOBJ_ChgPokeIcon( ZKNLISTMAIN_WORK * wk, u32 idx, u16 mons, u16 form,
 	ah = GFL_ARC_OpenDataHandle( ARCID_POKEICON, HEAPID_ZUKAN_LIST_L );
 
 	buf = GFL_ARCHDL_UTIL_LoadOBJCharacter(
-					ah, POKEICON_GetCgxArcIndexByMonsNumber(mons,form,FALSE), FALSE, &chr, HEAPID_ZUKAN_LIST_L );
+					ah, POKEICON_GetCgxArcIndexByMonsNumber(mons,form,sex,FALSE), FALSE, &chr, HEAPID_ZUKAN_LIST_L );
 	if( disp == TRUE ){
 		GFL_CLGRP_CGR_ReplaceEx(
 			GFL_CLACT_WK_GetCgrIndex(wk->clwk[idx]), chr->pRawData, POKEICON_SIZE_CGX, 0, CLSYS_DRAW_MAIN );
@@ -827,7 +828,7 @@ void ZKNLISTOBJ_ChgPokeIcon( ZKNLISTMAIN_WORK * wk, u32 idx, u16 mons, u16 form,
   GFL_ARC_CloseDataHandle( ah );
 
 	GFL_CLACT_WK_SetPlttOffs(
-		wk->clwk[idx], POKEICON_GetPalNum(mons,form,FALSE), CLWK_PLTTOFFS_MODE_PLTT_TOP );
+		wk->clwk[idx], POKEICON_GetPalNum(mons,form,sex,FALSE), CLWK_PLTTOFFS_MODE_PLTT_TOP );
 }
 
 /*
@@ -952,7 +953,7 @@ void ZKNLISTOBJ_PutPokeList2( ZKNLISTMAIN_WORK * wk, u16 mons, s16 py, BOOL disp
 
 	obj = ZKNLISTOBJ_GetChgPokeIconIndex( wk, disp );
 
-	ZKNLISTOBJ_ChgPokeIcon( wk, obj, mons, form, disp );
+	ZKNLISTOBJ_ChgPokeIcon( wk, obj, mons, form, sex, disp );
 	ZKNLISTOBJ_SetVanish( wk, obj, TRUE );
 	ZKNLISTOBJ_SetAutoAnm( wk, obj, POKEICON_ANM_DEATH );
 
