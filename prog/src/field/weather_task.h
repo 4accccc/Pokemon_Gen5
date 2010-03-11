@@ -220,7 +220,7 @@ typedef struct {
 //-------------------------------------
 ///	システム生成・破棄・メイン
 //=====================================
-extern WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG** pp_3dbg, const FIELD_SOUND* cp_sound, const FLD_SEASON_TIME* cp_season_time, HEAPID heapID ); // pp_3dbg　配列数はWEATHER_TASK_3DBG_NUM
+extern WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG** pp_3dbg, FIELD_SOUND* p_sound, const FLD_SEASON_TIME* cp_season_time, HEAPID heapID ); // pp_3dbg　配列数はWEATHER_TASK_3DBG_NUM
 extern void WEATHER_TASK_Exit( WEATHER_TASK* p_wk );
 extern void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID );
 
@@ -342,6 +342,8 @@ extern void WEATHER_TASK_ScrollBg( WEATHER_TASK* p_wk, int x, int y );
 //=====================================
 extern void WEATHER_TASK_PlayLoopSnd( WEATHER_TASK* p_wk, int snd_no );
 extern void WEATHER_TASK_StopLoopSnd( WEATHER_TASK* p_wk );
+extern void WEATHER_TASK_PlaySnd( WEATHER_TASK* p_wk, int snd_no );
+extern void WEATHER_TASK_PlaySndVol( WEATHER_TASK* p_wk, int snd_no, u32 vol );
 
 
 //-------------------------------------

@@ -1004,6 +1004,21 @@ void FSND_PlayEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  環境音の再生  （単発のみ対応）
+ *
+ *	@param	fieldSound    フィールドサウンド
+ *	@param	soundIdx      サウンドインデックス
+ *	@param	vol           指定ボリューム(有効値 0-127 デフォルトは127)
+ */
+//-----------------------------------------------------------------------------
+void FSND_PlayEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol )
+{
+  FIELD_SOUND_PlayEnvSEVol( fieldSound, soundIdx, vol );
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  環境音の停止
  *
  *	@param	fieldSound  フィールドサウンド

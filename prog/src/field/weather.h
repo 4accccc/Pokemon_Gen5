@@ -60,7 +60,7 @@ typedef struct _FIELD_WEATHER FIELD_WEATHER;
 //-------------------------------------
 ///	天気システム	初期化破棄
 //=====================================
-extern FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, const FIELD_SOUND* cp_sound, const FLD_SEASON_TIME* cp_season_time, HEAPID heapID );
+extern FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_SOUND* p_sound, const FLD_SEASON_TIME* cp_season_time, HEAPID heapID );
 extern void FIELD_WEATHER_Exit( FIELD_WEATHER* p_sys );
 extern void FIELD_WEATHER_Main( FIELD_WEATHER* p_sys, HEAPID heapID );
 extern void FIELD_WEATHER_3DWrite( FIELD_WEATHER* p_sys );

@@ -95,6 +95,7 @@ extern u32 FSND_GetTrainerEyeBGM( u32 trType );
 //=================================================================================
 // ŠÂ‹«‰¹‚ÌÄ¶
 extern void FSND_PlayEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx );
+extern void FSND_PlayEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol ); // i’P”­‚Ì‚İ‘Î‰j
 // ŠÂ‹«‰¹‚Ì’â~
 extern void FSND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx );
 // ŠÂ‹«‰¹‚Ìˆê’â~

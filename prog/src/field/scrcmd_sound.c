@@ -74,6 +74,16 @@ VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
     event = EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_SHORT, FSND_FADE_NONE );
     SCRIPT_CallEvent( sc, event );
   }
+
+  // フィールドサウンド。
+  // 環境SE停止。
+  {
+    GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+    FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
+    FSND_PauseEnvSE( fsound );
+  }
+  
+  
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -87,6 +97,17 @@ VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdBgmStop( VMHANDLE *core, void *wk )
 {
   PMSND_StopBGM();
+
+  // フィールドサウンド。
+  // 環境SE再生。
+  {
+    SCRCMD_WORK*  work = wk;
+    GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+    GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+    FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
+    FSND_RePlayEnvSE( fsound );
+  }
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -532,6 +553,14 @@ VMCMD_RESULT EvCmdMePlay(VMHANDLE *core, void *wk )
     event = EVENT_FSND_PushPlayJingleBGM( gsys, sound_idx );
     SCRIPT_CallEvent( sc, event );
   }
+
+  // フィールドサウンド。
+  // 環境SE停止。
+  {
+    GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+    FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
+    FSND_PauseEnvSE( fsound );
+  }
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -553,6 +582,15 @@ static BOOL EvWaitMe( VMHANDLE *core, void *wk )
     GMEVENT* event;
     event = EVENT_FSND_PopBGM( gsys, FSND_FADE_NONE, FSND_FADE_SHORT );
     SCRIPT_CallEvent( sc, event );
+
+    // フィールドサウンド。
+    // 環境SE再始動。
+    {
+      GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+      FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
+      FSND_RePlayEnvSE( fsound );
+    }
+
     return TRUE;
   }
   

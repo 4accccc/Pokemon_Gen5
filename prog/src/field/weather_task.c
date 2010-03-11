@@ -123,6 +123,8 @@ typedef struct {
 typedef struct {
 	u16	play;
 	u16 snd_no;
+
+  FIELD_SOUND* p_sound;
 } WEATHER_TASK_SND_LOOP;
 
 
@@ -176,7 +178,7 @@ struct _WEATHER_TASK {
 	FIELD_LIGHT* p_light;
 
 	// サウンド情報
-	const FIELD_SOUND* cp_sound;
+	FIELD_SOUND* p_sound;
 
 	// ゾーン用フォグ、ライト情報
 	const FIELD_ZONEFOGLIGHT*	cp_zonefog;
@@ -289,8 +291,8 @@ static GFL_CLWK* WEATHER_OBJ_WK_GetClWk( const WEATHER_OBJ_WORK* cp_wk );
 //-------------------------------------
 ///	サウンドシステム
 //=====================================
-static void WEATHER_SND_LOOP_Play( WEATHER_TASK_SND_LOOP* p_wk, int snd_no );
-static void WEATHER_SND_LOOP_Stop( WEATHER_TASK_SND_LOOP* p_wk );
+static void WEATHER_SND_LOOP_Play( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_sound, int snd_no );
+static void WEATHER_SND_LOOP_Stop( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_sound );
 
 
 //-------------------------------------
@@ -321,13 +323,13 @@ static void TOOL_GetPerspectiveScreenSize( const MtxFx44* cp_pers_mtx, fx32 dist
  *	@param	p_zonefog		ゾーン用フォグライト除法
  *	@param	pp_3dbg			3DBGシステム
  *	@param	p_3dbg_back	3DBGシステム
- *	@param  cp_sound    サウンドシステム
+ *	@param  p_sound    サウンドシステム
  *	@param	heapID			ヒープID
  *	
  *	@return	天気タスクワーク
  */
 //-----------------------------------------------------------------------------
-WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG** pp_3dbg, const FIELD_SOUND* cp_sound, const FLD_SEASON_TIME* cp_season_time, HEAPID heapID )
+WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG** pp_3dbg, FIELD_SOUND* p_sound, const FLD_SEASON_TIME* cp_season_time, HEAPID heapID )
 {
 	WEATHER_TASK* p_wk;
 
@@ -340,7 +342,7 @@ WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_ca
 	p_wk->p_light		= p_light;
 	p_wk->cp_zonefog	= cp_zonefog;
 	p_wk->pp_3dbg		= pp_3dbg;
-	p_wk->cp_sound	= cp_sound;
+	p_wk->p_sound	= p_sound;
   p_wk->cp_season_time = cp_season_time;
 
 	return p_wk;
@@ -1493,7 +1495,7 @@ void WEATHER_TASK_ScrollBg( WEATHER_TASK* p_wk, int x, int y )
 //-----------------------------------------------------------------------------
 void WEATHER_TASK_PlayLoopSnd( WEATHER_TASK* p_wk, int snd_no )
 {
-	WEATHER_SND_LOOP_Play( &p_wk->snd_loop, snd_no );
+	WEATHER_SND_LOOP_Play( &p_wk->snd_loop, p_wk->p_sound, snd_no );
 }
 
 //----------------------------------------------------------------------------
@@ -1505,7 +1507,34 @@ void WEATHER_TASK_PlayLoopSnd( WEATHER_TASK* p_wk, int snd_no )
 //-----------------------------------------------------------------------------
 void WEATHER_TASK_StopLoopSnd( WEATHER_TASK* p_wk )
 {
-	WEATHER_SND_LOOP_Stop( &p_wk->snd_loop );
+	WEATHER_SND_LOOP_Stop( &p_wk->snd_loop, p_wk->p_sound );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  天気通常サウンド再生
+ *
+ *	@param	p_wk
+ *	@param	snd_no 
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_PlaySnd( WEATHER_TASK* p_wk, int snd_no )
+{
+  FSND_PlayEnvSE( p_wk->p_sound, snd_no );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボリューム指定
+ *
+ *	@param	p_wk
+ *	@param	snd_no
+ *	@param	vol 
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_PlaySndVol( WEATHER_TASK* p_wk, int snd_no, u32 vol )
+{
+  FSND_PlayEnvSEVol( p_wk->p_sound, snd_no, vol );
 }
 
 
@@ -1727,7 +1756,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	FIELD_LIGHT* p_light;
 	FIELD_3DBG** pp_3dbg;
 	const FIELD_CAMERA* cp_camera;
-	const FIELD_SOUND* cp_sound;
+  FIELD_SOUND* p_sound;
 	const FLD_SEASON_TIME* cp_season_time;
 
 
@@ -1739,7 +1768,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	p_light		= p_wk->p_light;
 	cp_camera	= p_wk->cp_camera;
 	pp_3dbg		= p_wk->pp_3dbg;
-	cp_sound  = p_wk->cp_sound;
+	p_sound  = p_wk->p_sound;
   cp_season_time = p_wk->cp_season_time;
 
 	// クリア
@@ -1752,7 +1781,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	p_wk->cp_camera	= cp_camera;
 	p_wk->pp_3dbg	= pp_3dbg;
 	p_wk->cp_zonefog = cp_zonefog;
-	p_wk->cp_sound = cp_sound;
+	p_wk->p_sound  = p_sound;
   p_wk->cp_season_time = cp_season_time;
 }
 
@@ -2051,7 +2080,7 @@ static void WEATHER_TASK_WK_ExitOther( WEATHER_TASK* p_wk )
 
 
 //----------------------------------------------------------------------------
-/**
+/*
  *	@brief	グラフィックワークをクリアする
  *
  *	@param	p_wk	ワーク
@@ -2479,7 +2508,6 @@ static GFL_CLWK* WEATHER_OBJ_WK_GetClWk( const WEATHER_OBJ_WORK* cp_wk )
 
 
 
-
 //----------------------------------------------------------------------------
 /**
  *	@brief	ループサウンド再生
@@ -2488,16 +2516,16 @@ static GFL_CLWK* WEATHER_OBJ_WK_GetClWk( const WEATHER_OBJ_WORK* cp_wk )
  *	@param	snd_no		サウンド定数
  */
 //-----------------------------------------------------------------------------
-static void WEATHER_SND_LOOP_Play( WEATHER_TASK_SND_LOOP* p_wk, int snd_no )
+static void WEATHER_SND_LOOP_Play( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_sound, int snd_no )
 {
 	if( p_wk->play ){
-		WEATHER_SND_LOOP_Stop( p_wk );
+		WEATHER_SND_LOOP_Stop( p_wk, p_sound );
 	}
 
 	p_wk->play		= TRUE;
 	p_wk->snd_no	= snd_no;
 
-  PMSND_PlaySE( p_wk->snd_no );
+  FSND_PlayEnvSE( p_sound, p_wk->snd_no );
 }
 
 //----------------------------------------------------------------------------
@@ -2507,13 +2535,13 @@ static void WEATHER_SND_LOOP_Play( WEATHER_TASK_SND_LOOP* p_wk, int snd_no )
  *	@param	p_wk		ワーク
  */
 //-----------------------------------------------------------------------------
-static void WEATHER_SND_LOOP_Stop( WEATHER_TASK_SND_LOOP* p_wk )
+static void WEATHER_SND_LOOP_Stop( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_sound )
 {
   if(p_wk->play)
   {
     p_wk->play = FALSE;
 
-    PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID( p_wk->snd_no ) );
+    FSND_StopEnvSE( p_sound, p_wk->snd_no );
   }
 }
 

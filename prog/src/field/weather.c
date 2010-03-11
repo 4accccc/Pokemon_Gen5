@@ -304,7 +304,7 @@ static u32 FIELD_WEATHER_GetChangeType( u16 now_weather, u16 next_weather );
  *	@return	システムワーク
  */
 //-----------------------------------------------------------------------------
-FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, const FIELD_SOUND* cp_sound, const FLD_SEASON_TIME* cp_season_time, HEAPID heapID )
+FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_SOUND* p_sound, const FLD_SEASON_TIME* cp_season_time, HEAPID heapID )
 {
 	FIELD_WEATHER* p_sys;
 	int i;
@@ -329,7 +329,7 @@ FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p
 	
 
 	for( i=0; i<FIELD_WEATHER_WORK_NUM; i++ ){
-		p_sys->p_task[ i ] = WEATHER_TASK_Init( p_sys->p_unit, cp_camera, p_light, p_fog, cp_zonefog, p_sys->p_3dbg, cp_sound, cp_season_time, heapID );
+		p_sys->p_task[ i ] = WEATHER_TASK_Init( p_sys->p_unit, cp_camera, p_light, p_fog, cp_zonefog, p_sys->p_3dbg, p_sound, cp_season_time, heapID );
 	}
 
 	// 割り込み初期化

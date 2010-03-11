@@ -499,6 +499,40 @@ void FIELD_SOUND_PlayEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  環境音SEの再生  ボリューム指定
+ *
+ *	@param	fieldSound    フィールドサウンド
+ *	@param	soundIdx      サウンドID
+ *	@param	vol           ボリューム
+ */
+//-----------------------------------------------------------------------------
+void FIELD_SOUND_PlayEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol )
+{
+  // 環境音SEかチェック
+  if( FLD_ENVSE_DATA_IsEnvSE( soundIdx ) == FALSE ){
+    GF_ASSERT( 0 );
+    //環境音SEじゃないので、鳴らす
+    PMSND_PlaySE( soundIdx );
+  }else{
+
+    // ループサウンドなら保存
+    if( FLD_ENVSE_DATA_IsLoopSE( soundIdx ) ){
+      // 非対応
+      GF_ASSERT(0);
+      //  ここはならさない
+      return ;
+    }
+
+    // Pauseではないときにだけ鳴らす
+    if( fieldSound->envse.pause == FALSE ){
+      PMSND_PlaySEVolume( soundIdx, vol );
+    }
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  環境音を停止する
  *
  *	@param	fieldSound  フィールドサウンド
@@ -1947,6 +1981,11 @@ static void PushBGM( FIELD_SOUND* fieldSound )
     return;
   }
 
+  // 0->1ならば、環境音を停止
+  if( fieldSound->pushCount == FSND_PUSHCOUNT_NONE ){
+    FIELD_SOUND_PauseEnvSE( fieldSound );
+  }
+
   // 退避
   PMSND_PushBGM();
 
@@ -1985,6 +2024,11 @@ static void PopBGM( FIELD_SOUND* fieldSound )
   // 内部情報を更新
   fieldSound->pushCount--;
   fieldSound->currentBGM = fieldSound->pushBGM[ fieldSound->pushCount ];
+
+  // 1->0ならば、環境音を停止
+  if( fieldSound->pushCount == FSND_PUSHCOUNT_NONE ){
+    FIELD_SOUND_RePlayEnvSE( fieldSound );
+  }
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_NO, "FIELD-SOUND: pop BGM(%d)\n", fieldSound->currentBGM );

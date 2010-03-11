@@ -830,7 +830,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
     // 天気システム生成
     {
-      const FIELD_SOUND* fsnd;
+      FIELD_SOUND* fsnd;
       fsnd = GAMEDATA_GetFieldSound( fieldWork->gamedata );
       
       fieldWork->weather_sys = FIELD_WEATHER_Init(
