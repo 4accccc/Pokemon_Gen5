@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-02-24T16:12:22"/>
+	<create user="shimoyamada" host="W00184" date="2010-03-12T02:02:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1039,67 +1039,106 @@
 	<row id="trmemo_02_13_01">
 		<comment>2010映画配信用
 
-セレビィのイベント発動前</comment>
-		<language name="JPN" font=" 1:small" width="144" line="5">クラウンシティを　まもる
-でんせつのポケモン。
-イリュージョンを
-あやつる　ゾロアークと
-はげしい　たたかいを
-くりひろげた。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">クラウンシティを　守る
-伝説のポケモン。
-イリュージョンを
-あやつる　ゾロアークと
-激しい　戦いを
-くりひろげた。</language>
+セレビィのイベント発動前
+
+0：エンカウントした西暦下２桁
+1：エンカウント月
+2：エンカウント日
+3：エンカウントしたレベル
+
+</comment>
+		<language name="JPN" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+とくべつな　ばしょで
+うんめいてきな
+であいをした
+まぼろしの　ポケモン。
+ライモンシティに
+つれていってみよう。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
+特別な　場所で
+運命的な
+出会いをした
+まぼろしの　ポケモン。
+ライモンシティに
+連れて行ってみよう。</language>
 	</row>
 
 	<row id="trmemo_02_14_01">
 		<comment>2010映画配信用
 
-セレビィのイベント発動後</comment>
-		<language name="JPN" font=" 1:small" width="144" line="5">クラウンシティに
-ときわたりで
-やってきた。
-まいごの　ゾロアと
-であい　なかよくなった。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">クラウンシティに
-ときわたりで
-やってきた。
-迷子の　ゾロアと
-出会い　仲良くなった。</language>
+セレビィのイベント発動後
+
+0：エンカウントした西暦下２桁
+1：エンカウント月
+2：エンカウント日
+3：エンカウントしたレベル</comment>
+		<language name="JPN" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+うんめいてきな
+であいをした
+ライモンシティで
+ゾロアと　であい
+いっしょに　ぼうけんを
+することに　なった。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
+運命的な
+出会いをした
+ライモンシティで
+ゾロアと　出会い
+一緒に　冒険を
+することに　なった。</language>
 	</row>
 
 	<row id="trmemo_02_15_01">
 		<comment>2010映画配信用
 
-エンテイ・スイクン・ライコウのイベント発動前</comment>
-		<language name="JPN" font=" 1:small" width="144" line="5">げんえいのもりで
-ゾロアークと
-ふたたび　であう。
-ゾロアークの
-イリュージョンを
-うちやぶった。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">幻影の森で
-ゾロアークと
-再び　出会う。
-ゾロアークの
-イリュージョンを
-打ち破った。</language>
+エンテイ・スイクン・ライコウのイベント発動前
+
+0：エンカウントした西暦下２桁
+1：エンカウント月
+2：エンカウント日
+3：エンカウントしたレベル</comment>
+		<language name="JPN" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+とくべつな　ばしょで
+うんめいてきな
+であいをした
+でんせつの　ポケモン。
+まよいのもりに
+つれていってみよう。
+</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
+特別な　場所で
+運命的な
+出会いをした
+伝説の　ポケモン。
+迷いの森に
+連れて行ってみよう。
+</language>
 	</row>
 
 	<row id="trmemo_02_16_01">
 		<comment>2010映画配信用
 
-エンテイ・スイクン・ライコウのイベント発動後</comment>
-		<language name="JPN" font=" 1:small" width="144" line="5">ライモンシティで
-ゾロアと　さいかいして
-いっしょに　ぼうけんを
-することに　なった。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ライモンシティで
-ゾロアと　再開して
-一緒に　冒険を
-することに　なった。</language>
+エンテイ・スイクン・ライコウのイベント発動後
+0：エンカウントした西暦下２桁
+1：エンカウント月
+2：エンカウント日
+3：エンカウントしたレベル</comment>
+		<language name="JPN" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
+うんめいてきな
+であいをした
+まよいのもりで
+ゾロアークの
+イリュージョンを
+うちやぶった。
+</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
+運命的な
+出会いをした
+迷いの森で
+ゾロアークの
+イリュージョンを
+打ち破った。
+</language>
 	</row>
 
 	<row id="trmemo_03_01_00">

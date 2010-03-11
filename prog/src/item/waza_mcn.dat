@@ -114,5 +114,5 @@ static const u16 MachineNo[] = {
 	WAZANO_DAIBINGU,		// 106: ダイビング
 	WAZANO_TAKINOBORI,		// 107: たきのぼり
 	WAZANO_IWAKUDAKI,		// 108: いわくだき
-	WAZANO_DORAGONKUROO,		// 109: ドラゴンクロー
+	WAZANO_BAAKUAUTO,		// 109: バークアウト
 };

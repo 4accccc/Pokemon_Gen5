@@ -353,7 +353,7 @@
 #define ITEM_WAZAMASIN37		( 364 )		// わざマシン３７
 #define ITEM_WAZAMASIN38		( 365 )		// わざマシン３８
 #define ITEM_WAZAMASIN39		( 366 )		// わざマシン３９
-#define ITEM_WAZAMASIN40		( 367 )		// わざマシン４０
+#define ITEM_A		( 367 )		// 　
 #define ITEM_WAZAMASIN41		( 368 )		// わざマシン４１
 #define ITEM_WAZAMASIN42		( 369 )		// わざマシン４２
 #define ITEM_WAZAMASIN43		( 370 )		// わざマシン４３
@@ -623,8 +623,20 @@
 #define ITEM_EAMEERU		( 634 )		// エアメール
 #define ITEM_MOZAIKUMEERU		( 635 )		// モザイクメール
 #define ITEM_BURIKKUMEERU		( 636 )		// ブリックメール
+#define ITEM_KAORUKINOKO		( 637 )		// かおるキノコ
+#define ITEM_DEKAIKINOTAMA		( 638 )		// でかいきんおたま
+#define ITEM_ODANGOSINZYU		( 639 )		// おだんごしんじゅ
+#define ITEM_SUISEINOKAKERA		( 640 )		// すいせいのかけら
+#define ITEM_KODAINODOUKA		( 641 )		// こだいのどうか
+#define ITEM_KODAINOGINKA		( 642 )		// こだいのぎんか
+#define ITEM_KODAINOKINKA		( 643 )		// こだいのきんか
+#define ITEM_KODAINOTUBO		( 644 )		// こだいのツボ
+#define ITEM_KODAINOUDEWA		( 645 )		// こだいのうでわ
+#define ITEM_KODAINOSEKIZOU		( 646 )		// こだいのせきぞう
+#define ITEM_KODAINOOUKAN		( 647 )		// こだいのおうかん
+#define ITEM_HIUNAISU		( 648 )		// ヒウンアイス
 
-#define ITEM_DATA_MAX		( 636 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 648 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 24 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数
