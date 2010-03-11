@@ -553,10 +553,10 @@ void FIELD_SOUND_SetEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol )
   
   // ボリューム変更
   for( i=0; i<FSND_ENVSE_PLAYER_MAX; i++ ){
-    if( fieldSound->envse.envse_tbl[ i+SEPLAYER_SE1 ] == soundIdx ){
+    if( fieldSound->envse.envse_tbl[ i ] == soundIdx ){
       // ボリューム変更
       PMSND_PlayerSetInitialVolume( i+SEPLAYER_SE1, vol );
-      fieldSound->envse.envse_vol_tbl[ i+SEPLAYER_SE1 ] = vol;
+      fieldSound->envse.envse_vol_tbl[ i ] = vol;
       break;
     }
   }
@@ -612,7 +612,7 @@ void FIELD_SOUND_PauseEnvSE( FIELD_SOUND* fieldSound )
   
   // 停止
   for( i=0; i<FSND_ENVSE_PLAYER_MAX; i++ ){
-    if( fieldSound->envse.envse_tbl[ i+SEPLAYER_SE1 ] != FSND_ENVSE_NONE ){
+    if( fieldSound->envse.envse_tbl[ i ] != FSND_ENVSE_NONE ){
       // SE停止
       PMSND_StopSE_byPlayerID( i+SEPLAYER_SE1 );
     }
