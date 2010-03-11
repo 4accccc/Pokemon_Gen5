@@ -624,7 +624,7 @@ void	PMVOICE_SetSpeed( u32 voicePlayerIdx, int speed)
 	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
 	if(voicePlayer->active == FALSE){ return; }
 
-	voicePlayer->speed = speed;
+	voicePlayer->speed += speed;
 	NNS_SndWaveOutSetSpeed(voicePlayer->waveHandle, voicePlayer->speed);
 
 	if( voicePlayer->subWaveUse == TRUE ){
