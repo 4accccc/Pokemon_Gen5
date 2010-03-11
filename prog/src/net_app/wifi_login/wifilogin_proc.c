@@ -20,6 +20,7 @@
 
 #include "system/main.h"
 #include "system/wipe.h"
+#include "system/ds_system.h"
 #include "gamesystem/msgspeed.h" // MSGSPEED_GetWait
 
 #include "message.naix"
@@ -809,7 +810,7 @@ static void _modeDifferDSWait(WIFILOGIN_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _profileIDCheck(WIFILOGIN_WORK* pWork)
 {
-  if(0){  ///EURAŒŸ¸
+  if(!DS_SYSTEM_IsAgreeEULA()){  ///EULAŒŸ¸
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0018);
     _CHANGE_STATE(pWork,_exitEnd2);
   }
