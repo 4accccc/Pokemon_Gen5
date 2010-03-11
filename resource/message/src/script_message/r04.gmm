@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-04T17:49:16"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T12:41:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -400,22 +400,20 @@
 よろしく　頼むよ！▼</language>
 	</row>
 
-	<row id="msg_r04_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r04_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・戦闘後
-・メッセージ表示後、画面下に移動
-　msg_r04_tvt_01</comment>
+・メッセージ表示後
+　msg_r04_tvt_01に</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『ありがとう！
 なんとなく　わかったことがある▼
-ぼくは　きになる　ビルがあるから
-ヒウンシティに　もどるよ▽
-それじゃあね▼</language>
+きみの　たたかいかたの　ほうが
+じゅうなんな　かんじが……▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『ありがとう！
 なんとなく　わかったことがある▼
-ぼくは　気になる　ビルがあるから
-ヒウンシティに　もどるよ▽
-それじゃあね▼</language>
+きみの　戦い方の　方が
+柔軟な　感じが……▼</language>
 	</row>
 
 	<row id="msg_r04_tvt_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -426,6 +424,23 @@ TVトランシーバー</attribute>
 ライブキャスターを　つなげた[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
 ライブキャスターを　つなげた[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r04_black_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・ライブキャスター終了後
+・メッセージ表示後、画面上に移動していく</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『……だって▼
+ライモンシティの　ゲートなら
+この　４ばんどうろを▽
+まっすぐ　すすむだけさ▼
+じゃ　ぼくは　さきにいくよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……だって▼
+ライモンシティの　ゲートなら
+この　４番道路を▽
+まっすぐ　進むだけさ▼
+じゃ　ぼくは　先に行くよ▼</language>
 	</row>
 
 	<row id="msg_r04_man2_01">
