@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-03-10T17:24:01" source="palace01_00_00_ALL016.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-03-11T13:17:26" source="palace01_00_00_ALL019.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -16,7 +16,7 @@
 	tool_end_frame="150"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="on" material_size="27 27"
+	compress_material="on" material_size="30 30"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
@@ -65,14 +65,14 @@
 </tex_translate_data>
 
 <tex_srt_anm_array size="2">
-	<tex_srt_anm index="0" material_name="mizu_sita2">
+	<tex_srt_anm index="0" material_name="out25_mizu2">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="150" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="150" data_head="0"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="1" material_name="sea_gake02">
+	<tex_srt_anm index="1" material_name="out25_gake02">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
