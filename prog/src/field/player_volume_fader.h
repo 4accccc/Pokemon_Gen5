@@ -22,3 +22,5 @@ extern void PLAYER_VOLUME_FADER_Main( PLAYER_VOLUME_FADER* fader );
 
 // É{ÉäÉÖÅ[ÉÄïœçX
 extern void PLAYER_VOLUME_FADER_SetVolume( PLAYER_VOLUME_FADER* fader, u8 volume, u16 frames );
+
+extern void PLAYER_VOLUME_FADER_SetMasterVolume( PLAYER_VOLUME_FADER* fader, u8 volume );

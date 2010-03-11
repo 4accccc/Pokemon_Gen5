@@ -9,6 +9,7 @@
 #include "field_sound_system.h"
 #include "sound/pm_sndsys.h"
 #include "player_volume_fader.h"
+#include "ringtone_sys.h"
 
 #include "field_envse_data.h"
 
@@ -142,6 +143,7 @@ struct _FIELD_SOUND
 
   // プレイヤーボリューム管理
   PLAYER_VOLUME_FADER* playerVolumeFader;
+  RINGTONE_SYS*        ringToneSys;
 
   // 環境SE管理
   FSND_ENVSE_DATA envse;
@@ -252,6 +254,7 @@ FIELD_SOUND* FIELD_SOUND_Create( HEAPID heapID )
   // 初期化
   InitFieldSoundSystem( fieldSound );
   fieldSound->playerVolumeFader = PLAYER_VOLUME_FADER_Create( heapID, PLAYER_BGM );
+  fieldSound->ringToneSys = RINGTONE_SYS_Create( heapID, fieldSound->playerVolumeFader );
 
   return fieldSound;
 }
@@ -265,6 +268,7 @@ FIELD_SOUND* FIELD_SOUND_Create( HEAPID heapID )
 //---------------------------------------------------------------------------------
 void FIELD_SOUND_Delete( FIELD_SOUND* fieldSound )
 {
+  RINGTONE_SYS_Delete( fieldSound->ringToneSys );
   PLAYER_VOLUME_FADER_Delete( fieldSound->playerVolumeFader );
   GFL_HEAP_FreeMemory( fieldSound );
 }
@@ -427,6 +431,9 @@ void FIELD_SOUND_Main( FIELD_SOUND* fieldSound )
   default: GF_ASSERT(0);
   }
 
+  // TVトランシーバー着信音処理
+  RINGTONE_SYS_Main( fieldSound->ringToneSys );
+
   // プレイヤーボリューム フェード処理
   PLAYER_VOLUME_FADER_Main( fieldSound->playerVolumeFader );
 } 
@@ -462,6 +469,21 @@ void FIELD_SOUND_ChangePlayerVolume( FIELD_SOUND* fieldSound, u8 volume, u8 fade
   PLAYER_VOLUME_FADER_SetVolume( fieldSound->playerVolumeFader, volume, fadeFrame );
 }
 
+
+//=================================================================================
+// ■TVトランシーバー着信音制御
+//=================================================================================
+//---------------------------------------------------------------------------------
+/**
+ * @brief TVトランシーバー着信音をリクエストする
+ *
+ * @param fieldSound
+ */
+//---------------------------------------------------------------------------------
+void FIELD_SOUND_RequestTVTRingTone( FIELD_SOUND* fieldSound )
+{
+  RINGTONE_SYS_RequestSE( fieldSound->ringToneSys );
+}
 
 
 
@@ -646,7 +668,6 @@ void FIELD_SOUND_RePlayEnvSE( FIELD_SOUND* fieldSound )
     }
   }
 }
-
 
 //================================================================================= 
 // ■非公開関数

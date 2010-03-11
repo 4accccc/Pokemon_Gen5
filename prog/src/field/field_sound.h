@@ -104,3 +104,9 @@ extern void FSND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx );
 extern void FSND_PauseEnvSE( FIELD_SOUND* fieldSound );
 // 環境音の再始動
 extern void FSND_RePlayEnvSE( FIELD_SOUND* fieldSound );
+
+//=================================================================================
+// ■TVトランシーバー着信音
+//=================================================================================
+extern void FSND_RequestTVTRingTone( FIELD_SOUND* fieldSound );
+

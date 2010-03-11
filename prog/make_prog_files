@@ -186,6 +186,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/player_volume_fader.c \
         field/field_sound_system.c \
         field/field_sound.c \
+        field/ringtone_sys.c \
         tr_tool/tr_tool.c \
         gamesystem/iss_city_sys.c \
         gamesystem/iss_city_unit.c \

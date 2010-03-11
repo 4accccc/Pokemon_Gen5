@@ -9,6 +9,8 @@
 #include <gflib.h>
 #include "player_volume_fader.h"
 
+#include "sound/wb_sound_data.sadl" // PLAYER_
+
 
 //===================================================================================
 // ■定数
@@ -27,6 +29,7 @@ struct _PLAYER_VOLUME_FADER
   u8  endVolume;    // フェード最終ボリューム
   u16 fadeFrame;    // フェード フレーム数
   u16 fadeCount;    // フェード フレームカウンタ
+  u8 masterVolume;
 };
 
 
@@ -121,6 +124,24 @@ void PLAYER_VOLUME_FADER_SetVolume( PLAYER_VOLUME_FADER* fader, u8 volume, u16 f
   SetFadeParam( fader, volume, frames );
 }
 
+//-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------
+void PLAYER_VOLUME_FADER_SetMasterVolume( PLAYER_VOLUME_FADER* fader, u8 volume )
+{
+  fader->masterVolume = volume;
+  if ( volume == 0 ) {
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_SYS, 0 );
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_1, 0 );
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_2, 0 );
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_PSG, 0 );
+  } else {
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_SYS, MAX_VOLUME );
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_1, MAX_VOLUME );
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_2, MAX_VOLUME );
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_PSG, MAX_VOLUME );
+  }
+  UpdatePlayerVolume( fader );
+}
 
 //==================================================================================
 // ■システム制御
@@ -140,6 +161,7 @@ static void InitFader( PLAYER_VOLUME_FADER* fader )
   fader->endVolume   = MAX_VOLUME;
   fader->fadeFrame   = 0;
   fader->fadeCount   = 0;
+  fader->masterVolume = MAX_VOLUME;
 
   UpdatePlayerVolume( fader ); 
 }
@@ -243,6 +265,10 @@ static void UpdatePlayerVolume( const PLAYER_VOLUME_FADER* fader )
   int volume;
 
   volume = CalcNowVolume( fader );
+  if ( fader->masterVolume == 0 )
+  {
+    volume = 0;
+  }
   NNS_SndPlayerSetPlayerVolume( fader->playerNo, volume );
 
   // DEBUG:
