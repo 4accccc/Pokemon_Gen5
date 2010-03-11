@@ -435,10 +435,10 @@ EVENT_START    ev_pos_c06_hakase1_01
 
 	//===============フラグ操作===============//
 	//POSイベントを無効に
-//	$WK_SCENE_C06 = 1
+	$WK_SCENE_C06 = 1
 
 	//博士とジムリーダーを消す
-//	_FLAG_SET( FV_C06_ZUKANCHK_01 )
+	_FLAG_SET( FV_C06_ZUKANCHK_01 )
 	
 	//博士をT01にて出現させる
 	_FLAG_RESET(FV_T01R0401_HAKASE1)
@@ -556,7 +556,7 @@ _ANIME_LABEL	anm_leader06_kuru_02_x104
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase1_kuru_01
 	_ANIME_DATA AC_WALK_R_8F,13
-	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_hakase1_kuru_02_x100
