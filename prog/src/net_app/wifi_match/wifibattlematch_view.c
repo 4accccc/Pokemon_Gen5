@@ -836,7 +836,7 @@ void PLAYERINFO_LIVE_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_
       pos.x = PLAYERINFO_POKEICON_START_X + PLAYERINFO_POKEICON_DIFF_X*i;
       if( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i] )
       { 
-        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i], &pos, p_wk->cl_draw_type );
+        GFL_CLACT_WK_SetPos( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i], &pos, p_wk->cl_draw_type );
       }
       if( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP+i] )
       { 

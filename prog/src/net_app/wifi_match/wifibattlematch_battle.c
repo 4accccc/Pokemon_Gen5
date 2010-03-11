@@ -274,7 +274,12 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
   {
     if( GFL_NET_GetNETInitStruct()->bNetType == GFL_NET_TYPE_IRC )
     { 
-
+      if( NET_ERR_CHECK_NONE != NetErr_App_CheckError() )
+      { 
+        NetErr_App_ReqErrorDisp();
+        p_param->result = WIFIBATTLEMATCH_BATTLELINK_RESULT_DISCONNECT;
+        return TRUE;
+      }
     }
     else 
     { 

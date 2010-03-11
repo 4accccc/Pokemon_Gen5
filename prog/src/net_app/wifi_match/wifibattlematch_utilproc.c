@@ -411,6 +411,13 @@ static BOOL UTIL_IRC_Main( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATCH
 
   LIVEBATTLEMATCH_IRC_Main( p_wk->p_irc );
 
+  if( NET_ERR_CHECK_NONE != NetErr_App_CheckError() )
+  { 
+    NetErr_App_ReqErrorDisp();
+    p_param->result = WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_RETURN_LIVE;
+    return TRUE;
+  } 
+
   return FALSE;
 }
 //----------------------------------------------------------------------------

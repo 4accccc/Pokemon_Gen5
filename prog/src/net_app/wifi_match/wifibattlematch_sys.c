@@ -584,7 +584,15 @@ static void *BC_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, 
     break;
 
   default:
-    GF_ASSERT(0);
+    if( p_wk->btl_score.is_error )
+    { 
+      //LIVE大会用エラー
+      p_param->mode       = BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_FLOW_MENU;
+    }
+    else
+    { 
+      GF_ASSERT(0);
+    }
     break;
   }
 
@@ -629,6 +637,8 @@ static BOOL BC_CORE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adr
   default:
     GF_ASSERT( 0 );
   }
+
+  GFL_STD_MemClear( &p_wk->btl_score, sizeof(BATTLEMATCH_BATTLE_SCORE) );
 
 	GFL_HEAP_FreeMemory( p_param );
 
@@ -881,9 +891,6 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   //録画バッファをクリア
   BattleRec_DataClear();
 
-  //相手の戦績をクリア
-  GFL_STD_MemClear( &p_wk->btl_score, sizeof(BATTLEMATCH_BATTLE_SCORE) );
-
   //デモパラメータ
   p_param->p_demo_param = GFL_HEAP_AllocMemory( heapID, sizeof(COMM_BTL_DEMO_PARAM) );
 	GFL_STD_MemClear( p_param->p_demo_param, sizeof(COMM_BTL_DEMO_PARAM) );
@@ -1127,8 +1134,17 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
   //次のPROC
   if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
   { 
-    //ライブマッチはメインメニューからくるのでライブまっちへ戻る
-    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
+    switch( result )
+    {
+    case WIFIBATTLEMATCH_BATTLELINK_RESULT_SUCCESS:
+      //ライブマッチはメインメニューからくるのでライブまっちへ戻る
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
+      break;
+    default:
+      p_wk->btl_score.is_error  = TRUE;
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
+      break;
+    }
   }
   else
   {
@@ -1260,7 +1276,16 @@ static BOOL WBM_LISTAFTER_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_par
 
   if( GFL_NET_GetNETInitStruct()->bNetType == GFL_NET_TYPE_IRC )
   { 
-    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_BATTLE );
+    switch( result )
+    { 
+    case WIFIBATTLEMATCH_LISTAFTER_RESULT_SUCCESS:
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_BATTLE );
+      break;
+    case WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_RETURN_LIVE:
+      p_wk->btl_score.is_error  = TRUE;
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
+      break;
+    }
   }
   else
   { 
