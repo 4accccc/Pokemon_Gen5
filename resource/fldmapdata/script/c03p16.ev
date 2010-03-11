@@ -62,6 +62,7 @@ EVENT_START		ev_reserve_c03p16_cabinguide_01
 
 	//ごじょうせん　ありがとうございました
 	_BALLOONWIN_OBJMSG( msg_c03p16_cabinguide_07 , C03P16_CABINGUIDE_01 )
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
 	//遊覧船終了
@@ -244,6 +245,7 @@ ev_cabin:
 				
 					//お金が　足りません
 					_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01c , C03P16_CABINGUIDE_01, POS_DL )
+					_LAST_KEYWAIT()
 					_BALLOONWIN_CLOSE()
 				
 				ENDIF

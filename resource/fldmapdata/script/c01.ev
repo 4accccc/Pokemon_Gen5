@@ -443,7 +443,7 @@ EVENT_END
 /*	C01 FISING	アイテム入手イベントスクリプト				  */
 /**************************************************************/
 EVENT_START		ev_c01_fising_01
-	_EASY_TALK_ITEM_EVENT( ITEM_WAZAMASIN01, 1, FE_C01_ITEMGET_01, msg_c01_fising_01, msg_c01_fising_02, msg_c01_fising_02)
+	_EASY_TALK_ITEM_EVENT( ITEM_OOKINASINZYU, 1, FE_C01_ITEMGET_01, msg_c01_fising_01, msg_c01_fising_02, msg_c01_fising_02)
 EVENT_END
 
 

@@ -21,6 +21,7 @@
 #define TR_KINDERGARTENM_05                9
 #define TR_KIDERGARTENW_04                10
 #define TR_BATTLEG_03                     11
+#define D02_FIGHTERW_01                   12
 
 #endif //ZONE_D02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -319,6 +319,7 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 
 	//T01‚Ì”ŽŽm•\Ž¦
 	_FLAG_RESET( FV_T01R0401_HAKASE2 )
+	_FLAG_RESET( FV_T01R0401_POKEMON_01 )
 
 	//===================================//
 

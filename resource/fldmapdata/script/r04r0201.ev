@@ -20,6 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_r04r0201_workman_01
+_EVENT_DATA    ev_r04r0201_worker_01
 _EVENT_DATA_END
 
 
@@ -34,4 +35,11 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START		ev_r04r0201_workman_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04r0201_workman_01 )
+EVENT_END
+
+/**************************************************************/
+/*		R04R201		あなをほる								  */
+/**************************************************************/
+EVENT_START		ev_r04r0201_worker_01
+	_EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN28, 1, FE_R04R0201_ITEMGET_01, msg_r04r0201_worker_01, msg_r04r0201_worker_02, msg_r04r0201_worker_02 )
 EVENT_END
