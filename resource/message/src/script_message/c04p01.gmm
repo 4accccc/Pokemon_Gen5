@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-11T16:55:15"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T17:08:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -427,7 +427,8 @@
 
 	<row id="msg_c04p01_hakaim2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてboss_03</comment>
+・続けてboss_03
+・戦闘後には削除済みで</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
 		<language name="JPN" width="256">プラズマだん『ごぶじ　ですか！▼</language>
 		<language name="JPN_KANJI" width="256">プラズマだん『</language>
