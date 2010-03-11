@@ -710,8 +710,8 @@
 #define FV_C06_GYM_STOPPER                 686 /* 0x02ae フキヨセのジムストッパー */
 #define FV_D07_WORKMAN_STOPPER             687 /* 0x02af ネジ山ストッパー */
 #define FV_D04R0201_SAGE2                  688 /* 0x02b0 古代の城２Fの七賢者２ */
-#define FV_C03P09_SWEETS                   689 /* 0x02b1 ヒウンシティP09：ヒウンアイス行列 */
-		/* not used   690(0x02b2) */
+#define FV_C03P09_SWEETS_01                689 /* 0x02b1 ヒウンシティP09：ヒウンアイス行列 */
+#define FV_C03P09_SWEETS_02                690 /* 0x02b2 ヒウンシティP09：ヒウンアイス行列・後列 */
 		/* not used   691(0x02b3) */
 		/* not used   692(0x02b4) */
 		/* not used   693(0x02b5) */
