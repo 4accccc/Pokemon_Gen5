@@ -388,7 +388,7 @@ GMEVENT *TRIAL_HOUSE_CreateBeaconSearchEvt( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK
 
 //--------------------------------------------------------------
 /**
- * ビーコンサーチ  @todoまだ未完成
+ * ビーコンサーチ
  * @param event GMEVENT
  * @param seq event sequence
  * @param wk event work
@@ -491,6 +491,7 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
 //--------------------------------------------------------------
 void TRIAL_HOUSE_CalcBtlResult( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, u16 *outRank, u16 *outPoint )
 {
+  SAVE_CONTROL_WORK *sv;
   int val;
   u16 rank;
   TH_POINT_WORK *point;
@@ -511,6 +512,7 @@ void TRIAL_HOUSE_CalcBtlResult( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, u1
   val -= ( ((500 - point->RestHpPer) * 100) / 500 );     //残りＨＰ割合(最大-100)
 
   if (val < 0) val = 0;
+  else if (val > TH_SCORE_MAX) val = TH_SCORE_MAX;
 
   if (val >= 6000) rank = TH_RANK_MASTER;
   else if (val >= 5000) rank = TH_RANK_ELITE;
@@ -530,7 +532,7 @@ void TRIAL_HOUSE_CalcBtlResult( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, u1
     THSV_WORK *sv_wk;
     u8 idx;
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
-    SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+    sv = GAMEDATA_GetSaveControlWork(gamedata);
     sv_wk = THSV_GetSvPtr( sv );
 
     if ( ptr->DLDataType == TH_DL_DATA_TYPE_NONE ) idx = 0; //ＲＯＭデータ
@@ -583,7 +585,14 @@ void TRIAL_HOUSE_CalcBtlResult( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, u1
     }
   }
 
-  //最高得点、最高ランク更新処理(シングル、ダブルの区別無し) @todo
+  //最高得点、最高ランク更新処理(シングル、ダブルの区別無し) 
+  {
+    RECORD * rec;
+    rec = SaveData_GetRecord(sv);
+    //内部で上書きチェックしているので、条件無しで処理してＯＫ
+    RECORD_SetThScore(rec, val);
+    RECORD_SetRank(rec, rank);
+  }
 }
 
 //--------------------------------------------------------------
