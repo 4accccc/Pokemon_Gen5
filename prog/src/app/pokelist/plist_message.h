@@ -24,7 +24,6 @@ typedef enum
   PMT_MAX,
 }PLIST_MSGWIN_TYPE;
 
-
 extern PLIST_MSG_WORK* PLIST_MSG_CreateSystem( PLIST_WORK *work );
 extern void PLIST_MSG_DeleteSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork );
 extern void PLIST_MSG_UpdateSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork );

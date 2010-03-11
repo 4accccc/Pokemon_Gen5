@@ -1704,7 +1704,6 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
         PLIST_SubBagItem( work , work->plData->item );
       }
       */
-      PMSND_PlaySystemSE( PLIST_SND_WAZA_MACHINE );
       break;
     
     case LSCL_OK_FULL:
@@ -1713,7 +1712,6 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
       PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 1 , work->plData->waza );
       PLIST_MessageWaitInit( work , mes_pokelist_04_06 , FALSE , PLIST_MSGCB_ForgetSkill_ForgetCheck );
       PLIST_MSG_DeleteWordSet( work , work->msgWork );
-      PMSND_PlaySystemSE( PLIST_SND_WAZA_MACHINE );
       break;
 
     case LSCL_NG:
@@ -2890,11 +2888,16 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
     
   case PMIT_RET_JOIN:
     {
+      REGULATION *reg = (REGULATION*)work->plData->reg;
       const PLIST_PLATE_CAN_BATTLE ret = PLIST_PLATE_CanJoinBattle( work , work->plateWork[work->pokeCursor] );
       if( ret == PPCB_OK )
       {
         PLIST_PLATE_SetBattleOrder( work , work->plateWork[work->pokeCursor] , work->btlJoinNum );
         work->btlJoinNum++;
+        if( work->btlJoinNum == reg->NUM_HI )
+        {
+          work->pokeCursor = PL_SEL_POS_ENTER;
+        }
         PLIST_InitMode_Select( work );
         work->mainSeq = PSMS_SELECT_POKE;
       }
@@ -2902,11 +2905,19 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
       if( ret == PPCB_NG_SAME_MONSNO )
       {
         PLIST_MessageWaitInit( work , mes_pokelist_07_01 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+        PMSND_PlaySystemSE( PLIST_SND_ERROR );
       }
       else
       if( ret == PPCB_NG_SAME_ITEM )
       {
         PLIST_MessageWaitInit( work , mes_pokelist_07_02 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+        PMSND_PlaySystemSE( PLIST_SND_ERROR );
+      }
+      else
+      if( ret == PPCB_NG_OVER_NUM )
+      {
+        PLIST_MessageWaitInit( work , mes_pokelist_04_62_1 + (reg->NUM_HI-1) , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+        PMSND_PlaySystemSE( PLIST_SND_ERROR );
       }
       
       

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-26T11:55:31"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-11T16:56:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="182" top="174" right="887" bottom="802" maximized="no" rayout="Vertical2">
+	<dialog left="38" top="159" right="743" bottom="787" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="305" right="1280" bottom="703" visible="no"/>
+		<tag-palette left="878" top="148" right="1351" bottom="547" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -661,11 +661,11 @@ PP値上昇アイテムで技選択するとき</comment>
 メッセージ
 0：選択したポケモンニックネーム
 1：技マシンの技名</comment>
-		<language name="JPN" width="216" line="2">１[BE:02:ウェイト変更（単発）:20]　２の[BE:02:ウェイト変更（単発）:20]　…[BE:02:ウェイト変更（単発）:20]…[BE:02:ウェイト変更（単発）:20]　ポカン！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="216" line="2">１[BE:02:ウェイト変更（単発）:20]　２の[BE:02:ウェイト変更（単発）:20]　…[BE:02:ウェイト変更（単発）:20]…[BE:02:ウェイト変更（単発）:20]　ポカン！[BE:05:コールバック引数変更（単発）:3][BE:05:コールバック引数変更（単発）:5][BE:01:ページ切り替え（クリア）]
 [1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
 つかいかたを　きれいにわすれた！[BE:01:ページ切り替え（クリア）]
 そして……！</language>
-		<language name="JPN_KANJI" width="216" line="2">１[BE:02:ウェイト変更（単発）:20]　２の[BE:02:ウェイト変更（単発）:20]　…[BE:02:ウェイト変更（単発）:20]…[BE:02:ウェイト変更（単発）:20]　ポカン！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="216" line="2">１[BE:02:ウェイト変更（単発）:20]　２の[BE:02:ウェイト変更（単発）:20]　…[BE:02:ウェイト変更（単発）:20]…[BE:02:ウェイト変更（単発）:20]　ポカン！[BE:05:コールバック引数変更（単発）:3][BE:05:コールバック引数変更（単発）:5][BE:01:ページ切り替え（クリア）]
 [1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
 つかいかたを　きれいにわすれた！[BE:01:ページ切り替え（クリア）]
 そして……！</language>
@@ -677,9 +677,9 @@ PP値上昇アイテムで技選択するとき</comment>
 0：選択したポケモンニックネーム
 1：技マシンの技名</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は　あたらしく
-[1:07:わざ名:1]を　おぼえた！[1:07:わざ名:4][1:07:わざ名:2]</language>
+[1:07:わざ名:1]を　おぼえた！[BE:05:コールバック引数変更（単発）:2][BE:05:コールバック引数変更（単発）:5]</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は　あたらしく
-[1:07:わざ名:1]を　おぼえた！[1:07:わざ名:4][1:07:わざ名:2]</language>
+[1:07:わざ名:1]を　おぼえた！[BE:05:コールバック引数変更（単発）:2][BE:05:コールバック引数変更（単発）:5]</language>
 	</row>
 
 	<row id="mes_pokelist_04_12">
@@ -1610,17 +1610,17 @@ PP値上昇アイテムで技選択するとき</comment>
 	<row id="mes_pokelist_08_09">
 		<comment>「ふしぎなアメ」レベルアップ</comment>
 		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は
-レベル[2:02:３桁:1]　に　あがった！[2:02:３桁:4][2:02:３桁:2]</language>
+レベル[2:02:３桁:1]　に　あがった！[BE:05:コールバック引数変更（単発）:2][BE:05:コールバック引数変更（単発）:5]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は
-レベル[2:02:３桁:1]　に　あがった！[2:02:３桁:4][2:02:３桁:2]</language>
+レベル[2:02:３桁:1]　に　あがった！[BE:05:コールバック引数変更（単発）:2][BE:05:コールバック引数変更（単発）:5]</language>
 	</row>
 
 	<row id="mes_pokelist_08_10">
 		<comment>「ふしぎなアメ」レベルアップ</comment>
 		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は
-[1:07:わざ名:1]を　おぼえた！[1:07:わざ名:4][1:07:わざ名:2]</language>
+[1:07:わざ名:1]を　おぼえた！[BE:05:コールバック引数変更（単発）:3][BE:05:コールバック引数変更（単発）:5]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]は
-[1:07:わざ名:1]を　おぼえた！[1:07:わざ名:4][1:07:わざ名:2]</language>
+[1:07:わざ名:1]を　おぼえた！[BE:05:コールバック引数変更（単発）:3][BE:05:コールバック引数変更（単発）:5]</language>
 	</row>
 
 	<row id="mes_pokelist_09_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">

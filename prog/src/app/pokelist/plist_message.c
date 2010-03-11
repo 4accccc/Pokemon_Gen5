@@ -19,8 +19,10 @@
 #include "print/wordset.h"
 #include "system/bmp_winframe.h"
 #include "app/app_keycursor.h"
+#include "app/app_printsys_common.h"
 
 #include "plist_message.h"
+#include "plist_snd_def.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -69,6 +71,7 @@ struct _PLIST_MSG_WORK
   PRINT_STREAM *printHandle;
   STRBUF       *streamStr;
   APP_KEYCURSOR_WORK *cursorWork;
+  APP_PRINTSYS_COMMON_WORK printCtrlWork;
   
   BOOL isWaitKey;
   
@@ -82,7 +85,7 @@ struct _PLIST_MSG_WORK
 //======================================================================
 #pragma mark [> proto
 static void PLIST_MSG_ClearWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork  );
-
+static BOOL PLSIT_MSG_PrintStreamCallBack(u32 value);
 
 //--------------------------------------------------------------
 //	メッセージシステム初期化
@@ -131,8 +134,30 @@ void PLIST_MSG_UpdateSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
   
   if( msgWork->printHandle != NULL )
   {
+    BOOL ret;
     APP_KEYCURSOR_Main( msgWork->cursorWork , msgWork->printHandle , msgWork->bmpWin );
-
+    ret = APP_PRINTSYS_COMMON_PrintStreamFunc( &msgWork->printCtrlWork , msgWork->printHandle );
+    if( ret == TRUE )
+    {
+      if( msgWork->isWaitKey == FALSE ||
+          GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY ||
+          GFL_UI_TP_GetTrg() == TRUE )
+      {
+        if( msgWork->isWaitKey == TRUE )
+        {
+          PMSND_PlaySystemSE( APP_PRINTSYS_COMMON_SE_TRG );
+        }
+        PRINTSYS_PrintStreamDelete( msgWork->printHandle );
+        msgWork->printHandle = NULL;
+        GFL_STR_DeleteBuffer( msgWork->streamStr );
+      }
+      else
+      {
+        APP_KEYCURSOR_Write( msgWork->cursorWork , GFL_BMPWIN_GetBmp( msgWork->bmpWin ) , 0xF );
+        GFL_BMPWIN_TransVramCharacter( msgWork->bmpWin );
+      }
+    }
+    /*
     if( PRINTSYS_PrintStreamGetState( msgWork->printHandle ) == PRINTSTREAM_STATE_DONE )
     {
       if( msgWork->isWaitKey == FALSE ||
@@ -166,6 +191,7 @@ void PLIST_MSG_UpdateSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
         PRINTSYS_PrintStreamShortWait( msgWork->printHandle , 0 );
       }
     }
+    */
   }
   
   //printQueの更新
@@ -319,8 +345,9 @@ void PLIST_MSG_DrawMessageStream( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , c
   msgWork->streamStr = str; 
   msgWork->isWaitKey = isWait;
 
-  msgWork->printHandle = PRINTSYS_PrintStream( msgWork->bmpWin , 0 , 0 , msgWork->streamStr ,
-            work->fontHandle , MSGSPEED_GetWait() , msgWork->tcblSys , 0 , work->heapId , PLIST_FONT_MSG_BACK );
+  APP_PRINTSYS_COMMON_PrintStreamInit( &msgWork->printCtrlWork , APP_PRINTSYS_COMMON_TYPE_BOTH );
+  msgWork->printHandle = PRINTSYS_PrintStreamCallBack( msgWork->bmpWin , 0 , 0 , msgWork->streamStr ,
+            work->fontHandle , MSGSPEED_GetWait() , msgWork->tcblSys , 0 , work->heapId , PLIST_FONT_MSG_BACK , PLSIT_MSG_PrintStreamCallBack );
 }
 
 //--------------------------------------------------------------
@@ -334,6 +361,33 @@ const BOOL PLIST_MSG_IsFinishMessage( PLIST_WORK *work , PLIST_MSG_WORK *msgWork
     return TRUE;
   }
   return FALSE;
+}
+
+//--------------------------------------------------------------
+//	ストリーム用コールバック
+//--------------------------------------------------------------
+static BOOL PLSIT_MSG_PrintStreamCallBack(u32 value)
+{
+  switch( value )
+  {
+  case 2:  // "テテテテン"Lvアップ・技を覚えた
+    {
+    PMSND_PlaySystemSE( PLIST_SND_WAZA_LEARN );
+    }
+    break;
+  case 3:  // "ポカン"
+    {
+    PMSND_PlaySystemSE( PLIST_SND_WAZA_WASURE );
+    }
+    break;
+  case 5:  // "ポカン"のSE終了待ち
+    {
+      return PMSND_CheckPlaySE();
+    }
+    break;
+  }
+  return FALSE;
+  
 }
 
 #pragma mark [> wordset

@@ -173,6 +173,7 @@ typedef enum
   PSMS_CHANGE_ANM,
   PSMS_MENU,        //メニュー処理中
   PSMS_MSG_WAIT,    //メッセージ諸々
+  PSMS_MSG_SE,      //メッセージ後のSE処理
   PSMS_YESNO_WAIT,    //はい・いいえ待ち
   PSMS_INIT_HPANIME,
   PSMS_HPANIME,     //HPバー処理中

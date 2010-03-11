@@ -1222,6 +1222,10 @@ const PLIST_PLATE_CAN_BATTLE PLIST_PLATE_CanJoinBattle( PLIST_WORK *work , PLIST
         }
       }
     }
+    if( work->btlJoinNum == reg->NUM_HI )
+    {
+      return PPCB_NG_OVER_NUM;
+    }
   }
   return PPCB_OK;
 }

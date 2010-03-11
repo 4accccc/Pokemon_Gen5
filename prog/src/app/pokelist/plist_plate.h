@@ -55,8 +55,9 @@ typedef enum
 {
   PPCB_OK,
   PPCB_NG,
-  PPCB_NG_SAME_MONSNO,
-  PPCB_NG_SAME_ITEM,
+  PPCB_NG_SAME_MONSNO,  //同じ手持ちが要る
+  PPCB_NG_SAME_ITEM,    //同じアイテムがある
+  PPCB_NG_OVER_NUM,     //人数オーバー
 }PLIST_PLATE_CAN_BATTLE;
 
 extern PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POKEMON_PARAM *pp );

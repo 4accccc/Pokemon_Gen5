@@ -764,6 +764,7 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
         PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 1 , wazaNo );
         PLIST_MessageWaitInit( work , mes_pokelist_04_11 , TRUE , PLIST_MSGCB_LvUp_EvoCheck );
         PLIST_MSG_DeleteWordSet( work , work->msgWork );
+        //work->msgCallBackSe = PLIST_SND_WAZA_LEARN;
       }
       
     	GFL_BMPWIN_ClearScreen( work->paramWin );
