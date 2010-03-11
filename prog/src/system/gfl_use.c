@@ -200,6 +200,8 @@ void GFLUser_Init(void)
 #endif //MULTI_BOOT_MAKE
 #endif
 	GFUser_ResetVIntrFunc();
+
+  GFUser_SetSleepSoundFunc();
 }
 
 
@@ -508,4 +510,32 @@ BOOL GFUser_SendHeapStatus(void)
   }
 	return FALSE;
 }
+
+
+//=============================================================================================
+//
+//  DSのカバーを開閉した時の処理
+//
+//=============================================================================================
+//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+static void sleepSoundSetupDefault( void * work )
+{
+  NNS_SndSetMasterVolume( 0 );
+}
+//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+static void sleepSoundReleaseDefault( void * work )
+{
+  NNS_SndSetMasterVolume( 127 );
+}
+//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+void GFUser_SetSleepSoundFunc( void )
+{
+   GFL_UI_SleepSoundGoSetFunc( sleepSoundSetupDefault, NULL );
+   GFL_UI_SleepSoundReleaseSetFunc( sleepSoundReleaseDefault, NULL );
+}
+
+
 

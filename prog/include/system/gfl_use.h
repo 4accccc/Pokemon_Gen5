@@ -69,3 +69,6 @@ extern BOOL GFUser_SetVIntrFunc(GFL_USE_VINTR_FUNC func);
 //VBlank割り込み関数の解除
 extern void GFUser_ResetVIntrFunc(void);
 
+//デフォルトのDS開閉時サウンド制御コールバックを登録
+extern void GFUser_SetSleepSoundFunc( void );
+
