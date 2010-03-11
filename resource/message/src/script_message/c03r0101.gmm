@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00131" date="2010-03-11T12:15:04"/>
+	<create user="nakamura_akira" host="W00131" date="2010-03-11T17:14:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="151" top="4" right="856" bottom="632" maximized="no" rayout="Vertical2">
+	<dialog left="430" top="78" right="1135" bottom="706" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -7753,15 +7753,19 @@ girl4_04へ続く
 プレイヤー名と現在の隊員ランクを表示
 ランクが上がるとランクを連動して変更
 
-[トレーナー名:1]＝主人公名</comment>
+[トレーナー名:1]＝主人公名
+[5桁:1]＝ライブ通信の総すれ違い人数
+[5桁:2]＝ライブ通信のお礼を受けた総数</comment>
 		<attribute name="キャラ指定">NONE
 机の書類</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]▼
-たいいんばんごう　３ばん
-たいいんランク　Ｃランクたいいん</language>
+たいいんランク　Ｃランクたいいん
+すれちがい　にんずう　[2:04:５桁:1]にん
+おれい　かいすう　[2:04:５桁:2]かい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]▼
-隊員番号　３番
-隊員ランク　Ｃランク隊員</language>
+隊員ランク　Ｃランク隊員
+すれ違い　人数　[2:04:５桁:1]人
+お礼　回数　[2:04:５桁:2]回</language>
 	</row>
 
 	<row id="msg_c03r0101_none_debug_02b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -7770,15 +7774,19 @@ girl4_04へ続く
 プレイヤー名と現在の隊員ランクを表示
 ランクが上がるとランクを連動して変更
 
-[トレーナー名:1]＝主人公名</comment>
+[トレーナー名:1]＝主人公名
+[5桁:1]＝ライブ通信の総すれ違い人数
+[5桁:2]＝ライブ通信のお礼を受けた総数</comment>
 		<attribute name="キャラ指定">NONE
 机の書類</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]▼
-たいいんばんごう　３ばん
-たいいんランク　Ｂランクたいいん</language>
+たいいんランク　Ｂランクたいいん
+すれちがい　にんずう　[2:04:５桁:1]にん
+おれい　かいすう　[2:04:５桁:2]かい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]▼
-隊員番号　３番
-隊員ランク　Ｂランク隊員</language>
+隊員ランク　Ｂランク隊員
+すれ違い　人数　[2:04:５桁:1]人
+お礼　回数　[2:04:５桁:2]回</language>
 	</row>
 
 	<row id="msg_c03r0101_none_debug_02c" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -7787,15 +7795,19 @@ girl4_04へ続く
 プレイヤー名と現在の隊員ランクを表示
 ランクが上がるとランクを連動して変更
 
-[トレーナー名:1]＝主人公名</comment>
+[トレーナー名:1]＝主人公名
+[5桁:1]＝ライブ通信の総すれ違い人数
+[5桁:2]＝ライブ通信のお礼を受けた総数</comment>
 		<attribute name="キャラ指定">NONE
 机の書類</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]▼
-たいいんばんごう　３ばん
-たいいんランク　Ａランクたいいん</language>
+たいいんランク　Ａランクたいいん
+すれちがい　にんずう　[2:04:５桁:1]にん
+おれい　かいすう　[2:04:５桁:2]かい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]▼
-隊員番号　３番
-隊員ランク　Ａランク隊員</language>
+隊員ランク　Ａランク隊員
+すれ違い　人数　[2:04:５桁:1]人
+お礼　回数　[2:04:５桁:2]回</language>
 	</row>
 
 	<row id="msg_c03r0101_none_debug_02d" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -7804,15 +7816,19 @@ girl4_04へ続く
 プレイヤー名と現在の隊員ランクを表示
 ランクが上がるとランクを連動して変更
 
-[トレーナー名:1]＝主人公名</comment>
+[トレーナー名:1]＝主人公名
+[5桁:1]＝ライブ通信の総すれ違い人数
+[5桁:2]＝ライブ通信のお礼を受けた総数</comment>
 		<attribute name="キャラ指定">NONE
 机の書類</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]▼
-たいいんばんごう　３ばん
-たいいんランク　Ｓランクたいいん</language>
+たいいんランク　Ｓランクたいいん
+すれちがい　にんずう　[2:04:５桁:1]にん
+おれい　かいすう　[2:04:５桁:2]かい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]▼
-隊員番号　３番
-隊員ランク　Ｓランク隊員</language>
+隊員ランク　Ｓランク隊員
+すれ違い　人数　[2:04:５桁:1]人
+お礼　回数　[2:04:５桁:2]回</language>
 	</row>
 
 	<row id="msg_c03r0101_none_debug_02e" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -7821,15 +7837,19 @@ girl4_04へ続く
 プレイヤー名と現在の隊員ランクを表示
 ランクが上がるとランクを連動して変更
 
-[トレーナー名:1]＝主人公名</comment>
+[トレーナー名:1]＝主人公名
+[5桁:1]＝ライブ通信の総すれ違い人数
+[5桁:2]＝ライブ通信のお礼を受けた総数</comment>
 		<attribute name="キャラ指定">NONE
 机の書類</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]▼
-たいいんばんごう　３ばん
-たいいんランク　ＳＳランクたいいん</language>
+たいいんランク　ＳＳランクたいいん
+すれちがい　にんずう　[2:04:５桁:1]にん
+おれい　かいすう　[2:04:５桁:2]かい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]▼
-隊員番号　３番
-隊員ランク　ＳＳランク隊員</language>
+隊員ランク　ＳＳランク隊員
+すれ違い　人数　[2:04:５桁:1]人
+お礼　回数　[2:04:５桁:2]回</language>
 	</row>
 
 	<flowchart-group-list>
