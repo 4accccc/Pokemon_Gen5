@@ -42,15 +42,16 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 endif
 
-.PHONY:	do-build clean subdir
+.PHONY:	do-build clean
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
-
-subdir:
-	@$(MAKE_SUBDIR)
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
+do-build:	$(TARGETDIR)/$(targetname).narc
+else
+do-build:	$(targetname).narc $(TARGETDIR)/$(targetname).narc
+endif
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
