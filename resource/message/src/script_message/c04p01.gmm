@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-11T16:00:14"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T16:55:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -304,7 +304,7 @@
 		<number position="-1" width="100"/>
 		<comment position="4" width="292"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="113">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -359,51 +359,102 @@
 	</lock>
 
 
-	<row id="msg_c04p01_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04p01_boss_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
+・最初からGRIDX=23、GRIDZ=13）下向きで待機
 ・pos（GRIDX=20.GRIDZ=12^16）を踏むと
-　画面右から登場してメッセージ表示
-・表示後、画面左へ連れて行かれる（暫定）</comment>
+　！マーク表示後、隣接してメッセージ表示
+・表示後、画面左へ誘導</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……キミは　プラズマだんを
 さがして　いるんだろう？▼
-ならば　かんらんしゃに　のればいい
-たかい　ところからで　あれば▽
-みのがすことも　ないだろう▼
-こっちに　きたまえ[BE:09:速度コントロール:0]▼</language>
+この　ゆうえんちの
+おくに　にげていったさ▽
+さあ　ついてきたまえ[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……キミは　プラズマ団を
 探して　いるんだろう？▼
-ならば　観覧車に　のればいい
-高い　ところからで　あれば▽
-見逃すとも　ないだろう▼
-こっちに　来たまえ[BE:09:速度コントロール:0]▼</language>
+この遊園地の　奥に逃げていったさ
+さあ　ついてきたまえ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_02" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
+・観覧車前に到達して
+　辺りを見回す動きの後にメッセージ表示
 ・メッセージ表示後、観覧車に乗る演出
 ・観覧車デモに切り替え
 　観覧車内でのメッセージは別ファイルで管理予定</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]さあ　のりたまえ[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]さあ　乗りたまえ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……いないね▼
+かんらんしゃに　のって
+さがすことに　しよう▼
+フフフ……　ボクは
+かんらんしゃが　だいすき　なんだ▼
+あの　えんうんどう……　りきがく……
+うつくしい　すうしきの　あつまり……[BE:09:速度コントロール:0]▼
+以下　観覧車デモでのセリフ▼
+さて　おきづき　だろうが
+ボクが　プラズマだんの　おうさま▼
+だから　これいじょう　プラズマだんの
+メンバーを　たおしてほしくないな▼
+キミが　がんばれば　がんばるほど
+ポケモンが　くるしむことに　なる！▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……いないね▼
+観覧車に　乗って
+探すことに　しよう▼
+フフフ……　ボクは
+観覧車が　大好き　なんだ▼
+あの　円運動……　力学……
+美しい　数式の　集まり……[BE:09:速度コントロール:0]▼
+以下　観覧車デモでのセリフ▼
+さて　お気づき　だろうが
+ボクが　プラズマ団の　王様▼
+だから　これ以上　プラズマ団の
+メンバーを　倒してほしくないな▼
+キミが　がんばれば　がんばるほど
+ポケモンが　苦しむことに　なる！▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_03" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_hakaim1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・観覧車から降りてきて
-　主人公と向き合いメッセージ表示
+・観覧車から降りるとプラズマ団が近づいてきて
+　メッセージ表示
+・続けてhakaim2_01</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
+		<language name="JPN" width="256">プラズマだん『Ｎさま！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『</language>
+	</row>
+
+	<row id="msg_c04p01_hakaim2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてboss_03</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
+		<language name="JPN" width="256">プラズマだん『ごぶじ　ですか！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『</language>
+	</row>
+
+	<row id="msg_c04p01_boss_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・プラズマ団のほうは向かない(気にしていない）
 ・はい/いいえの選択
 　どちらを選んだか保存しておく</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]さて　[1:00:トレーナー名:0]……▼
-たびをつづけて　キミは
-きれいごとばかりを　いう▽
-にんげんの　みにくさに　きづいたかい？[BE:09:速度コントロール:0]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]さて　[1:00:トレーナー名:0]……▼
-旅を続けて　キミは
-きれいごとばかりを　いう▽
-人間の　醜さに　気づいたかい？[BE:09:速度コントロール:0]</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]だいじょうぶ▼
+ポケモンを　すくうために
+あつまった　ひとは……▽
+ボクが　まもるよ▼
+ボクが　かれと　たたかうあいだに
+キミたちは　ここから　にげたまえ▼
+……さて　[1:00:トレーナー名:0]
+ボクの　かんがえ　わかるかい？[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]問題ない▼
+ポケモンを　救うために
+集った　人々は……▽
+ボクが　守るよ▼
+ボクが　彼と　戦うあいだに
+キミたちは　この場を　離れたまえ▼
+……さて　[1:00:トレーナー名:0]
+ボクの　考え　理解できるかい？[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_c04p01_boss_04" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -422,30 +473,21 @@
 ・いいえ選択時
 ・トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]やれやれ……だ▼
-にんげんは　うらおもてが　ありすぎる
-じぶんを　よりよく　みせようと▽
-むりをする……　ときには　ウソをつく▼
-ポケモンのように
-しぜんで　いられない▼
-キミが　しょうぶで　まけそうになったとき
-どんなエゴを　むきだしにするか▽
-そのことを　おしえてあげるよ[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]やれやれ……だ▼
-人間は　裏表が　ありすぎる
-自分を　より良く見せようと▽
-無理をする……　時にはウソをつく▼
-ポケモンのように
-自然で　いられない▼
-キミが　勝負で　負けそうになったとき
-どんなエゴを　むきだしにするか▽
-そのことを　教えてあげるよ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……だろうね
+まあ　いいさ▼
+ボクと　ボクのトモダチの　きずな
+みせてあげるよ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……だろうね
+まあ　いいさ▼
+ボクと　ボクのトモダチの　きずな
+みせてあげるよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04p01_boss_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・戦闘後
-･メッセージ表示後、c04方面に移動
+･メッセージ表示後
+　c04方面に移動
 ・画面外に消えると、主人公操作可能に</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]いま　しょうぶの　さなかに
@@ -506,7 +548,7 @@
 ピエロさんが　いるよ！</language>
 	</row>
 
-	<row id="msg_c04p01_gymsign_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04p01_gymsign_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ポケモンジム</comment>
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">ライモンシティ　ポケモンジム
