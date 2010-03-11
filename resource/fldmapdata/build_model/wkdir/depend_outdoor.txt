@@ -258,4 +258,10 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/tt_train11.nsbmd \
 	$(RESDIR)/door_c05_build.nsbmd \
 	$(RESDIR)/rock_02.nsbmd \
+	$(RESDIR)/door_normal01.nsbmd \
+	$(RESDIR)/door_normal02.nsbmd \
+	$(RESDIR)/door_normal03.nsbmd \
+	$(RESDIR)/door_bar.nsbmd \
+	$(RESDIR)/door_c8_b.nsbmd \
+	$(RESDIR)/door_auto01.nsbmd \
 
