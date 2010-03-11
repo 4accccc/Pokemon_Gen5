@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T13:01:11"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-03-11T17:22:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1413" top="182" right="2118" bottom="802" maximized="no" rayout="Vertical2">
+	<dialog left="1371" top="151" right="2076" bottom="779" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,36 +292,36 @@
 	</lock>
 
 
-	<row id="msg_c03p09_iceline_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03p09_iceline_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂：アイスイベント</comment>
 		<language name="JPN" width="256">いよいよ　たべられる！
-ならんだかいが　あったぜ！</language>
+ならんだかいが　あったぜ！▼</language>
 		<language name="JPN_KANJI" width="256">いよいよ　食べられる！
-並んだかいが　あったぜ！</language>
+並んだかいが　あったぜ！▼</language>
 	</row>
 
 	<row id="msg_c03p09_iceline_02" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
 		<comment>♀：アイスイベント</comment>
 		<language name="JPN" width="256">これを　あじわいたくて　はるばる
-カラクサタウンから　きちゃいました！</language>
+カラクサタウンから　きちゃいました！▼</language>
 		<language name="JPN_KANJI" width="256">これを　味わいたくて　はるばる
-カラクサタウンから　来ちゃいました！</language>
+カラクサタウンから　来ちゃいました！▼</language>
 	</row>
 
 	<row id="msg_c03p09_iceline_03" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
 		<comment>♀：アイスイベント</comment>
 		<language name="JPN" width="256">ここのー　スィーツー！
-チョーにんき　なんだよー！！</language>
+チョーにんき　なんだよー！！▼</language>
 		<language name="JPN_KANJI" width="256">ここのー　スィーツー！
-チョーにんき　なんだよー！！</language>
+チョーにんき　なんだよー！！▼</language>
 	</row>
 
 	<row id="msg_c03p09_iceline_04" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
 		<comment>♀：アイスイベント</comment>
 		<language name="JPN" width="256">さすが　わだいの　おみせ！
-こんなに　こんでるなんて　すごい！</language>
+こんなに　こんでるなんて　すごい！▼</language>
 		<language name="JPN_KANJI" width="256">さすが　話題の　お店！
-こんなに　こんでるなんて　すごい！</language>
+こんなに　こんでるなんて　すごい！▼</language>
 	</row>
 
 	<row id="msg_c03p09_iceline_05a" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -347,11 +347,11 @@
 		<language name="JPN" width="256">そうかー
 けっこう　ならぶぞー！▼
 でも　ぜったい　おいしいから
-ならぶ　かちは　ある！</language>
+ならぶ　かちは　ある！▼</language>
 		<language name="JPN_KANJI" width="256">そうかー
 けっこう　並ぶぞー！▼
 でも　ぜったい　おいしいから
-並ぶ　価値は　ある！</language>
+並ぶ　価値は　ある！▼</language>
 	</row>
 
 	<row id="msg_c03p09_iceline_05c" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -361,11 +361,11 @@
 		<language name="JPN" width="256">そうかー　こんでるしな▼
 でも　ここだけの　はなし
 きょうは　すいてるほう　なんだよ▽
-いつもは　もう　うりきれ　なんだ</language>
+いつもは　もう　うりきれ　なんだ▼</language>
 		<language name="JPN_KANJI" width="256">そうかー　こんでるしな▼
 でも　ここだけの話
 今日は　すいてるほう　なんだよ▽
-いつもは　もう　売り切れ　なんだ</language>
+いつもは　もう　売り切れ　なんだ▼</language>
 	</row>
 
 	<row id="msg_c03p09_iceline_05d" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -376,12 +376,12 @@
 いま　シウンシティで　わだいの▽
 スィーツを　かうことが　できるんだよ▼
 でも　きょうは　もう
-ぼくで　うりきれ　みたいだ</language>
+ぼくで　うりきれ　みたいだ▼</language>
 		<language name="JPN_KANJI" width="256">うん？　ここでは
 いま　シウンシティで　話題の▽
 スィーツを　買うことが　できるんだよ▼
 でも　今日は　もう
-ぼくで　売り切れ　みたいだ</language>
+ぼくで　売り切れ　みたいだ▼</language>
 	</row>
 
 	<row id="msg_c03p09_iceline_05e" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -393,23 +393,23 @@
 でも　きょうは　もう
 ぼくで　うりきれ　みたいだ▼
 かようびは　すいてるから
-また　きてごらんよ！</language>
+また　きてごらんよ！▼</language>
 		<language name="JPN_KANJI" width="256">うん？　ここでは
 いま　シウンシティで　話題の▽
 スィーツを　買うことが　できるんだよ▼
 でも　今日は　もう
 ぼくで　売り切れ　みたいだ▼
 火曜日は　すいてるから
-また　来てごらんよ！</language>
+また　来てごらんよ！▼</language>
 	</row>
 
 	<row id="msg_c03p09_ice_shop_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・冬以外
-・はい/いいえの選択肢
-　はい→shop_02
-　はい選択、でもお金がない→shop_03
-　いいえ→shop_04</comment>
+・かう/かわないの選択肢
+　かう→shop_02
+　かう選択、でもお金がない→shop_03
+　かわない→shop_01b</comment>
 		<attribute name="キャラ指定">SHOPW</attribute>
 		<language name="JPN" width="256">ヒウンシティめいぶつ
 ヒウンアイスに　なりまーす▼
@@ -419,6 +419,20 @@
 ヒウンアイスに　なりまーす▼
 １こ　１００円　です
 お買い上げに　なりますか？</language>
+	</row>
+
+	<row id="msg_c03p09_ice_shop_01b" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・冬以外
+・かう/かわないの選択肢
+　かう→shop_02
+　かう選択、でもお金がない→shop_03
+　かわない→shop_05</comment>
+		<attribute name="キャラ指定">SHOPW</attribute>
+		<language name="JPN" width="256">ええっ　ほんとうにかわないんですか？
+そろそろ　うりきれちゃいますよ？</language>
+		<language name="JPN_KANJI" width="256">ええっ　本当に買わないんですか？
+そろそろ　売り切れちゃいますよ？</language>
 	</row>
 
 	<row id="msg_c03p09_ice_shop_02" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -450,18 +464,33 @@
 また　来てくださいませ</language>
 	</row>
 
-	<row id="msg_c03p09_ice_shop_04" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p09_ice_shop_04" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>♀
+・冬以外
+・はい選択、でもおバッグがいっぱい</comment>
+		<attribute name="キャラ指定">SHOPW</attribute>
+		<language name="JPN" width="256">ありがとう　ございます！▼
+……あれ　あれれ？
+バッグが　いっぱいみたいですね▽
+また　きてくださいませ</language>
+		<language name="JPN_KANJI" width="256">ありがとう　ございます！▼
+……あれ　あれれ？
+バッグが　いっぱいみたいですね▽
+また　来てくださいませ</language>
+	</row>
+
+	<row id="msg_c03p09_ice_shop_05" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・冬以外
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">SHOPW</attribute>
 		<language name="JPN" width="256">せっかく　ならんでくれたのに……
-あのう　また　きてくださいね！</language>
+あのう　また　きてくださいね！▼</language>
 		<language name="JPN_KANJI" width="256">せっかく　並んでくれたのに……
-あのう　また　来てくださいね！</language>
+あのう　また　来てくださいね！▼</language>
 	</row>
 
-	<row id="msg_c03p09_ice_shop_05" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p09_ice_shop_06" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・冬</comment>
 		<attribute name="キャラ指定">SHOPW</attribute>
@@ -469,12 +498,26 @@
 ヒウンアイスを　うっていまーす！▼
 でも　オーナーの　かんがえで
 ふゆは　おやすみ　なんです……▽
-あたたかくなれば　またきてください！</language>
+あたたかくなったら　またきてください！</language>
 		<language name="JPN_KANJI" width="256">ここでは　ヒウンシティ名物の
 ヒウンアイスを　売っていまーす！▼
 でも　オーナーの　意向で
 冬は　おやすみ　なんです……▽
-暖かくなれば　また来てください！</language>
+暖かくなったら　また来てください！</language>
+	</row>
+
+	<row id="msg_c03p09_ice_shop_07" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>msg_c03p09_ice_shop_01表示後の選択肢</comment>
+		<attribute name="キャラ指定">SHOPW</attribute>
+		<language name="JPN" width="256">かう</language>
+		<language name="JPN_KANJI" width="256">買う</language>
+	</row>
+
+	<row id="msg_c03p09_ice_shop_08" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>msg_c03p09_ice_shop_01表示後の選択肢</comment>
+		<attribute name="キャラ指定">SHOPW</attribute>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<row id="msg_c03p09_sign1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
