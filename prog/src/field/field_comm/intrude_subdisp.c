@@ -438,7 +438,6 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
-  OCCUPY_INFO *area_occupy;
   
   if(intcomm == NULL){
     return;
@@ -455,8 +454,6 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
   if(PRINTSYS_QUE_IsExistTarget(intsub->print_que, intsub->entrymsg_bmp) == FALSE){
     BmpOam_ActorBmpTrans(intsub->entrymsg_bmpoam);
   }
-  
-  area_occupy = _IntSub_GetArreaOccupy(intcomm, intsub);
   
   //タッチ判定チェック
   _IntSub_TouchUpdate(intcomm, intsub);
@@ -492,7 +489,28 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
       }
     }
   }
+}
+
+//==================================================================
+/**
+ * 侵入下画面：描画
+ *
+ * @param   intsub		
+ */
+//==================================================================
+void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub)
+{
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+  INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
+  OCCUPY_INFO *area_occupy;
   
+  if(intcomm == NULL){
+    return;
+  }
+
+  area_occupy = _IntSub_GetArreaOccupy(intcomm, intsub);
+
   _IntSub_BGBarUpdate(intcomm, intsub);
   //BGスクリーンカラー変更チェック
   _IntSub_BGColorUpdate(intcomm, intsub);
@@ -509,18 +527,6 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
   _IntSub_ActorUpdate_EntryButton(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_LvNum(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_PointNum(intsub, intcomm, area_occupy);
-}
-
-//==================================================================
-/**
- * 侵入下画面：描画
- *
- * @param   intsub		
- */
-//==================================================================
-void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub)
-{
-  ;
 }
 
 
