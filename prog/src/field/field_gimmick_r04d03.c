@@ -11,7 +11,7 @@
 #include "field_gimmick_r04d03.h"
 #include "field_gimmick_def.h"
 #include "savedata/gimmickwork.h"
-//#include "sound/pm_sndsys.h"
+#include "sound/pm_sndsys.h"
 #include "system/gfl_use.h"
 
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
@@ -21,6 +21,8 @@
 #include "gmk_tmp_wk.h"
 
 #include "field_gimmick_r04d03_se_def.h"
+
+#include "../../../resource/fldmapdata/gimmick/r04d03/gimmick_se_range_def.h"
 
 #define EXPOBJ_UNIT_IDX (0)
 #define ARCID (ARCID_H01_GIMMICK) // ギミックデータのアーカイブID
@@ -42,9 +44,9 @@
 
 #define TRAILER_MAX (2)
 
-#define SE_BAND_Z_MIN (0)   //SEの聞こえる幅Ｚ最小値
-#define SE_BAND_Z_MAX (0)   //SEの聞こえる幅Ｚ最大値
-#define SE_RANGE_X (0)      //SEの聞こえる距離
+#define SE_BAND_Z_MIN ( SE_BAND_Z_MIN_GRID * FIELD_CONST_GRID_FX32_SIZE )   //SEの聞こえる幅Ｚ最小値
+#define SE_BAND_Z_MAX ( SE_BAND_Z_MAX_GRID * FIELD_CONST_GRID_FX32_SIZE )   //SEの聞こえる幅Ｚ最大値
+#define SE_RANGE_X ( SE_RANGE_X_GRID * FIELD_CONST_GRID_FX32_SIZE )      //SEの聞こえる距離
 
 
 
@@ -82,10 +84,10 @@ static const GFL_G3D_UTIL_RES res_table[RES_NUM] =
 
 // オブジェクト
 typedef enum {
-  OBJ_TRAILER_1_HEAD,  // トレーラー1(前)
-  OBJ_TRAILER_1_TAIL,  // トレーラー1(後)
-  OBJ_TRAILER_2_HEAD,  // トレーラー2(前)
-  OBJ_TRAILER_2_TAIL,  // トレーラー2(後)
+  OBJ_TRAILER_1_HEAD,  // トレーラー1(前) 左から右
+  OBJ_TRAILER_1_TAIL,  // トレーラー1(後) 左から右
+  OBJ_TRAILER_2_HEAD,  // トレーラー2(前) 右から左
+  OBJ_TRAILER_2_TAIL,  // トレーラー2(後) 右から左
   OBJ_NUM
 } OBJ_INDEX;
 
@@ -181,6 +183,9 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 {
   int i;
   int *frame;
+  VecFx32 pos;
+  fx32 tr1_x, tr2_x;
+
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
@@ -195,7 +200,12 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
     GFL_G3D_OBJSTATUS* status;
     status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_HEAD );
     status->trans.x = TRAILER_LEFT_X + TRAILER_SPEED * (*frame);
-    if ( status->trans.x >= TRAILER_RIGHT_X) (*frame) = 0;
+    if ( status->trans.x >= TRAILER_RIGHT_X)
+    {
+      (*frame) = 0;
+      work->GmkObj[0].SeFlg = FALSE;
+    }
+    tr1_x = status->trans.x;
   }
   { // トレーラー1(後)
     GFL_G3D_OBJSTATUS* status;
@@ -211,7 +221,12 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
     GFL_G3D_OBJSTATUS* status;
     status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_HEAD );
     status->trans.x = TRAILER_RIGHT_X - TRAILER_SPEED * (*frame);
-    if ( status->trans.x <= TRAILER_LEFT_X) (*frame) = 0;
+    if ( status->trans.x <= TRAILER_LEFT_X)
+    {
+      (*frame) = 0;
+      work->GmkObj[1].SeFlg = FALSE;
+    }
+    tr2_x = status->trans.x;
   }
   { // トレーラー2(後)
     GFL_G3D_OBJSTATUS* status;
@@ -221,24 +236,41 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   }
 
   //自機の位置座表を取得
-  ;
-  //SEを鳴らすＺバンド幅に自機がいるか？
-  if (0)      //いる場合
   {
-    //一台目のトレーラー（右から左に動くトレーラー）のＸ座標を取得
-    ;
-    //自機よりも右にいて、なおかつ、ＳＥ再生距離にいるか？
-    if(0)   //いる場合
-    {
-      ;
-    }
+    FIELD_PLAYER *fld_player;
+    fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+    FIELD_PLAYER_GetPos( fld_player, &pos );
+  }
 
-    //二台目のトレーラー（左から右に動くトレーラー）のＸ座標を取得
-    ;
-    //自機よりも左にいて、なおかつ、ＳＥ再生距離にいるか？
-    if(0)   //いる場合
+  //SEを鳴らすＺバンド幅に自機がいるか？
+  if ( (SE_BAND_Z_MIN<=pos.z)&&(pos.z<=SE_BAND_Z_MAX) )      //いる場合
+  {
+    SEPLAYER_ID p_id;
+    fx32 diff;
+    FIELD_SOUND *fs = GAMEDATA_GetFieldSound( gdata );
+    diff = pos.x - tr1_x;
+    //一台目のトレーラーが自機よりも右にいて、なおかつ、ＳＥ再生距離にいてまだＳＥならしてないか？
+    if( (0 <= diff)&&(diff <= SE_RANGE_X)&&(!work->GmkObj[0].SeFlg) )   //YES
     {
-      ;
+      //プレーヤー空きチェック
+      p_id = PMSND_GetSE_DefaultPlayerID( FLD_GMK_R04D03_LR_SE );
+      if ( !PMSND_CheckPlaySE_byPlayerID( p_id ) )
+      {
+        work->GmkObj[0].SeFlg = TRUE;
+        FSND_PlayEnvSE( fs, FLD_GMK_R04D03_LR_SE );    //左から右
+      }
+    }
+    diff = tr2_x - pos.x;
+    //二台目のトレーラーが自機よりも左にいて、なおかつ、ＳＥ再生距離にいてまだＳＥならしてないか？
+    if( (0 <= diff)&&(diff <= SE_RANGE_X)&&(!work->GmkObj[1].SeFlg) )   //YES
+    {
+      //プレーヤー空きチェック
+      p_id = PMSND_GetSE_DefaultPlayerID( FLD_GMK_R04D03_RL_SE );
+      if ( !PMSND_CheckPlaySE_byPlayerID( p_id ) )
+      {
+        work->GmkObj[1].SeFlg = TRUE;
+        FSND_PlayEnvSE( fs, FLD_GMK_R04D03_RL_SE );    //右から左
+      }
     }
   }
 }
@@ -318,15 +350,5 @@ static void InitWork( GMK_WORK* work, FIELDMAP_WORK* fieldmap )
     //カリングする
     FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_TAIL, TRUE);
   }
-#if 0  
-
-  // 動作待機カウンタ
-  for( i=0; i<SOBJ_NUM; i++ ){ work->wait[i] = 0; }
-
-  // 待機時間
-  LoadWaitTime( work );
-  // 風データ
-  LoadWindData( work );
-#endif  
 }
 
