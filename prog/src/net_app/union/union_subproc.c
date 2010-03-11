@@ -835,8 +835,9 @@ static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
 	case SEQ_POKELIST_WAIT:
 		if(GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       if(unisys->colosseum_sys != NULL){
-        plist->comm_selected_num 
-          = ColosseumTool_ReceiveCheck_PokeListSeletedNum(unisys->colosseum_sys);
+        //List内で制御するのでコメントアウト Ari100311
+        //plist->comm_selected_num 
+        //  = ColosseumTool_ReceiveCheck_PokeListSeletedNum(unisys->colosseum_sys);
       }
       break;
     }

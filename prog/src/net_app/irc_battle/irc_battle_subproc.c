@@ -228,7 +228,7 @@ static void IRC_BATTLE_SUBPROC_InitListData( IRC_BATTLE_WORK *work , IRC_BATTLE_
 //  plData->reg = reg;
   
   plData->zone_id = 0;
-  plData->mode = PL_MODE_BATTLE;
+  plData->mode = PL_MODE_BATTLE_WIFI;
   switch( reg->BATTLE_TYPE )
   {
   case REGULATION_BATTLE_SINGLE:   ///<シングル
@@ -322,5 +322,6 @@ static void IRC_BATTLE_SUBPROC_InitStatusData( IRC_BATTLE_WORK *work , IRC_BATTL
 //--------------------------------------------------------------
 void IRC_BATTLE_SUBPROC_PostFinishPokelist( IRC_BATTLE_SUBPROC_WORK *procWork )
 {
-  procWork->plData.comm_selected_num++;
+  //List内で制御するのでコメントアウト Ari100310
+  //procWork->plData.comm_selected_num++;
 }
