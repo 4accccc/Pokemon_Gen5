@@ -238,7 +238,7 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate_Blank( PLIST_WORK *work , const u8 idx
   plateWork->idx = idx;
   plateWork->pp = NULL;
   plateWork->isBlank = TRUE;
-  plateWork->btlOrder = PPBO_INVALLID;
+  plateWork->btlOrder = PPBO_INVALID;
   GFL_BG_LoadScreenV_Req( PLIST_BG_PLATE );
 
   return plateWork;
@@ -464,7 +464,7 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
   if( isWazaLearn == FALSE )//技の時はレベルも状態以上も無い。
   {
     if( (PP_GetSick( plateWork->pp ) == POKESICK_NULL && plateWork->dispHp != 0) ||
-        plateWork->btlOrder != PPBO_INVALLID )  //バトルのときは強制レベル表示
+        plateWork->btlOrder != PPBO_INVALID )  //バトルのときは強制レベル表示
     {
         WORDSET *wordSet = WORDSET_Create( work->heapId );
 
@@ -512,7 +512,7 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
   }
   
   //HPorバトル参加順or技教えor進化アイテムorミュージカル
-  if( plateWork->btlOrder != PPBO_INVALLID )
+  if( plateWork->btlOrder != PPBO_INVALID )
   {
     //バトル参加順
     u32 strId;
@@ -787,6 +787,12 @@ void PLIST_PLATE_SetActivePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
       PLIST_PLATE_ChangeColor( work , plateWork , PPC_CHANGE_SELECT );
     }
     else
+    if( PLIST_UTIL_IsBattleMenu(work) == TRUE &&
+        plateWork->btlOrder < PPBO_JOIN_OK )
+    {
+      PLIST_PLATE_ChangeColor( work , plateWork , PPC_BATTLE_SELECT );
+    }
+    else
     {
       PLIST_PLATE_ChangeColor( work , plateWork , PPC_NORMAL_SELECT );
     }
@@ -807,6 +813,12 @@ void PLIST_PLATE_SetActivePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
         (work->mainSeq == PSMS_USE_POKE && work->useTarget == plateWork->idx) )
     {
       PLIST_PLATE_ChangeColor( work , plateWork , PPC_CHANGE );
+    }
+    else
+    if( PLIST_UTIL_IsBattleMenu(work) == TRUE &&
+        plateWork->btlOrder < PPBO_JOIN_OK )
+    {
+      PLIST_PLATE_ChangeColor( work , plateWork , PPC_BATTLE );
     }
     else
     {
@@ -1169,7 +1181,7 @@ static void PLIST_PLATE_CheckBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *p
   if( PLIST_UTIL_IsBattleMenu(work) == FALSE )
   {
     //バトルじゃない！
-    plateWork->btlOrder = PPBO_INVALLID;
+    plateWork->btlOrder = PPBO_INVALID;
     return;
   }
   

@@ -32,6 +32,10 @@ typedef enum
   //以下は自動設定
   PPC_DEATH        = 4,  //死亡
   PPC_DEATH_SELECT = 7,  //死亡(選択
+  
+  //バトル選択
+  PPC_BATTLE = PPC_CHANGE,
+  PPC_BATTLE_SELECT = PPC_CHANGE_SELECT,
 }PLIST_PLATE_COLTYPE;
 
 //戦闘参加時の状態
@@ -47,7 +51,7 @@ typedef enum
   PPBO_JOIN_OK, //参加できる
   PPBO_JOIN_NG, //参加できない
   
-  PPBO_INVALLID,  //バトル以外
+  PPBO_INVALID,  //バトル以外
 
 }PLIST_PLATE_BATTLE_ORDER;
 

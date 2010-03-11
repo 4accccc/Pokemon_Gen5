@@ -229,6 +229,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->ktst = GFL_UI_CheckTouchOrKey();
   work->mainSeq = PSMS_FADEIN;
   work->subSeq = PSSS_INIT;
+  work->pokeCursor = 0;
   work->selectPokePara = NULL;
   work->menuRet = PMIT_NONE;
   work->changeTarget = PL_SEL_POS_MAX;
@@ -654,13 +655,20 @@ static void PLIST_UpdatePlatePalletAnime( PLIST_WORK *work )
     const u16 endCol[3]   = {0x4a0a,0x5ef7,0x4140};
 
     const u16 anmSpd = 0x10000/64;
-    if( work->platePalWakuAnmCnt + anmSpd >= 0x10000 )
+    if( work->isActiveWindowMask == FALSE )
     {
-      work->platePalWakuAnmCnt = work->platePalWakuAnmCnt + anmSpd - 0x10000;
+      if( work->platePalWakuAnmCnt + anmSpd >= 0x10000 )
+      {
+        work->platePalWakuAnmCnt = work->platePalWakuAnmCnt + anmSpd - 0x10000;
+      }
+      else
+      {
+        work->platePalWakuAnmCnt = work->platePalWakuAnmCnt + anmSpd;
+      }
     }
     else
     {
-      work->platePalWakuAnmCnt = work->platePalWakuAnmCnt + anmSpd;
+      work->platePalWakuAnmCnt = 0xc000;
     }
     {
       u8 i,j;
@@ -2327,11 +2335,12 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
       GFL_CLACT_WK_GetDrawEnable( work->clwkCursor[0] ) == FALSE )
   {
     //非表示のときだけ0に表示するように
+    //↑やっぱしない。
     if( trg != 0 )
     {
       //カーソルを0の位置に表示
       //PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
-      work->pokeCursor = PL_SEL_POS_POKE1;
+      //work->pokeCursor = PL_SEL_POS_POKE1;
       PLIST_SelectPokeSetCursor( work , work->pokeCursor );
       PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
 
@@ -2894,11 +2903,11 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
       {
         PLIST_PLATE_SetBattleOrder( work , work->plateWork[work->pokeCursor] , work->btlJoinNum );
         work->btlJoinNum++;
+        PLIST_InitMode_Select( work );
         if( work->btlJoinNum == reg->NUM_HI )
         {
           work->pokeCursor = PL_SEL_POS_ENTER;
         }
-        PLIST_InitMode_Select( work );
         work->mainSeq = PSMS_SELECT_POKE;
       }
       else
