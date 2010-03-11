@@ -10,6 +10,8 @@
 #ifndef ZONE_H02_EVC_H
 #define ZONE_H02_EVC_H
 
+#define H02_MIDDLEMAN1_01                  0
+#define H02_WOMAN2_01                      1
 
 #endif //ZONE_H02_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h02.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

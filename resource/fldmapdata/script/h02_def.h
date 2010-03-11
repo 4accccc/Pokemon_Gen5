@@ -5,6 +5,7 @@
 #define _H02_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_H02 (1)
+#define SCRID_H02_MIDDLEMAN1_01 (1)
+#define SCRID_H02_WOMAN2_01 (2)
 
 #endif //_H02_DEF_H_

@@ -172,6 +172,9 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME( R05_CHAMPION_01, anm_champ_look_01 )
 	_OBJ_ANIME_WAIT()
 	
+	_OBJ_ANIME( R05_CHAMPION_01, anm_obj_dir_d )
+	_OBJ_ANIME_WAIT()
+	
 	//チャンプ：おお！カミツレではないか
 	_PLAINWIN_MSG_UP( msg_r05_champion_01 )
 	_MSGWIN_CLOSE()
@@ -182,12 +185,18 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_obj_dir_u )
 	_OBJ_ANIME_WAIT()
 	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラパージ
+	_CAMERA_MOVE(9688,0,970752,23494656,0,28540928, 30)
+	
 	//チャンプ：カミツレ前へ
 	_OBJ_ANIME( R05_CHAMPION_01, anm_champ_come_01 )
 	_OBJ_ANIME_WAIT()
 	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 	//チャンプ：フェスティバルはいいのう
-	_BALLOONWIN_OBJMSG( msg_r05_champion_01_01 , R05_CHAMPION_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_01_01 , R05_CHAMPION_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//ライバル：カミツレを見て
@@ -195,7 +204,7 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル：だれこの人
-	_BALLOONWIN_OBJMSG( msg_r05_black_03 , R05_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_03 , R05_RIVAL_01, POS_DR )
 	_MSGWIN_CLOSE()
 	
 	//カミツレ：ライバルを見て
@@ -203,33 +212,33 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//イッシュ地方のチャンピオンよ
-	_BALLOONWIN_OBJMSG( msg_r05_leader_03 , R05_LEADER4_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_leader_03 , R05_LEADER4_01, POS_DL )
 	_MSGWIN_CLOSE()
 	
-	//ライバル：チャンプの前にかけよる
-	_OBJ_ANIME( R05_RIVAL_01, anm_rival_move_01 )
-	_TIME_WAIT( 8 )
-	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_u )
-	_OBJ_ANIME_WAIT()
-	
 	//どうしてチャンピオンが？
-	_BALLOONWIN_OBJMSG( msg_r05_black_04 , R05_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_04 , R05_RIVAL_01, POS_DR )
 	_MSGWIN_CLOSE()
 	
 	//チャンプ：ライバルを見て
-	_OBJ_ANIME( R05_CHAMPION_01, anm_obj_dir_r )
+	_OBJ_ANIME( R05_CHAMPION_01, anm_champ_move_01 )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_u )
 	_OBJ_ANIME_WAIT()
 	
-	//手厳しい若者だな
-	_BALLOONWIN_OBJMSG( msg_r05_champion_02 , R05_CHAMPION_01 )
+	//聞こえたが…手厳しい若者だな
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_02 , R05_CHAMPION_01, POS_UR )
 	_MSGWIN_CLOSE()
 	
+	//ライバル：その場歩き
+	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_u )
+	_OBJ_ANIME_WAIT()
+	
 	//はじめまして
-	_BALLOONWIN_OBJMSG( msg_r05_black_05 , R05_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_05 , R05_RIVAL_01, POS_DR )
 	_MSGWIN_CLOSE()
 	
 	//目的をもって
-	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_03 , R05_CHAMPION_01 , POS_UL )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_03 , R05_CHAMPION_01 , POS_UR )
 	_MSGWIN_CLOSE()
 	
 	//ライバル：？マーク
@@ -237,15 +246,15 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//強さを求める以外に
-	_BALLOONWIN_OBJMSG_POS( msg_r05_black_06 , R05_RIVAL_01 , WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_06 , R05_RIVAL_01 , POS_DR )
 	_MSGWIN_CLOSE()
 	
 	//ふむう強くなる か
-	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_04 , R05_CHAMPION_01 , POS_UL )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_04 , R05_CHAMPION_01 , POS_UR )
 	_MSGWIN_CLOSE()
 	
 	//マルチバトルをしてみないかね？
-	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_05 , R05_CHAMPION_01 , POS_UL )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_05 , R05_CHAMPION_01 , POS_UR )
 	_MSGWIN_CLOSE()
 	
 	//チャンプ：上を見て
@@ -253,24 +262,41 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//おーいオマエたち！
-	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_05_01 , R05_CHAMPION_01 , POS_UL )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_05_01 , R05_CHAMPION_01 , POS_UR )
 	_MSGWIN_CLOSE()
 	
 	//子供たち：主人公の前へ
+	_OBJ_ANIME( R05_CHAMPION_01, anm_champ_move_02 )
 	_OBJ_ANIME( R05_BOY3_01, anm_boy3_come_01 )
 	_OBJ_ANIME( R05_GIRL2_01, anm_girl2_come_01 )
 	_TIME_WAIT( 16 )
-	//チャンプ：主人公たちを見る
-	_OBJ_ANIME( R05_CHAMPION_01, anm_obj_dir_d )
+	//カミツレ：正面を向く
+	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_u )
 	_OBJ_ANIME_WAIT()
 	
-	//ライバル：主人公の隣へ
-	_OBJ_ANIME( R05_RIVAL_01, anm_rival_move_02 )
+	//わかりました その前に…
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_07 , R05_RIVAL_01 , POS_DR )
+	_MSGWIN_CLOSE()
+	
+	//ライバル：主人公を見て
+	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_l )
 	_OBJ_ANIME_WAIT()
 	
-	//わかりました ～～ いくよ！
+	//チェレンは～～のポケモンを回復した
+	_SE_PLAY( SEQ_SE_RECOVERY )
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_POS( msg_r05_black_07 , R05_RIVAL_01 , WIN_NONE )
+	_SYSWIN_MSG( msg_r05_black_07_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	_SE_WAIT()
+	
+	_TEMOTI_POKEMON_KAIFUKU()		//回復処理
+	
+	//ライバル：正面を向いて
+	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_u )
+	_OBJ_ANIME_WAIT()
+	
+	//ではいきます！
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_07_02 , R05_RIVAL_01 , POS_DR )
 	_MSGWIN_CLOSE()
 	
 	//マルチバトル呼び出し
@@ -288,6 +314,11 @@ EVENT_START	ev_pos_r05_rival_01
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 		//勝利
+		_CAMERA_START()		//カメラ操作開始
+		_CAMERA_PURGE()		//カメラパージ
+		_CAMERA_MOVE(9688,0,970752,23494656,0,28540928, 1)
+		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+		
 		_TRAINER_WIN()
 	ELSE
 		//負けの場合ライバルとカミツレの非表示フラグをセット
@@ -325,6 +356,11 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME( R05_LEADER4_01, anm_leader_move_02 )
 	_OBJ_ANIME_WAIT()
 	
+	_CAMERA_DEF_MOVE(30)		//カメラ主人公位置に復帰
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+	
 	//ライバル：下を向いて
 	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_d )
 	_OBJ_ANIME_WAIT()
@@ -332,7 +368,7 @@ EVENT_START	ev_pos_r05_rival_01
 	_TIME_WAIT( 16 )
 	
 	//チャンピオンは強い それ以外にないよ
-	_BALLOONWIN_OBJMSG_POS( msg_r05_black_08 , R05_RIVAL_01 , POS_DL )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_08 , R05_RIVAL_01 , POS_DR )
 	_MSGWIN_CLOSE()
 	
 	//ライバル：先に行く
@@ -486,24 +522,34 @@ _ANIME_LABEL	anm_champ_look_01
 //チャンプ：カミツレ前へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_champ_come_01
-	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+/*
 //--------------------------------------------------------------------
 //ライバル：チャンプ前へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_move_01
-	_ANIME_DATA	AC_WALK_U_4F,1
+	_ANIME_DATA	AC_WALK_U_4F,2
 	_ANIME_DATA	AC_STAY_WALK_L_4F,1
+	_ANIME_DATA	ACMD_END,0
+*/
+
+//--------------------------------------------------------------------
+//チャンプ：ライバル前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_champ_move_01
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//チャンプ：ちらっと上を見て
+//チャンプ：左へよける
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_champ_look_02
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	AC_WAIT_8F,1
+_ANIME_LABEL	anm_champ_move_02
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -519,14 +565,6 @@ _ANIME_LABEL	anm_boy3_come_01
 _ANIME_LABEL	anm_girl2_come_01
 	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//ライバル：主人公横へ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_rival_move_02
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -577,8 +615,24 @@ EVENT_START	ev_pos_r05_h02demo_01
 	DEFINE_LOCAL	LWK_POSX
 	DEFINE_LOCAL	LWK_POSZ
 	
-	//主人公：近寄る
+	//ライバル：主人公に気づく
 	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+	IF $LWK_POSZ == 435 THEN
+		_OBJ_ANIME( R05_RIVAL_01, anm_rival_look_01a )
+	ELSE
+		_OBJ_ANIME( R05_RIVAL_01, anm_rival_look_01b )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_START()		//カメラ操作開始--------------------------------------
+	_CAMERA_PURGE()		//カメラパージ
+	_CAMERA_MOVE(9688,0,970752,22052864,0,28344320, 20)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_10, R05_RIVAL_01, POS_UL )
+	_MSGWIN_CLOSE()
+	
+	//主人公：近寄る
 	IF $LWK_POSZ == 431 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01a )
 	ELSIF $LWK_POSZ == 432 THEN
@@ -590,15 +644,17 @@ EVENT_START	ev_pos_r05_h02demo_01
 	ELSE
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01e )
 	ENDIF
+	
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_l )
+	
 	_OBJ_ANIME_WAIT()
 	
 	//カミツレ：さてと…
 	_BALLOONWIN_OBJMSG_POS( msg_r05_leader_05 , R05_LEADER4_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
-	_CAMERA_START()		//カメラ操作開始--------------------------------------
-	_CAMERA_PURGE()		//カメラパージ
-	_CAMERA_MOVE(9688,0,970752,21856256,0,28344320, 30)
+	_CAMERA_MOVE(9688,0,970752,21921792,0,28344320, 20)
 	
 	//カミツレ：前へ
 	_OBJ_ANIME( R05_LEADER4_01, anm_leader_move_03 )
@@ -711,32 +767,45 @@ EVENT_START	ev_pos_r05_h02demo_01
 EVENT_END
 
 //--------------------------------------------------------------------
+//ライバル：気づく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_look_01a
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_look_01b
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
 //主人公：近寄る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_move_01a
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_move_01b
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_move_01c
-	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_move_01d
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_move_01e
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -799,7 +868,7 @@ EVENT_START	ev_pos_r05_h02stop_01
 		_CAMERA_MOVE( 9688,0,970752,21790720,0,28217344, 35 )
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stop_player_move_01c )
 	ELSE
-		//２グリッド以内なら上を向くだけ
+		//２グリッド以内
 		_CAMERA_MOVE( 9688,0,970752,21790720,0,28217344, 20 )
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stop_player_move_01d )
 	ENDIF
