@@ -57,7 +57,7 @@ static u16* btlutil_CreateRegulationOutPokeArray(
     const REGULATION* regu, GAMEDATA* gdata, u16* num,HEAPID heapID );
 
 static GMEVENT* BtlPartySelectCheck(
-    GAMESYS_WORK* gsys, const REGULATION* regulation, u16* ret_wk, HEAPID heapID );
+    GAMESYS_WORK* gsys, const BOOL same, const REGULATION* regulation, u16* ret_wk, HEAPID heapID );
 static GMEVENT_RESULT event_BtlPartySelect(GMEVENT * event, int *  seq, void * work);
 
 //////////////////////////////////////////////////////////////////////////
@@ -98,15 +98,22 @@ VMCMD_RESULT EvCmdBtlUtilPartySelect( VMHANDLE * core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  u16 regulation = SCRCMD_GetVMWorkValue(core,work);  //レギュレーションコード
+  u16 regu_code = SCRCMD_GetVMWorkValue(core,work);  //レギュレーションコード
   u16* ret_wk = SCRCMD_GetVMWork(core,work);  //結果を返すワーク
   
   {
+    BOOL same;
     GMEVENT* event;
     HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
-    const REGULATION* regu = PokeRegulation_LoadDataAlloc( regulation, heapID );
- 
-    event = BtlPartySelectCheck( gsys, regu, ret_wk, heapID );
+    const REGULATION* regu = PokeRegulation_LoadDataAlloc( regu_code, heapID );
+
+    //選択前重複可か？ 今のところサブウェイのみ
+    if ( (regu_code == REG_SUBWAY_SINGLE) ||
+         (regu_code == REG_SUBWAY_DOUBLE) ||
+         (regu_code == REG_SUBWAY_MALTI) ) same = TRUE;
+    else same = FALSE;
+
+    event = BtlPartySelectCheck( gsys, same, regu, ret_wk, heapID );
 
     GFL_HEAP_FreeMemory( (void*)regu );
     if(event == NULL){
@@ -186,7 +193,7 @@ static u16* btlutil_CreateRegulationOutPokeArray(
 /*
  *  @brief  パーティ選択イベント生成
  */
-static GMEVENT* BtlPartySelectCheck( GAMESYS_WORK* gsys, const REGULATION* regulation, u16* ret_wk, HEAPID heapID )
+static GMEVENT* BtlPartySelectCheck( GAMESYS_WORK* gsys, const BOOL same, const REGULATION* regulation, u16* ret_wk, HEAPID heapID )
 {
   PARTY_SELECT_WORK* wk;
   GAMEDATA* gdata;
@@ -199,20 +206,33 @@ static GMEVENT* BtlPartySelectCheck( GAMESYS_WORK* gsys, const REGULATION* regul
   
   fail_bit = 0;
   my_party = GAMEDATA_GetMyPokemon( gdata );
-  reg_my = PokeRegulationMatchLookAtPokeParty( regulation, my_party, &fail_bit );
+
+  if (same){
+    reg_my = PokeRegulationMatchPartialPokeParty( regulation, my_party);  //選択前のポケモンの重複OK
+  }
+  else{
+    reg_my = PokeRegulationMatchLookAtPokeParty( regulation, my_party, &fail_bit ); //重複NG
+  }
   
   {
     BATTLE_BOX_SAVE *bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( GAMEDATA_GetSaveControlWork( gdata ) );
   
     if(BATTLE_BOX_SAVE_IsIn( bb_save ) == TRUE){
+      //バトルボックスにポケモンがいる
       fail_bit = 0;
       btl_party = BATTLE_BOX_SAVE_MakePokeParty( bb_save, heapID );
-      reg_btl = PokeRegulationMatchLookAtPokeParty( regulation, btl_party, &fail_bit );
+      if (same){
+        reg_btl = PokeRegulationMatchPartialPokeParty(regulation, btl_party);   //選択前のポケモンの重複OK
+      }
+      else{
+        reg_btl = PokeRegulationMatchLookAtPokeParty( regulation, btl_party, &fail_bit ); //重複NG
+      }
     }else{
+      //バトルボックスにポケモンがいない
       if(reg_my != POKE_REG_OK){
-        *ret_wk = SCR_BTL_PARTY_SELECT_NG;
+        *ret_wk = SCR_BTL_PARTY_SELECT_NG;          //ＮＧ
       }else{
-        *ret_wk = SCR_BTL_PARTY_SELECT_TEMOTI;
+        *ret_wk = SCR_BTL_PARTY_SELECT_TEMOTI;      //手持ちのみＯＫ
       }
       return NULL;
     }
