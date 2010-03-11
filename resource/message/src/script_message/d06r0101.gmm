@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T16:52:50"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T21:27:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -359,88 +359,145 @@
 	</lock>
 
 
-	<row id="msg_d06r0101_ninja_01" text-color="#ff0000,,,,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_d06r0101_ninja_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・pos（GRIDX=6~8、GRIDZ=55）を踏むと
 　主人公の上下にダークトリニティ出現
+・続けてninja_01a</comment>
+		<attribute name="キャラ指定">ダークトリニティ</attribute>
+		<language name="JPN" width="256">……　……　……▼
+……　……　こい▼</language>
+		<language name="JPN_KANJI" width="256">……　……　……▼
+……　……　来い▼</language>
+	</row>
+
+	<row id="msg_d06r0101_ninja_01a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>♂
 ・主人公に？マーク表示後
 　GRIDX=10、GRIDZ=52まで主人公を連れ歩き
 　（移動速度はやい：要調整）
-・上記座標で、主人公を上向きにすると
-　ダークトリニティ削除
+・上記座標で、主人公を上向き＆Nは下向き
+・メッセージ表示、ダークトリニティ削除
 ・続けてboss_10</comment>
 		<attribute name="キャラ指定">ダークトリニティ</attribute>
-		<language name="JPN" width="256">……　……　……▼</language>
-		<language name="JPN_KANJI" width="256">……　……　……▼</language>
+		<language name="JPN" width="256">……　……　……▼
+Ｎさま　つれてきました▼</language>
+		<language name="JPN_KANJI" width="256">……　……　……▼
+Ｎさま　連れてきました▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_10" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_10" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
-・GRIDX=10、GRIDZ=50、右向きに配置していた
-　Nが下を向いてメッセージ表示
+・GRIDX=10、GRIDZ=50、右向きに配置
+・再度、右を向いてメッセージ表示</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ありがとう▼
+いまの　れんちゅうは
+ダークトリニティ▽
+プラズマだんの　メンバーさ▼
+ちなみに　この　ほらあなの
+いりぐちに　デンチュラの　すを▽
+よういしたのも　かれら　らしいよ▼[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……ありがとう▼
+今の　連中は
+ダークトリニティ▽
+プラズマ団の　メンバーさ▼
+ちなみに　この　洞穴の
+入り口に　デンチュラの　巣を▽
+用意したのも　カレら　らしいよ▼[BE:09:速度コントロール:0]</language>
+	</row>
+
+	<row id="msg_d06r0101_boss_10a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・下を向き
 ・はい/いいえの選択肢表示</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……さてと▼
-きみは　ともにいる　ポケモンの
-ちからを　ひきだせて　いるかい？[BE:09:速度コントロール:0]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……さてと▼
-キミは　共にいる　ポケモンの
-能力を　ひきだせて　いるかい？[BE:09:速度コントロール:0]</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]でんきいしの　ほらあな……
+ここ　いいよね▼
+でんきを　あらわすのは　すうしき
+そして　ポケモンとの　つながり▼
+……ひとが　いなければ
+ボクの　りそうの　ばしょ　だ▼
+さて　キミは　えらばれた……
+そういうと　おどろくかい？[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]電気石の洞穴……
+ここ　いいよね▼
+電気を　表すのは　数式
+そして　ポケモンとの　つながり▼
+……人が　いなければ
+ボクの　理想の　場所だ▼
+さて　キミは　選ばれた……
+そういうと　おどろくかい？[BE:09:速度コントロール:0][BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_11" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_11" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・はい選択時
 ・続けてboss_04</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]……フウン
-おもしろい　へんじ　だな▼
-まさか　ボクと　おなじような
-ちからを　もっているとでも[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……フウン
-おもしろい　返事だな▼
-まさか　ボクと　同じような
-力を　持っているとでも[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]まあ　そうだよね
+おどろくだろうさ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]まあ　そうだよね
+おどろくだろうさ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_12" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_12" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・続けてboss_04</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]……フウン
-おもしろい　へんじ　だな▼
-そう　おもうなら　なぜ
-ポケモンを　ときはなたない？[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……フウン
-おもしろい　返事だな▼
-そう　思うなら　なぜ
-ポケモンを　解き放たない？[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]……フウン▼
+やはり　いみが　わからないと
+おどろくことも　できないか[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……フウン▼
+やはり　意味が　理解できないと
+おどろくことも　できないか[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_13" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_13" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
-・表示後、GRIDX=14、GRIDZ=45まで移動
-　あわせてカメラも追従
-・N、GRIDX=14、GRIDZ=45に配置されている
-　電気石を押し、ルートが開くと
-　そのまま画面右、そして画面上に移動する
-
-・画面外に消えるとカメラをもどし、主人公操作可能に</comment>
+・表示後、画面上に移動する
+・画面外に消えると主人公操作可能に</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]キミを　ためすか……
-みらいを　かくてい　させるためにも▼
-わかった
-ボクは　この　ほらあなの▽
-でぐちで　まっているよ[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]キミを　試すか……
-未来を　確定させるためにも▼
-わかった
-ボクは　この　洞穴の▽
-出口で　待っているよ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]キミたちの　ことを
+ゲーチスに　はなした▼
+すると　ダークトリニティを　つかい
+キミたちのことを　しらべたらしいよ▼
+チェレンは　つよさという
+りそうを　もとめている……▼
+ベルとやらは　だれもが
+つよくなれる　わけではない　という▽
+しんじつを　しっている▼
+キミは　どっちにも　そまっていない
+いわば　ニュートラルな　そんざい……▽
+それが　いいらしいんだ▼
+このさきには　プラズマだんが
+キミを　まっている▼
+ゲーチスは　キミが　どれほどの
+ポケモントレーナーか　ためすそうだ▼
+ボクは　この　ほらあなの
+でぐちで　まつことに　するよ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]キミたちの　ことを
+ゲーチスに　話した
+すると　ダークトリニティを　使い
+キミたちのことを　調べたらしいよ▼
+チェレンは　強さという
+理想を　求めている……▼
+ベルとやらは　だれもが
+強くなれる　わけではない　という▽
+真実を　知っている▼
+キミは　どっちにも　染まっていない
+いわば　ニュートラルな　存在……▽
+それが　いいらしいんだ▼
+この先には　プラズマ団が
+キミを　待ち構えている▼
+ゲーチスは　キミが　どれほどの
+ポケモントレーナーか　試すそうだ▼
+ボクは　この　洞穴の　出口で
+キミを　待っているよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d06r0101_white_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d06r0101_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：シーン1
 ・pos（GRIDX=11、GRIDZ=45~47）で発動
 　ｒ06側から登場
@@ -458,7 +515,7 @@
 押せば　動くんだよ▼</language>
 	</row>
 
-	<row id="msg_d06r0101_white_02" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d06r0101_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてhakase2_01</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -479,7 +536,7 @@
 元気してる？　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_d06r0101_hakase2_02" text-color="#ff0000,,,,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d06r0101_hakase2_02">
 		<comment>♀
 ・GRIDX=8、GRIDZ=47に移動
 　その場で上下を見た後、主人公と向き合って
@@ -611,7 +668,7 @@
 そう　信じているのよね！▼</language>
 	</row>
 
-	<row id="msg_d06r0101_white_04" text-color="#ff0000,,,,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d06r0101_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてhakase2_08</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -661,16 +718,28 @@
 だって　旅は　出会い　なんだもん！</language>
 	</row>
 
-	<row id="msg_d06r0101_ninja_02" text-color="#ff0000,,,,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_d06r0101_ninja_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・pos（GRIDX=38、GRIDZ=41~42）を踏むと
 　主人公を囲むようにダークトリニティ3人出現
 ・そのままGRIDX=58、GRIDZ=41~42まで連れ歩き
-　（移動速度はやい：要調整）
-　そこで3人とも削除</comment>
+　（移動速度はやい：要調整）</comment>
 		<attribute name="キャラ指定">ダークトリニティ</attribute>
-		<language name="JPN" width="256">……　……　……▼</language>
-		<language name="JPN_KANJI" width="256">……　……　……▼</language>
+		<language name="JPN" width="256">……　……　……▼
+……　……　こい▼</language>
+		<language name="JPN_KANJI" width="256">……　……　……▼
+……　……　来い▼</language>
+	</row>
+
+	<row id="msg_d06r0101_ninja_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#c0c0c0,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・上記の所定位置につくと
+　メッセージ表示後に3人を削除</comment>
+		<attribute name="キャラ指定">ダークトリニティ</attribute>
+		<language name="JPN" width="256">……　……　……▼
+……　……　したにおりろ▼</language>
+		<language name="JPN_KANJI" width="256">……　……　……▼
+……　……　したにおりろ▼</language>
 	</row>
 
 	<row id="msg_d06r0101_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -865,7 +934,7 @@
 		<language name="JPN" width="256">アララギ『……まあ　いきなり
 わかってもらえるとは　おもわないけど▼
 かれとは　また　あわないと……▼
-少しづつで　いい
+すこしづつで　いい
 みんなの　きもちを　しってほしいな▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『……まあ　いきなり
 わかってもらえるとは　思わないけど▼
