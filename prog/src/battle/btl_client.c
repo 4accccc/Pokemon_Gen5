@@ -4203,8 +4203,9 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     break;
 
   case SEQ_LVUP_GAUGE_WAIT:
-    if( !BTLV_EFFECT_CheckExecuteGauge() )
-    {
+    if( (!BTLV_EFFECT_CheckExecuteGauge())
+    &&  (!PMSND_CheckPlaySE())
+    ){
       BTLV_AddEffectByPos( wk->viewCore, vpos, BTLEFF_LVUP );
       (*seq) = SEQ_LVUP_EFFECT_WAIT;
     }
@@ -4241,8 +4242,15 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     break;
 
   case SEQ_LVUP_INFO_PARAM_START:
-    BTLV_LvupWin_StartDisp( wk->viewCore, bpp, &lvupInfo );
-    (*seq) = SEQ_LVUP_INFO_PARAM_SEQ1;
+    ++subSeq;
+    if( (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B))
+    ||  (GFL_UI_TP_GetTrg())
+    ||  (subSeq > 80)
+    ){
+      subSeq = 0;
+      BTLV_LvupWin_StartDisp( wk->viewCore, bpp, &lvupInfo );
+      (*seq) = SEQ_LVUP_INFO_PARAM_SEQ1;
+    }
     break;
 
   case SEQ_LVUP_INFO_PARAM_SEQ1:

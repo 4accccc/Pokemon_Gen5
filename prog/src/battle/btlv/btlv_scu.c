@@ -99,7 +99,7 @@ enum {
 
   BTLIN_STD_FADE_WAIT = 2,
 
-  LVUPWIN_STEP_SE = SEQ_SE_SELECT2,
+  LVUPWIN_STEP_SE = SEQ_SE_MESSAGE,
 };
 
 
@@ -2547,12 +2547,18 @@ typedef struct {
  *
  */
 //=============================================================================================
-void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos, WazaID wazaID )
+void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos, WazaID wazaID, BOOL fChapterSkipMode )
 {
   const BTL_POKEPARAM*  bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, defPos );
   int                   value = BPP_GetValue( bpp, BPP_HP );
+  BtlvMcssPos           vpos  = BTL_MAIN_BtlPosToViewPos( wk->mainModule, defPos );
 
-  BTLV_EFFECT_CalcGaugeHP( BTL_MAIN_BtlPosToViewPos( wk->mainModule, defPos ), value );
+  if( !fChapterSkipMode ){
+    BTLV_EFFECT_CalcGaugeHP( vpos, value );
+  }else{
+    BTLV_EFFECT_CalcGaugeHPAtOnce( vpos, value );
+  }
+
   BTLV_EFFECT_Damage( BTL_MAIN_BtlPosToViewPos(wk->mainModule, defPos), wazaID );
 }
 
@@ -2797,6 +2803,7 @@ void BTLV_SCU_StartHPGauge( BTLV_SCU* wk, BtlPokePos pos, BOOL fSkipEffect )
 
   if( fSkipEffect )
   {
+    TAYA_Printf("スキップでＨＰゲージ処理\n");
     BTLV_EFFECT_CalcGaugeHPAtOnce( vpos, value );
   }
   else

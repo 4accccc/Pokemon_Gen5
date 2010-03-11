@@ -1392,24 +1392,28 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
 
   switch( *seq ){
   case 0:
-    BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->defPokePos, subwk->wazaID );
-    if( subwk->affinity < BTL_TYPEAFF_100 )
     {
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
-      PutMsgToSCU( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      BOOL fChapterSkipMode = BTL_CLIENT_IsChapterSkipMode( wk->myClient );
 
-      PMSND_PlaySE( SEQ_SE_KOUKA_L );
+      BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->defPokePos, subwk->wazaID, fChapterSkipMode );
+      if( subwk->affinity < BTL_TYPEAFF_100 )
+      {
+        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
+        PutMsgToSCU( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+
+        PMSND_PlaySE( SEQ_SE_KOUKA_L );
+      }
+      else if ( subwk->affinity > BTL_TYPEAFF_100 )
+      {
+        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
+        PutMsgToSCU( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+        PMSND_PlaySE( SEQ_SE_KOUKA_H );
+      }
+      else{
+        PMSND_PlaySE( SEQ_SE_KOUKA_M );
+      }
+      (*seq)++;
     }
-    else if ( subwk->affinity > BTL_TYPEAFF_100 )
-    {
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
-      PutMsgToSCU( wk, wk->strBuf, BTLV_MSGWAIT_STD );
-      PMSND_PlaySE( SEQ_SE_KOUKA_H );
-    }
-    else{
-      PMSND_PlaySE( SEQ_SE_KOUKA_M );
-    }
-    (*seq)++;
     break;
 
   case 1:
@@ -1462,8 +1466,11 @@ BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk )
   case 0:
     {
       u32 i;
-      for(i=0; i<subwk->pokeCnt; ++i){
-        BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->pokePos[i], subwk->wazaID );
+      BOOL fChapterSkipMode = BTL_CLIENT_IsChapterSkipMode( wk->myClient );
+
+      for(i=0; i<subwk->pokeCnt; ++i)
+      {
+        BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->pokePos[i], subwk->wazaID, fChapterSkipMode );
       }
 
       if( subwk->affAbout == BTL_TYPEAFF_ABOUT_ADVANTAGE )
