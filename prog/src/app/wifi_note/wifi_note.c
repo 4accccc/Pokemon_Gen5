@@ -2308,7 +2308,7 @@ static void Data_Init( WFNOTE_DATA* p_data, WIFINOTE_PROC_PARAM* wp, HEAPID heap
   //コンフィグ
 //  config = SaveData_GetConfig(p_data->p_save);
   p_data->msg_spd = MSGSPEED_GetWait();
-  p_data->win_type = WINTYPE_01;
+  p_data->win_type = 0;//WINTYPE_01;
 //  if(CONFIG_GetInputMode(config) != INPUTMODE_L_A){
     p_data->lr_key_enable = TRUE;
 //  }else{

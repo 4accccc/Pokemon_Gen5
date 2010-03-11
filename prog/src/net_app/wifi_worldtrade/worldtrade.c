@@ -948,9 +948,9 @@ int WorldTrade_GetTalkSpeed( WORLDTRADE_WORK *wk )
  * @retval  WINTYPE 会話ウインドウのスキン番号
  */
 //==============================================================================
-WINTYPE WorldTrade_GetMesWinType( WORLDTRADE_WORK *wk )
+int WorldTrade_GetMesWinType( WORLDTRADE_WORK *wk )
 {
-  return CONFIG_GetWindowType( wk->param->config );
+  return 0;
 }
 
 //------------------------------------------------------------------

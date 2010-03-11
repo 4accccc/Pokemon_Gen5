@@ -244,6 +244,12 @@ void CONFIG_SetMojiMode(CONFIG * cfg, MOJIMODE type)
   GFL_MSGSYS_SetLangID( cfg->moji_mode );
 }
 
+void CONFIG_ApplyMojiMode(CONFIG * cfg )
+{ 
+  GFL_MSGSYS_SetLangID( cfg->moji_mode );
+}
+
+
 //  ワイヤレスセーブモード
 WIRELESSSAVE_MODE CONFIG_GetWirelessSaveMode(const CONFIG * cfg)
 {

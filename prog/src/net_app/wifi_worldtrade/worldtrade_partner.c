@@ -372,7 +372,7 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 
 	// 会話ウインドウグラフィック転送
 	BmpWinFrame_GraphicSet(	 GFL_BG_FRAME0_S, WORLDTRADE_MESFRAME_CHR, 
-						WORLDTRADE_MESFRAME_SUB_PAL,  CONFIG_GetWindowType(wk->param->config), HEAPID_WORLDTRADE );
+						WORLDTRADE_MESFRAME_SUB_PAL,  0, HEAPID_WORLDTRADE );
 
 
 

@@ -36,7 +36,7 @@ struct _PMSI_PARAM {
 
   u8  padding[1];
 
-	WINTYPE		win_type;
+	//WINTYPE		win_type; //syachi‚Å‚Í‚ ‚è‚Ü‚¹‚ñ
 
 //	const ZUKAN_WORK*     zukan_savedata;
 	const PMSW_SAVEDATA*  pmsw_savedata;
@@ -97,7 +97,7 @@ PMSI_PARAM*  PMSI_PARAM_Create( u32 input_mode, u32 guidance_type,
 
 	p->cancel_flag = TRUE;
 	p->modified_flag = FALSE;
-	p->win_type = CONFIG_GetWindowType( SaveData_GetConfig(savedata) );
+	//p->win_type = CONFIG_GetWindowType( SaveData_GetConfig(savedata) );
   p->picture_flag = picture_flag;
 	
 	if(input_mode == PMSI_MODE_SENTENCE)
@@ -305,7 +305,7 @@ u32 PMSI_PARAM_GetGuidanceType( const PMSI_PARAM* p )
 
 int PMSI_PARAM_GetWindowType( const PMSI_PARAM* p )
 {
-	return p->win_type;
+	return 0;//p->win_type;
 }
 /*
 const ZUKAN_WORK*  PMSI_PARAM_GetZukanSaveData( const PMSI_PARAM* p )

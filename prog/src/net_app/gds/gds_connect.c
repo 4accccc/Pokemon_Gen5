@@ -632,7 +632,7 @@ static void BgGraphicSet( GDS_CONNECT_SYS * wk )
 	// 会話ウインドウグラフィック転送
 	TalkWinFrame_GraphicSet(	GFL_BG_FRAME0_M, GDSCONNECT_MESFRAME_CHR, 
 				GDSCONNECT_MESFRAME_PAL,  
-				CONFIG_GetWindowType(SaveData_GetConfig(wk->oya_proc_work->proc_param->savedata)), 
+				0, 
 				HEAPID_GDS_CONNECT );
 
 	BmpWinFrame_GraphicSet(	GFL_BG_FRAME0_M, GDSCONNECT_MENUFRAME_CHR,

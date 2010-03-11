@@ -1133,12 +1133,10 @@ static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
   
   if( param[0] == 0 )
   {
-    GFL_MSGSYS_SetLangID( 0 );
     CONFIG_SetMojiMode( config, MOJIMODE_HIRAGANA );
   }
   else
   {
-    GFL_MSGSYS_SetLangID( 1 );
     CONFIG_SetMojiMode( config, MOJIMODE_KANJI );
   }
 

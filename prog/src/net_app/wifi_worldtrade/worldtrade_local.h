@@ -595,7 +595,7 @@ extern void WorldTrade_TouchPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y
 extern void WorldTrade_WifiIconAdd( WORLDTRADE_WORK *wk );
 extern void Enter_MessagePrint( WORLDTRADE_WORK *wk, GFL_MSGDATA *msgman, int msgno, int wait, u16 dat );
 extern void WorldTrade_SubProcessChange( WORLDTRADE_WORK *wk, int subprccess, int mode );
-extern WINTYPE WorldTrade_GetMesWinType( WORLDTRADE_WORK *wk );
+extern int WorldTrade_GetMesWinType( WORLDTRADE_WORK *wk );
 extern int WorldTrade_GetTalkSpeed( WORLDTRADE_WORK *wk );
 extern void FreeFieldObjData( WORLDTRADE_WORK *wk );
 extern void WorldTrade_BoxPokeNumGetStart( WORLDTRADE_WORK *wk );

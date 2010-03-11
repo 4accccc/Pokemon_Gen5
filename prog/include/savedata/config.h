@@ -11,7 +11,7 @@
 
 #include "savedata/save_control.h"
 
-#define OLDCONFIG_ON
+//#define OLDCONFIG_ON
 
 //============================================================================================
 //============================================================================================
@@ -211,6 +211,7 @@ extern void CONFIG_SetWindowType(CONFIG * cfg, WINTYPE type);
 //  文字モード
 extern MOJIMODE CONFIG_GetMojiMode(const CONFIG * cfg);
 extern void CONFIG_SetMojiMode(CONFIG * cfg, MOJIMODE type);
+extern void CONFIG_ApplyMojiMode(CONFIG * cfg );
 
 //  ワイヤレスセーブモード
 extern WIRELESSSAVE_MODE CONFIG_GetWirelessSaveMode(const CONFIG * cfg);
