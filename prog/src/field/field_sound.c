@@ -22,7 +22,7 @@
 //================================================================================= 
 #define SPECIAL_BGM_NONE (0xffffffff)  // 特殊BGMなし
 #define MAX_VOLUME       (127)         // 最大ボリューム
-#define APP_HOLD_VOLUME  (100)         // アプリ時のボリューム
+#define APP_HOLD_VOLUME  (89)          // アプリ時のボリューム
 #define APP_FADE_FRAME   (18)          // アプリ時のフェード フレーム数
 
 
