@@ -1021,7 +1021,7 @@ void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mi
   }
   
   occupy = Intrude_GetOccupyInfo(intcomm, palace_area);
-  palace_level = (occupy->white_level + occupy->black_level) / 2;
+  palace_level = occupy->white_level + occupy->black_level;
   if(MyStatus_GetRomCode( Intrude_GetMyStatus(intcomm, palace_area) ) == VERSION_BLACK){
     monolith_type = MONOLITH_TYPE_BLACK;
   }
