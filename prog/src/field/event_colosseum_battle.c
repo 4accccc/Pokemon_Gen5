@@ -71,6 +71,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
 
   switch (*seq) {
   case 0:
+#if 0 //ポケモンリスト後、直接来るようになったので削除
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, cbw->fieldmap) );
     (*seq)++;
     break;
@@ -86,6 +87,10 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     GMEVENT_CallEvent( event, EVENT_FieldClose(gsys, cbw->fieldmap));
     (*seq)++;
     break;
+#else
+    (*seq) = 3;
+    break;
+#endif
   case 3:
     GMEVENT_CallEvent(event, 
       EVENT_FSND_PushPlayNextBGM(gsys, cbw->para.musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE)); 

@@ -74,9 +74,7 @@ const GFL_PROC_DATA MonolithAppProc_Up_MissionExplain = {
 const u32 TownNo_to_Type[] = {
   MISSION_TYPE_PERSONALITY, ///<«Ši
   MISSION_TYPE_VICTORY,     ///<Ÿ—˜(LV)
-  MISSION_TYPE_OCCUR,       ///<”­¶(ƒGƒ“ƒJƒEƒ“ƒg)
   MISSION_TYPE_SKILL,       ///<‹Z
-  MISSION_TYPE_SIZE,        ///<‘å‚«‚³
   MISSION_TYPE_BASIC,       ///<Šî‘b
   MISSION_TYPE_ITEM,        ///<“¹‹ï
   MISSION_TYPE_ATTRIBUTE,   ///<‘®«

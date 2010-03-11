@@ -585,17 +585,11 @@ static INTRUDE_TALK_TYPE _IntrudeTalkTypeJudge(EVENT_COMM_COMMON *talk, INTRUDE_
     case MISSION_TYPE_BASIC:
       intrude_talk_type += INTRUDE_TALK_TYPE_MISSION_BASIC_START;
       break;
-    case MISSION_TYPE_SIZE:
-      intrude_talk_type += INTRUDE_TALK_TYPE_MISSION_SIZE_START;
-      break;
     case MISSION_TYPE_ATTRIBUTE:
       intrude_talk_type += INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_START;
       break;
     case MISSION_TYPE_ITEM:
       intrude_talk_type += INTRUDE_TALK_TYPE_MISSION_ITEM_START;
-      break;
-    case MISSION_TYPE_OCCUR:
-      intrude_talk_type += INTRUDE_TALK_TYPE_MISSION_OCCUR_START;
       break;
     case MISSION_TYPE_PERSONALITY:
       intrude_talk_type += INTRUDE_TALK_TYPE_MISSION_PERSONALITY_START;

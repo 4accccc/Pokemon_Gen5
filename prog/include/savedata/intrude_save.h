@@ -12,6 +12,7 @@
 #include "field/intrude_common.h"
 #include "buflen.h"
 #include "field/gpower_id.h"
+#include "field/field_comm/mission_types.h"
 
 
 //==============================================================================
@@ -26,6 +27,12 @@ enum {
 ///占拠レベルの最大値
 #define OCCUPY_LEVEL_MAX    (999)
 
+///ミッションクリア状況
+enum{
+  MISSION_CLEAR_NONE,       ///<クリアしていない
+  MISSION_CLEAR_WHITE,      ///<白でクリア達成
+  MISSION_CLEAR_BLACK,      ///<黒でクリア達成
+};
 
 //==============================================================================
 //  構造体定義
@@ -36,20 +43,17 @@ typedef struct _INTRUDE_SAVE_WORK INTRUDE_SAVE_WORK;
 //--------------------------------------------------------------
 //  占拠
 //--------------------------------------------------------------
-///占拠情報：街
+///ミッションリストステータス
 typedef struct{
-  ///街の占拠値   (WHITE ---- OCCUPY_TOWN_NEUTRALITY ---- OCCUPY_TOWN_BLACK)
-  u16 town_occupy[INTRUDE_TOWN_MAX];
-}OCCUPY_INFO_TOWN;
+  u8 mission_no[MISSION_TYPE_MAX];      ///<ミッション番号
+  u8 mission_clear[MISSION_TYPE_MAX];   ///<ミッションクリア状況(MISSION_CLEAR_xxx)
+}MISSION_LIST_STATUS;
 
 ///占拠情報
 typedef struct{
-  OCCUPY_INFO_TOWN town;                 ///<街の占拠情報
-  u16 intrude_point;                     ///<侵入ポイント
-  u8 intrude_level;                      ///<侵入レベル ※check 削除候補
-  u8 white_level;                        ///<白レベル
-  u8 black_level;                        ///<黒レベル
-  u8 padding[3];
+  MISSION_LIST_STATUS mlst;              ///<ミッションリストステータス
+  u16 white_level;                       ///<白レベル
+  u16 black_level;                       ///<黒レベル
 }OCCUPY_INFO;
 
 //--------------------------------------------------------------
@@ -108,7 +112,6 @@ extern void IntrudeSave_WorkInit(void *work);
 extern void OccupyInfo_WorkInit(OCCUPY_INFO *occupy);
 extern void SaveData_OccupyInfoUpdate(SAVE_CONTROL_WORK * sv, const OCCUPY_INFO *occupy);
 extern void SaveData_OccupyInfoLoad(SAVE_CONTROL_WORK * sv, OCCUPY_INFO *dest_occupy);
-extern u32 OccupyInfo_GetIntrudeLevel(const OCCUPY_INFO *occupy);
 
 //--------------------------------------------------------------
 //  隠しアイテム

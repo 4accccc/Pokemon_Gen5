@@ -173,6 +173,7 @@ static const ITEM_ST DebugItem[] = {
 	{ ITEM_MOKOSINOMI,	50},	//モコシのみ
 	{ ITEM_GOSUNOMI,	50},	//ゴスのみ
 	{ ITEM_RABUTANOMI,	50},	//ラブタのみ
+  { ITEM_PARESUDAMA, 99}, // パレスだま
 	
   { ITEM_GAKUSYUUSOUTI,  5},  // がくしゅうそうち
   {ITEM_SENSEINOTUME, 5}, // せんせいのツメ
@@ -266,7 +267,6 @@ static void DEBUG_IntrudeParam( GAMEDATA *gamedata, HEAPID heapID )
   occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
   occupy->white_level = 100;
   occupy->black_level = 100;
-  occupy->intrude_point = 3456;
   
   intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
   ISC_SAVE_SetGPowerID( intsave, GFUser_GetPublicRand( GPOWER_ID_MAX - 1) + 1 );

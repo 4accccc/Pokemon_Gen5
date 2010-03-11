@@ -23,12 +23,10 @@ typedef enum{
   MISSION_TYPE_VICTORY,     ///<勝利(LV)
   MISSION_TYPE_SKILL,       ///<技
   MISSION_TYPE_BASIC,       ///<基礎
-  MISSION_TYPE_SIZE,        ///<大きさ
   MISSION_TYPE_ATTRIBUTE,   ///<属性
   MISSION_TYPE_ITEM,        ///<道具
-  MISSION_TYPE_OCCUR,       ///<発生(エンカウント)
   MISSION_TYPE_PERSONALITY, ///<性格
-  
+
   MISSION_TYPE_MAX,
   MISSION_TYPE_NONE = MISSION_TYPE_MAX, ///<ミッション実行していない
 }MISSION_TYPE;
@@ -127,22 +125,12 @@ typedef struct{
   u16 padding[2];
 }MISSION_TYPEDATA_ATTRIBUTE;
 
-///ミッション系統毎に異なるdataの構造体：SIZE
-typedef struct{
-  u16 padding[3];
-}MISSION_TYPEDATA_SIZE;
-
 ///ミッション系統毎に異なるdataの構造体：ITEM
 typedef struct{
   u16 secret_pos_tblno;   ///<隠しアイテム設置座標テーブル番号位置(IntrudeSecretItemPosDataTbl)
   u16 item_no;            ///<渡すアイテム番号
   u16 padding;
 }MISSION_TYPEDATA_ITEM;
-
-///ミッション系統毎に異なるdataの構造体：OCCUR
-typedef struct{
-  u16 padding[3];
-}MISSION_TYPEDATA_OCCUR;
 
 ///ミッション系統毎に異なるdataの構造体：PERSONALITY
 typedef struct{

@@ -410,7 +410,7 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
   
   //ƒ‚ƒmƒŠƒXƒŒƒxƒ‹
   GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_000, strbuf);
-  WORDSET_RegisterNumber(setup->wordset, 0, occupy->intrude_level, 3, 
+  WORDSET_RegisterNumber(setup->wordset, 0, occupy->white_level, 3, 
     STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT); // level + 1 = •\Ž¦‚ð1origin‰»
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
   PRINT_UTIL_Print(&msw->print_util[BMPWIN_LEVEL], setup->printQue, 

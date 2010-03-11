@@ -1329,7 +1329,7 @@ static void _IntSub_ActorUpdate_PointNum(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COM
   GFL_CLWK *act;
   
   my_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
-  point = my_occupy->intrude_point;
+  point = 0;//my_occupy->intrude_point;
   
   for(i = 0; i <= INTSUB_ACTOR_POINT_NUM_KETA_MAX - INTSUB_ACTOR_POINT_NUM_KETA_0; i++){
     act = intsub->act[INTSUB_ACTOR_POINT_NUM_KETA_0 + i];

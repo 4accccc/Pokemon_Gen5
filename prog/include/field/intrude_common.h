@@ -23,12 +23,6 @@
 ///侵入できる街の数
 #define INTRUDE_TOWN_MAX      (8)
 
-///街の占拠値   (WHITE ---- OCCUPY_TOWN_NEUTRALITY ---- OCCUPY_TOWN_BLACK)
-enum{
-  OCCUPY_TOWN_WHITE = 0,                            ///<ホワイト占拠
-  OCCUPY_TOWN_NEUTRALITY = 100,                     ///<中立
-  OCCUPY_TOWN_BLACK = OCCUPY_TOWN_NEUTRALITY * 2,   ///<ブラック占拠
-};
 
 //==============================================================================
 //  型定義

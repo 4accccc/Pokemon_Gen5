@@ -1062,7 +1062,7 @@ static void _HavePointCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK 
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
   OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
   
-  WORDSET_RegisterNumber(appwk->setup->wordset, 0, occupy->intrude_point, 4, 
+  WORDSET_RegisterNumber(appwk->setup->wordset, 0, 0, 4,//occupy->intrude_point, 4, 
     STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
   MonolithTool_Bmpoam_Create(appwk->setup, &mpw->bmpstr_point, COMMON_RESOURCE_INDEX_DOWN, 
     128+64, 192-_MENU_BAR_Y_LEN/2, 8, 2, msg_mono_pow_013, appwk->setup->wordset);

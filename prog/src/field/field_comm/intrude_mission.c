@@ -813,16 +813,14 @@ BOOL MISSION_AddPoint(GAMEDATA *gamedata, const MISSION_RESULT *result, s32 poin
     OCCUPY_INFO *mine_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
 //    PALACE_TOWN_RESULT town_result;
     
-    //ミッションポイント加算
-    mine_occupy->intrude_point += point;
     //街の占拠情報反映
   #if 0
     if(Intrude_SearchPalaceTown(result->mission_data.zone_id, &town_result) == TRUE){
       if(result->mission_data.monolith_type == MONOLITH_TYPE_WHITE){
-        mine_occupy->town.town_occupy[town_result.tblno] = OCCUPY_TOWN_WHITE;
+        mine_occupy->mlst.mission_clear[town_result.tblno] = OCCUPY_TOWN_WHITE;
       }
       else{
-        mine_occupy->town.town_occupy[town_result.tblno] = OCCUPY_TOWN_BLACK;
+        mine_occupy->mlst.mission_clear[town_result.tblno] = OCCUPY_TOWN_BLACK;
       }
     }
     else{
@@ -830,10 +828,10 @@ BOOL MISSION_AddPoint(GAMEDATA *gamedata, const MISSION_RESULT *result, s32 poin
     }
   #else
     if(result->mission_data.monolith_type == MONOLITH_TYPE_WHITE){
-      mine_occupy->town.town_occupy[result->mission_data.cdata.type] = OCCUPY_TOWN_WHITE;
+      mine_occupy->mlst.mission_clear[result->mission_data.cdata.type] = MISSION_CLEAR_WHITE;
     }
     else{
-      mine_occupy->town.town_occupy[result->mission_data.cdata.type] = OCCUPY_TOWN_BLACK;
+      mine_occupy->mlst.mission_clear[result->mission_data.cdata.type] = MISSION_CLEAR_BLACK;
     }
   #endif
     return TRUE;
@@ -988,12 +986,10 @@ static void MISSIONDATA_ExtraParamSet(INTRUDE_COMM_SYS_PTR intcomm, MISSION_DATA
     break;
   case MISSION_TYPE_BASIC:       ///<基礎
     break;
-  case MISSION_TYPE_SIZE:        ///<大きさ
   case MISSION_TYPE_ATTRIBUTE:   ///<属性
     break;
   case MISSION_TYPE_ITEM:        ///<道具
     break;
-  case MISSION_TYPE_OCCUR:       ///<発生(エンカウント)
   case MISSION_TYPE_PERSONALITY: ///<性格
     break;
   }
@@ -1025,7 +1021,7 @@ void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mi
   }
   
   occupy = Intrude_GetOccupyInfo(intcomm, palace_area);
-  palace_level = occupy->intrude_level;
+  palace_level = (occupy->white_level + occupy->black_level) / 2;
   if(MyStatus_GetRomCode( Intrude_GetMyStatus(intcomm, palace_area) ) == VERSION_BLACK){
     monolith_type = MONOLITH_TYPE_BLACK;
   }
@@ -1306,8 +1302,6 @@ void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mdata
         PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
     }
     break;
-  case MISSION_TYPE_SIZE:        //大きさ
-    break;
   case MISSION_TYPE_ATTRIBUTE:   //属性
     {
       const MISSION_TYPEDATA_ATTRIBUTE *d_attr = (void*)mdata->cdata.data;
@@ -1324,8 +1318,6 @@ void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mdata
       _Wordset_Strcode(wordset, 1, mdata->target_info.name, 
         PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
     }
-    break;
-  case MISSION_TYPE_OCCUR:       //発生(エンカウント)
     break;
   case MISSION_TYPE_PERSONALITY: //性格
     {

@@ -688,7 +688,7 @@ GFL_CLWK * MonolithTool_TownIcon_Create(MONOLITH_SETUP *setup, const OCCUPY_INFO
   
   ActHead_Town.pos_x = pos->x;
   ActHead_Town.pos_y = pos->y;
-  if(occupy->town.town_occupy[town_no] == OCCUPY_TOWN_WHITE){
+  if(occupy->mlst.mission_clear[town_no] == MISSION_CLEAR_WHITE){
     ActHead_Town.anmseq = COMMON_ANMSEQ_WHITE_TOWN;
   }
   
@@ -698,7 +698,7 @@ GFL_CLWK * MonolithTool_TownIcon_Create(MONOLITH_SETUP *setup, const OCCUPY_INFO
     setup->common_res[res_index].cell_index, 
     &ActHead_Town, setSerface, HEAPID_MONOLITH );
 
-  if(occupy->town.town_occupy[town_no] == OCCUPY_TOWN_NEUTRALITY){
+  if(occupy->mlst.mission_clear[town_no] == MISSION_CLEAR_NONE){
     GFL_CLACT_WK_SetDrawEnable( cap, FALSE );  //’†—§‚È‚Ì‚Å”ñ•\Ž¦
   }
   GFL_CLACT_WK_SetAutoAnmFlag( cap, TRUE );
@@ -731,10 +731,10 @@ void MonolithTool_TownIcon_Update(GFL_CLWK *cap, const OCCUPY_INFO *occupy, int 
 {
   int anmseq;
   
-  if(occupy->town.town_occupy[town_no] == OCCUPY_TOWN_WHITE){
+  if(occupy->mlst.mission_clear[town_no] == MISSION_CLEAR_WHITE){
     anmseq = COMMON_ANMSEQ_WHITE_TOWN;
   }
-  else if(occupy->town.town_occupy[town_no] == OCCUPY_TOWN_BLACK){
+  else if(occupy->mlst.mission_clear[town_no] == MISSION_CLEAR_BLACK){
     anmseq = COMMON_ANMSEQ_BLACK_TOWN;
   }
   else{
