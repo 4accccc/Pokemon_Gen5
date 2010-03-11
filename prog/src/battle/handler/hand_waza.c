@@ -200,7 +200,7 @@ static void handler_Yuwaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 static const BtlEventHandlerTable*  ADD_TriAttack( u32* numElems );
 static void handler_TriAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_HimituNoTikara( u32* numElems );
-static void handler_HimituNoTikara_Sick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_HimituNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Osyaberi( u32* numElems );
 static void handler_Osyaberi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Makituku( u32* numElems );
@@ -1167,19 +1167,46 @@ static void handler_Hogosyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    BtlBgType  bg = BTL_SVFTOOL_GetLandForm( flowWk );
+    BtlBgAttr  bg = BTL_SVFTOOL_GetLandForm( flowWk );
     PokeType   type = POKETYPE_NORMAL;
 
     switch( bg ){
-    case BATTLE_BG_TYPE_GRASS:   type = POKETYPE_KUSA;   break;  ///< 草むら
-    case BATTLE_BG_TYPE_SAND:    type = POKETYPE_JIMEN;  break;  ///< 砂地
-    case BATTLE_BG_TYPE_SEA:     type = POKETYPE_MIZU;   break;  ///< 海
-    case BATTLE_BG_TYPE_SNOW:    type = POKETYPE_KOORI;  break;  ///< 雪原
-    case BATTLE_BG_TYPE_CAVE:    type = POKETYPE_IWA;    break;  ///< 洞窟
-    case BATTLE_BG_TYPE_ROCK:    type = POKETYPE_IWA;    break;  ///< 岩場
-    case BATTLE_BG_TYPE_FOREST:  type = POKETYPE_KUSA;   break;  ///< 森
-    case BATTLE_BG_TYPE_ROOM:    type = POKETYPE_NORMAL; break;  ///< 室内
+
+    case BATTLE_BG_ATTR_NORMAL_GROUND:  //通常地面
+    case BATTLE_BG_ATTR_GROUND1:        //地面１
+    case BATTLE_BG_ATTR_GROUND2:        //地面２
+    case BATTLE_BG_ATTR_PALACE:         //パレスでの対戦専用
+    case BATTLE_BG_ATTR_SAND:           //砂地
+    case BATTLE_BG_ATTR_MARSH:          //浅い湿原
+      type = POKETYPE_JIMEN;
+      break;
+
+    case BATTLE_BG_ATTR_INDOOR:         //室内
+    default:
+      type = POKETYPE_NORMAL;
+      break;
+
+    case BATTLE_BG_ATTR_CAVE:           //洞窟
+      type = POKETYPE_IWA;
+      break;
+
+    case BATTLE_BG_ATTR_LAWN:           //芝生
+    case BATTLE_BG_ATTR_GRASS:          //草
+      type = POKETYPE_KUSA;
+      break;
+
+    case BATTLE_BG_ATTR_WATER:          //水上
+    case BATTLE_BG_ATTR_POOL:           //水たまり
+    case BATTLE_BG_ATTR_SHOAL:          //浅瀬
+      type = POKETYPE_MIZU;
+      break;
+
+    case BATTLE_BG_ATTR_SNOW:           //雪原
+    case BATTLE_BG_ATTR_ICE:            //氷上
+      type = POKETYPE_KOORI;
+      break;
     }
+
 
     {
       PokeTypePair  pairType = PokeTypePair_MakePure( type );
@@ -1992,35 +2019,117 @@ static void handler_TriAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_HimituNoTikara( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADD_SICK, handler_HimituNoTikara_Sick },    // 追加効果による状態異常チェックハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION, handler_HimituNoTikara },    // ダメージ反応ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-static void handler_HimituNoTikara_Sick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// ダメージ反応ハンドラ
+static void handler_HimituNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    BtlBgType  bg = BTL_SVFTOOL_GetLandForm( flowWk );
-    WazaSick  sick;
-    BPP_SICK_CONT  cont;
-    WazaID  waza = BTL_EVENT_FACTOR_GetSubID( myHandle );
+    u32 rnd = BTL_CALC_GetRand( 100 );
 
-    // @@@ 本来は地形に応じてもっとフクザツに
-    if( bg == BATTLE_BG_TYPE_SNOW ){
-      sick = WAZASICK_KOORI;
-    }else{
-      sick = WAZASICK_MAHI;
+    #ifdef PM_DEBUG
+    if( BTL_SVFTOOL_GetDebugFlag(flowWk, BTL_DEBUGFLAG_MUST_TUIKA) ){
+      rnd = 0;
     }
+    #endif
 
-    BTL_CALC_MakeDefaultWazaSickCont( sick, bpp, &cont );
+    if( rnd < 30 )
+    {
+      enum {
+        METHOD_SICK,    ///< 状態異常
+        METHOD_RANK,    ///< 能力ランクダウン
+        METHOD_SHRINK,  ///< ひるませる
+      };
 
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICKID, sick );
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICKID, cont.raw );
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, WAZADATA_GetParam(waza, WAZAPARAM_SICK_PER) );
+      BtlBgAttr  bg = BTL_SVFTOOL_GetLandForm( flowWk );
+      const BTL_POKEPARAM* attacker = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      u8   targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+      u16        method, method_arg;
+
+      switch( bg ){
+      case BATTLE_BG_ATTR_NORMAL_GROUND:  //通常地面
+      case BATTLE_BG_ATTR_GROUND1:        //地面１
+      case BATTLE_BG_ATTR_GROUND2:        //地面２
+      case BATTLE_BG_ATTR_PALACE:         //パレスでの対戦専用
+      case BATTLE_BG_ATTR_SAND:           //砂地
+        method = METHOD_RANK;
+        method_arg = BPP_HIT_RATIO;
+        break;
+
+      case BATTLE_BG_ATTR_INDOOR:         //室内
+      default:
+        method = METHOD_SICK;
+        method_arg = WAZASICK_MAHI;
+        break;
+
+      case BATTLE_BG_ATTR_CAVE:           //洞窟
+        method = METHOD_SHRINK;
+        method_arg = 0;
+        break;
+
+      case BATTLE_BG_ATTR_LAWN:           //芝生
+      case BATTLE_BG_ATTR_GRASS:          //草
+        method = METHOD_SICK;
+        method_arg = WAZASICK_NEMURI;
+        break;
+
+      case BATTLE_BG_ATTR_WATER:          //水上
+      case BATTLE_BG_ATTR_POOL:           //水たまり
+      case BATTLE_BG_ATTR_SHOAL:          //浅瀬
+        method = METHOD_RANK;
+        method_arg = BPP_ATTACK_RANK;
+        break;
+
+      case BATTLE_BG_ATTR_MARSH:          //浅い湿原
+        method = METHOD_RANK;
+        method_arg = BPP_AGILITY_RANK;
+        break;
+
+      case BATTLE_BG_ATTR_SNOW:           //雪原
+      case BATTLE_BG_ATTR_ICE:            //氷上
+        method = METHOD_SICK;
+        method_arg = WAZASICK_KOORI;
+        break;
+      }/* switch( bg ) */
+
+      switch( method ){
+      case METHOD_SICK:
+        {
+          BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+          param->poke_cnt = 1;
+          param->pokeID[0] = targetPokeID;
+          param->sickID = method_arg;
+          BTL_CALC_MakeDefaultWazaSickCont( param->sickID, attacker, &param->sickCont );
+        }
+        break;
+
+      case METHOD_RANK:
+        {
+          BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+
+          param->poke_cnt = 1;
+          param->pokeID[0] = targetPokeID;
+          param->rankType = method_arg;
+        }
+        break;
+
+      case METHOD_SHRINK:
+        {
+          BTL_HANDEX_PARAM_ADD_SHRINK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SHRINK, pokeID );
+
+          param->pokeID = targetPokeID;
+          param->per = 100;
+        }
+        break;
+      }
+    }/* if( rand < 30) */
   }
 }
+
 //----------------------------------------------------------------------------------
 /**
  * おしゃべり
@@ -8063,32 +8172,50 @@ static void handler_SizenNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BtlBgType  bg = BTL_SVFTOOL_GetLandForm( flowWk );
+    BtlBgAttr  bg = BTL_SVFTOOL_GetLandForm( flowWk );
     WazaID  waza;
     BtlPokePos pos;
 
     switch( bg ){
-    case  BATTLE_BG_TYPE_GRASS:         ///< 草むら
-    case  BATTLE_BG_TYPE_GRASS_SEASON:  ///< 草むら(四季有り)
-    case  BATTLE_BG_TYPE_FOREST:        ///< 森
-    case  BATTLE_BG_TYPE_MOUNTAIN:      ///< 山
-      waza = WAZANO_TANEBAKUDAN;
-      break;
-    case  BATTLE_BG_TYPE_CAVE:          ///< 洞窟
-    case  BATTLE_BG_TYPE_CAVE_DARK:     ///< 洞窟(暗い)
-      waza = WAZANO_IWANADARE;
-      break;
-    case  BATTLE_BG_TYPE_SEA:           ///< 海
-      waza = WAZANO_HAIDOROPONPU;
-      break;
-    case  BATTLE_BG_TYPE_SAND:          ///< 砂漠
+
+    case BATTLE_BG_ATTR_NORMAL_GROUND:  //通常地面
+    case BATTLE_BG_ATTR_GROUND1:        //地面１
+    case BATTLE_BG_ATTR_GROUND2:        //地面２
+    case BATTLE_BG_ATTR_PALACE:         //パレスでの対戦専用
+    case BATTLE_BG_ATTR_SAND:           //砂地
       waza = WAZANO_ZISIN;
       break;
-    case  BATTLE_BG_TYPE_ROOM:          ///< 室内
-    case  BATTLE_BG_TYPE_CITY:          ///< 街
-    case  BATTLE_BG_TYPE_CITY_SEASON:   ///< 街(四季有り)
+
+    case BATTLE_BG_ATTR_INDOOR:         //室内
     default:
       waza = WAZANO_TORAIATAKKU;
+      break;
+
+    case BATTLE_BG_ATTR_CAVE:           //洞窟
+      waza = WAZANO_IWANADARE;
+      break;
+
+    case BATTLE_BG_ATTR_LAWN:           //芝生
+    case BATTLE_BG_ATTR_GRASS:          //草
+      waza = WAZANO_TANEBAKUDAN;
+      break;
+
+    case BATTLE_BG_ATTR_WATER:          //水上
+    case BATTLE_BG_ATTR_POOL:           //水たまり
+    case BATTLE_BG_ATTR_SHOAL:          //浅瀬
+      waza = WAZANO_HAIDOROPONPU;
+      break;
+
+    case BATTLE_BG_ATTR_MARSH:          //浅い湿原
+      waza = WAZANO_DOROBAKUDAN;
+      break;
+
+    case BATTLE_BG_ATTR_SNOW:           //雪原
+      waza = WAZANO_HUBUKI;
+      break;
+
+    case BATTLE_BG_ATTR_ICE:            //氷上
+      waza = WAZANO_REITOUBIIMU;
       break;
     }
 
