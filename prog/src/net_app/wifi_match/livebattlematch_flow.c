@@ -608,7 +608,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 #endif
     { 
       //VERSION‚Í³‚µ‚¢‚©
-      if( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_ROMVER) & (1<<GET_VERSION()) )
+      if( Regulation_GetCardParam( &p_wk->regulation_temp, REGULATION_CARD_ROMVER) & (1<<GET_VERSION()) )
       { 
         //‚·‚Å‚ÉŽó‚¯‚Æ‚Á‚Ä‚¢‚é‚©
         if( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO) ==
