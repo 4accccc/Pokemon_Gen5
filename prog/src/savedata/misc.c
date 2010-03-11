@@ -620,7 +620,7 @@ u8 MISC_GetResearchQuestionID( const MISC* misc, u8 idx )
 void MISC_SetResearchQuestionID( MISC* misc, u8 idx, u8 id )
 {
   GF_ASSERT( idx < MAX_QNUM_PER_RESEARCH_REQ );
-  GF_ASSERT( id <= QUESTION_ID_MAX );
+  GF_ASSERT( (id == QUESTION_ID_DUMMY) || (id <= QUESTION_ID_MAX) );
   misc->research_question_id[ idx ] = id;
 }
 //----------------------------------------------------------
