@@ -19,6 +19,7 @@ targetname = poke_icon
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)
 RES_DIR = ./graphic/
+DAT_DIR = ../../prog/src/pokeicon/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -49,9 +50,9 @@ endif
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
-do-build:	$(TARGETDIR)/$(targetname).narc
+do-build:	$(targetname).narc $(TARGETDIR)/$(targetname).narc $(DAT_DIR)pokeicon.dat
 else
-do-build:	$(targetname).narc $(TARGETDIR)/$(targetname).narc
+do-build:	$(TARGETDIR)/$(targetname).narc $(DAT_DIR)pokeicon.dat
 endif
 
 # narc のコピーだけ実行する
@@ -59,6 +60,8 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR) 
 
+$(DAT_DIR)pokeicon.dat: $(RES_DIR)pokeicon.dat
+	$(COPY) $(RES_DIR)pokeicon.dat $(DAT_DIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
