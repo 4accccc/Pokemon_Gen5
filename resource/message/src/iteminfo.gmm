@@ -713,47 +713,47 @@
 
 	<row id="ITEMINFO_065">
 		<language name="JPN" width="256">ガラスせいの　あおい　ふえ。
-ポケモン　１ひきの　ねむりの
-じょうたいを　かいふくする。</language>
+
+</language>
 		<language name="JPN_KANJI" width="256">ガラスせいの　あおい　ふえ。
-ポケモン　１ひきの　ねむりの
-じょうたいを　かいふくする。</language>
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_066">
 		<language name="JPN" width="256">ガラスせいの　きいろい　ふえ。
-ポケモン　１ひきの　こんらんの
-じょうたいを　かいふくする。</language>
+
+</language>
 		<language name="JPN_KANJI" width="256">ガラスせいの　きいろい　ふえ。
-ポケモン　１ひきの　こんらんの
-じょうたいを　かいふくする。</language>
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_067">
 		<language name="JPN" width="256">ガラスせいの　あかい　ふえ。
-ポケモン　１ひきの　メロメロの
-じょうたいを　かいふくする。</language>
+
+</language>
 		<language name="JPN_KANJI" width="256">ガラスせいの　あかい　ふえ。
-ポケモン　１ひきの　メロメロの
-じょうたいを　かいふくする。</language>
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_068">
 		<language name="JPN" width="256">ガラスせいの　くろい　ふえ。
-ふくと　やせいの　ポケモンが
-でて　きにくくなる。</language>
+
+</language>
 		<language name="JPN_KANJI" width="256">ガラスせいの　くろい　ふえ。
-ふくと　やせいの　ポケモンが
-でて　きにくくなる。</language>
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_069">
 		<language name="JPN" width="256">ガラスせいの　しろい　ふえ。
-ふくと　やせいの　ポケモンが
-でて　きやすくなる。</language>
+
+</language>
 		<language name="JPN_KANJI" width="256">ガラスせいの　しろい　ふえ。
-ふくと　やせいの　ポケモンが
-でて　きやすくなる。</language>
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_070">
@@ -5857,6 +5857,159 @@
 		<language name="JPN_KANJI" width="256">かりメッセージ１
 ブリッジメール２
 なまえをかえると　エラーになる</language>
+	</row>
+
+	<row id="ITEMINFO_637">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_638">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_639">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_640">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_641">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_642">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_643">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_644">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_645">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_646">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_647">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_648">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_649">
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
+	</row>
+
+	<row id="ITEMINFO_650">
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
+	</row>
+
+	<row id="ITEMINFO_651">
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
+	</row>
+
+	<row id="ITEMINFO_652">
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
+	</row>
+
+	<row id="ITEMINFO_653">
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
 	</row>
 
 
