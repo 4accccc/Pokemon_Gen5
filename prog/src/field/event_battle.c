@@ -149,6 +149,8 @@ typedef struct {
   BOOL is_no_lose;
 
   BOOL Examination;   //トライアルハウス審査処理を行うか？TRUEで行う
+  
+  BOOL not_free_bsp; //戦闘後、BATTLE_SETUP_PARAMを開放しない
 
   //エンカウントエフェクトナンバー
   int EncEffNo;
@@ -418,18 +420,23 @@ GMEVENT * EVENT_BSubwayTrainerBattle(
 #ifdef PM_DEBUG
   debug_FieldDebugFlagSet( bp );
 #endif
-
+  
   bew = GMEVENT_GetEventWork(event);
   BEW_Initialize( bew, gsys, bp );
+  
 #if 0
   bew->is_sub_event = TRUE; //サブイベント呼び出し
 #else
   bew->is_sub_event = FALSE; //戦闘後のフェードイン目当て
 #endif
+  
   bew->is_no_lose = TRUE; //敗戦処理無し
+  bew->not_free_bsp = TRUE; //開放はしない
+  
   //エンカウントエフェクトとＢＧＭセット(サブウェイ固有)
   bew->EncEffNo = ENCEFFID_SUBWAY;
   bew->battle_param->musicDefault = SEQ_BGM_VS_SUBWAY_TRAINER;
+  
   //エフェクトエンカウト　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
   return event;
@@ -940,6 +947,8 @@ static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, BATTLE_
 //--------------------------------------------------------------
 static void BEW_Destructor(BATTLE_EVENT_WORK * bew)
 {
-  BATTLE_PARAM_Delete( bew->battle_param );
+  if( bew->not_free_bsp == FALSE ){
+    BATTLE_PARAM_Delete( bew->battle_param );
+  }
 }
 

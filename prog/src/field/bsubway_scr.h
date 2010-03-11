@@ -59,6 +59,8 @@ extern void BSUBWAY_SCRWORK_PreparBattleBox( BSUBWAY_SCRWORK *bsw_scr );
 extern const POKEPARTY * BSUBWAY_SCRWORK_GetPokePartyUse(
     const BSUBWAY_SCRWORK *bsw_scr );
 
+extern u32 BSUBWAY_SCRWORK_GetPlayModeMemberNum( u16 mode );
+
 //bsubway_tr.h
 extern COMM_BTL_DEMO_PARAM * BSUBWAY_SCRWORK_CreateBattleDemoParam(
     BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys );

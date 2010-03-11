@@ -1142,6 +1142,7 @@ sub_receipt_msg_geton_train:
 }
 _RET
 
+/*
 //--------------------------------------------------------------
 //  受付話し掛け　手持ちポケモンエラーメッセージ
 //--------------------------------------------------------------
@@ -1152,6 +1153,7 @@ sub_receipt_msg_poke_error:
   _SYSWIN_MSG( msg_bsw_scr_22 , WIN_DOWN )
 }
 _RET
+*/
 
 //=====================================================================
 //  受付　ワーク処理
@@ -1784,7 +1786,12 @@ sub_receipt_common_select_btl_box:
     _BSUBWAY_TOOL( BSWSUB_CHK_REGULATION, BSW_NULL, BSW_NULL, ret )
     
     IF $ret == FALSE THEN //エラーメッセージ
-      _CALL sub_receipt_msg_poke_error
+      _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_NUM, BSW_NULL, BSW_NULL, ret )
+      _NUMBER( 0, ret, 1 )
+      _SYSWIN_MSG( msg_bsw_scr_21 , WIN_DOWN )
+      _BSUBWAY_TOOL( BSWSUB_GET_REGULATION_TYPE, BSW_NULL, BSW_NULL, ret )
+      _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( ret )
+      _AB_KEYWAIT()
       $SCWK_ANSWER = FALSE
     ENDIF
   ENDIF

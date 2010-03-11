@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-02-18T18:46:11"/>
+	<create user="kagaya" host="W00143" date="2010-03-11T18:12:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,38 +292,6 @@
 	</lock>
 
 
-	<row id="msg_c04r0110_test00">
-		<comment>テスト</comment>
-		<language name="JPN" width="256">たいせあいて　かりメッセージ
-せんとうかいし</language>
-		<language name="JPN_KANJI" width="256">たいせあいて　かりメッセージ
-せんとうかいし</language>
-	</row>
-
-	<row id="msg_c04r0110_test01">
-		<comment>テスト</comment>
-		<language name="JPN">たいせあいて　かりメッセージ
-はいぼく</language>
-		<language name="JPN_KANJI">たいせあいて　かりメッセージ
-はいぼく</language>
-	</row>
-
-	<row id="msg_c04r0110_test02">
-		<comment>テスト</comment>
-		<language name="JPN">かいふく
-</language>
-		<language name="JPN_KANJI">かいふく
-</language>
-	</row>
-
-	<row id="msg_c04r0110_test03">
-		<comment>テスト</comment>
-		<language name="JPN">かりメッセージ
-</language>
-		<language name="JPN_KANJI">かりメッセージ
-</language>
-	</row>
-
 	<row id="msg_c04r0110_01">
 		<language name="JPN" width="256">ただいま　[2:00:１桁:0]れんしょう！[BE:01:ページ切り替え（クリア）]
 つぎは　[2:00:１桁:1]りょうめと　なります
@@ -377,8 +345,11 @@
 	</row>
 
 	<row id="msg_c04r0110_09">
-		<language name="JPN" width="256">バトルビデオ　きろく　が　はいります</language>
-		<language name="JPN_KANJI" width="256">バトルビデオ　きろく　が　はいります</language>
+		<comment>バトルビデオ</comment>
+		<language name="JPN" width="256">すでにある　バトルビデオを　けして
+いまの　しょうぶを　きろくしますか？</language>
+		<language name="JPN_KANJI" width="256">すでにある　バトルビデオを　けして
+いまの　しょうぶを　きろくしますか？</language>
 	</row>
 
 	<row id="msg_c04r0110_10">
@@ -405,28 +376,34 @@
 	</row>
 
 	<row id="msg_c04r0110_13">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<comment>バトルビデオ</comment>
+		<language name="JPN" width="256">きろくちゅうです
+でんげんを　きらないで　ください！</language>
+		<language name="JPN_KANJI" width="256">きろくちゅうです
+でんげんを　きらないで　ください！</language>
 	</row>
 
 	<row id="msg_c04r0110_14">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<comment>バトルビデオ</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　たたかいが
+きろく　されました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　たたかいが
+きろく　されました</language>
 	</row>
 
 	<row id="msg_c04r0110_15">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">test</language>
+		<language name="JPN_KANJI" width="256">test</language>
 	</row>
 
 	<row id="msg_c04r0110_16">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">test</language>
+		<language name="JPN_KANJI" width="256">test</language>
 	</row>
 
 	<row id="msg_c04r0110_17">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">test</language>
+		<language name="JPN_KANJI" width="256">test</language>
 	</row>
 
 	<flowchart-group-list>

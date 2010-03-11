@@ -188,14 +188,14 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
     list->type = type;
     
     //debug
-#ifdef DEBUG_ONLY_FOR_kagaya
+    #ifdef DEBUG_ONLY_FOR_kagaya
     {
       REGULATION *pReg = list->reg;
       
       KAGAYA_Printf( "BSWAY REG NUM_LO = %d, HI =%d, LV = %d\n",
         pReg->NUM_LO, pReg->NUM_HI, pReg->LEVEL );
     }
-#endif
+    #endif
   }
   
   {
@@ -230,12 +230,19 @@ GMEVENT * BSUBWAY_EVENT_TrainerBattle(
   GMEVENT * event;
   BATTLE_SETUP_PARAM *bp;
   
+  //対戦録画データを作成する
+  BattleRec_Init( HEAPID_PROC );
+  
+  //バトルパラム作成
+  bsw_scr->btl_setup_param =
+    BSUBWAY_SCRWORK_CreateBattleParam( bsw_scr, gsys );
+  
   if( bsw_scr->play_mode == BSWAY_MODE_COMM_MULTI ||
       bsw_scr->play_mode == BSWAY_MODE_S_COMM_MULTI ){
     return BSUBWAY_EVENT_CommBattle( bsw_scr, gsys, fieldmap );
   }else{
-    bp = BSUBWAY_SCRWORK_CreateBattleParam( bsw_scr, gsys );
-    event = EVENT_BSubwayTrainerBattle( gsys, fieldmap, bp );
+    event = EVENT_BSubwayTrainerBattle(
+        gsys, fieldmap, bsw_scr->btl_setup_param );
   }
   
   return( event );
@@ -352,9 +359,6 @@ GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
   return( event );
 }
 
-
-
-
 //======================================================================
 //  歴代リーダー情報の表示
 //======================================================================
@@ -429,13 +433,16 @@ GMEVENT * BSUBWAY_EVENT_CallLeaderBoard( GAMESYS_WORK *gsys )
 }
 
 //======================================================================
-//
+//  通信バトル
 //======================================================================
 #include "net/network_define.h"
 
-static GFL_PROC_RESULT CommBattleCallProc_Init(  GFL_PROC *proc, int *seq, void* pwk, void* mywk );
-static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void* pwk, void* mywk );
-static GFL_PROC_RESULT CommBattleCallProc_End(  GFL_PROC *proc, int *seq, void* pwk, void* mywk );
+static GFL_PROC_RESULT CommBattleCallProc_Init(
+    GFL_PROC *proc, int *seq, void* pwk, void* mywk );
+static GFL_PROC_RESULT CommBattleCallProc_Main(
+    GFL_PROC *proc, int *seq, void* pwk, void* mywk );
+static GFL_PROC_RESULT CommBattleCallProc_End(
+    GFL_PROC *proc, int *seq, void* pwk, void* mywk );
 
 const GFL_PROC_DATA bsw_CommBattleCommProcData = 
 { 
@@ -702,11 +709,10 @@ static GMEVENT_RESULT bsw_CommBattleMain( GMEVENT *event, int *seq, void *wk )
     (*seq)++;
     break;
   case 5:
-#if 0
-    BATTLE_PARAM_Release( &work->para ); //バトルSetupParam解放
-#else
-    BATTLE_PARAM_Delete( work->para ); //バトルSetupParam解放
-#endif
+    #if 0
+    BATTLE_PARAM_Delete( work->para ); //バトルSetupParam解放しません。
+    #endif
+    
     OS_TPrintf("_FIELD_OPEN\n");
     GMEVENT_CallEvent( event, EVENT_FieldOpen(gsys) );
     (*seq) ++;
@@ -734,7 +740,6 @@ static GMEVENT_RESULT bsw_CommBattleMain( GMEVENT *event, int *seq, void *wk )
   }
   return GMEVENT_RES_CONTINUE;
 }
-
 
 //==================================================================
 /**
@@ -779,13 +784,11 @@ GMEVENT * BSUBWAY_EVENT_CommBattle(
   GMEVENT * event;
   BATTLE_SETUP_PARAM *bp;
   COMM_BTL_DEMO_PARAM *demo;
-
-  bp = BSUBWAY_SCRWORK_CreateBattleParam( bsw_scr, gsys );
+  
   demo = BSUBWAY_SCRWORK_CreateBattleDemoParam( bsw_scr, gsys );
-  event = ev_CommBattle( gsys, fieldmap, bp, demo );
+  event = ev_CommBattle( gsys, fieldmap, bsw_scr->btl_setup_param, demo );
   return( event );
 }
-
 
 //======================================================================
 //  バトルサブウェイ wifi

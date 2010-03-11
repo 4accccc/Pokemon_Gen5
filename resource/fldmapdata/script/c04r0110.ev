@@ -318,6 +318,9 @@ sub_train_battle:
 
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
+  //戦闘録画データ存在チェック呼び出し
+  _BSUBWAY_TOOL( BSWSUB_CALL_BTLREC_EXIST, BSW_NULL, BSW_NULL, BSW_NULL )
+  
   //対戦へ
   SWITCH $play_mode
   CASE BSWAY_MODE_SINGLE THEN
@@ -342,9 +345,12 @@ sub_train_battle:
   
   $win_lose = $SCWK_ANSWER
   
+  //戦闘録画データを格納
+  _BSUBWAY_TOOL( BSWSUB_STORE_BTLREC, BSW_NULL, BSW_NULL, BSW_NULL )
+  
   //戦闘復帰　マップフェードイン
-//  _MAP_FADE_BLACK_IN()
-//  _MAP_FADE_END_CHECK()
+//_MAP_FADE_BLACK_IN()
+//_MAP_FADE_END_CHECK()
   
   //回復
   _TEMOTI_POKEMON_KAIFUKU()
@@ -356,6 +362,8 @@ sub_train_battle:
     _CALL sub_train_battle_win
   ENDIF
   
+  //戦闘後のワーク開放
+  _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
 }
 _RET
 
@@ -542,9 +550,11 @@ _RET
 //--------------------------------------------------------------
 sub_train_battle_win_next_menu:
 {
+  DEFINE_LOCAL ret
   DEFINE_LOCAL loop
   DEFINE_LOCAL play_mode
   DEFINE_LOCAL multi_flag
+  DEFINE_LOCAL flag
   
   //プレイモード取得
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
@@ -589,9 +599,27 @@ sub_train_battle_win_next_menu:
       _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 7, 0, 4, DIR_UP )
       $loop = 0
     CASE 1 THEN //記録する
-      _SYSWIN_MSG( msg_c04r0110_09 , WIN_DOWN )
-      _AB_KEYWAIT()
-      _SYSWIN_CLOSE()
+      $flag = TRUE
+      _BSUBWAY_TOOL( BSWSUB_CHK_BTLREC_EXIST, BSW_NULL, BSW_NULL, ret )
+      
+      IF $ret == TRUE THEN //既存ビデオあり
+        _SYSWIN_MSG( msg_c04r0110_09 , WIN_DOWN )
+        _YES_NO_WIN( ret )
+        _SYSWIN_CLOSE()
+        
+        IF $ret == SCR_NO THEN
+          $flag = FALSE
+        ENDIF
+      ENDIF
+      
+      IF $flag == TRUE THEN
+        _SYSWIN_MSG( msg_c04r0110_13, WIN_DOWN )
+        _BSUBWAY_TOOL( BSWSUB_SAVE_BTLREC, BSW_NULL, BSW_NULL, BSW_NULL )
+        _PLAYER_NAME( 0 )
+        _SYSWIN_MSG( msg_c04r0110_14, WIN_DOWN )
+        _AB_KEYWAIT()
+        _SYSWIN_CLOSE()
+      ENDIF
     CASE 2 THEN //休む
       //休むか
       _SYSWIN_MSG( msg_c04r0110_07 , WIN_DOWN )
@@ -603,6 +631,9 @@ sub_train_battle_win_next_menu:
         $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_CONTINUE
         //プレイデータ反映
         _BSUBWAY_TOOL( BSWSUB_SAVE_REST_PLAY_DATA, BSW_NULL, BSW_NULL, BSW_NULL )
+        //戦闘後のワーク開放
+        _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
+        
         //ワーク開放
         _BSUBWAY_WORK_RELEASE()
         //レポート
@@ -635,9 +666,11 @@ _RET
 //--------------------------------------------------------------
 sub_train_battle_win_next_menu_comm_multi:
 {
+  DEFINE_LOCAL ret
   DEFINE_LOCAL loop
   DEFINE_LOCAL play_mode
   DEFINE_LOCAL multi_flag
+  DEFINE_LOCAL flag
   
   //プレイモード取得
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
@@ -658,13 +691,15 @@ sub_train_battle_win_next_menu_comm_multi:
     
     _BMPMENU_INIT_EX( 21, 8, 0, 0, SCWK_ANSWER ) //Bキャンセル無効
     _BMPMENU_MAKE_LIST( msg_c04r0110_02, 0 )  //つづける
+    _BMPMENU_MAKE_LIST( msg_c04r0110_03, 1 )  //きろくする
     _BMPMENU_MAKE_LIST( msg_c04r0110_05, 3 )  //リタイア
     _BMPMENU_START()
     _SYSWIN_CLOSE()
     
     $LOCALWORK0 = 0
     
-    IF $SCWK_ANSWER == 0 THEN //続ける
+    SWITCH $SCWK_ANSWER
+    CASE 0 THEN //続ける
       //お友達の選択を待っています
       _SYSWIN_MSG( msg_c04r0110_10 , WIN_DOWN )
       
@@ -702,7 +737,29 @@ sub_train_battle_win_next_menu_comm_multi:
       ENDIF
       
       $loop = 0
-    ELSE //リタイア
+    CASE 1 THEN //記録する
+      $flag = TRUE
+      _BSUBWAY_TOOL( BSWSUB_CHK_BTLREC_EXIST, BSW_NULL, BSW_NULL, ret )
+      
+      IF $ret == TRUE THEN //既存ビデオあり
+        _SYSWIN_MSG( msg_c04r0110_09 , WIN_DOWN )
+        _YES_NO_WIN( ret )
+        _SYSWIN_CLOSE()
+        
+        IF $ret == SCR_NO THEN
+          $flag = FALSE
+        ENDIF
+      ENDIF
+      
+      IF $flag == TRUE THEN
+        _SYSWIN_MSG( msg_c04r0110_13, WIN_DOWN )
+        _BSUBWAY_TOOL( BSWSUB_SAVE_BTLREC, BSW_NULL, BSW_NULL, BSW_NULL )
+        _PLAYER_NAME( 0 )
+        _SYSWIN_MSG( msg_c04r0110_14, WIN_DOWN )
+        _AB_KEYWAIT()
+        _SYSWIN_CLOSE()
+      ENDIF
+    DEFAULT //リタイア
       //リタイアするか
       _SYSWIN_MSG( msg_c04r0110_06 , WIN_DOWN )
       _YES_NO_WIN( SCWK_ANSWER )
@@ -733,7 +790,7 @@ sub_train_battle_win_next_menu_comm_multi:
         _CALL sub_common_retmap_lose_retire //受付へ
         $loop = 0
       ENDIF
-    ENDIF
+    ENDSWITCH
   ENDWHILE
 }
 _RET

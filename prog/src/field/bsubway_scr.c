@@ -19,6 +19,8 @@
 #include "poke_tool/poke_tool.h"
 #include "app/pokelist.h"
 
+#include "gamesystem\btl_setup.h"
+
 #include "savedata/bsubway_savedata.h"
 #include "savedata/bsubway_savedata_def.h"
 #include "battle/bsubway_battle_data.h"
@@ -40,7 +42,6 @@
 //======================================================================
 //  proto
 //======================================================================
-static u8 get_MemberNum( u16 mode );
 static BOOL is_ConflictTrainer( u16* trainer,u16 id,u16 num );
 
 static void bsw_SetCommonScore(
@@ -111,7 +112,8 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
   
   if( init == BSWAY_PLAY_NEW ){ //新規
     bsw_scr->play_mode = playmode;
-    bsw_scr->member_num = get_MemberNum( bsw_scr->play_mode );
+    bsw_scr->member_num =
+      BSUBWAY_SCRWORK_GetPlayModeMemberNum( bsw_scr->play_mode );
     
     for(i = 0;i < BSUBWAY_STOCK_MEMBER_MAX;i++){
       bsw_scr->member[i] = BSWAY_NULL_POKE;
@@ -132,7 +134,8 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     bsw_scr->play_mode = (u8)BSUBWAY_PLAYDATA_GetData(
         bsw_scr->playData, BSWAY_PLAYDATA_ID_playmode, NULL );
     
-    bsw_scr->member_num = get_MemberNum( bsw_scr->play_mode );
+    bsw_scr->member_num =
+      BSUBWAY_SCRWORK_GetPlayModeMemberNum( bsw_scr->play_mode );
     
     //バトルボックス使用であれば準備
     if( (u32)BSUBWAY_PLAYDATA_GetData( bsw_scr->playData,
@@ -202,6 +205,10 @@ void BSUBWAY_SCRWORK_ReleaseWork(
     
     if( bsw_scr->btl_box_party != NULL ){
       GFL_HEAP_FreeMemory( bsw_scr->btl_box_party );
+    }
+    
+    if( bsw_scr->btl_setup_param != NULL ){
+      BATTLE_PARAM_Delete( bsw_scr->btl_setup_param );
     }
     
     MI_CpuClear8( bsw_scr, sizeof(BSUBWAY_SCRWORK) );
@@ -301,7 +308,8 @@ void BSUBWAY_SCRWORK_LoadPokemonMember(
   const POKEPARTY *party;
   POKEMON_PARAM *pp;
   
-  bsw_scr->member_num = get_MemberNum( bsw_scr->play_mode );
+  bsw_scr->member_num =
+      BSUBWAY_SCRWORK_GetPlayModeMemberNum( bsw_scr->play_mode );
   
   BSUBWAY_PLAYDATA_GetData( bsw_scr->playData, //選んだポケモンNo
       BSWAY_PLAYDATA_ID_pokeno, bsw_scr->member );
@@ -1123,7 +1131,7 @@ const POKEPARTY * BSUBWAY_SCRWORK_GetPokePartyUse(
  * @retval  
  */
 //--------------------------------------------------------------
-static u8 get_MemberNum( u16 mode )
+u32 BSUBWAY_SCRWORK_GetPlayModeMemberNum( u16 mode )
 {
   switch(mode){
   case BSWAY_MODE_SINGLE:

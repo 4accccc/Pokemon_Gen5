@@ -18,7 +18,9 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 
+#include "gamesystem\btl_setup.h"
 #include "poke_tool/poke_regulation.h"
+
 #include "savedata/save_tbl.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_SPEXIT_REQUEST
 #include "fieldmap.h"
@@ -51,6 +53,7 @@
 #include "event_wifi_bsubway.h"
 
 #include "savedata/battle_box_save.h"
+#include "savedata/battle_rec.h"
 
 #include "net_app/irc_match.h"
 FS_EXTERN_OVERLAY(ircbattlematch);
@@ -83,13 +86,13 @@ static BOOL evCommTimingSync( VMHANDLE *core, void *wk );
 static BOOL evCommEntryMenuPerent( VMHANDLE *core, void *wk );
 static BOOL evCommEntryMenuChild( VMHANDLE *core, void *wk );
 static BOOL evCommRecvData( VMHANDLE *core, void *wk );
+static BOOL evBtlRecSave( VMHANDLE *core, void *wk );
 
 static void bsway_SetHomeNPC(
     BSUBWAY_SCRWORK *bsw_scr, MMDLSYS *mmdlsys, FIELDMAP_WORK *fieldmap );
 static u16 bsway_GetHomeNPCMsgID( const MMDL *mmdl );
 
-
-static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys );
+static u32 bsw_getRegulationLabel( u32 play_mode );
 
 static const FLDEFF_BTRAIN_TYPE data_TrainModeType[BSWAY_MODE_MAX];
 static const VecFx32 data_TrainPosTbl[BTRAIN_POS_MAX];
@@ -853,26 +856,14 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     *ret_wk = FALSE; //error
     
     {
+      int type;
       u32 ret = 0;
       REGULATION *regu;
       POKEPARTY *check_party = NULL, *btl_party = NULL, *my_party = NULL;
-      int type = REG_SUBWAY_SINGLE;
       u32 use_bbox = (u32)BSUBWAY_PLAYDATA_GetData(
         playData, BSWAY_PLAYDATA_ID_use_battle_box, NULL );
       
-      switch( play_mode ){
-      case BSWAY_MODE_DOUBLE:
-      case BSWAY_MODE_S_DOUBLE:
-        type = REG_SUBWAY_DOUBLE;
-        break;
-      case BSWAY_MODE_MULTI:
-      case BSWAY_MODE_S_MULTI:
-      case BSWAY_MODE_COMM_MULTI:
-      case BSWAY_MODE_S_COMM_MULTI:
-        type = REG_SUBWAY_MALTI;
-        break;
-      }
-      
+      type = bsw_getRegulationLabel( play_mode );
       regu = (REGULATION*)PokeRegulation_LoadDataAlloc( type, HEAPID_PROC );
       
       if( use_bbox == TRUE ){
@@ -884,7 +875,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
         my_party = GAMEDATA_GetMyPokemon( gdata ); 
         check_party = my_party;
       }
-
+      
       ret = PokeRegulationMatchPartialPokeParty( regu, check_party );
       
       GFL_HEAP_FreeMemory( regu );
@@ -901,6 +892,68 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //バトルボックス使用準備
   case BSWSUB_PREPAR_BTL_BOX:
     BSUBWAY_SCRWORK_PreparBattleBox( bsw_scr );
+    break;
+  //レギュレーションタイプ取得
+  case BSWSUB_GET_REGULATION_TYPE:
+    *ret_wk = bsw_getRegulationLabel( play_mode );
+    break;
+  //現在のプレイモードで参加に必要なポケモン数
+  case BSWSUB_GET_MEMBER_NUM:
+    *ret_wk = BSUBWAY_SCRWORK_GetPlayModeMemberNum( play_mode );
+    break;
+  //戦闘録画データ存在チェック呼び出し
+  //(一時的にですが、大きいヒープを使用するため、
+  //BattleRec_Initとの共存は厳しいかもしれません。
+  //BattleRec_Init呼び出し前に、先にチェックをしておいて、
+  //フラグを別途ワークに保存しておくのをオススメします。)
+  //なので存在チェックの前にこれを呼ぶ必要がある。
+  case BSWSUB_CALL_BTLREC_EXIST:
+    {
+      LOAD_RESULT res;
+      bsw_scr->btlrec_exist_f = BSW_BTLREC_EXIST_NON;
+      if( BattleRec_DataOccCheck(
+            save,HEAPID_PROC,&res,LOADDATA_MYREC) == TRUE ){
+        bsw_scr->btlrec_exist_f = BSW_BTLREC_EXIST_EXIST;
+      }
+    }
+    break;
+  //戦闘録画データ存在チェック
+  case BSWSUB_CHK_BTLREC_EXIST:
+    GF_ASSERT( bsw_scr->btlrec_exist_f != BSW_BTLREC_EXIST_NG ); //none call
+    
+    if( bsw_scr->btlrec_exist_f == BSW_BTLREC_EXIST_NON ){
+      *ret_wk = FALSE;
+    }else{
+      *ret_wk = TRUE;
+    }
+    break;
+  //戦闘後の録画データ格納
+  case BSWSUB_STORE_BTLREC:
+    GF_ASSERT( bsw_scr->btl_setup_param != NULL );
+    {
+      BattleRec_LoadToolModule();
+      BattleRec_StoreSetupParam( bsw_scr->btl_setup_param );
+      BattleRec_UnloadToolModule();
+    }
+    break;
+  //戦闘録画データセーブ
+  case BSWSUB_SAVE_BTLREC:
+    {
+      bsw_scr->btlrec_save_work[0] = 0;
+      bsw_scr->btlrec_save_work[1] = 0;
+      VMCMD_SetWait( core, evBtlRecSave );
+      bsw_scr->btlrec_exist_f = BSW_BTLREC_EXIST_EXIST;
+    }
+    return( VMCMD_RESULT_SUSPEND );
+  //戦闘用ワーク開放
+  case BSWSUB_FREE_BTLPRM:
+    GF_ASSERT( bsw_scr->btl_setup_param != NULL );
+    
+    if( bsw_scr->btl_setup_param != NULL ){
+      BattleRec_Exit();
+      BATTLE_PARAM_Delete( bsw_scr->btl_setup_param );
+      bsw_scr->btl_setup_param = NULL;
+    }
     break;
   //----ワーク依存　通信関連
   //通信開始
@@ -1217,6 +1270,35 @@ static u16 bsway_GetHomeNPCMsgID( const MMDL *mmdl )
 }
 
 //======================================================================
+//  通信録画 
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 戦闘録画セーブ待ち
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL evBtlRecSave( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+  BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
+  SAVE_RESULT res = BattleRec_Save(
+      save, HEAPID_PROC, BATTLE_MODE_NONE, 0, LOADDATA_MYREC,
+      &bsw_scr->btlrec_save_work[0], &bsw_scr->btlrec_save_work[1] );
+  
+  if( res == SAVE_RESULT_OK || res == SAVE_RESULT_NG ){
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
+//======================================================================
 //  parts
 //======================================================================
 #if 0
@@ -1286,6 +1368,32 @@ static BOOL bsway_CheckRegulation(
   return( FALSE );
 }
 #endif
+
+//--------------------------------------------------------------
+/**
+ * レギュレーションラベル取得
+ * @param play_mode BSWAY_MODE_SINGLE等
+ * @retval u32 レギュレーションラベル
+ */
+//--------------------------------------------------------------
+static u32 bsw_getRegulationLabel( u32 play_mode )
+{
+  u32 type = REG_SUBWAY_SINGLE;
+  
+  switch( play_mode ){
+  case BSWAY_MODE_DOUBLE:
+  case BSWAY_MODE_S_DOUBLE:
+    type = REG_SUBWAY_DOUBLE;
+    break;
+  case BSWAY_MODE_MULTI:
+  case BSWAY_MODE_S_MULTI:
+  case BSWAY_MODE_COMM_MULTI:
+  case BSWAY_MODE_S_COMM_MULTI:
+    type = REG_SUBWAY_MALTI;
+  }
+  
+  return( type );
+}
 
 //======================================================================
 //  data

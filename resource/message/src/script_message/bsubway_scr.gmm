@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-03-09T17:59:32"/>
+	<create user="kagaya" host="W00143" date="2010-03-10T23:27:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -636,29 +636,24 @@
 	</row>
 
 	<row id="msg_bsw_scr_21">
+		<comment>参加ポケモンエラー</comment>
 		<language name="JPN" width="256">おきゃくさま！[BE:01:ページ切り替え（クリア）]
 さんかできる　ポケモンが
-３ひき　いません[BE:01:ページ切り替え（クリア）]
+[2:00:１桁:0]ひき　いません[BE:01:ページ切り替え（クリア）]
 さんかするには　しゅるいが　ちがう
-ポケモンを　３ひき　よういし[BE:00:ページ切り替え（行送り）]
+ポケモンを　[2:00:１桁:0]ひき　よういし[BE:00:ページ切り替え（行送り）]
 ちがう　どうぐに　してください</language>
 		<language name="JPN_KANJI" width="256">おきゃくさま！[BE:01:ページ切り替え（クリア）]
 さんかできる　ポケモンが
-３ひき　いません[BE:01:ページ切り替え（クリア）]
+[2:00:１桁:0]ひき　いません[BE:01:ページ切り替え（クリア）]
 さんかするには　しゅるいが　ちがう
-ポケモンを　３ひき　よういし[BE:00:ページ切り替え（行送り）]
+ポケモンを　[2:00:１桁:0]ひき　よういし[BE:00:ページ切り替え（行送り）]
 ちがう　どうぐに　してください</language>
 	</row>
 
 	<row id="msg_bsw_scr_22">
-		<language name="JPN" width="256">なお　タマゴ　ポケモンめいは
-さんか　させることは　できません！[BE:01:ページ切り替え（クリア）]
-じゅんびが　できましたら
-また　おこし　ください</language>
-		<language name="JPN_KANJI" width="256">なお　タマゴ　ポケモンめいは
-さんか　させることは　できません！[BE:01:ページ切り替え（クリア）]
-じゅんびが　できましたら
-また　おこし　ください</language>
+		<language name="JPN" width="256">test</language>
+		<language name="JPN_KANJI" width="256">test</language>
 	</row>
 
 	<row id="msg_bsw_scr_23">

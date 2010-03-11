@@ -295,6 +295,7 @@ static void make_PokePara(
  * @retval u32 FIGHT_TYPE
  */
 //--------------------------------------------------------------
+#if 0
 static u32 get_FightType(u8 play_mode)
 {
   switch(play_mode){
@@ -315,6 +316,7 @@ static u32 get_FightType(u8 play_mode)
   }
   return BTL_RULE_SINGLE;
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -388,6 +390,8 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   dst->musicPinch = SEQ_BGM_BATTLEPINCH;
   dst->result = BTL_RESULT_WIN;
   
+  BTL_SETUP_AllocRecBuffer( dst, HEAPID_PROC );
+  
   {
     SAVE_CONTROL_WORK *saveCtrl = GAMEDATA_GetSaveControlWork( gdata );
     dst->configData = SaveData_GetConfig( saveCtrl );
@@ -424,6 +428,26 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
       dst->commPos = 2;
     }
     break;
+  }
+  
+  //録画データ生成のため、
+  //対戦相手のMYSTATUS, POKEPARTYを受け取るバッファとして確保します taya
+  {
+    u32 i;
+    u32 heapID = HEAPID_PROC;
+
+    for(i=0; i<BTL_CLIENT_NUM; ++i)
+    {
+      if( i != BTL_CLIENT_PLAYER )
+      {
+        if( dst->playerStatus[i] == NULL ){
+          dst->playerStatus[i] = MyStatus_AllocWork( heapID );
+        }
+        if( dst->party[i] == NULL ){
+          dst->party[i] = PokeParty_AllocPartyWork( heapID );
+        }
+      }
+    }
   }
   
   { //プレイヤー設定
@@ -494,7 +518,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
 #endif
     
     //ポケモンパーティ
-    dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
+//    dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
     party = dst->party[client];
     PokeParty_Init( party, TEMOTI_POKEMAX );
     
@@ -535,7 +559,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
 #endif
     
     //ポケモンパーティ
-    dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
+//    dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
     party = dst->party[client];
     PokeParty_Init( party, TEMOTI_POKEMAX );
     
@@ -577,7 +601,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
 #endif
     
     //ポケモンパーティ
-    dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
+//    dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
     party = dst->party[client];
     PokeParty_Init( party, TEMOTI_POKEMAX );
     
