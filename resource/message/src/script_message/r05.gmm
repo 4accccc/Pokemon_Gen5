@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-05T12:49:13"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T17:51:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="74" top="297" right="779" bottom="925" maximized="no" rayout="Vertical2">
+	<dialog left="1474" top="294" right="2179" bottom="922" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -532,9 +532,34 @@
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
 		<language name="JPN" width="256">チェレン『わかりました▼
-では　いくよ　[1:00:トレーナー名:0]▼</language>
+では　そのまえに……▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『わかりました▼
-では　いくよ　[1:00:トレーナー名:0]▼</language>
+では　そのまえに……▼</language>
+	</row>
+
+	<row id="msg_r05_black_07_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・主人公と向き合って
+・主人公ポケモン、ＨＰ・ＰＰ全回復の処理
+　次のメッセージ表示</comment>
+		<attribute name="キャラ指定">ライバル
+友達♂</attribute>
+		<language name="JPN" width="256">チェレンは
+[1:00:トレーナー名:0]の　ポケモンを▽
+かいふく　してくれた！▼</language>
+		<language name="JPN_KANJI" width="256">チェレンは
+[1:00:トレーナー名:0]の　ポケモンを▽
+回復してくれた！▼</language>
+	</row>
+
+	<row id="msg_r05_black_07_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・上を向いてメッセージ表示
+・表示後、イベントバトルへ</comment>
+		<attribute name="キャラ指定">ライバル
+友達♂</attribute>
+		<language name="JPN" width="256">チェレン『では　いきます！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『では　いきます！▼</language>
 	</row>
 
 	<row id="msg_r05_champion_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
