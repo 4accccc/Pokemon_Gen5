@@ -479,7 +479,7 @@ void RECORD_Score_AddZukanScore(RECORD * rec, const ZUKAN_WORK * zw, u16 const i
 
 //----------------------------------------------------------
 /**
- * @brief	ランクのセット
+ * @brief	ランクのセット(上書きチェック内臓)
  * @param	rec		  RECORDへのポインタ
  * @param inRank  ランク th_rank_def.h 参照
  * @return	none
@@ -489,7 +489,7 @@ void RECORD_SetRank(RECORD * rec, u8 inRank)
 {
   if (inRank < TH_RANK_NUM)
   {
-    rec->Rank = inRank;
+    if (rec->Rank < inRank) rec->Rank = inRank;
   }
   else GF_ASSERT_MSG( 0,"rank error %d", inRank );
 }
@@ -504,6 +504,35 @@ void RECORD_SetRank(RECORD * rec, u8 inRank)
 u8 RECORD_GetRank(RECORD * rec)
 {
 	return rec->Rank;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	トライアルハウスのスコアのセット(上書きチェック内臓)
+ * @param	rec		  RECORDへのポインタ
+ * @param inScore
+ * @return	none
+ */
+//----------------------------------------------------------
+void RECORD_SetThScore(RECORD * rec, u32 inScore)
+{
+  if (inScore < TH_SCORE_MAX)
+  {
+    if ( rec->TrialScore < inScore ) rec->TrialScore = inScore;
+  }
+  else GF_ASSERT_MSG( 0,"th score over %d", inScore );
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	トライアルハウスのスコアの取得
+ * @param	rec		  RECORDへのポインタ
+ * @return	u32 スコア
+ */
+//----------------------------------------------------------
+u32 RECORD_GetThScore(RECORD * rec)
+{
+  return rec->TrialScore;
 }
 
 #ifdef PM_DEBUG

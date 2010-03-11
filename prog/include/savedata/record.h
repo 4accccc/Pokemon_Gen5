@@ -48,6 +48,8 @@ extern u32 RECORD_Get(RECORD * rec, int id);
 //’l‚ð‘«‚·
 extern u32 RECORD_Add(RECORD * rec, int id, u32 add_value);
 
+extern void RECORD_SetThScore(RECORD * rec, u32 inScore);
+extern u32 RECORD_GetThScore(RECORD * rec);
 extern void RECORD_SetRank(RECORD * rec, u8 inRank);
 extern u8 RECORD_GetRank(RECORD * rec);
 
