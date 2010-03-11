@@ -39,7 +39,6 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/map22_23.3dppack \
 	$(DIR_OUTPUT)/map21_22.3dppack \
 	$(DIR_OUTPUT)/map21_23.3dppack \
-	$(DIR_OUTPUT)/map21_23.3dppack \
 	$(DIR_OUTPUT)/map20_22.3dppack \
 	$(DIR_OUTPUT)/map19_23.3dppack \
 	$(DIR_OUTPUT)/map20_23.3dppack \
@@ -324,7 +323,6 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/bc_01_00.3dppack \
 	$(DIR_OUTPUT)/bc_00_01.3dppack \
 	$(DIR_OUTPUT)/bc_01_01.3dppack \
-	$(DIR_OUTPUT)/winter05_04.3dppack \
 	$(DIR_OUTPUT)/c03_r00_00.3dppack \
 	$(DIR_OUTPUT)/c03_s00_00.3dppack \
 	$(DIR_OUTPUT)/c03_t00_00.3dppack \
@@ -367,7 +365,6 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/map26_08.3dppack \
 	$(DIR_OUTPUT)/map26_09.3dppack \
 	$(DIR_OUTPUT)/map26_10.3dppack \
-	$(DIR_OUTPUT)/map25_10.3dppack \
 	$(DIR_OUTPUT)/map21_03.3dppack \
 	$(DIR_OUTPUT)/map23_06.3dppack \
 	$(DIR_OUTPUT)/map22_05.3dppack \
@@ -582,8 +579,6 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_dun1102_00_02.3dppack \
 	$(DIR_OUTPUT)/m_dun1102_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun1102_01_01.3dppack \
-	$(DIR_OUTPUT)/m_dun1102_01_02.3dppack \
-	$(DIR_OUTPUT)/m_dun1102_01_02.3dppack \
 	$(DIR_OUTPUT)/m_dun1102_01_02.3dppack \
 	$(DIR_OUTPUT)/m_dun2101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun2101_00_01.3dppack \
@@ -888,6 +883,4 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/champion_05_00.ngpack \
 	$(DIR_OUTPUT)/champion_05_01.ngpack \
 	$(DIR_OUTPUT)/champion_05_02.ngpack \
-	$(DIR_OUTPUT)/champion_05_03.ngpack \
-	$(DIR_OUTPUT)/m_dun0805_00_00.ngpack \
-	$(DIR_OUTPUT)/m_gstation01_00_00.ngpack
+	$(DIR_OUTPUT)/champion_05_03.ngpack

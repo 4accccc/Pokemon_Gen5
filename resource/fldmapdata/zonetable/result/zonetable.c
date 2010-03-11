@@ -2724,7 +2724,7 @@ static const ZONEDATA ZoneData[] = {
 		1,
 		WEATHER_NO_SUNNY,
 		0,
-		MC_TYPE_ROOM,
+		MC_TYPE_FIELD,
 		2,
 		FALSE,
 		TRUE,
