@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-04T17:49:40"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T12:49:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="115" right="1988" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="527"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="694"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d03r0101_hakase2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_hakase2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ※d08r0901イベント後から
 　c02のストーン入手まで、このイベントは発生しない（暫定）
@@ -305,7 +305,7 @@
 		<language name="JPN_KANJI" width="256">アララギ『ハーイ！　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_hakase2_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_hakase2_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてhakase2_03</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
@@ -317,7 +317,7 @@
 起源を　調べに　来たんだ！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_hakase2_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_hakase2_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・GRIDX=60、GRIDZ=31に
 　移動してからメッセージ表示
@@ -334,7 +334,7 @@
 眠って　固まっている　状態なの▼</language>
 	</row>
 
-	<row id="msg_d03r0101_hakase2_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_hakase2_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公のほうを向いてメッセージ表示
 ・続けてhakase2_05</comment>
@@ -358,7 +358,7 @@
 街を　守っていたのかも▼</language>
 	</row>
 
-	<row id="msg_d03r0101_hakase2_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_hakase2_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・さらにGRIDX=63、GRIDZ=33に
 　移動してメッセージ表示
@@ -387,7 +387,7 @@
 わけてあげまーす！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_hakase2_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_hakase2_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公と向き合ってメッセージ表示
 ・メッセージ表示後、画面下に移動
@@ -401,7 +401,7 @@
 バイバーイ！！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_daruma_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d03r0101_daruma_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>ポケモン
 ・道具「いかりまんじゅう」を持っていない
 ・GRIDX=58、GRIDZ=33
@@ -411,7 +411,7 @@
 ・GRIDX=67、GRIDZ=31に配置
 ※「いかりまんじゅう」を持っていてもアララギのセリフ
 　hakase2_06が表示されない限り、このメッセージ</comment>
-		<attribute name="キャラ指定">ゴリダルマ
+		<attribute name="キャラ指定">ヒヒダルマ
 （瞑想モード）</attribute>
 		<language name="JPN" width="256">ヒヒダルマという
 ポケモンが　ねむっている　すがただ</language>
@@ -425,7 +425,7 @@
 ・はい/いいえの選択肢表示
 　はい→daruma_03
 　いいえ→終了</comment>
-		<attribute name="キャラ指定">ゴリダルマ
+		<attribute name="キャラ指定">ヒヒダルマ
 （瞑想モード）</attribute>
 		<language name="JPN" width="256">ねむっている　ヒヒダルマに
 いかりまんじゅうを　あげますか？</language>
@@ -437,7 +437,7 @@
 		<comment>ポケモン
 ・メッセージ後、野生ポケモンとの戦闘に
 ・戦闘後、フィールド復帰時に動作モデルを削除</comment>
-		<attribute name="キャラ指定">ゴリダルマ
+		<attribute name="キャラ指定">ヒヒダルマ
 （瞑想モード）</attribute>
 		<language name="JPN" width="256">めざめた　ヒヒダルマが
 おそいかかってきた！▼</language>

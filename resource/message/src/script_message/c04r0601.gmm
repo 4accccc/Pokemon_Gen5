@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T21:06:14"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T13:54:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="267"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="110">
 		</attribute>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="162" right="1998" bottom="784" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,6 +292,162 @@
 	</lock>
 
 
+	<row id="msg_c04r0601_hakase2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・pos起動（GRIDX=2～7、GRIDZ=10）
+※当たり判定の不具合があるので
+　GRIDX=1～7の設定でもいいかも
+・続けてblack_01
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">アララギ博士(娘）</attribute>
+		<language name="JPN" width="256">アララギ『はーい！
+[1:00:トレーナー名:0]！！▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『はーい！
+[1:00:トレーナー名:0]！！▼</language>
+	</row>
+
+	<row id="msg_c04r0601_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、主人公を誘導
+　所定の位置(アララギの前）に到達すると
+　hakase2_02表示</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『こっちだよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『こっちだよ▼</language>
+	</row>
+
+	<row id="msg_c04r0601_hakase2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてhakase2_03</comment>
+		<attribute name="キャラ指定">アララギ博士(娘）</attribute>
+		<language name="JPN" width="256">アララギ『カミツレに　よばれて
+でんきタイプの　ポケモンのこと▽
+いろいろ　きかれている　ときに▽
+あなたたちのこと　おもいだして……▼
+で　ようじと　いうのは　これ！
+ドドーンと　サービスよ！！▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『カミツレに　呼ばれて
+でんきタイプの　ポケモンのこと▽
+いろいろ　きかれている　ときに▽
+あなたたちのこと　思い出して……▼
+で　用事と　いうのは　これ！
+ドドーンと　サービスよ！！▼</language>
+	</row>
+
+	<row id="msg_c04r0601_hakase2_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・まずチェレンの前に移動して
+　hakase2_04</comment>
+		<attribute name="キャラ指定">アララギ博士(娘）</attribute>
+		<language name="JPN" width="256">はい　チェレン！▼</language>
+		<language name="JPN_KANJI" width="256">はい　チェレン！▼</language>
+	</row>
+
+	<row id="msg_c04r0601_hakase2_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・主人公の前に移動して
+・アイテム入手処理
+　No002「ハイパーボール」×10
+・続けてhakase2_05
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">アララギ博士(娘）</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]も▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]も▼</language>
+	</row>
+
+	<row id="msg_c04r0601_hakase2_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・アイテム入手後
+・続けてhakase2_06</comment>
+		<attribute name="キャラ指定">アララギ博士(娘）</attribute>
+		<language name="JPN" width="256">いっしょに　いたい　ポケモンと
+であったら　おしむことなく▽
+いい　ボールを　つかいなさいな▼
+その　ポケモンとの　であいは
+それが　さいしょで▽
+さいごかも　しれないんだから！▼</language>
+		<language name="JPN_KANJI" width="256">一緒に　いたい　ポケモンと
+出会ったら　惜しむことなく▽
+いい　ボールを　使いなさいな▼
+その　ポケモンとの　出会いは
+それが　最初で▽
+最後かも　しれないんだから！▼</language>
+	</row>
+
+	<row id="msg_c04r0601_hakase2_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・横を向いてメッセージ表示
+・hakase2_07</comment>
+		<attribute name="キャラ指定">アララギ博士(娘）</attribute>
+		<language name="JPN" width="256">……それと　ポケモンずかんの
+かんせいを　おねがいした▽
+あたしが　こんなことを　いうのも▼
+ちょっと　おかしいけど
+たびを　たのしみなさいね！▼</language>
+		<language name="JPN_KANJI" width="256">……それと　ポケモン図鑑の
+完成を　お願いした▽
+あたしが　こんなことを　いうのも▼
+ちょっと　おかしいけど
+旅を　楽しみなさいね！▼</language>
+	</row>
+
+	<row id="msg_c04r0601_hakase2_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ後、画面下に移動
+・画面外に消えるとblack_02</comment>
+		<attribute name="キャラ指定">アララギ博士(娘）</attribute>
+		<language name="JPN" width="256">アララギ『……あっ！▼
+ポケモンずかんのこと
+なにもしなくて　いいって▼
+いみ　じゃないのは　わかってるよね▼
+さてと……
+ベルに　あわなきゃね▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『……あっ！▼
+ポケモン図鑑のこと
+なにも　しなくて　いいって▼
+意味じゃないのは　わかってるよね▼
+さてと……
+ベルに　会わなきゃね▼</language>
+	</row>
+
+	<row id="msg_c04r0601_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・下を向いたままメッセージ表示
+　続けてblack_03</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『……はかせったら
+おれいを　いうまえに　いっちゃった▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……博士ったら
+お礼を　いう前に　いっちゃった▼</language>
+	</row>
+
+	<row id="msg_c04r0601_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・主人公と向き合って
+・メッセージ表示後、下に移動
+　画面外に消えると主人公、操作可能
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">さて　これから　どうしようか▼
+……リゾートデザートは
+まだ　きびしいかな？▼
+そうだな……　４ばんどうろで
+まだ　つかまえていない▽
+ポケモンを　つかまえることで▽
+おれいと　させてもらうかな▼
+じゃあね
+[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">さて　これから　どうしようか▼
+……リゾートデザートは
+まだ　きびしいかな？▼
+そうだな……　４ばんどうろで
+まだ　つかまえていない▽
+ポケモンを　つかまえることで▽
+おれいと　させてもらうかな▼
+じゃあね
+[1:00:トレーナー名:0]！▼</language>
+	</row>
+
 	<row id="msg_c04r0601_infomationw_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">INFORMATIONW
@@ -312,7 +468,6 @@
 
 	<row id="msg_c04r0601_oldman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・ｒ04ゲート
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">でんこうけいじばんを　みれば
