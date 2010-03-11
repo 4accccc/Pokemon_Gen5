@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-11T14:15:59"/>
+	<create user="matsumiya" host="W00224" date="2010-03-11T17:01:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -733,11 +733,7 @@
 	</row>
 
 	<row id="msg_c04_middleman1_06">
-		<comment>♂
-・画面上を向いてメッセージ表示
-　表示後、画面下に移動
-・画面外に動作モデルが消えると
-　続けてmiddleman1_06</comment>
+		<comment>♂</comment>
 		<attribute name="キャラ指定">男性
 サポートの父親</attribute>
 		<language name="JPN" width="256">ジムリーダーさんに
@@ -746,17 +742,27 @@
 いまは　きみが　したいことを▽
 したほうが　いいんだよ　きっと▼
 パパは　きみの　たびが
-たのしいものであるよう　いのるさ▼
-[1:00:トレーナー名:0]
-ベルを　よろしく　たのむよ▼</language>
+たのしいものであるよう　いのるさ▼</language>
 		<language name="JPN_KANJI" width="256">ジムリーダーさんに
 いわれて　気づいたよ▼
 そうだね　ベル
 今は　君が　したいことを▽
 したほうが　いいんだよ　きっと▼
 パパは　君の　旅が
-楽しいものであるよう　祈るさ▼
-[1:00:トレーナー名:0]
+楽しいものであるよう　祈るさ▼</language>
+	</row>
+
+	<row id="msg_c04_middleman1_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・画面上を向いてメッセージ表示
+・表示後、画面下に移動
+・画面外に動作モデルが消えると
+　続けてmiddleman1_06</comment>
+		<attribute name="キャラ指定">男性
+サポートの父親</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]
+ベルを　よろしく　たのむよ▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
 ベルを　よろしく　頼むよ▼</language>
 	</row>
 
