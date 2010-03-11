@@ -509,8 +509,6 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
   _IntSub_ActorUpdate_EntryButton(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_LvNum(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_PointNum(intsub, intcomm, area_occupy);
-
-	GFL_CLACT_SYS_Main();
 }
 
 //==================================================================
