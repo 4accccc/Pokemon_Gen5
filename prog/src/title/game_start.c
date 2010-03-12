@@ -530,6 +530,7 @@ static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, vo
   int search_mode_temp = CONFIG_GetNetworkSearchMode( work->selModeParam.configSave );
 
   SaveControl_Load(sv_ctrl);
+  CONFIG_ApplyMojiMode( SaveData_GetConfig( sv_ctrl ) );  //ロードしたコンフィグに従って文字モード設定
   SaveData_SituationLoad_PlayerWorkSave(sv_ctrl, &plsv);
 
   init_param = DEBUG_GetGameInitWork(

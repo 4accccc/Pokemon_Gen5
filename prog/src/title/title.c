@@ -570,7 +570,6 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
 		CG2d->fontHandle = GFL_FONT_Create
 			( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 		CG2d->printQue = PRINTSYS_QUE_Create( heapID );
-		GFL_MSGSYS_SetLangID( 1 );	//JPN_KANJI
 
 		//メッセージ取得
 		CG2d->mm = GFL_MSG_Create
