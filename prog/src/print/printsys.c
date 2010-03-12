@@ -1749,7 +1749,7 @@ u8 PRINTSYS_GetTagWidth( const STRBUF* str, u8 tag_id, GFL_FONT* font, u16 margi
     }
   }
 
-  GF_ASSERT(0);
+//  GF_ASSERT(0);
 
   return 0;
 }
