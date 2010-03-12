@@ -37,6 +37,7 @@ PMS_INPUT_SEARCH* PMSI_SEARCH_Create( const PMS_INPUT_WORK* mwk, const PMS_INPUT
 extern void PMSI_SEARCH_Delete( PMS_INPUT_SEARCH* wk );
 extern void PMSI_SEARCH_AddWord( PMS_INPUT_SEARCH* wk, u16 word_code );
 extern BOOL PMSI_SEARCH_DelWord( PMS_INPUT_SEARCH* wk );
+extern u8 PMSI_SEARCH_GetCharNum( const PMS_INPUT_SEARCH* wk );
 extern void PMSI_SEARCH_ClearWord( PMS_INPUT_SEARCH* wk );
 extern void PMSI_SEARCH_GetInputWord( PMS_INPUT_SEARCH* wk, STRBUF* out_buf );
 extern BOOL PMSI_SEARCH_Start( PMS_INPUT_SEARCH*wk );

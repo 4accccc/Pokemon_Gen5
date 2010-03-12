@@ -179,6 +179,7 @@ enum {
 enum {
 	SEQ_CA_KEYWAIT,
 	SEQ_CA_NEXTPROC,
+	SEQ_CA_NEXTPROC2,
 	SEQ_CA_WAIT_MODE_CHANGE,
 };
 
@@ -547,6 +548,7 @@ static PMS_INPUT_WORK* ConstructWork( GFL_PROC* proc , void* pwk )
 	wk->sub_proc = NULL;
 	wk->sub_seq = 0;
 	wk->edit_pos = 0;
+	wk->cmd_button_pos = 0;
 
 	wk->touch_button = TOUCH_BUTTON_NULL;
   
@@ -1631,6 +1633,7 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 
       if( idx > -1 )
       {
+			  wk->edit_pos = 0;
         sentence_change_type( &wk->sentence_wk, &wk->edit_pms, idx );
         PMSIView_SetCommand( wk->vwk, VCMD_UPDATE_EDITAREA );
         GFL_SOUND_PlaySE( SOUND_TOUCH_FLIPBUTTON );
@@ -1992,6 +1995,17 @@ static GFL_PROC_RESULT MainProc_Category( PMS_INPUT_WORK* wk, int* seq )
 
 	case SEQ_CA_NEXTPROC:
 		if( PMSIView_WaitCommandAll( wk->vwk ) )
+		{
+      if( wk->next_proc == MainProc_EditArea )
+      { 
+        // 次にEditAreaが始まるので、そのキー/タッチ切替を行っておく
+	      PMSIView_SetCommand( wk->vwk, VCMD_KTCHANGE_EDITAREA);
+      }
+			(*seq) = SEQ_CA_NEXTPROC2;
+		}
+		break;
+	case SEQ_CA_NEXTPROC2:
+    if( PMSIView_WaitCommandAll( wk->vwk ) )
 		{
 			ChangeMainProc( wk, wk->next_proc );
 		}
@@ -2415,8 +2429,21 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 static void category_input(PMS_INPUT_WORK* wk,int* seq)
 {
 	if(KeyStatusChange(wk,seq)){
-		return;
-	}
+    if( wk->category_mode == CATEGORY_MODE_GROUP )
+    {
+	    if( wk->key_mode == GFL_APP_KTST_KEY && (!(GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)) )  // タッチ→キーに変更したときで、そのときの入力がBボタンでないときだけ(KeyStatusChange関数内でwk->cb_ktchg_funcを呼ぶ以外は)何もせずに戻る
+      {
+        return;
+      }
+    }
+    else
+    {
+	    if(wk->key_mode == GFL_APP_KTST_KEY)  // タッチ→キーに変更したときだけ(KeyStatusChange関数内でwk->cb_ktchg_funcを呼ぶ以外は)何もせずに戻る
+      {
+			  return;
+      }
+    }
+  }
 
   // 演出中は受け付けない
   // @TODO どうにか後勝ちにできないか？
@@ -4070,6 +4097,20 @@ void PMSI_GetInputWord( const PMS_INPUT_WORK* wk, STRBUF* out_buf )
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  検索画面（カテゴリ＞イニシャル）で入力された文字列をクリアする
+ *
+ *	@param	PMS_INPUT_WORK* wk ワーク
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void PMSI_ClearInputWord( PMS_INPUT_WORK* wk )
+{
+  PMSI_SEARCH_ClearWord( wk->swk );
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  スクロールデータ取得
  *
  *	@param	const PMS_INPUT_WORK * wk ワーク
@@ -4097,6 +4138,20 @@ void PMSI_GetWorkScrollData( const PMS_INPUT_WORK * wk, u16 * line, u16 * line_m
 u32 PMSI_GetSearchResultCount( const PMS_INPUT_WORK* wk )
 {
   return PMSI_SEARCH_GetResultCount( wk->swk );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  入力されている文字数を得る
+ *
+ *	@param	const PMS_INPUT_WORK* wk ワーク
+ *
+ *	@retval 入力されている文字数
+ */
+//-----------------------------------------------------------------------------
+u8 PMSI_GetSearchCharNum( const PMS_INPUT_WORK* wk )
+{
+  return PMSI_SEARCH_GetCharNum( wk->swk );
 }
 
 //-----------------------------------------------------------------------------

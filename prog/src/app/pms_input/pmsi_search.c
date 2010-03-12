@@ -215,6 +215,20 @@ BOOL PMSI_SEARCH_DelWord( PMS_INPUT_SEARCH* wk )
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  “ü—Í‚³‚ê‚Ä‚¢‚é•¶š”‚ğ“¾‚é
+ *
+ *	@param	const PMS_INPUT_SEARCH* wk 
+ *
+ *	@retval “ü—Í‚³‚ê‚Ä‚¢‚é•¶š”
+ */
+//-----------------------------------------------------------------------------
+u8 PMSI_SEARCH_GetCharNum( const PMS_INPUT_SEARCH* wk )
+{
+  return wk->word_code_pos;
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  “ü—Í‚³‚ê‚½•¶šî•ñ‚ğƒNƒŠƒA
  *
  *	@param	PMS_INPUT_SEARCH* wk 
@@ -233,6 +247,9 @@ void PMSI_SEARCH_ClearWord( PMS_INPUT_SEARCH* wk )
   }
 
   wk->word_code_pos = 0;
+  
+  // ŒŸõŒ‹‰Ê‚ğ0‚É‚µ‚Ä‚¨‚­ 
+  wk->search_hitnum = 0;
 }
 
 //-----------------------------------------------------------------------------

@@ -260,6 +260,7 @@ extern BOOL PMSI_GetLockFlag( const PMS_INPUT_WORK* wk );
 
 extern GFL_TCBSYS* PMSI_GetTcbSystem( const PMS_INPUT_WORK* wk );
 extern void PMSI_GetInputWord( const PMS_INPUT_WORK* wk, STRBUF* out_buf );
+extern void PMSI_ClearInputWord( PMS_INPUT_WORK* wk );
 
 extern BOOL PMSI_CheckInputComplete( const PMS_INPUT_WORK* wk );
 
@@ -283,6 +284,7 @@ extern void PMSIView_TouchEditButton( PMS_INPUT_VIEW* wk, int btn_id );
 extern void PMSI_GetWorkScrollData( const PMS_INPUT_WORK * wk, u16 * line, u16 * line_max );
 
 extern u32 PMSI_GetSearchResultCount( const PMS_INPUT_WORK* wk );
+extern u8 PMSI_GetSearchCharNum( const PMS_INPUT_WORK* wk );
 extern void PMSI_GetSearchResultString( const PMS_INPUT_WORK* wk, u32 result_idx, STRBUF* dst_buf );
 
 

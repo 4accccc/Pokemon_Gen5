@@ -510,6 +510,7 @@ void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk )
 //-----------------------------------------------------------------------------
 void PMSIV_MENU_UpdateEditTaskMenu( PMSIV_MENU* wk )
 {
+  // TASKMENU_WIN_EDIT_DECIDE
   if( PMSI_CheckInputComplete( wk->mwk ) )
   {
     APP_TASKMENU_WIN_SetPaletteAndAnimeColor(
@@ -522,6 +523,50 @@ void PMSIV_MENU_UpdateEditTaskMenu( PMSIV_MENU* wk )
     APP_TASKMENU_WIN_SetPaletteAndAnimeColor(
         wk->menu_win[TASKMENU_WIN_EDIT_DECIDE],
         wk->menu_res_win[TASKMENU_WIN_EDIT_DECIDE],
+        PALNUM_MAIN_TASKMENU_PASSIVE, passive_taskmenu_anime_s, passive_taskmenu_anime_e );  // パレットをパッシブのものにしておく
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  カテゴリモードのタスクメニューを更新
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void PMSIV_MENU_UpdateCategoryTaskMenu( PMSIV_MENU* wk )
+{
+  // TASKMENU_WIN_INITIAL_SELECT
+  if( PMSI_GetSearchResultCount( wk->mwk ) > 0 )
+  {
+    APP_TASKMENU_WIN_SetPaletteAndAnimeColor(
+        wk->menu_win[TASKMENU_WIN_INITIAL_SELECT],
+        wk->menu_res_win[TASKMENU_WIN_INITIAL_SELECT],
+        PALNUM_MAIN_TASKMENU, active_taskmenu_anime_s, active_taskmenu_anime_e );  // パレットを通常のものにしておく
+  }
+  else
+  {
+    APP_TASKMENU_WIN_SetPaletteAndAnimeColor(
+        wk->menu_win[TASKMENU_WIN_INITIAL_SELECT],
+        wk->menu_res_win[TASKMENU_WIN_INITIAL_SELECT],
+        PALNUM_MAIN_TASKMENU_PASSIVE, passive_taskmenu_anime_s, passive_taskmenu_anime_e );  // パレットをパッシブのものにしておく
+  }
+
+  // TASKMENU_WIN_INITIAL_DELETE
+  if( PMSI_GetSearchCharNum( wk->mwk ) > 0 )
+  {
+    APP_TASKMENU_WIN_SetPaletteAndAnimeColor(
+        wk->menu_win[TASKMENU_WIN_INITIAL_DELETE],
+        wk->menu_res_win[TASKMENU_WIN_INITIAL_DELETE],
+        PALNUM_MAIN_TASKMENU, active_taskmenu_anime_s, active_taskmenu_anime_e );  // パレットを通常のものにしておく
+  }
+  else
+  {
+    APP_TASKMENU_WIN_SetPaletteAndAnimeColor(
+        wk->menu_win[TASKMENU_WIN_INITIAL_DELETE],
+        wk->menu_res_win[TASKMENU_WIN_INITIAL_DELETE],
         PALNUM_MAIN_TASKMENU_PASSIVE, passive_taskmenu_anime_s, passive_taskmenu_anime_e );  // パレットをパッシブのものにしておく
   }
 }
@@ -1112,6 +1157,8 @@ static void _setup_category_initial( PMSIV_MENU* wk )
     APP_TASKMENU_WIN_SetPaletteAndAnimeColor( wk->menu_win[i], wk->menu_res_win[i],
         PALNUM_MAIN_TASKMENU, active_taskmenu_anime_s, active_taskmenu_anime_e );  // パレットを通常のものにしておく
   }
+
+  PMSIV_MENU_UpdateCategoryTaskMenu( wk );
 
   GFL_BG_LoadScreenReq( FRM_MAIN_TASKMENU );
 

@@ -1126,6 +1126,9 @@ static void Cmd_EditAreaToCategory( GFL_TCB *tcb, void* wk_adrs )
 	case 1:
     HOSAKA_Printf("Cmd_EditAreaToCategory\n");
     PMSIV_MENU_SetupCategory( vwk->menu_wk );
+
+    PMSI_ClearInputWord( (PMS_INPUT_WORK*)(wk->mwk) );  // constはずしはイヤだがやむなし
+
 		PMSIV_EDIT_StopCursor( vwk->edit_wk );
 		PMSIV_EDIT_StopArrow( vwk->edit_wk );
 		PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,1);
@@ -1134,6 +1137,8 @@ static void Cmd_EditAreaToCategory( GFL_TCB *tcb, void* wk_adrs )
 		PMSIV_CATEGORY_StartEnableBG( vwk->category_wk );
 		PMSIV_EDIT_ScrollSet( vwk->edit_wk,0);
 
+    if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL ) PMSIV_CATEGORY_InputWordUpdate( vwk->category_wk );
+    
     // 上画面説明欄に表示するメッセージのウィンドウ
     if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_GROUP )
     {
@@ -1151,7 +1156,7 @@ static void Cmd_EditAreaToCategory( GFL_TCB *tcb, void* wk_adrs )
 		flag1 = PMSIV_CATEGORY_WaitEnableBG( vwk->category_wk );
 		flag2 = PMSIV_EDIT_ScrollWait( vwk->edit_wk);
 		if(flag1 && flag2){
-			PMSIV_CATEGORY_MoveCursor( vwk->category_wk, PMSI_GetCategoryCursorPos(vwk->main_wk) );
+      PMSIV_CATEGORY_MoveCursor( vwk->category_wk, PMSI_GetCategoryCursorPos(vwk->main_wk) );
 			PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, TRUE );
 			DeleteCommand( wk );
 		}
@@ -1181,9 +1186,15 @@ static void Cmd_ChangeCategoryModeDisable( GFL_TCB *tcb, void* wk_adrs )
 
 	case 1:
     PMSIV_MENU_SetupCategory( vwk->menu_wk );
+
+    //PMSI_ClearInputWord( (PMS_INPUT_WORK*)(vwk->mwk) );  // この関数自体に来ない気がするが、ここって来るの？
+ 
     PMSIV_CATEGORY_StartModeChange( vwk->category_wk );
 		PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
-		wk->seq++;
+    
+    if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL ) PMSIV_CATEGORY_InputWordUpdate( vwk->category_wk );
+		
+    wk->seq++;
 		break;
 
 	case 2:
@@ -1192,7 +1203,7 @@ static void Cmd_ChangeCategoryModeDisable( GFL_TCB *tcb, void* wk_adrs )
 //		&&	PMSIV_BUTTON_WaitChangeCategoryButton( vwk->button_wk )
 		)
 		{
-			DeleteCommand( wk );
+      DeleteCommand( wk );
 		}
 		break;
 	}
@@ -1232,10 +1243,14 @@ static void Cmd_ChangeCategoryModeEnable( GFL_TCB *tcb, void* wk_adrs )
 
         PMSIV_MENU_SetupCategory( vwk->menu_wk );
 
+        PMSI_ClearInputWord( (PMS_INPUT_WORK*)(wk->mwk) );  // constはずしはイヤだがやむなし
+        
         PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
         PMSIV_CATEGORY_StartModeChange( vwk->category_wk );
         PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
 
+        if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL ) PMSIV_CATEGORY_InputWordUpdate( vwk->category_wk );
+        
         // 上画面説明欄に表示するメッセージのウィンドウ
         if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_GROUP )
         {
@@ -1254,7 +1269,7 @@ static void Cmd_ChangeCategoryModeEnable( GFL_TCB *tcb, void* wk_adrs )
 	case 2:
 		if( PMSIV_CATEGORY_WaitModeChange( vwk->category_wk ) )
 		{
-			wk->seq++;
+      wk->seq++;
 		}
 		break;
 
@@ -1446,6 +1461,9 @@ static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs )
 //		PMSIV_SUB_ChangeCategoryButton( vwk->sub_wk );
 //		PMSIV_BUTTON_ChangeCategoryButton( vwk->button_wk );
     PMSIV_MENU_SetupCategory( vwk->menu_wk );
+
+    //PMSI_ClearInputWord( (PMS_INPUT_WORK*)(vwk->mwk) );  // 単語選択から戻ってきたときは文字を残しておきたいのでクリアしない
+
 		wk->seq++;
 		break;
 
@@ -1460,7 +1478,10 @@ static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs )
 		if( PMSIV_WORDWIN_WaitFadeOut( vwk->wordwin_wk ) )
 		{
 			PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
-			wk->seq++;
+			
+      //if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL ) PMSIV_CATEGORY_InputWordUpdate( vwk->category_wk );  // 単語選択から戻ってきたときは文字を残しておきたいのでクリアしない
+    
+      wk->seq++;
 		}
 		break;
 
@@ -1997,6 +2018,7 @@ static void Cmd_InputWordUpdate( GFL_TCB* tcb, void* wk_adrs )
   switch( cwk->seq )
   {
   case 0 :
+    PMSIV_MENU_UpdateCategoryTaskMenu( vwk->menu_wk );
     PMSIV_CATEGORY_InputWordUpdate( vwk->category_wk );
     PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, (count>0) );
     cwk->seq++;
