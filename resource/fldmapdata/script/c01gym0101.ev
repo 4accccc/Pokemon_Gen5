@@ -148,9 +148,7 @@ EVENT_END
 /*     ポケモン像		      					              */
 /**************************************************************/
 EVENT_START		ev_bg_c01gym0101_pokezou
-	_TALK_OBJ_START()
-	
-	
+_TALK_OBJ_START()
 	//分岐：ジムバッジ取得しているか、いないか
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
 
@@ -158,6 +156,8 @@ EVENT_START		ev_bg_c01gym0101_pokezou
 	IF $SCWK_TEMP0 == 0 THEN
 		_PLAYER_NAME( 0 )
 		_PLAINWIN_MSG_DOWN( msg_c01gym0101_statue_01 )
+		_LAST_KEYWAIT()	
+		_PLAINWIN_CLOSE()
 		
 	//ジムバッジを取得している場合
 	ELSE
@@ -166,18 +166,18 @@ EVENT_START		ev_bg_c01gym0101_pokezou
 		IF $WK_SCENE_R03_PLASMA == 0 THEN
 			_PLAYER_NAME( 0 )
 			_PLAINWIN_MSG_DOWN( msg_c01gym0101_statue_02 )
+			_LAST_KEYWAIT()	
+			_PLAINWIN_CLOSE()
 		
 		//分岐処理・R03プラズマイベント後
 		ELSE
 			_PLAYER_NAME( 0 )
 			_PLAINWIN_MSG_DOWN( msg_c01gym0101_statue_03 )
-			
+			_LAST_KEYWAIT()	
+			_PLAINWIN_CLOSE()
+
 		ENDIF
-		_PLAINWIN_CLOSE()
 	ENDIF
-	
-	_LAST_KEYWAIT()	
-	
 
 EVENT_END
 

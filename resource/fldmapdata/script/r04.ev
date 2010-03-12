@@ -283,6 +283,23 @@ EVENT_START		ev_pos_r04_rival_01
 	//ありがとう！　なんとなく　わかったことがある
 	_BALLOONWIN_OBJMSG( msg_r04_black_03 , R04_RIVAL_01 )
 	_MSGWIN_CLOSE()
+	
+	//TVT着信音を再生
+	_SE_PLAY( SEQ_SE_SYS_35 )
+	_SE_WAIT()
+	_SE_PLAY( SEQ_SE_SYS_35 )
+	_SE_WAIT()
+	
+	//アララギ博士からの連絡
+	_PLAINWIN_MSG_DOWN( msg_r04_tvt_01 )
+	_PLAINWIN_CLOSE()
+	
+	//TVトランシーバー起動
+	_CALL_TVT_DEMO( 4 )
+
+	//……だって　ライモンシティの　ゲートなら
+	_BALLOONWIN_OBJMSG( msg_r04_black_04 , R04_RIVAL_01 )
+	_MSGWIN_CLOSE()
 
 	SWITCH $LWK_POSX
 	CASE 427 THEN
@@ -320,19 +337,6 @@ EVENT_START		ev_pos_r04_rival_01
 	$WK_SCENE_R04 = 2
 	
 	//===================================//
-	
-	//TVT着信音を再生
-	_SE_PLAY( SEQ_SE_SYS_35 )
-	_SE_WAIT()
-	_SE_PLAY( SEQ_SE_SYS_35 )
-	_SE_WAIT()
-	
-	//アララギ博士からの連絡
-	_PLAINWIN_MSG_DOWN( msg_r04_tvt_01 )
-	_PLAINWIN_CLOSE()
-	
-	//TVトランシーバー起動
-	_CALL_TVT_DEMO( 4 )
 
 	
 EVENT_END
@@ -392,38 +396,37 @@ _ANIME_LABEL	anm_rival_come433
 //	ライバル：退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_leave427
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,10
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_rival_leave428
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,10
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_rival_leave429
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	AC_WALK_U_8F,10
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_rival_leave430
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	AC_WALK_U_8F,10
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_rival_leave431
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	AC_WALK_U_8F,10
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_rival_leave432
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,10
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_rival_leave433
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,10
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/
