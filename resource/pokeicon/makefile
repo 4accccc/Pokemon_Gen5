@@ -65,7 +65,7 @@ $(DAT_DIR)pokeicon.dat: $(RES_DIR)pokeicon.dat
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(gsources)
+$(targetname).narc: $(gsources) ./graphic/pokeicon_all.scr
 #$(lsources) $(gsources) $(esources) $(ssources) $(isources) $(icasources) *.bat makefile
 	icon_conv.bat
 	$(NAIXCUT) $(targetname).naix
