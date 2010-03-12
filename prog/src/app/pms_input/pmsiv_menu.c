@@ -84,6 +84,7 @@ typedef enum {
 #define ACTIVE_TASKMENU_ANIME_E_R (12)
 #define ACTIVE_TASKMENU_ANIME_E_G (25)
 #define ACTIVE_TASKMENU_ANIME_E_B (30)
+/*
 // パッシブ 
 #define PASSIVE_TASKMENU_ANIME_S_R (0)
 #define PASSIVE_TASKMENU_ANIME_S_G (0)
@@ -91,6 +92,14 @@ typedef enum {
 #define PASSIVE_TASKMENU_ANIME_E_R (0)
 #define PASSIVE_TASKMENU_ANIME_E_G (10)
 #define PASSIVE_TASKMENU_ANIME_E_B (15)
+*/
+// パッシブ 
+#define PASSIVE_TASKMENU_ANIME_S_R (5)
+#define PASSIVE_TASKMENU_ANIME_S_G (10)
+#define PASSIVE_TASKMENU_ANIME_S_B (13)
+#define PASSIVE_TASKMENU_ANIME_E_R (12)
+#define PASSIVE_TASKMENU_ANIME_E_G (25)
+#define PASSIVE_TASKMENU_ANIME_E_B (30)
 
 static const GXRgb active_taskmenu_anime_s = GX_RGB( ACTIVE_TASKMENU_ANIME_S_R,
                                                      ACTIVE_TASKMENU_ANIME_S_G,
