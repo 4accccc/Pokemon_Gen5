@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
+#include "system/rtc_tool.h"
 
 // 文字列関連
 #include "font/font.naix"
@@ -25,14 +26,10 @@
 //アーカイブ
 #include "arc_def.h"
 
+#include "demo3d_local.h"
 #include "demo3d_graphic.h"
-
-//データ
 #include "demo3d_data.h"
-
-// 3Dデモコマンド
 #include "demo3d_cmd.h" 
-
 #include "demo3d_engine.h"
 
 //=============================================================================
@@ -41,9 +38,6 @@
  */
 //=============================================================================
 
-// キー同時押しマクロ
-#define CHECK_KEY_TRG( key ) ( (GFL_UI_KEY_GetTrg() & (key) ) == (key) )
-#define CHECK_KEY_CONT( key ) ( (GFL_UI_KEY_GetCont() & (key) ) == (key) )
 
 //=============================================================================
 /**
@@ -60,7 +54,9 @@ struct _DEMO3D_ENGINE_WORK {
   // [IN]
   DEMO3D_GRAPHIC_WORK*    graphic;
   DEMO3D_ID               demo_id;
-  u32                     start_frame;
+//  u32                     start_frame;
+  DEMO3D_SCENE_ENV        env;
+
   // [PRIVATE]
   BOOL          is_double;
   fx32          anime_speed;  ///< アニメーションスピード
@@ -140,37 +136,44 @@ static void FrustCamera_Delete( GFL_G3D_CAMERA* p_camera )
  *	@brief  3Dグラフィック 初期化
  *
  *	@param	DEMO3D_GRAPHIC_WORK* graphic  グラフィックワーク
- *	@param	demo_id デモID
- *	@param	start_frame 初期フレーム値(1SYNC=1)
+ *	@param	DEMO3D_PARAM*
  *	@param	heapID ヒープID
  *
  *	@retval DEMO3D_ENGINE_WORK* ワーク
  */
 //-----------------------------------------------------------------------------
-DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID demo_id, u32 start_frame, HEAPID heapID )
+DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PARAM* param, HEAPID heapID )
 {
   DEMO3D_ENGINE_WORK* wk;
   u8 unit_max;
 
   GF_ASSERT( graphic );
 
-  HOSAKA_Printf("start_frame=%d\n",start_frame);
-
   // メインワーク アロケート
   wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(DEMO3D_ENGINE_WORK) );
 
   // メンバ初期化
   wk->graphic       = graphic;
-  wk->demo_id       = demo_id;
-  wk->start_frame   = start_frame;
+
+  wk->demo_id       = param->demo_id;
+  
+  //環境パラメータセット
+  wk->env.demo_id = wk->demo_id;
+  wk->env.scene_id = param->scene_id;
+  
+  wk->env.start_frame = param->start_frame;
+  wk->env.time_zone = GFL_RTC_ConvertHourToTimeZone( param->hour );
+  wk->env.player_sex = param->player_sex;
+
+  IWASAWA_Printf("start_frame=%d\n",wk->env.start_frame);
 
   // コンバータデータからカメラ生成
   {
     fx32 fovySin;
     fx32 fovyCos;
 
-    fovySin = Demo3D_DATA_GetCameraFovySin( demo_id );
-    fovyCos = Demo3D_DATA_GetCameraFovyCos( demo_id );
+    fovySin = Demo3D_DATA_GetCameraFovySin( wk->demo_id );
+    fovyCos = Demo3D_DATA_GetCameraFovyCos( wk->demo_id );
 
     fovySin = FX_SinIdx( (fovySin>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT );
     fovyCos = FX_CosIdx( (fovyCos>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT );
@@ -186,11 +189,11 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   }
    
   // アニメーションスピードを取得
-  wk->anime_speed = Demo3D_DATA_GetAnimeSpeed( demo_id );
+  wk->anime_speed = Demo3D_DATA_GetAnimeSpeed( wk->demo_id );
   HOSAKA_Printf("anime_speed=%d\n", wk->anime_speed );
   
   // 2画面連結フラグを取得
-  wk->is_double = Demo3D_DATA_GetDoubleFlag( demo_id );
+  wk->is_double = Demo3D_DATA_GetDoubleFlag( wk->demo_id );
 
 #ifdef PM_DEBUG
   //@TODO セレクトを押しながら起動すると二画面フラグ反転
@@ -209,7 +212,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
 		GFUser_SetVIntrFunc(vintrFunc);
   }
   
-  wk->cmd = Demo3D_CMD_Init( demo_id, start_frame, heapID );
+  wk->cmd = Demo3D_CMD_Init( wk->demo_id, wk->env.start_frame, heapID );
 
   unit_max = Demo3D_DATA_GetUnitMax( wk->demo_id );
 
@@ -220,24 +223,27 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   wk->ica_anime = Demo3D_DATA_CreateICACamera( wk->demo_id, heapID, ICA_BUFF_SIZE );
 
   // icaアニメフレーム初期化
-  ICA_ANIME_SetAnimeFrame( wk->ica_anime, FX32_CONST(start_frame) );
+  ICA_ANIME_SetAnimeFrame( wk->ica_anime, FX32_CONST(wk->env.start_frame) );
 
   // 3D管理ユーティリティーの生成
   wk->g3d_util = GFL_G3D_UTIL_Create( 10, 16, heapID );
 
   // ユニット追加
   {
+    GFL_G3D_UTIL_SETUP* setup;
     int i;
+
+    setup = Demo3D_DATA_InitG3DUtilSetup(heapID);
     for( i=0; i<unit_max; i++ )
     {
-      const GFL_G3D_UTIL_SETUP* setup;
 
-      setup = Demo3D_DATA_GetG3DUtilSetup( wk->demo_id, i );
+      Demo3D_DATA_GetG3DUtilSetup( setup, &wk->env, i );
 
-      HOSAKA_Printf("demoid=%d setup_idx=%d setup objcnt=%d resCount=%d \n",wk->demo_id, i, setup->objCount, setup->resCount);
+      IWASAWA_Printf("demoid=%d setup_idx=%d setup objcnt=%d resCount=%d \n",wk->demo_id, i, setup->objCount, setup->resCount);
 
       wk->unit_idx[i] = GFL_G3D_UTIL_AddUnit( wk->g3d_util, setup );
     }
+    Demo3D_DATA_FreeG3DUtilSetup(setup);
   }
   
   // アニメーション有効化
@@ -254,7 +260,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
 
       for( j=0; j<anime_count; j++ )
       {
-        const int frame = FX32_CONST(wk->start_frame);
+        const int frame = FX32_CONST(wk->env.start_frame);
 
         GFL_G3D_OBJECT_EnableAnime( obj, j );
         GFL_G3D_OBJECT_SetAnimeFrame( obj, j, &frame );

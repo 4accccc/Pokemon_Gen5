@@ -64,7 +64,8 @@ typedef struct _DEMO3D_ENGINE_WORK DEMO3D_ENGINE_WORK;
  *	@retval DEMO3D_ENGINE_WORK* ワーク
  */
 //-----------------------------------------------------------------------------
-extern DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID demo_id, u32 start_frame, HEAPID heapID );
+extern DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PARAM* param, HEAPID heapID );
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  3Dグラフィック 開放

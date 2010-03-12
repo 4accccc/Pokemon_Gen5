@@ -9,9 +9,21 @@
 #pragma once
 
 #include "demo/demo3d.h"
-#include "demo3d_engine.h"
+#include "demo/demo3d_demoid.h"
 
-#define CHECK_KEY_TRG( key ) ( ( GFL_UI_KEY_GetTrg() & (key) ) == (key) )
+///シーン呼び出しパラメータ格納構造体
+typedef struct _DEMO3D_SCENE_ENV{
+  DEMO3D_ID demo_id;
+  u32       start_frame;
+
+  u8        scene_id;
+  u8        time_zone;
+  u8        player_sex;
+}DEMO3D_SCENE_ENV;
+
+// キー同時押しマクロ
+#define CHECK_KEY_TRG( key ) ( (GFL_UI_KEY_GetTrg() & (key) ) == (key) )
+#define CHECK_KEY_CONT( key ) ( (GFL_UI_KEY_GetCont() & (key) ) == (key) )
 
 //-------------------------------------
 ///	フレーム

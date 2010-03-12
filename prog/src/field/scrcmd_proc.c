@@ -472,10 +472,11 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdDemoScene( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
+
   DEMO3D_PARAM * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(DEMO3D_PARAM) );
   u16 demo_id = SCRCMD_GetVMWorkValue( core, wk );
 
-  DEMO3D_PARAM_SetFromEvTime( param, demo_id, 0, SCRCMD_WORK_GetGameData( work ) );
+  DEMO3D_PARAM_SetFromEvTime( param, SCRCMD_WORK_GetGameData( work ), demo_id, 0 );
   EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(demo3d), &Demo3DProcData, param, NULL, NULL );
 
   return VMCMD_RESULT_SUSPEND;

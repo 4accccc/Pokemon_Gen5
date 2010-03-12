@@ -27,17 +27,8 @@
 //簡易CLWK読み込み＆開放ユーティリティー
 #include "ui/ui_easy_clwk.h"
 
-//タッチバー
-#include "ui/touchbar.h"
-
-//INFOWIN
-#include "infowin/infowin.h"
-
 #include "field/field_light_status.h"
 #include "field/weather_no.h"
-
-//描画設定
-#include "demo3d_graphic.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -47,6 +38,8 @@
 #include "message.naix"
 
 #include "demo3d_local.h"
+#include "demo3d_graphic.h"
+#include "demo3d_engine.h"
 #include "demo3d_exp.h"
 
 FS_EXTERN_OVERLAY(ui_common);
@@ -59,30 +52,6 @@ FS_EXTERN_OVERLAY(ui_common);
 enum
 { 
   DEMO3D_HEAP_SIZE = 0x110000,  ///< ヒープサイズ
-};
-
-/*
-///デモの起動パラメータとするゾーンID
-//  @todo そのうち各デモの初期パラメータ設定としてinit.txtに記述する予定
-*/
-static const u16 DATA_DemoZoneTable[] = {
-  0, 0, // DEMO3D_ID_NULL
-  ZONE_ID_T01,
-  ZONE_ID_T01,
-  ZONE_ID_T01,
-  ZONE_ID_T01,
-  ZONE_ID_T01,
-  ZONE_ID_T01,
-  ZONE_ID_T01,
-  ZONE_ID_T01,
-  ZONE_ID_T01,
-  ZONE_ID_T01,
-  ZONE_ID_T01,
-  ZONE_ID_T01,
-  ZONE_ID_T01,
-  ZONE_ID_T01,
-  ZONE_ID_T01,
-  ZONE_ID_T01,
 };
 
 //=============================================================================
@@ -212,7 +181,7 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   wk->graphic = DEMO3D_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, param->demo_id, wk->heapID );
 
   //フィールドライト設定引継ぎ
-  FIELD_LIGHT_STATUS_Get( DATA_DemoZoneTable[param->demo_id],
+  FIELD_LIGHT_STATUS_Get( ZONE_ID_T01,
       param->hour, param->min, WEATHER_NO_SUNNY, param->season, &wk->fld_light, wk->heapID );
   
   DEMO3D_GRAPHIC_Scene3DParamSet( wk->graphic, &wk->fld_light, NULL );
@@ -229,7 +198,8 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   wk->print_que   = PRINTSYS_QUE_Create( wk->heapID );
 
   //3D 初期化
-  wk->engine = Demo3D_ENGINE_Init( wk->graphic, param->demo_id, param->start_frame, wk->heapID );
+  wk->engine = Demo3D_ENGINE_Init( wk->graphic, param, wk->heapID );
+
   // BG/OBJを非表示にしておく
   GFL_BG_SetVisible( BG_FRAME_BACK_S, VISIBLE_OFF );
   GFL_BG_SetVisible( BG_FRAME_TEXT_S, VISIBLE_OFF );

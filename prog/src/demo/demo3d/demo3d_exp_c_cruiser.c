@@ -39,6 +39,8 @@
 #include "townmap_gra.naix"
 
 #include "demo3d_local.h"
+#include "demo3d_graphic.h"
+#include "demo3d_engine.h"
 #include "demo3d_exp.h"
 
 //-----------------------------------------------------------

@@ -1,0 +1,20 @@
+#コンバート対象にするデモ管理表のリスト
+
+DEMO_LIST =	c_cruiser.xls \
+			      c_cruiser_port.xls \
+			      f_wheel.xls \
+			      g_ship_port.xls \
+			      intro_town.xls \
+			      n_castle.xls \
+			      n_final_b.xls \
+			      n_final_w.xls \
+			      n_legend_born_b.xls \
+			      n_legend_born_w.xls \
+			      n_legend_come_b.xls \
+			      n_legend_come_w.xls \
+			      n_legend_meat_b.xls \
+			      n_legend_meat_w.xls \
+			      riza_bridge.xls \
+			      v_boat_port.xls
+
+

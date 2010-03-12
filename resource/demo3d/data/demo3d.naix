@@ -1,0 +1,77 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: data\demo3d.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2010-03-12T22:50:05
+ *****************************************************************************/
+
+#ifndef NARC_DATA_DEMO3D_NAIX_
+#define NARC_DATA_DEMO3D_NAIX_
+
+enum {
+	NARC_data_demo3d_c_cruiser_camera_bin = 0,
+	NARC_data_demo3d_c_cruiser_port_01_nsbmd = 1,
+	NARC_data_demo3d_c_cruiser_port_camera_bin = 2,
+	NARC_data_demo3d_cdemo_01_nsbca = 3,
+	NARC_data_demo3d_cdemo_01_nsbmd = 4,
+	NARC_data_demo3d_cdemo_01_nsbta = 5,
+	NARC_data_demo3d_cdemo_01_nsbtp = 6,
+	NARC_data_demo3d_cdemo_02_nsbmd = 7,
+	NARC_data_demo3d_cdemo_03_nsbmd = 8,
+	NARC_data_demo3d_cdemo_04_nsbmd = 9,
+	NARC_data_demo3d_cdemo_04_nsbtp = 10,
+	NARC_data_demo3d_cdemo_05_nsbmd = 11,
+	NARC_data_demo3d_cdemo_06_nsbmd = 12,
+	NARC_data_demo3d_f_wheel_01_nsbmd = 13,
+	NARC_data_demo3d_f_wheel_camera_bin = 14,
+	NARC_data_demo3d_g_ship_port_01_nsbmd = 15,
+	NARC_data_demo3d_g_ship_port_camera_bin = 16,
+	NARC_data_demo3d_intro_town01_nsbmd = 17,
+	NARC_data_demo3d_intro_town01_nsbta = 18,
+	NARC_data_demo3d_intro_town01_nsbtp = 19,
+	NARC_data_demo3d_intro_town02_nsbca = 20,
+	NARC_data_demo3d_intro_town02_nsbmd = 21,
+	NARC_data_demo3d_intro_town03_nsbca = 22,
+	NARC_data_demo3d_intro_town03_nsbmd = 23,
+	NARC_data_demo3d_intro_town03_nsbtp = 24,
+	NARC_data_demo3d_intro_town_camera_bin = 25,
+	NARC_data_demo3d_n_castle_camera_bin = 26,
+	NARC_data_demo3d_n_demo_01_nsbca = 27,
+	NARC_data_demo3d_n_demo_01_nsbma = 28,
+	NARC_data_demo3d_n_demo_01_nsbmd = 29,
+	NARC_data_demo3d_n_demo_02_nsbca = 30,
+	NARC_data_demo3d_n_demo_02_nsbma = 31,
+	NARC_data_demo3d_n_demo_02_nsbmd = 32,
+	NARC_data_demo3d_n_demo_03_nsbca = 33,
+	NARC_data_demo3d_n_demo_03_nsbma = 34,
+	NARC_data_demo3d_n_demo_03_nsbmd = 35,
+	NARC_data_demo3d_n_demo_03_nsbta = 36,
+	NARC_data_demo3d_n_final_b_01_nsbmd = 37,
+	NARC_data_demo3d_n_final_b_camera_bin = 38,
+	NARC_data_demo3d_n_final_w_01_nsbmd = 39,
+	NARC_data_demo3d_n_final_w_camera_bin = 40,
+	NARC_data_demo3d_n_legend_born_b_01_nsbmd = 41,
+	NARC_data_demo3d_n_legend_born_b_camera_bin = 42,
+	NARC_data_demo3d_n_legend_born_w_01_nsbmd = 43,
+	NARC_data_demo3d_n_legend_born_w_camera_bin = 44,
+	NARC_data_demo3d_n_legend_come_b_01_nsbmd = 45,
+	NARC_data_demo3d_n_legend_come_b_camera_bin = 46,
+	NARC_data_demo3d_n_legend_come_w_01_nsbmd = 47,
+	NARC_data_demo3d_n_legend_come_w_camera_bin = 48,
+	NARC_data_demo3d_n_legend_meat_b_01_nsbmd = 49,
+	NARC_data_demo3d_n_legend_meat_b_camera_bin = 50,
+	NARC_data_demo3d_n_legend_meat_w_01_nsbmd = 51,
+	NARC_data_demo3d_n_legend_meat_w_camera_bin = 52,
+	NARC_data_demo3d_riza_bridge_01_nsbca = 53,
+	NARC_data_demo3d_riza_bridge_01_nsbmd = 54,
+	NARC_data_demo3d_riza_bridge_02_nsbmd = 55,
+	NARC_data_demo3d_riza_bridge_02_nsbta = 56,
+	NARC_data_demo3d_riza_bridge_camera_bin = 57,
+	NARC_data_demo3d_v_boat_port_01_nsbmd = 58,
+	NARC_data_demo3d_v_boat_port_camera_bin = 59
+};
+
+/* NARC_DATA_DEMO3D_NAIX_ */
+#endif
