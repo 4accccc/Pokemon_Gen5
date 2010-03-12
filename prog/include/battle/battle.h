@@ -25,6 +25,8 @@
 #include "savedata/config.h"
 #include "gamesystem/comm_player_support.h"
 #include "gamesystem/playerwork.h"
+#include "item/shooter_item.h"
+
 #include "buflen.h"
 
 #include "battle_bg_def.h"  //zonetableコンバータから参照させたいので定義を分離しました by iwasawa
@@ -265,7 +267,8 @@ typedef struct {
   u16         LimitTimeCommand;     ///< コマンド選択制限時間（秒） [ 0 = 無制限 ]
 
   // 各種ステータスフラグ
-  u8          btl_status_flag;  ///<各種ステータスフラグ(定義値 BTL_STATUS_FLAG型)
+  SHOOTER_ITEM_BIT_WORK  shooterBitWork;  ///< シューター使用制限パラメータ
+  u8          btl_status_flag;  ///< 各種ステータスフラグ(定義値 BTL_STATUS_FLAG型)
   u8          badgeCount;       ///< プレイヤー取得済みバッジ数
 
   // デバッグ系
