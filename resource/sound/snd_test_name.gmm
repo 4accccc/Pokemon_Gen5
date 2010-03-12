@@ -8058,9 +8058,9 @@
 		<language name="JPN" width="256">W542-BOUFU</language>
 		<language name="JPN_KANJI" width="256">W542-BOUFU</language>
 	</row>
-	<row id="msg_seq_se_dmy_253">
-		<language name="JPN" width="256">DMY-253</language>
-		<language name="JPN_KANJI" width="256">DMY-253</language>
+	<row id="msg_seq_se_w554_pakin">
+		<language name="JPN" width="256">W554-PAKIN</language>
+		<language name="JPN_KANJI" width="256">W554-PAKIN</language>
 	</row>
 	<row id="msg_seq_se_dmy_254">
 		<language name="JPN" width="256">DMY-254</language>
