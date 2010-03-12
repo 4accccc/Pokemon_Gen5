@@ -726,5 +726,8 @@ extern void POKETOOL_MakeLevelRevise(POKEMON_PARAM *pp, u32 level);
 //構造体コピー
 extern  void POKETOOL_CopyPPtoPP( POKEMON_PARAM* pp_src, POKEMON_PARAM* pp_dst );
 
+//アイテムナンバーからタイプ取得
+extern  PokeType  POKETOOL_GetPokeTypeFromItem( u16 item );
+
 #endif __ASM_NO_DEF_
 
