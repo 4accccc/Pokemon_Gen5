@@ -597,8 +597,8 @@
 #define FV_R03_RIVAL_02                    573 /* 0x023d R03：ライバル02 */
 #define FV_R03R0301_RIVAL_01               574 /* 0x023e R030101：プラズマ団・ライバル */
 #define FV_D07R0201_GYMLEADER05_01         575 /* 0x023f ネジ山：ヤーコンとライバル */
-#define FV_C07_RIVAL_01                    576 /* 0x0240 C07セッカシティ：ライバル・サポート */
-		/* not used   577(0x0241) */
+#define FV_C07_RIVAL_01                    576 /* 0x0240 C07セッカシティ：ライバル */
+#define FV_C07_SUPPORT_01                  577 /* 0x0241 C07セッカシティ：サポート */
 #define FV_C07_READER7                     578 /* 0x0242 C07セッカシティ：ハチク */
 #define FV_C07_HAKASE1                     579 /* 0x0243 C07セッカシティジム：アララギ（父） */
 #define FV_C07GYM0101_READER7_01           580 /* 0x0244 C07GYM0101セッカシティジム：ハチク */
