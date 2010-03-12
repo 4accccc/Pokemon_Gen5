@@ -529,7 +529,7 @@
   //画面演出関連
   DEF_CMD( EvCmdBModelAnimeLoopSet, EV_SEQ_BMODEL_ANIME_LOOP_SET )
   NO_CMD()
-  NO_CMD()
+  DEF_CMD(EvCMdBmodelDirectChangeModelID, EV_SEQ_BMODEL_DIRECT_CHANGE_MODEL_ID )
   NO_CMD()
 
   DEF_CMD( EvCmdPokecenRecoverAnime, EV_SEQ_POKECEN_RECOVER_ANIME )
@@ -809,8 +809,8 @@
   NO_CMD()
   NO_CMD()
 
-  //PDW家具屋用
-  NO_CMD()
+  //トレインタウン用
+  DEF_CMD( EvCmdGetTrainModelID, EV_SEQ_GET_TRAIN_MODEL_ID )
   NO_CMD()
   NO_CMD()
   NO_CMD()

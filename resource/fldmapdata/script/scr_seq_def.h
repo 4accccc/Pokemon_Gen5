@@ -6229,6 +6229,49 @@
     .short  \flag
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _BMODEL_DIRECT_CHANGE_MODEL_ID
+ * @brief 配置モデルのモデルIDを変更
+ * @param search_id   配置モデルの種類指定ID（script_def.hを参照）
+ * @param gx          アニメ生成する配置モデルのX位置（グリッド単位）
+ * @param gz          アニメ生成する配置モデルのZ位置（グリッド単位）
+ * @param model_id    モデル指定ID
+ *
+ * モデル指定IDを直接スクリプトから記述する予定はない。
+ * 現状は_GET_TRAIN_MODEL_ID()でのみ使用予定
+ */
+//--------------------------------------------------------------
+#define _BMODEL_DIRECT_CHANGE_MODEL_ID( search_id, gx, gz, model_id ) \
+    _ANM_BMODEL_DIRECT_CHANGE_MODEL_ID search_id, gx, gz, model_id
+
+    .macro  _ANM_BMODEL_DIRECT_CHANGE_MODEL_ID search_id, gx, gz, model_id
+    .short  EV_SEQ_BMODEL_DIRECT_CHANGE_MODEL_ID
+    .short  \search_id
+    .short  \gx
+    .short  \gz
+    .short  \model_id
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_TRAIN_MODEL_ID
+ * @brief   トレインタウンの電車モデルIDを取得
+ * @param index   電車の種類指定（０～９）
+ * @param ret_wk  電車のモデルIDを受け取るワーク
+ *
+ * トレインタウンでのみ使用するコマンド。
+ */
+//--------------------------------------------------------------
+#define _GET_TRAIN_MODEL_ID( index, ret_wk ) \
+    _ASM_GET_TRAIN_MODEL_ID index, ret_wk
+
+    .macro  _ASM_GET_TRAIN_MODEL_ID index, ret_wk
+    .short  EV_SEQ_GET_TRAIN_MODEL_ID
+    .short  \index
+    .short  \ret_wk
+    .endm
+
 //======================================================================
 //
 //

@@ -258,6 +258,8 @@ extern void G3DMAPOBJST_setAnime(
 extern void G3DMAPOBJST_getPos(G3DMAPOBJST * obj, VecFx32 * dst);
 
 extern fx32 G3DMAPOBJST_getAnimeFrame(FIELD_BMODEL_MAN* man, const G3DMAPOBJST * obj, u32 anm_idx );
+extern void G3DMAPOBJST_changeModelID(
+    const FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj, BMODEL_ID new_id );
 
 //============================================================================================
 //============================================================================================

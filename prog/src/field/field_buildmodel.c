@@ -1863,6 +1863,13 @@ void G3DMAPOBJST_changeViewFlag(G3DMAPOBJST * obj, BOOL flag)
   }
 }
 
+//------------------------------------------------------------------
+/// 配置モデル実データ：表示ID変更
+//------------------------------------------------------------------
+void G3DMAPOBJST_changeModelID( const FIELD_BMODEL_MAN * man, G3DMAPOBJST * obj, BMODEL_ID new_id )
+{
+  obj->objSt->id = BMIDtoEntryNo( man, new_id );
+}
 
 //============================================================================================
 //

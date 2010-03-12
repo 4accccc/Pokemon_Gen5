@@ -38,6 +38,8 @@
 
 #include "event_pokecen_pc.h"  // for EVENT_PokecenPcOn, EVENT_PokecenPcOff
 
+#include "arc/fieldmap/buildmodel_outdoor.naix" //NARC_output_buildmodel_
+
 #define BRIGHT_FADE_SPPED (1)
 
 typedef enum {
@@ -415,7 +417,7 @@ static FIELD_BMODEL_MAN * getBModelMan( SCRCMD_WORK * wk )
  * @brief 配置モデル実データの取得
  */
 //--------------------------------------------------------------
-static G3DMAPOBJST * getBModel( FIELD_BMODEL_MAN * man, u16 bm_id, u16 gx, u16 gz )
+static G3DMAPOBJST * getBModel( FIELD_BMODEL_MAN * man, u16 search_id, u16 gx, u16 gz )
 {
   VecFx32 pos;
 
@@ -423,7 +425,7 @@ static G3DMAPOBJST * getBModel( FIELD_BMODEL_MAN * man, u16 bm_id, u16 gx, u16 g
   pos.y = 0;
   pos.z = GRID_TO_FX32( gz );
 
-  return FIELD_BMODEL_MAN_SearchObjStatusPos( man, bm_id, &pos );
+  return FIELD_BMODEL_MAN_SearchObjStatusPos( man, search_id, &pos );
 }
 
 //--------------------------------------------------------------
@@ -433,13 +435,13 @@ static G3DMAPOBJST * getBModel( FIELD_BMODEL_MAN * man, u16 bm_id, u16 gx, u16 g
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBModelDirectAnimeSetFinished( VMHANDLE * core, void *wk )
 {
-  u16 bm_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 search_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 gx = SCRCMD_GetVMWorkValue( core, wk );
   u16 gz = SCRCMD_GetVMWorkValue( core, wk );
 
   SCRCMD_WORK *work = wk;
   FIELD_BMODEL_MAN * bmodel_man = getBModelMan( work );
-  G3DMAPOBJST * entry = getBModel( bmodel_man, bm_id, gx, gz );
+  G3DMAPOBJST * entry = getBModel( bmodel_man, search_id, gx, gz );
 
   if ( entry )
   {
@@ -457,13 +459,13 @@ VMCMD_RESULT EvCmdBModelDirectAnimeSetFinished( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBModelDirectAnimeSetLoop( VMHANDLE * core, void *wk )
 {
-  u16 bm_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 search_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 gx = SCRCMD_GetVMWorkValue( core, wk );
   u16 gz = SCRCMD_GetVMWorkValue( core, wk );
 
   SCRCMD_WORK *work = wk;
   FIELD_BMODEL_MAN * bmodel_man = getBModelMan( work );
-  G3DMAPOBJST * entry = getBModel( bmodel_man, bm_id, gx, gz );
+  G3DMAPOBJST * entry = getBModel( bmodel_man, search_id, gx, gz );
 
   if ( entry )
   {
@@ -480,20 +482,73 @@ VMCMD_RESULT EvCmdBModelDirectAnimeSetLoop( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBModelDirectChangeViewFlag( VMHANDLE * core, void *wk )
 {
-  u16 bm_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 search_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 gx = SCRCMD_GetVMWorkValue( core, wk );
   u16 gz = SCRCMD_GetVMWorkValue( core, wk );
   u16 flag = SCRCMD_GetVMWorkValue( core, wk );
 
   SCRCMD_WORK *work = wk;
   FIELD_BMODEL_MAN * bmodel_man = getBModelMan( work );
-  G3DMAPOBJST * entry = getBModel( bmodel_man, bm_id, gx, gz );
+  G3DMAPOBJST * entry = getBModel( bmodel_man, search_id, gx, gz );
 
   if (entry)
   {
     G3DMAPOBJST_changeViewFlag( entry, flag );
   }
 
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 配置モデル実データの指定モデルID変更
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCMdBmodelDirectChangeModelID( VMHANDLE * core, void * wk )
+{
+  u16 search_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gx = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gz = SCRCMD_GetVMWorkValue( core, wk );
+  u16 bm_id = SCRCMD_GetVMWorkValue( core, wk );
+
+  SCRCMD_WORK *work = wk;
+  FIELD_BMODEL_MAN * bmodel_man = getBModelMan( work );
+  G3DMAPOBJST * entry = getBModel( bmodel_man, search_id, gx, gz );
+
+  if (entry)
+  {
+    G3DMAPOBJST_changeModelID( bmodel_man, entry, bm_id );
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief トレインタウンの電車用モデルIDを取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetTrainModelID( VMHANDLE * core, void *wk )
+{
+  u16 train_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  static const BMODEL_ID trains[] = {
+    NARC_output_buildmodel_outdoor_tt_train01_nsbmd,
+    NARC_output_buildmodel_outdoor_tt_train02_nsbmd,
+    NARC_output_buildmodel_outdoor_tt_train03_nsbmd,
+    NARC_output_buildmodel_outdoor_tt_train04_nsbmd,
+    NARC_output_buildmodel_outdoor_tt_train05_nsbmd,
+    NARC_output_buildmodel_outdoor_tt_train06_nsbmd,
+    NARC_output_buildmodel_outdoor_tt_train07_nsbmd,
+    NARC_output_buildmodel_outdoor_tt_train08_nsbmd,
+    NARC_output_buildmodel_outdoor_tt_train09_nsbmd,
+    NARC_output_buildmodel_outdoor_tt_train10_nsbmd,
+  };
+  if ( train_id >= NELEMS(trains) )
+  {
+    GF_ASSERT( 0 );
+    train_id = 0;
+  }
+  *ret_wk = trains[train_id];
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -524,7 +579,7 @@ static BOOL evWaitBModelAnime( VMHANDLE *core, void *wk );
 VMCMD_RESULT EvCmdBModelAnimeCreate( VMHANDLE * core, void *wk )
 {
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
-  u16 bm_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 search_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 gx = SCRCMD_GetVMWorkValue( core, wk );
   u16 gz = SCRCMD_GetVMWorkValue( core, wk );
   VecFx32 pos;
@@ -540,7 +595,7 @@ VMCMD_RESULT EvCmdBModelAnimeCreate( VMHANDLE * core, void *wk )
   pos.y = 0;
   pos.z = GRID_TO_FX32( gz );
 
-  bmodel = FIELD_BMODEL_Create_Search( bmodel_man, bm_id, &pos );
+  bmodel = FIELD_BMODEL_Create_Search( bmodel_man, search_id, &pos );
   *ret_wk = FIELD_BMODEL_MAN_GetUniqKey( bmodel_man, bmodel );
 
 
