@@ -149,6 +149,7 @@ typedef struct{
   u8 padding2;
   u32 dummy[4];            //予備データ16byte
   u16 crc;             //CRCデータ
+  u16 encryption;             //暗号複合キー
 } GIFT_PACK_DATA;
 
 
