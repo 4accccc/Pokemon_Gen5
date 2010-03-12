@@ -782,4 +782,28 @@ VMCMD_RESULT EvCmdSetStartMenuFlag( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief タイトルメニュー項目のＮＥＷラベルが表示済みかどうか
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdChkStartMenuViewFlag( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK* work       = (SCRCMD_WORK*)wk;
+  u16 flag = SCRCMD_GetVMWorkValue( core, wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  MISC * misc = GAMEDATA_GetMiscWork( gamedata );
+
+  GF_ASSERT( flag < MISC_STARTMENU_TYPE_MAX );
+  if ( (MISC_GetStartMenuFlag( misc, flag ) == (MISC_STARTMENU_FLAG_OPEN|MISC_STARTMENU_FLAG_VIEW) ) )
+  {
+    *ret_wk = TRUE;
+  }
+  else *ret_wk = FALSE;
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
 

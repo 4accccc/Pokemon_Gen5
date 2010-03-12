@@ -45,4 +45,5 @@ extern VMCMD_RESULT EvCmdGetBoxWallPaper( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdCheckPlayerViewChange( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdGetStartMenuFlag( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdSetStartMenuFlag( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdChkStartMenuViewFlag( VMHANDLE * core, void * wk );
 

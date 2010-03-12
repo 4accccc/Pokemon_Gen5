@@ -433,7 +433,7 @@
   DEF_CMD( EvCmdSetStartMenuFlag, EV_SEQ_SET_START_MENU_FLAG )
 
   DEF_CMD( EvCmdSeaTempleGetStepWalk, EV_SEQ_GET_SEATEMPLE_STEP_WALK )
-  NO_CMD()
+  DEF_CMD( EvCmdChkStartMenuViewFlag, EV_SEQ_CHK_START_MENU_VIEW_FLAG )
   NO_CMD()
   NO_CMD()
 

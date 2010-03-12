@@ -341,9 +341,6 @@
 #define SCR_STARTMENU_FLAG_GAMESYNC  (2)    ///<「ゲームシンク設定」
 #define SCR_STARTMENU_FLAG_MACHINE   (3)    ///<「転送マシンをつかう」
 
-#define SCR_STARTMENU_FLAG_OPEN       (1)   ///<表示許可
-#define SCR_STARTMENU_FLAG_VIEW       (2)		///<表示済み
-
 //--------------------------------------------------------------
 //  移動ポケモン
 //  src/field/event_movepoke.hの定義と一致している必要がある。

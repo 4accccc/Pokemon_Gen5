@@ -35,13 +35,14 @@ EVENT_START	ev_c03r0502_engineer_01
   //転送マシンを実行した後か？
   IF $SCWK_ANSWER == TRUE THEN
     DEFINE_LOCAL msg
-    //項目は「ＮＥＷ」か？@todo
-    IF $SCWK_ANSWER == TRUE THEN
-      //「ためしてみて」＞＞　終了
-      $msg = msg_c03r0502_engineer_04
-    ELSE
+    //項目は「ＮＥＷ」か？
+    _CHK_STARTMENU_VIEW_FLAG( SCR_STARTMENU_FLAG_MACHINE, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN   //ＮＥＷ表示済み
       //「つかうの　かんたん」　＞＞　終了
       $msg = msg_c03r0502_engineer_06
+    ELSE                           //ＮＥＷ表示
+      //「ためしてみて」＞＞　終了
+      $msg = msg_c03r0502_engineer_04
     ENDIF
       _BALLOONWIN_TALKOBJ_MSG( msg )
       _LAST_KEYWAIT()
