@@ -3042,8 +3042,12 @@ static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 static void word_input(PMS_INPUT_WORK* wk,int* seq)
 {
 	if(KeyStatusChange(wk,seq)){
-		return;
-	}
+	  if( wk->key_mode == GFL_APP_KTST_KEY && (!(GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)) )  // タッチ→キーに変更したときで、そのときの入力がBボタンでないときだけ(KeyStatusChange関数内でwk->cb_ktchg_funcを呼ぶ以外は)何もせずに戻る
+    {
+      return;
+    }
+  }
+
 	if(wk->key_mode == GFL_APP_KTST_KEY){
 		word_input_key(wk,seq);
 	}else{
