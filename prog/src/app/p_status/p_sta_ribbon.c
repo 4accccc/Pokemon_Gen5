@@ -165,14 +165,6 @@ static void PSTATUS_RIBBON_DispInfo_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_W
 static void PSTATUS_RIBBON_ClearInfo( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
 static void PSTATUS_RIBBON_ClearInfo_Trans( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork );
 
-static const u8 RibbonDispArr [RIBBON_MAX] =
-{
-  0,32,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,
-  19,20,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,
-  51,52,21,22,53,54,55,56,57,58,23,24,59,70,60,61,72,62,63,64,
-  65,66,67,68,69,28,29,30,31,78,79,71,74,75,76,77,25,26,27,73,
-};
-
 //--------------------------------------------------------------
 //	èâä˙âª
 //--------------------------------------------------------------
@@ -819,7 +811,7 @@ void PSTATUS_RIBBON_CreateRibbonBar( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
   idx = 0;
   for( i=0;i<RIBBON_MAX;i++ )
   {
-    const u8 ribbonNo = RibbonDispArr[i];
+    const u8 ribbonNo = i;
     const u32 checkId = RIBBON_DataGet( ribbonNo , RIBBON_PARA_POKEPARA );
     const u32 isHave = PPP_Get( ppp , checkId , NULL );
 

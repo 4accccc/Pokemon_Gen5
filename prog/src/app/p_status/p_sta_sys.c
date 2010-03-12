@@ -671,7 +671,7 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   work->cellRes[SCR_ANM_SKILL_CUR] = GFL_CLGRP_CELLANIM_Register( archandle , 
         NARC_p_status_gra_p_st_skill_cur_NCER , NARC_p_status_gra_p_st_skill_cur_NANR, work->heapId  );
   work->cellRes[SCR_ANM_RIBBON_ICON] = GFL_CLGRP_CELLANIM_Register( archandle , 
-        NARC_p_status_gra_ribbon00_NCER , NARC_p_status_gra_ribbon00_NANR, work->heapId  );
+        NARC_p_status_gra_ribbon_contest_00_NCER , NARC_p_status_gra_ribbon_contest_00_NANR, work->heapId  );
   work->cellRes[SCR_ANM_RIBBON_CUR] = GFL_CLGRP_CELLANIM_Register( archandle , 
         NARC_p_status_gra_p_st_ribbon_cur_NCER , NARC_p_status_gra_p_st_ribbon_cur_NANR, work->heapId  );
 

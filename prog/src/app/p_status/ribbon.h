@@ -29,7 +29,7 @@ enum {
 
 typedef enum
 {
-  RIBBON_CATEGORY_CHAMP,    //チャンプリボン
+  RIBBON_CATEGORY_LEAGUE,    //リーグリボン
   RIBBON_CATEGORY_CONTEST,  //コンテストリボン
   RIBBON_CATEGORY_TOWER,    //タワーリボン
   RIBBON_CATEGORY_MEMORY,   //メモリーリボン

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-25T16:18:50"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-11T22:24:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,46 +274,57 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="155"/>
-		<group default=" 0:デフォルト" position="-1" width="100">
-			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		<id position="0" width="224"/>
+		<group default=" 0:名前：リーグ" position="4" width="100">
+			<list entry="0" japanese="名前：リーグ" english="Default" colorID="0"/>
+			<list entry="1" japanese="名前：コンテスト" english="名前：コンテスト" colorID="0"/>
+			<list entry="2" japanese="名前：タワー" english="名前：タワー" colorID="0"/>
+			<list entry="3" japanese="名前：メモリー" english="名前：メモリー" colorID="0"/>
+			<list entry="4" japanese="名前：プレゼント" english="名前：プレゼント" colorID="0"/>
+			<list entry="5" japanese="説明：リーグ" english="説明：リーグ" colorID="0"/>
+			<list entry="6" japanese="説明：コンテスト" english="説明：コンテスト" colorID="0"/>
+			<list entry="7" japanese="説明：タワー" english="説明：タワー" colorID="0"/>
+			<list entry="8" japanese="説明：メモリー" english="説明：メモリー" colorID="0"/>
+			<list entry="9" japanese="説明：プレゼント" english="説明：プレゼント" colorID="0"/>
+			<list entry="10" japanese="カテゴリ" english="カテゴリ" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
 		<comment position="1" width="100"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
-			<font default=" 0:large" position="4" width="109">
+			<font default=" 0:large" position="5" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
-			<width position="6" width="70"/>
+			<width position="7" width="70"/>
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
 			<message position="3" width="246"/>
-			<font default=" 0:large" position="5" width="106">
+			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
-			<width position="7" width="75"/>
+			<width position="8" width="75"/>
 			<line position="-1" width="100"/>
 		</language>
 	</columns>
 
-	<dialog left="1427" top="114" right="2132" bottom="734" maximized="no" rayout="Vertical2">
+	<dialog left="84" top="216" right="789" bottom="844" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
-		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="0" index="1" style="0000" width="530"/>
+		<band id="1" index="2" style="0000" width="165"/>
+		<band id="2" index="3" style="0000" width="556"/>
+		<band id="3" index="4" style="0000" width="139"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -333,567 +344,567 @@
 	</lock>
 
 
-	<row id="mes_ribbon_name_000" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_league_001" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.000
 ＡＧＢゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ホウエン　チャンプリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ホウエン　チャンプリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_001" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.001
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">クールリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">クールリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_002" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.002
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">クールリボンスーパー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">クールリボンスーパー</language>
-	</row>
-
-	<row id="mes_ribbon_name_003" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.003
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">クールリボンハイパー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">クールリボンハイパー</language>
-	</row>
-
-	<row id="mes_ribbon_name_004" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.004
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">クールリボンマスター</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">クールリボンマスター</language>
-	</row>
-
-	<row id="mes_ribbon_name_005" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.005
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">ビューティリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ビューティリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_006" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.006
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">ビューティリボンスーパー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ビューティリボンスーパー</language>
-	</row>
-
-	<row id="mes_ribbon_name_007" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.007
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">ビューティリボンハイパー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ビューティリボンハイパー</language>
-	</row>
-
-	<row id="mes_ribbon_name_008" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.008
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">ビューティリボンマスター</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ビューティリボンマスター</language>
-	</row>
-
-	<row id="mes_ribbon_name_009" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.009
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">キュートリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">キュートリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_010" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.010
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">キュートリボンスーパー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">キュートリボンスーパー</language>
-	</row>
-
-	<row id="mes_ribbon_name_011" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.011
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">キュートリボンハイパー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">キュートリボンハイパー</language>
-	</row>
-
-	<row id="mes_ribbon_name_012" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.012
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">キュートリボンマスター</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">キュートリボンマスター</language>
-	</row>
-
-	<row id="mes_ribbon_name_013" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.013
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">ジーニアスリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ジーニアスリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_014" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.014
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">ジーニアスリボンスーパー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ジーニアスリボンスーパー</language>
-	</row>
-
-	<row id="mes_ribbon_name_015" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.015
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">ジーニアスリボンハイパー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ジーニアスリボンハイパー</language>
-	</row>
-
-	<row id="mes_ribbon_name_016" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.016
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">ジーニアスリボンマスター</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ジーニアスリボンマスター</language>
-	</row>
-
-	<row id="mes_ribbon_name_017" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.017
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">パワフルリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">パワフルリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_018" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.018
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">パワフルリボンスーパー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">パワフルリボンスーパー</language>
-	</row>
-
-	<row id="mes_ribbon_name_019" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.019
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">パワフルリボンハイパー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">パワフルリボンハイパー</language>
-	</row>
-
-	<row id="mes_ribbon_name_020" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.020
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">パワフルリボンマスター</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">パワフルリボンマスター</language>
-	</row>
-
-	<row id="mes_ribbon_name_021" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.021
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">ウイニングリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ウイニングリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_022" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.022
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">ビクトリーリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ビクトリーリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_023" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.023
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">ブロマイドリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ブロマイドリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_024" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.024
-ＡＧＢゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">がんばリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">がんばリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_025" back-color=",,,#008000,,,,,,,,,,,,,,">
-		<comment>リボンNo.025
-配布用001</comment>
-		<language name="JPN" font=" 1:small" width="168">マリンリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">マリンリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_026" back-color=",,,#008000,,,,,,,,,,,,,,">
-		<comment>リボンNo.026
-配布用002</comment>
-		<language name="JPN" font=" 1:small" width="168">ランドリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ランドリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_027" back-color=",,,#008000,,,,,,,,,,,,,,">
-		<comment>リボンNo.027
-配布用003</comment>
-		<language name="JPN" font=" 1:small" width="168">スカイリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">スカイリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_028" back-color=",,,#008000,,,,,,,,,,,,,,">
-		<comment>リボンNo.028
-配布用004</comment>
-		<language name="JPN" font=" 1:small" width="168">カントリーリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">カントリーリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_029" back-color=",,,#008000,,,,,,,,,,,,,,">
-		<comment>リボンNo.029
-配布用005</comment>
-		<language name="JPN" font=" 1:small" width="168">ナショナルリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ナショナルリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_030" back-color=",,,#008000,,,,,,,,,,,,,,">
-		<comment>リボンNo.030
-配布用006</comment>
-		<language name="JPN" font=" 1:small" width="168">アースリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">アースリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_031" back-color=",,,#008000,,,,,,,,,,,,,,">
-		<comment>リボンNo.031
-配布用007</comment>
-		<language name="JPN" font=" 1:small" width="168">ワールドリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ワールドリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_032" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_league_002" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.032
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">シンオウ　チャンプリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">シンオウ　チャンプリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_033" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_001" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.001
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">クールリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">クールリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_002" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.002
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">クールリボンスーパー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">クールリボンスーパー</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_003" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.003
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">クールリボンハイパー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">クールリボンハイパー</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_004" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.004
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">クールリボンマスター</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">クールリボンマスター</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_005" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.005
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">ビューティリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ビューティリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_006" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.006
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">ビューティリボンスーパー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ビューティリボンスーパー</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_007" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.007
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">ビューティリボンハイパー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ビューティリボンハイパー</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_008" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.008
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">ビューティリボンマスター</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ビューティリボンマスター</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_009" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.009
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">キュートリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">キュートリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_010" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.010
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">キュートリボンスーパー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">キュートリボンスーパー</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_011" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.011
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">キュートリボンハイパー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">キュートリボンハイパー</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_012" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.012
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">キュートリボンマスター</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">キュートリボンマスター</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_013" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.013
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">ジーニアスリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ジーニアスリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_014" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.014
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">ジーニアスリボンスーパー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ジーニアスリボンスーパー</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_015" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.015
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">ジーニアスリボンハイパー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ジーニアスリボンハイパー</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_016" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.016
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">ジーニアスリボンマスター</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ジーニアスリボンマスター</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_017" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.017
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">パワフルリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">パワフルリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_018" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.018
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">パワフルリボンスーパー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">パワフルリボンスーパー</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_019" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.019
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">パワフルリボンハイパー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">パワフルリボンハイパー</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_020" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.020
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">パワフルリボンマスター</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">パワフルリボンマスター</language>
+	</row>
+
+	<row id="mes_ribbon_name_contest_021" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.033
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">クールリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">クールリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_034" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_022" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.034
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">クールリボングレート</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">クールリボングレート</language>
 	</row>
 
-	<row id="mes_ribbon_name_035" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_023" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.035
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">クールリボンウルトラ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">クールリボンウルトラ</language>
 	</row>
 
-	<row id="mes_ribbon_name_036" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_024" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.036
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">クールリボンマスター</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">クールリボンマスター</language>
 	</row>
 
-	<row id="mes_ribbon_name_037" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_025" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.037
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ビューティリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ビューティリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_038" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_026" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.038
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ビューティリボングレート</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ビューティリボングレート</language>
 	</row>
 
-	<row id="mes_ribbon_name_039" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_027" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.039
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ビューティリボンウルトラ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ビューティリボンウルトラ</language>
 	</row>
 
-	<row id="mes_ribbon_name_040" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_028" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.040
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ビューティリボンマスター</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ビューティリボンマスター</language>
 	</row>
 
-	<row id="mes_ribbon_name_041" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_029" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.041
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">キュートリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">キュートリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_042" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_030" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.042
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">キュートリボングレート</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">キュートリボングレート</language>
 	</row>
 
-	<row id="mes_ribbon_name_043" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_031" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.043
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">キュートリボンウルトラ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">キュートリボンウルトラ</language>
 	</row>
 
-	<row id="mes_ribbon_name_044" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_032" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.044
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">キュートリボンマスター</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">キュートリボンマスター</language>
 	</row>
 
-	<row id="mes_ribbon_name_045" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_033" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.045
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ジーニアスリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ジーニアスリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_046" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_034" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.046
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ジーニアスリボングレート</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ジーニアスリボングレート</language>
 	</row>
 
-	<row id="mes_ribbon_name_047" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_035" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.047
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ジーニアスリボンウルトラ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ジーニアスリボンウルトラ</language>
 	</row>
 
-	<row id="mes_ribbon_name_048" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_036" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.048
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ジーニアスリボンマスター</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ジーニアスリボンマスター</language>
 	</row>
 
-	<row id="mes_ribbon_name_049" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_037" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.049
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">パワフルリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">パワフルリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_050" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_038" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.050
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">パワフルリボングレート</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">パワフルリボングレート</language>
 	</row>
 
-	<row id="mes_ribbon_name_051" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_039" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.051
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">パワフルリボンウルトラ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">パワフルリボンウルトラ</language>
 	</row>
 
-	<row id="mes_ribbon_name_052" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_contest_040" group=" 1:名前：コンテスト" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.052
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">パワフルリボンマスター</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">パワフルリボンマスター</language>
 	</row>
 
-	<row id="mes_ribbon_name_053" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_tower_001" group=" 2:名前：タワー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.021
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">ウイニングリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ウイニングリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_tower_002" group=" 2:名前：タワー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.022
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">ビクトリーリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ビクトリーリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_tower_003" group=" 2:名前：タワー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.053
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">アビリティリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">アビリティリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_054" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_tower_004" group=" 2:名前：タワー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.054
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">グレートアビリティリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">グレートアビリティリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_055" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_tower_005" group=" 2:名前：タワー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.055
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ダブルアビリティリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ダブルアビリティリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_056" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_tower_006" group=" 2:名前：タワー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.056
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">マルチアビリティリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">マルチアビリティリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_057" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_tower_007" group=" 2:名前：タワー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.057
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ペアアビリティリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ペアアビリティリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_058" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_tower_008" group=" 2:名前：タワー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.058
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ワールドアビリティリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ワールドアビリティリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_059" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_memory_001" group=" 3:名前：メモリー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.023
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">ブロマイドリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ブロマイドリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_memory_002" group=" 3:名前：メモリー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+		<comment>リボンNo.024
+ＡＧＢゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">がんばリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">がんばリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_memory_003" group=" 3:名前：メモリー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.059
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">しゃっきリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">しゃっきリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_060" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_memory_004" group=" 3:名前：メモリー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.060
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">どっきリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">どっきリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_061" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_memory_005" group=" 3:名前：メモリー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.061
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">しょんぼリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">しょんぼリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_062" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_memory_006" group=" 3:名前：メモリー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.062
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">うっかリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">うっかリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_063" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_memory_007" group=" 3:名前：メモリー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.063
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">すっきリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">すっきリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_064" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_memory_008" group=" 3:名前：メモリー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.064
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ぐっすリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ぐっすリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_065" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_memory_009" group=" 3:名前：メモリー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.065
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">にっこリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">にっこリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_066" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_memory_010" group=" 3:名前：メモリー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.066
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ゴージャスリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ゴージャスリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_067" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_memory_011" group=" 3:名前：メモリー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.067
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ロイヤルリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ロイヤルリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_068" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_memory_012" group=" 3:名前：メモリー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.068
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">ゴージャスロイヤルリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">ゴージャスロイヤルリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_069" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_memory_013" group=" 3:名前：メモリー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.069
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">あしあとリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">あしあとリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_070" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_memory_014" group=" 3:名前：メモリー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.070
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">レコードリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">レコードリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_071" back-color=",,,#80ff80,,,,,,,,,,,,,,">
-		<comment>リボンNo.071
-ＤＰゲーム中</comment>
-		<language name="JPN" font=" 1:small" width="168">ヒストリーリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ヒストリーリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_072" back-color=",,,#80ff80,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_memory_015" group=" 3:名前：メモリー" back-color=",,,#80ff80,,,,,,,,,,,,,,">
 		<comment>リボンNo.072
 ＤＰゲーム中</comment>
 		<language name="JPN" font=" 1:small" width="168">レジェンドリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">レジェンドリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_073" back-color=",,,#008000,,,,,,,,,,,,,,">
-		<comment>リボンNo.073
-配布用008</comment>
-		<language name="JPN" font=" 1:small" width="168">レッドリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">レッドリボン</language>
+	<row id="mes_ribbon_name_present_001" group=" 4:名前：プレゼント" back-color=",,,#008000,,,,,,,,,,,,,,">
+		<comment>リボンNo.028
+配布用004</comment>
+		<language name="JPN" font=" 1:small" width="168">カントリーリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">カントリーリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_074" back-color=",,,#008000,,,,,,,,,,,,,,">
-		<comment>リボンNo.074
-配布用009</comment>
-		<language name="JPN" font=" 1:small" width="168">グリーンリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">グリーンリボン</language>
+	<row id="mes_ribbon_name_present_002" group=" 4:名前：プレゼント" back-color=",,,#008000,,,,,,,,,,,,,,">
+		<comment>リボンNo.029
+配布用005</comment>
+		<language name="JPN" font=" 1:small" width="168">ナショナルリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ナショナルリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_075" back-color=",,,#008000,,,,,,,,,,,,,,">
-		<comment>リボンNo.075
-配布用010</comment>
-		<language name="JPN" font=" 1:small" width="168">ブルーリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">ブルーリボン</language>
+	<row id="mes_ribbon_name_present_003" group=" 4:名前：プレゼント" back-color=",,,#008000,,,,,,,,,,,,,,">
+		<comment>リボンNo.030
+配布用006</comment>
+		<language name="JPN" font=" 1:small" width="168">アースリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">アースリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_076" back-color=",,,#008000,,,,,,,,,,,,,,">
-		<comment>リボンNo.076
-配布用011</comment>
-		<language name="JPN" font=" 1:small" width="168">フェスティバルリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">フェスティバルリボン</language>
+	<row id="mes_ribbon_name_present_004" group=" 4:名前：プレゼント" back-color=",,,#008000,,,,,,,,,,,,,,">
+		<comment>リボンNo.031
+配布用007</comment>
+		<language name="JPN" font=" 1:small" width="168">ワールドリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ワールドリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_077" back-color=",,,#008000,,,,,,,,,,,,,,">
-		<comment>リボンNo.077
-配布用012</comment>
-		<language name="JPN" font=" 1:small" width="168">カーニバルリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="168">カーニバルリボン</language>
-	</row>
-
-	<row id="mes_ribbon_name_078" back-color=",,,#008000,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_present_005" group=" 4:名前：プレゼント" back-color=",,,#008000,,,,,,,,,,,,,,">
 		<comment>リボンNo.078
 配布用013</comment>
 		<language name="JPN" font=" 1:small" width="168">クラシックリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">クラシックリボン</language>
 	</row>
 
-	<row id="mes_ribbon_name_079" back-color=",,,#008000,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_present_006" group=" 4:名前：プレゼント" back-color=",,,#008000,,,,,,,,,,,,,,">
 		<comment>リボンNo.079
 配布用014</comment>
 		<language name="JPN" font=" 1:small" width="168">プレミアリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="168">プレミアリボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_000" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,," back-color=",,,,,#ff8080,,,,,,,,,,,,">
+	<row id="mes_ribbon_name_present_007" group=" 4:名前：プレゼント" back-color=",,,#80ff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>リボンNo.071
+ＤＰゲーム中</comment>
+		<language name="JPN" font=" 1:small" width="168">イベントリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">イベントリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_present_008" group=" 4:名前：プレゼント" back-color=",,,#008000,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>リボンNo.074
+配布用009</comment>
+		<language name="JPN" font=" 1:small" width="168">バースデーリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">バースデーリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_present_009" group=" 4:名前：プレゼント" back-color=",,,#008000,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>リボンNo.075
+配布用010</comment>
+		<language name="JPN" font=" 1:small" width="168">スペシャルリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">スペシャルリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_present_010" group=" 4:名前：プレゼント" back-color=",,,#008000,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>リボンNo.076
+配布用011</comment>
+		<language name="JPN" font=" 1:small" width="168">メモリアルリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">メモリアルリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_present_011" group=" 4:名前：プレゼント" back-color=",,,#008000,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>リボンNo.077
+配布用012</comment>
+		<language name="JPN" font=" 1:small" width="168">ウィッシュリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ウィッシュリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_present_012" group=" 4:名前：プレゼント" back-color=",,,#008000,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>リボンNo.025
+配布用001</comment>
+		<language name="JPN" font=" 1:small" width="168">バトルチャンプリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">バトルチャンプリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_present_013" group=" 4:名前：プレゼント" back-color=",,,#008000,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>リボンNo.026
+配布用002</comment>
+		<language name="JPN" font=" 1:small" width="168">エリアチャンプリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">エリアチャンプリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_present_014" group=" 4:名前：プレゼント" back-color=",,,#008000,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>リボンNo.027
+配布用003</comment>
+		<language name="JPN" font=" 1:small" width="168">ナショナルチャンプリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ナショナルチャンプリボン</language>
+	</row>
+
+	<row id="mes_ribbon_name_present_015" group=" 4:名前：プレゼント" back-color=",,,#008000,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>リボンNo.073
+配布用008</comment>
+		<language name="JPN" font=" 1:small" width="168">ワールドチャンプリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="168">ワールドチャンプリボン</language>
+	</row>
+
+	<row id="mes_ribbon_text_league_001" group=" 5:説明：リーグ" text-color=",,,#0000ff,,,,,,,,,,,,,," back-color=",,,,,#ff8080,,,,,,,,,,,,">
 		<comment>テキスト名00
 ・プラチナで修正</comment>
 		<language name="JPN" font=" 1:small" width="240">べつちほうの　リーグで　かちぬき
@@ -902,199 +913,7 @@
 でんどういり　した　きねんリボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_001">
-		<comment>テキスト名01</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
-ノーマルランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
-ノーマルランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_002">
-		<comment>テキスト名02</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
-スーパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
-スーパーランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_003">
-		<comment>テキスト名03</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
-ハイパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
-ハイパーランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_004">
-		<comment>テキスト名04</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
-マスターランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
-マスターランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_005">
-		<comment>テキスト名05</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
-ノーマルランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
-ノーマルランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_006">
-		<comment>テキスト名06</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
-スーパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
-スーパーランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_007">
-		<comment>テキスト名07</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
-ハイパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
-ハイパーランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_008">
-		<comment>テキスト名08</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
-マスターランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
-マスターランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_009">
-		<comment>テキスト名09</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
-ノーマルランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
-ノーマルランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_010">
-		<comment>テキスト名10</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
-スーパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
-スーパーランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_011">
-		<comment>テキスト名11</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
-ハイパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
-ハイパーランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_012">
-		<comment>テキスト名12</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
-マスターランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
-マスターランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_013">
-		<comment>テキスト名13</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
-ノーマルランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
-ノーマルランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_014">
-		<comment>テキスト名14</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
-スーパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
-スーパーランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_015">
-		<comment>テキスト名15</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
-ハイパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
-ハイパーランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_016">
-		<comment>テキスト名16</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
-マスターランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
-マスターランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_017">
-		<comment>テキスト名17</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
-ノーマルランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
-ノーマルランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_018">
-		<comment>テキスト名18</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
-スーパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
-スーパーランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_019">
-		<comment>テキスト名19</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
-ハイパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
-ハイパーランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_020">
-		<comment>テキスト名20</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
-マスターランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
-マスターランク　ゆうしょう！</language>
-	</row>
-
-	<row id="mes_ribbon_text_021">
-		<comment>テキスト名21</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンの　バトルタワー　レベル５０を
-かちぬいた　きねんの　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンの　バトルタワー　レベル５０を
-かちぬいた　きねんの　リボン</language>
-	</row>
-
-	<row id="mes_ribbon_text_022">
-		<comment>テキスト名22</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンの　バトルタワー　レベル１００を
-かちぬいた　きねんの　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンの　バトルタワー　レベル１００を
-かちぬいた　きねんの　リボン</language>
-	</row>
-
-	<row id="mes_ribbon_text_023" back-color=",,,,,#ff8080,,,,,,,,,,,,">
-		<comment>テキスト名23</comment>
-		<language name="JPN" font=" 1:small" width="240">ホウエンで　ごうかな　にがおえの
-モデルになった　きねんの　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンで　ごうかな　にがおえの
-モデルになった　きねんの　リボン</language>
-	</row>
-
-	<row id="mes_ribbon_text_024">
-		<comment>テキスト名24</comment>
-		<language name="JPN" font=" 1:small" width="240">たくさん　どりょく　している
-ポケモンに　おくられる　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">たくさん　どりょく　している
-ポケモンに　おくられる　リボン</language>
-	</row>
-
-	<row id="mes_ribbon_text_032" back-color=",,,,,#ff8080,,,,,,,,,,,,">
+	<row id="mes_ribbon_text_league_002" group=" 5:説明：リーグ" back-color=",,,,,#ff8080,,,,,,,,,,,,">
 		<comment>テキスト名32</comment>
 		<language name="JPN" font=" 1:small" width="240">シンオウで　チャンピオンに　かって
 でんどういり　した　きねんリボン</language>
@@ -1102,7 +921,167 @@
 でんどういり　した　きねんリボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_033">
+	<row id="mes_ribbon_text_contest_001" group=" 6:説明：コンテスト">
+		<comment>テキスト名01</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
+ノーマルランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
+ノーマルランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_002" group=" 6:説明：コンテスト">
+		<comment>テキスト名02</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
+スーパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
+スーパーランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_003" group=" 6:説明：コンテスト">
+		<comment>テキスト名03</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
+ハイパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
+ハイパーランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_004" group=" 6:説明：コンテスト">
+		<comment>テキスト名04</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
+マスターランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
+マスターランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_005" group=" 6:説明：コンテスト">
+		<comment>テキスト名05</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
+ノーマルランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
+ノーマルランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_006" group=" 6:説明：コンテスト">
+		<comment>テキスト名06</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
+スーパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
+スーパーランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_007" group=" 6:説明：コンテスト">
+		<comment>テキスト名07</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
+ハイパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
+ハイパーランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_008" group=" 6:説明：コンテスト">
+		<comment>テキスト名08</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
+マスターランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
+マスターランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_009" group=" 6:説明：コンテスト">
+		<comment>テキスト名09</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
+ノーマルランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
+ノーマルランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_010" group=" 6:説明：コンテスト">
+		<comment>テキスト名10</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
+スーパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
+スーパーランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_011" group=" 6:説明：コンテスト">
+		<comment>テキスト名11</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
+ハイパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
+ハイパーランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_012" group=" 6:説明：コンテスト">
+		<comment>テキスト名12</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
+マスターランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
+マスターランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_013" group=" 6:説明：コンテスト">
+		<comment>テキスト名13</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
+ノーマルランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
+ノーマルランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_014" group=" 6:説明：コンテスト">
+		<comment>テキスト名14</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
+スーパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
+スーパーランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_015" group=" 6:説明：コンテスト">
+		<comment>テキスト名15</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
+ハイパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
+ハイパーランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_016" group=" 6:説明：コンテスト">
+		<comment>テキスト名16</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
+マスターランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
+マスターランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_017" group=" 6:説明：コンテスト">
+		<comment>テキスト名17</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
+ノーマルランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
+ノーマルランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_018" group=" 6:説明：コンテスト">
+		<comment>テキスト名18</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
+スーパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
+スーパーランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_019" group=" 6:説明：コンテスト">
+		<comment>テキスト名19</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
+ハイパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
+ハイパーランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_020" group=" 6:説明：コンテスト">
+		<comment>テキスト名20</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
+マスターランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
+マスターランク　ゆうしょう！</language>
+	</row>
+
+	<row id="mes_ribbon_text_contest_021" group=" 6:説明：コンテスト">
 		<comment>テキスト名33</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かっこよさ　ぶもん
 ノーマルランク　ゆうしょう！</language>
@@ -1110,7 +1089,7 @@
 ノーマルランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_034">
+	<row id="mes_ribbon_text_contest_022" group=" 6:説明：コンテスト">
 		<comment>テキスト名34</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かっこよさ　ぶもん
 グレートランク　ゆうしょう！</language>
@@ -1118,7 +1097,7 @@
 グレートランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_035">
+	<row id="mes_ribbon_text_contest_023" group=" 6:説明：コンテスト">
 		<comment>テキスト名35</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かっこよさ　ぶもん
 ウルトラランク　ゆうしょう！</language>
@@ -1126,7 +1105,7 @@
 ウルトラランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_036">
+	<row id="mes_ribbon_text_contest_024" group=" 6:説明：コンテスト">
 		<comment>テキスト名36</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かっこよさ　ぶもん
 マスターランク　ゆうしょう！</language>
@@ -1134,7 +1113,7 @@
 マスターランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_037">
+	<row id="mes_ribbon_text_contest_025" group=" 6:説明：コンテスト">
 		<comment>テキスト名37</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　うつくしさ　ぶもん
 ノーマルランク　ゆうしょう！</language>
@@ -1142,7 +1121,7 @@
 ノーマルランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_038">
+	<row id="mes_ribbon_text_contest_026" group=" 6:説明：コンテスト">
 		<comment>テキスト名38</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　うつくしさ　ぶもん
 グレートランク　ゆうしょう！</language>
@@ -1150,7 +1129,7 @@
 グレートランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_039">
+	<row id="mes_ribbon_text_contest_027" group=" 6:説明：コンテスト">
 		<comment>テキスト名39</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　うつくしさ　ぶもん
 ウルトラランク　ゆうしょう！</language>
@@ -1158,7 +1137,7 @@
 ウルトラランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_040">
+	<row id="mes_ribbon_text_contest_028" group=" 6:説明：コンテスト">
 		<comment>テキスト名40</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　うつくしさ　ぶもん
 マスターランク　ゆうしょう！</language>
@@ -1166,7 +1145,7 @@
 マスターランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_041">
+	<row id="mes_ribbon_text_contest_029" group=" 6:説明：コンテスト">
 		<comment>テキスト名41</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かわいさ　ぶもん
 ノーマルランク　ゆうしょう！</language>
@@ -1174,7 +1153,7 @@
 ノーマルランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_042">
+	<row id="mes_ribbon_text_contest_030" group=" 6:説明：コンテスト">
 		<comment>テキスト名42</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かわいさ　ぶもん
 グレートランク　ゆうしょう！</language>
@@ -1182,7 +1161,7 @@
 グレートランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_043">
+	<row id="mes_ribbon_text_contest_031" group=" 6:説明：コンテスト">
 		<comment>テキスト名43</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かわいさ　ぶもん
 ウルトラランク　ゆうしょう！</language>
@@ -1190,7 +1169,7 @@
 ウルトラランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_044">
+	<row id="mes_ribbon_text_contest_032" group=" 6:説明：コンテスト">
 		<comment>テキスト名44</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かわいさ　ぶもん
 マスターランク　ゆうしょう！</language>
@@ -1198,7 +1177,7 @@
 マスターランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_045">
+	<row id="mes_ribbon_text_contest_033" group=" 6:説明：コンテスト">
 		<comment>テキスト名45</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かしこさ　ぶもん
 ノーマルランク　ゆうしょう！</language>
@@ -1206,7 +1185,7 @@
 ノーマルランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_046">
+	<row id="mes_ribbon_text_contest_034" group=" 6:説明：コンテスト">
 		<comment>テキスト名46</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かしこさ　ぶもん
 グレートランク　ゆうしょう！</language>
@@ -1214,7 +1193,7 @@
 グレートランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_047">
+	<row id="mes_ribbon_text_contest_035" group=" 6:説明：コンテスト">
 		<comment>テキスト名47</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かしこさ　ぶもん
 ウルトラランク　ゆうしょう！</language>
@@ -1222,7 +1201,7 @@
 ウルトラランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_048">
+	<row id="mes_ribbon_text_contest_036" group=" 6:説明：コンテスト">
 		<comment>テキスト名48</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かしこさ　ぶもん
 マスターランク　ゆうしょう！</language>
@@ -1230,7 +1209,7 @@
 マスターランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_049">
+	<row id="mes_ribbon_text_contest_037" group=" 6:説明：コンテスト">
 		<comment>テキスト名49</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　たくましさ　ぶもん
 ノーマルランク　ゆうしょう！</language>
@@ -1238,7 +1217,7 @@
 ノーマルランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_050">
+	<row id="mes_ribbon_text_contest_038" group=" 6:説明：コンテスト">
 		<comment>テキスト名50</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　たくましさ　ぶもん
 グレートランク　ゆうしょう！</language>
@@ -1246,7 +1225,7 @@
 グレートランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_051">
+	<row id="mes_ribbon_text_contest_039" group=" 6:説明：コンテスト">
 		<comment>テキスト名51</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　たくましさ　ぶもん
 ウルトラランク　ゆうしょう！</language>
@@ -1254,7 +1233,7 @@
 ウルトラランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_052">
+	<row id="mes_ribbon_text_contest_040" group=" 6:説明：コンテスト">
 		<comment>テキスト名52</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　たくましさ　ぶもん
 マスターランク　ゆうしょう！</language>
@@ -1262,7 +1241,23 @@
 マスターランク　ゆうしょう！</language>
 	</row>
 
-	<row id="mes_ribbon_text_053" text-color="#0000ff,,,#0000ff,,,,,,,,,,,,,," back-color=",,,,,#ff8080,,,,,,,,,,,,">
+	<row id="mes_ribbon_text_tower_001" group=" 7:説明：タワー">
+		<comment>テキスト名21</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンの　バトルタワー　レベル５０を
+かちぬいた　きねんの　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンの　バトルタワー　レベル５０を
+かちぬいた　きねんの　リボン</language>
+	</row>
+
+	<row id="mes_ribbon_text_tower_002" group=" 7:説明：タワー">
+		<comment>テキスト名22</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンの　バトルタワー　レベル１００を
+かちぬいた　きねんの　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンの　バトルタワー　レベル１００を
+かちぬいた　きねんの　リボン</language>
+	</row>
+
+	<row id="mes_ribbon_text_tower_003" group=" 7:説明：タワー" text-color=",,,#0000ff,,,,,,,,,,,,,," back-color=",,,,,#ff8080,,,,,,,,,,,,">
 		<comment>テキスト名53
 
 金銀で修正
@@ -1273,7 +1268,7 @@
 しょうりした　きねんの　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_054" text-color="#0000ff,,,#0000ff,,,,,,,,,,,,,," back-color=",,,,,#ff8080,,,,,,,,,,,,">
+	<row id="mes_ribbon_text_tower_004" group=" 7:説明：タワー" text-color=",,,#0000ff,,,,,,,,,,,,,," back-color=",,,,,#ff8080,,,,,,,,,,,,">
 		<comment>テキスト名53
 
 金銀で修正
@@ -1284,7 +1279,7 @@
 しょうりした　きねんの　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_055" text-color="#0000ff,,,#0000ff,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_text_tower_005" group=" 7:説明：タワー" text-color=",,,#0000ff,,,,,,,,,,,,,,">
 		<comment>テキスト名53
 
 金銀で修正
@@ -1295,7 +1290,7 @@
 かちぬいた　きねんの　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_056" text-color="#0000ff,,,#0000ff,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_text_tower_006" group=" 7:説明：タワー" text-color=",,,#0000ff,,,,,,,,,,,,,,">
 		<comment>テキスト名53
 
 金銀で修正
@@ -1306,7 +1301,7 @@
 かちぬいた　きねんの　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_057" text-color="#0000ff,,,#0000ff,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_text_tower_007" group=" 7:説明：タワー" text-color=",,,#0000ff,,,,,,,,,,,,,,">
 		<comment>テキスト名53
 
 金銀で修正
@@ -1317,7 +1312,7 @@
 かちぬいた　きねんの　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_058" text-color="#0000ff,,,#0000ff,,,,,,,,,,,,,,">
+	<row id="mes_ribbon_text_tower_008" group=" 7:説明：タワー" text-color=",,,#0000ff,,,,,,,,,,,,,,">
 		<comment>テキスト名53
 
 金銀で修正
@@ -1328,7 +1323,23 @@
 かちぬいた　きねんの　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_059">
+	<row id="mes_ribbon_text_memory_001" group=" 8:説明：メモリー" back-color=",,,,,#ff8080,,,,,,,,,,,,">
+		<comment>テキスト名23</comment>
+		<language name="JPN" font=" 1:small" width="240">ホウエンで　ごうかな　にがおえの
+モデルになった　きねんの　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンで　ごうかな　にがおえの
+モデルになった　きねんの　リボン</language>
+	</row>
+
+	<row id="mes_ribbon_text_memory_002" group=" 8:説明：メモリー">
+		<comment>テキスト名24</comment>
+		<language name="JPN" font=" 1:small" width="240">たくさん　どりょく　している
+ポケモンに　おくられる　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">たくさん　どりょく　している
+ポケモンに　おくられる　リボン</language>
+	</row>
+
+	<row id="mes_ribbon_text_memory_003" group=" 8:説明：メモリー">
 		<comment>テキスト名59</comment>
 		<language name="JPN" font=" 1:small" width="240">しゃっきりする　できごとを　おもいだして
 じんせいの　エネルギーとなる　リボン</language>
@@ -1336,7 +1347,7 @@
 じんせいの　エネルギーとなる　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_060">
+	<row id="mes_ribbon_text_memory_004" group=" 8:説明：メモリー">
 		<comment>テキスト名60</comment>
 		<language name="JPN" font=" 1:small" width="240">どきどきした　ことがらを　おもいだして
 じんせいを　わくわくさせてくれる　リボン</language>
@@ -1344,7 +1355,7 @@
 じんせいを　わくわくさせてくれる　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_061">
+	<row id="mes_ribbon_text_memory_005" group=" 8:説明：メモリー">
 		<comment>テキスト名61</comment>
 		<language name="JPN" font=" 1:small" width="240">しょんぼりした　きもちを　おもいだして
 じんせいの　スパイスとなる　リボン</language>
@@ -1352,7 +1363,7 @@
 じんせいの　スパイスとなる　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_062">
+	<row id="mes_ribbon_text_memory_006" group=" 8:説明：メモリー">
 		<comment>テキスト名62</comment>
 		<language name="JPN" font=" 1:small" width="240">うっかりした　しっぱいを　おもいだして
 じんせいの　エッセンスとなる　リボン</language>
@@ -1360,7 +1371,7 @@
 じんせいの　エッセンスとなる　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_063">
+	<row id="mes_ribbon_text_memory_007" group=" 8:説明：メモリー">
 		<comment>テキスト名63</comment>
 		<language name="JPN" font=" 1:small" width="240">すっきりした　けいけんを　おもいだして
 じんせいを　リフレッシュさせる　リボン</language>
@@ -1368,7 +1379,7 @@
 じんせいを　リフレッシュさせる　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_064">
+	<row id="mes_ribbon_text_memory_008" group=" 8:説明：メモリー">
 		<comment>テキスト名64</comment>
 		<language name="JPN" font=" 1:small" width="240">ぐっすり　ねむったことを　おもいだして
 じんせいの　やすらぎとなる　リボン</language>
@@ -1376,7 +1387,7 @@
 じんせいの　やすらぎとなる　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_065">
+	<row id="mes_ribbon_text_memory_009" group=" 8:説明：メモリー">
 		<comment>テキスト名65</comment>
 		<language name="JPN" font=" 1:small" width="240">にっこり　ほほえむことを　おもいだして
 じんせいを　ゆたかにしてくれる　リボン</language>
@@ -1384,7 +1395,7 @@
 じんせいを　ゆたかにしてくれる　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_066">
+	<row id="mes_ribbon_text_memory_010" group=" 8:説明：メモリー">
 		<comment>テキスト名66</comment>
 		<language name="JPN" font=" 1:small" width="240">このうえなく　ゴージャスで
 きらびやかな　かんじの　リボン</language>
@@ -1392,7 +1403,7 @@
 きらびやかな　かんじの　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_067">
+	<row id="mes_ribbon_text_memory_011" group=" 8:説明：メモリー">
 		<comment>テキスト名67</comment>
 		<language name="JPN" font=" 1:small" width="240">とてつもなく　ロイヤルで
 けだかい　かんじのする　リボン</language>
@@ -1400,7 +1411,7 @@
 けだかい　かんじのする　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_068">
+	<row id="mes_ribbon_text_memory_012" group=" 8:説明：メモリー">
 		<comment>テキスト名68</comment>
 		<language name="JPN" font=" 1:small" width="240">これいじょう　すばらしいものは　ない
 ゴージャスで　ロイヤルな　リボン</language>
@@ -1408,7 +1419,7 @@
 ゴージャスで　ロイヤルな　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_069">
+	<row id="mes_ribbon_text_memory_013" group=" 8:説明：メモリー">
 		<comment>テキスト名69</comment>
 		<language name="JPN" font=" 1:small" width="240">さいこうの　あしあとを　もつ
 ポケモンが　もらえる　リボン</language>
@@ -1416,7 +1427,7 @@
 ポケモンが　もらえる　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_070">
+	<row id="mes_ribbon_text_memory_014" group=" 8:説明：メモリー">
 		<comment>テキスト名70</comment>
 		<language name="JPN" font=" 1:small" width="240">ものすごい　きろくを　のこした
 きねんの　リボン</language>
@@ -1424,15 +1435,7 @@
 きねんの　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_text_071">
-		<comment>テキスト名71</comment>
-		<language name="JPN" font=" 1:small" width="240">れきしてき　きろくを　のこした
-きねんの　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">れきしてき　きろくを　のこした
-きねんの　リボン</language>
-	</row>
-
-	<row id="mes_ribbon_text_072">
+	<row id="mes_ribbon_text_memory_015" group=" 8:説明：メモリー">
 		<comment>テキスト名72</comment>
 		<language name="JPN" font=" 1:small" width="240">でんせつてき　きろくを　のこした
 きねんの　リボン</language>
@@ -1440,2072 +1443,135 @@
 きねんの　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_000">
-		<comment>配布リボンメッセージ000
-ダミーテキスト</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_001">
-		<comment>配布リボンメッセージ001</comment>
-		<language name="JPN" font=" 1:small" width="240">２００３ねん　ちほう　たいかい
+	<row id="mes_ribbon_text_present_001" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>テキスト名28</comment>
+		<language name="JPN" font=" 1:small" width="240">ポケモンリーグ
 ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００３ねん　ちほう　たいかい
+		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンリーグ
 ゆうしょう　きねんリボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_002">
-		<comment>配布リボンメッセージ002</comment>
-		<language name="JPN" font=" 1:small" width="240">２００３ねん　ぜんこく　たいかい
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００３ねん　ぜんこく　たいかい
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_003">
-		<comment>配布リボンメッセージ003</comment>
-		<language name="JPN" font=" 1:small" width="240">２００３ねん　ワールドカップ
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００３ねん　ワールドカップ
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_004">
-		<comment>配布リボンメッセージ004</comment>
-		<language name="JPN" font=" 1:small" width="240">２００３ねん　ちほう　たいかい
-じゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００３ねん　ちほう　たいかい
-じゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_005">
-		<comment>配布リボンメッセージ005</comment>
-		<language name="JPN" font=" 1:small" width="240">２００３ねん　ぜんこく　たいかい
-じゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００３ねん　ぜんこく　たいかい
-じゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_006">
-		<comment>配布リボンメッセージ006</comment>
-		<language name="JPN" font=" 1:small" width="240">２００３ねん　ワールドカップ
-じゅんじゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００３ねん　ワールドカップ
-じゅんじゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_007">
-		<comment>配布リボンメッセージ007</comment>
-		<language name="JPN" font=" 1:small" width="240">２００３ねん　ちほう　たいかい
-ベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００３ねん　ちほう　たいかい
-ベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_008">
-		<comment>配布リボンメッセージ008</comment>
-		<language name="JPN" font=" 1:small" width="240">２００３ねん　ぜんこく　たいかい
-ベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００３ねん　ぜんこく　たいかい
-ベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_009">
-		<comment>配布リボンメッセージ009</comment>
-		<language name="JPN" font=" 1:small" width="240">２００３ねん　ワールドカップ
-じゅんベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００３ねん　ワールドカップ
-じゅんベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_010">
-		<comment>配布リボンメッセージ010</comment>
-		<language name="JPN" font=" 1:small" width="240">２００４ねん　ちほう　たいかい
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００４ねん　ちほう　たいかい
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_011">
-		<comment>配布リボンメッセージ011</comment>
-		<language name="JPN" font=" 1:small" width="240">２００４ねん　ぜんこく　たいかい
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００４ねん　ぜんこく　たいかい
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_012">
-		<comment>配布リボンメッセージ012</comment>
-		<language name="JPN" font=" 1:small" width="240">２００４ねん　ワールドカップ
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００４ねん　ワールドカップ
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_013">
-		<comment>配布リボンメッセージ013</comment>
-		<language name="JPN" font=" 1:small" width="240">２００４ねん　ちほう　たいかい
-じゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００４ねん　ちほう　たいかい
-じゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_014">
-		<comment>配布リボンメッセージ014</comment>
-		<language name="JPN" font=" 1:small" width="240">２００４ねん　ぜんこく　たいかい
-じゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００４ねん　ぜんこく　たいかい
-じゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_015">
-		<comment>配布リボンメッセージ015</comment>
-		<language name="JPN" font=" 1:small" width="240">２００４ねん　ワールドカップ
-じゅんじゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００４ねん　ワールドカップ
-じゅんじゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_016">
-		<comment>配布リボンメッセージ016</comment>
-		<language name="JPN" font=" 1:small" width="240">２００４ねん　ちほう　たいかい
-ベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００４ねん　ちほう　たいかい
-ベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_017">
-		<comment>配布リボンメッセージ017</comment>
-		<language name="JPN" font=" 1:small" width="240">２００４ねん　ぜんこく　たいかい
-ベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００４ねん　ぜんこく　たいかい
-ベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_018">
-		<comment>配布リボンメッセージ018</comment>
-		<language name="JPN" font=" 1:small" width="240">２００４ねん　ワールドカップ
-じゅんベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００４ねん　ワールドカップ
-じゅんベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_019">
-		<comment>配布リボンメッセージ019</comment>
-		<language name="JPN" font=" 1:small" width="240">２００５ねん　ちほう　たいかい
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００５ねん　ちほう　たいかい
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_020">
-		<comment>配布リボンメッセージ020</comment>
-		<language name="JPN" font=" 1:small" width="240">２００５ねん　ぜんこく　たいかい
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００５ねん　ぜんこく　たいかい
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_021">
-		<comment>配布リボンメッセージ021</comment>
-		<language name="JPN" font=" 1:small" width="240">２００５ねん　ワールドカップ
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００５ねん　ワールドカップ
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_022">
-		<comment>配布リボンメッセージ022</comment>
-		<language name="JPN" font=" 1:small" width="240">２００５ねん　ちほう　たいかい
-じゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００５ねん　ちほう　たいかい
-じゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_023">
-		<comment>配布リボンメッセージ023</comment>
-		<language name="JPN" font=" 1:small" width="240">２００５ねん　ぜんこく　たいかい
-じゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００５ねん　ぜんこく　たいかい
-じゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_024">
-		<comment>配布リボンメッセージ024</comment>
-		<language name="JPN" font=" 1:small" width="240">２００５ねん　ワールドカップ
-じゅんじゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００５ねん　ワールドカップ
-じゅんじゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_025">
-		<comment>配布リボンメッセージ025</comment>
-		<language name="JPN" font=" 1:small" width="240">２００５ねん　ちほう　たいかい
-ベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００５ねん　ちほう　たいかい
-ベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_026">
-		<comment>配布リボンメッセージ026</comment>
-		<language name="JPN" font=" 1:small" width="240">２００５ねん　ぜんこく　たいかい
-ベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００５ねん　ぜんこく　たいかい
-ベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_027">
-		<comment>配布リボンメッセージ027</comment>
-		<language name="JPN" font=" 1:small" width="240">２００５ねん　ワールドカップ
-ベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">２００５ねん　ワールドカップ
-ベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_028">
-		<comment>配布リボンメッセージ028</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　バトル　カップ
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　バトル　カップ
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_029">
-		<comment>配布リボンメッセージ029</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　バトル　カップ
-じゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　バトル　カップ
-じゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_030">
-		<comment>配布リボンメッセージ030</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　バトル　カップ
-ベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　バトル　カップ
-ベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_031">
-		<comment>配布リボンメッセージ031</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　バトル　カップ
-さんか　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　バトル　カップ
-さんか　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_032" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
-		<comment>配布リボンメッセージ032
-使用済み：ワールドリボン／カントリーリボン</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_033">
-		<comment>配布リボンメッセージ033</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ
-じゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ
-じゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_034">
-		<comment>配布リボンメッセージ034</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ
-ベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ
-ベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_035">
-		<comment>配布リボンメッセージ035</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ
-さんか　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ
-さんか　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_036">
-		<comment>配布リボンメッセージ036</comment>
-		<language name="JPN" font=" 1:small" width="240">アドバンス　カップ
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">アドバンス　カップ
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_037">
-		<comment>配布リボンメッセージ037</comment>
-		<language name="JPN" font=" 1:small" width="240">アドバンス　カップ
-じゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">アドバンス　カップ
-じゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_038">
-		<comment>配布リボンメッセージ038</comment>
-		<language name="JPN" font=" 1:small" width="240">アドバンス　カップ
-ベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">アドバンス　カップ
-ベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_039">
-		<comment>配布リボンメッセージ039</comment>
-		<language name="JPN" font=" 1:small" width="240">アドバンス　カップ
-さんか　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">アドバンス　カップ
-さんか　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_040">
-		<comment>配布リボンメッセージ040</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモンの　たいかいに
-さんかした　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンの　たいかいに
-さんかした　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_041">
-		<comment>配布リボンメッセージ041</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモンの　イベントに
-さんかした　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンの　イベントに
-さんかした　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_042">
-		<comment>配布リボンメッセージ042</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモンの　おまつりに
-さんかした　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンの　おまつりに
-さんかした　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_043">
-		<comment>配布リボンメッセージ043</comment>
-		<language name="JPN" font=" 1:small" width="240">こんなんに　うちかった
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">こんなんに　うちかった
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_044" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
-		<comment>配布リボンメッセージ044
-使用済み：アースリボン</comment>
+	<row id="mes_ribbon_text_present_002" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>テキスト名29</comment>
 		<language name="JPN" font=" 1:small" width="240">すべての　こんなんを
 のりこえた　きねんリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">すべての　こんなんを
 のりこえた　きねんリボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_045" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
-		<comment>配布リボンメッセージ045
-使用済み：ナショナルリボン</comment>
+	<row id="mes_ribbon_text_present_003" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>テキスト名30</comment>
 		<language name="JPN" font=" 1:small" width="240">１００にんぬき　たっせい
 きねんリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">１００にんぬき　たっせい
 きねんリボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_046">
-		<comment>配布リボンメッセージ046</comment>
-		<language name="JPN" font=" 1:small" width="240">くらやみのとう　クリア
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">くらやみのとう　クリア
-きねんリボン</language>
+	<row id="mes_ribbon_text_present_004" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>テキスト名31</comment>
+		<language name="JPN" font=" 1:small" width="240">ポケモンリーグ
+ゆうしょう　きねんリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンリーグ
+ゆうしょう　きねんリボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_047">
-		<comment>配布リボンメッセージ047</comment>
-		<language name="JPN" font=" 1:small" width="240">くれないのとう　クリア
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">くれないのとう　クリア
-きねんリボン</language>
+	<row id="mes_ribbon_text_present_005" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>テキスト名78</comment>
+		<language name="JPN" font=" 1:small" width="240">ポケモンが　だいすきな　ことを
+しょうめいする　きねんリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンが　だいすきな　ことを
+しょうめいする　きねんリボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_048">
-		<comment>配布リボンメッセージ048</comment>
-		<language name="JPN" font=" 1:small" width="240">くろがねのとう　クリア
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">くろがねのとう　クリア
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_049">
-		<comment>配布リボンメッセージ049</comment>
-		<language name="JPN" font=" 1:small" width="240">さいごのとう　クリア
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">さいごのとう　クリア
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_050">
-		<comment>配布リボンメッセージ050</comment>
-		<language name="JPN" font=" 1:small" width="240">でんせつを　つくった
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">でんせつを　つくった
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_051">
-		<comment>配布リボンメッセージ051</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモンセンター　トウキョー
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンセンター　トウキョー
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_052">
-		<comment>配布リボンメッセージ052</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモンセンター　オーサカ
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンセンター　オーサカ
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_053">
-		<comment>配布リボンメッセージ053</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモンセンター　ナゴヤ
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンセンター　ナゴヤ
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_054">
-		<comment>配布リボンメッセージ054</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモンセンター　ニューヨーク
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンセンター　ニューヨーク
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_055">
-		<comment>配布リボンメッセージ055</comment>
-		<language name="JPN" font=" 1:small" width="240">なつやすみ　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なつやすみ　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_056">
-		<comment>配布リボンメッセージ056</comment>
-		<language name="JPN" font=" 1:small" width="240">ふゆやすみ　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ふゆやすみ　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_057">
-		<comment>配布リボンメッセージ057</comment>
-		<language name="JPN" font=" 1:small" width="240">はるやすみ　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">はるやすみ　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_058">
-		<comment>配布リボンメッセージ058</comment>
-		<language name="JPN" font=" 1:small" width="240">クリスマス　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">クリスマス　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_059">
-		<comment>配布リボンメッセージ059</comment>
+	<row id="mes_ribbon_text_present_006" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>テキスト名79</comment>
 		<language name="JPN" font=" 1:small" width="240">きねんび　きねんリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">きねんび　きねんリボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_060">
-		<comment>配布リボンメッセージ060</comment>
-		<language name="JPN" font=" 1:small" width="240">がんばった　きねんの　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">がんばった　きねんの　リボン</language>
+	<row id="mes_ribbon_text_present_007" group=" 9:説明：プレゼント">
+		<comment>テキスト名71</comment>
+		<language name="JPN" font=" 1:small" width="240">れきしてき　きろくを　のこした
+きねんの　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">れきしてき　きろくを　のこした
+きねんの　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_061">
-		<comment>配布リボンメッセージ061</comment>
-		<language name="JPN" font=" 1:small" width="240">ともだち　いっぱい　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ともだち　いっぱい　きねんリボン</language>
+	<row id="mes_ribbon_text_present_008" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>テキスト名74</comment>
+		<language name="JPN" font=" 1:small" width="240">おたんじょうび　きねん　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">おたんじょうび　きねん　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_062">
-		<comment>配布リボンメッセージ062</comment>
-		<language name="JPN" font=" 1:small" width="240">げんき　いっぱい　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">げんき　いっぱい　きねんリボン</language>
+	<row id="mes_ribbon_text_present_009" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>テキスト名75</comment>
+		<language name="JPN" font=" 1:small" width="240">とくべつな　ひの　とくべつな　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">とくべつな　ひの　とくべつな　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_063">
-		<comment>配布リボンメッセージ063</comment>
-		<language name="JPN" font=" 1:small" width="240">だいすきな　ポケモンに　つけている
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">だいすきな　ポケモンに　つけている
-きねんリボン</language>
+	<row id="mes_ribbon_text_present_010" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>テキスト名76</comment>
+		<language name="JPN" font=" 1:small" width="240">とくべつな　おもいでを　きねんする　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">とくべつな　おもいでを　きねんする　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_064">
-		<comment>配布リボンメッセージ064</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモンが　だいすきな　ことを　
-しょうめいする　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンが　だいすきな　ことを　
-しょうめいする　きねんリボン</language>
+	<row id="mes_ribbon_text_present_011" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>テキスト名77</comment>
+		<language name="JPN" font=" 1:small" width="240">ねがいが　かなうと　いわれている　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ねがいが　かなうと　いわれている　リボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_065">
-		<comment>配布リボンメッセージ065</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモンセンター　サッポロ
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンセンター　サッポロ
-きねんリボン</language>
+	<row id="mes_ribbon_text_present_012" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>テキスト名25</comment>
+		<language name="JPN" font=" 1:small" width="240">バトルたいかい　ゆうしょうきねんリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">バトルたいかい　ゆうしょうきねんリボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_066">
-		<comment>配布リボンメッセージ066</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモンセンター　ヨコハマ
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンセンター　ヨコハマ
-きねんリボン</language>
+	<row id="mes_ribbon_text_present_013" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>テキスト名26</comment>
+		<language name="JPN" font=" 1:small" width="240">ポケモンワールドチャンピオンシップス
+エリアたいかい　ゆうしょうきねんリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンワールドチャンピオンシップス
+エリアたいかい　ゆうしょうきねんリボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_067">
-		<comment>配布リボンメッセージ067</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモンセンター　フクオカ
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンセンター　フクオカ
-きねんリボン</language>
+	<row id="mes_ribbon_text_present_014" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>テキスト名27</comment>
+		<language name="JPN" font=" 1:small" width="240">ポケモンワールドチャンピオンシップス
+こくないたいかい　ゆうしょうきねんリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンワールドチャンピオンシップス
+こくないたいかい　ゆうしょうきねんリボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_068" back-color=",,,,,#ff8000,,,,,,,,,,,,">
-		<comment>配布リボンメッセージ068</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモンだいすきクラブ
-スペシャルリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンだいすきクラブ
-スペシャルリボン</language>
+	<row id="mes_ribbon_text_present_015" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>テキスト名73</comment>
+		<language name="JPN" font=" 1:small" width="240">ポケモンワールドチャンピオンシップス
+せかいたいかい　ゆうしょうきねんリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンワールドチャンピオンシップス
+せかいたいかい　ゆうしょうきねんリボン</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_069" back-color=",,,,,#ff8000,,,,,,,,,,,,">
-		<comment>配布リボンメッセージ069</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモンだいすきクラブ
-ＷｉーＦｉ　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンだいすきクラブ
-ＷｉーＦｉ　きねんリボン</language>
+	<row id="mes_ribbon_category_01" group="10:カテゴリ">
+		<language name="JPN" font=" 1:small" width="240">リーグリボン[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">リーグリボン[2:01:２桁:0]</language>
 	</row>
 
-	<row id="mes_ribbon_haihu_text_070" back-color=",,,,,#ff8000,,,,,,,,,,,,">
-		<comment>配布リボンメッセージ070</comment>
-		<language name="JPN" font=" 1:small" width="240">ＷｉーＦｉ　グローバル　イベント
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ＷｉーＦｉ　グローバル　イベント
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_071" back-color=",,,,,#ff8000,,,,,,,,,,,,">
-		<comment>配布リボンメッセージ071</comment>
-		<language name="JPN" font=" 1:small" width="240">ＷｉーＦｉ　ぜんせかい　プレゼント
-スペシャルリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ＷｉーＦｉ　ぜんせかい　プレゼント
-スペシャルリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_072" back-color=",,,,,#ff8000,,,,,,,,,,,,">
-		<comment>配布リボンメッセージ072</comment>
-		<language name="JPN" font=" 1:small" width="240">ぜんせかい　いっせい　プレゼント
-スペシャルリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ぜんせかい　いっせい　プレゼント
-スペシャルリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_073" back-color=",,,,,#ff8000,,,,,,,,,,,,">
-		<comment>配布リボンメッセージ073</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモンセンター
-オープン　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンセンター
-オープン　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_074" back-color=",,,,,#ff8000,,,,,,,,,,,,">
-		<comment>配布リボンメッセージ074</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケパーク　オープニング
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケパーク　オープニング
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_075" back-color=",,,,,#ff8000,,,,,,,,,,,,">
-		<comment>配布リボンメッセージ075</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケパーク
-スペシャルリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケパーク
-スペシャルリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_076" back-color=",,,,,#ff8000,,,,,,,,,,,,">
-		<comment>配布リボンメッセージ076</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　コンサート
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　コンサート
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_077">
-		<comment>配布リボンメッセージ077</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００６
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００６
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_078">
-		<comment>配布リボンメッセージ078</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００６
-じゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００６
-じゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_079">
-		<comment>配布リボンメッセージ079</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００６
-ベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００６
-ベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_080">
-		<comment>配布リボンメッセージ080</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００６
-さんか　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００６
-さんか　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_081">
-		<comment>配布リボンメッセージ081</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００７
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００７
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_082">
-		<comment>配布リボンメッセージ082</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００７
-じゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００７
-じゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_083">
-		<comment>配布リボンメッセージ083</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００７
-ベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００７
-ベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_084">
-		<comment>配布リボンメッセージ084</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００７
-さんか　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００７
-さんか　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_085">
-		<comment>配布リボンメッセージ085</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００８
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００８
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_086">
-		<comment>配布リボンメッセージ086</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００８
-じゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００８
-じゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_087">
-		<comment>配布リボンメッセージ087</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００８
-ベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００８
-ベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_088">
-		<comment>配布リボンメッセージ088</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００８
-さんか　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００８
-さんか　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_089">
-		<comment>配布リボンメッセージ089</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００９
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００９
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_090">
-		<comment>配布リボンメッセージ090</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００９
-じゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００９
-じゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_091">
-		<comment>配布リボンメッセージ091</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００９
-ベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００９
-ベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_092">
-		<comment>配布リボンメッセージ092</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２００９
-さんか　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２００９
-さんか　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_093">
-		<comment>配布リボンメッセージ093</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２０１０
-ゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２０１０
-ゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_094">
-		<comment>配布リボンメッセージ094</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２０１０
-じゅんゆうしょう　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２０１０
-じゅんゆうしょう　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_095">
-		<comment>配布リボンメッセージ095</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２０１０
-ベスト４　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２０１０
-ベスト４　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_096">
-		<comment>配布リボンメッセージ096</comment>
-		<language name="JPN" font=" 1:small" width="240">ポケモン　リーグ　２０１０
-さんか　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモン　リーグ　２０１０
-さんか　きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_097">
-		<comment>配布リボンメッセージ097</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_098">
-		<comment>配布リボンメッセージ098</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_099">
-		<comment>配布リボンメッセージ099</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_100">
-		<comment>配布リボンメッセージ100</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_101">
-		<comment>配布リボンメッセージ101</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_102">
-		<comment>配布リボンメッセージ102</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_103">
-		<comment>配布リボンメッセージ103</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_104">
-		<comment>配布リボンメッセージ104</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_105">
-		<comment>配布リボンメッセージ105</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_106">
-		<comment>配布リボンメッセージ106</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_107">
-		<comment>配布リボンメッセージ107</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_108">
-		<comment>配布リボンメッセージ108</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_109">
-		<comment>配布リボンメッセージ109</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_110">
-		<comment>配布リボンメッセージ110</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_111">
-		<comment>配布リボンメッセージ111</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_112">
-		<comment>配布リボンメッセージ112</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_113">
-		<comment>配布リボンメッセージ113</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_114">
-		<comment>配布リボンメッセージ114</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_115">
-		<comment>配布リボンメッセージ115</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_116">
-		<comment>配布リボンメッセージ116</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_117">
-		<comment>配布リボンメッセージ117</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_118">
-		<comment>配布リボンメッセージ118</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_119">
-		<comment>配布リボンメッセージ119</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_120">
-		<comment>配布リボンメッセージ120</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_121">
-		<comment>配布リボンメッセージ121</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_122">
-		<comment>配布リボンメッセージ122</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_123">
-		<comment>配布リボンメッセージ123</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_124">
-		<comment>配布リボンメッセージ124</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_125">
-		<comment>配布リボンメッセージ125</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_126">
-		<comment>配布リボンメッセージ126</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_127">
-		<comment>配布リボンメッセージ127</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_128">
-		<comment>配布リボンメッセージ128</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_129">
-		<comment>配布リボンメッセージ129</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_130">
-		<comment>配布リボンメッセージ130</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_131">
-		<comment>配布リボンメッセージ131</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_132">
-		<comment>配布リボンメッセージ132</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_133">
-		<comment>配布リボンメッセージ133</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_134">
-		<comment>配布リボンメッセージ134</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_135">
-		<comment>配布リボンメッセージ135</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_136">
-		<comment>配布リボンメッセージ136</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_137">
-		<comment>配布リボンメッセージ137</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_138">
-		<comment>配布リボンメッセージ138</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_139">
-		<comment>配布リボンメッセージ139</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_140">
-		<comment>配布リボンメッセージ140</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_141">
-		<comment>配布リボンメッセージ141</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_142">
-		<comment>配布リボンメッセージ142</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_143">
-		<comment>配布リボンメッセージ143</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_144">
-		<comment>配布リボンメッセージ144</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_145">
-		<comment>配布リボンメッセージ145</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_146">
-		<comment>配布リボンメッセージ146</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_147">
-		<comment>配布リボンメッセージ147</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_148">
-		<comment>配布リボンメッセージ148</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_149">
-		<comment>配布リボンメッセージ149</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_150">
-		<comment>配布リボンメッセージ150</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_151">
-		<comment>配布リボンメッセージ151</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_152">
-		<comment>配布リボンメッセージ152</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_153">
-		<comment>配布リボンメッセージ153</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_154">
-		<comment>配布リボンメッセージ154</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_155">
-		<comment>配布リボンメッセージ155</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_156">
-		<comment>配布リボンメッセージ156</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_157">
-		<comment>配布リボンメッセージ157</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_158">
-		<comment>配布リボンメッセージ158</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_159">
-		<comment>配布リボンメッセージ159</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_160">
-		<comment>配布リボンメッセージ160</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_161">
-		<comment>配布リボンメッセージ161</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_162">
-		<comment>配布リボンメッセージ162</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_163">
-		<comment>配布リボンメッセージ163</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_164">
-		<comment>配布リボンメッセージ164</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_165">
-		<comment>配布リボンメッセージ165</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_166">
-		<comment>配布リボンメッセージ166</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_167">
-		<comment>配布リボンメッセージ167</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_168">
-		<comment>配布リボンメッセージ168</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_169">
-		<comment>配布リボンメッセージ169</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_170">
-		<comment>配布リボンメッセージ170</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_171">
-		<comment>配布リボンメッセージ171</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_172">
-		<comment>配布リボンメッセージ172</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_173">
-		<comment>配布リボンメッセージ173</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_174">
-		<comment>配布リボンメッセージ174</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_175">
-		<comment>配布リボンメッセージ175</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_176">
-		<comment>配布リボンメッセージ176</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_177">
-		<comment>配布リボンメッセージ177</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_178">
-		<comment>配布リボンメッセージ178</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_179">
-		<comment>配布リボンメッセージ179</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_180">
-		<comment>配布リボンメッセージ180</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_181">
-		<comment>配布リボンメッセージ181</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_182">
-		<comment>配布リボンメッセージ182</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_183">
-		<comment>配布リボンメッセージ183</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_184">
-		<comment>配布リボンメッセージ184</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_185">
-		<comment>配布リボンメッセージ185</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_186">
-		<comment>配布リボンメッセージ186</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_187">
-		<comment>配布リボンメッセージ187</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_188">
-		<comment>配布リボンメッセージ188</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_189">
-		<comment>配布リボンメッセージ189</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_190">
-		<comment>配布リボンメッセージ190</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_191">
-		<comment>配布リボンメッセージ191</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_192">
-		<comment>配布リボンメッセージ192</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_193">
-		<comment>配布リボンメッセージ193</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_194">
-		<comment>配布リボンメッセージ194</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_195">
-		<comment>配布リボンメッセージ195</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_196">
-		<comment>配布リボンメッセージ196</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_197">
-		<comment>配布リボンメッセージ197</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_198">
-		<comment>配布リボンメッセージ198</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_199">
-		<comment>配布リボンメッセージ199</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_200">
-		<comment>配布リボンメッセージ200</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_201">
-		<comment>配布リボンメッセージ201</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_202">
-		<comment>配布リボンメッセージ202</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_203">
-		<comment>配布リボンメッセージ203</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_204">
-		<comment>配布リボンメッセージ204</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_205">
-		<comment>配布リボンメッセージ205</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_206">
-		<comment>配布リボンメッセージ206</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_207">
-		<comment>配布リボンメッセージ207</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_208">
-		<comment>配布リボンメッセージ208</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_209">
-		<comment>配布リボンメッセージ209</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_210">
-		<comment>配布リボンメッセージ210</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_211">
-		<comment>配布リボンメッセージ211</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_212">
-		<comment>配布リボンメッセージ212</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_213">
-		<comment>配布リボンメッセージ213</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_214">
-		<comment>配布リボンメッセージ214</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_215">
-		<comment>配布リボンメッセージ215</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_216">
-		<comment>配布リボンメッセージ216</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_217">
-		<comment>配布リボンメッセージ217</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_218">
-		<comment>配布リボンメッセージ218</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_219">
-		<comment>配布リボンメッセージ219</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_220">
-		<comment>配布リボンメッセージ220</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_221">
-		<comment>配布リボンメッセージ221</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_222">
-		<comment>配布リボンメッセージ222</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_223">
-		<comment>配布リボンメッセージ223</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_224">
-		<comment>配布リボンメッセージ224</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_225">
-		<comment>配布リボンメッセージ225</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_226">
-		<comment>配布リボンメッセージ226</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_227">
-		<comment>配布リボンメッセージ227</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_228">
-		<comment>配布リボンメッセージ228</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_229">
-		<comment>配布リボンメッセージ229</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_230">
-		<comment>配布リボンメッセージ230</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_231">
-		<comment>配布リボンメッセージ231</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_232">
-		<comment>配布リボンメッセージ232</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_233">
-		<comment>配布リボンメッセージ233</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_234">
-		<comment>配布リボンメッセージ234</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_235">
-		<comment>配布リボンメッセージ235</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_236">
-		<comment>配布リボンメッセージ236</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_237">
-		<comment>配布リボンメッセージ237</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_238">
-		<comment>配布リボンメッセージ238</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_239">
-		<comment>配布リボンメッセージ239</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_240">
-		<comment>配布リボンメッセージ240</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_241">
-		<comment>配布リボンメッセージ241</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_242">
-		<comment>配布リボンメッセージ242</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_243">
-		<comment>配布リボンメッセージ243</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_244">
-		<comment>配布リボンメッセージ244</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_245">
-		<comment>配布リボンメッセージ245</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_246">
-		<comment>配布リボンメッセージ246</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_247">
-		<comment>配布リボンメッセージ247</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_248">
-		<comment>配布リボンメッセージ248</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_249">
-		<comment>配布リボンメッセージ249</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_250">
-		<comment>配布リボンメッセージ250</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_251">
-		<comment>配布リボンメッセージ251</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_252">
-		<comment>配布リボンメッセージ252</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_253">
-		<comment>配布リボンメッセージ253</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_254">
-		<comment>配布リボンメッセージ254</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_255">
-		<comment>配布リボンメッセージ255</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_haihu_text_256" back-color="#ff0000,,,,,,,,,,,,,,,,,">
-		<comment>配布リボンメッセージ256
-0～255なので使えません！！</comment>
-		<language name="JPN" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">なぞのばしょで　てにいれた
-きねんリボン</language>
-	</row>
-
-	<row id="mes_ribbon_category_01">
-		<language name="JPN" font=" 1:small" width="240">チャンプリボン[2:01:２桁:0]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">チャンプリボン[2:01:２桁:0]</language>
-	</row>
-
-	<row id="mes_ribbon_category_02">
+	<row id="mes_ribbon_category_02" group="10:カテゴリ">
 		<language name="JPN" font=" 1:small" width="240">コンテストリボン[2:01:２桁:0]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">コンテストリボン[2:01:２桁:0]</language>
 	</row>
 
-	<row id="mes_ribbon_category_03">
+	<row id="mes_ribbon_category_03" group="10:カテゴリ">
 		<language name="JPN" font=" 1:small" width="240">タワーリボン[2:01:２桁:0]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">タワーリボン[2:01:２桁:0]</language>
 	</row>
 
-	<row id="mes_ribbon_category_04">
+	<row id="mes_ribbon_category_04" group="10:カテゴリ">
 		<language name="JPN" font=" 1:small" width="240">メモリーリボン[2:01:２桁:0]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">メモリーリボン[2:01:２桁:0]</language>
 	</row>
 
-	<row id="mes_ribbon_category_05">
+	<row id="mes_ribbon_category_05" group="10:カテゴリ">
 		<language name="JPN" font=" 1:small" width="240">プレゼントリボン[2:01:２桁:0]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">プレゼントリボン[2:01:２桁:0]</language>
 	</row>
