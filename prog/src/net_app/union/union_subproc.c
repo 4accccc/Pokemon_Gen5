@@ -37,6 +37,7 @@
 #include "field/field_sound.h"
 #include "pm_define.h"
 #include "colosseum_comm_command.h"
+#include "app/pokelist/plist_comm.h"
 
 
 //==============================================================================
@@ -810,10 +811,12 @@ static BOOL SubEvent_PokelistBattle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys,
   enum{
     SEQ_FADEOUT,
     SEQ_FIELD_CLOSE,
+    SEQ_POKELIST_COMM_INIT,
     SEQ_POKELIST,
     SEQ_POKELIST_WAIT,
     SEQ_STATUS,
     SEQ_STATUS_WAIT,
+    SEQ_POKELIST_COMM_EXIT,
     SEQ_BATTLE_INIT,
     SEQ_BATTLE_PARTY_TIMING_WAIT,
     SEQ_BATTLE_PARTY_SEND,
@@ -824,6 +827,10 @@ static BOOL SubEvent_PokelistBattle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys,
     SEQ_FADEIN,
     SEQ_FINISH,
   };
+  
+  if((*seq) > SEQ_POKELIST_COMM_INIT && (*seq) < SEQ_POKELIST_COMM_EXIT){
+    PLIST_COMM_UpdateComm( plist );
+  }
   
 	switch(*seq) {
 	case SEQ_FADEOUT:
@@ -839,6 +846,11 @@ static BOOL SubEvent_PokelistBattle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys,
 		GMEVENT_CallEvent(parent_event, EVENT_FieldClose(gsys, fieldWork));
 		(*seq) ++;
 		break;
+	case SEQ_POKELIST_COMM_INIT:
+    GFL_OVERLAY_Load(FS_OVERLAY_ID(pokelist_comm));
+    PLIST_COMM_InitComm( plist );
+    (*seq)++;
+    break;
 	case SEQ_POKELIST:
     OS_TPrintf("ポケモンリスト呼び出し\n");
 		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokelist), &PokeList_ProcData, plist);
@@ -857,7 +869,7 @@ static BOOL SubEvent_PokelistBattle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys,
       *seq = SEQ_STATUS;
     }
     else{
-      *seq = SEQ_BATTLE_INIT;
+      *seq = SEQ_POKELIST_COMM_EXIT;
     }
     break;
   case SEQ_STATUS:
@@ -884,7 +896,12 @@ static BOOL SubEvent_PokelistBattle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys,
     plist->ret_sel = pstatus->pos;
     (*seq) = SEQ_POKELIST;
     break;
-  
+  case SEQ_POKELIST_COMM_EXIT:
+    PLIST_COMM_ExitComm( plist );
+    GFL_OVERLAY_Unload(FS_OVERLAY_ID(pokelist_comm));
+    (*seq) = SEQ_BATTLE_INIT;
+    break;
+    
   //----------------------------------------------------------------------------
   case SEQ_BATTLE_INIT:
     GF_ASSERT_MSG(plist->ret_mode == PL_RET_NORMAL, "plist->ret_mode 不正 %d\n", plist->ret_mode);
