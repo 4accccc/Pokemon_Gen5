@@ -185,6 +185,8 @@
 #define WK_SCENE_D04R0201                16573 /* 0x40bd 古代の城２F：イベント用ワーク */
 #define WK_SCENE_C03P12                  16574 /* 0x40be ヒウンシティ路地：イベント用ワーク */
 #define WK_SCENE_C03P09_SWEETS           16575 /* 0x40bf ヒウンシティ路地：イベント用ワーク */
+#define WK_SCENE_R07_MOVEPOKE            16576 /* 0x40c0 7番道路：移動ポケモンイベント用ワーク */
+#define WK_SCENE_R13Ｒ0103_LEGEND        16577 /* 0x40c1 13番道路：ツチノカミイベント用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

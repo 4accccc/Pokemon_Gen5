@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/10 12:10:23
+#save date:2010/03/12 17:27:16
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d07.wms
 #SECTION START:OBJ_EVENT
@@ -177,7 +177,7 @@ POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_D07_RIVAL_01
 #Event Trigger Work Value
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position

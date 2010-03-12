@@ -99,9 +99,6 @@ EVENT_START		ev_pos_c03r0301_cleaningm_01
 	_TIME_WAIT ( 12 )
 	
 	//エレベータ到着音
-	_SE_PLAY( SEQ_SE_FLD_23 )
-	_TIME_WAIT ( 8 )
-	_SE_STOP( ) 
 	_SE_PLAY( SEQ_SE_FLD_87 )
 	_SE_WAIT()
 	
@@ -122,11 +119,6 @@ EVENT_START		ev_pos_c03r0301_cleaningm_01
 	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
 	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
 	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
-	
-	//エレベータ移動音
-	_SE_PLAY( SEQ_SE_FLD_23 )
-	_TIME_WAIT ( 12 )
-	_SE_STOP( ) 
 	
 	//自機にカメラを戻す
 	_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です

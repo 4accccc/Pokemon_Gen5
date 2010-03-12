@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_r07r0201.h"
-  //.include  "r07r0201.h"
+  .include  "r07r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,14 +21,82 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_r07r0201_mountain_01
 _EVENT_DATA    ev_r07r0201_girl2_01
+_EVENT_DATA    ev_r07r0201_poke_01
+_EVENT_DATA    ev_zone_r07r0201
 _EVENT_DATA_END
 
+//------------------------------注意--------------------------------//
+//																	//
+//	LOCALWORK15を使用しました。同マップ内の使用を禁止します。		//
+//				LOCALWORK15⇒回復処理のチェック						//
+//																	//
+//------------------------------------------------------------------//
+
+/************************************************************/
+/*					ZONE_CHANGE_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_r07r0201
+
+{
+	//バージョンを取得してOBJを変化させる
+	_GET_ROM_VERSION( SCWK_ANSWER )
+	
+	//BlackVERならモンメン
+	IF $SCWK_ANSWER == VERSION_BLACK THEN
+		$OBJCHRWORK0 = POKE24
+	//Whiteならチュリネ
+	ELSE
+		$OBJCHRWORK0 = POKE18
+	ENDIF
+}
+INIT_EVENT_END
 
 /**************************************************************/
 /*MOUNTAIN */
 /**************************************************************/
 EVENT_START   ev_r07r0201_mountain_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0201_mountain_01)
+		_TALK_OBJ_START()
+	
+	IF $LOCALWORK15 == 999 THEN
+		//回復終了後なのでメッセージ表示のみ
+		_BALLOONWIN_OBJMSG( msg_r07r0201_mountain_01,R07R0201_MOUNTAIN_01 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+
+	ELSE
+
+		//休ませるか質問
+		_BALLOONWIN_OBJMSG( msg_r07r0201_mountain_01,R07R0201_MOUNTAIN_01 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_BALLOONWIN_CLOSE()
+
+		//「はい」
+		IF $SCWK_ANSWER == SCR_YES THEN
+
+			//暗転して手持ちポケモンを回復
+			_BLACK_OUT()
+			_DISP_FADE_END_CHECK()
+			_TEMOTI_POKEMON_KAIFUKU()		//回復処理
+			_ME_PLAY( SEQ_ME_ASA )
+			_ME_WAIT()
+			_BLACK_IN()
+			_DISP_FADE_END_CHECK()
+
+			//回復済みチェック用にローカルワークに値を代入
+			$LOCALWORK15 = 999
+
+			_BALLOONWIN_OBJMSG( msg_r07r0201_mountain_01,R07R0201_MOUNTAIN_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		
+		ELSE
+		
+			_BALLOONWIN_OBJMSG( msg_r07r0201_mountain_03,R07R0201_MOUNTAIN_01 )
+			_BALLOONWIN_CLOSE()
+		
+		ENDIF
+
+	ENDIF
 EVENT_END
 
 /**************************************************************/
@@ -37,3 +105,22 @@ EVENT_END
 EVENT_START   ev_r07r0201_girl2_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0201_girl2_01)
 EVENT_END
+
+/************************************************************/
+/*					ZONE_CHANGE_LABEL						*/
+/************************************************************/
+EVENT_START	ev_r07r0201_poke_01
+{
+	//バージョンを取得して会話を分岐させる
+	_GET_ROM_VERSION( SCWK_ANSWER )
+	
+	//BlackVERならモンメン
+	IF $SCWK_ANSWER == VERSION_BLACK THEN
+		_EASY_TALK_POKEVOICE( MONSNO_521, msg_r07r0201_pokemon_01 )
+	
+	//Whiteならチュリネ
+	ELSE
+		_EASY_TALK_POKEVOICE( MONSNO_533, msg_r07r0201_pokemon_01w )
+	ENDIF
+}
+INIT_EVENT_END

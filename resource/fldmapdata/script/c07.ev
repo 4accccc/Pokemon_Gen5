@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_pos_c07_hakase1_01
+_EVENT_DATA    ev_scene_c07_hakase1_01
 _EVENT_DATA    ev_scene_c07_leader7_01
 _EVENT_DATA    ev_c07_rival_01
 _EVENT_DATA    ev_c07_support_01
@@ -34,19 +34,26 @@ _EVENT_DATA    ev_c07_girl2_02
 _EVENT_DATA    ev_c07_boy1_01
 _EVENT_DATA    ev_bg_c07_board_02
 _EVENT_DATA    ev_bg_c07_board_03
+_EVENT_DATA    ev_init_c07
 _EVENT_DATA_END
 
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_c07
+	
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_c07_flag_change:
-//  _END
+	//イベント開始時に
+	IF $WK_SCENE_C07 == 2 THEN
+		_OBJ_POS_CHANGE( C07_SUPPORT_01, 173, 3, 171, DIR_UP )
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*   C07：到着イベント                                        */
 /**************************************************************/
-EVENT_START   ev_pos_c07_hakase1_01
+EVENT_START   ev_scene_c07_hakase1_01
 
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
@@ -60,64 +67,12 @@ EVENT_START   ev_pos_c07_hakase1_01
 	DEFINE_LOCAL LWK_CHECK_NT
 	//なつき度チェック
 	_GET_TEMOTI_NATSUKI  ( LWK_CHECK_NT , LWK_FRONT ) 
-	
-	{
-	//主人公の座標を取得
-	DEFINE_LOCAL  LCW_POSX
-	DEFINE_LOCAL  LCW_POSZ
-	_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-	
-	//アララギ博士歩み寄って話しかける（プレイヤーが下の方にいたら、下を向いて問いかける）
-	IF $LCW_POSZ < 210 THEN
-		_BALLOONWIN_OBJMSG( msg_c07_hakase1_01 , C07_HAKASE1_01)
-		_BALLOONWIN_CLOSE()
-	ELSE
-		_OBJ_ANIME( C07_HAKASE1_01 , C07_hakase1_to_player_01 )
-		_OBJ_ANIME_WAIT()
-		_BALLOONWIN_OBJMSG_POS( msg_c07_hakase1_01 , C07_HAKASE1_01,POS_DOWN  )
-		_BALLOONWIN_CLOSE()
-	ENDIF
-	
-	//主人公も歩みよる
-	SWITCH $LCW_POSZ
-	CASE 206 THEN
-	_OBJ_ANIME( C07_HAKASE1_01, anm_hakase_to_player_z206 )
+
+	_OBJ_ANIME( C07_HAKASE1_01 , C07_hakase1_to_player_01 )
 	_OBJ_ANIME_WAIT()
-	
-	CASE 207 THEN
-	_OBJ_ANIME( C07_HAKASE1_01, anm_hakase_to_player_z207 )
-	_OBJ_ANIME_WAIT()
-	
-	CASE 208 THEN
-	_OBJ_ANIME( C07_HAKASE1_01, anm_hakase_to_player_z208 )
-	_OBJ_ANIME_WAIT()
-	
-	CASE 209 THEN
-	_OBJ_ANIME( C07_HAKASE1_01, anm_hakase_to_player_z209 )
-	_OBJ_ANIME_WAIT()
-	
-	CASE 210 THEN
-	_OBJ_ANIME( C07_HAKASE1_01, anm_hakase_to_player_z210 )
-	_OBJ_ANIME_WAIT()
-	
-	CASE 211 THEN
-	_OBJ_ANIME( C07_HAKASE1_01, anm_hakase_to_player_z211 )
-	_OBJ_ANIME_WAIT()
-	
-	CASE 212 THEN
-	_OBJ_ANIME( C07_HAKASE1_01, anm_hakase_to_player_z212 )
-	_OBJ_ANIME_WAIT()
-	
-	CASE 213 THEN
-	_OBJ_ANIME( C07_HAKASE1_01, anm_hakase_to_player_z213 )
-	_OBJ_ANIME_WAIT()
-	
-	DEFAULT //正面に立った時と同じ処理
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_hakase_to_player_z208 )
-	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_POS( msg_c07_hakase1_01 , C07_HAKASE1_01,POS_DOWN  )
+	_BALLOONWIN_CLOSE()
 		
-	ENDSWITCH
-	}
 	//なつき度によって会話を分岐
 	//70以上
 	IF $LWK_CHECK_NT >= 70 THEN
@@ -182,87 +137,10 @@ EVENT_START   ev_pos_c07_hakase1_01
 EVENT_END
 
 //--------------------------------------------------------------
-//	C07　到着イベント用：アララギ父主人公に接近(下を向く）
-//--------------------------------------------------------------
-_ANIME_LABEL	C07_hakase1_to_player_01
-	_ANIME_DATA	AC_STAY_WALK_D_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
 //	C07　到着イベント用：アララギ父主人公に接近
 //--------------------------------------------------------------
-_ANIME_LABEL	C07_hakase1_to_player_02
+_ANIME_LABEL	C07_hakase1_to_player_01
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	C07　到着イベント用：アララギ父主人公に隣接z206
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_hakase_to_player_z206
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	C07　到着イベント用：アララギ父主人公に隣接z207
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_hakase_to_player_z207
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	C07　到着イベント用：アララギ父主人公に隣接z208
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_hakase_to_player_z208
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	C07　到着イベント用：アララギ父主人公に隣接z209
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_hakase_to_player_z209
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	C07　到着イベント用：アララギ父主人公に隣接z210
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_hakase_to_player_z210
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	C07　到着イベント用：アララギ父主人公に隣接z211
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_hakase_to_player_z211
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	C07　到着イベント用：アララギ父主人公に隣接z212
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_hakase_to_player_z212
-		_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,4
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	C07　到着イベント用：アララギ父主人公に隣接z213
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_hakase_to_player_z213
-		_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,5
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -283,6 +161,7 @@ _ANIME_LABEL	anm_c07_hakase1_03
 //	C07　到着イベント用：アララギ父退場
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c07_hakase1_goodbye
+	_ANIME_DATA	AC_WALK_R_8F,4
 	_ANIME_DATA	AC_WALK_U_8F,8
 	_ANIME_DATA	ACMD_END,0
 
@@ -290,6 +169,9 @@ _ANIME_LABEL	anm_c07_hakase1_goodbye
 /*   C07：リュウラセンイベント開始                             */
 /**************************************************************/
 EVENT_START   ev_scene_c07_leader7_01
+
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
 
 	//======================================//
 	
@@ -318,44 +200,226 @@ EVENT_START   ev_scene_c07_leader7_01
 	_OBJ_ANIME( C07_RIVAL_01 , anm_c07_rival_koutai )
 	_OBJ_ANIME_WAIT()
 	
-	//リュウラセンの塔が鳴いている、ハチク退場
+	//ハチク：だれだ
 	_BALLOONWIN_OBJMSG_POS( msg_c07_leader7_01 , C07_LEADER7_01 , POS_UR )
 	_BALLOONWIN_CLOSE()
+	
+	//サポート：だれ…って？
+	_BALLOONWIN_OBJMSG_POS( msg_c07_white_02 , C07_SUPPORT_01 , POS_DR )
+	_BALLOONWIN_CLOSE()
+	
+	//ハチク：いるのはわかっている
+	_BALLOONWIN_OBJMSG_POS( msg_c07_leader7_02 , C07_LEADER7_01 , POS_UR )
+	_BALLOONWIN_CLOSE()
+	
+	//【仮】ダークトリニティ登場
+	_TIME_WAIT ( 8 )
+	_OBJ_ADD( C07_NINJA_01 )
+	_OBJ_ADD( C07_NINJA_02 )
+	_OBJ_ADD( C07_NINJA_03 )
+	
+	//主人公・サポート・ライバルびっくりする
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_c07_player_surprised )
+	_OBJ_ANIME( C07_SUPPORT_01 , anm_c07_support_surprised )
+	_OBJ_ANIME( C07_RIVAL_01 , anm_c07_rival_surprised )
+	_OBJ_ANIME_WAIT()
+	
+	//ダークトリニティ1：さすがはセッカのジムリーダー
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_ninja1_01 , C07_NINJA_01 , POS_UR )
+	_BALLOONWIN_CLOSE()
+	
+	//ダークトリニティ2：（トレーナー名）だけに伝えるつもりだったがまぁいい
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_ninja2_01 , C07_NINJA_02 , POS_UR )
+	_BALLOONWIN_CLOSE()
+	
+	//ダークトリニティ3：そこでNさまがまっておられる
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_ninja3_01 , C07_NINJA_03 , POS_UL )
+	_BALLOONWIN_CLOSE()
+	
+	//ハチクその場歩き
+	_OBJ_ANIME( C07_LEADER7_01 , anm_c07_leader_steystep_d )
+	_OBJ_ANIME_WAIT()
+	
+	//ハチク：リュウラセンのとう！？
+	_BALLOONWIN_OBJMSG_POS( msg_c07_leader7_03 , C07_LEADER7_01 , POS_UR )
+	_BALLOONWIN_CLOSE()
+	
+	//【仮】ダークトリニティ退場
+	_TIME_WAIT ( 8 )
+	_OBJ_DEL( C07_NINJA_01 )
+	_OBJ_DEL( C07_NINJA_02 )
+	_OBJ_DEL( C07_NINJA_03 )
+	
+	//サポートとライバル、ハチクの方を向く
+	_OBJ_ANIME( C07_SUPPORT_01 , anm_c07_rival_steystep_up )
+	_OBJ_ANIME( C07_RIVAL_01 , anm_c07_rival_steystep_up )
+	_OBJ_ANIME_WAIT()
+	
+	//ハチク：…！ そちらの少年
+	_BALLOONWIN_OBJMSG_POS( msg_c07_leader7_04 , C07_LEADER7_01 , POS_UR )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバル：ぼくも 行きます！
+	_BALLOONWIN_OBJMSG_POS( msg_c07_black_02 , C07_RIVAL_01 , POS_UL )
+	_BALLOONWIN_CLOSE()
+	
+	//ハチク退場
 	_OBJ_ANIME( C07_LEADER7_01 , anm_c07_leader_goodbye )
+	_OBJ_ANIME( C07_RIVAL_01 , anm_c07_rival_goodbye )
 	_OBJ_ANIME_WAIT()
 	
-	//主人公ライバルと向き合う
+	//ライバル退場
+	
+	_OBJ_ANIME_WAIT()
+	
+	//主人公サポートと向き合う
 	_OBJ_ANIME( MMDL_ID_PLAYER , anm_player_to_rival )
-	_OBJ_ANIME( C07_RIVAL_01 , anm_c07_rival_1up )
-	_OBJ_ANIME( C07_SUPPORT_01 , anm_c07_rival_1up )
+	_OBJ_ANIME( C07_SUPPORT_01 , anm_c07_support_to_player )
 	_OBJ_ANIME_WAIT()
 	
-	//ライバルとサポート会話
-	_BALLOONWIN_OBJMSG_POS( msg_c07_black_02 , C07_RIVAL_01 , POS_DL )
-	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG_POS( msg_c07_white_03 , C07_SUPPORT_01 , POS_DL )
-	_BALLOONWIN_CLOSE()
-	_OBJ_ANIME( C07_RIVAL_01 , anm_rival_staystep )
-	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG_POS( msg_c07_black_03 , C07_RIVAL_01 , POS_DL )
+	//サポート：わわわ！
+	_BALLOONWIN_OBJMSG_POS( msg_c07_white_03 , C07_SUPPORT_01 , POS_DR )
 	_BALLOONWIN_CLOSE()
 
-	//ハチクOBJ削除
+	//イベント関連OBJ削除
 	_OBJ_DEL( C07_LEADER7_01 )
+	_OBJ_DEL( C07_RIVAL_01 )
 	
 	//======================================//
 	
-	//D08イベント開始・ジム前POS起動
+	//D08イベント開始
 	$WK_SCENE_C07 = 3
 	
 	//C07ハチク非表示
 	_FLAG_SET( FV_C07_READER7 )
+	_FLAG_SET( FV_C07_RIVAL_01 )
 	//C07GYM0101ハチク非表示
 	_FLAG_SET( FV_C07GYM0101_READER7_01 )
 	
 	//======================================//
 	
 EVENT_END
+
+	
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：プレイヤー外に出てくる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_player_exit
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：ハチク外に出てくる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_leader_exit
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：主人公押しのけられる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_player_koutai
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：ライバルとサポート押しのけられる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_rival_koutai
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：主人公驚く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_player_surprised
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：主人公驚く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_rival_surprised
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：主人公驚く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_support_surprised
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：ハチク外に出てくる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_leader_steystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：ライバル・サポート上を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_rival_steystep_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：ハチク退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_leader_goodbye
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_U_8F,11
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：ライバル退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_rival_goodbye
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_U_8F,12
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：ハチク退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_rival_1up
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+// C07　リュウラセンイベント開始：ライバルその場歩きで興奮を表現
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_rival_staystep
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+// C07　リュウラセンイベント開始：主人公ライバルに向き合う
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_player_to_rival
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+// C07　リュウラセンイベント開始：主人公ライバルに向き合う
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_support_to_player
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /* ライバル                                             */
@@ -459,67 +523,3 @@ EVENT_END
 EVENT_START   ev_bg_c07_board_03
 	_EASY_BGWIN_MSG( msg_c07_gymsign_01, TYPE_POST )
 EVENT_END
-
-//--------------------------------------------------------------
-//	C07　リュウラセンイベント開始：ハチク外に出てくる
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c07_player_exit
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------
-//	C07　リュウラセンイベント開始：ハチク外に出てくる
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c07_leader_exit
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	C07　リュウラセンイベント開始：主人公押しのけられる
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c07_player_koutai
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	C07　リュウラセンイベント開始：ライバルとサポート押しのけられる
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c07_rival_koutai
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	C07　リュウラセンイベント開始：ハチク退場
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c07_leader_goodbye
-	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	AC_WALK_U_8F,10
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	C07　リュウラセンイベント開始：ハチク退場
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c07_rival_1up
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------
-// C07　リュウラセンイベント開始：ライバルその場歩きで興奮を表現
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_rival_staystep
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-// C07　リュウラセンイベント開始：主人公ライバルに向き合う
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_player_to_rival
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0

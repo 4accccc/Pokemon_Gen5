@@ -25,6 +25,9 @@
 #define C07_WOMAN2_01                      7
 #define C07_GIRL2_02                       8
 #define C07_BOY1_01                        9
+#define C07_NINJA_03                      10
+#define C07_NINJA_01                      11
+#define C07_NINJA_02                      12
 
 #endif //ZONE_C07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

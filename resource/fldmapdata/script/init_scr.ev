@@ -111,6 +111,7 @@ init_flags:
 	
 	//C07：ライバル・サポート・ジムクリア後に表示
 	_FLAG_SET( FV_C07_RIVAL_01 )
+	_FLAG_SET( FV_C07_SUPPORT_01 )
 	//C07：ハチク・ジムクリア後に表示
 	_FLAG_SET( FV_C07_READER7 )
 

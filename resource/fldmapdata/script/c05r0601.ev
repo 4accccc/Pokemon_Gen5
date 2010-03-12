@@ -93,6 +93,7 @@ EVENT_END
 /*  R09 ウェートレスの会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_c05r0601_waitress_01
+  	_TALK_OBJ_START()
   	
   	DEFINE_LOCAL	LWK_MILK_NUM
    	DEFINE_LOCAL	LWK_MILK_NUM_SELECT

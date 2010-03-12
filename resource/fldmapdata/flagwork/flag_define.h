@@ -547,7 +547,7 @@
 #define FV_T02_SAGE                        523 /* 0x020b カラクサタウン：七賢者の演説 */
 #define FV_T02_NNN                         524 /* 0x020c カラクサタウン：Nとの出会い */
 #define FV_T02_MAN                         525 /* 0x020d カラクサタウン：群集 */
-#define FV_R03_POKE                        526 /* 0x020e ３番道路：ハカイ団に奪われたポケモン */
+		/* not used   526(0x020e) */
 #define FV_D01_GYM_LEADER                  527 /* 0x020f 廃墟入り口：ジムリーダー */
 #define FV_T02_RIVAL_02                    528 /* 0x0210 カラクサタウン：イベント誘導 */
 #define FV_R02_MOTHER                      529 /* 0x0211 ２番道路：ランニングシューズ入手イベントのママ */
@@ -593,7 +593,7 @@
 #define FV_MUSEUM_TOUNAN                   569 /* 0x0239 博物館：盗難イベントで盗まれるもの */
 #define FV_C03GYM0101_TR01                 570 /* 0x023a Ｃ03虫ジム：トリックアートに隠れているトレーナー（右上） */
 #define FV_C03GYM0101_TR02                 571 /* 0x023b Ｃ03虫ジム：トリックアートに隠れているトレーナー（左下） */
-#define FV_R03_SUPPORT_01                  572 /* 0x023c R03：ストッパーのサポート02 */
+#define FV_R03_SUPPORT_01                  572 /* 0x023c R03：ストッパーのサポート01 */
 #define FV_R03_RIVAL_02                    573 /* 0x023d R03：ライバル02 */
 #define FV_R03R0301_RIVAL_01               574 /* 0x023e R030101：プラズマ団・ライバル */
 #define FV_D07R0201_GYMLEADER05_01         575 /* 0x023f ネジ山：ヤーコンとライバル */
@@ -712,8 +712,8 @@
 #define FV_D04R0201_SAGE2                  688 /* 0x02b0 古代の城２Fの七賢者２ */
 #define FV_C03P09_SWEETS_01                689 /* 0x02b1 ヒウンシティP09：ヒウンアイス行列 */
 #define FV_C03P09_SWEETS_02                690 /* 0x02b2 ヒウンシティP09：ヒウンアイス行列・後列 */
-		/* not used   691(0x02b3) */
-		/* not used   692(0x02b4) */
+#define FV_R03_SUPPORT_02                  691 /* 0x02b3 3番道路：サポート */
+#define FV_R03_SUPPORT_03                  692 /* 0x02b4 3番道路：サポート */
 		/* not used   693(0x02b5) */
 		/* not used   694(0x02b6) */
 		/* not used   695(0x02b7) */

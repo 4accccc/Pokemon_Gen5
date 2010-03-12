@@ -254,7 +254,7 @@ EVENT_START  ev_pos_d07_rival_01
 	_FLAG_SET( FV_D07_RIVAL_01 )
 
 	//D07‚ÌPOS‚ð–³Œø‚É
-	$WK_SCENE_D07_RIVAL_01 = 1
+	$WK_SCENE_D07_RIVAL_01 = 2
 
 	//==================================//
 	
