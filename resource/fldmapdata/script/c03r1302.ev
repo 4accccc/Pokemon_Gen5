@@ -27,6 +27,9 @@ _EVENT_DATA    ev_c03r1302_girl3_01
 _EVENT_DATA    ev_c03r1302_woman2_01
 _EVENT_DATA    ev_c03r1302_rangerw_01
 _EVENT_DATA    ev_c03r1302_trainerw_01
+_EVENT_DATA    ev_c03r1302_fighterw_01
+_EVENT_DATA    ev_c03r1302_rangerm_01
+_EVENT_DATA    ev_c03r1302_boy4_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -61,7 +64,7 @@ EVENT_END
 /* 			girl3	C03R1302							  */
 /**************************************************************/
 EVENT_START		ev_c03r1302_girl3_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1302_girl3_01 )
+	_EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN45, 1, FE_C03R1302_ITEMGET_01 , msg_c03r1302_girl3_01 , msg_c03r1302_girl3_02 , msg_c03r1302_girl3_02 )
 EVENT_END
 
 /**************************************************************/
@@ -95,4 +98,25 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c03r1302_trainerw_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1302_trainerw_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			figtherm	C03R1302							  */
+/**************************************************************/
+EVENT_START		ev_c03r1302_fighterw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1302_fighterw_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			rangerm	C03R1302							  */
+/**************************************************************/
+EVENT_START		ev_c03r1302_rangerm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1302_rangerm_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			boy4	C03R1302							  */
+/**************************************************************/
+EVENT_START		ev_c03r1302_boy4_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1302_boy4_01 )
 EVENT_END
