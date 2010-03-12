@@ -1370,7 +1370,13 @@ static void GHOST_SPARK_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p
   }
 
   // ループ再生開始
-  PMSND_PlaySE( SEQ_SE_FLD_111 );
+  {
+    GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+    GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+    FIELD_SOUND* p_fieldsound = GAMEDATA_GetFieldSound( p_gdata );
+
+    FSND_PlayEnvSE( p_fieldsound, SEQ_SE_FLD_111 );
+  }
   //PMSND_PlaySE( SEQ_SE_FLD_112 );
 }
 
@@ -1381,9 +1387,14 @@ static void GHOST_SPARK_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p
 //-----------------------------------------------------------------------------
 static void GHOST_SPARK_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
 {
-  // ループSEの停止
-  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_111) );
-  //PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_112) );
+  // ループ停止
+  {
+    GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+    GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+    FIELD_SOUND* p_fieldsound = GAMEDATA_GetFieldSound( p_gdata );
+
+    FSND_StopEnvSE( p_fieldsound, SEQ_SE_FLD_111 );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1440,6 +1451,8 @@ typedef struct
   const G3DMAPOBJST* cp_obj;
   u16 se_2_on;
   s16 se_2_time;
+
+  FIELD_SOUND* p_fieldsound;
 } ESPERT_SOUND;
 
 // エスパー部屋星の位置
@@ -1494,6 +1507,11 @@ static void ESPERT_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fiel
   p_wk->cp_obj  = FIELD_BMODEL_MAN_SearchObjStatusPos( p_model_man, BM_SEARCH_ID_NULL, &sc_ESPERT_STAR_SARCH_POS );
   p_wk->p_man         = p_model_man;
 
+  {
+    GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+    GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+    p_wk->p_fieldsound = GAMEDATA_GetFieldSound( p_gdata );
+  }
   GF_ASSERT(p_wk->cp_obj);
   GF_ASSERT(p_wk->p_man);
   
@@ -1527,7 +1545,7 @@ static void ESPERT_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fiel
   {
     if(frame == sc_ESPERT_SE_START_TIMING[i])
     {
-      PMSND_PlaySE( SEQ_SE_FLD_108 );
+      FSND_PlayEnvSE( p_wk->p_fieldsound, SEQ_SE_FLD_108 );
       p_wk->se_2_on = TRUE;
       p_wk->se_2_time = ESPERT_SE_2_TIMING;
       break;
@@ -1538,7 +1556,7 @@ static void ESPERT_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fiel
   if(  p_wk->se_2_on  ){
     p_wk->se_2_time --;
     if( p_wk->se_2_time <= 0 ){
-      PMSND_PlaySE( SEQ_SE_FLD_130 );
+      FSND_PlayEnvSE( p_wk->p_fieldsound, SEQ_SE_FLD_130 );
       p_wk->se_2_on = FALSE;
       p_wk->se_2_time = 0;
     }
@@ -1617,7 +1635,13 @@ const FLDMAPFUNC_DATA c_FLDMAPFUNC_BAD_SOUND =
 static void BAD_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
 {
   // ループ再生開始
-  PMSND_PlaySE( SEQ_SE_FLD_116 );
+  {
+    GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+    GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+    FIELD_SOUND* p_fieldsound = GAMEDATA_GetFieldSound( p_gdata );
+
+    FSND_PlayEnvSE( p_fieldsound, SEQ_SE_FLD_116 );
+  }
 }
 
 
@@ -1628,8 +1652,14 @@ static void BAD_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldma
 //-----------------------------------------------------------------------------
 static void BAD_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
 {
-  // ループSEの停止
-  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_116) );
+  // ループ停止
+  {
+    GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+    GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+    FIELD_SOUND* p_fieldsound = GAMEDATA_GetFieldSound( p_gdata );
+
+    FSND_StopEnvSE( p_fieldsound, SEQ_SE_FLD_116 );
+  }
 }
 
 
