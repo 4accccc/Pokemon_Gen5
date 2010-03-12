@@ -54,9 +54,9 @@ typedef enum
 
 //--------------------------------------------------------------
 /**
- * @brief	//トライアルハウスワーク確保関数
+ * @brief //トライアルハウスワーク確保関数
  * @param   gsys      ゲームシステムポインタ
- * @retval	ptr      TRIAL_HOUSE_WORK_PTR
+ * @retval  ptr      TRIAL_HOUSE_WORK_PTR
 */
 //--------------------------------------------------------------
 TRIAL_HOUSE_WORK_PTR TRIAL_HOUSE_Start(GAMESYS_WORK * gsys)
@@ -82,9 +82,9 @@ TRIAL_HOUSE_WORK_PTR TRIAL_HOUSE_Start(GAMESYS_WORK * gsys)
 
 //--------------------------------------------------------------
 /**
- * @brief	外部セーブに入っているダウンロードデータの種類をワークにセットする
+ * @brief 外部セーブに入っているダウンロードデータの種類をワークにセットする
  * @param   gsys      ゲームシステムポインタ
- * @retval	ptr      TRIAL_HOUSE_WORK_PTR
+ * @retval  ptr      TRIAL_HOUSE_WORK_PTR
 */
 //--------------------------------------------------------------
 static void SetDLDataType( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
@@ -139,10 +139,10 @@ static void SetDLDataType( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
 
 //--------------------------------------------------------------
 /**
- * @brief	トライアルハウスワーク解放関数
+ * @brief トライアルハウスワーク解放関数
  * @param   gsys  ゲームシステムポインタ
- * @param	ptr      TRIAL_HOUSE_WORK_PTR
- * @retval		none
+ * @param ptr      TRIAL_HOUSE_WORK_PTR
+ * @retval    none
 */
 //--------------------------------------------------------------
 void TRIAL_HOUSE_End( GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR *ptr )
@@ -159,11 +159,11 @@ void TRIAL_HOUSE_End( GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR *ptr )
 
 //--------------------------------------------------------------
 /**
- * @brief	トライアルハウス プレイモードのセット
- * @param	ptr      TRIAL_HOUSE_WORK_PTR
+ * @brief トライアルハウス プレイモードのセット
+ * @param ptr      TRIAL_HOUSE_WORK_PTR
  * @param inPlayMode     プレイモード　 TH_PLAYMODE_SINGLE or TH_PLAYMODE_DOUBLE
  * @note  trial_house_scr_def.h参照
- * @retval		none
+ * @retval    none
 */
 //--------------------------------------------------------------
 void TRIAL_HOUSE_SetPlayMode( TRIAL_HOUSE_WORK_PTR ptr, const u32 inPlayMode )
@@ -204,10 +204,10 @@ void TRIAL_HOUSE_SetPlayMode( TRIAL_HOUSE_WORK_PTR ptr, const u32 inPlayMode )
 
 //--------------------------------------------------------------
 /**
- * @brief	トライアルハウス プレイモードのセット
- * @param	ptr      TRIAL_HOUSE_WORK_PTR
+ * @brief トライアルハウス プレイモードのセット
+ * @param ptr      TRIAL_HOUSE_WORK_PTR
  * @param inDLFlg   ダウンロードデータで遊ぶか？　　TRUE:ダウンロードデータ　FALSE:ROMデータ
- * @retval		none
+ * @retval    none
 */
 //--------------------------------------------------------------
 void TRIAL_HOUSE_SetDLFlg( TRIAL_HOUSE_WORK_PTR ptr, const BOOL inDLFlg )
@@ -217,11 +217,11 @@ void TRIAL_HOUSE_SetDLFlg( TRIAL_HOUSE_WORK_PTR ptr, const BOOL inDLFlg )
 
 //--------------------------------------------------------------
 /**
- * @brief	対戦相手の抽選
+ * @brief 対戦相手の抽選
  * @param gsys      ゲームシステムポインタ
- * @param	ptr      TRIAL_HOUSE_WORK_PTR
+ * @param ptr      TRIAL_HOUSE_WORK_PTR
  * @param inBtlCouont   対戦回数　0～4（最大五戦）
- * @retval	obj_id      OBJ見た目     
+ * @retval  obj_id      OBJ見た目     
 */
 //--------------------------------------------------------------
 int TRIAL_HOUSE_MakeTrainer( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount )
@@ -239,10 +239,10 @@ int TRIAL_HOUSE_MakeTrainer( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, const
 
 //--------------------------------------------------------------
 /**
- * @brief	対戦相手の抽選(ＲＯＭデータ)
- * @param	ptr      TRIAL_HOUSE_WORK_PTR
+ * @brief 対戦相手の抽選(ＲＯＭデータ)
+ * @param ptr      TRIAL_HOUSE_WORK_PTR
  * @param inBtlCouont   対戦回数　0～4（最大五戦）
- * @retval	none  
+ * @retval  none  
 */
 //--------------------------------------------------------------
 static void MakeTrainer(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount)
@@ -290,10 +290,10 @@ static void MakeTrainer(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount)
 
 //--------------------------------------------------------------
 /**
- * @brief	対戦相手のセット(ダウンロードデータ)
- * @param	ptr      TRIAL_HOUSE_WORK_PTR
+ * @brief 対戦相手のセット(ダウンロードデータ)
+ * @param ptr      TRIAL_HOUSE_WORK_PTR
  * @param inBtlCouont   対戦回数　0～4（最大五戦）
- * @retval	none    
+ * @retval  none    
 */
 //--------------------------------------------------------------
 static void SetDownLoadData( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount)
@@ -340,9 +340,9 @@ static u16 GetTrainerOBJCode( TRIAL_HOUSE_WORK_PTR ptr )
 
 //--------------------------------------------------------------
 /**
- * @brief	対戦相手の先頭前メッセージ表示
- * @param	ptr      TRIAL_HOUSE_WORK_PTR
- * @retval		none
+ * @brief 対戦相手の先頭前メッセージ表示
+ * @param ptr      TRIAL_HOUSE_WORK_PTR
+ * @retval    none
 */
 //--------------------------------------------------------------
 GMEVENT *TRIAL_HOUSE_CreateBeforeMsgEvt( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
@@ -356,11 +356,11 @@ GMEVENT *TRIAL_HOUSE_CreateBeforeMsgEvt( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PT
 
 //--------------------------------------------------------------
 /**
- * @brief	ビーコンサーチ
- * @param	gsys        ゲームシステムポインタ
+ * @brief ビーコンサーチ
+ * @param gsys        ゲームシステムポインタ
  * @param ptr         トライアルハウスワークポインタ
  * @param outRet      サーチ結果格納バッファ
- * @retval	event     イベントポインタ
+ * @retval  event     イベントポインタ
 */
 //--------------------------------------------------------------
 GMEVENT *TRIAL_HOUSE_CreateBeaconSearchEvt( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, u16* outRet )
@@ -587,7 +587,7 @@ void TRIAL_HOUSE_CalcBtlResult( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, u1
     rec = SaveData_GetRecord(sv);
     //内部で上書きチェックしているので、条件無しで処理してＯＫ
     RECORD_SetThScore(rec, val);
-    RECORD_SetRank(rec, rank);
+    RECORD_SetThRank(rec, rank);
   }
 }
 

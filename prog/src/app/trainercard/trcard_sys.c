@@ -141,8 +141,7 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
   wk->tcp = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TRCARD_CALL_PARAM ) );
   *wk->tcp = *pp;
   wk->tcp->TrCardData = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TR_CARD_DATA ) );
-//  TRAINERCARD_GetSelfData( wk->tcp->TrCardData , pp->gameData , FALSE, wk->tcp->edit_possible, wk->heapId);
-  TRAINERCARD_GetSelfData( wk->tcp->TrCardData , pp->gameData , FALSE, wk->tcp->edit_possible);
+  TRAINERCARD_GetSelfData( wk->tcp->TrCardData , pp->gameData , FALSE, wk->tcp->edit_possible, wk->heapId);
 
   return GFL_PROC_RES_FINISH;
 }
@@ -411,7 +410,18 @@ static int sub_BadgeWait(TR_CARD_SYS* wk)
  * @param   isSendData    
  */
 //=============================================================================================
-void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , const BOOL isSendData, BOOL edit )
+//=============================================================================================
+/**
+ * @brief 自分のトレーナーカードデータを収集する
+ *
+ * @param   cardData    格納するカードデータポインタ
+ * @param   gameData    GAMEDATA
+ * @param   isSendData  通信用データかどうか（TRUE:通信データ）
+ * @param   edit        編集可能データかどうか（TRUE:編集可能　FALSE:不可能）
+ * @param   heapId      ヒープＩＤ
+ */
+//=============================================================================================
+void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , const BOOL isSendData, BOOL edit, HEAPID heapId )
 {
   u8 i,flag;
   TR_CARD_SV_PTR trc_ptr = TRCSave_GetSaveDataPtr(GAMEDATA_GetSaveControlWork(gameData));
@@ -522,12 +532,9 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   //通信交換  ワイヤレス+WiFi
   cardData->CommTrade = RECORD_Get(rec, RECID_COMM_TRADE)+RECORD_Get(rec, RECID_WIFI_TRADE);
   
-  //スコア
-  cardData->Score = RECORD_Score_Get( rec );
-  
-  //FIXME 図鑑処理
+  //図鑑処理
   cardData->PokeBookFlg = TRUE;
-//  cardData->PokeBook    = ZUKANSAVE_GetZukanPokeGetCount( zukan, wk->heapId );
+  cardData->PokeBook    = ZUKANSAVE_GetZukanPokeGetCount( zukan, heapId );
 
   //サインデータの取得
   //サインデータの有効/無効フラグを取得(金銀ローカルでのみ有効)

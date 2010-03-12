@@ -240,7 +240,7 @@ VMCMD_RESULT EvCmdTH_SetRank( VMHANDLE *core, void *wk )
   {
     RECORD *rec;
     rec = SaveData_GetRecord( GAMEDATA_GetSaveControlWork( gamedata ) );
-    RECORD_SetRank(rec, rank);
+    RECORD_SetThRank(rec, rank);
   }
 
   return VMCMD_RESULT_CONTINUE;
@@ -266,7 +266,7 @@ VMCMD_RESULT EvCmdTH_GetRank( VMHANDLE *core, void *wk )
   {
     RECORD *rec;
     rec = SaveData_GetRecord( GAMEDATA_GetSaveControlWork( gamedata ) );
-    *rank = RECORD_GetRank(rec);
+    *rank = RECORD_GetThRank(rec);
   }
 
   return VMCMD_RESULT_CONTINUE;
