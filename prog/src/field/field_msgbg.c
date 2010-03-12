@@ -1,9 +1,9 @@
 //======================================================================
 /**
- * @file	field_msgbg.c
- * @brief	フィールド　メッセージBG関連
- * @authaor	kagaya
- * @date	2008.12.11
+ * @file  field_msgbg.c
+ * @brief フィールド　メッセージBG関連
+ * @authaor kagaya
+ * @date  2008.12.11
  */
 //======================================================================
 #include <gflib.h>
@@ -30,7 +30,7 @@
 
 
 //======================================================================
-//	define
+//  define
 //======================================================================
 #ifdef DEBUG_ONLY_FOR_yoshida
 #define TEST_TALKMSGWIN_TYPE (TALKMSGWIN_TYPE_GIZA)
@@ -42,13 +42,13 @@
 #define DEBUG_FLDMSGBG
 #endif
 
-#define FLDMSGBG_BGFRAME (FLDBG_MFRM_MSG)	///<使用BGフレーム
+#define FLDMSGBG_BGFRAME (FLDBG_MFRM_MSG) ///<使用BGフレーム
 #define FLDMSGBG_BGFRAME_BLD (FLDBG_MFRM_EFF1) ///<使用BGフレーム 半透明用
 
-#define FLDMSGBG_PRINT_MAX (4)				///<PRINT関連要素数最大
+#define FLDMSGBG_PRINT_MAX (4)        ///<PRINT関連要素数最大
 #define FLDMSGBG_PRINT_STREAM_MAX (1) ///<PRINT_STREAM稼働数
 
-#define FLDMSGBG_STRLEN (128)				///<文字列長さ標準
+#define FLDMSGBG_STRLEN (128)       ///<文字列長さ標準
 
 #define SPWIN_HEIGHT_FONT_SPACE (2)
 
@@ -97,7 +97,7 @@ typedef enum
 }CURSOR_STATE;
 
 //======================================================================
-//	typedef struct
+//  typedef struct
 //======================================================================
 //--------------------------------------------------------------
 /// KEYWAIT_CURSOR_WORK
@@ -115,36 +115,36 @@ typedef struct
 }KEYWAIT_CURSOR_WORK;
 
 //--------------------------------------------------------------
-///	FLDMSGPRINT
+/// FLDMSGPRINT
 //--------------------------------------------------------------
 struct _TAG_FLDMSGPRINT
 {
-	FLDMSGBG *fmb;
-	
-	BOOL printTransFlag;
-	GFL_FONT *fontHandle;	//FLDMSGBGから
-	PRINT_QUE *printQue;	//FLDMSGBGから
-	GFL_MSGDATA *msgData;	//ユーザーから
-	GFL_BMPWIN *bmpwin;		//ユーザーから
-	
-	STRBUF *strBuf;
-	PRINT_UTIL printUtil;
+  FLDMSGBG *fmb;
+  
+  BOOL printTransFlag;
+  GFL_FONT *fontHandle; //FLDMSGBGから
+  PRINT_QUE *printQue;  //FLDMSGBGから
+  GFL_MSGDATA *msgData; //ユーザーから
+  GFL_BMPWIN *bmpwin;   //ユーザーから
+  
+  STRBUF *strBuf;
+  PRINT_UTIL printUtil;
 };
 
 //--------------------------------------------------------------
-///	FLDMSGBG
+/// FLDMSGBG
 //--------------------------------------------------------------
 struct _TAG_FLDMSGBG
 {
-	HEAPID heapID; //u16
-	u16 bgFrame;
+  HEAPID heapID; //u16
+  u16 bgFrame;
   
   u16 bgFrameBld;
-	u16 deriveWin_plttNo;
+  u16 deriveWin_plttNo;
   
-	GFL_FONT *fontHandle;
-	PRINT_QUE *printQue;
-	FLDMSGPRINT msgPrintTbl[FLDMSGBG_PRINT_MAX];
+  GFL_FONT *fontHandle;
+  PRINT_QUE *printQue;
+  FLDMSGPRINT msgPrintTbl[FLDMSGBG_PRINT_MAX];
   
   FLDSUBMSGWIN *subMsgWinTbl[FLDSUBMSGWIN_MAX];
   
@@ -159,36 +159,36 @@ struct _TAG_FLDMSGBG
 };
 
 //--------------------------------------------------------------
-///	FLDMSGWIN
+/// FLDMSGWIN
 //--------------------------------------------------------------
 struct _TAG_FLDMSGWIN
 {
-	GFL_BMPWIN *bmpwin;		//ユーザーから
-	FLDMSGPRINT *msgPrint;
-	FLDMSGBG *fmb;
+  GFL_BMPWIN *bmpwin;   //ユーザーから
+  FLDMSGPRINT *msgPrint;
+  FLDMSGBG *fmb;
 };
 
 //--------------------------------------------------------------
-///	FLDSYSWIN
+/// FLDSYSWIN
 //--------------------------------------------------------------
 struct _TAG_FLDSYSWIN
 {
-	GFL_BMPWIN *bmpwin;		//ユーザーから
-	FLDMSGPRINT *msgPrint;
-	FLDMSGBG *fmb;
+  GFL_BMPWIN *bmpwin;   //ユーザーから
+  FLDMSGPRINT *msgPrint;
+  FLDMSGBG *fmb;
 };
 
 //--------------------------------------------------------------
-///	FLDMENUFUNC
+/// FLDMENUFUNC
 //--------------------------------------------------------------
 struct _TAG_FLDMENUFUNC
 {
-	FLDMSGBG *fmb;
-	FLDMSGPRINT *msgPrint;
-	GFL_BMPWIN *bmpwin;
-	
-	BMP_MENULIST_DATA *pMenuListData;
-	BMPMENULIST_WORK *pMenuListWork;
+  FLDMSGBG *fmb;
+  FLDMSGPRINT *msgPrint;
+  GFL_BMPWIN *bmpwin;
+  
+  BMP_MENULIST_DATA *pMenuListData;
+  BMPMENULIST_WORK *pMenuListWork;
 };
 
 //--------------------------------------------------------------
@@ -204,31 +204,31 @@ struct _TAG_FLDMSGPRINT_STREAM
 };
 
 //--------------------------------------------------------------
-///	FLDMSGWIN_STREAM
+/// FLDMSGWIN_STREAM
 //--------------------------------------------------------------
 struct _TAG_FLDMSGWIN_STREAM
 {
-	GFL_BMPWIN *bmpwin;
-	FLDMSGPRINT_STREAM *msgPrintStream;
+  GFL_BMPWIN *bmpwin;
+  FLDMSGPRINT_STREAM *msgPrintStream;
   FLDMSGPRINT *msgPrint;
   GFL_MSGDATA *msgData; //ユーザーから
   STRBUF *strBuf;
-	FLDMSGBG *fmb;
+  FLDMSGBG *fmb;
    
   KEYWAIT_CURSOR_WORK cursor_work;
 };
 
 //--------------------------------------------------------------
-///	FLDSYSWIN_STREAM
+/// FLDSYSWIN_STREAM
 //--------------------------------------------------------------
 struct _TAG_FLDSYSWIN_STREAM
 {
-	GFL_BMPWIN *bmpwin;
-	FLDMSGPRINT_STREAM *msgPrintStream;
+  GFL_BMPWIN *bmpwin;
+  FLDMSGPRINT_STREAM *msgPrintStream;
   FLDMSGPRINT *msgPrint;
   GFL_MSGDATA *msgData; //ユーザーから
   STRBUF *strBuf;
-	FLDMSGBG *fmb;
+  FLDMSGBG *fmb;
    
   KEYWAIT_CURSOR_WORK cursor_work;
 };
@@ -260,19 +260,19 @@ struct _TAG_FLDBGWIN
 //--------------------------------------------------------------
 struct _TAG_FLDSPWIN
 {
-	GFL_BMPWIN *bmpwin;
+  GFL_BMPWIN *bmpwin;
   STRBUF *strBuf;
-	FLDMSGBG *fmb;
+  FLDMSGBG *fmb;
   
   GFL_BMP_DATA *bmp_bg;
   KEYWAIT_CURSOR_WORK cursor_work;
 };
 
 //======================================================================
-//	proto
+//  proto
 //======================================================================
 static void FldMenuFuncH_BmpMenuListH(
-	BMPMENULIST_HEADER *menuH, const FLDMENUFUNC_HEADER *fmenuH );
+  BMPMENULIST_HEADER *menuH, const FLDMENUFUNC_HEADER *fmenuH );
 
 static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
     FLDMSGPRINT_STREAM *stm );
@@ -314,7 +314,7 @@ static void setBGResource( FLDMSGBG *fmb );
 static void setBlendAlpha( BOOL on );
 
 static GFL_BMPWIN * winframe_InitBmp( u32 bgFrame, HEAPID heapID,
-	u16 pos_x, u16 pos_y, u16 size_x, u16 size_y, u16 pltt_no );
+  u16 pos_x, u16 pos_y, u16 size_x, u16 size_y, u16 pltt_no );
 static void winframe_DeleteBmp( GFL_BMPWIN *bmpwin );
 static void winframe_SetPaletteBlack( u32 heapID );
 static void winframe_SetPaletteWhith( u32 heapID );
@@ -324,6 +324,8 @@ static FLDSUBMSGWIN * FldMsgBG_DeleteFldSubMsgWin( FLDMSGBG *fmb, int id );
 
 static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo;
 //static const u8 ALIGN4 skip_cursor_Character[128];
+static void transBGResource( int bgFrame, HEAPID heapID );
+
 
 #ifdef DEBUG_FLDMSGBG
 static void DEBUG_AddCountPrintTCB( FLDMSGBG *fmb );
@@ -336,7 +338,7 @@ static void DEBUG_CheckCountPrintTCB( FLDMSGBG *fmb );
 #endif
 
 //======================================================================
-//	FLDMSGBG	フィールドメッセージBG関連
+//  FLDMSGBG  フィールドメッセージBG関連
 //======================================================================
 //--------------------------------------------------------------
 //  10月ROM用 仮対処 ウィンドウの縁カラーを無効に 0x50001a0
@@ -372,48 +374,48 @@ static void debug_ROM091030_WindowColorON( HEAPID heapID )
 //--------------------------------------------------------------
 /**
  * FLDMSGBG 作成
- * @param	heapID	HEAPID
+ * @param heapID  HEAPID
  * @param g3Dcamera GFL_G3D_CAMERA* 吹き出しウィンドウで使用 NULL=使用しない
- * @retval	FLDMAPBG	FLDMAPBG*
+ * @retval  FLDMAPBG  FLDMAPBG*
  */
 //--------------------------------------------------------------
 FLDMSGBG * FLDMSGBG_Create( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
 {
-	FLDMSGBG *fmb;
-	
-	fmb = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDMSGBG) );
-	fmb->heapID = heapID;
+  FLDMSGBG *fmb;
   
-//	fmb->bgFrame = BGFRAME_ERROR;
-	fmb->bgFrame = FLDMSGBG_BGFRAME;
+  fmb = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDMSGBG) );
+  fmb->heapID = heapID;
+  
+//  fmb->bgFrame = BGFRAME_ERROR;
+  fmb->bgFrame = FLDMSGBG_BGFRAME;
   fmb->bgFrameBld = FLDMSGBG_BGFRAME_BLD;
-	fmb->g3Dcamera = g3Dcamera;
+  fmb->g3Dcamera = g3Dcamera;
   
-  {	//font
-		fmb->fontHandle = GFL_FONT_Create(
-			ARCID_FONT,
+  { //font
+    fmb->fontHandle = GFL_FONT_Create(
+      ARCID_FONT,
 //    NARC_font_large_nftr, //旧フォントID
       NARC_font_large_gftr, //新フォントID
-			GFL_FONT_LOADTYPE_FILE, FALSE, fmb->heapID );
-	}
-	
-	{	//print
-		fmb->printQue = PRINTSYS_QUE_Create( fmb->heapID );
-	}
-	
+      GFL_FONT_LOADTYPE_FILE, FALSE, fmb->heapID );
+  }
+  
+  { //print
+    fmb->printQue = PRINTSYS_QUE_Create( fmb->heapID );
+  }
+  
   { //PRINT_STREAM TCB
     fmb->printTCBLSys = GFL_TCBL_Init(
         fmb->heapID, fmb->heapID, FLDMSGBG_PRINT_STREAM_MAX, 4 );
   }
   
   //FLDMSGBG_SetupResource( fmb );
-	return( fmb );
+  return( fmb );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGBG リソースセットアップ
- * @param	fmb FLDMSGBG
+ * @param fmb FLDMSGBG
  * @retval nothing
  */
 //--------------------------------------------------------------
@@ -424,16 +426,30 @@ void FLDMSGBG_SetupResource( FLDMSGBG *fmb )
 
 //--------------------------------------------------------------
 /**
+ * FLDMSGBG 画面初期化は行わずVRAMリソースのみ復元するための転送
+ * @param int     bgFrame
+ * @param HEAPID  heapID
+ * @retval none
+ */
+//--------------------------------------------------------------
+void FLDMSGBG_TransResource( int bgFrame, HEAPID heapID )
+{
+  transBGResource( bgFrame, heapID );
+
+}
+
+//--------------------------------------------------------------
+/**
  * FLDMSGBG 削除
- * @param	fmb	FLDMSGBG
- * @retval	nothing
+ * @param fmb FLDMSGBG
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGBG_Delete( FLDMSGBG *fmb )
 {
-	int i = 0;
-	FLDMSGPRINT *msgPrint = fmb->msgPrintTbl;
-	
+  int i = 0;
+  FLDMSGPRINT *msgPrint = fmb->msgPrintTbl;
+  
   if( fmb->talkMsgWinSys != NULL ){
     TALKMSGWIN_SystemDelete( fmb->talkMsgWinSys );
   }
@@ -442,34 +458,34 @@ void FLDMSGBG_Delete( FLDMSGBG *fmb )
     DEBUG_CheckCountPrintTCB( fmb );
     GFL_TCBL_Exit( fmb->printTCBLSys );
   }
-	
+  
   if( fmb->bgFrame != BGFRAME_ERROR ){
     GFL_BG_FillCharacterRelease( fmb->bgFrame, 1, 0 );
-	  GFL_BG_FreeBGControl( fmb->bgFrame );
+    GFL_BG_FreeBGControl( fmb->bgFrame );
   }
-	
-	do{
-		#if 0
-		if( msgPrint->msgData != NULL ){
-			GFL_MSG_Delete( msgPrint->msgData );
-		}
-		#endif
-		if( msgPrint->strBuf != NULL ){
-			GFL_STR_DeleteBuffer( msgPrint->strBuf );
-		}
-		msgPrint++;
-		i++;
-	}while( i < FLDMSGBG_PRINT_MAX );
-	
+  
+  do{
+    #if 0
+    if( msgPrint->msgData != NULL ){
+      GFL_MSG_Delete( msgPrint->msgData );
+    }
+    #endif
+    if( msgPrint->strBuf != NULL ){
+      GFL_STR_DeleteBuffer( msgPrint->strBuf );
+    }
+    msgPrint++;
+    i++;
+  }while( i < FLDMSGBG_PRINT_MAX );
+  
   if( fmb->printQue != NULL ){
-	  PRINTSYS_QUE_Delete( fmb->printQue );
+    PRINTSYS_QUE_Delete( fmb->printQue );
   }
   
   if( fmb->fontHandle != NULL ){
-	  GFL_FONT_Delete( fmb->fontHandle );
+    GFL_FONT_Delete( fmb->fontHandle );
   }
 
-	GFL_HEAP_FreeMemory( fmb );
+  GFL_HEAP_FreeMemory( fmb );
 }
 
 //--------------------------------------------------------------
@@ -487,7 +503,7 @@ void FLDMSGBG_ReleaseBGResouce( FLDMSGBG *fmb )
   }
   
   if( fmb->bgFrame != BGFRAME_ERROR ){
-	  GFL_BG_FillCharacterRelease( fmb->bgFrame, 1, 0 );
+    GFL_BG_FillCharacterRelease( fmb->bgFrame, 1, 0 );
     GFL_BG_FreeBGControl( fmb->bgFrame );
     fmb->bgFrame = BGFRAME_ERROR;
   }
@@ -518,14 +534,14 @@ void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb )
 //--------------------------------------------------------------
 /**
  * FLDMSGBG プリント処理
- * @param	fmb	FLDMSGBG
- * @retval	nothing
+ * @param fmb FLDMSGBG
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGBG_PrintMain( FLDMSGBG *fmb )
 {
-	int i;
-	PRINTSYS_QUE_Main( fmb->printQue );
+  int i;
+  PRINTSYS_QUE_Main( fmb->printQue );
   
   {
     FLDSUBMSGWIN **subWin = fmb->subMsgWinTbl;
@@ -537,14 +553,14 @@ void FLDMSGBG_PrintMain( FLDMSGBG *fmb )
   }
 
   {
-	  FLDMSGPRINT *msgPrint = fmb->msgPrintTbl;
-	  for( i = 0; i < FLDMSGBG_PRINT_MAX; i++, msgPrint++ ){
-		  if( msgPrint->printQue != NULL ){
-			  msgPrint->printTransFlag = PRINT_UTIL_Trans(
-				  &msgPrint->printUtil, msgPrint->printQue );
-		  }
+    FLDMSGPRINT *msgPrint = fmb->msgPrintTbl;
+    for( i = 0; i < FLDMSGBG_PRINT_MAX; i++, msgPrint++ ){
+      if( msgPrint->printQue != NULL ){
+        msgPrint->printTransFlag = PRINT_UTIL_Trans(
+          &msgPrint->printUtil, msgPrint->printQue );
+      }
     }
-	}
+  }
   
   GFL_TCBL_Main( fmb->printTCBLSys );
   
@@ -571,58 +587,58 @@ void FLDMSGBG_PrintG3D( FLDMSGBG *fmb )
 //--------------------------------------------------------------
 /**
  * FLDMSGBG プリントキューに貯まっている処理を全てクリア
- * @param	fmb	FLDMSGBG
- * @retval	nothing
+ * @param fmb FLDMSGBG
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGBG_ClearPrintQue( FLDMSGBG *fmb )
 {
-	PRINTSYS_QUE_Clear( fmb->printQue );
+  PRINTSYS_QUE_Clear( fmb->printQue );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGBG プリントキューに貯まっている処理を全て実行
- * @param	fmb	FLDMSGBG
- * @retval	nothing
+ * @param fmb FLDMSGBG
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGBG_AllPrint( FLDMSGBG *fmb )
 {
-	while( FLDMSGBG_CheckFinishPrint(fmb) != TRUE ){
-		FLDMSGBG_PrintMain( fmb );
-	}
+  while( FLDMSGBG_CheckFinishPrint(fmb) != TRUE ){
+    FLDMSGBG_PrintMain( fmb );
+  }
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGBG プリントキューの処理が全て完了しているかチェック
- * @param	fmb	FLDMSGBG
- * @retval	BOOL TRUE=完了
+ * @param fmb FLDMSGBG
+ * @retval  BOOL TRUE=完了
  */
 //--------------------------------------------------------------
 BOOL FLDMSGBG_CheckFinishPrint( FLDMSGBG *fmb )
 {
-	return( PRINTSYS_QUE_IsFinished(fmb->printQue) );
+  return( PRINTSYS_QUE_IsFinished(fmb->printQue) );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGBG 使用しているPRINT_QUEを返す
- * @param	fmb	FLDMSGBG
- * @retval	PRINT_QUE*
+ * @param fmb FLDMSGBG
+ * @retval  PRINT_QUE*
  */
 //--------------------------------------------------------------
 PRINT_QUE * FLDMSGBG_GetPrintQue( FLDMSGBG *fmb )
 {
-	return( fmb->printQue );
+  return( fmb->printQue );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGBG 使用しているGFL_FONTを返す
- * @param	fmb	FLDMSGBG
- * @retval	GFL_FONT*
+ * @param fmb FLDMSGBG
+ * @retval  GFL_FONT*
  */
 //--------------------------------------------------------------
 GFL_FONT * FLDMSGBG_GetFontHandle( FLDMSGBG *fmb )
@@ -634,17 +650,17 @@ GFL_FONT * FLDMSGBG_GetFontHandle( FLDMSGBG *fmb )
 /**
  * FLDMSGBG FLDMSGBGで使用しているHEAPIDでGFL_MSGDATA初期化。
  * 戻り値GFL_MSGDATAの削除は各自で行う事。
- * @param	fmb	FLDMSGBG
- * @param	arcDatIDMsg	メッセージが含まれるアーカイブデータID
- * @retval	GFL_MSGDATA*
+ * @param fmb FLDMSGBG
+ * @param arcDatIDMsg メッセージが含まれるアーカイブデータID
+ * @retval  GFL_MSGDATA*
  */
 //--------------------------------------------------------------
 GFL_MSGDATA * FLDMSGBG_CreateMSGDATA( FLDMSGBG *fmb, u32 arcDatIDMsg )
 {
-	GFL_MSGDATA *msgData;
-	msgData = GFL_MSG_Create(
-		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, arcDatIDMsg, fmb->heapID );
-	return( msgData );
+  GFL_MSGDATA *msgData;
+  msgData = GFL_MSG_Create(
+    GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, arcDatIDMsg, fmb->heapID );
+  return( msgData );
 }
 
 ////--------------------------------------------------------------
@@ -662,151 +678,151 @@ void FLDMSGBG_DeleteMSGDATA( GFL_MSGDATA *msgData )
 }
 
 //======================================================================
-//	FLDMSGPRINT	フィールド文字表示関連
+//  FLDMSGPRINT フィールド文字表示関連
 //======================================================================
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT プリント設定
- * @param	fmb	FLDMSGBG
- * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
- * @param	bmpwin	表示する初期化済みのGFL_BMPWIN
- * @retval	FLDMSGPRINT*
+ * @param fmb FLDMSGBG
+ * @param msgData 表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @param bmpwin  表示する初期化済みのGFL_BMPWIN
+ * @retval  FLDMSGPRINT*
  */
 //--------------------------------------------------------------
 FLDMSGPRINT * FLDMSGPRINT_SetupPrint(
-	FLDMSGBG *fmb, GFL_MSGDATA *msgData, GFL_BMPWIN *bmpwin )
+  FLDMSGBG *fmb, GFL_MSGDATA *msgData, GFL_BMPWIN *bmpwin )
 {
-	int i = 0;
-	FLDMSGPRINT *msgPrint = fmb->msgPrintTbl;
-	
-	do{
-		if( msgPrint->printQue == NULL ){
-			msgPrint->fmb = fmb;
-			msgPrint->bmpwin = bmpwin;
-			msgPrint->printTransFlag = TRUE;
-			msgPrint->fontHandle = fmb->fontHandle;
-			msgPrint->printQue = fmb->printQue;
-			msgPrint->strBuf = GFL_STR_CreateBuffer(
-					FLDMSGBG_STRLEN, fmb->heapID );
-			#if 0
-			msgPrint->msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
-					ARCID_MESSAGE, arcDatIDMsg, fmb->heapID );
-			#else
-			msgPrint->msgData = msgData;
-			#endif
-			PRINT_UTIL_Setup( &msgPrint->printUtil, bmpwin );
-			return( msgPrint );
-		}
-		msgPrint++;
-		i++;
-	}while( i < FLDMSGBG_PRINT_MAX );
-	
-	GF_ASSERT( 0 );
-	return( NULL );
+  int i = 0;
+  FLDMSGPRINT *msgPrint = fmb->msgPrintTbl;
+  
+  do{
+    if( msgPrint->printQue == NULL ){
+      msgPrint->fmb = fmb;
+      msgPrint->bmpwin = bmpwin;
+      msgPrint->printTransFlag = TRUE;
+      msgPrint->fontHandle = fmb->fontHandle;
+      msgPrint->printQue = fmb->printQue;
+      msgPrint->strBuf = GFL_STR_CreateBuffer(
+          FLDMSGBG_STRLEN, fmb->heapID );
+      #if 0
+      msgPrint->msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+          ARCID_MESSAGE, arcDatIDMsg, fmb->heapID );
+      #else
+      msgPrint->msgData = msgData;
+      #endif
+      PRINT_UTIL_Setup( &msgPrint->printUtil, bmpwin );
+      return( msgPrint );
+    }
+    msgPrint++;
+    i++;
+  }while( i < FLDMSGBG_PRINT_MAX );
+  
+  GF_ASSERT( 0 );
+  return( NULL );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT プリント削除
- * @param	msgPrint	FLDMSGPRINT FLDMSGPRINT_SetupPrint()の戻り値
- * @retval	nothing 
+ * @param msgPrint  FLDMSGPRINT FLDMSGPRINT_SetupPrint()の戻り値
+ * @retval  nothing 
  * FLDMSGPRINT_SetupPrint()で指定したmsgData,bmpwinの削除は各自で行う事。
  */
 //--------------------------------------------------------------
 void FLDMSGPRINT_Delete( FLDMSGPRINT *msgPrint )
 {
-	msgPrint->fontHandle = NULL;
-	msgPrint->printQue = NULL;
-	GFL_STR_DeleteBuffer( msgPrint->strBuf );
-	msgPrint->strBuf = NULL;
-	#if 0
-	GFL_MSG_Delete( msgPrint->msgData );
-	#endif
-	msgPrint->msgData = NULL;
+  msgPrint->fontHandle = NULL;
+  msgPrint->printQue = NULL;
+  GFL_STR_DeleteBuffer( msgPrint->strBuf );
+  msgPrint->strBuf = NULL;
+  #if 0
+  GFL_MSG_Delete( msgPrint->msgData );
+  #endif
+  msgPrint->msgData = NULL;
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT プリント
- * @param	msgPrint	FLDMSGPRINT
- * @param	x		表示X座標
- * @param	y		表示Y座標
- * @param	strID	メッセージデータ 文字列ID
- * @retval	nothing
+ * @param msgPrint  FLDMSGPRINT
+ * @param x   表示X座標
+ * @param y   表示Y座標
+ * @param strID メッセージデータ 文字列ID
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGPRINT_Print( FLDMSGPRINT *msgPrint, u32 x, u32 y, u32 strID )
 {
-	GF_ASSERT( msgPrint->msgData );
-	GFL_MSG_GetString( msgPrint->msgData, strID, msgPrint->strBuf );
-	PRINT_UTIL_Print( &msgPrint->printUtil, msgPrint->printQue,
-		x, y, msgPrint->strBuf, msgPrint->fontHandle );		
+  GF_ASSERT( msgPrint->msgData );
+  GFL_MSG_GetString( msgPrint->msgData, strID, msgPrint->strBuf );
+  PRINT_UTIL_Print( &msgPrint->printUtil, msgPrint->printQue,
+    x, y, msgPrint->strBuf, msgPrint->fontHandle );   
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT プリント カラー指定有り
- * @param	msgPrint	FLDMSGPRINT
- * @param	x		表示X座標
- * @param	y		表示Y座標
- * @param	strID	メッセージデータ 文字列ID
+ * @param msgPrint  FLDMSGPRINT
+ * @param x   表示X座標
+ * @param y   表示Y座標
+ * @param strID メッセージデータ 文字列ID
  * @param color PRINTSYS_LSB
- * @retval	nothing
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGPRINT_PrintColor(
     FLDMSGPRINT *msgPrint, u32 x, u32 y, u32 strID, PRINTSYS_LSB color )
 {
-	GF_ASSERT( msgPrint->msgData );
-	GFL_MSG_GetString( msgPrint->msgData, strID, msgPrint->strBuf );
+  GF_ASSERT( msgPrint->msgData );
+  GFL_MSG_GetString( msgPrint->msgData, strID, msgPrint->strBuf );
   PRINT_UTIL_PrintColor( &msgPrint->printUtil, msgPrint->printQue,
-		x, y, msgPrint->strBuf, msgPrint->fontHandle, color );		
+    x, y, msgPrint->strBuf, msgPrint->fontHandle, color );    
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT プリント　STRBUF指定
- * @param	msgPrint	FLDMSGPRINT
- * @param	x		表示X座標
- * @param	y		表示Y座標
- * @param	strBuf	表示するSTRBUF
- * @retval	nothing
+ * @param msgPrint  FLDMSGPRINT
+ * @param x   表示X座標
+ * @param y   表示Y座標
+ * @param strBuf  表示するSTRBUF
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGPRINT_PrintStrBuf(
-		FLDMSGPRINT *msgPrint, u32 x, u32 y, STRBUF *strBuf )
+    FLDMSGPRINT *msgPrint, u32 x, u32 y, STRBUF *strBuf )
 {
-	PRINT_UTIL_Print( &msgPrint->printUtil, msgPrint->printQue,
-		x, y, strBuf, msgPrint->fontHandle );		
+  PRINT_UTIL_Print( &msgPrint->printUtil, msgPrint->printQue,
+    x, y, strBuf, msgPrint->fontHandle );   
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT プリント　STRBUF指定、カラー指定あり、GFL_FONT外部渡し
- * @param	msgPrint	FLDMSGPRINT
- * @param	x		表示X座標
- * @param	y		表示Y座標
- * @param	strBuf	表示するSTRBUF
+ * @param msgPrint  FLDMSGPRINT
+ * @param x   表示X座標
+ * @param y   表示Y座標
+ * @param strBuf  表示するSTRBUF
  * @param color PRINTSYS_LSB
- * @retval	nothing
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGPRINT_PrintStrBufColorFontHandle( FLDMSGPRINT *msgPrint,
     u32 x, u32 y, STRBUF *strBuf, PRINTSYS_LSB color, GFL_FONT *fontHandle )
 {
   PRINT_UTIL_PrintColor( &msgPrint->printUtil, msgPrint->printQue,
-		x, y, strBuf, fontHandle, color );		
+    x, y, strBuf, fontHandle, color );    
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT プリント　STRBUF指定、カラー指定あり
- * @param	msgPrint	FLDMSGPRINT
- * @param	x		表示X座標
- * @param	y		表示Y座標
- * @param	strBuf	表示するSTRBUF
+ * @param msgPrint  FLDMSGPRINT
+ * @param x   表示X座標
+ * @param y   表示Y座標
+ * @param strBuf  表示するSTRBUF
  * @param color PRINTSYS_LSB
- * @retval	nothing
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGPRINT_PrintStrBufColor( FLDMSGPRINT *msgPrint,
@@ -818,172 +834,172 @@ void FLDMSGPRINT_PrintStrBufColor( FLDMSGPRINT *msgPrint,
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT　プリント転送チェック
- * @param	msgPrint	FLDMSGPRINT
- * @retval	BOOL	TRUE=転送終了
+ * @param msgPrint  FLDMSGPRINT
+ * @retval  BOOL  TRUE=転送終了
  */
 //--------------------------------------------------------------
 BOOL FLDMSGPRINT_CheckPrintTrans( FLDMSGPRINT *msgPrint )
 {
-	return( msgPrint->printTransFlag );
+  return( msgPrint->printTransFlag );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT 表示するビットマップウィンドウを変更する
- * @param	msgPrint	FLDMSGPRINT
- * @param	bmpwin	表示する初期化済みのGFL_BMPWIN
- * @retval	nothing
+ * @param msgPrint  FLDMSGPRINT
+ * @param bmpwin  表示する初期化済みのGFL_BMPWIN
+ * @retval  nothing
  * 以前に指定したbmpwinの削除は各自で行う事。
  */
 //--------------------------------------------------------------
 void FLDMSGPRINT_ChangeBmpWin( FLDMSGPRINT *msgPrint, GFL_BMPWIN *bmpwin )
 {
-	msgPrint->bmpwin = bmpwin;
-	PRINT_UTIL_Setup( &msgPrint->printUtil, bmpwin );
+  msgPrint->bmpwin = bmpwin;
+  PRINT_UTIL_Setup( &msgPrint->printUtil, bmpwin );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT ビットマップクリア
- * @param	msgPrint
- * @retval	nothing
+ * @param msgPrint
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGPRINT_ClearBmp( FLDMSGPRINT *msgPrint )
 {
-	GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgPrint->bmpwin );
-	GFL_BMP_Clear( bmp, 0xff );
-	GFL_BG_LoadScreenReq( msgPrint->fmb->bgFrame );
+  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgPrint->bmpwin );
+  GFL_BMP_Clear( bmp, 0xff );
+  GFL_BG_LoadScreenReq( msgPrint->fmb->bgFrame );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT ビットマップ矩形クリア
- * @param	msgPrint
+ * @param msgPrint
  * @param x 書き込み先書き込み開始X座標（ドット）
  * @param y 書き込み先書き込み開始Y座標（ドット）
  * @param size_x  描画範囲Xサイズ（ドット）
  * @param size_y  描画範囲Yサイズ（ドット）
- * @retval	nothing
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGPRINT_FillClearBmp(
     FLDMSGPRINT *msgPrint, u32 x, u32 y, u32 size_x, u32 size_y )
 {
-	GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgPrint->bmpwin );
+  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgPrint->bmpwin );
   GFL_BMP_Fill( bmp, x, y, size_x, size_y, 0xff );
-	GFL_BG_LoadScreenReq( msgPrint->fmb->bgFrame );
+  GFL_BG_LoadScreenReq( msgPrint->fmb->bgFrame );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT　PRINT_QUE取得
- * @param	msgPrint	FLDMSGPRINT
- * @retval	PRINT_QUE*
+ * @param msgPrint  FLDMSGPRINT
+ * @retval  PRINT_QUE*
  */
 //--------------------------------------------------------------
 PRINT_QUE * FLDMSGPRINT_GetPrintQue( FLDMSGPRINT *msgPrint )
 {
-	return( msgPrint->printQue );
+  return( msgPrint->printQue );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT　GFL_FONT取得
- * @param	msgPrint	FLDMSGPRINT
- * @retval	GFL_FONT*
+ * @param msgPrint  FLDMSGPRINT
+ * @retval  GFL_FONT*
  */
 //--------------------------------------------------------------
 GFL_FONT * FLDMSGPRINT_GetFontHandle( FLDMSGPRINT *msgPrint )
 {
-	return( msgPrint->fontHandle );
+  return( msgPrint->fontHandle );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT　PRINT_UTIL取得
- * @param	msgPrint	FLDMSGPRINT
- * @retval	PRINT_UTIL*
+ * @param msgPrint  FLDMSGPRINT
+ * @retval  PRINT_UTIL*
  */
 //--------------------------------------------------------------
 PRINT_UTIL * FLDMSGPRINT_GetPrintUtil( FLDMSGPRINT *msgPrint )
 {
-	return( &msgPrint->printUtil );
+  return( &msgPrint->printUtil );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT　STRBUF取得
- * @param	msgPrint	FLDMSGPRINT
- * @retval	STRBUF*
+ * @param msgPrint  FLDMSGPRINT
+ * @retval  STRBUF*
  */
 //--------------------------------------------------------------
 STRBUF * FLDMSGPRINT_GetStrBuf( FLDMSGPRINT *msgPrint )
 {
-	return( msgPrint->strBuf );
+  return( msgPrint->strBuf );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT MSGDATA取得
- * @param	msgPrint	FLDMSGPRINT
- * @retval	MSGDATA*
+ * @param msgPrint  FLDMSGPRINT
+ * @retval  MSGDATA*
  */
 //--------------------------------------------------------------
 GFL_MSGDATA * FLDMSGPRINT_GetMsgData( FLDMSGPRINT *msgPrint )
 {
-	return( msgPrint->msgData );
+  return( msgPrint->msgData );
 }
 
 //======================================================================
-//	FLDMSGWIN	メッセージウィンドウ関連
+//  FLDMSGWIN メッセージウィンドウ関連
 //======================================================================
 //--------------------------------------------------------------
 /**
  * メッセージウィンドウ　追加　メイン
- * @param	fmb	FLDMSGBG*
- * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
- * @param	bmppos_x		//表示座標X キャラ単位
- * @param	bmppos_y		//表示座標Y キャラ単位
- * @param	bmpsize_x		//表示サイズX キャラ単位
- * @param	bmpsize_y		//表示サイズY キャラ単位
+ * @param fmb FLDMSGBG*
+ * @param msgData 表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @param bmppos_x    //表示座標X キャラ単位
+ * @param bmppos_y    //表示座標Y キャラ単位
+ * @param bmpsize_x   //表示サイズX キャラ単位
+ * @param bmpsize_y   //表示サイズY キャラ単位
  * @param pltt_no     使用するパレット番号
- * @retval	FLDMSGWIN*
+ * @retval  FLDMSGWIN*
  */
 //--------------------------------------------------------------
 static FLDMSGWIN * fldmsgwin_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
-	u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y, u16 pltt_no )
+  u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y, u16 pltt_no )
 {
-	FLDMSGWIN *msgWin;
+  FLDMSGWIN *msgWin;
   
-	msgWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDMSGWIN) );
-	msgWin->fmb = fmb;
-	msgWin->bmpwin = winframe_InitBmp( fmb->bgFrame, fmb->heapID,
+  msgWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDMSGWIN) );
+  msgWin->fmb = fmb;
+  msgWin->bmpwin = winframe_InitBmp( fmb->bgFrame, fmb->heapID,
     bmppos_x, bmppos_y, bmpsize_x, bmpsize_y, pltt_no );
-	msgWin->msgPrint = FLDMSGPRINT_SetupPrint( fmb, msgData, msgWin->bmpwin );
-	
+  msgWin->msgPrint = FLDMSGPRINT_SetupPrint( fmb, msgData, msgWin->bmpwin );
+  
   if( pltt_no == PANO_FONT ){
     winframe_SetPaletteBlack( fmb->heapID );
     setBlendAlpha( TRUE );
   }
   
-	return( msgWin );
+  return( msgWin );
 }
 
 //--------------------------------------------------------------
 /**
  * メッセージウィンドウ　追加
- * @param	fmb	FLDMSGBG*
- * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
- * @param	bmppos_x		//表示座標X キャラ単位
- * @param	bmppos_y		//表示座標Y キャラ単位
- * @param	bmpsize_x		//表示サイズX キャラ単位
- * @param	bmpsize_y		//表示サイズY キャラ単位
- * @retval	FLDMSGWIN*
+ * @param fmb FLDMSGBG*
+ * @param msgData 表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @param bmppos_x    //表示座標X キャラ単位
+ * @param bmppos_y    //表示座標Y キャラ単位
+ * @param bmpsize_x   //表示サイズX キャラ単位
+ * @param bmpsize_y   //表示サイズY キャラ単位
+ * @retval  FLDMSGWIN*
  */
 //--------------------------------------------------------------
 FLDMSGWIN * FLDMSGWIN_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
-	u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y )
+  u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y )
 {
   FLDMSGWIN *msgWin;
   fmb->deriveWin_plttNo = PANO_FONT;
@@ -996,102 +1012,102 @@ FLDMSGWIN * FLDMSGWIN_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
 /**
  * メッセージウィンドウ 削除。
  * FLDMSGWIN_Add()引数msgDataは各自で行う事。
- * @param	msgWin	FLDMSGWIN*
- * @retval	nothing
+ * @param msgWin  FLDMSGWIN*
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGWIN_Delete( FLDMSGWIN *msgWin )
 {
-	winframe_DeleteBmp( msgWin->bmpwin );
-	FLDMSGPRINT_Delete( msgWin->msgPrint );
-	GFL_HEAP_FreeMemory( msgWin );
+  winframe_DeleteBmp( msgWin->bmpwin );
+  FLDMSGPRINT_Delete( msgWin->msgPrint );
+  GFL_HEAP_FreeMemory( msgWin );
 }
 
 //--------------------------------------------------------------
 /**
  * メッセージウィンドウ　メッセージ表示
- * @param	msgWin	FLDMSGWIN
- * @param	x		X表示座標
- * @param	y		Y表示座標
- * @param	strID	メッセージデータ 文字列ID
- * @retval	nothing
+ * @param msgWin  FLDMSGWIN
+ * @param x   X表示座標
+ * @param y   Y表示座標
+ * @param strID メッセージデータ 文字列ID
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGWIN_Print( FLDMSGWIN *msgWin, u16 x, u16 y, u32 strID )
 {
-	FLDMSGPRINT_Print( msgWin->msgPrint, x, y, strID );
-	GFL_BG_LoadScreenReq( FLDMSGBG_BGFRAME );
+  FLDMSGPRINT_Print( msgWin->msgPrint, x, y, strID );
+  GFL_BG_LoadScreenReq( FLDMSGBG_BGFRAME );
 }
 
 //--------------------------------------------------------------
 /**
  * メッセージウィンドウ　メッセージ表示 STRBUF指定
- * @param	msgWin	FLDMSGWIN
- * @param	x		X表示座標
- * @param	y		Y表示座標
- * @param	strBuf	STRBUF
- * @retval	nothing
+ * @param msgWin  FLDMSGWIN
+ * @param x   X表示座標
+ * @param y   Y表示座標
+ * @param strBuf  STRBUF
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGWIN_PrintStrBuf( FLDMSGWIN *msgWin, u16 x, u16 y, STRBUF *strBuf )
 {
-	FLDMSGPRINT_PrintStrBuf( msgWin->msgPrint, x, y, strBuf );
+  FLDMSGPRINT_PrintStrBuf( msgWin->msgPrint, x, y, strBuf );
 }
 
 //--------------------------------------------------------------
 /**
  * メッセージウィンドウ　メッセージ表示 STRBUF指定、カラー指定あり
- * @param	msgWin	FLDMSGWIN
- * @param	x		X表示座標
- * @param	y		Y表示座標
- * @param	strBuf	STRBUF
+ * @param msgWin  FLDMSGWIN
+ * @param x   X表示座標
+ * @param y   Y表示座標
+ * @param strBuf  STRBUF
  * @param color PRINTSYS_LSB
- * @retval	nothing
+ * @retval  nothing
  */
 //-------------------------------------------------------------
 void FLDMSGWIN_PrintStrBufColor( FLDMSGWIN *msgWin,
     u16 x, u16 y, STRBUF *strBuf, PRINTSYS_LSB color )
 {
-	FLDMSGPRINT_PrintStrBufColor( msgWin->msgPrint, x, y, strBuf, color );
+  FLDMSGPRINT_PrintStrBufColor( msgWin->msgPrint, x, y, strBuf, color );
 }
 
 //--------------------------------------------------------------
 /**
  * メッセージウィンドウ　メッセージ表示 GFL_FONT指定
- * @param	msgWin	FLDMSGWIN
- * @param	x		X表示座標
- * @param	y		Y表示座標
- * @param	strBuf	STRBUF
- * @retval	nothing
+ * @param msgWin  FLDMSGWIN
+ * @param x   X表示座標
+ * @param y   Y表示座標
+ * @param strBuf  STRBUF
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGWIN_PrintStrBufColorFontHandle( FLDMSGWIN *msgWin, u16 x, u16 y, STRBUF *strBuf, PRINTSYS_LSB color, GFL_FONT *font_handle )
 {
-	FLDMSGPRINT_PrintStrBufColorFontHandle( msgWin->msgPrint, x, y, strBuf, color, font_handle );
+  FLDMSGPRINT_PrintStrBufColorFontHandle( msgWin->msgPrint, x, y, strBuf, color, font_handle );
 }
 
 //--------------------------------------------------------------
 /**
  * メッセージウィンドウ　転送終了チェック
- * @param	msgWin	FLDMSGWIN
- * @retval	BOOL	TRUE=転送終了
+ * @param msgWin  FLDMSGWIN
+ * @retval  BOOL  TRUE=転送終了
  */
 //--------------------------------------------------------------
 BOOL FLDMSGWIN_CheckPrintTrans( FLDMSGWIN *msgWin )
 {
-	return( FLDMSGPRINT_CheckPrintTrans(msgWin->msgPrint) );
+  return( FLDMSGPRINT_CheckPrintTrans(msgWin->msgPrint) );
 }
 
 //--------------------------------------------------------------
 /**
  * メッセージウィンドウ　メッセージ表示クリア
- * @param	msgWin	FLDMSGWIN
- * @retval	nothing
+ * @param msgWin  FLDMSGWIN
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMSGWIN_ClearWindow( FLDMSGWIN *msgWin )
 {
-	FLDMSGPRINT_ClearBmp( msgWin->msgPrint );
+  FLDMSGPRINT_ClearBmp( msgWin->msgPrint );
 }
 
 //--------------------------------------------------------------
@@ -1114,51 +1130,51 @@ void FLDMSGWIN_FillClearWindow(
 //--------------------------------------------------------------
 /**
  * メッセージウィンドウ　追加　会話ウィンドウタイプ
- * @param	fmb	FLDMSGBG*
- * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
- * @retval	FLDMSGWIN*
+ * @param fmb FLDMSGBG*
+ * @param msgData 表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @retval  FLDMSGWIN*
  */
 //--------------------------------------------------------------
 FLDMSGWIN * FLDMSGWIN_AddTalkWin( FLDMSGBG *fmb, GFL_MSGDATA *msgData )
 {
-	return( FLDMSGWIN_Add(fmb,msgData,1,19,30,4) );
+  return( FLDMSGWIN_Add(fmb,msgData,1,19,30,4) );
 }
 
 //======================================================================
-//	FLDSYSWIN	システムウィンドウ関連
+//  FLDSYSWIN システムウィンドウ関連
 //======================================================================
 //--------------------------------------------------------------
 /**
  * システムウィンドウ　追加　メイン
- * @param	fmb	FLDMSGBG*
- * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
- * @retval	FLDSYSWIN*
+ * @param fmb FLDMSGBG*
+ * @param msgData 表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @retval  FLDSYSWIN*
  */
 //--------------------------------------------------------------
 static FLDSYSWIN * syswin_Add(
   FLDMSGBG *fmb, GFL_MSGDATA *msgData, u16 bmppos_y )
 {
-	FLDSYSWIN *sysWin;
+  FLDSYSWIN *sysWin;
   
-	sysWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDSYSWIN) );
-	sysWin->fmb = fmb;
-	sysWin->bmpwin = syswin_InitBmp( bmppos_y, fmb->heapID );
-	sysWin->msgPrint = FLDMSGPRINT_SetupPrint( fmb, msgData, sysWin->bmpwin );
-	
+  sysWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDSYSWIN) );
+  sysWin->fmb = fmb;
+  sysWin->bmpwin = syswin_InitBmp( bmppos_y, fmb->heapID );
+  sysWin->msgPrint = FLDMSGPRINT_SetupPrint( fmb, msgData, sysWin->bmpwin );
+  
   setBlendAlpha( TRUE );
-	return( sysWin );
+  return( sysWin );
 }
 
 //--------------------------------------------------------------
 /**
  * システムウィンドウ　追加
- * @param	fmb	FLDMSGBG*
- * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
- * @param	bmppos_x		//表示座標X キャラ単位
- * @param	bmppos_y		//表示座標Y キャラ単位
- * @param	bmpsize_x		//表示サイズX キャラ単位
- * @param	bmpsize_y		//表示サイズY キャラ単位
- * @retval	FLDSYSWIN*
+ * @param fmb FLDMSGBG*
+ * @param msgData 表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @param bmppos_x    //表示座標X キャラ単位
+ * @param bmppos_y    //表示座標Y キャラ単位
+ * @param bmpsize_x   //表示サイズX キャラ単位
+ * @param bmpsize_y   //表示サイズY キャラ単位
+ * @retval  FLDSYSWIN*
  */
 //--------------------------------------------------------------
 FLDSYSWIN * FLDSYSWIN_Add(
@@ -1174,87 +1190,87 @@ FLDSYSWIN * FLDSYSWIN_Add(
 /**
  * システムウィンドウ 削除。
  * FLDSYSWIN_Add()引数msgDataは各自で行う事。
- * @param	sysWin	FLDSYSWIN*
- * @retval	nothing
+ * @param sysWin  FLDSYSWIN*
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDSYSWIN_Delete( FLDSYSWIN *sysWin )
 {
-	syswin_DeleteBmp( sysWin->bmpwin );
-	FLDMSGPRINT_Delete( sysWin->msgPrint );
-	GFL_HEAP_FreeMemory( sysWin );
+  syswin_DeleteBmp( sysWin->bmpwin );
+  FLDMSGPRINT_Delete( sysWin->msgPrint );
+  GFL_HEAP_FreeMemory( sysWin );
 }
 
 //--------------------------------------------------------------
 /**
  * システムウィンドウ　メッセージ表示
- * @param	sysWin	FLDSYSWIN
- * @param	x		X表示座標
- * @param	y		Y表示座標
- * @param	strID	メッセージデータ 文字列ID
- * @retval	nothing
+ * @param sysWin  FLDSYSWIN
+ * @param x   X表示座標
+ * @param y   Y表示座標
+ * @param strID メッセージデータ 文字列ID
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDSYSWIN_Print( FLDSYSWIN *sysWin, u16 x, u16 y, u32 strID )
 {
-	FLDMSGPRINT_Print( sysWin->msgPrint, x, y, strID );
-	GFL_BG_LoadScreenReq( FLDMSGBG_BGFRAME );
+  FLDMSGPRINT_Print( sysWin->msgPrint, x, y, strID );
+  GFL_BG_LoadScreenReq( FLDMSGBG_BGFRAME );
 }
 
 //--------------------------------------------------------------
 /**
  * システムウィンドウ　メッセージ表示 STRBUF指定
- * @param	sysWin	FLDSYSWIN
- * @param	x		X表示座標
- * @param	y		Y表示座標
- * @param	strBuf	STRBUF
- * @retval	nothing
+ * @param sysWin  FLDSYSWIN
+ * @param x   X表示座標
+ * @param y   Y表示座標
+ * @param strBuf  STRBUF
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDSYSWIN_PrintStrBuf( FLDSYSWIN *sysWin, u16 x, u16 y, STRBUF *strBuf )
 {
-	FLDMSGPRINT_PrintStrBuf( sysWin->msgPrint, x, y, strBuf );
+  FLDMSGPRINT_PrintStrBuf( sysWin->msgPrint, x, y, strBuf );
 }
 
 //--------------------------------------------------------------
 /**
  * システムウィンドウ　メッセージ表示 STRBUF指定、カラー指定あり
- * @param	sysWin	FLDSYSWIN
- * @param	x		X表示座標
- * @param	y		Y表示座標
- * @param	strBuf	STRBUF
+ * @param sysWin  FLDSYSWIN
+ * @param x   X表示座標
+ * @param y   Y表示座標
+ * @param strBuf  STRBUF
  * @param color PRINTSYS_LSB
- * @retval	nothing
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDSYSWIN_PrintStrBufColor( FLDSYSWIN *sysWin,
     u16 x, u16 y, STRBUF *strBuf, PRINTSYS_LSB color )
 {
-	FLDMSGPRINT_PrintStrBufColor( sysWin->msgPrint, x, y, strBuf, color );
+  FLDMSGPRINT_PrintStrBufColor( sysWin->msgPrint, x, y, strBuf, color );
 }
 
 //--------------------------------------------------------------
 /**
  * システムウィンドウ　転送終了チェック
- * @param	sysWin	FLDSYSWIN
- * @retval	BOOL	TRUE=転送終了
+ * @param sysWin  FLDSYSWIN
+ * @retval  BOOL  TRUE=転送終了
  */
 //--------------------------------------------------------------
 BOOL FLDSYSWIN_CheckPrintTrans( FLDSYSWIN *sysWin )
 {
-	return( FLDMSGPRINT_CheckPrintTrans(sysWin->msgPrint) );
+  return( FLDMSGPRINT_CheckPrintTrans(sysWin->msgPrint) );
 }
 
 //--------------------------------------------------------------
 /**
  * システムウィンドウ　メッセージ表示クリア
- * @param	sysWin	FLDSYSWIN
- * @retval	nothing
+ * @param sysWin  FLDSYSWIN
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDSYSWIN_ClearWindow( FLDSYSWIN *sysWin )
 {
-	FLDMSGPRINT_ClearBmp( sysWin->msgPrint );
+  FLDMSGPRINT_ClearBmp( sysWin->msgPrint );
 }
 
 //--------------------------------------------------------------
@@ -1277,104 +1293,104 @@ void FLDSYSWIN_FillClearWindow(
 //--------------------------------------------------------------
 /**
  * システムウィンドウ　追加　会話ウィンドウタイプ
- * @param	fmb	FLDMSGBG*
- * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
- * @retval	FLDSYSWIN*
+ * @param fmb FLDMSGBG*
+ * @param msgData 表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @retval  FLDSYSWIN*
  */
 //--------------------------------------------------------------
 FLDSYSWIN * FLDSYSWIN_AddTalkWin( FLDMSGBG *fmb, GFL_MSGDATA *msgData )
 {
-	return( FLDSYSWIN_Add(fmb,msgData,19) );
+  return( FLDSYSWIN_Add(fmb,msgData,19) );
 }
 
 //======================================================================
-//	FLDMENUFUNC　フィールドメニュー関連
+//  FLDMENUFUNC　フィールドメニュー関連
 //======================================================================
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC メニュー追加 メイン
- * @param	fmb	FLDMSGBG
- * @param	pMenuHead FLDMENUFUNC_HEADER
- * @param	pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
+ * @param fmb FLDMSGBG
+ * @param pMenuHead FLDMENUFUNC_HEADER
+ * @param pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
  * @param list_pos リスト初期位置
  * @param cursor_pos カーソル初期位置
  * @param pltt_no 使用するパレット番号
  * @param call_back    BMPMENULIST_HEADERのカーソル移動ごとのコールバック関数指定(NULL可)
  * @param icon    BMPMENULIST_HEADERの一列表示ごとのコールバック関数指定(NULL可)
  * @param work    BMPMENULIST_HEADERにセットするワーク(BmpMenuList_GetWorkPtrで取り出す。NULL可)
- * @retval	FLDMENUFUNC*
+ * @retval  FLDMENUFUNC*
  */
 //--------------------------------------------------------------
 static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
-	const FLDMENUFUNC_HEADER *pMenuHead,
-	FLDMENUFUNC_LISTDATA *pMenuListData,
+  const FLDMENUFUNC_HEADER *pMenuHead,
+  FLDMENUFUNC_LISTDATA *pMenuListData,
   u16 list_pos, u16 cursor_pos, u16 pltt_no,
   BMPMENULIST_CURSOR_CALLBACK callback,
   BMPMENULIST_PRINT_CALLBACK icon,
   void *work )
 {
-	FLDMENUFUNC *menuFunc;
-	BMPMENULIST_HEADER menuH;
-	
-	menuFunc = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDMENUFUNC) );
-	FldMenuFuncH_BmpMenuListH( &menuH, pMenuHead );
-	
-	menuFunc->fmb = fmb;
-	menuFunc->pMenuListData = (BMP_MENULIST_DATA *)pMenuListData;
-	
-	menuFunc->bmpwin = winframe_InitBmp(
-		fmb->bgFrame, fmb->heapID,
-		pMenuHead->bmppos_x, pMenuHead->bmppos_y,
-		pMenuHead->bmpsize_x, pMenuHead->bmpsize_y, pltt_no );
-	
-	menuFunc->msgPrint = FLDMSGPRINT_SetupPrint(
-			fmb, NULL, menuFunc->bmpwin );
-	
-	menuH.msgdata = NULL;
-	menuH.print_util = FLDMSGPRINT_GetPrintUtil( menuFunc->msgPrint );
-	menuH.print_que = FLDMSGPRINT_GetPrintQue( menuFunc->msgPrint );
-	menuH.font_handle = fmb->fontHandle;
-	menuH.win = menuFunc->bmpwin;
-	menuH.list = (const BMP_MENULIST_DATA *)pMenuListData;
-	menuH.icon = icon;
-	menuH.call_back = callback;
-	menuH.work = work;
-	
-	menuFunc->pMenuListWork =
-		BmpMenuList_Set( &menuH, list_pos, cursor_pos, fmb->heapID );
-//	BmpMenuList_SetCursorString( menuFunc->pMenuListWork, 0 );
-	BmpMenuList_SetCursorBmp( menuFunc->pMenuListWork, fmb->heapID );
+  FLDMENUFUNC *menuFunc;
+  BMPMENULIST_HEADER menuH;
+  
+  menuFunc = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDMENUFUNC) );
+  FldMenuFuncH_BmpMenuListH( &menuH, pMenuHead );
+  
+  menuFunc->fmb = fmb;
+  menuFunc->pMenuListData = (BMP_MENULIST_DATA *)pMenuListData;
+  
+  menuFunc->bmpwin = winframe_InitBmp(
+    fmb->bgFrame, fmb->heapID,
+    pMenuHead->bmppos_x, pMenuHead->bmppos_y,
+    pMenuHead->bmpsize_x, pMenuHead->bmpsize_y, pltt_no );
+  
+  menuFunc->msgPrint = FLDMSGPRINT_SetupPrint(
+      fmb, NULL, menuFunc->bmpwin );
+  
+  menuH.msgdata = NULL;
+  menuH.print_util = FLDMSGPRINT_GetPrintUtil( menuFunc->msgPrint );
+  menuH.print_que = FLDMSGPRINT_GetPrintQue( menuFunc->msgPrint );
+  menuH.font_handle = fmb->fontHandle;
+  menuH.win = menuFunc->bmpwin;
+  menuH.list = (const BMP_MENULIST_DATA *)pMenuListData;
+  menuH.icon = icon;
+  menuH.call_back = callback;
+  menuH.work = work;
+  
+  menuFunc->pMenuListWork =
+    BmpMenuList_Set( &menuH, list_pos, cursor_pos, fmb->heapID );
+//  BmpMenuList_SetCursorString( menuFunc->pMenuListWork, 0 );
+  BmpMenuList_SetCursorBmp( menuFunc->pMenuListWork, fmb->heapID );
   
   if( pltt_no == PANO_FONT ){
     winframe_SetPaletteBlack( fmb->heapID );
     setBlendAlpha( TRUE );
   }
-	return( menuFunc );
+  return( menuFunc );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC メニュー追加　BMPリストの1列表示後とのコールバック指定有り版
- * @param	fmb	FLDMSGBG
- * @param	pMenuHead FLDMENUFUNC_HEADER
- * @param	pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
+ * @param fmb FLDMSGBG
+ * @param pMenuHead FLDMENUFUNC_HEADER
+ * @param pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
  * @param list_pos リスト初期位置
  * @param cursor_pos カーソル初期位置
  * @param icon    BMPMENULIST_HEADERの一列表示ごとのコールバック関数指定(NULL可)
  * @param icon    BMPMENULIST_HEADERの一列表示ごとのコールバック関数指定(NULL可)
  * @param work    BMPMENULIST_HEADERにセットするワーク(BmpMenuList_GetWorkPtrで取り出す。NULL可)
- * @retval	FLDMENUFUNC*
+ * @retval  FLDMENUFUNC*
  */
 //--------------------------------------------------------------
 FLDMENUFUNC * FLDMENUFUNC_AddMenuListEx( FLDMSGBG *fmb,
-	const FLDMENUFUNC_HEADER *pMenuHead,
-	FLDMENUFUNC_LISTDATA *pMenuListData,
+  const FLDMENUFUNC_HEADER *pMenuHead,
+  FLDMENUFUNC_LISTDATA *pMenuListData,
   u16 list_pos, u16 cursor_pos,
   BMPMENULIST_CURSOR_CALLBACK callback,
   BMPMENULIST_PRINT_CALLBACK icon,
   void *work )
 {
-	FLDMENUFUNC *menuFunc;
+  FLDMENUFUNC *menuFunc;
   fmb->deriveWin_plttNo = PANO_FONT;
   menuFunc = fldmenufunc_AddMenuList( fmb, pMenuHead, pMenuListData,
     list_pos, cursor_pos, fmb->deriveWin_plttNo, callback, icon, work );
@@ -1384,17 +1400,17 @@ FLDMENUFUNC * FLDMENUFUNC_AddMenuListEx( FLDMSGBG *fmb,
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC メニュー追加
- * @param	fmb	FLDMSGBG
- * @param	pMenuHead FLDMENUFUNC_HEADER
- * @param	pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
+ * @param fmb FLDMSGBG
+ * @param pMenuHead FLDMENUFUNC_HEADER
+ * @param pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
  * @param list_pos リスト初期位置
  * @param cursor_pos カーソル初期位置
- * @retval	FLDMENUFUNC*
+ * @retval  FLDMENUFUNC*
  */
 //--------------------------------------------------------------
 FLDMENUFUNC * FLDMENUFUNC_AddMenuList( FLDMSGBG *fmb,
-	const FLDMENUFUNC_HEADER *pMenuHead,
-	FLDMENUFUNC_LISTDATA *pMenuListData,
+  const FLDMENUFUNC_HEADER *pMenuHead,
+  FLDMENUFUNC_LISTDATA *pMenuListData,
   u16 list_pos, u16 cursor_pos )
 {
   return FLDMENUFUNC_AddMenuListEx(fmb, pMenuHead, pMenuListData, list_pos, cursor_pos, NULL, pMenuHead->icon, NULL);
@@ -1403,15 +1419,15 @@ FLDMENUFUNC * FLDMENUFUNC_AddMenuList( FLDMSGBG *fmb,
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC メニュー追加　リスト位置、カーソル位置省略版
- * @param	fmb	FLDMSGBG
- * @param	pMenuHead FLDMENUFUNC_HEADER
- * @param	pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
- * @retval	FLDMENUFUNC*
+ * @param fmb FLDMSGBG
+ * @param pMenuHead FLDMENUFUNC_HEADER
+ * @param pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
+ * @retval  FLDMENUFUNC*
  */
 //--------------------------------------------------------------
 FLDMENUFUNC * FLDMENUFUNC_AddMenu( FLDMSGBG *fmb,
-	const FLDMENUFUNC_HEADER *pMenuHead,
-	FLDMENUFUNC_LISTDATA *pMenuListData )
+  const FLDMENUFUNC_HEADER *pMenuHead,
+  FLDMENUFUNC_LISTDATA *pMenuListData )
 {
   return( FLDMENUFUNC_AddMenuList(fmb,pMenuHead,pMenuListData,0,0) );
 }
@@ -1419,23 +1435,23 @@ FLDMENUFUNC * FLDMENUFUNC_AddMenu( FLDMSGBG *fmb,
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC メニュー追加　イベント用
- * @param	fmb	FLDMSGBG
- * @param	pMenuHead FLDMENUFUNC_HEADER
- * @param	pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
+ * @param fmb FLDMSGBG
+ * @param pMenuHead FLDMENUFUNC_HEADER
+ * @param pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
  * @param list_pos リスト初期位置
  * @param cursor_pos カーソル初期位置
  * @param cancel TRUE=キャンセル可
- * @retval	FLDMENUFUNC*
+ * @retval  FLDMENUFUNC*
  * @note メニューカラーは派生ウィンドウのカラーを継続する
  */
 //--------------------------------------------------------------
 FLDMENUFUNC * FLDMENUFUNC_AddEventMenuList( FLDMSGBG *fmb,
-	const FLDMENUFUNC_HEADER *pMenuHead,
-	FLDMENUFUNC_LISTDATA *pMenuListData,
+  const FLDMENUFUNC_HEADER *pMenuHead,
+  FLDMENUFUNC_LISTDATA *pMenuListData,
   BMPMENULIST_CURSOR_CALLBACK callback, void* cb_work,
   u16 list_pos, u16 cursor_pos, BOOL cancel )
 {
-	FLDMENUFUNC *menuFunc;
+  FLDMENUFUNC *menuFunc;
   
   GF_ASSERT( fmb != NULL );
   GF_ASSERT( pMenuHead != NULL );
@@ -1454,48 +1470,48 @@ FLDMENUFUNC * FLDMENUFUNC_AddEventMenuList( FLDMSGBG *fmb,
 
 //--------------------------------------------------------------
 /**
- * FLDMENUFUNC	削除
- * @param	menuFunc	FLDMENUFUNC*
- * @retval	nothing
+ * FLDMENUFUNC  削除
+ * @param menuFunc  FLDMENUFUNC*
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMENUFUNC_DeleteMenu( FLDMENUFUNC *menuFunc )
 {
-	BmpMenuList_Exit( menuFunc->pMenuListWork, NULL, NULL );
-	BmpMenuWork_ListDelete( menuFunc->pMenuListData );
-	winframe_DeleteBmp( menuFunc->bmpwin );
-	FLDMSGPRINT_Delete( menuFunc->msgPrint );
-	GFL_HEAP_FreeMemory( menuFunc );
+  BmpMenuList_Exit( menuFunc->pMenuListWork, NULL, NULL );
+  BmpMenuWork_ListDelete( menuFunc->pMenuListData );
+  winframe_DeleteBmp( menuFunc->bmpwin );
+  FLDMSGPRINT_Delete( menuFunc->msgPrint );
+  GFL_HEAP_FreeMemory( menuFunc );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC メニュー処理
- * @param	menuFunc	FLDMENUFUNC*
- * @retval	u32		リスト選択位置のパラメータ
+ * @param menuFunc  FLDMENUFUNC*
+ * @retval  u32   リスト選択位置のパラメータ
  * FLDMENUFUNC_NULL = 選択中。FLDMENUFUNC_CANCEL = キャンセル
  */
 //--------------------------------------------------------------
 u32 FLDMENUFUNC_ProcMenu( FLDMENUFUNC *menuFunc )
 {
-	u32 ret = BmpMenuList_Main( menuFunc->pMenuListWork );
-	
-	if( ret == BMPMENULIST_NULL ){
-		return( FLDMENUFUNC_NULL );
-	}
-	
-	if( ret == BMPMENULIST_CANCEL ){
-		return( FLDMENUFUNC_CANCEL );
-	}
-	
-	return( ret );
+  u32 ret = BmpMenuList_Main( menuFunc->pMenuListWork );
+  
+  if( ret == BMPMENULIST_NULL ){
+    return( FLDMENUFUNC_NULL );
+  }
+  
+  if( ret == BMPMENULIST_CANCEL ){
+    return( FLDMENUFUNC_CANCEL );
+  }
+  
+  return( ret );
 }
 
 //==================================================================
 /**
  * FLDMENUFUNC メニュー再描画
  *
- * @param   menuFunc		FLDMENUFUNC*
+ * @param   menuFunc    FLDMENUFUNC*
  */
 //==================================================================
 void FLDMENUFUNC_Rewrite( FLDMENUFUNC *menuFunc )
@@ -1506,98 +1522,98 @@ void FLDMENUFUNC_Rewrite( FLDMENUFUNC *menuFunc )
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC_LISTDATAを作成
- * @param	max	リスト数
- * @param	heapID	作成用ヒープID
- * @retval	FLDMENUFUNC_LISTDATA*
+ * @param max リスト数
+ * @param heapID  作成用ヒープID
+ * @retval  FLDMENUFUNC_LISTDATA*
  */
 //--------------------------------------------------------------
 FLDMENUFUNC_LISTDATA * FLDMENUFUNC_CreateListData( int max, HEAPID heapID )
 {
-	BMP_MENULIST_DATA *listData;
-	listData = BmpMenuWork_ListCreate( max, heapID );
-	return( (FLDMENUFUNC_LISTDATA*)listData );
+  BMP_MENULIST_DATA *listData;
+  listData = BmpMenuWork_ListCreate( max, heapID );
+  return( (FLDMENUFUNC_LISTDATA*)listData );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC_LISTDATAを削除
- * @param	listData	FLDMENUFUNC_LISTDATA
- * @retval	nothing
+ * @param listData  FLDMENUFUNC_LISTDATA
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMENUFUNC_DeleteListData( FLDMENUFUNC_LISTDATA *listData )
 {
-	BmpMenuWork_ListDelete( (BMP_MENULIST_DATA*)listData );
+  BmpMenuWork_ListDelete( (BMP_MENULIST_DATA*)listData );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC_LISTDATAを作成し
  * FLDMENUFUNC_LISTからメニュー表示用文字列を追加する
- * @param	menuList	FLDMENUFUNC_LIST
- * @param	max			menuList要素数
- * @param	msgData		文字列を
- * @param	heapID		FLDMENUFUNC_LISTDATA作成用ヒープID
- * @retval	FLDMENUFUNC_LISTDATA
+ * @param menuList  FLDMENUFUNC_LIST
+ * @param max     menuList要素数
+ * @param msgData   文字列を
+ * @param heapID    FLDMENUFUNC_LISTDATA作成用ヒープID
+ * @retval  FLDMENUFUNC_LISTDATA
  */
 //--------------------------------------------------------------
 FLDMENUFUNC_LISTDATA * FLDMENUFUNC_CreateMakeListData(
-	const FLDMENUFUNC_LIST *menuList,
-	int max, GFL_MSGDATA *msgData, HEAPID heapID )
+  const FLDMENUFUNC_LIST *menuList,
+  int max, GFL_MSGDATA *msgData, HEAPID heapID )
 {
-	int i;
-	FLDMENUFUNC_LISTDATA *listData;
-	
-	listData = FLDMENUFUNC_CreateListData( max, heapID );
-	
-	for( i = 0; i < max; i++ ){
-		BmpMenuWork_ListAddArchiveString(
-			(BMP_MENULIST_DATA*)listData, msgData,
-			menuList[i].str_id, (u32)menuList[i].selectParam, heapID );
-	}
-	
-	return( listData );
+  int i;
+  FLDMENUFUNC_LISTDATA *listData;
+  
+  listData = FLDMENUFUNC_CreateListData( max, heapID );
+  
+  for( i = 0; i < max; i++ ){
+    BmpMenuWork_ListAddArchiveString(
+      (BMP_MENULIST_DATA*)listData, msgData,
+      menuList[i].str_id, (u32)menuList[i].selectParam, heapID );
+  }
+  
+  return( listData );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC_LISTDATAに文字列&パラメータをセット
- * @param	listData	FLDMENUFUNC_LISTDATA
- * @param	strBuf		STRBUF
- * @param	param		パラメタ
- * @param	heapID		ヒープID
- * @retval	nothing
+ * @param listData  FLDMENUFUNC_LISTDATA
+ * @param strBuf    STRBUF
+ * @param param   パラメタ
+ * @param heapID    ヒープID
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMENUFUNC_AddStringListData( FLDMENUFUNC_LISTDATA *listData,
-		const STRBUF *strBuf, u32 param, HEAPID heapID  )
-{	
-	BmpMenuWork_ListAddString(
-		(BMP_MENULIST_DATA*)listData, strBuf, param, heapID );
+    const STRBUF *strBuf, u32 param, HEAPID heapID  )
+{ 
+  BmpMenuWork_ListAddString(
+    (BMP_MENULIST_DATA*)listData, strBuf, param, heapID );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC_LISTDATAに文字列&パラメータをセット
- * @param	listData	FLDMENUFUNC_LISTDATA
- * @param	strBuf		STRBUF
- * @param	param		パラメタ
- * @param	heapID		ヒープID
- * @retval	nothing
+ * @param listData  FLDMENUFUNC_LISTDATA
+ * @param strBuf    STRBUF
+ * @param param   パラメタ
+ * @param heapID    ヒープID
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMENUFUNC_AddArcStringListData( FLDMENUFUNC_LISTDATA *listData,
-		GFL_MSGDATA *msgData, u32 strID, u32 param, HEAPID heapID )
-{	
-	BmpMenuWork_ListAddArchiveString(
-		(BMP_MENULIST_DATA*)listData, msgData, strID, param, heapID );
+    GFL_MSGDATA *msgData, u32 strID, u32 param, HEAPID heapID )
+{ 
+  BmpMenuWork_ListAddArchiveString(
+    (BMP_MENULIST_DATA*)listData, msgData, strID, param, heapID );
 }
 
 //==================================================================
 /**
  * FLDMENUFUNC_LISTDATAからリストバッファのSTRBUFを破棄する
  *
- * @param   listData		
+ * @param   listData    
  */
 //==================================================================
 void FLDMENUFUNC_ListSTRBUFDelete(FLDMENUFUNC_LISTDATA *listData)
@@ -1701,52 +1717,52 @@ u32 FLDMENUFUNC_GetListMenuLen( u32 num, u32 font_size, u32 space )
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC_HEADERにリスト数、座標系情報を追加
- * @param	head	FLDMENUFUNC_HEADER
- * @param	list_count	リスト数
- * @param	bmppos_x		//表示座標X キャラ単位
- * @param	bmppos_y		//表示座標Y キャラ単位
- * @param	bmpsize_x		//表示サイズX キャラ単位
- * @param	bmpsize_y		//表示サイズY キャラ単位
- * @retval	nothing
+ * @param head  FLDMENUFUNC_HEADER
+ * @param list_count  リスト数
+ * @param bmppos_x    //表示座標X キャラ単位
+ * @param bmppos_y    //表示座標Y キャラ単位
+ * @param bmpsize_x   //表示サイズX キャラ単位
+ * @param bmpsize_y   //表示サイズY キャラ単位
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 void FLDMENUFUNC_InputHeaderListSize(
-	FLDMENUFUNC_HEADER *head, u16 count,
-	u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y )
+  FLDMENUFUNC_HEADER *head, u16 count,
+  u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y )
 {
-	head->count = count;
-	head->bmppos_x = bmppos_x;
-	head->bmppos_y = bmppos_y;
-	head->bmpsize_x = bmpsize_x;
-	head->bmpsize_y = bmpsize_y;
+  head->count = count;
+  head->bmppos_x = bmppos_x;
+  head->bmppos_y = bmppos_y;
+  head->bmpsize_x = bmpsize_x;
+  head->bmpsize_y = bmpsize_y;
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC_HEADER -> BMPMENULIST_HEADER
- * @param	menuH	BMPMENULIST_HEADER
- * @param	fmenuH	FLDMENUFUNC_HEADER
- * @retval	nothing
+ * @param menuH BMPMENULIST_HEADER
+ * @param fmenuH  FLDMENUFUNC_HEADER
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 static void FldMenuFuncH_BmpMenuListH(
-	BMPMENULIST_HEADER *menuH, const FLDMENUFUNC_HEADER *fmenuH )
+  BMPMENULIST_HEADER *menuH, const FLDMENUFUNC_HEADER *fmenuH )
 {
-	GFL_STD_MemClear( menuH, sizeof(BMPMENULIST_HEADER) );
-	menuH->count = fmenuH->count;			//リスト項目数
-	menuH->line = fmenuH->line;				//表示最大項目数
-	menuH->label_x = fmenuH->label_x;		//ラベル表示Ｘ座標
-	menuH->data_x = fmenuH->data_x;			//項目表示Ｘ座標
-	menuH->cursor_x = fmenuH->cursor_x;		//カーソル表示Ｘ座標
-	menuH->line_y = fmenuH->line_y;			//表示Ｙ座標
-	menuH->f_col = fmenuH->f_col;			//表示文字色
-	menuH->b_col = fmenuH->b_col;			//表示背景色
-	menuH->s_col = fmenuH->s_col;			//表示文字影色
-	menuH->msg_spc = fmenuH->msg_spc;		//文字間隔Ｘ
-	menuH->line_spc = fmenuH->line_spc;		//文字間隔Ｙ
-	menuH->page_skip = fmenuH->page_skip;	//ページスキップタイプ
-	menuH->font_size_x = fmenuH->font_size_x;	//文字サイズX(ドット
-	menuH->font_size_y = fmenuH->font_size_y;	//文字サイズY(ドット
+  GFL_STD_MemClear( menuH, sizeof(BMPMENULIST_HEADER) );
+  menuH->count = fmenuH->count;     //リスト項目数
+  menuH->line = fmenuH->line;       //表示最大項目数
+  menuH->label_x = fmenuH->label_x;   //ラベル表示Ｘ座標
+  menuH->data_x = fmenuH->data_x;     //項目表示Ｘ座標
+  menuH->cursor_x = fmenuH->cursor_x;   //カーソル表示Ｘ座標
+  menuH->line_y = fmenuH->line_y;     //表示Ｙ座標
+  menuH->f_col = fmenuH->f_col;     //表示文字色
+  menuH->b_col = fmenuH->b_col;     //表示背景色
+  menuH->s_col = fmenuH->s_col;     //表示文字影色
+  menuH->msg_spc = fmenuH->msg_spc;   //文字間隔Ｘ
+  menuH->line_spc = fmenuH->line_spc;   //文字間隔Ｙ
+  menuH->page_skip = fmenuH->page_skip; //ページスキップタイプ
+  menuH->font_size_x = fmenuH->font_size_x; //文字サイズX(ドット
+  menuH->font_size_y = fmenuH->font_size_y; //文字サイズY(ドット
   menuH->icon = fmenuH->icon;
 }
 
@@ -1766,9 +1782,9 @@ FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(
     FLDMSGBG *fmb, FLDMENUFUNC_YESNO cursor_pos )
 {
   u32 max = 2;
-	GFL_MSGDATA *msgData;
+  GFL_MSGDATA *msgData;
   FLDMENUFUNC *menuFunc;
-	FLDMENUFUNC_LISTDATA *listData;
+  FLDMENUFUNC_LISTDATA *listData;
   FLDMENUFUNC_HEADER menuH = DATA_MenuHeader_YesNo;
   const FLDMENUFUNC_LIST menuList[2] = {
     { msgid_yesno_yes, (void*)0 }, { msgid_yesno_no, (void*)1 }, };
@@ -1780,7 +1796,7 @@ FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(
             menuList, max, msgData, fmb->heapID );
   GFL_MSG_Delete( msgData );
   
-	FLDMENUFUNC_InputHeaderListSize( &menuH, max, 24, 10, 7, 4 );
+  FLDMENUFUNC_InputHeaderListSize( &menuH, max, 24, 10, 7, 4 );
   menuFunc = fldmenufunc_AddMenuList( fmb, &menuH, listData,
       0, cursor_pos, fmb->deriveWin_plttNo, NULL, NULL, NULL );
   
@@ -1828,12 +1844,12 @@ FLDMENUFUNC_YESNO FLDMENUFUNC_ProcYesNoMenu( FLDMENUFUNC *menuFunc )
  * @param bmpwin 表示する初期化済みのGFL_BMPWIN
  * @param x 描画開始X座標(ドット)
  * @param y 描画開始Y座標(ドット)
- * @param   wait		１文字描画ごとのウェイトフレーム数
+ * @param   wait    １文字描画ごとのウェイトフレーム数
  * @retval FLDMSGPRINT_STREAM
  */
 //--------------------------------------------------------------
 FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrintColor(
-	FLDMSGBG *fmb, const STRBUF *strbuf,
+  FLDMSGBG *fmb, const STRBUF *strbuf,
   GFL_BMPWIN *bmpwin, u16 x, u16 y, int wait, u16 n_color )
 {
   FLDMSGPRINT_STREAM *stm = GFL_HEAP_AllocClearMemory(
@@ -1862,12 +1878,12 @@ FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrintColor(
  * @param bmpwin 表示する初期化済みのGFL_BMPWIN
  * @param x 描画開始X座標(ドット)
  * @param y 描画開始Y座標(ドット)
- * @param   wait		１文字描画ごとのウェイトフレーム数
+ * @param   wait    １文字描画ごとのウェイトフレーム数
  * @retval FLDMSGPRINT_STREAM
  */
 //--------------------------------------------------------------
 FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrint(
-	FLDMSGBG *fmb, const STRBUF *strbuf,
+  FLDMSGBG *fmb, const STRBUF *strbuf,
   GFL_BMPWIN *bmpwin, u16 x, u16 y, int wait )
 {
   return( FLDMSGPRINT_STREAM_SetupPrintColor(
@@ -1960,12 +1976,12 @@ BOOL FLDMSGPRINT_STREAM_ProcPrint( FLDMSGPRINT_STREAM *stm )
 //--------------------------------------------------------------
 /**
  * FLDMSGWIN_STREAM メッセージウィンドウ追加
- * @param	fmb	FLDMSGBG*
- * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
- * @param	bmppos_x		//表示座標X キャラ単位
- * @param	bmppos_y		//表示座標Y キャラ単位
- * @param	bmpsize_x		//表示サイズX キャラ単位
- * @param	bmpsize_y		//表示サイズY キャラ単位
+ * @param fmb FLDMSGBG*
+ * @param msgData 表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @param bmppos_x    //表示座標X キャラ単位
+ * @param bmppos_y    //表示座標Y キャラ単位
+ * @param bmpsize_x   //表示サイズX キャラ単位
+ * @param bmpsize_y   //表示サイズY キャラ単位
  * @retval FLDMSGWIN_STREAM*
  */
 //--------------------------------------------------------------
@@ -1974,14 +1990,14 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
     u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y )
 {
   FLDMSGWIN_STREAM *msgWin;
-	
+  
   fmb->deriveWin_plttNo = PANO_FONT;
   
-	msgWin = GFL_HEAP_AllocClearMemory(
+  msgWin = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDMSGWIN_STREAM) );
-	msgWin->fmb = fmb;
+  msgWin->fmb = fmb;
   msgWin->msgData = msgData;
-	msgWin->bmpwin = winframe_InitBmp( fmb->bgFrame, fmb->heapID,
+  msgWin->bmpwin = winframe_InitBmp( fmb->bgFrame, fmb->heapID,
       bmppos_x, bmppos_y, bmpsize_x, bmpsize_y, fmb->deriveWin_plttNo );
   msgWin->strBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN, fmb->heapID );
   
@@ -2002,10 +2018,10 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
 //--------------------------------------------------------------
 void FLDMSGWIN_STREAM_Delete( FLDMSGWIN_STREAM *msgWin )
 {
-	winframe_DeleteBmp( msgWin->bmpwin );
+  winframe_DeleteBmp( msgWin->bmpwin );
   
   if( msgWin->msgPrintStream != NULL ){
-	  FLDMSGPRINT_STREAM_Delete( msgWin->msgPrintStream );
+    FLDMSGPRINT_STREAM_Delete( msgWin->msgPrintStream );
   }
   
   if( msgWin->msgPrint != NULL ){
@@ -2014,15 +2030,15 @@ void FLDMSGWIN_STREAM_Delete( FLDMSGWIN_STREAM *msgWin )
   
   GFL_STR_DeleteBuffer( msgWin->strBuf );
   keyWaitCursor_Delete( &msgWin->cursor_work );
-	GFL_HEAP_FreeMemory( msgWin );
+  GFL_HEAP_FreeMemory( msgWin );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGWIN_STREAM メッセージウィンドウ メッセージ表示開始
  * @param msgWin FLDMSGWIN_STREAM*
- * @param	x		X表示座標
- * @param	y		Y表示座標
+ * @param x   X表示座標
+ * @param y   Y表示座標
  * @param strID メッセージデータ　文字列ID
  * @retval nothing
  */
@@ -2038,15 +2054,15 @@ void FLDMSGWIN_STREAM_PrintStart(
   GFL_MSG_GetString( msgWin->msgData, strID, msgWin->strBuf );
   
   msgWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
-  	msgWin->fmb, msgWin->strBuf, msgWin->bmpwin, x, y, MSGSPEED_GetWait() );
+    msgWin->fmb, msgWin->strBuf, msgWin->bmpwin, x, y, MSGSPEED_GetWait() );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDMSGWIN_STREAM メッセージウィンドウ メッセージ表示開始 STRBUF指定
  * @param msgWin FLDMSGWIN_STREAM*
- * @param	x		X表示座標
- * @param	y		Y表示座標
+ * @param x   X表示座標
+ * @param y   Y表示座標
  * @param strBuf 表示するSTRBUF
  * @retval nothing
  */
@@ -2059,7 +2075,7 @@ void FLDMSGWIN_STREAM_PrintStrBufStart(
   }
   
   msgWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
-  	msgWin->fmb, strBuf, msgWin->bmpwin, x, y, MSGSPEED_GetWait() );
+    msgWin->fmb, strBuf, msgWin->bmpwin, x, y, MSGSPEED_GetWait() );
 }
 
 //--------------------------------------------------------------
@@ -2081,16 +2097,16 @@ BOOL FLDMSGWIN_STREAM_Print( FLDMSGWIN_STREAM *msgWin )
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
     if( keyWaitCursor_GetState(&msgWin->cursor_work) == CURSOR_STATE_WRITE ){
-		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgWin->bmpwin );
+      GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgWin->bmpwin );
       keyWaitCursor_Clear( &msgWin->cursor_work, bmp, 0x0f );
-		  GFL_BMPWIN_TransVramCharacter( msgWin->bmpwin );
+      GFL_BMPWIN_TransVramCharacter( msgWin->bmpwin );
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
     {
-		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgWin->bmpwin );
+      GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgWin->bmpwin );
       keyWaitCursor_Write( &msgWin->cursor_work, bmp, 0x0f );
-		  GFL_BMPWIN_TransVramCharacter( msgWin->bmpwin );
+      GFL_BMPWIN_TransVramCharacter( msgWin->bmpwin );
     }
     break;
   case PRINTSTREAM_STATE_DONE: //終了
@@ -2104,7 +2120,7 @@ BOOL FLDMSGWIN_STREAM_Print( FLDMSGWIN_STREAM *msgWin )
 /**
  * FLDMSGWIN_STREAM メッセージウィンドウ追加 会話ウィンドウタイプ
  * @param fmb FLDMSGBG*
- * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @param msgData 表示する初期化済みのGFL_MSGDATA NULL=使用しない
  * @retval FLDMSGWIN_STREAM
  */
 //--------------------------------------------------------------
@@ -2125,7 +2141,7 @@ void FLDMSGWIN_STREAM_ClearMessage( FLDMSGWIN_STREAM *msgWin )
 {
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgWin->bmpwin );
   GFL_BMP_Clear( bmp, 0xff);
-	GFL_BG_LoadScreenReq( msgWin->fmb->bgFrame );
+  GFL_BG_LoadScreenReq( msgWin->fmb->bgFrame );
 }
 
 //--------------------------------------------------------------
@@ -2149,7 +2165,7 @@ void FLDMSGWIN_STREAM_ClearWindow( FLDMSGWIN_STREAM *msgWin )
 //--------------------------------------------------------------
 void FLDMSGWIN_STREAM_WriteWindow( FLDMSGWIN_STREAM *msgWin )
 {
-	BmpWinFrame_Write( msgWin->bmpwin,
+  BmpWinFrame_Write( msgWin->bmpwin,
       WINDOW_TRANS_ON, 1, PANO_MENU );
   FLDMSGWIN_STREAM_ClearMessage( msgWin );
 }
@@ -2195,9 +2211,9 @@ BOOL FLDMSGWIN_STREAM_CheckAllPrintTrans( FLDMSGWIN_STREAM *msgWin )
 //--------------------------------------------------------------
 /**
  * FLDSYSWIN_STREAM システムウィンドウ追加
- * @param	fmb	FLDMSGBG*
- * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
- * @param	bmppos_y		//表示座標Y キャラ単位
+ * @param fmb FLDMSGBG*
+ * @param msgData 表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @param bmppos_y    //表示座標Y キャラ単位
  * @retval FLDSYSWIN_STREAM*
  */
 //--------------------------------------------------------------
@@ -2205,14 +2221,14 @@ FLDSYSWIN_STREAM * FLDSYSWIN_STREAM_Add(
     FLDMSGBG *fmb, GFL_MSGDATA *msgData, u16 bmppos_y )
 {
   FLDSYSWIN_STREAM *sysWin;
-	
+  
   fmb->deriveWin_plttNo = PANO_FONT;
   
-	sysWin = GFL_HEAP_AllocClearMemory(
+  sysWin = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDSYSWIN_STREAM) );
-	sysWin->fmb = fmb;
+  sysWin->fmb = fmb;
   sysWin->msgData = msgData;
-	sysWin->bmpwin = syswin_InitBmp( bmppos_y, fmb->heapID );
+  sysWin->bmpwin = syswin_InitBmp( bmppos_y, fmb->heapID );
   sysWin->strBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN, fmb->heapID );
   
   keyWaitCursor_Init( &sysWin->cursor_work, fmb->heapID );
@@ -2232,10 +2248,10 @@ FLDSYSWIN_STREAM * FLDSYSWIN_STREAM_Add(
 //--------------------------------------------------------------
 void FLDSYSWIN_STREAM_Delete( FLDSYSWIN_STREAM *sysWin )
 {
-	syswin_DeleteBmp( sysWin->bmpwin );
+  syswin_DeleteBmp( sysWin->bmpwin );
   
   if( sysWin->msgPrintStream != NULL ){
-	  FLDMSGPRINT_STREAM_Delete( sysWin->msgPrintStream );
+    FLDMSGPRINT_STREAM_Delete( sysWin->msgPrintStream );
   }
   
   if( sysWin->msgPrint != NULL ){
@@ -2244,15 +2260,15 @@ void FLDSYSWIN_STREAM_Delete( FLDSYSWIN_STREAM *sysWin )
   
   GFL_STR_DeleteBuffer( sysWin->strBuf );
   keyWaitCursor_Delete( &sysWin->cursor_work );
-	GFL_HEAP_FreeMemory( sysWin );
+  GFL_HEAP_FreeMemory( sysWin );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDSYSWIN_STREAM システムウィンドウ メッセージ表示開始
  * @param sysWin FLDSYSWIN_STREAM*
- * @param	x		X表示座標
- * @param	y		Y表示座標
+ * @param x   X表示座標
+ * @param y   Y表示座標
  * @param strID メッセージデータ　文字列ID
  * @retval nothing
  */
@@ -2268,15 +2284,15 @@ void FLDSYSWIN_STREAM_PrintStart(
   GFL_MSG_GetString( sysWin->msgData, strID, sysWin->strBuf );
   
   sysWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
-  	sysWin->fmb, sysWin->strBuf, sysWin->bmpwin, x, y, MSGSPEED_GetWait() );
+    sysWin->fmb, sysWin->strBuf, sysWin->bmpwin, x, y, MSGSPEED_GetWait() );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDSYSWIN_STREAM システムウィンドウ メッセージ表示開始 STRBUF指定
  * @param sysWin FLDSYSWIN_STREAM*
- * @param	x		X表示座標
- * @param	y		Y表示座標
+ * @param x   X表示座標
+ * @param y   Y表示座標
  * @param strBuf 表示するSTRBUF
  * @retval nothing
  */
@@ -2289,7 +2305,7 @@ void FLDSYSWIN_STREAM_PrintStrBufStart(
   }
   
   sysWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
-  	sysWin->fmb, strBuf, sysWin->bmpwin, x, y, MSGSPEED_GetWait() );
+    sysWin->fmb, strBuf, sysWin->bmpwin, x, y, MSGSPEED_GetWait() );
 }
 
 //--------------------------------------------------------------
@@ -2311,16 +2327,16 @@ BOOL FLDSYSWIN_STREAM_Print( FLDSYSWIN_STREAM *sysWin )
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
     if( keyWaitCursor_GetState(&sysWin->cursor_work) == CURSOR_STATE_WRITE ){
-		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
+      GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
       keyWaitCursor_Clear( &sysWin->cursor_work, bmp, 0x0f );
-		  GFL_BMPWIN_TransVramCharacter( sysWin->bmpwin );
+      GFL_BMPWIN_TransVramCharacter( sysWin->bmpwin );
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
     {
-		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
+      GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
       keyWaitCursor_Write( &sysWin->cursor_work, bmp, 0x0f );
-		  GFL_BMPWIN_TransVramCharacter( sysWin->bmpwin );
+      GFL_BMPWIN_TransVramCharacter( sysWin->bmpwin );
     }
     break;
   case PRINTSTREAM_STATE_DONE: //終了
@@ -2348,7 +2364,7 @@ void FLDSYSWIN_WriteKeyWaitCursor( FLDSYSWIN_STREAM *sysWin )
 /**
  * FLDSYSWIN_STREAM システムウィンドウ追加 会話ウィンドウタイプ
  * @param fmb FLDMSGBG*
- * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @param msgData 表示する初期化済みのGFL_MSGDATA NULL=使用しない
  * @retval FLDSYSWIN_STREAM
  */
 //--------------------------------------------------------------
@@ -2369,7 +2385,7 @@ void FLDSYSWIN_STREAM_ClearMessage( FLDSYSWIN_STREAM *sysWin )
 {
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
   GFL_BMP_Clear( bmp, 0xff);
-	GFL_BG_LoadScreenReq( sysWin->fmb->bgFrame );
+  GFL_BG_LoadScreenReq( sysWin->fmb->bgFrame );
 }
 
 //--------------------------------------------------------------
@@ -2393,7 +2409,7 @@ void FLDSYSWIN_STREAM_ClearWindow( FLDSYSWIN_STREAM *sysWin )
 //--------------------------------------------------------------
 void FLDSYSWIN_STREAM_WriteWindow( FLDSYSWIN_STREAM *sysWin )
 {
-	syswin_WriteWindow( sysWin->bmpwin );
+  syswin_WriteWindow( sysWin->bmpwin );
   FLDSYSWIN_STREAM_ClearMessage( sysWin );
 }
 
@@ -2526,7 +2542,7 @@ FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
   FLDTALKMSGWIN *tmsg = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDTALKMSGWIN) );
   tmsg->strBuf = GFL_STR_CreateBuffer(
-					FLDMSGBG_STRLEN, fmb->heapID );
+          FLDMSGBG_STRLEN, fmb->heapID );
   
   GFL_MSG_GetString( msgData, msgID, tmsg->strBuf );
   fldTalkMsgWin_Add( fmb, tmsg, idx, pos, tmsg->strBuf, type, tail );
@@ -2599,7 +2615,7 @@ BOOL FLDTALKMSGWIN_WaitClose( FLDTALKMSGWIN *tmsg )
 void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg )
 {
   if( tmsg->strBuf != NULL ){
-		GFL_STR_DeleteBuffer( tmsg->strBuf );
+    GFL_STR_DeleteBuffer( tmsg->strBuf );
   }
   
   TALKMSGWIN_DeleteWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
@@ -2638,7 +2654,7 @@ void FLDTALKMSGWIN_ResetMessageStrBuf( FLDTALKMSGWIN *tmsg, STRBUF *strbuf )
   GFL_BMP_Clear( bmp, 0xff );
   TALKMSGWIN_ResetMessage(
     tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx, strbuf );
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(bmpwin) );
+  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(bmpwin) );
 }
 
 //--------------------------------------------------------------
@@ -2688,7 +2704,7 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
           tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
       GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
       keyWaitCursor_Clear( &tmsg->cursor_work, bmp, 0x0f );
-		  GFL_BMPWIN_TransVramCharacter( twin_bmp );
+      GFL_BMPWIN_TransVramCharacter( twin_bmp );
     }
     
     if( (trg & MSG_SKIP_BTN) ){
@@ -2703,7 +2719,7 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
     { 
       GFL_BMPWIN *twin_bmp = TALKMSGWIN_GetBmpWin(
           tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
-		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
+      GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
       
       keyWaitCursor_Write( &tmsg->cursor_work, bmp, 0x0f );
 
@@ -2714,7 +2730,7 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
         tmsg->flag_key_trg = FALSE;
       }
       
-		  GFL_BMPWIN_TransVramCharacter( twin_bmp );
+      GFL_BMPWIN_TransVramCharacter( twin_bmp );
     }
     break;
   case PRINTSTREAM_STATE_DONE: //終了
@@ -2759,10 +2775,10 @@ struct _TAG_FLDPLAINMSGWIN
   STRBUF *strBuf;
   FLDMSGBG *fmb;
   TALKMSGWIN_SYS *talkMsgWinSys; //FLDMSGBGより
-  GFL_MSGDATA *msgData;	//ユーザーから
+  GFL_MSGDATA *msgData; //ユーザーから
   
   GFL_BMPWIN *bmpwin;
-	FLDMSGPRINT_STREAM *msgPrintStream;
+  FLDMSGPRINT_STREAM *msgPrintStream;
   FLDMSGPRINT *msgPrint;
 };
 
@@ -2811,11 +2827,11 @@ static void fldPlainMsgWin_Add( FLDMSGBG *fmb,
 /**
  * FLDPLAINMSGWIN プレーンウィンドウ追加
  * @param fmb FLDMSGBG
- * @param	msgData	表示する初期化済みのGFL_MSGDATA NULL=使用しない
- * @param	bmppos_x		//表示座標X キャラ単位
- * @param	bmppos_y		//表示座標Y キャラ単位
- * @param	bmpsize_x		//表示サイズX キャラ単位
- * @param	bmpsize_y		//表示サイズY キャラ単位
+ * @param msgData 表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @param bmppos_x    //表示座標X キャラ単位
+ * @param bmppos_y    //表示座標Y キャラ単位
+ * @param bmpsize_x   //表示サイズX キャラ単位
+ * @param bmpsize_y   //表示サイズY キャラ単位
  * @retval FLDPLAINMSGWIN*
  */
 //--------------------------------------------------------------
@@ -2828,7 +2844,7 @@ FLDPLAINMSGWIN * FLDPLAINMSGWIN_Add(
   plnwin->fmb = fmb;
   plnwin->msgData = msgData;
   plnwin->strBuf = GFL_STR_CreateBuffer(
-					FLDMSGBG_STRLEN, fmb->heapID );
+          FLDMSGBG_STRLEN, fmb->heapID );
   fldPlainMsgWin_Add( fmb, plnwin, bmppos_x, bmppos_y,
       bmpsize_x, bmpsize_y, type );
   return( plnwin );
@@ -2845,7 +2861,7 @@ FLDPLAINMSGWIN * FLDPLAINMSGWIN_Add(
 void FLDPLAINMSGWIN_Delete( FLDPLAINMSGWIN *plnwin )
 {
   if( plnwin->msgPrintStream != NULL ){
-	  FLDMSGPRINT_STREAM_Delete( plnwin->msgPrintStream );
+    FLDMSGPRINT_STREAM_Delete( plnwin->msgPrintStream );
   }
   
   if( plnwin->msgPrint != NULL ){
@@ -2853,7 +2869,7 @@ void FLDPLAINMSGWIN_Delete( FLDPLAINMSGWIN *plnwin )
   }
 
   if( plnwin->strBuf != NULL ){
-		GFL_STR_DeleteBuffer( plnwin->strBuf );
+    GFL_STR_DeleteBuffer( plnwin->strBuf );
   }
   
   TALKMSGWIN_DeleteBmpWindow( plnwin->talkMsgWinSys, plnwin->bmpwin );
@@ -2872,7 +2888,7 @@ void FLDPLAINMSGWIN_ClearMessage( FLDPLAINMSGWIN *plnwin )
 {
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
   GFL_BMP_Clear( bmp, 0xff);
-	GFL_BG_LoadScreenReq( plnwin->fmb->bgFrame );
+  GFL_BG_LoadScreenReq( plnwin->fmb->bgFrame );
 }
 
 //--------------------------------------------------------------
@@ -2906,8 +2922,8 @@ void FLDPLAINMSGWIN_WriteWindow( FLDPLAINMSGWIN *plnwin )
 /**
  * FLDPLAINMSGWIN メッセージ表示
  * @param msgWin FLDPLAINMSGWIN *
- * @param	x		X表示座標
- * @param	y		Y表示座標
+ * @param x   X表示座標
+ * @param y   Y表示座標
  * @param strID メッセージデータ　文字列ID
  * @retval nothing
  */
@@ -2923,7 +2939,7 @@ void FLDPLAINMSGWIN_Print(
   
   plnwin->msgPrint = FLDMSGPRINT_SetupPrint(
       plnwin->fmb, plnwin->msgData, plnwin->bmpwin );
-	
+  
   FLDMSGPRINT_Print( plnwin->msgPrint, x, y, strID );
 }
 
@@ -2931,9 +2947,9 @@ void FLDPLAINMSGWIN_Print(
 /**
  * FLDPLAINMSGWIN メッセージ表示 STRBUF指定
  * @param msgWin FLDPLAINMSGWIN *
- * @param	x		X表示座標
- * @param	y		Y表示座標
- * @param	strBuf	STRBUF
+ * @param x   X表示座標
+ * @param y   Y表示座標
+ * @param strBuf  STRBUF
  * @retval nothing
  */
 //--------------------------------------------------------------
@@ -2946,7 +2962,7 @@ void FLDPLAINMSGWIN_PrintStrBuf(
   
   plnwin->msgPrint = FLDMSGPRINT_SetupPrint(
       plnwin->fmb, NULL, plnwin->bmpwin );
-	
+  
   FLDMSGPRINT_PrintStrBuf( plnwin->msgPrint, x, y, strBuf );
 }
 
@@ -2954,9 +2970,9 @@ void FLDPLAINMSGWIN_PrintStrBuf(
 /**
  * FLDPLAINMSGWIN メッセージ表示 STRBUF、カラー指定
  * @param msgWin FLDPLAINMSGWIN *
- * @param	x		X表示座標
- * @param	y		Y表示座標
- * @param	strBuf	STRBUF
+ * @param x   X表示座標
+ * @param y   Y表示座標
+ * @param strBuf  STRBUF
  * @param color PRINTSYS_LSB
  * @retval nothing
  */
@@ -2971,7 +2987,7 @@ void FLDPLAINMSGWIN_PrintStrBufColor(
   
   plnwin->msgPrint = FLDMSGPRINT_SetupPrint(
       plnwin->fmb, NULL, plnwin->bmpwin );
-	
+  
   FLDMSGPRINT_PrintStrBufColor( plnwin->msgPrint, x, y, strBuf, color );
 }
 
@@ -2979,8 +2995,8 @@ void FLDPLAINMSGWIN_PrintStrBufColor(
 /**
  * FLDPLAINMSGWIN メッセージストリーム表示開始
  * @param msgWin FLDPLAINMSGWIN *
- * @param	x		X表示座標
- * @param	y		Y表示座標
+ * @param x   X表示座標
+ * @param y   Y表示座標
  * @param strID メッセージデータ　文字列ID
  * @retval nothing
  */
@@ -2996,15 +3012,15 @@ void FLDPLAINMSGWIN_PrintStreamStart(
   GFL_MSG_GetString( plnwin->msgData, strID, plnwin->strBuf );
   
   plnwin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
-  	plnwin->fmb, plnwin->strBuf, plnwin->bmpwin, x, y, MSGSPEED_GetWait() );
+    plnwin->fmb, plnwin->strBuf, plnwin->bmpwin, x, y, MSGSPEED_GetWait() );
 }
 
 //--------------------------------------------------------------
 /**
  * FLDPLAINMSGWIN メッセージストリーム表示開始　STRBUF指定
  * @param msgWin FLDPLAINMSGWIN *
- * @param	x		X表示座標
- * @param	y		Y表示座標
+ * @param x   X表示座標
+ * @param y   Y表示座標
  * @param strBuf 表示するSTRBUF
  * @retval nothing
  */
@@ -3017,7 +3033,7 @@ void FLDPLAINMSGWIN_PrintStreamStartStrBuf(
   }
   
   plnwin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
-  	plnwin->fmb, strBuf, plnwin->bmpwin, x, y, MSGSPEED_GetWait() );
+    plnwin->fmb, strBuf, plnwin->bmpwin, x, y, MSGSPEED_GetWait() );
 }
 
 //--------------------------------------------------------------
@@ -3039,16 +3055,16 @@ BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin )
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
     if( keyWaitCursor_GetState(&plnwin->cursor_work) == CURSOR_STATE_WRITE ){
-		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
+      GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
       keyWaitCursor_Clear( &plnwin->cursor_work, bmp, 0x0f );
       GFL_BMPWIN_TransVramCharacter( plnwin->bmpwin );
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
     {
-		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
+      GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
       keyWaitCursor_Write( &plnwin->cursor_work, bmp, 0x0f );
-		  GFL_BMPWIN_TransVramCharacter( plnwin->bmpwin );
+      GFL_BMPWIN_TransVramCharacter( plnwin->bmpwin );
     }
     break;
   case PRINTSTREAM_STATE_DONE: //終了
@@ -3141,7 +3157,7 @@ void FLDSUBMSGWIN_Add( FLDMSGBG *fmb,
   idx += FLDTALKMSGWIN_IDX_SUBWIN0;
   
   subwin->strBuf = GFL_STR_CreateBuffer(
-					FLDMSGBG_STRLEN_SUBWIN, fmb->heapID );
+          FLDMSGBG_STRLEN_SUBWIN, fmb->heapID );
   
   GFL_MSG_GetString( msgData, msgID, subwin->strBuf );
   fldSubMsgWin_Add( fmb, subwin, subwin->strBuf,
@@ -3172,7 +3188,7 @@ void FLDSUBMSGWIN_AddStrBuf( FLDMSGBG *fmb,
   {
     u32 len = GFL_STR_GetBufferLength( strBuf ) + 1;
     subwin->strBuf = GFL_STR_CreateBuffer( len, fmb->heapID );
-	  GFL_STR_CopyBuffer( subwin->strBuf, strBuf );
+    GFL_STR_CopyBuffer( subwin->strBuf, strBuf );
   }
   
   fldSubMsgWin_Add(
@@ -3189,7 +3205,7 @@ void FLDSUBMSGWIN_AddStrBuf( FLDMSGBG *fmb,
 static void fldSubMsgWin_Delete( FLDSUBMSGWIN *subwin )
 {
   if( subwin->strBuf != NULL ){
-		GFL_STR_DeleteBuffer( subwin->strBuf );
+    GFL_STR_DeleteBuffer( subwin->strBuf );
   }
   
   TALKMSGWIN_DeleteWindow( subwin->talkMsgWinSys, subwin->talkMsgWinIdx );
@@ -3305,8 +3321,8 @@ FLDBGWIN * FLDBGWIN_Add( FLDMSGBG *fmb, FLDBGWIN_TYPE type )
   
   {
     bgWin->y = -48;
-	  GFL_BG_SetScroll( bgWin->fmb->bgFrame, GFL_BG_SCROLL_X_SET, 0 );
-	  GFL_BG_SetScroll( bgWin->fmb->bgFrame, GFL_BG_SCROLL_Y_SET, bgWin->y );
+    GFL_BG_SetScroll( bgWin->fmb->bgFrame, GFL_BG_SCROLL_X_SET, 0 );
+    GFL_BG_SetScroll( bgWin->fmb->bgFrame, GFL_BG_SCROLL_Y_SET, bgWin->y );
   }
   
   {
@@ -3319,21 +3335,21 @@ FLDBGWIN * FLDBGWIN_Add( FLDMSGBG *fmb, FLDBGWIN_TYPE type )
     bgWin->bmp_old = GFL_BMP_Create(
         27, 4, GFL_BMP_16_COLOR, fmb->heapID );
     
-	  bmp = GFL_BMPWIN_GetBmp( bgWin->bmpwin );
-	  GFL_BMP_Clear( bmp, BGWIN_NCOL );
-	  GFL_BMPWIN_MakeScreen( bgWin->bmpwin );
-	  GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
+    bmp = GFL_BMPWIN_GetBmp( bgWin->bmpwin );
+    GFL_BMP_Clear( bmp, BGWIN_NCOL );
+    GFL_BMPWIN_MakeScreen( bgWin->bmpwin );
+    GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
     
     bgwin_InitGraphic(
       fmb->bgFrame, PANO_BGWIN, type, fmb->heapID );
     
     bgwin_WriteWindow( fmb->bgFrame, 
-		  GFL_BMPWIN_GetPosX( bgWin->bmpwin ),
-		  GFL_BMPWIN_GetPosY( bgWin->bmpwin ),
-		  GFL_BMPWIN_GetSizeX( bgWin->bmpwin ),
-		  GFL_BMPWIN_GetSizeY( bgWin->bmpwin ), CHARNO_OTHERSWIN, PANO_BGWIN );
+      GFL_BMPWIN_GetPosX( bgWin->bmpwin ),
+      GFL_BMPWIN_GetPosY( bgWin->bmpwin ),
+      GFL_BMPWIN_GetSizeX( bgWin->bmpwin ),
+      GFL_BMPWIN_GetSizeY( bgWin->bmpwin ), CHARNO_OTHERSWIN, PANO_BGWIN );
     
-		GFL_BG_LoadScreenReq( fmb->bgFrame );
+    GFL_BG_LoadScreenReq( fmb->bgFrame );
   }
   
   keyWaitCursor_Init( &bgWin->cursor_work, bgWin->fmb->heapID );
@@ -3352,26 +3368,26 @@ FLDBGWIN * FLDBGWIN_Add( FLDMSGBG *fmb, FLDBGWIN_TYPE type )
 //--------------------------------------------------------------
 void FLDBGWIN_Delete( FLDBGWIN *bgWin )
 {
-	GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( bgWin->bmpwin );
+  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( bgWin->bmpwin );
   
   bgwin_CleanWindow( bgWin->fmb->bgFrame, 
-		  GFL_BMPWIN_GetPosX( bgWin->bmpwin ),
-		  GFL_BMPWIN_GetPosY( bgWin->bmpwin ),
-		  GFL_BMPWIN_GetSizeX( bgWin->bmpwin ),
-		  GFL_BMPWIN_GetSizeY( bgWin->bmpwin ), 0, BGWIN_NCOL );
+      GFL_BMPWIN_GetPosX( bgWin->bmpwin ),
+      GFL_BMPWIN_GetPosY( bgWin->bmpwin ),
+      GFL_BMPWIN_GetSizeX( bgWin->bmpwin ),
+      GFL_BMPWIN_GetSizeY( bgWin->bmpwin ), 0, BGWIN_NCOL );
   
-	GFL_BMPWIN_ClearScreen( bgWin->bmpwin );
+  GFL_BMPWIN_ClearScreen( bgWin->bmpwin );
   
   GFL_BG_FillScreen( bgWin->fmb->bgFrame, 0,
-		  GFL_BMPWIN_GetPosX( bgWin->bmpwin ),
+      GFL_BMPWIN_GetPosX( bgWin->bmpwin ),
       GFL_BMPWIN_GetPosY( bgWin->bmpwin ),
-		  GFL_BMPWIN_GetSizeX( bgWin->bmpwin ), 
-		  GFL_BMPWIN_GetSizeY( bgWin->bmpwin ), GFL_BG_SCRWRT_PALIN );
+      GFL_BMPWIN_GetSizeX( bgWin->bmpwin ), 
+      GFL_BMPWIN_GetSizeY( bgWin->bmpwin ), GFL_BG_SCRWRT_PALIN );
   
-	GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
-	GFL_BMPWIN_Delete( bgWin->bmpwin );
+  GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
+  GFL_BMPWIN_Delete( bgWin->bmpwin );
   
-	GFL_BG_LoadScreenReq( bgWin->fmb->bgFrame );
+  GFL_BG_LoadScreenReq( bgWin->fmb->bgFrame );
   GFL_BG_SetScroll( bgWin->fmb->bgFrame, GFL_BG_SCROLL_Y_SET, 0 );
   
   GFL_BMP_Delete( bgWin->bmp_old );
@@ -3389,7 +3405,7 @@ void FLDBGWIN_Delete( FLDBGWIN *bgWin )
 /**
  * フィールドBGウィンドウ　プリント
  * @param FLDBGWIN *bgWin
- * @param	strID	メッセージデータ 文字列ID
+ * @param strID メッセージデータ 文字列ID
  * @retval BOOL TRUE=終了
  */
 //--------------------------------------------------------------
@@ -3401,7 +3417,7 @@ BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
 #if 0
     bgWin->strTemp = GFL_STR_CreateCopyBuffer( strBuf, bgWin->fmb->heapID );
 #else
-	  bgWin->strTemp = GFL_STR_CreateBuffer( 
+    bgWin->strTemp = GFL_STR_CreateBuffer( 
         GFL_STR_GetBufferLength(strBuf) + (EOM_CODESIZE*2),
         bgWin->fmb->heapID );
 #endif
@@ -3412,7 +3428,7 @@ BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
         BGWIN_NCOL );
     
     GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
-		GFL_BG_LoadScreenReq( bgWin->fmb->bgFrame );
+    GFL_BG_LoadScreenReq( bgWin->fmb->bgFrame );
     bgWin->seq_no++;
     break;
   case 1: //スクロール
@@ -3422,7 +3438,7 @@ BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
       bgWin->y = 0;
       bgWin->seq_no++;
     }
-	  
+    
     GFL_BG_SetScroll( bgWin->fmb->bgFrame, GFL_BG_SCROLL_Y_SET, bgWin->y );
     break;
   case 2: //終端チェック
@@ -3437,7 +3453,7 @@ BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
     if( !(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A) ){
       keyWaitCursor_Write( &bgWin->cursor_work,
           GFL_BMPWIN_GetBmp(bgWin->bmpwin), BGWIN_NCOL );
-		  GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
+      GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
       break;
     }
     
@@ -3462,8 +3478,8 @@ BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
       bgWin->scroll_y += BGWIN_MSG_SCROLL_SPEED;
     }
     
-	  GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
-	  GFL_BG_LoadScreenReq( bgWin->fmb->bgFrame );
+    GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
+    GFL_BG_LoadScreenReq( bgWin->fmb->bgFrame );
     break;
   case 5: //終了へ　キー待ち
     if( !(GFL_UI_KEY_GetTrg() & (MSG_LAST_BTN|PAD_KEY_ALL)) ){
@@ -3477,7 +3493,7 @@ BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
       bgWin->y = -48;
     }
     
-	  GFL_BG_SetScroll( bgWin->fmb->bgFrame, GFL_BG_SCROLL_Y_SET, bgWin->y );
+    GFL_BG_SetScroll( bgWin->fmb->bgFrame, GFL_BG_SCROLL_Y_SET, bgWin->y );
     
     if( bgWin->y == -48 ){
       bgWin->seq_no++;
@@ -3533,25 +3549,25 @@ static void bgwin_InitGraphic(
 static void bgwin_WriteWindow(
     u8 frm, u8 px, u8 py, u8 sx, u8 sy, u16 cgx, u8 pal )
 {
-	GFL_BG_FillScreen( frm, cgx, px-2, py-1, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+1, px-1, py-1, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+2, px, py-1, sx, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+3, px+sx,	py-1, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+4, px+sx+1, py-1, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+5, px+sx+2, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px-2, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+1, px-1, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+2, px, py-1, sx, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+3, px+sx, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+4, px+sx+1, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+5, px+sx+2, py-1, 1, 1, pal );
   
-	GFL_BG_FillScreen( frm, cgx+6, px-2, py, 1, sy, pal );
-	GFL_BG_FillScreen( frm, cgx+7, px-1, py, 1, sy, pal );
-	GFL_BG_FillScreen( frm, cgx+9, px+sx, py, 1, sy, pal );
-	GFL_BG_FillScreen( frm, cgx+10, px+sx+1, py, 1, sy, pal );
-	GFL_BG_FillScreen( frm, cgx+11, px+sx+2, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+6, px-2, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+7, px-1, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+9, px+sx, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+10, px+sx+1, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+11, px+sx+2, py, 1, sy, pal );
   
-	GFL_BG_FillScreen( frm, cgx+12, px-2, py+sy, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+13, px-1, py+sy, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+14, px, py+sy, sx, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+15, px+sx, py+sy, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+16, px+sx+1, py+sy, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+17, px+sx+2, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+12, px-2, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+13, px-1, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+14, px, py+sy, sx, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+15, px+sx, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+16, px+sx+1, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+17, px+sx+2, py+sy, 1, 1, pal );
 }
 
 //--------------------------------------------------------------
@@ -3570,25 +3586,25 @@ static void bgwin_WriteWindow(
 static void bgwin_CleanWindow(
     u8 frm, u8 px, u8 py, u8 sx, u8 sy, u16 cgx, u8 pal )
 {
-	GFL_BG_FillScreen( frm, cgx, px-2, py-1, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx, px-1, py-1, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx, px, py-1, sx, 1, pal );
-	GFL_BG_FillScreen( frm, cgx, px+sx,	py-1, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx, px+sx+1, py-1, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx, px+sx+2, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px-2, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px-1, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px, py-1, sx, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px+sx, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px+sx+1, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px+sx+2, py-1, 1, 1, pal );
   
-	GFL_BG_FillScreen( frm, cgx, px-2, py, 1, sy, pal );
-	GFL_BG_FillScreen( frm, cgx, px-1, py, 1, sy, pal );
-	GFL_BG_FillScreen( frm, cgx, px+sx, py, 1, sy, pal );
-	GFL_BG_FillScreen( frm, cgx, px+sx+1, py, 1, sy, pal );
-	GFL_BG_FillScreen( frm, cgx, px+sx+2, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx, px-2, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx, px-1, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx, px+sx, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx, px+sx+1, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx, px+sx+2, py, 1, sy, pal );
   
-	GFL_BG_FillScreen( frm, cgx, px-2, py+sy, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx, px-1, py+sy, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx, px, py+sy, sx, 1, pal );
-	GFL_BG_FillScreen( frm, cgx, px+sx, py+sy, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx, px+sx+1, py+sy, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx, px+sx+2, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px-2, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px-1, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px, py+sy, sx, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px+sx, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px+sx+1, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px+sx+2, py+sy, 1, 1, pal );
 }
 
 //--------------------------------------------------------------
@@ -3664,7 +3680,7 @@ static BOOL bgwin_ScrollBmp(
   int sizeX = GFL_BMP_GetSizeX( bmp );
   int sizeY = GFL_BMP_GetSizeY( bmp );
   
-	GFL_BMP_Clear( bmp, n_col );
+  GFL_BMP_Clear( bmp, n_col );
   
   if( y > sizeY ){
     y = sizeY;
@@ -3724,7 +3740,7 @@ static void spwin_CreateBmpBG(
 {
   u8 *buf;
   void *pData;
-	NNSG2dCharacterData *pCharData;
+  NNSG2dCharacterData *pCharData;
   
   if( type >= FLDSPWIN_TYPE_MAX ){
     GF_ASSERT( 0 );
@@ -3741,7 +3757,7 @@ static void spwin_CreateBmpBG(
   
   charOffs *= 0x20;
 
-	NNS_G2dGetUnpackedBGCharacterData( pData, &pCharData );
+  NNS_G2dGetUnpackedBGCharacterData( pData, &pCharData );
   MI_CpuCopy( (u8*)(pCharData->pRawData)+(0x20*type)+charOffs, buf, 0x20 );
   GFL_HEAP_FreeMemory( pData );
 }
@@ -3865,15 +3881,15 @@ static void spwin_Print( u16 x, u16 y,
 /**
  * FDLSPWIN 特殊ウィンドウ　初期化
  * @param fmb FLDMSGBG*
- * @param	bmppos_x		//表示座標X キャラ単位
- * @param	bmppos_y		//表示座標Y キャラ単位
- * @param	bmpsize_x		//表示サイズX キャラ単位
- * @param	bmpsize_y		//表示サイズY キャラ単位
+ * @param bmppos_x    //表示座標X キャラ単位
+ * @param bmppos_y    //表示座標Y キャラ単位
+ * @param bmpsize_x   //表示サイズX キャラ単位
+ * @param bmpsize_y   //表示サイズY キャラ単位
  * @retval FLDSPWIN*
  */
 //--------------------------------------------------------------
 FLDSPWIN * FLDSPWIN_Add( FLDMSGBG *fmb, FLDSPWIN_TYPE type,
-	u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y )
+  u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y )
 {
   FLDSPWIN *spWin;
   
@@ -3893,8 +3909,8 @@ FLDSPWIN * FLDSPWIN_Add( FLDMSGBG *fmb, FLDSPWIN_TYPE type,
   spwin_InitPalette( fmb->bgFrame, PANO_SPWIN, fmb->heapID );
   
   GFL_BMPWIN_MakeScreen( spWin->bmpwin );
-	GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
-	GFL_BG_LoadScreenReq( fmb->bgFrame );
+  GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
+  GFL_BG_LoadScreenReq( fmb->bgFrame );
   
   keyWaitCursor_Init( &spWin->cursor_work, fmb->heapID );
 
@@ -3912,14 +3928,14 @@ FLDSPWIN * FLDSPWIN_Add( FLDMSGBG *fmb, FLDSPWIN_TYPE type,
 //--------------------------------------------------------------
 void FLDSPWIN_Delete( FLDSPWIN *spWin )
 {
-	GFL_BMPWIN_ClearScreen( spWin->bmpwin );
+  GFL_BMPWIN_ClearScreen( spWin->bmpwin );
   GFL_BG_FillScreen( spWin->fmb->bgFrame, 0,
-		  GFL_BMPWIN_GetPosX( spWin->bmpwin ),
+      GFL_BMPWIN_GetPosX( spWin->bmpwin ),
       GFL_BMPWIN_GetPosY( spWin->bmpwin ),
-		  GFL_BMPWIN_GetSizeX( spWin->bmpwin ), 
-		  GFL_BMPWIN_GetSizeY( spWin->bmpwin ), GFL_BG_SCRWRT_PALIN );
-	GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
-	GFL_BG_LoadScreenReq( spWin->fmb->bgFrame );
+      GFL_BMPWIN_GetSizeX( spWin->bmpwin ), 
+      GFL_BMPWIN_GetSizeY( spWin->bmpwin ), GFL_BG_SCRWRT_PALIN );
+  GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
+  GFL_BG_LoadScreenReq( spWin->fmb->bgFrame );
   
   keyWaitCursor_Delete( &spWin->cursor_work );
 
@@ -3932,8 +3948,8 @@ void FLDSPWIN_Delete( FLDSPWIN *spWin )
 /**
  * FLDSPWIN 特殊ウィンドウ メッセージ表示開始 STRBUF指定
  * @param msgWin FLDMSGWIN_STREAM*
- * @param	x		X表示座標
- * @param	y		Y表示座標
+ * @param x   X表示座標
+ * @param y   Y表示座標
  * @param strBuf 表示するSTRBUF
  * @retval nothing
  */
@@ -3972,7 +3988,7 @@ BOOL FLDSPWIN_Print( FLDSPWIN *spWin )
   
   keyWaitCursor_WriteBmpBG( &spWin->cursor_work,
       GFL_BMPWIN_GetBmp(spWin->bmpwin), spWin->bmp_bg );
-	GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
+  GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
   return( FALSE );
 }
 
@@ -4096,7 +4112,7 @@ static CURSOR_STATE keyWaitCursor_GetState( KEYWAIT_CURSOR_WORK *work )
  * キー送りカーソル クリア
  * @param work KEYWAIT_CURSOR_WORK
  * @param bmp 表示先GFL_BMP_DATA
- * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
+ * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI 
  * @retval nothing
  */
 //--------------------------------------------------------------
@@ -4140,7 +4156,7 @@ static void keyWaitCursor_WriteCore(
  * キー送りカーソル 表示
  * @param work KEYWAIT_CURSOR_WORK
  * @param bmp 表示先GFL_BMP_DATA
- * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
+ * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI 
  * @retval nothing
  */
 //--------------------------------------------------------------
@@ -4239,30 +4255,30 @@ static void syswin_WriteWindow( const GFL_BMPWIN *bmpwin )
   u16 cgx = CHARNO_SYSWIN;
   u8 px = GFL_BMPWIN_GetPosX( bmpwin );
   u8 py = GFL_BMPWIN_GetPosY( bmpwin );
-	u8 sx = GFL_BMPWIN_GetSizeX( bmpwin );
-	u8 sy = GFL_BMPWIN_GetSizeY( bmpwin );
+  u8 sx = GFL_BMPWIN_GetSizeX( bmpwin );
+  u8 sy = GFL_BMPWIN_GetSizeY( bmpwin );
   u8 pal = PANO_MENU;
   u8 frm = FLDMSGBG_BGFRAME;
   
-	GFL_BG_FillScreen( frm, cgx, px-2, py-1, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+1, px-1, py-1, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+2, px, py-1, sx, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+3, px+sx,	py-1, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+4, px+sx+1, py-1, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+5, px+sx+2, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx, px-2, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+1, px-1, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+2, px, py-1, sx, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+3, px+sx, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+4, px+sx+1, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+5, px+sx+2, py-1, 1, 1, pal );
   
-	GFL_BG_FillScreen( frm, cgx+6, px-2, py, 1, sy, pal );
-	GFL_BG_FillScreen( frm, cgx+7, px-1, py, 1, sy, pal );
-	GFL_BG_FillScreen( frm, cgx+9, px+sx, py, 1, sy, pal );
-	GFL_BG_FillScreen( frm, cgx+10, px+sx+1, py, 1, sy, pal );
-	GFL_BG_FillScreen( frm, cgx+11, px+sx+2, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+6, px-2, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+7, px-1, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+9, px+sx, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+10, px+sx+1, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+11, px+sx+2, py, 1, sy, pal );
   
-	GFL_BG_FillScreen( frm, cgx+12, px-2, py+sy, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+13, px-1, py+sy, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+14, px, py+sy, sx, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+15, px+sx, py+sy, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+16, px+sx+1, py+sy, 1, 1, pal );
-	GFL_BG_FillScreen( frm, cgx+17, px+sx+2, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+12, px-2, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+13, px-1, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+14, px, py+sy, sx, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+15, px+sx, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+16, px+sx+1, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+17, px+sx+2, py+sy, 1, 1, pal );
   
   GFL_BG_LoadScreenReq( frm );
 }
@@ -4270,49 +4286,49 @@ static void syswin_WriteWindow( const GFL_BMPWIN *bmpwin )
 //--------------------------------------------------------------
 /**
  * システムウィンドウ　ビットマップウィンドウフレーム　初期化
- * @param	bgframe	BGフレーム
- * @param	heapID	HEAPID
- * @param	pos_y	ビットマップ左上Y キャラ単位
- * @retval	GFL_BMPWIN	作成されたGFL_BMPWIN
+ * @param bgframe BGフレーム
+ * @param heapID  HEAPID
+ * @param pos_y ビットマップ左上Y キャラ単位
+ * @retval  GFL_BMPWIN  作成されたGFL_BMPWIN
  */
 //--------------------------------------------------------------
 static GFL_BMPWIN * syswin_InitBmp( u8 pos_y, HEAPID heapID )
 {
-	GFL_BMP_DATA *bmp;
-	GFL_BMPWIN *bmpwin;
+  GFL_BMP_DATA *bmp;
+  GFL_BMPWIN *bmpwin;
   
-	bmpwin = GFL_BMPWIN_Create( FLDMSGBG_BGFRAME,
-		2, pos_y, 27, 4,
-		PANO_FONT, GFL_BMP_CHRAREA_GET_B );
+  bmpwin = GFL_BMPWIN_Create( FLDMSGBG_BGFRAME,
+    2, pos_y, 27, 4,
+    PANO_FONT, GFL_BMP_CHRAREA_GET_B );
   
-	bmp = GFL_BMPWIN_GetBmp( bmpwin );
-	
-	GFL_BMP_Clear( bmp, 0xff );
-	GFL_BMPWIN_MakeScreen( bmpwin );
-	GFL_BMPWIN_TransVramCharacter( bmpwin );
+  bmp = GFL_BMPWIN_GetBmp( bmpwin );
+  
+  GFL_BMP_Clear( bmp, 0xff );
+  GFL_BMPWIN_MakeScreen( bmpwin );
+  GFL_BMPWIN_TransVramCharacter( bmpwin );
   syswin_WriteWindow( bmpwin );
 
-	return( bmpwin );
+  return( bmpwin );
 }
 
 //--------------------------------------------------------------
 /**
  * ビットマップウィンドウフレーム　クリア
- * @param	bmpwin	syswin_InitBmp()の戻り値
- * @retval	nothing
+ * @param bmpwin  syswin_InitBmp()の戻り値
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 static void syswin_ClearBmp( GFL_BMPWIN *bmpwin )
 {
-	u8 frm = GFL_BMPWIN_GetFrame( bmpwin );
+  u8 frm = GFL_BMPWIN_GetFrame( bmpwin );
   
-	GFL_BG_FillScreen(
-		frm, CHARNO_CLEAR,
-		GFL_BMPWIN_GetPosX( bmpwin ) - 2,
-		GFL_BMPWIN_GetPosY( bmpwin ) - 1,
-		GFL_BMPWIN_GetSizeX( bmpwin ) + 3 + 2,
-		GFL_BMPWIN_GetSizeY( bmpwin ) + 2,
-		0 );
+  GFL_BG_FillScreen(
+    frm, CHARNO_CLEAR,
+    GFL_BMPWIN_GetPosX( bmpwin ) - 2,
+    GFL_BMPWIN_GetPosY( bmpwin ) - 1,
+    GFL_BMPWIN_GetSizeX( bmpwin ) + 3 + 2,
+    GFL_BMPWIN_GetSizeY( bmpwin ) + 2,
+    0 );
   
   GFL_BG_LoadScreenReq( frm );
 }
@@ -4320,8 +4336,8 @@ static void syswin_ClearBmp( GFL_BMPWIN *bmpwin )
 //--------------------------------------------------------------
 /**
  * ビットマップウィンドウフレーム　削除
- * @param	bmpwin	syswin_InitBmp()の戻り値
- * @retval	nothing
+ * @param bmpwin  syswin_InitBmp()の戻り値
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 static void syswin_DeleteBmp( GFL_BMPWIN *bmpwin )
@@ -4342,60 +4358,49 @@ static void syswin_DeleteBmp( GFL_BMPWIN *bmpwin )
 //--------------------------------------------------------------
 static void setBGResource( FLDMSGBG *fmb )
 {
-	fmb->bgFrame = FLDMSGBG_BGFRAME; //不透明BG
+  fmb->bgFrame = FLDMSGBG_BGFRAME; //不透明BG
 
-	{	//BG初期化
-		GFL_BG_BGCNT_HEADER bgcntText = {
-			0, 0, FLDBG_MFRM_MSG_SCRSIZE, 0,
-			GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_MSG_COLORMODE,
-			FLDBG_MFRM_MSG_SCRBASE, FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
-			GX_BG_EXTPLTT_01, FLDBG_MFRM_MSG_PRI, 0, 0, FALSE
-		};
-		
-		GFL_BG_SetBGControl( fmb->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
-		
-		GFL_BG_FillCharacter( fmb->bgFrame, CHARNO_CLEAR, 1, 0 );
-		GFL_BG_FillScreen( fmb->bgFrame,
-			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-		
-		GFL_BG_LoadScreenReq( fmb->bgFrame );
-	}
+  { //BG初期化
+    GFL_BG_BGCNT_HEADER bgcntText = {
+      0, 0, FLDBG_MFRM_MSG_SCRSIZE, 0,
+      GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_MSG_COLORMODE,
+      FLDBG_MFRM_MSG_SCRBASE, FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
+      GX_BG_EXTPLTT_01, FLDBG_MFRM_MSG_PRI, 0, 0, FALSE
+    };
+    
+    GFL_BG_SetBGControl( fmb->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
+    
+    GFL_BG_FillCharacter( fmb->bgFrame, CHARNO_CLEAR, 1, 0 );
+    GFL_BG_FillScreen( fmb->bgFrame,
+      0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    
+    GFL_BG_LoadScreenReq( fmb->bgFrame );
+  }
 
   fmb->bgFrameBld = FLDMSGBG_BGFRAME_BLD; //半透明BG
 
 #if 0  
-  {	//BG初期化
-		GFL_BG_BGCNT_HEADER bgcntText = {
-			0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
-			GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_MSG_COLORMODE,
-			FLDBG_MFRM_EFF1_SCRBASE, FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
-			GX_BG_EXTPLTT_01, FLDBG_MFRM_MSG_PRI, 0, 0, FALSE
-		};
-		
-		GFL_BG_SetBGControl( fmb->bgFrameBld, &bgcntText, GFL_BG_MODE_TEXT );
-		
-		GFL_BG_FillCharacter( fmb->bgFrameBld, CHARNO_CLEAR, 1, 0 );
-		GFL_BG_FillScreen( fmb->bgFrameBld,
-			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-		
-		GFL_BG_LoadScreenReq( fmb->bgFrameBld );
-	}
+  { //BG初期化
+    GFL_BG_BGCNT_HEADER bgcntText = {
+      0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
+      GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_MSG_COLORMODE,
+      FLDBG_MFRM_EFF1_SCRBASE, FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
+      GX_BG_EXTPLTT_01, FLDBG_MFRM_MSG_PRI, 0, 0, FALSE
+    };
+    
+    GFL_BG_SetBGControl( fmb->bgFrameBld, &bgcntText, GFL_BG_MODE_TEXT );
+    
+    GFL_BG_FillCharacter( fmb->bgFrameBld, CHARNO_CLEAR, 1, 0 );
+    GFL_BG_FillScreen( fmb->bgFrameBld,
+      0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    
+    GFL_BG_LoadScreenReq( fmb->bgFrameBld );
+  }
 #endif
 
-	{	//フォントパレット
-		GFL_ARC_UTIL_TransVramPalette(
-			ARCID_FONT, NARC_font_default_nclr, //黒
-			PALTYPE_MAIN_BG, PANO_FONT_TALKMSGWIN*32, 32, fmb->heapID );
-		GFL_ARC_UTIL_TransVramPalette(
-			ARCID_FONT, NARC_font_systemwin_nclr, //白
-			PALTYPE_MAIN_BG, PANO_FONT*32, 32, fmb->heapID );
-	}
-	
-	{	//window frame
-		BmpWinFrame_GraphicSet( fmb->bgFrame, CHARNO_WINFRAME,
-			PANO_MENU, MENU_TYPE_SYSTEM, fmb->heapID );
-	}
-  
+  // パレット・システムウインドウ
+  transBGResource( fmb->bgFrame, fmb->heapID );
+
   { //TALKMSGWIN
     if( fmb->g3Dcamera != NULL ){
       TALKMSGWIN_SYS_SETUP setup;
@@ -4409,16 +4414,47 @@ static void setBGResource( FLDMSGBG *fmb )
       fmb->talkMsgWinSys = TALKMSGWIN_SystemCreate( &setup );
     }
   }
-	
-  { //SYSWIN
-    syswin_InitGraphic( fmb->heapID );
-  }
+  
 
   GFL_BG_SetPriority( GFL_BG_FRAME0_M, FLDBG_MFRM_3D_PRI );
   GFL_BG_SetVisible( fmb->bgFrame, VISIBLE_ON );
   
   fmb->deriveWin_plttNo = PANO_FONT;
 }
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief ウインドウ用リソースのみ転送
+ *
+ * @param   bgFrame   
+ * @param   heapID
+ */
+//----------------------------------------------------------------------------------
+static void transBGResource( int bgFrame, HEAPID heapID )
+{
+  { //フォントパレット
+    GFL_ARC_UTIL_TransVramPalette(
+      ARCID_FONT, NARC_font_default_nclr, //黒
+      PALTYPE_MAIN_BG, PANO_FONT_TALKMSGWIN*32, 32, heapID );
+    GFL_ARC_UTIL_TransVramPalette(
+      ARCID_FONT, NARC_font_systemwin_nclr, //白
+      PALTYPE_MAIN_BG, PANO_FONT*32, 32, heapID );
+  }
+  
+  { //window frame
+    BmpWinFrame_GraphicSet( bgFrame, CHARNO_WINFRAME,
+      PANO_MENU, MENU_TYPE_SYSTEM, heapID );
+  }
+
+  //SYSWIN
+  {
+    syswin_InitGraphic( heapID );
+  }
+}
+
+
+
 
 //--------------------------------------------------------------
 /**
@@ -4432,24 +4468,24 @@ static void setBlendAlpha( BOOL on )
 #if 1
   if( on == TRUE ){
     int plane1 = GX_BLEND_PLANEMASK_BG1; 
-  	int plane2 = GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|
+    int plane2 = GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|
       GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ;
-  	G2_SetBlendAlpha( plane1, plane2, 31, 8 );
+    G2_SetBlendAlpha( plane1, plane2, 31, 8 );
   }else{
     int plane1 = GX_BLEND_PLANEMASK_NONE; 
     int plane2 = GX_BLEND_PLANEMASK_NONE; 
-  	G2_SetBlendAlpha( plane1, plane2, 0, 0 );
+    G2_SetBlendAlpha( plane1, plane2, 0, 0 );
   }
 #else
   if( on == TRUE ){
     int plane1 = GX_BLEND_PLANEMASK_BG2; 
-  	int plane2 = GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|
+    int plane2 = GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|
       GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ;
-  	G2_SetBlendAlpha( plane1, plane2, 31, 8 );
+    G2_SetBlendAlpha( plane1, plane2, 31, 8 );
   }else{
     int plane1 = GX_BLEND_PLANEMASK_NONE; 
     int plane2 = GX_BLEND_PLANEMASK_NONE; 
-  	G2_SetBlendAlpha( plane1, plane2, 0, 0 );
+    G2_SetBlendAlpha( plane1, plane2, 0, 0 );
   }
 #endif
 }
@@ -4479,91 +4515,77 @@ void FLDMSGBG_RecoveryBG( FLDMSGBG *fmb )
   
   {
     GFL_BG_FillCharacterRelease( fmb->bgFrame, 1, 0 );
-		GFL_BG_FillCharacter( fmb->bgFrame, 0x00, 1, 0 );
-		GFL_BG_FillScreen( fmb->bgFrame,
-			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-		
-		GFL_BG_LoadScreenReq( fmb->bgFrame );
-	}
+    GFL_BG_FillCharacter( fmb->bgFrame, 0x00, 1, 0 );
+    GFL_BG_FillScreen( fmb->bgFrame,
+      0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    
+    GFL_BG_LoadScreenReq( fmb->bgFrame );
+  }
 #if 0  
-	{
-		GFL_BG_FillScreen( fmb->bgFrameBld,
-			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-		GFL_BG_LoadScreenReq( fmb->bgFrameBld );
-	}
+  {
+    GFL_BG_FillScreen( fmb->bgFrameBld,
+      0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( fmb->bgFrameBld );
+  }
 #endif  
-	{	//フォントパレット
-		GFL_ARC_UTIL_TransVramPalette(
-			ARCID_FONT, NARC_font_default_nclr, //黒
-			PALTYPE_MAIN_BG, PANO_FONT_TALKMSGWIN*32, 32, fmb->heapID );
-		GFL_ARC_UTIL_TransVramPalette(
-			ARCID_FONT, NARC_font_systemwin_nclr, //白
-			PALTYPE_MAIN_BG, PANO_FONT*32, 32, fmb->heapID );
-	}
-	
-	{	//window frame
-		BmpWinFrame_GraphicSet( fmb->bgFrame, CHARNO_WINFRAME,
-			PANO_MENU, MENU_TYPE_SYSTEM, heapID );
-	}
+
+  transBGResource( fmb->bgFrame, fmb->heapID );
 
   { //バルーンウィンドウ
     TALKMSGWIN_ReTransWindowBG( fmb->talkMsgWinSys );
   }
 
-  { //SYSWIN
-    syswin_InitGraphic( heapID );
-  }
 }
 
 //======================================================================
-//	パーツ
+//  パーツ
 //======================================================================
 //--------------------------------------------------------------
 /**
  * ビットマップウィンドウフレーム　初期化
- * @param	bgframe	BGフレーム
- * @param	heapID	HEAPID
- * @param	pos_x	ビットマップ左上X キャラ単位
- * @param	pos_y	ビットマップ左上Y キャラ単位
- * @param	size_x　ビットマップサイズX キャラ単位
- * @param	size_y	ビットマップサイズY キャラ単位
- * @retval	GFL_BMPWIN	作成されたGFL_BMPWIN
+ * @param bgframe BGフレーム
+ * @param heapID  HEAPID
+ * @param pos_x ビットマップ左上X キャラ単位
+ * @param pos_y ビットマップ左上Y キャラ単位
+ * @param size_x　ビットマップサイズX キャラ単位
+ * @param size_y  ビットマップサイズY キャラ単位
+ * @retval  GFL_BMPWIN  作成されたGFL_BMPWIN
  */
 //--------------------------------------------------------------
 static GFL_BMPWIN * winframe_InitBmp( u32 bgFrame, HEAPID heapID,
-	u16 pos_x, u16 pos_y, u16 size_x, u16 size_y, u16 pltt_no )
+  u16 pos_x, u16 pos_y, u16 size_x, u16 size_y, u16 pltt_no )
 {
-	GFL_BMP_DATA *bmp;
-	GFL_BMPWIN *bmpwin;
+  GFL_BMP_DATA *bmp;
+  GFL_BMPWIN *bmpwin;
 
-	bmpwin = GFL_BMPWIN_Create( bgFrame,
-		pos_x, pos_y, size_x, size_y,
-//		PANO_FONT, GFL_BMP_CHRAREA_GET_B );
-		pltt_no, GFL_BMP_CHRAREA_GET_B );
+  bmpwin = GFL_BMPWIN_Create( bgFrame,
+    pos_x, pos_y, size_x, size_y,
+//    PANO_FONT, GFL_BMP_CHRAREA_GET_B );
+    pltt_no, GFL_BMP_CHRAREA_GET_B );
 
-	bmp = GFL_BMPWIN_GetBmp( bmpwin );
-	
-	GFL_BMP_Clear( bmp, 0xff );
-	GFL_BMPWIN_MakeScreen( bmpwin );
-	GFL_BMPWIN_TransVramCharacter( bmpwin );
-	GFL_BG_LoadScreenReq( bgFrame );
-	
-	BmpWinFrame_Write( bmpwin, WINDOW_TRANS_ON, 1, PANO_MENU );
-	
-	return( bmpwin );
+  bmp = GFL_BMPWIN_GetBmp( bmpwin );
+  
+  GFL_BMP_Clear( bmp, 0xff );
+  GFL_BMPWIN_MakeScreen( bmpwin );
+  GFL_BMPWIN_TransVramCharacter( bmpwin );
+  GFL_BG_LoadScreenReq( bgFrame );
+  
+  BmpWinFrame_Write( bmpwin, WINDOW_TRANS_ON, 1, PANO_MENU );
+  
+  return( bmpwin );
 }
 
 //--------------------------------------------------------------
 /**
  * ビットマップウィンドウフレーム　削除
- * @param	bmpwin	winframe_InitBmp()の戻り値
- * @retval	nothing
+ * @param bmpwin  winframe_InitBmp()の戻り値
+ * @retval  nothing
  */
 //--------------------------------------------------------------
 static void winframe_DeleteBmp( GFL_BMPWIN *bmpwin )
 {
-	BmpWinFrame_Clear( bmpwin, 0 );
-	GFL_BMPWIN_Delete( bmpwin );
+  BmpWinFrame_Clear( bmpwin, 0 );
+  GFL_BMPWIN_Delete( bmpwin );
 }
 
 //--------------------------------------------------------------
@@ -4651,25 +4673,25 @@ static FLDSUBMSGWIN * FldMsgBG_DeleteFldSubMsgWin( FLDMSGBG *fmb, int id )
 //--------------------------------------------------------------
 static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo =
 {
-	1,		//リスト項目数
-	10,		//表示最大項目数
-	0,		//ラベル表示Ｘ座標
-	13,		//項目表示Ｘ座標
-	0,		//カーソル表示Ｘ座標
-//	0,		//表示Ｙ座標
-	3,		//表示Ｙ座標
-	1,		//表示文字色
-	15,		//表示背景色
-	2,		//表示文字影色
-	0,		//文字間隔Ｘ
-	1,		//文字間隔Ｙ
-	FLDMENUFUNC_SKIP_NON,	//ページスキップタイプ
-	12,		//文字サイズX(ドット
-	12,		//文字サイズY(ドット
-	0,		//表示座標X キャラ単位
-	0,		//表示座標Y キャラ単位
-	0,		//表示サイズX キャラ単位
-	0,		//表示サイズY キャラ単位
+  1,    //リスト項目数
+  10,   //表示最大項目数
+  0,    //ラベル表示Ｘ座標
+  13,   //項目表示Ｘ座標
+  0,    //カーソル表示Ｘ座標
+//  0,    //表示Ｙ座標
+  3,    //表示Ｙ座標
+  1,    //表示文字色
+  15,   //表示背景色
+  2,    //表示文字影色
+  0,    //文字間隔Ｘ
+  1,    //文字間隔Ｙ
+  FLDMENUFUNC_SKIP_NON, //ページスキップタイプ
+  12,   //文字サイズX(ドット
+  12,   //文字サイズY(ドット
+  0,    //表示座標X キャラ単位
+  0,    //表示座標Y キャラ単位
+  0,    //表示サイズX キャラ単位
+  0,    //表示サイズY キャラ単位
 };
 
 //--------------------------------------------------------------

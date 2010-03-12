@@ -657,11 +657,12 @@ void FIELD_SUBSCREEN_ResetAction( FIELD_SUBSCREEN_WORK* pWork)
  * @param  mode
  */
 //----------------------------------------------------------------------------
-void FIELD_SUBSCREEN_MainDispBrightnessOff( void )
+void FIELD_SUBSCREEN_MainDispBrightnessOff( HEAPID heapId )
 {
   G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0, GX_BLEND_PLANEMASK_NONE, 0, 0, 0 );
   FLDMSGBG_SetBlendAlpha( FALSE );
   GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
+  FLDMSGBG_TransResource( FLDBG_MFRM_MSG, heapId );   // FLDBG_MFRM_MSG = GFL_BG_FRAME1_M
 //  FLDMSGBG_ResetBGResource( fld_msg );
 
 

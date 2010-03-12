@@ -352,7 +352,7 @@ static void _return_brightness( FIELD_MENU_WORK *work )
   // フィールドメニューをキャンセルしたか、レポート画面決定で終了するのでなければ
   if( work->isCancel==TRUE ){
     // 上画面に掛けていた輝度オフを戻す
-    FIELD_SUBSCREEN_MainDispBrightnessOff();
+    FIELD_SUBSCREEN_MainDispBrightnessOff( work->heapId );
     OS_Printf("上画面解放した isCancel=%d, funcType=%d\n", work->isCancel, work->funcType);
   }
 }
@@ -666,6 +666,7 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_field_menu_menu_back_NSCR, 
                       FIELD_MENU_BG_BACK ,  0 , 0, FALSE , work->tempHeapId );
 
+#if 0
   // 上画面プレート
   GFL_ARCHDL_UTIL_TransVramPaletteEx( arcHandle, NARC_field_menu_menu_bg_NCLR, PALTYPE_MAIN_BG, 
                                       10*32, 10*32, 32, work->tempHeapId );  
@@ -673,6 +674,7 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
                                         FIELD_MENU_BG_PLATE_M , 0 , 0, FALSE , work->tempHeapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_field_menu_menu_back2_NSCR, 
                                    FIELD_MENU_BG_PLATE_M ,  0 , 0, FALSE , work->tempHeapId );
+#endif
 
   // セルアクターリソース転送(カーソル）
   work->objRes[FMO_COM_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle, NARC_field_menu_menu_obj_common_NCLR, 
