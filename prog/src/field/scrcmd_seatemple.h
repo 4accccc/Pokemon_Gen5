@@ -38,6 +38,9 @@ extern "C"{
 // 海底神殿　表示物管理処理開始
 extern VMCMD_RESULT EvCmdSeaTempleStart( VMHANDLE *core, void *wk );
 
+// 海底神殿　歩数カウンタの取得
+extern VMCMD_RESULT EvCmdSeaTempleGetStepWalk( VMHANDLE *core, void *wk );
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif

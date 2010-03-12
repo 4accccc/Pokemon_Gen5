@@ -2613,7 +2613,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	zoneChange_UpdatePlayerWork( gdata, new_zone_id );
 
   //SCENEAREA更新 
-  zoneChangeScene( fieldWork, fieldWork->map_id );
+  zoneChangeScene( fieldWork, new_zone_id );
 
 	// 地名表示システムに, ゾーンの切り替えを通達
   if(fieldWork->placeNameSys){ FIELD_PLACE_NAME_Display( fieldWork->placeNameSys, new_zone_id ); }
@@ -2846,8 +2846,10 @@ static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
 static void zoneChangeScene( FIELDMAP_WORK *fieldWork, u32 zone_id )
 {
   u32 id = ZONEDATA_GetSceneAreaID( zone_id );
+  TOMOYA_Printf( "zone_id %d   id %d\n", zone_id, id );
   if( id != ZONEDATA_NO_SCENEAREA_ID ) 
   {
+    TOMOYA_Printf( "seanarea load\n" );
     // まずクリア
     FLD_SCENEAREA_Release( fieldWork->sceneArea );
     FLD_SCENEAREA_LOADER_Clear( fieldWork->sceneAreaLoader );
@@ -2863,6 +2865,7 @@ static void zoneChangeScene( FIELDMAP_WORK *fieldWork, u32 zone_id )
   }
   else if( !ZONEDATA_IsRailMap( zone_id ) )
   {
+    TOMOYA_Printf( "seanarea clear\n" );
     FLD_SCENEAREA_Release( fieldWork->sceneArea );
     FLD_SCENEAREA_LOADER_Clear( fieldWork->sceneAreaLoader );
   }

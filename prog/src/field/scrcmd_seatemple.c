@@ -15,6 +15,8 @@
 #include "system/gfl_use.h"
 #include "system/vm_cmd.h"
 
+#include "savedata/situation.h"
+
 #include "script.h"
 #include "script_def.h"
 #include "script_local.h"
@@ -64,6 +66,25 @@ VMCMD_RESULT EvCmdSeaTempleStart( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  海底神殿歩数カウンタの取得
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdSeaTempleGetStepWalk( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK* saveData = GAMEDATA_GetSaveControlWork(gdata);
+  SITUATION* situation = SaveData_GetSituation( saveData );
+  u16* ret_wk = SCRCMD_GetVMWork(core,work);  //タグ展開数を返すワーク
+
+  *ret_wk = Situation_GetSeaTempleStepCount( situation );
+
+  return VMCMD_RESULT_CONTINUE;
+}
 
 
 

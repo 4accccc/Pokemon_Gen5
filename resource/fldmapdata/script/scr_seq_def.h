@@ -4343,6 +4343,20 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_SEATEMPLE_STEP_WALK
+ * @brief   海底遺跡　歩行数の取得
+ * @param ret_wk  歩数格納先
+ */
+//--------------------------------------------------------------
+#define _GET_SEATEMPLE_STEP_WALK( ret_wk ) \
+    _ASM_GET_SEATEMPLE_STEP_WALK ret_wk
+    .macro  _ASM_GET_SEATEMPLE_STEP_WALK ret_wk
+    .short  EV_SEQ_GET_SEATEMPLE_STEP_WALK
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _GET_STARTMENU_FLAG
  * @brief   タイトルからのスタートメニュー項目の状態取得
  * @param type    メニュー項目指定（script_def.hのSCR_STARTMENU_FLAG_～を参照）
@@ -6791,13 +6805,16 @@
 //--------------------------------------------------------------
 /**
  * @brief フィールド技：ダイビング
- * フィールド技スクリプト内でのみ使用しています。
+ * フィールド技スクリプトと海底遺跡でのみ使用しています。
  * 他の箇所では使用しないでください。
+ *
+ *  param 上昇と下降  SCR_EV_DIVING_MAPCHANGE_DOWN　SCR_EV_DIVING_MAPCHANGE_UP
  */
 //--------------------------------------------------------------
-#define _DIVING() _ASM_DIVING
-  .macro  _ASM_DIVING
+#define _DIVING( up_down ) _ASM_DIVING up_down
+  .macro  _ASM_DIVING up_down
   .short  EV_SEQ_DIVING
+  .short  \up_down
   .endm
 
 //======================================================================

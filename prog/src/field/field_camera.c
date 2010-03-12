@@ -2633,6 +2633,8 @@ void FIELD_CAMERA_StopTraceNow(FIELD_CAMERA * camera_ptr)
           (trace->targetBuffer[check_idx].y != trace->targetBuffer[last_check_idx].y) )
       {
         OS_TPrintf( "FIELD_CAMERA_StopTraceNow err トレース情報に中身が入っています\n" );
+        OS_TPrintf( "target (%d == %d)\n", trace->targetBuffer[check_idx].y, trace->targetBuffer[last_check_idx].y );
+        OS_TPrintf( "camera (%d == %d)\n", trace->camPosBuffer[check_idx].y, trace->camPosBuffer[last_check_idx].y );
         GF_ASSERT( (trace->camPosBuffer[check_idx].y == trace->camPosBuffer[last_check_idx].y) &&
            (trace->targetBuffer[check_idx].y == trace->targetBuffer[last_check_idx].y) );
       }

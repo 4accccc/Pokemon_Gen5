@@ -474,15 +474,8 @@ sub_diving_main:
   _CALL sub_cutin_player_player_form_return
 
   //自機下降演出開始
-  //  原点から移動、４０フレーム、６４ユニット下に移動
-  _PLAYER_UPDOWN_EFFECT( 0, 40, 64 )
-
-  _TIME_WAIT( 40 )
-  _SE_PLAY( SEQ_SE_FLD_123 )
-  _SE_WAIT()
-
   //ダイビングでのマップ遷移開始
-  _DIVING()
+  _DIVING( SCR_EV_DIVING_MAPCHANGE_DOWN )
   _RET
   
 /**************************************************************/

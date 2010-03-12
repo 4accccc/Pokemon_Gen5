@@ -911,6 +911,50 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport( GMEVENT* event, int* seq, void*
 
 //------------------------------------------------------------------
 /**
+ * @brief 「海底神殿　退場」によるマップチェンジ
+ */
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangeBySeaTemple( GMEVENT* event, int* seq, void* wk )
+{
+  MAPCHANGE_WORK* work       = wk;
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+
+  switch( *seq )
+  {
+  case 0:
+    // 動作モデル停止
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
+    (*seq)++;
+    break;
+  case 1: 
+    // SE再生
+    PMSND_PlaySE( SEQ_SE_FLD_123 );
+    (*seq)++;
+    break;
+
+    // 基本的なマップチェンジで海面へ
+  case 2:
+    if( PMSND_CheckPlaySE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_123) ) == FALSE )
+    {
+      GMEVENT* sub_event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK) );
+      MAPCHANGE_WORK* sub_work;
+
+      sub_work  = GMEVENT_GetEventWork( sub_event );
+      *sub_work  = *work; // コピー
+      // マップチェンジ イベント
+      GMEVENT_CallEvent( event, sub_event );
+      (*seq)++;
+    }
+    break;
+  case 3:
+    return GMEVENT_RES_FINISH; 
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief 「ワープ」によるマップチェンジ
  */
 //------------------------------------------------------------------
@@ -1239,6 +1283,30 @@ GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK* gameSystem )
   MAPCHANGE_WORK_init( work, gameSystem ); 
   WARPDATA_GetWarpLocation( warpID, &(work->loc_req) );
   LOCATION_DEBUG_SetDefaultPos( &(work->loc_req), work->loc_req.zone_id );
+  work->loc_req.type = LOCATION_TYPE_DIRECT;
+  work->exit_type    = EXIT_TYPE_NONE;
+
+  return event;
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief マップ遷移イベント生成（ 海底神殿からの強制退場 )
+ * @param gameSystem ゲームシステムへのポインタ
+ * @return GMEVENT 生成したマップ遷移イベント
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* EVENT_ChangeMapBySeaTemple( GAMESYS_WORK* gameSystem )
+{
+  GMEVENT* event;
+  MAPCHANGE_WORK* work;
+
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeBySeaTemple, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  work->loc_req      = *(GAMEDATA_GetEscapeLocation( work->gameData ));
   work->loc_req.type = LOCATION_TYPE_DIRECT;
   work->exit_type    = EXIT_TYPE_NONE;
 

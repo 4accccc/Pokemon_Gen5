@@ -24,6 +24,7 @@
 #include "fldeff_iaigiri.h"
 
 #include "event_mapchange.h"
+#include "event_seatemple.h"
 #include "arc/fieldmap/zone_id.h"
 #include "script_local.h" //SCRIPT_CallEvent
 #include "field_diving_data.h"  //DIVINGSPOT_GetZoneID
@@ -151,7 +152,17 @@ VMCMD_RESULT EvCmdIaigiriEffect( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * @brief ダイビングでのマップ遷移
- * @todo  暫定コマンドなので、振り分けなどをキチンとする！
+ *
+ *  下降
+ * 1.沈むイベント
+ * 2.SE
+ * 3.対象のマップにジャンプ
+ * 
+ *
+ *　上昇
+ * 1.上るイベント
+ * 2.SE
+ * 3.Divingを使用した場所にジャンプ
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdDiving( VMHANDLE * core, void *wk )
@@ -160,31 +171,44 @@ VMCMD_RESULT EvCmdDiving( VMHANDLE * core, void *wk )
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   SCRIPT_WORK* scriptWork = SCRCMD_WORK_GetScriptWork( work );
-
   GMEVENT * event;
-#if 0
-  u16 connect_zone_id;
-  {
-    u16 now_zone_id = FIELDMAP_GetZoneID( fieldmap );
-    FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
-    MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-    u16 x = MMDL_GetGridPosX( mmdl );
-    u16 z = MMDL_GetGridPosZ( mmdl );
-    connect_zone_id = DIVINGSPOT_GetZoneID( now_zone_id, x, z );
-    if ( connect_zone_id == ZONE_ID_MAX )
-    { //不具合対処
-      connect_zone_id = now_zone_id;
-    }
+  u16 type = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+
+  GF_ASSERT( type < SCR_EV_DIVING_MAPCHANGE_MAX );
+
+  if( type == SCR_EV_DIVING_MAPCHANGE_DOWN ){
+    event = EVENT_SeaTemple_GetDivingDownEvent( gsys, fieldmap );
+    SCRIPT_CallEvent( scriptWork, event );
+  }else{
+    event = EVENT_SeaTemple_GetDivingUpEvent( gsys, fieldmap );
+    SCRIPT_CallEvent( scriptWork, event );
   }
-#endif
-  u16 connect_zone_id;
-  BOOL result;
-  result = DIVINGSPOT_Check( fieldmap, &connect_zone_id );
-  GF_ASSERT( result );
-  event = DEBUG_EVENT_ChangeMapDefaultPos( gsys, fieldmap, connect_zone_id );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief ダイビングでのマップ遷移
+ *
+ * 
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdDivingUp( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  SCRIPT_WORK* scriptWork = SCRCMD_WORK_GetScriptWork( work );
+  GMEVENT * event;
+
+
+  event = EVENT_SeaTemple_GetDivingUpEvent( gsys, fieldmap );
   SCRIPT_CallEvent( scriptWork, event );
 
   return VMCMD_RESULT_SUSPEND;
 }
+
 
 

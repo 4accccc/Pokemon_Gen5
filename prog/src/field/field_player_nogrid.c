@@ -2964,7 +2964,7 @@ static void nogrid_AutoUp_Main_Under( AUTO_UP_WORK* wk )
 static int nogrid_AutoUp_GetDir( const AUTO_UP_WORK* wk, int dir )
 {
   if( wk->auto_up_now_flag ){
-    return DIR_LEFT;
+    return DIR_DOWN;
   }else{
     if( wk->save_dir != DIR_NOT ){
       return wk->save_dir;

@@ -17,6 +17,9 @@
 #define C03R1302_WOMAN2_02                 6
 #define C03R1302_RANGERW_01                7
 #define C03R1302_TRAINERW_01               8
+#define C03R1302_FIGHTERW_01               9
+#define C03R1302_RANGERM_01               10
+#define C03R1302_BOY4_01                  11
 
 #endif //ZONE_C03R1302_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r1302.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

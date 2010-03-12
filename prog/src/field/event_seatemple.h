@@ -40,6 +40,15 @@ extern "C"{
 extern GMEVENT * EVENT_SeaTemple_GetStepEvent(
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
 
+
+// ‘JˆÚ
+extern GMEVENT * EVENT_SeaTemple_GetDivingDownEvent(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
+
+extern GMEVENT * EVENT_SeaTemple_GetDivingUpEvent(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
+
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif

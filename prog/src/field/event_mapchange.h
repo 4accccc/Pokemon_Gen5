@@ -137,7 +137,7 @@ extern GMEVENT* EVENT_ChangeMapBySandStream( GAMESYS_WORK* gameSystem, FIELDMAP_
 
 //------------------------------------------------------------------
 /**
- * @brief マップ遷移イベント生成 ( あなぬけのヒモ / あなをほる / テレポート )
+ * @brief マップ遷移イベント生成 ( あなぬけのヒモ / あなをほる / テレポート/海底神殿からの退場 )
  *
  * @param gameSystem
  *
@@ -147,6 +147,7 @@ extern GMEVENT* EVENT_ChangeMapBySandStream( GAMESYS_WORK* gameSystem, FIELDMAP_
 extern GMEVENT* EVENT_ChangeMapByAnanukenohimo( FIELDMAP_WORK* fieldWork, GAMESYS_WORK* gameSystem );
 extern GMEVENT* EVENT_ChangeMapByAnawohoru( GAMESYS_WORK* gameSystem );
 extern GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK* gameSystem );
+extern GMEVENT* EVENT_ChangeMapBySeaTemple( GAMESYS_WORK* gameSystem );
 
 //------------------------------------------------------------------
 /**

@@ -14,4 +14,5 @@
 extern VMCMD_RESULT EvCmdNaminori( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTakinobori( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdIaigiriEffect( VMHANDLE *core, void *wk );
+
 extern VMCMD_RESULT EvCmdDiving( VMHANDLE * core, void *wk );
