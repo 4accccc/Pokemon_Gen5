@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00131" date="2010-03-11T18:48:28"/>
+	<create user="nakamura_akira" host="W00131" date="2010-03-12T15:32:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -570,16 +570,17 @@
 	</row>
 
 	<row id="plwc10_04_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>※金沢弁を使用します</comment>
 		<attribute name="キャラ指定">OL
 アズサ</attribute>
 		<language name="JPN" width="256">アズサ『だれか　マチに
 つれていって　くれないかなー？▼
 そうだ！　ブラックシティに
-つれていって　くれない？</language>
+つれていって　くれたいま？</language>
 		<language name="JPN_KANJI" width="256">アズサ『だれか　マチに
 連れていって　くれないかなー？▼
 そうだ！　ブラックシティに
-連れていって　くれない？</language>
+連れていって　くれたいま？</language>
 	</row>
 
 	<row id="plwc10_04_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -2361,9 +2362,9 @@
 		<attribute name="キャラ指定">VETERANM
 ユウ</attribute>
 		<language name="JPN" width="256">そうか
-ほかを　あたるよ</language>
+たを　あたるよ</language>
 		<language name="JPN_KANJI" width="256">そうか
-他を　あたるよ</language>
+たを　あたるよ</language>
 	</row>
 
 	<row id="plwc10_25_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -4331,11 +4332,11 @@
 		<language name="JPN" width="256">ウホホ！▼
 ゆったり　ポケモンとの
 であいをたのしむ　せいかつ▼
-たのしみだ！　ありがとう！</language>
+たのしみだ！　あちがとう！</language>
 		<language name="JPN_KANJI" width="256">ウホホ！▼
 ゆったり　ポケモンとの
 出会いを楽しむ　生活▼
-楽しみだ！　ありがとう！</language>
+楽しみだ！　あちがとう！</language>
 	</row>
 
 	<row id="plbc10_19_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">

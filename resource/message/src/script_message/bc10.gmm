@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00131" date="2010-03-11T14:55:32"/>
+	<create user="nakamura_akira" host="W00131" date="2010-03-12T15:28:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -489,6 +489,7 @@
 	</row>
 
 	<row id="bc10_04_01">
+		<comment>※金沢弁を使用します</comment>
 		<attribute name="キャラ指定">OL
 アズサ</attribute>
 		<language name="JPN" width="256">アズサ『わたしと
@@ -500,6 +501,7 @@
 	</row>
 
 	<row id="bc10_04_02">
+		<comment>※金沢弁を使用します</comment>
 		<attribute name="キャラ指定">OL
 アズサ</attribute>
 		<language name="JPN" width="256">え～んなっ　つよいですね！▼
@@ -511,6 +513,7 @@
 	</row>
 
 	<row id="bc10_04_03">
+		<comment>※金沢弁を使用します</comment>
 		<attribute name="キャラ指定">OL
 アズサ</attribute>
 		<language name="JPN" width="256">あせくらしい　せいかつが
@@ -522,6 +525,7 @@
 	</row>
 
 	<row id="bc10_04_04">
+		<comment>※金沢弁を使用します</comment>
 		<attribute name="キャラ指定">OL
 アズサ</attribute>
 		<language name="JPN" width="256">ブラックシティに　ついていくのは
