@@ -194,17 +194,17 @@ static u32 get_limit(int id)
 
   if (id < LARGE_REC_MAX) {
     if(limit[id]){
-      GF_ASSERT_MSG( 0, "record: max over id %d 99999999\n", id );
+//      GF_ASSERT_MSG( 0, "record: max over id %d 99999999\n", id );
       return 999999999;
     }else{
-      GF_ASSERT_MSG( 0, "record: max over id %d 999999\n", id );
+//      GF_ASSERT_MSG( 0, "record: max over id %d 999999\n", id );
       return 999999;
     }
   } else if (id < SMALL_REC_MAX) {
     if(limit[id]){
       return 0xffff;
     }else{
-      GF_ASSERT_MSG( 0, "record: max over id %d 9999\n", id );
+//      GF_ASSERT_MSG( 0, "record: max over id %d 9999\n", id );
       return 9999;
     }
   }
