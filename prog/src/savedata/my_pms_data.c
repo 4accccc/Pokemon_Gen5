@@ -68,11 +68,19 @@ int MYPMS_GetWorkSize( void )
 //-----------------------------------------------------------------------------
 void MYPMS_Init( MYPMS_DATA *p_wk )
 {
+  PMSDAT_SetupDefaultIntroductionMessage( &p_wk->pms[MYPMS_PMS_TYPE_INTRODUCTION] );
+  PMSDAT_SetupDefaultBattleMessage( &p_wk->pms[MYPMS_PMS_TYPE_BATTLE_READY], PMS_BATTLE_TYPE_PLAYER_READY );
+  PMSDAT_SetupDefaultBattleMessage( &p_wk->pms[MYPMS_PMS_TYPE_BATTLE_WON], PMS_BATTLE_TYPE_PLAYER_WIN );
+  PMSDAT_SetupDefaultBattleMessage( &p_wk->pms[MYPMS_PMS_TYPE_BATTLE_LOST], PMS_BATTLE_TYPE_PLAYER_LOSE );
+  PMSDAT_SetupDefaultBattleMessage( &p_wk->pms[MYPMS_PMS_TYPE_BATTLE_TOP], PMS_BATTLE_TYPE_LEADER );
+
+  /*
   PMSDAT_Init( &p_wk->pms[MYPMS_PMS_TYPE_INTRODUCTION], PMS_TYPE_UNION );
   PMSDAT_Init( &p_wk->pms[MYPMS_PMS_TYPE_BATTLE_READY], PMS_TYPE_BATTLE_READY );
   PMSDAT_Init( &p_wk->pms[MYPMS_PMS_TYPE_BATTLE_WON], PMS_TYPE_BATTLE_WON );
   PMSDAT_Init( &p_wk->pms[MYPMS_PMS_TYPE_BATTLE_LOST], PMS_TYPE_BATTLE_LOST );
   PMSDAT_Init( &p_wk->pms[MYPMS_PMS_TYPE_BATTLE_TOP], PMS_TYPE_BATTLE_WON );
+  */
 }
 
 //----------------------------------------------------------

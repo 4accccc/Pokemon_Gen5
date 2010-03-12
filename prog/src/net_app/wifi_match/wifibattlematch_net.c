@@ -3668,6 +3668,7 @@ WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLE
     SEQ_WAIT_CONNECT,
 
     SEQ_END,
+    SEQ_DIRTY_END,
   };
 
   NHTTPError error;
@@ -3705,11 +3706,20 @@ WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLE
       DEBUG_NET_Printf("ID %x\n",pDream->WifiMatchUpID);
       DEBUG_NET_Printf("FLG %x\n",pDream->GPFEntryFlg);
       DEBUG_NET_Printf("ST %d\n",pDream->WifiMatchUpState);
+      DEBUG_NET_Printf("Sign %d\n",pDream->signin);
 
       DEBUG_NET_Printf("I—¹\n");
 
       p_wk->gpf_data  = *pDream;
-      p_wk->seq  = SEQ_END;
+
+      if( ((gs_response*)pEvent)->ret_cd == DREAM_WORLD_SERVER_ERROR_NONE )
+      { 
+        p_wk->seq  = SEQ_END;
+      }
+      else
+      { 
+        p_wk->seq  = SEQ_DIRTY_END;
+      }
     }
     else if( NHTTP_ERROR_BUSY != error )
     { 
@@ -3719,6 +3729,14 @@ WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLE
 
     break;
 
+  case SEQ_DIRTY_END:
+    GFL_STD_MemClear( &p_wk->gpf_data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
+    if(p_wk->p_nhttp)
+    {
+      NHTTP_RAP_End(p_wk->p_nhttp);
+      p_wk->p_nhttp  = NULL;
+    }
+    return WIFIBATTLEMATCH_RECV_GPFDATA_RET_DIRTY;
 
   case SEQ_END :
     if(p_wk->p_nhttp)

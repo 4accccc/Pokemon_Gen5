@@ -20,6 +20,8 @@
 //文字表示
 #include "print/printsys.h"
 
+#include "system/time_icon.h"
+
 //自分のモジュール
 #include "wifibattlematch_snd.h"
 
@@ -44,10 +46,13 @@ struct _WBM_TEXT_WORK
   GFL_FONT          *p_font;
   PRINT_STREAM      *p_stream;
   GFL_TCBLSYS       *p_tcbl;
+  GFL_TCBSYS        *p_tcb;
+  void              *p_tcb_area;
+  TIMEICON_WORK     *p_time;
   GFL_BMPWIN*       p_bmpwin;
   STRBUF*           p_strbuf;
   u16               clear_chr;
-  u16               heapID;
+  HEAPID            heapID;
   PRINT_UTIL        util;
   PRINT_QUE         *p_que;
   u32               print_update;
@@ -86,6 +91,7 @@ WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, 
   p_wk->p_font    = p_font;
   p_wk->p_que     = p_que;
   p_wk->print_update  = WBM_TEXT_TYPE_NONE;
+  p_wk->heapID    = heapID;
 
   APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->common, APP_PRINTSYS_COMMON_TYPE_KEY);
 
@@ -105,7 +111,9 @@ WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
 	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
 
-  p_wk->p_tcbl    = GFL_TCBL_Init( heapID, heapID, 1, 32 );
+  p_wk->p_tcbl      = GFL_TCBL_Init( heapID, heapID, 1, 32 );
+  p_wk->p_tcb_area  = GFL_HEAP_AllocMemory( heapID, GFL_TCB_CalcSystemWorkSize( 1 ) );
+  p_wk->p_tcb       = GFL_TCB_Init( 1, p_wk->p_tcb_area );
 
   //フレーム
   BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_ON, frm_chr, frm_plt );
@@ -127,6 +135,14 @@ void WBM_TEXT_Exit( WBM_TEXT_WORK* p_wk )
     p_wk->p_stream  = NULL;
   }
 
+  if( p_wk->p_time )
+  { 
+    TILEICON_Exit( p_wk->p_time );
+    p_wk->p_time  = NULL;
+  }
+
+  GFL_TCB_Exit( p_wk->p_tcb );
+  GFL_HEAP_FreeMemory( p_wk->p_tcb_area );
   GFL_TCBL_Exit( p_wk->p_tcbl );
 
   BmpWinFrame_Clear( p_wk->p_bmpwin, WINDOW_TRANS_ON );
@@ -153,6 +169,10 @@ void WBM_TEXT_Main( WBM_TEXT_WORK* p_wk )
     /* fallthor */
   case WBM_TEXT_TYPE_NONE:
     break;
+    
+  case WBM_TEXT_TYPE_WAIT:
+    PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
+    break;
 
   case WBM_TEXT_TYPE_QUE:
     p_wk->is_end_print  = PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
@@ -175,6 +195,7 @@ void WBM_TEXT_Main( WBM_TEXT_WORK* p_wk )
   }
 
   GFL_TCBL_Main( p_wk->p_tcbl );
+  GFL_TCB_Main( p_wk->p_tcb );
 }
 //----------------------------------------------------------------------------
 /**
@@ -235,6 +256,14 @@ static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type )
   //タイプごとの文字描画
   switch( type )
   { 
+  case WBM_TEXT_TYPE_WAIT:
+    GF_ASSERT( p_wk->p_time == NULL );
+    p_wk->p_time  = TIMEICON_Create( p_wk->p_tcb, p_wk->p_bmpwin, p_wk->clear_chr,
+        TIMEICON_DEFAULT_WAIT, p_wk->heapID );
+    PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
+    p_wk->print_update  = WBM_TEXT_TYPE_QUE;
+    break;
+
   case WBM_TEXT_TYPE_QUE:     //プリントキューを使う
     PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
     p_wk->print_update  = WBM_TEXT_TYPE_QUE;
@@ -263,6 +292,22 @@ static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type )
 BOOL WBM_TEXT_IsEnd( const WBM_TEXT_WORK* cp_wk )
 { 
   return cp_wk->is_end_print;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ  待機終了
+ *
+ *	@param	WBM_TEXT_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void WBM_TEXT_EndWait( WBM_TEXT_WORK* p_wk )
+{ 
+  p_wk->is_end_print  = TRUE;
+  if( p_wk->p_time )
+  { 
+    TILEICON_Exit( p_wk->p_time );
+    p_wk->p_time  = NULL;
+  }
 }
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**

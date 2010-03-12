@@ -72,6 +72,21 @@ typedef enum {
 
 //------------------------------------------------------
 /**
+ *  文章タイプ
+ */
+//------------------------------------------------------
+typedef enum
+{ 
+  PMS_BATTLE_TYPE_PLAYER_READY,  //対戦前
+	PMS_BATTLE_TYPE_PLAYER_WIN,     //勝った時
+	PMS_BATTLE_TYPE_PLAYER_LOSE,    //負けた時
+  PMS_BATTLE_TYPE_LEADER,          //リーダーになった時
+
+  PMS_BATTLE_TYPE_MAX
+}PMS_BATTLE_TYPE;
+
+//------------------------------------------------------
+/**
  *  単語型定義
  */
 //------------------------------------------------------
@@ -168,8 +183,17 @@ extern void PMSDAT_SetupDefaultUnionMessage( PMS_DATA* pms );
  *
  */
 //------------------------------------------------------------------
-//extern void PMSDAT_SetupDefaultBattleTowerMessage( PMS_DATA* pms, BTWR_PLAYER_MSG_ID msgType );
+extern void PMSDAT_SetupDefaultBattleMessage( PMS_DATA* pms, PMS_BATTLE_TYPE msgType );
 
+//------------------------------------------------------------------
+/**
+ * トレーナーカードのあいさつとして初期化する
+ *
+ * @param   pms     文章型へのポインタ
+ *
+ */
+//------------------------------------------------------------------
+extern void PMSDAT_SetupDefaultIntroductionMessage( PMS_DATA* pms );
 
 
 //------------------------------------------------------------------

@@ -19,6 +19,7 @@
 #include "msg\msg_pmss_ready.h"
 #include "msg\msg_pmss_won.h"
 #include "msg\msg_pmss_lost.h"
+#include "msg\msg_pmss_peculiar.h"
 #include "msg\msg_pms_word06.h"
 #include "msg\msg_pms_word07.h"
 #include "msg\msg_pms_word08.h"
@@ -147,7 +148,7 @@ void PMSDAT_InitAndSetSentence( PMS_DATA* pms, u32 sentence_type, u32 sentence_i
 void PMSDAT_SetupDefaultUnionMessage( PMS_DATA* pms )
 {
 	//PMSDAT_Init( pms, PMS_TYPE_UNION );
-	//pms->sentence_id = pmss_union_06;
+	//pms->sentence_id = NARC_message_pmss_union_dat;
 	
   PMSDAT_Init( pms, PMS_TYPE_MAIL );  // ユニオンルームにはいりました！
   pms->sentence_id = pmss_mail_01;    // が、なくなってしまったので、緊急仮対応
@@ -164,8 +165,7 @@ void PMSDAT_SetupDefaultUnionMessage( PMS_DATA* pms )
  *
  */
 //------------------------------------------------------------------
-/*
-void PMSDAT_SetupDefaultBattleTowerMessage( PMS_DATA* pms, BTWR_PLAYER_MSG_ID msgType )
+void PMSDAT_SetupDefaultBattleMessage( PMS_DATA* pms, PMS_BATTLE_TYPE msgType )
 {
 	static const struct {
 		u8  sentenceType;
@@ -174,29 +174,29 @@ void PMSDAT_SetupDefaultBattleTowerMessage( PMS_DATA* pms, BTWR_PLAYER_MSG_ID ms
 		u16 word1_wordID;
 		s16 word2_gmmID;
 		u16 word2_wordID;
-	}sentenceDataTbl[] = {
+	}sentenceDataTbl[PMS_BATTLE_TYPE_MAX] = {
 		// BTWR_MSG_PLAYER_READY = 対戦前
 		{
 			PMS_TYPE_BATTLE_READY, pmss_ready_01,
-			NARC_msg_pms_word06_dat, pms_word06_08,
+			NARC_message_pms_word06_dat, pms_word06_08,
 			-1, 0,
 		},
 		// BTWR_MSG_PLAYER_WIN = 勝った時
 		{
 			PMS_TYPE_BATTLE_WON, pmss_won_01,
-			NARC_msg_pms_word06_dat, pms_word06_34,
+			NARC_message_pms_word06_dat, pms_word06_34,
 			-1, 0,
 		},
 		// BTWR_MSG_PLAYER_LOSE = 負けた時
 		{
 			PMS_TYPE_BATTLE_LOST, pmss_lost_01,
-			NARC_msg_pms_word10_dat, pms_word10_11,
+			NARC_message_pms_word06_dat, pms_word10_11,
 			-1, 0,
 		},
 		// BTWR_MSG_LEADER = リーダーになった時
 		{
-			PMS_TYPE_BATTLE_WON, pmss_won_05,
-			NARC_msg_pms_word06_dat, pms_word06_02,
+			PMS_TYPE_UNION, pmss_won_05,
+			NARC_message_pms_word06_dat, pms_word06_02,
 			-1, 0,
 		}
 	};
@@ -219,8 +219,19 @@ void PMSDAT_SetupDefaultBattleTowerMessage( PMS_DATA* pms, BTWR_PLAYER_MSG_ID ms
 		}
 	}
 }
-*/
 
+//----------------------------------------------------------------------------
+/**
+ * トレーナーカードのあいさつとして初期化する
+ *
+ * @param   pms     文章型へのポインタ
+ */
+//-----------------------------------------------------------------------------
+void PMSDAT_SetupDefaultIntroductionMessage( PMS_DATA* pms )
+{ 
+  PMSDAT_Init( pms, PMS_TYPE_PECULIAR );
+  pms->sentence_id = pmss_peculiar_01;
+}
 
 //------------------------------------------------------------------
 /**

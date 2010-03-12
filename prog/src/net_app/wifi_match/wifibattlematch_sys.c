@@ -492,10 +492,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 
 	case WBM_SYS_SEQ_MAIN:
 		{
-			BOOL is_end;
-			is_end	= WBM_SYS_SUBPROC_Main( p_wk->p_subproc );
-
-			if( is_end )
+      //サブプロックのループ
+			if( WBM_SYS_SUBPROC_Main( p_wk->p_subproc ) )
 			{	
 				*p_seq	= WBM_SYS_SEQ_EXIT;
 			}

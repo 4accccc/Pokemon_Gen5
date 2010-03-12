@@ -270,7 +270,7 @@ static WBM_WIFI_SUBSEQ_RET Util_SubSeq_Main( WIFIBATTLEMATCH_WIFI_WORK *p_wk );
 //自分のデータ作成
 static void Util_InitMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data );
 static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_WIFI_WORK *cp_wk );
-static void Util_SetMyDataSign( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_NET_EVILCHECK_DATA  *cp_evilecheck_data, u32 index );
+static void Util_SetMyDataSign( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_NET_EVILCHECK_DATA  *cp_evilecheck_data );
 //ポケモン証明
 static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, POKEPARTY *p_party, HEAPID heapID );
 //ポケパーティを設定
@@ -3538,18 +3538,15 @@ static void WbmWifiSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       Util_SetEvilcheckParty( p_wk );
       OS_TFPrintf( 3, "自分のポケモン署名取得開始\n" );
     }
-    p_wk->cnt = 0;
     (*p_seq)  = SEQ_START_EVIL_CHECK;
     break;
 
   case SEQ_START_EVIL_CHECK:
     { 
-      const POKEMON_PARAM *cp_pp  = PokeParty_GetMemberPointer( p_wk->p_evilcheck_party, p_wk->cnt);
-
-      WIFIBATTLEMATCH_NET_StartEvilCheck( p_wk->p_net, cp_pp, WIFIBATTLEMATCH_NET_EVILCHECK_TYPE_PP );
+      WIFIBATTLEMATCH_NET_StartEvilCheck( p_wk->p_net, p_wk->p_evilcheck_party, WIFIBATTLEMATCH_NET_EVILCHECK_TYPE_PARTY );
       GFL_STD_MemClear( &p_wk->evilecheck_data, sizeof(WIFIBATTLEMATCH_NET_EVILCHECK_DATA));
       (*p_seq)  = SEQ_WAIT_EVIL_CHECK;
-      NAGI_Printf( "EvilCheck Start [%d]匹目\n", p_wk->cnt );
+      NAGI_Printf( "EvilCheck Start\n" );
     }
     break;
 
@@ -3576,7 +3573,7 @@ static void WbmWifiSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     OS_TPrintf( "ポケモン結果[不正番号%d]status=%d\n", p_wk->evilecheck_data.poke_result[0], p_wk->evilecheck_data.status_code );
     if( p_wk->evilecheck_data.status_code == 0 && p_wk->evilecheck_data.poke_result[0] == NHTTP_RAP_EVILCHECK_RESULT_OK )
     { 
-      OS_TFPrintf( 3, "-=-=-=ポケモン証明[%d]-=-=-=\n", p_wk->cnt );
+      OS_TFPrintf( 3, "-=-=-=ポケモン証明-=-=-=\n" );
       {
         int len = 0;
         for(len = 0; len < 128; len++ )
@@ -3589,27 +3586,15 @@ static void WbmWifiSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       OS_TFPrintf( 3, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
 
       //署名を保存
-      Util_SetMyDataSign( p_my_data, &p_wk->evilecheck_data, p_wk->cnt );
+      Util_SetMyDataSign( p_my_data, &p_wk->evilecheck_data );
 
-      //カウント
-      p_wk->cnt++;
-
-      //まだポケモンがいれば不正チェック
-      if( p_wk->cnt < PokeParty_GetPokeCount( p_wk->p_evilcheck_party ) )
-      { 
-        NAGI_Printf( "EvilCheck %d匹目　OK！！\n",p_wk->cnt );
-        *p_seq  = SEQ_START_EVIL_CHECK;
-      }
-      else
-      { 
-        NAGI_Printf( "EvilCheck 成功！！\n" );
-        p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_EVILCHECK_RET_SUCCESS;
-        *p_seq  = SEQ_END;
-      }
+      NAGI_Printf( "EvilCheck 成功！！\n" );
+      p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_EVILCHECK_RET_SUCCESS;
+      *p_seq  = SEQ_END;
     }
     else
     { 
-      NAGI_Printf( "EvilCheck 不正 %d / %d！！\n", p_wk->cnt, PokeParty_GetPokeCount( p_wk->p_evilcheck_party ) );
+      NAGI_Printf( "EvilCheck 不正！！\n");
       p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_EVILCHECK_RET_DARTY;
       *p_seq  = SEQ_END;
     }
@@ -4004,10 +3989,10 @@ static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFI
  *
  */
 //-----------------------------------------------------------------------------
-static void Util_SetMyDataSign( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_NET_EVILCHECK_DATA  *cp_evilecheck_data, u32 index )
+static void Util_SetMyDataSign( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_NET_EVILCHECK_DATA  *cp_evilecheck_data )
 { 
-  OS_TFPrintf( 3, "署名を追加%d\n", index );
-  GFL_STD_MemCopy( cp_evilecheck_data->sign, p_my_data->sign[ index ], NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
+  OS_TFPrintf( 3, "署名を追加\n" );
+  GFL_STD_MemCopy( cp_evilecheck_data->sign, p_my_data->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
 }
 
 //----------------------------------------------------------------------------
@@ -4029,40 +4014,19 @@ static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, POKEPARTY *p
 
   NAGI_Printf( "ポケモン署名開始　全部で[%d]匹\n", PokeParty_GetPokeCount( p_party ) );
   OS_TFPrintf( 3, "相手のポケモン署名チェック開始\n" );
+
+  p_buff  = NHTTP_RAP_EVILCHECK_CreateVerifyPokeBuffer( POKETOOL_GetWorkSize(), 6, GFL_HEAP_LOWID(heapID) );
+
   for( i = 0; i < PokeParty_GetPokeCount( p_party ); i++ )
   { 
     p_pp  = PokeParty_GetMemberPointer( p_party, i);
 
-    p_buff  = NHTTP_RAP_EVILCHECK_CreateVerifyPokeBuffer( POKETOOL_GetWorkSize(), 1, GFL_HEAP_LOWID(heapID) );
-    NHTTP_RAP_EVILCHECK_AddPokeVerifyPokeBuffer( p_buff, p_pp, POKETOOL_GetWorkSize(), 0 );
-
-    ret = NHTTP_RAP_EVILCHECK_VerifySign( p_buff, POKETOOL_GetWorkSize(), 1, p_data->sign[i], GFL_HEAP_LOWID(heapID) );
-
-    OS_TFPrintf( 3, "-=-=-=ポケモン証明[%d]-=-=-=\n", i );
-    { 
-      OS_TFPrintf( 3, "mosno=%d\n", PP_Get( p_pp, ID_PARA_monsno, NULL ) );
-      OS_TFPrintf( 3, "sex  =%d\n", PP_Get( p_pp, ID_PARA_sex, NULL ) );
-      OS_TFPrintf( 3, "level=%d\n", PP_Get( p_pp, ID_PARA_level, NULL ) );
-    }
-    {
-      int len = 0;
-      for(len = 0; len < 128; len++ )
-			{
-				OS_TFPrintf( 3,"%x ", (u8) p_data->sign[i][len] );
-				if( (len + 1) % 16 == 0 ) OS_TFPrintf( 3,"\n");
-			}
-      OS_TFPrintf( 3, "\n" );
-    }
-    OS_TFPrintf( 3, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-
-    NHTTP_RAP_EVILCHECK_DeleteVerifyPokeBuffer( p_buff );
-
-    NAGI_Printf( "%d匹目=[%d]\n", i, ret );
-    if( ret == FALSE )
-    { 
-      break;
-    }
+    NHTTP_RAP_EVILCHECK_AddPokeVerifyPokeBuffer( p_buff, p_pp, POKETOOL_GetWorkSize(), i );
   }
+
+  ret = NHTTP_RAP_EVILCHECK_VerifySign( p_buff, POKETOOL_GetWorkSize(), 6, p_data->sign, GFL_HEAP_LOWID(heapID) );
+
+  NHTTP_RAP_EVILCHECK_DeleteVerifyPokeBuffer( p_buff );
 
   return ret;
 }
