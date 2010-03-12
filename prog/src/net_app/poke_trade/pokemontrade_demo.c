@@ -131,13 +131,14 @@ void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(POKEMON_TRADE_WORK* pWork)
   pWork->mcssStop[1] = TRUE;
   MCSS_SetAnimeIndex(pWork->pokeMcss[1], 0);
 
+#if 1
   if(POKEMONTRADEPROC_IsTriSelect(pWork)){
     MCSS_WORK* pMCSS0 = pWork->pokeMcss[0];
     MCSS_WORK* pMCSS1 = pWork->pokeMcss[1];
     pWork->pokeMcss[0]=pMCSS1;
     pWork->pokeMcss[1]=pMCSS0;
   }
-
+#endif
 
   
   _CHANGE_STATE(pWork,_changeDemo_ModelT1);
@@ -162,22 +163,12 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   G2_BlendNone();
   IRC_POKETRADEDEMO_SetModel( pWork, TRADE01_OBJECT);  //通常用モデル
 
-
-  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1),TRUE );  //相手裏
-  IRCPOKETRADE_PokeCreateMcss(pWork, 2, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0),TRUE );  //みかた裏
-  IRCPOKETRADE_PokeCreateMcss(pWork, 3, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1),TRUE );  //相手表
+  //０に入っているのは相手表
   
-  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
-    MCSS_WORK* pMCSS0 = pWork->pokeMcss[0];
-    MCSS_WORK* pMCSS1 = pWork->pokeMcss[1];
-    MCSS_WORK* pMCSS2 = pWork->pokeMcss[2];
-    MCSS_WORK* pMCSS3 = pWork->pokeMcss[3];
-    pWork->pokeMcss[0]=pMCSS1;
-    pWork->pokeMcss[1]=pMCSS0;
-    pWork->pokeMcss[2]=pMCSS3;
-    pWork->pokeMcss[3]=pMCSS2;
-  }
-    
+  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1),FALSE );  //相手裏
+  IRCPOKETRADE_PokeCreateMcss(pWork, 2, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0),FALSE );  //みかた裏
+  IRCPOKETRADE_PokeCreateMcss(pWork, 3, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1),FALSE );  //相手表
+  
   MCSS_SetVanishFlag( pWork->pokeMcss[1] );
   MCSS_SetVanishFlag( pWork->pokeMcss[2] );
   MCSS_SetVanishFlag( pWork->pokeMcss[3] );
@@ -220,7 +211,6 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 
   if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME)){
     MCSS_SetVanishFlag( pWork->pokeMcss[0] );
-//      IRCPOKETRADE_PokeDeleteMcss(pWork,0);
   }
 
 
@@ -267,7 +257,10 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 
   if(pWork->anmCount == ANMCNTC(_POKE_APPEAR_START)){
     MCSS_ResetVanishFlag( pWork->pokeMcss[2] );
-    //IRCPOKETRADE_PokeCreateMcss(pWork, 0, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0) );
+    IRCPOKETRADE_PokeDeleteMcss(pWork,0);
+    IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,0),FALSE );
+    MCSS_SetVanishFlag( pWork->pokeMcss[0] );
+    
     {  //初期位置設定
       VecFx32 apos;
       apos.x = _POKEMON_PLAYER_APPEAR_POSX;
@@ -421,22 +414,28 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
   }
 
 #if 1
-  if(ANMCNTC(_POKEMON_CREATE_TIME) == pWork->anmCount){
+  {
+    int num = 3;
+    if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+      num=0;
+    }
+    if(ANMCNTC(_POKEMON_CREATE_TIME) == pWork->anmCount){
       VecFx32 apos;
-    MCSS_ResetVanishFlag(pWork->pokeMcss[3]);
-    apos.x = _POKEMON_PLAYER_CENTER_POSX;
-    apos.y = _POKEMON_PLAYER_CENTER_POSY;
-    apos.z = _POKEMON_PLAYER_CENTER_POSZ;
-    MCSS_SetPosition( pWork->pokeMcss[3] ,&apos );
-    MCSS_SetAnmStopFlag(pWork->pokeMcss[3]);
-
-    MCSS_SetPaletteFade( pWork->pokeMcss[3], 16, 16, 0, 0x7fff );
-  }
-  if(ANMCNTC(_POKEMON_CREATE_TIME+1) == pWork->anmCount){
-    MCSS_SetPaletteFade( pWork->pokeMcss[3], 8, 8, 0, 0x7fff );
-  }
-  if(ANMCNTC(_POKEMON_CREATE_TIME+2) == pWork->anmCount){
-    MCSS_SetPaletteFade( pWork->pokeMcss[3], 0, 0, 0, 0x7fff  );
+      MCSS_ResetVanishFlag(pWork->pokeMcss[num]);
+      apos.x = _POKEMON_PLAYER_CENTER_POSX;
+      apos.y = _POKEMON_PLAYER_CENTER_POSY;
+      apos.z = _POKEMON_PLAYER_CENTER_POSZ;
+      MCSS_SetPosition( pWork->pokeMcss[num] ,&apos );
+      MCSS_SetAnmStopFlag(pWork->pokeMcss[num]);
+      
+      MCSS_SetPaletteFade( pWork->pokeMcss[num], 16, 16, 0, 0x7fff );
+    }
+    if(ANMCNTC(_POKEMON_CREATE_TIME+1) == pWork->anmCount){
+      MCSS_SetPaletteFade( pWork->pokeMcss[num], 8, 8, 0, 0x7fff );
+    }
+    if(ANMCNTC(_POKEMON_CREATE_TIME+2) == pWork->anmCount){
+      MCSS_SetPaletteFade( pWork->pokeMcss[num], 0, 0, 0, 0x7fff  );
+    }
   }
 #endif
 

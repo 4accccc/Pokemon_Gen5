@@ -78,6 +78,14 @@ static GFL_UI_TP_HITTBL _tp_data[]={
   {GFL_UI_TP_HIT_END,0,0,0},
 };
 
+static void _rapTimingStart(GFL_NETHANDLE* pNet, const u8 no,POKEMON_TRADE_WORK* pWork)
+{
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    GFL_NET_HANDLE_TimeSyncStart( pNet,no,WB_NET_TRADE_SERVICEID );
+  }
+}
+
+
 //GTS用遅延タイマー
 static BOOL CheckNegoWaitTimer(POKEMON_TRADE_WORK* pWork)
 {
@@ -531,9 +539,7 @@ static void _changePokemonSendDataNetWait(POKEMON_TRADE_WORK* pWork)
   if((pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_LAST) &&
      (pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_LAST)){
 
-    if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START,WB_NET_TRADE_SERVICEID);
-    }
+    _rapTimingStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START,pWork);
     _CHANGE_STATE(pWork, POKEMONTRADE_changeTimingDemoStart);
 //    _CHANGE_STATE(pWork,POKETRE_MAIN_ChangePokemonSendDataNetwork);
     return;
@@ -555,9 +561,7 @@ static void _changePokemonSendDataNetWait(POKEMON_TRADE_WORK* pWork)
   pWork->changeFactor[0] = POKETRADE_FACTOR_NONE;
   pWork->changeFactor[1] = POKETRADE_FACTOR_NONE;
   
-  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID);
-  }
+  _rapTimingStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_A,pWork);
   _CHANGE_STATE(pWork, _NEGO_BackSelect6);
 
 }
@@ -577,7 +581,7 @@ static void _changePokemonSendDataOk(POKEMON_TRADE_WORK* pWork)
         cmd = POKETRADE_FACTOR_EGG;
       }
       if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd)){
-        GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_E,WB_NET_TRADE_SERVICEID );
+        _rapTimingStart( GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_E ,pWork);
         _CHANGE_STATE(pWork, _changePokemonSendDataNetWait);// あいても選ぶまで待つ
       }
     }
@@ -595,7 +599,7 @@ static void _changePokemonSendDataNg(POKEMON_TRADE_WORK* pWork)
   else{
     if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_F, WB_NET_TRADE_SERVICEID)){
       if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd)){
-        GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_E,WB_NET_TRADE_SERVICEID );
+        _rapTimingStart( GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_E ,pWork);
         _CHANGE_STATE(pWork, _changePokemonSendDataNetWait);// あいても選ぶまで待つ
       }
     }
@@ -612,14 +616,14 @@ static void _changePokemonSendData(POKEMON_TRADE_WORK* pWork)
     pWork->pAppTask=NULL;
     switch(selectno){
     case 0:  //こうかん
-      GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_F,WB_NET_TRADE_SERVICEID );
+      _rapTimingStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_F,pWork);
       GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
       pWork->NegoWaitTime = _GTSINFO04_WAIT;
       _CHANGE_STATE(pWork,_changePokemonSendDataOk);
       break;
     case 1:  //もどる
-      GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_F,WB_NET_TRADE_SERVICEID );
+      _rapTimingStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_F,pWork);
       GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
       pWork->NegoWaitTime = _GTSINFO04_WAIT;

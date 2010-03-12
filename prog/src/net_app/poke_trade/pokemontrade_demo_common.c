@@ -10,7 +10,7 @@
 
 static void _apperFlgCheck(POKEMON_TRADE_WORK* pWork, u8* msg,u8* nojump,MYSTATUS* pMystatus)
 {
-  POKEMON_PARAM* pp= IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
+  POKEMON_PARAM* pp= IRC_POKEMONTRADE_GetRecvPP(pWork, POKEMONTRADEPROC_IsTriSelect(pWork));
   int id = PP_Get(pp,ID_PARA_id_no,NULL);
   int monsno = PP_Get(pp,ID_PARA_monsno_egg,NULL);
   int frm = PP_Get( pp, ID_PARA_form_no, NULL );
@@ -262,7 +262,7 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
     _setNextAnim(pWork, 0);
 
     {
-      POKEMON_PARAM* pp= IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
+      POKEMON_PARAM* pp= IRC_POKEMONTRADE_GetRecvPP(pWork, POKEMONTRADEPROC_IsTriSelect(pWork));
       int id = PP_Get(pp,ID_PARA_id_no,NULL);
       if(! PP_Get(pp,ID_PARA_tamago_flag,NULL) ){
         int monsno = PP_Get(pp,ID_PARA_monsno_egg,NULL);
@@ -283,6 +283,8 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
 
       if(!pWork->bByebyeMessageEach){     // •sˆê’v‚È‚Ì‚ÅƒWƒƒƒ“ƒv+‰ñ“]
         VecFx32 apos;
+        POKEMON_PARAM* pp;
+        
         MCSS_GetPosition(pWork->pokeMcss[0], &apos);
         if(pWork->bByebyeNoJump){
           pWork->pMoveMcss[0] = _pokeTblMoveCreate(pWork->pokeMcss[0], elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
@@ -290,7 +292,9 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
         else{
           pWork->pMoveMcss[0] = _pokeTblMoveCreate(pWork->pokeMcss[0], elementof(_shortJumpTbl), &apos, _shortJumpTbl,  pWork->heapID);
         }
-        IRCPOKETRADE_PokeCreateMcss(pWork, 2, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0),TRUE );  //‚Ý‚©‚½— 
+
+        pp = IRC_POKEMONTRADE_GetRecvPP(pWork,POKEMONTRADEPROC_IsTriSelect(pWork));
+        IRCPOKETRADE_PokeCreateMcss(pWork, 2, 0, pp,TRUE );  //‚Ý‚©‚½— 
         MCSS_SetAnmStopFlag(pWork->pokeMcss[2]);
         MCSS_SetVanishFlag( pWork->pokeMcss[2] );
 
@@ -321,7 +325,7 @@ static void _byebyeMessage(POKEMON_TRADE_WORK* pWork)
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_28, pWork->pMessageStrBufEx );
   }
   {
-    POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
+    POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, POKEMONTRADEPROC_IsTriSelect(pWork));
     WORDSET_RegisterPokeNickName( pWork->pWordSet, 0,  pp );
   }
   WORDSET_RegisterPlayerName( pWork->pWordSet, 1, pWork->pFriend  );
@@ -390,3 +394,5 @@ static void _moveMcssDelete(POKEMON_TRADE_WORK* pWork,int no)
     pWork->pMoveMcss[0]=NULL;
   }
 }
+
+
