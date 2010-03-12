@@ -45,6 +45,9 @@ VMCMD_RESULT EvCmdGetResearchRequestID( VMHANDLE *core, void *wk )
   // 調査中の調査依頼IDを取得
   *ret = MISC_GetResearchRequestID( misc );
 
+  // DEBUG:
+  OS_TFPrintf( 3, "_GET_RESEARCH_REQUEST_ID ==> %d\n", *ret );
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -77,6 +80,9 @@ VMCMD_RESULT EvCmdGetResearchQuestionID( VMHANDLE *core, void *wk )
   *retQ1 = MISC_GetResearchQuestionID( misc, 0 ); 
   *retQ2 = MISC_GetResearchQuestionID( misc, 1 ); 
   *retQ3 = MISC_GetResearchQuestionID( misc, 2 ); 
+
+  // DEBUG:
+  OS_TFPrintf( 3, "_GET_RESEARCH_QUESTION_ID ==> %d, %d, %d\n", *retQ1, *retQ2, *retQ3 );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -136,6 +142,9 @@ VMCMD_RESULT EvCmdGetResearchPassedTime( VMHANDLE *core, void *wk )
   // 経過時間を返す
   *ret = passedHour;
 
+  // DEBUG:
+  OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME ==> %d\n", *ret );
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -166,6 +175,9 @@ VMCMD_RESULT EvCmdStartResearch( VMHANDLE *core, void *wk )
   qID[1] = SCRCMD_GetVMWorkValue( core, work ); // 第三引数: 質問ID2
   qID[2] = SCRCMD_GetVMWorkValue( core, work ); // 第四引数: 質問ID3
 
+  // DEBUG:
+  OS_TFPrintf( 3, "_START_RESEARCH: reqID=%d, qID[0]=%d, qID[1]=%d, qID[2]=%d\n", reqID, qID[0], qID[1], qID[2] );
+
   // 調査依頼IDをセーブ
   MISC_SetResearchRequestID( misc, reqID );
 
@@ -181,11 +193,18 @@ VMCMD_RESULT EvCmdStartResearch( VMHANDLE *core, void *wk )
    {
      int count = QuestionnaireWork_GetTotalCount( qSave, qID[i] );
      MISC_SetResearchStartCount( misc, i, count );
+
+     // DEBUG:
+     OS_TFPrintf( 3, "_START_RESEARCH: count=%d\n", count );
    }
  }
 
   // 調査開始時刻をセーブ
   MISC_SetResearchStartTimeBySecond( misc, GFL_RTC_GetDateTimeBySecond() );
+
+  // DEBUG:
+  OS_TFPrintf( 3, "_START_RESEARCH: start time=%d\n", GFL_RTC_GetDateTimeBySecond() );
+
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -216,6 +235,9 @@ VMCMD_RESULT EvCmdFinishResearch( VMHANDLE *core, void *wk )
     MISC_SetResearchQuestionID( misc, i, QUESTION_ID_DUMMY );
   }
 
+  // DEBUG:
+  OS_TFPrintf( 3, "_FINISH_RESEARCH\n" );
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -245,6 +267,9 @@ VMCMD_RESULT EvCmdGetTotalCountOfQuestion( VMHANDLE *core, void *wk )
 
   // いままでの回答人数を取得
   *retWork = QuestionnaireWork_GetTotalCount( qSave, qID );
+
+  // DEBUG:
+  OS_TFPrintf( 3, "_GET_RESEARCH_TOTAL_COUNT ==> %d\n", *retWork );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -280,6 +305,9 @@ VMCMD_RESULT EvCmdGetStartCountOfQuestion( VMHANDLE *core, void *wk )
       *retWork = MISC_GetResearchStartCount( misc, i );
     }
   }
+
+  // DEBUG:
+  OS_TFPrintf( 3, "_GET_RESEARCH_TODAY_COUNT ==> %d\n", *retWork );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -331,6 +359,9 @@ VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
 
   // 最も多数派の回答IDを返す
   *retWork = majorityAnswerID;
+
+  // DEBUG:
+  OS_TFPrintf( 3, "_GET_MAJORITY_ANSWER ==> %d\n", *retWork );
 
   return VMCMD_RESULT_CONTINUE;
 }

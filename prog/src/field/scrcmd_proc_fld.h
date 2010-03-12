@@ -20,8 +20,16 @@
  * @retval  VMCMD_RESULT
  */
 //--------------------------------------------------------------
-extern VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk ); 
 
+//--------------------------------------------------------------
+/**
+ * @brief   すれ違い『挨拶メッセージ』入力画面の呼び出し
+ * @param   core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCrossCommHelloMessageInputCall( VMHANDLE *core, void *wk );
 
 //--------------------------------------------------------------
 //  ゲームクリア処理呼び出し
@@ -34,4 +42,4 @@ extern VMCMD_RESULT EvCmdGameClearDemo( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdCallCGearGetDemo( VMHANDLE *core, void *wk );
 
 ///ジオネット呼び出し
-extern VMCMD_RESULT EvCmdCallGeonet( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdCallGeonet( VMHANDLE *core, void *wk ); 

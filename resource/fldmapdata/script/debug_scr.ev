@@ -851,7 +851,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_debug_obata
 
-  _MAP_CHANGE_WARP( ZONE_ID_D02R0201, 10, 10, DIR_UP )
+  DEFINE_LOCAL ret
+  _CALL_CROSS_COMM_HELLO_MSG_INPUT( ret )
 
 EVENT_END
 

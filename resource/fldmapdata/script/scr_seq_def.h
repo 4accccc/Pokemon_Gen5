@@ -9107,3 +9107,18 @@
   .short EV_SEQ_GET_RESEARCH_PASSED_TIME
   .short \ret
   .endm 
+
+//--------------------------------------------------------------
+/**
+ * @brief すれ違い『挨拶メッセージ』入力画面を呼び出す
+ *
+ * @param ret [out] 入力を確定したかどうかを受け取るワーク ( TRUE: 確定 )
+ */
+//--------------------------------------------------------------
+#define _CALL_CROSS_COMM_HELLO_MSG_INPUT( ret ) \
+    _ASM_CALL_CROSS_COMM_HELLO_MSG_INPUT ret
+
+  .macro _ASM_CALL_CROSS_COMM_HELLO_MSG_INPUT ret
+  .short EV_SEQ_CALL_CROSS_COMM_HELLO_MSG_INPUT
+  .short \ret
+  .endm 
