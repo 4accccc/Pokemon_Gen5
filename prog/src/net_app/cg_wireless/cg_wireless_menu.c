@@ -1268,20 +1268,20 @@ static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
     }
     GFL_STR_DeleteBuffer(pName);
 
-    if(pWork->TelTimer < 0){
-      PMSND_PlaySE( SEQ_SE_SYS_35 );
-      pWork->TelTimer = _TEL_TIMER;
-    }
-    else{
-      pWork->TelTimer--;
-    }
+  //  if(pWork->TelTimer < 0){
+  //    PMSND_PlaySE( SEQ_SE_SYS_35 );
+  //    pWork->TelTimer = _TEL_TIMER;
+  //  }
+   // else{
+  //    pWork->TelTimer--;
+  //  }
 
     if(15 == GFL_CLACT_WK_GetAnmSeq(pWork->TVTCall)){
       GFL_CLACT_WK_SetAnmSeq(pWork->TVTCall, 16);
     }
   }
   else{
-    PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
+//    PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
     if(16 == GFL_CLACT_WK_GetAnmSeq(pWork->TVTCall)){
       GFL_CLACT_WK_SetAnmSeq(pWork->TVTCall, 15);
     }
@@ -1477,7 +1477,7 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   
   _workEnd(pWork);
   pParentWork->selectType = pWork->selectType;
-  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
+//  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
 
   GFL_PROC_FreeWork(proc);
 

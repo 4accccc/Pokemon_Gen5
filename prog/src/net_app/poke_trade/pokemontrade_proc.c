@@ -1196,14 +1196,34 @@ static void _networkFriendsStandbyWait2(POKEMON_TRADE_WORK* pWork)
 
 }
 
+
+
+static void _preFadeOut2(POKEMON_TRADE_WORK* pWork)
+{
+
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    if(GFL_NET_HANDLE_IsTimeSync( GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_RETURN2,WB_NET_TRADE_SERVICEID )){
+      POKETRADE_MESSAGE_WindowClear(pWork);
+      _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
+    }
+  }
+  else{
+    POKETRADE_MESSAGE_WindowClear(pWork);
+    _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
+  }
+}
+
+
 static void _preFadeOut(POKEMON_TRADE_WORK* pWork)
 {
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
-    POKETRADE_MESSAGE_WindowClear(pWork);
-    _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
+  if(pWork->anmCount > 300){
+    if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+      GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_RETURN2,WB_NET_TRADE_SERVICEID );
+    }
+    _CHANGE_STATE(pWork,_preFadeOut2);
   }
 }
 
@@ -1241,6 +1261,8 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
     pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_08, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
+
+    pWork->anmCount=0;
     _CHANGE_STATE(pWork, _preFadeOut);
     return;
   }
@@ -3443,6 +3465,12 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
 
   POKMEONTRADE_RemoveCoreResource(pWork);
 
+  if(GFL_NET_IsInit()){
+    GFL_NET_SetAutoErrorCheck(FALSE);
+    GFL_NET_SetNoChildErrorCheck(FALSE);
+  }
+
+  
   DEBUGWIN_ExitProc();
   IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
   IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);

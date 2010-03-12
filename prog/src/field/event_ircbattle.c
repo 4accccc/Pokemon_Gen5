@@ -190,6 +190,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
   case _BATTLE_MATCH_START:
     {
+      
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO, WB_NET_IRCBATTLE);
@@ -206,6 +207,10 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
    // dbw->push=TRUE;
 //    (*seq) ++;
 //    break;
+
+    PMSND_PushBGM();
+
+
     switch(dbw->selectType){
     case EVENTIRCBTL_ENTRYMODE_SINGLE:
       dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
@@ -262,6 +267,11 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     NET_PRINT("バトル完了 event_ircbattle\n");
   //  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+
+    PMSND_PopBGM();
+    PMSND_FadeInBGM( 8 );
+
+    
     (*seq) = _CALL_NET_END;
     break;
   case _CALL_IRCBATTLE_FRIEND:  //  ともだちコード交換
