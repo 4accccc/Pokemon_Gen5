@@ -374,7 +374,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
                     PTL_SETUP_ID_NOT_RARE,
                     TTL_SETUP_POW_PACK( pow ),
                     rnd );
-        PP_Put( pp, ID_PARA_item, ( u32 )&pti[ i ].itemno );
+        PP_Put( pp, ID_PARA_item, pti[ i ].itemno );
         PokeParaSetFriend( pp );
         PokeParty_Add( pparty, pp );
       }
