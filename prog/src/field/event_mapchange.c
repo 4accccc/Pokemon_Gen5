@@ -1306,7 +1306,7 @@ GMEVENT* EVENT_ChangeMapBySeaTemple( GAMESYS_WORK* gameSystem )
 
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
-  work->loc_req      = *(GAMEDATA_GetEscapeLocation( work->gameData ));
+  work->loc_req      = *(GAMEDATA_GetSpecialLocation( work->gameData ));
   work->loc_req.type = LOCATION_TYPE_DIRECT;
   work->exit_type    = EXIT_TYPE_NONE;
 

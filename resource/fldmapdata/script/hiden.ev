@@ -474,6 +474,8 @@ sub_diving_main:
   _CALL sub_cutin_player_player_form_return
 
   //自機下降演出開始
+  // 特殊出口に保存
+  _SET_SP_LOCATION_HERE()
   //ダイビングでのマップ遷移開始
   _DIVING( SCR_EV_DIVING_MAPCHANGE_DOWN )
   _RET
