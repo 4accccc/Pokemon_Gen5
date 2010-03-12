@@ -140,6 +140,8 @@ enum {
 
 typedef int (*pSTARTMENU_FUNC)(START_MENU_WORK*);
 
+#define	BGPAL_VER_WHITE		( 4 )			// ホワイトの場合の背景パレット番号
+
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -1200,7 +1202,7 @@ static void LoadBgGraphic(void)
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_STARTMENU, HEAPID_STARTMENU_L );
 
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_startmenu_bgu_NCLR, PALTYPE_MAIN_BG, 0, 0x20*4, HEAPID_STARTMENU );
+		ah, NARC_startmenu_bgu_NCLR, PALTYPE_MAIN_BG, 0, 0x20*5, HEAPID_STARTMENU );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_startmenu_bgu_lz_NCGR, GFL_BG_FRAME2_M, 0, 0, TRUE, HEAPID_STARTMENU );
 	GFL_ARCHDL_UTIL_TransVramScreen(
@@ -1208,7 +1210,7 @@ static void LoadBgGraphic(void)
 		GFL_BG_FRAME3_M, 0, 0, TRUE, HEAPID_STARTMENU );
 
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_startmenu_bgd_NCLR, PALTYPE_SUB_BG, 0, 0x20*4, HEAPID_STARTMENU );
+		ah, NARC_startmenu_bgd_NCLR, PALTYPE_SUB_BG, 0, 0x20*5, HEAPID_STARTMENU );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_startmenu_bgd_lz_NCGR, GFL_BG_FRAME1_S, 0, 0, TRUE, HEAPID_STARTMENU );
 	GFL_ARCHDL_UTIL_TransVramScreen(
@@ -1229,6 +1231,14 @@ static void LoadBgGraphic(void)
 	GFL_ARC_UTIL_TransVramPalette(
 		ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
 		FONT_PALETTE_S*0x20, 0x20, HEAPID_STARTMENU );
+
+#if PM_VERSION == VERSION_WHITE
+	// ホワイトの場合は背景のパレットを変更
+	GFL_BG_ChangeScreenPalette( GFL_BG_FRAME3_M, 0, 0, 32, 24, BGPAL_VER_WHITE );
+	GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, 0, 0, 32, 24, BGPAL_VER_WHITE );
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1544,6 +1554,7 @@ static void InitObj( START_MENU_WORK * wk )
 											wk->palRes[PALRES_OBJ_U],
 											wk->celRes[CELRES_OBJ_U],
 											&NewObjData, CLSYS_DRAW_MAIN, HEAPID_STARTMENU );
+			GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[i], TRUE );
 			GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
 		}
 	}
@@ -1645,7 +1656,8 @@ static void ExitBgWinFrame( START_MENU_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void SetBlendAlpha(void)
 {
-	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 10, 6 );
+	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 3 );
+	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1, GX_BLEND_PLANEMASK_BG2, 16, 3 );
 }
 
 
@@ -2570,7 +2582,6 @@ static int SetButtonAnm( START_MENU_WORK * wk, int next )
 	wk->nextSeq = next;
 	return MAINSEQ_BUTTON_ANM;
 }
-
 
 
 

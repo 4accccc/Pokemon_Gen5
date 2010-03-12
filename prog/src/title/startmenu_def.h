@@ -202,8 +202,8 @@ enum {
 
 // ï∂éöêF
 #define	FCOL_MP15WN		( PRINTSYS_LSB_Make(15,2,0) )
-#define	FCOL_MP15BLN	( PRINTSYS_LSB_Make(6,5,0) )
-#define	FCOL_MP15RN		( PRINTSYS_LSB_Make(4,3,0) )
+#define	FCOL_MP15BLN	( PRINTSYS_LSB_Make(5,6,0) )
+#define	FCOL_MP15RN		( PRINTSYS_LSB_Make(3,4,0) )
 
 
 // OBJ INDEX
