@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2010-01-14T21:55:47"/>
+	<create user="ohmori" host="W00223" date="2010-03-10T23:34:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,22 +294,43 @@
 
 	<row id="plc08_man01_01">
 		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">なにここ！</language>
-		<language name="JPN_KANJI" width="256">なにここ！</language>
+		<attribute name="キャラ指定">BABYGIRL2
+４０２，１６９
+女</attribute>
+		<language name="JPN" width="256">イッシュの　えんをえがく　ちけいには
+きっとなにか　りゆうがある！▼
+……そうおもって　かくちを
+けんきゅうしていたら▽
+いつのまにか　こんなところに▼
+ここは　どこだ！？</language>
+		<language name="JPN_KANJI" width="256">イッシュの　円を描く地形には
+きっと何か　理由がある！▼
+……そう思って　各地を
+研究していたら▽
+いつの間にか　こんな所に▼
+ここは　どこだ！？</language>
 	</row>
 
 	<row id="plc08_man02_01">
-		<language name="JPN" width="256">へんしんした！</language>
-		<language name="JPN_KANJI" width="256">へんしんした！</language>
+		<attribute name="キャラ指定">CLOWN
+４３１，１４８
+男</attribute>
+		<language name="JPN" width="256">むかしは　もっと
+ハイルツリーが　おおきくて▼
+いろんな　デルパワーを
+つかうことが　できたらしいよ</language>
+		<language name="JPN_KANJI" width="256">昔は　もっと
+ハイルツリーが　大きくて▼
+色んな　デルパワーを
+使うことが　できたらしいよ</language>
 	</row>
 
-	<row id="plc08_man03_01">
+	<row id="plc08_man03_01" back-color="#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">まよいこんだ！</language>
 		<language name="JPN_KANJI" width="256">まよいこんだ！</language>
 	</row>
 
-	<row id="plc08_man04_01">
+	<row id="plc08_man04_01" back-color="#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">きみだれ！？</language>
 		<language name="JPN_KANJI" width="256">きみだれ！？</language>
 	</row>

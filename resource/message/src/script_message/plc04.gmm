@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2010-01-14T21:54:49"/>
+	<create user="ohmori" host="W00223" date="2010-03-10T23:04:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="741" top="447" right="1446" bottom="1067" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,22 +294,44 @@
 
 	<row id="plc04_man01_01">
 		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">なにここ！</language>
-		<language name="JPN_KANJI" width="256">なにここ！</language>
+		<attribute name="キャラ指定">BUSINESSMAN
+座標は４１１，４６２
+
+男</attribute>
+		<language name="JPN" width="256">……パレスだまを　さがしていたら
+こんなところに　きてしまった▼
+よく　ポケモンセンターの
+いりぐちに　おちてるんだけどな</language>
+		<language name="JPN_KANJI" width="256">……パレスだまを　探していたら
+こんな所に　来てしまった▼
+よく　ポケモンセンターの
+入り口に　落ちてるんだけどな</language>
 	</row>
 
 	<row id="plc04_man02_01">
-		<language name="JPN" width="256">へんしんした！</language>
-		<language name="JPN_KANJI" width="256">へんしんした！</language>
+		<attribute name="キャラ指定">BASEBALLM
+座標は４０３，４３７
+男</attribute>
+		<language name="JPN" width="256">ん？　なんだ　よくみたら
+ぼく　やきゅうせんしゅに　なってるぞ！▽
+なんだこれー！？▼
+どうしよう　がっこうに
+いかなきゃ　いけないのに！</language>
+		<language name="JPN_KANJI" width="256">ん？　なんだ　良くみたら
+ぼく　野球選手に　なってるぞ！▽
+何だこれー！？▼
+どうしよう　学校に
+行かなきゃ　いけないのに！</language>
 	</row>
 
-	<row id="plc04_man03_01">
+	<row id="plc04_man03_01" back-color="#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<attribute name="キャラ指定">ダミー</attribute>
 		<language name="JPN" width="256">まよいこんだ！</language>
 		<language name="JPN_KANJI" width="256">まよいこんだ！</language>
 	</row>
 
-	<row id="plc04_man04_01">
+	<row id="plc04_man04_01" back-color="#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<attribute name="キャラ指定">ダミー</attribute>
 		<language name="JPN" width="256">きみだれ！？</language>
 		<language name="JPN_KANJI" width="256">きみだれ！？</language>
 	</row>

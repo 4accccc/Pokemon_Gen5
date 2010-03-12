@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2010-01-14T21:55:20"/>
+	<create user="ohmori" host="W00223" date="2010-03-10T23:15:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,22 +294,37 @@
 
 	<row id="plc06_man01_01">
 		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">なにここ！</language>
-		<language name="JPN_KANJI" width="256">なにここ！</language>
+		<attribute name="キャラ指定">BADMAN
+８０，２８３
+男</attribute>
+		<language name="JPN" width="256">あ　あれ？
+ぼく　みんなで　ひこうきを▽
+みにきた　はずなのに▼
+なんで　みんな　いないんだ？
+おーい　みんなー！</language>
+		<language name="JPN_KANJI" width="256">あ　あれ？
+ぼく　みんなで　飛行機を▽
+見に来たはずなのに▼
+何でみんな　いないんだ？
+おーい　みんなー！</language>
 	</row>
 
 	<row id="plc06_man02_01">
-		<language name="JPN" width="256">へんしんした！</language>
-		<language name="JPN_KANJI" width="256">へんしんした！</language>
+		<attribute name="キャラ指定">PILOT
+１００，３０６
+男</attribute>
+		<language name="JPN" width="256">わ！　ぼく　パイロットになってる！
+パイロットになるの　ゆめだったんだー！</language>
+		<language name="JPN_KANJI" width="256">わ！　ぼく　パイロットになってる！
+パイロットになるの　夢だったんだー！</language>
 	</row>
 
-	<row id="plc06_man03_01">
+	<row id="plc06_man03_01" back-color="#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">まよいこんだ！</language>
 		<language name="JPN_KANJI" width="256">まよいこんだ！</language>
 	</row>
 
-	<row id="plc06_man04_01">
+	<row id="plc06_man04_01" back-color="#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">きみだれ！？</language>
 		<language name="JPN_KANJI" width="256">きみだれ！？</language>
 	</row>

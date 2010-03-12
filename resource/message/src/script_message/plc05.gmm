@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2010-01-14T21:55:06"/>
+	<create user="ohmori" host="W00223" date="2010-03-10T23:10:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,22 +294,41 @@
 
 	<row id="plc05_man01_01">
 		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">なにここ！</language>
-		<language name="JPN_KANJI" width="256">なにここ！</language>
+		<attribute name="キャラ指定">MIDDLEWOMAN1
+座標１７７，４２８
+女</attribute>
+		<language name="JPN" width="256">まちの　かんばんのしたに
+よく　パレスだまが　おちてるんだ！▽
+……でも　ここは　どこ？▼
+かんばんの　したを　くぐったら
+みんな　いなくなっちゃったよ</language>
+		<language name="JPN_KANJI" width="256">街の看板の下に
+よく　パレスだまが落ちてるんだ！▽
+……でも　ここは　どこ？▼
+看板の下を　くぐったら
+みんな　いなくなっちゃったよ</language>
 	</row>
 
 	<row id="plc05_man02_01">
-		<language name="JPN" width="256">へんしんした！</language>
-		<language name="JPN_KANJI" width="256">へんしんした！</language>
+		<attribute name="キャラ指定">GENTLEMAN
+座標１９６，４３２
+男</attribute>
+		<language name="JPN" width="256">パレスだまは　かんしゃの　きもちが
+あつまったもの　なんだって！▼
+だれかを　たすけると
+そのばに　あふれだすって　うわさだよ！</language>
+		<language name="JPN_KANJI" width="256">パレスだまは　感謝の気持ちが
+集まった物　なんだって！▼
+だれかを　助けると
+その場にあふれ出すって　うわさだよ！</language>
 	</row>
 
-	<row id="plc05_man03_01">
+	<row id="plc05_man03_01" back-color="#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">まよいこんだ！</language>
 		<language name="JPN_KANJI" width="256">まよいこんだ！</language>
 	</row>
 
-	<row id="plc05_man04_01">
+	<row id="plc05_man04_01" back-color="#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">きみだれ！？</language>
 		<language name="JPN_KANJI" width="256">きみだれ！？</language>
 	</row>
