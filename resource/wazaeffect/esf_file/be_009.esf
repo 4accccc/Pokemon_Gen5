@@ -13,6 +13,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 ポケモン影バニッシュ	POS_BB	バニッシュオン
 指定されたワークを見て条件分岐	POS_BB_JUMP	==	1	NO_EXIST_BB_1
 ポケモン移動	POS_BB	追従	0	4	1	0	0
+指定されたワークを見て条件分岐	POS_BB_FLY	==	1	NO_EXIST_BB_1
 汎用ワークに値をセット	0
 ラベル	NO_EXIST_BB_1
 立ち位置チェック	POS_B	いない	NO_EXIST_B_1
@@ -21,6 +22,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 ポケモン影バニッシュ	POS_B	バニッシュオン
 指定されたワークを見て条件分岐	POS_B_JUMP	==	1	NO_EXIST_B_1
 ポケモン移動	POS_B	追従	0	4	1	0	0
+指定されたワークを見て条件分岐	POS_B_FLY	==	1	NO_EXIST_B_1
 汎用ワークに値をセット	0
 ラベル	NO_EXIST_B_1
 立ち位置チェック	POS_D	いない	NO_EXIST_D_1
@@ -29,6 +31,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 ポケモン影バニッシュ	POS_D	バニッシュオン
 指定されたワークを見て条件分岐	POS_D_JUMP	==	1	NO_EXIST_D_1
 ポケモン移動	POS_D	追従	0	4	1	0	0
+指定されたワークを見て条件分岐	POS_D_FLY	==	1	NO_EXIST_D_1
 汎用ワークに値をセット	0
 ラベル	NO_EXIST_D_1
 立ち位置チェック	POS_F	いない	NO_EXIST_F_1
@@ -37,6 +40,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 ポケモン影バニッシュ	POS_F	バニッシュオン
 指定されたワークを見て条件分岐	POS_F_JUMP	==	1	NO_EXIST_F_1
 ポケモン移動	POS_F	追従	0	4	1	0	0
+指定されたワークを見て条件分岐	POS_F_FLY	==	1	NO_EXIST_F_1
 汎用ワークに値をセット	0
 ラベル	NO_EXIST_F_1
 制御モード変更	逐次
@@ -170,7 +174,8 @@ SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_5
 指定されたワークを見て条件分岐	POS_BB_JUMP	==	1	NO_EXIST_BB_5
 ポケモン移動	POS_BB	追従	0	-3	10	0	0
-指定されたワークを見て条件分岐	POS_BB_WEIGHT	<	1500	WEIGHT_BB_M
+指定されたワークを見て条件分岐	POS_BB_FLY	==	1	NO_EXIST_BB_5
+指定されたワークを見て条件分岐	POS_BB_WEIGHT	<	1500	NO_EXIST_BB_5
 パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_BB	方向無し	1:0:0	1:1:1	1
 汎用ワークに値をセット	2
 ラベル	WEIGHT_BB_M
@@ -181,6 +186,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 立ち位置チェック	POS_B	いない	NO_EXIST_B_5
 指定されたワークを見て条件分岐	POS_B_JUMP	==	1	NO_EXIST_B_5
 ポケモン移動	POS_B	追従	0	-3	10	0	0
+指定されたワークを見て条件分岐	POS_B_FLY	==	1	NO_EXIST_B_5
 指定されたワークを見て条件分岐	POS_B_WEIGHT	<	1500	WEIGHT_B_M
 パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_B	方向無し	1:0:0	1:1:1	1
 汎用ワークに値をセット	2
@@ -192,6 +198,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 立ち位置チェック	POS_D	いない	NO_EXIST_D_5
 指定されたワークを見て条件分岐	POS_D_JUMP	==	1	NO_EXIST_D_5
 ポケモン移動	POS_D	追従	0	-3	10	0	0
+指定されたワークを見て条件分岐	POS_D_FLY	==	1	NO_EXIST_D_5
 指定されたワークを見て条件分岐	POS_D_WEIGHT	<	1500	WEIGHT_D_M
 パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_D	方向無し	1:0:0	1:1:1	1
 汎用ワークに値をセット	2
@@ -203,6 +210,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 立ち位置チェック	POS_F	いない	NO_EXIST_F_5
 指定されたワークを見て条件分岐	POS_F_JUMP	==	1	NO_EXIST_F_5
 ポケモン移動	POS_F	追従	0	-3	10	0	0
+指定されたワークを見て条件分岐	POS_F_FLY	==	1	NO_EXIST_F_5
 指定されたワークを見て条件分岐	POS_F_WEIGHT	<	1500	WEIGHT_F_M
 パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_F	方向無し	1:0:0	1:1:1	1
 汎用ワークに値をセット	2
@@ -211,7 +219,25 @@ SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 指定されたワークを見て条件分岐	SEQUENCE_WORK	==	2	NO_EXIST_F_5
 汎用ワークに値をセット	1
 ラベル	NO_EXIST_F_5
-タイマーによるウエイト	5
+エフェクト終了待ち	ポケモン
+制御モード変更	継続
+立ち位置チェック	POS_BB	いない	NO_FLY_BB
+指定されたワークを見て条件分岐	POS_BB_FLY	!=	1	NO_FLY_BB
+ポケモンSIN移動	POS_BB	Y方向	180	360	0.5	24
+ラベル	NO_FLY_BB
+立ち位置チェック	POS_B	いない	NO_FLY_B
+指定されたワークを見て条件分岐	POS_B_FLY	!=	1	NO_FLY_B
+ポケモンSIN移動	POS_B	Y方向	180	360	0.5	24
+ラベル	NO_FLY_B
+立ち位置チェック	POS_D	いない	NO_FLY_D
+指定されたワークを見て条件分岐	POS_D_FLY	!=	1	NO_FLY_D
+ポケモンSIN移動	POS_D	Y方向	180	360	0.5	24
+ラベル	NO_FLY_D
+立ち位置チェック	POS_F	いない	NO_FLY_F
+指定されたワークを見て条件分岐	POS_F_FLY	!=	1	NO_FLY_F
+ポケモンSIN移動	POS_F	Y方向	180	360	0.5	32
+ラベル	NO_FLY_F
+制御モード変更	継続
 ラベル	SE_L
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	2	SE_M
 SE再生	SEQ_SE_TOUJOU_LARGE	デフォルト	真ん中	0:0:127	0:0:0

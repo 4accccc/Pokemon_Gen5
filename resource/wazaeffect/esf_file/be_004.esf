@@ -230,9 +230,25 @@ SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 指定されたワークを見て条件分岐	SEQUENCE_WORK	==	2	NO_EXIST_E_5
 汎用ワークに値をセット	1
 ラベル	NO_EXIST_E_5
-エフェクト終了待ち	ポケモン
+タイマーによるウエイト	10
 制御モード変更	継続
-ポケモン移動	攻撃側	追従	0	0	0	0	0
+立ち位置チェック	POS_AA	いない	NO_FLY_AA
+指定されたワークを見て条件分岐	POS_AA_FLY	!=	1	NO_FLY_AA
+ポケモンSIN移動	POS_AA	Y方向	180	360	0.5	24
+ラベル	NO_FLY_AA
+立ち位置チェック	POS_A	いない	NO_FLY_A
+指定されたワークを見て条件分岐	POS_A_FLY	!=	1	NO_FLY_A
+ポケモンSIN移動	POS_A	Y方向	180	360	0.5	24
+ラベル	NO_FLY_A
+立ち位置チェック	POS_C	いない	NO_FLY_C
+指定されたワークを見て条件分岐	POS_C_FLY	!=	1	NO_FLY_C
+ポケモンSIN移動	POS_C	Y方向	180	360	0.5	24
+ラベル	NO_FLY_C
+立ち位置チェック	POS_E	いない	NO_FLY_E
+指定されたワークを見て条件分岐	POS_E_FLY	!=	1	NO_FLY_E
+ポケモンSIN移動	POS_E	Y方向	180	360	0.5	32
+ラベル	NO_FLY_E
+制御モード変更	継続
 ラベル	SE_L
 指定されたワークを見て条件分岐	SEQUENCE_WORK	!=	2	SE_M
 SE再生	SEQ_SE_TOUJOU_LARGE	デフォルト	真ん中	0:0:127	0:0:0
@@ -300,6 +316,7 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 ポケモン影バニッシュ	POS_E	バニッシュオフ
 ラベル	NO_EXIST_E_6
 エフェクト終了待ち	パーティクル
+エフェクト終了待ち	ポケモン
 タイマーによるウエイト	5
 制御モード変更	継続
 カメラ移動	追従	初期位置	10	0	8
