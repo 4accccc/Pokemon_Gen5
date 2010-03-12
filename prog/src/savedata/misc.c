@@ -157,7 +157,8 @@ u8 MISC_GetNameInMode( const MISC *cp_misc, u32 mode )
 //-----------------------------------------------------------------------------
 static void MISC_InitNameIn( MISC *p_misc )
 {
-	p_misc->namein_mode[ NAMEIN_POKEMON ] = 1;
+  GFL_STD_MemClear( p_misc->namein_mode, sizeof(u8)*NAMEIN_SAVEMODE_MAX );
+	p_misc->namein_mode[ NAMEIN_POKEMON ] = 1;  //ポケモンだけカタカナ開始
 }
 
 //==============================================================================

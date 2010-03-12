@@ -39,6 +39,7 @@ typedef enum
 
 //-------------------------------------
 ///	入力文字数
+//    以下EOM含まない長さです
 //=====================================
 // ポケモン名前入力の長さ
 #if (PM_LANG==LANG_JAPAN)
@@ -85,9 +86,9 @@ typedef enum
 
 // すれ違い　フリーワード
 #if (PM_LANG==LANG_JAPAN)
-#define NAMEIN_FREE_WORD_LENGTH		( 10 )
+#define NAMEIN_FREE_WORD_LENGTH		( 8 )
 #else
-#define NAMEIN_FREE_WORD_LENGTH		( 10 )
+#define NAMEIN_FREE_WORD_LENGTH		( 8 )
 #endif
 
 //=============================================================================
