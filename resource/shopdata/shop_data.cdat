@@ -300,8 +300,8 @@ static const u16 c10_fs[] = {
 };
 #define C10_FS_MAX	(NELEMS(c10_fs))
 
-// シッポウシティその２
-static const u16 c02_rl[] = {
+// シッポウシティ個人商店
+static const u16 shop_up[] = {
 		ITEM_SUPIIDAA,
 		ITEM_PURASUPAWAA,
 		ITEM_DHIFENDAA,
@@ -311,16 +311,85 @@ static const u16 c02_rl[] = {
 		ITEM_SUPESYARUAPPU,
 		ITEM_SUPESYARUGAADO,
 };
-#define C02_RL_MAX	(NELEMS(c02_rl))
+#define SHOP_UP_MAX	(NELEMS(shop_up))
 
-// ホドモエシティその２
-static const u16 c05_rl[] = {
+// ホドモエシティ市場１
+static const u16 shop_kanpo[] = {
 		ITEM_BANNOUGONA,
 		ITEM_TIKARANOKONA,
 		ITEM_TIKARANONEKKO,
 		ITEM_HUKKATUSOU,
 };
-#define C05_RL_MAX	(NELEMS(c05_rl))
+#define SHOP_KANPO_MAX	(NELEMS(shop_kanpo))
+
+// ホドモエシティ市場２
+static const u16 shop_okou[] = {
+		ITEM_AYASIIOKOU,
+		ITEM_USIONOOKOU,
+		ITEM_OHANANOOKOU,
+		ITEM_GANSEKIOKOU,
+		ITEM_NONKINOOKOU,
+		ITEM_MANPUKUOKOU,
+};
+#define SHOP_OKOU_MAX	(NELEMS(shop_okou))
+
+// ショッピングモール１Ｆ
+static const u16 shop_mall1[] = {
+		ITEM_KIZUGUSURI,
+		ITEM_IIKIZUGUSURI,
+		ITEM_SUGOIKIZUGUSURI,
+		ITEM_MANTANNOKUSURI,
+		ITEM_GENKINOKAKERA,
+		ITEM_DOKUKESI,
+		ITEM_MAHINAOSI,
+		ITEM_YAKEDONAOSI,
+		ITEM_KOORINAOSI,
+		ITEM_NEMUKEZAMASI,
+		ITEM_NANDEMONAOSI,
+};
+#define SHOP_MALL1_MAX	(NELEMS(shop_mall1))
+
+// ショッピングモール２Ｆ右
+static const u16 shop_mall2[] = {
+		ITEM_HAZIMETEMEERU,
+		ITEM_DAISUKIMEERU,
+		ITEM_OSASOIMEERU,
+		ITEM_KANSYAMEERU,
+		ITEM_SITUMONMEERU,
+		ITEM_OSUSUMEMEERU,
+		ITEM_OKAESIMEERU,
+		ITEM_HIIRUBOORU,
+		ITEM_NETTOBOORU,
+		ITEM_NESUTOBOORU,
+		ITEM_DAAKUBOORU,
+		ITEM_KUIKKUBOORU,
+		ITEM_TAIMAABOORU,
+};
+#define SHOP_MALL2_MAX	(NELEMS(shop_mall2))
+
+// ショッピングモール２Ｆ左
+static const u16 shop_mall3[] = {
+		ITEM_MONSUTAABOORU,
+		ITEM_SUUPAABOORU,
+		ITEM_HAIPAABOORU,
+		ITEM_ANANUKENOHIMO,
+		ITEM_PIPPININGYOU,
+		ITEM_MUSIYOKESUPUREE,
+		ITEM_SIRUBAASUPUREE,
+		ITEM_GOORUDOSUPUREE,
+};
+#define SHOP_MALL3_MAX	(NELEMS(shop_mall3))
+
+// ショッピングモール３Ｆ左
+static const u16 shop_mall4[] = {
+		ITEM_TAURIN,
+		ITEM_BUROMUHEKISIN,
+		ITEM_RIZOTIUMU,
+		ITEM_KITOSAN,
+		ITEM_INDOMETASIN,
+		ITEM_MAKKUSUAPPU,
+};
+#define SHOP_MALL4_MAX	(NELEMS(shop_mall4))
 
 
 
@@ -345,8 +414,13 @@ static const u16 *shop_data_table[]={
 	t03_fs,
 	t04_fs,
 	c10_fs,
-	c02_rl,
-	c05_rl,
+	shop_up,
+	shop_kanpo,
+	shop_okou,
+	shop_mall1,
+	shop_mall2,
+	shop_mall3,
+	shop_mall4,
 };
 
 
@@ -371,6 +445,11 @@ static const u8 shop_itemnum_table[]={
 	T03_FS_MAX,
 	T04_FS_MAX,
 	C10_FS_MAX,
-	C02_RL_MAX,
-	C05_RL_MAX,
+	SHOP_UP_MAX,
+	SHOP_KANPO_MAX,
+	SHOP_OKOU_MAX,
+	SHOP_MALL1_MAX,
+	SHOP_MALL2_MAX,
+	SHOP_MALL3_MAX,
+	SHOP_MALL4_MAX,
 };
