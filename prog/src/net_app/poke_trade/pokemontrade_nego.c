@@ -1913,7 +1913,7 @@ void POKEMONTRADE_NEGO_SlideInit(POKEMON_TRADE_WORK* pWork,int side,POKEMON_PARA
   POKEMONTRADE_NEGOBG_SlideInit(pWork, side, pp);
   POKEMONTRADE_NEGOBG_SlideMessage(pWork, side, pp);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
-  IRCPOKETRADE_PokeCreateMcss(pWork, side, 1-side, pp, TRUE);
+  IRCPOKETRADE_PokeCreateMcssGTS(pWork, side, 1-side, pp, TRUE, TRUE);
 
   POKETRADE_2D_GTSPokemonIconVisible(pWork, side, FALSE);
 }

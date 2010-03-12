@@ -951,7 +951,7 @@ void POKE_MAIN_Pokemonset(POKEMON_TRADE_WORK *pWork, int side, POKEMON_PARAM* pp
 {
   if(pp){
     IRCPOKETRADE_PokeDeleteMcss(pWork, side);
-    IRCPOKETRADE_PokeCreateMcss(pWork, side, 1-side, pp, TRUE);
+    IRCPOKETRADE_PokeCreateMcssGTS(pWork, side, 1-side, pp, TRUE, POKEMONTRADEPROC_IsTriSelect(pWork));
     POKETRADE_MESSAGE_SetPokemonStatusMessage(pWork,side ,pp);
   }
 }
@@ -3376,7 +3376,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
   }
   //ポケモンセットをコール
   if(pWork->pokemonsetCall != 0){
-    POKE_MAIN_Pokemonset(pWork, 1, pWork->recvPoke[pWork->pokemonsetCall-1]);
+    POKE_MAIN_Pokemonset(pWork, 1, pWork->recvPoke[pWork->pokemonsetCall-1] );
     pWork->pokemonsetCall=0;
   }
 
