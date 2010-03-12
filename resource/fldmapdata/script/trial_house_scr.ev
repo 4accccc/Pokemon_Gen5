@@ -301,9 +301,6 @@ charange:
       $rank_msg = msg_trialhouse_021
     ENDSWITCH
 
-    //ランクセット
-    _TH_SET_RANK( result_rank )
-
     //ラストメッセージ
     _BALLOONWIN_OBJMSG_POS(rank_msg, SCWK_TARGET_OBJID, POS_DL )
     _LAST_KEYWAIT()
