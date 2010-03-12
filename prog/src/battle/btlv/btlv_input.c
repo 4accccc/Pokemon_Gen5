@@ -2685,21 +2685,26 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
         GFL_HEAP_FreeMemory( arc_data );
       }
 
-      //BMPWINÅFãZñº
-      WORDSET_RegisterWazaName( wordset, 0, biwp->wazano[ i ] );
-      WORDSET_ExpandStr( wordset, wazaname_p, wazaname_src );
-      FontLenGet( wazaname_p, biw->font, &dot_len, &char_len );
-      PRINTSYS_Print( biw->bmp_data, wazaname_pos[ i ][ 0 ] - ( dot_len / 2 ), wazaname_pos[ i ][ 1 ], wazaname_p, biw->font );
-
-      WORDSET_RegisterNumber(wordset, 0, biwp->pp[ i ],     2, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
-      WORDSET_RegisterNumber(wordset, 1, biwp->ppmax[ i ],  2, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
-      WORDSET_ExpandStr(wordset, pp_p, pp_src);
-      color = PP_FontColorGet( biwp->pp[ i ], biwp->ppmax[ i ] );
-
       {
         u8 letter, shadow, back;
-
         GFL_FONTSYS_GetColor( &letter, &shadow, &back );
+
+        //BMPWINÅFãZñº
+        GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( MSGCOLOR_PP_WHITE ),
+                              PRINTSYS_LSB_GetS( MSGCOLOR_PP_WHITE ),
+                              PRINTSYS_LSB_GetB( MSGCOLOR_PP_WHITE ) );
+        WORDSET_RegisterWazaName( wordset, 0, biwp->wazano[ i ] );
+        WORDSET_ExpandStr( wordset, wazaname_p, wazaname_src );
+        FontLenGet( wazaname_p, biw->font, &dot_len, &char_len );
+        PRINTSYS_Print( biw->bmp_data, wazaname_pos[ i ][ 0 ] - ( dot_len / 2 ), wazaname_pos[ i ][ 1 ],
+                        wazaname_p, biw->font );
+
+        WORDSET_RegisterNumber(wordset, 0, biwp->pp[ i ],     2, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
+        WORDSET_RegisterNumber(wordset, 1, biwp->ppmax[ i ],  2, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
+        WORDSET_ExpandStr(wordset, pp_p, pp_src);
+        color = PP_FontColorGet( biwp->pp[ i ], biwp->ppmax[ i ] );
+
+
         GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( color ), PRINTSYS_LSB_GetS( color ), PRINTSYS_LSB_GetB( color ) );
 
         //BMPWINÅFPP
