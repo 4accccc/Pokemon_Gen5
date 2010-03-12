@@ -358,3 +358,10 @@
 #define SCR_EV_SUBSCREEN_MODE_SAVE  (0) // セーブ画面にする
 #define SCR_EV_SUBSCREEN_MODE_MAX  (1)
 
+//--------------------------------------------------------------
+///　図鑑完成賞状&路線図表示アプリ起動コード (同一アプリを呼び出す)
+//--------------------------------------------------------------
+#define SCR_ZUKAN_AWARD_CHIHOU    (0)  // 地方図鑑完成
+#define SCR_ZUKAN_AWARD_ZENKOKU   (1)  // 全国図鑑完成
+#define SCR_ZUKAN_AWARD_SUBWAY_ROUTE_MAP  (2)  // 路線図
+

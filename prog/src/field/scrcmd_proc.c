@@ -527,12 +527,25 @@ VMCMD_RESULT EvCmdCallZukanAward( VMHANDLE *core, void *wk )
   u16 patern  = SCRCMD_GetVMWorkValue( core, wk );
 
   // ÉRÉ}ÉìÉhÇ™ÇOÇ»ÇÁínï˚ê}ä”è‹èÛÅBÇPÇ»ÇÁëSçëê}ä”è‹èÛ
-  if(demo_id==0){
-    CHIHOU_ZUKAN_AWARD_PARAM* param = CHIHOU_ZUKAN_AWARD_AllocParam( HEAPID_PROC, mystatus, TRUE );
-    EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(chihou_zukan_award), &CHIHOU_ZUKAN_AWARD_ProcData, param, NULL, NULL );
-  }else{
-    ZENKOKU_ZUKAN_AWARD_PARAM* param = ZENKOKU_ZUKAN_AWARD_AllocParam( HEAPID_PROC, mystatus, TRUE );
-    EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(chihou_zukan_award), &ZENKOKU_ZUKAN_AWARD_ProcData, param, NULL, NULL );
+  switch(demo_id){
+  case SCR_ZUKAN_AWARD_CHIHOU:
+    {
+      CHIHOU_ZUKAN_AWARD_PARAM* param = CHIHOU_ZUKAN_AWARD_AllocParam( HEAPID_PROC, mystatus, TRUE );
+      EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(chihou_zukan_award), &CHIHOU_ZUKAN_AWARD_ProcData, param, NULL, NULL );
+    }
+    break;
+  case SCR_ZUKAN_AWARD_ZENKOKU:
+    {
+      ZENKOKU_ZUKAN_AWARD_PARAM* param = ZENKOKU_ZUKAN_AWARD_AllocParam( HEAPID_PROC, mystatus, TRUE );
+      EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(chihou_zukan_award), &ZENKOKU_ZUKAN_AWARD_ProcData, param, NULL, NULL );
+    }
+    break;
+  case SCR_ZUKAN_AWARD_SUBWAY_ROUTE_MAP:  //òHê¸ê}
+    {
+      ZENKOKU_ZUKAN_AWARD_PARAM* param = ZENKOKU_ZUKAN_AWARD_AllocParam( HEAPID_PROC, mystatus, TRUE );
+      EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(chihou_zukan_award), &ZENKOKU_ZUKAN_AWARD_ProcData, param, NULL, NULL );
+    }
+    break;
   }
   return VMCMD_RESULT_SUSPEND;
 }

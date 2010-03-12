@@ -409,6 +409,15 @@ sub_rndmatch_try:
   //パーティ選択保存
   $lwk_rm_party = $i_ret
  
+  // レポートを書く
+  _REPORT_EVENT_CALL( i_ret )
+
+  // 書き込みに失敗
+  IF $i_ret != SCR_REPORT_OK THEN
+    $reg_return = SEQ_SUB_RNDMATCH_EXIT
+    _RET
+  ENDIF
+  
   //フィールド通信切断
   _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
   IF $i_ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
@@ -416,15 +425,6 @@ sub_rndmatch_try:
     _RET
   ELSIF $i_ret == SCR_FIELD_COMM_EXIT_ERROR THEN
     $reg_return = SEQ_SUB_RNDMATCH_RETRY
-    _RET
-  ENDIF
-
-  // レポートを書く
-  _REPORT_EVENT_CALL( i_ret )
-
-  // 書き込みに失敗
-  IF $i_ret != SCR_REPORT_OK THEN
-    $reg_return = SEQ_SUB_RNDMATCH_EXIT
     _RET
   ENDIF
   
@@ -647,6 +647,14 @@ sub_gts_normal_exchange:
     $reg_return = SEQ_SUB_GTS_NORMAL_EXIT
     _RET
   ENDIF
+
+  // レポートを書く
+  _REPORT_EVENT_CALL( i_ret )
+  // 書き込みに失敗
+  IF $i_ret != SCR_REPORT_OK THEN
+    $reg_return = SEQ_SUB_GTS_NORMAL_EXIT
+    _RET
+  ENDIF
  
   //フィールド通信切断
   _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
@@ -657,21 +665,11 @@ sub_gts_normal_exchange:
     $reg_return = SEQ_SUB_GTS_NORMAL_RETRY
     _RET
   ENDIF
-
-  // レポートを書く
-  _REPORT_EVENT_CALL( i_ret )
-  // 書き込みに失敗
-  IF $i_ret != SCR_REPORT_OK THEN
-    $reg_return = SEQ_SUB_GTS_NORMAL_EXIT
-    _RET
-  ENDIF
  
   //入り口移動アニメ
   _CALL sub_anm_wifi_counter_in
 
-  _FIELD_CLOSE()
-//  _WIFI_GTS_EVENT_CALL()
-  _FIELD_OPEN()
+  _WIFI_GTS_EVENT_CALL()
 
   _CALL sub_anm_wifi_counter_out
 
@@ -807,6 +805,14 @@ sub_gts_nego_exchange:
     $reg_return = SEQ_SUB_GTS_NEGO_EXIT
     _RET
   ENDIF
+
+  // レポートを書く
+  _REPORT_EVENT_CALL( i_ret )
+  // 書き込みに失敗
+  IF $i_ret != SCR_REPORT_OK THEN
+    $reg_return = SEQ_SUB_GTS_NEGO_EXIT
+    _RET
+  ENDIF
   
   //フィールド通信切断
   _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
@@ -817,21 +823,12 @@ sub_gts_nego_exchange:
     $reg_return = SEQ_SUB_GTS_NEGO_RETRY
     _RET
   ENDIF
-
-  // レポートを書く
-  _REPORT_EVENT_CALL( i_ret )
-  // 書き込みに失敗
-  IF $i_ret != SCR_REPORT_OK THEN
-    $reg_return = SEQ_SUB_GTS_NEGO_EXIT
-    _RET
-  ENDIF
  
   //入り口移動アニメ
   _CALL sub_anm_wifi_counter_in
 
-  _FIELD_CLOSE()
-//  _WIFI_GTS_NEGO_EVENT_CALL()
-  _FIELD_OPEN()
+  _WIFI_GTS_NEGO_EVENT_CALL()
+  
   _CALL sub_anm_wifi_counter_out
 
   $reg_return = SEQ_SUB_GTS_NEGO_END
@@ -932,6 +929,14 @@ sub_btl_recorder_call:
     $reg_return = SEQ_GOODBYE
     _RET
   ENDIF
+
+  // レポートを書く
+  _REPORT_EVENT_CALL( i_ret )
+  // 書き込みに失敗
+  IF $i_ret != SCR_REPORT_OK THEN
+    $reg_return = SEQ_GOODBYE
+    _RET
+  ENDIF
   
   //フィールド通信切断
   _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
@@ -942,16 +947,8 @@ sub_btl_recorder_call:
     $reg_return = SEQ_RETRY
     _RET
   ENDIF
-
-  // レポートを書く
-  _REPORT_EVENT_CALL( i_ret )
-  // 書き込みに失敗
-  IF $i_ret != SCR_REPORT_OK THEN
-    $reg_return = SEQ_GOODBYE
-    _RET
-  ENDIF
-
-  _CALL sub_anm_wifi_counter_in
+ 
+ _CALL sub_anm_wifi_counter_in
 
   _WIFI_BATTLE_RECORDER_EVENT_CALL( reg_param )
   

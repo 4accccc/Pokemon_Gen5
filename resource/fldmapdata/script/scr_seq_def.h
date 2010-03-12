@@ -6522,11 +6522,20 @@
 //--------------------------------------------------------------
 /**
  * @def _CALL_ZUKAN_AWARD
- * @brief   図鑑完成表彰状アプリ呼び出し
+ * @brief   図鑑完成表彰状＆路線図表示アプリ呼び出し
+ *
+ * 図鑑呼び出しID
+ *  地方図鑑 SCR_ZUKAN_AWARD_CHIHOU
+ *  全国図鑑 SCR_ZUKAN_AWARD_ZENKOKU
  */
 //--------------------------------------------------------------
+//図鑑
 #define _CALL_ZUKAN_AWARD( demo_id, pattern ) \
     _ASM_CALL_ZUKAN_AWARD demo_id, pattern
+
+//路線図
+#define _CALL_SUBWAY_ROUTE_MAP( pattern ) \
+    _ASM_CALL_ZUKAN_AWARD SCR_ZUKAN_AWARD_SUBWAY_RUTE_MAP, pattern
 
   .macro  _ASM_CALL_ZUKAN_AWARD demo_id, pattern
   .short  EV_SEQ_CALL_ZUKAN_AWARD
