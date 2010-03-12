@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-03-11T18:53:01"/>
+	<create user="nakamura_akira" host="W00131" date="2010-03-12T21:10:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -893,6 +893,16 @@ assistantm_01_06へ続く
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ポケモンの　おもしろい　ところは？</language>
 		<language name="JPN_KANJI" width="256">ポケモンの　面白い　ところは？</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_03x" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・選択肢
+隊長との会話をやめたいときに経由
+
+『やめる』　⇒　　assistantm_01_08へ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_13a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -6625,7 +6635,7 @@ assistantm_01_31へ続く
 アンケートを選ぶと、アンケートごとのタイトルを表示
 各アンケートの質問メッセージ表示へ
 
-各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+各アンケート　⇒　msg_c03r0101_woman2_11aへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">こんかいの　アンケートは
@@ -6641,7 +6651,7 @@ assistantm_01_31へ続く
 アンケートを選ぶと、アンケートごとのタイトルを表示
 各アンケートの質問メッセージ表示へ
 
-各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+各アンケート　⇒　msg_c03r0101_woman2_11bへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">こんかいの　アンケートは
@@ -6656,7 +6666,7 @@ assistantm_01_31へ続く
 アンケートを選ぶと、アンケートごとのタイトルを表示
 各アンケートの質問メッセージ表示へ
 
-各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+各アンケート　⇒　msg_c03r0101_woman2_11cへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">こんかいの　アンケートは
@@ -6671,7 +6681,7 @@ assistantm_01_31へ続く
 アンケートを選ぶと、アンケートごとのタイトルを表示
 各アンケートの質問メッセージ表示へ
 
-各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+各アンケート　⇒　msg_c03r0101_woman2_11dへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">こんかいの　アンケートは
@@ -6686,7 +6696,7 @@ assistantm_01_31へ続く
 アンケートを選ぶと、アンケートごとのタイトルを表示
 各アンケートの質問メッセージ表示へ
 
-各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+各アンケート　⇒　msg_c03r0101_woman2_11eへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">こんかいの　アンケートは
@@ -6701,7 +6711,7 @@ assistantm_01_31へ続く
 アンケートを選ぶと、アンケートごとのタイトルを表示
 各アンケートの質問メッセージ表示へ
 
-各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+各アンケート　⇒　msg_c03r0101_woman2_11fへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">こんかいの　アンケートは
@@ -6716,7 +6726,7 @@ assistantm_01_31へ続く
 アンケートを選ぶと、アンケートごとのタイトルを表示
 各アンケートの質問メッセージ表示へ
 
-各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+各アンケート　⇒　msg_c03r0101_woman2_11gへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">こんかいの　アンケートは
@@ -6731,7 +6741,7 @@ assistantm_01_31へ続く
 アンケートを選ぶと、アンケートごとのタイトルを表示
 各アンケートの質問メッセージ表示へ
 
-各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+各アンケート　⇒　msg_c03r0101_woman2_11hへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">こんかいの　アンケートは
@@ -6748,7 +6758,7 @@ assistantm_01_31へ続く
 アンケートを選ぶと、アンケートごとのタイトルを表示
 各アンケートの質問メッセージ表示へ
 
-各アンケート　⇒　msg_c03r0101_woman2_11へ</comment>
+各アンケート　⇒　msg_c03r0101_woman2_11iへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">こんかいの　アンケートは
@@ -6757,49 +6767,372 @@ assistantm_01_31へ続く
 『ポケモン』に　ついてよ</language>
 	</row>
 
-	<row id="msg_c03r0101_woman2_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r0101_woman2_11a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・アンケート隊員
-アンケート１問目
+『どんなひとが　いるか』アンケート１問目
 このメッセージの表示後、選択ウインドウを表示
-回答の選択後、woman2__14へ続く
-
-[簡易会話単語:34]＝質問１アンケート内容</comment>
+回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">しつもん１
-『[1:1C:簡易会話単語:34]』▼</language>
+『アナタの　しゅみは？』▼</language>
 		<language name="JPN_KANJI" width="256">質問１
-『[1:1C:簡易会話単語:34]』▼</language>
+『アナタの　趣味は？』▼</language>
 	</row>
 
-	<row id="msg_c03r0101_woman2_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r0101_woman2_11b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・アンケート隊員
-アンケート２問目
+『すきな　ポケモン』アンケート１問目
 このメッセージの表示後、選択ウインドウを表示
-回答の選択後、woman2__14へ続く
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん１
+『アナタは　たいせんと　こうかん▽
+どっちがすき？』▼</language>
+		<language name="JPN_KANJI" width="256">質問１
+『アナタは　対戦と　交換▽
+どっちが　好き？』▼</language>
+	</row>
 
-[簡易会話単語:35]＝質問２アンケート内容</comment>
+	<row id="msg_c03r0101_woman2_11c" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『みんなの　りそう』アンケート１問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん１
+『アナタは　とかいと　いなか▽
+すむなら　どっち？』▼</language>
+		<language name="JPN_KANJI" width="256">質問１
+『アナタは　都会と　田舎▽
+住むなら　どっち？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_11d" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『すきな　ひと』アンケート１問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん１
+『アナタが　あいてを　えらぶなら▽
+どっち？』▼</language>
+		<language name="JPN_KANJI" width="256">質問１
+『アナタが　相手を　選ぶなら▽
+どっち？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_11e" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『みんなの　このみ』アンケート１問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん１
+『アナタが　すきな　きせつは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問１
+『アナタが　好きな　季節は？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_11f" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『みんなの　しゅみ』アンケート１問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん１
+『アナタが　すきな　おんがくは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問１
+『アナタが　好きな　音楽は？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_11g" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『がっこうせいかつ』アンケート１問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん１
+『アナタが　すきな　がっこうの▽
+じかんは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問１
+『アナタが　好きな▽
+学校の　時間は？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_11h" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『どんな　あそびが　すきか』アンケート１問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん１
+『アナタが　あそびに　いくなら▽
+どこ？』▼</language>
+		<language name="JPN_KANJI" width="256">質問１
+『アナタが　遊びに　行くなら▽
+どこ？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_11i" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『ポケモン』アンケート１問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん１
+『アナタが　おもう　ポケモンの▽
+おもしろいところは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問１
+『アナタが　思う　ポケモンの▽
+面白いところは？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_12a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『どんなひとが　いるか』アンケート２問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">しつもん２
-『[1:1C:簡易会話単語:35]』▼</language>
+『アナタの　おしごとは？』▼</language>
 		<language name="JPN_KANJI" width="256">質問２
-『[1:1C:簡易会話単語:35]』▼</language>
+『アナタの　お仕事は？』▼</language>
 	</row>
 
-	<row id="msg_c03r0101_woman2_13" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r0101_woman2_12b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・アンケート隊員
-アンケート２問目
+『すきな　ポケモン』アンケート２問目
 このメッセージの表示後、選択ウインドウを表示
-回答の選択後、woman2__14へ続く
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん２
+『アナタが　すきな　ポケモンは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問２
+『アナタが　好きな　ポケモンは？』▼</language>
+	</row>
 
-[簡易会話単語:36]＝質問２アンケート内容</comment>
+	<row id="msg_c03r0101_woman2_12c" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『みんなの　りそう』アンケート２問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん２
+『アナタが　ほしいのは　どっち？』▼</language>
+		<language name="JPN_KANJI" width="256">質問２
+『アナタが　欲しいのは　どっち？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_12d" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『すきな　ひと』アンケート２問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん２
+『アナタが　あいてに▽
+もとめるものは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問２
+『アナタが　相手に▽
+求めるものは？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_12e" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『みんなの　このみ』アンケート２問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん２
+『アナタが　すきな　たべものは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問２
+『アナタが　好きな　食べ物は？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_12f" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『みんなの　しゅみ』アンケート２問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん２
+『アナタが　すきな▽
+TVばんぐみは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問２
+『アナタが　好きな　TV番組は？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_12g" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『がっこうせいかつ』アンケート２問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん２
+『アナタが　すきな▽
+べんきょうは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問２
+『アナタが　好きな　勉強は？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_12h" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『どんな　あそびが　すきか』アンケート２問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん２
+『アナタは　きゅうじつは▽
+なにしてる？』▼</language>
+		<language name="JPN_KANJI" width="256">質問２
+『アナタは　休日は　何してる？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_12i" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『ポケモン』アンケート２問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん２
+『アナタが　もし　なれるなら？』▼</language>
+		<language name="JPN_KANJI" width="256">質問２
+『アナタが　もし　なれるなら？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_13a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>アンケートなし</comment>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_13b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『すきな　ポケモン』アンケート３問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">しつもん３
-『[1:1C:簡易会話単語:36]』▼</language>
+『アナタが　すきな　ポケモンの▽
+タイプは？』▼</language>
 		<language name="JPN_KANJI" width="256">質問３
-『[1:1C:簡易会話単語:36]』▼</language>
+『アナタが　好きな　ポケモンの▽
+タイプは？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_13c" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『みんなの　りそう』アンケート３問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん３
+『アナタが　だいじなのは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問３
+『アナタが　大事なのは？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_13d" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『すきな　ひと』アンケート３問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん３
+『アナタが　すきな　にんげんの▽
+タイプは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問３
+『アナタが　好きな　人間の▽
+タイプは？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_13e" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『みんなの　このみ』アンケート３問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん３
+『アナタの　すきな　いろは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問３
+『アナタの　好きな　色は？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_13f" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『みんなの　しゅみ』アンケート３問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん３
+『アナタが　すきな　えいがは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問３
+『アナタが　好きな　映画は？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_13g" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『がっこうせいかつ』アンケート３問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん３
+『アナタが　にがてな▽
+べんきょうは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問３
+『アナタが　苦手な　勉強は？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_13h" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『どんな　あそびが　すきか』アンケート３問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん３
+『アナタが　すきな　スポーツは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問３
+『アナタが　好きな　スポーツは？』▼</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_13i" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・アンケート隊員
+『ポケモン』アンケート３問目
+このメッセージの表示後、選択ウインドウを表示
+回答の選択後、woman2__14へ続く</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しつもん３
+『アナタが　すきな▽
+ジムリーダーは？』▼</language>
+		<language name="JPN_KANJI" width="256">質問３
+『アナタが　好きな▽
+ジムリーダーは？』▼</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_14" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -6807,8 +7140,8 @@ assistantm_01_31へ続く
 各アンケートの回答後に表示
 
 全て質問答えていない場合は、
-２問目　⇒　msg_c03r0101_woman2_12へ
-３問目　⇒　msg_c03r0101_woman2_13へ
+２問目　⇒　msg_c03r0101_woman2_12○へ
+３問目　⇒　msg_c03r0101_woman2_13○へ
 全部回答　⇒　woman2__15へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
@@ -7115,6 +7448,13 @@ woman2_22へ続く
 教えてくれないかな？▼</language>
 	</row>
 
+	<row id="msg_c03r0101_input_a">
+		<comment>入力画面にデフォルトで表示</comment>
+		<attribute name="キャラ指定">デフォルト挨拶</attribute>
+		<language name="JPN" width="256">よろしく！</language>
+		<language name="JPN_KANJI" width="256">よろしく！</language>
+	</row>
+
 	<row id="msg_c03r0101_boy2_04">
 		<comment>・挨拶隊員
 挨拶受付時に『いいえ』を選択時に表示
@@ -7225,6 +7565,13 @@ girl4_04へ続く
 		<language name="JPN_KANJI" width="256">よかったら
 またあなたの　感謝の気持ちを▽
 教えてくれるかしら？▼</language>
+	</row>
+
+	<row id="msg_c03r0101_input_b">
+		<comment>入力画面にデフォルトで表示</comment>
+		<attribute name="キャラ指定">デフォルトお礼</attribute>
+		<language name="JPN" width="256">ありがとう！</language>
+		<language name="JPN_KANJI" width="256">ありがとう！</language>
 	</row>
 
 	<row id="msg_c03r0101_girl4_06">
