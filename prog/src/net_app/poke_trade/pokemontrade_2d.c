@@ -1170,7 +1170,7 @@ static void  _PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
 
 
   GF_ASSERT(MONSNO_MAX < 660);
-  pWork->pCharMem = GFL_HEAP_AllocMemory(pWork->heapID, 4*8*4*4*660 );
+  pWork->pCharMem = GFL_HEAP_AllocMemory(pWork->heapID, 4*8*4*4*726 );  //ボックスの総数にする @todo
   
   for(i=0;i < MONSNO_MAX; i++){ //@todo フォルム違いを持ってくる必要あり、雌雄書き分けにも対応する必要あり
   

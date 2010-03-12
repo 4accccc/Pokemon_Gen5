@@ -98,6 +98,7 @@ static void _setNextAnim(POKEMON_TRADE_WORK* pWork, int timer)
 
 void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
 {
+  POKEMON_PARAM* pp;
   GFL_CLACT_UNIT_Delete(pWork->cellUnit);
   GFL_CLACT_SYS_Delete();
   IRC_POKETRADE_CLACT_Create(pWork);
@@ -133,10 +134,17 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
   else{
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_49, pWork->pMessageStrBufEx );
   }
+
+  if(POKEMONTRADEPROC_IsTriSelect(pWork))
   {
-    POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
-    WORDSET_RegisterPokeNickName( pWork->pWordSet, 1,  pp );
+    pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
   }
+  else{
+    pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
+  }
+
+  WORDSET_RegisterPokeNickName( pWork->pWordSet, 1,  pp );
+
   {
     WORDSET_RegisterPlayerName( pWork->pWordSet, 0, pWork->pFriend  );
   }
@@ -157,16 +165,25 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork)
 {
+  POKEMON_PARAM* pp;
+  
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
-  if(pWork->anmCount < 100){
+  if(pWork->anmCount < 400){
     return;
   }
+
+  if(POKEMONTRADEPROC_IsTriSelect(pWork))
   {
-    POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
-    WORDSET_RegisterPokeNickName( pWork->pWordSet, 1,  pp );
+    pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
   }
+  else{
+    pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
+  }
+
+
+  WORDSET_RegisterPokeNickName( pWork->pWordSet, 1,  pp );
   WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx);
   POKETRADE_MESSAGE_WindowOpen(pWork);
   _setNextAnim(pWork, 0);
@@ -179,7 +196,7 @@ static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork)
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
-  if(pWork->anmCount < 100){
+  if(pWork->anmCount < 400){
     return;
   }
   POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_KEY);
@@ -213,7 +230,17 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
     return;
   }
   {   //ここからいつでもPROCCHANGEしても良いように親ワークに交換情報を格納
-    POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
+    POKEMON_PARAM* pp;// = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
+
+    if(POKEMONTRADEPROC_IsTriSelect(pWork))
+    {
+      pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
+    }
+    else{
+      pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
+    }
+    OS_Printf("ポケモン%d\n",PP_Get(pp,ID_PARA_monsno,NULL));
+
     pWork->pParentWork->selectBoxno = pWork->selectBoxno;
     pWork->pParentWork->selectIndex = pWork->selectIndex;
 
@@ -224,18 +251,19 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
   }
 
   {
-    int id = 1-GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-    STATUS_RCV_PokeParam_RecoverAll(pWork->recvPoke[id]);
+    POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
+//    int id = 1-GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+    STATUS_RCV_PokeParam_RecoverAll(pp);
     //交換する
     // 相手のポケを自分の選んでいた場所に入れる
     if(pWork->selectBoxno == BOXDAT_GetTrayMax(pWork->pBox)){ //てもちの交換の場合
       POKEPARTY* party = pWork->pMyParty;
-      PokeParty_SetMemberData(party, pWork->selectIndex, pWork->recvPoke[id]);
+      PokeParty_SetMemberData(party, pWork->selectIndex, pp);
     }
     else{
       // メールがあったらボックスに
       _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
-      int item = PP_Get( pWork->recvPoke[id] , ID_PARA_item ,NULL);
+      int item = PP_Get( pp , ID_PARA_item ,NULL);
       if(ITEM_CheckMail(item)){
         GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_08, pWork->pMessageStrBuf );
         POKETRADE_MESSAGE_WindowOpen(pWork);
@@ -243,14 +271,14 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
         return;
       }
       else{
-        if(MONSNO_SHEIMI == PP_Get( pWork->recvPoke[id] , ID_PARA_monsno ,NULL)){
-          if(FORMNO_SHEIMI_SKY == PP_Get( pWork->recvPoke[id] , ID_PARA_form_no ,NULL)){
-            PP_ChangeFormNo(pWork->recvPoke[id],FORMNO_SHEIMI_LAND);
+        if(MONSNO_SHEIMI == PP_Get( pp , ID_PARA_monsno ,NULL)){
+          if(FORMNO_SHEIMI_SKY == PP_Get( pp , ID_PARA_form_no ,NULL)){
+            PP_ChangeFormNo(pp,FORMNO_SHEIMI_LAND);
           }
         }
         BOXDAT_PutPokemonPos(pWork->pBox, pWork->selectBoxno,
                              pWork->selectIndex,
-                             (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pWork->recvPoke[id]));
+                             (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp));
       }
     }
   }
@@ -268,9 +296,23 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
   else{
     if(pWork->pParentWork){
       SHINKA_COND cond;
-      POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
+      POKEMON_PARAM* pp;
+      POKEMON_PARAM* pp2;
+      u16 after_mons_no;
+
+      if(POKEMONTRADEPROC_IsTriSelect(pWork))
+      {
+        pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
+        pp2 = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
+      }
+      else{
+        pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
+        pp2 = IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
+      }
+      
+   //   POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
     
-      u16 after_mons_no = SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, (u32)IRC_POKEMONTRADE_GetRecvPP(pWork, 0), &cond, pWork->heapID );
+      after_mons_no = SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, (u32)pp2, &cond, pWork->heapID );
       if( after_mons_no ){
         pWork->pParentWork->ret = POKEMONTRADE_MOVE_EVOLUTION;
         pWork->pParentWork->after_mons_no = after_mons_no;
@@ -280,7 +322,7 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
 
         PokeParty_Init( pWork->pParentWork->pParty, TEMOTI_POKEMAX );
         PokeParty_Add( pWork->pParentWork->pParty, pp );
-        _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);   //交換デモに行く
+        _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);   //
         return ;
       }
     }
@@ -350,7 +392,9 @@ void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork)
   pWork->selectIndex = pWork->pParentWork->selectIndex;
   {
     POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
-    
+
+    OS_Printf("ポケモン  %d %d %d   \n",PP_Get(pp,ID_PARA_monsno,NULL) ,pWork->selectIndex , pWork->selectBoxno);
+
     // 相手のポケを自分の選んでいた場所に入れる
     if(pWork->selectBoxno == BOXDAT_GetTrayMax(pWork->pBox)){ //てもちの交換の場合
       POKEPARTY* party = pWork->pMyParty;
