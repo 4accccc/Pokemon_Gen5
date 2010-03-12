@@ -538,14 +538,8 @@ void POKEMONTRADE_DEMO_IRICA_Init(POKEMONTRADE_DEMO_WORK* pWork)
 
 void POKEMONTRADE_DEMO_IRICA_Delete(POKEMONTRADE_DEMO_WORK* pWork)
 {
-  if(pWork->icaCamera){
-    ICA_ANIME_Delete(pWork->icaCamera);
-    pWork->icaCamera=NULL;
-  }
-  if(pWork->icaTarget){
-    ICA_ANIME_Delete(pWork->icaTarget);
-    pWork->icaTarget=NULL;
-  }
+  POKEMONTRADE_DEMO_ICA_Delete( pWork);
+
 }
 
 
@@ -609,8 +603,11 @@ void POKEMONTRADE_DEMO_PTC_End( POKEMONTRADE_DEMO_WORK* pWork ,int num)
   int i;
 
   GFL_PTC_Exit();
-  for(i=0;i<num;i++){
-    GFL_HEAP_FreeMemory(pWork->ptcheap[i]);
+  for(i=0;i<PTC_KIND_NUM_MAX;i++){
+    if(pWork->ptcheap[i]){
+      GFL_HEAP_FreeMemory(pWork->ptcheap[i]);
+      pWork->ptcheap[i]=NULL;
+    }
   }
 }
 
