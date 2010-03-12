@@ -13,6 +13,7 @@
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "app/app_keycursor.h"
+#include "app/app_printsys_common.h"
 
 #include "app/local_tvt_sys.h"
 
@@ -131,6 +132,7 @@ struct _LOCAL_TVT_WORK
   WORDSET         *wordSet;
   PRINT_QUE       *printQue;
   APP_KEYCURSOR_WORK *cursorWork;
+  APP_PRINTSYS_COMMON_WORK streamMng;
 
   u8 scriptIdx;
   u16 waitCnt;

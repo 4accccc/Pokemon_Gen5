@@ -577,7 +577,6 @@ static void LOCAL_TVT_MSG_InitMessage( LOCAL_TVT_WORK *work )
   work->printQue = PRINTSYS_QUE_Create( work->heapId );
 
   work->cursorWork = APP_KEYCURSOR_Create( 0x0f , TRUE , TRUE , work->heapId );
-
   GFL_FONTSYS_SetColor( 1,2,0xf );
   
 }
@@ -616,29 +615,12 @@ static void LOCAL_TVT_MSG_UpdateMessage( LOCAL_TVT_WORK *work )
   if( work->printHandle != NULL  )
   {
     APP_KEYCURSOR_Main( work->cursorWork , work->printHandle , work->msgWin );
-    if( PRINTSYS_PrintStreamGetState( work->printHandle ) == PRINTSTREAM_STATE_DONE )
+    if( APP_PRINTSYS_COMMON_PrintStreamFunc( &work->streamMng , work->printHandle ) == TRUE )
     {
       PRINTSYS_PrintStreamDelete( work->printHandle );
       work->printHandle = NULL;
       GFL_STR_DeleteBuffer( work->msgStr );
       work->msgStr = NULL;
-    }
-    else
-    if( PRINTSYS_PrintStreamGetState( work->printHandle ) == PRINTSTREAM_STATE_PAUSE )
-    {
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ||
-          GFL_UI_TP_GetTrg() == TRUE )
-      {
-        PRINTSYS_PrintStreamReleasePause( work->printHandle );
-      }
-    }
-    else
-    {
-      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ||
-          GFL_UI_KEY_GetCont() == TRUE )
-      {
-        PRINTSYS_PrintStreamShortWait( work->printHandle , 0 );
-      }
     }
   }
   PRINTSYS_QUE_Main( work->printQue );
@@ -684,6 +666,7 @@ static void LOCAL_TVT_MSG_OpenWindow( LOCAL_TVT_WORK *work , LOCAL_TVT_MSG_POS p
   GFL_BMPWIN_TransVramCharacter( work->msgWin );
   GFL_BMPWIN_MakeScreen( work->msgWin );
   GFL_BG_LoadScreenReq( LTVT_FRAME_MESSAGE );
+  APP_PRINTSYS_COMMON_PrintStreamInit( &work->streamMng , APP_PRINTSYS_COMMON_TYPE_BOTH );
 }
 
 static void LOCAL_TVT_MSG_CloseWindow( LOCAL_TVT_WORK *work )
