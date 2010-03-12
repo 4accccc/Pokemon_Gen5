@@ -101,11 +101,9 @@ extern void FIELD_SOUND_ChangePlayerVolume( FIELD_SOUND* fieldSound, u8 volume, 
 
 //=================================================================================
 // ■TVトランシーバー着信音制御
-/**
- * @brief TVトランシーバー着信音をリクエストする
- */
 //=================================================================================
-extern void FIELD_SOUND_RequestTVTRingTone( FIELD_SOUND* fieldSound );
+extern void FIELD_SOUND_PlayTVTRingTone( FIELD_SOUND* fieldSound );
+extern void FIELD_SOUND_StopTVTRingTone( FIELD_SOUND* fieldSound );
 
 
 //=================================================================================

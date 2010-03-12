@@ -1080,7 +1080,18 @@ void FSND_RePlayEnvSE( FIELD_SOUND* fieldSound )
 //-----------------------------------------------------------------------------
 void FSND_RequestTVTRingTone( FIELD_SOUND* fieldSound )
 {
-  FIELD_SOUND_RequestTVTRingTone( fieldSound );
+  FIELD_SOUND_PlayTVTRingTone( fieldSound );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief TVトランシーバー着信音の停止
+ *
+ *	@param	fieldSound  フィールドサウンド
+ */
+//-----------------------------------------------------------------------------
+void FSND_StopTVTRingTone( FIELD_SOUND* fieldSound )
+{
+  FIELD_SOUND_StopTVTRingTone( fieldSound );
+}
 

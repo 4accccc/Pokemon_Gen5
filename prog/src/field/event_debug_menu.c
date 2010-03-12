@@ -233,6 +233,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk
 static BOOL debugMenuCallProc_Zukan( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_AllMapCheck( DEBUG_MENU_EVENT_WORK * p_wk );
+static BOOL debugMenuCallProc_RingTone( DEBUG_MENU_EVENT_WORK * p_wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -315,6 +316,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR59, debugMenuCallProc_BattleRecorder },        //バトルレコーダー
   { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway },                //バトルサブウェイ
   { DEBUG_FIELD_ZUKAN_04, debugMenuCallProc_Zukan },            //ずかん
+  { DEBUG_FIELD_STR66,  debugMenuCallProc_RingTone },           //着信音
 };
 
 
@@ -4370,6 +4372,25 @@ static BOOL debugMenuCallProc_ForceSave( DEBUG_MENU_EVENT_WORK *wk )
   GFL_MSG_Delete(msgdata);
 
   return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 着信音
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_RingTone( DEBUG_MENU_EVENT_WORK * p_wk )
+{
+  GAMESYS_WORK * gsys = p_wk->gmSys;
+  GAMEDATA* gamedata  = GAMESYSTEM_GetGameData( gsys );
+  FIELD_SOUND * fsnd  = GAMEDATA_GetFieldSound( gamedata );
+  
+  if ( PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SE3 ) == FALSE ) {
+    FSND_RequestTVTRingTone( fsnd );
+  } else {
+    FSND_StopTVTRingTone( fsnd );
+  }
+  return FALSE;
 }
 
 //======================================================================

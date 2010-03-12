@@ -109,4 +109,5 @@ extern void FSND_RePlayEnvSE( FIELD_SOUND* fieldSound );
 // ■TVトランシーバー着信音
 //=================================================================================
 extern void FSND_RequestTVTRingTone( FIELD_SOUND* fieldSound );
+extern void FSND_StopTVTRingTone( FIELD_SOUND* fieldSound );
 

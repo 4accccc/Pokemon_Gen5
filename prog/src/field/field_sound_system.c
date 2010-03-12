@@ -475,17 +475,27 @@ void FIELD_SOUND_ChangePlayerVolume( FIELD_SOUND* fieldSound, u8 volume, u8 fade
 //=================================================================================
 //---------------------------------------------------------------------------------
 /**
- * @brief TVトランシーバー着信音をリクエストする
+ * @brief TVトランシーバー着信音を鳴らす
  *
  * @param fieldSound
  */
 //---------------------------------------------------------------------------------
-void FIELD_SOUND_RequestTVTRingTone( FIELD_SOUND* fieldSound )
+void FIELD_SOUND_PlayTVTRingTone( FIELD_SOUND* fieldSound )
 {
-  RINGTONE_SYS_RequestSE( fieldSound->ringToneSys );
+  RINGTONE_SYS_Play( fieldSound->ringToneSys );
 }
 
-
+//---------------------------------------------------------------------------------
+/**
+ * @brief TVトランシーバー着信音を停止する
+ *
+ * @param fieldSound
+ */
+//---------------------------------------------------------------------------------
+void FIELD_SOUND_StopTVTRingTone( FIELD_SOUND* fieldSound )
+{
+  RINGTONE_SYS_Stop( fieldSound->ringToneSys );
+}
 
 
 //=================================================================================
