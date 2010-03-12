@@ -1,10 +1,10 @@
 //=============================================================================
 /**
  *
- *	@file		pms_draw.c
- *	@brief  簡易会話表示システム（簡易会話+デコメ管理）
- *	@author	hosaka genya
- *	@data		2009.10.14
+ *  @file   pms_draw.c
+ *  @brief  簡易会話表示システム（簡易会話+デコメ管理）
+ *  @author hosaka genya
+ *  @data   2009.10.14
  *
  */
 //=============================================================================
@@ -19,18 +19,18 @@
 
 //=============================================================================
 /**
- *								定数定義
+ *                定数定義
  */
 //=============================================================================
 
 //=============================================================================
 /**
- *								構造体定義
+ *                構造体定義
  */
 //=============================================================================
 
 //--------------------------------------------------------------
-///	要素ごとの管理データ
+/// 要素ごとの管理データ
 //==============================================================
 typedef struct {
   PRINT_UTIL    print_util;
@@ -39,12 +39,13 @@ typedef struct {
   int           pre_scrcnt_y; ///< 前フレームのBGスクロールカウンタ
   u32           b_useflag:1;
   u32           b_visible:1;
+  u32           obj_visible:1;
   u32           padding:30;
   BOOL          b_clwk_deco[PMS_WORD_MAX]; ///< CLWKデコメ判定フラグ
 } PMS_DRAW_UNIT;
 
 //--------------------------------------------------------------
-///	OBJリソース管理ワーク
+/// OBJリソース管理ワーク
 //==============================================================
 typedef struct {
   GFL_CLUNIT* clwk_unit;
@@ -56,7 +57,7 @@ typedef struct {
 
 
 //--------------------------------------------------------------
-///	メインワーク
+/// メインワーク
 //==============================================================
 struct _PMS_DRAW_WORK {
   // [IN]
@@ -76,7 +77,7 @@ struct _PMS_DRAW_WORK {
 
 //=============================================================================
 /**
- *							プロトタイプ宣言
+ *              プロトタイプ宣言
  */
 //=============================================================================
 static void _get_write_pos( GFL_BMPWIN* win, u8 width, u8 line, GFL_POINT* offset, GFL_POINT* out_pos );
@@ -96,23 +97,23 @@ static CLSYS_DRAW_TYPE BGFrameToVramType( u8 frame );
 
 //=============================================================================
 /**
- *								外部公開関数
+ *                外部公開関数
  */
 //=============================================================================
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  簡易会話表示システム 初期化
+ *  @brief  簡易会話表示システム 初期化
  *
- *	@param	GFL_CLUNIT* clunit  アクターユニット
- *	@param  CLSYS_DRAW_TYPE vram_type 上下画面フラグ
- *	@param	que   プリントキュー
- *	@param  font  フォント
- *	@param	obj_pltt_ofs パレットオフセット
- *	@param	id_max  管理する表示ユニット数
- *	@param	heap_id ヒープID
+ *  @param  GFL_CLUNIT* clunit  アクターユニット
+ *  @param  CLSYS_DRAW_TYPE vram_type 上下画面フラグ
+ *  @param  que   プリントキュー
+ *  @param  font  フォント
+ *  @param  obj_pltt_ofs パレットオフセット
+ *  @param  id_max  管理する表示ユニット数
+ *  @param  heap_id ヒープID
  *
- *	@retval ワーク
+ *  @retval ワーク
  */
 //-----------------------------------------------------------------------------
 PMS_DRAW_WORK* PMS_DRAW_Init( GFL_CLUNIT* clunit, CLSYS_DRAW_TYPE vram_type, PRINT_QUE* que, GFL_FONT* font, u8 obj_pltt_ofs, u8 id_max, HEAPID heap_id )
@@ -158,11 +159,11 @@ PMS_DRAW_WORK* PMS_DRAW_Init( GFL_CLUNIT* clunit, CLSYS_DRAW_TYPE vram_type, PRI
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  簡易会話表示システム 主処理
+ *  @brief  簡易会話表示システム 主処理
  *
- *	@param	PMS_DRAW_WORK* wk ワーク
+ *  @param  PMS_DRAW_WORK* wk ワーク
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void PMS_DRAW_Main( PMS_DRAW_WORK* wk )
@@ -185,11 +186,11 @@ void PMS_DRAW_Main( PMS_DRAW_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  簡易会話表示システム 開放処理
+ *  @brief  簡易会話表示システム 開放処理
  *
- *	@param	PMS_DRAW_WORK* wk ワーク
+ *  @param  PMS_DRAW_WORK* wk ワーク
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void PMS_DRAW_Exit( PMS_DRAW_WORK* wk )
@@ -213,14 +214,14 @@ void PMS_DRAW_Exit( PMS_DRAW_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  指定IDに簡易会話を表示
+ *  @brief  指定IDに簡易会話を表示
  *
- *	@param	PMS_DRAW_WORK* wk ワーク
- *	@param	win 表示するBMPWIN
- *	@param	pms 表示する簡易会話データ
- *	@param	id 表示ユニット管理ID
+ *  @param  PMS_DRAW_WORK* wk ワーク
+ *  @param  win 表示するBMPWIN
+ *  @param  pms 表示する簡易会話データ
+ *  @param  id 表示ユニット管理ID
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void PMS_DRAW_Print( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8 id )
@@ -230,15 +231,15 @@ void PMS_DRAW_Print( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8 id )
 }
 //-----------------------------------------------------------------------------
 /**
- *	@brief  指定IDに簡易会話を表示(表示オフセット指定版)
+ *  @brief  指定IDに簡易会話を表示(表示オフセット指定版)
  *
- *	@param	PMS_DRAW_WORK* wk ワーク
- *	@param	win 表示するBMPWIN
- *	@param	pms 表示する簡易会話データ
- *	@param	id 表示ユニット管理ID
- *	@param  offset 表示オフセット（ドット単位）
+ *  @param  PMS_DRAW_WORK* wk ワーク
+ *  @param  win 表示するBMPWIN
+ *  @param  pms 表示する簡易会話データ
+ *  @param  id 表示ユニット管理ID
+ *  @param  offset 表示オフセット（ドット単位）
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void PMS_DRAW_PrintOffset( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8 id, GFL_POINT* offset )
@@ -258,11 +259,11 @@ void PMS_DRAW_PrintOffset( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  指定IDの表示終了チェック
+ *  @brief  指定IDの表示終了チェック
  *
- *	@param	PMS_DRAW_WORK* wk ワーク
+ *  @param  PMS_DRAW_WORK* wk ワーク
  *
- *	@retval	TRUE:プリント終了
+ *  @retval TRUE:プリント終了
  */
 //-----------------------------------------------------------------------------
 BOOL PMS_DRAW_IsPrintEnd( PMS_DRAW_WORK* wk )
@@ -272,13 +273,13 @@ BOOL PMS_DRAW_IsPrintEnd( PMS_DRAW_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  指定IDの表示クリア
+ *  @brief  指定IDの表示クリア
  *
- *	@param	PMS_DRAW_WORK* wk ワーク
- *	@param	id 表示ユニット管理ID
- *	@param	is_trans TRUE：スクリーン、キャラを転送する
+ *  @param  PMS_DRAW_WORK* wk ワーク
+ *  @param  id 表示ユニット管理ID
+ *  @param  is_trans TRUE：スクリーン、キャラを転送する
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id, BOOL is_trans )
@@ -293,13 +294,13 @@ void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id, BOOL is_trans )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  指定IDの表示|非表示切替
+ *  @brief  指定IDの表示|非表示切替
  *
- *	@param	PMS_DRAW_WORK* wk ワーク
- *	@param	id 表示ユニット管理ID
- *	@param	is_visible TRUE：表示
+ *  @param  PMS_DRAW_WORK* wk ワーク
+ *  @param  id 表示ユニット管理ID
+ *  @param  is_visible TRUE：表示
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void PMS_DRAW_VisibleSet( PMS_DRAW_WORK* wk, u8 id, BOOL is_visible )
@@ -314,12 +315,12 @@ void PMS_DRAW_VisibleSet( PMS_DRAW_WORK* wk, u8 id, BOOL is_visible )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  指定表示ユニットが表示中かどうかを返す
+ *  @brief  指定表示ユニットが表示中かどうかを返す
  *
- *	@param	PMS_DRAW_WORK* wk ワーク
- *	@param	id 表示ユニット管理ID
+ *  @param  PMS_DRAW_WORK* wk ワーク
+ *  @param  id 表示ユニット管理ID
  *
- *	@retval TRUE:表示中 FALSE:クリアされている
+ *  @retval TRUE:表示中 FALSE:クリアされている
  */
 //-----------------------------------------------------------------------------
 BOOL PMS_DRAW_IsPrinting( PMS_DRAW_WORK* wk, u8 id )
@@ -330,15 +331,43 @@ BOOL PMS_DRAW_IsPrinting( PMS_DRAW_WORK* wk, u8 id )
   return wk->unit[id].b_useflag;
 }
 
+
 //-----------------------------------------------------------------------------
 /**
- *	@brief  表示ユニットを上書き(双方プリント済みのものに限る)
+ *  @brief  指定表示ユニットにＯＢＪがある際に表示・非表示を設定する
+ *          BMPWINの文字列は表示していても、OBJを非表示にしたいという要望のため
  *
- *	@param	PMS_DRAW_WORK* wk ワーク
- *	@param	id_src 入れ替え元
- *	@param	id_dst 入れ替え先
+ *  @param  PMS_DRAW_WORK* wk ワーク
+ *  @param  id 表示ユニット管理ID
+ *  @param  flag TRUE:表示　FALSE:非表示
  *
- *	@retval none
+ *  @retval TRUE:表示中 FALSE:クリアされている
+ */
+//-----------------------------------------------------------------------------
+void PMS_DRAW_SetPmsObjVisible( PMS_DRAW_WORK* wk, u8 id, BOOL flag )
+{
+  int i;
+  // 表示しているんだったらOBJ制御を行う
+  if(PMS_DRAW_IsPrinting( wk, id )){
+    wk->unit[id].obj_visible = flag;
+//    for(i=0;i<PMS_WORD_MAX;i++){
+//      if(wk->unit[id].b_clwk_deco[i]){  // デコメ表示しているかも検出
+//        GFL_CLACT_WK_SetDrawEnable( wk->unit[id].clwk[i], flag );
+        
+//      }
+//    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  表示ユニットを上書き(双方プリント済みのものに限る)
+ *
+ *  @param  PMS_DRAW_WORK* wk ワーク
+ *  @param  id_src 入れ替え元
+ *  @param  id_dst 入れ替え先
+ *
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void PMS_DRAW_Copy( PMS_DRAW_WORK* wk, u8 id_src, u8 id_dst )
@@ -401,12 +430,12 @@ void PMS_DRAW_Copy( PMS_DRAW_WORK* wk, u8 id_src, u8 id_dst )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  簡易会話の空欄を埋めるパレット番号指定
+ *  @brief  簡易会話の空欄を埋めるパレット番号指定
  *
- *	@param	PMS_DRAW_WORK* wk　ワーク
- *	@param	pltt_pos パレット番号
+ *  @param  PMS_DRAW_WORK* wk　ワーク
+ *  @param  pltt_pos パレット番号
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void PMS_DRAW_SetNullColorPallet( PMS_DRAW_WORK* wk, u8 pltt_pos )
@@ -418,12 +447,12 @@ void PMS_DRAW_SetNullColorPallet( PMS_DRAW_WORK* wk, u8 pltt_pos )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  文字描画色を指定
+ *  @brief  文字描画色を指定
  *
- *	@param	PMS_DRAW_WORK* wk ワーク
- *	@param	color 描画色
+ *  @param  PMS_DRAW_WORK* wk ワーク
+ *  @param  color 描画色
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void PMS_DRAW_SetPrintColor( PMS_DRAW_WORK* wk, PRINTSYS_LSB color )
@@ -435,12 +464,12 @@ void PMS_DRAW_SetPrintColor( PMS_DRAW_WORK* wk, PRINTSYS_LSB color )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アクターをBGスクロールに追随させるフラグON／OFF (デフォルト無効)
+ *  @brief  アクターをBGスクロールに追随させるフラグON／OFF (デフォルト無効)
  *
- *	@param	PMS_DRAW_WORK* wk ワーク
- *	@param	is_clwk_auto_scroll TRUE:追随させる
+ *  @param  PMS_DRAW_WORK* wk ワーク
+ *  @param  is_clwk_auto_scroll TRUE:追随させる
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void PMS_DRAW_SetCLWKAutoScrollFlag( PMS_DRAW_WORK* wk, BOOL is_clwk_auto_scroll )
@@ -453,21 +482,21 @@ void PMS_DRAW_SetCLWKAutoScrollFlag( PMS_DRAW_WORK* wk, BOOL is_clwk_auto_scroll
 
 //=============================================================================
 /**
- *								static関数
+ *                static関数
  */
 //=============================================================================
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  座標計算
+ *  @brief  座標計算
  *
- *	@param	GFL_BMPWIN* win
- *	@param	width
- *	@param	line
- *	@param	offset
- *	@param	out_pos [OUT] 座標出力
+ *  @param  GFL_BMPWIN* win
+ *  @param  width
+ *  @param  line
+ *  @param  offset
+ *  @param  out_pos [OUT] 座標出力
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static void _get_write_pos( GFL_BMPWIN* win, u8 width, u8 line, GFL_POINT* offset, GFL_POINT* out_pos )
@@ -480,16 +509,16 @@ static void _get_write_pos( GFL_BMPWIN* win, u8 width, u8 line, GFL_POINT* offse
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  VRAMモードからセルの取得リソースを判定
+ *  @brief  VRAMモードからセルの取得リソースを判定
  *
- *	@param	CLSYS_DRAW_TYPE vram_type 
+ *  @param  CLSYS_DRAW_TYPE vram_type 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static u32 _obj_get_ncer( CLSYS_DRAW_TYPE vram_type )
 {
-	GXOBJVRamModeChar vrammode;
+  GXOBJVRamModeChar vrammode;
   
   if( vram_type == CLSYS_DRAW_MAIN )
   {
@@ -501,31 +530,31 @@ static u32 _obj_get_ncer( CLSYS_DRAW_TYPE vram_type )
   }
 
   switch(vrammode){
-	case GX_OBJVRAMMODE_CHAR_1D_32K:
-		return NARC_pmsi_pms2_obj_dekome_32k_NCER;
-	case GX_OBJVRAMMODE_CHAR_1D_64K:
-		return NARC_pmsi_pms2_obj_dekome_64k_NCER;
-	case GX_OBJVRAMMODE_CHAR_1D_128K:
-		return NARC_pmsi_pms2_obj_dekome_128k_NCER;
-	default:
-		GF_ASSERT(0);	//非対応のマッピングモード
-	}
+  case GX_OBJVRAMMODE_CHAR_1D_32K:
+    return NARC_pmsi_pms2_obj_dekome_32k_NCER;
+  case GX_OBJVRAMMODE_CHAR_1D_64K:
+    return NARC_pmsi_pms2_obj_dekome_64k_NCER;
+  case GX_OBJVRAMMODE_CHAR_1D_128K:
+    return NARC_pmsi_pms2_obj_dekome_128k_NCER;
+  default:
+    GF_ASSERT(0); //非対応のマッピングモード
+  }
   
   return NARC_pmsi_pms2_obj_dekome_128k_NCER;
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  VRAMモードからセルアニメの取得リソースを判定
+ *  @brief  VRAMモードからセルアニメの取得リソースを判定
  *
- *	@param	CLSYS_DRAW_TYPE vram_type 
+ *  @param  CLSYS_DRAW_TYPE vram_type 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static u32 _obj_get_nanr( CLSYS_DRAW_TYPE vram_type )
 {
-	GXOBJVRamModeChar vrammode;
+  GXOBJVRamModeChar vrammode;
   
   if( vram_type == CLSYS_DRAW_MAIN )
   {
@@ -535,28 +564,28 @@ static u32 _obj_get_nanr( CLSYS_DRAW_TYPE vram_type )
   {
     vrammode = GXS_GetOBJVRamModeChar();
   }
-	
+  
   switch(vrammode){
-	case GX_OBJVRAMMODE_CHAR_1D_32K:
-		return NARC_pmsi_pms2_obj_dekome_32k_NANR;
-	case GX_OBJVRAMMODE_CHAR_1D_64K:
-		return NARC_pmsi_pms2_obj_dekome_64k_NANR;
-	case GX_OBJVRAMMODE_CHAR_1D_128K:
-		return NARC_pmsi_pms2_obj_dekome_128k_NANR;
-	default:
-		GF_ASSERT(0);	//非対応のマッピングモード
-	}
+  case GX_OBJVRAMMODE_CHAR_1D_32K:
+    return NARC_pmsi_pms2_obj_dekome_32k_NANR;
+  case GX_OBJVRAMMODE_CHAR_1D_64K:
+    return NARC_pmsi_pms2_obj_dekome_64k_NANR;
+  case GX_OBJVRAMMODE_CHAR_1D_128K:
+    return NARC_pmsi_pms2_obj_dekome_128k_NANR;
+  default:
+    GF_ASSERT(0); //非対応のマッピングモード
+  }
   
   return NARC_pmsi_pms2_obj_dekome_128k_NANR;
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  OBJ リソース初期化
+ *  @brief  OBJ リソース初期化
  *
- *	@param	PMS_DRAW_OBJ* obj 
+ *  @param  PMS_DRAW_OBJ* obj 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _obj_loadres( PMS_DRAW_OBJ* obj, u8 pltt_ofs, HEAPID heap_id )
@@ -566,10 +595,10 @@ static void _obj_loadres( PMS_DRAW_OBJ* obj, u8 pltt_ofs, HEAPID heap_id )
   u32 res_nanr = _obj_get_nanr( obj->vram_type );
 
   // ハンドルオープン
-  handle	= GFL_ARC_OpenDataHandle( ARCID_PMSI_GRAPHIC, heap_id );
+  handle  = GFL_ARC_OpenDataHandle( ARCID_PMSI_GRAPHIC, heap_id );
 
-	//リソース読みこみ
-	obj->obj_ncl	= GFL_CLGRP_PLTT_RegisterEx( handle, NARC_pmsi_pms2_obj_dekome_NCLR, obj->vram_type, 0x20*pltt_ofs, 0, PMS_DRAW_OBJ_PLTT_NUM, heap_id );
+  //リソース読みこみ
+  obj->obj_ncl  = GFL_CLGRP_PLTT_RegisterEx( handle, NARC_pmsi_pms2_obj_dekome_NCLR, obj->vram_type, 0x20*pltt_ofs, 0, PMS_DRAW_OBJ_PLTT_NUM, heap_id );
   obj->obj_ncg = GFL_CLGRP_CGR_Register( handle, NARC_pmsi_pms2_obj_dekome_NCGR, FALSE, obj->vram_type, heap_id );
   obj->obj_nce = GFL_CLGRP_CELLANIM_Register( handle, res_ncer, res_nanr, heap_id );
 
@@ -578,27 +607,27 @@ static void _obj_loadres( PMS_DRAW_OBJ* obj, u8 pltt_ofs, HEAPID heap_id )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  OBJ リソース開放
+ *  @brief  OBJ リソース開放
  *
- *	@param	PMS_DRAW_OBJ* obj 
+ *  @param  PMS_DRAW_OBJ* obj 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _obj_unloadres( PMS_DRAW_OBJ* obj )
 {
-	GFL_CLGRP_PLTT_Release( obj->obj_ncl );
-	GFL_CLGRP_CGR_Release( obj->obj_ncg );
-	GFL_CLGRP_CELLANIM_Release( obj->obj_nce );
+  GFL_CLGRP_PLTT_Release( obj->obj_ncl );
+  GFL_CLGRP_CGR_Release( obj->obj_ncg );
+  GFL_CLGRP_CELLANIM_Release( obj->obj_nce );
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アクター生成
+ *  @brief  アクター生成
  *
- *	@param	PMS_DRAW_OBJ* obj 
+ *  @param  PMS_DRAW_OBJ* obj 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static GFL_CLWK* _obj_create( PMS_DRAW_OBJ* obj, HEAPID heap_id )
@@ -630,14 +659,14 @@ static GFL_CLWK* _obj_create( PMS_DRAW_OBJ* obj, HEAPID heap_id )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  デコメアクター表示
+ *  @brief  デコメアクター表示
  *
- *	@param	GFL_CLWK* act
- *	@param	win
- *	@param	deco_id 
- *	@param	offset 
+ *  @param  GFL_CLWK* act
+ *  @param  win
+ *  @param  deco_id 
+ *  @param  offset 
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static void _obj_set_deco( GFL_CLWK* act, GFL_BMPWIN* win, u8 width, u8 line, PMS_DECO_ID deco_id, GFL_POINT* offset )
@@ -662,11 +691,11 @@ static void _obj_set_deco( GFL_CLWK* act, GFL_BMPWIN* win, u8 width, u8 line, PM
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  表示ユニット 初期化
+ *  @brief  表示ユニット 初期化
  *
- *	@param	PMS_DRAW_UNIT* unit 
+ *  @param  PMS_DRAW_UNIT* unit 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _unit_init( PMS_DRAW_UNIT* unit, PMS_DRAW_OBJ* obj, HEAPID heap_id )
@@ -679,16 +708,17 @@ static void _unit_init( PMS_DRAW_UNIT* unit, PMS_DRAW_OBJ* obj, HEAPID heap_id )
     unit->clwk[i] = _obj_create( obj, heap_id );
   }
   
-  unit->b_useflag = FALSE;
+  unit->b_useflag   = FALSE;
+  unit->obj_visible = TRUE;
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  表示ユニット 削除
+ *  @brief  表示ユニット 削除
  *
- *	@param	PMS_DRAW_UNIT* unit 
+ *  @param  PMS_DRAW_UNIT* unit 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void _unit_exit( PMS_DRAW_UNIT* unit )
@@ -704,12 +734,12 @@ static void _unit_exit( PMS_DRAW_UNIT* unit )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  表示ユニット 主処理
+ *  @brief  表示ユニット 主処理
  *
- *	@param	PMS_DRAW_UNIT* unit
- *	@param	que 
+ *  @param  PMS_DRAW_UNIT* unit
+ *  @param  que 
  *
- *  @retval BOOL	まだ転送が終わっていない場合はTRUE／それ以外FALSE
+ *  @retval BOOL  まだ転送が終わっていない場合はTRUE／それ以外FALSE
  */
 //-----------------------------------------------------------------------------
 static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que, BOOL is_clwk_auto_scroll )
@@ -724,9 +754,11 @@ static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que, BOOL is_clwk_auto_s
     int i;
     for( i=0; i<PMS_WORD_MAX; i++ )
     {
-      if( unit->b_clwk_deco[i] )
+      if( unit->b_clwk_deco[i] && unit->obj_visible)
       {
         GFL_CLACT_WK_SetDrawEnable( unit->clwk[i], TRUE );
+      }else{
+        GFL_CLACT_WK_SetDrawEnable( unit->clwk[i], FALSE );
       }
     }
   }
@@ -777,17 +809,17 @@ static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que, BOOL is_clwk_auto_s
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  表示ユニット プリント
+ *  @brief  表示ユニット プリント
  *
- *	@param	PMS_DRAW_UNIT* unit
- *	@param	print_que
- *	@param	font
- *	@param	win
- *	@param	pms
- *	@param  offset
- *	@param	heap_id 
+ *  @param  PMS_DRAW_UNIT* unit
+ *  @param  print_que
+ *  @param  font
+ *  @param  win
+ *  @param  pms
+ *  @param  offset
+ *  @param  heap_id 
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* font, GFL_BMPWIN* win, PMS_DATA* pms, GFL_POINT* offset, PRINTSYS_LSB print_color, u8 null_color, HEAPID heap_id )
@@ -839,7 +871,7 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
 // PRINT_UTIL_Print( &unit->print_util, print_que, offset->x, offset->y, buf, font );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(unit->print_util.win), null_color );
   PRINTSYS_PrintQueColor( print_que, GFL_BMPWIN_GetBmp(unit->print_util.win), offset->x, offset->y, buf, font, print_color );
-	unit->print_util.transReq = TRUE;
+  unit->print_util.transReq = TRUE;
 
   GFL_STR_DeleteBuffer( buf );
   
@@ -884,8 +916,8 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
   GFL_STR_DeleteBuffer( buf_src );
       
   // スクリーン転送
-	GFL_BMPWIN_MakeScreen( unit->print_util.win );
-	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(unit->print_util.win) );
+  GFL_BMPWIN_MakeScreen( unit->print_util.win );
+  GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(unit->print_util.win) );
 
   unit->b_useflag = TRUE;
   unit->b_visible = TRUE;
@@ -893,11 +925,11 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  表示ユニット クリア
+ *  @brief  表示ユニット クリア
  *
- *	@param	PMS_DRAW_UNIT* unit 
+ *  @param  PMS_DRAW_UNIT* unit 
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static void _unit_clear( PMS_DRAW_UNIT* unit, BOOL is_trans )
@@ -933,11 +965,11 @@ static void _unit_clear( PMS_DRAW_UNIT* unit, BOOL is_trans )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  表示ユニット 表示|非表示切替
+ *  @brief  表示ユニット 表示|非表示切替
  *
- *	@param	PMS_DRAW_UNIT* unit 
+ *  @param  PMS_DRAW_UNIT* unit 
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static void _unit_visible_set( PMS_DRAW_UNIT* unit, BOOL is_visible )
@@ -948,12 +980,12 @@ static void _unit_visible_set( PMS_DRAW_UNIT* unit, BOOL is_visible )
 
   // スクリーン転送
   if( is_visible ){
-	  GFL_BMPWIN_MakeScreen( unit->print_util.win );
+    GFL_BMPWIN_MakeScreen( unit->print_util.win );
   }else{
     // スクリーンをクリアして即時転送
-	  GFL_BMPWIN_ClearScreen( unit->print_util.win );
+    GFL_BMPWIN_ClearScreen( unit->print_util.win );
   } 
-	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(unit->print_util.win) );
+  GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(unit->print_util.win) );
   
   // 画像表示切り替え
   {
@@ -969,11 +1001,11 @@ static void _unit_visible_set( PMS_DRAW_UNIT* unit, BOOL is_visible )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  BGフレームからOBJ用VRAMTYPEを取得
+ *  @brief  BGフレームからOBJ用VRAMTYPEを取得
  *
- *	@param	u8 frame 
+ *  @param  u8 frame 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static CLSYS_DRAW_TYPE BGFrameToVramType( u8 frame )
