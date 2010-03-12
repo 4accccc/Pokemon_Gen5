@@ -683,10 +683,11 @@ static int KeyStatusChange(PMS_INPUT_WORK* wk,int* seq)
 			return 0;
 		}
 		if(GFL_UI_KEY_GetCont() != 0){
+			wk->key_mode = GFL_APP_KTST_KEY;
 			if(wk->cb_ktchg_func != NULL){
 				(wk->cb_ktchg_func)(wk,seq);
 			}
-			wk->key_mode = GFL_APP_KTST_KEY;
+			//wk->key_mode = GFL_APP_KTST_KEY;
 			return 1;
 		}
 	}else{
@@ -694,10 +695,11 @@ static int KeyStatusChange(PMS_INPUT_WORK* wk,int* seq)
 			return 0;
 		}
 		if(GFL_UI_TP_GetCont() != 0){
+			wk->key_mode = GFL_APP_KTST_TOUCH;
 			if(wk->cb_ktchg_func != NULL){
 				(wk->cb_ktchg_func)(wk,seq);
 			}
-			wk->key_mode = GFL_APP_KTST_TOUCH;
+			//wk->key_mode = GFL_APP_KTST_TOUCH;
 			return 1;
 		}
 	}
@@ -752,7 +754,8 @@ static GFL_PROC_RESULT MainProc_EditArea( PMS_INPUT_WORK* wk, int* seq )
 	*/
 static void CB_EditArea_KTChange(PMS_INPUT_WORK* wk,int* seq)
 {
-	PMSIView_SetCommand( wk->vwk, VCMD_KTCHANGE_EDITAREA);
+	//PMSIView_SetCommand( wk->vwk, VCMD_KTCHANGE_EDITAREA);
+  PMSIView_ChangeKTEditArea( wk->vwk, wk, wk->dwk );
 }
 
 /**
@@ -760,7 +763,8 @@ static void CB_EditArea_KTChange(PMS_INPUT_WORK* wk,int* seq)
 	*/
 static void CB_Category_KTChange(PMS_INPUT_WORK* wk,int* seq)
 {	
-	PMSIView_SetCommand( wk->vwk, VCMD_KTCHANGE_CATEGORY);
+	//PMSIView_SetCommand( wk->vwk, VCMD_KTCHANGE_CATEGORY);
+  PMSIView_ChangeKTCategory( wk->vwk, wk, wk->dwk );
 }
 
 /**
@@ -768,7 +772,8 @@ static void CB_Category_KTChange(PMS_INPUT_WORK* wk,int* seq)
 	*/
 static void CB_WordWin_KTChange(PMS_INPUT_WORK* wk,int* seq)
 {	
-	PMSIView_SetCommand( wk->vwk, VCMD_KTCHANGE_WORDWIN);
+	//PMSIView_SetCommand( wk->vwk, VCMD_KTCHANGE_WORDWIN);
+  PMSIView_ChangeKTWordWin( wk->vwk, wk, wk->dwk );
 }
 
 //------------------------------------------------------------------

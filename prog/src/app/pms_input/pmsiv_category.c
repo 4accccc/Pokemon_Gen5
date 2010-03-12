@@ -600,15 +600,36 @@ void PMSIV_CATEGORY_MoveCursor( PMSIV_CATEGORY* wk, u32 pos )
 
     if( pos == CATEGORY_POS_SELECT )
     {
-      PMSIV_MENU_TaskMenuSetActive( menu_wk, 0 ,TRUE );
+		  if(*wk->p_key_mode == GFL_APP_KTST_KEY)  // こんなところでキー入力かタッチ入力か判定するのはよくない、さらに、タスクメニューのボタンはカーソルの表示と位置移動がいっしょくたになってしまっているのもよくない。
+      {
+        PMSIV_MENU_TaskMenuSetActive( menu_wk, 0 ,TRUE );
+      }
+      else
+      {
+        PMSIV_MENU_TaskMenuSetActive( menu_wk, 0 ,FALSE );
+      }
     }
     else if( pos == CATEGORY_POS_ERASE )
     {
-      PMSIV_MENU_TaskMenuSetActive( menu_wk, 1 ,TRUE );
+		  if(*wk->p_key_mode == GFL_APP_KTST_KEY)
+      {
+        PMSIV_MENU_TaskMenuSetActive( menu_wk, 1 ,TRUE );
+      }
+      else
+      {
+        PMSIV_MENU_TaskMenuSetActive( menu_wk, 0 ,FALSE );
+      }
     }
     else if( pos == CATEGORY_POS_BACK )
     {
-      PMSIV_MENU_TaskMenuSetActive( menu_wk, 2 ,TRUE );
+		  if(*wk->p_key_mode == GFL_APP_KTST_KEY)
+      {
+        PMSIV_MENU_TaskMenuSetActive( menu_wk, 2 ,TRUE );
+      }
+      else
+      {
+        PMSIV_MENU_TaskMenuSetActive( menu_wk, 0 ,FALSE );
+      }
     }
     else
     {
