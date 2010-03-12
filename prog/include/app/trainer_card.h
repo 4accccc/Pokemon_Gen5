@@ -51,7 +51,7 @@ typedef struct TR_CARD_DATA_tag
   
   u32 Money;        //おこづかい
   u32 PokeBook;     //図鑑モンスター数
-  u32 Score;        //スコア
+  u32 Amari0;       //----------------------余り領域
   u16 TrainerID;    //トレーナーID
   
   u16 PlayTime_h;   //プレイ時間（時）
@@ -91,7 +91,8 @@ FS_EXTERN_OVERLAY(trainercard);
 #define TRCARD_OVERLAY_ID (FS_OVERLAY_ID(trainercard))
 
 //データの取得
-extern void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , const BOOL isSendData, BOOL edit );
+void TRAINERCARD_GetSelfData( 
+      TR_CARD_DATA *cardData , GAMEDATA *gameData , const BOOL isSendData, BOOL edit, HEAPID heapId );
 
 
 //通信用と自分用のCallParam作成

@@ -70,7 +70,7 @@ COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, GAMESYS_WORK *gsy
   my_basic->battle_server_version = BTL_NET_SERVER_VERSION;
   
   //自分のトレーナーカード情報セット
-  TRAINERCARD_GetSelfData(clsys->recvbuf.tr_card[my_net_id], game_data, TRUE, FALSE);
+  TRAINERCARD_GetSelfData(clsys->recvbuf.tr_card[my_net_id], game_data, TRUE, FALSE, HEAPID_UNION);
   clsys->recvbuf.tr_card_occ[my_net_id] = TRUE;
   
   return clsys;
