@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-02-23T14:32:09"/>
+	<create user="ohmori" host="W00223" date="2010-03-12T21:10:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -234,7 +234,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="260"/>
+		<comment position="1" width="414"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -305,7 +305,8 @@
 	</row>
 
 	<row id="plc_mis_01_01" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション１：「●●●●●に　はなしかけられろ」</comment>
+		<comment>ミッション１：
+「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
 じぶんから　はなしかけては　いけない</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
@@ -313,7 +314,8 @@
 	</row>
 
 	<row id="plc_mis_01_02" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション１：「●●●●●に　はなしかけられろ」</comment>
+		<comment>ミッション１：
+「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
 じぶんから　はなしかけては　いけない</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
@@ -321,7 +323,8 @@
 	</row>
 
 	<row id="plc_mis_01_03" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション１：「●●●●●に　はなしかけられろ」</comment>
+		<comment>ミッション１：
+「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
 じぶんから　はなしかけては　いけない</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
@@ -329,7 +332,89 @@
 	</row>
 
 	<row id="plc_mis_01_04" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション１：「●●●●●に　はなしかけられろ」</comment>
+		<comment>ミッション１：
+「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_01_05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション１：
+「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_01_06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション１：
+「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_01_07" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション１：
+「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_01_08" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション１：
+「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_01_09" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション１：
+「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_01_10" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション１：
+「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_01_11" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション１：
+「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_01_12" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション１：
+「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_01_13" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション１：
+「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
 じぶんから　はなしかけては　いけない</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
@@ -337,7 +422,8 @@
 	</row>
 
 	<row id="plc_mis_02_01" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション２：「●●●●●に　話しかけろ」</comment>
+		<comment>ミッション２：
+「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
 じぶんから　はなしかけては　いけない</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
@@ -345,7 +431,8 @@
 	</row>
 
 	<row id="plc_mis_02_02" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション２：「●●●●●に　話しかけろ」</comment>
+		<comment>ミッション２：
+「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
 じぶんから　はなしかけては　いけない</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
@@ -353,7 +440,8 @@
 	</row>
 
 	<row id="plc_mis_02_03" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション２：「●●●●●に　話しかけろ」</comment>
+		<comment>ミッション２：
+「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
 じぶんから　はなしかけては　いけない</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
@@ -361,7 +449,89 @@
 	</row>
 
 	<row id="plc_mis_02_04" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション２：「●●●●●に　話しかけろ」</comment>
+		<comment>ミッション２：
+「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_02_05" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション２：
+「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_02_06" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション２：
+「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_02_07" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション２：
+「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_02_08" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション２：
+「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_02_09" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション２：
+「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_02_10" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション２：
+「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_02_11" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション２：
+「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_02_12" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション２：
+「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
+じぶんから　はなしかけては　いけない</language>
+	</row>
+
+	<row id="plc_mis_02_13" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション２：
+「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
 じぶんから　はなしかけては　いけない</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられろ
@@ -393,6 +563,38 @@
 	</row>
 
 	<row id="plc_mis_03_04" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
+		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[2:02:３桁:1]の　レベルで
+しょうぶを　いどめ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　[2:02:３桁:1]の　レベルで
+しょうぶを　いどめ</language>
+	</row>
+
+	<row id="plc_mis_03_05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[2:02:３桁:1]の　レベルで
+しょうぶを　いどめ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　[2:02:３桁:1]の　レベルで
+しょうぶを　いどめ</language>
+	</row>
+
+	<row id="plc_mis_03_06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[2:02:３桁:1]の　レベルで
+しょうぶを　いどめ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　[2:02:３桁:1]の　レベルで
+しょうぶを　いどめ</language>
+	</row>
+
+	<row id="plc_mis_03_07" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[2:02:３桁:1]の　レベルで
+しょうぶを　いどめ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　[2:02:３桁:1]の　レベルで
+しょうぶを　いどめ</language>
+	</row>
+
+	<row id="plc_mis_03_08" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[2:02:３桁:1]の　レベルで
 しょうぶを　いどめ</language>
@@ -464,100 +666,564 @@
 みんなが　まわっていた　ばしょにかくせ</language>
 	</row>
 
+	<row id="plc_mis_05_05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_07" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_08" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_09" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_10" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_11" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_12" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_13" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_14" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_15" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_16" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_17" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_18" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_19" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_20" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_21" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_22" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_23" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_24" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_25" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_26" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_27" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_28" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_29" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_30" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_31" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_32" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_33" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_34" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_35" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
+	<row id="plc_mis_05_36" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
+みんなが　まわっていた　ばしょにかくせ</language>
+	</row>
+
 	<row id="plc_mis_06_01" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション６：「まちにいる　じんぶつの　しつもんに　●つこたえろ」</comment>
-		<language name="JPN" width="256">かくまちにいる　じんぶつの　しつもんに
-ぜんいんで　３つ　こたえろ（まだ仮）</language>
-		<language name="JPN_KANJI" width="256">かくまちにいる　じんぶつの　しつもんに
-ぜんいんで　３つ　こたえろ（まだ仮）</language>
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
 	</row>
 
 	<row id="plc_mis_06_02" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション６：「まちにいる　じんぶつの　しつもんに　●つこたえろ」</comment>
-		<language name="JPN" width="256">かくまちにいる　じんぶつの　しつもんに
-ぜんいんで　３つ　こたえろ（まだ仮）</language>
-		<language name="JPN_KANJI" width="256">かくまちにいる　じんぶつの　しつもんに
-ぜんいんで　３つ　こたえろ（まだ仮）</language>
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
 	</row>
 
 	<row id="plc_mis_06_03" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション６：「まちにいる　じんぶつの　しつもんに　●つこたえろ」</comment>
-		<language name="JPN" width="256">かくまちにいる　じんぶつの　しつもんに
-ぜんいんで　３つ　こたえろ（まだ仮）</language>
-		<language name="JPN_KANJI" width="256">かくまちにいる　じんぶつの　しつもんに
-ぜんいんで　３つ　こたえろ（まだ仮）</language>
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
 	</row>
 
 	<row id="plc_mis_06_04" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション６：「まちにいる　じんぶつの　しつもんに　●つこたえろ」</comment>
-		<language name="JPN" width="256">かくまちにいる　じんぶつの　しつもんに
-ぜんいんで　３つ　こたえろ（まだ仮）</language>
-		<language name="JPN_KANJI" width="256">かくまちにいる　じんぶつの　しつもんに
-ぜんいんで　３つ　こたえろ（まだ仮）</language>
-	</row>
-
-	<row id="plc_mis_07_01" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション７：「（道具名）を　うれ！」</comment>
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
 １０００円で　かってもらえ（まだ仮）</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
 １０００円で　かってもらえ（まだ仮）</language>
 	</row>
 
-	<row id="plc_mis_07_02" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション７：「（道具名）を　うれ！」</comment>
+	<row id="plc_mis_06_05" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
 １０００円で　かってもらえ（まだ仮）</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
 １０００円で　かってもらえ（まだ仮）</language>
 	</row>
 
-	<row id="plc_mis_07_03" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション７：「（道具名）を　うれ！」</comment>
+	<row id="plc_mis_06_06" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
 １０００円で　かってもらえ（まだ仮）</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
 １０００円で　かってもらえ（まだ仮）</language>
 	</row>
 
-	<row id="plc_mis_07_04" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション７：「（道具名）を　うれ！」</comment>
+	<row id="plc_mis_06_07" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
 １０００円で　かってもらえ（まだ仮）</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
 １０００円で　かってもらえ（まだ仮）</language>
 	</row>
 
-	<row id="plc_mis_08_01" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション８：「●●●●●を　～ひき　つかまえろ！」</comment>
-		<language name="JPN" width="256">ぜんいんで　[1:01:ポケモン種族名:0]を
-３ひき　つかまえろ（まだ仮）</language>
-		<language name="JPN_KANJI" width="256">ぜんいんで　[1:01:ポケモン種族名:0]を
-３ひき　つかまえろ（まだ仮）</language>
+	<row id="plc_mis_06_08" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
 	</row>
 
-	<row id="plc_mis_08_02" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション８：「●●●●●を　～ひき　つかまえろ！」</comment>
-		<language name="JPN" width="256">ぜんいんで　[1:01:ポケモン種族名:0]を
-３ひき　つかまえろ（まだ仮）</language>
-		<language name="JPN_KANJI" width="256">ぜんいんで　[1:01:ポケモン種族名:0]を
-３ひき　つかまえろ（まだ仮）</language>
+	<row id="plc_mis_06_09" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
 	</row>
 
-	<row id="plc_mis_08_03" back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,">
-		<comment>ミッション８：「●●●●●を　～ひき　つかまえろ！」</comment>
-		<language name="JPN" width="256">ぜんいんで　[1:01:ポケモン種族名:0]を
-３ひき　つかまえろ（まだ仮）</language>
-		<language name="JPN_KANJI" width="256">ぜんいんで　[1:01:ポケモン種族名:0]を
-３ひき　つかまえろ（まだ仮）</language>
+	<row id="plc_mis_06_10" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
 	</row>
 
-	<row id="plc_mis_08_04" back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,">
-		<comment>ミッション８：「●●●●●を　～ひき　つかまえろ！」</comment>
-		<language name="JPN" width="256">ぜんいんで　[1:01:ポケモン種族名:0]を
-３ひき　つかまえろ（まだ仮）</language>
-		<language name="JPN_KANJI" width="256">ぜんいんで　[1:01:ポケモン種族名:0]を
-３ひき　つかまえろ（まだ仮）</language>
+	<row id="plc_mis_06_11" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_12" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_13" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_14" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_15" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_16" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_17" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_18" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_19" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_20" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_21" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_22" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_23" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_24" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_25" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_26" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_27" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_28" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_29" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_30" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_31" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_32" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_33" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_34" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_35" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_36" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_37" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+	</row>
+
+	<row id="plc_mis_06_38" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション６：「（道具名）を　うれ！」</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]に　[1:09:どうぐ名:0]を　
+１０００円で　かってもらえ（まだ仮）</language>
 	</row>
 
 	<flowchart-group-list>

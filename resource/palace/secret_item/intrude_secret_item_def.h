@@ -5,4 +5,4 @@
 #pragma once
 
 ///IntrudeSecretItemPosDataTbl‚Ìƒe[ƒuƒ‹”
-#define SECRET_ITEM_DATA_TBL_MAX			50
+#define SECRET_ITEM_DATA_TBL_MAX			18
