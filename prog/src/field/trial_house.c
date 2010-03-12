@@ -22,7 +22,7 @@
 #include "savedata/trialhouse_save_local.h"
 #include "savedata/trialhouse_save.h"
 
-#include "th_rank_calc.h"   //for TH_CALC_Rank  inline
+#include "field/th_rank_calc.h"   //for TH_CALC_Rank  inline
 
 //ビーコンサーチワーク
 typedef struct
