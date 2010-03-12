@@ -14,6 +14,7 @@
 #include "system/gfl_use.h"
 #include "system/wipe.h"
 #include "system/bmp_winframe.h"
+#include "system/time_icon.h"
 #include "system/camera_system.h"
 #include "net/network_define.h"
 #include "net/net_whpipe.h"
@@ -168,9 +169,10 @@ struct _CTVT_CALL_WORK
   BOOL  isUpdateCallMsgWin;
   GFL_BMPWIN *msgWin;
   GFL_BMPWIN *callMsgWin;
-  u8  callAnmCnt;
-  u8  callAnmIdx;
   u16 connectTimeOutCnt;
+
+  GFL_TCBLSYS *tcblSys;
+  TIMEICON_WORK *timeIcon;
 
   CTVT_CALL_BAR_WORK barWork[CTVT_CALL_BAR_NUM];
   CTVT_CALL_MEMBER_WORK memberData[CTVT_CALL_SEARCH_NUM];
@@ -205,7 +207,8 @@ CTVT_CALL_WORK* CTVT_CALL_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
 {
   u8 i;
   CTVT_CALL_WORK* callWork = GFL_HEAP_AllocClearMemory( heapId , sizeof(CTVT_CALL_WORK) );
-  
+  callWork->tcblSys = GFL_TCBL_Init( heapId , heapId , 1 , 0 );
+
   return callWork;
 }
 
@@ -214,6 +217,7 @@ CTVT_CALL_WORK* CTVT_CALL_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
 //--------------------------------------------------------------
 void CTVT_CALL_TermSystem( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 {
+  GFL_TCBL_Exit( callWork->tcblSys );
   
   GFL_HEAP_FreeMemory( callWork );
 }
@@ -328,6 +332,7 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
                                         2 , 9 , 28 , 2 ,
                                         CTVT_PAL_BG_SUB_FONT ,
                                         GFL_BMP_CHRAREA_GET_B );
+  callWork->timeIcon = NULL;
   {
     u8 i;
     for( i=0;i<3;i++ )
@@ -347,8 +352,6 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   callWork->barState = CCBS_NONE;
   callWork->barMenuWork = NULL;
   callWork->state = CCS_FADEIN;
-  callWork->callAnmCnt = 0;
-  callWork->callAnmIdx = 0;
   callWork->connectTimeOutCnt = 0;
 
   GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , 0 );
@@ -386,6 +389,11 @@ void CTVT_CALL_TermMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   
   GFL_BMPWIN_ClearTransWindow( callWork->msgWin );
   GFL_BMPWIN_Delete( callWork->msgWin );
+  if( callWork->timeIcon != NULL )
+  {
+    TILEICON_Exit( callWork->timeIcon );
+    callWork->timeIcon = NULL;
+  }
   GFL_BMPWIN_ClearTransWindow( callWork->callMsgWin );
   GFL_BMPWIN_Delete( callWork->callMsgWin );
   
@@ -421,6 +429,8 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
   const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
   
+  GFL_TCBL_Main( callWork->tcblSys );
+
   switch( callWork->state )
   {
   case CCS_FADEIN:
@@ -508,8 +518,6 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
           CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_11 );
           callWork->state = CCS_WAIT_CONNECT_JOIN;
           callWork->connectTimeOutCnt = 0;
-          callWork->callAnmCnt = 0;
-          callWork->callAnmIdx = 0;
 
           APP_TASKMENU_WIN_Delete( callWork->barMenuWork );
           callWork->barMenuWork = NULL;
@@ -520,8 +528,6 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
           callWork->state = CCS_WAIT_CONNECT_CALL;
           CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_07 );
           CTVT_COMM_SetMode( work , commWork , CCIM_PARENT );
-          callWork->callAnmCnt = 0;
-          callWork->callAnmIdx = 0;
 
           APP_TASKMENU_WIN_Delete( callWork->barMenuWork );
           callWork->barMenuWork = NULL;
@@ -558,32 +564,6 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
   case CCS_WAIT_CONNECT_JOIN:
   case CCS_WAIT_CONNECT_JOIN_DIRECT:
   case CCS_WAIT_CONNECT_CALL:
-    callWork->callAnmCnt++;
-    if( callWork->callAnmCnt > CTVT_CALL_MSG_ANM_SPEED &&
-        callWork->isUpdateCallMsgWin == FALSE )
-    {
-      callWork->callAnmCnt = 0;
-      callWork->callAnmIdx++;
-      if( callWork->callAnmIdx >= CTVT_CALL_MSG_ANM_NUM )
-      {
-        callWork->callAnmIdx = 0;
-        //ついでにコール音再生
-        if( callWork->state == CCS_WAIT_CONNECT_CALL )
-        {
-          PMSND_PlaySystemSE( CTVT_SND_TEL_CALL );
-        }
-      }
-      
-      if( callWork->state == CCS_WAIT_CONNECT_JOIN ||
-          callWork->state == CCS_WAIT_CONNECT_JOIN_DIRECT )
-      {
-        CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_11+callWork->callAnmIdx );
-      }
-      else
-      {
-        CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_07+callWork->callAnmIdx );
-      }
-    }
     {
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
       if( COMM_TVT_GetConnectNum( work ) >= 2 )
@@ -647,6 +627,11 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         callWork->state = CCS_MAIN;
         BmpWinFrame_Clear( callWork->callMsgWin , WINDOW_TRANS_ON_V );
         GFL_BMPWIN_ClearTransWindow( callWork->callMsgWin );
+        if( callWork->timeIcon != NULL )
+        {
+          TILEICON_Exit( callWork->timeIcon );
+          callWork->timeIcon = NULL;
+        }
 
         GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN );
         //メッセージのアップデートで出す
@@ -751,6 +736,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       GFL_BMPWIN_MakeScreen( callWork->callMsgWin );
       GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
       callWork->isUpdateCallMsgWin = FALSE;
+      callWork->timeIcon = TIMEICON_CreateTcbl( callWork->tcblSys , callWork->callMsgWin , 0x0F , TIMEICON_DEFAULT_WAIT , heapId );
     }
   }
 
@@ -1506,8 +1492,6 @@ static void CTVT_CALL_UpdateNoMemberMsg( COMM_TVT_WORK *work , CTVT_CALL_WORK *c
   {
     if( callWork->barNum == 0 )
     {
-      callWork->callAnmCnt = 0;
-      callWork->callAnmIdx = 0;
       CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_15 );
 
       GFL_BMPWIN_ClearTransWindow_VBlank( callWork->msgWin );
@@ -1519,28 +1503,17 @@ static void CTVT_CALL_UpdateNoMemberMsg( COMM_TVT_WORK *work , CTVT_CALL_WORK *c
     {
       CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
 
+      if( callWork->timeIcon != NULL )
+      {
+        TILEICON_Exit( callWork->timeIcon );
+        callWork->timeIcon = NULL;
+      }
       BmpWinFrame_Clear( callWork->callMsgWin , WINDOW_TRANS_ON_V );
       GFL_BMPWIN_ClearTransWindow( callWork->callMsgWin );
     }
     
     callWork->befbarNum = callWork->barNum;
   }
-
-  if( callWork->barNum == 0 )
-  {
-    callWork->callAnmCnt++;
-    if( callWork->callAnmCnt > CTVT_CALL_MSG_ANM_SPEED )
-    {
-      callWork->callAnmCnt = 0;
-      callWork->callAnmIdx++;
-      if( callWork->callAnmIdx >= CTVT_CALL_MSG_ANM_NUM )
-      {
-        callWork->callAnmIdx = 0;
-      }
-      CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_15+callWork->callAnmIdx );
-    }
-  }
-
 }
 
 static const BOOL CTVT_CALL_CheckRegistFriendData( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , const STRCODE *name , const u32 id , const u32 sex )
