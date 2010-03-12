@@ -40,17 +40,8 @@ EVENT_START		ev_reserve_c03p16_cabinguide_01
 	_OBJ_ANIME( C03P16_CABINGUIDE_01, anm_cabin_out2 )
 	_OBJ_ANIME_WAIT()
 
-	//ローカル変数を定義
-	DEFINE_LOCAL	LWK_TOTAL2
-	DEFINE_LOCAL	LWK_WIN2
-	
-	//遊覧船内のトレーナー数と勝利数
-	_PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_TOTAL,LWK_TOTAL2)
-	_PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_WIN,LWK_WIN2)
-
-    //勝利数と総数が同じならば、特別なメッセージを表示
-    IF $LWK_TOTAL2 <= $LWK_WIN2 THEN
-
+  //勝利数と総数が同じならば(WK_OTHER_PASSENGERBOATが2ならば)、特別なメッセージを表示
+  IF $WK_OTHER_PASSENGERBOAT == 2 THEN
 		//おめでとうございます！（全抜き用メッセージ）
 		_BALLOONWIN_OBJMSG( msg_c03p16_cabinguide_09 , C03P16_CABINGUIDE_01 )
 		_BALLOONWIN_CLOSE()
@@ -58,15 +49,12 @@ EVENT_START		ev_reserve_c03p16_cabinguide_01
 		//【仮】ご褒美仮
 		_ITEM_EVENT_KEYWAIT(ITEM_KIZUGUSURI, 1)
 
-    ENDIF
+  ENDIF
 
 	//ごじょうせん　ありがとうございました
 	_BALLOONWIN_OBJMSG( msg_c03p16_cabinguide_07 , C03P16_CABINGUIDE_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
-
-	//遊覧船終了
-	_PL_BOAT_END()
 
 	//========================================/
 
@@ -230,9 +218,6 @@ ev_cabin:
 			
 					//船員のOBJを消す
 					_OBJ_DEL( C03P16_CABINGUIDE_01 )
-
-					//望さんスクリプト
-					_PL_BOAT_START()
 
 					//予約スクリプト
 					_RESERVE_SCRIPT( SCRID_RESERVE_C03R0801_CABINGUIDE_01 )

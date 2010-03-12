@@ -131,11 +131,8 @@ EVENT_START ev_prg_c03r0801_timeup
 	_MAP_FADE_BLACK_OUT()
 	_MAP_FADE_END_CHECK()
 
-	//予約スクリプト
-	_RESERVE_SCRIPT( SCRID_RESERVE_C03P16_CABINGUIDE_01 )
-	
-	//マップチェンジ
-	_MAP_CHANGE_NO_FADE( ZONE_ID_C03P16, 18, 0, 16, DIR_LEFT )
+  //遊覧船終了
+  _CALL pl_boat_end
 
 EVENT_END
 
@@ -197,11 +194,8 @@ _TALK_OBJ_START()
 		//ブラックアウト
 		_MAP_FADE_BLACK_OUT()
 
-		//予約スクリプト
-		_RESERVE_SCRIPT( SCRID_RESERVE_C03P16_CABINGUIDE_01 )
-	
-		//マップチェンジ
-		_MAP_CHANGE_NO_FADE( ZONE_ID_C03P16, 18, 0, 16, DIR_LEFT )
+    //遊覧船終了
+    _CALL pl_boat_end
 	
 	ELSE
 		
@@ -747,6 +741,9 @@ EVENT_START		ev_reserve_c03r0801_cabinguide_01
 {
 	//ローカル変数を定義
 	DEFINE_LOCAL	LWK_TOTAL1
+
+  //遊覧船スタート
+  _PL_BOAT_START()
 	
 	//遊覧船内のトレーナー総数
 	_PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_TOTAL,LWK_TOTAL1)
@@ -782,6 +779,33 @@ EVENT_START		ev_reserve_c03r0801_cabinguide_01
 	$WK_OTHER_PASSENGERBOAT = 1
 
 EVENT_END
+
+/**************************************************************/
+/*			遊覧船終了処理							  */
+/**************************************************************/
+pl_boat_end:
+  //ローカル変数を定義
+	DEFINE_LOCAL	LWK_TOTAL2
+	DEFINE_LOCAL	LWK_WIN2
+
+  //遊覧船内のトレーナー数と勝利数
+	_PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_TOTAL,LWK_TOTAL2)
+	_PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_WIN,LWK_WIN2)
+
+  //勝利数と総数が同じならば、特別なメッセージを表示するためにワークの値を変更
+  IF $LWK_TOTAL2 <= $LWK_WIN2 THEN
+    $WK_OTHER_PASSENGERBOAT = 2
+  ENDIF  
+
+  //遊覧船終了
+	_PL_BOAT_END()
+
+	//予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_C03P16_CABINGUIDE_01 )
+	
+	//マップチェンジ
+	_MAP_CHANGE_NO_FADE( ZONE_ID_C03P16, 18, 0, 16, DIR_LEFT )
+_RET
 
 //--------------------------------------------------------------
 //			乗船アニメ
