@@ -81,7 +81,7 @@ struct _FIELD_SUBSCREEN_WORK {
     GFL_CAMADJUST * gflCamAdjust;
     GFL_SNDVIEWER * gflSndViewer;
     void * checker;
-		REPORT_WORK * reportWork;
+    REPORT_WORK * reportWork;
   };
   u16 angle_h;
   u16 angle_v;
@@ -237,8 +237,8 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     exit_dowsing_subscreen,
     NULL,
   },
-	{	// レポート画面
-		FIELD_SUBSCREEN_REPORT,
+  { // レポート画面
+    FIELD_SUBSCREEN_REPORT,
     init_report_subscreen,
     update_report_subscreen,
     draw_report_subscreen,
@@ -657,10 +657,14 @@ void FIELD_SUBSCREEN_ResetAction( FIELD_SUBSCREEN_WORK* pWork)
  * @param  mode
  */
 //----------------------------------------------------------------------------
-void FIELD_SUBSCREEN_MainDispBrightnessOff(void)
+void FIELD_SUBSCREEN_MainDispBrightnessOff( void )
 {
-	G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0, GX_BLEND_PLANEMASK_NONE, 0, 0, 0 );
-	FLDMSGBG_SetBlendAlpha( FALSE );
+  G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0, GX_BLEND_PLANEMASK_NONE, 0, 0, 0 );
+  FLDMSGBG_SetBlendAlpha( FALSE );
+  GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
+//  FLDMSGBG_ResetBGResource( fld_msg );
+
+
 }
 
 
@@ -685,7 +689,7 @@ void * FIELD_SUBSCREEN_DEBUG_GetControl(FIELD_SUBSCREEN_WORK * pWork)
 static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
   // Overlay
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(cgear) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(cgear) );
   
   pWork->cgearWork = CGEAR_Init(CGEAR_SV_GetCGearSaveData(
     GAMEDATA_GetSaveControlWork(
@@ -705,7 +709,7 @@ static void init_firstget_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREE
 {
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap)));
   // Overlay
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(cgear) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(cgear) );
 
   pWork->cgearWork = CGEAR_FirstInit(CGEAR_SV_GetCGearSaveData(pSave),
                                      pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap),
@@ -724,7 +728,7 @@ static void exit_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork )
   CGEAR_Exit(pWork->cgearWork);
 
   // Overlay
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(cgear) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(cgear) );
 }
 
 //----------------------------------------------------------------------------
@@ -760,7 +764,7 @@ static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 static void init_nogear_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
   // Overlay
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(no_gear) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(no_gear) );
   
   pWork->nogearWork = NOGEAR_Init(CGEAR_SV_GetCGearSaveData(
     GAMEDATA_GetSaveControlWork(
@@ -778,7 +782,7 @@ static void exit_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork )
   NOGEAR_Exit(pWork->nogearWork);
 
   // Overlay
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(no_gear) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(no_gear) );
 }
 
 //----------------------------------------------------------------------------
@@ -996,7 +1000,7 @@ void FIELD_SUBSCREEN_SetTopMenuItemNo( FIELD_SUBSCREEN_WORK* pWork , const FIELD
 static void init_union_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
   // Overlay
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(union_subdisp) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(union_subdisp) );
   pWork->unisubWork = UNION_SUBDISP_Init(FIELDMAP_GetGameSysWork(pWork->fieldmap));
 }
 
@@ -1010,7 +1014,7 @@ static void exit_union_subscreen( FIELD_SUBSCREEN_WORK* pWork )
   UNION_SUBDISP_Exit(pWork->unisubWork);
 
   // Overlay
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(union_subdisp) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(union_subdisp) );
 }
 
 //----------------------------------------------------------------------------
@@ -1100,7 +1104,7 @@ static void draw_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 static void init_beacon_view_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode)
 {
   // Overlay
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(beacon_view) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(beacon_view) );
   pWork->beaconViewWork = BEACON_VIEW_Init(FIELDMAP_GetGameSysWork(pWork->fieldmap), pWork);
 }
 
@@ -1114,7 +1118,7 @@ static void exit_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork )
   BEACON_VIEW_Exit(pWork->beaconViewWork);
 
   // Overlay
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(beacon_view) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(beacon_view) );
 }
 
 //----------------------------------------------------------------------------
@@ -1283,7 +1287,7 @@ static void draw_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 static void init_report_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
   GFL_OVERLAY_Load(FS_OVERLAY_ID(report));
-	pWork->reportWork = REPORT_Init( FIELDMAP_GetGameSysWork(pWork->fieldmap), pWork->heapID );
+  pWork->reportWork = REPORT_Init( FIELDMAP_GetGameSysWork(pWork->fieldmap), pWork->heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -1293,7 +1297,7 @@ static void init_report_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_
 //-----------------------------------------------------------------------------
 static void exit_report_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
-	REPORT_Exit( pWork->reportWork );
+  REPORT_Exit( pWork->reportWork );
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(report));
 }
 
@@ -1304,7 +1308,7 @@ static void exit_report_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void update_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
-	REPORT_Update( pWork->reportWork );
+  REPORT_Update( pWork->reportWork );
 }
 
 //----------------------------------------------------------------------------
@@ -1314,37 +1318,37 @@ static void update_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 //-----------------------------------------------------------------------------
 static void draw_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
-	REPORT_Draw( pWork->reportWork );
+  REPORT_Draw( pWork->reportWork );
 }
 
 // セーブサイズ設定
 void FIELD_SUBSCREEN_SetReportSize( FIELD_SUBSCREEN_WORK * pWork )
 {
-	REPORT_SetSaveSize( pWork->reportWork );
+  REPORT_SetSaveSize( pWork->reportWork );
 }
 
 // セーブ開始
 void FIELD_SUBSCREEN_SetReportStart( FIELD_SUBSCREEN_WORK * pWork )
 {
-	REPORT_StartSave( pWork->reportWork );
+  REPORT_StartSave( pWork->reportWork );
 }
 
 // セーブ終了
 BOOL FIELD_SUBSCREEN_SetReportEnd( FIELD_SUBSCREEN_WORK * pWork )
 {
-	return REPORT_EndSave( pWork->reportWork );
+  return REPORT_EndSave( pWork->reportWork );
 }
 
 // セーブ強制終了（失敗時）
 void FIELD_SUBSCREEN_SetReportBreak( FIELD_SUBSCREEN_WORK * pWork )
 {
-	REPORT_BreakSave( pWork->reportWork );
+  REPORT_BreakSave( pWork->reportWork );
 }
 
 // セーブタイプ取得（たくさん書くか）
 BOOL FIELD_SUBSCREEN_CheckReportType( FIELD_SUBSCREEN_WORK * pWork )
 {
-	return REPORT_CheckSaveType( pWork->reportWork );
+  return REPORT_CheckSaveType( pWork->reportWork );
 }
 //----------------------------------------------------------------------------
 /**
