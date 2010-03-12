@@ -48,7 +48,6 @@
 #include "savedata/c_gear_picture.h"
 #include "savedata/bsubway_savedata.h"
 #include "savedata/battlematch_savedata.h"
-#include "savedata/radar_save.h"
 #include "savedata/symbol_save.h"
 #include "savedata/my_pms_data.h"
 #include "savedata/battle_examination.h"
@@ -403,11 +402,6 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_BATTLEMATCH,
     (FUNC_GET_SIZE)BATTLEMATCH_GetWorkSize,
     (FUNC_INIT_WORK)BATTLEMATCH_Init,
-  },
-  { //調査レーダー
-    GMDATA_ID_RADAR,
-    (FUNC_GET_SIZE)RadarSave_GetWorkSize,
-    (FUNC_INIT_WORK)RadarSave_WorkInit,
   },
   { //シンボルエンカウント
     GMDATA_ID_SYMBOL,
