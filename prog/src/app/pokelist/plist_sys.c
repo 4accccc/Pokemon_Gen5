@@ -510,6 +510,7 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
             work->btlMenuWin[1] = NULL;
             PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
             PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_13_07 );
+            PLIST_MSG_DispTimerIcon( work , work->msgWork );
           }
         }
         else
@@ -1371,16 +1372,16 @@ static void PLIST_InitMode( PLIST_WORK *work )
       const u32 itemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
       if( itemNo == 0 )
       {
-        
         //フォルムチェンジ前にReDrawParamが必要
         PP_Put( work->selectPokePara , ID_PARA_item , work->plData->item );
         PLIST_SubBagItem( work , work->plData->item );
         PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
 
-
         PLIST_MSG_CreateWordSet( work , work->msgWork );
         PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
         PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
+        
+        PLIST_ITEM_CangeAruseusuForm( work , work->selectPokePara , work->plData->item );
         if( PLIST_DEMO_CheckGirathnaToOrigin( work , work->selectPokePara ) == TRUE )
         {
           //ギラティナ・フォルムチェンジ
@@ -1629,6 +1630,8 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
           PLIST_MSG_CreateWordSet( work , work->msgWork );
           PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
           PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
+
+          PLIST_ITEM_CangeAruseusuForm( work , work->selectPokePara , work->plData->item );
 
           if( PLIST_DEMO_CheckGirathnaToOrigin( work , work->selectPokePara ) == TRUE )
           {
@@ -2984,6 +2987,9 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
   case PMIT_TAKE:
     {
       const u32 itemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
+      //預かるので持たせるアイテム０
+      PLIST_ITEM_CangeAruseusuForm( work , work->selectPokePara , 0 );
+
       if( itemNo == 0 )
       {
         PLIST_MSG_CreateWordSet( work , work->msgWork );
@@ -3663,6 +3669,8 @@ static void PLIST_MSGCB_ItemSet_CheckChangeItemCB( PLIST_WORK *work , const int 
       //フォルムチェンジ前にReDrawParamが必要
       PLIST_SetPokeItem( work , work->selectPokePara , work->plData->item );
       PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+
+      PLIST_ITEM_CangeAruseusuForm( work , work->selectPokePara , work->plData->item );
 
       isGirathinaToOrigin = PLIST_DEMO_CheckGirathnaToOrigin( work , work->selectPokePara );
       isGirathinaToAnother = PLIST_DEMO_CheckGirathnaToAnother( work , work->selectPokePara );

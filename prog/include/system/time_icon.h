@@ -8,6 +8,7 @@
  *	ÉÇÉWÉÖÅ[ÉãñºÅFTIMEICON
  */
 //============================================================================================
+#include <tcbl.h>
 #pragma	once
 
 
@@ -40,6 +41,8 @@ typedef struct _TIMEICON_WORK	TIMEICON_WORK;
 //--------------------------------------------------------------------------------------------
 extern TIMEICON_WORK * TIMEICON_Create(
 												GFL_TCBSYS * tcbsys, GFL_BMPWIN * msg_win, u8 clear_color, u8 wait, HEAPID heapID );
+extern TIMEICON_WORK * TIMEICON_CreateTcbl( 
+												GFL_TCBLSYS * tcblsys, GFL_BMPWIN * msg_win, u8 clear_color, u8 wait, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**

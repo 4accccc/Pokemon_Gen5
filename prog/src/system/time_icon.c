@@ -23,6 +23,7 @@
 // ワーク
 struct _TIMEICON_WORK {
 	GFL_TCB * tcb;			// TCB
+	GFL_TCBL * tcbl;			// TCBL
 	GFL_BMPWIN * win;		// BMPWIN
 	GFL_BMP_DATA * src;	// アイコンキャラデータ
 	HEAPID heapID;			// ヒープＩＤ
@@ -47,7 +48,10 @@ struct _TIMEICON_WORK {
 //	プロトタイプ宣言
 //============================================================================================
 static void MainTask(  GFL_TCB * tcb, void * work );
+static void MainTaskTcbl(  GFL_TCBL * tcbl, void * work );
+static void MainTaskCore( TIMEICON_WORK *wk );
 
+static void TIMEICON_CreateCore( TIMEICON_WORK *wk , GFL_BMPWIN * msg_win, u8 clear_color, u8 wait, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -67,6 +71,33 @@ TIMEICON_WORK * TIMEICON_Create(
 {
 	TIMEICON_WORK * wk = GFL_HEAP_AllocMemory( heapID, sizeof(TIMEICON_WORK) );
 
+	TIMEICON_CreateCore( wk , msg_win , clear_color , wait , heapID );
+
+  wk->tcbl = NULL;
+  wk->tcb = GFL_TCB_AddTask( tcbsys, MainTask, wk, 0 );
+	wk->flg = TRUE;
+
+	return wk;
+}
+//上のTCBL版
+TIMEICON_WORK * TIMEICON_CreateTcbl(
+									GFL_TCBLSYS * tcblsys, GFL_BMPWIN * msg_win, u8 clear_color, u8 wait , HEAPID heapID )
+{
+  GFL_TCBL *tcblWk = GFL_TCBL_Create( tcblsys, MainTaskTcbl, sizeof(TIMEICON_WORK), 0 );
+  TIMEICON_WORK * wk = GFL_TCBL_GetWork( tcblWk );
+	
+	TIMEICON_CreateCore( wk , msg_win , clear_color , wait , heapID );
+
+  wk->tcbl = tcblWk;
+  wk->tcb = NULL;
+	wk->flg = TRUE;
+
+	return wk;
+}
+
+static void TIMEICON_CreateCore( TIMEICON_WORK *wk , GFL_BMPWIN * msg_win, u8 clear_color, u8 wait, HEAPID heapID )
+{
+
 	wk->heapID = heapID;
 	wk->col    = clear_color;
 	wk->cnt    = 0;
@@ -85,11 +116,6 @@ TIMEICON_WORK * TIMEICON_Create(
 
 	GFL_BMPWIN_MakeScreen( wk->win );
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(wk->win) );
-
-  wk->tcb = GFL_TCB_AddTask( tcbsys, MainTask, wk, 0 );
-	wk->flg = TRUE;
-
-	return wk;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -110,8 +136,16 @@ void TILEICON_Exit( TIMEICON_WORK * wk )
 
 	GFL_BMPWIN_Delete( wk->win );
 	GFL_BMP_Delete( wk->src );
-	GFL_TCB_DeleteTask( wk->tcb );
-	GFL_HEAP_FreeMemory( wk );
+	if( wk->tcb != NULL )
+	{
+		GFL_TCB_DeleteTask( wk->tcb );
+  	GFL_HEAP_FreeMemory( wk );
+  }
+	if( wk->tcbl != NULL )
+	{
+		GFL_TCBL_Delete( wk->tcbl );
+    //ワークは自動開放
+  }
 }
 
 //--------------------------------------------------------------------------------------------
@@ -127,7 +161,16 @@ void TILEICON_Exit( TIMEICON_WORK * wk )
 static void MainTask( GFL_TCB * tcb, void * work )
 {
 	TIMEICON_WORK * wk = work;
+	MainTaskCore( wk );
+}
+static void MainTaskTcbl(  GFL_TCBL * tcbl, void * work )
+{
+	TIMEICON_WORK * wk = work;
+	MainTaskCore( wk );
+}
 
+static void MainTaskCore( TIMEICON_WORK *wk )
+{
 	if( wk->flg == FALSE ){ return; }
 
 	if( wk->cnt == 0 ){
@@ -149,3 +192,4 @@ static void MainTask( GFL_TCB * tcb, void * work )
 		wk->cnt--;
 	}
 }
+

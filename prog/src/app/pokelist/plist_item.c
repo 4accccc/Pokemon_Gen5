@@ -367,6 +367,21 @@ u32 PLIST_ITEM_GetWazaListMessage( PLIST_WORK *work , u16 itemNo )
   return mes_pokelist_03_04;
 }
 
+void PLIST_ITEM_CangeAruseusuForm( PLIST_WORK *work , POKEMON_PARAM *pp , const u16 itemNo )
+{
+  const u32 monsNo = PP_Get( pp , ID_PARA_monsno , NULL );
+  if( monsNo == MONSNO_ARUSEUSU )
+  {
+    const u32 formNo =  PP_Get( pp , ID_PARA_form_no , NULL );
+    const PokeType newForm =  POKETOOL_GetPokeTypeFromItem( itemNo );
+    OS_TPrintf("ARUSEUSU:[%d]->[%d]\n",formNo,newForm);
+    if( formNo != newForm )
+    {
+      PP_ChangeFormNo( pp , newForm );
+    }
+  }
+}
+
 #pragma mark [> msg func
 //--------------------------------------------------------------------------
 //  アイテム使えないメッセージの表示
@@ -893,3 +908,4 @@ static void PLIST_ITEM_UTIL_ItemUseMessageParamExp( PLIST_WORK *work , u16 msgId
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
   
 }
+

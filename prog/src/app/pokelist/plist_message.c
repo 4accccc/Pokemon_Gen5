@@ -18,6 +18,7 @@
 #include "gamesystem\msgspeed.h"
 #include "print/wordset.h"
 #include "system/bmp_winframe.h"
+#include "system/time_icon.h"
 #include "app/app_keycursor.h"
 #include "app/app_printsys_common.h"
 
@@ -79,6 +80,7 @@ struct _PLIST_MSG_WORK
   BOOL  isUpdateMsg;
   
   WORDSET *wordSet;
+  TIMEICON_WORK *timeIcon;
 };
 //======================================================================
 //	proto
@@ -104,6 +106,7 @@ PLIST_MSG_WORK* PLIST_MSG_CreateSystem( PLIST_WORK *work )
   msgWork->isUpdateMsg = FALSE;
   msgWork->isWaitKey = FALSE;
   msgWork->wordSet = NULL;
+  msgWork->timeIcon = NULL;
   msgWork->cursorWork = APP_KEYCURSOR_Create( 0x0f , FALSE , TRUE , work->heapId );
   return msgWork;
 }
@@ -118,7 +121,11 @@ void PLIST_MSG_DeleteSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
     ARI_TPrintf("PLIST_MSG MessageWindow is open by delete system!!\n");
     PLIST_MSG_CloseWindow( work,msgWork );
   }
-  
+  if( msgWork->timeIcon != NULL )
+  {
+    TILEICON_Exit( msgWork->timeIcon );
+  }
+
   APP_KEYCURSOR_Delete( msgWork->cursorWork );
   GFL_TCBL_Exit( msgWork->tcblSys );
   GFL_HEAP_FreeMemory( msgWork );
@@ -262,6 +269,12 @@ void PLIST_MSG_CloseWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
     return;
   }
   GF_ASSERT_MSG( msgWork->winType != PMT_NONE , "PLIST_MSG Close window yet!!\n");
+  
+  if( msgWork->timeIcon != NULL )
+  {
+    TILEICON_Exit( msgWork->timeIcon );
+    msgWork->timeIcon = NULL;
+  }
   
   TalkWinFrame_Clear( msgWork->bmpWin , WINDOW_TRANS_ON_V );
   GFL_BMPWIN_Delete( msgWork->bmpWin );
@@ -467,4 +480,12 @@ void PLIST_MSG_ReloadWinFrame( PLIST_WORK *work , PLIST_MSG_WORK *msgWork  )
 {
   BmpWinFrame_GraphicSet( PLIST_BG_MENU , PLIST_BG_WINCHAR_TOP , PLIST_BG_PLT_BMPWIN ,
                           0 , work->heapId );
+}
+
+//--------------------------------------------------------------
+//	タイマーアイコン表示
+//--------------------------------------------------------------
+void PLIST_MSG_DispTimerIcon( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
+{
+  msgWork->timeIcon = TIMEICON_CreateTcbl( msgWork->tcblSys , msgWork->bmpWin , 0x0F , TIMEICON_DEFAULT_WAIT , work->heapId );
 }

@@ -62,6 +62,7 @@ extern const BOOL PLIST_ITEM_IsNeedSelectSkill( PLIST_WORK *work , u16 itemNo );
 extern const int PLIST_ITEM_CanUseDeathRecoverAllItem( PLIST_WORK *work );
 
 extern u32 PLIST_ITEM_GetWazaListMessage( PLIST_WORK *work , u16 itemNo );
+extern void PLIST_ITEM_CangeAruseusuForm( PLIST_WORK *work , POKEMON_PARAM *pp , const u16 itemNo );
 
 extern void PLIST_ITEM_MSG_CanNotUseItem( PLIST_WORK *work );
 extern const PLIST_ITEM_USE_TYPE PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work );
