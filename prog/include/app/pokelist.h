@@ -203,6 +203,10 @@ typedef struct
   //WBより追加
   u8  wazaLearnBit; //イベントなど特殊な技覚えで外から覚えられるやつのbitをもらう
                     // PL_MODE_SELECT_WAZAの時のみ有効
+  //通信処理用
+  u16 time_limit;   //制限時間(秒)
+  u8  comm_state;   //通信状態
+
   
   //通信時相手見せ系
   PL_COMM_TYPE comm_type;
@@ -211,7 +215,6 @@ typedef struct
   BOOL    use_tile_limit;  //制限時間を使うか？
   u8 comm_selected_num;   // 通信時：既に選択が終わった人数(外側から操作)
   u8 padding;
-  u16 time_limit;   //制限時間(秒)(外側から操作)
 }PLIST_DATA;
 
 //-----------------------------------------------

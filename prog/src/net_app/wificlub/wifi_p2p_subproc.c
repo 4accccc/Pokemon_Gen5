@@ -13,6 +13,7 @@
 
 #include "app/pokelist.h"
 #include "app/p_status.h"
+#include "app/pokelist/plist_comm.h"
 #include "savedata/mystatus.h"
 #include "system/main.h"
 #include "system/gfl_use.h"
@@ -174,6 +175,9 @@ static GFL_PROC_RESULT WIFICLUB_BATTLE_SUB_PROC_Exit( GFL_PROC *p_proc, int *p_s
 
   GFL_HEAP_FreeMemory( procWork->pokeParty );
   */
+  PLIST_COMM_ExitComm( &procWork->plData );
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(pokelist_comm));
+  
   GFL_PROC_LOCAL_Exit( procWork->procSys );
 	GFL_PROC_FreeWork( p_proc );
 
@@ -207,6 +211,7 @@ static GFL_PROC_RESULT WIFICLUB_BATTLE_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
 
   //List内で制御するのでコメントアウト Ari100310
   //procWork->plData.comm_selected_num  = p_param->comm_selected_num;
+  PLIST_COMM_UpdateComm( &procWork->plData );
   
   
   switch( procWork->state )
@@ -356,6 +361,8 @@ static void WIFICLUB_BATTLE_SUBPROC_InitListData( WIFICLUB_BATTLE_SUBPROC_PARAM 
     plData->time_limit = 0;
   }
   plData->comm_selected_num = 0;
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(pokelist_comm));
+  PLIST_COMM_InitComm( plData );
 }
 
 //--------------------------------------------------------------

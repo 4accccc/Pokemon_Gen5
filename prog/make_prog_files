@@ -992,11 +992,18 @@ SRCS_OVERLAY_TITLE  = title/title.c \
 #===> SRCS_OVERLAY_TITLE
 SRCS_OVERLAY_TESTMODE = test/testmode.c
 
+#通信ポケモンリスト管理
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> GROUP_OVERLAY_UNION_INTRUDE
+SRCS_OVERLAY_POKELIST_COMM	= app/pokelist/plist_comm.c
+
 
 #ポケモンリスト
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> GROUP_OVERLAY_UNION_INTRUDE
+#===> SRCS_OVERLAY_POKELIST_COMM
 SRCS_OVERLAY_POKELIST = app/pokelist/pokelist.c \
 		app/pokelist/plist_sys.c \
 		app/pokelist/plist_plate.c \
@@ -1004,8 +1011,7 @@ SRCS_OVERLAY_POKELIST = app/pokelist/pokelist.c \
 		app/pokelist/plist_menu.c \
 		app/pokelist/plist_item.c \
 		app/pokelist/plist_battle.c \
-		app/pokelist/plist_demo.c \
-		app/pokelist/plist_comm.c
+		app/pokelist/plist_demo.c 
 
 
 # バトル->フィールド復帰
@@ -1381,6 +1387,7 @@ SRCS_OVERLAY_MATSUDA_DEBUG  = test/matsuda/d_matsu.c \
 #ポケモンステータス
 #===> SRCS_OVERLAY_DPW_COMMON
 #===> GROUP_OVERLAY_UNION_INTRUDE
+#===> SRCS_OVERLAY_POKELIST_COMM
 SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
         app/p_status/p_status.c \
 		app/p_status/p_sta_sub.c \

@@ -282,7 +282,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   {
     work->plData->mode = PL_MODE_BATTLE;
     work->isFinishSync = TRUE;
-    PLIST_COMM_InitComm( work );
+    //PLIST_COMM_InitComm( work );
     
     //この場合中で操作するので
     work->plData->comm_selected_num = 0;
@@ -498,7 +498,7 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
       {
         if( work->isFinishSync == TRUE )
         {
-          const BOOL ret = PLIST_COMM_SendFlg( work , PCFT_FINISH_SELECT , 0 );
+          const BOOL ret = PLIST_COMM_SendFlg( work->plData , PCFT_FINISH_SELECT , 0 );
           if( ret == TRUE )
           {
             //通信同期をとる
@@ -539,14 +539,14 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
 
   case PSMS_FINISH_SYNC_INIT:  //Wifiバトル終了通信同期
     {
-      PLIST_COMM_ReqExitComm( work );
+      PLIST_COMM_SendTimming( work->plData , PLIST_COMM_TIMMIN_EXIT_LIST );
       work->mainSeq = PSMS_FINISH_SYNC_WAIT;
     }
     break;
 
   case PSMS_FINISH_SYNC_WAIT:
     {
-      if( PLIST_COMM_IsExitComm( work ) == TRUE )
+      if( PLIST_COMM_CheckTimming( work->plData , PLIST_COMM_TIMMIN_EXIT_LIST ) == TRUE )
       {
         work->mainSeq = PSMS_FADEOUT;
       }
@@ -602,8 +602,8 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
   //OBJの更新
   GFL_CLACT_SYS_Main();
   
-  //通信チェックは中で
-  PLIST_COMM_UpdateComm( work );
+  //通信チェックは外で
+  //PLIST_COMM_UpdateComm( work );
 
   return FALSE;
 }

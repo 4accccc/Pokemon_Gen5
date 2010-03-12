@@ -16,8 +16,6 @@
 #pragma mark [> define
 #define PLIST_COMM_TIMMIN_INIT_LIST (1) //開始時・コマンドの追加
 #define PLIST_COMM_TIMMIN_EXIT_LIST (2) //終了時・コマンドの削除
-//いずれ上の処理でチェックするように
-#define PLIST_COMM_TIMMIN_EXIT_LIST_TEMP (128) //終了時・コマンドの削除
 
 //======================================================================
 //	enum
@@ -32,17 +30,19 @@ typedef enum
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
+FS_EXTERN_OVERLAY(pokelist_comm);
 
 //======================================================================
 //	proto
 //======================================================================
 #pragma mark [> proto
-extern void PLIST_COMM_InitComm( PLIST_WORK *work );
-extern void PLIST_COMM_ReqExitComm( PLIST_WORK *work );
-extern const BOOL PLIST_COMM_IsExitComm( PLIST_WORK *work );
-extern void PLIST_COMM_UpdateComm( PLIST_WORK *work );
+extern void PLIST_COMM_InitComm( PLIST_DATA *work );
+extern void PLIST_COMM_ExitComm( PLIST_DATA *work );
+extern void PLIST_COMM_UpdateComm( PLIST_DATA *work );
 
-extern const BOOL PLIST_COMM_SendFlg( PLIST_WORK *work , const u8 flgType , const u16 flgValue );
+extern const BOOL PLIST_COMM_SendFlg( PLIST_DATA *work , const u8 flgType , const u16 flgValue );
+extern void PLIST_COMM_SendTimming( PLIST_DATA *work , const u8 timmingNo );
+extern const BOOL PLIST_COMM_CheckTimming( PLIST_DATA *work , const u8 timmingNo );
 
 //--------------------------------------------------------------
 //	

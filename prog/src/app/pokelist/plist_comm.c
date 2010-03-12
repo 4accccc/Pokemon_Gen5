@@ -30,9 +30,6 @@ enum
   PCS_INIT_TIMMING,
   PCS_ADD_COMMAND,
   PCS_UPDATE,
-  PCS_TERM_TIMMING,
-  PCS_RELEASE_COMMAND,
-  PCS_FINISH,
 }PLIST_COMM_STATE;
 
 
@@ -62,86 +59,43 @@ static const NetRecvFuncTable PLIST_COMM_RecvTable[] =
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
-void PLIST_COMM_InitComm( PLIST_WORK *work )
+void PLIST_COMM_InitComm( PLIST_DATA *work )
 {
-  work->isComm = TRUE;
-  work->commState = PCS_INIT_TIMMING;
+  work->comm_state = PCS_INIT_TIMMING;
+  OS_TPrintf("InitPokeListcomm\n");
 }
 
-void PLIST_COMM_ReqExitComm( PLIST_WORK *work )
+void PLIST_COMM_ExitComm( PLIST_DATA *work )
 {
-  if( work->isComm == TRUE )
-  {
-    work->commState = PCS_TERM_TIMMING;
-  }
+  OS_TPrintf("ExitPokeListcomm\n");
+  GFL_NET_DelCommandTable( GFL_NET_CMD_POKELIST );
 }
 
-const BOOL PLIST_COMM_IsExitComm( PLIST_WORK *work )
+void PLIST_COMM_UpdateComm( PLIST_DATA *work )
 {
-  if( work->isComm == TRUE )
+  switch( work->comm_state )
   {
-    if( work->commState == PCS_FINISH )
+  case PCS_INIT_TIMMING:
     {
-      return TRUE;
+      GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      GFL_NET_HANDLE_TimeSyncStart( selfHandle , PLIST_COMM_TIMMIN_INIT_LIST , WB_NET_POKELIST );
+      work->comm_state = PCS_ADD_COMMAND;
     }
-    return FALSE;
-  }
-  else
-  {
-    return TRUE;
-  }
-}
+    break;
 
-void PLIST_COMM_UpdateComm( PLIST_WORK *work )
-{
-  if( work->isComm == TRUE )
-  {
-    switch( work->commState )
+  case PCS_ADD_COMMAND:
     {
-    case PCS_INIT_TIMMING:
+      GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      if( GFL_NET_HANDLE_IsTimeSync( selfHandle , PLIST_COMM_TIMMIN_INIT_LIST , WB_NET_POKELIST ) == TRUE )
       {
-        GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-        GFL_NET_HANDLE_TimeSyncStart( selfHandle , PLIST_COMM_TIMMIN_INIT_LIST , WB_NET_POKELIST );
-        work->commState = PCS_ADD_COMMAND;
+        GFL_NET_AddCommandTable( GFL_NET_CMD_POKELIST , PLIST_COMM_RecvTable , NELEMS(PLIST_COMM_RecvTable) , work );
+        work->comm_state = PCS_UPDATE;
       }
-      break;
-
-    case PCS_ADD_COMMAND:
-      {
-        GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-        if( GFL_NET_HANDLE_IsTimeSync( selfHandle , PLIST_COMM_TIMMIN_INIT_LIST , WB_NET_POKELIST ) == TRUE )
-        {
-          GFL_NET_AddCommandTable( GFL_NET_CMD_POKELIST , PLIST_COMM_RecvTable , NELEMS(PLIST_COMM_RecvTable) , work );
-          work->commState = PCS_UPDATE;
-        }
-      }
-      break;
-
-    case PCS_UPDATE:
-      break;
-
-    case PCS_TERM_TIMMING:
-      {
-        GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-        GFL_NET_HANDLE_TimeSyncStart( selfHandle , PLIST_COMM_TIMMIN_EXIT_LIST , WB_NET_POKELIST );
-        work->commState = PCS_RELEASE_COMMAND;
-      }
-      break;
-
-    case PCS_RELEASE_COMMAND:
-      {
-        GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-        if( GFL_NET_HANDLE_IsTimeSync( selfHandle , PLIST_COMM_TIMMIN_EXIT_LIST , WB_NET_POKELIST ) == TRUE )
-        {
-          GFL_NET_DelCommandTable( GFL_NET_CMD_POKELIST );
-          work->commState = PCS_FINISH;
-        }
-      }
-      break;
-    case PCS_FINISH:
-
-      break;
     }
+    break;
+
+  case PCS_UPDATE:
+    break;
   }
 }
 
@@ -152,14 +106,14 @@ typedef struct
   u8  flg;
 }PLIST_COMM_FLG_PACKET;
 
-const BOOL PLIST_COMM_SendFlg( PLIST_WORK *work , const u8 flgType , const u16 flgValue )
+const BOOL PLIST_COMM_SendFlg( PLIST_DATA *work , const u8 flgType , const u16 flgValue )
 {
   GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
   PLIST_COMM_FLG_PACKET pkt;
   pkt.flg = flgType;
   pkt.value = flgValue;
   
-  if( work->commState != PCS_UPDATE )
+  if( work->comm_state != PCS_UPDATE )
   {
     OS_TPrintf("PLIST_COMM net is not initialize!!!\n");
     return FALSE;
@@ -184,7 +138,7 @@ const BOOL PLIST_COMM_SendFlg( PLIST_WORK *work , const u8 flgType , const u16 f
 //--------------------------------------------------------------
 static void PLIST_COMM_PostFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
 {
-  PLIST_WORK *work = (PLIST_WORK*)pWork;
+  PLIST_DATA *work = (PLIST_DATA*)pWork;
   PLIST_COMM_FLG_PACKET *pkt = (PLIST_COMM_FLG_PACKET*)pData;
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   
@@ -193,7 +147,25 @@ static void PLIST_COMM_PostFlg( const int netID, const int size , const void* pD
   switch( pkt->flg )
   {
   case PCFT_FINISH_SELECT:
-    work->plData->comm_selected_num++;
+    work->comm_selected_num++;
     break;
   }
+}
+
+//--------------------------------------------------------------
+// タイミングコマンド
+//--------------------------------------------------------------
+void PLIST_COMM_SendTimming( PLIST_DATA *work , const u8 timmingNo )
+{
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  GFL_NET_HANDLE_TimeSyncStart( selfHandle , timmingNo , WB_NET_POKELIST );
+}
+const BOOL PLIST_COMM_CheckTimming( PLIST_DATA *work , const u8 timmingNo )
+{
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  if( GFL_NET_HANDLE_IsTimeSync( selfHandle , timmingNo , WB_NET_POKELIST ) == TRUE )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
