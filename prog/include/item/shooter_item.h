@@ -36,7 +36,8 @@
 //=====================================
 typedef struct 
 {
-  u8 bit_tbl[ SHOOTER_ITEM_BIT_TBL_MAX ];
+  u8  bit_tbl[ SHOOTER_ITEM_BIT_TBL_MAX ];  //シューターでの禁止道具
+  u8  shooter_use;                          //シューターを使用するかどうか
 } SHOOTER_ITEM_BIT_WORK;
 
 //=============================================================================

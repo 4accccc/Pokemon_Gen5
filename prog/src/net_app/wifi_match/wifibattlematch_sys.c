@@ -100,6 +100,8 @@ typedef struct
   WIFIBATTLEMATCH_ENEMYDATA   *p_enemy_data;
   POKEPARTY                   *p_player_btl_party;//自分で決めたパーティ
   POKEPARTY                   *p_enemy_btl_party; //相手の決めたパーティ
+  POKEPARTY                   *p_player_modify_party;//レベル補正をかけたパーティ
+  POKEPARTY                   *p_enemy_modify_party; //
   DWCSvlResult                svl_result;         //WIFIログイン時に得るサービスロケータ
   BATTLEMATCH_BATTLE_SCORE    btl_score;          //バトルの成績
 #if 0
@@ -344,7 +346,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   NAGI_Printf( "work %d + %d *2\n", sizeof(WIFIBATTLEMATCH_SYS), sizeof(WIFIBATTLEMATCH_ENEMYDATA) );
 
 	//ヒープ作成
-	GFL_HEAP_CreateHeap( parentID, HEAPID_WIFIBATTLEMATCH_SYS, 0x7000 );
+	GFL_HEAP_CreateHeap( parentID, HEAPID_WIFIBATTLEMATCH_SYS, 0x8000 );
 
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(WIFIBATTLEMATCH_SYS), HEAPID_WIFIBATTLEMATCH_SYS );
@@ -362,6 +364,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   //戦闘用パーティ作成
   p_wk->p_player_btl_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
   p_wk->p_enemy_btl_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
+  p_wk->p_player_modify_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
+  p_wk->p_enemy_modify_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
 
   OS_Printf( "ランダムマッチ引数 使用ポケ%d ルール%d\n", p_wk->param.poke, p_wk->param.btl_rule );
 
@@ -412,6 +416,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
   BattleRec_Exit();
 
   //パーティの破棄
+  GFL_HEAP_FreeMemory( p_wk->p_enemy_modify_party );
+  GFL_HEAP_FreeMemory( p_wk->p_player_modify_party );
   GFL_HEAP_FreeMemory( p_wk->p_enemy_btl_party );
   GFL_HEAP_FreeMemory( p_wk->p_player_btl_party );
 
@@ -810,22 +816,28 @@ static void *POKELIST_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID,
     WIFIBATTLEMATCH_ENEMYDATA *p_player;
     POKEPARTY *p_party;
     POKEMON_PARAM *pp;
-
     p_player = p_wk->p_player_data;
-    p_param->p_party  = (POKEPARTY*)p_player->pokeparty;
 
-    PokeRegulation_ModifyLevelPokeParty( p_param->regulation, p_param->p_party );
+    PokeParty_Copy((POKEPARTY*)p_player->pokeparty, p_wk->p_player_modify_party);
+    PokeRegulation_ModifyLevelPokeParty( p_param->regulation, p_wk->p_player_modify_party );
+
+    p_param->p_party  = p_wk->p_player_modify_party;
+
   }
 
   //敵データ
   { 
     WIFIBATTLEMATCH_ENEMYDATA *p_enemy;
     POKEPARTY *p_party;
-
     p_enemy = p_wk->p_enemy_data;
+
+    PokeParty_Copy((POKEPARTY*)p_enemy->pokeparty, p_wk->p_enemy_modify_party);
+    PokeRegulation_ModifyLevelPokeParty( p_param->regulation, p_wk->p_enemy_modify_party );
+
     p_param->enemyName      = MyStatus_GetMyName( (MYSTATUS*)p_enemy->mystatus );
-    p_param->enemyPokeParty = (POKEPARTY*)p_enemy->pokeparty;
+    p_param->enemyPokeParty = p_wk->p_enemy_modify_party;
     p_param->enemySex       = MyStatus_GetMySex( (MYSTATUS*)p_enemy->mystatus );
+
   }
 
 	return p_param;
@@ -1046,6 +1058,10 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
 
   p_param->p_btl_setup_param->LimitTimeGame    = Regulation_GetParam( p_reg , REGULATION_TIME_VS );
   p_param->p_btl_setup_param->LimitTimeCommand = Regulation_GetParam( p_reg , REGULATION_TIME_COMMAND );
+
+  OS_TFPrintf( 3, "vs %d\n", p_param->p_btl_setup_param->LimitTimeGame );
+  OS_TFPrintf( 3, "cmd %d\n",  p_param->p_btl_setup_param->LimitTimeCommand );
+
   p_param->p_btl_setup_param->musicDefault  = WBM_SND_SEQ_BATTLE;
   p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
 
@@ -1053,7 +1069,7 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
 
 
   //ポケモンパーティを設定（ニックネームフラグがOFFならば名前を書き換える）
-  PokeRegulation_ModifyNickName( p_reg, p_wk->p_player_btl_party );
+  PokeRegulation_ModifyNickName( p_reg, p_wk->p_player_btl_party, GFL_HEAP_LOWID( heapID ) );
 
   //ポケモン設定
   BATTLE_PARAM_SetPokeParty( p_param->p_btl_setup_param, p_wk->p_player_btl_party, BTL_CLIENT_PLAYER );

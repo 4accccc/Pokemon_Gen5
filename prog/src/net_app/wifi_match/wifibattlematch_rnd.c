@@ -247,7 +247,8 @@ static u32 Util_List_Main( WIFIBATTLEMATCH_RND_WORK *p_wk );
 //マッチング用データ作成
 static void Util_Matchkey_SetData( WIFIBATTLEMATCH_MATCH_KEY_DATA *p_data, const WIFIBATTLEMATCH_RND_WORK *cp_wk );
 //自分のデータ作成
-static void Util_SetupMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLEMATCH_RND_WORK *p_wk );
+static void Util_InitMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLEMATCH_RND_WORK *p_wk );
+static void Util_RenewalMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLEMATCH_RND_WORK *p_wk );
 //サブシーケンス
 static void Util_SubSeq_Start( WIFIBATTLEMATCH_RND_WORK *p_wk, WBM_SEQ_FUNCTION seq_function );
 static WBM_RND_SUBSEQ_RET Util_SubSeq_Main( WIFIBATTLEMATCH_RND_WORK *p_wk );
@@ -320,7 +321,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Init( GFL_PROC *p_proc, int *p_s
   p_wk->p_res     = WIFIBATTLEMATCH_VIEW_LoadResource( WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic ), WIFIBATTLEMATCH_VIEW_RES_MODE_RANDOM, HEAPID_WIFIBATTLEMATCH_CORE );
 
   //自分のデータを設定
-  Util_SetupMyData( p_param->p_player_data, p_wk );
+  Util_InitMyData( p_param->p_player_data, p_wk );
 
 	//共通モジュールの作成
 	p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
@@ -1695,8 +1696,9 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 { 
   enum
   { 
-    SEQ_START_MATCHING,
+    SEQ_INIT,
     SEQ_START_MATCHING_MSG,
+    SEQ_START_MATCHING,
     SEQ_WAIT_MATCHING,
     SEQ_START_CHECK_CHEAT,
     SEQ_WAIT_CHECK_CHEAT,
@@ -1718,27 +1720,34 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     SEQ_WAIT_MSG,
   };
 
-  WIFIBATTLEMATCH_RND_WORK	      *p_wk	    = p_wk_adrs;
+  WIFIBATTLEMATCH_RND_WORK	  *p_wk	    = p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
   switch( *p_seq )
   { 
     //-------------------------------------
     ///	マッチング開始
     //=====================================
-  case SEQ_START_MATCHING:
+  case SEQ_INIT:
     { 
-      WIFIBATTLEMATCH_MATCH_KEY_DATA  data;
-      Util_Matchkey_SetData( &data, p_wk );
-      PMSND_PlaySE( WBM_SND_SE_MATCHING );
-      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
-      WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, WIFIBATTLEMATCH_TYPE_RNDFREE, FALSE, p_param->p_param->btl_rule, &data ); 
+      Util_RenewalMyData( p_param->p_player_data, p_wk );
       *p_seq = SEQ_START_MATCHING_MSG;
     }
     break;
 
   case SEQ_START_MATCHING_MSG:
+    PMSND_PlaySE( WBM_SND_SE_MATCHING );
+    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_009, WBM_TEXT_TYPE_WAIT );
-    *p_seq = SEQ_WAIT_MATCHING;
+    *p_seq = SEQ_START_MATCHING;
+    break;
+
+  case SEQ_START_MATCHING:
+    { 
+      WIFIBATTLEMATCH_MATCH_KEY_DATA  data;
+      Util_Matchkey_SetData( &data, p_wk );
+      WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, WIFIBATTLEMATCH_TYPE_RNDFREE, FALSE, p_param->p_param->btl_rule, &data ); 
+    }
+    *p_seq  = SEQ_WAIT_MATCHING;
     break;
 
   case SEQ_WAIT_MATCHING:
@@ -1829,7 +1838,7 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     { 
       //不正なのでマッチングに戻る
       WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
-      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_Start );
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_Matching );
     }
     break;
 
@@ -1966,7 +1975,6 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
   case SEQ_WAIT_DISCONNECT:
     if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
     { 
-
       //スコアをセーブ
       Util_SaveFreeScore( p_param->p_rndmatch, p_param->p_param->btl_rule, p_param->btl_result );
       *p_seq  = SEQ_START_CARD;
@@ -1989,7 +1997,7 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     /// セーブ処理
     //=====================================
   case SEQ_START_SAVE_MSG:
-    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_017, WBM_TEXT_TYPE_STREAM );
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_017, WBM_TEXT_TYPE_WAIT);
     *p_seq = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE );
     break;
@@ -2008,6 +2016,7 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
         break;
       case SAVE_RESULT_OK:
       case SAVE_RESULT_NG:
+        WBM_TEXT_EndWait( p_wk->p_text );
         p_param->result = WIFIBATTLEMATCH_CORE_RESULT_NEXT_REC;
         WBM_SEQ_End( p_seqwk ); 
         break;
@@ -2342,7 +2351,7 @@ static void WbmRndSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       if( ret == WIFIBATTLEMATCH_NET_EVILCHECK_RET_SUCCESS )
       { 
         NAGI_Printf( "EvilCheck Success\n" );
-        (*p_seq)++;
+        (*p_seq)  = SEQ_END_CHECK;
       }
       else if( ret == WIFIBATTLEMATCH_NET_EVILCHECK_RET_ERROR )
       { 
@@ -2356,7 +2365,7 @@ static void WbmRndSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   case SEQ_END_CHECK:
     //データを格納
     OS_TPrintf( "ポケモン結果[不正番号%d]status=%d\n", p_wk->evilecheck_data.poke_result[0], p_wk->evilecheck_data.status_code );
-    if( p_wk->evilecheck_data.status_code == 0 && p_wk->evilecheck_data.poke_result[0] == NHTTP_RAP_EVILCHECK_RESULT_OK )
+    if( p_wk->evilecheck_data.status_code == 0 )
     { 
       //署名を保存
       GFL_STD_MemCopy( p_wk->evilecheck_data.sign, p_my_data->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
@@ -2757,13 +2766,13 @@ static void Util_Matchkey_SetData( WIFIBATTLEMATCH_MATCH_KEY_DATA *p_data, const
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  自分のデータを格納  （レートはまだ）
+ *	@brief  自分のデータを格納 
  *
  *	@param	WIFIBATTLEMATCH_ENEMYDATA *p_my_data    データ
  *	@param	WIFIBATTLEMATCH_RND_WORK *cp_wk         ワーク
  */
 //-----------------------------------------------------------------------------
-static void Util_SetupMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLEMATCH_RND_WORK *p_wk )
+static void Util_InitMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLEMATCH_RND_WORK *p_wk )
 { 
   GAMEDATA  *p_game_data  = p_wk->p_param->p_param->p_game_data;
 
@@ -2779,6 +2788,22 @@ static void Util_SetupMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLEMA
     p_sv            = GAMEDATA_GetSaveControlWork(p_game_data);
     cp_mypms        = SaveData_GetMyPmsDataConst( p_sv );
     MYPMS_GetPms( cp_mypms, MYPMS_PMS_TYPE_INTRODUCTION, &p_my_data->pms );
+  }
+  { 
+    if( p_wk->p_param->retmode == WIFIBATTLEMATCH_CORE_RETMODE_RATE )
+    { 
+      p_my_data->win_cnt  = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, 
+          RNDMATCH_TYPE_RATE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_WIN );
+      p_my_data->lose_cnt = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, 
+          RNDMATCH_TYPE_RATE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_LOSE );
+    }
+    else
+    { 
+      p_my_data->win_cnt  = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, 
+          RNDMATCH_TYPE_FREE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_WIN );
+      p_my_data->lose_cnt = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, 
+          RNDMATCH_TYPE_FREE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_LOSE );
+    }
   }
   {
     POKEPARTY *p_temoti;
@@ -2798,6 +2823,33 @@ static void Util_SetupMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLEMA
         GFL_HEAP_FreeMemory( p_temoti );
       }
       break;
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分のデータ更新
+ *
+ *	@param	WIFIBATTLEMATCH_ENEMYDATA *p_my_data  ワーク
+ *	@param	*p_wk   ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Util_RenewalMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLEMATCH_RND_WORK *p_wk )
+{ 
+  { 
+    if( p_wk->p_param->retmode == WIFIBATTLEMATCH_CORE_RETMODE_RATE )
+    { 
+      p_my_data->win_cnt  = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, 
+          RNDMATCH_TYPE_RATE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_WIN );
+      p_my_data->lose_cnt = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, 
+          RNDMATCH_TYPE_RATE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_LOSE );
+    }
+    else
+    { 
+      p_my_data->win_cnt  = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, 
+          RNDMATCH_TYPE_FREE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_WIN );
+      p_my_data->lose_cnt = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, 
+          RNDMATCH_TYPE_FREE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_LOSE );
     }
   }
 }
@@ -2851,20 +2903,38 @@ static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, HEAPID heapI
   void *p_buff;
   POKEPARTY *p_party  = (POKEPARTY *)p_data->pokeparty;
   const POKEMON_PARAM *cp_pp;
-  BOOL ret  = TRUE;
+  BOOL ret;
 
-  p_buff  = NHTTP_RAP_EVILCHECK_CreateVerifyPokeBuffer( POKETOOL_GetWorkSize(), 6, GFL_HEAP_LOWID(heapID) );
+  p_buff  = NHTTP_RAP_EVILCHECK_CreateVerifyPokeBuffer( POKETOOL_GetWorkSize(), PokeParty_GetPokeCount(p_party) , GFL_HEAP_LOWID(heapID) );
 
   for( i = 0; i < PokeParty_GetPokeCount( p_party ); i++ )
   { 
     cp_pp  = PokeParty_GetMemberPointer( p_party, i);
     NHTTP_RAP_EVILCHECK_AddPokeVerifyPokeBuffer( p_buff, cp_pp, POKETOOL_GetWorkSize(), i );
+    OS_TPrintf( "monsno %d\n", PP_Get( cp_pp, ID_PARA_monsno, NULL) );
+    OS_TPrintf( "rnd %d\n", PP_Get( cp_pp, ID_PARA_personal_rnd, NULL) );
+    OS_TPrintf( "crc %d\n", GFL_STD_CrcCalc( cp_pp, POKETOOL_GetWorkSize() ) );
   }
 
-  ret = NHTTP_RAP_EVILCHECK_VerifySign( p_buff, POKETOOL_GetWorkSize(), 6, p_data->sign, GFL_HEAP_LOWID(heapID) );
+  ret = NHTTP_RAP_EVILCHECK_VerifySign( p_buff, POKETOOL_GetWorkSize(), PokeParty_GetPokeCount(p_party) , p_data->sign, GFL_HEAP_LOWID(heapID) );
 
-  NAGI_Printf( "不正？=[%d]\n", ret );
   NHTTP_RAP_EVILCHECK_DeleteVerifyPokeBuffer( p_buff );
+
+  NAGI_Printf( "不正チェック通過？=[%d]\n", ret );
+  NAGI_Printf( "パーティ=[%d]\n", PokeParty_GetPokeCount( p_party ) );
+  
+  { 
+    int i;
+    for( i = 0; i < NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN; i++ )
+    { 
+      OS_TPrintf( "%d ", p_data->sign[i] );
+      if(i % 0x10 == 0xF )
+      { 
+        OS_TPrintf( "\n" );
+      }
+    }
+  }
+
 
   return ret;
 

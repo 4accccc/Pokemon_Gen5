@@ -124,8 +124,8 @@ typedef enum
 #define TIMEOUT_MS   100  // HTTP通信のタイムアウト時間
 #define PLAYER_NUM   2          // プレイヤー数
 #define TEAM_NUM     0          // チーム数
-#define CANCELSELECT_TIMEOUT (60*60)     //キャンセルセレクトタイムアウト
-#define ASYNC_TIMEOUT (60*60)     //キャンセルセレクトタイムアウト
+#define CANCELSELECT_TIMEOUT (20*60)     //キャンセルセレクトタイムアウト
+#define ASYNC_TIMEOUT (60*60)     //非同期用タイムアウト
 
 #define RECV_BUFFER_SIZE  (0x1000)
 
@@ -742,6 +742,7 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
   STD_TSPrintf( p_wk->filter, "mod=%d And rul=%d And deb=%d", btl_mode, btl_rule, MATCHINGKEY );
   OS_TFPrintf( 3, "%s\n", p_wk->filter );
   p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START;
+  p_wk->async_timeout = 0;
 
   //接続評価コールバック指定
   switch( mode )
@@ -852,7 +853,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
     {
       u16 netID;
       netID = GFL_NET_SystemGetCurrentID();
-      if( netID != GFL_NET_NO_PARENTMACHINE){  // 子機として接続が完了した
+      if( !GFL_NET_IsParentMachine() ){  // 子機として接続が完了した
         if( GFL_NET_HANDLE_RequestNegotiation() )
         {
           p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CONNECT_CHILD;
@@ -882,6 +883,13 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
     break;
 
   case WIFIBATTLEMATCH_NET_SEQ_CONNECT_PARENT:
+    if( p_wk->cancel_select_timeout++ > CANCELSELECT_TIMEOUT )
+    { 
+      p_wk->cancel_select_timeout = 0;
+      DEBUG_NET_Printf( "マッチングネゴシエーションタイムアウト\n" );
+      p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
+    }
+
     if( GFL_NET_HANDLE_GetNumNegotiation() != 0 )
     {
       if( GFL_NET_HANDLE_RequestNegotiation() )
@@ -3963,7 +3971,11 @@ void WIFIBATTLEMATCH_NET_StartEvilCheck( WIFIBATTLEMATCH_NET_WORK *p_wk, const v
       for( i = 0; i < PokeParty_GetPokeCount(cp_party); i++ )
       { 
         p_pp  = PokeParty_GetMemberPointer( cp_party, i );
-            NHTTP_RAP_PokemonEvilCheckAdd( p_wk->p_nhttp, p_pp, POKETOOL_GetWorkSize() );
+        NHTTP_RAP_PokemonEvilCheckAdd( p_wk->p_nhttp, p_pp, POKETOOL_GetWorkSize() );
+
+        OS_TPrintf( "monsno %d\n", PP_Get( p_pp, ID_PARA_monsno, NULL) );
+        OS_TPrintf( "rnd %d\n", PP_Get( p_pp, ID_PARA_personal_rnd, NULL) );
+        OS_TPrintf( "crc %d\n", GFL_STD_CrcCalc( p_pp, POKETOOL_GetWorkSize() ) );
       }
       p_wk->poke_max  = PokeParty_GetPokeCount(cp_party);
     }
@@ -4042,8 +4054,23 @@ WIFIBATTLEMATCH_NET_EVILCHECK_RET WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEM
 
       if( p_data->status_code == 0 )
       { 
+        NAGI_Printf( "不正チェック通過してサインもらいました！\n" );
         cp_sign  = NHTTP_RAP_EVILCHECK_GetSign( p_buff, p_wk->poke_max );
         GFL_STD_MemCopy( cp_sign, p_data->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
+
+        { 
+          int i;
+          for( i = 0; i < NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN; i++ )
+          { 
+            OS_TPrintf( "%d ", p_data->sign[i] );
+            if(i % 0x10 == 0xF )
+            { 
+              OS_TPrintf( "\n" );
+            }
+          }
+
+        }
+
       }
 
       NHTTP_RAP_PokemonEvilCheckDelete(p_wk->p_nhttp);

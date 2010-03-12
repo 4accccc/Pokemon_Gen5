@@ -501,22 +501,24 @@ void PokeRegulation_ModifyLevelPokeParty( const REGULATION* pReg, POKEPARTY *par
  *	@param	*party                  ポケモンパーティ
  */
 //-----------------------------------------------------------------------------
-void PokeRegulation_ModifyNickName( const REGULATION* pReg, POKEPARTY *party )
+void PokeRegulation_ModifyNickName( const REGULATION* pReg, POKEPARTY *party, HEAPID heapID )
 { 
-  if( Regulation_GetParam( pReg , REGULATION_NICKNAME ) )
+  if( Regulation_GetParam( pReg , REGULATION_NICKNAME ) == 0 )
   { 
     int i;
+
+    STRBUF  *p_name = GFL_STR_CreateBuffer( MONS_NAME_SIZE + EOM_SIZE, heapID );
     for( i = 0; i < PokeParty_GetPokeCount( party);i ++ )
     { 
       POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( party, i );
       if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) )
       { 
-        STRBUF  *p_name = GFL_MSG_CreateString( GlobalMsg_PokeName, PP_Get( p_pp, ID_PARA_monsno, NULL ) );
+        GFL_MSG_GetString( GlobalMsg_PokeName, PP_Get( p_pp, ID_PARA_monsno, NULL ), p_name );
         PP_Put( p_pp, ID_PARA_nickname, (u32)p_name );
 
-        GFL_HEAP_FreeMemory( p_name );
       }
     }
+    GFL_HEAP_FreeMemory( p_name );
   }
 }
 //------------------------------------------------------------------
