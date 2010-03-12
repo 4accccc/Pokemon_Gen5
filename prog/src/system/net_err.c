@@ -94,6 +94,7 @@ typedef struct{
   u8                      net_type;   //ネットのタイプ
   u8                      dummy[2];
   NET_ERR_CHECK           err_important_type;  //エラーの重度軽度判別
+  u32                     wifi_msg;   //WIFIで表示するものは先に取得するため
 
 }NET_ERR_SYSTEM;
 
@@ -197,6 +198,22 @@ void NetErr_Main(void)
       OS_TPrintf("NetErr エラー発生\n");
       GFL_NET_DeleteInitializeCallback();
       NetErr_ErrorSet();
+
+      //WIFIのエラーならばオーバーレイが解放される前にメッセージ番号を貰う
+#ifndef MULTI_BOOT_MAKE  //通常時処理
+      {
+        const GFLNetInitializeStruct* net_init  = GFL_NET_GetNETInitStruct();
+        if( net_init->bNetType == GFL_NET_TYPE_WIFI 
+            || net_init->bNetType == GFL_NET_TYPE_WIFI_LOBBY 
+            || net_init->bNetType == GFL_NET_TYPE_WIFI_GTS )
+        { 
+          GFL_NETSTATE_DWCERROR *p_dwc_error   = GFL_NET_StateGetWifiError();
+
+          NetErrSystem.wifi_msg = GFL_NET_DWC_ErrorType( p_dwc_error->errorCode,
+              p_dwc_error->errorType);
+        }
+      }
+#endif 
     }
   }
 }
@@ -741,7 +758,7 @@ static void Local_ErrMessagePrint(void)
 			ARCID_MESSAGE, NARC_message_wifi_system_dat, HEAPID_NET_TEMP);
 
       //WIFIで表示するメッセージを取得
-      type    = GFL_NET_DWC_ErrorType( nes->wifi_error.errorCode, nes->wifi_error.errorType);
+      type    = NetErrSystem.wifi_msg;
       if(type == 11){
         msgno = dwc_error_0015;
         type = 11;
