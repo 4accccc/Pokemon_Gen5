@@ -1726,6 +1726,23 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _PLAYER_FORM_GET
+ * @brief 自機の動作形態を取得
+ * @param ret_wk 形態格納先
+ * SCR_PLAYER_FORM_NORMAL　二足
+ * SCR_PLAYER_FORM_CYCLE　自転車
+ * SCR_PLAYER_FORM_SWIM　波乗り
+ */
+//--------------------------------------------------------------
+#define _PLAYER_FORM_GET( ret_wk ) _ASM_PLAYER_FORM_GET ret_wk
+
+  .macro _ASM_PLAYER_FORM_GET ret_wk
+  .short EV_SEQ_GET_PLAYER_FORM
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @brief   自機のスクリプト用レールロケーション取得　！レールマップ専用！
  * @param index   戻り値１　インデックス
  * @param front   戻り値２  フロントインデックス

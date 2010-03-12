@@ -40,6 +40,7 @@ extern VMCMD_RESULT EvCmdPlayerRequest( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdPlayerUpDown( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdPosPlayerTurn( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGetPlayerFrom( VMHANDLE *core, void *wk );
 
 
 //======================================================================

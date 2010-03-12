@@ -372,3 +372,9 @@
 #define SCR_ZUKAN_AWARD_ZENKOKU   (1)  // ëSçëê}ä”äÆê¨
 #define SCR_ZUKAN_AWARD_SUBWAY_ROUTE_MAP  (2)  // òHê¸ê}
 
+//--------------------------------------------------------------
+/// é©ã@ìÆçÏå`ë‘
+//--------------------------------------------------------------
+#define SCR_PLAYER_FORM_NORMAL (0)
+#define SCR_PLAYER_FORM_CYCLE (1)
+#define SCR_PLAYER_FORM_SWIM (2)

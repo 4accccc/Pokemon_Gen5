@@ -233,7 +233,7 @@
   DEF_CMD( EvCmdEyeTrainerTypeGet, EV_SEQ_EYE_TRAINER_TYPE_GET )
 
   DEF_CMD( EvCmdEyeTrainerIdGet, EV_SEQ_EYE_TRAINER_ID_GET )
-  NO_CMD()
+  DEF_CMD( EvCmdGetPlayerFrom, EV_SEQ_GET_PLAYER_FORM )
   NO_CMD()
   NO_CMD()
   

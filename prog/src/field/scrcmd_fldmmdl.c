@@ -973,10 +973,41 @@ VMCMD_RESULT EvCmdPosPlayerTurn( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
-
-
-
-
+//--------------------------------------------------------------
+/**
+ * 自機の動作形態を取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetPlayerFrom( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fldparam = SCRIPT_GetFieldParam( sc );
+  FIELDMAP_WORK *fieldmap = fldparam->fieldMap;
+  FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+  u16 *ret_wk = SCRCMD_GetVMWork( core, work );
+  PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( fld_player );
+  
+  switch( form ){
+  case PLAYER_MOVE_FORM_NORMAL:
+    *ret_wk = SCR_PLAYER_FORM_NORMAL;
+    break;
+  case PLAYER_MOVE_FORM_CYCLE:
+    *ret_wk = SCR_PLAYER_FORM_CYCLE;
+    break;
+  case PLAYER_MOVE_FORM_SWIM:
+    *ret_wk = SCR_PLAYER_FORM_SWIM;
+    break;
+  default:
+    GF_ASSERT( 0 );
+    *ret_wk = SCR_PLAYER_FORM_NORMAL;
+  }
+  
+  return( VMCMD_RESULT_CONTINUE );
+}
 
 //======================================================================
 //  railマップ専用
