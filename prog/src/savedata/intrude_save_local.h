@@ -24,4 +24,6 @@ struct _INTRUDE_SAVE_WORK{
   u8 gpower_id;           ///<自身が装備しているGパワーID(セットしていない場合はGPOWER_ID_NULL)
   u8 gpower_distribution_bit[2]; ///<Gパワー配布受信bit
   u8 padding;
+  u32 clear_mission_count;       ///<ミッションクリア数
+  s64 palace_sojourn_time;       ///<パレス滞在時間
 };
