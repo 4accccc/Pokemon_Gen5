@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-12T12:46:51"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-03-12T12:48:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -501,11 +501,6 @@
 		<language name="JPN_KANJI" width="216">グループモード：
 決めた場所に　当てはまる
 グループを　選んでください</language>
-	</row>
-
-	<row id="str_mode_01">
-		<language name="JPN" width="216">モードきりかえ</language>
-		<language name="JPN_KANJI" width="216">モードきりかえ</language>
 	</row>
 
 	<flowchart-group-list>
