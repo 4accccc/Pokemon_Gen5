@@ -353,7 +353,7 @@
 #define ITEM_WAZAMASIN37		( 364 )		// わざマシン３７
 #define ITEM_WAZAMASIN38		( 365 )		// わざマシン３８
 #define ITEM_WAZAMASIN39		( 366 )		// わざマシン３９
-#define ITEM_A		( 367 )		// 　
+#define ITEM_WAZAMASIN40		( 367 )		// わざマシン４０
 #define ITEM_WAZAMASIN41		( 368 )		// わざマシン４１
 #define ITEM_WAZAMASIN42		( 369 )		// わざマシン４２
 #define ITEM_WAZAMASIN43		( 370 )		// わざマシン４３

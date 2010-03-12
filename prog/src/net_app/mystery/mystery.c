@@ -192,7 +192,7 @@ typedef enum
 //-------------------------------------
 ///	ââèo
 //=====================================
-#define MYSTERY_EFFECT_DEFAULT_SCROLL_SPEED     (0)
+#define MYSTERY_EFFECT_DEFAULT_SCROLL_SPEED     (-FX32_CONST(0.2))
 #define MYSTERY_EFFECT_DEMO_SCROLL_SPEED        (-FX32_CONST(4.0))
 #define MYSTERY_EFFECT_DEMO_SCROLL_CHANGE_SYNC  (60)
 
