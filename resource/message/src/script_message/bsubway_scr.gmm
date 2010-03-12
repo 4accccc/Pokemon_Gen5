@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-03-10T23:27:01"/>
+	<create user="morimoto" host="W00220" date="2010-03-12T11:31:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="41" top="286" right="746" bottom="906" maximized="no" rayout="Vertical2">
+	<dialog left="303" top="224" right="1008" bottom="844" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="753" top="172" right="1226" bottom="570" visible="yes"/>
+		<tag-palette left="753" top="172" right="1226" bottom="570" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -923,12 +923,12 @@
 
 	<row id="msg_bsw_scr_57">
 		<comment>マルチ　パートナー男</comment>
-		<language name="JPN" width="256">こんにちは！　ぼく○○○○○！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">こんにちは！　ぼく　トウヤ！[BE:01:ページ切り替え（クリア）]
 きみ　マルチトレインに
 ちょうせんするの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
 マルチトレインに　ちょうせんするには
 パートナーが　ひつようなんだ</language>
-		<language name="JPN_KANJI" width="256">こんにちは！　ぼく○○○○○！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">こんにちは！　ぼく　トウヤ！[BE:01:ページ切り替え（クリア）]
 きみ　マルチトレインに
 ちょうせんするの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
 マルチトレインに　ちょうせんするには
@@ -937,12 +937,12 @@
 
 	<row id="msg_bsw_scr_58">
 		<comment>マルチ　パートナー女</comment>
-		<language name="JPN" width="256">こんにちは！　わたし○○○○○！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">こんにちは！　わたし　トウコ！[BE:01:ページ切り替え（クリア）]
 あなた　マルチトレインに
 ちょうせんするの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
 マルチトレインに　ちょうせんするには
 パートナーが　ひつようなのよ</language>
-		<language name="JPN_KANJI" width="256">こんにちは！　わたし○○○○○！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">こんにちは！　わたし　トウコ！[BE:01:ページ切り替え（クリア）]
 あなた　マルチトレインに
 ちょうせんするの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
 マルチトレインに　ちょうせんするには
