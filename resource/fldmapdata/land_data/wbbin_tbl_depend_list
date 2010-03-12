@@ -634,10 +634,6 @@ $(DIR_WBTMP)/c03_g00_00.tbl: $(DIR_RES)/c03_g00_00.bin
 	@echo create_bintbl c03_g00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/c03_g00_00.bin
 
-$(DIR_WBTMP)/c03_h00_00.tbl: $(DIR_RES)/c03_h00_00.bin
-	@echo create_bintbl c03_h00_00
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/c03_h00_00.bin
-
 $(DIR_WBTMP)/c03_i00_00.tbl: $(DIR_RES)/c03_i00_00.bin
 	@echo create_bintbl c03_i00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/c03_i00_00.bin
