@@ -517,14 +517,14 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 				PMSND_PlaySE( SEQ_SE_DECIDE2 );
 			}
 */
-			PMSND_PlaySE( SEQ_SE_CANCEL1 );
+			PMSND_PlaySE( SEQ_SE_CANCEL2 );
       wk->dat->ret_item = ITEM_DUMMY_DATA;
       wk->dat->ret_page = BBAG_POKE_MAX;
       BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
       return SEQ_BBAG_ENDSET;
 
     case CURSORMOVE_CANCEL:   // キャンセル
-			PMSND_PlaySE( SEQ_SE_CANCEL1 );
+			PMSND_PlaySE( SEQ_SE_CANCEL2 );
       wk->dat->ret_item = ITEM_DUMMY_DATA;
       wk->dat->ret_page = BBAG_POKE_MAX;
       BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
@@ -590,7 +590,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 			PMSND_PlaySE( SEQ_SE_DECIDE2 );
 		}
 */
-		PMSND_PlaySE( SEQ_SE_CANCEL1 );
+		PMSND_PlaySE( SEQ_SE_CANCEL2 );
     BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
     if( wk->dat->mode == BBAG_MODE_SHOOTER ){
       wk->dat->ret_item = ITEM_DUMMY_DATA;
@@ -603,7 +603,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
     break;
 
   case CURSORMOVE_CANCEL:   // キャンセル
-		PMSND_PlaySE( SEQ_SE_CANCEL1 );
+		PMSND_PlaySE( SEQ_SE_CANCEL2 );
     BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
     if( wk->dat->mode == BBAG_MODE_SHOOTER ){
       wk->dat->ret_item = ITEM_DUMMY_DATA;
@@ -765,13 +765,13 @@ static int BBAG_SeqUseSelect( BBAG_WORK * wk )
 			PMSND_PlaySE( SEQ_SE_DECIDE2 );
 		}
 */
-		PMSND_PlaySE( SEQ_SE_CANCEL1 );
+		PMSND_PlaySE( SEQ_SE_CANCEL2 );
     wk->ret_seq = SEQ_BBAG_PAGE2_CHG;
     BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
     return SEQ_BBAG_BUTTON_WAIT;
 
   case CURSORMOVE_CANCEL:   // キャンセル
-		PMSND_PlaySE( SEQ_SE_CANCEL1 );
+		PMSND_PlaySE( SEQ_SE_CANCEL2 );
     wk->ret_seq = SEQ_BBAG_PAGE2_CHG;
     BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
     return SEQ_BBAG_BUTTON_WAIT;
