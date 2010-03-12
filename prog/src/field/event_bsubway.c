@@ -184,7 +184,7 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
     KAGAYA_Printf( "ƒŒƒMƒ…ƒŒ[ƒVƒ‡ƒ“@%d\n", reg );
     
     list->reg = (void*)PokeRegulation_LoadDataAlloc( reg, HEAPID_PROC );
-    list->mode = PL_MODE_BATTLE;
+    list->mode = PL_MODE_BATTLE_SUBWAY;
     list->type = type;
     
     //debug

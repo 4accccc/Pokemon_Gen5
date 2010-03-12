@@ -887,6 +887,10 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       if( ret == POKE_REG_OK || ret == POKE_REG_TOTAL_LV_FAILED ){
         *ret_wk = TRUE; //ok
       }
+      
+#ifdef DEBUG_BSW_REGU_NONE
+      *ret_wk = TRUE;
+#endif
     }
     break;
   //バトルボックス使用準備
@@ -908,7 +912,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //フラグを別途ワークに保存しておくのをオススメします。)
   //なので存在チェックの前にこれを呼ぶ必要がある。
   case BSWSUB_CALL_BTLREC_EXIST:
-    {
+    if( bsw_scr->btlrec_exist_f == BSW_BTLREC_EXIST_NG ){
       LOAD_RESULT res;
       bsw_scr->btlrec_exist_f = BSW_BTLREC_EXIST_NON;
       if( BattleRec_DataOccCheck(
@@ -947,8 +951,6 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     return( VMCMD_RESULT_SUSPEND );
   //戦闘用ワーク開放
   case BSWSUB_FREE_BTLPRM:
-    GF_ASSERT( bsw_scr->btl_setup_param != NULL );
-    
     if( bsw_scr->btl_setup_param != NULL ){
       BattleRec_Exit();
       BATTLE_PARAM_Delete( bsw_scr->btl_setup_param );

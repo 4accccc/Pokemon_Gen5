@@ -100,7 +100,7 @@ typedef enum
 //	typedef struct
 //======================================================================
 //--------------------------------------------------------------
-/// KEYCURSOR_WORK
+/// KEYWAIT_CURSOR_WORK
 //--------------------------------------------------------------
 typedef struct
 {
@@ -109,7 +109,10 @@ typedef struct
   u8 cursor_anm_frame;
   u8 padding;
   GFL_BMP_DATA *bmp_cursor;
-}KEYCURSOR_WORK;
+
+  void *pArcChara;
+  NNSG2dCharacterData *pChara;
+}KEYWAIT_CURSOR_WORK;
 
 //--------------------------------------------------------------
 ///	FLDMSGPRINT
@@ -212,7 +215,7 @@ struct _TAG_FLDMSGWIN_STREAM
   STRBUF *strBuf;
 	FLDMSGBG *fmb;
    
-  KEYCURSOR_WORK cursor_work;
+  KEYWAIT_CURSOR_WORK cursor_work;
 };
 
 //--------------------------------------------------------------
@@ -227,7 +230,7 @@ struct _TAG_FLDSYSWIN_STREAM
   STRBUF *strBuf;
 	FLDMSGBG *fmb;
    
-  KEYCURSOR_WORK cursor_work;
+  KEYWAIT_CURSOR_WORK cursor_work;
 };
 
 //--------------------------------------------------------------
@@ -249,7 +252,7 @@ struct _TAG_FLDBGWIN
   int scroll_y;
   u32 line;
   
-  KEYCURSOR_WORK cursor_work;
+  KEYWAIT_CURSOR_WORK cursor_work;
 };
 
 //--------------------------------------------------------------
@@ -262,7 +265,7 @@ struct _TAG_FLDSPWIN
 	FLDMSGBG *fmb;
   
   GFL_BMP_DATA *bmp_bg;
-  KEYCURSOR_WORK cursor_work;
+  KEYWAIT_CURSOR_WORK cursor_work;
 };
 
 //======================================================================
@@ -291,15 +294,15 @@ static BOOL bgwin_ScrollBmp(
     GFL_BMP_DATA *bmp, GFL_BMP_DATA *old, GFL_BMP_DATA *new,
     int y, u16 n_col );
 
-static void keyCursor_Init( KEYCURSOR_WORK *work, HEAPID heapID );
-static void keyCursor_Delete( KEYCURSOR_WORK *work );
-static CURSOR_STATE keyCursor_GetState( KEYCURSOR_WORK *work );
-static void keyCursor_Clear (
-    KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col );
-static void keyCursor_Write(
-    KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col );
-static void keyCursor_WriteBmpBG(
-    KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, GFL_BMP_DATA *bmp_bg );
+static void keyWaitCursor_Init( KEYWAIT_CURSOR_WORK *work, HEAPID heapID );
+static void keyWaitCursor_Delete( KEYWAIT_CURSOR_WORK *work );
+static CURSOR_STATE keyWaitCursor_GetState( KEYWAIT_CURSOR_WORK *work );
+static void keyWaitCursor_Clear (
+    KEYWAIT_CURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col );
+static void keyWaitCursor_Write(
+    KEYWAIT_CURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col );
+static void keyWaitCursor_WriteBmpBG(
+    KEYWAIT_CURSOR_WORK *work, GFL_BMP_DATA *bmp, GFL_BMP_DATA *bmp_bg );
 
 static void syswin_InitGraphic( HEAPID heapID );
 static void syswin_WriteWindow( const GFL_BMPWIN *bmpwin );
@@ -320,7 +323,7 @@ static int FldMsgBG_SetFldSubMsgWin( FLDMSGBG *fmb, FLDSUBMSGWIN *subwin );
 static FLDSUBMSGWIN * FldMsgBG_DeleteFldSubMsgWin( FLDMSGBG *fmb, int id );
 
 static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo;
-static const u8 ALIGN4 skip_cursor_Character[128];
+//static const u8 ALIGN4 skip_cursor_Character[128];
 
 #ifdef DEBUG_FLDMSGBG
 static void DEBUG_AddCountPrintTCB( FLDMSGBG *fmb );
@@ -1695,8 +1698,6 @@ u32 FLDMENUFUNC_GetListMenuLen( u32 num, u32 font_size, u32 space )
   return( c );
 }
 
-
-
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC_HEADERにリスト数、座標系情報を追加
@@ -1984,7 +1985,7 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
       bmppos_x, bmppos_y, bmpsize_x, bmpsize_y, fmb->deriveWin_plttNo );
   msgWin->strBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN, fmb->heapID );
   
-  keyCursor_Init( &msgWin->cursor_work, fmb->heapID );
+  keyWaitCursor_Init( &msgWin->cursor_work, fmb->heapID );
 
   winframe_SetPaletteBlack( fmb->heapID );
   setBlendAlpha( TRUE );
@@ -2012,7 +2013,7 @@ void FLDMSGWIN_STREAM_Delete( FLDMSGWIN_STREAM *msgWin )
   }
   
   GFL_STR_DeleteBuffer( msgWin->strBuf );
-  keyCursor_Delete( &msgWin->cursor_work );
+  keyWaitCursor_Delete( &msgWin->cursor_work );
 	GFL_HEAP_FreeMemory( msgWin );
 }
 
@@ -2079,16 +2080,16 @@ BOOL FLDMSGWIN_STREAM_Print( FLDMSGWIN_STREAM *msgWin )
   
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
-    if( keyCursor_GetState(&msgWin->cursor_work) == CURSOR_STATE_WRITE ){
+    if( keyWaitCursor_GetState(&msgWin->cursor_work) == CURSOR_STATE_WRITE ){
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgWin->bmpwin );
-      keyCursor_Clear( &msgWin->cursor_work, bmp, 0x0f );
+      keyWaitCursor_Clear( &msgWin->cursor_work, bmp, 0x0f );
 		  GFL_BMPWIN_TransVramCharacter( msgWin->bmpwin );
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
     {
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgWin->bmpwin );
-      keyCursor_Write( &msgWin->cursor_work, bmp, 0x0f );
+      keyWaitCursor_Write( &msgWin->cursor_work, bmp, 0x0f );
 		  GFL_BMPWIN_TransVramCharacter( msgWin->bmpwin );
     }
     break;
@@ -2214,7 +2215,7 @@ FLDSYSWIN_STREAM * FLDSYSWIN_STREAM_Add(
 	sysWin->bmpwin = syswin_InitBmp( bmppos_y, fmb->heapID );
   sysWin->strBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN, fmb->heapID );
   
-  keyCursor_Init( &sysWin->cursor_work, fmb->heapID );
+  keyWaitCursor_Init( &sysWin->cursor_work, fmb->heapID );
   
   winframe_SetPaletteBlack( fmb->heapID );
   setBlendAlpha( TRUE );
@@ -2242,7 +2243,7 @@ void FLDSYSWIN_STREAM_Delete( FLDSYSWIN_STREAM *sysWin )
   }
   
   GFL_STR_DeleteBuffer( sysWin->strBuf );
-  keyCursor_Delete( &sysWin->cursor_work );
+  keyWaitCursor_Delete( &sysWin->cursor_work );
 	GFL_HEAP_FreeMemory( sysWin );
 }
 
@@ -2309,16 +2310,16 @@ BOOL FLDSYSWIN_STREAM_Print( FLDSYSWIN_STREAM *sysWin )
   
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
-    if( keyCursor_GetState(&sysWin->cursor_work) == CURSOR_STATE_WRITE ){
+    if( keyWaitCursor_GetState(&sysWin->cursor_work) == CURSOR_STATE_WRITE ){
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
-      keyCursor_Clear( &sysWin->cursor_work, bmp, 0x0f );
+      keyWaitCursor_Clear( &sysWin->cursor_work, bmp, 0x0f );
 		  GFL_BMPWIN_TransVramCharacter( sysWin->bmpwin );
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
     {
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
-      keyCursor_Write( &sysWin->cursor_work, bmp, 0x0f );
+      keyWaitCursor_Write( &sysWin->cursor_work, bmp, 0x0f );
 		  GFL_BMPWIN_TransVramCharacter( sysWin->bmpwin );
     }
     break;
@@ -2339,7 +2340,7 @@ BOOL FLDSYSWIN_STREAM_Print( FLDSYSWIN_STREAM *sysWin )
 void FLDSYSWIN_WriteKeyWaitCursor( FLDSYSWIN_STREAM *sysWin )
 {
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
-  keyCursor_Write( &sysWin->cursor_work, bmp, 0x0f );
+  keyWaitCursor_Write( &sysWin->cursor_work, bmp, 0x0f );
   GFL_BMPWIN_TransVramCharacter( sysWin->bmpwin );
 }
 
@@ -2447,7 +2448,7 @@ struct _TAG_FLDTALKMSGWIN
   
   STRBUF *strBuf;
   TALKMSGWIN_SYS *talkMsgWinSys; //FLDMSGBGより
-  KEYCURSOR_WORK cursor_work;
+  KEYWAIT_CURSOR_WORK cursor_work;
 };
 
 //--------------------------------------------------------------
@@ -2495,7 +2496,7 @@ static void fldTalkMsgWin_Add(
   
   TALKMSGWIN_OpenWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
   
-  keyCursor_Init( &tmsg->cursor_work, fmb->heapID );
+  keyWaitCursor_Init( &tmsg->cursor_work, fmb->heapID );
   
   if( type == TALKMSGWIN_TYPE_GIZA ){
     tmsg->shake_y = GIZA_SHAKE_Y;
@@ -2567,7 +2568,7 @@ void FLDTALKMSGWIN_StartClose( FLDTALKMSGWIN *tmsg )
     GFL_STR_DeleteBuffer( tmsg->strBuf );
   }
   
-  keyCursor_Delete( &tmsg->cursor_work );
+  keyWaitCursor_Delete( &tmsg->cursor_work );
   TALKMSGWIN_CloseWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
 }
 
@@ -2602,7 +2603,7 @@ void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg )
   }
   
   TALKMSGWIN_DeleteWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
-  keyCursor_Delete( &tmsg->cursor_work );
+  keyWaitCursor_Delete( &tmsg->cursor_work );
   GFL_HEAP_FreeMemory( tmsg );
 }
 
@@ -2682,11 +2683,11 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
   
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
-    if( keyCursor_GetState(&tmsg->cursor_work) == CURSOR_STATE_WRITE ){
+    if( keyWaitCursor_GetState(&tmsg->cursor_work) == CURSOR_STATE_WRITE ){
       GFL_BMPWIN *twin_bmp = TALKMSGWIN_GetBmpWin(
           tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
       GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
-      keyCursor_Clear( &tmsg->cursor_work, bmp, 0x0f );
+      keyWaitCursor_Clear( &tmsg->cursor_work, bmp, 0x0f );
 		  GFL_BMPWIN_TransVramCharacter( twin_bmp );
     }
     
@@ -2704,12 +2705,12 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
           tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
       
-      keyCursor_Write( &tmsg->cursor_work, bmp, 0x0f );
+      keyWaitCursor_Write( &tmsg->cursor_work, bmp, 0x0f );
 
       if( (trg & MSG_LAST_BTN) ){
         PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
         PRINTSYS_PrintStreamReleasePause( stream );
-        keyCursor_Clear( &tmsg->cursor_work, bmp, 0x0f );
+        keyWaitCursor_Clear( &tmsg->cursor_work, bmp, 0x0f );
         tmsg->flag_key_trg = FALSE;
       }
       
@@ -2741,7 +2742,7 @@ void FLDTALKMSGWIN_WriteKeyWaitCursor( FLDTALKMSGWIN *tmsg )
   GFL_BMPWIN *twin_bmp = TALKMSGWIN_GetBmpWin(
     tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
-  keyCursor_Write( &tmsg->cursor_work, bmp, 0x0f );
+  keyWaitCursor_Write( &tmsg->cursor_work, bmp, 0x0f );
   GFL_BMPWIN_TransVramCharacter( twin_bmp );
 }
 
@@ -2753,7 +2754,7 @@ void FLDTALKMSGWIN_WriteKeyWaitCursor( FLDTALKMSGWIN *tmsg )
 //--------------------------------------------------------------
 struct _TAG_FLDPLAINMSGWIN
 {
-  KEYCURSOR_WORK cursor_work;
+  KEYWAIT_CURSOR_WORK cursor_work;
   
   STRBUF *strBuf;
   FLDMSGBG *fmb;
@@ -2803,7 +2804,7 @@ static void fldPlainMsgWin_Add( FLDMSGBG *fmb,
       bmppos_x, bmppos_y, bmpsize_x, bmpsize_y,
       type );
   
-  keyCursor_Init( &plnwin->cursor_work, fmb->heapID );
+  keyWaitCursor_Init( &plnwin->cursor_work, fmb->heapID );
 }
 
 //--------------------------------------------------------------
@@ -2856,7 +2857,7 @@ void FLDPLAINMSGWIN_Delete( FLDPLAINMSGWIN *plnwin )
   }
   
   TALKMSGWIN_DeleteBmpWindow( plnwin->talkMsgWinSys, plnwin->bmpwin );
-  keyCursor_Delete( &plnwin->cursor_work );
+  keyWaitCursor_Delete( &plnwin->cursor_work );
   GFL_HEAP_FreeMemory( plnwin );
 }
 
@@ -3037,16 +3038,16 @@ BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin )
   
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
-    if( keyCursor_GetState(&plnwin->cursor_work) == CURSOR_STATE_WRITE ){
+    if( keyWaitCursor_GetState(&plnwin->cursor_work) == CURSOR_STATE_WRITE ){
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
-      keyCursor_Clear( &plnwin->cursor_work, bmp, 0x0f );
+      keyWaitCursor_Clear( &plnwin->cursor_work, bmp, 0x0f );
       GFL_BMPWIN_TransVramCharacter( plnwin->bmpwin );
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
     {
 		  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
-      keyCursor_Write( &plnwin->cursor_work, bmp, 0x0f );
+      keyWaitCursor_Write( &plnwin->cursor_work, bmp, 0x0f );
 		  GFL_BMPWIN_TransVramCharacter( plnwin->bmpwin );
     }
     break;
@@ -3067,7 +3068,7 @@ BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin )
 void FLDPLAINMSGWIN_WriteKeyWaitCursor( FLDPLAINMSGWIN *plnwin )
 {
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
-  keyCursor_Write( &plnwin->cursor_work, bmp, 0x0f );
+  keyWaitCursor_Write( &plnwin->cursor_work, bmp, 0x0f );
   GFL_BMPWIN_TransVramCharacter( plnwin->bmpwin );
 }
 
@@ -3083,7 +3084,7 @@ struct _TAG_FLDSUBMSGWIN
   int id; //ウィンドウID
   int talkMsgWinIdx;
   TALKMSGWIN_SYS *talkMsgWinSys; //FLDMSGBGより
-  KEYCURSOR_WORK cursor_work;
+  KEYWAIT_CURSOR_WORK cursor_work;
 };
 
 //--------------------------------------------------------------
@@ -3335,7 +3336,7 @@ FLDBGWIN * FLDBGWIN_Add( FLDMSGBG *fmb, FLDBGWIN_TYPE type )
 		GFL_BG_LoadScreenReq( fmb->bgFrame );
   }
   
-  keyCursor_Init( &bgWin->cursor_work, bgWin->fmb->heapID );
+  keyWaitCursor_Init( &bgWin->cursor_work, bgWin->fmb->heapID );
   
   fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
   setBlendAlpha( FALSE );
@@ -3380,7 +3381,7 @@ void FLDBGWIN_Delete( FLDBGWIN *bgWin )
     GFL_STR_DeleteBuffer( bgWin->strTemp );
   }
   
-  keyCursor_Delete( &bgWin->cursor_work );
+  keyWaitCursor_Delete( &bgWin->cursor_work );
   GFL_HEAP_FreeMemory( bgWin ); 
 }
 
@@ -3434,13 +3435,13 @@ BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
     bgWin->seq_no++;
   case 3: //ページ送り待ち
     if( !(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A) ){
-      keyCursor_Write( &bgWin->cursor_work,
+      keyWaitCursor_Write( &bgWin->cursor_work,
           GFL_BMPWIN_GetBmp(bgWin->bmpwin), BGWIN_NCOL );
 		  GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
       break;
     }
     
-    keyCursor_Clear( &bgWin->cursor_work,
+    keyWaitCursor_Clear( &bgWin->cursor_work,
           GFL_BMPWIN_GetBmp(bgWin->bmpwin), BGWIN_NCOL );
     
     GFL_BMP_Copy( GFL_BMPWIN_GetBmp(bgWin->bmpwin), bgWin->bmp_old );
@@ -3895,7 +3896,7 @@ FLDSPWIN * FLDSPWIN_Add( FLDMSGBG *fmb, FLDSPWIN_TYPE type,
 	GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
 	GFL_BG_LoadScreenReq( fmb->bgFrame );
   
-  keyCursor_Init( &spWin->cursor_work, fmb->heapID );
+  keyWaitCursor_Init( &spWin->cursor_work, fmb->heapID );
 
   fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
   setBlendAlpha( FALSE );
@@ -3920,7 +3921,7 @@ void FLDSPWIN_Delete( FLDSPWIN *spWin )
 	GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
 	GFL_BG_LoadScreenReq( spWin->fmb->bgFrame );
   
-  keyCursor_Delete( &spWin->cursor_work );
+  keyWaitCursor_Delete( &spWin->cursor_work );
 
   GFL_BMP_Delete( spWin->bmp_bg );
   GFL_BMPWIN_Delete( spWin->bmpwin );
@@ -3969,7 +3970,7 @@ BOOL FLDSPWIN_Print( FLDSPWIN *spWin )
     return( TRUE );
   }
   
-  keyCursor_WriteBmpBG( &spWin->cursor_work,
+  keyWaitCursor_WriteBmpBG( &spWin->cursor_work,
       GFL_BMPWIN_GetBmp(spWin->bmpwin), spWin->bmp_bg );
 	GFL_BMPWIN_TransVramCharacter( spWin->bmpwin );
   return( FALSE );
@@ -4037,40 +4038,55 @@ u32 FLDSPWIN_GetNeedWindowHeightCharaSize(
 //--------------------------------------------------------------
 /**
  * キー送りカーソル 初期化
- * @param work KEYCURSOR_WORK
+ * @param work KEYWAIT_CURSOR_WORK
  * @param heapID HEAPID
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void keyCursor_Init( KEYCURSOR_WORK *work, HEAPID heapID )
+static void keyWaitCursor_Init( KEYWAIT_CURSOR_WORK *work, HEAPID heapID )
 {
-  MI_CpuClear8( work, sizeof(KEYCURSOR_WORK) );
+  MI_CpuClear8( work, sizeof(KEYWAIT_CURSOR_WORK) );
+  
+#if 0
   work->bmp_cursor = GFL_BMP_CreateWithData(
         (u8*)skip_cursor_Character,
         2, 2, GFL_BMP_16_COLOR, heapID );
+  
+#else
+  {
+    work->pArcChara = GFL_ARC_UTIL_Load(
+        ARCID_FLDMAP_WINFRAME, NARC_winframe_talk_cursor_NCGR,
+        FALSE, heapID );
+    NNS_G2dGetUnpackedBGCharacterData( work->pArcChara, &work->pChara );
+    
+    work->bmp_cursor = GFL_BMP_CreateWithData(
+        (u8*)work->pChara->pRawData, 1, 1, GFL_BMP_16_COLOR, heapID );
+  }
+#endif
 }
 
 //--------------------------------------------------------------
 /**
  * キー送りカーソル 削除
- * @param work KEYCURSOR_WORK
+ * @param work KEYWAIT_CURSOR_WORK
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void keyCursor_Delete( KEYCURSOR_WORK *work )
+static void keyWaitCursor_Delete( KEYWAIT_CURSOR_WORK *work )
 {
   work->cursor_state = CURSOR_STATE_NONE;
   GFL_BMP_Delete( work->bmp_cursor );
+  GFL_HEAP_FreeMemory( work->pArcChara );
 }
 
 //--------------------------------------------------------------
 /**
  * キー送りカーソル　状態取得
- * @param work KEYCURSOR_WORK
+ * @param work KEYWAIT_CURSOR_WORK
  * @retval CURSOR_STATE
  */
 //--------------------------------------------------------------
-static CURSOR_STATE keyCursor_GetState( KEYCURSOR_WORK *work )
+static CURSOR_STATE keyWaitCursor_GetState( KEYWAIT_CURSOR_WORK *work )
 {
   return( work->cursor_state );
 }
@@ -4078,86 +4094,104 @@ static CURSOR_STATE keyCursor_GetState( KEYCURSOR_WORK *work )
 //--------------------------------------------------------------
 /**
  * キー送りカーソル クリア
- * @param work KEYCURSOR_WORK
+ * @param work KEYWAIT_CURSOR_WORK
  * @param bmp 表示先GFL_BMP_DATA
  * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void keyCursor_Clear(
-    KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
+static void keyWaitCursor_Clear(
+    KEYWAIT_CURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
 {
-  u16 x,y,offs;
+  u16 x,y;
   u16 tbl[3] = { 0, 1, 2 };
   
-  x = GFL_BMP_GetSizeX( bmp ) - 11;
-  y = GFL_BMP_GetSizeY( bmp ) - 9;
-  offs = tbl[work->cursor_anm_no];
-  GFL_BMP_Fill( bmp, x, y+offs, 10, 7, n_col );
+  x = GFL_BMP_GetSizeX( bmp ) - 8;
+  y = GFL_BMP_GetSizeY( bmp ) - 8 - tbl[work->cursor_anm_no];
+  GFL_BMP_Fill( bmp, x, y, 8, 8, n_col );
   
   work->cursor_state = CURSOR_STATE_NONE;
 }
 
 //--------------------------------------------------------------
 /**
- * キー送りカーソル 表示
- * @param work KEYCURSOR_WORK
+ * キー送りカーソル 描画部分
+ * @param work KEYWAIT_CURSOR_WORK
  * @param bmp 表示先GFL_BMP_DATA
  * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void keyCursor_Write(
-    KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
+static void keyWaitCursor_WriteCore(
+    KEYWAIT_CURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
 {
-  u16 x,y,offs;
+  u16 x,y;
   u16 tbl[3] = { 0, 1, 2 };
   
-  keyCursor_Clear( work, bmp, n_col );
-  
-  work->cursor_anm_frame++;
-  
-  if( work->cursor_anm_frame >= 4 ){
-    work->cursor_anm_frame = 0;
-    work->cursor_anm_no++;
-    work->cursor_anm_no %= 3;
-  }
-
-  x = GFL_BMP_GetSizeX( bmp ) - 11;
-  y = GFL_BMP_GetSizeY( bmp ) - 9;
-  offs = tbl[work->cursor_anm_no];
-  
-  GFL_BMP_Print( work->bmp_cursor, bmp, 0, 2, x, y+offs, 10, 7, 0x00 );
+  x = GFL_BMP_GetSizeX( bmp ) - 8;
+  y = GFL_BMP_GetSizeY( bmp ) - 8 - tbl[work->cursor_anm_no];
+  GFL_BMP_Print( work->bmp_cursor, bmp, 0, 0, x, y, 8, 8, 0x00 );
   
   work->cursor_state = CURSOR_STATE_WRITE;
 }
 
 //--------------------------------------------------------------
 /**
+ * キー送りカーソル 表示
+ * @param work KEYWAIT_CURSOR_WORK
+ * @param bmp 表示先GFL_BMP_DATA
+ * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void keyWaitCursor_Write(
+    KEYWAIT_CURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
+{
+  u16 x,y,offs;
+  u16 tbl[3] = { 0, 1, 2 };
+  
+  keyWaitCursor_Clear( work, bmp, n_col );
+  
+  work->cursor_anm_frame++;
+  
+  if( work->cursor_anm_frame >= 4 ){
+    work->cursor_anm_frame = 0;
+    work->cursor_anm_no++;
+    work->cursor_anm_no %= 3;
+  }
+  
+  keyWaitCursor_WriteCore( work, bmp, n_col );
+}
+
+//--------------------------------------------------------------
+/**
  * キー送りカーソル 表示　背景BITMAP指定
- * @param work KEYCURSOR_WORK
+ * @param work KEYWAIT_CURSOR_WORK
  * @param bmp 表示先GFL_BMP_DATA
  * @param bmp_bg 背景に張る1キャラ分のGFL_BMP_DATA
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void keyCursor_WriteBmpBG(
-    KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp,
+static void keyWaitCursor_WriteBmpBG(
+    KEYWAIT_CURSOR_WORK *work, GFL_BMP_DATA *bmp,
     GFL_BMP_DATA *bmp_bg )
 {
-  s16 x,y,offs;
+  s16 x,y;
   u16 tbl[3] = { 0, 1, 2 };
   
-  x = GFL_BMP_GetSizeX( bmp ) - (8 - 16);
-  y = GFL_BMP_GetSizeY( bmp ) - (8 - 16);
+  x = GFL_BMP_GetSizeX( bmp ) - 8;
+  y = GFL_BMP_GetSizeY( bmp ) - 8 - tbl[work->cursor_anm_no];
   
-  if( x >= 0 && y >= 0 ){ //BGを張る領域がある
-    s16 ix,iy;
-    for( iy = y; iy < (y+16); iy += 4 ){
-      for( ix = x; ix < (x+16); ix += 4 ){
-        GFL_BMP_Print( bmp_bg, bmp, 0, 0, ix, iy, 4, 4, GF_BMPPRT_NOTNUKI );
-      }
+  { //クリア
+    s16 dy = y & 0x07;
+    
+    if( dy ){
+      GFL_BMP_Print( bmp_bg, bmp,
+          0, 8-dy, x, y, 8, dy, GF_BMPPRT_NOTNUKI );
     }
+    
+    GFL_BMP_Print( bmp_bg, bmp,
+        0, 0, x, y+dy, 8, 8-dy, GF_BMPPRT_NOTNUKI );
   }
   
   work->cursor_anm_frame++;
@@ -4168,11 +4202,10 @@ static void keyCursor_WriteBmpBG(
     work->cursor_anm_no %= 3;
   }
   
-  x = GFL_BMP_GetSizeX( bmp ) - (8 - 10);
-  y = GFL_BMP_GetSizeY( bmp ) - (8 - 7 - 3);
-  offs = tbl[work->cursor_anm_no];
+  x = GFL_BMP_GetSizeX( bmp ) - 8;
+  y = GFL_BMP_GetSizeY( bmp ) - 8 - tbl[work->cursor_anm_no];
   
-  GFL_BMP_Print( work->bmp_cursor, bmp, 0, 2, x, y+offs, 10, 7, 0x00 );
+  GFL_BMP_Print( work->bmp_cursor, bmp, 0, 0, x, y, 8, 8, 0x00 );
   
   work->cursor_state = CURSOR_STATE_WRITE;
 }
@@ -4643,18 +4676,6 @@ static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo =
 /// 送りカーソルデータ 仮　PLから持ってきた
 //--------------------------------------------------------------
 #if 0
-static const u8 ALIGN4 skip_cursor_Character[128] = {
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x44,0x44,0x44,0x44,
-0x42,0x44,0x44,0x44,0x20,0x44,0x44,0x24, 0x00,0x42,0x44,0x22,0x00,0x20,0x24,0x02,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x24,0x00,0x00,0x00,
-0x22,0x00,0x00,0x00,0x02,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-
-0x00,0x00,0x22,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-};
-#else
 static const u8 ALIGN4 skip_cursor_Character[128] = {
 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x22,0x22,0x22,0x22,
 0x21,0x22,0x22,0x22,0x10,0x22,0x22,0x12, 0x00,0x21,0x22,0x11,0x00,0x10,0x12,0x01,
