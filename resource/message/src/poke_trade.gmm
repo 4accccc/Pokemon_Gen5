@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-03-11T13:45:57"/>
+	<create user="ohmori" host="W00223" date="2010-03-12T14:19:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="99" top="216" right="804" bottom="836" maximized="no" rayout="Vertical2">
+	<dialog left="842" top="288" right="1547" bottom="908" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="532" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1112,31 +1112,27 @@
 見せることはできません</language>
 	</row>
 
-	<row id="gtsnego_info_10" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+	<row id="gtsnego_info_10" back-color="#ffff80,,,#ff8080,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>gtsnego_info_04から
 「BOXからさしだす画面」
 最終判断後に、不正チェックで
 交換できないポケモンがいた
 ※ネゴでは、ウエイト60フレームずつ</comment>
-		<language name="JPN" width="256">えらんだ　ポケモンのなかに
-こうかんできない　ポケモンが　いました▽
-もういちど　えらびなおしてください</language>
-		<language name="JPN_KANJI" width="256">選んだポケモンの中に
-交換できない　ポケモンがいました▽
+		<language name="JPN" width="256">じぶんに　こうかんできない　ポケモンが
+います　もういちど　えらびなおしてください</language>
+		<language name="JPN_KANJI" width="256">自分に　交換できない　ポケモンがいます
 もう一度　選び直してください</language>
 	</row>
 
-	<row id="gtsnego_info_11" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+	<row id="gtsnego_info_11" back-color="#ffff80,,,#ff8080,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>gtsnego_info_04から
 「BOXからさしだす画面」
 最終判断後に、不正チェックで
 相手側に交換できないポケモンがいた
 ※ネゴでは、ウエイト60フレームずつ</comment>
-		<language name="JPN" width="256">あいてに　こうかんできない
-ポケモンが　いました▽
-もういちど　えらびなおしてください</language>
-		<language name="JPN_KANJI" width="256">相手に交換できない
-ポケモンが　いました▽
+		<language name="JPN" width="256">あいてに　こうかんできない ポケモンが
+いました　もういちど　えらびなおしてください</language>
+		<language name="JPN_KANJI" width="256">相手に交換できない　ポケモンがいました
 もう一度　選び直してください</language>
 	</row>
 
@@ -1160,18 +1156,14 @@
 交換します　よろしいですか？</language>
 	</row>
 
-	<row id="gtsnego_info_14" back-color="#ffff00,,,#ff8080,,,,,,,,,,,,,,">
+	<row id="gtsnego_info_14" back-color="#ffff00,,,#ff8080,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>「１匹選ぶ画面」
 相手が選ぶ画面をキャンセルしていた
 ※ネゴでは、ウエイト60フレームずつ</comment>
-		<language name="JPN" width="256">あいてが　こうかんを
-キャンセル　しました▼
-もういちど　さしだすポケモンを
-えらびなおして　ください</language>
-		<language name="JPN_KANJI" width="256">相手が交換を
-キャンセル　しました▼
-もう一度　差し出すポケモンを
-選び直してください</language>
+		<language name="JPN" width="256">あいてが　こうかんを　キャンセルしました
+もういちど　えらびなおしてください</language>
+		<language name="JPN_KANJI" width="256">相手が交換をキャンセルしました
+もう一度　選び直してください</language>
 	</row>
 
 	<row id="gtsnego_info_15" back-color="#ffff00,,,#80ff80,,,,,,,,,,,,,,">
@@ -1184,16 +1176,14 @@
 変更しますか？</language>
 	</row>
 
-	<row id="gtsnego_info_16" back-color="#ffff00,,,#ff8080,,,,,,,,,,,,,,">
+	<row id="gtsnego_info_16" back-color="#ffff00,,,#ff8080,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>「１匹選ぶ画面」
 自分が選ぶ画面をキャンセルした
 ※ネゴでは、ウエイト60フレームずつ</comment>
-		<language name="JPN" width="256">こうかんを　キャンセル　しました▼
-もういちど　さしだすポケモンを
-えらびなおして　ください</language>
-		<language name="JPN_KANJI" width="256">交換をキャンセルしました▼
-もう一度　差し出すポケモンを
-選び直してください</language>
+		<language name="JPN" width="256">こうかんを　キャンセルしました
+もういちど　えらびなおしてください</language>
+		<language name="JPN_KANJI" width="256">交換をキャンセルしました
+もう一度　選び直してください</language>
 	</row>
 
 	<row id="gtsnego_info_17" back-color="#ffff00,,,#ff8080,,,,,,,,,,,,,,">
