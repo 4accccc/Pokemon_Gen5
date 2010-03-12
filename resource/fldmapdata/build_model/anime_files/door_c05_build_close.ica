@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2009-11-16T13:08:12" source="door_c05_build_close.mb"/>
+	<create user="fuchino" host="W00152" date="2010-03-12T12:45:24" source="door_c05_build_close.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,31 +11,26 @@
 <body>
 
 <node_anm_info
-	frame_size="30"
+	frame_size="8"
 	scaling_rule="standard"
 	magnify="1.000000"
 	tool_start_frame="1"
-	tool_end_frame="30"
+	tool_end_frame="8"
 	interpolation="frame"
 	compress_node="merge" node_size="3 3"
 	frame_step_mode="1"
 	tolerance_scale="0.100000"
 	tolerance_rotate="0.100000"
-	tolerance_translate="0.100000"
+	tolerance_translate="0.010000"
 />
 
 <node_scale_data size="2">
 	1.000000 -1.000000
 </node_scale_data>
 
-<node_rotate_data size="61">
-	0.000000 -70.000000 -67.586182 -65.172363 -62.758545 -60.344727 -57.931152 -55.517334 -53.103516 -50.689697
-	-48.275879 -45.862061 -43.448242 -41.034424 -38.620605 -36.206787 -33.793213 -31.379395 -28.965576 -26.551758
-	-24.137939 -21.724121 -19.310303 -16.896484 -14.482666 -12.068848 -9.655273 -7.241455 -4.827637 -2.413818
-	0.000000 70.000000 67.586182 65.172363 62.758545 60.344727 57.931152 55.517334 53.103516 50.689697
-	48.275879 45.862061 43.448242 41.034424 38.620605 36.206787 33.793213 31.379395 28.965576 26.551758
-	24.137939 21.724121 19.310303 16.896484 14.482666 12.068848 9.655273 7.241455 4.827637 2.413818
-	0.000000
+<node_rotate_data size="17">
+	0.000000 -70.000000 -60.000000 -50.000000 -40.000000 -30.000000 -20.000000 -10.000000 0.000000 70.000000
+	60.000000 50.000000 40.000000 30.000000 20.000000 10.000000 0.000000
 </node_rotate_data>
 
 <node_translate_data size="3">
@@ -59,7 +54,7 @@
 		<scale_y frame_step="1" data_size="1" data_head="0"/>
 		<scale_z frame_step="1" data_size="1" data_head="0"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
-		<rotate_y frame_step="1" data_size="30" data_head="1"/>
+		<rotate_y frame_step="1" data_size="8" data_head="1"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
 		<translate_x frame_step="1" data_size="1" data_head="0"/>
 		<translate_y frame_step="1" data_size="1" data_head="1"/>
@@ -70,7 +65,7 @@
 		<scale_y frame_step="1" data_size="1" data_head="0"/>
 		<scale_z frame_step="1" data_size="1" data_head="0"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
-		<rotate_y frame_step="1" data_size="30" data_head="31"/>
+		<rotate_y frame_step="1" data_size="8" data_head="9"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
 		<translate_x frame_step="1" data_size="1" data_head="0"/>
 		<translate_y frame_step="1" data_size="1" data_head="1"/>
