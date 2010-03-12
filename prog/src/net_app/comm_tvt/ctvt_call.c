@@ -72,8 +72,7 @@
 #define CTVT_CALL_SCROLL_HIT_WIDTH  (12)
 #define CTVT_CALL_SCROLL_HIT_HEIGHT (12)
 
-#define CTVT_CALL_MSG_ANM_SPEED (30)
-#define CTVT_CALL_MSG_ANM_NUM (4)
+#define CTVT_CALL_MSG_SE_CNT (120)
 
 //接続時タイムアウト
 #define CTVT_CALL_JOIN_TIMEOUT (15*60)
@@ -170,6 +169,7 @@ struct _CTVT_CALL_WORK
   GFL_BMPWIN *msgWin;
   GFL_BMPWIN *callMsgWin;
   u16 connectTimeOutCnt;
+  u16 callSeCnt;
 
   GFL_TCBLSYS *tcblSys;
   BOOL          reqDispTimeIcon;
@@ -335,6 +335,7 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
                                         GFL_BMP_CHRAREA_GET_B );
   callWork->timeIcon = NULL;
   callWork->reqDispTimeIcon = FALSE;
+  callWork->callSeCnt = 0;
   {
     u8 i;
     for( i=0;i<3;i++ )
@@ -521,6 +522,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
           callWork->reqDispTimeIcon = TRUE;
           callWork->state = CCS_WAIT_CONNECT_JOIN;
           callWork->connectTimeOutCnt = 0;
+          callWork->callSeCnt = 0;
 
           APP_TASKMENU_WIN_Delete( callWork->barMenuWork );
           callWork->barMenuWork = NULL;
@@ -530,6 +532,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
           CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
           callWork->state = CCS_WAIT_CONNECT_CALL;
           CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_07 );
+          callWork->callSeCnt = 0;
           callWork->reqDispTimeIcon = TRUE;
           CTVT_COMM_SetMode( work , commWork , CCIM_PARENT );
 
@@ -572,8 +575,18 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
       if( COMM_TVT_GetConnectNum( work ) >= 2 )
       {
+        PMSND_StopSE();
         PMSND_PlaySystemSE( CTVT_SND_CALL_ANSWER );
         callWork->state = CCS_FADEOUT;
+      }
+      if( callWork->state == CCS_WAIT_CONNECT_CALL )
+      {
+        callWork->callSeCnt++;
+        if( callWork->callSeCnt >= CTVT_CALL_MSG_SE_CNT )
+        {
+          callWork->callSeCnt = 0;
+          PMSND_PlaySE_byPlayerID( CTVT_SND_TEL_CALL , SEPLAYER_SE2 );
+        }
       }
     }
     //時間切れ。戻る
@@ -910,10 +923,12 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
     {
       APP_TASKMENU_WIN_SetDecide( callWork->barMenuWork , TRUE );
       callWork->state = CCS_WAIT_ANIME;
+      PMSND_PlaySystemSE( CTVT_SND_DECIDE );
       if( callWork->barState == CCBS_CALL_CHILD )
       {
-        PMSND_PlaySystemSE( CTVT_SND_TEL_CALL );
+        PMSND_PlaySE_byPlayerID( CTVT_SND_TEL_CALL , SEPLAYER_SE2 );
       }
+      
     }
   }
   
@@ -961,7 +976,8 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
   }
   
   if( callWork->state != CCS_WAIT_CONNECT_JOIN &&
-      callWork->state != CCS_WAIT_CONNECT_CALL )
+      callWork->state != CCS_WAIT_CONNECT_CALL &&
+      callWork->state != CCS_FAILUE_CONNECT )
   {
     for( i=0;i<CTVT_COMM_BEACON_NUM;i++ )
     {
@@ -1501,6 +1517,7 @@ static void CTVT_CALL_UpdateNoMemberMsg( COMM_TVT_WORK *work , CTVT_CALL_WORK *c
     if( callWork->barNum == 0 )
     {
       CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_15 );
+      callWork->reqDispTimeIcon = TRUE;
 
       GFL_BMPWIN_ClearTransWindow_VBlank( callWork->msgWin );
       BmpWinFrame_Clear( callWork->msgWin , WINDOW_TRANS_ON_V );
