@@ -124,12 +124,14 @@ typedef struct _BATTLE_REC_HEADER{
   u16 monsno[HEADER_MONSNO_MAX];  ///< ポケモン番号(表示する必要がないのでタマゴの場合は0)
   u8  form_no_and_sex[HEADER_MONSNO_MAX]; ///< 6..0bit目ポケモンのフォルム番号　7bit目性別（0：♂orなし 1：♀）
 
-  u16 battle_counter; ///< 連勝数
-  u8  mode;           ///< 戦闘モード(ファクトリー50、ファクトリー100、通信対戦...)
-  u8  secure;         ///< TRUE:安全が保障されている。　FALSE：再生した事がない
-
+  u16 battle_counter;   ///<連勝数                        2
+  u16 mode;        ///<戦闘モード(ファクトリー50、ファクトリー100、通信対戦...)
+  
   u16 magic_key;      ///<マジックキー
-  u8  work[14];      ///< 予備                    16
+  u8 secure;        ///<TRUE:安全が保障されている。　FALSE：再生した事がない
+  
+  u8 server_vesion;   ///<バトルのサーバーバージョン
+  u8 work[12];      ///< 予備
 
   //CRCとデータナンバー(必ず最後尾にしておくこと)
   DATA_NUMBER   data_number;///<データナンバー(サーバー側でセットされる)。チェックサム対象から外す
