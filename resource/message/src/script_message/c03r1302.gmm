@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T22:29:02"/>
+	<create user="matsumiya" host="W00224" date="2010-03-12T14:55:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1606" top="208" right="2311" bottom="836" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -442,8 +442,8 @@ having a good time?</language>
 なんでだろう？　むくみってやつか？</language>
 	</row>
 
-	<row id="msg_c03r1302_fighterm_01">
-		<attribute name="キャラ指定">FIGHTERM</attribute>
+	<row id="msg_c03r1302_fighterw_01">
+		<attribute name="キャラ指定">FIGHTERW</attribute>
 		<language name="JPN" width="256">はじめて　ここに　きてみたけど▼
 ステキな　けしきに
 アットホームな　くうき！▼
