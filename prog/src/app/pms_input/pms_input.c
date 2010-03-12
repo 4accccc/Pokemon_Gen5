@@ -2647,13 +2647,47 @@ static BOOL keycheck_category_initial_mode( PMS_INPUT_WORK* wk )
 	{
 		if( wk->key_repeat & PAD_KEY_UP )
 		{
-			wk->category_pos = PMSI_INITIAL_DAT_GetColBottomCode( wk->category_pos_prv );
+			//wk->category_pos = PMSI_INITIAL_DAT_GetColBottomCode( wk->category_pos_prv );
+      
+      int pos_prv = PMSI_INITIAL_DAT_GetColBottomCode( wk->category_pos_prv );
+      if( wk->category_pos == CATEGORY_POS_SELECT )
+      {
+        if( INI_NA <= pos_prv && pos_prv <= INI_NO ) wk->category_pos = pos_prv;
+        else                                         wk->category_pos = INI_NU;
+      }
+      else if( wk->category_pos == CATEGORY_POS_ERASE )
+      {
+        if( pos_prv == INI_WA || pos_prv == INI_WO ) wk->category_pos = pos_prv;
+        else                                         wk->category_pos = INI_WA;
+      }
+      else  // if( wk->category_pos == CATEGORY_POS_BACK )
+      {
+        if( pos_prv == INI_NN || pos_prv == INI_BOU || pos_prv == INI_OTHER ) wk->category_pos = pos_prv;
+        else                                                                  wk->category_pos = INI_BOU;
+      }
 
 			return TRUE;
 		}
 		else if( wk->key_repeat & PAD_KEY_DOWN )
 		{
-			wk->category_pos = PMSI_INITIAL_DAT_GetColTopCode( wk->category_pos_prv );
+			//wk->category_pos = PMSI_INITIAL_DAT_GetColTopCode( wk->category_pos_prv );
+
+      int pos_prv = PMSI_INITIAL_DAT_GetColTopCode( wk->category_pos_prv );
+      if( wk->category_pos == CATEGORY_POS_SELECT )
+      {
+        if( INI_A <= pos_prv && pos_prv <= INI_O ) wk->category_pos = pos_prv;
+        else                                       wk->category_pos = INI_U;
+      }
+      else if( wk->category_pos == CATEGORY_POS_ERASE )
+      {
+        if( pos_prv == INI_HA || pos_prv == INI_HI ) wk->category_pos = pos_prv;
+        else                                         wk->category_pos = INI_HA;
+      }
+      else  // if( wk->category_pos == CATEGORY_POS_BACK )
+      {
+        if( pos_prv == INI_HU || pos_prv == INI_HE || pos_prv == INI_HO ) wk->category_pos = pos_prv;
+        else                                                              wk->category_pos = INI_HE;
+      }
 
 			return TRUE;
 		}
