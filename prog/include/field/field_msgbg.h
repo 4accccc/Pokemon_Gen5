@@ -150,8 +150,8 @@ typedef struct
   u16   bmppos_y;     //表示座標Y キャラ単位
   u16   bmpsize_x;      //表示サイズX キャラ単位
   u16   bmpsize_y;      //表示サイズY キャラ単位
-	//一列表示ごとのコールバック関数
-	BMPMENULIST_PRINT_CALLBACK icon;
+  //一列表示ごとのコールバック関数
+  BMPMENULIST_PRINT_CALLBACK icon;
 }FLDMENUFUNC_HEADER;
 
 //======================================================================
@@ -172,6 +172,8 @@ extern PRINT_QUE * FLDMSGBG_GetPrintQue( FLDMSGBG *fmb );
 extern GFL_FONT * FLDMSGBG_GetFontHandle( FLDMSGBG *fmb );
 extern GFL_MSGDATA * FLDMSGBG_CreateMSGDATA( FLDMSGBG *fmb, u32 arcDatIDMsg );
 extern void FLDMSGBG_DeleteMSGDATA( GFL_MSGDATA *msgData );
+extern void FLDMSGBG_TransResource( int bgFrame, HEAPID heapID );
+
 
 //メッセージ表示
 extern FLDMSGPRINT * FLDMSGPRINT_SetupPrint(
@@ -233,8 +235,8 @@ extern void FLDMSGBG_TransMsgWindowFrame( HEAPID heapID, int bgFrame );
 
 //メニュー
 extern FLDMENUFUNC * FLDMENUFUNC_AddMenuListEx( FLDMSGBG *fmb,
-	const FLDMENUFUNC_HEADER *pMenuHead,
-	FLDMENUFUNC_LISTDATA *pMenuListData,
+  const FLDMENUFUNC_HEADER *pMenuHead,
+  FLDMENUFUNC_LISTDATA *pMenuListData,
   u16 list_pos, u16 cursor_pos,
   BMPMENULIST_CURSOR_CALLBACK callback,
   BMPMENULIST_PRINT_CALLBACK icon,
@@ -247,8 +249,8 @@ extern FLDMENUFUNC * FLDMENUFUNC_AddMenu( FLDMSGBG *fmb,
   const FLDMENUFUNC_HEADER *pMenuHead,
   FLDMENUFUNC_LISTDATA *pMenuListData );
 extern FLDMENUFUNC * FLDMENUFUNC_AddEventMenuList( FLDMSGBG *fmb,
-	const FLDMENUFUNC_HEADER *pMenuHead,
-	FLDMENUFUNC_LISTDATA *pMenuListData,
+  const FLDMENUFUNC_HEADER *pMenuHead,
+  FLDMENUFUNC_LISTDATA *pMenuListData,
   BMPMENULIST_CURSOR_CALLBACK callback, void* cb_work,
   u16 list_pos, u16 cursor_pos, BOOL cancel );
 extern void FLDMENUFUNC_DeleteMenu( FLDMENUFUNC *menuFunc );
