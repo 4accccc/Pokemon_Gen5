@@ -121,6 +121,10 @@
 #define ITEM_MANMARUISI		( 110 )		// まんまるいし
 #define ITEM_KANAMEISI		( 111 )		// かなめいし
 #define ITEM_HAKKINDAMA		( 112 )		// はっきんだま
+#define ITEM_AKUAKASETTO		( 116 )		// アクアカセット
+#define ITEM_INAZUMAKASETTO		( 117 )		// イナズマカセット
+#define ITEM_BUREIZUKASETTO		( 118 )		// ブレイズカセット
+#define ITEM_HURIIZUKASETTO		( 119 )		// フリーズカセット
 #define ITEM_KONGOUDAMA		( 135 )		// こんごうだま
 #define ITEM_SIRATAMA		( 136 )		// しらたま
 #define ITEM_HAZIMETEMEERU		( 137 )		// はじめてメール
@@ -598,10 +602,6 @@
 #define ITEM_RAIBUKYASUTAA		( 609 )		// ライブキャスター
 #define ITEM_GODDOSUTOON		( 610 )		// ゴッドストーン
 #define ITEM_RIBATHITIKETTO		( 611 )		// リバティチケット
-#define ITEM_AKUAKASETTO		( 612 )		// アクアカセット
-#define ITEM_INAZUMAKASETTO		( 613 )		// イナズマカセット
-#define ITEM_BUREIZUKASETTO		( 614 )		// ブレイズカセット
-#define ITEM_HURIIZUKASETTO		( 615 )		// フリーズカセット
 #define ITEM_PARESUBOORU		( 616 )		// パレスボール
 #define ITEM_KIREINAISI		( 617 )		// きれいないし
 #define ITEM_POKEZYARASI		( 618 )		// ポケじゃらし

@@ -711,23 +711,23 @@
 	</row>
 
 	<row id="ITEMNAME_116">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+		<language name="JPN" width="256">アクアカセット</language>
+		<language name="JPN_KANJI" width="256">アクサカセット</language>
 	</row>
 
 	<row id="ITEMNAME_117">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+		<language name="JPN" width="256">イナズマカセット</language>
+		<language name="JPN_KANJI" width="256">イナズマカセット</language>
 	</row>
 
 	<row id="ITEMNAME_118">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+		<language name="JPN" width="256">ブレイズカセット</language>
+		<language name="JPN_KANJI" width="256">ブレイズカセット</language>
 	</row>
 
 	<row id="ITEMNAME_119">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+		<language name="JPN" width="256">フリーズカセット</language>
+		<language name="JPN_KANJI" width="256">フリーズカセット</language>
 	</row>
 
 	<row id="ITEMNAME_120">
@@ -3191,23 +3191,23 @@
 	</row>
 
 	<row id="ITEMNAME_612">
-		<language name="JPN" width="256">アクアカセット</language>
-		<language name="JPN_KANJI" width="256">アクサカセット</language>
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="ITEMNAME_613">
-		<language name="JPN" width="256">イナズマカセット</language>
-		<language name="JPN_KANJI" width="256">イナズマカセット</language>
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="ITEMNAME_614">
-		<language name="JPN" width="256">ブレイズカセット</language>
-		<language name="JPN_KANJI" width="256">ブレイズカセット</language>
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="ITEMNAME_615">
-		<language name="JPN" width="256">フリーズカセット</language>
-		<language name="JPN_KANJI" width="256">フリーズカセット</language>
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="ITEMNAME_616">
@@ -3377,27 +3377,27 @@
 
 	<row id="ITEMNAME_649">
 		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">しなもの１</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="ITEMNAME_650">
 		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">しなもの２</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="ITEMNAME_651">
 		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">しなもの３</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="ITEMNAME_652">
 		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">しなもの２</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="ITEMNAME_653">
 		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">かおるキノコ</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 
