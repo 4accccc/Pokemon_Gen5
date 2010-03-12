@@ -37,6 +37,7 @@
 #include "arc/wifileadingchar.naix"
 #include "arc/wifi_unionobj.naix"
 #include "arc/wifi_unionobj_plt.cdat"
+#include "app/app_nogear_subscreen.h"
 //#include "comm_command_record.h"
 
 // SE用定義
@@ -664,7 +665,7 @@ static void BgInit()
 
   }
 
-  // メイン画面1
+  // サブ画面テキスト面
   { 
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -684,9 +685,9 @@ static void BgInit()
     };
     GFL_BG_SetBGControl(  GFL_BG_FRAME2_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
   }
+  GFL_BG_SetClearCharacter( GFL_BG_FRAME0_S, 32, 0, HEAPID_GURU2 );
 
-
-  // サブ画面テキスト面
+  // メイン画面1
   { 
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -706,9 +707,10 @@ static void BgInit()
     };
     GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
   }
-
   GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 32, 0, HEAPID_GURU2 );
-  GFL_BG_SetClearCharacter( GFL_BG_FRAME0_S, 32, 0, HEAPID_GURU2 );
+
+  // サブBG面にはNO-CGEARスクリーンを表示する
+//  APP_NOGEAR_SUBSCREEN_Init();
 
 }
 
@@ -803,6 +805,7 @@ static void FreeWork( GURU2RC_WORK *wk )
 //--------------------------------------------------------------------------------------------
 static void BgExit( void )
 {
+//  APP_NOGEAR_SUBSCREEN_Exit();
 
   GFL_BG_FreeBGControl( GFL_BG_FRAME2_S );
   GFL_BG_FreeBGControl( GFL_BG_FRAME1_S );
@@ -839,14 +842,21 @@ static void BgGraphicSet( GURU2RC_WORK * wk, ARCHANDLE* p_handle )
 
   // ------下画面用BGリソース転送---------
   // サブ画面パレット転送
+
   GFL_ARC_UTIL_TransVramPalette( ARCID_C_GEAR, NARC_c_gear_c_gear_NCLR,  PALTYPE_SUB_BG,  0, 32*11,   HEAPID_GURU2 );
   // サブ画面キャラ転送
   GFL_ARC_UTIL_TransVramBgCharacter( ARCID_C_GEAR, NARC_c_gear_c_gear_NCGR,   GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_GURU2);
   // サブ画面スクリーンキャラ転送
   GFL_ARC_UTIL_TransVramScreen(      ARCID_C_GEAR, NARC_c_gear_c_gear01_n_NSCR, GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_GURU2);
 
-
-
+#if 0
+  {
+    MYSTATUS *my = GAMEDATA_GetMyStatus( wk->g2p->param->gamedata);
+    int gender   = MyStatus_GetMySex( my );
+    APP_NOGEAR_SUBSCREEN_Trans( HEAPID_GURU2, gender );
+  }
+#endif
+  
   // メイン画面会話ウインドウグラフィック転送
   BmpWinFrame_GraphicSet(
      GFL_BG_FRAME0_M, 1, MESFRAME_PAL_INDEX,
