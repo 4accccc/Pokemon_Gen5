@@ -72,7 +72,8 @@ typedef enum {
 #define TWIN_FIX_POSX		(1)
 #define TWIN_FIX_POSY_U (1)
 #define TWIN_FIX_POSY_D (24 - (TWIN_FIX_SIZY+1))
-#define TWIN_FIX_TAIL_X	(7)
+//#define TWIN_FIX_TAIL_X	(7) //old
+#define TWIN_FIX_TAIL_X (7) //100312 kaga
 
 enum {
 	WINSEQ_EMPTY = 0,

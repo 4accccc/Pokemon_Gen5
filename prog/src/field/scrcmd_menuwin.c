@@ -609,37 +609,120 @@ VMCMD_RESULT EvCmdGoldWinClose( VMHANDLE *core, void *wk )
 //======================================================================
 //  吹き出しウィンドウ
 //======================================================================
-#define U_DEF_Y (NUM_FX32(16))
-#define U_DEF_Z (NUM_FX32(-3))
-#define D_DEF_Y (NUM_FX32(16))
-#define D_DEF_Z (NUM_FX32(1))
-
 //--------------------------------------------------------------
 //  吹き出しウィンドウ　補正座標
 //--------------------------------------------------------------
-static const VecFx32 data_balloonWinOffset_Up[DIR_MAX4] =
+#define OFFS_0_0_X (NUM_FX32(0))
+#define OFFS_0_0_Y (NUM_FX32(16))
+#define OFFS_0_0_Z (NUM_FX32(-16))
+
+#define OFFS_0_1_X (NUM_FX32(-8))
+#define OFFS_0_1_Y (NUM_FX32(16))
+#define OFFS_0_1_Z (NUM_FX32(-16))
+
+#define OFFS_0_2_X (NUM_FX32(8))
+#define OFFS_0_2_Y (NUM_FX32(16))
+#define OFFS_0_2_Z (NUM_FX32(0))
+
+#define OFFS_0_3_X (NUM_FX32(0))
+#define OFFS_0_3_Y (NUM_FX32(16))
+#define OFFS_0_3_Z (NUM_FX32(-16))
+
+#define OFFS_1_0_X (NUM_FX32(0))
+#define OFFS_1_0_Y (NUM_FX32(16))
+#define OFFS_1_0_Z (NUM_FX32(16))
+
+#define OFFS_1_1_X (NUM_FX32(-8))
+#define OFFS_1_1_Y (NUM_FX32(16))
+#define OFFS_1_1_Z (NUM_FX32(16))
+
+#define OFFS_1_2_X (NUM_FX32(8))
+#define OFFS_1_2_Y (NUM_FX32(16))
+#define OFFS_1_2_Z (NUM_FX32(16))
+
+#define OFFS_1_3_X (NUM_FX32(0))
+#define OFFS_1_3_Y (NUM_FX32(16))
+#define OFFS_1_3_Z (NUM_FX32(16))
+
+static const VecFx32 data_balloonWinOffsetTbl[2][4] =
 {
-  {NUM_FX32(5),U_DEF_Y,U_DEF_Z}, //fix
-  {NUM_FX32(5),U_DEF_Y,U_DEF_Z}, //fix
-  {NUM_FX32(-2),U_DEF_Y,U_DEF_Z},
-  {NUM_FX32(2),U_DEF_Y,U_DEF_Z},
-//  {NUM_FX32(5),U_DEF_Y,U_DEF_Z}, //fix
-//  {NUM_FX32(5),U_DEF_Y,U_DEF_Z}, //fix
-//  {NUM_FX32(-4),U_DEF_Y,U_DEF_Z},
-//  {NUM_FX32(4),U_DEF_Y,U_DEF_Z},
+  {
+    {OFFS_0_0_X,OFFS_0_0_Y,OFFS_0_0_Z},
+    {OFFS_0_1_X,OFFS_0_1_Y,OFFS_0_1_Z},
+    {OFFS_0_2_X,OFFS_0_2_Y,OFFS_0_2_Z},
+    {OFFS_0_3_X,OFFS_0_3_Y,OFFS_0_3_Z},
+  },
+  {
+    {OFFS_1_0_X,OFFS_1_0_Y,OFFS_1_0_Z},
+    {OFFS_1_1_X,OFFS_1_1_Y,OFFS_1_1_Z},
+    {OFFS_1_2_X,OFFS_1_2_Y,OFFS_1_2_Z},
+    {OFFS_1_3_X,OFFS_1_3_Y,OFFS_1_3_Z},
+  },
 };
 
-static const VecFx32 data_balloonWinOffset_Down[DIR_MAX4] =
+//--------------------------------------------------------------
+/**
+ * 吹き出しウィンドウ　指定座標から調節位置を取得
+ * @param pos 指定座標
+ * @param offs 座標格納先
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void balloonWin_GetOffsetPos(
+    const VecFx32 *pos, VecFx32 *offs, const GFL_G3D_CAMERA *cp_g3Dcamera )
 {
-  {NUM_FX32(5),NUM_FX32(16),D_DEF_Z},
-  {NUM_FX32(5),D_DEF_Y,D_DEF_Z},
-  {NUM_FX32(-2),D_DEF_Y,D_DEF_Z},
-  {NUM_FX32(2),D_DEF_Y,D_DEF_Z},
-//  {NUM_FX32(5),D_DEF_Y,D_DEF_Z},
-//  {NUM_FX32(5),D_DEF_Y,D_DEF_Z},
-//  {NUM_FX32(-4),D_DEF_Y,D_DEF_Z},
-//  {NUM_FX32(4),D_DEF_Y,D_DEF_Z},
-};
+  u32 x,y;
+  VecFx32 target_pos = *pos;
+  
+  {
+    VecFx32 camera_way;
+    VecFx32 camera_way_xz;
+    VecFx32 camera_side;
+    VecFx32 camera_up;
+    VecFx32 camera_pos;
+    VecFx32 camera_target;
+    static const VecFx32 up_way = { 0,FX32_ONE,0 };
+    
+	  GFL_G3D_CAMERA_Switching( cp_g3Dcamera );
+    GFL_G3D_CAMERA_GetTarget( cp_g3Dcamera, &camera_target );
+    GFL_G3D_CAMERA_GetPos( cp_g3Dcamera, &camera_pos );
+    
+    VEC_Subtract( &camera_target, &camera_pos, &camera_way );
+    //XZ平面横方向取得
+    camera_way_xz = camera_way;
+    camera_way_xz.y = 0;
+    VEC_Normalize( &camera_way_xz, &camera_way_xz );
+    
+    // 横方向を外積で求める
+    VEC_CrossProduct( &camera_way_xz, &up_way, &camera_side );
+    // 横とカメラ方向から上を求める
+    VEC_CrossProduct( &camera_way, &camera_side, &camera_up );
+    VEC_Normalize( &camera_up, &camera_up );
+    
+    target_pos.x += camera_up.x;
+    target_pos.y += camera_up.y;
+    target_pos.z += camera_up.z;
+  }
+
+  NNS_G3dWorldPosToScrPos( &target_pos, (int*)&x, (int*)&y );
+  
+  KAGAYA_Printf( "BALLOONWIN TARGET pos %xH,%xH,%xH : x=%d,y=%d : ",
+      pos->x, pos->y, pos->z, x, y );
+  
+  x >>= 3; // chara size
+  x >>= 3; // table size
+  y >>= 3; // chara size
+  y /= 12; // table size
+  
+  if( x < 4 && y < 2 ){
+    KAGAYA_Printf( "table pos %d,%d\n", x, y );
+    *offs = data_balloonWinOffsetTbl[y][x];
+  }else{
+    VecFx32 error = {0,0,0};
+    *offs = error;
+    OS_Printf( "BALLOONWIN OUTSIDE SCREEN\n" );
+  }
+}
 
 //--------------------------------------------------------------
 /**
@@ -747,6 +830,81 @@ static void balloonWin_UpdatePos( SCRCMD_WORK *work )
 {
   u16 dir;
   MMDL *npc;
+  VecFx32 npc_pos;
+  MMDLSYS *mmdlsys;
+  SCRCMD_BALLOONWIN_WORK *bwin_work;
+  
+  mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  bwin_work = SCRCMD_WORK_GetBalloonWinWork( work );
+  npc = MMDLSYS_SearchOBJID( mmdlsys, bwin_work->obj_id );
+  
+  if( npc == NULL ){
+    GF_ASSERT( 0 && "BALLOON WINDOW TARGET LOST\n" );
+    return;
+  }
+  
+  dir = MMDL_GetDirDisp( npc );
+  MMDL_GetVectorPos( npc, &npc_pos );
+  
+  if( npc_pos.x != bwin_work->tail_pos_org.x ||
+      npc_pos.y != bwin_work->tail_pos_org.y ||
+      npc_pos.z != bwin_work->tail_pos_org.z ){
+    bwin_work->tail_pos_org = npc_pos;
+    
+    {
+      GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+      FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+      FIELD_CAMERA *p_camera = FIELDMAP_GetFieldCamera( fieldmap );
+      const GFL_G3D_CAMERA *cp_g3Dcamera =
+        FIELD_CAMERA_GetCameraPtr( p_camera ); //g3Dcamera Lib ハンドル
+      balloonWin_GetOffsetPos(
+        &bwin_work->tail_pos_org, &bwin_work->tail_offs, cp_g3Dcamera );
+    }
+  }
+  
+  bwin_work->tail_pos.x = bwin_work->tail_pos_org.x + bwin_work->tail_offs.x;
+  bwin_work->tail_pos.y = bwin_work->tail_pos_org.y + bwin_work->tail_offs.y;
+  bwin_work->tail_pos.z = bwin_work->tail_pos_org.z + bwin_work->tail_offs.z;
+}
+
+#if 0
+#define U_DEF_Y (NUM_FX32(16))
+#define U_DEF_Z (NUM_FX32(-3))
+#define D_DEF_Y (NUM_FX32(16))
+#define D_DEF_Z (NUM_FX32(1))
+
+//--------------------------------------------------------------
+//  吹き出しウィンドウ　補正座標
+//--------------------------------------------------------------
+static const VecFx32 data_balloonWinOffset_Up[DIR_MAX4] =
+{
+  {NUM_FX32(5),U_DEF_Y,U_DEF_Z}, //fix
+  {NUM_FX32(5),U_DEF_Y,U_DEF_Z}, //fix
+  {NUM_FX32(-2),U_DEF_Y,U_DEF_Z},
+  {NUM_FX32(2),U_DEF_Y,U_DEF_Z},
+//  {NUM_FX32(5),U_DEF_Y,U_DEF_Z}, //fix
+//  {NUM_FX32(5),U_DEF_Y,U_DEF_Z}, //fix
+//  {NUM_FX32(-4),U_DEF_Y,U_DEF_Z},
+//  {NUM_FX32(4),U_DEF_Y,U_DEF_Z},
+};
+
+static const VecFx32 data_balloonWinOffset_Down[DIR_MAX4] =
+{
+  {NUM_FX32(5),NUM_FX32(16),D_DEF_Z},
+  {NUM_FX32(5),D_DEF_Y,D_DEF_Z},
+  {NUM_FX32(-2),D_DEF_Y,D_DEF_Z},
+  {NUM_FX32(2),D_DEF_Y,D_DEF_Z},
+//  {NUM_FX32(5),D_DEF_Y,D_DEF_Z},
+//  {NUM_FX32(5),D_DEF_Y,D_DEF_Z},
+//  {NUM_FX32(-4),D_DEF_Y,D_DEF_Z},
+//  {NUM_FX32(4),D_DEF_Y,D_DEF_Z},
+};
+
+
+static void balloonWin_UpdatePos( SCRCMD_WORK *work )
+{
+  u16 dir;
+  MMDL *npc;
   MMDLSYS *mmdlsys;
   const VecFx32 *offs;
   SCRCMD_BALLOONWIN_WORK *bwin_work;
@@ -774,6 +932,7 @@ static void balloonWin_UpdatePos( SCRCMD_WORK *work )
   bwin_work->tail_pos.y += offs->y;
   bwin_work->tail_pos.z += offs->z;
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -787,7 +946,7 @@ static void balloonWin_UpdatePos( SCRCMD_WORK *work )
  * @note arcID=0x400の場合、デフォルトのメッセージアーカイブを使用する
  */
 //--------------------------------------------------------------
-static BOOL balloonWin_Write( SCRCMD_WORK *work,
+static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
     u16 objID, u16 arcID, u16 msgID, u16 pos_type,
     TALKMSGWIN_TYPE type )
 {
@@ -806,6 +965,8 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work,
   }
   
   bwin_work = SCRCMD_WORK_GetBalloonWinWork( work );
+  MI_CpuClear8( bwin_work, sizeof(SCRCMD_BALLOONWIN_WORK) );
+  
   bwin_work->obj_id = objID;
   
   msgbuf = SCRIPT_GetMsgBuffer( sc );
@@ -923,7 +1084,7 @@ VMCMD_RESULT EvCmdBalloonWinWrite( VMHANDLE *core, void *wk )
   
   KAGAYA_Printf( "吹き出しウィンドウ OBJID =%d\n", obj_id );
   
-  if( balloonWin_Write(work,obj_id,arc_id,msg_id,pos_type,type) == TRUE ){
+  if( balloonWin_SetWrite(work,obj_id,arc_id,msg_id,pos_type,type) == TRUE ){
     VMCMD_SetWait( core, BallonWinMsgWait );
     return VMCMD_RESULT_SUSPEND;
   }
@@ -956,7 +1117,7 @@ VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
   {
     u8 obj_id = MMDL_GetOBJID( mmdl );
     
-    if( balloonWin_Write(work,obj_id,arc_id,msg_id,pos_type,type) == TRUE ){
+    if( balloonWin_SetWrite(work,obj_id,arc_id,msg_id,pos_type,type) == TRUE ){
       VMCMD_SetWait( core, BallonWinMsgWait );
       return VMCMD_RESULT_SUSPEND;
     }
@@ -992,7 +1153,7 @@ VMCMD_RESULT EvCmdBalloonWinWriteMF( VMHANDLE *core, void *wk )
     }
   }
   
-  if( balloonWin_Write(work,obj_id,arc_id,msg_id,pos_type,type) == TRUE ){
+  if( balloonWin_SetWrite(work,obj_id,arc_id,msg_id,pos_type,type) == TRUE ){
     VMCMD_SetWait( core, BallonWinMsgWait );
     return VMCMD_RESULT_SUSPEND;
   }
@@ -1021,7 +1182,7 @@ VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk )
     msg_id = msg_id_b;
   }
   
-  if( balloonWin_Write(work,obj_id,arc_id,msg_id,pos_type,type) == TRUE ){
+  if( balloonWin_SetWrite(work,obj_id,arc_id,msg_id,pos_type,type) == TRUE ){
     VMCMD_SetWait( core, BallonWinMsgWait );
     return VMCMD_RESULT_SUSPEND;
   }
@@ -1106,7 +1267,8 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
     SCRCMD_BALLOONWIN_WORK *bwin_work;
     
     bwin_work = SCRCMD_WORK_GetBalloonWinWork( work );
-    
+    MI_CpuClear8( bwin_work, sizeof(SCRCMD_BALLOONWIN_WORK) );
+
     mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
     fld_player = FIELDMAP_GetFieldPlayer( fparam->fieldMap );
     jiki = FIELD_PLAYER_GetMMdl( fld_player );

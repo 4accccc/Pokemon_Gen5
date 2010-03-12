@@ -58,6 +58,8 @@ typedef struct
   u16 obj_id;
   u16 win_idx;
   VecFx32 tail_pos;
+  VecFx32 tail_pos_org;
+  VecFx32 tail_offs;
 }SCRCMD_BALLOONWIN_WORK;
 
 //======================================================================
