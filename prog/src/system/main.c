@@ -29,6 +29,7 @@
 #include "gamesystem\msgspeed.h"
 #include "gamesystem\game_beacon.h"
 #include "gamesystem/g_power.h"
+#include "savedata/config.h"
 
 #include "sound\pm_sndsys.h"
 #include "sound\pm_voice.h"
@@ -250,6 +251,7 @@ static	void	GameInit(void)
 
 	//セーブ関連初期化
 	SaveControl_SystemInit(HEAPID_SAVE);
+	CONFIG_ApplyMojiMode( SaveData_GetConfig( SaveControl_GetPointer() ) );
 
 	// 通信のデバッグプリントを行う定義
 #ifdef PM_DEBUG
