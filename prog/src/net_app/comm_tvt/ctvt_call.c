@@ -172,6 +172,7 @@ struct _CTVT_CALL_WORK
   u16 connectTimeOutCnt;
 
   GFL_TCBLSYS *tcblSys;
+  BOOL          reqDispTimeIcon;
   TIMEICON_WORK *timeIcon;
 
   CTVT_CALL_BAR_WORK barWork[CTVT_CALL_BAR_NUM];
@@ -333,6 +334,7 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
                                         CTVT_PAL_BG_SUB_FONT ,
                                         GFL_BMP_CHRAREA_GET_B );
   callWork->timeIcon = NULL;
+  callWork->reqDispTimeIcon = FALSE;
   {
     u8 i;
     for( i=0;i<3;i++ )
@@ -364,7 +366,7 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
       //CGEAR‚©‚çŒÄ‚Ño‚µ‚Å‚«‚½B
       GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN_OFF );
       CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_11 );
-
+      callWork->reqDispTimeIcon = TRUE;
       callWork->barState = CCBS_JOIN_PARENT_DIRECT;
     }
     else
@@ -516,6 +518,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
           CTVT_COMM_SetMode( work , commWork , CCIM_CHILD );
           CTVT_COMM_SetMacAddress( work , commWork , callWork->memberData[ callWork->checkIdxParent ].macAddress );
           CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_11 );
+          callWork->reqDispTimeIcon = TRUE;
           callWork->state = CCS_WAIT_CONNECT_JOIN;
           callWork->connectTimeOutCnt = 0;
 
@@ -527,6 +530,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
           CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
           callWork->state = CCS_WAIT_CONNECT_CALL;
           CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_07 );
+          callWork->reqDispTimeIcon = TRUE;
           CTVT_COMM_SetMode( work , commWork , CCIM_PARENT );
 
           APP_TASKMENU_WIN_Delete( callWork->barMenuWork );
@@ -736,7 +740,11 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       GFL_BMPWIN_MakeScreen( callWork->callMsgWin );
       GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
       callWork->isUpdateCallMsgWin = FALSE;
-      callWork->timeIcon = TIMEICON_CreateTcbl( callWork->tcblSys , callWork->callMsgWin , 0x0F , TIMEICON_DEFAULT_WAIT , heapId );
+      if( callWork->reqDispTimeIcon == TRUE )
+      {
+        callWork->reqDispTimeIcon = FALSE;
+        callWork->timeIcon = TIMEICON_CreateTcbl( callWork->tcblSys , callWork->callMsgWin , 0x0F , TIMEICON_DEFAULT_WAIT , heapId );
+      }
     }
   }
 
@@ -1596,6 +1604,13 @@ static void CTVT_CALL_DispCallMessage( COMM_TVT_WORK *work , CTVT_CALL_WORK *cal
   BmpWinFrame_Write( callWork->callMsgWin , WINDOW_TRANS_OFF , 
                       CTVT_BMPWIN_CGX , CTVT_PAL_BG_SUB_WINFRAME );
   callWork->isUpdateCallMsgWin = TRUE;
+
+  callWork->reqDispTimeIcon = FALSE;
+  if( callWork->timeIcon != NULL )
+  {
+    TILEICON_Exit( callWork->timeIcon );
+    callWork->timeIcon = NULL;
+  }
 
 }
 
