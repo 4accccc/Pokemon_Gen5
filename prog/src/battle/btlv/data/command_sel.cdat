@@ -2,7 +2,7 @@
 //============================================================================================
 /**
  * @file	command_sel.cdat
- * @brief	コマンド選択、技選択タッチパネル＆キー操作データテーブル
+ * @brief	コマンド選択、技選択、バトルレコーダータッチパネル＆キー操作データテーブル
  * @author	soga
  * @date	2009.10.22
  */
@@ -156,5 +156,43 @@ static const BTLV_INPUT_KEYTBL  SkillMenuKeyData3vs3[] = {
 
   //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R   A   B
   { { 5,  5,  5,  5,  -1, -1 }, 2,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  5,  4 },  //移動
+};
+
+///バトルレコーダータッチパネル領域設定
+static const GFL_UI_TP_HITTBL BattleRecorderTouchDataHitTbl[] = {
+  //UP      DOWN    LEFT    RIGHT
+  { 0x12*8, 0x18*8, 0x00*8, 0x0a*8},  //巻き戻し
+  { 0x12*8, 0x18*8, 0x16*8, 255},     //早送り
+  { 0x13*8, 0x18*8, 0x0b*8, 0x15*8},  //停止
+  { GFL_UI_TP_HIT_END, 0, 0, 0 },   
+};
+
+static  const BOOL  BattleRecorderTouchDataCancel[] = { 
+  FALSE,  //巻き戻し
+  FALSE,  //早送り
+  FALSE,  //停止
+};
+
+static  const int  BattleRecorderTouchDataPltt[] = { 
+   1 << 2,        //巻き戻し
+   1 << 3,        //早送り
+   1 << 4,        //停止
+};
+
+static const BTLV_INPUT_HITTBL BattleRecorderTouchData = {
+  BattleRecorderTouchDataHitTbl,
+  BattleRecorderTouchDataCancel,
+  BattleRecorderTouchDataPltt,
+};
+
+static const BTLV_INPUT_KEYTBL  BattleRecorderKeyData[] = { 
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L                   R   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  2,  0,  BTLV_INPUT_NOMOVE },//早送り
+
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L   R                   A   B
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE },//巻き戻し
+
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L   R   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  1,  2,  BTLV_INPUT_NOMOVE },  //停止
 };
 
