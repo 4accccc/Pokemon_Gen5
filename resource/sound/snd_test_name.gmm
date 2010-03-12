@@ -5610,6 +5610,10 @@
 		<language name="JPN" width="256">ME-ACCE</language>
 		<language name="JPN_KANJI" width="256">ME-ACCE</language>
 	</row>
+	<row id="msg_seq_me_wasure">
+		<language name="JPN" width="256">ME-WASURE</language>
+		<language name="JPN_KANJI" width="256">ME-WASURE</language>
+	</row>
 	<row id="msg_seq_me_kinomi">
 		<language name="JPN" width="256">ME-KINOMI</language>
 		<language name="JPN_KANJI" width="256">ME-KINOMI</language>
@@ -5682,10 +5686,6 @@
 		<language name="JPN" width="256">ME-END</language>
 		<language name="JPN_KANJI" width="256">ME-END</language>
 	</row>
-          <row id="msg_seq_1327">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1328">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
