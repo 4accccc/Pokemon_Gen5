@@ -269,10 +269,10 @@ int PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * part
   if(partyNum < ans){
     return POKE_REG_NUM_FAILED;  // 数があってない
   }
-  ans = Regulation_GetParam(pReg, REGULATION_NUM_HI);
-  if(partyNum > ans){
-    return POKE_REG_NUM_FAILED;  // 数があってない
-  }
+//  ans = Regulation_GetParam(pReg, REGULATION_NUM_HI);  //ここで最大比較は必要ないohno
+  //if(partyNum < ans){
+ //   return POKE_REG_NUM_FAILED;  // 数があってない
+//  }
   //partyNum = ans;
 
   //残ったポケモンの合計LV組み合わせ検査
