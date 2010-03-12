@@ -4206,7 +4206,9 @@ static void Bg3D_Init( GURU2MAIN_WORK *g2m )
 {
   // 背景３Ｄモデリングデータ読み込み
   g2m->unitIndex_bg  = GFL_G3D_UTIL_AddUnit( g2m->g3dUtil, setupBg3d );
-  
+
+  // 背景ポリゴンにエッジマーキングが画面端につくのを押さえる
+  G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,0,FALSE);
 }
 
 //----------------------------------------------------------------------------------
