@@ -424,7 +424,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/field_g3d_map.c \
 		    field/report_event.c \
         field/sheimi_normalform.c \
-        field/scrcmd_trial_house.c
+        field/scrcmd_trial_house.c \
+        field/scrcmd_startmenu.c
 
 # wifiƒvƒƒOƒ‰ƒ€
 #===> SRCS_OVERLAY_DEV_WIFILIB
