@@ -37,6 +37,19 @@
 #include "field_task_target_offset.h"
 
 
+//=======================================================================================
+// ■定数
+//=======================================================================================
+// イベント処理関数のタイプ
+typedef enum {
+  EVENTFUNC_TYPE_NONE, // ドアなし
+  EVENTFUNC_TYPE_DOOR, // ドアあり
+  EVENTFUNC_TYPE_STEP, // 階段
+  EVENTFUNC_TYPE_WARP, // ワープ
+  EVENTFUNC_TYPE_SPx,  // 特殊
+  EVENTFUNC_TYPE_NUM,
+} EVENTFUNC_TYPE;
+
 
 //=======================================================================================
 // ■イベントワーク
@@ -102,55 +115,23 @@ GMEVENT* EVENT_EntranceOut( GMEVENT* parent,
   GMEVENT* event;
   EVENT_WORK* work; 
   EXIT_TYPE exitType; 
+  EVENTFUNC_TYPE funcType;
 
   // イベントテーブル
-  const GMEVENT_FUNC eventFuncTable[] = {
-    EVENT_FUNC_EntranceOut_ExitTypeNone,   // EXIT_TYPE_NONE
-    EVENT_FUNC_EntranceOut_ExitTypeNone,   // EXIT_TYPE_MAT
-    EVENT_FUNC_EntranceOut_ExitTypeStep,   // EXIT_TYPE_STAIRS
-    EVENT_FUNC_EntranceOut_ExitTypeDoor,   // EXIT_TYPE_DOOR
-    EVENT_FUNC_EntranceOut_ExitTypeStep,   // EXIT_TYPE_WALL
-    EVENT_FUNC_EntranceOut_ExitTypeWarp,   // EXIT_TYPE_WARP
-    EVENT_FUNC_EntranceOut_ExitTypeNone,   // EXIT_TYPE_INTRUDE
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP1
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP2
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP3
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP4
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP5
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP6
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP7
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP8
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP9
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP10
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP11
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP12
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP13
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP14
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP15
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP16
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP17
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP18
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP19
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP20
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP21
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP22
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP23
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP24
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP25
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP26
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP27
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP28
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP29
-    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EXIT_TYPE_SP30
+  const GMEVENT_FUNC eventFuncTable[ EVENTFUNC_TYPE_NUM ] = 
+  {
+    EVENT_FUNC_EntranceOut_ExitTypeNone,   // EVENTFUNC_TYPE_NONE ドアなし
+    EVENT_FUNC_EntranceOut_ExitTypeDoor,   // EVENTFUNC_TYPE_DOOR ドアあり
+    EVENT_FUNC_EntranceOut_ExitTypeStep,   // EVENTFUNC_TYPE_STEP 階段
+    EVENT_FUNC_EntranceOut_ExitTypeWarp,   // EVENTFUNC_TYPE_WARP ワープ
+    EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EVENTFUNC_TYPE_SPx, 特殊
   };
 
   // EXIT_TYPEを決定
-  if( location.type == LOCATION_TYPE_DIRECT )
-  {
+  if( location.type == LOCATION_TYPE_DIRECT ) {
     exitType = EXIT_TYPE_NONE;
   }
-  else
-  {
+  else {
     EVENTDATA_SYSTEM* eventData;
     const CONNECT_DATA* connectData;
 
@@ -159,8 +140,20 @@ GMEVENT* EVENT_EntranceOut( GMEVENT* parent,
     exitType    = CONNECTDATA_GetExitType( connectData );
   } 
 
+  // イベント処理関数を決定
+  switch( exitType ) {
+  case EXIT_TYPE_NONE:    funcType = EVENTFUNC_TYPE_NONE; break;
+  case EXIT_TYPE_MAT:     funcType = EVENTFUNC_TYPE_NONE; break;
+  case EXIT_TYPE_STAIRS:  funcType = EVENTFUNC_TYPE_STEP; break;
+  case EXIT_TYPE_DOOR:    funcType = EVENTFUNC_TYPE_DOOR; break;
+  case EXIT_TYPE_WALL:    funcType = EVENTFUNC_TYPE_STEP; break;
+  case EXIT_TYPE_WARP:    funcType = EVENTFUNC_TYPE_WARP; break;
+  case EXIT_TYPE_INTRUDE: funcType = EVENTFUNC_TYPE_NONE; break;
+  default:                funcType = EVENTFUNC_TYPE_SPx;  break;
+  }
+
   // イベント作成
-  event = GMEVENT_Create( gameSystem, parent, eventFuncTable[ exitType ], sizeof( EVENT_WORK ) );
+  event = GMEVENT_Create( gameSystem, parent, eventFuncTable[ funcType ], sizeof( EVENT_WORK ) );
 
   // イベント・ワークを初期化
   work                    = (EVENT_WORK*)GMEVENT_GetEventWork( event );
