@@ -22,6 +22,8 @@
 #include "savedata/trialhouse_save_local.h"
 #include "savedata/trialhouse_save.h"
 
+#include "th_rank_calc.h"   //for TH_CALC_Rank  inline
+
 //ビーコンサーチワーク
 typedef struct
 {
@@ -514,13 +516,7 @@ void TRIAL_HOUSE_CalcBtlResult( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, u1
   if (val < 0) val = 0;
   else if (val > TH_SCORE_MAX) val = TH_SCORE_MAX;
 
-  if (val >= 6000) rank = TH_RANK_MASTER;
-  else if (val >= 5000) rank = TH_RANK_ELITE;
-  else if (val >= 4000) rank = TH_RANK_HYPER;
-  else if (val >= 3000) rank = TH_RANK_SUPER;
-  else if (val >= 2000) rank = TH_RANK_NORMAL;
-  else if (val >= 1000) rank = TH_RANK_NOVICE;
-  else rank = TH_RANK_BEGINNER;
+  rank = TH_CALC_Rank( val );
 
   *outRank = rank;
   *outPoint = val;
