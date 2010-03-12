@@ -265,8 +265,8 @@ static void DEBUG_IntrudeParam( GAMEDATA *gamedata, HEAPID heapID )
   OCCUPY_INFO *occupy;
   
   occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
-  occupy->white_level = 100;
-  occupy->black_level = 100;
+  occupy->white_level = 25;
+  occupy->black_level = 25;
   
   intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
   ISC_SAVE_SetGPowerID( intsave, GFUser_GetPublicRand( GPOWER_ID_MAX - 1) + 1 );
