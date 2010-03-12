@@ -403,6 +403,7 @@ GFL_PROC_RESULT PMSInput_Init( GFL_PROC * proc, int * seq , void *pwk, void *myw
     wk = mywk;
 		if( PMSIView_WaitCommandAll( wk->vwk ) )
     {
+	    ChangeMainProc(wk, MainProc_EditArea);  // ここでチェンジする
 			return GFL_PROC_RES_FINISH;
 		}
 		break;
@@ -554,7 +555,7 @@ static PMS_INPUT_WORK* ConstructWork( GFL_PROC* proc , void* pwk )
   
   wk->swk = PMSI_SEARCH_Create( wk, wk->dwk, HEAPID_PMS_INPUT_SYSTEM );
 
-	ChangeMainProc(wk, MainProc_EditArea);
+	//ChangeMainProc(wk, MainProc_EditArea);  // もっと後でチェンジする
 	SetSubProc( wk, SubProc_FadeIn );
 
 	return wk;
@@ -654,10 +655,13 @@ static void ChangeMainProc( PMS_INPUT_WORK* wk, MainProc main_proc )
 	wk->main_seq = 0;
 
 	if(main_proc == MainProc_EditArea){
+    PMSIView_ChangeKTEditArea( wk->vwk, wk, wk->dwk );
 		wk->cb_ktchg_func = CB_EditArea_KTChange;
 	}else if(main_proc == MainProc_Category){
+    PMSIView_ChangeKTCategory( wk->vwk, wk, wk->dwk );
 		wk->cb_ktchg_func = CB_Category_KTChange;
 	}else if(main_proc == MainProc_WordWin){
+    PMSIView_ChangeKTWordWin( wk->vwk, wk, wk->dwk );
 		wk->cb_ktchg_func = CB_WordWin_KTChange;
 	}else{
 		wk->cb_ktchg_func = NULL;
@@ -1984,7 +1988,8 @@ static GFL_PROC_RESULT MainProc_Category( PMS_INPUT_WORK* wk, int* seq )
 		//if (PMSIView_WaitCommand( wk->vwk, VCMD_MOVE_WORDWIN_CURSOR) == FALSE )  // VCMD_MOVE_CATEGORY_CURSOR の間違いでは？
 		if (
             PMSIView_WaitCommand( wk->vwk, VCMD_MOVE_CATEGORY_CURSOR) == FALSE 
-		     && PMSIView_WaitCommand( wk->vwk, VCMD_INPUT_BLINK_IN_CATEGORY ) == FALSE
+		     || PMSIView_WaitCommand( wk->vwk, VCMD_INPUT_BLINK_IN_CATEGORY ) == FALSE
+		     || PMSIView_WaitCommand( wk->vwk, VCMD_ERASE_BLINK_IN_CATEGORY_INITIAL ) == FALSE
     )
 		{
 			break;
@@ -2031,6 +2036,8 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
   {
     if( wk->category_mode == CATEGORY_MODE_INITIAL )
     {
+		  wk->category_pos = CATEGORY_POS_SELECT;
+
       // 検索開始
       if( PMSI_SEARCH_Start( wk->swk ) )
       {
@@ -2041,6 +2048,8 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
       else
       {
         GFL_SOUND_PlaySE( SOUND_SEARCH_DISABLE );
+
+		    PMSIView_SetCommand( wk->vwk, VCMD_MOVE_CATEGORY_CURSOR );  // カーソルを「えらぶ」の位置に移動させる
       }
       
       return;
@@ -2064,6 +2073,8 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     // INITIALなら文字消去→これ以上消すものがなければ画面から抜ける
     if( wk->category_mode == CATEGORY_MODE_INITIAL && PMSI_SEARCH_DelWord( wk->swk ) )
     {
+		  wk->category_pos = CATEGORY_POS_ERASE;
+
 		  GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
 		  PMSIView_SetCommand( wk->vwk, VCMD_ERASE_BLINK_IN_CATEGORY_INITIAL );
 
@@ -2073,6 +2084,9 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     // GROUPは無条件で画面から抜ける
     else
     {
+      if( wk->category_mode == CATEGORY_MODE_INITIAL )
+		    wk->category_pos = CATEGORY_POS_BACK;
+      
       GFL_SOUND_PlaySE(SOUND_CANCEL); 
       PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_EDITAREA );
       wk->next_proc = MainProc_EditArea;
@@ -2381,6 +2395,7 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
         // 処理なし
         break;
       case 0 :
+        wk->category_pos = CATEGORY_POS_SELECT;
         if( PMSI_SEARCH_Start( wk->swk ) )
         {
           // 単語リストへ
@@ -2394,6 +2409,7 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
         break;
       case 1 :
         // けす
+        wk->category_pos = CATEGORY_POS_ERASE;
         if( PMSI_SEARCH_DelWord( wk->swk ) )
         {
           GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
@@ -2409,6 +2425,7 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
         break;
       case 2 :
         {
+          wk->category_pos = CATEGORY_POS_BACK;
           GFL_SOUND_PlaySE(SOUND_CANCEL);
 
           PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_EDITAREA );

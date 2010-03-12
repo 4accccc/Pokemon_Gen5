@@ -938,6 +938,11 @@ static void Cmd_UpdateEditArea( GFL_TCB *tcb, void* wk_adrs )
 //----------------------------------------------------------------------------------------------
 static void Cmd_ChangeKTEditArea( GFL_TCB *tcb, void* wk_adrs )
 {
+  COMMAND_WORK* wk = wk_adrs;
+  PMSIView_ChangeKTEditArea( wk->vwk, wk->mwk, wk->dwk );
+  DeleteCommand( wk );
+
+#if 0
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
@@ -965,6 +970,7 @@ static void Cmd_ChangeKTEditArea( GFL_TCB *tcb, void* wk_adrs )
 	}
 
 	DeleteCommand( wk );
+#endif
 }
 
 //----------------------------------------------------------------------------------------------
@@ -978,10 +984,15 @@ static void Cmd_ChangeKTEditArea( GFL_TCB *tcb, void* wk_adrs )
 //----------------------------------------------------------------------------------------------
 static void Cmd_ChangeKTCategory( GFL_TCB *tcb, void* wk_adrs )
 {
+  COMMAND_WORK* wk = wk_adrs;
+  PMSIView_ChangeKTCategory( wk->vwk, wk->mwk, wk->dwk );
+  DeleteCommand( wk );
+
+#if 0
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
-	PMSIV_CATEGORY_VisibleCursor(vwk->category_wk,TRUE);
+	PMSIV_CATEGORY_VisibleCursor(vwk->category_wk,TRUE);  // OBJのカーソルの表示/非表示が切り替わる
 #if 0 
 	if(*vwk->p_key_mode == APP_KTST_TOUCH){	//キーからタッチへ
 		PMSIV__VisibleCursor( vwk->edit_wk, FALSE );
@@ -994,7 +1005,19 @@ static void Cmd_ChangeKTCategory( GFL_TCB *tcb, void* wk_adrs )
 		}
 	}
 #endif
+
+	if(*vwk->p_key_mode == GFL_APP_KTST_TOUCH)  // キーからタッチへ
+  {
+    if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
+      PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, 0 , FALSE );  // タスクメニュー全てにカーソルが置かれないようにする
+	}
+  else  // タッチからキーへ
+  {
+	  PMSIV_CATEGORY_MoveCursor( vwk->category_wk, PMSI_GetCategoryCursorPos(vwk->main_wk) );  // 今選んでいるところにカーソルを置く
+  }
+
 	DeleteCommand( wk );
+#endif
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1008,6 +1031,11 @@ static void Cmd_ChangeKTCategory( GFL_TCB *tcb, void* wk_adrs )
 //----------------------------------------------------------------------------------------------
 static void Cmd_ChangeKTWordWin( GFL_TCB *tcb, void* wk_adrs )
 {
+  COMMAND_WORK* wk = wk_adrs;
+  PMSIView_ChangeKTWordWin( wk->vwk, wk->mwk, wk->dwk );
+  DeleteCommand( wk );
+
+#if 0
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 	
@@ -1019,6 +1047,7 @@ static void Cmd_ChangeKTWordWin( GFL_TCB *tcb, void* wk_adrs )
 	}
 #endif
 	DeleteCommand( wk );
+#endif
 }
 
 //----------------------------------------------------------------------------------------------
@@ -2083,9 +2112,13 @@ static void Cmd_EraseBlinkInCategoryInitial( GFL_TCB *tcb, void* wk_adrs )
 	case 1:
     if( PMSIV_MENU_IsFinishCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_ERASE ) )
     {
-      if( PMSI_GetCategoryCursorPos(vwk->main_wk) == CATEGORY_POS_ERASE )
+      if( *vwk->p_key_mode == GFL_APP_KTST_KEY && PMSI_GetCategoryCursorPos(vwk->main_wk) == CATEGORY_POS_ERASE )  // キー 
       {
         PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, 1, TRUE );
+      }
+      else
+      {
+        PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, 0, FALSE );
       }
 			DeleteCommand( wk );
     }
@@ -2428,5 +2461,77 @@ static void trans_explain_message( PMS_INPUT_VIEW* vwk )
     GFL_BMPWIN_MakeTransWindow_VBlank( vwk->explain_bmpwin );
     vwk->explain_bmpwin_trans_req = FALSE;
   }
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+	* タッチorキー更新
+	*
+	* @param   		
+	* @param   		
+	* @param   		
+	*
+	*/
+//----------------------------------------------------------------------------------------------
+void PMSIView_ChangeKTEditArea( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk )
+{
+  // 編集領域にいるか、ボタン領域にいるかを更新する
+  {
+    BOOL is_edit_area = PMSI_GetEditAreaOrButton( vwk->main_wk );
+    //if( is_edit_area ) vwk->status == PMSI_ST_EDIT;
+    //else               vwk->status == PMSI_ST_BUTTON;
+    // vwk->statusには常に正しい値が入っていると期待して、更新しないことにする
+  }
+
+	if(*vwk->p_key_mode == GFL_APP_KTST_TOUCH){	//キーからタッチへ
+		PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );  // 編集エリアのカーソルはカテゴリ選択(ポケモンやステータスなど、あいうえおなど)やワードウィン選択(ピカチュウなど)に移行している間は表示しておくが、編集エリア内では選ばない限り消しておく。
+    PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), FALSE );
+//		PMSIV_BUTTON_VisibleCursor( vwk->button_wk, FALSE );
+	}else{	//タッチからキーへ
+		if(vwk->status == PMSI_ST_BUTTON){
+      PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );
+      PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), TRUE );
+//			PMSIV_BUTTON_VisibleCursor( vwk->button_wk, TRUE );
+		}else{
+			PMSIV_EDIT_VisibleCursor( vwk->edit_wk, TRUE );
+      PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), FALSE );
+		}
+	}
+}
+void PMSIView_ChangeKTCategory( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk )
+{
+	PMSIV_CATEGORY_VisibleCursor(vwk->category_wk,TRUE);  // OBJのカーソルの表示/非表示が切り替わる
+#if 0 
+	if(*vwk->p_key_mode == APP_KTST_TOUCH){	//キーからタッチへ
+		PMSIV__VisibleCursor( vwk->edit_wk, FALSE );
+		PMSIV_BUTTON_VisibleCursor( vwk->button_wk, FALSE );
+	}else{	//タッチからキーへ
+		if(vwk->status == PMSI_ST_BUTTON){
+			PMSIV_BUTTON_VisibleCursor( vwk->button_wk, TRUE );
+		}else{
+			PMSIV_EDIT_VisibleCursor( vwk->edit_wk, TRUE );
+		}
+	}
+#endif
+
+	if(*vwk->p_key_mode == GFL_APP_KTST_TOUCH)  // キーからタッチへ
+  {
+    if( PMSI_GetCategoryMode(mwk) == CATEGORY_MODE_INITIAL )
+      PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, 0 , FALSE );  // タスクメニュー全てにカーソルが置かれないようにする
+	}
+  else  // タッチからキーへ
+  {
+	  PMSIV_CATEGORY_MoveCursor( vwk->category_wk, PMSI_GetCategoryCursorPos(vwk->main_wk) );  // 今選んでいるところにカーソルを置く
+  }
+}
+void PMSIView_ChangeKTWordWin( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk )
+{
+	PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk,TRUE);
+
+#if 0 
+	if(*vwk->p_key_mode == APP_KTST_TOUCH){	//キーからタッチへ
+	}else{	//タッチからキーへ
+	}
+#endif
 }
 

@@ -230,6 +230,11 @@ extern u32 PMSIView_GetScrollBarPosCount( PMS_INPUT_VIEW* vwk, u32 max );
 
 extern void PMSIView_SetBackScreen( PMS_INPUT_VIEW* vwk, BOOL is_wordwin );
 
+extern void PMSIView_ChangeKTEditArea( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk );
+extern void PMSIView_ChangeKTCategory( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk );
+extern void PMSIView_ChangeKTWordWin( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk );
+
+
 //================================================================================
 //  ì¸óÕóìèàóù
 //================================================================================
