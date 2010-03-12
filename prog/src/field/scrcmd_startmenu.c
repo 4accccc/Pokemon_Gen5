@@ -26,6 +26,7 @@
 #include "event_fieldmap_control.h"
 
 #include "scrcmd_startmenu.h"
+#include "savedata/misc.h"
 
 //--------------------------------------------------------------
 /**
@@ -39,7 +40,7 @@ VMCMD_RESULT EvCmdGetStartMenuFlg( VMHANDLE *core, void *wk )
   SCRCMD_WORK*   work     = (SCRCMD_WORK*)wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
   
-  u16 *type = SCRCMD_GetVMWorkValue( core, work );
+  u16 type = SCRCMD_GetVMWorkValue( core, work );
   u16 *flg = SCRCMD_GetVMWork( core, work );
   {
     MISC *misc = GAMEDATA_GetMiscWork(gdata);
