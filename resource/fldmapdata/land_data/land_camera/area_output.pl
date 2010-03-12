@@ -96,7 +96,7 @@ for( $count_z=0; $count_z<$ARGV[2]; $count_z++ )
     $count_x = $ARGV[1] - 1;
   }
 
-  if( $count_z == 0 )
+  if( ($count_z == $count_x) && ($count_z == 0) )
   {
     $max_model_left = $model_left;
     $max_model_size_x = $model_size_x;
@@ -180,7 +180,7 @@ for( $count_x=0; $count_x<$ARGV[1]; $count_x++ )
     $count_z += $ARGV[2] - 1;
   }
 
-  if( $count_x == 0 )
+  if( ($count_z == $count_x) && ($count_z == 0) )
   {
     $max_model_top = $model_top;
     $max_model_size_z = $model_size_z;
