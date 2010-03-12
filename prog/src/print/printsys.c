@@ -1695,7 +1695,7 @@ u8 PRINTSYS_GetTagLine( const STRBUF* str, u8 tag_id )
 
   }
 
-  GF_ASSERT( 0 ); ///< 指定タグは見つからなかった
+//  GF_ASSERT( 0 ); ///< 指定タグは見つからなかった
 
   return 0;
 }
