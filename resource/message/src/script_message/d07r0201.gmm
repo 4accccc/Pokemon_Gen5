@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-04T15:23:23"/>
+	<create user="matsumiya" host="W00224" date="2010-03-12T14:12:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -404,12 +404,12 @@
 　画面外に消えると主人公、操作可能
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ライバル『また　なにか
+		<language name="JPN" width="256">チェレン『また　なにか
 むりなんだいを　おしつけられるかと▽
 おもわず　みがまえて　しまったよ▼
 [1:00:トレーナー名:0]
 ぼくは　さきに　いくよ▼</language>
-		<language name="JPN_KANJI" width="256">ライバル『また　なにか
+		<language name="JPN_KANJI" width="256">チェレン『また　なにか
 無理難題を　おしつけられるかと▽
 思わず　身構えて　しまったよ▼
 [1:00:トレーナー名:0]
