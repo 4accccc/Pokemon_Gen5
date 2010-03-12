@@ -83,24 +83,16 @@ end
     next if i == 0
     file_name = file_list[ i ].sub( ".NCGR", ".ncg" )
 
+    conv = 0
+
     if File::exist?( ARGV[ ARGV_TSC_FILE ] ) == true
-      next if File::stat( ARGV[ ARGV_TSC_FILE ] ).mtime.tv_sec >= File::stat( file_name ).mtime.tv_sec
+      if File::stat( ARGV[ ARGV_TSC_FILE ] ).mtime.tv_sec >= File::stat( file_name ).mtime.tv_sec
+        conv = 1
+      end
     end
 
-    #オスファイルコンバート
-    cmd = "./nce_lnk poke_icon_128k.nce " + file_name
-    system( cmd )
-    p cmd
-
-    cmd = "g2dcvtr " + file_name.sub( ".ncg", ".nce" ) + " -br"
-    system( cmd )
-    p cmd
-
-    osu_pltt = get_palette( file_name )
-
-    #メスファイルが存在するならコンバート
-    file_name = file_list[ i ].sub( "_m.NCGR", "_f.ncg" )
-    if File.exist?( file_name ) == true 
+    if conv == 0
+      #オスファイルコンバート
       cmd = "./nce_lnk poke_icon_128k.nce " + file_name
       system( cmd )
       p cmd
@@ -108,11 +100,32 @@ end
       cmd = "g2dcvtr " + file_name.sub( ".ncg", ".nce" ) + " -br"
       system( cmd )
       p cmd
+    end
 
+    osu_pltt = get_palette( file_name )
+
+    if conv == 0
+      #メスファイルが存在するならコンバート
+      file_name = file_list[ i ].sub( "_m.NCGR", "_f.ncg" )
+      if File.exist?( file_name ) == true 
+        cmd = "./nce_lnk poke_icon_128k.nce " + file_name
+        system( cmd )
+        p cmd
+
+        cmd = "g2dcvtr " + file_name.sub( ".ncg", ".nce" ) + " -br"
+        system( cmd )
+        p cmd
+
+      else
+        fp_w = open( file_name.sub( ".ncg", ".NCGR" ), "w" )
+        fp_w.close
+      end
+    end
+    #メスファイルが存在するならコンバート
+    file_name = file_list[ i ].sub( "_m.NCGR", "_f.ncg" )
+    if File.exist?( file_name ) == true 
       mesu_pltt = get_palette( file_name )
     else
-      fp_w = open( file_name.sub( ".ncg", ".NCGR" ), "w" )
-      fp_w.close
       mesu_pltt = osu_pltt
     end
     fp_pal.printf("\t0x%d%d,\t\t// %d : %s\n", mesu_pltt, osu_pltt, i - 1, file_list[ i ].sub( ".NCGR", "" ) )
