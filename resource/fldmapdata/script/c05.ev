@@ -444,7 +444,7 @@ EVENT_START   ev_pos_c05_support_01
 	_OBJ_ANIME_WAIT()
 	
 	//サポート表示
-	_OBJ_ADD_EX( 181, 414, DIR_UP, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
+	_OBJ_ADD_EX( 172, 405, DIR_UP, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
 	
 	//サポート曲再生
 	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
@@ -461,6 +461,9 @@ EVENT_START   ev_pos_c05_support_01
 	
 	//主人公座標に応じてサポートに隣接
 	SWITCH $POSZ
+	CASE 403 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_supportz403 )
+		_OBJ_ANIME_WAIT()
 	CASE 404 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_supportz404 )
 		_OBJ_ANIME_WAIT()
@@ -561,15 +564,22 @@ EVENT_END
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c05_player_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	サポート登場：主人公に隣接
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c05_support_hello
-	_ANIME_DATA	AC_WALK_U_8F,9
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	サポート登場：主人公、z座標に応じてサポートに隣接z403
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_player_to_supportz403
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -616,8 +626,7 @@ _ANIME_LABEL	anm_c05_support_gyoe
 //	サポート登場：退場（１)
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c05_support_goodbye01
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	AC_WALK_R_8F,8
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/

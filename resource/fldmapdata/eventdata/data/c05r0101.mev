@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/19 18:09:11
+#save date:2010/03/12 15:27:06
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c05r0101.wms
 #SECTION START:OBJ_EVENT
@@ -16,7 +16,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c05r0101.wms
 #ID name
 C05R0101_POKEMON
 #OBJ CODE Number
-POKE2
+POKE17
 #MOVE CODE Number
 MV_RT2
 #EVENT TYPE Number

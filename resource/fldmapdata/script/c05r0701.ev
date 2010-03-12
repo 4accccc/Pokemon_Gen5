@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05r0701_lady_01
+_EVENT_DATA    ev_c05r0701_girl4_01
 _EVENT_DATA_END
 
 
@@ -32,7 +32,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /* 			日替わりわざポケモン見せイベント			  */
 /**************************************************************/
-EVENT_START		ev_c05r0701_lady_01
+EVENT_START		ev_c05r0701_girl4_01
 	
 	_TALK_OBJ_START()
 	
@@ -41,7 +41,7 @@ EVENT_START		ev_c05r0701_lady_01
 	
 		//わたくしのおねがい きいてくださるかしら？
 		DEFINE_LOCAL SCWK_ANSWER01
-		_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_01 , C05R0701_LADY_01 )
+		_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_01 , C05R0701_GIRL4_01 )
 		_YES_NO_WIN( SCWK_ANSWER01 )
 		_BALLOONWIN_CLOSE()
 		
@@ -53,7 +53,7 @@ EVENT_START		ev_c05r0701_lady_01
 		//いいえ
 		ELSE
 			//つれないのね
-			_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_04 , C05R0701_LADY_01 )
+			_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_04 , C05R0701_GIRL4_01 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			
@@ -79,7 +79,7 @@ EVENT_START		ev_c05r0701_lady_01
 		
 				//わたくしのおねがい きいてくださるかしら？
 				DEFINE_LOCAL SCWK_ANSWER02
-				_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_02 , C05R0701_LADY_01 )
+				_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_02 , C05R0701_GIRL4_01 )
 				_YES_NO_WIN( SCWK_ANSWER02 )
 				_BALLOONWIN_CLOSE()
 				
@@ -91,7 +91,7 @@ EVENT_START		ev_c05r0701_lady_01
 				//いいえ
 				ELSE
 					//つれないのね
-					_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_04 , C05R0701_LADY_01 )
+					_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_04 , C05R0701_GIRL4_01 )
 					_LAST_KEYWAIT()
 					_BALLOONWIN_CLOSE()
 				ENDIF
@@ -108,7 +108,7 @@ EVENT_START		ev_c05r0701_lady_01
 			_WAZA_NAME( 0 , WK_OTHER_C05R0701_WAZA )
 			
 			//(わざ名）ってわざ じっさいにつかうと
-			_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_07 , C05R0701_LADY_01 )
+			_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_07 , C05R0701_GIRL4_01 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 		ENDIF
@@ -150,7 +150,7 @@ ev_c05r0701_waza_check:
 	IF $LWK_WAZA_RESURT == 6 THEN
 		
 		//（わざ名）というわざを覚えたポケモンがみたいわ！
-		_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_03 , C05R0701_LADY_01 )
+		_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_03 , C05R0701_GIRL4_01 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	
@@ -161,7 +161,7 @@ ev_c05r0701_waza_check:
 		_TEMOTI_MONS_NAME( 1 , LWK_WAZA_RESURT )
 	
 		//あなたの（種族名）（わざ名）が使えるのね！
-		_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_03a , C05R0701_LADY_01 )
+		_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_03a , C05R0701_GIRL4_01 )
 		_BALLOONWIN_CLOSE()
 		
 		//アイテム入手処理（ハートのうろこ）
