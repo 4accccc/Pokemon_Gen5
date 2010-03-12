@@ -38,6 +38,7 @@
 #define FST_EXTRA_BATTLE_EXAMINATION_BREAK_BIT	(1<<7)		//外部セーブ：バトル検定：破壊
 #define FST_EXTRA_STREAMING_BREAK_BIT		        (1<<8)		//外部セーブ：ミュージカル：破壊
 #define FST_EXTRA_ZUKAN_WALLPAPER_BREAK_BIT	  	(1<<9)		//外部セーブ：図鑑壁紙：破壊
+#define FST_EXTRA_DENDOU_BREAK_BIT	  	(1<<10)		//外部セーブ：殿堂入り：破壊
 
 //--------------------------------------------------------------
 //  外部セーブ番号
@@ -53,6 +54,7 @@ typedef enum{
   SAVE_EXTRA_ID_BATTLE_EXAMINATION,
   SAVE_EXTRA_ID_MUSICAL_DIST,
   SAVE_EXTRA_ID_ZUKAN_WALLPAPER,
+  SAVE_EXTRA_ID_DENDOU,
   
   SAVE_EXTRA_ID_MAX,
 }SAVE_EXTRA_ID;

@@ -57,7 +57,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/zukan_wp_savedata.c \
         savedata/trialhouse_save.c \
         savedata/livematch_savedata.c \
-        savedata/battlematch_savedata.c
+        savedata/battlematch_savedata.c \
+        savedata/dendou_save.c
 
 
 #’ÊM‚Ìí’“

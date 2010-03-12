@@ -33,6 +33,8 @@
 #define SAVESIZE_EXTRA_STREAMING    (SAVE_SECTOR_SIZE * 32)  //128Kbyte
 ///EXTRA領域で図鑑壁紙が使用するセーブサイズ
 #define SAVESIZE_EXTRA_ZUKAN_WALLPAPER    (SAVE_SECTOR_SIZE * 7)  //CGX6000 + PLTT1000
+///EXTRA領域で殿堂入りが使用するセーブサイズ
+#define SAVESIZE_EXTRA_DENDOU             (0x1800)
 
 
 ///セーブデータ識別ID
@@ -148,9 +150,9 @@ enum{
   EXGMDATA_ID_ZUKAN_WALLPAPER,
 };
 
-///外部セーブデータ識別ID：デバッグバトル
+///外部セーブデータ識別ID：殿堂入り
 enum{
-  EXGMDATA_ID_DEBUG_BATTLE,
+  EXGMDATA_ID_DENDOU,
 };
 
 
