@@ -714,11 +714,11 @@
 #define FV_C03P09_SWEETS_02                690 /* 0x02b2 ヒウンシティP09：ヒウンアイス行列・後列 */
 #define FV_R03_SUPPORT_02                  691 /* 0x02b3 3番道路：サポート */
 #define FV_R03_SUPPORT_03                  692 /* 0x02b4 3番道路：サポート */
-		/* not used   693(0x02b5) */
-		/* not used   694(0x02b6) */
-		/* not used   695(0x02b7) */
-		/* not used   696(0x02b8) */
-		/* not used   697(0x02b9) */
+#define FV_R08R0101_POKE4                  693 /* 0x02b5 セッカ湿原：ダルタニスイベントのアトス */
+#define FV_R08R0101_POKE5                  694 /* 0x02b6 セッカ湿原：ダルタニスイベントのポルトス */
+#define FV_R08R0101_POKE6                  695 /* 0x02b7 セッカ湿原：ダルタニスイベントのアラミス */
+#define FV_R08R0101_POKE11                 696 /* 0x02b8 セッカ湿原：ダルタニスイベントのダルタニス */
+#define FV_C04R0601_POS_HAKASE             697 /* 0x02b9 ライモンシティ４番道路側ゲート：博士とライバル */
 		/* not used   698(0x02ba) */
 		/* not used   699(0x02bb) */
 		/* not used   700(0x02bc) */

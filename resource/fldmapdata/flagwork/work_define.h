@@ -187,6 +187,7 @@
 #define WK_SCENE_C03P09_SWEETS           16575 /* 0x40bf ヒウンシティ路地：イベント用ワーク */
 #define WK_SCENE_R07_MOVEPOKE            16576 /* 0x40c0 7番道路：移動ポケモンイベント用ワーク */
 #define WK_SCENE_R13Ｒ0103_LEGEND        16577 /* 0x40c1 13番道路：ツチノカミイベント用ワーク */
+#define WK_SCENE_C04R0601                16578 /* 0x40c2 ライモンシティ４番道路側ゲート：イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
@@ -232,7 +233,7 @@
 #define WK_OTHER_BSUBWAY_TRAIN           16690 /* 0x4132 バトルサブウェイ、列車内制御 */
 #define WK_OTHER_BSUBWAY_HOME            16691 /* 0x4133 バトルサブウェイ、ホーム制御 */
 #define WK_OTHER_KASEKI_NUM              16692 /* 0x4134 化石復元イベント用ワーク 化石ポケモン預かり状態か識別するためのワーク。アイテムナンバーを格納。 */
-#define WK_OTHER_PASSENGERBOAT           16693 /* 0x4135 遊覧船イベント用ワーク 遊覧船のイベント状態を保存するワーク。船内案内済みか判定に使用 */
+#define WK_OTHER_PASSENGERBOAT           16693 /* 0x4135 遊覧船イベント用ワーク 遊覧船のイベント状態を保存するワーク。船内案内済みか判定に使用 00 初期状態 01 乗船後、案内イベント済み 02 全てのトレーナーを倒した */
 #define WK_OTHER_STATION_CONNECT         16694 /* 0x4136 C04とギアステーションの接続イベント用ワーク 00 ギアステーションからC04にでる階段前のPOSイベント有効 01 ギアステーション入場アニメ有効（シーンチェンジスクリプト） */
 #define WK_OTHER_C03R0201_GALLERY        16695 /* 0x4137 日替わりタイプ指定ポケモン見せ用ワーク */
 #define WK_OTHER_UN                      16696 /* 0x4138 国連イベント用ワーク 00 参加していない（受付がゲートを塞いでいる） 01 参加状態（受付を通過している→受付をどかした状態にする） */
