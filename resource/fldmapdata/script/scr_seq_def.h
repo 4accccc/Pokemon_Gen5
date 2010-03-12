@@ -6534,8 +6534,8 @@
     _ASM_CALL_ZUKAN_AWARD demo_id, pattern
 
 //òHê¸ê}
-#define _CALL_SUBWAY_ROUTE_MAP( pattern ) \
-    _ASM_CALL_ZUKAN_AWARD SCR_ZUKAN_AWARD_SUBWAY_RUTE_MAP, pattern
+#define _CALL_SUBWAY_ROUTE_MAP() \
+    _ASM_CALL_ZUKAN_AWARD SCR_ZUKAN_AWARD_SUBWAY_RUTE_MAP, 0 
 
   .macro  _ASM_CALL_ZUKAN_AWARD demo_id, pattern
   .short  EV_SEQ_CALL_ZUKAN_AWARD
