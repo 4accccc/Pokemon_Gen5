@@ -599,11 +599,13 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
 {
   GYM_ELEC_SV_WORK *gmk_sv_work;
   GYM_ELEC_TMP *tmp;
+  FIELD_SOUND* fs;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
+    fs = GAMEDATA_GetFieldSound( gamedata );
   }
 
   //汎用ワーク確保
@@ -771,29 +773,13 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
 
   //ＳＥ鳴らしっぱなし
   {
-    SEPLAYER_ID player_id1, player_id2;
-    player_id1 = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_DRIVE );
-    player_id2 = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_SPEED );
-    PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, player_id1 );
+    SEPLAYER_ID player_id;
+    player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_SPEED );
+    FSND_PlayEnvSE( fs, GYM_ELEC_SE_DRIVE );
     //始めはボリューム0
-    NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id1 ), 0 );
-    NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id2 ), 0 );
+    FSND_SetEnvSEVol( fs, GYM_ELEC_SE_DRIVE, 0 );
+    NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id ), 0 );
   }
-/**
-  {
-    u8 i;
-    for (i=0;i<RALE_NUM_MAX;i++){
-      u16 arc_idx;
-      u8 *dat;
-      arc_idx = RaleAnm[i];
-      dat = &tmp->FramePosDat2[i][0];
-      tmp->IcaAnmPtr2[i] = ICA_ANIME_Create( 
-            GFL_HEAP_LOWID(HEAPID_FIELDMAP), ARCID_GYM_ELEC, arc_idx, dat, FRAME_POS_SIZE*2
-            );
-    }
-  }
-*/  
-
 }
 
 //--------------------------------------------------------------
@@ -811,6 +797,7 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
   GYM_ELEC_SV_WORK *gmk_sv_work;
   FLD_EXP_OBJ_CNT_PTR obj_cnt_ptr;
   GYM_ELEC_TMP *tmp;
+  FIELD_SOUND* fs;
   
   fieldWork = (FIELDMAP_WORK *)(work);
   obj_cnt_ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
@@ -819,6 +806,7 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
+    fs = GAMEDATA_GetFieldSound( gamedata );
   }
 
   //----リクエスト消化部----
@@ -863,12 +851,12 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
         //自分が乗っているカプセルのときはループＳＥ再生
         if ( (tmp->RadeRaleIdx != RIDE_NONE)&&(i == tmp->RadeRaleIdx / 2) ){
           SEPLAYER_ID player_id;
-          player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_DRIVE );
           //ループＳＥスタート
-          PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, player_id );
+          FSND_PlayEnvSE( fs, GYM_ELEC_SE_DRIVE );
           PMSND_PlaySE(GYM_ELEC_SE_SPEED);
           player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_SPEED );
           //鳴らし始めはボリューム0にしとく
+          FSND_SetEnvSEVol( fs, GYM_ELEC_SE_DRIVE, 0 );
           NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id ), 0 );
 
         }
@@ -921,55 +909,7 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
   }
   else    //カプセルに乗っていないときボリューム変更
   {
-#if 1    
     StateSeFunc(fieldWork, tmp);
-#else
-    int volume;
-    u8 rect_idx;
-    rect_idx = CheckGetSeRect(fieldWork);
-    if ( rect_idx != SE_RECT_MAX ){
-      //アニメデータ取得
-      fx32 now_frm;
-      VecFx32 now, player_pos, dst;
-      fx32 len;
-      NNSG3dAnmObj* anm_obj_ptr;
-      GFL_G3D_ANM*  gfl_anm;
-      u8 cap_idx = SeRect[rect_idx].CapIdx;
-      u8 obj_idx = OBJ_CAP_1 + cap_idx;
-      GFL_G3D_OBJ* g3Dobj = FLD_EXP_OBJ_GetUnitObj(obj_cnt_ptr, GYM_ELEC_UNIT_IDX, obj_idx);
-      u8 anm_idx = ANM_CAP_MOV1 + tmp->NowRaleIdx[cap_idx];
-      EXP_OBJ_ANM_CNT_PTR anm_ptr = FLD_EXP_OBJ_GetAnmCnt(obj_cnt_ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx);
-
-      now_frm = GetAnimeFrame(obj_cnt_ptr, obj_idx, anm_idx);
-
-      gfl_anm = GFL_G3D_OBJECT_GetG3Danm( g3Dobj, anm_idx );
-      anm_obj_ptr = GFL_G3D_ANIME_GetAnmObj( gfl_anm );
-      getJntSRTAnmResult_(anm_obj_ptr->resAnm,
-                          0,
-                          now_frm,
-                          &now);
-      VEC_Add( &now, &CapPos[cap_idx] ,&now );
-      FIELD_PLAYER_GetPos( FIELDMAP_GetFieldPlayer( fieldWork ), &player_pos );
-      VEC_Subtract( &now, &player_pos ,&dst );
-      len = VEC_Mag( &dst );
-
-      {
-        fx32 max = SE_LEN;
-        if ( max <= len ) volume = 0;
-        else volume = (SE_VOL * (max - len)) / max;
-      }
-    }
-    else
-    {
-      volume = 0;
-    }
-
-    {
-      SEPLAYER_ID player_id;
-      player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_DRIVE );
-      NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id ), volume );
-    }
-#endif    
   }
 }
 
@@ -1490,15 +1430,19 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_ELEC_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
-
+  FIELD_SOUND* fs;
   u8 cap_idx;
   u8 obj_idx;
   EXP_OBJ_ANM_CNT_PTR anm;
-
   int volume;
-  SEPLAYER_ID player_id1, player_id2;
-  player_id1 = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_DRIVE );
-  player_id2 = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_SPEED );
+  SEPLAYER_ID player_id;
+
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    fs = GAMEDATA_GetFieldSound( gamedata );
+  }
+
+  player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_SPEED );
 
   GF_ASSERT(tmp->RadeRaleIdx != RIDE_NONE);
 
@@ -1587,13 +1531,12 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       tmp->RideEvt = -1;
 
       //ループＳＥスタート
-      PMSND_PlaySE( GYM_ELEC_SE_DRIVE);
+      FSND_PlayEnvSE( fs, GYM_ELEC_SE_DRIVE );
       PMSND_PlaySE(GYM_ELEC_SE_SPEED);
       //鳴らし始めはボリューム0にしとく
-      NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id2 ), 0 );
-
+      NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id ), 0 );
       //ボリュームセット
-      NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id1 ), SE_VOL );
+      FSND_SetEnvSEVol( fs, GYM_ELEC_SE_DRIVE, SE_VOL );
       //自機自動移動開始
       tmp->AltoMove = TRUE;
 
@@ -1708,10 +1651,9 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       {
         SEPLAYER_ID player_id;
         //カプセル近接ＳＥのためGYM_ELEC_SE_DRIVEは鳴らし続ける
-        player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_DRIVE );
-        PMSND_PlaySE_byPlayerID( GYM_ELEC_SE_DRIVE, player_id );
+        FSND_PlayEnvSE( fs, GYM_ELEC_SE_DRIVE );
         //始めはボリューム0
-        NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id ), 0 );
+        FSND_SetEnvSEVol( fs, GYM_ELEC_SE_DRIVE, 0 );
         //加速音はストップする
         player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_SPEED );
         PMSND_StopSE_byPlayerID( player_id );
@@ -1821,7 +1763,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     }
   }
 
-  NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id2 ), volume );
+  NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id ), volume );
 
   return GMEVENT_RES_CONTINUE;
 }
@@ -2475,9 +2417,14 @@ static void StateSeFunc(FIELDMAP_WORK *fieldWork, GYM_ELEC_TMP *tmp)
   int min_obj_idx, min_anm_idx;
   BOOL first;
   int i;
-
+  FIELD_SOUND* fs;
   FLD_EXP_OBJ_CNT_PTR obj_cnt_ptr;
   obj_cnt_ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    fs = GAMEDATA_GetFieldSound( gamedata );
+  }
 
   first = TRUE;
   for(i=0;i<CAPSULE_NUM_MAX;i++)
@@ -2556,9 +2503,6 @@ static void StateSeFunc(FIELDMAP_WORK *fieldWork, GYM_ELEC_TMP *tmp)
       volume = 0;
     }
   }
-  {
-    SEPLAYER_ID player_id;
-    player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_DRIVE );
-    NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id ), volume );
-  }
+  
+  FSND_SetEnvSEVol( fs, GYM_ELEC_SE_DRIVE, volume );
 }
