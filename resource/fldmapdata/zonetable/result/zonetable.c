@@ -9299,7 +9299,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     TRUE,
-		MATRIX_ID_DUN2005, // camera_area
+		camera_area_dummy, // camera_area
 		0, // padding
 		5,
 		0,
