@@ -4373,6 +4373,23 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _CHK_STARTMENU_VIEW_FLAG
+ * @brief   タイトルからのスタートメニュー項目の状態取得ＮＥＷがきえているか？
+ * @param type    メニュー項目指定（script_def.hのSCR_STARTMENU_FLAG_～を参照）
+ * @param ret_wk  戻り値（TRUE/FALSEを返す）TRUEで表示済み
+ */
+//--------------------------------------------------------------
+#define _CHK_STARTMENU_VIEW_FLAG( type, ret_wk ) \
+    _ASM_CHK_STARTMENU_VIEW_FLAG type, ret_wk
+    .macro  _ASM_CHK_STARTMENU_VIEW_FLAG type, ret_wk
+    .short  EV_SEQ_CHK_START_MENU_VIEW_FLAG
+    .short  \type
+    .short  \ret_wk
+    .endm
+    
+
+//--------------------------------------------------------------
+/**
  * @brief 全滅時戻り先の設定
  * @param warp_id ワープ飛び先指定
  *
@@ -9147,4 +9164,4 @@
   .macro _ASM_CALL_CROSS_COMM_HELLO_MSG_INPUT ret
   .short EV_SEQ_CALL_CROSS_COMM_HELLO_MSG_INPUT
   .short \ret
-  .endm 
+  .endm
