@@ -38,11 +38,11 @@ EVENT_START     ev_d07r0101_workman1_01
 	DEFINE_LOCAL SCWK_SEASON
 	_GET_SEASON_ID( SCWK_SEASON )
 	
-	//【仮】冬の一言メッセージ
-	IF $SCWK_SEASON == 0 THEN
+	//冬の一言メッセージ
+	IF $SCWK_SEASON == PMSEASON_WINTER THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d07r0101_workman1_02 )
 	
-	//【仮】冬以外
+	//冬以外
 	ELSE
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d07r0101_workman1_01 )
 	

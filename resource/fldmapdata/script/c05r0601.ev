@@ -105,13 +105,11 @@ EVENT_START   ev_c05r0601_waitress_01
   	//ウェイトレス：いらっしゃいませ！　モーモーミルクは……
  	_BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_01 , C05R0601_WAITRESS_01, POS_DL )
   	
-  	//【仮】現在、所持金の表示とバールーンウィンドウが同時に表示されると、バルーンウィンドウが半透明になる
-  	//対処については、12末ROM以降になります。
    	//所持金の表示
-   	_GOLD_WIN_OPEN( 1, 1 )
+   	_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
    	
  	//購入本数の選択画面を作成
-  	_BMPMENU_INIT_EX( 22, 1, 0, 1, LWK_MILK_NUM_SELECT  )
+  	_BMPMENU_INIT_EX( MENU_X2, MENU_Y2, 0, 1, LWK_MILK_NUM_SELECT  )
 	
 	_BMPMENU_MAKE_LIST( msg_c05r0601_waitress_07, 0 )	//1本
 	_BMPMENU_MAKE_LIST( msg_c05r0601_waitress_08, 1 )	//1ダース

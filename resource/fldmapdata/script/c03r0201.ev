@@ -42,8 +42,6 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START		ev_c03r0201_sunglasses_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0201_sunglasses_01 )
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
@@ -51,8 +49,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c03r0201_lady_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0201_lady_01 )
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
@@ -192,7 +188,7 @@ EVENT_START		ev_c03r0201_clown_01
 							DEFINE_LOCAL	LWK_STATE_SELECT
 							
 							//•ªŠò
-							_BMPMENU_INIT_EX( 1, 1, 0, 0, LWK_STATE_SELECT )
+							_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 0, LWK_STATE_SELECT )
 							
 							_BMPMENU_MAKE_LIST( msg_c03r0201_select_01, 0 )	//ƒNƒ‰ƒ{
 							_BMPMENU_MAKE_LIST( msg_c03r0201_select_02, 1 )	//ƒJƒS
