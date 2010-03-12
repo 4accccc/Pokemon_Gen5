@@ -142,10 +142,7 @@ typedef struct _BATTLE_REC_HEADER{
  */
 //--------------------------------------------------------------
 struct _BATTLE_REC_SAVEDATA{
-  //殿堂入り以外の外部セーブは必ず一番最初にEX_SAVE_KEY構造体を配置しておくこと
-  EX_CERTIFY_SAVE_KEY save_key;     ///<認証キー
-
-  GDS_PROFILE profile;      ///<GDSプロフィール
+  GT_GDS_PROFILE profile;      ///<GDSプロフィール
   BATTLE_REC_HEADER head;     ///<戦闘録画ヘッダ
   BATTLE_REC_WORK rec;      ///<戦闘録画本体
 };

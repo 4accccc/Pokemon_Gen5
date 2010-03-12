@@ -11,6 +11,14 @@
 #include "system/main.h"
 #include "net/dwc_rap.h"
 #include "savedata\save_control.h"
+#include "pm_define.h"
+#include "poke_tool/poke_tool.h"
+#include "poke_tool/poke_tool_def.h"
+#include "savedata/gds_profile.h"
+#include "net_app/gds/gds_profile_local.h"
+#include "battle/btl_common.h"
+#include "savedata\battle_rec.h"
+#include "savedata\battle_rec_local.h"
 #include "gds_battle_rec.h"
 #include "gds_ranking.h"
 #include "gds_boxshot.h"
@@ -19,7 +27,6 @@
 //#include "savedata/imageclip_data.h"
 #include "savedata/box_savedata.h"
 #include "poke_tool/monsno_def.h"
-#include "savedata/gds_profile.h"
 
 #include <arc_tool.h>
 #include "print/wordset.h"

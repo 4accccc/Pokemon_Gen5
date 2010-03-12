@@ -20,6 +20,15 @@
 #include "gds_profile_types.h"
 #include "savedata/gds_profile.h"
 
+#include "pm_define.h"
+#include "poke_tool/poke_tool.h"
+#include "poke_tool/poke_tool_def.h"
+#include "savedata/gds_profile.h"
+#include "net_app/gds/gds_profile_local.h"
+#include "battle/btl_common.h"
+#include "savedata\battle_rec.h"
+#include "savedata\battle_rec_local.h"
+
 #include "net_app/gds/gds_battle_rec.h"
 #include "savedata/misc.h"
 

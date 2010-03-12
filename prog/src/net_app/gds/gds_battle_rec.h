@@ -13,44 +13,57 @@
 #include "gds_profile_local.h"
 #include "gds_battle_rec_sub.h"
 
+#include "pm_define.h"
+#include "poke_tool/poke_tool.h"
+#include "poke_tool/poke_tool_def.h"
+#include "savedata/gds_profile.h"
+#include "net_app/gds/gds_profile_local.h"
+#include "battle/btl_common.h"
+#include "savedata\battle_rec.h"
+#include "savedata\battle_rec_local.h"
+#include "gds_battle_rec.h"
+#include "gds_ranking.h"
+#include "gds_boxshot.h"
+#include "gds_dressup.h"
+
 
 //----------------------------------------------------------
 /**
- *	録画セーブデータ本体（7272byte）
+ *	録画セーブデータ本体（6116byte）
  */
 //----------------------------------------------------------
 typedef struct {
-	GT_REC_BATTLE_PARAM	bp;						//戦闘開始パラメータ	336byte
-	GT_RECORD_PARAM		rp;						//録画バッファ			4096byte
-	GT_REC_POKEPARTY	rec_party[GT_CLIENT_MAX];	//ポケモンパラメータ	628 * 4
-	GT_MYSTATUS			my_status[GT_CLIENT_MAX];	//プレイヤー情報		32byte * 4
-	GT_CONFIG			config;					//コンフィグ			2byte
-	u16 magic_key;
-	
-	//u32					checksum;	//チェックサム	4byte
-	GT_GDS_CRC crc;							///< CRC						4
+  BTLREC_SETUP_SUBSET       setupSubset;   ///< バトル画面セットアップパラメータのサブセット
+  BTLREC_OPERATION_BUFFER   opBuffer;      ///< クライアント操作内容の保存バッファ
+
+  REC_POKEPARTY         rec_party[ BTL_CLIENT_MAX ];
+  BTLREC_CLIENT_STATUS  clientStatus[ BTL_CLIENT_MAX ];
+
+  u16 magic_key;
+  u16 padding;
+  
+  //u32         checksum; //チェックサム  4byte
+  GDS_CRC crc;              ///< CRC            4
 }GT_BATTLE_REC_WORK;
 
 //--------------------------------------------------------------
 /**
  *	戦闘録画のヘッダ
- *		100byte
+ *		68byte
  */
 //--------------------------------------------------------------
 typedef struct {
 	u16 monsno[GT_HEADER_MONSNO_MAX];	///<ポケモン番号(表示する必要がないのでタマゴの場合は0)	24
 	u8 form_no_and_sex[GT_HEADER_MONSNO_MAX];	///<6..0bit目：ポケモンのフォルム番号　7bit目：ポケモンの性別		12
 
-	u16 battle_counter;		///<連勝数												2
-	u8 mode;				///<戦闘モード(ファクトリー50、ファクトリー100、通信対戦...)
-	
-	u8 secure;				///<TRUE:安全が保障されている。　FALSE：再生した事がない
-	
-	GT_REGULATION regulation;			///<レギュレーションデータ		32
-
-	u16 magic_key;			///<マジックキー
-	
-	u8 work[14];			///< 予備										16
+  u16 battle_counter;   ///<連勝数                        2
+  u16 mode;        ///<戦闘モード(ファクトリー50、ファクトリー100、通信対戦...)
+  
+  u16 magic_key;      ///<マジックキー
+  u8 secure;        ///<TRUE:安全が保障されている。　FALSE：再生した事がない
+  
+  u8 server_vesion;   ///<バトルのサーバーバージョン
+  u8 work[12];      ///< 予備
 	
 	GT_DATA_NUMBER data_number;		///<データナンバー(サーバー側でセットされる)	8
 	GT_GDS_CRC crc;							///< CRC						4

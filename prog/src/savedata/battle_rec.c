@@ -26,6 +26,13 @@
 #include "mystatus_local.h"
 #include "gds_profile_types.h"
 
+#include "pm_define.h"
+#include "poke_tool/poke_tool.h"
+#include "poke_tool/poke_tool_def.h"
+#include "savedata/gds_profile.h"
+#include "battle/btl_common.h"
+#include "savedata\battle_rec.h"
+#include "net_app/gds/gds_profile_local.h"
 #include "battle_rec_local.h"
 
 /*----------------------------------------------------------------------------*/
@@ -1050,7 +1057,7 @@ GDS_PROFILE_PTR BattleRec_GDSProfileAllocCopy(HEAPID heap_id)
 GDS_PROFILE_PTR BattleRec_GDSProfilePtrGet(void)
 {
   GF_ASSERT(brs != NULL);
-  return &brs->profile;
+  return (GDS_PROFILE_PTR)&brs->profile;
 }
 
 //--------------------------------------------------------------

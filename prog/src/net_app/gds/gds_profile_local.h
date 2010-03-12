@@ -51,7 +51,8 @@ typedef struct {
 	u8 language;							///< 言語コード
 	
 	u8 egg_flag:1;							///< 1=タマゴ
-	u8 form_no:7;							///< ポケモンフォルム番号
+	u8 form_no:6;							///< ポケモンフォルム番号
+  u8 mons_sex:1;            ///< ポケモン性別
 	u16 monsno;								///< ポケモン番号		2
 	
 	u8 message_flag;						///< 簡易会話、フリーワードどちらを使用するか
