@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T16:42:26"/>
+	<create user="matsumiya" host="W00224" date="2010-03-12T15:28:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,7 +274,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="163"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -338,7 +338,8 @@
 
 	<row id="msg_c07_hakase1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・pos（GRIDX=175、GRIDZ=13~15）で発動、座標は暫定
+・pos（GRIDX=175、GRIDZ=13~15）に配置
+・d07r0401からc07に来るとイベント発動
 ・0＝先頭のポケモン名
 ・先頭のポケモン（タマゴ、ひん死除く）のなつき度が
 　70以上→msg_c07_hakase1_02
@@ -425,7 +426,7 @@
 リュウラセンのとう　とは
 この　イッシュちほうで　もっとも[BE:00:ページ切り替え（行送り）]
 ふるい　たてものと　いわれている[BE:01:ページ切り替え（クリア）]
-なにより　パッケージポケモンが
+なにより　でんせつの　ポケモンが
 うまれた　ばしょ　とも[BE:01:ページ切り替え（クリア）]
 ねむる　ばしょ　とつたわっているな[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">よし！　おまえさん　ちょいと
@@ -433,7 +434,7 @@
 リュウラセンの塔　とは
 この　イッシュ地方で　もっとも[BE:00:ページ切り替え（行送り）]
 古い　建造物と　いわれている[BE:01:ページ切り替え（クリア）]
-なにより　パッケージポケモンが
+なにより　伝説の　ポケモンが
 生まれた　場所とも[BE:01:ページ切り替え（クリア）]
 眠る　場所とも　伝わっているな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -447,7 +448,7 @@
 リュウラセンのとう　とは
 この　イッシュちほうで　もっとも[BE:00:ページ切り替え（行送り）]
 ふるい　たてものと　いわれている[BE:01:ページ切り替え（クリア）]
-なにより　パッケージポケモンが
+なにより　でんせつの　ポケモンが
 うまれた　ばしょ　とも[BE:01:ページ切り替え（クリア）]
 ねむる　ばしょ　とつたわっているな[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">よし！　おまえさん　ちょいと
@@ -455,7 +456,7 @@
 リュウラセンの塔　とは
 この　イッシュ地方で　もっとも[BE:00:ページ切り替え（行送り）]
 古い　建造物と　いわれている[BE:01:ページ切り替え（クリア）]
-なにより　パッケージポケモンが
+なにより　伝説の　ポケモンが
 生まれた　場所とも[BE:01:ページ切り替え（クリア）]
 眠る　場所とも　伝わっているな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -506,7 +507,7 @@
 ・ポケモンジムをクリアして
 　ジムの外に出るとイベント発動
 ・主人公に隣接してメッセージ表示
-・続けてmsg_c07_white_01</comment>
+・続けてwhite_01</comment>
 		<attribute name="キャラクター">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『やあ　[1:00:トレーナー名:0]
 ジムバッジを　てにいれたところ？[BE:01:ページ切り替え（クリア）]</language>
@@ -514,63 +515,166 @@
 ジムバッジを　手に入れたところ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c07_white_01">
+	<row id="msg_c07_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・続けてmsg_c07_leader7_01</comment>
+・続けてleader7_01</comment>
 		<attribute name="キャラクター">友達♀</attribute>
-		<language name="JPN" width="256">ベル『ひさしぶり！
-あたしはね　だいすきクラブで……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『ひさしぶり！
-あたしはね　大好きクラブで……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ベル『ひさしぶり！　あたしはね
+こんどは　だいすきクラブに　いって▽
+じぶんに　できそうなこと　さがすの……▼</language>
+		<language name="JPN_KANJI" width="256">ベル『ひさしぶり！　あたしはね
+今度は　大好きクラブに　いって▽
+自分に　できそうなこと　探すの……▼</language>
 	</row>
 
-	<row id="msg_c07_leader7_01">
+	<row id="msg_c07_leader7_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムから登場、主人公たちを押しのけメッセージ表示
 ・表示後、塔の方に移動する
 　画面外に消えると
-　続けてmsg_c07_black_02</comment>
+　続けてwhite_02</comment>
 		<attribute name="キャラクター">LEADER7
 ハチク</attribute>
-		<language name="JPN" width="256">ハチク『……ないている？
-リュウラセンのとう　が[BE:01:ページ切り替え（クリア）]
-なかの　くうきが　ながれだしたのか！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ハチク『……ないている？
-リュウラセンの塔　が[BE:01:ページ切り替え（クリア）]
-中の空気が　流れだしたのか！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ハチク『……だれだ？</language>
+		<language name="JPN_KANJI" width="256">ハチク『……だれだ？</language>
 	</row>
 
-	<row id="msg_c07_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c07_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてleader7_02</comment>
+		<attribute name="キャラクター">友達♀</attribute>
+		<language name="JPN" width="256">ベル『だれ……って？▼
+あたしは　ベルで
+こっちは　チェレン……▼</language>
+		<language name="JPN_KANJI" width="256">ベル『だれ……って？▼
+あたしは　ベルで
+こっちは　チェレン……▼</language>
+	</row>
+
+	<row id="msg_c07_leader7_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・続けてmsg_c07_white_03</comment>
-		<attribute name="キャラクター">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……いまの
-ジムリーダーの　ハチクさん？[BE:01:ページ切り替え（クリア）]
-なんだか　こえを　かけづらい
-ふんいき　だったけれど？▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……今の
-ジムリーダーの　ハチクさん？[BE:01:ページ切り替え（クリア）]
-なんだか　声を　かけづらい
-雰囲気だったけれど？▼</language>
+・続けてninja1_01</comment>
+		<attribute name="キャラクター">LEADER7
+ハチク</attribute>
+		<language name="JPN" width="256">ハチク『いるのは　わかっている
+すがたを　みせたら　どうだ？▼</language>
+		<language name="JPN_KANJI" width="256">ハチク『いるのは　わかっている
+姿を　みせたら　どうだ？▼</language>
 	</row>
 
-	<row id="msg_c07_white_03">
+	<row id="msg_d06r0101_ninja1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>♂
+・ダークトリニティ、芝居（発注しています）のあと
+　3人出現
+・続けてninja2_01</comment>
+		<attribute name="キャラクター">ダークトリニティ
+その１</attribute>
+		<language name="JPN" width="256">……　……　……▼
+……さすがは
+セッカの　ジムリーダー▼
+かげの　そんざいである　われら
+ダークトリニティに　きづくとはな▼</language>
+		<language name="JPN_KANJI" width="256">……　……　……▼
+……さすがは
+セッカの　ジムリーダー▼
+影の　存在である　我ら
+ダークトリニティに　気づくとはな▼</language>
+	</row>
+
+	<row id="msg_d06r0101_ninja2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>♂
+・続けてninja3_01
+・0＝主人公名前</comment>
+		<attribute name="キャラクター">ダークトリニティ
+その２</attribute>
+		<language name="JPN" width="256">……[1:00:トレーナー名:0]だけに
+つたえるつもりだったが　まあいい▼
+ゲーチスさま　からの　でんごんだ
+リュウラセンのとうに　こい▼</language>
+		<language name="JPN_KANJI" width="256">……[1:00:トレーナー名:0]だけに
+伝えるつもりだったが　まあいい▼
+ゲーチスさま　からの　伝言だ
+リュウラセンの塔に　来い▼</language>
+	</row>
+
+	<row id="msg_d06r0101_ninja3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>♂
+・続けてleader7_03</comment>
+		<attribute name="キャラクター">ダークトリニティ
+その３</attribute>
+		<language name="JPN" width="256">……そこで　Ｎさまが
+おまえを　まっておられる▽
+しかと　つたえたぞ▼</language>
+		<language name="JPN_KANJI" width="256">……そこで　Ｎさまが
+おまえを　待っておられる▽
+しかと　伝えたぞ▼</language>
+	</row>
+
+	<row id="msg_c07_leader7_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・メッセージ表示後に、ダークトリニティ3人、芝居して消える
+・続けてleader7_04</comment>
+		<attribute name="キャラクター">LEADER7
+ハチク</attribute>
+		<language name="JPN" width="256">ハチク『リュウラセンのとう！？
+どういう　ことだ……▼
+おい！　きちんと……▼</language>
+		<language name="JPN_KANJI" width="256">ハチク『リュウラセンの塔！？
+どういう　ことだ……▼
+おい！　きちんと……▼</language>
+	</row>
+
+	<row id="msg_c07_leader7_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・メッセージ表示後、リュウラセンの塔に向かう
+・画面外に消えると、続けてblack_02</comment>
+		<attribute name="キャラクター">LEADER7
+ハチク</attribute>
+		<language name="JPN" width="256">ハチク『……！▼
+そちらの　しょうねん
+ジムちょうせん　だとしたら▽
+しばし　まってくれ▼
+わたしは　いまから
+リュウラセンのとうに　むかう！▼</language>
+		<language name="JPN_KANJI" width="256">ハチク『……！▼
+そちらの　少年
+ジム挑戦　だとしたら▽
+しばし　待ってくれ▼
+わたしは　今から
+リュウラセンの塔に　向かう！▼</language>
+	</row>
+
+	<row id="msg_c07_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、リュウラセンの塔に向かう
+・画面外に消えると、続けてwhite_03</comment>
+		<attribute name="キャラクター">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『ぼくも　いきます！▼
+リュウラセンのとうは
+８ばんどうろ　ですよね▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ぼくも　行きます！▼
+リュウラセンの塔は
+８番道路　ですよね▼</language>
+	</row>
+
+	<row id="msg_c07_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・msg_c07_white_03表示後
 　d08でのイベント開始まで繰り返し
-・d08イベントが開始されるとここから削除</comment>
+・d08イベントが開始されるとここから削除
+・メッセージ表示後から、左右にウロウロするアニメ</comment>
 		<attribute name="キャラクター">友達♀</attribute>
-		<language name="JPN" width="256">ベル『そんなことよりも
-なんだか　たいへん　そうだよ！[BE:01:ページ切り替え（クリア）]
-あたしたちも　いったほうが　よくない？
-その　リュウラセンのとう　に</language>
+		<language name="JPN" width="256">ベル『わわわ！
+あ　あたしは……　どうしたら？▼
+と　とりあえず　その
+リュウラセンのとうに　いかないと……</language>
 		<language name="JPN_KANJI" width="256">ベル『そんなことよりも
 なんだか　大変そうだよ！[BE:01:ページ切り替え（クリア）]
 あたしたちも　行ったほうが　よくない？
 その　リュウラセンの塔に</language>
 	</row>
 
-	<row id="msg_c07_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c07_black_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・msg_c07_white_03表示後
 　d08でのイベント開始まで繰り返し
@@ -584,7 +688,7 @@
 イヤな　空気を　感じるよ……</language>
 	</row>
 
-	<row id="msg_c07_hakaim1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c07_hakaim1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・c07ジムバッジ取得後から
 　d08リュウラセンの塔イベント後まで表示
@@ -597,7 +701,7 @@
 英雄としての　力を　得るのだ！</language>
 	</row>
 
-	<row id="msg_c07_hakaim2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c07_hakaim2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・c07ジムバッジ取得後から
 　d08リュウラセンの塔イベント後まで表示
@@ -610,7 +714,7 @@
 それこそが　パッケージポケモン！</language>
 	</row>
 
-	<row id="msg_c07_hakaiw1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c07_hakaiw1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・c07ジムバッジ取得後から
 　d08リュウラセンの塔イベント後まで表示
