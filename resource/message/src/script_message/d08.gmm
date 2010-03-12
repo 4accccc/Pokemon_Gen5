@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T23:15:07"/>
+	<create user="matsumiya" host="W00224" date="2010-03-12T21:02:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="384" right="1998" bottom="1012" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="110" right="1992" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="531"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="544"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="698"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,325 @@
 	</lock>
 
 
-	<row id="msg_d08_hakase1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08_hakase1_01w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・WHITEver
+・c07ジムバッジ取得まで繰り返し表示</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『この　おくに
+ゆうぜんと　そびえるのが▽
+リュウラセンのとう……▼
+イッシュの　くにが　できるまえの
+おおむかしから　そびえたち▼
+さいじょうかい　では
+でんせつの　ドラゴンポケモンが▼
+しんじつを　おいもとめる
+にんげんが　あらわれるのを▽
+まっていた……　そう　つたわっておる</language>
+		<language name="JPN_KANJI" width="256">アララギ『この　奥に
+悠然と　そびえるのが▽
+リュウラセンの塔……▼
+イッシュの　国が　できるまえの
+太古の　昔から　そびえたち▼
+塔の　最上階では
+伝説の　ドラゴンポケモンが▼
+真実を　追究する
+人間が　あらわれるのを▽
+待っていた……　そう　伝わっておる</language>
+	</row>
+
+	<row id="msg_d08_hakase1_01b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・BLACKver
+・c07ジムバッジ取得まで繰り返し表示</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『この　おくに
+ゆうぜんと　そびえるのが▽
+リュウラセンのとう……▼
+イッシュの　くにが　できるまえの
+おおむかしから　そびえたち▼
+さいじょうかい　では
+でんせつの　ドラゴンポケモンが▼
+りそうを　おいもとめる
+にんげんが　あらわれるのを▽
+まっていた……　そう　つたわっておる</language>
+		<language name="JPN_KANJI" width="256">アララギ『この　奥に
+悠然と　そびえるのが▽
+リュウラセンの塔……▼
+イッシュの　国が　できるまえの
+太古の　昔から　そびえたち▼
+塔の　最上階では
+伝説の　ドラゴンポケモンが▼
+理想を　追究する
+人間が　あらわれるのを▽
+待っていた……　そう　伝わっておる</language>
+	</row>
+
+	<row id="msg_d08_hakase1_00_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・c07ジムバッジ取得後からd08r0901イベント終了まで
+・posで発動
+・続けてwhite_00_01
+
+・0＝主人公の名前</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『おお　[1:00:トレーナー名:0]！▼
+それに　そちらは　ベルだね▼
+わたしも　アララギ▼
+きみに　ポケモンずかんを
+わたしたのは　むすめ　だよ▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『おお　[1:00:トレーナー名:0]！▼
+それに　そちらは　ベルだね▼
+わたしも　アララギ▼
+きみに　ポケモン図鑑を
+託したのは　娘なんだよ▼</language>
+	</row>
+
+	<row id="msg_d08_white_00_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・続けてhakase1_00_03</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『はじめまして！　おじいちゃん▼
+アララギはかせの　おかげで
+たびに　でられたし▽
+いろいろな　かのうせいを　さがせて▽
+すっごく　かんしゃ　しています！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『はじめまして！▼
+アララギはかせの　おかげで
+旅に　でられたし▽
+いろいろな　可能性を　探せて▽
+すっごく　感謝しています！▼</language>
+	</row>
+
+	<row id="msg_d08_hakase1_00_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・続けてwhite_00_02
+・0＝主人公の名前</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『そうかい　そうかい
+そいつは　よかった▼
+っと　のんびり
+はなすのは　あとだよ▼
+[1:00:トレーナー名:0]！　ベル！
+じょうきょうを　せつめい　するぞ▼
+おおぜいの　プラズマだんが
+とうの　かべを　つきやぶり▽
+なかに　はいっていったんだよ▼
+ハチクと……
+さっきの　わかものは　チェレンだね▼
+ふたりが　プラズマだんを
+おいかけて　いったが……▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『そうかい　そうかい
+そいつは　よかった▼
+っと　のんびり
+話すのは　あとだよ▼
+[1:00:トレーナー名:0]！　ベル！
+状況を　説明するぞ▼
+大挙した　プラズマだんが
+塔の　壁を　突き破り▽
+中に　入っていったんだよ▼
+ハチクと……
+さっきの　若者は　チェレンだね▼
+２人が　プラズマ団を
+追いかけて　いったが……▼</language>
+	</row>
+
+	<row id="msg_d08_white_00_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてバージョンで
+　hakase1_00_04w　か
+　hakase1_00_04b</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『……アララギはかせ
+リュウラセンのとうって　なんですか？▼</language>
+		<language name="JPN_KANJI" width="256">ベル『……アララギ博士
+リュウラセンの塔って　なんですか？▼</language>
+	</row>
+
+	<row id="msg_d08_hakase1_00_04w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・WHITEver
+・別方向を向いて
+・続けてhakase1_00_05</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『ふぁはは！▼
+そうだよな　きになるよな
+では　かんたんに　せつめいするぞ▼
+リュウラセンのとう　は……▼
+イッシュの　くにが　できるまえの
+おおむかしから　そびえたち▼
+さいじょうかい　では
+でんせつの　ドラゴンポケモンが▼
+しんじつを　おいもとめる
+にんげんが　あらわれるのを▽
+まっていた……　そう　つたわっておる▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『ふぁはは！▼
+そうだよな　気になるよな
+では　簡単に　説明するぞ▼
+リュウラセンの塔は……▼
+イッシュの　国が　できるまえの
+太古の　昔から　そびえたち▼
+塔の　最上階では
+伝説の　ドラゴンポケモンが▼
+真実を　追究する
+人間が　あらわれるのを▽
+待っていた……　そう　伝わっておる</language>
+	</row>
+
+	<row id="msg_d08_hakase1_00_04b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・BLACKver
+・別方向を向いて
+・続けてhakase1_00_05</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『ふぁはは！▼
+そうだよな　きになるよな
+では　かんたんに　せつめいするぞ▼
+リュウラセンのとう　は……▼
+イッシュの　くにが　できるまえの
+おおむかしから　そびえたち▼
+さいじょうかい　では
+でんせつの　ドラゴンポケモンが▼
+りそうを　おいもとめる
+にんげんが　あらわれるのを▽
+まっていた……　そう　つたわっておる▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『ふぁはは！▼
+そうだよな　気になるよな
+では　簡単に　説明するぞ▼
+リュウラセンの塔は……▼
+イッシュの　国が　できるまえの
+太古の　昔から　そびえたち▼
+塔の　最上階では
+伝説の　ドラゴンポケモンが▼
+理想を　追究する
+人間が　あらわれるのを▽
+待っていた……　そう　伝わっておる</language>
+	</row>
+
+	<row id="msg_d08_hakase1_00_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・続けてwhite_00_03</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">で　おまえさんたちも　チェレンのように
+プラズマだんを　おいかけるのかね？▼
+だが　プラズマだん　あいてに
+ことを　かまえるのは▽
+あまり　かんしん　できんが……▼</language>
+		<language name="JPN_KANJI" width="256">で　おまえさんたちも　チェレンのように
+プラズマだんを　おいかけるのかね？▼
+だが　プラズマだん　あいてに
+ことを　かまえるのは▽
+あまり　かんしん　できんが……▼</language>
+	</row>
+
+	<row id="msg_d08_white_00_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてhakase1_00_06
+・0＝主人公の名前</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『だいじょうぶ！▼
+チェレンも　[1:00:トレーナー名:0]も
+すっごい　つよくて　プラズマだんを▽
+たおしたことも　あるんだから▼
+……えーっと
+あたしは　そんなに　というか▽
+ぜんぜん　つよくないから▼
+……ここで　アララギはかせの
+ボディガードを　できたら……▽
+いいなあ……　なんて▼</language>
+		<language name="JPN_KANJI" width="256">ベル『だいじょうぶ！▼
+チェレンも　[1:00:トレーナー名:0]も
+すっごい　強くて　プラズマ団を▽
+倒したことも　あるんだから▼
+……えーっと
+あたしは　そんなに　というか▽
+ぜんぜん　強くないから▼
+……ここで　アララギ博士の
+ボディガードを　できたら……▽
+いいなあ……　なんて▼</language>
+	</row>
+
+	<row id="msg_d08_hakase1_00_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・はい/いいえ
+・はい→hakase1_00_09
+　いいえ→hakase1_00_07
+・0＝主人公の名前</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『そうかい　ありがとうよ！
+そいつは　こころづよいな▼
+で　[1:00:トレーナー名:0]
+おまえさんは　どうするんだい？</language>
+		<language name="JPN_KANJI" width="256">アララギ『そうかい　ありがとうよ！
+そいつは　心強いな▼
+で　[1:00:トレーナー名:0]
+おまえさんは　どうするんだい？</language>
+	</row>
+
+	<row id="msg_d08_hakase1_00_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『……おまえさんが
+そうしたいなら　それでいい</language>
+		<language name="JPN_KANJI" width="256">アララギ『……おまえさんが
+そうしたいなら　それでいい</language>
+	</row>
+
+	<row id="msg_d08_hakase1_00_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・はい/いいえ
+・はい→hakase1_00_09
+　いいえ→hakase1_00_07
+・0＝主人公の名前</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『[1:00:トレーナー名:0]
+おまえさんは　どうするんだい？</language>
+		<language name="JPN_KANJI" width="256">アララギ『[1:00:トレーナー名:0]
+おまえさんは　どうするんだい？</language>
+	</row>
+
+	<row id="msg_d08_hakase1_00_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・はい選択時
+・アイテム入手処理
+　No000「もりのヨウカン」</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『そうか……▼
+そうだな　それがいい！▼
+いまは　コレしかないが
+きやすめには　なるだろう▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『そうか……▼
+そうだな　それがいい！▼
+今は　コレしかないが
+気休めには　なるだろう▼</language>
+	</row>
+
+	<row id="msg_d08_hakase1_00_10" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・アイテム入手後、自動で表示
+・以降も、d08r0910イベント後まで繰り返し</comment>
+		<attribute name="キャラ指定">博士（父）</attribute>
+		<language name="JPN" width="256">アララギ『それにしても……▼
+ポケモンかいほうを　うたう
+プラズマだんが　なにを　ねらう……？</language>
+		<language name="JPN_KANJI" width="256">アララギ『それにしても……▼
+ポケモン解放を　うたう
+プラズマ団が　なにを　目論む……？</language>
+	</row>
+
+	<row id="msg_d08_white_00_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・はい選択後、d08r0910イベント後まで繰り返し
+・0＝主人公の名前</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]……
+ぜったいに　ムリしちゃ　ダメだよ</language>
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]……
+絶対に　ムリしちゃ　ダメだよ</language>
+	</row>
+
+	<row id="msg_d08_hakase1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・c07ジムバッジ取得まで
 ・繰り返し表示</comment>
@@ -313,7 +631,7 @@
 どのような　存在だったのか</language>
 	</row>
 
-	<row id="msg_d08_hakase1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08_hakase1_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・c07ジムバッジ取得後からd08r0701イベント終了まで
 ・posで発動
@@ -333,7 +651,7 @@
 単身　追いかけていった……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d08_black_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・msg_d08_hakase1_02表示後
 　ライバルとサポート、同時に歩いてくる
@@ -359,7 +677,7 @@
 放って　おけないね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08_white_01">
+	<row id="msg_d08_white_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてmsg_d08_black_02</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -369,7 +687,7 @@
 大丈夫なの？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d08_black_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、塔に入るように移動
 　画面外に消えると、msg_d08_hakase1_03表示</comment>
@@ -384,7 +702,7 @@
 じゃあね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08_hakase1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08_hakase1_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・このときサポートに近づいてからメッセージ表示？
 ・続けてmsg_d08_white_02</comment>
@@ -393,7 +711,7 @@
 		<language name="JPN_KANJI" width="256">アララギ『きみたちは……？</language>
 	</row>
 
-	<row id="msg_d08_white_02">
+	<row id="msg_d08_white_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてmsg_d08_hakase1_04</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -409,7 +727,7 @@
 イッシュ地方を　旅してるの！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08_hakase1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08_hakase1_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてmsg_d08_white_03</comment>
 		<attribute name="キャラ指定">博士（父）</attribute>
@@ -425,7 +743,7 @@
 あまり　感心できんが……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08_white_03">
+	<row id="msg_d08_white_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・博士に近づいてからメッセージ表示
 ・続けてmsg_d08_hakase1_05</comment>
@@ -450,7 +768,7 @@
 チェレンのこと　ヨロシク！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08_hakase1_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08_hakase1_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・d08r0701イベント終了まで繰り返し</comment>
 		<attribute name="キャラ指定">博士（父）</attribute>
@@ -462,7 +780,7 @@
 プラズマ団が　なにを　目論む……？</language>
 	</row>
 
-	<row id="msg_d08_white_04">
+	<row id="msg_d08_white_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・d08r0701イベント終了まで繰り返し</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -537,12 +855,44 @@
 ・msg_d08_hakase1_08
 　バージョンで台詞異なる</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『あいさつは　ぬきだ[BE:01:ページ切り替え（クリア）]
-とうから　はなたれた　あの　ひかり
+		<language name="JPN" width="256">アデク『あいさつは　ぬきだ▼
+とうから　はなたれた
+あの　すさまじい　ひばしら……▽
 すなおに　よろこべぬぞ……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アデク『あいさつは　抜きだ[BE:01:ページ切り替え（クリア）]
-塔から　放たれた　あの光……
-すなおに　喜べぬぞ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『あいさつは　ぬきだ▼
+塔から　放たれた
+あの　すさまじい　火柱……▽
+素直に　喜べぬぞ……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_champion_02w" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂：d08r0701イベント後
+・msg_d08_hakase1_08
+　バージョンで台詞異なる</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『あいさつは　ぬきだ▼
+とうから　はなたれた
+あの　すさまじい　ひばしら……▽
+すなおに　よろこべぬぞ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『あいさつは　ぬきだ▼
+塔から　放たれた
+あの　すさまじい　火柱……▽
+素直に　喜べぬぞ……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d08_champion_02b" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂：d08r0701イベント後
+・msg_d08_hakase1_08
+　バージョンで台詞異なる</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『あいさつは　ぬきだ▼
+とうから　はなたれた
+あの　はげしい　いなびかり……▽
+すなおに　よろこべぬぞ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『あいさつは　ぬきだ▼
+塔から　放たれた
+あの　激しい　稲光……▽
+素直に　喜べぬぞ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d08_hakase1_08w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -710,18 +1060,18 @@
 こんらん　しちゃって……[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]は
 こだいのしろに　いくんでしょ？[BE:01:ページ切り替え（クリア）]
-ライモンシティから　つながる
+４ばんどうろ　から　つながる
 リゾートデザートの　おく……[BE:00:ページ切り替え（行送り）]
-そこが　こだいのしろ　だよ</language>
+そこが　こだいのしろ　だって……</language>
 		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]
 大変な　ことに　なっちゃったね[BE:01:ページ切り替え（クリア）]
 あたし　なんだか
 混乱しちゃって……[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]は
 古代の城に　向かうんでしょ？[BE:01:ページ切り替え（クリア）]
-ライモンシティから　つながる
+４番道路から　つながる
 リゾートデザートの　奥……[BE:00:ページ切り替え（行送り）]
-そこが　古代の城　だよ</language>
+そこが　古代の城　だって……</language>
 	</row>
 
 	<row id="msg_d08_white_08">
@@ -730,13 +1080,13 @@
 ・d04r0601イベント終了で動作モデルを削除</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
-ライモンシティから　つながる
+４ばんどうろ　から　つながる
 リゾートデザートの　おく……[BE:00:ページ切り替え（行送り）]
-そこが　こだいのしろ　だよ</language>
+そこが　こだいのしろ　だって……</language>
 		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
-ライモンシティから　つながる
+４番道路から　つながる
 リゾートデザートの　奥……[BE:00:ページ切り替え（行送り）]
-そこが　古代の城　だよ</language>
+そこが　古代の城　だって……</language>
 	</row>
 
 	<flowchart-group-list>
