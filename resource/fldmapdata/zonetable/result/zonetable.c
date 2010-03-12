@@ -1643,7 +1643,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
     TRUE,
     TRUE,
-		NARC_camera_scroll_original_C03P13_bin, // camera_area
+		camera_area_dummy, // camera_area
 		0, // padding
 		0,
 		0,
@@ -7385,7 +7385,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     TRUE,
-		camera_area_dummy, // camera_area
+		MATRIX_ID_DUN0602, // camera_area
 		0, // padding
 		5,
 		0,
@@ -9299,7 +9299,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     TRUE,
-		camera_area_dummy, // camera_area
+		MATRIX_ID_DUN2005, // camera_area
 		0, // padding
 		5,
 		0,
