@@ -226,6 +226,7 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
   u32 i;
 
   dst->netHandle = NULL;
+  dst->commNetIDBit = 0;
   dst->commMode = BTL_COMM_NONE;
   dst->commPos = 0;
   dst->multiMode = BTL_MULTIMODE_NONE;
