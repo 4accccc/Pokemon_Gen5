@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/08 16:01:51
+#save date:2010/03/12 14:22:11
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03.wms
 #SECTION START:OBJ_EVENT
@@ -729,7 +729,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 R03_POKE3_01
 #OBJ CODE Number
-POKE18
+WKOBJCODE00
 #MOVE CODE Number
 MV_RTRD         
 #EVENT TYPE Number

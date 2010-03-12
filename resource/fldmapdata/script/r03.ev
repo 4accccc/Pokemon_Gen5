@@ -41,7 +41,28 @@ _EVENT_DATA    ev_pos_r03_sodateya_egg		//タマゴ発見を教えてくれるPOSイベント
 _EVENT_DATA    ev_r03_futago_02
 _EVENT_DATA    ev_r03_futago_03
 _EVENT_DATA    ev_pos_r03_support_04
+_EVENT_DATA    ev_zone_r03
 _EVENT_DATA_END
+
+/************************************************************/
+/*					ZONE_CHANGE_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_r03
+
+{
+	//バージョンを取得してOBJを変化させる
+	_GET_ROM_VERSION( SCWK_ANSWER )
+	
+	//BlackVERならシャガ
+	IF $SCWK_ANSWER == VERSION_BLACK THEN
+		$OBJCHRWORK0 = POKE24
+	
+	//Whiteならアイリス
+	ELSE
+		$OBJCHRWORK0 = POKE18
+	ENDIF
+}
+INIT_EVENT_END
 
 /************************************************************/
 /*					FIELD_INIT_LABEL						*/
