@@ -701,6 +701,7 @@ static void _recvChangeFactor(const int netID, const int size, const void* pData
   }
   // 保存
   pWork->changeFactor[netID] = pRecvData[0];
+  OS_TPrintf("factor %d %d\n",netID , pWork->changeFactor[netID]);
 }
 
 
@@ -977,7 +978,7 @@ static void _PokemonReset(POKEMON_TRADE_WORK *pWork, int side )
 
 
 
-static BOOL _IsEggAndLastBattlePokemonChange(POKEMON_TRADE_WORK* pWork)
+BOOL POKEMONTRADE_IsEggAndLastBattlePokemonChange(POKEMON_TRADE_WORK* pWork)
 {
   POKEMON_PARAM* pp1 = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
   POKEMON_PARAM* pp2 = IRC_POKEMONTRADE_GetRecvPP(pWork, 1); //相手のポケモン
@@ -998,7 +999,7 @@ void POKETRE_MAIN_ChangePokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
   BOOL bMode = POKEMONTRADEPROC_IsNetworkMode(pWork);
 
   if( bMode ){
-    if(_IsEggAndLastBattlePokemonChange(pWork)){
+    if(POKEMONTRADE_IsEggAndLastBattlePokemonChange(pWork)){
       u8 cmd = POKETRADE_FACTOR_EGG;
       bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd);
     }
@@ -1225,7 +1226,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   }
   if((pWork->changeFactor[myID]==POKETRADE_FACTOR_SINGLECHANGE) &&
      (pWork->changeFactor[targetID]==POKETRADE_FACTOR_SINGLECHANGE)){
-    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_20, pWork->pMessageStrBufEx );
+    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_13, pWork->pMessageStrBufEx );
     for(i=0;i<2;i++){
       POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, i);
       WORDSET_RegisterPokeNickName( pWork->pWordSet, i,  pp );
@@ -1572,7 +1573,7 @@ static void _dispSubState(POKEMON_TRADE_WORK* pWork)
 }
 
 //通信同期を取る
-static void _changeTimingDemoStart(POKEMON_TRADE_WORK* pWork)
+void POKEMONTRADE_changeTimingDemoStart(POKEMON_TRADE_WORK* pWork)
 {
   BOOL bMode = POKEMONTRADEPROC_IsNetworkMode(pWork);
 
@@ -1614,7 +1615,7 @@ static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
     if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START,WB_NET_TRADE_SERVICEID);
     }
-    _CHANGE_STATE(pWork, _changeTimingDemoStart);
+    _CHANGE_STATE(pWork, POKEMONTRADE_changeTimingDemoStart);
     return;
   }
   else if((pWork->changeFactor[myID]==POKETRADE_FACTOR_SINGLE_NG) &&
@@ -1656,7 +1657,7 @@ static void _touchState_BeforeTimeing2(POKEMON_TRADE_WORK* pWork)
 
     if(POKEMONTRADEPROC_IsTriSelect(pWork)){
 
-      WIPE_ResetBrightness(WIPE_DISP_MAIN);
+      WIPE_ResetBrightness(WIPE_DISP_MAIN);   //@todo つながりの状況をすべて確認してから外す必要がある
       WIPE_ResetBrightness(WIPE_DISP_SUB);
 
       POKE_GTS_InitWork(pWork);
@@ -3421,7 +3422,6 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
 
   if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
     retCode = GFL_PROC_RES_CONTINUE;
-
   }
 
 

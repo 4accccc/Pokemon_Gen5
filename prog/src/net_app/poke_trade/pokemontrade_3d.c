@@ -934,15 +934,15 @@ void IRCPOKETRADE_PokeCreateMcss( POKEMON_TRADE_WORK *pWork ,int no, int bFront,
 
   GF_ASSERT( pWork->pokeMcss[no] == NULL );
 
-  {
+  if(bRev){
     u16 mons = PP_Get( pp, ID_PARA_monsno, NULL );
     u16 frm = PP_Get( pp, ID_PARA_form_no, NULL );
     POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(mons, frm, pWork->heapID);
     rev = POKE_PERSONAL_GetParam(ppd,POKEPER_ID_reverse);
     POKE_PERSONAL_CloseHandle(ppd);
-  }
-  if(bRev && rev){
-    scale.x = -FX32_ONE*16;
+    if(!rev){
+      scale.x = -FX32_ONE*16;
+    }
   }
 
   if(bFront){

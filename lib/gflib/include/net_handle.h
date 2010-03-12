@@ -48,7 +48,7 @@ struct _GFL_NETHANDLE{
   u8 serviceNo;              ///< 通信サービス番号
   u8 version;                ///< 通信相手の通信バージョン番号
   u8 bSendInfomation;   ///< インフォメーションデータを送るフラグ
-  u8 dummy[1];
+  u8 dummy;
 };
 
 

@@ -125,9 +125,21 @@ void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(POKEMON_TRADE_WORK* pWork)
   _demoBGMChange();
   
   //‹­§’âŽ~
+
   pWork->mcssStop[0] = TRUE;
   MCSS_SetAnimeIndex(pWork->pokeMcss[0], 0);
+  pWork->mcssStop[1] = TRUE;
+  MCSS_SetAnimeIndex(pWork->pokeMcss[1], 0);
 
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    MCSS_WORK* pMCSS0 = pWork->pokeMcss[0];
+    MCSS_WORK* pMCSS1 = pWork->pokeMcss[1];
+    pWork->pokeMcss[0]=pMCSS1;
+    pWork->pokeMcss[1]=pMCSS0;
+  }
+
+
+  
   _CHANGE_STATE(pWork,_changeDemo_ModelT1);
 }
 
@@ -149,10 +161,23 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
 
   G2_BlendNone();
   IRC_POKETRADEDEMO_SetModel( pWork, TRADE01_OBJECT);  //’Êí—pƒ‚ƒfƒ‹
-  
+
+
   IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1),TRUE );  //‘ŠŽè— 
   IRCPOKETRADE_PokeCreateMcss(pWork, 2, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0),TRUE );  //‚Ý‚©‚½— 
   IRCPOKETRADE_PokeCreateMcss(pWork, 3, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1),TRUE );  //‘ŠŽè•\
+  
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    MCSS_WORK* pMCSS0 = pWork->pokeMcss[0];
+    MCSS_WORK* pMCSS1 = pWork->pokeMcss[1];
+    MCSS_WORK* pMCSS2 = pWork->pokeMcss[2];
+    MCSS_WORK* pMCSS3 = pWork->pokeMcss[3];
+    pWork->pokeMcss[0]=pMCSS1;
+    pWork->pokeMcss[1]=pMCSS0;
+    pWork->pokeMcss[2]=pMCSS3;
+    pWork->pokeMcss[3]=pMCSS2;
+  }
+    
   MCSS_SetVanishFlag( pWork->pokeMcss[1] );
   MCSS_SetVanishFlag( pWork->pokeMcss[2] );
   MCSS_SetVanishFlag( pWork->pokeMcss[3] );

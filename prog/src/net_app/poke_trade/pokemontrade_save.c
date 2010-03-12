@@ -243,8 +243,14 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
         return;
       }
       else{
+        if(MONSNO_SHEIMI == PP_Get( pWork->recvPoke[id] , ID_PARA_monsno ,NULL)){
+          if(FORMNO_SHEIMI_SKY == PP_Get( pWork->recvPoke[id] , ID_PARA_form_no ,NULL)){
+            PP_ChangeFormNo(pWork->recvPoke[id],FORMNO_SHEIMI_LAND);
+          }
+        }
         BOXDAT_PutPokemonPos(pWork->pBox, pWork->selectBoxno,
-                             pWork->selectIndex, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pWork->recvPoke[id]));
+                             pWork->selectIndex,
+                             (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pWork->recvPoke[id]));
       }
     }
   }
