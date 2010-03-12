@@ -55,5 +55,8 @@ struct _MISC
 
   //ジムリーダー戦勝利時の手持ち記録
   u16 gym_win_monsno[GYM_MAX][TEMOTI_POKEMAX];
+
+  //配布イベント用予約領域３２バイト
+  u32 event_lock[8];
 };
 
