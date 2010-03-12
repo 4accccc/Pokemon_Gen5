@@ -270,6 +270,7 @@ typedef struct {
   SHOOTER_ITEM_BIT_WORK  shooterBitWork;  ///< シューター使用制限パラメータ
   u8          btl_status_flag;  ///< 各種ステータスフラグ(定義値 BTL_STATUS_FLAG型)
   u8          badgeCount;       ///< プレイヤー取得済みバッジ数
+  u16         commNetIDBit;     ///< 通信対戦時のNetIDBitフラグ
 
   // デバッグ系
   u16         DebugFlagBit;          ///< 各種デバッグフラグ
