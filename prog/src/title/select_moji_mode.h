@@ -12,6 +12,7 @@
 
 #include "savedata/config.h"
 #include "savedata/mystatus.h"
+#include "savedata/misc.h"
 
 extern const GFL_PROC_DATA SelectModeProcData;
 
@@ -26,6 +27,7 @@ typedef struct
   SELECT_MODE_TYPE type;
   CONFIG *configSave;
   MYSTATUS *mystatus;
+	MISC * miscSave;
 }SELECT_MODE_INIT_WORK;
 
 #endif //SELECT_MOJI_MODE_H__

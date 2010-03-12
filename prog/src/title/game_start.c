@@ -473,6 +473,7 @@ static GFL_PROC_RESULT GameStart_ContinueProcInit( GFL_PROC * proc, int * seq, v
   GAMESTART_FIRST_WORK *work = GFL_PROC_AllocWork( proc , sizeof(GAMESTART_FIRST_WORK) , GFL_HEAPID_APP );
   work->selModeParam.type = SMT_CONTINUE_GAME;
   work->selModeParam.configSave = SaveData_GetConfig( SaveControl_GetPointer() );
+  work->selModeParam.miscSave = SaveData_GetMisc( SaveControl_GetPointer() );
   work->selModeParam.mystatus = NULL;
   
   
@@ -528,6 +529,8 @@ static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, vo
   
   // 直前の選択肢で選んだ通信モードを取得する
   int search_mode_temp = CONFIG_GetNetworkSearchMode( work->selModeParam.configSave );
+	// タイトルメニューの項目情報取得
+	u8	title_menu_flag = MISC_GetStartMenuFlagAll( work->selModeParam.miscSave );
 
   SaveControl_Load(sv_ctrl);
   CONFIG_ApplyMojiMode( SaveData_GetConfig( sv_ctrl ) );  //ロードしたコンフィグに従って文字モード設定
@@ -542,6 +545,8 @@ static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, vo
 
   // セーブデータで通信モードが上書きされてしまっているのでとっておいた通信モードを再度格納する
   CONFIG_SetNetworkSearchMode( work->selModeParam.configSave, search_mode_temp );
+  // セーブデータでタイトルメニューの項目情報が上書きされてしまっているので再設定
+	MISC_SetStartMenuFlagAll( work->selModeParam.miscSave, title_menu_flag );
 
   return GFL_PROC_RES_FINISH;
 

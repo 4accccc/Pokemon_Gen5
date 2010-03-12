@@ -561,6 +561,31 @@ u8 MISC_GetStartMenuFlag( const MISC * misc, MISC_STARTMENU_TYPE type )
 	return ( ( misc->start_menu_open >> (type<<1) ) & (MISC_STARTMENU_FLAG_OPEN|MISC_STARTMENU_FLAG_VIEW) );
 }
 
+//----------------------------------------------------------
+/**
+ * @brief		フラグ取得（全体）
+ * @param		misc
+ * @retval	フラグ
+ */
+//----------------------------------------------------------
+u8 MISC_GetStartMenuFlagAll( const MISC * misc )
+{
+	return misc->start_menu_open;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief		フラグセット（全体）
+ * @param		misc
+ * @param		flg			フラグ
+ * @return  
+ */
+//----------------------------------------------------------
+void MISC_SetStartMenuFlagAll( MISC * misc, u8 flg )
+{
+	misc->start_menu_open = flg;
+}
+
 
 //==============================================================================
 // すれ違い調査隊
