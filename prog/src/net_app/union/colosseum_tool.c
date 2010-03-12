@@ -72,11 +72,6 @@ static const POINT_S16 ColosseumWayOutPos_multi[] = {
 };
 
 
-//==============================================================================
-//  プロトタイプ宣言
-//==============================================================================
-static void _BattleDemoParent_SetTrainerData(COLOSSEUM_SYSTEM_PTR clsys, COMM_BTL_DEMO_TRAINER_DATA *demo_tr, NetID net_id, HEAPID heap_id);
-
 
 
 //==================================================================
@@ -127,52 +122,6 @@ BOOL ColosseumTool_AllReceiveCheck_TrainerCard(COLOSSEUM_SYSTEM_PTR clsys)
     return TRUE;
   }
   return FALSE;
-}
-
-//==================================================================
-/**
- * 全員分のPOKEPARTYが受け取れているか調べる
- *
- * @param   clsys		
- *
- * @retval  BOOL		TRUE:全員分受信している
- */
-//==================================================================
-BOOL ColosseumTool_AllReceiveCheck_Pokeparty(COLOSSEUM_SYSTEM_PTR clsys)
-{
-  int i, count;
-  
-  count = 0;
-  for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){
-    if(clsys->recvbuf.pokeparty_occ[i] == TRUE){
-      count++;
-    }
-  }
-  if(count >= GFL_NET_GetConnectNum()){
-    return TRUE;
-  }
-  return FALSE;
-}
-
-//==================================================================
-/**
- * 受信バッファのクリア：POKEPARTY
- *
- * @param   clsys		
- * @param   except_for_mine   TRUE:自分のデータはクリアしない(受信フラグは落とす)
- */
-//==================================================================
-void ColosseumTool_Clear_ReceivePokeParty(COLOSSEUM_SYSTEM_PTR clsys, BOOL except_for_mine)
-{
-  int i, my_net_id;
-  
-  my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-  for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){
-    if(except_for_mine == FALSE || my_net_id != i){
-      PokeParty_InitWork(clsys->recvbuf.pokeparty[i]);
-    }
-    clsys->recvbuf.pokeparty_occ[i] = FALSE;
-  }
 }
 
 //==================================================================
@@ -365,76 +314,5 @@ void ColosseumTool_CommPlayerUpdate(COLOSSEUM_SYSTEM_PTR clsys)
   }
 }
 
-//==================================================================
-/**
- * バトル開始・終了デモ用ParentWork作成
- *
- * @param   clsys		
- * @param   cbdp		
- * @param   heap_id		
- */
-//==================================================================
-void ColosseumTool_SetupBattleDemoParent(COLOSSEUM_SYSTEM_PTR clsys, COMM_BTL_DEMO_PARAM *cbdp, HEAPID heap_id)
-{
-  int net_id, member_max, set_id, stand_pos;
-  
-  GFL_STD_MemClear(cbdp, sizeof(COMM_BTL_DEMO_PARAM));
-  
-  cbdp->type = COMM_BTL_DEMO_TYPE_MULTI_START;
-  member_max = 0;
-  for(net_id = 0; net_id < COLOSSEUM_MEMBER_MAX; net_id++){
-    member_max++;
-    if(clsys->recvbuf.pokeparty_occ[net_id] == FALSE){
-      cbdp->type = COMM_BTL_DEMO_TYPE_NORMAL_START;
-      break;
-    }
-  }
-  
-  for(net_id = 0; net_id < member_max; net_id++){
-    stand_pos = clsys->recvbuf.stand_position[net_id];
-    if((stand_pos & 1) == 0){  //左側
-      set_id = COMM_BTL_DEMO_TRDATA_A;
-    }
-    else{ //右側
-      if(cbdp->type == COMM_BTL_DEMO_TYPE_NORMAL_START){
-        set_id = COMM_BTL_DEMO_TRDATA_B;
-      }
-      else{
-        set_id = COMM_BTL_DEMO_TRDATA_C;
-      }
-    }
-    _BattleDemoParent_SetTrainerData(
-      clsys, &cbdp->trainer_data[set_id + (stand_pos >> 1)], net_id, heap_id);
-  }
-}
-
-//==================================================================
-/**
- * バトル開始・終了デモ用ParentWork解放処理
- *
- * @param   cbdp		
- */
-//==================================================================
-void ColosseumTool_DeleteBattleDemoParent(COMM_BTL_DEMO_PARAM *cbdp)
-{
-  GFL_STD_MemClear(cbdp, sizeof(COMM_BTL_DEMO_PARAM));
-}
-
-//--------------------------------------------------------------
-/**
- * バトル開始・終了デモで使用するトレーナーデータをセット
- *
- * @param   clsys		
- * @param   demo_tr		トレーナーデータ代入先
- * @param   net_id		対象のNetID
- * @param   heap_id		
- */
-//--------------------------------------------------------------
-static void _BattleDemoParent_SetTrainerData(COLOSSEUM_SYSTEM_PTR clsys, COMM_BTL_DEMO_TRAINER_DATA *demo_tr, NetID net_id, HEAPID heap_id)
-{
-  demo_tr->party = clsys->recvbuf.pokeparty[net_id];
-  demo_tr->mystatus = &clsys->basic_status[net_id].myst;
-  demo_tr->server_version = clsys->basic_status[net_id].battle_server_version;
-}
 
 

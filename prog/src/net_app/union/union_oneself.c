@@ -109,9 +109,7 @@ static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, 
 static BOOL OneselfSeq_ColosseumInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumNormal(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumStandPosition(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
-static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
-static BOOL OneselfSeq_ColosseumAllBattleReadyWait(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
-static BOOL OneselfSeq_ColosseumBattle(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_ColosseumPokelistBattle(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumStandingBack(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumPokelistReady(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
@@ -359,19 +357,9 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
     OneselfSeq_ColosseumPokelistBeforeDataShare,
     NULL,
   },
-  {//UNION_STATUS_COLOSSEUM_POKELIST
+  {//UNION_STATUS_COLOSSEUM_POKELIST_BATTLE
     NULL,
-    OneselfSeq_ColosseumPokelist,
-    NULL,
-  },
-  {//UNION_STATUS_COLOSSEUM_BATTLE_READY_WAIT
-    NULL,
-    OneselfSeq_ColosseumAllBattleReadyWait,
-    NULL,
-  },
-  {//UNION_STATUS_COLOSSEUM_BATTLE
-    NULL,
-    OneselfSeq_ColosseumBattle,
+    OneselfSeq_ColosseumPokelistBattle,
     NULL,
   },
   {//UNION_STATUS_COLOSSEUM_LEAVE
@@ -3632,13 +3620,15 @@ static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys,
       break;
     }
     //レベル補正
-    _PokeParty_RegulationLevelRevise(
-      unisys->alloc.regulation, clsys->recvbuf.pokeparty[my_net_id]);
+//    _PokeParty_RegulationLevelRevise(
+//      unisys->alloc.regulation, clsys->recvbuf.pokeparty[my_net_id]);
+    PokeRegulation_ModifyLevelPokeParty( 
+      unisys->alloc.regulation, clsys->recvbuf.pokeparty[my_net_id] );
 
     (*seq)++;
     break;
   case 1:
-    ColosseumTool_Clear_ReceivePokeParty(clsys, TRUE);
+    Colosseum_Clear_ReceivePokeParty(clsys, TRUE);
     ColosseumTool_Clear_ReceiveStandingPos(clsys);
     ColosseumTool_Clear_ReceivePokeListSelected(clsys);
 
@@ -3661,7 +3651,7 @@ static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys,
     }
     break;
   case 4:
-    if(ColosseumTool_AllReceiveCheck_Pokeparty(clsys) == TRUE){
+    if(Colosseum_AllReceiveCheck_Pokeparty(clsys) == TRUE){
       OS_TPrintf("全員分のリスト用POKEPARTY受信\n");
       (*seq)++;
     }
@@ -3693,7 +3683,7 @@ static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys,
   case 8:
     if(ColosseumTool_ReceiveCheck_StandingPos(clsys) == TRUE){
       OS_TPrintf("立ち位置受信\n");
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_POKELIST);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_POKELIST_BATTLE);
       return TRUE;
     }
     break;
@@ -3714,7 +3704,7 @@ static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys,
  * @retval  BOOL    
  */
 //--------------------------------------------------------------
-static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
+static BOOL OneselfSeq_ColosseumPokelistBattle(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
   COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
   PLIST_DATA *plist;
@@ -3785,8 +3775,11 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     plist->pp = clsys->recvbuf.pokeparty[my_net_id];
     plist->myitem = GAMEDATA_GetMyItem(unisys->uniparent->game_data);
     plist->cfg = SaveData_GetConfig(GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data));
-    plist->mode = PL_MODE_BATTLE;
+    plist->mode = PL_MODE_BATTLE_WIFI;
     plist->reg = unisys->alloc.regulation;
+
+    parent_list->battle_setup 
+      = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(COLOSSEUM_BATTLE_SETUP));
     
     {//通信相手の情報をセット
       int net_id, enemy_player = 0;
@@ -3826,7 +3819,7 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     plist->time_limit = 0;
     
     unisys->parent_work = parent_list;
-    UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_POKELIST, parent_list);
+    UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_POKELIST_BATTLE, parent_list);
 
     (*seq)++;
     break;
@@ -3836,163 +3829,11 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     }
     
     parent_list = unisys->parent_work;
-    plist = &parent_list->plist;
-
-    GF_ASSERT_MSG(plist->ret_mode == PL_RET_NORMAL, "plist->ret_mode 不正 %d\n", plist->ret_mode);
-    switch(plist->ret_sel){
-    case PL_SEL_POS_EXIT:
-      GF_ASSERT(0); //キャンセルで終了は選択肢として無くなった 2009.09.16(水)
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDING_BACK);
-      (*seq)++;
-      break;
-    case PL_SEL_POS_ENTER:
-      {//自分の受信バッファにリストで選んだ順にポケモンデータをセット
-        int entry_no, temoti_no;
-        POKEPARTY *temoti_party;
-        POKEPARTY *dest_party = clsys->recvbuf.pokeparty[my_net_id];
-        
-        temoti_party = PokeParty_AllocPartyWork(HEAPID_UNION);
-        PokeParty_Copy(dest_party, temoti_party);
-        PokeParty_InitWork(dest_party);
-        
-        for(entry_no = 0; entry_no < TEMOTI_POKEMAX; entry_no++){
-          if(plist->in_num[entry_no] == 0){
-            break;
-          }
-          PokeParty_Add(dest_party, 
-            PokeParty_GetMemberPointer(temoti_party, plist->in_num[entry_no] - 1));
-          OS_TPrintf("ポケモン手持ち登録 entry_no=%d, in_num=%d\n", entry_no, plist->in_num[entry_no]);
-        }
-        
-        GFL_HEAP_FreeMemory(temoti_party);
-      }
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_BATTLE_READY_WAIT);
-      (*seq)++;
-      break;
-    default:
-      OS_TPrintf("plist->ret_sel 不正 %d\n", plist->ret_sel);
-      GF_ASSERT(0);
-      break;
-    }
-    break;
-  case 5:
+    GFL_HEAP_FreeMemory(parent_list->battle_setup);
     GFL_HEAP_FreeMemory(unisys->parent_work);
     unisys->parent_work = NULL;
-    return TRUE;
-  }
-  
-  return FALSE;
-}
 
-//--------------------------------------------------------------
-/**
- * コロシアム、全員が戦闘の準備が完了するのを待つ：更新
- *
- * @param   unisys    
- * @param   situ    
- * @param   fieldWork   
- * @param   seq   
- *
- * @retval  BOOL    
- */
-//--------------------------------------------------------------
-static BOOL OneselfSeq_ColosseumAllBattleReadyWait(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
-{
-  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
-  
-  switch(*seq){
-  case 0:
-    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_battle_01_32);
-    (*seq)++;
-    break;
-  case 1:
-    if(ColosseumSend_PokeListSelected() == TRUE){
-      (*seq)++;
-    }
-    break;
-  case 2:
-    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_BATTLE);
-      return TRUE;
-    }
-    break;
-  }
-  
-  return FALSE;
-}
-
-//--------------------------------------------------------------
-/**
- * コロシアム、戦闘画面呼び出し：更新
- *
- * @param   unisys    
- * @param   situ    
- * @param   fieldWork   
- * @param   seq   
- *
- * @retval  BOOL    
- */
-//--------------------------------------------------------------
-static BOOL OneselfSeq_ColosseumBattle(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
-{
-  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
-  COLOSSEUM_BATTLE_SETUP *battle_setup;
-  int my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-  int member_num, i;
-  
-  switch(*seq){
-  case 0:
-    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
-      ColosseumTool_Clear_ReceivePokeParty(clsys, TRUE);
-
-      GFL_NET_HANDLE_TimeSyncStart(
-        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_POKEPARTY_BEFORE, WB_NET_UNION);
-      OS_TPrintf("バトル用のPOKEPARTY送受信前の同期取り開始\n");
-      (*seq)++;
-    }
-    break;
-  case 1:
-    if(GFL_NET_HANDLE_IsTimeSync(
-        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_POKEPARTY_BEFORE, WB_NET_UNION) == TRUE){
-      OS_TPrintf("バトル用のPOKEPARTY送受信前の同期取り成功\n");
-      (*seq)++;
-    }
-    break;
-  case 2:
-    if(ColosseumSend_Pokeparty(clsys->recvbuf.pokeparty[my_net_id]) == TRUE){
-      OS_TPrintf("POKEPARTY送信\n");
-      (*seq)++;
-    }
-    break;
-  case 3:
-    if(ColosseumTool_AllReceiveCheck_Pokeparty(clsys) == TRUE){
-      OS_TPrintf("全員分のPOKEPARTY受信\n");
-      (*seq)++;
-    }
-    break;
-  case 4:
-    battle_setup = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(COLOSSEUM_BATTLE_SETUP));
-    
-    battle_setup->partyPlayer = clsys->recvbuf.pokeparty[my_net_id];
-    battle_setup->standing_pos = clsys->recvbuf.stand_position[my_net_id];
-    ColosseumTool_SetupBattleDemoParent(clsys, &battle_setup->demo, HEAPID_UNION);
-    
-    unisys->parent_work = battle_setup;
-    UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_BATTLE, battle_setup);
-
-    (*seq)++;
-    break;
-  case 5:
-    if(UnionSubProc_IsExits(unisys) == TRUE){
-      break;
-    }
-    
     UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDING_BACK);
-    
-    battle_setup = unisys->parent_work;
-    ColosseumTool_DeleteBattleDemoParent(&battle_setup->demo);
-    GFL_HEAP_FreeMemory(unisys->parent_work);
-    unisys->parent_work = NULL;
     return TRUE;
   }
   

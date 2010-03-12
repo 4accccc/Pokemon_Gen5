@@ -10,6 +10,7 @@
 
 #include "app/pokelist.h"
 #include "app/p_status.h"
+#include "field/event_colosseum_battle.h"
 
 
 //==============================================================================
@@ -19,6 +20,7 @@
 typedef struct{
   PLIST_DATA plist;
   PSTATUS_DATA pstatus;
+  COLOSSEUM_BATTLE_SETUP *battle_setup;
 }UNION_SUBPROC_PARENT_POKELIST;
 
 

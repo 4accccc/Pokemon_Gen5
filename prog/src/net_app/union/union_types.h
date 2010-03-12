@@ -122,9 +122,7 @@ enum{
   UNION_STATUS_COLOSSEUM_USE_PARTY_SELECT,  ///<コロシアム：手持ち、バトルボックス選択
   UNION_STATUS_COLOSSEUM_POKELIST_READY,    ///<コロシアム：ポケモンリスト呼び出し前の全員待ち
   UNION_STATUS_COLOSSEUM_POKELIST_BEFORE_DATA_SHARE,  ///<コロシアム：ポケモンリスト呼び出し前の全員データ送受信
-  UNION_STATUS_COLOSSEUM_POKELIST,      ///<コロシアム：ポケモンリスト呼び出し
-  UNION_STATUS_COLOSSEUM_BATTLE_READY_WAIT, ///<コロシアム：全員が戦闘準備できるのを待つ
-  UNION_STATUS_COLOSSEUM_BATTLE,        ///<コロシアム：戦闘画面呼び出し
+  UNION_STATUS_COLOSSEUM_POKELIST_BATTLE,    ///<コロシアム：ポケモンリスト呼び出し>バトル呼び出し
   UNION_STATUS_COLOSSEUM_LEAVE,         ///<コロシアム：退出処理
   UNION_STATUS_COLOSSEUM_TRAINER_CARD,  ///<コロシアム：トレーナーカード呼び出し
   
@@ -229,7 +227,7 @@ typedef enum{
   UNION_SUBPROC_ID_COLOSSEUM_WARP_END = UNION_SUBPROC_ID_COLOSSEUM_WARP_MULTI_FLAT,
   
   UNION_SUBPROC_ID_UNION_WARP,              ///<ユニオンルーム遷移
-  UNION_SUBPROC_ID_POKELIST,                ///<ポケモンリスト呼び出し
+  UNION_SUBPROC_ID_POKELIST_BATTLE,         ///<ポケモンリスト呼び出し ＞ 戦闘呼び出し
   UNION_SUBPROC_ID_BATTLE,                  ///<戦闘遷移
   UNION_SUBPROC_ID_COLOSSEUM_TRAINERCARD,   ///<コロシアムでのトレーナーカード
   

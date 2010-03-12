@@ -906,20 +906,20 @@ BOOL UnionMyComm_PartyAdd(UNION_MY_COMM *mycomm, const UNION_BEACON_PC *pc)
 
 //==================================================================
 /**
- * ユニオンパーティからプレイヤーを削除する
+ * ユニオンパーティからプレイヤーを削除する   ※PARAM指定
  *
  * @param   unisys		
  * @param   pc		    削除対象のPCへのポインタ
  */
 //==================================================================
-void UnionMyComm_PartyDel(UNION_MY_COMM *mycomm, const UNION_BEACON_PC *pc)
+void UnionMyComm_PartyDelParam(UNION_MY_COMM *mycomm, const u8 *mac_address)
 {
   int i;
   UNION_MEMBER *member;
   
   for(i = 0; i < UNION_CONNECT_PLAYER_NUM - 1; i++){
     member = &mycomm->party.member[i];
-    if(member->occ == TRUE && GFL_STD_MemComp(pc->mac_address, member->mac_address, 6) == 0){
+    if(member->occ == TRUE && GFL_STD_MemComp(mac_address, member->mac_address, 6) == 0){
       GFL_STD_MemClear(member, sizeof(UNION_MEMBER));
       OS_TPrintf("メンバー削除 %d\n", i);
       return;
@@ -927,6 +927,19 @@ void UnionMyComm_PartyDel(UNION_MY_COMM *mycomm, const UNION_BEACON_PC *pc)
   }
   
   GF_ASSERT(0); //パーティに存在していないPC
+}
+
+//==================================================================
+/**
+ * ユニオンパーティからプレイヤーを削除する   ※UNION_BEACON_PC指定
+ *
+ * @param   unisys		
+ * @param   pc		    削除対象のPCへのポインタ
+ */
+//==================================================================
+void UnionMyComm_PartyDel(UNION_MY_COMM *mycomm, const UNION_BEACON_PC *pc)
+{
+  UnionMyComm_PartyDelParam(mycomm, pc->mac_address);
 }
 
 //--------------------------------------------------------------

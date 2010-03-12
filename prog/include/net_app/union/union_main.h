@@ -62,6 +62,7 @@ extern void UnionMyComm_Init(UNION_SYSTEM_PTR unisys, UNION_MY_COMM *mycomm);
 extern void UnionMyComm_InitMenuParam(UNION_MY_COMM *mycomm);
 extern BOOL UnionMyComm_PartyAddParam(UNION_MY_COMM *mycomm, const u8 *mac_address, u8 trainer_view, u8 sex);
 extern BOOL UnionMyComm_PartyAdd(UNION_MY_COMM *mycomm, const UNION_BEACON_PC *pc);
+extern void UnionMyComm_PartyDelParam(UNION_MY_COMM *mycomm, const u8 *mac_address);
 extern void UnionMyComm_PartyDel(UNION_MY_COMM *mycomm, const UNION_BEACON_PC *pc);
 
 extern void UnionComm_Req_ShutdownRestarts(UNION_SYSTEM_PTR unisys);
