@@ -2950,6 +2950,7 @@ static int word_input_scr_btn(PMS_INPUT_WORK* wk)
 		switch( tpypos ){
 		case 0:	// タッチ座標にスクロールバーがある
 			wk->scroll_bar_flg = 1;
+      GFL_SOUND_PlaySE(SOUND_TOUCH_SLIDEBAR);  // こんなところで音を鳴らしたくはないが、この戻り値では呼び出し元で鳴らすのは困難。
 			return WORDWIN_RESULT_NONE;
 		case 1:	// タッチ座標よりスクロールバーが下にある（上にスクロール）
 			wk->scroll_bar_flg = 1;
@@ -3055,7 +3056,7 @@ static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 
 	case WORDWIN_RESULT_SCROLL:
 #if PMS_USE_SND
-		GFL_SOUND_PlaySE(SOUND_MOVE_CURSOR);
+		GFL_SOUND_PlaySE(SOUND_TOUCH_SLIDEBAR);
 #endif //PMS_USE_SND
 //		PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN );
 //		(*seq) = SEQ_WORD_SCROLL_WAIT;
