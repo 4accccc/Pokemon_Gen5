@@ -7,6 +7,7 @@
 #include "app/trainer_card.h"
 #include "trcard_obj.h"
 #include "trcard_snd.h"
+#include "system/pms_draw.h"
 
 #define TRC_FRAME_RATE (60)
 
@@ -18,13 +19,18 @@
 #define TR_CARD_BADGE_LV_MAX  (4)   //バッジの最大レベル
 #define TR_BADGE_NUM_MAX  (16)
 
+
+#define CALL_NONE     ( 0 ) ///< トレーナーカード通常終了
+#define CALL_PMSINPUT ( 1 ) ///< トレーナカードから簡易会話呼び出し
+#define CALL_BADGE    ( 2 ) ///< トレーナーカードからバッヂ確認画面呼び出し
+
 //パレット使用リスト
 enum{
-  CASE_BD_PAL = 0,
-  YNWIN_PAL = 11, //2本使う
-  TALKWIN_PAL = 13,
-  SYS_FONT_PAL = 14,
-  TR_FONT_PAL = 15,
+  CASE_BD_PAL   = 0,
+  YNWIN_PAL     = 11, //2本使う
+  TALKWIN_PAL   = 13,
+  SYS_FONT_PAL  = 14,
+  TR_FONT_PAL   = 15,
   BACK_FONT_PAL = 15,
 };
 
@@ -132,7 +138,8 @@ typedef struct TR_CARD_WORK_tag
   STRBUF  *CPrmBuf[TR_CPRM_STR_MAX];  //カードパラメータ展開用文字列バッファ
   STRBUF  *CreditBuf[TR_CREDIT_STR_MAX];  // カードパラメータ展開用(回数単位表示用）文字列バッファ
 
-  PMS_DATA pms;           // 簡易会話
+  PMS_DATA      pms;          ///< 簡易会話
+  PMS_DRAW_WORK *PmsDrawWork; ///< 簡易会話描画ワーク
 
   u8 badge[TR_BADGE_NUM_MAX];
   u8 IsOpen;
@@ -148,6 +155,7 @@ typedef struct TR_CARD_WORK_tag
   u8 drug_f:1;        // ドラッグフラグ
   u8 Dummy:5;         // パディング
   
+  PRINT_QUE     *printQue;
   PRINT_STREAM  *printHandle;
   u8  win_type;  ///<ウィンドウタイプ
   u8  msg_spd;   ///<メッセージスピード

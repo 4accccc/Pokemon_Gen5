@@ -1210,7 +1210,8 @@ SRCS_OVERLAY_PMSINPUT = app/pms_input/pms_input_data.c \
 #===> SRCS_OVERLAY_PMSINPUT
 SRCS_OVERLAY_TRAINERCARD = app/trainercard/trainer_card.c \
       app/trainercard/trcard_bmp.c \
-      app/trainercard/trcard_obj.c
+      app/trainercard/trcard_obj.c \
+      app/trainercard/badge_view.c
 
 # ミュージカルショット
 #===> SRCS_OVERLAY_DEV_WIFI

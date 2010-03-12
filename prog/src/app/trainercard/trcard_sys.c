@@ -25,7 +25,10 @@
 #include "savedata/zukan_savedata.h"
 #include "field/eventwork.h"
 #include "field/eventwork_def.h"
-
+#include "savedata/musical_save.h"
+#include "savedata/intrude_save.h"
+#include "savedata/my_pms_data.h"
+#include "savedata/zukan_savedata.h"
 
 //#include "app/mysign.h"
 #include "app/trainer_card.h"
@@ -53,6 +56,8 @@ GFL_PROC_RESULT TrCardSysProc_InitComm( GFL_PROC * proc, int * seq , void *pwk, 
 GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 GFL_PROC_RESULT TrCardSysProc_End( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 GFL_PROC_RESULT TrCardSysProc_EndComm( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
+
+
 const GFL_PROC_DATA TrCardSysProcData = {
   TrCardSysProc_Init,
   TrCardSysProc_Main,
@@ -73,15 +78,20 @@ const GFL_PROC_DATA TrCardSysCommProcData = {
 enum{
   CARD_INIT,
   CARD_WAIT,
-  SIGN_INIT,
-  SIGN_WAIT,
+  PMSINPUT_INIT,
+  PMSINPUT_WAIT,
+  BADGE_INIT,
+  BADGE_WAIT,
   CARDSYS_END,
 };
 
 static int sub_CardInit(TR_CARD_SYS* wk);
 static int sub_CardWait(TR_CARD_SYS* wk);
-static int sub_SignInit(TR_CARD_SYS* wk);
-static int sub_SignWait(TR_CARD_SYS* wk);
+static int sub_PmsInputInit(TR_CARD_SYS* wk);
+static int sub_PmsInputWait(TR_CARD_SYS* wk);
+static int sub_BadgeInit(TR_CARD_SYS* wk);
+static int sub_BadgeWait(TR_CARD_SYS* wk);
+
 
 //------------------------------------------------------------------
 /**
@@ -131,6 +141,7 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
   wk->tcp = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TRCARD_CALL_PARAM ) );
   *wk->tcp = *pp;
   wk->tcp->TrCardData = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TR_CARD_DATA ) );
+//  TRAINERCARD_GetSelfData( wk->tcp->TrCardData , pp->gameData , FALSE, wk->tcp->edit_possible, wk->heapId);
   TRAINERCARD_GetSelfData( wk->tcp->TrCardData , pp->gameData , FALSE, wk->tcp->edit_possible);
 
   return GFL_PROC_RES_FINISH;
@@ -178,11 +189,17 @@ GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void
   case CARD_WAIT:
     *seq = sub_CardWait(wk);
     break;
-  case SIGN_INIT:
-    *seq = sub_SignInit(wk);
+  case PMSINPUT_INIT:
+    *seq = sub_PmsInputInit(wk);
     break;
-  case SIGN_WAIT:
-    *seq = sub_SignWait(wk);
+  case PMSINPUT_WAIT:
+    *seq = sub_PmsInputWait(wk);
+    break;
+  case BADGE_INIT:
+    *seq = sub_BadgeInit(wk);
+    break;
+  case BADGE_WAIT:
+    *seq = sub_BadgeWait(wk);
     break;
   case CARDSYS_END:
   default:
@@ -289,8 +306,10 @@ static int sub_CardWait(TR_CARD_SYS* wk)
     return CARD_WAIT;
   }
   
-  if(wk->tcp->value){
-    return SIGN_INIT;
+  if(wk->tcp->value==CALL_PMSINPUT){
+    return PMSINPUT_INIT;
+  }else if(wk->tcp->value==CALL_BADGE){
+    return BADGE_INIT;
   }
   return CARDSYS_END;
 }
@@ -305,25 +324,15 @@ FS_EXTERN_OVERLAY(pmsinput);
  * @retval  int   
  */
 //----------------------------------------------------------------------------------
-static int sub_SignInit(TR_CARD_SYS* wk)
+static int sub_PmsInputInit(TR_CARD_SYS* wk)
 {
-//  FS_EXTERN_OVERLAY(mysign);
-  // プロセス定義データ
-//  static const GFL_PROC_DATA MySignProcData = {
-//    MySignProc_Init,
-//    MySignProc_Main,
-//    MySignProc_End,
-//  };
-    
-//  wk->proc = PROC_Create(&MySignProcData,(void*)wk->tcp->savedata,wk->heapId);
   if( wk->procSys == NULL )
   { 
     wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
   }
-//  GFL_PROC_LOCAL_CallProc( wk->procSys, NO_OVERLAY_ID, &MySignProcData,wk->tcp);
   wk->PmsParam.save_ctrl = GAMEDATA_GetSaveControlWork( wk->tcp->gameData );
-  GFL_PROC_LOCAL_CallProc( wk->procSys, FS_OVERLAY_ID(pmsinput), &ProcData_PMSSelect, &wk->PmsParam );
-  return SIGN_WAIT;
+  GFL_PROC_LOCAL_CallProc( wk->procSys, FS_OVERLAY_ID(pmsinput), &ProcData_PMSSelect, &wk->PmsParam);
+  return PMSINPUT_WAIT;
 }
 
 //----------------------------------------------------------------------------------
@@ -335,19 +344,63 @@ static int sub_SignInit(TR_CARD_SYS* wk)
  * @retval  int   
  */
 //----------------------------------------------------------------------------------
-static int sub_SignWait(TR_CARD_SYS* wk)
+static int sub_PmsInputWait(TR_CARD_SYS* wk)
 {
   if(!TrCardSysProcCall(&wk->procSys)){
-    return SIGN_WAIT;
+    return PMSINPUT_WAIT;
   }
-  
   // 作成した簡易会話があれば書き換え
   if(wk->PmsParam.out_pms_data!=NULL){
+    MYPMS_DATA *p_wk = SaveData_GetMyPmsData(GAMEDATA_GetSaveControlWork(wk->tcp->gameData));
     wk->tcp->TrCardData->Pms = *wk->PmsParam.out_pms_data;
+//    TRCSave_SetPmsData( trc_ptr, wk->PmsParam.out_pms_data ); // セーブデータにも反映
+    MYPMS_SetPms( p_wk, MYPMS_PMS_TYPE_INTRODUCTION, wk->PmsParam.out_pms_data );
   }
+  
+  return CARD_INIT;
+}
+
+extern const GFL_PROC_DATA BadgeViewProcData;
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 簡易会話呼び出し
+ *
+ * @param   wk    
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int sub_BadgeInit(TR_CARD_SYS* wk)
+{
+  if( wk->procSys == NULL )
+  { 
+    wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
+  }
+  wk->PmsParam.save_ctrl = GAMEDATA_GetSaveControlWork( wk->tcp->gameData );
+  GFL_PROC_LOCAL_CallProc( wk->procSys, FS_OVERLAY_ID(pmsinput), &BadgeViewProcData, wk->tcp );
+  return BADGE_WAIT;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 簡易会話終了待ち
+ *
+ * @param   wk    
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int sub_BadgeWait(TR_CARD_SYS* wk)
+{
+  if(!TrCardSysProcCall(&wk->procSys)){
+    return BADGE_WAIT;
+  }
+  
 
   return CARD_INIT;
 }
+
 
 //=============================================================================================
 /**
@@ -366,6 +419,8 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   MISC *misc = GAMEDATA_GetMiscWork( gameData );
   GMTIME *gameTime = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork(gameData) );
   RECORD *rec = SaveData_GetRecord( GAMEDATA_GetSaveControlWork(gameData) );
+  const MYPMS_DATA *p_wk = SaveData_GetMyPmsDataConst(GAMEDATA_GetSaveControlWorkConst(gameData));
+  ZUKAN_SAVEDATA *zukan = GAMEDATA_GetZukanSave( gameData );
 
   //名前
   if( MyStatus_CheckNameClear( mystatus ) == FALSE )
@@ -400,7 +455,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   {
     if( MISC_GetBadgeFlag( misc , i ) == TRUE )
     {
-      cardData->BadgeFlag &= flag;
+      cardData->BadgeFlag |= flag;
     }
     flag <<= 1;
   }
@@ -416,10 +471,12 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   }
   else
   {
-    cardData->UnionTrNo = MyStatus_GetTrainerView( mystatus );
-    cardData->TimeUpdate = TRUE;
-    cardData->PlayTime = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(gameData) );
+    cardData->UnionTrNo   = MyStatus_GetTrainerView( mystatus );
+    cardData->TimeUpdate  = TRUE;
+    cardData->PlayTime    = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(gameData) );
     cardData->Personality = TRCSave_GetPersonarity(  trc_ptr );
+//    TRCSave_GetPmsData( trc_ptr, &cardData->Pms );
+    MYPMS_GetPms( p_wk, MYPMS_PMS_TYPE_INTRODUCTION, &cardData->Pms );
 
   }
   //クリア日時とプレイ開始日時
@@ -470,6 +527,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   
   //FIXME 図鑑処理
   cardData->PokeBookFlg = TRUE;
+//  cardData->PokeBook    = ZUKANSAVE_GetZukanPokeGetCount( zukan, wk->heapId );
 
   //サインデータの取得
   //サインデータの有効/無効フラグを取得(金銀ローカルでのみ有効)
@@ -534,8 +592,8 @@ TRCARD_CALL_PARAM*  TRAINERCASR_CreateCallParam_CommData( GAMEDATA *gameData , v
 }
 
 
-// バトルサブウェイでランクアップになる条件(シングル49連勝）
-#define BSUBWAY_BADGE_TERMS ( 49 )
+// ブラックシティ・ホワイトフォレストのトレーナーカードランクアップ条件
+#define OCCUPY_QUALIFY  ( 30 )
 
 //=============================================================================================
 /**
@@ -549,23 +607,43 @@ TRCARD_CALL_PARAM*  TRAINERCASR_CreateCallParam_CommData( GAMEDATA *gameData , v
 int TRAINERCARD_GetCardRank( GAMEDATA *gameData )
 {
   int rank=0;
-  //殿堂入り（クリアフラグ）
+  BSUBWAY_SCOREDATA *bs_score   = GAMEDATA_GetBSubwayScoreData( gameData );
+  MUSICAL_SAVE      *musical_sv = GAMEDATA_GetMusicalSavePtr( gameData );
+  OCCUPY_INFO       *occupy_sv  = GAMEDATA_GetMyOccupyInfo( gameData );
+
+  //ストーリークリア（殿堂入りとは違う）
   if (EVENTWORK_CheckEventFlag(GAMEDATA_GetEventWork( gameData ),SYS_FLAG_GAME_CLEAR)){
+    OS_Printf( "ストーリークリア\n");
     rank++;
   }
   //全国図鑑完成（イベント系ポケモンを除くポケモンをゲットしているか）
   if ( ZUKANSAVE_CheckZenkokuComp(GAMEDATA_GetZukanSave(gameData)) ){
-       
+    OS_Printf( "全国図鑑完成\n");
     rank++;
   }
 
-#if 0
-  // バトルサブウェイで49連勝
-  bs_save = SaveControl_DataPtrGet( save, GMDATA_ID_BSUBWAY_SCOREDATA );    /// @@TODO まだバトルサブウェイの連勝未実装
-  if(BSUBWAY_SCOREDATA_GetMaxRenshouCount( bs_save, BSWAY_PLAYMODE_SINGLE) > BSUBWAY_BADGE_TERMS){
+  // バトルサブウェイ、スーパーシングル、スーパーダブルでボス撃破
+  if(BSUBWAY_SCOREDATA_SetFlag( bs_score,  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_S_SINGLE, BSWAY_SETMODE_get) 
+  && BSUBWAY_SCOREDATA_SetFlag( bs_score,  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_S_DOUBLE, BSWAY_SETMODE_get) 
+//  && BSUBWAY_SCOREDATA_SetFlag( bs_score,  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_S_MULTI, BSWAY_SETMODE_get)    // 必要なら
+  ){
+    OS_Printf( "バトルサブウェイボス撃破\n");
     rank++;
   }
-#endif
+
+  // ミュージカルグッズをコンプリートしているか
+  if( MUSICAL_SAVE_IsCompleteItem( musical_sv ) ){
+    OS_Printf( "ミュージカルグッズコンプ\n");
+    rank++;
+  }
+  
+  // ブラックシティ・ホワイトフォレストのバランス数値がうにゃうにゃ
+  if(OccupyInfo_GetWhiteLevel(occupy_sv)>OCCUPY_QUALIFY
+  && OccupyInfo_GetBlackLevel(occupy_sv)>OCCUPY_QUALIFY
+  ){
+    OS_Printf( "BC/WFのバランス数値が両方共３０以上\n");
+    rank++;
+  }
 
   return rank;
 }

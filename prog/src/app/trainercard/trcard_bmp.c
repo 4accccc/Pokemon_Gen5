@@ -307,6 +307,8 @@ void TRCBmp_AddTrCardBmp( TR_CARD_WORK* wk )
   GFL_BG_LoadScreenV_Req(FONT_BG);
   GFL_BG_LoadScreenV_Req(MSG_BG);
 
+  wk->printQue = PRINTSYS_QUE_Create( wk->heapId );
+  
 }
 
 //--------------------------------------------------------------------------------------------
@@ -321,6 +323,8 @@ void TRCBmp_AddTrCardBmp( TR_CARD_WORK* wk )
 void TRCBmp_ExitTrCardBmpWin( TR_CARD_WORK* wk)
 {
   u16 i;
+
+  PRINTSYS_QUE_Delete( wk->printQue );
 
   //YesNoボタンシステムワーク解放
   TOUCH_SW_FreeWork( wk->ynbtn_wk);
@@ -368,10 +372,6 @@ void TRCBmp_WriteTrWinInfo(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DA
               STR_NUM_DISP_SPACE,0);
     }
     
-    //スコア
-//    WriteNumData( wk, win[TRC_BMPWIN_SCORE],
-//            BMP_WIDTH_TYPE2, 0, 0, str, inTrCardData->Score, SCORE_DIGIT,
-//            STR_NUM_DISP_SPACE,0);
     
     // トレーナータイプ(ユニオン見た目の取得・反映)
     TRCBmp_PrintTrainerType( wk, inTrCardData->UnionTrNo, 0 );
@@ -404,9 +404,12 @@ void TRCBmp_WriteTrWinInfo(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DA
     
     // 簡易会話描画
     {
-      STRBUF *str = PMSDAT_ToString( &wk->TrCardData->Pms, wk->heapId );
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(win[TRC_BMPWIN_PMSWORD]) , 0, 0, str, wk->fontHandle );
-      GFL_STR_DeleteBuffer( str );
+//      STRBUF *str = PMSDAT_ToString( &wk->TrCardData->Pms, wk->heapId );
+//      PRINTSYS_Print( GFL_BMPWIN_GetBmp(win[TRC_BMPWIN_PMSWORD]) , 0, 0, str, wk->fontHandle );
+//      GFL_STR_DeleteBuffer( str );
+
+        PMS_DRAW_SetNullColorPallet( wk->PmsDrawWork, 0 );
+        PMS_DRAW_Print( wk->PmsDrawWork, win[TRC_BMPWIN_PMSWORD], &wk->TrCardData->Pms, 0 );
     }
     
     //スタート時間
@@ -1001,9 +1004,14 @@ static void WriteStrData( TR_CARD_WORK* wk,
 void TRCBmp_WritePlayTime(TR_CARD_WORK* wk, GFL_BMPWIN  *win[], const TR_CARD_DATA *inTrCardData, STRBUF *str)
 {
   int hour;
+//  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win[TRC_BMPWIN_PLAY_TIME]), 0 );
   
   GF_ASSERT(inTrCardData->PlayTime!=NULL&&"ERROR:PlayTimeData is NULL!!");
 
+  // 時間表記部分だけクリアする
+  GFL_BMP_Fill( GFL_BMPWIN_GetBmp(win[TRC_BMPWIN_PLAY_TIME]), 18*8, 0, WIN_TIME_SX*8-18*8, 16, 0 );
+
+  // プレイ時間書き直し
   hour = PLAYTIME_GetHour(inTrCardData->PlayTime);
 
   if (hour>HOUR_DISP_MAX){

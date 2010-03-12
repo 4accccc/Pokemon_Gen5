@@ -37,7 +37,9 @@
 #include "msg/msg_trainercard.h"
 #include "message.naix"
 #include "system/wipe.h"
+#include "system/pms_draw.h"
 #include "test/ariizumi/ari_debug.h"
+
 
 // キーでカードがめくれないようにする
 #define KEY_LR_OK
@@ -76,8 +78,9 @@ enum {
   SEQ_MAIN,
   SEQ_OUT,
   SEQ_REVERSE,
-  SEQ_SIGN_CALL,
-  SEQ_SIGN,
+  SEQ_PMSINPUT_CALL,
+  SEQ_PMSINPUT,
+  SEQ_BADGE_VIEW_CALL,
   SEQ_COVER,
   SEQ_SCALING,
 };
@@ -87,12 +90,12 @@ typedef enum {
   TRC_KEY_REQ_TP_BEAT,
   TRC_KEY_REQ_TP_BRUSH,
   TRC_KEY_REQ_REV_BUTTON,
-  TRC_KEY_REQ_SIGN_CALL,
   TRC_KEY_REQ_END_BUTTON,
   TRC_KEY_REQ_TRAINER_TYPE,
   TRC_KEY_REQ_PERSONALITY,
   TRC_KEY_REQ_SCALE_BUTTON,
   TRC_KEY_REQ_PMS_CALL,
+  TRC_KEY_REQ_BADGE_CALL,
 }TRC_KEY_REQ;
 
 typedef enum {
@@ -232,7 +235,7 @@ static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_OBJ_128_B,        // メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
 
-  GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
+  GX_VRAM_SUB_OBJ_128_D,     // サブ2DエンジンのOBJ
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
 
   GX_VRAM_TEX_NONE,       // テクスチャイメージスロット
@@ -258,6 +261,7 @@ static void CardDataDraw(TR_CARD_WORK* wk);
 static BOOL CardRev(TR_CARD_WORK * wk );
 static void CardRevAffineSet(TR_CARD_WORK* wk);
 static int  CheckInput(TR_CARD_WORK *wk);
+static void JumpInputResult( TR_CARD_WORK *wk, int req, int *seq );
 static void SetCardPalette(TR_CARD_WORK *wk ,u8 inCardRank, const u8 inPokeBookHold);
 static void SetUniTrainerPalette(TR_CARD_WORK *wk ,const u8 inTrainerNo);
 
@@ -381,20 +385,17 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   //Bmpウィンドウ初期化
   TRCBmp_AddTrCardBmp( wk );
 
+  // 簡易会話システム初期化
+  wk->PmsDrawWork = PMS_DRAW_Init( wk->ObjWork.cellUnit, CLSYS_DRAW_SUB, wk->printQue, wk->fontHandle, 8, 1, HEAPID_TR_CARD );
+
   //コロン描く
   TRCBmp_WriteSec(wk,wk->win[TRC_BMPWIN_PLAY_TIME], TRUE, wk->SecBuf);
 
-  if(wk->tcp->value){
-    wk->is_back = FALSE;
-  }else{
-    wk->is_back = FALSE;    //表面からスタート
-  }
+  wk->is_back = FALSE;
   wk->tcp->value = FALSE;
   wk->IsOpen = COVER_CLOSE;     //ケースは閉じた状態からスタート
 
-//  wk->touch = RECT_HIT_NONE;      //タッチパネルは押されていない
-
-  wk->ButtonPushFlg = FALSE;      //ボタン押されてない
+  wk->ButtonPushFlg = FALSE;    //ボタン押されてない
   wk->SignAnimeWait    = 0;
   if(wk->TrCardData->SignAnimeOn){  // サインアニメしているか？
     wk->SignAnimePat = SCREEN_SIGN_LEFT;    
@@ -531,6 +532,8 @@ static void _scruch_sound_func( TR_CARD_WORK *wk )
 #endif
 }
 
+
+
 //--------------------------------------------------------------------------------------------
 /**
  * プロセス関数：メイン
@@ -555,51 +558,17 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
   case SEQ_MAIN:
     {
       int req;
-      req = CheckInput(wk);
-
-      _scruch_sound_func(wk);
-      if (req == TRC_KEY_REQ_REV_BUTTON){
-        //カードひっくり返す
-        wk->sub_seq = 0;  //サブシーケンス初期化
-        *seq = SEQ_REVERSE; //カード回転
-      }else if(req == TRC_KEY_REQ_SCALE_BUTTON){
-        *seq = SEQ_SCALING;
-      }else if(req == TRC_KEY_REQ_SIGN_CALL){
-        SetSActDrawSt(&wk->ObjWork,ACTS_BTN_TURN,ANMS_SIGN_ON,TRUE);
-//        SetEffActDrawSt(&wk->ObjWork, ACTS_BTN_TURN ,TRUE);
-        wk->sub_seq = 0;
-        *seq = SEQ_SIGN_CALL;
-      }else if(req == TRC_KEY_REQ_PMS_CALL){
-        wk->sub_seq = 0;
-        *seq = SEQ_SIGN;
-      }else if (req == TRC_KEY_REQ_END_BUTTON){
-        //終了
-        SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BACK,ANMS_BACK_ON,TRUE);
-//        SetEffActDrawSt(&wk->ObjWork, ACTS_BTN_BACK ,TRUE);
-        WIPE_SYS_Start( WIPE_PATTERN_FMAS, WIPE_TYPE_SHUTTEROUT_UP,
-                WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
-                WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
-        *seq = SEQ_OUT;
-      }else if(req==TRC_KEY_REQ_TRAINER_TYPE){
-        if(wk->tcp->TrCardData->EditPossible){
-          _add_UnionTrNo( wk->TrCardData );
-          TRCBmp_PrintTrainerType( wk, wk->TrCardData->UnionTrNo, 1 );
-        }
-        
-      }else if(req==TRC_KEY_REQ_PERSONALITY){
-        if(wk->tcp->TrCardData->EditPossible){
-          if(++wk->TrCardData->Personality>24){
-            wk->TrCardData->Personality = 0;
-          }
-          TRCBmp_PrintPersonality( wk, wk->TrCardData->Personality, 1 );
-        }
-      }
+      req = CheckInput(wk);           // 入力チェック
+      JumpInputResult(wk, req, seq);  // 入力で分岐
       
       UpdatePlayTime(wk, wk->TrCardData->TimeUpdate);
       UpdateSignAnime(wk);
       
-      DrawBrushLine( (GFL_BMPWIN*)wk->TrSignData, &wk->AllTouchResult, 
-                      &wk->OldTouch, 1, wk->TrSignData, wk->ScaleMode );
+      if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
+        _scruch_sound_func(wk);
+        DrawBrushLine( (GFL_BMPWIN*)wk->TrSignData, &wk->AllTouchResult, 
+                       &wk->OldTouch, 1, wk->TrSignData, wk->ScaleMode );
+      }
     }
     break;
 
@@ -619,7 +588,7 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
       *seq = SEQ_MAIN;
     }
     break;
-  case SEQ_SIGN_CALL: //サイン処理を呼び出すか？
+  case SEQ_PMSINPUT_CALL: //サイン処理を呼び出すか？
     {
       int ret;
       ret = SignCall(wk);
@@ -628,27 +597,38 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
         *seq = SEQ_MAIN;
         break;
       case 2:
-        *seq = SEQ_SIGN;
+        *seq = SEQ_PMSINPUT;
         break;
       }
     }
     break;
-  case SEQ_SIGN:  //サイン処理を呼ぶ
+  case SEQ_PMSINPUT:  //簡易会話処理を呼ぶ
     WIPE_SYS_Start( WIPE_PATTERN_FMAS, WIPE_TYPE_SHUTTEROUT_UP,
             WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
             WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
-    wk->tcp->value = TRUE;
+    wk->tcp->value = CALL_PMSINPUT;
     *seq = SEQ_OUT;
     break;
+  case SEQ_BADGE_VIEW_CALL: //サイン処理を呼び出すか？
+    WIPE_SYS_Start( WIPE_PATTERN_FMAS, WIPE_TYPE_SHUTTEROUT_UP,
+            WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
+            WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
+    wk->tcp->value = CALL_BADGE;
+    *seq = SEQ_OUT;
+    break;
+
   }
   
   if(++wk->scrl_ct >= 128){
     wk->scrl_ct = 0;
   }
   GFL_CLACT_SYS_Main();
-  if( wk->vblankTcblSys != NULL )
+  PMS_DRAW_Main( wk->PmsDrawWork );
+  PRINTSYS_QUE_Main( wk->printQue );
+  if( wk->vblankTcblSys != NULL ){
     GFL_TCBL_Main( wk->vblankTcblSys );
-
+  }
+  
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -688,6 +668,8 @@ GFL_PROC_RESULT TrCardProc_End( GFL_PROC * proc, int * seq , void *pwk, void *my
     TRCSave_SetPersonarity(  tr, wk->TrCardData->Personality );
   }
 
+
+  PMS_DRAW_Exit( wk->PmsDrawWork );
 
   //使用した拡縮面を元に戻す
   ResetAffinePlane();
@@ -1237,17 +1219,15 @@ static void CardDataDraw(TR_CARD_WORK* wk)
 
 //----------------------------------------------------------------------------------
 /**
- * @brief 表裏の切り替わり時にタッチバーのOBJ表示状態を変更する
+ * @brief 自分のカードを編集可能状態で見るときのボタン表示・非表示制御
  *
  * @param   wk    
- * @param   is_back   
  */
 //----------------------------------------------------------------------------------
-static void DispTouchBarObj( TR_CARD_WORK *wk, int is_back )
+static void EditOK_MineCardAppear( TR_CARD_WORK *wk, int is_back )
 {
   BOOL flag = FALSE;
-
-  // 表
+ // 表
   if(is_back==0){  
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK,  APP_COMMON_BARICON_RETURN,TRUE);
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, ANMS_LOUPE_L,             FALSE);
@@ -1286,6 +1266,100 @@ static void DispTouchBarObj( TR_CARD_WORK *wk, int is_back )
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE, ANMS_ANIME_L,                  FALSE);
     }
   }
+}
+//----------------------------------------------------------------------------------
+/**
+ * @brief 自分のカードを編集可能状態で見るときのボタン表示・非表示制御
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void EditNG_MineCardAppear( TR_CARD_WORK *wk, int is_back )
+{
+  BOOL flag = FALSE;
+ // 表
+  if(is_back==0){  
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK,  APP_COMMON_BARICON_RETURN,TRUE);
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, ANMS_LOUPE_L,             FALSE);
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_PEN,   ANMS_BLACK_PEN_L,         FALSE);
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE,ANMS_BADGE_L,             TRUE);
+
+    // ショートカット登録しているか
+    flag = GAMEDATA_GetShortCut( wk->tcp->gameData, SHORTCUT_ID_TRCARD_FRONT );
+    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BOOKMARK, APP_COMMON_BARICON_CHECK_OFF+flag, TRUE);
+
+  // 裏
+  }else{          
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK,  APP_COMMON_BARICON_RETURN,TRUE);
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END,   APP_COMMON_BARICON_EXIT,  TRUE);
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, ANMS_LOUPE_L,             FALSE);
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_TURN,  ANMS_TURN_L,              TRUE);
+
+    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, FALSE);
+
+    // サインアニメ中か
+    Change_SignAnimeButton( wk, wk->TrCardData->SignAnimeOn, FALSE);
+
+    // ショートカット登録しているか
+    flag = GAMEDATA_GetShortCut( wk->tcp->gameData, SHORTCUT_ID_TRCARD_BACK );
+    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BOOKMARK, APP_COMMON_BARICON_CHECK_OFF+flag, TRUE);
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 他人のカードを編集可能状態で見るときのボタン表裏表示・非表示制御
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void OtherCardAppear( TR_CARD_WORK *wk, int is_back )
+{
+ // 表
+  if(is_back==0){  
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK,  APP_COMMON_BARICON_RETURN,     TRUE);
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END,   APP_COMMON_BARICON_EXIT_OFF,   FALSE);
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE,ANMS_BADGE_L,                  FALSE);
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_PEN,   ANMS_BLACK_PEN_L,              FALSE);
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BOOKMARK,APP_COMMON_BARICON_CHECK_OFF,FALSE);
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, 0,FALSE);
+
+  // 裏
+  }else{          
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK,  APP_COMMON_BARICON_RETURN,TRUE);
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END,   APP_COMMON_BARICON_EXIT,  FALSE);
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, ANMS_LOUPE_L,             FALSE);
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_TURN,  ANMS_TURN_L,              TRUE);
+    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, FALSE);
+    Change_SignAnimeButton( wk, wk->TrCardData->SignAnimeOn, FALSE);
+    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BOOKMARK, APP_COMMON_BARICON_CHECK_OFF, FALSE);
+  }
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 表裏の切り替わり時にタッチバーのOBJ表示状態を変更する
+ *
+ * @param   wk    
+ * @param   is_back   
+ */
+//----------------------------------------------------------------------------------
+static void DispTouchBarObj( TR_CARD_WORK *wk, int is_back )
+{
+
+  // 人のカードを見ている
+  if(wk->TrCardData->OtherTrCard==TRUE){
+    OtherCardAppear( wk, is_back );
+  // 自分のカードだが編集不可状態
+  }else if(wk->tcp->edit_possible==FALSE){
+    EditNG_MineCardAppear(wk, is_back);
+  // 編集可能な自分のカード
+  }else{
+    EditOK_MineCardAppear(wk, is_back);
+  }
+  
+ 
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1385,6 +1459,9 @@ static BOOL CardRev( TR_CARD_WORK *wk )
     wk->CardScaleX = START_SCALE;
     wk->CardScaleY = START_SCALE;
     PMSND_PlaySE( SND_TRCARD_REV );   //ひっくり返す音
+    if(wk->is_back==0){
+      PMS_DRAW_SetPmsObjVisible( wk->PmsDrawWork, 0, FALSE );
+    }
     wk->sub_seq++;
     break;
   case 1:
@@ -1437,6 +1514,9 @@ static BOOL CardRev( TR_CARD_WORK *wk )
       wk->CardScaleX = 1 << FX32_SHIFT;
       wk->CardScaleY = 1 << FX32_SHIFT;
       rc = TRUE;
+      if(wk->is_back==0){
+        PMS_DRAW_SetPmsObjVisible( wk->PmsDrawWork, 0, TRUE );
+      }
     }
     break;
   }
@@ -1722,31 +1802,39 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
     break;
   case 3:     // バッジ画面ボタン・アニメON/OFFボタン
     if(wk->is_back){
-      wk->TrCardData->SignAnimeOn ^=1;
-      Trans_CardBackScreen(wk, wk->TrCardData->Version);
-      Change_SignAnimeButton( wk, wk->TrCardData->SignAnimeOn, TRUE);
-      Change_SignAnime( wk, wk->TrCardData->SignAnimeOn );
-      OS_Printf("SignAnime = %d\n", wk->TrCardData->SignAnimeOn);
-      PMSND_PlaySE( SND_TRCARD_ANIME );
+      if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
+        wk->TrCardData->SignAnimeOn ^=1;
+        Trans_CardBackScreen(wk, wk->TrCardData->Version);
+        Change_SignAnimeButton( wk, wk->TrCardData->SignAnimeOn, TRUE);
+        Change_SignAnime( wk, wk->TrCardData->SignAnimeOn );
+        OS_Printf("SignAnime = %d\n", wk->TrCardData->SignAnimeOn);
+        PMSND_PlaySE( SND_TRCARD_ANIME );
+      }
+    }else{
+      return TRC_KEY_REQ_BADGE_CALL;
     }
     break;
   case 4:     // 精密描画ボタン
     if(wk->is_back && (!wk->isComm) && wk->TrCardData->SignAnimeOn==0){
-        if(wk->ScaleMode==0){
-          wk->sub_seq = 0;
-        }else{
-          wk->sub_seq = 3;
-        }
-        PMSND_PlaySE( SND_TRCARD_LOUPE );
-        return TRC_KEY_REQ_SCALE_BUTTON;
+      if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
+          if(wk->ScaleMode==0){
+            wk->sub_seq = 0;
+          }else{
+            wk->sub_seq = 3;
+          }
+          PMSND_PlaySE( SND_TRCARD_LOUPE );
+          return TRC_KEY_REQ_SCALE_BUTTON;
+      }
     }
     break;
   case 5:     // ペン先ボタン
     if(wk->is_back){
-      PMSND_PlaySE( SND_TRCARD_PEN );
-      wk->pen ^=1;
-      SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, TRUE);
-      OS_Printf("pen touch\n");
+      if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
+        PMSND_PlaySE( SND_TRCARD_PEN );
+        wk->pen ^=1;
+        SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, TRUE);
+        OS_Printf("pen touch\n");
+      }
     }
     break;
   case 6:     // ブックマークボタン
@@ -1907,6 +1995,7 @@ static int CheckTouch(TR_CARD_WORK* wk)
 {
   int ret;
   u16 pat;
+  int hitNo;
   // タッチバー
   static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
     { TP_RETURN_Y,   TP_RETURN_Y+TP_RETURN_H,    TP_RETURN_X,   TP_RETURN_X+TP_RETURN_W }, // 戻る
@@ -1921,10 +2010,21 @@ static int CheckTouch(TR_CARD_WORK* wk)
     { TP_PMS_Y,      TP_PMS_Y+TP_PMS_H,          TP_PMS_X,      TP_PMS_X+TP_PMS_W },        // 簡易会話
     {GFL_UI_TP_HIT_END,0,0,0}
   };
+  static const GFL_UI_TP_HITTBL Btn_TpRectComm[] = {
+    { TP_RETURN_Y,   TP_RETURN_Y+TP_RETURN_H,    TP_RETURN_X,   TP_RETURN_X+TP_RETURN_W }, // 戻る
+    { TP_RETURN_Y,   TP_RETURN_Y+TP_RETURN_H,    TP_RETURN_X,   TP_RETURN_X+TP_RETURN_W }, // 戻る
+    { TP_CARD_Y,     TP_CARD_Y+TP_CARD_H,        TP_CARD_X,     TP_CARD_X+TP_CARD_W },     // カード裏返しボタン
+    { GFL_UI_TP_HIT_END,0,0,0}
+  };
 
 
-  // ボタン処理
-  const int hitNo = GFL_UI_TP_HitTrg( Btn_TpRect );
+  // タッチ検出
+  if(wk->TrCardData->OtherTrCard==FALSE){
+    hitNo = GFL_UI_TP_HitTrg( Btn_TpRect );
+  }else{
+    hitNo = GFL_UI_TP_HitTrg( Btn_TpRectComm );
+  }
+  // 拡大状態かどうか
   if(wk->ScaleMode==0){
     ret = normal_touch_func( wk, hitNo );
   }else{
@@ -1980,6 +2080,70 @@ static int CheckInput(TR_CARD_WORK *wk)
   }
   return key_req;
 }
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 入力内容によってシーケンスを分岐させる
+ *
+ * @param   wk    
+ * @param   req   入力結果のリクエスト内容
+ */
+//----------------------------------------------------------------------------------
+static void JumpInputResult( TR_CARD_WORK *wk, int req, int *seq )
+{
+  switch( req ){
+  //カードひっくり返す
+  case TRC_KEY_REQ_REV_BUTTON:
+    wk->sub_seq = 0;    //サブシーケンス初期化
+    *seq = SEQ_REVERSE; //カード回転
+    break;
+  // 拡大縮小
+  case TRC_KEY_REQ_SCALE_BUTTON:
+    if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
+      *seq = SEQ_SCALING;
+    }
+    break;
+  // 簡易会話呼び出し
+  case TRC_KEY_REQ_PMS_CALL:
+    if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
+      wk->sub_seq = 0;
+      *seq = SEQ_PMSINPUT;
+    }
+    break;
+  // 通常終了
+  case TRC_KEY_REQ_END_BUTTON:
+    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BACK,ANMS_BACK_ON,TRUE);
+    WIPE_SYS_Start( WIPE_PATTERN_FMAS, WIPE_TYPE_SHUTTEROUT_UP,
+            WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
+            WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
+    *seq = SEQ_OUT;
+    wk->tcp->value = CALL_NONE;
+    break;
+  // トレーナータイプ切り替え
+  case TRC_KEY_REQ_TRAINER_TYPE:
+    if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
+      _add_UnionTrNo( wk->TrCardData );
+      TRCBmp_PrintTrainerType( wk, wk->TrCardData->UnionTrNo, 1 );
+    }
+    break;
+  // 性格切り替え
+  case TRC_KEY_REQ_PERSONALITY:
+    if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
+      if(++wk->TrCardData->Personality>24){
+        wk->TrCardData->Personality = 0;
+      }
+      TRCBmp_PrintPersonality( wk, wk->TrCardData->Personality, 1 );
+    }
+    break;
+  // バッジ閲覧画面へ
+  case TRC_KEY_REQ_BADGE_CALL:
+    wk->sub_seq = 0;
+    *seq = SEQ_BADGE_VIEW_CALL;
+    break;
+  }
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**

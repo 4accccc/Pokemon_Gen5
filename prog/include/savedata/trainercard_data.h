@@ -2,7 +2,7 @@
 /**
  * @file  trainerbadge_data.h
  * @bfief トレーナーカード用セーブデータアクセス関連
- * @author  Nozomu Saito
+ * @author  Akito Mori
  *
  *
  */
@@ -14,6 +14,8 @@
 #define TRCARD_PERSONARITY_MAX    ( 8 )
 
 #include "savedata/save_control.h"
+#include "system/pms_data.h"
+
 typedef struct TR_CARD_SV_DATA_tag * TR_CARD_SV_PTR;
 
 extern int TRCSave_GetSaveDataSize(void);
