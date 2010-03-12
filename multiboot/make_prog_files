@@ -29,6 +29,7 @@ SRCS	+= \
 		$(PARENT_SRC)/system/wipe_wnd.c \
 		$(PARENT_SRC)/system/brightness.c \
 		$(PARENT_SRC)/system/debug_print.c \
+		$(PARENT_SRC)/system/time_icon.c \
 		$(PARENT_SRC)/waza_tool/waza_tool.c \
 		$(PARENT_SRC)/debug/debug_str_conv.c \
 		$(PARENT_SRC)/multiboot/child/mb_child_sys.c \

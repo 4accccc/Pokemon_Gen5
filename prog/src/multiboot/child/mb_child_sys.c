@@ -308,6 +308,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     {
       MB_COMM_InitComm( work->commWork );
       MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_01 );
+      MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
       work->state = MCS_WAIT_COMM_INIT;
     }
     break;
@@ -341,6 +342,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       }
       
       MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_01 );
+      MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
       work->state = MCS_WAIT_CONNECT;
     }
     break;
@@ -514,6 +516,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
     MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
     MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_03 );
+    MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
     MB_CHILD_ErrCheck( work , TRUE );
     GFUser_SetVIntrFunc( MB_CHILD_VSync );
     break;
@@ -1121,6 +1124,7 @@ static void MB_CHILD_SaveInit( MB_CHILD_WORK *work )
   MB_DATA_ResetSaveLoad( work->dataWork );
   MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_04 );
+  MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
 
 }
 

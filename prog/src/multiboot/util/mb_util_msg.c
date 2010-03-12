@@ -14,6 +14,7 @@
 #include "app/app_keycursor.h"
 #include "print/printsys.h"
 #include "system/talkmsgwin.h"
+#include "system/time_icon.h"
 
 #include "multiboot/mb_util_msg.h"
 #include "multiboot/mb_local_def.h"
@@ -62,6 +63,10 @@ struct _MB_MSG_WORK
   APP_KEYCURSOR_WORK *cursorWork;
   
   TALKMSGWIN_SYS    *talkWinSys;
+
+  BOOL reqDispTimerIcon;
+  TIMEICON_WORK *timeIcon;
+
 };
 
 
@@ -140,6 +145,8 @@ MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame ,const u8 selFra
   
   msgWork->isUpdateQue = FALSE;
   msgWork->isUseCursor = FALSE;
+  msgWork->reqDispTimerIcon = FALSE;
+  msgWork->timeIcon = NULL;
   return msgWork;
 }
 
@@ -157,6 +164,13 @@ void MB_MSG_MessageTerm( MB_MSG_WORK *msgWork )
   {
     APP_TASKMENU_CloseMenu( msgWork->yesNoWork );
   }
+  
+  if( msgWork->timeIcon != NULL )
+  {
+    TILEICON_Exit( msgWork->timeIcon );
+    msgWork->timeIcon = NULL;
+  }
+
   APP_KEYCURSOR_Delete( msgWork->cursorWork );
   APP_TASKMENU_RES_Delete( msgWork->takmenures );
   PRINTSYS_QUE_Delete( msgWork->printQue );
@@ -228,6 +242,11 @@ void MB_MSG_MessageMain( MB_MSG_WORK *msgWork )
   {
     GFL_BMPWIN_TransVramCharacter( msgWork->msgWin );
     msgWork->isUpdateQue = FALSE;
+    if( msgWork->reqDispTimerIcon == TRUE )
+    {
+      msgWork->reqDispTimerIcon = FALSE;
+      msgWork->timeIcon = TIMEICON_CreateTcbl( msgWork->tcblSys , msgWork->msgWin , 0x0F , TIMEICON_DEFAULT_WAIT , msgWork->heapId );
+    }
   }
 
   if( msgWork->yesNoWork != NULL )
@@ -323,6 +342,12 @@ void MB_MSG_MessageDisp( MB_MSG_WORK *msgWork , const u16 msgId , const int msgS
     msgWork->printHandle = NULL;
   }
   
+  
+  if( msgWork->timeIcon != NULL )
+  {
+    TILEICON_Exit( msgWork->timeIcon );
+    msgWork->timeIcon = NULL;
+  }
   //一応デフォは消しておく
   msgWork->isUseCursor = FALSE;
   
@@ -368,6 +393,12 @@ void MB_MSG_MessageDispNoWait( MB_MSG_WORK *msgWork , const u16 msgId )
     MB_TPrintf( "Message is not finish!!\n" );
     PRINTSYS_PrintStreamDelete( msgWork->printHandle );
     msgWork->printHandle = NULL;
+  }
+  
+  if( msgWork->timeIcon != NULL )
+  {
+    TILEICON_Exit( msgWork->timeIcon );
+    msgWork->timeIcon = NULL;
   }
 
   {
@@ -418,6 +449,13 @@ void MB_MSG_MessageHide( MB_MSG_WORK *msgWork )
   {
     BmpWinFrame_Clear( msgWork->msgWin , WINDOW_TRANS_ON_V );
   }
+
+  if( msgWork->timeIcon != NULL )
+  {
+    TILEICON_Exit( msgWork->timeIcon );
+    msgWork->timeIcon = NULL;
+  }
+
 }
 
 //--------------------------------------------------------------------------
@@ -567,5 +605,13 @@ const BOOL MB_MSG_CheckPrintStreamIsFinish( MB_MSG_WORK *msgWork )
 void MB_MSG_SetDispKeyCursor( MB_MSG_WORK *msgWork , const BOOL flg )
 {
   msgWork->isUseCursor = flg;
+}
+
+//--------------------------------------------------------------------------
+//  時計アイコンの表示
+//--------------------------------------------------------------------------
+void MB_MSG_SetDispTimeIcon( MB_MSG_WORK *msgWork , const BOOL flg )
+{
+  msgWork->reqDispTimerIcon = flg;
 }
 

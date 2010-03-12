@@ -10,8 +10,17 @@
 #define __POKEICON_H__
 
 #include "poke_tool/poke_tool.h"
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 
 #define GENDER_VER
+
+#else                    //DL子機時処理
+
+//#define GENDER_VER
+
+#endif //MULTI_BOOT_MAKE
+
 
 //==============================================================================
 //	定数定義

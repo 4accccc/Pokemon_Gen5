@@ -51,3 +51,4 @@
 	ARCID_WAZA_TBL			"../../prog/arc/waza_tbl/waza_tbl.narc"			#技テーブル
 	ARCID_MB_CHILD			"../../prog/arc/mb_child_gra.narc"		#子機システム画面
 	ARCID_MB_SELECT			"../../prog/arc/mb_select_gra.narc"		#子機選択画面
+	ARCID_TIMEICON_GRA		"../../prog/arc/time_icon_gra.narc"		#待機中時計アイコン

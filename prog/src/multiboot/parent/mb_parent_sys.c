@@ -918,6 +918,7 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
     MB_MSG_MessageHide( work->msgWork );
     MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
     MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_02 , MSGSPEED_GetWait() );
+    MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
     GFL_CLACT_WK_SetAnmSeq( work->clwkReturn , APP_COMMON_BARICON_RETURN_OFF );
     work->subState = MPSS_SEND_IMAGE_WAIT_BOOT;
     break;
@@ -1241,6 +1242,7 @@ static void MB_PARENT_SaveInit( MB_PARENT_WORK *work )
   ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( work->initWork->gameData );
   const u8 pokeNum = MB_COMM_GetPostPokeNum( work->commWork );
   MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_PAERNT_07 );
+  MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
   for( i=0;i<pokeNum;i++ )
   {
     const POKEMON_PASO_PARAM *ppp = MB_COMM_GetPostPokeData( work->commWork , i );

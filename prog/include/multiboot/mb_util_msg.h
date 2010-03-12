@@ -116,5 +116,6 @@ extern PRINT_QUE* MB_MSG_GetPrintQue( MB_MSG_WORK *msgWork );
 extern const BOOL MB_MSG_CheckPrintQueIsFinish( MB_MSG_WORK *msgWork );
 extern const BOOL MB_MSG_CheckPrintStreamIsFinish( MB_MSG_WORK *msgWork );
 extern void MB_MSG_SetDispKeyCursor( MB_MSG_WORK *msgWork , const BOOL flg );
+extern void MB_MSG_SetDispTimeIcon( MB_MSG_WORK *msgWork , const BOOL flg );
 
 
