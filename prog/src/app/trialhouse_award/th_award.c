@@ -23,6 +23,8 @@
 #include "app/app_nogear_subscreen.h"
 
 #include "savedata/trialhouse_save.h"
+#include "savedata/th_rank_def.h"
+#include "field/th_rank_calc.h"
 #include "../../savedata/trialhouse_save_local.h"
 
 #include "th_award_graphic.h"
@@ -179,8 +181,8 @@ static const GFL_CLACTPOS star_pos[STAR_NUM_MAX] =
 #define TEXT_POINT_SPACE   (8)  // 点数とポイントの間のスペースの幅
 
 // ポイント
-#define POINT_NUMBER_MAX (9999)  // ここまで(含む)表示可能。これより大きい数字はこの数字で表示する
-#define POINT_NUMBER_MIN (0)     // ここまで(含む)表示可能。これより小さい数字はこの数字で表示する
+#define POINT_NUMBER_MAX (TH_SCORE_MAX)  // ここまで(含む)表示可能。これより大きい数字はこの数字で表示する
+#define POINT_NUMBER_MIN (0)             // ここまで(含む)表示可能。これより小さい数字はこの数字で表示する
 
 // ランク
 typedef enum
@@ -199,19 +201,20 @@ typedef struct
 {
   u32 str_id;
   u8  star_num;
-  u16 min;  // min<= <=max
-  u16 max;
+  u16 rank_def;  // TH_RANK_????
+  //u16 min;  // min<= <=max
+  //u16 max;
 }
 RANK_INFO;
 static const RANK_INFO rank_info_tbl[RANK_MAX] =
 {
-  { msg_trialhouse_str15, 7,             6000, POINT_NUMBER_MAX },
-  { msg_trialhouse_str16, 6,             5000,             5999 },
-  { msg_trialhouse_str17, 5,             4000,             4999 },
-  { msg_trialhouse_str18, 4,             3000,             3999 },
-  { msg_trialhouse_str19, 3,             2000,             2999 },
-  { msg_trialhouse_str20, 2,             1000,             1999 },
-  { msg_trialhouse_str21, 1, POINT_NUMBER_MIN,              999 },
+  { msg_trialhouse_str15, 7, TH_RANK_MASTER   },  //             6000, POINT_NUMBER_MAX },
+  { msg_trialhouse_str16, 6, TH_RANK_ELITE    },  //             5000,             5999 },
+  { msg_trialhouse_str17, 5, TH_RANK_HYPER    },  //             4000,             4999 },
+  { msg_trialhouse_str18, 4, TH_RANK_SUPER    },  //             3000,             3999 },
+  { msg_trialhouse_str19, 3, TH_RANK_NORMAL   },  //             2000,             2999 },
+  { msg_trialhouse_str20, 2, TH_RANK_NOVICE   },  //             1000,             1999 },
+  { msg_trialhouse_str21, 1, TH_RANK_BEGINNER },  // POINT_NUMBER_MIN,              999 },
 };
 
 
@@ -1124,10 +1127,20 @@ static void Th_Award_TextMain( TH_AWARD_WORK* work )
 //=====================================
 static RANK Th_Award_GetRank( u16 point )
 {
+  u16 rank_def = TH_CALC_Rank( point );
+  u8 i;
+  for( i=0; i<RANK_MAX; i++ )
+  {
+    if( rank_info_tbl[i].rank_def == rank_def ) return i;
+  }
+  return 0;
+
+/*    
   u8 i;
   for( i=0; i<RANK_MAX -1; i++ )
   {
     if( point >= rank_info_tbl[i].min ) break;
   }
   return i;
+*/
 }
