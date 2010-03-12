@@ -516,7 +516,8 @@
 #define	TRID_JUGGLING_08   ( 503 ) 
 #define	TRID_JUGGLING_09   ( 504 ) 
 #define	TRID_PARASOL_07   ( 505 ) 
-#define TRID_MAX  ( 506 )
+#define	TRID_BADRIDER_03   ( 506 ) 
+#define TRID_MAX  ( 507 )
 
 #ifndef __ASM_NO_DEF_  //‚±‚êˆÈ~‚ÍƒAƒZƒ“ƒuƒ‰‚Å‚Í–³‹
 typedef  int TrainerID;

@@ -2904,6 +2904,11 @@
 		<language name="JPN_KANJI" width="216">スミエ</language>
 	</row>
 
+	<row id="badrider_03">
+		<language name="JPN" width="216">チャールズ</language>
+		<language name="JPN_KANJI" width="216">チャールズ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
