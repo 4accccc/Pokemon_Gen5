@@ -80,6 +80,7 @@ struct _PLIST_MSG_WORK
   BOOL  isUpdateMsg;
   
   WORDSET *wordSet;
+  BOOL reqDispTimerIcon;
   TIMEICON_WORK *timeIcon;
 };
 //======================================================================
@@ -107,6 +108,7 @@ PLIST_MSG_WORK* PLIST_MSG_CreateSystem( PLIST_WORK *work )
   msgWork->isWaitKey = FALSE;
   msgWork->wordSet = NULL;
   msgWork->timeIcon = NULL;
+  msgWork->reqDispTimerIcon = FALSE;
   msgWork->cursorWork = APP_KEYCURSOR_Create( 0x0f , FALSE , TRUE , work->heapId );
   return msgWork;
 }
@@ -208,6 +210,11 @@ void PLIST_MSG_UpdateSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
     {
       msgWork->isUpdateMsg = FALSE;
       GFL_BMPWIN_MakeTransWindow_VBlank( msgWork->bmpWin );
+      if( msgWork->reqDispTimerIcon == TRUE )
+      {
+        msgWork->reqDispTimerIcon = FALSE;
+        msgWork->timeIcon = TIMEICON_CreateTcbl( msgWork->tcblSys , msgWork->bmpWin , 0x0F , TIMEICON_DEFAULT_WAIT , work->heapId );
+      }
     }
   }
 
@@ -487,5 +494,5 @@ void PLIST_MSG_ReloadWinFrame( PLIST_WORK *work , PLIST_MSG_WORK *msgWork  )
 //--------------------------------------------------------------
 void PLIST_MSG_DispTimerIcon( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 {
-  msgWork->timeIcon = TIMEICON_CreateTcbl( msgWork->tcblSys , msgWork->bmpWin , 0x0F , TIMEICON_DEFAULT_WAIT , work->heapId );
+  msgWork->reqDispTimerIcon = TRUE;
 }
