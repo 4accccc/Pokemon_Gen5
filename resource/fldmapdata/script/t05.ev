@@ -21,8 +21,35 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_t05_railfan_01
 _EVENT_DATA    ev_t05_pipe_01
+_EVENT_DATA    ev_zone_t05
+_EVENT_DATA    ev_init_t05
+_EVENT_DATA    ev_recover_t05
 _EVENT_DATA_END
 
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START   ev_zone_t05
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START   ev_init_t05
+  _GET_RND( SCWK_ANSWER, 10 )
+  _GET_TRAIN_MODEL_ID( SCWK_ANSWER, LOCALWORK1 )
+  _BMODEL_DIRECT_CHANGE_MODEL_ID( SCR_BMID_EVENT, 24, 25, LOCALWORK1 )
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START   ev_recover_t05
+  _GET_RND( SCWK_ANSWER, 10 )
+  _GET_TRAIN_MODEL_ID( SCWK_ANSWER, LOCALWORK1 )
+  _BMODEL_DIRECT_CHANGE_MODEL_ID( SCR_BMID_EVENT, 24, 25, LOCALWORK1 )
+INIT_EVENT_END
 
 /************************************************************/
 /*						‚Ä‚Á‚¿‚á‚ñ							*/
