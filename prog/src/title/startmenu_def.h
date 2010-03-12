@@ -48,8 +48,18 @@ enum {
 	BMPWIN_MAX
 };
 
+// ＢＧパレット
+#define	LIST_PALETTE			( 1 )
+#define	CURSOR_PALETTE		( 2 )
+#define	CURSOR_PALETTE2		( 3 )
+#define	BGPAL_VER_WHITE		( 4 )			// ホワイトの場合の背景パレット番号
+#define	WIN_PALETTE_M			( 5 )
+#define	FONT_PALETTE_M		( 15 )
+#define	WIN_PALETTE_S			( 5 )
+#define	FONT_PALETTE_S		( 15 )
+
 // BMPWIN定義
-#define	BMPWIN_LIST_PAL			( FONT_PALETTE_M )
+#define	BMPWIN_LIST_PAL			( WIN_PALETTE_M )
 #define	BMPWIN_LIST_FRM			( GFL_BG_FRAME1_M )
 //「続きから始める」
 #define	BMPWIN_TITLE_PX			( 2 )
@@ -135,7 +145,7 @@ enum {
 #define	BMPWIN_NEWGAME_WIN_PY		( 2 )
 #define	BMPWIN_NEWGAME_WIN_SX		( 30 )
 #define	BMPWIN_NEWGAME_WIN_SY		( 20 )
-#define	BMPWIN_NEWGAME_WIN_PAL	( FONT_PALETTE_M )
+#define	BMPWIN_NEWGAME_WIN_PAL	( WIN_PALETTE_M )
 
 //「最初から始める」の警告文表示座標
 #define	NEW_GAME_WARRNING_ATTENTION_PY	( 0 )
@@ -156,7 +166,7 @@ enum {
 #define	BMPWIN_CONTINUE_WIN_PY		( 3 )
 #define	BMPWIN_CONTINUE_WIN_SX		( 30 )
 #define	BMPWIN_CONTINUE_WIN_SY		( 19 )
-#define	BMPWIN_CONTINUE_WIN_PAL		( FONT_PALETTE_S )
+#define	BMPWIN_CONTINUE_WIN_PAL		( WIN_PALETTE_S )
 
 //「続きから始める」の説明文表示座標
 #define	CONTINUE_INFO_ATTENTION_PY	( 0 )
@@ -193,17 +203,13 @@ enum {
 //#define	LIST_ITEM_SCROLL_DOWN_PY	( 22 )
 //#define	LIST_ITEM_SCROLL_UP_PY		( 17 )
 
-// ＢＧパレット
-#define	LIST_PALETTE			( 1 )
-#define	CURSOR_PALETTE		( 2 )
-#define	CURSOR_PALETTE2		( 3 )
-#define	FONT_PALETTE_M		( 15 )
-#define	FONT_PALETTE_S		( 15 )
-
 // 文字色
 #define	FCOL_MP15WN		( PRINTSYS_LSB_Make(15,2,0) )
-#define	FCOL_MP15BLN	( PRINTSYS_LSB_Make(5,6,0) )
-#define	FCOL_MP15RN		( PRINTSYS_LSB_Make(3,4,0) )
+//#define	FCOL_MP15BLN	( PRINTSYS_LSB_Make(5,6,0) )
+//#define	FCOL_MP15RN		( PRINTSYS_LSB_Make(3,4,0) )
+#define	FCOL_WP05WN		( PRINTSYS_LSB_Make(1,2,0) )
+#define	FCOL_WP05BLN	( PRINTSYS_LSB_Make(3,4,0) )
+#define	FCOL_WP05RN		( PRINTSYS_LSB_Make(5,6,0) )
 
 
 // OBJ INDEX

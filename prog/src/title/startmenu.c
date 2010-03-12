@@ -140,8 +140,6 @@ enum {
 
 typedef int (*pSTARTMENU_FUNC)(START_MENU_WORK*);
 
-#define	BGPAL_VER_WHITE		( 4 )			// ホワイトの場合の背景パレット番号
-
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -1202,7 +1200,7 @@ static void LoadBgGraphic(void)
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_STARTMENU, HEAPID_STARTMENU_L );
 
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_startmenu_bgu_NCLR, PALTYPE_MAIN_BG, 0, 0x20*5, HEAPID_STARTMENU );
+		ah, NARC_startmenu_bgu_NCLR, PALTYPE_MAIN_BG, 0, 0x20*6, HEAPID_STARTMENU );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_startmenu_bgu_lz_NCGR, GFL_BG_FRAME2_M, 0, 0, TRUE, HEAPID_STARTMENU );
 	GFL_ARCHDL_UTIL_TransVramScreen(
@@ -1210,7 +1208,7 @@ static void LoadBgGraphic(void)
 		GFL_BG_FRAME3_M, 0, 0, TRUE, HEAPID_STARTMENU );
 
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_startmenu_bgd_NCLR, PALTYPE_SUB_BG, 0, 0x20*5, HEAPID_STARTMENU );
+		ah, NARC_startmenu_bgd_NCLR, PALTYPE_SUB_BG, 0, 0x20*6, HEAPID_STARTMENU );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_startmenu_bgd_lz_NCGR, GFL_BG_FRAME1_S, 0, 0, TRUE, HEAPID_STARTMENU );
 	GFL_ARCHDL_UTIL_TransVramScreen(
@@ -1347,16 +1345,16 @@ static void InitBmp( START_MENU_WORK * wk )
 	// 項目文字列描画
 	// 続きから始める
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_01_01 );
-	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_TITLE], wk->que, 0, 4, str, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_TITLE], wk->que, 0, 4, str, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 	// 主人公名
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_01_06 );
 	WORDSET_RegisterPlayerName( wk->wset, 0, wk->mystatus );
 	WORDSET_ExpandStr( wk->wset, wk->exp, str );
 	if( MyStatus_GetMySex( wk->mystatus ) == PM_MALE ){
-		PRINT_UTIL_PrintColor( &wk->util[BMPWIN_NAME], wk->que, 0, 0, wk->exp, wk->font, FCOL_MP15BLN );
+		PRINT_UTIL_PrintColor( &wk->util[BMPWIN_NAME], wk->que, 0, 0, wk->exp, wk->font, FCOL_WP05BLN );
 	}else{
-		PRINT_UTIL_PrintColor( &wk->util[BMPWIN_NAME], wk->que, 0, 0, wk->exp, wk->font, FCOL_MP15RN );
+		PRINT_UTIL_PrintColor( &wk->util[BMPWIN_NAME], wk->que, 0, 0, wk->exp, wk->font, FCOL_WP05RN );
 	}
 	GFL_STR_DeleteBuffer( str );
 	// 場所
@@ -1372,7 +1370,7 @@ static void InitBmp( START_MENU_WORK * wk )
 		WORDSET_RegisterPlaceName( wk->wset, 0, num );
 	}
 	WORDSET_ExpandStr( wk->wset, wk->exp, str );
-	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_PLACE], wk->que, 0, 0, wk->exp, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_PLACE], wk->que, 0, 0, wk->exp, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 	// プレイ時間
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_01_03 );
@@ -1382,7 +1380,7 @@ static void InitBmp( START_MENU_WORK * wk )
 		WORDSET_RegisterNumber( wk->wset, 1, PLAYTIME_GetMinute(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wk->wset, wk->exp, str );
-	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_TIME], wk->que, 0, 0, wk->exp, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_TIME], wk->que, 0, 0, wk->exp, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 	// 図鑑
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_01_04 );
@@ -1391,7 +1389,7 @@ static void InitBmp( START_MENU_WORK * wk )
 		WORDSET_RegisterNumber( wk->wset, 0, num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wk->wset, wk->exp, str );
-	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_ZUKAN], wk->que, 0, 0, wk->exp, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_ZUKAN], wk->que, 0, 0, wk->exp, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 	// バッジ
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_01_05 );
@@ -1400,36 +1398,36 @@ static void InitBmp( START_MENU_WORK * wk )
 		WORDSET_RegisterNumber( wk->wset, 0, num, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wk->wset, wk->exp, str );
-	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_BADGE], wk->que, 0, 0, wk->exp, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_BADGE], wk->que, 0, 0, wk->exp, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 
 	// 最初から始める
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_02 );
-	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_START], wk->que, 0, 4, str, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_START], wk->que, 0, 4, str, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 	// 不思議な贈り物
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_03 );
-	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_HUSHIGI], wk->que, 0, 4, str, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_HUSHIGI], wk->que, 0, 4, str, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 	// バトル大会
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_05 );
-	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_BATTLE], wk->que, 0, 4, str, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_BATTLE], wk->que, 0, 4, str, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 	// ゲームシンク設定
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_06 );
-	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_GAMESYNC], wk->que, 0, 4, str, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_GAMESYNC], wk->que, 0, 4, str, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 	// Wi-Fi設定
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_04 );
-	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_WIFI], wk->que, 0, 4, str, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_WIFI], wk->que, 0, 4, str, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 	// マイクテスト
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_08 );
-	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_MIC], wk->que, 0, 4, str, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_MIC], wk->que, 0, 4, str, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 	// 転送マシンを使う
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_07 );
-	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_MACHINE], wk->que, 0, 4, str, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_MACHINE], wk->que, 0, 4, str, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 }
 
@@ -2218,19 +2216,19 @@ static void PutNewGameWarrning( START_MENU_WORK * wk )
 
 	// 注意
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ATTENTION_06 );
-	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, NEW_GAME_WARRNING_ATTENTION_PY, str, wk->font, FCOL_MP15RN );
+	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, NEW_GAME_WARRNING_ATTENTION_PY, str, wk->font, FCOL_WP05RN );
 	GFL_STR_DeleteBuffer( str );
 	// 文章
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ATTENTION_07 );
-	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, NEW_GAME_WARRNING_MESSAGE_PY, str, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, NEW_GAME_WARRNING_MESSAGE_PY, str, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 	// Ａ
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ATTENTION_08 );
-	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, NEW_GAME_WARRNING_A_BUTTON_PY, str, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, NEW_GAME_WARRNING_A_BUTTON_PY, str, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 	// Ｂ
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ATTENTION_09 );
-	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, NEW_GAME_WARRNING_B_BUTTON_PY, str, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, NEW_GAME_WARRNING_B_BUTTON_PY, str, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 
 	GFL_BMPWIN_MakeScreen( wk->utilWin.win );
@@ -2304,11 +2302,11 @@ static void PutContinueInfo( START_MENU_WORK * wk )
 
 	// 注意
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ATTENTION_04 );
-	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, CONTINUE_INFO_ATTENTION_PY, str, wk->font, FCOL_MP15RN );
+	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, CONTINUE_INFO_ATTENTION_PY, str, wk->font, FCOL_WP05RN );
 	GFL_STR_DeleteBuffer( str );
 	// 文章
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ATTENTION_05 );
-	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, CONTINUE_INFO_MESSAGE_PY, str, wk->font, FCOL_MP15WN );
+	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, CONTINUE_INFO_MESSAGE_PY, str, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 
 	GFL_BMPWIN_MakeScreen( wk->utilWin.win );
