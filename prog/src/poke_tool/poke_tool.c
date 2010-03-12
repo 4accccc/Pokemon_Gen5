@@ -3692,3 +3692,16 @@ void POKETOOL_CopyPPtoPP( POKEMON_PARAM* pp_src, POKEMON_PARAM* pp_dst )
   *pp_dst = *pp_src;
 }
 
+//==================================================================
+/**
+ * アイテムナンバーからタイプを取得
+ *
+ * @param   item アイテムナンバー
+ *
+ * @retval  PokeType
+ */
+//==================================================================
+PokeType  POKETOOL_GetPokeTypeFromItem( u16 item )
+{ 
+  return get_type_from_item( item );
+}
