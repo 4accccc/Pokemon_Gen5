@@ -72,6 +72,29 @@ typedef struct{
   STRBUF*   no_msg;     //NOに相当するメッセージ
 }BTLV_INPUT_YESNO_PARAM;
 
+enum
+{ 
+  BTLV_INPUT_BR_SEL_REW = 0,  //巻き戻し
+  BTLV_INPUT_BR_SEL_FF,       //早送り
+  BTLV_INPUT_BR_SEL_STOP,     //停止
+};
+
+typedef enum
+{ 
+  BTLV_INPUT_BR_STOP_NONE = 0,
+  BTLV_INPUT_BR_STOP_KEY,         //キーによる中断
+  BTLV_INPUT_BR_STOP_BREAK,       //データ破壊による中断
+  BTLV_INPUT_BR_STOP_OVER,        //録画時間オーバーによる中断
+}BTLV_INPUT_BR_STOP_FLAG;
+
+//バトルレコーダー画面構成用のSceneワーク
+typedef struct{
+  int                       play_chapter;   //上画面で再生中のチャプタ
+  int                       view_chapter;   //下画面に表示するチャプタ
+  int                       max_chapter;    //総チャプタ数
+  BTLV_INPUT_BR_STOP_FLAG   stop_flag;      //再生停止フラグ
+}BTLV_INPUT_BATTLE_RECORDER_PARAM;
+
 typedef enum
 {
   BTLV_INPUT_CENTER_BUTTON_ESCAPE = FALSE,
@@ -111,6 +134,7 @@ typedef enum
   BTLV_INPUT_SCRTYPE_DIR,
   BTLV_INPUT_SCRTYPE_YES_NO,
   BTLV_INPUT_SCRTYPE_ROTATE,
+  BTLV_INPUT_SCRTYPE_BATTLE_RECORDER,
 
   BTLV_INPUT_SCRTYPE_MAX,
 }BTLV_INPUT_SCRTYPE;

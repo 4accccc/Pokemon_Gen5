@@ -61,10 +61,11 @@
 #define STANDBY_FADE_COLOR  ( 0x0842 )
 
 //PP表示用カラー定義
-#define MSGCOLOR_PP_WHITE   ( PRINTSYS_LSB_Make( 1, 2, 0 ) )
-#define MSGCOLOR_PP_YELLOW  ( PRINTSYS_LSB_Make( 3, 4, 0 ) )
-#define MSGCOLOR_PP_ORANGE  ( PRINTSYS_LSB_Make( 5, 6, 0 ) )
-#define MSGCOLOR_PP_RED     ( PRINTSYS_LSB_Make( 7, 8, 0 ) )
+#define MSGCOLOR_PP_WHITE   ( PRINTSYS_LSB_Make( 1,  2, 0 ) )
+#define MSGCOLOR_PP_YELLOW  ( PRINTSYS_LSB_Make( 3,  4, 0 ) )
+#define MSGCOLOR_PP_ORANGE  ( PRINTSYS_LSB_Make( 5,  6, 0 ) )
+#define MSGCOLOR_PP_RED     ( PRINTSYS_LSB_Make( 7,  8, 0 ) )
+#define MSGCOLOR_PP_GREEN   ( PRINTSYS_LSB_Make( 9, 10, 0 ) )
 
 //TCB_TransformStandby2Command
 #define TTS2C_SCROLL_COUNT ( 8 )
@@ -390,6 +391,20 @@ enum
   ROTATE_SCROLL_SPEED = 64 / ROTATE_SCROLL_COUNT,
 };
 
+enum
+{ 
+  BR_PLAY_CHAPTER_X = 11 * 8 + 4,
+  BR_PLAY_CHAPTER_Y =  1 * 8,
+  BR_MAX_CHAPTER_X  = 17 * 8 + 4,
+  BR_MAX_CHAPTER_Y  =  1 * 8,
+  BR_SLASH_X        = 15 * 8 + 4,
+  BR_SLASH_Y        =  1 * 8,
+  BR_MESSAGE_X      =  3 * 8,
+  BR_MESSAGE_Y      =  7 * 8,
+
+  BUFLEN_BR_CHAPTER = ( 3 * GLOBAL_MSGLEN + BUFLEN_EOM_SIZE ),
+};
+
 static  const GFL_CLACTPOS pokeicon_pos[ BTLV_INPUT_POKEICON_MAX ] =
 {
   { ROTATE_POKEICON_X0, ROTATE_POKEICON_Y0 },
@@ -616,6 +631,7 @@ static  void  TCB_TransformCommand2Standby( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work );
+static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work );
 
 static  void  SetupScaleChange( BTLV_INPUT_WORK* biw, fx32 start_scale, fx32 end_scale, fx32 scale_speed, int pos_y );
 static  void  TCB_ScaleChange( GFL_TCB* tcb, void* work );
@@ -639,6 +655,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
 static  void  BTLV_INPUT_CreateYesNoScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_YESNO_PARAM *biyp );
 static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_CreateRotatePokeIcon( BTLV_INPUT_WORK* biw );
+static  void  BTLV_INPUT_CreateBattleRecorderScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_BATTLE_RECORDER_PARAM *bibrp );
 static  void  BTLV_INPUT_ClearScreen( BTLV_INPUT_WORK* biw );
 static  PRINTSYS_LSB  PP_FontColorGet( int pp, int pp_max );
 static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp );
@@ -650,6 +667,7 @@ static  void  BTLV_INPUT_DeleteBallGauge( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_CreateCursorOBJ( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_DeleteCursorOBJ( BTLV_INPUT_WORK* biw );
 static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, int hit );
+static  int   BTLV_INPUT_CheckKeyBR( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl );
 static  int   BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int pltt );
 static  void  TCB_ButtonReaction( GFL_TCB* tcb, void* work );
@@ -1213,6 +1231,33 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Rotate, ttw, 1 );
     }
     break;
+  case BTLV_INPUT_SCRTYPE_BATTLE_RECORDER:
+    {
+      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+      BTLV_INPUT_BATTLE_RECORDER_PARAM* bibrp = ( BTLV_INPUT_BATTLE_RECORDER_PARAM * )param;
+      int i;
+
+      for( i = 0 ; i < 3 ; i++ )
+      {
+        biw->button_exist[ i ] = 1;
+      }
+
+      BTLV_INPUT_CreateBattleRecorderScreen( biw, bibrp );
+
+      if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
+      { 
+        biw->tcb_execute_flag = 1;
+        ttw->biw = biw;
+        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2BattleRecorder, ttw, 1 );
+      }
+      else
+      { 
+        GFL_BMPWIN_MakeScreen( biw->bmp_win );
+        GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+        GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
+      }
+    }
+    break;
   default:
     //ありえないSCRTYPEが指定されている
     GF_ASSERT( 0 );
@@ -1294,6 +1339,39 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   GF_ASSERT( tp_tbl != NULL );
   GF_ASSERT( key_tbl != NULL );
 
+  //バトルレコーダーは、別判定をする
+  if( biw->scr_type == BTLV_INPUT_SCRTYPE_BATTLE_RECORDER )
+  { 
+    hit = GFL_UI_TP_HitTrg( tp_tbl->hit_tbl );
+    if( hit != GFL_UI_TP_HIT_NONE )
+    {
+      if( biw->button_exist[ hit ] == FALSE )
+      {
+        hit = GFL_UI_TP_HIT_NONE;
+      }
+      else
+      {
+        if( hit == BTLV_INPUT_BR_SEL_STOP )
+        {
+          SePlayCancel( biw );
+        }
+        else
+        {
+          SePlayDecide( biw );
+        }
+      }
+    }
+    else
+    { 
+      hit = BTLV_INPUT_CheckKeyBR( biw );
+    }
+    if( hit != GFL_UI_TP_HIT_NONE )
+    { 
+      hit = BTLV_INPUT_SetButtonReaction( biw, hit, tp_tbl->button_pltt[ hit ] );
+    }
+    return hit;
+  }
+
   hit = hit_tp = GFL_UI_TP_HitTrg( tp_tbl->hit_tbl );
   hit = BTLV_INPUT_CheckKey( biw, tp_tbl, key_tbl, hit );
 
@@ -1320,7 +1398,6 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   }
   if( hit != GFL_UI_TP_HIT_NONE )
   { 
-    OS_TPrintf("hit:%d\n",hit);
     hit = BTLV_INPUT_SetButtonReaction( biw, hit, tp_tbl->button_pltt[ hit ] );
     //カメラワークエフェクト
     BTLV_EFFECT_Stop();
@@ -1903,6 +1980,50 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      ttw->biw->tcb_execute_flag = 0;
+      GFL_HEAP_FreeMemory( ttw );
+      GFL_TCB_DeleteTask( tcb );
+    }
+    break;
+  }
+}
+
+//============================================================================================
+/**
+ *  @brief  下画面変形タスク（スタンバイ→バトルレコーダー）
+ */
+//============================================================================================
+static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
+{ 
+  TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
+
+  switch( ttw->seq_no ){
+  case 0:
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0f_NSCR,
+                                     GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1f_NSCR,
+                                     GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
+    PMSND_PlaySE( SEQ_SE_OPEN2 );
+    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
+    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
+    SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
+    ttw->seq_no++;
+    break;
+  case 1:
+  default:
+    if( ttw->biw->tcb_execute_count == 0 )
+    {
+      GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
+      GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+      GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
+      GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+      GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+      GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
       ttw->biw->tcb_execute_flag = 0;
       GFL_HEAP_FreeMemory( ttw );
       GFL_TCB_DeleteTask( tcb );
@@ -2913,6 +3034,79 @@ static  void  BTLV_INPUT_CreateRotatePokeIcon( BTLV_INPUT_WORK* biw )
 
 //--------------------------------------------------------------
 /**
+ * @brief   バトルレコーダー画面BG生成
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_CreateBattleRecorderScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_BATTLE_RECORDER_PARAM *bibrp )
+{ 
+  STRBUF *chapter_p;
+  STRBUF *chapter_src;
+  STRBUF *msg_src;
+  WORDSET *wordset;
+  PRINTSYS_LSB color;
+
+  wordset = WORDSET_Create( biw->heapID );
+  chapter_p = GFL_STR_CreateBuffer( BUFLEN_BR_CHAPTER, biw->heapID );
+  chapter_src = GFL_MSG_CreateString( biw->msg,  BI_BattleRecorderChapter );
+
+  {
+    u8 letter, shadow, back;
+
+    GFL_FONTSYS_GetColor( &letter, &shadow, &back );
+    GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( MSGCOLOR_PP_GREEN ),
+                          PRINTSYS_LSB_GetS( MSGCOLOR_PP_GREEN ),
+                          PRINTSYS_LSB_GetB( MSGCOLOR_PP_GREEN ) );
+    WORDSET_RegisterNumber(wordset, 0, bibrp->max_chapter,  3, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU );
+    WORDSET_ExpandStr(wordset, chapter_p, chapter_src);
+    PRINTSYS_Print( biw->bmp_data, BR_MAX_CHAPTER_X, BR_MAX_CHAPTER_Y, chapter_p, biw->font );
+
+    if( bibrp->play_chapter != bibrp->view_chapter )
+    { 
+      GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( MSGCOLOR_PP_RED ),
+                            PRINTSYS_LSB_GetS( MSGCOLOR_PP_RED ),
+                            PRINTSYS_LSB_GetB( MSGCOLOR_PP_RED ) );
+    }
+
+    WORDSET_RegisterNumber(wordset, 0, bibrp->view_chapter, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU );
+    WORDSET_ExpandStr(wordset, chapter_p, chapter_src);
+    PRINTSYS_Print( biw->bmp_data, BR_PLAY_CHAPTER_X, BR_PLAY_CHAPTER_Y, chapter_p, biw->font );
+
+    GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( MSGCOLOR_PP_WHITE ),
+                          PRINTSYS_LSB_GetS( MSGCOLOR_PP_WHITE ),
+                          PRINTSYS_LSB_GetB( MSGCOLOR_PP_WHITE ) );
+
+    msg_src = GFL_MSG_CreateString( biw->msg,  BI_BattleRecorderChapterSlash );
+    PRINTSYS_Print( biw->bmp_data, BR_SLASH_X, BR_SLASH_Y, msg_src, biw->font );
+    GFL_STR_DeleteBuffer( msg_src );
+
+    GFL_FONTSYS_SetColor( letter, shadow, back );
+  }
+
+  switch( bibrp->stop_flag ){ 
+  case BTLV_INPUT_BR_STOP_KEY:    //キーによる中断
+  case BTLV_INPUT_BR_STOP_BREAK:  //データ破壊による中断
+  case BTLV_INPUT_BR_STOP_OVER:   //録画時間オーバーによる中断
+    GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( MSGCOLOR_PP_WHITE ),
+                          PRINTSYS_LSB_GetS( MSGCOLOR_PP_WHITE ),
+                          PRINTSYS_LSB_GetB( MSGCOLOR_PP_WHITE ) );
+    msg_src = GFL_MSG_CreateString( biw->msg,  BI_BattleRecorderStopKey + bibrp->stop_flag - 1 );
+    PRINTSYS_Print( biw->bmp_data, BR_MESSAGE_X, BR_MESSAGE_Y, msg_src, biw->font );
+    GFL_STR_DeleteBuffer( msg_src );
+    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X1 );
+    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y1 );
+    /*fall thru*/
+  case BTLV_INPUT_BR_STOP_NONE:
+  default:
+    break;
+  }
+
+  WORDSET_Delete( wordset );
+  GFL_STR_DeleteBuffer( chapter_src );
+  GFL_STR_DeleteBuffer( chapter_p );
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   画面クリア（画面推移時に消さなければならないスクリーンを消す）
  */
 //--------------------------------------------------------------
@@ -3471,6 +3665,32 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
   }
 
   return hit;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   キー操作チェック（バトルレコーダー専用）
+ *
+ * @param[in] biw     システム管理構造体のポインタ
+ */
+//--------------------------------------------------------------
+static  int   BTLV_INPUT_CheckKeyBR( BTLV_INPUT_WORK* biw )
+{
+  int rp = GFL_UI_KEY_GetRepeat();
+
+  if( rp & PAD_BUTTON_B )
+  { 
+    return BTLV_INPUT_BR_SEL_STOP;
+  }
+  else if( rp & PAD_KEY_LEFT )
+  { 
+    return BTLV_INPUT_BR_SEL_REW;
+  }
+  else if( rp & PAD_KEY_RIGHT )
+  { 
+    return BTLV_INPUT_BR_SEL_FF;
+  }
+  return GFL_UI_TP_HIT_NONE;
 }
 
 //--------------------------------------------------------------
