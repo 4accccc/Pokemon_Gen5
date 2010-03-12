@@ -284,8 +284,6 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
     work->isFinishSync = TRUE;
     //PLIST_COMM_InitComm( work );
     
-    //‚±‚Ìê‡’†‚Å‘€ì‚·‚é‚Ì‚Å
-    work->plData->comm_selected_num = 0;
   }
   else
   {

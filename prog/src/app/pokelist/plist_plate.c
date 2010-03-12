@@ -173,7 +173,6 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POK
                       &work->plateScrData->rawData , 
                       PLATE_SCR_POS_ARR[(idx==0?0:1)][0] , PLATE_SCR_POS_ARR[(idx==0?0:1)][1] ,
                       32 , 32 );  //←グラフィックデータのサイズ
-  PLIST_PLATE_ChangeColor( work , plateWork , PPC_NORMAL );
   
   plateWork->isEgg =  PP_Get( plateWork->pp , ID_PARA_tamago_flag , NULL );
 
@@ -215,7 +214,9 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POK
       plateWork->btlOrder = i;
     }
   }
-
+  
+  PLIST_PLATE_SetActivePlate( work , plateWork , FALSE );
+  //PLIST_PLATE_ChangeColor( work , plateWork , PPC_NORMAL );
   PLIST_PLATE_DrawParamMain( work , plateWork );
   return plateWork;
 }
