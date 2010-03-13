@@ -291,7 +291,7 @@
 #define FE_SEA_TEMPLE_FLASH                275 /* 0x0113 海底遺跡ギミック：特定の場所でフラッシュを使った */
 #define FE_D03R0101_ITEMGET_01             276 /* 0x0114 リゾートデザート：アイテム入手フラグ（じてんしゃ） */
 #define FE_D04R0101_ARRIVE                 277 /* 0x0115 古代の城：到着フラグ（イベントでのみ使用） */
-		/* not used   278(0x0116) */
+#define FE_R08R0101_LEG_FIRST              278 /* 0x0116 セッカ湿原：ダルタニスの技習得イベントの初回判定フラグ */
 		/* not used   279(0x0117) */
 		/* not used   280(0x0118) */
 		/* not used   281(0x0119) */
@@ -719,7 +719,7 @@
 #define FV_R08R0101_POKE6                  695 /* 0x02b7 セッカ湿原：ダルタニスイベントのアラミス */
 #define FV_R08R0101_POKE11                 696 /* 0x02b8 セッカ湿原：ダルタニスイベントのダルタニス */
 #define FV_C04R0601_POS_HAKASE             697 /* 0x02b9 ライモンシティ４番道路側ゲート：博士とライバル */
-		/* not used   698(0x02ba) */
+#define FV_R08R0101_OLDMAN1                698 /* 0x02ba セッカ湿原：事情通の老人 */
 		/* not used   699(0x02bb) */
 		/* not used   700(0x02bc) */
 		/* not used   701(0x02bd) */
