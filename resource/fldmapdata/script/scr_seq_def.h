@@ -8162,6 +8162,26 @@
     .short  \ret_wk
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def  _PDW_POSTMAN_REQUEST
+ * @brief PDW配達員用コマンド
+ * @param req     リクエストID
+ * @param ret_wk  戻り値
+ *
+ * @note
+ * パレスに配置されるPDW配達員専用です。通常は使用しないでください。
+ */
+//--------------------------------------------------------------
+#define _PDW_POSTMAN_REQUEST( req, ret_wk ) \
+    _ASM_PDW_POSTMAN_REQUEST req, ret_wk
+
+    .macro  _ASM_PDW_POSTMAN_REQUEST req, ret_wk
+    .short  EV_SEQ_PDW_POSTMAN_REQUEST
+    .short  \req
+    .short  \ret_wk
+    .endm
+
 //======================================================================
 //
 //    WFBC関連
@@ -8765,6 +8785,30 @@
     .macro  _ASM_SXY_MOVE_EXIT_EVENT exit_id, gx, gy, gz
     .short  EV_SEQ_MOVE_EXIT_EVENT_POS
     .short  \exit_id
+    .short  \gx
+    .short  \gy
+    .short  \gz
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SXY_MOVE_NPC_POS
+ * @brief NPCの初期位置を変更する
+ * @param npc_id  NPCを指定するためのID
+ * @param gx      X位置（グリッド単位）
+ * @param gy      Y位置（グリッド単位）
+ * @param gz      Z位置（グリッド単位）
+ *
+ * _ZONE_CHANGE_LABELのタイミング以外で使用しても、
+ * このコマンドで変更したデータが参照されないため意味がない。
+ */
+//--------------------------------------------------------------
+#define _SXY_MOVE_NPC_POS( npc_id, gx, gy, gz ) \
+    _ASM_SXY_MOVE_NPC_POS npc_id, gx, gy, gz
+
+    .macro  _ASM_SXY_MOVE_NPC_POS npc_id, gx, gy, gz
+    .short  EV_SEQ_MOVE_NPC_DATA_POS
+    .short  \npc_id
     .short  \gx
     .short  \gy
     .short  \gz
