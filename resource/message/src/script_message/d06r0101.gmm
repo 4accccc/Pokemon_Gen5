@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-11T21:49:16"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T21:39:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -584,7 +584,7 @@
 ポケモンのこと　調べているの▼
 ポケモン図鑑を
 お持ちの　トレーナーさん！▼
-アナタも　ほらあなの　なか
+アナタも　洞穴の　中
 たくさんの　ポケモンと　出会ってね！</language>
 	</row>
 
@@ -599,7 +599,7 @@
 たくさんの　ポケモンと　であってね！</language>
 		<language name="JPN_KANJI" width="256">アララギ『ポケモン図鑑を
 お持ちの　トレーナーさん！▼
-アナタも　ほらあなの　なか
+アナタも　洞穴の　中
 たくさんの　ポケモンと　出会ってね！</language>
 	</row>
 
@@ -717,15 +717,15 @@
 　d06r0101出口付近のNイベント発生まで
 　繰り返し表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『アタシは
-ここで　ポケモン　つかまえるつもり！▽
+		<language name="JPN" width="256">ベル『アタシは　ここでも
+ポケモン　つかまえるつもり！▽
 だって　たびは　であい　なんだもん！</language>
-		<language name="JPN_KANJI" width="256">ベル『アタシは
-ここで　ポケモン　捕まえるつもり！▽
+		<language name="JPN_KANJI" width="256">ベル『アタシは　ここでも
+ポケモン　捕まえるつもり！▽
 だって　旅は　出会い　なんだもん！</language>
 	</row>
 
-	<row id="msg_d06r0101_ninja_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_d06r0101_ninja_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・pos（GRIDX=38、GRIDZ=41~42）を踏むと
 　主人公を囲むようにダークトリニティ3人出現
@@ -738,15 +738,21 @@
 ……　……　来い▼</language>
 	</row>
 
-	<row id="msg_d06r0101_ninja_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#c0c0c0,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d06r0101_ninja_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・上記の所定位置につくと
 　メッセージ表示後に3人を削除</comment>
 		<attribute name="キャラ指定">ダークトリニティ</attribute>
 		<language name="JPN" width="256">……　……　……▼
-……　……　したにおりろ▼</language>
+……　……　このさきに
+したに　おりる　かいだんが　ある▼
+そこで　プラズマだんが
+おまえを　まちかまえている▼</language>
 		<language name="JPN_KANJI" width="256">……　……　……▼
-……　……　したにおりろ▼</language>
+……　……　この先に
+下りの　階段が　ある▼
+そこで　プラズマ団が
+おまえを　待ち構えている▼</language>
 	</row>
 
 	<row id="msg_d06r0101_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
