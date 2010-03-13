@@ -1113,16 +1113,28 @@ static BOOL checkTouchPanelEventCont(SOUNDTEST_WORK* sw)
 
   case SNDTEST_TPEV_BGM_NUMDOWN1:
     numberDec(sw, NOIDX_BGMNO, PMSND_BGM_START, 1);
+    if((sw->setNo[NOIDX_BGMNO] < PMSND_ME_START)&&(sw->setNo[NOIDX_BGMNO] > PMSND_BGM_END)){
+			sw->setNo[NOIDX_BGMNO] =  PMSND_BGM_END - 1;
+		}
     break;
   case SNDTEST_TPEV_BGM_NUMDOWN10:
     numberDec(sw, NOIDX_BGMNO, PMSND_BGM_START, 10);
+    if((sw->setNo[NOIDX_BGMNO] < PMSND_ME_START)&&(sw->setNo[NOIDX_BGMNO] > PMSND_BGM_END)){
+			sw->setNo[NOIDX_BGMNO] =  PMSND_BGM_END - 1;
+		}
     break;
 
   case SNDTEST_TPEV_BGM_NUMUP1:
-    numberInc(sw, NOIDX_BGMNO, PMSND_BGM_END, 1);
+    numberInc(sw, NOIDX_BGMNO, PMSND_ME_END, 1);
+    if((sw->setNo[NOIDX_BGMNO] < PMSND_ME_START)&&(sw->setNo[NOIDX_BGMNO] > PMSND_BGM_END)){
+			sw->setNo[NOIDX_BGMNO] =  PMSND_ME_START;
+		}
     break;
   case SNDTEST_TPEV_BGM_NUMUP10:
-    numberInc(sw, NOIDX_BGMNO, PMSND_BGM_END, 10);
+    numberInc(sw, NOIDX_BGMNO, PMSND_ME_END, 10);
+    if((sw->setNo[NOIDX_BGMNO] < PMSND_ME_START)&&(sw->setNo[NOIDX_BGMNO] > PMSND_BGM_END)){
+			sw->setNo[NOIDX_BGMNO] =  PMSND_ME_START;
+		}
     break;
 
   case SNDTEST_TPEV_VOICE_NUMDOWN1:
