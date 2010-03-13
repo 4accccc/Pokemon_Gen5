@@ -465,7 +465,7 @@ static void APP_TASKMENU_UpdateKey( APP_TASKMENU_WORK *work )
   const int trg = GFL_UI_KEY_GetTrg();
   const int repeat = GFL_UI_KEY_GetRepeat();
 
-  if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH && !(trg&PAD_BUTTON_B)   )
   {
     if( trg & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_A|PAD_BUTTON_B) )
     {

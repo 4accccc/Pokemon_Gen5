@@ -62,7 +62,6 @@ FS_EXTERN_OVERLAY(ui_common);
 //-------------------------------------
 /// 切り替えマクロ
 //=====================================
-#define CONFIG_KEY_TOUCH  //キーとタッチの読み替えON
 
 //-------------------------------------
 /// パレット
@@ -2241,7 +2240,7 @@ static void UI_Main( UI_WORK *p_wk )
   { 
     if( GFL_UI_KEY_GetTrg() )
     { 
-      if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH && !(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_B|PAD_BUTTON_Y|PAD_BUTTON_X) ) )
       {
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         p_wk->input = UI_INPUT_KEY;
@@ -2280,14 +2279,17 @@ static void UI_Main( UI_WORK *p_wk )
     }
     else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
     {
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
       p_wk->input = UI_INPUT_TRG_CANCEL;
     }
     else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
     {
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
       p_wk->input = UI_INPUT_TRG_Y;
     }
     else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
     {
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY ); 
       p_wk->input = UI_INPUT_TRG_X;
     }
   }
@@ -3083,6 +3085,10 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       PMSND_PlaySE( CONFIG_SE_MOVE );
       p_wk->select  = MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_CANCEL );
     }
+    break;
+
+  case UI_INPUT_TRG_Y:
+    Scroll_ChangePlt( p_wk, TRUE );
     break;
 
   case UI_INPUT_TRG_DECIDE:
