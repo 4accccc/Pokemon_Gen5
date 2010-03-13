@@ -139,6 +139,7 @@ struct _PROCLINK_WORK
   u8                        sel_poke; //メール画面で引き継げないので用意
   u8                        item_no;  //メール画面で引き継げないので用意
   PROCLINK_TAKEOVER_MODE    mode;     //メール画面で引き継げないので用意
+  BOOL                      is_shortcut;  //ポケリスト画面の初期化で設定し、破棄で使用
 };
 
 
@@ -743,6 +744,15 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
   plistData->wazaLearnBit = 0xFF;
   plistData->zone_id    = GAMEDATA_GetMyPlayerWork(gmData)->zoneID; 
 
+  if( param == PL_MODE_ITEMUSE )
+  { 
+    //ショートカットからよばれた＝グラシデアのはな
+    plistData->ret_sel  = 0;
+    plistData->mode     = PL_MODE_ITEMUSE;
+    plistData->item     = ITEM_GURASIDEANOHANA;
+    wk->is_shortcut   = TRUE;
+  }
+  else
   if( pre == EVENT_PROCLINK_CALL_POKELIST )
   { 
     //初回時だったら
@@ -886,6 +896,22 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_
   const PLIST_DATA *plData = param_adrs;
   
   wk->param->select_poke  = plData->ret_sel;
+
+  //Yボタンメニューから着ていたら、
+  //戻りモードを無視して戻る
+  if( wk->is_shortcut == TRUE )
+  { 
+    if(plData->ret_sel == PL_SEL_POS_EXIT2)
+    {
+      return RETURNFUNC_RESULT_EXIT;
+    }
+    else
+    { 
+      return RETURNFUNC_RESULT_RETURN;
+    }
+  }
+
+
   switch( plData->ret_mode )
   {
   case PL_RET_NORMAL:      // 通常

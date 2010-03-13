@@ -30,18 +30,12 @@
 
 //プロセス（主に起動時モードのため）
 #include "app/zukan.h"
+#include "app/pokelist.h"
 
 //スクリプトイベント呼び出しのため
 #include "field/script.h"
 #include "field/script_local.h"
 #include "../../../resource/fldmapdata/script/common_scr_def.h" //SCRID_～
-//#include "./event_fieldmap_control.h"
-//#include "./event_gpower.h"
-
-//#include "sound/pm_sndsys.h"
-//#include "sound/wb_sound_data.sadl"
-
-//#include "system/main.h"      //GFL_HEAPID_APP参照
 
 //セーブデータ
 #include "savedata/shortcut.h"
@@ -550,6 +544,10 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
 	case SHORTCUT_ID_DOWSINGMACHINE:		//ダウジングマシン
 		p_param->select_param	= EVENT_ITEMUSE_CALL_DOWSINGMACHINE;
 		return CALLTYPE_ITEM;
+	case SHORTCUT_ID_GURASHIDEA:		//グラシデアの花
+		p_param->select_param	= EVENT_PROCLINK_CALL_POKELIST;
+		p_param->data	= PL_MODE_ITEMUSE;
+		return CALLTYPE_PROC;
   case SHORTCUT_ID_PSTATUS_STATUS:		//ポケモン情報＞ステータス
 		p_param->call = EVENT_PROCLINK_CALL_STATUS;
 		p_param->data	= PPT_INFO;
@@ -610,6 +608,9 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
 		p_param->call = EVENT_PROCLINK_CALL_TRAINERCARD;
 		return CALLTYPE_PROC;
 	case SHORTCUT_ID_TRCARD_BACK:			//トレーナーカード＞うらめん
+		p_param->call = EVENT_PROCLINK_CALL_TRAINERCARD;
+		return CALLTYPE_PROC;
+	case SHORTCUT_ID_TRCARD_BADGE:			//トレーナーカード＞バッジ
 		p_param->call = EVENT_PROCLINK_CALL_TRAINERCARD;
 		return CALLTYPE_PROC;
 	case SHORTCUT_ID_CONFIG:						//せってい

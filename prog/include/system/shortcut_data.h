@@ -16,6 +16,7 @@
 //=============================================================================
 //-------------------------------------
 ///	Yボタン登録箇所
+//    (shortcut_menu.gmmで同じならびになるようにしてください)
 //=====================================
 typedef enum
 {
@@ -26,6 +27,7 @@ typedef enum
 	SHORTCUT_ID_FRIENDNOTE,		//友達手帳
 	SHORTCUT_ID_TURIZAO,			//つりざお
 	SHORTCUT_ID_DOWSINGMACHINE,		//ダウジングマシン
+	SHORTCUT_ID_GURASHIDEA,		    //グラシデア
 
 	SHORTCUT_ID_PSTATUS_STATUS,		//ポケモン情報＞ステータス
 	SHORTCUT_ID_PSTATUS_ABILITY,	//ポケモン情報＞のうりょく
@@ -43,6 +45,7 @@ typedef enum
 	SHORTCUT_ID_ZUKAN_FORM,				//ずかん＞詳細・姿
 	SHORTCUT_ID_TRCARD_FRONT,			//トレーナーカード＞ぜんめん
 	SHORTCUT_ID_TRCARD_BACK,			//トレーナーカード＞うらめん
+  SHORTCUT_ID_TRCARD_BADGE,     //トレーナーカード＞バッジ
 	SHORTCUT_ID_CONFIG,						//せってい
 
 
