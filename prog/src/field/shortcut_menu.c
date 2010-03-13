@@ -19,6 +19,7 @@
 
 #include "field_bg_def.h"
 #include "field_oam_pal.h"
+#include "sound/pm_sndsys.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -135,6 +136,14 @@ enum
 	MAINSEQ_CLOSE_START,	//閉じる開始
 	MAINSEQ_CLOSE_WAIT,		//閉じる待ち
 } ;
+
+//-------------------------------------
+///	ショートカットメニューサウンド
+//=====================================
+#define SHORTCUTMENU_SND_SE_DECIDE  (SEQ_SE_DECIDE1)
+#define SHORTCUTMENU_SND_SE_POPUP  (SEQ_SE_SYS_03)
+
+
 
 //=============================================================================
 /**
@@ -455,6 +464,7 @@ void SHORTCUTMENU_Main( SHORTCUTMENU_WORK *p_wk )
 		break;
 
 	case MAINSEQ_OPEN_START:		//開く開始
+    PMSND_PlaySE( SHORTCUTMENU_SND_SE_POPUP );
 		p_wk->cnt	=	0;
 		p_wk->seq	= MAINSEQ_OPEN_WAIT;
 		break;
@@ -731,6 +741,8 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 			u16 pos;
 			BmpMenuList_DirectPosGet( p_wk->p_list, &pos );
 			select	= BmpMenuList_PosParamGet( p_wk->p_list, pos );
+
+      PMSND_PlaySE( SHORTCUTMENU_SND_SE_DECIDE );
 		}
 	}
 
@@ -780,6 +792,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT && p_wk->mode == SCROLL_MOVE_NORMAL )
 	{	
+    PMSND_PlaySE( SHORTCUTMENU_SND_SE_DECIDE );
 		is_move_change	= TRUE;
 	}
 
