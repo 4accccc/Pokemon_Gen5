@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-01T20:04:33"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T16:12:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -360,7 +360,7 @@
 持っていくと　いいさ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c02gym0202_leader_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0202_leader_05">
 		<comment>♀
 ・アイテム入手処理後
 ・続けてmsg_c02gym0202_ad_01表示</comment>
@@ -377,7 +377,7 @@
 強敵も　倒せるんだよ！▼</language>
 	</row>
 
-	<row id="msg_c02gym0202_leader_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0202_leader_06">
 		<comment>♀
 ・msg_d02r0101_leader2_04表示後に
 　再度会話したとき</comment>
@@ -402,7 +402,7 @@
 ２つが　入り混じって　いるからさ</language>
 	</row>
 
-	<row id="msg_c02gym0202_ad_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0202_ad_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・まずメッセージウインドウ表示
 ・主人公たちに！マーク後
@@ -413,7 +413,7 @@
 		<language name="JPN_KANJI" width="256">ママー！！▼</language>
 	</row>
 
-	<row id="msg_c02gym0202_ad_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0202_ad_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　ジムリーダー退場
@@ -447,9 +447,8 @@
 アンタも　おいで！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c02gym0202_bookrack1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ
-・仮メッセージ</comment>
+	<row id="msg_c02gym0202_bookrack1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">本棚</attribute>
 		<language name="JPN" width="256">アロエの　けんきゅうしりょうが
 きそくただしく　つめこまれている！</language>
@@ -457,9 +456,8 @@
 規則正しく　詰め込まれている！</language>
 	</row>
 
-	<row id="msg_c02gym0202_case1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ
-・仮メッセージ</comment>
+	<row id="msg_c02gym0202_case1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">ガラスケース</attribute>
 		<language name="JPN" width="256">アロエの　けんきゅうしりょうの
 ホネなどが　ちんれつ　されている</language>

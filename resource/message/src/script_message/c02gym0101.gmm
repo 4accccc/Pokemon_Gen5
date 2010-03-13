@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-08T14:58:38"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T16:11:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c02gym0101_counter1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02gym0101_counter1_01">
 		<comment>♀
 ・通常時</comment>
 		<attribute name="キャラ指定">受付嬢その１</attribute>
@@ -302,7 +302,7 @@
 シッポウ博物館へ</language>
 	</row>
 
-	<row id="msg_c02gym0101_counter1_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02gym0101_counter1_02">
 		<comment>♀
 ・盗難イベント発生時</comment>
 		<attribute name="キャラ指定">受付嬢その１</attribute>
@@ -314,7 +314,7 @@
 いったい　なにもの　ですか？</language>
 	</row>
 
-	<row id="msg_c02gym0101_counter2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02gym0101_counter2_01">
 		<comment>♀
 ・通常時</comment>
 		<attribute name="キャラ指定">受付嬢その２</attribute>
@@ -324,7 +324,7 @@
 博物館の　奥から　行けます！</language>
 	</row>
 
-	<row id="msg_c02gym0101_counter2_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02gym0101_counter2_02">
 		<comment>♀
 ・盗難イベント発生時</comment>
 		<attribute name="キャラ指定">受付嬢その２</attribute>
@@ -334,13 +334,13 @@
 どうするつもり　でしょう？</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_01" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・初回
 ・受付カウンターを越えたあたりにpos設定
 ・最初標本の前、上向きに鉢
 　posを踏むと下を向き
-　主人公に隣接してmsg_c02gym0101_ad_02
+　主人公に隣接してad_02
 ・ホネ（大）→隕石→石→ジム</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
@@ -350,7 +350,7 @@
 いつみても……　ホレボレしますな▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
@@ -364,7 +364,7 @@
 館内を　案内いたしましょう！▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・骨格標本</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
@@ -383,7 +383,7 @@
 そのまま　カセキに　なったようです▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・隕石</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
@@ -398,11 +398,11 @@
 宇宙エネルギーを　秘めています▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・古い石
-　Wverなら「ダークストーン（黒）」
-　Bverなら「ライトストーン（しろ）」</comment>
+　WHITEverなら「ダークストーン（黒）」
+　BLACKverなら「ライトストーン（しろ）」</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
 		<language name="JPN" width="256">ああ　こちらは
@@ -421,7 +421,7 @@
 展示して　おります▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_06" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・階段付近
 ・続けて、下を向いてから07表示</comment>
@@ -433,7 +433,7 @@
 ポケモンジムと　なっております▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_06a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_ad_06a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジム（予定）……階段付近
 ・ジムバッジ取得まで
@@ -450,7 +450,7 @@
 わたくしの　奥さん　なのです</language>
 	</row>
 
-	<row id="msg_c02gym0101_leader_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02gym0101_leader_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・盗難イベント時、posを踏むとメッセージ表示
 ・プラズマ団を追加配置
@@ -469,7 +469,7 @@
 おふざけは　よしとくれ！！▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_hakaim1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_hakaim1_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・GRIDX=11、GRIDZ=12に配置されたもの
 ・続けてhakaim2_01</comment>
@@ -486,7 +486,7 @@
 ドラゴンの　骨を　いただく▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_hakaim2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_hakaim2_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
  GRIDX=13、GRIDZ=12に配置されたもの
 ・続けてhakaim1_02</comment>
@@ -499,7 +499,7 @@
 あえて　おまえの前で　奪おう▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_hakaim1_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_hakaim1_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてhakaim1_03</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
@@ -507,14 +507,14 @@
 		<language name="JPN_KANJI" width="256">プラズマ団『では　えんまく！▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_hakaim1_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_hakaim1_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>・サブウインドウで表示</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
 		<language name="JPN" width="256">プラ～ズマ～</language>
 		<language name="JPN_KANJI" width="256">プラ～ズマ～</language>
 	</row>
 
-	<row id="msg_c02gym0101_hakaim1_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_hakaim1_04" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>・サブウインドウで表示
 ・続けて煙の演出に
 　この間に動作モデル「骨」削除
@@ -524,7 +524,7 @@
 		<language name="JPN_KANJI" width="256">プラ～ズマ～</language>
 	</row>
 
-	<row id="msg_c02gym0101_leader_01" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02gym0101_leader_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・盗難イベント時
 　POSを踏むとメッセージ表示
@@ -537,7 +537,7 @@
 		<language name="JPN_KANJI" width="256">アロエ『なんてこったい……▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_07a" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_07a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
@@ -548,7 +548,7 @@
 おいかけないと　いけないですよね</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_07" text-color="#000000,,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムバッジ取得後～盗難イベント解決前</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
@@ -559,7 +559,7 @@
 アロエが　大好きな　もの……</language>
 	</row>
 
-	<row id="msg_c02gym0101_white_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02gym0101_white_01">
 		<comment>♀
 ・盗難イベント中
 　メッセージは繰り返し
@@ -571,7 +571,7 @@
 あたし　許せない！！</language>
 	</row>
 
-	<row id="msg_c02gym0101_black_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02gym0101_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・盗難イベント中
 　メッセージは繰り返し
@@ -585,7 +585,7 @@
 なんとも　迷惑な　話だね</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_08" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・盗難イベント解決後</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
@@ -604,7 +604,7 @@
 表しているようで……　ホレボレです</language>
 	</row>
 
-	<row id="msg_c02gym0101_man1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02gym0101_man1_01">
 		<comment>♂
 ・通常時</comment>
 		<attribute name="キャラ指定">見物客その１
@@ -615,7 +615,7 @@ MAN1</attribute>
 そう考えると　ロマンの　集合体だね</language>
 	</row>
 
-	<row id="msg_c02gym0101_man1_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02gym0101_man1_02">
 		<comment>♂
 ・盗難イベント発生時</comment>
 		<attribute name="キャラ指定">見物客その１
@@ -624,7 +624,7 @@ MAN1</attribute>
 		<language name="JPN_KANJI" width="256">あわわわわ！</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02gym0101_girl3_01">
 		<comment>♀
 ・通常時</comment>
 		<attribute name="キャラ指定">見物客その２
@@ -637,7 +637,7 @@ GIRL3</attribute>
 研究も　しているってね</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_012" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02gym0101_girl3_012">
 		<comment>♀
 ・盗難イベント発生時</comment>
 		<attribute name="キャラ指定">見物客その２
@@ -652,7 +652,7 @@ GIRL3</attribute>
 正義を　信じているみたい</language>
 	</row>
 
-	<row id="msg_c02gym0101_oldman_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02gym0101_oldman_01">
 		<comment>♂
 ・通常時</comment>
 		<attribute name="キャラ指定">見物客その３
@@ -665,7 +665,7 @@ OLDMAN1</attribute>
 ポケモンも　いるかもしれんのう</language>
 	</row>
 
-	<row id="msg_c02gym0101_oldman_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c02gym0101_oldman_02">
 		<comment>♂
 ・盗難イベント発生時</comment>
 		<attribute name="キャラ指定">見物客その３
@@ -676,7 +676,7 @@ OLDMAN1</attribute>
 いったい　なにもの　なんだ！？</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_01" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_plate_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・カイリューの骨格標本</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -686,7 +686,7 @@ OLDMAN1</attribute>
 ポケモンの　骨格標本</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_01a" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_plate_01a" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ
 ･盗難イベント時</comment>
 		<attribute name="キャラ指定">台座</attribute>
@@ -696,7 +696,7 @@ OLDMAN1</attribute>
 ホネの　一部が　ない！！</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_02" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_plate_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・アーマルドのカセキ</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -706,7 +706,7 @@ OLDMAN1</attribute>
 守っていた　ポケモンのカセキ</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_03" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_plate_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・デオキシス用の隕石</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -716,7 +716,7 @@ OLDMAN1</attribute>
 付着していた　いん石</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_04" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_plate_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・ライトストーン/ダークストーン</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -726,7 +726,7 @@ OLDMAN1</attribute>
 古代の　丸い石</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_05" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_plate_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・石版</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -736,7 +736,7 @@ OLDMAN1</attribute>
 文字が　刻まれた　石板</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_06" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_plate_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・木の仮面</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
@@ -746,7 +746,7 @@ OLDMAN1</attribute>
 祭りのときに　つけた　仮面</language>
 	</row>
 
-	<row id="msg_c02gym0101_plate_07" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_plate_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・ガラガラの骨</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
