@@ -1038,7 +1038,28 @@ DEP_TEXSET_IMD_OUTDOOR025 = \
 	$(SRCDIR)/rock_02.imd \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
-	$(SRCDIR)/door_normal03.imd
+	$(SRCDIR)/door_normal03.imd \
+	$(SRCDIR)/ptree_b01.imd \
+	$(SRCDIR)/ptree_b02.imd \
+	$(SRCDIR)/ptree_b03.imd \
+	$(SRCDIR)/ptree_b04.imd \
+	$(SRCDIR)/ptree_b05.imd \
+	$(SRCDIR)/ptree_b06.imd \
+	$(SRCDIR)/ptree_b07.imd \
+	$(SRCDIR)/ptree_b08.imd \
+	$(SRCDIR)/ptree_b09.imd \
+	$(SRCDIR)/ptree_b10.imd \
+	$(SRCDIR)/ptree_w01.imd \
+	$(SRCDIR)/ptree_w02.imd \
+	$(SRCDIR)/ptree_w03.imd \
+	$(SRCDIR)/ptree_w04.imd \
+	$(SRCDIR)/ptree_w05.imd \
+	$(SRCDIR)/ptree_w06.imd \
+	$(SRCDIR)/ptree_w07.imd \
+	$(SRCDIR)/ptree_w08.imd \
+	$(SRCDIR)/ptree_w09.imd \
+	$(SRCDIR)/ptree_w10.imd \
+	$(SRCDIR)/pwarp_01.imd
 
 texset/outdoor025.imd: $(DEP_TEXSET_IMD_OUTDOOR025) texset/tmp/outdoor025.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor025.list

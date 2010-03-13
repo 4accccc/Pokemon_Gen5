@@ -264,4 +264,25 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/door_bar.nsbmd \
 	$(RESDIR)/door_c8_b.nsbmd \
 	$(RESDIR)/door_auto01.nsbmd \
+	$(RESDIR)/ptree_b01.nsbmd \
+	$(RESDIR)/ptree_b02.nsbmd \
+	$(RESDIR)/ptree_b03.nsbmd \
+	$(RESDIR)/ptree_b04.nsbmd \
+	$(RESDIR)/ptree_b05.nsbmd \
+	$(RESDIR)/ptree_b06.nsbmd \
+	$(RESDIR)/ptree_b07.nsbmd \
+	$(RESDIR)/ptree_b08.nsbmd \
+	$(RESDIR)/ptree_b09.nsbmd \
+	$(RESDIR)/ptree_b10.nsbmd \
+	$(RESDIR)/ptree_w01.nsbmd \
+	$(RESDIR)/ptree_w02.nsbmd \
+	$(RESDIR)/ptree_w03.nsbmd \
+	$(RESDIR)/ptree_w04.nsbmd \
+	$(RESDIR)/ptree_w05.nsbmd \
+	$(RESDIR)/ptree_w06.nsbmd \
+	$(RESDIR)/ptree_w07.nsbmd \
+	$(RESDIR)/ptree_w08.nsbmd \
+	$(RESDIR)/ptree_w09.nsbmd \
+	$(RESDIR)/ptree_w10.nsbmd \
+	$(RESDIR)/pwarp_01.nsbmd \
 
