@@ -42,7 +42,9 @@ extern GMEVENT* EVENT_FSND_ChangeBGM( GAMESYS_WORK* gameSystem, u32 soundIdx,
                                       u16 fadeOutFrame, u16 fadeInFrame );
 
 // ベースBGMを退避し, 戦闘曲を再生する
-extern GMEVENT* EVENT_FSND_PushPlayBattleBGM( GAMESYS_WORK* gameSystem, u32 soundIdx );
+extern GMEVENT* EVENT_FSND_PushPlayBattleBGM( GAMESYS_WORK* gameSystem, u32 soundIdx ); 
+// 戦闘曲からベースBGMに復帰する
+extern GMEVENT* EVENT_FSND_PopPlayBGM_fromBattle( GAMESYS_WORK* gameSystem );
 
 // フェード操作の完了待ち
 extern GMEVENT* EVENT_FSND_WaitBGMFade( GAMESYS_WORK* gameSystem );

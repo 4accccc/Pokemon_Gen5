@@ -616,7 +616,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     break;
   case 6: 
     if (bew->bgm_pushed_flag == TRUE) {
-      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NORMAL, FSND_FADE_NORMAL));
+      GMEVENT_CallEvent( event, EVENT_FSND_PopPlayBGM_fromBattle(gsys) );
       bew->bgm_pushed_flag = FALSE;
     }
     (*seq) ++;
