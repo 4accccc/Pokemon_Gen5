@@ -53,11 +53,10 @@ INIT_EVENT_START	ev_zone_r03
 	//バージョンを取得してOBJを変化させる
 	_GET_ROM_VERSION( SCWK_ANSWER )
 	
-	//BlackVERならシャガ
+	//BlackVERならモンメン
 	IF $SCWK_ANSWER == VERSION_BLACK THEN
 		$OBJCHRWORK0 = POKE24
-	
-	//Whiteならアイリス
+	//Whiteならチュリネ
 	ELSE
 		$OBJCHRWORK0 = POKE18
 	ENDIF
