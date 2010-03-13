@@ -71,8 +71,9 @@ void BTL_POKESET_RemoveDeadPoke( BTL_POKESET* rec )
   BTL_POKESET_SeekStart( rec );
   while( (bpp = BTL_POKESET_SeekNext(rec)) != NULL )
   {
-    if( BPP_IsDead(bpp) ){
-      TAYA_Printf("ポケ(%d) 死んだのでセットから除外\n", BPP_GetID(bpp));
+    if( BPP_IsDead(bpp) )
+    {
+      BTL_N_Printf( DBGSTR_POKESET_RemoveDeadPoke, BPP_GetID(bpp));
       BTL_POKESET_Remove( rec, bpp );
     }
   }

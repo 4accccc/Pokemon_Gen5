@@ -71,6 +71,7 @@ typedef enum {
   DBGSTR_CLIENT_ReadRecAct_Move,
   DBGSTR_CLIENT_UnknownServerCmd,
   DBGSTR_CLIENT_RecPlayerBlackOut,
+  DBGSTR_CLIENT_RecPlay_ChapterSkipped,
 
   DBGSTR_BPP_NemuriWakeCheck,
 
@@ -83,6 +84,7 @@ typedef enum {
   DBGSTR_MAIN_GetFrontPokeData,
   DBGSTR_MAIN_GetFrontPokeDataResult,
 
+  DBGSTR_NET_Startup,
   DBGSTR_NET_DecideClientID,
   DBGSTR_NET_SendSucceed,
   DBGSTR_NET_RecvedServerParam,
@@ -207,6 +209,8 @@ typedef enum {
   DBGSTR_EV_LinkEmpty,
   DBGSTR_EVAR_Push,
   DBGSTR_EVAR_Pop,
+
+  DBGSTR_POKESET_RemoveDeadPoke,
 
   DBGSTR_VCORE_PokeListStart,
   DBGSTR_VCORE_SelPokeEnd,

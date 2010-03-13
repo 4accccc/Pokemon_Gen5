@@ -1169,3 +1169,17 @@ BOOL BTLV_SCD_ForceQuitInput_Wait( BTLV_SCD* wk )
   return TRUE;
 }
 
+//=============================================================================================
+//  ˜^‰æÄ¶ƒ‚[ƒh
+//=============================================================================================
+
+void BTLV_SCD_SetupRecPlayerMode( BTLV_SCD* wk, const BTLV_INPUT_BATTLE_RECORDER_PARAM* param )
+{
+  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_BATTLE_RECORDER, (void*)param );
+}
+
+int BTLV_SCD_CheckRecPlayerInput( BTLV_SCD* wk )
+{
+  return BTLV_INPUT_CheckInput( wk->biw, &BattleRecorderTouchData, BattleRecorderKeyData );
+}
+

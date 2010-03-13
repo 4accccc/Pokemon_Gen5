@@ -117,6 +117,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_ReadRecAct_Move:      return "   action=Move!\n";
   case DBGSTR_CLIENT_UnknownServerCmd:     return "用意されていないコマンドNo[%d]！\n";
   case DBGSTR_CLIENT_RecPlayerBlackOut:    return "録画再生コントローラ：ブラックアウト\n";
+  case DBGSTR_CLIENT_RecPlay_ChapterSkipped: return "client(%d), 指定チャプタ[%d]に到達した..\n";
 
 
   case DBGSTR_BPP_NemuriWakeCheck:        return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
@@ -126,7 +127,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_VCORE_SelPokeEnd_Sel:     return "  [%d]番目 選択された -> %d体 格納\n";
   case DBGSTR_VCORE_SelPokeEnd_Unsel:   return "  [%d]番目 選択されていない\n";
 
-
+  case DBGSTR_NET_Startup:              return "自分のネットID=%d, 接続メンバー数=%d\n";
   case DBGSTR_NET_DecideClientID:       return "NetID:%d -> clientID=%d\n";
   case DBGSTR_NET_SendSucceed:          return "  送信成功\n";
   case DBGSTR_NET_RecvedServerParam:    return "netID=%d, サーバパラメータ受信しました。\n";
@@ -256,6 +257,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_EVAR_Push:                return "PUSH [%5d] SP=%d\n";
   case DBGSTR_EVAR_Pop:                 return "Pop! [%5d] SP=%d\n";
   case DBGSTR_DEADREC_Add:              return " 死亡記録 ターン%d件目 ... pokeID=%d\n";
+  case DBGSTR_POKESET_RemoveDeadPoke:   return "ポケ(%d) 死んだのでセットから除外\n";
 
   case DBGSTR_SCU_RelivePokeAct:        return "Pos[%d]=Vpos[%d] ポケ(%d)が生き返り\n";
   case DBGSTR_Item_PinchReactItem:      return "PokeID=%d, 最大HP=%d, 現HP=%d, n=%d ... ";
@@ -318,6 +320,7 @@ static void print_file_info( const char* filename, int line )
     { "btl_sick.c",           "SIC" },
     { "btl_event.c",          "EVE" },
     { "btl_pokeparam.c",      "BPP" },
+    { "btl_pokeset.c",        "SET" },
     { "btl_pospoke_state.c",  "POS" },
     { "btl_server_cmd.c",     "CMD" },
     { "btl_server_flow.c",    "FLW" },

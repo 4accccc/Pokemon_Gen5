@@ -100,4 +100,12 @@ extern BOOL BTLV_SCD_SelectYesNo_Wait( BTLV_SCD* wk, BtlYesNo* result );
 extern void   BTLV_SCD_ForceQuitInput_Notify( BTLV_SCD* wk );
 extern BOOL BTLV_SCD_ForceQuitInput_Wait( BTLV_SCD* wk );
 
+
+//=============================================================================================
+//  ò^âÊçƒê∂ÉÇÅ[Éh
+//=============================================================================================
+extern void BTLV_SCD_SetupRecPlayerMode( BTLV_SCD* wk, const BTLV_INPUT_BATTLE_RECORDER_PARAM* param );
+extern int BTLV_SCD_CheckRecPlayerInput( BTLV_SCD* wk );
+
+
 #endif

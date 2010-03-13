@@ -74,10 +74,10 @@ extern const void* BTL_REC_GetDataPtr( const BTL_REC* wk, u32* size );
 typedef struct {
 
   const u8*   recordData;
-  u32         readPtr;
   u32         dataSize;
-
-  u8          buf[64];
+//  u32         readPtr;
+  u32         readPtr[ BTL_CLIENT_MAX ];
+  u8          readBuf[ BTL_CLIENT_MAX ][64];
 
 }BTL_RECREADER;
 

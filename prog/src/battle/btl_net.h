@@ -63,7 +63,7 @@ typedef struct {
 }BTLNET_AIDATA_CONTAINER;
 
 
-extern void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, HEAPID heapID );
+extern void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, u16 netIDBit, HEAPID heapID );
 extern void BTL_NET_QuitSystem( void );
 extern BOOL BTL_NET_CheckError( void );
 

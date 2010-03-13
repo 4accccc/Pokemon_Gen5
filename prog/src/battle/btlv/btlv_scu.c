@@ -2803,7 +2803,6 @@ void BTLV_SCU_StartHPGauge( BTLV_SCU* wk, BtlPokePos pos, BOOL fSkipEffect )
 
   if( fSkipEffect )
   {
-    TAYA_Printf("スキップでＨＰゲージ処理\n");
     BTLV_EFFECT_CalcGaugeHPAtOnce( vpos, value );
   }
   else

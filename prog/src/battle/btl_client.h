@@ -55,6 +55,7 @@ typedef enum {
 #include "btl_main_def.h"
 #include "btl_adapter.h"
 #include "btl_pokeparam.h"
+#include "btl_rec.h"
 #include "btlv/btlv_core_def.h"
 #include "app/b_bag.h"
 
@@ -81,15 +82,17 @@ extern BOOL BTL_CLIENT_Main( BTL_CLIENT* client );
 extern u8 BTL_CLIENT_GetClientID( const BTL_CLIENT* client );
 extern const BTL_PARTY* BTL_CLIENT_GetParty( const BTL_CLIENT* client );
 extern BtlPokePos BTL_CLIENT_GetProcPokePos( const BTL_CLIENT* client );
-extern BtlWeather BTL_CLIENT_GetWeather( const BTL_CLIENT* client );
 
 
 extern const void* BTL_CLIENT_GetRecordData( BTL_CLIENT* wk, u32* size );
-extern void BTL_CLIENT_SetRecordPlayType( BTL_CLIENT* wk, const void* recordData, u32 dataSize );
+extern void BTL_CLIENT_SetRecordPlayerMode( BTL_CLIENT* wk, BTL_RECREADER* recReader );
+
 
 extern void BTL_CLIENT_SetChapterSkip( BTL_CLIENT* wk, u32 nextTurnNum );
 extern void BTL_CLIENT_StopChapterSkip( BTL_CLIENT* wk );
 extern BOOL BTL_CLIENT_IsChapterSkipMode( const BTL_CLIENT* wk );
+extern BOOL BTL_CLIENT_IsRecPlayerMode( const BTL_CLIENT* wk );
+extern u32 BTL_CLIENT_GetRecPlayerMaxChapter( const BTL_CLIENT* wk );
 
 
 

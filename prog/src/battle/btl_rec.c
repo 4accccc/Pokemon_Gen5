@@ -173,9 +173,15 @@ const void* BTL_REC_GetDataPtr( const BTL_REC* wk, u32* size )
 //=============================================================================================
 void BTL_RECREADER_Init( BTL_RECREADER* wk, const void* recordData, u32 dataSize )
 {
+  u32 i;
+
   wk->recordData = recordData;
   wk->dataSize = dataSize;
-  wk->readPtr = 0;
+
+  for(i=0; i<NELEMS(wk->readPtr); ++i){
+    wk->readPtr[i] = 0;
+  }
+
   BTL_Printf("RECREADRE Init dataSize=%d\n", wk->dataSize);
 }
 
@@ -188,7 +194,10 @@ void BTL_RECREADER_Init( BTL_RECREADER* wk, const void* recordData, u32 dataSize
 //=============================================================================================
 void BTL_RECREADER_Reset( BTL_RECREADER* wk )
 {
-  wk->readPtr = 0;
+  u32 i;
+  for(i=0; i<NELEMS(wk->readPtr); ++i){
+    wk->readPtr[i] = 0;
+  }
 }
 
 //=============================================================================================
@@ -207,18 +216,20 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
 {
   BtlRecFieldType type;
   u8 numClient, readClientID, readNumAction;
+  u32* rp;
   u32 i;
 
+  rp = &wk->readPtr[ clientID ];
 
-  BTL_N_Printf( DBGSTR_REC_ReadActStart, wk->readPtr);
-  while( wk->readPtr < wk->dataSize )
+  BTL_N_Printf( DBGSTR_REC_ReadActStart, *rp );
+  while( (*rp) < wk->dataSize )
   {
-    ReadRecFieldTag( wk->recordData[wk->readPtr++], &type, &numClient, fChapter );
-    if( (wk->readPtr >= wk->dataSize) ){ break; }
+    ReadRecFieldTag( wk->recordData[ (*rp)++ ], &type, &numClient, fChapter );
+    if( (*rp >= wk->dataSize) ){ break; }
     if( type != BTL_RECFIELD_ACTION )
     {
       BTL_N_Printf( DBGSTR_REC_ReadActSkip, numClient);
-      wk->readPtr += numClient;
+      (*rp) += numClient;
     }
     else
     {
@@ -226,19 +237,20 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
       BTL_Printf( DBGSTR_REC_SeekClient, numClient);
       for(i=0; i<numClient; ++i)
       {
-        ReadClientActionTag( wk->recordData[wk->readPtr++], &readClientID, &readNumAction );
-        if( (wk->readPtr >= wk->dataSize) ){ break; }
+        ReadClientActionTag( wk->recordData[ (*rp)++ ], &readClientID, &readNumAction );
+
+        if( ((*rp) >= wk->dataSize) ){ break; }
         if( readClientID != clientID )
         {
-          wk->readPtr += (sizeof(BTL_ACTION_PARAM) * readNumAction);
+          (*rp) += (sizeof(BTL_ACTION_PARAM) * readNumAction);
         }
         else
         {
-          returnPtr = (const BTL_ACTION_PARAM*)(&wk->recordData[wk->readPtr]);
-          GFL_STD_MemCopy( returnPtr, wk->buf, readNumAction * sizeof(BTL_ACTION_PARAM) );
-          returnPtr = (const BTL_ACTION_PARAM*)(wk->buf);
-          BTL_N_Printf( DBGSTR_REC_ReadActParam, wk->readPtr, returnPtr->gen.cmd, returnPtr->fight.waza);
-          wk->readPtr += (sizeof(BTL_ACTION_PARAM) * readNumAction);
+          returnPtr = (const BTL_ACTION_PARAM*)(&wk->recordData[(*rp)]);
+          GFL_STD_MemCopy( returnPtr, wk->readBuf[clientID], readNumAction * sizeof(BTL_ACTION_PARAM) );
+          returnPtr = (const BTL_ACTION_PARAM*)(wk->readBuf[ clientID ]);
+          BTL_N_Printf( DBGSTR_REC_ReadActParam, (*rp), returnPtr->gen.cmd, returnPtr->fight.waza);
+          (*rp) += (sizeof(BTL_ACTION_PARAM) * readNumAction);
           *numAction = readNumAction;
         }
       }
@@ -246,12 +258,12 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
         return returnPtr;
       }
     }
-    if( (wk->readPtr >= wk->dataSize) ){ break; }
+    if( ((*rp) >= wk->dataSize) ){ break; }
   }
 
 
   GF_ASSERT_MSG(0, "不正なデータ読み取り clientID=%d, type=%d, readPtr=%d, datSize=%d",
-    clientID, type, wk->readPtr, wk->dataSize);
+    clientID, type, (*rp), wk->dataSize);
   return NULL;
 }
 
@@ -272,20 +284,22 @@ BtlRotateDir BTL_RECREADER_ReadRotation( BTL_RECREADER* wk, u8 clientID )
   u8 numClient, readClientID, readNumAction, fChapter;
   u32 i;
 
-  BTL_Printf("rec seek start RP= %d\n", wk->readPtr);
-  while( wk->readPtr < wk->dataSize )
+  u32 *rp = &wk->readPtr[ clientID ];
+
+
+  while( (*rp) < wk->dataSize )
   {
-    ReadRecFieldTag( wk->recordData[wk->readPtr++], &type, &numClient, &fChapter );
-    if( (wk->readPtr >= wk->dataSize) ){ break; }
+    ReadRecFieldTag( wk->recordData[ (*rp)++ ], &type, &numClient, &fChapter );
+    if( ((*rp) >= wk->dataSize) ){ break; }
     if( type != BTL_RECFIELD_ROTATION )
     {
       u8 readClientID, readNumAction;
       // クライアント数分、アクションパラメータスキップ
       for(i=0; i<numClient; ++i)
       {
-        ReadClientActionTag( wk->recordData[wk->readPtr++], &readClientID, &readNumAction );
-        wk->readPtr += (readNumAction * sizeof(BTL_ACTION_PARAM));
-        if( (wk->readPtr >= wk->dataSize) ){ break; }
+        ReadClientActionTag( wk->recordData[ (*rp)++ ], &readClientID, &readNumAction );
+        (*rp) += (readNumAction * sizeof(BTL_ACTION_PARAM));
+        if( ((*rp) >= wk->dataSize) ){ break; }
       }
     }
     else
@@ -294,12 +308,12 @@ BtlRotateDir BTL_RECREADER_ReadRotation( BTL_RECREADER* wk, u8 clientID )
       BtlRotateDir dir;
       for(i=0; i<numClient; ++i)
       {
-        ReadRotationTag( wk->recordData[wk->readPtr+i], &readClientID, &dir );
+        ReadRotationTag( wk->recordData[(*rp)+i], &readClientID, &dir );
         if( readClientID == clientID ){
           break;
         }
       }
-      wk->readPtr += numClient;
+      (*rp) += numClient;
       if( i != numClient ){
         return dir;
       }

@@ -246,6 +246,7 @@ void BTL_SERVER_Startup( BTL_SERVER* server )
 {
   setMainProc( server, ServerMain_WaitReady );
   ResetAdapterCmd( server );
+  BTL_SVFLOW_ResetSystem( server->flowWork );
 }
 //--------------------------------------------------------------------------------------
 /**

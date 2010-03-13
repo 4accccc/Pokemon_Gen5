@@ -101,6 +101,7 @@ struct _BTL_MAIN_MODULE {
   POKEPARTY*            tmpParty;
   POKEMON_PARAM*        ppIllusionZoroArc;
   BTLNET_AIDATA_CONTAINER*  AIDataContainer;
+  BTL_RECREADER         recReader;
 
   GFL_STD_RandContext   randomContext;
   BTLNET_SERVER_NOTIFY_PARAM  serverNotifyParam;
@@ -264,7 +265,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->changeMode = (CONFIG_GetBattleRule(setup_param->configData) == BATTLERULE_IREKAE)?
           BTL_CHANGEMODE_IREKAE : BTL_CHANGEMODE_KATINUKI;
 
-      BTL_NET_InitSystem( setup_param->netHandle, HEAPID_BTL_NET );
+      BTL_NET_InitSystem( setup_param->netHandle, setup_param->commNetIDBit, HEAPID_BTL_NET );
       BTL_CALC_ITEM_InitSystem( HEAPID_BTL_SYSTEM );
       (*seq)++;
     }
@@ -430,10 +431,8 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
       break;
     case BTL_RULE_DOUBLE:
       if( setup_param->multiMode == BTL_MULTIMODE_NONE ){
-        TAYA_Printf("通常ダブルとしてのセットアップ\n");
         BTL_UTIL_SetupProc( bp, wk, setup_alone_double, NULL );
       }else{
-        TAYA_Printf("マルチバトルとしてのセットアップ\n");
         BTL_UTIL_SetupProc( bp, wk, setup_alone_double_multi, NULL );
       }
       break;
@@ -612,9 +611,11 @@ static BOOL setup_alone_single( int* seq, void* work )
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 1,
               BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
 
-  if( sp->fRecordPlay ){
-    BTL_CLIENT_SetRecordPlayType( wk->client[0], sp->recBuffer, sp->recDataSize );
-    BTL_CLIENT_SetRecordPlayType( wk->client[1], sp->recBuffer, sp->recDataSize );
+  if( sp->fRecordPlay )
+  {
+    BTL_RECREADER_Init( &wk->recReader, sp->recBuffer, sp->recDataSize );
+    BTL_CLIENT_SetRecordPlayerMode( wk->client[0], &wk->recReader );
+    BTL_CLIENT_SetRecordPlayerMode( wk->client[1], &wk->recReader );
   }
 
   // 描画エンジン生成、プレイヤークライアントに関連付ける
@@ -723,9 +724,9 @@ static BOOL setup_alone_double( int* seq, void* work )
 
   if( sp->fRecordPlay )
   {
-    BTL_Printf("再生タイプ初期化 ... dataSize=%d\n", sp->recDataSize);
-    BTL_CLIENT_SetRecordPlayType( wk->client[0], sp->recBuffer, sp->recDataSize );
-    BTL_CLIENT_SetRecordPlayType( wk->client[1], sp->recBuffer, sp->recDataSize );
+    BTL_RECREADER_Init( &wk->recReader, sp->recBuffer, sp->recDataSize );
+    BTL_CLIENT_SetRecordPlayerMode( wk->client[0], &wk->recReader );
+    BTL_CLIENT_SetRecordPlayerMode( wk->client[1], &wk->recReader );
   }
 
 
@@ -782,7 +783,6 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
 
   case BTL_MULTIMODE_P_AA:  // AIタッグマルチ
     wk->posCoverClientID[BTL_POS_2ND_1] = BTL_CLIENT_ENEMY2;
-    OS_TPrintf("P_AA だよ ENEMY2 有効だよ pos[%d] client=%d \n", BTL_POS_2ND_1, BTL_CLIENT_ENEMY2);
     wk->numClients = 3;
     break;
   }
@@ -841,10 +841,11 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
 
   if( sp->fRecordPlay )
   {
+    BTL_RECREADER_Init( &wk->recReader, sp->recBuffer, sp->recDataSize );
     for(i=0; i<BTL_CLIENT_MAX; ++i)
     {
-    if( BTL_MAIN_IsExistClient(wk, i) ){
-        BTL_CLIENT_SetRecordPlayType( wk->client[i], sp->recBuffer, sp->recDataSize );
+      if( BTL_MAIN_IsExistClient(wk, i) ){
+        BTL_CLIENT_SetRecordPlayerMode( wk->client[i], &wk->recReader );
       }
     }
   }
@@ -914,9 +915,11 @@ static BOOL setup_alone_triple( int* seq, void* work )
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 3,
           BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
 
-  if( sp->fRecordPlay ){
-    BTL_CLIENT_SetRecordPlayType( wk->client[0], sp->recBuffer, sp->recDataSize );
-    BTL_CLIENT_SetRecordPlayType( wk->client[1], sp->recBuffer, sp->recDataSize );
+  if( sp->fRecordPlay )
+  {
+    BTL_RECREADER_Init( &wk->recReader, sp->recBuffer, sp->recDataSize );
+    BTL_CLIENT_SetRecordPlayerMode( wk->client[0], &wk->recReader );
+    BTL_CLIENT_SetRecordPlayerMode( wk->client[1], &wk->recReader );
   }
 
   // 描画エンジン生成

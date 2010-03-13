@@ -28,6 +28,7 @@
 #include "btlv\btlv_core.h"
 #include "btlv\btlv_effect.h"
 #include "btlv\btlv_timer.h"
+#include "btlv\btlv_input.h"
 
 #include "btl_client.h"
 
@@ -88,7 +89,7 @@ typedef struct {
   u8   fChapterSkip    : 1;
   u8   fFadeOutDone    : 1;
   u8   fTurnIncrement  : 1;
-  u16  chapterTimer;
+  u16  handlingTimer;
   u16  turnCount;
   u16  nextTurnCount;
   u16  maxTurnCount;
@@ -107,7 +108,7 @@ struct _BTL_CLIENT {
   const BTL_POKEPARAM*  procPoke;
   BTL_ACTION_PARAM*     procAction;
   BTL_REC*              btlRec;
-  BTL_RECREADER         btlRecReader;
+  BTL_RECREADER*        btlRecReader;
   RECPLAYER_CONTROL     recPlayer;
   ClientMainProc        mainProc;
 
@@ -116,7 +117,6 @@ struct _BTL_CLIENT {
   BTLV_STRPARAM   strParam;
   BTLV_STRPARAM   strParamSub;
   BtlRotateDir    prevRotateDir;
-  BtlWeather      weather;
 
   ClientSubProc  subProc;
   int            subSeq;
@@ -362,7 +362,6 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->procPokeIdx = 0;
   wk->basePos = clientID;
   wk->prevRotateDir = BTL_ROTATEDIR_NONE;
-  wk->weather = BTL_WEATHER_NONE;
   wk->viewCore = NULL;
   wk->EnemyPokeHPBase = 0;
   wk->cmdQue = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_SERVER_CMD_QUE) );
@@ -416,13 +415,14 @@ const void* BTL_CLIENT_GetRecordData( BTL_CLIENT* wk, u32* size )
   return NULL;
 }
 
-void BTL_CLIENT_SetRecordPlayType( BTL_CLIENT* wk, const void* recordData, u32 dataSize )
+void BTL_CLIENT_SetRecordPlayerMode( BTL_CLIENT* wk, BTL_RECREADER* recReader )
 {
   u32 turnCnt;
 
   wk->myType = BTL_CLIENT_TYPE_RECPLAY;
-  BTL_RECREADER_Init( &wk->btlRecReader, recordData, dataSize );
-  turnCnt = BTL_RECREADER_GetTurnCount( &wk->btlRecReader );
+  wk->btlRecReader = recReader;
+  turnCnt = BTL_RECREADER_GetTurnCount( wk->btlRecReader );
+
   RecPlayer_Setup( &wk->recPlayer, turnCnt );
 }
 
@@ -480,7 +480,9 @@ BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
 //=============================================================================================
 void BTL_CLIENT_SetChapterSkip( BTL_CLIENT* wk, u32 nextTurnNum )
 {
-  BTL_RECREADER_Reset( &wk->btlRecReader );
+  // @todo これはmainにいったん任せるべきか？
+  BTL_RECREADER_Reset( wk->btlRecReader );
+
   RecPlayer_ChapterSkipOn( &wk->recPlayer, nextTurnNum );
   ChangeMainProc( wk, ClientMain_ChapterSkip );
 }
@@ -490,6 +492,33 @@ void BTL_CLIENT_StopChapterSkip( BTL_CLIENT* wk )
 //  ChangeMainProc( wk, ClientMain_Normal );
   RecPlayer_ChapterSkipOff( &wk->recPlayer );
   ChangeMainProc( wk, ClientMain_Normal );
+}
+
+//=============================================================================================
+/**
+ * クライアントが録画再生モードで動いているか判定
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_CLIENT_IsRecPlayerMode( const BTL_CLIENT* wk )
+{
+  return wk->myType == BTL_CLIENT_TYPE_RECPLAY;
+}
+//=============================================================================================
+/**
+ *
+ *
+ * @param   wk
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_CLIENT_GetRecPlayerMaxChapter( const BTL_CLIENT* wk )
+{
+  return wk->recPlayer.maxTurnCount;
 }
 
 //=============================================================================================
@@ -505,6 +534,9 @@ BOOL BTL_CLIENT_IsChapterSkipMode( const BTL_CLIENT* wk )
 {
   return (wk->mainProc == ClientMain_ChapterSkip);
 }
+
+
+
 
 /**
  *  メインループ関数を差し替える
@@ -551,10 +583,6 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
         wk->subProc = getSubProc( wk, cmd );
         if( wk->subProc != NULL ){
           BTL_N_Printf( DBGSTR_CLIENT_StartCmd, wk->myID, cmd );
-          if( cmd == BTL_ACMD_WAIT_SETUP )
-          {
-            TAYA_Printf("SetupWait rp=%d\n", wk->btlRecReader.readPtr );
-          }
           wk->myState = SEQ_EXEC_CMD;
           wk->subSeq = 0;
         }
@@ -661,7 +689,7 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
 
       if( fSkipEnd )
       {
-        TAYA_Printf("client(%d), 指定チャプタ[%d]に到達した..\n", wk->myID, wk->recPlayer.turnCount);
+        BTL_N_Printf( DBGSTR_CLIENT_RecPlay_ChapterSkipped, wk->myID, wk->recPlayer.turnCount);
         if( wk->viewCore ){
           BTLV_RecPlayFadeIn_Start( wk->viewCore );
         }
@@ -986,12 +1014,12 @@ static BtlRotateDir decideNextDirRandom( BtlRotateDir prevDir )
 
 static BOOL SubProc_REC_SelectRotation( BTL_CLIENT* wk, int* seq )
 {
+  // @todo 未実装
   return TRUE;
 }
 
 static BOOL SubProc_AI_SelectRotation( BTL_CLIENT* wk, int* seq )
 {
-  // @todo AI用。今は仮動作
   wk->prevRotateDir = decideNextDirRandom( wk->prevRotateDir );
   wk->returnDataPtr = &wk->prevRotateDir;
   wk->returnDataSize = sizeof(wk->prevRotateDir);
@@ -1106,9 +1134,8 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
 {
   u8 numAction, fChapter;
 
-  const BTL_ACTION_PARAM* act = BTL_RECREADER_ReadAction( &wk->btlRecReader, wk->myID, &numAction, &fChapter );
+  const BTL_ACTION_PARAM* act = BTL_RECREADER_ReadAction( wk->btlRecReader, wk->myID, &numAction, &fChapter );
   if( fChapter ){
-    TAYA_Printf("チャプター記録->ターン数更新へ\n");
     RecPlayer_TurnIncReq( &wk->recPlayer );
   }
 
@@ -3917,7 +3944,6 @@ static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args )
         return TRUE;
       }
       BTLV_StartMsgStd( wk->viewCore, msgID, NULL );
-      wk->weather = BTL_WEATHER_NONE;
       (*seq)++;
     }
     break;
@@ -4225,7 +4251,6 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     (*seq) = SEQ_LVUP_INFO_MSG_WAIT;
     break;
 
-  // @todo この辺、レベルアップウィンドウをタッチ前に表示しないようにしたい
   case SEQ_LVUP_INFO_MSG_WAIT:
     if( BTLV_IsJustDoneMsg(wk->viewCore) ){
       PMSND_PauseBGM( TRUE );
@@ -5196,10 +5221,6 @@ const BTL_PARTY* BTL_CLIENT_GetParty( const BTL_CLIENT* client )
   return client->myParty;
 }
 
-BtlWeather BTL_CLIENT_GetWeather( const BTL_CLIENT* client )
-{
-  return client->weather;
-}
 
 //=============================================================================================
 /**
@@ -5380,7 +5401,7 @@ static void RecPlayer_Init( RECPLAYER_CONTROL* ctrl )
   ctrl->nextTurnCount = 0;
   ctrl->maxTurnCount = 0;
   ctrl->skipTurnCount = 0;
-  ctrl->chapterTimer = 0;
+  ctrl->handlingTimer = 0;
 }
 /**
  *  再生準備処理（再生時にのみ呼び出す）
@@ -5434,14 +5455,14 @@ static void RecPlayer_ChapterSkipOff( RECPLAYER_CONTROL* ctrl )
  */
 static BOOL RecPlayer_CheckChapterSkipEnd( const RECPLAYER_CONTROL* ctrl )
 {
-  return ( ctrl->skipTurnCount == ctrl->turnCount );
+  return ( ctrl->skipTurnCount == ctrl->nextTurnCount );
 }
 /**
  *
  */
 static u32 RecPlayer_GetNextTurn( const RECPLAYER_CONTROL* ctrl )
 {
-  return ctrl->turnCount;
+  return ctrl->nextTurnCount;
 }
 
 /**
@@ -5462,6 +5483,8 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
       SEQ_STAY,
     };
 
+    BOOL fTurnUpdate = FALSE;
+
     if( ctrl->fTurnIncrement )
     {
       ctrl->fTurnIncrement = FALSE;
@@ -5470,16 +5493,23 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
       {
         if( ctrl->turnCount < ctrl->maxTurnCount ){
           ++(ctrl->turnCount);
-          TAYA_Printf("--- Increment Turn = %d/%d\n", ctrl->turnCount, ctrl->maxTurnCount);
+          if(ctrl->handlingTimer == 0){
+            ctrl->nextTurnCount = ctrl->turnCount;
+          }
+          fTurnUpdate = TRUE;
         }
       }
       else
       {
-        if( ctrl->skipTurnCount < ctrl->turnCount ){
+        if( ctrl->skipTurnCount < ctrl->nextTurnCount )
+        {
           ctrl->skipTurnCount++;
-          TAYA_Printf("--- Chapter Skip Turn = %d/%d\n", ctrl->skipTurnCount, ctrl->turnCount);
-          if( ctrl->skipTurnCount == ctrl->turnCount ){
-            TAYA_Printf("Skip Chapter done ->%d\n", ctrl->skipTurnCount );
+          if( ctrl->skipTurnCount == ctrl->nextTurnCount )
+          {
+            ctrl->turnCount = ctrl->nextTurnCount;
+            if( wk->viewCore ){
+              BTLV_UpdateRecPlayerInput( wk->viewCore, ctrl->turnCount, ctrl->nextTurnCount );
+            }
           }
         }
         return;
@@ -5488,6 +5518,7 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
 
     // 最初のチャプタまで何もしない（入場エフェクト待ち）
     if( ctrl->turnCount == 0 ){
+//      BTLV_UpdateRecPlayerInput( wk->viewCore, ctrl->turnCount, ctrl->nextTurnCount );
       return;
     }
 
@@ -5498,40 +5529,48 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
 
     switch( ctrl->seq ){
     case SEQ_DEFAULT:
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
       {
-        ctrl->ctrlCode = RECCTRL_QUIT;
-        BTLV_RecPlayFadeOut_Start( wk->viewCore );
-        ctrl->seq = SEQ_FADEOUT;
-        break;
-      }
-      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
-      {
-        if( ctrl->turnCount > 1 ){
-          ctrl->turnCount--;
-          TAYA_Printf("*** Ctrl Turn = %d/%d\n", ctrl->turnCount, ctrl->maxTurnCount);
-        }
-        ctrl->chapterTimer = CHAPTER_CTRL_FRAMES;
-        break;
-      }
-      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
-      {
-        if( ctrl->turnCount < ctrl->maxTurnCount ){
-          ctrl->turnCount++;
-          TAYA_Printf("*** Ctrl Turn = %d/%d\n", ctrl->turnCount, ctrl->maxTurnCount);
-        }
-        ctrl->chapterTimer = CHAPTER_CTRL_FRAMES;
-        break;
-      }
-      if( ctrl->chapterTimer )
-      {
-        if( --(ctrl->chapterTimer) == 0 )
-        {
-          ctrl->ctrlCode = RECCTRL_CHAPTER;
+        int result = BTLV_CheckRecPlayerInput( wk->viewCore );
+        BOOL fCtrlUpdate = FALSE;
+
+        switch( result ){
+        case  BTLV_INPUT_BR_SEL_STOP:     //停止
+          ctrl->ctrlCode = RECCTRL_QUIT;
           BTLV_RecPlayFadeOut_Start( wk->viewCore );
           ctrl->seq = SEQ_FADEOUT;
+          break;
+
+        case BTLV_INPUT_BR_SEL_REW:
+          if( ctrl->nextTurnCount > 1 ){
+            ctrl->nextTurnCount--;
+            fCtrlUpdate = TRUE;
+          }
+          ctrl->handlingTimer = CHAPTER_CTRL_FRAMES;
+          break;
+
+        case BTLV_INPUT_BR_SEL_FF:
+          if( ctrl->nextTurnCount < ctrl->maxTurnCount ){
+            ctrl->nextTurnCount++;
+            fCtrlUpdate = TRUE;
+          }
+          ctrl->handlingTimer = CHAPTER_CTRL_FRAMES;
+          break;
         }
-        break;
+
+        if( fCtrlUpdate || fTurnUpdate ){
+          BTLV_UpdateRecPlayerInput( wk->viewCore, ctrl->turnCount, ctrl->nextTurnCount );
+        }
+
+        if( ctrl->handlingTimer )
+        {
+          if( --(ctrl->handlingTimer) == 0 )
+          {
+            ctrl->ctrlCode = RECCTRL_CHAPTER;
+            BTLV_RecPlayFadeOut_Start( wk->viewCore );
+            ctrl->seq = SEQ_FADEOUT;
+          }
+          break;
+        }
       }
       break;
 

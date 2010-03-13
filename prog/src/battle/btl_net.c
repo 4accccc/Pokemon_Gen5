@@ -99,6 +99,7 @@ typedef struct {
   u8      myNetID;
   u8      serverNetID;
 
+  u16   netIDBit;
   u8    fServerParamReceived;
   u8    memberCount;
   u8    recvCount;
@@ -174,13 +175,14 @@ const NetRecvFuncTable BtlRecvFuncTable[] = {
 };
 
 
-void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, HEAPID heapID )
+void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, u16 netIDBit, HEAPID heapID )
 {
   if( netHandle )
   {
     Sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(SYSWORK) );
 
     Sys->netHandle = netHandle;
+    Sys->netIDBit = netIDBit;
     Sys->heapID = heapID;
     Sys->myNetID = GFL_NET_GetNetID( netHandle );
     Sys->serverNetID = NETID_NULL;
@@ -209,7 +211,7 @@ void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, HEAPID heapID )
       Sys->tmpExBufferUsedSize = 0;
     }
 
-    BTL_Printf("自分のネットID=%d, 接続メンバー数=%d\n", Sys->myNetID, Sys->memberCount);
+    BTL_N_Printf( DBGSTR_NET_Startup, Sys->myNetID, Sys->memberCount);
     BTL_NET_TimingSyncStart( BTL_NET_TIMING_INITIALIZE );
   }
   else
@@ -223,7 +225,6 @@ BOOL BTL_NET_IsInitialized( void )
   {
     if( BTL_NET_IsTimingSync(BTL_NET_TIMING_INITIALIZE) )
     {
-      BTL_Printf("ネット初回シンクロ\n", result);
       return TRUE;
     }
     return FALSE;
@@ -702,10 +703,10 @@ void BTL_NET_TimingSyncStart( u8 timingID )
 {
   if( Sys )
   {
-    OS_TPrintf(" Btl TimingID=%d, handle=%p\n", timingID, Sys->netHandle );
     Sys->timingID = timingID;
     Sys->timingSyncStartFlag = TRUE;
-    GFL_NET_TimingSyncStart( Sys->netHandle, timingID );
+
+    GFL_NET_HANDLE_TimeSyncBitStart( Sys->netHandle, timingID, WB_NET_BATTLE_SERVICEID, Sys->netIDBit );
   }
 }
 
@@ -715,7 +716,7 @@ BOOL BTL_NET_IsTimingSync( u8 timingID )
   {
     if( Sys->timingSyncStartFlag )
     {
-      BOOL is_sync = GFL_NET_IsTimingSync( Sys->netHandle, Sys->timingID );
+      BOOL is_sync = GFL_NET_HANDLE_IsTimeSync( Sys->netHandle, Sys->timingID, WB_NET_BATTLE_SERVICEID );
       if( is_sync ){
         Sys->timingID = BTL_NET_TIMING_NULL;
         Sys->timingSyncStartFlag = FALSE;
@@ -724,7 +725,8 @@ BOOL BTL_NET_IsTimingSync( u8 timingID )
     }
     else
     {
-      GFL_NET_TimingSyncStart( Sys->netHandle, Sys->timingID );
+//      GFL_NET_TimingSyncStart( Sys->netHandle, Sys->timingID );
+      GFL_NET_HANDLE_TimeSyncBitStart( Sys->netHandle, timingID, WB_NET_BATTLE_SERVICEID, Sys->netIDBit );
     }
     return FALSE;
   }

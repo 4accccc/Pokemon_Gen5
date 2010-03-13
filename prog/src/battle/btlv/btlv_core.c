@@ -79,6 +79,7 @@ struct _BTLV_CORE {
   BBAG_DATA             bagData;
   BPLIST_DATA           plistData;
   BTL_POKESELECT_RESULT* pokeselResult;
+  BTLV_INPUT_BATTLE_RECORDER_PARAM  recPlayerUI;
   u8                    selectItemSeq;
   u8                    fActionPrevButton;
 
@@ -316,6 +317,14 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
   case 2:
     if( BTLV_SCU_WaitBtlIn( core->scrnU ) )
     {
+      if( BTL_CLIENT_IsRecPlayerMode(core->myClient) )
+      {
+        core->recPlayerUI.play_chapter = 1;
+        core->recPlayerUI.view_chapter = 1;
+        core->recPlayerUI.max_chapter = BTL_CLIENT_GetRecPlayerMaxChapter( core->myClient );
+        core->recPlayerUI.stop_flag = BTLV_INPUT_BR_STOP_NONE;
+        BTLV_SCD_SetupRecPlayerMode( core->scrnD, &core->recPlayerUI );
+      }
       return TRUE;
     }
     break;
@@ -2486,6 +2495,25 @@ BOOL BTLV_ForceQuitInput_Wait( BTLV_CORE* wk )
 {
   return BTLV_SCD_ForceQuitInput_Wait( wk->scrnD );
 }
+
+//=============================================================================================
+//  録画再生モードキー操作
+//=============================================================================================
+
+int BTLV_CheckRecPlayerInput( BTLV_CORE* wk )
+{
+  return BTLV_SCD_CheckRecPlayerInput( wk->scrnD );
+}
+void BTLV_UpdateRecPlayerInput( BTLV_CORE* wk, u16 currentChapter, u16 ctrlChapter )
+{
+  wk->recPlayerUI.play_chapter = currentChapter;
+  wk->recPlayerUI.view_chapter = ctrlChapter;
+
+  BTLV_SCD_SetupRecPlayerMode( wk->scrnD, &wk->recPlayerUI );
+}
+
+
+
 
 /*--------------------------------------------------------------------------------------------------*/
 /* 下請けから呼び出される関数群                                                                     */

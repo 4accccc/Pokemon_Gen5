@@ -355,6 +355,13 @@ extern BOOL BTLV_RecPlayFadeIn_Wait( BTLV_CORE* wk );
 extern void BTLV_ForceQuitInput_Notify( BTLV_CORE* wk );
 extern BOOL BTLV_ForceQuitInput_Wait( BTLV_CORE* wk );
 
+//=============================================================================================
+//  録画再生モード
+//=============================================================================================
+extern int BTLV_CheckRecPlayerInput( BTLV_CORE* wk );
+extern void BTLV_UpdateRecPlayerInput( BTLV_CORE* wk, u16 currentChapter, u16 ctrlChapter );
+
+
 //-----------------------------------------------------------
 // 各種下請けから呼び出される関数
 

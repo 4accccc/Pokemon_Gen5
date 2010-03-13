@@ -798,6 +798,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
 
 void BTL_SVFLOW_ResetSystem( BTL_SVFLOW_WORK* wk )
 {
+  OS_TPrintf("SVF Reset\n");
   clearWorks( wk );
 
 }
@@ -8233,8 +8234,6 @@ static void scproc_CheckResetMove( BTL_SVFLOW_WORK* wk )
       u8 posIdx1 = BTL_MAIN_BtlPosToPosIdx( wk->mainModule, pos1 );
       u8 posIdx2 = BTL_MAIN_BtlPosToPosIdx( wk->mainModule, pos2 );
 
-      TAYA_Printf("残り１ずつ、Pos=%d(Idx=%d), Idx2=%d (Idx=%d)..\n", pos1, posIdx1, pos2, posIdx2 );
-
       if( (posIdx1 == posIdx2) && (!BTL_MAINUTIL_IsTripleCenterPos(pos1) ) )
       {
         SCQUE_PUT_ACT_TripleResetMove( wk->que, clientID_1, posIdx1, clientID_2, posIdx2 );
@@ -8602,6 +8601,11 @@ static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
       return TRUE;
     }
   }
+  else
+  {
+    OS_TPrintf("ポケ(%d)既に死んでるので死亡コマンドを打ちません\n", pokeID);
+  }
+
   return FALSE;
 }
 //--------------------------------------------------------------------------
@@ -9434,15 +9438,12 @@ static void scPut_WazaAffinityMsg( BTL_SVFLOW_WORK* wk, u32 poke_cnt, const BtlT
     u8 pokeID[ BTL_POSIDX_MAX ];
     u8 c;
 
-    TAYA_Printf("AffInfo : TotalPoke=%d, AfGood=%d, AfBad=%d\n", poke_cnt, affGoodCnt, affBadCnt );
-
     if( affGoodCnt )
     {
       for(i=0, c=0; i<poke_cnt; ++i)
       {
         if( aff[i] > BTL_TYPEAFF_100 ){
           pokeID[c++] = BPP_GetID( bpp[i] );
-          TAYA_Printf("  GoodPokeID=%d\n", pokeID[c-1]);
         }
       }
       switch( affGoodCnt ){
@@ -9457,7 +9458,6 @@ static void scPut_WazaAffinityMsg( BTL_SVFLOW_WORK* wk, u32 poke_cnt, const BtlT
       {
         if( aff[i] < BTL_TYPEAFF_100 ){
           pokeID[c++] = BPP_GetID( bpp[i] );
-          TAYA_Printf("  BadPokeID=%d\n", pokeID[c-1]);
         }
       }
       switch( affBadCnt ){
@@ -11018,7 +11018,6 @@ static BOOL scEvent_HitCheckParam( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
         param->countMax = BTL_EVENTVAR_GetValue( BTL_EVAR_HITCOUNT );
         param->fCheckEveryTime = BTL_EVENTVAR_GetValue( BTL_EVAR_AVOID_FLAG );
       }
-      TAYA_Printf("Plural ... hitCntMax=%d\n", param->countMax );
       param->fPluralHitWaza = TRUE;
 
     BTL_EVENTVAR_Pop();
