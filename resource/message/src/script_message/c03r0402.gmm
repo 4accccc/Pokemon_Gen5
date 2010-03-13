@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-13T20:42:05"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T20:55:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -427,8 +427,8 @@
 ながく　なるから　やめておきますが
 スパゲッティは　にがて　です</language>
 		<language name="JPN_KANJI" width="256">プログラムってのは……▼
-ながく　なるから　やめておきますが
-スパゲッティは　にがて　です</language>
+長く　なるから　やめておきますが
+スパゲッティは　苦手です</language>
 	</row>
 
 	<row id="msg_c03r0402_02_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -443,14 +443,14 @@
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MAN1</attribute>
-		<language name="JPN" width="256">ポケモンしょうぶに
+		<language name="JPN" width="256">ポケモンしょうぶで
 つよくなる　ポイントはねえ▽
 そうだねえ▽
 いっぱい　しょうぶ　することかな！</language>
-		<language name="JPN_KANJI" width="256">ポケモンしょうぶに
-つよくなる　ポイントはねえ▽
+		<language name="JPN_KANJI" width="256">ポケモン勝負で
+強くなる　ポイントはねえ▽
 そうだねえ▽
-いっぱい　しょうぶ　することかな！</language>
+いっぱい　勝負することかな！</language>
 	</row>
 
 	<row id="msg_c03r0402_04_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -458,16 +458,25 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
 		<language name="JPN" width="256">おれ　カビゴン▼
-じゃなくて　プランナーです</language>
+じゃなくて　プランナー！
+たべのこし　って　だいじだよね</language>
 		<language name="JPN_KANJI" width="256">おれ　カビゴン▼
-じゃなくて　プランナーです</language>
+じゃなくて　プランナー！
+たべのこし　って　重要だよね</language>
 	</row>
 
 	<row id="msg_c03r0402_05_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>？
 ・GRIDX=2、GRIDZ=11</comment>
-		<language name="JPN" width="256">サウンドやで</language>
-		<language name="JPN_KANJI" width="256">サウンドやで</language>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">ぼく　サウンドデザイナー！▼
+おんがくが　かわる　すてきな
+しかけを　たくさん　いれたでー！▽
+きみ　いくつ　きがついた？</language>
+		<language name="JPN_KANJI" width="256">ぼく　サウンドデザイナー！▼
+音楽が　変わる　すてきな
+しかけを　たくさん　いれたでー！▽
+きみ　いくつ　気がついた？</language>
 	</row>
 
 	<flowchart-group-list>
