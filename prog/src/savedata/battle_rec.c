@@ -209,7 +209,7 @@ void * BattleRec_RecWorkAdrsGet( void )
   GF_ASSERT(brs);
 
   work = (u8*)brs;
-  return &work[sizeof(EX_CERTIFY_SAVE_KEY)];
+  return work;
 }
 
 //--------------------------------------------------------------

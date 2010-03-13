@@ -525,7 +525,6 @@ int GDSRAP_Tool_Send_BattleVideoUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp
 	}
 
 	//録画データとGDSプロフィールはGT系と全く同じ型のはず
-	GF_ASSERT((BattleRec_GetWorkSize()-sizeof(EX_CERTIFY_SAVE_KEY)) == sizeof(GT_BATTLE_REC_SEND));
 	GF_ASSERT(sizeof(GT_GDS_PROFILE) == sizeof(GDS_PROFILE));
 
 	//録画データは巨大な為、コピーせずに、そのままbrsのデータを送信する
