@@ -485,12 +485,12 @@ GAME_COMM_NO GameCommSys_GetCommGameNo(GAME_COMM_SYS_PTR gcsp)
  * @param   gcsp		
  *
  * @retval  		TRUE:初期化待ち、終了待ち、等のシステム系の待ち状態になっている
- * @retval      FALSE:通常の更新処理を実行している状態
+ * @retval      FALSE:通常の更新処理を実行している or GAME_COMM_NO_NULL 状態
  */
 //==================================================================
 BOOL GameCommSys_CheckSystemWaiting(GAME_COMM_SYS_PTR gcsp)
 {
-  if(gcsp->game_comm_no == GAME_COMM_NO_NULL || gcsp->sub_work.seq != GCSSEQ_UPDATE){
+  if(gcsp->game_comm_no != GAME_COMM_NO_NULL && gcsp->sub_work.seq != GCSSEQ_UPDATE){
     return TRUE;
   }
   return FALSE;
