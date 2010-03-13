@@ -32,26 +32,11 @@ _EVENT_DATA		ev_c01_glasses_01
 _EVENT_DATA		ev_c01_leader_01
 _EVENT_DATA		ev_scene_c01_pdwguide_01
 _EVENT_DATA		ev_c01_inventor_01
-_EVENT_DATA		ev_zone_c01
 _EVENT_DATA		ev_c01_woman2a_01
 _EVENT_DATA		ev_c01_fising_01
 _EVENT_DATA		ev_bg_c01_gymsign_01
 _EVENT_DATA		ev_c01_badman1_01
 _EVENT_DATA_END
-
-
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_c01_flag_change:
-//  _END
-
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-INIT_EVENT_START	ev_zone_c01
-
-INIT_EVENT_END
 
 /**************************************************************/
 /*  C01 BADMANの会話用イベントスクリプト                      */
