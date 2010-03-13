@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T21:45:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="250"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1508" top="197" right="2213" bottom="817" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,484 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_t04r0101_boy3_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・初回：波際に立っている。
+・この後、「はい／いいえ」を選択
+・「はい」で連戦スタート
+・「いいえ」でmsg_t04r0101_boy3_03</comment>
+		<attribute name="キャラ指定">息子
+じゅくがえり</attribute>
+		<language name="JPN" width="256">ひまで　ひまで
+しかたないって　かおだろう！▼
+ようし！
+この　ボクが　あいて　してやろう！</language>
+		<language name="JPN_KANJI" width="256">暇で　暇で
+仕方ないって　顔だろう！▼
+ようし！
+この　ボクが　相手してやろう！</language>
+	</row>
+
+	<row id="msg_t04r0101_boy3_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・msg_t04r0101_boy3_01で「いいえ」を選択</comment>
+		<attribute name="キャラ指定">息子
+じゅくがえり</attribute>
+		<language name="JPN" width="256">なんだよう　ひまじゃないのか……</language>
+		<language name="JPN_KANJI" width="256">なんだよう　暇じゃないのか……</language>
+	</row>
+
+	<row id="msg_t04r0101_boy3_01c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・主人公がまけた場合</comment>
+		<attribute name="キャラ指定">息子
+じゅくがえり</attribute>
+		<language name="JPN" width="256">どうしてもって　いうなら
+また　あした▽
+あいて　してやっても　いいぞ！</language>
+		<language name="JPN_KANJI" width="256">どうしてもって　いうなら
+また　明日▽
+相手して　やっても　いいぞ!</language>
+	</row>
+
+	<row id="msg_t04r0101_boy3_01d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・初戦闘勝利後
+・この後、豪邸まで主人公を連れ歩く</comment>
+		<attribute name="キャラ指定">息子
+じゅくがえり</attribute>
+		<language name="JPN" width="256">オマエ　きにいったぞ！▼
+とっておきの　もの　みせてやるから
+うちに　こい！▼</language>
+		<language name="JPN_KANJI" width="256">オマエ　気に入ったぞ！▼
+とっておきの　もの　見せてやるから
+うちに　こい！▼</language>
+	</row>
+
+	<row id="msg_t04r0101_boy3_01e" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・豪邸の中央部分まで歩いてから会話開始。
+・メッセージの後に、コレクション棚の方を向く。</comment>
+		<attribute name="キャラ指定">息子
+じゅくがえり</attribute>
+		<language name="JPN" width="256">すごいだろ！　ひろいだろ！▼
+ここは　パパの　べっそうで
+じゆうに　つかって　いいんだ！▼</language>
+		<language name="JPN_KANJI" width="256">すごいだろ！　広いだろ！▼
+ここは　パパの　別荘で
+自由に　使っていいんだ！▼</language>
+	</row>
+
+	<row id="msg_t04r0101_boy3_01f" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続き。
+・メッセージの後に再び主人公の方に向きなおす</comment>
+		<attribute name="キャラ指定">息子
+じゅくがえり</attribute>
+		<language name="JPN" width="256">……でも　きてみたら　いがいと
+することなくて　ひまでさ▼
+パパは　あのとおり
+いせきひんに　むちゅうだし……▼</language>
+		<language name="JPN_KANJI" width="256">……でも　来てみたら　意外と
+することなくて　暇でさ▼
+パパは　あの通り
+遺跡品に　夢中だし……▼</language>
+	</row>
+
+	<row id="msg_t04r0101_boy3_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続き。
+・以降、本日中はこのメッセージを表示する。</comment>
+		<attribute name="キャラ指定">息子
+じゅくがえり</attribute>
+		<language name="JPN" width="256">なぁ　オマエ　ひまなんだろう？▼
+あしたも　こいよ！
+ボクが　あいて　してやっても　いいぞ！</language>
+		<language name="JPN_KANJI" width="256">なぁ　オマエ　暇なんだろう？▼
+明日も　こいよ！
+ボクが　相手してやっても　いいぞ！</language>
+	</row>
+
+	<row id="msg_t04r0101_boy3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・初回以降、息子に話し書ける時。
+・この後に連戦スタート。</comment>
+		<attribute name="キャラ指定">息子
+じゅくがえり</attribute>
+		<language name="JPN" width="256">きたな！▼
+ひまで　ひまで
+しかたないって　かおだろう！▼
+この　ボクが　あいて
+してやっても　いいぞ！</language>
+		<language name="JPN_KANJI" width="256">きたな！▼
+暇で　暇で
+仕方ないって　顔だろう！▼
+この　ボクが　相手
+してやっても　いいぞ！</language>
+	</row>
+
+	<row id="msg_t04r0101_boy3_02a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・トレーナー戦闘へ</comment>
+		<attribute name="キャラ指定">息子
+じゅくがえり</attribute>
+		<language name="JPN" width="256">いざ　じんじょうに　しょうぶっ！▼</language>
+		<language name="JPN_KANJI" width="256">いざ　じんじょうに　しょうぶっ！▼</language>
+	</row>
+
+	<row id="msg_t04r0101_boy3_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・家族全員に勝利したあとのメッセージ</comment>
+		<attribute name="キャラ指定">息子
+じゅくがえり</attribute>
+		<language name="JPN" width="256">オマエ　すごいじゃないか！
+すこしだけ　みとめてやっても　いいぞ！</language>
+		<language name="JPN_KANJI" width="256">オマエ　すごいじゃないか！
+すこしだけ　みとめてやっても　いいぞ！</language>
+	</row>
+
+	<row id="msg_t04r0101_girl4_01">
+		<comment>♀
+・ふきだしのみ。この後にマップ外から登場し、
+　主人公の目の前まで移動する。</comment>
+		<attribute name="キャラ指定">姉
+お嬢様</attribute>
+		<language name="JPN" width="256">あら　たのしそうね▼</language>
+		<language name="JPN_KANJI" width="256">あら　楽しそうね▼</language>
+	</row>
+
+	<row id="msg_t04r0101_girl4_02">
+		<comment>♀
+・続けて。この後戦闘に入る。</comment>
+		<attribute name="キャラ指定">姉
+お嬢様</attribute>
+		<language name="JPN" width="256">ごきげんよう　トレーナーさん▼
+おとうさまの　べっそう
+することが　なくて　たいくつしてましたの！▽
+あたくしも　まぜてくださる？▼</language>
+		<language name="JPN_KANJI" width="256">ごきげんよう　トレーナーさん▼
+お父様の　別荘
+することが　なくて　退屈してましたの！▽
+あたくしも　まぜてくださる？▼</language>
+	</row>
+
+	<row id="msg_t04r0101_girl4_03">
+		<comment>♀
+・戦闘終了後、主人公が勝利した場合</comment>
+		<attribute name="キャラ指定">姉
+お嬢様</attribute>
+		<language name="JPN" width="256">おとうさまの　べっそうでは
+じかんを　もてあましますわ▼
+また　あしたも　いらして　ください
+おあいて　いたしますわ</language>
+		<language name="JPN_KANJI" width="256">お父様の　別荘では
+時間を　持て余しますわ▼
+また　明日も　いらして　ください
+お相手　いたしますわ</language>
+	</row>
+
+	<row id="msg_t04r0101_girl4_04">
+		<comment>♀
+・連戦前、能動的に話しかけた場合</comment>
+		<attribute name="キャラ指定">姉
+お嬢様</attribute>
+		<language name="JPN" width="256">ごきげんよう
+きょうも　きてくださったのね▼
+また　おあいて　ねがいますわ
+そうね……▼
+まずは　おとうとの
+あいてを　おねがいしますわ！</language>
+		<language name="JPN_KANJI" width="256">ごきげんよう
+今日も　来てくださったのね▼
+また　お相手　願いますわ
+そうね……▼
+まずは　弟の
+相手を　お願いしますわ！</language>
+	</row>
+
+	<row id="msg_t04r0101_girl4_05">
+		<comment>♀
+・家族全員勝ち抜いた後、話しかけた場合。</comment>
+		<attribute name="キャラ指定">姉
+お嬢様</attribute>
+		<language name="JPN" width="256">？？？？？け　あげてでも
+かなうことのない　その　おつよさ……▽
+けいふく　いたしますわ！</language>
+		<language name="JPN_KANJI" width="256">？？？？？家　あげてでも
+敵うことのない　その　お強さ……▽
+敬服　いたしますわ！</language>
+	</row>
+
+	<row id="msg_t04r0101_lady_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ふきだしのみ。この後にマップ外から登場し、
+　主人公の目の前まで移動する。</comment>
+		<attribute name="キャラ指定">おばあちゃん
+マダム</attribute>
+		<language name="JPN" width="256">おやおや
+なにやら　にぎやかですわねぇ▼</language>
+		<language name="JPN_KANJI" width="256">おやおや
+なにやら　にぎやかですわねぇ▼</language>
+	</row>
+
+	<row id="msg_t04r0101_lady_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・移動終了後、戦闘前のセリフ</comment>
+		<attribute name="キャラ指定">おばあちゃん
+マダム</attribute>
+		<language name="JPN" width="256">まごの　おあいて　してくださって
+かんしゃ　しますよ▼
+……どれどれ▼
+まごを　こえる　その　うで
+みせていただこうかしら▼</language>
+		<language name="JPN_KANJI" width="256">孫の　お相手　してくださって
+感謝　しますよ▼
+……どれどれ▼
+孫を　こえる　その　うで
+見せていただこうかしら▼</language>
+	</row>
+
+	<row id="msg_t04r0101_lady_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・戦闘終了後、話しかけた場合</comment>
+		<attribute name="キャラ指定">おばあちゃん
+マダム</attribute>
+		<language name="JPN" width="256">サザナミタウンは　とても　のんびりできて
+きもちのよい　ところですわ▼
+……でも　まごには　いささか
+たいくつなよう▼
+また　あしたも　いらっしゃいな
+まごも　よろこぶでしょう</language>
+		<language name="JPN_KANJI" width="256">サザナミタウンは　とても　のんびりできて
+気持ちのよい　所ですわ▼
+……でも　孫には
+いささか　退屈なよう▼
+また　明日も　いらっしゃいな
+孫達も　喜ぶでしょう</language>
+	</row>
+
+	<row id="msg_t04r0101_lady_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・連戦前、能動的に話しかけた場合</comment>
+		<attribute name="キャラ指定">おばあちゃん
+マダム</attribute>
+		<language name="JPN" width="256">あら　いらっしゃい
+まごが　あなたと　しょうぶ　したくて▽
+ウズウズしていますよ</language>
+		<language name="JPN_KANJI" width="256">あら　いらっしゃい
+孫が　あなたと　勝負　したくて▽
+ウズウズしていますよ</language>
+	</row>
+
+	<row id="msg_t04r0101_lady_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・家族全員勝ち抜いた後、話しかけた場合。</comment>
+		<attribute name="キャラ指定">おばあちゃん
+マダム</attribute>
+		<language name="JPN" width="256">さいきんの　おこさんは
+ポケモンしょうぶが　おつよいのね▼
+ホホホ　まごたちも　あなたのような
+トレーナーに　なれるかしら</language>
+		<language name="JPN_KANJI" width="256">さいきんの　お子さんは
+ポケモン勝負が　お強いのね▼
+ホホホ　孫達も　あなたのような
+トレーナーに　なれるかしら</language>
+	</row>
+
+	<row id="msg_t04r0101_gentleman_01">
+		<comment>♂
+・ふきだしのみ。この後にマップ外から登場し、
+　主人公の目の前まで移動する。</comment>
+		<attribute name="キャラ指定">おじいちゃん
+ジェントルマン</attribute>
+		<language name="JPN" width="256">ホッホッホ
+ポケモン　しょうぶとは　なつかしい！▼</language>
+		<language name="JPN_KANJI" width="256">ホッホッホ
+ポケモン　勝負とは　なつかしい！▼</language>
+	</row>
+
+	<row id="msg_t04r0101_gentleman_02">
+		<comment>♂
+・移動終了後、戦闘前のセリフ</comment>
+		<attribute name="キャラ指定">おじいちゃん
+ジェントルマン</attribute>
+		<language name="JPN" width="256">ちが　たぎりますな！
+……おあいて　おねがいできますかな？▼</language>
+		<language name="JPN_KANJI" width="256">ちが　たぎりますな！
+……お相手　お願いできますかな？▼</language>
+	</row>
+
+	<row id="msg_t04r0101_gentleman_03">
+		<comment>♂
+・戦闘終了後、主人公が勝利した場合</comment>
+		<attribute name="キャラ指定">おじいちゃん
+ジェントルマン</attribute>
+		<language name="JPN" width="256">ホッホ　いくつに　なっても
+ポケモンしょうぶは　たのしいものですな！▼
+たまには　こういった
+しげきも　わるくない！</language>
+		<language name="JPN_KANJI" width="256">ホッホ　いくつに　なっても
+ポケモン勝負は　楽しいものですな！▼
+たまには　こう言った
+刺激も　悪くない！</language>
+	</row>
+
+	<row id="msg_t04r0101_gentleman_04">
+		<comment>♂
+・連戦前、能動的に話しかけた場合</comment>
+		<attribute name="キャラ指定">おじいちゃん
+ジェントルマン</attribute>
+		<language name="JPN" width="256">ホッホ　いらっしゃい
+きみが　くると　しげきがあって　よいですな</language>
+		<language name="JPN_KANJI" width="256">ホッホ　いらっしゃい
+きみが　くると　刺激があって　よいですな</language>
+	</row>
+
+	<row id="msg_t04r0101_gentleman_05">
+		<comment>♂
+・家族全員勝ち抜いた後、話しかけた場合。</comment>
+		<attribute name="キャラ指定">おじいちゃん
+ジェントルマン</attribute>
+		<language name="JPN" width="256">ホッホ！
+いっか　そろっての　ポケモンしょうぶ！▽
+たのしませて　もらいましたぞ！</language>
+		<language name="JPN_KANJI" width="256">ホッホ！
+一家　そろっての　ポケモン勝負！▽
+楽しませて　もらいましたぞ！</language>
+	</row>
+
+	<row id="msg_t04r0101_veteranw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ふきだしのみ。この後にマップ外から登場し、
+　主人公の目の前まで移動する。</comment>
+		<attribute name="キャラ指定">母
+ベテラントレーナー</attribute>
+		<language name="JPN" width="256">なにごとかしら？
+ずいぶんと　にぎやかね▼</language>
+		<language name="JPN_KANJI" width="256">何ごとかしら？
+随分と　にぎやかね▼</language>
+	</row>
+
+	<row id="msg_t04r0101_veteranw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・移動終了後、戦闘前のセリフ</comment>
+		<attribute name="キャラ指定">母
+ベテラントレーナー</attribute>
+		<language name="JPN" width="256">ぼうや　おつよいのかしら？
+ならば　わたくしを　たおしてごらんなさい！▼</language>
+		<language name="JPN_KANJI" width="256">坊や　お強いのかしら？
+ならば　私を　倒してごらんなさい！▼</language>
+	</row>
+
+	<row id="msg_t04r0101_veteranw_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・戦闘終了後、主人公が勝利した場合</comment>
+		<attribute name="キャラ指定">母
+ベテラントレーナー</attribute>
+		<language name="JPN" width="256">これでも　わたくし
+ポケモンには　くわしくてよ▼
+また　おあいて　ねがいますわ▼</language>
+		<language name="JPN_KANJI" width="256">これでも　わたくし
+ポケモンには　詳しくてよ▼
+また　お相手　願いますわ▼</language>
+	</row>
+
+	<row id="msg_t04r0101_veteranw_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・連戦前、能動的に話しかけた場合</comment>
+		<attribute name="キャラ指定">母
+ベテラントレーナー</attribute>
+		<language name="JPN" width="256">ようこそ
+？？？？？けの　しんの　つよさ
+きょうこそ　おみせ　いたしますわ！</language>
+		<language name="JPN_KANJI" width="256">ようこそ
+？？？？？家の　真の　強さ
+今日こそ　お見せ　いたしますわ！</language>
+	</row>
+
+	<row id="msg_t04r0101_veteranw_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・家族全員勝ち抜いた後、話しかけた場合。</comment>
+		<attribute name="キャラ指定">母
+ベテラントレーナー</attribute>
+		<language name="JPN" width="256">かんぱい　ですわ▼
+この　？？？？？け
+あなたの　こんごを　こころから▽
+おうえん　いたします</language>
+		<language name="JPN_KANJI" width="256">完敗　ですわ▼
+この　？？？？？家
+あなたの　今後を　心から▽
+応援　いたします</language>
+	</row>
+
+	<row id="msg_t04r0101_boy4_01">
+		<comment>♂
+・ふきだしのみ。この後にマップ外から登場し、
+　主人公の目の前まで移動する。</comment>
+		<attribute name="キャラ指定">兄
+お坊ちゃま</attribute>
+		<language name="JPN" width="256">きみたち　それでも　？？？？？家の
+いちいんかい？▼</language>
+		<language name="JPN_KANJI" width="256">きみたち　それでも　？？？？？家の
+一員かい？▼</language>
+	</row>
+
+	<row id="msg_t04r0101_boy4_02">
+		<comment>♂
+・移動終了後、戦闘前のセリフ</comment>
+		<attribute name="キャラ指定">兄
+お坊ちゃま</attribute>
+		<language name="JPN" width="256">？？？？？け　じきとうしゅ　▲▲▲▲▲！
+いっかの　めいよは　このボクが　まもろう！</language>
+		<language name="JPN_KANJI" width="256">？？？？？家　次期当主　▲▲▲▲▲！
+一家の　名誉は　このボクが　護ろう！</language>
+	</row>
+
+	<row id="msg_t04r0101_boy4_03">
+		<comment>♂
+・戦闘終了後、主人公が勝利した場合</comment>
+		<attribute name="キャラ指定">兄
+お坊ちゃま</attribute>
+		<language name="JPN" width="256">また　あしたも　くるがいい▼
+だが　？？？？？けの　なに　かけて
+ボクは　まけるつもりは　ないよ</language>
+		<language name="JPN_KANJI" width="256">また　明日も　来るがいい▼
+だが　？？？？？家の　名に　かけて
+ボクは　負けるつもりは　ないよ</language>
+	</row>
+
+	<row id="msg_t04r0101_boy4_04">
+		<comment>♂
+・連戦前、能動的に話しかけた場合</comment>
+		<attribute name="キャラ指定">兄
+お坊ちゃま</attribute>
+		<language name="JPN" width="256">きたな▼
+かぞくを　たおすことが　できたら
+あいてを　してやろうじゃないか</language>
+		<language name="JPN_KANJI" width="256">きたな▼
+家族を　倒すことが　出来たら
+相手を　してやろうじゃないか</language>
+	</row>
+
+	<row id="msg_t04r0101_boy4_05">
+		<comment>♂
+・家族全員勝ち抜いた後、話しかけた場合。</comment>
+		<attribute name="キャラ指定">兄
+お坊ちゃま</attribute>
+		<language name="JPN" width="256">……　……
+……　……▼
+……　……
+……　……▼
+……フッ▼
+まだ　とうしゅを　なのるには
+はやい……　そういう　ことか</language>
+		<language name="JPN_KANJI" width="256">……　……
+……　……▼
+……　……
+……　……▼
+……フッ▼
+まだ　当主に　名乗るには
+早い……　そういう　ことか</language>
 	</row>
 
 	<flowchart-group-list>
