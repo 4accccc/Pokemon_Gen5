@@ -72,7 +72,7 @@ static GMEVENT * DEBUG_EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_W
 static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*work);
 static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm);
 static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*work);
-static void DEBUG_PalaceMapInCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, GAME_COMM_SYS_PTR game_comm, FIELD_PLAYER *pcActor);
+static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, GAME_COMM_SYS_PTR game_comm, FIELD_PLAYER *pcActor);
 static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm);
 
 
@@ -99,17 +99,8 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   int i, my_net_id;
   BOOL update_ret;
 
-  //パレスマップに来たかチェック
-  DEBUG_PalaceMapInCheck(fieldWork, gameSys, game_comm, pcActor);
-
-#if 0
-  if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION){
-    if(intcomm->palace != NULL){ //すごいやっつけっぽいけど所詮デバッグ用のアクターなので
-      PALACE_DEBUG_EnableNumberAct(intcomm->palace, FALSE);
-    }
-    return;
-  }
-#endif
+  //パレス通信自動起動ON/OFF処理
+  _PalaceMapCommBootCheck(fieldWork, gameSys, game_comm, pcActor);
 
   if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION || intcomm == NULL){
     return;
@@ -574,61 +565,52 @@ static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*wo
 
 //--------------------------------------------------------------
 /**
- * デバッグ：パレスマップに入ってきたかチェックし、入ってくれば通信起動などをする
- *   ※check　将来的にスクリプトでマップ毎に自動起動イベントが出来るようになったらこれは削除する
+ * 自分のパレス島の中にいるか、橋側にいるかを判定
+ *
+ * @param   player_pos		
+ *
+ * @retval  BOOL		    TRUE:橋　FALSE:パレス島
+ */
+//--------------------------------------------------------------
+static BOOL _PlayerPosCheck_PalaceBridge(const VecFx32 *player_pos)
+{
+  if(player_pos->x >= 0x348000 || player_pos->x <= 0xb8000){
+    return TRUE;  //橋の上
+  }
+  return FALSE;   //自分のパレス島の中
+}
+
+//--------------------------------------------------------------
+/**
+ * パレス通信自動起動ON/OFF処理
  *
  * @param   fieldWork		
  * @param   gameSys		
+ * @param   game_comm		
+ * @param   pcActor		
  */
 //--------------------------------------------------------------
-extern u8 debug_palace_comm_seq;
-static void DEBUG_PalaceMapInCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, GAME_COMM_SYS_PTR game_comm, FIELD_PLAYER *pcActor)
+static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, GAME_COMM_SYS_PTR game_comm, FIELD_PLAYER *pcActor)
 {
-  PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
-//  ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
-  ZONEID zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(GAMESYSTEM_GetGameData(gameSys)));
+  ZONEID zone_id;
   GAME_COMM_NO comm_no;
+
+  VecFx32 player_pos;
+
+  if(GameCommSys_CheckSystemWaiting(game_comm) == TRUE){
+    return;
+  }
   
-  switch(debug_palace_comm_seq){
-  case 0:
-    comm_no = GameCommSys_BootCheck(game_comm);
-    //子として接続した場合
-    if(comm_no == GAME_COMM_NO_INVASION){
-      debug_palace_comm_seq = 2;
-      break;
-    }
-    
-  #if 0 //パレス島にいるなら橋とか関係なく通信開始になった 2009.10.28(水)
-    {
-      VecFx32 pos;
-      
-      FIELD_PLAYER_GetPos( pcActor, &pos );
-      pos.x >>= FX32_SHIFT;
-      if( !((pos.x <= 1016) || (pos.x >= 2056)) ){
-        //橋ではない場所にいるなら通信は開始しない
-        return;
-      }
-    }
-  #endif
-    
-    //ビーコンサーチ状態でパレスに入ってきた場合
-    if(ZONEDATA_IsPalace(zone_id) == TRUE && (comm_no == GAME_COMM_NO_FIELD_BEACON_SEARCH
-        || comm_no == GAME_COMM_NO_DEBUG_SCANONLY)
-        && GameCommSys_CheckSystemWaiting(game_comm) == FALSE){
-      OS_TPrintf("ビーコンサーチを終了\n");
-      GameCommSys_ExitReq(game_comm);
-      debug_palace_comm_seq++;
-      break;
-    }
-    
-    //親として起動している場合のチェック
-    if(ZONEDATA_IsPalace(zone_id) == FALSE || GFL_NET_IsExit() == FALSE || comm_no != GAME_COMM_NO_NULL){
-      return;
-    }
-    debug_palace_comm_seq++;
-    break;
-  case 1:
-    if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL){
+  zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(GAMESYSTEM_GetGameData(gameSys)));
+  if(ZONEDATA_IsPalace(zone_id) == FALSE){
+    return;
+  }
+  
+  FIELD_PLAYER_GetPos( pcActor, &player_pos );
+  comm_no = GameCommSys_BootCheck(game_comm);
+  switch(comm_no){
+  case GAME_COMM_NO_NULL:
+    if(_PlayerPosCheck_PalaceBridge(&player_pos) == TRUE){
       FIELD_INVALID_PARENT_WORK *invalid_parent;
       
       invalid_parent = GFL_HEAP_AllocClearMemory(
@@ -638,26 +620,28 @@ static void DEBUG_PalaceMapInCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
       invalid_parent->game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSys);
       GameCommSys_Boot(game_comm, GAME_COMM_NO_INVASION, invalid_parent);
 
-      OS_TPrintf("パレス通信自動起動\n");
-      debug_palace_comm_seq++;
+      OS_TPrintf("パレス通信起動：親\n");
     }
     break;
-  case 2:
-    if(GameCommSys_CheckSystemWaiting(game_comm) == FALSE){
-      OS_TPrintf("パレス通信自動起動完了\n");
-      debug_palace_comm_seq++;
+  case GAME_COMM_NO_INVASION:
+    //自分のパレス島にいて接続している相手もいない場合は通信終了
+    if(_PlayerPosCheck_PalaceBridge(&player_pos) == FALSE
+        && GFL_NET_SystemGetConnectNum() <= 1){
+      if(GAMESYSTEM_GetAlwaysNetFlag(gameSys) == TRUE){
+        GameCommSys_ChangeReq(game_comm, GAME_COMM_NO_FIELD_BEACON_SEARCH, gameSys);
+        OS_TPrintf("パレス通信終了：ビーコンサーチへ\n");
+      }
+      else{
+        GameCommSys_ExitReq(game_comm);
+        OS_TPrintf("パレス通信終了：通信END\n");
+      }
     }
     break;
-  case 3:
-    if(ZONEDATA_IsPalace(zone_id) == TRUE){
-//      PALACE_DEBUG_CreateNumberAct(intcomm->palace, GFL_HEAP_LOWID(GFL_HEAPID_APP));
-      debug_palace_comm_seq++;
-    }
-    break;
-  case 4:
-    if(ZONEDATA_IsPalace(zone_id) == FALSE){
-//      PALACE_DEBUG_DeleteNumberAct(intcomm->palace);
-      debug_palace_comm_seq = 3;
+  case GAME_COMM_NO_FIELD_BEACON_SEARCH:
+    //自分のパレス島にいて橋の上にいるならビーコンサーチをOFF
+    if(_PlayerPosCheck_PalaceBridge(&player_pos) == TRUE){
+      GameCommSys_ExitReq(game_comm);
+      OS_TPrintf("ビーコンサーチ終了\n");
     }
     break;
   }
