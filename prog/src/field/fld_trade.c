@@ -60,6 +60,7 @@
 #include "../../../resource/fld_trade/fld_trade_list.h"  // for FLD_TRADE_POKE_xxxx
 #include "poke_tool/shinka_check.h"
 #include "demo/shinka_demo.h"
+#include "poke_tool/poke_memo.h"
 
 FS_EXTERN_OVERLAY(pokemon_trade);
 
@@ -104,8 +105,9 @@ struct _FLD_TRADE_WORK
 //-----------------------------------------------------------------------------
 static STRBUF* GetTradeMsgData( u32 heapID, u32 idx );
 
-static void SetPokemonParam( POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data, 
-	                           u32 trade_no, u32 zone_id, int heapID );
+static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID, u32 zone_id,
+                             POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data, 
+	                           u32 trade_no );
 
 static void PP_Dump( const POKEMON_PARAM* pp );
 static void FTP_Dump( const FLD_TRADE_POKEDATA* ftp );
@@ -481,15 +483,17 @@ static STRBUF* GetTradeMsgData( u32 heapID, u32 str_id )
 /**
  *	@brief	ポケモンパラムにデータの設定
  *
+ *  @param  gameData
+ *	@param	heapID		heapID
+ *	@param	zoneID		トレーナーメモに記載するゾーンID
  *	@param	pp		    ポケモンパラム
  *	@param	data		  データ
  *	@param	trade_no	tradeナンバー
- *	@param	zoneID		トレーナーメモに記載するゾーンID
- *	@param	heapID		heapID
  */
 //-----------------------------------------------------------------------------
-static void SetPokemonParam( POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data, 
-	                           u32 trade_no, u32 zone_id, int heapID )
+static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID, u32 zone_id,
+                             POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data, 
+	                           u32 trade_no )
 {
 	STRBUF* strbuf;
 	u32 placeid; 
@@ -550,13 +554,13 @@ static void SetPokemonParam( POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data,
 	// 国コード
 	PP_Put( pp, ID_PARA_country_code, data->world_code );
 
-#if 0
-	// トレーナーメモ設定
-	placeid = ZoneData_GetPlaceNameID( zone_id );
-	TrainerMemoSetPP( pp, NULL, memo, placeid, heapID );
-#endif
-  // 捕まえた場所
-	PP_Put( pp, ID_PARA_get_place, zone_id );
+  // トレーナーメモ
+  {
+    MYSTATUS* mystatus;
+    mystatus = GAMEDATA_GetMyStatus( gameData );
+    POKE_MEMO_SetTrainerMemoPP( 
+        pp, POKE_MEMO_GAME_TRADE, mystatus, POKE_MEMO_PLACE_GAME_TRADE, heapID );
+  }
 
   PP_Dump( pp );
 
@@ -697,10 +701,10 @@ enum{
 static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
 {
   FLD_TRADE_EVWORK* work = (FLD_TRADE_EVWORK*)wk;
-  GAMESYS_WORK* gameSystem = work->gameSystem;
-  GAMEDATA* gameData = work->gameData;
-  POKEPARTY* pokeParty = work->pokeParty;
-  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gameSystem );
+  GAMESYS_WORK*     gameSystem = work->gameSystem;
+  GAMEDATA*         gameData = work->gameData;
+  POKEPARTY*        pokeParty = work->pokeParty;
+  FIELDMAP_WORK*    fieldmap = GAMESYSTEM_GetFieldMapWork( gameSystem );
 
   switch( *seq )
   {
@@ -711,8 +715,10 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
       u16 zoneID = FIELDMAP_GetZoneID( fieldmap );
        
       work->tradeWork = FLD_TRADE_WORK_Create( HEAPID_PROC, work->tradeNo );
-      SetPokemonParam( work->tradeWork->p_pp, work->tradeWork->p_pokedata, 
-                       work->tradeNo, zoneID, HEAPID_PROC );
+      SetPokemonParam( gameData, HEAPID_PROC, zoneID,
+                       work->tradeWork->p_pp, 
+                       work->tradeWork->p_pokedata, 
+                       work->tradeNo );
     }
     // DEBUG:
     PP_Dump( work->tradeWork->p_pp );

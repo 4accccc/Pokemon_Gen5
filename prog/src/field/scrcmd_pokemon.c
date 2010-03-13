@@ -31,9 +31,6 @@
 
 #include "savedata/box_savedata.h"
 
-#include "savedata/sodateya_work.h"
-#include "sodateya.h" // for POKEMON_EGG_Birth
-
 #include "event_poke_status.h" // for EvCmdPartyPokeSelect
 
 
