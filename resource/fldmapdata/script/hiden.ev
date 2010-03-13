@@ -500,13 +500,20 @@ EVENT_END
 /* 海底神殿　謎解き　2F */
 /**************************************************************/
 EVENT_START ev_hiden_seatemple_2f
-	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
-	_SYSWIN_MSG( msg_flash_01 , POS_DOWN )
-	_SYSWIN_CLOSE()
 
-  _CALL sub_cutin_player_form_set
-	_CALL_POKE_CUTIN(SCWK_PARAM0)
-  _CALL sub_cutin_player_player_form_return
+  _FLAG_CHECK( FE_SEA_TEMPLE_FLASH, SCWK_ANSWER ) //謎解きフラグチェック
+
+  IF $SCWK_ANSWER == 0 THEN
+
+    _TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
+    _SYSWIN_MSG( msg_flash_01 , POS_DOWN )
+    _SYSWIN_CLOSE()
+
+    _CALL sub_cutin_player_form_set
+    _CALL_POKE_CUTIN(SCWK_PARAM0)
+    _CALL sub_cutin_player_player_form_return
+
+  ENDIF
 
 EVENT_END
 
@@ -517,14 +524,18 @@ EVENT_END
 EVENT_START ev_hiden_seatemple_3f
 
 
-  //_FLAG_SET( SYS_FLAG_KAIRIKI )      //謎解き用フラグセット
-  _TEMOTI_NICK_NAME( 0, SCWK_PARAM0 )
-  _SYSWIN_MSG( msg_kairiki_05 , POS_DOWN )
-  _SYSWIN_CLOSE()
+  _FLAG_CHECK( FE_SEA_TEMPLE_KAIRIKI, SCWK_ANSWER ) //謎解きフラグチェック
 
-  _CALL sub_cutin_player_form_set
-  _CALL_POKE_CUTIN(SCWK_PARAM0) //カットイン
-  _CALL sub_cutin_player_player_form_return
+  IF $SCWK_ANSWER == 0 THEN
 
+    _TEMOTI_NICK_NAME( 0, SCWK_PARAM0 )
+    _SYSWIN_MSG( msg_kairiki_05 , POS_DOWN )
+    _SYSWIN_CLOSE()
+
+    _CALL sub_cutin_player_form_set
+    _CALL_POKE_CUTIN(SCWK_PARAM0) //カットイン
+    _CALL sub_cutin_player_player_form_return
+    
+  ENDIF
 
 EVENT_END
