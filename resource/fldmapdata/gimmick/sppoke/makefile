@@ -83,7 +83,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 #	@echo $<をコンバート
 	@g3dcvtr $<
 
-%.nsbma:	data/%.itp
+%.nsbtp:	data/%.itp
 #	@echo $<をコンバート
 	@g3dcvtr $<
 

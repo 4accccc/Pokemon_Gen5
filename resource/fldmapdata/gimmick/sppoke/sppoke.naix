@@ -1,0 +1,25 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: sppoke.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2010-03-13T22:41:31
+ *****************************************************************************/
+
+#ifndef NARC_SPPOKE_NAIX_
+#define NARC_SPPOKE_NAIX_
+
+enum {
+	NARC_sppoke_mb_in_nsbmd = 0,
+	NARC_sppoke_mb_in_nsbca = 1,
+	NARC_sppoke_mb_in_nsbma = 2,
+	NARC_sppoke_mb_in_nsbtp = 3,
+	NARC_sppoke_mb_out_nsbmd = 4,
+	NARC_sppoke_mb_out_nsbca = 5,
+	NARC_sppoke_mb_out_nsbma = 6,
+	NARC_sppoke_mb_out_nsbtp = 7
+};
+
+/* NARC_SPPOKE_NAIX_ */
+#endif
