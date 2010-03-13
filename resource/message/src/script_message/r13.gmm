@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-13T20:19:46"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T20:21:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1444" top="137" right="2149" bottom="757" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,21 +294,29 @@
 
 	<row id="msg_r13_salvage_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・初回会話</comment>
+・初回会話
+・アイテム入手処理</comment>
 		<language name="JPN" width="256">なにを　しているか　だって？▼
 たからさがし　だよ
 た・か・ら・さ・が・し！▼
 たからさがしは　たのしいよ
-たまに　すなはまに　うまっているんだ</language>
+たまに　すなはまに　うまっていてね▽
+さっきも　おたからを　みつけたんだ▼
+だけど　すでに　みつけた　モノだから
+きみに　ゆずってあげるよ▼</language>
 		<language name="JPN_KANJI" width="256">なにを　しているか　だって？▼
 たからさがし　だよ
 た・か・ら・さ・が・し！▼
 たからさがしは　たのしいよ
-たまに　すなはまに　うまっているんだ</language>
+たまに　すなはまに　うまっていてね▽
+さっきも　おたからを　みつけたんだ▼
+だけど　すでに　みつけた　モノだから
+きみに　ゆずってあげるよ▼</language>
 	</row>
 
 	<row id="msg_r13_salvage_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
+・2回目以降
 ・アイテム入手処理</comment>
 		<language name="JPN" width="256">さっき　おたからを　みつけたんだ▼
 だけど　すでに　みつけた　モノだから
