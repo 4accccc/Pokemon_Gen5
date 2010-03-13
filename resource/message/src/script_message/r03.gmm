@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T14:35:58"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T13:20:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -446,7 +446,7 @@
 		<language name="JPN_KANJI" width="256">だから　どうして　走ってるの？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r03_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・画面左を向いたままメッセージ表示
 ・続けてbabygirl1_01

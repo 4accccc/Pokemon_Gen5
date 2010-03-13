@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-02T11:30:49"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T13:17:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 アナタたちの　手助けを頼まれたの[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>♀
 ・メッセージ表示後パソコンを触るアニメ
 ・アニメ後、元の位置に戻って
@@ -325,7 +325,7 @@
 使えるように　登録してあげる[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_friend_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_friend_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・No437「ともだちてちょう」入手処理
 ・続けてinventor_friend_02</comment>
@@ -337,7 +337,7 @@
 ともだちてちょうも　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_friend_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_friend_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・はい/いいえの選択肢表示
 ・はい→inventor_friend_03
@@ -360,7 +360,7 @@
 詳しい　説明を　ききたい？</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_friend_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_friend_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・はい/いいえの選択肢表示
 ・はい→inventor_friend_03
@@ -420,7 +420,7 @@
 いあいぎりと　いう　技が　使えるわ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_inventor_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ後、踊りだすようなアニメ
 ・続けてmsg_c01r0102_inventor_06</comment>
@@ -488,7 +488,7 @@
 ムンナの　「ゆめのけむり」が　必要なんだ</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_inventor_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・d01r0101イベント後
 ・続けてinventor_09</comment>
@@ -508,7 +508,7 @@
 ほんとうに　ありがとうね！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_09" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・一歩横に移動し
 　そちらを向いたままメッセージ表示
@@ -523,7 +523,7 @@
 という　話は　したよね▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_10" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_10" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・再度主人公と隣接、向き合って
 ・続けてinventor_11</comment>
@@ -543,7 +543,7 @@
 ポケモン　ドリーム　ワールドのことよ▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_11" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_11" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・続けてinventor_12</comment>
 		<attribute name="キャラ指定">ASSISTANTW
@@ -558,7 +558,7 @@
 寝かせたい　ポケモンを　選べるわ！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_12" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_12" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・続けてinventor_13</comment>
 		<attribute name="キャラ指定">ASSISTANTW
@@ -573,7 +573,7 @@
 現実でも　起きているの！！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_13" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_13" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・続けてinventor_14</comment>
 		<attribute name="キャラ指定">ASSISTANTW
@@ -592,7 +592,7 @@
 出現するみたいね▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_14" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_14" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・続けてinventor_15</comment>
 		<attribute name="キャラ指定">ASSISTANTW
@@ -609,7 +609,7 @@
 寝かせることが　できるから▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_15" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_15" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・イベント終了
 ・再度話しかけるとinventor_16から</comment>
@@ -633,7 +633,7 @@
 マコモさんの　説明でした！</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_16" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_16" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・inventor_15表示以降</comment>
 		<attribute name="キャラ指定">ASSISTANTW
@@ -654,7 +654,7 @@
 どんな　夢を　みるのかしらね？</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_girl3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・会話後、パソコンメニューの
 　「だれかのパソコン」が
@@ -690,7 +690,7 @@
 つくりあげた　もの　なんです</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_girl3_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・inventor_08表示後
 　＝ＰＤＷのチュートリアル後
@@ -705,7 +705,7 @@
 そこの　パソコンを　使ってくださいな</language>
 	</row>
 
-	<row id="msg_c01r0101_books_01" text-color="#000000,,,#000000,,#000000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c01r0101_books_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>本棚その１
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">本棚その１</attribute>
@@ -713,7 +713,7 @@
 		<language name="JPN_KANJI" width="256">Ｃギアの　マニュアル</language>
 	</row>
 
-	<row id="msg_c01r0101_books2_01" text-color="#000000,,,#000000,,#000000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0101_books2_01" back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
 		<comment>本棚その２
 ・ともだちてちょうのマニュアル
 ・はい/いいえの選択肢
@@ -726,7 +726,7 @@
 ……続きを　読みますか？</language>
 	</row>
 
-	<row id="msg_c01r0101_books2_02" text-color="#000000,,,#000000,,#000000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0101_books2_02" back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
 		<comment>本棚その２</comment>
 		<attribute name="キャラ指定">本棚その２</attribute>
 		<language name="JPN" width="256">ともだちてちょうに
