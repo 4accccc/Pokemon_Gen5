@@ -3,7 +3,7 @@
 # @file  uniq_script.list
 # @bfief 非マップ依存のスクリプトリスト
 # @author  tamada GAMEFREAK inc.
-# @date  2010 03/11 (Thu) 18:04
+# @date  2010 03/13 (Sat) 19:18
 #
 #  このファイルはコンバータにより自動生成されています
 #
@@ -42,7 +42,7 @@ UNIQ_SCRIPTFILES = \
 	bsubway_scr.ev \
 	crowd_people_scr.ev \
 	hyouka_scr.ev \
-	furniture_store.ev \
+	pdw_postman_scr.ev \
 	postman_scr.ev \
 	vending_machine.ev \
 	elevator.ev \
@@ -79,7 +79,7 @@ UNIQ_TOP_EVENT_SCRFILES = \
 	id_present_scr.ev \
 	bsubway_scr.ev \
 	crowd_people_scr.ev \
-	furniture_store.ev \
+	pdw_postman_scr.ev \
 	postman_scr.ev \
 	vending_machine.ev \
 	elevator.ev \

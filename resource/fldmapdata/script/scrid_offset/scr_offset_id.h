@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2010 03/11 (Thu) 18:04
+ * @date  2010 03/13 (Sat) 19:18
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -112,8 +112,8 @@
 #define ID_HYOUKA_SCR_OFFSET             (10380) //ずかん評価スクリプト
 #define ID_HYOUKA_SCR_OFFSET_END         (10389)
 
-#define ID_FURNITURE_STORE_OFFSET        (10390) //家具屋（PDW)用スクリプト
-#define ID_FURNITURE_STORE_OFFSET_END    (10394)
+#define ID_PDW_POSTMAN_SCR_OFFSET        (10390) //家具屋（PDW)用スクリプト
+#define ID_PDW_POSTMAN_SCR_OFFSET_END    (10394)
 
 #define ID_POSTMAN_SCR_OFFSET            (10395) //不思議な贈り物配達員スクリプト
 #define ID_POSTMAN_SCR_OFFSET_END        (10399)
