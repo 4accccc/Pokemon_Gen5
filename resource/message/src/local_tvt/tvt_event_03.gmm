@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T22:25:04"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T14:19:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1428" top="275" right="2133" bottom="895" maximized="no" rayout="Vertical2">
+	<dialog left="1374" top="102" right="2079" bottom="730" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -365,14 +365,18 @@
 ・続けて</comment>
 		<attribute name="キャラ指定">サポート</attribute>
 		<language name="JPN" width="256">ねえねえ　いま　どこお？▼
-ヒウンシティ　ひろすぎて
-あたし　ちょっと　くたびれちゃった▼
-それだけなんだけど
+ひさしぶりに
+ポケモンしょうぶ　しようよ！▼
+４ばんどうろに　つながる
+ゲートで　まちあわせ　しようね▼
+それだけ　なんだけど
 じゃあ　またねえ▼</language>
-		<language name="JPN_KANJI" width="256">ねえねえ　いま　どこお？▼
-ヒウンシティ　ひろすぎて
-あたし　ちょっと　くたびれちゃった▼
-それだけなんだけど
+		<language name="JPN_KANJI" width="256">ねえねえ　今　どこお？▼
+ひさしぶりに
+ポケモン勝負　しようよ！▼
+４番道路に　つながる
+ゲートで　待ち合わせ　しようね▼
+それだけ　なんだけど
 じゃあ　またねえ▼</language>
 	</row>
 
