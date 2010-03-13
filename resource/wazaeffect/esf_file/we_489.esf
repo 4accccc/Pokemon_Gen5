@@ -1,5 +1,5 @@
 EFFSEQ
-$0021
+$0022
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_390.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_188.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_342.spa
@@ -21,22 +21,27 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_020.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_035.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_322.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_461_1.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_489.spa
 #001
 %00
 カメラ移動	追従	攻撃側	12	0	8
 ポケモンアニメ	攻撃側	アニメストップ
-パーティクルデータロード	w_035
+パーティクルデータロード	w_489
 制御モード変更	継続
 SE再生	SEQ_SE_FLD_112	SE1	攻撃側	0:0:127	0:0:0
 SE再生	SEQ_SE_DUMMY5	SE1	攻撃側	70:0:0	0:0:0
 SE再生	SEQ_SE_FLD_112	SE2	攻撃側	50:0:127	0:0:0
 SE再生	SEQ_SE_DUMMY5	SE2	攻撃側	120:0:0	0:0:0
 制御モード変更	逐次
-パーティクル再生	w_035	W_035_035_BALL_ROLL	攻撃側	方向無し	1:0:0	1:1:1	1
+パーティクル再生	w_489	W_489_489_BALL_SPIN	攻撃側	方向無し	1:0:0	1:1:1	1
+パーティクル再生	w_489	W_489_489_RING_A	攻撃側	方向無し	1:0:0	1:1:1	1
+パーティクル再生	w_489	W_489_489_RING_B	攻撃側	方向無し	1:0:0	1:1:1	1
+パーティクル再生	w_489	W_489_489_RING_C	攻撃側	方向無し	1:0:0	1:1:1	1
+パーティクル再生	w_489	W_489_489_RING_A_HIKARU	攻撃側	方向無し	1:0:0	1:1:1	1
+パーティクル再生	w_489	W_489_489_RING_B_HIKARU	攻撃側	方向無し	1:0:0	1:1:1	1
+パーティクル再生	w_489	W_489_489_RING_C_HIKARU	攻撃側	方向無し	1:0:0	1:1:1	1
 タイマーによるウエイト	6
 ポケモン拡縮	攻撃側	往復	0.1	-0.1	40	0	1
-タイマーによるウエイト	40
-パーティクル再生	w_035	W_035_035_BALL_ROLL	攻撃側	方向無し	1:0:0	1:1:1	1
 エフェクト終了待ち	すべて
 カメラ移動	追従	初期位置	12	0	8
 ポケモンアニメ	攻撃側	アニメスタート
