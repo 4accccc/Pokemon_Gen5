@@ -169,8 +169,13 @@ u32 CURSORMOVE_Main( CURSORMOVE_WORK * wk )
 
 	// カーソル表示チェック
 	if( wk->cur_flg == FALSE && wk->cur_mode == CURSOR_MODE_VANISH ){
-		if( GFL_UI_KEY_GetTrg() & ( PAD_KEY_ALL | PAD_BUTTON_CANCEL | PAD_BUTTON_DECIDE ) ){
+//		if( GFL_UI_KEY_GetTrg() & ( PAD_KEY_ALL | PAD_BUTTON_CANCEL | PAD_BUTTON_DECIDE ) ){
+		if( GFL_UI_KEY_GetTrg() & ( PAD_KEY_ALL | PAD_BUTTON_DECIDE ) ){		// キャンセルボタンは即実行にする
 			return Main_CursorOn( wk );
+		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+			Main_CursorOn( wk );
+			return CURSORMOVE_CANCEL;
 		}
 		return CURSORMOVE_NONE;
 	}
@@ -235,8 +240,13 @@ u32 CURSORMOVE_MainCont( CURSORMOVE_WORK * wk )
 
 	// カーソル表示チェック
 	if( wk->cur_flg == FALSE && wk->cur_mode == CURSOR_MODE_VANISH ){
-		if( GFL_UI_KEY_GetTrg() & ( PAD_KEY_ALL | PAD_BUTTON_CANCEL | PAD_BUTTON_DECIDE ) ){
+//		if( GFL_UI_KEY_GetTrg() & ( PAD_KEY_ALL | PAD_BUTTON_CANCEL | PAD_BUTTON_DECIDE ) ){
+		if( GFL_UI_KEY_GetTrg() & ( PAD_KEY_ALL | PAD_BUTTON_DECIDE ) ){		// キャンセルボタンは即実行にする
 			return Main_CursorOn( wk );
+		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+			Main_CursorOn( wk );
+			return CURSORMOVE_CANCEL;
 		}
 		return CURSORMOVE_NONE;
 	}
@@ -265,11 +275,13 @@ u32 CURSORMOVE_MainCont( CURSORMOVE_WORK * wk )
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );		// 各アプリでSEが可変になる可能性がある
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return wk->cur_pos;
 	}
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return CURSORMOVE_CANCEL;
 	}
 
