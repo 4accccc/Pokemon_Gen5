@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-01T18:03:24"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T16:57:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="288" right="1993" bottom="911" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="528"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="541"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="695"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,49 +292,88 @@
 	</lock>
 
 
-	<row id="msg_c03r0601_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0601_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ｃ03ジムバッジ取得後
 ・pos（GRIDX=2~7、GRIDZ=9）を踏むと画面下から出現
-　主人公と隣接し向き合ってメッセージ表示</comment>
+　主人公と隣接し向き合ってメッセージ表示
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『おうい！　[1:00:トレーナー名:0]
-もう　４ばんどうろに　いくの？▽
-やりのこしたことは　なあい？▼
-すれちがい　ちょうさたい　の
-たてものとか　あそびにいった？▼</language>
-		<language name="JPN_KANJI" width="256">ベル『おうい！　[1:00:トレーナー名:0]
-もう　４番道路に　行くの？▽
-やりのこしたことは　なあい？▼
-すれ違い調査隊　の
-建物とか　遊びに行った？▼</language>
+		<language name="JPN" width="256">ベル『おうい！　[1:00:トレーナー名:0]▼
+ライブキャスターで　いった
+やくそく　おぼえてるよねえ▼
+というわけで　さっそく
+ポケモンしょうぶ　だよ！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『おうい！　[1:00:トレーナー名:0]▼
+ライブキャスターで　いった
+約束　覚えてるよねえ▼
+というわけで　さっそく
+ポケモン勝負だよ！▼</language>
 	</row>
 
-	<row id="msg_c03r0601_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0601_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・画面下を見ながらメッセージ表示
-・続けてwhite_03</comment>
+・メッセージ後、受付嬢の前に移動
+・！、？マークを表示後
+　元の位置にもどりwhite_03</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">カノコタウンと　ちがって
-すっごく　おおきいよねえ……▽
-まさに　だいとかい！▼
-こんなに　ひとがいて　みんな
-じぶんを　みうしなわないのかなあ？▼</language>
-		<language name="JPN_KANJI" width="256">カノコタウンと　ちがって
-すっごく　大きいよねえ……▽
-まさに　大都会！▼
-こんなに　人がいて　みんな
-自分を　見失わないのかなあ？▼</language>
+		<language name="JPN" width="256">と　そのまえに▼</language>
+		<language name="JPN_KANJI" width="256">と　その前に▼</language>
 	</row>
 
 	<row id="msg_c03r0601_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
+・メッセージ後、ポケモン戦闘</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ゲートでの　ポケモンしょうぶは
+でんこうけいじばんに　きをつけて▽
+おねがいします！　だって▼
+あたしも　さいしょとは　ちがうもん
+ぜんぜん　だいじょうぶ　だよ！▼
+というわけで　あらためて
+ポケモンしょうぶ　かいし　ね！▼</language>
+		<language name="JPN_KANJI" width="256">ゲートでの　ポケモン勝負は
+電光掲示板に　気をつけて▽
+お願いします！　だって▼
+あたしも　最初とは　違うもん
+ぜんぜん　大丈夫だよ！▼
+というわけで　あらためて
+ポケモン勝負　開始ね！▼</language>
+	</row>
+
+	<row id="msg_c03r0601_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・画面下を見ながらメッセージ表示
+・続けてwhite_04
+・0＝主人公名前</comment>
+		<language name="JPN" width="256">ベル『……あたしは
+[1:00:トレーナー名:0]や　チェレンのように▽
+つよい　トレーナーには　なれないけど▼
+カノコタウンを　たびだってから
+いろいろな　ひとと　であって▼
+あたしの　やってみたいことが
+いっぱい　いっぱい　できたの！！▼
+そういう　いみで　ポケモンは
+あたしに　たくさんの▽
+はじめてを　くれたんだよね！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『……あたしは
+[1:00:トレーナー名:0]や　チェレンのように▽
+強い　トレーナーには　なれないけど▼
+カノコタウンを　旅立ってから
+いろいろな　人と　出会って▼
+あたしの　やってみたいことが
+いっぱい　いっぱい　できたの！！▼
+そういう意味で　ポケモンは
+あたしに　たくさんの▽
+はじめてを　くれたんだよね！▼</language>
+	</row>
+
+	<row id="msg_c03r0601_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・主人公と向き合って
 ・メッセージ表示後、画面下に移動
 ・画面外に消えると主人公操作可能に
-
-※国連など仮メッセージ
-　父親の前振りをする、など？</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+・0＝主人公名前</comment>
 		<language name="JPN" width="256">ほんとうに
 たびに　でて　よかったよ！▼
 じゃ　また　どこかで　あおうね
