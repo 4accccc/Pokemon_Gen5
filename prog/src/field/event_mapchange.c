@@ -1993,7 +1993,12 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
     GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NOGEAR);
     break;
   default:
-    GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NORMAL);
+    {// 進入かライブチャットはそのまま その他の画面は切り替え
+      u8 mode = GAMEDATA_GetSubScreenMode(gamedata);
+      if((mode != FIELD_SUBSCREEN_INTRUDE) && (mode != FIELD_SUBSCREEN_BEACON_VIEW)){
+        GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NORMAL);
+      }
+    }
     break;
   }
 
