@@ -538,7 +538,7 @@ EVENT_START	ev_bg_c05gym0101_exitlift_00u
 
 	//マップチェンジ
 	_MAP_CHANGE_NO_FADE( ZONE_ID_C05GYM0201, 5, 0, 4, DIR_UP )
-
+
 
 EVENT_END
 

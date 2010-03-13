@@ -364,4 +364,33 @@ VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
   OS_TFPrintf( 3, "_GET_MAJORITY_ANSWER ==> %d\n", *retWork );
 
   return VMCMD_RESULT_CONTINUE;
+} 
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 指定した質問についての, 自分の回答を設定する
+ * @param  core
+ * @param  wk
+ * @retval VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdSetMyAnswer( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*              work     = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*              script   = SCRCMD_WORK_GetScriptWork( work );
+  GAMEDATA*                 gameData = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK*        save     = GAMEDATA_GetSaveControlWork( gameData );
+  QUESTIONNAIRE_SAVE_WORK*  qSave    = SaveData_GetQuestionnaire( save );
+  QUESTIONNAIRE_ANSWER_WORK* myAnswer = Questionnaire_GetAnswerWork( qSave );
+  u16 qID;
+  u16 aIdx;
+
+  // コマンドの引数を取得
+  qID  = SCRCMD_GetVMWorkValue( core, work ); // 第一引数: 質問ID
+  aIdx = SCRCMD_GetVMWorkValue( core, work ); // 第二引数: 何番目の回答か
+
+  // 回答をセット
+  QuestionnaireAnswer_WriteBit( myAnswer, qID, aIdx );
+
+  return VMCMD_RESULT_CONTINUE;
 }

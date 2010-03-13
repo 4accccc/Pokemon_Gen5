@@ -940,6 +940,11 @@
   DEF_CMD( EvCmdGetResearchPassedTime, EV_SEQ_GET_RESEARCH_PASSED_TIME ) 
   
   DEF_CMD( EvCmdCrossCommHelloMessageInputCall, EV_SEQ_CALL_CROSS_COMM_HELLO_MSG_INPUT ) 
+  DEF_CMD( EvCmdCrossCommThanksMessageInputCall, EV_SEQ_CALL_CROSS_COMM_THANKS_MSG_INPUT ) 
+  DEF_CMD( EvCmdSuretigaiCount, EV_SEQ_SURETIGAI_COUNT ) 
+  DEF_CMD( EvCmdSuretigaiThanksReceiveCount, EV_SEQ_SURETIGAI_THANKS_RECEIVE_COUNT ) 
+
+  NO_CMD()
   NO_CMD()
   NO_CMD()
   NO_CMD()

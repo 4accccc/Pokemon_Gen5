@@ -32,6 +32,8 @@ extern VMCMD_RESULT EvCmdHobbyName( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdAnswerName( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGPowerName( VMHANDLE* core, void* wk );
 extern VMCMD_RESULT EvCmdTrTypeName( VMHANDLE* core, void* wk );
+extern VMCMD_RESULT EvCmdSuretigaiCount( VMHANDLE* core, void* wk );
+extern VMCMD_RESULT EvCmdSuretigaiThanksReceiveCount( VMHANDLE* core, void* wk );
 
 #endif	/* __ASM_NO_DEF_ */
 

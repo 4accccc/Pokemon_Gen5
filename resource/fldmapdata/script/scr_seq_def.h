@@ -2173,6 +2173,34 @@
   .short \answerID
   .endm
 
+//--------------------------------------------------------------
+/**
+ * 通算『すれ違い回数』をバッファにセット
+ * @param idx セットするタグナンバー
+ */
+//--------------------------------------------------------------
+#define _SURETIGAI_COUNT( idx ) \
+    _ASM_SURETIGAI_COUNT idx
+
+  .macro _ASM_SURETIGAI_COUNT idx
+  .short EV_SEQ_SURETIGAI_COUNT
+  .byte  \idx
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 通算『すれ違いでお礼を受けた回数』をバッファにセット
+ * @param idx セットするタグナンバー
+ */
+//--------------------------------------------------------------
+#define _SURETIGAI_THANKS_RECEIVE_COUNT( idx ) \
+    _ASM_SURETIGAI_THANKS_RECEIVE_COUNT idx
+
+  .macro _ASM_SURETIGAI_THANKS_RECEIVE_COUNT idx
+  .short EV_SEQ_SURETIGAI_THANKS_RECEIVE_COUNT
+  .byte  \idx
+  .endm
+
 //======================================================================
 //  視線トレーナー関連
 //======================================================================
@@ -9223,5 +9251,20 @@
 
   .macro _ASM_CALL_CROSS_COMM_HELLO_MSG_INPUT ret
   .short EV_SEQ_CALL_CROSS_COMM_HELLO_MSG_INPUT
+  .short \ret
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief すれ違い『お礼メッセージ』入力画面を呼び出す
+ *
+ * @param ret [out] 入力を確定したかどうかを受け取るワーク ( TRUE: 確定 )
+ */
+//--------------------------------------------------------------
+#define _CALL_CROSS_COMM_THANKS_MSG_INPUT( ret ) \
+    _ASM_CALL_CROSS_COMM_THANKS_MSG_INPUT ret
+
+  .macro _ASM_CALL_CROSS_COMM_THANKS_MSG_INPUT ret
+  .short EV_SEQ_CALL_CROSS_COMM_THANKS_MSG_INPUT
   .short \ret
   .endm

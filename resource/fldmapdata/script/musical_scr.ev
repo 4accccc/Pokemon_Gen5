@@ -34,7 +34,8 @@ _EVENT_DATA_END
 // ローカルワーク
 //----------------------------------------------------------------------
 DEFINE_LOCAL fan_number // ファンの番号
-DEFINE_LOCAL selectPoke
+
+DEFINE_LOCAL selectPoke
 
 /*************************************************************/
 /*            一人用　受付             */
@@ -579,7 +580,7 @@ fan_main_routine:
   DEFINE_LOCAL msg_id   // メッセージID
   DEFINE_LOCAL gift_type  // 贈り物種類
   DEFINE_LOCAL gift_number// 贈り物番号(アイテム・グッズ
-
+
   _TALK_OBJ_START()
   
   //本来見た目の処理はココでやるべきではないと思うが、仮処理

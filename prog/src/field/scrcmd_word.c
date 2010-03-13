@@ -36,6 +36,8 @@
 
 #include "print/str_tool.h"
 
+#include "savedata/misc.h" 
+
 //======================================================================
 //  define
 //======================================================================
@@ -477,6 +479,66 @@ VMCMD_RESULT EvCmdTrTypeName( VMHANDLE* core, void* wk )
   WORDSET_RegisterTrTypeName( wordset, idx, trID );
 
   return VMCMD_RESULT_CONTINUE;
+} 
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 通算すれ違い回数をバッファに展開する
+ * @param  core
+ * @param  wk
+ * @retval VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdSuretigaiCount( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*       script   = SCRCMD_WORK_GetScriptWork( work );
+  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
+  MISC*              misc     = SaveData_GetMisc( save );
+  WORDSET*           wordset  = SCRIPT_GetWordSet( script ); 
+  u16 bufID;
+  u32 count;
+
+  // コマンド引数を取得
+  bufID = VMGetU8( core ); // 第一引数: バッファID
+
+  // 通算すれ違い回数をを取得
+  count = MISC_CrossComm_GetSuretigaiCount( misc );
+
+  // 回数をバッファに登録 (9桁)
+  WORDSET_RegisterNumber( wordset, bufID, count, 9, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+
+  return VMCMD_RESULT_CONTINUE;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief すれ違いで『お礼』を受けた通算回数をバッファに展開する
+ * @param  core
+ * @param  wk
+ * @retval VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdSuretigaiThanksReceiveCount( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*       script   = SCRCMD_WORK_GetScriptWork( work );
+  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
+  MISC*              misc     = SaveData_GetMisc( save );
+  WORDSET*           wordset  = SCRIPT_GetWordSet( script ); 
+  u16 bufID;
+  u32 count;
 
+  // コマンド引数を取得
+  bufID = VMGetU8( core ); // 第一引数: バッファID
+
+  // 通算『お礼』を受けた回数を取得
+  count = MISC_CrossComm_GetThanksRecvCount( misc );
+
+  // 回数をバッファに登録 (9桁)
+  WORDSET_RegisterNumber( wordset, bufID, count, 9, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+
+  return VMCMD_RESULT_CONTINUE;
+}

@@ -19,11 +19,13 @@
 #define C03R0101_BOY4_01                   7
 #define C03R0101_MAN1_01                   8
 #define C03R0101_GIRL3_01                  9
+#define C03R0101_WOMAN2_01                10
 
 #endif //ZONE_C03R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_C03R0101_EVB_H
 #define ZONE_C03R0101_EVB_H
 
+#define BGID_PAPER                        0
 
 #endif //ZONE_C03R0101_EVB_H

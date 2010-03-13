@@ -32,6 +32,15 @@ extern VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk );
 VMCMD_RESULT EvCmdCrossCommHelloMessageInputCall( VMHANDLE *core, void *wk );
 
 //--------------------------------------------------------------
+/**
+ * @brief   すれ違い『お礼メッセージ』入力画面の呼び出し
+ * @param   core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCrossCommThanksMessageInputCall( VMHANDLE *core, void *wk );
+
+//--------------------------------------------------------------
 //  ゲームクリア処理呼び出し
 //--------------------------------------------------------------
 extern VMCMD_RESULT EvCmdGameClearDemo( VMHANDLE *core, void *wk );

@@ -84,3 +84,4 @@
 #define RESEARCH_QUESTIONNAIRE_ID_SCHOOL        (6) // がっこうせいかつ
 #define RESEARCH_QUESTIONNAIRE_ID_PLAY          (7) // どんな　あそびがすきか
 #define RESEARCH_QUESTIONNAIRE_ID_POKEMON       (8) // ポケモン
+#define RESEARCH_QUESTIONNAIRE_ID_DUMMY         (9) // ダミー

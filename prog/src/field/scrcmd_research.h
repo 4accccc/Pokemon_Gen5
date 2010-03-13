@@ -16,3 +16,6 @@ extern VMCMD_RESULT EvCmdFinishResearch( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetTotalCountOfQuestion( VMHANDLE *core, void *wk ); 
 extern VMCMD_RESULT EvCmdGetStartCountOfQuestion( VMHANDLE *core, void *wk ); 
 extern VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk ); 
+extern VMCMD_RESULT EvCmdGetThanksReceiveCount( VMHANDLE *core, void *wk ); 
+extern VMCMD_RESULT EvCmdGetSuretigaiCount( VMHANDLE *core, void *wk ); 
+extern VMCMD_RESULT EvCmdSetMyAnswer( VMHANDLE *core, void *wk ); 
