@@ -161,14 +161,8 @@ EVENT_START	ev_reserve_d08_hakase1_01
 	//D08R0101の博士とハチクを出現させる
 	_FLAG_RESET( FV_D08R0101_EVENT_01 )
 	
-	//リゾートデザートのライバルイベント開始
-	$WK_SCENE_D03R0101 = 2
-
 	//リゾートデザートのライバル出現
 	_FLAG_RESET( FV_D03R0101_RIVAL_01 )
-	
-	//古代の城１Fの道路用コーンを消去
-	_FLAG_SET( FV_D04R0101_CORN_01 )
 	
 	//========================================//
 	
@@ -377,13 +371,18 @@ EVENT_START    ev_pos_d08_hakase1_01
 		_FLAG_SET(FV_D08_RIVAL_01)
 		_FLAG_SET( FV_C07_RIVAL_01 )
 		_FLAG_SET( FV_C07_RIVAL_01 ) 
-		
+
+		//C07のサポートを非表示に
+		_FLAG_SET( FV_C07_SUPPORT_01 )
+				
 		//プラズマ団配置
 		_FLAG_RESET( FV_D08R0101_HAKAI )
 
 		_FLAG_SET(FV_D08R0101_NONDRAW_01)
 		//リュウラセンの外マップイベントを無効に
 		$WK_SCENE_D08_LEGEND = 2
+		
+
 		
 		//========================================//
 		
