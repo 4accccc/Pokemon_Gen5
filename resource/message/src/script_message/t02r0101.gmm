@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-26T12:08:30"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T15:59:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -314,12 +314,12 @@
 いくつ　もってるのかしら？▼
 すくないと　おもったら
 ポケモンセンターの　なかにある▽
-ショップで　かっておきなさいな！</language>
+ショップで　かうのが　ベストね！</language>
 		<language name="JPN_KANJI" width="256">トレーナーさん　モンスターボールは
 いくつ　持ってるのかしら？▼
 少ないと　思ったらら
 ポケモンセンターの　中にある▽
-ショップで　買っておきなさいな！</language>
+ショップで　買うのが　ベストね！</language>
 	</row>
 
 	<row id="msg_t02r0101_babyboy1_01" text-color=",,,#000000,,,,,,,,,,,,,,,">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-13T13:14:43"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T15:57:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1314" top="315" right="2019" bottom="943" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -412,8 +412,7 @@
 		<comment>♀
 ・t02pc0101イベント終了までのストッパー
 ・POSを踏んだとき
-・メッセージ後、主人公の位置をもどす
-※マップによっては不要</comment>
+・メッセージ後、主人公の位置をもどす</comment>
 		<attribute name="キャラ指定">プラズマ団員♀</attribute>
 		<language name="JPN" width="256">ちょっと……
 いま　じゅんびちゅう　なんです▼
@@ -760,14 +759,14 @@
 かんせい　させるための▽
 たびに　でたところ　です▼
 もっとも　ぼくの　もくひょうは
-チャンピオン　だけど……▼</language>
+チャンピオン　ですが……▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……オレは　チェレン
 こちらは　[1:00:トレーナー名:0]▼
 頼まれて　ポケモン図鑑を
 完成させるための▽
 旅に　でたところです▼
-もっとも　ボクの　目標は
-チャンピオン　だけど……▼</language>
+もっとも　ぼくの　目標は
+チャンピオン　ですが……▼</language>
 	</row>
 
 	<row id="msg_t02_boss_03" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
