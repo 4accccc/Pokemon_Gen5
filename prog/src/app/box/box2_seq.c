@@ -278,6 +278,7 @@ static int SetWallPaperChange( BOX2_SYS_WORK * syswk, u32 pos );
 static void BoxEndPassiveSet( BOX2_SYS_WORK * syswk );
 
 static int ChgSeqYButton( BOX2_SYS_WORK * syswk, int next );
+static void ChgCursorYButton( BOX2_SYS_WORK * syswk );
 
 
 //============================================================================================
@@ -1459,7 +1460,6 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
 
 	// Ｙボタン
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		syswk->get_start_mode = 0;
 		return ChgSeqYButton( syswk, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_INIT );
 	}
@@ -1795,7 +1795,7 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 	// Ｙボタン
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
 		if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			ChgCursorYButton( syswk );
 			syswk->mv_cnv_mode = 0;
 			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_EXIT );
 		}
@@ -2390,7 +2390,6 @@ static int MainSeq_ArrangePartyMain( BOX2_SYS_WORK * syswk )
 
 	// Ｙボタン
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		syswk->get_start_mode = 1;
 		return ChgSeqYButton( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
 	}
@@ -2752,7 +2751,7 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 	// Ｙボタン
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
 		if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			ChgCursorYButton( syswk );
 			syswk->mv_cnv_mode = 0;
 			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_EXIT );
 		}
@@ -3089,7 +3088,6 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
 
 	// Ｙボタン
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return ChgSeqYButton( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
 	}
 
@@ -3377,7 +3375,6 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 
 	// Ｙボタン
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return ChgSeqYButton( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
 	}
 
@@ -4538,7 +4535,6 @@ static int MainSeq_ItemMain( BOX2_SYS_WORK * syswk )
 				syswk->get_pos = 0;
 			}
 		}
-		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return next;
 	}
 
@@ -4897,7 +4893,7 @@ static int MainSeq_ItemGetMain( BOX2_SYS_WORK * syswk )
 	// Ｙボタン
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
 		if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			ChgCursorYButton( syswk );
 			syswk->mv_cnv_mode = 0;
 			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ITEMGET_END );
 		}
@@ -5456,7 +5452,6 @@ static int MainSeq_ItemPartyMain( BOX2_SYS_WORK * syswk )
 				syswk->get_pos = BOX2OBJ_POKEICON_TRAY_MAX;
 			}
 		}
-		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return next;
 	}
 
@@ -9532,7 +9527,25 @@ static int ChgSeqYButton( BOX2_SYS_WORK * syswk, int next )
 		syswk->mv_cnv_mode = 1;
 	}
 	syswk->mv_cnv_end = 0;
+	ChgCursorYButton( syswk );
 	return ChangeSequence( syswk, next );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		Ｙボタンで移動モードへ移行時のカーソル表示切り替え
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void ChgCursorYButton( BOX2_SYS_WORK * syswk )
+{
+	GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+	if( CURSORMOVE_CursorOnOffGet( syswk->app->cmwk ) == FALSE ){
+		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
+	}
 }
 
 
