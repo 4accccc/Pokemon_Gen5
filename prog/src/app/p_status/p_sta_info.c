@@ -15,6 +15,7 @@
 #include "system/mcss.h"
 #include "system/mcss_tool.h"
 #include "print/global_msg.h"
+#include "poke_tool/poke_memo.h"
 #include "app/app_menu_common.h"
 
 #include "arc_def.h"
@@ -567,7 +568,7 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
   u32 level   = PPP_Get( ppp , ID_PARA_get_level , NULL );
   u32 isEvent = PPP_Get( ppp , ID_PARA_event_get_flag , NULL );
   u32 rom = PPP_Get( ppp , ID_PARA_get_cassette , NULL );
-  const u32 perRand = PPP_Get( ppp , ID_PARA_personal_rnd , NULL );;
+  const u32 perRand = PPP_Get( ppp , ID_PARA_personal_rnd , NULL );
   //場所はポケシフター対応で書き換える可能性あり。
   u32 place1  = PPP_Get( ppp , ID_PARA_birth_place , NULL );
   u32 place2  = PPP_Get( ppp , ID_PARA_get_place , NULL );
@@ -837,7 +838,7 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
       { 3,4,5,0,1,2 },
       { 4,5,0,1,2,3 },
       { 5,0,1,2,3,4 },
-    }
+    };
     
     for( i=0;i<6;i++ )
     {
