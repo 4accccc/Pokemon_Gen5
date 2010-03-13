@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T12:15:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="272"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1530" top="278" right="2235" bottom="898" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,11 +292,43 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_r16r0101_woman1_01">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">WOMAN1</attribute>
+		<language name="JPN" width="256">ワタシは　ワタシ
+アナタは　アナタ……▼
+こういうこと　とつぜん　いわれると
+こまっちゃうわよねえ</language>
+		<language name="JPN_KANJI" width="256">ワタシは　ワタシ
+アナタは　アナタ……▼
+こういうこと　突然　いわれると
+困っちゃうわよねえ</language>
+	</row>
+
+	<row id="msg_r16r0101_ambrella_01">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">AMBRELLA</attribute>
+		<language name="JPN" width="256">ゲートの　なかで　パラソル！
+だって　ぬれて　よごしたくないし</language>
+		<language name="JPN_KANJI" width="256">ゲートの　中で　パラソル！
+だって　ぬれて　汚したくないし</language>
+	</row>
+
+	<row id="msg_r16r0101_badman_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">BADMAN</attribute>
+		<language name="JPN" width="256">すっ　すげえよ！▼
+まじ　かんどう　したよ▼
+いま　じどうはんばいき　で
+もういっぽん　あたったんだ！！▼
+この　いきおいで　いろちがいの
+ポケモンが　とびだしそうだぜ！！</language>
+		<language name="JPN_KANJI" width="256">すっ　すげえよ！▼
+まじ　感動したよ▼
+いま　自動販売機で
+もう一本　当たったんだ！！▼
+この勢いで　色違いの
+ポケモンが　飛び出しそうだぜ！！</language>
 	</row>
 
 	<flowchart-group-list>

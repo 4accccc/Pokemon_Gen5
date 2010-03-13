@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-05T22:03:48"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T11:47:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="111" right="1990" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1292" top="328" right="1996" bottom="956" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="529"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -893,8 +893,10 @@
 ・→waitress_11</comment>
 		<attribute name="キャラ指定">WAITRESS
 ウェートレス</attribute>
-		<language name="JPN" width="256">[2:00:１桁:]つめのサンドイッチのトッピングは？</language>
-		<language name="JPN_KANJI" width="256">[2:00:１桁:]つ目のサンドイッチのトッピングは？</language>
+		<language name="JPN" width="256">[2:00:１桁:]コめの
+サンドイッチの　トッピングは？</language>
+		<language name="JPN_KANJI" width="256">[2:00:１桁:]コめの
+サンドイッチの　トッピングは？</language>
 	</row>
 
 	<row id="msg_h04_waitress_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1213,8 +1215,7 @@
 		<comment>・チラーミィの鳴き声を再生
 ・鳴き声仮</comment>
 		<attribute name="キャラ指定">POKE19
-チラーミィ
-</attribute>
+チラーミィ</attribute>
 		<language name="JPN" width="256">みゅぅみゅぃーん</language>
 		<language name="JPN_KANJI" width="256">みゅぅみゅぃーん</language>
 	</row>
@@ -1223,28 +1224,25 @@
 		<comment>・ミネズミの鳴き声を再生
 ・鳴き声仮</comment>
 		<attribute name="キャラ指定">POKE17
-ミネズミ
-</attribute>
+ミネズミ</attribute>
 		<language name="JPN" width="256">ぼふんっぼふうー</language>
 		<language name="JPN_KANJI" width="256">ボフンッボフウー</language>
 	</row>
 
 	<row id="msg_h04_pokemon_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>・チュリネの鳴き声を再生
+		<comment>・ピカチュウの鳴き声を再生
 ・鳴き声仮</comment>
-		<attribute name="キャラ指定">POKE18
-チュリネ
-</attribute>
-		<language name="JPN" width="256">ヒョォンヒョォン</language>
-		<language name="JPN_KANJI" width="256">ヒョォンヒョォン</language>
+		<attribute name="キャラ指定">POKE
+ピカチュウ</attribute>
+		<language name="JPN" width="256">ぴがー</language>
+		<language name="JPN_KANJI" width="256">ぴがー</language>
 	</row>
 
 	<row id="msg_h04_pokemon_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・ワルビルの鳴き声を再生
 ・鳴き声仮</comment>
 		<attribute name="キャラ指定">POKE20
-ワルビル
-</attribute>
+ワルビル</attribute>
 		<language name="JPN" width="256">じゃあごぉおおお</language>
 		<language name="JPN_KANJI" width="256">じゃあごぉおおお</language>
 	</row>
@@ -1282,15 +1280,21 @@
 ・タグに数字をセット
 ・プレーンウィンで表示</comment>
 		<language name="JPN" width="256">この　おきゃくさんに　[2:00:１桁:]つめの
-サンドイッチをわたす？</language>
+サンドイッチを　わたしますか？</language>
 		<language name="JPN_KANJI" width="256">この　お客さんに　[2:00:１桁:]つ目の
-サンドイッチを渡す？</language>
+サンドイッチを　渡しますか？</language>
 	</row>
 
-	<row id="msg_h04_sign_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_sign_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>・看板用メッセージ</comment>
-		<attribute name="キャラ指定">BG
-POST　施設看板</attribute>
+		<attribute name="キャラ指定">道路看板</attribute>
+		<language name="JPN" width="256">ここは　ビレッジブリッジ</language>
+		<language name="JPN_KANJI" width="256">ここは　ビレッジブリッジ</language>
+	</row>
+
+	<row id="msg_h04_sign_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>・看板用メッセージ</comment>
+		<attribute name="キャラ指定">施設看板</attribute>
 		<language name="JPN" width="256">ビレッジブリッジ
 めいぶつ　ビレッジサンド</language>
 		<language name="JPN_KANJI" width="256">ビレッジブリッジ
