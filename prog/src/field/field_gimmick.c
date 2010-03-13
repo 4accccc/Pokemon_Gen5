@@ -30,6 +30,7 @@
 #include "field_gimmick_bgate_jet.h"
 #include "field_gimmick_bsubway.h"
 #include "field_gimmick_r04d03.h"
+#include "sp_poke_gimmick.h"
 
 extern void GYM_SetupTest(FIELDMAP_WORK *fieldWork);
 extern void GYM_EndTest(FIELDMAP_WORK *fieldWork);
@@ -49,6 +50,7 @@ FS_EXTERN_OVERLAY(field_gimmick_gate);
 FS_EXTERN_OVERLAY(field_gimmick_h01);
 FS_EXTERN_OVERLAY(field_gimmick_h03);
 FS_EXTERN_OVERLAY(field_gimmick_r04d03);
+FS_EXTERN_OVERLAY(sppoke_gimmick);
 
 const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
 	NULL,					//0:–³‚µ
@@ -98,6 +100,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(field_gimmick_gate),  // R11R0101
   FS_OVERLAY_ID(field_gimmick_gate),  // R12R0101
   FS_OVERLAY_ID(field_gimmick_r04d03),  // R04 and D03
+  FS_OVERLAY_ID(sppoke_gimmick),  // R08R0101
 };
 
 const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
@@ -148,6 +151,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_Setup,  // R11R0101
   GATE_GIMMICK_Setup,  // R12R0101
   R04D03_GIMMICK_Setup,    //R04 and D03
+  SPPOKE_GMK_Setup,    //R08R0101
 };
 
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
@@ -198,6 +202,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_End,  // R11R0101
   GATE_GIMMICK_End,  // R12R0101
   R04D03_GIMMICK_End,    //R04 and D03
+  SPPOKE_GMK_End,     //R08R0101
 };
 
 const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
@@ -248,21 +253,8 @@ const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_Move,  // R11R0101
   GATE_GIMMICK_Move,  // R12R0101
   R04D03_GIMMICK_Move,    //R04 and D03
+  SPPOKE_GMK_Move,    //R08R0101
 };
-
-#if 0
-const static FLD_GMK_HIT_CHECK FldGimmickHitCheck[FLD_GIMMICK_MAX] = {
-	NULL,					//0:–³‚µ
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-
-};
-#endif
 
 //---------------------------------------------------------------------------
 /**

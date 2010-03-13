@@ -87,6 +87,7 @@
 #include "scrcmd_movepoke.h"
 #include "scrcmd_subscreen.h"
 #include "scrcmd_quiz.h"
+#include "scrcmd_sppoke_trio.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
