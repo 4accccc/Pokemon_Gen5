@@ -13,11 +13,13 @@ USERS	= tomoya_takahashi unno
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 targetname = field_sea_temple
+targetname2 = sea_temple.cdat
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)/fieldmap/
+TARGETDIR2 = $(PROJECT_ROOT)/prog/src/field/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -124,7 +126,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(TARGETDIR2)/$(targetname2)
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -133,6 +135,10 @@ subdir:
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR)
+
+
+$(TARGETDIR2)/$(targetname2):$(targetname2)
+	$(COPY) $(targetname2) $(TARGETDIR2)
 
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
