@@ -33,6 +33,8 @@
 #define PMSND_BGM_END			(SEQ_BGM_END)
 #define PMSND_SE_START		(SE_START)
 #define PMSND_SE_END			(SEQ_SE_END)
+#define PMSND_ME_START		(ME_START)
+#define PMSND_ME_END			(SEQ_ME_END)
 
 //------------------------------------------------------------------
 /**
