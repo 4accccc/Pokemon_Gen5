@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r08r0101.h"
-  //.include  "r08r0101.h"
+  .include  "r08r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,19 +19,176 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r08r0101_oldman1_01
+_EVENT_DATA    ev_zone_c08r0101     //ゾーンチェンジスクリプト
+_EVENT_DATA    ev_scene_c08r0101   //シーンスクリプト
 _EVENT_DATA_END
 
+/**************************************************************/
+/*            SCENE_SCRIPT                               */
+/**************************************************************/
+EVENT_START ev_scene_c08r0101
+  DEFINE_LOCAL target_poke_pos
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_r08r0101_flag_change:
-//  _END
+  //自機所定の位置へ移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
+  _OBJ_ANIME_WAIT()
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-EVENT_START	ev_r08r0101_oldman1_01
+  //条件を満たしたダルタニスが手持ちから検索して今回の対象ポケモンにする
+  _GET_EVT_DARUTANIS_POS( target_poke_pos, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    //「イベント続ける？」
+    _SYSWIN_MSG_ALLPUT_DOWN( msg_r08r0101_narrator_01 )
+    _YES_NO_WIN( SCWK_ANSWER )
+    _SYSWIN_CLOSE()
 
+    IF $SCWK_ANSWER == 0 THEN
+      //ボール投げるアニメ
+
+      //ボール出現フレーム待ち
+
+      //ダルタニスを表示
+      _FLAG_RESET( FV_R08R0101_POKE11 )
+      _OBJ_ADD(R08R0101_POKE11_01)
+
+      //対象ダルタニスのニックネームをタグ０番にセット
+      _TEMOTI_NICK_NAME( 0, target_poke_pos )
+      //「とびだした」
+      _SYSWIN_MSG_ALLPUT_DOWN( msg_r08r0101_narrator_03 )
+      _SYSWIN_CLOSE()
+      //2回目以降のイベントか？
+      $SCWK_ANSWER = TRUE //@todo
+      IF $SCWK_ANSWER == FALSE THEN   //初回
+        //おじさん登場
+      ENDIF
+      //三銃士ポケモンそろっているか？
+      $SCWK_ANSWER = TRUE //@todo
+      IF $SCWK_ANSWER == TRUE THEN
+        //イベント続行
+        _CALL sp_poke_main_event
+      ELSE
+        //２回目以降?
+        IF $SCWK_ANSWER == FALSE THEN   //初回
+          //メッセージ
+
+          //おじさん退出
+        ELSE
+          //メッセージ
+
+          //終了
+        ENDIF
+      ENDIF
+    ELSE
+      //「ボールにとどまった」＞＞終了
+      _SYSWIN_MSG_ALLPUT_DOWN( msg_r08r0101_narrator_02 )
+      _LAST_KEYWAIT()
+      _SYSWIN_CLOSE()
+    ENDIF
+  ENDIF
+
+  //イベント終了 ローカルワーク0に0をセット
+  $LOCALWORK0 = 0
 EVENT_END
+
+/**************************************************************/
+/*            ZONE_CHANGE_SCRIPT                               */
+/**************************************************************/
+INIT_EVENT_START ev_zone_c08r0101
+  DEFINE_LOCAL pos
+  //ＯＢＪのバニッシュフラグをセットする(非表示状態)
+  _FLAG_SET( FV_R08R0101_POKE4 )
+	_FLAG_SET( FV_R08R0101_POKE5 )
+	_FLAG_SET( FV_R08R0101_POKE6 )
+	_FLAG_SET( FV_R08R0101_POKE11 )
+  //イベント条件判定
+  _GET_EVT_DARUTANIS_POS( pos, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    //ローカルワーク0に1をセット  イベント有効
+    $LOCALWORK0 = 1
+  ELSE
+    //ローカルワーク0に0をセット　イベント無効
+    $LOCALWORK0 = 0
+  ENDIF
+INIT_EVENT_END
+
+//イベント中核
+sp_poke_main_event:
+  DEFINE_LOCAL skill_learn
+  //三匹ポケを順に出す
+  _FLAG_RESET( FV_R08R0101_POKE4 )
+  _OBJ_ADD(R08R0101_POKE4_01)
+  _FLAG_RESET( FV_R08R0101_POKE5 )
+  _OBJ_ADD(R08R0101_POKE5_01)
+  _FLAG_RESET( FV_R08R0101_POKE6 )
+  _OBJ_ADD(R08R0101_POKE6_01)
+  //それぞれダルタニスに近づく
+  _OBJ_ANIME( R08R0101_POKE4_01, anm_poke4_move )
+  _OBJ_ANIME( R08R0101_POKE5_01, anm_poke5_move )
+  _OBJ_ANIME( R08R0101_POKE6_01, anm_poke6_move )
+  _OBJ_ANIME_WAIT()
+
+  //新技覚える?
+  IF $SCWK_ANSWER == TRUE THEN
+    //技覚えシーケンス
+
+    //覚えた？
+    IF $SCWK_ANSWER == FALSE THEN
+      $skill_learn = FALSE
+    ENDIF  
+  ELSE
+    $skill_learn = FALSE
+  ENDIF
+
+  //覚えなかったとき
+  IF $skill_learn == FALSE THEN
+    //2回目以降？
+    IF $SCWK_ANSWER == FALSE THEN
+      //おじさんメッセージ
+    ENDIF
+  ENDIF
+
+  //三匹戻る
+  _OBJ_DEL(R08R0101_POKE4_01)
+  _OBJ_DEL(R08R0101_POKE5_01)
+  _OBJ_DEL(R08R0101_POKE6_01)
+
+  //２回目以降?
+  IF $SCWK_ANSWER == FALSE THEN
+    //おじさん退出
+  ENDIF
+
+  //ダルタニス戻る
+  _OBJ_DEL(R08R0101_POKE11_01)
+
+_RET
+
+  
+//--------------------------------------------------------------------
+//自機所定位置に移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,6
+  _ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//アトス　ダルタニスに近づく上から
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke4_move
+  _ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+  
+//--------------------------------------------------------------------
+//ポルトス　ダルタニスに近づく左から
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke5_move
+  _ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//アラミス　ダルタニスに近づく右から
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke6_move
+  _ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+  

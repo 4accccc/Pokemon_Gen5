@@ -9267,3 +9267,20 @@
   .short EV_SEQ_CALL_CROSS_COMM_THANKS_MSG_INPUT
   .short \ret
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちの配布ダルタニスの位置を返す
+ *
+ * @param pos       手持ちポケモンの位置
+ * @param ret       条件を満たしたダルタニスがいた場合はTRUE
+ */
+//--------------------------------------------------------------
+#define _GET_EVT_DARUTANIS_POS( pos, ret ) \
+    _ASM_GET_EVT_DARUTANIS_POS pos, ret
+
+  .macro _ASM_GET_EVT_DARUTANIS_POS pos, ret
+  .short EV_SEQ_GET_EVT_DARUTANIS_POS
+  .short \pos
+  .short \ret
+  .endm

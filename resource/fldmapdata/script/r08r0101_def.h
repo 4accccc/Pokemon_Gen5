@@ -5,6 +5,7 @@
 #define _R08R0101_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_R08R0101_OLDMAN1_01 (1)
+#define SCRID_ZONE_C08R0101 (1)
+#define SCRID_SCENE_C08R0101 (2)
 
 #endif //_R08R0101_DEF_H_
