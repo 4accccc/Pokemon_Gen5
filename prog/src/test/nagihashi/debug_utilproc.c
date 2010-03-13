@@ -115,6 +115,27 @@ static GFL_PROC_RESULT DEBUG_NAGI_IRC_REGULATION_PROC_Init( GFL_PROC *p_proc, in
 
   Regulation_SetDebugData( &p_wk->carddata );
 
+
+  { 
+    int i;
+    u8 *p_dump  = (u8*)&p_wk->carddata;
+
+    Regulation_PrintDebug( &p_wk->carddata );
+    OS_TPrintf("配信用データダンプ\n" );
+
+    OS_TPrintf("------start-------\n" );
+    for( i = 0; i < sizeof(REGULATION_CARDDATA); i++ )
+    { 
+      OS_TPrintf( "0x%x ", p_dump[i] );
+      if( i % 0x10 == 0xF )
+      { 
+        OS_TPrintf( "\n" );
+      }
+    }
+    OS_TPrintf("-------end-------\n" );
+  }
+
+
 	return GFL_PROC_RES_FINISH;
 }
 

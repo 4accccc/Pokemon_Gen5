@@ -524,6 +524,30 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
       //Regulation_PrintDebug( &p_wk->regulation_temp );
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+
+#ifdef PM_DEBUG
+    Regulation_PrintDebug( &p_wk->regulation_temp );
+    { 
+      int i;
+      u8 *p_dump  = (u8*)&p_wk->regulation_temp;
+
+      OS_TPrintf("配信用データダンプ\n" );
+
+      OS_TPrintf("------start-------\n" );
+      for( i = 0; i < sizeof(REGULATION_CARDDATA); i++ )
+      { 
+        OS_TPrintf( "0x%x ", p_dump[i] );
+        if( i % 0x10 == 0xF )
+        { 
+          OS_TPrintf( "\n" );
+        }
+      }
+      OS_TPrintf("-------end-------\n" );
+    }
+#endif
+
+
+
       *p_seq  = SEQ_CHECK_RECVCARD;
     }
 
@@ -673,7 +697,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       Regulation_SetCardParam( &p_wk->regulation_temp, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_SIGNUP );
       //新規大会なのでスコアもクリアする
       LIVEMATCH_Init( p_wk->p_livematch );
-
+#ifdef PM_DEBUG
       OS_TPrintf( "セット前\n" );
       OS_TPrintf( "テンポラリ\n" );
       Regulation_PrintDebug( &p_wk->regulation_temp );
@@ -685,6 +709,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       Regulation_PrintDebug( &p_wk->regulation_temp );
       OS_TPrintf( "セーブ\n" );
       Regulation_PrintDebug( p_wk->p_regulation );
+#endif 
     }
 
     GAMEDATA_SaveAsyncStart(p_wk->param.p_gamedata);
