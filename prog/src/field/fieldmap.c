@@ -2589,10 +2589,6 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
   //歩いてゾーンが変更した場合のフラグ初期化
   FIELD_FLAGCONT_INIT_WalkStepOver( gdata, fieldWork );
 	
-  SET_CHECK("zonechange:set mmdl");
-	//新規ゾーンに配置する動作モデルセット
-	zoneChange_SetMMdl( gdata, fmmdlsys, evdata, new_zone_id );
-	
   SET_CHECK("zonechange:bgm");
 	//BGM切り替え
 	zoneChange_SetBGM( fieldWork, old_zone_id, new_zone_id );
@@ -2628,6 +2624,10 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
   //特殊スクリプト呼び出し：ゾーン切り替え
   SCRIPT_CallZoneChangeScript( fieldWork->gsys, HEAPID_PROC );
 
+  SET_CHECK("zonechange:set mmdl");
+	//新規ゾーンに配置する動作モデルセット
+	zoneChange_SetMMdl( gdata, fmmdlsys, evdata, new_zone_id );
+	
   SET_CHECK("zonechange:tail");
 
 #ifdef DEBUG_FIELDMAP_ZONE_CHANGE_SYNC
