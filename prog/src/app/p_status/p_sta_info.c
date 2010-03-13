@@ -567,6 +567,7 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
   u32 level   = PPP_Get( ppp , ID_PARA_get_level , NULL );
   u32 isEvent = PPP_Get( ppp , ID_PARA_event_get_flag , NULL );
   u32 rom = PPP_Get( ppp , ID_PARA_get_cassette , NULL );
+  const u32 perRand = PPP_Get( ppp , ID_PARA_personal_rnd , NULL );;
   //場所はポケシフター対応で書き換える可能性あり。
   u32 place1  = PPP_Get( ppp , ID_PARA_birth_place , NULL );
   u32 place2  = PPP_Get( ppp , ID_PARA_get_place , NULL );
@@ -639,42 +640,42 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
         case VERSION_SAPPHIRE:  //1	///<	バージョン：AGBサファイア
         case VERSION_RUBY:		  //2	///<	バージョン：AGBルビー
         case VERSION_EMERALD:	  //3	///<	バージョン：AGBエメラルド
-          place1 = 30006;
+          place1 = POKE_MEMO_PLACE_HOUEN;
           memoId = oldRomMsg;
           break;
           
         case VERSION_RED:			  //4	///<	バージョン：AGBファイアーレッド
         case VERSION_GREEN:		  //5	///<	バージョン：AGBリーフグリーン
-          place1 = 30004;
+          place1 = POKE_MEMO_PLACE_KANTOU;
           memoId = oldRomMsg;
           break;
 
         case VERSION_GOLD:		  //7	///<	バージョン：ゴールド用予約定義
         case VERSION_SILVER:	  //8	///<	バージョン：シルバー用予約定義
-          place1 = 30005;
+          place1 = POKE_MEMO_PLACE_JYOUTO;
           memoId = newRomMsg;
           break;
 
         case VERSION_DIAMOND:	  //10	///<	バージョン：DSダイヤモンド
         case VERSION_PEARL:		  //11	///<	バージョン：DSパール
         case VERSION_PLATINUM:  //12	///<	バージョン：DSプラチナ
-          place1 = 30007;
+          place1 = POKE_MEMO_PLACE_SHINOU;
           memoId = newRomMsg;
           break;
 
         case VERSION_COLOSSEUM: //15	///<	バージョン：GCコロシアム
-          place1 = 30008;
+          place1 = POKE_MEMO_PLACE_FAR_PLACE;
           memoId = oldRomMsg;
           break;
 
         default:
-          place1 = 30009;
+          place1 = POKE_MEMO_PLACE_UNKNOWN;
           memoId = newRomMsg;
           break;
           
         }
       }
-      else if( place2 >= 30010 && place2 <= 30013 )
+      else if( place2 >= POKE_MEMO_PLACE_SEREBIXI_BEFORE && place2 <= POKE_MEMO_PLACE_ENRAISUI_AFTER )
       {
         //2010映画
         switch( place2 )
@@ -700,7 +701,7 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
         {
           if( place1 == 0 )
           {
-            if( place2 == 30002 )
+            if( place2 == POKE_MEMO_PLACE_GAME_TRADE )
             {
               //ゲーム内交換
               memoId = trmemo_02_02_01;
@@ -826,10 +827,21 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
       ID_PARA_spepow_rnd,             //特攻乱数
       ID_PARA_spedef_rnd,             //特防乱数
     };
+    //同順があった場合の優先順位用(前からチェックしていって"より大きい"でチェック
+    const u8 priArrIdx = perRand%6;
+    const u8 paraPriorityArr[6][6] =
+    {
+      { 0,1,2,3,4,5 },
+      { 1,2,3,4,5,0 },
+      { 2,3,4,5,0,1 },
+      { 3,4,5,0,1,2 },
+      { 4,5,0,1,2,3 },
+      { 5,0,1,2,3,4 },
+    }
     
     for( i=0;i<6;i++ )
     {
-      const u32 rand = PPP_Get( ppp , paraId[i] , NULL );
+      const u32 rand = PPP_Get( ppp , paraId[ paraPriorityArr[priArrIdx][i] ] , NULL );
       if( maxRand < rand )
       {
         maxRand = rand;
@@ -837,7 +849,7 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
       }
     }
     
-    msgId = trmemo_03_01_00 + maxIdx*5 + maxRand%5;
+    msgId = trmemo_03_01_00 + maxIdx*5 + perRand%5;
     
     srcStr = GFL_MSG_CreateString( infoWork->msgMemo , msgId );
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( infoWork->bmpWinUp ) , 
