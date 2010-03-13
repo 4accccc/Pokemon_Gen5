@@ -83,6 +83,8 @@ typedef struct {
 typedef struct {
   u8 bGet;          ///<	‚±‚Ìƒf[ƒ^‚ğ‚·‚Å‚Éó‚¯æ‚Á‚½‚©‚Ç‚¤‚©
   u8 dummy;
+  u8 dummy2;
+  u8 dummy3;
 } DREAM_WORLD_SERVER_DOWNLOAD_FINISH_DATA;
 
 

@@ -1275,7 +1275,10 @@ static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
    // else{
   //    pWork->TelTimer--;
   //  }
-
+    {
+      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( pWork->gamedata );
+      FSND_RequestTVTRingTone( fsnd);
+    }
     if(15 == GFL_CLACT_WK_GetAnmSeq(pWork->TVTCall)){
       GFL_CLACT_WK_SetAnmSeq(pWork->TVTCall, 16);
     }
@@ -1479,6 +1482,11 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   pParentWork->selectType = pWork->selectType;
 //  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
 
+  {
+    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( pWork->gamedata );
+    FSND_StopTVTRingTone( fsnd);
+  }
+  
   GFL_PROC_FreeWork(proc);
 
   GFL_TCBL_Exit(pWork->pMsgTcblSys);

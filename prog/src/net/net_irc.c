@@ -148,6 +148,23 @@ void GFL_NET_IRC_Init(u32 irc_timeout)
 /**
  * @brief   
  *
+ * @param   irc_timeout		赤外線再接続時のタイムアウト時間
+ *
+ * @retval  
+ *
+ *
+ */
+//--------------------------------------------------------------
+void GFL_NET_IRC_ChangeTimeoutTime(u32 irc_timeout)
+{
+	NetIrcSys.timeout = irc_timeout;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief   
+ *
  * @param   none		
  *
  * @retval  
@@ -316,6 +333,100 @@ int GFL_NET_IRC_System_GetCurrentAid(void)
 /**
  * @brief   IRC受信時に呼ばれるコールバック
  *
+ * @param   data    
+ * @param   size    
+ * @param   command   
+ * @param   value   
+ */
+//--------------------------------------------------------------
+static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id)
+{
+  int send_id;
+  int send_value, receive_value;
+  u8 value;
+  
+//  size -= IRC_HEADER_SIZE;
+
+  value = data[1];
+
+  
+  send_value = value & 0xf;
+  receive_value = value >> 4;
+
+  //OS_TPrintf("%x value \n",value);
+  
+  
+  if(command != GF_NET_COMMAND_CONTINUE){
+    IRC_PRINT("IRC受信コールバック呼び出し, size=%d, command=%d, send_value=%d, receive_value=%d\n", size,command,send_value,receive_value);
+  }
+  
+  NetIrcSys.send_turn = TRUE;
+
+  //-- 赤外線ライブラリ内部で使用しているシステムコマンド --//
+  if(command >= 0xf0){
+    if(command == 0xf4){
+      OS_TPrintf("IRC切断コマンドを受信\n");
+    }
+    return; //赤外線ライブラリ内部で使用しているシステムコマンドの為、ここでは無視
+  }
+  
+  if(NetIrcSys.send_action == TRUE && NetIrcSys.retry_send_reserve == 0){
+    //何らかの返事が向こうから返ってきているなら先ほど送信したデータは向こうに渡ったという事
+    //但しライブラリ内部のシステムコマンドは切断コマンドだったりするので、
+    //システムコマンドの返事は無視する
+    IRC_PRINT("action返事受信 my_value = %d, receive_value=%d\n", NetIrcSys.my_value, receive_value);
+    if(receive_value == NetIrcSys.my_value){
+      if(NetIrcSys.my_value < SEND_CHECK_VALUE_RANGE){
+        NetIrcSys.my_value++;
+      }
+      else{
+        NetIrcSys.my_value = 0;
+      }
+      NetIrcSys.send_action = 0;
+    }
+    else{
+      NetIrcSys.retry_send_reserve = TRUE;  //再度送信予約
+    }
+  }
+  
+  //赤外線専用のシステムコマンド解釈
+  switch(command){
+  case GF_NET_COMMAND_CONTINUE:
+    return;   //通信継続の為の延命コマンドの為、ここで終了
+  default:
+    break;
+  }
+
+  if(NetIrcSys.last_value == send_value){
+    //最後に受け取ったvalue値と同じvalue値の場合、同じデータが2度送られてきているので無視する
+    //※再接続した時にこのケースが発生する。
+    OS_TPrintf("赤外線：同一valueを受信\n");
+    return;
+  }
+#if 0
+  NetIrcSys.last_value = send_value;
+
+  send_id = IRC_TargetIDGet();
+  if(NetIrcSys.recieve_func != NULL){
+    u16* x = (u16*)data;
+    NetIrcSys.recieve_func(send_id, &x[1], size-2);
+  }
+#else
+  send_id = IRC_TargetIDGet();
+  if(NetIrcSys.recieve_func != NULL){
+    u16* x = (u16*)data;
+    if(NetIrcSys.recieve_func(send_id, &x[1], size-2) == FALSE){
+      return; //データが壊れているなら受け取らない
+    }
+  }
+  NetIrcSys.last_value = send_value;
+#endif
+}
+#if 0
+//--------------------------------------------------------------
+/**
+ * @brief   IRC受信時に呼ばれるコールバック
+ *
  * @param   data		
  * @param   size		
  * @param   command		
@@ -394,6 +505,7 @@ static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id)
 		NetIrcSys.recieve_func(send_id, &x[1], size-2);
 	}
 }
+#endif
 
 //--------------------------------------------------------------
 /**

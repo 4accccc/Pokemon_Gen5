@@ -33,6 +33,7 @@ typedef struct {
   u8* pData;     // データ  受信バッファ 送信バッファ
   u16 ConfusionID;   //混線しないためのID 送信側で必要
   HEAPID heapID;    //HEAP
+  u32 LangCode;    //言語コード
 } DELIVERY_IRC_INIT;
 
 

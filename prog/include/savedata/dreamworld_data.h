@@ -14,7 +14,7 @@
 #define DREAM_WORLD_DATA_MAX_ITEMBOX (20)          ///< 受け取るアイテムボックスの数
 #define DREAM_WORLD_DATA_FURNITURE_NAME_NUM (12)  ///< 家具名文字列NUM
 #define DREAM_WORLD_DATA_MAX_FURNITURE (5)        ///< 家具のMAX ５つ
-#define DREAM_WORLD_NOPICTURE (0xff)              ///< 絵が入っていない状態
+#define DREAM_WORLD_NOPICTURE (0)              ///< 絵が入っていない状態
 #define DREAM_WORLD_NOFURNITURE (0x7f)            ///< 家具選択の不正値
 #define DREAM_WORLD_INVALID_FURNITURE (0)      ///< 家具番号の不正値
 

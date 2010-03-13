@@ -14,7 +14,7 @@
 #define DELIVERY_IRC_FUNC (0)   //“®ì’†
 #define DELIVERY_IRC_SUCCESS (1)  //¬Œ÷
 #define DELIVERY_IRC_FAILED (2)   //¸”s
-
+#define DELIVERY_IRC_NOTLANG (3)  //Œ¾ŒêƒR[ƒh‚ªˆá‚¤
 
 typedef struct _DELIVERY_IRC_LOCALWORK DELIVERY_IRC_WORK;
 

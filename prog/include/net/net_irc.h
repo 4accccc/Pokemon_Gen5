@@ -31,13 +31,14 @@ enum{
 //	型定義
 //==============================================================================
 /// 受信コールバックの書式指定
-typedef void (*IrcRecvFunc)(u16 aid, u16 *data, u16 size);
+typedef BOOL (*IrcRecvFunc)(u16 aid, u16 *data, u16 size);
 
 
 //==============================================================================
 //	外部関数宣言
 //==============================================================================
 extern void GFL_NET_IRC_Init(u32 irc_timeout);
+extern void GFL_NET_IRC_ChangeTimeoutTime(u32 irc_timeout);
 extern void GFL_NET_IRC_Exit(void);
 extern void GFL_NET_IRC_RecieveFuncSet(IrcRecvFunc recieve_func);
 extern void GFL_NET_IRC_InitializeFlagSet(void);

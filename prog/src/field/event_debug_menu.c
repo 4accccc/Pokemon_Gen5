@@ -883,7 +883,7 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
  */
 //--------------------------------------------------------------
 #endif
-#if 1
+#if 0
 static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 {
   u16 crc=0;
@@ -943,16 +943,15 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 }
 #endif
 
-#if 0    //図鑑テスト
+#if 1    //図鑑テスト
 
+#include "include/savedata/zukan_wp_savedata.h"
 // セーブデータ
 typedef struct  {
 	// カスタムグラフィックキャラ
 	u8	customChar[ZUKANWP_SAVEDATA_CHAR_SIZE];
 	// カスタムグラフィックパレット
 	u16	customPalette[ZUKANWP_SAVEDATA_PAL_SIZE];
-	// フレームパレット
-	u16	framePalette[ZUKANWP_SAVEDATA_PAL_SIZE];
 	// データ有無フラグ
 	BOOL	flg;
 } TESTZUKAN_DATA;
@@ -961,7 +960,7 @@ typedef struct  {
 
 static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 {
-  int size;
+  int size,i;
   u16 crc=0;
   ARCHANDLE* p_handle;
   GMEVENT *event = wk->gmEvent;
@@ -987,19 +986,15 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 
   pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_zukantest_NCLR, FALSE, HEAPID_FIELDMAP);
   if( NNS_G2dGetUnpackedPaletteData( pArc, &palData ) ){
-    GFL_STD_MemCopy(palData->pRawData, pPic->customPalette, ZUKANWP_SAVEDATA_PAL_SIZE*2);
-  }
-  GFL_HEAP_FreeMemory(pArc);
-
-  pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_zukantest_NCLR, FALSE, HEAPID_FIELDMAP);
-  if( NNS_G2dGetUnpackedPaletteData( pArc, &palData ) ){
-    GFL_STD_MemCopy(palData->pRawData, pPic->framePalette, ZUKANWP_SAVEDATA_PAL_SIZE*2);
+    for(i=0;i<16;i++){
+      GFL_STD_MemCopy(palData->pRawData, &pPic->customPalette[32*i], 32);
+    }
   }
   GFL_HEAP_FreeMemory(pArc);
 
   GFL_ARC_CloseDataHandle( p_handle );
 
-  size = ZUKANWP_SAVEDATA_CHAR_SIZE+ZUKANWP_SAVEDATA_PAL_SIZE*4;
+  size = ZUKANWP_SAVEDATA_CHAR_SIZE+ZUKANWP_SAVEDATA_PAL_SIZE*2;
   crc = GFL_STD_CrcCalc( pPic, size );
 
   {

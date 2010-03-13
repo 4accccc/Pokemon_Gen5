@@ -16,6 +16,7 @@
 #include "system/net_err.h"
 
 #include "net/delivery_irc.h"
+#include "net/net_irc.h"
 
 
 //ビーコン単体の中身
@@ -30,12 +31,14 @@ typedef void (StateFunc)(DELIVERY_IRC_WORK* pState);
 //ローカルワーク
 struct _DELIVERY_IRC_LOCALWORK{
   DELIVERY_IRC_INIT aInit;   //初期化構造体のコピー
-//   DELIVERY_IRC aSend;  //配信する、受け取る構造体
   DELIVERY_IRC aRecv;  //配信する、受け取る構造体
-  u8 end;
-  u8 bSend;
+  u32 targetLangCode;
   u16 bNego;
   u16 crc;
+  u8 end;
+  u8 bSend;
+  u8 dummy1;
+  u8 dummy2;
   StateFunc* state;      ///< ハンドルのプログラム状態
 };
 
@@ -48,17 +51,20 @@ struct _DELIVERY_IRC_LOCALWORK{
 static void _RecvDeliveryData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static u8* _getDeliveryData(int netID, void* pWk, int size);
 static void _Recvcrc16Data(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _LangData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 #define _NET_CMD(x) (x<<8)  //ネットワークサービスIDからコマンドへの変換マクロ
 
 enum{
   _DELIVERY_DATA, //この値に上記マクロを足す
   _CRCCCTI_DATA,
+  _LANG_DATA,
 };
 
 static const NetRecvFuncTable _CommPacketTbl[] = {
   {_RecvDeliveryData,         _getDeliveryData},    ///受信データ
   {_Recvcrc16Data,         NULL},    ///受信データ
+  {_LangData,         NULL},    ///言語コード
 };
 
 
@@ -134,8 +140,18 @@ static void _Recvcrc16Data(const int netID, const int size, const void* pData, v
   DELIVERY_IRC_WORK *pWork = pWk;
   
   pWork->crc = pU16[0];
-  OS_TPrintf("crc16\n");
 }
+
+
+
+static void _LangData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  const u32* pU32 = pData;
+  DELIVERY_IRC_WORK *pWork = pWk;
+  
+  pWork->targetLangCode = pU32[0];
+}
+
 
 
 //------------------------------------------------------------------------------
@@ -160,11 +176,16 @@ static void _sendInit7(DELIVERY_IRC_WORK* pWork)
 {
   if( GFL_NET_IsInit() == FALSE ){
     if(!pWork->bSend){
+
+
       pWork->end = DELIVERY_IRC_SUCCESS;
       
       GFL_STD_MemCopy( pWork->aRecv.data, pWork->aInit.pData,pWork->aInit.datasize);
       if(pWork->crc != GFL_STD_CrcCalc( pWork->aInit.pData, pWork->aInit.datasize) ){
         pWork->end = DELIVERY_IRC_FAILED;
+      }
+      if(  pWork->targetLangCode != pWork->aInit.LangCode){
+        pWork->end = DELIVERY_IRC_NOTLANG;
       }
     }
     else{
@@ -173,6 +194,16 @@ static void _sendInit7(DELIVERY_IRC_WORK* pWork)
     _CHANGE_STATE(_nop);
   }
 }
+
+
+//NET終了
+static void _sendInit6Parent(DELIVERY_IRC_WORK* pWork)
+{
+  if( GFL_NET_IRC_IsConnect() )
+    GFL_NET_Exit(NULL);
+  _CHANGE_STATE(_sendInit7);
+}
+
 
 //NET終了
 static void _sendInit6(DELIVERY_IRC_WORK* pWork)
@@ -185,7 +216,13 @@ static void _sendInit6(DELIVERY_IRC_WORK* pWork)
 static void _sendInit5(DELIVERY_IRC_WORK* pWork)
 {
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_END, pWork->aInit.NetDevID) ){
-    _CHANGE_STATE(_sendInit6);
+    if(GFL_NET_IsParentMachine()){
+      GFL_NET_IRC_ChangeTimeoutTime(IRC_TIMEOUT_STANDARD);  //終了時には変更する
+      _CHANGE_STATE(_sendInit6Parent);
+    }
+    else{
+      _CHANGE_STATE(_sendInit6);
+    }
   }
 }
 
@@ -237,12 +274,30 @@ static void _sendInit25(DELIVERY_IRC_WORK* pWork)
 }
 
 
+static void _sendInitLang(DELIVERY_IRC_WORK* pWork)
+{
+  if( pWork->bSend ){
+    if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle() ,
+                          _LANG_DATA + _NET_CMD( pWork->aInit.NetDevID ),
+                          sizeof(u32) ,  &pWork->aInit.LangCode )){
+//      pWork->bNego=FALSE;
+      _CHANGE_STATE(_sendInit25);
+    }
+  }
+  else{
+    _CHANGE_STATE(_sendInit25);
+  }
+}
+
+
+
+
 //タイミング
 static void _sendInit2(DELIVERY_IRC_WORK* pWork)
 {
   if( GFL_NET_GetConnectNum() > 1 ){
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  _TIMING_START, pWork->aInit.NetDevID);
-    _CHANGE_STATE(_sendInit25);
+    _CHANGE_STATE(_sendInitLang);
   }
 }
 

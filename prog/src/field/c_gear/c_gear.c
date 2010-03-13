@@ -1914,6 +1914,12 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
   }
   pWork->bAction = bAction;
 
+
+  if(!pWork->bAction){
+    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
+    FSND_StopTVTRingTone( fsnd );
+  }
+
   if(GFL_NET_IsInit())
   {
     GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
@@ -1976,6 +1982,10 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
         else if(bit & GAME_COMM_STATUS_BIT_WIRELESS_FU){
           st = GAME_COMM_STATUS_WIRELESS_FU;
           _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 1);
+        }
+        if(!(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR)){
+          FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
+          FSND_StopTVTRingTone( fsnd );
         }
  //       if(!(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR)){
   //        if(PMSND_CheckPlayingSEIdx(SEQ_SE_SYS_35)){
@@ -2048,6 +2058,10 @@ void CGEAR_Exit( C_GEAR_WORK* pWork )
   GFL_TCB_Exit( pWork->pfade_tcbsys );
   GFL_HEAP_FreeMemory( pWork->pfade_tcbsys_wk );
   GFL_TCB_DeleteTask( pWork->vblank_tcb );
+  {
+    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
+    FSND_StopTVTRingTone( fsnd );
+  }
 
   _workEnd(pWork);
   G2S_BlendNone();

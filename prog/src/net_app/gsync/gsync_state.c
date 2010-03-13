@@ -149,9 +149,9 @@ struct _G_SYNC_WORK {
   int lvup;
   int percent;
   DREAM_WORLD_SERVER_ERROR_TYPE ErrorNo;   ///エラーがあった場合の番号
-  u8 musicalNo;      ///< webで選択した番号  無い場合 0xff
-  u8 cgearNo;        ///< webで選択した番号  無い場合 0xff
-  u8 zukanNo;        ///< webで選択した番号  無い場合 0xff
+  u8 musicalNo;      ///< webで選択した番号  無い場合 0
+  u8 cgearNo;        ///< webで選択した番号  無い場合 0
+  u8 zukanNo;        ///< webで選択した番号  無い場合 0
   u8 downloadType;
   u8 msgBit;
   u8 dummy;
@@ -539,7 +539,7 @@ static void _zukansave(G_SYNC_WORK* pWork)
     SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(pWork->pGameData);
     u8* pZknWork = GFL_HEAP_AllocMemory(pWork->heapID, SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
     u16* pCRC = GSYNC_DOWNLOAD_GetData(pWork->pDownload);
-    int size = ZUKANWP_SAVEDATA_CHAR_SIZE + ZUKANWP_SAVEDATA_PAL_SIZE*4;
+    int size = ZUKANWP_SAVEDATA_RESOURCE_SIZE;
     int sizeh = size/2;
     u16 crc;
     
@@ -821,10 +821,10 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
   }
   if(!pDream->bGet && (DREAMWORLD_SV_GetUploadCount(pDreamSave) != pDream->uploadCount))
   {
-    
-    pWork->musicalNo = pDream->musicalNo;      ///< webで選択した番号  無い場合 0xff
-    pWork->cgearNo = pDream->cgearNo; //  u8 cgearNo;        ///< webで選択した番号  無い場合 0xff
-    pWork->zukanNo = pDream->zukanNo; //  u8 zukanNo;        ///< webで選択した番号  無い場合 0xff
+    DREAMWORLD_SV_SetUploadCount(pDreamSave, pDream->uploadCount);
+    pWork->musicalNo = pDream->musicalNo;      ///< webで選択した番号  無い場合 0
+    pWork->cgearNo = pDream->cgearNo; //  u8 cgearNo;        ///< webで選択した番号  無い場合 0
+    pWork->zukanNo = pDream->zukanNo; //  u8 zukanNo;        ///< webで選択した番号  無い場合 0
     pWork->lvup = pDream->sleepPokemonLv; //寝てたポケモンのレベルアップ値
 
     if(pWork->cgearNo != DREAM_WORLD_NOPICTURE){
