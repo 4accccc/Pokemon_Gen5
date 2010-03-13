@@ -19,71 +19,200 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r07r0301_middlewoman1_01
-_EVENT_DATA    ev_r07r0301_pokemon18_01
+_EVENT_DATA    ev_reserve_r07r0301_movepoke_01
+_EVENT_DATA    ev_r07r0301_oldwoman_01
+_EVENT_DATA    ev_r07r0301_oldman_01
+_EVENT_DATA    ev_init_r07r0301
 _EVENT_DATA_END
 
-//------------------------------注意--------------------------------//
-//																	//
-//	LOCALWORK15を使用しました。同マップ内の使用を禁止します。		//
-//				LOCALWORK15⇒回復処理のチェック						//
-//																	//
-//------------------------------------------------------------------//
-
-/************************************************************/	
-/*	MIDDLEWOMAN1（回復処理してくれる）						*/
 /************************************************************/
-EVENT_START ev_r07r0301_middlewoman1_01
-
-	_TALK_OBJ_START()
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_r07r0301
 	
-	IF $LOCALWORK15 == 999 THEN
-		//回復終了後なのでメッセージ表示のみ
-		_BALLOONWIN_OBJMSG( msg_r07r0301_middlewoman1_02,R07R0301_MIDDLEWOMAN1_01 )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-
-	ELSE
-
-		//休ませるか質問
-		_BALLOONWIN_OBJMSG( msg_r07r0301_middlewoman1_01,R07R0301_MIDDLEWOMAN1_01 )
-		_YES_NO_WIN( SCWK_ANSWER )
-		_BALLOONWIN_CLOSE()
-
-		//「はい」
-		IF $SCWK_ANSWER == SCR_YES THEN
-
-			//暗転して手持ちポケモンを回復
-			_BLACK_OUT()
-			_DISP_FADE_END_CHECK()
-			_TEMOTI_POKEMON_KAIFUKU()		//回復処理
-			_ME_PLAY( SEQ_ME_ASA )
-			_ME_WAIT()
-			_BLACK_IN()
-			_DISP_FADE_END_CHECK()
-
-			//回復済みチェック用にローカルワークに値を代入
-			$LOCALWORK15 = 999
-
-			_BALLOONWIN_OBJMSG( msg_r07r0301_middlewoman1_02,R07R0301_MIDDLEWOMAN1_01 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-		
-		ELSE
-		
-			_BALLOONWIN_OBJMSG( msg_r07r0301_middlewoman1_03,R07R0301_MIDDLEWOMAN1_01 )
-			_BALLOONWIN_CLOSE()
-		
-		ENDIF
-
+	//ライカミ・カザカミイベント入室時のみOBJの配置を替える
+	IF $WK_SCENE_R07_MOVEPOKE == 1 THEN
+		_OBJ_POS_CHANGE( R07R0301_OLDWOMAN_01, 6, 0, 8, DIR_DOWN )
+		_OBJ_POS_CHANGE( R07R0301_OLDMAN_01, 2, 0, 5, DIR_RIGHT )
 	ENDIF
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*カザカミ・ライカミ時発動イベント                    */
+/**************************************************************/
+EVENT_START   ev_reserve_r07r0301_movepoke_01
+	
+	//バージョンチェック
+	DEFINE_LOCAL LCW_VERSION
+	_GET_ROM_VERSION ( LCW_VERSION ) 
+
+	//入室して椅子に移動
+	_OBJ_ANIME( R07R0301_OLDWOMAN_01 ,  anm_r07_oldwoman_to_chair )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_to_chair )
+	_OBJ_ANIME_WAIT()
+	
+	//おばあちゃん：スープでも のむかー？
+	_BALLOONWIN_OBJMSG(msg_r07r0301_oldwoman_01,R07R0301_OLDWOMAN_01)
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はい
+	IF $SCWK_ANSWER == SCR_YES THEN
+		_BALLOONWIN_OBJMSG(msg_r07r0301_oldwoman_02,R07R0301_OLDWOMAN_01)
+	//いいえ
+	ELSE
+		_BALLOONWIN_OBJMSG(msg_r07r0301_oldwoman_03,R07R0301_OLDWOMAN_01)
+	ENDIF
+	_BALLOONWIN_CLOSE()
+	
+	//おばあちゃん台所まで移動
+	_OBJ_ANIME( R07R0301_OLDWOMAN_01 ,  anm_r07_oldwoman_to_kitchen )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_look_kitchen )
+	_OBJ_ANIME_WAIT()
+	
+	//おばあちゃん：イッシュ地方にはなー（バージョン分岐）
+	//★Blackの場合
+	IF $LCW_VERSION == VERSION_BLACK THEN
+		_BALLOONWIN_OBJMSG(msg_r07r0301_oldwoman_04b,R07R0301_OLDWOMAN_01)
+		_BALLOONWIN_CLOSE()
+		
+	//★Whiteの場合
+	ELSE
+		_BALLOONWIN_OBJMSG(msg_r07r0301_oldwoman_04w,R07R0301_OLDWOMAN_01)
+		_BALLOONWIN_CLOSE()
+	ENDIF
+	
+	//おばあちゃん主人公に隣接
+	_OBJ_ANIME( R07R0301_OLDWOMAN_01 ,  anm_r07_oldwoman_to_player )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_look_oldwoman )
+	_OBJ_ANIME_WAIT()
+	
+	//おばあちゃん：ほれ のんでみなさいー
+	_BALLOONWIN_OBJMSG(msg_r07r0301_oldwoman_05,R07R0301_OLDWOMAN_01)
+	_BALLOONWIN_CLOSE()
+	
+	//手渡し
+	_OBJ_ANIME( R07R0301_OLDWOMAN_01 ,  anm_r07_oldwoman_gift_soup )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_look_oldwoman )
+	_OBJ_ANIME_WAIT()
+	
+	//主人公「！」
+	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//やさいがたっぷりのスープ！
+	_PLAINWIN_MSG_DOWN( msg_r07r0301_narration_01)
+	_PLAINWIN_CLOSE()
+	
+	//おばあちゃん：大事に 育てとった 作物が
+	_BALLOONWIN_OBJMSG(msg_r07r0301_oldwoman_06,R07R0301_OLDWOMAN_01)
+	_BALLOONWIN_CLOSE()
+	
+	//おばあちゃん：捕まえようと 思ってもなー
+	_BALLOONWIN_OBJMSG(msg_r07r0301_oldwoman_07,R07R0301_OLDWOMAN_01)
+	_BALLOONWIN_CLOSE()
+	
+	//おばあちゃん：1日かけて イッシュ地方を
+	_BALLOONWIN_OBJMSG(msg_r07r0301_oldwoman_08,R07R0301_OLDWOMAN_01)
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+	
+	//========================================//
+	
+	//R07カザカミ・ライカミ登場イベント起動
+	$WK_SCENE_R07_MOVEPOKE = 2
+	//R07天気を晴れに
+	_FLAG_RESET(SYS_FLAG_WEATHER_R07)
+	//========================================//
 
 EVENT_END
 
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：おばあちゃん主人公を椅子に誘導
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_oldwoman_to_chair
+	_ANIME_DATA	AC_WALK_U_16F,4
+	_ANIME_DATA	AC_WALK_L_16F,2
+	_ANIME_DATA	AC_STAY_WALK_D_16F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公椅子に移動
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_to_chair
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：おばあちゃん台所まで移動
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_oldwoman_to_kitchen
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	AC_WALK_L_16F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公台所を見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_look_kitchen
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：おばあちゃん主人公に隣接
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_oldwoman_to_player
+	_ANIME_DATA	AC_WALK_R_16F,2
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公おばあちゃんを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_look_oldwoman
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：おばあちゃんスープを渡す
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_oldwoman_gift_soup
+	_ANIME_DATA	AC_STAY_WALK_D_16F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公おばあちゃんを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/	
+/*	【仮】OLDWOMAN											*/
+/************************************************************/
+EVENT_START ev_r07r0301_oldwoman_01
+	//カザカミ・ライカミイベント起動前
+	//カザカミ・ライカミ捕獲前
+	//カザカミ・ライカミ捕獲後
+	//ツチノカミイベント後でセリフ分岐
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldwoman_00)
+EVENT_END
+
 /**************************************************************/
-/* 			POKEMON	R07R0301							  */
+/* 	【仮】OLDMAN											  */
 /**************************************************************/
-EVENT_START		ev_r07r0301_pokemon18_01
-	_EASY_TALK_POKEVOICE( MONSNO_533, msg_r07r0301_pokemon_01 )
+EVENT_START		ev_r07r0301_oldman_01
+	//カザカミ・ライカミイベント起動前
+	//カザカミ・ライカミ捕獲前
+	//カザカミ・ライカミ捕獲後
+	//ツチノカミイベント後でセリフ分岐
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldman_00)
 EVENT_END
 

@@ -9,8 +9,8 @@
 #ifndef ZONE_R07R0301_EVC_H
 #define ZONE_R07R0301_EVC_H
 
-#define R07R0301_POKEMON18_01              0
-#define R07R0301_MIDDLEWOMAN1_01           1
+#define R07R0301_OLDWOMAN_01               0
+#define R07R0301_OLDMAN_01                 1
 
 #endif //ZONE_R07R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

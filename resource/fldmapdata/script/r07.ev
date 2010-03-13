@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r07.h"
   .include  "r07.h"
+  .include  "r07r0301_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -23,6 +24,9 @@ _EVENT_DATA ev_r07_fightrew_01
 _EVENT_DATA ev_bg_r07_board_01
 _EVENT_DATA ev_bg_r07_board_02
 _EVENT_DATA ev_bg_r07_board_03
+_EVENT_DATA ev_r07_fightrew_02
+_EVENT_DATA ev_pos_r07_movepoke_01
+_EVENT_DATA ev_scene_r07_movepoke_02
 _EVENT_DATA_END
 
 
@@ -39,6 +43,447 @@ _EVENT_DATA_END
 EVENT_START   ev_r07_fightrew_01
   _EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN57, 1, FE_R07_FIGHTREW_01, msg_r07_fighterw_01, msg_r07_fighterw_02, msg_r07_fighterw_02 )
 EVENT_END
+
+/**************************************************************/
+/*  fightrew_02*/
+/**************************************************************/
+EVENT_START   ev_r07_fightrew_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07_fighterw1_01)
+EVENT_END
+
+/**************************************************************/
+/*  カザカミ・ライカミイベント開始（おばあちゃん登場）*/
+/**************************************************************/
+EVENT_START   ev_pos_r07_movepoke_01
+	{
+	
+	//主人公位置取得
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+	_PLAYER_POS_GET( POSX,POSZ )
+
+	//主人公の方向を取得して向いていた方に2歩歩かせる
+	DEFINE_LOCAL LWK_DIR
+	_PLAYER_DIR_GET(LWK_DIR)
+	
+	//右
+	IF $LWK_DIR == DIR_LEFT THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_goto_left_01 )
+		_OBJ_ANIME_WAIT()
+	//左
+	ELSE
+		_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_goto_right_01 )
+		_OBJ_ANIME_WAIT()
+	ENDIF
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+
+	//カメラ操作　サポートの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,8552448,0,15904768,30 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+	//ドア開く
+	DEFINE_LOCAL	DOOR_ANIME_ID
+	_BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 130, 242 )
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+
+	//おばあちゃん生成
+	_OBJ_ADD_EX( 130, 242, DIR_DOWN, MMDL_ID_EVENTOBJ_00, OLDWOMAN1, MV_DMY )
+	
+	//おばあちゃん外に出る
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_r07_oldwoman_hello_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//おばあちゃん：ありゃりゃー
+	_BALLOONWIN_OBJMSG(msg_r07_oldwoman_01,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//主人公下のほうにいたら上に移動
+	SWITCH $POSZ
+	CASE 243 THEN
+	
+		//右
+		IF $LWK_DIR == DIR_LEFT THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_look_oldwoman_z243_right )
+			_OBJ_ANIME_WAIT()
+		//左
+		ELSE
+			_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_look_oldwoman_z243_left )
+			_OBJ_ANIME_WAIT()
+		ENDIF
+		
+	CASE 244 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r07_player_look_oldwoman_z244 )
+		_OBJ_ANIME_WAIT()
+	CASE 245 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r07_player_look_oldwoman_z245 )
+	_OBJ_ANIME_WAIT()
+	CASE 246 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r07_player_look_oldwoman_z246 )
+		 _OBJ_ANIME_WAIT()
+	CASE 247 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r07_player_look_oldwoman_z247 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //244と同じ処理を行う
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r07_player_look_oldwoman_z244 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	//おばあちゃん「！」
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_r07_oldwoman_gyoe_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//主人公の位置に応じておばあちゃん隣接
+	SWITCH $POSZ
+	CASE 243 THEN
+	
+		//右
+		IF $LWK_DIR == DIR_LEFT THEN
+			_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_r07_oldwoman_to_player_z243_left  )
+			_OBJ_ANIME_WAIT()
+		//左
+		ELSE
+			_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 ,  anm_r07_oldwoman_to_player_z243_right )
+			_OBJ_ANIME_WAIT()
+		ENDIF
+
+	DEFAULT  //244と同じ処理を行う
+	
+		//右
+		IF $LWK_DIR == DIR_LEFT THEN
+			_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_r07_oldwoman_to_player_z244_left  )
+			_OBJ_ANIME_WAIT()
+		//左
+		ELSE
+			_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 ,  anm_r07_oldwoman_to_player_z244_right )
+			_OBJ_ANIME_WAIT()
+		ENDIF
+		
+	ENDSWITCH
+	
+	//おばあちゃん：おやおや あんた
+	_BALLOONWIN_OBJMSG(msg_r07_oldwoman_02,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//おばあちゃん：こんな あめかぜの したで
+	_BALLOONWIN_OBJMSG(msg_r07_oldwoman_03,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//おばあちゃん退場：主人公の位置に応じてアニメーションを替える
+	SWITCH $POSZ
+	CASE 243 THEN
+
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 ,  anm_r07_oldwoman_to_house_z243 )
+		_OBJ_ANIME_WAIT()
+
+	DEFAULT  //243と同じ処理を行う
+	
+		//右
+		IF $LWK_DIR == DIR_LEFT THEN
+			_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 ,  anm_r07_oldwoman_to_house_z244_left )
+			_OBJ_ANIME_WAIT()
+		//左
+		ELSE
+			_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 ,  anm_r07_oldwoman_to_house_z244_right )
+			_OBJ_ANIME_WAIT()
+		ENDIF
+		
+	ENDSWITCH
+	
+	//おばあちゃんOBJ消す
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//主人公は座標と向きに応じて移動
+	SWITCH $POSZ
+	CASE 243 THEN
+	
+		//右
+		IF $LWK_DIR == DIR_LEFT THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_to_house_z243_left )
+			_OBJ_ANIME_WAIT()
+		//左
+		ELSE
+			_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_to_house_z243_right )
+			_OBJ_ANIME_WAIT()
+		ENDIF
+
+	DEFAULT  //z243と同じ処理を行う
+	
+		IF $LWK_DIR == DIR_LEFT THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_to_house_z244_left )
+			_OBJ_ANIME_WAIT()
+		//左
+		ELSE
+			_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_to_house_z244_right )
+			_OBJ_ANIME_WAIT()
+		ENDIF
+		
+	ENDSWITCH
+	
+	//予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_R07R0301_MOVEPOKE_01 )
+	
+	//シーン切り替え
+	_MAP_CHANGE( ZONE_ID_R07R0301, 6, 9, DIR_UP )
+	
+	//カメラ操作終了
+	_CAMERA_END()		//カメラ操作終了
+	
+	//ドア閉じる
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+	
+	}
+EVENT_END
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公左へ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_goto_left_01
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公右へ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_goto_right_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公ふりむく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_look_oldwoman_z243_right
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公ふりむく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_look_oldwoman_z243_left
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公上を見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_look_oldwoman_z244
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公上へ1歩
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_look_oldwoman_z245
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公上へ2歩
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_look_oldwoman_z246
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：画面下部にいたら主人公は上へ3歩
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_look_oldwoman_z247
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：おばあちゃん登場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_oldwoman_hello_01
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：おばあちゃん「！」
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_oldwoman_gyoe_01
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：おばあちゃんプレイヤーに隣接z244右
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_oldwoman_to_player_z243_left
+	_ANIME_DATA	AC_STAY_WALK_L_16F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：おばあちゃんプレイヤーに隣接z244左
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_oldwoman_to_player_z243_right
+	_ANIME_DATA	AC_STAY_WALK_R_16F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：おばあちゃんプレイヤーに隣接z244右
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_oldwoman_to_player_z244_left
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	AC_STAY_WALK_D_16F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：おばあちゃんプレイヤーに隣接z244左
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_oldwoman_to_player_z244_right
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	AC_STAY_WALK_D_16F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：おばあちゃん退場z243
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_oldwoman_to_house_z243
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：おばあちゃん退場z244右
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_oldwoman_to_house_z244_left
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：おばあちゃん退場z244左
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_oldwoman_to_house_z244_right
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公上へ3歩z243
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_to_house_z243_left
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公上へ3歩z243
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_to_house_z243_right
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公上へ3歩z244
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_to_house_z244_left
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公上へ3歩z244
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_to_house_z244_right
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*  カザカミ・ライカミイベント開始（家から出たら）*/
+/**************************************************************/
+EVENT_START   ev_scene_r07_movepoke_02
+{
+	//バージョンチェック
+	DEFINE_LOCAL LCW_VERSION
+	_GET_ROM_VERSION ( LCW_VERSION ) 
+	
+	//移動ポケモンOBJ生成
+	//★Blackの場合（カザカミ）
+	IF $LCW_VERSION == VERSION_BLACK THEN
+		_OBJ_ADD_EX( 144, 244, DIR_LEFT, MMDL_ID_EVENTOBJ_00, POKE2, MV_DMY )
+	//★Whiteの場合（ライカミ）
+	ELSE
+		_OBJ_ADD_EX( 144, 244, DIR_LEFT, MMDL_ID_EVENTOBJ_00, POKE3, MV_DMY )
+	ENDIF
+	
+	//家から出たらオートで右方向に移動
+	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_exit_house_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//バージョンによって天気を替える
+	//★Blackの場合
+	IF $LCW_VERSION == VERSION_BLACK THEN
+		_WEATHER_CHANGE( WEATHER_NO_KAZAKAMI ) 
+	//★Whiteの場合
+	ELSE
+		_WEATHER_CHANGE( WEATHER_NO_RAIKAMI ) 
+	ENDIF
+	
+	//天気変更待ち
+	_TIME_WAIT ( 500 )
+	
+	//演出アニメ作成
+	_EV_MOVEPOKE_CREATE( MMDL_ID_EVENTOBJ_00 )
+	
+	//登場
+	_EV_MOVEPOKE_START_ANIME( SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_INSIDE )
+	_EV_MOVEPOKE_CHECK_ANIME_END()
+	
+	//バージョンによって鳴き声を替える
+	//★Blackの場合
+	IF $LCW_VERSION == VERSION_BLACK THEN
+		_VOICE_PLAY(  MONSNO_648,  0 )
+		_VOICE_WAIT()
+	//★Whiteの場合
+	ELSE
+		_VOICE_PLAY(  MONSNO_649,  0 )
+		_VOICE_WAIT()
+	ENDIF
+	
+	//退場
+	_EV_MOVEPOKE_START_ANIME(  SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_OUTSIDE )
+	_EV_MOVEPOKE_CHECK_ANIME_END()
+	
+	//演出アニメ削除
+	_EV_MOVEPOKE_DELETE( )
+	
+	//天気を晴れに戻す
+	_WEATHER_CHANGE( WEATHER_NO_SUNNY ) 
+	
+	//移動ポケモンOBJ消す
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//========================================//
+	//R07カザカミ・ライカミ登場イベント終了
+	$WK_SCENE_R07_MOVEPOKE = 3
+	
+	//移動ポケモン
+	//★Blackの場合（カザカミ）
+	IF $LCW_VERSION == VERSION_BLACK THEN
+		_ADD_MOVE_POKEMON( MOVE_POKE_KAZAKAMI )
+	//★Whiteの場合（ライカミ）
+	ELSE
+		_ADD_MOVE_POKEMON( MOVE_POKE_RAIKAMI )
+	ENDIF
+	//========================================//
+}
+EVENT_END
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公上へ3歩z244
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_exit_house_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*看板01（７番道路用）                                         */

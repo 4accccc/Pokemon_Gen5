@@ -97,6 +97,11 @@ EVENT_START   ev_pos_c08r0601_informationw_02
 	//========================================//
 	//R10ライバルイベント起動
 	$WK_SCENE_C08_GYMCLEAR = 2
+	
+	//R07カザカミ・ライカミイベント起動
+	$WK_SCENE_R07_MOVEPOKE = 1
+	//R07の天気を変更
+	_FLAG_SET( SYS_FLAG_WEATHER_R07 )
 		
 	//========================================//
 
