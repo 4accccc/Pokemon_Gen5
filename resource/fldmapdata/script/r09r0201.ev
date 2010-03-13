@@ -23,7 +23,15 @@ _EVENT_DATA    ev_r09r0201_boy3_01
 _EVENT_DATA    ev_r09r0201_breederm_01
 _EVENT_DATA    ev_r09r0201_middlewoman1_01
 _EVENT_DATA    ev_r09r0201_woman3_01
-_EVENT_DATA    ev_r09r0201_waitress_01
+
+_EVENT_DATA    ev_r09r0201_trainerm_01
+_EVENT_DATA    ev_r09r0201_babyboy_01
+_EVENT_DATA    ev_r09r0201_infomationw_01
+_EVENT_DATA    ev_r09r0201_baker_01
+_EVENT_DATA    ev_r09r0201_workman_01
+_EVENT_DATA    ev_bg_r09r0201_statue_01
+
+// _EVENT_DATA    ev_r09r0201_waitress_01
 _EVENT_DATA_END
 
 
@@ -34,7 +42,18 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*  R09 ブリーダーの会話用イベントスクリプト                      */
+/*  R09R0201　スタチュー用スクリプト                      */
+/**************************************************************/
+EVENT_START   ev_bg_r09r0201_statue_01
+  
+	_PLAINWIN_MSG_DOWN ( msg_r09r0201_statue_01)
+	_LAST_KEYWAIT()	
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+/**************************************************************/
+/*  R09R0201ブリーダーの会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_r09r0201_breederm_01
   
@@ -43,7 +62,7 @@ EVENT_START   ev_r09r0201_breederm_01
 EVENT_END
 
 /**************************************************************/
-/*  R09 聡明の会話用イベントスクリプト                      */
+/*  R09R0201聡明の会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_r09r0201_boy3_01
   
@@ -52,7 +71,7 @@ EVENT_START   ev_r09r0201_boy3_01
 EVENT_END
 
 /**************************************************************/
-/*  R09 おばさんの会話用イベントスクリプト                      */
+/*  R09R0201おばさんの会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_r09r0201_middlewoman1_01
   
@@ -61,7 +80,7 @@ EVENT_START   ev_r09r0201_middlewoman1_01
 EVENT_END
 
 /**************************************************************/
-/*  R09 エプロンの会話用イベントスクリプト                      */
+/*  R09R0201エプロンの会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_r09r0201_woman3_01
   
@@ -70,8 +89,78 @@ EVENT_START   ev_r09r0201_woman3_01
 EVENT_END
 
 /**************************************************************/
-/*  R09 ウェートレスの会話用イベントスクリプト                      */
+/*  R09R0201トレーナーMの会話用イベントスクリプト                      */
 /**************************************************************/
+EVENT_START   ev_r09r0201_trainerm_01
+  
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_trainerm_01 )
+	
+EVENT_END
+
+/**************************************************************/
+/*  R09R0201BABYBOYの会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_r09r0201_babyboy_01
+  
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_babyboy_01 )
+	
+EVENT_END
+
+/**************************************************************/
+/*  R09R0201インフォメーションの会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_r09r0201_infomationw_01
+  
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_infomationw_01 )
+	
+EVENT_END
+
+/**************************************************************/
+/*  R09R0201ベイカーの会話用イベントスクリプト                     */
+/**************************************************************/
+EVENT_START   ev_r09r0201_baker_01
+  
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_baker_01 )
+	
+EVENT_END
+
+/**************************************************************/
+/*  R09R0201ワークマンの会話用イベントスクリプト                      */
+/**************************************************************/
+//かみなりのいし　が貰える
+EVENT_START   ev_r09r0201_workman_01
+  
+	_TALK_OBJ_START()
+	IF FLAG_OFF(FE_R09R0201_ITEMGET_01)	THEN
+		_BALLOONWIN_OBJMSG_POS(msg_r09r0201_workman_01,R09R0201_WORKMAN_01,POS_DR)
+		_YES_NO_WIN( SCWK_ANSWER )
+
+		IF $SCWK_ANSWER == SCR_YES THEN
+			_BALLOONWIN_OBJMSG_POS( msg_r09r0201_workman_02,R09R0201_WORKMAN_01,POS_DEFAULT )
+		
+		ELSE
+			_BALLOONWIN_OBJMSG_POS( msg_r09r0201_workman_03,R09R0201_WORKMAN_01,POS_DEFAULT)
+			
+		ENDIF
+		
+		_BALLOONWIN_OBJMSG_POS( msg_r09r0201_workman_04,R09R0201_WORKMAN_01,POS_DEFAULT)
+		_MSGWIN_CLOSE()
+		_ITEM_EVENT_KEYWAIT(ITEM_KAMINARINOISI,1)
+		_FLAG_SET(FE_R09R0201_ITEMGET_01)
+		
+	ELSE
+		_BALLOONWIN_OBJMSG_POS( msg_r09r0201_workman_05,R09R0201_WORKMAN_01,POS_DEFAULT)
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+	ENDIF
+	
+EVENT_END
+
+/**************************************************************/
+/*  R09R0201ウェートレスの会話用イベントスクリプト                      */
+/**************************************************************/
+/*
 EVENT_START   ev_r09r0201_waitress_01
   	
   	DEFINE_LOCAL	LWK_MILK_NUM
@@ -174,3 +263,4 @@ EVENT_START   ev_r09r0201_waitress_01
 	ENDIF
 	
 EVENT_END
+*/

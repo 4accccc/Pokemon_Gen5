@@ -202,7 +202,7 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_idou_01_a
 	_ANIME_DATA AC_WALK_U_4F,2
-	_ANIME_DATA AC_WALK_R_4F,4
+	_ANIME_DATA AC_WALK_R_4F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -210,7 +210,7 @@ _ANIME_LABEL	anm_player_idou_01_a
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_idou_01_b
 	_ANIME_DATA AC_WALK_U_4F,2
-	_ANIME_DATA AC_WALK_R_4F,3
+	_ANIME_DATA AC_WALK_R_4F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -218,15 +218,15 @@ _ANIME_LABEL	anm_player_idou_01_b
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_idou_01_c
 	_ANIME_DATA AC_WALK_U_4F,2
-	_ANIME_DATA AC_WALK_R_4F,2
+	_ANIME_DATA AC_WALK_R_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //N: 立ち去る1                   
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_boss_saru_01
-	_ANIME_DATA	AC_WALK_U_8F,4
-	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_R_8F,6
 	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	ACMD_END,0
 
@@ -243,7 +243,7 @@ _ANIME_LABEL	anm_boss_saru_02
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ninja_01_idou_01_a
 	_ANIME_DATA AC_WALK_U_4F,1
-	_ANIME_DATA AC_WALK_R_4F,5
+	_ANIME_DATA AC_WALK_R_4F,4
 	_ANIME_DATA AC_STAY_WALK_U_4F,1	
 	_ANIME_DATA	ACMD_END,0
 
@@ -252,7 +252,7 @@ _ANIME_LABEL	anm_ninja_01_idou_01_a
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ninja_01_idou_01_b
 	_ANIME_DATA AC_WALK_U_4F,1	
-	_ANIME_DATA AC_WALK_R_4F,4
+	_ANIME_DATA AC_WALK_R_4F,3
 	_ANIME_DATA AC_STAY_WALK_U_4F,1	
 	_ANIME_DATA	ACMD_END,0
 
@@ -261,7 +261,7 @@ _ANIME_LABEL	anm_ninja_01_idou_01_b
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ninja_01_idou_01_c
 	_ANIME_DATA AC_WALK_U_4F,1
-	_ANIME_DATA AC_WALK_R_4F,3
+	_ANIME_DATA AC_WALK_R_4F,2
 	_ANIME_DATA AC_STAY_WALK_U_4F,1	
 	_ANIME_DATA	ACMD_END,0
 
@@ -270,7 +270,7 @@ _ANIME_LABEL	anm_ninja_01_idou_01_c
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ninja_02_idou_01_a
 	_ANIME_DATA AC_WALK_U_4F,3
-	_ANIME_DATA AC_WALK_R_4F,3
+	_ANIME_DATA AC_WALK_R_4F,2
 	_ANIME_DATA AC_STAY_WALK_U_4F,1		
 	_ANIME_DATA	ACMD_END,0
 	
@@ -279,7 +279,7 @@ _ANIME_LABEL	anm_ninja_02_idou_01_a
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ninja_02_idou_01_b
 	_ANIME_DATA AC_WALK_U_4F,3
-	_ANIME_DATA AC_WALK_R_4F,2
+	_ANIME_DATA AC_WALK_R_4F,1
 	_ANIME_DATA AC_STAY_WALK_U_4F,1		
 	_ANIME_DATA	ACMD_END,0
 
@@ -288,7 +288,6 @@ _ANIME_LABEL	anm_ninja_02_idou_01_b
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ninja_02_idou_01_c
 	_ANIME_DATA AC_WALK_U_4F,3
-	_ANIME_DATA AC_WALK_R_4F,1
 	_ANIME_DATA AC_STAY_WALK_U_4F,1		
 	_ANIME_DATA	ACMD_END,0
 
@@ -310,12 +309,14 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	//ホワイト:おーい　しってる？
 	//ホワイトが喋る
 	_PLAINWIN_MSG_DOWN(msg_d06r0101_white_01)
-//	_BALLOONWIN_OBJMSG( msg_d06r0101_white_01, D06R0101_HEROINE_01)
 	_MSGWIN_CLOSE()
 	
 	//主人公がびっくり
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
 	_OBJ_ANIME_WAIT()
+	
+	//サポートのイベント曲を鳴らす
+	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )	
 	
 	//主人公がよこを向く
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_turn_down)
@@ -372,6 +373,8 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_03, D06R0101_HAKASE2_01,POS_UL)
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
+	
+	_END_EVENT_BGM()
 	
 //===============フラグ操作===============//
 //【仮】ワークが無い為、仮
