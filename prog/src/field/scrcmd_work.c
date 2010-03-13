@@ -20,7 +20,7 @@
 //======================================================================
 #define SCRCMD_ACMD_MAX (8)
 
-#define SCRCMD_MENU_LIST_MAX (16)
+#define SCRCMD_MENU_LIST_MAX (17)
 #define EV_WIN_B_CANCEL (0xfffe)
 #define EV_WIN_X_BREAK  (0xfffd)
 
