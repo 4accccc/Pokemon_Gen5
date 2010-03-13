@@ -58,7 +58,7 @@ INIT_EVENT_END
 /**************************************************************/
 INIT_EVENT_START	ev_recover_d06
 	
-	IF $WK_SCENE_D06 < 2 THEN 
+	IF $WK_SCENE_D06 < 1 THEN 
 	
 		_SXY_MOVE_EXIT_EVENT( DOOR_ID_D06_D06R0101_EXIT01, 107, 1, 337 )
 
