@@ -278,7 +278,6 @@ static int SetWallPaperChange( BOX2_SYS_WORK * syswk, u32 pos );
 static void BoxEndPassiveSet( BOX2_SYS_WORK * syswk );
 
 static int ChgSeqYButton( BOX2_SYS_WORK * syswk, int next );
-static void ChgCursorYButton( BOX2_SYS_WORK * syswk );
 
 
 //============================================================================================
@@ -1795,7 +1794,7 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 	// Ｙボタン
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
 		if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
-			ChgCursorYButton( syswk );
+			BOX2MAIN_ChgCursorButton( syswk );
 			syswk->mv_cnv_mode = 0;
 			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_EXIT );
 		}
@@ -2751,7 +2750,7 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 	// Ｙボタン
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
 		if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
-			ChgCursorYButton( syswk );
+			BOX2MAIN_ChgCursorButton( syswk );
 			syswk->mv_cnv_mode = 0;
 			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_EXIT );
 		}
@@ -4294,10 +4293,10 @@ static int MainSeq_PartyOutPutMain( BOX2_SYS_WORK * syswk )
 
 	if( ret == CURSORMOVE_NONE ){
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			ret = BOX2UI_PTOUT_BOXSEL_LEFT;
 		}else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			ret = BOX2UI_PTOUT_BOXSEL_RIGHT;
 		}
 	}
@@ -4893,7 +4892,7 @@ static int MainSeq_ItemGetMain( BOX2_SYS_WORK * syswk )
 	// Ｙボタン
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
 		if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
-			ChgCursorYButton( syswk );
+			BOX2MAIN_ChgCursorButton( syswk );
 			syswk->mv_cnv_mode = 0;
 			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ITEMGET_END );
 		}
@@ -9527,26 +9526,10 @@ static int ChgSeqYButton( BOX2_SYS_WORK * syswk, int next )
 		syswk->mv_cnv_mode = 1;
 	}
 	syswk->mv_cnv_end = 0;
-	ChgCursorYButton( syswk );
+	BOX2MAIN_ChgCursorButton( syswk );
 	return ChangeSequence( syswk, next );
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		Ｙボタンで移動モードへ移行時のカーソル表示切り替え
- *
- * @param		syswk		ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void ChgCursorYButton( BOX2_SYS_WORK * syswk )
-{
-	GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-	if( CURSORMOVE_CursorOnOffGet( syswk->app->cmwk ) == FALSE ){
-		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
-	}
-}
 
 
 

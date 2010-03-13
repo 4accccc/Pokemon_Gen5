@@ -1376,11 +1376,11 @@ u32 BOX2UI_PartyInMain( BOX2_SYS_WORK * syswk )
 
 	if( ret == CURSORMOVE_NONE ){
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_PTIN_MAIN_LEFT;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_PTIN_MAIN_RIGHT;
 		}
 	}
@@ -1520,11 +1520,11 @@ u32 BOX2UI_BoxArrangeMain( BOX2_SYS_WORK * syswk )
 
 	if( ret == CURSORMOVE_NONE ){
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_MAIN_LEFT;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_MAIN_RIGHT;
 		}
 	}
@@ -1788,11 +1788,11 @@ u32 BOX2UI_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 
 	if( ret == CURSORMOVE_NONE ){
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_PGT_LEFT;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_PGT_RIGHT;
 		}
 	}
@@ -1966,11 +1966,11 @@ u32 BOX2UI_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 
 	if( ret == CURSORMOVE_NONE ){
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_PTGT_LEFT;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_PTGT_RIGHT;
 		}
 	}
@@ -2124,11 +2124,11 @@ u32 BOX2UI_BoxItemArrangeMain( BOX2_SYS_WORK * syswk )
 
 	if( ret == CURSORMOVE_NONE ){
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ITEM_MAIN_LEFT;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ITEM_MAIN_RIGHT;
 		}
 	}
@@ -2665,11 +2665,11 @@ u32 BOX2UI_BattleBoxMain( BOX2_SYS_WORK * syswk )
 
 	if( ret == CURSORMOVE_NONE ){
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_BATTLEBOX_MAIN_LEFT;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_BATTLEBOX_MAIN_RIGHT;
 		}
 	}
@@ -2967,11 +2967,11 @@ u32 BOX2UI_SleepMain( BOX2_SYS_WORK * syswk )
 
 	if( ret == CURSORMOVE_NONE ){
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_SLEEP_MAIN_LEFT;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_SLEEP_MAIN_RIGHT;
 		}
 	}

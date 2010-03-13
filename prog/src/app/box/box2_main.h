@@ -391,6 +391,8 @@ typedef struct {
 
 //	u8	party_frm;			// 手持ちポケモンフレーム制御
 
+	u8	mode_chg_flg;			// ドラッグ中のモード切替有効無効フラグ 0 = 有効, 1 = 無効
+
 	u8	msg_put;				// メッセージを表示するか
 	u8	mv_err_code;		// ポケモン移動エラーコード
 
@@ -1089,6 +1091,17 @@ extern void BOX2MAIN_InitTrayIconScroll( BOX2_SYS_WORK * syswk, s32 mv );
 extern void BOX2MAIN_InitBoxMoveFrameScroll( BOX2_SYS_WORK * syswk );
 
 extern u32 BOX2MAIN_GetTrayScrollDir( BOX2_SYS_WORK * syswk, u32 now, u32 chg );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		専用ボタンを押したときのカーソル表示切り替え
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2MAIN_ChgCursorButton( BOX2_SYS_WORK * syswk );
 
 
 //============================================================================================
