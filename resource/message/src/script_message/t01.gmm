@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-06T20:34:27"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T15:54:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -351,7 +351,7 @@
 博士に　会おう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01_mama_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01_mama_01">
 		<comment>♀
 ・ポケモン図鑑入手後に登場/配置
 ・ママ（GRIDX=777、GRIDZ=743）
@@ -377,7 +377,7 @@
 すごーい！！▼</language>
 	</row>
 
-	<row id="msg_t01_mama_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01_mama_02">
 		<comment>♀
 ・続けてmama_03
 ・演出追加のためにラベルを分けていますが
@@ -391,7 +391,7 @@
 すでに　聞いていたんだけどね▼</language>
 	</row>
 
-	<row id="msg_t01_mama_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01_mama_03">
 		<comment>♀
 ・主人公、No442「タウンマップ」入手処理
 ・続けてmama_04</comment>
@@ -402,7 +402,7 @@
 タウンマップを　もっていきなさいな▼</language>
 	</row>
 
-	<row id="msg_t01_mama_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01_mama_04">
 		<comment>♀
 ・チェレンの下に移動してメッセージ
 ・続けてblack_04</comment>
@@ -411,7 +411,7 @@
 		<language name="JPN_KANJI" width="256">ママ『はい　チェレン▼</language>
 	</row>
 
-	<row id="msg_t01_black_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けて</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -421,7 +421,7 @@
 大切に　使わせてもらいます▼</language>
 	</row>
 
-	<row id="msg_t01_mama_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01_mama_05">
 		<comment>♀
 ・ベルの下に移動してメッセージ
 ・続けてwhite_02</comment>
@@ -430,7 +430,7 @@
 		<language name="JPN_KANJI" width="256">ママ『ほら　ベルも▼</language>
 	</row>
 
-	<row id="msg_t01_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてmama_06</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -438,7 +438,7 @@
 		<language name="JPN_KANJI" width="256">ベル『あ　ありがとうございます！▼</language>
 	</row>
 
-	<row id="msg_t01_mama_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01_mama_06">
 		<comment>♀
 ・0＝主人公の名前
 ・続けてmama_07</comment>
@@ -451,7 +451,7 @@
 ベルたちは　気にしなくて　いいのよ▼</language>
 	</row>
 
-	<row id="msg_t01_mama_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01_mama_07">
 		<comment>♀
 ・GRIDX=777、GRIDZ=743に
 　移動してメッセージ表示
@@ -473,7 +473,7 @@
 どこに　行くのだって　安心よね！▼</language>
 	</row>
 
-	<row id="msg_t01_mama_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01_mama_08">
 		<comment>♀
 ・メッセージ後、ママ、自宅にもどる
 ・画面外に消えるとblack_05表示</comment>
@@ -494,7 +494,7 @@
 じゃ　いってらっしゃい！！▼</language>
 	</row>
 
-	<row id="msg_t01_black_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・このとき、3人、顔を見合わせる？
 ・メッセージ表示後、1番道路へ
@@ -506,8 +506,8 @@
 博士が　待ってるから▼</language>
 	</row>
 
-	<row id="msg_t01_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
+	<row id="msg_t01_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
 ・メッセージ表示後、1番道路へ
 ・画面外に消えると主人公、操作可能に</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -515,6 +515,80 @@
 [1:00:トレーナー名:0]も　はやく　きてよ▼</language>
 		<language name="JPN_KANJI" width="256">ベル『あっ　待ってよ
 [1:00:トレーナー名:0]も　はやく　来てよ▼</language>
+	</row>
+
+	<row id="msg_t01_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・msg_t01_white_03表示後にセット
+　ライバル　GRIDX=789、GRIDZ=737　上向き
+　ベル　　　GRIDX=787、GRIDZ=737　下向き
+・pos起動（GRIDX=786~791、GRIDZ=738）を踏むと
+　メッセージ表示後、主人公
+　GRIDX=788、GRIDZ=737に移動
+・続けてblack_06</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]
+こっち　だよ！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]
+こっち　だよ！▼</language>
+	</row>
+
+	<row id="msg_t01_black_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてwhite_05</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『ベルがね
+たびを　はじめるなら▽
+さいしょの　いっぽは▽
+みんな　いっしょが　いいって▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ベルが
+旅をはじめるなら　最初の一歩は▽
+みんな　いっしょが　いいって▼</language>
+	</row>
+
+	<row id="msg_t01_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ後、
+　上入力→white_06
+　下入力→black_08
+・サポートと会話→white_05
+・ライバルと会話→black_07</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『ねえ　[1:00:トレーナー名:0]！▼
+あなたに　あわせるから
+１ばんどうろに　ふみだそうよ！</language>
+		<language name="JPN_KANJI" width="256">ベル『ねえ　[1:00:トレーナー名:0]！▼
+あなたに　あわせるから
+１ばんどうろに　ふみだそうよ！</language>
+	</row>
+
+	<row id="msg_t01_black_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・white_05表示後に話しかけ</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『さ　いこう！</language>
+		<language name="JPN_KANJI" width="256">チェレン『さ　いこう！</language>
+	</row>
+
+	<row id="msg_t01_black_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・white_05表示後に下入力
+・メッセージ表示後、元の位置にもどされる</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『どこ　いくのさ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『どこ　いくのさ▼</language>
+	</row>
+
+	<row id="msg_t01_white_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ後、3人同時に一歩を踏み出す
+・続けてライバル（早い）、サポート(普通）の
+　速度で一番道路へ
+・このときカメラ移動なし
+・画面外に消えると主人公操作可能に</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">せーの！！▼</language>
+		<language name="JPN_KANJI" width="256">せーの！！▼</language>
 	</row>
 
 	<row id="msg_t01_bigman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -532,10 +606,11 @@
 お話　できるんだと！</language>
 	</row>
 
-	<row id="msg_t01_woman2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・はい・いいえの選択肢表示
-　はいだと文字モード切替</comment>
+・はい/いいえの選択肢表示
+　はいだと文字モード切替
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">WOMAN2
 女性</attribute>
 		<language name="JPN" width="256">あなたは　ひらがな　よりも
