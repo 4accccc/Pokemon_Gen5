@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-03-08T11:49:03"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T13:12:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -312,7 +312,7 @@
 おかたづけ……▼</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_01a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_t01r0101_mama_01a">
 		<comment>♀
 ・続けてblack_02</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
@@ -328,7 +328,7 @@
 待っているんじゃないの？▼</language>
 	</row>
 
-	<row id="msg_t01r0101_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0101_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてwhite_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -340,7 +340,7 @@
 お礼を　いいに　いかないと▼</language>
 	</row>
 
-	<row id="msg_t01r0101_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0101_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてwhite_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -350,7 +350,7 @@
 前で　待ってるよ▼</language>
 	</row>
 
-	<row id="msg_t01r0101_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0101_white_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後、友達♂、友達♀退場
 ・続けて主人公ママ
@@ -378,7 +378,7 @@
 鳴き声とか　聞こえてきたわよ！▼</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0101_mama_02" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>♀
 ・別方向を向いてメッセージ表示
 ・続けてmama_03
@@ -403,7 +403,7 @@
 休ませて　あげないと！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_04" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0101_mama_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・テレビトランシーバー入手処理</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
@@ -423,7 +423,7 @@
 ちゃんと　登録されたままよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_04_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0101_mama_04_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ポケモン図鑑入手まで繰り返し</comment>
 		<language name="JPN" width="256">あなたも　はかせに
@@ -434,7 +434,7 @@
 じゃ　いってらっしゃい！</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0101_mama_05" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ポケモン図鑑入手後から
 　ランニングシューズ入手するまで
@@ -479,7 +479,7 @@
 どんな　ポケモンと　出会うのかしら？</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01r0101_mama_08">
 		<comment>♀
 ・ランニングシューズ入手後
 ・メッセージ表示後、
@@ -499,7 +499,7 @@
 ポケモンに　無理させないのよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_09a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01r0101_mama_09a">
 		<comment>♀
 ・回復処理後ランダム（20％）で09a~09e表示
 ・0＝主人公名前</comment>
@@ -514,7 +514,7 @@
 さあ　旅を　続けなさいな</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_09b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01r0101_mama_09b">
 		<comment>♀
 ・回復処理後ランダム（20％）で09a~09e表示
 ・0＝主人公名前</comment>
@@ -533,7 +533,7 @@
 気遣ってあげるのが　普通でしょ？</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_09c" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01r0101_mama_09c">
 		<comment>♀
 ・回復処理後ランダム（20％）で09a~09e表示</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
@@ -547,7 +547,7 @@
 旅先で　ママと　出会って……</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_09d" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01r0101_mama_09d">
 		<comment>♀
 ・回復処理後ランダム（20％）で09a~09e表示</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
@@ -559,7 +559,7 @@
 博士の　お願い　なんでしょ</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_09e" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01r0101_mama_09e">
 		<comment>♀
 ・回復処理後ランダム（20％）で09a~09e表示</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
