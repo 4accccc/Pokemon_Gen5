@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T17:24:21"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T16:22:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1504" top="167" right="2209" bottom="795" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -348,6 +348,74 @@
 それよりも　おまえさん
 その　ポケモン図鑑は▽
 博士に　みせておるのかい？</language>
+	</row>
+
+	<row id="msg_c05r0201_boy2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ポケモン交換前
+・はい/いいえの選択肢表示
+　はい→ポケモン選択画面
+　いいえ→boy2_04
+・0＝渡すポケモン
+・1＝もらうポケモン</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">なーなー　いきなりだけど
+オイラの　[1:01:ポケモン種族名:1]と▽
+キミの　[1:01:ポケモン種族名:0]　こうかん　しようぜ</language>
+		<language name="JPN_KANJI" width="256">なーなー　いきなりだけど
+オイラの　[1:01:ポケモン種族名:1]と▽
+キミの　[1:01:ポケモン種族名:0]　交換しようぜ</language>
+	</row>
+
+	<row id="msg_c05r0201_boy2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・はい選択
+　ポケモン選択画面で条件を満たすポケモンを選択
+　交換デモ開始
+　終了後、以下のメッセージを自動表示
+・0＝渡すポケモン
+・1＝もらうポケモン</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">オイラの　[1:01:ポケモン種族名:1]
+だいじにだいじに　してくれよ！</language>
+		<language name="JPN_KANJI" width="256">オイラの　[1:01:ポケモン種族名:1]
+大事に大事に　してくれよ！</language>
+	</row>
+
+	<row id="msg_c05r0201_boy2_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ポケモン交換
+・0＝渡すポケモン</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">オイラが　ほしいのは
+[1:01:ポケモン種族名:0]　だよ？</language>
+		<language name="JPN_KANJI" width="256">オイラが　ほしいのは
+[1:01:ポケモン種族名:0]　だよ？</language>
+	</row>
+
+	<row id="msg_c05r0201_boy2_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・いいえ選択
+　もしくはポケモン選択画面で「やめる」を選択</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">そっか……
+そいつのこと　だいじに　してるんだ▼
+まんがいち　きが　かわったら
+ポケモン　こうかん　してくれよ！</language>
+		<language name="JPN_KANJI" width="256">そっか……
+そいつのこと　大事に　してるんだ▼
+万が一　気が　変わったら
+ポケモン交換　してくれよ！</language>
+	</row>
+
+	<row id="msg_c05r0201_boy2_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ポケモン交換後</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">きみと　こうかんした
+ポケモンを　そだてて　みるかな！</language>
+		<language name="JPN_KANJI" width="256">きみと　交換した
+ポケモンを　育ててみるかな！</language>
 	</row>
 
 	<row id="msg_c05r0201_woman2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">

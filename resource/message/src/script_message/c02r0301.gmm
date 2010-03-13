@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-12T14:15:39"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T16:23:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c02r0301_woman2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0301_woman2_01" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ポケモン交換前
 ・はい/いいえの選択肢表示
@@ -300,8 +300,7 @@
 　いいえ→woman2_04
 ・0＝渡すポケモン
 ・1＝もらうポケモン</comment>
-		<attribute name="キャラ指定">WOMAN2
-女性（金髪）</attribute>
+		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ねえねえ　あなた
 [1:01:ポケモン種族名:0]　って　ポケモン　もってる？▼
 よかったら　あたしの　[1:01:ポケモン種族名:1]と
@@ -312,7 +311,7 @@
 あなたの　[1:01:ポケモン種族名:0]　交換しよ？</language>
 	</row>
 
-	<row id="msg_c02r0301_woman2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0301_woman2_02" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・はい選択
 　ポケモン選択画面で条件を満たすポケモンを選択
@@ -320,8 +319,7 @@
 　終了後、以下のメッセージを自動表示
 ・0＝渡すポケモン
 ・1＝もらうポケモン</comment>
-		<attribute name="キャラ指定">WOMAN2
-女性（金髪）</attribute>
+		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">うふふ！　あたしの
 [1:01:ポケモン種族名:1]　だいじにしてね！▼
 あたしも　もらった
@@ -332,24 +330,22 @@
 [1:01:ポケモン種族名:0]　大事にするから！</language>
 	</row>
 
-	<row id="msg_c02r0301_woman2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0301_woman2_03" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ポケモン交換
 ・0＝渡すポケモン</comment>
-		<attribute name="キャラ指定">WOMAN2
-女性（金髪）</attribute>
+		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">あたしが　ほしいのは
 [1:01:ポケモン種族名:0]　なんだけど……</language>
 		<language name="JPN_KANJI" width="256">あたしが　ほしいのは
 [1:01:ポケモン種族名:0]　なんだけど……</language>
 	</row>
 
-	<row id="msg_c02r0301_woman2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0301_woman2_04" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・いいえ選択
 　もしくはポケモン選択画面で「やめる」を選択</comment>
-		<attribute name="キャラ指定">WOMAN2
-女性（金髪）</attribute>
+		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">だめなら　しかたないな……▼
 でも　きが　かわったら
 ポケモン　こうかん　しようね！</language>
@@ -358,11 +354,10 @@
 ポケモン交換　しようね！</language>
 	</row>
 
-	<row id="msg_c02r0301_woman2_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0301_woman2_05" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ポケモン交換後</comment>
-		<attribute name="キャラ指定">WOMAN2
-女性（金髪）</attribute>
+		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ポケモンの　おかげで
 あたしと　あなた▽
 おともだちに　なれたよね！</language>
@@ -374,8 +369,7 @@
 	<row id="msg_c02r0301_girl1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：なつき度チェック
 ・なつき度をチェックして対応したメッセージに続く
-
-0＝先頭のポケモン（タマゴ/ひんし除く）</comment>
+・0＝先頭のポケモン（タマゴ/ひんし除く）</comment>
 		<attribute name="キャラ指定">女の子</attribute>
 		<language name="JPN" width="256">まあ　すてきな　トレーナーさん
 どんな　ポケモンと　いっしょなの？▼
