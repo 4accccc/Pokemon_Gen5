@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-12T17:04:33"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T18:25:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -647,17 +647,17 @@
 リュウラセンの塔に　向かう！▼</language>
 	</row>
 
-	<row id="msg_c07_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c07_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、リュウラセンの塔に向かう
 ・画面外に消えると、続けてwhite_03</comment>
 		<attribute name="キャラクター">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『ぼくも　いきます！▼
 リュウラセンのとうは
-８ばんどうろ　ですよね▼</language>
+ここから　きた　ですよね▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『ぼくも　行きます！▼
 リュウラセンの塔は
-８番道路　ですよね▼</language>
+ここから　北ですよね▼</language>
 	</row>
 
 	<row id="msg_c07_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -671,12 +671,12 @@
 あ　あたしは……　どうしたら？▼
 と　とりあえず　その
 リュウラセンのとうに　いかないと……▽
-えーっと　８ばんどうろ　だっけ？</language>
+えーっと　ここから　きた　だっけ？</language>
 		<language name="JPN_KANJI" width="256">ベル『わわわ！
 あ　あたしは……　どうしたら？▼
 と　とりあえず　その
 リュウラセンの塔に　行かないと……▽
-えーっと　８番道路　だっけ？</language>
+えーっと　ここから　北だっけ？</language>
 	</row>
 
 	<row id="msg_c07_black_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
