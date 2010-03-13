@@ -389,6 +389,11 @@ FIELD_PLAYER_GRID * FIELD_PLAYER_GRID_Init(
           gjiki->player_core, FIELD_PLAYER_REQBIT_SWIM );
       FIELD_PLAYER_CORE_UpdateRequest( gjiki->player_core );
       break;
+    case PLAYER_MOVE_FORM_DIVING:
+      FIELD_PLAYER_CORE_SetRequest(
+          gjiki->player_core, FIELD_PLAYER_REQBIT_DIVING );
+      FIELD_PLAYER_CORE_UpdateRequest( gjiki->player_core );
+      break;
     }
   }
   
@@ -742,6 +747,7 @@ static JIKI_MOVEORDER gjiki_GetMoveOrder(
     set = gjiki_GetMoveOrder_Cycle( gjiki, input );
     break;
   case PLAYER_MOVE_FORM_SWIM:
+  case PLAYER_MOVE_FORM_DIVING:
     set = gjiki_GetMoveOrder_Swim( gjiki, input );
     break;
   default:
@@ -1683,6 +1689,7 @@ static void gjiki_SetMove( FIELD_PLAYER_GRID *gjiki,
     gjiki_SetMove_Cycle( gjiki, set, input );
     break;
   case PLAYER_MOVE_FORM_SWIM:
+  case PLAYER_MOVE_FORM_DIVING:
     gjiki_SetMove_Swim( gjiki, set, input );
     break;
   default:

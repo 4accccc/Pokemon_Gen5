@@ -64,6 +64,7 @@ typedef enum
   PLAYER_DRAW_FORM_NORMAL = 0, ///<自機二足歩行
   PLAYER_DRAW_FORM_CYCLE, ///<自機自転車移動
   PLAYER_DRAW_FORM_SWIM, ///<自機波乗り移動
+  PLAYER_DRAW_FORM_DIVING, ///<自機ダイビング移動
   PLAYER_DRAW_FORM_ITEMGET, ///<自機アイテムゲット
   PLAYER_DRAW_FORM_SAVEHERO, ///<自機セーブ
   PLAYER_DRAW_FORM_PCHERO, ///<自機PC預け

@@ -1001,6 +1001,9 @@ VMCMD_RESULT EvCmdGetPlayerFrom( VMHANDLE *core, void *wk )
   case PLAYER_MOVE_FORM_SWIM:
     *ret_wk = SCR_PLAYER_FORM_SWIM;
     break;
+  case PLAYER_MOVE_FORM_DIVING:
+    *ret_wk = SCR_PLAYER_FORM_DIVING;
+    break;
   default:
     GF_ASSERT( 0 );
     *ret_wk = SCR_PLAYER_FORM_NORMAL;

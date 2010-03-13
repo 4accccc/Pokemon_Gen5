@@ -167,15 +167,26 @@ static GMEVENT_RESULT EVENT_DivingDown( GMEVENT* p_event, int* p_seq, void* p_wo
   case 2:
     if( PMSND_CheckPlaySE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_123) ) == FALSE )
     {
+      // 自機をダイビング状態にする
+      {
+        FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+        const MMDL* cp_mmdl = FIELD_PLAYER_GetMMdl( p_player );
+        
+        FIELD_PLAYER_ChangeOBJCode( p_player, MMDL_GetOBJCode( cp_mmdl ) ); // ダイビング固定にする。
+        FIELD_PLAYER_SetMoveForm( p_player, PLAYER_MOVE_FORM_DIVING );
+      }
+      
       // マップジャンプ
-      u16 connect_zone_id;
-      BOOL result;
-      GMEVENT * p_sub_event;
-      result = DIVINGSPOT_Check( p_wk->p_fieldmap, &connect_zone_id );
-      GF_ASSERT( result );
-      p_sub_event = DEBUG_EVENT_ChangeMapDefaultPos( p_wk->p_gsys, 
-          p_wk->p_fieldmap, connect_zone_id );
-      GMEVENT_CallEvent(p_event, p_sub_event);
+      {
+        u16 connect_zone_id;
+        BOOL result;
+        GMEVENT * p_sub_event;
+        result = DIVINGSPOT_Check( p_wk->p_fieldmap, &connect_zone_id );
+        GF_ASSERT( result );
+        p_sub_event = DEBUG_EVENT_ChangeMapDefaultPos( p_wk->p_gsys, 
+            p_wk->p_fieldmap, connect_zone_id );
+        GMEVENT_CallEvent(p_event, p_sub_event);
+      }
       (*p_seq)++;
     }
     break;
@@ -204,6 +215,12 @@ static GMEVENT_RESULT EVENT_DivingUp( GMEVENT* p_event, int* p_seq, void* p_work
   switch( (*p_seq) ){
 
   case 0:
+    // 自機状態を波乗りに戻す
+    {
+      FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+      FIELD_PLAYER_SetMoveForm( p_player, PLAYER_MOVE_FORM_SWIM );
+      FIELD_PLAYER_ClearOBJCodeFix( p_player );
+    }
     // マップジャンプ
     {
       GMEVENT* p_sub_event;

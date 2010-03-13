@@ -36,6 +36,7 @@ typedef enum
   PLAYER_MOVE_FORM_NORMAL = 0,   ///<自機二足歩行
   PLAYER_MOVE_FORM_CYCLE,  ///<自機自転車移動
   PLAYER_MOVE_FORM_SWIM, ///<自機波乗り移動
+  PLAYER_MOVE_FORM_DIVING, ///<自機ダイビング移動
   PLAYER_MOVE_FORM_MAX,
 }PLAYER_MOVE_FORM;
 

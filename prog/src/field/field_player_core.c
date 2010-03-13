@@ -1229,7 +1229,43 @@ static void gjikiReq_SetDiving( FIELD_PLAYER_CORE *player_core )
   fectrl = FIELDMAP_GetFldEffCtrl( player_core->fieldWork );
   
   // まず波乗り状態にして
-  gjikiReq_SetSwim( player_core );
+  {
+    int sex;
+    u16 code;
+    MMDL *mmdl;
+    
+    sex = FIELD_PLAYER_CORE_GetSex( player_core );
+    mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
+    code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_DIVING );
+
+    if( MMDL_GetOBJCode(mmdl) != code ){
+      MMDL_ChangeOBJCode( mmdl, code );
+    }
+    
+    if(FIELD_PLAYER_CORE_GetMoveForm( player_core ) != PLAYER_MOVE_FORM_DIVING ){
+      FIELD_PLAYER_CORE_SetMoveForm( player_core, PLAYER_MOVE_FORM_DIVING );
+    }
+    // ダイビングは、常に画面遷移とともに発動される。
+    // さらに、BGMは通常曲でよいので、
+    // BGM操作は行わない。
+    //gjiki_PlayBGM( player_core );
+    
+    if( FIELD_PLAYER_CORE_GetEffectTaskWork( player_core ) == NULL ){ //波乗りポケモン
+      u16 dir;
+      VecFx32 pos;
+      FLDEFF_CTRL *fectrl;
+      FLDEFF_TASK* task;
+      
+      fectrl = FIELDMAP_GetFldEffCtrl( player_core->fieldWork );
+      dir = MMDL_GetDirDisp( mmdl );
+      MMDL_GetVectorPos( mmdl, &pos );
+      
+      task = FLDEFF_NAMIPOKE_SetMMdl(
+          fectrl, dir, &pos, mmdl, NAMIPOKE_JOINT_ON );
+
+      FIELD_PLAYER_CORE_SetEffectTaskWork( player_core, task );
+    }
+  }
 
   //気泡を設定
   FLDEFF_BUBBLE_SetMMdl( player_core->fldmmdl, fectrl );

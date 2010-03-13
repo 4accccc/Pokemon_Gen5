@@ -441,6 +441,11 @@ FIELD_PLAYER_NOGRID* FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER_CORE* p_player_cor
           p_wk->p_player_core, FIELD_PLAYER_REQBIT_SWIM );
       FIELD_PLAYER_CORE_UpdateRequest( p_wk->p_player_core );
       break;
+    case PLAYER_MOVE_FORM_DIVING:
+      FIELD_PLAYER_CORE_SetRequest(
+          p_wk->p_player_core, FIELD_PLAYER_REQBIT_DIVING );
+      FIELD_PLAYER_CORE_UpdateRequest( p_wk->p_player_core );
+      break;
     }
   }
 
@@ -936,6 +941,7 @@ static PLAYER_SET nogridGetMoveStartSet( FIELD_PLAYER_NOGRID* p_player, int dir,
     set = jikiMove_Cycle_GetSet( p_player, key_trg, key_cont, dir, debug );
 	  break;
   case PLAYER_MOVE_FORM_SWIM:
+  case PLAYER_MOVE_FORM_DIVING:
     set = jikiMove_Swim_GetSet( p_player, key_trg, key_cont, dir, debug );
     break;
   default:
@@ -969,6 +975,7 @@ static void nogridSetMove( FIELD_PLAYER_NOGRID* p_player, PLAYER_SET set, int di
     jikiMove_Cycle( p_player, set, key_trg, key_cont, dir, debug );
 	  break;
   case PLAYER_MOVE_FORM_SWIM:
+  case PLAYER_MOVE_FORM_DIVING:
     jikiMove_Swim( p_player, set, key_trg, key_cont, dir, debug );
     break;
   default:
