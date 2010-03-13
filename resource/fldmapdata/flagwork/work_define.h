@@ -105,14 +105,14 @@
 
 #define WK_SCENE_AREA_START              16496 /* 0x4070  */
 
-#define WK_SCENE_0907ROM00               16496 /* 0x4070 wb 0907ROM用スクリプトセーブワーク */
-#define WK_SCENE_0907ROM01               16497 /* 0x4071 wb 0907ROM用スクリプトセーブワーク */
-#define WK_SCENE_0907ROM02               16498 /* 0x4072 wb 0907ROM用スクリプトセーブワーク */
-#define WK_SCENE_0907ROM03               16499 /* 0x4073 wb 0907ROM用スクリプトセーブワーク */
-#define WK_SCENE_0907ROM04               16500 /* 0x4074 wb 0907ROM用スクリプトセーブワーク */
-#define WK_SCENE_0907ROM05               16501 /* 0x4075 wb 0907ROM用スクリプトセーブワーク */
-#define WK_SCENE_0907ROM06               16502 /* 0x4076 wb 0907ROM用スクリプトセーブワーク */
-#define WK_SCENE_0907ROM07               16503 /* 0x4077 wb 0907ROM用スクリプトセーブワーク */
+		/* not used 16496(0x4070) */
+		/* not used 16497(0x4071) */
+		/* not used 16498(0x4072) */
+		/* not used 16499(0x4073) */
+		/* not used 16500(0x4074) */
+		/* not used 16501(0x4075) */
+		/* not used 16502(0x4076) */
+		/* not used 16503(0x4077) */
 #define WK_SCENE_T01R0201                16504 /* 0x4078 友達♀の自宅イベント用ワーク */
 #define WK_SCENE_T01R0401                16505 /* 0x4079 カノコタウン研究所：イベント用ワーク */
 #define WK_SCENE_T02                     16506 /* 0x407a カラクサタウン：イベント用ワーク */
@@ -150,7 +150,7 @@
 #define WK_SCENE_D06                     16538 /* 0x409a D06電気洞窟の外側：POSイベント用ワーク */
 #define WK_SCENE_D06R0101                16539 /* 0x409b D06R0101電気洞窟の内部：イベント用ワーク */
 #define WK_SCENE_R04                     16540 /* 0x409c ４番道路：POSイベント用ワーク */
-#define WK_SCENE_D03R0101                16541 /* 0x409d D03砂漠（遺跡手前）：イベント用ワーク */
+		/* not used 16541(0x409d) */
 #define WK_SCENE_D04R0101                16542 /* 0x409e D04遺跡：イベント用ワーク */
 #define WK_SCENE_D04R0601                16543 /* 0x409f D04遺跡奥：イベント用ワーク */
 		/* not used 16544(0x40a0) */
