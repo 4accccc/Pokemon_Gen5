@@ -16,7 +16,6 @@
 //              特殊スクリプト
 //--------------------------------------------------------------
 _SCENE_CHANGE_LABEL		sp_c01_tbl
-_ZONE_CHANGE_LABEL		SCRID_ZONE_C01
 _SP_EVENT_DATA_END
 
 //テーブル定義
