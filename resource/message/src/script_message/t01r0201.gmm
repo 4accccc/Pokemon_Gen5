@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-06T20:37:06"/>
+	<create user="matsumiya" host="W00224" date="2010-03-13T16:35:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,10 +292,19 @@
 	</lock>
 
 
-	<row id="msg_t01r0201_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♀
+	<row id="msg_t01r0201_middleman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
 ・t01r0301に入ると
 　カメラ移動してこのメッセージ表示
+・続けてwhite_01
+・主人公と隣接したときwhite_02</comment>
+		<attribute name="キャラ指定">男性</attribute>
+		<language name="JPN" width="256">だめだめだめーっ！！▼</language>
+		<language name="JPN_KANJI" width="256">だめだめだめーっ！！▼</language>
+	</row>
+
+	<row id="msg_t01r0201_white_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
 ・メッセージ表示後
 　室外へ出おうとするアニメ
 ・主人公と隣接したときwhite_02</comment>
@@ -314,6 +323,7 @@
 		<comment>♀
 ・このメッセージ表示後
 　研究所内に入れる</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ベル『あっ　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 ……だいじょうぶ　だよ[BE:01:ページ切り替え（クリア）]
 ……だいじょうぶ！[BE:01:ページ切り替え（クリア）]
