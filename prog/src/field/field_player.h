@@ -231,6 +231,10 @@ extern void FIELD_PLAYER_SetUpGrid( FIELD_PLAYER *fld_player, HEAPID heapID );
 extern void FIELD_PLAYER_MoveGrid( FIELD_PLAYER *fld_player,
     int key_trg, int key_cont, PLAYER_MOVEBIT mbit );
 
+//GRIDç¿ïWÇÃéÊìæ
+extern void FIELD_PLAYER_GetGridPos(
+		const FIELD_PLAYER *fld_player, s16 *gx, s16 *gy, s16 *gz );
+
 //TOOL
 extern void FIELD_PLAYER_GetDirGridPos(
 		const FIELD_PLAYER *fld_player, u16 dir, s16 *gx, s16 *gy, s16 *gz );

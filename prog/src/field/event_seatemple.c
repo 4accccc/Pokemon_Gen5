@@ -43,11 +43,11 @@ typedef struct
 } STEP_DO_SCRIPT_ID;
 
 static const STEP_DO_SCRIPT_ID sc_STEP_DO_SCRIPT_ID[] = {
-  { 0, SCRID_STEP_000 },
-  { 100, SCRID_STEP_100 },
-  { 300, SCRID_STEP_300 },
-  { 450, SCRID_STEP_450 },
-  { 500, SCRID_STEP_500 },
+  { 0,   SCRID_SEATEMPLE_STEP_000 },
+  { 100, SCRID_SEATEMPLE_STEP_100 },
+  { 300, SCRID_SEATEMPLE_STEP_300 },
+  { 450, SCRID_SEATEMPLE_STEP_450 },
+  { 500, SCRID_SEATEMPLE_STEP_500 },
 };
 
 //-----------------------------------------------------------------------------

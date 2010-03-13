@@ -20,11 +20,15 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_seatemple
 
-_EVENT_DATA    ev_step_000
-_EVENT_DATA    ev_step_100
-_EVENT_DATA    ev_step_300
-_EVENT_DATA    ev_step_450
-_EVENT_DATA    ev_step_500
+_EVENT_DATA    ev_seatemple_step_000
+_EVENT_DATA    ev_seatemple_step_100
+_EVENT_DATA    ev_seatemple_step_300
+_EVENT_DATA    ev_seatemple_step_450
+_EVENT_DATA    ev_seatemple_step_500
+
+
+_EVENT_DATA    ev_seatemple_skill_use_2f
+_EVENT_DATA    ev_seatemple_skill_use_3f
 
 _EVENT_DATA_END
 
@@ -47,7 +51,7 @@ ev_seatemple:
 /**************************************************************/
 /*      ÇOï‡                                                  */
 /**************************************************************/
-EVENT_START ev_step_000
+EVENT_START ev_seatemple_step_000
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step00 )
   _PLAINWIN_CLOSE()
 EVENT_END
@@ -55,7 +59,7 @@ EVENT_END
 /**************************************************************/
 /*      ÇPÇOÇOï‡                                              */
 /**************************************************************/
-EVENT_START ev_step_100
+EVENT_START ev_seatemple_step_100
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step01 )
   _PLAINWIN_CLOSE()
 EVENT_END
@@ -63,7 +67,7 @@ EVENT_END
 /**************************************************************/
 /*      ÇRÇOÇOï‡                                              */
 /**************************************************************/
-EVENT_START ev_step_300
+EVENT_START ev_seatemple_step_300
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step02 )
   _PLAINWIN_CLOSE()
 EVENT_END
@@ -71,7 +75,7 @@ EVENT_END
 /**************************************************************/
 /*      ÇSÇTÇOï‡                                              */
 /**************************************************************/
-EVENT_START ev_step_450
+EVENT_START ev_seatemple_step_450
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step03 )
   _PLAINWIN_CLOSE()
 EVENT_END
@@ -79,11 +83,27 @@ EVENT_END
 /**************************************************************/
 /*      ÇTÇOÇOï‡                                              */
 /**************************************************************/
-EVENT_START ev_step_500
+EVENT_START ev_seatemple_step_500
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step04 )
   _PLAINWIN_CLOSE()
 
   _DIVING( SCR_EV_DIVING_MAPCHANGE_UP )
 EVENT_END
 
+
+/**************************************************************/
+/*      ÇQFÇ≈Ç»ÇºÇâÇ¢ÇΩÅI   or    Ç∑Ç≈Ç…Ç∆Ç¢ÇƒÇ¢ÇÈ          */
+/**************************************************************/
+EVENT_START ev_seatemple_skill_use_2f
+	_PLAINWIN_MSG_DOWN( msg_seatemple_skill_01 )
+  _PLAINWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*      ÇRFÇ≈Ç»ÇºÇâÇ¢ÇΩÅI   or    Ç∑Ç≈Ç…Ç∆Ç¢ÇƒÇ¢ÇÈ          */
+/**************************************************************/
+EVENT_START ev_seatemple_skill_use_3f
+	_PLAINWIN_MSG_DOWN( msg_seatemple_skill_01 )
+  _PLAINWIN_CLOSE()
+EVENT_END
 

@@ -1011,6 +1011,23 @@ BOOL ZONEDATA_IsSeaTempleDungeon( u16 zone_id )
   return FALSE;
 }
 
+// 2FÇ©ÅH
+BOOL ZONEDATA_IsSeaTempleDungeon2F( u16 zone_id )
+{
+  if( zone_id == ZONE_ID_D20R0601 ){
+    return TRUE;
+  }
+  return FALSE;
+}
+// 3FÇ©ÅH
+BOOL ZONEDATA_IsSeaTempleDungeon3F( u16 zone_id )
+{
+  if( zone_id == ZONE_ID_D20R0701 ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 
 //============================================================================================

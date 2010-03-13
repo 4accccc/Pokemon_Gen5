@@ -23,9 +23,13 @@
 
 #include "script.h"
 #include "../../../resource/fldmapdata/script/hiden_def.h" //script id
+#include "../../../resource/fldmapdata/script/seatemple_scr_def.h" //script id
 
 #include "event_mapchange.h"  //EVENT_ChangeMapByTeleport
 #include "field_diving_data.h"  //DIVINGSPOT_Check
+
+// 海底神殿位置情報
+#include "sea_temple.cdat"  //(8byteのテーブル)
 
 //======================================================================
 //  define
@@ -67,8 +71,8 @@ static GMEVENT_RESULT GMEVENT_Flash(GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT GMEVENT_Anawohoru(GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT GMEVENT_Teleport(GMEVENT *event, int *seq, void *wk );
 
-static FLDSKILL_CHECK_FUNC GetCheckFunc( FLDSKILL_IDX idx );
-static FLDSKILL_USE_FUNC GetUseFunc( FLDSKILL_IDX idx );
+static FLDSKILL_CHECK_FUNC GetCheckFunc( const FLDSKILL_CHECK_WORK *scwk, FLDSKILL_IDX idx );
+static FLDSKILL_USE_FUNC GetUseFunc( const FLDSKILL_CHECK_WORK *scwk, FLDSKILL_IDX idx );
 
 //static HIDEN_SCR_WORK * CreateHSW(
 //    const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk );
@@ -87,6 +91,7 @@ static GMEVENT* SkillUse_Amaikaori( const FLDSKILL_USE_HEADER *head, const FLDSK
 static GMEVENT* SkillUse_Sorawotobu( const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk );
 
 static const FLDSKILL_FUNC_DATA SkillFuncTable[FLDSKILL_IDX_MAX];
+static const FLDSKILL_FUNC_DATA SeaTempleSkillFuncTable[FLDSKILL_IDX_MAX];
 
 //======================================================================
 //  FLDSKILL
@@ -110,7 +115,6 @@ void FLDSKILL_InitCheckWork(
   FIELD_PLAYER *fld_player;
   MAPATTR fattr,nattr;
   s16 gx,gy,gz;
-  VecFx32 pos;
   
   MI_CpuClear8( scwk, sizeof(FLDSKILL_CHECK_WORK) );
   scwk->zone_id = FIELDMAP_GetZoneID( fieldmap );
@@ -141,12 +145,10 @@ void FLDSKILL_InitCheckWork(
   }
   
   {
-    FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
     u16 dir = FIELD_PLAYER_GetDir( fld_player );
     
     //現在地のアトリビュート
-    FIELD_PLAYER_GetPos( fld_player, &pos );
-    nattr = MAPATTR_GetAttribute( mapper, &pos );
+    nattr = FIELD_PLAYER_GetMapAttr( fld_player );
     
     //自機前のアトリビュート
     fattr = FIELD_PLAYER_GetDirMapAttr( fld_player, dir );
@@ -206,6 +208,30 @@ void FLDSKILL_InitCheckWork(
   {
     scwk->enable_skill = 0;
   }
+
+  //海底神殿の設定
+  {
+    if( ZONEDATA_IsSeaTempleDungeon( scwk->zone_id ) ){
+      const FIELD_PLAYER* cp_player = FIELDMAP_GetFieldPlayer( scwk->fieldmap );
+      s16 gx, gy, gz;
+      FIELD_PLAYER_GetGridPos( cp_player, &gx, &gy, &gz );
+
+      // 2F
+      if( ZONEDATA_IsSeaTempleDungeon2F(scwk->zone_id) ){
+        if( (sc_SEATEMPLE_SKILL_USE_POS[ SEATEMPLE_USE_SKILL_2F ].gx == gx) &&
+            (sc_SEATEMPLE_SKILL_USE_POS[ SEATEMPLE_USE_SKILL_2F ].gz == gz) ){
+          scwk->enable_skill |= (1 << FLDSKILL_IDX_FLASH);
+        }
+      }
+      // 3F
+      if( ZONEDATA_IsSeaTempleDungeon3F(scwk->zone_id) ){
+        if( (sc_SEATEMPLE_SKILL_USE_POS[ SEATEMPLE_USE_SKILL_3F ].gx == gx) &&
+            (sc_SEATEMPLE_SKILL_USE_POS[ SEATEMPLE_USE_SKILL_3F ].gz == gz) ){
+          scwk->enable_skill |= (1 << FLDSKILL_IDX_KAIRIKI);
+        }
+      }
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -219,7 +245,7 @@ void FLDSKILL_InitCheckWork(
 FLDSKILL_RET FLDSKILL_CheckUseSkill(
     FLDSKILL_IDX idx, FLDSKILL_CHECK_WORK *scwk )
 {
-  FLDSKILL_CHECK_FUNC func = GetCheckFunc( idx );
+  FLDSKILL_CHECK_FUNC func = GetCheckFunc( scwk, idx );
   return func( scwk );
 }
 
@@ -256,7 +282,7 @@ void FLDSKILL_InitUseHeader( FLDSKILL_USE_HEADER *head,
 GMEVENT * FLDSKILL_UseSkill( FLDSKILL_IDX idx,
     const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk )
 {
-  FLDSKILL_USE_FUNC func = GetUseFunc( idx );
+  FLDSKILL_USE_FUNC func = GetUseFunc( scwk, idx );
   return func( head, scwk );
 }
 
@@ -713,6 +739,8 @@ static GMEVENT_RESULT GMEVENT_Flash(GMEVENT *event, int *seq, void *wk )
     FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( gdata );
     FIELDSKILL_MAPEFF* mapeff = FIELDMAP_GetFieldSkillMapEffect( GAMESYSTEM_GetFieldMapWork( hsw->gsys ) );
     FIELD_FLASH* flash = FIELDSKILL_MAPEFF_GetFlash( mapeff );
+    FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( hsw->gsys );
+    HEAPID heapID = FIELDMAP_GetHeapID( fieldmap );
 
     switch( *seq )
     {
@@ -722,7 +750,7 @@ static GMEVENT_RESULT GMEVENT_Flash(GMEVENT *event, int *seq, void *wk )
           SCRIPT_WORK *sc;
           
           prm0 = hsw->head.poke_pos;
-          sc = SCRIPT_CallScript( event, SCRID_HIDEN_FLASH_MENU, NULL, NULL, HEAPID_FIELDMAP );
+          sc = SCRIPT_CallScript( event, SCRID_HIDEN_FLASH_MENU, NULL, NULL, heapID );
           SCRIPT_SetScriptWorkParam( sc, prm0, 0, 0, 0 );
         }
         (*seq) ++;
@@ -1020,6 +1048,126 @@ static GMEVENT * SkillUse_Osyaberi(
 }
 
 //======================================================================
+//  海底　かいりき
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * かいりき呼び出しイベント
+ * @param event GMEVENT*
+ * @parama seq シーケンス
+ * @param wk event work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT GMEVENT_SeaTempleKairiki(
+    GMEVENT *event, int *seq, void *wk )
+{
+  u16 *scwk;
+  u16 prm0;
+  SCRIPT_WORK *sc;
+  HIDEN_SCR_WORK *hsw = wk;
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( hsw->gsys );
+  EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( hsw->gsys );
+  HEAPID heapID = FIELDMAP_GetHeapID( fieldmap );
+  
+  switch( *seq )
+  {
+  case 0:
+    prm0 = hsw->head.poke_pos;
+    sc = SCRIPT_CallScript( event, SCRID_HIDEN_SEATEMPLE_3F, NULL, NULL, heapID );
+    SCRIPT_SetScriptWorkParam( sc, prm0, 0, 0, 0 );
+    (*seq) ++;
+    break;
+  case 1:
+    sc = SCRIPT_ChangeScript( event, SCRID_SEATEMPLE_SKILL_USE_3F, NULL, 0 );
+    break;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * かいりき使用
+ * @param head FLDSKILL_USE_HEADER
+ * @parama  scwk FLDSKILL_CHECK_WORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static GMEVENT * SkillUse_SeaTempleKairiki(
+    const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk )
+{
+  GMEVENT *event;
+  HIDEN_SCR_WORK *hsw;
+  
+  event = GMEVENT_Create( scwk->gsys, NULL,
+      GMEVENT_SeaTempleKairiki, sizeof(HIDEN_SCR_WORK) );
+  hsw = GMEVENT_GetEventWork( event );
+  InitHSW( hsw, head, scwk );
+  return event;
+}
+
+//======================================================================
+//  海底フラッシュ
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * フラッシュ呼び出しイベント
+ * @param event GMEVENT*
+ * @parama seq シーケンス
+ * @param wk event work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT GMEVENT_SeaTempleFlash(GMEVENT *event, int *seq, void *wk )
+{
+  u16 *scwk;
+  u16 prm0;
+  SCRIPT_WORK *sc;
+  HIDEN_SCR_WORK *hsw = wk;
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( hsw->gsys );
+  EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( hsw->gsys );
+  HEAPID heapID = FIELDMAP_GetHeapID( fieldmap );
+  
+  switch( *seq )
+  {
+  case 0:
+    prm0 = hsw->head.poke_pos;
+    sc = SCRIPT_CallScript( event, SCRID_HIDEN_SEATEMPLE_2F, NULL, NULL, heapID );
+    SCRIPT_SetScriptWorkParam( sc, prm0, 0, 0, 0 );
+    (*seq) ++;
+    break;
+  case 1:
+    sc = SCRIPT_ChangeScript( event, SCRID_SEATEMPLE_SKILL_USE_2F, NULL, 0 );
+    break;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * フラッシュ使用
+ * @param head FLDSKILL_USE_HEADER
+ * @parama  scwk FLDSKILL_CHECK_WORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static GMEVENT * SkillUse_SeaTempleFlash(
+    const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk )
+{
+  GMEVENT *event;
+  HIDEN_SCR_WORK *hsw;
+  
+  event = GMEVENT_Create( scwk->gsys, NULL,
+      GMEVENT_SeaTempleFlash, sizeof(HIDEN_SCR_WORK) );
+  hsw = GMEVENT_GetEventWork( event );
+  InitHSW( hsw, head, scwk );
+  return event;
+}
+
+
+//======================================================================
 //======================================================================
 //--------------------------------------------------------------
 /**
@@ -1062,9 +1210,15 @@ static GMEVENT * SkillUse_Dummy(
  * @return  FLDSKILL_CHECK_FUNC
  */
 //--------------------------------------------------------------
-static FLDSKILL_CHECK_FUNC GetCheckFunc( FLDSKILL_IDX idx )
+static FLDSKILL_CHECK_FUNC GetCheckFunc( const FLDSKILL_CHECK_WORK *scwk, FLDSKILL_IDX idx )
 {
   GF_ASSERT( idx < FLDSKILL_IDX_MAX );
+
+  // 海底神殿
+  if( ZONEDATA_IsSeaTempleDungeon( scwk->zone_id ) ){
+    return SeaTempleSkillFuncTable[idx].check_func;
+  }
+  
   return SkillFuncTable[idx].check_func;
 }
 
@@ -1075,9 +1229,15 @@ static FLDSKILL_CHECK_FUNC GetCheckFunc( FLDSKILL_IDX idx )
  * @return FLDSKILL_USE_FUNC
  */
 //--------------------------------------------------------------
-static FLDSKILL_USE_FUNC GetUseFunc( FLDSKILL_IDX idx )
+static FLDSKILL_USE_FUNC GetUseFunc( const FLDSKILL_CHECK_WORK *scwk, FLDSKILL_IDX idx )
 {
   GF_ASSERT_MSG( idx < FLDSKILL_IDX_MAX,"%d\n",idx );
+
+  // 海底神殿
+  if( ZONEDATA_IsSeaTempleDungeon( scwk->zone_id ) ){
+    return SeaTempleSkillFuncTable[idx].use_func;
+  }
+
   return SkillFuncTable[idx].use_func;
 }
 
@@ -1215,6 +1375,36 @@ static const FLDSKILL_FUNC_DATA SkillFuncTable[FLDSKILL_IDX_MAX] =
   {SkillUse_Dummy,SkillCheck_Dummy},    // 06 :いわくだき
   {SkillUse_Dummy,SkillCheck_Dummy},    // 07 :ロッククライム
   {SkillUse_Flash,SkillCheck_Flash},    // 08 :フラッシュ
+  {SkillUse_Teleport,SkillCheck_Teleport},    // 09 :テレポート
+  {SkillUse_Anawohoru,SkillCheck_Anawohoru},    // 10 :あなをほる
+  {SkillUse_Amaikaori,SkillCheck_Amaikaori},   // 11 :あまいかおり
+  {SkillUse_Osyaberi,SkillCheck_Osyaberi},    // 12 :おしゃべり
+  {SkillUse_Diving, SkillCheck_Diving}, // 13 :ダイビング
+};
+
+
+
+//--------------------------------------------------------------
+/* 使用関数テーブル
+ *  海底神殿専用テーブル
+ *
+ * 引数として渡される FLDSKILL_USE_HEADER *head と FLDSKILL_CHECK_WORK *scwkは
+ * 呼び出し側で自動変数として定義されているので、SkillUse_XXXXで登録する
+ * イベント中でメンバの値を参照したい場合、値のコピーを取って使うこと！
+ */
+//--------------------------------------------------------------
+static const FLDSKILL_FUNC_DATA SeaTempleSkillFuncTable[FLDSKILL_IDX_MAX] =
+{
+  {SkillUse_Iaigiri,SkillCheck_Iaigiri},    // 00 : いあいぎり
+  {SkillUse_Naminori,SkillCheck_Naminori},    // 01 :なみのり 
+  {SkillUse_Takinobori,SkillCheck_Takinobori},    // 02 :たきのぼり
+  {SkillUse_SeaTempleKairiki,SkillCheck_Kairiki},    // 海底神殿用かいりき
+  
+  {SkillUse_Sorawotobu,SkillCheck_Sorawotobu},    // 04 :そらをとぶ
+  {SkillUse_Dummy,SkillCheck_Dummy},    // 05 :きりばらい
+  {SkillUse_Dummy,SkillCheck_Dummy},    // 06 :いわくだき
+  {SkillUse_Dummy,SkillCheck_Dummy},    // 07 :ロッククライム
+  {SkillUse_SeaTempleFlash,SkillCheck_Flash},    // 海底神殿用フラッシュ
   {SkillUse_Teleport,SkillCheck_Teleport},    // 09 :テレポート
   {SkillUse_Anawohoru,SkillCheck_Anawohoru},    // 10 :あなをほる
   {SkillUse_Amaikaori,SkillCheck_Amaikaori},   // 11 :あまいかおり

@@ -1259,6 +1259,25 @@ void FIELD_PLAYER_MoveGrid( FIELD_PLAYER *fld_player,
   FIELD_PLAYER_GRID_Move( fld_player->gridwk, key_trg, key_cont, mbit );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GRID座標の取得
+ *
+ *	@param	fld_player    フィールドプレイヤー
+ *	@param	*gx     グリッドX
+ *	@param	*gy     グリッドY
+ *	@param	*gz     グリッドZ
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_GetGridPos( const FIELD_PLAYER *fld_player, s16 *gx, s16 *gy, s16 *gz )
+{
+  MMDL* fmmdl = FIELD_PLAYER_CORE_GetMMdl( fld_player->corewk );
+  
+  *gx = MMDL_GetGridPosX( fmmdl );
+  *gy = MMDL_GetGridPosY( fmmdl );
+  *gz = MMDL_GetGridPosZ( fmmdl );
+}
+
 
 //======================================================================
 //	NOGrid 専用処理

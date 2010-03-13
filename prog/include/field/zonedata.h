@@ -295,4 +295,6 @@ extern u8 ZONEDATA_GetMapChangeType(u16 zone_id);
 // 海底神殿　ダンジョンマップか？
 //------------------------------------------------------------------
 extern BOOL ZONEDATA_IsSeaTempleDungeon( u16 zone_id );
+extern BOOL ZONEDATA_IsSeaTempleDungeon2F( u16 zone_id );
+extern BOOL ZONEDATA_IsSeaTempleDungeon3F( u16 zone_id );
 

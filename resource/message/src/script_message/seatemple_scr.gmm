@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tomoya_takahashi" host="W00148" date="2010-03-11T18:16:56"/>
+	<create user="tomoya_takahashi" host="W00148" date="2010-03-13T13:34:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -293,8 +293,7 @@
 
 
 	<row id="msg_seatemple_step00">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<comment>歩数０歩目</comment>
 		<language name="JPN" width="256">カチッ！
 スイッチの　おとが　ひびいた</language>
 		<language name="JPN_KANJI" width="256">カチッ！
@@ -302,6 +301,7 @@
 	</row>
 
 	<row id="msg_seatemple_step01">
+		<comment>歩数１００歩目</comment>
 		<language name="JPN" width="256">カチッ！
 また　スイッチの　おとが　した</language>
 		<language name="JPN_KANJI" width="256">カチッ！
@@ -309,6 +309,7 @@
 	</row>
 
 	<row id="msg_seatemple_step02">
+		<comment>歩数３００歩目</comment>
 		<language name="JPN" width="256">ゴゴゴ
 とおくで　にぶい　おとが　ひびいた</language>
 		<language name="JPN_KANJI" width="256">ゴゴゴ
@@ -316,6 +317,7 @@
 	</row>
 
 	<row id="msg_seatemple_step03">
+		<comment>歩数４５０歩目</comment>
 		<language name="JPN" width="256">ゴゴゴ
 にぶい　おとが　ちかい！</language>
 		<language name="JPN_KANJI" width="256">ゴゴゴ
@@ -323,8 +325,14 @@
 	</row>
 
 	<row id="msg_seatemple_step04">
+		<comment>歩数５００歩目</comment>
 		<language name="JPN" width="256">すいりゅうだ！</language>
 		<language name="JPN_KANJI" width="256">すいりゅうだ！</language>
+	</row>
+
+	<row id="msg_seatemple_skill_01">
+		<language name="JPN" width="256">ゴゴン　なにかが　うごいた……</language>
+		<language name="JPN_KANJI" width="256">ゴゴン　なにかが　うごいた……</language>
 	</row>
 
 	<flowchart-group-list>
