@@ -308,3 +308,32 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
   }
   return FALSE;
 }
+
+//イベント後の処理を行う(2010映画配布用
+void POKE_MEMO_SetEventPoke_AfterEventPP( POKEMON_PARAM *pp , const POKE_MEMO_EVENT_TYPE type )
+{
+  POKE_MEMO_SetEventPoke_AfterEventPPP( PP_GetPPPPointer(pp),type);
+}
+
+void POKE_MEMO_SetEventPoke_AfterEventPPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_EVENT_TYPE type )
+{
+  const BOOL fastFlg = PPP_FastModeOn(ppp);
+  const BOOL flg = POKE_MEMO_CheckEventPokePPP( ppp , type );
+
+  if( flg == TRUE )
+  {
+    switch(type)
+    {
+    case POKE_MEMO_EVENT_2010MOVIE_SEREBIXI_BEF:
+      //2010映画セレビィ(イベント前
+      PPP_Put( ppp, ID_PARA_get_place, POKE_MEMO_PLACE_SEREBIXI_AFTER );
+      break;
+    case POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_BEF:
+      //2010映画エンテイ・ライコウ・スイクン(イベント前
+      PPP_Put( ppp, ID_PARA_get_place, POKE_MEMO_PLACE_ENRAISUI_AFTER );
+      break;
+    }
+  }
+
+  PPP_FastModeOff(ppp,fastFlg);
+}
