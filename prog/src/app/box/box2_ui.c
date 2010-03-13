@@ -3395,6 +3395,23 @@ BOOL BOX2UI_HitCheckPartyFrameLeft(void)
 	return FALSE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タッチチェック：ボックス/手持ち切り替えボタン
+ *
+ * @param		none
+ *
+ * @retval	"GFL_UI_TP_HIT_NONE = タッチなし"
+ * @retval	"GFL_UI_TP_HIT_NONE != それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+u32 BOX2UI_HitCheckModeChange(void)
+{
+	return HitCheckCont( &BoxArrangeMainCursorMoveData[BOX2UI_ARRANGE_MAIN_PARTY], 1 );
+}
+
+
+
 
 
 

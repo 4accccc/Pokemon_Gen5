@@ -379,8 +379,6 @@ typedef struct {
 
 	u16	pokegra_swap;		// 上画面ポケモングラフィック切替フラグ
 
-//	BOOL cancel_flg;		// ポケモン取得キャンセルフラグ
-
 	u32	old_cur_pos;		// 前回のカーソル位置（外部で必要なため）
 
 	u16	get_item;						// 取得アイテム
@@ -458,7 +456,8 @@ typedef struct {
 	u8	box_mv_pos;							// ボックス移動選択位置
 //	u8	box_mv_scroll;
 
-	u8	move_mode;			// ポケモン移動モード
+	u8	move_mode;				// ポケモン移動モード
+	u8	get_start_mode;		// アイコンを掴んだときのモード 0 = トレイから, 1 = 手持ちから
 
 	u8	mv_cnv_mode:4;		// 便利モードフラグ 1 = yes, 0 = no
 	u8	mv_cnv_end:4;			// 掴む終了フラグ
@@ -1056,6 +1055,18 @@ extern void BOX2MAIN_YesNoWinSet( BOX2_SYS_WORK * syswk, u32 pos );
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL BOX2MAIN_ButtonAnmMain( BOX2_SYS_WORK * syswk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧボタンアニメセット
+ *
+ * @param		syswk			ボックス画面システムワーク
+ * @param		wfrmID		ＢＧウィンドウフレームＩＤ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2MAIN_InitBgButtonAnm( BOX2_SYS_WORK * syswk, u32 wfrmID );
 
 //--------------------------------------------------------------------------------------------
 /**
