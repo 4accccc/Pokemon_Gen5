@@ -174,7 +174,7 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
   }
 
   
-  NET_PRINT(" Target URL: %s\n", pWork->urlbuff);
+  OS_TPrintf(" Target URL: %s\n", pWork->urlbuff);
   handle = NHTTPCreateConnection( pWork->urlbuff,
                                   urltable[urlno].type,
                                   pWork->getbuffer, _GET_MAXSIZE,
@@ -286,7 +286,7 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
     if ( NHTTP_ERROR_NONE == NHTTPGetConnectionProgress(pWork->handle, &receivedCurrent, &contentLength))
     {
 
-      NET_PRINT(" %d recv  \n",100*contentLength/receivedCurrent);
+      OS_TPrintf(" %d recv  \n",100*contentLength/receivedCurrent);
 
     }
   }
@@ -356,10 +356,10 @@ void NHTTP_RAP_End(NHTTP_RAP_WORK* pWork)
 void NHTTP_DEBUG_GPF_HEADER_PRINT(gs_response* prep)
 {
 
-  NET_PRINT("処理結果コード       %d\n",prep->ret_cd);
-  NET_PRINT("データ部バイトサイズ %d\n",prep->body_size);
-  NET_PRINT("詳細エラーコード     %d\n",prep->desc_cd);
-  NET_PRINT("%s\n",prep->desc_msg);
+  OS_TPrintf("処理結果コード       %d\n",prep->ret_cd);
+  OS_TPrintf("データ部バイトサイズ %d\n",prep->body_size);
+  OS_TPrintf("詳細エラーコード     %d\n",prep->desc_cd);
+  OS_TPrintf("%s\n",prep->desc_msg);
 }
 #endif
 
@@ -391,14 +391,14 @@ void NHTTP_RAP_PokemonEvilCheckReset(NHTTP_RAP_WORK* pWork,NHTTP_POKECHK_ENUM ty
     pWork->length++;
   }
   pWork->pData[pWork->length++] = 0;
-  NET_PRINT("[%d] %s\n", pWork->length, pWork->pData);
+  OS_TPrintf("[%d] %s\n", pWork->length, pWork->pData);
  
 
 
   pWork->pData[pWork->length++] = (u8)(typeu16 >> 8);
-  NET_PRINT("[%d] %d\n", 1, pWork->pData[pWork->length-1]);
+  OS_TPrintf("[%d] %d\n", 1, pWork->pData[pWork->length-1]);
   pWork->pData[pWork->length++] = (u8)(typeu16 & 0xFF);
-  NET_PRINT("[%d] %d\n", 1, pWork->pData[pWork->length-1]);
+  OS_TPrintf("[%d] %d\n", 1, pWork->pData[pWork->length-1]);
 }
 
 
@@ -416,7 +416,7 @@ void NHTTP_RAP_PokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork, void* pData, int size)
 {
   GFL_STD_MemCopy(pData, &pWork->pData[pWork->length], size);
   pWork->length += size;
-  NET_PRINT("[%d] \n", size);
+  OS_TPrintf("[%d] \n", size);
 }
 
 
@@ -444,8 +444,8 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
   STD_StrCpy(pWork->urlbuff, urltable[urlno].url );
 
   
-  NET_PRINT(" Target URL: %s\n", pWork->urlbuff);
-  NET_PRINT("type :%d\n", urltable[urlno].type );
+  OS_TPrintf(" Target URL: %s\n", pWork->urlbuff);
+  OS_TPrintf("type :%d\n", urltable[urlno].type );
   handle = NHTTPCreateConnection( urltable[urlno].url,
                                   urltable[urlno].type,
                                   pWork->getbuffer, _GET_MAXSIZE,
@@ -481,15 +481,15 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
 #endif
 
   NHTTP_AddPostDataRaw( handle, &(pWork->pData[0]), pWork->length );
-  NET_PRINT("data svltoken = %s\n", pWork->pData);
-  NET_PRINT("Post Byte size %d\n", pWork->length);
+  OS_TPrintf("data svltoken = %s\n", pWork->pData);
+  OS_TPrintf("Post Byte size %d\n", pWork->length);
   {
     int i;
     for( i = 0; i < pWork->length; i++ )
     { 
-      NET_PRINT( "%x ", pWork->pData[i] );
+      OS_TPrintf( "%x ", pWork->pData[i] );
     }
-      NET_PRINT( "\nend\n" );
+      OS_TPrintf( "\nend\n" );
   }
 
 
