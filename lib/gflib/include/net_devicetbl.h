@@ -15,7 +15,7 @@ extern "C" {
 /// @brief 送信完了コールバック
 typedef BOOL (*PTRSendDataCallback)(BOOL result);
 /// @brief コールバック関数の書式
-typedef void (*PTRCommRecvLocalFunc)(u16 aid, u16 *data, u16 size);
+typedef BOOL (*PTRCommRecvLocalFunc)(u16 aid, u16 *data, u16 size);
 /// @brief コールバック関数の書式
 typedef void (*PTRChildConnectCallbackFunc)(u16 aid);
 /// ビーコンを拾ったときに呼ばれるコールバック関数

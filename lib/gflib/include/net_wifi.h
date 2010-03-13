@@ -335,8 +335,8 @@ extern void GFL_NET_StateWifiP2PEnd( void );
 
 
 
-// 受信コールバック型。WHReceiverFuncと同形
-typedef void (*GFL_NET_MYDWCReceiverFunc) (u16 aid, u16 *data, u16 size);
+// 受信コールバック型。WHReceiverFuncと形を変えてBOOLを追加
+typedef BOOL (*GFL_NET_MYDWCReceiverFunc) (u16 aid, u16 *data, u16 size);
 
 //接続検査 フレンドコードリストインデックス
 typedef BOOL (*GFL_NET_MYDWCConnectModeCheckFunc) (int index,void* pWork);
