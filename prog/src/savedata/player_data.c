@@ -71,7 +71,7 @@ void PLAYERDATA_Init(PLAYER_DATA * pd)
 	CONFIG_Init(&pd->config);
 	MyStatus_Init(&pd->mystatus);
 	PLAYTIME_Init(&pd->playtime);
-	pd->now_save_mode_setup = FALSE;
+	pd->now_save_mode_setup = TRUE;
 }
 
 //============================================================================================

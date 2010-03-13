@@ -234,13 +234,14 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
   // ワーク アロケート
   work = GFL_PROC_AllocWork( proc , sizeof(GAMESTART_FIRST_WORK) , GFL_HEAPID_APP );
   
-  // セーブデータ:ワークエリアのの初期化
-  SaveControl_ClearData( sv_ctrl );
-
   // セーブシステム作成
 #ifdef USE_INTRSAVE
+  //既存セーブの有無を調べる為、セーブデータのワークエリアの処理化をするよりも先に実行
   work->intr_save = IntrSave_Init( GFL_HEAPID_APP, sv_ctrl );
 #endif
+
+  // セーブデータ:ワークエリアのの初期化
+  SaveControl_ClearData( sv_ctrl );
 
   // SELMODE 初期化
   work->selModeParam.type       = SMT_START_GAME;
