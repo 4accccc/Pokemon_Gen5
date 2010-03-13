@@ -287,8 +287,8 @@
 #define FE_D02_ITEMGET_01                  271 /* 0x010f ヤグルマの森外側：アイテム入手フラグ（わざマシン：いわくだき） */
 #define FE_R04R0201_ITEMGET_01             272 /* 0x0110 ４番道路：アイテム入手フラグ（わざマシン：あなをほる） */
 #define FE_C04R1002_ITEMGET_01             273 /* 0x0111 ライモンシティ建物２F：アイテム入手フラグ */
-		/* not used   274(0x0112) */
-		/* not used   275(0x0113) */
+#define FE_SEA_TEMPLE_KAIRIKI              274 /* 0x0112 海底遺跡ギミック：特定の場所でかいりきを使った */
+#define FE_SEA_TEMPLE_FLASH                275 /* 0x0113 海底遺跡ギミック：特定の場所でフラッシュを使った */
 		/* not used   276(0x0114) */
 		/* not used   277(0x0115) */
 		/* not used   278(0x0116) */
