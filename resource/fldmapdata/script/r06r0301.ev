@@ -20,6 +20,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_r06r0301_oldman1_01
+_EVENT_DATA    ev_r06r0301_middlewoman1_01
+_EVENT_DATA    ev_r06r0301_babygirl1_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -32,5 +34,68 @@ EVENT_START  ev_r06r0301_oldman1_01
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	 
+EVENT_END
+
+/**************************************************************/
+/*  C06R0301 BABYGIRL2の会話用イベントスクリプト*/
+/**************************************************************/
+EVENT_START  ev_r06r0301_babygirl1_01
+	
+	_TALK_OBJ_START()
+	IF FLAG_OFF(FE_R06R0301_ITEMGET_01) THEN
+		_BALLOONWIN_OBJMSG_MF(msg_r06r0301_babygirl1_01,msg_r06r0301_babygirl1_02,R06R0301_BABYGIRL1_01,POS_DR)
+		_MSGWIN_CLOSE()
+		_ITEM_EVENT_KEYWAIT(ITEM_HIKARINOISI,1)
+		_FLAG_SET(FE_R06R0301_ITEMGET_01)
+	ELSE
+		_BALLOONWIN_OBJMSG_POS(msg_r06r0301_babygirl1_03,R06R0301_BABYGIRL1_01,POS_DR)
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+	ENDIF
+EVENT_END
+
+/**************************************************************/
+/*  C06R0301 MIDDLEWOMAN1の会話用イベントスクリプト*/
+/**************************************************************/
+EVENT_START  ev_r06r0301_middlewoman1_01
+	
+	DEFINE_LOCAL	LWK_POKE_HP_CHK
+	DEFINE_LOCAL	LWK_POKE_NUM
+	DEFINE_LOCAL	LWK_LOOP
+	
+	//手持ちにHPが減っているポケモンがいるかチェック
+	$LWK_LOOP = 0
+	_GET_PARTY_POKE_COUNT( LWK_POKE_NUM, POKECOUNT_MODE_TOTAL )
+	
+	WHILE $LWK_LOOP < $LWK_POKE_NUM
+		_CHECK_TEMOTI_HP( LWK_POKE_HP_CHK, LWK_LOOP )
+		IF$LWK_POKE_HP_CHK == FALSE THEN
+			$LWK_LOOP = 6
+		ELSE
+			$LWK_LOOP += 1
+		ENDIF
+  	ENDWHILE
+  	
+	_TALK_OBJ_START()
+	IF$LWK_POKE_HP_CHK == FALSE THEN
+		//あなたのポケモン……
+		_BALLOONWIN_TALKOBJ_MSG( msg_r06r0301_middlewoman_02 )
+		_MSGWIN_CLOSE()
+		
+		//暗転して手持ちポケモンを回復
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		_TEMOTI_POKEMON_KAIFUKU()		//回復処理
+		_ME_PLAY( SEQ_ME_ASA )
+		_ME_WAIT()
+		_BLACK_IN()
+		_DISP_FADE_END_CHECK()
+	
+	ELSE
+		_BALLOONWIN_TALKOBJ_MSG( msg_r06r0301_middlewoman_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	ENDIF
 EVENT_END
 

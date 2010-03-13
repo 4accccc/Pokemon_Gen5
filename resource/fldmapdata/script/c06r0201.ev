@@ -20,7 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c06r0201_workman_01
-_EVENT_DATA    ev_c06r0201_poke3_01
+_EVENT_DATA    ev_c06r0201_poke19_01
 _EVENT_DATA    ev_c06r0201_workman_02
 _EVENT_DATA    ev_c06r0201_workman_03
 _EVENT_DATA    ev_c06r0201_veteranw_01
@@ -46,9 +46,9 @@ EVENT_END
 /**************************************************************/
 /*  c06r0201_poke3_01:一言メッセージと鳴き声*/
 /**************************************************************/
-EVENT_START		ev_c06r0201_poke3_01
+EVENT_START		ev_c06r0201_poke19_01
 	
-	_EASY_TALK_POKEVOICE( MONSNO_HUSIGIDANE, msg_c06r0201_poke_01 )	//【仮】フシギダネの鳴き声。
+	_EASY_TALK_POKEVOICE( MONSNO_533, msg_c06r0201_poke_01 )
 	
 EVENT_END
 
@@ -74,7 +74,7 @@ EVENT_END
 EVENT_START   ev_c06r0201_veteranw_01
 	
 	//【仮】入手わざマシンについて仮
-	_EASY_TALK_ITEM_EVENT( ITEM_WAZAMASIN01, 1, FE_C06R0101_ITEMGET_01, msg_c06r0201_veteranw_01, msg_c06r0201_veteranw_02, msg_c06r0201_veteranw_02)
+	_EASY_TALK_ITEM_EVENT( ITEM_SURUDOIKUTIBASI, 1, FE_C06R0101_ITEMGET_01, msg_c06r0201_veteranw_01, msg_c06r0201_veteranw_02, msg_c06r0201_veteranw_02)
 	
 EVENT_END
 

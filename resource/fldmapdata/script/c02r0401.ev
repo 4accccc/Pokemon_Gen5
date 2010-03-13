@@ -21,15 +21,22 @@
 _EVENT_DATA    ev_c02r0401_fightrem_01
 _EVENT_DATA    ev_c02r0401_fightrem_02
 _EVENT_DATA    ev_c02r0401_boy2_01
+_EVENT_DATA    ev_c02r0401_shopm1_01
+
 
 _EVENT_DATA_END
 
+/**************************************************************/
+/*  C02R0401 SHOPM1の会話用イベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_c02r0401_shopm1_01
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_c02r0401_flag_change:
-//  _END
+  _TALK_OBJ_START()
+  _BALLOONWIN_TALKOBJ_MSG(msg_c02r0401_shopm_01)
+  _MSGWIN_CLOSE()
+// _FIX_SHOP_CALL(C02_RL)
+  _FIX_SHOP_CALL(SHOP_UP)
+EVENT_END
 
 /**************************************************************/
 /*  C02R0401 FIGHTERM1の会話用イベントスクリプト*/

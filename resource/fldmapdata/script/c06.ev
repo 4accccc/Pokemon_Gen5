@@ -152,8 +152,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_PLAYER_NAME(0)
 	
 	//ギアンを捕まえているかのチェック
-	//511はギアンのポケモンナンバー
-	_GET_ZUKAN_FLAG( ZUKANCTRL_MODE_GET, 511, LWK_GIAN_CHECK )
+	_GET_ZUKAN_FLAG( ZUKANCTRL_MODE_GET, MONSNO_544, LWK_GIAN_CHECK )
 	
 	//捕まえたポケモンの数をカウント
 	_GET_ZUKAN_COUNT( ZUKANCTRL_MODE_GET, LWK_HOKAKU_COUNT )
@@ -206,7 +205,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 	
 	//ギアンがいるかどうかで、分岐	
 	//ギアンを捕まえている？
-	IF $LWK_GIAN_CHECK ==  SCR_YES	THEN
+	IF $LWK_GIAN_CHECK ==  1	THEN
 		//捕まえている
 		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_03, C06_HAKASE1_01,POS_DR)
 		_BALLOONWIN_CLOSE()
@@ -308,10 +307,8 @@ EVENT_START    ev_pos_c06_hakase1_01
 	//ジムリーダーフウロが喋る
 	//フウロ:フウロ『わあ！　だったら　ジムに　ちょうせん　するよね！
 	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_02, C06_LEADER6_01,POS_DR)
-	_BALLOONWIN_CLOSE()	
-
-	//博士が主人公を向く
 	_OBJ_ANIME( C06_HAKASE1_01,anm_common_turn_d)
+	_BALLOONWIN_CLOSE()	
 	_OBJ_ANIME_WAIT()
 
 	//博士がフウロに喋る

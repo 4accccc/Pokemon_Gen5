@@ -12,7 +12,7 @@
 #define ZONE_C06R0201_EVC_H
 
 #define C06R0201_WORKMAN_01                0
-#define C06R0201_POKE3_01                  1
+#define C06R0201_POKE19_01                 1
 #define C06R0201_WORKMAN_02                2
 #define C06R0201_WORKMAN_03                3
 #define C06R0201_INFORMATIONW_01           4

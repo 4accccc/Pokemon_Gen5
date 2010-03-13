@@ -36,9 +36,7 @@ _EVENT_DATA_END
 /*  R08 パラソルの会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_r08_ambrella_01
-  
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r08_ambrella_01 )
-	
+	_EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN42,1,FE_R08_ITEMGET_01,msg_r08_ambrella_01,msg_r08_ambrella_02,msg_r08_ambrella_02)
 EVENT_END
 
 /**************************************************************/

@@ -513,7 +513,7 @@ EVENT_START   ev_scene_c02_leader02_01
 
 	//主人公がアロエの方を向く
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
-	_TIME_WAIT(16)
+	_TIME_WAIT(12)
 	_OBJ_ANIME( C02_RIVAL_02, anm_common_turn_d )
 	_TIME_WAIT(2)
 	_OBJ_ANIME( C02_SUPPORT_01, anm_common_turn_d )
@@ -531,9 +531,21 @@ EVENT_START   ev_scene_c02_leader02_01
 	//アロエがアーティを向く
 	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_turn3 )
 	_OBJ_ANIME_WAIT()
+	_TIME_WAIT(16)
+	//アロエがライバルサポートを向く
+	_OBJ_ANIME(C02_LEADER02_01,anm_common_turn_u)
+	_OBJ_ANIME_WAIT()
 	
 	//アロエが喋る
 	//そして　あんたたちは
+	_BALLOONWIN_OBJMSG( msg_c02_leader2_05, C02_LEADER02_01 )
+    _BALLOONWIN_CLOSE()
+	
+	//アロエがアーティを向く
+	_OBJ_ANIME(C02_LEADER02_01,anm_common_turn_l)
+	_OBJ_ANIME_WAIT()
+	
+	//で　アーティと
 	_BALLOONWIN_OBJMSG( msg_c02_leader2_06, C02_LEADER02_01 )
     _BALLOONWIN_CLOSE()
 
@@ -544,8 +556,8 @@ EVENT_START   ev_scene_c02_leader02_01
 	_TIME_WAIT(24)
 	
 	//アーティが喋る
-	//で　アーティと
-	_BALLOONWIN_OBJMSG( msg_c02_leader3_03, C02_LEADER3_01 )
+	//さてさて
+	_BALLOONWIN_OBJMSG_MF(msg_c02_leader3_03,msg_c02_leader3_04,C02_LEADER3_01,POS_DEFAULT)
     _BALLOONWIN_CLOSE()
 	
 	//アーティがD02に向かう
