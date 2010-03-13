@@ -41,6 +41,12 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START	ev_init_d04r0101
 
+	IF FLAG_OFF( FE_D04R0101_ARRIVE ) THEN
+	
+		_FLAG_SET( FE_D04R0101_ARRIVE )
+	
+	ENDIF
+
 INIT_EVENT_END
 
 /**************************************************************/

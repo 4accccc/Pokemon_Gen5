@@ -30,9 +30,10 @@ _EVENT_DATA		ev_n01r0502_wkobjcode01_01
 _EVENT_DATA_END
 
 /**************************************************************/
-/*               フィールド初期化スクリプト                         */
+/*               フィールド初期化スクリプト                   */
 /**************************************************************/
 INIT_EVENT_START ev_zone_n01r0502
+	//可変OBJの確定
 	_GET_ROM_VERSION( SCWK_ANSWER )
 	IF $SCWK_ANSWER == VERSION_WHITE THEN
 		$OBJCHRWORK0 = POKE7	//シン
@@ -40,6 +41,18 @@ INIT_EVENT_START ev_zone_n01r0502
 	ELSE
 		$OBJCHRWORK0 = POKE8	//シン
 		$OBJCHRWORK1 = POKE7	//ム
+	ENDIF
+
+	//シーン毎のOBJPOSチェンジ
+	//Ｎの戦闘前
+	IF $WK_SCENE_N01R0502 == 3 THEN
+		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 35, DIR_DOWN )
+		_OBJ_POS_CHANGE( N01R0502_BOSS_01, 16, 0, 37, DIR_DOWN )
+	//シン（ム）の戦闘前
+	ELSIF $WK_SCENE_N01R0502 == 4 THEN
+		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE01_01, 16, 0, 38, DIR_DOWN )
+		_OBJ_POS_CHANGE( N01R0502_BOSS_01, 17, 0, 39, DIR_LEFT )
+	
 	ENDIF
 
 INIT_EVENT_END

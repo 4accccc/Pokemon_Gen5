@@ -43,26 +43,21 @@ _EVENT_DATA_END
 EVENT_START		ev_d03r0101_sunglasses_01
 
 	//じてんしゃを貰っていない場合
-	IF FLAG_OFF( FH_01) THEN
-		_EASY_TALK_ITEM_EVENT(ITEM_ZITENSYA, 1, FH_01, msg_d03r0101_sunglasses_01, msg_d03r0101_sunglasses_02, msg_d03r0101_sunglasses_02 )
+	IF FLAG_OFF( FE_D03R0101_ITEMGET_01 ) THEN
+		_EASY_TALK_ITEM_EVENT(ITEM_ZITENSYA, 1, FE_D03R0101_ITEMGET_01 , msg_d03r0101_sunglasses_01, msg_d03r0101_sunglasses_02, msg_d03r0101_sunglasses_02 )
 	
 	//じてんしゃ取得済み
 	ELSE
 	
-		//D03R0101博士イベント前なら
-		IF $WK_SCENE_D03R0101 == 0 THEN
+		//古代の城に行く前
+		IF FLAG_OFF( FE_D04R0101_ARRIVE ) THEN
 			
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_02 )
 		
-		//D03R0101博士イベント後なら
-		ELSIF $WK_SCENE_D03R0101 == 1 THEN
-		
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_03 )
-		
-		//それ以外の場合
+		//古代の城に行った後
 		ELSE
 		
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_04 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_03 )
 		
 		ENDIF
 		
@@ -225,6 +220,24 @@ EVENT_START		ev_reserve_d03r0101_event_01
 	
 	//チャンピオンバニシュフラグセット
 	_FLAG_SET( FV_D03R0101_CHAMPION_01 )
+	
+	//C02の博士（父、娘）、チャンピオン、ジムリーダー,、サポートを表示
+	_FLAG_RESET(FV_C02_STONEEVENT_01)	
+
+	//D08のサポートを消す
+	_FLAG_SET(FV_D08_SUPORT_01)	
+
+	//C02でのライトストーン、ダークストーンのイベント有効
+	$WK_SCENE_C02 = 6
+	
+	//C07にてジムリーダー7を出現させる
+	_FLAG_RESET( FV_C07GYM0101_READER7_01 )
+
+	//D08R0101の博士とジムリーダー7を消す
+	_FLAG_SET( FV_D08R0101_EVENT_01 )
+	
+	//D04R0201の七賢人２を消す
+	_FLAG_SET( FV_D04R0201_SAGE2 )
 
 	//========================================/
 
