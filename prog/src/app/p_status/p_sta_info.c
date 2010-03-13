@@ -429,8 +429,15 @@ static void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *info
                             PSTATUS_INFO_STR_NAME_X , PSTATUS_INFO_STR_NAME_Y , PSTATUS_STR_COL_TITLE );
   {
     STRBUF *srcStr;
-    u32 no = PPP_Get( ppp , ID_PARA_monsno , NULL );
-    srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName , no ); 
+    if( work->isEgg == FALSE )
+    {
+      u32 no = PPP_Get( ppp , ID_PARA_monsno , NULL );
+      srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName , no ); 
+    }
+    else
+    {
+      srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName , MONSNO_TAMAGO ); 
+    }
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( infoWork->bmpWin[SIB_NAME] ) , 
             PSTATUS_INFO_STR_NAME_VAL_X , PSTATUS_INFO_STR_NAME_VAL_Y , 
             srcStr , work->fontHandle , PSTATUS_STR_COL_VALUE );

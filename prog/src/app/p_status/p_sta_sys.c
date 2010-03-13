@@ -14,6 +14,7 @@
 #include "system/wipe.h"
 #include "app/app_menu_common.h"
 #include "poke_tool/poke_tool.h"
+#include "sound/pm_voice.h"
 
 #include "arc_def.h"
 #include "message.naix"
@@ -122,6 +123,7 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   work->mosaicCnt = 0;
   work->mainSeq = SMS_FADEIN;
   work->clwkExitButton = NULL;
+  work->reqPlayVoice = FALSE;
   work->ktst = GFL_UI_CheckTouchOrKey();
 
   if( work->psData->ppt == PST_PP_TYPE_POKEPASO )
@@ -1430,10 +1432,35 @@ static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder )
       if( isUpOder == TRUE )
       {
         work->dataPos++;
+#if PM_DEBUG
+        if( work->psData->ppt == PST_PP_TYPE_DEBUG &&
+            GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+        {
+          work->dataPos+=9;
+          if( work->dataPos >= work->psData->max-1 )
+          {
+            work->dataPos = work->psData->max-1;
+          }
+        }
+#endif
       }
       else
       {
         work->dataPos--;
+#if PM_DEBUG
+        if( work->psData->ppt == PST_PP_TYPE_DEBUG &&
+            GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+        {
+          if( work->dataPos >= 9 )
+          {
+            work->dataPos-=9;
+          }
+          else
+          {
+            work->dataPos = 0;
+          }
+        }
+#endif
       }
       
       {
@@ -1495,6 +1522,18 @@ static void PSTATUS_RefreshData( PSTATUS_WORK *work )
   
   //PPPˆÃ†‰»
   PSTATUS_UTIL_SetCurrentPPPFast( work , FALSE );
+
+  work->reqPlayVoice = TRUE;
+
+/*
+  PMVOICE_Stop( 0 );
+  if( work->isEgg == FALSE )
+  {
+    const u32 monsNo = PP_Get( pp , ID_PARA_monsno , NULL );
+    const u32 formNo = PP_Get( pp , ID_PARA_form_no , NULL );
+    PMVOICE_Play( monsNo , formNo , 64 , FALSE , 0 , 0 , FALSE , 0 );
+  }
+*/
 }
 
 //--------------------------------------------------------------
@@ -1667,6 +1706,18 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
       }
     }
     
+    if( work->reqPlayVoice == TRUE )
+    {
+      work->reqPlayVoice = FALSE;
+      PMVOICE_Stop( 0 );
+      if( work->isEgg == FALSE )
+      {
+        POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP(work);
+        const u32 monsNo = PP_Get( pp , ID_PARA_monsno , NULL );
+        const u32 formNo = PP_Get( pp , ID_PARA_form_no , NULL );
+        PMVOICE_Play( monsNo , formNo , 64 , FALSE , 0 , 0 , FALSE , 0 );
+      }
+    }
     
     if( work->mosaicEffSeq == SMES_WAIT )
     {

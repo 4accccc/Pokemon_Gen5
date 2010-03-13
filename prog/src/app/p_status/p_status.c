@@ -158,7 +158,7 @@ static GFL_PROC_RESULT PokeStatusProc_Init( GFL_PROC * proc, int * seq , void *p
       psData->mode = PST_MODE_NORMAL;
       psData->page = PPT_INFO;
       psData->canExitButton = TRUE;
-      psData->zukan_mode = 0;
+      psData->zukan_mode = 1;
       psData->game_data = GAMEDATA_Create( GFL_HEAPID_APP );
       
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )

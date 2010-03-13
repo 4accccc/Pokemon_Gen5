@@ -226,8 +226,9 @@ typedef struct
   PSTATUS_DATA *psData;
   
   BOOL isWaitDisp;
+  BOOL reqPlayVoice;
   
-  u8  dataPos;  //âΩî‘ñ⁄Ç©ÅH
+  u16 dataPos;  //âΩî‘ñ⁄Ç©ÅH
   u8  befDataPos;
   u8  scrollCnt;
   u8  ktst;
