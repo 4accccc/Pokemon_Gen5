@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/17 15:10:57
+#save date:2010/03/13 22:03:58
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r09r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,69 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r09r0101.wms
 #hold event type:
 1
 #hold event number:
+2
+#event number: 0
+#type
+1
+#ID name
+R09R0101_BOY2_01
+#OBJ CODE Number
+BOY2
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_R09R0101_BOY2_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 40
+#event number: 1
+#type
+1
+#ID name
+R09R0101_WOMAN2_01
+#OBJ CODE Number
+WOMAN2
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R09R0101_WOMAN2_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

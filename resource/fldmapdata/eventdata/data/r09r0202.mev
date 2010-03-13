@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/26 15:34:40
+#save date:2010/03/13 22:01:09
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r09r0202.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--136 0 200
+-152 0 216
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -50,10 +50,10 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+18
 #event number: 0
 #Bg Event Label
-BG_ROTOM_CHANGE
+BG_ROTOM_CHANGE_02
 #Bg Event Type
 BG_TALK_TYPE_BOARD
 #Bg Event Reaction Direction ID
@@ -63,7 +63,228 @@ SCRID_ROTOM_CHANGE
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 0 216
+-184 0 152
+#event number: 1
+#Bg Event Label
+BG_ROTOM_CHANGE_01
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 0 152
+#event number: 2
+#Bg Event Label
+BG_ROTOM_CHANGE_03
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 0 168
+#event number: 3
+#Bg Event Label
+BG_ROTOM_CHANGE_04
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 168
+#event number: 4
+#Bg Event Label
+BG_ROTOM_CHANGE_06
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 184
+#event number: 5
+#Bg Event Label
+BG_ROTOM_CHANGE_05
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 0 184
+#event number: 6
+#Bg Event Label
+BG_ROTOM_CHANGE_07
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 216
+#event number: 7
+#Bg Event Label
+BG_ROTOM_CHANGE_08
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 216
+#event number: 8
+#Bg Event Label
+BG_ROTOM_CHANGE_09
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 216
+#event number: 9
+#Bg Event Label
+BG_ROTOM_CHANGE_10
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 216
+#event number: 10
+#Bg Event Label
+BG_ROTOM_CHANGE_11
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 200
+#event number: 11
+#Bg Event Label
+BG_ROTOM_CHANGE_12
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 200
+#event number: 12
+#Bg Event Label
+BG_ROTOM_CHANGE_13
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 152
+#event number: 13
+#Bg Event Label
+BG_ROTOM_CHANGE_14
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 152
+#event number: 14
+#Bg Event Label
+BG_ROTOM_CHANGE_15
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 152
+#event number: 15
+#Bg Event Label
+BG_ROTOM_CHANGE_16
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 136
+#event number: 16
+#Bg Event Label
+BG_ROTOM_CHANGE_17
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 136
+#event number: 17
+#Bg Event Label
+BG_ROTOM_CHANGE_18
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ROTOM_CHANGE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 136
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

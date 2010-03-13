@@ -19,149 +19,32 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_pos_h03_sage2_01
-_EVENT_DATA    ev_pos_h03_sage2_02
+_EVENT_DATA    ev_h03_fighterw_01
 _EVENT_DATA_END
 
-
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*    ニトロチャージをくれるイベント           */                                                           
 /**************************************************************/
-//ev_h03_flag_change:
-//  _END
+EVENT_START    ev_h03_fighterw_01
+	
+	//_EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN28,1,FH_01,msg_h03_00_01,msg_h03_00_02,msg_h03_00_02)
+	_TALK_OBJ_START()	
+	
+	//アイテムを入手しているかによって分岐
+	IF FLAG_OFF(FE_H03_ITEMGET_01) THEN
+		_BALLOONWIN_OBJMSG_POS( msg_h03_fighterw_01, H03_FIGHTERW_01, POS_UR )
+		_MSGWIN_CLOSE()
 
-/**************************************************************/
-/* 七賢人のPOSイベント1　七人抜きのイベント開始               */                                                           */
-/**************************************************************/
-EVENT_START    ev_pos_h03_sage2_01
-	
-	//七賢人がやってくる
-	_OBJ_ANIME( H03_SAGE2_01,anm_sage2_kuru_01)
-	_OBJ_ANIME_WAIT()
-
-	//七賢人が喋る
-	_BALLOONWIN_OBJMSG( msg_h03_sage2_01, H03_SAGE2_01)
-	_BALLOONWIN_CLOSE()
-	
-	//七賢人が去っていく
-	_OBJ_ANIME( H03_SAGE2_01,anm_sage2_saru_01)
-	_OBJ_ANIME_WAIT()
-
-	//===========フラグワーク操作===========//
-	
-	//h03のPOSイベント1を無効に
-	$WK_SCENE_H03 = 1
-	
-	//======================================//
-	
-EVENT_END
-
-//--------------------------------------------------------------------
-//七賢人：歩いてくる
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_sage2_kuru_01
-	_ANIME_DATA AC_WALK_D_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//七賢人：奥まで歩く                   
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_sage2_saru_01
-	_ANIME_DATA AC_WALK_U_8F,26
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-
-/**************************************************************/
-/* 七賢人のPOSイベント2　追い返される、またはイベント終了     */                                                           
-/**************************************************************/
-EVENT_START    ev_pos_h03_sage2_02
-	
-	DEFINE_LOCAL	LWK_TRANIER_1
-	DEFINE_LOCAL	LWK_TRANIER_2
-	DEFINE_LOCAL	LWK_TRANIER_3
-	DEFINE_LOCAL	LWK_TRANIER_4
-	DEFINE_LOCAL	LWK_TRANIER_5
-	DEFINE_LOCAL	LWK_TRANIER_6
-	DEFINE_LOCAL	LWK_TRANIER_7
-	DEFINE_LOCAL	LWK_TRANIER_CHK
-	
-	//トレーナーとの勝負に勝っているかをチェック
-	_TRAINER_FLAG_CHECK( TRID_HAKAIM1_05, LWK_TRANIER_1 )
-	_TRAINER_FLAG_CHECK( TRID_HAKAIM1_06, LWK_TRANIER_2 )
-	_TRAINER_FLAG_CHECK( TRID_HAKAIM1_07, LWK_TRANIER_3 )
-	_TRAINER_FLAG_CHECK( TRID_HAKAIM1_08, LWK_TRANIER_4 )
-	_TRAINER_FLAG_CHECK( TRID_HAKAIW1_01, LWK_TRANIER_5 )
-	_TRAINER_FLAG_CHECK( TRID_HAKAIW1_02, LWK_TRANIER_6 )
-	_TRAINER_FLAG_CHECK( TRID_HAKAIW1_03, LWK_TRANIER_7 )
-	
-	//勝利数をカウント	
-	$LWK_TRANIER_2 += $LWK_TRANIER_1
-	$LWK_TRANIER_3 += $LWK_TRANIER_2
-	$LWK_TRANIER_4 += $LWK_TRANIER_3
-	$LWK_TRANIER_5 += $LWK_TRANIER_4
-	$LWK_TRANIER_6 += $LWK_TRANIER_5
-	$LWK_TRANIER_7 += $LWK_TRANIER_6
-	$LWK_TRANIER_CHK += $LWK_TRANIER_7
-	
-	//七人の下っ端を倒している？
-	//倒していない
-	IF $LWK_TRANIER_CHK < 7 THEN 
-	
-		//七賢人が喋る
-		_BALLOONWIN_OBJMSG( msg_h03_sage2_03, H03_SAGE2_01)
-		_BALLOONWIN_CLOSE()
+		_ITEM_EVENT_KEYWAIT(ITEM_WAZAMASIN43,1)
+		_BALLOONWIN_OBJMSG_POS( msg_h03_fighterw_02, H03_FIGHTERW_01, POS_UR )
 		
-		//主人公が追い返される
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_back_01)
-		_OBJ_ANIME_WAIT()
-	
-	//倒している
+		//アイテム入手フラグON
+		_FLAG_SET(FE_H03_ITEMGET_01)
+
 	ELSE
-	
-		//七賢人がやってくる
-		_OBJ_ANIME( H03_SAGE2_01,anm_sage2_kuru_01)
-		_OBJ_ANIME_WAIT()
-
-		//七賢人が喋る
-		_BALLOONWIN_OBJMSG( msg_h03_sage2_02, H03_SAGE2_01)
-		_BALLOONWIN_CLOSE()
-		
-		//画面暗転・プラズマ団OB削除
-		_BLACK_OUT()
-		_TIME_WAIT( 30 )
-		
-		//破壊団を消す
-		_OBJ_DEL(H03_HAKAIM_01)
-		_OBJ_DEL(H03_HAKAIM_02)
-		_OBJ_DEL(H03_HAKAIM_03)
-		_OBJ_DEL(H03_HAKAIM_04)
-		_OBJ_DEL(H03_HAKAIW_01)
-		_OBJ_DEL(H03_HAKAIW_02)
-		_OBJ_DEL(H03_HAKAIW_03)
-		_OBJ_DEL(H03_SAGE2_01)
-		
-		//===========フラグワーク操作===========//	
-		_FLAG_SET(FV_H03_HAKAI_01)
-		//======================================//
-		
-		_TIME_WAIT( 30 )
-		_BLACK_IN()
-
-		//===========フラグワーク操作===========//
-		
-		//h03のPOSイベント1を無効に
-		$WK_SCENE_H03 = 2
-		
-		//======================================//
-	
+		_BALLOONWIN_OBJMSG_POS( msg_h03_fighterw_02, H03_FIGHTERW_01, POS_UR )
 	ENDIF
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
 		
 EVENT_END
-
-//--------------------------------------------------------------------
-// 主人公：追い返される                   
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_back_01
-	_ANIME_DATA AC_WALK_D_8F,2
-	_ANIME_DATA	ACMD_END,0
-	

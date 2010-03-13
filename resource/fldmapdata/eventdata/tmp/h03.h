@@ -10,14 +10,7 @@
 #ifndef ZONE_H03_EVC_H
 #define ZONE_H03_EVC_H
 
-#define H03_SAGE2_01                       0
-#define H03_HAKAIM_01                      1
-#define H03_HAKAIM_02                      2
-#define H03_HAKAIM_03                      3
-#define H03_HAKAIM_04                      4
-#define H03_HAKAIW_01                      5
-#define H03_HAKAIW_02                      6
-#define H03_HAKAIW_03                      7
+#define H03_FIGHTERW_01                    0
 
 #endif //ZONE_H03_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

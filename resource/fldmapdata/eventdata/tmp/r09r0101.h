@@ -10,6 +10,8 @@
 #ifndef ZONE_R09R0101_EVC_H
 #define ZONE_R09R0101_EVC_H
 
+#define R09R0101_BOY2_01                   0
+#define R09R0101_WOMAN2_01                 1
 
 #endif //ZONE_R09R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r09r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
