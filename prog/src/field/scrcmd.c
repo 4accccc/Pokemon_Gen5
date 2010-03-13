@@ -78,6 +78,7 @@
 #include "scrcmd_easytalk.h"
 #include "scrcmd_weather.h"
 #include "scrcmd_postman.h"
+#include "scrcmd_dreamworld.h"
 #include "scrcmd_beacon.h"
 #include "scrcmd_elevator.h"
 #include "scrcmd_trial_house.h"

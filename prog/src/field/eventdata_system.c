@@ -1094,6 +1094,29 @@ u16 EVENTDATA_GetNpcCount( const EVENTDATA_SYSTEM *evdata )
 	return( evdata->npc_count );
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief
+ * @param	evdata		イベントデータへのポインタ
+ * @param npc_id
+ * @param gx
+ * @param y
+ * @param gz
+ */
+//------------------------------------------------------------------
+void EVENTDATA_MoveNPCData( EVENTDATA_SYSTEM * evdata, u16 npc_id, u16 gx, s32 y, u16 gz )
+{
+  if ( npc_id < evdata->npc_count )
+  {
+    if ( evdata->npc_data[npc_id].pos_type == MMDL_HEADER_POSTYPE_GRID )
+    {
+      MMDL_HEADER_GRIDPOS * pos = (MMDL_HEADER_GRIDPOS *)(evdata->npc_data[npc_id].pos_buf);
+      pos->gx = gx;
+      pos->y = y;
+      pos->gz = gz;
+    }
+  }
+}
 //============================================================================================
 //  POSイベント関連
 //============================================================================================

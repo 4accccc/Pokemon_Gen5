@@ -24,6 +24,8 @@
 #include "field/eventdata_system.h"
 
 #include "scrcmd_sxy.h"
+#include "field/field_const.h"
+
 //======================================================================
 //	ƒRƒ}ƒ“ƒh
 //======================================================================
@@ -58,6 +60,25 @@ VMCMD_RESULT EvCmdMoveExitEventPos( VMHANDLE * core, void * wk )
   EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData( gamedata );
 
   EVENTDATA_MoveConnectData( evdata, id, gx, gy, gz );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMoveNPCDataPos( VMHANDLE * core, void * wk )
+{
+  u16 id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gx = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gy = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gz = SCRCMD_GetVMWorkValue( core, wk );
+  s32 y;
+  
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *       gamedata = SCRCMD_WORK_GetGameData( work );
+  EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData( gamedata );
+
+  y = FIELD_CONST_GRID_FX32_SIZE * gy;
+  EVENTDATA_MoveNPCData( evdata, id, gx, y, gz );
   return VMCMD_RESULT_CONTINUE;
 }
 

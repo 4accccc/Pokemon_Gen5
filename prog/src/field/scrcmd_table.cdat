@@ -858,7 +858,7 @@
   //イベントデータ操作関連
   DEF_CMD( EvCmdMoveBgEventPos, EV_SEQ_MOVE_BG_EVENT_POS )
   DEF_CMD( EvCmdMoveExitEventPos, EV_SEQ_MOVE_EXIT_EVENT_POS )
-  NO_CMD()
+  DEF_CMD( EvCmdMoveNPCDataPos, EV_SEQ_MOVE_NPC_DATA_POS )
   NO_CMD()
 
   //簡易会話
@@ -870,7 +870,7 @@
   //ふしぎなおくりもの配達員
   DEF_CMD( EvCmdPostmanCommand, EV_SEQ_POSTMAN_REQUEST )
   NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdDreamWorldCommand, EV_SEQ_PDW_POSTMAN_REQUEST )
   NO_CMD()
 
   //ビーコン&Gパワー関連
