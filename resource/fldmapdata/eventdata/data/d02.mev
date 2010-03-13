@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/11 12:50:17
+#save date:2010/03/13 19:21:24
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d02.wms
 #SECTION START:OBJ_EVENT
@@ -299,7 +299,7 @@ BABYBOY2
 #MOVE CODE Number
 MV_RT2
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
@@ -330,7 +330,7 @@ BABYGIRL2
 #MOVE CODE Number
 MV_UP
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
