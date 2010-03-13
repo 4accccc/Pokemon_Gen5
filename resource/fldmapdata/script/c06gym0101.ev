@@ -222,13 +222,18 @@ _TALK_OBJ_START()
 		
 		//D07のストッパー解除
 		_FLAG_SET(FV_D07_WORKMAN_STOPPER)
+
+		//D07POSイベント起動
+		$WK_SCENE_D07_RIVAL_01 = 1
 		
 		//========================================/
 
 	//ジムバッジを取得している場合
 	ELSE
+			_GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_07 )
+	
 			//【仮】　フラグ未実装　D07のイベントを終了していない場合
-			IF FLAG_OFF( FH_01 ) THEN
+			IF $SCWK_ANSWER == 0 THEN
 			
 				//……そういえばなんだけど　セッカシティを　とんだとき
 				_BALLOONWIN_OBJMSG( msg_c06gym0101_leader_06 , C06GYM0101_LEADER6_01 )

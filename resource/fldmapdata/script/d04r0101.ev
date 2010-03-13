@@ -26,6 +26,7 @@ _EVENT_DATA		ev_d04r0101_backpackerw_01
 _EVENT_DATA		ev_d04r0101_assistantm_01
 _EVENT_DATA		ev_d04r0101_stop_01
 _EVENT_DATA		ev_pos_d04r0101_stop_01
+_EVENT_DATA		ev_init_d04r0101
 _EVENT_DATA_END
 
 
@@ -34,6 +35,13 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_d04r0101_flag_change:
 //  _END
+
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d04r0101
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*			ó¨çª                                              */

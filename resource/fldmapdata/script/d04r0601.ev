@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d04r0601.h"
   .include  "d04r0601.h"
+  .include  "d03r0101_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -116,9 +117,6 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	//D04遺跡イベントバニシュフラグ
 	_FLAG_SET( FV_D04R0601_EVENT_01 )
 
-	//D03R0101のイベント開始
-	$WK_SCENE_D03R0101 = 4
-
 	//D03R0101のバニシュフラグリセット
 	_FLAG_RESET( FV_D03R0101_RIVAL_02 )
 	_FLAG_RESET( FV_D03R0101_CHAMPION_01 )
@@ -142,6 +140,9 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	_FLAG_SET( FV_D04R0201_SAGE2 )
 	
 	//========================================/
+
+	//予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_D03R0101_EVENT_01 )
 
 	//マップチェンジ
 	_MAP_CHANGE( ZONE_ID_D03R0101, 61, 32, DIR_DOWN )

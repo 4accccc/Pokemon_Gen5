@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/26 0:23:11
+#save date:2010/03/13 16:08:34
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d03r0101.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-776 24 -248
+840 0 -424
 #event number: 1
 #type
 1
@@ -86,7 +86,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_D03R0101_RIVAL_01
 #Event Script Name
-SCRID_DUMMY
+SCRID_D03R0101_RIVAL_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -102,7 +102,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1080 0 -1016
+728 32 -232
 #event number: 3
 #type
 1
@@ -257,7 +257,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-712 24 -264
+648 24 -248
 #event number: 8
 #type
 1
@@ -773,58 +773,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-3
-#event number: 0
-#Pos Event Label
-POS_D03R0101_EVENT_01
-#Pos Script Name
-SCRID_POS_D03R0101_EVENT_01
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_D03R0101
-#Event Trigger Work Value
-2
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1048 0 -1048
-#size
-5 1
-#event number: 1
-#Pos Event Label
-POS_D03R0101_HAKASE2_01
-#Pos Script Name
-SCRID_POS_D03R0101_HAKASE2_01
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_D03R0101
-#Event Trigger Work Value
 0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-728 32 -232
-#size
-1 1
-#event number: 2
-#Pos Event Label
-POS_D03R0101_EVENT_01A
-#Pos Script Name
-SCRID_POS_D03R0101_EVENT_01
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_D03R0101
-#Event Trigger Work Value
-2
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1032 0 -1064
-#size
-1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
