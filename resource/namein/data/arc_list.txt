@@ -10,3 +10,4 @@
 "change_dakuten2.dat"
 "change_handakuten2.dat"
 "change_qwerty.dat"
+"changeex_all.dat"

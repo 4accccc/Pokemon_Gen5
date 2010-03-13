@@ -61,7 +61,7 @@
 */
 //=============================================================================
 //-------------------------------------
-/// デバッグ関係
+/// マクロ関係
 //=====================================
 #ifdef PM_DEBUG
 //#define DEBUG_PRINT_ON
@@ -87,6 +87,9 @@ static inline void DEBUG_NAMEIN_Print( STRCODE *x , int len )
 
 #define NAMEIN_KEY_TOUCH  //キーとタッチの操作わけ処理ON
 
+#define NAMEIN_STRINPUT_CENTERING
+//センタリングしていたが、最大文字数が１０になったので、
+//センタリングできなくなった -> 最大文字が８にへりましたので戻します
 
 //-------------------------------------
 /// マクロ
@@ -439,6 +442,8 @@ typedef struct
   GFL_CLWK          *p_clwk[OBJ_BAR_NUM];   //バーのOBJ
 
   NAMEIN_STRCHANGE  *p_changedata[NAMEIN_STRCHANGETYPE_MAX];  //変換データ
+  NAMEIN_STRCHANGE_EX *p_changedata_ex;
+
 } STRINPUT_WORK;
 //-------------------------------------
 /// キー配列
@@ -631,6 +636,7 @@ static void STRINPUT_BackSpace( STRINPUT_WORK *p_wk );
 static BOOL STRINPUT_SetStr( STRINPUT_WORK *p_wk, STRCODE code );
 static BOOL STRINPUT_SetChangeStr( STRINPUT_WORK *p_wk, STRCODE code, BOOL is_shift );
 static BOOL STRINPUT_SetChangeSP( STRINPUT_WORK *p_wk, STRINPUT_SP_CHANGE type );
+static BOOL STRINPUT_SetChangeAuto( STRINPUT_WORK *p_wk );
 static BOOL STRINPUT_PrintMain( STRINPUT_WORK *p_wk );
 static void STRINPUT_CopyStr( const STRINPUT_WORK *cp_wk, STRBUF *p_strbuf );
 static void STRINPUT_DeleteChangeStr( STRINPUT_WORK *p_wk );
@@ -1762,6 +1768,7 @@ static void STRINPUT_Init( STRINPUT_WORK *p_wk, const STRBUF * cp_default_str, u
       p_wk->p_changedata[i] = NAMEIN_STRCHANGE_Alloc( i, heapID );
     }
   }
+  p_wk->p_changedata_ex = NAMEIN_STRCHANGE_EX_Alloc( heapID );
 
   //CLWK設定
   {  
@@ -1769,8 +1776,13 @@ static void STRINPUT_Init( STRINPUT_WORK *p_wk, const STRBUF * cp_default_str, u
     u16 x;
     GFL_CLACTPOS  clpos;
     clpos.y = STRINPUT_BAR_Y;
- //   x = STRINPUT_BMPWIN_W * 8 / 2 - (p_wk->strlen * STRINPUT_STR_OFFSET_X) /2;  //開始
-      x = 0;
+
+#ifdef NAMEIN_STRINPUT_CENTERING
+
+    x = (256 / 2 - STRINPUT_BMPWIN_X*8 ) - (p_wk->strlen * STRINPUT_STR_OFFSET_X) /2 ;  //開始
+#else
+    x = 0;
+#endif
     for( i = 0; i < OBJ_BAR_NUM; i++ )
     { 
       clpos.x = STRINPUT_BAR_START_X + x + i * STRINPUT_BAR_OFFSET_X;
@@ -1806,6 +1818,7 @@ static void STRINPUT_Exit( STRINPUT_WORK *p_wk )
   //検索用データ破棄
   { 
     int i;
+    NAMEIN_STRCHANGE_EX_Free( p_wk->p_changedata_ex );
     for( i = 0; i < NAMEIN_STRCHANGETYPE_MAX; i++ )
     { 
       NAMEIN_STRCHANGE_Free( p_wk->p_changedata[i] );
@@ -1864,13 +1877,11 @@ static void STRINPUT_Main( STRINPUT_WORK *p_wk )
 
 
         GFL_STR_SetStringCodeOrderLength( p_wk->p_strbuf, code, 2 );
-#if 0
-        x = STRINPUT_BMPWIN_W * 8 / 2 - (p_wk->strlen * STRINPUT_STR_OFFSET_X) /2;  //開始
-        x += i * STRINPUT_STR_OFFSET_X + STRINPUT_BAR_OFFSET_X/2;               //幅
+#ifdef NAMEIN_STRINPUT_CENTERING
+        x = (256 / 2 - STRINPUT_BMPWIN_X*8 ) - (p_wk->strlen * STRINPUT_STR_OFFSET_X) /2 ;  //開始
+        x += i * STRINPUT_STR_OFFSET_X + STRINPUT_BAR_OFFSET_X/2;               //１文字ずつセンタリング
         x -= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_wk->p_font, 0 )/2;
 #else
-        //センタリングしていたが、最大文字数が１０になったので、
-        //センタリングできなくなった
         x = 0;
         x += i * STRINPUT_STR_OFFSET_X;
         x += (STRINPUT_BAR_OFFSET_X/2 - PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_wk->p_font, 0 )/2);
@@ -2093,6 +2104,38 @@ static BOOL STRINPUT_SetChangeSP( STRINPUT_WORK *p_wk, STRINPUT_SP_CHANGE type )
 
   return FALSE;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  入力文字欄  濁点、半濁点、小文字、などを循環変換する
+ *
+ *	@param	STRINPUT_WORK *p_wk   ワーク
+ *
+ *	@return TRUEで発見  FALSEで未発見
+ */
+//-----------------------------------------------------------------------------
+static BOOL STRINPUT_SetChangeAuto( STRINPUT_WORK *p_wk )
+{ 
+  //確定文字列の一番後ろを見て、変換可能だったら、変える
+  if( 0 < p_wk->input_idx )
+  { 
+    BOOL ret;
+    STRCODE code;
+    
+    ret = NAMEIN_STRCHANGE_EX_GetChangeStr( p_wk->p_changedata_ex, &p_wk->input_str[ p_wk->input_idx-1 ], &code );
+    if( ret )
+    { 
+      STRINPUT_BackSpace( p_wk );
+
+      STRINPUT_SetStr( p_wk, code );
+      PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
+    }
+  }
+
+  return FALSE;
+}
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  入力文字欄  描画メイン
@@ -5444,16 +5487,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       }
       break;
     case KEYBOARD_INPUT_AUTOCHANGE: //自動
-      if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKUTEN ) )
-      { 
-        if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HANDAKUTEN2 ) )
-        { 
-          if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKU_SEION ) )
-          { 
-            STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HAN_SEION );
-          }
-        }
-      }
+      STRINPUT_SetChangeAuto( &p_wk->strinput );
       break;
     case KEYBOARD_INPUT_BACKSPACE:  //一つ前に戻る
       STRINPUT_BackSpace( &p_wk->strinput );

@@ -31,10 +31,12 @@ include	$(PROJECT_RSCDIR)\macro_define
 # 自動でリソースを集める
 KEYMAPXLS:=$(wildcard keymap_*.xls)
 CHANGEXLS:=$(wildcard change_*.xls)
+CHANGEEXXLS:=$(wildcard changeex_*.xls)
 
 # リソースが吐き出すファイルを自動でつくる
 KEYMAPDAT = $(subst .xls,.dat,$(KEYMAPXLS))
 CHANGEDAT = $(subst .xls,.dat,$(CHANGEXLS))
+CHANGEEXDAT = $(subst .xls,.dat,$(CHANGEEXXLS))
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # パターンを定義することで 依存関係をサフィックス以外でも自動で判断してくれる
@@ -45,6 +47,9 @@ keymap_%.dat: keymap_%.xls
 
 change_%.dat: change_%.xls
 	perl namein_change_conv.pl $<
+
+changeex_%.dat: changeex_%.xls
+	perl namein_changeex_conv.pl $<
 
 endif
 
@@ -66,7 +71,7 @@ $(TARGETDIR_ARC)/$(targetname).naix: $(targetname).naix
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(KEYMAPDAT) $(CHANGEDAT)
+$(targetname).narc: $(KEYMAPDAT) $(CHANGEDAT) $(CHANGEEXDAT)
 	nnsarc -r -l -n -i $(targetname) -S arc_list.txt
 	$(NAIXCUT) $(targetname).naix
 endif

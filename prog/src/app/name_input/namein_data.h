@@ -90,7 +90,7 @@ extern STRCODE NAMEIN_KEYMAP_GetStr( const NAMEIN_KEYMAP *cp_wk, u16 x, u16 y );
 
 //=============================================================================
 /**
- *					変換データの変数
+ *					変換データ
 */
 //=============================================================================
 //-------------------------------------
@@ -140,3 +140,32 @@ extern BOOL NAMEIN_STRCHANGE_GetChangeStr( const NAMEIN_STRCHANGE *cp_wk, u16 id
 extern BOOL NAMEIN_STRCHANGE_GetChangeShiftStr( const NAMEIN_STRCHANGE *cp_wk, u16 idx, STRCODE *p_code, u8 code_le, u8 *p_len );
 extern BOOL NAMEIN_STRCHANGE_GetRestStr( const NAMEIN_STRCHANGE *cp_wk, u16 idx, STRCODE *p_code, u8 code_le, u8 *p_len );
 extern u16 NAMEIN_STRCHANGE_GetIndexByInputStr( const NAMEIN_STRCHANGE *cp_wk, const STRCODE *cp_code );
+
+//=============================================================================
+/**
+ *					変換データ  循環版
+*/
+//=============================================================================
+//=============================================================================
+/**
+ *					変換の構造体宣言
+*/
+//=============================================================================
+//-------------------------------------
+///	名前入力データワーク
+//=====================================
+typedef struct _NAMEIN_STRCHANGE_EX NAMEIN_STRCHANGE_EX;
+
+//=============================================================================
+/**
+ *					変換の外部公開
+*/
+//=============================================================================
+//データ読みこみ
+extern NAMEIN_STRCHANGE_EX *NAMEIN_STRCHANGE_EX_Alloc( HEAPID heapID );
+extern void NAMEIN_STRCHANGE_EX_Free( NAMEIN_STRCHANGE_EX *p_wk );
+
+//データ取得
+extern u16 NAMEIN_STRCHANGE_EX_GetNum( const NAMEIN_STRCHANGE_EX *cp_wk );
+
+extern BOOL NAMEIN_STRCHANGE_EX_GetChangeStr( const NAMEIN_STRCHANGE_EX *cp_wk, const STRCODE *cp_code, STRCODE *p_code );

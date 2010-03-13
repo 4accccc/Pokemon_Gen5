@@ -30,6 +30,7 @@
 //=====================================
 //存在しない場合入っている値（namein_change_conv.pl内でスペースをいれている）
 #define NAMEIN_STRCHANGE_EMPTY	(L'　')
+#define NAMEIN_STRCHANGE_EX_STR_MAX (3)
 
 //=============================================================================
 /**
@@ -52,7 +53,7 @@ struct _NAMEIN_KEYMAP
 typedef struct
 {	
 	STRCODE	input[NAMEIN_STRCHANGE_CODE_LEN];
-	STRCODE	chage[NAMEIN_STRCHANGE_CODE_LEN];
+	STRCODE	change[NAMEIN_STRCHANGE_CODE_LEN];
 	STRCODE	shift[NAMEIN_STRCHANGE_CODE_LEN];
 	STRCODE	rest[NAMEIN_STRCHANGE_CODE_LEN];
 }CHANGECODE;
@@ -61,6 +62,19 @@ struct _NAMEIN_STRCHANGE
 	u16					num;
 	CHANGECODE	word[0];
 } ;
+
+//-------------------------------------
+///	変換用データ拡張版
+//=====================================
+typedef struct
+{	
+	STRCODE	change[NAMEIN_STRCHANGE_EX_STR_MAX];
+}CHANGECODE_EX;
+struct _NAMEIN_STRCHANGE_EX
+{ 
+  u16           num;
+  CHANGECODE_EX word[0];
+};
 
 //-------------------------------------
 ///	ハンドル
@@ -319,7 +333,7 @@ BOOL NAMEIN_STRCHANGE_GetChangeStr( const NAMEIN_STRCHANGE *cp_wk, u16 idx, STRC
 	u8	len;
 
 	GF_ASSERT( idx < NAMEIN_STRCHANGE_GetNum(cp_wk) );
-	STRTOOL_Copy( cp_wk->word[ idx ].chage, p_code, code_len );	
+	STRTOOL_Copy( cp_wk->word[ idx ].change, p_code, code_len );	
 	for( len = 0; len < NAMEIN_STRCHANGE_CODE_LEN && p_code[len] != NAMEIN_STRCHANGE_EMPTY ; (len)++ )
 	{	};
 	if( p_len )
@@ -445,4 +459,93 @@ static BOOL STRCODE_Search( const STRCODE* data, const STRCODE* code )
 	//3文字あった
 
 	return TRUE;
+}
+
+
+//=============================================================================
+/**
+ *					変換の外部公開
+*/
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  変換拡張  読み込み
+ *
+ *	@param	HEAPID heapID   ヒープID
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+NAMEIN_STRCHANGE_EX *NAMEIN_STRCHANGE_EX_Alloc( HEAPID heapID )
+{ 
+	return GFL_ARC_UTIL_Load( ARCID_NAMEIN_DATA, NARC_namein_data_changeex_all_dat, FALSE, heapID );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  変換拡張  破棄
+ *
+ *	@param	NAMEIN_STRCHANGE_EX *p_wk ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void NAMEIN_STRCHANGE_EX_Free( NAMEIN_STRCHANGE_EX *p_wk )
+{ 
+	GFL_HEAP_FreeMemory( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  変換拡張  変換文字の数取得
+ *
+ *	@param	const NAMEIN_STRCHANGE_EX *cp_wk  ワーク
+ *
+ *	@return 総数
+ */
+//-----------------------------------------------------------------------------
+u16 NAMEIN_STRCHANGE_EX_GetNum( const NAMEIN_STRCHANGE_EX *cp_wk )
+{
+  return cp_wk->num;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  変換変換  変換出来る場合変換先文字列を返す
+ *
+ *	@param	const NAMEIN_STRCHANGE_EX *cp_wk  ワーク
+ *	@param	STRCODE *cp_code  変換元文字列
+ *	@param	*p_code           変換先文字列
+ *
+ *	@return TRUEならば変換可能  FALSEならば不可能
+ */
+//-----------------------------------------------------------------------------
+BOOL NAMEIN_STRCHANGE_EX_GetChangeStr( const NAMEIN_STRCHANGE_EX *cp_wk, const STRCODE *cp_code, STRCODE *p_code )
+{ 
+  int i,j;
+  
+  if( NAMEIN_STRCHANGE_EMPTY == *cp_code )
+  { 
+    return FALSE;
+  }
+
+  for( i = 0; i < NAMEIN_STRCHANGE_EX_GetNum(cp_wk); i++ )
+  { 
+    for( j = 0; j < NAMEIN_STRCHANGE_EX_STR_MAX; j++ )
+    { 
+      if( cp_wk->word[ i ].change[ j ] == *cp_code )
+      { 
+        //一致したので、変換先を返す
+        //ただし空文字の場合次の変換
+        do
+        { 
+          j++;
+          j %= NAMEIN_STRCHANGE_EX_STR_MAX;
+          *p_code = cp_wk->word[ i ].change[ j ];
+        }while( *p_code == NAMEIN_STRCHANGE_EMPTY );
+
+        return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
 }
