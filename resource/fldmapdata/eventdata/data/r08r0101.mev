@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/13 21:23:42
+#save date:2010/03/13 21:49:55
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r08r0101.wms
 #SECTION START:OBJ_EVENT
@@ -148,7 +148,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_R08R0101_OLDMAN1
 #Event Script Name
-SCRID_R08R0101_OLDMAN1_01
+SCRID_DUMMY
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
