@@ -13,6 +13,7 @@
 #define R08R0101_POKE4_01                  1
 #define R08R0101_POKE5_01                  2
 #define R08R0101_POKE6_01                  3
+#define R08R0101_OLDMAN1_01                4
 
 #endif //ZONE_R08R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r08r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
