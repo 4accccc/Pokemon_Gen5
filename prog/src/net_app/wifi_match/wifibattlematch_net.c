@@ -46,8 +46,16 @@
 #define DEBUG_DEBUG_NET_Printf_ON
 #endif //PM_DEBUG
 
+#if defined(DEBUG_ONLY_FOR_shimoyamada)
+#undef  MATCHINGKEY
+#define MATCHINGKEY 0xFF
+#elsif defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#undef  MATCHINGKEY
+#define MATCHINGKEY 0xFE
+#endif 
+
 #if defined(DEBUG_DEBUG_NET_Printf_ON) && defined(DEBUG_ONLY_FOR_toru_nagihashi)
-#define DEBUG_NET_Printf(...)  OS_FPrintf(3,__VA_ARGS__)
+#define DEBUG_NET_Printf(...)  OS_FPrintf(0,__VA_ARGS__)
 #else
 #define DEBUG_NET_Printf(...)  /*  */
 #endif  //DEBUG_DEBUG_NET_Printf_ON
@@ -1178,22 +1186,26 @@ BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk )
     //初期化
     case WIFIBATTLEMATCH_SC_SEQ_INIT:
       p_wk->wait_cnt  = 0;
+#if 0
+      DEBUG_NET_Printf( "SC:gdbInit\n" );
       { 
-        ret = DWC_GdbInitialize( GAME_ID, p_wk->cp_user_data, DWC_SSL_TYPE_SERVER_AUTH );
-        if( ret != DWC_GDB_ERROR_NONE )
+        DWCGdbError gdb_err;
+        gdb_err = DWC_GdbInitialize( GAME_ID, p_wk->cp_user_data, DWC_SSL_TYPE_SERVER_AUTH );
+        if( gdb_err != DWC_GDB_ERROR_NONE )
         { 
-          WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret );
+          WIFIBATTLEMATCH_NETERR_SetGdbError( &p_wk->error, gdb_err );
           return FALSE;
         }
       }
-
+#endif
+      DEBUG_NET_Printf( "SC:sc Init\n" );
       ret = DWC_ScInitialize( GAME_ID,DWC_SSL_TYPE_SERVER_AUTH );
       if( ret != DWC_SC_RESULT_NO_ERROR )
       { 
         WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret );
         return FALSE;
       }
-      DEBUG_NET_Printf( "SC:Init\n" );
+      DEBUG_NET_Printf( "SC:Init end\n" );
       p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_LOGIN;
       break;
 
@@ -1590,7 +1602,7 @@ static void DwcRap_Sc_Finalize( WIFIBATTLEMATCH_NET_WORK *p_wk )
   {
     DEBUG_NET_Printf( "sc shutdown\n" );
     DWC_ScShutdown();
-    DWC_GdbShutdown();           // 簡易データベースライブラリの終了
+    //DWC_GdbShutdown();           // 簡易データベースライブラリの終了
   }
 }
 

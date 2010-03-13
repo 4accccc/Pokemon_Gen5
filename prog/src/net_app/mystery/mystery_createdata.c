@@ -17,6 +17,7 @@
 #include "item/itemsym.h"
 #include "waza_tool/wazano_def.h"
 #include "savedata/mystery_data.h"
+#include "poke_tool/poke_memo.h"
 
 #include "net_app/mystery.h"
 #include "system/gfl_use.h"
@@ -175,6 +176,19 @@ POKEMON_PARAM* MYSTERY_CreatePokemon(const GIFT_PACK_DATA* pPack, HEAPID heapID,
     GFL_HEAP_FreeMemory(pp);
     return NULL;
   }
+
+  //配布ポケモン
+  //@todo　これでよいのか？
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#warning event_poke memo
+#endif 
+#if 0
+  if( POKE_MEMO_CheckEventPokePP( pp, POKE_MEMO_DISTRIBUTION ) )
+  { 
+    POKE_MEMO_SetEventPoke_AfterEventPP( pp , POKE_MEMO_DISTRIBUTION );
+  }
+#endif
+
   return pp;
 }
 

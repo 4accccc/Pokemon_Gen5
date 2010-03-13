@@ -23,11 +23,11 @@
 // メモリの残量表示処理 1:ON  0:OFF
 #if GFL_NET_DEBUG
 
-#define NET_MEMORY_DEBUG  (0)
+#define NET_MEMORY_DEBUG  (1)
 
 #else // GFL_NET_DEBUG
 
-#define NET_MEMORY_DEBUG  (0)
+#define NET_MEMORY_DEBUG  (1)
 
 #endif// GFL_NET_DEBUG 
 
@@ -43,9 +43,49 @@
 typedef struct{
 	NNSFndHeapHandle headHandle;
   void *heapPtr;
+
+  NNSFndHeapHandle headHandleSub; //サブヒープ
+  void          *heapPtrSub;
+  DWCAllocType  SubAllocType;  //サブヒープから確保するタイプ
 } DWCRAPCOMMON_WORK;
 
-static DWCRAPCOMMON_WORK* pDwcRapWork;
+static DWCRAPCOMMON_WORK* pDwcRapWork = NULL;
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  DWCのサブヒープを作成
+ *	        （サブヒープは特定のタイプのみアロケートさせるものです
+ *	        　現状、WIFI大会とランダムマッチレーティングで使用しております）
+ *
+ *	@param	DWCAllocType SubAllocType このヒープでからアロケートするタイプ
+ *	@param	size                      サブヒープのサイズ
+ *	@param	heapID                    ヒープID
+ */
+//-----------------------------------------------------------------------------
+void DWC_RAPCOMMON_SetSubHeapID( DWCAllocType SubAllocType, u32 size, HEAPID heapID )
+{ 
+  GF_ASSERT( pDwcRapWork != NULL );
+  GF_ASSERT( pDwcRapWork->heapPtrSub == NULL );
+  GF_ASSERT( pDwcRapWork->headHandleSub == NULL );
+  pDwcRapWork->heapPtrSub    = GFL_HEAP_AllocMemory(heapID, size-0x80);
+  pDwcRapWork->headHandleSub = NNS_FndCreateExpHeap( (void *)( ((u32)pDwcRapWork->heapPtr + 31) / 32 * 32 ), size-0x80-64); 
+  pDwcRapWork->SubAllocType = SubAllocType;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  DWCのサブヒープを破棄
+ */
+//-----------------------------------------------------------------------------
+void DWC_RAPCOMMON_ResetSubHeapID(void)
+{
+  GF_ASSERT(pDwcRapWork);
+  NNS_FndDestroyExpHeap( pDwcRapWork->headHandleSub );
+  GFL_HEAP_FreeMemory( pDwcRapWork->heapPtrSub );
+  pDwcRapWork->headHandleSub  = NULL;
+  pDwcRapWork->heapPtrSub = NULL;
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -62,9 +102,23 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
 {	
 
   void *ptr;
-  OSIntrMode  enable = OS_DisableInterrupts();
-  ptr = NNS_FndAllocFromExpHeapEx( pDwcRapWork->headHandle, size, align );
-  (void)OS_RestoreInterrupts(enable);
+
+  //サブヒープが登録されていてかつ、指定したアロケートタイプだったら
+  if( (pDwcRapWork->headHandleSub != NULL ) &&  (name == pDwcRapWork->SubAllocType ) )
+  { 
+    OSIntrMode  enable = OS_DisableInterrupts();
+    ptr = NNS_FndAllocFromExpHeapEx( pDwcRapWork->headHandleSub, size, align );
+    (void)OS_RestoreInterrupts(enable);
+    NAGI_Printf( "SUB" );
+  }
+  else
+  { 
+    OSIntrMode  enable = OS_DisableInterrupts();
+    ptr = NNS_FndAllocFromExpHeapEx( pDwcRapWork->headHandle, size, align );
+    (void)OS_RestoreInterrupts(enable);
+  }
+
+  NAGI_Printf( "[>name%d size%d align%d\n", name, size, align );
 
   if(ptr == NULL){
     GF_ASSERT_MSG(ptr,"dwcalloc not allocate! size %d,align %d rest %d name %d\n", size, align, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle), name );
@@ -89,12 +143,23 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
 //-----------------------------------------------------------------------------
 void DWC_RAPCOMMON_Free( DWCAllocType name, void *ptr, u32 size )
 {	
-#pragma unused( name, size )
+
+  NAGI_Printf( "[>name%d ptr%x size%d\n", name, ptr, size );
 
   if ( !ptr ){
     return;  //NULL開放を認める
   }
   NET_MEMORY_PRINT( "free memory size=%d\n", size );
+
+
+  //サブヒープが登録されていてかつ、指定したアロケートタイプだったら
+  if( (pDwcRapWork->headHandleSub != NULL ) &&  (name == pDwcRapWork->SubAllocType ) )
+  { 
+    OSIntrMode  enable = OS_DisableInterrupts();
+    NNS_FndFreeToExpHeap( pDwcRapWork->headHandleSub, ptr );
+    (void)OS_RestoreInterrupts(enable);
+  }
+  else
   {
     OSIntrMode  enable = OS_DisableInterrupts();
     NNS_FndFreeToExpHeap( pDwcRapWork->headHandle, ptr );
@@ -132,6 +197,9 @@ void DWC_RAPCOMMON_SetHeapID(HEAPID id,int size)
 void DWC_RAPCOMMON_ResetHeapID(void)
 {
   GF_ASSERT(pDwcRapWork);
+  GF_ASSERT( pDwcRapWork->heapPtrSub == NULL );
+  GF_ASSERT( pDwcRapWork->headHandleSub == NULL );
+
   NNS_FndDestroyExpHeap( pDwcRapWork->headHandle );
   GFL_HEAP_FreeMemory( pDwcRapWork->heapPtr  );
   GFL_HEAP_FreeMemory(pDwcRapWork);

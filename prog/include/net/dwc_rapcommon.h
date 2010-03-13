@@ -65,6 +65,8 @@ extern void DWC_RAPCOMMON_ResetHeapID(void);
 extern void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align );
 extern void DWC_RAPCOMMON_Free( DWCAllocType name, void *ptr, u32 size );
 
+extern void DWC_RAPCOMMON_SetSubHeapID( DWCAllocType SubAllocType, u32 size, HEAPID heapID );
+extern void DWC_RAPCOMMON_ResetSubHeapID(void);
 
 //------------------------------------------------------------------------------
 /**

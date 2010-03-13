@@ -20,6 +20,7 @@
 #include "gamesystem/game_data.h"
 #include "system/net_err.h"
 #include "battle/btl_net.h" //BTL_NET_SERVER_VERSION
+#include "net/dwc_rapcommon.h"
 
 //	アーカイブ
 #include "arc_def.h"
@@ -59,11 +60,17 @@ FS_EXTERN_OVERLAY(dpw_common);
 //#define DEBUGWIN_USE
 
 #if defined(DEBUG_ONLY_FOR_toru_nagihashi)||defined(DEBUG_ONLY_FOR_shimoyamada)
-//#define DEBUG_GPF_PASS
+#define DEBUG_GPF_PASS
 #endif
 
 //#define DEBUG_DIRTYCHECK_PASS
 #define SAKE_REPORT_NONE          //レポートをしない
+
+#ifndef SAKE_REPORT_NONE
+//#define SAKE_REPORT_HEAP_DIVIDE   //レポート用ヒープを切り分ける
+#endif 
+
+#define DEBUG_GPF_PASS
 #endif //PM_DEBUG
 
 
@@ -83,6 +90,11 @@ FS_EXTERN_OVERLAY(dpw_common);
 //=====================================
 #define ENEMYDATA_WAIT_SYNC    (180)
 #define MATCHING_MSG_WAIT_SYNC (120)
+
+//-------------------------------------
+///	シンク
+//=====================================
+#define WBM_RND_RATE_HEAP_SIZE  (0x30000)
 
 //-------------------------------------
 ///	サブシーケンス戻り値
@@ -1226,9 +1238,12 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
  
   enum
   { 
+    SEQ_SC_HEAP_INIT,
     SEQ_START_MSG,
     SEQ_START_REPORT_ATLAS,
     SEQ_WAIT_REPORT_ATLAS,
+
+    SEQ_SC_HEAP_EXIT,
 
     SEQ_START_RECVDATA_SAKE,
     SEQ_WAIT_RECVDATA_SAKE,
@@ -1249,6 +1264,13 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
 
   switch( *p_seq )
   { 
+  case SEQ_SC_HEAP_INIT:
+#ifdef SAKE_REPORT_HEAP_DIVIDE
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_RND_RATE_HEAP_SIZE );
+    DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_GS, WBM_RND_RATE_HEAP_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
+#endif //SAKE_REPORT_HEAP_DIVIDE
+    *p_seq  = SEQ_START_MSG;
+    break;
     //-------------------------------------
     ///	Atlasへの書き込み
     //=====================================
@@ -1269,7 +1291,7 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
       if( WIFIBATTLEMATCH_SC_Process( p_wk->p_net ) )
 #endif
       { 
-        *p_seq = SEQ_START_RECVDATA_SAKE;
+        *p_seq = SEQ_SC_HEAP_EXIT;
       }
 
       //エラー
@@ -1284,6 +1306,14 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
         break;
       }
     }
+    break;
+
+  case SEQ_SC_HEAP_EXIT:
+#ifdef SAKE_REPORT_HEAP_DIVIDE
+    DWC_RAPCOMMON_ResetSubHeapID();
+    GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
+#endif //SAKE_REPORT_HEAP_DIVIDE
+    *p_seq = SEQ_START_RECVDATA_SAKE;
     break;
 
     //-------------------------------------
