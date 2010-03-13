@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/06 18:37:09
+#save date:2010/03/13 16:23:18
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d09.wms
 #SECTION START:OBJ_EVENT
@@ -199,7 +199,7 @@ LOCALWORK10
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-60 0 -2
+60 0 -3
 #size
 5 1
 #Map Event List Data End
