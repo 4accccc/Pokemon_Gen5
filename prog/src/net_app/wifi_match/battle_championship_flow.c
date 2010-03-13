@@ -49,6 +49,7 @@
 ///	DEBUG
 //=====================================
 #ifdef PM_DEBUG
+#define DEBUG_REGULATION_R_LOST //メニューでRを押すとレギュレーションを消す
 #endif //PM_DEBUG
 
 //=============================================================================
@@ -751,6 +752,18 @@ static void SEQFUNC_LiveMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_WAIT_LIVEMENU:
     {
       const u32 ret = UTIL_LIST_Main( p_wk );
+
+#ifdef DEBUG_REGULATION_R_LOST
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+      { 
+        SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
+        REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
+        REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_LIVE ); 
+        GFL_STD_MemClear( p_reg, sizeof( REGULATION_CARDDATA ) );
+        OS_TPrintf( "レギュレーションを強制消去しました\n" );
+      }
+#endif //DEBUG_REGULATION_R_LOST
+
       if( ret != WBM_LIST_SELECT_NULL )
       {
         switch( ret )
