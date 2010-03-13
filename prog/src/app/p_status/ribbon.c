@@ -98,10 +98,10 @@ static const RIBBON_TABLE RibbonTable[] =
 	{ID_PARA_sinou_ashiato_ribbon,	NARC_p_status_gra_ribbon_memory_12_NCGR,	0,	mes_ribbon_name_memory_013,	mes_ribbon_text_memory_013,	RIBBON_CATEGORY_MEMORY	},	//	あしあとリボン
 	{ID_PARA_sinou_record_ribbon,	NARC_p_status_gra_ribbon_memory_13_NCGR,	1,	mes_ribbon_name_memory_014,	mes_ribbon_text_memory_014,	RIBBON_CATEGORY_MEMORY	},	//	レコードリボン
 	{ID_PARA_sinou_legend_ribbon,	NARC_p_status_gra_ribbon_memory_14_NCGR,	0,	mes_ribbon_name_memory_015,	mes_ribbon_text_memory_015,	RIBBON_CATEGORY_MEMORY	},	//	レジェンドリボン
-	{ID_PARA_country_ribbon,	NARC_p_status_gra_ribbon_present_00_NCGR,	3,	mes_ribbon_name_present_001,	mes_ribbon_text_present_001,	RIBBON_CATEGORY_MEMORY	},	//	カントリーリボン
-	{ID_PARA_national_ribbon,	NARC_p_status_gra_ribbon_present_00_NCGR,	4,	mes_ribbon_name_present_002,	mes_ribbon_text_present_002,	RIBBON_CATEGORY_MEMORY	},	//	ナショナルリボン
-	{ID_PARA_earth_ribbon,	NARC_p_status_gra_ribbon_present_01_NCGR,	0,	mes_ribbon_name_present_003,	mes_ribbon_text_present_003,	RIBBON_CATEGORY_MEMORY	},	//	アースリボン
-	{ID_PARA_world_ribbon,	NARC_p_status_gra_ribbon_present_01_NCGR,	1,	mes_ribbon_name_present_004,	mes_ribbon_text_present_004,	RIBBON_CATEGORY_MEMORY	},	//	ワールドリボン
+	{ID_PARA_country_ribbon,	NARC_p_status_gra_ribbon_present_00_NCGR,	3,	mes_ribbon_name_present_001,	mes_ribbon_text_present_001,	RIBBON_CATEGORY_PRESENT	},	//	カントリーリボン
+	{ID_PARA_national_ribbon,	NARC_p_status_gra_ribbon_present_00_NCGR,	4,	mes_ribbon_name_present_002,	mes_ribbon_text_present_002,	RIBBON_CATEGORY_PRESENT	},	//	ナショナルリボン
+	{ID_PARA_earth_ribbon,	NARC_p_status_gra_ribbon_present_01_NCGR,	0,	mes_ribbon_name_present_003,	mes_ribbon_text_present_003,	RIBBON_CATEGORY_PRESENT	},	//	アースリボン
+	{ID_PARA_world_ribbon,	NARC_p_status_gra_ribbon_present_01_NCGR,	1,	mes_ribbon_name_present_004,	mes_ribbon_text_present_004,	RIBBON_CATEGORY_PRESENT	},	//	ワールドリボン
 	{ID_PARA_sinou_classic_ribbon,	NARC_p_status_gra_ribbon_present_02_NCGR,	1,	mes_ribbon_name_present_005,	mes_ribbon_text_present_005,	RIBBON_CATEGORY_PRESENT	},	//	クラシックリボン
 	{ID_PARA_sinou_premiere_ribbon,	NARC_p_status_gra_ribbon_present_03_NCGR,	0,	mes_ribbon_name_present_006,	mes_ribbon_text_present_006,	RIBBON_CATEGORY_PRESENT	},	//	プレミアリボン
 	{ID_PARA_sinou_history_ribbon,	NARC_p_status_gra_ribbon_present_04_NCGR,	3,	mes_ribbon_name_present_007,	mes_ribbon_text_present_007,	RIBBON_CATEGORY_PRESENT	},	//	イベントリボン
