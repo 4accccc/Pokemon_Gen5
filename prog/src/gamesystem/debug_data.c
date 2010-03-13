@@ -93,18 +93,21 @@ static void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
 static void DEBUG_MyPokeAdd_Field( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus )
 {
 	PP_Setup(pp, MONSNO_MOGURYUU, 100, MyStatus_GetID( mystatus ));
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
 	PokeParty_Add(party, pp);
 	ZUKANSAVE_SetPokeGet( zukan, pp );
 
 	PP_Setup(pp, MONSNO_MUSYAANA, 100, MyStatus_GetID( mystatus ));
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
 	PokeParty_Add(party, pp);
 	ZUKANSAVE_SetPokeGet( zukan, pp );
 
 	PP_Setup(pp, MONSNO_TIRAAMHI, 100, MyStatus_GetID( mystatus ));
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
   PP_SetWazaPos( pp , WAZANO_TEREPOOTO , 0 );
@@ -113,6 +116,7 @@ static void DEBUG_MyPokeAdd_Field( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SA
 	ZUKANSAVE_SetPokeGet( zukan, pp );
 
   PP_Setup(pp, MONSNO_GOBITTO, 100, MyStatus_GetID( mystatus ));
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
   PP_SetWazaPos( pp , WAZANO_NAMINORI , 0 );
@@ -127,6 +131,7 @@ static void DEBUG_MyPokeAdd_Field( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SA
 static void DEBUG_MyPokeAdd_Tamada( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus )
 {
 	PP_Setup(pp, MONSNO_MUSYAANA, 2, MyStatus_GetID( mystatus ));
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
 	PokeParty_Add(party, pp);
@@ -136,18 +141,21 @@ static void DEBUG_MyPokeAdd_Tamada( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_S
 static void DEBUG_MyPokeAdd_Matsuda( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus )
 {
 	PP_Setup(pp, MONSNO_MOGURYUU, 100, MyStatus_GetID( mystatus ));
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
 	PokeParty_Add(party, pp);
 	ZUKANSAVE_SetPokeGet( zukan, pp );
 
 	PP_Setup(pp, MONSNO_MUSYAANA, 100, 123456);
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
 	PokeParty_Add(party, pp);
 	ZUKANSAVE_SetPokeGet( zukan, pp );
 
 	PP_Setup(pp, MONSNO_TIRAAMHI, 100, 123456);
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
   PP_SetWazaPos( pp , WAZANO_TEREPOOTO , 0 );
