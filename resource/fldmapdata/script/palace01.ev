@@ -10,6 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_palace01.h"
+  .include  "palace01.h"
   //.include  "../eventdata/zone_palace01evc.h"
 
 //--------------------------------------------------------------
@@ -19,14 +20,14 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_palace01
 _EVENT_DATA    ev_init_palace01
 _EVENT_DATA    ev_recover_palace01
 _EVENT_DATA    ev_scene_change_palace01
 _EVENT_DATA    ev_palace01_monolith
-_EVENT_DATA    ev_palace01_oldman1_01	//パレスじいさん
-_EVENT_DATA    ev_palace01_girl4_01		//パレス双子
-_EVENT_DATA    ev_palace01_girl4_02		//パレス双子
+_EVENT_DATA    ev_palace01_oldman1_01		//パレスじいさん
+_EVENT_DATA    ev_palace01_girl4_01			//パレス双子（左）
+_EVENT_DATA    ev_palace01_girl4_02			//パレス双子（右）
+_EVENT_DATA    ev_scene_palace01_1stguide	//パレス初回誘導イベント
 _EVENT_DATA_END
 
 
@@ -65,12 +66,6 @@ EVENT_START	ev_scene_change_palace01
   $LOCALWORK0 = 1
 EVENT_END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_palace01:
-  //とりあえず最初のラベルだけ生成している
-  _END
 
 /**************************************************************/
 /*  モノリス                                              */
@@ -97,38 +92,94 @@ EVENT_START ev_palace01_monolith
 EVENT_END
 
 
+
 /**************************************************************/
-/*  パレスじいさん [100213斉藤マ]                             */
+/*  初回誘導イベント [100314斉藤マ]                           */
+/**************************************************************/
+EVENT_START ev_scene_palace01_1stguide
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_look_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//パレスじじい：主人公横へ
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//われわれは
+	_BALLOONWIN_OBJMSG( plc_oldman1_01_01, PALACE01_OLDMAN1_01 )
+	_MSGWIN_CLOSE()
+	
+	//パレスじじい：主人公を見て
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_r )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//パレスだま＊５入手 【仮】名称変更を控えているため定義名を使っていません
+	_ITEM_EVENT_KEYWAIT( 620, 5 )
+
+	//パレス質問メニューへ
+	_CALL	ev_oldman1_guide
+
+	//========================================//
+	//初回誘導イベントを無効
+	$WK_SCENE_PALACE01 = 1
+	
+	//========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_walk_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//パレスじじい：気づく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman1_look_01
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//パレスじじい：主人公横へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman1_move_01
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/**************************************************************/
+/*  パレスじいさん 話しかけ [100213斉藤マ]                    */
 /**************************************************************/
 EVENT_START ev_palace01_oldman1_01
 	_TALK_OBJ_START()
 	
-	//初回会話分岐
-	IF FLAG_OFF( FE_PALACE01_OLDMANTALK) THEN
-		//初めてなら
-		_PLAINWIN_MSG_DOWN( plc_oldman1_01_01 )
-		
-		//========================================//
-		//初回会話済み
-		_FLAG_SET( FE_PALACE01_OLDMANTALK )
-		//========================================//
-		
-	ELSE
-		//２回目以降
-		_PLAINWIN_MSG_DOWN( plc_oldman1_01_04 )
-		
-	ENDIF
-	_MSGWIN_CLOSE()		//【仮】ウインドウ連続表示が可能になったら不要
+	_BALLOONWIN_TALKOBJ_MSG( plc_oldman1_01_04 )
 	
-	
-	//パレスに興味があるのか？
-	_PLAINWIN_MSG_DOWN( plc_oldman1_01_02 )
-	
+	//パレス質問メニューへ
+	_CALL	ev_oldman1_guide
+
+EVENT_END
+
+
+//パレス質問メニュー（共通）
+ev_oldman1_guide:
 	{
 	DEFINE_LOCAL  lwk_loop
 	DEFINE_LOCAL  lwk_bmpans
 	
 	WHILE $lwk_loop != 555
+	
+		//パレスに興味があるのか？
+		_BALLOONWIN_OBJMSG( plc_oldman1_01_02, PALACE01_OLDMAN1_01 )
 	
 		//メニュー作成
 		_BMPMENU_INIT_EX( 1, 1, 0, 1, lwk_bmpans )
@@ -138,17 +189,14 @@ EVENT_START ev_palace01_oldman1_01
 		_BMPMENU_MAKE_LIST( plc_oldman1_01_09, 10 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
-		_MSGWIN_CLOSE()		//【仮】ウインドウ連続表示が可能になったら不要
 		
 		SWITCH $lwk_bmpans
 		CASE 0 THEN
 			//パレスとは
-			_PLAINWIN_MSG_DOWN( plc_oldman1_01_05 )
-			_MSGWIN_CLOSE()
+			_BALLOONWIN_OBJMSG( plc_oldman1_01_05, PALACE01_OLDMAN1_01 )
 		CASE 1 THEN
 			//アクセスとは
-			_PLAINWIN_MSG_DOWN( plc_oldman1_01_06 )
-			_MSGWIN_CLOSE()
+			_BALLOONWIN_OBJMSG( plc_oldman1_01_06, PALACE01_OLDMAN1_01 )
 		DEFAULT
 			//やめる
 			$lwk_loop = 555
@@ -159,12 +207,11 @@ EVENT_START ev_palace01_oldman1_01
 	}
 	
 	//終了メッセージ
-	_PLAINWIN_MSG_DOWN( plc_oldman1_01_03 )
+	_BALLOONWIN_OBJMSG( plc_oldman1_01_03, PALACE01_OLDMAN1_01 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
-EVENT_END
-
+_RET
 
 /**************************************************************/
 /*  パレス双子１ [100213斉藤マ]                               */
@@ -173,37 +220,34 @@ EVENT_START ev_palace01_girl4_01
 	_TALK_OBJ_START()
 	
 	//私たちはパレスを見守るもの
-	_PLAINWIN_MSG_DOWN( plc_girl4_01_01 )
-	_MSGWIN_CLOSE()		//【仮】ウインドウ連続表示が可能になったら不要
-	
-	//パレスについて知りたい？
-	_PLAINWIN_MSG_DOWN( plc_girl4_01_02 )
+	_BALLOONWIN_OBJMSG( plc_girl4_01_01, PALACE01_GIRL4_01 )
 	
 	{
 	DEFINE_LOCAL  lwk_loop
 	DEFINE_LOCAL  lwk_bmpans
 	
+	//パレス質問メニュー（やめる選択までループ）
 	WHILE $lwk_loop != 555
-	
+		
+		//パレスについて知りたい？
+		_BALLOONWIN_OBJMSG( plc_girl4_01_02, PALACE01_GIRL4_01 )
+		
 		//メニュー作成
 		_BMPMENU_INIT_EX( 1, 1, 0, 1, lwk_bmpans )
 		//リスト追加
-		_BMPMENU_MAKE_LIST( plc_girl4_01_06, 0 )	//ツリーとは
+		_BMPMENU_MAKE_LIST( plc_girl4_01_06, 0 )	//リンクブリッジとは
 		_BMPMENU_MAKE_LIST( plc_girl4_01_07, 1 )	//ミッションとは
 		_BMPMENU_MAKE_LIST( plc_girl4_01_08, 10 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
-		_MSGWIN_CLOSE()		//【仮】ウインドウ連続表示が可能になったら不要
 		
 		SWITCH $lwk_bmpans
 		CASE 0 THEN
-			//ツリーとは
-			_PLAINWIN_MSG_DOWN( plc_girl4_01_03 )
-			_MSGWIN_CLOSE()
+			//リンクブリッジとは
+			_BALLOONWIN_OBJMSG( plc_girl4_01_03, PALACE01_GIRL4_01 )
 		CASE 1 THEN
 			//ミッションとは
-			_PLAINWIN_MSG_DOWN( plc_girl4_01_04 )
-			_MSGWIN_CLOSE()
+			_BALLOONWIN_OBJMSG( plc_girl4_01_04, PALACE01_GIRL4_01 )
 		DEFAULT
 			//やめる
 			$lwk_loop = 555
@@ -214,7 +258,7 @@ EVENT_START ev_palace01_girl4_01
 	}
 	
 	//終了メッセージ
-	_PLAINWIN_MSG_DOWN( plc_girl4_01_05 )
+	_BALLOONWIN_OBJMSG( plc_girl4_01_05 ,PALACE01_GIRL4_01 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
@@ -228,18 +272,18 @@ EVENT_START ev_palace01_girl4_02
 	_TALK_OBJ_START()
 	
 	//私たちはパレスを見守るもの
-	_PLAINWIN_MSG_DOWN( plc_girl4_02_01 )
-	_MSGWIN_CLOSE()		//【仮】ウインドウ連続表示が可能になったら不要
-	
-	//パレスについて知りたい？
-	_PLAINWIN_MSG_DOWN( plc_girl4_02_02 )
+	_BALLOONWIN_OBJMSG( plc_girl4_02_01, PALACE01_GIRL4_02 )
 	
 	{
 	DEFINE_LOCAL  lwk_loop
 	DEFINE_LOCAL  lwk_bmpans
 	
+	//パレス質問メニュー（やめる選択までループ）
 	WHILE $lwk_loop != 555
-	
+		
+		//パレスについて知りたい？
+		_BALLOONWIN_OBJMSG( plc_girl4_02_02, PALACE01_GIRL4_02 )
+		
 		//メニュー作成
 		_BMPMENU_INIT_EX( 1, 1, 0, 1, lwk_bmpans )
 		//リスト追加
@@ -253,7 +297,7 @@ EVENT_START ev_palace01_girl4_02
 		SWITCH $lwk_bmpans
 		CASE 0 THEN
 			//Ｇパワーとは
-			_PLAINWIN_MSG_DOWN( plc_girl4_02_03 )
+			_BALLOONWIN_OBJMSG( plc_girl4_02_03, PALACE01_GIRL4_02 )
 			_MSGWIN_CLOSE()
 		CASE 1 THEN
 			//Ｇパワーをもらうには
@@ -274,9 +318,5 @@ EVENT_START ev_palace01_girl4_02
 	_MSGWIN_CLOSE()
 	
 EVENT_END
-
-
-
-
 
 
