@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-14T12:29:01"/>
+	<create user="shimoyamada" host="W00184" date="2010-03-14T15:58:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+	<dialog left="157" top="475" right="862" bottom="1103" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="685" top="9" right="1158" bottom="407" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -334,8 +334,10 @@
 
 
 	<row id="BC_STR_01">
-		<language name="JPN" width="256">バトルたいかいに　さんか　しますか？</language>
-		<language name="JPN_KANJI" width="256">バトル大会に　参加しますか？</language>
+		<language name="JPN" width="256">ポケモン　バトルたいかい　へ
+ようこそ！</language>
+		<language name="JPN_KANJI" width="256">ポケモン　バトル大会　へ
+ようこそ！</language>
 	</row>
 
 	<row id="BC_STR_02">
@@ -402,13 +404,13 @@
 	</row>
 
 	<row id="BC_STR_03">
-		<language name="JPN" width="256">Ｗｉ－Ｆｉバトル大会は
+		<language name="JPN" width="256">Ｗｉ－Ｆｉ大会は
 ＧＰＦの　ホームページで[BE:00:ページ切り替え（行送り）]
 登録することで　参加できます[BE:01:ページ切り替え（クリア）]
 大会のルールや　開催期間は
 大好きクラブホームページで[BE:00:ページ切り替え（行送り）]
 確認してください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉバトル大会は
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ大会は
 ＧＰＦの　ホームページで[BE:00:ページ切り替え（行送り）]
 登録することで　参加できます[BE:01:ページ切り替え（クリア）]
 大会のルールや　開催期間は
@@ -417,9 +419,9 @@
 	</row>
 
 	<row id="BC_STR_04">
-		<language name="JPN" width="256">Ｗｉ－Ｆｉバトルたいかいに
+		<language name="JPN" width="256">Ｗｉ－Ｆｉたいかいに
 さんか　しますか？</language>
-		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉバトル大会に
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ大会に
 参加しますか？</language>
 	</row>
 

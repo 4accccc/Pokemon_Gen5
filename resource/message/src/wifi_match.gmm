@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-02-25T22:05:44"/>
+	<create user="shimoyamada" host="W00184" date="2010-03-14T18:08:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1197" top="585" right="1902" bottom="1213" maximized="no" rayout="Vertical2">
+	<dialog left="175" top="562" right="876" bottom="1188" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="551" top="136" right="1024" bottom="534" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<tag-palette left="551" top="136" right="1024" bottom="534" visible="no"/>
+		<band id="0" index="0" style="0000" width="526"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="693"/>
+		<band id="3" index="3" style="0000" width="693"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -461,8 +461,10 @@
 	</row>
 
 	<row id="WIFIMATCH_TEXT_000">
-		<language name="JPN" width="256">データを　しゅとく　しています</language>
-		<language name="JPN_KANJI" width="256">データを　取得しています</language>
+		<language name="JPN" width="256">データを　うけとっています……
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">データを　受け取っています……
+しばらく　おまちください</language>
 	</row>
 
 	<row id="WIFIMATCH_TEXT_001">
@@ -496,9 +498,9 @@
 
 	<row id="WIFIMATCH_TEXT_006">
 		<language name="JPN" width="256">ランダムマッチを
-やめますか？</language>
+おわりに　しますか？</language>
 		<language name="JPN_KANJI" width="256">ランダムマッチを
-やめますか？</language>
+おわりに　しますか？</language>
 	</row>
 
 	<row id="WIFIMATCH_TEXT_007">
@@ -540,8 +542,10 @@
 	</row>
 
 	<row id="WIFIMATCH_TEXT_013">
-		<language name="JPN" width="256">データを　そうしん　しています</language>
-		<language name="JPN_KANJI" width="256">データを　送信しています</language>
+		<language name="JPN" width="256">データを　おくっています……
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">データを　送っています……
+しばらく　おまちください</language>
 	</row>
 
 	<row id="WIFIMATCH_TEXT_015">
@@ -550,8 +554,10 @@
 	</row>
 
 	<row id="WIFIMATCH_TEXT_016">
-		<language name="JPN" width="256">ランダムマッチを　やめますか？</language>
-		<language name="JPN_KANJI" width="256">ランダムマッチを　やめますか？</language>
+		<language name="JPN" width="256">ランダムマッチを
+おわりに　しますか？</language>
+		<language name="JPN_KANJI" width="256">ランダムマッチを
+おわりに　しますか？</language>
 	</row>
 
 	<row id="WIFIMATCH_TEXT_017">
@@ -576,9 +582,9 @@
 
 	<row id="WIFIMATCH_WIFI_STR_01">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">Ｗｉ－Ｆｉバトル　たいかいに
+		<language name="JPN" width="256">ポケモンバトル　Ｗｉ－Ｆｉたいかいに
 さんか　しますか？</language>
-		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉバトル大会に
+		<language name="JPN_KANJI" width="256">ポケモンバトル　Ｗｉ－Ｆｉ大会に
 参加しますか？</language>
 	</row>
 
@@ -602,14 +608,14 @@
 
 	<row id="WIFIMATCH_WIFI_STR_02">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">Ｗｉ－Ｆｉバトルたいかいは
+		<language name="JPN" width="256">ポケモンバトル　Ｗｉ－Ｆｉたいかいは
 ＧＰＦの　ホームページで[BE:00:ページ切り替え（行送り）]
 とうろく　すると　さんか　できます[BE:01:ページ切り替え（クリア）]
 たいかいの　ルールや
 かいさい　きかんは[BE:00:ページ切り替え（行送り）]
 ＧＰＦ　ホームページで[BE:00:ページ切り替え（行送り）]
 かくにん　してください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉバトル大会は
+		<language name="JPN_KANJI" width="256">ポケモンバトル　Ｗｉ－Ｆｉ大会は
 ＧＰＦの　ホームページで[BE:00:ページ切り替え（行送り）]
 登録　すると　参加できます[BE:01:ページ切り替え（クリア）]
 大会の　ルールや　開催期間は
@@ -640,9 +646,9 @@
 	<row id="WIFIMATCH_WIFI_STR_04">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">たいかい　データを
-さがしています</language>
+さがしています……</language>
 		<language name="JPN_KANJI" width="256">大会　データを
-探しています</language>
+探しています……</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_05">
@@ -820,9 +826,9 @@
 	<row id="WIFIMATCH_WIFI_STR_20">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">たいかいへの
-とうろくが　かんりょうしました！</language>
+とうろくが　かんりょうしました！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">大会への
-登録が　完了しました！</language>
+登録が　完了しました！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_21">
@@ -841,9 +847,9 @@
 
 	<row id="WIFIMATCH_WIFI_STR_22">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">Ｗｉ－Ｆｉバトル　たいかい！
+		<language name="JPN" width="256">ポケモンバトル　Ｗｉ－Ｆｉたいかい！
 なにを　しますか？</language>
-		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉバトル　大会！
+		<language name="JPN_KANJI" width="256">ポケモンバトル　Ｗｉ－Ｆｉ大会！
 なにを　しますか？</language>
 	</row>
 
@@ -867,9 +873,9 @@
 
 	<row id="WIFIMATCH_WIFI_STR_23">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">たいかいを　しゅうりょうします
+		<language name="JPN" width="256">きょうの　たいせんを　おわりにします
 よろしいですか？</language>
-		<language name="JPN_KANJI" width="256">大会を　終了します
+		<language name="JPN_KANJI" width="256">今日の　対戦を　終わりにします
 よろしいですか？</language>
 	</row>
 
@@ -969,9 +975,9 @@
 
 	<row id="WIFIMATCH_WIFI_STR_35">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">データを　じゅしんしています
+		<language name="JPN" width="256">データを　うけとっています
 でんげんを　きらないで　ください</language>
-		<language name="JPN_KANJI" width="256">データを　受信しています
+		<language name="JPN_KANJI" width="256">データを　受け取っています
 電源を　切らないでください</language>
 	</row>
 
@@ -1099,8 +1105,10 @@
 
 	<row id="WIFIMATCH_ERR_00">
 		<comment>ポケモンが不正</comment>
-		<language name="JPN" width="256">さんか　できませんでした</language>
-		<language name="JPN_KANJI" width="256">参加できませんでした</language>
+		<language name="JPN" width="256">ふせいな　ポケモンが　いるため
+さんか　できませんでした</language>
+		<language name="JPN_KANJI" width="256">不正な　ポケモンが　いるため
+参加できませんでした</language>
 	</row>
 
 	<flowchart-group-list>
