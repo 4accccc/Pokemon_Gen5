@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T13:04:02"/>
+	<create user="matsumiya" host="W00224" date="2010-03-14T14:05:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03p14_girl4_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03p14_girl4_01">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
@@ -304,6 +304,30 @@
 運命の　相手に　出会うんだって！▼
 結婚した　おねえちゃんが
 そういってたから　信じてるの！</language>
+	</row>
+
+	<row id="msg_c03p14_dancer3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・wk_scene_c03centerが0の場合
+　ダンサーイベント開始前</comment>
+		<attribute name="キャラ指定">DANCER</attribute>
+		<language name="JPN" width="256">ダンスの　レッスンするために
+ヒウンシティに　きたんだよー！</language>
+		<language name="JPN_KANJI" width="256">ダンスの　レッスンするために
+ヒウンシティに　きたんだよー！</language>
+	</row>
+
+	<row id="msg_c03p14_dancer3_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・wk_scene_c03centerが1の場合
+　会話後・中央広場の方へ消える</comment>
+		<attribute name="キャラ指定">DANCER</attribute>
+		<language name="JPN" width="256">なんか　よう？▼
+おー！　ダンスチーム！！
+オレに　しょうかい　してよ！</language>
+		<language name="JPN_KANJI" width="256">なんか　よう？▼
+おー！　ダンスチーム！！
+オレに　しょうかい　してよ！</language>
 	</row>
 
 	<flowchart-group-list>
