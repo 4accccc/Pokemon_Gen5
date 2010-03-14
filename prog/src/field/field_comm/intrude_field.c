@@ -36,6 +36,7 @@
 #include "fieldmap/map_matrix.naix"  //MATRIX_ID
 
 #include "intrude_minimono.h"   //DEBUG_INTRUDE_Pokemon_Add
+#include "field/event_intrude.h"
 
 
 //==============================================================================
@@ -63,6 +64,28 @@ typedef struct{
   u8 padding[2];
 }DEBUG_SIOEND_CHILD;
 
+///NGメッセージイベント用ワーク
+typedef struct{
+  FIELDMAP_WORK *fieldWork;
+  MMDL *player_mmdl;
+  GFL_MSGDATA *msgData;
+  FLDMSGWIN *msgWin;
+  u16 dir;
+}EVENT_PALACE_NGWIN;
+
+///バリアーイベント用ワーク
+typedef struct{
+  FIELDMAP_WORK *fieldWork;
+  MMDL *player_mmdl;
+  GFL_MSGDATA *msgData;
+  FLDMSGWIN *msgWin;
+  WORDSET *wordset;
+  u16 dir;
+  u8 no_change;
+  u8 padding;
+  INTRUDE_EVENT_DISGUISE_WORK ev_diswork;
+}EVENT_PALACE_BARRIER;
+
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -74,6 +97,10 @@ static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * f
 static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*work);
 static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, GAME_COMM_SYS_PTR game_comm, FIELD_PLAYER *pcActor);
 static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm);
+static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir );
+static GMEVENT_RESULT _EventPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk );
+static GMEVENT * EVENT_PalaceBarrierMove( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir );
+static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *wk );
 
 
 
@@ -220,36 +247,49 @@ BOOL IntrudeField_CheckTalkedTo(INTRUDE_COMM_SYS_PTR intcomm, u32 *hit_netid)
 //  橋の特定位置まで来て、誰とも通信していないなら注意メッセージを出して自機を戻す
 //
 //==============================================================================
-typedef struct{
-  FIELDMAP_WORK *fieldWork;
-  MMDL *player_mmdl;
-  GFL_MSGDATA *msgData;
-  FLDMSGWIN *msgWin;
-  BOOL left_right;
-}DEBUG_PALACE_NGWIN;
-
-static GMEVENT_RESULT DebugPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk );
-
-static GMEVENT * EVENT_DebugPalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, BOOL left_right )
+//--------------------------------------------------------------
+/**
+ * 橋の特定位置まで来て、誰とも通信していないなら注意メッセージを出して自機を戻す
+ *
+ * @param   gsys		
+ * @param   fieldWork		
+ * @param   fld_player		
+ * @param   dir		
+ *
+ * @retval  GMEVENT *		
+ */
+//--------------------------------------------------------------
+static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir )
 {
-  DEBUG_PALACE_NGWIN *ngwin;
+  EVENT_PALACE_NGWIN *ngwin;
   GMEVENT * event;
   
-  event = GMEVENT_Create(gsys, NULL, DebugPalaceNGWinEvent, sizeof(DEBUG_PALACE_NGWIN));
+  event = GMEVENT_Create(gsys, NULL, _EventPalaceNGWinEvent, sizeof(EVENT_PALACE_NGWIN));
   
   ngwin = GMEVENT_GetEventWork(event);
-  GFL_STD_MemClear( ngwin, sizeof(DEBUG_PALACE_NGWIN) );
+  GFL_STD_MemClear( ngwin, sizeof(EVENT_PALACE_NGWIN) );
   
   ngwin->fieldWork = fieldWork;
   ngwin->player_mmdl = FIELD_PLAYER_GetMMdl(fld_player);
-  ngwin->left_right = left_right;
+  ngwin->dir = dir;
   
   return event;
 }
 
-static GMEVENT_RESULT DebugPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk )
+//--------------------------------------------------------------
+/**
+ * 橋の特定位置まで来て、誰とも通信していないなら注意メッセージを出して自機を戻す
+ *
+ * @param   event		
+ * @param   seq		
+ * @param   wk		
+ *
+ * @retval  GMEVENT_RESULT		
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT _EventPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk )
 {
-  DEBUG_PALACE_NGWIN *ngwin = wk;
+  EVENT_PALACE_NGWIN *ngwin = wk;
   
   switch(*seq){
   case 0:
@@ -257,8 +297,7 @@ static GMEVENT_RESULT DebugPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk 
       FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(ngwin->fieldWork);
       ngwin->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
       ngwin->msgWin = FLDMSGWIN_AddTalkWin( msgBG, ngwin->msgData );
-      FLDMSGWIN_Print( ngwin->msgWin, 0, 0, msg_invasion_test09_00 );
-      GXS_SetMasterBrightness(-16);
+      FLDMSGWIN_Print( ngwin->msgWin, 0, 0, plc_connect_06 );
       (*seq)++;
     }
     break;
@@ -278,12 +317,11 @@ static GMEVENT_RESULT DebugPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk 
   case 3:
     FLDMSGWIN_Delete( ngwin->msgWin );
     GFL_MSG_Delete( ngwin->msgData );
-    GXS_SetMasterBrightness(0);
     (*seq)++;
     break;
   case 4:
     if(MMDL_CheckPossibleAcmd(ngwin->player_mmdl) == TRUE){
-      u16 code = (ngwin->left_right == 0) ? AC_WALK_R_16F : AC_WALK_L_16F;
+      u16 code = (ngwin->dir == DIR_RIGHT) ? AC_WALK_L_16F : AC_WALK_R_16F;
       MMDL_SetAcmd(ngwin->player_mmdl, code);
       (*seq)++;
     }
@@ -299,10 +337,184 @@ static GMEVENT_RESULT DebugPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk 
   return( GMEVENT_RES_CONTINUE );
 }
 
+//==============================================================================
+//
+//  
+//
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * イベント：バリアー移動
+ *
+ * @param   gsys		
+ * @param   fieldWork		
+ * @param   fld_player		
+ * @param   dir		
+ *
+ * @retval  GMEVENT *		
+ */
+//--------------------------------------------------------------
+static GMEVENT * EVENT_PalaceBarrierMove( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir )
+{
+  EVENT_PALACE_BARRIER *barrier;
+  GMEVENT * event;
+  
+  event = GMEVENT_Create(gsys, NULL, _EventPalaceBarrierMove, sizeof(EVENT_PALACE_BARRIER));
+  
+  barrier = GMEVENT_GetEventWork(event);
+  GFL_STD_MemClear( barrier, sizeof(EVENT_PALACE_BARRIER) );
+  
+  barrier->fieldWork = fieldWork;
+  barrier->player_mmdl = FIELD_PLAYER_GetMMdl(fld_player);
+  barrier->dir = dir;
+  
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：バリアー移動
+ *
+ * @param   event		
+ * @param   seq		
+ * @param   wk		
+ *
+ * @retval  GMEVENT_RESULT		
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *wk )
+{
+  EVENT_PALACE_BARRIER *barrier = wk;
+  GAMESYS_WORK * gsys = GMEVENT_GetGameSysWork(event);
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  enum{
+    _SEQ_INIT,
+    _SEQ_INIT_WAIT,
+    _SEQ_DISGUISE_INIT,
+    _SEQ_DISGUISE_WAIT,
+    _SEQ_MSG_INIT,
+    _SEQ_MSG_WAIT,
+    _SEQ_MSG_LASTKEY_WAIT,
+    _SEQ_FINISH,
+  };
+  
+  switch(*seq){
+  case _SEQ_INIT:
+    if(MMDL_CheckPossibleAcmd(barrier->player_mmdl) == TRUE){
+      u16 code = (barrier->dir == DIR_RIGHT) ? AC_WALK_R_32F : AC_WALK_L_32F;
+      MMDL_SetAcmd(barrier->player_mmdl, code);
+      (*seq)++;
+    }
+    break;
+  case _SEQ_INIT_WAIT:
+    if(MMDL_CheckEndAcmd(barrier->player_mmdl) == TRUE){
+      MMDL_EndAcmd(barrier->player_mmdl);
+      (*seq)++;
+    }
+    break;
+  case _SEQ_DISGUISE_INIT:
+    if(intcomm == NULL){  //変身前にエラーチェック：通信切断状態ならばここで終了
+      *seq = _SEQ_FINISH;
+      break;
+    }
+    
+    if(MISSION_GetMissionPlay(&intcomm->mission) == TRUE){
+      barrier->no_change = TRUE;
+      (*seq) = _SEQ_MSG_INIT;
+      break;
+    }
+
+    if(intcomm->intrude_status_mine.palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
+      IntrudeEvent_Sub_DisguiseEffectSetup(
+        &barrier->ev_diswork, gsys, barrier->fieldWork, DISGUISE_NO_NULL, 0, 0);
+    }
+    else{
+      u16 disguise_code;
+      u8 disguise_type, disguise_sex;
+      Intrude_GetNormalDisguiseObjCode(
+        GAMEDATA_GetMyStatus(gamedata), &disguise_code, &disguise_type, &disguise_sex);
+      IntrudeEvent_Sub_DisguiseEffectSetup(&barrier->ev_diswork, gsys, barrier->fieldWork, 
+        disguise_code, disguise_type, disguise_sex);
+    }
+    (*seq)++;
+    break;
+  case _SEQ_DISGUISE_WAIT:
+    if(IntrudeEvent_Sub_DisguiseEffectMain(&barrier->ev_diswork, intcomm) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case _SEQ_MSG_INIT:
+    if(intcomm == NULL){  //メッセージ前にエラーチェック：通信切断状態ならばここで終了
+      *seq = _SEQ_FINISH;
+      break;
+    }
+    
+    {
+      FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(barrier->fieldWork);
+      barrier->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
+      barrier->msgWin = FLDMSGWIN_AddTalkWin( msgBG, barrier->msgData );
+      barrier->wordset = WORDSET_Create(HEAPID_PROC);
+      
+      if(intcomm->intrude_status_mine.palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
+        if(barrier->no_change == TRUE){
+          FLDMSGWIN_Print( barrier->msgWin, 0, 0, plc_connect_03 );
+        }
+        else{
+          FLDMSGWIN_Print( barrier->msgWin, 0, 0, plc_connect_02 );
+        }
+      }
+      else{
+        STRBUF *expand_buf = GFL_STR_CreateBuffer(256, HEAPID_FIELDMAP);
+        STRBUF *src_buf;
+        
+        WORDSET_RegisterPlayerName( barrier->wordset, 0, 
+          GAMEDATA_GetMyStatusPlayer(gamedata, intcomm->intrude_status_mine.palace_area) );
+        
+        if(barrier->no_change == TRUE){
+          src_buf = GFL_MSG_CreateString( barrier->msgData, plc_connect_04 );
+        }
+        else{
+          src_buf = GFL_MSG_CreateString( barrier->msgData, plc_connect_05 );
+        }
+        WORDSET_ExpandStr(barrier->wordset, expand_buf, src_buf);
+        FLDMSGWIN_PrintStrBuf( barrier->msgWin, 0, 0, expand_buf );
+        GFL_STR_DeleteBuffer(src_buf);
+        GFL_STR_DeleteBuffer(expand_buf);
+      }
+      (*seq)++;
+    }
+    break;
+  case _SEQ_MSG_WAIT:
+    if( FLDMSGWIN_CheckPrintTrans(barrier->msgWin) == TRUE ){
+      (*seq)++;
+    } 
+    break;
+  case _SEQ_MSG_LASTKEY_WAIT:
+    {
+      int trg = GFL_UI_KEY_GetTrg();
+      if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+        (*seq)++;
+      }
+    }
+    break;
+  case _SEQ_FINISH:
+    if(barrier->msgWin != NULL){
+      FLDMSGWIN_Delete( barrier->msgWin );
+      GFL_MSG_Delete( barrier->msgData );
+      WORDSET_Delete(barrier->wordset);
+    }
+    return( GMEVENT_RES_FINISH );
+  }
+
+  return( GMEVENT_RES_CONTINUE );
+}
+
 
 //==================================================================
 /**
- *   木に重なったらT1へワープ
+ * パレス：座標イベント
  *
  * @param   fieldWork		
  * @param   gameSys		
@@ -311,26 +523,26 @@ static GMEVENT_RESULT DebugPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk 
  * @retval  GMEVENT *		
  */
 //==================================================================
-GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm)
+GMEVENT * Intrude_CheckPosEvent(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor)
 {
   PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
   ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
   VecFx32 pos;
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSys);
+  INTRUDE_COMM_SYS_PTR intcomm;
   int i;
   
-  if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION || intcomm == NULL){
-//    return NULL;
-  }
+  intcomm = Intrude_Check_CommConnect(game_comm);
 
   if(intcomm != NULL && intcomm->comm_status == INTRUDE_COMM_STATUS_UPDATE){
     if(intcomm->exit_recv == TRUE){
       return DEBUG_EVENT_ChildCommEnd(gameSys, fieldWork, intcomm);
     }
   }
+
+  FIELD_PLAYER_GetPos( pcActor, &pos );
   
   if(ZONEDATA_IsBingo(zone_id) == TRUE){  //ビンゴマップから脱出監視
-    FIELD_PLAYER_GetPos( pcActor, &pos );
     if(pos.z >= FX32_CONST(680)){
     	pos.x = PALACE_MAP_LEN/2;
     	pos.y = 0;
@@ -340,11 +552,14 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     return NULL;
   }
   
+  
+  
+  //------------- ここから下はパレス時のみの処理 -----------------
+  
   if(ZONEDATA_IsPalace(zone_id) == FALSE){
     return NULL;
   }
   
-  FIELD_PLAYER_GetPos( pcActor, &pos );
   //T01へワープ
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
     if(pos.x >= FX32_CONST(504) + PALACE_MAP_LEN*i && pos.x <= FX32_CONST(504) + PALACE_MAP_LEN*i
@@ -377,20 +592,63 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     }
   }
   
+#if 0
   {//自機の座標を監視し、誰とも通信していないのにパレスの橋の一定位置まで来たら
    //注意メッセージを出して引き返させる
-    VecFx32 pos;
     BOOL left_right;
     
-    FIELD_PLAYER_GetPos( pcActor, &pos );
-    pos.x >>= FX32_SHIFT;
-    pos.z >>= FX32_SHIFT;
     if(GFL_NET_GetConnectNum() <= 1 && ((pos.x <= 136 && pos.x >= 136-16) || (pos.x >= 872 && pos.x <= 872+16)) && (pos.z >= 472 && pos.z <= 536)){
       left_right = pos.x <= (PALACE_MAP_LEN/2 >> FX32_SHIFT) ? 0 : 1;
-      return EVENT_DebugPalaceNGWin( gameSys, fieldWork, pcActor, left_right );
+      return EVENT_PalaceNGWin( gameSys, fieldWork, pcActor, left_right );
+    }
+  }
+#endif
+  return NULL;
+}
+
+//==================================================================
+/**
+ * 侵入：キー入力起動イベント
+ *
+ * @param   gsys		
+ * @param   fieldWork		
+ * @param   pcActor		
+ * @param   now_pos		    現在の座標
+ * @param   front_pos		  進行方向の座標
+ * @param   player_dir		自機の移動方向
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *pcActor, const VecFx32 *now_pos, const VecFx32 *front_pos, u16 player_dir)
+{
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  s32 now_gx;
+  u16 event_dir = DIR_NOT;
+  
+  now_gx = FX32_TO_GRID(now_pos->x) % PALACE_MAP_LEN_GRID;
+  
+  //パレスマップの橋で左側へ行こうとしている
+  if(player_dir == DIR_LEFT){
+    if(now_gx == 0){
+      event_dir = DIR_LEFT;
+    }
+  }
+  else if(player_dir == DIR_RIGHT){
+    if(now_gx == PALACE_MAP_LEN_GRID - 1){
+      event_dir = DIR_RIGHT;
     }
   }
   
+  if(event_dir != DIR_NOT){
+    if(intcomm == NULL || GFL_NET_GetConnectNum() <= 1 || intcomm->member_num < 2){
+      return EVENT_PalaceNGWin(gsys, fieldWork, pcActor, event_dir);
+    }
+    else{
+      return EVENT_PalaceBarrierMove(gsys, fieldWork, pcActor, event_dir);
+    }
+  }
   return NULL;
 }
 
@@ -837,7 +1095,7 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
 /**
  * 自機を変装させる(OBJコードの変更)
  *
- * @param   intcomm		
+ * @param   intcomm		         NULLを渡した場合は通常の姿に戻します
  * @param   gsys		
  * @param   disguise_code      変装後のOBJCODE 
  *                  (DISGUISE_NO_NULLの場合は通常の姿、DISGUISE_NO_NORMALの場合はパレス時の標準姿)
@@ -849,22 +1107,44 @@ void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsy
 {
   FIELDMAP_WORK *fieldWork;
   FIELD_PLAYER *fld_player;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   int obj_code;
+  int sex;
+  MYSTATUS *myst;
   
   if(GAMESYSTEM_CheckFieldMapWork( gsys ) == FALSE){
     return;
   }
   
+  myst = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
+  sex = MyStatus_GetMySex(myst);
+  
+  if(intcomm != NULL){
+    if(disguise_code == DISGUISE_NO_NORMAL 
+        && GAMEDATA_GetIntrudeMyID(gamedata) == intcomm->intrude_status_mine.palace_area){
+      disguise_code = DISGUISE_NO_NULL; //自分のパレスにいる場合はNORMALはNULLにする
+    }
+    
+    if(disguise_code == DISGUISE_NO_NULL){
+      disguise_type = sex == PM_MALE ? TALK_TYPE_MAN : TALK_TYPE_WOMAN;
+      disguise_sex = sex;
+    }
+
+    intcomm->intrude_status_mine.disguise_no = disguise_code;
+    intcomm->intrude_status_mine.disguise_type = disguise_type;
+    intcomm->intrude_status_mine.disguise_sex = disguise_sex;
+    intcomm->send_status = TRUE;
+
+    obj_code = Intrude_GetObjCode(&intcomm->intrude_status_mine, myst);
+  }
+  else{
+    disguise_code = DISGUISE_NO_NULL;
+    obj_code = sex == PM_MALE ? HERO : HEROINE;
+  }
+
   fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 
-  intcomm->intrude_status_mine.disguise_no = disguise_code;
-  intcomm->intrude_status_mine.disguise_type = disguise_type;
-  intcomm->intrude_status_mine.disguise_sex = disguise_sex;
-  intcomm->send_status = TRUE;
-
-  obj_code = Intrude_GetObjCode(&intcomm->intrude_status_mine, 
-    GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys)));
   FIELD_PLAYER_ChangeOBJCode( fld_player, obj_code );
   if(disguise_code == DISGUISE_NO_NULL){
     FIELD_PLAYER_ClearOBJCodeFix( fld_player );

@@ -554,6 +554,25 @@ MISSION_RESULT * MISSION_GetResultData(MISSION_SYSTEM *mission)
   return &mission->result;
 }
 
+//==================================================================
+/**
+ * ミッションを遊んでいる状態か調べる
+ *
+ * @param   mission		
+ *
+ * @retval  BOOL		TRUE:ミッションで遊んでいる　FALSE:ミッションで遊んでいない
+ */
+//==================================================================
+BOOL MISSION_GetMissionPlay(MISSION_SYSTEM *mission)
+{
+  //エントリーして実際にミッションをやっているか、
+  //結果を受け取ってまだ表示していない状態(参加者でなければ結果は受け取らない)
+  if(MISSION_GetMissionEntry(mission) == TRUE || MISSION_GetResultData(mission) != NULL){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //--------------------------------------------------------------
 /**
  * ミッション達成者として登録する

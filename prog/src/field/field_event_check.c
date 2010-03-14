@@ -198,6 +198,8 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
+static GMEVENT * checkPushIntrude(const EV_REQUEST * req,
+		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT * checkIntrudeSubScreenEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
 static GMEVENT * checkSubScreenEvent(
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
@@ -560,6 +562,10 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     if( event != NULL ){
       return event;
     }
+    event = checkPushIntrude(&req, gsys, fieldWork);
+    if( event != NULL ){
+      return event;
+    }
   }
   
 //☆☆☆自機位置に関係ないキー入力イベントチェック
@@ -637,15 +643,12 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   }
   
 	
-	//デバッグ：パレスで木に触れたらワープ
-  {
-    GMEVENT *ev;
-    INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(GAMESYSTEM_GetGameCommSysPtr(gsys));
-    ev =  DEBUG_IntrudeTreeMapWarp(fieldWork, gsys, req.field_player, intcomm);
-    if(ev != NULL){
-      return ev;
-    }
-	}
+	//パレス座標イベント
+  event =  Intrude_CheckPosEvent(fieldWork, gsys, req.field_player);
+  if(event != NULL){
+    return event;
+  }
+
 	return NULL;
 }
 
@@ -1149,15 +1152,11 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
 	}
   
   /*	
-	//デバッグ：パレスで木に触れたらワープ
-  {
-    GMEVENT *ev;
-    INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(GAMESYSTEM_GetGameCommSysPtr(gsys));
-    ev =  DEBUG_IntrudeTreeMapWarp(fieldWork, gsys, req.field_player, intcomm);
-    if(ev != NULL){
-      return ev;
-    }
-	}
+	//パレス座標イベント
+  event =  Intrude_CheckPosEvent(fieldWork, gsys, req.field_player);
+  if(event != NULL){
+    return event;
+  }
   //*/
 	return NULL;
 }
@@ -2259,6 +2258,30 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
   }
 
   return NULL;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント キー入力：侵入ギミック起動チェック
+ *
+ * @param req   イベントチェック用ワーク
+ * @param gsys GAMESYS_WORK
+ * @param	fieldWork FIELDMAP_WORK
+ * @retval GMEVENT NULL イベント無し
+ */
+//--------------------------------------------------------------
+static GMEVENT * checkPushIntrude(const EV_REQUEST * req,
+		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
+{
+	VecFx32 front_pos;
+  int idx;
+
+  if(ZONEDATA_IsPalace(req->map_id) == FALSE){
+    return NULL;
+  }
+  
+  setFrontPos(req, &front_pos);
+  return Intrude_CheckPushEvent(gsys, fieldWork, req->field_player, req->now_pos, &front_pos, req->player_dir);
 }
 
 

@@ -286,10 +286,8 @@ BOOL IntrudeEvent_Sub_DisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *iedw, INTR
           iedw->wait_max--;
           if(iedw->wait_max <= DISGUISE_ANM_WAIT_MIN){
             GAMEDATA *gamedata = GAMESYSTEM_GetGameData(iedw->gsys);
-            if(intcomm != NULL){
-              IntrudeField_PlayerDisguise(intcomm, iedw->gsys, 
-                iedw->disguise_code, iedw->disguise_type, iedw->disguise_sex);
-            }
+            IntrudeField_PlayerDisguise(intcomm, iedw->gsys, 
+              iedw->disguise_code, iedw->disguise_type, iedw->disguise_sex);
             iedw->loop++;
           }
         }
