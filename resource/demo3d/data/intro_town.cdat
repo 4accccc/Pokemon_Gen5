@@ -22,7 +22,7 @@ static const DEMO3D_SCENE_DATA data_intro_town_scene = {
 	GX_SORTMODE_AUTO,GX_BUFFERMODE_Z,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
 	FX32_CONST(40.0),FX32_CONST(40.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
-	FX32_CONST(0.100 ),FX32_CONST(2048.000 ),	///<near,far
+	FX32_CONST(1.000 ),FX32_CONST(900.000 ),	///<near,far
 	FX32_CONST(1.0 ),	///<ScaleW
 	0,0,	///<2画面main_ofs,2画面sub_ofs
 	FX32_CONST(0),	///<1dotポリゴン表示境界デプス
