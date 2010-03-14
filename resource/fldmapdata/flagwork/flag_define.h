@@ -183,7 +183,7 @@
 #define FE_LEGEND2_GET                     167 /* 0x00a7 伝説ポケモン：ポルトスを捕まえた */
 #define FE_LEGEND3_GET                     168 /* 0x00a8 伝説ポケモン：アラミスを捕まえた */
 #define FE_D06R0201_GOLDGET                169 /* 0x00a9 電気洞窟内：きんのたま入手フラグ */
-#define FE_PALACE01_OLDMANTALK             170 /* 0x00aa パレスじじい初回会話フラグ */
+		/* not used   170(0x00aa) */
 #define FE_C09R0501_CHAMPION               171 /* 0x00ab チャンピオンリーグ：アデク初回会話フラグ */
 #define FE_MEZAPA_FIRSTTALK                172 /* 0x00ac めざめるパワーのタイプチェックする人の初回会話フラグ */
 #define FE_T01R0102_SUPPORTBTL             173 /* 0x00ad 自宅２Ｆサポートとの戦闘終了フラグ */
@@ -720,7 +720,7 @@
 #define FV_R08R0101_POKE11                 696 /* 0x02b8 セッカ湿原：ダルタニスイベントのダルタニス */
 #define FV_C04R0601_POS_HAKASE             697 /* 0x02b9 ライモンシティ４番道路側ゲート：博士とライバル */
 #define FV_R08R0101_OLDMAN1                698 /* 0x02ba セッカ湿原：事情通の老人 */
-		/* not used   699(0x02bb) */
+#define FV_C04P01_HAKAI                    699 /* 0x02bb ライモン遊園地：プラズマ団したっぱ２人 */
 		/* not used   700(0x02bc) */
 		/* not used   701(0x02bd) */
 		/* not used   702(0x02be) */
