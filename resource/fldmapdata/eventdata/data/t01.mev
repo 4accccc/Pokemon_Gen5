@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/09 19:56:25
+#save date:2010/03/14 14:35:54
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01.wms
 #SECTION START:OBJ_EVENT
@@ -67,11 +67,11 @@ DIR_DOWN
 #Move Limit X Number
 2
 #Move Limit Z Number
-2
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 0 88
+-152 0 40
 #event number: 2
 #type
 1
@@ -280,7 +280,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Pos Event Label
 POS_T01_STOPPER_01
@@ -297,7 +297,24 @@ EVENTDATA_POSTYPE_GRID
 #position
 40 0 184
 #size
-7 1
+6 1
+#event number: 1
+#Pos Event Label
+POS_T01_FIRSTSTEP_01
+#Pos Script Name
+SCRID_POS_T01_FIRSTSTEP_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_T01
+#Event Trigger Work Value
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 0 184
+#size
+6 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

@@ -39,7 +39,6 @@ INIT_EVENT_END
 /************************************************************/
 EVENT_START	ev_scene_t01r0201_support_01
 //初めてサポートの家に入ったとき、出発イベント
-
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
 	//カメラ操作
@@ -52,6 +51,10 @@ EVENT_START	ev_scene_t01r0201_support_01
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	_TIME_WAIT( 16 )
+
+	//ダメだダメだー！
+	_GIZAWIN_OBJMSG_POS( msg_t01r0201_middleman1_01, T01R0201_MIDDLEMAN1_01, POS_UR )
+	_MSGWIN_CLOSE()
 
 	//サポート：一歩前へ
 	_OBJ_ANIME( T01R0201_SUPPORT_01, anm_heroine_move_01 )

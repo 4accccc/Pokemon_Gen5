@@ -517,7 +517,7 @@ EVENT_END
 EVENT_START   ev_bg_t01r0401_picture_01
 	_TALK_START_SE_PLAY()
 	
-	//イベント進行で分岐【仮】専用のフラグを用意すべき
+	//イベント進行で分岐 ※専用のフラグを用意すべき
 	IF $WK_SCENE_C06 == 0 THEN
 		//C06で博士父と出会っていないなら
 		_PLAINWIN_MSG_DOWN( msg_t01r0401_photo_01 )

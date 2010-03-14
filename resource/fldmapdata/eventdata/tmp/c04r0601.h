@@ -12,6 +12,8 @@
 
 #define C04R0601_OLDMAN1_01                0
 #define C04R0601_INFORMATIONW_01           1
+#define C04R0601_HAKASE2_01                2
+#define C04R0601_RIVAL_01                  3
 
 #endif //ZONE_C04R0601_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0601.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

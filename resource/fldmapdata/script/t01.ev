@@ -30,6 +30,7 @@ _EVENT_DATA   ev_bg_t01_board_04
 _EVENT_DATA   ev_bg_t01_board_05
 _EVENT_DATA   ev_scene_t01_mama_01		//タウンマップ入手イベント
 _EVENT_DATA   ev_init_t01
+_EVENT_DATA   ev_pos_t01_firststep_01
 _EVENT_DATA_END //データ終端を指定しています。
 
 
@@ -38,10 +39,18 @@ _EVENT_DATA_END //データ終端を指定しています。
 /************************************************************/
 INIT_EVENT_START   ev_init_t01
 
-	//研究所で図鑑をもらった直後なら、ライバルとサポートの位置を変更
 	IF $WK_SCENE_T01 == 1 THEN
+		//研究所で図鑑をもらった直後なら、ライバルとサポートの位置を変更
+
 		_OBJ_POS_CHANGE( T01_RIVAL_01, 776, 0, 741, DIR_DOWN )
 		_OBJ_POS_CHANGE( T01_SUPPORT_01, 778, 0, 741, DIR_DOWN )
+
+	ELSIF $WK_SCENE_T01 == 2 THEN
+		//ママからタウンマップもらった直後なら、ライバルとサポートを１番道路手前に
+
+		_OBJ_POS_CHANGE( T01_RIVAL_01, 789, 0, 737, DIR_UP )
+		_OBJ_POS_CHANGE( T01_SUPPORT_01, 787, 0, 737, DIR_DOWN )
+
 	ENDIF
 
 INIT_EVENT_END
@@ -320,17 +329,16 @@ EVENT_START	ev_scene_t01_mama_01
 	_OBJ_ANIME( T01_SUPPORT_01, anm_scene_support_goaway_01 )
 	_OBJ_ANIME_WAIT()
 
-	//ライバル＆サポート消す
-	_OBJ_DEL( T01_RIVAL_01 )
-	_OBJ_DEL( T01_SUPPORT_01 )
+	//ライバル＆サポート：次のイベント位置へ
+	_OBJ_POS_CHANGE( T01_RIVAL_01, 789, 0, 737, DIR_UP )
+	_OBJ_POS_CHANGE( T01_SUPPORT_01, 787, 0, 737, DIR_DOWN )
 
 	//================フラグ操作==================//
-	//ライバル、サポートの非表示フラグon
-	_FLAG_SET( FV_T01_RIVAL )
-	_FLAG_SET( FV_T01_SUPPORT )
-	
 	//イベント無効
 	$WK_SCENE_T01 = 2
+	
+	//ママを非表示に
+	_FLAG_SET( FV_T01_MAMA_01 )
 	
 	//================フラグ操作==================//
 	
@@ -519,5 +527,154 @@ EVENT_END
 EVENT_START ev_bg_t01_board_05
 	_EASY_BGWIN_MSG( msg_t01_sign5_01, TYPE_POST )
 EVENT_END
+
+
+/************************************************************/
+/*					最初の一歩イベント						*/
+/************************************************************/
+EVENT_START ev_pos_t01_firststep_01
+	{
+	DEFINE_LOCAL	lwk_pos_x
+	DEFINE_LOCAL	lwk_pos_z
+
+	_PLAYER_NAME( 0 )
+	_PLAINWIN_MSG_UP( msg_t01_white_04 )
+	_MSGWIN_CLOSE()
+
+	//主人公：サポート横へ
+	_PLAYER_POS_GET( lwk_pos_x, lwk_pos_z )
+	IF $lwk_pos_x == 786 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_1ststep_player_move_01a )
+	ELSIF $lwk_pos_x == 787 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_1ststep_player_move_01b )
+	ELSIF $lwk_pos_x == 788 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_1ststep_player_move_01c )
+	ELSIF $lwk_pos_x == 789 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_1ststep_player_move_01d )
+	ELSIF $lwk_pos_x == 790 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_1ststep_player_move_01e )
+	ELSE
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_1ststep_player_move_01f )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+
+	//ライバル：主人公を見て
+	_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_06, T01_RIVAL_01, POS_UR )
+	_MSGWIN_CLOSE()
+
+	//サポート：主人公横へ
+	_OBJ_ANIME( T01_SUPPORT_01, anm_1ststep_support_move_01 )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_white_05, T01_SUPPORT_01, POS_UL )
+	_MSGWIN_CLOSE()
+
+	//ライバル：前を向いて
+	_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
+
+	//さ いこう！
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_07, T01_RIVAL_01, POS_UR )
+	_MSGWIN_CLOSE()
+
+	//主人公＆サポート：前を向いて
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_1ststep_onestep_01 )
+	_OBJ_ANIME( T01_SUPPORT_01, anm_1ststep_onestep_01 )
+	_OBJ_ANIME_WAIT()
+
+	//せーの！
+	_BALLOONWIN_OBJMSG_POS( msg_t01_white_06, T01_SUPPORT_01, POS_UL )
+	_MSGWIN_CLOSE()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_1ststep_onestep_01 )
+	_OBJ_ANIME( T01_RIVAL_01, anm_1ststep_rival_01 )
+	_OBJ_ANIME( T01_SUPPORT_01, anm_1ststep_support_01 )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_DEL( T01_RIVAL_01 )
+	_OBJ_DEL( T01_SUPPORT_01 )
+
+	//========================================//
+	//POS無効
+	$WK_SCENE_T01 = 3
+	
+	//ライバル＆サポート非表示
+	_FLAG_SET( FV_T01_RIVAL )
+	_FLAG_SET( FV_T01_SUPPORT )
+	//========================================//
+
+	}
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：サポート横へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_1ststep_player_move_01a
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_1ststep_player_move_01b
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_1ststep_player_move_01c
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_1ststep_player_move_01d
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_1ststep_player_move_01e
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_1ststep_player_move_01f
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート：主人公横へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_1ststep_support_move_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//一歩前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_1ststep_onestep_01
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//最初の一歩
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_1ststep_rival_01
+	_ANIME_DATA	AC_WALK_U_6F,11
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_1ststep_support_01
+	_ANIME_DATA	AC_WALK_U_8F,11
+	_ANIME_DATA	ACMD_END,0
 
 

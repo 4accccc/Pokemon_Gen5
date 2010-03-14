@@ -18,5 +18,6 @@
 #define SCRID_BG_T01_BOARD_05 (11)
 #define SCRID_SCENE_T01_MAMA_01 (12)
 #define SCRID_INIT_T01 (13)
+#define SCRID_POS_T01_FIRSTSTEP_01 (14)
 
 #endif //_T01_DEF_H_

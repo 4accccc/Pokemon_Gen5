@@ -23,21 +23,9 @@
 _EVENT_DATA		ev_c04r0601_oldman1_01
 _EVENT_DATA		ev_bg_c04r0601_board_01
 _EVENT_DATA		ev_c04r0601_informationw_01
+_EVENT_DATA		ev_pos_c04r0601_hakase_01
 _EVENT_DATA_END
 
-/************************************************************/
-/*							老人							*/
-/************************************************************/
-EVENT_START	ev_c04r0601_oldman1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0601_oldman_01 )
-EVENT_END
-
-/************************************************************/
-/*							受付							*/
-/************************************************************/
-EVENT_START	ev_c04r0601_informationw_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0601_infomationw_01 )
-EVENT_END
 
 /**************************************************************/
 /*  電光掲示板のイベントスクリプト*/
@@ -47,3 +35,311 @@ EVENT_START   ev_bg_c04r0601_board_01
 	_LOOK_ELBOARD( 45 )
 
 EVENT_END
+
+
+/************************************************************/
+/*							老人							*/
+/************************************************************/
+EVENT_START	ev_c04r0601_oldman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0601_oldman_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							受付							*/
+/************************************************************/
+EVENT_START	ev_c04r0601_informationw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0601_infomationw_01 )
+EVENT_END
+
+
+/************************************************************/
+/*						POSイベント 博士					*/
+/************************************************************/
+EVENT_START	ev_pos_c04r0601_hakase_01
+	
+	//博士：！マーク
+	_OBJ_ANIME( C04R0601_HAKASE2_01, anm_mark_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_START()		//カメラ操作開始------------------------------
+	_CAMERA_PURGE()		//カメラパージ
+	_CAMERA_MOVE(9688,0,970752,360448,0,491520, 30)
+	
+	//ライバル：下を向いて
+	_OBJ_ANIME( C04R0601_RIVAL_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//ハ～イ！
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_c04r0601_hakase2_01, C04R0601_HAKASE2_01, POS_UL )
+	_MSGWIN_CLOSE()
+	
+	//こっちだよ
+	_BALLOONWIN_OBJMSG_POS( msg_c04r0601_black_01, C04R0601_RIVAL_01, POS_UR )
+	_MSGWIN_CLOSE()
+	
+	{
+	DEFINE_LOCAL	lwk_pos_x
+	DEFINE_LOCAL	lwk_pos_z
+	
+	_PLAYER_POS_GET( lwk_pos_x, lwk_pos_z )
+	//主人公：博士前へ
+	IF $lwk_pos_x == 2 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01a )
+	ELSIF $lwk_pos_x == 3 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01b )
+	ELSIF $lwk_pos_x == 4 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01c )
+	ELSIF $lwk_pos_x == 5 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01d )
+	ELSIF $lwk_pos_x == 6 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01e )
+	ELSE
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01f )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：博士を見る
+	_OBJ_ANIME( C04R0601_RIVAL_01, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
+	
+	//カミツレに呼ばれて
+	_BALLOONWIN_OBJMSG_POS( msg_c04r0601_hakase2_02, C04R0601_HAKASE2_01, POS_UL )
+	_MSGWIN_CLOSE()
+	
+	//博士：ライバル前へ
+	_OBJ_ANIME( C04R0601_HAKASE2_01, anm_hakase2_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//はいチェレン
+	_BALLOONWIN_OBJMSG_POS( msg_c04r0601_hakase2_03, C04R0601_HAKASE2_01, POS_UL )
+	_MSGWIN_CLOSE()
+	
+	//博士：主人公前へ
+	IF $lwk_pos_x <= 5 THEN
+		_OBJ_ANIME( C04R0601_HAKASE2_01, anm_hakase2_move_02a )
+	ELSE
+		_OBJ_ANIME( C04R0601_HAKASE2_01, anm_hakase2_move_02b )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	//～～も
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_c04r0601_hakase2_04, C04R0601_HAKASE2_01, POS_UL )
+	_MSGWIN_CLOSE()
+	
+	//ハイパーボール＊10入手
+	_ITEM_EVENT_KEYWAIT( ITEM_HAIPAABOORU, 10 )
+	
+	//博士：一歩さがる
+	_OBJ_ANIME( C04R0601_HAKASE2_01, anm_hakase2_move_03 )
+	_OBJ_ANIME_WAIT()
+	
+	//いいボールを使いなさい！
+	_BALLOONWIN_OBJMSG_POS( msg_c04r0601_hakase2_05, C04R0601_HAKASE2_01, POS_UL )
+	_MSGWIN_CLOSE()
+	
+	//博士：横を向いて
+	_OBJ_ANIME( C04R0601_HAKASE2_01, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//……それと
+	_BALLOONWIN_OBJMSG_POS( msg_c04r0601_hakase2_06, C04R0601_HAKASE2_01, POS_UL )
+	_MSGWIN_CLOSE()
+	
+	//博士：主人公を見て
+	_OBJ_ANIME( C04R0601_HAKASE2_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	//…あっ！
+	_BALLOONWIN_OBJMSG_POS( msg_c04r0601_hakase2_07, C04R0601_HAKASE2_01, POS_UL )
+	_MSGWIN_CLOSE()
+	
+	//博士：去る（R04側）
+	IF $lwk_pos_x <= 5 THEN
+		_OBJ_ANIME( C04R0601_HAKASE2_01, anm_hakase2_move_04a )
+	ELSE
+		_OBJ_ANIME( C04R0601_HAKASE2_01, anm_hakase2_move_04b )
+	ENDIF
+	
+	//主人公＆ライバル：見送る
+	_TIME_WAIT( 24 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
+	_TIME_WAIT( 8 )
+	_OBJ_ANIME( C04R0601_RIVAL_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+	
+	//博士消す
+	_OBJ_DEL( C04R0601_HAKASE2_01 )
+	
+	//…博士ったら
+	_BALLOONWIN_OBJMSG_POS( msg_c04r0601_black_02, C04R0601_RIVAL_01, POS_UR )
+	_MSGWIN_CLOSE()
+	
+	//主人公＆ライバル：向き合って
+	IF $lwk_pos_x <= 5 THEN
+		_OBJ_ANIME( C04R0601_RIVAL_01, anm_stay_walk_l )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
+	ELSE
+		_OBJ_ANIME( C04R0601_RIVAL_01, anm_stay_walk_r )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	//さて これから どうしようか
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_c04r0601_black_03, C04R0601_RIVAL_01, POS_UR )
+	_MSGWIN_CLOSE()
+	
+	_CAMERA_DEF_MOVE(8)		//カメラ主人公位置に復帰
+	
+	//ライバル：去る
+	_OBJ_ANIME( C04R0601_RIVAL_01, anm_rival_goaway_01 )
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了----------------------------------------
+	
+	_OBJ_ANIME_WAIT()
+	
+	//========================================//
+	//POS無効
+	$WK_SCENE_C04R0601 = 1
+	
+	//博士とライバルの非表示フラグをセット
+	_FLAG_SET( FV_C04R0601_POS_HAKASE )
+	
+	//========================================//
+	
+	}
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//！マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mark_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_walk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：博士前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_01a
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01b
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01c
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01d
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01e
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01f
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士：ライバル前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase2_move_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士：主人公前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase2_move_02a
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakase2_move_02b
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士：一歩さがる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase2_move_03
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase2_move_04a
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakase2_move_04b
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_goaway_01
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+
+
