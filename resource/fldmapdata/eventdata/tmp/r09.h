@@ -20,6 +20,7 @@
 #define TR_BADTEAM_01_2                    5
 #define R09_FLD_ITEM_01                    6
 #define R09_FLD_ITEM_02                    7
+#define R09_FLD_ITEM_03                    8
 
 #endif //ZONE_R09_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r09.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

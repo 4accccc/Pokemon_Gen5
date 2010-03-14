@@ -34,6 +34,9 @@
 #define TR_WORKER2_01                     19
 #define TR_PARASOL_07                     20
 #define R04_FLD_ITEM_05                   21
+#define R04_FLD_ITEM_11                   22
+#define R04_FLD_ITEM_09                   23
+#define R04_FLD_ITEM_10                   24
 
 #endif //ZONE_R04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

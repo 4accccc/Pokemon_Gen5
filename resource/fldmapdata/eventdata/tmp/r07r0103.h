@@ -15,6 +15,8 @@
 #define TR_ESPW_03                         2
 #define TR_ESPM_03                         3
 #define TR_NURSE_01                        4
+#define R07R0103_FLD_ITEM_01               5
+#define R07R0103_FLD_ITEM_02               6
 
 #endif //ZONE_R07R0103_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07r0103.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

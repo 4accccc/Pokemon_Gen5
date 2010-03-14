@@ -16,6 +16,8 @@
 #define TR_VETERANM_06                     4
 #define TR_MOUNT_11                        5
 #define TR_BACKPACKERW_10                  6
+#define R18_FLD_ITEM_01                    7
+#define R18_FLD_ITEM_02                    8
 
 #endif //ZONE_R18_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r18.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

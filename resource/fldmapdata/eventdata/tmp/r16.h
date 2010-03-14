@@ -18,6 +18,8 @@
 #define TR_CYCLINGM_01                     4
 #define TR_CYCLINGW_01                     5
 #define TR_POLICE_02                       6
+#define R16_FLD_ITEM_01                    7
+#define R16_FLD_ITEM_02                    8
 
 #endif //ZONE_R16_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r16.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

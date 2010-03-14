@@ -11,6 +11,15 @@
 
 #define TR_VETERANW_03                     0
 #define TR_VETERANM_03                     1
+#define R09R0303_FLD_ITEM_01               2
+#define R09R0303_FLD_ITEM_03               3
+#define R09R0303_FLD_ITEM_04               4
+#define R09R0303_FLD_ITEM_06               5
+#define R09R0303_FLD_ITEM_07               6
+#define R09R0303_FLD_ITEM_08               7
+#define R09R0303_FLD_ITEM_05               8
+#define R09R0303_FLD_ITEM_09               9
+#define R09R0303_FLD_ITEM_02              10
 
 #endif //ZONE_R09R0303_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r09r0303.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

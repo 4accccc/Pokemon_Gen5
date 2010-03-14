@@ -14,6 +14,9 @@
 #define R06R0202_ROCK_02                   1
 #define R06R0202_ROCK_03                   2
 #define R06R0202_OLDMAN1_01                3
+#define R06R0202_FLD_ITEM_01               4
+#define R06R0202_FLD_ITEM_03               5
+#define R06R0202_FLD_ITEM_02               6
 
 #endif //ZONE_R06R0202_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r06r0202.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

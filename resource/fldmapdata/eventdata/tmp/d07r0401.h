@@ -20,6 +20,7 @@
 #define TR_KARATE_02                       1
 #define D07R0401_RIVAL_01                  2
 #define D07R0401_HAKAIM_01                 3
+#define D07R0401_FLD_ITEM_06               4
 
 #endif //ZONE_D07R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d07r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

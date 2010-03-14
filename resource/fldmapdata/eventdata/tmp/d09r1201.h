@@ -16,6 +16,7 @@
 #define TR_ELITEM_07                       0
 #define D09R1201_ROCK_01                   1
 #define D09R1201_SPROCK_01                 2
+#define D09R1201_FLD_ITEM_01               3
 
 #endif //ZONE_D09R1201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d09r1201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

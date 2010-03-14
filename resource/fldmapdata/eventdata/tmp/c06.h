@@ -28,6 +28,8 @@
 #define C06_BOY2_01                        9
 #define C06_BABYGIRL1_01                  10
 #define C06_SUNGLASSES_01                 11
+#define C06_FLD_ITEM_01                   12
+#define C06_FLD_ITEM_02                   13
 
 #endif //ZONE_C06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

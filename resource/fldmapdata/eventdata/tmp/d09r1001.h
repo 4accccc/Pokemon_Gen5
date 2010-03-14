@@ -13,6 +13,7 @@
 
 #define TR_DOCTOR_03                       0
 #define D09R1001_ROCK_01                   1
+#define D09R1001_FLD_ITEM_01               2
 
 #endif //ZONE_D09R1001_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d09r1001.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

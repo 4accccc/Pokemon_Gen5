@@ -15,6 +15,8 @@
 #define TR_ESPW_02                         2
 #define TR_R07R0102_DUMMY_06               3
 #define TR_BADMAN_01                       4
+#define R07R0102_FLD_ITEM_01               5
+#define R07R0102_FLD_ITEM_02               6
 
 #endif //ZONE_R07R0102_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07r0102.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

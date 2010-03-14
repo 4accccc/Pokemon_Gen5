@@ -18,6 +18,7 @@
 #define TR_RANGERW_05                      5
 #define R08_FLD_ITEM_01                    6
 #define R08_FLD_ITEM_02                    7
+#define R08_FLD_ITEM_03                    8
 
 #endif //ZONE_R08_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r08.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -18,6 +18,9 @@
 #define R03R0301_HAKAIM_02                 5
 #define R03R0301_HAKAIM_03                 6
 #define R03R0301_HAKAIW_01                 7
+#define R03R0301_FLD_ITEM_01               8
+#define R03R0301_FLD_ITEM_02               9
+#define R03R0301_FLD_ITEM_03              10
 
 #endif //ZONE_R03R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
