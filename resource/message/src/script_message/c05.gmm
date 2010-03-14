@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-11T19:31:00"/>
+	<create user="matsumiya" host="W00224" date="2010-03-14T15:11:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -363,7 +363,7 @@
 	<row id="msg_c05_black_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてleader_02</comment>
-		<attribute name="キャラクター">友達♂（ライバル）</attribute>
+		<attribute name="キャラクター">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『……りふじん　です▼
 はしを　おろしてくださって
 かんしゃ　していますけれど▽
@@ -398,6 +398,8 @@
 		<comment>♂
 ・メッセージ表示後、画面左に移動
 　画面外に消えると続けてblack_03</comment>
+		<attribute name="キャラクター">LEADER5
+ヤーコン</attribute>
 		<language name="JPN" width="256">そうだな……[BE:01:ページ切り替え（クリア）]
 プラズマだんを　みつけだしたら
 ジムで　ちょうせんを　うけてやるぞ！[BE:00:ページ切り替え（行送り）]
@@ -412,7 +414,7 @@
 		<comment>♂
 ・メッセージ表示後、主人公を見る
 ・続けてblack_03a</comment>
-		<attribute name="キャラクター">友達♂（ライバル）</attribute>
+		<attribute name="キャラクター">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『わかりました▼
 いわれなくても
 プラズマだんは　さがしますよ▼
@@ -429,7 +431,7 @@
 		<comment>♂
 ・メッセージ表示後、ライバル、画面左に移動
 ・画面外に消えると、主人公操作可能</comment>
-		<attribute name="キャラクター">友達♂（ライバル）</attribute>
+		<attribute name="キャラクター">友達♂</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！
 さきに　いくよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！
@@ -443,7 +445,8 @@
 ・七賢人×１
 　プラズマ団したっぱ♂×２も配置
 ・続けてleader_04</comment>
-		<attribute name="キャラクター">七賢人ゲーチス</attribute>
+		<attribute name="キャラクター">七賢人
+ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『ヤーコンさん
 はじめまして[BE:01:ページ切り替え（クリア）]
 わたくし　プラズマだんの
@@ -474,7 +477,8 @@
 	<row id="msg_c05_sage1_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてleader_05</comment>
-		<attribute name="キャラクター">七賢人ゲーチス</attribute>
+		<attribute name="キャラクター">七賢人
+ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『おや　ごかいが　あるようで[BE:01:ページ切り替え（クリア）]
 わたしどもは　ポケモンを
 かいほう　こそすれ[BE:01:ページ切り替え（クリア）]
@@ -499,7 +503,8 @@
 	<row id="msg_c05_sage1_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてleader_06</comment>
-		<attribute name="キャラクター">七賢人ゲーチス</attribute>
+		<attribute name="キャラクター">七賢人
+ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『プラズマだん　としても
 ホドモエシティに[BE:00:ページ切り替え（行送り）]
 きょうみが　ありまして[BE:01:ページ切り替え（クリア）]
@@ -526,7 +531,8 @@
 		<comment>♂
 ・メッセージ表示後、七賢人のOBJ
 　ヤーコンのほうに移動</comment>
-		<attribute name="キャラクター">七賢人ゲーチス</attribute>
+		<attribute name="キャラクター">七賢人
+ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『さすが　こうざんおうと
 よばれる　しょうばいにん……▼
 じょうきょうを　みる　めに
@@ -545,7 +551,8 @@
 ･七賢人、ゲーチスのそばで
 　このメッセージ表示
 ・続けてmsg_c05_sage1_05</comment>
-		<attribute name="キャラクター">七賢人</attribute>
+		<attribute name="キャラクター">SAGE１
+七賢人その１</attribute>
 		<language name="JPN" width="256">？？？『ゲーチスさま……
 ありがとう　ございます……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">？？？『ゲーチスさま……
@@ -556,7 +563,8 @@
 		<comment>♂
 ・その後、画面暗転し
 　プラズマ団のOBJ削除</comment>
-		<attribute name="キャラクター">七賢人ゲーチス</attribute>
+		<attribute name="キャラクター">七賢人
+ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『よいのです
 ともに　おうのため　はたらく　なかま……[BE:01:ページ切り替え（クリア）]
 それでは　みなさん
@@ -591,7 +599,7 @@
 	<row id="msg_c05_black_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面左に移動</comment>
-		<attribute name="キャラクター">友達♂（ライバル）</attribute>
+		<attribute name="キャラクター">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『……おたがいに
 まちなかでの　あらそいは　さけたね▼
 それにしても　あの　ゲーチス

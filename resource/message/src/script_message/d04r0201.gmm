@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T21:54:07"/>
+	<create user="matsumiya" host="W00224" date="2010-03-14T15:12:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="156" right="1998" bottom="784" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,12 +292,13 @@
 	</lock>
 
 
-	<row id="msg_d04r0201_sage2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0201_sage2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・posを踏むとッセージ表示
 ・メッセージ後画面左に移動
 　消えると主人公操作可能</comment>
-		<attribute name="キャラ指定">七賢人</attribute>
+		<attribute name="キャラ指定">SAGE１
+七賢人その４</attribute>
 		<language name="JPN" width="256">？？？『ゲーチスさまは　いわれた[BE:01:ページ切り替え（クリア）]
 おまえの　ちからが
 どれほどか　たしかめよ　と[BE:01:ページ切り替え（クリア）]
@@ -310,18 +311,19 @@
 倒せるか　みさせて　もらうぞよ！</language>
 	</row>
 
-	<row id="msg_d04r0201_sage2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0201_sage2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・sage2_01表示後、イベントクリアまで繰り返し
 ・ゲーチスイベント終了に合わせここから削除</comment>
-		<attribute name="キャラ指定">七賢人</attribute>
+		<attribute name="キャラ指定">SAGE１
+七賢人その４</attribute>
 		<language name="JPN" width="256">？？？『ほれ！
 はやく　りゅうさから　おちてゆけ</language>
 		<language name="JPN_KANJI" width="256">？？？『ほれ！
 早く　流砂から　落ちてゆけ</language>
 	</row>
 
-	<row id="msg_d04r0201_hakaim5_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d04r0201_hakaim5_01">
 		<comment>♂
 ・GRIDX=28、GRIDZ=19、左向き
 ・戦闘後メッセージ表示後に再度会話
