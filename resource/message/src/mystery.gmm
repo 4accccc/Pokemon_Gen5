@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-03-06T19:55:43"/>
+	<create user="matsumiya" host="W00224" date="2010-03-14T15:40:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -462,14 +462,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1168" top="362" right="1873" bottom="990" maximized="no" rayout="Vertical2">
+	<dialog left="1349" top="198" right="1987" bottom="997" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="637" right="1024" bottom="789" visible="yes"/>
 		<tag-palette left="532" top="179" right="1024" bottom="591" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="463"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="630"/>
+		<band id="3" index="3" style="0000" width="630"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1496,8 +1496,7 @@
 さいだい　１２まい　です[BE:01:ページ切り替え（クリア）]
 １２まい　いっぱいに　なると
 おくりものが　うけとれなく　なるので[BE:00:ページ切り替え（行送り）]
-カードを　せいり　してください[BE:01:ページ切り替え（クリア）]
-</language>
+カードを　せいり　してください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI">カードアルバムには
 ふしぎなおくりものを　うけとった[BE:00:ページ切り替え（行送り）]
 きねんの　しるしに[BE:00:ページ切り替え（行送り）]
@@ -1512,8 +1511,7 @@
 さいだい　１２まい　です[BE:01:ページ切り替え（クリア）]
 １２まい　いっぱいに　なると
 おくりものが　うけとれなく　なるので[BE:00:ページ切り替え（行送り）]
-カードを　せいり　してください[BE:01:ページ切り替え（クリア）]
-</language>
+カードを　せいり　してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_01_025" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
