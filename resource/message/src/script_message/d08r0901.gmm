@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-15T19:12:38"/>
+	<create user="matsumiya" host="W00224" date="2010-03-14T14:15:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1439" top="242" right="2144" bottom="870" maximized="no" rayout="Vertical2">
+	<dialog left="1379" top="192" right="2084" bottom="820" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -359,13 +359,13 @@
 	</lock>
 
 
-	<row id="msg_d08r0901_boss_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_d08r0901_boss_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_01w" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂：WHITEver
 ・NはGRIDX=16、GRIDZ=12に配置
 ・pos（GRIDX=16、GRIDZ=18）起動
@@ -388,7 +388,7 @@
 ポケモンの　美しい　姿は！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_01b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
@@ -404,7 +404,7 @@
 ポケモンの　力強い　姿は！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_02w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_02w" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂：WHITEver
 ・画面上（ポケモン）を見ながらメッセージ
 ・続けてboss_03w</comment>
@@ -421,7 +421,7 @@
 ようやく　実現する[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_02b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_02b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
@@ -437,13 +437,13 @@
 ようやく　実現する[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_d08r0901_boss_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_03w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_03w" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂：WHITEver
 ・N、下向きに
 ・このメッセージ表示前に
@@ -466,7 +466,7 @@
 ボクたちを　阻止できる！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_03b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_03b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
@@ -486,7 +486,7 @@
 ボクたちを　阻止できる！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_04w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_04w" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂：WHITEver
 ・メッセージ表示後、N、3歩上に移動
 ・移動すると画面右から左へシンが横切る
@@ -513,7 +513,7 @@
 英雄に　なりなよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_04b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_04b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]さて　どうする？▼
@@ -536,7 +536,7 @@
 英雄に　なりなよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d08r0901_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公の2歩下に走ってきてメッセージ
 　このときジムリーダーも来る
@@ -548,7 +548,7 @@
 いま　飛び去ったのって……▼</language>
 	</row>
 
-	<row id="msg_d08r0901_leader7_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_leader7_01">
 		<comment>♂
 ・続けてblack_02</comment>
 		<attribute name="キャラ指定">LEADER7
@@ -557,7 +557,7 @@
 		<language name="JPN_KANJI" width="256">ハチク『……なんたること▼</language>
 	</row>
 
-	<row id="msg_d08r0901_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d08r0901_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてleader7_02</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
@@ -573,7 +573,7 @@
 英雄だと　いうのかい！？▼</language>
 	</row>
 
-	<row id="msg_d08r0901_leader7_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_leader7_02">
 		<comment>♂
 ・メッセージ表示後、画面暗転し
 　d08：リュウラセンの塔（外）へ切り替え</comment>
@@ -587,6 +587,56 @@
 いま　大事なのは
 起きたことを　解明するより▽
 これから　なにをするか　だ▼</language>
+	</row>
+
+	<row id="msg_d08r0901_poke7_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>ポケモン
+・BLACKver
+・クリア後に登場
+・メッセージ表示とともに鳴き声再生
+　つづけてポケモン戦闘に
+・倒した場合は、殿堂入りで復活処理</comment>
+		<attribute name="キャラ指定">ポケモン
+シン</attribute>
+		<language name="JPN" width="256">モエルーワ！▼</language>
+		<language name="JPN_KANJI" width="256">モエルーワ！▼</language>
+	</row>
+
+	<row id="msg_d08r0901_poke7_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>ポケモン
+・BLACKver
+・倒した場合、フィールド復帰時に
+　このメッセージを表示</comment>
+		<attribute name="キャラ指定">ポケモン
+シン</attribute>
+		<language name="JPN" width="256">シンは　どこかに
+とびさって　いった……</language>
+		<language name="JPN_KANJI" width="256">シンは　どこかに
+飛び去って　いった……</language>
+	</row>
+
+	<row id="msg_d08r0901_poke8_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>ポケモン
+・WHITEver
+・クリア後に登場
+・メッセージ表示とともに鳴き声再生
+　つづけてポケモン戦闘に
+・倒した場合は、殿堂入りで復活処理</comment>
+		<attribute name="キャラ指定">ポケモン
+ム</attribute>
+		<language name="JPN" width="256">バリバリダー！！▼</language>
+		<language name="JPN_KANJI" width="256">バリバリダー！！▼</language>
+	</row>
+
+	<row id="msg_d08r0901_poke8_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>ポケモン
+・WHITEver
+・倒した場合、フィールド復帰時に
+　このメッセージを表示</comment>
+		<language name="JPN" width="256">ムは　どこかに
+とびさって　いった……</language>
+		<language name="JPN_KANJI" width="256">ムは　どこかに
+飛び去って　いった……</language>
 	</row>
 
 	<flowchart-group-list>
