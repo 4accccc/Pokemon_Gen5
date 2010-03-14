@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-03-11T19:46:57"/>
+	<create user="matsumiya" host="W00224" date="2010-03-14T12:51:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,7 +337,7 @@
 		</language>
 	</columns>
 
-	<dialog left="146" top="109" right="851" bottom="737" maximized="no" rayout="Vertical2">
+	<dialog left="1543" top="217" right="2248" bottom="844" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="261" top="246" right="734" bottom="644" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -369,23 +369,23 @@
 		<language name="JPN" width="256">バトルけんていで　あなたの　バトルを
 しんだん　しちゃいますよ！▼
 いかが　いたしましょう？</language>
-		<language name="JPN_KANJI" width="256">バトルけんていで　あなたの　バトルを
-しんだん　しちゃいますよ！▼
+		<language name="JPN_KANJI" width="256">バトル検定で　あなたの　バトルを
+診断しちゃいますよ！▼
 いかが　いたしましょう？</language>
 	</row>
 
 	<row id="msg_trialhouse_002">
 		<language name="JPN" width="256">ししょう！！　バトルけんていに　
 また　チャレンジ　しちゃう？</language>
-		<language name="JPN_KANJI" width="256">ししょう！！　バトルけんていに　
-また　チャレンジ　しちゃう？</language>
+		<language name="JPN_KANJI" width="256">師匠！！　バトル検定に　
+また　チャレンジしちゃう？</language>
 	</row>
 
 	<row id="msg_trialhouse_003">
 		<language name="JPN" width="256">チャレンジするのね！
 じゃ　ちょっとまってね……</language>
 		<language name="JPN_KANJI" width="256">チャレンジするのね！
-じゃ　ちょっとまってね……</language>
+じゃ　ちょっと待ってね……</language>
 	</row>
 
 	<row id="msg_trialhouse_004">
@@ -393,19 +393,19 @@
 あなたに　バトルけんていは
 まだ　はやいわ▼
 すべてのことを　おわらせて
-もっと　つよく　なってから▽
-またきて　ちょーだい</language>
+もっと　つよくなってから▽
+また　きてちょーだい</language>
 		<language name="JPN_KANJI" width="256">ごめんなさい…▼
-あなたに　バトルけんていは
+あなたに　バトル検定は
 まだ　はやいわ▼
-すべてのことを　おわらせて
-もっと　つよく　なってから▽
-またきて　ちょーだい</language>
+すべてのことを　終わらせて
+もっと　強くなってから▽
+また　来てちょーだい</language>
 	</row>
 
 	<row id="msg_trialhouse_005">
 		<language name="JPN" width="256">じゃ　またこんど</language>
-		<language name="JPN_KANJI" width="256">じゃ　またこんど</language>
+		<language name="JPN_KANJI" width="256">じゃ　また今度</language>
 	</row>
 
 	<row id="msg_trialhouse_006">
@@ -418,8 +418,8 @@
 	<row id="msg_trialhouse_007">
 		<language name="JPN" width="256">いまなら　とくべつな　バトルけんていが
 できるけど　チャレンジ　しちゃう？</language>
-		<language name="JPN_KANJI" width="256">いまなら　とくべつな　バトルけんていが
-できるけど　チャレンジ　しちゃう？</language>
+		<language name="JPN_KANJI" width="256">いまなら　特別な　バトル検定が
+できるけど　チャレンジしちゃう？</language>
 	</row>
 
 	<row id="msg_trialhouse_008">
@@ -427,23 +427,23 @@
 まだ　はやいんだけど……▼
 いまなら　とくべつな　バトルけんていが
 できるけど　チャンジ　しちゃう？</language>
-		<language name="JPN_KANJI" width="256">あなたに　バトルけんていは
+		<language name="JPN_KANJI" width="256">あなたに　バトル検定は
 まだ　はやいんだけど……▼
-いまなら　とくべつな　バトルけんていが
-できるけど　チャンジ　しちゃう？</language>
+いまなら　特別な　バトル検定が
+できるけど　チャンジしちゃう？</language>
 	</row>
 
 	<row id="msg_trialhouse_009">
 		<language name="JPN" width="256">ＤＳ　ワイヤレスつうしんを
 かいし　します</language>
-		<language name="JPN_KANJI" width="256">ＤＳ　ワイヤレスつうしんを
-かいし　します</language>
+		<language name="JPN_KANJI" width="256">ＤＳ　ワイヤレス通信を
+開始します</language>
 	</row>
 
 	<row id="msg_trialhouse_010">
 		<language name="JPN" width="256">とくべつな　バトルけんていを
 ダウンロードしました！</language>
-		<language name="JPN_KANJI" width="256">とくべつな　バトルけんていを
+		<language name="JPN_KANJI" width="256">特別な　バトル検定を
 ダウンロードしました！</language>
 	</row>
 
@@ -453,112 +453,112 @@
 どちらを　つかうか　えらんでね</language>
 		<language name="JPN_KANJI" width="256">じゃ　さっそく　はじめましょう▼
 てもちか　バトルボックスの
-どちらを　つかうか　えらんでね</language>
+どちらを　使うか　選んでね</language>
 	</row>
 
 	<row id="msg_trialhouse_012">
 		<language name="JPN" width="256">それでは　さんかする　ポケモンを
 えらんで　ちょーだいな</language>
-		<language name="JPN_KANJI" width="256">それでは　さんかする　ポケモンを
-えらんで　ちょーだいな</language>
+		<language name="JPN_KANJI" width="256">それでは　参加する　ポケモンを
+選んで　ちょーだいな</language>
 	</row>
 
 	<row id="msg_trialhouse_013">
 		<language name="JPN" width="256">では　バトルけんてい　はじめるよ！
 なかに　どうぞー！</language>
-		<language name="JPN_KANJI" width="256">では　バトルけんてい　はじめるよ！
+		<language name="JPN_KANJI" width="256">では　バトル検定　はじめるよ！
 なかに　どうぞー！</language>
 	</row>
 
 	<row id="msg_trialhouse_014">
 		<language name="JPN" width="256">おつかれさま！▼
 では　さっそく　バトルけんていの
-しんだん　けっかを　おつたえしますよ
-あなたの　しんだん　けっかは……▼</language>
+しんだんけっかを　おつたえしますよ▼
+あなたの　しんだんけっかは……▼</language>
 		<language name="JPN_KANJI" width="256">おつかれさま！▼
-では　さっそく　バトルけんていの
-しんだん　けっかを　おつたえしますよ
-あなたの　しんだん　けっかは……▼</language>
+では　さっそく　バトル検定の
+診断結果を　お伝えしますよ▼
+あなたの　診断結果は……▼</language>
 	</row>
 
 	<row id="msg_trialhouse_015">
 		<language name="JPN" width="256">なんと　マスターランク！！！
 すばらしい！　でしに　してくださいな</language>
 		<language name="JPN_KANJI" width="256">なんと　マスターランク！！！
-すばらしい！　でしに　してくださいな</language>
+すばらしい！　弟子に　してくださいな</language>
 	</row>
 
 	<row id="msg_trialhouse_016">
 		<language name="JPN" width="256">けっかは　エリートランク！！
 ともだちに　じまん　できるかも！</language>
-		<language name="JPN_KANJI" width="256">けっかは　エリートランク！！
-ともだちに　じまん　できるかも！</language>
+		<language name="JPN_KANJI" width="256">結果は　エリートランク！！
+友達に　自慢できるかも！</language>
 	</row>
 
 	<row id="msg_trialhouse_017">
 		<language name="JPN" width="256">けっかは　ハイパーランク！
 いろいろ　けんきゅう　してますね？</language>
-		<language name="JPN_KANJI" width="256">けっかは　ハイパーランク！
-いろいろ　けんきゅう　してますね？</language>
+		<language name="JPN_KANJI" width="256">結果は　ハイパーランク！
+いろいろ　研究してますね？</language>
 	</row>
 
 	<row id="msg_trialhouse_018">
 		<language name="JPN" width="256">けっかは　スーパーランクですよ
 なかなか　おつよい　ですね</language>
-		<language name="JPN_KANJI" width="256">けっかは　スーパーランクですよ
-なかなか　おつよい　ですね</language>
+		<language name="JPN_KANJI" width="256">結果は　スーパーランクですよ
+なかなか　お強いですね</language>
 	</row>
 
 	<row id="msg_trialhouse_019">
 		<language name="JPN" width="256">けっかは　ノーマルランクですよ
 ふつーの　つよさ　ですかね</language>
-		<language name="JPN_KANJI" width="256">けっかは　ノーマルランクですよ
-ふつーの　つよさ　ですかね</language>
+		<language name="JPN_KANJI" width="256">結果は　ノーマルランクですよ
+ふつーの　強さですかね</language>
 	</row>
 
 	<row id="msg_trialhouse_020">
 		<language name="JPN" width="256">けっかは　ノービスランクですよ
 もうすこし　がんばって　くださいな</language>
-		<language name="JPN_KANJI" width="256">けっかは　ノービスランクですよ
+		<language name="JPN_KANJI" width="256">結果は　ノービスランクですよ
 もうすこし　がんばって　くださいな</language>
 	</row>
 
 	<row id="msg_trialhouse_021">
 		<language name="JPN" width="256">けっかは　ビギナーランクですよ
 まずは　きそから　おぼえては？</language>
-		<language name="JPN_KANJI" width="256">けっかは　ビギナーランクですよ
-まずは　きそから　おぼえては？</language>
+		<language name="JPN_KANJI" width="256">結果は　ビギナーランクですよ
+まずは　基礎から　覚えては？</language>
 	</row>
 
 	<row id="msg_trialhouse_022" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">まってましたよ！▼
 ダウンロードした　シングルバトルの
 けんていに　チャレンジ　しちゃう？</language>
-		<language name="JPN_KANJI" width="256">まってましたよ！▼
+		<language name="JPN_KANJI" width="256">待ってましたよ！▼
 ダウンロードした　シングルバトルの
-けんていに　チャレンジ　しちゃう？</language>
+検定に　チャレンジしちゃう？</language>
 	</row>
 
 	<row id="msg_trialhouse_023" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">とくべつな　バトルけんていを
 ダウンロード　しちゃう？</language>
-		<language name="JPN_KANJI" width="256">とくべつな　バトルけんていを
-ダウンロード　しちゃう？</language>
+		<language name="JPN_KANJI" width="256">特別な　バトル検定を
+ダウンロードしちゃう？</language>
 	</row>
 
 	<row id="msg_trialhouse_024" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">ダウンロードするものが
-みあたらない　ですね……。▼
+みあたらない　ですね……▼
 どうする？</language>
 		<language name="JPN_KANJI" width="256">ダウンロードするものが
-みあたらない　ですね……。▼
+みあたらない　ですね……▼
 どうする？</language>
 	</row>
 
 	<row id="msg_trialhouse_025" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">とくべつな　バトルけんていを
 ダウンロードしました！</language>
-		<language name="JPN_KANJI" width="256">とくべつな　バトルけんていを
+		<language name="JPN_KANJI" width="256">特別な　バトル検定を
 ダウンロードしました！</language>
 	</row>
 
@@ -571,7 +571,7 @@
 		<language name="JPN" width="256">じゃ　また　あとで
 まってますよ！</language>
 		<language name="JPN_KANJI" width="256">じゃ　また　あとで
-まってますよ！</language>
+待ってますよ！</language>
 	</row>
 
 	<row id="msg_trialhouse_028" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -584,21 +584,21 @@
 もたせる　どうぐも　すべてちがう
 どうぐで　なくては　なりません▼
 ５人のトレーナーと　れんぞくで
-たたかって　そのけっかから▽
+たたかって　その　けっかから▽
 バトルけんていの　しんだんを▽
 おこなっちゃいますよ！▼
 いかが　いたしましょう？</language>
-		<language name="JPN_KANJI" width="256">バトルけんていでは
-シングルなら　ポケモン　３ひき▽
-ダブルなら　ポケモン　４ひきで▽
-たたかいに　さんかします▼
-ポケモンは　すべて　ちがう
+		<language name="JPN_KANJI" width="256">バトル検定では
+シングルなら　ポケモン　３匹▽
+ダブルなら　ポケモン　４匹で▽
+戦いに　参加します▼
+ポケモンは　すべて　違う
 ポケモンで　なくてはならず▼
-もたせる　どうぐも　すべてちがう
-どうぐで　なくては　なりません▼
-５人のトレーナーと　れんぞくで
-たたかって　そのけっかから▽
-バトルけんていの　しんだんを▽
+もたせる　道具も　すべて違う
+道具で　なくては　なりません▼
+５人のトレーナーと　連続で
+戦って　その結果から▽
+バトル検定の　診断を▽
 おこなっちゃいますよ！▼
 いかが　いたしましょう？</language>
 	</row>
@@ -606,7 +606,7 @@
 	<row id="msg_trialhouse_029" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">つぎは　[2:00:１桁:0]にんめ　ですよ
 がんばって　ください！</language>
-		<language name="JPN_KANJI" width="256">つぎは　[2:00:１桁:0]にんめ　ですよ
+		<language name="JPN_KANJI" width="256">次は　[2:00:１桁:0]人目　ですよ
 がんばって　ください！</language>
 	</row>
 
@@ -614,35 +614,35 @@
 		<language name="JPN" width="256">まってましたよ！▼
 ダウンロードした　ダブルバトルの
 けんていに　チャレンジ　しちゃう？</language>
-		<language name="JPN_KANJI" width="256">まってましたよ！▼
+		<language name="JPN_KANJI" width="256">待ってましたよ！▼
 ダウンロードした　ダブルバトルの
-けんていに　チャレンジ　しちゃう？</language>
+検定に　チャレンジしちゃう？</language>
 	</row>
 
 	<row id="msg_trialhouse_031" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="256">げんざい　はいしんされている
 バトルけんていは　すでに▽
-チャレンジされて　いるようです。▼
+チャレンジ　されているようです▼
 いかが　いたしましょう？</language>
-		<language name="JPN_KANJI" width="256">げんざい　はいしんされている
-バトルけんていは　すでに▽
-チャレンジされて　いるようです。▼
+		<language name="JPN_KANJI" width="256">現在　配信されている
+バトル検定は　すでに▽
+チャレンジ　されているようです▼
 いかが　いたしましょう？</language>
 	</row>
 
 	<row id="msg_trialhouse_032" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="256">げんざい　ひょうじする　
 けんていけっかが　ありません</language>
-		<language name="JPN_KANJI" width="256">げんざい　ひょうじする　
-けんていけっかが　ありません</language>
+		<language name="JPN_KANJI" width="256">現在　表示する　
+検定結果が　ありません</language>
 	</row>
 
 	<row id="msg_trialhouse_033" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="256">つうじょうの　けんていけっかと
 とくべつな　けんていのけっか▽
 どちらを　みますか？</language>
-		<language name="JPN_KANJI" width="256">つうじょうの　けんていけっかと
-とくべつな　けんていのけっか▽
+		<language name="JPN_KANJI" width="256">通常の　検定結果と
+特別な　検定結果▽
 どちらを　みますか？</language>
 	</row>
 
@@ -653,7 +653,7 @@
 
 	<row id="msg_trialhouse_str2">
 		<language name="JPN" width="256">せつめいをきく</language>
-		<language name="JPN_KANJI" width="256">せつめいをきく</language>
+		<language name="JPN_KANJI" width="256">説明を聞く</language>
 	</row>
 
 	<row id="msg_trialhouse_str3">
