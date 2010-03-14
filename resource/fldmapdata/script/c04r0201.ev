@@ -33,6 +33,7 @@ _EVENT_DATA    ev_c04R0201_init
 _EVENT_DATA    ev_scene_c04r0201_musical_first
 _EVENT_DATA    ev_bg_c04r0201_musical_shot
 _EVENT_DATA    ev_c04r0201_girl4_01
+_EVENT_DATA    ev_bg_c04r0201_statue_01
 _EVENT_DATA_END
 
 
@@ -87,8 +88,16 @@ EVENT_START		ev_scene_c04r0201_musical_first
 	_BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_02, C04R0201_OWNER_01 )
 	_MSGWIN_CLOSE()
 	
+	//オーナー：グッズケースを渡す
+	_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_02 )
+	_OBJ_ANIME_WAIT()
+	
 	//グッズケース入手
 	_ITEM_EVENT_KEYWAIT( ITEM_GUZZUKEESU, 1 )
+	
+	//オーナー：一歩さがる
+	_OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_03 )
+	_OBJ_ANIME_WAIT()
 	
 	//そのグッズケースの中に
 	_BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_03, C04R0201_OWNER_01 )
@@ -109,7 +118,6 @@ EVENT_START		ev_scene_c04r0201_musical_first
 		
 		//残念ながら参加できないようだ
 		_BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_03a, C04R0201_OWNER_01 )
-		_MSGWIN_CLOSE()
 		
 	ELSE
 		//参加できるポケモンがいる
@@ -202,15 +210,13 @@ ev_fitting_entry:
 	IF $SCWK_ANSWER == FALSE THEN
 		//グッズを１つもつけなかった
 		
-		//おおお！二人とも素晴らしい
+		//なにもつけずに…
 		_BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_03b, C04R0201_OWNER_01 )
-		_MSGWIN_CLOSE()
 	ELSE
 		//グッズ１つ以上つけてた
 		
 		//おおお！二人とも素晴らしい
 		_BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_04, C04R0201_OWNER_01 )
-		_MSGWIN_CLOSE()
 	ENDIF
 	
 	}
@@ -278,6 +284,27 @@ _ANIME_LABEL	anm_first_owner_move_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
+//オーナー：グッズケースを渡す
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_owner_move_02
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//オーナー：一歩さがる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_owner_move_03
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
 //オーナー：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_first_owner_goaway_01
@@ -328,6 +355,19 @@ EVENT_START		ev_bg_c04r0201_musical_shot
 
 	ENDIF
 	
+	
+EVENT_END
+
+
+/************************************************************/
+/*						ポケモン像							*/
+/************************************************************/
+EVENT_START		ev_bg_c04r0201_statue_01
+	_TALK_START_SE_PLAY()
+	
+	_PLAINWIN_MSG_DOWN( msg_c04r0201_statue_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -418,6 +458,7 @@ EVENT_END
 /************************************************************/
 EVENT_START		ev_c04r0201_girl4_01
 
+	//わざマシン（エコーボイス）入手
 	_EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN49, 1, FE_C04R0201_ITEM_01, msg_c04r0201_girl4_01, msg_c04r0201_girl4_02, msg_c04r0201_girl4_03 )
 
 EVENT_END

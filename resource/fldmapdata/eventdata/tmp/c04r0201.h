@@ -40,5 +40,9 @@
 #define ZONE_C04R0201_EVB_H
 
 #define BG_C04R0201_MUSICAL_SHOT          0
+#define BG_C04R0201_STATUE_01a            1
+#define BG_C04R0201_STATUE_01b            2
+#define BG_C04R0201_STATUE_01c            3
+#define BG_C04R0201_STATUE_01d            4
 
 #endif //ZONE_C04R0201_EVB_H

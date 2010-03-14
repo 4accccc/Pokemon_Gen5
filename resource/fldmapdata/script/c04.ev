@@ -121,6 +121,8 @@ EVENT_START	ev_pos_c04_hakai_01
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
 	
+	_START_EVENT_BGM( SEQ_BGM_E_PLASMA )
+	
 	//カメラ操作
 	_CAMERA_MOVE( 9688,0,970752,28213248,65551,30564352,30 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
@@ -195,6 +197,8 @@ EVENT_START	ev_pos_c04_hakai_01
 	//したっぱ消す
 	_OBJ_DEL( C04_HAKAIM_01 )
 	_OBJ_DEL( C04_HAKAIM_02 )
+	
+	_END_EVENT_BGM()
 	
 	//主人公：じいさんを見る
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
@@ -698,16 +702,22 @@ _ANIME_LABEL	anm_music_player_move_02
 /************************************************************/
 EVENT_START	ev_scene_c04_support_01
 	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラパージ
+	_CAMERA_MOVE( 9840,0,970752,28409856,65551,28672000, 30 )
+	
 	//主人公：サポートの近くへ
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_papa_player_move_01 )
 	_OBJ_ANIME_WAIT()
 	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 	//パパ！？どうしてここに
-	_BALLOONWIN_OBJMSG_POS( msg_c04_white_08, C04_SUPPORT_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_08, C04_SUPPORT_01, POS_UR )
 	_MSGWIN_CLOSE()
 	
 	//どうもこうも
-	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_01, C04_SUPPORTPAPA_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_01, C04_SUPPORTPAPA_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//サポート：後ずさり
@@ -716,7 +726,7 @@ EVENT_START	ev_scene_c04_support_01
 	
 	//やだぁ！
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_POS( msg_c04_white_09, C04_SUPPORT_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_09, C04_SUPPORT_01, POS_UR )
 	_MSGWIN_CLOSE()
 	
 	//パパ：一歩前へ
@@ -724,7 +734,7 @@ EVENT_START	ev_scene_c04_support_01
 	_OBJ_ANIME_WAIT()
 	
 	//ダメだ！よそはよそウチはウチだ
-	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_02, C04_SUPPORTPAPA_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_02, C04_SUPPORTPAPA_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//サポート：パパを見て
@@ -732,7 +742,7 @@ EVENT_START	ev_scene_c04_support_01
 	_OBJ_ANIME_WAIT()
 	
 	//だったら！
-	_BALLOONWIN_OBJMSG_POS( msg_c04_white_10, C04_SUPPORT_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_10, C04_SUPPORT_01, POS_UR )
 	_MSGWIN_CLOSE()
 	
 	_TIME_WAIT( 8 )
@@ -751,9 +761,7 @@ EVENT_START	ev_scene_c04_support_01
 	_OBJ_ANIME( C04_SUPPORT_01, anm_stay_walk_d )
 	_OBJ_ANIME( C04_SUPPORTPAPA_01, anm_stay_walk_d )
 	
-	_CAMERA_START()		//カメラ操作開始
-	_CAMERA_PURGE()		//カメラパージ
-	_CAMERA_MOVE( 10488,0,970752,28409856,65551,28672000, 20 )
+	_CAMERA_MOVE( 10840,0,970752,28409856,65551,28672000, 20 )
 	
 	//カミツレ：登場
 	_OBJ_ADD_EX( 433, 444, DIR_UP, MMDL_ID_EVENTOBJ_00, LEADER4, MV_DMY )
@@ -767,10 +775,10 @@ EVENT_START	ev_scene_c04_support_01
 	_MSGWIN_CLOSE()
 	
 	//カミツレと申します
-	_BALLOONWIN_OBJMSG_POS( msg_c04_leader_02, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_leader_02, MMDL_ID_EVENTOBJ_00, POS_DR )
 	_MSGWIN_CLOSE()
 	
-	//カミツレ：サポートの隣へいどう
+	//カミツレ：サポートの隣へ移動
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_papa_leader4_move_01 )
 	_OBJ_ANIME_WAIT()
 	//パパ：カミツレを見る
@@ -778,7 +786,7 @@ EVENT_START	ev_scene_c04_support_01
 	_OBJ_ANIME_WAIT()
 	
 	//もちろん…
-	_BALLOONWIN_OBJMSG_POS( msg_c04_leader_03, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_leader_03, MMDL_ID_EVENTOBJ_00, POS_DR )
 	_MSGWIN_CLOSE()
 	
 	//そうでしょうとも！
@@ -790,7 +798,7 @@ EVENT_START	ev_scene_c04_support_01
 	_OBJ_ANIME_WAIT()
 	
 	//ですが…
-	_BALLOONWIN_OBJMSG_POS( msg_c04_leader_04, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_leader_04, MMDL_ID_EVENTOBJ_00, POS_DR )
 	_MSGWIN_CLOSE()
 	
 	//サポート：一歩前へ出て
@@ -798,7 +806,7 @@ EVENT_START	ev_scene_c04_support_01
 	_OBJ_ANIME_WAIT()
 	
 	//おねがい！
-	_BALLOONWIN_OBJMSG_POS( msg_c04_white_11, C04_SUPPORT_01, POS_UL )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_11, C04_SUPPORT_01, POS_UR )
 	_MSGWIN_CLOSE()
 	
 	//パパ：下を向いて
@@ -814,8 +822,16 @@ EVENT_START	ev_scene_c04_support_01
 	_OBJ_ANIME_WAIT()
 	
 	//ジムリーダーさんに言われて気づいたよ
-	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_06, C04_SUPPORTPAPA_01, POS_UL )
+	_MSGWIN_CLOSE()
+	
+	//パパ：主人公を見て
+	_OBJ_ANIME( C04_SUPPORTPAPA_01, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
+	
+	//ベルをよろしくたのむよ
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_07, C04_SUPPORTPAPA_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//パパ：去る
@@ -827,7 +843,7 @@ EVENT_START	ev_scene_c04_support_01
 	_OBJ_ANIME_WAIT()
 	_OBJ_DEL( C04_SUPPORTPAPA_01 )
 	
-	_CAMERA_MOVE( 9688,0,970752,28409856,65551,28737536, 8 )
+	_CAMERA_MOVE( 10840,0,970752,28409856,65551,28737536, 8 )
 	
 	//サポート：一歩追いかける感じで
 	_OBJ_ANIME( C04_SUPPORT_01, anm_papa_support_move_02 )
@@ -836,13 +852,13 @@ EVENT_START	ev_scene_c04_support_01
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//…みつけたら ちゃんと帰るから！
-	_BALLOONWIN_OBJMSG_POS( msg_c04_white_12, C04_SUPPORT_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_12, C04_SUPPORT_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	_TIME_WAIT( 30 )
 	
 	//親って大変なのね
-	_BALLOONWIN_OBJMSG_POS( msg_c04_leader_05, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_leader_05, MMDL_ID_EVENTOBJ_00, POS_UR )
 	_MSGWIN_CLOSE()	
 	
 	//カミツレ：サポートを見て
@@ -853,8 +869,7 @@ EVENT_START	ev_scene_c04_support_01
 	_OBJ_ANIME_WAIT()
 	
 	//おせっかいだったかな
-	_BALLOONWIN_OBJMSG_POS( msg_c04_leader_06, MMDL_ID_EVENTOBJ_00, WIN_NONE )
-	_MSGWIN_CLOSE()	
+	_BALLOONWIN_OBJMSG_POS( msg_c04_leader_06, MMDL_ID_EVENTOBJ_00, POS_UR )
 	
 	//バッジ取得で分岐
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_04 )	//バッジフラグ取得
@@ -862,7 +877,7 @@ EVENT_START	ev_scene_c04_support_01
 		//バッジ未入手なら
 		
 		//ジムで待ってるわ
-		_BALLOONWIN_OBJMSG_POS( msg_c04_leader_07, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+		_BALLOONWIN_OBJMSG_POS( msg_c04_leader_07, MMDL_ID_EVENTOBJ_00, POS_UR )
 		_MSGWIN_CLOSE()	
 		
 		//カミツレ：ジム側へ去る
@@ -875,13 +890,16 @@ EVENT_START	ev_scene_c04_support_01
 	ELSE
 		//入手済みなら
 		
+		//こちらの場合、連続メッセージにならないので一つ前のウインドウを削除
+		_MSGWIN_CLOSE()	
+		
 		//カミツレ：主人公を見る
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_u )
 		_OBJ_ANIME_WAIT()
 		
 		//５番道路で待ってるわ
 		_PLAYER_NAME( 0 )
-		_BALLOONWIN_OBJMSG_POS( msg_c04_leader_08, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+		_BALLOONWIN_OBJMSG_POS( msg_c04_leader_08, MMDL_ID_EVENTOBJ_00, POS_UR )
 		_MSGWIN_CLOSE()	
 		
 		//サポート：道を開ける
@@ -921,7 +939,7 @@ EVENT_START	ev_scene_c04_support_01
 	ENDIF
 	
 	//かっこいい！
-	_BALLOONWIN_OBJMSG_POS( msg_c04_white_13, C04_SUPPORT_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_13, C04_SUPPORT_01, POS_DL )
 	_MSGWIN_CLOSE()
 	
 	//サポート：去る
