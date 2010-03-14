@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-29T16:31:50"/>
+	<create user="matsumiya" host="W00224" date="2010-03-14T16:54:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="172"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -292,11 +292,89 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d06r0301_sage3_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♂
+・GRIDX=4、GRIDZ=31
+・アイテム入手処理
+　No396「ロックカット」</comment>
+		<attribute name="キャラ指定">SAGE3
+七賢人その３</attribute>
+		<language name="JPN" width="256">？？？『であったとき▼</language>
+		<language name="JPN_KANJI" width="256">？？？『であったとき▼</language>
+	</row>
+
+	<row id="msg_d06r0301_sage3_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♂
+・アイテム入手後自動で表示
+・続けてicpo_end_01</comment>
+		<attribute name="キャラ指定">SAGE3
+七賢人その３</attribute>
+		<language name="JPN" width="256">？？？『アイテムをくれたあと▼</language>
+		<language name="JPN_KANJI" width="256">？？？『アイテムをくれたあと▼</language>
+	</row>
+
+	<row id="msg_d06r0301_icpo_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・隣接してメッセージ
+・続けてsage3_end_03</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『さてと……
+プラズマだんに　ついて▼
+こくさいけいさつの　わたしに
+いろいろ　おしえてもらおう！▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『さてと……
+プラズマ団に　ついて▼
+国際警察の　わたしに
+いろいろ　教えてもらおう！▼</language>
+	</row>
+
+	<row id="msg_d06r0301_sage3_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♂
+・続けて七賢人
+　6人と会っていない→icpo_end_02
+　6人と会っている→icpo_end_03</comment>
+		<attribute name="キャラ指定">SAGE3
+七賢人その３</attribute>
+		<language name="JPN" width="256">？？？『かまわんよ▼</language>
+		<language name="JPN_KANJI" width="256">？？？『かまわんよ▼</language>
+	</row>
+
+	<row id="msg_d06r0301_icpo_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　画面暗転して七賢人とハンサムを削除</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『ありがとう▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『ありがとう▼</language>
+	</row>
+
+	<row id="msg_d06r0301_icpo_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・6人の七賢人とであったとき
+・メッセージ歩湯事後
+　画面暗転して七賢人とハンサムを削除</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『ありがとう！▼
+さて　[1:00:トレーナー名:0]……
+きみに　つたえることが　ある▼
+Ｎらしき　じんぶつが
+ドラゴンポケモンと　いるのを▽
+みたという　じょうほうが　あった▼
+わたしは　じょうほうが　ただしいか
+たしかめに　いくつもりだよ▽
+では　また　いつかあおう！▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『ありがとう！▼
+さて　[1:00:トレーナー名:0]……
+きみに　伝えることが　ある▼
+Ｎらしき　人物が
+ドラゴンポケモンと　いるのを▽
+みたという　情報が　あった▼
+わたしは　情報の　真偽を
+確かめに　いくつもりだよ▽
+では　また　いつか会おう！▼</language>
 	</row>
 
 	<flowchart-group-list>

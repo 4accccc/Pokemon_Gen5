@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-14T15:11:00"/>
+	<create user="matsumiya" host="W00224" date="2010-03-14T16:55:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -485,6 +485,91 @@
 なんだか　おおごとに　なってきたね[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]
 なんだか　おおごとに　なってきたね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d05r0201_sage1_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♂
+・GRIDX=4、GRIDZ=9
+・アイテム入手処理
+　No328「つめとぎ」</comment>
+		<attribute name="キャラ指定">SAGE１
+七賢人その１</attribute>
+		<language name="JPN" width="256">？？？『であったとき▼</language>
+		<language name="JPN_KANJI" width="256">？？？『であったとき▼</language>
+	</row>
+
+	<row id="msg_d05r0201_sage1_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♂
+・アイテム入手後自動で表示
+・続けてicpo_end_01</comment>
+		<attribute name="キャラ指定">SAGE１
+七賢人その１</attribute>
+		<language name="JPN" width="256">？？？『アイテムをくれたあと▼</language>
+		<language name="JPN_KANJI" width="256">？？？『アイテムをくれたあと▼</language>
+	</row>
+
+	<row id="msg_d05r0201_icpo_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・隣接してメッセージ
+・続けてsage1_end_03</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『さてと……
+プラズマだんに　ついて▼
+こくさいけいさつの　わたしに
+いろいろ　おしえてもらおう！▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『さてと……
+プラズマ団に　ついて▼
+国際警察の　わたしに
+いろいろ　教えてもらおう！▼</language>
+	</row>
+
+	<row id="msg_d05r0201_sage1_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♂
+・続けて七賢人
+　6人と会っていない→icpo_end_02
+　6人と会っている→icpo_end_03</comment>
+		<attribute name="キャラ指定">SAGE１
+七賢人その１</attribute>
+		<language name="JPN" width="256">？？？『かまわんよ▼</language>
+		<language name="JPN_KANJI" width="256">？？？『かまわんよ▼</language>
+	</row>
+
+	<row id="msg_d05r0201_icpo_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　画面暗転して七賢人とハンサムを削除</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『ありがとう▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『ありがとう▼</language>
+	</row>
+
+	<row id="msg_d05r0201_icpo_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・6人の七賢人とであったとき
+・メッセージ歩湯事後
+　画面暗転して七賢人とハンサムを削除</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『ありがとう！▼
+さて　[1:00:トレーナー名:0]……
+きみに　つたえることが　ある▼
+Ｎらしき　じんぶつが
+ドラゴンポケモンと　いるのを▽
+みたという　じょうほうが　あった▼
+わたしは　じょうほうが　ただしいか
+たしかめに　いくつもりだよ▽
+では　また　いつかあおう！▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『ありがとう！▼
+さて　[1:00:トレーナー名:0]……
+きみに　伝えることが　ある▼
+Ｎらしき　人物が
+ドラゴンポケモンと　いるのを▽
+みたという　情報が　あった▼
+わたしは　情報の　真偽を
+確かめに　いくつもりだよ▽
+では　また　いつか会おう！▼</language>
 	</row>
 
 	<flowchart-group-list>
