@@ -409,7 +409,9 @@ EVENT_END
 
 //トレーナーの入っているコースター１台目
 ev_trainer_btl_01:
-	//【仮】視線曲を入れる
+
+	//視線曲を再生
+	_TRAINER_BGM_SET( TRID_PRINCE_02 )
 
 	//トレーナー：主人公前へ
 	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_trainer_move_02 )
@@ -445,7 +447,8 @@ ev_trainer_btl_01:
 
 //トレーナーの入っているコースター２台目
 ev_trainer_btl_02:
-	//【仮】視線曲を入れる
+	//視線曲を再生
+	_TRAINER_BGM_SET( TRID_PRINCESS_02 )
 
 	//トレーナー：主人公前へ
 	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_trainer_move_02 )
