@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-08T22:08:23"/>
+	<create user="matsumiya" host="W00224" date="2010-03-14T12:39:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1340" top="157" right="2045" bottom="785" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -379,17 +379,17 @@
 
 
 	<row id="pdw_furniture_menu_01">
-		<language name="JPN">かぐカタログが　かんきょうが　
-ととのってなくて　とどかないのよね</language>
-		<language name="JPN_KANJI">家具カタログが　環境が整ってなくて
-届かないのよね</language>
+		<language name="JPN">かんきょうが　ととのってなくて
+かぐカタログが　とどかないのよね</language>
+		<language name="JPN_KANJI">環境が　整ってなくて
+家具カタログが　届かないのよね</language>
 	</row>
 
 	<row id="pdw_furniture_menu_02">
-		<language name="JPN">家具のカタログが
-まだ届かないのよね</language>
-		<language name="JPN_KANJI">家具のカタログが
-まだ届かないのよね</language>
+		<language name="JPN" width="401">かぐカタログが
+まだ　とどかないのよね</language>
+		<language name="JPN_KANJI">家具カタログが
+まだ　届かないのよね</language>
 	</row>
 
 	<row id="pdw_furniture_menu_03">

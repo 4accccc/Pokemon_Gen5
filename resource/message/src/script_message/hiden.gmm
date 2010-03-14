@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T15:04:52"/>
+	<create user="matsumiya" host="W00224" date="2010-03-14T12:42:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -588,6 +588,7 @@
 	</row>
 
 	<row id="msg_diving_01">
+		<comment>フィールド技ダイビング</comment>
 		<language name="JPN" width="256">ふかい　うみだ！
 ポケモンの　わざで　もぐれるかも？</language>
 		<language name="JPN_KANJI" width="256">深い海だ！
@@ -595,6 +596,11 @@
 	</row>
 
 	<row id="msg_diving_02">
+		<comment>フィールド技ダイビング
+・秘伝使用可能時
+・はい／いいえの選択
+　はい→msg_diving_03
+　いいえ→終了</comment>
 		<language name="JPN" width="256">ふかい　うみだ！
 ダイビングを　つかいますか？</language>
 		<language name="JPN_KANJI" width="256">深い海だ！

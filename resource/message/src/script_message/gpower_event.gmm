@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-03-10T15:01:09"/>
+	<create user="matsumiya" host="W00224" date="2010-03-14T12:42:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="785" top="91" right="1258" bottom="715" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -344,10 +344,10 @@
 	</row>
 
 	<row id="msg_wonderpower_effect_05">
-		<language name="JPN" width="256">フレンドリィショップ　で
+		<language name="JPN" width="256">フレンドリィショップで
 やすうりが　はじまった！</language>
-		<language name="JPN_KANJI" width="256">フレンドリィショップ　で
-安売りが　はじまった！</language>
+		<language name="JPN_KANJI" width="256">フレンドリィショップで
+安売りが　開始された！</language>
 	</row>
 
 	<row id="msg_wonderpower_effect_06">

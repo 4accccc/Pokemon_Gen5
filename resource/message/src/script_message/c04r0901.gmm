@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T14:57:14"/>
+	<create user="matsumiya" host="W00224" date="2010-03-14T12:27:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="207"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c04r0901_veteranm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0901_veteranm_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・トライアルハウスストッパー</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
@@ -306,7 +306,7 @@
 その腕前を　競うところだ</language>
 	</row>
 
-	<row id="msg_c04r0901_veteranm_02">
+	<row id="msg_c04r0901_veteranm_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・トライアルハウスストッパー
 ・クリア後
