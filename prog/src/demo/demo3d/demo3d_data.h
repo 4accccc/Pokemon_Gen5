@@ -20,6 +20,9 @@
 
 #include "system/ica_anime.h" // for ICA_ANIME
 
+
+#define DEMO3D_BGM_NONE         (0xFFFF)
+
 ///シーンパラメータ
 typedef struct _DEMO3D_SCENE_DATA{
   u16   camera_bin_id;

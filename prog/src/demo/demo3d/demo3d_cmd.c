@@ -82,7 +82,7 @@ struct _DEMO3D_CMD_WORK {
 static BOOL cmd_setup( DEMO3D_CMD_WORK* mwk, DEMO3D_ID id, u32 now_frame, int* out_idx );
 static void cmd_exec( DEMO3D_CMD_WORK* mwk, const DEMO3D_CMD_DATA* data );
 
-static void CMD_SE(CMD_UNIT* unit, int* param);
+static void CMD_SE_PLAY(CMD_UNIT* unit, int* param);
 static void CMD_SE_STOP(CMD_UNIT* unit, int* param);
 static void CMD_BRIGHTNESS_REQ(CMD_UNIT* unit, int* param);
 static void CMD_MOTIONBL_START(CMD_UNIT* unit, int* param);
@@ -95,7 +95,7 @@ static void CMD_MOTIONBL_END(CMD_UNIT* unit, int* param);
 static void (*c_cmdtbl[ DEMO3D_CMD_TYPE_MAX ])() = 
 { 
   NULL, // null
-  CMD_SE,
+  CMD_SE_PLAY,
   CMD_SE_STOP,
   CMD_BRIGHTNESS_REQ,
   CMD_MOTIONBL_START,
@@ -114,25 +114,34 @@ static void (*c_cmdtbl[ DEMO3D_CMD_TYPE_MAX ])() =
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void CMD_SE(CMD_UNIT* unit, int* param)
+static void CMD_SE_PLAY(CMD_UNIT* unit, int* param)
 {
   int player_no;
 
-
-  GFL_SOUND_PlaySE( param[0] );
+  //ÉvÉåÉCÉÑÅ[No
+  if(param[4] != DEMO3D_SE_PARAM_DEFAULT){
+    PMSND_PlaySE_byPlayerID( param[0], param[4] );
+  }else{
+    PMSND_PlaySE(param[0]);
+  }
   
   player_no = GFL_SOUND_GetPlayerNo( param[0] );
 
   // volume
-  if( param[1] != 0 )
+  if( param[1] != DEMO3D_SE_PARAM_DEFAULT )
   {
     GFL_SOUND_SetVolume( player_no, param[1] );
   }
 
   // pan
-  if( param[2] != 0 )
+  if( param[2] != DEMO3D_SE_PARAM_DEFAULT )
   {
     GFL_SOUND_SetPan( player_no, 0xFFFF, param[2] );
+  }
+
+  //pitch
+  if( param[3] != DEMO3D_SE_PARAM_DEFAULT){
+    GFL_SOUND_SetPitch( player_no, 0xFFFF, param[3]);
   }
 }
 

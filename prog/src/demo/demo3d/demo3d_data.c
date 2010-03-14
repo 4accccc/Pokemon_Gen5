@@ -25,7 +25,6 @@
 
 #include "demo3d_data.h"
 
-#define DEMO3D_BGM_NONE     (0xFFFF)
 #define DEMO3D_DATA_RES_MAX (6) //1unitのリソースmax(imd+アニメ5種)
 
 typedef enum{

@@ -45,9 +45,12 @@ typedef enum
   DEMO3D_CMD_TYPE_MAX,
 } DEMO3D_CMD_TYPE;
 
-#define DEMO3D_CMD_PARAM_MAX (4)  ///< 初期化パラメータの最大値
+#define DEMO3D_CMD_PARAM_MAX (8)  ///< 初期化パラメータの最大値
 #define DEMO3D_CMD_PARAM_NULL (0) ///< 無効パラメータの初期化値
 #define DEMO3D_CMD_SYNC_INIT (-1)     ///< frameにこの値が入っていたら初期化コマンドとみなす
+
+//SE_PLAY
+#define DEMO3D_SE_PARAM_DEFAULT (0xFFFFFFFF)
 
 //--------------------------------------------------------------
 ///	3Dデモコマンドデータ

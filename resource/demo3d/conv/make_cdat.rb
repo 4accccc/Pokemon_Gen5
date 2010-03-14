@@ -35,6 +35,9 @@ ARC_ID = "ARCID_DEMO3D_GRA"
 STR_NARC_PRE = "NARC_data_demo3d_"
 STR_COMMENT_LINE = "//=========================================================================\n"
 
+CMD_PARAM_MAX  = 8
+CMD_PARAM_END = CMD_PARAM_MAX-1
+
 #データテーブル
 $onoff_list = ["OFF","ON"]
 $frame_rate_list = ["60fps","30fps"]
@@ -57,6 +60,137 @@ $_unit = Struct.new("Unit", :time_zone_f, :unit_name, :unit_num, :unit_tbl )
 $_scene_unit = Struct.new("SceneUnit", :main_name, :chg_type, :chg_tbl )
 
 $_command = Struct.new("Command", :command, :frame, :param )
+
+$_cmd_prm = Struct.new("CommandParam", :min, :max, :def_key)
+
+class CDemo3DCmd
+  attr  :name
+  attr  :prm_num
+  attr  :prm_tbl
+
+  def initialize name,prm_num,tbl
+    @name = name
+    @prm_num = prm_num
+
+    @prm_tbl = tbl
+
+    print("GetCmdParam = #{name} -> #{tbl.size}\n")
+  end
+end
+
+#-----------------------------------------------
+# demo3d コマンドパラメータチェッククラス
+# コマンドが増えたらチェック関数を追加する必要があります
+#-----------------------------------------------
+class CDemo3DCmdCheck
+  P_FREE = "0xFFFFFFFF"
+  STR_SE_PARAM_NONE = "PMSND_NOEFFECT"
+
+  def cmd_search key
+    for n in @cmd_tbl do
+      if n.name == key then return n end
+    end
+    print("Error! コマンド名 #{key} は未定義です\n")
+    exit 1;
+    return nil
+  end
+
+  #コマンドパラメータチェック
+  def check key, work
+    cmd = cmd_search( key )
+   
+    print("コマンドテーブルNum = #{@cmd_tbl.size}, cmd_param_num = #{cmd.prm_num}, cmd = #{key}\n")
+    @buf.fill( "DEMO3D_CMD_PARAM_NULL", 0..CMD_PARAM_END )
+   
+    #引数の数をカウント
+    arg_num = 0
+    if work == nil && cmd.prm_num == 0 then
+      return @buf
+    end
+    for i in 0..CMD_PARAM_END do
+      if work[i] == nil || work[i] == "" then break end
+      arg_num += 1
+    end
+    
+    if arg_num < cmd.prm_num then
+      print("Error! コマンド #{key} の引数が足りません #{arg_num}/#{cmd.prm_num}\n")
+      exit 1
+    end
+    
+    if arg_num > cmd.prm_num then
+      print("Error! コマンド #{key} の引数が多すぎます #{arg_num}>#{cmd.prm_num}\n")
+      exit 1
+    end
+
+    if cmd.prm_num == 0 then
+      return @buf
+    end
+
+    for i in 0..(cmd.prm_num-1) do
+      prm = cmd.prm_tbl[i]
+
+      if prm.def_key != nil then
+        val = prm.def_key.fetch(work[i],nil)
+        if val != nil then
+          print("buf#{i}= #{work[i]}\n")
+          @buf[i] = val
+          next
+        end
+      end
+
+      if prm.min != P_FREE && work[i].to_i < prm.min then
+        print("Error! 不正なパラメータ指定 #{work[i]} -> 最小値 = #{prm.min}\n")
+        exit 1
+      end
+      
+      if prm.max != P_FREE && work[i].to_i > prm.max then
+        print("Error! 不正なパラメータ指定 #{work[i]} -> 最大値 = #{prm.max}\n")
+        exit 1
+      end
+
+      print("buf#{i}= #{work[i]}\n")
+      @buf[i] = work[i]
+    end
+
+    return @buf
+  end
+
+  def initialize 
+    @buf = Array.new
+ 
+    @prm_se_play = [
+      $_cmd_prm.new( P_FREE, P_FREE, nil ), #SEラベル
+      $_cmd_prm.new( 0, 127, {"---"=>STR_SE_PARAM_NONE} ),       #volume
+      $_cmd_prm.new( -128, 127, { "---"=>STR_SE_PARAM_NONE} ),      #pan
+      $_cmd_prm.new( -32768, 32768, { "---"=>STR_SE_PARAM_NONE } ),  #pitch
+      $_cmd_prm.new( 0, 3, { "---"=>STR_SE_PARAM_NONE } ),  #プレイヤー                
+    ] 
+    @prm_se_stop = [
+      $_cmd_prm.new( P_FREE, P_FREE, nil ), #SEラベル
+    ] 
+    @prm_brightness_req = [
+      $_cmd_prm.new( P_FREE, P_FREE, nil ), #
+      $_cmd_prm.new( -16, 16, nil ), #
+      $_cmd_prm.new( -16, 16, nil ), #
+    ] 
+    @prm_motionbl_start = [
+      $_cmd_prm.new( 0, 31, nil ), #
+      $_cmd_prm.new( 0, 31, nil ), #
+    ] 
+    @prm_none = [
+      $_cmd_prm.new( P_FREE, P_FREE, nil ), #
+    ] 
+    @cmd_tbl = [
+      CDemo3DCmd::new( "SE_PLAY", 5, @prm_se_play),
+      CDemo3DCmd::new( "SE_STOP", 1, @prm_se_stop),
+      CDemo3DCmd::new( "BRIGHTNESS_REQ", 3, @prm_brightness_req),
+      CDemo3DCmd::new( "MOTIONBL_START", 2, @prm_motionbl_start),
+      CDemo3DCmd::new( "MOTIONBL_END", 0, @prm_none),
+      CDemo3DCmd::new( "END", 0, @prm_none),
+    ]
+  end
+end
+
 
 #-----------------------------------------------
 # demo3d リソースデータcsv
@@ -153,7 +287,7 @@ class CDemo3DRes
     com_end = ""
     for n in tbl do
       buf = " { DEMO3D_CMD_TYPE_#{n.command}, #{n.frame}, { "
-      for i in 0..3 do
+      for i in 0..CMD_PARAM_END do
         if n.param[i] == nil || n.param[i] == "" then
           buf += "DEMO3D_CMD_PARAM_NULL, "
         else
@@ -504,7 +638,7 @@ class CDemo3DRes
   end
 
   #コマンド列取得
-  def get_command_list fp, com, tag
+  def get_command_list fp, com, tag, end_cmd_f
     #一行読み飛ばし
     get_line(fp,0)
     
@@ -519,7 +653,9 @@ class CDemo3DRes
       cp.command = work[1]
       cp.frame = work[2]
 
-      if cp.frame == nil then
+      if end_cmd_f == true then
+        cp.frame = "0"
+      elsif cp.frame == nil then
         if cp.command == "END" then
           cp.frame = "0"
         else
@@ -530,10 +666,16 @@ class CDemo3DRes
         cp.frame = "DEMO3D_CMD_SYNC_INIT"
       end
       cp.param = Array.new
-      for i in 0..3 do
+
+      cmd = work[3..(CMD_PARAM_END+3)]
+
+      cp.param = @c_cmd_check.check( work[1], cmd ).slice(0..CMD_PARAM_END)
+=begin
+      for i in 0..CMD_PARAM_END do
         if work[3+i] == "" then break end
         cp.param << work[3+i]
       end
+=end
     end 
   end
 
@@ -629,15 +771,17 @@ class CDemo3DRes
 
     @base_name = File::basename(fpath,'.txt')
 
-    print("\nConvertStart " + fpath + "\n")
+    print("\n#コンバートスタート " + fpath + "\n")
     fp = File.open(fpath,"r")
     if fp == nil then
       exit 1
     end
+    @c_cmd_check = CDemo3DCmdCheck.new()
+
     #シーン名取得
     work = get_line(fp,1)
     @scene_name = work[1]
-    print("シーン " + @base_name + " ->" +@scene_name  + "コンバート開始\n")
+    print("#シーン " + @base_name + " ->" +@scene_name  + "コンバート開始\n\n")
 
     #シーンパラメータ取得開始
     parse_tag( fp, "#SCENE_PARAM")
@@ -654,12 +798,12 @@ class CDemo3DRes
     #コマンドパラメータ取得
     parse_tag( fp, "#COMMAND_PARAM")
     @com_tbl = Array.new
-    get_command_list(fp, @com_tbl, "#COMMAND_PARAM")
+    get_command_list(fp, @com_tbl, "#COMMAND_PARAM", false)
 
     #終了コマンドパラメータ取得
     parse_tag( fp, "#END_COMMAND_PARAM")
     @end_com_tbl = Array.new
-    get_command_list(fp, @end_com_tbl, "#END_COMMAND_PARAM")
+    get_command_list(fp, @end_com_tbl, "#END_COMMAND_PARAM", true)
     
     #リスト終端取得
     parse_tag( fp, "#END_SCENE")
