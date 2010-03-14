@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-13T20:55:43"/>
+	<create user="matsumiya" host="W00224" date="2010-03-14T14:48:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="297"/>
+		<comment position="4" width="320"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1989" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="695"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -343,7 +343,7 @@
 表彰しましょう！！</language>
 	</row>
 
-	<row id="msg_c03r0402_director_02a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0402_director_02a" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>♂
 ・02表示後1回のみ、このメッセージを表示
 ・あわせてt01r0102にイッシュ図鑑の表彰状の動作モデル追加</comment>
@@ -408,14 +408,14 @@
 ひとり　ひとり　違うんだね！</language>
 	</row>
 
-	<row id="msg_c03r0402_director_04a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0402_director_04a" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>♂
 ・04表示後1回のみ、このメッセージを表示
 ・あわせてt01r0102に全国図鑑の表彰状の動作モデル追加</comment>
 		<attribute name="キャラ指定">MAN2（暫定）</attribute>
-		<language name="JPN" width="256">この　ひょうしょうじょう　ですが
+		<language name="JPN" width="256">この　ひょうしょうじょう　も
 きみの　いえにも　おくっておきますね！</language>
-		<language name="JPN_KANJI" width="256">この　表彰状ですが
+		<language name="JPN_KANJI" width="256">この　表彰状も
 きみの　家にも　送っておきますね！</language>
 	</row>
 
@@ -439,18 +439,75 @@
 		<language name="JPN_KANJI" width="256">あたし　グラフィッカーなの</language>
 	</row>
 
-	<row id="msg_c03r0402_03_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0402_03_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
+・仮メッセージ
+・クリア前</comment>
 		<attribute name="キャラ指定">MAN1</attribute>
 		<language name="JPN" width="256">ポケモンしょうぶで
 つよくなる　ポイントはねえ▽
 そうだねえ▽
-いっぱい　しょうぶ　することかな！</language>
+いっぱい　しょうぶ　することかな！▼
+すごーく　つよくなったら　おいでよ
+ぼくと　ポケモンしょうぶ　しよう！</language>
 		<language name="JPN_KANJI" width="256">ポケモン勝負で
 強くなる　ポイントはねえ▽
 そうだねえ▽
-いっぱい　勝負することかな！</language>
+いっぱい　勝負することかな！▼
+すごーく　強くなったら　おいでよ
+ぼくと　ポケモン勝負　しよう！</language>
+	</row>
+
+	<row id="msg_c03r0402_03_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・クリア後
+　はい/いいえの確認</comment>
+		<attribute name="キャラ指定">MAN1</attribute>
+		<language name="JPN" width="256">おっ　つよくなったね！　わかるよ
+ぼくと　ポケモンしょうぶ　してみる？</language>
+		<language name="JPN_KANJI" width="256">おっ　強くなったね！　わかるよ
+ぼくと　ポケモン勝負　してみる？</language>
+	</row>
+
+	<row id="msg_c03r0402_03_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・クリア後＋はい選択
+・メッセージ表示後、戦闘に</comment>
+		<attribute name="キャラ指定">MAN1</attribute>
+		<language name="JPN" width="256">じゃあ　はじめるよー！▼</language>
+		<language name="JPN_KANJI" width="256">じゃあ　はじめるよー！▼</language>
+	</row>
+
+	<row id="msg_c03r0402_03_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・クリア後＋戦闘後
+・日塚が変わるまで繰り返し</comment>
+		<attribute name="キャラ指定">MAN1</attribute>
+		<language name="JPN" width="256">いろいろ　かんがえてるよね！▼
+まけたけれど　べんきょうになったし
+なにより　おもしろかったよ！▽
+また　あした　おいでよ</language>
+		<language name="JPN_KANJI" width="256">いろいろ　考えてるよね！▼
+負けたけれど　勉強になったし
+なにより　おもしろかったよ！▽
+また　明日　おいでよ</language>
+	</row>
+
+	<row id="msg_c03r0402_03_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・クリア後＋いいえ選択
+・再度会話は03_02から</comment>
+		<attribute name="キャラ指定">MAN1</attribute>
+		<language name="JPN" width="256">いいえ　かー▼
+ポケモンの　とくせいとか
+もたせる　どうぐの　くみあわせとか▽
+いろいろ　かんがえて▽
+そだててたのに　ざんねんだなー</language>
+		<language name="JPN_KANJI" width="256">いいえ　かー▼
+ポケモンの　特性とか
+持たせる　道具の　組み合わせとか▽
+いろいろ　考えて▽
+育ててたのに　残念だなー</language>
 	</row>
 
 	<row id="msg_c03r0402_04_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
