@@ -4745,6 +4745,10 @@
 		<language name="JPN" width="256">BGM-E-N</language>
 		<language name="JPN_KANJI" width="256">BGM-E-N</language>
 	</row>
+	<row id="msg_seq_bgm_e_sage">
+		<language name="JPN" width="256">BGM-E-SAGE</language>
+		<language name="JPN_KANJI" width="256">BGM-E-SAGE</language>
+	</row>
 	<row id="msg_seq_bgm_e_g_cis">
 		<language name="JPN" width="256">BGM-E-G-CIS</language>
 		<language name="JPN_KANJI" width="256">BGM-E-G-CIS</language>
@@ -4752,10 +4756,6 @@
 	<row id="msg_seq_bgm_e_gl_union">
 		<language name="JPN" width="256">BGM-E-GL-UNION</language>
 		<language name="JPN_KANJI" width="256">BGM-E-GL-UNION</language>
-	</row>
-	<row id="msg_seq_bgm_e_uragiri">
-		<language name="JPN" width="256">BGM-E-URAGIRI</language>
-		<language name="JPN_KANJI" width="256">BGM-E-URAGIRI</language>
 	</row>
 	<row id="msg_seq_bgm_e_inishie">
 		<language name="JPN" width="256">BGM-E-INISHIE</language>
