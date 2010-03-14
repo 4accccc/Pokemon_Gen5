@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-25T18:59:00"/>
+	<create user="matsumiya" host="W00224" date="2010-03-14T15:39:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="52" top="144" right="757" bottom="772" maximized="no" rayout="Vertical2">
+	<dialog left="1533" top="210" right="2238" bottom="838" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -405,18 +405,18 @@
 	</row>
 
 	<row id="MSG_MB_CHILD_09">
-		<language name="JPN" width="208">ポケモンが　６ひき　いません。
-ポケシフターを　しゅうりょうします。▼</language>
-		<language name="JPN_KANJI" width="208">ポケモンが　６匹　いません。
-ポケシフターを　終了します。▼</language>
+		<language name="JPN" width="208">ポケモンが　６ひき　いません
+ポケシフターを　しゅうりょうします▼</language>
+		<language name="JPN_KANJI" width="208">ポケモンが　６匹　いません
+ポケシフターを　終了します▼</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_10" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>Ariizumi追加0219
 
 初期ロード失敗</comment>
-		<language name="JPN" width="208">データのよみこみに
-しっぱいしました
+		<language name="JPN" width="208">データの　よみこみに
+しっぱい　しました▽
 ポケシフターを　しゅうりょうします▼</language>
 		<language name="JPN_KANJI" width="208">データの読み込みに　失敗しました
 ポケシフターを　終了します▼</language>
@@ -435,11 +435,11 @@
 		<comment>Ariizumi追加0225
 
 セーブ(CRCチェック)失敗</comment>
-		<language name="JPN" width="208">データのかきこみに　
-しっぱいしました。
-ポケシフターを　しゅうりょうします。▼</language>
-		<language name="JPN_KANJI" width="208">データの書き込みに　失敗しました。
-ポケシフターを　終了します。▼</language>
+		<language name="JPN" width="208">データの　かきこみに
+しっぱい　しました▽
+ポケシフターを　しゅうりょうします▼</language>
+		<language name="JPN_KANJI" width="208">データの書き込みに　失敗しました
+ポケシフターを　終了します▼</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_SYS_01">

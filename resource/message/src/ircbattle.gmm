@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-08T16:51:27"/>
+	<create user="matsumiya" host="W00224" date="2010-03-14T15:37:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,7 +342,7 @@
 		</language>
 	</columns>
 
-	<dialog left="260" top="73" right="965" bottom="701" maximized="no" rayout="Vertical2">
+	<dialog left="1473" top="293" right="2178" bottom="921" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="58" top="61" right="531" bottom="459" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -584,21 +584,21 @@
 	<row id="IRCBTL_STR_38">
 		<language name="JPN" width="256">グループ　ぜんいんと
 せきがいせんつうしんを　してください</language>
-		<language name="JPN_KANJI" width="256">グループ　ぜんいんと
-せきがいせんつうしんを　してください</language>
+		<language name="JPN_KANJI" width="256">グループ　全員と
+赤外線通信を　してください</language>
 	</row>
 
 	<row id="IRCBTL_STR_39">
 		<language name="JPN" width="256">リーダーと
 せきがいせんつうしんを　してください</language>
 		<language name="JPN_KANJI" width="256">リーダーと
-せきがいせんつうしんを　してください</language>
+赤外線通信を　してください</language>
 	</row>
 
 	<row id="IRCBTL_STR_40">
 		<language name="JPN" width="256">[2:00:１桁:0]にんと　つうしんちゅう
 すすむで　はじまります</language>
-		<language name="JPN_KANJI" width="256">[2:00:１桁:0]にんと　つうしんちゅう
+		<language name="JPN_KANJI" width="256">[2:00:１桁:0]人と　通信中
 すすむで　はじまります</language>
 	</row>
 
