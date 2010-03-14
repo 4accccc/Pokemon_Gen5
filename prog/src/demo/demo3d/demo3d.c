@@ -95,7 +95,6 @@ typedef struct
   // アプリ例外処理エンジン
   APP_EXCEPTION_WORK*   expection;
   
-  FIELD_LIGHT_STATUS fld_light;
 
 } DEMO3D_MAIN_WORK;
 
@@ -179,12 +178,6 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 
   //描画設定初期化
   wk->graphic = DEMO3D_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, param->demo_id, wk->heapID );
-
-  //フィールドライト設定引継ぎ
-  FIELD_LIGHT_STATUS_Get( ZONE_ID_T01,
-      param->hour, param->min, WEATHER_NO_SUNNY, param->season, &wk->fld_light, wk->heapID );
-  
-  DEMO3D_GRAPHIC_Scene3DParamSet( wk->graphic, &wk->fld_light, NULL );
 
   //フォント作成
   wk->font      = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,

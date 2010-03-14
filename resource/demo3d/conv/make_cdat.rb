@@ -48,9 +48,14 @@ $nsx_list = ["nsbtp","nsbta","nsbca","nsbma","nsbva"]
 
 #構造体定義
 $_scene = Struct.new("SceneParam",\
-	:frame_rate, :camera_name, :zone_id, :bgm_no, :fovy_sin, :fovy_cos, :near, :far, :alpha_sort_mode, :buffer_mode, \
-	:double_view_f, :fog_f, :fog_rgba, :fog_shift, :fog_offset, :fog_mode, :fog_tbl, \
-  :edge_f, :edge_rgb_tbl, :clear_rgba, :fadein_col, :fadein_wait, :fadeout_col, :fadeout_wait )
+	:frame_rate, :camera_name, :zone_id, :bgm_no, :fovy_sin, :fovy_cos, :near, :far, :aspect, \
+  :alpha_sort_mode, :buffer_mode, :scale_w, \
+	:double_view_f, :dview_main_ofs, :dview_sub_ofs, \
+  :alpha_blend_f, :alpha_test_f, :alpha_test_val, \
+  :anti_alias_f, :poly_1dot_depth, \
+  :fog_f, :fog_rgba, :fog_shift, :fog_offset, :fog_mode, :fog_tbl, \
+  :edge_f, :edge_rgb_tbl, :clear_rgba, :clear_poly_id, :clear_fog_f, :clear_depth, \
+  :fadein_col, :fadein_wait, :fadeout_col, :fadeout_wait )
 
 $_unit_prm = Struct.new("UnitParam",\
   :time_zone, :res_tbl )
@@ -239,17 +244,25 @@ class CDemo3DRes
     end 
     fp.puts("\t#{scene.zone_id},\t///<ゾーンID")
     fp.puts("\tDEMO3D_FRAME_RATE_#{scene.frame_rate.upcase},\t///<フレームレート定義")
-    fp.puts("\t#{scene.double_view_f},#{scene.fog_f},#{scene.edge_f},\t///<2画面連結,フォグOn/Off,エッジマーキングOn/Off")
+    fp.puts("\t#{scene.double_view_f},\t///<2画面連結")
+    fp.puts("\t#{scene.alpha_blend_f},#{scene.anti_alias_f},\t///<αブレンドOn/Off,アンチエイリアスOn/Off")
+    fp.puts("\t#{scene.fog_f},#{scene.edge_f},\t///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off")
+    fp.puts("\t#{scene.alpha_sort_mode},#{scene.buffer_mode},\t///<SwapBuf αソートモード,バッファモード")
+    fp.puts("\t#{scene.alpha_test_f},#{scene.alpha_test_val},\t///<αテストOn/Off,αテスト敷居値")
     
-    fp.puts("\tFX32_CONST(#{scene.fovy_sin}),FX32_CONST(#{scene.fovy_cos}),\t///<fovy_sin,fovy_cos")
+    fp.puts("\tFX32_CONST(#{scene.fovy_sin}),FX32_CONST(#{scene.fovy_cos}),#{scene.aspect},\t///<fovy_sin,fovy_cos,aspect")
     fp.puts("\tFX32_CONST(#{scene.near}),FX32_CONST(#{scene.far}),\t///<near,far")
-   
+    fp.puts("\tFX32_CONST(#{scene.scale_w}),\t///<ScaleW")
+  
+    fp.puts("\t#{scene.dview_main_ofs},#{scene.dview_sub_ofs},\t///<2画面main_ofs,2画面sub_ofs")
+    fp.puts("\tFX32_CONST(#{scene.poly_1dot_depth}),\t///<1dotポリゴン表示境界デプス")
     buf = make_rgb_str(scene.clear_rgba)
     fp.puts("\t#{buf},#{scene.clear_rgba[3]},\t///<クリアカラーRGB,A")
+    fp.puts("\t#{scene.clear_poly_id},#{scene.clear_fog_f},#{scene.clear_depth},\t///<クリアポリゴンID,クリアfog,クリアデプス")
     
     buf = make_rgb_str(scene.fog_rgba)
     fp.puts("\t#{buf},#{scene.fog_rgba[3]},\t///<フォグRGB,A")
-    fp.puts("\t#{scene.fog_shift},#{scene.fog_offset},\t///<フォグshift,フォグoffset")
+    fp.puts("\t#{scene.fog_shift},#{scene.fog_offset},#{scene.fog_mode},\t///<フォグshift,フォグoffset,フォグモード")
     
     buf = "{ "
     for i in 0..7 do
@@ -445,72 +458,85 @@ class CDemo3DRes
     @scene = $_scene.new
     
     #一行読み飛ばし
-    get_line(fp,0)
+    get_line(fp, 0, 0)
 
     #フレームレート
-    work = get_line(fp,2)
+    work = get_line(fp, 2, 1)
     @scene.frame_rate = work[0]
 
     #カメラ
-    work = get_line(fp,2)
+    work = get_line(fp,2, 1)
     @scene.camera_name = work[0]
    
     #ゾーン
-    work = get_line(fp,2)
+    work = get_line(fp,2, 1)
     @scene.zone_id = work[0]
 
     #BGM
-    work = get_line(fp,2)
+    work = get_line(fp,2, 1)
     @scene.bgm_no = work[0]
 
     #斜角
-    work = get_line(fp,2)
+    work = get_line(fp, 2, 3)
     @scene.fovy_sin = work[0].to_f
     @scene.fovy_cos = work[1].to_f
+    if work[2] == "DEFAULT" then
+      @scene.aspect = "defaultCameraAspect"
+    else
+      @scene.aspect = "FX32_CONST(#{work[2]}"
+    end
 
-    #斜角
-    work = get_line(fp,2)
-    @scene.near = work[0].to_f
-    @scene.far = work[1].to_f
-    
+    #Near/Far
+    work = get_line(fp,2,2)
+    @scene.near = work[0]
+    @scene.far = work[1]
+
     #SwapBuffers
-    work = get_line(fp,2)
+    work = get_line(fp,2,3)
     @scene.alpha_sort_mode = ("GX_" + work[0])
     @scene.buffer_mode = ("GX_" + work[1])
+    @scene.scale_w = work[2]
 
     #2画面連結
-    work = get_line(fp,2)
+    work = get_line(fp,2,3)
     @scene.double_view_f = work[0]
-    
+    @scene.dview_main_ofs = work[1]
+    @scene.dview_sub_ofs = work[2]
+
     #αブレンディング
-    work = get_line(fp,2)
-    
+    work = get_line(fp,2,1)
+    @scene.alpha_blend_f = work[0]
+
     #αテスト
-    work = get_line(fp,2)
-    
+    work = get_line(fp,2,2)
+    @scene.alpha_test_f = work[0]
+    @scene.alpha_test_val = work[1]
+
     #アンチエイリアス
-    work = get_line(fp,2)
-    
+    work = get_line(fp,2,1)
+    @scene.anti_alias_f = work[0]
+
     #1dotポリゴン表示
-    work = get_line(fp,2)
+    work = get_line(fp,2,1)
+    @scene.poly_1dot_depth = work[0]
 
     #フォグ
-    work = get_line(fp,2)
+    work = get_line(fp,2,5)
     @scene.fog_f = work[0]
     @scene.fog_rgba = get_rgba( work[1] )
     @scene.fog_shift = work[2]
     @scene.fog_offset = work[3]
-    @scene.fog_mode = ("GX_"+work[4])
+    @scene.fog_mode = ("GX_FOG"+work[4])
 
     #フォグ濃度テーブル
-    work = get_line(fp,2)
+    work = get_line(fp,2,8)
     @scene.fog_tbl = Array.new
     for i in 0..7 do
       @scene.fog_tbl << work[i]
     end
 
     #エッジマーキング
-    work = get_line(fp,2)
+    work = get_line(fp,2,9)
     @scene.edge_f = work[0]
     @scene.edge_rgb_tbl = Array.new
     for i in 0..7 do
@@ -518,29 +544,32 @@ class CDemo3DRes
     end
     
     #クリアカラー
-    work = get_line(fp,2)
+    work = get_line(fp,2,4)
     @scene.clear_rgba = get_rgba( work[0] );
-    
+    @scene.clear_poly_id = work[1]
+    @scene.clear_fog_f = work[2]
+    @scene.clear_depth = work[3]
+
     #フェードイン
-    work = get_line(fp,2)
+    work = get_line(fp,2,2)
     @scene.fadein_col = work[0];
     @scene.fadein_wait = work[1];
    
     #フェードアウト
-    work = get_line(fp,2)
+    work = get_line(fp,2,2)
     @scene.fadeout_col = work[0];
     @scene.fadeout_wait = work[1];
   end
 
   #Unitパラメータ取得
   def get_unit_param unit, work
-    idx = $timezone_list.index(work[2])
+    idx = $timezone_list.index(work[1])
     if idx == nil then
-      print("Error! タイムゾーン指定が間違っています -> #{work[2]}\n")
+      print("Error! タイムゾーン指定が間違っています -> #{work[1]}\n")
       exit 1
     end
 
-    if work[3] == "" then
+    if work[2] == "" then
       print("Error! imd名は必ず指定してください\n")
       exit 1
     end
@@ -550,11 +579,11 @@ class CDemo3DRes
     cp.time_zone = idx
     cp.res_tbl = Array.new
     
-    cp.res_tbl << (work[3]+"_nsbmd")
+    cp.res_tbl << (work[2]+"_nsbmd")
 
     for i in 0..4 do
-      if work[4+i] == nil || work[4+i] == "" then next end
-      cp.res_tbl << (work[4+i]+"_"+$nsx_list[i]) 
+      if work[3+i] == nil || work[3+i] == "" then next end
+      cp.res_tbl << (work[3+i]+"_"+$nsx_list[i]) 
     end
 
     return idx
@@ -567,10 +596,10 @@ class CDemo3DRes
     @unit_main_num = 0
 
     #一行読み飛ばし
-    get_line(fp,0)
+    get_line(fp,0,0)
     
     while 1
-      work = get_line(fp,0)
+      work = get_line(fp,1,0)
       if check_tag_block_end(work[0],"#UNIT_RESOURCE") == 1 then
         if @unit.size == 0 then
           print("Error! Unit定義がありません -> #{work[0]}\n最低1つのunitを定義してください\n")
@@ -581,10 +610,15 @@ class CDemo3DRes
       
       @unit << $_unit.new
       cp = @unit.last()
-      cp.unit_name = work[1]
+      
+      cp.unit_name = work[0]
+      if cp.unit_name == nil || cp.unit_name == "" then
+        print("Error! ユニット名が指定されていません\n")
+        exit 1
+      end
 
       cp.unit_tbl = Array.new
-      cp.time_zone_f = work[2] == "TIMEZONE_NONE" ? 0 : 1
+      cp.time_zone_f = work[1] == "TIMEZONE_NONE" ? 0 : 1
       if cp.time_zone_f == 0 then
         get_unit_param( cp, work )
       else
@@ -595,7 +629,7 @@ class CDemo3DRes
             exit 1
           end
           if i < 4 then
-            work = get_line(fp,0)
+            work = get_line(fp,1,0)
           end
         end
       end
@@ -609,26 +643,26 @@ class CDemo3DRes
     @scene_unit_num = 0
 
     #一行読み飛ばし
-    get_line(fp,0)
+    get_line(fp,0,0)
    
     print("\nシーンユニット検索開始\n")
     while 1
-      work = get_line(fp,0)
+      work = get_line(fp,1,2)
       if check_tag_block_end(work[0],"#SCENE_UNIT") == 1 then
         break
       end
       
       @scene_unit << $_scene_unit.new
       cp = @scene_unit.last()
-      cp.chg_type = work[1]
-      cp.main_name = work[2]
-      print(" Get scene unit -> #{work[2]}\n")
+      cp.chg_type = work[0]
+      cp.main_name = work[1]
+      print(" Get scene unit -> #{work[1]}\n")
       cp.chg_tbl = Array.new
       for i in 0..9 do
-        if work[2+i] == nil || work[2+i] == "" then break end
-        cp.chg_tbl << work[2+i]
+        if work[1+i] == nil || work[1+i] == "" then break end
+        cp.chg_tbl << work[1+i]
       end
-      if work[2+10] != nil && work[2+10] != "" then
+      if work[1+10] != nil && work[1+10] != "" then
         print("Error! 指定できるパターンは10以下です\n10以上のパターンを指定した場合、プログラマにご相談ください\n")
         exit 1
       end
@@ -640,18 +674,18 @@ class CDemo3DRes
   #コマンド列取得
   def get_command_list fp, com, tag, end_cmd_f
     #一行読み飛ばし
-    get_line(fp,0)
+    get_line(fp,0,0)
     
     while 1
-      work = get_line(fp,0)
+      work = get_line(fp,1,1)
       if check_tag_block_end(work[0], tag ) == 1 then
         break
       end
       com << $_command.new
       cp = com.last()
 
-      cp.command = work[1]
-      cp.frame = work[2]
+      cp.command = work[0]
+      cp.frame = work[1]
 
       if end_cmd_f == true then
         cp.frame = "0"
@@ -659,7 +693,7 @@ class CDemo3DRes
         if cp.command == "END" then
           cp.frame = "0"
         else
-          print("Error! コマンドのフレームを指定してください->#{work[1]}\n")
+          print("Error! コマンドのフレームを指定してください->#{work[0]}\n")
           exit 1
         end
       elsif cp.frame == "INIT" then
@@ -667,15 +701,9 @@ class CDemo3DRes
       end
       cp.param = Array.new
 
-      cmd = work[3..(CMD_PARAM_END+3)]
+      cmd = work[2..(CMD_PARAM_END+2)]
 
-      cp.param = @c_cmd_check.check( work[1], cmd ).slice(0..CMD_PARAM_END)
-=begin
-      for i in 0..CMD_PARAM_END do
-        if work[3+i] == "" then break end
-        cp.param << work[3+i]
-      end
-=end
+      cp.param = @c_cmd_check.check( work[0], cmd ).slice(0..CMD_PARAM_END)
     end 
   end
 
@@ -717,7 +745,7 @@ class CDemo3DRes
   end
  
   #ライン取得
-  def get_line fp, idx
+  def get_line fp, idx, num
     line = fp.gets
     line.chomp!
     work = line.split("\t")
@@ -725,7 +753,30 @@ class CDemo3DRes
     if idx > size then
       idx = 0
     end
-    return work.slice(idx..size)
+    
+    if /^#.*/ =~ work[0] then
+      return work  #タグ行はパラメータ数チェックが要らない
+    end
+    param = work.slice!(idx..size)
+ 
+    if num == 0 then
+      return param
+    end
+    if param == nil then
+      print("#{work[1]} -> パラメータ数が足りません 0 / #{num}\n")
+      exit 1
+    end
+
+    ct = 0
+    for n in param do
+      if n == nil || n == "" then break end
+      ct += 1
+    end
+    if ct < num then
+      print("#{work[1]} -> パラメータ数が足りません #{ct} / #{num}\n")
+      exit 1
+    end
+    return param 
   end
 
   #タグブロックチェック
@@ -779,7 +830,7 @@ class CDemo3DRes
     @c_cmd_check = CDemo3DCmdCheck.new()
 
     #シーン名取得
-    work = get_line(fp,1)
+    work = get_line(fp, 1, 0)
     @scene_name = work[1]
     print("#シーン " + @base_name + " ->" +@scene_name  + "コンバート開始\n\n")
 

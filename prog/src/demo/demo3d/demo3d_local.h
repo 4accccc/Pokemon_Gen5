@@ -19,6 +19,10 @@ typedef struct _DEMO3D_SCENE_ENV{
   u8        scene_id;
   u8        time_zone;
   u8        player_sex;
+
+  u8        hour;
+  u8        min;
+  u8        season;
 }DEMO3D_SCENE_ENV;
 
 // キー同時押しマクロ

@@ -55,7 +55,6 @@ struct _DEMO3D_ENGINE_WORK {
   DEMO3D_GRAPHIC_WORK*    graphic;
   DEMO3D_ID               demo_id;
 //  u32                     start_frame;
-  DEMO3D_SCENE_ENV        env;
 
   // [PRIVATE]
   BOOL          is_double;
@@ -68,6 +67,10 @@ struct _DEMO3D_ENGINE_WORK {
   DEMO3D_CMD_WORK*  cmd;
 
   u16* unit_idx; // unit_idx保持（ALLOC)
+
+  //シーンパラメータ保持
+  const DEMO3D_SCENE_DATA* scene;
+  DEMO3D_SCENE_ENV        env;
 };
 
 //=============================================================================
@@ -75,6 +78,7 @@ struct _DEMO3D_ENGINE_WORK {
  *							プロトタイプ宣言
  */
 //=============================================================================
+static void set_SceneParam( const DEMO3D_ENGINE_WORK* wk, DEMO3D_PARAM* param, const DEMO3D_SCENE_DATA* scene, HEAPID heapID );
 
 //=============================================================================
 /**
@@ -154,7 +158,6 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
 
   // メンバ初期化
   wk->graphic       = graphic;
-
   wk->demo_id       = param->demo_id;
   
   //環境パラメータセット
@@ -164,6 +167,11 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
   wk->env.start_frame = param->start_frame;
   wk->env.time_zone = GFL_RTC_ConvertHourToTimeZone( param->hour );
   wk->env.player_sex = param->player_sex;
+  wk->env.hour = param->hour;
+  wk->env.min = param->min;
+  wk->env.season = param->season;
+
+  wk->scene = Demo3D_DATA_GetSceneData( wk->demo_id );
 
   IWASAWA_Printf("start_frame=%d\n",wk->env.start_frame);
 
@@ -172,22 +180,20 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
     fx32 fovySin;
     fx32 fovyCos;
 
-    fovySin = Demo3D_DATA_GetCameraFovySin( wk->demo_id );
-    fovyCos = Demo3D_DATA_GetCameraFovyCos( wk->demo_id );
-
-    fovySin = FX_SinIdx( (fovySin>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT );
-    fovyCos = FX_CosIdx( (fovyCos>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT );
+    fovySin = FX_SinIdx( (wk->scene->fovy_sin>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT );
+    fovyCos = FX_CosIdx( (wk->scene->fovy_cos>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT );
 
     wk->camera = GFL_G3D_CAMERA_CreateFrustumByPersPrm( 
                   &sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET,
-                  fovySin, fovyCos, defaultCameraAspect, FX32_CONST(0.1), FX32_CONST(2048), heapID );
+                  fovySin, fovyCos, defaultCameraAspect, wk->scene->near, wk->scene->far, heapID );
 
     // デフォルトのtop/buttomを取得
     GFL_G3D_CAMERA_GetTop( wk->camera, &wk->def_top );
     GFL_G3D_CAMERA_GetBottom( wk->camera, &wk->def_buttom );
 
   }
-   
+  set_SceneParam( wk, param, wk->scene, heapID );
+  
   // アニメーションスピードを取得
   wk->anime_speed = Demo3D_DATA_GetAnimeSpeed( wk->demo_id );
   HOSAKA_Printf("anime_speed=%d\n", wk->anime_speed );
@@ -635,6 +641,54 @@ fx32 DEMO3D_ENGINE_GetNowFrame( const DEMO3D_ENGINE_WORK* wk )
 
   return ICA_ANIME_GetNowFrame( wk->ica_anime );
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  シーンパラメータ設定
+ *
+ *	@param	DEMO3D_ENGINE_WORK* wk 　ワーク
+ *
+ *	@retval フーレム値
+ */
+//-----------------------------------------------------------------------------
+static void set_SceneParam( const DEMO3D_ENGINE_WORK* wk, DEMO3D_PARAM* param, const DEMO3D_SCENE_DATA* scene, HEAPID heapID )
+{
+  //フィールドライト設定引継ぎ
+  {
+    FIELD_LIGHT_STATUS fld_light;
+
+    FIELD_LIGHT_STATUS_Get( scene->zone_id,
+      param->hour, param->min, WEATHER_NO_SUNNY, param->season, &fld_light, heapID );
+  
+    DEMO3D_GRAPHIC_Scene3DParamSet( wk->graphic, &fld_light, NULL );
+  }
+
+	G3X_AntiAlias( scene->anti_alias_f ); //	アンチエイリアス
+	G3X_AlphaTest( scene->alpha_test_f, wk->scene->alpha_test_val );  //	アルファテスト　　オフ
+	G3X_AlphaBlend( scene->alpha_blend_f );   //	アルファブレンド　オン
+
+	G3X_EdgeMarking( scene->edge_marking_f ); //	エッジマーキング
+  if( scene->edge_marking_f ){
+    G3X_SetEdgeColorTable( scene->edge_col );
+  }
+
+	G3X_SetFog( scene->fog_f, scene->fog_mode, scene->fog_shift, scene->fog_offset );	//フォグ
+  if( scene->fog_f ){
+    u32 i, tbl[8];
+    G3X_SetFogColor( scene->fog_col, scene->fog_alpha );
+
+    for( i = 0;i < 8;i++){
+      tbl[i] = scene->fog_tbl[i]; //u8[]からu32[]に変換
+    }
+    G3X_SetFogTable( tbl );
+  }
+	// クリアカラーの設定
+	G3X_SetClearColor( scene->clear_col, scene->clear_alpha, scene->clear_depth,
+                     scene->clear_poly_id, scene->fog_f );	//color,alpha,depth,polygonID,fog
+
+  G3X_SetDisp1DotDepth( scene->poly_1dot_depth);
+}
+
 
 
 

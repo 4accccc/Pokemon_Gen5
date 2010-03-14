@@ -28,21 +28,36 @@ typedef struct _DEMO3D_SCENE_DATA{
   u16   camera_bin_id;
   u16   zone_id;
   u16   bgm_no;
-  u8    frame_rate; //<フレームレート 0:60fps, 1:30fps
-  u8    double_view_f:1;
-  u8    fog_f:1;
-  u8    edge_marking_f:1;
-//  fx32  anm_speed;  //<60fps = 1.0, 30fps = 0.5
-  fx32  fovy_sin,fovy_cos;
-  fx32  near,far;
+ 
+  u16   frame_rate:1; //<フレームレート 0:60fps, 1:30fps
+  u16   double_view_f:1;
+  u16   alpha_blend_f:1;
+  u16   anti_alias_f:1;
+  u16   fog_f:1;
+  u16   edge_marking_f:1;
+  u16   sbuf_sort_mode:1;
+  u16   sbuf_buf_mode:1;
+  u16   alpha_test_f:1;
+  u16   alpha_test_val:5;
+  
+  fx32  fovy_sin, fovy_cos, aspect;
+  fx32  near, far;
+  fx32  scale_w;
+
+  s16   dview_main_ofs, dview_sub_ofs;
+  fx32  poly_1dot_depth;
 
   GXRgb clear_col;
-  u8    clear_alpha;
+  u16   clear_alpha;
+  u16   clear_poly_id:15;
+  u16   clear_fog_f:1;
+  u16   clear_depth;
 
   GXRgb fog_col;
   u8    fog_alpha;
   u8    fog_shift;
-  u16   fog_offset;
+  u16   fog_offset:15;
+  u16   fog_mode:1;
   u8    fog_tbl[8];
   
   GXRgb edge_col[8];
