@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d04r0801.h"
-  //.include  "d04r0801.h"
+  .include  "d04r0801.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d04r0801
+_EVENT_DATA		ev_d04r0801_sage4_01
 _EVENT_DATA_END
 
 
@@ -30,9 +30,193 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*		D04R0801	七賢人イベント							  */
 /**************************************************************/
-ev_d04r0801:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_d04r0801_sage4_01
+_TALK_OBJ_START()
+DEFINE_LOCAL	LWK_DIR	
 
+	//七賢人４・セリフ１
+	_BALLOONWIN_TALKOBJ_MSG( msg_d04r0801_sage4_end_01 )
+	_MSGWIN_CLOSE()
+	
+	//めいそう入手
+	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN04, 1 )
+	
+	//七賢人４・セリフ２
+	_BALLOONWIN_TALKOBJ_MSG( msg_d04r0801_sage4_end_02 )
+	_MSGWIN_CLOSE()
+	
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
+	//ハンサム出現
+	_OBJ_ADD_EX( 12,07,DIR_LEFT,MMDL_ID_EVENTOBJ_00,ICPO,MV_DMY )
+	
+	//ハンサム寄ってくる
+	_PLAYER_DIR_GET( LWK_DIR )
+	SWITCH $LWK_DIR
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_left_come )
+		_OBJ_ANIME( D04R0801_SAGE4_01, anm_stay_u2 )
+		_OBJ_ANIME_WAIT()
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_right_come )
+		_OBJ_ANIME( D04R0801_SAGE4_01, anm_stay_u2 )
+		_OBJ_ANIME_WAIT()
+	CASE DIR_UP THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_up_come )
+		_OBJ_ANIME( D04R0801_SAGE4_01, anm_stay_r2 )
+		_OBJ_ANIME_WAIT()
+	CASE DIR_DOWN THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_down_come )
+		_OBJ_ANIME( D04R0801_SAGE4_01, anm_stay_r2 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+
+	//ハンサムセリフ
+	_BALLOONWIN_OBJMSG( msg_d04r0801_icpo_end_01 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+
+	//七賢人４・セリフ３
+	_BALLOONWIN_TALKOBJ_MSG( msg_d04r0801_sage4_end_02 )
+	_MSGWIN_CLOSE()
+
+	SWITCH $LWK_DIR
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_left_come2 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+		_OBJ_ANIME_WAIT()
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_right_come2 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+		_OBJ_ANIME_WAIT()
+	CASE DIR_UP THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_up_come2 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
+		_OBJ_ANIME_WAIT()
+	CASE DIR_DOWN THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_down_come2 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+
+	//【仮】全部の七賢人を捕まえている場合
+	IF $LOCALWORK10 == 7 THEN
+		
+		//ハンサムセリフ
+		_BALLOONWIN_OBJMSG( msg_d04r0801_icpo_end_03 , MMDL_ID_EVENTOBJ_00 )
+		_MSGWIN_CLOSE()
+	
+	//まだ捕まえていない場合
+	ELSE
+	
+		//ハンサムセリフ
+		_BALLOONWIN_OBJMSG( msg_d04r0801_icpo_end_02 , MMDL_ID_EVENTOBJ_00 )
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+	
+	//画面暗転
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	_OBJ_DEL( D04R0801_SAGE4_01 )
+	
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+
+	//========================================/
+	
+	//バニシュフラグセット
+	_FLAG_SET( FV_D04R0801_SAGE )
+	
+	//========================================/
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//共通アニメ：ステイウォーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_u2
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d2
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r2
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l2
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	ハンサムアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_left_come
+	_ANIME_DATA	AC_WALK_L_4F,6
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_right_come
+	_ANIME_DATA	AC_WALK_L_4F,6
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_up_come
+	_ANIME_DATA	AC_WALK_L_4F,5
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_down_come
+	_ANIME_DATA	AC_WALK_L_4F,5
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_left_come2
+	_ANIME_DATA	AC_WALK_R_4F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_right_come2
+	_ANIME_DATA	AC_WALK_L_4F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_up_come2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_down_come2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
