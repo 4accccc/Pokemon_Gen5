@@ -104,22 +104,31 @@ EVENT_START ev_scene_palace01_1stguide
 	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_move_01 )
 	_OBJ_ANIME_WAIT()
 	
-	//われわれは
-	_BALLOONWIN_OBJMSG( plc_oldman1_01_01, PALACE01_OLDMAN1_01 )
+	//主人公：じじいを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//おやおや迷子が
+	_BALLOONWIN_OBJMSG( plc_oldman1_01_10, PALACE01_OLDMAN1_01 )
+	_MSGWIN_CLOSE()
+	
+	//パレスじじい：下を向いて
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	//ここはイッシュの中心にある…
+	_BALLOONWIN_OBJMSG( plc_oldman1_01_11, PALACE01_OLDMAN1_01 )
 	_MSGWIN_CLOSE()
 	
 	//パレスじじい：主人公を見て
 	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_r )
 	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
-	_OBJ_ANIME_WAIT()
 	
-	//パレスだま＊５入手 【仮】名称変更を控えているため定義名を使っていません
-	_ITEM_EVENT_KEYWAIT( 620, 5 )
-
-	//パレス質問メニューへ
-	_CALL	ev_oldman1_guide
-
+	//…こどもよ
+	_BALLOONWIN_OBJMSG( plc_oldman1_01_12, PALACE01_OLDMAN1_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
 	//========================================//
 	//初回誘導イベントを無効
 	$WK_SCENE_PALACE01 = 1
@@ -131,6 +140,10 @@ EVENT_END
 //--------------------------------------------------------------------
 //方向転換
 //--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_walk_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 _ANIME_LABEL	anm_stay_walk_r
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -151,8 +164,7 @@ _ANIME_LABEL	anm_oldman1_look_01
 //パレスじじい：主人公横へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_oldman1_move_01
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -162,7 +174,25 @@ _ANIME_LABEL	anm_oldman1_move_01
 EVENT_START ev_palace01_oldman1_01
 	_TALK_OBJ_START()
 	
-	_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_04, PALACE01_OLDMAN1_01, POS_DR )
+	//初回会話分岐
+	IF FLAG_OFF( FE_PALACE01_OLDMANTALK) THEN
+		//初めてなら
+		_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_01, PALACE01_OLDMAN1_01, POS_DR )
+		_MSGWIN_CLOSE()
+		
+		//パレスだま＊５入手 【仮】名称変更を控えているため定義名を使っていません
+		_ITEM_EVENT_KEYWAIT( 620, 5 )
+		
+		//========================================//
+		//初回会話済み
+		_FLAG_SET( FE_PALACE01_OLDMANTALK )
+		//========================================//
+		
+	ELSE
+		//２回目以降
+		_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_04, PALACE01_OLDMAN1_01, POS_DR )
+		
+	ENDIF
 	
 	//パレス質問メニューへ
 	_CALL	ev_oldman1_guide
