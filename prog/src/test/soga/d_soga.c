@@ -20,6 +20,9 @@
 
 #include "demo/shinka_demo.h"
 
+#include "app/pdc.h"
+#include "field/zonedata.h"
+
 enum{
   BACK_COL = 0,
   SHADOW_COL = 2,
@@ -51,6 +54,9 @@ typedef struct
   int         key_repeat_speed;
   int         key_repeat_wait;
   void*       param;
+  GFL_PROCSYS*  local_procsys;
+  PDC_SETUP_PARAM*    psp;
+  BTL_FIELD_SITUATION bfs;
 }SOGA_WORK;
 
 static  void  TextPrint( SOGA_WORK *wk );
@@ -73,6 +79,7 @@ static	const	SOGA_PROC_TABLE	spt[]={
 	{ DSMSG_TRAINER_VIEWER,	&TrainerViewerProcData },
 	{ DSMSG_BATTLE_TEST,	&DebugBattleTestProcData },
 	{ DSMSG_CAPTURE,		&CaptureTestProcData },
+	{ DSMSG_CAPTURE,		&PDC_ProcData },
 };
 
 //--------------------------------------------------------------------------
@@ -199,6 +206,8 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 
   (*seq) = 0;
 
+  wk->local_procsys = GFL_PROC_LOCAL_boot( wk->heapID );
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -215,7 +224,10 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
   int tp = GFL_UI_TP_GetTrg();
   SOGA_WORK* wk = mywk;
 
-  switch( (*seq) ){ 
+  GFL_PROC_MAIN_STATUS  local_proc_status = GFL_PROC_LOCAL_Main( wk->local_procsys );
+  if( local_proc_status == GFL_PROC_MAIN_VALID ) return GFL_PROC_RES_CONTINUE;
+
+  switch( wk->seq_no ){ 
   case 0:
     if( ( trg & PAD_KEY_UP ) && ( wk->pos > 0 ) ){
       wk->pos--;
@@ -224,10 +236,30 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
       wk->pos++;
     }
     else if( trg & PAD_BUTTON_A ){
-      wk->seq_no = 1;
-      return GFL_PROC_RES_FINISH;
+      if( wk->pos == 5 )
+      { 
+        wk->seq_no = 2;
+      }
+      else
+      { 
+        wk->seq_no = 1;
+        return GFL_PROC_RES_FINISH;
+      }
     }
+    break;
   case 1:
+    break;
+  case 2:
+    { 
+      BTL_FIELD_SITUATION bfs = { 
+        0, 0, 0, 0, 0, 12, 0,
+      };
+      wk->bfs = bfs;
+      GFL_OVERLAY_Load( FS_OVERLAY_ID(pdc) );
+      wk->psp = PDC_MakeSetUpParam( NULL, &wk->bfs, wk->heapID );
+      ZONEDATA_Open( wk->heapID );
+      GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, spt[ wk->pos ].gpd, wk->psp );
+    }
     break;
   }
 
@@ -250,6 +282,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
  */
 //--------------------------------------------------------------------------
 FS_EXTERN_OVERLAY(sogabe_debug);
+
 static GFL_PROC_RESULT DebugSogabeMainProcExit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   SOGA_WORK* wk = mywk;
