@@ -186,8 +186,10 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     break;
   case _CALL_GAMESYNC:
     {
+      SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys));
+      BOOL Flg = DREAMWORLD_SV_GetSleepPokemonFlg(DREAMWORLD_SV_GetDreamWorldSaveData(pSave));
       BOX_MANAGER* pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(gsys));
-      if(0==BOXDAT_GetPokeExistCount2Total(pBox)){  //BOXが空ならば
+      if(0==BOXDAT_GetPokeExistCount2Total(pBox) && !Flg){  // 寝てるポケモンがいない+ BOXが空ならば
         dbw->selectType = GSYNC_CALLTYPE_BOXNULL; 
         (*seq) = _GAMESYNC_MAINPROC;  //BOXから表示をして終了するために
       }
