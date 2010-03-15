@@ -189,6 +189,7 @@
 #define WK_SCENE_R13Ｒ0103_LEGEND        16577 /* 0x40c1 13番道路：ツチノカミイベント用ワーク */
 #define WK_SCENE_C04R0601                16578 /* 0x40c2 ライモンシティ４番道路側ゲート：イベント用ワーク */
 #define WK_SCENE_PALACE01                16579 /* 0x40c3 パレス：イベント用ワーク */
+#define WK_SCENE_C3CENTER_DANCE          16580 /* 0x40c4 C03中央部：ヒウンダンサーズイベント用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

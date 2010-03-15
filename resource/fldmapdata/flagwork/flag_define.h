@@ -721,15 +721,15 @@
 #define FV_C04R0601_POS_HAKASE             697 /* 0x02b9 ライモンシティ４番道路側ゲート：博士とライバル */
 #define FV_R08R0101_OLDMAN1                698 /* 0x02ba セッカ湿原：事情通の老人 */
 #define FV_C04P01_HAKAI                    699 /* 0x02bb ライモン遊園地：プラズマ団したっぱ２人 */
-		/* not used   700(0x02bc) */
-		/* not used   701(0x02bd) */
-		/* not used   702(0x02be) */
-		/* not used   703(0x02bf) */
-		/* not used   704(0x02c0) */
-		/* not used   705(0x02c1) */
-		/* not used   706(0x02c2) */
-		/* not used   707(0x02c3) */
-		/* not used   708(0x02c4) */
+#define FV_C03P12_DANCER_01                700 /* 0x02bc ヒウンダンサーズ：路地のダンサー１ */
+#define FV_C03P14_DANCER_02                701 /* 0x02bd ヒウンダンサーズ：路地のダンサー２ */
+#define FV_C03CENTER_DANCER_01             702 /* 0x02be ヒウンダンサーズ：中央部のダンサー１ */
+#define FV_C03CENTER_DANCER_02             703 /* 0x02bf ヒウンダンサーズ：中央部のダンサー２ */
+#define FV_D04R0801_SAGE                   704 /* 0x02c0 クリア後七賢人イベント：古代の城 */
+#define FV_R14_SAGE                        705 /* 0x02c1 クリア後七賢人イベント：14番道路 */
+#define FV_D06R0301_SAGE                   706 /* 0x02c2 クリア後七賢人イベント：電気石の洞穴 */
+#define FV_D01R0101_SAGE                   707 /* 0x02c3 クリア後七賢人イベント：夢の跡地 */
+#define FV_R18_SAGE                        708 /* 0x02c4 クリア後七賢人イベント：18番道路 */
 		/* not used   709(0x02c5) */
 		/* not used   710(0x02c6) */
 		/* not used   711(0x02c7) */
@@ -2464,7 +2464,7 @@
 #define TMFLG_C05R0701_WAZA_CLEAR         2740 /* 0x0ab4 日替わり技見せ：クリア判定 */
 #define TMFLG_C07R0201_QUIZ               2741 /* 0x0ab5 セッカシティ民家：クイズ家挑戦フラグ */
 #define TMFLG_R13_TREASURE                2742 /* 0x0ab6 13番道路：海辺のお宝イベント */
-		/* not used  2743(0x0ab7) */
+#define TMFLG_C03R0402_BATTLE             2743 /* 0x0ab7 ゲームフリーク：森本さん戦闘フラグ */
 		/* not used  2744(0x0ab8) */
 		/* not used  2745(0x0ab9) */
 		/* not used  2746(0x0aba) */
