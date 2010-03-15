@@ -292,7 +292,7 @@
 #define FE_D03R0101_ITEMGET_01             276 /* 0x0114 リゾートデザート：アイテム入手フラグ（じてんしゃ） */
 #define FE_D04R0101_ARRIVE                 277 /* 0x0115 古代の城：到着フラグ（イベントでのみ使用） */
 #define FE_R08R0101_LEG_FIRST              278 /* 0x0116 セッカ湿原：ダルタニスの技習得イベントの初回判定フラグ */
-		/* not used   279(0x0117) */
+#define FE_R13_TREASURE_FIRSTTALK          279 /* 0x0117 R13お宝イベント：初回会話フラグ */
 		/* not used   280(0x0118) */
 		/* not used   281(0x0119) */
 		/* not used   282(0x011a) */
