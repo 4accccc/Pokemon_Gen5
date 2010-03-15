@@ -3,18 +3,18 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-03-11T15:02:03" source="door_normal01.mb"/>
+	<create user="fuchino" host="W00152" date="2010-03-15T19:44:13" source="door_c8_b.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2010-03-11T15:02:03" source="door_normal01.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-03-15T19:44:13" source="door_c8_b.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
-	pos_scale="3"
+	pos_scale="2"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
@@ -27,63 +27,79 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="3" xyz="-2.125000 0.750000 -0.250000" whd="2.250000 3.250000 0.500000"/>
+<box_test pos_scale="2" xyz="-2.250000 1.000000 0.250000" whd="4.500000 6.750000 0.000000"/>
 
 <tex_image_array size="1">
-	<tex_image index="0" name="door_n_01"
+	<tex_image index="0" name="c8_door_b"
 		width="32" height="32" original_width="32" original_height="32"
-		format="palette4"
-		color0_mode="color"
-		palette_name="door_n_01_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/door_normal01/tex/door_n_01.tga"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="c8_door_b_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/door_c8_b/tex/c8_door_b.tga"
 	>
-		<bitmap size="128">
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			3333 3333 3333 3333 3333 3333 3333 3333
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 5555 5555 5555 5555 5555 5555
-			6aaa 5aa9 96aa 556a bffe affe ebff aabf
-			bffe affe ebff aabf bffe affe ebff aabf
-			bffe affe ebff aabf baae affe ebff aabf
-			b82e affe ebff aabf b82e affe ebff aabf
-			b82e affe ebff aabf b82e affe ebff aabf
-			b41e affe ebff aabf b41e affe ebff aabf
-			b55e affe ebff aabf baae affe ebff aabf
-			bffe affe ebff aabf bffe affe ebff aabf
-			bffe affe ebff aabf bffe affe ebff aabf
-			bffe affe ebff aabf bffe affe ebff aabf
-			bffe affe ebff aabf bffe affe ebff aabf
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 4444
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
-	<tex_palette index="0" name="door_n_01_pl" color_size="4">
-		439f 4dc8 5e09 6e6b
+	<tex_palette index="0" name="c8_door_b_pl" color_size="8">
+		18c6 7357 772d 45e9 6680 72e0 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="1">
-	<material index="0" name="door_n_01"
+	<material index="0" name="c8_door_b"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="8"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="25 25 25"
+		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="31 31 31"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
-		tex_tiling="clamp clamp"
+		tex_tiling="clamp repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
@@ -97,37 +113,47 @@
 
 <polygon_array size="1">
 	<polygon index="0" name="polygon0"
-		vertex_size="8" polygon_size="2"
-		triangle_size="0" quad_size="2"
-		volume_min="-2.125000 0.750000 -0.250000"
-		volume_max="0.125000 4.000000 0.250000"
-		volume_r="4.536377"
+		vertex_size="12" polygon_size="6"
+		triangle_size="6" quad_size="0"
+		volume_min="-0.250000 1.000000 6.000000"
+		volume_max="4.250000 7.750000 6.000000"
+		volume_r="10.407227"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
-			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="8">
+			<primitive_array size="3">
+				<primitive index="0" type="triangle_strip" vertex_size="5">
 					<mtx idx="0"/>
-					<tex st="27.000000 32.000000"/>
-					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_s xyz="0.125000 0.750000 0.250000"/>
-					<tex st="32.000000 32.000000"/>
-					<pos_xz xz="0.125000 -0.250000"/>
-					<tex st="32.000000 0.000000"/>
-					<pos_xy xy="0.125000 4.000000"/>
-					<tex st="27.000000 0.000000"/>
-					<pos_xz xz="0.125000 0.250000"/>
-					<tex st="0.000000 32.000000"/>
+					<tex st="0.000000 31.000000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_xy xy="-2.125000 0.750000"/>
-					<tex st="27.000000 32.000000"/>
-					<pos_xy xy="0.125000 0.750000"/>
-					<tex st="27.000000 0.000000"/>
-					<pos_xy xy="0.125000 4.000000"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-2.125000 4.000000"/>
+					<pos_s xyz="3.750000 1.000000 6.000000"/>
+					<tex st="32.000000 31.000000"/>
+					<pos_xy xy="4.250000 4.995361"/>
+					<tex st="16.000000 17.187500"/>
+					<pos_xy xy="1.936768 4.995361"/>
+					<tex st="0.000000 31.000000"/>
+					<pos_xy xy="3.500000 7.750000"/>
+					<tex st="32.000000 31.000000"/>
+					<pos_xy xy="0.500000 7.750000"/>
+				</primitive>
+				<primitive index="1" type="triangle_strip" vertex_size="4">
+					<pos_xy xy="-0.250000 4.995361"/>
+					<tex st="0.000000 31.000000"/>
+					<pos_xy xy="0.250000 1.000000"/>
+					<tex st="16.000000 17.187500"/>
+					<pos_xy xy="1.936768 4.995361"/>
+					<tex st="32.000000 31.000000"/>
+					<pos_xy xy="3.750000 1.000000"/>
+				</primitive>
+				<primitive index="2" type="triangles" vertex_size="3">
+					<tex st="0.000000 31.000000"/>
+					<pos_xy xy="-0.250000 4.995361"/>
+					<tex st="16.000000 17.187500"/>
+					<pos_xy xy="1.936768 4.995361"/>
+					<tex st="32.000000 31.000000"/>
+					<pos_xy xy="0.500000 7.750000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -135,7 +161,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface6" kind="mesh"
+	<node index="0" name="polySurface26" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -144,21 +170,21 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="-8.000000 0.000000 -23.000000"
 		visibility="on"
 		display_size="1"
-		vertex_size="8" polygon_size="2"
-		triangle_size="0" quad_size="2"
-		volume_min="-2.125000 0.750000 -0.250000"
-		volume_max="0.125000 4.000000 0.250000"
-		volume_r="4.536377"
+		vertex_size="12" polygon_size="6"
+		triangle_size="6" quad_size="0"
+		volume_min="-0.250000 1.000000 6.000000"
+		volume_max="4.250000 7.750000 6.000000"
+		volume_r="10.407227"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="8" polygon_size="2"
-	triangle_size="0" quad_size="2"/>
+<output_info vertex_size="12" polygon_size="6"
+	triangle_size="6" quad_size="0"/>
 
 </body>
 
