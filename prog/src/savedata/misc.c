@@ -16,6 +16,11 @@
 #include "field/research_team_def.h"
 #include "../../../resource/research_radar/data/question_id.h" // for QUESTION_ID_xxxx
 
+#include "system/main.h"             // for HEAPID_xxxx
+#include "arc/arc_def.h"             // for ARCID_xxxx
+#include "arc/script_message.naix"   // for NARC_xxxx
+#include "msg/script/msg_c03r0101.h" // for msg_xxxx
+
 //=============================================================================
 /**
  *					定数宣言
@@ -70,7 +75,25 @@ void MISC_Init( MISC *p_msc )
 	
 	p_msc->palpark_highscore = 100; //仮
 	
-	p_msc->self_introduction[0] = GFL_STR_GetEOMCode();
+  // すれ違いデフォルトメッセージ
+  {
+    GFL_MSGDATA* msg;
+    STRBUF* strbuf;
+
+    msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_c03r0101_dat, HEAPID_SAVE );
+
+    // 挨拶
+    strbuf = GFL_MSG_CreateString( msg, msg_c03r0101_input_a );
+    GFL_STR_GetStringCode( strbuf, p_msc->self_introduction, SAVE_SURETIGAI_SELFINTRODUCTION_LEN );
+    GFL_STR_DeleteBuffer( strbuf );
+
+    // お礼
+    strbuf = GFL_MSG_CreateString( msg, msg_c03r0101_input_b );
+    GFL_STR_GetStringCode( strbuf, p_msc->thankyou_message, SAVE_SURETIGAI_THANKYOU_LEN );
+    GFL_STR_DeleteBuffer( strbuf );
+
+    GFL_MSG_Delete( msg );
+  }
 
   p_msc->research_request_id = RESEARCH_REQ_ID_NONE;
   p_msc->research_question_id[0] = QUESTION_ID_DUMMY;
