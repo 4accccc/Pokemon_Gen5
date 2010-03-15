@@ -183,7 +183,7 @@
 #define FE_LEGEND2_GET                     167 /* 0x00a7 伝説ポケモン：ポルトスを捕まえた */
 #define FE_LEGEND3_GET                     168 /* 0x00a8 伝説ポケモン：アラミスを捕まえた */
 #define FE_D06R0201_GOLDGET                169 /* 0x00a9 電気洞窟内：きんのたま入手フラグ */
-		/* not used   170(0x00aa) */
+#define FE_PALACE01_OLDMANTALK             170 /* 0x00aa パレスじじい初回会話フラグ */
 #define FE_C09R0501_CHAMPION               171 /* 0x00ab チャンピオンリーグ：アデク初回会話フラグ */
 #define FE_MEZAPA_FIRSTTALK                172 /* 0x00ac めざめるパワーのタイプチェックする人の初回会話フラグ */
 #define FE_T01R0102_SUPPORTBTL             173 /* 0x00ad 自宅２Ｆサポートとの戦闘終了フラグ */
