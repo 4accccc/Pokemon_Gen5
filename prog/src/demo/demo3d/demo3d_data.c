@@ -342,6 +342,27 @@ const fx32 Demo3D_DATA_GetCameraFovyCos( DEMO3D_ID id )
   return scene->fovy_cos;//c_demo3d_setup_data[ id ].fovy_cos;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  コンバートデータからフェードイン・アウトパラメータを取得
+ *
+ *	@param	DEMO3D_ID id  デモID
+ *
+ *	@retval fx32 fovy_sin パース値SIN
+ */
+//-----------------------------------------------------------------------------
+void Demo3D_DATA_GetFadeParam( DEMO3D_ID id, u8 inout_f, u8* outType, u8* outSync )
+{
+  const DEMO3D_SCENE_DATA* scene = Demo3D_DATA_GetSceneData( id );
+
+  if(inout_f == 0){
+    *outType = scene->fadein_type;
+    *outSync = scene->fadein_sync;
+  }else{
+    *outType = scene->fadeout_type;
+    *outSync = scene->fadeout_sync;
+  }
+}
 
 // コンバートデータ読み込み
 //#include "demo3d_cmd_data.cdat"

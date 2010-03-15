@@ -41,6 +41,7 @@
 #include "demo3d_graphic.h"
 #include "demo3d_engine.h"
 #include "demo3d_exp.h"
+#include "demo3d_data.h"
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -203,8 +204,11 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
   
   // フェードイン リクエスト
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
-
+  {
+    u8 type,sync;
+    Demo3D_DATA_GetFadeParam( param->demo_id, 0, &type, &sync );
+    GFL_FADE_SetMasterBrightReq( type, 16, 0, sync );
+  }
   // デモ毎の例外処理エンジン初期化
   wk->expection = APP_EXCEPTION_Create( param->demo_id, wk->graphic, wk->engine, wk->heapID );
 
@@ -230,7 +234,9 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
   if( *seq == 0 )
   {
     // フェードアウト リクエスト
-    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 2 );
+    u8 type,sync;
+    Demo3D_DATA_GetFadeParam( wk->param->demo_id, 1, &type, &sync );
+    GFL_FADE_SetMasterBrightReq( type, 0, 16, sync );
     (*seq)++;
     return GFL_PROC_RES_CONTINUE;
   }

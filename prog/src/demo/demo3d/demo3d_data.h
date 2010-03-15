@@ -193,3 +193,14 @@ extern const fx32 Demo3D_DATA_GetCameraFovySin( DEMO3D_ID id );
 //-----------------------------------------------------------------------------
 extern const fx32 Demo3D_DATA_GetCameraFovyCos( DEMO3D_ID id );
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  コンバートデータからフェードイン・アウトパラメータを取得
+ *
+ *	@param	DEMO3D_ID id  デモID
+ *
+ *	@retval fx32 fovy_sin パース値SIN
+ */
+//-----------------------------------------------------------------------------
+extern void Demo3D_DATA_GetFadeParam( DEMO3D_ID id, u8 inout_f, u8* outType, u8* outSync );
+
