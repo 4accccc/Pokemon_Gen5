@@ -20,11 +20,14 @@ WOTBL			= wotbl.narc
 EVOTBL		= evo.narc
 PMSTBL		= pms.narc
 GROWTBL		= growtbl.narc
+ICONSCR		= pokeicon_all.scr
+ICONATTR	= attr_list.txt
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR	= $(PROJECT_ARCDIR)personal/
+POKEICONDIR	= ../pokeicon/graphic/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -80,7 +83,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)$(PERSONAL) $(TARGETDIR)$(PERSONAL_NAIX) $(TARGETDIR)$(WOTBL) $(TARGETDIR)$(EVOTBL) $(TARGETDIR)$(PMSTBL) $(TARGETDIR)$(GROWTBL)
+do-build:	$(TARGETDIR)$(PERSONAL) $(TARGETDIR)$(PERSONAL_NAIX) $(TARGETDIR)$(WOTBL) $(TARGETDIR)$(EVOTBL) $(TARGETDIR)$(PMSTBL) $(TARGETDIR)$(GROWTBL) $(POKEICONDIR)$(ICONSCR) $(POKEICONDIR)$(ICONATTR)
 
 $(TARGETDIR)$(PERSONAL):	$(PERSONAL)
 	$(COPY)	$(PERSONAL) $(TARGETDIR)
@@ -99,4 +102,10 @@ $(TARGETDIR)$(PMSTBL):	$(PMSTBL)
 
 $(TARGETDIR)$(GROWTBL):	$(GROWTBL)
 	$(COPY)	$(GROWTBL) $(TARGETDIR)
+
+$(POKEICONDIR)$(ICONSCR):	$(ICONSCR)
+	$(COPY)	$(ICONSCR) $(POKEICONDIR)
+
+$(POKEICONDIR)$(ICONATTR):	$(ICONATTR)
+	$(COPY)	$(ICONATTR) $(POKEICONDIR)
 
