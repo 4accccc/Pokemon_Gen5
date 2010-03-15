@@ -282,3 +282,4 @@
   ARCID_TRIALHOUSE_GRA  "trialhouse_gra.narc"  # トライアルハウス検定結果のグラフィックデータ
   ARCID_SHOUJOU  "shoujou.narc"  # 図鑑賞状（地方、全国）のグラフィックデータ
   ARCID_EV_MOVEPOKE  "event_movepoke.narc"  # 移動ポケモンイベント用データ
+  ARCID_SPPOKE_GMK  "fieldmap/sppoke.narc"  # 特殊ポケモンギミックアーカイブ
