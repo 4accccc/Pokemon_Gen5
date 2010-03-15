@@ -163,6 +163,7 @@ static const FSND_REQUEST_DATA* GetHeadRequest( const FIELD_SOUND* fieldSound );
 static const FSND_REQUEST_DATA* GetNextRequest( const FIELD_SOUND* fieldSound );
 static const FSND_REQUEST_DATA* GetTailRequest( const FIELD_SOUND* fieldSound );
 static BOOL QueueHaveRequest( const FIELD_SOUND* fieldSound );
+static u8 GetRequestCountInQueue( const FIELD_SOUND* fieldSound, FSND_BGM_REQUEST request );
 static void RegisterNewRequest( FIELD_SOUND* fieldSound, const FSND_REQUEST_DATA* requestData );
 static void RemoveHeadRequest( FIELD_SOUND* fieldSound );
 // キューにリクエストを登録できるかどうかの判定
@@ -290,6 +291,35 @@ void FIELD_SOUND_Delete( FIELD_SOUND* fieldSound )
 FSND_PUSHCOUNT FIELD_SOUND_GetBGMPushCount( const FIELD_SOUND* fieldSound )
 {
   return fieldSound->pushCount;
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief 現在登録されているリクエストが完了した時点での, BGM退避数を取得する
+ *
+ * @param fieldSound
+ *
+ * @return 全てのリクエストを完了した時点での, 積まれているBGMの数
+ */
+//---------------------------------------------------------------------------------
+FSND_PUSHCOUNT FIELD_SOUND_GetBGMPushCount_atAllRequestFinished( const FIELD_SOUND* fieldSound )
+{
+  FSND_PUSHCOUNT pushCount;
+
+  // 現在積まれているBGMの数を取得
+  pushCount = fieldSound->pushCount;
+
+  // キューに登録されているPOPリクエストの数だけ減らす
+  pushCount -= GetRequestCountInQueue( fieldSound, FSND_BGM_REQUEST_POP );
+
+  // POP リクエスト処理中
+  if( fieldSound->request == FSND_BGM_REQUEST_POP ) {
+    pushCount--;
+  }
+
+  GF_ASSERT( FSND_PUSHCOUNT_NONE <= pushCount );
+  GF_ASSERT( pushCount <= FSND_PUSHCOUNT_MAX );
+  return pushCount;
 }
 
 //---------------------------------------------------------------------------------
@@ -840,6 +870,35 @@ static BOOL QueueHaveRequest( const FIELD_SOUND* fieldSound )
   headRequest = GetHeadRequest( fieldSound );
 
   return ( headRequest->request != FSND_BGM_REQUEST_NONE );
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief キューに登録された, リクエストの数を取得する
+ *
+ * @param fieldSound
+ * @param request    リクエスト
+ * 
+ * @return 指定したリクエストがキューに登録されている数
+ */
+//---------------------------------------------------------------------------------
+static u8 GetRequestCountInQueue( const FIELD_SOUND* fieldSound, FSND_BGM_REQUEST request )
+{
+  int pos;
+  int num;
+
+  pos = fieldSound->requestHeadPos;
+  num = 0;
+  while( pos != fieldSound->requestTailPos )
+  {
+    // 指定されたリクエストを発見
+    if( fieldSound->requestData[ pos ].request == request ) { num++; }
+
+    // 次のリクエストへ
+    pos += (pos + 1) % REQUEST_QUEUE_SIZE;
+  }
+
+  return num;
 }
 
 //---------------------------------------------------------------------------------
@@ -2056,6 +2115,7 @@ static void PushBGM( FIELD_SOUND* fieldSound )
   }
 
   // 退避
+  PMSND_PauseBGM( TRUE );
   PMSND_PushBGM();
 
   // 内部情報を更新
@@ -2091,6 +2151,7 @@ static void PopBGM( FIELD_SOUND* fieldSound )
 
   // 復帰
   PMSND_PopBGM();
+  PMSND_PauseBGM( FALSE );
 
   // 内部情報を更新
   fieldSound->pushCount--;

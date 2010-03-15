@@ -42,11 +42,16 @@ typedef enum{
 // BGM退避数の取得
 extern FSND_PUSHCOUNT FIELD_SOUND_GetBGMPushCount( const FIELD_SOUND* fieldSound );
 
+// 現在登録されているリクエストが完了した時点での, BGM退避数を取得する
+extern FSND_PUSHCOUNT FIELD_SOUND_GetBGMPushCount_atAllRequestFinished( 
+    const FIELD_SOUND* fieldSound );
+
 // フェード中かどうか (TRUE: フェード中)
 extern BOOL FIELD_SOUND_IsBGMFade( const FIELD_SOUND* fieldSound );
 
 // 未処理のリクエストを持っているかどうか (TRUE: 持っている)
 extern BOOL FIELD_SOUND_HaveRequest( const FIELD_SOUND* fieldSound );
+
 
 
 //=================================================================================

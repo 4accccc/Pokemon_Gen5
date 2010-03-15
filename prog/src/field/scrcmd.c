@@ -24,6 +24,7 @@
 
 #include "field_status_local.h"
 #include "field_sound.h"
+#include "field_sound_system.h"
 
 #include "field_saveanime.h"
 
@@ -1233,20 +1234,39 @@ static VMCMD_RESULT EvCmdCommonProcFieldEventStart( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdCommonProcFieldEventEnd( VMHANDLE * core, void *wk )
 {
-  SCRCMD_WORK*  work = wk;
-  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-  SCRIPT_WORK*    sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRCMD_WORK*  work       = wk;
+  SCRIPT_WORK*  script     = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gameSystem = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*     gameData   = GAMESYSTEM_GetGameData( gameSystem );
+  VMCMD_RESULT  result     = VMCMD_RESULT_CONTINUE;
   
   //動作モデルポーズ解除
   SCRCMD_SUB_PauseClearAll( work );
 
   //サウンド開放忘れ回避
   {
-    GMEVENT* event;
-    event = EVENT_FSND_AllPopBGM( gsys, FSND_FADE_NONE );
-    SCRIPT_CallEvent( sc, event );
+    FIELD_SOUND* fieldSound;
+    FSND_PUSHCOUNT pushCount;
+
+    // ポップ予定のないBGMの数を取得
+    fieldSound = GAMEDATA_GetFieldSound( gameData );
+    pushCount  = FIELD_SOUND_GetBGMPushCount_atAllRequestFinished( fieldSound );
+
+    // ポップされないBGMが残っている
+    if( FSND_PUSHCOUNT_NONE != pushCount ) {
+      OS_Printf( "BGM復帰を忘れています。\n" );
+      GF_ASSERT(0);
+
+      // POP忘れのBGMをすべてPOPする
+      {
+        GMEVENT* event;
+        event = EVENT_FSND_AllPopBGM( gameSystem, FSND_FADE_NONE );
+        SCRIPT_CallEvent( script, event );
+        result = VMCMD_RESULT_SUSPEND;
+      }
+    }
   }
-  return VMCMD_RESULT_SUSPEND;
+  return result;
 }
 
 //--------------------------------------------------------------

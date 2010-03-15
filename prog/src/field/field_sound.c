@@ -317,27 +317,19 @@ GMEVENT* EVENT_FSND_PopBGM( GAMESYS_WORK* gameSystem, u16 fadeOutFrame, u16 fade
 //---------------------------------------------------------------------------------
 static GMEVENT_RESULT AllPopBGMEvent( GMEVENT* event, int* seq, void* wk )
 {
-  FIELD_SOUND* fieldSound;
-  FSND_EVWORK* work; 
+  FSND_EVWORK* work = (FSND_EVWORK*)wk;
+  FIELD_SOUND* fieldSound = work->fieldSound;
   FSND_PUSHCOUNT pushCount;
-  u16 fadeInFrame;
-  int i;
-
-
-  work = (FSND_EVWORK*)wk;
-  fieldSound = work->fieldSound;
-  pushCount = FIELD_SOUND_GetBGMPushCount( fieldSound );
+  int i; 
 
   switch( *seq )
   {
-  // 既存のリクエスト完了待ち
-  case 0:
-    if( FIELD_SOUND_HaveRequest( fieldSound ) == FALSE ) { (*seq)++; }
-    break;
-
   // 全ポップ
-  case 1:
-    OS_TFPrintf( 1, "puchCount = %d\n", pushCount );
+  case 0:
+    // ポップされる予定のないBGMの数を取得
+    pushCount = FIELD_SOUND_GetBGMPushCount_atAllRequestFinished( fieldSound );
+
+    // 全BGMをポップ
     if( FSND_PUSHCOUNT_NONE < pushCount )
     {
       for( i=0; i<pushCount-1; i++ )
@@ -351,7 +343,7 @@ static GMEVENT_RESULT AllPopBGMEvent( GMEVENT* event, int* seq, void* wk )
     break;
 
   // イベント終了
-  case 2:
+  case 1:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE; 
