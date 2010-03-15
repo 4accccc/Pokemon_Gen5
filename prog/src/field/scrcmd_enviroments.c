@@ -37,6 +37,7 @@
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  //for SYS_FLAG_
 #include "report.h" //REPORT_SAVE_TYPE_VAL
 #include "savedata/misc.h"
+#include "ev_time.h"
 
 
 //======================================================================
@@ -163,16 +164,13 @@ VMCMD_RESULT EvCmdGetTrainerCardRank( VMHANDLE *core, void *wk )
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
- *
- * @todo 
- * 時間帯が季節で変わることをどうするか企画と協議。
- * 直接RTCでなくイベントで保持している時間帯を参照するのか？
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetTimeZone( VMHANDLE *core, void *wk )
 {
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
   u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
-  *ret_wk = GFL_RTC_GetTimeZone();
+  *ret_wk = EVTIME_GetTimeZone( gamedata );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -182,17 +180,15 @@ VMCMD_RESULT EvCmdGetTimeZone( VMHANDLE *core, void *wk )
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
- *
- * @todo  RTCから直接取得しているが、本当にそれでよいのか？検討する
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetWeek( VMHANDLE * core, void *wk )
 {
   RTCDate now_date;
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
   u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
 
-  GFL_RTC_GetDate( &now_date );
-  *ret_wk = now_date.week;
+  *ret_wk = EVTIME_GetWeek( gamedata );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -202,21 +198,40 @@ VMCMD_RESULT EvCmdGetWeek( VMHANDLE * core, void *wk )
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param  wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
- *
- * @todo  RTCから直接取得しているが、本当にそれでよいのか？検討する
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetDate( VMHANDLE * core, void *wk )
 {
   RTCDate now_date;
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
   u16 *ret_month = SCRCMD_GetVMWork( core, wk ); // 第一引数
   u16 *ret_day   = SCRCMD_GetVMWork( core, wk ); // 第二引数
 
-  GFL_RTC_GetDate( &now_date );
-  *ret_month = now_date.month;
-  *ret_day   = now_date.day;
+  *ret_month = EVTIME_GetMonth( gamedata );
+  *ret_day   = EVTIME_GetDay( gamedata );
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief 日付の取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param  wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetTime( VMHANDLE * core, void *wk )
+{
+  RTCDate now_date;
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
+  u16 *      ret_hour = SCRCMD_GetVMWork( core, wk ); // 第一引数
+  u16 *    ret_minute = SCRCMD_GetVMWork( core, wk ); // 第二引数
+
+  *ret_hour   = EVTIME_GetHour( gamedata );
+  *ret_minute = EVTIME_GetMinute( gamedata );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //--------------------------------------------------------------
 /**
  * @brief 現在の季節を取得する

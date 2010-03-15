@@ -4188,6 +4188,23 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_TIME
+ * @brief 現在時間の取得
+ * @param ret_hour    時を受け取るワーク
+ * @param ret_minute  分を受け取るワーク
+ */
+//--------------------------------------------------------------
+#define _GET_TIME( ret_hour, ret_minute ) \
+    _ASM_GET_TIME ret_hour, ret_minute
+
+  .macro  _ASM_GET_TIME ret_hour, ret_minute
+  .short  EV_SEQ_GET_TIME
+  .short  \ret_hour
+  .short  \ret_minute
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @def _GET_SEASON_ID
  * @brief 季節の取得
  * @param ret_wk    結果を受けるワーク
