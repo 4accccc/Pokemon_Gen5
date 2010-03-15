@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-13T13:12:30"/>
+	<create user="matsumiya" host="W00224" date="2010-03-15T19:01:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -631,6 +631,305 @@
 気を　つけてね！
 いってらっしゃい！▽
 ママ　応援してるから！</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♀
+・初回クリア後に
+　t01r0102から降りてくるとイベント開始
+・メッセージ表示後、主人公、移動
+・続けてicpo_end_01
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ？『おかえりなさい
+[1:00:トレーナー名:0]▼
+なんだか　すごいこと　ばかりで
+いろいろ　たいへん　だったみたいね▼</language>
+		<language name="JPN_KANJI" width="256">ママ？『おかえりなさい
+[1:00:トレーナー名:0]▼
+なんだか　すごいこと　ばかりで
+いろいろ　大変だったみたいね▼</language>
+	</row>
+
+	<row id="msg_t01r0101_icpo_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・最初はママの動作モデルで配置
+・続けてmama_end_02
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ママ？『そうだね▼
+でんせつの　ポケモン　２ひきと
+であうなんて　すごいこと　だよ▼</language>
+		<language name="JPN_KANJI" width="256">ママ？『そうだね▼
+伝説の　ポケモン　２匹と
+出会うなんて　すごいこと　だよ▼</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♀
+・続けてicpo_end_02</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ？『ああ　こちらは……▼</language>
+		<language name="JPN_KANJI" width="256">ママ？『ああ　こちらは……▼</language>
+	</row>
+
+	<row id="msg_t01r0101_icpo_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　その場で一回転後、動作モデルをICPOに差し替え
+・続けてicpo_end_03</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ママ？『おっと
+へんそう　したまま　だったね▼
+しっけい！　というか
+じこしょうかいを　させていただこう▼</language>
+		<language name="JPN_KANJI" width="256">ママ？『おっと
+変装したまま　だったね▼
+失敬！　というか
+自己紹介を　させていただこう▼</language>
+	</row>
+
+	<row id="msg_t01r0101_icpo_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けてicpo_end_04</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">わたしは　せかいを　またに　かける
+こくさいけいさつの　メンバーである▼
+なまえは……　いや　きみには
+コードネームを　おしえよう▼
+そう　コードネームは　ハンサム！
+みんな　そう　よんでいるよ！▼</language>
+		<language name="JPN_KANJI" width="256">わたしは　世界を　またに　かける
+国際警察の　メンバーである▼
+名前は……　いや　きみには
+コードネームを　教えよう▼
+そう　コードネームは　ハンサム！
+みんな　そう　呼んでいるよ！▼</language>
+	</row>
+
+	<row id="msg_t01r0101_icpo_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・下を向いてメッセージ表示
+・続けてicpo_end_05</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『イッシュちほうで
+プラズマだん　なる　そしきが▽
+あんやく　している……▼
+その　じょうほうを　えて
+はるばる　やってきたのだが……▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『イッシュ地方で
+プラズマ団なる　組織が▽
+暗躍している……▼
+その情報を　えて
+はるばる　やってきたのだが……▼</language>
+	</row>
+
+	<row id="msg_t01r0101_icpo_end_05" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・主人公を向いてメッセージ表示
+・続けてicpo_end_06</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ジムリーダーたちや
+きみの　かつやく　で！▼
+プラズマだんの　しろは　くずれさり
+メンバーは　ちりぢりに　にげさった！▽
+わたしは　そう　きいているよ▼</language>
+		<language name="JPN_KANJI" width="256">ジムリーダーたちや
+きみの　活躍で！▼
+プラズマ団の　城は　崩壊し
+メンバーは　散り散りに　逃げ去った！▽
+わたしは　そう　聞いているよ▼</language>
+	</row>
+
+	<row id="msg_t01r0101_icpo_end_06" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・数歩うろうろしてからメッセージ表示歩いてから
+・続けてicpo_end_07</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">だがしかし！
+いやしかし！▼
+しちけんじん　とよばれる　メンバーは
+まだ　イッシュちほうに　ひそんでいる▼</language>
+		<language name="JPN_KANJI" width="256">だがしかし！
+いやしかし！▼
+七賢人とよばれる　メンバーは
+まだ　イッシュ地方に　潜伏している▼</language>
+	</row>
+
+	<row id="msg_t01r0101_icpo_end_07" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・再度主人公と向き合ってからメッセージ表示
+・はい/いいえの選択肢表示
+　はい→icpo_end_09
+　いいえ→icpo_end_08</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">そこでだ！　すごい　トレーナーの
+きみに　たのみたいことが　ある！▼
+きみは　イッシュちほうの
+あらゆる　ばしょを　めぐり▽
+しちけんじんを　さがしてほしい！▼
+これは　チャンピオンである
+アデクさんの　すいせん　でもあるんだ</language>
+		<language name="JPN_KANJI" width="256">そこでだ！　すごい　トレーナーの
+きみに　たのみたいことが　ある！▼
+きみは　イッシュ地方の
+あらゆる　場所を　巡り▽
+七賢人を　探してほしい！▼
+これは　チャンピオンである
+アデクさんの　推薦でも　あるんだ</language>
+	</row>
+
+	<row id="msg_t01r0101_icpo_end_08" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・いいえ選択時
+・再度はい/いいえの選択肢表示
+　はい→icpo_end_09
+　いいえ→icpo_end_08</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ゴホン！▼
+もういちど　おねがいしよう！！▼
+きみは　イッシュちほうの
+あらゆる　ばしょを　めぐり▽
+しちけんじんを　さがしてほしい！</language>
+		<language name="JPN_KANJI" width="256">ゴホン！▼
+もういちど　お願いしよう！！▼
+きみは　イッシュ地方の
+あらゆる　場所を　巡り▽
+七賢人を　探してほしい！</language>
+	</row>
+
+	<row id="msg_t01r0101_icpo_end_09" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・はい選択時
+・アイテム入手処理
+　No000「すごいつりざお」
+・続けてmama_end_03</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『おお！　ありがたい！▼
+まさに　１００まんの
+みかたを　えた　おもいだよ▼
+では　これを　わたそう▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『おお！　ありがたい！▼
+まさに　１００万の
+味方を　えた　思いだよ▼
+では　これを　渡そう▼</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♀
+・続けてicpo_end_10</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『……それは
+すごいつりざお　ですよね▼</language>
+		<language name="JPN_KANJI" width="256">ママ『……それは
+すごいつりざお　ですよね▼</language>
+	</row>
+
+	<row id="msg_t01r0101_icpo_end_10" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けてmama_end_04</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『ええ！
+すごいつりざお　です！▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『ええ！
+すごいつりざお　です！▼</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♀
+・続けてicpo_end_11</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『……その　プラズマだんの
+しちけんじん　でしたっけ？▼
+その　ひとたちを　さがすのに
+なにか　かんけいが　あるのでしょうか▼</language>
+		<language name="JPN_KANJI" width="256">ママ『……その　プラズマ団の
+七賢人でしたっけ？▼
+その　人たちを　探すのに
+なにか　関係が　あるのでしょうか▼</language>
+	</row>
+
+	<row id="msg_t01r0101_icpo_end_11" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けてmama_end_05</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『なるほど▼
+さすが　[1:00:トレーナー名:0]の　おかあさん
+いい　しつもん　ですな▼
+おこたえ　しましょう！▼
+まったく　かんけい　ありません▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『なるほど▼
+さすが　[1:00:トレーナー名:0]の　おかあさん
+いい　質問ですな▼
+お答しましょう！▼
+まったく　関係ありません▼</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_end_05" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♀
+・サブウインドウで表示
+・続けてmama_end_06</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">……</language>
+		<language name="JPN_KANJI" width="256">……</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_end_06" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♀
+・サブウインドウで表示
+・続けてmama_end_07</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">……</language>
+		<language name="JPN_KANJI" width="256">……</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_end_07" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♀
+・続けてicpo_end_12</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『はあ……▼</language>
+		<language name="JPN_KANJI" width="256">ママ『はあ……▼</language>
+	</row>
+
+	<row id="msg_t01r0101_icpo_end_12" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、家の外に退場
+　画面外に消えると、主人公操作可能に
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『では　[1:00:トレーナー名:0]！
+よろしく　たのんだよ！▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『では　[1:00:トレーナー名:0]！
+よろしく　頼んだよ！▼</language>
+	</row>
+
+	<row id="msg_t01r0101_mama_end_08" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+		<comment>♀
+・icpo_end_12表示後、家を出るまで繰り返し
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『とっても　ユニークなのね
+こくさいけいさつの　ひとって▼
+まあ　きにしないで
+あなたの　したいように　すれば▽
+いいと　おもうな！　ママは</language>
+		<language name="JPN_KANJI" width="256">ママ『とっても　ユニークなのね
+国際警察の　人って▼
+まあ　気にしないで
+あなたの　したいように　すれば▽
+いいと　思うな！　ママは</language>
 	</row>
 
 	<flowchart-group-list>
