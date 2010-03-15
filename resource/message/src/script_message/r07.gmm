@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T19:51:19"/>
+	<create user="matsushima" host="W00181" date="2010-03-15T16:33:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="63" top="107" right="768" bottom="727" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -542,7 +542,7 @@
 ちと　寄っていきなさいなー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r07_pokemon_01w" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r07_pokemon_01w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>ポケモン
 ・メッセージ表示とともに鳴き声再生
 ・このあと、飛び去る。</comment>
@@ -551,13 +551,23 @@
 		<language name="JPN_KANJI" width="256">しゅるばばばーっ！！</language>
 	</row>
 
-	<row id="msg_r07_pokemon_01b" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r07_pokemon_01b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>ポケモン
 ・メッセージ表示とともに鳴き声再生
 ・このあと、飛び去る。</comment>
 		<attribute name="キャラ指定">ライカミ</attribute>
 		<language name="JPN" width="256">ばりゅるるるるーっ！！</language>
 		<language name="JPN_KANJI" width="256">ばりゅるるるるーっ！！</language>
+	</row>
+
+	<row id="msg_r07_narrator_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>●カザカミ、ライカミが登場し、天候が変化したあとのメッセージ。
+●この後、カザカミ、ライカミが退場します。</comment>
+		<attribute name="キャラ指定">ナレーション</attribute>
+		<language name="JPN" width="256">ひどい　あらし…！[BE:01:ページ切り替え（クリア）]
+あの　ポケモンの　しわざらしい！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ひどい　あらし…！[BE:01:ページ切り替え（クリア）]
+あの　ポケモンの　しわざらしい！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r07_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
