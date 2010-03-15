@@ -2064,7 +2064,9 @@ static void PushBGM( FIELD_SOUND* fieldSound )
   fieldSound->currentBGM = BGM_NONE; 
 
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: push BGM(%d)\n", fieldSound->pushBGM[ fieldSound->pushCount-1 ] );
+  OS_TFPrintf( PRINT_NO, 
+      "FIELD-SOUND: push BGM(%d). pushCount==>%d\n", 
+      fieldSound->pushBGM[ fieldSound->pushCount-1 ], fieldSound->pushCount );
 #endif
 }
 
@@ -2100,7 +2102,9 @@ static void PopBGM( FIELD_SOUND* fieldSound )
   }
 
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: pop BGM(%d)\n", fieldSound->currentBGM );
+  OS_TFPrintf( PRINT_NO, 
+      "FIELD-SOUND: pop BGM(%d). pushCount==>%d\n", 
+      fieldSound->currentBGM, fieldSound->pushCount );
 #endif
 }
 

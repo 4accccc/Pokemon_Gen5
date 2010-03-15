@@ -330,18 +330,28 @@ static GMEVENT_RESULT AllPopBGMEvent( GMEVENT* event, int* seq, void* wk )
 
   switch( *seq )
   {
+  // 既存のリクエスト完了待ち
   case 0:
+    if( FIELD_SOUND_HaveRequest( fieldSound ) == FALSE ) { (*seq)++; }
+    break;
+
+  // 全ポップ
+  case 1:
+    OS_TFPrintf( 1, "puchCount = %d\n", pushCount );
     if( FSND_PUSHCOUNT_NONE < pushCount )
     {
       for( i=0; i<pushCount-1; i++ )
-      {
+      { // フェードなしでポップ
         FIELD_SOUND_RegisterRequest_POP( fieldSound, FSND_FADE_NONE, FSND_FADE_NONE );
       }
+      // フェードありでポップ
       FIELD_SOUND_RegisterRequest_POP( fieldSound, FSND_FADE_NONE, work->fadeInFrame );
     }
     (*seq)++;
     break;
-  case 1:
+
+  // イベント終了
+  case 2:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE; 
