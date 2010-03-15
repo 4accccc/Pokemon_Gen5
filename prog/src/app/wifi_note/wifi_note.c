@@ -3869,6 +3869,26 @@ static BOOL ModeSelectInput_Key( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, W
 */
 static BOOL ModeSelectInput_Key( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw )
 {
+  // キャンセルチェック
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+    PMSND_PlaySE(WIFINOTE_BS_SE);
+		SetTopPageButtonPassive( p_draw, p_wk->cursor );
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+    p_data->key_mode = GFL_APP_END_KEY;
+    p_wk->cursor = MODESEL_CUR_END; // 終了にする
+    return TRUE;
+  }
+
+  // 終了チェック
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+    PMSND_PlaySE(WIFINOTE_EXIT);
+		SetTopPageButtonPassive( p_draw, p_wk->cursor );
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+    p_data->key_mode = GFL_APP_END_KEY;
+    p_wk->cursor = MODESEL_CUR_END_X; // 終了にする
+    return TRUE;
+  }
+
 	// キー入力モードへ変更
 	if( p_data->key_mode == GFL_APP_END_TOUCH ){
 	  if( GFL_UI_KEY_GetTrg() & GFL_PAD_BUTTON_KTST_CHG){
@@ -3884,22 +3904,6 @@ static BOOL ModeSelectInput_Key( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, W
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
     PMSND_PlaySE(WIFINOTE_DECIDE_SE);
 		BLINKPALANM_InitAnimeCount( p_draw->bpawk );
-    return TRUE;
-  }
-
-  // キャンセルチェック
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
-    PMSND_PlaySE(WIFINOTE_BS_SE);
-		SetTopPageButtonPassive( p_draw, p_wk->cursor );
-    p_wk->cursor = MODESEL_CUR_END; // 終了にする
-    return TRUE;
-  }
-
-  // 終了チェック
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-    PMSND_PlaySE(WIFINOTE_EXIT);
-		SetTopPageButtonPassive( p_draw, p_wk->cursor );
-    p_wk->cursor = MODESEL_CUR_END_X; // 終了にする
     return TRUE;
   }
 
@@ -4884,7 +4888,7 @@ static u32 FListInputMain_Exe( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFN
   }else if(code == FLIST_MAIN_EXE_EXIT){
     PMSND_PlaySE( WIFINOTE_EXIT );
 		SetExitButtonAnime( p_draw );
-    return RCODE_FLIST_SEQMAIN_CANCEL;
+    return RCODE_FLIST_SEQMAIN_EXIT;
   }else if( code == FLIST_MAIN_EXE_DECIDE){
     // キャンセルチェック
     if( p_wk->pos == FLIST_CURSORDATA_BACK ){
@@ -4896,7 +4900,7 @@ static u32 FListInputMain_Exe( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFN
     if( p_wk->pos == FLIST_CURSORDATA_EXIT ){
 			PMSND_PlaySE( WIFINOTE_EXIT );
 			SetExitButtonAnime( p_draw );
-      return RCODE_FLIST_SEQMAIN_CANCEL;
+      return RCODE_FLIST_SEQMAIN_EXIT;
     }
 
     // その位置に友達がいるかチェック
@@ -4939,6 +4943,18 @@ static u32 FListInputMain_Key( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFN
   u16 lastpos;
   BOOL move,pagechg,way;
 
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+    p_data->key_mode = GFL_APP_END_KEY;
+    return FListInputMain_Exe( p_wk, p_data, p_draw, FLIST_MAIN_EXE_CANCEL );
+  }
+
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+    p_data->key_mode = GFL_APP_END_KEY;
+    return FListInputMain_Exe( p_wk, p_data, p_draw, FLIST_MAIN_EXE_EXIT );
+  }
+
 	// キー入力モードへ変更
 	if( p_data->key_mode == GFL_APP_END_TOUCH ){
 		if( GFL_UI_KEY_GetTrg() & GFL_PAD_BUTTON_KTST_CHG){
@@ -4953,14 +4969,6 @@ static u32 FListInputMain_Key( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFN
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 //		PMSND_PlaySE( WIFINOTE_MOVE_SE );
     return FListInputMain_Exe( p_wk, p_data, p_draw, FLIST_MAIN_EXE_DECIDE );
-  }
-
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
-    return FListInputMain_Exe( p_wk, p_data, p_draw, FLIST_MAIN_EXE_CANCEL );
-  }
-
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-    return FListInputMain_Exe( p_wk, p_data, p_draw, FLIST_MAIN_EXE_EXIT );
   }
 
   lastpos = p_wk->pos;  // 前の座標を保存しておく もどる　からリストにカーソルが移動するときに使用する
