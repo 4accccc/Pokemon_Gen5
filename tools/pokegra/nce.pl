@@ -533,7 +533,6 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 
   if( $non_stop == 1 ){
     $write_work |= 0x000000ff;
-    print $write_work;
 		$write = pack "L", $write_work;
 	  print WRITE_NCE $write;
   }
