@@ -1333,10 +1333,12 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       SHORTCUT_SetEventItem( pWork, pWork->curpos );
       _CHANGE_STATE(pWork, _itemKindSelectMenu);
     }
+/*
     else if(pWork->ret_item == ITEM_PARESUHEGOO){
       pWork->ret_code = BAG_NEXTPROC_PALACEJUMP;  // パレスへゴー
       _CHANGE_STATE(pWork,NULL);
     }
+*/
     else if(_hit_item(pWork->ret_item)>=0){    // どうぐ使用チェックを増やせる構造
       ItemUseFuncTable[_hit_item(pWork->ret_item)].check( pWork );
     }
