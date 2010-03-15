@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-14T14:04:22"/>
+	<create user="matsumiya" host="W00224" date="2010-03-15T12:57:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1466" top="203" right="2171" bottom="823" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -390,21 +390,21 @@
 仲間が　できたよ！　うれしいよ！</language>
 	</row>
 
-	<row id="msg_c03center_dancer3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03center_dancer3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・C03P14のダンサー会話後・表示</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
 		<language name="JPN" width="256">ダンサー　おどる！
-せかいが　まわる！▽
-せかいが　まわれば▽
-さいこう　ハッピー！</language>
-		<language name="JPN_KANJI" width="256">ダンサー　踊る！
-世界が　回る！▽
-世界が　回れば▽
-最高　ハッピー！</language>
+まわりが　よろこぶ！▽
+よろこび　ひろがる！▽
+せかいは　ハッピー！</language>
+		<language name="JPN_KANJI" width="256">ダンサー　おどる！
+周りが　喜ぶ！▽
+喜び　広がる！▽
+世界は　ハッピー！</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03center_dancer1_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・全員探した後に話しかけるとこのセリフ
 ・アイテム入手処理
@@ -412,7 +412,7 @@
 		<attribute name="キャラ指定">DANCER</attribute>
 		<language name="JPN" width="256">サンキュー！　サイコーの
 チーム　たんじょう　しちゃった！▽
-これは　オレからの　きもちさ▼</language>
+これは　オレからの　きもち！▼</language>
 		<language name="JPN_KANJI" width="256">サンキュー！　サイコーの
 チーム　誕生しちゃった！▽
 これは　オレからの　気持ち！▼</language>
