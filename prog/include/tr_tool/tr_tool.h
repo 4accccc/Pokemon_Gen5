@@ -35,6 +35,7 @@
 #define	TRMSG_REVENGE_FIGHT_START		      ( 21 )	//フィールド：再戦：対戦前
 #define	TRMSG_REVENGE_FIGHT_START_1		    ( 22 )	//フィールド：再戦：対戦前：右
 #define	TRMSG_REVENGE_FIGHT_START_2		    ( 23 )	//フィールド：再戦：対戦前：左
+#define TRMSG_POKE_UNDER_TWO              ( 24 )  //ポケモン２匹以下（戦闘しない）
 
 #define	TRMSG_FIGHT_WIN					(100)	//戦闘勝ち（戦闘内でのみ使用される）
 
