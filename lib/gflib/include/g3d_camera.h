@@ -346,7 +346,43 @@ inline fx32 GFL_G3D_CAMERA_PerspectiveToFrustumRight( fx32 near, fx32 aspect, fx
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  PerspectiveのパラメータでFrustumカメラを生成
+ *	@brief  PerspectiveのパラメータでFrustumカメラを生成(scaleW指定有り版)
+ *
+ *	@param	cp_pos        カメラ位置
+ *	@param  cp_up         カメラ上方向
+ *	@param  cp_target     注視点
+ *	@param  fovySin       視野角SIN
+ *	@param  fovyCos     　視野角COS
+ *	@param  aspect        アスペクト比
+ *	@param  near          ニア
+ *	@param  far           ファー
+ *  @param	scaleW		    ビューボリュームの精度調整パラメータ（使用しないときは0）
+ *	@param  heapID        ヒープID
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+inline GFL_G3D_CAMERA* GFL_G3D_CAMERA_CreateFrustumByPersPrmW
+		( const VecFx32* cp_pos, const VecFx32* cp_up, const VecFx32* cp_target,
+      fx32 fovySin, fx32 fovyCos, fx32 aspect, fx32 near, fx32 far, fx32 scaleW, HEAPID heapID )
+{
+  fx32 t, b, l, r;
+
+  t = GFL_G3D_CAMERA_PerspectiveToFrustumTop( near, fovySin, fovyCos );
+  b = GFL_G3D_CAMERA_PerspectiveToFrustumButtom( near, fovySin, fovyCos );
+  r = GFL_G3D_CAMERA_PerspectiveToFrustumRight( near, aspect, fovySin, fovyCos );
+  l = GFL_G3D_CAMERA_PerspectiveToFrustumLeft( near, aspect, fovySin, fovyCos );
+
+  return GFL_G3D_CAMERA_CreateFrustum(
+      t, b, l, r, 
+      near, far, scaleW, 
+      cp_pos, cp_up, cp_target, heapID
+      );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  PerspectiveのパラメータでFrustumカメラを生成(scaleW指定無し版)
  *
  *	@param	cp_pos        カメラ位置
  *	@param  cp_up         カメラ上方向
@@ -363,21 +399,13 @@ inline fx32 GFL_G3D_CAMERA_PerspectiveToFrustumRight( fx32 near, fx32 aspect, fx
 //-----------------------------------------------------------------------------
 inline GFL_G3D_CAMERA* GFL_G3D_CAMERA_CreateFrustumByPersPrm
 		( const VecFx32* cp_pos, const VecFx32* cp_up, const VecFx32* cp_target,
-      fx32 fovySin, fx32 fovyCos, fx32 aspect, fx32 near, fx32 far, HEAPID heapID )
+      fx32 fovySin, fx32 fovyCos, fx32 aspect, fx32 near, fx32 far, fx32 scaleW, HEAPID heapID )
 {
-  fx32 t, b, l, r;
-
-  t = GFL_G3D_CAMERA_PerspectiveToFrustumTop( near, fovySin, fovyCos );
-  b = GFL_G3D_CAMERA_PerspectiveToFrustumButtom( near, fovySin, fovyCos );
-  r = GFL_G3D_CAMERA_PerspectiveToFrustumRight( near, aspect, fovySin, fovyCos );
-  l = GFL_G3D_CAMERA_PerspectiveToFrustumLeft( near, aspect, fovySin, fovyCos );
-
-  return GFL_G3D_CAMERA_CreateFrustum(
-      t, b, l, r, 
-      near, far, 0, 
-      cp_pos, cp_up, cp_target, heapID
-      );
+  return GFL_G3D_CAMERA_CreateFrustumByPersPrmW(
+		      cp_pos, cp_up, cp_target,
+          fovySin, fovyCos, aspect, near, far, 0, heapID );
 }
+
 
 #endif
 
