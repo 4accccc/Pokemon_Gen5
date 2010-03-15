@@ -16,6 +16,7 @@
 #include "buflen.h"
 #include "field/eventwork.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
+#include "poke_tool/poke_regulation.h"
 
 #include "gamesystem/btl_setup.h"
 
@@ -135,6 +136,41 @@ void BATTLE_PARAM_SetBtlStatusFlag( BATTLE_SETUP_PARAM* bp, BTL_STATUS_FLAG stat
 BOOL BATTLE_PARAM_CheckBtlStatusFlag( BATTLE_SETUP_PARAM* bp, BTL_STATUS_FLAG status_f )
 {
   return (bp->btl_status_flag & status_f);
+}
+
+/*
+ *  @brief  バトル引数にレギュレーションを設定
+ *          必ず全てのバトルパラメータを設定したあとに呼んでください
+ *  
+ *  内部でおこなっていること
+ *  　・制限時間設定
+ *    ・シューター設定
+ *    ・ニックネーム設定
+ *    ・レベル補正設定
+ */
+void BATTLE_PARAM_SetRegulation( BATTLE_SETUP_PARAM* bp, const REGULATION *reg, HEAPID heapID )
+{ 
+  int i;
+
+  //制限時間を設定
+  bp->LimitTimeCommand  = Regulation_GetParam( reg, REGULATION_TIME_COMMAND );
+  bp->LimitTimeGame     = Regulation_GetParam( reg, REGULATION_TIME_VS );
+
+  //シューターを設定
+  Regulation_GetShooterItem( reg, &bp->shooterBitWork );
+
+  //ポケパーティへの設定
+  for( i = 0; i < BTL_CLIENT_NUM; i++ )
+  { 
+    if( bp->party[i] )
+    {
+      //ニックネームを設定
+      PokeRegulation_ModifyNickName( reg, bp->party[i], heapID );
+
+      //レベル補正を設定
+      PokeRegulation_ModifyLevelPokeParty( reg, bp->party[i] );
+    }
+  }
 }
 
 /*
@@ -356,6 +392,7 @@ static void setup_common_CommTrainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameDat
   dst->commMode = commMode;
   dst->multiMode = multiMode;
   dst->commPos = commPos;
+  dst->commNetIDBit = 0xFF;
 
   // 録画データ生成のため、対戦相手のMYSTATUS, POKEPARTYを受け取るバッファとして確保します taya
   {

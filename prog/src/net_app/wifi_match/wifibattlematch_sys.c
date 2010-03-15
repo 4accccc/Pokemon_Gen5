@@ -1053,23 +1053,16 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
     GF_ASSERT(0);
   }
 
-  p_param->p_btl_setup_param->LimitTimeGame    = Regulation_GetParam( p_reg , REGULATION_TIME_VS );
-  p_param->p_btl_setup_param->LimitTimeCommand = Regulation_GetParam( p_reg , REGULATION_TIME_COMMAND );
-
   OS_TFPrintf( 3, "vs %d\n", p_param->p_btl_setup_param->LimitTimeGame );
   OS_TFPrintf( 3, "cmd %d\n",  p_param->p_btl_setup_param->LimitTimeCommand );
 
   p_param->p_btl_setup_param->musicDefault  = WBM_SND_SEQ_BATTLE;
   p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
 
-  //シューター設定 （フラグと禁止道具）
-  Regulation_GetShooterItem( p_reg, &p_param->p_btl_setup_param->shooterBitWork );
-
-  //ポケモンパーティを設定（ニックネームフラグがOFFならば名前を書き換える）
-  PokeRegulation_ModifyNickName( p_reg, p_wk->p_player_btl_party, GFL_HEAP_LOWID( heapID ) );
-
   //ポケモン設定
   BATTLE_PARAM_SetPokeParty( p_param->p_btl_setup_param, p_wk->p_player_btl_party, BTL_CLIENT_PLAYER );
+  //レギュレーションの内容を適用
+  BATTLE_PARAM_SetRegulation( p_param->p_btl_setup_param, p_reg, GFL_HEAP_LOWID( heapID ) );
 
   //録画準備
   BTL_SETUP_AllocRecBuffer( p_param->p_btl_setup_param, heapID );

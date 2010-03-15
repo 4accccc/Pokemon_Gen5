@@ -62,7 +62,7 @@ typedef enum  {
   REGULATION_SHOW_POKE_TIME,  ///<    #ポケモン見せ合い制限時間 0は無制限
   REGULATION_BATTLETYPE,  ///<  バトルタイプ
   REGULATION_BTLCOUNT,  ///<  戦闘規定回数
-  REGULATION_VETO_SHOOTER_ITEM,  ///<  シューター禁止道具
+  REGULATION_VETO_SHOOTER_ITEM, ///< 禁止道具
 } REGULATION_PARAM_TYPE;
 
 typedef enum  {
