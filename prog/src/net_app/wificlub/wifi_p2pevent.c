@@ -182,6 +182,9 @@ static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,EV_P2PEVENT_WORK * ep2p,in
     BTL_SETUP_Rotation_Comm( &ep2p->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
     break;
   }
+  
+  Regulation_GetShooterItem( ep2p->pMatchParam->pRegulation, &ep2p->para.shooterBitWork );
+  PokeRegulation_ModifyLevelPokeParty(ep2p->pMatchParam->pRegulation,  ep2p->pPokeParty);
   BATTLE_PARAM_SetPokeParty( &ep2p->para, ep2p->pPokeParty, BTL_CLIENT_PLAYER );
 
 }

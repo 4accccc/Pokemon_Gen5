@@ -1,6 +1,18 @@
 
 
-
+static void _vctcheckCommon( WIFIP2PMATCH_WORK *pWork)
+{
+  if(pWork->VCTOn[0] && pWork->VCTOn[1]){
+    GFL_NET_DWC_SetVChat(TRUE);
+    GFL_NET_DWC_StartVChat();
+    DWCRAP_StartVChat();
+  }
+#if PM_DEBUG
+  else{
+    NET_PRINT("VCTOFF %d %d\n",pWork->VCTOn[0] ,pWork->VCTOn[1] );
+  }
+#endif
+}
 
 
 
@@ -458,7 +470,7 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
     break;
   case WIFIP2PMATCH_PLAYERDIRECT_TVT:
     gamemode = WIFI_GAME_TVT;
-    GFL_NET_DWC_SetVChat(FALSE);
+ //   GFL_NET_DWC_SetVChat(FALSE);
     break;
   case WIFIP2PMATCH_PLAYERDIRECT_TRADE:
     gamemode = WIFI_GAME_TRADE;
@@ -470,13 +482,22 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
   switch(wk->directmode){
   case WIFIP2PMATCH_PLAYERDIRECT_VCT:
     {
-      GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
-      GFL_NET_DWC_StartVChat();
+      _vctcheckCommon(wk);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT);
     }
     break;
   case WIFIP2PMATCH_PLAYERDIRECT_TVT:
+    {
+      WIFI_STATUS* p_status;
+      EndMessageWindowOff(wk);
+
+      wk->endSeq = gamemode;
+
+      return SEQ_OUT;            //終了シーケンスへ
+    }
+    break;
   case WIFIP2PMATCH_PLAYERDIRECT_TRADE:
+    _vctcheckCommon(wk);
     {
       WIFI_STATUS* p_status;
       EndMessageWindowOff(wk);
@@ -957,14 +978,48 @@ static int _playerDirectBattleGO( WIFIP2PMATCH_WORK *wk, int seq )
 
   if(!GFL_NET_IsParentMachine()){
     _friendNameExpand(wk,  wk->friendNo - 1);
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1001+wk->battleMode+wk->battleRule*4, FALSE);
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO2);
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1032, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO_12);
   }
   else{
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
   }
   return seq;
 }
+
+
+static int _playerDirectBattleGO_12( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if( !WifiP2PMatchMessageEndCheck(wk) ){
+    return seq;
+  }
+  EndMessageWindowOff(wk);
+  {
+    u32 regulation = _createRegulation(wk);
+    _Menu_RegulationSetup(wk,0,1-wk->battleShooter ,REGWIN_TYPE_RULE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO_13);
+  }
+  return seq;
+  
+}
+
+
+static int _playerDirectBattleGO_13( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if(GFL_UI_KEY_GetTrg()){
+    wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO_14);
+  }
+  return seq;
+}
+
+static int _playerDirectBattleGO_14( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  WifiP2PMatchMessagePrint(wk, msg_wifilobby_1001+wk->battleMode+wk->battleRule*4, FALSE);
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO2);
+  return seq;
+}
+
 
 static int _playerDirectBattleGO1( WIFIP2PMATCH_WORK *wk, int seq )
 {
@@ -1207,6 +1262,11 @@ static int _playerDirectBattleStart6( WIFIP2PMATCH_WORK *wk, int seq )
     wk->endSeq = gamemode;
   }
   {
+
+    GFL_NET_DWC_SetVChat(TRUE);
+    GFL_NET_DWC_StartVChat();
+    DWCRAP_StartVChat();
+
     EndMessageWindowOff(wk);
   }
   return SEQ_OUT;            //終了シーケンスへ

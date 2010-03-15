@@ -1880,6 +1880,16 @@ static void _DWC_StartVChat(int heapID)
   }
 }
 
+
+void DWCRAP_StartVChat(void)
+{
+  GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
+
+  _DWC_StartVChat(pNetInit->netHeapID);
+}
+
+
+
 //==============================================================================
 /**
  * ボイスチャットのコーデックを指定します。

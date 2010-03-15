@@ -454,5 +454,18 @@ extern void GFL_NET_DWC_SetClinetConnect(BOOL bEnable);
 
 extern void GFL_NET_DWC_SetCconnectionUserData(u32 data);
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   VCTŠJŽn
+ * @param   data u32Œ^‚ÌID
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+extern void DWCRAP_StartVChat(void);
+
+
+
 //#include <ppwlobby/ppw_lobby.h>
 
