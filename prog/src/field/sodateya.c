@@ -20,6 +20,7 @@
 #include "fieldmap.h"
 #include "sodateya.h" 
 #include "print/global_msg.h"
+#include "poke_tool/poke_memo.h"
 
 #include "arc/arc_def.h"  // for ARCID_PMSTBL
 #include "arc/kowaza.naix"
@@ -1365,6 +1366,20 @@ static void EggCordinate_finish( POKEMON_PARAM* egg, SODATEYA* sodateya )
 
     // タマゴの間は, なつき度を孵化カウンタとして利用する
     PP_Put( egg, ID_PARA_friend, birth );
+  }
+
+  // トレーナーメモ
+  {
+    GAMESYS_WORK* gameSystem;
+    GAMEDATA* gameData;
+    MYSTATUS* mystatus;
+
+    gameSystem = FIELDMAP_GetGameSysWork( sodateya->fieldmap );
+    gameData = GAMESYSTEM_GetGameData( gameSystem );
+    mystatus = GAMEDATA_GetMyStatus( gameData );
+
+    POKE_MEMO_SetTrainerMemoPP( 
+        egg, POKE_MEMO_EGG_FIRST, mystatus, POKE_MEMO_PERSON_SODATEYA, sodateya->heapID );
   }
 
   // タマゴフラグ
