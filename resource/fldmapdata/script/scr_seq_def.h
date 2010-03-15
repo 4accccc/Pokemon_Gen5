@@ -9331,6 +9331,23 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief ワークの値を出力する
+ *
+ * @param print_no [in] 出力No.
+ * @param value    [in] 出力するワーク
+ */
+//--------------------------------------------------------------
+#define _DEBUG_PRINT( print_no, value ) \
+    _ASM_DEBUG_PRINT print_no, value
+
+  .macro _ASM_DEBUG_PRINT print_no, value
+  .short EV_SEQ_DEBUG_PRINT
+  .short \print_no
+  .short \value
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @brief 手持ちの配布ダルタニスの位置を返す
  *
  * @param pos       手持ちポケモンの位置

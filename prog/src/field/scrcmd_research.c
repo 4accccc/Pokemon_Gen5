@@ -22,6 +22,27 @@
 #include "../../../resource/research_radar/data/answer_num_question.cdat" // for AnswerNum_question[]
 #include "../../../resource/research_radar/data/answer_id_question.cdat"  // for AnswerID_question[][]
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief ワークの内容を表示する
+ * @param  core
+ * @param  wk
+ * @retval VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdDebugPrint( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK* work = (SCRCMD_WORK*)wk;
+  u16 key, value;
+  
+  key   = SCRCMD_GetVMWorkValue( core, work ); // 第一引数: 出力 No.
+  value = SCRCMD_GetVMWorkValue( core, work ); // 第二引数: 出力するワークの値
+
+  // 表示
+  OS_TFPrintf( 3, "SCRPIT: print No.%d ==> %d\n", key, value );
+
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //-----------------------------------------------------------------------------
 /**

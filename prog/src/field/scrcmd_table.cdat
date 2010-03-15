@@ -944,8 +944,8 @@
   DEF_CMD( EvCmdSuretigaiCount, EV_SEQ_SURETIGAI_COUNT ) 
   DEF_CMD( EvCmdSuretigaiThanksReceiveCount, EV_SEQ_SURETIGAI_THANKS_RECEIVE_COUNT ) 
 
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdSetMyAnswer, EV_SEQ_SET_MY_ANSWER ) 
+  DEF_CMD( EvCmdDebugPrint, EV_SEQ_DEBUG_PRINT ) 
   NO_CMD()
   NO_CMD()
 
