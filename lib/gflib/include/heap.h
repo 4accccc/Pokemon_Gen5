@@ -88,6 +88,11 @@ extern BOOL
   GFI_HEAP_CreateHeap
     ( HEAPID parentHeapID, HEAPID childHeapID, u32 size );
 
+
+extern BOOL
+  GFI_HEAP_CreateHeapInBuffer
+  ( void* buffer, u32 size, HEAPID childHeapID );
+
 //------------------------------------------------------------------
 /**
  * ÉqÅ[Évîjä¸

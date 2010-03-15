@@ -97,6 +97,11 @@ inline void
   GFL_HEAP_CreateHeap( parentHeapID, GetHeapLowID(childHeapID), size );
 }
 
+
+extern void
+  GFL_HEAP_CreateHeapInBuffer
+    ( void* buffer, u32 bufferSize, HEAPID childHeapID );
+
 //------------------------------------------------------------------
 /**
  * ÉqÅ[Évîjä¸
