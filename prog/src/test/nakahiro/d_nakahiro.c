@@ -27,11 +27,13 @@
 #include "message.naix"
 #include "msg/msg_d_nakahiro.h"
 
+#include "pokeicon_view.h"
+
 
 //============================================================================================
 //	’è”’è‹`
 //============================================================================================
-#define	TOP_MENU_SIZ	( 12 )
+#define	TOP_MENU_SIZ	( 13 )
 
 typedef struct {
 	u32	main_seq;
@@ -83,6 +85,8 @@ enum {
 	MAIN_SEQ_VSMLIST_R,
 
 	MAIN_SEQ_WIFI_NOTE,
+
+	MAIN_SEQ_POKEICON,
 
 	MAIN_SEQ_END,
 };
@@ -178,7 +182,7 @@ static GFL_PROC_RESULT MainProcInit( GFL_PROC * proc, int * seq, void * pwk, voi
 {
 	NAKAHIRO_MAIN_WORK * wk;
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAKAHIRO_DEBUG, 0x20000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAKAHIRO_DEBUG, 0x60000 );
 
   wk = GFL_PROC_AllocWork( proc, sizeof(NAKAHIRO_MAIN_WORK), HEAPID_NAKAHIRO_DEBUG );
 
@@ -398,7 +402,10 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		wk->main_seq = MAIN_SEQ_END;
 		break;
 
-
+	case MAIN_SEQ_POKEICON:
+		GFL_PROC_SysCallProc( NO_OVERLAY_ID, &POKEICONVIEW_ProcData, NULL );
+		wk->main_seq = MAIN_SEQ_END;
+		break;
 	}
 
   return GFL_PROC_RES_CONTINUE;

@@ -1739,7 +1739,8 @@ SRCS_OVERLAY_SHINKA_DEMO	= demo/shinka_demo/shinka_demo.c \
 
 #中村デバッグ
 #===> SRCS_OVERLAY_NAMEIN
-SRCS_OVERLAY_NAKAHIRO_DEBUG = test/nakahiro/d_nakahiro.c
+SRCS_OVERLAY_NAKAHIRO_DEBUG = test/nakahiro/d_nakahiro.c \
+                              test/nakahiro/pokeicon_view.c
 
 
 #	名木橋デバッグ
