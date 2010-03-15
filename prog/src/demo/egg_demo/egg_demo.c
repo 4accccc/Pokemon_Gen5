@@ -27,6 +27,7 @@
 #include "poke_tool/poke_tool.h"
 #include "sound/pm_sndsys.h"
 #include "app/name_input.h"
+#include "poke_tool/poke_memo.h"
 
 #include "egg_demo_graphic.h"
 #include "egg_demo_view.h"
@@ -569,6 +570,17 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
         
         // タマゴ孵化
         PP_Put( param->pp, ID_PARA_tamago_flag, 0 );
+
+        {
+          // トレーナーメモ
+          PLAYER_WORK* player_wk = GAMEDATA_GetMyPlayerWork( param->gamedata );
+          POKE_MEMO_SetTrainerMemoPP(
+              param->pp,
+              POKE_MEMO_INCUBATION,
+              GAMEDATA_GetMyStatus( param->gamedata ),
+              PLAYERWORK_getZoneID( player_wk ),
+              work->heap_id );
+        }
 
         // タマゴ孵化デモの演出
         EGG_DEMO_VIEW_Hatch( work->view, param->pp );
