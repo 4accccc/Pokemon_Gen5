@@ -4869,6 +4869,10 @@
 		<language name="JPN" width="256">BGM-EYE-12</language>
 		<language name="JPN_KANJI" width="256">BGM-EYE-12</language>
 	</row>
+	<row id="msg_seq_bgm_eye_13">
+		<language name="JPN" width="256">BGM-EYE-13</language>
+		<language name="JPN_KANJI" width="256">BGM-EYE-13</language>
+	</row>
 	<row id="msg_seq_bgm_eye_plasma">
 		<language name="JPN" width="256">BGM-EYE-PLASMA</language>
 		<language name="JPN_KANJI" width="256">BGM-EYE-PLASMA</language>
@@ -5009,10 +5013,6 @@
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1158">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1159">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
