@@ -1248,6 +1248,8 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   const MISSION_RESULT *mresult = pData;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
   
   if((intcomm->recv_profile & (1 << netID)) == 0){
     OS_TPrintf("受信：ミッション結果：プロフィール未受信の為、受け取らない recv_profile=%d\n", 
@@ -1255,9 +1257,38 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
     return;
   }
   
+  //自分がミッションのターゲットだった
+  if(mresult->mission_data.target_info.net_id 
+      == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    if(mresult->mission_fail == TRUE){  //ミッション失敗の場合はリストを作り直す
+      MISSION_LIST_Create_Type(occupy, mresult->mission_data.cdata.type);
+      intcomm->send_occupy = TRUE;
+    }
+    else{ //達成者がいるので、ターゲットだった自分の占拠情報をクリア済みにする
+      MISSION_SetMissionClear(gamedata, mresult);
+      intcomm->send_occupy = TRUE;
+    }
+  }
+
+  //自分が達成者の場合はレベルアップ
+  if(MISSION_GetResultPoint(intcomm, &intcomm->mission) > 0){
+    if(mresult->mission_data.monolith_type == MONOLITH_TYPE_BLACK){
+      OccupyInfo_LevelUpBlack(occupy, MISSION_ACHIEVE_ADD_LEVEL);
+    }
+    else{
+      OccupyInfo_LevelUpWhite(occupy, MISSION_ACHIEVE_ADD_LEVEL);
+    }
+    intcomm->send_occupy = TRUE;
+  }
+
+  //全占拠達成ならばミッションリストを作成しなおす
+  if(MISSION_LIST_Create_Complete(occupy) == TRUE){
+    intcomm->send_occupy = TRUE;
+  }
+  
   if(MISSION_RecvCheck(&intcomm->mission) == FALSE 
       || MISSION_GetMissionEntry(&intcomm->mission) == FALSE){
-    OS_TPrintf("受信：ミッション結果：ミッションに参加していない為、結果も受け取らない\n");
+    OS_TPrintf("受信：ミッション結果：ミッションに参加していない為、結果を受け取らない\n");
     return;
   }
 

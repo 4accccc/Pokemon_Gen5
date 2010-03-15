@@ -928,7 +928,7 @@ INTRUDE_TALK_STATUS Intrude_GetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm)
  * @retval  上記以外                  戻り値のモードに変更する必要がある
  */
 //==================================================================
-FIELD_SUBSCREEN_MODE Intrude_SUBSCREEN_Watch(GAME_COMM_SYS_PTR game_comm, FIELD_SUBSCREEN_WORK *subscreen)
+FIELD_SUBSCREEN_MODE Intrude_SUBSCREEN_Watch(GAME_COMM_SYS_PTR game_comm, FIELD_SUBSCREEN_WORK *subscreen, u16 zone_id)
 {
   FIELD_SUBSCREEN_MODE subscreen_mode = FIELD_SUBSCREEN_GetMode(subscreen);
   
@@ -954,11 +954,17 @@ FIELD_SUBSCREEN_MODE Intrude_SUBSCREEN_Watch(GAME_COMM_SYS_PTR game_comm, FIELD_
     if(intcomm != NULL && intcomm->palace_in == TRUE){
       return FIELD_SUBSCREEN_INTRUDE;
     }
+    else if(ZONEDATA_IsPalace(zone_id) == TRUE){
+      return FIELD_SUBSCREEN_INTRUDE;
+    }
   #endif
   }
   else if(subscreen_mode == FIELD_SUBSCREEN_INTRUDE){
     if(NetErr_App_CheckError()){
       //エラー発生中はまだ戻さない (エラー画面が出てから戻るようにしている)
+      return FIELD_SUBSCREEN_MODE_MAX;
+    }
+    if(ZONEDATA_IsPalace(zone_id) == TRUE){
       return FIELD_SUBSCREEN_MODE_MAX;
     }
     if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION){

@@ -117,6 +117,8 @@ extern u16 OccupyInfo_GetWhiteLevel(const OCCUPY_INFO *occupy);
 extern u16 OccupyInfo_GetBlackLevel(const OCCUPY_INFO *occupy);
 extern void SaveData_OccupyInfoUpdate(SAVE_CONTROL_WORK * sv, const OCCUPY_INFO *occupy);
 extern void SaveData_OccupyInfoLoad(SAVE_CONTROL_WORK * sv, OCCUPY_INFO *dest_occupy);
+extern void OccupyInfo_LevelUpWhite(OCCUPY_INFO *occupy, int add_level);
+extern void OccupyInfo_LevelUpBlack(OCCUPY_INFO *occupy, int add_level);
 
 //--------------------------------------------------------------
 //  ‰B‚µƒAƒCƒeƒ€

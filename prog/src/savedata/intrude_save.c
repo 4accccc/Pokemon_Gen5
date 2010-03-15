@@ -96,6 +96,41 @@ u16 OccupyInfo_GetBlackLevel(const OCCUPY_INFO *occupy)
   return occupy->black_level;
 }
 
+//==================================================================
+/**
+ * 白レベルアップ
+ *
+ * @param   occupy		
+ * @param   add_level		レベル加算値
+ */
+//==================================================================
+void OccupyInfo_LevelUpWhite(OCCUPY_INFO *occupy, int add_level)
+{
+  if(occupy->white_level + add_level > OCCUPY_LEVEL_MAX){
+    occupy->white_level = OCCUPY_LEVEL_MAX;
+  }
+  else{
+    occupy->white_level += add_level;
+  }
+}
+
+//==================================================================
+/**
+ * 黒レベルアップ
+ *
+ * @param   occupy		
+ * @param   add_level		レベル加算値
+ */
+//==================================================================
+void OccupyInfo_LevelUpBlack(OCCUPY_INFO *occupy, int add_level)
+{
+  if(occupy->black_level + add_level > OCCUPY_LEVEL_MAX){
+    occupy->black_level = OCCUPY_LEVEL_MAX;
+  }
+  else{
+    occupy->black_level += add_level;
+  }
+}
 
 //==============================================================================
 //  
@@ -265,4 +300,5 @@ BOOL ISC_SAVE_GetDistributionGPower(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower
   }
   return FALSE;
 }
+
 

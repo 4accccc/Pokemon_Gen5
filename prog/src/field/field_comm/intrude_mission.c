@@ -796,44 +796,22 @@ s32 MISSION_GetResultPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *m
 
 //==================================================================
 /**
- * ミッション結果から得られるミッションポイント、占拠ポインタを加算する
+ * 占拠情報に対してミッション達成済みにする
  *
  * @param   intcomm		
  * @param   mission		
- *
- * @retval  BOOL		TRUE:加算した。　FALSE:ポイントは発生しなかった
  */
 //==================================================================
-BOOL MISSION_AddPoint(GAMEDATA *gamedata, const MISSION_RESULT *result, s32 point)
+void MISSION_SetMissionClear(GAMEDATA *gamedata, const MISSION_RESULT *result)
 {
-  if(point > 0){
-    OCCUPY_INFO *mine_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
-//    PALACE_TOWN_RESULT town_result;
-    
-    //街の占拠情報反映
-  #if 0
-    if(Intrude_SearchPalaceTown(result->mission_data.zone_id, &town_result) == TRUE){
-      if(result->mission_data.monolith_type == MONOLITH_TYPE_WHITE){
-        mine_occupy->mlst.mission_clear[town_result.tblno] = OCCUPY_TOWN_WHITE;
-      }
-      else{
-        mine_occupy->mlst.mission_clear[town_result.tblno] = OCCUPY_TOWN_BLACK;
-      }
-    }
-    else{
-      GF_ASSERT_MSG(0, "zone_id = %d\n", result->mission_data.zone_id);
-    }
-  #else
-    if(result->mission_data.monolith_type == MONOLITH_TYPE_WHITE){
-      mine_occupy->mlst.mission_clear[result->mission_data.cdata.type] = MISSION_CLEAR_WHITE;
-    }
-    else{
-      mine_occupy->mlst.mission_clear[result->mission_data.cdata.type] = MISSION_CLEAR_BLACK;
-    }
-  #endif
-    return TRUE;
+  OCCUPY_INFO *mine_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  
+  if(result->mission_data.monolith_type == MONOLITH_TYPE_WHITE){
+    mine_occupy->mlst.mission_clear[result->mission_data.cdata.type] = MISSION_CLEAR_WHITE;
   }
-  return FALSE;
+  else{
+    mine_occupy->mlst.mission_clear[result->mission_data.cdata.type] = MISSION_CLEAR_BLACK;
+  }
 }
 
 //==================================================================
@@ -1059,6 +1037,7 @@ BOOL MISSION_SetEntryNew(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, 
   
   //実行するミッションとして登録
   exe_mdata->cdata = entry_req->cdata;
+  exe_mdata->target_info = entry_req->target_info;
   exe_mdata->accept_netid = net_id;
   exe_mdata->palace_area = entry_req->target_info.net_id;
   exe_mdata->monolith_type = entry_req->monolith_type;
@@ -1291,24 +1270,60 @@ void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_CONV_DATA *
 //==================================================================
 void MISSION_LIST_Create(OCCUPY_INFO *occupy)
 {
-  int palace_level;
-  int mission_type, no;
-  
-  palace_level = occupy->white_level + occupy->black_level;
+  int mission_type;
   
   for(mission_type = 0; mission_type < MISSION_LIST_MAX; mission_type++){
     occupy->mlst.mission_clear[mission_type] = MISSION_CLEAR_NONE;
-    for(no = 0; no < NELEMS(MissionConvDataListParam); no++){
-      if(MissionConvDataListParam[no].type == mission_type
-          && MissionConvDataListParam[no].level <= palace_level){
-        if(MissionConvDataListParam[no].odds == 100 
-            || MissionConvDataListParam[no].odds <= GFUser_GetPublicRand(100+1)){
-          occupy->mlst.mission_no[mission_type] = no;
-          break;
-        }
-      }
-    }
-    GF_ASSERT_MSG(no != NELEMS(MissionConvDataListParam), "type=%d", mission_type);
+    MISSION_LIST_Create_Type(occupy, mission_type);
   }
 }
 
+//==================================================================
+/**
+ * 占拠情報からミッションリストを指定タイプに対して抽選を行う
+ *
+ * @param   occupy		
+ * @param   mission_type		
+ */
+//==================================================================
+void MISSION_LIST_Create_Type(OCCUPY_INFO *occupy, MISSION_TYPE mission_type)
+{
+  int no;
+  int palace_level;
+
+  palace_level = occupy->white_level + occupy->black_level;
+  
+  for(no = 0; no < NELEMS(MissionConvDataListParam); no++){
+    if(MissionConvDataListParam[no].type == mission_type
+        && MissionConvDataListParam[no].level <= palace_level){
+      if(MissionConvDataListParam[no].odds == 100 
+          || MissionConvDataListParam[no].odds <= GFUser_GetPublicRand(100+1)){
+        occupy->mlst.mission_no[mission_type] = no;
+        return;
+      }
+    }
+  }
+  GF_ASSERT_MSG(0, "type=%d", mission_type);
+}
+
+//==================================================================
+/**
+ * ミッションを全て制覇しているならばミッションリストを全て作成しなおす
+ *
+ * @param   occupy		
+ *
+ * @retval  BOOL		TRUE:作成しなおした
+ */
+//==================================================================
+BOOL MISSION_LIST_Create_Complete(OCCUPY_INFO *occupy)
+{
+  int mission_type;
+  
+  for(mission_type = 0; mission_type < MISSION_LIST_MAX; mission_type++){
+    if(occupy->mlst.mission_clear[mission_type] == MISSION_CLEAR_NONE){
+      return FALSE;
+    }
+  }
+  MISSION_LIST_Create(occupy);
+  return TRUE;
+}

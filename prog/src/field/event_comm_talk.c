@@ -72,7 +72,6 @@ typedef struct
 //==============================================================================
 static GMEVENT_RESULT CommTalkEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommBingoEvent( GMEVENT *event, int *seq, void *wk );
-static GMEVENT_RESULT CommMissionAchieveEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommMissionItemEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommMissionBasicEvent( GMEVENT *event, int *seq, void *wk );
 
@@ -465,97 +464,6 @@ static GMEVENT_RESULT CommBingoEvent( GMEVENT *event, int *seq, void *wk )
 	}
 	
 	return( GMEVENT_RES_CONTINUE );
-}
-
-//--------------------------------------------------------------
-/**
- * ミッション達成話し掛けイベント
- * @param	event	GMEVENT
- * @param	seq		シーケンス
- * @param	wk		event talk
- */
-//--------------------------------------------------------------
-static GMEVENT_RESULT CommMissionAchieveEvent( GMEVENT *event, int *seq, void *wk )
-{
-	COMMTALK_EVENT_WORK *talk = wk;
-	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
-	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-	INTRUDE_COMM_SYS_PTR intcomm;
-	enum{
-    SEQ_INIT,
-    SEQ_SEND_ACHIEVE,
-    SEQ_RECV_WAIT,
-    SEQ_MSG_INIT,
-    SEQ_MSG_WAIT,
-    SEQ_MSG_END_BUTTON_WAIT,
-    SEQ_END,
-  };
-	
-  intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL){
-    if((*seq) < SEQ_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_sys002);
-      *seq = SEQ_MSG_WAIT;
-      talk->error = TRUE;
-    }
-  }
-
-	switch( *seq ){
-  case SEQ_INIT:
-    (*seq)++;
-    break;
-	case SEQ_SEND_ACHIEVE:
-    if(IntrudeSend_MissionAchieve(intcomm, &intcomm->mission) == TRUE){//ミッション達成を親に伝える
-      (*seq)++;
-    }
-    break;
-  case SEQ_RECV_WAIT:
-		if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE){
-      (*seq)++;
-    }
-    break;
-  case SEQ_MSG_INIT:
-    {
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
-      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gdata,intcomm->mission.data.target_info.net_id);
-      MYSTATUS *mine_myst = GAMEDATA_GetMyStatus(gdata);
-      int my_netid = GAMEDATA_GetIntrudeMyID(gdata);
-      u16 msg_id;
-      
-      msg_id = MISSION_GetAchieveMsgID(&intcomm->mission, my_netid);
-
-      WORDSET_RegisterPlayerName( talk->iem.wordset, 0, target_myst );
-      WORDSET_RegisterPlayerName( talk->iem.wordset, 1, mine_myst );
-
-      IntrudeEventPrint_StartStream(&talk->iem, msg_id);
-    }
-		(*seq)++;
-		break;
-  case SEQ_MSG_WAIT:
-    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
-      *seq = SEQ_MSG_END_BUTTON_WAIT;
-    }
-    break;
-  case SEQ_MSG_END_BUTTON_WAIT:
-    if(IntrudeEventPrint_LastKeyWait() == TRUE){
-      *seq = SEQ_END;
-    }
-    break;
-  case SEQ_END:
-    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
-    if(intcomm != NULL){
-      if(MISSION_AddPoint(GAMESYSTEM_GetGameData(gsys), MISSION_GetResultData(&intcomm->mission), MISSION_GetResultPoint(intcomm, &intcomm->mission)) == TRUE){
-        intcomm->send_occupy = TRUE;
-      }
-      MISSION_Init(&intcomm->mission);
-    }
-
-  	//侵入システムのアクションステータスを更新
-  	Intrude_SetActionStatus(talk->intcomm, INTRUDE_ACTION_FIELD);
-    Intrude_InitTalkWork(talk->intcomm, INTRUDE_NETID_NULL);
-    return GMEVENT_RES_FINISH;
-  }
-	return GMEVENT_RES_CONTINUE;
 }
 
 //--------------------------------------------------------------

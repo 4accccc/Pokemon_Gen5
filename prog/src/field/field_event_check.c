@@ -200,7 +200,7 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT * checkPushIntrude(const EV_REQUEST * req,
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
-static GMEVENT * checkIntrudeSubScreenEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
+static GMEVENT * checkIntrudeSubScreenEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, ZONEID zone_id);
 static GMEVENT * checkSubScreenEvent(
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
@@ -612,7 +612,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 	
 	//侵入によるサブスクリーン切り替えイベント起動チェック
 	if(WIPE_SYS_EndCheck()){
-    event = checkIntrudeSubScreenEvent(gsys, fieldWork);
+    event = checkIntrudeSubScreenEvent(gsys, fieldWork, req.map_id);
     if(event != NULL){
       return event;
     }
@@ -1123,7 +1123,7 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
 
 	//侵入によるサブスクリーン切り替えイベント起動チェック
 	if(WIPE_SYS_EndCheck()){
-    event = checkIntrudeSubScreenEvent(gsys, fieldWork);
+    event = checkIntrudeSubScreenEvent(gsys, fieldWork, req.map_id);
     if(event != NULL){
       return event;
     }
@@ -2398,11 +2398,11 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
  * @retval  GMEVENT *		NULL=イベントなし
  */
 //--------------------------------------------------------------
-static GMEVENT * checkIntrudeSubScreenEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+static GMEVENT * checkIntrudeSubScreenEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, ZONEID zone_id)
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   FIELD_SUBSCREEN_WORK * subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
-  FIELD_SUBSCREEN_MODE subscreen_mode = Intrude_SUBSCREEN_Watch(game_comm, subscreen);
+  FIELD_SUBSCREEN_MODE subscreen_mode = Intrude_SUBSCREEN_Watch(game_comm, subscreen, zone_id);
   GMEVENT* event = NULL;
   
   if(subscreen_mode != FIELD_SUBSCREEN_MODE_MAX){

@@ -437,7 +437,7 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
-  INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   
   if(intcomm == NULL){
     return;
@@ -502,7 +502,7 @@ void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub)
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
-  INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   OCCUPY_INFO *area_occupy;
   
   if(intcomm == NULL){

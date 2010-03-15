@@ -42,13 +42,6 @@
 
 
 
-//==============================================================================
-//  定数定義
-//==============================================================================
-///ミッション達成で上がるレベル数
-#define MISSION_ACHIEVE_ADD_LEVEL   (1)
-
-
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -71,8 +64,6 @@ typedef struct
 	u16 explain_msgid;
 	BOOL mission_result;    ///<TRUE:自分がミッション達成者
 	s32 point;
-	
-	u8 send_occupy_req;
 }COMMTALK_EVENT_WORK;
 
 
@@ -205,15 +196,6 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
         }
         MYITEM_AddItem(myitem, ITEM_PARESUDAMA, add_num, talk->heapID);
       }
-      { //白黒レベル
-        OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gdata);
-        if(talk->mresult.mission_data.monolith_type == MONOLITH_TYPE_BLACK){
-          INTRUDE_OCCUPY_FIELD_LevelUpBlack(occupy, MISSION_ACHIEVE_ADD_LEVEL);
-        }
-        else{
-          INTRUDE_OCCUPY_FIELD_LevelUpWhite(occupy, MISSION_ACHIEVE_ADD_LEVEL);
-        }
-      }
 
       WORDSET_RegisterNumber( talk->iem.wordset, 0, talk->point, 
         3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
@@ -246,9 +228,6 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
 
   case SEQ_POINT_GET_MSG_END_BUTTON_WAIT:
     if(IntrudeEventPrint_LastKeyWait() == TRUE){
-      if(MISSION_AddPoint(gdata, &talk->mresult, talk->point) == TRUE){
-        talk->send_occupy_req = TRUE;
-      }
       (*seq) = SEQ_DISGUISE_START;
     }
     break;
@@ -281,9 +260,6 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     }
   #endif
     if(intcomm != NULL){
-      if(talk->send_occupy_req == TRUE){
-        intcomm->send_occupy = TRUE;
-      }
       MISSION_Init(&intcomm->mission);
     }
 
