@@ -1162,7 +1162,7 @@
 //--------------------------------------------------------------
 /**
  *  @def _GOLD_WIN_OPEN
- *  @brief 所持金ウィンドウを表示する
+ *  @brief 所持金ウィンドウを表示する　右詰表示
  *  @param x 表示x位置(キャラ単位)
  *  @param y 表示x位置(キャラ単位)
  *  @param none
@@ -3085,6 +3085,30 @@
   .byte  \cancel
   .short  \ret_wk
   .endm
+
+//--------------------------------------------------------------
+/**
+ *  _BMPMENU_INIT_EX BMPメニュー　初期化(右詰、読み込んでいるgmmファイルを使用する)
+ *  @param x メニュー左上X座標 キャラ単位
+ *  @param y メニュー左上Y座標 キャラ単位
+ *  @param cursor カーソル初期位置
+ *  @param cancel Bボタンキャンセル有効フラグ 1=有効 0=無効
+ *  @param ret_wk 結果格納先ワークID
+ *  @note 座標指定は定義名を使います。MENU_X1,MENU_Y1 詳細はuser_define.hを参照。
+ */
+//--------------------------------------------------------------
+#define _BMPMENU_INIT_RIGHT( x,y,cursor,cancel,ret_wk ) \
+   _ASM_BMPMENU_INIT_RIGHT x,y,cursor,cancel,ret_wk
+
+   .macro  _ASM_BMPMENU_INIT_RIGHT x,y,cursor,cancel,ret_wk
+  .short  EV_SEQ_BMPMENU_INIT_EX_RIGHT
+  .byte  \x
+  .byte  \y
+  .short \cursor
+  .byte  \cancel
+  .short  \ret_wk
+  .endm
+
 
 //--------------------------------------------------------------
 /**
