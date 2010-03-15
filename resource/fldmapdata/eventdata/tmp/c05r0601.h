@@ -19,6 +19,7 @@
 #define C05R0601_NURSE_01                  4
 #define C05R0601_WORKMAN_01                5
 #define C05R0601_TRAINERW_01               6
+#define C05R0601_FLD_ITEM_01               7
 
 #endif //ZONE_C05R0601_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
