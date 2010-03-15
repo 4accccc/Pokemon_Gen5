@@ -124,7 +124,7 @@ u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons_no, u32 form_no, BOOL egg )
     int gra_index = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_form_gra_index );
     int pltt_only = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_pltt_only );
     int form_max = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_form_max );
-    if( form_no >= form_max )
+    if( form_no > form_max )
     { 
       form_no = 0;
     }
@@ -206,7 +206,7 @@ const u8 POKEICON_GetPalNum( u32 mons_no, u32 form_no, BOOL egg )
     int gra_index = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_form_gra_index );
     int pltt_only = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_pltt_only );
     int form_max = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_form_max );
-    if( form_no >= form_max )
+    if( form_no > form_max )
     { 
       form_no = 0;
     }
@@ -222,7 +222,7 @@ const u8 POKEICON_GetPalNum( u32 mons_no, u32 form_no, BOOL egg )
     }
     else
     { 
-      mons_no = POKEICON_FILE_MAX * ( MONSNO_MAX + 1 ) + POKEICON_FILE_MAX * ( gra_index + form_no - 1 );
+      mons_no = ( MONSNO_MAX + 1 ) +  ( gra_index + form_no - 1 );
     }
   }
 #ifdef GENDER_VER
