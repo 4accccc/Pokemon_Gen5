@@ -55,12 +55,14 @@ def hfile_search( hfile, search, none_str, error_ret )
     if( line =~ /\A#define/ )
       len = line.length
       str = line.split()
+      def_start = str[1].sub(/^ID_/,"").sub(/_OFFSET$/,"")
       
       if( none_str != nil && str[1].include?(none_str) )
         next #無効となる文字を含んでいる
       end
       
-      if( str[1].include?(search) ) #シンボル search含み
+      if ( str[1] == search )
+      #if( str[1].include?(search) ) #シンボル search含み
         str_num = str[2] #シンボル数値
         
         if( str_num =~ /\A0x/ ) #16進
@@ -114,13 +116,15 @@ fname_ev_big = File::basename( fname_ev )
 fname_ev_big = fname_ev_big.gsub( "\.ev", "" )
 fname_ev_big = fname_ev_big.upcase
 
+search_id_offset = "ID_" + fname_ev_big + "_OFFSET"
 #開始ID検索
-start_id = hfile_search( file_id, fname_ev_big, "_END", RET_ERROR )
+start_id = hfile_search( file_id, search_id_offset, "OFFSET_END", RET_ERROR )
 
 if( start_id == RET_ERROR )
   start_id = hfile_search( file_id, SCROFFS_START, nil, RET_ERROR )
   
   if( start_id == RET_ERROR )
+    printf( "can't find start_id %s \n", fname_ev_big )
     error_end( file_ev, file_id, file_def_h, fname_def_h )
     exit 1
   end
@@ -142,6 +146,7 @@ if( fname_ev.include?(FNAME_TRAINER) )
     file_id, SCROFFS_START_TRAINER_2VS2, nil, RET_ERROR )
   
   if( start_id_trainer == RET_ERROR )
+    printf( "can't find start_id %s \n", SCROFFS_START_TRAINER_2VS2 )
     error_end( file_ev, file_id, file_def_h, fname_def_h )
     exit 1
   end
