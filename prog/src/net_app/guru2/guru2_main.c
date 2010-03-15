@@ -7,7 +7,6 @@
  * @data    2010.01.20
  *
  * @todo 
- * ・ぐるぐる交換終了時にトレーナーメモを書き込んでいない(GURU2_TRAINER_MEMO)
  * ・同期セーブが入っていない(VIRTUAL_SAVE_FUNC)
  * ・セーブの時の会話ウインドウ右下でアイコンくるくるが入っていない(WINDOW_SAVE_ICON)
  * ・通信アイコンのパレットがパレットフェードで狂う(WMICON_PALETTE)
@@ -16,7 +15,6 @@
 #include <gflib.h>
 #include <calctool.h>
 
-#define GURU2_TRAINER_MEMO 
 #define VIRTUAL_SAVE_FUNC
 //#defein WINDOW_SAVE_ICON  
 //#define WMICON_PALETTE  
@@ -40,7 +38,7 @@
 
 #include "poke_tool/pokeparty.h"
 #include "savedata/myitem_savedata.h"
-//#include "poketool/poke_memo.h"
+#include "poke_tool/poke_memo.h"
 
 //#include "..\..\demo\egg\data\egg_data_def.h" //卵アーカイブインデックス
 
@@ -6223,14 +6221,9 @@ static void Guru2MainFriendEggExchange( GURU2MAIN_WORK *g2m, int id )
   f_pp = PokeParty_GetMemberPointer( f_poke, f_pos );
   
   // トレーナーメモ処理
-#ifndef GURU2_TRAINER_MEMO 
-  TrainerMemoSetPP(
-    f_pp,
-    Union_App_GetMystatus( _get_unionwork(g2m), GFL_NET_SystemGetCurrentID() ),
-    TRMEMO_ONTRADE_PLACESET,
-    0,
-    HEAPID_PROC );
-#endif
+  POKE_MEMO_SetTrainerMemoPP( f_pp, POKE_MEMO_EGG_TRADE,
+                              Union_App_GetMystatus( _get_unionwork(g2m), GFL_NET_SystemGetCurrentID() ), 
+                              POKE_MEMO_PLACE_GAME_TRADE, HEAPID_GURU2 );
   
   POKETOOL_CopyPPtoPP( f_pp, m_pp ); //コピー元,コピー先
 }
