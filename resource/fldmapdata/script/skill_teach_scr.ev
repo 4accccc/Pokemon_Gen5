@@ -22,6 +22,7 @@ _EVENT_DATA   ev_waza_teacher_dragon
 _EVENT_DATA   ev_waza_teacher_powerful
 _EVENT_DATA   ev_waza_teacher_coalescence
 _EVENT_DATA   ev_bg_waza_teacher_coalescence
+_EVENT_DATA   ev_skill_learn
 _EVENT_DATA_END
 
 //----------------------------------------------------------------------
@@ -504,6 +505,23 @@ sub_skillteacher_wasure_core:
     _RET
 
 }
+
+//======================================================================
+//
+//    指定のポケモンに指定の技を覚えさせる外部呼び出し用スクリプト
+//
+//======================================================================
+/**************************************************************/
+// IN: LOCALWORK14    手持ちポケモンの位置
+// IN: LOCALWORK15    覚えさせる技ＩＤ
+// OUT:SCWK_ANSWER    覚えた：TRUE　覚えなかった：FALSE
+/**************************************************************/
+ev_skill_learn:
+  $select_pos = $LOCALWORK14
+  $teach_waza_id = $LOCALWORK15
+  _CALL sub_skillteacher_system
+  _CHG_LOCAL_SCR
+_END
 
 
 
