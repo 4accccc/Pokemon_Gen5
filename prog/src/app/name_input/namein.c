@@ -632,7 +632,7 @@ static BOOL KeyAnm_PltFade( u16 *p_buff, u16 *p_cnt, u16 add, u8 plt_num, u8 plt
 static void STRINPUT_Init( STRINPUT_WORK *p_wk, const STRBUF * cp_default_str, u8 strlen, GFL_FONT *p_font, PRINT_QUE *p_que, const OBJ_WORK *cp_obj, HEAPID heapID );
 static void STRINPUT_Exit( STRINPUT_WORK *p_wk );
 static void STRINPUT_Main( STRINPUT_WORK *p_wk );
-static void STRINPUT_BackSpace( STRINPUT_WORK *p_wk );
+static BOOL STRINPUT_BackSpace( STRINPUT_WORK *p_wk );
 static BOOL STRINPUT_SetStr( STRINPUT_WORK *p_wk, STRCODE code );
 static BOOL STRINPUT_SetChangeStr( STRINPUT_WORK *p_wk, STRCODE code, BOOL is_shift );
 static BOOL STRINPUT_SetChangeSP( STRINPUT_WORK *p_wk, STRINPUT_SP_CHANGE type );
@@ -776,9 +776,10 @@ const u32 NAMEIN_SE_PresetData[]  =
   NAMEIN_SE_DECIDE_STR,
   NAMEIN_SE_CHANGE_MODE,
   NAMEIN_SE_DECIDE,
+  NAMEIN_SE_BEEP,
 };
 
-const u32 NAMEIN_SE_PresetNum = 5;
+const u32 NAMEIN_SE_PresetNum = 6;
 //=============================================================================
 /**
  *    外部参照
@@ -1936,9 +1937,10 @@ static void STRINPUT_Main( STRINPUT_WORK *p_wk )
  *  @brief  入力文字欄  1文字消去
  *
  *  @param  STRINPUT_WORK *p_wk ワーク
+ *  @rerval TRUE 成功 FALSE 失敗
  */
 //-----------------------------------------------------------------------------
-static void STRINPUT_BackSpace( STRINPUT_WORK *p_wk )
+static BOOL STRINPUT_BackSpace( STRINPUT_WORK *p_wk )
 { 
   //変換中ならば、変換中の文字を
   //そうでないならば、普通に消去
@@ -1948,7 +1950,7 @@ static void STRINPUT_BackSpace( STRINPUT_WORK *p_wk )
     p_wk->change_str[ p_wk->change_idx ] = GFL_STR_GetEOMCode();
     p_wk->is_update = TRUE;
 
-    PMSND_PlaySE( NAMEIN_SE_DELETE_STR );
+    return TRUE;
   }
   else
   { 
@@ -1958,9 +1960,11 @@ static void STRINPUT_BackSpace( STRINPUT_WORK *p_wk )
       p_wk->input_str[ p_wk->input_idx ] = GFL_STR_GetEOMCode();
       p_wk->is_update = TRUE;
 
-      PMSND_PlaySE( NAMEIN_SE_DELETE_STR );
+      return TRUE;
     }
   }
+
+  return FALSE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1981,8 +1985,6 @@ static BOOL STRINPUT_SetStr( STRINPUT_WORK *p_wk, STRCODE code )
 
     OS_Printf( "\nSetStr\n " );
     DEBUG_NAMEIN_Print(p_wk->input_str,p_wk->input_idx);
-
-    PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
 
     p_wk->is_update = TRUE;
 
@@ -2015,8 +2017,6 @@ static BOOL STRINPUT_SetChangeStr( STRINPUT_WORK *p_wk, STRCODE code, BOOL is_sh
     //変換バッファから確定バッファへの変換処理
     StrInput_ChangeStrToStr( p_wk, is_shift );
 
-    PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
-    
     p_wk->is_update = TRUE;
     return TRUE;
   }
@@ -2096,7 +2096,6 @@ static BOOL STRINPUT_SetChangeSP( STRINPUT_WORK *p_wk, STRINPUT_SP_CHANGE type )
           STRINPUT_SetStr( p_wk, code[i] );
         }
 
-        PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
         return TRUE;
       }
     }
@@ -2129,7 +2128,8 @@ static BOOL STRINPUT_SetChangeAuto( STRINPUT_WORK *p_wk )
       STRINPUT_BackSpace( p_wk );
 
       STRINPUT_SetStr( p_wk, code );
-      PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
+
+      return TRUE;
     }
   }
 
@@ -4212,6 +4212,7 @@ static void Keyboard_Decide( KEYBOARD_WORK *p_wk, const KEYBOARD_INPUT_REQUEST *
     break;
 
   case KEYMAP_KEYTYPE_SHIFT:    //シフト
+    PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
     p_wk->input = KEYBOARD_INPUT_SHIFT;
     p_wk->is_shift  ^= 1;
     break;
@@ -5453,7 +5454,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   NAMEIN_WORK *p_wk = p_param;
 
   //入力処理
-  { 
+  {
     KEYBOARD_INPUT  input;
     BOOL            is_shift;
     STRCODE         code;
@@ -5463,34 +5464,92 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     switch( input )
     { 
     case KEYBOARD_INPUT_STR:        //文字入力
-      STRINPUT_SetStr( &p_wk->strinput, code );
+      if( STRINPUT_SetStr( &p_wk->strinput, code ) )
+      { 
+        PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
+      }
+      else
+      { 
+        PMSND_PlaySE( NAMEIN_SE_BEEP );
+      }
       break;
     case KEYBOARD_INPUT_CHANGESTR:  //変換文字入力
-      STRINPUT_SetChangeStr( &p_wk->strinput, code, is_shift );
+      if( STRINPUT_SetChangeStr( &p_wk->strinput, code, is_shift ) )
+      { 
+        PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
+      }
+      else
+      { 
+        PMSND_PlaySE( NAMEIN_SE_BEEP );
+      }
       break;
     case KEYBOARD_INPUT_DAKUTEN:    //濁点
-      if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKUTEN ) )
-      { 
-        if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKUTEN2 ) )
+      {
+        BOOL is_change  = TRUE;
+        if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKUTEN ) )
         { 
-          STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKU_SEION );
+          if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKUTEN2 ) )
+          { 
+            if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKU_SEION ) )
+            { 
+              is_change = FALSE;
+            }
+          }
+        }
+
+        if( is_change )
+        { 
+          PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
+        }
+        else
+        { 
+          PMSND_PlaySE( NAMEIN_SE_BEEP );
         }
       }
       break;
     case KEYBOARD_INPUT_HANDAKUTEN: //半濁点
-      if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HANDAKUTEN ) )
-      { 
-        if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HANDAKUTEN2 ) )
+      {
+        BOOL is_change  = TRUE;
+        if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HANDAKUTEN ) )
         { 
-          STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HAN_SEION );
+          if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HANDAKUTEN2 ) )
+          { 
+            if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HAN_SEION ) )
+            { 
+              is_change = FALSE;
+            }
+          }
+        }
+
+        if( is_change )
+        { 
+          PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
+        }
+        else
+        { 
+          PMSND_PlaySE( NAMEIN_SE_BEEP );
         }
       }
       break;
     case KEYBOARD_INPUT_AUTOCHANGE: //自動
-      STRINPUT_SetChangeAuto( &p_wk->strinput );
+      if( STRINPUT_SetChangeAuto( &p_wk->strinput ) )
+      { 
+        PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
+      }
+      else
+      { 
+        PMSND_PlaySE( NAMEIN_SE_BEEP );
+      }
       break;
     case KEYBOARD_INPUT_BACKSPACE:  //一つ前に戻る
-      STRINPUT_BackSpace( &p_wk->strinput );
+      if( STRINPUT_BackSpace( &p_wk->strinput ) )
+      { 
+        PMSND_PlaySE( NAMEIN_SE_DELETE_STR );
+      }
+      else
+      { 
+        PMSND_PlaySE( NAMEIN_SE_BEEP );
+      }
       break;
     case KEYBOARD_INPUT_CHAGETYPE:  //入力タイプ変更
       STRINPUT_DeleteChangeStr( &p_wk->strinput );
@@ -5546,8 +5605,9 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         { 
           STRINPUT_SetLongStr( &p_wk->strinput, GFL_STR_GetStringCodePointer(p_default) );
           GFL_STR_DeleteBuffer( p_default );
-        }
 
+          PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
+        }
       }
       break;
     case KEYBOARD_INPUT_SHIFT:      //シフト
@@ -5555,7 +5615,14 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       break;
     case KEYBOARD_INPUT_SPACE:      //スペース入力
       STRINPUT_DecideChangeStr( &p_wk->strinput );
-      STRINPUT_SetStr( &p_wk->strinput, code );
+      if( STRINPUT_SetStr( &p_wk->strinput, code ) )
+      { 
+        PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
+      }
+      else
+      { 
+        PMSND_PlaySE( NAMEIN_SE_BEEP );
+      }
       break;
     default:
       GF_ASSERT(0);
