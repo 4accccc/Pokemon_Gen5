@@ -1115,6 +1115,13 @@ SRCS_OVERLAY_VRAM_H =	battle/tr_ai/tr_ai.c \
 #===> SRCS_OVERLAY_BATTLE
 SRCS_OVERLAY_VS_MULTI_LIST = battle/app/vs_multi_list.c
 
+# ポケモンドリームキャッチャー
+#===> SRCS_OVERLAY_TAYA_DEBUG
+#===> SRCS_OVERLAY_SOGABE_DEBUG
+#===> SRCS_OVERLAY_DEV_WIFI
+SRCS_OVERLAY_PDC = app/pdc/pdc.c \
+                   app/pdc/pdc_main.c
+
 # WIFICLUB
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
@@ -1126,8 +1133,6 @@ SRCS_OVERLAY_WIFICLUB =   net_app/wificlub/wifi_p2pmatchroom.c \
               net_app/wificlub/wifi_p2pmatchroom_map.c \
               net_app/wificlub/wifi_p2pmatch.c \
 		 					net_app/wificlub/wifi_status.c
-
-
 
 # IRCマッチングアプリケーション ともだちコード交換
 #===> SRCS_OVERLAY_UI_COMMON
