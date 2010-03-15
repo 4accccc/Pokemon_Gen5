@@ -189,6 +189,8 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UN
     return NULL;
   }
   BATTLE_PARAM_SetPokeParty( para, setup->partyPlayer, BTL_CLIENT_PLAYER );
+  BATTLE_PARAM_SetRegulation( para, setup->regulation, HEAPID_PROC );
+  
 #if 0 //戦闘内部でシェアしあうので、ここで指定はいらない
   para->partyEnemy1 = setup->partyEnemy1;   ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
   para->partyPartner = setup->partyPartner; ///< 2vs2時の味方AI（不要ならnull）

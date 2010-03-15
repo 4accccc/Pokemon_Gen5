@@ -956,6 +956,7 @@ static BOOL SubEvent_PokelistBattle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys,
   case SEQ_BATTLE_CALL:
     battle_setup->partyPlayer = clsys->recvbuf.pokeparty[my_net_id];
     battle_setup->standing_pos = clsys->recvbuf.stand_position[my_net_id];
+    battle_setup->regulation = unisys->alloc.regulation;
     Colosseum_SetupBattleDemoParent(clsys, &battle_setup->demo, HEAPID_UNION);
     
     *child_event = EVENT_ColosseumBattle(gsys, fieldWork, situ->play_category, battle_setup);

@@ -22,6 +22,7 @@ typedef struct{
   POKEPARTY*      partyEnemy2;  ///< 2vs2時の２番目敵AI用（不要ならnull）
   u8              standing_pos; ///< 立ち位置
   u8              padding[3];
+  REGULATION      *regulation;  ///<バトルレギュレーション
   
   //デモ用
   COMM_BTL_DEMO_PARAM demo;     ///< バトル開始・終了デモ用ParentWork
