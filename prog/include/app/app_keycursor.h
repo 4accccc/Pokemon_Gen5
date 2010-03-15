@@ -47,6 +47,21 @@ extern APP_KEYCURSOR_WORK* APP_KEYCURSOR_Create( u16 n_col, BOOL is_decide_key, 
 
 //--------------------------------------------------------------
 /**
+ * キー送りカーソル 初期化
+ *  @param n_col      [IN] 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
+ *  @param is_decide_key  [IN] TRUE:決定ボタン、キャンセルボタンでカーソルを消す。
+ *  @param is_decide_tp   [IN] TRUE:タッチでカーソルを消す。
+ *  @param heapID     [IN] HEAPID ヒープID
+ *  @param skip_cursor_character    [IN] キャラエリアへのポインタ(APP_KEYCURSOR_Deleteするまで呼び出し元で保持すること)
+ *                                       (app_keycursor.c内にあるsc_skip_cursor_characterを参考に用意して下さい)
+ *  @retval nothing
+ */
+//--------------------------------------------------------------
+extern APP_KEYCURSOR_WORK* APP_KEYCURSOR_CreateEx( u16 n_col, BOOL is_decide_key, BOOL is_decide_tp, HEAPID heap_id,
+                                                   u8* skip_cursor_character );
+
+//--------------------------------------------------------------
+/**
  *  @brief  キー送りカーソル 削除
  *  @param  work メインワーク
  *  @retval nothing

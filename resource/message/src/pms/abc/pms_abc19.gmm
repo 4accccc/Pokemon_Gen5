@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-06T13:28:45"/>
+	<create user="taya" host="W00146" date="2010-03-12T21:03:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -99,6 +99,9 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
 				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="19" japanese="アンケート回答" english="アンケート回答" view="EP" width="108" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -346,13 +349,13 @@
 		</language>
 	</columns>
 
-	<dialog left="-16" top="176" right="689" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="0" top="176" right="689" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="514"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="681"/>
+		<band id="3" index="3" style="0000" width="681"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>

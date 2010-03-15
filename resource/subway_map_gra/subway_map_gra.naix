@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: subway_map_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_SUBWAY_MAP_GRA_NAIX_
+#define NARC_SUBWAY_MAP_GRA_NAIX_
+
+enum {
+	NARC_subway_map_gra_subwaymap_NCLR = 0,
+	NARC_subway_map_gra_subwaymap_NCGR = 1,
+	NARC_subway_map_gra_subwaymap_base_NSCR = 2,
+	NARC_subway_map_gra_subwaymap_root_NSCR = 3
+};
+
+/* NARC_SUBWAY_MAP_GRA_NAIX_ */
+#endif

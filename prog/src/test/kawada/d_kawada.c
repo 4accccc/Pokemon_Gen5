@@ -52,6 +52,11 @@
 // ˆê‘ðŠÈˆÕ‰ï˜b
 #include "app/pms_input.h"
 
+// ŽO•C‘I‘ð
+#include "demo/psel.h"
+
+// ’n‰º“S˜Hü}
+#include "app/subway_map.h"
 
 // ƒI[ƒo[ƒŒƒC
 FS_EXTERN_OVERLAY(zukan_toroku);
@@ -60,12 +65,14 @@ FS_EXTERN_OVERLAY(chihou_zukan_award);
 FS_EXTERN_OVERLAY(zenkoku_zukan_award);
 FS_EXTERN_OVERLAY(btl_rec_sel);
 FS_EXTERN_OVERLAY(pmsinput);
+FS_EXTERN_OVERLAY(psel);
+FS_EXTERN_OVERLAY(subway_map);
 
 
 //============================================================================================
 //	’è”’è‹`
 //============================================================================================
-#define	TOP_MENU_SIZ	( 7 )
+#define	TOP_MENU_SIZ	( 9 )
 
 typedef struct {
 	u32	main_seq;
@@ -106,6 +113,12 @@ typedef struct {
   // ˆê‘ðŠÈˆÕ‰ï˜b
   PMSI_PARAM*    pmsi_param;
 
+  // ŽO•C‘I‘ð
+  PSEL_PARAM*        psel_param;
+
+  // ’n‰º“S˜Hü}
+  SUBWAY_MAP_PARAM*  subway_map_param;
+
 }KAWADA_MAIN_WORK;
 
 enum {
@@ -121,6 +134,8 @@ enum {
 	MAIN_SEQ_BTL_REC_SEL_CALL,
 	MAIN_SEQ_PMS_INPUT_DOUBLE_CALL,
 	MAIN_SEQ_PMS_INPUT_SINGLE_CALL,
+	MAIN_SEQ_PSEL_CALL,
+	MAIN_SEQ_SUBWAY_MAP_CALL,
   // ‚±‚±‚Ü‚Å
 
 	MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN,
@@ -130,6 +145,8 @@ enum {
 	MAIN_SEQ_BTL_REC_SEL_CALL_RETURN,
 	MAIN_SEQ_PMS_INPUT_DOUBLE_CALL_RETURN,
 	MAIN_SEQ_PMS_INPUT_SINGLE_CALL_RETURN,
+	MAIN_SEQ_PSEL_CALL_RETURN,
+	MAIN_SEQ_SUBWAY_MAP_CALL_RETURN,
 	
   MAIN_SEQ_END,
 };
@@ -179,6 +196,14 @@ static void PmsInputDoubleExit( KAWADA_MAIN_WORK* wk );
 // ˆê‘ðŠÈˆÕ‰ï˜b
 static void PmsInputSingleInit( KAWADA_MAIN_WORK* wk );
 static void PmsInputSingleExit( KAWADA_MAIN_WORK* wk );
+
+// ŽO•C‘I‘ð
+static void PselInit( KAWADA_MAIN_WORK* wk );
+static void PselExit( KAWADA_MAIN_WORK* wk );
+
+// ’n‰º“S˜Hü}
+static void SubwayMapInit( KAWADA_MAIN_WORK* wk );
+static void SubwayMapExit( KAWADA_MAIN_WORK* wk );
 
 
 //============================================================================================
@@ -373,6 +398,30 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     break;
   case MAIN_SEQ_PMS_INPUT_SINGLE_CALL_RETURN:
     PmsInputSingleExit(wk); 
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+
+
+  // ŽO•C‘I‘ð
+  case MAIN_SEQ_PSEL_CALL:
+    PselInit(wk);
+		wk->main_seq = MAIN_SEQ_PSEL_CALL_RETURN;
+    break;
+  case MAIN_SEQ_PSEL_CALL_RETURN:
+    PselExit(wk); 
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+  
+    
+  // ’n‰º“S˜Hü}
+  case MAIN_SEQ_SUBWAY_MAP_CALL:
+    SubwayMapInit(wk);
+		wk->main_seq = MAIN_SEQ_SUBWAY_MAP_CALL_RETURN;
+    break;
+  case MAIN_SEQ_SUBWAY_MAP_CALL_RETURN:
+    SubwayMapExit(wk); 
 		FadeInSet( wk, MAIN_SEQ_INIT );
 		wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
@@ -774,4 +823,38 @@ static void PmsInputSingleExit( KAWADA_MAIN_WORK* wk )
   PMSI_PARAM_Delete( wk->pmsi_param );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(pmsinput) );
 }
+
+// ŽO•C‘I‘ð
+static void PselInit( KAWADA_MAIN_WORK* wk )
+{
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(psel) );
+  wk->psel_param = PSEL_AllocParam( wk->heapID, 0 );
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &PSEL_ProcData, wk->psel_param );
+}
+static void PselExit( KAWADA_MAIN_WORK* wk )
+{
+  PSEL_FreeParam( wk->psel_param );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(psel) );
+}
+
+// ’n‰º“S˜Hü}
+static void SubwayMapInit( KAWADA_MAIN_WORK* wk )
+{
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(subway_map));
+
+  wk->mystatus = GFL_HEAP_AllocMemory( wk->heapID, MYSTATUS_SAVE_SIZE );
+  wk->mystatus->sex = PM_MALE;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) wk->mystatus->sex = PM_FEMALE;
+
+  wk->subway_map_param = SUBWAY_MAP_AllocParam( wk->heapID, wk->mystatus );
+  
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &SUBWAY_MAP_ProcData, wk->subway_map_param );
+}
+static void SubwayMapExit( KAWADA_MAIN_WORK* wk )
+{
+  SUBWAY_MAP_FreeParam( wk->subway_map_param );
+  GFL_HEAP_FreeMemory( wk->mystatus );
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(subway_map));
+}
+
 

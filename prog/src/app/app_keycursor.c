@@ -101,6 +101,11 @@ static const u8 ALIGN4 sc_skip_cursor_character[128] = {
 //--------------------------------------------------------------
 APP_KEYCURSOR_WORK* APP_KEYCURSOR_Create( u16 n_col, BOOL is_decide_key, BOOL is_decide_tp, HEAPID heap_id )
 {
+  return APP_KEYCURSOR_CreateEx( n_col, is_decide_key, is_decide_tp, heap_id, (u8*)sc_skip_cursor_character );
+
+#if 0
+  APP_KEYCURSOR_CreateExに移行したのでコメントアウト
+
   APP_KEYCURSOR_WORK* work;
   
   GF_ASSERT( is_decide_key == TRUE || is_decide_tp == TRUE ); // どちらかがTRUEでないとカーソルが消えない。
@@ -114,6 +119,41 @@ APP_KEYCURSOR_WORK* APP_KEYCURSOR_Create( u16 n_col, BOOL is_decide_key, BOOL is
   // BMP生成
   work->bmp_cursor = GFL_BMP_CreateWithData(
         (u8*)sc_skip_cursor_character,
+        CURSOR_BMP_CHR_X, CURSOR_BMP_CHR_Y, GFL_BMP_16_COLOR, heap_id );
+
+  return work;
+#endif
+
+}
+
+//--------------------------------------------------------------
+/**
+ * キー送りカーソル 初期化
+ *  @param n_col      [IN] 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
+ *  @param is_decide_key  [IN] TRUE:決定ボタン、キャンセルボタンでカーソルを消す。
+ *  @param is_decide_tp   [IN] TRUE:タッチでカーソルを消す。
+ *  @param heapID     [IN] HEAPID ヒープID
+ *  @param skip_cursor_character    [IN] キャラエリアへのポインタ(APP_KEYCURSOR_Deleteするまで呼び出し元で保持すること)
+ *                                       (app_keycursor.c内にあるsc_skip_cursor_characterを参考に用意して下さい)
+ *  @retval nothing
+ */
+//--------------------------------------------------------------
+extern APP_KEYCURSOR_WORK* APP_KEYCURSOR_CreateEx( u16 n_col, BOOL is_decide_key, BOOL is_decide_tp, HEAPID heap_id,
+                                                   u8* skip_cursor_character )
+{
+  APP_KEYCURSOR_WORK* work;
+  
+  GF_ASSERT( is_decide_key == TRUE || is_decide_tp == TRUE ); // どちらかがTRUEでないとカーソルが消えない。
+
+  work = GFL_HEAP_AllocClearMemory( heap_id, sizeof(APP_KEYCURSOR_WORK) );
+ 
+  work->n_col = n_col;
+  work->decide_key_flag = is_decide_key;
+  work->decide_tp_flag  = is_decide_tp;
+
+  // BMP生成
+  work->bmp_cursor = GFL_BMP_CreateWithData(
+        skip_cursor_character,
         CURSOR_BMP_CHR_X, CURSOR_BMP_CHR_Y, GFL_BMP_16_COLOR, heap_id );
 
   return work;

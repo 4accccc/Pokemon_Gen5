@@ -283,3 +283,5 @@
   ARCID_SHOUJOU  "shoujou.narc"  # 図鑑賞状（地方、全国）のグラフィックデータ
   ARCID_EV_MOVEPOKE  "event_movepoke.narc"  # 移動ポケモンイベント用データ
   ARCID_SPPOKE_GMK  "fieldmap/sppoke.narc"  # 特殊ポケモンギミックアーカイブ
+  ARCID_PSEL "psel.narc"  # 三匹選択の2D、3Dデータ
+  ARCID_SUBWAY_MAP_GRA "subway_map_gra.narc"  # 地下鉄路線図のグラフィックデータ

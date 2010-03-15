@@ -1904,6 +1904,16 @@ SRCS_OVERLAY_CHIHOU_ZUKAN_AWARD = app/zukan_award/chihou/chihou_zukan_award.c \
 SRCS_OVERLAY_ZENKOKU_ZUKAN_AWARD = app/zukan_award/zenkoku/zenkoku_zukan_award.c \
                                    app/zukan_award/zenkoku/zenkoku_zukan_award_graphic.c
 
+# ŽO•C‘I‘ð
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_PSEL = demo/psel/psel.c \
+                    demo/psel/psel_graphic.c
+
+# ’n‰º“S˜Hü}
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_SUBWAY_MAP = app/subway_map/subway_map.c \
+                          app/subway_map/subway_map_graphic.c
+
 # ì“cƒfƒoƒbƒO
 #===> SRCS_OVERLAY_UI_COMMON
 #===> SRCS_OVERLAY_ZUKAN_TOROKU
@@ -1912,5 +1922,7 @@ SRCS_OVERLAY_ZENKOKU_ZUKAN_AWARD = app/zukan_award/zenkoku/zenkoku_zukan_award.c
 #===> SRCS_OVERLAY_ZENKOKU_ZUKAN_AWARD
 #===> SRCS_OVERLAY_BTL_REC_SEL
 #===> SRCS_OVERLAY_PMSINPUT
+#===> SRCS_OVERLAY_PSEL
+#===> SRCS_OVERLAY_SUBWAY_MAP
 SRCS_OVERLAY_KAWADA_DEBUG = test/kawada/d_kawada.c
 

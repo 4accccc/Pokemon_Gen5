@@ -1,0 +1,43 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: psel.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_PSEL_NAIX_
+#define NARC_PSEL_NAIX_
+
+enum {
+	NARC_psel_psel_551_n_NCLR = 0,
+	NARC_psel_psel_554_n_NCLR = 1,
+	NARC_psel_psel_557_n_NCLR = 2,
+	NARC_psel_psel_cursol_NCLR = 3,
+	NARC_psel_psel_551_m_NCGR = 4,
+	NARC_psel_psel_554_m_NCGR = 5,
+	NARC_psel_psel_557_m_NCGR = 6,
+	NARC_psel_psel_cursol_NCGR = 7,
+	NARC_psel_psel_551_m_NCER = 8,
+	NARC_psel_psel_554_m_NCER = 9,
+	NARC_psel_psel_557_m_NCER = 10,
+	NARC_psel_psel_cursol_NCER = 11,
+	NARC_psel_psel_551_m_NANR = 12,
+	NARC_psel_psel_554_m_NANR = 13,
+	NARC_psel_psel_557_m_NANR = 14,
+	NARC_psel_psel_cursol_NANR = 15,
+	NARC_psel_psel_s01_nsbmd = 16,
+	NARC_psel_psel_s01_nsbca = 17,
+	NARC_psel_psel_s01_nsbma = 18,
+	NARC_psel_psel_s01_nsbta = 19,
+	NARC_psel_psel_s01_cam_bin = 20,
+	NARC_psel_psel_s02_nsbmd = 21,
+	NARC_psel_psel_s02_nsbca = 22,
+	NARC_psel_psel_s02_cam_bin = 23,
+	NARC_psel_psel_mb_nsbmd = 24,
+	NARC_psel_psel_mb_nsbma = 25
+};
+
+/* NARC_PSEL_NAIX_ */
+#endif

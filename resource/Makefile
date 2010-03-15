@@ -155,7 +155,10 @@ SUBDIRS	=	wmi \
             time_icon \
             trialhouse_gra \
             shoujou \
-						event_movepoke
+						event_movepoke \
+						psel \
+						subway_map_gra
+
 
 include $(RESOURCE_MACRO)
 

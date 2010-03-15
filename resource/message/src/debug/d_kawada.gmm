@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kawada_koji" host="W00215" date="2010-03-09T23:03:11"/>
+	<create user="kawada_koji" host="W00215" date="2010-03-14T15:22:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -370,32 +370,32 @@
 		<language name="JPN_KANJI" width="256">二択簡易会話</language>
 	</row>
 
-	<row id="top_menu10">
+	<row id="top_menu06">
 		<language name="JPN" width="256">いったくかんいかいわ</language>
 		<language name="JPN_KANJI" width="256">一択簡易会話</language>
 	</row>
 
-	<row id="top_menu20">
-		<language name="JPN" width="256">ずかん</language>
-		<language name="JPN_KANJI" width="256">ずかん</language>
+	<row id="top_menu07">
+		<language name="JPN" width="256">さんびきせんたく</language>
+		<language name="JPN_KANJI" width="256">三匹選択</language>
 	</row>
 
-	<row id="top_menu21">
-		<language name="JPN" width="256">ずかんリスト</language>
-		<language name="JPN_KANJI" width="256">ずかんリスト</language>
+	<row id="top_menu08">
+		<language name="JPN" width="256">ちかてつろせんず</language>
+		<language name="JPN_KANJI" width="256">地下鉄路線図</language>
 	</row>
 
-	<row id="top_menu30">
+	<row id="top_menu09">
 		<language name="JPN" width="256">ＶＳリストＬ</language>
 		<language name="JPN_KANJI" width="256">ＶＳリストＬ</language>
 	</row>
 
-	<row id="top_menu31">
+	<row id="top_menu10">
 		<language name="JPN" width="256">ＶＳリストＲ</language>
 		<language name="JPN_KANJI" width="256">ＶＳリストＲ</language>
 	</row>
 
-	<row id="top_menu32">
+	<row id="top_menu11">
 		<language name="JPN" width="256">ともだちてちょう</language>
 		<language name="JPN_KANJI" width="256">ともだちてちょう</language>
 	</row>
