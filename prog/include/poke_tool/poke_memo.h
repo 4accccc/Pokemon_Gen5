@@ -13,12 +13,14 @@
 //特殊トレーナーメモ用場所定義
 #define POKE_MEMO_PLACE_POKE_SHIFTER (30001)  //ポケシフター(過去作転送
 #define POKE_MEMO_PLACE_GAME_TRADE   (30002)  //つうしんこうかん(ゲーム内)
+#define POKE_MEMO_PLACE_HUMAN_TRADE   (30002)  //つうしんこうかん(人と通信)
 #define POKE_MEMO_PLACE_KANTOU       (30004)  //カントー
 #define POKE_MEMO_PLACE_JYOUTO       (30005)  //ジョウト
 #define POKE_MEMO_PLACE_HOUEN        (30006)  //ホウエン
 #define POKE_MEMO_PLACE_SHINOU       (30007)  //シンオウ
 #define POKE_MEMO_PLACE_FAR_PLACE    (30008)  //とおいとち(XD・コロシアム
 #define POKE_MEMO_PLACE_UNKNOWN      (30009)  //----------(不明
+#define POKE_MEMO_PERSON_SODATEYA    (60001)  //育て屋夫婦
 
 #define POKE_MEMO_PLACE_SEREBIXI_BEFORE  (30010)   //セレビィ転送時
 #define POKE_MEMO_PLACE_SEREBIXI_AFTER   (30011)   //セレビィイベント後
@@ -36,6 +38,11 @@ typedef enum
   POKE_MEMO_INCUBATION,   //タマゴ孵化
   POKE_MEMO_POKE_SHIFTER, //ポケシフター(過去作転送
   POKE_MEMO_DISTRIBUTION, //配布 ※配布の親名・親IDは外でセットしてください。
+                          //     ※タマゴは↓を使ってください。
+
+  POKE_MEMO_EGG_FIRST,    //初めて手入れたタマゴ(育てや・ゲーム内イベント・外部配布
+  POKE_MEMO_EGG_TRADE,    //もらったタマゴ(通信交換・ぐるぐる交換・ゲーム内交換
+                          //placeにはPOKE_MEMO_PLACE_GAME_TRADEかPOKE_MEMO_PLACE_HUMAN_TRADEをセットしてください。
 }POKE_MEMO_SET_TYPE;
 
 //イベントポケチェック用種類

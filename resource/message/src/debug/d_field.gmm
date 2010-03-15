@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2010-03-12T18:46:05"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-15T12:10:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="61" top="201" right="766" bottom="829" maximized="no" rayout="Vertical2">
+	<dialog left="112" top="121" right="817" bottom="749" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="752" top="128" right="1280" bottom="650" visible="yes"/>
+		<tag-palette left="1451" top="242" right="1979" bottom="764" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1390,6 +1390,66 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_STR66">
 		<language name="JPN" width="160">ちゃくしんおん</language>
 		<language name="JPN_KANJI" width="160">着信音</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR67">
+		<language name="JPN" width="160">イベントポケ</language>
+		<language name="JPN_KANJI" width="160">イベントポケ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_EVEPOKE01">
+		<language name="JPN" width="160">10えいがセレビィ</language>
+		<language name="JPN_KANJI" width="160">10映画セレビィ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_EVEPOKE02">
+		<language name="JPN" width="160">10えいがエンテイ</language>
+		<language name="JPN_KANJI" width="160">10映画エンテイ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_EVEPOKE03">
+		<language name="JPN" width="160">10えいがライコウ</language>
+		<language name="JPN_KANJI" width="160">10映画ライコウ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_EVEPOKE04">
+		<language name="JPN" width="160">10えいがスイクン</language>
+		<language name="JPN_KANJI" width="160">10映画スイクン</language>
+	</row>
+
+	<row id="DEBUG_FIELD_EVEPOKE05">
+		<language name="JPN" width="160">10えいがセレビィ(後</language>
+		<language name="JPN_KANJI" width="160">10映画セレビィ(後</language>
+	</row>
+
+	<row id="DEBUG_FIELD_EVEPOKE06">
+		<language name="JPN" width="160">10えいがエンテイ(後</language>
+		<language name="JPN_KANJI" width="160">10映画エンテイ(後</language>
+	</row>
+
+	<row id="DEBUG_FIELD_EVEPOKE07">
+		<language name="JPN" width="160">10えいがライコウ(後</language>
+		<language name="JPN_KANJI" width="160">10映画ライコウ(後</language>
+	</row>
+
+	<row id="DEBUG_FIELD_EVEPOKE08">
+		<language name="JPN" width="160">10えいがスイクン(後</language>
+		<language name="JPN_KANJI" width="160">10映画スイクン(後</language>
+	</row>
+
+	<row id="DEBUG_FIELD_EVEPOKE09">
+		<language name="JPN" width="160">メロディア</language>
+		<language name="JPN_KANJI" width="160">メロディア</language>
+	</row>
+
+	<row id="DEBUG_FIELD_EVEPOKE10">
+		<language name="JPN" width="160">ダルタニス</language>
+		<language name="JPN_KANJI" width="160">ダルタニス</language>
+	</row>
+
+	<row id="DEBUG_FIELD_EVEPOKE11">
+		<language name="JPN" width="160">はいふシェイミ</language>
+		<language name="JPN_KANJI" width="160">配布シェイミ</language>
 	</row>
 
 	<flowchart-group-list>

@@ -109,6 +109,16 @@ void POKE_MEMO_SetTrainerMemoPPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_SET_
     POKE_MEMO_SetRomVersion( ppp );
     break;
     
+  case POKE_MEMO_EGG_FIRST:
+    POKE_MEMO_SetPlaceTime( ppp , place , PMDT_1 );
+    POKE_MEMO_SetMyStatus( ppp , my , heapId );
+    POKE_MEMO_SetRomVersion( ppp );
+    break;
+    
+  case POKE_MEMO_EGG_TRADE:
+    POKE_MEMO_SetPlaceTime( ppp , place , PMDT_2 );
+    break;
+    
   }
   PPP_FastModeOff(ppp,fastFlg);
 }
@@ -290,7 +300,7 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
 
   case POKE_MEMO_EVENT_DARUTANISU:
     //配布ダルタニス
-    if( monsNo == MONSNO_SEREBHI &&
+    if( monsNo == MONSNO_DARUTANISU &&
         isEvent == 1 )
     {
       return TRUE;

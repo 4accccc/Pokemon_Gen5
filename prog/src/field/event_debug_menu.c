@@ -234,6 +234,7 @@ static BOOL debugMenuCallProc_Zukan( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_AllMapCheck( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_RingTone( DEBUG_MENU_EVENT_WORK * p_wk );
+static BOOL debugMenuCallProc_EventPokeCreate( DEBUG_MENU_EVENT_WORK * p_wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -289,6 +290,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_MYSTERY_00, debugMenuCallProc_MakeMysteryCardList },//ふしぎなおくりものカード作成
   { DEBUG_FIELD_STR63, debugMenuCallProc_SetBtlBox },  //不正チェックを通るポケモンを作成
   { DEBUG_FIELD_STR64, debugMenuCallProc_ChangeName },  //主人公名を再設定
+  { DEBUG_FIELD_STR67, debugMenuCallProc_EventPokeCreate },  //イベントポケモン作成
 
   { DEBUG_FIELD_TITLE_06, (void*)BMPMENULIST_LABEL },       //○つうしん
   { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },      //WIFIクラブ
@@ -6055,4 +6057,174 @@ static void SetZukanDataOne( DEBUG_ZUKAN_WORK * wk, u16 mons, u16 form, u32 mode
   }
 
   GFL_HEAP_FreeMemory( pp );
+}
+
+
+//--------------------------------------------------------------
+//イベントポケモン作成
+//--------------------------------------------------------------
+#include "poke_tool/poke_memo.h"
+static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *wk );
+
+
+static const FLDMENUFUNC_LIST DATA_EventPokeCreate[] =
+{
+  { DEBUG_FIELD_EVEPOKE01, (void*)0 },
+  { DEBUG_FIELD_EVEPOKE02, (void*)1 },
+  { DEBUG_FIELD_EVEPOKE03, (void*)2 },
+  { DEBUG_FIELD_EVEPOKE04, (void*)3 },
+  { DEBUG_FIELD_EVEPOKE05, (void*)4 },
+  { DEBUG_FIELD_EVEPOKE06, (void*)5 },
+  { DEBUG_FIELD_EVEPOKE07, (void*)6 },
+  { DEBUG_FIELD_EVEPOKE08, (void*)7 },
+  { DEBUG_FIELD_EVEPOKE09, (void*)8 },
+  { DEBUG_FIELD_EVEPOKE10, (void*)9 },
+  { DEBUG_FIELD_EVEPOKE11, (void*)10 },
+};
+
+static const DEBUG_MENU_INITIALIZER DebugEventPokeCreateMenu = {
+  NARC_message_d_field_dat,
+  NELEMS(DATA_EventPokeCreate),
+  DATA_EventPokeCreate,
+  &DATA_DebugMenuList_Default, //流用
+  1, 1, 16, 17,
+  NULL,
+  NULL
+};
+
+typedef struct
+{
+  HEAPID heapId;
+  GAMESYS_WORK *gmSys;
+  GMEVENT *gmEvent;
+  FLDMENUFUNC *menuFunc;
+  FIELDMAP_WORK *fieldWork;
+}DEBUG_EVENT_POKE_CREATE;
+
+static BOOL debugMenuCallProc_EventPokeCreate( DEBUG_MENU_EVENT_WORK * wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  GMEVENT *event = wk->gmEvent;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_EVENT_POKE_CREATE *work;
+
+  GMEVENT_Change( event, debugMenuEventpokeCreate, sizeof(DEBUG_EVENT_POKE_CREATE) );
+
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_EVENT_POKE_CREATE) );
+
+  work->gmSys = gsys;
+  work->gmEvent = event;
+  work->fieldWork = fieldWork;
+  work->heapId = heapID;
+
+  return TRUE;
+}
+static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_EVENT_POKE_CREATE *work = wk;
+
+  switch( *seq ){
+  case 0:
+    work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapId, &DebugEventPokeCreateMenu );
+    (*seq)++;
+    break;
+
+  case 1:
+    {
+      const u32 ret = FLDMENUFUNC_ProcMenu(work->menuFunc);
+      GAMEDATA *gmData = GAMESYSTEM_GetGameData(work->gmSys);
+      POKEPARTY *party = GAMEDATA_GetMyPokemon(gmData);
+      BOX_MANAGER *boxData = GAMEDATA_GetBoxManager(gmData);
+      
+      if( ret == FLDMENUFUNC_NULL )
+      {
+        return GMEVENT_RES_CONTINUE;
+      }
+      else
+      if( ret == FLDMENUFUNC_CANCEL )
+      {
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+        return GMEVENT_RES_FINISH;
+      }
+      else
+      {
+        POKEMON_PARAM *pp;
+        //ポケモン作成
+        switch( ret )
+        {
+        case 0: //10えいがセレビィ
+          pp = PP_Create( MONSNO_SEREBHI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_SEREBIXI_BEFORE );
+          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+          break;
+        case 1: //10えいがエンテイ
+          pp = PP_Create( MONSNO_ENTEI , 50 , PTL_SETUP_RND_RARE , work->heapId );
+          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
+          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+          break;
+        case 2: //10えいがライコウ
+          pp = PP_Create( MONSNO_RAIKOU , 50 , PTL_SETUP_RND_RARE , work->heapId );
+          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
+          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+          break;
+        case 3: //10えいがスイクン
+          pp = PP_Create( MONSNO_SUIKUN , 50 , PTL_SETUP_RND_RARE , work->heapId );
+          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
+          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+          break;
+        case 4: //10えいがセレビィ(後
+          pp = PP_Create( MONSNO_SEREBHI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_SEREBIXI_AFTER );
+          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+          break;
+        case 5: //10えいがエンテイ(後
+          pp = PP_Create( MONSNO_ENTEI , 50 , PTL_SETUP_RND_RARE , work->heapId );
+          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
+          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+          break;
+        case 6: //10えいがライコウ(後
+          pp = PP_Create( MONSNO_RAIKOU , 50 , PTL_SETUP_RND_RARE , work->heapId );
+          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
+          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+          break;
+        case 7: //10えいがスイクン(後
+          pp = PP_Create( MONSNO_SUIKUN , 50 , PTL_SETUP_RND_RARE , work->heapId );
+          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
+          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+          break;
+        case 8: //メロディア
+          pp = PP_Create( MONSNO_MERODHIA , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+          break;
+        case 9: //ダルタニス
+          pp = PP_Create( MONSNO_DARUTANISU , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+          break;
+        case 10: //はいふシェイミ
+          pp = PP_Create( MONSNO_SHEIMI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+          break;
+        }
+        {
+          u16 oyaName[] = {L'イ',L'ベ',L'ン',L'ト',L'ぽ',L'け',0xFFFF};
+          PP_Put( pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+          PP_Put( pp , ID_PARA_oyasex , PTL_SEX_MALE );
+        }
+        //手持ちに空きがあれば入れる
+        if( PokeParty_GetPokeCount( party ) < 6 )
+        {
+          PokeParty_Add( party , pp );
+        }
+        else
+        {
+          BOXDAT_PutPokemon( boxData , PP_GetPPPPointer( pp ) );
+        }
+        GFL_HEAP_FreeMemory( pp );
+      }
+    }
+  }
+
+  return GMEVENT_RES_CONTINUE;
 }
