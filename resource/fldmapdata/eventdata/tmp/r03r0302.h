@@ -11,6 +11,11 @@
 #ifndef ZONE_R03R0302_EVC_H
 #define ZONE_R03R0302_EVC_H
 
+#define R03R0302_FLD_ITEM_01               0
+#define R03R0302_FLD_ITEM_02               1
+#define R03R0302_FLD_ITEM_03               2
+#define R03R0302_FLD_ITEM_04               3
+#define R03R0302_FLD_ITEM_05               4
 
 #endif //ZONE_R03R0302_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03r0302.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
