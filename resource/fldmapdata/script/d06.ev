@@ -147,7 +147,7 @@ EVENT_START    ev_pos_d06_leader5_01
 	_BALLOONWIN_CLOSE()
 	
 	//ヤーコンのポケモンが出現
-	_OBJ_ADD_EX( 106, 341, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE17, MV_DMY )
+	_OBJ_ADD_EX( 106, 341, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE20, MV_DMY )
 	
 	//ポケモンが巣に向かう
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_kuru_01)
@@ -157,12 +157,21 @@ EVENT_START    ev_pos_d06_leader5_01
 	//ヤーコン:ポケモン名！　わざ名！
 	_BALLOONWIN_OBJMSG( msg_d06_leader_03, D06_LEADER5_01)
 	_BALLOONWIN_CLOSE()
+
+	_TIME_WAIT(16)
 	
 	//【仮】スクリプトの動きだけ出来るのか。エフェクトはいるのか
 	//ポケモンがわざを出したような処理
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_waza_01)
+	
+	_TIME_WAIT(8)
+	//画面を揺らすデモを入れる
+	_SHAKE_CAMERA(0,1,3,6)
+	
 	_OBJ_ANIME_WAIT()
-
+	
+	_TIME_WAIT(4)
+	
 	_OBJ_ANIME(D06_STOPPER_01,anm_stopper_01_hakai)
 	_OBJ_ANIME_WAIT()
 
@@ -225,23 +234,22 @@ EVENT_START    ev_pos_d06_leader5_01
 	//ヤーコンが立ち去る
 		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_a)
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01_a)
-		_OBJ_ANIME_WAIT()
 	ELSIF $LWK_HERO_POSX == 106 THEN
 	//ヤーコンが立ち去る
 		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_b)
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01_b)
-		_OBJ_ANIME_WAIT()
 	ELSIF $LWK_HERO_POSX == 107 THEN
 	//ヤーコンが立ち去る
 		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_c)
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01_c)
-		_OBJ_ANIME_WAIT()
 	ELSIF $LWK_HERO_POSX == 108 THEN
 		//ヤーコンが立ち去る
 		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_d)
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01_d)
-		_OBJ_ANIME_WAIT()
 	ENDIF
+		_TIME_WAIT(16)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d)
+		_OBJ_ANIME_WAIT()
 
 //===============フラグ操作===============//
 	//【仮】フラグが無い為、仮
@@ -278,28 +286,28 @@ _ANIME_LABEL	anm_player_gyoe
 // 主人公:ヤーコンを向く1                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_muku_01
-	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 // 主人公:ヤーコンを向く2A                   
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_muku_02_a
-	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 // 主人公:ヤーコンを向く2B                   
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_muku_02_b
-	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 // 主人公:巣を向く                   
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_muku_03
-	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -338,14 +346,14 @@ _ANIME_LABEL	anm_leader5_muku_01_d
 // ヤーコン:主人公を向く2A                  
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader5_muku_02_a
-	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 // ヤーコン:主人公を向く2B                   
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader5_muku_02_b
-	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -480,6 +488,47 @@ _ANIME_LABEL	anm_poke2_saru_01_d
 	_ANIME_DATA AC_WALK_L_8F,3
 	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：びっくりする                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：右振り向き                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：下振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：上振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /*  D06 看板のイベントスクリプト2                      */
