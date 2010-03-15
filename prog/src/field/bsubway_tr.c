@@ -273,7 +273,7 @@ static void make_PokePara(
   }else{ //ニックネーム
     STRBUF *nick_name;
     nick_name = GFL_STR_CreateBuffer(
-        HEAPID_PROC, MONS_NAME_SIZE+EOM_SIZE );
+        MONS_NAME_SIZE+EOM_SIZE, HEAPID_PROC );
     GFL_STR_SetStringCode( nick_name, src->nickname );
     PP_Put( dest, ID_PARA_nickname, (u32)nick_name );
     GFL_STR_DeleteBuffer( nick_name );
