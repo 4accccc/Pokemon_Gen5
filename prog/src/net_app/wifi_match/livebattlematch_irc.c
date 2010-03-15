@@ -12,6 +12,7 @@
 #include <gflib.h>
 
 //ƒVƒXƒeƒ€
+#include "pm_version.h"
 #include "system/main.h"
 #include "system/net_err.h"
 
@@ -533,10 +534,12 @@ void LIVEBATTLEMATCH_IRC_StartRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk, RE
   DELIVERY_IRC_INIT init;
   GFL_STD_MemClear( &init, sizeof(DELIVERY_IRC_INIT) );
   init.NetDevID = WB_NET_IRC_BATTLE;
-  init.datasize = sizeof(REGULATION_CARDDATA);
-  init.pData  = (u8*)p_recv;
+  init.data[0].datasize = sizeof(REGULATION_CARDDATA);
+  init.data[0].pData  = (u8*)p_recv;
   init.ConfusionID  = 0;
   init.heapID = p_wk->heapID;
+  init.data[0].LangCode = CasetteLanguage;
+  init.dataNum  = 1;
 
   GF_ASSERT( p_wk->p_delivery == NULL );
   p_wk->p_delivery  = DELIVERY_IRC_Init(&init);
@@ -574,9 +577,11 @@ BOOL LIVEBATTLEMATCH_IRC_WaitRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk )
     break;
 
   case SEQ_WAIT_RECV:
-    if( DELIVERY_IRC_RecvCheck( p_wk->p_delivery ) )
-    { 
-      p_wk->seq++;
+    {
+      if( DELIVERY_IRC_RecvCheck( p_wk->p_delivery ) )
+      { 
+        p_wk->seq++;
+      }
     }
     break;
 

@@ -536,7 +536,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       OS_TPrintf("------start-------\n" );
       for( i = 0; i < sizeof(REGULATION_CARDDATA); i++ )
       { 
-        OS_TPrintf( "0x%x ", p_dump[i] );
+        OS_TPrintf( "0x%2x ", p_dump[i] );
         if( i % 0x10 == 0xF )
         { 
           OS_TPrintf( "\n" );

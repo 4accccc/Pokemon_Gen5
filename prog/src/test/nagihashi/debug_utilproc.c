@@ -12,6 +12,7 @@
 #include <gflib.h>
 
 //システム
+#include "pm_version.h"
 #include "system/main.h"
 #include "gamesystem/game_data.h"
 
@@ -41,7 +42,7 @@ typedef struct
 {
   DELIVERY_IRC_WORK         *p_delivery;
   GAMEDATA                  *p_gamedata;
-  REGULATION_CARDDATA       carddata;
+  REGULATION_CARDDATA       carddata[7];
 } DEBUG_NAGI_IRC_REGULATION_WORK;
 
 //=============================================================================
@@ -102,31 +103,62 @@ static GFL_PROC_RESULT DEBUG_NAGI_IRC_REGULATION_PROC_Init( GFL_PROC *p_proc, in
 	GFL_STD_MemClear( p_wk, sizeof(DEBUG_NAGI_IRC_REGULATION_WORK) );	
   p_wk->p_gamedata  = GAMEDATA_Create( HEAPID_NAGI_DEBUG_SUB );
 
+
+  //7カ国分のレギュレーションを作る
   { 
+    int i;
+
+    static const int sc_lang_tbl[7]  =
+    { 
+      LANG_JAPAN		,
+      LANG_ENGLISH	,
+      LANG_FRANCE		,
+      LANG_ITALY		,
+      LANG_GERMANY	,
+      LANG_SPAIN		,
+      LANG_KOREA		,
+    };
+
+    for( i = 0; i < 7; i++ )
+    { 
+      Regulation_SetDebugData( &p_wk->carddata[i] );
+      Regulation_SetCardParam( &p_wk->carddata[i], REGULATION_CARD_LANGCODE, sc_lang_tbl[i] );
+    }
+  }
+
+  //７カ国分の配信データを設定
+  { 
+    int i;
     DELIVERY_IRC_INIT init;
     GFL_STD_MemClear( &init, sizeof(DELIVERY_IRC_INIT) );
     init.NetDevID = WB_NET_IRC_BATTLE;
-    init.datasize = sizeof(REGULATION_CARDDATA);
-    init.pData  = (u8*)&p_wk->carddata;
     init.ConfusionID  = 0;
     init.heapID = HEAPID_NAGI_DEBUG_SUB;
+    init.dataNum  = 7;
+
+    for( i = 0; i < 7; i++ )
+    { 
+      init.data[i].datasize = sizeof(REGULATION_CARDDATA);
+      init.data[i].pData  = (u8*)&p_wk->carddata[i];
+      init.data[i].LangCode = Regulation_GetCardParam( &p_wk->carddata[i], REGULATION_CARD_LANGCODE );
+
+      OS_TPrintf( "lang %d\n", init.data[i].LangCode );
+    }
+
     p_wk->p_delivery  = DELIVERY_IRC_Init(&init);
   }
 
-  Regulation_SetDebugData( &p_wk->carddata );
-
-
   { 
     int i;
-    u8 *p_dump  = (u8*)&p_wk->carddata;
+    u8 *p_dump  = (u8*)&p_wk->carddata[0];
 
-    Regulation_PrintDebug( &p_wk->carddata );
+    Regulation_PrintDebug( &p_wk->carddata[1] );
     OS_TPrintf("配信用データダンプ\n" );
 
     OS_TPrintf("------start-------\n" );
     for( i = 0; i < sizeof(REGULATION_CARDDATA); i++ )
     { 
-      OS_TPrintf( "0x%x ", p_dump[i] );
+      OS_TPrintf( "0x%2x ", p_dump[i] );
       if( i % 0x10 == 0xF )
       { 
         OS_TPrintf( "\n" );

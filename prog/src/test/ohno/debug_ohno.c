@@ -953,9 +953,9 @@ static BOOL _getIRCTime(void* pCtl)
   if( k ){  // もう通信している場合終了処理
     OS_TPrintf("受信完了 %d %d\n",pDOC->counter,k);
 
-    for(j=0;j<pDOC->aIRCInit.datasize;){
+    for(j=0;j<pDOC->aIRCInit.data[0].datasize;){
       for(i=0;i<16;i++){
-        OS_TPrintf("%x ",pDOC->aIRCInit.pData[j]);
+        OS_TPrintf("%x ",pDOC->aIRCInit.data[0].pData[j]);
         j++;
       }
       OS_TPrintf("\n");
@@ -969,14 +969,19 @@ static BOOL _getIRCTime(void* pCtl)
 
 static void _fushigiDataIRCRecv(DEBUG_OHNO_CONTROL * pDOC)
 {
+
   DOWNLOAD_GIFT_DATA* pDG;
 
   pDOC->aIRCInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
-  pDOC->aIRCInit.datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
-  pDOC->aIRCInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aIRCInit.datasize);     // データ
+
+  //受信側は１つのバッファでOK
+  pDOC->aIRCInit.data[0].datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
+  pDOC->aIRCInit.data[0].pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aIRCInit.data[0].datasize);     // データ
+  pDOC->aIRCInit.data[0].LangCode = LANG_JAPAN;   //言語コード
+
   pDOC->aIRCInit.ConfusionID = 12;
   pDOC->aIRCInit.heapID = HEAPID_OHNO_DEBUG;
-
+  pDOC->aIRCInit.dataNum = 1;
 }
 
 
@@ -1007,35 +1012,56 @@ static GFL_PROC_RESULT NetDeliveryIRCRecvProc_Init(GFL_PROC * proc, int * seq, v
 //赤外線用テストデータセット
 static void _fushigiDataIRCSet(DEBUG_OHNO_CONTROL * pDOC)
 {
+  static const int sc_lang_tbl[7]  =
+  { 
+    LANG_JAPAN		,
+    LANG_ENGLISH	,
+    LANG_FRANCE		,
+    LANG_ITALY		,
+    LANG_GERMANY	,
+    LANG_SPAIN		,
+    LANG_KOREA		,
+  };
+
+  int i;
+
   DOWNLOAD_GIFT_DATA* pDG;
 
   pDOC->aIRCInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
-  pDOC->aIRCInit.datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
-  pDOC->aIRCInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aIRCInit.datasize);     // データ
   pDOC->aIRCInit.ConfusionID = 12;
   pDOC->aIRCInit.heapID = HEAPID_OHNO_DEBUG;
+  pDOC->aIRCInit.dataNum = 7;
+  for( i = 0; i < 7; i++  )
+  { 
 
-  pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aIRCInit.pData;
+    pDOC->aIRCInit.data[i].datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
+    pDOC->aIRCInit.data[i].pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aIRCInit.data[0].datasize);     // データ
+    pDOC->aIRCInit.data[i].LangCode = sc_lang_tbl[i];
 
-  DEBUG_MYSTERY_SetGiftPokeData(&pDG->data);
-  DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
-  pDG->version = 0;
-  pDG->event_text[0] = L'で';
-  pDG->event_text[1] = L'ば';
-  pDG->event_text[2] = L'ぐ';
-  pDG->event_text[3] = 0xffff;
+    pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aIRCInit.data[i].pData;
 
-  {
-    int i,j;
-    for(j=0;j<pDOC->aIRCInit.datasize;){
-      for(i=0;i<16;i++){
-        OS_TPrintf("%x ",pDOC->aIRCInit.pData[j]);
-        j++;
+    DEBUG_MYSTERY_SetGiftPokeData(&pDG->data);
+    DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
+    pDG->version = 0;
+    pDG->LangCode = sc_lang_tbl[i];
+    pDG->event_text[0] = L'で';
+    pDG->event_text[1] = L'ば';
+    pDG->event_text[2] = L'ぐ';
+    pDG->event_text[3] = 0xffff;
+
+    OS_TPrintf("%dつ目スタート：言語＝%d\n", i, pDOC->aIRCInit.data[i].LangCode);
+    {
+      int j,k;
+      for(j=0;j<pDOC->aIRCInit.data[i].datasize;){
+        for(k=0;k<16;k++){
+          OS_TPrintf("%x ",pDOC->aIRCInit.data[i].pData[j]);
+          j++;
+        }
+        OS_TPrintf("\n");
       }
-      OS_TPrintf("\n");
-    }
+   }
+
   }
-  
 
 }
 

@@ -14,7 +14,8 @@
 #define DELIVERY_IRC_FUNC (0)   //動作中
 #define DELIVERY_IRC_SUCCESS (1)  //成功
 #define DELIVERY_IRC_FAILED (2)   //失敗
-#define DELIVERY_IRC_NOTLANG (3)  //言語コードが違う
+#define DELIVERY_IRC_NOTLANG (3)  //受信側：対応する言語が送信側になかったためもらえなかった
+                                  //送信側：対応していない言語をリクエストされた
 
 typedef struct _DELIVERY_IRC_LOCALWORK DELIVERY_IRC_WORK;
 

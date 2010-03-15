@@ -159,7 +159,8 @@ typedef struct{
   u32 version;					// 対象バージョン(０の場合は制限無しで配布)
   STRCODE event_text[GIFT_DATA_CARD_TEXT_MAX+EOM_SIZE];	// 説明テキスト
   u8 movie_flag;         //映画配信かどうか
-  u8 dummy[3];          //パディング
+  u8 LangCode;          //言語コード
+  u8 dummy[2];          //パディング
 } DOWNLOAD_GIFT_DATA;
 
 

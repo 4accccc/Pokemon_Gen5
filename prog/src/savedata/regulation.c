@@ -931,6 +931,7 @@ void Regulation_SetDebugData( REGULATION_CARDDATA* pReg )
   pReg->end_month   = 12;
   pReg->end_day     = 24;
   pReg->status      = 0;
+  pReg->code        = LANG_JAPAN;
 }
 #include "debug/debug_str_conv.h"
 //----------------------------------------------------------------------------

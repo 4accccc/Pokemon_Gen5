@@ -13,6 +13,7 @@
 #include <dwc.h>
 
 //システム
+#include "pm_version.h"
 #include "system/main.h"
 
 //ネット
@@ -901,10 +902,12 @@ static void SEQFUNC_InitIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       DELIVERY_IRC_INIT  belivery_irc_init;
       GFL_STD_MemClear( &belivery_irc_init, sizeof(DELIVERY_IRC_INIT) );
       belivery_irc_init.NetDevID     = WB_NET_MYSTERY;
-      belivery_irc_init.datasize     = sizeof( DOWNLOAD_GIFT_DATA );
-      belivery_irc_init.pData        = (void*)p_wk->buffer;
+      belivery_irc_init.data[0].datasize     = sizeof( DOWNLOAD_GIFT_DATA );
+      belivery_irc_init.data[0].pData        = (void*)p_wk->buffer;
       belivery_irc_init.ConfusionID  = 0;
       belivery_irc_init.heapID       = p_wk->heapID;
+      belivery_irc_init.data[0].LangCode     = CasetteLanguage;
+      belivery_irc_init.dataNum = 1;
       p_wk->p_irc  = DELIVERY_IRC_Init( &belivery_irc_init );
       DELIVERY_IRC_RecvStart( p_wk->p_irc );
     }
