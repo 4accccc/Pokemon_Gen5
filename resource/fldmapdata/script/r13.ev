@@ -35,34 +35,76 @@ _EVENT_DATA_END
 EVENT_START		ev_r13_treasure_01
 _TALK_OBJ_START()
 
-	//１日フラグが立っていない場合
-	IF FLAG_OFF( TMFLG_R13_TREASURE ) THEN
+	//初めて会話する場合
+	IF FLAG_OFF( FE_R13_TREASURE_FIRSTTALK ) THEN
 	
-		//なにを　しているか　だって？
-		_BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_01 )
-		_MSGWIN_CLOSE()
-	
-		_CALL ev_treasure
-	
-		//あしたも　ここで　たからさがし
-		_BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_03 )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
+		//１日フラグが立っていない場合
+		IF FLAG_OFF( TMFLG_R13_TREASURE ) THEN
 		
-		//========================================/
-		
-		//一日フラグセット
-		_FLAG_SET( TMFLG_R13_TREASURE )
-		
-		//========================================/
+			//なにを　しているか　だって？
+			_BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_01 )
+			_MSGWIN_CLOSE()
 	
-	//もう既に話しをしている場合
+			_CALL ev_treasure
+	
+			//あしたも　ここで　たからさがし
+			_BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+			//========================================/
+			
+			//一日フラグセット
+			_FLAG_SET( TMFLG_R13_TREASURE )
+			
+			//初回会話フラグセット
+			_FLAG_SET( FE_R13_TREASURE_FIRSTTALK )
+			
+			//========================================/
+	
+		//もう既に話しをしている場合
+		ELSE
+	
+			//あしたも　ここで　たからさがし
+			_BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+	
+		ENDIF
+	
+	//２回目以降の場合
 	ELSE
 	
-		//あしたも　ここで　たからさがし
-		_BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_03 )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
+		//１日フラグが立っていない場合
+		IF FLAG_OFF( TMFLG_R13_TREASURE ) THEN
+		
+			//なにを　しているか　だって？
+			_BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_02 )
+			_MSGWIN_CLOSE()
+	
+			_CALL ev_treasure
+	
+			//あしたも　ここで　たからさがし
+			_BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+			//========================================/
+			
+			//一日フラグセット
+			_FLAG_SET( TMFLG_R13_TREASURE )
+			
+			//========================================/
+	
+		//もう既に話しをしている場合
+		ELSE
+	
+			//あしたも　ここで　たからさがし
+			_BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+	
+		ENDIF
 	
 	ENDIF
 
