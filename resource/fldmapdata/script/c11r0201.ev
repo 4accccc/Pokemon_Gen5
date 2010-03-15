@@ -44,7 +44,7 @@ DEFINE_LOCAL	DOOR_ANIME_ID
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
-ev_zone_c11r0201:
+INIT_EVENT_START ev_zone_c11r0201
   DEFINE_LOCAL GTSFriendNum
   //可変OBJの決定
   //※定員（5名）未満の場合であっても定員数の処理は行うことにする
@@ -81,7 +81,7 @@ ev_zone_c11r0201:
   IF $GTSFriendNum > 4 THEN           //5人いる
     _FLAG_RESET( FV_UN_GTSFRIEND_04 )
   ENDIF
-  _END
+INIT_EVENT_END
 
 /************************************************************/
 /*			予約スクリプト：エレベータから出てくる		    			*/
