@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T19:53:14"/>
+	<create user="matsumiya" host="W00224" date="2010-03-15T19:27:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1419" top="187" right="2124" bottom="815" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d07_black_01" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d07_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・c06ジムバッジ取得でイベント起動
 ・pos（GRIDX=144、GRIDZ=2060~208）起動
@@ -308,7 +308,7 @@
 確かめさせて　もらうよ▼</language>
 	</row>
 
-	<row id="msg_d07_champion_01" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d07_champion_01">
 		<comment>♂
 ・戦闘復帰時にチャンピオン配置済み
 　GRIDX=143、GRIDZ=204
@@ -326,7 +326,7 @@
 育っておるようで　なにより！▼</language>
 	</row>
 
-	<row id="msg_d07_black_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d07_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてchampion_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -342,7 +342,7 @@
 正直　困ります▼</language>
 	</row>
 
-	<row id="msg_d07_champion_02" text-color="#000000,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d07_champion_02">
 		<comment>♂
 ・メッセージ表示前、チャンピオンの動作モデル
 　GRIDX=133、GRIDZ=245付近に移動（ジャンプする?）
@@ -361,7 +361,7 @@
 強くなって　どうするのかね？▼</language>
 	</row>
 
-	<row id="msg_d07_black_03" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d07_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてchampion_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -375,7 +375,7 @@
 ぼくは　生きている　証が　ほしい▼</language>
 	</row>
 
-	<row id="msg_d07_champion_03" text-color="#000000,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d07_champion_03">
 		<comment>♂
 ・まずライバルに渡すような演出
 ・続けてchampion_04</comment>
@@ -400,39 +400,39 @@
 これでも　持っていけ！▼</language>
 	</row>
 
-	<row id="msg_d07_champion_04" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d07_champion_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・主人公と隣接してメッセージ表示
 ・アイテム入手処理
-　No367「つばめがえし」
+　No602「なみのり」
 ・続けてchampion_05</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
 		<language name="JPN" width="256">ほら　おまえさんも▼</language>
 		<language name="JPN_KANJI" width="256">ほら　おまえさんも▼</language>
 	</row>
 
-	<row id="msg_d07_champion_05" text-color="#000000,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d07_champion_05">
 		<comment>♂
 ・表示後、画面左に移動
 ・続けてblack_04</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
 		<language name="JPN" width="256">アデク『その　わざ
-つばめがえしは　かならず▽
-あいてに　あたる　わざよ！▼
+なみのりを　つかえば▽
+みずのうえを　すすめる！▼
 じゃあな
 わかき　トレーナーたち▼
 ともにあゆむ　ポケモンが
 なにをのぞむか　わすれるなよ！▼</language>
 		<language name="JPN_KANJI" width="256">アデク『その　技
-つばめがえしは　必ず▽
-相手に　当たる　技よ！▼
+なみのりを　つかえば▽
+水上を　進める！▼
 じゃあな
 若き　トレーナーたち▼
 ともに歩む　ポケモンが
 なにを望むか　忘れるなよ！▼</language>
 	</row>
 
-	<row id="msg_d07_black_04" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d07_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・画面左を見ながら
 ・続けてblack_05</comment>
@@ -445,7 +445,7 @@
 強くなりたいんだよ　ぼくは▼</language>
 	</row>
 
-	<row id="msg_d07_black_05" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d07_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公と向き合ってメッセージ
 ・表示後、ネジ山内（d07r00201）に移動
@@ -458,7 +458,7 @@
 次に会うときは　ぼくが勝つよ▼</language>
 	</row>
 
-	<row id="msg_d07_workman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d07_workman1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・c06ジムバッジ取得で削除
 ・GRIDX=140、GRIDZ=203
@@ -483,7 +483,7 @@
 野生ポケモンが　でるって　ことだ</language>
 	</row>
 
-	<row id="msg_d07_sign1_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d07_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">看板：洞窟</attribute>

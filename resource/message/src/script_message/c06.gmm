@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T15:23:03"/>
+	<create user="matsumiya" host="W00224" date="2010-03-15T19:28:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1583" top="294" right="2288" bottom="922" maximized="no" rayout="Vertical2">
+	<dialog left="1567" top="198" right="2272" bottom="826" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -336,7 +336,7 @@
 	</lock>
 
 
-	<row id="msg_c06_hakase1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・pos（GRIDX=100~104、GRIDZ=301）で発動
 ・画面左上方向から
@@ -370,7 +370,7 @@
 [2:02:３桁:0]匹　か！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてhakase1_05（この処理は暫定）</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
@@ -380,7 +380,7 @@
 なかなかの　トレーナーじゃな！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてhakase1_05（この処理は暫定）</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
@@ -420,7 +420,7 @@
 なんとも　うれしい　かぎりだ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ポケモン図鑑に
 　フォルムチェンジ確認機能追加予定
@@ -434,7 +434,7 @@
 パワーアップ！　だな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・アイテム入手処理
 　No001「マスターボール」
@@ -567,7 +567,7 @@
 また　会おうぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_leader6_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_leader6_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・画面右を向いてメッセージ表示
 ・続けてleader6_05かleader6_06</comment>
@@ -583,7 +583,7 @@
 いまだに　信じられないな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_leader6_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_leader6_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・主人公性別＝♂
 ・主人公に隣接してメッセージ
@@ -602,7 +602,7 @@
 やることが　あるんだよね▼</language>
 	</row>
 
-	<row id="msg_c06_leader6_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c06_leader6_06" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・主人公性別＝♀
 ・主人公に隣接してメッセージ
@@ -621,7 +621,7 @@
 やることが　あるんだよね▼</language>
 	</row>
 
-	<row id="msg_c06_leader6_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c06_leader6_07" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・上向きでメッセージ表示</comment>
 		<attribute name="キャラクター">c06ジムリーダー
@@ -636,7 +636,7 @@
 なにか　みえたんだよね▼</language>
 	</row>
 
-	<row id="msg_c06_leader6_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c06_leader6_08" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・主人公と向き合ってメッセージ表示
 ・表示後、r07方面に歩いて移動
@@ -657,7 +657,7 @@
 タワーオブヘブンに　行かせてもらうね▼</language>
 	</row>
 
-	<row id="msg_c06_stop_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c06_stop_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムストッパー
 ・r07r0105で鐘を鳴らすと削除</comment>
@@ -674,7 +674,7 @@
 タワーオブヘブン　っすか？</language>
 	</row>
 
-	<row id="msg_c06_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c06_boy3_01">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">BOY3</attribute>
@@ -688,7 +688,7 @@
 いっさいの　無駄が　ないんです！</language>
 	</row>
 
-	<row id="msg_c06_pilot_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c06_pilot_01">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">PILOT</attribute>
@@ -702,7 +702,7 @@
 そらをとぶ　って　技があるもんね</language>
 	</row>
 
-	<row id="msg_c06_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c06_girl2_01">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">GIRL2</attribute>
@@ -718,7 +718,7 @@
 いかした　ねえちゃん　なんだから！</language>
 	</row>
 
-	<row id="msg_c06_rangerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c06_rangerw_01">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">RANGERW</attribute>
@@ -734,7 +734,7 @@
 その　精神は　変わらないわ</language>
 	</row>
 
-	<row id="msg_c06_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c06_workman_01">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">WORKMAN</attribute>
@@ -748,7 +748,7 @@
 １日に　１便　ぐらいだしな</language>
 	</row>
 
-	<row id="msg_c06_woman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c06_woman1_01">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">WOMAN1</attribute>
@@ -768,11 +768,10 @@
 奇跡を　起こす　あの人です</language>
 	</row>
 
-	<row id="msg_c06_boy2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_boy2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・msg_c06r0101_boy2_01表示後にセットされる
-　アイテムNo602
-　「わざマシン９６：なみのり」を入手すると登場し
+　No367「つばめがえし」を入手すると登場し
 　主人公に隣接してメッセージ表示
 ・続けてbabygirl_01</comment>
 		<attribute name="キャラクター">BOY2</attribute>
@@ -782,7 +781,7 @@
 たからもの　とったあ！！▼</language>
 	</row>
 
-	<row id="msg_c06_babygirl_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_babygirl_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けて
 　主人公♂→boy2_02
@@ -792,7 +791,7 @@
 		<language name="JPN_KANJI" width="256">とったあ！！▼</language>
 	</row>
 
-	<row id="msg_c06_boy2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_boy2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてbabygirl_02</comment>
 		<attribute name="キャラクター">BOY2</attribute>
@@ -801,16 +800,20 @@
 それまで　その　わざマシンを▽
 かくしておくつもり　だったんだ▼
 だけど　もったいないから
-おにいちゃん　つかって　いいよ▼</language>
+おにいちゃん　つかって　いいよ▼
+ぼくら　また
+フウロねえちゃんから　もらうから！▼</language>
 		<language name="JPN_KANJI" width="256">なんてね▼
 ぼくら　ポケモン　もってないし
 それまで　その　わざマシンを▽
 かくしておくつもり　だったんだ▼
 だけど　もったいないから
-おにいちゃん　つかって　いいよ▼</language>
+おにいちゃん　つかって　いいよ▼
+ぼくら　また
+フウロねえちゃんから　もらうから！▼</language>
 	</row>
 
-	<row id="msg_c06_boy2_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_boy2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてbabygirl_02</comment>
 		<attribute name="キャラクター">BOY2</attribute>
@@ -819,16 +822,20 @@
 それまで　その　わざマシンを
 かくしておく　つもりだったんだ▼
 だけど　もったいないから
-おねえちゃん　つかって　いいよ▼</language>
+おねえちゃん　つかって　いいよ▼
+ぼくら　また
+フウロねえちゃんから　もらうから！▼</language>
 		<language name="JPN_KANJI" width="256">なんてね▼
 ぼくら　ポケモン　もってないし
 それまで　その　わざマシンを
 かくしておく　つもりだったんだ▼
 だけど　もったいないから
-おねえちゃん　つかって　いいよ▼</language>
+おねえちゃん　つかって　いいよ▼
+ぼくら　また
+フウロねえちゃんから　もらうから！▼</language>
 	</row>
 
-	<row id="msg_c06_babygirl_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_babygirl_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてboy2_04</comment>
 		<attribute name="キャラクター">BABYGIRL</attribute>
@@ -836,7 +843,7 @@
 		<language name="JPN_KANJI" width="256">つかって　いーよー！！▼</language>
 	</row>
 
-	<row id="msg_c06_boy2_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_boy2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、動作モデル退場
 　画面外に消えると主人公操作可能に</comment>
@@ -854,7 +861,7 @@
 風が　花を　集める　街</language>
 	</row>
 
-	<row id="msg_c06_sign2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>c06r0301
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">看板</attribute>
@@ -862,7 +869,7 @@
 		<language name="JPN_KANJI" width="256">フキヨセ　カーゴ　サービス</language>
 	</row>
 
-	<row id="msg_c06_gymsign_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_gymsign_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ポケモンジム</comment>
 		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">フキヨセシティ　ポケモンジム
