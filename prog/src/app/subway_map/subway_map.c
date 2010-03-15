@@ -373,7 +373,7 @@ static void Subway_Map_VBlankFunc( GFL_TCB* tcb, void* wk )
 //=====================================
 static void Subway_Map_BgInit( SUBWAY_MAP_WORK* work )
 {
-  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_SHOUJOU, work->heap_id );
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_SUBWAY_MAP_GRA, work->heap_id );
 
   // ‹¤’Ê
   GFL_ARCHDL_UTIL_TransVramPalette(
