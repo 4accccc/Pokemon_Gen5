@@ -412,6 +412,12 @@ static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *ch
   }
 }
 
+void LOCAL_TVT_CHARA_RedrawName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
+{
+  GFL_BMPWIN_MakeScreen( charaWork->nameWin );
+  GFL_BG_LoadScreenV_Req(LTVT_FRAME_NAME);
+}
+
 const u8 LOCAL_TVT_CHARA_GetNameLen( LOCAL_TVT_CHARA *charaWork )
 {
   return charaWork->nameLen;

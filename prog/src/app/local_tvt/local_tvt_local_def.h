@@ -23,16 +23,18 @@
 //======================================================================
 #pragma mark [> define
 
-#define LTVT_FRAME_MESSAGE (GFL_BG_FRAME0_M)
-#define LTVT_FRAME_NAME    (GFL_BG_FRAME1_M)
-#define LTVT_FRAME_CHARA   (GFL_BG_FRAME2_M)
-#define LTVT_FRAME_BG      (GFL_BG_FRAME3_M)
+#define LTVT_FRAME_MESSAGE  (GFL_BG_FRAME0_M)
+#define LTVT_FRAME_NAME     (GFL_BG_FRAME0_M)  //îwåiämï€ÇÃÇΩÇﬂìùçá
+#define LTVT_FRAME_NOIZE_BG (GFL_BG_FRAME1_M)
+#define LTVT_FRAME_CHARA    (GFL_BG_FRAME2_M)
+#define LTVT_FRAME_BG       (GFL_BG_FRAME3_M)
 
 #define LTVT_FRAME_SUB_BG  (GFL_BG_FRAME3_S)
 
 #define LTVT_CHARA_SCREEN_WIDTH (16)
 #define LTVT_CHARA_SCREEN_HEIGHT (24)
 
+#define LTVT_PLT_MAIN_NOIZE    (11)
 #define LTVT_PLT_MAIN_FONT     (12)
 #define LTVT_PLT_MAIN_WINFRAME (13)
 

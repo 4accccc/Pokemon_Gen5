@@ -319,6 +319,10 @@ static void LOCAL_TVT_VBlankFunc(GFL_TCB *tcb, void *wk )
 {
   //OBJの更新
   GFL_CLACT_SYS_VBlankFunc();
+
+  //上画面ノイズ
+  GFL_BG_SetScroll( LTVT_FRAME_NOIZE_BG , GFL_BG_SCROLL_X_SET , GFUser_GetPublicRand0(256) );
+  GFL_BG_SetScroll( LTVT_FRAME_NOIZE_BG , GFL_BG_SCROLL_Y_SET , GFUser_GetPublicRand0(256) );
 }
 //--------------------------------------------------------------
 //  グラフィック系初期化
@@ -346,33 +350,33 @@ static void LOCAL_TVT_InitGraphic( LOCAL_TVT_WORK *work )
     static const GFL_BG_SYS_HEADER sys_data = {
         GX_DISPMODE_GRAPHICS, GX_BGMODE_5, GX_BGMODE_0, GX_BG0_AS_2D,
     };
-    // BG0 MAIN (メッセージ
+    // BG0 MAIN (メッセージ+名前
     static const GFL_BG_BGCNT_HEADER header_main0 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x6000,
-      GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x08000,0x8000,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
-    // BG1 MAIN (名前
+    // BG1 MAIN (ノイズBG
     static const GFL_BG_BGCNT_HEADER header_main1 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000,0x8000,
-      GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x6000,
+      GX_BG_EXTPLTT_01, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG2 MAIN (キャラ
     static const GFL_BG_BGCNT_HEADER header_main2 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
       GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x10000,0x0C000,
-      GX_BG_EXTPLTT_23, 2, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+      GX_BG_EXTPLTT_23, 1, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG3 MAIN (背景
     static const GFL_BG_BGCNT_HEADER header_main3 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
       GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x28000,0x0C000,
-      GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+      GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG3 SUB (背景
     static const GFL_BG_BGCNT_HEADER header_sub3 = {
@@ -385,11 +389,12 @@ static void LOCAL_TVT_InitGraphic( LOCAL_TVT_WORK *work )
     GFL_BG_SetBGMode( &sys_data );
 
     LOCAL_TVT_SetupBgFunc( &header_main0 , LTVT_FRAME_MESSAGE , GFL_BG_MODE_TEXT );
-    LOCAL_TVT_SetupBgFunc( &header_main1 , LTVT_FRAME_NAME    , GFL_BG_MODE_TEXT );
+    LOCAL_TVT_SetupBgFunc( &header_main1 , LTVT_FRAME_NOIZE_BG, GFL_BG_MODE_TEXT );
     LOCAL_TVT_SetupBgFunc( &header_main2 , LTVT_FRAME_CHARA   , GFL_BG_MODE_256X16 );
     LOCAL_TVT_SetupBgFunc( &header_main3 , LTVT_FRAME_BG      , GFL_BG_MODE_256X16 );
     LOCAL_TVT_SetupBgFunc( &header_sub3  , LTVT_FRAME_SUB_BG  , GFL_BG_MODE_TEXT );
     
+    GFL_STD_MemClear32( (void*)(HW_BG_VRAM) , 0x40000 );
   }
   //OBJ系の初期化
   {
@@ -410,7 +415,7 @@ static void LOCAL_TVT_TermGraphic( LOCAL_TVT_WORK *work )
   GFL_BG_FreeBGControl( LTVT_FRAME_SUB_BG );
   GFL_BG_FreeBGControl( LTVT_FRAME_BG );
   GFL_BG_FreeBGControl( LTVT_FRAME_CHARA );
-  GFL_BG_FreeBGControl( LTVT_FRAME_NAME );
+  GFL_BG_FreeBGControl( LTVT_FRAME_NOIZE_BG );
   GFL_BG_FreeBGControl( LTVT_FRAME_MESSAGE );
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
@@ -509,6 +514,15 @@ static void LOCAL_TVT_LoadResource( LOCAL_TVT_WORK *work )
                       LTVT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
     GFL_BG_LoadScreenReq( LTVT_FRAME_SUB_BG );
 
+    GFL_ARCHDL_UTIL_TransVramPalette( ctvtArcHandle , NARC_comm_tvt_noise_bg_NCLR , 
+                      PALTYPE_MAIN_BG , LTVT_PLT_MAIN_NOIZE*32 , 32*1 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( ctvtArcHandle , NARC_comm_tvt_noise_bg_NCGR ,
+                      LTVT_FRAME_NOIZE_BG , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( ctvtArcHandle , NARC_comm_tvt_noise_bg_NSCR , 
+                      LTVT_FRAME_NOIZE_BG ,  0 , 0, FALSE , work->heapId );
+    GFL_BG_ChangeScreenPalette( LTVT_FRAME_NOIZE_BG , 0,0,32,32,LTVT_PLT_MAIN_NOIZE );
+    GFL_BG_LoadScreenReq( LTVT_FRAME_NOIZE_BG );
+    
     GFL_ARC_CloseDataHandle( ctvtArcHandle );
   }
   
@@ -657,12 +671,13 @@ static void LOCAL_TVT_MSG_OpenWindow( LOCAL_TVT_WORK *work , LOCAL_TVT_MSG_POS p
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0x0F );
   GFL_BMPWIN_TransVramCharacter( work->msgWin );
   GFL_BMPWIN_MakeScreen( work->msgWin );
-  GFL_BG_LoadScreenReq( LTVT_FRAME_MESSAGE );
+  GFL_BG_LoadScreenV_Req( LTVT_FRAME_MESSAGE );
   APP_PRINTSYS_COMMON_PrintStreamInit( &work->streamMng , APP_PRINTSYS_COMMON_TYPE_BOTH );
 }
 
 static void LOCAL_TVT_MSG_CloseWindow( LOCAL_TVT_WORK *work )
 {
+  u8 i;
   if( work->msgWin != NULL )
   {
     BmpWinFrame_Clear( work->msgWin , WINDOW_TRANS_ON_V );
@@ -679,6 +694,14 @@ static void LOCAL_TVT_MSG_CloseWindow( LOCAL_TVT_WORK *work )
   {
     GFL_STR_DeleteBuffer( work->msgStr );
     work->msgStr = NULL;
+  }
+
+  for( i=0 ; i<work->mode ; i++ )
+  {
+    if( work->charaWork[i] != NULL )
+    {
+      LOCAL_TVT_CHARA_RedrawName( work , work->charaWork[i] );
+    }
   }
 }
 
