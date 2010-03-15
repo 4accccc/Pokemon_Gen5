@@ -11,16 +11,13 @@
 #define ZONE_R03R0301_EVC_H
 
 #define R03R0301_RIVAL_01                  0
-#define TR_BATTLEG_07                      1
-#define TR_KARATE_08                       2
-#define TR_BATTLEG_08                      3
-#define R03R0301_HAKAIM_01                 4
-#define R03R0301_HAKAIM_02                 5
-#define R03R0301_HAKAIM_03                 6
-#define R03R0301_HAKAIW_01                 7
-#define R03R0301_FLD_ITEM_01               8
-#define R03R0301_FLD_ITEM_02               9
-#define R03R0301_FLD_ITEM_03              10
+#define R03R0301_FLD_ITEM_02               1
+#define R03R0301_HAKAIM_01                 2
+#define R03R0301_HAKAIM_02                 3
+#define R03R0301_HAKAIM_03                 4
+#define R03R0301_HAKAIW_01                 5
+#define R03R0301_FLD_ITEM_01               6
+#define R03R0301_FLD_ITEM_03               7
 
 #endif //ZONE_R03R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
