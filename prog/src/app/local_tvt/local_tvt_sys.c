@@ -162,7 +162,10 @@ static void LOCAL_TVT_Term( LOCAL_TVT_WORK *work )
 
   for( i=0 ; i<work->mode ; i++ )
   {
-    LOCAL_TVT_CHARA_Term( work , work->charaWork[i] );
+    if( work->charaWork[i] != NULL )
+    {
+      LOCAL_TVT_CHARA_Term( work , work->charaWork[i] );
+    }
   }
   
   GFL_ARC_CloseDataHandle( work->arcHandle );
@@ -206,27 +209,6 @@ static const BOOL LOCAL_TVT_Main( LOCAL_TVT_WORK *work )
 
   case LTS_MAIN:
     LOCAL_TVT_ScriptMain( work );
-/*
-    //---‰¼ˆ—---
-    {
-      if( LOCAL_TVT_MSG_IsFinishMsg(work) == TRUE )
-      {
-        if( work->scriptIdx < 5 )
-        {
-          LOCAL_TVT_DispRecIcon( work , work->scriptIdx%2 );
-          LOCAL_TVT_MSG_OpenWindow( work , LTMP_DOWN );
-          LOCAL_TVT_MSG_DispMessage( work , work->scriptIdx );
-        }
-        else
-        {
-          LOCAL_TVT_HideRecIcon( work );
-          work->state = LTS_FADEOUT;
-        }
-        work->scriptIdx++;
-      }
-    }
-    //---‰¼ˆ—---
-*/
     break;
   }
   
@@ -286,12 +268,19 @@ static const BOOL LOCAL_TVT_Main( LOCAL_TVT_WORK *work )
     case LTTS_CHARA4:
       {
         const u8 charaNo = work->transState - LTTS_CHARA1;
-        LOCAL_TVT_CHARA_LoadChara( work , work->charaWork[charaNo] , work->bufNo );
-        work->transChara = work->charaWork[charaNo];
-        if( work->mode == LTM_2_MEMBER &&
-            work->transState == LTTS_CHARA2 )
+        if( work->charaWork[charaNo] != NULL )
         {
-          work->transState = LTTS_TRANS_WAIT;
+          LOCAL_TVT_CHARA_LoadChara( work , work->charaWork[charaNo] , work->bufNo );
+          work->transChara = work->charaWork[charaNo];
+          if( work->mode == LTM_2_MEMBER &&
+              work->transState == LTTS_CHARA2 )
+          {
+            work->transState = LTTS_TRANS_WAIT;
+          }
+          else
+          {
+            work->transState++;
+          }
         }
         else
         {
@@ -304,7 +293,10 @@ static const BOOL LOCAL_TVT_Main( LOCAL_TVT_WORK *work )
 
   for( i=0 ; i<work->mode ; i++ )
   {
-    LOCAL_TVT_CHARA_Main( work , work->charaWork[i] );
+    if( work->charaWork[i] != NULL )
+    {
+      LOCAL_TVT_CHARA_Main( work , work->charaWork[i] );
+    }
   }
   
   LOCAL_TVT_MSG_UpdateMessage( work );
@@ -874,7 +866,7 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
     initWork->scriptId = 1;
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
     {
-      initWork->scriptId = 2;
+      initWork->scriptId = 4;
     }
   }
   else

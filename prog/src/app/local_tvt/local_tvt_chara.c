@@ -103,29 +103,36 @@ static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *ch
 //--------------------------------------------------------------
 LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_WORK *work , const u8 charaIdx )
 {
-  LOCAL_TVT_CHARA *charaWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( LOCAL_TVT_CHARA ) );
-  
-  charaWork->charaIdx = charaIdx;
-  charaWork->charaType = work->scriptHead->chara[charaIdx];
-  charaWork->bgType = work->scriptHead->back[charaIdx];
-  charaWork->charaAnmIdx = 0;
-  charaWork->bgAnmIdx = 0;
-  charaWork->isUpdateQue = FALSE;
+  if( work->scriptHead->chara[charaIdx] == 0xFF )
+  {
+    return NULL;
+  }
+  else
+  {
+    LOCAL_TVT_CHARA *charaWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( LOCAL_TVT_CHARA ) );
+    
+    charaWork->charaIdx = charaIdx;
+    charaWork->charaType = work->scriptHead->chara[charaIdx];
+    charaWork->bgType = work->scriptHead->back[charaIdx];
+    charaWork->charaAnmIdx = 0;
+    charaWork->bgAnmIdx = 0;
+    charaWork->isUpdateQue = FALSE;
 
-  OS_TPrintf("[%d][%d:%d]\n",charaWork->charaIdx,charaWork->charaType,charaWork->bgType);
-  
-  LOCAL_TVT_CHARA_LoadCharaResource( work , charaWork );
-  LOCAL_TVT_CHARA_LoadCommonResource( work , charaWork );
+    OS_TPrintf("[%d][%d:%d]\n",charaWork->charaIdx,charaWork->charaType,charaWork->bgType);
+    
+    LOCAL_TVT_CHARA_LoadCharaResource( work , charaWork );
+    LOCAL_TVT_CHARA_LoadCommonResource( work , charaWork );
 
-  LOCAL_TVT_CHARA_DispName( work , charaWork );
-  
-  charaWork->state = LTCTS_WAIT_REQ;
-  charaWork->resData = NULL;
-  
-  charaWork->anmCnt = GFUser_GetPublicRand0(LTVT_CHARA_UPDATE_CNT);
-  
-  
-  return charaWork;
+    LOCAL_TVT_CHARA_DispName( work , charaWork );
+    
+    charaWork->state = LTCTS_WAIT_REQ;
+    charaWork->resData = NULL;
+    
+    charaWork->anmCnt = GFUser_GetPublicRand0(LTVT_CHARA_UPDATE_CNT);
+    
+    
+    return charaWork;
+  }
 }
 
 //--------------------------------------------------------------
