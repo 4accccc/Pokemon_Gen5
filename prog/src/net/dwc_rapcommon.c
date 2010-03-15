@@ -109,13 +109,15 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
     OSIntrMode  enable = OS_DisableInterrupts();
     ptr = NNS_FndAllocFromExpHeapEx( pDwcRapWork->headHandleSub, size, align );
     (void)OS_RestoreInterrupts(enable);
-    NAGI_Printf( "SUB" );
+    NET_MEMORY_PRINT( "sub alloc memory size=%d rest=%d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle) );
   }
   else
   { 
     OSIntrMode  enable = OS_DisableInterrupts();
     ptr = NNS_FndAllocFromExpHeapEx( pDwcRapWork->headHandle, size, align );
     (void)OS_RestoreInterrupts(enable);
+
+    NET_MEMORY_PRINT( "main alloc memory size=%d rest=%d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle) );
   }
 
   NAGI_Printf( "[>name%d size%d align%d\n", name, size, align );
@@ -126,7 +128,6 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
     GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
     return NULL;
   }
-  NET_MEMORY_PRINT( "alloc memory size=%d rest=%d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle) );
   return ptr;
 
 

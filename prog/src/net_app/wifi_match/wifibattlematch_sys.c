@@ -965,9 +965,7 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
       reg_no  = REG_RND_TRIPLE_SHOOTER;
       BTL_SETUP_Triple_Comm( p_param->p_btl_setup_param, p_wk->param.p_game_data, 
           GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
-      //@todo 
-      GF_ASSERT( 0 );
-
+      //シューター用設定は下部で行っている
       break;
 
       p_reg = (REGULATION*)PokeRegulation_LoadDataAlloc( reg_no, heapID );
@@ -1004,12 +1002,11 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
           GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
       break;
 
-//    case REGULATION_BATTLE_SH:    ///< シューター
-      default:
-      //@todo
-      BTL_SETUP_Triple_Comm( p_param->p_btl_setup_param, p_wk->param.p_game_data, 
+    default:
+      GF_ASSERT( 0 );
+      //念のためシングルにしておく
+      BTL_SETUP_Single_Comm( p_param->p_btl_setup_param, p_wk->param.p_game_data, 
           GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
-      break;
     }
   }
   //LIVE大会のバトル設定
@@ -1043,10 +1040,10 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
           GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
       break;
 
-//    case REGULATION_BATTLE_SH:    ///< シューター
-      default:
-      //@todo
-      BTL_SETUP_Triple_Comm( p_param->p_btl_setup_param, p_wk->param.p_game_data, 
+    default:
+      GF_ASSERT( 0 );
+      //念のためシングルにしておく
+      BTL_SETUP_Single_Comm( p_param->p_btl_setup_param, p_wk->param.p_game_data, 
           GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
       break;
     }
@@ -1065,8 +1062,8 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   p_param->p_btl_setup_param->musicDefault  = WBM_SND_SEQ_BATTLE;
   p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
 
-  //@todoシューター設定 （フラグと禁止道具）
-
+  //シューター設定 （フラグと禁止道具）
+  Regulation_GetShooterItem( p_reg, &p_param->p_btl_setup_param->shooterBitWork );
 
   //ポケモンパーティを設定（ニックネームフラグがOFFならば名前を書き換える）
   PokeRegulation_ModifyNickName( p_reg, p_wk->p_player_btl_party, GFL_HEAP_LOWID( heapID ) );

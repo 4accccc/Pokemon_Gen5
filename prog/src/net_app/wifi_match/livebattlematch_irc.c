@@ -551,10 +551,10 @@ void LIVEBATTLEMATCH_IRC_StartRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk, RE
  *
  *	@param	LIVEBATTLEMATCH_IRC_WORK *p_wk  ワーク
  *
- *	@return TRUEで終了  FALSEで処理中
+ *	@return LIVEBATTLEMATCH_IRC_RETの列挙を参照
  */
 //-----------------------------------------------------------------------------
-BOOL LIVEBATTLEMATCH_IRC_WaitRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk )
+extern LIVEBATTLEMATCH_IRC_RET LIVEBATTLEMATCH_IRC_WaitRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk )
 { 
   enum
   { 

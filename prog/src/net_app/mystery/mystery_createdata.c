@@ -170,24 +170,27 @@ POKEMON_PARAM* MYSTERY_CreatePokemon(const GIFT_PACK_DATA* pPack, HEAPID heapID,
     PP_Put(pp, ID_PARA_tamago_flag, TRUE);
   }
 
-	PP_Renew( pp );
+  //配布ポケモン
+  { 
+    if( pGift->egg )
+    {
+      //タマゴなら生まれた場所から検索する
+      POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_DISTRIBUTION,
+          NULL, pGift->birth_place, heapID );
+    }
+    else
+    { 
+      POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_DISTRIBUTION,
+          NULL, pGift->get_place, heapID );
+    }
+  }
+
+  PP_Renew( pp );
 
   if(PP_Get(pp,ID_PARA_fusei_tamago_flag, NULL)){  //不正ポケモンが出来てしまった場合
     GFL_HEAP_FreeMemory(pp);
     return NULL;
   }
-
-  //配布ポケモン
-  //@todo　これでよいのか？
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
-#warning event_poke memo
-#endif 
-#if 0
-  if( POKE_MEMO_CheckEventPokePP( pp, POKE_MEMO_DISTRIBUTION ) )
-  { 
-    POKE_MEMO_SetEventPoke_AfterEventPP( pp , POKE_MEMO_DISTRIBUTION );
-  }
-#endif
 
   return pp;
 }

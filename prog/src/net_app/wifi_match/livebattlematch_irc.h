@@ -96,7 +96,15 @@ extern BOOL LIVEBATTLEMATCH_IRC_RecvPokeParty( LIVEBATTLEMATCH_IRC_WORK *p_wk, P
 //=====================================
 //レギュレーションを受け取る
 extern void LIVEBATTLEMATCH_IRC_StartRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk, REGULATION_CARDDATA *p_recv );
-extern BOOL LIVEBATTLEMATCH_IRC_WaitRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk );
+
+typedef enum
+{ 
+  LIVEBATTLEMATCH_IRC_RET_UPDATE,  //処理中
+  LIVEBATTLEMATCH_IRC_RET_SUCCESS,  //正常に受信
+  LIVEBATTLEMATCH_IRC_RET_FAILED,   //不正なデータを受け取った
+  LIVEBATTLEMATCH_IRC_RET_NOT_LAG,  //自分の言語のレギュレーションがなかった
+}LIVEBATTLEMATCH_IRC_RET;
+extern LIVEBATTLEMATCH_IRC_RET LIVEBATTLEMATCH_IRC_WaitRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk );
 
 extern void LIVEBATTLEMATCH_IRC_StartCancelRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk );
 extern BOOL LIVEBATTLEMATCH_IRC_WaitCancelRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk );

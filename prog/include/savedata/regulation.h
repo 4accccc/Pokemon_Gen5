@@ -218,6 +218,7 @@ extern void Regulation_SetParam(REGULATION * pReg, REGULATION_PARAM_TYPE type, i
 
 extern BOOL Regulation_CheckParamBit(const REGULATION* pReg, REGULATION_PARAM_TYPE type, int no);
 
+extern void Regulation_GetShooterItem( const REGULATION* cp_reg, SHOOTER_ITEM_BIT_WORK *p_wk );
 //----------------------------------------------------------
 //	REGULATION_CARDDATA操作のための関数 デジタル選手証の事
 //----------------------------------------------------------

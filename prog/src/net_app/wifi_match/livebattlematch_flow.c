@@ -517,62 +517,72 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     *p_seq  = SEQ_WAIT_RECVCARD;
     break;
   case SEQ_WAIT_RECVCARD:
-    //受信中
-    if( LIVEBATTLEMATCH_IRC_WaitRecvRegulation( p_wk->p_irc ) )
     { 
-      //@todo 言語コードが違う場合はまたもらいに行く
+      //受信中
+      LIVEBATTLEMATCH_IRC_RET ret =  LIVEBATTLEMATCH_IRC_WaitRecvRegulation( p_wk->p_irc );
+      if( ret != LIVEBATTLEMATCH_IRC_RET_UPDATE )
+      { 
 
-      //Regulation_PrintDebug( &p_wk->regulation_temp );
-      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+        //Regulation_PrintDebug( &p_wk->regulation_temp );
+        WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
 
 #ifdef PM_DEBUG
-    Regulation_PrintDebug( &p_wk->regulation_temp );
-    { 
-      int i;
-      u8 *p_dump  = (u8*)&p_wk->regulation_temp;
-
-      OS_TPrintf("配信用データダンプ\n" );
-
-      OS_TPrintf("------start-------\n" );
-      for( i = 0; i < sizeof(REGULATION_CARDDATA); i++ )
-      { 
-        OS_TPrintf( "0x%2x ", p_dump[i] );
-        if( i % 0x10 == 0xF )
+        Regulation_PrintDebug( &p_wk->regulation_temp );
         { 
-          OS_TPrintf( "\n" );
+          int i;
+          u8 *p_dump  = (u8*)&p_wk->regulation_temp;
+
+          OS_TPrintf("配信用データダンプ\n" );
+
+          OS_TPrintf("------start-------\n" );
+          for( i = 0; i < sizeof(REGULATION_CARDDATA); i++ )
+          { 
+            OS_TPrintf( "0x%2x ", p_dump[i] );
+            if( i % 0x10 == 0xF )
+            { 
+              OS_TPrintf( "\n" );
+            }
+          }
+          OS_TPrintf("-------end-------\n" );
+        }
+#endif
+
+
+        if( ret == LIVEBATTLEMATCH_IRC_RET_SUCCESS )
+        { 
+          *p_seq  = SEQ_CHECK_RECVCARD;
+        }
+        else
+        { 
+          //不正なデータを受信or対応言語がない
+          OS_TPrintf( "なデータを受信or対応言語がない %d\n", ret );
+          *p_seq  = SEQ_START_MSG_DIRTY_VER;
         }
       }
-      OS_TPrintf("-------end-------\n" );
-    }
-#endif
 
+      //エラー処理
+      if( LIVEBATTLEMATCH_IRC_ERROR_REPAIR_DISCONNECT == LIVEBATTLEMATCH_IRC_CheckErrorRepairType( p_wk->p_irc ) )
+      { 
+        *p_seq  = SEQ_START_MSG_RECVCARD;
+        break;
+      }
 
-
-      *p_seq  = SEQ_CHECK_RECVCARD;
-    }
-
-    //エラー処理
-    if( LIVEBATTLEMATCH_IRC_ERROR_REPAIR_DISCONNECT == LIVEBATTLEMATCH_IRC_CheckErrorRepairType( p_wk->p_irc ) )
-    { 
-      *p_seq  = SEQ_START_MSG_RECVCARD;
-      break;
-    }
-
-    //Bキャンセル
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    { 
-      *p_seq  = SEQ_START_CANCEL;
-    }
+      //Bキャンセル
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+      { 
+        *p_seq  = SEQ_START_CANCEL;
+      }
 
 #ifdef DEBUG_REGULATION_RECV_A_PASS
-    //Aで進む
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    { 
-      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
-      LIVEBATTLEMATCH_IRC_StartCancelRecvRegulation( p_wk->p_irc );
-      *p_seq  = SEQ_WAIT_RECV_DEBUG;
-    }
+      //Aで進む
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      { 
+        WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+        LIVEBATTLEMATCH_IRC_StartCancelRecvRegulation( p_wk->p_irc );
+        *p_seq  = SEQ_WAIT_RECV_DEBUG;
+      }
 #endif
+    }
     break;
 
   case SEQ_WAIT_RECV_DEBUG:
