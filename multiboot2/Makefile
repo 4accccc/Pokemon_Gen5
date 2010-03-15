@@ -208,13 +208,13 @@ source:
 #	子機srlを親機側に移動
 #----------------------------------------------------------------------------
 
-installsrl:..\prog\filetree\dl_rom\child.srl
+installsrl:..\prog\filetree\dl_rom\child2.srl
 ifeq	($(TWLSDK_PLATFORM),NITRO)
-..\prog\filetree\dl_rom\child.srl:.\bin\ARM9-TS\Release\main.srl
-	$(CP) .\bin\ARM9-TS\Release\main.srl ..\prog\filetree\dl_rom\child.srl
+..\prog\filetree\dl_rom\child2.srl:.\bin\ARM9-TS\Release\main.srl
+	$(CP) .\bin\ARM9-TS\Release\main.srl ..\prog\filetree\dl_rom\child2.srl
 else
-..\prog\filetree\dl_rom\child.srl:.\bin\ARM9-TS.HYB\Release\main.srl
-	$(CP) .\bin\ARM9-TS.HYB\Release\main.srl ..\prog\filetree\dl_rom\child.srl
+..\prog\filetree\dl_rom\child2.srl:.\bin\ARM9-TS.HYB\Release\main.srl
+	$(CP) .\bin\ARM9-TS.HYB\Release\main.srl ..\prog\filetree\dl_rom\child2.srl
 endif
 
 do-build: precompile $(TARGETS)

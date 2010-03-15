@@ -29,6 +29,7 @@ TARGETDIR	= $(PROJECT_ARCDIR)/font/
 
 #DLプレイ用追加
 TARGETDIR_DL	= $(PROJECT_ROOT)/multiboot/arc/font/
+TARGETDIR_DL2	= $(PROJECT_ROOT)/multiboot2/arc/font/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -97,11 +98,16 @@ $(NARCNAME): $(FONTFILE) $(GFONTFILE) $(COLFILE) arclist.txt
 	nnsarc -c -l -n -i $(NARCNAME) -S arclist.txt > error
 	$(NAIXCUT) $(NAIXNAME)
 
-do-build:	$(TARGETDIR_DL)/$(NARCNAME_DL)
+do-build:	$(TARGETDIR_DL)/$(NARCNAME_DL) $(TARGETDIR_DL2)/$(NARCNAME_DL)
 #DLプレイ用追加
 $(TARGETDIR_DL)/$(NARCNAME_DL):	$(NARCNAME_DL)
 	$(COPY)	$(NARCNAME_DL) $(TARGETDIR_DL)
 	$(COPY) $(NAIXNAME_DL) $(TARGETDIR_DL)
+
+#DLプレイ用追加
+$(TARGETDIR_DL2)/$(NARCNAME_DL):	$(NARCNAME_DL)
+	$(COPY)	$(NARCNAME_DL) $(TARGETDIR_DL2)
+	$(COPY) $(NAIXNAME_DL) $(TARGETDIR_DL2)
 
 $(NARCNAME_DL): $(FONTFILE) $(GFONTFILE) $(COLFILE) arclist_dl.txt
 	nnsarc -c -l -n -i $(NARCNAME_DL) -S arclist_dl.txt > error_dl
@@ -116,6 +122,8 @@ clean:
 	-rm -f $(TARGETDIR)/$(NAIXNAME)
 	-rm -f $(TARGETDIR_DL)/$(NARCNAME_DL)
 	-rm -f $(TARGETDIR_DL)/$(NAIXNAME_DL)
+	-rm -f $(TARGETDIR_DL2)/$(NARCNAME_DL)
+	-rm -f $(TARGETDIR_DL2)/$(NAIXNAME_DL)
 	-rm -f *.narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f *.nftr

@@ -62,8 +62,9 @@ struct _MB_MSG_WORK
   APP_TASKMENU_RES  *takmenures;
   APP_KEYCURSOR_WORK *cursorWork;
   
+#ifdef MB_TYPE_POKE_SHIFTER
   TALKMSGWIN_SYS    *talkWinSys;
-
+#endif
   BOOL reqDispTimerIcon;
   TIMEICON_WORK *timeIcon;
 
@@ -126,6 +127,7 @@ MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame ,const u8 selFra
 #endif //MULTI_BOOT_MAKE
 
   //‰ï˜bWin
+#ifdef MB_TYPE_POKE_SHIFTER
   if( useTalkWin == TRUE )
   {
     TALKMSGWIN_SYS_SETUP setup;
@@ -142,6 +144,7 @@ MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame ,const u8 selFra
   {
     msgWork->talkWinSys = NULL;
   }
+#endif
   
   msgWork->isUpdateQue = FALSE;
   msgWork->isUseCursor = FALSE;
@@ -156,10 +159,12 @@ MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame ,const u8 selFra
 //--------------------------------------------------------------
 void MB_MSG_MessageTerm( MB_MSG_WORK *msgWork )
 {
+#ifdef MB_TYPE_POKE_SHIFTER
   if( msgWork->talkWinSys != NULL )
   {
     TALKMSGWIN_SystemDelete( msgWork->talkWinSys );
   }
+#endif
   if( msgWork->yesNoWork != NULL )
   {
     APP_TASKMENU_CloseMenu( msgWork->yesNoWork );
@@ -374,7 +379,9 @@ void MB_MSG_MessageDisp( MB_MSG_WORK *msgWork , const u16 msgId , const int msgS
   }
   if( msgWork->type == MMWT_2LINE_TALK )
   {
+#ifdef MB_TYPE_POKE_SHIFTER
     TALKMSGWIN_WriteBmpWindow( msgWork->talkWinSys , msgWork->msgWin , TALKMSGWIN_TYPE_NORMAL );
+#endif
   }
   else
   {
@@ -425,7 +432,9 @@ void MB_MSG_MessageDispNoWait( MB_MSG_WORK *msgWork , const u16 msgId )
   }
   if( msgWork->type == MMWT_2LINE_TALK )
   {
+#ifdef MB_TYPE_POKE_SHIFTER
     TALKMSGWIN_WriteBmpWindow( msgWork->talkWinSys , msgWork->msgWin , TALKMSGWIN_TYPE_NORMAL );
+#endif
     GFL_BG_LoadScreenReq(msgWork->frame);
     }
   else
@@ -442,8 +451,10 @@ void MB_MSG_MessageHide( MB_MSG_WORK *msgWork )
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( msgWork->msgWin ) , 0 );
   if( msgWork->type == MMWT_2LINE_TALK )
   {
+#ifdef MB_TYPE_POKE_SHIFTER
     TALKMSGWIN_ClearBmpWindow( msgWork->talkWinSys , msgWork->msgWin );
     GFL_BG_LoadScreenReq(msgWork->frame);
+#endif
   }
   else
   {

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-15T16:35:46"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-15T20:47:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -340,14 +340,14 @@
 	</lock>
 
 
-	<row id="MSG_MB_CHILD_01">
+	<row id="MSG_MB_MOVIE_01">
 		<language name="JPN" width="208">ロードちゅう……
 しばらく　おまちください</language>
 		<language name="JPN_KANJI" width="208">ロード中……
 しばらく　お待ちください</language>
 	</row>
 
-	<row id="MSG_MB_CHILD_02" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+	<row id="MSG_MB_MOVIE_02" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>Hozumi追加0225
 メッセージを調整</comment>
 		<language name="JPN" width="208">ただしい　ソフトが　ささっていません
@@ -360,35 +360,35 @@
 起動し直してください</language>
 	</row>
 
-	<row id="MSG_MB_CHILD_03">
+	<row id="MSG_MB_MOVIE_03">
 		<language name="JPN" width="208">ポケシフター　きどうちゅう……
 まもなく　はじまります</language>
 		<language name="JPN_KANJI" width="208">ポケシフター　起動中……
 まもなく　始まります</language>
 	</row>
 
-	<row id="MSG_MB_CHILD_04">
+	<row id="MSG_MB_MOVIE_04">
 		<language name="JPN" width="208">レポートに　かきこんでいます
 でんげんを　きらないでください</language>
 		<language name="JPN_KANJI" width="208">レポートに　書き込んでいます
 電源を　切らないでください</language>
 	</row>
 
-	<row id="MSG_MB_CHILD_05">
+	<row id="MSG_MB_MOVIE_05">
 		<comment>キー待ちを表示するため
 改行記号付</comment>
 		<language name="JPN" width="208">レポートに　かきこみました▼</language>
 		<language name="JPN_KANJI" width="208">レポートに　書き込みました▼</language>
 	</row>
 
-	<row id="MSG_MB_CHILD_06">
+	<row id="MSG_MB_MOVIE_06">
 		<language name="JPN" width="208">もういちど　ポケシフターで
 あそびますか？</language>
 		<language name="JPN_KANJI" width="208">もう一度　ポケシフターで
 遊びますか？</language>
 	</row>
 
-	<row id="MSG_MB_CHILD_07">
+	<row id="MSG_MB_MOVIE_07">
 		<language name="JPN" width="208">ゲームを　しゅうりょうします
 でんげんを　きって
 しゅうりょうしてください</language>
@@ -397,21 +397,21 @@
 終了してください</language>
 	</row>
 
-	<row id="MSG_MB_CHILD_08">
+	<row id="MSG_MB_MOVIE_08">
 		<language name="JPN" width="208">ボックスの　あきが　たりません
 ポケシフターを　しゅうりょうします▼</language>
 		<language name="JPN_KANJI" width="208">ボックスの　空きが　足りません
 ポケシフターを　終了します▼</language>
 	</row>
 
-	<row id="MSG_MB_CHILD_09">
+	<row id="MSG_MB_MOVIE_09">
 		<language name="JPN" width="208">ポケモンが　６ひき　いません
 ポケシフターを　しゅうりょうします▼</language>
 		<language name="JPN_KANJI" width="208">ポケモンが　６匹　いません
 ポケシフターを　終了します▼</language>
 	</row>
 
-	<row id="MSG_MB_CHILD_10" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+	<row id="MSG_MB_MOVIE_10" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>Ariizumi追加0219
 
 初期ロード失敗</comment>
@@ -422,7 +422,7 @@
 ポケシフターを　終了します▼</language>
 	</row>
 
-	<row id="MSG_MB_CHILD_11" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+	<row id="MSG_MB_MOVIE_11" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>Ariizumi追加0219
 初期接続タイムアウト</comment>
 		<language name="JPN" width="208">もうひとつの　ＤＳの
@@ -431,7 +431,7 @@
 接続に　失敗しました▼</language>
 	</row>
 
-	<row id="MSG_MB_CHILD_12" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+	<row id="MSG_MB_MOVIE_12" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>Ariizumi追加0225
 
 セーブ(CRCチェック)失敗</comment>
@@ -440,6 +440,27 @@
 ポケシフターを　しゅうりょうします▼</language>
 		<language name="JPN_KANJI" width="208">データの書き込みに　失敗しました
 ポケシフターを　終了します▼</language>
+	</row>
+
+	<row id="MSG_MB_MOVIE_SYS_01">
+		<language name="JPN" width="208">はい</language>
+		<language name="JPN_KANJI" width="208">はい</language>
+	</row>
+
+	<row id="MSG_MB_MOVIE_SYS_02">
+		<language name="JPN" width="208">いいえ</language>
+		<language name="JPN_KANJI" width="208">いいえ</language>
+	</row>
+
+	<row id="MSG_MB_MOVIE_DEB_01">
+		<language name="JPN" width="208">デバッグROM
+DP　Y
+PT　X
+GS　A</language>
+		<language name="JPN_KANJI" width="208">デバッグROM
+DP　Y
+PT　X
+GS　A</language>
 	</row>
 
 	<flowchart-group-list>

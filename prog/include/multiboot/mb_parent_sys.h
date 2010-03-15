@@ -22,6 +22,11 @@ FS_EXTERN_OVERLAY(multiboot);
 //	enum
 //======================================================================
 #pragma mark [> enum
+typedef enum
+{
+  MPM_POKE_SHIFTER,
+  MPM_MOVIE_TRANS,
+}MB_PARENT_MODE;
 
 //======================================================================
 //	typedef struct
@@ -29,6 +34,7 @@ FS_EXTERN_OVERLAY(multiboot);
 #pragma mark [> struct
 typedef struct
 {
+  u8       mode;
   GAMEDATA *gameData;
 }MB_PARENT_INIT_WORK;
 

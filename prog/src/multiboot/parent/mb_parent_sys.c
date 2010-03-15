@@ -14,6 +14,7 @@
 #include "system/net_err.h"
 #include "gamesystem/msgspeed.h"
 #include "net/wih.h"
+#include "net/network_define.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "system/wipe.h"
@@ -175,6 +176,8 @@ typedef struct
   GFL_CLUNIT  *cellUnit;
   u32         cellResIdx[MPCR_MAX];
   GFL_CLWK    *clwkReturn;
+  
+  MBGameRegistry gameRegistry;  //MB配信用のデータ
   
 }MB_PARENT_WORK;
 
@@ -956,8 +959,17 @@ static void MP_PARENT_SendImage_MBPInit( MB_PARENT_WORK *work )
 {
   /* このデモがダウンロードさせるプログラム情報 */
   //staticじゃないと動かない！！！
-  static MBGameRegistry mbGameList = {
+  MBGameRegistry mbGameListPokeShifter = {
     "/dl_rom/child.srl",    // 子機バイナリコード
+    NULL ,                  // ゲーム名
+    NULL ,                  // ゲーム内容説明
+    "/dl_rom/icon.char",    // アイコンキャラクタデータ
+    "/dl_rom/icon.plt",     // アイコンパレットデータ
+    MB_DEF_GGID,            // GGID
+    2,                      // 最大プレイ人数、親機の数も含めた人数
+  };
+  MBGameRegistry mbGameListMovieTrans = {
+    "/dl_rom/child2.srl",    // 子機バイナリコード
     NULL ,                  // ゲーム名
     NULL ,                  // ゲーム内容説明
     "/dl_rom/icon.char",    // アイコンキャラクタデータ
@@ -967,10 +979,20 @@ static void MP_PARENT_SendImage_MBPInit( MB_PARENT_WORK *work )
   };
 
   const u16 channel = WH_GetMeasureChannel();
-  mbGameList.gameNamep = work->romTitleStr;
-  mbGameList.gameIntroductionp = work->romInfoStr;
+  
+  if( work->initWork->mode == MPM_POKE_SHIFTER )
+  {
+    GFL_STD_MemCopy( &mbGameListPokeShifter , &work->gameRegistry , sizeof(MBGameRegistry) );
+  }
+  else
+  {
+    GFL_STD_MemCopy( &mbGameListMovieTrans , &work->gameRegistry , sizeof(MBGameRegistry) );
+  }
+  
+  work->gameRegistry.gameNamep = work->romTitleStr;
+  work->gameRegistry.gameIntroductionp = work->romInfoStr;
   MBP_Init( MB_DEF_GGID , MB_TGID_AUTO );
-  MBP_Start( &mbGameList , channel );
+  MBP_Start( &work->gameRegistry , channel );
   
 }
 
@@ -1444,6 +1466,16 @@ static GFL_PROC_RESULT MB_PARENT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   if( pwk == NULL )
   {
     initWork = GFL_HEAP_AllocMemory( HEAPID_MULTIBOOT , sizeof( MB_PARENT_INIT_WORK ));
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+    {
+      MB_TPrintf("Boot mode movie!\n");
+      initWork->mode = MPM_MOVIE_TRANS;
+    }
+    else
+    {
+      MB_TPrintf("Boot mode poke shifter!\n");
+      initWork->mode = MPM_POKE_SHIFTER;
+    }
     initWork->gameData = GAMEDATA_Create( HEAPID_MULTIBOOT );
   }
   else

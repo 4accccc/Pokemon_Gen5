@@ -66,6 +66,7 @@ VMCMD_RESULT EvCmdPalparkCall( VMHANDLE *core, void *wk )
   MB_PARENT_INIT_WORK *param;
   
   param = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(MB_PARENT_INIT_WORK) ); 
+  param->mode    = MPM_POKE_SHIFTER;
   param->gameData    = gdata;
 
   event = EVENT_FieldSubProcNoFade( gsys, fieldmap, 

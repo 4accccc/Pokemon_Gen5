@@ -16,7 +16,13 @@
 #ifndef MULTI_BOOT_MAKE  //通常時処理
 #include "message.naix"
 #else                    //DL子機時処理
+
+#ifdef MB_TYPE_POKE_SHIFTER
 #include "message_dl.naix"
+#else
+#include "message_dl_movie.naix"
+#endif
+
 #endif //MULTI_BOOT_MAKE
 
 //--------------------------------------------------------------
@@ -42,7 +48,11 @@ void GLOBALMSG_Init( HEAPID heapID )
 #ifndef MULTI_BOOT_MAKE  //通常時処理
 	GlobalMsg_PokeName = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_monsname_dat, heapID );
 #else                    //DL子機時処理
+#ifdef MB_TYPE_POKE_SHIFTER
 	GlobalMsg_PokeName = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_dl_monsname_dat, heapID );
+#else
+	GlobalMsg_PokeName = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_dl_movie_monsname_dat, heapID );
+#endif
 #endif //MULTI_BOOT_MAKE
 }
 

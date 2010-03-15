@@ -17,6 +17,7 @@ SRCS	+= \
 		$(PARENT_SRC)/print/printsys.c \
 		$(PARENT_SRC)/print/str_tool.c \
 		$(PARENT_SRC)/print/wordset.c \
+		$(PARENT_SRC)/print/global_msg.c \
 		$(PARENT_SRC)/sound/pm_sndsys.c \
 		$(PARENT_SRC)/sound/sound_manager.c \
 		$(PARENT_SRC)/system/bmp_winframe.c \
@@ -28,7 +29,14 @@ SRCS	+= \
 		$(PARENT_SRC)/system/debug_print.c \
 		$(PARENT_SRC)/system/time_icon.c \
 		$(PARENT_SRC)/waza_tool/waza_tool.c \
-		$(PARENT_SRC)/debug/debug_str_conv.c
+		$(PARENT_SRC)/debug/debug_str_conv.c\
+		$(PARENT_SRC)/multiboot/util/mb_data_main.c \
+		$(PARENT_SRC)/multiboot/util/mb_data_pt.c \
+		$(PARENT_SRC)/multiboot/util/mb_data_gs.c \
+		$(PARENT_SRC)/multiboot/util/mb_util.c \
+		$(PARENT_SRC)/multiboot/util/mb_util_msg.c \
+		$(PARENT_SRC)/multiboot/comm/mb_comm_sys.c \
+		$(PARENT_SRC)/multiboot/movie/mb_movie_sys.c
 				
 #================================================
 # ここから下はオーバーレイプログラム定義

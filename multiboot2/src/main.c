@@ -33,7 +33,7 @@
 //#include "debug/debugwin_sys.h"
 #endif //PM_DEBUG
 
-#include "multiboot/mb_child_sys.h"
+#include "multiboot/mb_movie_sys.h"
 
 static  void  SkeltonHBlankFunc(void);
 static  void  SkeltonVBlankFunc(void);
@@ -192,7 +192,7 @@ static  void  GameInit(void)
   // 通信ブート処理 VBlank割り込み後に行うためここに記述
   GFL_NET_Boot( GFL_HEAPID_APP, FatalError_Disp, GFL_HEAPID_APP, GFL_HEAPID_APP );
   /* 起動プロセスの設定 */
-	//GFL_PROC_SysCallProc(NO_OVERLAY_ID, &MultiBootChild_ProcData, NULL);
+	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &MultiBootMovie_ProcData, NULL);
 
   /* 文字描画システム初期化 */
   PRINTSYS_Init( GFL_HEAPID_SYSTEM );

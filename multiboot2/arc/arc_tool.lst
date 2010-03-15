@@ -50,3 +50,4 @@
 	ARCID_EVOTBL			"../../prog/arc/personal/evo.narc"			#進化テーブル
 	ARCID_WAZA_TBL			"../../prog/arc/waza_tbl/waza_tbl.narc"			#技テーブル
 	ARCID_TIMEICON_GRA		"../../prog/arc/time_icon_gra.narc"		#待機中時計アイコン
+	ARCID_MB_CHILD			"../../prog/arc/mb_child_gra.narc"		#子機汎用
