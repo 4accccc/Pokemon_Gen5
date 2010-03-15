@@ -1455,7 +1455,7 @@ static GFL_PROC_RESULT CG_WirelessMenuProcMain( GFL_PROC * proc, int * seq, void
     pWork->bit = WIH_DWC_GetAllBeaconTypeBit();
 
     pWork->unionnumOld = pWork->unionnum;
-    pWork->unionnum = GFL_NET_WLGetServiceNumber(WB_NET_MYSTERY);
+    pWork->unionnum = GFL_NET_WLGetServiceNumber(WB_NET_UNION);
   }
 
   GFL_TCBL_Main( pWork->pMsgTcblSys );
