@@ -50,6 +50,7 @@
 #include "app/local_tvt_sys.h"  //LocalTvt_ProcData etc.
 #include "app/chihou_zukan_award.h"
 #include "app/zenkoku_zukan_award.h"
+#include "app/subway_map.h"
 
 #include "app/mailbox.h"
 FS_EXTERN_OVERLAY(app_mail);
@@ -541,10 +542,11 @@ VMCMD_RESULT EvCmdCallZukanAward( VMHANDLE *core, void *wk )
       EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(chihou_zukan_award), &ZENKOKU_ZUKAN_AWARD_ProcData, param, NULL, NULL );
     }
     break;
-  case SCR_ZUKAN_AWARD_SUBWAY_ROUTE_MAP:  //òHê¸ê}
+  
+  case SCR_ZUKAN_AWARD_SUBWAY_ROUTE_MAP:  
     {
-      ZENKOKU_ZUKAN_AWARD_PARAM* param = ZENKOKU_ZUKAN_AWARD_AllocParam( HEAPID_PROC, mystatus, TRUE );
-      EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(chihou_zukan_award), &ZENKOKU_ZUKAN_AWARD_ProcData, param, NULL, NULL );
+      SUBWAY_MAP_PARAM* param = SUBWAY_MAP_AllocParam( HEAPID_PROC, mystatus );
+      EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(subway_map), &SUBWAY_MAP_ProcData, param, NULL, NULL );
     }
     break;
   }
