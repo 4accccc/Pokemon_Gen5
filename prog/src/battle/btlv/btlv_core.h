@@ -246,7 +246,7 @@ extern void BTLV_ACT_WazaEffect_Start( BTLV_CORE* wk, BtlPokePos atPokePos, BtlP
 
 extern BOOL BTLV_ACT_WazaEffect_Wait( BTLV_CORE* wk );
 
-extern void BTLV_ACT_DamageEffectSingle_Start( BTLV_CORE* wk, WazaID waza, BtlPokePos defPokePos, u16 damage, BtlTypeAff aff );
+extern void BTLV_ACT_DamageEffectSingle_Start( BTLV_CORE* wk, WazaID waza, BtlPokePos defPokePos, BtlTypeAff aff );
 extern BOOL BTLV_ACT_DamageEffectSingle_Wait( BTLV_CORE* wk );
 
 

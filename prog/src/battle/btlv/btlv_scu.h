@@ -39,7 +39,7 @@ extern void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos );
 extern BOOL BTLV_SCU_WaitDeadAct( BTLV_SCU* wk );
 extern void BTLV_SCU_StartReliveAct( BTLV_SCU* wk, BtlPokePos pos );
 extern BOOL BTLV_SCU_WaitReliveAct( BTLV_SCU* wk );
-extern void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pokePos, u8 clientID, u8 memberIdx );
+extern void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pokePos, u8 clientID, u8 memberIdx, BOOL fEffectSkip );
 extern BOOL BTLV_SCU_WaitPokeIn( BTLV_SCU* wk );
 extern void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, BtlvMcssPos vpos );
 extern BOOL BTLV_SCU_WaitMemberOutAct( BTLV_SCU* wk );

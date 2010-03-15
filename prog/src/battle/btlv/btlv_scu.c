@@ -2630,7 +2630,7 @@ void BTLV_SCU_StartReliveAct( BTLV_SCU* wk, BtlPokePos pos )
 }
 //=============================================================================================
 /**
- * ポケモンひんしアクション終了待ち
+ * ポケモン生き返りアクション終了待ち
  *
  * @param   wk
  *
@@ -2721,7 +2721,7 @@ typedef struct {
  *
  */
 //=============================================================================================
-void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos, u8 clientID, u8 memberIdx )
+void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos, u8 clientID, u8 memberIdx, BOOL fEffectSkip )
 {
   GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskPokeInEffect, sizeof(POKEIN_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
   POKEIN_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
@@ -2741,7 +2741,9 @@ void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos, u8 clientID, u8 memberI
       BTL_Printf("入るポケモン  memIdx=%d, pokeID=%d, monsno=%d, monsno_src=%d\n",
             memberIdx, BPP_GetID(bpp), BPP_GetMonsNo(bpp), PP_Get(pp, ID_PARA_monsno, NULL) );
       BTLV_EFFECT_SetPokemon( pp, vpos );
-      BTLV_EFFECT_AddByPos( vpos, BTLEFF_POKEMON_KURIDASU );
+      if( !fEffectSkip ){
+        BTLV_EFFECT_AddByPos( vpos, BTLEFF_POKEMON_KURIDASU );
+      }
     }
   }
 }

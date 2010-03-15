@@ -689,7 +689,7 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
 
       if( fSkipEnd )
       {
-        BTL_N_Printf( DBGSTR_CLIENT_RecPlay_ChapterSkipped, wk->myID, wk->recPlayer.turnCount);
+        BTL_N_Printf( DBGSTR_CLIENT_RecPlay_ChapterSkipped, wk->myID, wk->recPlayer.nextTurnCount);
         if( wk->viewCore ){
           BTLV_RecPlayFadeIn_Start( wk->viewCore );
         }
@@ -3598,6 +3598,9 @@ static BOOL scProc_ACT_TameWazaHide( BTL_CLIENT* wk, int* seq, const int* args )
 
 
 
+/**
+ * 【アクション】単体ダメージ演出  [0]:pokeID, [1]:affinity [2]:wazaID
+ */
 static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ) {
@@ -3611,10 +3614,9 @@ static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args )
 
     defPokePos  = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
     affinity  = args[1];
-    damage    = args[2];
-    waza      = args[3];
+    waza      = args[2];
 
-    BTLV_ACT_DamageEffectSingle_Start( wk->viewCore, waza, defPokePos, damage, affinity );
+    BTLV_ACT_DamageEffectSingle_Start( wk->viewCore, waza, defPokePos, affinity );
     (*seq)++;
   }
   break;
@@ -3668,6 +3670,9 @@ static BOOL scProc_ACT_WazaIchigeki( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
   {
     BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+
+//    BTLV_EFFECT_Damage( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos), wazaID );
+
     BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos );
     (*seq)++;
   }
@@ -5439,7 +5444,7 @@ static void RecPlayer_ChapterSkipOn( RECPLAYER_CONTROL* ctrl, u32 nextTurnNum )
 {
   ctrl->fChapterSkip = TRUE;
   ctrl->skipTurnCount = 0;
-  ctrl->turnCount = nextTurnNum;
+  ctrl->nextTurnCount = nextTurnNum;
   ctrl->fFadeOutDone = FALSE;
 }
 /**

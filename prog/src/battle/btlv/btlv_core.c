@@ -1352,7 +1352,6 @@ BOOL BTLV_ACT_WazaEffect_Wait( BTLV_CORE* wk )
 typedef struct {
   WazaID      wazaID;
   BtlTypeAff  affinity;
-  u16     damage;
   u16     timer;
   u8      defPokePos;
 }WAZA_DMG_ACT_WORK;
@@ -1368,12 +1367,11 @@ typedef struct {
  * @param   aff
  */
 //=============================================================================================
-void BTLV_ACT_DamageEffectSingle_Start( BTLV_CORE* wk, WazaID wazaID, BtlPokePos defPokePos, u16 damage, BtlTypeAff aff )
+void BTLV_ACT_DamageEffectSingle_Start( BTLV_CORE* wk, WazaID wazaID, BtlPokePos defPokePos, BtlTypeAff aff )
 {
   WAZA_DMG_ACT_WORK* subwk = getGenericWork(wk, sizeof(WAZA_DMG_ACT_WORK));
 
   subwk->affinity = aff;
-  subwk->damage = damage;
   subwk->defPokePos = defPokePos;
   subwk->timer = 0;
   subwk->wazaID = wazaID;
@@ -1407,15 +1405,10 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
       BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->defPokePos, subwk->wazaID, fChapterSkipMode );
       if( subwk->affinity < BTL_TYPEAFF_100 )
       {
-        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
-        PutMsgToSCU( wk, wk->strBuf, BTLV_MSGWAIT_STD );
-
         PMSND_PlaySE( SEQ_SE_KOUKA_L );
       }
       else if ( subwk->affinity > BTL_TYPEAFF_100 )
       {
-        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
-        PutMsgToSCU( wk, wk->strBuf, BTLV_MSGWAIT_STD );
         PMSND_PlaySE( SEQ_SE_KOUKA_H );
       }
       else{
@@ -1426,9 +1419,8 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
     break;
 
   case 1:
-    if( BTLV_SCU_WaitWazaDamageAct(wk->scrnU)
-    &&  BTLV_SCU_WaitMsg(wk->scrnU)
-    ){
+    if( BTLV_SCU_WaitWazaDamageAct(wk->scrnU) )
+    {
       return TRUE;
     }
     break;
@@ -1474,11 +1466,10 @@ BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk )
   switch( subwk->seq ){
   case 0:
     {
-      u32 i;
       BOOL fChapterSkipMode = BTL_CLIENT_IsChapterSkipMode( wk->myClient );
+      u32 i;
 
-      for(i=0; i<subwk->pokeCnt; ++i)
-      {
+      for(i=0; i<subwk->pokeCnt; ++i){
         BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->pokePos[i], subwk->wazaID, fChapterSkipMode );
       }
 
@@ -1697,8 +1688,11 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
 
   switch( *seq ){
   case 0:
-    BTLV_SCU_StartPokeIn( wk->scrnU, subwk->pokePos, subwk->clientID, subwk->memberIdx );
-    (*seq)++;
+    {
+      BOOL fEffectSkip = BTL_CLIENT_IsChapterSkipMode( wk->myClient );
+      BTLV_SCU_StartPokeIn( wk->scrnU, subwk->pokePos, subwk->clientID, subwk->memberIdx, fEffectSkip );
+      (*seq)++;
+    }
     break;
   case 1:
     if( BTLV_SCU_WaitPokeIn(wk->scrnU) )

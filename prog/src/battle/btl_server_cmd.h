@@ -361,9 +361,9 @@ static inline void SCQUE_PUT_ACT_TameWazaHide( BTL_SERVER_CMD_QUE* que, u8 pokeI
 
 
 // 【アクション】単体ダメージ処理
-static inline void SCQUE_PUT_ACT_WazaDamage( BTL_SERVER_CMD_QUE* que, u8 defPokeID, u8 affinity, u16 damage, u16 wazaID )
+static inline void SCQUE_PUT_ACT_WazaDamage( BTL_SERVER_CMD_QUE* que, u8 defPokeID, u8 affinity, u16 wazaID )
 {
-  SCQUE_PUT_Common( que, SC_ACT_WAZA_DMG, defPokeID, affinity, damage, wazaID );
+  SCQUE_PUT_Common( que, SC_ACT_WAZA_DMG, defPokeID, affinity, wazaID );
 }
 // 【アクション】複数体同時ダメージ処理
 static inline void SCQUE_PUT_ACT_WazaDamagePlural( BTL_SERVER_CMD_QUE* que, u8 pokeCnt, u8 affAbout, u16 wazaID )
