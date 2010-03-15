@@ -1233,7 +1233,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     break;
   case BTLV_INPUT_SCRTYPE_BATTLE_RECORDER:
     {
-      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
       BTLV_INPUT_BATTLE_RECORDER_PARAM* bibrp = ( BTLV_INPUT_BATTLE_RECORDER_PARAM * )param;
       int i;
 
@@ -1246,6 +1245,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
       { 
+        TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
         biw->tcb_execute_flag = 1;
         ttw->biw = biw;
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2BattleRecorder, ttw, 1 );
