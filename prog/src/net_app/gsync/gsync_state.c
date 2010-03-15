@@ -795,10 +795,14 @@ static void _downloadcheck(G_SYNC_WORK* pWork)
 static void _furnitureInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream)
 {
   int i;
-  
+
+  //Ç©ÇÆçXêV
   for(i=0;i<DREAM_WORLD_DATA_MAX_FURNITURE;i++){
     DREAMWORLD_SV_SetFurnitureData(pDreamSave, i,   &pDream->Furniture[i]);
   }
+  DREAMWORLD_SV_SetIsSyncFurniture(pDreamSave, TRUE);
+
+  
 }
 
 
