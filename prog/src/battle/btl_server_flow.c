@@ -800,9 +800,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
 
 void BTL_SVFLOW_ResetSystem( BTL_SVFLOW_WORK* wk )
 {
-  OS_TPrintf("SVF Reset\n");
   clearWorks( wk );
-
 }
 
 static void clearWorks( BTL_SVFLOW_WORK* wk )
@@ -2536,7 +2534,6 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   BTL_POKEPARAM* bpp;
   u8 pokeID;
 
-
   clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
   GF_ASSERT(posIdx < clwk->numCoverPos);
 
@@ -2553,6 +2550,8 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   }
   bpp = BTL_PARTY_GetMemberData( clwk->party, posIdx );
   pokeID = BPP_GetID( bpp );
+
+  BTL_MAIN_RegisterZukanSeeFlag( wk->mainModule, clientID, bpp );
 
 
   BTL_HANDLER_TOKUSEI_Add( bpp );

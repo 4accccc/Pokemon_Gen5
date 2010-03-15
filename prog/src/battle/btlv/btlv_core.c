@@ -158,10 +158,10 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
   core->mainSeq = 0;
   core->selectItemSeq = 0;
 
-  BTL_STR_InitSystem( mainModule, client, pokeCon, heapID );
-
   //描画系オーバーレイロード
   GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_view ) );
+
+  BTL_STR_InitSystem( mainModule, client, pokeCon, heapID );
 
   return core;
 }

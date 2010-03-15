@@ -164,14 +164,14 @@ static inline u32 recvBuf_getData( const RECV_BUFFER* buf, const void** ppData )
 
 //static const NetRecvFuncTable RecvFuncTable[] = {
 const NetRecvFuncTable BtlRecvFuncTable[] = {
-    { recv_serverVer,      NULL },
-    { recv_serverParam,    NULL },
-    { recv_partyData,      getbuf_partyData     },
-    { recv_AI_partyData,   getbuf_AI_partyData  },
-    { recv_playerData,     getbuf_playerData },
+    { recv_serverVer,       NULL                  },
+    { recv_serverParam,     NULL                  },
+    { recv_partyData,       getbuf_partyData      },
+    { recv_AI_partyData,    getbuf_AI_partyData   },
+    { recv_playerData,      getbuf_playerData     },
     { recv_AI_trainerData,  getbuf_AI_trainerData },
-    { recv_serverCmd,      getbuf_serverCmd  },
-    { recv_clientData,     getbuf_clientData },
+    { recv_serverCmd,       getbuf_serverCmd      },
+    { recv_clientData,      getbuf_clientData     },
 };
 
 

@@ -2019,6 +2019,30 @@ u32 BTL_MAIN_GetZukanCapturedCount( const BTL_MAIN_MODULE* wk )
 {
   return ZUKANSAVE_GetPokeGetCount( wk->setupParam->zukanData );
 }
+//=============================================================================================
+/**
+ *
+ *
+ * @param   wk
+ * @param   clientID
+ * @param   bpp
+ */
+//=============================================================================================
+void BTL_MAIN_RegisterZukanSeeFlag( const BTL_MAIN_MODULE* wk, u8 clientID, const BTL_POKEPARAM* bpp )
+{
+  BtlCompetitor competitor = BTL_MAIN_GetCompetitor( wk );
+  if( (competitor == BTL_COMPETITOR_WILD)
+  ||  (competitor == BTL_COMPETITOR_TRAINER)
+  ){
+    if( clientID != BTL_CLIENT_PLAYER )
+    {
+      POKEMON_PARAM* pp = (POKEMON_PARAM*)BPP_GetSrcData( bpp );
+      ZUKAN_SAVEDATA* zukan = (ZUKAN_SAVEDATA*)(wk->setupParam->zukanData);
+
+      ZUKANSAVE_SetPokeSee( zukan, pp );
+    }
+  }
+}
 
 //=============================================================================================
 /**
@@ -3138,7 +3162,9 @@ u32 BTL_MAIN_FixBonusMoney( BTL_MAIN_MODULE* wk )
     wk->bonusMoney = GPOWER_Calc_Money( wk->bonusMoney );
     wk->fBonusMoneyFixed = TRUE;
   }
-  return wk->bonusMoney;
+  // @todo デバッグ用一時措置
+  return 0;
+//  return wk->bonusMoney;
 }
 
 //=============================================================================================
