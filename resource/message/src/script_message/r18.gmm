@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T14:40:44"/>
+	<create user="matsumiya" host="W00224" date="2010-03-15T17:36:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -237,7 +237,7 @@
 		<number position="-1" width="100"/>
 		<comment position="4" width="258"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="121">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -292,12 +292,106 @@
 	</lock>
 
 
-	<row id="msg_r18_sign1_01">
-		<comment>BGメッセージ
-・GRIDX=632、GRIDZ=737</comment>
-		<attribute name="キャラ指定">看板</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_r18_sage6_end_01">
+		<comment>♂
+・GRIDX=616、GRIDZ=53
+・アイテム入手処理
+　No359「かげぶんしん」</comment>
+		<attribute name="キャラ指定">七賢人その６</attribute>
+		<language name="JPN" width="256">？？？『であったとき▼</language>
+		<language name="JPN_KANJI" width="256">？？？『であったとき▼</language>
+	</row>
+
+	<row id="msg_r18_sage6_end_02">
+		<comment>♂
+・アイテム入手後自動で表示
+・続けてicpo_end_01</comment>
+		<attribute name="キャラ指定">七賢人その６</attribute>
+		<language name="JPN" width="256">？？？『アイテムをくれたあと▼</language>
+		<language name="JPN_KANJI" width="256">？？？『アイテムをくれたあと▼</language>
+	</row>
+
+	<row id="msg_r18_icpo_end_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・隣接してメッセージ
+・続けてsage6_end_03</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『さてと……
+プラズマだんに　ついて▼
+こくさいけいさつの　わたしに
+いろいろ　おしえてもらおう！▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『さてと……
+プラズマ団に　ついて▼
+国際警察の　わたしに
+いろいろ　教えてもらおう！▼</language>
+	</row>
+
+	<row id="msg_r18_sage6_end_03">
+		<comment>♂
+・続けて七賢人
+　6人と会っていない→icpo_end_02
+　6人と会っている→icpo_end_03</comment>
+		<attribute name="キャラ指定">七賢人その６</attribute>
+		<language name="JPN" width="256">？？？『かまわんよ▼</language>
+		<language name="JPN_KANJI" width="256">？？？『かまわんよ▼</language>
+	</row>
+
+	<row id="msg_r18_icpo_end_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　画面暗転して七賢人とハンサムを削除</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『ありがとう▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『ありがとう▼</language>
+	</row>
+
+	<row id="msg_r18_icpo_end_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・6人の七賢人とであったとき
+・メッセージ歩湯事後
+　画面暗転して七賢人とハンサムを削除</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『ありがとう！▼
+さて　[1:00:トレーナー名:0]……
+きみに　つたえることが　ある▼
+Ｎらしき　じんぶつが
+ドラゴンポケモンと　いるのを▽
+みたという　じょうほうが　あった▼
+わたしは　じょうほうが　ただしいか
+たしかめに　いくつもりだよ▽
+では　また　いつかあおう！▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『ありがとう！▼
+さて　[1:00:トレーナー名:0]……
+きみに　伝えることが　ある▼
+Ｎらしき　人物が
+ドラゴンポケモンと　いるのを▽
+みたという　情報が　あった▼
+わたしは　情報の　真偽を
+確かめに　いくつもりだよ▽
+では　また　いつか会おう！▼</language>
+	</row>
+
+	<row id="msg_r18_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>看板分類：タウンマップ</comment>
+		<attribute name="キャラ指定">看板：道路</attribute>
+		<language name="JPN" width="256">１８ばんすいどう</language>
+		<language name="JPN_KANJI" width="256">１８番水道</language>
+	</row>
+
+	<row id="msg_r18_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>看板分類：タウンマップ</comment>
+		<attribute name="キャラ指定">看板：道路</attribute>
+		<language name="JPN" width="256">１８ばんすいどう</language>
+		<language name="JPN_KANJI" width="256">１８番水道</language>
+	</row>
+
+	<row id="msg_r18_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
+		<language name="JPN" width="256">おとくな　けいじばん</language>
+		<language name="JPN_KANJI" width="256">お得な　掲示板</language>
 	</row>
 
 	<flowchart-group-list>
