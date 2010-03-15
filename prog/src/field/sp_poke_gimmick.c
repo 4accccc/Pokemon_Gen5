@@ -14,7 +14,7 @@
 
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 
-//#include "arc/fieldmap/gym_anti.naix"
+#include "arc/fieldmap/sppoke.naix"
 
 //#include "../../../resource/fldmapdata/gimmick/gym_anti/gym_anti_local_def.h"
 
@@ -59,18 +59,15 @@ enum {
 };
 
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl_trio[] = {
-#if 0  
-	{ ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_f_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールアウト
-  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_w_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールイン
+	{ ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールアウト
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールイン
 
-  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_f_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールアウトアニメ
-  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_f_nsbta, GFL_G3D_UTIL_RESARC }, //ITP
-  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_w_nsbca, GFL_G3D_UTIL_RESARC }, //IMA
-  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_w_nsbta, GFL_G3D_UTIL_RESARC }, //ICA ボールインアニメ
-  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_l_nsbca, GFL_G3D_UTIL_RESARC }, //ITP
-  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_l_nsbta, GFL_G3D_UTIL_RESARC }, //IMA
-#endif
-  { 0, 0, 0}
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールアウトアニメ
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールインアニメ
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
 };
 
 //3Dアニメ　ボールアウト
