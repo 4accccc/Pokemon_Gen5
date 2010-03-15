@@ -454,41 +454,43 @@ void PokeRegulation_ModifyLevelPokeParty( const REGULATION* pReg, POKEPARTY *par
 { 
   int i;
   POKEMON_PARAM *pp;
-  const u32 modfity_level = pReg->LEVEL;
+  const u32 modfity_level = Regulation_GetParam(pReg, REGULATION_LEVEL);
   BOOL is_modify;
-
 
   for( i = 0; i < PokeParty_GetPokeCount( party ); i++ )
   {
     pp  = PokeParty_GetMemberPointer( party, i );
 
-    //レギュレーションごとにレベル補正をかけるポケモンが違う
-    switch( pReg->LEVEL_RANGE )
+    if( PP_Get( pp, ID_PARA_poke_exist, NULL ) )
     { 
-    case REGULATION_LEVEL_RANGE_DRAG_DOWN:  
-      //以上補正なので、補正レベル以上ならば補正レベルにする
-      is_modify = ( PP_Get( pp, ID_PARA_level, NULL) >= modfity_level );
-      break;
+      //レギュレーションごとにレベル補正をかけるポケモンが違う
+      switch( Regulation_GetParam(pReg, REGULATION_LEVEL_RANGE) )
+      { 
+      case REGULATION_LEVEL_RANGE_DRAG_DOWN:  
+        //以上補正なので、補正レベル以上ならば補正レベルにする
+        is_modify = ( PP_Get( pp, ID_PARA_level, NULL) >= modfity_level );
+        break;
 
-    case REGULATION_LEVEL_RANGE_SAME:
-      //全補正なので、全員行う
-      is_modify = TRUE; 
-      break;
+      case REGULATION_LEVEL_RANGE_SAME:
+        //全補正なので、全員行う
+        is_modify = TRUE; 
+        break;
 
-    case REGULATION_LEVEL_RANGE_PULL_UP:
-      //以下補正かので補正レベル以下ならば補正レベルにする
-      is_modify = ( PP_Get( pp, ID_PARA_level, NULL) <= modfity_level );
-      break;
+      case REGULATION_LEVEL_RANGE_PULL_UP:
+        //以下補正なので補正レベル以下ならば補正レベルにする
+        is_modify = ( PP_Get( pp, ID_PARA_level, NULL) <= modfity_level );
+        break;
 
-    default:
-      //それ以外は行わない
-      is_modify = FALSE;
-    }
+      default:
+        //それ以外は行わない
+        is_modify = FALSE;
+      }
 
-    //補正をかける
-    if( is_modify )
-    { 
-      POKETOOL_MakeLevelRevise(pp, modfity_level);
+      //補正をかける
+      if( is_modify )
+      { 
+        POKETOOL_MakeLevelRevise(pp, modfity_level);
+      }
     }
   }
 }
@@ -508,7 +510,7 @@ void PokeRegulation_ModifyNickName( const REGULATION* pReg, POKEPARTY *party, HE
     int i;
 
     STRBUF  *p_name = GFL_STR_CreateBuffer( MONS_NAME_SIZE + EOM_SIZE, heapID );
-    for( i = 0; i < PokeParty_GetPokeCount( party);i ++ )
+    for( i = 0; i < PokeParty_GetPokeCount( party );i ++ )
     { 
       POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( party, i );
       if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) )

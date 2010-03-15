@@ -967,10 +967,10 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
           GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
       //シューター用設定は下部で行っている
       break;
-
-      p_reg = (REGULATION*)PokeRegulation_LoadDataAlloc( reg_no, heapID );
-      is_alloc  = TRUE;
     }
+
+    p_reg = (REGULATION*)PokeRegulation_LoadDataAlloc( reg_no, heapID );
+    is_alloc  = TRUE;
   }
   //WiFI大会のバトル設定
   else if( p_wk->type == WIFIBATTLEMATCH_TYPE_WIFICUP )
@@ -1053,16 +1053,18 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
     GF_ASSERT(0);
   }
 
-  OS_TFPrintf( 3, "vs %d\n", p_param->p_btl_setup_param->LimitTimeGame );
-  OS_TFPrintf( 3, "cmd %d\n",  p_param->p_btl_setup_param->LimitTimeCommand );
 
   p_param->p_btl_setup_param->musicDefault  = WBM_SND_SEQ_BATTLE;
   p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
 
   //ポケモン設定
   BATTLE_PARAM_SetPokeParty( p_param->p_btl_setup_param, p_wk->p_player_btl_party, BTL_CLIENT_PLAYER );
+
   //レギュレーションの内容を適用
   BATTLE_PARAM_SetRegulation( p_param->p_btl_setup_param, p_reg, GFL_HEAP_LOWID( heapID ) );
+
+  OS_TFPrintf( 3, "vs %d\n", p_param->p_btl_setup_param->LimitTimeGame );
+  OS_TFPrintf( 3, "cmd %d\n",  p_param->p_btl_setup_param->LimitTimeCommand );
 
   //録画準備
   BTL_SETUP_AllocRecBuffer( p_param->p_btl_setup_param, heapID );

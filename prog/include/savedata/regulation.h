@@ -53,6 +53,7 @@ typedef enum  {
   REGULATION_MUST_POKE,   ///<    #必須ポケモン
   REGULATION_MUST_POKE_FORM,  ///<  #必須ポケモンフォルム
   REGULATION_SHOOTER,    ///<    #シューター
+  REGULATION_VETO_SHOOTER_ITEM, ///< 禁止道具
   REGULATION_TIME_VS,     ///<    #対戦時間
   REGULATION_TIME_COMMAND, ///<    #入力時間
   REGULATION_NICKNAME, ///<    #ニックネーム表示
@@ -62,7 +63,6 @@ typedef enum  {
   REGULATION_SHOW_POKE_TIME,  ///<    #ポケモン見せ合い制限時間 0は無制限
   REGULATION_BATTLETYPE,  ///<  バトルタイプ
   REGULATION_BTLCOUNT,  ///<  戦闘規定回数
-  REGULATION_VETO_SHOOTER_ITEM, ///< 禁止道具
 } REGULATION_PARAM_TYPE;
 
 typedef enum  {

@@ -95,9 +95,6 @@ WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, 
 
   APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->common, APP_PRINTSYS_COMMON_TYPE_KEY);
 
-  //文字送りカーソル作成
-  p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, TRUE, FALSE, heapID );
-
   //バッファ作成
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
 
@@ -140,6 +137,10 @@ void WBM_TEXT_Exit( WBM_TEXT_WORK* p_wk )
     TILEICON_Exit( p_wk->p_time );
     p_wk->p_time  = NULL;
   }
+  if( p_wk->p_keycursor )
+  { 
+    APP_KEYCURSOR_Delete( p_wk->p_keycursor );
+  }
 
   GFL_TCB_Exit( p_wk->p_tcb );
   GFL_HEAP_FreeMemory( p_wk->p_tcb_area );
@@ -150,7 +151,6 @@ void WBM_TEXT_Exit( WBM_TEXT_WORK* p_wk )
 
   GFL_STR_DeleteBuffer( p_wk->p_strbuf );
 
-  APP_KEYCURSOR_Delete( p_wk->p_keycursor );
 
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -183,7 +183,10 @@ void WBM_TEXT_Main( WBM_TEXT_WORK* p_wk )
     { 
       BOOL is_end;
 
-      APP_KEYCURSOR_Main( p_wk->p_keycursor, p_wk->p_stream, p_wk->p_bmpwin );
+      if( p_wk->p_keycursor )
+      { 
+        APP_KEYCURSOR_Main( p_wk->p_keycursor, p_wk->p_stream, p_wk->p_bmpwin );
+      }
       is_end  = APP_PRINTSYS_COMMON_PrintStreamFunc( &p_wk->common, p_wk->p_stream );
 
       if( is_end )
@@ -252,6 +255,11 @@ static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type )
     PRINTSYS_PrintStreamDelete( p_wk->p_stream );
     p_wk->p_stream  = NULL;
   }
+  if( p_wk->p_keycursor )
+  { 
+    APP_KEYCURSOR_Delete( p_wk->p_keycursor );
+    p_wk->p_keycursor = NULL;
+  }
 
   //タイプごとの文字描画
   switch( type )
@@ -270,6 +278,9 @@ static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type )
     break;
 
   case WBM_TEXT_TYPE_STREAM:  //ストリームを使う
+    GF_ASSERT( p_wk->p_keycursor == NULL );
+    //文字送りカーソル作成
+    p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, TRUE, FALSE, p_wk->heapID );
     p_wk->p_stream  = PRINTSYS_PrintStream( p_wk->p_bmpwin, 0, 0, p_wk->p_strbuf,
         p_wk->p_font, MSGSPEED_GetWait(), p_wk->p_tcbl, 0, p_wk->heapID, p_wk->clear_chr );
     p_wk->print_update  = WBM_TEXT_TYPE_STREAM;
@@ -307,6 +318,10 @@ void WBM_TEXT_EndWait( WBM_TEXT_WORK* p_wk )
   { 
     TILEICON_Exit( p_wk->p_time );
     p_wk->p_time  = NULL;
+
+    //タイムアイコンのあとはスクリーンが壊れているため、再転送
+    GFL_BMPWIN_MakeScreen( p_wk->p_bmpwin );
+    GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(p_wk->p_bmpwin) );
   }
 }
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/

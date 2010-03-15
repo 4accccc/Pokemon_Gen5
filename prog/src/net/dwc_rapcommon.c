@@ -68,7 +68,7 @@ void DWC_RAPCOMMON_SetSubHeapID( DWCAllocType SubAllocType, u32 size, HEAPID hea
   GF_ASSERT( pDwcRapWork->heapPtrSub == NULL );
   GF_ASSERT( pDwcRapWork->headHandleSub == NULL );
   pDwcRapWork->heapPtrSub    = GFL_HEAP_AllocMemory(heapID, size-0x80);
-  pDwcRapWork->headHandleSub = NNS_FndCreateExpHeap( (void *)( ((u32)pDwcRapWork->heapPtr + 31) / 32 * 32 ), size-0x80-64); 
+  pDwcRapWork->headHandleSub = NNS_FndCreateExpHeap( (void *)( ((u32)pDwcRapWork->heapPtrSub + 31) / 32 * 32 ), size-0x80-64); 
   pDwcRapWork->SubAllocType = SubAllocType;
 }
 
@@ -109,7 +109,7 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
     OSIntrMode  enable = OS_DisableInterrupts();
     ptr = NNS_FndAllocFromExpHeapEx( pDwcRapWork->headHandleSub, size, align );
     (void)OS_RestoreInterrupts(enable);
-    NET_MEMORY_PRINT( "sub alloc memory size=%d rest=%d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle) );
+    NET_MEMORY_PRINT( "sub alloc memory size=%d rest=%d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandleSub) );
   }
   else
   { 
