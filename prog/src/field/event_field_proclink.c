@@ -765,6 +765,7 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
     const BAG_PARAM *pBag = pre_param_adrs;
 
     plistData->item = pBag->ret_item;     //ƒAƒCƒeƒ€ID
+    plistData->ret_sel  = 0;
 
     switch( pBag->next_proc )
     { 
