@@ -17,9 +17,12 @@ extern void SPPOKE_GMK_Setup(FIELDMAP_WORK *fieldWork);
 extern void SPPOKE_GMK_End(FIELDMAP_WORK *fieldWork);
 extern void SPPOKE_GMK_Move(FIELDMAP_WORK *fieldWork);
 
-extern GMEVENT *SPPOKE_GMK_StartBallAnm(
+extern GMEVENT *SPPOKE_GMK_MoveBall(
     GAMESYS_WORK *gsys, const BALL_ANM_TYPE inType,
-    const VecFx32 *inStart, const VecFx32 *inEnd , const u32 inSync);
+    const VecFx32 *inStart, const VecFx32 *inEnd ,
+    const fx32 inHeight, const u32 inSync);
+
+extern void SPPOKE_GMK_StartBallAnm( GAMESYS_WORK *gsys, const BALL_ANM_TYPE inType, const VecFx32 *inPos );
 
 extern GMEVENT *SPPOKE_GMK_WaitPokeAppear( GAMESYS_WORK *gsys, const BALL_ANM_TYPE inType );
 

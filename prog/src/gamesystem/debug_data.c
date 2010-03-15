@@ -76,7 +76,10 @@ static void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
   DEBUG_MyPokeAdd_Matsuda( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );
 #elif defined(DEBUG_ONLY_FOR_saitou)
   DEBUG_MyPokeAdd_Saito( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );
+#elif defined(DEBUG_ONLY_FOR_unno)
+  DEBUG_MyPokeAdd_Saito( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );
 #else
+
   // デフォルトの設定。
   // 手持ちが全部ばらばらで、フィールド技を持っている状態
   DEBUG_MyPokeAdd_Field( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );

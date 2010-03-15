@@ -19,19 +19,16 @@
 //#include "../../../resource/fldmapdata/gimmick/gym_anti/gym_anti_local_def.h"
 
 
-#define SCR_BALL_ANM_TYPE_OUT   (0)
-#define SCR_BALL_ANM_TYPE_IN   (1)
-
-
 #define SPPOKE_GMK_ASSIGN_ID    (1)
 #define SPPOKE_TRIO_UNIT_IDX    (0)   //三銃士イベントユニットインデックス
+#define BALL_ANM_NUM  (3)
 
 typedef struct SPPOKE_GMK_WK_tag
 {
   BALL_ANM_TYPE AnmType;    //ターゲットとなるアニメタイプを格納する
   VecFx32 BallStart;
   VecFx32 BallEnd;
-  fx32 Hieght;
+  fx32 Height;
   u16 Sync;
   u16 NowSync;
 
@@ -114,7 +111,7 @@ static const GFL_G3D_UTIL_SETUP SetupTrio = {
 
 static GMEVENT_RESULT BallMoveEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT WaitPokeAppFrmEvt( GMEVENT* event, int* seq, void* work );
-static GMEVENT_RESULT WaitBallOutAnmEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT WaitBallAnmEvt( GMEVENT* event, int* seq, void* work );
 
 //--------------------------------------------------------------
 /**
@@ -125,6 +122,7 @@ static GMEVENT_RESULT WaitBallOutAnmEvt( GMEVENT* event, int* seq, void* work );
 //--------------------------------------------------------------
 void SPPOKE_GMK_Setup(FIELDMAP_WORK *fieldWork)
 {
+  int i;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
 
   //汎用ワーク確保
@@ -133,11 +131,28 @@ void SPPOKE_GMK_Setup(FIELDMAP_WORK *fieldWork)
   //三銃士イベント用ワークのアロケーション
   ;
   //必要なリソースの用意
-//  FLD_EXP_OBJ_AddUnit(ptr, &SetupTrio, SPPOKE_TRIO_UNIT_IDX );
+  FLD_EXP_OBJ_AddUnit(ptr, &SetupTrio, SPPOKE_TRIO_UNIT_IDX );
   
   //ボール初期化
+  //アニメの状態を初期化
+  for (i=0;i<BALL_ANM_NUM;i++)
   {
-    //始めは非表示
+    EXP_OBJ_ANM_CNT_PTR anm;
+    //1回再生設定
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_TRIO_UNIT_IDX, OBJ_BALL_OUT, i);
+    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+    //アニメ停止
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+    //無効化
+    FLD_EXP_OBJ_ValidCntAnm(ptr, SPPOKE_TRIO_UNIT_IDX, OBJ_BALL_OUT, i, FALSE);
+
+    //1回再生設定
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_TRIO_UNIT_IDX, OBJ_BALL_IN, i);
+    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+    //アニメ停止
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+    //無効化
+    FLD_EXP_OBJ_ValidCntAnm(ptr, SPPOKE_TRIO_UNIT_IDX, OBJ_BALL_IN, i, FALSE);
   }
 }
 
@@ -157,7 +172,7 @@ void SPPOKE_GMK_End(FIELDMAP_WORK *fieldWork)
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
   //ＯＢＪ解放
-//  FLD_EXP_OBJ_DelUnit( ptr, SPPOKE_TRIO_UNIT_IDX );
+  FLD_EXP_OBJ_DelUnit( ptr, SPPOKE_TRIO_UNIT_IDX );
 }
 
 //--------------------------------------------------------------
@@ -171,7 +186,7 @@ void SPPOKE_GMK_Move(FIELDMAP_WORK *fieldWork)
 {
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   //アニメーション再生
-//  FLD_EXP_OBJ_PlayAnime( ptr );
+  FLD_EXP_OBJ_PlayAnime( ptr );
 }
 
 //--------------------------------------------------------------
@@ -181,25 +196,97 @@ void SPPOKE_GMK_Move(FIELDMAP_WORK *fieldWork)
  * @return      none
  */
 //--------------------------------------------------------------
-GMEVENT *SPPOKE_GMK_StartBallAnm( GAMESYS_WORK *gsys, const BALL_ANM_TYPE inType, const VecFx32 *inStart, const VecFx32 *inEnd , const u32 inSync)
+GMEVENT *SPPOKE_GMK_MoveBall( GAMESYS_WORK *gsys, const BALL_ANM_TYPE inType, const VecFx32 *inStart, const VecFx32 *inEnd,
+                              const fx32 inHeight, const u32 inSync)
 {
+  int i;
+  int obj;
   GMEVENT *event;
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   SPPOKE_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
 
+  if ( inType == BALL_ANM_TYPE_OUT ) obj = OBJ_BALL_OUT;
+  else obj = OBJ_BALL_IN;
+
   //スタート座標に表示状態でボール配置
-  ;
+  {
+     GFL_G3D_OBJSTATUS *status;
+     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, SPPOKE_TRIO_UNIT_IDX, obj);
+     status->trans = *inStart;
+  }
+
+  //ボールを表示状態にする
+  FLD_EXP_OBJ_SetVanish(ptr, SPPOKE_TRIO_UNIT_IDX, obj, FALSE);
   //アニメの状態を初期化
-  ;
+  for (i=0;i<BALL_ANM_NUM;i++)
+  {
+    EXP_OBJ_ANM_CNT_PTR anm;
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_TRIO_UNIT_IDX, obj, i);
+    //アニメ停止
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+    //無効化
+    FLD_EXP_OBJ_ValidCntAnm(ptr, SPPOKE_TRIO_UNIT_IDX, obj, i, FALSE);
+    //頭だし
+    FLD_EXP_OBJ_SetObjAnmFrm(ptr, SPPOKE_TRIO_UNIT_IDX, obj, i, 0 );
+  }
+
   //移動に必要なパラメータのセット
-  ;
+  {
+    gmk_wk->BallStart = *inStart;
+    gmk_wk->BallEnd = *inEnd;
+    gmk_wk->Sync = inSync;
+    gmk_wk->NowSync = 0;
+    gmk_wk->Height = inHeight;
+  }
   //イベント作成
   event = GMEVENT_Create( gsys, NULL, BallMoveEvt, 0 );
   //アニメタイプを格納
   gmk_wk->AnmType = inType;
 
   return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * ボールアニメイベント作成
+ * @param	      fieldWork   フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+void SPPOKE_GMK_StartBallAnm( GAMESYS_WORK *gsys, const BALL_ANM_TYPE inType, const VecFx32 *inPos )
+{
+  int i;
+  int obj;
+  GMEVENT *event;
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  SPPOKE_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+
+  if ( inType == BALL_ANM_TYPE_OUT ) obj = OBJ_BALL_OUT;
+  else obj = OBJ_BALL_IN;
+
+  //ボール座標時セット
+  {
+     GFL_G3D_OBJSTATUS   *status;
+     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, SPPOKE_TRIO_UNIT_IDX, obj);
+     status->trans = *inPos;
+  }
+
+  //ボールを表示状態にする
+  FLD_EXP_OBJ_SetVanish(ptr, SPPOKE_TRIO_UNIT_IDX, obj, FALSE);
+  //アニメの状態を初期化
+  for (i=0;i<BALL_ANM_NUM;i++)
+  {
+    EXP_OBJ_ANM_CNT_PTR anm;
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_TRIO_UNIT_IDX, obj, i);
+    //アニメ停止解除
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    //無効化解除
+    FLD_EXP_OBJ_ValidCntAnm(ptr, SPPOKE_TRIO_UNIT_IDX, obj, i, TRUE);
+    //頭だし
+    FLD_EXP_OBJ_SetObjAnmFrm(ptr, SPPOKE_TRIO_UNIT_IDX, obj, i, 0 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -233,7 +320,7 @@ GMEVENT *SPPOKE_GMK_WaitBallAnmEnd( GAMESYS_WORK *gsys, const BALL_ANM_TYPE inTy
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   SPPOKE_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
   //イベント作成
-  GMEVENT * event = GMEVENT_Create( gsys, NULL, WaitBallOutAnmEvt, 0 );
+  GMEVENT * event = GMEVENT_Create( gsys, NULL, WaitBallAnmEvt, 0 );
   //アニメタイプを格納
   gmk_wk->AnmType = inType;
   return event;
@@ -254,16 +341,49 @@ static GMEVENT_RESULT BallMoveEvt( GMEVENT* event, int* seq, void* work )
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   SPPOKE_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
-//  SPPOKE_GMK_WK *tmp = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
+  int obj;
+  if ( gmk_wk->AnmType == BALL_ANM_TYPE_OUT ) obj = OBJ_BALL_OUT;
+  else obj = OBJ_BALL_IN;
 
   //目的地に向かって飛ぶ
-  //
-  //到着したか？
-  if (1)
   {
-    //タイプを見てアニメ開始
-    if (gmk_wk->AnmType == BALL_ANM_TYPE_OUT);
-    else ;
+    VecFx32 vec;
+    fx32 diff;
+    gmk_wk->NowSync++;
+    diff = gmk_wk->BallEnd.x - gmk_wk->BallStart.x;
+    vec.x = gmk_wk->BallStart.x + ( (diff*gmk_wk->NowSync) / gmk_wk->Sync );
+    diff = gmk_wk->BallEnd.y - gmk_wk->BallStart.y;
+    vec.y = gmk_wk->BallStart.y + ( (diff*gmk_wk->NowSync) / gmk_wk->Sync );
+    diff = gmk_wk->BallEnd.z - gmk_wk->BallStart.z;
+    vec.z = gmk_wk->BallStart.z + ( (diff*gmk_wk->NowSync) / gmk_wk->Sync );
+
+    {
+      int h_sync = (gmk_wk->Sync+1)/2;
+      int now_h_sync;
+      fx32 h;
+      if ( gmk_wk->NowSync < h_sync ){
+        now_h_sync = gmk_wk->NowSync;
+      }else{
+        now_h_sync = (gmk_wk->Sync-gmk_wk->NowSync);
+      }
+      h = (gmk_wk->Height * now_h_sync) / gmk_wk->Sync;
+      vec.y += h;
+    }
+
+    {
+     GFL_G3D_OBJSTATUS *status;
+     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, SPPOKE_TRIO_UNIT_IDX, obj);
+     status->trans = vec;
+    }
+  }
+  //到着したか？
+  if (gmk_wk->NowSync >= gmk_wk->Sync)
+  {
+    //戻りの場合はボールを非表示にする
+    if ( gmk_wk->AnmType == BALL_ANM_TYPE_IN )
+    {
+      FLD_EXP_OBJ_SetVanish(ptr, SPPOKE_TRIO_UNIT_IDX, obj, TRUE);
+    }
     //イベント終了
     return GMEVENT_RES_FINISH;
   }
@@ -284,12 +404,25 @@ static GMEVENT_RESULT WaitPokeAppFrmEvt( GMEVENT* event, int* seq, void* work )
   GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
-//  SPPOKE_GMK_WK *tmp = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
+  SPPOKE_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
+  fx32 frm, dst_frm;
+  int obj;
+  if ( gmk_wk->AnmType == BALL_ANM_TYPE_OUT )
+  {
+    dst_frm = 5 * FX32_ONE;
+    obj = OBJ_BALL_OUT;
+  }
+  else
+  {
+    dst_frm = 34 * FX32_ONE;
+    obj = OBJ_BALL_IN;
+  }
+
 
   //ボールアニメの現在フレームを取得
-  ;
+  frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, SPPOKE_TRIO_UNIT_IDX, obj, 0 );
   //ポケモン出していいフレームか？
-  if (1)
+  if (frm >= dst_frm)
   {
     //イベント終了
     return GMEVENT_RES_FINISH;
@@ -306,20 +439,24 @@ static GMEVENT_RESULT WaitPokeAppFrmEvt( GMEVENT* event, int* seq, void* work )
  * @return      GMEVENT_RESULT    イベント結果
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT WaitBallOutAnmEvt( GMEVENT* event, int* seq, void* work )
+static GMEVENT_RESULT WaitBallAnmEvt( GMEVENT* event, int* seq, void* work )
 {
   GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
-//  SPPOKE_GMK_WK *tmp = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
+  SPPOKE_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
+  EXP_OBJ_ANM_CNT_PTR anm;
+  int obj;
 
-  //ボールアニメの現在フレームを取得
-  ;
-  //アニメ終了か？
-  if (1)
+  if (gmk_wk->AnmType == BALL_ANM_TYPE_OUT) obj = OBJ_BALL_OUT;
+  else obj = OBJ_BALL_IN;
+
+  //０番目にアニメで終了判定する
+  anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_TRIO_UNIT_IDX, obj, 0);
+  if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
   {
-    //イベント終了
     return GMEVENT_RES_FINISH;
   }
+
   return GMEVENT_RES_CONTINUE;
 }

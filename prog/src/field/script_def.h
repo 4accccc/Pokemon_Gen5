@@ -380,3 +380,10 @@
 #define SCR_PLAYER_FORM_SWIM (2)
 #define SCR_PLAYER_FORM_DIVING (3)
 
+//--------------------------------------------------------------
+/// ボールアニメタイプ指定用
+//--------------------------------------------------------------
+#define SCR_BALL_ANM_TYPE_OUT   (0)
+#define SCR_BALL_ANM_TYPE_IN   (1)
+
+

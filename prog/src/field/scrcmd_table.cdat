@@ -951,11 +951,11 @@
 
   //配布ポケモンイベント演出関連
   DEF_CMD( EvCmdGetEvtDarutanisPos, EV_SEQ_GET_EVT_DARUTANIS_POS )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdMoveBall, EV_SEQ_MOVE_BALL )
+  DEF_CMD( EvCmdStartBallAnm, EV_SEQ_START_BALL_ANM )
+  DEF_CMD( EvCmdWaitBallAnm, EV_SEQ_WAIT_BALL_ANM )
 
-  NO_CMD()
+  DEF_CMD( EvCmdWaitBallPokeApp, EV_SEQ_WAIT_BALL_POKE_APP )
   NO_CMD()
   NO_CMD()
   NO_CMD()
