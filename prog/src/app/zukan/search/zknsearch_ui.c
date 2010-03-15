@@ -141,14 +141,6 @@ u32 ZKNSEARCHUI_MenuMain( ZKNSEARCHMAIN_WORK * wk )
 		return ret;
 	}
 
-	if( GFL_UI_KEY_GetTrg() ){
-		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-			ChangePosMenuMainKey( wk, CURSORMOVE_PosGet(wk->cmwk) );
-			return ret;
-		}
-	}	
-
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return ZKNSEARCHUI_X;
@@ -156,6 +148,7 @@ u32 ZKNSEARCHUI_MenuMain( ZKNSEARCHMAIN_WORK * wk )
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+		ChangePosMenuMainKey( wk, CURSORMOVE_PosGet(wk->cmwk) );
 		return ZKNSEARCHUI_Y;
 	}
 
@@ -170,6 +163,14 @@ u32 ZKNSEARCHUI_MenuMain( ZKNSEARCHMAIN_WORK * wk )
 		ChangePosMenuMainKey( wk, ZKNSEARCHUI_RESET );
 		return ZKNSEARCHUI_RESET;
 	}
+
+	if( GFL_UI_KEY_GetTrg() ){
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			ChangePosMenuMainKey( wk, CURSORMOVE_PosGet(wk->cmwk) );
+			return ret;
+		}
+	}	
 
 	return ret;
 }
@@ -186,6 +187,11 @@ static void ChangePosMenuMainKey( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 static void MainCallBack_On( void * work, int now_pos, int old_pos )
 {
 	ZKNSEARCHMAIN_WORK * wk  = work;
+
+	// キャンセル時はカーソルをONにしない
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+		return;
+	}
 
 	ZKNSEARCHUI_ChangeCursorPalette( wk, now_pos, ZKNSEARCHMAIN_MBG_PAL_BUTTON_CUR2 );
 	BLINKPALANM_InitAnimeCount( wk->blink );
