@@ -636,6 +636,10 @@ end
     if other_form == 1
       if split_data[ PARA::POKENAME ] == ""
       else
+        if monsno[ split_data[ PARA::POKENAME ] ] == nil
+          p monsno
+          exit
+        end
         if form[ monsno[ split_data[ PARA::POKENAME ] ] ].get_form_index == 0 && split_data[ PARA::OTHERFORM ] == "Åú"
           form[ monsno[ split_data[ PARA::POKENAME ] ] ].set_form_index( cnt )
         end
