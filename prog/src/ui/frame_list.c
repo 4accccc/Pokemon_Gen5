@@ -152,6 +152,9 @@ enum {
 #define	RAIL_AREA_X_MAX		( 255 )			// レール処理のタッチ範囲Ｘ最大値
 #define	RAIL_AREA_Y_MAX		( 191 )			// レール処理のタッチ範囲Ｙ最大値
 
+// キー・タッチ切り替えに対応したボタン
+#define	KEY_TOUCH_CHG_TRG		( PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_BUTTON_DECIDE|PAD_BUTTON_L|PAD_BUTTON_R )
+
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -755,7 +758,7 @@ static int MoveListTouch( FRAMELIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MoveListKey( FRAMELIST_WORK * wk )
 {
-	if( GFL_UI_KEY_GetTrg() ){
+	if( GFL_UI_KEY_GetTrg() & KEY_TOUCH_CHG_TRG ){
 		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
 			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 			wk->listOldPos = PALCHG_NONE;
@@ -1865,4 +1868,18 @@ void FRAMELIST_SetCursorPos( FRAMELIST_WORK * wk, u32 pos )
 	wk->listPos = pos;
 	ChangeCursorPosPalette( wk, wk->listPos, wk->listOldPos );
 	wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル位置のパレットを光らせる
+ *
+ * @param		wk					ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void FRAMELIST_SetCursorPosPalette( FRAMELIST_WORK * wk )
+{
+	ChangeCursorPosPalette( wk, wk->listPos, PALCHG_NONE );
 }

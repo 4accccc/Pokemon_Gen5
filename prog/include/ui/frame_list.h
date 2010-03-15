@@ -322,3 +322,14 @@ extern BOOL FRAMELIST_CheckScrollMax( FRAMELIST_WORK * wk );
  */
 //--------------------------------------------------------------------------------------------
 extern void FRAMELIST_SetCursorPos( FRAMELIST_WORK * wk, u32 pos );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル位置のパレットを光らせる
+ *
+ * @param		wk					ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void FRAMELIST_SetCursorPosPalette( FRAMELIST_WORK * wk );
