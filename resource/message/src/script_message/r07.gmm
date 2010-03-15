@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-03-15T16:33:03"/>
+	<create user="matsumiya" host="W00224" date="2010-03-15T19:55:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -542,7 +542,7 @@
 ちと　寄っていきなさいなー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r07_pokemon_01w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_r07_pokemon_01w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ポケモン
 ・メッセージ表示とともに鳴き声再生
 ・このあと、飛び去る。</comment>
@@ -551,7 +551,7 @@
 		<language name="JPN_KANJI" width="256">しゅるばばばーっ！！</language>
 	</row>
 
-	<row id="msg_r07_pokemon_01b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_r07_pokemon_01b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ポケモン
 ・メッセージ表示とともに鳴き声再生
 ・このあと、飛び去る。</comment>
@@ -560,7 +560,7 @@
 		<language name="JPN_KANJI" width="256">ばりゅるるるるーっ！！</language>
 	</row>
 
-	<row id="msg_r07_narrator_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+	<row id="msg_r07_narrator_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>●カザカミ、ライカミが登場し、天候が変化したあとのメッセージ。
 ●この後、カザカミ、ライカミが退場します。</comment>
 		<attribute name="キャラ指定">ナレーション</attribute>
