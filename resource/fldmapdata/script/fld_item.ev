@@ -336,10 +336,10 @@ EVENT_START ev_fld_item_12
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r03 X=408 Y=120 ITEM=プラスパワー FLAG=13
+// MAP=r03 X=408 Y=120 ITEM=なんでもなおし FLAG=13
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_13
-  _FLD_ITEM_EVENT ITEM_PURASUPAWAA,1
+  _FLD_ITEM_EVENT ITEM_NANDEMONAOSI,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -357,10 +357,10 @@ EVENT_START ev_fld_item_43
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r03 X=408 Y=120 ITEM=クリティカッター FLAG=44
+// MAP=r03 X=408 Y=120 ITEM=きんのたま FLAG=44
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_44
-  _FLD_ITEM_EVENT ITEM_KURITHIKATTAA,1
+  _FLD_ITEM_EVENT ITEM_KINNOTAMA,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -385,7 +385,7 @@ EVENT_START ev_fld_item_139
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r03r0301 X=20 Y=12 ITEM=キズぐすり FLAG=133
+// MAP=r03r0301 X=408 Y=120 ITEM=キズぐすり FLAG=133
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_133
   _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
@@ -1449,10 +1449,10 @@ EVENT_START ev_fld_item_120
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=キズぐすり FLAG=225
+// MAP=WC10 X=0 Y=0 ITEM=ほしのすな FLAG=225
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_225
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+  _FLD_ITEM_EVENT ITEM_HOSINOSUNA,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1484,10 +1484,10 @@ EVENT_START ev_fld_item_229
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=げんきのかけら FLAG=230
+// MAP=WC10 X=0 Y=0 ITEM=リピートボール FLAG=230
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_230
-  _FLD_ITEM_EVENT ITEM_GENKINOKAKERA,1
+  _FLD_ITEM_EVENT ITEM_RIPIITOBOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1533,10 +1533,10 @@ EVENT_START ev_fld_item_236
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=リピートボール FLAG=237
+// MAP=WC10 X=0 Y=0 ITEM=まんまるいし FLAG=237
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_237
-  _FLD_ITEM_EVENT ITEM_RIPIITOBOORU,1
+  _FLD_ITEM_EVENT ITEM_MANMARUISI,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1652,10 +1652,10 @@ EVENT_START ev_fld_item_253
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=WC10 X=0 Y=0 ITEM=ふしぎなアメ FLAG=254
+// MAP=WC10 X=0 Y=0 ITEM=めざめいし FLAG=254
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_254
-  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
+  _FLD_ITEM_EVENT ITEM_MEZAMEISI,1
 EVENT_END
 
 
