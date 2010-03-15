@@ -1493,7 +1493,7 @@ SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata)
 
   sr = SaveControl_SaveAsyncMain(gamedata->sv_control_ptr);
 
-  if(sr==SAVE_RESULT_OK){
+  if(sr==SAVE_RESULT_OK || sr==SAVE_RESULT_NG){
 
     //ƒŠƒZƒbƒg‹–‰Â
     GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_SVLD);
