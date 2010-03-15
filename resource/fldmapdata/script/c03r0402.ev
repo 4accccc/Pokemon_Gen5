@@ -63,7 +63,7 @@ EVENT_START		ev_c03r0402_man1_01
 	ELSE
 	
 		//既に戦っているか？(１日フラグがＯＮの場合)
-		IF FLAG_ON( FH_01 ) THEN
+		IF FLAG_ON( TMFLG_C03R0402_BATTLE ) THEN
 	
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_04 )
 	
@@ -81,7 +81,7 @@ EVENT_START		ev_c03r0402_man1_01
 			IF $SCWK_ANSWER == SCR_YES THEN
 			
 				//じゃあ　はじめるよー！
-				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_02 )
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_03 )
 				_MSGWIN_CLOSE()
 			
 				//【仮】もりもとさんとバトル
@@ -90,6 +90,8 @@ EVENT_START		ev_c03r0402_man1_01
 				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_04 )
 				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
+				
+				_FLAG_SET( TMFLG_C03R0402_BATTLE )
 			
 			//いいえの場合
 			ELSE

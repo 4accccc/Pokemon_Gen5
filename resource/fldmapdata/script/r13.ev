@@ -36,14 +36,10 @@ EVENT_START		ev_r13_treasure_01
 _TALK_OBJ_START()
 
 	//１日フラグが立っていない場合
-	IF FLAG_OFF( FH_01) THEN
+	IF FLAG_OFF( TMFLG_R13_TREASURE ) THEN
 	
 		//なにを　しているか　だって？
 		_BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_01 )
-		_MSGWIN_CLOSE()
-	
-		//さっき　おたからを　みつけたんだ
-		_BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_02 )
 		_MSGWIN_CLOSE()
 	
 		_CALL ev_treasure
@@ -56,7 +52,7 @@ _TALK_OBJ_START()
 		//========================================/
 		
 		//一日フラグセット
-		_FLAG_SET( FH_01 )
+		_FLAG_SET( TMFLG_R13_TREASURE )
 		
 		//========================================/
 	
