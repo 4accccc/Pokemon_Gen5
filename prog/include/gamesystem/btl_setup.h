@@ -68,7 +68,7 @@ extern void BATTLE_PARAM_SetBtlStatusFlag( BATTLE_SETUP_PARAM* bp, BTL_STATUS_FL
 extern BOOL BATTLE_PARAM_CheckBtlStatusFlag( BATTLE_SETUP_PARAM* bp, BTL_STATUS_FLAG status_f );
 
 /*
- *  @brief  戦闘パラメータワークの内部アロケーションメモリ解放とクリア
+ *  @brief  レギュレーションの内容をBATTLE_PARAMへ適応する
  *  @param  bp  確保済みかつ、設定済みのBATTLE_SETUP_PARAM構造体型ワークへのポインタ
  *  @param  reg レギュレーションのポインタ
  *  @param  HEAPID 一時バッファのためのヒープID
