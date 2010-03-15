@@ -1677,7 +1677,7 @@
 /**
  * @def _PLAYER_REQUEST
  * @brief 自機にリクエストを出す
- * @param reqbit FIELD_PLAYER_REQBIT_NORMAL等
+ * @param reqbit FIELD_PLAYER_REQBIT_NORMAL等 C:\home\pokemon_wb\prog\src\field\field_player_code.h
  */
 //--------------------------------------------------------------
 #define _PLAYER_REQUEST( reqbit ) _ASM_PLAYER_REQUEST reqbit
