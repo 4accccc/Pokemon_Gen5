@@ -1,3 +1,6 @@
+#include "message_dl.naix"
+#define MB_ERROR_MSG_FILE (NARC_message_dl_net_err_dat)
+
 #include "../prog/src/system/net_err.c"
 
 //net_errの名前のままだと、narcファイルを*.oファイルとしてROMに

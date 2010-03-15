@@ -20,6 +20,7 @@ targetname_dl = app_menu_common_dl
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)
 TARGETDIR_DL = $(PROJECT_ROOT)/multiboot/arc
+TARGETDIR_DL2 = $(PROJECT_ROOT)/multiboot2/arc
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -86,13 +87,17 @@ $(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) 
 endif
 
 
-do-build:	subdir $(TARGETDIR_DL)/$(targetname_dl).narc
+do-build:	subdir $(TARGETDIR_DL)/$(targetname_dl).narc $(TARGETDIR_DL2)/$(targetname_dl).narc
 #サブフォルダの処理はいらない。
 
 # narc のコピーだけ実行する
 $(TARGETDIR_DL)/$(targetname_dl).narc: $(targetname_dl).narc
 	$(COPY) $(targetname_dl).narc $(TARGETDIR_DL)
 	$(COPY) $(targetname_dl).naix $(TARGETDIR_DL)
+
+$(TARGETDIR_DL2)/$(targetname_dl).narc: $(targetname_dl).narc
+	$(COPY) $(targetname_dl).narc $(TARGETDIR_DL2)
+	$(COPY) $(targetname_dl).naix $(TARGETDIR_DL2)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
@@ -127,5 +132,7 @@ endif
 	rm -f $(TARGETDIR)/$(targetname).naix
 	rm -f $(TARGETDIR_DL)/$(targetname_dl).narc
 	rm -f $(TARGETDIR_DL)/$(targetname_dl).naix
+	rm -f $(TARGETDIR_DL2)/$(targetname_dl).narc
+	rm -f $(TARGETDIR_DL2)/$(targetname_dl).naix
 
 

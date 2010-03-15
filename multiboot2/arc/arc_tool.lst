@@ -1,0 +1,52 @@
+#==================================================================================================
+#
+#	narc用リスト生成ファイル
+#
+#	arc_tool.datから変更しました
+#	
+#	○記述方法
+#	　以前は、enum定義とnarcファイルの所在を別々に記述していましたが、それを１行で書くようになりました
+#     enum定義名　narcファイルの所在
+#     の順序で記入してください（区切り文字は、スペースタブどちらも使用可です）
+#     narcファイルの所在は”（ダブルクォーテーション）で囲ってください
+#    （本当はなくてもよかったんですが、以前の書式にあわせました）
+#     また、パーソナルのように、2バージョンでenum定義は1つだけど、narcファイルは2つある場合は、
+#     $バージョンラベル	enum定義名　narcファイルの所在
+#     の順序で記入してください（一致するバージョンの方だけリストに追加されます）
+#	  バージョンラベルの前に＄記号を忘れないようにしてください（＄の有無で判定しているため）
+#     また、＃を書くとそれ以降はコメントとして無視するようになっています
+#
+#   ○生成方法
+#     Makeすることで自動生成されるようになっていますので、このファイルに記述するだけで、結構です
+#     また、以前は、ROMにバイナリをリンクするためにMakefileのFILE_TREE定義に
+#     narcファイルの所在をこのリストとは別に追記していたと思いますが、
+#     Makeすることで、FILE_TREE定義にも追加するようになっていますので、
+#     単純にこのファイルに記述するだけで、OKになりました
+#
+#     疑問、質問は、曽我部まで
+#
+#==================================================================================================
+
+#==================================================================================================
+#
+#ex) メニュー画面グラフィックを追加
+#	ARCID_MENU	"menu.narc"	#メニュー画面
+#
+#ex) タイトル画面グラフィックを追加
+#	$VERSION_BLACK	ARCID_TITLE	"title_b.narc"	#ブラック版タイトル
+#	$VERSION_WHITE	ARCID_TITLE	"title_w.narc"	#ホワイト版タイトル
+#
+#==================================================================================================
+
+	ARCID_MESSAGE			"message_dl_movie.narc"	#メッセージデータ
+	ARCID_FONT				"font/font_dl.narc"	#フォントデータ
+	ARCID_APP_MENU_COMMON	"app_menu_common_dl.narc"	#フォントデータ
+	ARCID_WMI				"../../prog/arc/wmi.narc"	# 通信アイコン
+	ARCID_NET_ERR			"../../prog/arc/net_err.narc"
+	ARCID_FLDMAP_WINFRAME 	"../../prog/arc/winframe.narc"   # ウィンドウフレーム
+	ARCID_PERSONAL			"../../prog/arc/personal/personal.narc"		#パーソナルデータ
+	ARCID_GROW_TBL			"../../prog/arc/personal/growtbl.narc"			#成長曲線テーブル
+	ARCID_WOTBL				"../../prog/arc/personal/wotbl.narc"			#技覚えテーブル
+	ARCID_EVOTBL			"../../prog/arc/personal/evo.narc"			#進化テーブル
+	ARCID_WAZA_TBL			"../../prog/arc/waza_tbl/waza_tbl.narc"			#技テーブル
+	ARCID_TIMEICON_GRA		"../../prog/arc/time_icon_gra.narc"		#待機中時計アイコン

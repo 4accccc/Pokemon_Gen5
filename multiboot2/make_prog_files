@@ -1,0 +1,80 @@
+#こんな感じで各自のソースを追加してください
+SRCS	+= \
+		net_err_dl.c \
+		fatal_error_dl.c \
+		$(PARENT_SRC)/app/app_menu_common.c \
+		$(PARENT_SRC)/app/app_taskmenu.c \
+		$(PARENT_SRC)/app/app_keycursor.c \
+		$(PARENT_SRC)/net/net_dev.c \
+		$(PARENT_SRC)/net/net_icondata.c \
+		$(PARENT_SRC)/net/net_devwireless.c \
+		$(PARENT_SRC)/net/wih.c \
+		$(PARENT_SRC)/net/net_whpipe.c \
+		$(PARENT_SRC)/poke_tool/poke_tool.c \
+		$(PARENT_SRC)/poke_tool/poke_personal.c \
+		$(PARENT_SRC)/poke_tool/pokepara_conv.c \
+		$(PARENT_SRC)/print/gf_font.c \
+		$(PARENT_SRC)/print/printsys.c \
+		$(PARENT_SRC)/print/str_tool.c \
+		$(PARENT_SRC)/print/wordset.c \
+		$(PARENT_SRC)/sound/pm_sndsys.c \
+		$(PARENT_SRC)/sound/sound_manager.c \
+		$(PARENT_SRC)/system/bmp_winframe.c \
+		$(PARENT_SRC)/system/net_define.c \
+		$(PARENT_SRC)/system/wipe.c \
+		$(PARENT_SRC)/system/wipe_sub.c \
+		$(PARENT_SRC)/system/wipe_wnd.c \
+		$(PARENT_SRC)/system/brightness.c \
+		$(PARENT_SRC)/system/debug_print.c \
+		$(PARENT_SRC)/system/time_icon.c \
+		$(PARENT_SRC)/waza_tool/waza_tool.c \
+		$(PARENT_SRC)/debug/debug_str_conv.c
+				
+#================================================
+# ここから下はオーバーレイプログラム定義
+#================================================
+# オーバーレイ用のソースコード定義の１行上に「#===>」とあるのは
+# オーバーレイツール用の特殊キーワードです。
+# この「#===>」の後ろにある文字列はオーバーレイする際のモジュールの
+# ターゲットを指しています。
+# 「main」というキーワードは常駐プログラム部分を指す予約語です。
+# 「main」の後ろにつくプログラム領域の名前は「SRCS_OVERLAY_????????」の
+# 「????????」の部分を小文字にして使用します。
+# 「SRCS_OVERLAY_POKETCH01」というソースコード群は「poketch01」という
+# オーバーレイIDになります
+#
+# これらの処理はoverlaytool.rbで行われています。
+# ■注意■ 
+# 1.このツールはフォルダ内のソースコード名取得は行っていません
+#   つまり、「$(DEBUGDIR)」のみ書いてこのフォルダの中のファイルを
+#   全てオーバーレイ扱いにするという処理は作成していません。
+#   ($(DEBUGDIR)/d_mori.c)というようにソースファイル名も指定する事を
+#   期待した動作をしています。
+# 2.オーバーレイ用のソースコード定義をオーバーレイIDに変換して使用する為、
+#   存在していないオーバーレイソースを先に「===>」で指定しないように
+#   してください（チェックはしています）
+#   一番初めのオーバーレイターゲット定義は「main」しか書けない事になります。
+# 3.ライブラリをオーバーレイする場合  #LIB=>	???.a  と書いてください
+#
+# --------------
+# ==> main
+# SRCS_OVERLY_FIRST = $(SRC)\test.c
+# 
+# ==> SRCS_OVERLY_FIRST
+# SRCS_OVERLY_SECOND = $(SRC)\test2.c
+# --------------
+# は書けますが、
+# 
+# --------------
+# ==> SRCS_OVERLY_SECOND
+# SRCS_OVERLY_FIRST = $(SRC)\test.c
+# 
+# ==> main
+# SRCS_OVERLY_SECOND = $(SRC)\test2.c
+# --------------
+# はFIRSTの下にSECONDがあるのに先にSECONDをターゲットに
+# しようとしているのでエラーになります。
+# 
+# 
+# 要望・質問は森にお願いします。
+# 
