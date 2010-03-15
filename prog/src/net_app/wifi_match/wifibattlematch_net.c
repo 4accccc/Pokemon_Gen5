@@ -49,7 +49,7 @@
 #if defined(DEBUG_ONLY_FOR_shimoyamada)
 #undef  MATCHINGKEY
 #define MATCHINGKEY 0xFF
-#elsif defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#elif defined(DEBUG_ONLY_FOR_toru_nagihashi)
 #undef  MATCHINGKEY
 #define MATCHINGKEY 0xFE
 #endif 
