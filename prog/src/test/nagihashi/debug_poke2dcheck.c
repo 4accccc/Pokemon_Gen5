@@ -1575,7 +1575,7 @@ static void POKEGRADATA_GetMinMax( POKEGRA_DATA *p_min, POKEGRA_DATA *p_max, POK
     POKEMON_PERSONAL_DATA*  p_ppd;
     p_ppd = POKE_PERSONAL_OpenHandle( p_now->mons_no, p_now->form_no, heapID );
   
-    p_max->form_no  = POKE_PERSONAL_GetParam( p_ppd, POKEPER_ID_form_max );
+    p_max->form_no  = POKE_PERSONAL_GetParam( p_ppd, POKEPER_ID_form_max ) - 1;
     { 
       u32 sex;
       sex = POKE_PERSONAL_GetParam( p_ppd, POKEPER_ID_sex );
