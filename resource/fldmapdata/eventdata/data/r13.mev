@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/04 21:17:11
+#save date:2010/03/13 21:17:24
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r13.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r13.wms
 #hold event type:
 1
 #hold event number:
-17
+18
 #event number: 0
 #type
 1
@@ -537,6 +537,37 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 664 -88 -1256
+#event number: 17
+#type
+1
+#ID name
+R13_TREASURE_01
+#OBJ CODE Number
+SUNGLASSES
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R13_TREASURE_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+456 -80 -1016
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

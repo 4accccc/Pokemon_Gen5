@@ -24,8 +24,8 @@ _EVENT_DATA    ev_c03r0402_assistantm_01
 _EVENT_DATA    ev_c03r0402_woman1_01
 _EVENT_DATA    ev_c03r0402_man1_01
 _EVENT_DATA    ev_c03r0402_middleman2_01
+_EVENT_DATA    ev_c03r0402_trainerm_01
 _EVENT_DATA_END
-
 
 /**************************************************************/
 /* 			DIRECTOR										  */
@@ -34,7 +34,6 @@ EVENT_START		ev_c03r0402_director_01
 	//【仮】賞状とシステムフラグが揃うまで仮
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_01 )
 EVENT_END
-
 
 /**************************************************************/
 /* 			assistantm										  */
@@ -54,7 +53,59 @@ EVENT_END
 /* 			man1										  */
 /**************************************************************/
 EVENT_START		ev_c03r0402_man1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_01 )
+	
+	//クリア前の場合
+	IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN	
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_01 )
+	
+	//クリア後の場合
+	ELSE
+	
+		//既に戦っているか？(１日フラグがＯＮの場合)
+		IF FLAG_ON( FH_01 ) THEN
+	
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_04 )
+	
+		//まだ戦っていない場合
+		ELSE
+	
+			_TALK_OBJ_START()
+			
+			//おっ　つよくなったね！
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_02 )
+			_YES_NO_WIN( SCWK_ANSWER )
+			_MSGWIN_CLOSE()
+			
+			//はいの場合
+			IF $SCWK_ANSWER == SCR_YES THEN
+			
+				//じゃあ　はじめるよー！
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_02 )
+				_MSGWIN_CLOSE()
+			
+				//【仮】もりもとさんとバトル
+			
+				//いろいろ　かんがえてるよね！
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_04 )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+			
+			//いいえの場合
+			ELSE
+			
+				//いいえ　かー
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_05 )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+			
+			ENDIF
+			
+	
+		ENDIF
+	
+	ENDIF
+
 EVENT_END
 
 /**************************************************************/
@@ -62,4 +113,11 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c03r0402_middleman2_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			かげやまさん									  */
+/**************************************************************/
+EVENT_START		ev_c03r0402_trainerm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_05_01 )
 EVENT_END

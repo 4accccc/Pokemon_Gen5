@@ -604,9 +604,6 @@ EVENT_START		ev_c01gym0101_leader1b_01
 	
 			//C01のＰＤＷ誘導イベント終了
 			$WK_SCENE_C01 = 1
-
-			//D01R0101ジム対策イベントOBJ非表示
-			_FLAG_SET( FV_D01R0101_GIRL_01 )
 			
 			//トレーナーフラグセット
 			_TRAINER_FLAG_SET( TRID_WAITER_01 )
@@ -734,9 +731,6 @@ EVENT_START		ev_c01gym0101_leader1a_01
 	
 			//C01のＰＤＷ誘導イベント終了
 			$WK_SCENE_C01 = 1
-
-			//D01R0101ジム対策イベントOBJ非表示
-			_FLAG_SET( FV_D01R0101_GIRL_01 )
 			
 			//トレーナーフラグセット
 			_TRAINER_FLAG_SET( TRID_WAITER_01 )
@@ -864,9 +858,6 @@ EVENT_START		ev_c01gym0101_leader1c_01
 	
 			//C01のＰＤＷ誘導イベント終了
 			$WK_SCENE_C01 = 1
-
-			//D01R0101ジム対策イベントOBJ非表示
-			_FLAG_SET( FV_D01R0101_GIRL_01 )
 
 			//トレーナーフラグセット
 			_TRAINER_FLAG_SET( TRID_WAITER_01 )

@@ -13,6 +13,7 @@
 #define C03R0402_WOMAN1_01                 2
 #define C03R0402_MAN1_01                   3
 #define C03R0402_MIDDLEMAN2_01             4
+#define C03R0402_TRAINERM_01               5
 
 #endif //ZONE_C03R0402_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r0402.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

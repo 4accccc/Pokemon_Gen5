@@ -5,6 +5,6 @@
 #define _R13_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_R13 (1)
+#define SCRID_R13_TREASURE_01 (1)
 
 #endif //_R13_DEF_H_

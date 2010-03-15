@@ -28,6 +28,7 @@
 #define TR_FISHING_08                     14
 #define TR_FISHING_09                     15
 #define TR_FISHING_10                     16
+#define R13_TREASURE_01                   17
 
 #endif //ZONE_R13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
