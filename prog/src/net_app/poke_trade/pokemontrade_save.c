@@ -48,6 +48,7 @@
 #include "p_st_obj_d_NANR_LBLDEFS.h"
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/status_rcv.h"
+#include "poke_tool/poke_memo.h"
 #include "tradedemo.naix"
 
 #include "pokemontrade_local.h"
@@ -254,6 +255,12 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
     POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
 //    int id = 1-GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
     STATUS_RCV_PokeParam_RecoverAll(pp);
+
+    POKE_MEMO_SetTrainerMemoPP( pp, POKE_MEMO_EGG_TRADE,
+                                pWork->pMy, 
+                                POKE_MEMO_PLACE_HUMAN_TRADE, pWork->heapID );
+
+
     //交換する
     // 相手のポケを自分の選んでいた場所に入れる
     if(pWork->selectBoxno == BOXDAT_GetTrayMax(pWork->pBox)){ //てもちの交換の場合
@@ -392,6 +399,10 @@ void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork)
   pWork->selectIndex = pWork->pParentWork->selectIndex;
   {
     POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
+    STATUS_RCV_PokeParam_RecoverAll(pp);
+    POKE_MEMO_SetTrainerMemoPP( pp, POKE_MEMO_EGG_TRADE,
+                                pWork->pMy, 
+                                POKE_MEMO_PLACE_HUMAN_TRADE, pWork->heapID );
 
     OS_Printf("ポケモン  %d %d %d   \n",PP_Get(pp,ID_PARA_monsno,NULL) ,pWork->selectIndex , pWork->selectBoxno);
 

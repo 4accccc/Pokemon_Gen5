@@ -259,6 +259,21 @@ void POKETRADE_MESSAGE_WindowOpen(POKEMON_TRADE_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   タイムアイコンを出す
+ * @param   POKEMON_TRADE_WORK
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+
+void POKETRADE_MESSAGE_WindowTimeIconStart(POKEMON_TRADE_WORK* pWork)
+{
+  pWork->pTimeIcon = TIMEICON_CreateTcbl(pWork->pMsgTcblSys,pWork->mesWin, 15, TIMEICON_DEFAULT_WAIT, pWork->heapID);
+}
+
+
+//------------------------------------------------------------------------------
+/**
  * @brief   メッセージウインドウ消去
  * @param   POKEMON_TRADE_WORK
  * @retval  none
@@ -267,6 +282,9 @@ void POKETRADE_MESSAGE_WindowOpen(POKEMON_TRADE_WORK* pWork)
 
 void POKETRADE_MESSAGE_WindowClose(POKEMON_TRADE_WORK* pWork)
 {
+  if(pWork->pTimeIcon){
+    TILEICON_Exit(pWork->pTimeIcon);
+  }
   if(pWork->mesWin){
 		GFL_BMPWIN_Delete(pWork->mesWin);
     pWork->mesWin=NULL;
@@ -283,7 +301,9 @@ void POKETRADE_MESSAGE_WindowClose(POKEMON_TRADE_WORK* pWork)
 
 void POKETRADE_MESSAGE_WindowClear(POKEMON_TRADE_WORK* pWork)
 {
-
+  if(pWork->pTimeIcon){
+    TILEICON_Exit(pWork->pTimeIcon);
+  }
 	if(pWork->mesWin){
 		GFL_BMPWIN_ClearScreen(pWork->mesWin);
 		GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);

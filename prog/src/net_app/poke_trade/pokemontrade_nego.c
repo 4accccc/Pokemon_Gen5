@@ -849,6 +849,9 @@ static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
     }
     IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
+    pWork->statusModeOn = FALSE;
+
+    
    // G2_BlendNone();
 
 /*
@@ -879,6 +882,8 @@ static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork)
   u16 trgno = pWork->pokemonselectno;
   
   POKEMON_PARAM* pp = pWork->GTSSelectPP[1-(trgno/GTS_NEGO_POKESLT_MAX)][trgno%GTS_NEGO_POKESLT_MAX]; //‚³‚©‚³‚Ü‚É‚·‚é
+
+  pWork->statusModeOn=TRUE;
 
   if(pp && PP_Get(pp,ID_PARA_poke_exist,NULL) ){
     POKETRADE_MESSAGE_CreatePokemonParamDisp(pWork,pp);

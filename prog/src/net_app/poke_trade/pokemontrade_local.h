@@ -29,6 +29,7 @@
 
 #include "system/mcss.h"
 #include "system/mcss_tool.h"
+#include "system/time_icon.h"
 #include "app/app_taskmenu.h"
 #include "pokemontrade_anim.h"
 #include "system/ica_anime.h"
@@ -483,6 +484,7 @@ struct _POKEMON_TRADE_WORK{
   GFL_BMPWIN* GTSInfoWindow2;     ///< GTSネゴシエーション説明
   POKEMON_PARAM* recvPoke[2];  ///< 受け取ったポケモンを格納する場所
   StateFunc* state;      ///< ハンドルのプログラム状態
+  TIMEICON_WORK* pTimeIcon;
   HEAPID heapID;
   void* pTexBoard[5];///< ボードテクスチャー
   
@@ -565,6 +567,8 @@ struct _POKEMON_TRADE_WORK{
 
   GFL_CLUNIT	*cellUnit;
   GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
+
+//  u32 pokeIconNcgResOrg[BOX_POKESET_MAX+ TEMOTI_POKEMAX];
 
   u32 pokeIconNcgRes[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   GFL_CLWK* pokeIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
@@ -666,17 +670,21 @@ struct _POKEMON_TRADE_WORK{
   s16 countNEGOSlideScroll;
   u8 changeFactor[2];
   u8 SlideWindowTimer[2];
+  u8 timerErupted[2]; //顔文字消去タイマー
   u8 BGClearFlg;
   u8 DemoBGClearFlg;
   u8 bByebyeMessageEach;  //送り先IDと送信ポケモン一致
   u8 bEncountMessageEach; //受け取りIDと受信ポケモン一致
   u8 bByebyeNoJump;
   u8 bEncountNoJump;
-  u8 timerErupted[2]; //顔文字消去タイマー
   u8 NegoWaitTime;  //NEGOを遅らせるタイマー
   u8 pokemonGTSSeq;  //GTSシーケンス番号
   u8 pokemonGTSSeqSend;  //送るGTSシーケンス番号
   u8 friendBoxNum;  //ともだちのボックス番号
+  u8 statusModeOn;  //
+  u8 dummy1;
+  u8 dummy2;
+  u8 dummy3;
 } ;
 
 
@@ -793,6 +801,7 @@ extern void POKEMONTRADE_NEGO_SlideMain(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_2D_GTSPokemonIconVisible(POKEMON_TRADE_WORK* pWork,int side, BOOL onoff);
 extern void POKEMONTRADE_changeTimingDemoStart(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_IsEggAndLastBattlePokemonChange(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_WindowTimeIconStart(POKEMON_TRADE_WORK* pWork);
 
 
 #if _TRADE_DEBUG
