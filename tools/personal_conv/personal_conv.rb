@@ -542,6 +542,8 @@ end
   fp_wave = open( "wb_sound_pv_wav.lst", "w" )
   fp_bank = open( "wb_sound_pv_bnk.lst", "w" )
   fp_num = open( "zukan2grano.txt", "w" )
+  fp_icon_scr = open( "pokeicon_all.scr", "w" )
+  fp_icon_attr = open( "attr_list.txt", "w" )
   gmm = GMM::new
   gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "monsname.gmm" )
 
@@ -602,6 +604,20 @@ end
   fp_lst.printf( "kanto/000/pmwb_000_n.ncl\n" )
   fp_lst.printf( "kanto/000/pmwb_000_r.ncl\n" )
 
+  #ポケアイコンリスト
+  fp_icon_scr.print( "\"poke_icon.NCLR\"\n" )
+  fp_icon_scr.print( "\"poke_icon_32k.NANR\"\n" )
+  fp_icon_scr.print( "\"poke_icon_32k.NCER\"\n" )
+  fp_icon_scr.print( "\"poke_icon_64k.NANR\"\n" )
+  fp_icon_scr.print( "\"poke_icon_64k.NCER\"\n" )
+  fp_icon_scr.print( "\"poke_icon_128k.NANR\"\n" )
+  fp_icon_scr.print( "\"poke_icon_128k.NCER\"\n" )
+  fp_icon_scr.print( "\"poke_icon_000_m.NCGR\"\n" )
+  fp_icon_scr.print( "\"poke_icon_000_f.NCGR\"\n" )
+
+  fp_icon_attr.print( ".\\\n" )
+  fp_icon_attr.print( "\"poke_icon_000_m.NCGR\"\n" )
+
   gmm.make_row_index_kanji( "MONSNAME_", 0, "ーーーーー", "ーーーーー" )
 
   pokelist << "－－－－－\t999\tノーマル\tノーマル\t－\t－\n"
@@ -640,7 +656,7 @@ end
 
       fp_monsnum.printf( "#define\t\tMONSNO_%03d\t\t( %d )\t\t//%s\n", split_data[ PARA::GRA_NO ].to_i, cnt, split_data[ PARA::POKENAME ] )
 
-      if split_data[ PARA::FORM_NAME ] == ""
+      if split_data[ PARA::FORM_NAME ] == "" || split_data[ PARA::FORM_NAME ] == nil
         form_name = ""
       else
         form_name = "_"
@@ -669,6 +685,11 @@ end
 	    fp_gra.printf( "\"pbwb_%03d%s.NCEC\"\n",     gra_no, form_name )
 	    fp_gra.printf( "\"pmwb_%03d%s_n.NCLR\"\n",   gra_no, form_name )
 	    fp_gra.printf( "\"pmwb_%03d%s_r.NCLR\"\n",   gra_no, form_name )
+
+      fp_icon_scr.printf( "\"poke_icon_%03d%s_m.NCGR\"\n",  gra_no, form_name )
+      fp_icon_scr.printf( "\"poke_icon_%03d%s_f.NCGR\"\n",  gra_no, form_name )
+
+      fp_icon_attr.printf( "\"poke_icon_%03d%s_m.NCGR\"\n",  gra_no, form_name )
 
       #SARC出力
       #WAVE&BANK
@@ -778,6 +799,14 @@ end
 	fp_gra.print( "\"pmwb_egg_manafi_n.NCLR\"\n" )
 	fp_gra.print( "\"pmwb_egg_manafi_r.NCLR\"\n" )
 
+  fp_icon_scr.print( "\"poke_icon_egg_normal_m.NCGR\"\n" )
+  fp_icon_scr.print( "\"poke_icon_egg_normal_f.NCGR\"\n" )
+  fp_icon_scr.print( "\"poke_icon_egg_manafi_m.NCGR\"\n" )
+  fp_icon_scr.print( "\"poke_icon_egg_manafi_f.NCGR\"\n" )
+
+  fp_icon_attr.print( "\"poke_icon_egg_normal_m.NCGR\"\n" )
+  fp_icon_attr.print( "\"poke_icon_egg_manafi_m.NCGR\"\n" )
+
   fp_lst.print( "egg/pfwb_egg_normal_m.ncg\n" )
 	fp_lst.print( "egg/pfwb_eggc_normal_m.ncg\n" )
 	fp_lst.print( "egg/pfwb_egg_normal.nce\n" )
@@ -867,6 +896,11 @@ end
   	        fp_form.printf( "\"pbwb_%s_%s.NCEC\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
   	        fp_form.printf( "\"pmwb_%s_%s_n.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
   	        fp_form.printf( "\"pmwb_%s_%s_r.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+
+  	        fp_icon_scr.printf( "\"poke_icon_%s_%s_m.NCGR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_icon_scr.printf( "\"poke_icon_%s_%s_f.NCGR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+
+  	        fp_icon_attr.printf( "\"poke_icon_%s_%s_m.NCGR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
           end
           form_name = "_"
           form_name << form[ i ].get_form_name( j )
@@ -1052,6 +1086,9 @@ end
       end
 
       form_max  = form[ cnt ].get_form_max
+      if form_max == 0
+        form_max = 1
+      end
 
       if color_table[ split_data[ PARA::COLOR ] ] ==nil
         printf( "定義されていないカラーです:%s\n", split_data[ PARA::COLOR ] )
