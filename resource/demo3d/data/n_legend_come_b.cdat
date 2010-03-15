@@ -12,11 +12,11 @@
 //============================================
 
 static const DEMO3D_SCENE_DATA data_n_legend_come_b_scene = {
-	NARC_data_demo3d_c_cruiser_camera_bin,	///<カメラID
+	NARC_data_demo3d_n_legend_come_b_camera_bin,	///<カメラID
 	DEMO3D_BGM_NONE,	///<BGM No
 	ZONE_ID_T01,	///<ゾーンID
 	DEMO3D_FRAME_RATE_30FPS,	///<フレームレート定義
-	FALSE,	///<2画面連結
+	TRUE,	///<2画面連結
 	TRUE,FALSE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
 	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
 	GX_SORTMODE_AUTO,GX_BUFFERMODE_Z,	///<SwapBuf αソートモード,バッファモード
@@ -24,7 +24,7 @@ static const DEMO3D_SCENE_DATA data_n_legend_come_b_scene = {
 	FX32_CONST(40.0),FX32_CONST(40.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
 	FX32_CONST(0.100 ),FX32_CONST(2048.000 ),	///<near,far
 	FX32_CONST(1.0 ),	///<ScaleW
-	0,0,	///<2画面main_ofs,2画面sub_ofs
+	300,-300,	///<2画面main_ofs,2画面sub_ofs
 	FX32_CONST(0),	///<1dotポリゴン表示境界デプス
 	GX_RGB(0,0,0),31,	///<クリアカラーRGB,A
 	0,FALSE,32767,	///<クリアポリゴンID,クリアfog,クリアデプス
@@ -42,12 +42,6 @@ static const DEMO3D_SCENE_DATA data_n_legend_come_b_scene = {
 //============================================
 
 static const DEMO3D_CMD_DATA demo3d_cmd_n_legend_come_b_data[] = {
- { DEMO3D_CMD_TYPE_SE_PLAY, DEMO3D_CMD_SYNC_INIT, { SEQ_SE_FLD_79, PMSND_NOEFFECT, PMSND_NOEFFECT, PMSND_NOEFFECT, PMSND_NOEFFECT, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 0*45*30, { SEQ_SE_FLD_78, PMSND_NOEFFECT, PMSND_NOEFFECT, PMSND_NOEFFECT, PMSND_NOEFFECT, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 1*45*30, { SEQ_SE_FLD_78, PMSND_NOEFFECT, PMSND_NOEFFECT, PMSND_NOEFFECT, PMSND_NOEFFECT, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 2*45*30, { SEQ_SE_FLD_78, PMSND_NOEFFECT, PMSND_NOEFFECT, PMSND_NOEFFECT, PMSND_NOEFFECT, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 3*45*30, { SEQ_SE_FLD_78, PMSND_NOEFFECT, PMSND_NOEFFECT, PMSND_NOEFFECT, PMSND_NOEFFECT, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 4*45*30, { SEQ_SE_FLD_78, PMSND_NOEFFECT, PMSND_NOEFFECT, PMSND_NOEFFECT, PMSND_NOEFFECT, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -56,7 +50,6 @@ static const DEMO3D_CMD_DATA demo3d_cmd_n_legend_come_b_data[] = {
 //============================================
 
 static const DEMO3D_CMD_DATA demo3d_cmd_n_legend_come_b_end_data[] = {
- { DEMO3D_CMD_TYPE_SE_STOP, 0, { SEQ_SE_FLD_79, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -66,138 +59,42 @@ static const DEMO3D_CMD_DATA demo3d_cmd_n_legend_come_b_end_data[] = {
 //============================================
 
 ///==================================
-/// cdemo_01 Unit File Resource
+/// n_legend_come_b_01 Unit File Resource
 
-static const u16 res_n_legend_come_b_file_cdemo_01_morning[] = {
- NARC_data_demo3d_cdemo_01_nsbmd,
- NARC_data_demo3d_cdemo_01_nsbtp,
- NARC_data_demo3d_cdemo_01_nsbta,
- NARC_data_demo3d_cdemo_01_nsbca,
-};
-static const u16 res_n_legend_come_b_file_cdemo_01_noon[] = {
- NARC_data_demo3d_cdemo_01_nsbmd,
- NARC_data_demo3d_cdemo_01_nsbtp,
- NARC_data_demo3d_cdemo_01_nsbta,
- NARC_data_demo3d_cdemo_01_nsbca,
-};
-static const u16 res_n_legend_come_b_file_cdemo_01_evening[] = {
- NARC_data_demo3d_cdemo_01_nsbmd,
- NARC_data_demo3d_cdemo_01_nsbtp,
- NARC_data_demo3d_cdemo_01_nsbta,
- NARC_data_demo3d_cdemo_01_nsbca,
-};
-static const u16 res_n_legend_come_b_file_cdemo_01_night[] = {
- NARC_data_demo3d_cdemo_01_nsbmd,
- NARC_data_demo3d_cdemo_01_nsbtp,
- NARC_data_demo3d_cdemo_01_nsbta,
- NARC_data_demo3d_cdemo_01_nsbca,
-};
-static const u16 res_n_legend_come_b_file_cdemo_01_midnight[] = {
- NARC_data_demo3d_cdemo_01_nsbmd,
- NARC_data_demo3d_cdemo_01_nsbtp,
- NARC_data_demo3d_cdemo_01_nsbta,
- NARC_data_demo3d_cdemo_01_nsbca,
+static const u16 res_n_legend_come_b_file_n_legend_come_b_01[] = {
+ NARC_data_demo3d_n_legend_come_b_01_nsbmd,
 };
 
-static const DEMO3D_FILE_UNIT res_n_legend_come_b_file_unit_cdemo_01[] = {
- { res_n_legend_come_b_file_cdemo_01_morning, 4 },
- { res_n_legend_come_b_file_cdemo_01_noon, 4 },
- { res_n_legend_come_b_file_cdemo_01_evening, 4 },
- { res_n_legend_come_b_file_cdemo_01_night, 4 },
- { res_n_legend_come_b_file_cdemo_01_midnight, 4 },
+static const DEMO3D_FILE_UNIT res_n_legend_come_b_file_unit_n_legend_come_b_01[] = {
+ { res_n_legend_come_b_file_n_legend_come_b_01, 1 },
 };
 
 ///==================================
-/// cdemo_02 Unit File Resource
+/// n_legend_come_b_02 Unit File Resource
 
-static const u16 res_n_legend_come_b_file_cdemo_02[] = {
- NARC_data_demo3d_cdemo_02_nsbmd,
+static const u16 res_n_legend_come_b_file_n_legend_come_b_02[] = {
+ NARC_data_demo3d_n_legend_come_b_02_nsbmd,
+ NARC_data_demo3d_n_legend_come_b_02_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_n_legend_come_b_file_unit_cdemo_02[] = {
- { res_n_legend_come_b_file_cdemo_02, 1 },
-};
-
-///==================================
-/// cdemo_03 Unit File Resource
-
-static const u16 res_n_legend_come_b_file_cdemo_03[] = {
- NARC_data_demo3d_cdemo_03_nsbmd,
-};
-
-static const DEMO3D_FILE_UNIT res_n_legend_come_b_file_unit_cdemo_03[] = {
- { res_n_legend_come_b_file_cdemo_03, 1 },
-};
-
-///==================================
-/// cdemo_04 Unit File Resource
-
-static const u16 res_n_legend_come_b_file_cdemo_04[] = {
- NARC_data_demo3d_cdemo_04_nsbmd,
- NARC_data_demo3d_cdemo_04_nsbtp,
-};
-
-static const DEMO3D_FILE_UNIT res_n_legend_come_b_file_unit_cdemo_04[] = {
- { res_n_legend_come_b_file_cdemo_04, 2 },
-};
-
-///==================================
-/// cdemo_05 Unit File Resource
-
-static const u16 res_n_legend_come_b_file_cdemo_05[] = {
- NARC_data_demo3d_cdemo_05_nsbmd,
-};
-
-static const DEMO3D_FILE_UNIT res_n_legend_come_b_file_unit_cdemo_05[] = {
- { res_n_legend_come_b_file_cdemo_05, 1 },
-};
-
-///==================================
-/// cdemo_06 Unit File Resource
-
-static const u16 res_n_legend_come_b_file_cdemo_06[] = {
- NARC_data_demo3d_cdemo_06_nsbmd,
-};
-
-static const DEMO3D_FILE_UNIT res_n_legend_come_b_file_unit_cdemo_06[] = {
- { res_n_legend_come_b_file_cdemo_06, 1 },
+static const DEMO3D_FILE_UNIT res_n_legend_come_b_file_unit_n_legend_come_b_02[] = {
+ { res_n_legend_come_b_file_n_legend_come_b_02, 2 },
 };
 
 ///========================================================
 /// シーンユニットテーブル
 ///========================================================
 
-static const DEMO3D_FILE_UNIT_TBL res_n_legend_come_b_file_unit_cdemo_01_tbl[] = {
- { res_n_legend_come_b_file_unit_cdemo_01, 5 },
- { res_n_legend_come_b_file_unit_cdemo_01, 5 },
+static const DEMO3D_FILE_UNIT_TBL res_n_legend_come_b_file_unit_n_legend_come_b_01_tbl[] = {
+ { res_n_legend_come_b_file_unit_n_legend_come_b_01, 1 },
 };
 
-static const DEMO3D_FILE_UNIT_TBL res_n_legend_come_b_file_unit_cdemo_02_tbl[] = {
- { res_n_legend_come_b_file_unit_cdemo_02, 1 },
-};
-
-static const DEMO3D_FILE_UNIT_TBL res_n_legend_come_b_file_unit_cdemo_03_tbl[] = {
- { res_n_legend_come_b_file_unit_cdemo_03, 1 },
-};
-
-static const DEMO3D_FILE_UNIT_TBL res_n_legend_come_b_file_unit_cdemo_04_tbl[] = {
- { res_n_legend_come_b_file_unit_cdemo_04, 1 },
-};
-
-static const DEMO3D_FILE_UNIT_TBL res_n_legend_come_b_file_unit_cdemo_05_tbl[] = {
- { res_n_legend_come_b_file_unit_cdemo_05, 1 },
-};
-
-static const DEMO3D_FILE_UNIT_TBL res_n_legend_come_b_file_unit_cdemo_06_tbl[] = {
- { res_n_legend_come_b_file_unit_cdemo_06, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_n_legend_come_b_file_unit_n_legend_come_b_02_tbl[] = {
+ { res_n_legend_come_b_file_unit_n_legend_come_b_02, 1 },
 };
 
 static const DEMO3D_SCENE_UNIT res_n_legend_come_b_scene_unit[] = {
- { res_n_legend_come_b_file_unit_cdemo_01_tbl, 2, DEMO3D_UNITCHG_PLAYER_SEX },
- { res_n_legend_come_b_file_unit_cdemo_02_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_n_legend_come_b_file_unit_cdemo_03_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_n_legend_come_b_file_unit_cdemo_04_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_n_legend_come_b_file_unit_cdemo_05_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_n_legend_come_b_file_unit_cdemo_06_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_n_legend_come_b_file_unit_n_legend_come_b_01_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_n_legend_come_b_file_unit_n_legend_come_b_02_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 

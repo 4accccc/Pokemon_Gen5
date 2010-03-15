@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-03-15T15:01:31
+	Update:2010-03-15T23:38:51
  *****************************************************************************/
 
 #ifndef NARC_DATA_DEMO3D_NAIX_
@@ -57,20 +57,22 @@ enum {
 	NARC_data_demo3d_n_legend_born_w_01_nsbmd = 43,
 	NARC_data_demo3d_n_legend_born_w_camera_bin = 44,
 	NARC_data_demo3d_n_legend_come_b_01_nsbmd = 45,
-	NARC_data_demo3d_n_legend_come_b_camera_bin = 46,
-	NARC_data_demo3d_n_legend_come_w_01_nsbmd = 47,
-	NARC_data_demo3d_n_legend_come_w_camera_bin = 48,
-	NARC_data_demo3d_n_legend_meat_b_01_nsbmd = 49,
-	NARC_data_demo3d_n_legend_meat_b_camera_bin = 50,
-	NARC_data_demo3d_n_legend_meat_w_01_nsbmd = 51,
-	NARC_data_demo3d_n_legend_meat_w_camera_bin = 52,
-	NARC_data_demo3d_riza_bridge_01_nsbca = 53,
-	NARC_data_demo3d_riza_bridge_01_nsbmd = 54,
-	NARC_data_demo3d_riza_bridge_02_nsbmd = 55,
-	NARC_data_demo3d_riza_bridge_02_nsbta = 56,
-	NARC_data_demo3d_riza_bridge_camera_bin = 57,
-	NARC_data_demo3d_v_boat_port_01_nsbmd = 58,
-	NARC_data_demo3d_v_boat_port_camera_bin = 59
+	NARC_data_demo3d_n_legend_come_b_02_nsbca = 46,
+	NARC_data_demo3d_n_legend_come_b_02_nsbmd = 47,
+	NARC_data_demo3d_n_legend_come_b_camera_bin = 48,
+	NARC_data_demo3d_n_legend_come_w_01_nsbmd = 49,
+	NARC_data_demo3d_n_legend_come_w_camera_bin = 50,
+	NARC_data_demo3d_n_legend_meat_b_01_nsbmd = 51,
+	NARC_data_demo3d_n_legend_meat_b_camera_bin = 52,
+	NARC_data_demo3d_n_legend_meat_w_01_nsbmd = 53,
+	NARC_data_demo3d_n_legend_meat_w_camera_bin = 54,
+	NARC_data_demo3d_riza_bridge_01_nsbca = 55,
+	NARC_data_demo3d_riza_bridge_01_nsbmd = 56,
+	NARC_data_demo3d_riza_bridge_02_nsbmd = 57,
+	NARC_data_demo3d_riza_bridge_02_nsbta = 58,
+	NARC_data_demo3d_riza_bridge_camera_bin = 59,
+	NARC_data_demo3d_v_boat_port_01_nsbmd = 60,
+	NARC_data_demo3d_v_boat_port_camera_bin = 61
 };
 
 /* NARC_DATA_DEMO3D_NAIX_ */
