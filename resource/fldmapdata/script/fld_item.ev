@@ -252,10 +252,10 @@ EVENT_START ev_fld_item_0
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r02 X=408 Y=120 ITEM=モンスターボール FLAG=1
+// MAP=r02 X=408 Y=120 ITEM=キズぐすり FLAG=1
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_1
-  _FLD_ITEM_EVENT ITEM_MONSUTAABOORU,1
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -280,10 +280,10 @@ EVENT_START ev_fld_item_4
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d01 X=408 Y=120 ITEM=むしよけスプレー FLAG=5
+// MAP=d01 X=408 Y=120 ITEM=キズぐすり FLAG=5
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_5
-  _FLD_ITEM_EVENT ITEM_MUSIYOKESUPUREE,1
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -294,17 +294,17 @@ EVENT_START ev_fld_item_6
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d01 X=408 Y=120 ITEM=キズぐすり FLAG=7
+// MAP=d01 X=408 Y=120 ITEM=むしよけスプレー FLAG=7
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_7
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+  _FLD_ITEM_EVENT ITEM_MUSIYOKESUPUREE,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d01 X=408 Y=120 ITEM=どくけし FLAG=8
+// MAP=d01 X=408 Y=120 ITEM=キズぐすり FLAG=8
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_8
-  _FLD_ITEM_EVENT ITEM_DOKUKESI,1
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -315,17 +315,17 @@ EVENT_START ev_fld_item_40
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d01 X=408 Y=120 ITEM=いいキズぐすり FLAG=41
+// MAP=d01 X=408 Y=120 ITEM=どくけし FLAG=41
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_41
-  _FLD_ITEM_EVENT ITEM_IIKIZUGUSURI,1
+  _FLD_ITEM_EVENT ITEM_DOKUKESI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d01 X=408 Y=120 ITEM=キズぐすり FLAG=42
+// MAP=d01 X=408 Y=120 ITEM=すごいキズぐすり FLAG=42
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_42
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
