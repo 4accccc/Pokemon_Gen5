@@ -422,6 +422,7 @@ s32 GPOWER_Calc_LargeAmountHappen(void)
  * @param   party		手持ちパーティへのポインタ
  *
  * @retval  s32		回復したポケモンの手持ち位置(パワーが発動しなかった場合はGPOWER_OCCUR_NONE)
+ *                (手持ち全て回復の時は0)
  */
 //==================================================================
 s32 GPOWER_Calc_HPRestore(POKEPARTY *party)
@@ -430,20 +431,26 @@ s32 GPOWER_Calc_HPRestore(POKEPARTY *party)
   int pos, hp_max, hp;
   
   if(GPowerSys.occur_power[GPOWER_TYPE_HP_RESTORE] != GPOWER_ID_NULL){
-    pos = PokeParty_GetMemberTopIdxBattleEnable( party );
-    pp = PokeParty_GetMemberPointer(party, pos);
-    {
-      BOOL flag = PP_FastModeOn( pp );
+    if(GPowerSys.powerdata_data[GPOWER_TYPE_HP_RESTORE] == 999){
+      STATUS_RCV_PokeParty_RecoverAll(party);
+      pos = 0;
+    }
+    else{
+      pos = PokeParty_GetMemberTopIdxBattleEnable( party );
+      pp = PokeParty_GetMemberPointer(party, pos);
       {
-        hp_max = PP_Get( pp, ID_PARA_hpmax, NULL );
-        hp = PP_Get( pp, ID_PARA_hp, NULL );
-        hp += GPowerSys.powerdata_data[GPOWER_TYPE_HP_RESTORE];
-        if(hp > hp_max){
-          hp = hp_max;
+        BOOL flag = PP_FastModeOn( pp );
+        {
+          hp_max = PP_Get( pp, ID_PARA_hpmax, NULL );
+          hp = PP_Get( pp, ID_PARA_hp, NULL );
+          hp += GPowerSys.powerdata_data[GPOWER_TYPE_HP_RESTORE];
+          if(hp > hp_max){
+            hp = hp_max;
+          }
+          PP_Put( pp , ID_PARA_hp , hp );
         }
-        PP_Put( pp , ID_PARA_hp , hp );
+        PP_FastModeOff( pp, flag );
       }
-      PP_FastModeOff( pp, flag );
     }
     _OccurPowerClear(GPOWER_TYPE_HP_RESTORE);   //効果は一度なのでクリア
     return pos;
