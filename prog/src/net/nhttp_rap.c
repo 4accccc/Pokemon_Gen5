@@ -356,10 +356,10 @@ void NHTTP_RAP_End(NHTTP_RAP_WORK* pWork)
 void NHTTP_DEBUG_GPF_HEADER_PRINT(gs_response* prep)
 {
 
-  NET_PRINT("処理結果コード       %d\n",prep->ret_cd);
-  NET_PRINT("データ部バイトサイズ %d\n",prep->body_size);
-  NET_PRINT("詳細エラーコード     %d\n",prep->desc_cd);
-  NET_PRINT("%s\n",prep->desc_msg);
+  OS_TPrintf("処理結果コード       %d\n",prep->ret_cd);
+  OS_TPrintf("データ部バイトサイズ %d\n",prep->body_size);
+  OS_TPrintf("詳細エラーコード     %d\n",prep->desc_cd);
+  OS_TPrintf("%s\n",prep->desc_msg);
 }
 #endif
 
