@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2009-12-15T11:25:05"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-03-15T17:54:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -334,1503 +334,1503 @@
 
 
 	<row id="BTD_TR_1">
-		<language name="JPN">アックン</language>
-		<language name="JPN_KANJI">アックン</language>
+		<language name="JPN">イチロウタ</language>
+		<language name="JPN_KANJI">イチロウタ</language>
 	</row>
 
 	<row id="BTD_TR_2">
-		<language name="JPN">カックン</language>
-		<language name="JPN_KANJI">カックン</language>
+		<language name="JPN">ロンドン</language>
+		<language name="JPN_KANJI">ロンドン</language>
 	</row>
 
 	<row id="BTD_TR_3">
-		<language name="JPN">サックン</language>
-		<language name="JPN_KANJI">サックン</language>
+		<language name="JPN">モモジ</language>
+		<language name="JPN_KANJI">モモジ</language>
 	</row>
 
 	<row id="BTD_TR_4">
-		<language name="JPN">アマナツ</language>
-		<language name="JPN_KANJI">アマナツ</language>
+		<language name="JPN">スミス</language>
+		<language name="JPN_KANJI">スミス</language>
 	</row>
 
 	<row id="BTD_TR_5">
-		<language name="JPN">モンモ</language>
-		<language name="JPN_KANJI">モンモ</language>
+		<language name="JPN">アニョー</language>
+		<language name="JPN_KANJI">アニョー</language>
 	</row>
 
 	<row id="BTD_TR_6">
-		<language name="JPN">アスミン</language>
-		<language name="JPN_KANJI">アスミン</language>
+		<language name="JPN">クルベット</language>
+		<language name="JPN_KANJI">クルベット</language>
 	</row>
 
 	<row id="BTD_TR_7">
-		<language name="JPN">ヒロシゲ</language>
-		<language name="JPN_KANJI">ヒロシゲ</language>
-	</row>
-
-	<row id="BTD_TR_8">
-		<language name="JPN">キルゴア</language>
-		<language name="JPN_KANJI">キルゴア</language>
-	</row>
-
-	<row id="BTD_TR_9">
-		<language name="JPN">ホクサイ</language>
-		<language name="JPN_KANJI">ホクサイ</language>
-	</row>
-
-	<row id="BTD_TR_10">
-		<language name="JPN">マウジー</language>
-		<language name="JPN_KANJI">マウジー</language>
-	</row>
-
-	<row id="BTD_TR_11">
-		<language name="JPN">シザーレ</language>
-		<language name="JPN_KANJI">シザーレ</language>
-	</row>
-
-	<row id="BTD_TR_12">
-		<language name="JPN">オリン</language>
-		<language name="JPN_KANJI">オリン</language>
-	</row>
-
-	<row id="BTD_TR_13">
-		<language name="JPN">ヘイハチ</language>
-		<language name="JPN_KANJI">ヘイハチ</language>
-	</row>
-
-	<row id="BTD_TR_14">
-		<language name="JPN">トルーマン</language>
-		<language name="JPN_KANJI">トルーマン</language>
-	</row>
-
-	<row id="BTD_TR_15">
-		<language name="JPN">アーサー</language>
-		<language name="JPN_KANJI">アーサー</language>
-	</row>
-
-	<row id="BTD_TR_16">
-		<language name="JPN">リンギット</language>
-		<language name="JPN_KANJI">リンギット</language>
-	</row>
-
-	<row id="BTD_TR_17">
-		<language name="JPN">シリング</language>
-		<language name="JPN_KANJI">シリング</language>
-	</row>
-
-	<row id="BTD_TR_18">
-		<language name="JPN">ウォン</language>
-		<language name="JPN_KANJI">ウォン</language>
-	</row>
-
-	<row id="BTD_TR_19">
-		<language name="JPN">バーナード</language>
-		<language name="JPN_KANJI">バーナード</language>
-	</row>
-
-	<row id="BTD_TR_20">
-		<language name="JPN">ハーバード</language>
-		<language name="JPN_KANJI">ハーバード</language>
-	</row>
-
-	<row id="BTD_TR_21">
-		<language name="JPN">カツシロウ</language>
-		<language name="JPN_KANJI">カツシロウ</language>
-	</row>
-
-	<row id="BTD_TR_22">
-		<language name="JPN">ハイラル</language>
-		<language name="JPN_KANJI">ハイラル</language>
-	</row>
-
-	<row id="BTD_TR_23">
-		<language name="JPN">クロヒメ</language>
-		<language name="JPN_KANJI">クロヒメ</language>
-	</row>
-
-	<row id="BTD_TR_24">
-		<language name="JPN">アソ</language>
-		<language name="JPN_KANJI">アソ</language>
-	</row>
-
-	<row id="BTD_TR_25">
-		<language name="JPN">マンゾウ</language>
-		<language name="JPN_KANJI">マンゾウ</language>
-	</row>
-
-	<row id="BTD_TR_26">
-		<language name="JPN">ハナウマ</language>
-		<language name="JPN_KANJI">ハナウマ</language>
-	</row>
-
-	<row id="BTD_TR_27">
-		<language name="JPN">ツバル</language>
-		<language name="JPN_KANJI">ツバル</language>
-	</row>
-
-	<row id="BTD_TR_28">
-		<language name="JPN">ドミニカ</language>
-		<language name="JPN_KANJI">ドミニカ</language>
-	</row>
-
-	<row id="BTD_TR_29">
-		<language name="JPN">ケラマ</language>
-		<language name="JPN_KANJI">ケラマ</language>
-	</row>
-
-	<row id="BTD_TR_30">
-		<language name="JPN">オトミ</language>
-		<language name="JPN_KANJI">オトミ</language>
-	</row>
-
-	<row id="BTD_TR_31">
-		<language name="JPN">マル</language>
-		<language name="JPN_KANJI">マル</language>
-	</row>
-
-	<row id="BTD_TR_32">
-		<language name="JPN">タダフミ</language>
-		<language name="JPN_KANJI">タダフミ</language>
-	</row>
-
-	<row id="BTD_TR_33">
-		<language name="JPN">カズヒロ</language>
-		<language name="JPN_KANJI">カズヒロ</language>
-	</row>
-
-	<row id="BTD_TR_34">
-		<language name="JPN">ピンイン</language>
-		<language name="JPN_KANJI">ピンイン</language>
-	</row>
-
-	<row id="BTD_TR_35">
-		<language name="JPN">ランジ</language>
-		<language name="JPN_KANJI">ランジ</language>
-	</row>
-
-	<row id="BTD_TR_36">
-		<language name="JPN">クリムゾン</language>
-		<language name="JPN_KANJI">クリムゾン</language>
-	</row>
-
-	<row id="BTD_TR_37">
-		<language name="JPN">ウネ</language>
-		<language name="JPN_KANJI">ウネ</language>
-	</row>
-
-	<row id="BTD_TR_38">
-		<language name="JPN">カノコ</language>
-		<language name="JPN_KANJI">カノコ</language>
-	</row>
-
-	<row id="BTD_TR_39">
-		<language name="JPN">オノミ</language>
-		<language name="JPN_KANJI">オノミ</language>
-	</row>
-
-	<row id="BTD_TR_40">
-		<language name="JPN">フォボス</language>
-		<language name="JPN_KANJI">フォボス</language>
-	</row>
-
-	<row id="BTD_TR_41">
-		<language name="JPN">メチス</language>
-		<language name="JPN_KANJI">メチス</language>
-	</row>
-
-	<row id="BTD_TR_42">
-		<language name="JPN">ガニメデ</language>
-		<language name="JPN_KANJI">ガニメデ</language>
-	</row>
-
-	<row id="BTD_TR_43">
-		<language name="JPN">ツケバ</language>
-		<language name="JPN_KANJI">ツケバ</language>
-	</row>
-
-	<row id="BTD_TR_44">
-		<language name="JPN">ムラサキ</language>
-		<language name="JPN_KANJI">ムラサキ</language>
-	</row>
-
-	<row id="BTD_TR_45">
-		<language name="JPN">ツメ</language>
-		<language name="JPN_KANJI">ツメ</language>
-	</row>
-
-	<row id="BTD_TR_46">
-		<language name="JPN">アッシュ</language>
-		<language name="JPN_KANJI">アッシュ</language>
-	</row>
-
-	<row id="BTD_TR_47">
-		<language name="JPN">ノワゼット</language>
-		<language name="JPN_KANJI">ノワゼット</language>
-	</row>
-
-	<row id="BTD_TR_48">
-		<language name="JPN">カヌレ</language>
-		<language name="JPN_KANJI">カヌレ</language>
-	</row>
-
-	<row id="BTD_TR_49">
-		<language name="JPN">ピンク</language>
-		<language name="JPN_KANJI">ピンク</language>
-	</row>
-
-	<row id="BTD_TR_50">
-		<language name="JPN">ホフマン</language>
-		<language name="JPN_KANJI">ホフマン</language>
-	</row>
-
-	<row id="BTD_TR_51">
-		<language name="JPN">アマデウス</language>
-		<language name="JPN_KANJI">アマデウス</language>
-	</row>
-
-	<row id="BTD_TR_52">
-		<language name="JPN">シガラク</language>
-		<language name="JPN_KANJI">シガラク</language>
-	</row>
-
-	<row id="BTD_TR_53">
-		<language name="JPN">ビゼン</language>
-		<language name="JPN_KANJI">ビゼン</language>
-	</row>
-
-	<row id="BTD_TR_54">
-		<language name="JPN">ピエール</language>
-		<language name="JPN_KANJI">ピエール</language>
-	</row>
-
-	<row id="BTD_TR_55">
-		<language name="JPN">タカコ</language>
-		<language name="JPN_KANJI">タカコ</language>
-	</row>
-
-	<row id="BTD_TR_56">
-		<language name="JPN">タツコ</language>
-		<language name="JPN_KANJI">タツコ</language>
-	</row>
-
-	<row id="BTD_TR_57">
-		<language name="JPN">タマコ</language>
-		<language name="JPN_KANJI">タマコ</language>
-	</row>
-
-	<row id="BTD_TR_58">
-		<language name="JPN">キクチヨ</language>
-		<language name="JPN_KANJI">キクチヨ</language>
-	</row>
-
-	<row id="BTD_TR_59">
-		<language name="JPN">バショウ</language>
-		<language name="JPN_KANJI">バショウ</language>
-	</row>
-
-	<row id="BTD_TR_60">
-		<language name="JPN">メンカウラ</language>
-		<language name="JPN_KANJI">メンカウラ</language>
-	</row>
-
-	<row id="BTD_TR_61">
-		<language name="JPN">クフ</language>
-		<language name="JPN_KANJI">クフ</language>
-	</row>
-
-	<row id="BTD_TR_62">
-		<language name="JPN">リシャール</language>
-		<language name="JPN_KANJI">リシャール</language>
-	</row>
-
-	<row id="BTD_TR_63">
-		<language name="JPN">デカダンス</language>
-		<language name="JPN_KANJI">デカダンス</language>
-	</row>
-
-	<row id="BTD_TR_64">
-		<language name="JPN">ブリジット</language>
-		<language name="JPN_KANJI">ブリジット</language>
-	</row>
-
-	<row id="BTD_TR_65">
-		<language name="JPN">ブランシュ</language>
-		<language name="JPN_KANJI">ブランシュ</language>
-	</row>
-
-	<row id="BTD_TR_66">
-		<language name="JPN">コレット</language>
-		<language name="JPN_KANJI">コレット</language>
-	</row>
-
-	<row id="BTD_TR_67">
-		<language name="JPN">オウメ</language>
-		<language name="JPN_KANJI">オウメ</language>
-	</row>
-
-	<row id="BTD_TR_68">
-		<language name="JPN">オタケ</language>
-		<language name="JPN_KANJI">オタケ</language>
-	</row>
-
-	<row id="BTD_TR_69">
-		<language name="JPN">オマツ</language>
-		<language name="JPN_KANJI">オマツ</language>
-	</row>
-
-	<row id="BTD_TR_70">
-		<language name="JPN">リュウゼン</language>
-		<language name="JPN_KANJI">リュウゼン</language>
-	</row>
-
-	<row id="BTD_TR_71">
-		<language name="JPN">ジャコウ</language>
-		<language name="JPN_KANJI">ジャコウ</language>
-	</row>
-
-	<row id="BTD_TR_72">
-		<language name="JPN">キャラ</language>
-		<language name="JPN_KANJI">キャラ</language>
-	</row>
-
-	<row id="BTD_TR_73">
-		<language name="JPN">バーニー</language>
-		<language name="JPN_KANJI">バーニー</language>
-	</row>
-
-	<row id="BTD_TR_74">
-		<language name="JPN">カーティス</language>
-		<language name="JPN_KANJI">カーティス</language>
-	</row>
-
-	<row id="BTD_TR_75">
-		<language name="JPN">ナラシバ</language>
-		<language name="JPN_KANJI">ナラシバ</language>
-	</row>
-
-	<row id="BTD_TR_76">
-		<language name="JPN">ニッタ</language>
-		<language name="JPN_KANJI">ニッタ</language>
-	</row>
-
-	<row id="BTD_TR_77">
-		<language name="JPN">ハツハナ</language>
-		<language name="JPN_KANJI">ハツハナ</language>
-	</row>
-
-	<row id="BTD_TR_78">
-		<language name="JPN">ヨヘイ</language>
-		<language name="JPN_KANJI">ヨヘイ</language>
-	</row>
-
-	<row id="BTD_TR_79">
-		<language name="JPN">ゴサク</language>
-		<language name="JPN_KANJI">ゴサク</language>
-	</row>
-
-	<row id="BTD_TR_80">
-		<language name="JPN">アマギ</language>
-		<language name="JPN_KANJI">アマギ</language>
-	</row>
-
-	<row id="BTD_TR_81">
-		<language name="JPN">ヤツガ</language>
-		<language name="JPN_KANJI">ヤツガ</language>
-	</row>
-
-	<row id="BTD_TR_82">
-		<language name="JPN">アドアド</language>
-		<language name="JPN_KANJI">アドアド</language>
-	</row>
-
-	<row id="BTD_TR_83">
-		<language name="JPN">アニー</language>
-		<language name="JPN_KANJI">アニー</language>
-	</row>
-
-	<row id="BTD_TR_84">
-		<language name="JPN">ツボネ</language>
-		<language name="JPN_KANJI">ツボネ</language>
-	</row>
-
-	<row id="BTD_TR_85">
-		<language name="JPN">スレッド</language>
-		<language name="JPN_KANJI">スレッド</language>
-	</row>
-
-	<row id="BTD_TR_86">
-		<language name="JPN">バイト</language>
-		<language name="JPN_KANJI">バイト</language>
-	</row>
-
-	<row id="BTD_TR_87">
-		<language name="JPN">ネジ</language>
-		<language name="JPN_KANJI">ネジ</language>
-	</row>
-
-	<row id="BTD_TR_88">
-		<language name="JPN">ナグリ</language>
-		<language name="JPN_KANJI">ナグリ</language>
-	</row>
-
-	<row id="BTD_TR_89">
-		<language name="JPN">カサエル</language>
-		<language name="JPN_KANJI">カサエル</language>
-	</row>
-
-	<row id="BTD_TR_90">
-		<language name="JPN">ゴエモン</language>
-		<language name="JPN_KANJI">ゴエモン</language>
-	</row>
-
-	<row id="BTD_TR_91">
-		<language name="JPN">ボナパルト</language>
-		<language name="JPN_KANJI">ボナパルト</language>
-	</row>
-
-	<row id="BTD_TR_92">
-		<language name="JPN">オトラ</language>
-		<language name="JPN_KANJI">オトラ</language>
-	</row>
-
-	<row id="BTD_TR_93">
-		<language name="JPN">ペイズリー</language>
-		<language name="JPN_KANJI">ペイズリー</language>
-	</row>
-
-	<row id="BTD_TR_94">
-		<language name="JPN">レベッカ</language>
-		<language name="JPN_KANJI">レベッカ</language>
-	</row>
-
-	<row id="BTD_TR_95">
-		<language name="JPN">ドナルド</language>
-		<language name="JPN_KANJI">ドナルド</language>
-	</row>
-
-	<row id="BTD_TR_96">
-		<language name="JPN">キンゴ</language>
-		<language name="JPN_KANJI">キンゴ</language>
-	</row>
-
-	<row id="BTD_TR_97">
-		<language name="JPN">ハムレット</language>
-		<language name="JPN_KANJI">ハムレット</language>
-	</row>
-
-	<row id="BTD_TR_98">
-		<language name="JPN">チェック</language>
-		<language name="JPN_KANJI">チェック</language>
-	</row>
-
-	<row id="BTD_TR_99">
-		<language name="JPN">マーブル</language>
-		<language name="JPN_KANJI">マーブル</language>
-	</row>
-
-	<row id="BTD_TR_100">
-		<language name="JPN">ギンガム</language>
-		<language name="JPN_KANJI">ギンガム</language>
-	</row>
-
-	<row id="BTD_TR_101">
-		<language name="JPN">ガスパール</language>
-		<language name="JPN_KANJI">ガスパール</language>
-	</row>
-
-	<row id="BTD_TR_102">
-		<language name="JPN">イグナシオ</language>
-		<language name="JPN_KANJI">イグナシオ</language>
-	</row>
-
-	<row id="BTD_TR_103">
-		<language name="JPN">ステム</language>
-		<language name="JPN_KANJI">ステム</language>
-	</row>
-
-	<row id="BTD_TR_104">
-		<language name="JPN">クランク</language>
-		<language name="JPN_KANJI">クランク</language>
-	</row>
-
-	<row id="BTD_TR_105">
-		<language name="JPN">ポンスケ</language>
-		<language name="JPN_KANJI">ポンスケ</language>
-	</row>
-
-	<row id="BTD_TR_106">
-		<language name="JPN">サンスケ</language>
-		<language name="JPN_KANJI">サンスケ</language>
-	</row>
-
-	<row id="BTD_TR_107">
-		<language name="JPN">コッパ</language>
-		<language name="JPN_KANJI">コッパ</language>
-	</row>
-
-	<row id="BTD_TR_108">
-		<language name="JPN">ミジン</language>
-		<language name="JPN_KANJI">ミジン</language>
-	</row>
-
-	<row id="BTD_TR_109">
-		<language name="JPN">チョウコツ</language>
-		<language name="JPN_KANJI">チョウコツ</language>
-	</row>
-
-	<row id="BTD_TR_110">
-		<language name="JPN">ソウボウ</language>
-		<language name="JPN_KANJI">ソウボウ</language>
-	</row>
-
-	<row id="BTD_TR_111">
-		<language name="JPN">ショウエン</language>
-		<language name="JPN_KANJI">ショウエン</language>
-	</row>
-
-	<row id="BTD_TR_112">
-		<language name="JPN">コウガ</language>
-		<language name="JPN_KANJI">コウガ</language>
-	</row>
-
-	<row id="BTD_TR_113">
-		<language name="JPN">アマゾン</language>
-		<language name="JPN_KANJI">アマゾン</language>
-	</row>
-
-	<row id="BTD_TR_114">
-		<language name="JPN">ビーナス</language>
-		<language name="JPN_KANJI">ビーナス</language>
-	</row>
-
-	<row id="BTD_TR_115">
-		<language name="JPN">ベック</language>
-		<language name="JPN_KANJI">ベック</language>
-	</row>
-
-	<row id="BTD_TR_116">
-		<language name="JPN">エリック</language>
-		<language name="JPN_KANJI">エリック</language>
-	</row>
-
-	<row id="BTD_TR_117">
-		<language name="JPN">ペイジ</language>
-		<language name="JPN_KANJI">ペイジ</language>
-	</row>
-
-	<row id="BTD_TR_118">
-		<language name="JPN">バーバレラ</language>
-		<language name="JPN_KANJI">バーバレラ</language>
-	</row>
-
-	<row id="BTD_TR_119">
-		<language name="JPN">イザベル</language>
-		<language name="JPN_KANJI">イザベル</language>
-	</row>
-
-	<row id="BTD_TR_120">
-		<language name="JPN">カルメン</language>
-		<language name="JPN_KANJI">カルメン</language>
-	</row>
-
-	<row id="BTD_TR_121">
-		<language name="JPN">アルパ</language>
-		<language name="JPN_KANJI">アルパ</language>
-	</row>
-
-	<row id="BTD_TR_122">
-		<language name="JPN">ベータ</language>
-		<language name="JPN_KANJI">ベータ</language>
-	</row>
-
-	<row id="BTD_TR_123">
-		<language name="JPN">ガンマ</language>
-		<language name="JPN_KANJI">ガンマ</language>
-	</row>
-
-	<row id="BTD_TR_124">
-		<language name="JPN">ホヅミ</language>
-		<language name="JPN_KANJI">ホヅミ</language>
-	</row>
-
-	<row id="BTD_TR_125">
-		<language name="JPN">カヅコ</language>
-		<language name="JPN_KANJI">カヅコ</language>
-	</row>
-
-	<row id="BTD_TR_126">
 		<language name="JPN">シヅ</language>
 		<language name="JPN_KANJI">シヅ</language>
 	</row>
 
-	<row id="BTD_TR_127">
-		<language name="JPN">ドンペイ</language>
-		<language name="JPN_KANJI">ドンペイ</language>
-	</row>
-
-	<row id="BTD_TR_128">
-		<language name="JPN">チンペイ</language>
-		<language name="JPN_KANJI">チンペイ</language>
-	</row>
-
-	<row id="BTD_TR_129">
-		<language name="JPN">カンペイ</language>
-		<language name="JPN_KANJI">カンペイ</language>
-	</row>
-
-	<row id="BTD_TR_130">
-		<language name="JPN">アドリアナ</language>
-		<language name="JPN_KANJI">アドリアナ</language>
-	</row>
-
-	<row id="BTD_TR_131">
-		<language name="JPN">ソーニャ</language>
-		<language name="JPN_KANJI">ソーニャ</language>
-	</row>
-
-	<row id="BTD_TR_132">
-		<language name="JPN">タチヤーナ</language>
-		<language name="JPN_KANJI">タチヤーナ</language>
-	</row>
-
-	<row id="BTD_TR_133">
-		<language name="JPN">ザンクロウ</language>
-		<language name="JPN_KANJI">ザンクロウ</language>
-	</row>
-
-	<row id="BTD_TR_134">
-		<language name="JPN">ヘルムート</language>
-		<language name="JPN_KANJI">ヘルムート</language>
-	</row>
-
-	<row id="BTD_TR_135">
-		<language name="JPN">ロダン</language>
-		<language name="JPN_KANJI">ロダン</language>
-	</row>
-
-	<row id="BTD_TR_136">
-		<language name="JPN">リルケ</language>
-		<language name="JPN_KANJI">リルケ</language>
-	</row>
-
-	<row id="BTD_TR_137">
-		<language name="JPN">フーコー</language>
-		<language name="JPN_KANJI">フーコー</language>
-	</row>
-
-	<row id="BTD_TR_138">
-		<language name="JPN">スキナー</language>
-		<language name="JPN_KANJI">スキナー</language>
-	</row>
-
-	<row id="BTD_TR_139">
-		<language name="JPN">シジャク</language>
-		<language name="JPN_KANJI">シジャク</language>
-	</row>
-
-	<row id="BTD_TR_140">
-		<language name="JPN">エンショウ</language>
-		<language name="JPN_KANJI">エンショウ</language>
-	</row>
-
-	<row id="BTD_TR_141">
-		<language name="JPN">ストク</language>
-		<language name="JPN_KANJI">ストク</language>
-	</row>
-
-	<row id="BTD_TR_142">
-		<language name="JPN">マサカド</language>
-		<language name="JPN_KANJI">マサカド</language>
-	</row>
-
-	<row id="BTD_TR_143">
-		<language name="JPN">ミチザネ</language>
-		<language name="JPN_KANJI">ミチザネ</language>
-	</row>
-
-	<row id="BTD_TR_144">
-		<language name="JPN">キム</language>
-		<language name="JPN_KANJI">キム</language>
-	</row>
-
-	<row id="BTD_TR_145">
-		<language name="JPN">ヤン</language>
-		<language name="JPN_KANJI">ヤン</language>
-	</row>
-
-	<row id="BTD_TR_146">
-		<language name="JPN">パク</language>
-		<language name="JPN_KANJI">パク</language>
-	</row>
-
-	<row id="BTD_TR_147">
-		<language name="JPN">ダーク</language>
-		<language name="JPN_KANJI">ダーク</language>
-	</row>
-
-	<row id="BTD_TR_148">
-		<language name="JPN">デューク</language>
-		<language name="JPN_KANJI">デューク</language>
-	</row>
-
-	<row id="BTD_TR_149">
-		<language name="JPN">ボニー</language>
-		<language name="JPN_KANJI">ボニー</language>
-	</row>
-
-	<row id="BTD_TR_150">
-		<language name="JPN">ガブリエラ</language>
-		<language name="JPN_KANJI">ガブリエラ</language>
-	</row>
-
-	<row id="BTD_TR_151">
-		<language name="JPN">メルセデス</language>
-		<language name="JPN_KANJI">メルセデス</language>
-	</row>
-
-	<row id="BTD_TR_152">
-		<language name="JPN">エビータ</language>
-		<language name="JPN_KANJI">エビータ</language>
-	</row>
-
-	<row id="BTD_TR_153">
-		<language name="JPN">アリババ</language>
-		<language name="JPN_KANJI">アリババ</language>
-	</row>
-
-	<row id="BTD_TR_154">
-		<language name="JPN">アブドゥル</language>
-		<language name="JPN_KANJI">アブドゥル</language>
-	</row>
-
-	<row id="BTD_TR_155">
-		<language name="JPN">バルザーン</language>
-		<language name="JPN_KANJI">バルザーン</language>
-	</row>
-
-	<row id="BTD_TR_156">
-		<language name="JPN">チンネン</language>
-		<language name="JPN_KANJI">チンネン</language>
-	</row>
-
-	<row id="BTD_TR_157">
-		<language name="JPN">ゴロベエ</language>
-		<language name="JPN_KANJI">ゴロベエ</language>
-	</row>
-
-	<row id="BTD_TR_158">
-		<language name="JPN">シチロウジ</language>
-		<language name="JPN_KANJI">シチロウジ</language>
-	</row>
-
-	<row id="BTD_TR_159">
-		<language name="JPN">ガリュウ</language>
-		<language name="JPN_KANJI">ガリュウ</language>
-	</row>
-
-	<row id="BTD_TR_160">
-		<language name="JPN">ホウスウ</language>
-		<language name="JPN_KANJI">ホウスウ</language>
-	</row>
-
-	<row id="BTD_TR_161">
-		<language name="JPN">タックン</language>
-		<language name="JPN_KANJI">タックン</language>
-	</row>
-
-	<row id="BTD_TR_162">
-		<language name="JPN">ナックン</language>
-		<language name="JPN_KANJI">ナックン</language>
-	</row>
-
-	<row id="BTD_TR_163">
-		<language name="JPN">フランソワ</language>
-		<language name="JPN_KANJI">フランソワ</language>
-	</row>
-
-	<row id="BTD_TR_164">
-		<language name="JPN">ハサン</language>
-		<language name="JPN_KANJI">ハサン</language>
-	</row>
-
-	<row id="BTD_TR_165">
-		<language name="JPN">ネオン</language>
-		<language name="JPN_KANJI">ネオン</language>
-	</row>
-
-	<row id="BTD_TR_166">
-		<language name="JPN">モリブデン</language>
-		<language name="JPN_KANJI">モリブデン</language>
-	</row>
-
-	<row id="BTD_TR_167">
-		<language name="JPN">セリーヌ</language>
-		<language name="JPN_KANJI">セリーヌ</language>
-	</row>
-
-	<row id="BTD_TR_168">
-		<language name="JPN">ゲラン</language>
-		<language name="JPN_KANJI">ゲラン</language>
-	</row>
-
-	<row id="BTD_TR_169">
-		<language name="JPN">ニクソン</language>
-		<language name="JPN_KANJI">ニクソン</language>
-	</row>
-
-	<row id="BTD_TR_170">
-		<language name="JPN">ハリソン</language>
-		<language name="JPN_KANJI">ハリソン</language>
-	</row>
-
-	<row id="BTD_TR_171">
-		<language name="JPN">ユーロ</language>
-		<language name="JPN_KANJI">ユーロ</language>
-	</row>
-
-	<row id="BTD_TR_172">
-		<language name="JPN">エン</language>
-		<language name="JPN_KANJI">エン</language>
-	</row>
-
-	<row id="BTD_TR_173">
-		<language name="JPN">カミーユ</language>
-		<language name="JPN_KANJI">カミーユ</language>
-	</row>
-
-	<row id="BTD_TR_174">
-		<language name="JPN">イゾウ</language>
-		<language name="JPN_KANJI">イゾウ</language>
-	</row>
-
-	<row id="BTD_TR_175">
-		<language name="JPN">ウカガミ</language>
-		<language name="JPN_KANJI">ウカガミ</language>
-	</row>
-
-	<row id="BTD_TR_176">
-		<language name="JPN">ノキザル</language>
-		<language name="JPN_KANJI">ノキザル</language>
-	</row>
-
-	<row id="BTD_TR_177">
-		<language name="JPN">ドウセツ</language>
-		<language name="JPN_KANJI">ドウセツ</language>
-	</row>
-
-	<row id="BTD_TR_178">
-		<language name="JPN">アテルイ</language>
-		<language name="JPN_KANJI">アテルイ</language>
-	</row>
-
-	<row id="BTD_TR_179">
-		<language name="JPN">ナヨギク</language>
-		<language name="JPN_KANJI">ナヨギク</language>
-	</row>
-
-	<row id="BTD_TR_180">
-		<language name="JPN">ヒグラシ</language>
-		<language name="JPN_KANJI">ヒグラシ</language>
-	</row>
-
-	<row id="BTD_TR_181">
-		<language name="JPN">コード</language>
-		<language name="JPN_KANJI">コード</language>
-	</row>
-
-	<row id="BTD_TR_182">
-		<language name="JPN">ビット</language>
-		<language name="JPN_KANJI">ビット</language>
-	</row>
-
-	<row id="BTD_TR_183">
-		<language name="JPN">ホウサイ</language>
-		<language name="JPN_KANJI">ホウサイ</language>
-	</row>
-
-	<row id="BTD_TR_184">
-		<language name="JPN">ブソン</language>
-		<language name="JPN_KANJI">ブソン</language>
-	</row>
-
-	<row id="BTD_TR_185">
-		<language name="JPN">カフラー</language>
-		<language name="JPN_KANJI">カフラー</language>
-	</row>
-
-	<row id="BTD_TR_186">
-		<language name="JPN">ホルス</language>
-		<language name="JPN_KANJI">ホルス</language>
-	</row>
-
-	<row id="BTD_TR_187">
-		<language name="JPN">スタローン</language>
-		<language name="JPN_KANJI">スタローン</language>
-	</row>
-
-	<row id="BTD_TR_188">
-		<language name="JPN">シャルル</language>
-		<language name="JPN_KANJI">シャルル</language>
-	</row>
-
-	<row id="BTD_TR_189">
-		<language name="JPN">フェリーニ</language>
-		<language name="JPN_KANJI">フェリーニ</language>
-	</row>
-
-	<row id="BTD_TR_190">
-		<language name="JPN">チェーザレ</language>
-		<language name="JPN_KANJI">チェーザレ</language>
-	</row>
-
-	<row id="BTD_TR_191">
-		<language name="JPN">テレメトリ</language>
-		<language name="JPN_KANJI">テレメトリ</language>
-	</row>
-
-	<row id="BTD_TR_192">
-		<language name="JPN">レンジング</language>
-		<language name="JPN_KANJI">レンジング</language>
-	</row>
-
-	<row id="BTD_TR_193">
-		<language name="JPN">カスピ</language>
-		<language name="JPN_KANJI">カスピ</language>
-	</row>
-
-	<row id="BTD_TR_194">
-		<language name="JPN">エーゲ</language>
-		<language name="JPN_KANJI">エーゲ</language>
-	</row>
-
-	<row id="BTD_TR_195">
-		<language name="JPN">モンブラン</language>
-		<language name="JPN_KANJI">モンブラン</language>
-	</row>
-
-	<row id="BTD_TR_196">
-		<language name="JPN">ロッキー</language>
-		<language name="JPN_KANJI">ロッキー</language>
-	</row>
-
-	<row id="BTD_TR_197">
-		<language name="JPN">エルク</language>
-		<language name="JPN_KANJI">エルク</language>
-	</row>
-
-	<row id="BTD_TR_198">
-		<language name="JPN">ホーク</language>
-		<language name="JPN_KANJI">ホーク</language>
-	</row>
-
-	<row id="BTD_TR_199">
-		<language name="JPN">ノワール</language>
-		<language name="JPN_KANJI">ノワール</language>
-	</row>
-
-	<row id="BTD_TR_200">
-		<language name="JPN">ルージュ</language>
-		<language name="JPN_KANJI">ルージュ</language>
-	</row>
-
-	<row id="BTD_TR_201">
-		<language name="JPN">ランタン</language>
-		<language name="JPN_KANJI">ランタン</language>
-	</row>
-
-	<row id="BTD_TR_202">
-		<language name="JPN">ビスマス</language>
-		<language name="JPN_KANJI">ビスマス</language>
-	</row>
-
-	<row id="BTD_TR_203">
-		<language name="JPN">インガ</language>
-		<language name="JPN_KANJI">インガ</language>
-	</row>
-
-	<row id="BTD_TR_204">
-		<language name="JPN">ターニャ</language>
-		<language name="JPN_KANJI">ターニャ</language>
-	</row>
-
-	<row id="BTD_TR_205">
+	<row id="BTD_TR_8">
 		<language name="JPN">クワン</language>
 		<language name="JPN_KANJI">クワン</language>
 	</row>
 
-	<row id="BTD_TR_206">
-		<language name="JPN">モンクット</language>
-		<language name="JPN_KANJI">モンクット</language>
+	<row id="BTD_TR_9">
+		<language name="JPN">ムラマサ</language>
+		<language name="JPN_KANJI">ムラマサ</language>
 	</row>
 
-	<row id="BTD_TR_207">
-		<language name="JPN">モポ</language>
-		<language name="JPN_KANJI">モポ</language>
+	<row id="BTD_TR_10">
+		<language name="JPN">セミマル</language>
+		<language name="JPN_KANJI">セミマル</language>
 	</row>
 
-	<row id="BTD_TR_208">
-		<language name="JPN">ヘレネ</language>
-		<language name="JPN_KANJI">ヘレネ</language>
+	<row id="BTD_TR_11">
+		<language name="JPN">イチモンジ</language>
+		<language name="JPN_KANJI">イチモンジ</language>
 	</row>
 
-	<row id="BTD_TR_209">
-		<language name="JPN">コロ</language>
-		<language name="JPN_KANJI">コロ</language>
+	<row id="BTD_TR_12">
+		<language name="JPN">ケビン</language>
+		<language name="JPN_KANJI">ケビン</language>
 	</row>
 
-	<row id="BTD_TR_210">
-		<language name="JPN">ウデモノ</language>
-		<language name="JPN_KANJI">ウデモノ</language>
+	<row id="BTD_TR_13">
+		<language name="JPN">ハツ</language>
+		<language name="JPN_KANJI">ハツ</language>
 	</row>
 
-	<row id="BTD_TR_211">
-		<language name="JPN">エウロパ</language>
-		<language name="JPN_KANJI">エウロパ</language>
-	</row>
-
-	<row id="BTD_TR_212">
-		<language name="JPN">パンドラ</language>
-		<language name="JPN_KANJI">パンドラ</language>
-	</row>
-
-	<row id="BTD_TR_213">
-		<language name="JPN">ジムジロウ</language>
-		<language name="JPN_KANJI">ジムジロウ</language>
-	</row>
-
-	<row id="BTD_TR_214">
-		<language name="JPN">ボブノスケ</language>
-		<language name="JPN_KANJI">ボブノスケ</language>
-	</row>
-
-	<row id="BTD_TR_215">
-		<language name="JPN">アシュレイ</language>
-		<language name="JPN_KANJI">アシュレイ</language>
-	</row>
-
-	<row id="BTD_TR_216">
-		<language name="JPN">ジンジャー</language>
-		<language name="JPN_KANJI">ジンジャー</language>
-	</row>
-
-	<row id="BTD_TR_217">
-		<language name="JPN">ピーター</language>
-		<language name="JPN_KANJI">ピーター</language>
-	</row>
-
-	<row id="BTD_TR_218">
-		<language name="JPN">ヒデロウ</language>
-		<language name="JPN_KANJI">ヒデロウ</language>
-	</row>
-
-	<row id="BTD_TR_219">
-		<language name="JPN">ゾーヤ</language>
-		<language name="JPN_KANJI">ゾーヤ</language>
-	</row>
-
-	<row id="BTD_TR_220">
-		<language name="JPN">アントニナ</language>
-		<language name="JPN_KANJI">アントニナ</language>
-	</row>
-
-	<row id="BTD_TR_221">
-		<language name="JPN">ゴウジン</language>
-		<language name="JPN_KANJI">ゴウジン</language>
-	</row>
-
-	<row id="BTD_TR_222">
-		<language name="JPN">トウジロウ</language>
-		<language name="JPN_KANJI">トウジロウ</language>
-	</row>
-
-	<row id="BTD_TR_223">
-		<language name="JPN">クロエ</language>
-		<language name="JPN_KANJI">クロエ</language>
-	</row>
-
-	<row id="BTD_TR_224">
-		<language name="JPN">ダフニス</language>
-		<language name="JPN_KANJI">ダフニス</language>
-	</row>
-
-	<row id="BTD_TR_225">
-		<language name="JPN">キュウゾウ</language>
-		<language name="JPN_KANJI">キュウゾウ</language>
-	</row>
-
-	<row id="BTD_TR_226">
-		<language name="JPN">ピアジェ</language>
-		<language name="JPN_KANJI">ピアジェ</language>
-	</row>
-
-	<row id="BTD_TR_227">
-		<language name="JPN">ショパール</language>
-		<language name="JPN_KANJI">ショパール</language>
-	</row>
-
-	<row id="BTD_TR_228">
-		<language name="JPN">ロンジン</language>
-		<language name="JPN_KANJI">ロンジン</language>
-	</row>
-
-	<row id="BTD_TR_229">
-		<language name="JPN">スケロウ</language>
-		<language name="JPN_KANJI">スケロウ</language>
-	</row>
-
-	<row id="BTD_TR_230">
-		<language name="JPN">スケキヨ</language>
-		<language name="JPN_KANJI">スケキヨ</language>
-	</row>
-
-	<row id="BTD_TR_231">
-		<language name="JPN">ピリカ</language>
-		<language name="JPN_KANJI">ピリカ</language>
-	</row>
-
-	<row id="BTD_TR_232">
+	<row id="BTD_TR_14">
 		<language name="JPN">チュチュ</language>
 		<language name="JPN_KANJI">チュチュ</language>
 	</row>
 
-	<row id="BTD_TR_233">
-		<language name="JPN">デンカ</language>
-		<language name="JPN_KANJI">デンカ</language>
+	<row id="BTD_TR_15">
+		<language name="JPN">モンモ</language>
+		<language name="JPN_KANJI">モンモ</language>
 	</row>
 
-	<row id="BTD_TR_234">
-		<language name="JPN">カンベエ</language>
-		<language name="JPN_KANJI">カンベエ</language>
+	<row id="BTD_TR_16">
+		<language name="JPN">ウメチヨ</language>
+		<language name="JPN_KANJI">ウメチヨ</language>
 	</row>
 
-	<row id="BTD_TR_235">
-		<language name="JPN">ナイフク</language>
-		<language name="JPN_KANJI">ナイフク</language>
+	<row id="BTD_TR_17">
+		<language name="JPN">ポンド</language>
+		<language name="JPN_KANJI">ポンド</language>
 	</row>
 
-	<row id="BTD_TR_236">
-		<language name="JPN">ダイデン</language>
-		<language name="JPN_KANJI">ダイデン</language>
+	<row id="BTD_TR_18">
+		<language name="JPN">ルピー</language>
+		<language name="JPN_KANJI">ルピー</language>
 	</row>
 
-	<row id="BTD_TR_237">
-		<language name="JPN">イブ</language>
-		<language name="JPN_KANJI">イブ</language>
+	<row id="BTD_TR_19">
+		<language name="JPN">ドル</language>
+		<language name="JPN_KANJI">ドル</language>
 	</row>
 
-	<row id="BTD_TR_238">
-		<language name="JPN">マリアンヌ</language>
-		<language name="JPN_KANJI">マリアンヌ</language>
+	<row id="BTD_TR_20">
+		<language name="JPN">ルーティ</language>
+		<language name="JPN_KANJI">ルーティ</language>
 	</row>
 
-	<row id="BTD_TR_239">
-		<language name="JPN">ガッショウ</language>
-		<language name="JPN_KANJI">ガッショウ</language>
+	<row id="BTD_TR_21">
+		<language name="JPN">ウォン</language>
+		<language name="JPN_KANJI">ウォン</language>
 	</row>
 
-	<row id="BTD_TR_240">
-		<language name="JPN">レイハイ</language>
-		<language name="JPN_KANJI">レイハイ</language>
+	<row id="BTD_TR_22">
+		<language name="JPN">ペソ</language>
+		<language name="JPN_KANJI">ペソ</language>
 	</row>
 
-	<row id="BTD_TR_241">
-		<language name="JPN">クララベル</language>
-		<language name="JPN_KANJI">クララベル</language>
+	<row id="BTD_TR_23">
+		<language name="JPN">クローネ</language>
+		<language name="JPN_KANJI">クローネ</language>
 	</row>
 
-	<row id="BTD_TR_242">
+	<row id="BTD_TR_24">
+		<language name="JPN">レアル</language>
+		<language name="JPN_KANJI">レアル</language>
+	</row>
+
+	<row id="BTD_TR_25">
+		<language name="JPN">ノブナガ</language>
+		<language name="JPN_KANJI">ノブナガ</language>
+	</row>
+
+	<row id="BTD_TR_26">
+		<language name="JPN">ノブヒデ</language>
+		<language name="JPN_KANJI">ノブヒデ</language>
+	</row>
+
+	<row id="BTD_TR_27">
+		<language name="JPN">ノブヤス</language>
+		<language name="JPN_KANJI">ノブヤス</language>
+	</row>
+
+	<row id="BTD_TR_28">
+		<language name="JPN">ノブタダ</language>
+		<language name="JPN_KANJI">ノブタダ</language>
+	</row>
+
+	<row id="BTD_TR_29">
 		<language name="JPN">エマニエル</language>
 		<language name="JPN_KANJI">エマニエル</language>
 	</row>
 
-	<row id="BTD_TR_243">
-		<language name="JPN">ペル</language>
-		<language name="JPN_KANJI">ペル</language>
+	<row id="BTD_TR_30">
+		<language name="JPN">ドミニカ</language>
+		<language name="JPN_KANJI">ドミニカ</language>
 	</row>
 
-	<row id="BTD_TR_244">
-		<language name="JPN">モモヒコ</language>
-		<language name="JPN_KANJI">モモヒコ</language>
+	<row id="BTD_TR_31">
+		<language name="JPN">モンロー</language>
+		<language name="JPN_KANJI">モンロー</language>
 	</row>
 
-	<row id="BTD_TR_245">
-		<language name="JPN">カシワ</language>
-		<language name="JPN_KANJI">カシワ</language>
-	</row>
-
-	<row id="BTD_TR_246">
-		<language name="JPN">サツマ</language>
-		<language name="JPN_KANJI">サツマ</language>
-	</row>
-
-	<row id="BTD_TR_247">
-		<language name="JPN">タネ</language>
-		<language name="JPN_KANJI">タネ</language>
-	</row>
-
-	<row id="BTD_TR_248">
-		<language name="JPN">アガリ</language>
-		<language name="JPN_KANJI">アガリ</language>
-	</row>
-
-	<row id="BTD_TR_249">
-		<language name="JPN">ディアボロ</language>
-		<language name="JPN_KANJI">ディアボロ</language>
-	</row>
-
-	<row id="BTD_TR_250">
+	<row id="BTD_TR_32">
 		<language name="JPN">サンレイ</language>
 		<language name="JPN_KANJI">サンレイ</language>
 	</row>
 
-	<row id="BTD_TR_251">
-		<language name="JPN">ジンパチ</language>
-		<language name="JPN_KANJI">ジンパチ</language>
-	</row>
-
-	<row id="BTD_TR_252">
-		<language name="JPN">ワカ</language>
-		<language name="JPN_KANJI">ワカ</language>
-	</row>
-
-	<row id="BTD_TR_253">
-		<language name="JPN">ハンゲツ</language>
-		<language name="JPN_KANJI">ハンゲツ</language>
-	</row>
-
-	<row id="BTD_TR_254">
-		<language name="JPN">マンゲツ</language>
-		<language name="JPN_KANJI">マンゲツ</language>
-	</row>
-
-	<row id="BTD_TR_255">
-		<language name="JPN">ヨアキン</language>
-		<language name="JPN_KANJI">ヨアキン</language>
-	</row>
-
-	<row id="BTD_TR_256">
-		<language name="JPN">モンジロウ</language>
-		<language name="JPN_KANJI">モンジロウ</language>
-	</row>
-
-	<row id="BTD_TR_257">
-		<language name="JPN">フレーム</language>
-		<language name="JPN_KANJI">フレーム</language>
-	</row>
-
-	<row id="BTD_TR_258">
-		<language name="JPN">スポーク</language>
-		<language name="JPN_KANJI">スポーク</language>
-	</row>
-
-	<row id="BTD_TR_259">
-		<language name="JPN">ルーテー</language>
-		<language name="JPN_KANJI">ルーテー</language>
-	</row>
-
-	<row id="BTD_TR_260">
-		<language name="JPN">ルバロン</language>
-		<language name="JPN_KANJI">ルバロン</language>
-	</row>
-
-	<row id="BTD_TR_261">
-		<language name="JPN">シルル</language>
-		<language name="JPN_KANJI">シルル</language>
-	</row>
-
-	<row id="BTD_TR_262">
-		<language name="JPN">デボン</language>
-		<language name="JPN_KANJI">デボン</language>
-	</row>
-
-	<row id="BTD_TR_263">
-		<language name="JPN">アキレス</language>
-		<language name="JPN_KANJI">アキレス</language>
-	</row>
-
-	<row id="BTD_TR_264">
-		<language name="JPN">ジンタイ</language>
-		<language name="JPN_KANJI">ジンタイ</language>
-	</row>
-
-	<row id="BTD_TR_265">
-		<language name="JPN">アレックス</language>
-		<language name="JPN_KANJI">アレックス</language>
-	</row>
-
-	<row id="BTD_TR_266">
-		<language name="JPN">ゴンザレス</language>
-		<language name="JPN_KANJI">ゴンザレス</language>
-	</row>
-
-	<row id="BTD_TR_267">
-		<language name="JPN">マリアナ</language>
-		<language name="JPN_KANJI">マリアナ</language>
-	</row>
-
-	<row id="BTD_TR_268">
-		<language name="JPN">トンガ</language>
-		<language name="JPN_KANJI">トンガ</language>
-	</row>
-
-	<row id="BTD_TR_269">
-		<language name="JPN">ヒカゲ</language>
-		<language name="JPN_KANJI">ヒカゲ</language>
-	</row>
-
-	<row id="BTD_TR_270">
-		<language name="JPN">ゲンゴロウ</language>
-		<language name="JPN_KANJI">ゲンゴロウ</language>
-	</row>
-
-	<row id="BTD_TR_271">
-		<language name="JPN">トトメス</language>
-		<language name="JPN_KANJI">トトメス</language>
-	</row>
-
-	<row id="BTD_TR_272">
-		<language name="JPN">ペル・アア</language>
-		<language name="JPN_KANJI">ペル・アア</language>
-	</row>
-
-	<row id="BTD_TR_273">
-		<language name="JPN">レゾナンス</language>
-		<language name="JPN_KANJI">レゾナンス</language>
-	</row>
-
-	<row id="BTD_TR_274">
-		<language name="JPN">カタバチ</language>
-		<language name="JPN_KANJI">カタバチ</language>
-	</row>
-
-	<row id="BTD_TR_275">
-		<language name="JPN">リー</language>
-		<language name="JPN_KANJI">リー</language>
-	</row>
-
-	<row id="BTD_TR_276">
-		<language name="JPN">ニューマン</language>
-		<language name="JPN_KANJI">ニューマン</language>
-	</row>
-
-	<row id="BTD_TR_277">
-		<language name="JPN">ロウシ</language>
-		<language name="JPN_KANJI">ロウシ</language>
-	</row>
-
-	<row id="BTD_TR_278">
-		<language name="JPN">コウシ</language>
-		<language name="JPN_KANJI">コウシ</language>
-	</row>
-
-	<row id="BTD_TR_279">
+	<row id="BTD_TR_33">
 		<language name="JPN">ゲンナイ</language>
 		<language name="JPN_KANJI">ゲンナイ</language>
 	</row>
 
-	<row id="BTD_TR_280">
-		<language name="JPN">ダーウィン</language>
-		<language name="JPN_KANJI">ダーウィン</language>
+	<row id="BTD_TR_34">
+		<language name="JPN">アナンダ</language>
+		<language name="JPN_KANJI">アナンダ</language>
 	</row>
 
-	<row id="BTD_TR_281">
-		<language name="JPN">ヨアヒム</language>
-		<language name="JPN_KANJI">ヨアヒム</language>
+	<row id="BTD_TR_35">
+		<language name="JPN">セルジブデ</language>
+		<language name="JPN_KANJI">セルジブデ</language>
 	</row>
 
-	<row id="BTD_TR_282">
-		<language name="JPN">ローレンツ</language>
-		<language name="JPN_KANJI">ローレンツ</language>
+	<row id="BTD_TR_36">
+		<language name="JPN">マイラ</language>
+		<language name="JPN_KANJI">マイラ</language>
 	</row>
 
-	<row id="BTD_TR_283">
-		<language name="JPN">バイス</language>
-		<language name="JPN_KANJI">バイス</language>
+	<row id="BTD_TR_37">
+		<language name="JPN">ターニャ</language>
+		<language name="JPN_KANJI">ターニャ</language>
 	</row>
 
-	<row id="BTD_TR_284">
-		<language name="JPN">カモイ</language>
-		<language name="JPN_KANJI">カモイ</language>
+	<row id="BTD_TR_38">
+		<language name="JPN">テリッサ</language>
+		<language name="JPN_KANJI">テリッサ</language>
 	</row>
 
-	<row id="BTD_TR_285">
-		<language name="JPN">ブンシ</language>
-		<language name="JPN_KANJI">ブンシ</language>
+	<row id="BTD_TR_39">
+		<language name="JPN">ゴウジン</language>
+		<language name="JPN_KANJI">ゴウジン</language>
 	</row>
 
-	<row id="BTD_TR_286">
-		<language name="JPN">エンゾウ</language>
-		<language name="JPN_KANJI">エンゾウ</language>
+	<row id="BTD_TR_40">
+		<language name="JPN">アブドゥル</language>
+		<language name="JPN_KANJI">アブドゥル</language>
 	</row>
 
-	<row id="BTD_TR_287">
-		<language name="JPN">マンソン</language>
-		<language name="JPN_KANJI">マンソン</language>
+	<row id="BTD_TR_41">
+		<language name="JPN">ジムジロウ</language>
+		<language name="JPN_KANJI">ジムジロウ</language>
 	</row>
 
-	<row id="BTD_TR_288">
+	<row id="BTD_TR_42">
+		<language name="JPN">アオヤギ</language>
+		<language name="JPN_KANJI">アオヤギ</language>
+	</row>
+
+	<row id="BTD_TR_43">
+		<language name="JPN">シャコ</language>
+		<language name="JPN_KANJI">シャコ</language>
+	</row>
+
+	<row id="BTD_TR_44">
+		<language name="JPN">イサキ</language>
+		<language name="JPN_KANJI">イサキ</language>
+	</row>
+
+	<row id="BTD_TR_45">
+		<language name="JPN">フツ</language>
+		<language name="JPN_KANJI">フツ</language>
+	</row>
+
+	<row id="BTD_TR_46">
+		<language name="JPN">ムラクモ</language>
+		<language name="JPN_KANJI">ムラクモ</language>
+	</row>
+
+	<row id="BTD_TR_47">
+		<language name="JPN">トツカ</language>
+		<language name="JPN_KANJI">トツカ</language>
+	</row>
+
+	<row id="BTD_TR_48">
+		<language name="JPN">アマナツ</language>
+		<language name="JPN_KANJI">アマナツ</language>
+	</row>
+
+	<row id="BTD_TR_49">
+		<language name="JPN">カレルレン</language>
+		<language name="JPN_KANJI">カレルレン</language>
+	</row>
+
+	<row id="BTD_TR_50">
+		<language name="JPN">ファルナ</language>
+		<language name="JPN_KANJI">ファルナ</language>
+	</row>
+
+	<row id="BTD_TR_51">
+		<language name="JPN">ガスパール</language>
+		<language name="JPN_KANJI">ガスパール</language>
+	</row>
+
+	<row id="BTD_TR_52">
+		<language name="JPN">ツルギ</language>
+		<language name="JPN_KANJI">ツルギ</language>
+	</row>
+
+	<row id="BTD_TR_53">
+		<language name="JPN">ディプロ</language>
+		<language name="JPN_KANJI">ディプロ</language>
+	</row>
+
+	<row id="BTD_TR_54">
+		<language name="JPN">ジャガー</language>
+		<language name="JPN_KANJI">ジャガー</language>
+	</row>
+
+	<row id="BTD_TR_55">
+		<language name="JPN">ポロ</language>
+		<language name="JPN_KANJI">ポロ</language>
+	</row>
+
+	<row id="BTD_TR_56">
+		<language name="JPN">アバッキオ</language>
+		<language name="JPN_KANJI">アバッキオ</language>
+	</row>
+
+	<row id="BTD_TR_57">
+		<language name="JPN">スカンピ</language>
+		<language name="JPN_KANJI">スカンピ</language>
+	</row>
+
+	<row id="BTD_TR_58">
+		<language name="JPN">ティウ</language>
+		<language name="JPN_KANJI">ティウ</language>
+	</row>
+
+	<row id="BTD_TR_59">
+		<language name="JPN">アトラス</language>
+		<language name="JPN_KANJI">アトラス</language>
+	</row>
+
+	<row id="BTD_TR_60">
+		<language name="JPN">カリスト</language>
+		<language name="JPN_KANJI">カリスト</language>
+	</row>
+
+	<row id="BTD_TR_61">
+		<language name="JPN">ニコラオス</language>
+		<language name="JPN_KANJI">ニコラオス</language>
+	</row>
+
+	<row id="BTD_TR_62">
+		<language name="JPN">パウロ</language>
+		<language name="JPN_KANJI">パウロ</language>
+	</row>
+
+	<row id="BTD_TR_63">
+		<language name="JPN">ホビロン</language>
+		<language name="JPN_KANJI">ホビロン</language>
+	</row>
+
+	<row id="BTD_TR_64">
+		<language name="JPN">クララベル</language>
+		<language name="JPN_KANJI">クララベル</language>
+	</row>
+
+	<row id="BTD_TR_65">
+		<language name="JPN">クラーラ</language>
+		<language name="JPN_KANJI">クラーラ</language>
+	</row>
+
+	<row id="BTD_TR_66">
+		<language name="JPN">オルガ</language>
+		<language name="JPN_KANJI">オルガ</language>
+	</row>
+
+	<row id="BTD_TR_67">
+		<language name="JPN">ボブ</language>
+		<language name="JPN_KANJI">ボブ</language>
+	</row>
+
+	<row id="BTD_TR_68">
+		<language name="JPN">ボブヒコ</language>
+		<language name="JPN_KANJI">ボブヒコ</language>
+	</row>
+
+	<row id="BTD_TR_69">
+		<language name="JPN">ミカ</language>
+		<language name="JPN_KANJI">ミカ</language>
+	</row>
+
+	<row id="BTD_TR_70">
+		<language name="JPN">メンカウラ</language>
+		<language name="JPN_KANJI">メンカウラ</language>
+	</row>
+
+	<row id="BTD_TR_71">
+		<language name="JPN">リンカーン</language>
+		<language name="JPN_KANJI">リンカーン</language>
+	</row>
+
+	<row id="BTD_TR_72">
+		<language name="JPN">トルーマン</language>
+		<language name="JPN_KANJI">トルーマン</language>
+	</row>
+
+	<row id="BTD_TR_73">
+		<language name="JPN">フーバー</language>
+		<language name="JPN_KANJI">フーバー</language>
+	</row>
+
+	<row id="BTD_TR_74">
+		<language name="JPN">ナヨギク</language>
+		<language name="JPN_KANJI">ナヨギク</language>
+	</row>
+
+	<row id="BTD_TR_75">
+		<language name="JPN">ヒグラシ</language>
+		<language name="JPN_KANJI">ヒグラシ</language>
+	</row>
+
+	<row id="BTD_TR_76">
+		<language name="JPN">アイリーン</language>
+		<language name="JPN_KANJI">アイリーン</language>
+	</row>
+
+	<row id="BTD_TR_77">
+		<language name="JPN">クリノスケ</language>
+		<language name="JPN_KANJI">クリノスケ</language>
+	</row>
+
+	<row id="BTD_TR_78">
+		<language name="JPN">カキエモン</language>
+		<language name="JPN_KANJI">カキエモン</language>
+	</row>
+
+	<row id="BTD_TR_79">
+		<language name="JPN">モモタロウ</language>
+		<language name="JPN_KANJI">モモタロウ</language>
+	</row>
+
+	<row id="BTD_TR_80">
+		<language name="JPN">ロベルタ</language>
+		<language name="JPN_KANJI">ロベルタ</language>
+	</row>
+
+	<row id="BTD_TR_81">
+		<language name="JPN">パク</language>
+		<language name="JPN_KANJI">パク</language>
+	</row>
+
+	<row id="BTD_TR_82">
+		<language name="JPN">ツルコ</language>
+		<language name="JPN_KANJI">ツルコ</language>
+	</row>
+
+	<row id="BTD_TR_83">
+		<language name="JPN">メルセデス</language>
+		<language name="JPN_KANJI">メルセデス</language>
+	</row>
+
+	<row id="BTD_TR_84">
+		<language name="JPN">ファビアン</language>
+		<language name="JPN_KANJI">ファビアン</language>
+	</row>
+
+	<row id="BTD_TR_85">
+		<language name="JPN">ネタロウ</language>
+		<language name="JPN_KANJI">ネタロウ</language>
+	</row>
+
+	<row id="BTD_TR_86">
+		<language name="JPN">ピアジェ</language>
+		<language name="JPN_KANJI">ピアジェ</language>
+	</row>
+
+	<row id="BTD_TR_87">
+		<language name="JPN">エーミル</language>
+		<language name="JPN_KANJI">エーミル</language>
+	</row>
+
+	<row id="BTD_TR_88">
 		<language name="JPN">シンエモン</language>
 		<language name="JPN_KANJI">シンエモン</language>
 	</row>
 
+	<row id="BTD_TR_89">
+		<language name="JPN">ウェイ</language>
+		<language name="JPN_KANJI">ウェイ</language>
+	</row>
+
+	<row id="BTD_TR_90">
+		<language name="JPN">ミン</language>
+		<language name="JPN_KANJI">ミン</language>
+	</row>
+
+	<row id="BTD_TR_91">
+		<language name="JPN">マールクス</language>
+		<language name="JPN_KANJI">マールクス</language>
+	</row>
+
+	<row id="BTD_TR_92">
+		<language name="JPN">マチゾウ</language>
+		<language name="JPN_KANJI">マチゾウ</language>
+	</row>
+
+	<row id="BTD_TR_93">
+		<language name="JPN">シンゲン</language>
+		<language name="JPN_KANJI">シンゲン</language>
+	</row>
+
+	<row id="BTD_TR_94">
+		<language name="JPN">クラウド</language>
+		<language name="JPN_KANJI">クラウド</language>
+	</row>
+
+	<row id="BTD_TR_95">
+		<language name="JPN">バシレウス</language>
+		<language name="JPN_KANJI">バシレウス</language>
+	</row>
+
+	<row id="BTD_TR_96">
+		<language name="JPN">ホフマン</language>
+		<language name="JPN_KANJI">ホフマン</language>
+	</row>
+
+	<row id="BTD_TR_97">
+		<language name="JPN">サダ</language>
+		<language name="JPN_KANJI">サダ</language>
+	</row>
+
+	<row id="BTD_TR_98">
+		<language name="JPN">ヨド</language>
+		<language name="JPN_KANJI">ヨド</language>
+	</row>
+
+	<row id="BTD_TR_99">
+		<language name="JPN">ゴサク</language>
+		<language name="JPN_KANJI">ゴサク</language>
+	</row>
+
+	<row id="BTD_TR_100">
+		<language name="JPN">コッフェル</language>
+		<language name="JPN_KANJI">コッフェル</language>
+	</row>
+
+	<row id="BTD_TR_101">
+		<language name="JPN">カメ</language>
+		<language name="JPN_KANJI">カメ</language>
+	</row>
+
+	<row id="BTD_TR_102">
+		<language name="JPN">カードイ</language>
+		<language name="JPN_KANJI">カードイ</language>
+	</row>
+
+	<row id="BTD_TR_103">
+		<language name="JPN">シンタロウ</language>
+		<language name="JPN_KANJI">シンタロウ</language>
+	</row>
+
+	<row id="BTD_TR_104">
+		<language name="JPN">エンゾウ</language>
+		<language name="JPN_KANJI">エンゾウ</language>
+	</row>
+
+	<row id="BTD_TR_105">
+		<language name="JPN">ディオーネ</language>
+		<language name="JPN_KANJI">ディオーネ</language>
+	</row>
+
+	<row id="BTD_TR_106">
+		<language name="JPN">ネレイド</language>
+		<language name="JPN_KANJI">ネレイド</language>
+	</row>
+
+	<row id="BTD_TR_107">
+		<language name="JPN">アックン</language>
+		<language name="JPN_KANJI">アックン</language>
+	</row>
+
+	<row id="BTD_TR_108">
+		<language name="JPN">カックン</language>
+		<language name="JPN_KANJI">カックン</language>
+	</row>
+
+	<row id="BTD_TR_109">
+		<language name="JPN">ロアン</language>
+		<language name="JPN_KANJI">ロアン</language>
+	</row>
+
+	<row id="BTD_TR_110">
+		<language name="JPN">クェン</language>
+		<language name="JPN_KANJI">クェン</language>
+	</row>
+
+	<row id="BTD_TR_111">
+		<language name="JPN">テルモト</language>
+		<language name="JPN_KANJI">テルモト</language>
+	</row>
+
+	<row id="BTD_TR_112">
+		<language name="JPN">カネツグ</language>
+		<language name="JPN_KANJI">カネツグ</language>
+	</row>
+
+	<row id="BTD_TR_113">
+		<language name="JPN">ユイットル</language>
+		<language name="JPN_KANJI">ユイットル</language>
+	</row>
+
+	<row id="BTD_TR_114">
+		<language name="JPN">パンタード</language>
+		<language name="JPN_KANJI">パンタード</language>
+	</row>
+
+	<row id="BTD_TR_115">
+		<language name="JPN">フリッツ</language>
+		<language name="JPN_KANJI">フリッツ</language>
+	</row>
+
+	<row id="BTD_TR_116">
+		<language name="JPN">ヨヘイ</language>
+		<language name="JPN_KANJI">ヨヘイ</language>
+	</row>
+
+	<row id="BTD_TR_117">
+		<language name="JPN">ワカタケ</language>
+		<language name="JPN_KANJI">ワカタケ</language>
+	</row>
+
+	<row id="BTD_TR_118">
+		<language name="JPN">ツバル</language>
+		<language name="JPN_KANJI">ツバル</language>
+	</row>
+
+	<row id="BTD_TR_119">
+		<language name="JPN">カイン</language>
+		<language name="JPN_KANJI">カイン</language>
+	</row>
+
+	<row id="BTD_TR_120">
+		<language name="JPN">アベル</language>
+		<language name="JPN_KANJI">アベル</language>
+	</row>
+
+	<row id="BTD_TR_121">
+		<language name="JPN">ポワソン</language>
+		<language name="JPN_KANJI">ポワソン</language>
+	</row>
+
+	<row id="BTD_TR_122">
+		<language name="JPN">ユイトール</language>
+		<language name="JPN_KANJI">ユイトール</language>
+	</row>
+
+	<row id="BTD_TR_123">
+		<language name="JPN">ユーセフ</language>
+		<language name="JPN_KANJI">ユーセフ</language>
+	</row>
+
+	<row id="BTD_TR_124">
+		<language name="JPN">ザイド</language>
+		<language name="JPN_KANJI">ザイド</language>
+	</row>
+
+	<row id="BTD_TR_125">
+		<language name="JPN">ベティ</language>
+		<language name="JPN_KANJI">ベティ</language>
+	</row>
+
+	<row id="BTD_TR_126">
+		<language name="JPN">ヘレン</language>
+		<language name="JPN_KANJI">ヘレン</language>
+	</row>
+
+	<row id="BTD_TR_127">
+		<language name="JPN">クンヤ</language>
+		<language name="JPN_KANJI">クンヤ</language>
+	</row>
+
+	<row id="BTD_TR_128">
+		<language name="JPN">シャムス</language>
+		<language name="JPN_KANJI">シャムス</language>
+	</row>
+
+	<row id="BTD_TR_129">
+		<language name="JPN">ズラータ</language>
+		<language name="JPN_KANJI">ズラータ</language>
+	</row>
+
+	<row id="BTD_TR_130">
+		<language name="JPN">ポリーナ</language>
+		<language name="JPN_KANJI">ポリーナ</language>
+	</row>
+
+	<row id="BTD_TR_131">
+		<language name="JPN">レオナルト</language>
+		<language name="JPN_KANJI">レオナルト</language>
+	</row>
+
+	<row id="BTD_TR_132">
+		<language name="JPN">ローレンツ</language>
+		<language name="JPN_KANJI">ローレンツ</language>
+	</row>
+
+	<row id="BTD_TR_133">
+		<language name="JPN">エンガワ</language>
+		<language name="JPN_KANJI">エンガワ</language>
+	</row>
+
+	<row id="BTD_TR_134">
+		<language name="JPN">コハダ</language>
+		<language name="JPN_KANJI">コハダ</language>
+	</row>
+
+	<row id="BTD_TR_135">
+		<language name="JPN">セルジオ</language>
+		<language name="JPN_KANJI">セルジオ</language>
+	</row>
+
+	<row id="BTD_TR_136">
+		<language name="JPN">フェリペ</language>
+		<language name="JPN_KANJI">フェリペ</language>
+	</row>
+
+	<row id="BTD_TR_137">
+		<language name="JPN">ビージャル</language>
+		<language name="JPN_KANJI">ビージャル</language>
+	</row>
+
+	<row id="BTD_TR_138">
+		<language name="JPN">メリル</language>
+		<language name="JPN_KANJI">メリル</language>
+	</row>
+
+	<row id="BTD_TR_139">
+		<language name="JPN">タピオカ</language>
+		<language name="JPN_KANJI">タピオカ</language>
+	</row>
+
+	<row id="BTD_TR_140">
+		<language name="JPN">ゲンゴロウ</language>
+		<language name="JPN_KANJI">ゲンゴロウ</language>
+	</row>
+
+	<row id="BTD_TR_141">
+		<language name="JPN">ダンカン</language>
+		<language name="JPN_KANJI">ダンカン</language>
+	</row>
+
+	<row id="BTD_TR_142">
+		<language name="JPN">モルガン</language>
+		<language name="JPN_KANJI">モルガン</language>
+	</row>
+
+	<row id="BTD_TR_143">
+		<language name="JPN">ココメーロ</language>
+		<language name="JPN_KANJI">ココメーロ</language>
+	</row>
+
+	<row id="BTD_TR_144">
+		<language name="JPN">パク</language>
+		<language name="JPN_KANJI">パク</language>
+	</row>
+
+	<row id="BTD_TR_145">
+		<language name="JPN">ポモドーロ</language>
+		<language name="JPN_KANJI">ポモドーロ</language>
+	</row>
+
+	<row id="BTD_TR_146">
+		<language name="JPN">オベロン</language>
+		<language name="JPN_KANJI">オベロン</language>
+	</row>
+
+	<row id="BTD_TR_147">
+		<language name="JPN">トリトン</language>
+		<language name="JPN_KANJI">トリトン</language>
+	</row>
+
+	<row id="BTD_TR_148">
+		<language name="JPN">カロン</language>
+		<language name="JPN_KANJI">カロン</language>
+	</row>
+
+	<row id="BTD_TR_149">
+		<language name="JPN">ザビエル</language>
+		<language name="JPN_KANJI">ザビエル</language>
+	</row>
+
+	<row id="BTD_TR_150">
+		<language name="JPN">ヤコブ</language>
+		<language name="JPN_KANJI">ヤコブ</language>
+	</row>
+
+	<row id="BTD_TR_151">
+		<language name="JPN">ヨアキム</language>
+		<language name="JPN_KANJI">ヨアキム</language>
+	</row>
+
+	<row id="BTD_TR_152">
+		<language name="JPN">セリーヌ</language>
+		<language name="JPN_KANJI">セリーヌ</language>
+	</row>
+
+	<row id="BTD_TR_153">
+		<language name="JPN">コウ</language>
+		<language name="JPN_KANJI">コウ</language>
+	</row>
+
+	<row id="BTD_TR_154">
+		<language name="JPN">マリーズ</language>
+		<language name="JPN_KANJI">マリーズ</language>
+	</row>
+
+	<row id="BTD_TR_155">
+		<language name="JPN">ジュズマル</language>
+		<language name="JPN_KANJI">ジュズマル</language>
+	</row>
+
+	<row id="BTD_TR_156">
+		<language name="JPN">ムネチカ</language>
+		<language name="JPN_KANJI">ムネチカ</language>
+	</row>
+
+	<row id="BTD_TR_157">
+		<language name="JPN">オニマル</language>
+		<language name="JPN_KANJI">オニマル</language>
+	</row>
+
+	<row id="BTD_TR_158">
+		<language name="JPN">テツ</language>
+		<language name="JPN_KANJI">テツ</language>
+	</row>
+
+	<row id="BTD_TR_159">
+		<language name="JPN">ニッケイ</language>
+		<language name="JPN_KANJI">ニッケイ</language>
+	</row>
+
+	<row id="BTD_TR_160">
+		<language name="JPN">サビアサギ</language>
+		<language name="JPN_KANJI">サビアサギ</language>
+	</row>
+
+	<row id="BTD_TR_161">
+		<language name="JPN">シャンク</language>
+		<language name="JPN_KANJI">シャンク</language>
+	</row>
+
+	<row id="BTD_TR_162">
+		<language name="JPN">アイアン</language>
+		<language name="JPN_KANJI">アイアン</language>
+	</row>
+
+	<row id="BTD_TR_163">
+		<language name="JPN">ボギー</language>
+		<language name="JPN_KANJI">ボギー</language>
+	</row>
+
+	<row id="BTD_TR_164">
+		<language name="JPN">マーチ</language>
+		<language name="JPN_KANJI">マーチ</language>
+	</row>
+
+	<row id="BTD_TR_165">
+		<language name="JPN">ミキヲ</language>
+		<language name="JPN_KANJI">ミキヲ</language>
+	</row>
+
+	<row id="BTD_TR_166">
+		<language name="JPN">ポルカ</language>
+		<language name="JPN_KANJI">ポルカ</language>
+	</row>
+
+	<row id="BTD_TR_167">
+		<language name="JPN">アントク</language>
+		<language name="JPN_KANJI">アントク</language>
+	</row>
+
+	<row id="BTD_TR_168">
+		<language name="JPN">トキヒト</language>
+		<language name="JPN_KANJI">トキヒト</language>
+	</row>
+
+	<row id="BTD_TR_169">
+		<language name="JPN">ユキムラ</language>
+		<language name="JPN_KANJI">ユキムラ</language>
+	</row>
+
+	<row id="BTD_TR_170">
+		<language name="JPN">ウジマサ</language>
+		<language name="JPN_KANJI">ウジマサ</language>
+	</row>
+
+	<row id="BTD_TR_171">
+		<language name="JPN">ハミード</language>
+		<language name="JPN_KANJI">ハミード</language>
+	</row>
+
+	<row id="BTD_TR_172">
+		<language name="JPN">アフマド</language>
+		<language name="JPN_KANJI">アフマド</language>
+	</row>
+
+	<row id="BTD_TR_173">
+		<language name="JPN">イチマツ</language>
+		<language name="JPN_KANJI">イチマツ</language>
+	</row>
+
+	<row id="BTD_TR_174">
+		<language name="JPN">ナヨタケ</language>
+		<language name="JPN_KANJI">ナヨタケ</language>
+	</row>
+
+	<row id="BTD_TR_175">
+		<language name="JPN">ボブジロウ</language>
+		<language name="JPN_KANJI">ボブジロウ</language>
+	</row>
+
+	<row id="BTD_TR_176">
+		<language name="JPN">ボブヨシ</language>
+		<language name="JPN_KANJI">ボブヨシ</language>
+	</row>
+
+	<row id="BTD_TR_177">
+		<language name="JPN">ワディム</language>
+		<language name="JPN_KANJI">ワディム</language>
+	</row>
+
+	<row id="BTD_TR_178">
+		<language name="JPN">ユーリー</language>
+		<language name="JPN_KANJI">ユーリー</language>
+	</row>
+
+	<row id="BTD_TR_179">
+		<language name="JPN">ベロア</language>
+		<language name="JPN_KANJI">ベロア</language>
+	</row>
+
+	<row id="BTD_TR_180">
+		<language name="JPN">モヘア</language>
+		<language name="JPN_KANJI">モヘア</language>
+	</row>
+
+	<row id="BTD_TR_181">
+		<language name="JPN">カマナリ</language>
+		<language name="JPN_KANJI">カマナリ</language>
+	</row>
+
+	<row id="BTD_TR_182">
+		<language name="JPN">ヨブコ</language>
+		<language name="JPN_KANJI">ヨブコ</language>
+	</row>
+
+	<row id="BTD_TR_183">
+		<language name="JPN">キャメロン</language>
+		<language name="JPN_KANJI">キャメロン</language>
+	</row>
+
+	<row id="BTD_TR_184">
+		<language name="JPN">ジャッキー</language>
+		<language name="JPN_KANJI">ジャッキー</language>
+	</row>
+
+	<row id="BTD_TR_185">
+		<language name="JPN">ドクデス</language>
+		<language name="JPN_KANJI">ドクデス</language>
+	</row>
+
+	<row id="BTD_TR_186">
+		<language name="JPN">チミン</language>
+		<language name="JPN_KANJI">チミン</language>
+	</row>
+
+	<row id="BTD_TR_187">
+		<language name="JPN">アデニン</language>
+		<language name="JPN_KANJI">アデニン</language>
+	</row>
+
+	<row id="BTD_TR_188">
+		<language name="JPN">タマトヨ</language>
+		<language name="JPN_KANJI">タマトヨ</language>
+	</row>
+
+	<row id="BTD_TR_189">
+		<language name="JPN">キクリ</language>
+		<language name="JPN_KANJI">キクリ</language>
+	</row>
+
+	<row id="BTD_TR_190">
+		<language name="JPN">クシナダ</language>
+		<language name="JPN_KANJI">クシナダ</language>
+	</row>
+
+	<row id="BTD_TR_191">
+		<language name="JPN">ダニイル</language>
+		<language name="JPN_KANJI">ダニイル</language>
+	</row>
+
+	<row id="BTD_TR_192">
+		<language name="JPN">フョードル</language>
+		<language name="JPN_KANJI">フョードル</language>
+	</row>
+
+	<row id="BTD_TR_193">
+		<language name="JPN">マキエ</language>
+		<language name="JPN_KANJI">マキエ</language>
+	</row>
+
+	<row id="BTD_TR_194">
+		<language name="JPN">ウルシ</language>
+		<language name="JPN_KANJI">ウルシ</language>
+	</row>
+
+	<row id="BTD_TR_195">
+		<language name="JPN">モリリン</language>
+		<language name="JPN_KANJI">モリリン</language>
+	</row>
+
+	<row id="BTD_TR_196">
+		<language name="JPN">ミズノスケ</language>
+		<language name="JPN_KANJI">ミズノスケ</language>
+	</row>
+
+	<row id="BTD_TR_197">
+		<language name="JPN">ウソブキ</language>
+		<language name="JPN_KANJI">ウソブキ</language>
+	</row>
+
+	<row id="BTD_TR_198">
+		<language name="JPN">オタフク</language>
+		<language name="JPN_KANJI">オタフク</language>
+	</row>
+
+	<row id="BTD_TR_199">
+		<language name="JPN">ゲッコウ</language>
+		<language name="JPN_KANJI">ゲッコウ</language>
+	</row>
+
+	<row id="BTD_TR_200">
+		<language name="JPN">イザヨイ</language>
+		<language name="JPN_KANJI">イザヨイ</language>
+	</row>
+
+	<row id="BTD_TR_201">
+		<language name="JPN">ネジヒコ</language>
+		<language name="JPN_KANJI">ネジヒコ</language>
+	</row>
+
+	<row id="BTD_TR_202">
+		<language name="JPN">ファウスト</language>
+		<language name="JPN_KANJI">ファウスト</language>
+	</row>
+
+	<row id="BTD_TR_203">
+		<language name="JPN">ヤブサメ</language>
+		<language name="JPN_KANJI">ヤブサメ</language>
+	</row>
+
+	<row id="BTD_TR_204">
+		<language name="JPN">ウツケ</language>
+		<language name="JPN_KANJI">ウツケ</language>
+	</row>
+
+	<row id="BTD_TR_205">
+		<language name="JPN">フトコロ</language>
+		<language name="JPN_KANJI">フトコロ</language>
+	</row>
+
+	<row id="BTD_TR_206">
+		<language name="JPN">ロッテ</language>
+		<language name="JPN_KANJI">ロッテ</language>
+	</row>
+
+	<row id="BTD_TR_207">
+		<language name="JPN">テレーゼ</language>
+		<language name="JPN_KANJI">テレーゼ</language>
+	</row>
+
+	<row id="BTD_TR_208">
+		<language name="JPN">ツヤコ</language>
+		<language name="JPN_KANJI">ツヤコ</language>
+	</row>
+
+	<row id="BTD_TR_209">
+		<language name="JPN">ボルドバト</language>
+		<language name="JPN_KANJI">ボルドバト</language>
+	</row>
+
+	<row id="BTD_TR_210">
+		<language name="JPN">ソロンゴ</language>
+		<language name="JPN_KANJI">ソロンゴ</language>
+	</row>
+
+	<row id="BTD_TR_211">
+		<language name="JPN">ハーン</language>
+		<language name="JPN_KANJI">ハーン</language>
+	</row>
+
+	<row id="BTD_TR_212">
+		<language name="JPN">ムー</language>
+		<language name="JPN_KANJI">ムー</language>
+	</row>
+
+	<row id="BTD_TR_213">
+		<language name="JPN">シャンバラ</language>
+		<language name="JPN_KANJI">シャンバラ</language>
+	</row>
+
+	<row id="BTD_TR_214">
+		<language name="JPN">ロンゴ</language>
+		<language name="JPN_KANJI">ロンゴ</language>
+	</row>
+
+	<row id="BTD_TR_215">
+		<language name="JPN">ウンスー</language>
+		<language name="JPN_KANJI">ウンスー</language>
+	</row>
+
+	<row id="BTD_TR_216">
+		<language name="JPN">ハリマオ</language>
+		<language name="JPN_KANJI">ハリマオ</language>
+	</row>
+
+	<row id="BTD_TR_217">
+		<language name="JPN">エンピ</language>
+		<language name="JPN_KANJI">エンピ</language>
+	</row>
+
+	<row id="BTD_TR_218">
+		<language name="JPN">テンホウ</language>
+		<language name="JPN_KANJI">テンホウ</language>
+	</row>
+
+	<row id="BTD_TR_219">
+		<language name="JPN">チーホウ</language>
+		<language name="JPN_KANJI">チーホウ</language>
+	</row>
+
+	<row id="BTD_TR_220">
+		<language name="JPN">スーカンツ</language>
+		<language name="JPN_KANJI">スーカンツ</language>
+	</row>
+
+	<row id="BTD_TR_221">
+		<language name="JPN">ススタケ</language>
+		<language name="JPN_KANJI">ススタケ</language>
+	</row>
+
+	<row id="BTD_TR_222">
+		<language name="JPN">マウス</language>
+		<language name="JPN_KANJI">マウス</language>
+	</row>
+
+	<row id="BTD_TR_223">
+		<language name="JPN">カメノゾキ</language>
+		<language name="JPN_KANJI">カメノゾキ</language>
+	</row>
+
+	<row id="BTD_TR_224">
+		<language name="JPN">テラコッタ</language>
+		<language name="JPN_KANJI">テラコッタ</language>
+	</row>
+
+	<row id="BTD_TR_225">
+		<language name="JPN">バフ</language>
+		<language name="JPN_KANJI">バフ</language>
+	</row>
+
+	<row id="BTD_TR_226">
+		<language name="JPN">ボルドー</language>
+		<language name="JPN_KANJI">ボルドー</language>
+	</row>
+
+	<row id="BTD_TR_227">
+		<language name="JPN">マツウシ</language>
+		<language name="JPN_KANJI">マツウシ</language>
+	</row>
+
+	<row id="BTD_TR_228">
+		<language name="JPN">ツルマツ</language>
+		<language name="JPN_KANJI">ツルマツ</language>
+	</row>
+
+	<row id="BTD_TR_229">
+		<language name="JPN">サエモン</language>
+		<language name="JPN_KANJI">サエモン</language>
+	</row>
+
+	<row id="BTD_TR_230">
+		<language name="JPN">グエン</language>
+		<language name="JPN_KANJI">グエン</language>
+	</row>
+
+	<row id="BTD_TR_231">
+		<language name="JPN">ムーイ</language>
+		<language name="JPN_KANJI">ムーイ</language>
+	</row>
+
+	<row id="BTD_TR_232">
+		<language name="JPN">パーム</language>
+		<language name="JPN_KANJI">パーム</language>
+	</row>
+
+	<row id="BTD_TR_233">
+		<language name="JPN">ポンタ</language>
+		<language name="JPN_KANJI">ポンタ</language>
+	</row>
+
+	<row id="BTD_TR_234">
+		<language name="JPN">ドンタ</language>
+		<language name="JPN_KANJI">ドンタ</language>
+	</row>
+
+	<row id="BTD_TR_235">
+		<language name="JPN">マゴベエ</language>
+		<language name="JPN_KANJI">マゴベエ</language>
+	</row>
+
+	<row id="BTD_TR_236">
+		<language name="JPN">シンエモン</language>
+		<language name="JPN_KANJI">シンエモン</language>
+	</row>
+
+	<row id="BTD_TR_237">
+		<language name="JPN">ヤマウバ</language>
+		<language name="JPN_KANJI">ヤマウバ</language>
+	</row>
+
+	<row id="BTD_TR_238">
+		<language name="JPN">シンジャ</language>
+		<language name="JPN_KANJI">シンジャ</language>
+	</row>
+
+	<row id="BTD_TR_239">
+		<language name="JPN">ナマナリ</language>
+		<language name="JPN_KANJI">ナマナリ</language>
+	</row>
+
+	<row id="BTD_TR_240">
+		<language name="JPN">ハンニャ</language>
+		<language name="JPN_KANJI">ハンニャ</language>
+	</row>
+
+	<row id="BTD_TR_241">
+		<language name="JPN">セドリック</language>
+		<language name="JPN_KANJI">セドリック</language>
+	</row>
+
+	<row id="BTD_TR_242">
+		<language name="JPN">シモン</language>
+		<language name="JPN_KANJI">シモン</language>
+	</row>
+
+	<row id="BTD_TR_243">
+		<language name="JPN">ジョウハラ</language>
+		<language name="JPN_KANJI">ジョウハラ</language>
+	</row>
+
+	<row id="BTD_TR_244">
+		<language name="JPN">ワルダ</language>
+		<language name="JPN_KANJI">ワルダ</language>
+	</row>
+
+	<row id="BTD_TR_245">
+		<language name="JPN">ハイサム</language>
+		<language name="JPN_KANJI">ハイサム</language>
+	</row>
+
+	<row id="BTD_TR_246">
+		<language name="JPN">コンニョン</language>
+		<language name="JPN_KANJI">コンニョン</language>
+	</row>
+
+	<row id="BTD_TR_247">
+		<language name="JPN">ハマチ</language>
+		<language name="JPN_KANJI">ハマチ</language>
+	</row>
+
+	<row id="BTD_TR_248">
+		<language name="JPN">イクラ</language>
+		<language name="JPN_KANJI">イクラ</language>
+	</row>
+
+	<row id="BTD_TR_249">
+		<language name="JPN">ジョルジュ</language>
+		<language name="JPN_KANJI">ジョルジュ</language>
+	</row>
+
+	<row id="BTD_TR_250">
+		<language name="JPN">サミュエル</language>
+		<language name="JPN_KANJI">サミュエル</language>
+	</row>
+
+	<row id="BTD_TR_251">
+		<language name="JPN">ハンフリー</language>
+		<language name="JPN_KANJI">ハンフリー</language>
+	</row>
+
+	<row id="BTD_TR_252">
+		<language name="JPN">アドルフ</language>
+		<language name="JPN_KANJI">アドルフ</language>
+	</row>
+
+	<row id="BTD_TR_253">
+		<language name="JPN">コマ</language>
+		<language name="JPN_KANJI">コマ</language>
+	</row>
+
+	<row id="BTD_TR_254">
+		<language name="JPN">ギンチヨ</language>
+		<language name="JPN_KANJI">ギンチヨ</language>
+	</row>
+
+	<row id="BTD_TR_255">
+		<language name="JPN">ガニメデ</language>
+		<language name="JPN_KANJI">ガニメデ</language>
+	</row>
+
+	<row id="BTD_TR_256">
+		<language name="JPN">プロテウス</language>
+		<language name="JPN_KANJI">プロテウス</language>
+	</row>
+
+	<row id="BTD_TR_257">
+		<language name="JPN">ペトロ</language>
+		<language name="JPN_KANJI">ペトロ</language>
+	</row>
+
+	<row id="BTD_TR_258">
+		<language name="JPN">フィリポ</language>
+		<language name="JPN_KANJI">フィリポ</language>
+	</row>
+
+	<row id="BTD_TR_259">
+		<language name="JPN">タマカヅラ</language>
+		<language name="JPN_KANJI">タマカヅラ</language>
+	</row>
+
+	<row id="BTD_TR_260">
+		<language name="JPN">ノノミヤ</language>
+		<language name="JPN_KANJI">ノノミヤ</language>
+	</row>
+
+	<row id="BTD_TR_261">
+		<language name="JPN">オオテンタ</language>
+		<language name="JPN_KANJI">オオテンタ</language>
+	</row>
+
+	<row id="BTD_TR_262">
+		<language name="JPN">ドウジギリ</language>
+		<language name="JPN_KANJI">ドウジギリ</language>
+	</row>
+
+	<row id="BTD_TR_263">
+		<language name="JPN">アンギーユ</language>
+		<language name="JPN_KANJI">アンギーユ</language>
+	</row>
+
+	<row id="BTD_TR_264">
+		<language name="JPN">フェザン</language>
+		<language name="JPN_KANJI">フェザン</language>
+	</row>
+
+	<row id="BTD_TR_265">
+		<language name="JPN">ヘチカン</language>
+		<language name="JPN_KANJI">ヘチカン</language>
+	</row>
+
+	<row id="BTD_TR_266">
+		<language name="JPN">リキュウ</language>
+		<language name="JPN_KANJI">リキュウ</language>
+	</row>
+
+	<row id="BTD_TR_267">
+		<language name="JPN">ツルミ</language>
+		<language name="JPN_KANJI">ツルミ</language>
+	</row>
+
+	<row id="BTD_TR_268">
+		<language name="JPN">チャチャ</language>
+		<language name="JPN_KANJI">チャチャ</language>
+	</row>
+
+	<row id="BTD_TR_269">
+		<language name="JPN">ロマン</language>
+		<language name="JPN_KANJI">ロマン</language>
+	</row>
+
+	<row id="BTD_TR_270">
+		<language name="JPN">バレリー</language>
+		<language name="JPN_KANJI">バレリー</language>
+	</row>
+
+	<row id="BTD_TR_271">
+		<language name="JPN">コレチカ</language>
+		<language name="JPN_KANJI">コレチカ</language>
+	</row>
+
+	<row id="BTD_TR_272">
+		<language name="JPN">ノリカタ</language>
+		<language name="JPN_KANJI">ノリカタ</language>
+	</row>
+
+	<row id="BTD_TR_273">
+		<language name="JPN">マリオン</language>
+		<language name="JPN_KANJI">マリオン</language>
+	</row>
+
+	<row id="BTD_TR_274">
+		<language name="JPN">ダンテ</language>
+		<language name="JPN_KANJI">ダンテ</language>
+	</row>
+
+	<row id="BTD_TR_275">
+		<language name="JPN">ビルギット</language>
+		<language name="JPN_KANJI">ビルギット</language>
+	</row>
+
+	<row id="BTD_TR_276">
+		<language name="JPN">マルギット</language>
+		<language name="JPN_KANJI">マルギット</language>
+	</row>
+
+	<row id="BTD_TR_277">
+		<language name="JPN">バーンク</language>
+		<language name="JPN_KANJI">バーンク</language>
+	</row>
+
+	<row id="BTD_TR_278">
+		<language name="JPN">スギカツ</language>
+		<language name="JPN_KANJI">スギカツ</language>
+	</row>
+
+	<row id="BTD_TR_279">
+		<language name="JPN">ボブノリ</language>
+		<language name="JPN_KANJI">ボブノリ</language>
+	</row>
+
+	<row id="BTD_TR_280">
+		<language name="JPN">ボブエモン</language>
+		<language name="JPN_KANJI">ボブエモン</language>
+	</row>
+
+	<row id="BTD_TR_281">
+		<language name="JPN">エリック</language>
+		<language name="JPN_KANJI">エリック</language>
+	</row>
+
+	<row id="BTD_TR_282">
+		<language name="JPN">オスカル</language>
+		<language name="JPN_KANJI">オスカル</language>
+	</row>
+
+	<row id="BTD_TR_283">
+		<language name="JPN">トトメス</language>
+		<language name="JPN_KANJI">トトメス</language>
+	</row>
+
+	<row id="BTD_TR_284">
+		<language name="JPN">ラムセス</language>
+		<language name="JPN_KANJI">ラムセス</language>
+	</row>
+
+	<row id="BTD_TR_285">
+		<language name="JPN">マツカゼ</language>
+		<language name="JPN_KANJI">マツカゼ</language>
+	</row>
+
+	<row id="BTD_TR_286">
+		<language name="JPN">ウネメ</language>
+		<language name="JPN_KANJI">ウネメ</language>
+	</row>
+
+	<row id="BTD_TR_287">
+		<language name="JPN">コテツ</language>
+		<language name="JPN_KANJI">コテツ</language>
+	</row>
+
+	<row id="BTD_TR_288">
+		<language name="JPN">トウシロウ</language>
+		<language name="JPN_KANJI">トウシロウ</language>
+	</row>
+
 	<row id="BTD_TR_289">
-		<language name="JPN">ヘル</language>
-		<language name="JPN_KANJI">ヘル</language>
+		<language name="JPN">サイズニー</language>
+		<language name="JPN_KANJI">サイズニー</language>
 	</row>
 
 	<row id="BTD_TR_290">
-		<language name="JPN">ジゴロウ</language>
-		<language name="JPN_KANJI">ジゴロウ</language>
+		<language name="JPN">パナラット</language>
+		<language name="JPN_KANJI">パナラット</language>
 	</row>
 
 	<row id="BTD_TR_291">
-		<language name="JPN">セキラン</language>
-		<language name="JPN_KANJI">セキラン</language>
+		<language name="JPN">マンゾウ</language>
+		<language name="JPN_KANJI">マンゾウ</language>
 	</row>
 
 	<row id="BTD_TR_292">
-		<language name="JPN">ニュウドウ</language>
-		<language name="JPN_KANJI">ニュウドウ</language>
+		<language name="JPN">イエオン</language>
+		<language name="JPN_KANJI">イエオン</language>
 	</row>
 
 	<row id="BTD_TR_293">
-		<language name="JPN">ヒサメ</language>
-		<language name="JPN_KANJI">ヒサメ</language>
+		<language name="JPN">ショウ</language>
+		<language name="JPN_KANJI">ショウ</language>
 	</row>
 
 	<row id="BTD_TR_294">
-		<language name="JPN">サミダレ</language>
-		<language name="JPN_KANJI">サミダレ</language>
+		<language name="JPN">ツヅミ</language>
+		<language name="JPN_KANJI">ツヅミ</language>
 	</row>
 
 	<row id="BTD_TR_295">
-		<language name="JPN">ウブメ</language>
-		<language name="JPN_KANJI">ウブメ</language>
+		<language name="JPN">カミュ</language>
+		<language name="JPN_KANJI">カミュ</language>
 	</row>
 
 	<row id="BTD_TR_296">
-		<language name="JPN">オイワ</language>
-		<language name="JPN_KANJI">オイワ</language>
+		<language name="JPN">リルケ</language>
+		<language name="JPN_KANJI">リルケ</language>
 	</row>
 
 	<row id="BTD_TR_297">
-		<language name="JPN">キビヤック</language>
-		<language name="JPN_KANJI">キビヤック</language>
+		<language name="JPN">サティー</language>
+		<language name="JPN_KANJI">サティー</language>
 	</row>
 
 	<row id="BTD_TR_298">
-		<language name="JPN">ホンオフェ</language>
-		<language name="JPN_KANJI">ホンオフェ</language>
+		<language name="JPN">アパルナ</language>
+		<language name="JPN_KANJI">アパルナ</language>
 	</row>
 
 	<row id="BTD_TR_299">
-		<language name="JPN">ショコラ</language>
-		<language name="JPN_KANJI">ショコラ</language>
+		<language name="JPN">ミカヅキ</language>
+		<language name="JPN_KANJI">ミカヅキ</language>
 	</row>
 
 	<row id="BTD_TR_300">
-		<language name="JPN">ロア</language>
-		<language name="JPN_KANJI">ロア</language>
+		<language name="JPN">シンゲツ</language>
+		<language name="JPN_KANJI">シンゲツ</language>
 	</row>
 
 	<row id="BTD_TR_301">
