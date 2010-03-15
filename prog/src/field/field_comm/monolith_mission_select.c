@@ -57,6 +57,7 @@ typedef struct{
   GFL_CLWK *act_town[INTRUDE_TOWN_MAX]; ///<街アイコンアクターへのポインタ
   GFL_CLWK *act_cancel;   ///<キャンセルアイコンアクターへのポインタ
   PANEL_ACTOR panel[_PANEL_MAX];
+  MISSION_ENTRY_REQ send_entry_req;     ///<ミッション受注送信バッファ
   u8 no_select;           ///<ミッション受注済み。選択はもう出来ない
   u8 order_end;           ///<TRUE:ミッションを受注して終了
 }MONOLITH_MSSELECT_WORK;
@@ -318,7 +319,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
 
       if(tp_ret >= TOUCH_TOWN0 && tp_ret < TOUCH_TOWN0 + INTRUDE_TOWN_MAX){
         OS_TPrintf("街選択 %d\n", tp_ret);
-        appwk->common->mission_select_town = tp_ret;
+        appwk->common->mission_select_no = tp_ret;
       }
       else if(tp_ret == TOUCH_RECEIVE || (trg & PAD_BUTTON_DECIDE)){
         OS_TPrintf("「受ける」選択\n");
@@ -347,10 +348,10 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
 
   case SEQ_ORDER:   //親機に「ミッション受注確認」を送信
     {
-      const MISSION_DATA *mdata;
-
-      mdata = &appwk->parent->list.md[TownNo_to_Type[appwk->common->mission_select_town]];
-      if(IntrudeSend_MissionOrderConfirm(appwk->parent->intcomm, mdata) == TRUE){
+      mmw->send_entry_req.cdata = appwk->setup->mission_cdata_array[TownNo_to_Type[appwk->common->mission_select_no]];
+      mmw->send_entry_req.monolith_type = appwk->parent->list.monolith_type;
+      mmw->send_entry_req.target_info = appwk->parent->list.target_info;
+      if(IntrudeSend_MissionOrderConfirm(appwk->parent->intcomm, &mmw->send_entry_req) == TRUE){
         *seq = SEQ_ORDER_WAIT;
       }
     }
@@ -764,7 +765,7 @@ static void _Msselect_ViewChange(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_W
     MonolithTool_PanelOBJ_SetEnable(&mmw->panel[_PANEL_ENFORCEMENT], FALSE);
   }
   else{
-    appwk->common->mission_select_town = SELECT_TOWN_ENFORCEMENT;
+    appwk->common->mission_select_no = SELECT_MISSION_ENFORCEMENT;
     MonolithTool_PanelOBJ_SetEnable(&mmw->panel[_PANEL_ORDER], FALSE);
     MonolithTool_PanelOBJ_SetEnable(&mmw->panel[_PANEL_ENFORCEMENT], TRUE);
   }

@@ -293,6 +293,25 @@ def DataFileOutput()
     file.printf("};\n");
   }
 
+  #ミッションリスト作成用の最低限のデータの塊
+  File.open("mission_list_param.cdat", "w"){|file|
+    file.printf("//============================================================\n");
+    file.printf("//       mission_conv.rb で出力されたファイルです\n");
+    file.printf("//============================================================\n\n");
+    file.printf("//ミッションリスト作成用の最低限のデータの塊\n");
+    file.printf("static const MISSION_CONV_DATA_LISTPARAM MissionConvDataListParam[] = {\n");
+
+    for i in 0..MissionData.size-1
+      file.printf("\t{\t//%d\n", i);
+      file.printf("\t\t%s,\t\t//type\n", MissionData[i].type);
+      file.printf("\t\t%s,\t\t//level\n", MissionData[i].level);
+      file.printf("\t\t%s,\t\t//odds\n", MissionData[i].odds);
+      file.printf("\t},\n");
+    end
+    
+    file.printf("};\n");
+  }
+
 end
 
 

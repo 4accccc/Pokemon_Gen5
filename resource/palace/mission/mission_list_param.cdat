@@ -1,0 +1,567 @@
+//============================================================
+//       mission_conv.rb で出力されたファイルです
+//============================================================
+
+//ミッションリスト作成用の最低限のデータの塊
+static const MISSION_CONV_DATA_LISTPARAM MissionConvDataListParam[] = {
+	{	//0
+		MISSION_TYPE_SKILL,		//type
+		48,		//level
+		15,		//odds
+	},
+	{	//1
+		MISSION_TYPE_SKILL,		//type
+		38,		//level
+		15,		//odds
+	},
+	{	//2
+		MISSION_TYPE_SKILL,		//type
+		32,		//level
+		15,		//odds
+	},
+	{	//3
+		MISSION_TYPE_SKILL,		//type
+		24,		//level
+		15,		//odds
+	},
+	{	//4
+		MISSION_TYPE_SKILL,		//type
+		17,		//level
+		15,		//odds
+	},
+	{	//5
+		MISSION_TYPE_SKILL,		//type
+		14,		//level
+		15,		//odds
+	},
+	{	//6
+		MISSION_TYPE_SKILL,		//type
+		11,		//level
+		15,		//odds
+	},
+	{	//7
+		MISSION_TYPE_SKILL,		//type
+		8,		//level
+		20,		//odds
+	},
+	{	//8
+		MISSION_TYPE_SKILL,		//type
+		5,		//level
+		20,		//odds
+	},
+	{	//9
+		MISSION_TYPE_SKILL,		//type
+		2,		//level
+		20,		//odds
+	},
+	{	//10
+		MISSION_TYPE_SKILL,		//type
+		0,		//level
+		30,		//odds
+	},
+	{	//11
+		MISSION_TYPE_SKILL,		//type
+		0,		//level
+		50,		//odds
+	},
+	{	//12
+		MISSION_TYPE_SKILL,		//type
+		0,		//level
+		100,		//odds
+	},
+	{	//13
+		MISSION_TYPE_BASIC,		//type
+		50,		//level
+		15,		//odds
+	},
+	{	//14
+		MISSION_TYPE_BASIC,		//type
+		40,		//level
+		15,		//odds
+	},
+	{	//15
+		MISSION_TYPE_BASIC,		//type
+		34,		//level
+		15,		//odds
+	},
+	{	//16
+		MISSION_TYPE_BASIC,		//type
+		25,		//level
+		15,		//odds
+	},
+	{	//17
+		MISSION_TYPE_BASIC,		//type
+		19,		//level
+		15,		//odds
+	},
+	{	//18
+		MISSION_TYPE_BASIC,		//type
+		16,		//level
+		15,		//odds
+	},
+	{	//19
+		MISSION_TYPE_BASIC,		//type
+		13,		//level
+		15,		//odds
+	},
+	{	//20
+		MISSION_TYPE_BASIC,		//type
+		10,		//level
+		20,		//odds
+	},
+	{	//21
+		MISSION_TYPE_BASIC,		//type
+		7,		//level
+		20,		//odds
+	},
+	{	//22
+		MISSION_TYPE_BASIC,		//type
+		4,		//level
+		20,		//odds
+	},
+	{	//23
+		MISSION_TYPE_BASIC,		//type
+		0,		//level
+		30,		//odds
+	},
+	{	//24
+		MISSION_TYPE_BASIC,		//type
+		0,		//level
+		50,		//odds
+	},
+	{	//25
+		MISSION_TYPE_BASIC,		//type
+		0,		//level
+		100,		//odds
+	},
+	{	//26
+		MISSION_TYPE_VICTORY,		//type
+		42,		//level
+		15,		//odds
+	},
+	{	//27
+		MISSION_TYPE_VICTORY,		//type
+		34,		//level
+		15,		//odds
+	},
+	{	//28
+		MISSION_TYPE_VICTORY,		//type
+		26,		//level
+		20,		//odds
+	},
+	{	//29
+		MISSION_TYPE_VICTORY,		//type
+		18,		//level
+		20,		//odds
+	},
+	{	//30
+		MISSION_TYPE_VICTORY,		//type
+		10,		//level
+		25,		//odds
+	},
+	{	//31
+		MISSION_TYPE_VICTORY,		//type
+		5,		//level
+		25,		//odds
+	},
+	{	//32
+		MISSION_TYPE_VICTORY,		//type
+		0,		//level
+		50,		//odds
+	},
+	{	//33
+		MISSION_TYPE_VICTORY,		//type
+		0,		//level
+		100,		//odds
+	},
+	{	//34
+		MISSION_TYPE_PERSONALITY,		//type
+		25,		//level
+		25,		//odds
+	},
+	{	//35
+		MISSION_TYPE_PERSONALITY,		//type
+		15,		//level
+		50,		//odds
+	},
+	{	//36
+		MISSION_TYPE_PERSONALITY,		//type
+		5,		//level
+		50,		//odds
+	},
+	{	//37
+		MISSION_TYPE_PERSONALITY,		//type
+		0,		//level
+		100,		//odds
+	},
+	{	//38
+		MISSION_TYPE_ITEM,		//type
+		48,		//level
+		10,		//odds
+	},
+	{	//39
+		MISSION_TYPE_ITEM,		//type
+		48,		//level
+		10,		//odds
+	},
+	{	//40
+		MISSION_TYPE_ITEM,		//type
+		48,		//level
+		10,		//odds
+	},
+	{	//41
+		MISSION_TYPE_ITEM,		//type
+		43,		//level
+		10,		//odds
+	},
+	{	//42
+		MISSION_TYPE_ITEM,		//type
+		43,		//level
+		10,		//odds
+	},
+	{	//43
+		MISSION_TYPE_ITEM,		//type
+		43,		//level
+		10,		//odds
+	},
+	{	//44
+		MISSION_TYPE_ITEM,		//type
+		38,		//level
+		10,		//odds
+	},
+	{	//45
+		MISSION_TYPE_ITEM,		//type
+		38,		//level
+		10,		//odds
+	},
+	{	//46
+		MISSION_TYPE_ITEM,		//type
+		38,		//level
+		10,		//odds
+	},
+	{	//47
+		MISSION_TYPE_ITEM,		//type
+		33,		//level
+		10,		//odds
+	},
+	{	//48
+		MISSION_TYPE_ITEM,		//type
+		33,		//level
+		10,		//odds
+	},
+	{	//49
+		MISSION_TYPE_ITEM,		//type
+		33,		//level
+		10,		//odds
+	},
+	{	//50
+		MISSION_TYPE_ITEM,		//type
+		28,		//level
+		10,		//odds
+	},
+	{	//51
+		MISSION_TYPE_ITEM,		//type
+		28,		//level
+		10,		//odds
+	},
+	{	//52
+		MISSION_TYPE_ITEM,		//type
+		28,		//level
+		10,		//odds
+	},
+	{	//53
+		MISSION_TYPE_ITEM,		//type
+		23,		//level
+		10,		//odds
+	},
+	{	//54
+		MISSION_TYPE_ITEM,		//type
+		23,		//level
+		10,		//odds
+	},
+	{	//55
+		MISSION_TYPE_ITEM,		//type
+		23,		//level
+		10,		//odds
+	},
+	{	//56
+		MISSION_TYPE_ITEM,		//type
+		18,		//level
+		10,		//odds
+	},
+	{	//57
+		MISSION_TYPE_ITEM,		//type
+		18,		//level
+		10,		//odds
+	},
+	{	//58
+		MISSION_TYPE_ITEM,		//type
+		18,		//level
+		10,		//odds
+	},
+	{	//59
+		MISSION_TYPE_ITEM,		//type
+		13,		//level
+		10,		//odds
+	},
+	{	//60
+		MISSION_TYPE_ITEM,		//type
+		13,		//level
+		10,		//odds
+	},
+	{	//61
+		MISSION_TYPE_ITEM,		//type
+		13,		//level
+		10,		//odds
+	},
+	{	//62
+		MISSION_TYPE_ITEM,		//type
+		8,		//level
+		10,		//odds
+	},
+	{	//63
+		MISSION_TYPE_ITEM,		//type
+		8,		//level
+		10,		//odds
+	},
+	{	//64
+		MISSION_TYPE_ITEM,		//type
+		8,		//level
+		10,		//odds
+	},
+	{	//65
+		MISSION_TYPE_ITEM,		//type
+		4,		//level
+		10,		//odds
+	},
+	{	//66
+		MISSION_TYPE_ITEM,		//type
+		4,		//level
+		10,		//odds
+	},
+	{	//67
+		MISSION_TYPE_ITEM,		//type
+		4,		//level
+		10,		//odds
+	},
+	{	//68
+		MISSION_TYPE_ITEM,		//type
+		0,		//level
+		15,		//odds
+	},
+	{	//69
+		MISSION_TYPE_ITEM,		//type
+		0,		//level
+		20,		//odds
+	},
+	{	//70
+		MISSION_TYPE_ITEM,		//type
+		0,		//level
+		25,		//odds
+	},
+	{	//71
+		MISSION_TYPE_ITEM,		//type
+		0,		//level
+		33,		//odds
+	},
+	{	//72
+		MISSION_TYPE_ITEM,		//type
+		0,		//level
+		50,		//odds
+	},
+	{	//73
+		MISSION_TYPE_ITEM,		//type
+		0,		//level
+		100,		//odds
+	},
+	{	//74
+		MISSION_TYPE_ATTRIBUTE,		//type
+		54,		//level
+		30,		//odds
+	},
+	{	//75
+		MISSION_TYPE_ATTRIBUTE,		//type
+		54,		//level
+		30,		//odds
+	},
+	{	//76
+		MISSION_TYPE_ATTRIBUTE,		//type
+		54,		//level
+		30,		//odds
+	},
+	{	//77
+		MISSION_TYPE_ATTRIBUTE,		//type
+		54,		//level
+		30,		//odds
+	},
+	{	//78
+		MISSION_TYPE_ATTRIBUTE,		//type
+		49,		//level
+		30,		//odds
+	},
+	{	//79
+		MISSION_TYPE_ATTRIBUTE,		//type
+		49,		//level
+		30,		//odds
+	},
+	{	//80
+		MISSION_TYPE_ATTRIBUTE,		//type
+		49,		//level
+		30,		//odds
+	},
+	{	//81
+		MISSION_TYPE_ATTRIBUTE,		//type
+		44,		//level
+		30,		//odds
+	},
+	{	//82
+		MISSION_TYPE_ATTRIBUTE,		//type
+		44,		//level
+		30,		//odds
+	},
+	{	//83
+		MISSION_TYPE_ATTRIBUTE,		//type
+		44,		//level
+		30,		//odds
+	},
+	{	//84
+		MISSION_TYPE_ATTRIBUTE,		//type
+		39,		//level
+		30,		//odds
+	},
+	{	//85
+		MISSION_TYPE_ATTRIBUTE,		//type
+		39,		//level
+		30,		//odds
+	},
+	{	//86
+		MISSION_TYPE_ATTRIBUTE,		//type
+		39,		//level
+		30,		//odds
+	},
+	{	//87
+		MISSION_TYPE_ATTRIBUTE,		//type
+		34,		//level
+		30,		//odds
+	},
+	{	//88
+		MISSION_TYPE_ATTRIBUTE,		//type
+		34,		//level
+		30,		//odds
+	},
+	{	//89
+		MISSION_TYPE_ATTRIBUTE,		//type
+		34,		//level
+		30,		//odds
+	},
+	{	//90
+		MISSION_TYPE_ATTRIBUTE,		//type
+		29,		//level
+		30,		//odds
+	},
+	{	//91
+		MISSION_TYPE_ATTRIBUTE,		//type
+		29,		//level
+		30,		//odds
+	},
+	{	//92
+		MISSION_TYPE_ATTRIBUTE,		//type
+		29,		//level
+		30,		//odds
+	},
+	{	//93
+		MISSION_TYPE_ATTRIBUTE,		//type
+		24,		//level
+		30,		//odds
+	},
+	{	//94
+		MISSION_TYPE_ATTRIBUTE,		//type
+		24,		//level
+		30,		//odds
+	},
+	{	//95
+		MISSION_TYPE_ATTRIBUTE,		//type
+		24,		//level
+		30,		//odds
+	},
+	{	//96
+		MISSION_TYPE_ATTRIBUTE,		//type
+		19,		//level
+		30,		//odds
+	},
+	{	//97
+		MISSION_TYPE_ATTRIBUTE,		//type
+		19,		//level
+		30,		//odds
+	},
+	{	//98
+		MISSION_TYPE_ATTRIBUTE,		//type
+		19,		//level
+		30,		//odds
+	},
+	{	//99
+		MISSION_TYPE_ATTRIBUTE,		//type
+		14,		//level
+		30,		//odds
+	},
+	{	//100
+		MISSION_TYPE_ATTRIBUTE,		//type
+		14,		//level
+		30,		//odds
+	},
+	{	//101
+		MISSION_TYPE_ATTRIBUTE,		//type
+		14,		//level
+		30,		//odds
+	},
+	{	//102
+		MISSION_TYPE_ATTRIBUTE,		//type
+		8,		//level
+		30,		//odds
+	},
+	{	//103
+		MISSION_TYPE_ATTRIBUTE,		//type
+		8,		//level
+		30,		//odds
+	},
+	{	//104
+		MISSION_TYPE_ATTRIBUTE,		//type
+		8,		//level
+		30,		//odds
+	},
+	{	//105
+		MISSION_TYPE_ATTRIBUTE,		//type
+		3,		//level
+		30,		//odds
+	},
+	{	//106
+		MISSION_TYPE_ATTRIBUTE,		//type
+		3,		//level
+		30,		//odds
+	},
+	{	//107
+		MISSION_TYPE_ATTRIBUTE,		//type
+		3,		//level
+		30,		//odds
+	},
+	{	//108
+		MISSION_TYPE_ATTRIBUTE,		//type
+		0,		//level
+		25,		//odds
+	},
+	{	//109
+		MISSION_TYPE_ATTRIBUTE,		//type
+		0,		//level
+		30,		//odds
+	},
+	{	//110
+		MISSION_TYPE_ATTRIBUTE,		//type
+		0,		//level
+		50,		//odds
+	},
+	{	//111
+		MISSION_TYPE_ATTRIBUTE,		//type
+		0,		//level
+		100,		//odds
+	},
+};

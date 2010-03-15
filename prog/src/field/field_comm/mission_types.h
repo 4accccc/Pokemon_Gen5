@@ -8,6 +8,10 @@
 //==============================================================================
 #pragma once
 
+#ifndef __CONVERT_TYPES__
+#include "savedata\intrude_save.h"
+#endif  //__CONVERT_TYPES__
+
 
 //==============================================================================
 //  定数定義
@@ -27,7 +31,7 @@ typedef enum{
   MISSION_TYPE_ITEM,        ///<道具
   MISSION_TYPE_PERSONALITY, ///<性格
 
-  MISSION_TYPE_MAX,
+  MISSION_TYPE_MAX,   //※MISSION_LIST_MAXと同じ値である必要があります
   MISSION_TYPE_NONE = MISSION_TYPE_MAX, ///<ミッション実行していない
 }MISSION_TYPE;
 
@@ -83,6 +87,14 @@ typedef struct{
   u8 limit_talk;      ///<制限話　TRUE:話禁止
   u8 padding;
 }MISSION_CONV_DATA;
+
+///ミッションデータからリスト作成用に最低限のデータだけを抽出した塊
+typedef struct{
+  u8 type;                        ///<ミッション系統(MISSION_TYPE_???)
+  u8 level;                       ///<発生レベル
+  u8 odds;                        ///<発生率
+  u8 padding;
+}MISSION_CONV_DATA_LISTPARAM;
 
 ///パワーデータ
 typedef struct{
@@ -149,19 +161,6 @@ typedef struct{
   u8 padding;
 }MISSION_REQ;
 
-///ミッションデータ
-#if 0
-typedef struct{
-  u8 monolith_type;           ///<石版タイプ  MONOLITH_TYPE_???
-  u8 mission_no;              ///<ミッション番号(ミッションが無い場合はMISSION_NO_NULL)
-  u8 accept_netid;            ///<ミッション受注者のNetID
-  u8 target_netid;            ///<ミッション内容によってターゲットとなるプレイヤーのNetID
-  
-  u16 zone_id;                ///<ミッション起動に使用したミニモノリスがあったゾーンID
-  u8 padding[2];
-}MISSION_DATA;
-#else
-
 ///ミッションでターゲットとなったプレイヤーの情報
 typedef struct{
   //ターゲットとなった相手のプレイヤー名
@@ -207,21 +206,26 @@ typedef struct{
 ///ミッションデータ
 typedef struct{
   MISSION_CONV_DATA cdata;       ///<ミッションデータ
-  MISSION_TYPE_WORK exwork;   ///<タイプ毎に異なる拡張ワーク
   MISSION_TARGET_INFO target_info;  ///<ミッションターゲット
   u8 accept_netid;            ///<ミッション受注者のNetID
   u8 palace_area;             ///<どのパレスエリアで受注したミッションなのか
-  
   u8 monolith_type;           ///<石版タイプ  MONOLITH_TYPE_???
-//  u8 target_netid;            ///<ミッション内容によってターゲットとなるプレイヤーのNetID
-  
-  u16 zone_id;                ///<ミッション起動に使用したミニモノリスがあったゾーンID
-  u8 padding[2];
+  u8 padding;
   
   u16 ready_timer;            ///<開始前のエントリー待ちの残り時間(秒)
-  u16 mission_timer;          ///<ミッション残り時間(秒)
+  u8 padding2[2];
 }MISSION_DATA;
-#endif
+
+
+#ifndef __CONVERT_TYPES__
+
+///「ミッション受注します」を親機へ送信
+typedef struct{
+  MISSION_CONV_DATA cdata;
+  MISSION_TARGET_INFO target_info;
+  u8 monolith_type;           ///<石版タイプ  MONOLITH_TYPE_???
+  u8 padding[3];
+}MISSION_ENTRY_REQ;
 
 ///「ミッション受注します」の返事の送信データ
 typedef struct{
@@ -240,9 +244,12 @@ typedef struct{
 
 ///ミッション選択候補リスト構造体
 typedef struct{
-  MISSION_DATA md[MISSION_TYPE_MAX];  ///<選択候補のミッションデータ
+  OCCUPY_INFO occupy;                 ///<現在の占拠情報
   u8 occ;                             ///<TRUE:リストが作成されている
-  u8 padding[3];
+  u8 monolith_type;                   ///<MONOLITH_TYPE_BLACK or MONOLITH_TYPE_WHITE
+  u8 accept_netid;                    ///<ミッション受注者のNetID
+  u8 padding;
+  MISSION_TARGET_INFO target_info;    ///<ターゲット情報
 }MISSION_CHOICE_LIST;
 
 ///ミッションシステム構造体
@@ -268,4 +275,6 @@ typedef struct{
   u8 mine_entry;              ///<TRUE:ミッション参加している
   u8 mission_complete;        ///<TRUE:今実行しているミッションは完了した
 }MISSION_SYSTEM;
+
+#endif  //__CONVERT_TYPES__
 

@@ -142,9 +142,9 @@ static GFL_PROC_RESULT MonolithMissionExplainProc_Main( GFL_PROC * proc, int * s
     }
   }
   if(print_finish_count == BMPWIN_MAX){
-    if(mmw->view_town != appwk->common->mission_select_town){
-      _Write_MissionExplain(appwk, appwk->setup, mmw, appwk->common->mission_select_town);
-      mmw->view_town = appwk->common->mission_select_town;
+    if(mmw->view_town != appwk->common->mission_select_no){
+      _Write_MissionExplain(appwk, appwk->setup, mmw, appwk->common->mission_select_no);
+      mmw->view_town = appwk->common->mission_select_no;
     }
   }
   
@@ -301,32 +301,37 @@ static void _Write_MissionExplain(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *se
 {
   STRBUF *str_type, *str_explain, *expand_explain;
   u32 explain_msgid;
-  const MISSION_DATA *mdata;
+  const MISSION_CONV_DATA *cdata;
+  const MISSION_TARGET_INFO *target;
   
   expand_explain = GFL_STR_CreateBuffer( 256, HEAPID_MONOLITH );
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(mmw->bmpwin[BMPWIN_TYPE]), 0x0000);
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(mmw->bmpwin[BMPWIN_EXPLAIN]), 0x0000);
 
-  if(select_town == SELECT_TOWN_ENFORCEMENT 
+  if(select_town == SELECT_MISSION_ENFORCEMENT 
       && MISSION_RecvCheck(&appwk->parent->intcomm->mission) == TRUE){  //念のため2重にチェック
     //ミッション実施中
+    const MISSION_DATA *mdata;
     mdata = MISSION_GetRecvData(&appwk->parent->intcomm->mission);
+    cdata = &mdata->cdata;
+    target = &mdata->target_info;
   }
   else{
     //ミッション選択中
     if(select_town > NELEMS(TownNo_to_Type)){
       select_town = 0;
     }
-    mdata = &appwk->parent->list.md[TownNo_to_Type[select_town]];
+    cdata = &setup->mission_cdata_array[TownNo_to_Type[select_town]];
+    target = &appwk->parent->list.target_info;
   }
 
-  explain_msgid = mdata->cdata.msg_id_contents_monolith;
+  explain_msgid = cdata->msg_id_contents_monolith;
   
-  str_type = GFL_MSG_CreateString(setup->mm_mission_mono, msg_mistype_000 + mdata->cdata.type);
+  str_type = GFL_MSG_CreateString(setup->mm_mission_mono, msg_mistype_000 + cdata->type);
   str_explain = GFL_MSG_CreateString(setup->mm_mission_mono, explain_msgid);
   
-  MISSIONDATA_Wordset(appwk->parent->intcomm, mdata, setup->wordset, HEAPID_MONOLITH);
+  MISSIONDATA_Wordset(appwk->parent->intcomm, cdata, target, setup->wordset, HEAPID_MONOLITH);
   WORDSET_ExpandStr(setup->wordset, expand_explain, str_explain );
 
   PRINT_UTIL_Print(&mmw->print_util[BMPWIN_TYPE], setup->printQue, 

@@ -12,7 +12,7 @@
 #include "field/intrude_common.h"
 #include "buflen.h"
 #include "field/gpower_id.h"
-#include "field/field_comm/mission_types.h"
+#include "savedata/save_control.h"
 
 
 //==============================================================================
@@ -43,10 +43,13 @@ typedef struct _INTRUDE_SAVE_WORK INTRUDE_SAVE_WORK;
 //--------------------------------------------------------------
 //  占拠
 //--------------------------------------------------------------
+///ミッションリスト数
+#define MISSION_LIST_MAX   (6)  //MISSION_TYPE_MAXと同じ値である必要があります
+
 ///ミッションリストステータス
 typedef struct{
-  u8 mission_no[MISSION_TYPE_MAX];      ///<ミッション番号
-  u8 mission_clear[MISSION_TYPE_MAX];   ///<ミッションクリア状況(MISSION_CLEAR_xxx)
+  u8 mission_no[MISSION_LIST_MAX];      ///<ミッション番号
+  u8 mission_clear[MISSION_LIST_MAX];   ///<ミッションクリア状況(MISSION_CLEAR_xxx)
 }MISSION_LIST_STATUS;
 
 ///占拠情報

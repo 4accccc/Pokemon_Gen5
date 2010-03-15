@@ -182,7 +182,8 @@ BOOL IntrudeEventPrint_StartStreamMission(INTRUDE_EVENT_MSGWORK *iem, INTRUDE_CO
   mdata = MISSION_GetRecvData(&intcomm->mission);
 
   GFL_MSG_GetString(iem->msgdata_mission, mdata->cdata.msg_id_contents, iem->tmpbuf);
-  MISSIONDATA_Wordset(intcomm, mdata, iem->wordset, INTRUDE_EVENT_HEAPID);
+  MISSIONDATA_Wordset(intcomm, &mdata->cdata, &mdata->target_info, 
+    iem->wordset, INTRUDE_EVENT_HEAPID);
   WORDSET_ExpandStr( iem->wordset, iem->msgbuf, iem->tmpbuf );
   
   _StartStream(iem, iem->msgbuf);

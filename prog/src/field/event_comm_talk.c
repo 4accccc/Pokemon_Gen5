@@ -620,8 +620,11 @@ static GMEVENT_RESULT CommMissionItemEvent( GMEVENT *event, int *seq, void *wk )
     }
     break;
   case SEQ_MSG_INIT:
-    MISSIONDATA_Wordset(intcomm,
-       MISSION_GetRecvData(&intcomm->mission), talk->iem.wordset, talk->heapID);
+    {
+      const MISSION_DATA *md = MISSION_GetRecvData(&intcomm->mission);
+      MISSIONDATA_Wordset(intcomm, &md->cdata, &md->target_info,
+        talk->iem.wordset, talk->heapID);
+    }
     IntrudeEventPrint_StartStream(&talk->iem, MissionItemMsgID[0] + 0);
 		(*seq)++;
 		break;
@@ -680,8 +683,11 @@ static GMEVENT_RESULT CommMissionBasicEvent( GMEVENT *event, int *seq, void *wk 
 
 	switch( *seq ){
   case SEQ_INIT:
-    MISSIONDATA_Wordset(intcomm,
-       MISSION_GetRecvData(&intcomm->mission), talk->iem.wordset, talk->heapID);
+    {
+      const MISSION_DATA *md = MISSION_GetRecvData(&intcomm->mission);
+      MISSIONDATA_Wordset(intcomm, &md->cdata, &md->target_info,
+        talk->iem.wordset, talk->heapID);
+    }
     IntrudeEventPrint_StartStream(&talk->iem, MissionBasicMsgID[0] + 0);
     (*seq)++;
     break;

@@ -45,14 +45,14 @@ extern BOOL MISSION_AddPoint(GAMEDATA *gamedata, const MISSION_RESULT *result, s
 extern BOOL MISSION_CheckResultMissionMine(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 extern void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, int accept_netid, int palace_area);
 extern BOOL MISSION_MissionList_CheckOcc(const MISSION_CHOICE_LIST *list);
-extern BOOL MISSION_MissionList_CheckAgree(const MISSION_SYSTEM *mission, const MISSION_DATA *mdata);
-extern BOOL MISSION_SetEntryNew(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, const MISSION_DATA *mdata, int net_id);
+extern BOOL MISSION_SetEntryNew(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, const MISSION_ENTRY_REQ *entry_req, int net_id);
 extern void MISSION_SetRecvEntryAnswer(MISSION_SYSTEM *mission, const MISSION_ENTRY_ANSWER *entry_answer);
 extern MISSION_ENTRY_RESULT MISSION_GetRecvEntryAnswer(MISSION_SYSTEM *mission);
 extern void MISSION_ClearRecvEntryAnswer(MISSION_SYSTEM *mission);
 
-extern void MISSION_SetMissionList(MISSION_SYSTEM *mission, const MISSION_CHOICE_LIST *list);
+extern void MISSION_SetMissionList(MISSION_SYSTEM *mission, const MISSION_CHOICE_LIST *list, NetID net_id);
 extern BOOL MISSION_CheckMissionTargetNetID(MISSION_SYSTEM *mission, int net_id);
-extern void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mdata, WORDSET *wordset, HEAPID temp_heap_id);
+extern void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_CONV_DATA *cdata, const MISSION_TARGET_INFO *target, WORDSET *wordset, HEAPID temp_heap_id);
 extern s32 MISSION_GetMissionTimer(MISSION_SYSTEM *mission);
+extern void MISSION_LIST_Create(OCCUPY_INFO *occupy);
 

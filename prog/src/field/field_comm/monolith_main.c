@@ -19,6 +19,8 @@
 #include "system/wipe.h"
 #include "gamesystem/g_power.h"
 
+#include "mission.naix"
+
 
 
 //==============================================================================
@@ -68,6 +70,7 @@ static void _Setup_ActorExit(MONOLITH_SETUP *setup);
 static void _Setup_OBJGraphicLoad(MONOLITH_SETUP *setup);
 static void _Setup_OBJGraphicUnload(MONOLITH_SETUP *setup);
 static void _VblankFunc(GFL_TCB *tcb, void *work);
+static void _Setup_MissionListData(MONOLITH_SYSTEM *monosys, MONOLITH_PARENT_WORK *parent);
 
 
 //==============================================================================
@@ -174,6 +177,9 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
   GFL_STD_MemClear(monosys, sizeof(MONOLITH_SYSTEM));
   monosys->common.power_select_no = GPOWER_ID_NULL;
   
+  //ミッションリストに従ってミッションデータの配列を作成
+  _Setup_MissionListData(monosys, parent);
+  
 	monosys->setup.hdl = GFL_ARC_OpenDataHandle(ARCID_MONOLITH, HEAPID_MONOLITH);
   {
     _Setup_VramSetting();
@@ -201,6 +207,7 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
   monosys->app_parent.common = &monosys->common;
   return GFL_PROC_RES_FINISH;
 }
+
 
 //--------------------------------------------------------------
 /**
@@ -707,4 +714,38 @@ static void _VblankFunc(GFL_TCB *tcb, void *work)
   
 	GFL_CLACT_SYS_VBlankFunc();
   PaletteFadeTrans( monosys->setup.pfd );
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッションリストに従ってミッションデータの配列を作成
+ *
+ * @param   monosys		
+ * @param   parent		
+ */
+//--------------------------------------------------------------
+static void _Setup_MissionListData(MONOLITH_SYSTEM *monosys, MONOLITH_PARENT_WORK *parent)
+{
+  MISSION_TYPE mission_type;
+  MISSION_CONV_DATA *mcd;
+  u32 mcd_max;
+  int mission_no;
+  
+  if(parent->list_occ == FALSE){
+    return;
+  }
+  
+  mcd = GFL_ARC_LoadDataAlloc(ARCID_MISSION, NARC_mission_mission_data_bin, HEAPID_MONOLITH);
+  mcd_max = GFL_ARC_GetDataSize(ARCID_MISSION, NARC_mission_mission_data_bin);
+  
+  for(mission_type = 0; mission_type < MISSION_TYPE_MAX; mission_type++){
+    mission_no = parent->list.occupy.mlst.mission_no[mission_type];
+    if(mission_no >= mcd_max){
+      GF_ASSERT_MSG(0, "mission_no=%d, mcd_max=%d", mission_no, mcd_max);
+      mission_no = 0;
+    }
+    monosys->setup.mission_cdata_array[mission_type] = mcd[mission_no];
+  }
+  
+  GFL_HEAP_FreeMemory(mcd);
 }

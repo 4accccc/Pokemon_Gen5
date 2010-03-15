@@ -11,7 +11,8 @@
 #include "savedata/save_tbl.h"
 #include "savedata/intrude_save.h"
 #include "intrude_save_local.h"
-
+#include "field/field_comm/mission_types.h"
+#include "field/field_comm/intrude_mission.h"
 
 
 
@@ -64,9 +65,7 @@ void OccupyInfo_WorkInit(OCCUPY_INFO *occupy)
   int i;
   
   GFL_STD_MemClear(occupy, sizeof(OCCUPY_INFO));
-  for(i = 0; i < INTRUDE_TOWN_MAX; i++){
-    occupy->mlst.mission_clear[i] = MISSION_CLEAR_NONE;
-  }
+  MISSION_LIST_Create(occupy);
 }
 
 //==================================================================

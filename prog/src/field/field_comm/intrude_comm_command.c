@@ -801,9 +801,16 @@ static void _IntrudeRecv_MissionList(const int netID, const int size, const void
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   const MISSION_CHOICE_LIST *mlist = pData;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   
-  MISSION_SetMissionList(&intcomm->mission, mlist);
-  OS_TPrintf("RECEIVE: ミッションリスト palace_area = %d\n", mlist->md[0].palace_area);
+  MISSION_SetMissionList(&intcomm->mission, mlist, netID);
+
+  if(netID != GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){//自分のデータで無いなら占拠情報もセット
+    OCCUPY_INFO *dest_occupy = GAMEDATA_GetOccupyInfo(gamedata, netID);
+    GFL_STD_MemCopy(&mlist->occupy, dest_occupy, sizeof(OCCUPY_INFO));
+  }
+  
+  OS_TPrintf("RECEIVE: ミッションリスト netID = %d\n", netID);
 }
 
 //==================================================================
@@ -852,14 +859,14 @@ BOOL IntrudeSend_MissionList(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM 
 static void _MissionOrderConfirm(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
-  const MISSION_DATA *mdata = pData;
+  const MISSION_ENTRY_REQ *entry_req = pData;
   
   if(GFL_NET_IsParentMachine() == FALSE){
     return;
   }
   
   OS_TPrintf("受信：ミッション受注します net_id=%d\n", netID);
-  MISSION_SetEntryNew(intcomm, &intcomm->mission, mdata, netID);
+  MISSION_SetEntryNew(intcomm, &intcomm->mission, entry_req, netID);
 }
 
 //==================================================================
@@ -872,7 +879,7 @@ static void _MissionOrderConfirm(const int netID, const int size, const void* pD
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL IntrudeSend_MissionOrderConfirm(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mdata)
+BOOL IntrudeSend_MissionOrderConfirm(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_ENTRY_REQ *entry_req)
 {
   if(_OtherPlayerExistence() == FALSE){
     return FALSE;
@@ -881,7 +888,7 @@ BOOL IntrudeSend_MissionOrderConfirm(INTRUDE_COMM_SYS_PTR intcomm, const MISSION
   MISSION_ClearRecvEntryAnswer(&intcomm->mission);
 
   return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-    INTRUDE_CMD_MISSION_ORDER_CONFIRM, sizeof(MISSION_DATA), mdata);
+    INTRUDE_CMD_MISSION_ORDER_CONFIRM, sizeof(MISSION_ENTRY_REQ), entry_req);
 }
 
 //==============================================================================

@@ -102,7 +102,7 @@ typedef enum{
 }PANEL_COLORMODE;
 
 ///ミッションが実施中の時に街番号領域にセットされる
-#define SELECT_TOWN_ENFORCEMENT   (INTRUDE_TOWN_MAX)
+#define SELECT_MISSION_ENFORCEMENT   (MISSION_TYPE_MAX)
 
 
 ///モノリスVINTR TCBのプライオリティ
@@ -151,11 +151,13 @@ typedef struct{
     u32 cell_index;          ///<アクター共通素材セルIndex
     u32 pltt_bmpfont_index;  ///<BMPフォントパレットIndex
   }common_res[COMMON_RESOURCE_INDEX_MAX];
+  
+  MISSION_CONV_DATA mission_cdata_array[MISSION_TYPE_MAX];
 }MONOLITH_SETUP;
 
 ///モノリス全画面共用ワーク(上下PROC間、画面をまたいだワークのやり取りに使用)
 typedef struct{
-  u8 mission_select_town;    ///<ミッション画面：選択している街番号 or SELECT_TOWN_ENFORCEMENT
+  u8 mission_select_no;      ///<ミッション画面：選択しているミッション番号 or SELECT_MISSION_ENFORCEMENT
   u8 power_select_no;        ///<パワー画面：選択しているパワー番号
   u8 power_mono_use;         ///<パワー画面：power_select_noのMONO_USE_POWER状態
   u8 power_eqp_update;       ///<パワー画面：TRUE:装備しているパワーに変更があった

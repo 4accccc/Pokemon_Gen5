@@ -18,6 +18,7 @@ targetname = mission
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)
+TARGETLISTDIR = $(PROJECT_PROGDIR)src/field/field_comm/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -90,9 +91,10 @@ subdir:
 	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).narc: $(targetname).narc
+$(TARGETDIR)/$(targetname).narc: $(targetname).narc mission_list_param.cdat
 	$(COPY) $(targetname).narc $(TARGETDIR)
-	$(COPY) $(targetname).naix $(TARGETDIR) 
+	$(COPY) $(targetname).naix $(TARGETDIR)
+	$(COPY) mission_list_param.cdat $(TARGETLISTDIR)
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
