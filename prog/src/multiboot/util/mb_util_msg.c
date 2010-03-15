@@ -605,6 +605,8 @@ const BOOL MB_MSG_CheckPrintStreamIsFinish( MB_MSG_WORK *msgWork )
 void MB_MSG_SetDispKeyCursor( MB_MSG_WORK *msgWork , const BOOL flg )
 {
   msgWork->isUseCursor = flg;
+  GFL_BMPWIN_MakeScreen( msgWork->msgWin );
+  GFL_BG_LoadScreenReq(msgWork->frame);
 }
 
 //--------------------------------------------------------------------------
