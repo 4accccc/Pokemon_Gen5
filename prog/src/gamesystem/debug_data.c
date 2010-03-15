@@ -43,7 +43,7 @@ static void DEBUG_MyPokeAdd_Field( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SA
 // ---その他自由に定義してください。
 static void DEBUG_MyPokeAdd_Tamada( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus );
 static void DEBUG_MyPokeAdd_Matsuda( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus );
-
+static void DEBUG_MyPokeAdd_Saito( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus );
 
 //============================================================================================
 // デバック用　手持ちポケモン　振り分け　
@@ -74,8 +74,9 @@ static void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
   DEBUG_MyPokeAdd_Tamada( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );
 #elif defined(DEBUG_ONLY_FOR_matsuda)
   DEBUG_MyPokeAdd_Matsuda( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );
+#elif defined(DEBUG_ONLY_FOR_saitou)
+  DEBUG_MyPokeAdd_Saito( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );
 #else
-
   // デフォルトの設定。
   // 手持ちが全部ばらばらで、フィールド技を持っている状態
   DEBUG_MyPokeAdd_Field( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );
@@ -163,6 +164,45 @@ static void DEBUG_MyPokeAdd_Matsuda( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_
 	PokeParty_Add(party, pp);
 	ZUKANSAVE_SetPokeGet( zukan, pp );
 }
+
+static void DEBUG_MyPokeAdd_Saito( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus )
+{
+	PP_Setup(pp, MONSNO_ATOSU, 100, MyStatus_GetID( mystatus ));
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
+  PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
+  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+
+	PP_Setup(pp, MONSNO_PORUTOSU, 100, MyStatus_GetID( mystatus ));
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
+  PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
+  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+
+	PP_Setup(pp, MONSNO_ARAMISU, 100, MyStatus_GetID( mystatus ));
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
+  PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
+  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
+  PP_SetWazaPos( pp , WAZANO_TEREPOOTO , 0 );
+  PP_SetWazaPos( pp , WAZANO_HURASSYU, 1 );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+
+  PP_Setup(pp, MONSNO_DARUTANISU, 100, MyStatus_GetID( mystatus ));
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
+  PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
+  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
+  PP_SetWazaPos( pp , WAZANO_NAMINORI , 0 );
+  PP_SetWazaPos( pp , WAZANO_TAKINOBORI , 1 );
+  PP_SetWazaPos( pp , WAZANO_KAIRIKI , 2 );
+  PP_SetWazaPos( pp , WAZANO_IAIGIRI , 3 );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+
+}
+
 
 
 
