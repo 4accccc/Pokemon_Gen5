@@ -16,6 +16,7 @@
 #include "event_trainer_eye.h"
 #include "effect_encount.h"
 
+#include "script_trainer.h"
 //SCRID_TRAINER_MOVE_BATTLE 
 #include "../../../resource/fldmapdata/script/trainer_def.h"
 
