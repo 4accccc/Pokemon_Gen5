@@ -32,6 +32,7 @@ lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
 ssources:=$(wildcard *.nsc)
 esources:=$(wildcard *.nce)
+parsources:=$(wildcard *.spr)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
@@ -43,7 +44,7 @@ aobjects = $(subst .nce,.NANR,$(esources))
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce
+.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce .spa.spt
 
 .ncl.NCLR:
 	g2dcvtr $<
@@ -76,9 +77,14 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects)
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) mystery.spa
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
+
+
+mystery.spa : $(parsources)
+	../../tools/SPRArchiver.exe -o spahead.h ./ ./ mystery.spa
+
 endif
 
 #------------------------------------------------------------------------------
@@ -95,6 +101,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCER
 	rm -f *.narc
 	rm -f *.naix
+	rm -f *.spa
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif

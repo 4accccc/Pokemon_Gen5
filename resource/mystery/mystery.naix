@@ -51,7 +51,8 @@ enum {
 	NARC_mystery_title_cursol_NCER = 37,
 	NARC_mystery_album_cursor_NANR = 38,
 	NARC_mystery_fushigi_box_NANR = 39,
-	NARC_mystery_title_cursol_NANR = 40
+	NARC_mystery_title_cursol_NANR = 40,
+	NARC_mystery_mystery_spa = 41
 };
 
 /* NARC_MYSTERY_NAIX_ */
