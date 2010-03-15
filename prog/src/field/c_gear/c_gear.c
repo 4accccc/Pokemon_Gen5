@@ -79,6 +79,9 @@
 #define PANEL_WIDTH (C_GEAR_PANEL_WIDTH)
 #define PANEL_SIZEXY (4)   //
 
+#define _CGEAR_TYPE_PATTERN_NUM (2)
+
+
 typedef enum{
   _CLACT_PLT,
   _CLACT_CHR,
@@ -148,6 +151,7 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
   { 18, 18+16, 40, 40+32 },
   { 160, 160+24, 100, 146 },
   { (POS_SCANRADAR_Y-12), (POS_SCANRADAR_Y+12), (POS_SCANRADAR_X-16), (POS_SCANRADAR_X+16) },
+  { 16, (16+8), 96, (96+(7*8)) },
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
 
@@ -200,9 +204,9 @@ struct _C_GEAR_WORK {
   GFL_CLWK  *cellMove;
 
   STARTUP_ENDCALLBACK* pCall;
- void* pWork;
+  void* pWork;
 
-     GFL_TCBSYS* pfade_tcbsys;
+  GFL_TCBSYS* pfade_tcbsys;
   GFL_TCB*                    vblank_tcb;
   void* pfade_tcbsys_wk;
   PALETTE_FADE_PTR            pfade_ptr;
@@ -226,7 +230,7 @@ struct _C_GEAR_WORK {
   u8 cellMoveType;
   u8 startCounter;
   u8 bPanelEdit;
-  u8 dummy;
+  u8 bgno;
 };
 
 
@@ -247,6 +251,11 @@ static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANEL
 static void _timeAnimation(C_GEAR_WORK* pWork);
 static void _typeAnimation(C_GEAR_WORK* pWork);
 static void _editMarkONOFF(C_GEAR_WORK* pWork,BOOL bOn);
+static void _gearArcCreate(C_GEAR_WORK* pWork, u32 bgno);
+static void _arcGearRelease(C_GEAR_WORK* pWork);
+static void _gearObjCreate(C_GEAR_WORK* pWork);
+static void _gearCrossObjCreate(C_GEAR_WORK* pWork);
+static void _gearMarkObjDrawEnable(C_GEAR_WORK* pWork,BOOL bFlg);
 
 
 #ifdef _NET_DEBUG
@@ -865,36 +874,25 @@ static u32 _bgcgx[]={NARC_c_gear_c_gear_NCGR,NARC_c_gear_c_gear2_NCGR,NARC_c_gea
 static u32 _objpal[]={NARC_c_gear_c_gear_obj_NCLR,NARC_c_gear_c_gear2_obj_NCLR,NARC_c_gear_c_gear_obj_NCLR};
 static u32 _objcgx[]={NARC_c_gear_c_gear_obj_NCGR,NARC_c_gear_c_gear2_obj_NCGR,NARC_c_gear_c_gear_obj_NCGR};
 
-static void _gearArcCreate(C_GEAR_WORK* pWork)
+static void _gearArcCreate(C_GEAR_WORK* pWork, u32 bgno)
 {
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, HEAPID_FIELDMAP );
-  MYSTATUS* pMy = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(pWork->pGameSys) );
-  u32 sex = MyStatus_GetMySex(pMy);
   u32 scrno=0;
 
-  /*
-  {
-    int i;
-    for(i=0;i<22;i++ ){
-      OS_TPrintf("xxxx NARC = %x\n",  GFL_ARC_GetDataSizeByHandle(p_handle, i));
-    }
-  }
-   */
 
-  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, _bgpal[ sex ],
+  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, _bgpal[ bgno ],
                                     PALTYPE_SUB_BG, 0, 0,  HEAPID_FIELDMAP);
 
 
   {
     int x,y;
     u16* loadPtr = GFL_ARC_LoadDataAllocByHandle(  p_handle,
-                                                   _bgpal[ sex ],
+                                                   _bgpal[ bgno ],
                                                    GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
 
     for(y = 0 ; y < _CGEAR_NET_CHANGEPAL_MAX; y++){
       for(x = 0 ; x < _CGEAR_NET_CHANGEPAL_NUM; x++){
         pWork->palBase[y][x ] = loadPtr[20 + 16*(_CGEAR_NET_CHANGEPAL_POSY+y) + _CGEAR_NET_CHANGEPAL_POSX + x];
-        //				pWork->palChange[y][x] = loadPtr[20 +16*(_CGEAR_NET_CHANGEPAL_POSY+_CGEAR_NET_CHANGEPAL_MAX+y) + _CGEAR_NET_CHANGEPAL_POSX + x];
       }
     }
     _PaletteMake(pWork,TRUE,TRUE,TRUE,0);
@@ -907,7 +905,7 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
 
 
   // サブ画面BGキャラ転送
-  pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, _bgcgx[sex],
+  pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, _bgcgx[bgno],
                                                                 GEAR_MAIN_FRAME, 0, 0, HEAPID_FIELDMAP);
 
   GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
@@ -917,13 +915,13 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
                                          HEAPID_FIELDMAP);
 
   pWork->objRes[_CLACT_PLT] = GFL_CLGRP_PLTT_Register( p_handle ,
-                                                       _objpal[sex],
+                                                       _objpal[bgno],
                                                        CLSYS_DRAW_SUB , 0 , HEAPID_FIELDMAP );
 
 
 
   pWork->objRes[_CLACT_CHR] = GFL_CLGRP_CGR_Register( p_handle ,
-                                                      _objcgx[sex] ,
+                                                      _objcgx[bgno] ,
                                                       FALSE , CLSYS_DRAW_SUB , HEAPID_FIELDMAP );
 
   pWork->objRes[_CLACT_ANM] = GFL_CLGRP_CELLANIM_Register( p_handle ,
@@ -933,7 +931,6 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
 
 
   //パレットアニメシステム作成
-  //    ConnectBGPalAnm_Init(&pWork->cbp, p_handle, NARC_ircbattle_connect_anm_NCLR, pWork->heapID);
   GFL_ARC_CloseDataHandle( p_handle );
 
   GFL_NET_WirelessIconEasy_HoldLCD(FALSE, pWork->heapID);
@@ -1044,6 +1041,58 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,C_GEAR_WORK* pWork)
 {
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタンイベントコールバック  GFL_BMN_EVENT_TOUCHのみ
+ *
+ *	@param	bttnid		ボタンID
+ *	@param	event		イベント種類
+ *	@param	p_work		ワーク
+ */
+//-----------------------------------------------------------------------------
+
+static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
+{
+  u32 touchx,touchy;
+
+  switch(bttnid){
+  case 0:
+    if(GFL_UI_TP_GetPointCont(&touchx,&touchy)){
+      pWork->tpx = touchx;
+      pWork->tpy = touchy;
+    }
+    pWork->cellMoveCreateCount = 0;
+    break;
+  case 1:
+    pWork->bPanelEdit = pWork->bPanelEdit ^ 1;
+    _editMarkONOFF(pWork, pWork->bPanelEdit);
+    break;
+  case 2:
+    //GAMEBEACON_Set_Congratulations();
+    break;
+  case 3:
+    FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW);
+    break;
+  case 4:
+    FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_SCANRADAR);
+    break;
+  case 5:
+    _arcGearRelease(pWork);
+    _gearArcCreate(pWork, pWork->bgno);
+    _gearPanelBgCreate(pWork);	// パネル作成
+    _gearObjCreate(pWork); //CLACT設定
+    _gearCrossObjCreate(pWork);
+    _gearMarkObjDrawEnable(pWork,TRUE);
+
+    pWork->bgno++;
+    pWork->bgno = pWork->bgno % _CGEAR_TYPE_PATTERN_NUM;
+
+    break;
+  }
+}
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	ボタンイベントコールバック
@@ -1067,28 +1116,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 
   switch( event ){
   case GFL_BMN_EVENT_TOUCH:
-    switch(bttnid){
-    case 0:
-      if(GFL_UI_TP_GetPointCont(&touchx,&touchy)){
-        pWork->tpx = touchx;
-        pWork->tpy = touchy;
-      }
-      pWork->cellMoveCreateCount = 0;
-      break;
-    case 1:
-      pWork->bPanelEdit = pWork->bPanelEdit ^ 1;
-      _editMarkONOFF(pWork, pWork->bPanelEdit);
-      break;
-    case 2:
-      //GAMEBEACON_Set_Congratulations();
-      break;
-    case 3:
-      FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW);
-      return;
-    case 4:
-      FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_SCANRADAR);
-      return;
-    }
+    _touchFunction(pWork,bttnid);
     break;
   case GFL_BMN_EVENT_HOLD:
     if(pWork->bPanelEdit){
@@ -1225,8 +1253,6 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
   int i;
   GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
 
-  //セル系システムの作成
-  pWork->cellUnit = GFL_CLACT_UNIT_Create( 56+_CLACT_TIMEPARTS_MAX , 0 , pWork->heapID );
 
   for(i=0;i < _CLACT_TIMEPARTS_MAX ;i++)
   {
@@ -1482,7 +1508,12 @@ static void _gearCrossObjDelete(C_GEAR_WORK* pWork)
 
 static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
 {
-  _gearArcCreate(pWork);  //ARC読み込み BG&OBJ
+  MYSTATUS* pMy = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(pWork->pGameSys) );
+  u32 bgno = MyStatus_GetMySex(pMy);
+
+  //セル系システムの作成
+  pWork->cellUnit = GFL_CLACT_UNIT_Create( 56+_CLACT_TIMEPARTS_MAX , 0 , pWork->heapID );
+  _gearArcCreate(pWork, bgno);  //ARC読み込み BG&OBJ
   if(bBoot){
     _gearBootMain(pWork);
   }
@@ -1496,12 +1527,14 @@ static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
 
 }
 
-static void _workEnd(C_GEAR_WORK* pWork)
+
+
+
+
+
+static void _arcGearRelease(C_GEAR_WORK* pWork)
 {
 
-  if(pWork->pButton){
-    GFL_BMN_Delete(pWork->pButton);
-  }
   _gearCrossObjDelete(pWork);
 
   if(pWork->cellMove){
@@ -1526,7 +1559,6 @@ static void _workEnd(C_GEAR_WORK* pWork)
       }
     }
   }
-  GFL_CLACT_UNIT_Delete( pWork->cellUnit );
   GFL_CLGRP_CELLANIM_Release( pWork->objRes[_CLACT_ANM] );
   GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
   GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
@@ -1534,6 +1566,20 @@ static void _workEnd(C_GEAR_WORK* pWork)
 
   GFL_BG_FreeCharacterArea(GEAR_MAIN_FRAME,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar),
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subchar));
+
+
+}
+
+
+static void _workEnd(C_GEAR_WORK* pWork)
+{
+  if(pWork->pButton){
+    GFL_BMN_Delete(pWork->pButton);
+  }
+  _arcGearRelease(pWork);
+
+  GFL_CLACT_UNIT_Delete( pWork->cellUnit );
+
 
   GFL_BG_FreeBGControl(GEAR_BUTTON_FRAME);
   GFL_BG_FreeBGControl(GEAR_BMPWIN_FRAME);
@@ -1966,7 +2012,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
           if(pWork->bAction){
             FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
             FSND_RequestTVTRingTone( fsnd);
-//            PMSND_PlaySE( SEQ_SE_SYS_35 );
+            //            PMSND_PlaySE( SEQ_SE_SYS_35 );
           }
           st = GAME_COMM_STATUS_WIRELESS_TR;
           _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 1);
@@ -1987,12 +2033,12 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
           FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
           FSND_StopTVTRingTone( fsnd );
         }
- //       if(!(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR)){
-  //        if(PMSND_CheckPlayingSEIdx(SEQ_SE_SYS_35)){
-   //         NET_PRINT("-けした-----\n");
-     //       PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
-       //   }
-   //     }
+        //       if(!(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR)){
+        //        if(PMSND_CheckPlayingSEIdx(SEQ_SE_SYS_35)){
+        //         NET_PRINT("-けした-----\n");
+        //       PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
+        //   }
+        //     }
 
       }
     }
@@ -2047,7 +2093,7 @@ void CGEAR_Exit( C_GEAR_WORK* pWork )
 {
   GFL_UI_SleepGoSetFunc(NULL,  NULL);
   GFL_UI_SleepReleaseSetFunc(NULL,  NULL);
-  
+
   GFL_NET_ChangeIconPosition(GFL_WICON_POSX,GFL_WICON_POSY);
   GFL_NET_ReloadIcon();
 
