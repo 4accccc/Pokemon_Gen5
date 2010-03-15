@@ -251,18 +251,19 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
     }
     break;
 
-  case REPORT_SEQ_SAVE_INIT:              // セーブ初期設定
-    if( CheckPlayerAnime( wk ) == FALSE ){
-      break;
-    }
-    wk->local->timeIcon = TIMEICON_Create(
-                            GFUser_VIntr_GetTCBSYS(),
-                            wk->local->util.win, 15, TIMEICON_DEFAULT_WAIT, wk->heapID );
-    FIELD_SUBSCREEN_SetReportStart( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
-    SetReportBgAnime( wk );
-    GAMEDATA_SaveAsyncStart( GAMESYSTEM_GetGameData(wk->gsys) );
-    *seq = REPORT_SEQ_SAVE_MAIN;
-    break;
+	case REPORT_SEQ_SAVE_INIT:							// セーブ初期設定
+		if( CheckPlayerAnime( wk ) == FALSE ){
+			break;
+		}
+		wk->local->timeIcon = TIMEICON_Create(
+														GFUser_VIntr_GetTCBSYS(),
+														wk->local->util.win, 15, TIMEICON_DEFAULT_WAIT, wk->heapID );
+		FIELD_SUBSCREEN_SetReportStart( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
+		SetReportBgAnime( wk );
+		GAMEDATA_SaveAsyncStart( GAMESYSTEM_GetGameData(wk->gsys) );
+		PMSND_PlaySE( SEQ_SE_SYS_78 );
+		*seq = REPORT_SEQ_SAVE_MAIN;
+		break;
 
   case REPORT_SEQ_SAVE_MAIN:              // セーブ実行
     switch( GAMEDATA_SaveAsyncMain(GAMESYSTEM_GetGameData(wk->gsys)) ){
@@ -295,17 +296,19 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
     case SAVE_RESULT_NG:
       FIELD_SUBSCREEN_SetReportBreak( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
       ResetReportBgAnime( wk );
-      ResetReportPlayerAnime( wk );
-      SetReportMsg( wk, msg_common_report_06 );
-      TILEICON_Exit( wk->local->timeIcon );
-      *seq = REPORT_SEQ_RESULT_NG_WAIT;
-      break;
-    }
-    break;
+			ResetReportPlayerAnime( wk );
+			SetReportMsg( wk, msg_common_report_06 );
+			TILEICON_Exit( wk->local->timeIcon );
+			PMSND_StopSE();
+			*seq = REPORT_SEQ_RESULT_NG_WAIT;
+			break;
+		}
+		break;
 
-  case REPORT_SEQ_RESULT_OK_BAR_WAIT:     // セーブ成功バー待ち
-    if( FIELD_SUBSCREEN_SetReportEnd( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) ) == TRUE ){
-      PMSND_PlaySE( SEQ_SE_SAVE );
+	case REPORT_SEQ_RESULT_OK_BAR_WAIT:			// セーブ成功バー待ち
+		if( FIELD_SUBSCREEN_SetReportEnd( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) ) == TRUE ){
+			PMSND_StopSE();
+			PMSND_PlaySE( SEQ_SE_SAVE );
       ResetReportBgAnime( wk );
       ResetReportPlayerAnime( wk );
       {
