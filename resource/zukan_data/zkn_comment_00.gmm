@@ -3924,42 +3924,37 @@
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_551_001">
+	<row id="ZKN_COMMENT_00_554_001">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_587_001">
+	<row id="ZKN_COMMENT_00_584_001">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_587_002">
+	<row id="ZKN_COMMENT_00_584_002">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_587_003">
+	<row id="ZKN_COMMENT_00_584_003">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_588_001">
+	<row id="ZKN_COMMENT_00_585_001">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_588_002">
+	<row id="ZKN_COMMENT_00_585_002">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_588_003">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_647_001">
+	<row id="ZKN_COMMENT_00_585_003">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
@@ -3969,17 +3964,22 @@
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_648_002">
+	<row id="ZKN_COMMENT_00_649_001">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_648_003">
+	<row id="ZKN_COMMENT_00_649_002">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_648_004">
+	<row id="ZKN_COMMENT_00_649_003">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_00_649_004">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
