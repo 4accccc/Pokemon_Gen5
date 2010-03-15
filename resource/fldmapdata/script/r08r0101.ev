@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r08r0101.h"
   .include  "r08r0101.h"
+  .include  "skill_teach_scr_def.h"     //for SCRID_SKILL_LEARN
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -23,21 +24,24 @@ _EVENT_DATA    ev_zone_c08r0101     //ゾーンチェンジスクリプト
 _EVENT_DATA    ev_scene_c08r0101   //シーンスクリプト
 _EVENT_DATA_END
 
+
+//イベント対象となるダルタニスの手持ち位置
+DEFINE_LOCAL target_poke_pos
+
 /**************************************************************/
 /*            SCENE_SCRIPT                               */
 /**************************************************************/
 EVENT_START ev_scene_c08r0101
-  DEFINE_LOCAL target_poke_pos
-
   //自機所定の位置へ移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
   _OBJ_ANIME_WAIT()
-
   //条件を満たしたダルタニスが手持ちから検索して今回の対象ポケモンにする
   _GET_EVT_DARUTANIS_POS( target_poke_pos, SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN
-    //「イベント続ける？」
-    _SYSWIN_MSG_ALLPUT_DOWN( msg_r08r0101_narrator_01 )
+    //対象ダルタニスのニックネームをタグ０番にセット
+    _TEMOTI_NICK_NAME( 0, target_poke_pos )
+    //「○○ボールからだす？」
+    _SYSWIN_MSG( msg_r08r0101_narrator_01, POS_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
     _SYSWIN_CLOSE()
 
@@ -46,40 +50,84 @@ EVENT_START ev_scene_c08r0101
 
       //ボール出現フレーム待ち
 
-      //ダルタニスを表示
+      //ダルタニスを表示 todo
       _FLAG_RESET( FV_R08R0101_POKE11 )
       _OBJ_ADD(R08R0101_POKE11_01)
-
       //対象ダルタニスのニックネームをタグ０番にセット
       _TEMOTI_NICK_NAME( 0, target_poke_pos )
-      //「とびだした」
-      _SYSWIN_MSG_ALLPUT_DOWN( msg_r08r0101_narrator_03 )
+      //「○○はとびだした」
+      _SYSWIN_MSG( msg_r08r0101_narrator_03, POS_DOWN )
       _SYSWIN_CLOSE()
-      //2回目以降のイベントか？
-      $SCWK_ANSWER = TRUE //@todo
-      IF $SCWK_ANSWER == FALSE THEN   //初回
+      //一度でも技覚えた？
+      IF FLAG_OFF( FE_R08R0101_LEG_FIRST ) THEN   //まだ覚えてない
         //おじさん登場
+        _FLAG_RESET( FV_R08R0101_OLDMAN1 )
+        _OBJ_ADD(R08R0101_OLDMAN1_01)
+        _OBJ_POS_CHANGE( R08R0101_OLDMAN1_01, 25, 0, 47, DIR_UP )
+        _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_move )
+        _OBJ_ANIME_WAIT()
+        _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_01 , R08R0101_OLDMAN1_01, POS_DR )
+        _BALLOONWIN_CLOSE()
+        _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_02 , R08R0101_OLDMAN1_01, POS_DR )
+        _BALLOONWIN_CLOSE()
+        _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_03 , R08R0101_OLDMAN1_01, POS_DR )
+        _BALLOONWIN_CLOSE()
+        _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_04 , R08R0101_OLDMAN1_01, POS_DR )
+        _BALLOONWIN_CLOSE()
       ENDIF
       //三銃士ポケモンそろっているか？
-      $SCWK_ANSWER = TRUE //@todo
+      {
+        DEFINE_LOCAL find_pos  //引数として必要なので用意してるだけ
+        DEFINE_LOCAL find_num
+        //検索数初期化
+        $find_num = 0
+        //アトスいるか？
+        _GET_PARTY_POS( MONSNO_645, SCWK_ANSWER, find_pos )
+        IF $SCWK_ANSWER == TRUE THEN
+          $find_num+=1
+        ENDIF
+        //ポルトスいるか？
+        _GET_PARTY_POS( MONSNO_646, SCWK_ANSWER, find_pos )
+        IF $SCWK_ANSWER == TRUE THEN
+          $find_num+=1
+        ENDIF
+        //アラミスいるか？
+        _GET_PARTY_POS( MONSNO_647, SCWK_ANSWER, find_pos )
+        IF $SCWK_ANSWER == TRUE THEN
+          $find_num+=1
+        ENDIF
+        //三匹そろってるか？
+        IF $find_num >= 3 THEN
+          $SCWK_ANSWER = TRUE       //条件満たした
+        ELSE
+          $SCWK_ANSWER = FALSE      //条件満たしてない
+        ENDIF
+      }
       IF $SCWK_ANSWER == TRUE THEN
         //イベント続行
         _CALL sp_poke_main_event
       ELSE
-        //２回目以降?
-        IF $SCWK_ANSWER == FALSE THEN   //初回
-          //メッセージ
-
+        //一度でも技覚えた？
+        IF FLAG_OFF( FE_R08R0101_LEG_FIRST ) THEN   //まだ覚えてない
+          //「ポケモン探してる」
+          _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_07 , R08R0101_OLDMAN1_01, POS_DR )
+          _BALLOONWIN_CLOSE()
           //おじさん退出
+          _CALL oldman_bye
         ELSE
-          //メッセージ
-
+          //ダルタニス戻る todo
+          _OBJ_DEL(R08R0101_POKE11_01)
+          //対象ダルタニスのニックネームをタグ０番にセット
+          _TEMOTI_NICK_NAME( 0, target_poke_pos )
+          //○○はボールに戻った
+          _SYSWIN_MSG( msg_r08r0101_narrator_07, POS_DOWN )
+          _SYSWIN_CLOSE()
           //終了
         ENDIF
       ENDIF
     ELSE
       //「ボールにとどまった」＞＞終了
-      _SYSWIN_MSG_ALLPUT_DOWN( msg_r08r0101_narrator_02 )
+      _SYSWIN_MSG( msg_r08r0101_narrator_02, POS_DOWN )
       _LAST_KEYWAIT()
       _SYSWIN_CLOSE()
     ENDIF
@@ -99,6 +147,7 @@ INIT_EVENT_START ev_zone_c08r0101
 	_FLAG_SET( FV_R08R0101_POKE5 )
 	_FLAG_SET( FV_R08R0101_POKE6 )
 	_FLAG_SET( FV_R08R0101_POKE11 )
+  _FLAG_SET( FV_R08R0101_OLDMAN1 )
   //イベント条件判定
   _GET_EVT_DARUTANIS_POS( pos, SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN
@@ -113,54 +162,103 @@ INIT_EVENT_END
 //イベント中核
 sp_poke_main_event:
   DEFINE_LOCAL skill_learn
-  //三匹ポケを順に出す
+  //三匹ポケを順に出す todo
   _FLAG_RESET( FV_R08R0101_POKE4 )
   _OBJ_ADD(R08R0101_POKE4_01)
   _FLAG_RESET( FV_R08R0101_POKE5 )
   _OBJ_ADD(R08R0101_POKE5_01)
   _FLAG_RESET( FV_R08R0101_POKE6 )
   _OBJ_ADD(R08R0101_POKE6_01)
+
+  //一度でも技覚えた？
+  IF FLAG_OFF( FE_R08R0101_LEG_FIRST ) THEN   //まだ覚えてない
+    //「なにかを伝えようとしている」
+    _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_05 , R08R0101_OLDMAN1_01, POS_DR )
+    _BALLOONWIN_CLOSE()
+  ELSE
+  ENDIF
+
   //それぞれダルタニスに近づく
   _OBJ_ANIME( R08R0101_POKE4_01, anm_poke4_move )
   _OBJ_ANIME( R08R0101_POKE5_01, anm_poke5_move )
   _OBJ_ANIME( R08R0101_POKE6_01, anm_poke6_move )
   _OBJ_ANIME_WAIT()
 
-  //新技覚える?
-  IF $SCWK_ANSWER == TRUE THEN
-    //技覚えシーケンス
-
+  //対象ダルタニスのニックネームをタグ０番にセット
+  _TEMOTI_NICK_NAME( 0, target_poke_pos )
+  //○○にきせきのつるぎを覚えさせる?
+  _SYSWIN_MSG( msg_r08r0101_narrator_04, POS_DOWN )
+  _YES_NO_WIN( SCWK_ANSWER )
+  _SYSWIN_CLOSE()
+  IF $SCWK_ANSWER == 0 THEN
+    //LOCALWORK14：ポケモン位置　LOCALWORK15：覚えさせる技ＩＤ
+    $LOCALWORK14 = $target_poke_pos
+    $LOCALWORK15 = WAZANO_KISEKINOTURUGI
+    //技覚えシーケンス SCWK_ANSWER=TRUEで覚えた
+    _CHG_COMMON_SCR SCRID_SKILL_LEARN
     //覚えた？
     IF $SCWK_ANSWER == FALSE THEN
-      $skill_learn = FALSE
-    ENDIF  
+      $skill_learn = FALSE      //覚えてない
+    ELSE
+      $skill_learn = TRUE      //覚えた
+    ENDIF
   ELSE
     $skill_learn = FALSE
   ENDIF
 
-  //覚えなかったとき
-  IF $skill_learn == FALSE THEN
-    //2回目以降？
-    IF $SCWK_ANSWER == FALSE THEN
-      //おじさんメッセージ
-    ENDIF
-  ENDIF
-
-  //三匹戻る
+  //三匹戻る todo
   _OBJ_DEL(R08R0101_POKE4_01)
   _OBJ_DEL(R08R0101_POKE5_01)
   _OBJ_DEL(R08R0101_POKE6_01)
 
-  //２回目以降?
-  IF $SCWK_ANSWER == FALSE THEN
-    //おじさん退出
-  ENDIF
+  {
+    DEFINE_LOCAL oldman_last_msg
+    //覚えなかったとき
+    IF $skill_learn == FALSE THEN
+      //「おぬししだい」
+      $oldman_last_msg = msg_r08r0101_guide_08
+    ELSE
+      //技を覚えたのでイベント消化フラグＯＮ
+      _FLAG_SET( FE_R08R0101_LEG_FIRST )
+      //「おぬしのおかげ」
+      $oldman_last_msg = msg_r08r0101_guide_06
+    ENDIF
+    //一度でも技覚えた？
+    IF FLAG_OFF( FE_R08R0101_LEG_FIRST ) THEN   //まだ覚えてない
+      //おじさんメッセージ
+      _BALLOONWIN_OBJMSG_POS( oldman_last_msg, R08R0101_OLDMAN1_01, POS_DR )
+      _BALLOONWIN_CLOSE()
+      //おじさん退出
+      _CALL oldman_bye
+    ENDIF
+  }
 
-  //ダルタニス戻る
+  //ダルタニス戻る todo
   _OBJ_DEL(R08R0101_POKE11_01)
 
 _RET
 
+//おじさん退場
+oldman_bye:
+  _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_bye )
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL(R08R0101_OLDMAN1_01)
+_RET
+
+//--------------------------------------------------------------------
+//おじさん所定位置に移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman_move
+  _ANIME_DATA	AC_WALK_U_8F,7
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//おじさん退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman_bye
+  _ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
   
 //--------------------------------------------------------------------
 //自機所定位置に移動
