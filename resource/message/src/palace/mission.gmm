@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-13T21:59:30"/>
+	<create user="ohmori" host="W00223" date="2010-03-15T23:39:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,135 +307,135 @@
 	<row id="plc_mis_01_01" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
-「ＨＰかいふくパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
-「ＨＰかいふくパワー　ＭＡＸ」を　あたえよ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
+「ぜんかいパワー」を　あたえよ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
+「ぜんかいパワー」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_01_02" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「たまごふかパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「たまごふかパワー　ＭＡＸ」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_01_03" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「やすうりパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「やすうりパワー　ＭＡＸ」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_01_04" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「なつきパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「なつきパワー　ＭＡＸ」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_01_05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「けいけんちパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「けいけんちパワー　ＭＡＸ」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_01_06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「おこづかいパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「おこづかいパワー　ＭＡＸ」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_01_07" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「ほかくパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「ほかくパワー　ＭＡＸ」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_01_08" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「たまごふかパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「たまごふかパワー　Ｓ」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_01_09" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「やすうりパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「やすうりパワー　Ｓ」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_01_10" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「なつきパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「なつきパワー　Ｓ」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_01_11" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「けいけんちパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「けいけんちパワー　Ｓ」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_01_12" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「おこづかいパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「おこづかいパワー　Ｓ」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_01_13" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「ほかくパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「ほかくパワー　Ｓ」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_02_01" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション２：
 「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
 「ほかくパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
 「ほかくパワー　ＭＡＸ」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_02_02" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション２：
 「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけかけ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
 「おこづかいパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけかけ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
 「おこづかいパワー　ＭＡＸ」を　あたえよ！</language>
 	</row>
 
@@ -460,28 +460,28 @@
 	<row id="plc_mis_02_05" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション２：
 「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
 「やすうりパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
 「やすうりパワー　ＭＡＸ」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_02_06" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション２：
 「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
 「たまごふかパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
 「たまごふかパワー　ＭＡＸ」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_02_07" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション２：
 「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
-「ＨＰかいふくパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
-「ＨＰかいふくパワー　ＭＡＸ」を　あたえよ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
+「ぜんかいパワー」を　あたえよ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
+「ぜんかいパワー」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_02_08" back-color="#80ff80,,,,,,,,,,,,,,,,,">
@@ -605,33 +605,33 @@
 	<row id="plc_mis_04_01" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」</comment>
 		<language name="JPN" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！</language>
+「せんとう　ＨＰかいふくパワー」を　あたえよ！</language>
 		<language name="JPN_KANJI" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！</language>
+「せんとう　ＨＰかいふくパワー」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_04_02" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」</comment>
 		<language name="JPN" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！</language>
+「せんとう　ＨＰかいふくパワー」を　あたえよ！</language>
 		<language name="JPN_KANJI" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！</language>
+「せんとう　ＨＰかいふくパワー」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_04_03" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」</comment>
 		<language name="JPN" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！</language>
+「せんとう　ＨＰかいふくパワー」を　あたえよ！</language>
 		<language name="JPN_KANJI" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！</language>
+「せんとう　ＨＰかいふくパワー」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_04_04" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」</comment>
 		<language name="JPN" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！</language>
+「せんとう　ＨＰかいふくパワー」を　あたえよ！</language>
 		<language name="JPN_KANJI" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！</language>
+「せんとう　ＨＰかいふくパワー」を　あたえよ！</language>
 	</row>
 
 	<row id="plc_mis_05_01" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
