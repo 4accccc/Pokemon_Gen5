@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="saitou" host="W00158" date="2010-02-22T19:49:58"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-03-14T00:54:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="61" top="170" right="766" bottom="798" maximized="no" rayout="Vertical2">
+	<dialog left="531" top="226" right="1236" bottom="854" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="412" top="136" right="940" bottom="658" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -451,6 +451,1191 @@
 		<comment>おこづかいそうさ</comment>
 		<language name="JPN" width="240">おこづかい</language>
 		<language name="JPN_KANJI" width="240">お小遣い</language>
+	</row>
+
+	<row id="dni_q_today" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">きょうの すれちがい ちょうさにんずう</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い調査人数</language>
+	</row>
+
+	<row id="dni_q_total" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">いままでの すれちがい ちょうさにんずう</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い調査人数</language>
+	</row>
+
+	<row id="dni_a_today_q01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ01</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q01</language>
+	</row>
+
+	<row id="dni_a_today_q02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ02</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q02</language>
+	</row>
+
+	<row id="dni_a_today_q03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ03</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q03</language>
+	</row>
+
+	<row id="dni_a_today_q04" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ04</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q04</language>
+	</row>
+
+	<row id="dni_a_today_q05" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ05</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q05</language>
+	</row>
+
+	<row id="dni_a_today_q06" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ06</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q06</language>
+	</row>
+
+	<row id="dni_a_today_q07" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ07</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q07</language>
+	</row>
+
+	<row id="dni_a_today_q08" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ08</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q08</language>
+	</row>
+
+	<row id="dni_a_today_q09" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ09</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q09</language>
+	</row>
+
+	<row id="dni_a_today_q10" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ10</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q10</language>
+	</row>
+
+	<row id="dni_a_today_q11" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ11</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q11</language>
+	</row>
+
+	<row id="dni_a_today_q12" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ12</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q12</language>
+	</row>
+
+	<row id="dni_a_today_q13" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ13</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q13</language>
+	</row>
+
+	<row id="dni_a_today_q14" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ14</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q14</language>
+	</row>
+
+	<row id="dni_a_today_q15" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ15</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q15</language>
+	</row>
+
+	<row id="dni_a_today_q16" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ16</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q16</language>
+	</row>
+
+	<row id="dni_a_today_q17" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ17</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q17</language>
+	</row>
+
+	<row id="dni_a_today_q18" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ18</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q18</language>
+	</row>
+
+	<row id="dni_a_today_q19" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ19</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q19</language>
+	</row>
+
+	<row id="dni_a_today_q20" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ20</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q20</language>
+	</row>
+
+	<row id="dni_a_today_q21" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ21</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q21</language>
+	</row>
+
+	<row id="dni_a_today_q22" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ22</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q22</language>
+	</row>
+
+	<row id="dni_a_today_q23" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ23</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q23</language>
+	</row>
+
+	<row id="dni_a_today_q24" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ24</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q24</language>
+	</row>
+
+	<row id="dni_a_today_q25" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ25</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q25</language>
+	</row>
+
+	<row id="dni_a_today_q26" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ26</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q26</language>
+	</row>
+
+	<row id="dni_a_today_q27" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ27</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q27</language>
+	</row>
+
+	<row id="dni_a_today_q28" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ28</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q28</language>
+	</row>
+
+	<row id="dni_a_today_q29" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ29</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q29</language>
+	</row>
+
+	<row id="dni_a_today_q30" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">きょうの かいとうにんずうQ30</language>
+		<language name="JPN_KANJI" width="240">今日のすれ違い回答人数Q30</language>
+	</row>
+
+	<row id="dni_a_total_q01" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ01</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q01</language>
+	</row>
+
+	<row id="dni_a_total_q02" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ02</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q02</language>
+	</row>
+
+	<row id="dni_a_total_q03" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ03</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q03</language>
+	</row>
+
+	<row id="dni_a_total_q04" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ04</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q04</language>
+	</row>
+
+	<row id="dni_a_total_q05" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ05</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q05</language>
+	</row>
+
+	<row id="dni_a_total_q06" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ06</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q06</language>
+	</row>
+
+	<row id="dni_a_total_q07" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ07</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q07</language>
+	</row>
+
+	<row id="dni_a_total_q08" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ08</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q08</language>
+	</row>
+
+	<row id="dni_a_total_q09" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ09</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q09</language>
+	</row>
+
+	<row id="dni_a_total_q10" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ10</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q10</language>
+	</row>
+
+	<row id="dni_a_total_q11" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ11</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q11</language>
+	</row>
+
+	<row id="dni_a_total_q12" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ12</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q12</language>
+	</row>
+
+	<row id="dni_a_total_q13" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ13</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q13</language>
+	</row>
+
+	<row id="dni_a_total_q14" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ14</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q14</language>
+	</row>
+
+	<row id="dni_a_total_q15" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ15</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q15</language>
+	</row>
+
+	<row id="dni_a_total_q16" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ16</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q16</language>
+	</row>
+
+	<row id="dni_a_total_q17" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ17</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q17</language>
+	</row>
+
+	<row id="dni_a_total_q18" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ18</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q18</language>
+	</row>
+
+	<row id="dni_a_total_q19" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ19</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q19</language>
+	</row>
+
+	<row id="dni_a_total_q20" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ20</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q20</language>
+	</row>
+
+	<row id="dni_a_total_q21" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ21</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q21</language>
+	</row>
+
+	<row id="dni_a_total_q22" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ22</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q22</language>
+	</row>
+
+	<row id="dni_a_total_q23" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ23</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q23</language>
+	</row>
+
+	<row id="dni_a_total_q24" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ24</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q24</language>
+	</row>
+
+	<row id="dni_a_total_q25" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ25</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q25</language>
+	</row>
+
+	<row id="dni_a_total_q26" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ26</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q26</language>
+	</row>
+
+	<row id="dni_a_total_q27" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ27</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q27</language>
+	</row>
+
+	<row id="dni_a_total_q28" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ28</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q28</language>
+	</row>
+
+	<row id="dni_a_total_q29" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ29</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q29</language>
+	</row>
+
+	<row id="dni_a_total_q30" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<language name="JPN" width="240">いままでの かいとうにんずうQ30</language>
+		<language name="JPN_KANJI" width="240">今までのすれ違い回答人数Q30</language>
+	</row>
+
+	<row id="dni_q01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q01 「ホワイトとブラック　どっち？」</language>
+		<language name="JPN_KANJI" width="240">Q01 「ホワイトとブラック　どっち？」</language>
+	</row>
+
+	<row id="dni_q02" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q02 「おとこと　おんな　どっち？」</language>
+		<language name="JPN_KANJI" width="240">Q02 「おとこと　おんな　どっち？」</language>
+	</row>
+
+	<row id="dni_q03" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q03 「たいせんと　こうかん　どっち？」</language>
+		<language name="JPN_KANJI" width="240">Q03 「たいせんと　こうかん　どっち？」</language>
+	</row>
+
+	<row id="dni_q04" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q04 「とかいと　いなか　すむなら？」</language>
+		<language name="JPN_KANJI" width="240">Q04 「とかいと　いなか　すむなら？」</language>
+	</row>
+
+	<row id="dni_q05" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q05 「あいてを　えらぶなら　どっち？」</language>
+		<language name="JPN_KANJI" width="240">Q05 「あいてを　えらぶなら　どっち？」</language>
+	</row>
+
+	<row id="dni_q06" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q06 「ほしいものは　どっち？」</language>
+		<language name="JPN_KANJI" width="240">Q06 「ほしいものは　どっち？」</language>
+	</row>
+
+	<row id="dni_q07" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q07 「あいてに　もとめるものは？」</language>
+		<language name="JPN_KANJI" width="240">Q07 「あいてに　もとめるものは？」</language>
+	</row>
+
+	<row id="dni_q08" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q08 「どんな　ポケモンが　すき？」</language>
+		<language name="JPN_KANJI" width="240">Q08 「どんな　ポケモンが　すき？」</language>
+	</row>
+
+	<row id="dni_q09" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q09 「さいしょにえらんだ　ポケモンは？」</language>
+		<language name="JPN_KANJI" width="240">Q09 「さいしょにえらんだ　ポケモンは？」</language>
+	</row>
+
+	<row id="dni_q10" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q10 「あそびにいくなら？」</language>
+		<language name="JPN_KANJI" width="240">Q10 「あそびにいくなら？」</language>
+	</row>
+
+	<row id="dni_q11" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q11 「すきな　がっこうの　じかんは？」</language>
+		<language name="JPN_KANJI" width="240">Q11 「すきな　がっこうの　じかんは？」</language>
+	</row>
+
+	<row id="dni_q12" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q12 「じぶんにとって　だいじなのは？」</language>
+		<language name="JPN_KANJI" width="240">Q12 「じぶんにとって　だいじなのは？」</language>
+	</row>
+
+	<row id="dni_q13" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q13 「どの　きせつが　すき？」</language>
+		<language name="JPN_KANJI" width="240">Q13 「どの　きせつが　すき？」</language>
+	</row>
+
+	<row id="dni_q14" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q14 「どんな　たべものが　すき？」</language>
+		<language name="JPN_KANJI" width="240">Q14 「どんな　たべものが　すき？」</language>
+	</row>
+
+	<row id="dni_q15" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q15 「すきな　にんげんの　タイプは？」</language>
+		<language name="JPN_KANJI" width="240">Q15 「すきな　にんげんの　タイプは？」</language>
+	</row>
+
+	<row id="dni_q16" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q16 「ポケモンの　おもしろいところは？」</language>
+		<language name="JPN_KANJI" width="240">Q16 「ポケモンの　おもしろいところは？」</language>
+	</row>
+
+	<row id="dni_q17" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q17 「すきな　べんきょうは？」</language>
+		<language name="JPN_KANJI" width="240">Q17 「すきな　べんきょうは？」</language>
+	</row>
+
+	<row id="dni_q18" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q18 「にがてな　べんきょうは？」</language>
+		<language name="JPN_KANJI" width="240">Q18 「にがてな　べんきょうは？」</language>
+	</row>
+
+	<row id="dni_q19" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q19 「もし　なれるとしたら？」</language>
+		<language name="JPN_KANJI" width="240">Q19 「もし　なれるとしたら？」</language>
+	</row>
+
+	<row id="dni_q20" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q20 「きゅうじつは　なにをしてる？」</language>
+		<language name="JPN_KANJI" width="240">Q20 「きゅうじつは　なにをしてる？」</language>
+	</row>
+
+	<row id="dni_q21" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q21 「どんな　おんがくが　すき？」</language>
+		<language name="JPN_KANJI" width="240">Q21 「どんな　おんがくが　すき？」</language>
+	</row>
+
+	<row id="dni_q22" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q22 「すきな　TVばんぐみは？」</language>
+		<language name="JPN_KANJI" width="240">Q22 「すきな　TVばんぐみは？」</language>
+	</row>
+
+	<row id="dni_q23" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q23 「どんな　えいがが　すき？」</language>
+		<language name="JPN_KANJI" width="240">Q23 「どんな　えいがが　すき？」</language>
+	</row>
+
+	<row id="dni_q24" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q24 「すきな　スポーツは？」</language>
+		<language name="JPN_KANJI" width="240">Q24 「すきな　スポーツは？」</language>
+	</row>
+
+	<row id="dni_q25" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q25 「すきないろは　どれ？」</language>
+		<language name="JPN_KANJI" width="240">Q25 「すきないろは　どれ？」</language>
+	</row>
+
+	<row id="dni_q26" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q26 「どんな　しゅみを　もってる？」</language>
+		<language name="JPN_KANJI" width="240">Q26 「どんな　しゅみを　もってる？」</language>
+	</row>
+
+	<row id="dni_q27" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q27 「どんな　しごとを　してる？」</language>
+		<language name="JPN_KANJI" width="240">Q27 「どんな　しごとを　してる？」</language>
+	</row>
+
+	<row id="dni_q28" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q28 「どのジムリーダーが　すき？」</language>
+		<language name="JPN_KANJI" width="240">Q28 「どのジムリーダーが　すき？」</language>
+	</row>
+
+	<row id="dni_q29" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q29 「すきな　ポケモンの　タイプは？」</language>
+		<language name="JPN_KANJI" width="240">Q29 「すきな　ポケモンの　タイプは？」</language>
+	</row>
+
+	<row id="dni_q30" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Q30 「ゲームプレイじかんは？」</language>
+		<language name="JPN_KANJI" width="240">Q30 「ゲームプレイじかんは？」</language>
+	</row>
+
+	<row id="dni_a001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ブラック」</language>
+		<language name="JPN_KANJI" width="240">「ブラック」</language>
+	</row>
+
+	<row id="dni_a002" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ホワイト」</language>
+		<language name="JPN_KANJI" width="240">「ホワイト」</language>
+	</row>
+
+	<row id="dni_a003" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「しょうねん」</language>
+		<language name="JPN_KANJI" width="240">「しょうねん」</language>
+	</row>
+
+	<row id="dni_a004" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「しょうじょ」</language>
+		<language name="JPN_KANJI" width="240">「しょうじょ」</language>
+	</row>
+
+	<row id="dni_a005" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「たいせん」</language>
+		<language name="JPN_KANJI" width="240">「たいせん」</language>
+	</row>
+
+	<row id="dni_a006" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「こうかん」</language>
+		<language name="JPN_KANJI" width="240">「こうかん」</language>
+	</row>
+
+	<row id="dni_a007" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「とかい」</language>
+		<language name="JPN_KANJI" width="240">「とかい」</language>
+	</row>
+
+	<row id="dni_a008" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「いなか」</language>
+		<language name="JPN_KANJI" width="240">「いなか」</language>
+	</row>
+
+	<row id="dni_a009" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「あたまがいい」</language>
+		<language name="JPN_KANJI" width="240">「あたまがいい」</language>
+	</row>
+
+	<row id="dni_a010" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「うんどうができる」</language>
+		<language name="JPN_KANJI" width="240">「うんどうができる」</language>
+	</row>
+
+	<row id="dni_a011" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「じかん」</language>
+		<language name="JPN_KANJI" width="240">「じかん」</language>
+	</row>
+
+	<row id="dni_a012" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「おかね」</language>
+		<language name="JPN_KANJI" width="240">「おかね」</language>
+	</row>
+
+	<row id="dni_a013" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「がいけん」</language>
+		<language name="JPN_KANJI" width="240">「がいけん」</language>
+	</row>
+
+	<row id="dni_a014" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「なかみ」</language>
+		<language name="JPN_KANJI" width="240">「なかみ」</language>
+	</row>
+
+	<row id="dni_a015" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「かっこいい」</language>
+		<language name="JPN_KANJI" width="240">「かっこいい」</language>
+	</row>
+
+	<row id="dni_a016" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「かわいい」</language>
+		<language name="JPN_KANJI" width="240">「かわいい」</language>
+	</row>
+
+	<row id="dni_a017" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「へんな」</language>
+		<language name="JPN_KANJI" width="240">「へんな」</language>
+	</row>
+
+	<row id="dni_a018" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ほのお」</language>
+		<language name="JPN_KANJI" width="240">「ほのお」</language>
+	</row>
+
+	<row id="dni_a019" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「みず」</language>
+		<language name="JPN_KANJI" width="240">「みず」</language>
+	</row>
+
+	<row id="dni_a020" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「くさ」</language>
+		<language name="JPN_KANJI" width="240">「くさ」</language>
+	</row>
+
+	<row id="dni_a021" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「うみ」</language>
+		<language name="JPN_KANJI" width="240">「うみ」</language>
+	</row>
+
+	<row id="dni_a022" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「かわ」</language>
+		<language name="JPN_KANJI" width="240">「かわ」</language>
+	</row>
+
+	<row id="dni_a023" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「やま」</language>
+		<language name="JPN_KANJI" width="240">「やま」</language>
+	</row>
+
+	<row id="dni_a024" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「じゅぎょう」</language>
+		<language name="JPN_KANJI" width="240">「じゅぎょう」</language>
+	</row>
+
+	<row id="dni_a025" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「やすみじかん」</language>
+		<language name="JPN_KANJI" width="240">「やすみじかん」</language>
+	</row>
+
+	<row id="dni_a026" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「きゅうしょく」</language>
+		<language name="JPN_KANJI" width="240">「きゅうしょく」</language>
+	</row>
+
+	<row id="dni_a027" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「かぞく」</language>
+		<language name="JPN_KANJI" width="240">「かぞく」</language>
+	</row>
+
+	<row id="dni_a028" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ともだち」</language>
+		<language name="JPN_KANJI" width="240">「ともだち」</language>
+	</row>
+
+	<row id="dni_a029" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「じぶん」</language>
+		<language name="JPN_KANJI" width="240">「じぶん」</language>
+	</row>
+
+	<row id="dni_a030" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「はる」</language>
+		<language name="JPN_KANJI" width="240">「はる」</language>
+	</row>
+
+	<row id="dni_a031" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「なつ」</language>
+		<language name="JPN_KANJI" width="240">「なつ」</language>
+	</row>
+
+	<row id="dni_a032" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「あき」</language>
+		<language name="JPN_KANJI" width="240">「あき」</language>
+	</row>
+
+	<row id="dni_a033" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ふゆ」</language>
+		<language name="JPN_KANJI" width="240">「ふゆ」</language>
+	</row>
+
+	<row id="dni_a034" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「あまい」</language>
+		<language name="JPN_KANJI" width="240">「あまい」</language>
+	</row>
+
+	<row id="dni_a035" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「からい」</language>
+		<language name="JPN_KANJI" width="240">「からい」</language>
+	</row>
+
+	<row id="dni_a036" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「すっぱい」</language>
+		<language name="JPN_KANJI" width="240">「すっぱい」</language>
+	</row>
+
+	<row id="dni_a037" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「にがい」</language>
+		<language name="JPN_KANJI" width="240">「にがい」</language>
+	</row>
+
+	<row id="dni_a038" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「おもしろい」</language>
+		<language name="JPN_KANJI" width="240">「おもしろい」</language>
+	</row>
+
+	<row id="dni_a039" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「かっこいい」</language>
+		<language name="JPN_KANJI" width="240">「かっこいい」</language>
+	</row>
+
+	<row id="dni_a040" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「やさしい」</language>
+		<language name="JPN_KANJI" width="240">「やさしい」</language>
+	</row>
+
+	<row id="dni_a041" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「おかねもち」</language>
+		<language name="JPN_KANJI" width="240">「おかねもち」</language>
+	</row>
+
+	<row id="dni_a042" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「たたかい」</language>
+		<language name="JPN_KANJI" width="240">「たたかい」</language>
+	</row>
+
+	<row id="dni_a043" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「あつめる」</language>
+		<language name="JPN_KANJI" width="240">「あつめる」</language>
+	</row>
+
+	<row id="dni_a044" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「おはなし」</language>
+		<language name="JPN_KANJI" width="240">「おはなし」</language>
+	</row>
+
+	<row id="dni_a045" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ポケモン」</language>
+		<language name="JPN_KANJI" width="240">「ポケモン」</language>
+	</row>
+
+	<row id="dni_a046" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「こくご」</language>
+		<language name="JPN_KANJI" width="240">「こくご」</language>
+	</row>
+
+	<row id="dni_a047" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「さんすう」</language>
+		<language name="JPN_KANJI" width="240">「さんすう」</language>
+	</row>
+
+	<row id="dni_a048" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「りか」</language>
+		<language name="JPN_KANJI" width="240">「りか」</language>
+	</row>
+
+	<row id="dni_a049" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「しゃかい」</language>
+		<language name="JPN_KANJI" width="240">「しゃかい」</language>
+	</row>
+
+	<row id="dni_a050" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「こくご」</language>
+		<language name="JPN_KANJI" width="240">「こくご」</language>
+	</row>
+
+	<row id="dni_a051" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「さんすう」</language>
+		<language name="JPN_KANJI" width="240">「さんすう」</language>
+	</row>
+
+	<row id="dni_a052" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「りか」</language>
+		<language name="JPN_KANJI" width="240">「りか」</language>
+	</row>
+
+	<row id="dni_a053" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「しゃかい」</language>
+		<language name="JPN_KANJI" width="240">「しゃかい」</language>
+	</row>
+
+	<row id="dni_a054" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ポケモントレーナー」</language>
+		<language name="JPN_KANJI" width="240">「ポケモントレーナー」</language>
+	</row>
+
+	<row id="dni_a055" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ポケモンはかせ」</language>
+		<language name="JPN_KANJI" width="240">「ポケモンはかせ」</language>
+	</row>
+
+	<row id="dni_a056" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「プラズマだん」</language>
+		<language name="JPN_KANJI" width="240">「プラズマだん」</language>
+	</row>
+
+	<row id="dni_a057" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ポケモン」</language>
+		<language name="JPN_KANJI" width="240">「ポケモン」</language>
+	</row>
+
+	<row id="dni_a058" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「そとであそぶ」</language>
+		<language name="JPN_KANJI" width="240">「そとであそぶ」</language>
+	</row>
+
+	<row id="dni_a059" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「かいもの」</language>
+		<language name="JPN_KANJI" width="240">「かいもの」</language>
+	</row>
+
+	<row id="dni_a060" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「どくしょ」</language>
+		<language name="JPN_KANJI" width="240">「どくしょ」</language>
+	</row>
+
+	<row id="dni_a061" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ゲーム」</language>
+		<language name="JPN_KANJI" width="240">「ゲーム」</language>
+	</row>
+
+	<row id="dni_a062" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ねてる」</language>
+		<language name="JPN_KANJI" width="240">「ねてる」</language>
+	</row>
+
+	<row id="dni_a063" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ポップ」</language>
+		<language name="JPN_KANJI" width="240">「ポップ」</language>
+	</row>
+
+	<row id="dni_a064" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ロック」</language>
+		<language name="JPN_KANJI" width="240">「ロック」</language>
+	</row>
+
+	<row id="dni_a065" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ジャズ」</language>
+		<language name="JPN_KANJI" width="240">「ジャズ」</language>
+	</row>
+
+	<row id="dni_a066" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ラップ」</language>
+		<language name="JPN_KANJI" width="240">「ラップ」</language>
+	</row>
+
+	<row id="dni_a067" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「オーケストラ」</language>
+		<language name="JPN_KANJI" width="240">「オーケストラ」</language>
+	</row>
+
+	<row id="dni_a068" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ニュース」</language>
+		<language name="JPN_KANJI" width="240">「ニュース」</language>
+	</row>
+
+	<row id="dni_a069" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ドラマ」</language>
+		<language name="JPN_KANJI" width="240">「ドラマ」</language>
+	</row>
+
+	<row id="dni_a070" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「おわらい」</language>
+		<language name="JPN_KANJI" width="240">「おわらい」</language>
+	</row>
+
+	<row id="dni_a071" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「スポーツ」</language>
+		<language name="JPN_KANJI" width="240">「スポーツ」</language>
+	</row>
+
+	<row id="dni_a072" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「アニメ」</language>
+		<language name="JPN_KANJI" width="240">「アニメ」</language>
+	</row>
+
+	<row id="dni_a073" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「アクション」</language>
+		<language name="JPN_KANJI" width="240">「アクション」</language>
+	</row>
+
+	<row id="dni_a074" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「SF」</language>
+		<language name="JPN_KANJI" width="240">「SF」</language>
+	</row>
+
+	<row id="dni_a075" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「れんあい」</language>
+		<language name="JPN_KANJI" width="240">「れんあい」</language>
+	</row>
+
+	<row id="dni_a076" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「サスペンス」</language>
+		<language name="JPN_KANJI" width="240">「サスペンス」</language>
+	</row>
+
+	<row id="dni_a077" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「コメディ」</language>
+		<language name="JPN_KANJI" width="240">「コメディ」</language>
+	</row>
+
+	<row id="dni_a078" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ホラー」</language>
+		<language name="JPN_KANJI" width="240">「ホラー」</language>
+	</row>
+
+	<row id="dni_a079" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「やきゅう」</language>
+		<language name="JPN_KANJI" width="240">「やきゅう」</language>
+	</row>
+
+	<row id="dni_a080" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「サッカー」</language>
+		<language name="JPN_KANJI" width="240">「サッカー」</language>
+	</row>
+
+	<row id="dni_a081" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「バスケ」</language>
+		<language name="JPN_KANJI" width="240">「バスケ」</language>
+	</row>
+
+	<row id="dni_a082" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「アメフト」</language>
+		<language name="JPN_KANJI" width="240">「アメフト」</language>
+	</row>
+
+	<row id="dni_a083" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ホッケー」</language>
+		<language name="JPN_KANJI" width="240">「ホッケー」</language>
+	</row>
+
+	<row id="dni_a084" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「かくとうぎ」</language>
+		<language name="JPN_KANJI" width="240">「かくとうぎ」</language>
+	</row>
+
+	<row id="dni_a085" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「あか」</language>
+		<language name="JPN_KANJI" width="240">「あか」</language>
+	</row>
+
+	<row id="dni_a086" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「みどり」</language>
+		<language name="JPN_KANJI" width="240">「みどり」</language>
+	</row>
+
+	<row id="dni_a087" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「あお」</language>
+		<language name="JPN_KANJI" width="240">「あお」</language>
+	</row>
+
+	<row id="dni_a088" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「きいろ」</language>
+		<language name="JPN_KANJI" width="240">「きいろ」</language>
+	</row>
+
+	<row id="dni_a089" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「しろ」</language>
+		<language name="JPN_KANJI" width="240">「しろ」</language>
+	</row>
+
+	<row id="dni_a090" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「くろ」</language>
+		<language name="JPN_KANJI" width="240">「くろ」</language>
+	</row>
+
+	<row id="dni_a091" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「うんどう」</language>
+		<language name="JPN_KANJI" width="240">「うんどう」</language>
+	</row>
+
+	<row id="dni_a092" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「どくしょ」</language>
+		<language name="JPN_KANJI" width="240">「どくしょ」</language>
+	</row>
+
+	<row id="dni_a093" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「おんがく」</language>
+		<language name="JPN_KANJI" width="240">「おんがく」</language>
+	</row>
+
+	<row id="dni_a094" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「えいが」</language>
+		<language name="JPN_KANJI" width="240">「えいが」</language>
+	</row>
+
+	<row id="dni_a095" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「りょこう」</language>
+		<language name="JPN_KANJI" width="240">「りょこう」</language>
+	</row>
+
+	<row id="dni_a096" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「りょうり」</language>
+		<language name="JPN_KANJI" width="240">「りょうり」</language>
+	</row>
+
+	<row id="dni_a097" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「つり」</language>
+		<language name="JPN_KANJI" width="240">「つり」</language>
+	</row>
+
+	<row id="dni_a098" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ゲーム」</language>
+		<language name="JPN_KANJI" width="240">「ゲーム」</language>
+	</row>
+
+	<row id="dni_a099" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「がくせい」</language>
+		<language name="JPN_KANJI" width="240">「がくせい」</language>
+	</row>
+
+	<row id="dni_a100" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「サラリーマン」</language>
+		<language name="JPN_KANJI" width="240">「サラリーマン」</language>
+	</row>
+
+	<row id="dni_a101" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「クリエーター」</language>
+		<language name="JPN_KANJI" width="240">「クリエーター」</language>
+	</row>
+
+	<row id="dni_a102" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「じえいぎょう」</language>
+		<language name="JPN_KANJI" width="240">「じえいぎょう」</language>
+	</row>
+
+	<row id="dni_a103" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「こうむいん」</language>
+		<language name="JPN_KANJI" width="240">「こうむいん」</language>
+	</row>
+
+	<row id="dni_a104" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「しゅふ」</language>
+		<language name="JPN_KANJI" width="240">「しゅふ」</language>
+	</row>
+
+	<row id="dni_a105" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「げいじゅつか」</language>
+		<language name="JPN_KANJI" width="240">「げいじゅつか」</language>
+	</row>
+
+	<row id="dni_a106" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「フリーター」</language>
+		<language name="JPN_KANJI" width="240">「フリーター」</language>
+	</row>
+
+	<row id="dni_a107" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「さんすくみ　くさ」</language>
+		<language name="JPN_KANJI" width="240">「さんすくみ　くさ」</language>
+	</row>
+
+	<row id="dni_a108" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「さんすくみ　ほのお」</language>
+		<language name="JPN_KANJI" width="240">「さんすくみ　ほのお」</language>
+	</row>
+
+	<row id="dni_a109" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「さんすくみ　みず」</language>
+		<language name="JPN_KANJI" width="240">「さんすくみ　みず」</language>
+	</row>
+
+	<row id="dni_a110" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ノーマル」</language>
+		<language name="JPN_KANJI" width="240">「ノーマル」</language>
+	</row>
+
+	<row id="dni_a111" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「むし」</language>
+		<language name="JPN_KANJI" width="240">「むし」</language>
+	</row>
+
+	<row id="dni_a112" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「でんき」</language>
+		<language name="JPN_KANJI" width="240">「でんき」</language>
+	</row>
+
+	<row id="dni_a113" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「じめん」</language>
+		<language name="JPN_KANJI" width="240">「じめん」</language>
+	</row>
+
+	<row id="dni_a114" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ひこう」</language>
+		<language name="JPN_KANJI" width="240">「ひこう」</language>
+	</row>
+
+	<row id="dni_a115" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「こおり」</language>
+		<language name="JPN_KANJI" width="240">「こおり」</language>
+	</row>
+
+	<row id="dni_a116" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ドラゴンくろ」</language>
+		<language name="JPN_KANJI" width="240">「ドラゴンくろ」</language>
+	</row>
+
+	<row id="dni_a117" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ドラゴンしろ」</language>
+		<language name="JPN_KANJI" width="240">「ドラゴンしろ」</language>
+	</row>
+
+	<row id="dni_a118" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ノーマル」</language>
+		<language name="JPN_KANJI" width="240">「ノーマル」</language>
+	</row>
+
+	<row id="dni_a119" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ほのお」</language>
+		<language name="JPN_KANJI" width="240">「ほのお」</language>
+	</row>
+
+	<row id="dni_a120" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「みず」</language>
+		<language name="JPN_KANJI" width="240">「みず」</language>
+	</row>
+
+	<row id="dni_a121" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「でんき」</language>
+		<language name="JPN_KANJI" width="240">「でんき」</language>
+	</row>
+
+	<row id="dni_a122" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「くさ」</language>
+		<language name="JPN_KANJI" width="240">「くさ」</language>
+	</row>
+
+	<row id="dni_a123" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「こおり」</language>
+		<language name="JPN_KANJI" width="240">「こおり」</language>
+	</row>
+
+	<row id="dni_a124" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「かくとう」</language>
+		<language name="JPN_KANJI" width="240">「かくとう」</language>
+	</row>
+
+	<row id="dni_a125" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「どく」</language>
+		<language name="JPN_KANJI" width="240">「どく」</language>
+	</row>
+
+	<row id="dni_a126" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「じめん」</language>
+		<language name="JPN_KANJI" width="240">「じめん」</language>
+	</row>
+
+	<row id="dni_a127" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ひこう」</language>
+		<language name="JPN_KANJI" width="240">「ひこう」</language>
+	</row>
+
+	<row id="dni_a128" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「エスパー」</language>
+		<language name="JPN_KANJI" width="240">「エスパー」</language>
+	</row>
+
+	<row id="dni_a129" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「むし」</language>
+		<language name="JPN_KANJI" width="240">「むし」</language>
+	</row>
+
+	<row id="dni_a130" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「いわ」</language>
+		<language name="JPN_KANJI" width="240">「いわ」</language>
+	</row>
+
+	<row id="dni_a131" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ゴースト」</language>
+		<language name="JPN_KANJI" width="240">「ゴースト」</language>
+	</row>
+
+	<row id="dni_a132" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「ドラゴン」</language>
+		<language name="JPN_KANJI" width="240">「ドラゴン」</language>
+	</row>
+
+	<row id="dni_a133" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「あく」</language>
+		<language name="JPN_KANJI" width="240">「あく」</language>
+	</row>
+
+	<row id="dni_a134" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「はがね」</language>
+		<language name="JPN_KANJI" width="240">「はがね」</language>
+	</row>
+
+	<row id="dni_a135" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「０ー１０じかん」</language>
+		<language name="JPN_KANJI" width="240">「０ー１０じかん」</language>
+	</row>
+
+	<row id="dni_a136" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「１０ー２０じかん」</language>
+		<language name="JPN_KANJI" width="240">「１０ー２０じかん」</language>
+	</row>
+
+	<row id="dni_a137" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「２０ー３０じかん」</language>
+		<language name="JPN_KANJI" width="240">「２０ー３０じかん」</language>
+	</row>
+
+	<row id="dni_a138" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「３０ー４０じかん」</language>
+		<language name="JPN_KANJI" width="240">「３０ー４０じかん」</language>
+	</row>
+
+	<row id="dni_a139" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「４０ー５０じかん」</language>
+		<language name="JPN_KANJI" width="240">「４０ー５０じかん」</language>
+	</row>
+
+	<row id="dni_a140" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「５０ー６０じかん」</language>
+		<language name="JPN_KANJI" width="240">「５０ー６０じかん」</language>
+	</row>
+
+	<row id="dni_a141" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「６０ー７０じかん」</language>
+		<language name="JPN_KANJI" width="240">「６０ー７０じかん」</language>
+	</row>
+
+	<row id="dni_a142" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「７０ー８０じかん」</language>
+		<language name="JPN_KANJI" width="240">「７０ー８０じかん」</language>
+	</row>
+
+	<row id="dni_a143" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「８０ー９０じかん」</language>
+		<language name="JPN_KANJI" width="240">「８０ー９０じかん」</language>
+	</row>
+
+	<row id="dni_a144" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「９０ー１００じかん」</language>
+		<language name="JPN_KANJI" width="240">「９０ー１００じかん」</language>
+	</row>
+
+	<row id="dni_a145" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="240">「１００じかんー」</language>
+		<language name="JPN_KANJI" width="240">「１００じかんー」</language>
 	</row>
 
 	<flowchart-group-list>

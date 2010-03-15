@@ -9314,6 +9314,23 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief すれ違い調査の, 自分の回答を設定する
+ *
+ * @param qID [in] 質問ID ( QUESTION_ID_xxxx )
+ * @param aIdx[in] 何番目の回答か？
+ */
+//--------------------------------------------------------------
+#define _SET_MY_ANSWER( qID, aIdx ) \
+    _ASM_SET_MY_ANSWER qID, aIdx
+
+  .macro _ASM_SET_MY_ANSWER qID, aIdx
+  .short EV_SEQ_SET_MY_ANSWER
+  .short \qID
+  .short \aIdx
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @brief 手持ちの配布ダルタニスの位置を返す
  *
  * @param pos       手持ちポケモンの位置

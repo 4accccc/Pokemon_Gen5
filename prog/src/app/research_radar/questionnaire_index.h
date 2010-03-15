@@ -37,3 +37,14 @@ extern u8 QUESTIONNAIRE_INDEX_GetAnswerNumOffset( u8 questionID );
 
 // セーブデータ オフセット ( ビット数 )
 extern u8 QUESTIONNAIRE_INDEX_GetBitCountOffset( u8 questionID );
+
+
+//=================================================================
+// ■ツール関数
+//=================================================================
+
+// 指定した回答が所属する質問のIDを取得する
+extern u8 GetQuestionID_byAnswerID( u8 answerID );
+
+// 指定した回答が, 所属する質問内の何番目の回答なのかを取得する
+extern u8 GetAnswerIndex_atQuestion( u8 answerID );

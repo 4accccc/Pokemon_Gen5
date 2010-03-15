@@ -152,6 +152,69 @@ static  const DEBUG_NUMINPUT_INITIALIZER DATA_united = {
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_Fortune = { 
   D_NINPUT_DATA_LIST,   NELEMS( DNI_FortuneList ), DNI_FortuneList, };
 
+static const DEBUG_NUMINPUT_INITIALIZER DATA_Q_today = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfQ), NumInputList_todayCountOfQ };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_Q_total = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfQ), NumInputList_totalCountOfQ };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q01 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q01), NumInputList_todayCountOfA_Q01 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q02 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q02), NumInputList_todayCountOfA_Q02 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q03 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q03), NumInputList_todayCountOfA_Q03 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q04 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q04), NumInputList_todayCountOfA_Q04 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q05 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q05), NumInputList_todayCountOfA_Q05 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q06 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q06), NumInputList_todayCountOfA_Q06 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q07 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q07), NumInputList_todayCountOfA_Q07 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q08 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q08), NumInputList_todayCountOfA_Q08 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q09 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q09), NumInputList_todayCountOfA_Q09 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q10 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q10), NumInputList_todayCountOfA_Q10 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q11 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q11), NumInputList_todayCountOfA_Q11 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q12 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q12), NumInputList_todayCountOfA_Q12 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q13 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q13), NumInputList_todayCountOfA_Q13 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q14 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q14), NumInputList_todayCountOfA_Q14 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q15 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q15), NumInputList_todayCountOfA_Q15 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q16 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q16), NumInputList_todayCountOfA_Q16 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q17 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q17), NumInputList_todayCountOfA_Q17 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q18 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q18), NumInputList_todayCountOfA_Q18 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q19 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q19), NumInputList_todayCountOfA_Q19 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q20 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q20), NumInputList_todayCountOfA_Q20 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q21 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q21), NumInputList_todayCountOfA_Q21 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q22 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q22), NumInputList_todayCountOfA_Q22 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q23 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q23), NumInputList_todayCountOfA_Q23 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q24 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q24), NumInputList_todayCountOfA_Q24 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q25 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q25), NumInputList_todayCountOfA_Q25 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q26 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q26), NumInputList_todayCountOfA_Q26 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q27 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q27), NumInputList_todayCountOfA_Q27 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q28 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q28), NumInputList_todayCountOfA_Q28 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q29 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q29), NumInputList_todayCountOfA_Q29 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q30 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q30), NumInputList_todayCountOfA_Q30 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q01 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q01), NumInputList_totalCountOfA_Q01 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q02 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q02), NumInputList_totalCountOfA_Q02 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q03 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q03), NumInputList_totalCountOfA_Q03 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q04 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q04), NumInputList_totalCountOfA_Q04 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q05 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q05), NumInputList_totalCountOfA_Q05 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q06 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q06), NumInputList_totalCountOfA_Q06 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q07 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q07), NumInputList_totalCountOfA_Q07 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q08 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q08), NumInputList_totalCountOfA_Q08 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q09 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q09), NumInputList_totalCountOfA_Q09 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q10 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q10), NumInputList_totalCountOfA_Q10 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q11 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q11), NumInputList_totalCountOfA_Q11 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q12 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q12), NumInputList_totalCountOfA_Q12 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q13 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q13), NumInputList_totalCountOfA_Q13 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q14 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q14), NumInputList_totalCountOfA_Q14 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q15 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q15), NumInputList_totalCountOfA_Q15 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q16 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q16), NumInputList_totalCountOfA_Q16 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q17 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q17), NumInputList_totalCountOfA_Q17 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q18 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q18), NumInputList_totalCountOfA_Q18 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q19 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q19), NumInputList_totalCountOfA_Q19 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q20 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q20), NumInputList_totalCountOfA_Q20 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q21 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q21), NumInputList_totalCountOfA_Q21 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q22 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q22), NumInputList_totalCountOfA_Q22 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q23 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q23), NumInputList_totalCountOfA_Q23 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q24 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q24), NumInputList_totalCountOfA_Q24 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q25 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q25), NumInputList_totalCountOfA_Q25 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q26 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q26), NumInputList_totalCountOfA_Q26 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q27 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q27), NumInputList_totalCountOfA_Q27 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q28 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q28), NumInputList_totalCountOfA_Q28 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q29 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q29), NumInputList_totalCountOfA_Q29 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q30 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q30), NumInputList_totalCountOfA_Q30 };
+
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
 {
@@ -189,6 +252,68 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_top_scenario, (void*)NULL },
   { dni_top_united_nations, (void*)&DATA_united },
   { dni_top_fortune, (void*)&DATA_Fortune },
+  { dni_q_today, (void*)&DATA_Q_today },
+  { dni_q_total, (void*)&DATA_Q_total },
+  { dni_a_today_q01, (void*)&DATA_A_today_Q01 },
+  { dni_a_today_q02, (void*)&DATA_A_today_Q02 },
+  { dni_a_today_q03, (void*)&DATA_A_today_Q03 },
+  { dni_a_today_q04, (void*)&DATA_A_today_Q04 },
+  { dni_a_today_q05, (void*)&DATA_A_today_Q05 },
+  { dni_a_today_q06, (void*)&DATA_A_today_Q06 },
+  { dni_a_today_q07, (void*)&DATA_A_today_Q07 },
+  { dni_a_today_q08, (void*)&DATA_A_today_Q08 },
+  { dni_a_today_q09, (void*)&DATA_A_today_Q09 },
+  { dni_a_today_q10, (void*)&DATA_A_today_Q10 },
+  { dni_a_today_q11, (void*)&DATA_A_today_Q11 },
+  { dni_a_today_q12, (void*)&DATA_A_today_Q12 },
+  { dni_a_today_q13, (void*)&DATA_A_today_Q13 },
+  { dni_a_today_q14, (void*)&DATA_A_today_Q14 },
+  { dni_a_today_q15, (void*)&DATA_A_today_Q15 },
+  { dni_a_today_q16, (void*)&DATA_A_today_Q16 },
+  { dni_a_today_q17, (void*)&DATA_A_today_Q17 },
+  { dni_a_today_q18, (void*)&DATA_A_today_Q18 },
+  { dni_a_today_q19, (void*)&DATA_A_today_Q19 },
+  { dni_a_today_q20, (void*)&DATA_A_today_Q20 },
+  { dni_a_today_q21, (void*)&DATA_A_today_Q21 },
+  { dni_a_today_q22, (void*)&DATA_A_today_Q22 },
+  { dni_a_today_q23, (void*)&DATA_A_today_Q23 },
+  { dni_a_today_q24, (void*)&DATA_A_today_Q24 },
+  { dni_a_today_q25, (void*)&DATA_A_today_Q25 },
+  { dni_a_today_q26, (void*)&DATA_A_today_Q26 },
+  { dni_a_today_q27, (void*)&DATA_A_today_Q27 },
+  { dni_a_today_q28, (void*)&DATA_A_today_Q28 },
+  { dni_a_today_q29, (void*)&DATA_A_today_Q29 },
+  { dni_a_today_q30, (void*)&DATA_A_today_Q30 },
+  { dni_a_total_q01, (void*)&DATA_A_total_Q01 },
+  { dni_a_total_q02, (void*)&DATA_A_total_Q02 },
+  { dni_a_total_q03, (void*)&DATA_A_total_Q03 },
+  { dni_a_total_q04, (void*)&DATA_A_total_Q04 },
+  { dni_a_total_q05, (void*)&DATA_A_total_Q05 },
+  { dni_a_total_q06, (void*)&DATA_A_total_Q06 },
+  { dni_a_total_q07, (void*)&DATA_A_total_Q07 },
+  { dni_a_total_q08, (void*)&DATA_A_total_Q08 },
+  { dni_a_total_q09, (void*)&DATA_A_total_Q09 },
+  { dni_a_total_q10, (void*)&DATA_A_total_Q10 },
+  { dni_a_total_q11, (void*)&DATA_A_total_Q11 },
+  { dni_a_total_q12, (void*)&DATA_A_total_Q12 },
+  { dni_a_total_q13, (void*)&DATA_A_total_Q13 },
+  { dni_a_total_q14, (void*)&DATA_A_total_Q14 },
+  { dni_a_total_q15, (void*)&DATA_A_total_Q15 },
+  { dni_a_total_q16, (void*)&DATA_A_total_Q16 },
+  { dni_a_total_q17, (void*)&DATA_A_total_Q17 },
+  { dni_a_total_q18, (void*)&DATA_A_total_Q18 },
+  { dni_a_total_q19, (void*)&DATA_A_total_Q19 },
+  { dni_a_total_q20, (void*)&DATA_A_total_Q20 },
+  { dni_a_total_q21, (void*)&DATA_A_total_Q21 },
+  { dni_a_total_q22, (void*)&DATA_A_total_Q22 },
+  { dni_a_total_q23, (void*)&DATA_A_total_Q23 },
+  { dni_a_total_q24, (void*)&DATA_A_total_Q24 },
+  { dni_a_total_q25, (void*)&DATA_A_total_Q25 },
+  { dni_a_total_q26, (void*)&DATA_A_total_Q26 },
+  { dni_a_total_q27, (void*)&DATA_A_total_Q27 },
+  { dni_a_total_q28, (void*)&DATA_A_total_Q28 },
+  { dni_a_total_q29, (void*)&DATA_A_total_Q29 },
+  { dni_a_total_q30, (void*)&DATA_A_total_Q30 },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {

@@ -1519,7 +1519,8 @@ SRCS_OVERLAY_SOUNDVIEW = sound/snd_viewer.c
 
 #D_NUMINPUTライブラリ
 #===> GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_D_NUMINPUT = field/event_debug_numinput.c
+SRCS_OVERLAY_D_NUMINPUT = field/event_debug_numinput.c \
+                          field/debug_numinput_research.c
 
 #D_IWASAWAライブラリ
 #===> GROUP_OVERLAY_GIMMICK
