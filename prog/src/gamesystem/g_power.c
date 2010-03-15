@@ -12,6 +12,7 @@
 #include "waza_tool/wazano_def.h"
 #include "arc_def.h"
 #include "power.naix"
+#include "poke_tool/status_rcv.h"
 
 
 //==============================================================================
