@@ -45,6 +45,7 @@ end
     "í“¬’†F‘ŠŽèƒ|ƒPƒ‚ƒ“‚Ì‚g‚o”¼•ªˆÈ‰º"              =>"TRMSG_FIGHT_POKE_HP_HALF",
     "í“¬’†F‘ŠŽèƒ|ƒPƒ‚ƒ“‚ªŽc‚è‚P•C"                  =>"TRMSG_FIGHT_POKE_LAST",
     "í“¬’†F‘ŠŽèƒ|ƒPƒ‚ƒ“‚ªŽc‚è‚P•C‚Å‚g‚o”¼•ªˆÈ‰º"    =>"TRMSG_FIGHT_POKE_LAST_HP_HALF",
+    "ƒ|ƒPƒ‚ƒ“‚Q•CˆÈ‰ºií“¬‚µ‚È‚¢j"                  =>"TRMSG_POKE_UNDER_TWO",
   }
 
 	if ARGV.size < 2
