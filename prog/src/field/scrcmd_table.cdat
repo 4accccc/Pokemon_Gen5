@@ -327,7 +327,7 @@
   DEF_CMD( EvCmdBmpMenuStart, EV_SEQ_BMPMENU_START )
 
   DEF_CMD( EvCmdBmpMenuStart_Breakable, EV_SEQ_BMPMENU_START_BREAKABLE )
-  NO_CMD()
+  DEF_CMD( EvCmdBmpMenuInitExRight, EV_SEQ_BMPMENU_INIT_EX_RIGHT )
   NO_CMD()
   NO_CMD()
 

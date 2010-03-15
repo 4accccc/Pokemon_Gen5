@@ -135,8 +135,8 @@ VMCMD_RESULT EvCmdBmpMenuInit( VMHANDLE *core, void *wk )
   WORDSET *wordset = SCRIPT_GetWordSet( sc );
   
   SCRCMD_WORK_InitMenuWork( work,
-      x, y, cursor, cancel, ret,
-      wordset, NULL );
+      x, y, cursor, cancel, SCR_MENU_JUST_L,
+      ret, wordset, NULL );
   
   return VMCMD_RESULT_SUSPEND;
 }
@@ -166,8 +166,38 @@ VMCMD_RESULT EvCmdBmpMenuInitEx( VMHANDLE *core, void *wk )
   GF_ASSERT( msgData != NULL );
 
   SCRCMD_WORK_InitMenuWork( work,
-      x, y, cursor, cancel, ret,
-      wordset, msgData );
+      x, y, cursor, cancel, SCR_MENU_JUST_L,
+      ret, wordset, msgData );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * BMPメニュー初期化(読み込んでいるgmmファイルを使用する) 右詰
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBmpMenuInitExRight( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  u8 x = VMGetU8(core);
+  u8 y = VMGetU8(core);
+  u16 cursor = SCRCMD_GetVMWorkValue( core, work );
+  u8 cancel = VMGetU8(core);
+  u16 wk_id = VMGetU16( core );
+  u16 *ret = SCRIPT_GetEventWork( sc, gdata, wk_id );
+  WORDSET *wordset = SCRIPT_GetWordSet( sc );
+  GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
+  
+  GF_ASSERT( wordset != NULL );
+  GF_ASSERT( msgData != NULL );
+
+  SCRCMD_WORK_InitMenuWork( work,
+      x, y, cursor, cancel, SCR_MENU_JUST_R,
+      ret, wordset, msgData );
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -206,7 +236,6 @@ static BOOL EvSelWinWait( VMHANDLE *core, void *wk )
   }
   return( FALSE );
 }
-
 
 //--------------------------------------------------------------
 /**
@@ -551,6 +580,10 @@ VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk )
   if( msg_win != NULL )
   {
     FLDMSGWIN_Delete( msg_win );
+  }
+  
+  { //所持金ウィンドウは基本右詰に変更
+    x -= GOLD_WIN_WIDTH;
   }
 
   // ウィンドウを表示

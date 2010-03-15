@@ -23,6 +23,15 @@
 //======================================================================
 //	define
 //======================================================================
+//--------------------------------------------------------------
+/// SCR_MENU_JUSTIFY メニュー左右詰め識別
+//--------------------------------------------------------------
+typedef enum
+{
+  SCR_MENU_JUST_L = 0, ///<左詰
+  SCR_MENU_JUST_R, ///<右詰
+  SCR_MENU_JUST_MAX, ///<最大
+}SCR_MENU_JUSTIFY;
 
 //======================================================================
 //	struct
@@ -103,7 +112,7 @@ extern void SCRCMD_WORK_CreateMsgData( SCRCMD_WORK *work, u32 datID );
 
 //メニュー
 extern void SCRCMD_WORK_InitMenuWork( SCRCMD_WORK *work,
-  u16 x, u16 y, u16 cursor, u16 cancel, u16 *ret,
+  u16 x, u16 y, u16 cursor, u16 cancel, SCR_MENU_JUSTIFY lr_just, u16 *ret,
   WORDSET *wordset, GFL_MSGDATA *msgData );
 extern void SCRCMD_WORK_AddMenuList(
     SCRCMD_WORK *work, u32 msg_id, u32 ex_msg_id, u32 param,

@@ -16,6 +16,7 @@
 extern VMCMD_RESULT EvCmdYesNoWin( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBmpMenuInit( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBmpMenuInitEx( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdBmpMenuInitExRight( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBmpMenuMakeList( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBmpMenuStart( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBmpMenuStart_Breakable( VMHANDLE *core, void *wk );

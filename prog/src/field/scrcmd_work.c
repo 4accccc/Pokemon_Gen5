@@ -35,7 +35,8 @@ typedef struct
   u16 x;
   u16 y;
   u16 cursor;
-  u16 cancel;
+  u8 cancel;
+  u8 lr_just;
   u16 *ret;
   
   WORDSET *wordset;
@@ -46,7 +47,7 @@ typedef struct
   FLDMENUFUNC_LISTDATA *listData;
 	FLDMENUFUNC *menuFunc;
 
-  STRBUF*   exMsgBuf[SCRCMD_MENU_LIST_MAX];
+  STRBUF *exMsgBuf[SCRCMD_MENU_LIST_MAX];
 }SCRCMD_MENU_WORK;
 
 //--------------------------------------------------------------
@@ -405,12 +406,20 @@ void SCRCMD_WORK_CreateMsgData( SCRCMD_WORK *work, u32 datID )
 //--------------------------------------------------------------
 /**
  * SCRCMD_WORK メニュー　関連用のワーク初期化
- * @param 
- * @retval
+ * @param work  SCRCMD_WORK*
+ * @param x X表示座標　キャラ単位
+ * @param y Y表示座標　キャラ単位
+ * @param cursor カーソル初期位置
+ * @param cancel Bキャンセル有効、無効 TRUE=有効
+ * @param lr_just 左右詰め識別
+ * @param ret 結果格納先
+ * @param wordset 文字列表示に使用するWORDSET*
+ * @param msgData 文字列表示に使用するGFL_MSGDATA
+ * @retval nothing
  */
 //--------------------------------------------------------------
 void SCRCMD_WORK_InitMenuWork( SCRCMD_WORK *work,
-  u16 x, u16 y, u16 cursor, u16 cancel, u16 *ret,
+  u16 x, u16 y, u16 cursor, u16 cancel, SCR_MENU_JUSTIFY lr_just, u16 *ret,
   WORDSET *wordset, GFL_MSGDATA *msgData )
 {
   SCRCMD_MENU_WORK *menuWork = &work->menuWork;
@@ -420,6 +429,7 @@ void SCRCMD_WORK_InitMenuWork( SCRCMD_WORK *work,
   menuWork->y = y;
   menuWork->cursor = cursor;
   menuWork->cancel = cancel;
+  menuWork->lr_just = lr_just;
   menuWork->ret = ret;
   menuWork->wordset = wordset;
   menuWork->msgData = msgData;
@@ -494,9 +504,10 @@ static const FLDMENUFUNC_HEADER data_MenuHeader =
 
 //--------------------------------------------------------------
 /**
- * SCRCMD_WORK メニュー　開始
- * @param
- * @retval
+ * SCRCMD_WORK メニュー　開始　
+ * @param work SCRCMD_WORK*
+ * @param r_just TRUE=右詰で座標設定
+ * @retval nothing
  */
 //--------------------------------------------------------------
 void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work )
@@ -504,23 +515,30 @@ void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work )
   u32 sx,sy,count;
   SCRCMD_MENU_WORK *menuWork = &work->menuWork;
   FLDMENUFUNC_HEADER menuH = data_MenuHeader;
-
+  
   sx = FLDMENUFUNC_GetListMenuWidth(
       menuWork->listData, menuH.font_size_x, menuH.msg_spc );
-
-  //項目数が表示最大数を超えているかをチェックして、ウィンドウの縦幅を決定する
+  
+  if( menuWork->lr_just == SCR_MENU_JUST_R ){ //右詰
+    menuWork->x -= sx; //座標補正
+  }
+  
+#if 0 //old
+  sy = FLDMENUFUNC_GetListMenuHeight(
+      menuWork->listData, menuH.font_size_y, menuH.line_spc );
+#else
+  //項目数が表示最大数を超えているかチェックし、ウィンドウの縦幅を決定する
   {
     u32 len;
     u32 max = FLDMENUFUNC_GetListMax( menuWork->listData );
     if (max > data_MenuHeader.line) len = data_MenuHeader.line;
     else len = max;
 
-    sy = FLDMENUFUNC_GetListMenuLen( len, menuH.font_size_y, menuH.line_spc );
+    sy = FLDMENUFUNC_GetListMenuLen(
+        len, menuH.font_size_y, menuH.line_spc );
   }
-/**
-  sy = FLDMENUFUNC_GetListMenuHeight(
-      menuWork->listData, menuH.font_size_y, menuH.line_spc );
-*/
+#endif
+
   count = FLDMENUFUNC_GetListMax( menuWork->listData );
   FLDMENUFUNC_InputHeaderListSize(
       &menuH, count, menuWork->x, menuWork->y, sx, sy );
