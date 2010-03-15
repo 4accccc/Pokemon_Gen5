@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-13T20:09:06"/>
+	<create user="ohmori" host="W00223" date="2010-03-15T21:51:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -290,38 +290,38 @@
 
 	<row id="msg_mistype_000">
 		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">デルパワー　ミッション</language>
-		<language name="JPN_KANJI" width="256">デルパワー　ミッション</language>
+		<language name="JPN" width="256">サポート　ミッション</language>
+		<language name="JPN_KANJI" width="256">サポート　ミッション</language>
 	</row>
 
 	<row id="msg_mistype_001">
 		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">デルパワー　ミッション</language>
-		<language name="JPN_KANJI" width="256">デルパワー　ミッション</language>
+		<language name="JPN" width="256">サポート　ミッション</language>
+		<language name="JPN_KANJI" width="256">サポート　ミッション</language>
 	</row>
 
 	<row id="msg_mistype_002">
 		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">たいせん　ミッション</language>
-		<language name="JPN_KANJI" width="256">たいせん　ミッション</language>
+		<language name="JPN" width="256">バトル　ミッション</language>
+		<language name="JPN_KANJI" width="256">バトル　ミッション</language>
 	</row>
 
 	<row id="msg_mistype_003">
 		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">せいかくミッション</language>
-		<language name="JPN_KANJI" width="256">せいかくミッション</language>
+		<language name="JPN" width="256">サポート　ミッション</language>
+		<language name="JPN_KANJI" width="256">サポート　ミッション</language>
 	</row>
 
 	<row id="msg_mistype_004">
 		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">どうぐミッション</language>
-		<language name="JPN_KANJI" width="256">どうぐミッション</language>
+		<language name="JPN" width="256">アイテム　ミッション</language>
+		<language name="JPN_KANJI" width="256">アイテム　ミッション</language>
 	</row>
 
 	<row id="msg_mistype_005">
 		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">ぞくせいミッション</language>
-		<language name="JPN_KANJI" width="256">ぞくせいミッション</language>
+		<language name="JPN" width="256">アイテム　ミッション</language>
+		<language name="JPN_KANJI" width="256">アイテム　ミッション</language>
 	</row>
 
 	<row id="msg_mistype_006" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
@@ -339,16 +339,16 @@
 	<row id="plc_mism_01_01" back-color="#ffff80,,,#ffff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
-「ＨＰかいふくパワー　ＭＡＸ」を　あたえよ！
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
+「ぜんかいパワー」を　あたえよ！
 （あいてのＨＰが　かんぜんかいふく　する）
 
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１２こ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
-「ＨＰかいふくパワー　ＭＡＸ」を　あたえよ！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
+「ぜんかいパワー」を　あたえよ！
 （あいてのＨＰが　かんぜんかいふく　する）
 
 
@@ -360,7 +360,7 @@
 	<row id="plc_mism_01_02" back-color="#ffff80,,,#ffff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「たまごふかパワー　ＭＡＸ」を　あたえよ！
 （１じかん　タマゴが　かえりやすくなる）
 
@@ -368,7 +368,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１２こ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「たまごふかパワー　ＭＡＸ」を　あたえよ！
 （１じかん　タマゴが　かえりやすくなる）
 
@@ -381,7 +381,7 @@
 	<row id="plc_mism_01_03" back-color="#ffff80,,,#ffff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「やすうりパワー　ＭＡＸ」を　あたえよ！
 （１じかん　やすうりが　おこなわれる）
 
@@ -389,7 +389,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１２こ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「やすうりパワー　ＭＡＸ」を　あたえよ！
 （１じかん　やすうりが　おこなわれる）
 
@@ -402,7 +402,7 @@
 	<row id="plc_mism_01_04" back-color="#ffff80,,,#ffff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「なつきパワー　ＭＡＸ」を　あたえよ！
 （１じかん　ポケモンがなつきやすくなる）
 
@@ -410,7 +410,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１２こ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「なつきパワー　ＭＡＸ」を　あたえよ！
 （１じかん　ポケモンがなつきやすくなる）
 
@@ -423,7 +423,7 @@
 	<row id="plc_mism_01_05" back-color="#ffff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「けいけんちパワー　ＭＡＸ」を　あたえよ！
 （１じかん　けいけんちが　たまりやすい）
 
@@ -431,7 +431,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１２こ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「けいけんちパワー　ＭＡＸ」を　あたえよ！
 （１じかん　けいけんちが　たまりやすい）
 
@@ -444,7 +444,7 @@
 	<row id="plc_mism_01_06" back-color="#ffff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「おこづかいパワー　ＭＡＸ」を　あたえよ！
 （１じかん　おこづかいが　たまりやすい）
 
@@ -452,7 +452,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１２こ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「おこづかいパワー　ＭＡＸ」を　あたえよ！
 （１じかん　おこづかいが　たまりやすい）
 
@@ -465,7 +465,7 @@
 	<row id="plc_mism_01_07" back-color="#ffff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「ほかくパワー　ＭＡＸ」を　あたえよ！
 （１じかん　ポケモンが　ほかくしやすい）
 
@@ -486,7 +486,7 @@
 	<row id="plc_mism_01_08" back-color="#ffff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「たまごふかパワー　Ｓ」を　あたえよ！
 （３０ふん　タマゴが　かえりやすくなる）
 
@@ -507,7 +507,7 @@
 	<row id="plc_mism_01_09" back-color="#ffff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「やすうりパワー　Ｓ」を　あたえよ！
 （３０ふん　やすうりが　おこなわれる）
 
@@ -528,7 +528,7 @@
 	<row id="plc_mism_01_10" back-color="#ffff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「なつきパワー　Ｓ」を　あたえよ！
 （ポケモンが　なつきやすくなる）
 
@@ -549,7 +549,7 @@
 	<row id="plc_mism_01_11" back-color="#ffff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「けいけんちパワー　Ｓ」を　あたえよ！
 （３０ふん　けいけんちが　たまりやすい）
 
@@ -570,7 +570,7 @@
 	<row id="plc_mism_01_12" back-color="#ffff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「おこづかいパワー　Ｓ」を　あたえよ！
 （３０ふん　おこづかいが　たまりやすい）
 
@@ -591,7 +591,7 @@
 	<row id="plc_mism_01_13" back-color="#ffff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけられ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
 「ほかくパワー　Ｓ」を　あたえよ！
 （３０ふん　ポケモンが　ほかくしやすい）
 
@@ -612,7 +612,7 @@
 	<row id="plc_mism_02_01" back-color="#80ff80,,,#80ff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ミッション２：
 「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
 「ほかくパワー　ＭＡＸ」を　あたえよ！
 （１じかん　ポケモンが　ほかくしやすい）
 
@@ -620,7 +620,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１０こ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
 「ほかくパワー　ＭＡＸ」を　あたえよ！
 （１じかん　ポケモンが　ほかくしやすい）
 
@@ -696,7 +696,7 @@
 	<row id="plc_mism_02_05" back-color="#80ff80,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ミッション２：
 「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
 「やすうりパワー　ＭＡＸ」を　あたえよ！
 （１じかん　やすうりが　おこなわれる）
 
@@ -704,7 +704,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１０こ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
 「やすうりパワー　ＭＡＸ」を　あたえよ！
 （１じかん　やすうりが　おこなわれる）
 
@@ -717,7 +717,7 @@
 	<row id="plc_mism_02_06" back-color="#80ff80,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ミッション２：
 「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
 「たまごふかパワー　ＭＡＸ」を　あたえよ！
 （１じかん　タマゴが　かえりやすくなる）
 
@@ -725,7 +725,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１０こ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
 「たまごふかパワー　ＭＡＸ」を　あたえよ！
 （１じかん　タマゴが　かえりやすくなる）
 
@@ -738,16 +738,16 @@
 	<row id="plc_mism_02_07" back-color="#80ff80,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ミッション２：
 「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
-「ＨＰかいふくパワー　ＭＡＸ」を　あたえよ！
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
+「ぜんかいパワー」を　あたえよ！
 （あいてのＨＰが　かんぜんかいふく　する）
 
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１０こ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなし
-「ＨＰかいふくパワー　ＭＡＸ」を　あたえよ！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
+「ぜんかいパワー」を　あたえよ！
 （あいてのＨＰが　かんぜんかいふく　する）
 
 
@@ -884,7 +884,7 @@
 
 	<row id="plc_mism_03_01" back-color="#ffff80,,,#ffff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
-		<language name="JPN" width="256">おたがいを　たかめるため
+		<language name="JPN" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　１００フラット
 
@@ -892,7 +892,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１５こ</language>
-		<language name="JPN_KANJI" width="256">おたがいを　たかめるため
+		<language name="JPN_KANJI" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　１００フラット
 
@@ -904,7 +904,7 @@
 
 	<row id="plc_mism_03_02" back-color="#ffff80,,,#ffff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
-		<language name="JPN" width="256">おたがいを　たかめるため
+		<language name="JPN" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　５０フラット
 
@@ -912,7 +912,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１２こ</language>
-		<language name="JPN_KANJI" width="256">おたがいを　たかめるため
+		<language name="JPN_KANJI" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　１００フラット
 
@@ -924,7 +924,7 @@
 
 	<row id="plc_mism_03_03" back-color="#ffff80,,,#ffff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
-		<language name="JPN" width="256">おたがいを　たかめるため
+		<language name="JPN" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　１００フラット
 
@@ -932,7 +932,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１２こ</language>
-		<language name="JPN_KANJI" width="256">おたがいを　たかめるため
+		<language name="JPN_KANJI" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　１００フラット
 
@@ -944,7 +944,7 @@
 
 	<row id="plc_mism_03_04" back-color="#ffff80,,,#ffff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
-		<language name="JPN" width="256">おたがいを　たかめるため
+		<language name="JPN" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　５０フラット
 
@@ -952,7 +952,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１０こ</language>
-		<language name="JPN_KANJI" width="256">おたがいを　たかめるため
+		<language name="JPN_KANJI" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　１００フラット
 
@@ -964,7 +964,7 @@
 
 	<row id="plc_mism_03_05" back-color="#ffff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
-		<language name="JPN" width="256">おたがいを　たかめるため
+		<language name="JPN" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　３０フラット
 
@@ -972,7 +972,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１０こ</language>
-		<language name="JPN_KANJI" width="256">おたがいを　たかめるため
+		<language name="JPN_KANJI" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　１００フラット
 
@@ -984,7 +984,7 @@
 
 	<row id="plc_mism_03_06" back-color="#ffff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
-		<language name="JPN" width="256">おたがいを　たかめるため
+		<language name="JPN" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　１０フラット
 
@@ -992,7 +992,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　８こ</language>
-		<language name="JPN_KANJI" width="256">おたがいを　たかめるため
+		<language name="JPN_KANJI" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　１００フラット
 
@@ -1004,7 +1004,7 @@
 
 	<row id="plc_mism_03_07" back-color="#ffff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
-		<language name="JPN" width="256">おたがいを　たかめるため
+		<language name="JPN" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　３０フラット
 
@@ -1012,7 +1012,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　８こ</language>
-		<language name="JPN_KANJI" width="256">おたがいを　たかめるため
+		<language name="JPN_KANJI" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　１００フラット
 
@@ -1024,7 +1024,7 @@
 
 	<row id="plc_mism_03_08" back-color="#ffff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
-		<language name="JPN" width="256">おたがいを　たかめるため
+		<language name="JPN" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　１０フラット
 
@@ -1032,7 +1032,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　６こ</language>
-		<language name="JPN_KANJI" width="256">おたがいを　たかめるため
+		<language name="JPN_KANJI" width="256">おたがいを　きたえるため
 [1:00:トレーナー名:0]に　たたかいを　いどめ！
 たいせんの　レベルは　１００フラット
 
@@ -1045,16 +1045,16 @@
 	<row id="plc_mism_04_01" back-color="#80ff80,,,#80ff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」</comment>
 		<language name="JPN" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！
-
+「せんとう　ＨＰかいふくパワー」を　あたえよ！
+（たたかっている　ポケモンが　かいふくする）
 
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１５こ</language>
 		<language name="JPN_KANJI" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！
-
+「せんとう　ＨＰかいふくパワー」を　あたえよ！
+（たたかっている　ポケモンが　かいふくする）
 
 
 せいげんじかん　[2:02:３桁:2]びょう
@@ -1065,16 +1065,16 @@
 	<row id="plc_mism_04_02" back-color="#80ff80,,,#80ff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」</comment>
 		<language name="JPN" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！
-
+「せんとう　ＨＰかいふくパワー」を　あたえよ！
+（たたかっている　ポケモンが　かいふくする）
 
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　１２こ</language>
 		<language name="JPN_KANJI" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！
-
+「せんとう　ＨＰかいふくパワー」を　あたえよ！
+（たたかっている　ポケモンが　かいふくする）
 
 
 せいげんじかん　[2:02:３桁:2]びょう
@@ -1085,16 +1085,16 @@
 	<row id="plc_mism_04_03" back-color="#80ff80,,,#80ff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」</comment>
 		<language name="JPN" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！
-
+「せんとう　ＨＰかいふくパワー」を　あたえよ！
+（たたかっている　ポケモンが　かいふくする）
 
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　８こ</language>
 		<language name="JPN_KANJI" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！
-
+「せんとう　ＨＰかいふくパワー」を　あたえよ！
+（たたかっている　ポケモンが　かいふくする）
 
 
 せいげんじかん　[2:02:３桁:2]びょう
@@ -1105,16 +1105,16 @@
 	<row id="plc_mism_04_04" back-color="#80ff80,,,#80ff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」</comment>
 		<language name="JPN" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！
-
+「せんとう　ＨＰかいふくパワー」を　あたえよ！
+（たたかっている　ポケモンが　かいふくする）
 
 
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　パレスだま　５こ</language>
 		<language name="JPN_KANJI" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
-たいりょくを　かいふくさせよ！
-
+「せんとう　ＨＰかいふくパワー」を　あたえよ！
+（たたかっている　ポケモンが　かいふくする）
 
 
 せいげんじかん　[2:02:３桁:2]びょう

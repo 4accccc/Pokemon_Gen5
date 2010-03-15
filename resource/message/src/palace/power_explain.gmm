@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-04T12:47:25"/>
+	<create user="ohmori" host="W00223" date="2010-03-15T21:39:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -679,13 +679,13 @@
 	</row>
 
 	<row id="plc_power_s_40" back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<comment>HPかいふくパワー　ＭＡＸ</comment>
+		<comment>ぜんかいパワー</comment>
 		<language name="JPN" width="256">このパワーを　うけとると
-そのばで　せんとうにいる　ポケモンの
-たいりょくが　かなり　かいふくします</language>
+てもちにいる　すべての　ポケモンが
+ぜんかい　します</language>
 		<language name="JPN_KANJI" width="256">このパワーを　うけとると
-そのばで　せんとうにいる　ポケモンの
-たいりょくが　かなり　かいふくします</language>
+てもちにいる　すべての　ポケモンが
+ぜんかい　します</language>
 	</row>
 
 	<row id="plc_power_s_41" back-color=",,,#ff8080,,,,,,,,,,,,,,">

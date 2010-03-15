@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-04T12:47:24"/>
+	<create user="ohmori" host="W00223" date="2010-03-15T21:41:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -484,8 +484,8 @@
 	</row>
 
 	<row id="plc_power_40">
-		<language name="JPN" width="256">HPかいふくパワー　ＭＡＸ</language>
-		<language name="JPN_KANJI" width="256">HPかいふくパワー　ＭＡＸ</language>
+		<language name="JPN" width="256">ぜんかいパワー</language>
+		<language name="JPN_KANJI" width="256">ぜんかいパワー</language>
 	</row>
 
 	<row id="plc_power_41">

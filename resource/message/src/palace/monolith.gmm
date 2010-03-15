@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-02-25T18:40:22"/>
+	<create user="ohmori" host="W00223" date="2010-03-15T21:55:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,13 +260,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1325" top="432" right="2030" bottom="1060" maximized="no" rayout="Vertical2">
+	<dialog left="1325" top="432" right="1920" bottom="1060" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="258" right="1280" bottom="882" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="587"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="420"/>
+		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -290,8 +290,8 @@
 
 	<row id="msg_mono_title_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>表題</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]　の　モノリス</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　の　モノリス</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]　の　ハイルツリー</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　の　ハイルツリー</language>
 	</row>
 
 	<row id="msg_mono_title_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -302,8 +302,8 @@
 
 	<row id="msg_mono_title_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>タイトルメニュー項目</comment>
-		<language name="JPN" width="256">Ｇパワーを　もらう</language>
-		<language name="JPN_KANJI" width="256">Ｇパワーを　もらう</language>
+		<language name="JPN" width="256">デルパワーを　もらう</language>
+		<language name="JPN_KANJI" width="256">デルパワーを　もらう</language>
 	</row>
 
 	<row id="msg_mono_title_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -322,17 +322,17 @@
 
 	<row id="msg_mono_st_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状態画面</comment>
-		<language name="JPN" width="256">パレスレベル：[2:02:３桁:0]</language>
-		<language name="JPN_KANJI" width="256">パレスレベル：[2:02:３桁:0]</language>
+		<language name="JPN" width="256">ハイルツリーのＬｖ：[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="256">ハイルツリーのＬｖ：[2:02:３桁:0]</language>
 	</row>
 
-	<row id="msg_mono_st_001" back-color="#ffff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_mono_st_001" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>状態画面（使用しない）</comment>
-		<language name="JPN" width="256">あんこくのモノリス</language>
-		<language name="JPN_KANJI" width="256">あんこくのモノリス</language>
+		<language name="JPN" width="256">あんこくのハイルツリー</language>
+		<language name="JPN_KANJI" width="256">あんこくのハイルツリー</language>
 	</row>
 
-	<row id="msg_mono_st_002" back-color="#ffff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_mono_st_002" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>状態画面（使用しない）</comment>
 		<language name="JPN" width="256">レベルバランス</language>
 		<language name="JPN_KANJI" width="256">レベルバランス</language>
@@ -340,20 +340,20 @@
 
 	<row id="msg_mono_st_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状態画面</comment>
-		<language name="JPN" width="256">WHITE：[2:03:４桁:0]</language>
-		<language name="JPN_KANJI" width="256">WHITE：[2:03:４桁:0]</language>
+		<language name="JPN" width="256">ホワイトＬｖ：[2:03:４桁:0]</language>
+		<language name="JPN_KANJI" width="256">ホワイトＬｖ：[2:03:４桁:0]</language>
 	</row>
 
 	<row id="msg_mono_st_004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状態画面</comment>
-		<language name="JPN" width="256">BLACK：[2:03:４桁:0]</language>
-		<language name="JPN_KANJI" width="256">BLACK：[2:03:４桁:0]</language>
+		<language name="JPN" width="256">ブラックＬｖ：[2:03:４桁:0]</language>
+		<language name="JPN_KANJI" width="256">ブラックＬｖ：[2:03:４桁:0]</language>
 	</row>
 
 	<row id="msg_mono_st_005" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状態画面</comment>
-		<language name="JPN" width="256">つかえるＧパワーの　かず　[2:03:４桁:0]</language>
-		<language name="JPN_KANJI" width="256">つかえるＧパワーの　かず　[2:03:４桁:0]</language>
+		<language name="JPN" width="256">つかえるデルパワーの　かず　[2:03:４桁:0]</language>
+		<language name="JPN_KANJI" width="256">つかえるデルパワーの　かず　[2:03:４桁:0]</language>
 	</row>
 
 	<row id="msg_mono_st_006" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -370,8 +370,8 @@
 
 	<row id="msg_mono_st_008" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状態画面</comment>
-		<language name="JPN" width="256">モノリスの　じょうたい</language>
-		<language name="JPN_KANJI" width="256">モノリスの　じょうたい</language>
+		<language name="JPN" width="256">ハイルツリーの　じょうたい</language>
+		<language name="JPN_KANJI" width="256">ハイルツリーの　じょうたい</language>
 	</row>
 
 	<row id="msg_mono_mis_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -395,50 +395,50 @@
 	<row id="msg_mono_mis_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション画面</comment>
 		<language name="JPN" width="256">すでに　べつの　ミッションが
-かいしされて　いました</language>
+かいしされて　います</language>
 		<language name="JPN_KANJI" width="256">すでに　べつの　ミッションが
-かいしされて　いました</language>
+かいしされて　います</language>
 	</row>
 
 	<row id="msg_mono_mis_004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション画面</comment>
-		<language name="JPN" width="256">Ｇパワーを　あつめるため　６つの
-ミッションから　１つ　えらんでください</language>
-		<language name="JPN_KANJI" width="256">Ｇパワーを　あつめるため　６つの
-ミッションから　１つ　えらんでください</language>
+		<language name="JPN" width="256">６つの　ミッションから
+１つ　えらんでください</language>
+		<language name="JPN_KANJI" width="256">６つの　ミッションから
+１つ　えらんでください</language>
 	</row>
 
-	<row id="msg_mono_pow_000" back-color="#ffff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_mono_pow_000" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>パワー画面（使用しない）</comment>
 		<language name="JPN" width="256">つかう　パレスだまの　かず</language>
 		<language name="JPN_KANJI" width="256">つかう　パレスだまの　かず</language>
 	</row>
 
-	<row id="msg_mono_pow_001" back-color="#ffff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_mono_pow_001" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>パワー画面（使用しない）</comment>
 		<language name="JPN" width="256">[2:03:４桁:0]こ</language>
 		<language name="JPN_KANJI" width="256">[2:03:４桁:0]こ</language>
 	</row>
 
-	<row id="msg_mono_pow_002" back-color="#ffff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_mono_pow_002" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>パワー画面（使用しない）</comment>
 		<language name="JPN" width="256">はっせいじかん</language>
 		<language name="JPN_KANJI" width="256">はっせいじかん</language>
 	</row>
 
-	<row id="msg_mono_pow_003" back-color="#ffff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_mono_pow_003" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>パワー画面（使用しない）</comment>
 		<language name="JPN" width="256">[2:03:４桁:0]ふん</language>
 		<language name="JPN_KANJI" width="256">[2:03:４桁:0]ふん</language>
 	</row>
 
-	<row id="msg_mono_pow_004" back-color="#ffff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_mono_pow_004" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>パワー画面（使用しない）</comment>
-		<language name="JPN" width="256">Ｇパワー</language>
-		<language name="JPN_KANJI" width="256">Ｇパワー</language>
+		<language name="JPN" width="256">デルパワー</language>
+		<language name="JPN_KANJI" width="256">デルパワー</language>
 	</row>
 
-	<row id="msg_mono_pow_005" back-color="#ffff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_mono_pow_005" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>パワー画面（使用しない）</comment>
 		<language name="JPN" width="256">ー</language>
 		<language name="JPN_KANJI" width="256">ー</language>
@@ -458,11 +458,13 @@
 
 	<row id="msg_mono_pow_008" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面</comment>
-		<language name="JPN" width="256">このＧパワーを　とうろくしますか？</language>
-		<language name="JPN_KANJI" width="256">このＧパワーを　とうろくしますか？</language>
+		<language name="JPN" width="256">このデルパワーを　Ｃギアに
+とうろくしますか？</language>
+		<language name="JPN_KANJI" width="256">このデルパワーを　Ｃギアに
+とうろくしますか？</language>
 	</row>
 
-	<row id="msg_mono_pow_009" back-color="#ffff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_mono_pow_009" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>パワー画面（使用しない）</comment>
 		<language name="JPN" width="256">ポイントが　たりません</language>
 		<language name="JPN_KANJI" width="256">ポイントが　たりません</language>
@@ -470,15 +472,15 @@
 
 	<row id="msg_mono_pow_010" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面</comment>
-		<language name="JPN" width="256">モノリスから　もらえる　Ｇパワー</language>
-		<language name="JPN_KANJI" width="256">モノリスから　もらえる　Ｇパワー</language>
+		<language name="JPN" width="256">ハイルツリーから　もらえる　デルパワー</language>
+		<language name="JPN_KANJI" width="256">ハイルツリーから　もらえる　デルパワー</language>
 	</row>
 
 	<row id="msg_mono_pow_011" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面</comment>
-		<language name="JPN" width="256">[1:27:リボンの名前:0]　を　もらい
+		<language name="JPN" width="256">[1:27:リボンの名前:0]　を
 Ｃギアに　とうろくした！</language>
-		<language name="JPN_KANJI" width="256">[1:27:リボンの名前:0]　を　もらい
+		<language name="JPN_KANJI" width="256">[1:27:リボンの名前:0]　を
 Ｃギアに　とうろくした！</language>
 	</row>
 
@@ -497,21 +499,21 @@
 	<row id="msg_mono_pow_014" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面</comment>
 		<language name="JPN" width="256">リストから　Ｃギアでしようする
-Ｇパワーを　えらんでください</language>
+デルパワーを　えらんでください</language>
 		<language name="JPN_KANJI" width="256">リストから　Ｃギアでしようする
-Ｇパワーを　えらんでください</language>
+デルパワーを　えらんでください</language>
 	</row>
 
 	<row id="msg_mono_pow_up_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面：上</comment>
-		<language name="JPN" width="256">Ｃギアに　とうろくされてる　Ｇパワー</language>
-		<language name="JPN_KANJI" width="256">Ｃギアに　とうろくされてる　Ｇパワー</language>
+		<language name="JPN" width="256">Ｃギアに　とうろくされてる　デルパワー</language>
+		<language name="JPN_KANJI" width="256">Ｃギアに　とうろくされてる　デルパワー</language>
 	</row>
 
 	<row id="msg_mono_pow_up_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面：上</comment>
-		<language name="JPN" width="256">Ｇパワーは　とうろくしていません</language>
-		<language name="JPN_KANJI" width="256">Ｇパワーは　とうろくしていません</language>
+		<language name="JPN" width="256">デルパワーは　とうろくしていません</language>
+		<language name="JPN_KANJI" width="256">デルパワーは　とうろくしていません</language>
 	</row>
 
 	<row id="msg_mono_pow_up_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -522,11 +524,11 @@
 
 	<row id="msg_mono_pow_up_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面：上</comment>
-		<language name="JPN" width="256">モノリスの　ホワイトレベルが
+		<language name="JPN" width="256">ハイルツリーの　ホワイトＬｖが
 [2:02:３桁:0]いじょうで　おぼえます
 
 ホワイトＬｖ：[2:02:３桁:1]　　　ブラックＬｖ：[2:02:３桁:2]</language>
-		<language name="JPN_KANJI" width="256">モノリスの　ホワイトレベルが
+		<language name="JPN_KANJI" width="256">ハイルツリーの　ホワイトＬｖが
 [2:02:３桁:0]いじょうで　おぼえます
 
 ホワイトＬｖ：[2:02:３桁:1]　　　ブラックＬｖ：[2:02:３桁:2]</language>
@@ -534,11 +536,11 @@
 
 	<row id="msg_mono_pow_up_004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面：上</comment>
-		<language name="JPN" width="256">モノリスの　ブラックレベルが
+		<language name="JPN" width="256">ハイルツリーの　ブラックＬｖが
 [2:02:３桁:0]いじょうで　おぼえます
 
 ホワイトＬｖ：[2:02:３桁:1]　　　ブラックＬｖ：[2:02:３桁:2]</language>
-		<language name="JPN_KANJI" width="256">モノリスの　ブラックレベルが
+		<language name="JPN_KANJI" width="256">ハイルツリーの　ブラックＬｖが
 [2:02:３桁:0]いじょうで　おぼえます
 
 ホワイトＬｖ：[2:02:３桁:1]　　　ブラックＬｖ：[2:02:３桁:2]</language>
