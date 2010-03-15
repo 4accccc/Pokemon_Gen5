@@ -9386,3 +9386,79 @@
   .short \pos
   .short \ret
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ボール移動
+ *
+ * @param type      ボールアニメタイプ SCR_BALL_ANM_TYPE_～　script_def.h参照
+ * @param tx        目的Ｘ座標
+ * @param ty        目的Ｙ座標 0.5グリッドサイズずつの指定（2を設定すると1グリッド）
+ * @param tz        目的Ｚ座標
+ * @param height    アニメ中のボール高さ
+ * @param sync      必要シンク数
+ */
+//--------------------------------------------------------------
+#define _MOVE_BALL( type, tx, ty, tz, height, sync ) \
+    _ASM_MOVE_BALL type, tx, ty, tz, height, sync
+
+  .macro _ASM_MOVE_BALL type, tx, ty, tz, height, sync
+  .short EV_SEQ_MOVE_BALL
+  .short \type
+  .short \tx
+  .short \ty
+  .short \tz
+  .short \height
+  .short \sync
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ボールアニメ開始
+ *
+ * @param type      ボールアニメタイプ SCR_BALL_ANM_TYPE_～　script_def.h参照
+ * @param tx        Ｘ座標
+ * @param ty        Ｙ座標 0.5グリッドサイズずつの指定（2を設定すると1グリッド）
+ * @param tz        Ｚ座標
+ */
+//--------------------------------------------------------------
+#define _START_BALL_ANM( type, tx, ty, tz  ) \
+    _ASM_START_BALL_ANM type, tx, ty, tz
+
+  .macro _ASM_START_BALL_ANM type, tx, ty, tz
+  .short EV_SEQ_START_BALL_ANM
+  .short \type
+  .short \tx
+  .short \ty
+  .short \tz
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ボールアニメ終了待ち
+ *
+ * @param type      ボールアニメタイプ SCR_BALL_ANM_TYPE_～　script_def.h参照
+ */
+//--------------------------------------------------------------
+#define _WAIT_BALL_ANM( type  ) \
+    _ASM_WAIT_BALL_ANM type
+
+  .macro _ASM_WAIT_BALL_ANM type
+  .short EV_SEQ_WAIT_BALL_ANM
+  .short \type
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ボールアニメ中、ポケモンを表示、非表示していいタイミングまで待つ
+ *
+ * @param type      ボールアニメタイプ SCR_BALL_ANM_TYPE_～　script_def.h参照
+ */
+//--------------------------------------------------------------
+#define _WAIT_BALL_POKE_APP( type  ) \
+    _ASM_WAIT_BALL_POKE_APP type
+
+  .macro _ASM_WAIT_BALL_POKE_APP type
+  .short EV_SEQ_WAIT_BALL_POKE_APP
+  .short \type
+  .endm

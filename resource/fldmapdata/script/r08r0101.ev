@@ -28,6 +28,11 @@ _EVENT_DATA_END
 //イベント対象となるダルタニスの手持ち位置
 DEFINE_LOCAL target_poke_pos
 
+DEFINE_LOCAL AnmX
+DEFINE_LOCAL AnmZ
+DEFINE_LOCAL FV
+DEFINE_LOCAL TrgtObj
+
 /**************************************************************/
 /*            SCENE_SCRIPT                               */
 /**************************************************************/
@@ -47,12 +52,13 @@ EVENT_START ev_scene_c08r0101
 
     IF $SCWK_ANSWER == 0 THEN
       //ボール投げるアニメ
-
-      //ボール出現フレーム待ち
-
-      //ダルタニスを表示 todo
-      _FLAG_RESET( FV_R08R0101_POKE11 )
-      _OBJ_ADD(R08R0101_POKE11_01)
+      {
+        $AnmX = 24
+        $AnmZ = 38
+        $FV = FV_R08R0101_POKE11
+        $TrgtObj = R08R0101_POKE11_01
+        _CALL ball_out
+      }
       //対象ダルタニスのニックネームをタグ０番にセット
       _TEMOTI_NICK_NAME( 0, target_poke_pos )
       //「○○はとびだした」
@@ -66,6 +72,7 @@ EVENT_START ev_scene_c08r0101
         _OBJ_POS_CHANGE( R08R0101_OLDMAN1_01, 25, 0, 47, DIR_UP )
         _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_move )
         _OBJ_ANIME_WAIT()
+        
         _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_01 , R08R0101_OLDMAN1_01, POS_DR )
         _BALLOONWIN_CLOSE()
         _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_02 , R08R0101_OLDMAN1_01, POS_DR )
@@ -74,6 +81,7 @@ EVENT_START ev_scene_c08r0101
         _BALLOONWIN_CLOSE()
         _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_04 , R08R0101_OLDMAN1_01, POS_DR )
         _BALLOONWIN_CLOSE()
+        
       ENDIF
       //三銃士ポケモンそろっているか？
       {
@@ -115,8 +123,13 @@ EVENT_START ev_scene_c08r0101
           //おじさん退出
           _CALL oldman_bye
         ELSE
-          //ダルタニス戻る todo
-          _OBJ_DEL(R08R0101_POKE11_01)
+          //ダルタニス戻る
+          {
+            $AnmX = 24
+            $AnmZ = 39
+            $TrgtObj = R08R0101_POKE11_01
+            _CALL ball_in
+          }
           //対象ダルタニスのニックネームをタグ０番にセット
           _TEMOTI_NICK_NAME( 0, target_poke_pos )
           //○○はボールに戻った
@@ -162,13 +175,31 @@ INIT_EVENT_END
 //イベント中核
 sp_poke_main_event:
   DEFINE_LOCAL skill_learn
-  //三匹ポケを順に出す todo
-  _FLAG_RESET( FV_R08R0101_POKE4 )
-  _OBJ_ADD(R08R0101_POKE4_01)
-  _FLAG_RESET( FV_R08R0101_POKE5 )
-  _OBJ_ADD(R08R0101_POKE5_01)
-  _FLAG_RESET( FV_R08R0101_POKE6 )
-  _OBJ_ADD(R08R0101_POKE6_01)
+  //三匹ポケを順に出す
+  {
+    $AnmX = 24
+    $AnmZ = 36
+    $FV = FV_R08R0101_POKE4
+    $TrgtObj = R08R0101_POKE4_01
+    _CALL ball_out
+  }
+  {
+    $AnmX = 22
+    $AnmZ = 38
+    $FV = FV_R08R0101_POKE5
+    $TrgtObj = R08R0101_POKE5_01
+    _CALL ball_out
+  }
+  {
+    $AnmX = 26
+    $AnmZ = 38
+    $FV = FV_R08R0101_POKE6
+    $TrgtObj = R08R0101_POKE6_01
+    _CALL ball_out
+  }
+
+  //ポケ小芝居
+  _CALL poke_jump
 
   //一度でも技覚えた？
   IF FLAG_OFF( FE_R08R0101_LEG_FIRST ) THEN   //まだ覚えてない
@@ -206,10 +237,25 @@ sp_poke_main_event:
     $skill_learn = FALSE
   ENDIF
 
-  //三匹戻る todo
-  _OBJ_DEL(R08R0101_POKE4_01)
-  _OBJ_DEL(R08R0101_POKE5_01)
-  _OBJ_DEL(R08R0101_POKE6_01)
+  //三匹戻る
+  {
+    $AnmX = 24
+    $AnmZ = 37
+    $TrgtObj = R08R0101_POKE4_01
+    _CALL ball_in
+  }
+  {
+    $AnmX = 23
+    $AnmZ = 38
+    $TrgtObj = R08R0101_POKE5_01
+    _CALL ball_in
+  }
+  {
+    $AnmX = 25
+    $AnmZ = 38
+    $TrgtObj = R08R0101_POKE6_01
+    _CALL ball_in
+  }
 
   {
     DEFINE_LOCAL oldman_last_msg
@@ -218,8 +264,6 @@ sp_poke_main_event:
       //「おぬししだい」
       $oldman_last_msg = msg_r08r0101_guide_08
     ELSE
-      //技を覚えたのでイベント消化フラグＯＮ
-      _FLAG_SET( FE_R08R0101_LEG_FIRST )
       //「おぬしのおかげ」
       $oldman_last_msg = msg_r08r0101_guide_06
     ENDIF
@@ -231,10 +275,20 @@ sp_poke_main_event:
       //おじさん退出
       _CALL oldman_bye
     ENDIF
+
+    IF $skill_learn == TRUE THEN
+      //技を覚えたのでイベント消化フラグＯＮ
+      _FLAG_SET( FE_R08R0101_LEG_FIRST )
+    ENDIF
   }
 
-  //ダルタニス戻る todo
-  _OBJ_DEL(R08R0101_POKE11_01)
+  //ダルタニス戻る
+  {
+    $AnmX = 24
+    $AnmZ = 38
+    $TrgtObj = R08R0101_POKE11_01
+    _CALL ball_in
+  }
 
 _RET
 
@@ -243,6 +297,27 @@ oldman_bye:
   _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_bye )
   _OBJ_ANIME_WAIT()
   _OBJ_DEL(R08R0101_OLDMAN1_01)
+_RET
+
+//ポケ小芝居
+poke_jump:
+  _OBJ_ANIME( R08R0101_POKE11_01, anm_poke11_left )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( R08R0101_POKE5_01, anm_poke5_jump)
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_ANIME( R08R0101_POKE11_01, anm_poke11_right )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( R08R0101_POKE6_01, anm_poke6_jump)
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_ANIME( R08R0101_POKE11_01, anm_poke11_up )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( R08R0101_POKE4_01, anm_poke4_jump)
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_ANIME( R08R0101_POKE11_01, anm_poke11_jump )
+  _OBJ_ANIME_WAIT()
 _RET
 
 //--------------------------------------------------------------------
@@ -289,4 +364,89 @@ _ANIME_LABEL	anm_poke5_move
 _ANIME_LABEL	anm_poke6_move
   _ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
-  
+
+//--------------------------------------------------------------------
+//ダルタニス左向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke11_left
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ダルタニス右向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke11_right
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ダルタニス上向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke11_up
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+  _ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ダルタニス２回ジャンプ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke11_jump
+  _ANIME_DATA	AC_STAY_JUMP_U_8F,2
+  _ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ポルトス　ジャンプ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke5_jump
+  _ANIME_DATA	AC_STAY_JUMP_R_8F,1
+  _ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//アラミス　ジャンプ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke6_jump
+  _ANIME_DATA	AC_STAY_JUMP_L_8F,1
+  _ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//アトス　ジャンプ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke4_jump
+  _ANIME_DATA	AC_STAY_JUMP_D_8F,1
+  _ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+ball_out:
+  _MOVE_BALL( SCR_BALL_ANM_TYPE_OUT, AnmX, 6, AnmZ, 3, 8 )
+  _START_BALL_ANM( SCR_BALL_ANM_TYPE_OUT, AnmX, 6, AnmZ )
+  //ボール出現フレーム待ち
+  _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_OUT )
+  _DISP_FADE_START(DISP_FADE_WHITEOUT,0,16,0)
+  _DISP_FADE_END_CHECK()
+  //ポケを表示
+  _FLAG_RESET( FV )
+  _OBJ_ADD(TrgtObj)
+  _DISP_FADE_START(DISP_FADE_WHITEOUT,16,0,0)
+  _DISP_FADE_END_CHECK()
+  _WAIT_BALL_ANM( SCR_BALL_ANM_TYPE_OUT )
+_RET
+
+ball_in:
+  _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, AnmX, 6, AnmZ )
+  //ポケ非表示フレーム待ち
+  _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_IN )
+  _DISP_FADE_START(DISP_FADE_WHITEOUT,0,16,0)
+  _DISP_FADE_END_CHECK()
+  //ポケ非表示
+  _OBJ_DEL(TrgtObj)
+  _DISP_FADE_START(DISP_FADE_WHITEOUT,16,0,0)
+  _DISP_FADE_END_CHECK()
+  _WAIT_BALL_ANM( SCR_BALL_ANM_TYPE_IN )
+  _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, AnmX, 6, AnmZ, 3, 8 )
+_RET
