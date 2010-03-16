@@ -59,6 +59,9 @@ wasure_sel_waza_routine:
 				_WAZA_NAME( 0 , waza_id )
 				//"だいせいこう　じゃ！▼おぬしの　ポケモンは[1:07:わざ名:0]を　わすれおったぞ！"
 				_BALLOONWIN_TALKOBJ_MSG( msg_wasure_09 )
+			  _ME_PLAY(SEQ_ME_WASURE)
+			  _ME_WAIT()
+  			_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 				
 				_SET_TEMOTI_WAZA( select_pos , waza_pos , 0 )

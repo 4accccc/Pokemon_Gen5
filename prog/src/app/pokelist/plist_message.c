@@ -392,15 +392,30 @@ static BOOL PLSIT_MSG_PrintStreamCallBack(u32 value)
   {
   case 2:  // "テテテテン"Lvアップ・技を覚えた
     {
-    PMSND_PlaySystemSE( PLIST_SND_WAZA_LEARN );
+      PMSND_PushBGM();
+      PMSND_PlayBGM(PLIST_SND_WAZA_LEARN_ME);
+      //PMSND_PlaySystemSE( PLIST_SND_WAZA_LEARN );
     }
     break;
   case 3:  // "ポカン"
     {
-    PMSND_PlaySystemSE( PLIST_SND_WAZA_WASURE );
+      PMSND_PlaySystemSE( PLIST_SND_WAZA_WASURE );
     }
     break;
-  case 5:  // "ポカン"のSE終了待ち
+  case 5:  // "テテテテン"のME終了待ち
+    {
+      if( PMSND_CheckPlayBGM() == FALSE )
+      {
+        PMSND_PopBGM();
+        return FALSE;
+      }
+      else
+      {
+        return TRUE;
+      }
+    }
+    break;
+  case 6:  // "ポカン"のSE終了待ち
     {
       return PMSND_CheckPlaySE();
     }

@@ -22,7 +22,8 @@
 
 #define PLIST_SND_RECOVER (SEQ_SE_RECOVERY)
 #define PLIST_SND_LVUP    (SEQ_SE_LVUP)
-#define PLIST_SND_WAZA_LEARN   (SEQ_SE_LVUP)
+#define PLIST_SND_WAZA_LEARN   (SEQ_SE_LVUP)      //←こっち未使用
+#define PLIST_SND_WAZA_LEARN_ME   (SEQ_ME_LVUP)   //←こっち使用
 #define PLIST_SND_WAZA_WASURE  (SEQ_SE_KON)   //1.2のポカン
 
 //  PMSND_PlaySystemSE

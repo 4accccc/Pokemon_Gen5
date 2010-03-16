@@ -32,7 +32,7 @@
 //リストにグッズを戻す音
 #define DUP_SE_LIST_RETURN_GOODS (SEQ_SE_MSCL_05)
 //グッズに触れない音
-#define DUP_SE_LIST_NO_GOODS (SEQ_SE_WALL_HIT)
+#define DUP_SE_LIST_NO_GOODS (SEQ_SE_BEEP)
 
 //グッズをポケモンに装着する音
 #define DUP_SE_POKE_SET_GOODS (SEQ_SE_MSCL_06)
