@@ -34,7 +34,6 @@ _EVENT_DATA    ev_bg_c05gym0101_lift_04d
 _EVENT_DATA    ev_bg_c05gym0101_lift_05u
 _EVENT_DATA    ev_bg_c05gym0101_lift_05d
 _EVENT_DATA    ev_c05gym0101_workman_00
-_EVENT_DATA    ev_zone_c05gym0101
 _EVENT_DATA    ev_reserve_c05gym0101_gymstart_01
 _EVENT_DATA    ev_bg_c05gym0101_exitlift_00u
 _EVENT_DATA    ev_bg_c05gym0101_exitlift_00d
@@ -49,15 +48,6 @@ _EVENT_DATA_END
 //	0 = 上の停止位置にいる、1 = 下の停止位置にいる					//
 //																	//
 //------------------------------------------------------------------//
-
-
-/************************************************************/
-/*					ゾーンチェンジスクリプト				*/
-/************************************************************/
-INIT_EVENT_START	ev_zone_c05gym0101
-
-
-INIT_EVENT_END
 
 
 /************************************************************/

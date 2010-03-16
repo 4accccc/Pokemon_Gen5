@@ -133,8 +133,6 @@ ev_d05r0101_player_to_rival:
 	_OBJ_ANIME_WAIT()
 	
 	CASE 9 THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_rival_z9 )
-	_OBJ_ANIME_WAIT()
 	
 	CASE 10 THEN
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_rival_z10 )
@@ -197,8 +195,6 @@ _ANIME_LABEL	anm_player_to_rival_z8
 //	D05R0101：主人公、ライバルと隣接z9
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_player_to_rival_z9
-	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	D05R0101：主人公、ライバルと隣接z10

@@ -213,8 +213,8 @@ EVENT_START  ev_pos_d07_rival_01
 	_OBJ_ANIME( D07_CHAMPION_01,anm_d07_champion_gift_to_player02 )
 	_OBJ_ANIME_WAIT()
 
-	//わざマシン入手処理
-	_ITEM_EVENT_KEYWAIT ( ITEM_WAZAMASIN40 , 1  )
+	//わざマシン入手処理（なみのり）
+	_ITEM_EVENT_KEYWAIT ( ITEM_WAZAMASIN96 , 1  )
 	
 	//アテグ：じゃあな
 	_BALLOONWIN_OBJMSG(msg_d07_champion_05,D07_CHAMPION_01  )
