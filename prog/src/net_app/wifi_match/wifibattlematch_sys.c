@@ -756,6 +756,13 @@ static void *POKELIST_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID,
   WIFIBATTLEMATCH_SYS               *p_wk   = p_wk_adrs;
   int reg_no;
 
+  //ポケパーティの受け取りは内部でADDしてるだけなので、
+  //毎回ここで初期化する
+  PokeParty_InitWork( p_wk->p_player_btl_party );
+  PokeParty_InitWork( p_wk->p_enemy_btl_party );
+
+
+  //引数作成
   p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(WIFIBATTLEMATCH_SUBPROC_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(WIFIBATTLEMATCH_SUBPROC_PARAM) );
 
@@ -863,7 +870,16 @@ static BOOL POKELIST_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_ad
 
   if( GFL_NET_GetNETInitStruct()->bNetType == GFL_NET_TYPE_IRC )
   { 
-    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LISTAFTER );
+
+    if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS )
+    { 
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LISTAFTER );
+    }
+    else if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_RETURN_LIVE )
+    { 
+      p_wk->btl_score.is_error  = TRUE;
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
+    }
   }
   else
   { 
@@ -876,7 +892,14 @@ static BOOL POKELIST_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_ad
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
     }
   }
-  GFL_HEAP_FreeMemory( p_param->regulation );
+
+  //ランダムマッチではレギュレーションをALLOCしたので
+  //解放する
+  if( p_wk->type == WIFIBATTLEMATCH_TYPE_RNDRATE
+      || p_wk->type == WIFIBATTLEMATCH_TYPE_RNDFREE )
+  { 
+    GFL_HEAP_FreeMemory( p_param->regulation );
+  }
   GFL_HEAP_FreeMemory( p_param );
 
   return TRUE;

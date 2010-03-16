@@ -27,7 +27,8 @@
 typedef enum 
 {
   WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS,
-  WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN,
+  WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN,  //エラー検知（WIFIのみ）
+  WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_RETURN_LIVE, //エラー検知(LIVEのみ)
 } WIFIBATTLEMATCH_SUBPROC_RESULT;
 
 
@@ -46,7 +47,6 @@ typedef struct
   u8        pad2[3];                                //パディング
   POKEPARTY *enemyPokeParty;                        //[in]相手のポケモン
   GAMEDATA            *gameData;                    //[in]ゲームデータ
-  u8                  comm_selected_num;            //[in]すでに選び終わった人数 外部操作
   u8                  dummy[3];
   POKEPARTY           *p_select_party;              //[out]出場するポケパーティ(Allocしておくこと)
   WIFIBATTLEMATCH_SUBPROC_RESULT  result;           //[out]終了コード

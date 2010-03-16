@@ -174,8 +174,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
     }
   }
 
-  //List内で制御するのでコメントアウト Ari100310
-  //procWork->plData.comm_selected_num  = p_param->comm_selected_num;
   PLIST_COMM_UpdateComm( &procWork->plData );
 
   
@@ -242,6 +240,12 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
     if( GFL_NET_GetNETInitStruct()->bNetType == GFL_NET_TYPE_IRC )
     { 
 
+      if( NET_ERR_CHECK_NONE != NetErr_App_CheckError() )
+      { 
+        NetErr_App_ReqErrorDisp();
+        p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_RETURN_LIVE;
+        return GFL_PROC_RES_FINISH;
+      }
     }
     else
     { 
@@ -327,7 +331,6 @@ static void WIFIBATTLEMATCH_SUBPROC_InitListData( WIFIBATTLEMATCH_SUBPROC_PARAM 
     plData->use_tile_limit = FALSE;
     plData->time_limit = 0;
   }
-  plData->comm_selected_num = 0;
   GFL_OVERLAY_Load(FS_OVERLAY_ID(pokelist_comm));
   PLIST_COMM_InitComm( plData );
 }
