@@ -8852,6 +8852,7 @@
  * @def _SXY_MOVE_NPC_POS
  * @brief NPCの初期位置を変更する
  * @param npc_id  NPCを指定するためのID
+ * @param dir     向きの指定
  * @param gx      X位置（グリッド単位）
  * @param gy      Y位置（グリッド単位）
  * @param gz      Z位置（グリッド単位）
@@ -8860,12 +8861,13 @@
  * このコマンドで変更したデータが参照されないため意味がない。
  */
 //--------------------------------------------------------------
-#define _SXY_MOVE_NPC_POS( npc_id, gx, gy, gz ) \
-    _ASM_SXY_MOVE_NPC_POS npc_id, gx, gy, gz
+#define _SXY_MOVE_NPC_POS( npc_id, dir, gx, gy, gz ) \
+    _ASM_SXY_MOVE_NPC_POS npc_id, dir, gx, gy, gz
 
-    .macro  _ASM_SXY_MOVE_NPC_POS npc_id, gx, gy, gz
+    .macro  _ASM_SXY_MOVE_NPC_POS npc_id, dir, gx, gy, gz
     .short  EV_SEQ_MOVE_NPC_DATA_POS
     .short  \npc_id
+    .short  \dir
     .short  \gx
     .short  \gy
     .short  \gz

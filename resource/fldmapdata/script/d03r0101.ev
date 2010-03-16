@@ -179,7 +179,11 @@ EVENT_START		ev_reserve_d03r0101_event_01
 	_MSGWIN_CLOSE()
 	
 	//TVトランシーバー起動
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
 	_CALL_TVT_DEMO( 5 )
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
 
 	//ライバル：自機のほうに向く
 	_OBJ_ANIME( D03R0101_RIVAL_02, anm_stay_l )

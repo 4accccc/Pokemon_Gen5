@@ -67,7 +67,11 @@ EVENT_START		ev_scene_c03p07_tvt_01
 	_PLAINWIN_CLOSE()
 	
 	//TVトランシーバー起動
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
 	_CALL_TVT_DEMO( 3 )
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
 	
 	//トランシーバーイベント終了
 	$WK_SCENE_C03P07 = 3

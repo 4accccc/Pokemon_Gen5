@@ -295,7 +295,11 @@ EVENT_START		ev_pos_r04_rival_01
 	_PLAINWIN_CLOSE()
 	
 	//TVトランシーバー起動
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
 	_CALL_TVT_DEMO( 4 )
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
 
 	//……だって　ライモンシティの　ゲートなら
 	_BALLOONWIN_OBJMSG( msg_r04_black_04 , R04_RIVAL_01 )
