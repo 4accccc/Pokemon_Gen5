@@ -138,7 +138,7 @@ static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc state, int line)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   キー入力で動きを変える
+ * @brief   セーブデータのアドレス
  * @retval  none
  */
 //------------------------------------------------------------------------------
@@ -154,11 +154,18 @@ static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc state, int line)
 #include "savedata/intrude_save.h"
 #include "savedata/system_data_local.h"
 #include "savedata/dreamworld_data_local.h"
-#include	"poke_tool/pokeparty.h"
+#include "poke_tool/pokeparty.h"
 #include "savedata/wifihistory.h"
 #include "savedata/wifihistory_local.h"
+#include "savedata/playtime.h"
+#include "savedata/playtime_local.h"
 #include "savedata/regulation.h"
+#include "savedata/myitem_savedata_local.h"
 #include "net/dreamworld_netdata.h"
+#include "savedata/zukan_savedata_local.h"
+
+
+extern MYITEM_PTR* SaveData_GetMyItem(SAVE_CONTROL_WORK * sv);
 
 
 
@@ -216,12 +223,17 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","SLEEP_POKEMON", (u32)pAddr-(u32)topAddr, POKETOOL_GetWorkSize());
       pAddr = (u8*)&pDW->pokemonIn;
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","ISIN_SLEEP_POKEMON", (u32)pAddr-(u32)topAddr, sizeof(u8));
+      pAddr = (u8*)&pDW->bAccount;  //ここは並びが変更されるとまずい
+      pAddr++;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","FURNITURENO", (u32)pAddr-(u32)topAddr, sizeof(u8));
       
     }
     {//MISC
       MISC* pMisc = SaveData_GetMisc(pWork->pSaveData);
       pAddr = (u8*)&pMisc->gold;
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYER_GOLD", (u32)pAddr-(u32)topAddr, sizeof(pMisc->gold));
+      pAddr = (u8*)&pMisc->badge;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYER_BADGE_BIT", (u32)pAddr-(u32)topAddr, sizeof(pMisc->badge));
     }
 
 
@@ -238,14 +250,28 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       pAddr = (u8*)&pMy->area;
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","MY_AREA", (u32)pAddr-(u32)topAddr, sizeof(pMy->area));
     }
+    {//PLAYTIME
+      PLAYTIME * playtime = SaveData_GetPlayTime(pWork->pSaveData);
 
+      pAddr = (u8*)&playtime->hour;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYTIME_HOUR", (u32)pAddr-(u32)topAddr, sizeof(playtime->hour));
+      pAddr = (u8*)&playtime->minute;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYTIME_MINUTE", (u32)pAddr-(u32)topAddr, sizeof(playtime->minute));
+      pAddr = (u8*)&playtime->second;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYTIME_SECOND", (u32)pAddr-(u32)topAddr, sizeof(playtime->second));
+    }
     
     { //ジオネット
       WIFI_HISTORY* pHis = SaveData_GetWifiHistory(pWork->pSaveData);
-
+      for(i=0;i<UNITEDNATIONS_PEOPLE_MAX;i++){
+        MYSTATUS* pMys = &pHis->aUnitedPeople[i].aMyStatus;
+        pAddr = (u8*)&pMys->id;
+        OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "GTS_GSID",(u32)pAddr-(u32)topAddr,sizeof(pMys->id));
+      }
+      
+      pAddr = (u8*)&pHis->myCountryCount;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","GTS_COUNTRYCOUNT", (u32)pAddr-(u32)topAddr, sizeof(pHis->myCountryCount));
     }
-
-    
 
     {//レコード
       short* rec = (short*)SaveData_GetRecord(pWork->pSaveData);
@@ -272,7 +298,37 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PROFILE_ID", (u32)pAddr-(u32)topAddr, sizeof(pSys->profileId));
     }
 
-    {
+    {//アイテム
+      MYITEM* pMyItem = (MYITEM*)SaveData_GetMyItem(pWork->pSaveData);
+
+      pAddr = (u8*)pMyItem;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","MYBAG_START", (u32)pAddr-(u32)topAddr, sizeof(ITEM_ST));
+
+      OS_TPrintf("\"%s\",\"0\",\"%d\"\n","BAG_NUM", (u32)BAG_TOTAL_NUM );
+      OS_TPrintf("\"%s\",\"0\",\"%d\"\n","ITEM_MAX", (u32)ITEM_DATA_MAX);
+
+      pAddr = (u8*)&pMyItem->MyNutsItem[0];
+      
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","NUTSBAG_START", (u32)pAddr-(u32)topAddr, sizeof(ITEM_ST));
+
+      OS_TPrintf("\"%s\",\"0\",\"%d\"\n","BAG_NUTS_ITEM_MAX ", (u32)BAG_NUTS_ITEM_MAX );
+      OS_TPrintf("\"%s\",\"0\",\"%d\"\n","ITEM_NUTS_MAX", (u32)ITEM_NUTS_MAX);
+      
+    }
+
+    {//図鑑
+      ZUKAN_SAVEDATA *pZukan = ZUKAN_SAVEDATA_GetZukanSave( pWork->pSaveData );
+
+      pAddr = (u8*)&pZukan->get_flag[0];
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","POKEMONGET_BIT_ARRAY", (u32)pAddr-(u32)topAddr, POKEZUKAN_ARRAY_LEN);
+      
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","ZUKANSAVE_ZENKOKU_MONSMAX", (u32)0, ZUKANSAVE_ZENKOKU_MONSMAX);
+      
+
+    }
+
+    
+    {//手持ちポケモン
       POKEPARTY* Party = SaveData_GetTemotiPokemon(pWork->pSaveData);
       for(i = 0 ; i < 6 ; i++){
         pAddr = (u8*)PokeParty_GetMemberPointer( Party, i );
@@ -280,7 +336,7 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       }
     }
 
-    {
+    {//ボックスポケモン
       BOX_MANAGER* pBox = BOX_DAT_InitManager( GFL_HEAPID_APP , pWork->pSaveData);
       int j,i;
       for(i=0;i<BOX_MAX_TRAY;i++){

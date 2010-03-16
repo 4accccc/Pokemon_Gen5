@@ -475,6 +475,14 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
   pWork->profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pParent->gameData) );
   pWork->pNHTTPRap = NHTTP_RAP_Init(pParent->heapID, pWork->profileID, pParent->pSvl);
   OS_TPrintf("profileID %x\n",pWork->profileID);
+
+  OS_TPrintf("DREAM_WORLD_SERVER_STATUS_DATA %d\n", sizeof(DREAM_WORLD_SERVER_STATUS_DATA));
+  OS_TPrintf("DREAM_WORLD_SERVER_DOWNLOAD_DATA %d\n", sizeof(DREAM_WORLD_SERVER_DOWNLOAD_DATA));
+  OS_TPrintf("DREAM_WORLD_SERVER_DOWNLOAD_FINISH_DATA %d\n", sizeof(DREAM_WORLD_SERVER_DOWNLOAD_FINISH_DATA));
+  OS_TPrintf("DREAM_WORLD_SERVER_POKEMONLIST_DATA %d\n", sizeof(DREAM_WORLD_SERVER_POKEMONLIST_DATA));
+  OS_TPrintf("DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA %d\n", sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA));
+  OS_TPrintf("DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA %d\n", sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA));
+
   
   pWork->pDispWork = PDWACC_DISP_Init(pWork->heapID);
   pWork->pMessageWork = PDWACC_MESSAGE_Init(pWork->heapID, NARC_message_pdwacc_dat);

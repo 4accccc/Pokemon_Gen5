@@ -33,9 +33,9 @@ struct _DREAMWORLD_SAVEDATA {
   u8 pokemoStatus;        //8	送信したポケモン						1byte			送信したポケモンの状態を受け取る
   u8 pokemonIn;  ///ppにポケモンが入っているかどうか
   u8 signin; //PDW登録済み
-  u8 bAccount; //アカウント取得済み
+  u8 bAccount; //アカウント取得済み                                                    ここから->
   u8 furnitureNo     :7;  //選んだ家具のインデックス  無い場合 DREAM_WORLD_NOFANITURE
-  u8 isSyncFurniture :1;  //家具をSyncして送ったか？(家具屋で話すと消える
+  u8 isSyncFurniture :1;  //家具をSyncして送ったか？(家具屋で話すと消える              ->ここまで並びを変更しない事
   u8 musicalNo;      ///< webで選択した番号  無い場合 0xff
   u8 cgearNo;        ///< webで選択した番号  無い場合 0xff
   u8 zukanNo;        ///< webで選択した番号  無い場合 0xff

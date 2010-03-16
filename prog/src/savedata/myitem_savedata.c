@@ -9,25 +9,13 @@
 #include <gflib.h>
 #include "savedata/myitem_savedata.h"
 #include "item/item.h"
+#include "myitem_savedata_local.h"
 
 
 
 //==============================================================================
 //	構造体定義
 //==============================================================================
-//------------------------------------------------------------------
-/**
- * @brief	手持ちアイテム構造体の定義
- */
-//------------------------------------------------------------------
-struct _MYITEM {
-	ITEM_ST MyNormalItem[ BAG_NORMAL_ITEM_MAX ];	// 手持ちの普通の道具
-	ITEM_ST MyEventItem[ BAG_EVENT_ITEM_MAX ];		// 手持ちの大切な道具
-	ITEM_ST MySkillItem[ BAG_WAZA_ITEM_MAX ];		// 手持ちの技マシン
-	ITEM_ST MyDrugItem[ BAG_DRUG_ITEM_MAX ];		// 手持ちの薬
-	ITEM_ST MyNutsItem[ BAG_NUTS_ITEM_MAX ];		// 手持ちの木の実
-	u32	cnv_button[DUMMY_SHORTCUT_MAX];									// 便利ボタン @@OO削除予定  便利ウインドウは統合管理される
-};
 
 // フィールドのバッグのカーソル位置
 typedef struct {
@@ -1044,4 +1032,24 @@ void *Index_Get_Myitem_Offset(MYITEM_PTR item, int type)
 }
 #endif
 
+
+#if PM_DEBUG
+//この関数はPDWでセーブのアドレスを導きだすため用です
+//かならずgamedataの方を使ってください
+#include "savedata/save_control.h"
+#include "savedata/save_tbl.h"
+extern MYITEM_PTR* SaveData_GetMyItem(SAVE_CONTROL_WORK * sv);
+//----------------------------------------------------------
+/**
+ * @brief	   アイテムデータ構造体の取得
+ * @param	   sv		セーブデータへのポインタ
+ * @return	 WIFI_HISTORYデータへのポインタ
+ */
+//----------------------------------------------------------
+MYITEM_PTR* SaveData_GetMyItem(SAVE_CONTROL_WORK * sv)
+{
+  return (MYITEM_PTR*)SaveControl_DataPtrGet(sv, GMDATA_ID_MYITEM);
+}
+
+#endif
 

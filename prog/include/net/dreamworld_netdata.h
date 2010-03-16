@@ -76,6 +76,7 @@ typedef struct {
   u8 itemNum[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///< 持ち帰ったアイテムの個数
   DREAM_WORLD_FURNITUREDATA Furniture[DREAM_WORLD_DATA_MAX_FURNITURE];  ///<	26*5=130  配信家具情報
   u16 CRC;  /// このデータのCRC-16/CCITT
+  u16 dummy;
 } DREAM_WORLD_SERVER_DOWNLOAD_DATA;
 
 
@@ -125,6 +126,8 @@ typedef struct {
 typedef struct {
   u8 GPFEntryFlg;      ///< GPFから書き込んだらDREAM_WORLD_ENTRYFLAG_GPF_WRITE DSから書き込んだらDREAM_WORLD_ENTRYFLAG_DS_WRITE
   u8 WifiMatchUpState; ///< 世界対戦の進行状況
+  u8 dummy1;
+  u8 dummy2;
 } DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA;
 
 
