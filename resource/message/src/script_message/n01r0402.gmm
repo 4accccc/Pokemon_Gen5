@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-19T15:10:34"/>
+	<create user="matsumiya" host="W00224" date="2010-03-16T16:21:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="216" right="1996" bottom="844" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,17 +292,19 @@
 	</lock>
 
 
-	<row id="msg_n01r0402_bg_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0402_bg_01">
 		<comment>BGメッセージ
 ・GRIDX=1、GRIDZ=13</comment>
 		<attribute name="キャラ指定">BGメッセージ</attribute>
 		<language name="JPN" width="256">つかいこまれた　かんじの
-ふるい　バスケットボール……</language>
+ふるい　バスケットボール……▽
+ハルモニアと　かかれている……</language>
 		<language name="JPN_KANJI" width="256">使い込まれた　感じの
-古い　バスケットボール……</language>
+古い　バスケットボール……▽
+ハルモニアと　かかれている……</language>
 	</row>
 
-	<row id="msg_n01r0402_bg_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0402_bg_02">
 		<comment>BGメッセージ
 ・GRIDX=4、GRIDZ=13</comment>
 		<attribute name="キャラ指定">BGメッセージ</attribute>
@@ -312,7 +314,7 @@
 バスケットゴールだ……</language>
 	</row>
 
-	<row id="msg_n01r0402_bg_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0402_bg_03">
 		<comment>BGメッセージ
 ・GRIDX=9、GRIDZ=3~4</comment>
 		<attribute name="キャラ指定">BGメッセージ</attribute>
@@ -322,7 +324,7 @@
 古い　おもちゃが　一杯……</language>
 	</row>
 
-	<row id="msg_n01r0402_bg_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0402_bg_04">
 		<comment>BGメッセージ
 ・GRIDX=1~4、GRIDZ=9</comment>
 		<attribute name="キャラ指定">BGメッセージ</attribute>
@@ -332,7 +334,7 @@
 スケートボードが　乗せられている</language>
 	</row>
 
-	<row id="msg_n01r0402_bg_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0402_bg_05">
 		<comment>BGメッセージ
 ・GRIDX=5~15、GRIDZ=9</comment>
 		<attribute name="キャラ指定">BGメッセージ</attribute>
@@ -342,7 +344,7 @@
 ハーフパイプが　設置されている……</language>
 	</row>
 
-	<row id="msg_n01r0402_bg_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0402_bg_06">
 		<comment>BGメッセージ
 ・GRIDX=11~13、GRIDZ=3</comment>
 		<attribute name="キャラ指定">BGメッセージ</attribute>
@@ -352,7 +354,7 @@
 プリントされた　アートパネル</language>
 	</row>
 
-	<row id="msg_n01r0402_bg_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0402_bg_07">
 		<comment>BGメッセージ
 ・GRIDX=10、GRIDZ=3</comment>
 		<attribute name="キャラ指定">BGメッセージ</attribute>
@@ -362,7 +364,7 @@
 ダーツが　刺さったままだ</language>
 	</row>
 
-	<row id="msg_n01r0402_bg_08" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0402_bg_08">
 		<comment>BGメッセージ
 ・電車のおもちゃ用
 　貼り付け座標は適当？</comment>
@@ -373,7 +375,7 @@
 ずっと　電池で　動いている……？</language>
 	</row>
 
-	<row id="msg_n01r0402_bg_09" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0402_bg_09">
 		<comment>BGメッセージ
 ・GRIDX=16、GRIDZ=10~12
 ・GRIDX=17、GRIDZ=12</comment>
