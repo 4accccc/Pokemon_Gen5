@@ -8,7 +8,7 @@
 #include <gflib.h>
 
 #include "sheimi_normalform.h"
-#include "poke_tool/monsno_def.h" //for MONSNO_SHEIMI
+#include "poke_tool/monsno_def.h" //for MONSNO_SHEIMI FORMNO_Å`
 
 //--------------------------------------------------------------
 /**
@@ -21,7 +21,7 @@ void SHEIMI_NFORM_ChangeNormal(POKEPARTY *ppt)
 {
 	int pos, count, monsno, form_no;
 	POKEMON_PARAM *pp;
-	int set_form_no = FORMNO_SHEIMI_NORMAL;
+	int set_form_no = FORMNO_SHEIMI_LAND;
 	
 	count = PokeParty_GetPokeCount(ppt);
 	for(pos = 0; pos < count; pos++)
@@ -29,7 +29,7 @@ void SHEIMI_NFORM_ChangeNormal(POKEPARTY *ppt)
 		pp = PokeParty_GetMemberPointer(ppt,pos);
 		monsno = PP_Get(pp, ID_PARA_monsno, NULL);
 		form_no = PP_Get(pp, ID_PARA_form_no, NULL);
-		if(monsno == MONSNO_SHEIMI && form_no == FORMNO_SHEIMI_FLOWER)
+		if(monsno == MONSNO_SHEIMI && form_no == FORMNO_SHEIMI_SKY)
     {
       PP_ChangeFormNo( pp, set_form_no );
 		}

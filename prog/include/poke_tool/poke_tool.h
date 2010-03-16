@@ -172,13 +172,11 @@
 #define FORMNO_SII_EAST       (1)   ///<東シーウシ・シードルゴ
 
 #define FORMNO_SII_MAX        (1)   ///<シーウシ・シードルゴの別フォルムMAX
-#endif
 //シェイミ
 #define FORMNO_SHEIMI_NORMAL    (0)   ///<シェイミノーマル
 #define FORMNO_SHEIMI_FLOWER    (1)   ///<シェイミ花咲き
 
 #define FORMNO_SHEIMI_MAX     (1)   ///<シェイミの別フォルムMAX
-#if 0
 //デオキシス
 #define FORMNO_DEOKISISU_NORMAL   (0)   ///<ノーマルフォルム
 #define FORMNO_DEOKISISU_ATTACK   (1)   ///<アタックフォルム
