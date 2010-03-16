@@ -53,7 +53,7 @@ extern int GAMEBEACON_Get_Area(const GAMEBEACON_INFO *info);
 extern u8 GAMEBEACON_Get_Job(const GAMEBEACON_INFO *info);
 extern u8 GAMEBEACON_Get_Hobby(const GAMEBEACON_INFO *info);
 extern void GAMEBEACON_Get_IntroductionPms(const GAMEBEACON_INFO *info, PMS_DATA *dest_pms);
-extern RESEARCH_TEAM_RANK GAMEBEACON_Get_ResearchTeamRank(const GAMEBEACON_INFO *info);
+extern u8 GAMEBEACON_Get_ResearchTeamRank(const GAMEBEACON_INFO *info);
 extern void GAMEBEACON_Get_FavoriteColor(GXRgb *dest_buf, const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_TrainerID(const GAMEBEACON_INFO *info);
 extern u8 GAMEBEACON_Get_TrainerView(const GAMEBEACON_INFO *info);

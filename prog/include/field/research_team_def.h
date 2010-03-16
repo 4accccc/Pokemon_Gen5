@@ -18,6 +18,15 @@
 #define RESEARCH_MEMBER_RANK_S  (3)
 #define RESEARCH_MEMBER_RANK_SS (4)
 
+///調査隊ランク
+#define RESEARCH_TEAM_RANK_0 (0)
+#define RESEARCH_TEAM_RANK_1 (1)
+#define RESEARCH_TEAM_RANK_2 (2)
+#define RESEARCH_TEAM_RANK_3 (3)
+#define RESEARCH_TEAM_RANK_4 (4)
+#define RESEARCH_TEAM_RANK_5 (5)
+#define RESEARCH_TEAM_RANK_MAX (6)
+
 // 調査タイプ
 #define RESEARCH_REQ_TYPE_COUNT (0) // 人数調査
 #define RESEARCH_REQ_TYPE_TIME  (1) // 時間調査

@@ -22,6 +22,7 @@
 #include "poke_tool/monsno_def.h"
 #include "item/itemsym.h"
 #include "app/research_radar/question_id.h"
+#include "field/research_team_def.h"
 
 enum{
  BEACON_WSET_DEFAULT,   //デフォルト(トレーナー名)  
@@ -581,10 +582,10 @@ void GAMEBEACON_Get_IntroductionPms(const GAMEBEACON_INFO *info, PMS_DATA *dest_
 /**
  * 調査隊員ランクを取得
  * @param   info		ビーコン情報へのポインタ
- * @retval  RESEARCH_TEAM_RANK		調査隊員ランク
+ * @retval  u8		調査隊員ランク ( RESEARCH_TEAM_RANK_xxxx )
  */
 //==================================================================
-RESEARCH_TEAM_RANK GAMEBEACON_Get_ResearchTeamRank(const GAMEBEACON_INFO *info)
+u8 GAMEBEACON_Get_ResearchTeamRank(const GAMEBEACON_INFO *info)
 {
   return info->research_team_rank;
 }

@@ -97,18 +97,6 @@ typedef enum{
 }GAMEBEACON_ACTION;
 
 
-///í≤ç∏ë‡ÉâÉìÉN
-typedef enum{
-  RESEARCH_TEAM_RANK_0,
-  RESEARCH_TEAM_RANK_1,
-  RESEARCH_TEAM_RANK_2,
-  RESEARCH_TEAM_RANK_3,
-  RESEARCH_TEAM_RANK_4,
-  RESEARCH_TEAM_RANK_5,
-  RESEARCH_TEAM_RANK_MAX,
-}RESEARCH_TEAM_RANK;
-
-
 //==============================================================================
 //  å^íËã`
 //==============================================================================

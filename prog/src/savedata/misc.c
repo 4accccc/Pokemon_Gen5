@@ -95,6 +95,7 @@ void MISC_Init( MISC *p_msc )
     GFL_MSG_Delete( msg );
   }
 
+  p_msc->research_team_rank = RESEARCH_TEAM_RANK_0;
   p_msc->research_request_id = RESEARCH_REQ_ID_NONE;
   p_msc->research_question_id[0] = QUESTION_ID_DUMMY;
   p_msc->research_question_id[1] = QUESTION_ID_DUMMY;
