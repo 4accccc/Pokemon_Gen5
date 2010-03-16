@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/02 18:45:25
+#save date:2010/03/16 21:19:10
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03.wms
 #SECTION START:OBJ_EVENT
@@ -373,7 +373,7 @@ SCRID_BG_C03_SIGN2_01
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 4 3
+2 7 5
 #event number: 1
 #Bg Event Label
 BGID_C03_SIGN1_02
@@ -386,7 +386,7 @@ SCRID_BG_C03_SIGN1_01
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 15 3
+2 4 4
 #event number: 2
 #Bg Event Label
 BGID_C03_SIGN1_01
@@ -399,7 +399,7 @@ SCRID_BG_C03_SIGN1_01
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 16 3
+2 6 4
 #event number: 3
 #Bg Event Label
 BGID_C03_SIGN1_03
@@ -412,7 +412,7 @@ SCRID_BG_C03_SIGN1_01
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 14 3
+2 5 4
 #event number: 4
 #Bg Event Label
 BGID_C03_SIGN3_01
@@ -503,7 +503,7 @@ SCRID_BG_C03_SIGN1_01
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 13 3
+2 3 4
 #event number: 11
 #Bg Event Label
 BGID_C03_SIGN1_05
@@ -516,7 +516,7 @@ SCRID_BG_C03_SIGN1_01
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 12 3
+2 2 4
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -581,13 +581,13 @@ DOOR_ID_C03P09_C03_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-1 2 7
+3 0 6
 #size
-3 1
+5 1
 #rail way
 DIR_LEFT
 #event number: 1
@@ -623,7 +623,7 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 25 6
+2 20 6
 #size
 5 1
 #rail way
@@ -851,7 +851,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 9 5
+2 19 6
 #size
 1 1
 #rail way
@@ -866,11 +866,11 @@ DOOR_ID_C03P09_C03_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 0 7
+2 25 6
 #size
 5 1
 #rail way
@@ -908,7 +908,7 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-3 0 6
+2 21 6
 #size
 5 1
 #rail way
