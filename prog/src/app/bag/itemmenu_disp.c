@@ -381,7 +381,7 @@ static void _load_parts( FIELD_ITEMMENU_WORK* pWork, ARCHANDLE* p_handle )
     GF_ASSERT(0);
   }
 
-  pWork->cellRes[_PLT_BAGPOCKET] = GFL_CLGRP_PLTT_RegisterEx( p_handle , parts_clr , CLSYS_DRAW_MAIN , _PAL_BAG_PARTS_CELL*32 , 0 , 2 , pWork->heapID );
+  pWork->cellRes[_PLT_BAGPOCKET] = GFL_CLGRP_PLTT_RegisterEx( p_handle , parts_clr , CLSYS_DRAW_MAIN , _PAL_BAG_PARTS_CELL*0x20 , 0 , _PAL_BAG_PARTS_CELL_NUM , pWork->heapID );
   pWork->cellRes[_NCG_BAGPOCKET] = GFL_CLGRP_CGR_Register( p_handle , parts_cgx , FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
   pWork->cellRes[_ANM_BAGPOCKET] = GFL_CLGRP_CELLANIM_Register( p_handle, parts_cer, parts_anm , pWork->heapID );
 }
@@ -566,7 +566,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_BAG , pWork->heapID );
 
     pWork->cellRes[_PLT_SORT] = GFL_CLGRP_PLTT_RegisterEx(
-      archandle , NARC_bag_bag_win06_d_NCLR , CLSYS_DRAW_MAIN , _PAL_SORT_CELL*32 , 0 , _PAL_SORT_CELL_NUM , pWork->heapID  );
+      archandle , NARC_bag_bag_win06_d_NCLR , CLSYS_DRAW_MAIN , _PAL_SORT_CELL*0x20 , 0 , _PAL_SORT_CELL_NUM , pWork->heapID  );
     pWork->cellRes[_NCG_SORT] = GFL_CLGRP_CGR_Register(
       archandle , NARC_bag_bag_win06_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID);
     pWork->cellRes[_ANM_SORT] = GFL_CLGRP_CELLANIM_Register(
@@ -1022,6 +1022,7 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
   int i;
   ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_BAG , pWork->heapID );
 
+/*
   //リスト用チェックマーク
   pWork->cellRes[_PTL_CHECK] = GFL_CLGRP_PLTT_RegisterEx(
     archandle , NARC_bag_bag_win04_d_NCLR , CLSYS_DRAW_MAIN , _PAL_MENU_CHECKBOX_CELL*32 , 0 , 1 , pWork->heapID  );
@@ -1029,11 +1030,12 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
     archandle , NARC_bag_bag_win04_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
   pWork->cellRes[_ANM_CHECK] = GFL_CLGRP_CELLANIM_Register(
     archandle, NARC_bag_bag_win04_d_NCER, NARC_bag_bag_win04_d_NANR , pWork->heapID);
+*/
 
   // スライドバーつまみ・リストカーソル
-  pWork->cellRes[_PLT_CUR] = GFL_CLGRP_PLTT_RegisterEx( archandle ,
-                                                        NARC_bag_bag_win03_d_NCLR , CLSYS_DRAW_MAIN ,
-                                                        _PAL_CUR_CELL*0x20 , 0 , _PAL_CUR_CELL_NUM , pWork->heapID  );
+  pWork->cellRes[_PLT_CUR] = GFL_CLGRP_PLTT_RegisterEx(
+															archandle, NARC_bag_bag_win03_d_NCLR, CLSYS_DRAW_MAIN,
+															_PAL_CUR_CELL*0x20, 0, _PAL_CUR_CELL_NUM, pWork->heapID );
 
   pWork->cellRes[_NCG_CUR] = GFL_CLGRP_CGR_Register(
     archandle , NARC_bag_bag_win03_d_NCGR ,
@@ -1069,7 +1071,9 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
        res_nclr = NARC_bag_bag_win01_d_NCLR;
      }
 
-     pWork->cellRes[_PLT_LIST] = GFL_CLGRP_PLTT_RegisterEx( archandle, res_nclr, CLSYS_DRAW_MAIN, _PAL_WIN01_CELL, 0, 1, pWork->heapID );
+     pWork->cellRes[_PLT_LIST] = GFL_CLGRP_PLTT_RegisterEx(
+																	archandle, res_nclr, CLSYS_DRAW_MAIN,
+																	_PAL_WIN01_CELL*0x20, 0, _PAL_WIN01_CELL_NUM, pWork->heapID );
   }
 
 
@@ -1177,6 +1181,7 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
  *  @retval none
  */
 //-----------------------------------------------------------------------------
+/*
 static void _cellmessage_printcolor( u16 itemtype )
 {
   switch( itemtype )
@@ -1199,6 +1204,7 @@ static void _cellmessage_printcolor( u16 itemtype )
   default : GF_ASSERT(0);
   }
 }
+*/
 
 //-----------------------------------------------------------------------------
 /**
@@ -1270,7 +1276,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
     // リスト枠
     {
       void * itemdata;
-      u8 backColor = 0x1;
+      u8 backColor = 0xd;
 
       //@TODO ページ切替時にロードするようにすれば、負荷が軽減される
       itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
@@ -1281,14 +1287,17 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
       switch( color_tbl[i] )
       {
       case 0:
+/*
         {
           u16 type = ITEM_GetBufParam( itemdata, ITEM_PRM_ITEM_TYPE );
           _cellmessage_printcolor( type );
         }
+*/
+        GFL_FONTSYS_SetColor( 2, 1, backColor );
         break;
       case 1:
         // 画面端はカラーフェード
-        GFL_FONTSYS_SetColor( 0xd, 0xc, backColor );
+        GFL_FONTSYS_SetColor( 4, 3, backColor );
         break;
       default : GF_ASSERT(0);
       }
@@ -1343,10 +1352,15 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
     BOOL is_cur_draw;
     BOOL is_scr_draw;
 
+		ITEMDISP_ChangeCursorPosPalette( pWork, 0 );
+
     GFL_CLACT_WK_GetPos( pWork->clwkCur , &pos, CLWK_SETSF_NONE );
     pos.y = CUR_OFFSET_Y * pWork->curpos + CUR_START_Y;
     GFL_CLACT_WK_SetPos( pWork->clwkCur ,  &pos, CLWK_SETSF_NONE );
-    
+
+		ITEMDISP_ChangeCursorPosPalette( pWork, 1 );
+		BLINKPALANM_InitAnimeCount( pWork->blwk );
+
     // 現在のポケットのアイテム数取得
     length = ITEMMENU_GetItemPocketNumber( pWork );
     
@@ -2281,3 +2295,26 @@ void ITEMDISP_InputNumDisp(FIELD_ITEMMENU_WORK* pWork,int num)
 }
 
 
+
+
+//--------------------------------------------------------------------------------------------
+//	↓ここから中村追加分
+//--------------------------------------------------------------------------------------------
+
+void ITEMDISP_ChangeCursorPosPalette( FIELD_ITEMMENU_WORK * wk, u32 pal )
+{
+	GFL_CLACTPOS	cur_pos;
+	GFL_CLACTPOS	lst_pos;
+	u32	i;
+
+	GFL_CLACT_WK_GetPos( wk->clwkCur, &cur_pos, CLSYS_DEFREND_MAIN );
+
+	for( i=0; i<ITEM_LIST_NUM; i++ ){
+		GFL_CLACT_WK_GetPos( wk->listCell[i], &lst_pos, CLSYS_DEFREND_MAIN );
+		if( lst_pos.y == cur_pos.y ){
+			break;
+		}
+	}
+
+	GFL_CLACT_WK_SetPlttOffs( wk->listCell[i], pal, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+}

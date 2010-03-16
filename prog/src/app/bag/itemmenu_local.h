@@ -22,6 +22,7 @@
 #include "system/bmp_winframe.h"
 #include "system/bmp_menulist.h"
 #include "system/touch_subwindow.h"
+#include "system/blink_palanm.h"
 
 #include "message.naix"
 #include "msg/msg_d_field.h"
@@ -246,6 +247,11 @@ struct _FIELD_ITEMMENU_PARAM {
   int ret_item;       ///< 選んだアイテム
   
   BOOL sort_mode;     ///< ソートモード
+
+
+	BLINKPALANM_WORK * blwk;
+	u16	tmpSeq;			///< 汎用シーケンス
+	u16	tmpCnt;			///< 汎用カウンタ
 };
 
 #define _OBJPLT_SUB_POKE_TYPE (4) //サブ画面技タイプアイコンパレット位置
@@ -262,15 +268,18 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _SUBBUTTON_MSG_PAL   (0)  // メッセージフォント
 #define _BUTTON_WIN_PAL   (13)  // ウインドウ
 
-#define _PAL_WIN01_CELL (0)     // リストウィンドウ用パレット転送位置
-#define _PAL_CUR_CELL (1)       // スライドバーつまみ カーソル用パレット転送位置
-#define _PAL_CUR_CELL_NUM (2)
-#define _PAL_MENU_CHECKBOX_CELL (12)  // チェックボックスのパレット展開位置
-#define _PAL_SORT_CELL (3)      // ソートボタンのパレット展開位置
-#define _PAL_SORT_CELL_NUM (2)  // ソートボタンのパレット本数
-#define _PAL_BAG_PARTS_CELL (10)      // バッグのパーツCELLのパレット展開位置
-#define _PAL_COMMON_CELL (12)          // 共通パレット展開位置
-#define _PAL_COMMON_CELL_NUM ( APP_COMMON_BARICON_PLT_NUM )
+#define _PAL_WIN01_CELL					(0)     // リストウィンドウ用パレット転送位置
+#define _PAL_WIN01_CELL_NUM			(3)     // リストウィンドウ用パレット転送位置
+#define _PAL_CUR_CELL						(_PAL_WIN01_CELL+_PAL_WIN01_CELL_NUM)	// スライドバーつまみ カーソル用パレット転送位置
+#define _PAL_CUR_CELL_NUM				(1)
+#define _PAL_SORT_CELL					(_PAL_CUR_CELL+_PAL_CUR_CELL_NUM)			// ソートボタンのパレット展開位置
+#define _PAL_SORT_CELL_NUM			(2)																		// ソートボタンのパレット本数
+#define _PAL_BAG_PARTS_CELL			(_PAL_SORT_CELL+_PAL_SORT_CELL_NUM)		// バッグのパーツCELLのパレット展開位置
+#define _PAL_BAG_PARTS_CELL_NUM	(1)						// バッグのパーツCELLのパレット展開位置
+#define _PAL_COMMON_CELL				(_PAL_BAG_PARTS_CELL+_PAL_BAG_PARTS_CELL_NUM)	// 共通パレット展開位置
+#define _PAL_COMMON_CELL_NUM		(APP_COMMON_BARICON_PLT_NUM)
+//#define _PAL_MENU_CHECKBOX_CELL (12)  // チェックボックスのパレット展開位置
+
 
 // ポケット名の文字色
 #define _POCKETNAME_FONT_PAL_L (0xF)
@@ -404,3 +413,4 @@ extern void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_InputNumDisp(FIELD_ITEMMENU_WORK* pWork,int num);
 
 
+extern void ITEMDISP_ChangeCursorPosPalette( FIELD_ITEMMENU_WORK * wk, u32 pal );

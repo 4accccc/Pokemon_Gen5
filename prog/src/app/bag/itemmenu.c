@@ -177,6 +177,12 @@ static void _startState(FIELD_ITEMMENU_WORK* pWork);
 #define   _CHANGE_STATE(pWork, state)  _changeState(pWork ,state)
 #endif //_NET_DEBUG
 
+static void InitBlinkPalAnm( FIELD_ITEMMENU_WORK * wk );
+static void ExitBlinkPalAnm( FIELD_ITEMMENU_WORK * wk );
+static void _listSelectAnime( FIELD_ITEMMENU_WORK * wk );
+static u32 GetCursorPosListObj( FIELD_ITEMMENU_WORK * wk );
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   通信管理ステートの変更
@@ -1466,6 +1472,8 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 
   GFL_BMN_Main( pWork->pButton );
 
+	BLINKPALANM_Main( pWork->blwk );
+
   if(pWork->state == NULL){
     // 終了時はキー無効
     return;
@@ -1491,6 +1499,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     {
       // アイテムに対する動作選択画面へ
       _CHANGE_STATE(pWork,_itemSelectState);
+//			_CHANGE_STATE( pWork, _listSelectAnime );
       return;
     }
   }
@@ -2685,7 +2694,14 @@ static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
   }
 
   // カーソルを消す
-  GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, on_off );
+//  GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, on_off );
+
+  GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, FALSE );
+	if( on_off == FALSE ){
+		ITEMDISP_ChangeCursorPosPalette( pWork, 0 );
+	}else{
+		ITEMDISP_ChangeCursorPosPalette( pWork, 1 );
+	}
 
   // 上画面を消す
   pWork->bDispUpReq = on_off;
@@ -3477,6 +3493,8 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
   pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
 
+	InitBlinkPalAnm( pWork );
+
   // ワイプ開始
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                   WIPE_FADE_BLACK , FLD_SUBSCR_FADE_DIV , FLD_SUBSCR_FADE_SYNC , pWork->heapID );
@@ -3600,6 +3618,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
   APP_KEYCURSOR_Delete(pWork->MsgCursorWork);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
+	ExitBlinkPalAnm( pWork );
   GFL_BMN_Delete(pWork->pButton);
   //  ITEMDISP_ListPlateDelete(pWork);
 
@@ -3630,3 +3649,52 @@ const GFL_PROC_DATA ItemMenuProcData = {
   FieldItemMenuProc_Main,
   FieldItemMenuProc_End,
 };
+
+
+
+
+
+//--------------------------------------------------------------------------------------------
+//	↓ここから中村追加分
+//--------------------------------------------------------------------------------------------
+
+static void InitBlinkPalAnm( FIELD_ITEMMENU_WORK * wk )
+{
+	ARCHANDLE * ah;
+
+	wk->blwk = BLINKPALANM_Create( (_PAL_WIN01_CELL+1)*16, 16, BLINKPALANM_MODE_MAIN_OBJ, wk->heapID );
+
+	ah = GFL_ARC_OpenDataHandle( ARCID_BAG, wk->heapID );
+	BLINKPALANM_SetPalBufferArcHDL( wk->blwk, ah, NARC_bag_bag_win01_d_NCLR, 16, 32 );
+  GFL_ARC_CloseDataHandle( ah );
+}
+
+static void ExitBlinkPalAnm( FIELD_ITEMMENU_WORK * wk )
+{
+	BLINKPALANM_Exit( wk->blwk );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト選択アニメ
+ */
+//--------------------------------------------------------------------------------------------
+static void _listSelectAnime( FIELD_ITEMMENU_WORK * wk )
+{
+	switch( wk->tmpSeq ){
+	case 0:
+		GFL_CLACT_WK_SetDrawEnable( wk->clwkCur, TRUE );
+		GFL_CLACT_WK_SetAnmFrame( wk->clwkCur, 0 );
+		GFL_CLACT_WK_SetAnmSeq( wk->clwkCur, 3 );
+		wk->tmpSeq++;
+		break;
+
+	case 1:
+		if( GFL_CLACT_WK_CheckAnmActive( wk->clwkCur ) == FALSE ){
+			wk->tmpSeq = 0;
+			_CHANGE_STATE( wk, _itemSelectState );
+		}
+		break;
+	}
+}
+

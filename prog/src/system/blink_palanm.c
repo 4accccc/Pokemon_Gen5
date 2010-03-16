@@ -62,7 +62,11 @@ BLINKPALANM_WORK * BLINKPALANM_Create( u16 offs, u16 size, u16 bgfrm, HEAPID hea
 	wk->seq = 0;
 	wk->heapID = heapID;
 
-	if( bgfrm <= GFL_BG_FRAME3_M ){
+	if( bgfrm == BLINKPALANM_MODE_MAIN_OBJ ){
+		wk->type = NNS_GFD_DST_2D_OBJ_PLTT_MAIN;
+	}else if( bgfrm == BLINKPALANM_MODE_SUB_OBJ ){
+		wk->type = NNS_GFD_DST_2D_OBJ_PLTT_SUB;
+	}else if( bgfrm <= GFL_BG_FRAME3_M ){
 		wk->type = NNS_GFD_DST_2D_BG_PLTT_MAIN;
 	}else{
 		wk->type = NNS_GFD_DST_2D_BG_PLTT_SUB;
