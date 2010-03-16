@@ -1068,9 +1068,10 @@ static int MainSeq_YesNo( BOX2_SYS_WORK * syswk )
 {
 	APP_TASKMENU_UpdateMenu( syswk->app->ynWork );
 	if( APP_TASKMENU_IsFinish( syswk->app->ynWork ) == TRUE ){
+		u8	pos = APP_TASKMENU_GetCursorPos( syswk->app->ynWork );
 		APP_TASKMENU_CloseMenu( syswk->app->ynWork );
 		GFL_UI_KEY_SetRepeatSpeed( 6, 6 );
-		if( APP_TASKMENU_GetCursorPos( syswk->app->ynWork ) == 0 ){
+		if( pos == 0 ){
 			return YesNoFunc[syswk->app->ynID].yes( syswk );
 		}else{
 			return YesNoFunc[syswk->app->ynID].no( syswk );

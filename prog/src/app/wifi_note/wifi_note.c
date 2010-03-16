@@ -3399,8 +3399,9 @@ static int Draw_YesNoWinMain( APP_TASKMENU_WORK * wk )
 {
 	APP_TASKMENU_UpdateMenu( wk );
 	if( APP_TASKMENU_IsFinish( wk ) == TRUE ){
+		int	pos = APP_TASKMENU_GetCursorPos( wk );
 		APP_TASKMENU_CloseMenu( wk );
-		return APP_TASKMENU_GetCursorPos( wk );
+		return pos;
 	}
 	return -1;
 }
@@ -5380,8 +5381,8 @@ static u32 FListSeq_MenuWait( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNO
 */
 	APP_TASKMENU_UpdateMenu( p_wk->listWork );
 	if( APP_TASKMENU_IsFinish( p_wk->listWork ) == TRUE ){
-		APP_TASKMENU_CloseMenu( p_wk->listWork );
 		ret = APP_TASKMENU_GetCursorPos( p_wk->listWork );
+		APP_TASKMENU_CloseMenu( p_wk->listWork );
 	}else{
 	 ret = SBOX_SELECT_NULL;
 	}

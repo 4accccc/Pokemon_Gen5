@@ -690,8 +690,9 @@ static s32 MainReportYesNo( FMENU_REPORT_EVENT_WORK * wk )
 {
   APP_TASKMENU_UpdateMenu( wk->local->ynWork );
   if( APP_TASKMENU_IsFinish( wk->local->ynWork ) == TRUE ){
+		u8	pos = APP_TASKMENU_GetCursorPos( wk->local->ynWork );
     APP_TASKMENU_CloseMenu( wk->local->ynWork );
-    if( APP_TASKMENU_GetCursorPos( wk->local->ynWork ) == 0 ){
+    if( pos == 0 ){
       return 0;
     }else{
       return 1;
