@@ -2121,8 +2121,8 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
       // INITIALなら文字消去→これ以上消すものがなければ禁止音
       if( wk->category_mode == CATEGORY_MODE_INITIAL && PMSI_SEARCH_DelWord( wk->swk ) )
       {
-		    //GFL_SOUND_PlaySE(SOUND_WORD_DELETE);
-		    GFL_SOUND_PlaySE(SOUND_DECIDE);  // Aボタンを使ったので決定音
+		    GFL_SOUND_PlaySE(SOUND_WORD_DELETE);  // Aボタンを使っても消去音になった(新)
+		    //GFL_SOUND_PlaySE(SOUND_DECIDE);  // Aボタンを使ったので決定音(古)
 		    PMSIView_SetCommand( wk->vwk, VCMD_ERASE_BLINK_IN_CATEGORY_INITIAL );
 
         PMSI_SEARCH_Start( wk->swk );
