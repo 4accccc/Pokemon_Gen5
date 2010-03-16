@@ -1526,6 +1526,7 @@ static int _playerDirectVCTChange5( WIFIP2PMATCH_WORK *wk, int seq )
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE6);
     }
   }
+  return seq;
 }
 
 //------------------------------------------------------------------
