@@ -9405,6 +9405,33 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief 調査隊の隊員ランクを取得する
+ *
+ * @param ret [out] 隊員ランクの格納先 ( RESEARCH_TEAM_RANK_ 0～5 )
+ */
+//--------------------------------------------------------------
+#define _GET_RESEARCH_TEAM_RANK( ret ) \
+    _ASM_GET_RESEARCH_TEAM_RANK ret
+
+  .macro _ASM_GET_RESEARCH_TEAM_RANK ret
+  .short EV_SEQ_GET_RESEARCH_TEAM_RANK
+  .short \ret
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 調査隊の隊員ランクを1つ上げる
+ */
+//--------------------------------------------------------------
+#define _RESEARCH_TEAM_RANK_UP() \
+    _ASM_RESEARCH_TEAM_RANK_UP
+
+  .macro _ASM_RESEARCH_TEAM_RANK_UP
+  .short EV_SEQ_RESEARCH_TEAM_RANK_UP
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @brief 手持ちの配布ダルタニスの位置を返す
  *
  * @param pos       手持ちポケモンの位置

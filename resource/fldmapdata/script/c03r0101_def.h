@@ -17,5 +17,6 @@
 #define SCRID_MEMBER_F (10)
 #define SCRID_MEMBER_G (11)
 #define SCRID_PAPER (12)
+#define SCRID_ZONE_C03R0101 (13)
 
 #endif //_C03R0101_DEF_H_

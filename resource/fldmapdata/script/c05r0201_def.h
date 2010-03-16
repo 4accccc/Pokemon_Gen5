@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_C05R0201_OLDMAN1_01 (1)
+#define SCRID_C05R0201_BOY2_01 (2)
 
 #endif //_C05R0201_DEF_H_

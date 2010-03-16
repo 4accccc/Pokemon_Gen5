@@ -25,6 +25,7 @@ _EVENT_DATA	ev_member_e        // 一般隊員E
 _EVENT_DATA	ev_member_f        // 一般隊員F
 _EVENT_DATA	ev_member_g        // 一般隊員G
 _EVENT_DATA	ev_paper           // 書類
+_EVENT_DATA ev_zone_c03r0101   // ゾーンチェンジ
 _EVENT_DATA_END
 
 
@@ -32,25 +33,34 @@ _EVENT_DATA_END
 // ■隊長サブルーチンリスト
 //======================================================================
 //----------------------------------------------------------------------
-// layer 4
+// layer 5
 //----------------------------------------------------------------------
 // ■メインシーケンス
 // RES_REQ_REPORT ◆調査結果を報告シーケンス
 // RES_REQ_CANCEL ◆依頼キャンセルシーケンス
 // RES_REQ_SELECT ◆依頼選択シーケンス
+//----------------------------------------------------------------------
+// layer 4
+//----------------------------------------------------------------------
+// ■チェック
+// CHECK_RES_REQ_ACHIEVE ◆受けている依頼が達成されているかどうかをチェックする
 // ■隊長の台詞
+// LEADER_SAY_This_request_is   ◆隊長「～依頼内容の説明～」
 // LEADER_SAY_Ah_hah            ◆隊長「ふむふむ……」
 // LEADER_SAY_You_dont_archieve ◆隊長「まだ調査が終わっていないぞ？」
 //----------------------------------------------------------------------
 // layer 3
 //----------------------------------------------------------------------
+// ■機能
+// FINISH_CURRENT_RES_REQ ◆受けている依頼を完了する
+// ■チェック
+// CHECK_RES_REQ_ALREADY_ARCHIEVE ◆指定した依頼について, すでに達成済みかどうかを事前にチェックする
+// CHECK_RES_REQ_ACHIEVE_COUNT    ◆受けている依頼が達成されているかどうかをチェックする ( 人数調査 )
+// CHECK_RES_REQ_ACHIEVE_TIME     ◆受けている依頼が達成されているかどうかをチェックする ( 時間調査 )
 // ■取得
 // GET_RES_REQ_MAX_REST_NORM_COUNT ◆調査中の依頼に関して, 最も大きいノルマ不足値を取得する ( 人数調査 )
 // GET_RES_REQ_MAX_REST_NORM_TIME  ◆調査中の依頼に関して, 最も大きいノルマ不足値を取得する ( 時間調査 )
-// ■チェック
-// CHECK_RES_REQ_ACHIEVE ◆受けている依頼が達成されているかどうかをチェックする
 // ■隊長の台詞
-// LEADER_SAY_This_request_is ◆隊長「～依頼内容の説明～」
 // LEADER_SAY_Next_rank       ◆隊長「あと～回で～隊員だ」
 //----------------------------------------------------------------------
 // layer 2
@@ -58,14 +68,13 @@ _EVENT_DATA_END
 // ■シーケンス
 // ACHIEVE_PRIZE_GET  ◆依頼達成アイテム入手処理
 // COMPLETE_PRIZE_GET ◆全依頼達成アイテム入手処理
-// ■機能
-// FINISH_CURRENT_RES_REQ ◆受けている依頼を完了する
 // ■取得
 // GET_ACHIEVE_NUM_TO_RANKUP   ◆次のランクアップまでの残り依頼達成回数を取得する
 // GET_RES_REQ_REST_NORM_COUNT ◆受けている依頼について, ノルマ達成までの残り人数を取得する
 // GET_RES_REQ_REST_NORM_TIME  ◆受けている依頼について, ノルマ達成までの残り時間を取得する
 // ■チェック
-// CHECK_RES_REQ_ALREADY_ARCHIEVE ◆指定した依頼について, すでに達成済みかどうかを事前にチェックする
+// CHECK_RES_REQ_ALREADY_ARCHIEVE_COUNT ◆指定した依頼について, すでに達成済みかどうかを事前にチェックする ( 人数調査 )
+// CHECK_RES_REQ_ALREADY_ARCHIEVE_TIME  ◆指定した依頼について, すでに達成済みかどうかを事前にチェックする ( 時間調査 )
 // ■システムメッセージ
 // SYSTEM_MSG_Rank_up ◆システム「～隊員に任命された」
 // ■隊長の台詞
@@ -80,14 +89,13 @@ _EVENT_DATA_END
 // ■フラグ操作
 // SET_RES_REQ_ACHIEVE_FLAG ◆指定した依頼の達成フラグをセットする
 // ■取得
-// GET_RES_MEMBER_RANK        ◆隊員ランクを取得する
 // GET_FINISH_RES_REQ_NUM     ◆達成した依頼の数を取得する
 // GET_RES_REQ_QUESTION_NUM   ◆調査中の依頼の質問数を取得する
 // GET_RES_REQ_ABS_NORM_COUNT ◆指定した調査依頼のノルマ人数を取得する
 // GET_RES_REQ_ABS_NORM_TIME  ◆指定した調査依頼のノルマ時間[h]を取得する
 // GET_RES_REQ_QUESTION_ID    ◆指定した依頼に該当する質問IDを取得する
 // GET_RES_REQ_RESEARCH_COUNT ◆調査中の依頼に関して, 調査を開始してからの調査人数を取得する
-// GET_RES_REQ_TYPE           ◆調査中の依頼のタイプ ( 人数 or 時間 ) を取得する
+// GET_RES_REQ_TYPE           ◆指定した依頼の調査タイプ ( 人数 or 時間 ) を取得する
 // GET_PRIZE_ITEM             ◆調査中の依頼の報酬を取得する
 // ■チェック
 // CHECK_RES_REQ_COMPLETE ◆全ての調査依頼が達成されているかどうかをチェックする
@@ -113,6 +121,7 @@ _EVENT_DATA_END
 // LEADER_SAY_Present_for_you             ◆隊長「これは調査の報酬だ 受け取ってくれ」
 // LEADER_SAY_Congraturation              ◆隊長「これは私の気持ちだ 受け取ってくれ」
 // LEADER_SAY_I_hope_for_you              ◆隊長「今後も期待しているぞ！」
+// LEADER_SAY_Lets_next_research          ◆隊長「次の調査も期待しているぞ！」
 
 
 //======================================================================
@@ -142,6 +151,12 @@ DEFINE_LOCAL v3_6
 DEFINE_LOCAL v3_7
 DEFINE_LOCAL v3_8
 DEFINE_LOCAL v3_9
+DEFINE_LOCAL v3_a
+DEFINE_LOCAL v3_b
+DEFINE_LOCAL v3_c
+DEFINE_LOCAL v3_d
+DEFINE_LOCAL v3_e
+DEFINE_LOCAL v3_f
 //----------------------------------------------------------------------
 // layer 2
 //----------------------------------------------------------------------
@@ -154,6 +169,12 @@ DEFINE_LOCAL v2_6
 DEFINE_LOCAL v2_7
 DEFINE_LOCAL v2_8
 DEFINE_LOCAL v2_9
+DEFINE_LOCAL v2_a
+DEFINE_LOCAL v2_b
+DEFINE_LOCAL v2_c
+DEFINE_LOCAL v2_d
+DEFINE_LOCAL v2_e
+DEFINE_LOCAL v2_f
 //----------------------------------------------------------------------
 // layer 1
 //----------------------------------------------------------------------
@@ -197,6 +218,7 @@ EVENT_START ev_leader
   IF $SCWK_ANSWER == FALSE THEN 
     _CALL LEADER_SAY_Nice_to_meet_you    // 隊長「君を調査隊員に任命する！」
     _FLAG_SET( FE_RES_LEADER_FIRSTTALK ) // 初回会話フラグを立てる
+    _RESEARCH_TEAM_RANK_UP()             // 隊員ランクをCにする
   // 通常会話
   ELSE
     _CALL LEADER_SAY_You_are_welcome // 隊長「よくきたな」
@@ -240,7 +262,7 @@ EVENT_START ev_leader
       _CALL CHECK_RES_REQ_ACHIEVE // 調査中の依頼を達成しているかどうかをチェック
       // 依頼を達成している
       IF $SCWK_ANSWER == TRUE THEN
-        _CALL RES_REQ_REPORT       // 報告処理
+        _CALL RES_REQ_REPORT // 報告処理
       // 依頼を達成していない
       ELSE
         _CALL LEADER_SAY_You_dont_archieve // 隊長「まだ調査が終わっていないぞ？」⇒『はい』or『いいえ』
@@ -256,7 +278,8 @@ EVENT_START ev_leader
   CASE msg_c03r0101__choice_01c THEN //『なんでもないです』
     _CALL LEADER_SAY_ByeBye // 隊長「そうか……」
 
-  CASE EV_WIN_B_CANCEL THEN // B ボタン
+  CASE EV_WIN_B_CANCEL THEN //『B ボタン』
+    _CALL LEADER_SAY_ByeBye // 隊長「そうか……」
   DEFAULT
   ENDSWITCH
 }
@@ -272,8 +295,7 @@ RES_REQ_REPORT:
   DEFINE_LOCAL after_rank  // 報告後の隊員ランク
 
   _GET_RESEARCH_REQUEST_ID( request_id ) // 調査依頼IDを取得
-  _CALL GET_RES_MEMBER_RANK   // 報告前の隊員ランクを取得
-  $before_rank = $SCWK_ANSWER //
+  _GET_RESEARCH_TEAM_RANK( before_rank ) // 報告前の隊員ランクを取得
 
   _CALL LEADER_SAY_Report_research_result // 隊長「調査内容を報告してくれ」
   _CALL SYSTEM_MSG_REPORT_RESULT          // システム「調査を隊長に報告した！」
@@ -291,26 +313,24 @@ RES_REQ_REPORT:
     _CALL LEADER_SAY_Congraturation // 隊長「これは私の気持ちだ 受け取ってくれ」
     _CALL ACHIEVE_PRIZE_GET         // 全依頼達成アイテムの入手処理
     _CALL LEADER_SAY_I_hope_for_you // 隊長「今後も期待しているぞ！」
-  //--未達成の依頼が残っている--
+  // 未達成の依頼が残っている
   ELSE
     // 報告後の隊員ランクを取得
-    _CALL GET_RES_MEMBER_RANK 
-    $after_rank = $SCWK_ANSWER
-    //--隊員ランクが上がっている--
+    _GET_RESEARCH_TEAM_RANK( after_rank ) // 報告前の隊員ランクを取得
+    // 隊員ランクが上がっている
     IF $before_rank != $after_rank THEN
       _CALL LEADER_SAY_I_appoint_you_as // 隊長「今日から君は～隊員だ！」
       _CALL SYSTEM_MSG_Rank_up          // システム「～隊員に任命された」
-    //--隊員楽は上がっていない--
+    // 隊員ランクは上がっていない
     ELSE
-      //--ランクSSでない--
-      IF $after_rank != RESEARCH_MEMBER_RANK_SS THEN
+      // ランクSSでない
+      IF $after_rank != RESEARCH_TEAM_RANK_5 THEN
         _CALL LEADER_SAY_Next_rank // 隊長「あと～回で～隊員だ」
       ENDIF
     ENDIF
-    //「つぎの　ちょうせんも　きたいしているぞ！」
-    _TALK_OBJ_START()
-    _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_29, SCWK_TARGET_OBJID, POS_DL )
-    _BALLOONWIN_CLOSE() 
+
+    // 隊長「次の調査も期待しているぞ！」
+    _CALL LEADER_SAY_Lets_next_research
   ENDIF
 }
 _RET
@@ -345,16 +365,11 @@ RES_REQ_SELECT:
   DEFINE_LOCAL loop   // 依頼選択ループ
   DEFINE_LOCAL choice // 選択したかどうか
   DEFINE_LOCAL type   // 調査タイプ
-  DEFINE_LOCAL rank   // 隊員ランク
   DEFINE_LOCAL req_id // 依頼ID
 
   // フラグを初期化
   $loop = TRUE
   $choice = FALSE
-
-  // 隊員ランクを取得
-  _CALL GET_RES_MEMBER_RANK
-  $rank = $SCWK_ANSWER 
 
   // 依頼を決定する or キャンセルするまでループする
   WHILE $loop == TRUE
@@ -405,9 +420,12 @@ GET_RES_REQ_MAX_REST_NORM_COUNT:
 
   // 各質問の不足人数を取得
   _CALL GET_RES_REQ_REST_NORM_COUNT
+  $v3_1 = $SCWK_TEMP0 
+  $v3_2 = $SCWK_TEMP1
+  $v3_3 = $SCWK_TEMP2 
+  $v3_4 = $v3_1
 
   // 最も大きい不足値を選出
-  $v3_4 = $v3_1
   IF $v3_4 < $v3_2 THEN
     $v3_4 = $v3_2
   ENDIF
@@ -436,9 +454,9 @@ GET_RES_REQ_MAX_REST_NORM_TIME:
   $v3_1 = $SCWK_TEMP0
   $v3_2 = $SCWK_TEMP1
   $v3_3 = $SCWK_TEMP2
+  $v3_4 = $v3_1
 
   // 最も大きい不足値を選出
-  $v3_4 = $v3_1
   IF $v3_4 < $v3_2 THEN
     $v3_4 = $v3_2
   ENDIF
@@ -457,71 +475,188 @@ _RET
 //----------------------------------------------------------------------
 CHECK_RES_REQ_ACHIEVE:
 {
-  // v3_1 調査中の依頼タイプ ( RESEARCH_REQ_TYPE_xxxx )
+  // v4_1 調査中の依頼タイプ ( RESEARCH_REQ_TYPE_xxxx )
+  // v4_2 依頼ID
+
+  // 依頼IDを取得
+  _GET_RESEARCH_REQUEST_ID( v4_2 )
 
   // 調査中の依頼の調査タイプを取得
+  $SCWK_TEMP0 = $v4_2
+  _CALL GET_RES_REQ_TYPE
+  $v4_1 = $SCWK_ANSWER
+
+  // 人数調査
+  IF $v4_1 == RESEARCH_REQ_TYPE_COUNT THEN
+    _CALL CHECK_RES_REQ_ACHIEVE_COUNT
+    _RET 
+  // 時間調査
+  ELSE
+    _CALL CHECK_RES_REQ_ACHIEVE_TIME
+    _RET 
+  ENDIF 
+}
+_RET
+
+//----------------------------------------------------------------------
+// ◆受けている依頼が達成されているかどうかをチェックする ( 人数調査 )
+// ◇out SCWK_ANSWER 依頼が達成されている場合 TRUE
+//----------------------------------------------------------------------
+CHECK_RES_REQ_ACHIEVE_COUNT:
+{
+  // v3_1 調査中の依頼タイプ ( RESEARCH_REQ_TYPE_xxxx )
+  // v3_2 質問1に対する, 依頼達成までの残り人数
+  // v3_3 質問2に対する, 依頼達成までの残り人数
+  // v3_4 質問3に対する, 依頼達成までの残り人数
+  // v3_5 依頼ID
+
+  // 依頼IDを取得
+  _GET_RESEARCH_REQUEST_ID( v3_5 )
+
+  // 調査中の依頼の調査タイプを取得
+  $SCWK_TEMP0 = $v3_5
   _CALL GET_RES_REQ_TYPE
   $v3_1 = $SCWK_ANSWER
 
-  // 人数調査
+  // 調査中の依頼が時間調査
+  IF $v3_1 == RESEARCH_REQ_TYPE_TIME THEN
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+
+  // 依頼達成までの残り人数を取得
+  _CALL GET_RES_REQ_REST_NORM_COUNT
+  $v3_2 = $SCWK_TEMP0
+  $v3_3 = $SCWK_TEMP1
+  $v3_4 = $SCWK_TEMP2
+
+  // ノルマ未達成 ( 質問１ )
+  IF $v3_2 != 0 THEN
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+
+  // ノルマ未達成 ( 質問２ )
+  IF $v3_3 != 0 THEN
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+
+  // ノルマ未達成 ( 質問３ )
+  IF $v3_4 != 0 THEN
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+
+  // ノルマ達成
+  $SCWK_ANSWER = TRUE
+}
+_RET
+
+//----------------------------------------------------------------------
+// ◆受けている依頼が達成されているかどうかをチェックする ( 時間調査 )
+// ◇out SCWK_ANSWER 依頼が達成されている場合 TRUE
+//----------------------------------------------------------------------
+CHECK_RES_REQ_ACHIEVE_TIME:
+{
+  // v3_1 調査中の依頼タイプ ( RESEARCH_REQ_TYPE_xxxx )
+  // v3_2 質問1に対する, 調査開始からの調査人数
+  // v3_3 質問2に対する, 調査開始からの調査人数
+  // v3_4 質問3に対する, 調査開始からの調査人数
+  // v3_5 質問1に対する, 依頼達成までの残り時間
+  // v3_6 質問2に対する, 依頼達成までの残り時間
+  // v3_7 質問3に対する, 依頼達成までの残り時間
+  // v3_8 依頼ID
+  // v3_9 質問ID ( 質問1 )
+  // v3_a 質問ID ( 質問2 )
+  // v3_b 質問ID ( 質問3 )
+  // v3_c いままでの調査人数 ( 質問1 )
+  // v3_d いままでの調査人数 ( 質問2 )
+  // v3_e いままでの調査人数 ( 質問3 )
+
+  // 依頼IDを取得
+  _GET_RESEARCH_REQUEST_ID( v3_8 )
+
+  // 質問IDを取得
+  $SCWK_TEMP0 = $v3_8
+  _CALL GET_RES_REQ_QUESTION_ID
+  $v3_9 = $SCWK_TEMP1
+  $v3_a = $SCWK_TEMP2
+  $v3_b = $SCWK_TEMP3
+
+  // いままでの調査人数を取得
+  _GET_TOTAL_COUNT_OF_QUESTION( v3_9, v3_c )
+  _GET_TOTAL_COUNT_OF_QUESTION( v3_a, v3_d )
+  _GET_TOTAL_COUNT_OF_QUESTION( v3_b, v3_e )
+
+  // 調査中の依頼の調査タイプを取得
+  $SCWK_TEMP0 = $v3_8
+  _CALL GET_RES_REQ_TYPE
+  $v3_1 = $SCWK_ANSWER
+
+  // 調査中の依頼が人数調査
   IF $v3_1 == RESEARCH_REQ_TYPE_COUNT THEN
-    _CALL GET_RES_REQ_REST_NORM_COUNT // 依頼達成までの残り人数を取得
-    // ノルマ未達成 ( 質問１ )
-    IF $SCWK_TEMP0 != 0 THEN
-      $SCWK_ANSWER = FALSE
-      _RET
-    ENDIF
-    // ノルマ未達成 ( 質問２ )
-    IF $SCWK_TEMP1 != 0 THEN
-      $SCWK_ANSWER = FALSE
-      _RET
-    ENDIF
-    // ノルマ未達成 ( 質問３ )
-    IF $SCWK_TEMP2 != 0 THEN
-      $SCWK_ANSWER = FALSE
-      _RET
-    ENDIF
-
-  //--調査中の依頼が時間調査--
-  ELSE
-    // 依頼開始からの調査人数を取得
-    _CALL GET_RES_REQ_RESEARCH_COUNT
-
-    //--ノルマ未達成--
-    IF $SCWK_TEMP0 != 0 THEN
-      $SCWK_ANSWER = FALSE
-      _RET
-    ENDIF
-    //--ノルマ未達成--
-    IF $SCWK_TEMP1 != 0 THEN
-      $SCWK_ANSWER = FALSE
-      _RET
-    ENDIF
-    //--ノルマ未達成--
-    IF $SCWK_TEMP2 != 0 THEN
-      $SCWK_ANSWER = FALSE
-      _RET
-    ENDIF
-
-    // 依頼達成までの残り時間を取得
-    _CALL GET_RES_REQ_REST_NORM_TIME
-
-    //--ノルマ未達成--
-    IF $SCWK_TEMP0 != 0 THEN
-      $SCWK_ANSWER = FALSE
-      _RET
-    ENDIF
-    //--ノルマ未達成--
-    IF $SCWK_TEMP1 != 0 THEN
-      $SCWK_ANSWER = FALSE
-      _RET
-    ENDIF
-    //--ノルマ未達成--
-    IF $SCWK_TEMP2 != 0 THEN
-      $SCWK_ANSWER = FALSE
-      _RET
-    ENDIF
+    $SCWK_ANSWER = FALSE
+    _RET
   ENDIF 
+
+  // MAXカウントまで調査している
+  IF ($v3_9 != QUESTION_ID_DUMMY) && ($v3_c >= 9999) THEN
+    $SCWK_ANSWER = TRUE
+    _RET
+  ENDIF
+  IF ($v3_a != QUESTION_ID_DUMMY) && ($v3_d >= 9999) THEN
+    $SCWK_ANSWER = TRUE
+    _RET
+  ENDIF
+  IF ($v3_b != QUESTION_ID_DUMMY) && ($v3_e >= 9999) THEN
+    $SCWK_ANSWER = TRUE
+    _RET
+  ENDIF
+
+  // 依頼開始からの調査人数を取得
+  _CALL GET_RES_REQ_RESEARCH_COUNT
+  $v3_2 = $SCWK_TEMP0
+  $v3_3 = $SCWK_TEMP1
+  $v3_4 = $SCWK_TEMP2
+
+  // ノルマ未達成 ( 開始からの調査人数が0 )
+  IF ($v3_9 != QUESTION_ID_DUMMY) && ($v3_2 == 0) THEN
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+  // ノルマ未達成 ( 開始からの調査人数が0 )
+  IF ($v3_a != QUESTION_ID_DUMMY) && ($v3_3 == 0) THEN
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+  // ノルマ未達成 ( 開始からの調査人数が0 )
+  IF ($v3_b != QUESTION_ID_DUMMY) && ($v3_4 == 0) THEN
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+
+  // 依頼達成までの残り時間を取得
+  _CALL GET_RES_REQ_REST_NORM_TIME
+  $v3_5 = $SCWK_TEMP0
+  $v3_6 = $SCWK_TEMP1
+  $v3_7 = $SCWK_TEMP2
+
+  // ノルマ未達成
+  IF $v3_5 != 0 THEN
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+  // ノルマ未達成
+  IF $v3_6 != 0 THEN
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+  // ノルマ未達成
+  IF $v3_7 != 0 THEN
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
 
   // ノルマ達成
   $SCWK_ANSWER = TRUE
@@ -557,6 +692,8 @@ _RET
 //----------------------------------------------------------------------
 FINISH_CURRENT_RES_REQ:
 {
+  // v3_1 ランクアップまでの残り達成回数
+
   // 依頼IDを取得
   _GET_RESEARCH_REQUEST_ID( v2_1 )
 
@@ -566,6 +703,15 @@ FINISH_CURRENT_RES_REQ:
 
   // セーブデータをクリア
   _FINISH_RESEARCH()
+
+  // 次のランクアップまでの残り依頼達成回数を取得する
+  _CALL GET_ACHIEVE_NUM_TO_RANKUP
+  $v3_1 = $SCWK_ANSWER
+
+  // ランクアップ
+  IF $v3_1 == 0 THEN
+    _RESEARCH_TEAM_RANK_UP()
+  ENDIF
 }
 _RET
 
@@ -628,53 +774,6 @@ SET_RES_REQ_ACHIEVE_FLAG:
 _RET
 
 //----------------------------------------------------------------------
-// ◆隊員ランクを取得する
-// ◇out SCWK_ANSWER 現在の隊員ランク
-//----------------------------------------------------------------------
-GET_RES_MEMBER_RANK:
-{
-  // v1_1 先頭の依頼達成フラグ
-  // v1_2 末尾の依頼達成フラグ
-  // v1_3 チェック対象フラグ
-  // v1_4 達成した依頼の数
-  // v1_5 隊員ランク
-  // v1_6 チェック対象フラグの値
-
-  $v1_1 = FE_RES_REQ_WB_COUNT
-  $v1_2 = FE_RES_REQ_FUN_TIME
-  $v1_3 = $v1_1
-  $v1_4 = 0
-
-  // 達成されている依頼の数をカウント
-  WHILE $v1_3 <= $v1_2
-    _FLAG_CHECK( v1_3, v1_6 )
-    IF $v1_6 == TRUE THEN
-      // 達成した依頼の数をインクリメント
-      _ASM_ADD_WK v1_4, 1
-    ENDIF
-    // フラグをインクリメント
-    _ASM_ADD_WK v1_3, 1
-  ENDWHILE
-
-  // 隊員ランクを決定
-  IF $v1_4 < 4 THEN 
-    $v1_5 = RESEARCH_MEMBER_RANK_C
-  ELSIF $v1_4 < 10 THEN
-    $v1_5 = RESEARCH_MEMBER_RANK_B
-  ELSIF $v1_4 < 16 THEN
-    $v1_5 = RESEARCH_MEMBER_RANK_A
-  ELSIF $v1_4 < 20 THEN
-    $v1_5 = RESEARCH_MEMBER_RANK_S
-  ELSE
-    $v1_5 = RESEARCH_MEMBER_RANK_SS
-  ENDIF
-
-  // 隊員ランクを返す
-  $SCWK_ANSWER = $v1_5
-}
-_RET
-
-//----------------------------------------------------------------------
 // ◆達成した依頼の数を取得する
 // ◇out SCWK_ANSWER 達成した依頼の数
 //----------------------------------------------------------------------
@@ -692,13 +791,13 @@ GET_FINISH_RES_REQ_NUM:
 
   // 全フラグを見る
   WHILE $v1_3 <= $v1_2
-    //--達成済みの依頼を発見--
-    IF $v1_3 == FALSE THEN
-      // 達成済みの依頼数をインクリメント
-      _ASM_ADD_WK v1_4, 1
+    // 達成済み
+    _FLAG_CHECK( v1_3, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _ASM_ADD_WK v1_4, 1 // 達成済みの依頼数をインクリメント
     ENDIF 
-    // フラグをインクリメント
-    _ASM_ADD_WK v1_3, 1
+
+    _ASM_ADD_WK v1_3, 1 // フラグをインクリメント
   ENDWHILE
 
   // 達成済みの依頼数を返す
@@ -718,18 +817,18 @@ GET_ACHIEVE_NUM_TO_RANKUP:
 
   // 達成済みの依頼数を取得
   _CALL GET_FINISH_RES_REQ_NUM
+  $v2_2 = $SCWK_ANSWER
 
   // 現在の隊員ランクを取得
-  _CALL GET_RES_MEMBER_RANK
-  $v2_1 = $SCWK_ANSWER
+  _GET_RESEARCH_TEAM_RANK( v2_1 )
 
   // 次のランクの必要達成数を決定
   SWITCH $v2_1
-  CASE RESEARCH_MEMBER_RANK_C  THEN $v2_3 = 4
-  CASE RESEARCH_MEMBER_RANK_B  THEN $v2_3 = 10
-  CASE RESEARCH_MEMBER_RANK_A  THEN $v2_3 = 16
-  CASE RESEARCH_MEMBER_RANK_S  THEN $v2_3 = 20 
-  CASE RESEARCH_MEMBER_RANK_SS THEN $v2_3 = RESEARCH_REQ_ID_NUM
+  CASE RESEARCH_TEAM_RANK_1 THEN $v2_3 = 4
+  CASE RESEARCH_TEAM_RANK_2 THEN $v2_3 = 10
+  CASE RESEARCH_TEAM_RANK_3 THEN $v2_3 = 16
+  CASE RESEARCH_TEAM_RANK_4 THEN $v2_3 = 20 
+  CASE RESEARCH_TEAM_RANK_5 THEN $v2_3 = RESEARCH_REQ_ID_NUM
   ENDSWITCH
 
   // ランクアップまでの達成回数を返す
@@ -752,12 +851,20 @@ GET_RES_REQ_REST_NORM_COUNT:
   // v2_4 質問1のノルマ人数
   // v2_5 質問2のノルマ人数
   // v2_6 質問3のノルマ人数
-  // v2_7 質問1の調査した人数
-  // v2_8 質問2の調査した人数
-  // v2_9 質問3の調査した人数
+  // v2_7 質問1の調査人数
+  // v2_8 質問2の調査人数
+  // v2_9 質問3の調査人数
+  // v2_a 依頼ID
+  // v2_b 質問1の質問ID
+  // v2_c 質問2の質問ID
+  // v2_d 質問3の質問ID
 
-  // 依頼ID ==> SCWK_TEMP0
-  _GET_RESEARCH_REQUEST_ID( SCWK_TEMP0 ) 
+  _GET_RESEARCH_REQUEST_ID( v2_a ) // 依頼IDを取得
+  $SCWK_TEMP0 = $v2_a              // 質問IDを取得
+  _CALL GET_RES_REQ_QUESTION_ID    //
+  $v2_b = $SCWK_TEMP1              //
+  $v2_c = $SCWK_TEMP2              //
+  $v2_d = $SCWK_TEMP3              //
 
   // ノルマ人数を取得
   _CALL GET_RES_REQ_ABS_NORM_COUNT
@@ -765,27 +872,30 @@ GET_RES_REQ_REST_NORM_COUNT:
   $v2_5 = $SCWK_TEMP2
   $v2_6 = $SCWK_TEMP3
 
-  // 開始からの調査人数を算出
-  _CALL GET_RES_REQ_RESEARCH_COUNT
-  $v2_7 = $SCWK_TEMP0
-  $v2_8 = $SCWK_TEMP1
-  $v2_9 = $SCWK_TEMP2
+  // 現在の調査人数を取得
+  _GET_TOTAL_COUNT_OF_QUESTION( v2_b, v2_7 )
+  _GET_TOTAL_COUNT_OF_QUESTION( v2_c, v2_8 )
+  _GET_TOTAL_COUNT_OF_QUESTION( v2_d, v2_9 )
 
   // 残り人数を算出
-  _ASM_LDWK   v2_1, v2_4
-  _ASM_LDWK   v2_2, v2_5
-  _ASM_LDWK   v2_3, v2_6
-  _ASM_SUB_WK v2_1, v2_7
-  _ASM_SUB_WK v2_2, v2_8
-  _ASM_SUB_WK v2_3, v2_9
-  IF $v2_1 < 0 THEN 
-  $v2_1 = 0 
+  IF $v2_4 < $v2_7 THEN
+    $v2_1 = 0
+  ELSE
+    _ASM_LDWK   v2_1, v2_4 
+    _ASM_SUB_WK v2_1, v2_7
   ENDIF
-  IF $v2_2 < 0 THEN 
-  $v2_2 = 0 
+
+  IF $v2_5 < $v2_8 THEN
+    $v2_2 = 0
+  ELSE
+    _ASM_LDWK   v2_2, v2_5
+    _ASM_SUB_WK v2_2, v2_8
   ENDIF
-  IF $v2_3 < 0 THEN 
-  $v2_3 = 0 
+  
+  IF $v2_3 < $v2_9 THEN
+  ELSE
+    _ASM_LDWK   v2_3, v2_6
+    _ASM_SUB_WK v2_3, v2_9
   ENDIF
 
   // 残り人数を返す
@@ -811,8 +921,10 @@ GET_RES_REQ_REST_NORM_TIME:
   // v2_6 質問3のノルマ時間
   // v2_7 調査した時間
 
-  // ノルマ時間を取得
+  // 調査中の依頼IDを取得
   _GET_RESEARCH_REQUEST_ID( SCWK_TEMP0 ) 
+
+  // ノルマ時間を取得
   _CALL GET_RES_REQ_ABS_NORM_TIME
   $v2_4 = $SCWK_TEMP1
   $v2_5 = $SCWK_TEMP2
@@ -822,20 +934,25 @@ GET_RES_REQ_REST_NORM_TIME:
   _GET_RESEARCH_PASSED_TIME( v2_7 )
 
   // 残り時間を算出
-  _ASM_LDWK   v2_1, v2_4
-  _ASM_LDWK   v2_2, v2_5
-  _ASM_LDWK   v2_3, v2_6
-  _ASM_SUB_WK v2_1, v2_7 
-  _ASM_SUB_WK v2_2, v2_7 
-  _ASM_SUB_WK v2_3, v2_7 
-  IF $v2_1 < 0 THEN 
-    $v2_1 = 0 
+  IF $v2_4 < $v2_7 THEN
+    $v2_1 = 0
+  ELSE
+    _ASM_LDWK   v2_1, v2_4
+    _ASM_SUB_WK v2_1, v2_7 
   ENDIF
-  IF $v2_2 < 0 THEN 
-    $v2_2 = 0 
+  
+  IF $v2_5 < $v2_7 THEN
+    $v2_2 = 0
+  ELSE
+    _ASM_LDWK   v2_2, v2_5
+    _ASM_SUB_WK v2_2, v2_7 
   ENDIF
-  IF $v2_3 < 0 THEN 
-    $v2_3 = 0 
+
+  IF $v2_6 < $v2_7 THEN
+    $v2_3 = 0
+  ELSE
+    _ASM_LDWK   v2_3, v2_6
+    _ASM_SUB_WK v2_3, v2_7 
   ENDIF
 
   // 残り時間を返す
@@ -852,13 +969,56 @@ _RET
 //----------------------------------------------------------------------
 CHECK_RES_REQ_ALREADY_ARCHIEVE:
 {
-  // v2_1 調査依頼ID
-  // v2_2 質問ID1
-  // v2_3 質問ID2
-  // v2_4 質問ID3
-  // v2_5 質問に対する, いままでの調査人数
+  // v3_1 依頼ID
+  // v3_2 調査タイプ
 
+  // 引数を受け取る
+  $v3_1 = $SCWK_TEMP0
+
+  // 調査タイプを取得
+  $SCWK_TEMP0 = $v3_1
+  _CALL GET_RES_REQ_TYPE
+  $v3_2 = $SCWK_ANSWER
+
+  // 調査タイプごとの判定モジュールを呼ぶ
+  SWITCH $v3_2 
+  CASE RESEARCH_REQ_TYPE_COUNT THEN 
+    $SCWK_TEMP0 = $v3_1
+    _CALL CHECK_RES_REQ_ALREADY_ARCHIEVE_COUNT
+  CASE RESEARCH_REQ_TYPE_TIME  THEN 
+    $SCWK_TEMP0 = $v3_1
+    _CALL CHECK_RES_REQ_ALREADY_ARCHIEVE_TIME
+  DEFAULT
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDSWITCH
+}
+_RET
+
+//----------------------------------------------------------------------
+// ◆指定した依頼について, すでに達成済みかどうかを事前にチェックする ( 人数調査 )
+// ◇in  SCWK_TEMP0  チェックする調査依頼ID
+// ◇out SCWK_ANSWER 達成済みの場合 TRUE, そうでなければ FALSE
+//----------------------------------------------------------------------
+CHECK_RES_REQ_ALREADY_ARCHIEVE_COUNT:
+{
+  // v2_1 依頼ID
+  // v2_2 質問ID ( 質問1 )
+  // v2_3 質問ID ( 質問2 )
+  // v2_4 質問ID ( 質問3 )
+  // v2_5 いままでの調査人数
+  // v2_6 調査タイプ
+  // v2_7 ノルマ人数 ( 質問1 )
+  // v2_8 ノルマ人数 ( 質問2 )
+  // v2_9 ノルマ人数 ( 質問3 )
+
+  // 引数を受け取る
   $v2_1 = $SCWK_TEMP0
+
+  // 調査タイプを取得
+  $SCWK_TEMP0 = $v2_1
+  _CALL GET_RES_REQ_TYPE
+  $v2_6 = $SCWK_ANSWER
 
   // 調査する質問IDを取得
   $SCWK_TEMP0 = $v2_1
@@ -867,12 +1027,24 @@ CHECK_RES_REQ_ALREADY_ARCHIEVE:
   $v2_3 = $SCWK_TEMP2
   $v2_4 = $SCWK_TEMP3
 
+  // ノルマ人数を取得
+  $SCWK_TEMP0 = $v2_1
+  _CALL GET_RES_REQ_ABS_NORM_COUNT
+  $v2_7 = $SCWK_TEMP1
+  $v2_8 = $SCWK_TEMP2
+  $v2_9 = $SCWK_TEMP3
+
+  // 依頼が時間調査
+  IF $v2_6 == RESEARCH_REQ_TYPE_TIME THEN
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+
   // 質問1
   IF $v2_2 != QUESTION_ID_DUMMY THEN
-    // いままでの調査人数を取得
-    _GET_TOTAL_COUNT_OF_QUESTION( v2_2, v2_5 )
-    // いままでの調査人数がMAX値になっていない
-    IF $v2_5 < 9999 THEN
+    _GET_TOTAL_COUNT_OF_QUESTION( v2_2, v2_5 ) // いままでの調査人数を取得
+    // ノルマを達成していない
+    IF $v2_5 < $v2_7 THEN
       $SCWK_ANSWER = FALSE
       _RET
     ENDIF
@@ -880,10 +1052,9 @@ CHECK_RES_REQ_ALREADY_ARCHIEVE:
 
   // 質問2
   IF $v2_3 != QUESTION_ID_DUMMY THEN
-    // いままでの調査人数を取得
-    _GET_TOTAL_COUNT_OF_QUESTION( v2_3, v2_5 )
-    // いままでの調査人数がMAX値になっていない
-    IF $v2_5 < 9999 THEN
+    _GET_TOTAL_COUNT_OF_QUESTION( v2_3, v2_5 ) // いままでの調査人数を取得
+    // ノルマを達成していない
+    IF $v2_5 < $v2_8 THEN
       $SCWK_ANSWER = FALSE
       _RET
     ENDIF
@@ -891,16 +1062,76 @@ CHECK_RES_REQ_ALREADY_ARCHIEVE:
 
   // 質問3
   IF $v2_4 != QUESTION_ID_DUMMY THEN
-    // いままでの調査人数を取得
-    _GET_TOTAL_COUNT_OF_QUESTION( v2_4, v2_5 )
-    // いままでの調査人数がMAX値になっていない
-    IF $v2_5 < 9999 THEN
+    _GET_TOTAL_COUNT_OF_QUESTION( v2_4, v2_5 ) // いままでの調査人数を取得
+    // ノルマを達成していない
+    IF $v2_5 < $v2_9 THEN
       $SCWK_ANSWER = FALSE
       _RET
     ENDIF
   ENDIF
 
   // すでに達成済み
+  $SCWK_ANSWER = TRUE
+}
+_RET
+
+//----------------------------------------------------------------------
+// ◆指定した依頼について, すでに達成済みかどうかを事前にチェックする ( 時間調査 )
+// ◇in  SCWK_TEMP0  チェックする調査依頼ID
+// ◇out SCWK_ANSWER 達成済みの場合 TRUE, そうでなければ FALSE
+//----------------------------------------------------------------------
+CHECK_RES_REQ_ALREADY_ARCHIEVE_TIME:
+{
+  // v2_1 依頼ID
+  // v2_2 質問ID ( 質問1 )
+  // v2_3 質問ID ( 質問2 )
+  // v2_4 質問ID ( 質問3 )
+  // v2_5 調査タイプ
+  // v2_6 いままでの調査人数 ( 質問1 )
+  // v2_7 いままでの調査人数 ( 質問2 )
+  // v2_8 いままでの調査人数 ( 質問3 )
+
+  // 引数を受け取る
+  $v2_1 = $SCWK_TEMP0
+
+  // 調査タイプを取得
+  $SCWK_TEMP0 = $v2_1
+  _CALL GET_RES_REQ_TYPE
+  $v2_5 = $SCWK_ANSWER
+
+  // 調査する質問IDを取得
+  $SCWK_TEMP0 = $v2_1
+  _CALL GET_RES_REQ_QUESTION_ID
+  $v2_2 = $SCWK_TEMP1
+  $v2_3 = $SCWK_TEMP2
+  $v2_4 = $SCWK_TEMP3
+
+  // 依頼が人数調査
+  IF $v2_5 == RESEARCH_REQ_TYPE_COUNT THEN
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+
+  // いままでの調査人数を取得
+  _GET_TOTAL_COUNT_OF_QUESTION( v2_2, v2_6 )
+  _GET_TOTAL_COUNT_OF_QUESTION( v2_3, v2_7 )
+  _GET_TOTAL_COUNT_OF_QUESTION( v2_4, v2_8 )
+
+  // MAXカウントまで調査していない質問がある
+  IF ($v2_2 != QUESTION_ID_DUMMY) && ($v2_6 < 9999) THEN
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+  IF ($v2_3 != QUESTION_ID_DUMMY) && ($v2_7 < 9999) THEN
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+  IF ($v2_4 != QUESTION_ID_DUMMY) && ($v2_8 < 9999) THEN
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+
+  // 全ての質問をMAXカウントまで調査している場合は, すでに達成済みとする
   $SCWK_ANSWER = TRUE
 }
 _RET
@@ -983,72 +1214,72 @@ GET_RES_REQ_ABS_NORM_COUNT:
   $SCWK_TEMP3 = 0
 
   SWITCH $SCWK_TEMP0
-  CASE RESEARCH_REQ_ID_WB_count             THEN $SCWK_TEMP1 = 5  //「ブラックと　ホワイト　おおいのは？」( 人数 )
-  CASE RESEARCH_REQ_ID_WB_time              THEN $SCWK_TEMP1 = 1  //「ブラックと　ホワイト　おおいのは？」( 時間 )
-  CASE RESEARCH_REQ_ID_FIRST_POKE_count     THEN $SCWK_TEMP1 = 5  //「えらんだ　さいしょのポケモンは？」( 人数 )
-  CASE RESEARCH_REQ_ID_FIRST_POKE_time      THEN $SCWK_TEMP1 = 1  //「えらんだ　さいしょのポケモンは？」( 時間 )
   CASE RESEARCH_REQ_ID_PLAY_TIME_count      THEN $SCWK_TEMP1 = 10 //「いちばんおおい　プレイじかんは？」( 人数 )
-  CASE RESEARCH_REQ_ID_PLAY_TIME_time       THEN $SCWK_TEMP1 = 1  //「いちばんおおい　プレイじかんは？」( 時間 )
+  CASE RESEARCH_REQ_ID_WB_count             THEN $SCWK_TEMP1 = 5  //「ブラックと　ホワイト　おおいのは？」( 人数 )
+  CASE RESEARCH_REQ_ID_FIRST_POKE_count     THEN $SCWK_TEMP1 = 5  //「えらんだ　さいしょのポケモンは？」( 人数 )
   CASE RESEARCH_REQ_ID_SEX_count            THEN $SCWK_TEMP1 = 10 //「おとこのこと　おんなのこ　おおいのは？」( 人数 )
-  CASE RESEARCH_REQ_ID_SEX_time             THEN $SCWK_TEMP1 = 1  //「おとこのこと　おんなのこ　おおいのは？」( 時間 )
   CASE RESEARCH_REQ_ID_JOB_count            THEN $SCWK_TEMP1 = 10 //「いちばんおおい　しごとは？」( 人数 )
-  CASE RESEARCH_REQ_ID_JOB_time             THEN $SCWK_TEMP1 = 1  //「いちばんおおい　しごとは？」( 時間 )
   CASE RESEARCH_REQ_ID_HOBBY_count          THEN $SCWK_TEMP1 = 10 //「いちばんおおい　しゅみは？」( 人数 )
-  CASE RESEARCH_REQ_ID_HOBBY_time           THEN $SCWK_TEMP1 = 1  //「いちばんおおい　しゅみは？」( 時間 )
   CASE RESEARCH_REQ_ID_BTL_OR_TRD_count     THEN $SCWK_TEMP1 = 20 //「たいせんと　こうかん　にんきがあるのは？」( 人数 )
-  CASE RESEARCH_REQ_ID_BTL_OR_TRD_time      THEN $SCWK_TEMP1 = 1  //「たいせんと　こうかん　にんきがあるのは？」( 時間 )
   CASE RESEARCH_REQ_ID_FAVORITE_POKE_count  THEN $SCWK_TEMP1 = 20 //「すきな　ポケモンは？」( 人数 )
-  CASE RESEARCH_REQ_ID_FAVORITE_POKE_time   THEN $SCWK_TEMP1 = 1  //「すきな　ポケモンは？」( 時間 )
   CASE RESEARCH_REQ_ID_POKE_TYPE_count      THEN $SCWK_TEMP1 = 20 //「すきな　ポケモンのタイプは？」( 人数 )
-  CASE RESEARCH_REQ_ID_POKE_TYPE_time       THEN $SCWK_TEMP1 = 1  //「すきな　ポケモンのタイプは？」( 時間 )
   CASE RESEARCH_REQ_ID_PLACE_count          THEN $SCWK_TEMP1 = 20 //「とかいと　いなか　すみたいのは？」( 人数 )
-  CASE RESEARCH_REQ_ID_PLACE_time           THEN $SCWK_TEMP1 = 1  //「とかいと　いなか　すみたいのは？」( 時間 )
+  CASE RESEARCH_REQ_ID_SEASON_count         THEN $SCWK_TEMP1 = 30 //「きせつに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_MUSIC_count          THEN $SCWK_TEMP1 = 40 //「いちばんすきな　おんがくは？」( 人数 )
+  CASE RESEARCH_REQ_ID_SCHOOL_count         THEN $SCWK_TEMP1 = 40 //「いちばんすきな　がっこうのじかんは？」( 人数 )
+  CASE RESEARCH_REQ_ID_STORTS_count         THEN $SCWK_TEMP1 = 50  //「いちばんにんきのある　スポーツは？」( 人数 )
+  CASE RESEARCH_REQ_ID_DAY_OFF_count        THEN $SCWK_TEMP1 = 50  //「きゅうじつに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_DREAM_count          THEN $SCWK_TEMP1 = 50  //「いちばんなりたいものは？」( 人数 )
+  CASE RESEARCH_REQ_ID_GYM_LEADER_count     THEN $SCWK_TEMP1 = 50  //「いちばんにんきのある　ジムリーダーは？」( 人数 )
+  CASE RESEARCH_REQ_ID_FUN_count            THEN $SCWK_TEMP1 = 100 //「ポケモンのおもしろいところは？」( 人数 )
   CASE RESEARCH_REQ_ID_PRECIOUS_count THEN //「だいじにしているものに　ついて」( 人数 )
     $SCWK_TEMP1 = 30
     $SCWK_TEMP2 = 30
-  CASE RESEARCH_REQ_ID_PRECIOUS_time THEN //「だいじにしているものに　ついて」( 時間 )
-    $SCWK_TEMP1 = 1
-    $SCWK_TEMP2 = 1
   CASE RESEARCH_REQ_ID_PARTNER_count THEN //「ひとのみりょくに　ついて」( 人数 )
     $SCWK_TEMP1 = 30
     $SCWK_TEMP2 = 30
-  CASE RESEARCH_REQ_ID_PARTNER_time THEN //「ひとのみりょくに　ついて」( 時間 )
-    $SCWK_TEMP1 = 1
-    $SCWK_TEMP2 = 1
-  CASE RESEARCH_REQ_ID_SEASON_count THEN $SCWK_TEMP1 = 30 //「きせつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_SEASON_time  THEN $SCWK_TEMP1 = 1  //「きせつに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_ART_count THEN //「げいじゅつに　ついて」( 人数 )
     $SCWK_TEMP1 = 30
     $SCWK_TEMP2 = 30
-  CASE RESEARCH_REQ_ID_ART_time THEN //「げいじゅつに　ついて」( 時間 )
-    $SCWK_TEMP1 = 1
-    $SCWK_TEMP2 = 1
-  CASE RESEARCH_REQ_ID_MUSIC_count THEN $SCWK_TEMP1 = 40 //「いちばんすきな　おんがくは？」( 人数 )
-  CASE RESEARCH_REQ_ID_MUSIC_time  THEN $SCWK_TEMP1 = 1  //「いちばんすきな　おんがくは？」( 時間 )
   CASE RESEARCH_REQ_ID_MOVIE_count THEN //「えいぞうに　ついて」( 人数 )
     $SCWK_TEMP1 = 40
     $SCWK_TEMP2 = 40
-  CASE RESEARCH_REQ_ID_MOVIE_time THEN //「えいぞうに　ついて」( 時間 )
-    $SCWK_TEMP1 = 1
-    $SCWK_TEMP2 = 1
-  CASE RESEARCH_REQ_ID_SCHOOL_count THEN $SCWK_TEMP1 = 40 //「いちばんすきな　がっこうのじかんは？」( 人数 )
-  CASE RESEARCH_REQ_ID_SCHOOL_time  THEN $SCWK_TEMP1 = 1  //「いちばんすきな　がっこうのじかんは？」( 時間 )
   CASE RESEARCH_REQ_ID_STUDY_count THEN //「べんきょうに　ついて」( 人数 )
     $SCWK_TEMP1 = 40
     $SCWK_TEMP2 = 40
+  CASE RESEARCH_REQ_ID_WB_time              THEN $SCWK_TEMP1 = 1  //「ブラックと　ホワイト　おおいのは？」( 時間 )
+  CASE RESEARCH_REQ_ID_FIRST_POKE_time      THEN $SCWK_TEMP1 = 1  //「えらんだ　さいしょのポケモンは？」( 時間 )
+  CASE RESEARCH_REQ_ID_PLAY_TIME_time       THEN $SCWK_TEMP1 = 1  //「いちばんおおい　プレイじかんは？」( 時間 )
+  CASE RESEARCH_REQ_ID_SEX_time             THEN $SCWK_TEMP1 = 1  //「おとこのこと　おんなのこ　おおいのは？」( 時間 )
+  CASE RESEARCH_REQ_ID_JOB_time             THEN $SCWK_TEMP1 = 1  //「いちばんおおい　しごとは？」( 時間 )
+  CASE RESEARCH_REQ_ID_HOBBY_time           THEN $SCWK_TEMP1 = 1  //「いちばんおおい　しゅみは？」( 時間 )
+  CASE RESEARCH_REQ_ID_BTL_OR_TRD_time      THEN $SCWK_TEMP1 = 1  //「たいせんと　こうかん　にんきがあるのは？」( 時間 )
+  CASE RESEARCH_REQ_ID_FAVORITE_POKE_time   THEN $SCWK_TEMP1 = 1  //「すきな　ポケモンは？」( 時間 )
+  CASE RESEARCH_REQ_ID_POKE_TYPE_time       THEN $SCWK_TEMP1 = 1  //「すきな　ポケモンのタイプは？」( 時間 )
+  CASE RESEARCH_REQ_ID_PLACE_time           THEN $SCWK_TEMP1 = 1  //「とかいと　いなか　すみたいのは？」( 時間 )
+  CASE RESEARCH_REQ_ID_STORTS_time          THEN $SCWK_TEMP1 = 1   //「いちばんにんきのある　スポーツは？」( 時間 )
+  CASE RESEARCH_REQ_ID_DAY_OFF_time         THEN $SCWK_TEMP1 = 1   //「きゅうじつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_DREAM_time           THEN $SCWK_TEMP1 = 1   //「いちばんなりたいものは？」( 時間 )
+  CASE RESEARCH_REQ_ID_GYM_LEADER_time      THEN $SCWK_TEMP1 = 1   //「いちばんにんきのある　ジムリーダーは？」( 時間 )
+  CASE RESEARCH_REQ_ID_FUN_time             THEN $SCWK_TEMP1 = 1   //「ポケモンのおもしろいところは？」( 時間 )
+  CASE RESEARCH_REQ_ID_PRECIOUS_time THEN //「だいじにしているものに　ついて」( 時間 )
+    $SCWK_TEMP1 = 1
+    $SCWK_TEMP2 = 1
+  CASE RESEARCH_REQ_ID_PARTNER_time THEN //「ひとのみりょくに　ついて」( 時間 )
+    $SCWK_TEMP1 = 1
+    $SCWK_TEMP2 = 1
+  CASE RESEARCH_REQ_ID_SEASON_time  THEN $SCWK_TEMP1 = 1  //「きせつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_ART_time THEN //「げいじゅつに　ついて」( 時間 )
+    $SCWK_TEMP1 = 1
+    $SCWK_TEMP2 = 1
+  CASE RESEARCH_REQ_ID_MUSIC_time  THEN $SCWK_TEMP1 = 1  //「いちばんすきな　おんがくは？」( 時間 )
+  CASE RESEARCH_REQ_ID_MOVIE_time THEN //「えいぞうに　ついて」( 時間 )
+    $SCWK_TEMP1 = 1
+    $SCWK_TEMP2 = 1
+  CASE RESEARCH_REQ_ID_SCHOOL_time  THEN $SCWK_TEMP1 = 1  //「いちばんすきな　がっこうのじかんは？」( 時間 )
   CASE RESEARCH_REQ_ID_STUDY_time THEN //「べんきょうに　ついて」( 時間 )
     $SCWK_TEMP1 = 1
     $SCWK_TEMP2 = 1
-  CASE RESEARCH_REQ_ID_STORTS_count     THEN $SCWK_TEMP1 = 50  //「いちばんにんきのある　スポーツは？」( 人数 )
-  CASE RESEARCH_REQ_ID_STORTS_time      THEN $SCWK_TEMP1 = 1   //「いちばんにんきのある　スポーツは？」( 時間 )
-  CASE RESEARCH_REQ_ID_DAY_OFF_count    THEN $SCWK_TEMP1 = 50  //「きゅうじつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_DAY_OFF_time     THEN $SCWK_TEMP1 = 1   //「きゅうじつに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_DREAM_count      THEN $SCWK_TEMP1 = 50  //「いちばんなりたいものは？」( 人数 )
-  CASE RESEARCH_REQ_ID_DREAM_time       THEN $SCWK_TEMP1 = 1   //「いちばんなりたいものは？」( 時間 )
-  CASE RESEARCH_REQ_ID_GYM_LEADER_count THEN $SCWK_TEMP1 = 50  //「いちばんにんきのある　ジムリーダーは？」( 人数 )
-  CASE RESEARCH_REQ_ID_GYM_LEADER_time  THEN $SCWK_TEMP1 = 1   //「いちばんにんきのある　ジムリーダーは？」( 時間 )
-  CASE RESEARCH_REQ_ID_FUN_count        THEN $SCWK_TEMP1 = 100 //「ポケモンのおもしろいところは？」( 人数 )
-  CASE RESEARCH_REQ_ID_FUN_time         THEN $SCWK_TEMP1 = 1   //「ポケモンのおもしろいところは？」( 時間 )
   DEFAULT
     $SCWK_TEMP1 = 0
     $SCWK_TEMP2 = 0
@@ -1068,50 +1299,50 @@ GET_RES_REQ_ABS_NORM_TIME:
 {
   SWITCH $SCWK_TEMP0
   CASE RESEARCH_REQ_ID_WB_count            THEN $SCWK_TEMP1 = 0  //「ブラックと　ホワイト　おおいのは？」( 人数 )
-  CASE RESEARCH_REQ_ID_WB_time             THEN $SCWK_TEMP1 = 2  //「ブラックと　ホワイト　おおいのは？」( 時間 )
   CASE RESEARCH_REQ_ID_FIRST_POKE_count    THEN $SCWK_TEMP1 = 0  //「えらんだ　さいしょのポケモンは？」( 人数 )
-  CASE RESEARCH_REQ_ID_FIRST_POKE_time     THEN $SCWK_TEMP1 = 2  //「えらんだ　さいしょのポケモンは？」( 時間 )
   CASE RESEARCH_REQ_ID_PLAY_TIME_count     THEN $SCWK_TEMP1 = 0  //「いちばんおおい　プレイじかんは？」( 人数 )
-  CASE RESEARCH_REQ_ID_PLAY_TIME_time      THEN $SCWK_TEMP1 = 4  //「いちばんおおい　プレイじかんは？」( 時間 )
   CASE RESEARCH_REQ_ID_SEX_count           THEN $SCWK_TEMP1 = 0  //「おとこのこと　おんなのこ　おおいのは？」( 人数 )
-  CASE RESEARCH_REQ_ID_SEX_time            THEN $SCWK_TEMP1 = 4  //「おとこのこと　おんなのこ　おおいのは？」( 時間 )
   CASE RESEARCH_REQ_ID_JOB_count           THEN $SCWK_TEMP1 = 0  //「いちばんおおい　しごとは？」( 人数 )
-  CASE RESEARCH_REQ_ID_JOB_time            THEN $SCWK_TEMP1 = 4  //「いちばんおおい　しごとは？」( 時間 )
   CASE RESEARCH_REQ_ID_HOBBY_count         THEN $SCWK_TEMP1 = 0  //「いちばんおおい　しゅみは？」( 人数 )
-  CASE RESEARCH_REQ_ID_HOBBY_time          THEN $SCWK_TEMP1 = 4  //「いちばんおおい　しゅみは？」( 時間 )
   CASE RESEARCH_REQ_ID_BTL_OR_TRD_count    THEN $SCWK_TEMP1 = 0  //「たいせんと　こうかん　にんきがあるのは？」( 人数 )
-  CASE RESEARCH_REQ_ID_BTL_OR_TRD_time     THEN $SCWK_TEMP1 = 8  //「たいせんと　こうかん　にんきがあるのは？」( 時間 )
   CASE RESEARCH_REQ_ID_FAVORITE_POKE_count THEN $SCWK_TEMP1 = 0  //「すきな　ポケモンは？」( 人数 )
-  CASE RESEARCH_REQ_ID_FAVORITE_POKE_time  THEN $SCWK_TEMP1 = 8  //「すきな　ポケモンは？」( 時間 )
   CASE RESEARCH_REQ_ID_POKE_TYPE_count     THEN $SCWK_TEMP1 = 0  //「すきな　ポケモンのタイプは？」( 人数 )
-  CASE RESEARCH_REQ_ID_POKE_TYPE_time      THEN $SCWK_TEMP1 = 8  //「すきな　ポケモンのタイプは？」( 時間 )
   CASE RESEARCH_REQ_ID_PLACE_count         THEN $SCWK_TEMP1 = 0  //「とかいと　いなか　すみたいのは？」( 人数 )
-  CASE RESEARCH_REQ_ID_PLACE_time          THEN $SCWK_TEMP1 = 8  //「とかいと　いなか　すみたいのは？」( 時間 )
   CASE RESEARCH_REQ_ID_PRECIOUS_count      THEN $SCWK_TEMP1 = 0  //「だいじにしているものに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_PRECIOUS_time       THEN $SCWK_TEMP1 = 12 //「だいじにしているものに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_PARTNER_count       THEN $SCWK_TEMP1 = 0  //「ひとのみりょくに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_PARTNER_time        THEN $SCWK_TEMP1 = 12 //「ひとのみりょくに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_SEASON_count        THEN $SCWK_TEMP1 = 0  //「きせつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_SEASON_time         THEN $SCWK_TEMP1 = 12 //「きせつに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_ART_count           THEN $SCWK_TEMP1 = 0  //「げいじゅつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_ART_time            THEN $SCWK_TEMP1 = 12 //「げいじゅつに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_MUSIC_count         THEN $SCWK_TEMP1 = 0  //「いちばんすきな　おんがくは？」( 人数 )
-  CASE RESEARCH_REQ_ID_MUSIC_time          THEN $SCWK_TEMP1 = 16 //「いちばんすきな　おんがくは？」( 時間 )
   CASE RESEARCH_REQ_ID_MOVIE_count         THEN $SCWK_TEMP1 = 0  //「えいぞうに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_MOVIE_time          THEN $SCWK_TEMP1 = 16 //「えいぞうに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_SCHOOL_count        THEN $SCWK_TEMP1 = 0  //「いちばんすきな　がっこうのじかんは？」( 人数 )
-  CASE RESEARCH_REQ_ID_SCHOOL_time         THEN $SCWK_TEMP1 = 16 //「いちばんすきな　がっこうのじかんは？」( 時間 )
   CASE RESEARCH_REQ_ID_STUDY_count         THEN $SCWK_TEMP1 = 0  //「べんきょうに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_STUDY_time          THEN $SCWK_TEMP1 = 16 //「べんきょうに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_STORTS_count        THEN $SCWK_TEMP1 = 0  //「いちばんにんきのある　スポーツは？」( 人数 )
-  CASE RESEARCH_REQ_ID_STORTS_time         THEN $SCWK_TEMP1 = 20 //「いちばんにんきのある　スポーツは？」( 時間 )
   CASE RESEARCH_REQ_ID_DAY_OFF_count       THEN $SCWK_TEMP1 = 0  //「きゅうじつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_DAY_OFF_time        THEN $SCWK_TEMP1 = 20 //「きゅうじつに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_DREAM_count         THEN $SCWK_TEMP1 = 0  //「いちばんなりたいものは？」( 人数 )
-  CASE RESEARCH_REQ_ID_DREAM_time          THEN $SCWK_TEMP1 = 20 //「いちばんなりたいものは？」( 時間 )
   CASE RESEARCH_REQ_ID_GYM_LEADER_count    THEN $SCWK_TEMP1 = 0  //「いちばんにんきのある　ジムリーダーは？」( 人数 )
-  CASE RESEARCH_REQ_ID_GYM_LEADER_time     THEN $SCWK_TEMP1 = 24 //「いちばんにんきのある　ジムリーダーは？」( 時間 )
   CASE RESEARCH_REQ_ID_FUN_count           THEN $SCWK_TEMP1 = 0  //「ポケモンのおもしろいところは？」( 人数 )
+  CASE RESEARCH_REQ_ID_WB_time             THEN $SCWK_TEMP1 = 2  //「ブラックと　ホワイト　おおいのは？」( 時間 )
+  CASE RESEARCH_REQ_ID_FIRST_POKE_time     THEN $SCWK_TEMP1 = 2  //「えらんだ　さいしょのポケモンは？」( 時間 )
+  CASE RESEARCH_REQ_ID_PLAY_TIME_time      THEN $SCWK_TEMP1 = 4  //「いちばんおおい　プレイじかんは？」( 時間 )
+  CASE RESEARCH_REQ_ID_SEX_time            THEN $SCWK_TEMP1 = 4  //「おとこのこと　おんなのこ　おおいのは？」( 時間 )
+  CASE RESEARCH_REQ_ID_JOB_time            THEN $SCWK_TEMP1 = 4  //「いちばんおおい　しごとは？」( 時間 )
+  CASE RESEARCH_REQ_ID_HOBBY_time          THEN $SCWK_TEMP1 = 4  //「いちばんおおい　しゅみは？」( 時間 )
+  CASE RESEARCH_REQ_ID_BTL_OR_TRD_time     THEN $SCWK_TEMP1 = 8  //「たいせんと　こうかん　にんきがあるのは？」( 時間 )
+  CASE RESEARCH_REQ_ID_FAVORITE_POKE_time  THEN $SCWK_TEMP1 = 8  //「すきな　ポケモンは？」( 時間 )
+  CASE RESEARCH_REQ_ID_POKE_TYPE_time      THEN $SCWK_TEMP1 = 8  //「すきな　ポケモンのタイプは？」( 時間 )
+  CASE RESEARCH_REQ_ID_PLACE_time          THEN $SCWK_TEMP1 = 8  //「とかいと　いなか　すみたいのは？」( 時間 )
+  CASE RESEARCH_REQ_ID_PRECIOUS_time       THEN $SCWK_TEMP1 = 12 //「だいじにしているものに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_PARTNER_time        THEN $SCWK_TEMP1 = 12 //「ひとのみりょくに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_SEASON_time         THEN $SCWK_TEMP1 = 12 //「きせつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_ART_time            THEN $SCWK_TEMP1 = 12 //「げいじゅつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_MUSIC_time          THEN $SCWK_TEMP1 = 16 //「いちばんすきな　おんがくは？」( 時間 )
+  CASE RESEARCH_REQ_ID_MOVIE_time          THEN $SCWK_TEMP1 = 16 //「えいぞうに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_SCHOOL_time         THEN $SCWK_TEMP1 = 16 //「いちばんすきな　がっこうのじかんは？」( 時間 )
+  CASE RESEARCH_REQ_ID_STUDY_time          THEN $SCWK_TEMP1 = 16 //「べんきょうに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_STORTS_time         THEN $SCWK_TEMP1 = 20 //「いちばんにんきのある　スポーツは？」( 時間 )
+  CASE RESEARCH_REQ_ID_DAY_OFF_time        THEN $SCWK_TEMP1 = 20 //「きゅうじつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_DREAM_time          THEN $SCWK_TEMP1 = 20 //「いちばんなりたいものは？」( 時間 )
+  CASE RESEARCH_REQ_ID_GYM_LEADER_time     THEN $SCWK_TEMP1 = 24 //「いちばんにんきのある　ジムリーダーは？」( 時間 )
   CASE RESEARCH_REQ_ID_FUN_time            THEN $SCWK_TEMP1 = 24 //「ポケモンのおもしろいところは？」( 時間 )
   DEFAULT                                       $SCWK_TEMP1 = 0
   ENDSWITCH 
@@ -1293,7 +1524,8 @@ GET_RES_REQ_RESEARCH_COUNT:
 _RET
 
 //----------------------------------------------------------------------
-// ◆調査中の依頼のタイプ ( 人数 or 時間 ) を取得する
+// ◆指定した依頼の調査タイプ ( 人数 or 時間 ) を取得する
+// ◇in  SCWK_TEMP0  依頼ID
 // ◇out SCWK_ANSWER 調査中の依頼のタイプ ( RESEARCH_REQ_TYPE_xxxx )
 //----------------------------------------------------------------------
 GET_RES_REQ_TYPE:
@@ -1301,7 +1533,7 @@ GET_RES_REQ_TYPE:
   // v1_1 調査依頼ID
   
   // 調査中の依頼IDを取得
-  _GET_RESEARCH_REQUEST_ID( v1_1 )
+  $v1_1 = $SCWK_TEMP0
 
   // 調査タイプを判別
   SWITCH $v1_1
@@ -1516,13 +1748,13 @@ RES_REQ_MENU:
 {
   DEFINE_LOCAL flag
 
-  _BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER )
+  _BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 0, SCWK_ANSWER )
 
   // メニューリストを作成
   SWITCH $SCWK_TEMP0
   CASE RESEARCH_REQ_TYPE_COUNT THEN // 人数調査
     // 隊員ランク C 以上
-    IF $SCWK_TEMP1 >= RESEARCH_MEMBER_RANK_C THEN 
+    IF $SCWK_TEMP1 >= RESEARCH_TEAM_RANK_1 THEN 
       //「ブラックと　ホワイト　おおいのは？」( 人数 )
       _FLAG_CHECK( FE_RES_REQ_WB_COUNT, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
@@ -1545,7 +1777,7 @@ RES_REQ_MENU:
       ENDIF
     ENDIF
     // 隊員ランク B 以上
-    IF $SCWK_TEMP1 >= RESEARCH_MEMBER_RANK_B THEN
+    IF $SCWK_TEMP1 >= RESEARCH_TEAM_RANK_2 THEN
       //「いちばんおおい　しごとは？」( 人数 )
       _FLAG_CHECK( FE_RES_REQ_JOB_COUNT, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
@@ -1578,7 +1810,7 @@ RES_REQ_MENU:
       ENDIF
     ENDIF
     // 隊員ランク A 以上
-    IF $SCWK_TEMP1 >= RESEARCH_MEMBER_RANK_A THEN
+    IF $SCWK_TEMP1 >= RESEARCH_TEAM_RANK_3 THEN
       //「だいじにしているものに　ついて」( 人数 )
       _FLAG_CHECK( FE_RES_REQ_PRECIOUS_COUNT, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
@@ -1611,7 +1843,7 @@ RES_REQ_MENU:
       ENDIF
     ENDIF
     // 隊員ランク S 以上
-    IF $SCWK_TEMP1 >= RESEARCH_MEMBER_RANK_S THEN
+    IF $SCWK_TEMP1 >= RESEARCH_TEAM_RANK_4 THEN
       //「いちばんすきな　がっこうのじかんは？」( 人数 )
       _FLAG_CHECK( FE_RES_REQ_SCHOOL_COUNT, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
@@ -1639,7 +1871,7 @@ RES_REQ_MENU:
       ENDIF
     ENDIF
     // 隊員ランク SS 以上
-    IF $SCWK_TEMP1 >= RESEARCH_MEMBER_RANK_SS THEN
+    IF $SCWK_TEMP1 >= RESEARCH_TEAM_RANK_5 THEN
       //「いちばんにんきのある　ジムリーダーは？」( 人数 )
       _FLAG_CHECK( FE_RES_REQ_LEADER_COUNT, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
@@ -1654,7 +1886,7 @@ RES_REQ_MENU:
 
   CASE RESEARCH_REQ_TYPE_TIME THEN // 時間調査
     // 隊員ランク C 以上
-    IF $SCWK_TEMP1 >= RESEARCH_MEMBER_RANK_C THEN 
+    IF $SCWK_TEMP1 >= RESEARCH_TEAM_RANK_1 THEN 
       //「ブラックと　ホワイト　おおいのは？」( 時間 )
       _FLAG_CHECK( FE_RES_REQ_WB_TIME, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
@@ -1677,7 +1909,7 @@ RES_REQ_MENU:
       ENDIF
     ENDIF
     // 隊員ランク B 以上
-    IF $SCWK_TEMP1 >= RESEARCH_MEMBER_RANK_B THEN
+    IF $SCWK_TEMP1 >= RESEARCH_TEAM_RANK_2 THEN
       //「いちばんおおい　しごとは？」( 時間 )
       _FLAG_CHECK( FE_RES_REQ_JOB_TIME, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
@@ -1710,7 +1942,7 @@ RES_REQ_MENU:
       ENDIF
     ENDIF
     // 隊員ランク A 以上
-    IF $SCWK_TEMP1 >= RESEARCH_MEMBER_RANK_A THEN
+    IF $SCWK_TEMP1 >= RESEARCH_TEAM_RANK_3 THEN
       //「だいじにしているものに　ついて」( 時間 )
       _FLAG_CHECK( FE_RES_REQ_PRECIOUS_TIME, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
@@ -1743,7 +1975,7 @@ RES_REQ_MENU:
     ENDIF
       ENDIF
     // 隊員ランク S 以上
-    IF $SCWK_TEMP1 >= RESEARCH_MEMBER_RANK_S THEN
+    IF $SCWK_TEMP1 >= RESEARCH_TEAM_RANK_4 THEN
       //「いちばんすきな　がっこうのじかんは？」( 時間 )
       _FLAG_CHECK( FE_RES_REQ_SCHOOL_TIME, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
@@ -1771,7 +2003,7 @@ RES_REQ_MENU:
       ENDIF
     ENDIF
     // 隊員ランク SS 以上
-    IF $SCWK_TEMP1 >= RESEARCH_MEMBER_RANK_SS THEN
+    IF $SCWK_TEMP1 >= RESEARCH_TEAM_RANK_5 THEN
       //「いちばんにんきのある　ジムリーダーは？」( 時間 )
       _FLAG_CHECK( FE_RES_REQ_LEADER_TIME, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
@@ -1934,16 +2166,15 @@ SYSTEM_MSG_Rank_up:
   // v2_2 メッセージID
 
   // 隊員ランクを取得
-  _CALL GET_RES_MEMBER_RANK 
-  $v2_1 = $SCWK_ANSWER
+  _GET_RESEARCH_TEAM_RANK( v2_1 )
 
   // メッセージIDを選択
   SWITCH $v2_1
-  CASE RESEARCH_MEMBER_RANK_C  THEN $v2_2 = msg_c03r0101_assistantm_01_27a
-  CASE RESEARCH_MEMBER_RANK_B  THEN $v2_2 = msg_c03r0101_assistantm_01_27a
-  CASE RESEARCH_MEMBER_RANK_A  THEN $v2_2 = msg_c03r0101_assistantm_01_27b
-  CASE RESEARCH_MEMBER_RANK_S  THEN $v2_2 = msg_c03r0101_assistantm_01_27c
-  CASE RESEARCH_MEMBER_RANK_SS THEN $v2_2 = msg_c03r0101_assistantm_01_27d
+  CASE RESEARCH_TEAM_RANK_1 THEN $v2_2 = msg_c03r0101_assistantm_01_27a
+  CASE RESEARCH_TEAM_RANK_2 THEN $v2_2 = msg_c03r0101_assistantm_01_27a
+  CASE RESEARCH_TEAM_RANK_3 THEN $v2_2 = msg_c03r0101_assistantm_01_27b
+  CASE RESEARCH_TEAM_RANK_4 THEN $v2_2 = msg_c03r0101_assistantm_01_27c
+  CASE RESEARCH_TEAM_RANK_5 THEN $v2_2 = msg_c03r0101_assistantm_01_27d
   ENDSWITCH 
 
   // メッセージを表示
@@ -2033,8 +2264,7 @@ LEADER_SAY_Please_select_request:
   // v2_2 隊員ランク
 
   // 隊員ランクを取得
-  _CALL GET_RES_MEMBER_RANK
-  $v2_2 = $SCWK_ANSWER 
+  _GET_RESEARCH_TEAM_RANK( v2_2 )
 
   //「調査依頼を選んでくれ」
   _TALK_OBJ_START()
@@ -2171,6 +2401,17 @@ LEADER_SAY_I_hope_for_you:
 }
 _RET
 //----------------------------------------------------------------------
+// ◆隊長「次の調査も期待しているぞ！」
+//----------------------------------------------------------------------
+LEADER_SAY_Lets_next_research:
+{
+  _PLAYER_NAME(1)
+  _TALK_OBJ_START()
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_29, SCWK_TARGET_OBJID, POS_DL )
+  _BALLOONWIN_CLOSE() 
+}
+_RET
+//----------------------------------------------------------------------
 // ◆隊長「今日から君は～隊員だ！」
 //----------------------------------------------------------------------
 LEADER_SAY_I_appoint_you_as:
@@ -2179,16 +2420,15 @@ LEADER_SAY_I_appoint_you_as:
   // v2_2 メッセージID
 
   // 隊員ランクを取得
-  _CALL GET_RES_MEMBER_RANK
-  $v2_1 = $SCWK_ANSWER
+  _GET_RESEARCH_TEAM_RANK( v2_1 )
 
   // メッセージIDを選択
   SWITCH $v2_1
-  CASE RESEARCH_MEMBER_RANK_C  THEN $v2_2 = msg_c03r0101_assistantm_01_26a
-  CASE RESEARCH_MEMBER_RANK_B  THEN $v2_2 = msg_c03r0101_assistantm_01_26a
-  CASE RESEARCH_MEMBER_RANK_A  THEN $v2_2 = msg_c03r0101_assistantm_01_26b
-  CASE RESEARCH_MEMBER_RANK_S  THEN $v2_2 = msg_c03r0101_assistantm_01_26c
-  CASE RESEARCH_MEMBER_RANK_SS THEN $v2_2 = msg_c03r0101_assistantm_01_26d
+  CASE RESEARCH_TEAM_RANK_1 THEN $v2_2 = msg_c03r0101_assistantm_01_26a
+  CASE RESEARCH_TEAM_RANK_2 THEN $v2_2 = msg_c03r0101_assistantm_01_26a
+  CASE RESEARCH_TEAM_RANK_3 THEN $v2_2 = msg_c03r0101_assistantm_01_26b
+  CASE RESEARCH_TEAM_RANK_4 THEN $v2_2 = msg_c03r0101_assistantm_01_26c
+  CASE RESEARCH_TEAM_RANK_5 THEN $v2_2 = msg_c03r0101_assistantm_01_26d
   ENDSWITCH 
 
   // メッセージを表示
@@ -2206,16 +2446,15 @@ LEADER_SAY_Next_rank:
   // v3_2 メッセージID
 
   // 隊員ランクを取得
-  _CALL GET_RES_MEMBER_RANK
-  $v3_1 = $SCWK_ANSWER
+  _GET_RESEARCH_TEAM_RANK( v3_1 )
 
   // メッセージIDを選択
   SWITCH $v3_1
-  CASE RESEARCH_MEMBER_RANK_C  THEN $v3_2 = msg_c03r0101_assistantm_01_28a
-  CASE RESEARCH_MEMBER_RANK_B  THEN $v3_2 = msg_c03r0101_assistantm_01_28b
-  CASE RESEARCH_MEMBER_RANK_A  THEN $v3_2 = msg_c03r0101_assistantm_01_28c
-  CASE RESEARCH_MEMBER_RANK_S  THEN $v3_2 = msg_c03r0101_assistantm_01_28d
-  CASE RESEARCH_MEMBER_RANK_SS THEN $v3_2 = msg_c03r0101_assistantm_01_28d
+  CASE RESEARCH_TEAM_RANK_1 THEN $v3_2 = msg_c03r0101_assistantm_01_28a
+  CASE RESEARCH_TEAM_RANK_2 THEN $v3_2 = msg_c03r0101_assistantm_01_28b
+  CASE RESEARCH_TEAM_RANK_3 THEN $v3_2 = msg_c03r0101_assistantm_01_28c
+  CASE RESEARCH_TEAM_RANK_4 THEN $v3_2 = msg_c03r0101_assistantm_01_28d
+  CASE RESEARCH_TEAM_RANK_5 THEN $v3_2 = msg_c03r0101_assistantm_01_28d
   ENDSWITCH 
 
   // ランクアップまでの残り依頼数をワードセットに登録
@@ -2234,79 +2473,77 @@ _RET
 //----------------------------------------------------------------------
 LEADER_SAY_This_request_is:
 {
-  // v3_1 メッセージID
-  // v3_2 調査依頼ID
-  // v3_3 現在の調査人数
-  // v3_4 ノルマ人数
-  // v3_5 依頼達成人数
+  // v4_1 メッセージID
+  // v4_2 調査依頼ID
+  // v4_3 現在の調査人数
+  // v4_4 ノルマ人数
+  // v4_5 依頼達成人数
 
   // 引数を受け取る
-  $v3_2 = $SCWK_TEMP0
+  $v4_2 = $SCWK_TEMP0
 
   // メッセージを選択
-  SWITCH $v3_2
-  CASE RESEARCH_REQ_ID_WB_count            THEN $v3_1 = msg_c03r0101_assistantm_01_14a //「ブラックと　ホワイト　おおいのは？」( 人数 )
-  CASE RESEARCH_REQ_ID_WB_time             THEN $v3_1 = msg_c03r0101_assistantm_01_13a //「ブラックと　ホワイト　おおいのは？」( 時間 )
-  CASE RESEARCH_REQ_ID_FIRST_POKE_count    THEN $v3_1 = msg_c03r0101_assistantm_01_14b //「えらんだ　さいしょのポケモンは？」( 人数 )
-  CASE RESEARCH_REQ_ID_FIRST_POKE_time     THEN $v3_1 = msg_c03r0101_assistantm_01_13b //「えらんだ　さいしょのポケモンは？」( 時間 )
-  CASE RESEARCH_REQ_ID_PLAY_TIME_count     THEN $v3_1 = msg_c03r0101_assistantm_01_14c //「いちばんおおい　プレイじかんは？」( 人数 )
-  CASE RESEARCH_REQ_ID_PLAY_TIME_time      THEN $v3_1 = msg_c03r0101_assistantm_01_13c //「いちばんおおい　プレイじかんは？」( 時間 )
-  CASE RESEARCH_REQ_ID_SEX_count           THEN $v3_1 = msg_c03r0101_assistantm_01_14d //「おとこのこと　おんなのこ　おおいのは？」( 人数 )
-  CASE RESEARCH_REQ_ID_SEX_time            THEN $v3_1 = msg_c03r0101_assistantm_01_13d //「おとこのこと　おんなのこ　おおいのは？」( 時間 )
-  CASE RESEARCH_REQ_ID_JOB_count           THEN $v3_1 = msg_c03r0101_assistantm_01_14e //「いちばんおおい　しごとは？」( 人数 )
-  CASE RESEARCH_REQ_ID_JOB_time            THEN $v3_1 = msg_c03r0101_assistantm_01_13e //「いちばんおおい　しごとは？」( 時間 )
-  CASE RESEARCH_REQ_ID_HOBBY_count         THEN $v3_1 = msg_c03r0101_assistantm_01_14f //「いちばんおおい　しゅみは？」( 人数 )
-  CASE RESEARCH_REQ_ID_HOBBY_time          THEN $v3_1 = msg_c03r0101_assistantm_01_13f //「いちばんおおい　しゅみは？」( 時間 )
-  CASE RESEARCH_REQ_ID_BTL_OR_TRD_count    THEN $v3_1 = msg_c03r0101_assistantm_01_14g //「たいせんと　こうかん　にんきがあるのは？」( 人数 )
-  CASE RESEARCH_REQ_ID_BTL_OR_TRD_time     THEN $v3_1 = msg_c03r0101_assistantm_01_13g //「たいせんと　こうかん　にんきがあるのは？」( 時間 )
-  CASE RESEARCH_REQ_ID_FAVORITE_POKE_count THEN $v3_1 = msg_c03r0101_assistantm_01_14h //「すきな　ポケモンは？」( 人数 )
-  CASE RESEARCH_REQ_ID_FAVORITE_POKE_time  THEN $v3_1 = msg_c03r0101_assistantm_01_13h //「すきな　ポケモンは？」( 時間 )
-  CASE RESEARCH_REQ_ID_POKE_TYPE_count     THEN $v3_1 = msg_c03r0101_assistantm_01_14i //「すきな　ポケモンのタイプは？」( 人数 )
-  CASE RESEARCH_REQ_ID_POKE_TYPE_time      THEN $v3_1 = msg_c03r0101_assistantm_01_13i //「すきな　ポケモンのタイプは？」( 時間 )
-  CASE RESEARCH_REQ_ID_PLACE_count         THEN $v3_1 = msg_c03r0101_assistantm_01_14j //「とかいと　いなか　すみたいのは？」( 人数 )
-  CASE RESEARCH_REQ_ID_PLACE_time          THEN $v3_1 = msg_c03r0101_assistantm_01_13j //「とかいと　いなか　すみたいのは？」( 時間 )
-  CASE RESEARCH_REQ_ID_PRECIOUS_count      THEN $v3_1 = msg_c03r0101_assistantm_01_14k //「だいじにしているものに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_PRECIOUS_time       THEN $v3_1 = msg_c03r0101_assistantm_01_13k //「だいじにしているものに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_PARTNER_count       THEN $v3_1 = msg_c03r0101_assistantm_01_14l //「ひとのみりょくに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_PARTNER_time        THEN $v3_1 = msg_c03r0101_assistantm_01_13l //「ひとのみりょくに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_SEASON_count        THEN $v3_1 = msg_c03r0101_assistantm_01_14m //「きせつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_SEASON_time         THEN $v3_1 = msg_c03r0101_assistantm_01_13m //「きせつに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_ART_count           THEN $v3_1 = msg_c03r0101_assistantm_01_14n //「げいじゅつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_ART_time            THEN $v3_1 = msg_c03r0101_assistantm_01_13n //「げいじゅつに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_MUSIC_count         THEN $v3_1 = msg_c03r0101_assistantm_01_14o //「いちばんすきな　おんがくは？」( 人数 )
-  CASE RESEARCH_REQ_ID_MUSIC_time          THEN $v3_1 = msg_c03r0101_assistantm_01_13o //「いちばんすきな　おんがくは？」( 時間 )
-  CASE RESEARCH_REQ_ID_MOVIE_count         THEN $v3_1 = msg_c03r0101_assistantm_01_14p //「えいぞうに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_MOVIE_time          THEN $v3_1 = msg_c03r0101_assistantm_01_13p //「えいぞうに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_SCHOOL_count        THEN $v3_1 = msg_c03r0101_assistantm_01_14q //「いちばんすきな　がっこうのじかんは？」( 人数 )
-  CASE RESEARCH_REQ_ID_SCHOOL_time         THEN $v3_1 = msg_c03r0101_assistantm_01_13q //「いちばんすきな　がっこうのじかんは？」( 時間 )
-  CASE RESEARCH_REQ_ID_STUDY_count         THEN $v3_1 = msg_c03r0101_assistantm_01_14r //「べんきょうに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_STUDY_time          THEN $v3_1 = msg_c03r0101_assistantm_01_13r //「べんきょうに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_STORTS_count        THEN $v3_1 = msg_c03r0101_assistantm_01_14s //「いちばんにんきのある　スポーツは？」( 人数 )
-  CASE RESEARCH_REQ_ID_STORTS_time         THEN $v3_1 = msg_c03r0101_assistantm_01_13s //「いちばんにんきのある　スポーツは？」( 時間 )
-  CASE RESEARCH_REQ_ID_DAY_OFF_count       THEN $v3_1 = msg_c03r0101_assistantm_01_14t //「きゅうじつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_DAY_OFF_time        THEN $v3_1 = msg_c03r0101_assistantm_01_13t //「きゅうじつに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_DREAM_count         THEN $v3_1 = msg_c03r0101_assistantm_01_14u //「いちばんなりたいものは？」( 人数 )
-  CASE RESEARCH_REQ_ID_DREAM_time          THEN $v3_1 = msg_c03r0101_assistantm_01_13u //「いちばんなりたいものは？」( 時間 )
-  CASE RESEARCH_REQ_ID_GYM_LEADER_count    THEN $v3_1 = msg_c03r0101_assistantm_01_14v //「いちばんにんきのある　ジムリーダーは？」( 人数 )
-  CASE RESEARCH_REQ_ID_GYM_LEADER_time     THEN $v3_1 = msg_c03r0101_assistantm_01_13v //「いちばんにんきのある　ジムリーダーは？」( 時間 )
-  CASE RESEARCH_REQ_ID_FUN_count           THEN $v3_1 = msg_c03r0101_assistantm_01_14w //「ポケモンのおもしろいところは？」( 人数 )
-  CASE RESEARCH_REQ_ID_FUN_time            THEN $v3_1 = msg_c03r0101_assistantm_01_13w //「ポケモンのおもしろいところは？」( 時間 )
+  SWITCH $v4_2
+  CASE RESEARCH_REQ_ID_WB_count            THEN $v4_1 = msg_c03r0101_assistantm_01_14a //「ブラックと　ホワイト　おおいのは？」( 人数 )
+  CASE RESEARCH_REQ_ID_WB_time             THEN $v4_1 = msg_c03r0101_assistantm_01_13a //「ブラックと　ホワイト　おおいのは？」( 時間 )
+  CASE RESEARCH_REQ_ID_FIRST_POKE_count    THEN $v4_1 = msg_c03r0101_assistantm_01_14b //「えらんだ　さいしょのポケモンは？」( 人数 )
+  CASE RESEARCH_REQ_ID_FIRST_POKE_time     THEN $v4_1 = msg_c03r0101_assistantm_01_13b //「えらんだ　さいしょのポケモンは？」( 時間 )
+  CASE RESEARCH_REQ_ID_PLAY_TIME_count     THEN $v4_1 = msg_c03r0101_assistantm_01_14c //「いちばんおおい　プレイじかんは？」( 人数 )
+  CASE RESEARCH_REQ_ID_PLAY_TIME_time      THEN $v4_1 = msg_c03r0101_assistantm_01_13c //「いちばんおおい　プレイじかんは？」( 時間 )
+  CASE RESEARCH_REQ_ID_SEX_count           THEN $v4_1 = msg_c03r0101_assistantm_01_14d //「おとこのこと　おんなのこ　おおいのは？」( 人数 )
+  CASE RESEARCH_REQ_ID_SEX_time            THEN $v4_1 = msg_c03r0101_assistantm_01_13d //「おとこのこと　おんなのこ　おおいのは？」( 時間 )
+  CASE RESEARCH_REQ_ID_JOB_count           THEN $v4_1 = msg_c03r0101_assistantm_01_14e //「いちばんおおい　しごとは？」( 人数 )
+  CASE RESEARCH_REQ_ID_JOB_time            THEN $v4_1 = msg_c03r0101_assistantm_01_13e //「いちばんおおい　しごとは？」( 時間 )
+  CASE RESEARCH_REQ_ID_HOBBY_count         THEN $v4_1 = msg_c03r0101_assistantm_01_14f //「いちばんおおい　しゅみは？」( 人数 )
+  CASE RESEARCH_REQ_ID_HOBBY_time          THEN $v4_1 = msg_c03r0101_assistantm_01_13f //「いちばんおおい　しゅみは？」( 時間 )
+  CASE RESEARCH_REQ_ID_BTL_OR_TRD_count    THEN $v4_1 = msg_c03r0101_assistantm_01_14g //「たいせんと　こうかん　にんきがあるのは？」( 人数 )
+  CASE RESEARCH_REQ_ID_BTL_OR_TRD_time     THEN $v4_1 = msg_c03r0101_assistantm_01_13g //「たいせんと　こうかん　にんきがあるのは？」( 時間 )
+  CASE RESEARCH_REQ_ID_FAVORITE_POKE_count THEN $v4_1 = msg_c03r0101_assistantm_01_14h //「すきな　ポケモンは？」( 人数 )
+  CASE RESEARCH_REQ_ID_FAVORITE_POKE_time  THEN $v4_1 = msg_c03r0101_assistantm_01_13h //「すきな　ポケモンは？」( 時間 )
+  CASE RESEARCH_REQ_ID_POKE_TYPE_count     THEN $v4_1 = msg_c03r0101_assistantm_01_14i //「すきな　ポケモンのタイプは？」( 人数 )
+  CASE RESEARCH_REQ_ID_POKE_TYPE_time      THEN $v4_1 = msg_c03r0101_assistantm_01_13i //「すきな　ポケモンのタイプは？」( 時間 )
+  CASE RESEARCH_REQ_ID_PLACE_count         THEN $v4_1 = msg_c03r0101_assistantm_01_14j //「とかいと　いなか　すみたいのは？」( 人数 )
+  CASE RESEARCH_REQ_ID_PLACE_time          THEN $v4_1 = msg_c03r0101_assistantm_01_13j //「とかいと　いなか　すみたいのは？」( 時間 )
+  CASE RESEARCH_REQ_ID_PRECIOUS_count      THEN $v4_1 = msg_c03r0101_assistantm_01_14k //「だいじにしているものに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_PRECIOUS_time       THEN $v4_1 = msg_c03r0101_assistantm_01_13k //「だいじにしているものに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_PARTNER_count       THEN $v4_1 = msg_c03r0101_assistantm_01_14l //「ひとのみりょくに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_PARTNER_time        THEN $v4_1 = msg_c03r0101_assistantm_01_13l //「ひとのみりょくに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_SEASON_count        THEN $v4_1 = msg_c03r0101_assistantm_01_14m //「きせつに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_SEASON_time         THEN $v4_1 = msg_c03r0101_assistantm_01_13m //「きせつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_ART_count           THEN $v4_1 = msg_c03r0101_assistantm_01_14n //「げいじゅつに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_ART_time            THEN $v4_1 = msg_c03r0101_assistantm_01_13n //「げいじゅつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_MUSIC_count         THEN $v4_1 = msg_c03r0101_assistantm_01_14o //「いちばんすきな　おんがくは？」( 人数 )
+  CASE RESEARCH_REQ_ID_MUSIC_time          THEN $v4_1 = msg_c03r0101_assistantm_01_13o //「いちばんすきな　おんがくは？」( 時間 )
+  CASE RESEARCH_REQ_ID_MOVIE_count         THEN $v4_1 = msg_c03r0101_assistantm_01_14p //「えいぞうに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_MOVIE_time          THEN $v4_1 = msg_c03r0101_assistantm_01_13p //「えいぞうに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_SCHOOL_count        THEN $v4_1 = msg_c03r0101_assistantm_01_14q //「いちばんすきな　がっこうのじかんは？」( 人数 )
+  CASE RESEARCH_REQ_ID_SCHOOL_time         THEN $v4_1 = msg_c03r0101_assistantm_01_13q //「いちばんすきな　がっこうのじかんは？」( 時間 )
+  CASE RESEARCH_REQ_ID_STUDY_count         THEN $v4_1 = msg_c03r0101_assistantm_01_14r //「べんきょうに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_STUDY_time          THEN $v4_1 = msg_c03r0101_assistantm_01_13r //「べんきょうに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_STORTS_count        THEN $v4_1 = msg_c03r0101_assistantm_01_14s //「いちばんにんきのある　スポーツは？」( 人数 )
+  CASE RESEARCH_REQ_ID_STORTS_time         THEN $v4_1 = msg_c03r0101_assistantm_01_13s //「いちばんにんきのある　スポーツは？」( 時間 )
+  CASE RESEARCH_REQ_ID_DAY_OFF_count       THEN $v4_1 = msg_c03r0101_assistantm_01_14t //「きゅうじつに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_DAY_OFF_time        THEN $v4_1 = msg_c03r0101_assistantm_01_13t //「きゅうじつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_DREAM_count         THEN $v4_1 = msg_c03r0101_assistantm_01_14u //「いちばんなりたいものは？」( 人数 )
+  CASE RESEARCH_REQ_ID_DREAM_time          THEN $v4_1 = msg_c03r0101_assistantm_01_13u //「いちばんなりたいものは？」( 時間 )
+  CASE RESEARCH_REQ_ID_GYM_LEADER_count    THEN $v4_1 = msg_c03r0101_assistantm_01_14v //「いちばんにんきのある　ジムリーダーは？」( 人数 )
+  CASE RESEARCH_REQ_ID_GYM_LEADER_time     THEN $v4_1 = msg_c03r0101_assistantm_01_13v //「いちばんにんきのある　ジムリーダーは？」( 時間 )
+  CASE RESEARCH_REQ_ID_FUN_count           THEN $v4_1 = msg_c03r0101_assistantm_01_14w //「ポケモンのおもしろいところは？」( 人数 )
+  CASE RESEARCH_REQ_ID_FUN_time            THEN $v4_1 = msg_c03r0101_assistantm_01_13w //「ポケモンのおもしろいところは？」( 時間 )
   DEFAULT _RET
   ENDSWITCH
 
   // すでに達成済みなら, メッセージを変更
-  $SCWK_TEMP0 = $v3_2
+  $SCWK_TEMP0 = $v4_2
   _CALL CHECK_RES_REQ_ALREADY_ARCHIEVE
   IF $SCWK_ANSWER == TRUE THEN
-    $v3_1 = msg_c03r0101_assistantm_01_14x
+    $v4_1 = msg_c03r0101_assistantm_01_14x
     _PLAYER_NAME(1)
   ENDIF
 
-  // @todo 依頼達成人数をワードセットに登録
-
   // メッセージを表示
   _TALK_OBJ_START()
-  _BALLOONWIN_OBJMSG_POS( v3_1, SCWK_TARGET_OBJID, POS_DL )
+  _BALLOONWIN_OBJMSG_POS( v4_1, SCWK_TARGET_OBJID, POS_DL )
   _BALLOONWIN_CLOSE() 
 }
 _RET 
@@ -2423,6 +2660,7 @@ LEADER_SAY_You_dont_archieve:
   _GET_RESEARCH_REQUEST_ID( v4_2 )
 
   // 調査中の依頼のタイプを取得
+  $SCWK_TEMP0 = $v4_2
   _CALL GET_RES_REQ_TYPE
   $v4_3 = $SCWK_ANSWER
 
@@ -2431,7 +2669,7 @@ LEADER_SAY_You_dont_archieve:
     // 最も大きいノルマ不足値をワードセットに登録
     _CALL GET_RES_REQ_MAX_REST_NORM_COUNT
     $v4_4 = $SCWK_ANSWER
-    _NUMBER( 2, v4_4, 3 )
+    _NUMBER( 1, v4_4, 3 )
   // 時間調査
   ELSE
     // 最も大きいノルマ不足値をワードセットに登録
@@ -3881,15 +4119,15 @@ EVENT_END
 EVENT_START	ev_member_a
 {
   // 隊員ランクを取得
-  _CALL GET_RES_MEMBER_RANK
+  _GET_RESEARCH_TEAM_RANK( SCWK_ANSWER )
 
   // メッセージを選択
   SWITCH $SCWK_ANSWER
-  CASE RESEARCH_MEMBER_RANK_C  THEN $SCWK_TEMP0 = msg_c03r0101_boy1_01
-  CASE RESEARCH_MEMBER_RANK_B  THEN $SCWK_TEMP0 = msg_c03r0101_boy1_02
-  CASE RESEARCH_MEMBER_RANK_A  THEN $SCWK_TEMP0 = msg_c03r0101_boy1_03
-  CASE RESEARCH_MEMBER_RANK_S  THEN $SCWK_TEMP0 = msg_c03r0101_boy1_04
-  CASE RESEARCH_MEMBER_RANK_SS THEN $SCWK_TEMP0 = msg_c03r0101_boy1_05
+  CASE RESEARCH_TEAM_RANK_1 THEN $SCWK_TEMP0 = msg_c03r0101_boy1_01
+  CASE RESEARCH_TEAM_RANK_2 THEN $SCWK_TEMP0 = msg_c03r0101_boy1_02
+  CASE RESEARCH_TEAM_RANK_3 THEN $SCWK_TEMP0 = msg_c03r0101_boy1_03
+  CASE RESEARCH_TEAM_RANK_4 THEN $SCWK_TEMP0 = msg_c03r0101_boy1_04
+  CASE RESEARCH_TEAM_RANK_5 THEN $SCWK_TEMP0 = msg_c03r0101_boy1_05
   DEFAULT EVENT_END
   ENDSWITCH
 
@@ -3908,15 +4146,15 @@ EVENT_END
 EVENT_START	ev_member_b
 {
   // 隊員ランクを取得
-  _CALL GET_RES_MEMBER_RANK
+  _GET_RESEARCH_TEAM_RANK( SCWK_ANSWER )
 
   // メッセージを選択
   SWITCH $SCWK_ANSWER
-  CASE RESEARCH_MEMBER_RANK_C  THEN $SCWK_TEMP0 = msg_c03r0101_boy3_01
-  CASE RESEARCH_MEMBER_RANK_B  THEN $SCWK_TEMP0 = msg_c03r0101_boy3_02
-  CASE RESEARCH_MEMBER_RANK_A  THEN $SCWK_TEMP0 = msg_c03r0101_boy3_03
-  CASE RESEARCH_MEMBER_RANK_S  THEN $SCWK_TEMP0 = msg_c03r0101_boy3_04
-  CASE RESEARCH_MEMBER_RANK_SS THEN $SCWK_TEMP0 = msg_c03r0101_boy3_05
+  CASE RESEARCH_TEAM_RANK_1 THEN $SCWK_TEMP0 = msg_c03r0101_boy3_01
+  CASE RESEARCH_TEAM_RANK_2 THEN $SCWK_TEMP0 = msg_c03r0101_boy3_02
+  CASE RESEARCH_TEAM_RANK_3 THEN $SCWK_TEMP0 = msg_c03r0101_boy3_03
+  CASE RESEARCH_TEAM_RANK_4 THEN $SCWK_TEMP0 = msg_c03r0101_boy3_04
+  CASE RESEARCH_TEAM_RANK_5 THEN $SCWK_TEMP0 = msg_c03r0101_boy3_05
   DEFAULT EVENT_END
   ENDSWITCH
 
@@ -3935,15 +4173,15 @@ EVENT_END
 EVENT_START	ev_member_c
 {
   // 隊員ランクを取得
-  _CALL GET_RES_MEMBER_RANK
+  _GET_RESEARCH_TEAM_RANK( SCWK_ANSWER )
 
   // メッセージを選択
   SWITCH $SCWK_ANSWER
-  CASE RESEARCH_MEMBER_RANK_C  THEN EVENT_END
-  CASE RESEARCH_MEMBER_RANK_B  THEN $SCWK_TEMP0 = msg_c03r0101_girl1_01
-  CASE RESEARCH_MEMBER_RANK_A  THEN $SCWK_TEMP0 = msg_c03r0101_girl1_02
-  CASE RESEARCH_MEMBER_RANK_S  THEN $SCWK_TEMP0 = msg_c03r0101_girl1_03
-  CASE RESEARCH_MEMBER_RANK_SS THEN $SCWK_TEMP0 = msg_c03r0101_girl1_04
+  CASE RESEARCH_TEAM_RANK_1 THEN EVENT_END
+  CASE RESEARCH_TEAM_RANK_2 THEN $SCWK_TEMP0 = msg_c03r0101_girl1_01
+  CASE RESEARCH_TEAM_RANK_3 THEN $SCWK_TEMP0 = msg_c03r0101_girl1_02
+  CASE RESEARCH_TEAM_RANK_4 THEN $SCWK_TEMP0 = msg_c03r0101_girl1_03
+  CASE RESEARCH_TEAM_RANK_5 THEN $SCWK_TEMP0 = msg_c03r0101_girl1_04
   DEFAULT EVENT_END
   ENDSWITCH
 
@@ -3962,15 +4200,15 @@ EVENT_END
 EVENT_START	ev_member_d
 {
   // 隊員ランクを取得
-  _CALL GET_RES_MEMBER_RANK
+  _GET_RESEARCH_TEAM_RANK( SCWK_ANSWER )
 
   // メッセージを選択
   SWITCH $SCWK_ANSWER
-  CASE RESEARCH_MEMBER_RANK_C  THEN EVENT_END
-  CASE RESEARCH_MEMBER_RANK_B  THEN $SCWK_TEMP0 = msg_c03r0101_girl2_01
-  CASE RESEARCH_MEMBER_RANK_A  THEN $SCWK_TEMP0 = msg_c03r0101_girl2_02
-  CASE RESEARCH_MEMBER_RANK_S  THEN $SCWK_TEMP0 = msg_c03r0101_girl2_03
-  CASE RESEARCH_MEMBER_RANK_SS THEN $SCWK_TEMP0 = msg_c03r0101_girl2_04
+  CASE RESEARCH_TEAM_RANK_1 THEN EVENT_END
+  CASE RESEARCH_TEAM_RANK_2 THEN $SCWK_TEMP0 = msg_c03r0101_girl2_01
+  CASE RESEARCH_TEAM_RANK_3 THEN $SCWK_TEMP0 = msg_c03r0101_girl2_02
+  CASE RESEARCH_TEAM_RANK_4 THEN $SCWK_TEMP0 = msg_c03r0101_girl2_03
+  CASE RESEARCH_TEAM_RANK_5 THEN $SCWK_TEMP0 = msg_c03r0101_girl2_04
   DEFAULT EVENT_END
   ENDSWITCH
 
@@ -3989,15 +4227,15 @@ EVENT_END
 EVENT_START	ev_member_e
 {
   // 隊員ランクを取得
-  _CALL GET_RES_MEMBER_RANK
+  _GET_RESEARCH_TEAM_RANK( SCWK_ANSWER )
 
   // メッセージを選択
   SWITCH $SCWK_ANSWER
-  CASE RESEARCH_MEMBER_RANK_C  THEN EVENT_END
-  CASE RESEARCH_MEMBER_RANK_B  THEN EVENT_END
-  CASE RESEARCH_MEMBER_RANK_A  THEN $SCWK_TEMP0 = msg_c03r0101_boy4_01
-  CASE RESEARCH_MEMBER_RANK_S  THEN $SCWK_TEMP0 = msg_c03r0101_boy4_02
-  CASE RESEARCH_MEMBER_RANK_SS THEN $SCWK_TEMP0 = msg_c03r0101_boy4_03
+  CASE RESEARCH_TEAM_RANK_1 THEN EVENT_END
+  CASE RESEARCH_TEAM_RANK_2 THEN EVENT_END
+  CASE RESEARCH_TEAM_RANK_3 THEN $SCWK_TEMP0 = msg_c03r0101_boy4_01
+  CASE RESEARCH_TEAM_RANK_4 THEN $SCWK_TEMP0 = msg_c03r0101_boy4_02
+  CASE RESEARCH_TEAM_RANK_5 THEN $SCWK_TEMP0 = msg_c03r0101_boy4_03
   DEFAULT EVENT_END
   ENDSWITCH
 
@@ -4016,15 +4254,15 @@ EVENT_END
 EVENT_START	ev_member_f
 {
   // 隊員ランクを取得
-  _CALL GET_RES_MEMBER_RANK
+  _GET_RESEARCH_TEAM_RANK( SCWK_ANSWER )
 
   // メッセージを選択
   SWITCH $SCWK_ANSWER
-  CASE RESEARCH_MEMBER_RANK_C  THEN EVENT_END
-  CASE RESEARCH_MEMBER_RANK_B  THEN EVENT_END
-  CASE RESEARCH_MEMBER_RANK_A  THEN EVENT_END
-  CASE RESEARCH_MEMBER_RANK_S  THEN $SCWK_TEMP0 = msg_c03r0101_man1_01
-  CASE RESEARCH_MEMBER_RANK_SS THEN $SCWK_TEMP0 = msg_c03r0101_man1_02
+  CASE RESEARCH_TEAM_RANK_1 THEN EVENT_END
+  CASE RESEARCH_TEAM_RANK_2 THEN EVENT_END
+  CASE RESEARCH_TEAM_RANK_3 THEN EVENT_END
+  CASE RESEARCH_TEAM_RANK_4 THEN $SCWK_TEMP0 = msg_c03r0101_man1_01
+  CASE RESEARCH_TEAM_RANK_5 THEN $SCWK_TEMP0 = msg_c03r0101_man1_02
   DEFAULT EVENT_END
   ENDSWITCH
 
@@ -4043,15 +4281,15 @@ EVENT_END
 EVENT_START	ev_member_g
 {
   // 隊員ランクを取得
-  _CALL GET_RES_MEMBER_RANK
+  _GET_RESEARCH_TEAM_RANK( SCWK_ANSWER )
 
   // メッセージを選択
   SWITCH $SCWK_ANSWER
-  CASE RESEARCH_MEMBER_RANK_C  THEN EVENT_END
-  CASE RESEARCH_MEMBER_RANK_B  THEN EVENT_END
-  CASE RESEARCH_MEMBER_RANK_A  THEN EVENT_END
-  CASE RESEARCH_MEMBER_RANK_S  THEN EVENT_END
-  CASE RESEARCH_MEMBER_RANK_SS THEN $SCWK_TEMP0 = msg_c03r0101_girl3_01
+  CASE RESEARCH_TEAM_RANK_1 THEN EVENT_END
+  CASE RESEARCH_TEAM_RANK_2 THEN EVENT_END
+  CASE RESEARCH_TEAM_RANK_3 THEN EVENT_END
+  CASE RESEARCH_TEAM_RANK_4 THEN EVENT_END
+  CASE RESEARCH_TEAM_RANK_5 THEN $SCWK_TEMP0 = msg_c03r0101_girl3_01
   DEFAULT EVENT_END
   ENDSWITCH
 
@@ -4078,16 +4316,16 @@ EVENT_START	ev_paper
   ENDIF
 
   // 隊員ランクを取得
-  _CALL GET_RES_MEMBER_RANK
+  _GET_RESEARCH_TEAM_RANK( SCWK_ANSWER )
 
   // メッセージを選択 ==> SCWK_TEMP0
   SWITCH $SCWK_ANSWER
-  CASE RESEARCH_MEMBER_RANK_C  THEN $SCWK_TEMP0 = msg_c03r0101_none_debug_02a
-  CASE RESEARCH_MEMBER_RANK_B  THEN $SCWK_TEMP0 = msg_c03r0101_none_debug_02b
-  CASE RESEARCH_MEMBER_RANK_A  THEN $SCWK_TEMP0 = msg_c03r0101_none_debug_02c
-  CASE RESEARCH_MEMBER_RANK_S  THEN $SCWK_TEMP0 = msg_c03r0101_none_debug_02d
-  CASE RESEARCH_MEMBER_RANK_SS THEN $SCWK_TEMP0 = msg_c03r0101_none_debug_02e
-  DEFAULT                           $SCWK_TEMP0 = msg_c03r0101_none_debug_01
+  CASE RESEARCH_TEAM_RANK_1 THEN $SCWK_TEMP0 = msg_c03r0101_none_debug_02a
+  CASE RESEARCH_TEAM_RANK_2 THEN $SCWK_TEMP0 = msg_c03r0101_none_debug_02b
+  CASE RESEARCH_TEAM_RANK_3 THEN $SCWK_TEMP0 = msg_c03r0101_none_debug_02c
+  CASE RESEARCH_TEAM_RANK_4 THEN $SCWK_TEMP0 = msg_c03r0101_none_debug_02d
+  CASE RESEARCH_TEAM_RANK_5 THEN $SCWK_TEMP0 = msg_c03r0101_none_debug_02e
+  DEFAULT                        $SCWK_TEMP0 = msg_c03r0101_none_debug_01
   ENDSWITCH
 
   // メッセージを表示
@@ -4100,3 +4338,25 @@ EVENT_START	ev_paper
 EVENT_END
 
 
+
+//======================================================================
+// ■ゾーンチェンジ時の初期化
+//======================================================================
+INIT_EVENT_START ev_zone_c03r0101
+{
+  // v1_1 隊員ランク
+
+  // 隊員ランクを取得
+  _GET_RESEARCH_TEAM_RANK( v1_1 )
+
+  // 隊員ランクに応じてフラグをセット
+  //SWITCH $v1_1
+  //CASE RESEARCH_TEAM_RANK_1 // ランクC
+  //CASE RESEARCH_TEAM_RANK_2 // ランクB
+  //CASE RESEARCH_TEAM_RANK_3 // ランクA
+  //CASE RESEARCH_TEAM_RANK_4 // ランクS
+  //CASE RESEARCH_TEAM_RANK_5 // ランクSS
+  //DEFAULT
+  //ENDSWITCH
+}
+INIT_EVENT_END

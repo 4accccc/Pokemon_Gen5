@@ -10,6 +10,8 @@
 
 extern VMCMD_RESULT EvCmdDebugPrint( VMHANDLE *core, void *wk ); 
 
+extern VMCMD_RESULT EvCmdGetResearchTeamRank( VMHANDLE *core, void *wk ); 
+extern VMCMD_RESULT EvCmdResearchTeamRankUp( VMHANDLE *core, void *wk ); 
 extern VMCMD_RESULT EvCmdGetResearchRequestID( VMHANDLE *core, void *wk ); 
 extern VMCMD_RESULT EvCmdGetResearchQuestionID( VMHANDLE *core, void *wk ); 
 extern VMCMD_RESULT EvCmdGetResearchPassedTime( VMHANDLE *core, void *wk ); 

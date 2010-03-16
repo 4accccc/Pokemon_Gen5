@@ -946,8 +946,8 @@
 
   DEF_CMD( EvCmdSetMyAnswer, EV_SEQ_SET_MY_ANSWER ) 
   DEF_CMD( EvCmdDebugPrint, EV_SEQ_DEBUG_PRINT ) 
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdGetResearchTeamRank, EV_SEQ_GET_RESEARCH_TEAM_RANK ) 
+  DEF_CMD( EvCmdResearchTeamRankUp, EV_SEQ_RESEARCH_TEAM_RANK_UP ) 
 
   //配布ポケモンイベント演出関連
   DEF_CMD( EvCmdGetEvtDarutanisPos, EV_SEQ_GET_EVT_DARUTANIS_POS )

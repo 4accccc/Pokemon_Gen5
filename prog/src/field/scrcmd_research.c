@@ -22,6 +22,7 @@
 #include "../../../resource/research_radar/data/answer_num_question.cdat" // for AnswerNum_question[]
 #include "../../../resource/research_radar/data/answer_id_question.cdat"  // for AnswerID_question[][]
 
+
 //-----------------------------------------------------------------------------
 /**
  * @brief ワークの内容を表示する
@@ -38,8 +39,72 @@ VMCMD_RESULT EvCmdDebugPrint( VMHANDLE *core, void *wk )
   key   = SCRCMD_GetVMWorkValue( core, work ); // 第一引数: 出力 No.
   value = SCRCMD_GetVMWorkValue( core, work ); // 第二引数: 出力するワークの値
 
-  // 表示
-  OS_TFPrintf( 3, "SCRPIT: print No.%d ==> %d\n", key, value );
+  OS_TFPrintf( 3, "%d: %d\n", key, value );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief  調査隊の隊員ランクを取得する
+ * @param  core
+ * @param  wk
+ * @retval VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdGetResearchTeamRank( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*       script   = SCRCMD_WORK_GetScriptWork( work );
+  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
+  MISC*              misc     = SaveData_GetMisc( save );
+  u16* ret;
+  
+  ret = SCRCMD_GetVMWork( core, work ); // 第一引数: 隊員ランクの格納先
+
+  // 隊員ランクを取得する
+  *ret = MISC_CrossComm_GetResearchTeamRank( misc );
+
+  // DEBUG:
+  OS_TFPrintf( 3, "_GET_RESEARCH_TEAM_RANK ==> %d\n", *ret );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief  調査隊の隊員ランクを1つ上げる
+ * @param  core
+ * @param  wk
+ * @retval VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResearchTeamRankUp( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*       script   = SCRCMD_WORK_GetScriptWork( work );
+  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
+  MISC*              misc     = SaveData_GetMisc( save );
+  int rank;
+  
+  // 隊員ランクを取得する
+  rank = MISC_CrossComm_GetResearchTeamRank( misc );
+
+  // すでに最高ランク
+  if( RESEARCH_TEAM_RANK_5 <= rank )
+  {
+    GF_ASSERT(0); // これ以上は上がらない
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  // ランクアップ
+  rank++;
+  MISC_CrossComm_SetResearchTeamRank( misc, rank );
+
+  // DEBUG:
+  OS_TFPrintf( 3, "_RESEARCH_TEAM_RANK_UP ==> %d\n", rank );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -134,23 +199,33 @@ VMCMD_RESULT EvCmdGetResearchPassedTime( VMHANDLE *core, void *wk )
   // 調査の開始時刻を取得
   startSec = MISC_GetResearchStartTimeBySecond( misc );
 
-  //--調査中でない--
+  // 調査中でない
   if( MISC_GetResearchRequestID( misc ) == RESEARCH_REQ_ID_NONE ) {
     passedHour = 0;
   }
-  //--調査中--
+  // 調査中
   else { 
     s64 nowSec, passedSec;
-    RTCDate passedDate;
-    RTCTime passedTime;
+    RTCDate passedDate, nowDate;
+    RTCTime passedTime, nowTime;
+
+    // 現在時刻を取得
+    GFL_RTC_GetDateTime( &nowDate, &nowTime );
+    nowSec = RTC_ConvertDateTimeToSecond( &nowDate, &nowTime );
+    OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME: year=%d, month=%d, day=%d\n", nowDate.year, nowDate.month, nowDate.day );
+    OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME: hour=%d, minute=%d, second=%d\n", nowTime.hour, nowTime.minute, nowTime.second );
+    OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME: startSec=%ld, nowSec=%ld\n", startSec, nowSec );
 
     // 経過時間[h]を算出
-    nowSec = GFL_RTC_GetDateTimeBySecond();
     passedSec = nowSec - startSec;
     RTC_ConvertSecondToDateTime( &passedDate, &passedTime, passedSec );
-    if( (0 < passedDate.year) || 
-        (0 < passedDate.month) || 
-        (0 < passedDate.day) )
+    OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME: startSec=%ld, nowSec=%ld, passedSec=%ld\n", startSec, nowSec, passedSec ); 
+    OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME: year=%d, month=%d, day=%d\n", passedDate.year, passedDate.month, passedDate.day );
+    OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME: hour=%d, minute=%d, second=%d\n", passedTime.hour, passedTime.minute, passedTime.second );
+
+    if( (0 < passedDate.year) ||  // 1年以上が経過
+        (1 < passedDate.month) || // 1月以上が経過
+        (1 < passedDate.day) )    // 1日以上が経過
     { 
       passedHour = 24; // 最大24時間とする ( それ以上は必要ないので )
     }
@@ -164,7 +239,7 @@ VMCMD_RESULT EvCmdGetResearchPassedTime( VMHANDLE *core, void *wk )
   *ret = passedHour;
 
   // DEBUG:
-  OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME ==> %d\n", *ret );
+  OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME ==> %d\n", passedHour );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -370,11 +445,12 @@ VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
     maxCount = 0;
     for( ansIdx=0; ansIdx < ansNum; ansIdx++ )
     {
-      count = QuestionnaireWork_GetTotalAnswerNum( qSave, qID, ansIdx - 1 );
+      count = QuestionnaireWork_GetTotalAnswerNum( qSave, qID, ansIdx+1 );
       if( maxCount <= count ) {
         maxCount = count;
         majorityAnswerID = AnswerID_question[ qID ][ ansIdx ];
       }
+      OS_TFPrintf( 3, "questionID=%d, answerIdx=%d, count=%d\n", qID, ansIdx, count );
     }
   }
 
