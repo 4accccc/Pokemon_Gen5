@@ -257,7 +257,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
       };
       wk->bfs = bfs;
       GFL_OVERLAY_Load( FS_OVERLAY_ID(pdc) );
-      wk->psp = PDC_MakeSetUpParam( pp, &wk->bfs, wk->heapID );
+      wk->psp = PDC_MakeSetUpParam( pp, &wk->bfs, NULL, NULL, wk->heapID );
       ZONEDATA_Open( wk->heapID );
       GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, spt[ wk->pos ].gpd, wk->psp );
     }
