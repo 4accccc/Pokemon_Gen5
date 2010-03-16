@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/08 22:13:02
+#save date:2010/03/16 17:46:57
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02r0301.wms
 #SECTION START:OBJ_EVENT
@@ -14,9 +14,9 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02r0301.wms
 #type
 1
 #ID name
-C02R0301_POKE18_01
+C02R0301_POKE_01
 #OBJ CODE Number
-POKE18
+WKOBJCODE00
 #MOVE CODE Number
 MV_DIR_RND
 #EVENT TYPE Number
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C02R0301_POKE18_01
+SCRID_C02R0301_POKE_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -47,7 +47,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C02R0301_WOMAN2_01
 #OBJ CODE Number
-WOMAN2
+GIRL2
 #MOVE CODE Number
 MV_DIR_RND
 #EVENT TYPE Number
