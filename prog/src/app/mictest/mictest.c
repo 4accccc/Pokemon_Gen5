@@ -808,7 +808,7 @@ static void SEQFUNC_Main( MICTEST_SEQ_WORK *p_seq_wk, u32 *p_seq )
 	case SEQ_MAIN:
 		if( IsProcEndTrg() ) {
 #if MICTEST_USE_SND
-			GFL_SOUND_PlaySE( SEQ_SE_DP_SELECT );
+			PMSND_PlaySE( SEQ_SE_DP_SELECT );
 #endif
 			*p_seq = SEQ_EXIT;
 		}

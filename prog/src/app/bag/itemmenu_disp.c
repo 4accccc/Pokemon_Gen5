@@ -1485,7 +1485,7 @@ void ITEMDISP_ScrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num)
     }
     else
     {
-      GFL_SOUND_PlaySE( SE_BAG_SRIDE );
+      PMSND_PlaySE( SE_BAG_SRIDE );
     }
 
     GFL_CLACT_WK_GetPos( pWork->clwkScroll , &pos, CLWK_SETSF_NONE );

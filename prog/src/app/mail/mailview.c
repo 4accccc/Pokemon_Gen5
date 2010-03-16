@@ -553,7 +553,7 @@ static int MailView_KeyInView(MAIL_VIEW_DAT* wk)
   }else{
     return 0;
   }
-  GFL_SOUND_PlaySE(SND_MAIL_FINISH);
+  PMSND_PlaySE(SND_MAIL_FINISH);
   return 1;
 }
 
@@ -574,28 +574,28 @@ static int input_key_create(MAIL_VIEW_DAT* wk)
     if(wk->line == VIEW_END_DECIDE){
       //会話文が空かどうかチェック
       if(MailView_IsWordNull(wk)){
-        GFL_SOUND_PlaySE(SND_MAIL_CANCEL);
+        PMSND_PlaySE(SND_MAIL_CANCEL);
         wk->mode = KEYIN_NOMSG;
         return FALSE;
       }else{
         wk->dat->val = VIEW_END_DECIDE;
-        GFL_SOUND_PlaySE(SND_MAIL_FINISH);
+        PMSND_PlaySE(SND_MAIL_FINISH);
         wk->dat->cntNo = 0;
         wk->dat->flags = 0;
         return TRUE;
       }
     }else if(wk->line == 4){
-      GFL_SOUND_PlaySE(SND_MAIL_CANCEL);
+      PMSND_PlaySE(SND_MAIL_CANCEL);
       wk->mode = KEYIN_CANCEL;
       return FALSE;
     }else{
       wk->dat->val = wk->dat->cntNo = wk->line;
       wk->dat->flags = wk->side;
-      GFL_SOUND_PlaySE(SND_MAIL_DECIDE);
+      PMSND_PlaySE(SND_MAIL_DECIDE);
     }
     return TRUE;
   }else if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL)){
-    GFL_SOUND_PlaySE(SND_MAIL_CANCEL);
+    PMSND_PlaySE(SND_MAIL_CANCEL);
     wk->mode = KEYIN_CANCEL;
     return FALSE;
   }
@@ -620,7 +620,7 @@ static int input_key_create(MAIL_VIEW_DAT* wk)
     return FALSE;
   }
   //選択ライン描画変更
-  GFL_SOUND_PlaySE(SND_MAIL_SELECT);
+  PMSND_PlaySE(SND_MAIL_SELECT);
 
   if(wk->line<3)
   {
@@ -676,26 +676,26 @@ static int input_touch_create(MAIL_VIEW_DAT* wk)
 //  }
 
   if(ret == 3){ //キャンセル
-    GFL_SOUND_PlaySE(SND_MAIL_CANCEL);
+    PMSND_PlaySE(SND_MAIL_CANCEL);
     wk->mode = KEYIN_CANCEL;
     return FALSE;
   }
   if(ret < 3){  //文字入力
     wk->dat->val = wk->dat->cntNo = ret;
     wk->dat->flags = wk->side;
-    GFL_SOUND_PlaySE(SND_MAIL_DECIDE);
+    PMSND_PlaySE(SND_MAIL_DECIDE);
     return TRUE;
   }
   //決定のとき
 
   //会話文が空かどうかチェック
   if(MailView_IsWordNull(wk)){
-    GFL_SOUND_PlaySE(SND_MAIL_CANCEL);
+    PMSND_PlaySE(SND_MAIL_CANCEL);
     wk->mode = KEYIN_NOMSG;
     return FALSE;
   }else{
     wk->dat->val = VIEW_END_DECIDE;
-    GFL_SOUND_PlaySE(SND_MAIL_FINISH);
+    PMSND_PlaySE(SND_MAIL_FINISH);
     wk->dat->cntNo = 0;
     wk->dat->flags = 0;
     return TRUE;

@@ -180,7 +180,8 @@ static void _startState(FIELD_ITEMMENU_WORK* pWork);
 static void InitBlinkPalAnm( FIELD_ITEMMENU_WORK * wk );
 static void ExitBlinkPalAnm( FIELD_ITEMMENU_WORK * wk );
 static void _listSelectAnime( FIELD_ITEMMENU_WORK * wk );
-static u32 GetCursorPosListObj( FIELD_ITEMMENU_WORK * wk );
+static void SetEndButtonAnime( FIELD_ITEMMENU_WORK * wk, u8 type );
+static void _endButtonAnime( FIELD_ITEMMENU_WORK * wk );
 
 
 //------------------------------------------------------------------------------
@@ -587,7 +588,7 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
       // リストが移動した時のみSE
       if( prelistpos != pWork->oamlistpos )
       {
-        GFL_SOUND_PlaySE( SE_BAG_SRIDE );
+        PMSND_PlaySE( SE_BAG_SRIDE );
         return TRUE;
       }
     }
@@ -622,7 +623,7 @@ static BOOL _keyChangeItemCheck(FIELD_ITEMMENU_WORK* pWork)
   }
   if(bChange){
     int newno = ITEMMENU_GetItemIndex(pWork);
-     GFL_SOUND_PlaySE( SE_BAG_CURSOR_MOVE );
+     PMSND_PlaySE( SE_BAG_CURSOR_MOVE );
     _ItemChange(pWork, nowno, newno);
   }
   return bChange;
@@ -644,10 +645,9 @@ static BOOL _keyMoveCheck(FIELD_ITEMMENU_WORK* pWork)
     int pos = pWork->curpos;
     int length = ITEMMENU_GetItemPocketNumber( pWork);
 
-    if(_GFL_UI_KEY_GetRepeat()== PAD_KEY_DOWN){
+    if(_GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
       bChange = _posplus(pWork, length);
-    }
-    if(_GFL_UI_KEY_GetRepeat()== PAD_KEY_UP){
+    }else if(_GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
       bChange = _posminus(pWork, length);
     }
   }
@@ -844,7 +844,7 @@ static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork )
       ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
 
       // スプレー音が見当たらないのでとりあえずテキトーな音
-      GFL_SOUND_PlaySE( SE_BAG_SPRAY );
+      PMSND_PlaySE( SE_BAG_SPRAY );
     }
     else
     {
@@ -927,7 +927,7 @@ static void _itemInnerUseRightStone( FIELD_ITEMMENU_WORK* pWork )
       ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
 
       // 音が見当たらないのでとりあえずテキトーな音
-      GFL_SOUND_PlaySE( SE_BAG_RAITOSUTOON );
+      PMSND_PlaySE( SE_BAG_RAITOSUTOON );
       _CHANGE_STATE(pWork,_itemInnerUseRightStoneWait);
       
     }
@@ -1396,11 +1396,13 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     }
     bClear = TRUE;
   }
+/*
   else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_B){
     bClear = TRUE;
 		GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
+*/
 
   // 選択終了だったらメニュー面の消去
   if(bClear){
@@ -1433,7 +1435,7 @@ static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork)
   }
 
   // 決定音
-//  GFL_SOUND_PlaySE( SE_BAG_DECIDE );
+//  PMSND_PlaySE( SE_BAG_DECIDE );
 
   //@TODO 上手く言ったら消す
 #if 0
@@ -1481,9 +1483,39 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 
 	BLINKPALANM_Main( pWork->blwk );
 
-  if(pWork->state == NULL){
+  if(pWork->state == _endButtonAnime){
     // 終了時はキー無効
     return;
+  }
+
+  // キャンセル
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+    pWork->ret_code = BAG_NEXTPROC_RETURN;
+    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+//    _CHANGE_STATE(pWork,NULL);
+		SetEndButtonAnime( pWork, 0 );
+		_CHANGE_STATE( pWork, _endButtonAnime );
+    return;
+  // 強制終了
+  }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+    pWork->ret_code = BAG_NEXTPROC_EXIT;
+    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+//    _CHANGE_STATE(pWork,NULL);
+		SetEndButtonAnime( pWork, 1 );
+		_CHANGE_STATE( pWork, _endButtonAnime );
+    return;
+  // 登録
+  }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+    if( pWork->pocketno == BAG_POKE_EVENT ){
+      SHORTCUT_SetEventItem( pWork, pWork->curpos );
+    }else{
+      SHORTCUT_SetPocket( pWork );
+    }
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+      ITEMDISP_upMessageRewrite(pWork); // 上画面表示
+      KTST_SetDraw( pWork, TRUE );
+		}
+		return;
   }
 
   // カーソルなしの状態から入力があった場合、カーソルを表示して抜ける
@@ -1491,7 +1523,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   {
     if( GFL_UI_KEY_GetTrg() )
     {
-      GFL_SOUND_PlaySE( SE_BAG_CURSOR_MOVE );
+      PMSND_PlaySE( SE_BAG_CURSOR_MOVE );
       ITEMDISP_upMessageRewrite(pWork); // 上画面表示
       KTST_SetDraw( pWork, TRUE );
       return;
@@ -1499,7 +1531,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   }
 
   // 決定
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE)
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
   {
     // アイテム存在チェック
     if( ITEMMENU_GetItemPocketNumber( pWork ) > 0 )
@@ -1510,34 +1542,8 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
       return;
     }
   }
-  // キャンセル
-  else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL)
-  {
-    pWork->ret_code = BAG_NEXTPROC_RETURN;
-    _CHANGE_STATE(pWork,NULL);
-    return;
-  }
-  // 強制終了
-  else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_X)
-  {
-    pWork->ret_code = BAG_NEXTPROC_EXIT;
-    _CHANGE_STATE(pWork,NULL);
-    return;
-  }
-  // 登録
-  else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y)
-  {
-    if( pWork->pocketno == BAG_POKE_EVENT )
-    {
-      SHORTCUT_SetEventItem( pWork, pWork->curpos );
-    }
-    else
-    {
-      SHORTCUT_SetPocket( pWork );
-    }
-  }
   // 並び替え
-  else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT)
+  else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {
     GFL_STD_MemClear( pWork->ScrollItem, sizeof( pWork->ScrollItem ) );
     MYITEM_ITEM_STCopy( pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE );  //取得
@@ -1561,14 +1567,14 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 
   {
     int oldpocket = pWork->pocketno;
-    if(GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT)
+    if(GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT)
     {
-      GFL_SOUND_PlaySE( SE_BAG_POCKET_MOVE );
+      PMSND_PlaySE( SE_BAG_POCKET_MOVE );
       pWork->pocketno++;
     }
-    if(GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT)
+		else if(GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT)
     {
-      GFL_SOUND_PlaySE( SE_BAG_POCKET_MOVE );
+      PMSND_PlaySE( SE_BAG_POCKET_MOVE );
       pWork->pocketno--;
     }
     if(pWork->pocketno >= BAG_POKE_MAX)
@@ -1664,7 +1670,7 @@ static void _itemTecniqueUseWait(FIELD_ITEMMENU_WORK* pWork)
 
 static void _itemTecniqueUseInit(FIELD_ITEMMENU_WORK* pWork)
 {
-  GFL_SOUND_PlaySE( SE_BAG_WAZA );
+  PMSND_PlaySE( SE_BAG_WAZA );
 
   GFL_MSG_GetString( pWork->MsgManager, msg_bag_065, pWork->pStrBuf );
   WORDSET_RegisterWazaName(pWork->WordSet, 0, ITEM_GetWazaNo( pWork->ret_item ));
@@ -1740,7 +1746,7 @@ static void _itemTrashYesNoWait(FIELD_ITEMMENU_WORK* pWork)
 
     if(selectno==0){
       // 捨てる音
-      GFL_SOUND_PlaySE( SE_BAG_TRASH );
+      PMSND_PlaySE( SE_BAG_TRASH );
 
       // アイテムを減らす
       ITEM_Sub( pWork, pWork->InputNum );
@@ -1824,7 +1830,7 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
 
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE)
   {
-    GFL_SOUND_PlaySE( SE_BAG_DECIDE );
+    PMSND_PlaySE( SE_BAG_DECIDE );
 
     InputNum_Exit( pWork );
 
@@ -1839,7 +1845,7 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
   }
   else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL)
   {
-    GFL_SOUND_PlaySE( SE_BAG_CANCEL );
+    PMSND_PlaySE( SE_BAG_CANCEL );
 
     InputNum_Exit( pWork );
 
@@ -1949,7 +1955,7 @@ static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
    // 決定
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
   {
-    GFL_SOUND_PlaySE( SE_BAG_DECIDE );
+    PMSND_PlaySE( SE_BAG_DECIDE );
 
     // 数値入力終了
     InputNum_Exit( pWork );
@@ -1959,7 +1965,7 @@ static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
   // キャンセル
   else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
   {
-    GFL_SOUND_PlaySE( SE_BAG_CANCEL );
+    PMSND_PlaySE( SE_BAG_CANCEL );
 
     // 数値入力終了
     InputNum_Exit( pWork );
@@ -2038,7 +2044,7 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
           MISC_AddGold( GAMEDATA_GetMiscWork(pWork->gamedata), val );
 
           // 売却音
-          GFL_SOUND_PlaySE( SE_BAG_SELL );
+          PMSND_PlaySE( SE_BAG_SELL );
 
           // タスクバーおこづかい表示しなおし
           ITEMDISP_GoldDispWrite( pWork );
@@ -2302,7 +2308,7 @@ static void InputNum_Main( FIELD_ITEMMENU_WORK* pWork )
   if(pWork->InputNum != backup)
   {
     // 移動音
-    GFL_SOUND_PlaySE( SE_BAG_CURSOR_MOVE );
+    PMSND_PlaySE( SE_BAG_CURSOR_MOVE );
 
     // ボタンアニメ
     if( pWork->InputNum < backup )
@@ -2623,7 +2629,7 @@ static void SORT_Button( FIELD_ITEMMENU_WORK* pWork )
   // 再描画
   _windowRewrite( pWork );
 
-  GFL_SOUND_PlaySE( SE_BAG_SORT );
+  PMSND_PlaySE( SE_BAG_SORT );
 }
 
 //-----------------------------------------------------------------------------
@@ -2764,7 +2770,7 @@ static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
       ITEMMENU_AddCnvButtonItem(pWork,item->id);
     }
 
-    GFL_SOUND_PlaySE( SE_BAG_REGIST_Y ); // 登録音
+    PMSND_PlaySE( SE_BAG_REGIST_Y ); // 登録音
 
     _windowRewrite(pWork);
   }
@@ -2825,7 +2831,7 @@ static void SHORTCUT_SetPocket( FIELD_ITEMMENU_WORK* pWork )
   is_active ^= 1; ///< 反転
   GAMEDATA_SetShortCut( pWork->gamedata, id, is_active );
 
-  GFL_SOUND_PlaySE( SE_BAG_REGIST_Y );
+  PMSND_PlaySE( SE_BAG_REGIST_Y );
 
   BTN_DrawCheckBox( pWork );
 }
@@ -3303,11 +3309,15 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   }
   else if(BUTTONID_EXIT == bttnid){
     pWork->ret_code = BAG_NEXTPROC_EXIT;
-    _CHANGE_STATE(pWork, NULL);
+//    _CHANGE_STATE(pWork, NULL);
+		SetEndButtonAnime( pWork, 1 );
+		_CHANGE_STATE( pWork, _endButtonAnime );
   }
   else if(BUTTONID_RETURN == bttnid){
     pWork->ret_code = BAG_NEXTPROC_RETURN;
-    _CHANGE_STATE(pWork, NULL);
+//    _CHANGE_STATE(pWork, NULL);
+		SetEndButtonAnime( pWork, 0 );
+		_CHANGE_STATE( pWork, _endButtonAnime );
   }
   else if((bttnid >= BUTTONID_ITEM_AREA) && (bttnid < BUTTONID_CHECK_AREA)){
     // アイテム選択シーケンスでの操作
@@ -3697,7 +3707,7 @@ static void _listSelectAnime( FIELD_ITEMMENU_WORK * wk )
 {
 	switch( wk->tmpSeq ){
 	case 0:
-		GFL_SOUND_PlaySE( SE_BAG_DECIDE );
+		PMSND_PlaySE( SE_BAG_DECIDE );
 	case 3:
 		ITEMDISP_ChangeCursorPosPalette( wk, 0 );
 		wk->tmpSeq++;
@@ -3730,3 +3740,42 @@ static void _listSelectAnime( FIELD_ITEMMENU_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タッチバーボタンアニメ
+ */
+//--------------------------------------------------------------------------------------------
+static void SetEndButtonAnime( FIELD_ITEMMENU_WORK * wk, u8 type )
+{
+	u32	idx;
+	u32	anm;
+
+	if( type == 0 ){
+		PMSND_PlaySE( SE_BAG_CANCEL );
+		idx = BAR_ICON_RETURN;
+		anm = APP_COMMON_BARICON_RETURN_ON;
+	}else{
+		PMSND_PlaySE( SE_BAG_CLOSE );
+		idx = BAR_ICON_EXIT;
+		anm = APP_COMMON_BARICON_EXIT_ON;
+	}
+	GFL_CLACT_WK_SetAnmFrame( wk->clwkBarIcon[idx], 0 );
+	GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[idx], anm );
+	GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkBarIcon[idx], TRUE );
+	wk->tmpSeq = type;
+}
+
+static void _endButtonAnime( FIELD_ITEMMENU_WORK * wk )
+{
+	u32	idx;
+
+	if( wk->tmpSeq == 0 ){
+		idx = BAR_ICON_RETURN;
+	}else{
+		idx = BAR_ICON_EXIT;
+	}
+
+	if( GFL_CLACT_WK_CheckAnmActive( wk->clwkBarIcon[idx] ) == FALSE ){
+		_CHANGE_STATE( wk, NULL );
+	}
+}

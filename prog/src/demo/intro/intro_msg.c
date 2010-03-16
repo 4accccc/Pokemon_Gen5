@@ -350,7 +350,7 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
       if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || (  GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL ) || GFL_UI_TP_GetTrg() )
       {
         PRINTSYS_PrintStreamReleasePause( wk->print_stream );
-        GFL_SOUND_PlaySE( SEQ_SE_DECIDE1 );
+        PMSND_PlaySE( SEQ_SE_DECIDE1 );
       }
       break;
 

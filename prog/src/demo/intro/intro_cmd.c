@@ -690,22 +690,22 @@ static BOOL CMD_BGM_FADEOUT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
 //-----------------------------------------------------------------------------
 static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  int player_no;
+  SEPLAYER_ID player_no;
 
-  GFL_SOUND_PlaySE( param[0] );
+  PMSND_PlaySE( param[0] );
   
-  player_no = GFL_SOUND_GetPlayerNo( param[0] );
+  player_no = PMSND_GetSE_DefaultPlayerID( param[0] );
 
   // volume
   if( param[1] != 0 )
   {
-    GFL_SOUND_SetVolume( player_no, param[1] );
+    PMSND_PlayerSetInitialVolume( player_no, param[1] );
   }
 
   // pan
   if( param[2] != 0 )
   {
-    GFL_SOUND_SetPan( player_no, 0xFFFF, param[2] );
+		PMSND_SetStatusSE_byPlayerID( player_no, PMSND_NOEFFECT, PMSND_NOEFFECT, param[2] );
   }
 
   return TRUE;
@@ -722,11 +722,11 @@ static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 //-----------------------------------------------------------------------------
 static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param)
 {
-  int player_no;
+  SEPLAYER_ID player_no;
 
-  player_no = GFL_SOUND_GetPlayerNo( param[0] );
+  player_no = PMSND_GetSE_DefaultPlayerID( param[0] );
 
-  GFL_SOUND_StopPlayerNo( player_no );
+  PMSND_StopSE_byPlayerID( player_no );
 
   return TRUE;
 }
@@ -1288,7 +1288,7 @@ static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat,
     if( (GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT) )
     {
       if(sdat->cnt!=1){
-        GFL_SOUND_PlaySE( SEQ_SE_SELECT1 );
+        PMSND_PlaySE( SEQ_SE_SELECT1 );
       }
       sdat->cnt = 1;  //‚¨‚ñ‚È‚Ì‚±
       INTRO_G3D_SelectSet( wk->g3d, 21 );
@@ -1297,7 +1297,7 @@ static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat,
     else if( (GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT) )
     {
       if(sdat->cnt!=0){
-        GFL_SOUND_PlaySE( SEQ_SE_SELECT1 );
+        PMSND_PlaySE( SEQ_SE_SELECT1 );
       }
       sdat->cnt = 0;  //‚¨‚Æ‚±‚Ì‚±
       INTRO_G3D_SelectSet( wk->g3d, 19 );
@@ -1305,7 +1305,7 @@ static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat,
     // Œˆ’è
     else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
-      GFL_SOUND_PlaySE( SEQ_SE_DECIDE1 );
+      PMSND_PlaySE( SEQ_SE_DECIDE1 );
       sdat->seq++;
     }
     break;

@@ -1934,7 +1934,7 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
         //2:移動の時はコピーを使う。
         PLATE_CNT_UpdateAll( wk );
 
-        GFL_SOUND_PlaySE( SE_MOVE_CURSOR );
+        PMSND_PlaySE( SE_MOVE_CURSOR );
       
         HOSAKA_Printf("list_head_id=%d select_id=%d \n", wk->list_head_id, wk->select_id );
       }
@@ -1964,7 +1964,7 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
         
         PLATE_CNT_UpdateAll( wk );
 
-        GFL_SOUND_PlaySE( SE_MOVE_CURSOR );
+        PMSND_PlaySE( SE_MOVE_CURSOR );
      
         HOSAKA_Printf("list_head_id=%d select_id=%d \n", wk->list_head_id, wk->select_id );
       }
@@ -1988,7 +1988,7 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
         {
           // 移動があった場合は更新
           PLATE_CNT_UpdateAll( wk );
-          GFL_SOUND_PlaySE( SE_MOVE_LISTBAR_ICON );
+          PMSND_PlaySE( SE_MOVE_LISTBAR_ICON );
         }
         wk->b_touch = TRUE;
         b_input = FALSE;
@@ -2042,7 +2042,7 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
               // 移動があった場合、または、選択されていたものが無効化された場合、は更新
               PLATE_CNT_UpdateAll( wk );
             }
-            GFL_SOUND_PlaySE( SE_MOVE_LISTBAR_ICON );
+            PMSND_PlaySE( SE_MOVE_LISTBAR_ICON );
             wk->b_touch = TRUE;
             b_input = FALSE;
           }
@@ -2333,7 +2333,7 @@ static BOOL ScenePlateSelect_Main( int* seq , void* work )
     // メニューを開く前に決定アニメをする
     if( b_decide )
     {
-      GFL_SOUND_PlaySE( SE_DECIDE );  // 音は押した瞬間に鳴らしたいのでここで鳴らす
+      PMSND_PlaySE( SE_DECIDE );  // 音は押した瞬間に鳴らしたいのでここで鳴らす
       wk->wk_bg.isDecide = TRUE;
     }
   }
@@ -2350,7 +2350,7 @@ static BOOL ScenePlateSelect_Main( int* seq , void* work )
   {
     PMS_DATA* pms;
 
-    //GFL_SOUND_PlaySE( SE_DECIDE );  // 音は押した瞬間に鳴らすのでここでは鳴らさない
+    //PMSND_PlaySE( SE_DECIDE );  // 音は押した瞬間に鳴らすのでここでは鳴らさない
     
     pms = PMSW_GetDataEntry( wk->pmsw_save, wk->select_id );
 

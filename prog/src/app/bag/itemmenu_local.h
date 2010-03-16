@@ -41,6 +41,7 @@ enum
 { 
   SE_BAG_DECIDE       = SEQ_SE_DECIDE1, ///< 決定音
   SE_BAG_CANCEL       = SEQ_SE_CANCEL1, ///< キャンセル音
+  SE_BAG_CLOSE        = SEQ_SE_CLOSE1,	///< キャンセル音（Ｘボタン）
   SE_BAG_REGIST_Y     = SEQ_SE_SYS_07,  ///< バッグYボタン登録音
   SE_BAG_SELL         = SEQ_SE_SYS_22,  ///< 売却音
   SE_BAG_TRASH        = SEQ_SE_SYS_08,  ///< 捨てる音

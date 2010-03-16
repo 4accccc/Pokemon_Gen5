@@ -1291,7 +1291,7 @@ static int WO_SeqSelectDecide(WO_WORK* wk)
 {
   //ñﬂÇÈ
   if(wk->cur_pos == CPOS_BACK){
-    GFL_SOUND_PlaySE( WO_SE_CANCEL );
+    PMSND_PlaySE( WO_SE_CANCEL );
     WO_SelCursorChange( wk, wk->dat->pos, PALDW_CURSOR);
 //    WO_ScrollCursorOff( wk );
     WO_TalkMsgSet( wk, MSG_END_CHECK );
@@ -1322,7 +1322,7 @@ static int WO_SeqSelectDecide(WO_WORK* wk)
   if(wk->dat->scr + wk->dat->pos >= wk->sel_max){
     return SEQ_SELECT;
   }
-  GFL_SOUND_PlaySE( WO_SE_DECIDE );
+  PMSND_PlaySE( WO_SE_DECIDE );
   WO_SelCursorChange( wk, wk->dat->pos, PALDW_CURSOR);
 //  WO_ScrollCursorOff( wk );
   if( WO_WazaSetCheck( wk ) < 4 ){
@@ -1421,13 +1421,13 @@ static int WO_SeqSelect( WO_WORK * wk )
   case 3:   // ãZÇS
     if( GFL_UI_TP_GetTrg() == FALSE ){
       if( wk->dat->scr + ret < wk->sel_max ){
-        GFL_SOUND_PlaySE( WO_SE_DECIDE );
+        PMSND_PlaySE( WO_SE_DECIDE );
         WazaSelBgChange( wk, ret );
         return WazaSelectEnter( wk );
       }
     }else{
       if( wk->dat->scr + ret < wk->sel_max ){
-        GFL_SOUND_PlaySE( WO_SE_LIST_MOVE );
+        PMSND_PlaySE( WO_SE_LIST_MOVE );
         WazaSelBgChange( wk, ret );
       }else{
         WazaSelBgChange( wk, 5 );
@@ -1436,17 +1436,17 @@ static int WO_SeqSelect( WO_WORK * wk )
     break;
 
   case 4:   // â∫ñÓàÛ
-//    GFL_SOUND_PlaySE( WO_SE_PAGE_MOVE );
+//    PMSND_PlaySE( WO_SE_PAGE_MOVE );
 //    ScrollButtonOnOff( wk );
     break;
 
   case 5:   // è„ñÓàÛ
-//    GFL_SOUND_PlaySE( WO_SE_PAGE_MOVE );
+//    PMSND_PlaySE( WO_SE_PAGE_MOVE );
     break;
 
   case 6:           // Ç‡Ç«ÇÈ
   case CURSORMOVE_CANCEL:   // ÉLÉÉÉìÉZÉã
-    GFL_SOUND_PlaySE( WO_SE_CANCEL );
+    PMSND_PlaySE( WO_SE_CANCEL );
     WazaSelBgChange( wk, 5 );
     EnterButtonOnOff( wk, FALSE );  // åàíËÇè¡Ç∑
 /*
@@ -1461,11 +1461,11 @@ static int WO_SeqSelect( WO_WORK * wk )
 
 
   case 7:   // Ç®Ç⁄Ç¶ÇÈ
-    GFL_SOUND_PlaySE( WO_SE_DECIDE );
+    PMSND_PlaySE( WO_SE_DECIDE );
     return EnterButtonAnmInit( wk, SEQ_ENTER_BUTTON );
 
   case CURSORMOVE_CURSOR_MOVE:  // à⁄ìÆ
-//    GFL_SOUND_PlaySE( WO_SE_LIST_MOVE );
+//    PMSND_PlaySE( WO_SE_LIST_MOVE );
     break;
 
   case CURSORMOVE_CURSOR_ON:    // ÉJÅ[É\Éãï\é¶
@@ -3317,7 +3317,7 @@ static void CursorMoveCallBack_Move( void * work, int now_pos, int old_pos )
 
   // ãZ
   if( now_pos <= 3 ){
-    GFL_SOUND_PlaySE( WO_SE_LIST_MOVE );
+    PMSND_PlaySE( WO_SE_LIST_MOVE );
     wk->dat->pos = now_pos;
     if( wk->dat->scr + wk->dat->pos < wk->sel_max ){
       BattleWazaParamPut( wk, WO_SelWazaGet( wk ) );
@@ -3328,7 +3328,7 @@ static void CursorMoveCallBack_Move( void * work, int now_pos, int old_pos )
   }else if( now_pos == 6 ){
     // â∫ÇÃãZÇ©ÇÁ
     if( old_pos == 3 && wk->dat->scr + 4 < wk->sel_max ){
-      GFL_SOUND_PlaySE( WO_SE_PAGE_MOVE );
+      PMSND_PlaySE( WO_SE_PAGE_MOVE );
       now_pos = 3;
       CURSORMOVE_PosSet( wk->cmwk, now_pos );
       wk->dat->scr++;
@@ -3340,7 +3340,7 @@ static void CursorMoveCallBack_Move( void * work, int now_pos, int old_pos )
     // è„ÇÃãZÇ©ÇÁ
     }else if( old_pos == 0 ){
       if( wk->dat->scr != 0 ){
-        GFL_SOUND_PlaySE( WO_SE_PAGE_MOVE );
+        PMSND_PlaySE( WO_SE_PAGE_MOVE );
         wk->dat->scr--;
         WO_WazaListDraw( wk );
         BattleWazaParamPut( wk, WO_SelWazaGet( wk ) );
@@ -3354,12 +3354,12 @@ static void CursorMoveCallBack_Move( void * work, int now_pos, int old_pos )
     }else{
       now_pos = 3;
       CURSORMOVE_PosSet( wk->cmwk, 3 );
-      //GFL_SOUND_PlaySE( WO_SE_LIST_MOVE );
+      //PMSND_PlaySE( WO_SE_LIST_MOVE );
       //BattleWazaParamPut( wk, BMPMENULIST_CANCEL );
     }
   // ÇªÇÃëº
   }else{
-    GFL_SOUND_PlaySE( WO_SE_LIST_MOVE );
+    PMSND_PlaySE( WO_SE_LIST_MOVE );
   }
 
   WO_SelCursorChange( wk, now_pos, PALDW_CURSOR );
@@ -3383,7 +3383,7 @@ static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos )
     }
   // â∫
   }else if( now_pos == 4 ){
-    GFL_SOUND_PlaySE( WO_SE_PAGE_MOVE );
+    PMSND_PlaySE( WO_SE_PAGE_MOVE );
     now_pos = wk->dat->pos;
     wk->dat->scr++;
     BattleWazaParamPut( wk, WO_SelWazaGet( wk ) );
@@ -3395,7 +3395,7 @@ static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos )
     CURSORMOVE_PosSet( wk->cmwk, now_pos );
   // è„
   }else if( now_pos == 5 ){
-    GFL_SOUND_PlaySE( WO_SE_PAGE_MOVE );
+    PMSND_PlaySE( WO_SE_PAGE_MOVE );
     now_pos = wk->dat->pos;
     wk->dat->scr--;
     BattleWazaParamPut( wk, WO_SelWazaGet( wk ) );

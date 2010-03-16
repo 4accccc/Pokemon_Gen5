@@ -116,7 +116,7 @@ static void (*c_cmdtbl[ DEMO3D_CMD_TYPE_MAX ])() =
 //-----------------------------------------------------------------------------
 static void CMD_SE_PLAY(CMD_UNIT* unit, int* param)
 {
-  int player_no;
+  SEPLAYER_ID player_no;
 
   //ÉvÉåÉCÉÑÅ[No
   if(param[4] != DEMO3D_SE_PARAM_DEFAULT){
@@ -125,23 +125,23 @@ static void CMD_SE_PLAY(CMD_UNIT* unit, int* param)
     PMSND_PlaySE(param[0]);
   }
   
-  player_no = GFL_SOUND_GetPlayerNo( param[0] );
+  player_no = PMSND_GetSE_DefaultPlayerID( param[0] );
 
   // volume
   if( param[1] != DEMO3D_SE_PARAM_DEFAULT )
   {
-    GFL_SOUND_SetVolume( player_no, param[1] );
+    PMSND_PlayerSetInitialVolume( player_no, param[1] );
   }
 
   // pan
   if( param[2] != DEMO3D_SE_PARAM_DEFAULT )
   {
-    GFL_SOUND_SetPan( player_no, 0xFFFF, param[2] );
+		PMSND_SetStatusSE_byPlayerID( player_no, PMSND_NOEFFECT, PMSND_NOEFFECT, param[2] );
   }
 
   //pitch
   if( param[3] != DEMO3D_SE_PARAM_DEFAULT){
-    GFL_SOUND_SetPitch( player_no, 0xFFFF, param[3]);
+		PMSND_SetStatusSE_byPlayerID( player_no, PMSND_NOEFFECT, param[3], PMSND_NOEFFECT );
   }
 }
 
@@ -156,11 +156,11 @@ static void CMD_SE_PLAY(CMD_UNIT* unit, int* param)
 //-----------------------------------------------------------------------------
 static void CMD_SE_STOP(CMD_UNIT* unit, int* param)
 {
-  int player_no;
+  SEPLAYER_ID player_no;
 
-  player_no = GFL_SOUND_GetPlayerNo( param[0] );
+  player_no = PMSND_GetSE_DefaultPlayerID( param[0] );
 
-  GFL_SOUND_StopPlayerNo( player_no );
+  PMSND_StopSE_byPlayerID( player_no );
 }
 
 //-----------------------------------------------------------------------------

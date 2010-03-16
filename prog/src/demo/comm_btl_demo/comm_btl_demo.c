@@ -788,7 +788,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {
     HOSAKA_Printf("aaa\n");
-    GFL_SOUND_PlaySE( SE_WIN_IN );
+    PMSND_PlaySE( SE_WIN_IN );
   }
 #endif
 
@@ -1045,7 +1045,7 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
 
     if( wk->timer == START_DEMO_VS_OPEN_SYNC )
     {
-      GFL_SOUND_PlaySE( SE_VS_IN );
+      PMSND_PlaySE( SE_VS_IN );
       // 「VS」出現パーティクル
       G3D_PTC_CreateEmitter( &wk->wk_g3d, 0, &(VecFx32){0,0,-100} );
       G3D_PTC_CreateEmitter( &wk->wk_g3d, 1, &(VecFx32){0,0,-100} );
@@ -1227,7 +1227,7 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
           pos = RESULT_POS_YOU;
         }
 
-        GFL_SOUND_PlaySE( SE_WIN_IN );
+        PMSND_PlaySE( SE_WIN_IN );
         RESULT_UNIT_SetOpen( &wk->result_unit, pos, COMM_BTL_DEMO_RESULT_WIN );
       }
       // LOSE表示
@@ -1682,7 +1682,7 @@ static void _ball_open( BALL_UNIT* unit, int start_sync )
 
   if( id < unit->max )
   {
-    if( id == 0 ){ GFL_SOUND_PlaySE( SE_BALL_IN ); } // ボール
+    if( id == 0 ){ PMSND_PlaySE( SE_BALL_IN ); } // ボール
 
     // パーティクル表示
     if( type_is_normal(unit->type) )
