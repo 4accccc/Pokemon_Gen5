@@ -53,7 +53,8 @@ typedef struct _EWK_EFFECT_ENCOUNT
 
 #ifdef PM_DEBUG
   u8  deb_interval;
-  u8  deb_prob;
+  u8  deb_prob:7;
+  u8  deb_prob_fix:1;
   u8  deb_ofsx;
   u8  deb_ofsz;
 #endif

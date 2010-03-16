@@ -72,7 +72,7 @@ typedef struct _ENCOUNT_DATA{
       u8  probWaterSp;   ///<水上特殊エンカウント率(0or1)
       u8  probFishing;   ///<釣りエンカウント率
       u8  probFishingSp; ///<釣り特殊エンカウント率(0or1)
-      u8  itemTblIdx:7;   ///<フィールドエフェクトアイテムテーブル参照idx
+      u8  effenc_type:7;   ///<フィールドエフェクトタイプ
       u8  enable_f:1;     ///<有効無効フラグ
     };
     u8 prob[ENC_LOCATION_MAX+1];

@@ -13,9 +13,11 @@
 #include "fieldmap.h"
 #include "map_attr.h"
 
+#include "savedata/misc.h"
 #include "field_encount.h"
 #include "fldeff_encount.h"
 #include "script.h"
+#include "script_def.h"
 
 #include "encount_data.h"
 #include "field_encount.h"
@@ -123,19 +125,11 @@ void EFFECT_ENC_DeleteWork( EFFECT_ENCOUNT* eff_wk )
  */
 void EFFECT_ENC_Init( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
 {
+  //フィールドエフェクトコントローラ取得
   eff_wk->fectrl = FIELDMAP_GetFldEffCtrl( enc->fwork );
 
-#ifdef PM_DEBUG
-  {
-    ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork( enc->gdata );
-    EWK_EFFECT_ENCOUNT* wk = &ewk->effect_encount;
-    eff_wk->walk_ct_interval = wk->deb_interval;
-    eff_wk->prob = wk->deb_prob;
-  }
-#else
-  eff_wk->walk_ct_interval = EFFENC_DEFAULT_INTERVAL;
-  eff_wk->prob = EFFENC_DEFAULT_PROB;
-#endif
+  //初期インターバルと確率指定
+  EFFECT_ENC_SetProb( enc, eff_wk );
 
   //パラメータをPop
   effect_EffectPop( enc, eff_wk );
@@ -154,12 +148,59 @@ void EFFECT_ENC_End( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
 }
 
 /*
+ *  @brief  エフェクトエンカウント 発生確率&歩数インターバル設定
+ */
+void EFFECT_ENC_SetProb( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
+{
+  u8 prob,interval,type;
+
+  static const u8 prob_tbl[][2] = {
+    { EFFENC_NORMAL_INTERVAL, EFFENC_NORMAL_PROB },
+    { EFFENC_CAVE_INTERVAL, EFFENC_CAVE_PROB },
+    { EFFENC_BRIDGE_INTERVAL, EFFENC_BRIDGE_PROB },
+  };
+
+  if( enc->encdata->effenc_type > 2){
+    type = 0;
+    GF_ASSERT(0);
+  }else{
+    type = enc->encdata->effenc_type;
+  }
+  interval = prob_tbl[type][0];
+  prob = prob_tbl[type][1];
+
+#ifdef PM_DEBUG
+  {
+    ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork( enc->gdata );
+    EWK_EFFECT_ENCOUNT* wk = &ewk->effect_encount;
+
+    if( wk->deb_prob_fix ){
+      eff_wk->walk_ct_interval = wk->deb_interval;
+      eff_wk->prob = wk->deb_prob;
+    }else{
+      eff_wk->walk_ct_interval = wk->deb_interval = interval;
+      eff_wk->prob = wk->deb_prob = prob;
+    }
+  }
+#else
+  eff_wk->walk_ct_interval = interval;
+  eff_wk->prob = prob;
+#endif
+}
+
+
+/*
  *  @brief  エンカウントエフェクト起動チェック
  */
 void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
 {
   EFFECT_ENCOUNT* eff_wk = enc->eff_enc;
   ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+
+  //最初のジムバッジ入手前は起動しない
+  if( !MISC_GetBadgeFlag( GAMEDATA_GetMiscWork(enc->gdata), BADGE_ID_01 )){
+    return;
+  }
 
   //グリッドベースマップかチェック
   if( FIELDMAP_GetBaseSystemType( enc->fwork ) != FLDMAP_BASESYS_GRID ){
@@ -733,6 +774,8 @@ u32 EFFENC_DEB_NumInputParamGet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 p
     return wk->deb_interval;
   case EFFENC_DNI_PROB: 
     return wk->deb_prob;
+  case EFFENC_DNI_PROB_FIX: 
+    return wk->deb_prob_fix;
   case EFFENC_DNI_OFSX: 
     return wk->deb_ofsx;
   case EFFENC_DNI_OFSZ: 
@@ -758,6 +801,9 @@ void EFFENC_DEB_NumInputParamSet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 
   case EFFENC_DNI_PROB: 
     wk->deb_prob = value;
     eff_wk->prob = wk->deb_prob;
+    break;
+  case EFFENC_DNI_PROB_FIX: 
+    wk->deb_prob_fix = value;
     break;
   case EFFENC_DNI_OFSX: 
     wk->deb_ofsx = value;

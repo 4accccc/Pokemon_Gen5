@@ -651,15 +651,14 @@ static void enc_CreateBattleParamMovePoke( FIELD_ENCOUNT *enc, const ENCPOKE_FLD
 
 //--------------------------------------------------------------
 /**
- * バトルパラム作成（トレーナー戦）
- * @param
- * @retval
+ * フィールドエンカウント　トレーナー用BATTLE_SETUP_PARAM*作成
+ * @param enc FIELD_ENCOUNT*
+ * @param tr_id トレーナーID
+ * @retval nothing
  */
 //--------------------------------------------------------------
-static void enc_CreateTrainerBattleParam(
-    FIELD_ENCOUNT *enc,
-    BATTLE_SETUP_PARAM *bp, const HEAPID heapID,
-    TrainerID partner_id, TrainerID tr_id0, TrainerID tr_id1 )
+void FIELD_ENCOUNT_SetTrainerBattleParam(
+    FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *bp, int partner_id, int tr_id0, int tr_id1, HEAPID heapID )
 {
   GAMESYS_WORK *gsys = enc->gsys;
   GAMEDATA *gdata = enc->gdata;
@@ -682,21 +681,6 @@ static void enc_CreateTrainerBattleParam(
   { //シングル
     BTL_SETUP_Single_Trainer( bp, gdata, &sit, tr_id0, heapID );
   }
-}
-
-//--------------------------------------------------------------
-/**
- * フィールドエンカウント　トレーナー用BATTLE_SETUP_PARAM*作成
- * @param enc FIELD_ENCOUNT*
- * @param tr_id トレーナーID
- * @retval nothing
- */
-//--------------------------------------------------------------
-void FIELD_ENCOUNT_SetTrainerBattleParam(
-    FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup, int partner_id, int tr_id0, int tr_id1, HEAPID heapID )
-{
-  KAGAYA_Printf( "トレーナーバトルパラム作成 HEAPID=%d\n", heapID );
-  enc_CreateTrainerBattleParam( enc, setup, heapID, partner_id, tr_id0, tr_id1 );
 }
 
 static BtlWeather btlparam_GetBattleWeather( FIELDMAP_WORK* fieldWork )

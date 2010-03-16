@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-03-16T15:21:48"/>
+	<create user="iwasawa" host="W00157" date="2010-03-16T19:38:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -371,6 +371,13 @@
 　エフェクト発生確率</comment>
 		<language name="JPN" width="240">かくりつ</language>
 		<language name="JPN_KANJI" width="240">確率</language>
+	</row>
+
+	<row id="dni_effenc_prob_fix" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>エフェクトエンカウント関連メニュー
+　デバッグエフェクト発生確率をマップチェンジ時に保持する</comment>
+		<language name="JPN" width="240">かくりつこてい</language>
+		<language name="JPN_KANJI" width="240">確率固定</language>
 	</row>
 
 	<row id="dni_effenc_pos_ofsx" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">

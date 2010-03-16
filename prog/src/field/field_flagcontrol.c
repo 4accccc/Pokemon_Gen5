@@ -68,7 +68,9 @@ void FIELD_FLAGCONT_INIT_WalkStepOver(GAMEDATA * gdata, FIELDMAP_WORK* fieldWork
     EVENTWORK *eventwork = GAMEDATA_GetEventWork( gdata );
     EVENTWORK_ResetEventFlag( eventwork, SYS_FLAG_KAIRIKI );
   }
-  
+  //エフェクトエンカウントの発生インターバルと確率をセット
+  ENCOUNT_WORK_MapWalkStepOverUpdate( fieldWork );
+
 /* PLATUNUM
 	//--冒険ノート用更新処理
 	FldFlgInit_FnoteTownDataSet( fsys );
@@ -197,7 +199,7 @@ void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata, u16 zone_id)
 void FIELD_FLAGCONT_INIT_FlySky(GAMEDATA * gdata, u16 zone_id)
 {
   //エフェクトエンカウント　歩数カウンタークリア他
-  ENCOUNT_WORK_MapChangeUpdate( gdata );
+  ENCOUNT_WORK_SpMapJumpUpdate( gdata );
   
 /*  PLATINUM
 	//サファリフラグクリア
@@ -215,7 +217,7 @@ void FIELD_FLAGCONT_INIT_FlySky(GAMEDATA * gdata, u16 zone_id)
 void FIELD_FLAGCONT_INIT_Teleport(GAMEDATA * gdata, u16 zone_id)
 {
   //エフェクトエンカウント　歩数カウンタークリア他
-  ENCOUNT_WORK_MapChangeUpdate( gdata );
+  ENCOUNT_WORK_SpMapJumpUpdate( gdata );
 /*  PLATINUM
 	//サファリフラグクリア
 	SysFlag_SafariReset( SaveData_GetEventWork(fsys->savedata) );
@@ -233,7 +235,7 @@ void FIELD_FLAGCONT_INIT_Teleport(GAMEDATA * gdata, u16 zone_id)
 void FIELD_FLAGCONT_INIT_Escape(GAMEDATA * gdata, u16 zone_id)
 {
   //エフェクトエンカウント　歩数カウンタークリア他
-  ENCOUNT_WORK_MapChangeUpdate( gdata );
+  ENCOUNT_WORK_SpMapJumpUpdate( gdata );
 /*  PLATINUM
 	//サファリフラグクリア
 	SysFlag_SafariReset( SaveData_GetEventWork(fsys->savedata) );
@@ -251,7 +253,7 @@ void FIELD_FLAGCONT_INIT_Escape(GAMEDATA * gdata, u16 zone_id)
 void FIELD_FLAGCONT_INIT_GameOver(GAMEDATA * gdata, u16 zone_id)
 {
   //エフェクトエンカウント　歩数カウンタークリア他
-  ENCOUNT_WORK_MapChangeUpdate( gdata );
+  ENCOUNT_WORK_SpMapJumpUpdate( gdata );
 /*  PLATINUM
 	EVENTWORK* ev = SaveData_GetEventWork( fsys->savedata );
 

@@ -68,9 +68,22 @@ void ENCOUNT_WORK_Delete( ENCOUNT_WORK* wp )
 }
 
 /**
- *  @brief  マップチェンジ時の状態クリア
+ *  @brief  地続きゾーンまたぎ時の状態セット
  */
-void ENCOUNT_WORK_MapChangeUpdate( GAMEDATA* gdata )
+void ENCOUNT_WORK_MapWalkStepOverUpdate( FIELDMAP_WORK* fieldWork )
+{
+  FIELD_ENCOUNT* encount = FIELDMAP_GetEncount(fieldWork); 
+
+  EFFECT_ENC_SetProb( encount, encount->eff_enc );
+}
+
+/**
+ *  @brief  特殊マップジャンプ時の状態セット
+ *
+ *  空を飛ぶ、穴抜け、テレポート、全滅時のマップチェンジのみから呼び出す
+ *　※マップジャンプ時全てに適用する状態遷移はない
+ */
+void ENCOUNT_WORK_SpMapJumpUpdate( GAMEDATA* gdata )
 {
   ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(gdata);
 

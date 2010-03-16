@@ -27,15 +27,19 @@ extern EFFECT_ENCOUNT* EFFECT_ENC_CreateWork( HEAPID heapID );
 extern void EFFECT_ENC_DeleteWork( EFFECT_ENCOUNT* eff_wk );
 
 /*
+ *  @brief  エフェクトエンカウント システム初期化
+ */
+extern void EFFECT_ENC_Init( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
+
+/*
  *  @brief  エフェクトエンカウント　システム終了処理
  */
 extern void EFFECT_ENC_End( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
 
 /*
- *  @brief  エフェクトエンカウント システム初期化
+ *  @brief  エフェクトエンカウント 発生確率&歩数インターバル設定
  */
-extern void EFFECT_ENC_Init( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
-
+extern void EFFECT_ENC_SetProb( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
 
 
 /*
@@ -93,6 +97,7 @@ extern u16 EFFECT_ENC_GetEffectEncountItem( FIELD_ENCOUNT* enc );
 enum{
   EFFENC_DNI_INTERVAL,
   EFFENC_DNI_PROB,
+  EFFENC_DNI_PROB_FIX,
   EFFENC_DNI_OFSX,
   EFFENC_DNI_OFSZ,
 };

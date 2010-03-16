@@ -1613,7 +1613,7 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
         }
 
         if( key_trg & PAD_BUTTON_X ){
-          move = MV_RND;
+          move = MV_RT2;
         }else if( (key_trg & PAD_KEY_UP )){
           move = MV_UP;
         }else if( key_trg & PAD_KEY_DOWN ){

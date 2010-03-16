@@ -49,7 +49,8 @@ extern void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc );
 extern ENCOUNT_WORK * ENCOUNT_WORK_Create( HEAPID heapID );
 extern void ENCOUNT_WORK_Delete( ENCOUNT_WORK* wp );
 
-extern void ENCOUNT_WORK_MapChangeUpdate( GAMEDATA* gdata );
+extern void ENCOUNT_WORK_MapWalkStepOverUpdate( FIELDMAP_WORK* fieldWork );
+extern void ENCOUNT_WORK_SpMapJumpUpdate( GAMEDATA* gdata );
 
 //チェック
 extern void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
