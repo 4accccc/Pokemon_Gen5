@@ -71,6 +71,8 @@ FS_EXTERN_OVERLAY(debug_data);
 #include "debug/debug_flg.h"
 #endif
 
+#include "seasonpoke_form.h"    //for SEASONPOKE_FORM_ChangeForm
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -227,6 +229,15 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
       GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Season( gsys, fieldmap, season, season ) );
 #endif
       GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
+    }
+
+    //季節ポケモンフォルムチェンジコンテニュー時は必ず通るようにする
+    {
+      u8 season;
+      POKEPARTY *party;
+      season = GAMEDATA_GetSeasonID(gamedata);
+      party = GAMEDATA_GetMyPokemon(gamedata);
+      SEASONPOKE_FORM_ChangeForm(party, season);
     }
     (*seq)++;
     break;
@@ -532,6 +543,14 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     {
       GAMEDATA_SetSeasonID( gameData, work->nextSeason );
       OBATA_Printf( "update season %d ==> %d\n", work->prevSeason, work->nextSeason );
+      //季節ポケモンフォルムチェンジ条件を満たしたので、手持ちの季節ポケモンをフォルムチェンジさせる
+      {
+        u8 season;
+        POKEPARTY *party;
+        season = GAMEDATA_GetSeasonID(gameData);
+        party = GAMEDATA_GetMyPokemon(gameData);
+        SEASONPOKE_FORM_ChangeForm(party, season);
+      }
     }
 
     //新しいマップモードなど機能指定を行う
