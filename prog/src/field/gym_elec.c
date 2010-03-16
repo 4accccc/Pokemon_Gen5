@@ -79,7 +79,7 @@
 #define DOWN_SE_FRM2  (1343488)
 
 #define LOOP_SE_FRM1  (724992)
-#define LOOP_SE_FRM2  (720896)
+#define LOOP_SE_FRM2  (/*720896*/745472)
 
 
 #define SPD_LV5 (FX32_ONE * 8 * 4)
@@ -855,8 +855,9 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
           FSND_PlayEnvSE( fs, GYM_ELEC_SE_DRIVE );
           PMSND_PlaySE(GYM_ELEC_SE_SPEED);
           player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_SPEED );
+          //ボリュームセット
+          FSND_SetEnvSEVol( fs, GYM_ELEC_SE_DRIVE, SE_VOL );
           //鳴らし始めはボリューム0にしとく
-          FSND_SetEnvSEVol( fs, GYM_ELEC_SE_DRIVE, 0 );
           NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id ), 0 );
 
         }
@@ -872,6 +873,7 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
         //自分の乗っているカプセルの場合はループＳＥをストップ
         if ( (tmp->RadeRaleIdx != RIDE_NONE)&&(i == tmp->RadeRaleIdx / 2) ){
           //ループＳＥストップ
+          FSND_StopEnvSE( fs, GYM_ELEC_SE_DRIVE );
           PMSND_StopSE();
         }
         //指定時間とめるためタイマーをセット
@@ -1672,11 +1674,13 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     switch( tmp->RadeRaleIdx ){
     case 2:
       if (frm == UP_SE_FRM1){
+        FSND_StopEnvSE( fs, GYM_ELEC_SE_DRIVE );
         PMSND_StopSE();
         //昇りＳＥスタート
         PMSND_PlaySE(GYM_ELEC_SE_RISE);
       }else if(frm == TOP_SE_STOP_FRM1){
         //SEストップ
+        FSND_StopEnvSE( fs, GYM_ELEC_SE_DRIVE );  
         PMSND_StopSE();
       }else if(frm == DOWN_SE_FRM1){
         //下りＳＥスタート
@@ -1685,11 +1689,13 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       break;
     case 3:
       if (frm == UP_SE_FRM2){
+        FSND_StopEnvSE( fs, GYM_ELEC_SE_DRIVE );
         PMSND_StopSE();
         //昇りＳＥスタート
         PMSND_PlaySE(GYM_ELEC_SE_RISE);
       }else if(frm == TOP_SE_STOP_FRM2){
         //SEストップ
+        FSND_StopEnvSE( fs, GYM_ELEC_SE_DRIVE );
         PMSND_StopSE();
       }else if(frm == DOWN_SE_FRM2){
         //下りＳＥスタート
@@ -1698,6 +1704,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       break;
     case 4:
       if (frm == LOOP_SE_FRM1){
+        FSND_StopEnvSE( fs, GYM_ELEC_SE_DRIVE );
         PMSND_StopSE();
         //宙返りＳＥスタート
         PMSND_PlaySE(GYM_ELEC_SE_LOOP);
@@ -1705,6 +1712,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       break;
     case 5:
       if (frm == LOOP_SE_FRM2){
+        FSND_StopEnvSE( fs, GYM_ELEC_SE_DRIVE );
         PMSND_StopSE();
         //宙返りＳＥスタート
         PMSND_PlaySE(GYM_ELEC_SE_LOOP);
