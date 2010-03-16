@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-14T15:37:16"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-03-16T12:11:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,7 +342,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1473" top="293" right="2178" bottom="921" maximized="no" rayout="Vertical2">
+	<dialog left="116" top="124" right="821" bottom="752" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="58" top="61" right="531" bottom="459" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -610,6 +610,11 @@
 	<row id="IRCBTL_STR_42">
 		<language name="JPN" width="256">てもちで　たたかう</language>
 		<language name="JPN_KANJI" width="256">てもちで　戦う</language>
+	</row>
+
+	<row id="IRCBTL_STR_43">
+		<language name="JPN" width="256">ともだちコードを　とうろく　しました</language>
+		<language name="JPN_KANJI" width="256">ともだちコードを　登録しました</language>
 	</row>
 
 	<flowchart-group-list>
