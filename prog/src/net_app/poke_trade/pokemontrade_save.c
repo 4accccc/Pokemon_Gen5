@@ -227,6 +227,8 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
     )
   {
     pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
+    PMSND_PopBGM();
+    PMSND_FadeInBGM( 24 );
     _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
     return;
   }

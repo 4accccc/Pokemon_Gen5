@@ -1676,7 +1676,7 @@ static void _touchState_BeforeTimeing2(POKEMON_TRADE_WORK* pWork)
   if(!POKEMONTRADEPROC_IsNetworkMode(pWork) || GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_POKECOLOR,WB_NET_TRADE_SERVICEID))
   {
     IRC_POKETRADE3D_SetColorTex(pWork);
-    POKETRADE_MESSAGE_WindowClear(pWork);
+ //   POKETRADE_MESSAGE_WindowClear(pWork);
 
     GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
     
@@ -1743,8 +1743,8 @@ static void _touchState_BeforeTimeing1Send(POKEMON_TRADE_WORK* pWork)
 
 static void _touchState_BeforeTimeing1(POKEMON_TRADE_WORK* pWork)
 {
-  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
-  POKETRADE_MESSAGE_WindowOpen(pWork);
+//  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
+//  POKETRADE_MESSAGE_WindowOpen(pWork);
   //メッセージ時計アイコン  @todo   エリアマネージャーにしかられる
 //  POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
 
@@ -3152,7 +3152,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   POKEMONTRADE_PARAM* pParentWork = pwk;
   POKEMON_TRADE_WORK *pWork = mywk;
 
-  if(GFL_NET_IsInit()){
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     GFL_NET_SetAutoErrorCheck(TRUE);
     GFL_NET_SetNoChildErrorCheck(TRUE);
   }
@@ -3471,9 +3471,10 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
   GFL_G3D_DRAW_End();
 
 
-
-  if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
-    retCode = GFL_PROC_RES_CONTINUE;
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+      retCode = GFL_PROC_RES_CONTINUE;
+    }
   }
 
 
