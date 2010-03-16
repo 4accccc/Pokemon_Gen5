@@ -9434,15 +9434,19 @@
 /**
  * @brief 手持ちの配布ダルタニスの位置を返す
  *
- * @param pos       手持ちポケモンの位置
- * @param ret       条件を満たしたダルタニスがいた場合はTRUE
+ * @param monsno    対象モンスターナンバー
+ * @param skill_flg 固有技を持っていないことを条件に加える場合はTRUE
+ * @param pos       手持ちポケモンの位置    
+ * @param ret       条件を満たしたポケモンがいた場合はTRUE
  */
 //--------------------------------------------------------------
-#define _GET_EVT_DARUTANIS_POS( pos, ret ) \
-    _ASM_GET_EVT_DARUTANIS_POS pos, ret
+#define _GET_EVT_POKE_POS( monsno, skill_flg, pos, ret ) \
+    _ASM_GET_EVT_POKE_POS monsno, skill_flg, pos, ret
 
-  .macro _ASM_GET_EVT_DARUTANIS_POS pos, ret
-  .short EV_SEQ_GET_EVT_DARUTANIS_POS
+  .macro _ASM_GET_EVT_POKE_POS monsno, skill_flg, pos, ret
+  .short EV_SEQ_GET_EVT_POKE_POS
+  .short \monsno
+  .short \skill_flg
   .short \pos
   .short \ret
   .endm
