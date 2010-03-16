@@ -29,6 +29,7 @@ _EVENT_DATA		ev_bg_t02_sign1_01
 _EVENT_DATA		ev_bg_t02_sign2_01
 _EVENT_DATA		ev_scene_t02_speech_01
 _EVENT_DATA		ev_pos_t02_rival_speech2
+_EVENT_DATA		ev_t02_girl1_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -1184,4 +1185,11 @@ _ANIME_LABEL anm_player_661go
 	_ANIME_DATA		AC_WALK_U_8F,3
 	_ANIME_DATA		AC_DIR_L,1
 	_ANIME_DATA		ACMD_END,0
+	
+/**************************************************************/
+/*		T02 GIRL1											  */
+/**************************************************************/
+EVENT_START		ev_t02_girl1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01_girl1_01 )
+EVENT_END
 
