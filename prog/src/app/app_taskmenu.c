@@ -200,12 +200,16 @@ APP_TASKMENU_WORK* APP_TASKMENU_OpenMenuEx( APP_TASKMENU_INITWORK *initWork, con
 void APP_TASKMENU_CloseMenu( APP_TASKMENU_WORK *work )
 {
   u8 i;
+  u8 frm;
+
+  frm = GFL_BMPWIN_GetFrame(work->menuWin[0]);
+
   for(i=0;i<work->initWork.itemNum;i++)
   {
     GFL_BMPWIN_ClearScreen( work->menuWin[i] );
     GFL_BMPWIN_Delete( work->menuWin[i] );
   }
-  GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->menuWin[0]) );
+  GFL_BG_LoadScreenV_Req( frm );
   
   GFL_HEAP_FreeMemory( work->menuWin );
   GFL_HEAP_FreeMemory( work->itemWork );
