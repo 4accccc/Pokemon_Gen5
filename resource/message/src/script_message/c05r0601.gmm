@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-03-10T22:10:24"/>
+	<create user="matsumiya" host="W00224" date="2010-03-16T16:18:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="175"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1304" top="235" right="2009" bottom="863" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,8 +294,7 @@
 
 	<row id="msg_c05r0601_man3_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・売り子その１
-　続けて、道具屋の処理へ</comment>
+・続けて、道具屋の処理へ</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
 		<language name="JPN" width="256">ポケモンを　げんきにする
 ふしぎな　かんぽうやく　あるよ▼</language>
@@ -428,8 +427,7 @@
 
 	<row id="msg_c05r0601_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・仮メッセージ
-・売り子その２</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">こんにちは！
 なんでも　みていってくださいね</language>
@@ -448,8 +446,7 @@
 
 	<row id="msg_c05r0601_sunglasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・仮メッセージ
-・売り子その４</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">あなたー　よくきたー！
 なんでも　かってけー！</language>
@@ -479,7 +476,7 @@
 		<language name="JPN_KANJI" width="256">季節を　大事にする
 ゆったりとして　街が　あるの▼
 そこから　いろいろ
-輸出　しているんだって！</language>
+輸出しているんだって！</language>
 	</row>
 
 	<row id="msg_c05r0601_nurse_01w">
@@ -534,6 +531,18 @@
 荷物が　ホドモエに　届く……[BE:01:ページ切り替え（クリア）]
 世界って　こうやって
 どこかに　つながっているんだよな</language>
+	</row>
+
+	<row id="msg_c05r0601_hakaim_end_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・クリア後に出現
+　GRIDX=4、GRIDZ=9
+・続けて、道具屋の処理（shop_okou）へ</comment>
+		<attribute name="キャラ指定">hakaim</attribute>
+		<language name="JPN" width="256">もとプラズマだん　ですが
+おこうは　いりませんか？▼</language>
+		<language name="JPN_KANJI" width="256">元プラズマ団　ですが
+おこうは　いりませんか？▼</language>
 	</row>
 
 	<flowchart-group-list>
