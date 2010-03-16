@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/13 19:21:24
+#save date:2010/03/16 17:46:52
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d02.wms
 #SECTION START:OBJ_EVENT
@@ -299,11 +299,11 @@ BABYBOY2
 #MOVE CODE Number
 MV_RT2
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_KINDERGARTENM_05
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -324,17 +324,17 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_KIDERGARTENW_04
+TR_KINDERGARTENW_04
 #OBJ CODE Number
 BABYGIRL2
 #MOVE CODE Number
 MV_UP
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_TRID_KINDERGARTENW_04
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
