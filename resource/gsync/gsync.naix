@@ -33,8 +33,7 @@ enum {
 	NARC_gsync_upper_bg_NSCR = 19,
 	NARC_gsync_gsync_obj_NANR = 20,
 	NARC_gsync_hand_obj_NANR = 21,
-	NARC_gsync_poke_icon_128k_NANR = 22,
-	NARC_gsync_save3_bin = 23
+	NARC_gsync_poke_icon_128k_NANR = 22
 };
 
 /* NARC_GSYNC_NAIX_ */

@@ -183,9 +183,11 @@ static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,EV_P2PEVENT_WORK * ep2p,in
     break;
   }
   
-  Regulation_GetShooterItem( ep2p->pMatchParam->pRegulation, &ep2p->para.shooterBitWork );
-  PokeRegulation_ModifyLevelPokeParty(ep2p->pMatchParam->pRegulation,  ep2p->pPokeParty);
+//  Regulation_GetShooterItem( ep2p->pMatchParam->pRegulation, &ep2p->para.shooterBitWork );
+//  PokeRegulation_ModifyLevelPokeParty(ep2p->pMatchParam->pRegulation,  ep2p->pPokeParty);
   BATTLE_PARAM_SetPokeParty( &ep2p->para, ep2p->pPokeParty, BTL_CLIENT_PLAYER );
+  BATTLE_PARAM_SetRegulation( &ep2p->para, ep2p->pMatchParam->pRegulation, HEAPID_PROC);
+
 
 }
 
@@ -282,6 +284,9 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   case P2P_BATTLE:
     {
       _pokeListWorkMake(ep2p,GAMESYSTEM_GetGameData(pClub->gsys),ep2p->seq );
+
+      _battleSetting(pClub, ep2p ,ep2p->pMatchParam->seq);
+
       //GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &ep2p->PokeList);
       //GMEVENT_CallProc(pClub->event,FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &ep2p->PokeList);
       GMEVENT_CallProc(pClub->event,FS_OVERLAY_ID(wificlub_subproc), &WifiClubBattle_Sub_ProcData, &ep2p->subProcParam);
@@ -305,7 +310,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     break;
   case P2P_BATTLE_START:
 
-    _battleSetting(pClub, ep2p ,ep2p->pMatchParam->seq);
+   // _battleSetting(pClub, ep2p ,ep2p->pMatchParam->seq);
     PMSND_PlayBGM(ep2p->para.musicDefault);
 
     GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
