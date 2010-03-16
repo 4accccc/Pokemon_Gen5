@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T18:35:55"/>
+	<create user="matsumiya" host="W00224" date="2010-03-16T14:07:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1510" top="255" right="2215" bottom="875" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -296,21 +296,24 @@
 		<comment>♀
 ・続けて画面暗転と回復処理</comment>
 		<attribute name="キャラ指定">GODDESS1</attribute>
-		<language name="JPN" width="256">さあ　やすみなさい[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">さあ　やすみなさい[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">わたしは　あいの　めがみ……
+さあ　やすみなさい……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">わたしは　愛の女神……
+さあ　やすみなさい……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_n01r0203_goddess1_02">
 		<comment>♀
 ・goddess1_01後の回復処理がすんで
 　画面復帰すると自動で表示</comment>
+		<attribute name="キャラ指定">GODDESS1</attribute>
 		<language name="JPN" width="256">げんきに　なったわね
 あなたも　あなたの　ポケモンも……</language>
 		<language name="JPN_KANJI" width="256">元気に　なったわね
 あなたも　あなたの　ポケモンも……</language>
 	</row>
 
-	<row id="msg_n01r0203_goddess2_01">
+	<row id="msg_n01r0203_goddess2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">GODDESS2</attribute>
@@ -328,6 +331,54 @@
 優しい　心根の　子なのです[BE:01:ページ切り替え（クリア）]
 それはもう
 こわいほどに　優しい……</language>
+	</row>
+
+	<row id="msg_n01r0203_goddess2_01w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・WHITEver</comment>
+		<attribute name="キャラ指定">GODDESS2</attribute>
+		<language name="JPN" width="256">わたしは　へいわの　めがみ……▼
+Ｎに　へいおんを　あたえるもの……▼
+……Ｎは　おさなきころより
+ひとと　はなされ▽
+ポケモンと　ともに　そだちました▼
+ひたすら　しんじつを　おいもとめるよう
+イノセントで　あるように……▼
+イノセントほど
+うつくしく　こわいものは　ないのに</language>
+		<language name="JPN_KANJI" width="256">わたしは　平和の女神……▼
+Ｎに　愛を与えるもの……▼
+……Ｎは　幼きころより
+人と　離され▽
+ポケモンと　共に　育ちました▼
+ひたすら　真実を　追い求めるよう
+イノセントで　あるように……▼
+イノセントほど
+美しく　怖いものは　ないのに</language>
+	</row>
+
+	<row id="msg_n01r0203_goddess2_01b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・BLACKver</comment>
+		<attribute name="キャラ指定">GODDESS2</attribute>
+		<language name="JPN" width="256">わたしは　へいわの　めがみ……▼
+Ｎに　へいおんを　あたえるもの……▼
+……Ｎは　おさなきころより
+ひとと　はなされ▽
+ポケモンと　ともに　そだちました▼
+ひたすら　りそうを　おいもとめるよう
+イノセントで　あるように……▼
+イノセントほど
+うつくしく　こわいものは　ないのに</language>
+		<language name="JPN_KANJI" width="256">わたしは　平和の女神……▼
+Ｎに　愛を与えるもの……▼
+……Ｎは　幼きころより
+人と　離され▽
+ポケモンと　共に　育ちました▼
+ひたすら　理想を　追い求めるよう
+イノセントで　あるように……▼
+イノセントほど
+美しく　怖いものは　ないのに</language>
 	</row>
 
 	<flowchart-group-list>
