@@ -11,8 +11,11 @@
 #include "arc_def.h"
 
 #include "gamesystem/gamesystem.h"
+#include "gamesystem/pm_season.h"
+
 #include "field/map_matrix.h"
-#include "field/field_comm/intrude_work.h"
+
+#include "field_comm/intrude_work.h"
 
 #include "arc/fieldmap/map_replace.naix"
 #include "arc/fieldmap/map_replace.h"
@@ -303,7 +306,7 @@ static void MAPREPLACE_makeReplaceOffset ( REPLACE_OFFSET * offsets, GAMESYS_WOR
   int season;
   GAME_COMM_SYS_PTR commsys = GAMESYSTEM_GetGameCommSysPtr( gamesystem );
   
-  offsets->season_pos = season = Intrude_GetSeasonID( commsys );
+  offsets->season_pos = season = PMSEASON_GetConsiderCommSeason( gamesystem );
   offsets->version_pos = Intrude_GetRomVersion( commsys ) == VERSION_BLACK? 0 : 1;
   if (offsets->version_pos == 0 )
   {

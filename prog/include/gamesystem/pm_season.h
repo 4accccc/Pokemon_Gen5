@@ -104,6 +104,8 @@ extern u8 PMSEASON_GetPrevSeasonID( u8 now );
 /**
  *	@brief  季節を設定
  *
+ *	*event_mapchange以外で使用する必要はないはずです。
+ *
  *	@param	gamedata    ゲームデータ
  *	@param  season      次の季節
  */
