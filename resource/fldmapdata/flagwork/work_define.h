@@ -190,6 +190,8 @@
 #define WK_SCENE_C04R0601                16578 /* 0x40c2 ライモンシティ４番道路側ゲート：イベント用ワーク */
 #define WK_SCENE_PALACE01                16579 /* 0x40c3 パレス：イベント用ワーク */
 #define WK_SCENE_C3CENTER_DANCE          16580 /* 0x40c4 C03中央部：ヒウンダンサーズイベント用ワーク */
+#define WK_SCENE_R15R0301_RECV           16581 /* 0x40c5 パルパーク：電源OFFからの復帰イベント用ワーク */
+#define WK_SCENE_R09                     16582 /* 0x40c6 ９番道路：イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
