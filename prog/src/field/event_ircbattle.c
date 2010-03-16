@@ -208,7 +208,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 //    (*seq) ++;
 //    break;
 
-    PMSND_PushBGM();
+  //  PMSND_PushBGM();
 
 
     switch(dbw->selectType){
@@ -268,8 +268,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     NET_PRINT("ƒoƒgƒ‹Š®—¹ event_ircbattle\n");
   //  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
-    PMSND_PopBGM();
-    PMSND_FadeInBGM( 8 );
+    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NONE));
 
     
     (*seq) = _CALL_NET_END;
@@ -358,10 +357,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq) ++;
     break;
   case _FIELD_POP_BGM:
-   // if(dbw->push){
-     // GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NONE));
-      //dbw->push=FALSE;
-//    }
     (*seq) ++;
     break;
   case _FIELD_END:

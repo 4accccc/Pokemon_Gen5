@@ -790,13 +790,15 @@ static void _modeAppWinFlashCallback(u32 param, fx32 currentFrame )
 {
   IRC_BATTLE_MENU* pWork = (IRC_BATTLE_MENU*)param;
   {
-    if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw)))){
+    if(pWork->selectType ==  EVENTIRCBTL_ENTRYMODE_EXIT){
+      _CHANGE_STATE(pWork, _modeFadeoutStart);
+    }
+    else if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw)))){
       _CHANGE_STATE(pWork, _modeReportInit);
     }
     else if(pWork->selectType == EVENTIRCBTL_ENTRYMODE_TRADE ||
-       pWork->selectType == EVENTIRCBTL_ENTRYMODE_COMPATIBLE ||
-       pWork->selectType == EVENTIRCBTL_ENTRYMODE_FRIEND ||
-       pWork->selectType ==  EVENTIRCBTL_ENTRYMODE_EXIT){
+            pWork->selectType == EVENTIRCBTL_ENTRYMODE_COMPATIBLE ||
+            pWork->selectType == EVENTIRCBTL_ENTRYMODE_FRIEND ){
       _CHANGE_STATE(pWork, _modeFadeoutStart);
     }
     else{
@@ -1598,7 +1600,7 @@ static void _modeReporting(IRC_BATTLE_MENU* pWork)
         _CHANGE_STATE(pWork,_modeSelectEntryNumInit);
       }
       else if(( pWork->selectType == EVENTIRCBTL_ENTRYMODE_TRADE) || (pWork->selectType == EVENTIRCBTL_ENTRYMODE_FRIEND)){
-        _CHANGE_STATE(pWork,NULL);
+        _CHANGE_STATE(pWork, _modeFadeoutStart);
       }
       pWork->IsIrc = TRUE;  //ÔŠOüÚ‘±ŠJŽn
     }
