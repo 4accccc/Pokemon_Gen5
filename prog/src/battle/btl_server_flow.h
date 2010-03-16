@@ -75,8 +75,7 @@ typedef struct {
 /*--------------------------------------------------------------------------*/
 /* Typedefs                                                                 */
 /*--------------------------------------------------------------------------*/
-typedef struct _BTL_SVFLOW_WORK   BTL_SVFLOW_WORK;
-typedef struct _SVCL_WORK         SVCL_WORK;
+#include "btl_server_flow_def.h"
 
 
 // server -> server_flow

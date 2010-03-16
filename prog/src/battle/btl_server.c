@@ -1374,3 +1374,10 @@ void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, BtlPokePos pos )
   }
 }
 
+
+
+BTL_SVFLOW_WORK* BTL_SERVER_GetFlowWork( BTL_SERVER* server )
+{
+  return server->flowWork;
+}
+

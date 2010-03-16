@@ -271,5 +271,7 @@ extern BOOL BTL_MAIN_CheckGameLimitTimeOver( const BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_ResetForRecPlay( BTL_MAIN_MODULE* wk, u32 nextTurnNum );
 extern void BTL_MAIN_NotifyChapterSkipEnd( BTL_MAIN_MODULE* wk );
 
+#include "btl_server_flow_def.h"
+extern BTL_SVFLOW_WORK* BTL_MAIN_GetSVFWorkForAI( const BTL_MAIN_MODULE* wk );
 
 #endif

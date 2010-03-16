@@ -14,6 +14,7 @@
 #include "btl_main_def.h"
 #include "btl_pokeparam.h"
 #include "btl_adapter.h"
+#include "btl_server_flow_def.h"
 #include "app/b_bag.h"
 
 typedef struct _BTL_SERVER    BTL_SERVER;
@@ -40,6 +41,7 @@ extern void BTL_SERVER_Delete( BTL_SERVER* wk );
 extern BOOL BTL_SERVER_Main( BTL_SERVER* server );
 extern u8 BTL_SERVER_GetEscapeClientID( const BTL_SERVER* sv );
 
+extern BTL_SVFLOW_WORK* BTL_SERVER_GetFlowWork( BTL_SERVER* server );
 
 //-------------------------------------
 // server_flow -> server ŒÄ‚Ño‚µê—p

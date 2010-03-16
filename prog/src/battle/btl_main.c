@@ -4331,3 +4331,9 @@ void BTL_MAIN_NotifyChapterSkipEnd( BTL_MAIN_MODULE* wk )
   }
 }
 
+BTL_SVFLOW_WORK* BTL_MAIN_GetSVFWorkForAI( const BTL_MAIN_MODULE* wk )
+{
+  GF_ASSERT(wk->server);
+  return BTL_SERVER_GetFlowWork( wk->server );
+}
+

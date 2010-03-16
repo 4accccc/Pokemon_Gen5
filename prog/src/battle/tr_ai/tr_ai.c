@@ -84,6 +84,7 @@ typedef struct{
   VM_CODE*      sequence;
 
   const BTL_MAIN_MODULE*    wk;
+  BTL_SVFLOW_WORK*          svfWork;
   const BTL_POKE_CONTAINER* pokeCon;
   const BTL_POKEPARAM*      atk_bpp;
   const BTL_POKEPARAM*      def_bpp;
@@ -457,7 +458,7 @@ static  const VM_INITIALIZER  vm_init={
  * @param[in] heapID  ƒq[ƒvID
  */
 //============================================================================================
-VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u32 ai_bit, HEAPID heapID )
+VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, BTL_SVFLOW_WORK* svfWork, const BTL_POKE_CONTAINER* pokeCon, u32 ai_bit, HEAPID heapID )
 {
   VMHANDLE* vmh;
   TR_AI_WORK*  taw = GFL_HEAP_AllocClearMemory( heapID, sizeof( TR_AI_WORK ) );
@@ -472,16 +473,17 @@ VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeC
   taw->handle = GFL_ARC_OpenDataHandle( ARCID_TR_AI, heapID );
   taw->waza_handle = WAZADATA_OpenDataHandle( heapID );
 
-  { 
+  {
     int i;
 
     for( i = 0 ; i < TR_AI_WAZATBL_MAX ; i++ )
-    { 
+    {
       taw->wd[ i ] = GFL_HEAP_AllocMemory( heapID, WAZADATA_GetWorkSize() );
     }
   }
 
   taw->wk = wk;
+  taw->svfWork = svfWork;
   taw->pokeCon = pokeCon;
 
   taw->rule        = BTL_MAIN_GetRule( wk );
@@ -541,7 +543,7 @@ void  TR_AI_Exit( VMHANDLE* vmh )
   GFL_ARC_CloseDataHandle( taw->waza_handle );
 
   for( i = 0 ; i < TR_AI_WAZATBL_MAX ; i++ )
-  { 
+  {
     GFL_HEAP_FreeMemory ( taw->wd[ i ] );
   }
   GFL_HEAP_FreeMemory ( taw );
@@ -1330,7 +1332,7 @@ static  VMCMD_RESULT  AI_CHECK_IRYOKU( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
-  GF_ASSERT_MSG( 0, "–¢ì¬" );
+  taw->calc_work = WAZADATA_GetPower( taw->waza_no );
 
   return taw->vmcmd_result;
 }
@@ -2862,24 +2864,24 @@ static  void  waza_no_stock( TR_AI_WORK* taw )
  */
 //============================================================================================
 static  int   get_waza_param( TR_AI_WORK* taw, WazaID waza_no, WazaDataParam param )
-{ 
+{
   int i;
 
   for( i = 0 ; i < TR_AI_WAZATBL_MAX ; i++ )
-  { 
+  {
     if( taw->wazaID[ i ] == 0 )
-    { 
+    {
       taw->wazaID[ i ] = waza_no;
       GFL_ARC_LoadDataByHandle( taw->waza_handle, waza_no, taw->wd[ i ] );
       break;
     }
     if( taw->wazaID[ i ] == waza_no )
-    { 
+    {
       if( i != 0 )
-      { 
+      {
         WAZA_DATA*  wd;
         WazaID      waza_no_temp;
-        
+
         wd = taw->wd[ i - 1 ];
         waza_no_temp = taw->wazaID[ i - 1 ];
         taw->wd[ i - 1 ] =  taw->wd[ i ];
@@ -2891,7 +2893,7 @@ static  int   get_waza_param( TR_AI_WORK* taw, WazaID waza_no, WazaDataParam par
     }
   }
   if( i == TR_AI_WAZATBL_MAX )
-  { 
+  {
     i--;
     taw->wazaID[ i ] = waza_no;
     GFL_ARC_LoadDataByHandle( taw->waza_handle, waza_no, taw->wd[ i ] );

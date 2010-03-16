@@ -131,6 +131,8 @@ struct _BTL_CLIENT {
   u16            gameLimitTime;
 
   u16            AIItem[ AI_ITEM_MAX ];
+  VMHANDLE*      AIHandle;
+
 
 
   const BTL_PARTY*  myParty;
@@ -382,6 +384,17 @@ BTL_CLIENT* BTL_CLIENT_Create(
   BTL_CALC_BITFLG_Construction( wk->fieldEffectFlag, sizeof(wk->fieldEffectFlag) );
 
   AIItem_Setup( wk );
+  if( wk->myType == BTL_CLIENT_TYPE_AI )
+  {
+    //@todo 本来はBattleSetupParamのトレーナーデータからAIビットを取得したい
+    u32 ai_bit = 0x01;
+    BTL_SVFLOW_WORK* svf_work = BTL_MAIN_GetSVFWorkForAI( wk->mainModule );
+    wk->AIHandle = TR_AI_Init( wk->mainModule, svf_work, wk->pokeCon, ai_bit, wk->heapID );
+  }
+  else
+  {
+    wk->AIHandle = NULL;
+  }
 
   if( (wk->myType == BTL_CLIENT_TYPE_UI)
   &&  (BTL_MAIN_IsRecordEnable(wk->mainModule))
@@ -397,6 +410,9 @@ void BTL_CLIENT_Delete( BTL_CLIENT* wk )
 {
   if( wk->btlRec ){
     BTL_REC_Delete( wk->btlRec );
+  }
+  if( wk->AIHandle ){
+    TR_AI_Exit( wk->AIHandle );
   }
   GFL_HEAP_FreeMemory( wk->cmdQue );
   BTL_ADAPTER_Delete( wk->adapter );
@@ -2309,17 +2325,10 @@ static BOOL checkForbitEscapeEffective_Jiryoku( BTL_CLIENT* wk, const BTL_POKEPA
 
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
-  VMHANDLE* vmh;
   const BTL_POKEPARAM* pp;
-  u32 ai_bit = 0;
   u32 i = 0;
 
-  //@todo トレーナー戦なら本来はBattleSetupParamのトレーナーデータからAIビットを取得したい
-  if( BTL_MAIN_GetCompetitor( wk->mainModule ) == BTL_COMPETITOR_TRAINER ){
-    ai_bit = 0x01;
-  }
-  //@todo InitとExitはClientのInitとExit時にしたいけどとりあえず
-  vmh = TR_AI_Init( wk->mainModule, wk->pokeCon, ai_bit, wk->heapID );
+  GF_ASSERT(wk->AIHandle);
 
   for(i=0; i<wk->numCoverPos; ++i)
   {
@@ -2330,7 +2339,6 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
     if( !BPP_IsDead(pp) )
     {
       u8 wazaCount, wazaIdx, targetPos;
-      u32 ai_bit = 0;
 
       // 行動選択できないチェック
       if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
@@ -2365,10 +2373,10 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
           WazaID waza;
           u8  mypos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->myID, i );
 
-          TR_AI_Start( vmh, usableWazaFlag, mypos );
-          TR_AI_Main( vmh );
-          wazaIdx = TR_AI_GetSelectWazaPos( vmh );
-          targetPos = TR_AI_GetSelectWazaDir( vmh );
+          TR_AI_Start( wk->AIHandle, usableWazaFlag, mypos );
+          TR_AI_Main( wk->AIHandle );
+          wazaIdx = TR_AI_GetSelectWazaPos( wk->AIHandle );
+          targetPos = TR_AI_GetSelectWazaDir( wk->AIHandle );
 
           waza = BPP_WAZA_GetID( pp, wazaIdx );
           BTL_ACTION_SetFightParam( &wk->actionParam[i], waza, targetPos );
@@ -2384,7 +2392,6 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
       BTL_ACTION_SetNULL( &wk->actionParam[i] );
     }
   }
-  TR_AI_Exit( vmh );
 
   wk->returnDataPtr = &(wk->actionParam[0]);
   wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
