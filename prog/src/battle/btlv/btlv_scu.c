@@ -634,12 +634,10 @@ static BOOL btlin_skip_core( BTLV_SCU* wk, int* seq, const u8* vposAry, u8 vposC
     break;
   case 1:
     // チャプタスキップ時はここでフェードインしない
-    // @todo デバッグ措置->一時的にフェードインさせる
-    /*
     if( wk->btlinSkipFlag ){
       return TRUE;
     }
-    */
+
     // フェードインするのはデバッグ時のみ
     btlin_startFade(-3);
     (*seq)++;
@@ -2555,11 +2553,10 @@ void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos, WazaID wazaID
 
   if( !fChapterSkipMode ){
     BTLV_EFFECT_CalcGaugeHP( vpos, value );
+    BTLV_EFFECT_Damage( vpos, wazaID );
   }else{
     BTLV_EFFECT_CalcGaugeHPAtOnce( vpos, value );
   }
-
-  BTLV_EFFECT_Damage( BTL_MAIN_BtlPosToViewPos(wk->mainModule, defPos), wazaID );
 }
 
 //=============================================================================================
@@ -2581,14 +2578,22 @@ BOOL BTLV_SCU_WaitWazaDamageAct( BTLV_SCU* wk )
  * ポケモンひんしアクション開始
  *
  * @param   wk
- * @param   pos   ひんしになったポケモンの位置ID
+ * @param   pos        ひんしになったポケモンの位置ID
+ * @param   skipFlag   チャプタースキップフラグ
  *
  */
 //=============================================================================================
-void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos )
+void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos, BOOL skipFlag )
 {
-  BTLV_EFFECT_DelGauge( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
-  BTLV_EFFECT_Hinshi( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
+  BtlvMcssPos vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+
+  BTLV_EFFECT_DelGauge( vpos );
+
+  if( !skipFlag ){
+    BTLV_EFFECT_Hinshi( vpos );
+  }else{
+    BTLV_EFFECT_DelPokemon( vpos );
+  }
 }
 //=============================================================================================
 /**
@@ -2658,18 +2663,25 @@ typedef struct {
 }POKEOUT_ACT_WORK;
 
 
-void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, BtlvMcssPos vpos )
+void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, BtlvMcssPos vpos, BOOL fSkipMode )
 {
-  GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskPokeOutAct, sizeof(POKEOUT_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
-  POKEOUT_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
+  if( fSkipMode )
+  {
+    BTLV_EFFECT_DelGauge( vpos );
+    BTLV_EFFECT_DelPokemon( vpos );
+  }
+  else
+  {
+    GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskPokeOutAct, sizeof(POKEOUT_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
+    POKEOUT_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
 
-  twk->viewpos = vpos;
-  twk->statWin = &wk->statusWin[ vpos ];
-  twk->taskCounter = &wk->taskCounter[TASKTYPE_MEMBER_OUT];
-  twk->seq = 0;
+    twk->viewpos = vpos;
+    twk->statWin = &wk->statusWin[ vpos ];
+    twk->taskCounter = &wk->taskCounter[TASKTYPE_MEMBER_OUT];
+    twk->seq = 0;
 
-
-  (*(twk->taskCounter))++;
+    (*(twk->taskCounter))++;
+  }
 }
 BOOL BTLV_SCU_WaitMemberOutAct( BTLV_SCU* wk )
 {

@@ -4309,6 +4309,7 @@ void BTL_MAIN_ResetForRecPlay( BTL_MAIN_MODULE* wk, u32 nextTurnNum )
   }
 
   BTLV_Delete( wk->viewCore );
+  BTLV_ResetSystem( HEAPID_BTL_VIEW );
   wk->viewCore = BTLV_Create( wk, wk->client[wk->setupParam->commPos], &wk->pokeconForClient, HEAPID_BTL_VIEW );
   BTL_CLIENT_AttachViewCore( wk->client[wk->setupParam->commPos], wk->viewCore );
 

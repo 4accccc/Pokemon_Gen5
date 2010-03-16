@@ -94,12 +94,12 @@ struct _BTLV_CORE {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static void InitSystemCore( HEAPID heapID );
+static void QuitSystemCore( void );
 static void* getGenericWork( BTLV_CORE* core, u32 size );
 static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer );
 static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer );
 static  const BTL_POKEPARAM*  get_btl_pokeparam( BTLV_CORE* core, BtlvMcssPos pos );
-static void setup_core( BTLV_CORE* wk, HEAPID heapID );
-static void cleanup_core( BTLV_CORE* wk );
 static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL CmdProc_SelectWaza( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL CmdProc_SelectTarget( BTLV_CORE* core, int* seq, void* workBufer );
@@ -114,6 +114,7 @@ static void PutMsgToSCU( BTLV_CORE* wk, const STRBUF* buf, u16 wait );
 static void PutMsgToSCUatOnce( BTLV_CORE* wk, const STRBUF* buf );
 static BOOL subprocMoveMember( int* seq, void* wk_adrs );
 static BOOL subprocRotateMember( int* seq, void* wk_adrs );
+static void PlaySELocal( BTLV_CORE* wk, u32 SENo );
 
 static  const BTL_POKEPARAM*  get_btl_pokeparam( BTLV_CORE* core, BtlvMcssPos pos );
 
@@ -131,6 +132,40 @@ static  const BTL_POKEPARAM*  get_btl_pokeparam( BTLV_CORE* core, BtlvMcssPos po
  */
 //=============================================================================================
 void BTLV_InitSystem( HEAPID heapID )
+{
+  InitSystemCore( heapID );
+
+  //描画系オーバーレイロード
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_view ) );
+
+  GX_SetBankForLCDC( GX_VRAM_LCDC_H );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( vram_h ) );
+}
+//=============================================================================================
+/**
+ * システム終了
+ */
+//=============================================================================================
+void BTLV_QuitSystem( void )
+{
+  QuitSystemCore();
+
+  //描画系オーバーレイアンロード
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( vram_h ) );
+}
+//=============================================================================================
+/**
+ * システムリセット（チャプタスキップ時に使用）
+ */
+//=============================================================================================
+void BTLV_ResetSystem( HEAPID heapID )
+{
+  QuitSystemCore();
+  InitSystemCore( heapID );
+}
+
+static void InitSystemCore( HEAPID heapID )
 {
   static const GFL_DISP_VRAM vramBank = {
     GX_VRAM_BG_128_D,           // メイン2DエンジンのBG
@@ -213,36 +248,22 @@ void BTLV_InitSystem( HEAPID heapID )
     };
     GFL_CLACT_SYS_Create( &clsysinit, &vramBank, heapID );
   }
-
-  //描画系オーバーレイロード
-  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_view ) );
-
-  GX_SetBankForLCDC( GX_VRAM_LCDC_H );
-  GFL_OVERLAY_Load( FS_OVERLAY_ID( vram_h ) );
 }
-//=============================================================================================
-/**
- * システム終了
- */
-//=============================================================================================
-void BTLV_QuitSystem( void )
+static void QuitSystemCore( void )
 {
-  GFL_BMPWIN_Exit();
-  GFL_BG_Exit();
-
   //エフェクト削除 soga
   BTLV_EFFECT_Exit();
 
-  //セルアクター削除
   GFL_CLACT_SYS_Delete();
+
+  GFL_BMPWIN_Exit();
+  GFL_BG_Exit();
 
   //3D関連削除 soga
   GFL_G3D_Exit();
-
-  //描画系オーバーレイアンロード
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID( vram_h ) );
 }
+
+
 
 //=============================================================================================
 /**
@@ -285,7 +306,6 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
   core->mainSeq = 0;
   core->selectItemSeq = 0;
 
-
   BTL_STR_InitSystem( mainModule, client, pokeCon, heapID );
 
   return core;
@@ -305,6 +325,7 @@ void BTLV_Delete( BTLV_CORE* core )
 
   BTLV_SCD_Delete( core->scrnD );
   BTLV_SCU_Delete( core->scrnU );
+
 
   GFL_TCBL_Exit( core->tcbl );
   GFL_STR_DeleteBuffer( core->strBuf );
@@ -559,7 +580,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
 
       BTLV_EFFECT_CalcGaugeHP( BTLV_MCSS_POS_BB, value );
       BTLV_EFFECT_Damage( BTLV_MCSS_POS_BB, WAZANO_HATAKU );
-      PMSND_PlaySE( SEQ_SE_KOUKA_M );
+      PlaySELocal( core, SEQ_SE_KOUKA_M );
       (*seq)++;
     }
     break;
@@ -1415,16 +1436,17 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
       BOOL fChapterSkipMode = BTL_CLIENT_IsChapterSkipMode( wk->myClient );
 
       BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->defPokePos, subwk->wazaID, fChapterSkipMode );
+
       if( subwk->affinity < BTL_TYPEAFF_100 )
       {
-        PMSND_PlaySE( SEQ_SE_KOUKA_L );
+        PlaySELocal( wk, SEQ_SE_KOUKA_L );
       }
       else if ( subwk->affinity > BTL_TYPEAFF_100 )
       {
-        PMSND_PlaySE( SEQ_SE_KOUKA_H );
+        PlaySELocal( wk, SEQ_SE_KOUKA_H );
       }
       else{
-        PMSND_PlaySE( SEQ_SE_KOUKA_M );
+        PlaySELocal( wk, SEQ_SE_KOUKA_M );
       }
       (*seq)++;
     }
@@ -1487,15 +1509,15 @@ BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk )
 
       if( subwk->affAbout == BTL_TYPEAFF_ABOUT_ADVANTAGE )
       {
-        PMSND_PlaySE( SEQ_SE_KOUKA_H );
+        PlaySELocal( wk, SEQ_SE_KOUKA_H );
       }
       else if( subwk->affAbout == BTL_TYPEAFF_ABOUT_DISADVANTAGE )
       {
-        PMSND_PlaySE( SEQ_SE_KOUKA_L );
+        PlaySELocal( wk, SEQ_SE_KOUKA_L );
       }
       else
       {
-        PMSND_PlaySE( SEQ_SE_KOUKA_M );
+        PlaySELocal( wk, SEQ_SE_KOUKA_M );
       }
       subwk->seq++;
     }
@@ -1609,7 +1631,7 @@ BOOL BTLV_WaitEffectByDir( BTLV_CORE* wk )
 //=============================================================================================
 void BTLV_StartDeadAct( BTLV_CORE* wk, BtlPokePos pos )
 {
-  BTLV_SCU_StartDeadAct( wk->scrnU, pos );
+  BTLV_SCU_StartDeadAct( wk->scrnU, pos, BTL_CLIENT_IsChapterSkipMode(wk->myClient) );
 }
 BOOL BTLV_WaitDeadAct( BTLV_CORE* wk )
 {
@@ -1648,7 +1670,7 @@ BOOL BTLV_WaitReliveAct( BTLV_CORE* wk )
 //=============================================================================================
 void BTLV_ACT_MemberOut_Start( BTLV_CORE* wk, BtlvMcssPos vpos )
 {
-  BTLV_SCU_StartMemberOutAct( wk->scrnU, vpos );
+  BTLV_SCU_StartMemberOutAct( wk->scrnU, vpos, BTL_CLIENT_IsChapterSkipMode(wk->myClient) );
 }
 BOOL BTLV_ACT_MemberOut_Wait( BTLV_CORE* wk )
 {
@@ -2103,7 +2125,7 @@ static BOOL subprocMoveMember( int* seq, void* wk_adrs )
     if( BTLV_EFFECT_CheckExist(subwk->vpos2) ){
       BTLV_EFFECT_DelPokemon( subwk->vpos2 );
     }
-    PMSND_PlaySE( SEQ_SE_CANCEL3 );  //@todo 超仮
+    PlaySELocal( wk, SEQ_SE_CANCEL3 );  //@todo 超仮
     (*seq)++;
     break;
 
@@ -2518,8 +2540,15 @@ void BTLV_UpdateRecPlayerInput( BTLV_CORE* wk, u16 currentChapter, u16 ctrlChapt
   BTLV_SCD_SetupRecPlayerMode( wk->scrnD, &wk->recPlayerUI );
 }
 
-
-
+/**
+ *  SE再生（チャプタスキップ時には無視する）
+ */
+static void PlaySELocal( BTLV_CORE* wk, u32 SENo )
+{
+  if( !BTL_CLIENT_IsChapterSkipMode(wk->myClient) ){
+    PMSND_PlaySE( SENo );
+  }
+}
 
 /*--------------------------------------------------------------------------------------------------*/
 /* 下請けから呼び出される関数群                                                                     */

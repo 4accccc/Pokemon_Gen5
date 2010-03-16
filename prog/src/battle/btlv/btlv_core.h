@@ -126,6 +126,9 @@ extern void BTLV_InitSystem( HEAPID heapID );
 extern void BTLV_QuitSystem( void );
 
 
+extern void BTLV_ResetSystem( HEAPID heapID );
+
+
 //=============================================================================================
 /**
  * •`‰æƒƒCƒ“ƒ‚ƒWƒ…[ƒ‹‚Ì¶¬

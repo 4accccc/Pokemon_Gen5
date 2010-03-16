@@ -50,7 +50,7 @@
 //============================================================================================
 
 struct _BTLV_EFFECT_SETUP_PARAM
-{ 
+{
   BtlRule             rule;
   BTL_FIELD_SITUATION bfs;
   u16                 tr_type[ 4 ];
@@ -131,7 +131,7 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
  */
 //============================================================================================
 BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FIELD_SITUATION* bfs, BOOL multi, u16* tr_type, HEAPID heapID )
-{ 
+{
   BTLV_EFFECT_SETUP_PARAM* besp = GFL_HEAP_AllocMemory( heapID, sizeof( BTLV_EFFECT_SETUP_PARAM ) );
   int i;
 
@@ -140,7 +140,7 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FI
   besp->multi = multi;
 
   for( i = 0 ; i < 4 ; i++ )
-  { 
+  {
     besp->tr_type[ i ] = tr_type[ i ];
   }
 
@@ -156,19 +156,19 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FI
  */
 //============================================================================================
 BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* mainModule, HEAPID heapID )
-{ 
+{
   int i;
   u16 tr_type[ 4 ];
 
   if( BTL_MAIN_IsMultiMode( mainModule ) == TRUE )
-  { 
+  {
     tr_type[ 0 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetPlayerClientID( mainModule ) );
     tr_type[ 1 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetEnemyClientID( mainModule, 0 ) );
     tr_type[ 2 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetFriendCleintID( mainModule ) );
     tr_type[ 3 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetEnemyClientID( mainModule, 1 ) );
   }
   else
-  { 
+  {
     tr_type[ 0 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetPlayerClientID( mainModule ) );
     tr_type[ 1 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetEnemyClientID( mainModule, 0 ) );
     tr_type[ 2 ] = 0;
@@ -590,7 +590,7 @@ void  BTLV_EFFECT_DelPokemon( int position )
 BOOL  BTLV_EFFECT_CheckExist( int position )
 {
   if( position < BTLV_MCSS_POS_MAX )
-  { 
+  {
     return BTLV_MCSS_CheckExist( bew->bmw, position );
   }
   else
@@ -635,7 +635,7 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
   }
   else
   {
-    switch( trtype ){ 
+    switch( trtype ){
     case TRTYPE_HERO:
     case TRTYPE_HEROINE:
       break;
@@ -651,7 +651,7 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
         trtype = TRTYPE_HERO;
       }
       else
-      { 
+      {
         trtype = TRTYPE_HEROINE;
       }
       break;
@@ -1238,10 +1238,10 @@ static  void  BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work )
  */
 //============================================================================================
 static  void  BTLV_EFFECT_TCB_Henge( GFL_TCB *tcb, void *work )
-{ 
+{
   BTLV_EFFECT_HENGE_TCB *beht = (BTLV_EFFECT_HENGE_TCB*)work;
 
-  switch( beht->seq_no ){ 
+  switch( beht->seq_no ){
   case 0:
     BTLV_MCSS_MoveAlpha( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_DIRECT, 16, 0, 0, 0 );
     BTLV_MCSS_MoveMosaic( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_INTERPOLATION, 8, 8, 1, 0 );
@@ -1249,7 +1249,7 @@ static  void  BTLV_EFFECT_TCB_Henge( GFL_TCB *tcb, void *work )
     break;
   case 1:
     if( !BTLV_MCSS_CheckTCBExecute( bew->bmw, beht->vpos ) )
-    { 
+    {
       BTLV_MCSS_OverwriteMAW( bew->bmw, beht->vpos, &beht->maw );
       beht->seq_no++;
     }
@@ -1260,7 +1260,7 @@ static  void  BTLV_EFFECT_TCB_Henge( GFL_TCB *tcb, void *work )
     break;
   case 3:
     if( !BTLV_MCSS_CheckTCBExecute( bew->bmw, beht->vpos ) )
-    { 
+    {
       BTLV_MCSS_MoveAlpha( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_DIRECT, 31, 0, 0, 0 );
       bew->tcb_execute_flag = 0;
       GFL_HEAP_FreeMemory( beht );
