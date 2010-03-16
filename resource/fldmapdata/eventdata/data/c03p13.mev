@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/02 15:22:19
+#save date:2010/03/13 15:48:06
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p13.wms
 #SECTION START:OBJ_EVENT
@@ -14,42 +14,11 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p13.wms
 #type
 1
 #ID name
-C03P13_BOY2_01
-#OBJ CODE Number
-BOY2
-#MOVE CODE Number
-MV_DIR_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_C03P13_BOY2_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-104 0 -24
-#event number: 1
-#type
-1
-#ID name
 C03P13_VETERANM_01
 #OBJ CODE Number
 VETERANM
 #MOVE CODE Number
-MV_DIR_RND
+MV_RAIL_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -69,9 +38,40 @@ DIR_DOWN
 #Move Limit Z Number
 3
 #Pos Type
-EVENTDATA_POSTYPE_GRID
+EVENTDATA_POSTYPE_RAIL
 #position
-72 0 -24
+0 5 2
+#event number: 1
+#type
+1
+#ID name
+C03P13_BOY2_01
+#OBJ CODE Number
+BOY2
+#MOVE CODE Number
+MV_RAIL_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03P13_BOY2_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+0 4 0
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -112,12 +112,14 @@ DOOR_ID_C03_C03P13_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_DOOR
 #Pos Type
-EVENTDATA_POSTYPE_GRID
+EVENTDATA_POSTYPE_RAIL
 #position
-152 0 152
+1 0 -2
 #size
-6 1
+1 7
+#rail way
+DIR_DOWN
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

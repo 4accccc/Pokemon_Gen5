@@ -9,8 +9,8 @@
 #ifndef ZONE_C03P13_EVC_H
 #define ZONE_C03P13_EVC_H
 
-#define C03P13_BOY2_01                     0
-#define C03P13_VETERANM_01                 1
+#define C03P13_VETERANM_01                 0
+#define C03P13_BOY2_01                     1
 
 #endif //ZONE_C03P13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03p13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
