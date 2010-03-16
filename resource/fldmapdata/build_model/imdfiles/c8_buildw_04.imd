@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-09-29T18:01:24" source="c8_buildw_04.mb"/>
+	<create user="fuchino" host="W00152" date="2010-03-16T14:00:11" source="c8_buildw_04.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-09-29T18:01:24" source="c8_buildw_04.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-03-16T14:00:11" source="c8_buildw_04.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,22 +20,288 @@
 	magnify="1.000000"
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="1 1"
-	compress_material="on" material_size="2 2"
+	compress_node="merge" node_size="5 5"
+	compress_material="on" material_size="3 3"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="4" xyz="-2.000000 0.125000 -2.165283" whd="5.000000 5.125000 4.330078"/>
+<box_test pos_scale="4" xyz="-1.750000 0.125000 -2.250000" whd="4.500000 6.375000 4.250000"/>
 
-<tex_image_array size="2">
-	<tex_image index="0" name="c8w_004"
+<tex_image_array size="3">
+	<tex_image index="0" name="c8_buil02w1"
+		width="64" height="128" original_width="64" original_height="128"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="c8_buil02w1_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/c8_buildw_02/tex/c8_buil02w1.tga"
+	>
+		<bitmap size="2048">
+			9999 7788 8877 8888 8888 9888 8889 8877
+			8888 8888 8998 7788 8888 1118 3311 3333
+			9999 7788 bbbb bbbb bbbb 9bbb 8889 bbbb
+			bbbb bbbb 899b bb88 bbbb bbbb 11bb 3331
+			9999 7788 cbbb cccc cccc 9ccc 8889 cbbb
+			cccc cccc 899c bb88 cccb cccc 11cc 3331
+			9999 7788 cbbb dddd dddd 9ddd 8889 cbbb
+			dddd dddd 899d bb88 ddcb dddd 11dd 3331
+			9999 7788 cbbb dddd dddd 9ddd 8889 cbbb
+			dddd dddd 899d bb88 ddcb dddd 11dd 3331
+			9999 7788 cbbb dddd dddd 9ddd 8889 cbbb
+			dddd dddd 899d bb88 ddcb dddd 11dd 3331
+			9999 7788 cbbb dddd dddd 9ddd 8889 cbbb
+			dddd dddd 899d bb88 ddcb dddd 11dd 3331
+			9999 7788 cbbb dddd dddd 9ddd 8889 cbbb
+			dddd dddd 899d bb88 ddcb dddd 11dd 3331
+			9999 7788 cbbb dddd dddd 9ddd 8889 cbbb
+			dddd dddd 899d bb88 ddcb dddd 11dd 3331
+			9999 7788 cbbb dddd dddd 9ddd 8889 cbbb
+			dddd dddd 899d bb88 ddcb dddd 11dd 3331
+			9999 7788 cbbb dddd dddd 9ddd 8889 cbbb
+			dddd dddd 899d bb88 ddcb dddd 11dd 3331
+			9999 7788 cbbb dddd dddd 9ddd 8889 cbbb
+			dddd dddd 899d bb88 ddcb dddd 11dd 3331
+			9999 7788 cbbb cccc cccc 9ccc 8889 cbbb
+			cccc cccc 899c bb88 cccb cccc 11cc 3331
+			9999 7788 bbbb bbbb bbbb 9bbb 8889 bbbb
+			bbbb bbbb 899b bb88 bbbb bbbb 11bb 3331
+			9999 7788 8877 8888 8888 9888 8889 8877
+			8888 8888 8998 7788 8888 1118 3311 3333
+			9999 7788 8877 8888 8888 9888 8889 8877
+			8888 8888 8998 7788 8888 1118 3311 3333
+			5555 5555 5555 5555 5555 3333 3333 3333
+			3333 3333 3333 3333 3333 5533 5555 5555
+			5555 5555 5555 5555 5555 5555 3333 3333
+			3333 3333 3333 3333 5333 5555 5555 5555
+			6666 6666 6666 6666 6666 1166 1111 1111
+			1111 1111 1111 6611 6666 6666 6666 6666
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			8887 8888 8888 7888 8887 8888 8888 7888
+			8887 8888 8888 7888 8887 8888 8888 7888
+			9998 9999 9999 8999 9998 9999 9999 8999
+			9998 9999 9999 8999 9998 9999 9999 8999
+			9998 9999 9999 8999 9998 9999 9999 8999
+			9998 9999 9999 8999 9998 9999 9999 8999
+			4444 4444 2224 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 4444 4444
+			4444 4444 4444 2224 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 4442 4444 4444
+			4444 4444 4444 4444 4444 2224 2222 2222
+			2222 2222 4442 4444 4444 4444 4444 4444
+			5555 5555 5555 5555 5555 3555 3333 2333
+			3332 5533 5555 5555 5555 5555 5555 5555
+			7776 7777 7777 7777 7777 7777 1117 3111
+			1112 7771 7777 7777 7777 7777 7777 6777
+			8887 8888 8888 8888 7788 7887 1888 3111
+			1113 8888 8888 8888 8888 8888 8888 7888
+			8887 8888 8888 8888 8778 9888 8888 3187
+			8816 8888 8888 8888 8888 8888 8888 7888
+			8887 8888 8888 8888 8877 9988 8888 3887
+			8886 8888 8888 8888 8888 8888 8888 7888
+			8887 8888 8888 8888 8887 8998 8888 6887
+			9886 8888 8888 8888 8888 8888 8888 7888
+			9997 9999 9999 7789 8888 9998 9999 7887
+			9887 9999 9999 9999 9999 9999 9999 7999
+			9997 9999 9999 8778 8888 9998 8999 6776
+			9776 9999 9999 9999 9999 9999 9999 7999
+			8886 8888 8888 8888 8888 8888 8888 6766
+			8976 8888 8888 8888 8888 8888 8888 6888
+			7775 7777 7777 7777 7777 7777 7777 6667
+			7896 7777 7777 7777 7777 7777 7777 5777
+			d775 dddd daad ddaa aadd daad dddd 5677
+			d785 dddd daad ddaa aadd daad dddd 577d
+			d775 dddd ddaa daad daad aadd dddd 5777
+			d775 dddd ddaa daad daad aadd dddd 577d
+			7775 7777 7777 7777 7777 7777 7777 5777
+			7775 7777 7777 7777 7777 7777 7777 5777
+			5554 5555 5555 5555 5555 5555 5555 4555
+			5554 5555 5555 5555 5555 5555 5555 4555
+			4444 4444 4444 4444 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 4444
+			bbbb 4bbb 4444 4444 4444 4444 bbb4 bbbb
+			bbbb 4bbb 4444 4444 4444 4444 bbb4 bbbb
+			aaaa 4caa 5555 5555 5555 5555 aac4 aaaa
+			aaaa 4caa 5555 5555 5555 5555 aac4 aaaa
+			aaaa 4daa 6665 6666 6666 5666 aad4 aaaa
+			aaaa 4daa 6665 6666 6666 5666 aad4 aaaa
+			dddd 4ddd 6665 7766 6677 5666 ddd4 dddd
+			dddd 4ddd 6665 7766 6677 5666 ddd4 dddd
+			5555 4444 6665 7777 7777 5666 4444 5555
+			5555 4444 6665 7777 7777 5666 4444 5555
+			5677 5544 7666 0077 7700 6667 4455 7765
+			5677 5544 7666 0077 7700 6667 4455 7765
+			4555 6655 7766 0000 0000 6677 5566 5554
+			4555 6655 7766 0000 0000 6677 5566 5554
+			4444 6665 0776 0000 0000 6770 5666 4444
+			4444 6665 0776 0000 0000 6770 5666 4444
+			4555 6665 0077 0000 0000 7700 5666 5554
+			4555 6665 0077 0000 0000 7700 5666 5554
+			4567 6665 0077 0000 0000 7700 5666 7654
+			4567 6665 0077 0000 0000 7700 5666 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 0007 0000 0000 7000 5667 7654
+			4567 7665 8887 8888 8888 7888 5667 7654
+			4567 7665 8887 8888 8888 7888 5667 7654
+			4567 7665 8887 8888 8888 7888 5667 7654
+			4567 7665 8887 8888 8888 7888 5667 7654
+			4567 7665 7777 7777 7777 7777 5667 7654
+			4567 7665 7777 7777 7777 7777 5667 7654
+			4467 7665 7777 7777 7777 7777 5667 7642
+			4467 7665 7777 7777 7777 7777 5667 7644
+			4554 6665 6666 6666 6666 6666 5666 4552
+			4554 6665 6666 6666 6666 6666 5666 4554
+			4755 6665 6666 6666 6666 6666 5666 5572
+			4755 6665 6666 6666 6666 6666 5666 5574
+			4777 5555 5555 5555 5555 5555 5555 7772
+			4777 5555 5555 5555 5555 5555 5555 7774
+			4677 5555 5555 5555 5555 5555 5555 7762
+			4677 5555 5555 5555 5555 5555 5555 7764
+			4566 5555 5555 5555 5555 5555 5555 6652
+			2566 5555 5555 5555 5555 5555 5555 6654
+			4566 4444 4444 4444 4444 4444 4444 6652
+			2566 4422 4444 4444 4444 4444 4444 6654
+			4566 4444 4444 4444 4444 2224 2222 6652
+			2566 2222 4442 4444 4444 4444 4444 6654
+			4566 4444 4444 4444 2222 2222 2222 6652
+			2566 2222 4222 4444 4444 4444 4444 6654
+			5555 5555 3333 3333 3333 5533 5555 5555
+			4444 4444 4444 4444 9999 9999 9999 9999
+			5555 5555 3333 3333 3333 5533 5555 5555
+			4444 4444 4444 4444 9999 9999 9999 9999
+			7777 7777 7777 3117 7113 7777 7777 7777
+			5555 5555 5555 7765 8888 8888 8888 8888
+			8888 8888 8888 3888 8881 8888 8888 8888
+			6666 6666 6666 8876 aaaa aaaa aaaa aaaa
+			8888 8888 8888 1888 8881 8888 8888 8888
+			6666 6666 6666 8876 aaaa aaaa aaaa aaaa
+			8888 8888 8888 1888 8889 8888 8888 8888
+			6666 6666 6666 8876 aaaa aaaa aaaa aaaa
+			8888 8888 8888 1888 8899 8888 8888 8888
+			7777 7777 7777 8877 8888 8888 8888 8888
+			8888 8888 8888 7888 9999 8889 8888 8888
+			8888 8888 8888 8888 8888 8888 8888 8888
+			9999 9999 9999 8999 8889 9999 9999 9999
+			8888 8888 8888 8888 1111 1111 1111 1111
+			9999 9999 9999 8999 8886 9988 9999 9999
+			8888 8888 8888 8888 3333 3333 3333 3333
+			8888 8888 8888 7888 8876 8888 8889 8888
+			7777 7777 7777 7777 4444 4444 4444 4444
+			7777 7777 7777 6777 8766 8888 7779 7777
+			7777 7777 7777 7777 5555 5555 5555 5555
+			dddd dddd dddd 6777 7667 9888 ddd8 dddd
+			5555 5555 5555 5555 5555 5555 5555 5555
+			aaaa aaaa daaa 6777 6778 8999 aaaa aaaa
+			4444 4444 4444 4444 5555 5555 5555 5555
+			aaaa aaaa ddaa 6777 7778 add7 aaaa aaaa
+			4444 4444 4444 4444 5555 5555 5555 5555
+			aaaa aaaa 7dda 5777 7785 dd77 aaaa aaaa
+			7888 4446 bbb4 4444 5555 5555 5555 5555
+			dddd dddd 77dd 2577 7854 d777 dddd dddd
+			7888 4446 bbb4 4444 5555 5555 5555 5555
+			7777 7777 7777 2257 8544 7777 7777 7777
+			7777 4446 bbb4 4444 6666 6666 6666 6666
+			5555 5555 5555 d224 544d 5555 5555 5555
+			6666 4445 bbb4 4444 7777 7777 7777 7777
+			2224 2222 2222 ad22 24da 2222 2222 2222
+			6666 4445 bbb4 4444 7777 7777 7777 7777
+			4444 4444 4444 aa44 44aa 4444 4444 4444
+			5555 4445 bbb4 4444 6666 6666 6666 6666
+			5555 5555 5555 a545 545a 5555 5555 5555
+			4444 4445 bbb4 4444 6666 5666 6665 6666
+			5555 5555 5666 d455 554d 6665 5555 5555
+			4444 4445 bbb4 4444 7777 5777 7775 7777
+			5555 6555 6666 5555 5555 6666 5556 5555
+			ffff ffff ffff ffff 7777 5777 7775 7777
+			5555 6655 6606 6556 6556 6066 5566 5555
+			ffff ffff ffff ffff 7777 5777 7775 7777
+			6666 7766 7000 6567 7656 0007 6677 6666
+			9999 9999 9999 9999 7777 5777 7775 7777
+			7777 8887 8000 7588 8857 0008 7888 7777
+			9999 8899 9988 9999 7777 6777 7776 7777
+			7777 0887 0000 7588 8857 0000 7880 7777
+			9999 6678 8766 9998 7777 6777 7776 7777
+			7777 0887 0000 7588 8857 0000 7880 7777
+			8999 7766 5677 9987 7777 6777 7776 7777
+			7777 0887 0000 7588 8857 0000 7880 7777
+			6899 7776 6777 9875 7777 6777 7776 7777
+			7777 0887 0000 7588 8857 0000 7880 7777
+			6799 8987 6777 9865 7777 6777 7776 7777
+			7777 0887 0000 7588 8857 0000 7880 7777
+			7689 9997 6777 9855 7777 6777 7776 7777
+			1166 0881 0000 7588 8857 0000 6880 6616
+			7689 8987 6677 9855 6666 6111 1116 6661
+			1166 0881 0000 7588 8857 0000 6880 6616
+			7689 7777 6677 9855 6666 6666 6666 6666
+			7777 0887 0000 7588 8857 0000 7880 7717
+			7689 7777 6667 9855 7777 6777 7776 7777
+			7777 0887 0000 7588 8857 0000 7880 7717
+			6799 6777 5666 9865 7777 6777 7776 7777
+			7777 8887 8888 7588 8857 8880 7888 7717
+			5899 6666 5566 9885 7777 6777 7776 7777
+			7777 8887 8888 7588 8857 8888 7888 7717
+			7999 5555 5555 9988 7777 6777 7776 7777
+			6666 6666 6666 7566 6657 6666 1666 6111
+			8999 5567 8655 9998 6666 6666 1666 6611
+			6666 1666 1111 7561 6657 6666 1666 6611
+			9999 8888 8888 9999 1116 6111 1116 6666
+			7677 7777 1777 7571 7757 7677 7777 7777
+			9999 9999 9999 9999 7777 6777 7776 7777
+			7677 7777 1777 7571 7757 7677 7777 7777
+			ffff ffff ffff ffff 7777 6777 7776 7777
+			7677 7777 1777 7571 7757 7677 7777 7777
+			ffff ffff ffff ffff 7777 6777 7776 7777
+			6666 6666 6666 6566 6656 6666 6666 6666
+			ffff ffff ffff ffff 6666 1111 1111 6666
+			5555 5555 5555 6555 5556 5555 5555 5555
+			ffff ffff ffff ffff 5555 5555 5555 5555
+			5555 5555 5555 6555 5556 5555 5555 5555
+			ffff ffff ffff ffff 5555 5555 5555 5555
+			6666 6666 6666 6666 6666 6666 6666 6666
+			ffff ffff ffff ffff 6666 6666 6666 6666
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			ffff ffff ffff ffff dddd dddd dddd dddd
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			ffff ffff ffff ffff aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			ffff ffff ffff ffff aaaa aaaa aaaa aaaa
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			ffff ffff ffff ffff dddd dddd dddd dddd
+			6666 6666 6666 6666 6666 6666 6666 6666
+			ffff ffff ffff ffff 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			ffff ffff ffff ffff 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			ffff ffff ffff ffff 6666 6666 6666 6666
+			1111 1111 1111 1111 1111 1111 1111 1111
+			ffff eeef feee ffff 1111 1111 1111 1111
+			3333 3333 3333 3333 3333 3333 3333 3333
+			ffff eeee eeee ffff 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 3333 3333
+			efff eeee eeee fffe 3333 3333 3333 3333
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="c8b_004"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="color"
-		palette_name="c8w_004_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/c8_buildw_04/tex/c8w_004.tga"
+		palette_name="c8b_004_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/c8_buildb_04/tex/c8b_004.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -56,7 +322,7 @@
 			5555 5555 5555 5555 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="h_kage"
+	<tex_image index="2" name="h_kage"
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
 		palette_name="h_kage_pl"
@@ -71,17 +337,45 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="2">
-	<tex_palette index="0" name="c8w_004_pl" color_size="4">
-		0000 56af 6713 77b8
+<tex_palette_array size="3">
+	<tex_palette index="0" name="c8_buil02w1_pl" color_size="16">
+		7c1f 4ab1 362d 3e4f 3a10 4252 4a94 56d6
+		5f19 675b 4eb8 4234 4655 4a76 294a 18c6
 	</tex_palette>
-	<tex_palette index="1" name="h_kage_pl" color_size="8">
+	<tex_palette index="1" name="c8b_004_pl" color_size="4">
+		0000 24a0 30c0 4120
+	</tex_palette>
+	<tex_palette index="2" name="h_kage_pl" color_size="8">
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="2">
-	<material index="0" name="lambert2"
+<material_array size="3">
+	<material index="0" name="c8_buil02w1"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="19"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="25 25 25"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat clamp"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="1" name="lambert2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -98,14 +392,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
+		tex_image_idx="1" tex_palette_idx="1"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="lambert3"
+	<material index="2" name="lambert3"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -122,7 +416,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="1"
+		tex_image_idx="2" tex_palette_idx="2"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -131,17 +425,20 @@
 	/>
 </material_array>
 
-<matrix_array size="1">
-	<matrix index="0" mtx_weight="1" node_idx="0"/>
+<matrix_array size="4">
+	<matrix index="0" mtx_weight="1" node_idx="1"/>
+	<matrix index="1" mtx_weight="1" node_idx="2"/>
+	<matrix index="2" mtx_weight="1" node_idx="3"/>
+	<matrix index="3" mtx_weight="1" node_idx="4"/>
 </matrix_array>
 
-<polygon_array size="2">
+<polygon_array size="4">
 	<polygon index="0" name="polygon0"
-		vertex_size="58" polygon_size="19"
-		triangle_size="6" quad_size="13"
-		volume_min="-1.375000 0.250000 -1.623779"
-		volume_max="2.375000 5.250000 1.623779"
-		volume_r="5.762207"
+		vertex_size="38" polygon_size="14"
+		triangle_size="6" quad_size="8"
+		volume_min="-1.500000 0.250000 -2.000000"
+		volume_max="2.500000 6.500000 1.500000"
+		volume_r="6.523926"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -152,89 +449,70 @@
 					<mtx idx="0"/>
 					<tex st="2.000000 24.000000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_xyz xyz="1.049805 0.250000 1.623779"/>
-					<pos_xy xy="1.437500 0.250000"/>
-					<pos_xy xy="1.049805 2.250000"/>
-					<pos_xy xy="1.437500 5.250000"/>
-					<pos_xy xy="-0.049805 2.250000"/>
-					<pos_xy xy="-0.437500 5.250000"/>
-					<pos_xy xy="-0.049805 0.250000"/>
-					<pos_xy xy="-0.437500 0.250000"/>
+					<pos_s xyz="1.062500 0.250000 1.500000"/>
+					<pos_xy xy="1.750000 0.250000"/>
+					<pos_xy xy="1.062500 2.125000"/>
+					<pos_xy xy="1.750000 5.250000"/>
+					<pos_xy xy="-0.062500 2.125000"/>
+					<pos_xy xy="-0.750000 5.250000"/>
+					<pos_xy xy="-0.062500 0.250000"/>
+					<pos_xy xy="-0.750000 0.250000"/>
 				</primitive>
 				<primitive index="1" type="triangle_strip" vertex_size="5">
 					<tex st="2.000000 18.000000"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xy xy="1.437500 5.250000"/>
-					<pos_xz xz="2.375000 0.000000"/>
-					<pos_xy xy="0.500000 5.250000"/>
-					<pos_xz xz="1.437500 -1.623779"/>
-					<pos_xy xy="-0.437500 5.250000"/>
+					<nrm xyz="0.271484 0.865234 0.423828"/>
+					<pos_xy xy="1.750000 5.250000"/>
+					<nrm xyz="0.529297 0.847656 -0.035156"/>
+					<pos_xz xz="2.500000 -0.250000"/>
+					<nrm xyz="0.000000 0.998047 -0.027344"/>
+					<pos_xy xy="0.500000 6.500000"/>
+					<nrm xyz="0.265625 0.849609 -0.455078"/>
+					<pos_s xyz="1.500000 5.250000 -2.000000"/>
+					<nrm xyz="-0.265625 0.849609 -0.455078"/>
+					<pos_xy xy="-0.500000 5.250000"/>
 				</primitive>
 				<primitive index="2" type="triangle_strip" vertex_size="5">
-					<pos_xy xy="-0.437500 5.250000"/>
-					<pos_xz xz="-1.375000 0.000000"/>
-					<pos_xy xy="0.500000 5.250000"/>
-					<pos_xz xz="-0.437500 1.623779"/>
-					<pos_xy xy="1.437500 5.250000"/>
+					<pos_xy xy="-0.500000 5.250000"/>
+					<nrm xyz="-0.529297 0.847656 -0.035156"/>
+					<pos_xz xz="-1.500000 -0.250000"/>
+					<nrm xyz="0.000000 0.998047 -0.027344"/>
+					<pos_xy xy="0.500000 6.500000"/>
+					<nrm xyz="-0.271484 0.865234 0.423828"/>
+					<pos_s xyz="-0.750000 5.250000 1.500000"/>
+					<nrm xyz="0.271484 0.865234 0.423828"/>
+					<pos_xy xy="1.750000 5.250000"/>
 				</primitive>
-				<primitive index="3" type="quads" vertex_size="40">
-					<tex st="2.000000 14.000000"/>
-					<nrm xyz="-1.000000 0.000000 0.000000"/>
-					<pos_xy xy="1.049805 0.250000"/>
-					<pos_xy xy="1.049805 2.250000"/>
-					<pos_xz xz="1.049805 0.716797"/>
-					<pos_xy xy="1.049805 0.250000"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xz xz="-0.049805 1.623779"/>
-					<pos_xy xy="1.049805 0.250000"/>
-					<pos_xz xz="1.049805 0.716797"/>
-					<pos_xy xy="-0.049805 0.250000"/>
-					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_yz yz="2.250000 1.623779"/>
-					<pos_xy xy="-0.049805 0.250000"/>
-					<pos_xz xz="-0.049805 0.716797"/>
-					<pos_xy xy="-0.049805 2.250000"/>
-					<nrm xyz="0.000000 -1.000000 0.000000"/>
-					<pos_xz xz="1.049805 1.623779"/>
-					<pos_xy xy="-0.049805 2.250000"/>
-					<pos_xz xz="-0.049805 0.716797"/>
-					<pos_xy xy="1.049805 2.250000"/>
+				<primitive index="3" type="quads" vertex_size="20">
 					<tex st="2.000000 28.000000"/>
-					<nrm xyz="0.865234 0.000000 0.500000"/>
-					<pos_s xyz="2.375000 5.250000 0.000000"/>
-					<pos_xz xz="1.437500 1.623779"/>
-					<pos_xy xy="1.437500 0.250000"/>
-					<pos_xz xz="2.375000 0.000000"/>
+					<nrm xyz="0.919922 0.000000 0.394531"/>
+					<pos_xz xz="2.500000 -0.250000"/>
+					<pos_xz xz="1.750000 1.500000"/>
+					<pos_xy xy="1.750000 0.250000"/>
+					<pos_xz xz="2.500000 -0.250000"/>
 					<tex st="2.000000 24.000000"/>
-					<nrm xyz="0.865234 0.000000 -0.500000"/>
-					<pos_xyz xyz="1.437500 5.250000 -1.623779"/>
-					<pos_xz xz="2.375000 0.000000"/>
-					<pos_xy xy="2.375000 0.250000"/>
-					<pos_xz xz="1.437500 -1.623779"/>
+					<nrm xyz="0.869141 0.000000 -0.496094"/>
+					<pos_s xyz="1.500000 5.250000 -2.000000"/>
+					<pos_xz xz="2.500000 -0.250000"/>
+					<pos_xy xy="2.500000 0.250000"/>
+					<pos_xz xz="1.500000 -2.000000"/>
 					<tex st="2.000000 28.000000"/>
 					<nrm xyz="0.000000 0.000000 -1.000000"/>
-					<pos_xy xy="-0.437500 5.250000"/>
-					<pos_xy xy="1.437500 5.250000"/>
-					<pos_xy xy="1.437500 0.250000"/>
-					<pos_xy xy="-0.437500 0.250000"/>
+					<pos_xy xy="-0.500000 5.250000"/>
+					<pos_xy xy="1.500000 5.250000"/>
+					<pos_xy xy="1.500000 0.250000"/>
+					<pos_xy xy="-0.500000 0.250000"/>
 					<tex st="2.000000 24.000000"/>
-					<nrm xyz="-0.865234 0.000000 -0.500000"/>
-					<pos_s xyz="-1.375000 5.250000 0.000000"/>
-					<pos_xz xz="-0.437500 -1.623779"/>
-					<pos_xy xy="-0.437500 0.250000"/>
-					<pos_xz xz="-1.375000 0.000000"/>
+					<nrm xyz="-0.869141 0.000000 -0.496094"/>
+					<pos_s xyz="-1.500000 5.250000 -0.250000"/>
+					<pos_xz xz="-0.500000 -2.000000"/>
+					<pos_xy xy="-0.500000 0.250000"/>
+					<pos_xz xz="-1.500000 -0.250000"/>
 					<tex st="2.000000 28.000000"/>
-					<nrm xyz="-0.865234 0.000000 0.500000"/>
-					<pos_xyz xyz="-0.437500 5.250000 1.623779"/>
-					<pos_xz xz="-1.375000 0.000000"/>
-					<pos_xy xy="-1.375000 0.250000"/>
-					<pos_xz xz="-0.437500 1.623779"/>
-					<tex st="2.000000 14.000000"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_xyz xyz="1.049805 2.250000 0.716797"/>
-					<pos_xy xy="-0.049805 2.250000"/>
-					<pos_xy xy="-0.049805 0.250000"/>
-					<pos_xy xy="1.049805 0.250000"/>
+					<nrm xyz="-0.919922 0.000000 0.394531"/>
+					<pos_s xyz="-0.750000 5.250000 1.500000"/>
+					<pos_xz xz="-1.500000 -0.250000"/>
+					<pos_xy xy="-1.500000 0.250000"/>
+					<pos_xz xz="-0.750000 1.500000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -242,65 +520,240 @@
 	<polygon index="1" name="polygon1"
 		vertex_size="18" polygon_size="6"
 		triangle_size="6" quad_size="0"
-		volume_min="-2.000000 0.125000 -2.165039"
-		volume_max="3.000000 0.125000 2.165039"
-		volume_r="3.002686"
+		volume_min="-1.750000 0.125000 -2.250000"
+		volume_max="2.750000 0.125000 2.000000"
+		volume_r="2.853271"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">0</mtx_list>
+			<mtx_list size="1">1</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="triangles" vertex_size="18">
 					<mtx idx="0"/>
 					<tex st="8.000000 1.687500"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xyz xyz="1.750000 0.125000 2.165039"/>
+					<nrm xyz="0.000000 0.998047 -0.027344"/>
+					<pos_s xyz="1.750000 0.125000 2.000000"/>
 					<tex st="0.000000 1.687500"/>
-					<pos_xz xz="3.000000 0.000000"/>
+					<pos_xz xz="2.750000 -0.250000"/>
 					<tex st="4.000000 6.312500"/>
 					<pos_xy xy="0.500000 0.125000"/>
 					<tex st="8.000000 1.687500"/>
-					<pos_xy xy="3.000000 0.125000"/>
+					<pos_xy xy="2.750000 0.125000"/>
 					<tex st="0.000000 1.687500"/>
-					<pos_xz xz="1.750000 -2.165039"/>
+					<pos_xz xz="1.750000 -2.250000"/>
 					<tex st="4.000000 6.312500"/>
-					<pos_xz xz="0.500000 0.000000"/>
+					<pos_xz xz="0.500000 -0.250000"/>
 					<tex st="8.000000 1.687500"/>
-					<pos_xz xz="1.750000 -2.165039"/>
+					<pos_xz xz="1.750000 -2.250000"/>
 					<tex st="0.000000 1.687500"/>
 					<pos_xy xy="-0.750000 0.125000"/>
 					<tex st="4.000000 6.312500"/>
-					<pos_xz xz="0.500000 0.000000"/>
+					<pos_xz xz="0.500000 -0.250000"/>
 					<tex st="8.000000 1.687500"/>
-					<pos_xz xz="-0.750000 -2.165039"/>
+					<pos_xz xz="-0.750000 -2.250000"/>
 					<tex st="0.000000 1.687500"/>
-					<pos_xz xz="-2.000000 0.000000"/>
+					<pos_xz xz="-1.750000 -0.250000"/>
 					<tex st="4.000000 6.312500"/>
 					<pos_xy xy="0.500000 0.125000"/>
 					<tex st="8.000000 1.687500"/>
-					<pos_xy xy="-2.000000 0.125000"/>
+					<pos_xy xy="-1.750000 0.125000"/>
 					<tex st="0.000000 1.687500"/>
-					<pos_xz xz="-0.750000 2.165039"/>
+					<pos_xz xz="-0.750000 2.000000"/>
 					<tex st="4.000000 6.312500"/>
-					<pos_xz xz="0.500000 0.000000"/>
+					<pos_xz xz="0.500000 -0.250000"/>
 					<tex st="8.000000 1.687500"/>
-					<pos_xz xz="-0.750000 2.165039"/>
+					<pos_xz xz="-0.750000 2.000000"/>
 					<tex st="0.000000 1.687500"/>
 					<pos_xy xy="1.750000 0.125000"/>
 					<tex st="4.000000 6.312500"/>
-					<pos_xz xz="0.500000 0.000000"/>
+					<pos_xz xz="0.500000 -0.250000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="2" name="polygon2"
+		vertex_size="52" polygon_size="16"
+		triangle_size="0" quad_size="16"
+		volume_min="-0.500000 0.250000 2.875000"
+		volume_max="1.500000 2.500000 3.000000"
+		volume_r="4.183350"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">2</mtx_list>
+			<primitive_array size="5">
+				<primitive index="0" type="quad_strip" vertex_size="10">
+					<mtx idx="0"/>
+					<tex st="-31.000000 85.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="1.062500 1.250000 3.000000"/>
+					<tex st="-31.000000 79.000000"/>
+					<pos_xy xy="1.500000 1.250000"/>
+					<tex st="-17.000000 85.000000"/>
+					<pos_xy xy="1.062500 2.125000"/>
+					<tex st="-17.000000 79.000000"/>
+					<pos_xy xy="1.500000 2.500000"/>
+					<tex st="-31.000000 85.000000"/>
+					<pos_xy xy="0.500000 2.125000"/>
+					<tex st="-31.000000 79.000000"/>
+					<pos_xy xy="0.500000 2.500000"/>
+					<tex st="-17.000000 85.000000"/>
+					<pos_xy xy="-0.062500 2.125000"/>
+					<tex st="-17.000000 79.000000"/>
+					<pos_xy xy="-0.500000 2.500000"/>
+					<tex st="-31.000000 85.000000"/>
+					<pos_xy xy="-0.062500 1.250000"/>
+					<tex st="-31.000000 79.000000"/>
+					<pos_xy xy="-0.500000 1.250000"/>
+				</primitive>
+				<primitive index="1" type="quad_strip" vertex_size="6">
+					<tex st="-17.000000 79.000000"/>
+					<nrm xyz="0.000000 0.998047 -0.027344"/>
+					<pos_xy xy="1.500000 2.500000"/>
+					<tex st="-17.000000 72.000000"/>
+					<pos_xz xz="1.500000 2.875000"/>
+					<tex st="-31.000000 79.000000"/>
+					<pos_xz xz="0.500000 3.000000"/>
+					<tex st="-31.000000 72.000000"/>
+					<pos_xz xz="0.500000 2.875000"/>
+					<tex st="-17.000000 79.000000"/>
+					<pos_xz xz="-0.500000 3.000000"/>
+					<tex st="-17.000000 72.000000"/>
+					<pos_xz xz="-0.500000 2.875000"/>
+				</primitive>
+				<primitive index="2" type="quad_strip" vertex_size="6">
+					<tex st="-19.000000 90.000000"/>
+					<nrm xyz="0.998047 0.000000 0.000000"/>
+					<pos_s xyz="-0.062500 0.250000 3.000000"/>
+					<pos_xz xz="-0.062500 2.875000"/>
+					<pos_yz yz="1.250000 3.000000"/>
+					<pos_xz xz="-0.062500 2.875000"/>
+					<pos_yz yz="2.125000 3.000000"/>
+					<pos_xz xz="-0.062500 2.875000"/>
+				</primitive>
+				<primitive index="3" type="quad_strip" vertex_size="6">
+					<nrm xyz="-1.000000 0.000000 0.000000"/>
+					<pos_xz xz="1.062500 3.000000"/>
+					<pos_xz xz="1.062500 2.875000"/>
+					<pos_yz yz="1.250000 3.000000"/>
+					<pos_xz xz="1.062500 2.875000"/>
+					<pos_yz yz="0.250000 3.000000"/>
+					<pos_xz xz="1.062500 2.875000"/>
+				</primitive>
+				<primitive index="4" type="quads" vertex_size="24">
+					<tex st="-31.000000 93.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-0.062500 1.250000 3.000000"/>
+					<tex st="-31.000000 87.000000"/>
+					<pos_xy xy="-0.500000 1.250000"/>
+					<tex st="-17.000000 87.000000"/>
+					<pos_xy xy="-0.500000 0.250000"/>
+					<tex st="-17.000000 93.000000"/>
+					<pos_xy xy="-0.062500 0.250000"/>
+					<tex st="-7.000000 98.000000"/>
+					<nrm xyz="0.998047 0.000000 0.000000"/>
+					<pos_s xyz="1.500000 1.250000 2.875000"/>
+					<pos_xz xz="1.500000 3.000000"/>
+					<pos_xy xy="1.500000 0.250000"/>
+					<pos_xz xz="1.500000 2.875000"/>
+					<tex st="-31.000000 72.000000"/>
+					<nrm xyz="-1.000000 0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 1.250000"/>
+					<tex st="-31.000000 79.000000"/>
+					<pos_xz xz="-0.500000 3.000000"/>
+					<tex st="-17.000000 79.000000"/>
+					<pos_xy xy="-0.500000 2.500000"/>
+					<tex st="-17.000000 72.000000"/>
+					<pos_xz xz="-0.500000 2.875000"/>
+					<tex st="-17.000000 87.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="1.500000 0.250000 3.000000"/>
+					<tex st="-31.000000 87.000000"/>
+					<pos_xy xy="1.500000 1.250000"/>
+					<tex st="-31.000000 93.000000"/>
+					<pos_xy xy="1.062500 1.250000"/>
+					<tex st="-17.000000 93.000000"/>
+					<pos_xy xy="1.062500 0.250000"/>
+					<tex st="-17.000000 72.000000"/>
+					<nrm xyz="0.998047 0.000000 0.000000"/>
+					<pos_s xyz="1.500000 2.500000 2.875000"/>
+					<tex st="-17.000000 79.000000"/>
+					<pos_xz xz="1.500000 3.000000"/>
+					<tex st="-31.000000 79.000000"/>
+					<pos_xy xy="1.500000 1.250000"/>
+					<tex st="-31.000000 72.000000"/>
+					<pos_xz xz="1.500000 2.875000"/>
+					<tex st="-7.000000 98.000000"/>
+					<nrm xyz="-1.000000 0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.250000"/>
+					<pos_xz xz="-0.500000 3.000000"/>
+					<pos_xy xy="-0.500000 1.250000"/>
+					<pos_xz xz="-0.500000 2.875000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="3" name="polygon3"
+		vertex_size="12" polygon_size="4"
+		triangle_size="0" quad_size="4"
+		volume_min="-0.250000 0.250000 1.500000"
+		volume_max="1.250000 2.125000 2.500000"
+		volume_r="3.511230"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">3</mtx_list>
+			<primitive_array size="2">
+				<primitive index="0" type="quad_strip" vertex_size="8">
+					<mtx idx="0"/>
+					<tex st="-22.000000 119.000000"/>
+					<nrm xyz="0.000000 0.998047 -0.027344"/>
+					<pos_s xyz="-0.250000 2.125000 2.500000"/>
+					<pos_xy xy="-0.250000 0.250000"/>
+					<pos_yz yz="2.125000 1.500000"/>
+					<pos_xy xy="-0.250000 0.250000"/>
+					<pos_xy xy="1.250000 2.125000"/>
+					<pos_xy xy="1.250000 0.250000"/>
+					<pos_yz yz="2.125000 2.500000"/>
+					<pos_xy xy="1.250000 0.250000"/>
+				</primitive>
+				<primitive index="1" type="quads" vertex_size="4">
+					<tex st="-31.000000 128.000000"/>
+					<pos_xy xy="-0.250000 0.250000"/>
+					<tex st="-17.000000 128.000000"/>
+					<pos_xy xy="1.250000 0.250000"/>
+					<tex st="-17.000000 112.000000"/>
+					<pos_xz xz="1.250000 1.500000"/>
+					<tex st="-31.000000 112.000000"/>
+					<pos_xy xy="-0.250000 0.250000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
 </polygon_array>
 
-<node_array size="1">
-	<node index="0" name="polySurface1" kind="mesh"
+<node_array size="5">
+	<node index="0" name="world_root" kind="null"
 		parent="-1"
-		child="-1"
+		child="1"
 		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="off"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="1" name="polySurface26" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="2"
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
@@ -308,20 +761,79 @@
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
-		display_size="2"
-		vertex_size="76" polygon_size="25"
-		triangle_size="12" quad_size="13"
-		volume_min="-2.000000 0.125000 -2.165039"
-		volume_max="3.000000 5.250000 2.165039"
-		volume_r="5.762207"
+		display_size="1"
+		vertex_size="38" polygon_size="14"
+		triangle_size="6" quad_size="8"
+		volume_min="-1.500000 0.250000 -2.000000"
+		volume_max="2.500000 6.500000 1.500000"
+		volume_r="6.523926"
 	>
-		<display index="0" material="0" polygon="0" priority="0"/>
-		<display index="1" material="1" polygon="1" priority="0"/>
+		<display index="0" material="1" polygon="0" priority="0"/>
+	</node>
+	<node index="2" name="polySurface27" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="3"
+		brother_prev="1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="18" polygon_size="6"
+		triangle_size="6" quad_size="0"
+		volume_min="-1.750000 0.125000 -2.250000"
+		volume_max="2.750000 0.125000 2.000000"
+		volume_r="2.853271"
+	>
+		<display index="0" material="2" polygon="1" priority="0"/>
+	</node>
+	<node index="3" name="polySurface28" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="4"
+		brother_prev="2"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 -22.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="52" polygon_size="16"
+		triangle_size="0" quad_size="16"
+		volume_min="-0.500000 0.250000 2.875000"
+		volume_max="1.500000 2.500000 3.000000"
+		volume_r="4.183350"
+	>
+		<display index="0" material="0" polygon="2" priority="0"/>
+	</node>
+	<node index="4" name="polySurface29" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="-1"
+		brother_prev="3"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 -16.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="12" polygon_size="4"
+		triangle_size="0" quad_size="4"
+		volume_min="-0.250000 0.250000 1.500000"
+		volume_max="1.250000 2.125000 2.500000"
+		volume_r="3.511230"
+	>
+		<display index="0" material="0" polygon="3" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="76" polygon_size="25"
-	triangle_size="12" quad_size="13"/>
+<output_info vertex_size="120" polygon_size="40"
+	triangle_size="12" quad_size="28"/>
 
 </body>
 
