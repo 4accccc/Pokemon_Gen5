@@ -19,3 +19,6 @@ doskey chi=cd %PROJECT_ROOT:/=\%prog\include\$*
 doskey che=cd %PROJECT_ROOT:/=\%prog\src\fielddata\$*
 doskey chr=cd %PROJECT_ROOT:/=\%resource\$*
 doskey chf=cd %PROJECT_ROOT:/=\%resource\fldmapdata\$*
+
+doskey mcs=%PROJECT_ROOT:/=\%lib\TwlSystem\tools\mcsserver\mcsserv.exe
+doskey mcspv=%PROJECT_ROOT:/=\%tools\pmviewer\pmViewer2_twl.exe
