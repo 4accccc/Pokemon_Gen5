@@ -330,6 +330,7 @@ extern void FLDSYSWIN_STREAM_WriteWindow( FLDSYSWIN_STREAM *sysWin );
 extern void FLDSYSWIN_STREAM_AllPrintStrBuf(
     FLDSYSWIN_STREAM *sysWin, u16 x, u16 y, STRBUF *strBuf );
 extern BOOL FLDSYSWIN_STREAM_CheckAllPrintTrans( FLDSYSWIN_STREAM *sysWin );
+extern GFL_BMPWIN * FLDSYSWIN_STREAM_GetBmpWin( FLDSYSWIN_STREAM *sysWin );
 
 //吹き出しメッセージウィンドウ
 extern FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,

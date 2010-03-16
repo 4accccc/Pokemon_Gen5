@@ -435,7 +435,6 @@ void FLDMSGBG_SetupResource( FLDMSGBG *fmb )
 void FLDMSGBG_TransResource( int bgFrame, HEAPID heapID )
 {
   transBGResource( bgFrame, heapID );
-
 }
 
 //--------------------------------------------------------------
@@ -2446,6 +2445,18 @@ void FLDSYSWIN_STREAM_AllPrintStrBuf(
 BOOL FLDSYSWIN_STREAM_CheckAllPrintTrans( FLDSYSWIN_STREAM *sysWin )
 {
   return( FLDMSGPRINT_CheckPrintTrans(sysWin->msgPrint) );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDSYSWIN_STREAM システムウィンドウ　GFL_BMPWIN取得
+ * @param sysWin FLDSYSWIN_STREAM
+ * @retval GFL_BMPWIN*
+ */
+//--------------------------------------------------------------
+GFL_BMPWIN * FLDSYSWIN_STREAM_GetBmpWin( FLDSYSWIN_STREAM *sysWin )
+{
+  return( sysWin->bmpwin );
 }
 
 //======================================================================
