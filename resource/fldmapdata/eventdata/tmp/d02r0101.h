@@ -51,6 +51,12 @@
 #define D02R0101_STOP_01                  37
 #define D02R0101_FLD_ITEM_6               38
 #define D02R0101_FLD_ITEM_7               39
+#define D02R0101_TR_GRASS_01              40
+#define D02R0101_TR_GRASS_02              41
+#define D02R0101_TR_GRASS_03              42
+#define D02R0101_TR_GRASS_04              43
+#define D02R0101_TR_GRASS_05              44
+#define D02R0101_TR_GRASS_06              45
 
 #endif //ZONE_D02R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
