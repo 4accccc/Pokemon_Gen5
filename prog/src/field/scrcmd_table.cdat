@@ -753,7 +753,7 @@
   //N“üŠÖ˜A‚»‚Ì‚Q
   DEF_CMD( EvCmdGetMissionEntry, EV_SEQ_GET_MISSION_ENTRY )
   DEF_CMD( EvCmdIntrudeMissionStartWait, EV_SEQ_MISSION_START_WAIT_EVENT )
-  NO_CMD()
+  DEF_CMD( EvCmdSymbolPokeBattle, EV_SEQ_SYMBOL_POKE_BATTLE )
   NO_CMD()
 
   //ˆÚ“®ƒ|ƒPƒ‚ƒ“

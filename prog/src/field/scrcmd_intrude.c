@@ -255,6 +255,9 @@ VMCMD_RESULT EvCmdIntrudeConnectMapSetting( VMHANDLE *core, void *wk )
     IntrudeField_ConnectMapInit(fieldWork, gsys, intcomm);
     IntrudeField_ConnectMap(fieldWork, gsys, intcomm);
   }
+  else{
+    IntrudeField_ConnectMapOne(fieldWork);
+  }
   
   MONOLITH_AddConnectAllMap(fieldWork);
 

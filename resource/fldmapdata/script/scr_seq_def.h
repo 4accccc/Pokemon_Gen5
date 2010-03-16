@@ -7478,6 +7478,19 @@
   .short  EV_SEQ_MISSION_START_WAIT_EVENT
   .endm
 
+//--------------------------------------------------------------
+/**
+ * シンボルポケモンバトル
+ * @param  バトル結果(TRUE:捕獲した　FALSE:捕獲しなかった)
+ */
+//--------------------------------------------------------------
+#define _SYMBOL_POKE_BATTLE( ret_wk ) _ASM_SYMBOL_POKE_BATTLE ret_wk
+
+  .macro  _ASM_SYMBOL_POKE_BATTLE     ret_wk
+  .short  EV_SEQ_SYMBOL_POKE_BATTLE
+  .short  \ret_wk
+  .endm
+
 //======================================================================
 //
 //

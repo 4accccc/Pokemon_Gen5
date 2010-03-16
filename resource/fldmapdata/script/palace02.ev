@@ -51,5 +51,6 @@ ev_palace02:
 /**************************************************************/
 EVENT_START ev_palace02_symbol_poke
   _EASY_MSG( msg_symbol_000 )
+  _SYMBOL_POKE_BATTLE( SCWK_ANSWER )
 EVENT_END
 

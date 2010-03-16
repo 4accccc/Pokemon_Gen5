@@ -91,6 +91,7 @@
 #include "scrcmd_quiz.h"
 #include "scrcmd_sppoke_trio.h"
 #include "scrcmd_sppoke.h"
+#include "scrcmd_symbol.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
