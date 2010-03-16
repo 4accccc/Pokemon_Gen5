@@ -3165,9 +3165,7 @@ u32 BTL_MAIN_FixBonusMoney( BTL_MAIN_MODULE* wk )
     wk->bonusMoney = GPOWER_Calc_Money( wk->bonusMoney );
     wk->fBonusMoneyFixed = TRUE;
   }
-  // @todo デバッグ用一時措置
-  return 0;
-//  return wk->bonusMoney;
+  return wk->bonusMoney;
 }
 
 //=============================================================================================
