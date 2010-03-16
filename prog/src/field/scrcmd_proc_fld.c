@@ -218,8 +218,8 @@ VMCMD_RESULT EvCmdCrossCommHelloMessageInputCall( VMHANDLE *core, void *wk )
 
     callbackWork->nameInParam.mode     = NAMEIN_FREE_WORD;
     callbackWork->nameInParam.hero_sex = MyStatus_GetMySex( myStatus );
-    callbackWork->nameInParam.wordmax  = NAMEIN_FREE_WORD_LENGTH+1;
-    callbackWork->nameInParam.strbuf   = GFL_STR_CreateBuffer( NAMEIN_FREE_WORD_LENGTH+1, HEAPID_PROC );
+    callbackWork->nameInParam.wordmax  = NAMEIN_GREETING_WORD_LENGTH;
+    callbackWork->nameInParam.strbuf   = GFL_STR_CreateBuffer( SAVE_SURETIGAI_SELFINTRODUCTION_LEN, HEAPID_PROC );
     callbackWork->nameInParam.p_misc   = misc;
 
     // “ü—Í•¶š—ñ‚Ì‰Šú’l‚ğİ’è
@@ -302,8 +302,8 @@ VMCMD_RESULT EvCmdCrossCommThanksMessageInputCall( VMHANDLE *core, void *wk )
 
     callbackWork->nameInParam.mode     = NAMEIN_FREE_WORD;
     callbackWork->nameInParam.hero_sex = MyStatus_GetMySex( myStatus );
-    callbackWork->nameInParam.wordmax  = NAMEIN_FREE_WORD_LENGTH+1;
-    callbackWork->nameInParam.strbuf   = GFL_STR_CreateBuffer( NAMEIN_FREE_WORD_LENGTH+1, HEAPID_PROC );
+    callbackWork->nameInParam.wordmax  = NAMEIN_THANKS_WORD_LENGTH;
+    callbackWork->nameInParam.strbuf   = GFL_STR_CreateBuffer( SAVE_SURETIGAI_THANKYOU_LEN, HEAPID_PROC );
     callbackWork->nameInParam.p_misc   = misc;
 
     // “ü—Í•¶š—ñ‚Ì‰Šú’l‚ğİ’è

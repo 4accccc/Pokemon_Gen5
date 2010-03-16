@@ -80,16 +80,20 @@ void MISC_Init( MISC *p_msc )
     GFL_MSGDATA* msg;
     STRBUF* strbuf;
 
-    msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_c03r0101_dat, HEAPID_SAVE );
+    msg = GFL_MSG_Create( 
+        GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, 
+        NARC_script_message_c03r0101_dat, HEAPID_SAVE );
 
     // ˆ¥ŽA
     strbuf = GFL_MSG_CreateString( msg, msg_c03r0101_input_a );
-    GFL_STR_GetStringCode( strbuf, p_msc->self_introduction, SAVE_SURETIGAI_SELFINTRODUCTION_LEN );
+    GFL_STR_GetStringCode( 
+        strbuf, p_msc->self_introduction, SAVE_SURETIGAI_SELFINTRODUCTION_LEN );
     GFL_STR_DeleteBuffer( strbuf );
 
     // ‚¨—ç
     strbuf = GFL_MSG_CreateString( msg, msg_c03r0101_input_b );
-    GFL_STR_GetStringCode( strbuf, p_msc->thankyou_message, SAVE_SURETIGAI_THANKYOU_LEN );
+    GFL_STR_GetStringCode( 
+        strbuf, p_msc->thankyou_message, SAVE_SURETIGAI_THANKYOU_LEN );
     GFL_STR_DeleteBuffer( strbuf );
 
     GFL_MSG_Delete( msg );
