@@ -3508,6 +3508,7 @@ static void Mystery_Demo_MovieMain( MYSTERY_DEMO_WORK *p_wk )
     SEQ_START_FADEIN,
     SEQ_WAIT_FADEIN,
     SEQ_INIT_WAIT,
+    SEQ_TEST_WAIT,
     SEQ_MOVE,
     SEQ_END_WAIT,
     SEQ_END,
@@ -3564,8 +3565,16 @@ static void Mystery_Demo_MovieMain( MYSTERY_DEMO_WORK *p_wk )
     if( p_wk->sync++ > MYSTERY_DEMO_INIT_WAIT_SYNC )
     { 
       p_wk->sync  = 0;
-      p_wk->seq   = SEQ_MOVE;
+      p_wk->seq   = SEQ_TEST_WAIT;
       MYSTERY_EFFECT_Start( p_wk->p_effect, MYSTERY_EFFECT_TYPE_MOVIE );
+    }
+    break;
+
+  case SEQ_TEST_WAIT:
+    if( p_wk->sync++ > 300 )
+    { 
+      p_wk->sync  = 0;
+      p_wk->seq   = SEQ_MOVE;
     }
     break;
 
