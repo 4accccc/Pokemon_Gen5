@@ -20,6 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c05r0201_oldman1_01
+_EVENT_DATA    ev_c05r0201_boy2_01
 _EVENT_DATA_END
 
 
@@ -78,3 +79,87 @@ EVENT_START   ev_c05r0201_oldman1_01
 	
 EVENT_END
 
+/**************************************************************/
+/*  C05R0201 BOY2の会話用イベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_c05r0201_boy2_01
+	{
+	_TALK_OBJ_START()
+
+	//交換後話しかけ
+	IF FLAG_ON( FE_C05R0201_POKETRADE_01 ) THEN
+		_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_05 ,C05R0201_BOY2_01)
+		
+	ELSE
+		//【仮】ポケモン名をセリフにセット
+		_MONS_NAME ( 1 , MONSNO_533  ) //交換先
+		_MONS_NAME ( 0 , MONSNO_601  ) //要望
+	
+		//交換しようよ
+		_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_01 ,C05R0201_BOY2_01)
+		_YES_NO_WIN( SCWK_ANSWER )
+		_BALLOONWIN_CLOSE()
+		
+		//はい
+		IF $SCWK_ANSWER == 0 THEN
+
+			//選択ポケモン格納変数定義
+			DEFINE_LOCAL LWK_CHOICE
+			//キャンセルしたか結果格納変数定義
+			DEFINE_LOCAL LWK_SELECT_RESULT
+			
+			//ポケモン選択画面開く
+			_SELECT_TEMOTI_POKE  ( LWK_SELECT_RESULT , LWK_CHOICE , 0 )
+			
+			
+			//ポケモンを選択した
+			IF $LWK_SELECT_RESULT == TRUE THEN
+			
+				//要望と一致してるかチェック結果格納変数定義
+				DEFINE_LOCAL LWK_TRADE_CHECK
+			
+				//選択したポケモンが交換可能かチェック
+				_FIELD_POKE_TRADE_CHECK ( LWK_TRADE_CHECK , FLD_TRADE_POKE_533 , LWK_CHOICE )
+			
+				//交換可能である
+				IF $LWK_TRADE_CHECK == FLD_TRADE_ENABLE THEN
+				
+					//交換処理
+					_FIELD_POKE_TRADE ( FLD_TRADE_POKE_533 , LWK_CHOICE )
+					_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_02 ,C05R0201_BOY2_01)
+					_LAST_KEYWAIT()
+					_BALLOONWIN_CLOSE()
+					
+					//==================================//
+			
+					//交換完了
+					_FLAG_SET ( FE_C05R0201_POKETRADE_01 )
+							
+					//==================================//
+		
+				//条件と一致しなかった
+				ELSE
+					//オイラがほしいのは違う
+					_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_03 ,C05R0201_BOY2_01)
+					_LAST_KEYWAIT()
+					_BALLOONWIN_CLOSE()
+				ENDIF
+			
+			//選択キャンセル
+			ELSE
+				_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_04 ,C05R0201_BOY2_01)
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+				
+			ENDIF
+		
+		//いいえ
+		ELSE
+			_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_04 ,C05R0201_BOY2_01)
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		ENDIF
+	
+	ENDIF
+	}
+EVENT_END
