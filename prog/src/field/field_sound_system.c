@@ -895,7 +895,7 @@ static u8 GetRequestCountInQueue( const FIELD_SOUND* fieldSound, FSND_BGM_REQUES
     if( fieldSound->requestData[ pos ].request == request ) { num++; }
 
     // 次のリクエストへ
-    pos += (pos + 1) % REQUEST_QUEUE_SIZE;
+    pos = (pos + 1) % REQUEST_QUEUE_SIZE;
   }
 
   return num;
