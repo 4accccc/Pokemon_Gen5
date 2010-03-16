@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-16T13:06:12"/>
+	<create user="ohmori" host="W00223" date="2010-03-16T16:24:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -400,8 +400,8 @@
 	</row>
 
 	<row id="msg_invasion_mission_sys003" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
-		<language name="JPN" width="256">[2:02:３桁:0]ポイント　ゲット！</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:0]ポイント　ゲット！</language>
+		<language name="JPN" width="256">パレスだまを　[2:01:２桁:0]こ　にゅうしゅした！</language>
+		<language name="JPN_KANJI" width="256">パレスだまを　[2:01:２桁:0]こ　にゅうしゅした！</language>
 	</row>
 
 	<row id="msg_invasion_mission_sys004" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
