@@ -27,6 +27,7 @@ extern VMCMD_RESULT EvCmdGoldWinClose( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdSysWinMsg( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdSysWinMsgAllPut( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdSysWinTimeIcon( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdSysWinClose( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdBalloonWinWrite( VMHANDLE *core, void *wk );

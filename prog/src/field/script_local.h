@@ -139,6 +139,8 @@ extern GAMESYS_WORK * SCRIPT_GetGameSysWork( SCRIPT_WORK * sc );
 extern SCRIPT_FLDPARAM * SCRIPT_GetFieldParam( SCRIPT_WORK * sc );
 extern void * SCRIPT_GetMsgWinPointer( SCRIPT_WORK *sc );
 extern void SCRIPT_SetMsgWinPointer( SCRIPT_WORK *sc, void* msgWin );
+extern void * SCRIPT_GetTimeIconPointer( SCRIPT_WORK *sc );
+extern void SCRIPT_SetTimeIconPointer( SCRIPT_WORK *sc, void* timeIcon );
 extern WORDSET * SCRIPT_GetWordSet( SCRIPT_WORK * sc );
 extern STRBUF * SCRIPT_GetMsgBuffer( SCRIPT_WORK * sc );
 extern STRBUF * SCRIPT_GetMsgTempBuffer( SCRIPT_WORK * sc );

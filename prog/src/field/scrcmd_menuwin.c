@@ -13,6 +13,7 @@
 #include <gflib.h>
 
 #include "system/vm_cmd.h"
+#include "system/time_icon.h"
 
 #include "pm_version.h"
 
@@ -337,11 +338,22 @@ static void sysWin_AddWindow( SCRCMD_WORK *work, u8 up_down )
 static void sysWin_Close( SCRCMD_WORK *work )
 {
   FLDSYSWIN_STREAM *sysWin;
+  TIMEICON_WORK* timeIcon;
   
   if( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) )
   {
     sysWin = (FLDSYSWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
     FLDSYSWIN_STREAM_Delete( sysWin );
+
+    // タイムウエイトがあったら破棄
+    {
+      timeIcon = SCRCMD_WORK_GetTimeIconPtr( work );
+      if( timeIcon ){
+        TILEICON_Exit( timeIcon );
+        SCRCMD_WORK_SetTimeIconPtr( work, NULL );
+      }
+    }
+    
     SCREND_CHK_SetBitOff(SCREND_CHK_WIN_OPEN);
   }
   else
@@ -497,6 +509,56 @@ VMCMD_RESULT EvCmdSysWinMsgAllPut( VMHANDLE *core, void *wk )
   sysWin = (FLDSYSWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
   FLDSYSWIN_STREAM_ClearMessage( sysWin );
   FLDSYSWIN_STREAM_AllPrintStrBuf( sysWin, 0, 0, msgbuf );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  システムウィンドウにタイムアイコンを設定する。
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdSysWinTimeIcon( VMHANDLE *core, void *wk )
+{
+  FLDSYSWIN_STREAM *sysWin;
+  SCRCMD_WORK *work = wk;
+  TIMEICON_WORK* timeIcon;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  HEAPID heapID = FIELDMAP_GetHeapID( fieldmap );
+  GFL_BMPWIN* bmpwin;
+  u16 flag = SCRCMD_GetVMWorkValue( core, work );
+
+
+  if( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) == FALSE ) //システムウィンドウがない。
+  {
+    // タイムアイコンの設定先がない
+    GF_ASSERT(0); 
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  // OFF処理
+  timeIcon = (TIMEICON_WORK*)SCRCMD_WORK_GetTimeIconPtr( work );
+  if( timeIcon ){
+    // 破棄
+    TILEICON_Exit( timeIcon );
+    SCRCMD_WORK_SetTimeIconPtr( work, NULL );
+  }
+
+  // ON処理
+  if( flag == SCR_SYSWIN_TIMEICON_ON )
+  {
+
+    // 設定
+    sysWin = (FLDSYSWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
+    bmpwin = FLDSYSWIN_STREAM_GetBmpWin( sysWin );
+
+    timeIcon = TIMEICON_Create( GFUser_VIntr_GetTCBSYS(), bmpwin, 15, TIMEICON_DEFAULT_WAIT, heapID );
+
+    SCRCMD_WORK_SetTimeIconPtr( work, timeIcon );
+  }
+
   return VMCMD_RESULT_CONTINUE;
 }
 

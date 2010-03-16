@@ -223,11 +223,15 @@ sub_report_event_call:
     //「かきこんでいます」
     SWITCH $save_size_value 
     CASE 0 THEN 
-      _SYSWIN_MSG( msg_common_report_03 , POS_DOWN )  //ふつう
+      _SYSWIN_MSG_ALLPUT( msg_common_report_03 , POS_DOWN )  //ふつう
     CASE 1 THEN
-      _SYSWIN_MSG( msg_common_report_09 , POS_DOWN )  //たくさん
+      _SYSWIN_MSG_ALLPUT( msg_common_report_09 , POS_DOWN )  //たくさん
     ENDSWITCH
+    _TIME_WAIT(1) //画面に反映
+    _SYSWIN_TIMEICON( SCR_SYSWIN_TIMEICON_ON )  // タイムアイコンON
+    _SE_PLAY( SEQ_SE_SYS_78 )
     _REPORT_CALL( temp_work ) // 実セーブ処理
+    _SE_STOP()
     _SYSWIN_CLOSE()
     // 書き込みに成功
     IF $temp_work == TRUE THEN

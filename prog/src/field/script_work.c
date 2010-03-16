@@ -96,6 +96,8 @@ struct _TAG_SCRIPT_WORK
 
 
   void *msgWin;           //メニュー系流用メッセージウィンドウ
+  void *timeIcon;         //メニュー系流用メッセージウィンドウタイムアイコン
+
 
   void *mw;				//ビットマップメニューワーク
 
@@ -260,6 +262,33 @@ void * SCRIPT_GetMsgWinPointer( SCRIPT_WORK *sc )
 void SCRIPT_SetMsgWinPointer( SCRIPT_WORK *sc, void* msgWin )
 {
   sc->msgWin = msgWin;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプト制御ワークのタイムアイコンポインタを取得
+ *
+ *	@param	sc  SCRIPT型のポインタ
+ *  
+ *	@return タイムアイコンポインタ
+ */
+//-----------------------------------------------------------------------------
+void * SCRIPT_GetTimeIconPointer( SCRIPT_WORK *sc )
+{
+  return sc->timeIcon;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプト制御ワークのタイムアイコンポインタ設定
+ *
+ *	@param	sc        SCRIPT型のポインタ
+ *	@param	timeIcon  タイムアイコンポインタ
+ */
+//-----------------------------------------------------------------------------
+void SCRIPT_SetTimeIconPointer( SCRIPT_WORK *sc, void* timeIcon )
+{
+  sc->timeIcon = timeIcon;
 }
 
 //--------------------------------------------------------------

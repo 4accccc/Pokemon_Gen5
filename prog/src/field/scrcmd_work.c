@@ -272,6 +272,34 @@ void * SCRCMD_WORK_GetMsgWinPtr( SCRCMD_WORK *work )
 #endif
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SCRCMD_WORK タイムアイコンワークを設定
+ *
+ *	@param	work      ワーク
+ *	@param	timeIcon  タイムアイコン
+ */
+//-----------------------------------------------------------------------------
+void SCRCMD_WORK_SetTimeIconPtr( SCRCMD_WORK *work, void *timeIcon )
+{
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_SetTimeIconPointer( sc, timeIcon );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SCRCMD_WORK タイムアイコンワークを取得
+ *
+ *	@param	work  ワーク
+ *
+ *	@return タイムアイコンワーク
+ */
+//-----------------------------------------------------------------------------
+void * SCRCMD_WORK_GetTimeIconPtr( SCRCMD_WORK *work )
+{
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  return SCRIPT_GetTimeIconPointer( sc );
+}
+
 
 //--------------------------------------------------------------
 /**

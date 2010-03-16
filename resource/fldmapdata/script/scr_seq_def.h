@@ -978,7 +978,7 @@
 //--------------------------------------------------------------
 /**
  *  @def    _SYSWIN_CLOSE
- *  @brief  システムウィンドウ閉じる
+ *  @brief  システムウィンドウ閉じる    （タイムアイコンも同時に閉じます）
  *  @param none
  */
 //--------------------------------------------------------------
@@ -986,6 +986,22 @@
 
   .macro  _ASM_SYSWIN_CLOSE
   .short  EV_SEQ_SYSWIN_CLOSE
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def    _SYSWIN_TIMEICON
+ *  @brief  システムウィンドウタイムアイコンを表示
+ *  @param flag 
+            SCR_SYSWIN_TIMEICON_ON  (0)   表示
+            SCR_SYSWIN_TIMEICON_OFF (1)   非表示
+ */
+//--------------------------------------------------------------
+#define _SYSWIN_TIMEICON( flag ) _ASM_SYSWIN_TIMEICON flag
+
+  .macro  _ASM_SYSWIN_TIMEICON flag
+  .short  EV_SEQ_SYSWIN_TIMEICON
+  .short  \flag
   .endm
 
 //======================================================================

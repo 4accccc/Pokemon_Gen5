@@ -94,6 +94,8 @@ extern void SCRCMD_WORK_SetMsgData(SCRCMD_WORK *work, GFL_MSGDATA *msgData);
 extern GFL_MSGDATA * SCRCMD_WORK_GetMsgData( SCRCMD_WORK *work );
 extern void SCRCMD_WORK_SetMsgWinPtr( SCRCMD_WORK *work, void *msgWin );
 extern void * SCRCMD_WORK_GetMsgWinPtr( SCRCMD_WORK *work );
+extern void SCRCMD_WORK_SetTimeIconPtr( SCRCMD_WORK *work, void *timeIcon );
+extern void * SCRCMD_WORK_GetTimeIconPtr( SCRCMD_WORK *work );
 
 extern SCRCMD_BALLOONWIN_WORK * SCRCMD_WORK_GetBalloonWinWork(
     SCRCMD_WORK *work );
