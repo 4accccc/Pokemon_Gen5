@@ -9,6 +9,9 @@
 #ifndef ZONE_C03P03_EVC_H
 #define ZONE_C03P03_EVC_H
 
+#define C03CT_DANCER_01                    0
+#define C03CT_DANCER_02                    1
+#define C03CT_DANCER_03                    2
 
 #endif //ZONE_C03P03_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p03.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

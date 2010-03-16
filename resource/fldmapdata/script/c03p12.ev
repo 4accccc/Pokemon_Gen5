@@ -24,6 +24,7 @@ _EVENT_DATA		ev_c03p12_badman2_01
 _EVENT_DATA		ev_bg_c03p12_sign1_01
 _EVENT_DATA		ev_c03p12_sunglasses_01
 _EVENT_DATA		ev_pos_c03p12_sunglasses_01
+_EVENT_DATA		ev_c03p12_dancer_01
 _EVENT_DATA_END
 
 
@@ -214,3 +215,39 @@ _ANIME_LABEL	anm_sun_leave18
 	_ANIME_DATA	AC_WALK_L_8F,4
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*		C03P12	DANCER										  */
+/**************************************************************/
+EVENT_START		ev_c03p12_dancer_01
+	
+	//ダンサーイベント開始前
+	IF $WK_SCENE_C3CENTER_DANCE <= 1 THEN
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p12_dancer2_01 )
+	
+	//ダンサーイベント開始後
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p12_dancer2_02 )
+		
+		//去るアニメ・OBJ削除
+		_OBJ_DEL( C03P12_DANCER_01 )
+		
+		//========================================/
+		
+		//バニシュフラグセット
+		_FLAG_SET( FV_C03P12_DANCER_01 )
+		_FLAG_RESET( FV_C03CENTER_DANCER_01 )
+		
+		IF $WK_SCENE_C3CENTER_DANCE == 2 THEN
+				$WK_SCENE_C3CENTER_DANCE = 3
+		ELSIF $WK_SCENE_C3CENTER_DANCE == 3 THEN
+				$WK_SCENE_C3CENTER_DANCE = 4
+		ENDIF
+		
+		//========================================/
+	
+	ENDIF
+
+EVENT_END

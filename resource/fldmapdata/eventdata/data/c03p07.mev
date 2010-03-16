@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/02 15:08:36
+#save date:2010/03/16 15:02:53
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p07.wms
 #SECTION START:OBJ_EVENT
@@ -94,7 +94,7 @@ SCRID_BG_C03P07_GYMSIGN_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 -584
+152 0 -584
 #event number: 1
 #Bg Event Label
 BGID_C03P07_GYMSIGN_02
@@ -107,7 +107,7 @@ SCRID_BG_C03P07_GYMSIGN_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 -456
+152 0 -440
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -132,7 +132,7 @@ WK_SCENE_C03P07
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 -520
+136 0 -520
 #size
 1 1
 #Map Event List Data End
@@ -155,11 +155,11 @@ DOOR_ID_C03P01_C03P07_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_SP30
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 0 -24
+-104 0 -8
 #size
 14 1
 #event number: 1
@@ -172,11 +172,11 @@ DOOR_ID_C03_C03P07_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_SP30
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 0 -744
+-104 0 -760
 #size
 14 1
 #event number: 2
@@ -189,7 +189,7 @@ DOOR_ID_C03GYM0101_C03P07_EXIT01
 #Door Direction
 EXIT_DIR_LEFT
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position

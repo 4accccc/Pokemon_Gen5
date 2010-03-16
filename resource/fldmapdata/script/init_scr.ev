@@ -217,6 +217,10 @@ init_flags:
 	//ライモン遊園地のしたっぱ２人を非表示。Ｎイベント中に表示。
 	_FLAG_SET( FV_C04P01_HAKAI )
 
+	//C03中央部：ダンサー・サブイベント用
+	_FLAG_SET( FV_C03CENTER_DANCER_01 )
+	_FLAG_SET( FV_C03CENTER_DANCER_02 )
+
 }
 _RET
 

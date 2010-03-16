@@ -24,6 +24,9 @@ _EVENT_DATA		ev_pos_c03ct_exit_02
 _EVENT_DATA		ev_pos_c03ct_exit_03
 _EVENT_DATA		ev_pos_c03ct_exit_04
 _EVENT_DATA		ev_pos_c03ct_exit_05
+_EVENT_DATA		ev_c03ct_dancer_01
+_EVENT_DATA		ev_c03ct_dancer_02
+_EVENT_DATA		ev_c03ct_dancer_03
 _EVENT_DATA_END
 
 
@@ -132,7 +135,7 @@ EVENT_START		ev_pos_c03ct_exit_01
 		_CAMERA_END()
 
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_C03P12, 15, 17, DIR_DOWN )
+		_MAP_CHANGE( ZONE_ID_C03P12, 16, 30, DIR_DOWN )
 
 	//ゾーンIDがC03P06だった場合
 	ELSE
@@ -237,7 +240,7 @@ EVENT_START		ev_pos_c03ct_exit_02
 		_CAMERA_END()
 
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_C03P12, 15, 17, DIR_DOWN )
+		_MAP_CHANGE( ZONE_ID_C03P12, 16, 30, DIR_DOWN )
 
 	//ゾーンIDがC03P05だった場合
 	ELSIF $LWK_ZONE2 == ZONE_ID_C03P05 THEN
@@ -342,7 +345,7 @@ EVENT_START		ev_pos_c03ct_exit_03
 		_CAMERA_END()
 
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_C03P12, 15, 17, DIR_DOWN )
+		_MAP_CHANGE( ZONE_ID_C03P12, 16, 30, DIR_DOWN )
 
 	//ゾーンIDがC03P04だった場合
 	ELSIF $LWK_ZONE3 == ZONE_ID_C03P04 THEN
@@ -432,7 +435,7 @@ EVENT_START		ev_pos_c03ct_exit_04
 		_CAMERA_END()
 
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_C03P12, 15, 17, DIR_DOWN )
+		_MAP_CHANGE( ZONE_ID_C03P12, 16, 30, DIR_DOWN )
 	
 	//ゾーンIDがC03P03だった場合
 	ELSIF $LWK_ZONE4 == ZONE_ID_C03P03 THEN
@@ -537,7 +540,7 @@ EVENT_START		ev_pos_c03ct_exit_05
 		_CAMERA_END()
 
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_C03P12, 15, 17, DIR_DOWN )
+		_MAP_CHANGE( ZONE_ID_C03P12, 16, 30, DIR_DOWN )
 		
 	//ゾーンIDがC03P02だった場合
 	ELSIF $LWK_ZONE5 == ZONE_ID_C03P02 THEN
@@ -631,4 +634,185 @@ EVENT_START		ev_pos_c03ct_exit_05
 
 	ENDIF
 	
+EVENT_END
+
+/**************************************************************/
+/*			C03CT	ヒウンダンサーズ１						  */
+/**************************************************************/
+EVENT_START		ev_c03ct_dancer_01
+_TALK_OBJ_START()
+
+	//初会話時
+	IF $WK_SCENE_C3CENTER_DANCE == 0 THEN
+	
+		//オーケー！　レッツ　ダンシング！
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03center_dancer1_01 )
+		_MSGWIN_CLOSE()
+	
+		//ダンサー踊る
+		DEFINE_LOCAL	LWK_DANCEZONE
+		_GET_ZONE_ID( LWK_DANCEZONE )
+		
+		SWITCH $LWK_DANCEZONE
+		CASE ZONE_ID_C03P01 THEN
+		CASE ZONE_ID_C03P03 THEN
+		CASE ZONE_ID_C03P04 THEN
+		CASE ZONE_ID_C03P05 THEN
+		CASE ZONE_ID_C03P06 THEN
+		ENDSWITCH
+		
+		//どうだい！　バツグンの　ステップだろ
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03center_dancer1_02 )
+		_MSGWIN_CLOSE()
+	
+		//そうだ　キミ！　ダンサーに　こえ　かけてくれない？
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03center_dancer1_03 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_MSGWIN_CLOSE()
+		
+		//はいの場合
+		IF $SCWK_ANSWER == SCR_YES THEN
+		
+			//オレと　おんなじ　かっこう！　そいつは　ダンサー！
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03center_dancer1_04 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+			//========================================/
+			
+			//ダンサー探しを受けた
+			$WK_SCENE_C3CENTER_DANCE = 2
+			
+			//========================================/
+		
+		ELSE
+		//いいえ選択の場合
+			
+			//そうかい？　チーム組んだら　すごい　ステップ
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03center_dancer1_07 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+			//========================================/
+			
+			//初会話が終了・依頼を受けていない
+			$WK_SCENE_C3CENTER_DANCE = 1
+			
+			//========================================/
+
+		ENDIF
+	
+	//初会話が済んでおり・依頼を受けていない場合
+	ELSIF $WK_SCENE_C3CENTER_DANCE == 1 THEN
+	
+		//そうだ　キミ！　ダンサーに　こえ　かけてくれない？
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03center_dancer1_03 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_MSGWIN_CLOSE()
+		
+		//はいの場合
+		IF $SCWK_ANSWER == SCR_YES THEN
+		
+			//オレと　おんなじ　かっこう！　そいつは　ダンサー！
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03center_dancer1_04 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+			//========================================/
+			
+			//ダンサー探しを受けた
+			$WK_SCENE_C3CENTER_DANCE = 2
+			
+			//========================================/
+		
+		ELSE
+		//いいえ選択の場合
+			
+			//そうかい？　チーム組んだら　すごい　ステップ
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03center_dancer1_07 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+
+		ENDIF
+	
+	//依頼を受けている場合
+	ELSIF $WK_SCENE_C3CENTER_DANCE == 2 THEN
+	
+		//さかばのある　ストリートと　はとばで　ダンスしてる　ヤツが
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03center_dancer1_05 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	//ダンサーを１人見つけている場合
+	ELSIF $WK_SCENE_C3CENTER_DANCE == 3 THEN
+	
+		//こえを　かけてくれて　サンキュー！
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03center_dancer1_06 )
+		_MSGWIN_CLOSE()
+		
+		//C03P12のダンサーの場合
+		IF FLAG_OFF( FV_C03CENTER_DANCER_01 ) THEN
+		
+			//ダンサー：ステップし合う（ステイウォーク）
+		
+		//C03P14のダンサーの場合
+		ELSE
+		
+			//ダンサー：ステップし合う（ステイウォーク）
+		
+		ENDIF
+	
+	//ダンサーを全員見つけている場合
+	ELSIF $WK_SCENE_C3CENTER_DANCE == 4 THEN
+	
+		//サンキュー！　サイコーの　チーム　たんじょう
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03center_dancer1_08 )
+		_MSGWIN_CLOSE()
+	
+		//おまもりこばん入手
+		_ITEM_EVENT_KEYWAIT( ITEM_OMAMORIKOBAN, 1 )
+		
+		//オレたち　ダンスで　メッセージを　つたえる！
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03center_dancer1_09 )
+		_MSGWIN_CLOSE()
+	
+		//三人で踊る
+	
+	//イベント終了時
+	ELSE
+	
+		//オーケー！　レッツ　ダンシング！
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03center_dancer1_10 )
+		_MSGWIN_CLOSE()
+		
+		DEFINE_LOCAL	LWK_DANCE
+		
+		_GET_RND( LWK_DANCE, 3 )
+	
+		SWITCH $LWK_DANCE
+		CASE 0 THEN
+			
+		CASE 1 THEN
+		
+		CASE 2 THEN
+		
+		CASE 3 THEN
+		ENDSWITCH
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*			C03CT	ヒウンダンサーズ２						  */
+/**************************************************************/
+EVENT_START		ev_c03ct_dancer_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03center_dancer2_01 )
+EVENT_END
+
+/**************************************************************/
+/*			C03CT	ヒウンダンサーズ３						  */
+/**************************************************************/
+EVENT_START		ev_c03ct_dancer_03
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03center_dancer3_01 )
 EVENT_END

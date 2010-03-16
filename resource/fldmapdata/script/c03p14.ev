@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c03p14.h"
-  //.include  "c03p14.h"
+  .include  "c03p14.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,6 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c03p14_girl4_01
+_EVENT_DATA		ev_c03p14_dancer_01
 _EVENT_DATA_END
 
 
@@ -34,4 +35,40 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START		ev_c03p14_girl4_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p14_girl4_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C03P14	DANCER										  */
+/**************************************************************/
+EVENT_START		ev_c03p14_dancer_01
+	
+	//ダンサーイベント開始前
+	IF $WK_SCENE_C3CENTER_DANCE <= 1 THEN
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p14_dancer3_01 )
+	
+	//ダンサーイベント開始後
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p14_dancer3_02 )
+		
+		//【仮】去るアニメ・OBJ削除
+		_OBJ_DEL( C03P14_DANCER_01 )
+		
+		//========================================/
+		
+		//バニシュフラグセット
+		_FLAG_SET( FV_C03P14_DANCER_02 )
+		_FLAG_RESET( FV_C03CENTER_DANCER_02 )
+		
+		IF $WK_SCENE_C3CENTER_DANCE == 2 THEN
+				$WK_SCENE_C3CENTER_DANCE = 3
+		ELSIF $WK_SCENE_C3CENTER_DANCE == 3 THEN
+				$WK_SCENE_C3CENTER_DANCE = 4
+		ENDIF
+		
+		//========================================/
+	
+	ENDIF
+
 EVENT_END

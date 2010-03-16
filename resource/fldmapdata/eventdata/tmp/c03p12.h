@@ -14,6 +14,7 @@
 #define C03P12_BADMAN1_01                  0
 #define C03P12_BADMAN2_01                  1
 #define C03P12_SUNGLASSES_01               2
+#define C03P12_DANCER_01                   3
 
 #endif //ZONE_C03P12_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p12.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
