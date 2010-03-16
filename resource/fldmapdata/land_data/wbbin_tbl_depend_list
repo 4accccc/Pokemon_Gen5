@@ -1130,81 +1130,41 @@ $(DIR_WBTMP)/h04_a00_00.tbl: $(DIR_RES)/h04_a00_00.bin
 	@echo create_bintbl h04_a00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a00_00.bin
 
-$(DIR_WBTMP)/h04_a00_00_ex.tbl: $(DIR_RES)/h04_a00_00_ex.bin
-	@echo create_bintbl h04_a00_00
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a00_00_ex.bin
-
 $(DIR_WBTMP)/h04_a01_00.tbl: $(DIR_RES)/h04_a01_00.bin
 	@echo create_bintbl h04_a01_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a01_00.bin
-
-$(DIR_WBTMP)/h04_a01_00_ex.tbl: $(DIR_RES)/h04_a01_00_ex.bin
-	@echo create_bintbl h04_a01_00
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a01_00_ex.bin
 
 $(DIR_WBTMP)/h04_a02_00.tbl: $(DIR_RES)/h04_a02_00.bin
 	@echo create_bintbl h04_a02_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a02_00.bin
 
-$(DIR_WBTMP)/h04_a02_00_ex.tbl: $(DIR_RES)/h04_a02_00_ex.bin
-	@echo create_bintbl h04_a02_00
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a02_00_ex.bin
-
 $(DIR_WBTMP)/h04_a03_00.tbl: $(DIR_RES)/h04_a03_00.bin
 	@echo create_bintbl h04_a03_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a03_00.bin
-
-$(DIR_WBTMP)/h04_a03_00_ex.tbl: $(DIR_RES)/h04_a03_00_ex.bin
-	@echo create_bintbl h04_a03_00
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a03_00_ex.bin
 
 $(DIR_WBTMP)/h04_a04_00.tbl: $(DIR_RES)/h04_a04_00.bin
 	@echo create_bintbl h04_a04_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a04_00.bin
 
-$(DIR_WBTMP)/h04_a04_00_ex.tbl: $(DIR_RES)/h04_a04_00_ex.bin
-	@echo create_bintbl h04_a04_00
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a04_00_ex.bin
-
 $(DIR_WBTMP)/h04_a00_01.tbl: $(DIR_RES)/h04_a00_01.bin
 	@echo create_bintbl h04_a00_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a00_01.bin
-
-$(DIR_WBTMP)/h04_a00_01_ex.tbl: $(DIR_RES)/h04_a00_01_ex.bin
-	@echo create_bintbl h04_a00_01
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a00_01_ex.bin
 
 $(DIR_WBTMP)/h04_a01_01.tbl: $(DIR_RES)/h04_a01_01.bin
 	@echo create_bintbl h04_a01_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a01_01.bin
 
-$(DIR_WBTMP)/h04_a01_01_ex.tbl: $(DIR_RES)/h04_a01_01_ex.bin
-	@echo create_bintbl h04_a01_01
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a01_01_ex.bin
-
 $(DIR_WBTMP)/h04_a02_01.tbl: $(DIR_RES)/h04_a02_01.bin
 	@echo create_bintbl h04_a02_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a02_01.bin
-
-$(DIR_WBTMP)/h04_a02_01_ex.tbl: $(DIR_RES)/h04_a02_01_ex.bin
-	@echo create_bintbl h04_a02_01
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a02_01_ex.bin
 
 $(DIR_WBTMP)/h04_a03_01.tbl: $(DIR_RES)/h04_a03_01.bin
 	@echo create_bintbl h04_a03_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a03_01.bin
 
-$(DIR_WBTMP)/h04_a03_01_ex.tbl: $(DIR_RES)/h04_a03_01_ex.bin
-	@echo create_bintbl h04_a03_01
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a03_01_ex.bin
-
 $(DIR_WBTMP)/h04_a04_01.tbl: $(DIR_RES)/h04_a04_01.bin
 	@echo create_bintbl h04_a04_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a04_01.bin
-
-$(DIR_WBTMP)/h04_a04_01_ex.tbl: $(DIR_RES)/h04_a04_01_ex.bin
-	@echo create_bintbl h04_a04_01
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h04_a04_01_ex.bin
 
 $(DIR_WBTMP)/winter05_06.tbl: $(DIR_RES)/winter05_06.bin
 	@echo create_bintbl winter05_06
