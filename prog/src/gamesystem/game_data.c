@@ -31,6 +31,7 @@
 #include "savedata/situation.h"
 #include "savedata/player_data.h"
 #include "gamesystem/pm_season.h"   //ãGêﬂíËã`éQè∆
+#include "gamesystem/pm_season_local.h"   //
 #include "field/field_subscreen.h" //FIELD_SUBSCREEN_ACTION
 #include "field/rail_location.h"    //RAIL_LOCATION
 #include "sound/bgm_info.h"

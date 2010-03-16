@@ -542,10 +542,10 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 		PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork(gsys);
 		fieldWork->map_id = PLAYERWORK_getZoneID( pw );
 	}
+  // 地面、見た目にかかわる情報には、進入の情報を関係付ける。
   {
-    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
     fieldWork->areadata = AREADATA_Create( heapID,
-        ZONEDATA_GetAreaID(fieldWork->map_id), GAMEDATA_GetSeasonID(gamedata) );
+        ZONEDATA_GetAreaID(fieldWork->map_id), PMSEASON_GetConsiderCommSeason(gsys) );
   }
 	
 	//マップコントロール

@@ -358,7 +358,7 @@ static void mmdl_InitAttrData( const MMDL *mmdl, ATTRDATA *data )
     MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
     FIELDMAP_WORK *fieldmap = MMDLSYS_GetFieldMapWork( mmdlsys );
     data->fectrl = FIELDMAP_GetFldEffCtrl( fieldmap );
-    data->season = GAMEDATA_GetSeasonID( MMDLSYS_GetGameData(mmdlsys) );
+    data->season = FLDEFF_CTRL_GetSeasonID( data->fectrl );
   }
 }
 

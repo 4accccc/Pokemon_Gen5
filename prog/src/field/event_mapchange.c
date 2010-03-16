@@ -449,8 +449,7 @@ static void SetSeasonUpdate( MAPCHANGE_WORK* work )
   u16 prevSeason, nextSeason;
 
   // 遷移前・遷移後の季節を決定
-  prevSeason = GAMEDATA_GetSeasonID( work->gameData );
-  nextSeason = PMSEASON_GetRealTimeSeasonID();
+  PMSEASON_GetNextSeason( work->gameData, &prevSeason, &nextSeason );
   
   // 遷移先が屋外かどうかを判定
   {
@@ -541,7 +540,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     // 季節の更新
     if( (work->seasonUpdateEnable) && (work->seasonUpdateOccur) )
     {
-      GAMEDATA_SetSeasonID( gameData, work->nextSeason );
+      PMSEASON_SetSeasonID( gameData, work->nextSeason );
       OBATA_Printf( "update season %d ==> %d\n", work->prevSeason, work->nextSeason );
       //季節ポケモンフォルムチェンジ条件を満たしたので、手持ちの季節ポケモンをフォルムチェンジさせる
       {

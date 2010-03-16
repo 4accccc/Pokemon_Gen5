@@ -7,6 +7,9 @@
  */
 //======================================================================
 #include <gflib.h>
+
+#include "gamesystem/pm_season.h"
+
 #include "system/gfl_use.h"
 #include "field/areadata.h"
 #include "field/zonedata.h"
@@ -122,8 +125,7 @@ FLDEFF_CTRL * FLDEFF_CTRL_Create(
 
   { //季節変化用データ取得
     u16 area_id = ZONEDATA_GetAreaID( FIELDMAP_GetZoneID( fieldMapWork ));
-    GAMEDATA* gdata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldMapWork ) );
-    fectrl->season_id = GAMEDATA_GetSeasonID( gdata );
+    fectrl->season_id = PMSEASON_GetConsiderCommSeason( FIELDMAP_GetGameSysWork( fieldMapWork ) );
     fectrl->area_inout_switch= AREADATA_GetInnerOuterSwitch( FIELDMAP_GetAreaData( fieldMapWork ) );
   }
   fectrl_InitProcEffect( fectrl );

@@ -300,10 +300,10 @@ static void MAPREPLACE_makeReplaceOffset ( REPLACE_OFFSET * offsets, GAMESYS_WOR
   int i;
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gamesystem );
   EVENTWORK * ev = GAMEDATA_GetEventWork( gamedata );
-  int season = GAMEDATA_GetSeasonID( gamedata );
+  int season;
   GAME_COMM_SYS_PTR commsys = GAMESYSTEM_GetGameCommSysPtr( gamesystem );
   
-  offsets->season_pos = season;
+  offsets->season_pos = season = Intrude_GetSeasonID( commsys );
   offsets->version_pos = Intrude_GetRomVersion( commsys ) == VERSION_BLACK? 0 : 1;
   if (offsets->version_pos == 0 )
   {

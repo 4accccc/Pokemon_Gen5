@@ -146,7 +146,7 @@ static void grass_InitResource( FLDEFF_GRASS *grass )
   handle = FLDEFF_CTRL_GetArcHandleEffect( grass->fectrl );
   fieldmap = FLDEFF_CTRL_GetFieldMapWork( grass->fectrl );
   gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  season = GAMEDATA_GetSeasonID( GAMESYSTEM_GetGameData(gsys) );
+  season = FLDEFF_CTRL_GetSeasonID( grass->fectrl );
   
   for( i = 0; i < FLDEFF_GRASS_MAX; i++ ){
     FLD_G3DOBJ_RES_HEADER_Init( &head );
