@@ -730,13 +730,13 @@
 #define FV_D06R0301_SAGE                   706 /* 0x02c2 クリア後七賢人イベント：電気石の洞穴 */
 #define FV_D01R0101_SAGE                   707 /* 0x02c3 クリア後七賢人イベント：夢の跡地 */
 #define FV_R18_SAGE                        708 /* 0x02c4 クリア後七賢人イベント：18番道路 */
-		/* not used   709(0x02c5) */
-		/* not used   710(0x02c6) */
-		/* not used   711(0x02c7) */
-		/* not used   712(0x02c8) */
-		/* not used   713(0x02c9) */
-		/* not used   714(0x02ca) */
-		/* not used   715(0x02cb) */
+#define FV_C03R0101_MEMBER_A               709 /* 0x02c5 調査隊一般隊員A */
+#define FV_C03R0101_MEMBER_B               710 /* 0x02c6 調査隊一般隊員B */
+#define FV_C03R0101_MEMBER_C               711 /* 0x02c7 調査隊一般隊員C */
+#define FV_C03R0101_MEMBER_D               712 /* 0x02c8 調査隊一般隊員D */
+#define FV_C03R0101_MEMBER_E               713 /* 0x02c9 調査隊一般隊員E */
+#define FV_C03R0101_MEMBER_F               714 /* 0x02ca 調査隊一般隊員F */
+#define FV_C03R0101_MEMBER_G               715 /* 0x02cb 調査隊一般隊員G */
 		/* not used   716(0x02cc) */
 		/* not used   717(0x02cd) */
 		/* not used   718(0x02ce) */
