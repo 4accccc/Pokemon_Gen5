@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-15T23:43:06"/>
+	<create user="ohmori" host="W00223" date="2010-03-16T13:06:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,13 +260,13 @@
 		</language>
 	</columns>
 
-	<dialog left="13" top="116" right="718" bottom="744" maximized="no" rayout="Vertical2">
+	<dialog left="13" top="116" right="744" bottom="1124" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="777" top="154" right="1250" bottom="778" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="556"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="723"/>
+		<band id="3" index="3" style="0000" width="723"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -288,13 +288,13 @@
 	</lock>
 
 
-	<row id="msg_intrude_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_intrude_000" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
 		<comment>話しかけた</comment>
 		<language name="JPN" width="256">はなしかけています</language>
 		<language name="JPN_KANJI" width="256">話しかけています</language>
 	</row>
 
-	<row id="msg_intrude_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_intrude_001" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
 		<comment>話しかけられた</comment>
 		<language name="JPN" width="256">はなしかけられました
 あいての　せんたくを　まっています</language>
@@ -302,7 +302,7 @@
 相手の　選択を　待っています</language>
 	</row>
 
-	<row id="msg_intrude_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_intrude_002" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
 		<comment>会話を断る</comment>
 		<language name="JPN" width="256">ごめん！いま　いそがしいんだ！
 また　あとでね！</language>
@@ -310,164 +310,167 @@
 また　後でね！</language>
 	</row>
 
-	<row id="msg_intrude_003" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_intrude_003" back-color="#ffff80,,,#404040,,#404040,#ff8080,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">こんにちは！　なにする？</language>
 		<language name="JPN_KANJI" width="256">こんにちは！　なにする？</language>
 	</row>
 
-	<row id="msg_talk_menu_001" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_talk_menu_001" back-color="#ffff80,,,#404040,,#404040,#ff8080,,,,,#404040,,,,,,">
 		<comment>話しかけメニュー</comment>
 		<language name="JPN" width="256">フラット５０たいせん</language>
 		<language name="JPN_KANJI" width="256">フラット５０対戦</language>
 	</row>
 
-	<row id="msg_talk_menu_002" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_talk_menu_002" back-color="#ffff80,,,#404040,,#404040,#ff8080,,,,,#404040,,,,,,">
 		<comment>話しかけメニュー</comment>
 		<language name="JPN" width="256">アイテムを　わたす</language>
 		<language name="JPN_KANJI" width="256">アイテムを　渡す</language>
 	</row>
 
-	<row id="msg_talk_menu_003" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_talk_menu_003" back-color="#ffff80,,,#404040,,#404040,#ff8080,,,,,#404040,,,,,,">
 		<comment>話しかけメニュー</comment>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_talk_battle_001" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_talk_battle_001" back-color="#ffff80,,,#404040,,#404040,#ff8080,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">フラット５０　で　たいせん　しよう！</language>
 		<language name="JPN_KANJI" width="256">フラット５０　で　対戦　しよう！</language>
 	</row>
 
-	<row id="msg_talk_battle_002" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_talk_battle_002" back-color="#ffff80,,,#404040,,#404040,#ff8080,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">あいての　へんじを　まっています</language>
 		<language name="JPN_KANJI" width="256">相手の　返事を　待っています</language>
 	</row>
 
-	<row id="msg_talk_battle_003" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_talk_battle_003" back-color="#ffff80,,,#404040,,#404040,#ff8080,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">ことわられました</language>
 		<language name="JPN_KANJI" width="256">断られました</language>
 	</row>
 
-	<row id="msg_talk_item_001" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_talk_item_001" back-color="#ffff80,,,#404040,,#404040,#ff8080,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]から
 [1:09:どうぐ名:1]を　もらった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]から
 [1:09:どうぐ名:1]を　もらった！</language>
 	</row>
 
-	<row id="msg_talk_item_002" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_talk_item_002" back-color="#ffff80,,,#404040,,#404040,#ff8080,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に
 [1:09:どうぐ名:1]を　わたした！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に
 [1:09:どうぐ名:1]を　渡した！</language>
 	</row>
 
-	<row id="msg_talk_cancel" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_talk_cancel" back-color="#ffff80,,,#404040,,#404040,#ff8080,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">なんでもない！　バイバイ！</language>
 		<language name="JPN_KANJI" width="256">なんでもない！　バイバイ！</language>
 	</row>
 
-	<row id="msg_intrude_bingo000" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_intrude_bingo000" back-color="#ffff80,,,#404040,,#404040,#ff8080,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">ビンゴバトルに　らんにゅうを
 しんせい　しています</language>
 		<language name="JPN_KANJI" width="256">ビンゴバトルに　乱入を
 申請しています</language>
 	</row>
 
-	<row id="msg_intrude_bingo001" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_intrude_bingo001" back-color="#ffff80,,,#404040,,#404040,#ff8080,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">らんにゅう　OK!</language>
 		<language name="JPN_KANJI" width="256">乱入OK!</language>
 	</row>
 
-	<row id="msg_intrude_bingo002" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_intrude_bingo002" back-color="#ffff80,,,#404040,,#404040,#ff8080,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">らんにゅう　できません</language>
 		<language name="JPN_KANJI" width="256">乱入できません</language>
 	</row>
 
-	<row id="msg_invasion_mission_sys000" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_invasion_mission_sys000" back-color="#ffff80,,,#404040,,#404040,#ff8080,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">ミッションの　じゅしんが　できませんでした</language>
 		<language name="JPN_KANJI" width="256">ミッションの　受信が　出来ませんでした</language>
 	</row>
 
-	<row id="msg_invasion_mission_sys001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission_sys001" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]が　ミッションたっせい！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]が　ミッション達成！</language>
 	</row>
 
-	<row id="msg_invasion_mission_sys002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission_sys002" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
 		<language name="JPN" width="256">ミッションしっぱい</language>
 		<language name="JPN_KANJI" width="256">ミッション失敗</language>
 	</row>
 
-	<row id="msg_invasion_mission_sys003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission_sys003" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
 		<language name="JPN" width="256">[2:02:３桁:0]ポイント　ゲット！</language>
 		<language name="JPN_KANJI" width="256">[2:02:３桁:0]ポイント　ゲット！</language>
 	</row>
 
-	<row id="msg_invasion_mission_sys004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission_sys004" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
 		<language name="JPN" width="256">ミッションせいこう！</language>
 		<language name="JPN_KANJI" width="256">ミッションせいこう！</language>
 	</row>
 
-	<row id="msg_invasion_mission_sys005" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission_sys005" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッションエントリー後、開始までの待ち</comment>
 		<language name="JPN" width="256">はじまるまで　おまちください</language>
 		<language name="JPN_KANJI" width="256">はじまるまで　おまちください</language>
 	</row>
 
-	<row id="msg_invasion_mission_sys006" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission_sys006" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
 		<language name="JPN" width="256">ミッション　スタート！</language>
 		<language name="JPN_KANJI" width="256">ミッション　スタート！</language>
 	</row>
 
-	<row id="msg_invasion_mission_sys007" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission_sys007" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション4成立時：助けてもらった側にフィールドで表示</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]が　たすけてくれた　ようだ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]が　たすけてくれた　ようだ</language>
 	</row>
 
-	<row id="msg_invasion_mission000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_invasion_mission000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">げんざい　ミッションは　ありません</language>
 		<language name="JPN_KANJI" width="256">現在　ミッションは　ありません</language>
 	</row>
 
-	<row id="msg_invasion_mission001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_invasion_mission001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">WHITEミッション：
 ６０びょうで　[1:00:トレーナー名:0]　と　であい　たすけよ</language>
 		<language name="JPN_KANJI" width="256">WHITEミッション：
 ６０秒で　[1:00:トレーナー名:0]　と　出会い　助けよ</language>
 	</row>
 
-	<row id="msg_invasion_mission001_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_invasion_mission001_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">BLACKミッション：
 ６０びょうで　[1:00:トレーナー名:0]　と　であい　たすけよ</language>
 		<language name="JPN_KANJI" width="256">BLACKミッション：
 ６０秒で　[1:00:トレーナー名:0]　と　出会い　助けよ</language>
 	</row>
 
-	<row id="msg_invasion_mission001_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_invasion_mission001_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">ミッションたっせい！
 [1:00:トレーナー名:0]を　かいふくさせた！</language>
 		<language name="JPN_KANJI" width="256">ミッション達成！
 [1:00:トレーナー名:0]を　回復させた！</language>
 	</row>
 
-	<row id="msg_invasion_mission001_03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_invasion_mission001_03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は　[1:00:トレーナー名:0]を
 かいふくさせた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は　[1:00:トレーナー名:0]を
 回復させた！</language>
 	</row>
 
-	<row id="msg_talk_item_m_000" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
+	<row id="msg_talk_item_m_000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>アイテム渡し：話しかけた側
 
 主人公男
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">おや！？
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『おや！？
 こんなところに　ポケモンが▽
 めずらしいなぁ▼
-……え！
+[1:00:トレーナー名:1]は　ハイルツリーから
+もらった　[1:1C:簡易会話単語:2]を▽
+[1:00:トレーナー名:0]に　つかった！▼
+
 [1:09:どうぐ名:0]を　くれるの？▼
 ありがとう
 たいせつに　つかうよ！▼
@@ -484,7 +487,7 @@
 あいてに　わたした！</language>
 	</row>
 
-	<row id="msg_talk_item_m_001" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
+	<row id="msg_talk_item_m_001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>アイテム渡し：話しかけられた側
 主人公男
 ※タグの数値はmission.gmmに合わせること</comment>
@@ -504,7 +507,7 @@
 キュイーン！</language>
 	</row>
 
-	<row id="msg_talk_item_w_000" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
+	<row id="msg_talk_item_w_000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>アイテム渡し：話しかけた側
 主人公女
 ※タグの数値はmission.gmmに合わせること</comment>
@@ -528,7 +531,7 @@
 あいてに　わたした！</language>
 	</row>
 
-	<row id="msg_talk_item_w_001" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
+	<row id="msg_talk_item_w_001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>アイテム渡し：話しかけられた側
 主人公女
 ※タグの数値はmission.gmmに合わせること</comment>
@@ -548,7 +551,7 @@
 キュイーン！</language>
 	</row>
 
-	<row id="msg_talk_item_pika_000" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
+	<row id="msg_talk_item_pika_000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>アイテム渡し：話しかけた側
 ピカチュウ
 ※タグの数値はmission.gmmに合わせること</comment>
@@ -560,7 +563,7 @@
 ありがとう！たいせつにつかうピカ！</language>
 	</row>
 
-	<row id="msg_talk_item_pika_001" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
+	<row id="msg_talk_item_pika_001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>アイテム渡し：話しかけられた側
 ピカチュウ
 ※タグの数値はmission.gmmに合わせること</comment>
@@ -576,7 +579,7 @@
 たいせつに　つかってピカ！</language>
 	</row>
 
-	<row id="msg_talk_life_m_000" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
+	<row id="msg_talk_life_m_000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>戦闘回復：話しかけた側
 
 主人公男
@@ -595,7 +598,7 @@
 たすかったよ！　ありがとう！！</language>
 	</row>
 
-	<row id="msg_talk_life_w_000" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
+	<row id="msg_talk_life_w_000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>戦闘回復：話しかけた側
 主人公女
 ※タグの数値はmission.gmmに合わせること</comment>
@@ -613,7 +616,7 @@
 たすかったよ！　ありがとう！！</language>
 	</row>
 
-	<row id="msg_talk_life_pika_000" back-color="#c0c0c0,,,,,,,,,,,,,,,,,">
+	<row id="msg_talk_life_pika_000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>戦闘回復：話しかけた側
 ピカチュウ
 ※タグの数値はmission.gmmに合わせること</comment>
@@ -631,7 +634,7 @@
 たすかったよ！　ありがとう！！</language>
 	</row>
 
-	<row id="msg_invasion_mission_01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission_01" back-color="#ffff80,,,#80ff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション開始までの待ち時間</comment>
 		<language name="JPN" width="256">ミッションさんかを　うけつけています
 かいしまで　しばらく　おまちください</language>
@@ -639,97 +642,109 @@
 かいしまで　しばらく　おまちください</language>
 	</row>
 
-	<row id="msg_invasion_mission_02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission_02" back-color="#ffff80,,,#80ff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッションスタート時の表示</comment>
 		<language name="JPN" width="256">ミッション　スタート！！</language>
 		<language name="JPN_KANJI" width="256">ミッション　スタート！！</language>
 	</row>
 
-	<row id="msg_invasion_mission_03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission_03" back-color="#ffff80,,,#80ff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション終了時の表示（成功）</comment>
 		<language name="JPN" width="256">ミッション　せいこう！</language>
 		<language name="JPN_KANJI" width="256">ミッション　せいこう！</language>
 	</row>
 
-	<row id="msg_invasion_mission_04" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission_04" back-color="#ffff80,,,#80ff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション終了時の表示（失敗）</comment>
 		<language name="JPN" width="256">ミッション　しっぱい……</language>
 		<language name="JPN_KANJI" width="256">ミッション　しっぱい……</language>
 	</row>
 
-	<row id="msg_invasion_mission_clear_01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission_clear_01" back-color="#ffff80,,,#80ff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション終了時の　獲得ポイント表示</comment>
-		<language name="JPN" width="256">パレスポイント　をにゅうしゅした！</language>
-		<language name="JPN_KANJI" width="256">パレスポイント　をにゅうしゅした！</language>
+		<language name="JPN" width="256">パレスだまを　[2:01:２桁:0]こ　にゅうしゅした！</language>
+		<language name="JPN_KANJI" width="256">パレスだまを　[2:01:２桁:0]こ　にゅうしゅした！</language>
 	</row>
 
-	<row id="msg_invasion_mission_clear_02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission_clear_02" back-color="#ffff80,,,#80ff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション終了時の　獲得ブラックレベルの表示</comment>
-		<language name="JPN" width="256">パレスの　ブラックレベルが　[2:02:３桁:0]あがった！</language>
-		<language name="JPN_KANJI" width="256">パレスの　ブラックレベルが　[2:02:３桁:0]あがった！</language>
+		<language name="JPN" width="256">ハイルツリーの　ブラックＬｖが　[2:02:３桁:0]あがった！</language>
+		<language name="JPN_KANJI" width="256">ハイルツリーの　ブラックＬｖが　[2:02:３桁:0]あがった！</language>
 	</row>
 
-	<row id="msg_invasion_mission_clear_03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_mission_clear_03" back-color="#ffff80,,,#80ff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション終了時の　獲得ホワイトレベルの表示</comment>
-		<language name="JPN" width="256">パレスの　ホワイトレベルが　[2:02:３桁:0]あがった！</language>
-		<language name="JPN_KANJI" width="256">パレスの　ホワイトレベルが　[2:02:３桁:0]あがった！</language>
+		<language name="JPN" width="256">ハイルツリーの　ホワイトＬｖが　[2:02:３桁:0]あがった！</language>
+		<language name="JPN_KANJI" width="256">ハイルツリーの　ホワイトＬｖが　[2:02:３桁:0]あがった！</language>
 	</row>
 
-	<row id="mis_m01_01_t1" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_01_t1" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 １=カワイイポケモンのメッセージ（自分が）
-話しかけられた時、相手側にでるメッセージ</comment>
+話しかけられた時、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:00:トレーナー名:1]＝自分の名前
+[1:1C:簡易会話単語:2]＝デルパワー名</comment>
 		<language name="JPN" width="256">キューン　キューン！▼
 ……　おや？
 やってきた　ポケモンが▽
-[1:09:どうぐ名:1]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:1]を　くれた！▼</language>
+とつぜん　ひかりだした！▼
+[1:00:トレーナー名:0]は　ポケモンから
+[1:1C:簡易会話単語:2]を　もらった！▼</language>
 		<language name="JPN_KANJI" width="256">キューン　キューン！▼
 ……　おや？
 やってきた　ポケモンが▽
-[1:09:どうぐ名:1]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:1]を　くれた！▼</language>
+とつぜん　ひかりだした！▼
+[1:00:トレーナー名:0]は　ポケモンから
+[1:1C:簡易会話単語:2]を　もらった！▼</language>
 	</row>
 
-	<row id="mis_m01_01_t2" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_01_t2" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ２＝怖いポケモンのメッセージ（自分が）
-話しかけられた時、相手側にでるメッセージ</comment>
-		<language name="JPN" width="256">フオオオ！▼
-……　おや？
-やってきた　ポケモンが▽
-[1:09:どうぐ名:1]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:1]を　くれた！▼</language>
-		<language name="JPN_KANJI" width="256">フオオオ！▼
-……　おや？
-やってきた　ポケモンが▽
-[1:09:どうぐ名:1]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:1]を　くれた！▼</language>
-	</row>
+話しかけられた時、相手側にでるメッセージ
 
-	<row id="mis_m01_01_t3" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
-		<comment>ミッション１：「●●●●●に　はなしかけられろ」
-３=無口なポケモンのメッセージ（自分が）
-話しかけられた時、相手側にでるメッセージ</comment>
+[1:00:トレーナー名:0]＝相手の名前
+[1:00:トレーナー名:1]＝自分の名前
+[1:1C:簡易会話単語:2]＝デルパワー名</comment>
 		<language name="JPN" width="256">ギャァーーアアス！▼
 ……　おや？
 やってきた　ポケモンが▽
-[1:09:どうぐ名:1]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:1]を　くれた！▼</language>
+とつぜん　ひかりだした！▼
+[1:00:トレーナー名:0]は　ポケモンから
+[1:1C:簡易会話単語:2]を　もらった！▼</language>
 		<language name="JPN_KANJI" width="256">ギャァーーアアス！▼
 ……　おや？
 やってきた　ポケモンが▽
-[1:09:どうぐ名:1]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:1]を　くれた！▼</language>
+とつぜん　ひかりだした！▼
+[1:00:トレーナー名:0]は　ポケモンから
+[1:1C:簡易会話単語:2]を　もらった！▼</language>
 	</row>
 
-	<row id="mis_m01_01_t4" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_01_t3" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+		<comment>ミッション１：「●●●●●に　はなしかけられろ」
+３=無口なポケモンのメッセージ（自分が）
+話しかけられた時、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:00:トレーナー名:1]＝自分の名前
+[1:1C:簡易会話単語:2]＝デルパワー名</comment>
+		<language name="JPN" width="256">……　……　……！▼
+……　おや？
+やってきた　ポケモンが▽
+とつぜん　ひかりだした！▼
+[1:00:トレーナー名:0]は　ポケモンから
+[1:1C:簡易会話単語:2]を　もらった！▼</language>
+		<language name="JPN_KANJI" width="256">……　……　……！▼
+……　おや？
+やってきた　ポケモンが▽
+とつぜん　ひかりだした！▼
+[1:00:トレーナー名:0]は　ポケモンから
+[1:1C:簡易会話単語:2]を　もらった！▼</language>
+	</row>
+
+	<row id="mis_m01_01_t4" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ４＝トレーナー男子（自分が）
 話しかけられた時、相手側にでるメッセージ</comment>
@@ -737,7 +752,7 @@
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_01_t5" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_01_t5" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ５=トレーナー女子（自分が）
 話しかけられた時、相手側にでるメッセージ</comment>
@@ -745,7 +760,7 @@
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_01_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_01_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 １=カワイイポケモンのメッセージ（相手が）
 話しかけられた時、ミッション側にでるメッセージ</comment>
@@ -753,7 +768,7 @@
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_01_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_01_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ２＝怖いポケモンのメッセージ（相手が）
 話しかけられた時、ミッション側にでるメッセージ</comment>
@@ -761,7 +776,7 @@
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_01_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_01_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ３=無口なポケモンのメッセージ（相手が）
 話しかけられた時、ミッション側にでるメッセージ</comment>
@@ -769,47 +784,55 @@
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_01_m4" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_01_m4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 m＝トレーナー男子（相手が）
-話しかけられた時、ミッション側にでるメッセージ</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『おや！？
-こんなところに　ポケモンが▽
-めずらしいなぁ▼
-……え！
-[1:09:どうぐ名:1]を　くれるの？▼
-もっていた　[1:09:どうぐ名:1]を
-あいてに　わたした！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『おや！？
-こんなところに　ポケモンが▽
-めずらしいなぁ▼
-……え！
-[1:09:どうぐ名:1]を　くれるの？▼
-もっていた　[1:09:どうぐ名:1]を
-あいてに　わたした！</language>
+話しかけられた時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:00:トレーナー名:1]＝自分の名前
+[1:1C:簡易会話単語:2]＝デルパワー名</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『へへ！
+つかまえた！▼
+それにしても　こんなところに
+ポケモンがいるなんて　めずらしいなぁ▼
+[1:00:トレーナー名:1]は　ハイルツリーから
+もらった　[1:1C:簡易会話単語:2]を▽
+[1:00:トレーナー名:0]に　つかった！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『へへ！
+つかまえた！▼
+それにしても　こんなところに
+ポケモンがいるなんて　めずらしいなぁ▼
+[1:00:トレーナー名:1]は　ハイルツリーから
+もらった　[1:1C:簡易会話単語:2]を▽
+[1:00:トレーナー名:0]に　つかった！▼</language>
 	</row>
 
-	<row id="mis_m01_01_m5" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_01_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 w=トレーナー女子（相手が）
-話しかけられた時、ミッション側にでるメッセージ</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『あれ！？
-こんなところに　ポケモンが▽
-めずらしいなぁ▼
-……え！
-[1:09:どうぐ名:1]を　くれるの？▼
-もっていた　[1:09:どうぐ名:1]を
-あいてに　わたした！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『あれ！？
-こんなところに　ポケモンが▽
-めずらしいなぁ▼
-……え！
-[1:09:どうぐ名:1]を　くれるの？▼
-もっていた　[1:09:どうぐ名:1]を
-あいてに　わたした！</language>
+話しかけられた時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:00:トレーナー名:1]＝自分の名前
+[1:1C:簡易会話単語:2]＝デルパワー名</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『よーし！
+つかまえたー！▼
+それにしても　こんなところに
+ポケモンが　いるなんて　めずらしいなぁ▼
+[1:00:トレーナー名:1]は　ハイルツリーから
+もらった　[1:1C:簡易会話単語:2]を▽
+[1:00:トレーナー名:0]に　つかった！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『よーし！
+つかまえたー！▼
+それにしても　こんなところに
+ポケモンが　いるなんて　めずらしいなぁ▼
+[1:00:トレーナー名:1]は　ハイルツリーから
+もらった　[1:1C:簡易会話単語:2]を▽
+[1:00:トレーナー名:0]に　つかった！▼</language>
 	</row>
 
-	<row id="mis_m01_02_t1" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_02_t1" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 １=カワイイポケモンのメッセージ（自分が）
 話しかた時、相手側にでるメッセージ</comment>
@@ -819,7 +842,7 @@ w=トレーナー女子（相手が）
 なんだか　かまってもらいたい　みたい</language>
 	</row>
 
-	<row id="mis_m01_02_t2" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_02_t2" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ２＝怖いポケモンのメッセージ（自分が）
 話しかけた時、相手側にでるメッセージ</comment>
@@ -829,7 +852,7 @@ w=トレーナー女子（相手が）
 なんだか　かまってもらいたい　みたい</language>
 	</row>
 
-	<row id="mis_m01_02_t3" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_02_t3" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ３=無口なポケモンのメッセージ（自分が）
 話しかけた時、相手側にでるメッセージ</comment>
@@ -839,7 +862,7 @@ w=トレーナー女子（相手が）
 なんだか　かまってもらいたい　みたい</language>
 	</row>
 
-	<row id="mis_m01_02_t4" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_02_t4" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ４＝トレーナー男子（自分が）
 話しかけた時、相手側にでるメッセージ</comment>
@@ -847,7 +870,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_02_t5" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_02_t5" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 5＝トレーナー女子（自分が）
 話しかけた時、相手側にでるメッセージ</comment>
@@ -855,7 +878,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_02_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_02_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 １=カワイイポケモンのメッセージ（相手が）
 話しかけた時、ミッション側にでるメッセージ</comment>
@@ -863,7 +886,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_02_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_02_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ２＝怖いポケモンのメッセージ（相手が）
 話しかけた時、ミッション側にでるメッセージ</comment>
@@ -871,7 +894,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_02_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_02_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ３=無口なポケモンのメッセージ（相手が）
 話しかけた時、ミッション側にでるメッセージ</comment>
@@ -879,20 +902,24 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_02_m4" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_02_m4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 m＝トレーナー男子（相手が）
-話しかけた時、ミッション側にでるメッセージ</comment>
+話しかけた時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『ん　なんだい？
 かまって　ほしいのかな？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『ん　なんだい？
 かまって　ほしいのかな？</language>
 	</row>
 
-	<row id="mis_m01_02_m5" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_02_m5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 w=トレーナー女子（相手が）
-話しかけた時、ミッション側にでるメッセージ</comment>
+話しかけた時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『わー！　めずらしい！▼
 どうしたのかな？
 かまって　ほしいのかな？</language>
@@ -901,7 +928,7 @@ w=トレーナー女子（相手が）
 かまって　ほしいのかな？</language>
 	</row>
 
-	<row id="mis_m01_03_t1" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_03_t1" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 １=カワイイポケモンのメッセージ（自分が）
 話しかた時、相手側にでるメッセージmis_m01_01_1のあとのセリフ</comment>
@@ -909,23 +936,23 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">キュイーン！</language>
 	</row>
 
-	<row id="mis_m01_03_t2" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_03_t2" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ２＝怖いポケモンのメッセージ（自分が）
-話しかけた時、相手側にでるメッセージmis_m01_01_1のあとのセリフ</comment>
-		<language name="JPN" width="256">フオオオーウ！</language>
-		<language name="JPN_KANJI" width="256">フオオオーウ！</language>
-	</row>
-
-	<row id="mis_m01_03_t3" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
-		<comment>ミッション１：「●●●●●に　はなしかけられろ」
-３=無口なポケモンのメッセージ（自分が）
 話しかけた時、相手側にでるメッセージmis_m01_01_1のあとのセリフ</comment>
 		<language name="JPN" width="256">ギャオーー！　ギャオーーー！</language>
 		<language name="JPN_KANJI" width="256">ギャオーー！　ギャオーーー！</language>
 	</row>
 
-	<row id="mis_m01_03_t4" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_03_t3" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+		<comment>ミッション１：「●●●●●に　はなしかけられろ」
+３=無口なポケモンのメッセージ（自分が）
+話しかけた時、相手側にでるメッセージmis_m01_01_1のあとのセリフ</comment>
+		<language name="JPN" width="256">……　……！！</language>
+		<language name="JPN_KANJI" width="256">……　……！！</language>
+	</row>
+
+	<row id="mis_m01_03_t4" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ４＝トレーナー男子（自分が）
 話しかけた時、相手側にでるメッセージmis_m01_01_1のあとのセリフ</comment>
@@ -933,7 +960,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_03_t5" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_03_t5" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 5＝トレーナー女子（自分が）
 話しかけた時、相手側にでるメッセージmis_m01_01_1のあとのセリフ</comment>
@@ -941,7 +968,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_03_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_03_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 １=カワイイポケモンのメッセージ（相手が）
 話しかけた時、ミッション側にでるメッセージmis_m01_01_1のあとのセリフ</comment>
@@ -949,7 +976,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_03_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_03_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ２＝怖いポケモンのメッセージ（相手が）
 話しかけた時、ミッション側にでるメッセージmis_m01_01_1のあとのセリフ</comment>
@@ -957,7 +984,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_03_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_03_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ３=無口なポケモンのメッセージ（相手が）
 話しかけた時、ミッション側にでるメッセージmis_m01_01_1のあとのセリフ</comment>
@@ -965,27 +992,35 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_03_m4" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_03_m4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 m＝トレーナー男子（相手が）
 話しかけた時、ミッション側にでるメッセージmis_m01_01_1のあとのセリフ</comment>
-		<language name="JPN" width="256">ありがとう
-たいせつに　つかうよ！▼</language>
-		<language name="JPN_KANJI" width="256">ありがとう
-たいせつに　つかうよ！▼</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『わー！
+こっこれは　すごいパワーだ！▼
+ありがとう！
+すごく　たすかるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『わー！
+こっこれは　すごいパワーだ！▼
+ありがとう！
+すごく　たすかるよ！▼</language>
 	</row>
 
-	<row id="mis_m01_03_m5" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_03_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 w=トレーナー女子（相手が）
 話しかけた時、ミッション側にでるメッセージmis_m01_01_1のあとのセリフ</comment>
-		<language name="JPN" width="256">ありがとう
-たいせつに　つかうね！▼</language>
-		<language name="JPN_KANJI" width="256">ありがとう
-たいせつに　つかうね！▼</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『わー！
+こっこれは　すごいパワーだ！▼
+ありがとう！
+すごく　たすかるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『わー！
+こっこれは　すごいパワーだ！▼
+ありがとう！
+すごく　たすかるよ！▼</language>
 	</row>
 
-	<row id="mis_m01_04_t1" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_04_t1" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 １=カワイイポケモンのメッセージ（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ</comment>
@@ -997,21 +1032,9 @@ w=トレーナー女子（相手が）
 あいては　やるきいっぱいだ！</language>
 	</row>
 
-	<row id="mis_m01_04_t2" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_04_t2" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ２＝怖いポケモンのメッセージ（自分が）
-ミッション対象者以外に話した時、相手側にでるメッセージ</comment>
-		<language name="JPN" width="256">フー！
-フーーン！▽
-あいては　やるきいっぱいだ！</language>
-		<language name="JPN_KANJI" width="256">フー！
-フーーン！▽
-あいては　やるきいっぱいだ！</language>
-	</row>
-
-	<row id="mis_m01_04_t3" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
-		<comment>ミッション１：「●●●●●に　はなしかけられろ」
-３=無口なポケモンのメッセージ（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ</comment>
 		<language name="JPN" width="256">ギャオ！
 ギャオギャオ！▽
@@ -1021,7 +1044,19 @@ w=トレーナー女子（相手が）
 あいては　やるきいっぱいだ！</language>
 	</row>
 
-	<row id="mis_m01_04_t4" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_04_t3" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+		<comment>ミッション１：「●●●●●に　はなしかけられろ」
+３=無口なポケモンのメッセージ（自分が）
+ミッション対象者以外に話した時、相手側にでるメッセージ</comment>
+		<language name="JPN" width="256">……！
+……　……！▽
+あいては　やるきいっぱいだ！</language>
+		<language name="JPN_KANJI" width="256">……！
+……　……！▽
+あいては　やるきいっぱいだ！</language>
+	</row>
+
+	<row id="mis_m01_04_t4" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ４＝トレーナー男子（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ</comment>
@@ -1029,7 +1064,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_04_t5" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_04_t5" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 5＝トレーナー女子（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ</comment>
@@ -1037,7 +1072,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_04_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_04_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 １=カワイイポケモンのメッセージ（相手が）
 ミッション対象者以外に話した時、ミッション側にでるメッセージ</comment>
@@ -1045,7 +1080,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_04_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_04_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ２＝怖いポケモンのメッセージ（相手が）
 ミッション対象者以外に話した時、ミッション側にでるメッセージ</comment>
@@ -1053,7 +1088,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_04_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m01_04_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 ３=無口なポケモンのメッセージ（相手が）
 ミッション対象者以外に話した時、ミッション側にでるメッセージ</comment>
@@ -1061,20 +1096,24 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m01_04_m4" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_04_m4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 4＝トレーナー男子（相手が）
-ミッション対象者以外に話した時、ミッション側にでるメッセージ</comment>
+ミッション対象者以外に話した時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『ん　なんだい？
 かまって　ほしいのかな？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『ん　なんだい？
 かまって　ほしいのかな？</language>
 	</row>
 
-	<row id="mis_m01_04_m5" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m01_04_m5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション１：「●●●●●に　はなしかけられろ」
 5=トレーナー女子（相手が）
-ミッション対象者以外に話した時、ミッション側にでるメッセージ</comment>
+ミッション対象者以外に話した時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『わー！　めずらしい！▼
 どうしたのかな？
 かまって　ほしいのかな？</language>
@@ -1083,7 +1122,7 @@ w=トレーナー女子（相手が）
 かまって　ほしいのかな？</language>
 	</row>
 
-	<row id="mis_btl_01_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_btl_01_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>１=相手がカワイイポケモンのメッセージ（自分が）
 バトル中の相手に話しかけたセリフ
 ※戦っているので、ターゲット側のセリフはなし</comment>
@@ -1091,7 +1130,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_btl_01_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_btl_01_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>２＝怖いポケモンのメッセージ（自分が）
 バトル中の相手に話しかけたセリフ
 ※戦っているので、ターゲット側のセリフはなし</comment>
@@ -1099,7 +1138,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_btl_01_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_btl_01_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>３=無口なポケモンのメッセージ（自分が）
 バトル中の相手に話しかけたセリフ
 ※戦っているので、ターゲット側のセリフはなし</comment>
@@ -1107,7 +1146,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_btl_01_t4" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_btl_01_t4" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>４＝トレーナー男子（自分が）
 バトル中の相手に話しかけたセリフ
 ※戦っているので、ターゲット側のセリフはなし</comment>
@@ -1115,7 +1154,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_btl_01_t5" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_btl_01_t5" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>5＝トレーナー女子（自分が）
 バトル中の相手に話しかけたセリフ
 ※戦っているので、ターゲット側のセリフはなし</comment>
@@ -1123,7 +1162,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_btl_01_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_btl_01_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>１=カワイイポケモンのメッセージ（相手が）
 バトル中の相手に話しかけたセリフ
 ※ポケモンの姿では、バトルをしない</comment>
@@ -1131,7 +1170,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_btl_01_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_btl_01_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>
 ２＝怖いポケモンのメッセージ（相手が）
 バトル中の相手に話しかけたセリフ
@@ -1140,7 +1179,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_btl_01_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_btl_01_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>
 ３=無口なポケモンのメッセージ（相手が）
 バトル中の相手に話しかけたセリフ
@@ -1149,11 +1188,12 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_btl_01_m4" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_btl_01_m4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>
 4＝トレーナー男子（相手が）
 バトル中の相手に話しかけたセリフ
-</comment>
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『いけ！
 そこだ！　がんばれ！▼
 あっ！　いま　たたかってるから
@@ -1164,10 +1204,12 @@ w=トレーナー女子（相手が）
 ちょっと　まってて！</language>
 	</row>
 
-	<row id="mis_btl_01_m5" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_btl_01_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>
 5=トレーナー女子（相手が）
-バトル中の相手に話しかけたセリフ</comment>
+バトル中の相手に話しかけたセリフ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『いけ！
 そこよ！　がんばれ！▼
 あっ！　いま　たたかってるから
@@ -1178,7 +1220,7 @@ w=トレーナー女子（相手が）
 ちょっと　まっててね！</language>
 	</row>
 
-	<row id="mis_std_01_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_std_01_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>
 １=相手がカワイイポケモンのメッセージ（自分が）
 取り込み中の相手に話しかけたセリフ（取り込み中）
@@ -1187,7 +1229,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_std_01_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_std_01_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>
 ２＝怖いポケモンのメッセージ（自分が）
 取り込み中の相手に話しかけたセリフ（取り込み中）
@@ -1196,7 +1238,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_std_01_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_std_01_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>
 ３=無口なポケモンのメッセージ（自分が）
 取り込み中の相手に話しかけたセリフ（取り込み中）
@@ -1205,7 +1247,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_std_01_t4" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_std_01_t4" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>
 ４＝トレーナー男子（自分が）
 取り込み中の相手に話しかけたセリフ（取り込み中）
@@ -1214,7 +1256,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_std_01_t5" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_std_01_t5" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>
 5＝トレーナー女子（自分が）
 取り込み中の相手に話しかけたセリフ（取り込み中）
@@ -1223,7 +1265,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_std_01_m1" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_std_01_m1" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>
 １=カワイイポケモンのメッセージ（相手が）
 取り込み中の相手に話しかけたセリフ</comment>
@@ -1235,20 +1277,9 @@ w=トレーナー女子（相手が）
 なんだか　とりこみちゅう　みたい</language>
 	</row>
 
-	<row id="mis_std_01_m2" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_std_01_m2" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>
 ２＝怖いポケモンのメッセージ（相手が）
-取り込み中の相手に話しかけたセリフ</comment>
-		<language name="JPN" width="256">フオ！？
-フオーー！？▽
-なんだか　とりこみちゅう　みたい</language>
-		<language name="JPN_KANJI" width="256">フオ！？
-フオーー！？▽
-なんだか　とりこみちゅう　みたい</language>
-	</row>
-
-	<row id="mis_std_01_m3" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
-		<comment>３=無口なポケモンのメッセージ（相手が）
 取り込み中の相手に話しかけたセリフ</comment>
 		<language name="JPN" width="256">ギャオ！？
 ギャオギャオ！？▽
@@ -1258,9 +1289,22 @@ w=トレーナー女子（相手が）
 なんだか　とりこみちゅう　みたい</language>
 	</row>
 
-	<row id="mis_std_01_m4" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_std_01_m3" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+		<comment>３=無口なポケモンのメッセージ（相手が）
+取り込み中の相手に話しかけたセリフ</comment>
+		<language name="JPN" width="256">……！？
+……　……！？▽
+なんだか　とりこみちゅう　みたい</language>
+		<language name="JPN_KANJI" width="256">……！？
+……　……！？▽
+なんだか　とりこみちゅう　みたい</language>
+	</row>
+
+	<row id="mis_std_01_m4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>4＝トレーナー男子（相手が）
-取り込み中の相手に話しかけたセリフ</comment>
+取り込み中の相手に話しかけたセリフ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『あっ！
 いま　てがはなせないんだ▽
 ちょっと　まってて</language>
@@ -1269,9 +1313,11 @@ w=トレーナー女子（相手が）
 ちょっと　まってて</language>
 	</row>
 
-	<row id="mis_std_01_m5" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_std_01_m5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>5=トレーナー女子（相手が）
-取り込み中の相手に話しかけたセリフ</comment>
+取り込み中の相手に話しかけたセリフ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『あっ！
 いま　てがはなせないんだ▽
 ちょっと　まっててね</language>
@@ -1280,7 +1326,7 @@ w=トレーナー女子（相手が）
 ちょっと　まっててね</language>
 	</row>
 
-	<row id="mis_nom_01_t1" back-color="#008000,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_nom_01_t1" back-color="#008000,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>
 １=相手がカワイイポケモンのメッセージ（自分が）
 ミッションをしていない相手と話したとき、ミッションしてない側のセリフ</comment>
@@ -1292,21 +1338,9 @@ w=トレーナー女子（相手が）
 なんだか　がんばってるみたい！</language>
 	</row>
 
-	<row id="mis_nom_01_t2" back-color="#008000,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_nom_01_t2" back-color="#008000,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>
 ２＝怖いポケモンのメッセージ（自分が）
-ミッションをしていない相手と話したとき、ミッションしてない側のセリフ</comment>
-		<language name="JPN" width="256">フオ！
-フオーー！！▽
-なんだか　がんばってるみたい！</language>
-		<language name="JPN_KANJI" width="256">フオ！
-フオーー！！▽
-なんだか　がんばってるみたい！</language>
-	</row>
-
-	<row id="mis_nom_01_t3" back-color="#008000,,,#ffff80,,,,,,,,,,,,,,">
-		<comment>
-３=無口なポケモンのメッセージ（自分が）
 ミッションをしていない相手と話したとき、ミッションしてない側のセリフ</comment>
 		<language name="JPN" width="256">ギャオ！
 ギャオギャオ！！▽
@@ -1316,27 +1350,43 @@ w=トレーナー女子（相手が）
 なんだか　がんばってるみたい！</language>
 	</row>
 
-	<row id="mis_nom_01_t4" back-color="#008000,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_nom_01_t3" back-color="#008000,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+		<comment>
+３=無口なポケモンのメッセージ（自分が）
+ミッションをしていない相手と話したとき、ミッションしてない側のセリフ</comment>
+		<language name="JPN" width="256">……！
+……　……！！▽
+なんだか　がんばってるみたい！</language>
+		<language name="JPN_KANJI" width="256">……！
+……　……！！▽
+なんだか　がんばってるみたい！</language>
+	</row>
+
+	<row id="mis_nom_01_t4" back-color="#008000,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>
 ４＝トレーナー男子（自分が）
-ミッションをしていない相手と話したとき、ミッションしてない側のセリフ</comment>
+ミッションをしていない相手と話したとき、ミッションしてない側のセリフ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『よう！
 きみも　いっしょに　ミッションしない？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『よう！
 きみも　いっしょに　ミッションしない？</language>
 	</row>
 
-	<row id="mis_nom_01_t5" back-color="#008000,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_nom_01_t5" back-color="#008000,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>
 5＝トレーナー女子（自分が）
-ミッションをしていない相手と話したとき、ミッションしてない側のセリフ</comment>
+ミッションをしていない相手と話したとき、ミッションしてない側のセリフ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『あ！
 きみも　いっしょに　ミッションしようよ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『あ！
 きみも　いっしょに　ミッションしようよ！</language>
 	</row>
 
-	<row id="mis_nom_01_m1" back-color="#008000,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_nom_01_m1" back-color="#008000,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>
 １=カワイイポケモンのメッセージ（相手が）
 ミッションをしていない相手と話したとき、ミッション側のセリフ
@@ -1345,7 +1395,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_nom_01_m2" back-color="#008000,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_nom_01_m2" back-color="#008000,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>
 ２＝怖いポケモンのメッセージ（相手が）
 ミッションをしていない相手と話したとき、ミッション側のセリフ
@@ -1354,7 +1404,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_nom_01_m3" back-color="#008000,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_nom_01_m3" back-color="#008000,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>３=無口なポケモンのメッセージ（相手が）
 ミッションをしていない相手と話したとき、ミッション側のセリフ
 ※ミッションしていない人は、ポケモンにならない。</comment>
@@ -1362,9 +1412,11 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_nom_01_m4" back-color="#008000,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_nom_01_m4" back-color="#008000,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>4＝トレーナー男子（相手が）
-ミッションをしていない相手と話したとき、ミッション側のセリフ</comment>
+ミッションをしていない相手と話したとき、ミッション側のセリフ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『おー！
 がんばってるね！▽
 ぼくも　ミッション　やってみようかな？</language>
@@ -1373,9 +1425,11 @@ w=トレーナー女子（相手が）
 ぼくも　ミッション　やってみようかな？</language>
 	</row>
 
-	<row id="mis_nom_01_m5" back-color="#008000,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_nom_01_m5" back-color="#008000,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>5=トレーナー女子（相手が）
-ミッションをしていない相手と話したとき、ミッション側のセリフ</comment>
+ミッションをしていない相手と話したとき、ミッション側のセリフ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『おー！
 がんばってるね！▽
 わたしも　ミッション　やってみようかな？</language>
@@ -1384,61 +1438,73 @@ w=トレーナー女子（相手が）
 わたしも　ミッション　やってみようかな？</language>
 	</row>
 
-	<row id="mis_m02_01_t1" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_01_t1" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 １=カワイイポケモンのメッセージ（自分が）
-自分がポケモンで話しかけたとき、相手側にでるメッセージ</comment>
+自分がポケモンで話しかけたとき、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:00:トレーナー名:1]＝自分の名前
+[1:1C:簡易会話単語:2]＝デルパワー名</comment>
 		<language name="JPN" width="256">キューン　キューン！▼
 ……　おや？
 やってきた　ポケモンが▽
-[1:09:どうぐ名:1]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:1]を　くれた！▼</language>
+とつぜん　ひかりだした！▼
+[1:00:トレーナー名:0]は　ポケモンから
+[1:1C:簡易会話単語:2]を　もらった！▼</language>
 		<language name="JPN_KANJI" width="256">キューン　キューン！▼
 ……　おや？
 やってきた　ポケモンが▽
-[1:09:どうぐ名:1]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:1]を　くれた！▼</language>
+とつぜん　ひかりだした！▼
+[1:00:トレーナー名:0]は　ポケモンから
+[1:1C:簡易会話単語:2]を　もらった！▼</language>
 	</row>
 
-	<row id="mis_m02_01_t2" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_01_t2" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 ２＝怖いポケモンのメッセージ（自分が）
-自分がポケモンで話しかけたとき、相手側にでるメッセージ</comment>
-		<language name="JPN" width="256">フオオオ！▼
-……　おや？
-やってきた　ポケモンが▽
-[1:09:どうぐ名:1]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:1]を　くれた！▼</language>
-		<language name="JPN_KANJI" width="256">フオオオ！▼
-……　おや？
-やってきた　ポケモンが▽
-[1:09:どうぐ名:1]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:1]を　くれた！▼</language>
-	</row>
+自分がポケモンで話しかけたとき、相手側にでるメッセージ
 
-	<row id="mis_m02_01_t3" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
-		<comment>ミッション2：「●●●●●に　話しかけろ」
-３=無口なポケモンのメッセージ（自分が）
-自分がポケモンで話しかけたとき、相手側にでるメッセージ</comment>
+[1:00:トレーナー名:0]＝相手の名前
+[1:00:トレーナー名:1]＝自分の名前
+[1:1C:簡易会話単語:2]＝デルパワー名</comment>
 		<language name="JPN" width="256">ギャァーーアアス！▼
 ……　おや？
 やってきた　ポケモンが▽
-[1:09:どうぐ名:1]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:1]を　くれた！▼</language>
+とつぜん　ひかりだした！▼
+[1:00:トレーナー名:0]は　ポケモンから
+[1:1C:簡易会話単語:2]を　もらった！▼</language>
 		<language name="JPN_KANJI" width="256">ギャァーーアアス！▼
 ……　おや？
 やってきた　ポケモンが▽
-[1:09:どうぐ名:1]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:1]を　くれた！▼</language>
+とつぜん　ひかりだした！▼
+[1:00:トレーナー名:0]は　ポケモンから
+[1:1C:簡易会話単語:2]を　もらった！▼</language>
 	</row>
 
-	<row id="mis_m02_01_t4" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_01_t3" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+		<comment>ミッション2：「●●●●●に　話しかけろ」
+３=無口なポケモンのメッセージ（自分が）
+自分がポケモンで話しかけたとき、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:00:トレーナー名:1]＝自分の名前
+[1:1C:簡易会話単語:2]＝デルパワー名</comment>
+		<language name="JPN" width="256">……　……　……！▼
+……　おや？
+やってきた　ポケモンが▽
+とつぜん　ひかりだした！▼
+[1:00:トレーナー名:0]は　ポケモンから
+[1:1C:簡易会話単語:2]を　もらった！▼</language>
+		<language name="JPN_KANJI" width="256">……　……　……！▼
+……　おや？
+やってきた　ポケモンが▽
+とつぜん　ひかりだした！▼
+[1:00:トレーナー名:0]は　ポケモンから
+[1:1C:簡易会話単語:2]を　もらった！▼</language>
+	</row>
+
+	<row id="mis_m02_01_t4" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 ４＝トレーナー男子（自分が）
 自分がポケモンで話しかたとき、相手側にでるメッセージ
@@ -1447,7 +1513,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_01_t5" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_01_t5" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 5＝トレーナー女子（自分が）
 自分がポケモンで話しかたとき、相手側にでるメッセージ
@@ -1456,7 +1522,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_01_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_01_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 １=カワイイポケモンのメッセージ（相手が）
 ミッション側にでるメッセージ
@@ -1465,7 +1531,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_01_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_01_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」」
 ２＝怖いポケモンのメッセージ（相手が）
 ミッション側にでるメッセージ
@@ -1474,7 +1540,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_01_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_01_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 ３=無口なポケモンのメッセージ（相手が）
 ミッション側にでるメッセージ
@@ -1483,47 +1549,51 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_01_m4" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_01_m4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 4＝トレーナー男子（相手が）
-ミッション側にでるメッセージ</comment>
+ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:00:トレーナー名:1]＝自分の名前
+[1:1C:簡易会話単語:2]＝デルパワー名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『おや！？
 こんなところに　ポケモンが▽
 めずらしいなぁ▼
-……え！
-[1:09:どうぐ名:1]を　くれるの？▼
-もっていた　[1:09:どうぐ名:1]を
-あいてに　わたした！</language>
+[1:00:トレーナー名:1]は　ハイルツリーから
+もらった　[1:1C:簡易会話単語:2]を▽
+[1:00:トレーナー名:0]に　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『おや！？
 こんなところに　ポケモンが▽
 めずらしいなぁ▼
-……え！
-[1:09:どうぐ名:1]を　くれるの？▼
-もっていた　[1:09:どうぐ名:1]を
-あいてに　わたした！</language>
+[1:00:トレーナー名:1]は　ハイルツリーから
+もらった　[1:1C:簡易会話単語:2]を▽
+[1:00:トレーナー名:0]に　つかった！▼</language>
 	</row>
 
-	<row id="mis_m02_01_m5" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_01_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 5=トレーナー女子（相手が）
-ミッション側にでるメッセージ</comment>
+ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:00:トレーナー名:1]＝自分の名前
+[1:1C:簡易会話単語:2]＝デルパワー名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『あれ！？
 こんなところに　ポケモンが▽
 めずらしいなぁ▼
-……え！
-[1:09:どうぐ名:1]を　くれるの？▼
-もっていた　[1:09:どうぐ名:1]を
-あいてに　わたした！</language>
+[1:00:トレーナー名:1]は　ハイルツリーから
+もらった　[1:1C:簡易会話単語:2]を▽
+[1:00:トレーナー名:0]に　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『あれ！？
 こんなところに　ポケモンが▽
 めずらしいなぁ▼
-……え！
-[1:09:どうぐ名:1]を　くれるの？▼
-もっていた　[1:09:どうぐ名:1]を
-あいてに　わたした！</language>
+[1:00:トレーナー名:1]は　ハイルツリーから
+もらった　[1:1C:簡易会話単語:2]を▽
+[1:00:トレーナー名:0]に　つかった！▼</language>
 	</row>
 
-	<row id="mis_m02_02_t1" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_02_t1" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 １=カワイイポケモンのメッセージ（自分が）
 自分がポケモンで話しかけられた時、相手側にでるメッセージ</comment>
@@ -1537,23 +1607,9 @@ w=トレーナー女子（相手が）
 ビックリしてるみたい</language>
 	</row>
 
-	<row id="mis_m02_02_t2" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_02_t2" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 ２＝怖いポケモンのメッセージ（自分が）
-自分がポケモンで話しかけられた時、相手側にでるメッセージ</comment>
-		<language name="JPN" width="256">フー！？
-フーーン！？▼
-いきなり　はなしかけられて
-ビックリしてるみたい</language>
-		<language name="JPN_KANJI" width="256">フー！？
-フーーン！？▼
-いきなり　はなしかけられて
-ビックリしてるみたい</language>
-	</row>
-
-	<row id="mis_m02_02_t3" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
-		<comment>ミッション2：「●●●●●に　話しかけろ」
-３=無口なポケモンのメッセージ（自分が）
 自分がポケモンで話しかけられた時、相手側にでるメッセージ</comment>
 		<language name="JPN" width="256">ギャ！？
 ギャオオ！？▼
@@ -1565,7 +1621,21 @@ w=トレーナー女子（相手が）
 ビックリしてるみたい</language>
 	</row>
 
-	<row id="mis_m02_02_t4" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_02_t3" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+		<comment>ミッション2：「●●●●●に　話しかけろ」
+３=無口なポケモンのメッセージ（自分が）
+自分がポケモンで話しかけられた時、相手側にでるメッセージ</comment>
+		<language name="JPN" width="256">……！？
+……　……！？▼
+いきなり　はなしかけられて
+ビックリしてるみたい</language>
+		<language name="JPN_KANJI" width="256">……！？
+……　……！？▼
+いきなり　はなしかけられて
+ビックリしてるみたい</language>
+	</row>
+
+	<row id="mis_m02_02_t4" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 ４＝トレーナー男子（自分が）
 自分がポケモンで話しかけられた時、相手側にでるメッセージ
@@ -1574,7 +1644,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_02_t5" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_02_t5" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 5＝トレーナー女子（自分が）
 自分がポケモンで話しかけられた時、相手側にでるメッセージ
@@ -1583,7 +1653,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_02_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_02_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 １=カワイイポケモンのメッセージ（相手が）
 ミッション側にでるメッセージ
@@ -1592,7 +1662,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_02_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_02_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」」
 ２＝怖いポケモンのメッセージ（相手が）
 ミッション側にでるメッセージ
@@ -1601,7 +1671,7 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_02_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_02_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 ３=無口なポケモンのメッセージ（相手が）
 ミッション側にでるメッセージ
@@ -1610,10 +1680,12 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_02_m4" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_02_m4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 4＝トレーナー男子（相手が）
-ミッション側にでるメッセージ</comment>
+ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『よーし！
 つかまえたぞー！▼
 あはは！
@@ -1624,10 +1696,12 @@ w=トレーナー女子（相手が）
 もっと　あそぼうぜ！</language>
 	</row>
 
-	<row id="mis_m02_02_m5" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_02_m5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 5=トレーナー女子（相手が）
-ミッション側にでるメッセージ</comment>
+ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『よーし！
 つかまえたー！▼
 えへへ！
@@ -1638,7 +1712,7 @@ w=トレーナー女子（相手が）
 もっと　あそぼうよ！</language>
 	</row>
 
-	<row id="mis_m02_03_t1" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_03_t1" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 １=カワイイポケモンのメッセージ（自分が）
 mis_m02_01_1のあとのセリフ、相手側にでるメッセージ</comment>
@@ -1646,23 +1720,23 @@ mis_m02_01_1のあとのセリフ、相手側にでるメッセージ</comment>
 		<language name="JPN_KANJI" width="256">キュイーン！</language>
 	</row>
 
-	<row id="mis_m02_03_t2" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_03_t2" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 ２＝怖いポケモンのメッセージ（自分が）
-mis_m02_01_1のあとのセリフ、相手側にでるメッセージ</comment>
-		<language name="JPN" width="256">フオオオーウ！</language>
-		<language name="JPN_KANJI" width="256">フオオオーウ！</language>
-	</row>
-
-	<row id="mis_m02_03_t3" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
-		<comment>ミッション2：「●●●●●に　話しかけろ」
-３=無口なポケモンのメッセージ（自分が）
 mis_m02_01_1のあとのセリフ、相手側にでるメッセージ</comment>
 		<language name="JPN" width="256">ギャオーー！　ギャオーーー！</language>
 		<language name="JPN_KANJI" width="256">ギャオーー！　ギャオーーー！</language>
 	</row>
 
-	<row id="mis_m02_03_t4" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_03_t3" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+		<comment>ミッション2：「●●●●●に　話しかけろ」
+３=無口なポケモンのメッセージ（自分が）
+mis_m02_01_1のあとのセリフ、相手側にでるメッセージ</comment>
+		<language name="JPN" width="256">……　……！！</language>
+		<language name="JPN_KANJI" width="256">……　……！！</language>
+	</row>
+
+	<row id="mis_m02_03_t4" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 ４＝トレーナー男子（自分が）
 mis_m02_01_1のあとのセリフ、相手側にでるメッセージ
@@ -1671,7 +1745,7 @@ mis_m02_01_1のあとのセリフ、相手側にでるメッセージ
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_03_t5" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_03_t5" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 5＝トレーナー女子（自分が）
 mis_m02_01_1のあとのセリフ、相手側にでるメッセージ
@@ -1680,7 +1754,7 @@ mis_m02_01_1のあとのセリフ、相手側にでるメッセージ
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_03_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_03_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 １=カワイイポケモンのメッセージ（相手が）
 mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
@@ -1689,7 +1763,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_03_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_03_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」」
 ２＝怖いポケモンのメッセージ（相手が）
 mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
@@ -1698,7 +1772,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_03_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_03_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 ３=無口なポケモンのメッセージ（相手が）
 mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
@@ -1707,27 +1781,39 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_03_m4" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_03_m4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 4＝トレーナー男子（相手が）
-mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</comment>
-		<language name="JPN" width="256">ありがとう
-たいせつに　つかうよ！</language>
-		<language name="JPN_KANJI" width="256">ありがとう
-たいせつに　つかうよ！</language>
+mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『わー！
+こっこれは　すごいパワーだ！▼
+ありがとう！
+すごく　たすかるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『わー！
+こっこれは　すごいパワーだ！▼
+ありがとう！
+すごく　たすかるよ！▼</language>
 	</row>
 
-	<row id="mis_m02_03_m5" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_03_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 5=トレーナー女子（相手が）
-mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</comment>
-		<language name="JPN" width="256">ありがとう
-たいせつに　つかうわ！</language>
-		<language name="JPN_KANJI" width="256">ありがとう
-たいせつに　つかうわ！</language>
+mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『わー！
+こっこれは　すごいパワーだ！▼
+ありがとう！
+すごく　たすかるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『わー！
+こっこれは　すごいパワーだ！▼
+ありがとう！
+すごく　たすかるよ！▼</language>
 	</row>
 
-	<row id="mis_m02_04_t1" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_04_t1" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 １=相手がカワイイポケモンのメッセージ（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ</comment>
@@ -1739,21 +1825,9 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 あいては　やるきいっぱいだ！</language>
 	</row>
 
-	<row id="mis_m02_04_t2" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_04_t2" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 ２＝怖いポケモンのメッセージ（自分が）
-ミッション対象者以外に話した時、相手側にでるメッセージ</comment>
-		<language name="JPN" width="256">フー！
-フーーン！▽
-あいては　やるきいっぱいだ！</language>
-		<language name="JPN_KANJI" width="256">フー！
-フーーン！▽
-あいては　やるきいっぱいだ！</language>
-	</row>
-
-	<row id="mis_m02_04_t3" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
-		<comment>ミッション2：「●●●●●に　話しかけろ」
-３=無口なポケモンのメッセージ（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ</comment>
 		<language name="JPN" width="256">ギャオ！
 ギャオギャオ！▽
@@ -1763,7 +1837,19 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 あいては　やるきいっぱいだ！</language>
 	</row>
 
-	<row id="mis_m02_04_t4" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_04_t3" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+		<comment>ミッション2：「●●●●●に　話しかけろ」
+３=無口なポケモンのメッセージ（自分が）
+ミッション対象者以外に話した時、相手側にでるメッセージ</comment>
+		<language name="JPN" width="256">……！
+……　……！▽
+あいては　やるきいっぱいだ！</language>
+		<language name="JPN_KANJI" width="256">……！
+……　……！▽
+あいては　やるきいっぱいだ！</language>
+	</row>
+
+	<row id="mis_m02_04_t4" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 ４＝トレーナー男子（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ
@@ -1772,7 +1858,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_04_t5" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_04_t5" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 5＝トレーナー女子（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ
@@ -1781,7 +1867,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_04_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_04_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 １=カワイイポケモンのメッセージ（相手が）
 ミッション対象者以外に話した時、ミッション側にでるメッセージ
@@ -1790,7 +1876,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_04_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_04_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」」
 ２＝怖いポケモンのメッセージ（相手が）
 ミッション対象者以外に話した時、ミッション側にでるメッセージ
@@ -1799,7 +1885,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_04_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m02_04_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 ３=無口なポケモンのメッセージ（相手が）
 ミッション対象者以外に話した時、ミッション側にでるメッセージ
@@ -1808,27 +1894,31 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m02_04_m4" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_04_m4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 4＝トレーナー男子（相手が）
-ミッション対象者以外に話した時、ミッション側にでるメッセージ</comment>
+ミッション対象者以外に話した時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
 	</row>
 
-	<row id="mis_m02_04_m5" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m02_04_m5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション2：「●●●●●に　話しかけろ」
 5=トレーナー女子（相手が）
-ミッション対象者以外に話した時、ミッション側にでるメッセージ</comment>
+ミッション対象者以外に話した時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 	</row>
 
-	<row id="mis_m03_01_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_01_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 １=カワイイポケモンのメッセージ（自分が）
 話しかたとき、相手側にでるメッセージ
@@ -1837,7 +1927,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_01_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_01_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ２＝怖いポケモンのメッセージ（自分が）
 話しかたとき、相手側にでるメッセージ
@@ -1846,7 +1936,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_01_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_01_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ３=無口なポケモンのメッセージ（自分が）
 話しかたとき、相手側にでるメッセージ
@@ -1855,44 +1945,48 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_01_t4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_01_t4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ４＝トレーナー男子（自分が）
-話しかたとき、相手側にでるメッセージ</comment>
+話しかたとき、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『なあ！
 いきなりだけど　たいせんしないか？▼
 たいりょくも　かいふくさせて
-せいせいどうどうと　たたかいたいぜ！▼
+せいせいどうどう　たたかいたいぜ！▼
 どうだ！？
 たいせん　しようぜ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『なあ！
 いきなりだけど　たいせんしないか？▼
 たいりょくも　かいふくさせて
-せいせいどうどうと　たたかいたいぜ！▼
+せいせいどうどう　たたかいたいぜ！▼
 どうだ！？
 たいせん　しようぜ！</language>
 	</row>
 
-	<row id="mis_m03_01_t5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_01_t5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ５=トレーナー女子（自分が）
 話しかたとき、相手側にでるメッセージ
-</comment>
+
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『ねえ！
 いきなりだけど　たいせんしない？▼
 たいりょくも　かいふくさせて
-せいせいどうどうと　たたかいたいわ！▼
+せいせいどうどう　たたかいたいわ！▼
 どう！？
 たいせん　しましょう！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『ねえ！
 いきなりだけど　たいせんしない？▼
 たいりょくも　かいふくさせて
-せいせいどうどうと　たたかいたいわ！▼
+せいせいどうどう　たたかいたいわ！▼
 どう！？
 たいせん　しましょう！</language>
 	</row>
 
-	<row id="mis_m03_01_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_01_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 １=カワイイポケモンのメッセージ（相手が）
 話しかたとき、ミッション側にでるメッセージ
@@ -1901,7 +1995,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_01_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_01_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ２＝怖いポケモンのメッセージ（相手が）
 話しかたとき、ミッション側にでるメッセージ
@@ -1910,7 +2004,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_01_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_01_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ３=無口なポケモンのメッセージ（相手が）
 話しかたとき、ミッション側にでるメッセージ
@@ -1920,29 +2014,33 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_01_m4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_01_m4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ４＝トレーナー男子（相手が）
 話しかたとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
 </comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『ん？
-たいせんしたいの？　ちょっとまってて！</language>
+たいせん　したいの？　ちょっとまってて！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『ん？
-たいせんしたいの？　ちょっとまってて！</language>
+たいせん　したいの？　ちょっとまってて！</language>
 	</row>
 
-	<row id="mis_m03_01_m5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_01_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ５=トレーナー女子（相手が）
 話しかたとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
 </comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『え？
-たいせんしたいの？　ちょっとまっててね！</language>
+たいせん　したいの？　ちょっとまっててね！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『え？
-たいせんしたいの？　ちょっとまっててね！</language>
+たいせん　したいの？　ちょっとまっててね！</language>
 	</row>
 
-	<row id="mis_m03_02_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_02_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 １=カワイイポケモンのメッセージ（自分が）
 話しかけられた時、相手側にでるメッセージ
@@ -1951,7 +2049,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_02_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_02_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ２＝怖いポケモンのメッセージ（自分が）
 話しかけられた時、相手側にでるメッセージ
@@ -1960,7 +2058,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_02_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_02_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ３=無口なポケモンのメッセージ（自分が）
 話しかけられた時、相手側にでるメッセージ
@@ -1969,44 +2067,48 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_02_t4" back-color="#80ff80,,,#ffff80,,#ffffff,#ffff00,,,,,#ffffff,,,,,,">
+	<row id="mis_m03_02_t4" back-color="#80ff80,,,#ffff80,,#ffffff,#ff8080,,,,,#ffffff,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ４＝トレーナー男子（自分が）
-話しかけられた時、相手側にでるメッセージ</comment>
+話しかけられた時、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『なあ！
 いきなりだけど　たいせんしないか？▼
 たいりょくも　かいふくさせて
-せいせいどうどうと　たたかいたいぜ！▼
+せいせいどうどう　たたかいたいぜ！▼
 どうだ！？
 たいせん　しようぜ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『なあ！
 いきなりだけど　たいせんしないか？▼
 たいりょくも　かいふくさせて
-せいせいどうどうと　たたかいたいぜ！▼
+せいせいどうどう　たたかいたいぜ！▼
 どうだ！？
 たいせん　しようぜ！</language>
 	</row>
 
-	<row id="mis_m03_02_t5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_02_t5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ５=トレーナー女子（自分が）
 話しかけられた時、相手側にでるメッセージ
-</comment>
+
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『ねえ！
 いきなりだけど　たいせんしない？▼
 たいりょくも　かいふくさせて
-せいせいどうどうと　たたかいたいわ！▼
+せいせいどうどう　たたかいたいわ！▼
 どう！？
 たいせん　しましょう！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『ねえ！
 いきなりだけど　たいせんしない？▼
 たいりょくも　かいふくさせて
-せいせいどうどうと　たたかいたいわ！▼
+せいせいどうどう　たたかいたいわ！▼
 どう！？
 たいせん　しましょう！</language>
 	</row>
 
-	<row id="mis_m03_02_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_02_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 １=カワイイポケモンのメッセージ（相手が）
 話しかけられた時、ミッション側にでるメッセージ
@@ -2015,7 +2117,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_02_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_02_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ２＝怖いポケモンのメッセージ（相手が）
 話しかけられた時、ミッション側にでるメッセージ
@@ -2024,7 +2126,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_02_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_02_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ３=無口なポケモンのメッセージ（相手が）
 話しかけられた時、ミッション側にでるメッセージ
@@ -2034,29 +2136,35 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_02_m4" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_02_m4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ４＝トレーナー男子（相手が）
 話しかけられた時、ミッション側にでるメッセージ
+
+
+[1:00:トレーナー名:0]＝相手の名前
 </comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『ん？
-たいせんしたいの？　ちょっとまってて！</language>
+たいせん　したいの？　ちょっとまってて！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『ん？
-たいせんしたいの？　ちょっとまってて！</language>
+たいせん　したいの？　ちょっとまってて！</language>
 	</row>
 
-	<row id="mis_m03_02_m5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_02_m5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ５=トレーナー女子（相手が）
 話しかけられた時、ミッション側にでるメッセージ
+
+
+[1:00:トレーナー名:0]＝相手の名前
 </comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『え？
-たいせんしたいの？　ちょっとまっててね！</language>
+たいせん　したいの？　ちょっとまっててね！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『え？
-たいせんしたいの？　ちょっとまっててね！</language>
+たいせん　したいの？　ちょっとまっててね！</language>
 	</row>
 
-	<row id="mis_m03_03_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_03_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 １=カワイイポケモンのメッセージ（自分が）
 対戦が決まったとき、相手側にでるメッセージ
@@ -2065,7 +2173,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_03_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_03_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ２＝怖いポケモンのメッセージ（自分が）
 対戦が決まったとき、相手側にでるメッセージ
@@ -2074,7 +2182,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_03_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_03_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ３=無口なポケモンのメッセージ（自分が）
 対戦が決まったとき、相手側にでるメッセージ
@@ -2083,7 +2191,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_03_t4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_03_t4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ４＝トレーナー男子（自分が）
 対戦が決まったとき、相手側にでるメッセージ</comment>
@@ -2093,7 +2201,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 じゃあ　いくぞ！</language>
 	</row>
 
-	<row id="mis_m03_03_t5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_03_t5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ５=トレーナー女子（自分が）
 対戦が決まったとき、相手側にでるメッセージ</comment>
@@ -2103,7 +2211,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 じゃあ　いくよ！</language>
 	</row>
 
-	<row id="mis_m03_03_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_03_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 １=カワイイポケモンのメッセージ（相手が）
 対戦が決まったとき、ミッション側にでるメッセージ
@@ -2112,7 +2220,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_03_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_03_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ２＝怖いポケモンのメッセージ（相手が）
 対戦が決まったとき、ミッション側にでるメッセージ
@@ -2121,7 +2229,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_03_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_03_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ３=無口なポケモンのメッセージ（相手が）
 対戦が決まったとき、ミッション側にでるメッセージ
@@ -2130,7 +2238,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_03_m4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_03_m4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ４＝トレーナー男子（相手が）
 対戦が決まったとき、ミッション側にでるメッセージ</comment>
@@ -2140,7 +2248,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 じゃあ　いくぞ！</language>
 	</row>
 
-	<row id="mis_m03_03_m5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_03_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ５=トレーナー女子（相手が）
 対戦が決まったとき、ミッション側にでるメッセージ</comment>
@@ -2150,7 +2258,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 じゃあ　いくよ！</language>
 	</row>
 
-	<row id="mis_m03_04_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_04_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 １=カワイイポケモンのメッセージ（自分が）
 バトル後、相手側にでるメッセージ
@@ -2159,7 +2267,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_04_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_04_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ２＝怖いポケモンのメッセージ（自分が）
 バトル後、相手側にでるメッセージ
@@ -2168,7 +2276,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_04_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_04_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ３=無口なポケモンのメッセージ（自分が）
 バトル後、相手側にでるメッセージ
@@ -2177,69 +2285,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_04_t4" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_04_t4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ４＝トレーナー男子（自分が）
 バトル後、相手側にでるメッセージ</comment>
-		<language name="JPN" width="256">ふー！
-いいたたかい　だったぜ！▼
-きみと　たたかえて
-おもしろかったぜ！▽
-じゃあ　またな！</language>
-		<language name="JPN_KANJI" width="256">ふー！
-いいたたかい　だったぜ！▼
-きみと　たたかえて
-おもしろかったぜ！▽
-じゃあ　またな！</language>
-	</row>
-
-	<row id="mis_m03_04_t5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
-		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
-５=トレーナー女子（自分が）
-バトル後、相手側にでるメッセージ</comment>
-		<language name="JPN" width="256">ふー！
-いいたたかい　だった！▼
-きみと　たたかえて
-おもしろかったよ！▽
-じゃあ　また！</language>
-		<language name="JPN_KANJI" width="256">ふー！
-いいたたかい　だった！▼
-きみと　たたかえて
-おもしろかったよ！▽
-じゃあ　また！</language>
-	</row>
-
-	<row id="mis_m03_04_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
-		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
-１=カワイイポケモンのメッセージ（相手が）
-バトル後、ミッション側にでるメッセージ
-※ミッション3ではポケモンの姿にならない</comment>
-		<language name="JPN" width="256">ー</language>
-		<language name="JPN_KANJI" width="256">ー</language>
-	</row>
-
-	<row id="mis_m03_04_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
-		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
-２＝怖いポケモンのメッセージ（相手が）
-バトル後、ミッション側にでるメッセージ
-※ミッション3ではポケモンの姿にならない</comment>
-		<language name="JPN" width="256">ー</language>
-		<language name="JPN_KANJI" width="256">ー</language>
-	</row>
-
-	<row id="mis_m03_04_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
-		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
-３=無口なポケモンのメッセージ（相手が）
-バトル後、ミッション側にでるメッセージ
-※ミッション3ではポケモンの姿にならない</comment>
-		<language name="JPN" width="256">ー</language>
-		<language name="JPN_KANJI" width="256">ー</language>
-	</row>
-
-	<row id="mis_m03_04_m4" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
-		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
-４＝トレーナー男子（相手が）
-バトル後、ミッション側にでるメッセージ</comment>
 		<language name="JPN" width="256">ふー！
 いいたたかい　だったぜ！▼
 いきなり　だったけど
@@ -2252,10 +2301,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 じゃあ　またな！</language>
 	</row>
 
-	<row id="mis_m03_04_m5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_04_t5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
-５=トレーナー女子（相手が）
-バトル後、ミッション側にでるメッセージ</comment>
+５=トレーナー女子（自分が）
+バトル後、相手側にでるメッセージ</comment>
 		<language name="JPN" width="256">ふー！
 いいたたかい　だった！▼
 いきなり　だったけど
@@ -2268,7 +2317,66 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 じゃあ　また！</language>
 	</row>
 
-	<row id="mis_m03_05_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_04_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
+		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
+１=カワイイポケモンのメッセージ（相手が）
+バトル後、ミッション側にでるメッセージ
+※ミッション3ではポケモンの姿にならない</comment>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
+	</row>
+
+	<row id="mis_m03_04_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
+		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
+２＝怖いポケモンのメッセージ（相手が）
+バトル後、ミッション側にでるメッセージ
+※ミッション3ではポケモンの姿にならない</comment>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
+	</row>
+
+	<row id="mis_m03_04_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
+		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
+３=無口なポケモンのメッセージ（相手が）
+バトル後、ミッション側にでるメッセージ
+※ミッション3ではポケモンの姿にならない</comment>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
+	</row>
+
+	<row id="mis_m03_04_m4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
+４＝トレーナー男子（相手が）
+バトル後、ミッション側にでるメッセージ</comment>
+		<language name="JPN" width="256">ふー！
+いいたたかい　だったぜ！▼
+きみと　たたかえて
+おもしろかったぜ！▽
+じゃあ　またな！</language>
+		<language name="JPN_KANJI" width="256">ふー！
+いいたたかい　だったぜ！▼
+きみと　たたかえて
+おもしろかったぜ！▽
+じゃあ　またな！</language>
+	</row>
+
+	<row id="mis_m03_04_m5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
+５=トレーナー女子（相手が）
+バトル後、ミッション側にでるメッセージ</comment>
+		<language name="JPN" width="256">ふー！
+いいたたかい　だった！▼
+きみと　たたかえて
+おもしろかったよ！▽
+じゃあ　また！</language>
+		<language name="JPN_KANJI" width="256">ふー！
+いいたたかい　だった！▼
+きみと　たたかえて
+おもしろかったよ！▽
+じゃあ　また！</language>
+	</row>
+
+	<row id="mis_m03_05_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 １=カワイイポケモンのメッセージ（自分が）
 バトルを、相手が断ったとき、相手側にでるメッセージ
@@ -2277,7 +2385,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_05_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_05_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ２＝怖いポケモンのメッセージ（自分が）
 バトルを、相手が断ったとき、相手側にでるメッセージ
@@ -2286,7 +2394,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_05_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_05_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ３=無口なポケモンのメッセージ（自分が）
 バトルを、相手が断ったとき、相手側にでるメッセージ
@@ -2295,7 +2403,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_05_t4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_05_t4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ４＝トレーナー男子（自分が）
 バトルを、相手が断ったとき、相手側にでるメッセージ</comment>
@@ -2305,7 +2413,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 またこんど　たたかおうな！</language>
 	</row>
 
-	<row id="mis_m03_05_t5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_05_t5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ５=トレーナー女子（自分が）
 バトルを、相手が断ったとき、相手側にでるメッセージ</comment>
@@ -2315,7 +2423,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 またこんど　たたかおうね！</language>
 	</row>
 
-	<row id="mis_m03_05_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_05_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 １=カワイイポケモンのメッセージ（相手が）
 バトルを、相手が断ったとき、ミッション側にでるメッセージ
@@ -2324,7 +2432,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_05_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_05_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ２＝怖いポケモンのメッセージ（相手が）
 バトルを、相手が断ったとき、ミッション側にでるメッセージ
@@ -2333,7 +2441,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_05_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_05_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ３=無口なポケモンのメッセージ（相手が）
 バトルを、相手が断ったとき、ミッション側にでるメッセージ
@@ -2342,7 +2450,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_05_m4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_05_m4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ４＝トレーナー男子（相手が）
 バトルを、相手が断ったとき、ミッション側にでるメッセージ</comment>
@@ -2356,7 +2464,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 たたかおうぜ！</language>
 	</row>
 
-	<row id="mis_m03_05_m5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_05_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ５=トレーナー女子（相手が）
 バトルを、相手が断ったとき、ミッション側にでるメッセージ</comment>
@@ -2370,7 +2478,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 たたかおうね！</language>
 	</row>
 
-	<row id="mis_m03_06_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_06_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 １=相手がカワイイポケモンのメッセージ（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ
@@ -2379,7 +2487,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_06_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_06_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ２＝怖いポケモンのメッセージ（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ
@@ -2388,7 +2496,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_06_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_06_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ３=無口なポケモンのメッセージ（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ
@@ -2397,10 +2505,12 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_06_t4" back-color="#80ff80,,,#ffff80,,#ffffff,#ffff00,,,,,#ffffff,,,,,,">
+	<row id="mis_m03_06_t4" back-color="#80ff80,,,#ffff80,,#ffffff,#ff8080,,,,,#ffffff,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ４＝トレーナー男子（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
 </comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
@@ -2408,18 +2518,19 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 がんばってるかい？</language>
 	</row>
 
-	<row id="mis_m03_06_t5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_06_t5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 5＝トレーナー女子（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ
-</comment>
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 	</row>
 
-	<row id="mis_m03_06_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_06_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 １=カワイイポケモンのメッセージ（相手が）
 ミッション対象者以外に話した時、ミッション側にでるメッセージ
@@ -2428,7 +2539,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_06_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_06_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ２＝怖いポケモンのメッセージ（相手が）
 ミッション対象者以外に話した時、ミッション側にでるメッセージ
@@ -2437,7 +2548,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_06_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m03_06_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 ３=無口なポケモンのメッセージ（相手が）
 ミッション対象者以外に話した時、ミッション側にでるメッセージ
@@ -2446,27 +2557,31 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m03_06_m4" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_06_m4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 4＝トレーナー男子（相手が）
-ミッション対象者以外に話した時、ミッション側にでるメッセージ</comment>
+ミッション対象者以外に話した時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
 	</row>
 
-	<row id="mis_m03_06_m5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m03_06_m5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション3：「●●●●●に　しょうぶを　いどめ！」
 5=トレーナー女子（相手が）
-ミッション対象者以外に話した時、ミッション側にでるメッセージ</comment>
+ミッション対象者以外に話した時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 	</row>
 
-	<row id="mis_m04_01_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_01_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 １=相手がカワイイポケモンのメッセージ（自分が）
 相手が戦闘状態で、相手側にでるメッセージ
@@ -2475,7 +2590,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_01_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_01_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ２＝怖いポケモンのメッセージ（自分が）
 相手が戦闘状態で、相手側にでるメッセージ
@@ -2484,7 +2599,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_01_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_01_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ３=無口なポケモンのメッセージ（自分が）
 相手が戦闘状態で、相手側にでるメッセージ
@@ -2493,7 +2608,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_01_t4" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_01_t4" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ４＝トレーナー男子（自分が）
 相手が戦闘状態で、相手側にでるメッセージ
@@ -2502,7 +2617,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_01_t5" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_01_t5" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 5＝トレーナー女子（自分が）
 相手が戦闘状態で、相手側にでるメッセージ
@@ -2511,7 +2626,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_01_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_01_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 １=カワイイポケモンのメッセージ（相手が）
 相手が戦闘状態で、ミッション側にでるメッセージ
@@ -2520,7 +2635,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_01_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_01_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ２＝怖いポケモンのメッセージ（相手が）
 相手が戦闘状態で、ミッション側にでるメッセージ
@@ -2529,7 +2644,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_01_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_01_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ３=無口なポケモンのメッセージ（（相手が）
 相手が戦闘状態で、ミッション側にでるメッセージ
@@ -2538,10 +2653,12 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_01_m4" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m04_01_m4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 4＝トレーナー男子（相手が）
-相手が戦闘状態で、ミッション側にでるメッセージ</comment>
+相手が戦闘状態で、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『いけっ　そこだ！
 がんばれ！　……▼
 お！　ありがたい！
@@ -2552,10 +2669,12 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 たすけてくれるのか！？▼</language>
 	</row>
 
-	<row id="mis_m04_01_m5" back-color="#00ff00,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m04_01_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 5=トレーナー女子（相手が）
-相手が戦闘状態で、ミッション側にでるメッセージ</comment>
+相手が戦闘状態で、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『いけっ　そこよ！
 がんばって！　……▼
 わ！　ありがとう！
@@ -2566,7 +2685,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 たすけてくれるの！？▼</language>
 	</row>
 
-	<row id="mis_m04_02_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_02_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 １=相手がカワイイポケモンのメッセージ（自分が）
 相手が戦闘状態で、mis_m04_01_1の後、相手側にでるメッセージ
@@ -2575,7 +2694,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_02_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_02_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ２＝怖いポケモンのメッセージ（自分が）
 相手が戦闘状態で、mis_m04_01_1の後、相手側にでるメッセージ
@@ -2584,7 +2703,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_02_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_02_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ３=無口なポケモンのメッセージ（自分が）
 相手が戦闘状態で、mis_m04_01_1の後、相手側にでるメッセージ
@@ -2593,7 +2712,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_02_t4" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_02_t4" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ４＝トレーナー男子（自分が）
 相手が戦闘状態で、mis_m04_01_1の後、相手側にでるメッセージ
@@ -2602,7 +2721,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_02_t5" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_02_t5" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 5＝トレーナー女子（自分が）
 相手が戦闘状態で、mis_m04_01_1の後、相手側にでるメッセージ
@@ -2611,7 +2730,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_02_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_02_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 １=カワイイポケモンのメッセージ（相手が）
 相手が戦闘状態で、mis_m04_01_1の後、ミッション側にでるメッセージ
@@ -2620,7 +2739,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_02_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_02_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ２＝怖いポケモンのメッセージ（相手が）
 相手が戦闘状態で、mis_m04_01_1の後、ミッション側にでるメッセージ
@@ -2629,7 +2748,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_02_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_02_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ３=無口なポケモンのメッセージ（（相手が）
 相手が戦闘状態で、mis_m04_01_1の後、ミッション側にでるメッセージ
@@ -2638,31 +2757,43 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_02_m4" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m04_02_m4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 4＝トレーナー男子（相手が）
-相手が戦闘状態で、mis_m04_01_1の後、ミッション側にでるメッセージ</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンは
+相手が戦闘状態で、mis_m04_01_1の後、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
+		<language name="JPN" width="256">「せんとう　ＨＰかいふくパワー」を
+[1:00:トレーナー名:0]の　ポケモンに　つかった！▼
+[1:00:トレーナー名:0]の　ポケモンは
 たいりょくが　かいふくした！▼
 [1:00:トレーナー名:0]『ありがとうな！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンは
+		<language name="JPN_KANJI" width="256">「せんとう　ＨＰかいふくパワー」を
+[1:00:トレーナー名:0]の　ポケモンに　つかった！▼
+[1:00:トレーナー名:0]の　ポケモンは
 たいりょくが　かいふくした！▼
 [1:00:トレーナー名:0]『ありがとうな！</language>
 	</row>
 
-	<row id="mis_m04_02_m5" back-color="#80ff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="mis_m04_02_m5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 5=トレーナー女子（相手が）
-相手が戦闘状態で、mis_m04_01_1の後、ミッション側にでるメッセージ</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンは
+相手が戦闘状態で、mis_m04_01_1の後、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
+		<language name="JPN" width="256">「せんとう　ＨＰかいふくパワー」を
+[1:00:トレーナー名:0]の　ポケモンに　つかった！▼
+[1:00:トレーナー名:0]の　ポケモンは
 たいりょくが　かいふくした！▼
 [1:00:トレーナー名:0]『ありがとうね！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンは
+		<language name="JPN_KANJI" width="256">「せんとう　ＨＰかいふくパワー」を
+[1:00:トレーナー名:0]の　ポケモンに　つかった！▼
+[1:00:トレーナー名:0]の　ポケモンは
 たいりょくが　かいふくした！▼
 [1:00:トレーナー名:0]『ありがとうね！</language>
 	</row>
 
-	<row id="mis_m04_03_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_03_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 １=相手がカワイイポケモンのメッセージ（自分が）
 相手が戦闘じゃない状態で、話しかけられたとき、相手側にでるメッセージ
@@ -2671,7 +2802,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_03_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_03_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ２＝怖いポケモンのメッセージ（自分が）
 相手が戦闘じゃない状態で、話しかけられたとき、相手側にでるメッセージ
@@ -2680,7 +2811,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_03_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_03_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ３=無口なポケモンのメッセージ（自分が）
 相手が戦闘じゃない状態で、話しかけられたとき、相手側にでるメッセージ</comment>
@@ -2688,35 +2819,39 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_03_t4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m04_03_t4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ４＝トレーナー男子（自分が）
-相手が戦闘じゃない状態で、話しかけられたとき、相手側にでるメッセージ</comment>
+相手が戦闘じゃない状態で、話しかけられたとき、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？▼
-たたかいのとき　くるしくなったら
-たすけて　あげるよ！</language>
+たたかってて　ピンチになったら
+たすけにとんでくよ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？▼
-たたかいのとき　くるしくなったら
-たすけて　あげるよ！</language>
+たたかってて　ピンチになったら
+たすけにとんでくよ！</language>
 	</row>
 
-	<row id="mis_m04_03_t5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m04_03_t5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 5＝トレーナー女子（自分が）
-相手が戦闘じゃない状態で、話しかけられたとき、相手側にでるメッセージ</comment>
+相手が戦闘じゃない状態で、話しかけられたとき、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？▼
-たたかいのとき　くるしくなったら
-たすけて　あげるね！</language>
+たたかってて　ピンチになったら
+たすけにとんでくからね！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？▼
-たたかいのとき　くるしくなったら
-たすけて　あげるね！</language>
+たたかってて　ピンチになったら
+たすけにとんでくからね！</language>
 	</row>
 
-	<row id="mis_m04_03_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_03_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 １=カワイイポケモンのメッセージ（相手が）
 相手が戦闘じゃない状態で、話しかけられたとき、ミッション側にでるメッセージ
@@ -2725,7 +2860,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_03_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_03_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ２＝怖いポケモンのメッセージ（相手が）
 相手が戦闘じゃない状態で、話しかけられたとき、ミッション側にでるメッセージ
@@ -2734,7 +2869,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_03_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_03_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ３=無口なポケモンのメッセージ（相手が）
 相手が戦闘じゃない状態で、話しかけられたとき、ミッション側にでるメッセージ
@@ -2743,27 +2878,31 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_03_m4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m04_03_m4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 4＝トレーナー男子（相手が）
-相手が戦闘じゃない状態で、話しかけられたとき、ミッション側にでるメッセージ</comment>
+相手が戦闘じゃない状態で、話しかけられたとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
 	</row>
 
-	<row id="mis_m04_03_m5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m04_03_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 5=トレーナー女子（相手が）
-相手が戦闘じゃない状態で、話しかけられたとき、ミッション側にでるメッセージ</comment>
+相手が戦闘じゃない状態で、話しかけられたとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 	</row>
 
-	<row id="mis_m04_04_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_04_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 １=相手がカワイイポケモンのメッセージ（自分が）
 相手が戦闘じゃない状態で、話しかけたとき、相手側にでるメッセージ
@@ -2772,7 +2911,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_04_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_04_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ２＝怖いポケモンのメッセージ（自分が）
 相手が戦闘じゃない状態で、話しかけたとき、相手側にでるメッセージ
@@ -2781,7 +2920,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_04_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_04_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ３=無口なポケモンのメッセージ（自分が）
 相手が戦闘じゃない状態で、話しかけたとき、相手側にでるメッセージ
@@ -2790,35 +2929,39 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_04_t4" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m04_04_t4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ４＝トレーナー男子（自分が）
-相手が戦闘じゃない状態で、話しかけたとき、相手側にでるメッセージ</comment>
+相手が戦闘じゃない状態で、話しかけたとき、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？▼
-たたかいのとき　くるしくなったら
-たすけて　あげるよ！</language>
+たたかってて　ピンチになったら
+たすけにとんでくよ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？▼
-たたかいのとき　くるしくなったら
-たすけて　あげるよ！</language>
+たたかってて　ピンチになったら
+たすけにとんでくよ！</language>
 	</row>
 
-	<row id="mis_m04_04_t5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m04_04_t5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 5＝トレーナー女子（自分が）
-相手が戦闘じゃない状態で、話しかけたとき、相手側にでるメッセージ</comment>
+相手が戦闘じゃない状態で、話しかけたとき、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？▼
-たたかいのとき　くるしくなったら
-たすけて　あげるね！</language>
+たたかってて　ピンチになったら
+たすけにとんでくからね！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？▼
-たたかいのとき　くるしくなったら
-たすけて　あげるね！</language>
+たたかってて　ピンチになったら
+たすけにとんでくからね！</language>
 	</row>
 
-	<row id="mis_m04_04_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_04_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 １=カワイイポケモンのメッセージ（相手が）
 相手が戦闘じゃない状態で、話しかけたとき、ミッション側にでるメッセージ
@@ -2827,7 +2970,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_04_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_04_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ２＝怖いポケモンのメッセージ（相手が）
 相手が戦闘じゃない状態で、話しかけたとき、ミッション側にでるメッセージ
@@ -2836,7 +2979,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_04_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_04_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ３=無口なポケモンのメッセージ（相手が）
 相手が戦闘じゃない状態で、話しかけたとき、ミッション側にでるメッセージ
@@ -2845,27 +2988,31 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_04_m4" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m04_04_m4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 4＝トレーナー男子（相手が）
-相手が戦闘じゃない状態で、話しかけたとき、ミッション側にでるメッセージ</comment>
+相手が戦闘じゃない状態で、話しかけたとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
 	</row>
 
-	<row id="mis_m04_04_m5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m04_04_m5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 5=トレーナー女子（相手が）
-相手が戦闘じゃない状態で、話しかけたとき、ミッション側にでるメッセージ</comment>
+相手が戦闘じゃない状態で、話しかけたとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 	</row>
 
-	<row id="mis_m04_05_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_05_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 １=相手がカワイイポケモンのメッセージ（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ
@@ -2874,7 +3021,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_05_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_05_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ２＝怖いポケモンのメッセージ（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ
@@ -2883,7 +3030,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_05_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_05_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ３=無口なポケモンのメッセージ（自分が）
 ミッション対象者以外に話した時、相手側にでるメッセージ
@@ -2892,27 +3039,31 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_05_t4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m04_05_t4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ４＝トレーナー男子（自分が）
-ミッション対象者以外に話した時、相手側にでるメッセージ</comment>
+ミッション対象者以外に話した時、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
 	</row>
 
-	<row id="mis_m04_05_t5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m04_05_t5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 5＝トレーナー女子（自分が）
-ミッション対象者以外に話した時、相手側にでるメッセージ</comment>
+ミッション対象者以外に話した時、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 	</row>
 
-	<row id="mis_m04_05_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_05_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 １=カワイイポケモンのメッセージ（相手が）
 ミッション対象者以外に話した時、ミッション側にでるメッセージ
@@ -2921,7 +3072,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_05_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_05_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ２＝怖いポケモンのメッセージ（相手が）
 ミッション対象者以外に話した時、ミッション側にでるメッセージ
@@ -2930,7 +3081,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_05_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m04_05_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 ３=無口なポケモンのメッセージ（相手が）
 ミッション対象者以外に話した時、ミッション側にでるメッセージ
@@ -2939,27 +3090,31 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m04_05_m4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m04_05_m4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 4＝トレーナー男子（相手が）
-ミッション対象者以外に話した時、ミッション側にでるメッセージ</comment>
+ミッション対象者以外に話した時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
 	</row>
 
-	<row id="mis_m04_05_m5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m04_05_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」
 5=トレーナー女子（相手が）
-ミッション対象者以外に話した時、ミッション側にでるメッセージ</comment>
+ミッション対象者以外に話した時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 	</row>
 
-	<row id="mis_m05_01_t1" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_01_t1" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 １=相手がカワイイポケモンのメッセージ（自分が）
 だれかに話しかけた時、相手側にでるメッセージ</comment>
@@ -2971,21 +3126,9 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 あいてに　つかまってしまった！</language>
 	</row>
 
-	<row id="mis_m05_01_t2" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_01_t2" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 ２＝怖いポケモンのメッセージ（自分が）
-だれかに話しかけた時、相手側にでるメッセージ</comment>
-		<language name="JPN" width="256">フー！
-フーーン！▽
-あいてに　つかまってしまった！</language>
-		<language name="JPN_KANJI" width="256">フー！
-フーーン！▽
-あいてに　つかまってしまった！</language>
-	</row>
-
-	<row id="mis_m05_01_t3" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
-		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
-３=無口なポケモンのメッセージ（自分が）
 だれかに話しかけた時、相手側にでるメッセージ</comment>
 		<language name="JPN" width="256">ギャオ！
 ギャオギャオ！▽
@@ -2995,27 +3138,43 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 あいてに　つかまってしまった！</language>
 	</row>
 
-	<row id="mis_m05_01_t4" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_01_t3" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
+３=無口なポケモンのメッセージ（自分が）
+だれかに話しかけた時、相手側にでるメッセージ</comment>
+		<language name="JPN" width="256">……！
+……　……！▽
+あいてに　つかまってしまった！</language>
+		<language name="JPN_KANJI" width="256">……！
+……　……！▽
+あいてに　つかまってしまった！</language>
+	</row>
+
+	<row id="mis_m05_01_t4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 ４＝トレーナー男子（自分が）
-だれかに話しかけた時、相手側にでるメッセージ</comment>
+だれかに話しかけた時、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『うわあ！
 つかまっちゃった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『うわあ！
 つかまっちゃった！</language>
 	</row>
 
-	<row id="mis_m05_01_t5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_01_t5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 5＝トレーナー女子（自分が）
-だれかに話しかけた時、相手側にでるメッセージ</comment>
+だれかに話しかけた時、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『うわあ！
 つかまっちゃった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『うわあ！
 つかまっちゃった！</language>
 	</row>
 
-	<row id="mis_m05_01_m1" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_01_m1" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 １=カワイイポケモンのメッセージ（相手が）
 だれかに話しかけた時、ミッション側にでるメッセージ</comment>
@@ -3027,21 +3186,9 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 あいてを　つかまえた！</language>
 	</row>
 
-	<row id="mis_m05_01_m2" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_01_m2" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 ２＝怖いポケモンのメッセージ（相手が）
-だれかに話しかけた時、ミッション側にでるメッセージ</comment>
-		<language name="JPN" width="256">フー！
-フーーン！▽
-あいてを　つかまえた！</language>
-		<language name="JPN_KANJI" width="256">フー！
-フーーン！▽
-あいてを　つかまえた！</language>
-	</row>
-
-	<row id="mis_m05_01_m3" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
-		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
-３=無口なポケモンのメッセージ（相手が）
 だれかに話しかけた時、ミッション側にでるメッセージ</comment>
 		<language name="JPN" width="256">ギャオ！
 ギャオギャオ！▽
@@ -3051,27 +3198,43 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 あいてを　つかまえた！</language>
 	</row>
 
-	<row id="mis_m05_01_m4" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_01_m3" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
+３=無口なポケモンのメッセージ（相手が）
+だれかに話しかけた時、ミッション側にでるメッセージ</comment>
+		<language name="JPN" width="256">……！
+……　……！▽
+あいてを　つかまえた！</language>
+		<language name="JPN_KANJI" width="256">……！
+……　……！▽
+あいてを　つかまえた！</language>
+	</row>
+
+	<row id="mis_m05_01_m4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 4＝トレーナー男子（相手が）
-だれかに話しかけた時、ミッション側にでるメッセージ</comment>
+だれかに話しかけた時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『あはは！
 つかまえちゃったぜ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『あはは！
 つかまえちゃったぜ！</language>
 	</row>
 
-	<row id="mis_m05_01_m5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_01_m5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 5=トレーナー女子（相手が）
-だれかに話しかけた時、ミッション側にでるメッセージ</comment>
+だれかに話しかけた時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
 つかまえちゃった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
 つかまえちゃった！</language>
 	</row>
 
-	<row id="mis_m05_02_t1" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_02_t1" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 １=相手がカワイイポケモンのメッセージ（自分が）
 だれかに話しかけられた時、相手側にでるメッセージ</comment>
@@ -3083,21 +3246,9 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 あいてを　つかまえた！</language>
 	</row>
 
-	<row id="mis_m05_02_t2" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_02_t2" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 ２＝怖いポケモンのメッセージ（自分が）
-だれかに話しかけられた時、相手側にでるメッセージ</comment>
-		<language name="JPN" width="256">フー！
-フーーン！▽
-あいてを　つかまえた！</language>
-		<language name="JPN_KANJI" width="256">フー！
-フーーン！▽
-あいてを　つかまえた！</language>
-	</row>
-
-	<row id="mis_m05_02_t3" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
-		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
-３=無口なポケモンのメッセージ（自分が）
 だれかに話しかけられた時、相手側にでるメッセージ</comment>
 		<language name="JPN" width="256">ギャオ！
 ギャオギャオ！▽
@@ -3107,27 +3258,43 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 あいてを　つかまえた！</language>
 	</row>
 
-	<row id="mis_m05_02_t4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_02_t3" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
+３=無口なポケモンのメッセージ（自分が）
+だれかに話しかけられた時、相手側にでるメッセージ</comment>
+		<language name="JPN" width="256">……！
+……　……！▽
+あいてを　つかまえた！</language>
+		<language name="JPN_KANJI" width="256">……！
+……　……！▽
+あいてを　つかまえた！</language>
+	</row>
+
+	<row id="mis_m05_02_t4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 ４＝トレーナー男子（自分が）
-だれかに話しかけられた時、相手側にでるメッセージ</comment>
+だれかに話しかけられた時、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『あはは！
 つかまえちゃったぜ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『あはは！
 つかまえちゃったぜ！</language>
 	</row>
 
-	<row id="mis_m05_02_t5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_02_t5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 5＝トレーナー女子（自分が）
-だれかに話しかけられた時、相手側にでるメッセージ</comment>
+だれかに話しかけられた時、相手側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
 つかまえちゃった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
 つかまえちゃった！</language>
 	</row>
 
-	<row id="mis_m05_02_m1" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_02_m1" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 １=カワイイポケモンのメッセージ（相手が）
 だれかに話しかけられた時、ミッション側にでるメッセージ</comment>
@@ -3139,21 +3306,9 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 あいてに　つかまってしまった！</language>
 	</row>
 
-	<row id="mis_m05_02_m2" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_02_m2" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 ２＝怖いポケモンのメッセージ（相手が）
-だれかに話しかけられた時、ミッション側にでるメッセージ</comment>
-		<language name="JPN" width="256">フー！
-フーーン！▽
-あいてに　つかまってしまった！</language>
-		<language name="JPN_KANJI" width="256">フー！
-フーーン！▽
-あいてに　つかまってしまった！</language>
-	</row>
-
-	<row id="mis_m05_02_m3" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
-		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
-３=無口なポケモンのメッセージ（相手が）
 だれかに話しかけられた時、ミッション側にでるメッセージ</comment>
 		<language name="JPN" width="256">ギャオ！
 ギャオギャオ！▽
@@ -3163,27 +3318,43 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 あいてに　つかまってしまった！</language>
 	</row>
 
-	<row id="mis_m05_02_m4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_02_m3" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
+３=無口なポケモンのメッセージ（相手が）
+だれかに話しかけられた時、ミッション側にでるメッセージ</comment>
+		<language name="JPN" width="256">……！
+……　……！▽
+あいてに　つかまってしまった！</language>
+		<language name="JPN_KANJI" width="256">……！
+……　……！▽
+あいてに　つかまってしまった！</language>
+	</row>
+
+	<row id="mis_m05_02_m4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 4＝トレーナー男子（相手が）
-だれかに話しかけられた時、ミッション側にでるメッセージ</comment>
+だれかに話しかけられた時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『うわあ！
 つかまっちゃった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『うわあ！
 つかまっちゃった！</language>
 	</row>
 
-	<row id="mis_m05_02_m5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_02_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 5=トレーナー女子（相手が）
-だれかに話しかけられた時、ミッション側にでるメッセージ</comment>
+だれかに話しかけられた時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『うわあ！
 つかまっちゃった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『うわあ！
 つかまっちゃった！</language>
 	</row>
 
-	<row id="mis_m05_03_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m05_03_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 １=相手がカワイイポケモンのメッセージ（自分が）
 道具を埋めたとき、相手側に出るメッセージ
@@ -3192,7 +3363,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m05_03_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m05_03_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 ２＝怖いポケモンのメッセージ（自分が）
 道具を埋めたとき、相手側に出るメッセージ
@@ -3201,7 +3372,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m05_03_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m05_03_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 ３=無口なポケモンのメッセージ（自分が）
 道具を埋めたとき、相手側に出るメッセージ
@@ -3210,7 +3381,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m05_03_t4" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m05_03_t4" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 ４＝トレーナー男子（自分が）
 道具を埋めたとき、相手側に出るメッセージ
@@ -3219,7 +3390,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m05_03_t5" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m05_03_t5" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 5＝トレーナー女子（自分が）
 道具を埋めたとき、相手側に出るメッセージ
@@ -3228,57 +3399,72 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m05_03_m1" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_03_m1" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 １=カワイイポケモンのメッセージ（自分が）
-道具を埋めたとき、ミッション側にでるメッセージ</comment>
+道具を埋めたとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝隠した道具</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　もっていた
-どうぐを　そのばにかくした！</language>
+[1:09:どうぐ名:1]を　そのばにかくした！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　もっていた
-どうぐを　そのばにかくした！</language>
+[1:09:どうぐ名:1]を　そのばにかくした！</language>
 	</row>
 
-	<row id="mis_m05_03_m2" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_03_m2" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 ２＝怖いポケモンのメッセージ（自分が）
-道具を埋めたとき、ミッション側にでるメッセージ</comment>
+道具を埋めたとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝隠した道具</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　もっていた
-どうぐを　そのばにかくした！</language>
+[1:09:どうぐ名:1]を　そのばにかくした！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　もっていた
-どうぐを　そのばにかくした！</language>
+[1:09:どうぐ名:1]を　そのばにかくした！</language>
 	</row>
 
-	<row id="mis_m05_03_m3" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_03_m3" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 ３=無口なポケモンのメッセージ（自分が）
-道具を埋めたとき、ミッション側にでるメッセージ</comment>
+道具を埋めたとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝隠した道具</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　もっていた
-どうぐを　そのばにかくした！</language>
+[1:09:どうぐ名:1]を　そのばにかくした！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　もっていた
-どうぐを　そのばにかくした！</language>
+[1:09:どうぐ名:1]を　そのばにかくした！</language>
 	</row>
 
-	<row id="mis_m05_03_m4" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_03_m4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 4＝トレーナー男子（自分が）
-道具を埋めたとき、ミッション側にでるメッセージ</comment>
+道具を埋めたとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝隠した道具</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　もっていた
-どうぐを　そのばにかくした！</language>
+[1:09:どうぐ名:1]を　そのばにかくした！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　もっていた
-どうぐを　そのばにかくした！</language>
+[1:09:どうぐ名:1]を　そのばにかくした！</language>
 	</row>
 
-	<row id="mis_m05_03_m5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m05_03_m5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 5=トレーナー女子（自分が）
-道具を埋めたとき、ミッション側にでるメッセージ</comment>
+道具を埋めたとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝隠した道具</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　もっていた
-どうぐを　そのばにかくした！</language>
+[1:09:どうぐ名:1]を　そのばにかくした！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　もっていた
-どうぐを　そのばにかくした！</language>
+[1:09:どうぐ名:1]を　そのばにかくした！</language>
 	</row>
 
-	<row id="mis_m06_01_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_01_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション７：「（道具名）を　うれ！」
 １=相手がカワイイポケモンのメッセージ（自分が）
 ターゲットに話したとき、ターゲット側にでるメッセージ
@@ -3287,7 +3473,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_01_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_01_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション７：「（道具名）を　うれ！」
 ２＝怖いポケモンのメッセージ（自分が）
 ターゲットに話したとき、ターゲット側にでるメッセージ
@@ -3296,7 +3482,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_01_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_01_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション７：「（道具名）を　うれ！」
 ３=無口なポケモンのメッセージ（自分が）
 ターゲットに話したとき、ターゲット側にでるメッセージ
@@ -3305,12 +3491,16 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_01_t4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_01_t4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション７：「（道具名）を　うれ！」
 ４＝トレーナー男子（自分が）
 ターゲットに話したとき、ターゲット側にでるメッセージ
 
-・はい、いいえのせんたく表示</comment>
+・はい、いいえのせんたく表示
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
 たびのとちゅうの　ブレイクタイム！▼
 ただいま　ですね
@@ -3337,12 +3527,16 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 [2:04:５桁:2]円で　いかがでしょうか？</language>
 	</row>
 
-	<row id="mis_m06_01_t5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_01_t5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション７：「（道具名）を　うれ！」
 5＝トレーナー女子（自分が）
 ターゲットに話したとき、ターゲット側にでるメッセージ
 
-・はい、いいえのせんたく表示</comment>
+・はい、いいえのせんたく表示
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
 たびのとちゅうの　ブレイクタイム！▼
 いま　フレンドリィショップ　キャンペーンを
@@ -3369,7 +3563,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 [2:04:５桁:2]円で　いかがでしょうか？</language>
 	</row>
 
-	<row id="mis_m06_01_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_01_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 １=カワイイポケモンのメッセージ（自分が）
 ターゲットに話したとき、ミッション側にでるメッセージ
@@ -3378,7 +3572,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_01_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_01_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ２＝怖いポケモンのメッセージ（自分が）
 ターゲットに話したとき、ミッション側にでるメッセージ
@@ -3387,7 +3581,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_01_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_01_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ３=無口なポケモンのメッセージ（自分が）
 ターゲットに話したとき、、ミッション側にでるメッセージ
@@ -3396,10 +3590,14 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_01_m4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_01_m4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 4＝トレーナー男子（自分が）
-ターゲットに話したとき、ミッション側にでるメッセージ</comment>
+ターゲットに話したとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！▼
 え！？　なに？
 [1:09:どうぐ名:1]を　[2:04:５桁:2]円で▽
@@ -3414,10 +3612,14 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 うーん……</language>
 	</row>
 
-	<row id="mis_m06_01_m5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_01_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 5=トレーナー女子（自分が）
-ターゲットに話したとき、ミッション側にでるメッセージ</comment>
+ターゲットに話したとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！▼
 え！？　なに？
 [1:09:どうぐ名:1]を　[2:04:５桁:2]円で▽
@@ -3432,7 +3634,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ</
 うーん……</language>
 	</row>
 
-	<row id="mis_m06_02_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_02_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 １=相手がカワイイポケモンのメッセージ（自分が）
 mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
@@ -3441,7 +3643,7 @@ mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_02_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_02_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ２＝怖いポケモンのメッセージ（自分が）
 mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
@@ -3450,7 +3652,7 @@ mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_02_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_02_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ３=無口なポケモンのメッセージ（自分が）
 mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
@@ -3459,7 +3661,7 @@ mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_02_t4" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_02_t4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ４＝トレーナー男子（自分が）
 mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
@@ -3480,7 +3682,7 @@ mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
 おあいしましょう！</language>
 	</row>
 
-	<row id="mis_m06_02_t5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_02_t5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 5＝トレーナー女子（自分が）
 mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
@@ -3502,7 +3704,7 @@ mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
 おあいしましょう！</language>
 	</row>
 
-	<row id="mis_m06_02_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_02_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 １=カワイイポケモンのメッセージ（自分が）
 mis_m06_01から、買ったとき、ミッション側にでるメッセージ
@@ -3511,7 +3713,7 @@ mis_m06_01から、買ったとき、ミッション側にでるメッセージ
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_02_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_02_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ２＝怖いポケモンのメッセージ（自分が）
 mis_m06_01から、買ったとき、ミッション側にでるメッセージ
@@ -3520,7 +3722,7 @@ mis_m06_01から、買ったとき、ミッション側にでるメッセージ
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_02_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_02_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ３=無口なポケモンのメッセージ（自分が）
 mis_m06_01から、買ったとき、ミッション側にでるメッセージ
@@ -3529,10 +3731,14 @@ mis_m06_01から、買ったとき、ミッション側にでるメッセージ
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_02_m4" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_02_m4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 4＝トレーナー男子（自分が）
-mis_m06_01から、買ったとき、ミッション側にでるメッセージ</comment>
+mis_m06_01から、買ったとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『きめた！
 [1:09:どうぐ名:1]を　１つください！▼
 [1:00:トレーナー名:0]は　[1:09:どうぐ名:1]を
@@ -3549,10 +3755,14 @@ mis_m06_01から、買ったとき、ミッション側にでるメッセージ<
 ありがとうな！</language>
 	</row>
 
-	<row id="mis_m06_02_m5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_02_m5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 5=トレーナー女子（自分が）
-mis_m06_01から、買ったとき、ミッション側にでるメッセージ</comment>
+mis_m06_01から、買ったとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『よーし！
 [1:09:どうぐ名:1]を　１つください！▼
 [1:00:トレーナー名:0]は　[1:09:どうぐ名:1]を
@@ -3569,7 +3779,7 @@ mis_m06_01から、買ったとき、ミッション側にでるメッセージ<
 ありがとうね！</language>
 	</row>
 
-	<row id="mis_m06_03_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_03_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 １=相手がカワイイポケモンのメッセージ（自分が）
 mis_m06_01から、買わなかったとき、ターゲット側にでるメッセージ
@@ -3578,7 +3788,7 @@ mis_m06_01から、買わなかったとき、ターゲット側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_03_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_03_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ２＝怖いポケモンのメッセージ（自分が）
 mis_m06_01から、買わなかったとき、ターゲット側にでるメッセージ
@@ -3587,7 +3797,7 @@ mis_m06_01から、買わなかったとき、ターゲット側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_03_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_03_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ３=無口なポケモンのメッセージ（自分が）
 mis_m06_01から、買わなかったとき、ターゲット側にでるメッセージ
@@ -3596,10 +3806,14 @@ mis_m06_01から、買わなかったとき、ターゲット側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_03_t4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_03_t4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ４＝トレーナー男子（自分が）
-mis_m06_01から、買わなかったとき、ターゲット側にでるメッセージ</comment>
+mis_m06_01から、買わなかったとき、ターゲット側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『そうですか！
 わかりました！▼
 それではまた　たびのどこかで
@@ -3610,10 +3824,14 @@ mis_m06_01から、買わなかったとき、ターゲット側にでるメッ�
 おあいしましょう！</language>
 	</row>
 
-	<row id="mis_m06_03_t5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_03_t5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 5＝トレーナー女子（自分が）
-mis_m06_01から、買わなかったとき、ターゲット側にでるメッセージ</comment>
+mis_m06_01から、買わなかったとき、ターゲット側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『そうですか！
 わかりました！▼
 それではまた　たびのどこかで
@@ -3624,7 +3842,7 @@ mis_m06_01から、買わなかったとき、ターゲット側にでるメッ�
 おあいしましょう！</language>
 	</row>
 
-	<row id="mis_m06_03_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_03_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 １=カワイイポケモンのメッセージ（自分が）
 mis_m06_01から、買わなかったとき、ミッション側にでるメッセージ
@@ -3633,7 +3851,7 @@ mis_m06_01から、買わなかったとき、ミッション側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_03_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_03_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ２＝怖いポケモンのメッセージ（自分が）
 mis_m06_01から、買わなかったとき、ミッション側にでるメッセージ
@@ -3642,7 +3860,7 @@ mis_m06_01から、買わなかったとき、ミッション側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_03_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_03_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ３=無口なポケモンのメッセージ（自分が）
 mis_m06_01から、買わなかったとき、ミッション側にでるメッセージ
@@ -3651,10 +3869,14 @@ mis_m06_01から、買わなかったとき、ミッション側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_03_m4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_03_m4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 4＝トレーナー男子（自分が）
-mis_m06_01から、買わなかったとき、ミッション側にでるメッセージ</comment>
+mis_m06_01から、買わなかったとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『うーん……
 やっぱり　かうのは　やめようかな？▼
 ごめんね　またこんど
@@ -3665,10 +3887,14 @@ mis_m06_01から、買わなかったとき、ミッション側にでるメッ�
 いいものがあったら　おしえてくれよ！</language>
 	</row>
 
-	<row id="mis_m06_03_m5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_03_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 5=トレーナー女子（自分が）
-mis_m06_01から、買わなかったとき、ミッション側にでるメッセージ</comment>
+mis_m06_01から、買わなかったとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えーと……
 やっぱり　かうのは　やめとこうかな？▼
 ごめんなさい　またこんど
@@ -3679,7 +3905,7 @@ mis_m06_01から、買わなかったとき、ミッション側にでるメッ�
 いいものがあったら　おしえてね！</language>
 	</row>
 
-	<row id="mis_m06_04_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_04_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 １=相手がカワイイポケモンのメッセージ（自分が）
 mis_m06_01から、金がたりない時、ターゲット側にでるメッセージ
@@ -3688,7 +3914,7 @@ mis_m06_01から、金がたりない時、ターゲット側にでるメッセ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_04_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_04_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ２＝怖いポケモンのメッセージ（自分が）
 mis_m06_01から、金がたりない時、ターゲット側にでるメッセージ
@@ -3697,7 +3923,7 @@ mis_m06_01から、金がたりない時、ターゲット側にでるメッセ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_04_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_04_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ３=無口なポケモンのメッセージ（自分が）
 mis_m06_01から、金がたりない時、ターゲット側にでるメッセージ
@@ -3706,10 +3932,14 @@ mis_m06_01から、金がたりない時、ターゲット側にでるメッセ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_04_t4" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_04_t4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ４＝トレーナー男子（自分が）
-mis_m06_01から、金がたりない時、ターゲット側にでるメッセージ</comment>
+mis_m06_01から、金がたりない時、ターゲット側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『……あれ？
 おかねが　たりないみたいですね▽
 また　こんど　ということで！▼
@@ -3722,10 +3952,14 @@ mis_m06_01から、金がたりない時、ターゲット側にでるメッセ�
 おあいしましょう！</language>
 	</row>
 
-	<row id="mis_m06_04_t5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_04_t5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 5＝トレーナー女子（自分が）
-mis_m06_01から、金がたりない時、ターゲット側にでるメッセージ</comment>
+mis_m06_01から、金がたりない時、ターゲット側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『……あれれ？
 おかねが　たりないみたいですね▽
 また　こんど　ということで！▼
@@ -3738,7 +3972,7 @@ mis_m06_01から、金がたりない時、ターゲット側にでるメッセ�
 おあいしましょう！</language>
 	</row>
 
-	<row id="mis_m06_04_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_04_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 １=カワイイポケモンのメッセージ（自分が）
 mis_m06_01から、金がたりない時、ミッション側にでるメッセージ
@@ -3747,7 +3981,7 @@ mis_m06_01から、金がたりない時、ミッション側にでるメッセ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_04_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_04_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ２＝怖いポケモンのメッセージ（自分が）
 mis_m06_01から、金がたりない時、ミッション側にでるメッセージ
@@ -3756,7 +3990,7 @@ mis_m06_01から、金がたりない時、ミッション側にでるメッセ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_04_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_04_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ３=無口なポケモンのメッセージ（自分が）
 mis_m06_01から、金がたりない時、ミッション側にでるメッセージ
@@ -3765,7 +3999,7 @@ mis_m06_01から、金がたりない時、ミッション側にでるメッセ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_04_m4" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_04_m4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 4＝トレーナー男子（自分が）
 mis_m06_01から、金がたりない時、ミッション側にでるメッセージ</comment>
@@ -3781,7 +4015,7 @@ mis_m06_01から、金がたりない時、ミッション側にでるメッセ�
 また　きてくれよ！</language>
 	</row>
 
-	<row id="mis_m06_04_m5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_04_m5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 5=トレーナー女子（自分が）
 mis_m06_01から、金がたりない時、ミッション側にでるメッセージ</comment>
@@ -3797,7 +4031,7 @@ mis_m06_01から、金がたりない時、ミッション側にでるメッセ�
 ぜったいに　きてください！</language>
 	</row>
 
-	<row id="mis_m06_05_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_05_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 １=相手がカワイイポケモンのメッセージ（自分が）
 mis_m06_01から、道具がいっぱい時、、ターゲット側にでるメッセージ
@@ -3806,7 +4040,7 @@ mis_m06_01から、道具がいっぱい時、、ターゲット側にでるメ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_05_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_05_t2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ２＝怖いポケモンのメッセージ（自分が）
 mis_m06_01から、道具がいっぱい時、ターゲット側にでるメッセージ
@@ -3815,7 +4049,7 @@ mis_m06_01から、道具がいっぱい時、ターゲット側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_05_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_05_t3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ３=無口なポケモンのメッセージ（自分が）
 mis_m06_01から、道具がいっぱい時、ターゲット側にでるメッセージ
@@ -3824,10 +4058,14 @@ mis_m06_01から、道具がいっぱい時、ターゲット側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_05_t4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_05_t4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ４＝トレーナー男子（自分が）
-mis_m06_01から、道具がいっぱい時、ターゲット側にでるメッセージ</comment>
+mis_m06_01から、道具がいっぱい時、ターゲット側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『……あれ？
 バッグが　いっぱい　みたいですね▽
 また　こんど　ということで！▼
@@ -3840,10 +4078,14 @@ mis_m06_01から、道具がいっぱい時、ターゲット側にでるメッ�
 おあいしましょう！</language>
 	</row>
 
-	<row id="mis_m06_05_t5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_05_t5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 5＝トレーナー女子（自分が）
-mis_m06_01から、道具がいっぱい時、ターゲット側にでるメッセージ</comment>
+mis_m06_01から、道具がいっぱい時、ターゲット側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『……あれれ？
 おかねが　たりないみたいですね▽
 また　こんど　ということで！▼
@@ -3856,7 +4098,7 @@ mis_m06_01から、道具がいっぱい時、ターゲット側にでるメッ�
 おあいしましょう！</language>
 	</row>
 
-	<row id="mis_m06_05_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_05_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 １=カワイイポケモンのメッセージ（自分が）
 mis_m06_01から、道具がいっぱい時、ミッション側にでるメッセージ
@@ -3865,7 +4107,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_05_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_05_m2" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ２＝怖いポケモンのメッセージ（自分が）
 mis_m06_01から、道具がいっぱい時、ミッション側にでるメッセージ
@@ -3874,7 +4116,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_05_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_05_m3" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ３=無口なポケモンのメッセージ（自分が）
 mis_m06_01から、道具がいっぱい時、ミッション側にでるメッセージ
@@ -3883,10 +4125,14 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_05_m4" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_05_m4" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 4＝トレーナー男子（自分が）
-mis_m06_01から、道具がいっぱい時、ミッション側にでるメッセージ</comment>
+mis_m06_01から、道具がいっぱい時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『あ！　ごめん……
 いま　かおうと　おもったんだけど▽
 もう　バッグが　いっぱいだった……▼
@@ -3899,10 +4145,14 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 うりにきてくれよ！</language>
 	</row>
 
-	<row id="mis_m06_05_m5" back-color="#00ff00,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_05_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 5=トレーナー女子（自分が）
-mis_m06_01から、道具がいっぱい時、ミッション側にでるメッセージ</comment>
+mis_m06_01から、道具がいっぱい時、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『あ！　ごめんなさい……
 いま　かおうと　おもったんだけど▽
 もう　バッグが　いっぱいだったよ……▼
@@ -3915,7 +4165,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 こんどこそ　かいたいです！</language>
 	</row>
 
-	<row id="mis_m06_06_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_06_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 １=相手がカワイイポケモンのメッセージ（自分が）
 挑戦者に話したとき、ターゲット側にでるメッセージ
@@ -3924,7 +4174,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_06_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_06_t2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ２＝怖いポケモンのメッセージ（自分が）
 挑戦者に話したとき、ターゲット側にでるメッセージ
@@ -3933,7 +4183,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_06_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_06_t3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ３=無口なポケモンのメッセージ（自分が）
 挑戦者に話したとき、ターゲット側にでるメッセージ
@@ -3942,7 +4192,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_06_t4" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_06_t4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ４＝トレーナー男子（自分が）
 挑戦者に話したとき、ターゲット側にでるメッセージ</comment>
@@ -3952,7 +4202,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 がんばってるかい？</language>
 	</row>
 
-	<row id="mis_m06_06_t5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_06_t5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 5＝トレーナー女子（自分が）
 挑戦者に話したとき、ターゲット側にでるメッセージ</comment>
@@ -3962,7 +4212,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 がんばってる？</language>
 	</row>
 
-	<row id="mis_m06_06_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_06_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 １=カワイイポケモンのメッセージ（自分が）
 挑戦者に話したとき、ミッション側にでるメッセージ
@@ -3971,7 +4221,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_06_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_06_m2" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ２＝怖いポケモンのメッセージ（自分が）
 挑戦者に話したとき、ミッション側にでるメッセージ
@@ -3980,7 +4230,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_06_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ffff00,,,,,#c0c0c0,,,,,,">
+	<row id="mis_m06_06_m3" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 ３=無口なポケモンのメッセージ（自分が）
 挑戦者に話したとき、ミッション側にでるメッセージ
@@ -3989,20 +4239,28 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
-	<row id="mis_m06_06_m4" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_06_m4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 4＝トレーナー男子（自分が）
-挑戦者に話したとき、ミッション側にでるメッセージ</comment>
+挑戦者に話したとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
 がんばってるかい？</language>
 	</row>
 
-	<row id="mis_m06_06_m5" back-color="#80ff80,,,#ffff80,,,#ffff00,,,,,,,,,,,">
+	<row id="mis_m06_06_m5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」
 5=トレーナー女子（自分が）
-挑戦者に話したとき、ミッション側にでるメッセージ</comment>
+挑戦者に話したとき、ミッション側にでるメッセージ
+
+[1:00:トレーナー名:0]＝相手の名前
+[1:09:どうぐ名:1]＝売る道具
+[2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
 がんばってる？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
