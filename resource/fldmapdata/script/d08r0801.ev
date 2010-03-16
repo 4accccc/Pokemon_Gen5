@@ -53,11 +53,12 @@ EVENT_START    ev_pos_d08r0801_demo_01
 	DEFINE_LOCAL	LCWK_VERSION
 	_GET_ROM_VERSION(LCWK_VERSION)
 
-	//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é	
-//	_SHAKE_CAMERA(0,3,3,6)
+	_SE_PLAY(SEQ_SE_W157_03)
+	//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
 	_SHAKE_CAMERA(0,1,3,4)
-
-
+	_TIME_WAIT(16)
+	_SE_STOP()
+	
 	_TIME_WAIT(8)
 	
 	//‚Ñ‚Á‚­‚è‚·‚é

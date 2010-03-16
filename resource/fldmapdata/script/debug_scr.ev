@@ -539,8 +539,14 @@ EVENT_START   ev_debug_murakami
 
 		//デンチュラの巣を破壊する		
 		ELSIF $SCWK_TEMP1 == 2 THEN
+			
+			//フラグ操作：D06電気洞窟前のPOSイベント起動（電気洞窟ストッパー解除）
+			$WK_SCENE_D06 = 1
+			_FLAG_RESET(FV_D06_STOPPER_01)
+			_OBJ_ADD( D06_STOPPER_01 )
 
 			_MAP_CHANGE( ZONE_ID_D06, 107, 343, DIR_UP )
+/*
 			_TIME_WAIT(90)
 			
 			//ヤーコンのポケモンが出現
@@ -559,7 +565,7 @@ EVENT_START   ev_debug_murakami
 			_OBJ_ANIME_WAIT()
 			
 			_OBJ_DEL( D06_STOPPER_01 )
-		
+*/		
 		//電気石の洞穴_Nとの対戦	
 		ELSIF $SCWK_TEMP1 == 3  THEN
 			//POSを踏むホワイトを表示する。
@@ -674,7 +680,34 @@ EVENT_START   ev_debug_murakami
 //			_FLAG_RESET  ( FV_R02_MOTHER  )  
 	
 			//R02のランニングシューズイベントを有効にする
-			$WK_SCENE_R02 = 0
+//			$WK_SCENE_R02 = 1
+//			$WK_SYS_FIRST_POKETYPE = 1
+			
+//			$WK_SCENE_D08_LEGEND  = 2
+		
+//			$WK_SCENE_D06R0101 = 3
+//			_OBJ_ADD(D06R0101_NINJA_01)
+//			_OBJ_ADD(D06R0101_NINJA_02)
+//			_OBJ_ADD(D06R0101_NINJA_03)
+/*
+			$WK_SCENE_D06R0101 = 0
+
+			//Nを出現
+			_OBJ_POS_CHANGE(D06R0101_BOSS_01,69,1,13,DIR_LEFT)	
+			
+			//博士とサポートを出現
+			_FLAG_RESET(FV_D06R0101_FRIENDS)
+			_OBJ_ADD( D06R0101_HEROINE_01 )
+			_OBJ_ADD( D06R0101_HAKASE2_01 )		
+			
+			//博士とホワイト、Nを消す
+//			_FLAG_RESET(FV_D06R0101_FRIENDS)
+			_FLAG_RESET(FV_D06R0201_BOSS_01)
+*/		
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_D08R0301, 25,5, DIR_UP )
+			$WK_SCENE_D08_LEGEND = 2
+		
 		ENDIF
 		
 EVENT_END
