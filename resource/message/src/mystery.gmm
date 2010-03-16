@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-14T15:40:34"/>
+	<create user="shimoyamada" host="W00184" date="2010-03-16T19:01:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -462,13 +462,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1349" top="198" right="1987" bottom="997" maximized="no" rayout="Vertical2">
+	<dialog left="137" top="327" right="842" bottom="955" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="637" right="1024" bottom="789" visible="yes"/>
 		<tag-palette left="532" top="179" right="1024" bottom="591" visible="yes"/>
-		<band id="0" index="0" style="0000" width="463"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="630"/>
-		<band id="3" index="3" style="0000" width="630"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1699,70 +1699,3745 @@
 	</row>
 
 	<row id="syachi_mystery_card_txt_00_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
-		<comment>ＩＤ：0
-受け取り前</comment>
-		<language name="JPN" width="216">おくりものは　ぼうけんを　さいかいして
-ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
-		<language name="JPN_KANJI">おくりものは　ぼうけんを　さいかいして
-ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
-	</row>
-
-	<row id="syachi_mystery_card_txt_00_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
-		<comment>ＩＤ：0
-受け取り後</comment>
-		<language name="JPN" width="216">この　おくりものは　はいたついんが
-おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<comment>映画汎用</comment>
+		<language name="JPN" width="216">ポケモンえいがを　みにきてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンえいがを　みにきてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_01_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
-		<comment>ＩＤ：1
-受け取り前</comment>
-		<language name="JPN" width="216">ポケモンえいがを　みにきてくれて
-ありがとう！
-おくりものは　ぼうけんを　さいかいして
-ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
-		<language name="JPN_KANJI">ポケモンえいがを　みにきてくれて
-ありがとう！
-おくりものは　ぼうけんを　さいかいして
-ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
-	</row>
-
-	<row id="syachi_mystery_card_txt_01_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
-		<comment>ＩＤ：1
-受け取り後</comment>
-		<language name="JPN" width="216">ポケモンえいがを　みにきてくれて
-ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンえいがを　みにきてくれて
-ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<comment>映画２０１０</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１０を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１０を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_02_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
-		<comment>ＩＤ：2
-受け取り前</comment>
+		<comment>映画２０１１</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１１を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１１を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_03_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１２</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１２を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１２を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_04_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１３</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１３を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１３を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_05_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１４</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１４を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１４を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_06_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１５</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１５を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１５を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_07_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１６</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１６を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１６を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_08_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１７</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１７を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１７を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_09_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１８</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１８を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１８を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_10_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１９</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１９を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１９を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_11_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０２０</comment>
+		<language name="JPN" width="216">ポケモンえいが２０２０を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンえいが２０２０を　
+みにきてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_12_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンセンター
+</comment>
+		<language name="JPN" width="216">ポケモンセンターに　きてくれて
+ありがとう！
+おくりものは　ゲームのなかの
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ポケモンセンターに　きてくれて
+ありがとう！
+おくりものは　ゲームのなかの
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_13_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンセンター
+トウキョー
+</comment>
+		<language name="JPN" width="216">ポケモンセンタートウキョーに　
+きてくれて　ありがとう！
+おくりものは　ゲームのなかの
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ポケモンセンタートウキョーに　
+きてくれて　ありがとう！
+おくりものは　ゲームのなかの
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_14_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンセンター
+オーサカ
+</comment>
+		<language name="JPN" width="216">ポケモンセンターオーサカに　
+きてくれて　ありがとう！
+おくりものは　ゲームのなかの
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ポケモンセンターオーサカに　
+きてくれて　ありがとう！
+おくりものは　ゲームのなかの
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_15_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンセンター
+フクオカ
+</comment>
+		<language name="JPN" width="216">ポケモンセンターフクオカに　
+きてくれて　ありがとう！
+おくりものは　ゲームのなかの
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ポケモンセンターフクオカに　
+きてくれて　ありがとう！
+おくりものは　ゲームのなかの
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_16_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンセンター
+ナゴヤ
+</comment>
+		<language name="JPN" width="216">ポケモンセンターナゴヤに　
+きてくれて　ありがとう！
+おくりものは　ゲームのなかの
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ポケモンセンターナゴヤに　
+きてくれて　ありがとう！
+おくりものは　ゲームのなかの
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_17_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンセンター
+サッポロ
+</comment>
+		<language name="JPN" width="216">ポケモンセンターサッポロに　
+きてくれて　ありがとう！
+おくりものは　ゲームのなかの
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ポケモンセンターサッポロに　
+きてくれて　ありがとう！
+おくりものは　ゲームのなかの
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_18_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンセンター
+ヨコハマ
+</comment>
+		<language name="JPN" width="216">ポケモンセンターヨコハマに　
+きてくれて　ありがとう！
+おくりものは　ゲームのなかの
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ポケモンセンターヨコハマに　
+きてくれて　ありがとう！
+おくりものは　ゲームのなかの
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_19_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス汎用</comment>
+		<language name="JPN" width="216">ポケモンワールドチャンピオンシップスに
+さんかしてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンワールドチャンピオンシップスに
+さんかしてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_20_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１０</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１０に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１０に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_21_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１１</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１１に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１１に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_22_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１２</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１２に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１２に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_23_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１３</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１３に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１３に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_24_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１４</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１４に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１４に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_25_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１５</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１５に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１５に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_26_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１６</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１６に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１６に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_27_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１７</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１７に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１７に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_28_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１８</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１８に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１８に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_29_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１９</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１９に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１９に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_30_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０２０</comment>
+		<language name="JPN" width="216">ＷＣＳ２０２０に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＷＣＳ２０２０に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_31_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス汎用</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓに　きてくれて　
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓに　きてくれて　
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_32_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１０</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_33_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１１</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１１に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１１に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_34_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１２</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１２に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１２に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_35_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１３</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１３に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１３に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_36_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１４</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１４に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１４に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_37_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１５</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１５に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１５に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_38_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１６</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１６に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１６に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_39_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１７</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１７に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１７に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_40_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１８</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１８に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１８に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_41_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１９</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１９に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１９に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_42_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０２０</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０２０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０２０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_43_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）汎用</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔに
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔに
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_44_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１０</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１０に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１０に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_45_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１１</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１１に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１１に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_46_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１２</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１２に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１２に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_47_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１３</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１３に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１３に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_48_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１４</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１４に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１４に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_49_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１５</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１５に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１５に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_50_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１６</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１６に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１６に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_51_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１７</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１７に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１７に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_52_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１８</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１８に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１８に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_53_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１９</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１９に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１９に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_54_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０２０</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０２０に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０２０に　きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_55_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１０</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１０に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１０に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_56_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１１</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１１に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１１に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_57_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１２</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１２に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１２に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_58_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１３</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１３に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１３に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_59_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１４</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１４に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１４に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_60_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１５</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１５に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１５に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_61_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１６</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１６に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１６に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_62_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１７</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１７に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１７に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_63_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１８</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１８に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１８に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_64_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１９</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１９に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１９に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_65_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０２０</comment>
+		<language name="JPN" width="216">ＶＧＣ２０２０に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ＶＧＣ２０２０に　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_66_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>汎用イベント1
+</comment>
 		<language name="JPN" width="216">イベントに　きてくれて
 ありがとう！
-おくりものは　ぼうけんを　さいかいして
-ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
 		<language name="JPN_KANJI">イベントに　きてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_67_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>汎用イベント2
+</comment>
+		<language name="JPN" width="216">ポケモンの　イベントに　きてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">ポケモンの　イベントに　きてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_68_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>汎用イベント3
+</comment>
+		<language name="JPN" width="216">ポケモンを　あそんでくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ポケモンを　あそんでくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 	</row>
 
+	<row id="syachi_mystery_card_txt_69_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>汎用イベント4
+</comment>
+		<language name="JPN" width="216">おみせに　きてくれて　ありがとう！ 
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おみせに　きてくれて　ありがとう！ 
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_70_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>汎用イベント5
+</comment>
+		<language name="JPN" width="216">バトルたいかいに　さんかしてくれて　
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">バトルたいかいに　さんかしてくれて　
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_71_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>汎用イベント6
+</comment>
+		<language name="JPN" width="216">ゲームイベントに　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">ゲームイベントに　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_72_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>汎用イベント7
+</comment>
+		<language name="JPN" width="216">ゲームイベントからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">ゲームイベントからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_73_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>だいすきクラブ</comment>
+		<language name="JPN" width="216">ポケモンだいすきクラブからの
+プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">ポケモンだいすきクラブからの
+プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_74_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンサンデー1</comment>
+		<language name="JPN" width="216">ポケモンサンデーを　みてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">ポケモンサンデーを　みてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_75_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンサンデー2</comment>
+		<language name="JPN" width="216">ポケモンサンデーからの
+プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">ポケモンサンデーからの
+プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_76_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>チャレンジひろば1</comment>
+		<language name="JPN" width="216">チャレンジひろばに　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">チャレンジひろばに　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_77_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>チャレンジひろば2</comment>
+		<language name="JPN" width="216">チャレンジひろばからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">チャレンジひろばからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_78_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>バトルチャレンジ1</comment>
+		<language name="JPN" width="216">バトルチャレンジに　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">バトルチャレンジに　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_79_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>バトルチャレンジ2</comment>
+		<language name="JPN" width="216">バトルチャレンジからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">バトルチャレンジからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_80_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>トレーナーズコート1</comment>
+		<language name="JPN" width="216">トレーナーズコートに　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">トレーナーズコートに　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_81_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>トレーナーズコート2</comment>
+		<language name="JPN" width="216">トレーナーズコートからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">トレーナーズコートからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_82_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>バトルツアー1</comment>
+		<language name="JPN" width="216">バトルツアーに　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">バトルツアーに　さんかしてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_83_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>バトルツアー2</comment>
+		<language name="JPN" width="216">バトルツアーからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">バトルツアーからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_84_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンコンサート</comment>
+		<language name="JPN" width="216">ポケモンの　コンサートに　きてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">ポケモンの　コンサートに　きてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_85_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンアニメ</comment>
+		<language name="JPN" width="216">ポケモンの　アニメを　みてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">ポケモンの　アニメを　みてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_86_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>Wi-Fi
+Nintendoスポット1</comment>
+		<language name="JPN" width="216">Ｗⅰ－Ｆⅰコネクションを　
+あそんでくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">Ｗⅰ－Ｆⅰコネクションを　
+あそんでくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_87_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>Wi-Fi
+Nintendoスポット2</comment>
+		<language name="JPN" width="216">ダウンロード　してくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ダウンロード　してくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_88_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>その他の汎用
+PBR等。</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_89_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンレンジャー1</comment>
+		<language name="JPN" width="216">ポケモンレンジャーを　あそんでくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ポケモンレンジャーを　あそんでくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_90_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンレンジャー2</comment>
+		<language name="JPN" width="216">レンジャーユニオンから　ポケモンほごの
+いらいが　きたぞ！
+ポケモンは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">レンジャーユニオンから　ポケモンほごの
+いらいが　きたぞ！
+ポケモンは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_91_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンレンジャー3</comment>
+		<language name="JPN" width="216">レンジャーユニオンから　タマゴほごの
+いらいが　きたぞ！
+タマゴは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">レンジャーユニオンから　タマゴほごの
+いらいが　きたぞ！
+タマゴは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_92_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンドリームワールド1</comment>
+		<language name="JPN" width="216">ポケモンドリームワールドを　
+あそんでくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ポケモンドリームワールドを　
+あそんでくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_93_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンドリームワールド2</comment>
+		<language name="JPN" width="216">ポケモンドリームワールドからの　
+プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ポケモンドリームワールドからの　
+プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_94_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンドリームワールド3</comment>
+		<language name="JPN" width="216">ＰＤＷを　あそんでくれて　
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ＰＤＷを　あそんでくれて　
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_95_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンドリームワールド4</comment>
+		<language name="JPN" width="216">ＰＤＷからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">ＰＤＷからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_96_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１０</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_97_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１１</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１１に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１１に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_98_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１２</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１２に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１２に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_99_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１３</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１３に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１３に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_100_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１４</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１４に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１４に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_101_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１５</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１５に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１５に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_102_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１６</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１６に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１６に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_103_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１７</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１７に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１７に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_104_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１８</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１８に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１８に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_105_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１９</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１９に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１９に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_106_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０２０</comment>
+		<language name="JPN" width="216">ポケモンイベント２０２０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンイベント２０２０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_107_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ汎用</comment>
+		<language name="JPN" width="216">ポケモンフェスタに　きてくれて　
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンフェスタに　きてくれて　
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_108_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１０</comment>
+		<language name="JPN" width="216">ポケモンフェスタ２０１０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_109_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１１</comment>
+		<language name="JPN" width="216">ポケモンフェスタ２０１１に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１１に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_110_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１２</comment>
+		<language name="JPN" width="216">ポケモンフェスタ２０１２に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１２に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_111_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１３</comment>
+		<language name="JPN" width="216">ポケモンフェスタ２０１３に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１３に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_112_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１４</comment>
+		<language name="JPN" width="216">ポケモンフェスタ２０１４に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１４に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_113_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１５</comment>
+		<language name="JPN" width="216">ポケモンフェスタ２０１５に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１５に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_114_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１６</comment>
+		<language name="JPN" width="216">ポケモンフェスタ２０１６に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１６に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_115_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１７</comment>
+		<language name="JPN" width="216">ポケモンフェスタ２０１７に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１７に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_116_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１８</comment>
+		<language name="JPN" width="216">ポケモンフェスタ２０１８に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１８に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_117_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１９</comment>
+		<language name="JPN" width="216">ポケモンフェスタ２０１９に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１９に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_118_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０２０</comment>
+		<language name="JPN" width="216">ポケモンフェスタ２０２０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０２０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_119_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク汎用1</comment>
+		<language name="JPN" width="216">ポケパークに　きてくれて　
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケパークに　きてくれて　
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_120_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク汎用2</comment>
+		<language name="JPN" width="216">ポケパークからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">ポケパークからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_121_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１０</comment>
+		<language name="JPN" width="216">ポケパーク２０１０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケパーク２０１０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_122_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１１</comment>
+		<language name="JPN" width="216">ポケパーク２０１１に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケパーク２０１１に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_123_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１２</comment>
+		<language name="JPN" width="216">ポケパーク２０１２に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケパーク２０１２に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_124_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１３</comment>
+		<language name="JPN" width="216">ポケパーク２０１３に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケパーク２０１３に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_125_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１４</comment>
+		<language name="JPN" width="216">ポケパーク２０１４に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケパーク２０１４に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_126_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１５</comment>
+		<language name="JPN" width="216">ポケパーク２０１５に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケパーク２０１５に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_127_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１６</comment>
+		<language name="JPN" width="216">ポケパーク２０１６に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケパーク２０１６に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_128_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１７</comment>
+		<language name="JPN" width="216">ポケパーク２０１７に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケパーク２０１７に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_129_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１８</comment>
+		<language name="JPN" width="216">ポケパーク２０１８に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケパーク２０１８に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_130_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１９</comment>
+		<language name="JPN" width="216">ポケパーク２０１９に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケパーク２０１９に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_131_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０２０</comment>
+		<language name="JPN" width="216">ポケパーク２０２０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+		<language name="JPN_KANJI">ポケパーク２０２０に　
+きてくれて　ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_132_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_133_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_134_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_135_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_136_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_137_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_138_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_139_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_140_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_141_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_142_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_143_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_144_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_145_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_146_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_147_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_148_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_149_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_150_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_151_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_152_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_153_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_154_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_155_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_156_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_157_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_158_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_159_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_160_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_161_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_162_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_163_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_164_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_165_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_166_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_167_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_168_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_169_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_170_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_171_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_172_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_173_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_174_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_175_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_176_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_177_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_178_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_179_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_180_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_181_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_182_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_183_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_184_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_185_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_186_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_187_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_188_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_189_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_190_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_191_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_192_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_193_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_194_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_195_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_196_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_197_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_198_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_199_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_200_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_201_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_202_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_203_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_204_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_205_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_206_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_207_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_208_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_209_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_210_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_211_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_212_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_213_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_214_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_215_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_216_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_217_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_218_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_219_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_220_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_221_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_222_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_223_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_224_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_225_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_226_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_227_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_228_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_229_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_230_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_231_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_232_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_233_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_234_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_235_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_236_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_237_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_238_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_239_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_240_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_241_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_242_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_243_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_244_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_245_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_246_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_247_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_248_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_249_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_250_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_251_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_252_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_253_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_254_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_255_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_00_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画汎用</comment>
+		<language name="JPN" width="216">ポケモンえいがを　みにきてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンえいがを　みにきてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_01_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１０</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１０を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１０を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
 	<row id="syachi_mystery_card_txt_02_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
-		<comment>ＩＤ：2
-受け取り後</comment>
+		<comment>映画２０１１</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１１を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１１を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_03_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１２</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１２を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１２を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_04_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１３</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１３を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１３を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_05_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１４</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１４を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１４を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_06_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１５</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１５を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１５を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_07_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１６</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１６を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１６を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_08_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１７</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１７を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１７を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_09_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１８</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１８を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１８を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_10_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０１９</comment>
+		<language name="JPN" width="216">ポケモンえいが２０１９を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンえいが２０１９を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_11_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>映画２０２０</comment>
+		<language name="JPN" width="216">ポケモンえいが２０２０を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンえいが２０２０を　
+みにきてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_12_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンセンター
+</comment>
+		<language name="JPN" width="216">ポケモンセンターに　きてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンセンターに　きてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_13_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンセンター
+トウキョー
+</comment>
+		<language name="JPN" width="216">ポケモンセンタートウキョーに　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンセンタートウキョーに　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_14_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンセンター
+オーサカ
+</comment>
+		<language name="JPN" width="216">ポケモンセンターオーサカに　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンセンターオーサカに　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_15_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンセンター
+フクオカ
+</comment>
+		<language name="JPN" width="216">ポケモンセンターフクオカに　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンセンターフクオカに　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_16_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンセンター
+ナゴヤ
+</comment>
+		<language name="JPN" width="216">ポケモンセンターナゴヤに　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンセンターナゴヤに　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_17_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンセンター
+サッポロ
+</comment>
+		<language name="JPN" width="216">ポケモンセンターサッポロに　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンセンターサッポロに　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_18_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンセンター
+ヨコハマ
+</comment>
+		<language name="JPN" width="216">ポケモンセンターヨコハマに　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンセンターヨコハマに　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_19_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス汎用</comment>
+		<language name="JPN" width="216">ポケモンワールドチャンピオンシップス
+にさんかしてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンワールドチャンピオンシップス
+にさんかしてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_20_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１０</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１０に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１０に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_21_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１１</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１１に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１１に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_22_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１２</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１２に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１２に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_23_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１３</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１３に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１３に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_24_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１４</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１４に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１４に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_25_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１５</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１５に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１５に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_26_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１６</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１６に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１６に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_27_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１７</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１７に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１７に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_28_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１８</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１８に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１８に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_29_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０１９</comment>
+		<language name="JPN" width="216">ＷＣＳ２０１９に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＷＣＳ２０１９に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_30_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンワールド
+チャンピオンシップス（ＷＣＳ）２０２０</comment>
+		<language name="JPN" width="216">ＷＣＳ２０２０に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＷＣＳ２０２０に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_31_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス汎用</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓに　きてくれて　
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓに　きてくれて　
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_32_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１０</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１０に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１０に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_33_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１１</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１１に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１１に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_34_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１２</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１２に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１２に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_35_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１３</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１３に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１３に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_36_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１４</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１４に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１４に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_37_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１５</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１５に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１５に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_38_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１６</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１６に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１６に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_39_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１７</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１７に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１７に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_40_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１８</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１８に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１８に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_41_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０１９</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０１９に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１９に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_42_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス２０２０</comment>
+		<language name="JPN" width="216">Ｗｏｒｌｄｓ２０２０に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０２０に　
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_43_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）汎用</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_44_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１０</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１０に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１０に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_45_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１１</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１１に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１１に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_46_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１２</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１２に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１２に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_47_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１３</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１３に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１３に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_48_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１４</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１４に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１４に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_49_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１５</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１５に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１５に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_50_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１６</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１６に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１６に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_51_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１７</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１７に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１７に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_52_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１８</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１８に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１８に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_53_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１９</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１９に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０１９に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_54_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０２０</comment>
+		<language name="JPN" width="216">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０２０に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
+２０２０に　きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_55_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１０</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１０に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１０に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_56_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１１</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１１に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１１に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_57_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１２</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１２に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１２に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_58_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１３</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１３に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１３に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_59_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１４</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１４に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１４に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_60_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１５</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１５に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１５に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_61_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１６</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１６に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１６に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_62_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１７</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１７に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１７に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_63_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１８</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１８に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１８に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_64_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０１９</comment>
+		<language name="JPN" width="216">ＶＧＣ２０１９に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＶＧＣ２０１９に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_65_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>海外ポケモンワールド
+チャンピオンシップス（ＶＧＣ）２０２０</comment>
+		<language name="JPN" width="216">ＶＧＣ２０２０に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＶＧＣ２０２０に　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_66_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>汎用イベント1
+</comment>
 		<language name="JPN" width="216">イベントに　きてくれて
 ありがとう！
 この　おくりものは　はいたついんが
@@ -1773,24 +5448,9 @@
 おわたししました！</language>
 	</row>
 
-	<row id="syachi_mystery_card_txt_03_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
-		<comment>ＩＤ：3
-受け取り前</comment>
-		<language name="JPN" width="216">ポケモンの　イベントに　きれてくれて
-ありがとう！
-おくりものは　ぼうけんを　さいかいして
-ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
-		<language name="JPN_KANJI">ポケモンの　イベントに　きれてくれて
-ありがとう！
-おくりものは　ぼうけんを　さいかいして
-ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
-	</row>
-
-	<row id="syachi_mystery_card_txt_03_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
-		<comment>ＩＤ：3
-受け取り後</comment>
+	<row id="syachi_mystery_card_txt_67_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>汎用イベント2
+</comment>
 		<language name="JPN" width="216">ポケモンの　イベントに　きてくれて
 ありがとう！
 この　おくりものは　はいたついんが
@@ -1801,26 +5461,249 @@
 おわたししました！</language>
 	</row>
 
-	<row id="syachi_mystery_card_txt_04_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
-		<comment>ＩＤ：4
-受け取り前</comment>
+	<row id="syachi_mystery_card_txt_68_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>汎用イベント3
+</comment>
+		<language name="JPN" width="216">ポケモンを　あそんでくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンを　あそんでくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_69_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>汎用イベント4
+</comment>
+		<language name="JPN" width="216">おみせに　きてくれて　ありがとう！ 
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">おみせに　きてくれて　ありがとう！ 
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_70_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>汎用イベント5
+</comment>
+		<language name="JPN" width="216">バトルたいかいに　さんかしてくれて　
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">バトルたいかいに　さんかしてくれて　
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_71_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>汎用イベント6
+</comment>
+		<language name="JPN" width="216">ゲームイベントに　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ゲームイベントに　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_72_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>汎用イベント7
+</comment>
+		<language name="JPN" width="216">ゲームイベントからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">ゲームイベントからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_73_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>だいすきクラブ</comment>
+		<language name="JPN" width="216">ポケモンだいすきクラブからの
+プレゼント！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンだいすきクラブからの
+プレゼント！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_74_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンサンデー1</comment>
+		<language name="JPN" width="216">ポケモンサンデーを　みてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">ポケモンサンデーを　みてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_75_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンサンデー2</comment>
+		<language name="JPN" width="216">ポケモンサンデーからの
+プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">ポケモンサンデーからの
+プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_76_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>チャレンジひろば1</comment>
+		<language name="JPN" width="216">チャレンジひろばに　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">チャレンジひろばに　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_77_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>チャレンジひろば2</comment>
+		<language name="JPN" width="216">チャレンジひろばからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">チャレンジひろばからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_78_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>バトルチャレンジ1</comment>
+		<language name="JPN" width="216">バトルチャレンジに　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">バトルチャレンジに　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_79_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>バトルチャレンジ2</comment>
+		<language name="JPN" width="216">バトルチャレンジからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">バトルチャレンジからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_80_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>トレーナーズコート1</comment>
+		<language name="JPN" width="216">トレーナーズコートに　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">トレーナーズコートに　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_81_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>トレーナーズコート2</comment>
+		<language name="JPN" width="216">トレーナーズコートからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">トレーナーズコートからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_82_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>バトルツアー1</comment>
+		<language name="JPN" width="216">バトルツアーに　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">バトルツアーに　さんかしてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_83_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>バトルツアー2</comment>
+		<language name="JPN" width="216">バトルツアーからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">バトルツアーからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_84_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンコンサート</comment>
+		<language name="JPN" width="216">ポケモンの　コンサートに　きてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンの　コンサートに　きてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_85_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンアニメ</comment>
+		<language name="JPN" width="216">ポケモンの　アニメを　みてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">ポケモンの　アニメを　みてくれて
+ありがとう！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_86_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>Wi-Fi
+Nintendoスポット1</comment>
+		<language name="JPN" width="216">Ｗⅰ－Ｆⅰコネクションを　
+あそんでくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">Ｗⅰ－Ｆⅰコネクションを　
+あそんでくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_87_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>Wi-Fi
+Nintendoスポット2</comment>
 		<language name="JPN" width="216">ダウンロード　してくれて
 ありがとう！
-おくりものは　ぼうけんを　さいかいして
-ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
-		<language name="JPN_KANJI">ダウンロード　してくれて
-ありがとう！
-おくりものは　ぼうけんを　さいかいして
-ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
-	</row>
-
-	<row id="syachi_mystery_card_txt_04_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
-		<comment>ＩＤ：4
-受け取り後</comment>
-		<language name="JPN" width="216">ダウンロード　してくれて
-ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">ダウンロード　してくれて
@@ -1829,31 +5712,1551 @@
 おわたししました！</language>
 	</row>
 
-	<row id="syachi_mystery_card_txt_05_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
-		<comment>ＩＤ：5
-受け取り前</comment>
-		<language name="JPN" width="216">ポケモンセンターに　きてくれて
-ありがとう！
-おくりものは　ぼうけんを　さいかいして
-ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
-		<language name="JPN_KANJI">ポケモンセンターに　きてくれて
-ありがとう！
-おくりものは　ぼうけんを　さいかいして
-ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+	<row id="syachi_mystery_card_txt_88_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>その他の汎用
+PBR等。</comment>
+		<language name="JPN" width="216">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
 	</row>
 
-	<row id="syachi_mystery_card_txt_05_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
-		<comment>ＩＤ：5
-受け取り後</comment>
-		<language name="JPN" width="216">ポケモンセンターに　きてくれて
+	<row id="syachi_mystery_card_txt_89_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンレンジャー1</comment>
+		<language name="JPN" width="216">ポケモンレンジャーを　あそんでくれて
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンセンターに　きてくれて
+		<language name="JPN_KANJI">ポケモンレンジャーを　あそんでくれて
 ありがとう！
 この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_90_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンレンジャー2</comment>
+		<language name="JPN" width="216">レンジャーユニオンから　ポケモンほごの
+いらいが　きたぞ！
+ポケモンは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">レンジャーユニオンから　ポケモンほごの
+いらいが　きたぞ！
+ポケモンは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_91_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンレンジャー3</comment>
+		<language name="JPN" width="216">レンジャーユニオンから　タマゴほごの
+いらいが　きたぞ！
+タマゴは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">レンジャーユニオンから　タマゴほごの
+いらいが　きたぞ！
+タマゴは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_92_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンドリームワールド1</comment>
+		<language name="JPN" width="216">ポケモンドリームワールドを　
+あそんでくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンドリームワールドを　
+あそんでくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_93_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンドリームワールド2</comment>
+		<language name="JPN" width="216">ポケモンドリームワールドからの　
+プレゼント！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンドリームワールドからの　
+プレゼント！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_94_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンドリームワールド3</comment>
+		<language name="JPN" width="216">ＰＤＷを　あそんでくれて　
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＰＤＷを　あそんでくれて　
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_95_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンドリームワールド4</comment>
+		<language name="JPN" width="216">ＰＤＷからの　プレゼント！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ＰＤＷからの　プレゼント！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_96_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１０</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１０をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１０をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_97_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１１</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１１をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１１をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_98_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１２</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１２をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１２をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_99_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１３</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１３をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１３をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_100_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１４</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１４をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１４をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_101_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１５</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１５をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１５をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_102_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１６</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１６をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１６をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_103_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１７</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１７をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１７をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_104_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１８</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１８をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１８をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_105_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０１９</comment>
+		<language name="JPN" width="216">ポケモンイベント２０１９をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１９をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_106_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンイベント
+２０２０</comment>
+		<language name="JPN" width="216">ポケモンイベント２０２０をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０２０をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_107_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ汎用</comment>
+		<language name="JPN">ポケモンフェスタに　きてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタに　きてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_108_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１０</comment>
+		<language name="JPN">ポケモンフェスタ２０１０をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１０をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_109_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１１</comment>
+		<language name="JPN">ポケモンフェスタ２０１１をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１１をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_110_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１２</comment>
+		<language name="JPN">ポケモンフェスタ２０１２をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１２をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_111_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１３</comment>
+		<language name="JPN">ポケモンフェスタ２０１３をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１３をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_112_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１４</comment>
+		<language name="JPN">ポケモンフェスタ２０１４をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１４をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_113_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１５</comment>
+		<language name="JPN">ポケモンフェスタ２０１５をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１５をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_114_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１６</comment>
+		<language name="JPN">ポケモンフェスタ２０１６をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１６をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_115_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１７</comment>
+		<language name="JPN">ポケモンフェスタ２０１７をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１７をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_116_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１８</comment>
+		<language name="JPN">ポケモンフェスタ２０１８をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１８をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_117_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０１９</comment>
+		<language name="JPN">ポケモンフェスタ２０１９をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１９をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_118_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンフェスタ
+２０２０</comment>
+		<language name="JPN">ポケモンフェスタ２０２０をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０２０をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_119_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク汎用1</comment>
+		<language name="JPN">ポケパークに　きてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケパークに　きてくれて
+ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_120_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク汎用2</comment>
+		<language name="JPN">ポケパークからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+		<language name="JPN_KANJI">ポケパークからの　プレゼント！
+おくりものは　ポケモンセンターにいる
+はいたついんから　うけとってね！！
+</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_121_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１０</comment>
+		<language name="JPN">ポケパーク２０１０をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１０をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_122_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１１</comment>
+		<language name="JPN">ポケパーク２０１１をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１１をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_123_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１２</comment>
+		<language name="JPN">ポケパーク２０１２をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１２をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_124_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１３</comment>
+		<language name="JPN">ポケパーク２０１３をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１３をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_125_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１４</comment>
+		<language name="JPN">ポケパーク２０１４をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１４をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_126_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１５</comment>
+		<language name="JPN">ポケパーク２０１５をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１５をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_127_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１６</comment>
+		<language name="JPN">ポケパーク２０１６をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１６をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_128_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１７</comment>
+		<language name="JPN">ポケパーク２０１７をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１７をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_129_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１８</comment>
+		<language name="JPN">ポケパーク２０１８をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１８をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_130_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０１９</comment>
+		<language name="JPN">ポケパーク２０１９をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１９をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_131_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
+		<comment>ポケパーク
+２０２０</comment>
+		<language name="JPN">ポケパーク２０２０をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０２０をに
+きてくれて　ありがとう！
+この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_132_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_133_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_134_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_135_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_136_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_137_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_138_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_139_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_140_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_141_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_142_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_143_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_144_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_145_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_146_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_147_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_148_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_149_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_150_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_151_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_152_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_153_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_154_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_155_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_156_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_157_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_158_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_159_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_160_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_161_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_162_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_163_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_164_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_165_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_166_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_167_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_168_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_169_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_170_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_171_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_172_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_173_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_174_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_175_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_176_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_177_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_178_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_179_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_180_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_181_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_182_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_183_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_184_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_185_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_186_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_187_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_188_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_189_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_190_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_191_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_192_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_193_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_194_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_195_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_196_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_197_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_198_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_199_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_200_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_201_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_202_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_203_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_204_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_205_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_206_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_207_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_208_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_209_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_210_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_211_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_212_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_213_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_214_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_215_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_216_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_217_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_218_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_219_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_220_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_221_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_222_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_223_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_224_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_225_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_226_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_227_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_228_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_229_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_230_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_231_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_232_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_233_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_234_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_235_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_236_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_237_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_238_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_239_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_240_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_241_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_242_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_243_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_244_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_245_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_246_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_247_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_248_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_249_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_250_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_251_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_252_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_253_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_254_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
+おわたししました！</language>
+	</row>
+
+	<row id="syachi_mystery_card_txt_255_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<comment>ダミー</comment>
+		<language name="JPN">この　おくりものは　はいたついんが
+おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　はいたついんが
 おわたししました！</language>
 	</row>
 
