@@ -46,9 +46,25 @@ static const DEBUG_NUMINPUT_LIST DNI_FortuneList[] = {
 
 
 #include "debug_numinput_research.h"
+#include "field/research_team_def.h"
 #include "../../../resource/research_radar/data/question_id.h"// for QUESTION_ID_xxxx
 #include "../../../resource/research_radar/data/answer_id.h"// for ANSWER_ID_xxxx
 #include "../../../resource/research_radar/data/answer_num_question.cdat"// for AnswerNum_question[]
+
+//----------------------------------------------------------------
+// 数値入力 → すれ違い調査隊 → 隊員ランク
+//----------------------------------------------------------------
+static const DEBUG_NUMINPUT_PARAM NumInputParam_researchTeam[1] = 
+{ 
+  0,                        // 最小値
+  RESEARCH_TEAM_RANK_5,     // 最大値
+  DEBUG_GetResearchTeamRank,// ゲッター関数
+  DEBUG_SetResearchTeamRank // セッター関数
+}; 
+static const DEBUG_NUMINPUT_LIST NumInputList_researchTeam[1] = 
+{
+  { dni_research_team_rank, 0, &NumInputParam_researchTeam[0] }, // 隊員ランク
+};
 
 //----------------------------------------------------------------
 // 数値入力 → 今日のすれ違い調査人数 →

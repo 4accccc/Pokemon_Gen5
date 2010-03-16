@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-03-14T00:54:01"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-03-16T15:21:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -453,7 +453,17 @@
 		<language name="JPN_KANJI" width="240">お小遣い</language>
 	</row>
 
-	<row id="dni_q_today" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+	<row id="dni_research_team" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN">すれちがい　ちょうさたい</language>
+		<language name="JPN_KANJI">すれ違い調査隊</language>
+	</row>
+
+	<row id="dni_research_team_rank" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN">たいいんランク</language>
+		<language name="JPN_KANJI">隊員ランク</language>
+	</row>
+
+	<row id="dni_q_today" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<language name="JPN" width="240">きょうの すれちがい ちょうさにんずう</language>
 		<language name="JPN_KANJI" width="240">今日のすれ違い調査人数</language>
 	</row>

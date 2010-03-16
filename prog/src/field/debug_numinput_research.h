@@ -127,4 +127,29 @@ extern u32 DEBUG_GetTotalCountOfAnswer(
  */
 //------------------------------------------------------------------------------
 extern void DEBUG_SetTotalCountOfAnswer( 
-    GAMESYS_WORK* gameSystem, GAMEDATA* gameData, u32 answerID, u32 count );
+    GAMESYS_WORK* gameSystem, GAMEDATA* gameData, u32 answerID, u32 count ); 
+//------------------------------------------------------------------------------
+/**
+ * @brief 数値取得関数 ( 数値入力 → すれ違い調査隊 → 隊員ランク )
+ *
+ * @param gameSystem
+ * @param gameData
+ * @param rank       隊員ランク ( RESEARCH_TEMP_RANK_xxxx )
+ *
+ * @return 隊員ランク
+ */
+//------------------------------------------------------------------------------
+extern u32 DEBUG_GetResearchTeamRank( 
+    GAMESYS_WORK* gameSystem, GAMEDATA* gameData, u32 rank ); 
+//------------------------------------------------------------------------------
+/**
+ * @brief 数値設定関数 ( 数値入力 → すれ違い調査隊 → 隊員ランク )
+ *
+ * @param gameSystem
+ * @param gameData
+ * @param answerID   設定する回答のID ( ANSWER_ID_xxxx )
+ * @param rank       設定する数値
+ */
+//------------------------------------------------------------------------------
+extern void DEBUG_SetResearchTeamRank( 
+    GAMESYS_WORK* gameSystem, GAMEDATA* gameData, u32 answerID, u32 rank );

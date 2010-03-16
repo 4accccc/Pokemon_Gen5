@@ -10,8 +10,10 @@
 
 #include "savedata/save_control.h"       // for SAVE_CONTROL_WORK
 #include "savedata/questionnaire_save.h" // for QUESTIONNAIRE_SAVE_WORK 
+#include "savedata/misc.h"               // for MISC
 
 #include "app/research_radar/questionnaire_index.h"
+#include "field/research_team_def.h"
 
 
 //------------------------------------------------------------------------------
@@ -265,4 +267,57 @@ void DEBUG_SetTotalCountOfAnswer(
   OBATA_Printf( "SetTotalCountOfAnswer: qID=%d, aID=%d, aIdx=%d, count=%d\n", 
       questionID, answerID, answerIdx,
       QuestionnaireWork_GetTotalAnswerNum( Qsave, questionID, answerIdx ) );
+}
+//------------------------------------------------------------------------------
+/**
+ * @brief 数値取得関数 ( 数値入力 → すれ違い調査隊 → 隊員ランク )
+ *
+ * @param gameSystem
+ * @param gameData
+ * @param param
+ *
+ * @return 隊員ランク ( RESEARCH_TEMP_RANK_xxxx )
+ */
+//------------------------------------------------------------------------------
+u32 DEBUG_GetResearchTeamRank( 
+    GAMESYS_WORK* gameSystem, GAMEDATA* gameData, u32 param )
+{
+  SAVE_CONTROL_WORK* save;
+  MISC* misc;
+  int rank;
+
+  // セーブデータ取得
+  save = GAMEDATA_GetSaveControlWork( gameData );
+  misc = SaveData_GetMisc( save );
+
+  // 隊員ランクを取得
+  rank = MISC_CrossComm_GetResearchTeamRank( misc );
+
+  return rank;
+}
+//------------------------------------------------------------------------------
+/**
+ * @brief 数値設定関数 ( 数値入力 → すれ違い調査隊 → 隊員ランク )
+ *
+ * @param gameSystem
+ * @param gameData
+ * @param answerID   設定する回答のID ( ANSWER_ID_xxxx )
+ * @param rank       設定する数値
+ */
+//------------------------------------------------------------------------------
+void DEBUG_SetResearchTeamRank( 
+    GAMESYS_WORK* gameSystem, GAMEDATA* gameData, u32 answerID, u32 rank )
+{
+  SAVE_CONTROL_WORK* save;
+  MISC* misc;
+
+  // 引数チェック
+  GF_ASSERT( rank < RESEARCH_TEAM_RANK_MAX );
+
+  // セーブデータ取得
+  save = GAMEDATA_GetSaveControlWork( gameData );
+  misc = SaveData_GetMisc( save );
+
+  // 隊員ランクを設定
+  MISC_CrossComm_SetResearchTeamRank( misc, rank );
 }

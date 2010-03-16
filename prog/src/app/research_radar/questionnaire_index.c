@@ -139,6 +139,7 @@ u8 GetAnswerIndex_atQuestion( u8 answerID )
 {
   int sum;
   int qID;
+  int answerNum;
 
   // IDÉGÉâÅ[
   if( ANSWER_ID_MAX < answerID ) {
@@ -149,9 +150,11 @@ u8 GetAnswerIndex_atQuestion( u8 answerID )
   sum = 0;
   for( qID=0; qID < QUESTION_ID_NUM; qID++ )
   {
-    sum += AnswerNum_question[ qID ];
+    answerNum = AnswerNum_question[ qID ]; 
+    sum += answerNum;
+
     if( answerID <= sum ) {
-      return sum - answerID + 1;  // 1 Origin
+      return answerNum - (sum - answerID);
     }
   }
 

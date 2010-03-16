@@ -152,6 +152,9 @@ static  const DEBUG_NUMINPUT_INITIALIZER DATA_united = {
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_Fortune = { 
   D_NINPUT_DATA_LIST,   NELEMS( DNI_FortuneList ), DNI_FortuneList, };
 
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_researchTeam = { 
+  D_NINPUT_DATA_LIST,   NELEMS(NumInputList_researchTeam), NumInputList_researchTeam, };
+
 static const DEBUG_NUMINPUT_INITIALIZER DATA_Q_today = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfQ), NumInputList_todayCountOfQ };
 static const DEBUG_NUMINPUT_INITIALIZER DATA_Q_total = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfQ), NumInputList_totalCountOfQ };
 static const DEBUG_NUMINPUT_INITIALIZER DATA_A_today_Q01 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_todayCountOfA_Q01), NumInputList_todayCountOfA_Q01 };
@@ -252,6 +255,7 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_top_scenario, (void*)NULL },
   { dni_top_united_nations, (void*)&DATA_united },
   { dni_top_fortune, (void*)&DATA_Fortune },
+  { dni_research_team, (void*)&DATA_researchTeam },
   { dni_q_today, (void*)&DATA_Q_today },
   { dni_q_total, (void*)&DATA_Q_total },
   { dni_a_today_q01, (void*)&DATA_A_today_Q01 },
