@@ -165,16 +165,6 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   POINT tp;
   BOOL my_power;
 
-#if 0
-  if( wk->my_data.power != GPOWER_ID_NULL ){
-    my_power = GPOWER_Check_MyPower();
-    if( wk->my_power_f != my_power ){
-      BeaconView_MenuBarViewSet( wk, MENU_POWER, MENU_ST_ON+(my_power*2) );
-      wk->my_power_f = my_power; 
-    }
-  }
-#endif
-
 #ifdef PM_DEBUG
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
     wk->deb_stack_check_throw ^= 1;
@@ -373,7 +363,8 @@ BOOL BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
     if( BeaconView_MenuBarCheckAnm( wk, MENU_THANKS )){
       break;
     }
-    BeaconView_MenuBarViewSet( wk, MENU_POWER|MENU_RETURN, MENU_ST_OFF );
+    BeaconView_MenuBarViewSet( wk, MENU_POWER, MENU_ST_OFF );
+    BeaconView_MenuBarViewSet( wk, MENU_RETURN, MENU_ST_OFF );
     draw_MenuWindow( wk, msg_sys_thanks );
     wk->sub_seq++;
     break;
@@ -431,7 +422,7 @@ static int sseq_thanks_CheckInput( BEACON_VIEW_PTR wk )
   
   //メニューあたり判定
   ret = touchin_CheckMenu( wk, &tp );
-  if(ret == (MENU_THANKS>>1)){
+  if(ret == MENU_THANKS){
     return SSEQ_THANKS_END;  //キャンセル
   }
 
@@ -457,17 +448,28 @@ static int sseq_thanks_CheckInput( BEACON_VIEW_PTR wk )
  */
 void BeaconView_MenuBarViewSet( BEACON_VIEW_PTR wk, MENU_ID id, MENU_STATE state )
 {
-  if( id & MENU_POWER ){
+  u8 flag;
+  
+  if( id == MENU_ALL ){
+    flag = MENU_F_ALL;
+  }else{
+    flag = 0x01 << id;
+  }
+
+  if( flag & MENU_F_POWER ){
     if( wk->my_data.power != GPOWER_ID_NULL ){
       act_AnmStart( wk->pAct[ACT_POWER], state+ACTANM_POWER_ON );
     }
   }
-  if( id & MENU_THANKS ){
+  if( flag & MENU_F_HELLO ){
+    act_AnmStart( wk->pAct[ACT_HELLO], state+ACTANM_HELLO_ON );
+  }
+  if( flag & MENU_F_THANKS ){
     if( wk->ctrl.max > 0 ){
       act_AnmStart( wk->pAct[ACT_THANKS], state+ACTANM_THANKS_ON );
     }
   }
-  if( id & MENU_RETURN ){
+  if( flag & MENU_F_RETURN ){
     act_AnmStart( wk->pAct[ACT_RETURN], state+ACTANM_RETURN_ON );
   }
 }
@@ -477,7 +479,7 @@ void BeaconView_MenuBarViewSet( BEACON_VIEW_PTR wk, MENU_ID id, MENU_STATE state
  */
 BOOL BeaconView_MenuBarCheckAnm( BEACON_VIEW_PTR wk, MENU_ID id )
 {
-  return GFL_CLACT_WK_CheckAnmActive( wk->pAct[ACT_POWER+(id>>1)] );
+  return GFL_CLACT_WK_CheckAnmActive( wk->pAct[ACT_POWER+id] );
 }
 
 
@@ -619,7 +621,7 @@ static int touchin_CheckMenu( BEACON_VIEW_PTR wk, POINT* tp )
 {
   int i, ret;
   GFL_UI_TP_HITTBL tbl[2];
-  static const u16 se_tbl[] = { BVIEW_SE_DECIDE, BVIEW_SE_DECIDE, BVIEW_SE_CANCEL };
+  static const u16 se_tbl[] = { BVIEW_SE_MENU, BVIEW_SE_MENU, BVIEW_SE_MENU, BVIEW_SE_CANCEL };
 
   tbl[1].rect.top = GFL_UI_TP_HIT_END;
 
@@ -701,7 +703,7 @@ static void print_PopupWindow( BEACON_VIEW_PTR wk, STRBUF* str, u8 wait )
   }else{
     //ストリーム開始
     wk->printStream = PRINTSYS_PrintStream( wk->win[WIN_POPUP].win, 0, 0,
-        str, wk->fontHandle, wait, wk->pTcbSys, 0, wk->heapID, FCOL_POPUP_BASE );
+        str, wk->fontHandle, wait, wk->pTcbSys, 0, wk->heap_sID, FCOL_POPUP_BASE );
   }
 }
 
@@ -748,7 +750,7 @@ static void tmenu_YnCreate( BEACON_VIEW_PTR wk )
   int i;
   for( i = 0;i < TMENU_MAX;i++){
     wk->tmenu[i].work = APP_TASKMENU_WIN_Create( wk->menuRes, &wk->tmenu[i].item, 
-                            TMENU_YN_PX+TMENU_YN_W*i, TMENU_YN_PY, TMENU_YN_W, wk->heapID );
+                            TMENU_YN_PX+TMENU_YN_W*i, TMENU_YN_PY, TMENU_YN_W, wk->heap_sID );
   }
 }
 
@@ -1011,10 +1013,18 @@ static void panel_UnionObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON
 static void panel_IconObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 icon)
 {
   u8 sex, char_no, p_ofs;
- 
+#if 0  
+  GFL_ARC_LoadDataByHandle( wk->arc_handle, NARC_beacon_status_bstatus_icon01_ncgr+icon, wk->resCharIcon[0].buf );
+  NNS_G2dGetUnpackedCharacterData( wk->resCharIcon[0].buf, &wk->resCharIcon[0].p_char );
+
+  //キャラクタ転送
+  GFL_CLGRP_CGR_Replace(  wk->objResIcon.res[ OBJ_RES_CGR ].tbl[ pp->id ],
+                          wk->resCharIcon[ 0 ].p_char );
+#else
   //キャラクタ転送
   GFL_CLGRP_CGR_Replace(  wk->objResIcon.res[ OBJ_RES_CGR ].tbl[ pp->id ],
                           wk->resCharIcon[ icon ].p_char );
+#endif
 }
 
 /*
@@ -1256,7 +1266,7 @@ static void effReq_PanelSlideIn( BEACON_VIEW_PTR wk, PANEL_WORK* pp )
   panel_SetPos( pp, ACT_PANEL_SI_SX, ACT_PANEL_SI_SY );
   panel_VisibleSet( pp, TRUE );
   if( wk->ctrl.max > 0 ){
-    deray = 15;
+    deray = PANEL_SCROLL_FRAME;
   }
   taskAdd_PanelScroll( wk, pp, SCROLL_RIGHT, deray, &wk->eff_task_ct );
 
@@ -1289,7 +1299,7 @@ static void taskAdd_PanelScroll( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 dir, u8 
   twk->epy = pp->n_line*ACT_PANEL_OY+ACT_PANEL_PY; 
   twk->x = FX32_CONST(pp->px);
   twk->y = FX32_CONST(pp->py);
-  twk->frame = 15;
+  twk->frame = PANEL_SCROLL_FRAME;
   twk->deray = wait;
   twk->ax = FX_Div( FX32_CONST( twk->epx - pp->px ), FX32_CONST(twk->frame));
   twk->ay = FX_Div( FX32_CONST( twk->epy - pp->py ), FX32_CONST(twk->frame));

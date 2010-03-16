@@ -44,6 +44,7 @@ static void event_RequestReset( BEACON_VIEW_PTR wk );
 static int seq_Main( BEACON_VIEW_PTR wk );
 static int seq_ViewUpdate( BEACON_VIEW_PTR wk );
 static int seq_GPowerUse( BEACON_VIEW_PTR wk );
+static int seq_TalkMsgInput( BEACON_VIEW_PTR wk );
 static int seq_ThankYou( BEACON_VIEW_PTR wk );
 static int seq_ReturnCGear( BEACON_VIEW_PTR wk );
 static int seq_CallDetailView( BEACON_VIEW_PTR wk );
@@ -123,10 +124,11 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
   wk->fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   wk->subscreen = subscreen;
  
+  wk->heap_sID = HEAPID_FIELD_SUBSCREEN;
   wk->heapID = HEAPID_FIELDMAP;
-  wk->tmpHeapID = GFL_HEAP_LOWID( HEAPID_FIELDMAP );
+  wk->tmpHeapID = GFL_HEAP_LOWID( HEAPID_FIELD_SUBSCREEN );
 
-  wk->arc_handle = GFL_ARC_OpenDataHandle(ARCID_BEACON_STATUS, wk->tmpHeapID);
+  wk->arc_handle = GFL_ARC_OpenDataHandle(ARCID_BEACON_STATUS, wk->heap_sID);
   
   _sub_DataSetup(wk);
   _sub_SystemSetup(wk);
@@ -136,7 +138,6 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
   _sub_ActorCreate(wk, wk->arc_handle);
   _sub_BmpWinCreate(wk);
   
-  GFL_ARC_CloseDataHandle(wk->arc_handle);
  
   //初期描画
   BeaconView_InitialDraw( wk );
@@ -168,6 +169,8 @@ void BEACON_VIEW_Exit(BEACON_VIEW_PTR wk)
   _sub_BGUnload( wk );
   _sub_SystemExit( wk );
   _sub_DataExit(wk);
+  
+  GFL_ARC_CloseDataHandle(wk->arc_handle);
 
   GFL_HEAP_FreeMemory( wk );
 }
@@ -208,6 +211,9 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
     break;
   case SEQ_GPOWER_USE:
     wk->seq = seq_GPowerUse( wk );
+    break;
+  case SEQ_TALKMSG_INPUT:
+    wk->seq = seq_TalkMsgInput( wk );
     break;
   case SEQ_THANK_YOU:
     wk->seq = seq_ThankYou( wk );
@@ -252,6 +258,9 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
     event = EVENT_GPowerEffectStart( wk->gsys, wk->ctrl.g_power, wk->ctrl.mine_power_f );
     wk->ctrl.g_power = GPOWER_ID_NULL;
     break;
+  case EV_CALL_TALKMSG_INPUT:
+    event = EVENT_BeaconDetail( wk->gsys, wk->fieldWork, wk->ctrl.target+wk->ctrl.view_top );
+    break;
   default:
     return NULL;
   }
@@ -269,58 +278,6 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
 void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
 {
   BEACON_VIEW_TouchUpdata( wk );
-#if 0
-  const GAMEBEACON_INFO *info;
-  u32 old_log_count;
-  s32 new_log_num, copy_src, copy_dest, write_start;
-  int i;
-
-  PRINTSYS_QUE_Main(wk->printQue);
-  for(i = 0; i < VIEW_LOG_MAX; i++){
-    PRINT_UTIL_Trans( &wk->print_util[i], wk->printQue );
-  }
-
-
-  //BMP描画
-  {
-    old_log_count = wk->log_count;
-    wk->log_count = GAMEBEACON_Get_LogCount();
-    new_log_num = wk->log_count - old_log_count;  //更新されたログ件数
-    
-    if(new_log_num > 0){
-      copy_dest = 0;
-      for(copy_src = new_log_num; copy_src < VIEW_LOG_MAX; copy_src++){
-        GFL_BMP_DATA *bmp_src, *bmp_dest;
-        
-        bmp_src = GFL_BMPWIN_GetBmp(wk->win[copy_src]);
-        bmp_dest = GFL_BMPWIN_GetBmp(wk->win[copy_dest]);
-        GFL_BMP_Copy( bmp_src, bmp_dest );
-        GFL_BMPWIN_TransVramCharacter( wk->win[copy_dest] );
-        copy_dest++;
-      }
-      
-      write_start = new_log_num - 1;
-      if(write_start >= VIEW_LOG_MAX){
-        write_start = VIEW_LOG_MAX - 1;
-      }
-      for( ; copy_dest < VIEW_LOG_MAX; copy_dest++){
-        info = GAMEBEACON_Get_BeaconLog(write_start);
-        if(info != NULL){
-          GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[copy_dest]), 0x00 );
-          GFL_MSG_GetString(wk->mm_status, GAMEBEACON_GetMsgID(info), wk->strbuf_temp);
-          GAMEBEACON_Wordset(info, wk->wordset, wk->tmpHeapID );
-          WORDSET_ExpandStr( wk->wordset, wk->strbuf_expand, wk->strbuf_temp );
-          PRINT_UTIL_PrintColor( &wk->print_util[copy_dest], wk->printQue, 0, 0, 
-            wk->strbuf_expand, wk->fontHandle, PRINTSYS_LSB_Make( 15, 2, 0 ) );
-        }
-        write_start--;
-        if(write_start < 0){
-          break;
-        }
-      }
-    }
-  }
-#endif
 }
 
 /////////////////////////////////////////////////////////////////
@@ -405,6 +362,27 @@ static int seq_GPowerUse( BEACON_VIEW_PTR wk )
     event_Request( wk, EV_GPOWER_USE );
   }
   return SEQ_MAIN;
+}
+
+/*
+ *  @brief  一言メッセージを入力＆送信
+ */
+static int seq_TalkMsgInput( BEACON_VIEW_PTR wk )
+{
+  switch( wk->sub_seq ){
+  case 0:
+    BeaconView_MenuBarViewSet( wk, MENU_HELLO, MENU_ST_ANM );
+    wk->sub_seq++;
+    break;
+  case 1:
+    if(BeaconView_MenuBarCheckAnm( wk, MENU_HELLO )){
+      break;
+    }
+    wk->sub_seq = 0;
+    event_Request( wk, EV_CALL_TALKMSG_INPUT );
+    return SEQ_END;
+  }
+  return SEQ_TALKMSG_INPUT;
 }
 
 /*
@@ -537,9 +515,8 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   }
   
   //スタックワーク領域取得
-  wk->infoStack = GAMEBEACON_InfoTbl_Alloc( wk->heapID );
-  wk->tmpInfo = GAMEBEACON_Alloc( wk->heapID );
-
+  wk->infoStack = GAMEBEACON_InfoTbl_Alloc( wk->heap_sID );
+  wk->tmpInfo = GAMEBEACON_Alloc( wk->heap_sID );
 }
 
 //--------------------------------------------------------------
@@ -565,29 +542,28 @@ static void _sub_DataExit(BEACON_VIEW_PTR wk)
 //--------------------------------------------------------------
 static void _sub_SystemSetup(BEACON_VIEW_PTR wk)
 {
-  wk->pTcbSys = GFL_TCBL_Init( wk->heapID, wk->heapID, 16, 128 );
+  wk->pTcbSys = GFL_TCBL_Init( wk->heap_sID, wk->heap_sID, 16, 128 );
 
   //Vタスク追加
   wk->tcbVIntr = GFUser_VIntr_CreateTCB( tcb_VInter, (void*)wk, 0);
 
-  wk->pfd = PaletteFadeInit( wk->heapID );
-  PaletteFadeWorkAllocSet( wk->pfd, FADE_SUB_BG,  0x20*BG_PALANM_AREA, wk->heapID );
-  PaletteFadeWorkAllocSet( wk->pfd, FADE_SUB_OBJ, 0x200, wk->heapID );
+  wk->pfd = PaletteFadeInit( wk->heap_sID );
+  PaletteFadeWorkAllocSet( wk->pfd, FADE_SUB_BG,  0x20*BG_PALANM_AREA, wk->heap_sID );
+  PaletteFadeWorkAllocSet( wk->pfd, FADE_SUB_OBJ, 0x200, wk->heap_sID );
 
-	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
-	wk->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
-		GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
-//  GFL_FONTSYS_SetColor( FCOL_POPUP_MAIN, FCOL_POPUP_SDW, FCOL_POPUP_BASE );
+	wk->printQue = PRINTSYS_QUE_Create( wk->heap_sID );
+  wk->fontHandle = FLDMSGBG_GetFontHandle( FIELDMAP_GetFldMsgBG(wk->fieldWork));
+
   GFL_FONTSYS_SetDefaultColor();
  
-  wk->wordset = WORDSET_Create( wk->heapID);
+  wk->wordset = WORDSET_Create( wk->heap_sID);
 
 	wk->mm_status = GFL_MSG_Create(
-		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_beacon_status_dat, wk->heapID );
+		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_beacon_status_dat, wk->heap_sID );
 
-  wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
-  wk->str_expand = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
-  wk->str_popup = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
+  wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heap_sID );
+  wk->str_expand = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heap_sID );
+  wk->str_popup = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heap_sID );
 }
 
 //--------------------------------------------------------------
@@ -608,7 +584,7 @@ static void _sub_SystemExit(BEACON_VIEW_PTR wk)
 	WORDSET_Delete(wk->wordset);
   
   GFL_FONTSYS_SetDefaultColor();
-  GFL_FONT_Delete(wk->fontHandle);
+//  GFL_FONT_Delete(wk->fontHandle);
   PRINTSYS_QUE_Delete(wk->printQue);
  
   PaletteFadeWorkAllocFree( wk->pfd, FADE_SUB_OBJ );
@@ -735,9 +711,9 @@ static void _sub_TMenuInit( BEACON_VIEW_PTR wk )
 {
   int i;
 
-  wk->key_cursor = APP_KEYCURSOR_Create( FCOL_POPUP_BASE, FALSE, TRUE, wk->heapID );
+  wk->key_cursor = APP_KEYCURSOR_Create( FCOL_POPUP_BASE, FALSE, TRUE, wk->heap_sID );
 
-  wk->menuRes = APP_TASKMENU_RES_Create( FRM_MENUMSG, BG_PAL_TASKMENU, wk->fontHandle, wk->printQue, wk->heapID );
+  wk->menuRes = APP_TASKMENU_RES_Create( FRM_MENUMSG, BG_PAL_TASKMENU, wk->fontHandle, wk->printQue, wk->heap_sID );
 
   //アイテム初期化
   for( i = 0;i < TMENU_MAX;i++){
@@ -817,27 +793,26 @@ static void _sub_ActorResourceLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle)
       wk->tmpHeapID, FADE_SUB_OBJ, 0x20, ACT_PAL_WMI*16 );
   wk->resPlttPanel.buf = GFL_ARC_LoadDataAllocByHandle( handle,
                           NARC_beacon_status_bstatus_panel_nclr,
-                          wk->heapID );
+                          wk->heap_sID );
   NNS_G2dGetUnpackedPaletteData( wk->resPlttPanel.buf, &wk->resPlttPanel.p_pltt );
   wk->resPlttPanel.dat = (u16*)wk->resPlttPanel.p_pltt->pRawData;
 
   wk->resPlttUnion.buf = GFL_ARC_LoadDataAllocByHandle( handle_union,
                           NARC_wifi_unionobj_wifi_union_obj_NCLR,
-                          wk->heapID );
+                          wk->heap_sID );
   NNS_G2dGetUnpackedPaletteData( wk->resPlttUnion.buf, &wk->resPlttUnion.p_pltt );
   wk->resPlttUnion.dat = (u16*)wk->resPlttUnion.p_pltt->pRawData;
   
   for(i = 0;i < UNION_CHAR_MAX;i++){
     wk->resCharUnion[i].buf = GFL_ARC_LoadDataAllocByHandle( handle_union,
                               NARC_wifi_unionobj_front00_NCGR+i,
-                              wk->heapID );
+                              wk->heap_sID );
     NNS_G2dGetUnpackedCharacterData( wk->resCharUnion[i].buf, &wk->resCharUnion[i].p_char );
   }
-
   for(i = 0;i < ICON_MAX;i++){
     wk->resCharIcon[i].buf = GFL_ARC_LoadDataAllocByHandle( handle,
                           NARC_beacon_status_bstatus_icon01_ncgr+i,
-                          wk->heapID );
+                          wk->heap_sID );
     NNS_G2dGetUnpackedCharacterData( wk->resCharIcon[i].buf, &wk->resCharIcon[i].p_char );
   }
   DC_FlushAll();
@@ -855,7 +830,6 @@ static void _sub_ActorResourceLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle)
 static void _sub_ActorResourceUnload( BEACON_VIEW_PTR wk )
 {
   int i;
-
   for( i = 0;i < ICON_MAX;i++){
     GFL_HEAP_FreeMemory( wk->resCharIcon[i].buf );
   }
@@ -889,7 +863,7 @@ static void _sub_ActorCreate( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
   {
     const GFL_REND_SURFACE_INIT renderInitData = { 0,512,256,192,CLSYS_DRAW_SUB};
     
-    wk->cellRender = GFL_CLACT_USERREND_Create( &renderInitData , 1 , wk->heapID );
+    wk->cellRender = GFL_CLACT_USERREND_Create( &renderInitData , 1 , wk->heap_sID );
     GFL_CLACT_UNIT_SetUserRend( wk->cellUnit, wk->cellRender );
   }
 
@@ -897,7 +871,7 @@ static void _sub_ActorCreate( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
 //  GFL_CLACT_USERREND_GetSurfacePos( , ACT_RENDER_ID, &wk->cellSurfacePos );
 
   //FontOAMシステAdd成
-  wk->bmpOam = BmpOam_Init( wk->heapID, wk->cellUnit );
+  wk->bmpOam = BmpOam_Init( wk->heap_sID, wk->cellUnit );
   
   act_NormalObjAdd( wk );
 
@@ -960,7 +934,7 @@ static void _sub_BmpWinCreate(BEACON_VIEW_PTR wk)
       BMP_MENU_FRM, BMP_MENU_PAL, BMP_MENU_PX, BMP_MENU_PY,BMP_MENU_SX, BMP_MENU_SY );
 
   //人数表示
- 	wk->foamLogNum.bmp = GFL_BMP_Create( BMP_LOGNUM_OAM_SX, BMP_LOGNUM_OAM_SY, GFL_BMP_16_COLOR, wk->heapID );
+ 	wk->foamLogNum.bmp = GFL_BMP_Create( BMP_LOGNUM_OAM_SX, BMP_LOGNUM_OAM_SY, GFL_BMP_16_COLOR, wk->heap_sID );
 
 	finit.bmp = wk->foamLogNum.bmp;
 	finit.x = BMP_LOGNUM_OAM_PX;
@@ -1102,6 +1076,7 @@ static void act_NormalObjAdd( BEACON_VIEW_PTR wk )
    { ACT_MENU_PX+ACT_MENU_OX*0 ,ACT_MENU_PY },
    { ACT_MENU_PX+ACT_MENU_OX*1 ,ACT_MENU_PY },
    { ACT_MENU_PX+ACT_MENU_OX*2 ,ACT_MENU_PY },
+   { ACT_MENU_PX+ACT_MENU_OX*3 ,ACT_MENU_PY },
    { ACT_UP_PX ,ACT_UP_PY },
    { ACT_DOWN_PX ,ACT_DOWN_PY },
   };
@@ -1181,7 +1156,7 @@ static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
     wk->objResIcon.res[OBJ_RES_CELLANIM].tbl[0],
     pp->px+ACT_ICON_OX, pp->py+ACT_ICON_OY, 0, OBJ_BG_PRI, OBJ_SPRI_ICON+idx);
 
-	pp->msgOam.bmp = GFL_BMP_Create( BMP_PANEL_OAM_SX, BMP_PANEL_OAM_SY, GFL_BMP_16_COLOR, wk->heapID );
+	pp->msgOam.bmp = GFL_BMP_Create( BMP_PANEL_OAM_SX, BMP_PANEL_OAM_SY, GFL_BMP_16_COLOR, wk->heap_sID );
 
 	finit.bmp = pp->msgOam.bmp;
 	finit.x = pp->px + ACT_MSG_OX;
@@ -1191,16 +1166,13 @@ static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
 	finit.soft_pri = OBJ_SPRI_MSG;			// ソフトプライオリティ
 	finit.bg_pri = OBJ_BG_PRI;				// BGプライオリティ
 	finit.setSerface = ACT_RENDER_ID;
-//	finit.setSerface = CLWK_SETSF_NONE;
 	finit.draw_type  = CLSYS_DRAW_SUB;
 
 	pp->msgOam.oam = BmpOam_ActorAdd( wk->bmpOam, &finit );
 
-  pp->str = GFL_STR_CreateBuffer( BUFLEN_PANEL_MSG, wk->heapID );
-  pp->name = GFL_STR_CreateBuffer( BUFLEN_TR_NAME, wk->heapID );
+  pp->str = GFL_STR_CreateBuffer( BUFLEN_PANEL_MSG, wk->heap_sID );
+  pp->name = GFL_STR_CreateBuffer( BUFLEN_TR_NAME, wk->heap_sID );
   GFL_BMP_Clear( pp->msgOam.bmp, 0 );
-//	x = ( BOX2OBJ_FNTOAM_BOXNAME_SX * 8 - PRINTSYS_GetStrWidth( str, syswk->app->font, 0 ) ) / 2;
-//	PRINTSYS_PrintColor( syswk->app->fobj[idx].bmp, x, 0, str, syswk->app->font, FCOL_FNTOAM );
 	BmpOam_ActorBmpTrans( pp->msgOam.oam );
 
 	BmpOam_ActorSetDrawEnable( pp->msgOam.oam, FALSE );
