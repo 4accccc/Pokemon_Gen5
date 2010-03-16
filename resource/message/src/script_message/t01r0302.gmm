@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-11T14:55:35"/>
+	<create user="matsumiya" host="W00224" date="2010-03-16T18:40:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="25" top="194" right="730" bottom="814" maximized="no" rayout="Vertical2">
+	<dialog left="1484" top="247" right="2189" bottom="867" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="766" top="13" right="1239" bottom="411" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -297,20 +297,20 @@
 ・仮：プラチナと同じ
 ・0＝主人公名</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-パソコンを　チェックした！[BE:01:ページ切り替え（クリア）]
-ポケモン　きそちしき[BE:01:ページ切り替え（クリア）]
-この　せかいでは　ポケモンと
-ひとが　いっしょに　くらしています[BE:01:ページ切り替え（クリア）]
-ポケモンを　たたかわせる　ひとを
-ポケモントレーナーと　いいます</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-パソコンを　チェックした！[BE:01:ページ切り替え（クリア）]
-ポケモン　基礎知識[BE:01:ページ切り替え（クリア）]
-この世界では　ポケモンと
-人が　一緒に　暮らしています[BE:01:ページ切り替え（クリア）]
-ポケモンを　戦わせる　人を
-ポケモントレーナーと　いいます</language>
+		<language name="JPN" width="256">[1:03:ポケモンタイプ:0]はパソコンの
+がめんを　チェックした！▼
+たんけんの　こころえ　その１
+Ｘボタンで　メニューが　ひらく！▼
+たんけんの　こころえ　その２
+レポートを　えらぶと　きろく　できる！▼
+あとは　なにも　かかれていない……</language>
+		<language name="JPN_KANJI" width="256">[1:03:ポケモンタイプ:0]はパソコンの
+モニタを　チェックした！▼
+探検の　心得　その１
+Ｘボタンで　メニューが　ひらく！▼
+探検の　心得　その２
+レポートを　選ぶと　記録できる！▼
+あとは　なにも　かかれていない……</language>
 	</row>
 
 	<flowchart-group-list>
