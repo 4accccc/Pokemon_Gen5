@@ -20,6 +20,8 @@
 #define C05R0601_WORKMAN_01                5
 #define C05R0601_TRAINERW_01               6
 #define C05R0601_FLD_ITEM_01               7
+#define C05R0601_HAKAIM_01                 8
+#define C05R0601_WOMAN3_01                 9
 
 #endif //ZONE_C05R0601_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05r0601.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

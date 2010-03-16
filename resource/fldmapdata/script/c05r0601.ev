@@ -26,6 +26,8 @@ _EVENT_DATA    ev_c05r0601_trainerw_01
 _EVENT_DATA    ev_c05r0601_nurse_01
 _EVENT_DATA    ev_c05r0601_workman_01
 _EVENT_DATA    ev_c05r0601_waitress_01
+_EVENT_DATA    ev_c05r0601_hakaim_01
+_EVENT_DATA    ev_c05r0601_woman3_01
 _EVENT_DATA_END
 
 
@@ -39,7 +41,9 @@ _EVENT_DATA_END
 /*  C05R0601 MAN3の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c05r0601_man3_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_man3_01 )
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG( msg_c05r0601_man3_01 ,C05R0601_MAN3_01)
+	_FIX_SHOP_CALL_GREETING_LESS( SHOP_KANPO )
 EVENT_END
 
 /**************************************************************/
@@ -192,4 +196,19 @@ EVENT_START   ev_c05r0601_waitress_01
 		
 	ENDIF
 	
+EVENT_END
+
+/**************************************************************/
+/*  C05R0601 クリア後お香*/
+/**************************************************************/
+EVENT_START   ev_c05r0601_hakaim_01
+	_TALK_OBJ_START()
+	_FIX_SHOP_CALL( SHOP_OKOU )
+EVENT_END
+
+/**************************************************************/
+/*  C05R0601 WOMAN2の会話用イベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_c05r0601_woman3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_woman3_01 )
 EVENT_END
