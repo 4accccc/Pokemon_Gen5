@@ -1326,7 +1326,6 @@ static void MB_PARENT_SaveTerm( MB_PARENT_WORK *work )
 //--------------------------------------------------------------
 static void MB_PARENT_SaveMain( MB_PARENT_WORK *work )
 {
-  SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork(work->initWork->gameData);
   switch( work->subState )
   {
   case MPSS_SAVE_WAIT_SAVE_INIT:
@@ -1350,14 +1349,14 @@ static void MB_PARENT_SaveMain( MB_PARENT_WORK *work )
     break;
     
   case MPSS_SAVE_INIT:
-    SaveControl_SaveAsyncInit( svWork );
+    GAMEDATA_SaveAsyncStart( work->initWork->gameData );
     work->subState = MPSS_SAVE_WAIT_FIRST;
     MB_TPrintf( "MB_Parent Save Start!\n" );
     break;
 
   case MPSS_SAVE_WAIT_FIRST:
     {
-      const SAVE_RESULT ret = SaveControl_SaveAsyncMain( svWork );
+      const SAVE_RESULT ret = GAMEDATA_SaveAsyncMain( work->initWork->gameData );
       if( ret == SAVE_RESULT_LAST )
       {
         MB_TPrintf( "MB_Parent Finish First!\n" );
@@ -1391,7 +1390,7 @@ static void MB_PARENT_SaveMain( MB_PARENT_WORK *work )
 
   case MPSS_SAVE_WAIT_SECOND:
     {
-  		const SAVE_RESULT ret = SaveControl_SaveAsyncMain( svWork );
+      const SAVE_RESULT ret = GAMEDATA_SaveAsyncMain( work->initWork->gameData );
   		if( ret == SAVE_RESULT_OK )
   		{
         work->subState = MPSS_SAVE_WAIT_SECOND_SYNC;
