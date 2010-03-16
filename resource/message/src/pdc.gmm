@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="sogabe" host="W00140" date="2010-03-16T18:49:24"/>
+	<create user="nishino" host="W00221" date="2010-03-16T19:02:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,13 +349,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1662" top="424" right="2351" bottom="1044" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="0" style="0000" width="514"/>
+	<dialog left="3" top="592" right="708" bottom="1220" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="855" top="259" right="1328" bottom="657" visible="yes"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="681"/>
-		<band id="3" index="3" style="0000" width="681"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -380,28 +380,30 @@
 	<row id="PDC_ENCOUNT">
 		<language name="JPN">ゆめで　であった
 [1:02:ポケモンニックネーム:0]が　あらわれた！</language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN_KANJI">夢で　出会った
+[1:02:ポケモンニックネーム:0]が　現れた！</language>
 	</row>
 
 	<row id="PDC_BALL_THROW">
 		<language name="JPN">おいで　[1:02:ポケモンニックネーム:0]！</language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN_KANJI">おいで　[1:02:ポケモンニックネーム:0]！</language>
 	</row>
 
 	<row id="PDC_CAPTURE">
 		<language name="JPN">やったー！
 [1:02:ポケモンニックネーム:0]が　なかまになった！</language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN_KANJI">やったー！
+[1:02:ポケモンニックネーム:0]が　仲間になった！</language>
 	</row>
 
 	<row id="PDC_DOUSURU">
 		<language name="JPN">[1:00:トレーナー名:0]は　どうする？</language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN_KANJI">[1:00:トレーナー名:0]は　どうする？</language>
 	</row>
 
 	<row id="PDC_ESCAPE">
-		<language name="JPN">[1:00:トレーナー名:0]は　にげだした！</language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">[1:00:トレーナー名:0]は　たちさった……</language>
+		<language name="JPN_KANJI">[1:00:トレーナー名:0]は　立ち去った……</language>
 	</row>
 
 	<flowchart-group-list>
