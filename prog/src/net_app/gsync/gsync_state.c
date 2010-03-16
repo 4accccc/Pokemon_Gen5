@@ -149,6 +149,7 @@ struct _G_SYNC_WORK {
   int lvup;
   int percent;
   DREAM_WORLD_SERVER_ERROR_TYPE ErrorNo;   ///エラーがあった場合の番号
+  char tempbuffer[30];
   u8 musicalNo;      ///< webで選択した番号  無い場合 0
   u8 cgearNo;        ///< webで選択した番号  無い場合 0
   u8 zukanNo;        ///< webで選択した番号  無い場合 0
@@ -1112,6 +1113,77 @@ static void _wakeupAction1(G_SYNC_WORK* pWork)
   
 }
 
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモン仮アカウント作成
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _createAccount2(G_SYNC_WORK* pWork)
+{
+  if(GFL_NET_IsInit()){
+    if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
+      {
+        gs_response* pEvent = (gs_response*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
+        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+        if(pEvent->ret_cd==DREAM_WORLD_SERVER_ALREADY_EXISTS){ //アカウントはすでにある
+           _CHANGE_STATE(_ghttpPokemonListDownload);
+        }
+        else if(pEvent->ret_cd==DREAM_WORLD_SERVER_ERROR_NONE){  //アカウント作成完了
+          DREAMWORLD_SV_SetAccount(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData),TRUE);
+           _CHANGE_STATE(_ghttpPokemonListDownload);
+        }
+        else{
+          pWork->ErrorNo = pEvent->ret_cd;
+          _CHANGE_STATE(_ErrorDisp);
+        }
+      }
+    }
+  }
+  else{
+    _CHANGE_STATE(_ghttpPokemonListDownload);
+  }
+}
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモン仮アカウント作成
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _createAccount(G_SYNC_WORK* pWork)
+{
+
+  if(GFL_NET_IsInit()){
+    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNT_CREATE, pWork->pNHTTPRap)){
+      s32 proid = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pWork->pGameData) );
+
+      GFL_STD_MemClear(pWork->tempbuffer, sizeof(pWork->tempbuffer));
+      STD_TSNPrintf(pWork->tempbuffer, sizeof(pWork->tempbuffer), "%d\0\0\0\0\0\0\0\0\0\0\0\0", proid);
+
+      OS_TPrintf("NHTTP_AddPostDataRaw byte %d %d %s\n",proid,STD_StrLen(pWork->tempbuffer),pWork->tempbuffer);
+      NHTTP_AddPostDataRaw( NHTTP_RAP_GetHandle(pWork->pNHTTPRap),
+                            pWork->tempbuffer, 12 );
+
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
+        _CHANGE_STATE(_createAccount2);
+      }
+    }
+  }
+  else{
+    if(GFL_UI_KEY_GetTrg()){
+      _CHANGE_STATE(_createAccount2);
+    }
+  }
+}
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケモン起こし処理
@@ -1144,7 +1216,6 @@ static void _playStatusCheck(G_SYNC_WORK* pWork, int status , gs_response* pRep)
     }
     break;
   case DREAM_WORLD_SERVER_NO_DATA:   //サーバーにデータが無い場合
-    //初回ならありうる
     switch(pWork->pParent->selectType){
     case GSYNC_CALLTYPE_POKELIST:          //セーブデータ上では眠らせるポケモンを選ぶ
       _CHANGE_STATE(_ghttpPokemonListDownload);
@@ -1161,7 +1232,9 @@ static void _playStatusCheck(G_SYNC_WORK* pWork, int status , gs_response* pRep)
       _CHANGE_STATE(_wakeupAction1);   //起こす部分
       break;
     case GSYNC_CALLTYPE_POKELIST:          //眠らせるポケモンを選ぶ
-      _CHANGE_STATE(_ghttpPokemonListDownload);
+      //初回ならありうる
+      _CHANGE_STATE(_createAccount);  //アカウントを作るに変更
+//      _CHANGE_STATE(_ghttpPokemonListDownload);
       break;
     }
     break;
