@@ -347,6 +347,32 @@ BOOL PMSND_IsLoading( void )
 //============================================================================================
 /**
  *
+ * @brief	プレーヤーの音量コントロール(ON/OFF)
+ *					※現状32bit = 32プレーヤーまで対応
+ *					in: bitmask : 最下位bitから0～のプレーヤー指定
+ */
+//============================================================================================
+void PMSND_AllPlayerVolumeEnable( BOOL playerON, u32 bitmask )
+{
+	int i;
+	int volume;
+
+	if(playerON == TRUE){
+		volume = 127;
+	} else {
+		volume = 0;
+	}
+
+	for(i=0; i<PMSND_PLAYER_MAX; i++){
+		if(bitmask & (1<<i)){
+			NNS_SndPlayerSetPlayerVolume( PLAYER_BGM, volume );
+		}
+	}
+}
+
+//============================================================================================
+/**
+ *
  * @brief	キャプチャー関数
  *
  */

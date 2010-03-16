@@ -418,6 +418,8 @@ typedef struct {
   void*						testSeq;
   void*						testBank;
   void*           testWave[4];
+
+	u8							debugWork[8];
 }SOUNDTEST_WORK;
 
 enum {
@@ -486,10 +488,9 @@ static void SoundWorkInitialize(SOUNDTEST_WORK* sw)
 
   sw->testSeq = NULL;
   sw->testBank = NULL;
-  for( i=0;i<4;i++ )
-  {
-    sw->testWave[i] = NULL;
-  }
+  for( i=0;i<4;i++ ){ sw->testWave[i] = NULL; }
+
+  for( i=0;i<8;i++ ){ sw->debugWork[i] = 0; }
 }
 
 static void SoundWorkFinalize(SOUNDTEST_WORK* sw)
@@ -659,6 +660,29 @@ static BOOL SoundTest(SOUNDTEST_WORK* sw)
 			// テスト
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){ PlayExBGM(sw); }
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){ StopExBGM(sw); }
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
+				u32		mask;
+
+				switch(sw->debugWork[0]){
+				case 0:
+					mask = PMSND_MASKPL_ALL;
+					break;
+				case 1:
+					mask = PMSND_MASKPL_BGM;
+					break;
+				case 2:
+					mask = PMSND_MASKPL_ALLSE;
+					break;
+
+				}
+				sw->debugWork[0]++;
+				if(sw->debugWork[0] >= 3){ sw->debugWork[0] = 0; }
+
+				PMSND_AllPlayerVolumeEnable( FALSE, mask ); 
+			}
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+				PMSND_AllPlayerVolumeEnable( TRUE, PMSND_MASKPL_ALL ); 
+			}
     }
     {
       //soundStatusコントロール設定
