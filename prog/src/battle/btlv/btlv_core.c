@@ -117,6 +117,133 @@ static BOOL subprocRotateMember( int* seq, void* wk_adrs );
 
 static  const BTL_POKEPARAM*  get_btl_pokeparam( BTLV_CORE* core, BtlvMcssPos pos );
 
+
+
+
+
+
+
+//=============================================================================================
+/**
+ * システム初期化
+ *
+ * @param   heapID
+ */
+//=============================================================================================
+void BTLV_InitSystem( HEAPID heapID )
+{
+  static const GFL_DISP_VRAM vramBank = {
+    GX_VRAM_BG_128_D,           // メイン2DエンジンのBG
+    GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
+    GX_VRAM_SUB_BG_128_C,       // サブ2DエンジンのBG
+    GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
+    GX_VRAM_OBJ_64_E,           // メイン2DエンジンのOBJ
+    GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
+    GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
+    GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
+    GX_VRAM_TEX_01_AB,          // テクスチャイメージスロット
+    GX_VRAM_TEXPLTT_01_FG,      // テクスチャパレットスロット
+    GX_OBJVRAMMODE_CHAR_1D_64K, // メインOBJマッピングモード
+    GX_OBJVRAMMODE_CHAR_1D_32K, // サブOBJマッピングモード
+  };
+
+  // BGsystem初期化
+  GFL_BG_Init( heapID );
+  GFL_BMPWIN_Init( heapID );
+  GFL_FONTSYS_Init();
+
+//  GFL_BG_DebugPrintCtrl( GFL_BG_SUB_DISP, TRUE );
+
+  // VRAMバンク設定
+  GFL_DISP_SetBank( &vramBank );
+
+  // 各種効果レジスタ初期化
+  G2_BlendNone();
+  G2S_BlendNone();
+
+  // 上下画面設定
+  GX_SetDispSelect( GX_DISP_SELECT_MAIN_SUB );
+
+  //ＢＧモード設定
+  {
+    static const GFL_BG_SYS_HEADER sysHeader = {
+      GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_3D,
+    };
+    GFL_BG_SetBGMode( &sysHeader );
+  }
+
+  //3D関連初期化 soga
+  {
+    GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K, 0, heapID, NULL );
+    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
+    G3X_AlphaBlend( TRUE );
+//    G3X_AlphaTest( TRUE, 31 );    //alpha0でワイヤーフレームにならないようにする
+    G3X_EdgeMarking( TRUE );
+    G3X_AntiAlias( FALSE );
+    G3X_SetFog( FALSE, 0, 0, 0 );
+    G2_SetBG0Priority( 1 );
+  }
+  //ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）soga
+  {
+    G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 |
+                 GX_WND_PLANEMASK_BG1 |
+                 GX_WND_PLANEMASK_BG2 |
+                 GX_WND_PLANEMASK_BG3 |
+                 GX_WND_PLANEMASK_OBJ,
+                 TRUE );
+    G2_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, TRUE );
+    G2_SetWnd0Position( 1, 0, 255, 192 );
+    GX_SetVisibleWnd( GX_WNDMASK_W0 );
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
+                      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
+                      GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+                      31, 3 );
+  }
+
+  {
+    static  const GFL_CLSYS_INIT clsysinit = {
+      0, 0,
+      0, 512,
+      4, 124,
+      4, 124,
+      0,
+//      48,48,48,48,
+      56,48,48,48,
+      16, 16,
+    };
+    GFL_CLACT_SYS_Create( &clsysinit, &vramBank, heapID );
+  }
+
+  //描画系オーバーレイロード
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_view ) );
+
+  GX_SetBankForLCDC( GX_VRAM_LCDC_H );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( vram_h ) );
+}
+//=============================================================================================
+/**
+ * システム終了
+ */
+//=============================================================================================
+void BTLV_QuitSystem( void )
+{
+  GFL_BMPWIN_Exit();
+  GFL_BG_Exit();
+
+  //エフェクト削除 soga
+  BTLV_EFFECT_Exit();
+
+  //セルアクター削除
+  GFL_CLACT_SYS_Delete();
+
+  //3D関連削除 soga
+  GFL_G3D_Exit();
+
+  //描画系オーバーレイアンロード
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( vram_h ) );
+}
+
 //=============================================================================================
 /**
  * 描画メインモジュールの生成
@@ -158,8 +285,6 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
   core->mainSeq = 0;
   core->selectItemSeq = 0;
 
-  //描画系オーバーレイロード
-  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_view ) );
 
   BTL_STR_InitSystem( mainModule, client, pokeCon, heapID );
 
@@ -180,16 +305,11 @@ void BTLV_Delete( BTLV_CORE* core )
 
   BTLV_SCD_Delete( core->scrnD );
   BTLV_SCU_Delete( core->scrnU );
-  cleanup_core( core );
 
   GFL_TCBL_Exit( core->tcbl );
   GFL_STR_DeleteBuffer( core->strBuf );
   GFL_FONT_Delete( core->largeFontHandle );
   GFL_HEAP_FreeMemory( core );
-
-  //描画系オーバーレイアンロード
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID( vram_h ) );
 }
 
 //=============================================================================================
@@ -295,7 +415,6 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
 {
   switch( *seq ){
   case 0:
-    setup_core( core, core->heapID );
     {
       BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParamBtl( core->mainModule, core->heapID );
       BTLV_EFFECT_Init( besp, core->smallFontHandle, core->heapID );
@@ -367,7 +486,6 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
   CAPTURE_DEMO_WORK*  cdw = ( CAPTURE_DEMO_WORK* )workBuffer;
   switch( *seq ){
   case 0:
-    setup_core( core, core->heapID );
     {
       BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParamBtl( core->mainModule, core->heapID );
       BTLV_EFFECT_Init( besp, core->smallFontHandle, core->heapID );
@@ -569,112 +687,6 @@ static  const BTL_POKEPARAM*  get_btl_pokeparam( BTLV_CORE* core, BtlvMcssPos po
   return  BTL_POKECON_GetFrontPokeDataConst( core->pokeCon, pokePos );
 }
 
-//-------------------------------------------
-
-static void setup_core( BTLV_CORE* wk, HEAPID heapID )
-{
-  static const GFL_DISP_VRAM vramBank = {
-    GX_VRAM_BG_128_D,           // メイン2DエンジンのBG
-    GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-    GX_VRAM_SUB_BG_128_C,       // サブ2DエンジンのBG
-    GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
-    GX_VRAM_OBJ_64_E,           // メイン2DエンジンのOBJ
-    GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
-    GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
-    GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
-    GX_VRAM_TEX_01_AB,          // テクスチャイメージスロット
-    GX_VRAM_TEXPLTT_01_FG,      // テクスチャパレットスロット
-    GX_OBJVRAMMODE_CHAR_1D_64K, // メインOBJマッピングモード
-    GX_OBJVRAMMODE_CHAR_1D_32K, // サブOBJマッピングモード
-  };
-
-  // BGsystem初期化
-  GFL_BG_Init( heapID );
-  GFL_BMPWIN_Init( heapID );
-  GFL_FONTSYS_Init();
-
-//  GFL_BG_DebugPrintCtrl( GFL_BG_SUB_DISP, TRUE );
-
-  // VRAMバンク設定
-  GFL_DISP_SetBank( &vramBank );
-
-  // 各種効果レジスタ初期化
-  G2_BlendNone();
-  G2S_BlendNone();
-
-  // 上下画面設定
-  GX_SetDispSelect( GX_DISP_SELECT_MAIN_SUB );
-
-  //ＢＧモード設定
-  {
-    static const GFL_BG_SYS_HEADER sysHeader = {
-      GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_3D,
-    };
-    GFL_BG_SetBGMode( &sysHeader );
-  }
-
-  //3D関連初期化 soga
-  {
-    GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K, 0, heapID, NULL );
-    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
-    G3X_AlphaBlend( TRUE );
-//    G3X_AlphaTest( TRUE, 31 );    //alpha0でワイヤーフレームにならないようにする
-    G3X_EdgeMarking( TRUE );
-    G3X_AntiAlias( FALSE );
-    G3X_SetFog( FALSE, 0, 0, 0 );
-    G2_SetBG0Priority( 1 );
-  }
-  //ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）soga
-  {
-    G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 |
-                 GX_WND_PLANEMASK_BG1 |
-                 GX_WND_PLANEMASK_BG2 |
-                 GX_WND_PLANEMASK_BG3 |
-                 GX_WND_PLANEMASK_OBJ,
-                 TRUE );
-    G2_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, TRUE );
-    G2_SetWnd0Position( 1, 0, 255, 192 );
-    GX_SetVisibleWnd( GX_WNDMASK_W0 );
-    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
-                      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
-                      GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
-                      31, 3 );
-  }
-
-  {
-    static  const GFL_CLSYS_INIT clsysinit = {
-      0, 0,
-      0, 512,
-      4, 124,
-      4, 124,
-      0,
-//      48,48,48,48,
-      56,48,48,48,
-      16, 16,
-    };
-    GFL_CLACT_SYS_Create( &clsysinit, &vramBank, heapID );
-  }
-
-//  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 16, 0 );
-
-
-  GX_SetBankForLCDC( GX_VRAM_LCDC_H );
-  GFL_OVERLAY_Load( FS_OVERLAY_ID( vram_h ) );
-}
-static void cleanup_core( BTLV_CORE* wk )
-{
-  GFL_BMPWIN_Exit();
-  GFL_BG_Exit();
-
-  //エフェクト削除 soga
-  BTLV_EFFECT_Exit();
-
-  //セルアクター削除
-  GFL_CLACT_SYS_Delete();
-
-  //3D関連削除 soga
-  GFL_G3D_Exit();
-}
 
 static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 {

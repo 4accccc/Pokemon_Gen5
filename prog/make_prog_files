@@ -342,6 +342,7 @@ SRCS_OVERLAY_DEV_WIFILIB   = net/net_devwifi.c \
 # k.ohno 10.01.12
 #===> main
 SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
+	battle/tr_ai/tr_ai.c \
         musical/musical_system.c \
         musical/musical_event.c \
         musical/dressup/musical_dressup_sys.c \
@@ -1041,30 +1042,25 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btl_server.c \
 			battle/btl_server_flow.c \
 			battle/btl_server_cmd.c \
-			battle/btl_pre_sc.c \
 			battle/btl_client.c \
 			battle/btl_adapter.c \
 			battle/btl_pokeparam.c \
 			battle/btl_event.c \
 			battle/btl_calc.c \
-			battle/btl_net.c \
-			battle/btl_string.c \
 			battle/btl_util.c \
-			battle/btl_field.c \
 			battle/btl_pokeselect.c \
 			battle/btl_sick.c \
 			battle/btl_pospoke_state.c \
 			battle/btl_wazarec.c \
 			battle/btl_deadrec.c \
 			battle/btl_pokeset.c \
-			battle/btl_rec.c \
 			battle/handler/hand_tokusei.c \
 			battle/handler/hand_item.c \
 			battle/handler/hand_waza.c \
-			battle/handler/hand_side.c \
 			battle/btlv/btlv_core.c \
-			battle/btlv/btlv_scu.c \
-			battle/btlv/btlv_scd.c
+			battle/btlv/btlv_scu.c
+
+
 
 # バトル表示
 #===> SRCS_OVERLAY_BATTLE
@@ -1108,9 +1104,16 @@ SRCS_OVERLAY_BATTLE_PLIST = battle/app/b_plist_anm.c \
 # 戦闘はVRAM_Hが空いているのでLCDCのメモリに割り当てて配置
 # 戦闘で使う以外のソースは配置しないでください
 #===> LCDC_VRAM_H
-SRCS_OVERLAY_VRAM_H =	battle/tr_ai/tr_ai.c \
-			battle/handler/hand_field.c \
-			battle/handler/hand_pos.c
+SRCS_OVERLAY_VRAM_H =	battle/handler/hand_field.c \
+			battle/handler/hand_pos.c \
+			battle/handler/hand_side.c \
+			battle/btlv/btlv_scd.c \
+			battle/btl_rec.c \
+			battle/btl_net.c \
+			battle/btl_field.c \
+			battle/btl_string.c
+
+
 
 
 # マルチバトル開始前ポケモンリスト

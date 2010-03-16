@@ -767,10 +767,6 @@ static u8 scproc_HandEx_changeForm( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
 
 
 
-
-
-
-
 BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   BTL_SERVER* server, BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon,
   BTL_SERVER_CMD_QUE* que, BtlBagMode bagMode, HEAPID heapID )

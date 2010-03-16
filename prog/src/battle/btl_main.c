@@ -235,6 +235,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk = GFL_PROC_AllocWork( proc, sizeof(BTL_MAIN_MODULE), HEAPID_BTL_SYSTEM );
       GFL_STD_MemClear32( wk, sizeof(BTL_MAIN_MODULE) );
 
+      BTLV_InitSystem( HEAPID_BTL_VIEW );
       BTL_UTIL_PRINTSYS_Init();
 
       wk->heapID = HEAPID_BTL_SYSTEM;
@@ -363,6 +364,8 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
     break;
   case 4:
     BTL_Printf("クリーンアッププロセス３\n");
+    BTLV_QuitSystem();
+
     GFL_PROC_FreeWork( proc );
     GFL_HEAP_DeleteHeap( HEAPID_BTL_VIEW );
     GFL_HEAP_DeleteHeap( HEAPID_BTL_NET );
