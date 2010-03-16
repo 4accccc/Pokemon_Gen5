@@ -45,6 +45,9 @@ EVENT_START   ev_reserve_d05r0201_vs_plasma
 	_OBJ_ANIME_WAIT()
 	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_lookup)
 	_OBJ_ANIME_WAIT()
+	
+	//ŽµŒ«l‹ÈÄ¶
+	_START_TEMP_EVENT_BGM( SEQ_BGM_E_SAGE )
 
 	//ŽµŒ«l‚Â‚Ô‚â‚«
 	_BALLOONWIN_OBJMSG(msg_d05r0201_sage2_01,D05R0201_SAGE_01)
