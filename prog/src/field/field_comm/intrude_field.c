@@ -1045,6 +1045,9 @@ void IntrudeField_ConnectMapInit(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys
 
   MAP_MATRIX_Delete( mmatrix );
 #else
+  //パレスマップに入った時点で1つは自動で連結しているが、
+  //この処理を通る場合はIntrudeField_ConnectMapに連結数を任せる為、
+  //0初期化する
   intcomm->connect_map_count = 0;
 #endif
 }
@@ -1089,6 +1092,24 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
 
     MAP_MATRIX_Delete( mmatrix );
   }
+}
+
+//==================================================================
+/**
+ * マップ単品連結
+ *
+ * @param   fieldWork		
+ */
+//==================================================================
+void IntrudeField_ConnectMapOne(FIELDMAP_WORK *fieldWork)
+{
+  MAP_MATRIX *mmatrix = MAP_MATRIX_Create( HEAPID_FIELDMAP );
+  MAP_MATRIX_Init(mmatrix, NARC_map_matrix_palace02_mat_bin, ZONE_ID_PALACE01);
+
+  OS_TPrintf("--- Map連結 One ----\n");
+  FLDMAPPER_Connect( fieldWork, FIELDMAP_GetFieldG3Dmapper( fieldWork ), mmatrix );
+
+  MAP_MATRIX_Delete( mmatrix );
 }
 
 //==================================================================

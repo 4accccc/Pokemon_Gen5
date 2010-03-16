@@ -123,6 +123,7 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
 	intcomm->comm_status = INTRUDE_COMM_STATUS_INIT_START;
   intcomm->cps = CommPlayer_Init(FIELD_COMM_MEMBER_MAX, invalid_parent->gsys, HEAPID_APP_CONTROL);
   intcomm->member_num = 1;
+  intcomm->connect_map_count = 1; //パレスマップに入った時点で1つは自動で連結している為
   Intrude_InitTalkWork(intcomm, INTRUDE_NETID_NULL);
   Bingo_InitBingoSystem(Bingo_GetBingoSystemWork(intcomm));
   MISSION_Init(&intcomm->mission);
