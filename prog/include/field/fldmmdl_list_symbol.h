@@ -17,7 +17,7 @@
 #define PROC_HERO_ITEMGET 6 //自機アイテムゲット
 #define PROC_HERO_PCAZUKE 7 //自機PC預け
 #define PROC_BLACT_ONELOOP 8 //一パターンループアニメ
-#define PROC_PCWOMAN 9 //PC姉
+#define PROC_ACT0 9 //PC姉
 #define PROC_POKE 10 //連れ歩きポケモン
 #define PROC_POKE_FLY 11 //連れ歩きポケモン 浮遊演出
 #define PROC_MODEL 12 //ポリゴンモデル
@@ -124,6 +124,7 @@
 #define ANMID_YUREHERO 17 //尾瀬揺れ自機
 #define ANMID_SHIN_MU 18 //ポケモン　シン・ム
 #define ANMID_SPIDER 19 //くもの巣
+#define ANMID_ACT0 20 //人物汎用 反転未使用+演技
 
 //SEX 性別で指定するシンボルです。
 #define SEX_MALE 0

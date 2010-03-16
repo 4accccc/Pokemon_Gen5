@@ -540,12 +540,12 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
 
 //--------------------------------------------------------------
 /**
- * 描画処理　ビルボード　PCお姉さん
+ * 描画処理　ビルボード　基本パターン+演技専用
  * @param  mmdl  MMDL
  * @retval  nothing
  */
 //--------------------------------------------------------------
-static void DrawBlAct_DrawPCWoman( MMDL *mmdl )
+static void DrawBlAct_DrawAct( MMDL *mmdl )
 {
   VecFx32 pos;
   DRAW_BLACT_WORK *work;
@@ -562,7 +562,7 @@ static void DrawBlAct_DrawPCWoman( MMDL *mmdl )
   {
     u16 status = MMDL_GetDrawStatus( mmdl );
     
-    if( status == DRAW_STA_PC_BOW ){
+    if( status == DRAW_STA_ACT0 ){
       u16 init_flag = FALSE;
       u16 dir = blact_GetDrawDir( mmdl );
       u16 anm_idx = (status * DIR_MAX4);
@@ -631,12 +631,12 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActAlwaysAnime =
 };
 
 //--------------------------------------------------------------
-//  描画処理　ビルボード　PCお姉さん　まとめ
+//  描画処理　ビルボード　汎用+演技　まとめ
 //--------------------------------------------------------------
-const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActPCWoman =
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActAct =
 {
   DrawBlAct_Init,
-  DrawBlAct_DrawPCWoman,
+  DrawBlAct_DrawAct,
   DrawBlAct_Delete,
   DrawBlAct_Delete,  //本当は退避
   DrawBlAct_Init,    //本当は復帰

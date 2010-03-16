@@ -306,9 +306,15 @@
 #define DRAW_STA_DIR4_MAX (DRAW_STA_MAX*DIR_MAX4)
 
 //--------------------------------------------------------------
+//  基本+演技専用ステータス　その0
+//--------------------------------------------------------------
+#define DRAW_STA_ACT0 (DRAW_STA_MAX)
+#define DRAW_STA_ACT0_DIR4_MAX (DRAW_STA_DIR4_MAX+1)
+
+//--------------------------------------------------------------
 ///  PC受付専用ステータス
 //--------------------------------------------------------------
-#define DRAW_STA_PC_BOW (DRAW_STA_MAX)
+#define DRAW_STA_PC_BOW (DRAW_STA_ACT0)
 #define DRAW_STA_PCWOMAN_DIR4_MAX (DRAW_STA_DIR4_MAX+1)
 
 //--------------------------------------------------------------
@@ -506,7 +512,7 @@
 #define AC_WALK_D_7F 0x61 ///<下方向に移動 7フレーム
 #define AC_WALK_L_7F 0x62 ///<左方向に移動 7フレーム
 #define AC_WALK_R_7F 0x63 ///<右方向に移動 7フレーム
-#define AC_PC_BOW 0x64 ///<PCお辞儀(PCWOMAN1専用
+#define AC_ACT0 0x64 ///<演技(特定OBJ専用
 #define AC_HIDE_PULLOFF 0x65 ///<隠れ蓑脱ぐ(MV_HIDE専用
 #define AC_HERO_BANZAI 0x66 ///<PC両手差出(自機専用
 #define AC_MARK_SAISEN 0x67 ///<再戦マーク表示
@@ -587,6 +593,11 @@
 
 #define ACMD_END 0xfe ///<アニメーションコマンド終了
 #define ACMD_NOT 0xff ///<非アニメーションコマンド
+
+///PCお辞儀　以前は専用だったが、似たようなアニメを行うOBJが増えたので
+///AC_ACT0と名前を変えて置き換える。が、AC_PC_BOWを使用している箇所を考慮し
+///定義だけは残す。
+#define AC_PC_BOW (AC_ACT0)
 
 //======================================================================
 //  フィールド動作モデル 表示コード
