@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r15r0201.h"
-  //.include  "r15r0201.h"
+  .include  "r15r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,29 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r15r0201
+_EVENT_DATA    ev_r15r0201_veteranw_01
+_EVENT_DATA    ev_r15r0201_oldwoman1_01
+_EVENT_DATA    ev_r15r0201_assistantm_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*  veteranw_01*/
 /**************************************************************/
-//ev_r15r0201_flag_change:
-//  _END
+EVENT_START   ev_r15r0201_veteranw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r15r0201_veteranw_01)
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*  _oldwoman1_01*/
 /**************************************************************/
-ev_r15r0201:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_r15r0201_oldwoman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r15r0201_oldwoman1_01)
+EVENT_END
 
+/**************************************************************/
+/*  _assistantm_01*/
+/**************************************************************/
+EVENT_START   ev_r15r0201_assistantm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r15r0201_assistantm_01)
+EVENT_END

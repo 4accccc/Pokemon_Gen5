@@ -25,5 +25,9 @@
 #ifndef ZONE_R15_EVB_H
 #define ZONE_R15_EVB_H
 
+#define BG_R15_BOARD_01                   0
+#define BG_R15_BOARD_02                   1
+#define BG_R15_BOARD_03                   2
+#define BG_R15_BOARD_04                   3
 
 #endif //ZONE_R15_EVB_H
