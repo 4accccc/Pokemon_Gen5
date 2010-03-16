@@ -365,7 +365,7 @@ void PMSND_AllPlayerVolumeEnable( BOOL playerON, u32 bitmask )
 
 	for(i=0; i<PMSND_PLAYER_MAX; i++){
 		if(bitmask & (1<<i)){
-			NNS_SndPlayerSetPlayerVolume( PLAYER_BGM, volume );
+			NNS_SndPlayerSetPlayerVolume( i, volume );
 		}
 	}
 }
