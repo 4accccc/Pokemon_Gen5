@@ -1197,7 +1197,7 @@ static  void  PokemonViewerDrawInfo( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
 
     WORDSET_RegisterNumber( mons_info, 0, pvw->form_no[ pos ], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
     { 
-      int form_max = ( pvw->form_max == 0 ) ? 0 : pvw->form_max - 1;
+      int form_max = pvw->form_max - 1;
       WORDSET_RegisterNumber( mons_info, 1, form_max, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
     }
     str_src = GFL_MSG_CreateString( pvw->msg,  PVMSG_FORMNAME );
