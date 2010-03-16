@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kawada_koji" host="W00215" date="2010-03-15T11:17:38"/>
+	<create user="matsumiya" host="W00224" date="2010-03-16T10:39:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1751" top="100" right="2456" bottom="728" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="668" top="313" right="1141" bottom="711" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -378,10 +378,10 @@
 ・続けてwhite_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『ねえ　ベル▼
-あまり　またせないでくれるかな
+マイペースも　いいけどさ
 ポケモンが　もらえるんだよ！▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『ねえ　ベル▼
-あまり　待たせないでくれるかな
+マイペースも　いいけどさ
 ポケモンが　もらえるんだよ！▼</language>
 	</row>
 
