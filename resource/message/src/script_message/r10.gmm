@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T14:13:27"/>
+	<create user="matsumiya" host="W00224" date="2010-03-16T19:20:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -360,7 +360,7 @@
 あたしからは　これ！▼</language>
 	</row>
 
-	<row id="msg_r10_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてblack_05
 ・0＝主人公名前</comment>
@@ -371,7 +371,7 @@
 みんな　ばらばらで▼</language>
 	</row>
 
-	<row id="msg_r10_black_05">
+	<row id="msg_r10_black_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♂
 ・続けてwhite_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -381,7 +381,7 @@
 こんなときに　きみは……▼</language>
 	</row>
 
-	<row id="msg_r10_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてblack_06</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -481,7 +481,7 @@
 お互い　がんばろうね！！▼</language>
 	</row>
 
-	<row id="msg_r10_veteranm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r10_veteranm_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・GRIDX=442、GRIDZ=110、右向き
 ・アイテム入手処理
@@ -498,7 +498,7 @@
 オレは　これを　くれてやるのだ▼</language>
 	</row>
 
-	<row id="msg_r10_veteranm_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r10_veteranm_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
