@@ -48,8 +48,8 @@ ENCOUNT_WORK * ENCOUNT_WORK_Create( HEAPID heapID )
     wp->effect_encount.deb_interval = 10;
     wp->effect_encount.deb_prob = 100;
   #else
-    wp->effect_encount.deb_interval = EFFENC_DEFAULT_INTERVAL;
-    wp->effect_encount.deb_prob = EFFENC_DEFAULT_PROB;
+    wp->effect_encount.deb_interval = EFFENC_NORMAL_INTERVAL;
+    wp->effect_encount.deb_prob = EFFENC_NORMAL_PROB;
   #endif
 #endif
   return( wp );
