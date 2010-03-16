@@ -50,6 +50,9 @@ struct _BLINK_PALANM_WORK {
  * @param		hapID		ヒープＩＤ
  *
  * @return	アニメワーク
+ *
+ * @li	bgfrm = BLINKPALANM_MODE_MAIN_OBJ でメインOBJのパレットに転送します
+ * @li	bgfrm = BLINKPALANM_MODE_SUB_OBJ でサブOBJのパレットに転送します
  */
 //--------------------------------------------------------------------------------------------
 BLINKPALANM_WORK * BLINKPALANM_Create( u16 offs, u16 size, u16 bgfrm, HEAPID heapID )

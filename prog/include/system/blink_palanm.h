@@ -18,10 +18,10 @@
 //	定数定義
 //============================================================================================
 
-#define	BLINKPALANM_MODE_MAIN_OBJ		( 0xfffe )
-#define	BLINKPALANM_MODE_SUB_OBJ		( 0xffff )
-
 typedef struct _BLINK_PALANM_WORK	BLINKPALANM_WORK;		// 点滅パレットアニメワーク
+
+#define	BLINKPALANM_MODE_MAIN_OBJ		( 0xfffe )	// メインＯＢＪパレット定義
+#define	BLINKPALANM_MODE_SUB_OBJ		( 0xffff )	// サブＯＢＪパレット定義
 
 
 //============================================================================================
@@ -38,6 +38,9 @@ typedef struct _BLINK_PALANM_WORK	BLINKPALANM_WORK;		// 点滅パレットアニメワーク
  * @param		hapID		ヒープＩＤ
  *
  * @return	アニメワーク
+ *
+ * @li	bgfrm = BLINKPALANM_MODE_MAIN_OBJ でメインOBJのパレットに転送します
+ * @li	bgfrm = BLINKPALANM_MODE_SUB_OBJ でサブOBJのパレットに転送します
  */
 //--------------------------------------------------------------------------------------------
 extern BLINKPALANM_WORK * BLINKPALANM_Create( u16 offs, u16 size, u16 bgfrm, HEAPID heapID );
