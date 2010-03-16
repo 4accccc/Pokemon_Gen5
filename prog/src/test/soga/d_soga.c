@@ -251,12 +251,13 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
     break;
   case 2:
     { 
+      POKEMON_PARAM*  pp = PP_Create( MONSNO_HUSIGIDANE, 5, 0, wk->heapID );
       BTL_FIELD_SITUATION bfs = { 
         0, 0, 0, 0, 0, 12, 0,
       };
       wk->bfs = bfs;
       GFL_OVERLAY_Load( FS_OVERLAY_ID(pdc) );
-      wk->psp = PDC_MakeSetUpParam( NULL, &wk->bfs, wk->heapID );
+      wk->psp = PDC_MakeSetUpParam( pp, &wk->bfs, wk->heapID );
       ZONEDATA_Open( wk->heapID );
       GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, spt[ wk->pos ].gpd, wk->psp );
     }
@@ -305,6 +306,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcExit( GFL_PROC * proc, int * seq, void
   GFL_BG_Exit();
   GFL_BMPWIN_Exit();
 
+  GFL_PROC_LOCAL_Exit( wk->local_procsys );
   GFL_PROC_FreeWork( proc );
 
   GFL_HEAP_DeleteHeap( HEAPID_SOGABE_DEBUG );
