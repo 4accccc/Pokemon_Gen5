@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-03-14T14:33:45"/>
+	<create user="matsumiya" host="W00224" date="2010-03-16T12:37:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1379" top="310" right="2084" bottom="938" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -305,12 +305,14 @@
 ポケモンと　いっしょに
 どこかに　いってみたい　きもち[BE:00:ページ切り替え（行送り）]
 わかるけれど……[BE:01:ページ切り替え（クリア）]
-まず　アララギはかせに　あおうよ[BE:01:ページ切り替え（クリア）]</language>
+まず　アララギはかせに
+おれいを　いわないとね[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
 ポケモンと　一緒に
 どこかに　行ってみたい　気持ち[BE:00:ページ切り替え（行送り）]
 わかるけれど……[BE:01:ページ切り替え（クリア）]
-まず　アララギ博士に　会おうよ[BE:01:ページ切り替え（クリア）]</language>
+まず　アララギ博士に
+お礼を　いわないとね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -322,12 +324,12 @@
 ベルの　いえまで　いってくれない？[BE:01:ページ切り替え（クリア）]
 きっと　いえで
 のんびりしていると　おもうんだ▽
-なんだか　おじょうさま　っぽいよね</language>
+ほんとう　マイペースだよね</language>
 		<language name="JPN_KANJI" width="256">チェレン『申し訳ないけれど
 ベルの　家まで　行ってくれない？[BE:01:ページ切り替え（クリア）]
 きっと　まだ
 のんびりしていると　思うんだ▽
-なんだか　お嬢様　っぽいよね</language>
+本当　マイペースだよね</language>
 	</row>
 
 	<row id="msg_t01_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -555,10 +557,10 @@
 ・ライバルと会話→black_07</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ベル『ねえ　[1:00:トレーナー名:0]！▼
-あなたに　あわせるから
+みんなで　いっしょに
 １ばんどうろに　ふみだそうよ！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『ねえ　[1:00:トレーナー名:0]！▼
-あなたに　あわせるから
+みんなで　いっしょに
 １ばんどうろに　ふみだそうよ！▼</language>
 	</row>
 
@@ -606,7 +608,7 @@
 あんなことが　できるってよ！</language>
 	</row>
 
-	<row id="msg_t01_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・はい/いいえの選択肢表示
 　はいだと文字モード切替
@@ -619,7 +621,7 @@
 ひらがなのほうが　好きなのかしら？</language>
 	</row>
 
-	<row id="msg_t01_woman2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01_woman2_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・はい選択時</comment>
 		<language name="JPN" width="256">では
@@ -628,7 +630,7 @@
 はなしかたを　かえてみるわね</language>
 	</row>
 
-	<row id="msg_t01_woman2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01_woman2_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・いいえ選択時</comment>
 		<language name="JPN" width="256">そうよね！　ひらがなには
@@ -689,6 +691,176 @@
 		<attribute name="キャラ指定">看板：研究所</attribute>
 		<language name="JPN" width="256">アララギ　ポケモンけんきゅうじょ</language>
 		<language name="JPN_KANJI" width="256">アララギ　ポケモン研究所</language>
+	</row>
+
+	<row id="msg_t01_black_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・クリア後
+・主人公の家の前で待機
+　家からでるとイベント発動
+・続けてwhite_end_01
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『やあ　[1:00:トレーナー名:0]
+ハンサムさんの　はなしは　おわった？▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『やあ　[1:00:トレーナー名:0]
+ハンサムさんの　話は　終わった？▼</language>
+	</row>
+
+	<row id="msg_t01_white_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・クリア後
+・続けてblack_end_02</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『……ふたりとも　ごめんね▼
+サンヨウシティの　ジムリーダーさん
+よびに　いってたら▽
+ぜんぶ　おわっちゃってて……▼</language>
+		<language name="JPN_KANJI" width="256">ベル『……２人とも　ごめんね▼
+サンヨウシティの　ジムリーダーさん
+呼びに　いってたら▽
+ぜんぶ　終わっちゃってて……▼</language>
+	</row>
+
+	<row id="msg_t01_black_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・クリア後
+・続けてwhite_end_02</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『……それをいうなら
+ぼくだって　ゲーチスを▽
+ダークトリニティに　だっかんされたし▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……それをいうなら
+ぼくだって　ゲーチスを▽
+ダークトリニティに　奪還されたし▼</language>
+	</row>
+
+	<row id="msg_t01_white_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・クリア後
+・続けてblack_end_03</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『……ゲーチス？
+ダークトリニティ？▼</language>
+		<language name="JPN_KANJI" width="256">ベル『……ゲーチス？
+ダークトリニティ？▼</language>
+	</row>
+
+	<row id="msg_t01_black_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・クリア後
+・続けてwhite_end_03w　か
+　white_end_03b
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『……こんど　おしえるよ▼
+それよりもさ　[1:00:トレーナー名:0]　ベル
+きみたちは　これから　どうするの？▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……今度　教えるよ▼
+それよりもさ　[1:00:トレーナー名:0]　ベル
+きみたちは　これから　どうするの？▼</language>
+	</row>
+
+	<row id="msg_t01_white_end_03w" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・クリア後＋WHITEver
+・続けてblack_end_04</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『あたしね　あたしね
+ホワイトフォレストに　いくつもり！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『あたしね　あたしね
+ホワイトフォレストに　行くつもり！▼</language>
+	</row>
+
+	<row id="msg_t01_white_end_03b" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・クリア後＋BLACKver
+・続けてblack_end_04</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『あたしね　あたしね
+ブラックシティに　いくつもり！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『あたしね　あたしね
+ブラックシティに　行くつもり！▼</language>
+	</row>
+
+	<row id="msg_t01_black_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてwhite_end_04</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『ああ
+ライモンシティから　つながる▽
+１６ばんどうろの　さきだね▼
+なるほど　あちらの　ほうなら
+まだ　みたことのない　ポケモンと▽
+であえるかも　しれないな！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ああ
+ライモンシティから　つながる▽
+１６番道路の　先だね▼
+なるほど　あちらの　方なら
+まだ　みたことのない　ポケモンと▽
+出会えるかも　しれないな！▼</language>
+	</row>
+
+	<row id="msg_t01_white_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・クリア後
+・メッセージ表示後、研究所のほうへ移動
+・画面外に消えると続けてblack_end_05</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『みたことのない　ポケモン？▼
+そうだった！▼
+あたし　けんきゅうじょで
+ポケモンずかんを▽
+パワーアップ　してもらうんだった！▼
+ということで　ふたりとも
+また　どこかで　あおうねえ！！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『みたことのない　ポケモン？▼
+そうだった！▼
+あたし　研究所で　ポケモン図鑑を
+パワーアップ　してもらうんだった！▼
+ということで　２人とも
+また　どこかで　会おうねえ！！▼</language>
+	</row>
+
+	<row id="msg_t01_black_end_05" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・クリア後
+・ベルの移動先を見たままメッセージ表示
+・続けてblack_end_06</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『たびをしても
+マイペースは　かわらないね　ベルは▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『旅をしても
+マイペースは　変わらないね　ベルは▼</language>
+	</row>
+
+	<row id="msg_t01_black_end_06" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・クリア後
+・メッセージ表示後、ベルと反対側から
+　一番道路に向かう
+・画面外に消えると主人公、操作可能に</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ぼくは　もういちど
+１ばんどうろから　じゅんばんに▽
+めぐっていく　つもりさ▼
+きっと　また　あたらしい
+はっけんが　あるだろうし▼
+それに　とちゅうで　しちけんじんを
+みつけるかも　しれないしね▼
+ということで　[1:00:トレーナー名:0]
+どこかで　さいかい　したら▽
+そのときは　しょうぶ　しようよ！▼</language>
+		<language name="JPN_KANJI" width="256">ぼくは　もう一度
+１番道路から　順番に▽
+イッシュを　巡っていく　つもりさ▼
+きっと　また　新しい
+発見が　あるだろうし▼
+それに　途中で　七賢人を
+みつけるかも　しれないしね▼
+ということで　[1:00:トレーナー名:0]
+どこかで　再会したら▽
+そのときは　勝負しようよ！▼</language>
 	</row>
 
 	<flowchart-group-list>
