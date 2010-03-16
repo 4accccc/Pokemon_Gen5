@@ -1291,7 +1291,8 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
     return hit;
   }
 
-  if( biw->camera_work_wait > CAMERA_WORK_WAIT )
+  if( ( biw->camera_work_wait > CAMERA_WORK_WAIT ) &&
+      ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) )
   { 
     if( !BTLV_EFFECT_CheckExecute() ){
       BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
@@ -1539,7 +1540,7 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
-    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
+    PaletteFadeReqWrite( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
   case 1:
@@ -2777,9 +2778,16 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
   };
   int max = ( biw->type == BTLV_INPUT_TYPE_TRIPLE ) ? BTLV_INPUT_DIR_MAX : 4;
   int type = ( biw->type == BTLV_INPUT_TYPE_TRIPLE ) ? BUTTON_TYPE_DIR_6 : BUTTON_TYPE_DIR_4;
+  u8 letter, shadow, back;
+
+  GFL_FONTSYS_GetColor( &letter, &shadow, &back );
 
   monsname_p = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, GFL_HEAP_LOWID(biw->heapID) );
   wordset = WORDSET_Create( GFL_HEAP_LOWID(biw->heapID) );
+
+  GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( MSGCOLOR_PP_WHITE ),
+                        PRINTSYS_LSB_GetS( MSGCOLOR_PP_WHITE ),
+                        PRINTSYS_LSB_GetB( MSGCOLOR_PP_WHITE ) );
 
   for( i = 0 ; i < max ; i++){
     if( bisp->bidp[ i ].hp ){
@@ -2795,6 +2803,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
     biw->button_exist[ i ] = bisp->bidp[ i ].exist;  //押せるボタンかどうかチェック
   }
   biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
+  GFL_FONTSYS_SetColor( letter, shadow, back );
 
   WORDSET_Delete( wordset );
   GFL_STR_DeleteBuffer( monsname_p );
