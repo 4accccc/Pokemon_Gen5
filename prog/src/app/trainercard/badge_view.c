@@ -265,7 +265,7 @@ GFL_PROC_RESULT BadgeViewProc_End( GFL_PROC * proc, int *seq, void *pwk, void *m
 //----------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------
 /**
- * VBlank関数
+ * 関数
  *
  * @param none
  *
@@ -461,12 +461,12 @@ static void BgInit(BADGEVIEW_WORK *wk)
       },
       { // メイン画面：文字
         0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x128,
+        GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
         GX_BG_EXTPLTT_01,      0, 0, 0, FALSE
       },
       { // メイン画面：ボタン
         0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
+        GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x128,
         GX_BG_EXTPLTT_01,      2, 0, 0, FALSE
       },
       { // メイン画面：背景
@@ -522,11 +522,11 @@ static void BgGraphicInit(BADGEVIEW_WORK *wk)
   ARCHANDLE * handle = wk->g_handle;
 
   // サブ画面背景転送
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_trainer_case_badge_bg01_NCGR,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_trainer_case_badge_bg_02_NCGR,
                                         BV_BGFRAME_U_BG, 0, 0, FALSE, HEAPID_LEADERBOARD );
-  GFL_ARCHDL_UTIL_TransVramScreen(      handle, NARC_trainer_case_badge_bg02_NSCR,
+  GFL_ARCHDL_UTIL_TransVramScreen(      handle, NARC_trainer_case_badge_bg03_NSCR,
                                         BV_BGFRAME_U_BG, 0, 0, FALSE, HEAPID_LEADERBOARD );
-  GFL_ARCHDL_UTIL_TransVramPalette(     handle, NARC_trainer_case_badge_bg01_NCLR, 
+  GFL_ARCHDL_UTIL_TransVramPalette(     handle, NARC_trainer_case_badge_bg02_NCLR, 
                                         PALTYPE_SUB_BG, 0, 0, HEAPID_LEADERBOARD );
 
   // メイン画面背景転送
@@ -539,9 +539,9 @@ static void BgGraphicInit(BADGEVIEW_WORK *wk)
 
   // メイン画面背景転送
   GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_trainer_case_badge_bg01_NCGR,
-                                        BV_BGFRAME_D_BUTTON, 0, 0, FALSE, HEAPID_LEADERBOARD );
-  GFL_ARCHDL_UTIL_TransVramScreen(      handle, NARC_trainer_case_badge_bg02_NSCR,
-                                        BV_BGFRAME_D_BUTTON, 0, 0, FALSE, HEAPID_LEADERBOARD );
+                                        BV_BGFRAME_D_MSG, 0, 0, FALSE, HEAPID_LEADERBOARD );
+  GFL_ARCHDL_UTIL_TransVramScreen(      handle, NARC_trainer_case_badge_bg01_NSCR,
+                                        BV_BGFRAME_D_MSG, 0, 0, FALSE, HEAPID_LEADERBOARD );
   
   // タッチバーBG転送
   {
@@ -642,14 +642,14 @@ static const int clact_dat[][6]={
   { 28*8,  21*8,   1, BV_RES_COMMON_CHR, BV_RES_COMMON_CHR,  BV_RES_COMMON_CHR },// もどる
   { 24*8,  21*8,   0, BV_RES_COMMON_CHR, BV_RES_COMMON_CHR,  BV_RES_COMMON_CHR },// ×
   { 20*8,  21*8+4,   7, BV_RES_COMMON_CHR, BV_RES_COMMON_CHR,  BV_RES_COMMON_CHR },// Ｙチェック
-  {  2*8,  17*8,   0, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ0
-  {  6*8,  17*8,   1, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ1
-  { 10*8,  17*8,   2, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ2
-  { 14*8,  17*8,   3, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ3
-  { 18*8,  17*8,   4, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ4
-  { 22*8,  17*8,   5, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ5
-  { 26*8,  17*8,   6, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ6
-  { 30*8,  17*8,   7, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ7
+  {  2*8,  16*8,   0, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ0
+  {  6*8,  16*8,   1, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ1
+  { 10*8,  16*8,   2, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ2
+  { 14*8,  16*8,   3, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ3
+  { 18*8,  16*8,   4, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ4
+  { 22*8,  16*8,   5, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ5
+  { 26*8,  16*8,   6, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ6
+  { 30*8,  16*8,   7, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// バッジ7
   {  (4*0+2)*8,  14*8,   9, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// キラキラ0-１
   {  (4*0+4)*8,  17*8,  10, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// キラキラ0-２
   {  (4*0+3)*8,  19*8,   8, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,      },// キラキラ0-３
@@ -694,8 +694,8 @@ static void ClActSet(BADGEVIEW_WORK *wk)
     add.pos_x  = clact_dat[i][0];
     add.pos_y  = clact_dat[i][1];
     add.anmseq = clact_dat[i][2];
-    add.bgpri  = 0;
-    add.softpri  = 0;
+    add.bgpri    = 0;
+    add.softpri  = BV_OBJ_MAX-i;
 
     wk->clwk[i] = GFL_CLACT_WK_Create( wk->clUnit,
                                        wk->clres[clact_dat[i][3]],

@@ -2159,12 +2159,14 @@ static void VBlankFunc( GFL_TCB *tcb, void *work )
   TR_CARD_WORK* wk = (TR_CARD_WORK*)work;
   int scr;
 
+#if 0
   //”wŒiƒXƒNƒ[ƒ‹
   scr = -(wk->scrl_ct);
   GFL_BG_SetScroll( TRC_BG_BACK, GFL_BG_SCROLL_X_SET,scr );
   GFL_BG_SetScroll( TRC_BG_BACK, GFL_BG_SCROLL_Y_SET,scr );
   GFL_BG_SetScroll( TRC_BG_BADGE_BACK, GFL_BG_SCROLL_X_SET, scr);
   GFL_BG_SetScroll( TRC_BG_BADGE_BACK, GFL_BG_SCROLL_Y_SET, scr);
+#endif
 
   if(wk->aff_req){
     CardRevAffineSet(wk);

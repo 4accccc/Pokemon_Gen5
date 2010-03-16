@@ -519,10 +519,9 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
     }
   }
   //通信回数  ワイヤレスコンテスト+ワイヤレス交換+WiFi交換+ワイヤレス対戦+WiFi対戦+ワイヤレスポルト
-  cardData->CommNum = RECORD_Get(rec, RECID_CONTEST_COMM_ENTRY)+
-            RECORD_Get(rec, RECID_COMM_TRADE)+RECORD_Get(rec, RECID_WIFI_TRADE)+
-            RECORD_Get(rec, RECID_COMM_BATTLE)+RECORD_Get(rec, RECID_WIFI_BATTLE)+
-            RECORD_Get(rec, RECID_PORUTO_COMM);
+  cardData->CommNum = RECORD_Get(rec, RECID_COMM_TRADE)+RECORD_Get(rec, RECID_WIFI_TRADE)+
+                      RECORD_Get(rec, RECID_COMM_BATTLE)+RECORD_Get(rec, RECID_WIFI_BATTLE);
+                      
   // 通信対戦回数
   cardData->CommBattleNum = RECORD_Get(rec, RECID_BATTLE_COUNT);
   //勝ち数  ワイヤレス+WiFi
