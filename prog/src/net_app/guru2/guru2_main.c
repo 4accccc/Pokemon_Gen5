@@ -30,6 +30,7 @@
 
 #include "print/printsys.h"
 #include "print/wordset.h"
+#include "item/itemsym.h"
 
 #include "system/bmp_menulist.h"
 
@@ -6737,12 +6738,12 @@ static const OMAKE_AREA_TBL DATA_OmakeAreaTbl[G2MEMBER_MAX+1] =
 //--------------------------------------------------------------
 static const u32 DATA_KinomiTbl[G2MEMBER_MAX+1][2] =
 {
-  {0,0},  //0 dummy
-  {0,0},  //1 dummy
-  {159,163}, //2
-  {159,163}, //3
-  {164,168}, //4
-  {175,183}, //5
+  {   0,   0 },  //0 dummy
+  {   0,   0 },  //1 dummy
+  { 159, 163 },  //2 フィラのみ～イアのみ
+  { 159, 163 },  //3 フィラのみ～イアのみ
+  { 149, 153 },  //4 クラボのみ～ナナシのみ
+  { 169, 174 },  //5 ザクロのみ～マトマのみ
 };
 
 
