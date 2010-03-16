@@ -864,17 +864,23 @@ end
   fp_pltt = open( "otherpltt_wb.scr", "w" )
 
   fp_monsno.print( "//別フォルム定義\n" )
+  fp_monsnum.print( "//別フォルム定義\n" )
 
   form.size.times {|i|
     if form[ i ].get_form_max != 0
       split_data = read_data[ i - 1 ].split(/,/)
       fp_monsno.printf( "//%s\n", split_data[ PARA::POKENAME ] )
+      fp_monsnum.printf( "//%s\n", split_data[ PARA::POKENAME ] )
       max = form[ i ].get_form_max
       max.times {|j|
         str = label.make_label( "FORMNO_", split_data[ PARA::POKENAME ] )
+        str_num = "FORMNO_" + split_data[ PARA::GRA_NO ]
         str << "_"
+        str_num << "_"
         str << form[ i ].get_form_name( j ).upcase
+        str_num << form[ i ].get_form_name( j ).upcase
         fp_monsno.printf( "#define\t\t%s\t\t\t\t( %d )\n", str, j )
+        fp_monsnum.printf( "#define\t\t%s\t\t\t\t( %d )\n", str_num, j )
         if j != 0
           if split_data[ PARA::PLTT_ONLY ] == "●"
   	        fp_pltt.printf( "\"pmwb_%s_%s_n.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
@@ -913,6 +919,7 @@ end
         end
       }
       fp_monsno.print( "\n" )
+      fp_monsnum.print( "\n" )
     end
   }
 
