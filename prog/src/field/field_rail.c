@@ -308,6 +308,13 @@ FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID, u32 work_num, FIELD_CAMERA
   // 計算用ワークも初期か
   man->calc_work = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_RAIL_WORK) );
   initRail(man->calc_work, &man->rail_dat, man);
+
+  //TOMOYA_Printf( "rail man %d\n", sizeof(FIELD_RAIL_MAN) );
+  //TOMOYA_Printf( "rail work %d\n", sizeof(FIELD_RAIL_WORK)*work_num );
+  //TOMOYA_Printf( "rail point %d\n", sizeof(RAIL_POINT) );
+  //TOMOYA_Printf( "rail line %d\n", sizeof(RAIL_POINT) );
+  //TOMOYA_Printf( "rail camera %d\n", sizeof(RAIL_CAMERA_SET) );
+  //TOMOYA_Printf( "rail linepos %d\n", sizeof(RAIL_LINEPOS_SET) );
   
   return man;
 }

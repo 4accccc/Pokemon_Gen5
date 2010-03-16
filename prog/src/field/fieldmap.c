@@ -225,6 +225,13 @@ enum {
 
 
 //--------------------------------------------------------------
+///	ヒープ用プログラム領域
+//--------------------------------------------------------------
+#define FIELD_PROG_AREA_HEAP_SIZE  (0x10000)
+static u8 FIELD_PROG_AREA_HEAP_BUF[ FIELD_PROG_AREA_HEAP_SIZE ] ATTRIBUTE_ALIGN(4);  //<-4byteアライメント
+
+
+//--------------------------------------------------------------
 /**
  * @brief フィールドマップシーケンス動作関数の戻り値
  */
@@ -544,6 +551,12 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 	//マップコントロール
 	fieldWork->func_tbl = FIELDDATA_GetFieldFunctions( fieldWork->map_id );
 
+
+  // プログラムエリアを使用したヒープ作成
+  // このメモリを使用して、
+  // 天気などを動かす。
+  GFL_HEAP_CreateHeapInBuffer( FIELD_PROG_AREA_HEAP_BUF, FIELD_PROG_AREA_HEAP_SIZE, HEAPID_FIELD_PRBUF );
+
 	return fieldWork;
 }
 
@@ -557,6 +570,9 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 void FIELDMAP_Delete( FIELDMAP_WORK *fieldWork )
 {
   GAMESYS_WORK *gsys = fieldWork->gsys;
+
+  // プログラムエリアを使用したヒープを破棄
+  GFL_HEAP_DeleteHeap( HEAPID_FIELD_PRBUF );
 
   //エリアデータ
   AREADATA_Delete( fieldWork->areadata );
@@ -589,7 +605,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 
 	// CLACT初期化
 	GFL_CLACT_SYS_Create(
-			&fldmapdata_CLSYS_Init, &fldmapdata_dispVram, heapID );
+			&fldmapdata_CLSYS_Init, &fldmapdata_dispVram, HEAPID_FIELD_PRBUF );
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
@@ -667,7 +683,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     fieldWork->goldMsgWin = NULL;
 
     // 地名表示システム作成
-    fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
+    fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( HEAPID_FIELD_PRBUF, fieldWork->fldMsgBG );
 
     SET_CHECK("setup: camera & scene");  //デバッグ：処理負荷計測
     // フラッシュチェック
@@ -840,12 +856,12 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
           fieldWork->zonefog, 
           fsnd,
           fieldWork->fieldSeasonTime,
-          fieldWork->heapID );
+          HEAPID_FIELD_PRBUF ); // プログラムヒープを使用する。
     }
     
     // 天気晴れ
     FIELD_WEATHER_Set(
-        fieldWork->weather_sys, GAMEDATA_GetWeatherNo( fieldWork->gamedata ), fieldWork->heapID );
+        fieldWork->weather_sys, GAMEDATA_GetWeatherNo( fieldWork->gamedata ), HEAPID_FIELD_PRBUF );
 
     //フィールドギミックセットアップ
     FLDGMK_SetUpFieldGimmick(fieldWork);
@@ -2156,7 +2172,7 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
   // scenearea
   FLD_SCENEAREA_Update( fieldWork->sceneArea, &fieldWork->now_pos );
 	
-	FIELD_WEATHER_Main( fieldWork->weather_sys, fieldWork->heapID );
+	FIELD_WEATHER_Main( fieldWork->weather_sys, HEAPID_FIELD_PRBUF );
 	FIELD_FOG_Main( fieldWork->fog );
 	FIELD_LIGHT_Main( fieldWork->light, GFL_RTC_GetTimeBySecond() );
 }

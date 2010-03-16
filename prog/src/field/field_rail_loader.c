@@ -176,6 +176,8 @@ FIELD_RAIL_LOADER* FIELD_RAIL_LOADER_Create( u32 heapID )
 
 	p_loader = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_RAIL_LOADER) );
 
+  //TOMOYA_Printf( "rail loader size %d\n", sizeof(FIELD_RAIL_LOADER) );
+
 	// ŠÖ””z—ñ‚Ìİ’è
 	SettingClear( &p_loader->setting );
 
