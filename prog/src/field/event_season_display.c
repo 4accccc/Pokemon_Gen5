@@ -15,7 +15,6 @@
 #include "gamesystem/pm_season.h"  // for PMSEASON_xxxx
 #include "arc/arc_def.h"  // for ARCID_SEASON_DISPLAY
 #include "arc/season_display.naix"  // for datid
-#include "field_status_local.h"  // for FIELD_STATUS
 
 
 extern void FIELDMAP_InitBGMode( void );
@@ -189,38 +188,6 @@ GMEVENT* EVENT_SeasonDisplay( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,
   work->skipOn        = FALSE;
   SetSeq( work, seq, SEQ_INIT );
   return event;
-}
-
-//----------------------------------------------------------------------------------------
-/**
- * @brief 季節表示イベントに要するフレーム数を取得する
- *
- * @param gsys ゲームシステム
- *
- * @return イベント起動から終了までにかかるフレーム数
- */
-//----------------------------------------------------------------------------------------
-u32 GetSeasonDispEventFrame( GAMESYS_WORK* gsys )
-{
-  GAMEDATA* gdata;
-  FIELD_STATUS* fstatus;
-  u32 frame;
-  u8 last, now, num;
-
-  // 表示する季節の数を求める
-  gdata   = GAMESYSTEM_GetGameData( gsys );
-  fstatus = GAMEDATA_GetFieldStatus( gdata );
-  last    = FIELD_STATUS_GetSeasonDispLast( fstatus );
-  now     = GAMEDATA_GetSeasonID( gdata );
-  num     = (now - last + PMSEASON_TOTAL) % PMSEASON_TOTAL;
-
-  // フレーム数を計算
-  frame  = 0;
-  frame += 2;  // INIT, EXIT の分
-  frame += (num - 1) *   // スキップ表示の分 (PREPARE, FADEIN, WAIT, FADEOUT)
-           (1 + FADEIN_FRAME_SHORT + WAIT_FRAME_SHORT + FADEOUT_FRAME_SHORT);
-  frame += (1 + FADEIN_FRAME_LONG + WAIT_FRAME_LONG + FADEOUT_FRAME_LONG); // 現季節表示の分
-  return frame;
 }
 
 

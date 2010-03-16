@@ -78,35 +78,6 @@ void FIELD_STATUS_SetContinueFlag( FIELD_STATUS * fldstatus, BOOL flag );
 BOOL FIELD_STATUS_GetContinueFlag( const FIELD_STATUS * fldstatus );
 
 //------------------------------------------------------------------
-/**
- * @brief 季節表示フラグの設定
- */
-//------------------------------------------------------------------
-extern void FIELD_STATUS_SetSeasonDispFlag( FIELD_STATUS * fldstatus, BOOL flag );
-
-//------------------------------------------------------------------
-/**
- * @brief 季節表示フラグの取得
- */
-//------------------------------------------------------------------
-extern BOOL FIELD_STATUS_GetSeasonDispFlag( const FIELD_STATUS * fldstatus );
-
-//------------------------------------------------------------------
-/**
- * @brief 最後に表示した季節の設定
- */
-//------------------------------------------------------------------
-void FIELD_STATUS_SetSeasonDispLast( FIELD_STATUS * fldstatus, u8 season );
-
-//------------------------------------------------------------------
-/**
- * @brief 最後に表示した季節の取得
- */
-//------------------------------------------------------------------
-u8 FIELD_STATUS_GetSeasonDispLast( const FIELD_STATUS * fldstatus );
-
-
-//------------------------------------------------------------------
 /// 予約スクリプト制御関連
 //------------------------------------------------------------------
 extern void FIELD_STATUS_SetReserveScript( FIELD_STATUS * fldstatus, u16 scr_id );

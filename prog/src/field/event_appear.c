@@ -301,59 +301,60 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wk
 //------------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq, void* wk )
 {
-  EVENT_WORK*     work = (EVENT_WORK*)wk;
-  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
+  EVENT_WORK*    work     = (EVENT_WORK*)wk;
+  FIELDMAP_WORK* fieldmap = work->fieldmap;
+  FIELD_CAMERA*  camera   = FIELDMAP_GetFieldCamera( work->fieldmap );
 
-  switch( *seq )
-  {
+  switch( *seq ) {
   case 0:
     // カメラモードの設定
     work->cameraMode = FIELD_CAMERA_GetMode( camera );
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     // カメラ初期設定
     FIELD_CAMERA_SetAngleLen( camera, ZOOM_IN_DIST );
-    { // フェードイン
-      GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn_White( work->gsys, work->fieldmap,  FIELD_FADE_NO_WAIT );
-      GMEVENT_CallEvent( event, fade_event );
-    }
-    { // タスクの追加
-      FLD_CAMERA_PARAM def_param; 
-      fx32 val_dist;
-      FIELD_TASK* rot1;
-      FIELD_TASK* rot2;
-      FIELD_TASK* zoom;
-      FIELD_TASK_MAN* man;
-      u32 fadein_frame;
-      FIELD_CAMERA_GetInitialParameter( camera, &def_param );
-      fadein_frame = GetSeasonDispEventFrame( work->gsys );  // 季節表示にかかる時間を取得
-      val_dist = def_param.Distance << FX32_SHIFT;
-      rot1 = FIELD_TASK_PlayerRotate( work->fieldmap, fadein_frame, fadein_frame/5 );
-      rot2 = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
-      zoom = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, val_dist );
-      man  = FIELDMAP_GetTaskManager( work->fieldmap ); 
-      FIELD_TASK_MAN_AddTask( man, rot1, NULL );
-      FIELD_TASK_MAN_AddTask( man, rot2, rot1 );
-      FIELD_TASK_MAN_AddTask( man, zoom, rot1 );
-    }
-    ++( *seq );
+    (*seq)++;
     break;
   case 1:
-    { // タスクの終了待ち
+    // タスクを登録
+    { 
+      FLD_CAMERA_PARAM def_param; 
+      fx32 val_dist;
+      FIELD_TASK* rot;
+      FIELD_TASK* zoom;
       FIELD_TASK_MAN* man;
-      man  = FIELDMAP_GetTaskManager( work->fieldmap ); 
-      if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
-      {
-        ++( *seq );
-      }
+      FIELD_CAMERA_GetInitialParameter( camera, &def_param );
+      val_dist = def_param.Distance << FX32_SHIFT;
+      rot  = FIELD_TASK_PlayerRotate_SpeedDown( fieldmap, 60, 8 );
+      zoom = FIELD_TASK_CameraLinearZoom( fieldmap, ZOOM_OUT_FRAME, val_dist );
+      man  = FIELDMAP_GetTaskManager( fieldmap ); 
+      FIELD_TASK_MAN_AddTask( man, rot, NULL );
+      FIELD_TASK_MAN_AddTask( man, zoom, NULL );
     }
+    (*seq)++;
     break;
   case 2:
+    // 画面フェードイン開始
+    {
+      GMEVENT* fadeEvent;
+      fadeEvent = EVENT_FieldFadeIn_White( work->gsys, fieldmap,  FIELD_FADE_NO_WAIT );
+      GMEVENT_CallEvent( event, fadeEvent );
+    }
+    (*seq)++;
+    break;
+  case 3:
+    // タスクの終了待ち
+    {
+      FIELD_TASK_MAN* man;
+      man = FIELDMAP_GetTaskManager( fieldmap ); 
+      if( FIELD_TASK_MAN_IsAllTaskEnd(man) ) { (*seq)++; }
+    }
+    break;
+  case 4:
     // カメラモードの復帰
     FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
     ++( *seq );
     break;
-  case 3:
+  case 5:
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
@@ -385,22 +386,16 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, voi
     { // タスクの追加
       FLD_CAMERA_PARAM def_param; 
       fx32 val_dist;
-      FIELD_TASK* rot1;
-      FIELD_TASK* rot2;
+      FIELD_TASK* rot;
       FIELD_TASK* zoom;
       FIELD_TASK_MAN* man;
-      u32 fadein_frame;
       FIELD_CAMERA_GetInitialParameter( camera, &def_param );
-      fadein_frame = GetSeasonDispEventFrame( work->gsys );  // 季節表示にかかる時間を取得
       val_dist = def_param.Distance << FX32_SHIFT;
-      rot1    = FIELD_TASK_PlayerRotate( work->fieldmap, fadein_frame, fadein_frame/5 );
-      rot2    = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
-      zoom    = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, val_dist );
-      man     = FIELDMAP_GetTaskManager( work->fieldmap ); 
-      FIELD_TASK_MAN_AddTask( man, rot1, NULL );
-      FIELD_TASK_MAN_AddTask( man, rot2, rot1 );
-      FIELD_TASK_MAN_AddTask( man, zoom, rot1 );
-      // @todo SE
+      rot  = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
+      zoom = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, val_dist );
+      man  = FIELDMAP_GetTaskManager( work->fieldmap ); 
+      FIELD_TASK_MAN_AddTask( man, rot, NULL );
+      FIELD_TASK_MAN_AddTask( man, zoom, NULL );
     }
     ++( *seq );
     break;
@@ -443,33 +438,33 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     // カメラ初期設定
     FIELD_CAMERA_SetAngleLen( camera, ZOOM_IN_DIST );
+    { // タスクの追加
+      FLD_CAMERA_PARAM def_param; 
+      fx32 val_dist;
+      FIELD_TASK* rot;
+      FIELD_TASK* zoom;
+      FIELD_TASK_MAN* man;
+      FIELD_CAMERA_GetInitialParameter( camera, &def_param );
+      val_dist = def_param.Distance << FX32_SHIFT;
+      rot  = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
+      zoom = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, val_dist );
+      man  = FIELDMAP_GetTaskManager( work->fieldmap ); 
+      FIELD_TASK_MAN_AddTask( man, rot, NULL );
+      FIELD_TASK_MAN_AddTask( man, zoom, NULL );
+    }
+    ++( *seq );
+    break;
+
+  case 1:
     { // フェードイン
       GMEVENT* fade_event;
       fade_event = EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap,  FIELD_FADE_NO_WAIT );
       GMEVENT_CallEvent( event, fade_event );
     }
-    { // タスクの追加
-      FLD_CAMERA_PARAM def_param; 
-      fx32 val_dist;
-      FIELD_TASK* rot1;
-      FIELD_TASK* rot2;
-      FIELD_TASK* zoom;
-      FIELD_TASK_MAN* man;
-      u32 fadein_frame;
-      FIELD_CAMERA_GetInitialParameter( camera, &def_param );
-      fadein_frame = GetSeasonDispEventFrame( work->gsys );  // 季節表示にかかる時間を取得
-      val_dist = def_param.Distance << FX32_SHIFT;
-      rot1    = FIELD_TASK_PlayerRotate( work->fieldmap, fadein_frame, fadein_frame/5 );
-      rot2    = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
-      zoom    = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, val_dist );
-      man     = FIELDMAP_GetTaskManager( work->fieldmap ); 
-      FIELD_TASK_MAN_AddTask( man, rot1, NULL );
-      FIELD_TASK_MAN_AddTask( man, rot2, rot1 );
-      FIELD_TASK_MAN_AddTask( man, zoom, rot1 );
-    }
     ++( *seq );
-    break;
-  case 1:
+    break; 
+
+  case 2:
     { // タスクの終了待ち
       FIELD_TASK_MAN* man;
       man  = FIELDMAP_GetTaskManager( work->fieldmap ); 
@@ -485,12 +480,14 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void
       }
     }
     break;
-  case 2:
+
+  case 3:
     // カメラモードの復帰
     FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
     ++( *seq );
     break;
-  case 3:
+
+  case 4:
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
