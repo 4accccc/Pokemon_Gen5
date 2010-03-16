@@ -47,6 +47,9 @@
 //外部公開
 #include "net_app/wifibattlematch.h"
 
+//デバッグ
+#include "debug/debug_nagihashi.h"
+
 //-------------------------------------
 ///	DEBUG
 //=====================================
@@ -476,6 +479,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 	};
 
   WIFIBATTLEMATCH_SYS   *p_wk     = p_wk_adrs;
+
+  DEBUG_HEAP_PrintRestUse( GFL_HEAPID_APP );
 
   //シーケンス
 	switch( *p_seq )

@@ -31,10 +31,7 @@
 #include "system/poke2dgra.h"
 #include "script_message.naix"
 #include "msg/script/msg_common_scr.h"
-
-//@todo
-#include "pokelist_gra.naix"
-#include "../../app/pokelist/pokelist_particle_lst.h"
+#include "mystery_spa.h"
 
 //セーブデータ
 #include "savedata/mystery_data.h"
@@ -68,6 +65,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 //=====================================
 #ifdef PM_DEBUG
 //#define MYSTERY_SAVEDATA_CLEAR
+#define MYSTERY_MOVIE_DEMO  //Rボタン押せば強制映画デモ
 #endif //PM_DEBUG
 
 //=============================================================================
@@ -210,6 +208,8 @@ typedef enum
 
 
 #define MYSTERY_RECV_TIMEOUT    (60*60)
+
+#define MYSTERY_RECV_CARD_END_BTN (4*60)
 
 //=============================================================================
 /**
@@ -390,6 +390,7 @@ typedef struct
 
   //汎用カウンタ
   u32                       cnt;
+  BOOL                      is_delete;  //カード削除した直後
 
   //取得データ
   DOWNLOAD_GIFT_DATA        data;
@@ -1299,6 +1300,7 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   { 
     SEQ_INIT,
     SEQ_TOP_SELECT,
+    SEQ_CONNECT_MSG,
     SEQ_YESNO_INIT,
     SEQ_YESNO_SELECT,
     SEQ_NET_INIT,
@@ -1338,12 +1340,21 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   switch( *p_seq )
   { 
   case SEQ_INIT:
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_001, MYSTERY_TEXT_TYPE_QUE );
-    if( p_wk->p_menu == NULL )
-    {
-      UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_TOP, HEAPID_MYSTERYGIFT ); 
+    if( p_wk->is_delete )
+    { 
+      //カード捨てた直後ならば通信確率へ
+      p_wk->is_delete = FALSE;
+      *p_seq  = SEQ_CONNECT_MSG;
     }
-    *p_seq  = SEQ_TOP_SELECT;
+    else
+    { 
+      MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_001, MYSTERY_TEXT_TYPE_QUE );
+      if( p_wk->p_menu == NULL )
+      {
+        UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_TOP, HEAPID_MYSTERYGIFT ); 
+      }
+      *p_seq  = SEQ_TOP_SELECT;
+    }
     break;
 
   case SEQ_TOP_SELECT:
@@ -1407,10 +1418,8 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 #endif
             else
             { 
-              //通常時  受け取れる
-              MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_002, MYSTERY_TEXT_TYPE_STREAM );
-              MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_YESNO_INIT );
-              *p_seq  = SEQ_MSG_WAIT;
+              //通常時なので受け取れる
+              *p_seq  = SEQ_CONNECT_MSG;
             }
           }
         }
@@ -1435,6 +1444,13 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     }
     break;
     
+  case SEQ_CONNECT_MSG:
+    //通常時  受け取れる
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_002, MYSTERY_TEXT_TYPE_STREAM );
+    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_YESNO_INIT );
+    *p_seq  = SEQ_MSG_WAIT;
+    break;
+
   case SEQ_YESNO_INIT:
     UTIL_CreateList( p_wk, UTIL_LIST_TYPE_YESNO, HEAPID_MYSTERYGIFT );
     *p_seq  = SEQ_YESNO_SELECT;
@@ -1504,6 +1520,8 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       { 
         MYSTERY_MENU_SetBlink( p_wk->p_menu, 1, FALSE );
       }
+#if 0
+      //赤外線は点滅しないことになりました
       if( bit & GAME_COMM_STATUS_BIT_IRC )
       { 
         MYSTERY_MENU_SetBlink( p_wk->p_menu, 2, TRUE );
@@ -1512,7 +1530,7 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       { 
         MYSTERY_MENU_SetBlink( p_wk->p_menu, 2, FALSE );
       }
-
+#endif
       //選択
       ret = UTIL_MainMenu( p_wk ); 
       if( ret != MYSTERY_MENU_SELECT_NULL )
@@ -2050,6 +2068,9 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     break;
 
   case SEQ_DIRTY_END:
+    UTIL_DeleteMenu(p_wk);
+    UTIL_DeleteGuideText( p_wk );
+
     MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_DisConnectReturn );
     break;
 
@@ -2107,6 +2128,15 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     //おくりものを受信中です
     { 
       GFL_CLUNIT	*p_unit	= MYSTERY_GRAPHIC_GetClunit( p_wk->p_graphic );
+
+#ifdef MYSTERY_MOVIE_DEMO
+  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_R)
+  { 
+    p_wk->data.movie_flag = TRUE;
+  }
+#endif //MYSTERY_MOVIE_DEMO
+
+
       MYSTERY_DEMO_Init( &p_wk->demo, p_unit, &p_wk->data, p_wk->p_gamedata, &p_wk->obj, &p_wk->bg, &p_wk->effect, HEAPID_MYSTERYGIFT );
       MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_014, MYSTERY_TEXT_TYPE_QUE );
       *p_seq  = SEQ_INIT_ONE_WAIT;
@@ -2215,12 +2245,13 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     MYSTERY_CARD_Main( p_wk->p_card );
     if( MYSTERY_CARD_IsEndEffect(p_wk->p_card) )
     { 
+      p_wk->cnt = 0;
       *p_seq  = SEQ_WAIT_SYNC;
     }
     break;
     
   case SEQ_WAIT_SYNC:
-    if( p_wk->cnt++ > 30 )
+    if( p_wk->cnt++ > MYSTERY_RECV_CARD_END_BTN )
     { 
       p_wk->cnt  = 0;
       *p_seq  = SEQ_INIT_BTN;
@@ -2472,6 +2503,7 @@ static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
 
   case SEQ_NEXT_STARTSELECT:
+    p_wk->is_delete = MYSTERYDATA_CheckCardDataSpace( p_wk->p_sv );
     MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
     break;
 
@@ -3154,13 +3186,21 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
       1,  //ポケモン
       2,  //道具
       6,  //Gパワー
-      3,   //映画
+      4,   //映画
     };
     u16 plt_ofs;
 
     //なんのデータかによって、パレットフェードする色が違う読み込み
     GF_ASSERT( cp_data->data.gift_type < NELEMS(sc_type_to_back_fade) );
-    plt_ofs = sc_type_to_back_fade[ cp_data->data.gift_type ];
+
+    if( cp_data->movie_flag )
+    { 
+      plt_ofs = sc_type_to_back_fade[ 4 ];
+    }
+    else
+    { 
+      plt_ofs = sc_type_to_back_fade[ cp_data->data.gift_type ];
+    }
 
     //BGのパレットフェード用にパレットをメモリ読み込み
     { 
@@ -3231,9 +3271,9 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
     }
     break;
 
-  case MYSTERYGIFT_TYPE_RULE:
-    /* fallthrow */
-  case MYSTERYGIFT_TYPE_NUTSET:
+  default:
+    GF_ASSERT( 0 );
+  case MYSTERYGIFT_TYPE_POWER:
     {	
       ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
 
@@ -3250,8 +3290,6 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
     }
     break;
 
-  default:
-    GF_ASSERT( 0 );
   }
 
 	//CLWK登録
@@ -3478,7 +3516,6 @@ static void Mystery_Demo_MovieMain( MYSTERY_DEMO_WORK *p_wk )
   switch( p_wk->seq )
   {
   case SEQ_INIT:
-    MYSTERY_EFFECT_Start( p_wk->p_effect, MYSTERY_EFFECT_TYPE_MOVIE );
     GFL_BG_SetVisible( BG_FRAME_M_BACK1, FALSE );
     BG_Load( p_wk->p_bg, BG_LOAD_TYPE_STAGE_M );
     p_wk->seq = SEQ_START_FADEIN;
@@ -3528,6 +3565,7 @@ static void Mystery_Demo_MovieMain( MYSTERY_DEMO_WORK *p_wk )
     { 
       p_wk->sync  = 0;
       p_wk->seq   = SEQ_MOVE;
+      MYSTERY_EFFECT_Start( p_wk->p_effect, MYSTERY_EFFECT_TYPE_MOVIE );
     }
     break;
 
@@ -3796,8 +3834,10 @@ static void Mystery_Effect_MovieMain( MYSTERY_EFFECT_WORK *p_wk )
   { 
   case SEQ_INIT:
     MYSTERY_PTC_Init( &p_wk->ptc, p_wk->heapID );
-    MYSTERY_PTC_LoadResource( &p_wk->ptc, ARCID_POKELIST, NARC_pokelist_gra_demo_sheimi_spa, p_wk->heapID );
-    MYSTERY_PTC_Start( &p_wk->ptc, DEMO_SHEIMI_SPAMAX );
+    MYSTERY_PTC_LoadResource( &p_wk->ptc, ARCID_MYSTERY, NARC_mystery_mystery_spa, p_wk->heapID );
+    MYSTERY_PTC_Start( &p_wk->ptc, BIG_RING );
+    MYSTERY_PTC_Start( &p_wk->ptc, DOWN_BALL );
+    MYSTERY_PTC_Start( &p_wk->ptc, SPLASH_BALL );
     p_wk->seq++;
     break;
   case SEQ_MAIN:

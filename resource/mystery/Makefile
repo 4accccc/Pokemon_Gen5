@@ -17,7 +17,8 @@ targetname = mystery
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
-TARGETDIR = $(PROJECT_ARCDIR)
+TARGETDIR_ARC	= $(PROJECT_ARCDIR)
+TARGETDIR_H		= $(PROJECT_ROOT)/prog/src/net_app/mystery
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -65,15 +66,18 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR_ARC)/$(targetname).narc $(TARGETDIR_H)/mystery_spa.h
 
 subdir:
 	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).narc: $(targetname).narc
-	$(COPY) $(targetname).narc $(TARGETDIR)
-	$(COPY) $(targetname).naix $(TARGETDIR)
+$(TARGETDIR_ARC)/$(targetname).narc: $(targetname).narc
+	$(COPY) $(targetname).narc $(TARGETDIR_ARC)
+	$(COPY) $(targetname).naix $(TARGETDIR_ARC)
+
+$(TARGETDIR_H)/mystery_spa.h :mystery_spa.h
+	$(COPY) mystery_spa.h $(TARGETDIR_H)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
@@ -83,7 +87,7 @@ $(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) 
 
 
 mystery.spa : $(parsources)
-	../../tools/SPRArchiver.exe -o spahead.h ./ ./ mystery.spa
+	../../tools/SPRArchiver.exe -o mystery_spa.h ./ ./ mystery.spa
 
 endif
 
@@ -105,7 +109,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif
-	rm -f $(TARGETDIR)/$(targetname).narc
-	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -f $(TARGETDIR_ARC)/$(targetname).narc
+	rm -f $(TARGETDIR_ARC)/$(targetname).naix
 
 

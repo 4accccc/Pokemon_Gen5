@@ -48,6 +48,7 @@
 //=============================================================================
 #ifdef PM_DEBUG
 #define DEBUG_SAVE  //STARTを押すとセーブして終了
+#define DEBUG_DELETE  //SELECTを押すと強制消してセーブして終了
 #endif //PM_DEBUG
 //=============================================================================
 /**
@@ -2032,7 +2033,7 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
           GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[1], FALSE );
           *p_seq  = SEQ_SCROLL;
         }
-        else
+        else if( p_wk->cursor != MYSTERY_CURSOR_RETURN )
         { 
           PMSND_PlaySE( MYSTERY_SE_SELCT );
         }
@@ -2080,7 +2081,7 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
           GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[1], FALSE );
           *p_seq  = SEQ_SCROLL;
         }
-        else
+        else if( p_wk->cursor != MYSTERY_CURSOR_RETURN )
         { 
           PMSND_PlaySE( MYSTERY_SE_SELCT );
         }
@@ -2165,6 +2166,19 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
         MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_End );
       }
 #endif //DEBUG_SAVE
+
+#ifdef DEBUG_DELETE
+      else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+      { 
+        int i;
+        for( i = 0; i < GIFT_DATA_MAX; i++ )
+        { 
+          MYSTERYDATA_RemoveCardData(p_wk->setup.p_sv, i );
+        }
+        p_wk->is_change = TRUE;
+        MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_End );
+      }
+#endif //DEBUG_DELETE
 
       //カーソルの移動
       if( is_update )

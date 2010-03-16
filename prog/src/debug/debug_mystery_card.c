@@ -149,3 +149,39 @@ void DEBUG_MYSTERY_SetGiftCommonData( GIFT_PACK_DATA *p_data, u32 event_id, BOOL
   //受け取ったかどうか
   p_data->have  = 0;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダウンロードふしぎなおくりものでーたを設定
+ *
+ *	@param	DOWNLOAD_GIFT_DATA *p_data  ワーク
+ *	@param	version   バージョン（ビット）
+ *	@param	langCode  言語コード
+ */
+//-----------------------------------------------------------------------------
+void DEBUG_MYSTERY_SetDownLoadData( DOWNLOAD_GIFT_DATA *p_data, u32 version, u8 langCode )
+{ 
+  p_data->LangCode  = langCode;
+  p_data->movie_flag  = 0;
+  p_data->version = version;
+  p_data->dummy[0]  = 0;
+  p_data->dummy[1]  = 0;
+
+  GFL_STD_MemClear( p_data->event_text, sizeof(STRCODE)*(GIFT_DATA_CARD_TEXT_MAX+EOM_SIZE) );
+  p_data->event_text[0] = L'デ';
+  p_data->event_text[1] = L'バ';
+  p_data->event_text[2] = L'ッ';
+  p_data->event_text[3] = L'ク';
+  p_data->event_text[4] = L'よ';
+  p_data->event_text[5] = L'う';
+  p_data->event_text[6] = L'の';
+  p_data->event_text[7] = L'　';
+  p_data->event_text[8] = L'か';
+  p_data->event_text[9] = L'り';
+  p_data->event_text[10] = L'フ';
+  p_data->event_text[11] = L'ァ';
+  p_data->event_text[12] = L'イ';
+  p_data->event_text[13] = L'ル';
+  p_data->event_text[14] = L'で';
+  p_data->event_text[15] = L'す';
+  p_data->event_text[16] = GFL_STR_GetEOMCode();
+}

@@ -120,7 +120,7 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
     NET_MEMORY_PRINT( "main alloc memory size=%d rest=%d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle) );
   }
 
-  NAGI_Printf( "[>name%d size%d align%d\n", name, size, align );
+  //NAGI_Printf( "[>name%d size%d align%d\n", name, size, align );
 
   if(ptr == NULL){
     GF_ASSERT_MSG(ptr,"dwcalloc not allocate! size %d,align %d rest %d name %d\n", size, align, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle), name );
@@ -145,7 +145,7 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
 void DWC_RAPCOMMON_Free( DWCAllocType name, void *ptr, u32 size )
 {	
 
-  NAGI_Printf( "[>name%d ptr%x size%d\n", name, ptr, size );
+  //NAGI_Printf( "[>name%d ptr%x size%d\n", name, ptr, size );
 
   if ( !ptr ){
     return;  //NULLŠJ•ú‚ð”F‚ß‚é

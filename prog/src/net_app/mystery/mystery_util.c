@@ -1087,12 +1087,18 @@ u32 MYSTERY_MENU_Main( MYSTERY_MENU_WORK *p_wk )
     { 
       p_wk->select--;
     }
-    PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
+    if( p_wk->list_max != 1 )
+    { 
+      PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
+    }
     is_update  = TRUE;
   }
   else if( repeat & PAD_KEY_DOWN )
   { 
-    PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
+    if( p_wk->list_max != 1 )
+    { 
+      PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
+    }
     p_wk->select++;
     p_wk->select  %= p_wk->list_max;
     is_update  = TRUE;

@@ -41,3 +41,6 @@ extern void DEBUG_MYSTERY_SetGiftGPowerData( GIFT_PACK_DATA *p_data );
 
 //実データ以外のものをセット
 extern void DEBUG_MYSTERY_SetGiftCommonData( GIFT_PACK_DATA *p_data, u32 event_id, BOOL only_one_flag );
+
+//ダウンロードデータを設定
+extern void DEBUG_MYSTERY_SetDownLoadData( DOWNLOAD_GIFT_DATA *p_data, u32 version, u8 langCode );
