@@ -8065,13 +8065,13 @@
 		<language name="JPN" width="256">W554-PAKIN</language>
 		<language name="JPN_KANJI" width="256">W554-PAKIN</language>
 	</row>
-	<row id="msg_seq_se_dmy_254">
-		<language name="JPN" width="256">DMY-254</language>
-		<language name="JPN_KANJI" width="256">DMY-254</language>
+	<row id="msg_seq_se_fld_142">
+		<language name="JPN" width="256">FLD-142</language>
+		<language name="JPN_KANJI" width="256">FLD-142</language>
 	</row>
-	<row id="msg_seq_se_dmy_255">
-		<language name="JPN" width="256">DMY-255</language>
-		<language name="JPN_KANJI" width="256">DMY-255</language>
+	<row id="msg_seq_se_fld_143">
+		<language name="JPN" width="256">FLD-143</language>
+		<language name="JPN_KANJI" width="256">FLD-143</language>
 	</row>
 	<row id="msg_seq_se_dmy_256">
 		<language name="JPN" width="256">DMY-256</language>
