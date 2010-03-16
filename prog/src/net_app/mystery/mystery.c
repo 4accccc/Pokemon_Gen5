@@ -2124,16 +2124,15 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     MYSTERY_GRAPHIC_3D_Setup( p_wk->p_graphic );
     GFL_BG_SetVisible( GFL_BG_FRAME1_M, TRUE ); //なぜかセットアップするとB１と３GがOFFになるので
     GFL_BG_SetVisible( GFL_BG_FRAME3_M, TRUE );
-
     //おくりものを受信中です
     { 
       GFL_CLUNIT	*p_unit	= MYSTERY_GRAPHIC_GetClunit( p_wk->p_graphic );
 
 #ifdef MYSTERY_MOVIE_DEMO
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_R)
-  { 
-    p_wk->data.movie_flag = TRUE;
-  }
+      if (GFL_UI_KEY_GetCont() & PAD_BUTTON_R)
+      { 
+        p_wk->data.movie_flag = TRUE;
+      }
 #endif //MYSTERY_MOVIE_DEMO
 
 
@@ -2144,7 +2143,6 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_INIT_ONE_WAIT:
-
     GFL_BG_SetVisible( GFL_BG_FRAME0_M, TRUE ); //パシり回避のため
     *p_seq  = SEQ_INIT_WAIT;
     break;
@@ -2196,6 +2194,7 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     MYSTERY_TEXT_Exit( p_wk->p_text );
     p_wk->p_text  = NULL;
     UTIL_DeleteMenu( p_wk );
+    G2_BlendNone();
     MYSTERY_GRAPHIC_3D_CleanUp( p_wk->p_graphic );
     GFL_BG_SetVisible( GFL_BG_FRAME1_M, TRUE ); //なぜかセットアップするとBGがOFFになるので
     GFL_BG_SetVisible( GFL_BG_FRAME3_M, TRUE );
@@ -3566,6 +3565,13 @@ static void Mystery_Demo_MovieMain( MYSTERY_DEMO_WORK *p_wk )
     { 
       p_wk->sync  = 0;
       p_wk->seq   = SEQ_TEST_WAIT;
+      //PTCをアルファ
+      G2_SetBlendAlpha(
+          GX_BLEND_PLANEMASK_BG0,
+          GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ,
+          16,
+          16
+          );
       MYSTERY_EFFECT_Start( p_wk->p_effect, MYSTERY_EFFECT_TYPE_MOVIE );
     }
     break;
@@ -3610,6 +3616,7 @@ static void Mystery_Demo_MovieMain( MYSTERY_DEMO_WORK *p_wk )
     break;
 
   case SEQ_END:
+    G2_BlendNone();
     p_wk->is_end  = TRUE;
     break;
   }
