@@ -38,6 +38,23 @@
 
 //------------------------------------------------------------------
 /**
+ * @brief	プレーヤー設定拡張定義
+ */
+//------------------------------------------------------------------
+#define PMSND_PLAYER_MAX (SEPLAYER_SE3 + 1)
+
+#define PMSND_MASKPL_BGM	(1<<PLAYER_BGM)
+#define PMSND_MASKPL_SYS	(1<<PLAYER_SE_SYS)
+#define PMSND_MASKPL_SE1	(1<<PLAYER_SE_1)
+#define PMSND_MASKPL_SE2	(1<<PLAYER_SE_2)
+#define PMSND_MASKPL_PSG	(1<<PLAYER_SE_PSG)
+#define PMSND_MASKPL_SE3	(1<<PLAYER_SE_3)
+
+#define PMSND_MASKPL_EFFSE	(PMSND_MASKPL_SE1|PMSND_MASKPL_SE2|PMSND_MASKPL_PSG|PMSND_MASKPL_SE3)
+#define PMSND_MASKPL_ALLSE	(PMSND_MASKPL_SYS|PMSND_MASKPL_EFFSE)
+#define PMSND_MASKPL_ALL	(PMSND_MASKPL_BGM|PMSND_MASKPL_ALLSE)
+//------------------------------------------------------------------
+/**
  * @brief	ＳＥプレーヤー設定定義
  */
 //------------------------------------------------------------------
@@ -51,6 +68,7 @@ typedef enum {
 }SEPLAYER_ID;
 
 #define SEPLAYER_MAX (5)
+
 //------------------------------------------------------------------
 /**
  * @brief	関数引数用定義
@@ -93,6 +111,17 @@ extern BOOL           PMSND_IsLoading( void );  // ロード中かどうか
 extern void PMSND_EnableCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames );
 extern void PMSND_DisableCaptureReverb( void );
 extern void PMSND_ChangeCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames );
+
+//============================================================================================
+/**
+ *
+ * @brief	プレーヤーの音量コントロール(ON/OFF)
+ *					※現状32bit = 32プレーヤーまで対応
+ *					in: bitmask : 最下位bitから0～のプレーヤー指定
+ *												上記プレーヤー設定拡張定義を参照
+ */
+//============================================================================================
+extern void PMSND_AllPlayerVolumeEnable( BOOL playerON, u32 bitmask );
 
 //============================================================================================
 /**
