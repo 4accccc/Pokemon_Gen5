@@ -35,13 +35,49 @@ EVENT_START   ev_pos_d05_rival_01
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 	
-	//ライバルめんどくさがりつつコンテナ内へ
-	_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_01 )
-	_OBJ_ANIME_WAIT()
+		{
+	//自機座標取得変数定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+	
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+	
+	//主人公座標に応じてライバル隣接
+	SWITCH $POSZ
+	CASE 474 THEN
+		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_01_z474 )
+		_OBJ_ANIME_WAIT()
+	CASE 475 THEN
+		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_01_z475 )
+		_OBJ_ANIME_WAIT()
+	CASE 476 THEN
+		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_01_z476 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_01_z475 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	//ライバルコンテナ内へ
+	
 	_BALLOONWIN_OBJMSG( msg_d05_black_01 , D05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
-	_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_02 )
-	_OBJ_ANIME_WAIT()
+	
+	//主人公座標に応じてライバル退場
+	SWITCH $POSZ
+	CASE 474 THEN
+		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_02_z474 )
+		_OBJ_ANIME_WAIT()
+	CASE 475 THEN
+		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_02_z475 )
+		_OBJ_ANIME_WAIT()
+	CASE 476 THEN
+		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_02_z476 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_02_z475 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
 	
 	//ライバル一時的に消去
 	_OBJ_DEL(D05_RIVAL_01)
@@ -56,7 +92,63 @@ EVENT_START   ev_pos_d05_rival_01
 	
 	//======================================//
 
+	}
 EVENT_END
+
+//--------------------------------------------------------------
+//	D05：ライバル主人公に隣接
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05_rivalpos_01_z474
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05：ライバル主人公に隣接
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05_rivalpos_01_z475
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05：ライバル主人公に隣接
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05_rivalpos_01_z476
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------
+//	D05：ライバルコンテナ内へ入ってゆく
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05_rivalpos_02_z474
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05：ライバルコンテナ内へ入ってゆく
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05_rivalpos_02_z475
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05：ライバルコンテナ内へ入ってゆく
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05_rivalpos_02_z476
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /*workman一言メッセージ：コンテナイベント終了まで表示          */
@@ -82,7 +174,7 @@ EVENT_START   ev_reserve_d05_end
 
 	//ライバル喋った後C05へ
 	_OBJ_ANIME(D05_RIVAL_01,anm_d05_rival_02)
-	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME_WAIT()	
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d05_player_down)
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG(msg_d05_black_02,D05_RIVAL_01)
@@ -115,22 +207,6 @@ EVENT_START   ev_reserve_d05_end
 
 EVENT_END
 
-//--------------------------------------------------------------
-//	D05：ライバル主人公に隣接
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d05_rivalpos_01
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D05：ライバルコンテナ内へ入ってゆく
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d05_rivalpos_02
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,4
-	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	D05：ライバル主人公のほうを見る

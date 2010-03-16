@@ -106,11 +106,11 @@ EVENT_START   ev_pos_r07_movepoke_01
 	
 		//右
 		IF $LWK_DIR == DIR_LEFT THEN
-			_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_look_oldwoman_z243_right )
+			_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_look_oldwoman_z243_left )
 			_OBJ_ANIME_WAIT()
 		//左
 		ELSE
-			_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_look_oldwoman_z243_left )
+			_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_look_oldwoman_z243_right )
 			_OBJ_ANIME_WAIT()
 		ENDIF
 		
@@ -414,21 +414,28 @@ EVENT_START   ev_scene_r07_movepoke_02
 		_OBJ_ADD_EX( 144, 244, DIR_LEFT, MMDL_ID_EVENTOBJ_00, POKE3, MV_DMY )
 	ENDIF
 	
-	//家から出たらオートで右方向に移動
+	//家から出たらオートで下方向に移動
 	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_exit_house_01 )
 	_OBJ_ANIME_WAIT()
 	
-	//バージョンによって天気を替える
+	//鳴き声再生
 	//★Blackの場合
 	IF $LCW_VERSION == VERSION_BLACK THEN
-		_WEATHER_CHANGE( WEATHER_NO_KAZAKAMI ) 
+		_VOICE_PLAY(  MONSNO_649,  0 )
+		
 	//★Whiteの場合
 	ELSE
-		_WEATHER_CHANGE( WEATHER_NO_RAIKAMI ) 
+		_VOICE_PLAY(  MONSNO_649,  0 )
+		
 	ENDIF
 	
-	//天気変更待ち
-	_TIME_WAIT ( 500 )
+	//BGM停止
+	_START_EVENT_BGM( SEQ_BGM_SILENCE_FIELD )
+	
+	//家から出たらオートで下方向に移動
+	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_exit_house_02 )
+	_VOICE_WAIT()
+	_OBJ_ANIME_WAIT()
 	
 	//演出アニメ作成
 	_EV_MOVEPOKE_CREATE( MMDL_ID_EVENTOBJ_00 )
@@ -440,13 +447,35 @@ EVENT_START   ev_scene_r07_movepoke_02
 	//バージョンによって鳴き声を替える
 	//★Blackの場合
 	IF $LCW_VERSION == VERSION_BLACK THEN
-		_VOICE_PLAY(  MONSNO_648,  0 )
+		_VOICE_PLAY(  MONSNO_649,  0 )
+		_GIZAWIN_OBJMSG_POS  (  msg_r07_pokemon_01b , MMDL_ID_EVENTOBJ_00 , POS_DR ) 
 		_VOICE_WAIT()
+		
 	//★Whiteの場合
 	ELSE
 		_VOICE_PLAY(  MONSNO_649,  0 )
+		_GIZAWIN_OBJMSG_POS  (  msg_r07_pokemon_01w , MMDL_ID_EVENTOBJ_00 , POS_DR ) 
 		_VOICE_WAIT()
+		
 	ENDIF
+	
+	//ギザウィン表示待ち
+	_TIME_WAIT ( 80 )
+	_GIZAWIN_CLOSE()
+	
+	//バージョンによって天気を替える
+	//★Blackの場合
+	IF $LCW_VERSION == VERSION_BLACK THEN
+		_WEATHER_CHANGE( WEATHER_NO_KAZAKAMI ) 
+	//★Whiteの場合
+	ELSE
+		_WEATHER_CHANGE( WEATHER_NO_RAIKAMI ) 
+	ENDIF
+	
+	//天気変更待ち
+	_TIME_WAIT ( 200 )
+	_PLAINWIN_MSG_DOWN( msg_r07_narrator_01)
+	_PLAINWIN_CLOSE()
 	
 	//退場
 	_EV_MOVEPOKE_START_ANIME(  SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_OUTSIDE )
@@ -455,8 +484,13 @@ EVENT_START   ev_scene_r07_movepoke_02
 	//演出アニメ削除
 	_EV_MOVEPOKE_DELETE( )
 	
+	_TIME_WAIT ( 80 )
+	
 	//天気を晴れに戻す
 	_WEATHER_CHANGE( WEATHER_NO_SUNNY ) 
+	//BGM再開
+	//イベント曲停止
+	_END_EVENT_BGM()
 	
 	//移動ポケモンOBJ消す
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
@@ -478,12 +512,23 @@ EVENT_START   ev_scene_r07_movepoke_02
 EVENT_END
 
 //--------------------------------------------------------------
-//	カザカミ・ライカミ起動イベント：主人公上へ3歩z244
+//	カザカミ・ライカミ起動イベント：主人公家から出る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r07_player_exit_house_01
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公家から出る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r07_player_exit_house_02
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_R_16F,0
+	_ANIME_DATA	AC_WAIT_16F,1
 	_ANIME_DATA	AC_WALK_R_8F,5
 	_ANIME_DATA	ACMD_END,0
+
+
 
 /**************************************************************/
 /*看板01（７番道路用）                                         */

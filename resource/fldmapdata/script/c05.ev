@@ -235,6 +235,9 @@ EVENT_START   ev_pos_c05_gymleader_02
 	_CAMERA_MOVE( 9688,0,970752,13918208,0,26509312,30 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
+	//七賢人曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
+	
 	//ゲーヂス：はじめまして
 	_BALLOONWIN_OBJMSG(msg_c05_sage1_01,C05_SAGE_01)
 	_BALLOONWIN_CLOSE()
@@ -278,6 +281,9 @@ EVENT_START   ev_pos_c05_gymleader_02
 	//画面暗転・プラズマ団OB削除
 	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
+	
+	//イベント曲停止
+	_END_EVENT_BGM()
 	
 	_OBJ_DEL(C05_HAKAI_01)
 	_OBJ_DEL(C05_HAKAI_02)

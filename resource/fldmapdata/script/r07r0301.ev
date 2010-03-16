@@ -68,7 +68,15 @@ EVENT_START   ev_reserve_r07r0301_movepoke_01
 	
 	//おばあちゃん台所まで移動
 	_OBJ_ANIME( R07R0301_OLDWOMAN_01 ,  anm_r07_oldwoman_to_kitchen )
+	
+	//カメラ操作　おばあちゃんの位置にカメラを合わせる
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	_CAMERA_MOVE( 9688,0,970752,163840,0,229376,40 )
+	
 	_OBJ_ANIME_WAIT()
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_look_kitchen )
 	_OBJ_ANIME_WAIT()
 	
@@ -84,9 +92,17 @@ EVENT_START   ev_reserve_r07r0301_movepoke_01
 		_BALLOONWIN_CLOSE()
 	ENDIF
 	
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	
 	//おばあちゃん主人公に隣接
 	_OBJ_ANIME( R07R0301_OLDWOMAN_01 ,  anm_r07_oldwoman_to_player )
 	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
 	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_player_look_oldwoman )
 	_OBJ_ANIME_WAIT()
 	
