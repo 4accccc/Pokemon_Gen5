@@ -367,7 +367,7 @@ enum{
   ID_PARA_sex,                //性別
   ID_PARA_form_no,              //形状ナンバー（アンノーン、デオキシス、ミノメスなど用）
   ID_PARA_seikaku,             //性格
-  ID_PARA_dummy_p2_2,             //あまり
+  ID_PARA_tokusei_3_flag,         //第3特性フラグ
   ID_PARA_dummy_p2_3,             //あまり
 
   ID_PARA_nickname,             //ニックネーム（STRBUF使用）
@@ -707,6 +707,10 @@ extern BOOL  POKETOOL_CheckWazaOshie( u16 mons_no, u16 form_no, int waza_oshie_n
 extern  PtlTasteJudge PP_CheckDesiredTaste( const POKEMON_PARAM *pp, PtlTaste taste );
 extern  PtlTasteJudge PPP_CheckDesiredTaste( const POKEMON_PASO_PARAM *ppp, PtlTaste taste );
 extern  PtlTasteJudge POKETOOL_CheckDesiredTaste( u8 seikaku, PtlTaste taste );
+
+//第3特性セット関数
+void  PP_SetTokusei3( POKEMON_PARAM* pp, int mons_no, int form_no );
+void  PPP_SetTokusei3( POKEMON_PASO_PARAM* ppp, int mons_no, int form_no );
 
 // 戦闘録画用に外部公開
 extern void  POKETOOL_encode_data( void *data, u32 size, u32 code );
