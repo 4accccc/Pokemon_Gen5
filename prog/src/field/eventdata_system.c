@@ -1104,13 +1104,14 @@ u16 EVENTDATA_GetNpcCount( const EVENTDATA_SYSTEM *evdata )
  * @param gz
  */
 //------------------------------------------------------------------
-void EVENTDATA_MoveNPCData( EVENTDATA_SYSTEM * evdata, u16 npc_id, u16 gx, s32 y, u16 gz )
+void EVENTDATA_MoveNPCData( EVENTDATA_SYSTEM * evdata, u16 npc_id, u16 dir, u16 gx, s32 y, u16 gz )
 {
   if ( npc_id < evdata->npc_count )
   {
     if ( evdata->npc_data[npc_id].pos_type == MMDL_HEADER_POSTYPE_GRID )
     {
       MMDL_HEADER_GRIDPOS * pos = (MMDL_HEADER_GRIDPOS *)(evdata->npc_data[npc_id].pos_buf);
+      *((short *)&evdata->npc_data[npc_id].dir) = dir;
       pos->gx = gx;
       pos->y = y;
       pos->gz = gz;

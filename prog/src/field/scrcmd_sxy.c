@@ -67,10 +67,11 @@ VMCMD_RESULT EvCmdMoveExitEventPos( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdMoveNPCDataPos( VMHANDLE * core, void * wk )
 {
-  u16 id = SCRCMD_GetVMWorkValue( core, wk );
-  u16 gx = SCRCMD_GetVMWorkValue( core, wk );
-  u16 gy = SCRCMD_GetVMWorkValue( core, wk );
-  u16 gz = SCRCMD_GetVMWorkValue( core, wk );
+  u16 id  = SCRCMD_GetVMWorkValue( core, wk );
+  u16 dir = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gx  = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gy  = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gz  = SCRCMD_GetVMWorkValue( core, wk );
   s32 y;
   
   SCRCMD_WORK *work = wk;
@@ -78,7 +79,7 @@ VMCMD_RESULT EvCmdMoveNPCDataPos( VMHANDLE * core, void * wk )
   EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData( gamedata );
 
   y = FIELD_CONST_GRID_FX32_SIZE * gy;
-  EVENTDATA_MoveNPCData( evdata, id, gx, y, gz );
+  EVENTDATA_MoveNPCData( evdata, id, dir, gx, y, gz );
   return VMCMD_RESULT_CONTINUE;
 }
 
