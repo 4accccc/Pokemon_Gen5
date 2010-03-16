@@ -319,7 +319,7 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
 	  *seq = SEQ_BATTLE_AFTER;
   	break;
   case SEQ_BATTLE_AFTER:
-    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NORMAL, FSND_FADE_NORMAL));
+    GMEVENT_CallEvent(event, EVENT_FSND_PopPlayBGM_fromBattle(gsys));
     (*seq)++;
     break;
   case SEQ_BATTLE_AFTER_NEXT:
@@ -511,7 +511,7 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
 	  *seq = SEQ_BATTLE_AFTER;
     break;
   case SEQ_BATTLE_AFTER:
-    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NORMAL, FSND_FADE_NORMAL));
+    GMEVENT_CallEvent(event, EVENT_FSND_PopPlayBGM_fromBattle(gsys));
     (*seq)++;
     break;
   case SEQ_BATTLE_AFTER_NEXT:
