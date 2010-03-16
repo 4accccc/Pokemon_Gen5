@@ -649,6 +649,23 @@ void MonolithTool_Bmpoam_BGPriSet(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *bmpstr
 
 //==================================================================
 /**
+ * 現在プレイヤーがいるパレスエリアのMYSTATUSを取得する
+ *
+ * @param   appwk		
+ *
+ * @retval  OCCUPY_INFO *		占拠情報へのポインタ
+ */
+//==================================================================
+MYSTATUS * MonolithTool_GetMystatus(MONOLITH_APP_PARENT *appwk)
+{
+  if(appwk->parent->intcomm == NULL){
+    return GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(appwk->parent->gsys));
+  }
+  return Intrude_GetMyStatus(appwk->parent->intcomm, appwk->parent->palace_area);
+}
+
+//==================================================================
+/**
  * 現在プレイヤーがいるパレスエリアの占拠情報を取得する
  *
  * @param   appwk		
@@ -658,6 +675,9 @@ void MonolithTool_Bmpoam_BGPriSet(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *bmpstr
 //==================================================================
 OCCUPY_INFO * MonolithTool_GetOccupyInfo(MONOLITH_APP_PARENT *appwk)
 {
+  if(appwk->parent->intcomm == NULL){
+    return GAMEDATA_GetMyOccupyInfo(GAMESYSTEM_GetGameData(appwk->parent->gsys));
+  }
   return Intrude_GetOccupyInfo(appwk->parent->intcomm, appwk->parent->palace_area);
 }
 

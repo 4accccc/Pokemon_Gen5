@@ -106,6 +106,7 @@ extern void MonolithTool_Bmpoam_Delete(MONOLITH_BMPSTR *bmpstr);
 extern BOOL MonolithTool_Bmpoam_TransUpdate(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *bmpstr);
 extern void MonolithTool_Bmpoam_BGPriSet(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *bmpstr, int bg_pri);
 
+extern MYSTATUS * MonolithTool_GetMystatus(MONOLITH_APP_PARENT *appwk);
 extern OCCUPY_INFO * MonolithTool_GetOccupyInfo(MONOLITH_APP_PARENT *appwk);
 
 extern GFL_CLWK * MonolithTool_TownIcon_Create(MONOLITH_SETUP *setup, 

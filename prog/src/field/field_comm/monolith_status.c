@@ -392,9 +392,9 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
 {
   STRBUF *strbuf, *expand_strbuf;
   const OCCUPY_INFO *occupy;
-  MYSTATUS *myst = Intrude_GetMyStatus(appwk->parent->intcomm, appwk->parent->palace_area);
+  MYSTATUS *myst = MonolithTool_GetMystatus(appwk);
   
-  occupy = Intrude_GetOccupyInfo(appwk->parent->intcomm, appwk->parent->palace_area);
+  occupy = MonolithTool_GetOccupyInfo(appwk);
   
   strbuf = GFL_STR_CreateBuffer(256, HEAPID_MONOLITH);
   expand_strbuf = GFL_STR_CreateBuffer( 256, HEAPID_MONOLITH );

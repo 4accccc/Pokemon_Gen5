@@ -103,7 +103,7 @@ static GFL_PROC_RESULT MonolithPalaceMapProc_Init(GFL_PROC * proc, int * seq, vo
   _Setup_BGGraphicLoad(appwk->setup);
   //OBJ
   {
-    MYSTATUS *myst = Intrude_GetMyStatus(appwk->parent->intcomm, appwk->parent->palace_area);
+    MYSTATUS *myst = MonolithTool_GetMystatus(appwk);
 
     STRBUF *strbuf = 	GFL_STR_CreateBuffer(PERSON_NAME_SIZE + EOM_SIZE, HEAPID_MONOLITH);
 
