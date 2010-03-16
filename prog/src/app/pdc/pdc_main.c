@@ -32,6 +32,7 @@ typedef PDC_RESULT  ( * PDC_FUNC )( PDC_MAIN_WORK* );
 //============================================================================================
 struct _PDC_MAIN_WORK
 { 
+  POKEMON_PARAM*    pp;
   GFL_FONT*         large_font;
   GFL_FONT*         small_font;
   GFL_MSGDATA*      msg;
@@ -40,11 +41,11 @@ struct _PDC_MAIN_WORK
 
   int               seq_no;
 
-  u8                cursor_flag;
-
-  PDC_FUNC*         pFunc;
+  PDC_FUNC          pFunc;
 
   HEAPID            heapID;
+
+  u8                cursor_flag;
 };
 
 //============================================================================================
@@ -54,11 +55,13 @@ struct _PDC_MAIN_WORK
 //============================================================================================
 static  void  screen_init( HEAPID heapID );
 static  void  screen_exit( void );
+static  void  pdc_change_seq( PDC_MAIN_WORK* pmw, PDC_FUNC func );
 
 static  PDC_RESULT  PDC_SEQ_Encount( PDC_MAIN_WORK* pmw );
 static  PDC_RESULT  PDC_SEQ_CheckInput( PDC_MAIN_WORK* pmw );
 static  PDC_RESULT  PDC_SEQ_Capture( PDC_MAIN_WORK* pmw );
 static  PDC_RESULT  PDC_SEQ_Escape( PDC_MAIN_WORK* pmw );
+
 
 //--------------------------------------------------------------------------
 /**
@@ -90,8 +93,12 @@ PDC_MAIN_WORK* PDC_MAIN_Init( PDC_SETUP_PARAM* psp, HEAPID heapID )
 
   pmw->biw = BTLV_INPUT_InitEx( BTLV_INPUT_TYPE_SINGLE, pmw->large_font, &pmw->cursor_flag, pmw->heapID );
 
+  pmw->pp = PDC_GetPP( psp );
+
   //フェードイン
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 2 );
+
+  pdc_change_seq( pmw, &PDC_SEQ_Encount );
 
   return pmw;
 }
@@ -108,7 +115,7 @@ PDC_RESULT  PDC_MAIN_Main( PDC_MAIN_WORK* pmw )
 
   if( pmw->pFunc )
   { 
-    return pmw->pFunc[ 0 ]( pmw );
+    return pmw->pFunc( pmw );
   }
 
   return PDC_RESULT_NONE;
@@ -127,6 +134,17 @@ void  PDC_MAIN_Exit( PDC_MAIN_WORK* pmw )
   BTLV_INPUT_Exit( pmw->biw );
 
   GFL_HEAP_FreeMemory( pmw );
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief シーケンス切り替え
+ */
+//--------------------------------------------------------------------------
+static  void  pdc_change_seq( PDC_MAIN_WORK* pmw, PDC_FUNC func )
+{ 
+  pmw->seq_no = 0;
+  pmw->pFunc = func;
 }
 
 //--------------------------------------------------------------------------
@@ -289,7 +307,22 @@ static  void  screen_exit( void )
 //--------------------------------------------------------------------------
 static  PDC_RESULT  PDC_SEQ_Encount( PDC_MAIN_WORK* pmw )
 { 
-
+  switch( pmw->seq_no ){ 
+  case 0:
+    BTLV_EFFECT_SetPokemon( pmw->pp, BTLV_MCSS_POS_BB );
+    BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_1 );
+    pmw->seq_no++;
+    break;
+  case 1:
+    if( !BTLV_EFFECT_CheckExecute() )
+    { 
+      //なんらかのメッセージ
+      pmw->seq_no++;
+    }
+    break;
+  case 2:
+    break;
+  }
   return PDC_RESULT_NONE;
 }
 
@@ -300,7 +333,6 @@ static  PDC_RESULT  PDC_SEQ_Encount( PDC_MAIN_WORK* pmw )
 //--------------------------------------------------------------------------
 static  PDC_RESULT  PDC_SEQ_CheckInput( PDC_MAIN_WORK* pmw )
 { 
-
   return PDC_RESULT_NONE;
 }
 
@@ -311,7 +343,6 @@ static  PDC_RESULT  PDC_SEQ_CheckInput( PDC_MAIN_WORK* pmw )
 //--------------------------------------------------------------------------
 static  PDC_RESULT  PDC_SEQ_Capture( PDC_MAIN_WORK* pmw )
 { 
-
   return PDC_RESULT_NONE;
 }
 
@@ -322,7 +353,6 @@ static  PDC_RESULT  PDC_SEQ_Capture( PDC_MAIN_WORK* pmw )
 //--------------------------------------------------------------------------
 static  PDC_RESULT  PDC_SEQ_Escape( PDC_MAIN_WORK* pmw )
 { 
-
   return PDC_RESULT_NONE;
 }
 

@@ -31,6 +31,8 @@ struct _PDC_SETUP_PARAM
 { 
   POKEMON_PARAM*        pp;
   BTL_FIELD_SITUATION*  bfs;
+  MYSTATUS*             my_status;
+  MYITEM*               my_item;
   PDC_RESULT            result;
 };
 
@@ -57,22 +59,40 @@ FS_EXTERN_OVERLAY(battle_view);
 /**
  * @brief PDC_SETUP_PARAM生成
  *
- * @param[in] pp      POKEMON_PARAM構造体
- * @param[in] bfs     BTL_FIELD_SITUATION構造体
- * @param[in] heapID  ヒープID
+ * @param[in] pp        POKEMON_PARAM構造体
+ * @param[in] bfs       BTL_FIELD_SITUATION構造体
+ * @param[in] my_status プレイヤーデータ
+ * @param[in] my_item   持ちアイテムデータ
+ * @param[in] heapID    ヒープID
  *
  * @retval  PDC_SETUP_PARAM
  */
 //--------------------------------------------------------------------------
-PDC_SETUP_PARAM*  PDC_MakeSetUpParam( POKEMON_PARAM* pp, BTL_FIELD_SITUATION* bfs, HEAPID heapID )
+PDC_SETUP_PARAM*  PDC_MakeSetUpParam( POKEMON_PARAM* pp, BTL_FIELD_SITUATION* bfs, MYSTATUS* my_status, MYITEM* my_item, HEAPID heapID )
 { 
   PDC_SETUP_PARAM*  psp = GFL_HEAP_AllocMemory( heapID, sizeof( PDC_SETUP_PARAM ) );
 
-  psp->pp     = pp;
-  psp->bfs    = bfs;
-  psp->result = PDC_RESULT_NONE;
+  psp->pp         = pp;
+  psp->bfs        = bfs;
+  psp->my_status  = my_status;
+  psp->my_item    = my_item;
+  psp->result     = PDC_RESULT_NONE;
 
   return psp;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief pp取得
+ *
+ * @param[in] psp PDC_SETUP_PARAM
+ *
+ * @retval  POKEMON_PARAM
+ */
+//--------------------------------------------------------------------------
+POKEMON_PARAM*  PDC_GetPP( PDC_SETUP_PARAM* psp )
+{ 
+  return psp->pp;
 }
 
 //--------------------------------------------------------------------------
@@ -87,6 +107,48 @@ PDC_SETUP_PARAM*  PDC_MakeSetUpParam( POKEMON_PARAM* pp, BTL_FIELD_SITUATION* bf
 BTL_FIELD_SITUATION*  PDC_GetBFS( PDC_SETUP_PARAM* psp )
 { 
   return psp->bfs;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief my_status取得
+ *
+ * @param[in] psp PDC_SETUP_PARAM
+ *
+ * @retval  my_status
+ */
+//--------------------------------------------------------------------------
+MYSTATUS*  PDC_GetMyStatus( PDC_SETUP_PARAM* psp )
+{ 
+  return psp->my_status;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief my_item取得
+ *
+ * @param[in] psp PDC_SETUP_PARAM
+ *
+ * @retval  my_item
+ */
+//--------------------------------------------------------------------------
+MYITEM*  PDC_GetMyItem( PDC_SETUP_PARAM* psp )
+{ 
+  return psp->my_item;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief PDC_RESULT取得
+ *
+ * @param[in] psp PDC_SETUP_PARAM
+ *
+ * @retval  PDC_RESULT
+ */
+//--------------------------------------------------------------------------
+PDC_RESULT  PDC_GetResult( PDC_SETUP_PARAM* psp )
+{ 
+  return psp->result;
 }
 
 //--------------------------------------------------------------------------
