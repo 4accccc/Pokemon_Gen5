@@ -709,8 +709,8 @@ extern  PtlTasteJudge PPP_CheckDesiredTaste( const POKEMON_PASO_PARAM *ppp, PtlT
 extern  PtlTasteJudge POKETOOL_CheckDesiredTaste( u8 seikaku, PtlTaste taste );
 
 //第3特性セット関数
-void  PP_SetTokusei3( POKEMON_PARAM* pp, int mons_no, int form_no );
-void  PPP_SetTokusei3( POKEMON_PASO_PARAM* ppp, int mons_no, int form_no );
+extern  void  PP_SetTokusei3( POKEMON_PARAM* pp, int mons_no, int form_no );
+extern  void  PPP_SetTokusei3( POKEMON_PASO_PARAM* ppp, int mons_no, int form_no );
 
 // 戦闘録画用に外部公開
 extern void  POKETOOL_encode_data( void *data, u32 size, u32 code );
