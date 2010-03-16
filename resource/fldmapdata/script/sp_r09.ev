@@ -15,6 +15,10 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_SCENE_CHANGE_LABEL		sp_r09_tbl
 _SP_EVENT_DATA_END
 
-
+//テーブル定義
+sp_r09_tbl:
+	_SCENE_CHANGE_DATA		WK_SCENE_R09,0,SCRID_SCENE_R09_BADMAN_01
+	_SCENE_CHANGE_END

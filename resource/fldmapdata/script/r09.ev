@@ -23,6 +23,8 @@ _EVENT_DATA		ev_bg_r09_sign1_01
 _EVENT_DATA		ev_bg_r09_sign2_01
 _EVENT_DATA		ev_bg_r09_sign3_01
 _EVENT_DATA		ev_bg_r09_sign4_01
+_EVENT_DATA		ev_r09_badman_01
+_EVENT_DATA		ev_scene_r09_badman_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -30,7 +32,55 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_r09_flag_change:
 //  _END
+/**************************************************************/
+/*  R09 バッドマンがアイテムをくれるイベント                  */
+/**************************************************************/
+EVENT_START   ev_r09_badman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r09_badman_02)
+EVENT_END
+/**************************************************************/
+/*  R09 バッドマンがアイテムをくれるイベント                  */
+/**************************************************************/
+EVENT_START   ev_scene_r09_badman_01
+	
+	IF FLAG_OFF(FE_R09_ITEMGET_01) THEN
+		_TIME_WAIT(4)
+		_OBJ_ANIME(R09_BADMAN_01,anm_common_gyoe)
+		_OBJ_ANIME_WAIT()
+		
+		_TIME_WAIT(4)
+		_BALLOONWIN_OBJMSG_POS(msg_r09_badman_01,R09_BADMAN_01,POS_DR)
+		_MSGWIN_CLOSE()
+		
+		_OBJ_ANIME(R09_BADMAN_01,anm_common_turn_l)
+		_OBJ_ANIME_WAIT()
+		
+		_TIME_WAIT(8)
+		
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
+		_OBJ_ANIME_WAIT()
+		
+		_ITEM_EVENT_KEYWAIT(ITEM_WAZAMASIN56,1)
+//		_FLAG_SET(FE_R09_ITEMGET_01)
+		
+		_TIME_WAIT(4)
+		
+		_BALLOONWIN_OBJMSG_POS( msg_r09_badman_02, R09_BADMAN_01, POS_DR )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ELSE
+		_BALLOONWIN_OBJMSG_POS(msg_r09_badman_02,R09_BADMAN_01,POS_DR)
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+	
+	//==============フラグワーク操作==============//
+	$WK_SCENE_R09 = 1
+	//============================================//
 
+EVENT_END
 /**************************************************************/
 /*  R09 看板のイベントスクリプト                      */
 /**************************************************************/
@@ -65,3 +115,42 @@ EVENT_START   ev_bg_r09_sign4_01
   _EASY_BGWIN_MSG(msg_r09_sign4_01,TYPE_POST) 
 
 EVENT_END
+//--------------------------------------------------------------------
+// 共通アニメ：びっくりする                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：右振り向き                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：下振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：上振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
