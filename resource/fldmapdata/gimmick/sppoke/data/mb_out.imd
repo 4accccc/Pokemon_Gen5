@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-03-13T16:30:32" source="mb_out_01.mb"/>
+	<create user="unno" host="W00199" date="2010-03-16T10:49:10" source="mb_out_02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2010-03-13T16:30:32" source="mb_out_01.mb"/>
+<original_create user="unno" host="W00199" date="2010-03-16T10:49:10" source="mb_out_02.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -18,7 +18,7 @@
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
-	tool_start_frame="1"
+	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="10 9"
 	compress_material="on" material_size="3 3"
@@ -109,7 +109,7 @@
 
 <material_array size="3">
 	<material index="0" name="lambert2"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -336,7 +336,7 @@
 		volume_max="1.000000 2.000000 0.000000"
 		volume_r="2.236084"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="on" tex_flag="on"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">1</mtx_list>
@@ -345,7 +345,6 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 16.000000"/>
 					<clr rgb="31 31 31"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_s xyz="-1.000000 0.000000 0.000000"/>
 					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="1.000000 0.000000"/>
