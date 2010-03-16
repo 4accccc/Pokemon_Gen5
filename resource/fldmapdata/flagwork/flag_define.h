@@ -737,8 +737,8 @@
 #define FV_C03R0101_MEMBER_E               713 /* 0x02c9 調査隊一般隊員E */
 #define FV_C03R0101_MEMBER_F               714 /* 0x02ca 調査隊一般隊員F */
 #define FV_C03R0101_MEMBER_G               715 /* 0x02cb 調査隊一般隊員G */
-		/* not used   716(0x02cc) */
-		/* not used   717(0x02cd) */
+#define FV_D05R0201_SAGE7                  716 /* 0x02cc クリア後七賢人イベント：冷凍コンテナ */
+#define FV_C05R0601_OKOU                   717 /* 0x02cd クリア後：お香売り */
 		/* not used   718(0x02ce) */
 		/* not used   719(0x02cf) */
 		/* not used   720(0x02d0) */
