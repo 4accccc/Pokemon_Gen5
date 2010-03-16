@@ -77,5 +77,10 @@ extern void MAPREPLACE_Delete( MAPREPLACE_CTRL * ctrl );
 //--------------------------------------------------------------
 extern void MAPREPLACE_ChangeFlag( GAMEDATA * gamedata, u32 id, BOOL flag );
 
+//--------------------------------------------------------------
+//  マップ置き換え制御：置き換え指定フラグの取得
+//--------------------------------------------------------------
+extern BOOL MAPREPLACE_GetFlag( GAMEDATA * gamedata, u32 id );
+
 #endif  //__ASM_NO_DEF_
 

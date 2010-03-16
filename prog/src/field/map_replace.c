@@ -329,6 +329,31 @@ static void MAPREPLACE_makeReplaceOffset ( REPLACE_OFFSET * offsets, GAMESYS_WOR
 
 //--------------------------------------------------------------
 /**
+ * @brief マップ置き換え：フラグの場所取得
+ * @param gamedata  ゲームデータへのポインタ
+ * @param id        フラグ指定ID
+ * @return  u16 * フラグ位置へのポインタ
+ *
+ * 戻り値がNULLのとき、不正なIDを指定している
+ */
+//--------------------------------------------------------------
+static const REPLACE_EVENT_DATA * getMatchedReplaceData( GAMEDATA * gamedata, u32 id )
+{
+  int i;
+  for ( i = 0; i < NELEMS(replaceEventTable); i++ )
+  {
+    const REPLACE_EVENT_DATA * rep_data = &replaceEventTable[ i ];
+    if ( rep_data->rep_data_id == id )
+    {
+      return rep_data;
+    }
+  }
+  GF_ASSERT_MSG( 0, "無効なマップ置き換えID（%d)です", id );
+  return NULL;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief マップ置き換え：フラグの反映処理
  * @param gamedata  ゲームデータへのポインタ
  * @param id        フラグ指定ID
@@ -337,26 +362,47 @@ static void MAPREPLACE_makeReplaceOffset ( REPLACE_OFFSET * offsets, GAMESYS_WOR
 //--------------------------------------------------------------
 void MAPREPLACE_ChangeFlag( GAMEDATA * gamedata, u32 id, BOOL flag )
 {
-  int i;
-  for ( i = 0; i < NELEMS(replaceEventTable); i++ )
+  const REPLACE_EVENT_DATA * matched_data;
+
+  matched_data = getMatchedReplaceData( gamedata, id );
+  if ( matched_data != NULL )
   {
-    const REPLACE_EVENT_DATA * evData = &replaceEventTable[ i ];
-    if ( evData->rep_data_id == id )
-    {
-      EVENTWORK * ev = GAMEDATA_GetEventWork( gamedata );
-      u16 * work = EVENTWORK_GetEventWorkAdrs( ev, evData->wk_id );
-      if (flag) {
-        *work = evData->wk_value;
-      } else {
-        *work = 0;
-      }
-      OS_Printf("REPLACE EVENT(%d) SET: %04x\n", id, evData->wk_value );
-      return;
+    EVENTWORK * ev = GAMEDATA_GetEventWork( gamedata );
+    u16 * work = EVENTWORK_GetEventWorkAdrs( ev, matched_data->wk_id );
+    if (flag) {
+      *work = matched_data->wk_value;
+    } else {
+      *work = 0;
     }
+    OS_Printf("REPLACE EVENT(%d) SET: %04x\n", id, matched_data->wk_value );
   }
-  GF_ASSERT_MSG( 0, "無効なマップ置き換えID（%d)です", id );
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief マップ置き換え：フラグの取得処理
+ * @param  gamedata  ゲームデータへのポインタ
+ * @param  id        フラグ指定ID
+ * @return BOOL
+ */
+//--------------------------------------------------------------
+BOOL MAPREPLACE_GetFlag( GAMEDATA * gamedata, u32 id )
+{
+  const REPLACE_EVENT_DATA * matched_data;
+
+  matched_data = getMatchedReplaceData( gamedata, id );
+  if ( matched_data != NULL )
+  {
+    EVENTWORK * ev = GAMEDATA_GetEventWork( gamedata );
+    u16 * work = EVENTWORK_GetEventWorkAdrs( ev, matched_data->wk_id );
+    if ( matched_data->wk_value == *work ) {
+      return TRUE;
+    } else {
+      return FALSE;
+    }
+  }
+  return FALSE;
+}
 
 
 

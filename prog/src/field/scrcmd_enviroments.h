@@ -30,6 +30,7 @@ extern VMCMD_RESULT EvCmdSetWarpID( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdSetSpLocationHere( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdSetSpLocationDirect( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdChangeMapReplaceFlag( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdGetMapReplaceFlag( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetSeasonID( VMHANDLE *core, void * wk );
 extern VMCMD_RESULT EvCmdGetZoneID( VMHANDLE *core, void * wk );
 extern VMCMD_RESULT EvCmdGetBirthDay( VMHANDLE * core, void*wk );

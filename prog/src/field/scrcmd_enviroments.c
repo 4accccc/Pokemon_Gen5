@@ -488,6 +488,26 @@ VMCMD_RESULT EvCmdChangeMapReplaceFlag( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief マップ置き換え状態の取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetMapReplaceFlag( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK* work = wk;
+  GAMEDATA*        gamedata = SCRCMD_WORK_GetGameData( wk );
+
+  u16 * ret_wk = SCRCMD_GetVMWork( core, work );
+  u16       id = SCRCMD_GetVMWorkValue( core, work );
+
+  *ret_wk = MAPREPLACE_GetFlag( gamedata, id );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
