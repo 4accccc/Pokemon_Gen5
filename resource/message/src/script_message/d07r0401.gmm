@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-06T19:52:12"/>
+	<create user="matsumiya" host="W00224" date="2010-03-16T11:21:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1437" top="232" right="2142" bottom="852" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="d07r0401_hakaim1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="d07r0401_hakaim1_01">
 		<comment>♂
 ・pos起動（GRIDX=52、GRIDZ=13~15）
 ・ライバル　　GRIDX=54、GRIDZ=14
@@ -311,7 +311,7 @@
 実現している　強さ　だよな！？▼</language>
 	</row>
 
-	<row id="d07r0401_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="d07r0401_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、プラズマ団その２が洞窟外から登場
 　プラズマ団その1の上に隣接
@@ -333,7 +333,7 @@
 逃がすだなんて　間違っているよね▼</language>
 	</row>
 
-	<row id="d07r0401_hakaim2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="d07r0401_hakaim2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・プラズマ団どうし向き合ってメッセージ表示
 ・続けてhakaim2_02</comment>
@@ -348,7 +348,7 @@
 さあ　われわれも　塔に　向かおう！▼</language>
 	</row>
 
-	<row id="d07r0401_hakaim2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="d07r0401_hakaim2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ライバルを向いてメッセージ表示
 ・続けてhakaim1_02</comment>
@@ -363,7 +363,7 @@
 力を　手に入れた！▼</language>
 	</row>
 
-	<row id="d07r0401_hakaim1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="d07r0401_hakaim1_02">
 		<comment>♂
 ・ライバルを向いてメッセージ表示
 ・メッセージ後、画面暗転してプラズマ団削除
@@ -381,22 +381,22 @@
 Ｎ様の　もとに　集おう！！▼</language>
 	</row>
 
-	<row id="d07r0401_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="d07r0401_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・出口方向を見ながら
 ・続けてblack_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『あいつら……
 なにを　てにいれたか　しらないけど▼
-つよく……　なる　って
-ああいう　ことじゃ　ないよね……！▼</language>
+みんなが　シアワセに　なれない
+つよさに　いみなんて　ないよね……▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『あいつら……
 なにを　手に入れたか　知らないけど▼
-強く……　なる　って
-ああいう　ことじゃ　ないよね……！▼</language>
+みんなが　シアワセに　なれない
+強さに　意味なんて　ないよね……▼</language>
 	</row>
 
-	<row id="d07r0401_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="d07r0401_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公と向き合ってメッセージ表示
 ・表示後からc07ジムクリア後イベントまで繰り返し
