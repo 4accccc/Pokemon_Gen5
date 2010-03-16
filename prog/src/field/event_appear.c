@@ -271,7 +271,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wk
       man  = FIELDMAP_GetTaskManager( work->fieldmap ); 
       FIELD_TASK_MAN_AddTask( man, fall, NULL );
     }
-    ++( *seq );
+    (*seq)++;
     break;
   case 1:
     { // タスクの終了待ち
@@ -279,14 +279,14 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wk
       man = FIELDMAP_GetTaskManager( work->fieldmap ); 
       if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
       {
-        ++( *seq );
+        (*seq)++;
       }
     }
     break;
   case 2:
     // カメラモードの復帰
     FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
-    ++( *seq );
+    (*seq)++;
     break;
   case 3: 
     return GMEVENT_RES_FINISH;
@@ -312,27 +312,33 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq,
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     // カメラ初期設定
     FIELD_CAMERA_SetAngleLen( camera, ZOOM_IN_DIST );
+    // カメラのトレース処理停止リクエスト発行
+    FIELD_CAMERA_StopTraceRequest( camera );
     (*seq)++;
     break;
   case 1:
+    // カメラのトレース処理終了待ち
+    if( FIELD_CAMERA_CheckTrace( camera ) == FALSE ) { (*seq)++; }
+    break;
+  case 2:
     // タスクを登録
     { 
       FLD_CAMERA_PARAM def_param; 
-      fx32 val_dist;
+      fx32 dist;
       FIELD_TASK* rot;
       FIELD_TASK* zoom;
       FIELD_TASK_MAN* man;
       FIELD_CAMERA_GetInitialParameter( camera, &def_param );
-      val_dist = def_param.Distance << FX32_SHIFT;
+      dist = def_param.Distance << FX32_SHIFT;
       rot  = FIELD_TASK_PlayerRotate_SpeedDown( fieldmap, 60, 8 );
-      zoom = FIELD_TASK_CameraLinearZoom( fieldmap, ZOOM_OUT_FRAME, val_dist );
+      zoom = FIELD_TASK_CameraLinearZoom( fieldmap, ZOOM_OUT_FRAME, dist );
       man  = FIELDMAP_GetTaskManager( fieldmap ); 
       FIELD_TASK_MAN_AddTask( man, rot, NULL );
       FIELD_TASK_MAN_AddTask( man, zoom, NULL );
     }
     (*seq)++;
     break;
-  case 2:
+  case 3:
     // 画面フェードイン開始
     {
       GMEVENT* fadeEvent;
@@ -341,7 +347,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq,
     }
     (*seq)++;
     break;
-  case 3:
+  case 4:
     // タスクの終了待ち
     {
       FIELD_TASK_MAN* man;
@@ -349,12 +355,12 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq,
       if( FIELD_TASK_MAN_IsAllTaskEnd(man) ) { (*seq)++; }
     }
     break;
-  case 4:
+  case 5:
     // カメラモードの復帰
     FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
-    ++( *seq );
+    (*seq)++;
     break;
-  case 5:
+  case 6:
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
@@ -367,54 +373,65 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq,
 //------------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, void* wk )
 {
-  EVENT_WORK*     work = (EVENT_WORK*)wk;
-  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
+  EVENT_WORK*    work     = (EVENT_WORK*)wk;
+  FIELDMAP_WORK* fieldmap = work->fieldmap;
+  FIELD_CAMERA*  camera   = FIELDMAP_GetFieldCamera( work->fieldmap );
 
-  switch( *seq )
-  {
+  switch( *seq ) {
   case 0:
     // カメラモードの設定
     work->cameraMode = FIELD_CAMERA_GetMode( camera );
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     // カメラ初期設定
     FIELD_CAMERA_SetAngleLen( camera, ZOOM_IN_DIST );
-    { // フェードイン
-      GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap,  FIELD_FADE_NO_WAIT );
-      GMEVENT_CallEvent( event, fade_event );
-    }
-    { // タスクの追加
+    // カメラのトレース処理停止リクエスト発行
+    FIELD_CAMERA_StopTraceRequest( camera );
+    (*seq)++;
+    break;
+  case 1:
+    // カメラのトレース処理終了待ち
+    if( FIELD_CAMERA_CheckTrace( camera ) == FALSE ) { (*seq)++; }
+    break;
+  case 2:
+    // タスクの追加
+    { 
       FLD_CAMERA_PARAM def_param; 
-      fx32 val_dist;
+      fx32 dist;
       FIELD_TASK* rot;
       FIELD_TASK* zoom;
       FIELD_TASK_MAN* man;
       FIELD_CAMERA_GetInitialParameter( camera, &def_param );
-      val_dist = def_param.Distance << FX32_SHIFT;
-      rot  = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
-      zoom = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, val_dist );
-      man  = FIELDMAP_GetTaskManager( work->fieldmap ); 
+      dist = def_param.Distance << FX32_SHIFT;
+      rot  = FIELD_TASK_PlayerRotate_SpeedDown( fieldmap, 60, 8 );
+      zoom = FIELD_TASK_CameraLinearZoom( fieldmap, ZOOM_OUT_FRAME, dist );
+      man  = FIELDMAP_GetTaskManager( fieldmap ); 
       FIELD_TASK_MAN_AddTask( man, rot, NULL );
       FIELD_TASK_MAN_AddTask( man, zoom, NULL );
     }
-    ++( *seq );
-    break;
-  case 1:
-    { // タスクの終了待ち
-      FIELD_TASK_MAN* man;
-      man  = FIELDMAP_GetTaskManager( work->fieldmap ); 
-      if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
-      {
-        ++( *seq );
-      }
-    }
-    break;
-  case 2:
-    // カメラモードの復帰
-    FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
-    ++( *seq );
+    (*seq)++;
     break;
   case 3:
+    // 画面フェードイン開始
+    { 
+      GMEVENT* fadeEvent;
+      fadeEvent = EVENT_FieldFadeIn_Black( work->gsys, fieldmap,  FIELD_FADE_NO_WAIT );
+      GMEVENT_CallEvent( event, fadeEvent );
+    }
+    (*seq)++;
+    break;
+  case 4:
+    { // タスクの終了待ち
+      FIELD_TASK_MAN* man;
+      man = FIELDMAP_GetTaskManager( fieldmap ); 
+      if( FIELD_TASK_MAN_IsAllTaskEnd(man) ) { (*seq)++; }
+    }
+    break;
+  case 5:
+    // カメラモードの復帰
+    FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
+    (*seq)++;
+    break;
+  case 6:
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
@@ -427,67 +444,73 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, voi
 //------------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void* wk )
 {
-  EVENT_WORK*     work = (EVENT_WORK*)wk;
-  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
+  EVENT_WORK*    work     = (EVENT_WORK*)wk;
+  FIELDMAP_WORK* fieldmap = work->fieldmap;
+  FIELD_CAMERA*  camera   = FIELDMAP_GetFieldCamera( work->fieldmap );
 
-  switch( *seq )
-  {
+  switch( *seq ) {
   case 0:
     // カメラモードの設定
     work->cameraMode = FIELD_CAMERA_GetMode( camera );
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     // カメラ初期設定
     FIELD_CAMERA_SetAngleLen( camera, ZOOM_IN_DIST );
-    { // タスクの追加
+    // カメラのトレース処理停止リクエスト発行
+    FIELD_CAMERA_StopTraceRequest( camera );
+    (*seq)++;
+    break; 
+  case 1:
+    // カメラのトレース処理終了待ち
+    if( FIELD_CAMERA_CheckTrace( camera ) == FALSE ) { (*seq)++; }
+    break;
+  case 2:
+    // タスクの追加
+    { 
       FLD_CAMERA_PARAM def_param; 
-      fx32 val_dist;
+      fx32 dist;
       FIELD_TASK* rot;
       FIELD_TASK* zoom;
       FIELD_TASK_MAN* man;
       FIELD_CAMERA_GetInitialParameter( camera, &def_param );
-      val_dist = def_param.Distance << FX32_SHIFT;
-      rot  = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
-      zoom = FIELD_TASK_CameraLinearZoom( work->fieldmap, ZOOM_OUT_FRAME, val_dist );
-      man  = FIELDMAP_GetTaskManager( work->fieldmap ); 
+      dist = def_param.Distance << FX32_SHIFT;
+      rot  = FIELD_TASK_PlayerRotate_SpeedDown( fieldmap, 60, 8 );
+      zoom = FIELD_TASK_CameraLinearZoom( fieldmap, ZOOM_OUT_FRAME, dist );
+      man  = FIELDMAP_GetTaskManager( fieldmap ); 
       FIELD_TASK_MAN_AddTask( man, rot, NULL );
       FIELD_TASK_MAN_AddTask( man, zoom, NULL );
     }
-    ++( *seq );
-    break;
-
-  case 1:
+    (*seq)++;
+    break; 
+  case 3:
     { // フェードイン
       GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap,  FIELD_FADE_NO_WAIT );
+      fade_event = EVENT_FieldFadeIn_Black( work->gsys, fieldmap,  FIELD_FADE_NO_WAIT );
       GMEVENT_CallEvent( event, fade_event );
     }
-    ++( *seq );
+    (*seq)++;
     break; 
-
-  case 2:
+  case 4:
     { // タスクの終了待ち
       FIELD_TASK_MAN* man;
-      man  = FIELDMAP_GetTaskManager( work->fieldmap ); 
+      man = FIELDMAP_GetTaskManager( fieldmap ); 
       if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
       {
         { // 煙エフェクト表示
-          FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
+          FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldmap );
           MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player );
-          FLDEFF_CTRL*  fectrl = FIELDMAP_GetFldEffCtrl( work->fieldmap );
+          FLDEFF_CTRL*  fectrl = FIELDMAP_GetFldEffCtrl( fieldmap );
           FLDEFF_KEMURI_SetMMdl( mmdl, fectrl );
         }
-        ++( *seq );
+        (*seq)++;
       }
     }
-    break;
-
-  case 3:
+    break; 
+  case 5:
     // カメラモードの復帰
     FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
-    ++( *seq );
-    break;
-
-  case 4:
+    (*seq)++;
+    break; 
+  case 6:
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
@@ -500,12 +523,11 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void
 //------------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Warp( GMEVENT* event, int* seq, void* wk )
 {
-  EVENT_WORK*        work = (EVENT_WORK*)wk;
+  EVENT_WORK*    work     = (EVENT_WORK*)wk;
   FIELDMAP_WORK* fieldmap = work->fieldmap;
-  FIELD_CAMERA*    camera = FIELDMAP_GetFieldCamera( fieldmap );
+  FIELD_CAMERA*  camera   = FIELDMAP_GetFieldCamera( fieldmap );
 
-  switch( *seq )
-  {
+  switch( *seq ) {
   case 0:
     // カメラモードの設定
     work->cameraMode = FIELD_CAMERA_GetMode( camera );
@@ -540,10 +562,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Warp( GMEVENT* event, int* seq, void* wk
     { // タスクの終了待ち
       FIELD_TASK_MAN* taskMan;
       taskMan = FIELDMAP_GetTaskManager( fieldmap ); 
-      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) )
-      {
-        (*seq)++;
-      }
+      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) { (*seq)++; }
     }
     break;
   case 2:
@@ -593,18 +612,18 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_UnionIn( GMEVENT* event, int* seq, void*
       fadeInEvent = EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap,  FIELD_FADE_NO_WAIT );
       GMEVENT_CallEvent( event, fadeInEvent );
     }
-    ++( *seq );
+    (*seq)++;
     break;
   case 1:
     if(MMDL_CheckEndAcmd(player_mmdl) == TRUE){
       MMDL_EndAcmd(player_mmdl);
-      ++( *seq );
+      (*seq)++;
     }
     break;
   case 2:
     // カメラモードの復帰
     FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
-    ++( *seq );
+    (*seq)++;
     break;
   case 3: 
     return GMEVENT_RES_FINISH;

@@ -779,7 +779,9 @@ static GMEVENT_RESULT EVENT_MapChangeBySandStream( GMEVENT* event, int* seq, voi
 {
   MAPCHANGE_WORK* work       = wk;
   GAMESYS_WORK*   gameSystem = work->gameSystem;
+  GAMEDATA*       gameData   = work->gameData;
   FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+  FIELD_SOUND*    fieldSound = GAMEDATA_GetFieldSound( gameData );
 
   switch( *seq )
   {
@@ -794,17 +796,23 @@ static GMEVENT_RESULT EVENT_MapChangeBySandStream( GMEVENT* event, int* seq, voi
         EVENT_DISAPPEAR_FallInSand( event, gameSystem, fieldmap, &work->stream_pos ) );
     (*seq)++;
     break;
-  case 2: 
+  case 2:
+    // BGM変更
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_PlayStartBGM( fieldSound );
+    (*seq)++;
+    break;
+  case 3: 
     // マップチェンジ・コア・イベント
     GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_NORMAL ) );
     (*seq)++;
     break;
-  case 3: 
+  case 4: 
     // 流砂登場イベント
     GMEVENT_CallEvent( event, EVENT_APPEAR_Fall( event, gameSystem, fieldmap ) );
     (*seq) ++;
     break;
-  case 4:
+  case 5:
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
@@ -819,7 +827,9 @@ static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo( GMEVENT* event, int* seq, 
 {
   MAPCHANGE_WORK* work       = wk;
   GAMESYS_WORK*   gameSystem = work->gameSystem;
+  GAMEDATA*       gameData   = work->gameData;
   FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+  FIELD_SOUND*    fieldSound = GAMEDATA_GetFieldSound( gameData );
 
   switch( *seq )
   {
@@ -834,17 +844,23 @@ static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo( GMEVENT* event, int* seq, 
         EVENT_DISAPPEAR_Ananukenohimo( event, gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 2: 
+  case 2:
+    // BGM変更
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_PlayStartBGM( fieldSound );
+    (*seq)++;
+    break;
+  case 3: 
     // マップチェンジ コアイベント
     GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_ESCAPE ) );
     (*seq)++;
     break;
-  case 3: 
+  case 4: 
     // 登場イベント
     GMEVENT_CallEvent( event, EVENT_APPEAR_Ananukenohimo( event, gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 4:
+  case 5:
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
@@ -859,7 +875,9 @@ static GMEVENT_RESULT EVENT_MapChangeByAnawohoru( GMEVENT* event, int* seq, void
 {
   MAPCHANGE_WORK* work       = wk;
   GAMESYS_WORK*   gameSystem = work->gameSystem;
+  GAMEDATA*       gameData   = work->gameData;
   FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+  FIELD_SOUND*    fieldSound = GAMEDATA_GetFieldSound( gameData );
 
   switch( *seq )
   {
@@ -873,16 +891,22 @@ static GMEVENT_RESULT EVENT_MapChangeByAnawohoru( GMEVENT* event, int* seq, void
     GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Anawohoru( event, gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 2: // マップチェンジ コアイベント
+  case 2:
+    // BGM変更
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_PlayStartBGM( fieldSound );
+    (*seq)++;
+    break;
+  case 3: // マップチェンジ コアイベント
     GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_ESCAPE ) );
     (*seq)++;
     break;
-  case 3: 
+  case 4: 
     // 登場イベント
     GMEVENT_CallEvent( event, EVENT_APPEAR_Anawohoru( event, gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 4:
+  case 5:
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
@@ -897,7 +921,9 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport( GMEVENT* event, int* seq, void*
 {
   MAPCHANGE_WORK* work       = wk;
   GAMESYS_WORK*   gameSystem = work->gameSystem;
+  GAMEDATA*       gameData   = work->gameData;
   FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+  FIELD_SOUND*    fieldSound = GAMEDATA_GetFieldSound( gameData );
 
   switch( *seq )
   {
@@ -911,17 +937,23 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport( GMEVENT* event, int* seq, void*
     GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Teleport( event, gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 2: 
+  case 2:
+    // BGM変更
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_PlayStartBGM( fieldSound );
+    (*seq)++;
+    break;
+  case 3: 
     // マップチェンジ コアイベント
     GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_TELEPORT ) );
     (*seq)++;
     break;
-  case 3: 
+  case 4: 
     // 登場イベント
     GMEVENT_CallEvent( event, EVENT_APPEAR_Teleport( event, gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 4:
+  case 5:
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
