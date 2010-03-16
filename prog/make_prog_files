@@ -430,7 +430,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_sppoke_trio.c \
         field/seasonpoke_form.c \
         field/scrcmd_symbol.c \
-        field/event_symbol.c
+        field/event_symbol.c \
+        field/scrcmd_research.c
 
 # wifiƒvƒƒOƒ‰ƒ€
 #===> SRCS_OVERLAY_DEV_WIFILIB
@@ -603,7 +604,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_elevator.c \
         field/scrcmd_dreamworld.c \
         field/scrcmd_postman.c \
-        field/scrcmd_research.c \
         field/field_mystery_gift.c \
         field/field_rail.c \
         field/field_rail_func.c \

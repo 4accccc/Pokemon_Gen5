@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/12 20:07:48
+#save date:2010/03/16 21:52:11
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r0101.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 0 168
+-104 0 168
 #event number: 1
 #type
 1
@@ -49,7 +49,7 @@ C03R0101_BOY2_01
 #OBJ CODE Number
 BOY2
 #MOVE CODE Number
-MV_DOWN
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -57,7 +57,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_MEMBER_HELLO
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--136 0 168
+-56 0 88
 #event number: 2
 #type
 1
@@ -80,7 +80,7 @@ C03R0101_GIRL4_01
 #OBJ CODE Number
 GIRL4
 #MOVE CODE Number
-MV_DOWN
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -88,7 +88,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_MEMBER_THANKS
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -102,7 +102,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 0 168
+-56 0 186
 #event number: 3
 #type
 1
@@ -111,15 +111,15 @@ C03R0101_BOY1_01
 #OBJ CODE Number
 BOY1
 #MOVE CODE Number
-MV_DOWN
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C03R0101_MEMBER_A
 #Event Script Name
 SCRID_MEMBER_A
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 0 136
+-72 0 136
 #event number: 4
 #type
 1
@@ -142,15 +142,15 @@ C03R0101_BOY3_01
 #OBJ CODE Number
 BOY3
 #MOVE CODE Number
-MV_DOWN
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C03R0101_MEMBER_B
 #Event Script Name
 SCRID_MEMBER_B
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 0 136
+-168 0 88
 #event number: 5
 #type
 1
@@ -173,15 +173,15 @@ C03R0101_GIRL1_01
 #OBJ CODE Number
 GIRL1
 #MOVE CODE Number
-MV_DOWN
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C03R0101_MEMBER_C
 #Event Script Name
 SCRID_MEMBER_C
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -195,7 +195,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 0 136
+-216 0 88
 #event number: 6
 #type
 1
@@ -204,15 +204,15 @@ C03R0101_GIRL2_01
 #OBJ CODE Number
 GIRL2
 #MOVE CODE Number
-MV_DOWN
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C03R0101_MEMBER_D
 #Event Script Name
 SCRID_MEMBER_D
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -226,7 +226,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--136 0 136
+-216 0 168
 #event number: 7
 #type
 1
@@ -235,11 +235,11 @@ C03R0101_BOY4_01
 #OBJ CODE Number
 BOY4
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C03R0101_MEMBER_E
 #Event Script Name
 SCRID_MEMBER_E
 #Direction Type Number
@@ -257,7 +257,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 0 136
+-168 0 216
 #event number: 8
 #type
 1
@@ -266,11 +266,11 @@ C03R0101_MAN1_01
 #OBJ CODE Number
 MAN1
 #MOVE CODE Number
-MV_DOWN
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C03R0101_MEMBER_F
 #Event Script Name
 SCRID_MEMBER_F
 #Direction Type Number
@@ -288,7 +288,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 0 136
+-88 0 200
 #event number: 9
 #type
 1
@@ -301,7 +301,7 @@ MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C03R0101_MEMBER_G
 #Event Script Name
 SCRID_MEMBER_G
 #Direction Type Number
@@ -319,7 +319,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 0 136
+-152 0 120
 #event number: 10
 #type
 1
@@ -328,7 +328,7 @@ C03R0101_WOMAN2_01
 #OBJ CODE Number
 WOMAN2
 #MOVE CODE Number
-MV_DOWN
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -336,7 +336,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_MEMBER_QUESTION
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -360,10 +360,10 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+5
 #event number: 0
 #Bg Event Label
-BGID_PAPER
+BGID_PAPER2
 #Bg Event Type
 BG_TALK_TYPE_NORMAL
 #Bg Event Reaction Direction ID
@@ -373,7 +373,59 @@ SCRID_PAPER
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 0 168
+-88 0 152
+#event number: 1
+#Bg Event Label
+BGID_PAPER1
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_PAPER
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 152
+#event number: 2
+#Bg Event Label
+BGID_PAPER3
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_PAPER
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 120
+#event number: 3
+#Bg Event Label
+BGID_PAPER5
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_PAPER
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 120
+#event number: 4
+#Bg Event Label
+BGID_PAPER4
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_PAPER
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 120
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
