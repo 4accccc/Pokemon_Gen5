@@ -943,6 +943,11 @@
 	@echo convert ncg_imd poke24
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke24.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
+#item_grass.imd
+./mmdl_res/item_grass.imd: ./mmdl_nchara/item_grass.ncg ./mmdl_nchara/item_grass.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
+	@echo convert ncg_imd item_grass
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/item_grass.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
 #tsure_001.imd
 ./mmdl_res/tsure_001.imd: ./mmdl_nchara/pokemon//tsure_001.ncg ./mmdl_nchara/pokemon//tsure_001.ncl ./mmdl_res/ncg4x4pokeflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd tsure_001
