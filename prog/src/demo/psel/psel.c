@@ -90,51 +90,45 @@ enum
 };
 
 // サブBGフレーム
-#define BG_FRAME_S_REAR        (GFL_BG_FRAME0_S)
+#define BG_FRAME_S_INSIDE_BALL (GFL_BG_FRAME0_S)
 #define BG_FRAME_S_WIN         (GFL_BG_FRAME1_S)  // BG_FRAME_S_WINとBG_FRAME_S_TEXTは共通のキャラ領域を使用
 #define BG_FRAME_S_TEXT        (GFL_BG_FRAME2_S)  // BG_FRAME_S_WINとBG_FRAME_S_TEXTは共通のキャラ領域を使用
 
 // サブBGフレームのプライオリティ
-#define BG_FRAME_PRI_S_REAR    (2)
-#define BG_FRAME_PRI_S_WIN     (1)
-#define BG_FRAME_PRI_S_TEXT    (0)
+#define BG_FRAME_PRI_S_INSIDE_BALL    (2)
+#define BG_FRAME_PRI_S_WIN            (1)
+#define BG_FRAME_PRI_S_TEXT           (0)
 
 // サブBGパレット
 // 本数
 enum
 {
-  BG_PAL_NUM_S_REAR                   = 11,
   BG_PAL_NUM_S_WIN                    =  1,
   BG_PAL_NUM_S_TEXT                   =  1,
+  BG_PAL_NUM_S_INSIDE_BALL            =  8,
 };
 // 位置
 enum
 {
-  BG_PAL_POS_S_REAR            =   0,
-  BG_PAL_POS_S_WIN             =  11,
-  BG_PAL_POS_S_TEXT            =  12,
+  BG_PAL_POS_S_WIN             =  0,
+  BG_PAL_POS_S_TEXT            =  1,
+  BG_PAL_POS_S_INSIDE_BALL     =  8,
 };
 
 // サブOBJパレット
 // 本数
 enum
 {
-  OBJ_PAL_NUM_S_SMALL_MIZU      = 1,
-  OBJ_PAL_NUM_S_BIG_MIZU        = 1,
-  OBJ_PAL_NUM_S_SMALL_HONOO     = 1,
-  OBJ_PAL_NUM_S_BIG_HONOO       = 1,
-  OBJ_PAL_NUM_S_SMALL_KUSA      = 1,
-  OBJ_PAL_NUM_S_BIG_KUSA        = 1,
+  OBJ_PAL_NUM_S_MIZU      = 1,  // smallもbigもこのパレット列を使う
+  OBJ_PAL_NUM_S_HONOO     = 1,
+  OBJ_PAL_NUM_S_KUSA      = 1,
 };
 // 位置
 enum
 {
-  OBJ_PAL_POS_S_SMALL_MIZU      = 0,
-  OBJ_PAL_POS_S_BIG_MIZU        = 1,
-  OBJ_PAL_POS_S_SMALL_HONOO     = 2,
-  OBJ_PAL_POS_S_BIG_HONOO       = 3,
-  OBJ_PAL_POS_S_SMALL_KUSA      = 4,
-  OBJ_PAL_POS_S_BIG_KUSA        = 5,
+  OBJ_PAL_POS_S_MIZU      = 0,
+  OBJ_PAL_POS_S_HONOO     = 1,
+  OBJ_PAL_POS_S_KUSA      = 2,
 };
 
 
@@ -175,18 +169,16 @@ enum
   TEXT_MAX,
 };
 
-#define TEXT_PAL_POS_M (BG_PAL_POS_M_TEXT)
-#define TEXT_PAL_POS_S (BG_PAL_POS_S_TEXT)
 #define TEXT_COLOR_L (15)  // MAINもSUBも同じ構成にしておく
 #define TEXT_COLOR_S ( 2)
 #define TEXT_COLOR_B ( 0)
 
 static const u8 bmpwin_setup[TEXT_MAX][9] =
 {
-  // frmnum           posx  posy  sizx  sizy  palnum          dir                    x  y (x,yは無視してセンタリングすることもある)
-  {  BG_FRAME_M_TEXT,    1,    3,   30,   18, TEXT_PAL_POS_M, GFL_BMP_CHRAREA_GET_B, 0, 0 },
-  {  BG_FRAME_M_TEXT,    1,   19,   30,    2, TEXT_PAL_POS_M, GFL_BMP_CHRAREA_GET_B, 0, 0 },
-  {  BG_FRAME_S_TEXT,    1,   18,   30,    4, TEXT_PAL_POS_S, GFL_BMP_CHRAREA_GET_B, 0, 0 },
+  // frmnum           posx  posy  sizx  sizy  palnum             dir                    x  y (x,yは無視してセンタリングすることもある)
+  {  BG_FRAME_M_TEXT,    1,    3,   30,   18, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
+  {  BG_FRAME_M_TEXT,    1,   19,   30,    2, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
+  {  BG_FRAME_S_TEXT,    1,   18,   30,    4, BG_PAL_POS_S_TEXT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
 };
 
 // 文字数
@@ -221,10 +213,11 @@ enum
   TWO_OBJ_RES_NCE,
   TWO_OBJ_RES_MAX,
   TWO_OBJ_RES_NAN        = TWO_OBJ_RES_MAX,
+  TWO_OBJ_RES_DARK_NCL,
   TWO_OBJ_RES_FILE_MAX,
 };
 
-#define OBJ_BG_PRI_S_POKE     (BG_FRAME_PRI_S_REAR)
+#define OBJ_BG_PRI_S_POKE     (BG_FRAME_PRI_S_INSIDE_BALL)
 #define OBJ_BG_PRI_M_FINGER   (BG_FRAME_PRI_M_THREE)
 
 
@@ -262,9 +255,9 @@ static const u8 finger_pos[TARGET_POKE_MAX][2] =
 // monsno
 static const u16 poke_monsno[TARGET_POKE_MAX] =
 {
-  557,
-  554,
-  551,
+  MONSNO_557,  // MONSNO_???の???はグラフィックナンバー、定義されている値はmonsno
+  MONSNO_554,
+  MONSNO_551,
 };
 // 位置
 static const u8 poke_pos[TARGET_POKE_MAX][2] =
@@ -276,16 +269,75 @@ static const u8 poke_pos[TARGET_POKE_MAX][2] =
 // リソース
 static const u8 poke_res_big[TARGET_POKE_MAX][TWO_OBJ_RES_FILE_MAX] =
 {
-  { NARC_psel_psel_557_m_NCGR, NARC_psel_psel_557_n_NCLR, NARC_psel_psel_557_m_NCER, NARC_psel_psel_557_m_NANR },
-  { NARC_psel_psel_554_m_NCGR, NARC_psel_psel_554_n_NCLR, NARC_psel_psel_554_m_NCER, NARC_psel_psel_554_m_NANR },
-  { NARC_psel_psel_551_m_NCGR, NARC_psel_psel_551_n_NCLR, NARC_psel_psel_551_m_NCER, NARC_psel_psel_551_m_NANR },
+  { NARC_psel_psel_557_m_NCGR, NARC_psel_psel_557_n_NCLR, NARC_psel_psel_557_m_NCER, NARC_psel_psel_557_m_NANR, NARC_psel_psel_557_x_NCLR },
+  { NARC_psel_psel_554_m_NCGR, NARC_psel_psel_554_n_NCLR, NARC_psel_psel_554_m_NCER, NARC_psel_psel_554_m_NANR, NARC_psel_psel_554_x_NCLR },
+  { NARC_psel_psel_551_m_NCGR, NARC_psel_psel_551_n_NCLR, NARC_psel_psel_551_m_NCER, NARC_psel_psel_551_m_NANR, NARC_psel_psel_551_x_NCLR },
 };
 // パレット
-static const u8 poke_obj_pal_pos_s[TARGET_POKE_MAX][2] =  // 0=small, 1=big
+static const u8 poke_obj_pal_pos_s[TARGET_POKE_MAX] =
 {
-  { OBJ_PAL_POS_S_SMALL_MIZU,  OBJ_PAL_POS_S_BIG_MIZU  },
-  { OBJ_PAL_POS_S_SMALL_HONOO, OBJ_PAL_POS_S_BIG_HONOO },
-  { OBJ_PAL_POS_S_SMALL_KUSA,  OBJ_PAL_POS_S_BIG_KUSA  },
+  OBJ_PAL_POS_S_MIZU, 
+  OBJ_PAL_POS_S_HONOO,
+  OBJ_PAL_POS_S_KUSA,
+};
+
+// ボール内をイメージしたサブ画面BG
+enum
+{
+  INSIDE_BALL_MIZU,    // TARGETと同じ並びにしておく
+  INSIDE_BALL_HONOO,
+  INSIDE_BALL_KUSA,
+  INSIDE_BALL_NONE,
+  INSIDE_BALL_MAX,
+};
+
+// ボール内をイメージしたサブ画面BGのパレットデータ
+static const u8 inside_ball_res[INSIDE_BALL_MAX] =
+{
+  NARC_psel_psel_bg02_w_NCLR, 
+  NARC_psel_psel_bg02_f_NCLR, 
+  NARC_psel_psel_bg02_l_NCLR, 
+  NARC_psel_psel_bg02_NCLR, 
+};
+
+// ボール内をイメージしたサブ画面BGのパレット
+enum
+{
+  INSIDE_BALL_PAL_START,  // 開始色
+  INSIDE_BALL_PAL_TRANS,  // 現在色
+  INSIDE_BALL_PAL_MAX,
+};
+
+// パレットアニメの状態
+typedef enum
+{
+  POKE_PAL_ANIME_STATE_COLOR,              // カラーにしたいときにPsel_PalPokeAnimeStartに引数として渡せる状態
+  POKE_PAL_ANIME_STATE_COLOR_TO_DARK,
+  POKE_PAL_ANIME_STATE_DARK,               // ダークにしたいときにPsel_PalPokeAnimeStartに引数として渡せる状態
+  POKE_PAL_ANIME_STATE_DARK_TO_COLOR,
+}
+POKE_PAL_ANIME_STATE;
+typedef enum
+{
+  INSIDE_BALL_PAL_ANIME_STATE_END,
+  INSIDE_BALL_PAL_ANIME_STATE_START_TO_END,
+}
+INSIDE_BALL_PAL_ANIME_STATE;
+
+// ポケモン大小
+enum
+{
+  POKE_SMALL,
+  POKE_BIG,
+  POKE_MAX,
+};
+// ポケモン大小パレット
+enum
+{
+  POKE_PAL_COLOR,  // 本来の色
+  POKE_PAL_DARK,   // 非選択時の暗色
+  POKE_PAL_TRANS,  // 現在色
+  POKE_PAL_MAX,
 };
 
 
@@ -454,10 +506,15 @@ static void ThreeObjPropertyDeleteArray( THREE_OBJ_PROPERTY* prop_array )
 //=====================================
 typedef struct
 {
-  u32        small_res[TWO_OBJ_RES_MAX];
-  GFL_CLWK*  small_clwk;
-  u32        big_res[TWO_OBJ_RES_MAX];
-  GFL_CLWK*  big_clwk;
+  u32        res[POKE_MAX][TWO_OBJ_RES_MAX];
+  GFL_CLWK*  clwk[POKE_MAX];
+  
+  // オリジナルパレットデータ
+  u16        pal[POKE_PAL_MAX][16];
+  
+  // パレットアニメの状態
+  u16        pal_anime_state;
+  u16        pal_anime_count;
 }
 POKE_SET;
 
@@ -516,6 +573,15 @@ typedef struct
   APP_TASKMENU_RES*           app_taskmenu_res;
   APP_TASKMENU_WIN_WORK*      app_taskmenu_win_wk;  // タッチのときに出る「これに決めた」ボタン
   APP_TASKMENU_WORK*          app_taskmenu_wk;      // タッチでもキーでも出る最終確認の「はい」「いいえ」ボタン
+
+  // ボール内をイメージしたサブ画面BGのパレット
+  // オリジナルパレットデータ
+  u16                         inside_ball_pal[INSIDE_BALL_MAX][16*BG_PAL_NUM_S_INSIDE_BALL];
+  u16                         inside_ball_st_pal[INSIDE_BALL_PAL_MAX][16*BG_PAL_NUM_S_INSIDE_BALL];
+  // パレットアニメの状態
+  INSIDE_BALL_PAL_ANIME_STATE inside_ball_pal_anime_state;
+  u8                          inside_ball_pal_anime_count;
+  u8                          inside_ball_pal_anime_end;
 }
 PSEL_WORK;
 
@@ -565,6 +631,9 @@ static void Psel_BgS02Init( PSEL_WORK* work );
 static void Psel_BgS02Exit( PSEL_WORK* work );
 static void Psel_BgS02Main( PSEL_WORK* work );
 
+static void Psel_InsideBallInit( PSEL_WORK* work );
+static void Psel_InsideBallExit( PSEL_WORK* work );
+
 // テキスト全体
 static void Psel_TextInit( PSEL_WORK* work );
 static void Psel_TextExit( PSEL_WORK* work );
@@ -593,6 +662,21 @@ static void Psel_AppTaskmenuWinMain( PSEL_WORK* work );
 static void Psel_AppTaskmenuInit( PSEL_WORK* work );
 static void Psel_AppTaskmenuExit( PSEL_WORK* work );
 static void Psel_AppTaskmenuMain( PSEL_WORK* work );
+
+// パレット
+static void U16ToRGB( u16 rgb, u16* r, u16* g, u16* b );
+static void Psel_PokeSetPalInit( PSEL_WORK* work );
+static void Psel_PokeSetPalExit( PSEL_WORK* work );
+static void Psel_PokeSetPalMain( PSEL_WORK* work );
+static void Psel_InsideBallPalInit( PSEL_WORK* work );
+static void Psel_InsideBallPalExit( PSEL_WORK* work );
+static void Psel_InsideBallPalMain( PSEL_WORK* work );
+static void Psel_PalInit( PSEL_WORK* work );
+static void Psel_PalExit( PSEL_WORK* work );
+static void Psel_PalMain( PSEL_WORK* work );
+static void Psel_PokeSetPalAnimeStart( PSEL_WORK* work, TARGET target_poke, POKE_PAL_ANIME_STATE state );
+static void Psel_InsideBallPalAnimeStart( PSEL_WORK* work, u8 end );
+
 
 // シーケンス
 typedef int (*PSEL_FUNC)( PSEL_WORK* work, int* seq );
@@ -1102,6 +1186,7 @@ static void Psel_ThreeS02Main( PSEL_WORK* work )
 static void Psel_PokeSetInit( PSEL_WORK* work )
 {
   u8 i;
+  u8 j;
 
   int  formno       = 0;                  // 0<=formno<POKETOOL_GetPersonalParam( monsno, 0, POKEPER_ID_form_max )
   int  sex          = PTL_SEX_MALE;       // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWN
@@ -1111,12 +1196,13 @@ static void Psel_PokeSetInit( PSEL_WORK* work )
   u32  personal_rnd = 0;                  // ?
 
   // small
+  j = POKE_SMALL;
   // リソースの読み込み
   {
     ARCHANDLE* handle = POKE2DGRA_OpenHandle( work->heap_id );
     for( i=0; i<TARGET_POKE_MAX; i++ )
     {
-      work->poke_set[i].small_res[TWO_OBJ_RES_NCG] = POKE2DGRA_OBJ_CGR_Register(
+      work->poke_set[i].res[j][TWO_OBJ_RES_NCG] = POKE2DGRA_OBJ_CGR_Register(
           handle,
           poke_monsno[i],
           formno, sex, rare, dir, egg,
@@ -1124,15 +1210,15 @@ static void Psel_PokeSetInit( PSEL_WORK* work )
           CLSYS_DRAW_SUB,
           work->heap_id );
 
-      work->poke_set[i].small_res[TWO_OBJ_RES_NCL] = POKE2DGRA_OBJ_PLTT_Register(
+      work->poke_set[i].res[j][TWO_OBJ_RES_NCL] = POKE2DGRA_OBJ_PLTT_Register(
           handle,
           poke_monsno[i],
           formno, sex, rare, dir, egg,
           CLSYS_DRAW_SUB,
-          poke_obj_pal_pos_s[i][0] * 0x20,
+          poke_obj_pal_pos_s[i] * 0x20,
           work->heap_id );
 
-      work->poke_set[i].small_res[TWO_OBJ_RES_NCE] = POKE2DGRA_OBJ_CELLANM_Register(
+      work->poke_set[i].res[j][TWO_OBJ_RES_NCE] = POKE2DGRA_OBJ_CELLANM_Register(
           poke_monsno[i],
           formno, sex, rare, dir, egg,
           APP_COMMON_MAPPING_32K,
@@ -1154,43 +1240,47 @@ static void Psel_PokeSetInit( PSEL_WORK* work )
       cldata.softpri  = 0;
       cldata.bgpri    = OBJ_BG_PRI_S_POKE;
 
-      work->poke_set[i].small_clwk = GFL_CLACT_WK_Create(
+      work->poke_set[i].clwk[j] = GFL_CLACT_WK_Create(
           PSEL_GRAPHIC_GetClunit( work->graphic ),
-          work->poke_set[i].small_res[TWO_OBJ_RES_NCG],
-          work->poke_set[i].small_res[TWO_OBJ_RES_NCL],
-          work->poke_set[i].small_res[TWO_OBJ_RES_NCE],
+          work->poke_set[i].res[j][TWO_OBJ_RES_NCG],
+          work->poke_set[i].res[j][TWO_OBJ_RES_NCL],
+          work->poke_set[i].res[j][TWO_OBJ_RES_NCE],
           &cldata, CLSYS_DEFREND_SUB, work->heap_id );
 
-      GFL_CLACT_WK_SetObjMode( work->poke_set[i].small_clwk, GX_OAM_MODE_XLU );  // 半透明OBJ
+      //GFL_CLACT_WK_SetObjMode( work->poke_set[i].clwk[j], GX_OAM_MODE_XLU );  // 半透明OBJにはせず、パレットアニメで暗くする
     
       
-      GFL_CLACT_WK_SetDrawEnable( work->poke_set[i].small_clwk, FALSE );
+      GFL_CLACT_WK_SetDrawEnable( work->poke_set[i].clwk[j], FALSE );
    
     
     }
   }
 
   // big
+  j = POKE_BIG;
   // リソース読み込み
   {
     ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_PSEL, work->heap_id );
     for( i=0; i<TARGET_POKE_MAX; i++ )
     {
-      work->poke_set[i].big_res[TWO_OBJ_RES_NCL] = GFL_CLGRP_PLTT_RegisterEx( 
+/*
+      smallとbigは同じパレットなので、samllのを使用する
+      work->poke_set[i].res[j][TWO_OBJ_RES_NCL] = GFL_CLGRP_PLTT_RegisterEx( 
           handle,
           poke_res_big[i][TWO_OBJ_RES_NCL],
           CLSYS_DRAW_SUB,
-          poke_obj_pal_pos_s[i][1] * 0x20,
+          poke_obj_pal_pos_s[i] * 0x20,
           0,  // データ読み出し開始位置を0に固定しているが大丈夫かな、デザイナさんにお願いしておかないと
           1,  // 転送本数を1に固定しているが大丈夫かな、デザイナさんにお願いしておかないと
           work->heap_id );
-      work->poke_set[i].big_res[TWO_OBJ_RES_NCG] = GFL_CLGRP_CGR_Register(
+*/
+      work->poke_set[i].res[j][TWO_OBJ_RES_NCG] = GFL_CLGRP_CGR_Register(
           handle,
           poke_res_big[i][TWO_OBJ_RES_NCG],
           FALSE,
           CLSYS_DRAW_SUB,
           work->heap_id );
-      work->poke_set[i].big_res[TWO_OBJ_RES_NCE] = GFL_CLGRP_CELLANIM_Register(
+      work->poke_set[i].res[j][TWO_OBJ_RES_NCE] = GFL_CLGRP_CELLANIM_Register(
           handle,
           poke_res_big[i][TWO_OBJ_RES_NCE],
           poke_res_big[i][TWO_OBJ_RES_NAN],
@@ -1213,40 +1303,39 @@ static void Psel_PokeSetInit( PSEL_WORK* work )
 
       claffinedata.affinepos_x    = 0;
       claffinedata.affinepos_y    = 0;
-      claffinedata.scale_x        = FX_F32_TO_FX32(0.3f);
-      claffinedata.scale_y        = FX_F32_TO_FX32(0.3f);
+      claffinedata.scale_x        = FX_F32_TO_FX32(1.0f);//FX_F32_TO_FX32(0.3f);
+      claffinedata.scale_y        = FX_F32_TO_FX32(1.0f);//FX_F32_TO_FX32(0.3f);
       claffinedata.rotation       = 0;  // 回転角度(0～0xffff 0xffffが360度)
       claffinedata.affine_type    = CLSYS_AFFINETYPE_NORMAL;  // 縮小しかしないので、倍角でなくてよい
 
-      work->poke_set[i].big_clwk = GFL_CLACT_WK_CreateAffine(
+      work->poke_set[i].clwk[j] = GFL_CLACT_WK_CreateAffine(
           PSEL_GRAPHIC_GetClunit( work->graphic ),
-          work->poke_set[i].big_res[TWO_OBJ_RES_NCG],
-          work->poke_set[i].big_res[TWO_OBJ_RES_NCL],
-          work->poke_set[i].big_res[TWO_OBJ_RES_NCE],
+          work->poke_set[i].res[j][TWO_OBJ_RES_NCG],
+          //work->poke_set[i].res[j][TWO_OBJ_RES_NCL],
+          work->poke_set[i].res[POKE_SMALL][TWO_OBJ_RES_NCL],
+          work->poke_set[i].res[j][TWO_OBJ_RES_NCE],
           &claffinedata, CLSYS_DEFREND_SUB, work->heap_id );
 
-      GFL_CLACT_WK_SetObjMode( work->poke_set[i].small_clwk, GX_OAM_MODE_XLU );  // 半透明OBJ
+      //GFL_CLACT_WK_SetObjMode( work->poke_set[i].clwk[j], GX_OAM_MODE_XLU );  // 半透明OBJにはせず、パレットアニメで暗くする
     }
   }
 }
 static void Psel_PokeSetExit( PSEL_WORK* work )
 {
   u8 i;
+  u8 j;
   for( i=0; i<TARGET_POKE_MAX; i++ )
   {
-    // CLWK破棄
-    GFL_CLACT_WK_Remove( work->poke_set[i].big_clwk );
+    for( j=0; j<POKE_MAX; j++ )
+    {
+      // CLWK破棄
+      GFL_CLACT_WK_Remove( work->poke_set[i].clwk[j] );
 
-    GFL_CLACT_WK_Remove( work->poke_set[i].small_clwk );
-
-    // リソース破棄
-    GFL_CLGRP_CELLANIM_Release( work->poke_set[i].big_res[TWO_OBJ_RES_NCE] );
-    GFL_CLGRP_CGR_Release( work->poke_set[i].big_res[TWO_OBJ_RES_NCG] );
-    GFL_CLGRP_PLTT_Release( work->poke_set[i].big_res[TWO_OBJ_RES_NCL] );
-
-    GFL_CLGRP_CELLANIM_Release( work->poke_set[i].small_res[TWO_OBJ_RES_NCE] );
-    GFL_CLGRP_CGR_Release( work->poke_set[i].small_res[TWO_OBJ_RES_NCG] );
-    GFL_CLGRP_PLTT_Release( work->poke_set[i].small_res[TWO_OBJ_RES_NCL] );
+      // リソース破棄
+      GFL_CLGRP_CELLANIM_Release( work->poke_set[i].res[j][TWO_OBJ_RES_NCE] );
+      GFL_CLGRP_CGR_Release( work->poke_set[i].res[j][TWO_OBJ_RES_NCG] );
+      if( j != POKE_BIG ) GFL_CLGRP_PLTT_Release( work->poke_set[i].res[j][TWO_OBJ_RES_NCL] );  // smallとbigは同じパレットなので、smallのしか読み込んでいない
+    }
   }
 }
 
@@ -1409,7 +1498,7 @@ static void Psel_BgS02Init( PSEL_WORK* work )
     {                         // 6.2.3.2.2 スクリーンデータのアドレスマッピング
       for(i=0; i<32; i++)     // スクリーンサイズが256×256 ドットのとき
       {                       // を参考にした。
-        u16 chara_name = (18<=j&&j<22)?1:0;  // 1キャラ目:0キャラ目
+        u16 chara_name = (17<=j&&j<23)?1:0;  // 1キャラ目:0キャラ目
         u16 flip_h     = 0;
         u16 flip_v     = 0;
         u16 pal        = BG_PAL_POS_M_WIN;
@@ -1434,7 +1523,7 @@ static void Psel_BgS02Init( PSEL_WORK* work )
     {                         // 6.2.3.2.2 スクリーンデータのアドレスマッピング
       for(i=0; i<32; i++)     // スクリーンサイズが256×256 ドットのとき
       {                       // を参考にした。
-        u16 chara_name = (18<=j&&j<22)?1:0;  // 1キャラ目:0キャラ目
+        u16 chara_name = (17<=j&&j<23)?1:0;  // 1キャラ目:0キャラ目
         u16 flip_h     = 0;
         u16 flip_v     = 0;
         u16 pal        = BG_PAL_POS_S_WIN;
@@ -1472,6 +1561,46 @@ static void Psel_BgS02Exit( PSEL_WORK* work )
 }
 static void Psel_BgS02Main( PSEL_WORK* work )
 {
+}
+
+static void Psel_InsideBallInit( PSEL_WORK* work )
+{
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_PSEL, work->heap_id );
+
+  GFL_ARCHDL_UTIL_TransVramPaletteEx(
+      handle,
+      inside_ball_res[INSIDE_BALL_NONE],
+      PALTYPE_SUB_BG,
+      BG_PAL_POS_S_INSIDE_BALL * 0x20,
+      BG_PAL_POS_S_INSIDE_BALL * 0x20,
+      BG_PAL_NUM_S_INSIDE_BALL * 0x20,
+      work->heap_id );
+
+  GFL_ARCHDL_UTIL_TransVramBgCharacter(
+      handle,
+      NARC_psel_psel_bg02_NCGR,
+      BG_FRAME_S_INSIDE_BALL,
+			0,
+      0,  // 全転送
+      FALSE,
+      work->heap_id );
+
+  GFL_ARCHDL_UTIL_TransVramScreen(
+      handle,
+      NARC_psel_psel_bg02_NSCR,
+      BG_FRAME_S_INSIDE_BALL,
+      0,
+      0,  // 全転送
+      FALSE,
+      work->heap_id );
+
+  GFL_ARC_CloseDataHandle( handle );
+
+  GFL_BG_LoadScreenReq( BG_FRAME_S_INSIDE_BALL );
+}
+static void Psel_InsideBallExit( PSEL_WORK* work )
+{
+  // 何もしない
 }
 
 //-------------------------------------
@@ -1849,7 +1978,7 @@ static void Psel_AppTaskmenuInit( PSEL_WORK* work )
   init.itemWork  = item;
   init.posType   = ATPT_RIGHT_DOWN;
   init.charPosX  = 32;  // 31キャラまで描かれる
-  init.charPosY  = 18;  // 17キャラまで描かれる
+  init.charPosY  = 17;  // 16キャラまで描かれる
   //init.w         = 7;  // いいえがぴったりおさまる幅
   init.w         = 9;  // いいえとリターンマークがぴったりおさまる幅  //APP_TASKMENU_PLATE_WIDTH;
   init.h         = APP_TASKMENU_PLATE_HEIGHT;
@@ -1870,6 +1999,292 @@ static void Psel_AppTaskmenuExit( PSEL_WORK* work )
 static void Psel_AppTaskmenuMain( PSEL_WORK* work )
 {
   APP_TASKMENU_UpdateMenu( work->app_taskmenu_wk );
+}
+
+//-------------------------------------
+/// パレット
+//=====================================
+static void U16ToRGB( u16 rgb, u16* r, u16* g, u16* b )
+{
+  *r = ( rgb & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+  *g = ( rgb & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+  *b = ( rgb & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+}
+
+static void Psel_PokeSetPalInit( PSEL_WORK* work )
+{
+  ARCHANDLE* handle;
+  NNSG2dPaletteData* pal_data;
+  void* buff;
+  u8 i;
+
+  // オリジナルパレットデータ
+  // 大小同じパレットなので、大のパレットを小にも割り当てることにする
+  handle = GFL_ARC_OpenDataHandle( ARCID_PSEL, work->heap_id );
+  for( i=0; i<TARGET_POKE_MAX; i++ )
+  {
+    buff = GFL_ARCHDL_UTIL_LoadPalette( handle, poke_res_big[i][TWO_OBJ_RES_NCL], &pal_data, work->heap_id );
+    GFL_STD_MemCopy( pal_data->pRawData, work->poke_set[i].pal[POKE_PAL_COLOR], 2*16 );  // 0番列から入っているのでこのままでいい
+    GFL_HEAP_FreeMemory( buff );
+    
+    buff = GFL_ARCHDL_UTIL_LoadPalette( handle, poke_res_big[i][TWO_OBJ_RES_DARK_NCL], &pal_data, work->heap_id );
+    GFL_STD_MemCopy( pal_data->pRawData, work->poke_set[i].pal[POKE_PAL_DARK], 2*16 );  // 0番列から入っているのでこのままでいい
+    GFL_HEAP_FreeMemory( buff );
+  }
+  GFL_ARC_CloseDataHandle( handle );
+
+  // パレットアニメの状態
+  for( i=0; i<TARGET_POKE_MAX; i++ )
+  {
+    // darkにする
+    work->poke_set[i].pal_anime_state = POKE_PAL_ANIME_STATE_DARK;
+    work->poke_set[i].pal_anime_count = 16;
+  }
+
+/*
+  なくても大丈夫のようだ
+  // 確実に読み込みを終える 
+  for( i=0; i<TARGET_POKE_MAX; i++ )
+  {
+    DC_FlushRange( work->poke_set[i].pal[POKE_PAL_COLOR], 2*16 );
+    DC_FlushRange( work->poke_set[i].pal[POKE_PAL_DARK], 2*16 );
+  }
+*/
+  
+  // 初期状態 
+  for( i=0; i<TARGET_POKE_MAX; i++ )
+  {
+    // darkにする
+    GFL_STD_MemCopy( work->poke_set[i].pal[POKE_PAL_DARK], work->poke_set[i].pal[POKE_PAL_TRANS], 2*16 );
+    NNS_GfdRegisterNewVramTransferTask(
+        NNS_GFD_DST_2D_OBJ_PLTT_SUB,
+        poke_obj_pal_pos_s[i] * 2*16,
+        work->poke_set[i].pal[POKE_PAL_TRANS],
+        2*16 );
+  }
+}
+static void Psel_PokeSetPalExit( PSEL_WORK* work )
+{
+  // 何もしない
+}
+static void Psel_PokeSetPalMain( PSEL_WORK* work )
+{
+  u8 i;
+  u8 j;
+
+  // 0=color, 16=dark
+  
+  for( i=0; i<TARGET_POKE_MAX; i++ )
+  {
+    BOOL need_trans = FALSE;
+
+    switch( work->poke_set[i].pal_anime_state )
+    {
+    case POKE_PAL_ANIME_STATE_COLOR_TO_DARK:
+      {
+        if( work->poke_set[i].pal_anime_count == 16 )
+        {
+          work->poke_set[i].pal_anime_state = POKE_PAL_ANIME_STATE_DARK;
+        }
+        else
+        {
+          work->poke_set[i].pal_anime_count++;
+          need_trans = TRUE;
+        }
+      }
+      break;
+    case POKE_PAL_ANIME_STATE_DARK_TO_COLOR:
+      {
+        if( work->poke_set[i].pal_anime_count == 0 )
+        {
+          work->poke_set[i].pal_anime_state = POKE_PAL_ANIME_STATE_COLOR;
+        }
+        else
+        {
+          work->poke_set[i].pal_anime_count--;
+          need_trans = TRUE;
+        }
+      }
+      break;
+    }
+
+    if( need_trans )
+    {
+      switch( work->poke_set[i].pal_anime_state )
+      {
+      case POKE_PAL_ANIME_STATE_COLOR_TO_DARK:
+      case POKE_PAL_ANIME_STATE_DARK_TO_COLOR:
+        {
+          for( j=0; j<16; j++ )
+          {
+            u16 count = work->poke_set[i].pal_anime_count;
+            u16 color = work->poke_set[i].pal[POKE_PAL_COLOR][j];
+            u16 dark  = work->poke_set[i].pal[POKE_PAL_DARK][j];
+            u16 color_r, color_g, color_b;
+            u16 dark_r, dark_g, dark_b;
+            u16 trans_r, trans_g, trans_b;
+            U16ToRGB( color, &color_r, &color_g, &color_b );
+            U16ToRGB( dark, &dark_r, &dark_g, &dark_b );
+            trans_r = ( color_r*(16-count) + dark_r*(count) ) /16;
+            trans_g = ( color_g*(16-count) + dark_g*(count) ) /16;
+            trans_b = ( color_b*(16-count) + dark_b*(count) ) /16;
+            work->poke_set[i].pal[POKE_PAL_TRANS][j] = GX_RGB( trans_r, trans_g, trans_b );
+          }
+        }
+        break;
+      }
+
+      NNS_GfdRegisterNewVramTransferTask(
+          NNS_GFD_DST_2D_OBJ_PLTT_SUB,
+          poke_obj_pal_pos_s[i] * 2*16,
+          work->poke_set[i].pal[POKE_PAL_TRANS],
+          2*16 );
+    }
+  }
+}
+
+static void Psel_InsideBallPalInit( PSEL_WORK* work )
+{
+  ARCHANDLE* handle;
+  NNSG2dPaletteData* pal_data;
+  u16* raw_data;
+  void* buff;
+  u8 i;
+
+  // オリジナルパレットデータ
+  handle = GFL_ARC_OpenDataHandle( ARCID_PSEL, work->heap_id );
+  for( i=0; i<INSIDE_BALL_MAX; i++ )
+  {
+    buff = GFL_ARCHDL_UTIL_LoadPalette( handle, inside_ball_res[i], &pal_data, work->heap_id );
+    raw_data = pal_data->pRawData;  // BG_PAL_POS_S_INSIDE_BALL番列から入っているので、それだけずらした位置からコピーする
+    GFL_STD_MemCopy( &(raw_data[BG_PAL_POS_S_INSIDE_BALL*16]), work->inside_ball_pal[i], 2*16*BG_PAL_NUM_S_INSIDE_BALL );
+    GFL_HEAP_FreeMemory( buff );
+  }
+  GFL_ARC_CloseDataHandle( handle );
+
+  // パレットアニメの状態
+  // noneにする
+  work->inside_ball_pal_anime_state = INSIDE_BALL_PAL_ANIME_STATE_END;
+  work->inside_ball_pal_anime_count = 16;
+  work->inside_ball_pal_anime_end   = INSIDE_BALL_NONE;
+
+/*
+  なくても大丈夫のようだ
+  // 確実に読み込みを終える 
+  for( i=0; i<INSIDE_BALL_MAX; i++ )
+  {
+    DC_FlushRange( work->inside_ball_pal[i], 2*16*BG_PAL_NUM_S_INSIDE_BALL );
+  }
+*/
+
+  // 初期状態
+  // noneにする
+  GFL_STD_MemCopy( work->inside_ball_pal[INSIDE_BALL_NONE], work->inside_ball_st_pal[INSIDE_BALL_PAL_TRANS], 2*16*BG_PAL_NUM_S_INSIDE_BALL );
+  NNS_GfdRegisterNewVramTransferTask(
+      NNS_GFD_DST_2D_BG_PLTT_SUB,
+      BG_PAL_POS_S_INSIDE_BALL * 2*16,
+      work->inside_ball_st_pal[INSIDE_BALL_PAL_TRANS],
+      2*16*BG_PAL_NUM_S_INSIDE_BALL );
+}
+static void Psel_InsideBallPalExit( PSEL_WORK* work )
+{
+  // 何もしない
+}
+static void Psel_InsideBallPalMain( PSEL_WORK* work )
+{
+  u8 j;
+  BOOL need_trans = FALSE;
+  
+  // 0=start, 16=end
+  
+  if( work->inside_ball_pal_anime_state == INSIDE_BALL_PAL_ANIME_STATE_START_TO_END )
+  {
+    if( work->inside_ball_pal_anime_count == 16 )
+    {
+      work->inside_ball_pal_anime_state = INSIDE_BALL_PAL_ANIME_STATE_END;
+    }
+    else
+    {
+      work->inside_ball_pal_anime_count++;
+      need_trans = TRUE;
+    }
+
+    if( need_trans )
+    {
+      for( j=0; j<16*BG_PAL_NUM_S_INSIDE_BALL; j++ )
+      {
+        u16 count = work->inside_ball_pal_anime_count;
+        u16 color = work->inside_ball_st_pal[INSIDE_BALL_PAL_START][j];
+        u16 dark  = work->inside_ball_pal[ work->inside_ball_pal_anime_end ][j];
+        u16 color_r, color_g, color_b;
+        u16 dark_r, dark_g, dark_b;
+        u16 trans_r, trans_g, trans_b;
+        U16ToRGB( color, &color_r, &color_g, &color_b );
+        U16ToRGB( dark, &dark_r, &dark_g, &dark_b );
+        trans_r = ( color_r*(16-count) + dark_r*(count) ) /16;
+        trans_g = ( color_g*(16-count) + dark_g*(count) ) /16;
+        trans_b = ( color_b*(16-count) + dark_b*(count) ) /16;
+        work->inside_ball_st_pal[INSIDE_BALL_PAL_TRANS][j] = GX_RGB( trans_r, trans_g, trans_b );
+      }
+      NNS_GfdRegisterNewVramTransferTask(
+        NNS_GFD_DST_2D_BG_PLTT_SUB,
+        BG_PAL_POS_S_INSIDE_BALL * 2*16,
+        work->inside_ball_st_pal[INSIDE_BALL_PAL_TRANS],
+        2*16*BG_PAL_NUM_S_INSIDE_BALL );
+    }
+  }
+}
+
+static void Psel_PalInit( PSEL_WORK* work )
+{
+  Psel_PokeSetPalInit( work );
+  Psel_InsideBallPalInit( work );
+}
+static void Psel_PalExit( PSEL_WORK* work )
+{
+  Psel_PokeSetPalExit( work );
+  Psel_InsideBallPalExit( work );
+}
+static void Psel_PalMain( PSEL_WORK* work )
+{
+  Psel_PokeSetPalMain( work );
+  Psel_InsideBallPalMain( work );
+}
+
+static void Psel_PokeSetPalAnimeStart( PSEL_WORK* work, TARGET target_poke, POKE_PAL_ANIME_STATE state )
+{
+  switch( state )
+  {
+  case POKE_PAL_ANIME_STATE_COLOR:
+    {
+      if( work->poke_set[target_poke].pal_anime_state != POKE_PAL_ANIME_STATE_COLOR )
+      {
+        work->poke_set[target_poke].pal_anime_state = POKE_PAL_ANIME_STATE_DARK_TO_COLOR;
+      }
+    }
+    break;
+  case POKE_PAL_ANIME_STATE_DARK:
+    {
+      if( work->poke_set[target_poke].pal_anime_state != POKE_PAL_ANIME_STATE_DARK )
+      {
+        work->poke_set[target_poke].pal_anime_state = POKE_PAL_ANIME_STATE_COLOR_TO_DARK;
+      }
+    }
+    break;
+  }
+}
+
+static void Psel_InsideBallPalAnimeStart( PSEL_WORK* work, u8 end )
+{
+  if( work->inside_ball_pal_anime_end != end )
+  {
+    work->inside_ball_pal_anime_state = INSIDE_BALL_PAL_ANIME_STATE_START_TO_END;
+    work->inside_ball_pal_anime_count = 0;
+    work->inside_ball_pal_anime_end = end;
+
+    // 現在の色をスタート色として覚えておく 
+    GFL_STD_MemCopy( work->inside_ball_st_pal[INSIDE_BALL_PAL_TRANS], work->inside_ball_st_pal[INSIDE_BALL_PAL_START], 2*16*BG_PAL_NUM_S_INSIDE_BALL );
+  }
 }
 
 
@@ -1896,9 +2311,9 @@ static int Psel_Load( PSEL_WORK* work, int* seq )
   GFL_BG_SetPriority( BG_FRAME_M_TEXT,     BG_FRAME_PRI_M_TEXT );
   
   // サブBG
-  GFL_BG_SetPriority( BG_FRAME_S_REAR,     BG_FRAME_PRI_S_REAR );
-  GFL_BG_SetPriority( BG_FRAME_S_WIN,      BG_FRAME_PRI_S_WIN );
-  GFL_BG_SetPriority( BG_FRAME_S_TEXT,     BG_FRAME_PRI_S_TEXT );
+  GFL_BG_SetPriority( BG_FRAME_S_INSIDE_BALL,     BG_FRAME_PRI_S_INSIDE_BALL );
+  GFL_BG_SetPriority( BG_FRAME_S_WIN,             BG_FRAME_PRI_S_WIN );
+  GFL_BG_SetPriority( BG_FRAME_S_TEXT,            BG_FRAME_PRI_S_TEXT );
 
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Psel_VBlankFunc, work, 1 );
@@ -1933,8 +2348,15 @@ static int Psel_S01Init    ( PSEL_WORK* work, int* seq )
   // 3Dのアルファをきれいに出すため、第1対象面にBG0を指定している
   // ev1とev2は使われない  // TWLプログラミングマニュアル「2D面とのαブレンディング」参考
 
+#if 0
   G2S_SetBlendAlpha(
       GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BG1/* | GX_BLEND_PLANEMASK_BG2*/,
+      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+      8, 8 );
+#endif
+  // OBJを半透明にするのはやめて、パレットを暗くすることにした。
+  G2S_SetBlendAlpha(
+      GX_BLEND_PLANEMASK_BG1/* | GX_BLEND_PLANEMASK_BG2*/,
       GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
       8, 8 );
 
@@ -2033,9 +2455,11 @@ static int Psel_S02Init    ( PSEL_WORK* work, int* seq )
   Psel_PokeSetInit( work );
   Psel_FingerInit( work );
   Psel_BgS02Init( work );
+  Psel_InsideBallInit( work );
   Psel_TextS02Init( work );
   Psel_AppTaskmenuWinInit( work );
   Psel_AppTaskmenuInit( work );
+  Psel_PalInit( work );
 
   // ブレンド
   G2_SetBlendAlpha(
@@ -2045,11 +2469,18 @@ static int Psel_S02Init    ( PSEL_WORK* work, int* seq )
   // 3Dのアルファをきれいに出すため、第1対象面にBG0を指定している
   // ev1とev2は使われない  // TWLプログラミングマニュアル「2D面とのαブレンディング」参考
 
+#if 0
   G2S_SetBlendAlpha(
       GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BG1/* | GX_BLEND_PLANEMASK_BG2*/,
       GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
       8, 8 );
-
+#endif
+  // OBJを半透明にするのはやめて、パレットを暗くすることにした。
+  G2S_SetBlendAlpha(
+      GX_BLEND_PLANEMASK_BG1/* | GX_BLEND_PLANEMASK_BG2*/,
+      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+      8, 8 );
+  
   return SEQ_S02_FADE_IN;
 }
 static int Psel_S02FadeIn  ( PSEL_WORK* work, int* seq )
@@ -2059,6 +2490,7 @@ static int Psel_S02FadeIn  ( PSEL_WORK* work, int* seq )
   Psel_TextS02Main( work );
   Psel_AppTaskmenuWinMain( work );
   Psel_AppTaskmenuMain( work );
+  Psel_PalMain( work );
 
   switch(*seq)
   {
@@ -2089,6 +2521,7 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
   Psel_TextS02Main( work );
   Psel_AppTaskmenuWinMain( work );
   Psel_AppTaskmenuMain( work );
+  Psel_PalMain( work );
 
   // タッチ
   hit = GFL_UI_TP_HitTrg(target_tp_hittbl);
@@ -2116,6 +2549,36 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
     break;
   }
 
+
+
+
+
+
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )  Psel_InsideBallPalAnimeStart( work, INSIDE_BALL_MIZU );
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )    Psel_InsideBallPalAnimeStart( work, INSIDE_BALL_HONOO );
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ) Psel_InsideBallPalAnimeStart( work, INSIDE_BALL_KUSA );
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )  Psel_InsideBallPalAnimeStart( work, INSIDE_BALL_NONE );
+
+  if( ( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
+      && ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ) )  Psel_PokeSetPalAnimeStart( work, TARGET_MIZU, POKE_PAL_ANIME_STATE_COLOR );
+  if( ( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
+      && ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ) )  Psel_PokeSetPalAnimeStart( work, TARGET_HONOO, POKE_PAL_ANIME_STATE_COLOR );
+  if( ( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
+      && ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ) )  Psel_PokeSetPalAnimeStart( work, TARGET_KUSA, POKE_PAL_ANIME_STATE_COLOR );
+
+  if( ( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
+      && ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ) )  Psel_PokeSetPalAnimeStart( work, TARGET_MIZU, POKE_PAL_ANIME_STATE_DARK );
+  if( ( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
+      && ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ) )  Psel_PokeSetPalAnimeStart( work, TARGET_HONOO, POKE_PAL_ANIME_STATE_DARK );
+  if( ( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
+      && ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ) )  Psel_PokeSetPalAnimeStart( work, TARGET_KUSA, POKE_PAL_ANIME_STATE_DARK );
+
+
+
+
+
+
+
   if(    ( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
       /*|| ( GFL_UI_TP_GetTrg() )*/ )
   {
@@ -2133,6 +2596,7 @@ static int Psel_S02FadeOut ( PSEL_WORK* work, int* seq )
   Psel_TextS02Main( work );
   Psel_AppTaskmenuWinMain( work );
   Psel_AppTaskmenuMain( work );
+  Psel_PalMain( work );
 
   switch(*seq)
   {
@@ -2160,9 +2624,11 @@ static int Psel_S02Exit    ( PSEL_WORK* work, int* seq )
   G2_BlendNone();
   G2S_BlendNone();
 
+  Psel_PalExit( work );
   Psel_AppTaskmenuExit( work );
   Psel_AppTaskmenuWinExit( work );
   Psel_TextS02Exit( work );
+  Psel_InsideBallExit( work );
   Psel_BgS02Exit( work );
   Psel_FingerExit( work );
   Psel_PokeSetExit( work );

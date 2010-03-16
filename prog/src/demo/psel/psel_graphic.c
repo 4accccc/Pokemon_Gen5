@@ -75,19 +75,26 @@
 //=====================================
 static const GFL_DISP_VRAM sc_vramSetTable =
 {
-	GX_VRAM_BG_128_C,						// メイン2DエンジンのBG
+	GX_VRAM_BG_128_A,						// メイン2DエンジンのBG
 	GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-	GX_VRAM_SUB_BG_48_HI,				// サブ2DエンジンのBG
-	GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
+	GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
+	GX_VRAM_SUB_BGEXTPLTT_NONE,//GX_VRAM_SUB_BGEXTPLTT_0123_H, // サブ2DエンジンのBG拡張パレット
 	GX_VRAM_OBJ_64_E,					// メイン2DエンジンのOBJ
 	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 	GX_VRAM_SUB_OBJ_128_D,	      // サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
-	GX_VRAM_TEX_01_AB,						// テクスチャイメージスロット
+	GX_VRAM_TEX_0_B,						// テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_01_FG,				// テクスチャパレットスロット
 	GX_OBJVRAMMODE_CHAR_1D_32K,// メイン画面OBJマッピングモード		
 	GX_OBJVRAMMODE_CHAR_1D_32K,// サブ画面OBJマッピングモード
 };
+
+// サブ2DエンジンのBG拡張パレットを設定しない理由
+// 256色1パレットのBGを使用しているので、拡張パレットを用意してしまうと、そちらを参照するようになってしまうから。
+// TWL-SDK
+// 関数リファレンスマニュアル
+// G2S_SetBG0Control
+// (注意) GX_SetBankForSubBGExtPltt() でVRAMバンクをBG拡張パレットに割り当てた場合、256色モードを使用するとBG拡張パレットを参照するようになります。それ以外の場合は標準パレットを参照します。
 
 //=============================================================================
 /**
@@ -168,8 +175,8 @@ static const struct
 		GFL_BG_FRAME0_S,	//設定するフレーム
 		{
 			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x128,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
+			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ256_128x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
 			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
 		},
 		GFL_BG_MODE_TEXT,//BGの種類
@@ -180,7 +187,7 @@ static const struct
 		{
 			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x128,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
+			GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x128,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
 			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
 		},
 		GFL_BG_MODE_TEXT,//BGの種類
@@ -191,7 +198,7 @@ static const struct
 		{
 			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x128,
+			GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x128,
 			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
 		},
 		GFL_BG_MODE_TEXT,//BGの種類
@@ -259,7 +266,7 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 //-------------------------------------
 ///	テクスチャ、ﾊﾟﾚｯﾄのVRAMｻｲｽﾞ
 //=====================================
-#define GRAPHIC_G3D_TEXSIZE	(GFL_G3D_TEX256K)	//バンクのテクスチャイメージスロットｻｲｽﾞとあわせてください
+#define GRAPHIC_G3D_TEXSIZE	(GFL_G3D_TEX128K)	//バンクのテクスチャイメージスロットｻｲｽﾞとあわせてください
 #define GRAPHIC_G3D_PLTSIZE	(GFL_G3D_PLT32K)	//バンクのﾊﾟﾚｯﾄイメージスロットｻｲｽﾞとあわせてください
 
 //-------------------------------------
