@@ -695,7 +695,11 @@ static void change_monsno_sub_tokusei( POKEMON_PASO_PARAM* ppp, u16 next_monsno,
   POKEMON_PERSONAL_DATA* ppd = Personal_Load( next_monsno, form_no );
   u32 rnd = PPP_Get( ppp, ID_PARA_personal_rnd, NULL );
   u16 param = POKEPER_ID_speabi1;
-  if( Personal_GetTokuseiCount(ppd) == 2 ){
+  if( PPP_Get( ppp, ID_PARA_tokusei_3_flag, NULL ) )
+  { 
+    param = POKEPER_ID_speabi3;
+  }
+  else if( Personal_GetTokuseiCount(ppd) == 2 ){
     if( rnd & 0x200 ){
       param = POKEPER_ID_speabi2;
     }
@@ -1974,6 +1978,36 @@ PtlTasteJudge POKETOOL_CheckDesiredTaste( u8 seikaku, PtlTaste taste )
   return desired_taste_tbl[ seikaku ][ taste ];
 }
 
+//=============================================================================================
+/**
+ * ポケモンに第3特性をつける（第3特性フラグも立てるため専用関数にする）
+ *
+ * @param[in] pp      ポケモンパラメータ構造体
+ * @param[in] mons_no 第3特性をつけるモンスターナンバー
+ * @param[in] form_no 第3特性をつけるフォルムナンバー
+ */
+//=============================================================================================
+void  PP_SetTokusei3( POKEMON_PARAM* pp, int mons_no, int form_no )
+{ 
+  PPP_SetTokusei3( &pp->ppp, mons_no, form_no );
+}
+
+//=============================================================================================
+/**
+ * ポケモンに第3特性をつける（第3特性フラグも立てるため専用関数にする）
+ *
+ * @param[in] ppp ポケモンパラメータ構造体
+ * @param[in] mons_no 第3特性をつけるモンスターナンバー
+ * @param[in] form_no 第3特性をつけるフォルムナンバー
+ */
+//=============================================================================================
+void  PPP_SetTokusei3( POKEMON_PASO_PARAM* ppp, int mons_no, int form_no )
+{ 
+  u32 tokusei = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_speabi3 );
+  PPP_Put( ppp, ID_PARA_speabino, tokusei );
+  PPP_Put( ppp, ID_PARA_tokusei_3_flag, 1 );
+}
+
 //--------------------------------------------------------------------------
 /**
  * PPPデータ部からPP独自データ部を再計算
@@ -2495,8 +2529,8 @@ static  u32 ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
     case ID_PARA_seikaku:
       ret = ppp2->seikaku;
       break;
-    case ID_PARA_dummy_p2_2:
-      ret = ppp2->dummy_p2_2;
+    case ID_PARA_tokusei_3_flag:
+      ret = ppp2->tokusei_3_flag;
       break;
     case ID_PARA_dummy_p2_3:
       ret = ppp2->dummy_p2_3;
@@ -2973,8 +3007,8 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
     case ID_PARA_seikaku:
       ppp2->seikaku = arg;
       break;
-    case ID_PARA_dummy_p2_2:
-      ppp2->dummy_p2_2 = arg;
+    case ID_PARA_tokusei_3_flag:
+      ppp2->tokusei_3_flag = arg;
       break;
     case ID_PARA_dummy_p2_3:
       ppp2->dummy_p2_3 = arg;
