@@ -658,3 +658,134 @@
 #define		MONSNO_654		( 647 )		//ダルタニス
 #define		MONSNO_655		( 648 )		//メロディア
 #define		MONSNO_656		( 649 )		//インセクタ
+//別フォルム定義
+//アンノーン
+#define		FORMNO_201_UNA				( 0 )
+#define		FORMNO_201_UNB				( 1 )
+#define		FORMNO_201_UNC				( 2 )
+#define		FORMNO_201_UND				( 3 )
+#define		FORMNO_201_UNE				( 4 )
+#define		FORMNO_201_UNF				( 5 )
+#define		FORMNO_201_UNG				( 6 )
+#define		FORMNO_201_UNH				( 7 )
+#define		FORMNO_201_UNI				( 8 )
+#define		FORMNO_201_UNJ				( 9 )
+#define		FORMNO_201_UNK				( 10 )
+#define		FORMNO_201_UNL				( 11 )
+#define		FORMNO_201_UNM				( 12 )
+#define		FORMNO_201_UNN				( 13 )
+#define		FORMNO_201_UNO				( 14 )
+#define		FORMNO_201_UNP				( 15 )
+#define		FORMNO_201_UNQ				( 16 )
+#define		FORMNO_201_UNR				( 17 )
+#define		FORMNO_201_UNS				( 18 )
+#define		FORMNO_201_UNT				( 19 )
+#define		FORMNO_201_UNU				( 20 )
+#define		FORMNO_201_UNV				( 21 )
+#define		FORMNO_201_UNW				( 22 )
+#define		FORMNO_201_UNX				( 23 )
+#define		FORMNO_201_UNY				( 24 )
+#define		FORMNO_201_UNZ				( 25 )
+#define		FORMNO_201_EXC				( 26 )
+#define		FORMNO_201_QUE				( 27 )
+
+//ポワルン
+#define		FORMNO_351_NORMAL				( 0 )
+#define		FORMNO_351_SUN				( 1 )
+#define		FORMNO_351_RAIN				( 2 )
+#define		FORMNO_351_SNOW				( 3 )
+
+//デオキシス
+#define		FORMNO_386_NORMAL				( 0 )
+#define		FORMNO_386_ATTACK				( 1 )
+#define		FORMNO_386_DEFENCE				( 2 )
+#define		FORMNO_386_SPEED				( 3 )
+
+//ミノムッチ
+#define		FORMNO_412_KUSA				( 0 )
+#define		FORMNO_412_SUNA				( 1 )
+#define		FORMNO_412_GOMI				( 2 )
+
+//ミノマダム
+#define		FORMNO_413_KUSA				( 0 )
+#define		FORMNO_413_JIMEN				( 1 )
+#define		FORMNO_413_HAGANE				( 2 )
+
+//チェリム
+#define		FORMNO_421_NEGA				( 0 )
+#define		FORMNO_421_POSI				( 1 )
+
+//カラナクシ
+#define		FORMNO_422_WEST				( 0 )
+#define		FORMNO_422_EAST				( 1 )
+
+//トリトドン
+#define		FORMNO_423_WEST				( 0 )
+#define		FORMNO_423_EAST				( 1 )
+
+//ロトム
+#define		FORMNO_479_NORMAL				( 0 )
+#define		FORMNO_479_HOT				( 1 )
+#define		FORMNO_479_WASH				( 2 )
+#define		FORMNO_479_COLD				( 3 )
+#define		FORMNO_479_FAN				( 4 )
+#define		FORMNO_479_CUT				( 5 )
+
+//ギラティナ
+#define		FORMNO_487_ANOTHER				( 0 )
+#define		FORMNO_487_ORIGIN				( 1 )
+
+//シェイミ
+#define		FORMNO_492_LAND				( 0 )
+#define		FORMNO_492_SKY				( 1 )
+
+//アルセウス
+#define		FORMNO_493_NORMAL				( 0 )
+#define		FORMNO_493_BATTLE				( 1 )
+#define		FORMNO_493_HIKOU				( 2 )
+#define		FORMNO_493_POISON				( 3 )
+#define		FORMNO_493_JIMEN				( 4 )
+#define		FORMNO_493_IWA				( 5 )
+#define		FORMNO_493_MUSHI				( 6 )
+#define		FORMNO_493_GHOST				( 7 )
+#define		FORMNO_493_METAL				( 8 )
+#define		FORMNO_493_FIRE				( 9 )
+#define		FORMNO_493_WATER				( 10 )
+#define		FORMNO_493_KUSA				( 11 )
+#define		FORMNO_493_ELECTRIC				( 12 )
+#define		FORMNO_493_ESPER				( 13 )
+#define		FORMNO_493_KOORI				( 14 )
+#define		FORMNO_493_DRAGON				( 15 )
+#define		FORMNO_493_AKU				( 16 )
+
+//バスラオ
+#define		FORMNO_603_BLACK				( 0 )
+#define		FORMNO_603_WHITE				( 1 )
+
+//ヒヒダルマ
+#define		FORMNO_503_ACTION				( 0 )
+#define		FORMNO_503_MEDITATION				( 1 )
+
+//バンビーナ
+#define		FORMNO_511_SPRING				( 0 )
+#define		FORMNO_511_SUMMER				( 1 )
+#define		FORMNO_511_AUTUMN				( 2 )
+#define		FORMNO_511_WINTER				( 3 )
+
+//シキジカ
+#define		FORMNO_527_SPRING				( 0 )
+#define		FORMNO_527_SUMMER				( 1 )
+#define		FORMNO_527_AUTUMN				( 2 )
+#define		FORMNO_527_WINTER				( 3 )
+
+//メロディア
+#define		FORMNO_655_VOICE				( 0 )
+#define		FORMNO_655_STEP				( 1 )
+
+//インセクタ
+#define		FORMNO_656_NORMAL				( 0 )
+#define		FORMNO_656_AQUA				( 1 )
+#define		FORMNO_656_INAZUMA				( 2 )
+#define		FORMNO_656_BLAZE				( 3 )
+#define		FORMNO_656_FREEZE				( 4 )
+
