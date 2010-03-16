@@ -279,7 +279,8 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _PAL_BAG_PARTS_CELL_NUM	(1)						// バッグのパーツCELLのパレット展開位置
 #define _PAL_COMMON_CELL				(_PAL_BAG_PARTS_CELL+_PAL_BAG_PARTS_CELL_NUM)	// 共通パレット展開位置
 #define _PAL_COMMON_CELL_NUM		(APP_COMMON_BARICON_PLT_NUM)
-//#define _PAL_MENU_CHECKBOX_CELL (12)  // チェックボックスのパレット展開位置
+#define _PAL_MENU_CHECKBOX_CELL			(_PAL_COMMON_CELL+_PAL_COMMON_CELL_NUM)	// チェックボックスのパレット展開位置
+#define _PAL_MENU_CHECKBOX_CELL_NUM	(1)  // チェックボックスのパレット展開位置
 
 
 // ポケット名の文字色

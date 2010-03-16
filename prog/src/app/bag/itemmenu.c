@@ -565,6 +565,9 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
       return FALSE;
     }
 
+		// タッチ状態
+		KTST_SetDraw( pWork, FALSE );
+
     {
       int num = (length * (y-_SCROLL_TOP_Y)) / Y_MAX;
       int prelistpos = pWork->oamlistpos;
@@ -572,7 +575,8 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
       pWork->curpos = 0;
       pWork->oamlistpos = -1;
 
-      HOSAKA_Printf( "===== length=%d num=%d \n", length, num );
+//      HOSAKA_Printf( "===== length=%d num=%d \n", length, num );
+//      OS_Printf( "===== length=%d num=%d \n", length, num );
 
       for(i = 0 ; i < num ; i++)
       {
@@ -582,8 +586,6 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
       
       // スクロールバーOAM座標を変更
       ITEMDISP_ScrollCursorMove(pWork);
-      // タッチ状態
-      KTST_SetDraw( pWork, FALSE );
 
       // リストが移動した時のみSE
       if( prelistpos != pWork->oamlistpos )
@@ -2719,6 +2721,7 @@ static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 		ITEMDISP_ChangeCursorPosPalette( pWork, 0 );
 	}else{
 		ITEMDISP_ChangeCursorPosPalette( pWork, 1 );
+		BLINKPALANM_InitAnimeCount( pWork->blwk );
 	}
 
   // 上画面を消す

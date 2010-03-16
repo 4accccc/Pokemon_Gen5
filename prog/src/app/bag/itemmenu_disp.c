@@ -1022,15 +1022,13 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
   int i;
   ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_BAG , pWork->heapID );
 
-/*
   //リスト用チェックマーク
   pWork->cellRes[_PTL_CHECK] = GFL_CLGRP_PLTT_RegisterEx(
-    archandle , NARC_bag_bag_win04_d_NCLR , CLSYS_DRAW_MAIN , _PAL_MENU_CHECKBOX_CELL*32 , 0 , 1 , pWork->heapID  );
+    archandle , NARC_bag_bag_win04_d_NCLR , CLSYS_DRAW_MAIN , _PAL_MENU_CHECKBOX_CELL*0x20 , 0 , _PAL_MENU_CHECKBOX_CELL_NUM , pWork->heapID  );
   pWork->cellRes[_NCG_CHECK] = GFL_CLGRP_CGR_Register(
     archandle , NARC_bag_bag_win04_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
   pWork->cellRes[_ANM_CHECK] = GFL_CLGRP_CELLANIM_Register(
     archandle, NARC_bag_bag_win04_d_NCER, NARC_bag_bag_win04_d_NANR , pWork->heapID);
-*/
 
   // スライドバーつまみ・リストカーソル
   pWork->cellRes[_PLT_CUR] = GFL_CLGRP_PLTT_RegisterEx(
@@ -1358,7 +1356,9 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
     pos.y = CUR_OFFSET_Y * pWork->curpos + CUR_START_Y;
     GFL_CLACT_WK_SetPos( pWork->clwkCur ,  &pos, CLWK_SETSF_NONE );
 
-		ITEMDISP_ChangeCursorPosPalette( pWork, 1 );
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
+			ITEMDISP_ChangeCursorPosPalette( pWork, 1 );
+		}
 		BLINKPALANM_InitAnimeCount( pWork->blwk );
 
     // 現在のポケットのアイテム数取得
@@ -1852,7 +1852,7 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8*14, 4, pWork->pStrBuf, pWork->fontHandle);
 
   if(pow==0){
-    GFL_MSG_GetString(  pWork->MsgManager, msg_bag_025, pWork->pStrBuf );
+    GFL_MSG_GetString(  pWork->MsgManager, msg_bag_023, pWork->pStrBuf );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 4, pWork->pStrBuf, pWork->fontHandle);
   }
   else{
@@ -1867,7 +1867,7 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8*14, 24, pWork->pStrBuf, pWork->fontHandle);
 
   if(hit==0){
-    GFL_MSG_GetString(  pWork->MsgManager, msg_bag_025, pWork->pStrBuf );
+    GFL_MSG_GetString(  pWork->MsgManager, msg_bag_023, pWork->pStrBuf );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 24, pWork->pStrBuf, pWork->fontHandle);
   }
   else{
