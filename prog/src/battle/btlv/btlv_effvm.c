@@ -3724,9 +3724,6 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
       case WAZA_TARGET_FRIEND_USER_SELECT:  ///< 自分を含む味方ポケ（１体選択）
       case WAZA_TARGET_FRIEND_SELECT:       ///< 自分以外の味方ポケ（１体選択）
       case WAZA_TARGET_ENEMY_SELECT:        ///< 相手側ポケ（１体選択）
-      case WAZA_TARGET_UNKNOWN:             ///< ゆびをふるなど特殊型
-      case WAZA_TARGET_USER:                ///< 自分のみ
-      case WAZA_TARGET_ENEMY_RANDOM:        ///< 相手ポケ１体ランダム
       //case WAZA_TARGET_LONG_SELECT:         ///<対象選択表示用に定義
         //本来この選択範囲でBTLV_MCSS_POS_ERRORになることはないはず
         GF_ASSERT( 0 );
@@ -3792,6 +3789,11 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
           }
         }
         break;
+      case WAZA_TARGET_UNKNOWN:             ///< ゆびをふるなど特殊型
+      case WAZA_TARGET_USER:                ///< 自分のみ
+      case WAZA_TARGET_ENEMY_RANDOM:        ///< 相手ポケ１体ランダム
+        //エフェクトによって相手側を指示する意味で防御側をつかっているので、
+        //全ポケ指示とする
       case WAZA_TARGET_ENEMY_ALL:           ///< 相手側全ポケ
         { 
           BtlvMcssPos check_pos;
@@ -4437,8 +4439,14 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
       }
       if( beeiw->speed )
       { 
+        VecFx32  vel32;
         fx16  vel;
 
+        GFL_PTC_GetEmitterVelocity( emit, &vel32 );
+        vel32.x = FX_Mul( vel32.x, beeiw->speed );
+        vel32.y = FX_Mul( vel32.y, beeiw->speed );
+        vel32.z = FX_Mul( vel32.z, beeiw->speed );
+        GFL_PTC_SetEmitterVelocity( emit, &vel32 );
         vel = GFL_PTC_GetEmitterInitVelocityPos( emit );
         GFL_PTC_SetEmitterInitVelocityPos( emit, FX_Mul( vel, beeiw->speed ) );
         vel = GFL_PTC_GetEmitterInitVelocityAxis( emit );
