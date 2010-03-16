@@ -16,6 +16,11 @@
 //              特殊スクリプト
 //--------------------------------------------------------------
 _FIELD_INIT_LABEL			SCRID_INIT_R15R0301
+_SCENE_CHANGE_LABEL		sp_r15r0301_tbl
 _SP_EVENT_DATA_END
+
+sp_r15r0301_tbl:
+	_SCENE_CHANGE_DATA		WK_SCENE_R15R0301_RECV,1,SCRID_SCENE_R15R0301
+	_SCENE_CHANGE_END
 
 

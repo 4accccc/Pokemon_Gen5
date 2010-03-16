@@ -21,6 +21,7 @@ _EVENT_DATA   ev_pos_palpark_reception
 _EVENT_DATA    ev_palpark_assistantw_01
 _EVENT_DATA    ev_palpark_assistantw_02
 _EVENT_DATA    ev_palpark_assistantm_03
+_EVENT_DATA   ev_palpark_player_return
 _EVENT_DATA_END
 
 
@@ -147,10 +148,14 @@ play_palpark:
 
   //主人公マシンインアニメ+フェードアウト
   _CALL player_in_anm
-
-  //パルパークコール
-  _PALPARK_CALL()
-
+  {
+    //アプリ内セーブ後電源ぎりのための対処フラグオン
+    $WK_SCENE_R15R0301_RECV = 1
+    //パルパークコール
+    _PALPARK_CALL()
+    //アプリ内セーブ後電源ぎりのための対処フラグオフ
+    $WK_SCENE_R15R0301_RECV = 0
+  }
   //主人公マシンアウトアニメ+フェードイン
   _CALL player_out_anm
 
@@ -282,6 +287,17 @@ player_out_anm:
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn )
 	_OBJ_ANIME_WAIT()
 _RET
+
+//主人公マシンアウトアプリ内セーブご電源切ったとき用
+player_out_anm_ex:
+  //自機移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_out )
+	_OBJ_ANIME_WAIT()
+  //博士入り口にもどる
+  _OBJ_ANIME( R15R0301_PARK, anm_doc_out )
+	_OBJ_ANIME_WAIT()
+_RET
+
 
 //--------------------------------------------------------------------
 //博士はける
@@ -686,6 +702,17 @@ _ANIME_LABEL	anm_spin
   _ANIME_DATA	AC_DIR_D,1
   _ANIME_DATA AC_STAY_JUMP_D_8F,2
 	_ANIME_DATA	ACMD_END,0
+
+/****************************************************************/
+/*パルパークアプリ内でセーブ後電源を切った際のゲーム開始復帰処理*/
+/****************************************************************/
+ev_palpark_player_return:
+  //戻るアニメ
+  _CALL player_out_anm_ex
+  //アプリ内セーブ後電源ぎりのための対処フラグオフ
+  $WK_SCENE_R15R0301_RECV = 0
+  _CHG_LOCAL_SCR
+_END
   
   
   

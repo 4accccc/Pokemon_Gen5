@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "msg_r15r0301.h"
   .include  "r15r0301.h"
+  .include  "palpark_scr_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,6 +22,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_r15r0301
 _EVENT_DATA   ev_init_r15r0301
+_EVENT_DATA    ev_scene_r15r0301
 _EVENT_DATA_END
 
 
@@ -45,8 +47,12 @@ INIT_EVENT_START  ev_init_r15r0301
 INIT_EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*                 SCENE SCRIPT                               */
 /**************************************************************/
+EVENT_START   ev_scene_r15r0301
+  _CHG_COMMON_SCR SCRID_PALPARK_PLAYER_RETURN
+EVENT_END
+
 ev_r15r0301:
   //とりあえず最初のラベルだけ生成している
   _END
