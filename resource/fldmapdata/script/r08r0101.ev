@@ -41,7 +41,7 @@ EVENT_START ev_scene_c08r0101
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
   _OBJ_ANIME_WAIT()
   //条件を満たしたダルタニスが手持ちから検索して今回の対象ポケモンにする
-  _GET_EVT_DARUTANIS_POS( target_poke_pos, SCWK_ANSWER )
+  _GET_EVT_POKE_POS( MONSNO_654, TRUE, target_poke_pos, SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN
     //対象ダルタニスのニックネームをタグ０番にセット
     _TEMOTI_NICK_NAME( 0, target_poke_pos )
@@ -162,7 +162,7 @@ INIT_EVENT_START ev_zone_c08r0101
 	_FLAG_SET( FV_R08R0101_POKE11 )
   _FLAG_SET( FV_R08R0101_OLDMAN1 )
   //イベント条件判定
-  _GET_EVT_DARUTANIS_POS( pos, SCWK_ANSWER )
+  _GET_EVT_POKE_POS( MONSNO_654, TRUE, pos, SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN
     //ローカルワーク0に1をセット  イベント有効
     $LOCALWORK0 = 1

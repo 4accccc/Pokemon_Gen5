@@ -24,7 +24,14 @@
 
 #include "sp_poke_gimmick.h"
 
+#include "poke_tool/poke_memo.h"
+#include "waza_tool/wazano_def.h"
+
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
+
+static BOOL SearchEventPoke( POKEPARTY* party,
+                             const int inMonsNo, const int inSkillNo, const int inEventFlg,
+                             u16 *outPos );
 
 //--------------------------------------------------------------
 /**
@@ -166,4 +173,99 @@ VMCMD_RESULT EvCmdWaitBallPokeApp( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 
 }
+
+//--------------------------------------------------------------
+/**
+ * 手持ちの中の配布ポケモンの位置を取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ * @note    条件を満たすポケがいない場合は retにFALSEがセットされる
+ * @note　　条件は配布されたダルタニスでかつ、固有技を覚えていないこと
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  POKEPARTY* party    = GAMEDATA_GetMyPokemon( gdata );
+  u16 monsno = SCRCMD_GetVMWorkValue( core, work );
+  u16 skill_flg = SCRCMD_GetVMWorkValue( core, work );
+  u16 *poke_pos = SCRCMD_GetVMWork( core, work );
+ 	u16 *ret = SCRCMD_GetVMWork( core, work );
+  int evt_flg;
+  int skill_no;
+
+  switch(monsno){
+  case MONSNO_654:
+    evt_flg = POKE_MEMO_EVENT_DARUTANISU;
+    skill_no = WAZANO_KISEKINOTURUGI;
+    break;
+  case MONSNO_655:
+    evt_flg = POKE_MEMO_EVENT_MERODHIA;
+    skill_no = WAZANO_INISIENOUTA;
+    break;
+  default:
+    GF_ASSERT(0);
+    *ret = FALSE;
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  if ( skill_flg == FALSE ) skill_no = WAZANO_NULL;
+
+  *ret = SearchEventPoke(
+      party, monsno, skill_no, evt_flg, poke_pos );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 手持ちの中の固有技を覚えることができる特殊ポケモンの位置を返す関数
+ *
+ * @param   party         　対象パーティ
+ * @param   inMonsNo        対象ポケモン
+ * @param   inSkillNo       対象技
+ * @param   inEventFlg      イベントフラグ
+ * @param   outPos          手持ちポケモン位置
+ *
+ * @return  BOOL TRUEで発見
+ * @note    条件を満たすポケモンがいない場合は retにFALSEがセットされる
+ * @note　　条件は配布されたポケモンでかつ、固有技を覚えていないこと
+ * @note    引数inSkillNo が WAZANO_NULLの場合は技チェックはしない
+ */
+//--------------------------------------------------------------
+static BOOL SearchEventPoke( POKEPARTY* party,
+                             const int inMonsNo, const int inSkillNo, const int inEventFlg,
+                             u16 *outPos )
+{
+  BOOL rc;
+  int i,num;
+  num = PokeParty_GetPokeCount( party );
+  rc = FALSE;
+  *outPos = 0;
+  //手持ち検索
+  for (i=0;i<num;i++)
+  {
+    POKEMON_PARAM *pp = PokeParty_GetMemberPointer(party, i);
+    //配布チェック
+//    if ( !POKE_MEMO_CheckEventPokePP( pp ,inEventFlg ) ) continue;
+    //モンスターナンバーチェック
+    if ( PP_Get( pp, ID_PARA_monsno, NULL ) != inMonsNo ) continue;
+
+    if ( inSkillNo != WAZANO_NULL )
+    {
+      //技チェック(既に覚えているか)
+      if ( PP_Get( pp, ID_PARA_waza1, NULL ) == inSkillNo) continue;
+      if ( PP_Get( pp, ID_PARA_waza2, NULL ) == inSkillNo) continue;
+      if ( PP_Get( pp, ID_PARA_waza3, NULL ) == inSkillNo) continue;
+      if ( PP_Get( pp, ID_PARA_waza4, NULL ) == inSkillNo) continue;
+    }
+    rc = TRUE;
+    *outPos = i;
+    NOZOMU_Printf("対象ポケモン発見　位置%d\n",i);
+    break;
+  }
+  return rc;
+}
+
 

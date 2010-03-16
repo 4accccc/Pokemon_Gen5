@@ -950,7 +950,7 @@
   DEF_CMD( EvCmdResearchTeamRankUp, EV_SEQ_RESEARCH_TEAM_RANK_UP ) 
 
   //配布ポケモンイベント演出関連
-  DEF_CMD( EvCmdGetEvtDarutanisPos, EV_SEQ_GET_EVT_DARUTANIS_POS )
+  DEF_CMD( EvCmdGetEvtPokePos, EV_SEQ_GET_EVT_POKE_POS )
   DEF_CMD( EvCmdMoveBall, EV_SEQ_MOVE_BALL )
   DEF_CMD( EvCmdStartBallAnm, EV_SEQ_START_BALL_ANM )
   DEF_CMD( EvCmdWaitBallAnm, EV_SEQ_WAIT_BALL_ANM )
