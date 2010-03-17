@@ -728,7 +728,6 @@ static BOOL _UnionCheckError_ForceExit(UNION_SYSTEM_PTR unisys)
 //--------------------------------------------------------------
 static BOOL OneselfSeq_NormalInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
-  UnionAlloc_AllFree(unisys);
   UnionMyComm_Init(unisys, &situ->mycomm);
   UnionMySituation_SetParam(
     unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, (void*)UNION_PLAY_CATEGORY_UNION);

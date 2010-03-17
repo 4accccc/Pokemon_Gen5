@@ -788,10 +788,12 @@ void UnionAlloc_AllFree(UNION_SYSTEM_PTR unisys)
     unisys->alloc.psl = NULL;
   }
 
+#if 0 //unisysの作成時に生成、破棄時に削除しているのでここではしない
   if(unisys->alloc.regulation != NULL){
     GFL_HEAP_FreeMemory(unisys->alloc.regulation);
     unisys->alloc.regulation = NULL;
   }
+#endif
 
   if(unisys->alloc.uniapp != NULL){
     //これを使用しているシーケンスは単純にFreeは危険。
