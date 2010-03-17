@@ -371,12 +371,10 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
     ENTRANCE_CAMERA_SETTINGS_LoadData( &work->cameraSettings, work->exitType );
 
     // データが有効かどうか
-    if( work->cameraSettings.validFlag_IN )
-    {
+    if( work->cameraSettings.validFlag_IN ) {
       *seq = SEQ_CREATE_CAMERA_EFFECT_TASK;
     }
-    else
-    {
+    else {
       *seq = SEQ_DOOR_IN_ANIME;
     } 
     break;
