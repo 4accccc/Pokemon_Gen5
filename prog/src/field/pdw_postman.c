@@ -4,6 +4,8 @@
  * @date    2010.03.17
  * @brief   PDW配達員関連
  * @author  tamada GAMEFREAK inc.
+ *
+ * @todo  keyWaitCursor_～をfield_msgbg.cからコピペで持ってきている
  */
 //======================================================================
 #include <gflib.h>
@@ -517,14 +519,20 @@ GMEVENT * DEBUG_EVENT_PDW_PostmanWindow( GAMESYS_WORK * gsys )
 #endif
 
 
-//======================================================================
-//======================================================================
-//--------------------------------------------------------------
-//--------------------------------------------------------------
 
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
+/**
+ * @param gamedata
+ * @param heapID
+ * @param dws
+ * @param size
+ * @return  DREAMWORLD_ITEM_DATA  取得可能アイテムのテーブル
+ *
+ * アロケーションしたメモリを返すので、呼び出し側で
+ * 責任持って開放すること
+ */
 //--------------------------------------------------------------
 static DREAMWORLD_ITEM_DATA * getRestItems(
     GAMEDATA * gamedata, HEAPID heapID, DREAMWORLD_SAVEDATA * dws, u32 * size )
@@ -558,6 +566,9 @@ static DREAMWORLD_ITEM_DATA * getRestItems(
 //--------------------------------------------------------------
 /**
  * @brief PDW配達員：アイテムを受け取る
+ * @param gamedata
+ * @param heapID
+ * @param dws
  */
 //--------------------------------------------------------------
 void PDW_POSTMAN_ReceiveItems( GAMEDATA * gamedata, HEAPID heapID, DREAMWORLD_SAVEDATA * dws )
@@ -582,6 +593,10 @@ void PDW_POSTMAN_ReceiveItems( GAMEDATA * gamedata, HEAPID heapID, DREAMWORLD_SA
 //--------------------------------------------------------------
 /**
  * @brief PDW配達員：受け取れないアイテムの数を取得
+ * @param gamedata
+ * @param heapID
+ * @param dws
+ * @return  u32 受け取れないアイテムの数
  */
 //--------------------------------------------------------------
 u32 PDW_POSTMAN_GetNGCount( GAMEDATA * gamedata, HEAPID heapID, DREAMWORLD_SAVEDATA * dws )

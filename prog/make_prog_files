@@ -373,6 +373,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_gym_init.c \
         field/scrcmd_sodateya.c \
         field/scrcmd_musical.c \
+        field/scrcmd_dreamworld.c \
         field/field_encount_st.c \
         field/move_pokemon.c \
         field/field_skill.c \
@@ -603,7 +604,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_crowd_people.c \
         field/scrcmd_feeling_check.c \
         field/scrcmd_elevator.c \
-        field/scrcmd_dreamworld.c \
         field/scrcmd_postman.c \
         field/pdw_postman.c \
         field/field_mystery_gift.c \

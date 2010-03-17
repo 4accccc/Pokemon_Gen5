@@ -1188,7 +1188,12 @@ FLDMSGWIN * FLDMSGWIN_AddTalkWin( FLDMSGBG *fmb, GFL_MSGDATA *msgData )
 {
   return( FLDMSGWIN_Add(fmb,msgData,1,19,30,4) );
 }
-
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+GFL_BMPWIN * FLDMSGWIN_GetBmp( FLDMSGWIN * fldmsgwin )
+{
+  return fldmsgwin->bmpwin;
+}
 //======================================================================
 //  FLDSYSWIN システムウィンドウ関連
 //======================================================================
