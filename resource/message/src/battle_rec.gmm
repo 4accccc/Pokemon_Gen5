@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-02-28T00:30:32"/>
+	<create user="shimoyamada" host="W00184" date="2010-03-17T02:29:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,13 +312,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1303" top="433" right="1960" bottom="1053" maximized="no" rayout="Vertical2">
+	<dialog left="137" top="330" right="840" bottom="955" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="551" top="133" right="1024" bottom="531" visible="yes"/>
-		<band id="0" index="0" style="0000" width="482"/>
+		<tag-palette left="70" top="18" right="543" bottom="416" visible="no"/>
+		<band id="0" index="0" style="0000" width="528"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="649"/>
-		<band id="3" index="3" style="0000" width="649"/>
+		<band id="2" index="2" style="0000" width="695"/>
+		<band id="3" index="3" style="0000" width="695"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -516,8 +516,8 @@
 	</row>
 
 	<row id="msg_204">
-		<language name="JPN" font=" 1:small" width="216">ビデオナンバーでさがす</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ビデオナンバーでさがす</language>
+		<language name="JPN" font=" 1:small" width="216">ナンバーでさがす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ナンバーでさがす</language>
 	</row>
 
 	<row id="msg_205">
@@ -956,6 +956,16 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">[2:01:２桁:0]</language>
 	</row>
 
+	<row id="msg_728" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<language name="JPN" font=" 1:small" width="216">つうしんたいせん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">つうしんたいせん</language>
+	</row>
+
+	<row id="msg_729" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<language name="JPN" font=" 1:small" width="216">バトルサブウェイ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルサブウェイ</language>
+	</row>
+
 	<row id="msg_800">
 		<language name="JPN" font=" 1:small" width="216">[BD:02:Ｘセンタリング]シングルバトル</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:02:Ｘセンタリング]シングルバトル</language>
@@ -992,12 +1002,12 @@
 	</row>
 
 	<row id="msg_807">
-		<language name="JPN" font=" 1:small" width="216">ぜんかい</language>
+		<language name="JPN" font=" 1:small" width="216">ぜんかい：</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ぜんかい</language>
 	</row>
 
 	<row id="msg_808">
-		<language name="JPN" font=" 1:small" width="216">さいこう</language>
+		<language name="JPN" font=" 1:small" width="216">さいこう：</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">さいこう</language>
 	</row>
 
@@ -1042,8 +1052,8 @@
 	</row>
 
 	<row id="msg_900">
-		<language name="JPN" font=" 1:small" width="216">[BD:02:Ｘセンタリング]ランダムマッチ　レーティング</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:02:Ｘセンタリング]ランダムマッチ　レーティング</language>
+		<language name="JPN" font=" 1:small" width="216">[BD:02:Ｘセンタリング]レーティングのきろく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:02:Ｘセンタリング]レーティングのきろく</language>
 	</row>
 
 	<row id="msg_901">
@@ -1102,8 +1112,8 @@
 	</row>
 
 	<row id="msg_912">
-		<language name="JPN" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:0]レーティング</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:0]レーティング</language>
+		<language name="JPN" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:0]Rating</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:0]Rating</language>
 	</row>
 
 	<row id="msg_1000">

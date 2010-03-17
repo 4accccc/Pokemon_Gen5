@@ -618,7 +618,6 @@
 #define ITEM_KIREINAISI		( 617 )		// きれいないし
 #define ITEM_POKEZYARASI		( 618 )		// ポケじゃらし
 #define ITEM_GUZZUKEESU		( 619 )		// グッズケース
-#define ITEM_PARESUDAMA		( 620 )		// パレスだま
 #define ITEM_HAITATUBUTU1		( 621 )		// はいたつぶつ１
 #define ITEM_HAITATUBUTU2		( 622 )		// はいたつぶつ２
 #define ITEM_HAITATUBUTU3		( 623 )		// はいたつぶつ３
