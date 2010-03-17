@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-03-16T16:34:23"/>
+	<create user="nakamura_akira" host="W00161" date="2010-03-17T20:01:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -352,7 +352,7 @@
 		</language>
 	</columns>
 
-	<dialog left="74" top="314" right="779" bottom="942" maximized="no" rayout="Vertical2">
+	<dialog left="86" top="308" right="791" bottom="936" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="163" right="1280" bottom="561" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -427,8 +427,9 @@ assistantm_01_02へ続く</comment>
 いま　みんなに
 はやっているものは　なんだろう？▼
 そんな　ぎもんを
-キミは　かんじたことはないか？▼
-ここは　すれちがいちょうさたいほんぶ▼
+キミは　かんじたことは　ないか？▼
+ここは　すれちがい
+ちょうさたいほんぶ▼
 キミのような　まよえる　こひつじに
 しんじつを　おしえる　ばしょだ▼
 ……キミは　いいめを　しているな
@@ -439,7 +440,7 @@ assistantm_01_02へ続く</comment>
 今　みんなに
 流行っているものは　何だろう？▼
 そんな　疑問を
-キミは　感じたことはないか？▼
+キミは　感じたことは　ないか？▼
 ここは　すれ違い調査隊本部▼
 キミのような　迷える子羊に
 真実を　教える　場所だ▼
@@ -552,7 +553,7 @@ assistantm_01_06へ続く
 		<comment>・選択肢
 依頼を受けるときに経由
 
-『いらいをうける』　⇒　assistantm_01_07へ</comment>
+『いらいをう　ける』　⇒　assistantm_01_07へ</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">いらいを　うける</language>
 		<language name="JPN_KANJI" width="256">依頼を　受ける</language>
@@ -562,7 +563,7 @@ assistantm_01_06へ続く
 		<comment>・選択肢
 依頼を報告するときに経由
 
-『いらいのほうこく』　⇒　assistantm_01_19へ</comment>
+『いらいの　ほうこく』　⇒　assistantm_01_19へ</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">いらいの　ほうこく</language>
 		<language name="JPN_KANJI" width="256">依頼の　報告</language>
@@ -576,6 +577,19 @@ assistantm_01_06へ続く
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">なんでもないです</language>
 		<language name="JPN_KANJI" width="256">なんでもないです</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_01d">
+		<comment>・選択肢
+依頼をすでに受けているときのみ表示（それ以外は非表示）
+受けている依頼の内容を再度表示する
+
+『いらいの　かくにん』
+時間調査の依頼を受けている　⇒　assistantm_01_13○
+人数調査の依頼を受けている　⇒　assistantm_01_14○</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">いらいの　かくにん</language>
+		<language name="JPN_KANJI" width="256">依頼の　確認</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -742,8 +756,8 @@ assistantm_01_06へ続く
 時間調査　⇒　assistantm_01_13c
 人数調査　⇒　assistantm_01_14c</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">いちばんおおい　プレイじかんは？</language>
-		<language name="JPN_KANJI" width="256">１番多い　プレイ時間は？</language>
+		<language name="JPN" width="256">いちばん　おおい　プレイじかんは？</language>
+		<language name="JPN_KANJI" width="256">１番　多い　プレイ時間は？</language>
 	</row>
 
 	<row id="msg_c03r0101__choice_03d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -766,8 +780,8 @@ assistantm_01_06へ続く
 時間調査　⇒　assistantm_01_13e
 人数調査　⇒　assistantm_01_14e</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">いちばんおおい　しごとは？</language>
-		<language name="JPN_KANJI" width="256">１番多い　仕事は？</language>
+		<language name="JPN" width="256">いちばん　おおい　しごとは？</language>
+		<language name="JPN_KANJI" width="256">１番　多い　仕事は？</language>
 	</row>
 
 	<row id="msg_c03r0101__choice_03f" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -778,8 +792,8 @@ assistantm_01_06へ続く
 時間調査　⇒　assistantm_01_13f
 人数調査　⇒　assistantm_01_14f</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">いちばんおおい　しゅみは？</language>
-		<language name="JPN_KANJI" width="256">１番多い　趣味は？</language>
+		<language name="JPN" width="256">いちばん　おおい　しゅみは？</language>
+		<language name="JPN_KANJI" width="256">１番　多い　趣味は？</language>
 	</row>
 
 	<row id="msg_c03r0101__choice_03g" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -886,8 +900,8 @@ assistantm_01_06へ続く
 時間調査　⇒　assistantm_01_13o
 人数調査　⇒　assistantm_01_14o</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">いちばんすきな　おんがくは？</language>
-		<language name="JPN_KANJI" width="256">１番好きな　音楽は？</language>
+		<language name="JPN" width="256">いちばん　すきな　おんがくは？</language>
+		<language name="JPN_KANJI" width="256">１番　好きな　音楽は？</language>
 	</row>
 
 	<row id="msg_c03r0101__choice_03p" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -910,8 +924,8 @@ assistantm_01_06へ続く
 時間調査　⇒　assistantm_01_13q
 人数調査　⇒　assistantm_01_14q</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">いちばんすきな　がっこうの　じかんは？</language>
-		<language name="JPN_KANJI" width="256">１番好きな　学校の　時間は？</language>
+		<language name="JPN" width="256">いちばん　すきな　がっこうの　じかんは？</language>
+		<language name="JPN_KANJI" width="256">１番　好きな　学校の　時間は？</language>
 	</row>
 
 	<row id="msg_c03r0101__choice_03r" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -934,8 +948,8 @@ assistantm_01_06へ続く
 時間調査　⇒　assistantm_01_13s
 人数調査　⇒　assistantm_01_14s</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">いちばんにんきのある　スポーツは？</language>
-		<language name="JPN_KANJI" width="256">１番人気のある　スポーツは？</language>
+		<language name="JPN" width="256">いちばん　にんきのある　スポーツは？</language>
+		<language name="JPN_KANJI" width="256">１番　人気のある　スポーツは？</language>
 	</row>
 
 	<row id="msg_c03r0101__choice_03t" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -958,8 +972,8 @@ assistantm_01_06へ続く
 時間調査　⇒　assistantm_01_13u
 人数調査　⇒　assistantm_01_14u</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">いちばんなりたいものは？</language>
-		<language name="JPN_KANJI" width="256">１番なりたいものは？</language>
+		<language name="JPN" width="256">いちばん　なりたいものは？</language>
+		<language name="JPN_KANJI" width="256">１番　なりたいものは？</language>
 	</row>
 
 	<row id="msg_c03r0101__choice_03v" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -970,8 +984,8 @@ assistantm_01_06へ続く
 時間調査　⇒　assistantm_01_13v
 人数調査　⇒　assistantm_01_14v</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">いちばんにんきのある　ジムリーダーは？</language>
-		<language name="JPN_KANJI" width="256">１番人気のある　ジムリーダーは？</language>
+		<language name="JPN" width="256">いちばん　にんきのある　ジムリーダーは？</language>
+		<language name="JPN_KANJI" width="256">１番　人気のある　ジムリーダーは？</language>
 	</row>
 
 	<row id="msg_c03r0101__choice_03w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1004,27 +1018,29 @@ assistantm_01_06へ続く
 
 初期から選択可能
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
-２じかんいじょう　ちょうさして
+２じかん　いじょう　ちょうさして
 ブラックと　ホワイト▽
 どちらが　おおいかを▽
 しらべてくる　ちょうさだ▼
 わたしも　ポケモンを
 はじめようと　おもってね▽
-にんきのあるほうを　しりたいんだ</language>
+にんきの　あるほうを　しりたいんだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-２時間以上　調査して
+２時間　以上　調査して
 ブラックと　ホワイト▽
 どちらが　多いかを▽
 調べてくる　調査だ▼
 わたしも　ポケモンを
 はじめようと　思ってね▽
-人気のあるほうを　知りたいんだ</language>
+人気の　あるほうを　知りたいんだ</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_13b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1035,13 +1051,15 @@ assistantm_01_15へ続く</comment>
 
 初期から選択可能
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　ポケモンはかせ　からの
 いらい　だな▼
-２じかんいじょう　ちょうさして
+２じかん　いじょう　ちょうさして
 いちばん　えらばれた▽
 さいしょの　ポケモンを▽
 しらべてくる　ちょうさだ▼
@@ -1050,11 +1068,11 @@ assistantm_01_15へ続く</comment>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　ポケモン博士　からの
 依頼だな▼
-２時間以上　調査して
+２時間　以上　調査して
 １番　選ばれた▽
-最初の　ポケモンを
+最初の　ポケモンを▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 研究に　役立てたいそうだ</language>
 	</row>
 
@@ -1066,13 +1084,15 @@ assistantm_01_15へ続く</comment>
 
 初期から選択可能
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　ははおや　からの
 いらい　だな▼
-４じかんいじょう　ちょうさして
+４じかん　いじょう　ちょうさして
 いちばん　おおい　プレイじかんを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
@@ -1080,10 +1100,10 @@ assistantm_01_15へ続く</comment>
 くらべたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　母親　からの　依頼だな▼
-４時間以上　調査して
-１番多い　プレイ時間を▼
+４時間　以上　調査して
+１番　多い　プレイ時間を▼
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 子供の　プレイ時間と▽
 くらべたいそうだ</language>
 	</row>
@@ -1096,13 +1116,15 @@ assistantm_01_15へ続く</comment>
 
 初期から選択可能
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　しんぶんしゃ　からの
 いらい　だな▼
-４じかんいじょう　ちょうさして
+４じかん　いじょう　ちょうさして
 おとこのこと　おんなのこ▽
 どっちが　おおいかを▽
 しらべてくる　ちょうさだ▼
@@ -1110,11 +1132,11 @@ assistantm_01_15へ続く</comment>
 あすの　ちょうかんに　したいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　新聞社　からの　依頼だな▼
-４時間以上　調査して
+４時間　以上　調査して
 男の子と　女の子▽
-どっちが　多いかを
+どっちが　多いかを▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 明日の朝刊に　したいそうだ</language>
 	</row>
 
@@ -1126,7 +1148,9 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがBにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
@@ -1142,7 +1166,7 @@ assistantm_01_15へ続く</comment>
 ４時間以上　調査して
 １番多い　仕事を▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 特集記事に　したいそうだ</language>
 	</row>
 
@@ -1154,7 +1178,9 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがBにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
@@ -1171,7 +1197,7 @@ assistantm_01_15へ続く</comment>
 ４時間以上　調査して
 一番多い　趣味を▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 企画の参考に　したいそうだ</language>
 	</row>
 
@@ -1183,7 +1209,9 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがBにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
@@ -1211,13 +1239,15 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがBにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　おんなのこ　からの
 いらい　だな▼
-８じかんいじょう　ちょうさして
+８じかん　いじょう　ちょうさして
 どんな　ポケモンが▽
 いちばん　にんきが　あるかを▽
 しらべてくる　ちょうさだ▼
@@ -1226,11 +1256,11 @@ assistantm_01_15へ続く</comment>
 ていしゅつ　したいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　女の子　からの　依頼だな▼
-８時間以上　調査して
+８時間　以上　調査して
 どんな　ポケモンが▽
 １番　人気が　あるかを▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 宿題として　提出したいそうだ</language>
 	</row>
 
@@ -1242,13 +1272,15 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがBにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　トレーナー　からの
 いらい　だな▼
-８じかんいじょう　ちょうさして
+８じかん　いじょう　ちょうさして
 いちばん　にんきのある▽
 ポケモンの　タイプを▽
 しらべてくる　ちょうさだ▼
@@ -1256,11 +1288,11 @@ assistantm_01_15へ続く</comment>
 たいせんに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　トレーナー　からの　依頼だな▼
-８時間以上　調査して
+８時間　以上　調査して
 １番　人気のある▽
 ポケモンの　タイプを▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 対戦に　役立てたいそうだ</language>
 	</row>
 
@@ -1272,13 +1304,15 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがBにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　ふどうさんや　からの
 いらい　だな▼
-８じかんいじょう　ちょうさして
+８じかん　いじょう　ちょうさして
 とかいと　いなか▽
 どっちに　すみたいかを▽
 しらべてくる　ちょうさだ▼
@@ -1286,11 +1320,11 @@ assistantm_01_15へ続く</comment>
 しごとに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　不動産屋　からの　依頼だな▼
-８時間以上　調査して
+８時間　以上　調査して
 都会と　田舎▽
 どっちに　住みたいかを▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 仕事に　役立てたいそうだ</language>
 	</row>
 
@@ -1302,26 +1336,30 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがAにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
-１２じかんいじょう　ちょうさして
-じかんとおかね　どっちがほしいかと▽
-いちばんだいじに　おもっているものを▽
-しらべてくる　ちょうさだ▼
+１２じかん　いじょう　ちょうさして
+じかんと　おかね　どっちが▽
+ほしいかと▽
+いちばん　だいじに　おもっている▽
+ものを　しらべてくる　ちょうさだ▼
 みんな　なにが
-いちばん　だいじなのか…▽
+いちばん　だいじなのか……▽
 それを　しりたくてな……▼
-え？　りゆうは　いえんな</language>
+え？
+りゆうは　いえんな</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-１２時間以上　調査して
-時間とお金　どっちが欲しいかと
-１番大事に　思っているものを▽
+１２時間　以上　調査して
+時間と　お金　どっちが　欲しいかと▽
+１番　大事に　思っているものを▽
 調べてくる　調査だ▼
-みんな　何が１番大事なのか……
+みんな　何が　１番　大事なのか……
 それを知りたくてな……▼
 え？
 理由は　言えんな</language>
@@ -1335,13 +1373,15 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがAにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
-１２じかんいじょう　ちょうさして▽
-あたまが　いいと
+１２じかん　いじょう　ちょうさして
+あたまが　いいと▽
 うんどうが　できる▽
 どっちが　にんきかと▼
 がいけんと　なかみ　どっちが
@@ -1355,12 +1395,12 @@ assistantm_01_15へ続く</comment>
 きにするな！</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-１２時間以上　調査して
+１２時間　以上　調査して
 頭がいいと　運動ができる▽
 どっちが　人気かと▼
 外見と　中身
 どっちが　求められているかと▼
-１番人気のある　人間のタイプを
+１番　人気のある　人間のタイプを
 調べてくる　調査だ▼
 え？
 なにか　あったのか？▼
@@ -1376,14 +1416,16 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがAにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
-１２じかんいじょう　ちょうさして
-いちばんすきな　きせつと▽
-いちばんすきな　たべものを▽
+１２じかん　いじょう　ちょうさして
+いちばん　すきな　きせつと▽
+いちばん　すきな　たべものを▽
 しらべてくる　ちょうさだ▼
 きせつにあわせて　おいしいものを
 ごちそう　したいだろう？▼
@@ -1391,9 +1433,9 @@ assistantm_01_15へ続く</comment>
 それは　ひみつだ！</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-１２時間以上　調査して
-１番好きな　季節と▽
-１番好きな　食べ物を▽
+１２時間　以上　調査して
+１番　好きな　季節と▽
+１番　好きな　食べ物を▽
 調べてくる　調査だ▼
 季節にあわせて　美味しいものを
 ごちそう　したいだろう？▼
@@ -1409,25 +1451,27 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがAにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　げいじゅつか　からの
 いらいだな▼
-１２じかんいじょう　ちょうさして
-いちばんすきな　いろと▽
-いちばんすきな　おんがくを▽
+１２じかん　いじょう　ちょうさして
+いちばん　すきな　いろと▽
+いちばん　すきな　おんがくを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
 さくひんに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　芸術家　からの　依頼だな▼
-１２時間以上　調査して
-１番好きな　色と▽
-１番好きな　音楽を▽
+１２時間　以上　調査して
+１番　好きな　色と▽
+１番　好きな　音楽を▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 作品に　役立てたいそうだ</language>
 	</row>
 
@@ -1439,13 +1483,15 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがAにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　アイドルかしゅ　からの
 いらい　だな▼
-１６じかんいじょう　ちょうさして
+１６じかん　いじょう　ちょうさして
 いちばん　すきな　おんがくを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
@@ -1453,10 +1499,10 @@ assistantm_01_15へ続く</comment>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　アイドル歌手　からの
 依頼だな▼
-１６時間以上　調査して
+１６時間　以上　調査して
 １番　好きな　音楽を▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 新曲に　役立てたいそうだ</language>
 	</row>
 
@@ -1468,23 +1514,25 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがAにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
-１６じかんいじょう　ちょうさして
-いちばんすきな　ＴＶばんぐみと▽
-いちばんすきな　えいがを▽
+１６じかん　いじょう　ちょうさして
+いちばん　すきな　ＴＶばんぐみと▽
+いちばん　すきな　えいがを▽
 しらべてくる　ちょうさだ▼
 わだいが　ほうふな
 おとこに　なりたいからな▽
 いまの　はやりを　しりたいんだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-１６時間以上　調査して
-１番好きな　ＴＶ番組と▽
-１番好きな　映画を▽
+１６時間　以上　調査して
+１番　好きな　ＴＶ番組と▽
+１番　好きな　映画を▽
 調べてくる　調査だ▼
 話題豊富な　男に　なりたいからな
 今の　流行を　知りたいんだ</language>
@@ -1498,22 +1546,24 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがSにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　がくせい　からのいらいだな▼
-１６じかんいじょう　ちょうさして
-いちばんすきな　がっこうのじかんを▽
+１６じかん　いじょう　ちょうさして
+いちばん　すきな　がっこうのじかんを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
 がっこうせいかつに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　学生　からの　依頼だな▼
-１６時間以上　調査して
-１番好きな　学校の時間を▽
+１６時間　以上　調査して
+１番　好きな　学校の時間を▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 学校生活に　役立てたいそうだ</language>
 	</row>
 
@@ -1525,25 +1575,27 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがSにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　せんせい　からの
 いらいだな▼
-１６じかんいじょう　ちょうさして
-いちばんすきな　べんきょうと▽
-いちばんにがてな　べんきょうを▽
+１６じかん　いじょう　ちょうさして
+いちばん　すきな　べんきょうと▽
+いちばん　にがてな　べんきょうを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
 じゅぎょうに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　先生　からの　依頼だな▼
-１６時間以上　調査して
-１番好きな　勉強と▽
-１番苦手な　勉強を▽
+１６時間　以上　調査して
+１番　好きな　勉強と▽
+１番　苦手な　勉強を▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 授業に　役立てたいそうだ</language>
 	</row>
 
@@ -1555,24 +1607,26 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがSにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　スポーツせんしゅ　からの
 いらい　だな▼
-２０じかんいじょう　ちょうさして
-いちばんにんきのある　スポーツを▽
+２０じかん　いじょう　ちょうさして
+いちばん　にんきのある　スポーツを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
 しあいに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　スポーツ選手　からの
 依頼だな▼
-２０時間以上　調査して
-１番人気のある　スポーツを▽
+２０時間　以上　調査して
+１番　人気のある　スポーツを▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 試合に　役立てたいそうだ</language>
 	</row>
 
@@ -1584,12 +1638,14 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがSにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
-２０じかんいじょう　ちょうさして
+２０じかん　いじょう　ちょうさして
 いちばん　にんきのある▽
 きゅうじつの　すごしかたと▼
 いちばん　にんきのある　あそびばを
@@ -1600,9 +1656,9 @@ assistantm_01_15へ続く</comment>
 しらべて　おきたいんだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-２０時間以上　調査して
-１番人気のある　休日の過ごし方と▽
-１番人気のある　遊び場を▽
+２０時間　以上　調査して
+１番　人気のある　休日の過ごし方と▽
+１番　人気のある　遊び場を▽
 調べてくる　調査だ▼
 じつは　次の週末に
 デートの　予定でな▼
@@ -1618,13 +1674,15 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがSにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　ポケモンファン　からの
 いらい　だな▼
-２０じかんいじょう　ちょうさして
+２０じかん　いじょう　ちょうさして
 いちばん　なりたいものを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
@@ -1633,10 +1691,10 @@ assistantm_01_15へ続く</comment>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　ポケモンファン　からの
 依頼だな▼
-２０時間以上　調査して
-１番なりたいものを▽
+２０時間　以上　調査して
+１番　なりたいものを▽
 調べてくる　調査だ▼
-調査の結果を　ポケモンの
+調査の　結果を　ポケモンの
 宣伝に　役立てたいそうだ</language>
 	</row>
 
@@ -1648,13 +1706,15 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがSSにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　ジムリーダー　からの
 いらいだな▼
-２４じかんいじょう　ちょうさして
+２４じかん　いじょう　ちょうさして
 いちばん　にんきのある▽
 ジムリーダーを▽
 しらべてくる　ちょうさだ▼
@@ -1663,10 +1723,10 @@ assistantm_01_15へ続く</comment>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　ジムリーダー　からの
 依頼だな▼
-２４時間以上　調査して
-１番人気のある　ジムリーダーを▽
+２４時間　以上　調査して
+１番　人気のある　ジムリーダーを▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 ジム運営に　役立てたいそうだ</language>
 	</row>
 
@@ -1678,14 +1738,16 @@ assistantm_01_15へ続く</comment>
 
 隊員ランクがSSにあがると出現
 
-assistantm_01_15へ続く</comment>
+assistantm_01_15へ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
 ２４じかん　いじょう　ちょうさして
-いちばんだと　おもう▽
-ポケモンの　おもしろいところを▽
+いちばん　だとおもう▽
+ポケモンの　おもしろい　ところを▽
 しらべてくる　ちょうさだ▼
 ……おとなになると　いろいろ　ある▼
 わたしは　こんご
@@ -1694,9 +1756,9 @@ assistantm_01_15へ続く</comment>
 けんきゅう　するのだ！</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-２４時間以上　調査して
-１番だと　思う▽
-ポケモンの　面白いところを▽
+２４時間　以上　調査して
+１番　だと思う▽
+ポケモンの　面白い　ところを▽
 調べてくる　調査だ▼
 ……大人になると　いろいろ　ある▼
 わたしは　今後
@@ -1714,12 +1776,14 @@ assistantm_01_15へ続く</comment>
 初期から選択可能
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
-５にんいじょうと　すれちがって
+５にん　いじょうと　すれちがって
 ブラックと　ホワイト▽
 どちらが　おおいかを▽
 しらべてくる　ちょうさだ▼
@@ -1728,7 +1792,7 @@ assistantm_01_15へ続く</comment>
 にんきのある　ほうを　しりたいんだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-５人以上と　すれ違って
+５人　以上と　すれ違って
 ブラックと　ホワイト▽
 どちらが　多いかを▽
 調べてくる　調査だ▼
@@ -1746,25 +1810,27 @@ assistantm_01_15へ続く</comment>
 初期から選択可能
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　ポケモンはかせ　からの
 いらいだな▼
-５にんいじょうと　すれちがって
-いちばんえらばれた▽
-さいしょのポケモンを▽
+５にん　いじょうと　すれちがって
+いちばん　えらばれた▽
+さいしょの　ポケモンを▽
 しらべてくる　ちょうさだ▼
-ちょうさのけっかを
+ちょうさの　けっかを
 けんきゅうに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　ポケモン博士　からの
 依頼だな▼
-５人以上と　すれ違って
-１番選ばれた　最初のポケモンを▽
+５人　以上と　すれ違って
+１番　選ばれた　最初の　ポケモンを▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 研究に　役立てたいそうだ</language>
 	</row>
 
@@ -1777,24 +1843,26 @@ assistantm_01_15へ続く</comment>
 初期から選択可能
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　ははおや　からの
 いらいだな▼
-１０にんいじょうと　すれちがって
-いちばんおおい　プレイじかんを▽
+１０にん　いじょうと　すれちがって
+いちばん　おおい　プレイじかんを▽
 しらべてくる　ちょうさだ▼
-ちょうさのけっかを
+ちょうさの　けっかを
 こどもの　プレイじかんと▽
 くらべたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　母親　からの　依頼だな▼
-１０人以上と　すれ違って
-１番多い　プレイ時間を▽
+１０人　以上と　すれ違って
+１番　多い　プレイ時間を▽
 調べてくる　調査だ▼
-調査の結果を　子供のプレイ時間と
+調査の　結果を　子供の　プレイ時間と
 比べたいそうだ</language>
 	</row>
 
@@ -1807,13 +1875,15 @@ assistantm_01_15へ続く</comment>
 初期から選択可能
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　しんぶんしゃ　からの
 いらいだな▼
-１０にんいじょうと　すれちがって
+１０にん　いじょうと　すれちがって
 おとこのこと　おんなのこ▽
 どっちが　おおいかを▽
 しらべてくる　ちょうさだ▼
@@ -1821,12 +1891,12 @@ assistantm_01_15へ続く</comment>
 あすの　ちょうかんに　したいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　新聞社　からの　依頼だな▼
-１０人以上と　すれ違って
+１０人　以上と　すれ違って
 男の子と　女の子▽
 どっちが　多いかを▽
 調べてくる　調査だ▼
-調査の結果を
-明日の朝刊に　したいそうだ</language>
+調査の　結果を
+明日の　朝刊に　したいそうだ</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_14e" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1838,23 +1908,25 @@ assistantm_01_15へ続く</comment>
 隊員ランクがBにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　ざっしきしゃ　からの
 いらいだな▼
-１０にんいじょうと　すれちがって
+１０にん　いじょうと　すれちがって
 いちばん　おおい　しごとを▽
 しらべてくる　ちょうさだ▼
 ちょうさけっかを
 とくしゅうきじに　したいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　雑誌記者　からの　依頼だな▼
-１０人以上と　すれ違って
-１番多い　仕事を▽
+１０人　以上と　すれ違って
+１番　多い　仕事を▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 特集記事に　したいそうだ</language>
 	</row>
 
@@ -1867,13 +1939,15 @@ assistantm_01_15へ続く</comment>
 隊員ランクがBにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　レジャーかいしゃ　からの
 いらいだな▼
-１０にんいじょうと　すれちがって
+１０にん　いじょうと　すれちがって
 いちばん　おおい　しゅみを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
@@ -1881,11 +1955,11 @@ assistantm_01_15へ続く</comment>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　レジャー会社　からの
 依頼だな▼
-１０人以上と　すれ違って
+１０人　以上と　すれ違って
 一番多い　趣味を▽
 調べてくる　調査だ▼
-調査の結果を
-企画の参考に　したいそうだ</language>
+調査の　結果を
+企画の　参考に　したいそうだ</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_14g" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1897,12 +1971,14 @@ assistantm_01_15へ続く</comment>
 隊員ランクがBにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
-２０にんいじょうと　すれちがって
+２０にん　いじょうと　すれちがって
 たいせんと　こうかん▽
 どっちが　にんきかを▽
 しらべてくる　ちょうさだ▼
@@ -1910,11 +1986,11 @@ assistantm_01_15へ続く</comment>
 みんなの　あそびかたを　しりたいんだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-２０人以上と　すれ違って
+２０人　以上と　すれ違って
 対戦と　交換　どっちが人気かを▽
 調べてくる　調査だ▼
 最近　ポケモンに　はまっていてね
-みんなの遊び方を　知りたいんだ</language>
+みんなの　遊び方を　知りたいんだ</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_14h" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1926,13 +2002,15 @@ assistantm_01_15へ続く</comment>
 隊員ランクがBにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　おんなのこ　からの
 いらいだな▼
-２０にんいじょうと　すれちがって
+２０にん　いじょうと　すれちがって
 どんな　ポケモンが▽
 いちばん　にんきが　あるかを▽
 しらべてくる　ちょうさだ▼
@@ -1941,11 +2019,11 @@ assistantm_01_15へ続く</comment>
 ていしゅつ　したいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　女の子からの　依頼だな▼
-２０人以上と　すれ違って
+２０人　以上と　すれ違って
 どんな　ポケモンが▽
 １番　人気が　あるかを▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 宿題として　提出したいそうだ</language>
 	</row>
 
@@ -1958,13 +2036,15 @@ assistantm_01_15へ続く</comment>
 隊員ランクがBにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　トレーナー　からの
 いらいだな▼
-２０にんいじょうと　すれちがって
+２０にん　いじょうと　すれちがって
 いちばん　にんきのある▽
 ポケモンの　タイプを▽
 しらべてくる　ちょうさだ▼
@@ -1972,11 +2052,11 @@ assistantm_01_15へ続く</comment>
 たいせんに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　トレーナーからの　依頼だな▼
-２０人以上と　すれ違って
+２０人　以上と　すれ違って
 １番　人気のある▽
 ポケモンの　タイプを▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 対戦に　役立てたいそうだ</language>
 	</row>
 
@@ -1989,13 +2069,15 @@ assistantm_01_15へ続く</comment>
 隊員ランクがBにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　ふどうさんや　からの
 いらいだな▼
-２０にんいじょうと　すれちがって
+２０にん　いじょうと　すれちがって
 とかいと　いなか▽
 どっちに　すみたいかを▽
 しらべてくる　ちょうさだ▼
@@ -2003,11 +2085,11 @@ assistantm_01_15へ続く</comment>
 しごとに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　不動産屋からの　依頼だな▼
-２０人以上と　すれ違って
+２０人　以上と　すれ違って
 都会と　田舎▽
 どっちに　住みたいかを▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 仕事に　役立てたいそうだ</language>
 	</row>
 
@@ -2020,15 +2102,18 @@ assistantm_01_15へ続く</comment>
 隊員ランクがAにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
-３０にんいじょうと　すれちがって
-じかんとおかね　どっちがほしいかと▽
-いちばんだいじに　おもっているものを▽
-しらべてくる　ちょうさだ▼
+３０にん　いじょうと　すれちがって
+じかんと　おかね　どっちが▽
+ほしいかと▽
+いちばん　だいじに　おもっている▽
+ものを　しらべてくる　ちょうさだ▼
 みんな　なにが
 いちばん　だいじなのか……▽
 それを　しりたくてな……▼
@@ -2036,11 +2121,11 @@ assistantm_01_15へ続く</comment>
 りゆうは　いえんな</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-３０人以上と　すれ違って
-時間とお金　どっちが欲しいかと
-１番大事に　思っているものを▽
+３０人　以上と　すれ違って
+時間と　お金　どっちが欲しいかと
+１番　大事に　思っているものを▽
 調べてくる　調査だ▼
-みんな　なにが　１番大事なのか……
+みんな　なにが　１番　大事なのか……
 それを知りたくてな……▼
 え？
 理由は　言えんな</language>
@@ -2055,12 +2140,14 @@ assistantm_01_15へ続く</comment>
 隊員ランクがAにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
-３０にんいじょうと　すれちがって
+３０にん　いじょうと　すれちがって
 あたまが　いいと
 うんどうが　できる▽
 どっちが　にんきかと▼
@@ -2075,7 +2162,7 @@ assistantm_01_15へ続く</comment>
 きにするな</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-３０人以上と　すれ違って
+３０人　以上と　すれ違って
 頭がいいと　運動ができる▽
 どっちが　人気かと▼
 外見と　中身
@@ -2097,14 +2184,16 @@ assistantm_01_15へ続く</comment>
 隊員ランクがAにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
-３０にんいじょうと　すれちがって
-いちばんすきな　きせつと▽
-いちばんすきな　たべものを▽
+３０にん　いじょうと　すれちがって
+いちばん　すきな　きせつと▽
+いちばん　すきな　たべものを▽
 しらべてくる　ちょうさだ▼
 きせつにあわせて　おいしいものを
 ごちそう　したいだろう？▼
@@ -2112,9 +2201,9 @@ assistantm_01_15へ続く</comment>
 それは　ひみつだ！</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-３０人以上と　すれ違って
-１番好きな　季節と▽
-１番好きな　食べ物を▽
+３０人　以上と　すれ違って
+１番　好きな　季節と▽
+１番　好きな　食べ物を▽
 調べてくる　調査だ▼
 季節にあわせて　美味しいものを
 ごちそう　したいだろう？▼
@@ -2131,25 +2220,27 @@ assistantm_01_15へ続く</comment>
 隊員ランクがAにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　げいじゅつか　からの
 いらいだな▼
-３０にんいじょうと　すれちがって
-いちばんすきな　いろと▽
-いちばんすきな　おんがくを▽
+３０にん　いじょうと　すれちがって
+いちばん　すきな　いろと▽
+いちばん　すきな　おんがくを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
 さくひんに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　芸術家からの　依頼だな▼
-３０人以上と　すれ違って
-１番好きな　色と▽
-１番好きな　音楽を▽
+３０人　以上と　すれ違って
+１番　好きな　色と▽
+１番　好きな　音楽を▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 作品に　役立てたいそうだ</language>
 	</row>
 
@@ -2162,13 +2253,15 @@ assistantm_01_15へ続く</comment>
 隊員ランクがAにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　アイドルかしゅ　からの
 いらいだな▼
-４０にんいじょうと　すれちがって
+４０にん　いじょうと　すれちがって
 いちばん　すきな　おんがくを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
@@ -2176,10 +2269,10 @@ assistantm_01_15へ続く</comment>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　アイドル歌手からの
 依頼だな▼
-４０人以上と　すれ違って
+４０人　以上と　すれ違って
 １番　好きな　音楽を▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 新曲に　役立てたいそうだ</language>
 	</row>
 
@@ -2192,23 +2285,25 @@ assistantm_01_15へ続く</comment>
 隊員ランクがAにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
-４０にんいじょうと　すれちがって
-いちばんすきな　ＴＶばんぐみと▽
-いちばんすきな　えいがを▽
+４０にん　いじょうと　すれちがって
+いちばん　すきな　ＴＶばんぐみと▽
+いちばん　すきな　えいがを▽
 しらべてくる　ちょうさだ▼
 わだいが　ほうふな
 おとこに　なりたいからな▽
 いまの　はやりを　しりたいんだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-４０人以上と　すれ違って
-１番好きな　ＴＶ番組と▽
-１番好きな　映画を▽
+４０人　以上と　すれ違って
+１番　好きな　ＴＶ番組と▽
+１番　好きな　映画を▽
 調べてくる　調査だ▼
 話題豊富な　男に　なりたいからな
 今の　流行を　知りたいんだ</language>
@@ -2223,23 +2318,25 @@ assistantm_01_15へ続く</comment>
 隊員ランクがSにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　がくせい　からの
 いらいだな▼
-４０にんいじょうと　すれちがって
-いちばんすきな　がっこうのじかんを▽
+４０にん　いじょうと　すれちがって
+いちばん　すきな　がっこうのじかんを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
 がっこうせいかつに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　学生からの　依頼だな▼
-４０人以上と　すれ違って
-１番好きな　学校の時間を▽
+４０人　以上と　すれ違って
+１番　好きな　学校の時間を▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 学校生活に　役立てたいそうだ</language>
 	</row>
 
@@ -2252,25 +2349,27 @@ assistantm_01_15へ続く</comment>
 隊員ランクがSにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　せんせい　からの
 いらいだな▼
-４０にんいじょうと　すれちがって
-いちばんすきな　べんきょうと▽
-いちばんにがてな　べんきょうを▽
+４０にん　いじょうと　すれちがって
+いちばん　すきな　べんきょうと▽
+いちばん　にがてな　べんきょうを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
 じゅぎょうに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　先生からの　依頼だな▼
-４０人以上と　すれ違って
-１番好きな　勉強と▽
-１番苦手な　勉強を▽
+４０人　以上と　すれ違って
+１番　好きな　勉強と▽
+１番　苦手な　勉強を▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 授業に　役立てたいそうだ</language>
 	</row>
 
@@ -2283,24 +2382,26 @@ assistantm_01_15へ続く</comment>
 隊員ランクがSにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　スポーツせんしゅ　からの
 いらいだな▼
-５０にんいじょうと　すれちがって
-いちばんにんきのある　スポーツを▽
+５０にん　いじょうと　すれちがって
+いちばん　にんきのある　スポーツを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
 しあいに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　スポーツ選手からの
 依頼だな▼
-５０人以上と　すれ違って
-１番人気のある　スポーツを▽
+５０人　以上と　すれ違って
+１番　人気のある　スポーツを▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 試合に　役立てたいそうだ</language>
 	</row>
 
@@ -2313,12 +2414,14 @@ assistantm_01_15へ続く</comment>
 隊員ランクがSにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
-５０にんいじょうと　すれちがって
+５０にん　いじょうと　すれちがって
 いちばん　にんきのある▽
 きゅうじつの　すごしかたと▼
 いちばん　にんきのある　あそびばを
@@ -2329,9 +2432,9 @@ assistantm_01_15へ続く</comment>
 しらべて　おきたいんだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-５０人以上と　すれ違って
-１番人気のある　休日の過ごし方と▽
-１番人気のある　遊び場を▽
+５０人　以上と　すれ違って
+１番　人気のある　休日の過ごし方と▽
+１番　人気のある　遊び場を▽
 調べてくる　調査だ▼
 じつは　次の週末に
 デートの　予定でな▼
@@ -2348,13 +2451,15 @@ assistantm_01_15へ続く</comment>
 隊員ランクがSにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">このちょさは……▼
 とある　ポケモンファン　からの
 いらいだな▼
-５０にんいじょうと　すれちがって
+５０にん　いじょうと　すれちがって
 いちばん　なりたいものを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
@@ -2362,10 +2467,10 @@ assistantm_01_15へ続く</comment>
 やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　ポケモンファンからの　依頼だな▼
-５０人以上と　すれ違って
-１番なりたいものを▽
+５０人　以上と　すれ違って
+１番　なりたいものを▽
 調べてくる　調査だ▼
-調査の結果を　ポケモンの
+調査の　結果を　ポケモンの
 宣伝に　役立てたいそうだ</language>
 	</row>
 
@@ -2378,13 +2483,15 @@ assistantm_01_15へ続く</comment>
 隊員ランクがSSにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　ジムリーダー　からの
 いらいだな▼
-１００にんいじょうと　すれちがって
+１００にん　いじょうと　すれちがって
 いちばん　にんきのある▽
 ジムリーダーを▽
 しらべてくる　ちょうさだ▼
@@ -2393,10 +2500,10 @@ assistantm_01_15へ続く</comment>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　ジムリーダー　からの
 依頼だな▼
-１００人以上と　すれ違って
-１番人気のある　ジムリーダーを▽
+１００人　以上と　すれ違って
+１番　人気のある　ジムリーダーを▽
 調べてくる　調査だ▼
-調査の結果を
+調査の　結果を
 ジム運営に　役立てたいそうだ</language>
 	</row>
 
@@ -2409,29 +2516,31 @@ assistantm_01_15へ続く</comment>
 隊員ランクがSSにあがると出現
 
 通常　⇒　assistantm_01_15へ続く
-すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く</comment>
+すでに人数を達成済み　⇒　msg_c03r0101_assistantm_01_14xへ続く
+
+※「依頼の　確認」からの移行の場合は　assistantm_01_17へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
-１００にんいじょうと　すれちがって
+１００にん　いじょうと　すれちがって
 いちばんだと　おもう▽
-ポケモンの　おもしろいところを▽
+ポケモンの　おもしろい　ところを▽
 しらべてくる　ちょうさだ▼
 ……おとなになると　いろいろ　ある▼
 わたしは　こんご
-ポケモンひとすじに　いきる！▼
+ポケモン　ひとすじに　いきる！▼
 ポケモンの　おもしろさを
 けんきゅう　するのだ！</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-１００人以上と　すれ違って
-１番だと　思う▽
-ポケモンの　面白いところを▽
+１００人　以上と　すれ違って
+１番　だと　思う▽
+ポケモンの　面白い　ところを▽
 調べてくる　調査だ▼
 ……大人になると　いろいろ　ある▼
 わたしは　今後
-ポケモン一筋に　生きることにした！▼
+ポケモン　一筋に　生きることにした！▼
 ポケモンの
 面白さを　研究するのだ！</language>
 	</row>
@@ -2506,8 +2615,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-『えらんだ　さいしょの▽
-ポケモンは？』の▽
+『えらんだ
+さいしょの　ポケモンは？』の▽
 ちょうさ　いらいを　うけた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『選んだ　最初の　ポケモンは？』の▽
@@ -2525,11 +2634,11 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-『いちばんおおい▽
+『いちばん　おおい▽
 プレイじかんは？』の▽
 ちょうさ　いらいを　うけた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
-『１番多い　プレイ時間は？』の▽
+『１番　多い　プレイ時間は？』の▽
 調査　依頼を　受けた！</language>
 	</row>
 
@@ -2563,10 +2672,10 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-『いちばんおおい　しごとは？』の▽
+『いちばん　おおい　しごとは？』の▽
 ちょうさ　いらいを　うけた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
-『１番多い　仕事は？』の▽
+『１番　多い　仕事は？』の▽
 調査　依頼を　受けた！</language>
 	</row>
 
@@ -2581,10 +2690,10 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-『いちばんおおい　しゅみは？』の▽
+『いちばん　おおい　しゅみは？』の▽
 ちょうさ　いらいを　うけた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
-『１番多い　趣味は？』の▽
+『１番　多い　趣味は？』の▽
 調査　依頼を　受けた！</language>
 	</row>
 
@@ -2750,10 +2859,10 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-『いちばんすきな　おんがくは？』の▽
+『いちばん　すきな　おんがくは？』の▽
 ちょうさ　いらいを　うけた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
-『１番好きな　音楽は？』の▽
+『１番　好きな　音楽は？』の▽
 調査　依頼を　受けた！</language>
 	</row>
 
@@ -2786,11 +2895,11 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-『いちばんすきな　がっこうの▽
+『いちばん　すきな　がっこうの▽
 じかんは？』の▽
 ちょうさ　いらいを　うけた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
-『１番好きな　学校の　時間は？』の▽
+『１番　好きな　学校の　時間は？』の▽
 調査　依頼を　受けた！</language>
 	</row>
 
@@ -2823,11 +2932,11 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-『いちばんにんきのある▽
+『いちばん　にんきのある▽
 スポーツは？』の▽
 ちょうさ　いらいを　うけた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
-『１番人気のある　スポーツは？』の▽
+『１番　人気のある　スポーツは？』の▽
 調査　依頼を　受けた！</language>
 	</row>
 
@@ -2860,10 +2969,10 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-『いちばんなりたいものは？』の▽
+『いちばん　なりたいものは？』の▽
 ちょうさ　いらいを　うけた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
-『１番なりたいものは？』の▽
+『１番　なりたいものは？』の▽
 調査　依頼を　受けた！</language>
 	</row>
 
@@ -2878,11 +2987,11 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-『いちばんにんきのある▽
+『いちばん　にんきのある▽
 ジムリーダーは？』の▽
 ちょうさ　いらいを　うけた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
-『１番人気のある▽
+『１番　人気のある▽
 ジムリーダーは？』の▽
 調査　依頼を　受けた！</language>
 	</row>
@@ -2912,7 +3021,8 @@ assistantm_01_17へ続く
 会話終了</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">では　ちょうさが　しゅうりょうしたら
+		<language name="JPN" width="256">では　ちょうさが　
+しゅうりょうしたら▽
 わたしの　ところに▽
 ほうこくに　きてくれ</language>
 		<language name="JPN_KANJI" width="256">では　調査が　終了したら
@@ -2963,8 +3073,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『ブラックと　ホワイト
-おおいのは？』の　ちょうさが▽
-おわっていないぞ▼
+おおいのは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -2972,8 +3082,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
 		<language name="JPN_KANJI" width="256">まだ　『ブラックと　ホワイト
-多いのは？』の　調査が▽
-終わっていないぞ▼
+多いのは？』の▽　
+調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -2994,18 +3104,18 @@ assistantm_01_17へ続く
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『えらんだ　さいしょの
-ポケモンは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『えらんだ　
+さいしょの　ポケモンは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『選んだ　最初の
-ポケモンは？』の　調査が▽
-終わっていないぞ▼
+		<language name="JPN_KANJI" width="256">まだ　『選んだ　
+最初の　ポケモンは？』の▽
+調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -3026,16 +3136,17 @@ assistantm_01_17へ続く
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんおおい
-プレイじかんは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　おおい
+プレイじかんは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番多い　プレイ時間は？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　多い　
+プレイ時間は？』の▽
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
@@ -3058,15 +3169,16 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『おとこのこと　おんなのこ
-おおいのは？』の　ちょうさが▽
-おわっていないぞ▼
+おおいのは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『男の子と　女の子　多いのは？』の
+		<language name="JPN_KANJI" width="256">まだ　『男の子と　女の子
+多いのは？』の▽
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
@@ -3088,16 +3200,16 @@ assistantm_01_17へ続く
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんおおい
-しごとは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　おおい
+しごとは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番多い　仕事は？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　多い　仕事は？』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
@@ -3119,16 +3231,16 @@ assistantm_01_17へ続く
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんおおい
-しゅみは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　おおい
+しゅみは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番多い　趣味は？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　多い　趣味は？』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
@@ -3151,8 +3263,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『たいせんと　こうかん
-にんきが　あるのは？』の　ちょうさが▽
-おわっていないぞ▼
+にんきが　あるのは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -3160,8 +3272,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
 		<language name="JPN_KANJI" width="256">まだ　『対戦と　交換
-人気が　あるのは？』の　調査が▽
-終わっていないぞ▼
+人気が　あるのは？』の▽
+調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -3213,8 +3325,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『すきな　ポケモンの
-タイプは？』の　ちょうさが▽
-おわっていないぞ▼
+タイプは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -3222,8 +3334,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
 		<language name="JPN_KANJI" width="256">まだ　『好きな　ポケモンの
-タイプは？』の　調査が▽
-終わっていないぞ▼
+タイプは？』の▽
+調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -3245,8 +3357,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『とかいと　いなか
-すみたいのは？』の　ちょうさが▽
-おわっていないぞ▼
+すみたいのは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -3254,8 +3366,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
 		<language name="JPN_KANJI" width="256">まだ　『都会と　田舎
-住みたいのは？』の　調査が▽
-終わっていないぞ▼
+住みたいのは？』の▽　
+調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -3277,8 +3389,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『だいじに　しているものに
-ついて』の　ちょうさが▽
-おわっていないぞ▼
+ついて』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -3286,8 +3398,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
 		<language name="JPN_KANJI" width="256">まだ　『大事に　しているものに
-ついて』の　調査が▽
-終わっていないぞ▼
+ついて』の▽
+調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -3309,8 +3421,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『ひとの　みりょくに
-ついて』の　ちょうさが▽
-おわっていないぞ▼
+ついて』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -3399,16 +3511,16 @@ assistantm_01_17へ続く
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんすきな
-おんがくは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　すきな
+おんがくは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番好きな　音楽は？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　好きな　音楽は？』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
@@ -3460,16 +3572,17 @@ assistantm_01_17へ続く
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんすきな　がっこうの
-じかんは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　すきな
+がっこうの　じかんは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番好きな　学校の　時間は？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　好きな
+学校の　時間は？』の▽
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
@@ -3521,18 +3634,18 @@ assistantm_01_17へ続く
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんにんきのある
-スポーツは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　にんきのある
+スポーツは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番人気のある
-スポーツは？』の　調査が▽
-終わっていないぞ▼
+		<language name="JPN_KANJI" width="256">まだ　『１番　人気のある
+スポーツは？』の▽
+調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -3583,7 +3696,8 @@ assistantm_01_17へ続く
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんなりたいものは？』の
+		<language name="JPN" width="256">まだ　『いちばん　なりたい
+ものは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
@@ -3591,7 +3705,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番なりたいものは？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　なりたいものは？』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
@@ -3613,18 +3727,18 @@ assistantm_01_17へ続く
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんにんきのある
-ジムリーダーは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　にんきのある
+ジムリーダーは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番人気のある
-ジムリーダーは？』の　調査が▽
-終わっていないぞ▼
+		<language name="JPN_KANJI" width="256">まだ　『１番　人気のある
+ジムリーダーは？』の▽
+調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -3645,18 +3759,18 @@ assistantm_01_17へ続く
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『ポケモンの　おもしろい
-ところは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『ポケモンの　
+おもしろい　ところは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『ポケモンの　面白い
-ところは？』の　調査が▽
-終わっていないぞ▼
+		<language name="JPN_KANJI" width="256">まだ　『ポケモンの　
+面白い　ところは？』の▽
+調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -3677,8 +3791,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『ブラックと　ホワイト
-おおいのは？』の　ちょうさが▽
-おわっていないぞ▼
+おおいのは？』の▽　
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -3686,8 +3800,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
 		<language name="JPN_KANJI" width="256">まだ　『ブラックと　ホワイト
-多いのは？』の　調査が▽
-終わっていないぞ▼
+多いのは？』の▽
+調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -3707,18 +3821,18 @@ assistantm_01_17へ続く
 『いいえ』　⇒　assistantm_01_12へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『えらんだ　さいしょの
-ポケモンは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『えらんだ
+さいしょの　ポケモンは？』の▽　
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『選んだ　最初の
-ポケモンは？』の　調査が▽
-終わっていないぞ▼
+		<language name="JPN_KANJI" width="256">まだ　『選んだ　
+最初の　ポケモンは？』の▽
+調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -3738,16 +3852,17 @@ assistantm_01_17へ続く
 『いいえ』　⇒　assistantm_01_12へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんおおい
-プレイじかんは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　おおい
+プレイじかんは？』の▽
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番多い　プレイ時間は？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　多い
+プレイ時間は？』の▽
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
@@ -3769,15 +3884,16 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『おとこのこと　おんなのこ
-おおいのは？』の　ちょうさが▽
-おわっていないぞ▼
+おおいのは？』の▽　
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『男の子と　女の子　多いのは？』の
+		<language name="JPN_KANJI" width="256">まだ　『男の子と　女の子
+多いのは？』の▽
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
@@ -3798,16 +3914,16 @@ assistantm_01_17へ続く
 『いいえ』　⇒　assistantm_01_12へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんおおい
-しごとは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　おおい
+しごとは？』の▽
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番多い　仕事は？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　多い　仕事は？』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
@@ -3828,16 +3944,16 @@ assistantm_01_17へ続く
 『いいえ』　⇒　assistantm_01_12へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんおおい
-しゅみは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　おおい
+しゅみは？』の▽
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番多い　趣味は？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　多い　趣味は？』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
@@ -3859,8 +3975,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『たいせんと　こうかん
-にんきが　あるのは？』の　ちょうさが▽
-おわっていないぞ▼
+にんきが　あるのは？』の▽
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -3868,8 +3984,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
 		<language name="JPN_KANJI" width="256">まだ　『対戦と　交換
-人気が　あるのは？』の　調査が▽
-終わっていないぞ▼
+人気が　あるのは？』の▽
+調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -3919,8 +4035,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『すきな　ポケモンの
-タイプは？』の　ちょうさが▽
-おわっていないぞ▼
+タイプは？』の▽
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -3928,8 +4044,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
 		<language name="JPN_KANJI" width="256">まだ　『好きな　ポケモンの
-タイプは？』の　調査が▽
-終わっていないぞ▼
+タイプは？』の▽
+調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -3950,8 +4066,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『とかいと　いなか
-すみたいのは？』の　ちょうさが▽
-おわっていないぞ▼
+すみたいのは？』の▽
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -3959,8 +4075,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
 		<language name="JPN_KANJI" width="256">まだ　『都会と　田舎
-住みたいのは？』の　調査が▽
-終わっていないぞ▼
+住みたいのは？』の▽
+調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -3981,8 +4097,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『だいじに　しているものに
-ついて』の　ちょうさが▽
-おわっていないぞ▼
+ついて』の▽
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -3990,8 +4106,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
 		<language name="JPN_KANJI" width="256">まだ　『大事に　しているものに
-ついて』の　調査が▽
-終わっていないぞ▼
+ついて』の▽
+調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -4012,8 +4128,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『ひとの　みりょくに
-ついて』の　ちょうさが▽
-おわっていないぞ▼
+ついて』の▽
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -4099,16 +4215,16 @@ assistantm_01_17へ続く
 『いいえ』　⇒　assistantm_01_12へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんすきな
-おんがくは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　すきな
+おんがくは？』の▽
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番好きな　音楽は？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　好きな　音楽は？』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
@@ -4158,16 +4274,17 @@ assistantm_01_17へ続く
 『いいえ』　⇒　assistantm_01_12へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんすきな　がっこうの
-じかんは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　すきな
+がっこうの　じかんは？』の▽
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番好きな　学校の　時間は？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　好きな
+学校の　時間は？』の▽
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
@@ -4217,18 +4334,18 @@ assistantm_01_17へ続く
 『いいえ』　⇒　assistantm_01_12へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんにんきのある
-スポーツは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　にんきのある
+スポーツは？』の▽
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番人気のある
-スポーツは？』の　調査が▽
-終わっていないぞ▼
+		<language name="JPN_KANJI" width="256">まだ　『１番　人気のある
+スポーツは？』の▽
+調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -4277,7 +4394,8 @@ assistantm_01_17へ続く
 『いいえ』　⇒　assistantm_01_12へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんなりたいものは？』の
+		<language name="JPN" width="256">まだ　『いちばん　なりたい
+ものは？』の▽
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
@@ -4285,7 +4403,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番なりたいものは？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　なりたいものは？』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
@@ -4306,18 +4424,18 @@ assistantm_01_17へ続く
 『いいえ』　⇒　assistantm_01_12へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんにんきのある
-ジムリーダーは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　にんきのある
+ジムリーダーは？』の▽
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番人気のある
-ジムリーダーは？』の　調査が▽
-終わっていないぞ▼
+		<language name="JPN_KANJI" width="256">まだ　『１番　人気のある
+ジムリーダーは？』の▽
+調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -4337,18 +4455,18 @@ assistantm_01_17へ続く
 『いいえ』　⇒　assistantm_01_12へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『ポケモンの　おもしろい
-ところは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『ポケモンの
+おもしろい　ところは？』の▽
+ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『ポケモンの　面白い
-ところは？』の　調査が▽
-終わっていないぞ▼
+		<language name="JPN_KANJI" width="256">まだ　『ポケモンの　
+面白い　ところは？』の▽
+調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -4370,8 +4488,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『ブラックと　ホワイト
-おおいのは？』の　ちょうさが▽
-おわっていないぞ▼
+おおいのは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -4379,8 +4497,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
 		<language name="JPN_KANJI" width="256">まだ　『ブラックと　ホワイト
-多いのは？』の　調査が▽
-終わっていないぞ▼
+多いのは？』の▽　
+調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -4401,18 +4519,18 @@ assistantm_01_17へ続く
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『えらんだ　さいしょの
-ポケモンは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『えらんだ
+さいしょの　ポケモンは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『選んだ　最初の
-ポケモンは？』の　調査が▽
-終わっていないぞ▼
+		<language name="JPN_KANJI" width="256">まだ　『選んだ
+最初の　ポケモンは？』の▽
+調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -4433,16 +4551,17 @@ assistantm_01_17へ続く
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんおおい
-プレイじかんは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　おおい
+プレイじかんは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番多い　プレイ時間は？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　多い　
+プレイ時間は？』の▽
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
@@ -4465,15 +4584,16 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『おとこのこと　おんなのこ
-おおいのは？』の　ちょうさが▽
-おわっていないぞ▼
+おおいのは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『男の子と　女の子　多いのは？』の
+		<language name="JPN_KANJI" width="256">まだ　『男の子と　女の子
+多いのは？』の▽
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
@@ -4495,16 +4615,16 @@ assistantm_01_17へ続く
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんおおい
-しごとは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　おおい
+しごとは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番多い　仕事は？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　多い　仕事は？』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
@@ -4526,16 +4646,16 @@ assistantm_01_17へ続く
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんおおい
-しゅみは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　おおい
+しゅみは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番多い　趣味は？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　多い　趣味は？』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
@@ -4558,8 +4678,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『たいせんと　こうかん
-にんきが　あるのは？』の　ちょうさが▽
-おわっていないぞ▼
+にんきが　あるのは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -4567,8 +4687,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
 		<language name="JPN_KANJI" width="256">まだ　『対戦と　交換
-人気が　あるのは？』の　調査が▽
-終わっていないぞ▼
+人気が　あるのは？』の▽
+調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -4620,8 +4740,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『すきな　ポケモンの
-タイプは？』の　ちょうさが▽
-おわっていないぞ▼
+タイプは？』の▽　
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -4629,8 +4749,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
 		<language name="JPN_KANJI" width="256">まだ　『好きな　ポケモンの
-タイプは？』の　調査が▽
-終わっていないぞ▼
+タイプは？』の▽
+調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -4652,8 +4772,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『とかいと　いなか
-すみたいのは？』の　ちょうさが▽
-おわっていないぞ▼
+すみたいのは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -4661,8 +4781,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
 		<language name="JPN_KANJI" width="256">まだ　『都会と　田舎
-住みたいのは？』の　調査が▽
-終わっていないぞ▼
+住みたいのは？』の▽
+調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -4684,8 +4804,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『だいじに　しているものに
-ついて』の　ちょうさが▽
-おわっていないぞ▼
+ついて』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -4693,8 +4813,8 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
 		<language name="JPN_KANJI" width="256">まだ　『大事に　しているものに
-ついて』の　調査が▽
-終わっていないぞ▼
+ついて』の▽
+調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -4716,8 +4836,8 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『ひとの　みりょくに
-ついて』の　ちょうさが▽
-おわっていないぞ▼
+ついて』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
@@ -4806,16 +4926,16 @@ assistantm_01_17へ続く
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんすきな
-おんがくは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　すきな
+おんがくは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番好きな　音楽は？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　好きな　音楽は？』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
@@ -4867,16 +4987,17 @@ assistantm_01_17へ続く
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんすきな　がっこうの
-じかんは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　すきな
+がっこうの　じかんは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番好きな　学校の　時間は？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　好きな
+学校の　時間は？』の▽
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
@@ -4928,18 +5049,18 @@ assistantm_01_17へ続く
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんにんきのある
-スポーツは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　にんきのある
+スポーツは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番人気のある
-スポーツは？』の　調査が▽
-終わっていないぞ▼
+		<language name="JPN_KANJI" width="256">まだ　『１番　人気のある
+スポーツは？』の▽
+調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -4990,7 +5111,8 @@ assistantm_01_17へ続く
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんなりたいものは？』の
+		<language name="JPN" width="256">まだ　『いちばん　なりたい
+ものは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
@@ -4998,7 +5120,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番なりたいものは？』の
+		<language name="JPN_KANJI" width="256">まだ　『１番　なりたいものは？』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
@@ -5020,18 +5142,18 @@ assistantm_01_17へ続く
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばんにんきのある
-ジムリーダーは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『いちばん　にんきのある
+ジムリーダーは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『一番人気のある
-ジムリーダーは？』の　調査が▽
-終わっていないぞ▼
+		<language name="JPN_KANJI" width="256">まだ　『一番　人気のある
+ジムリーダーは？』の▽
+調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -5052,18 +5174,18 @@ assistantm_01_17へ続く
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『ポケモンの　おもしろい
-ところは？』の　ちょうさが▽
-おわっていないぞ▼
+		<language name="JPN" width="256">まだ　『ポケモンの　
+おもしろい　ところは？』の▽
+ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　『ポケモンの　面白い
-ところは？』の　調査が▽
-終わっていないぞ▼
+		<language name="JPN_KANJI" width="256">まだ　『ポケモンの
+面白い　ところは？』の▽
+調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
@@ -5127,10 +5249,10 @@ assistantm_01_17へ続く
 依頼報告　⇒　assistantm_01_24cへ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">『いちばんおおい
+		<language name="JPN" width="256">『いちばん　おおい
 プレイじかんは？』の　ちょうさを▽
 たいちょうに　ほうこくした！</language>
-		<language name="JPN_KANJI" width="256">『１番多い　プレイ時間は？』の
+		<language name="JPN_KANJI" width="256">『１番　多い　プレイ時間は？』の
 調査を　隊長に　報告した！</language>
 	</row>
 
@@ -5159,10 +5281,10 @@ assistantm_01_17へ続く
 依頼報告　⇒　assistantm_01_24eへ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">『いちばんおおい　しごとは？』の
+		<language name="JPN" width="256">『いちばん　おおい　しごとは？』の
 ちょうさを▽
 たいちょうに　ほうこくした！</language>
-		<language name="JPN_KANJI" width="256">『１番多い　仕事は？』の
+		<language name="JPN_KANJI" width="256">『１番　多い　仕事は？』の
 調査を　隊長に　報告した！</language>
 	</row>
 
@@ -5175,10 +5297,10 @@ assistantm_01_17へ続く
 依頼報告　⇒　assistantm_01_24fへ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">『いちばんおおい　しゅみは？』の
+		<language name="JPN" width="256">『いちばん　おおい　しゅみは？』の
 ちょうさを▽
 たいちょうに　ほうこくした！</language>
-		<language name="JPN_KANJI" width="256">『１番多い　趣味は？』の
+		<language name="JPN_KANJI" width="256">『１番　多い　趣味は？』の
 調査を　隊長に　報告した！</language>
 	</row>
 
@@ -5320,10 +5442,10 @@ assistantm_01_17へ続く
 依頼報告　⇒　assistantm_01_24oへ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">『いちばんすきな　おんがくは？』の
+		<language name="JPN" width="256">『いちばん　すきな　おんがくは？』の
 ちょうさを▽
 たいちょうに　ほうこくした！</language>
-		<language name="JPN_KANJI" width="256">『１番好きな　音楽は？』の
+		<language name="JPN_KANJI" width="256">『１番　好きな　音楽は？』の
 調査を　隊長に　報告した！</language>
 	</row>
 
@@ -5351,10 +5473,10 @@ assistantm_01_17へ続く
 依頼報告　⇒　assistantm_01_24qへ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">『いちばんすきな　がっこうの
+		<language name="JPN" width="256">『いちばん　すきな　がっこうの
 じかんは？』の　ちょうさを▽
 たいちょうに　ほうこくした！</language>
-		<language name="JPN_KANJI" width="256">『１番好きな　学校の　時間は？』の
+		<language name="JPN_KANJI" width="256">『１番　好きな　学校の　時間は？』の
 調査を　隊長に　報告した！</language>
 	</row>
 
@@ -5383,10 +5505,10 @@ assistantm_01_17へ続く
 依頼報告　⇒　assistantm_01_24sへ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">『いちばんにんきのある
+		<language name="JPN" width="256">『いちばん　にんきのある
 スポーツは？』の　ちょうさを▽
 たいちょうに　ほうこくした！</language>
-		<language name="JPN_KANJI" width="256">『１番人気のある　スポーツは？』の
+		<language name="JPN_KANJI" width="256">『１番　人気のある　スポーツは？』の
 調査を　隊長に　報告した！</language>
 	</row>
 
@@ -5415,10 +5537,10 @@ assistantm_01_17へ続く
 依頼報告　⇒　assistantm_01_24uへ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">『いちばんなりたいものは？』の
+		<language name="JPN" width="256">『いちばん　なりたいものは？』の
 ちょうさを▽
 たいちょうに　ほうこくした！</language>
-		<language name="JPN_KANJI" width="256">『１番なりたいものは？』の
+		<language name="JPN_KANJI" width="256">『１番　なりたいものは？』の
 調査を　隊長に　報告した！</language>
 	</row>
 
@@ -5431,12 +5553,12 @@ assistantm_01_17へ続く
 依頼報告　⇒　assistantm_01_24vへ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">『いちばんにんきのある
+		<language name="JPN" width="256">『いちばん　にんきのある
 ジムリーダーは？』の　ちょうさを▽
 たいちょうに　ほうこくした！</language>
-		<language name="JPN_KANJI" width="256">『１番人気のある
-ジムリーダーは？』の　調査を▽
-隊長に　報告した！</language>
+		<language name="JPN_KANJI" width="256">『１番　人気のある
+ジムリーダーは？』の▽
+調査を　隊長に　報告した！</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_23w" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -5497,7 +5619,7 @@ assistantm_01_25へ続く
 いがいな　けっかだな
 これだから　ちょうさは　おもしろい</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番選ばれた　最初のポケモンは
+１番　選ばれた　最初の　ポケモンは
 『[1:13:アンケート回答:0]』のようだな▼
 意外な　結果だな
 これだから　調査は　おもしろい！</language>
@@ -5516,13 +5638,13 @@ assistantm_01_25へ続く
 		<language name="JPN" width="256">ふむふむ……　なるほど……▼
 いちばん　おおい　プレイじかんは
 『[1:13:アンケート回答:0]』のようだな▼
-おおくのじかん　たのしんで
+おおくの　じかん　たのしんで
 くれているのは　よろこばしいことだな</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番多い　プレイ時間は
+１番　多い　プレイ時間は
 『[1:13:アンケート回答:0]』のようだな▼
-多くの時間　楽しんでくれているのは
-喜ばしいことだな</language>
+多くの　時間　楽しんで
+くれているのは　喜ばしいことだな</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_24d" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -5564,7 +5686,7 @@ assistantm_01_25へ続く
 あそんでくれて　いるようだな▼
 すばらしいこと　じゃないか！</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番多い　仕事は
+１番　多い　仕事は
 『[1:13:アンケート回答:0]』のようだな▼
 いろいろな　人が
 遊んでくれて　いるようだな▼
@@ -5588,7 +5710,7 @@ assistantm_01_25へ続く
 たのしむのは　いいことだ▼
 じぶんの　せかいが　ひろがるからな</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番多い　趣味は
+１番　多い　趣味は
 『[1:13:アンケート回答:0]』のようだな▼
 いろいろな　ことを　楽しむのはいいことだ
 自分の　世界が　広がるからな</language>
@@ -5609,13 +5731,13 @@ assistantm_01_25へ続く
 『[1:13:アンケート回答:0]』が　おおいようだな▼
 さんこうになった▼
 いろいろな　あそびが　たのしめる
-それがポケモンの　みりょくだな</language>
+それが　ポケモンの　みりょくだな</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
 対戦と　交換では
 『[1:13:アンケート回答:0]』が　多いようだな▼
 参考になった▼
 いろいろな　遊びが　楽しめる
-それがポケモンの　魅力だな</language>
+それが　ポケモンの　魅力だな</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_24h" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -5631,13 +5753,13 @@ assistantm_01_25へ続く
 		<language name="JPN" width="256">ふむふむ……　なるほど……▼
 いちばん　にんきが　あるのは
 『[1:13:アンケート回答:0]』ポケモンのようだな▼
-いろいろな　ポケモンがいるからな▼
+いろいろな　ポケモンが　いるからな▼
 たくさんの　ポケモンと
 であいたいものだ</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番人気があるのは
+１番　人気が　あるのは
 『[1:13:アンケート回答:0]』ポケモンのようだな▼
-いろいろな　ポケモンがいるからな▼
+いろいろな　ポケモンが　いるからな▼
 たくさんの　ポケモンと
 出会いたいものだ</language>
 	</row>
@@ -5660,7 +5782,7 @@ assistantm_01_25へ続く
 たいせんに　やくだつ
 じょうほうに　なるだろう</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番人気のある　ポケモンのタイプは
+１番　人気のある　ポケモンのタイプは
 『[1:13:アンケート回答:0]』のようだな▼
 ポケモンにも　いろいろいるな
 対戦に　役立つ情報に　なるだろう</language>
@@ -5709,16 +5831,16 @@ assistantm_01_25へ続く
 いちばん　だいじに　おもっているのは
 『[1:13:アンケート回答:0]』のようだな▼
 さんこうになった▼
-じぶんにとって　なにがだいじか▼
+じぶんにとって　なにが　だいじか▼
 それを　みうしなわないように
 したいものだな</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
 時間と　お金では
 『[1:13:アンケート回答:0]』が　多いようだな▼
-１番大事に　思っているのは
+１番　大事に　思っているのは
 『[1:13:アンケート回答:0]』のようだな▼
 参考になった▼
-自分にとって　何が大事か▼
+自分にとって　何が　大事か▼
 それを　見失わないように
 したいものだな</language>
 	</row>
@@ -5744,7 +5866,7 @@ assistantm_01_25へ続く
 『[1:13:アンケート回答:0]』が　おおいようだな▼
 がいけんと　なかみ　では
 『[1:13:アンケート回答:1]』が　おおいようだな▼
-いちばんにんきのある
+いちばん　にんきのある
 にんげんのタイプ　は▽
 『[1:13:アンケート回答:2]』のようだな▼
 さんこうになった▼
@@ -5756,7 +5878,7 @@ assistantm_01_25へ続く
 『[1:13:アンケート回答:0]』が　多いようだな▼
 外見と　中身　では
 『[1:13:アンケート回答:1]』が　多いようだな▼
-１番人気のある　人間のタイプ　は
+１番　人気のある　人間のタイプ　は
 『[1:13:アンケート回答:2]』のようだな▼
 参考になった▼
 人の魅力には　いろいろある▼
@@ -5783,16 +5905,16 @@ assistantm_01_25へ続く
 いちばん　すきな　たべものは
 『[1:13:アンケート回答:1]』たべもののようだな▼
 さんこうになったよ▼
-きせつによって　おいしいものもかわる
-あじがわかる　おとなになりたまえ</language>
+きせつごとに　おいしいものも　かわる
+あじが　わかる　おとなに　なりたまえ</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番好きな　季節は
+１番　好きな　季節は
 『[1:13:アンケート回答:0]』のようだな▼
-１番好きな　食べ物は
+１番　好きな　食べ物は
 『[1:13:アンケート回答:1]』食べ物のようだな▼
 参考になったよ▼
-季節によって　美味しい物も変わる
-味がわかる　大人になりたまえ</language>
+季節ごとに　美味しい物も　変わる
+味が　わかる　大人に　なりたまえ</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_24n" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -5809,23 +5931,23 @@ assistantm_01_25へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">ふむふむ……　なるほど……▼
-いちばんすきな　いろは
+いちばん　すきな　いろは
 『[1:13:アンケート回答:0]』のようだな▼
-いちばんすきな　おんがくは
+いちばん　すきな　おんがくは
 『[1:13:アンケート回答:1]』のようだな▼
 はやっているものが
 よいとは　かぎらない▼
 じぶんの　すきなものを
-だいじにするべきだな</language>
+だいじに　するべきだな</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番好きな　色は
+１番　好きな　色は
 『[1:13:アンケート回答:0]』のようだな▼
-１番好きな　音楽は
+１番　好きな　音楽は
 『[1:13:アンケート回答:1]』のようだな▼
 流行っているものが
 よいとは　限らない▼
 自分の　好きなものを
-大事ににするべきだな</language>
+大事に　するべきだな</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_24o" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -5839,13 +5961,13 @@ assistantm_01_25へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">ふむふむ……　なるほど……▼
-いちばんすきな　おんがくは
+いちばん　すきな　おんがくは
 『[1:13:アンケート回答:0]』のようだな▼
 ゆっくり　おんがくを　きくのもいいな▼
 わたしも　ちょうさを
 さんこうに　してみるか</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番好きな　音楽は
+１番　好きな　音楽は
 『[1:13:アンケート回答:0]』のようだな▼
 ゆっくり　音楽を　聞くのもいいな
 わたしも　調査を　参考にしてみるか</language>
@@ -5872,16 +5994,16 @@ assistantm_01_25へ続く
 さんこうになった▼
 これで　わだいに
 こまらないで　すみそうだ▼
-つぎの　デートがたのしみだ</language>
+つぎの　デートが　たのしみだ</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番好きな　ＴＶ番組は
+１番　好きな　ＴＶ番組は
 『[1:13:アンケート回答:0]』のようだな▼
-１番好きな　映画は
+１番　好きな　映画は
 『[1:13:アンケート回答:1]』のようだな▼
 参考になった▼
 これで　話題に
 困らないで　すみそうだ▼
-次の　デートが楽しみだ</language>
+次の　デートが　楽しみだ</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_24q" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -5901,7 +6023,7 @@ assistantm_01_25へ続く
 むかしは　がっこうにいるだけでも
 たのしかったものだ</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番好きな　学校の時間は
+１番　好きな　学校の時間は
 『[1:13:アンケート回答:0]』のようだな▼
 学校か……　懐かしいな▼
 昔は　学校にいるだけでも
@@ -5930,9 +6052,9 @@ assistantm_01_25へ続く
 あそびと　べんきょう▽
 どちらも　がんばらないとな</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番好きな　勉強は
+１番　好きな　勉強は
 『[1:13:アンケート回答:0]』のようだな▼
-１番苦手な　勉強は
+１番　苦手な　勉強は
 『[1:13:アンケート回答:1]』のようだな▼
 いい大人に　なるには　遊びと　勉強
 どちらも　がんばらないとな</language>
@@ -5949,13 +6071,13 @@ assistantm_01_25へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">ふむふむ……　なるほど……▼
-いちばんにんきのある　スポーツは
+いちばん　にんきのある　スポーツは
 『[1:13:アンケート回答:0]』のようだな▼
 からだを　うごかすことも
 だいじだからな▼
 けんこうが　いちばんだ</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番人気のある　スポーツは
+１番　人気のある　スポーツは
 『[1:13:アンケート回答:0]』のようだな▼
 体を　動かすことも大事だからな
 健康が　１番だ</language>
@@ -5975,10 +6097,10 @@ assistantm_01_25へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">ふむふむ……　なるほど……▼
-いちばんにんきのある　きゅうじつの
+いちばん　にんきのある　きゅうじつの
 すごしかたは▽
 『[1:13:アンケート回答:0]』のようだな▼
-いちばんにんきのある　あそびばは
+いちばん　にんきのある　あそびばは
 『[1:13:アンケート回答:1]』のようだな▼
 さんこうになった▼
 これで　しゅうまつは
@@ -5986,9 +6108,9 @@ assistantm_01_25へ続く
 デートあいて？
 それは　ひみつだ</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番人気のある　休日の過ごし方は
+１番　人気のある　休日の過ごし方は
 『[1:13:アンケート回答:0]』のようだな▼
-１番人気のある　遊び場は
+１番　人気のある　遊び場は
 『[1:13:アンケート回答:1]』のようだな▼
 参考になった▼
 これで　週末は　楽しいデートが
@@ -6008,14 +6130,14 @@ assistantm_01_25へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">ふむふむ……　なるほど……▼
-いちばんなりたいものは
+いちばん　なりたいものは
 『[1:13:アンケート回答:0]』のようだな▼
 なにかに　あこがれるのも
 わるくないが▼
 まずは　じぶんに
 じしんを　もつことだな</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番なりたいものは
+１番　なりたいものは
 『[1:13:アンケート回答:0]』のようだな▼
 何かに　あこがれるのも　悪くないが
 まずは　自分に　自信をもつことだな</language>
@@ -6039,7 +6161,7 @@ assistantm_01_25へ続く
 どのリーダーも
 みりょくてきだと　おもうぞ</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番人気のある　ジムリーダーは
+１番　人気のある　ジムリーダーは
 『[1:13:アンケート回答:0]』のようだな▼
 ジムリーダーは　子供たちの
 あこがれだからな▼
@@ -6066,8 +6188,8 @@ assistantm_01_25へ続く
 ポケモンの　たのしさは
 むげんだい　だな</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-１番だと思う
-ポケモンの面白いところは▽
+１番だと　思う
+ポケモン　の面白いところは▽
 『[1:13:アンケート回答:0]』のようだな▼
 参考になった▼
 ポケモンには　楽しみ方が
@@ -6090,12 +6212,12 @@ SSランクアップ　⇒　assistantm_01_26d
 全依頼達成　⇒　assistantm_01_30</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">すばらしい　ちょうさだ▼
+		<language name="JPN" width="256">すばらしい　ちょうさだ！▼
 さすがは　わたしが　みこんだ
 [1:00:トレーナー名:1]たいいんだ▼
 これは　ちょうさの　ほうしゅうだ
 うけとってくれ</language>
-		<language name="JPN_KANJI" width="256">素晴らしい　調査だ▼
+		<language name="JPN_KANJI" width="256">素晴らしい　調査だ！▼
 さすがは　わたしが　見込んだ
 [1:00:トレーナー名:1]隊員だ▼
 これは　調査の　報酬だ
@@ -6248,11 +6370,11 @@ assistantm_01_29へ続く
 </comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">あと[2:01:２桁:1]かい
+		<language name="JPN" width="256">あと　[2:01:２桁:1]かい
 いらいを　たっせいすれば▽
 『Ｂランクたいいん』だ▽
 がんばりたまえ</language>
-		<language name="JPN_KANJI" width="256">あと[2:01:２桁:1]回　依頼を　達成すれば
+		<language name="JPN_KANJI" width="256">あと　[2:01:２桁:1]回　依頼を　達成すれば
 『Ｂランク隊員』だ　がんばりたまえ</language>
 	</row>
 
@@ -6266,11 +6388,11 @@ assistantm_01_29へ続く
 </comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">あと[2:01:２桁:1]かい
+		<language name="JPN" width="256">あと　[2:01:２桁:1]かい
 いらいを　たっせいすれば▽
 『Ａランクたいいん』だ▽
 がんばりたまえ</language>
-		<language name="JPN_KANJI" width="256">あと[2:01:２桁:1]回　依頼を　達成すれば
+		<language name="JPN_KANJI" width="256">あと　[2:01:２桁:1]回　依頼を　達成すれば
 『Ａランク隊員』だ　がんばりたまえ</language>
 	</row>
 
@@ -6284,11 +6406,11 @@ assistantm_01_29へ続く
 </comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">あと[2:01:２桁:1]かい
+		<language name="JPN" width="256">あと　[2:01:２桁:1]かい
 いらいを　たっせいすれば▽
 『Ｓランクたいいん』だ▽
 がんばりたまえ</language>
-		<language name="JPN_KANJI" width="256">あと[2:01:２桁:1]回　依頼を　達成すれば
+		<language name="JPN_KANJI" width="256">あと　[2:01:２桁:1]回　依頼を　達成すれば
 『Ｓランク隊員』だ　がんばりたまえ</language>
 	</row>
 
@@ -6302,11 +6424,11 @@ assistantm_01_29へ続く
 </comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">あと[2:01:２桁:1]かい
+		<language name="JPN" width="256">あと　[2:01:２桁:1]かい
 いらいを　たっせいすれば▽
 『ＳＳランクたいいん』だ▽
 がんばりたまえ</language>
-		<language name="JPN_KANJI" width="256">あと[2:01:２桁:1]回　依頼を　達成すれば
+		<language name="JPN_KANJI" width="256">あと　[2:01:２桁:1]回　依頼を　達成すれば
 『ＳＳランク隊員』だ　がんばりたまえ</language>
 	</row>
 
@@ -6391,7 +6513,7 @@ assistantm_01_31へ続く
 ちょうさたいほんぶよ▼
 にゅうたいきぼうなら
 たいちょうに　はなしかけてね</language>
-		<language name="JPN_KANJI" width="256">ここは　すれ違い　調査隊本部よ▼
+		<language name="JPN_KANJI" width="256">ここは　すれ違い調査隊本部よ▼
 入隊希望なら　隊長に　話しかけてね</language>
 	</row>
 
@@ -6444,7 +6566,7 @@ assistantm_01_31へ続く
 アンケートに　協力してくれたら
 お礼として▽
 アンケート用紙を　あげるわ▼
-このアンケート用紙があれば
+このアンケート用紙が　あれば
 調査レーダーで　調査できる▽
 項目が　増えるのよ▼
 アンケートに　答えるほど
@@ -6640,10 +6762,10 @@ assistantm_01_31へ続く
 アンケート隊員</attribute>
 		<language name="JPN" width="256">アンケートは　なんども　
 こたえられるから▽
-かいとうを　かえたくなったら
+こたえを　かえたくなったら
 いってね</language>
 		<language name="JPN_KANJI" width="256">アンケートは　何度も　答えられるから
-回答を　変えたくなったら　いってね</language>
+答えを　変えたくなったら　いってね</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_10a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -6655,10 +6777,12 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11aへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">こんかいの　アンケートは
+		<language name="JPN" width="256">さあ　はじめるわよ
+こんかいの　アンケートは……▼
 『どんなひとが　いるか』に▽
 ついてよ</language>
-		<language name="JPN_KANJI" width="256">今回の　アンケートは
+		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+今回の　アンケートは……▼
 『どんな人が　いるか』に　ついてよ</language>
 	</row>
 
@@ -6671,9 +6795,11 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11bへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">こんかいの　アンケートは
+		<language name="JPN" width="256">さあ　はじめるわよ
+こんかいの　アンケートは……▼
 『すきな　ポケモン』に　ついてよ</language>
-		<language name="JPN_KANJI" width="256">今回の　アンケートは
+		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+今回の　アンケートは……▼
 『好きな　ポケモン』に　ついてよ</language>
 	</row>
 
@@ -6686,9 +6812,11 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11cへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">こんかいの　アンケートは
+		<language name="JPN" width="256">さあ　はじめるわよ
+こんかいの　アンケートは……▼
 『みんなの　りそう』に　ついてよ</language>
-		<language name="JPN_KANJI" width="256">今回の　アンケートは
+		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+今回の　アンケートは……▼
 『みんなの　理想』に　ついてよ</language>
 	</row>
 
@@ -6701,9 +6829,11 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11dへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">こんかいの　アンケートは
+		<language name="JPN" width="256">さあ　はじめるわよ
+こんかいの　アンケートは……▼
 『すきな　ひと』に　ついてよ</language>
-		<language name="JPN_KANJI" width="256">今回の　アンケートは
+		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+今回の　アンケートは……▼
 『好きな　人』に　ついてよ</language>
 	</row>
 
@@ -6716,9 +6846,11 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11eへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">こんかいの　アンケートは
+		<language name="JPN" width="256">さあ　はじめるわよ
+こんかいの　アンケートは……▼
 『みんなの　このみ』に　ついてよ</language>
-		<language name="JPN_KANJI" width="256">今回の　アンケートは
+		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+今回の　アンケートは……▼
 『みんなの　好み』に　ついてよ</language>
 	</row>
 
@@ -6731,9 +6863,11 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11fへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">こんかいの　アンケートは
+		<language name="JPN" width="256">さあ　はじめるわよ
+こんかいの　アンケートは……▼
 『みんなの　しゅみ』に　ついてよ</language>
-		<language name="JPN_KANJI" width="256">今回の　アンケートは
+		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+今回の　アンケートは……▼
 『みんなの　趣味』に　ついてよ</language>
 	</row>
 
@@ -6746,9 +6880,11 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11gへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">こんかいの　アンケートは
+		<language name="JPN" width="256">さあ　はじめるわよ
+こんかいの　アンケートは……▼
 『がっこうせいかつ』に　ついてよ</language>
-		<language name="JPN_KANJI" width="256">今回の　アンケートは
+		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+今回の　アンケートは……▼
 『学校生活』に　ついてよ</language>
 	</row>
 
@@ -6761,10 +6897,12 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11hへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">こんかいの　アンケートは
+		<language name="JPN" width="256">さあ　はじめるわよ
+こんかいの　アンケートは……▼
 『どんな　あそびが　すきか』に▽
 ついてよ</language>
-		<language name="JPN_KANJI" width="256">今回の　アンケートは
+		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+今回の　アンケートは……▼
 『どんな　遊びが　好きか』に▽
 ついてよ</language>
 	</row>
@@ -6778,9 +6916,11 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11iへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">こんかいの　アンケートは
+		<language name="JPN" width="256">さあ　はじめるわよ
+こんかいの　アンケートは……▼
 『ポケモン』に　ついてよ</language>
-		<language name="JPN_KANJI" width="256">今回の　アンケートは
+		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+今回の　アンケートは……▼
 『ポケモン』に　ついてよ</language>
 	</row>
 
@@ -7162,9 +7302,11 @@ TVばんぐみは？』▼</language>
 全部回答　⇒　woman2__15へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">なるほど　なるほど……　そうなのね
+		<language name="JPN" width="256">なるほど　なるほど……
+そうなのね▼
 つぎは……</language>
-		<language name="JPN_KANJI" width="256">なるほど　なるほど……　そうなのね
+		<language name="JPN_KANJI" width="256">なるほど　なるほど……
+そうなのね▼
 次は……</language>
 	</row>
 
@@ -7177,9 +7319,15 @@ TVばんぐみは？』▼</language>
 以前答えたアンケート　⇒　woman2_21へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">……はい　おしまい▼
+		<language name="JPN" width="256">なるほど　なるほど……
+そうなのね▼
+……はい　これで　おしまい！▼
+ありがとう　
 いいアンケートが　とれたわ</language>
-		<language name="JPN_KANJI" width="256">……はい　おしまい▼
+		<language name="JPN_KANJI" width="256">なるほど　なるほど……
+そうなのね▼
+……はい　これで　おしまい！▼
+ありがとう　
 いいアンケートが　とれたわ</language>
 	</row>
 
@@ -7399,9 +7547,9 @@ woman2_22へ続く
 [1桁:1]＝残りの未回答アンケート数</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">これで　のこりのアンケートは……
+		<language name="JPN" width="256">これで　のこりの　アンケートは……
 あと　[2:00:１桁:1]こね</language>
-		<language name="JPN_KANJI" width="256">これで　残りのアンケートは……
+		<language name="JPN_KANJI" width="256">これで　残りの　アンケートは……
 あと　[2:00:１桁:1]個ね</language>
 	</row>
 
@@ -7494,11 +7642,11 @@ woman2_22へ続く
 挨拶隊員</attribute>
 		<language name="JPN" width="256">うん!　いいあいさつだね！
 きくだけで　げんきが　でるよ！▼
-また　きがるに　あいさつしてね！
+またきがるに　あいさつしてね！
 まってるよ</language>
 		<language name="JPN_KANJI" width="256">うん!　いいあいさつだね！
 聞くだけで　元気が　でるよ！▼
-また　気軽に　あいさつしてね！
+また気軽に　あいさつしてね！
 まってるよ</language>
 	</row>
 
@@ -7511,9 +7659,10 @@ woman2_22へ続く
 		<attribute name="キャラ指定">GIRL4
 お礼隊員</attribute>
 		<language name="JPN" width="256">こんにちは
-かんしゃのきもちを　わすれていない？</language>
+かんしゃの　きもちを▽
+わすれていない？</language>
 		<language name="JPN_KANJI" width="256">こんにちは
-感謝の気持ちを　忘れていない？</language>
+感謝の　気持ちを　忘れていない？</language>
 	</row>
 
 	<row id="msg_c03r0101_girl4_02">
@@ -7539,10 +7688,10 @@ girl4_04へ続く
 		<attribute name="キャラ指定">GIRL4
 お礼隊員</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-おとしたモンスターボールを▽
+おとした　モンスターボールを▽
 うけとった</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
-落としたモンスターボールを▽
+落とした　モンスターボールを▽
 受け取った</language>
 	</row>
 
@@ -7559,12 +7708,12 @@ girl4_04へ続く
 おせわになったひとには
 かんしゃする！▼
 ささいなことだけど　だいじなことよ▼
-さあ　あなたの　かんしゃのきもちを
+さあ　あなたの　かんしゃの　きもちを
 おしえてもらえるかしら？▼</language>
 		<language name="JPN_KANJI" width="256">こら！　待ちなさい！▼
 お世話になった人には　感謝する！
 ささいなことだけど　大事なことよ▼
-さあ　あなたの　感謝の気持ちを
+さあ　あなたの　感謝の　気持ちを
 教えてもらえるかしら？▼</language>
 	</row>
 
@@ -7577,10 +7726,10 @@ girl4_04へ続く
 		<attribute name="キャラ指定">GIRL4
 お礼隊員</attribute>
 		<language name="JPN" width="256">よかったら
-またあなたの　かんしゃのきもちを▽
+またあなたの　かんしゃの　きもちを▽
 おしえてくれるかしら？▼</language>
 		<language name="JPN_KANJI" width="256">よかったら
-またあなたの　感謝の気持ちを▽
+またあなたの　感謝の　気持ちを▽
 教えてくれるかしら？▼</language>
 	</row>
 
@@ -7598,10 +7747,10 @@ girl4_04へ続く
 		<attribute name="キャラ指定">GIRL4
 お礼隊員</attribute>
 		<language name="JPN" width="256">それじゃ　またこんどね▼
-でも　かんしゃの　きもちは
+かんしゃの　きもちは
 わすれちゃ　ダメよ</language>
 		<language name="JPN_KANJI" width="256">それじゃ　また今度ね▼
-でも　感謝の気持ちは　忘れちゃダメよ</language>
+感謝の　気持ちは　忘れちゃダメよ</language>
 	</row>
 
 	<row id="msg_c03r0101_girl4_07">
@@ -7617,7 +7766,7 @@ girl4_04へ続く
 いつも　わすれないでね</language>
 		<language name="JPN_KANJI" width="256">素敵な　言葉ね
 聞くだけで　心が　暖かくなるわ▼
-感謝の気持ちを　いつも　忘れないでね</language>
+感謝の　気持ちを　いつも　忘れないでね</language>
 	</row>
 
 	<row id="msg_c03r0101_boy1_01">
@@ -7656,7 +7805,7 @@ girl4_04へ続く
 [1:00:トレーナー名:1]たいいん▼
 Ｂランクまで　アップしたんだ
 がんばってるみたいだね▼
-ランクがあがったら
+ランクが　あがったら
 あたらしい　いらいも　ふえるから▽
 たいちょうに　はなしてみるといいよ</language>
 		<language name="JPN_KANJI" width="256">隊員ランクって　知ってる？▼
@@ -7664,7 +7813,7 @@ girl4_04へ続く
 [1:00:トレーナー名:1]隊員▼
 Ｂランクまで　アップしたんだ
 がんばってるみたいだね▼
-ランクが上がったら
+ランクが　上がったら
 新しい　依頼も　増えるから▽
 隊長に　話しててみるといいよ</language>
 	</row>
@@ -7684,7 +7833,7 @@ girl4_04へ続く
 すごいな……▽
 オレも　がんばって▽
 ちょうさしないと！▼
-Ａランクのいらいは
+Ａランクの　いらいは
 むずかしいらしいから▽
 がんばって　ちょうさしてね！</language>
 		<language name="JPN_KANJI" width="256">隊員ランクって　知ってる？▼
@@ -7693,7 +7842,7 @@ girl4_04へ続く
 もうＡランク隊員なんだね
 すごいな……▽
 オレも　がんばって　調査しないと！▼
-Ａランクの依頼は　難しいらしいから
+Ａランクの　依頼は　難しいらしいから
 がんばって　調査してね！</language>
 	</row>
 
@@ -7756,9 +7905,9 @@ girl4_04へ続く
 みんなが　たのしむ▼
 それが　ちょうさたいの　たのしさだね</language>
 		<language name="JPN_KANJI" width="256">調査は　楽しいよ！
-いろんな人の　気持ちがわかるからね▼
-みんなの意見を　集めて
-みんなが楽しむ▼
+いろんな人の　気持ちが　わかるからね▼
+みんなの　意見を　集めて
+みんなが　楽しむ▼
 それが　調査隊の　楽しさだね</language>
 	</row>
 
@@ -7864,16 +8013,16 @@ girl4_04へ続く
 一般隊員C</attribute>
 		<language name="JPN" width="256">もしかして　ちょうさに
 こまってない？▼
-ひとと　すれちがうのが
+ひとと　たくさん　すれちがうのが
 むずかしいなら▽
 じかんちょうさが　おすすめよ▼
 じかんは　かかるけど
-だれかと　すれちがえれば▽
+ひとりでも　すれちがえれば▽
 いらいを　たっせい　できるわ</language>
 		<language name="JPN_KANJI" width="256">もしかして　調査に　困ってない？▼
-人と　すれ違うのが　難しいなら
-時間調査が　おすすめよ▼
-時間は　かかるけど　だれかと
+人と　たくさん　すれ違うのが
+難しいなら　時間調査が　おすすめよ▼
+時間は　かかるけど　ひとりでも
 すれ違えれば　依頼を　達成できるわ</language>
 	</row>
 
@@ -7943,12 +8092,12 @@ girl4_04へ続く
 		<attribute name="キャラ指定">GIRL2
 一般隊員D</attribute>
 		<language name="JPN" width="256">アンケートの　つぎは　ちょうさね▼
-ちょうさレーダーで
-しらべたいちょうさを　セットして……▽
+ちょうさレーダーで　しらべたい
+ちょうさを　セットして……▽
 さあ　でかけるわよ！</language>
 		<language name="JPN_KANJI" width="256">アンケートの　次は　調査ね▼
-調査レーダーで
-調べたい　調査を　セットして……▽
+調査レーダーで　調べたい　
+調査を　セットして……▽
 さあ　でかけるわよ！</language>
 	</row>
 
@@ -7961,14 +8110,14 @@ girl4_04へ続く
 		<language name="JPN" width="256">あたらしい　たいいんが
 アンケートを　こたえないのよ▼
 アンケートに　こたえれば
-もっと　いろいろ▽
-ちょうさが　できるようになるのに……▽
+もっと　いろいろ　ちょうさが▽
+できるようになるのに……▽
 もったいないな……</language>
 		<language name="JPN_KANJI" width="256">新しい　隊員が
 アンケートを　答えないのよ▼
 アンケートに　答えれば
-もっと　いろいろな▽
-調査が　できるようになるのに……▽
+もっと　いろいろな　調査が▽
+できるようになるのに……▽
 もったいないな……</language>
 	</row>
 
@@ -7988,7 +8137,7 @@ girl4_04へ続く
 		<language name="JPN_KANJI" width="256">こんにちは！
 [1:00:トレーナー名:1]隊員！▼
 わたしも　新米隊員に
-調査の　やり方を▽
+調査の　やりかたを▽
 教えるように　なったんですよ</language>
 	</row>
 
@@ -8060,7 +8209,7 @@ girl4_04へ続く
 ちょうさいらいが　ふえてきたし……</language>
 		<language name="JPN_KANJI" width="256">隊長の　調査依頼って
 大変ですね▼
-段々　難しい
+だんだん　難しい
 調査依頼が　増えてきたし……</language>
 	</row>
 
@@ -8130,12 +8279,12 @@ girl4_04へ続く
 [5桁:2]＝ライブ通信のお礼を受けた総数</comment>
 		<attribute name="キャラ指定">NONE
 机の書類</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]▼
-たいいんランク　Ｃランクたいいん
+		<language name="JPN" width="256">[1:00:トレーナー名:0]
+たいいんランク　Ｃランクたいいん▼
 すれちがい　にんずう　[2:04:５桁:1]にん
 おれい　かいすう　[2:04:５桁:2]かい</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]▼
-隊員ランク　Ｃランク隊員
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
+隊員ランク　Ｃランク隊員▼
 すれ違い　人数　[2:04:５桁:1]人
 お礼　回数　[2:04:５桁:2]回</language>
 	</row>
@@ -8151,12 +8300,12 @@ girl4_04へ続く
 [5桁:2]＝ライブ通信のお礼を受けた総数</comment>
 		<attribute name="キャラ指定">NONE
 机の書類</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]▼
-たいいんランク　Ｂランクたいいん
+		<language name="JPN" width="256">[1:00:トレーナー名:0]
+たいいんランク　Ｂランクたいいん▼
 すれちがい　にんずう　[2:04:５桁:1]にん
 おれい　かいすう　[2:04:５桁:2]かい</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]▼
-隊員ランク　Ｂランク隊員
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
+隊員ランク　Ｂランク隊員▼
 すれ違い　人数　[2:04:５桁:1]人
 お礼　回数　[2:04:５桁:2]回</language>
 	</row>
@@ -8172,12 +8321,12 @@ girl4_04へ続く
 [5桁:2]＝ライブ通信のお礼を受けた総数</comment>
 		<attribute name="キャラ指定">NONE
 机の書類</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]▼
-たいいんランク　Ａランクたいいん
+		<language name="JPN" width="256">[1:00:トレーナー名:0]
+たいいんランク　Ａランクたいいん▼
 すれちがい　にんずう　[2:04:５桁:1]にん
 おれい　かいすう　[2:04:５桁:2]かい</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]▼
-隊員ランク　Ａランク隊員
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
+隊員ランク　Ａランク隊員▼
 すれ違い　人数　[2:04:５桁:1]人
 お礼　回数　[2:04:５桁:2]回</language>
 	</row>
@@ -8193,12 +8342,12 @@ girl4_04へ続く
 [5桁:2]＝ライブ通信のお礼を受けた総数</comment>
 		<attribute name="キャラ指定">NONE
 机の書類</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]▼
-たいいんランク　Ｓランクたいいん
+		<language name="JPN" width="256">[1:00:トレーナー名:0]
+たいいんランク　Ｓランクたいいん▼
 すれちがい　にんずう　[2:04:５桁:1]にん
 おれい　かいすう　[2:04:５桁:2]かい</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]▼
-隊員ランク　Ｓランク隊員
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
+隊員ランク　Ｓランク隊員▼
 すれ違い　人数　[2:04:５桁:1]人
 お礼　回数　[2:04:５桁:2]回</language>
 	</row>
@@ -8214,12 +8363,12 @@ girl4_04へ続く
 [5桁:2]＝ライブ通信のお礼を受けた総数</comment>
 		<attribute name="キャラ指定">NONE
 机の書類</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]▼
-たいいんランク　ＳＳランクたいいん
+		<language name="JPN" width="256">[1:00:トレーナー名:0]
+たいいんランク　ＳＳランクたいいん▼
 すれちがい　にんずう　[2:04:５桁:1]にん
 おれい　かいすう　[2:04:５桁:2]かい</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]▼
-隊員ランク　ＳＳランク隊員
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
+隊員ランク　ＳＳランク隊員▼
 すれ違い　人数　[2:04:５桁:1]人
 お礼　回数　[2:04:５桁:2]回</language>
 	</row>
