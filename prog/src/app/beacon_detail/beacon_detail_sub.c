@@ -201,7 +201,7 @@ static BOOL input_CheckHitTrIcon( BEACON_DETAIL_WORK* wk )
  */
 static void sub_PlaySE( u16 se_no )
 {
-  PMSND_PlaySEVolume( se_no, 127 );
+  PMSND_PlaySE( se_no );
 }
 
 /*

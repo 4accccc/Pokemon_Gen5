@@ -699,7 +699,7 @@ static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
   // volume
   if( param[1] != 0 )
   {
-    PMSND_PlayerSetInitialVolume( player_no, param[1] );
+    PMSND_PlayerSetVolume( player_no, param[1] );
   }
 
   // pan

@@ -182,8 +182,6 @@ extern BOOL PMSND_PlayBGMdiv(u32 no, u32* seq, BOOL start);
 extern SEPLAYER_ID	PMSND_GetSE_DefaultPlayerID( u32 soundIdx );
 //ＳＥプレーヤーハンドル取得
 extern NNSSndHandle* PMSND_GetSE_SndHandle( SEPLAYER_ID sePlayerID );
-//ＳＥプレーヤーボリュームセット
-extern void PMSND_PlayerSetInitialVolume( SEPLAYER_ID sePlayerID, u32 vol );
 
 extern void	PMSND_PlaySE_byPlayerID( u32 soundIdx, SEPLAYER_ID sePlayerID );
 #define PMSND_PlaySystemSE( soundNum ) PMSND_PlaySE( soundNum )
@@ -207,6 +205,31 @@ extern void	PMSND_SetStatusSE( int tempoRatio, int pitch, int pan );
 extern void	PMSND_SetStatusSE_byPlayerID(SEPLAYER_ID sePlayerID,int tempoRatio,int pitch,int pan);
 //再生中のＳＥが入力されたＩＤＸと一致するかチェック
 extern BOOL	PMSND_CheckPlayingSEIdx( u32 soundIdx );
+
+/***
+ * ボリューム操作 
+ *  SEのボリューム
+ *    SEのボリュームは、シーケンスボリューム＋イニシャルボリューム　
+ *    2つのボリュームで操作することが出来ます。
+ *
+ * シーケンスボリューム操作
+ *    PMSND_PlayerSetVolume
+ *    シーケンスのボリュームを設定します。
+ * 
+ * イニシャルボリューム操作
+ *    PMSND_PlayerSetInitialVolume
+ *    サウンド製作者が設定したボリュームをプログラム側で上書きすることが出来ます。
+ * 
+ * 
+ * "イニシャルボリュームを操作では、サウンド製作者の意図したボリュームが変更されて
+ * しまいます。使用時には、サウンド製作者の確認を取るようにしてください。"
+ *  
+ ****/
+//ＳＥプレーヤーボリュームセット
+extern void PMSND_PlayerSetVolume( SEPLAYER_ID sePlayerID, u32 vol );
+//SEイニシャルボリュームセット
+extern void PMSND_PlayerSetInitialVolume( SEPLAYER_ID sePlayerID, u32 vol );
+
 //============================================================================================
 /**
  *

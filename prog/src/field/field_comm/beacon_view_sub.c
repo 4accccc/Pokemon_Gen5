@@ -832,7 +832,7 @@ static u32 sub_GetBeaconMsgID(const GAMEBEACON_INFO *info)
  */
 static void sub_PlaySE( u16 se_no )
 {
-  PMSND_PlaySEVolume( se_no, 127 );
+  PMSND_PlaySE( se_no );
 }
 
 /*

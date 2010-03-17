@@ -1072,35 +1072,37 @@ void WEATHER_TASK_DustObj( WEATHER_TASK* p_wk, WEATHER_TASK_OBJADD_FUNC* p_add_f
 
 	// オブジェクトを進める
 	move_num = 0;
-	p_obj = p_wk->p_objlist;
-	p_obj_next = p_obj->p_next;
-	for( i=0; i<num; i++ ){	
-		
-		for( j=0; j<move_num; j++ ){
-			p_wk->cp_data->p_f_objmove( p_obj );
+  if(p_wk->p_objlist){
+	  p_obj = p_wk->p_objlist;
+    p_obj_next = p_obj->p_next;
+    for( i=0; i<num; i++ ){	
+      
+      for( j=0; j<move_num; j++ ){
+        p_wk->cp_data->p_f_objmove( p_obj );
 
-			// 破棄されたら終わり
-			if( !WEATHER_OBJ_WK_IsUse(p_obj) ){
-				break;
-			}
-		}
+        // 破棄されたら終わり
+        if( !WEATHER_OBJ_WK_IsUse(p_obj) ){
+          break;
+        }
+      }
 
-		// 次へ
-		p_obj = p_obj_next;
-		p_obj_next = p_obj->p_next;	// move_func内でオブジェクトが破棄されることもあるため、次のオブジェクトポインタを保存しておく
+      // 次へ
+      p_obj = p_obj_next;
+      p_obj_next = p_obj->p_next;	// move_func内でオブジェクトが破棄されることもあるため、次のオブジェクトポインタを保存しておく
 
-		// 動作数変更計算
-		if( i >= dust_div_num ){
-			if( (i % dust_div_num) == 0 ){
-				move_num += dust_div_move;
-			}
-		}
+      // 動作数変更計算
+      if( i >= dust_div_num ){
+        if( (i % dust_div_num) == 0 ){
+          move_num += dust_div_move;
+        }
+      }
 
-		
-		// 登録失敗しているときはnum分のオブジェクトが登録されていない
-		if( (u32)p_obj == (u32)p_wk->p_objlist ){
-			break;
-		}
+      
+      // 登録失敗しているときはnum分のオブジェクトが登録されていない
+      if( (u32)p_obj == (u32)p_wk->p_objlist ){
+        break;
+      }
+    }
 	}
 }
 

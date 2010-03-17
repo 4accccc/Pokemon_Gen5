@@ -877,53 +877,6 @@ SEPLAYER_ID	PMSND_GetSE_DefaultPlayerID( u32 soundIdx )
 	return (SEPLAYER_ID)(seqParam->playerNo - PLAYER_SE_SYS);
 }
 
-//--------------------------------------------------------------
-/**
- * @brief	シーケンスの初期ボリューム設定
- *
- * @param	p		サウンドハンドルのアドレス
- * @param	vol		ボリューム(0-127)
- *
- * @retval	none
- *
- * サウンドハンドルが無効の場合は、何もしません。 
- *
- * ボリュームのデフォルト値は、最大の127です。
- * この値の影響はシーケンス全体にかかります。
- *
- * 内部で呼び出されるNNS_SndPlayerSetInitialVolume関数は、
- * NNS_SndArcPlayerStartSeq*関数と NNS_SndArcPlayerStartSeqArc*関数内で
- * 呼びだされています。再度、この関数を呼びだすと、設定した値が上書きされます。
- * 上書きしたくない場合は、 NNS_SndPlayerSetVolume関数などを使ってください。
- *
- * 例
- * PMSND_PlaySE( no );
- * PMSND_PlayerSetInitialVolume( handle. 30 );
- * ボリューム30で再生される
- *
- * そのあと、
- * PMSND_PMVoicePlay( no );
- * デフォルトの値127で再生される(元に戻っている)
- *
- * 逆にいうと、常にボリューム30にしたかったら、
- * PMSND_PlayerSetInitialVolume( handle. 30 );
- * を毎回セットする
- */
-//--------------------------------------------------------------
-void PMSND_PlayerSetInitialVolume( SEPLAYER_ID sePlayerID, u32 vol )
-{
-	//エラー回避
-	if( vol > 127 ){
-		vol = 127;
-	}
-
-	//この関数は、NNS_SndArcPlayerStartSeq*関数と NNS_SndArcPlayerStartSeqArc*関数内で
-	//呼びだされています。再度、この関数を呼びだすと、設定した値が上書きされます。
-	//上書きしたくない場合は、 NNS_SndPlayerSetVolume関数などを使ってください。
-	NNS_SndPlayerSetInitialVolume( &sePlayerData[sePlayerID].sndHandle, vol );
-	return;
-}
-
 //------------------------------------------------------------------
 /**
  * @brief	ＳＥサウンド再生関数
@@ -954,7 +907,7 @@ static void pmsnd_PlaySECore( u32 soundIdx, u32 volume )
 	if(result == TRUE){
     sePlayerData[sePlayerID].soundIdx = soundIdx;
     if(volume < 128){
-      PMSND_PlayerSetInitialVolume( sePlayerID, volume );
+      PMSND_PlayerSetVolume( sePlayerID, volume );
     }
   }
 }
@@ -1054,6 +1007,68 @@ void	PMSND_SetStatusSE( int tempoRatio, int pitch, int pan )
 		PMSND_SetStatusSE_byPlayerID((SEPLAYER_ID)i, tempoRatio, pitch, pan );
 	}
 }
+
+
+
+/***
+ * ボリューム操作 
+ *  SEのボリューム
+ *    SEのボリュームは、シーケンスボリューム＋イニシャルボリューム　２つの
+ *    ボリュームで操作することが出来ます。
+ *
+ * シーケンスボリューム操作
+ *  PMSND_PlayerSetVolume
+ *  シーケンスのボリュームを設定します。
+ * 
+ * イニシャルボリューム操作
+ *  PMSND_PlayerSetInitialVolume
+ *  サウンド製作者が設定したボリュームをプログラム側で上書きすることが出来ます。
+ * 
+ * イニシャルボリュームを操作では、サウンド製作者の意図したボリュームが変更されてしまいます。
+ * 使用時には、サウンド製作者の確認を取るようにしてください。
+ *  
+ ****/
+//--------------------------------------------------------------
+/**
+ * @brief	シーケンスのボリューム設定
+ *
+ * @param	p		サウンドハンドルのアドレス
+ * @param	vol		ボリューム(0-127)
+ *
+ * @retval	none
+ */
+//--------------------------------------------------------------
+void PMSND_PlayerSetVolume( SEPLAYER_ID sePlayerID, u32 vol )
+{
+	//エラー回避
+	if( vol > 127 ){
+		vol = 127;
+	}
+
+	NNS_SndPlayerSetVolume( &sePlayerData[sePlayerID].sndHandle, vol );
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief	シーケンスのイニシャルボリューム設定
+ *
+ * @param	p		サウンドハンドルのアドレス
+ * @param	vol		ボリューム(0-127)
+ *
+ * @retval	none
+ */
+//--------------------------------------------------------------
+void PMSND_PlayerSetInitialVolume( SEPLAYER_ID sePlayerID, u32 vol )
+{
+	//エラー回避
+	if( vol > 127 ){
+		vol = 127;
+	}
+
+	NNS_SndPlayerSetInitialVolume( &sePlayerData[sePlayerID].sndHandle, vol );
+}
+
 
 
 //============================================================================================

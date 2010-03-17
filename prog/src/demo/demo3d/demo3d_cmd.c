@@ -130,7 +130,7 @@ static void CMD_SE_PLAY(CMD_UNIT* unit, int* param)
   // volume
   if( param[1] != DEMO3D_SE_PARAM_DEFAULT )
   {
-    PMSND_PlayerSetInitialVolume( player_no, param[1] );
+    PMSND_PlayerSetVolume( player_no, param[1] );
   }
 
   // pan
