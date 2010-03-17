@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-20T11:41:07"/>
+	<create user="matsumiya" host="W00224" date="2010-03-17T15:33:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1453" top="240" right="2158" bottom="860" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -308,10 +308,16 @@
 少年（聡明）</attribute>
 		<language name="JPN" width="256">じゅくがえりの　ボクは　しってます▼
 さばくは　どうくつと　おなじで
-あちこちから　ポケモンが　でてきます</language>
+あちこちから　ポケモンが　でてきます▼
+つけくわえるとですね
+すなの　いろが　うすい　ところは▽
+あるいても　だいじょうぶ　です</language>
 		<language name="JPN_KANJI" width="256">じゅくがえりの　ボクは　知ってます▼
 砂漠は　洞くつと　同じで
-あちこちから　ポケモンが　でてきます</language>
+あちこちから　ポケモンが　でてきます▼
+つけくわえるとですね
+砂の　色が　薄いところは▽
+歩いても　大丈夫です</language>
 	</row>
 
 	<flowchart-group-list>
