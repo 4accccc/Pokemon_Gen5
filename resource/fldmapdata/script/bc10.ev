@@ -69,7 +69,7 @@ EVENT_START ev_bc_npc
 	IF $LWK_BATTLE_FG == 0 THEN
 	
 		//BC‚ð‹C‚É“ü‚Á‚Ä‚¢‚é
-		IF $LWK_MOOD == 1 THEN
+		IF $LWK_MOOD == 0 THEN  // <-MOOD==0‚ÅBC‚ð‹C‚É“ü‚Á‚Ä‚¢‚éó‘ÔB
 			_WFBC_GET_AUTO_NPC_MESSAGE( LWK_MSG_NO , 4 )
 			_BALLOONWIN_OBJMSG( LWK_MSG_NO , LWK_OBJ_ID )
 			_LAST_KEYWAIT()

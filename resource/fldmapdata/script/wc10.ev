@@ -80,7 +80,7 @@ EVENT_START ev_wf_npc
 	ENDIF
 	
 	//WF‚ð‹C‚É“ü‚Á‚Ä‚¢‚é
-	IF $LWK_MOOD == 1 THEN
+	IF $LWK_MOOD == 0 THEN // <-MOOD==0‚ÅBC‚ð‹C‚É“ü‚Á‚Ä‚¢‚éó‘ÔB
 		_WFBC_GET_AUTO_NPC_MESSAGE( LWK_MOOD_MSG , 4 )
 		_BALLOONWIN_OBJMSG( LWK_MOOD_MSG, LWK_OBJ_ID )
 		_LAST_KEYWAIT()

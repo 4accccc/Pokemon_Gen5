@@ -232,6 +232,8 @@ extern u32 FIELD_WFBC_CORE_GetPeopleNum( const FIELD_WFBC_CORE* cp_wk, MAPMODE m
 // 機嫌値でソートする
 // ソートに使用するテンポラリワークを生成するためのheapIDです。
 extern void FIELD_WFBC_CORE_SortData( FIELD_WFBC_CORE* p_wk, HEAPID heapID );
+// 空いているワークをつめる処理
+extern void FIELD_WFBC_CORE_PackPeopleArray( FIELD_WFBC_CORE* p_wk, MAPMODE mapmode );
 // 街に入った！計算
 extern void FIELD_WFBC_CORE_CalcMoodInTown( FIELD_WFBC_CORE* p_wk );
 // 人を足しこむ

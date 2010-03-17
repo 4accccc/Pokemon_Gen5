@@ -416,6 +416,7 @@ void FIELD_WFBC_COMM_DATA_Ko_ChangeNpc( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p
 
   // êeÇÃèÓïÒÇ©ÇÁÇÕîjä¸
   FIELD_WFBC_CORE_PEOPLE_Clear( p_people );
+  FIELD_WFBC_CORE_PackPeopleArray( p_oyawfbc, MAPMODE_INTRUDE );
 }
 
 //----------------------------------------------------------------------------
@@ -796,6 +797,7 @@ static BOOL WFBC_COMM_DATA_Oya_AnserTake( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE*
   if( p_people )
   {
     FIELD_WFBC_CORE_PEOPLE_Clear( p_people );
+    FIELD_WFBC_CORE_PackPeopleArray( p_mywfbc, MAPMODE_INTRUDE );
   }
   
   return FALSE;

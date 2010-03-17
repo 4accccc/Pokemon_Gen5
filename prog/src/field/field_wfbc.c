@@ -1626,6 +1626,8 @@ static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
         break;
       }
     }
+    FIELD_WFBC_CORE_PackPeopleArray( p_wk, MAPMODE_NORMAL );
+    FIELD_WFBC_CORE_PackPeopleArray( p_wk, MAPMODE_INTRUDE );
     DEBUGWIN_RefreshScreen();
   }
 }

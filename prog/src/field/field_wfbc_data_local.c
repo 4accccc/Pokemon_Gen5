@@ -391,6 +391,23 @@ void FIELD_WFBC_CORE_SortData( FIELD_WFBC_CORE* p_wk, HEAPID heapID )
   WFBC_CORE_SortPeopleArray( p_wk->back_people, heapID );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  空いているワークをつめる処理
+ *
+ *	@param	p_wk      ワーク
+ *	@param	mapmode   マップモード
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_CORE_PackPeopleArray( FIELD_WFBC_CORE* p_wk, MAPMODE mapmode )
+{
+  if(mapmode == MAPMODE_NORMAL){
+    WFBC_CORE_PackPeopleArray( p_wk->people );
+  }else{
+    WFBC_CORE_PackPeopleArray( p_wk->back_people );
+  }
+}
+
 
 //----------------------------------------------------------------------------
 /**
