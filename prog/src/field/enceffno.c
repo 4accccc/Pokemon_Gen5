@@ -89,12 +89,12 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
       bgm = SEQ_BGM_VS_NORAPOKE;
       eff = ENCEFFID_WILD_WATER;
     }
-    else if ( MAPATTR_VALUE_CheckEncountGrassA( val ) ) //é„ëê
+    else if ( MAPATTR_VALUE_CheckEncountGrassLow( val ) ) //é„ëê
     {
       bgm = SEQ_BGM_VS_NORAPOKE;
       eff = ENCEFFID_WILD_NORMAL;
     }
-    else if ( MAPATTR_VALUE_CheckEncountGrassB( val ) ) //ã≠ëê
+    else if ( MAPATTR_VALUE_CheckEncountGrassHigh( val ) ) //ã≠ëê
     {
       bgm = SEQ_BGM_VS_TSUYOPOKE;
       eff = ENCEFFID_WILD_HEIGH;

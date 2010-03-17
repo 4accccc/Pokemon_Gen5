@@ -12,6 +12,7 @@
 #include "field_g3d_mapper.h"
 #include "map_attr_def.h"
 #include "effect_encount_def.h" //EFFENC_TYPE_IDéQè∆
+#include "battle/battle_bg_def.h"  //BtlBgAttréQè∆
 
 //======================================================================
 //  define
@@ -78,17 +79,13 @@ extern BOOL MAPATTR_VALUE_CheckShopShelf1( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckShopShelf2( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckShopShelf3( const MAPATTR_VALUE val );
 
-extern BOOL MAPATTR_VALUE_CheckEncountGrassA1( const MAPATTR_VALUE val );
-extern BOOL MAPATTR_VALUE_CheckEncountGrassA2( const MAPATTR_VALUE val );
-extern BOOL MAPATTR_VALUE_CheckEncountGrassB1( const MAPATTR_VALUE val );
-extern BOOL MAPATTR_VALUE_CheckEncountGrassB2( const MAPATTR_VALUE val );
-extern BOOL MAPATTR_VALUE_CheckEncountGrassA( const MAPATTR_VALUE val );
-extern BOOL MAPATTR_VALUE_CheckEncountGrassB( const MAPATTR_VALUE val );
-extern BOOL MAPATTR_VALUE_CheckEncountGrass( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckEncountShortGrassLow( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckEncountShortGrassHigh( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckEncountLongGrassLow( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckEncountLongGrassHigh( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckEncountGrassLow( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckEncountGrassHigh( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckEncountGrass( const MAPATTR_VALUE val );
 
 extern BOOL MAPATTR_VALUE_CheckKairikiAna( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckShore( const MAPATTR_VALUE val );
@@ -106,7 +103,6 @@ extern BOOL MAPATTR_VALUE_CheckSand( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckDesert( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckSandType( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckWaterType( const MAPATTR_VALUE val );
-extern BOOL MAPATTR_VALUE_CheckWaterTypeSeason( const MAPATTR_VALUE val, u8 season );
 
 extern BOOL MAPATTR_VALUE_CheckMonoGround( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckSeasonGround1( const MAPATTR_VALUE val );
@@ -133,3 +129,4 @@ extern BOOL MAPATTR_VALUE_CheckNotMoveLeft( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckNotMoveRight( const MAPATTR_VALUE val );
 
 extern EFFENC_TYPE_ID MAPATTR_GetEffectEncountType( MAPATTR attr );
+extern BtlBgAttr MAPATTR_GetBattleAttrID( MAPATTR_VALUE value );

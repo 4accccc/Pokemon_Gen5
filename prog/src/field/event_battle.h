@@ -58,12 +58,3 @@ extern BOOL FIELD_BATTLE_IsLoseResult(BtlResult result, BtlCompetitor competitor
 //--------------------------------------------------------------
 extern u8 FIELD_BATTLE_GetWildBattleRevengeCode(BtlResult result);
 
-//--------------------------------------------------------------
-/**
- * @brief   バトル画面でのアトリビュート指定を返す
- * @param value   マップアトリビュート
- * @retval  BtlBgAttr
- */
-//--------------------------------------------------------------
-extern BtlBgAttr FIELD_BATTLE_GetBattleAttrID( MAPATTR_VALUE value );
-

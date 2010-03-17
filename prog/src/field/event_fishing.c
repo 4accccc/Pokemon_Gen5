@@ -125,8 +125,7 @@ BOOL FieldFishingCheckPos( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, VecFx32* ou
     }
   }
   //アトリビュートチェック
-  if( !MAPATTR_VALUE_CheckWaterTypeSeason(
-        MAPATTR_GetAttrValue( gridData.attr ),GAMEDATA_GetSeasonID( gdata ))){
+  if( !MAPATTR_VALUE_CheckWaterType(MAPATTR_GetAttrValue( gridData.attr ))){
     return FALSE;
   }
   if( outPos != NULL ){

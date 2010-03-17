@@ -385,102 +385,6 @@ BOOL MAPATTR_VALUE_CheckShopShelf3( const MAPATTR_VALUE val )
 
 //--------------------------------------------------------------
 /**
- * アトリビュートバリュー チェック 草むらエンカウントA1　草むら弱
- * @param val MAPATTR_VALUE
- * @retval BOOL FALSE=違う
- */
-//--------------------------------------------------------------
-BOOL MAPATTR_VALUE_CheckEncountGrassA1( const MAPATTR_VALUE val )
-{
-  return ( (val == MATTR_E_GRASS_LOW) );
-}
-
-//--------------------------------------------------------------
-/**
- * アトリビュートバリュー チェック 草むらエンカウントA2 長い草むら弱
- * @param val MAPATTR_VALUE
- * @retval BOOL FALSE=違う
- */
-//--------------------------------------------------------------
-BOOL MAPATTR_VALUE_CheckEncountGrassA2( const MAPATTR_VALUE val )
-{
-  return (val == MATTR_E_LGRASS_LOW);
-}
-
-//--------------------------------------------------------------
-/**
- * アトリビュートバリュー チェック 草むらエンカウントB1　草むら強
- * @param val MAPATTR_VALUE
- * @retval BOOL FALSE=違う
- */
-//--------------------------------------------------------------
-BOOL MAPATTR_VALUE_CheckEncountGrassB1( const MAPATTR_VALUE val )
-{
-  return ( (val == MATTR_E_GRASS_HIGH) );
-}
-
-//--------------------------------------------------------------
-/**
- * アトリビュートバリュー チェック 草むらエンカウントB2 長い草むら強
- * @param val MAPATTR_VALUE
- * @retval BOOL FALSE=違う
- */
-//--------------------------------------------------------------
-BOOL MAPATTR_VALUE_CheckEncountGrassB2( const MAPATTR_VALUE val )
-{
-  return (val == MATTR_E_LGRASS_HIGH);
-}
-
-//--------------------------------------------------------------
-/**
- * アトリビュートバリュー チェック 草むらエンカウント弱　A群(A1,A2)
- * @param val MAPATTR_VALUE
- * @retval BOOL FALSE=違う
- */
-//--------------------------------------------------------------
-BOOL MAPATTR_VALUE_CheckEncountGrassA( const MAPATTR_VALUE val )
-{
-  if( MAPATTR_VALUE_CheckEncountGrassA1(val) == TRUE ||
-      MAPATTR_VALUE_CheckEncountGrassA2(val) == TRUE ){
-    return( TRUE );
-  }
-  return( FALSE );
-}
-
-//--------------------------------------------------------------
-/**
- * アトリビュートバリュー チェック 草むらエンカウント強　B群(B1,B2)
- * @param val MAPATTR_VALUE
- * @retval BOOL FALSE=違う
- */
-//--------------------------------------------------------------
-BOOL MAPATTR_VALUE_CheckEncountGrassB( const MAPATTR_VALUE val )
-{
-  if( MAPATTR_VALUE_CheckEncountGrassB1(val) == TRUE ||
-      MAPATTR_VALUE_CheckEncountGrassB2(val) == TRUE ){
-    return( TRUE );
-  }
-  return( FALSE );
-}
-
-//--------------------------------------------------------------
-/**
- * アトリビュートバリュー チェック 草むらエンカウント
- * @param val MAPATTR_VALUE
- * @retval BOOL FALSE=違う
- */
-//--------------------------------------------------------------
-BOOL MAPATTR_VALUE_CheckEncountGrass( const MAPATTR_VALUE val )
-{
-  if( MAPATTR_VALUE_CheckEncountGrassA(val) == TRUE ||
-      MAPATTR_VALUE_CheckEncountGrassB(val) == TRUE ){
-    return( TRUE );
-  }
-  return( FALSE );
-}
-
-//--------------------------------------------------------------
-/**
  * アトリビュートバリュー チェック 草むら　短い草むら　弱
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
@@ -529,6 +433,55 @@ BOOL MAPATTR_VALUE_CheckEncountLongGrassHigh( const MAPATTR_VALUE val )
 
 //--------------------------------------------------------------
 /**
+ * アトリビュートバリュー チェック 草むらエンカウント弱　A群(A1,A2)
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountGrassLow( const MAPATTR_VALUE val )
+{
+  if( MAPATTR_VALUE_CheckEncountShortGrassLow(val) == TRUE ||
+      MAPATTR_VALUE_CheckEncountLongGrassLow(val) == TRUE ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 草むらエンカウント強　B群(B1,B2)
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountGrassHigh( const MAPATTR_VALUE val )
+{
+  if( MAPATTR_VALUE_CheckEncountShortGrassHigh(val) == TRUE ||
+      MAPATTR_VALUE_CheckEncountLongGrassHigh(val) == TRUE ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 草むらエンカウント
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckEncountGrass( const MAPATTR_VALUE val )
+{
+  if( MAPATTR_VALUE_CheckEncountGrassLow(val) == TRUE ||
+      MAPATTR_VALUE_CheckEncountGrassHigh(val) == TRUE ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+
+//--------------------------------------------------------------
+/**
  * アトリビュートバリュー チェック 怪力穴
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
@@ -548,7 +501,10 @@ BOOL MAPATTR_VALUE_CheckKairikiAna( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckShore( const MAPATTR_VALUE val )
 {
-  return( val == MATTR_SHORE_01 );
+  if( val == MATTR_SHORE_01 || val == MATTR_SHORE_02 ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -714,6 +670,7 @@ BOOL MAPATTR_VALUE_CheckSandType( const MAPATTR_VALUE val )
   }
   return( FALSE );
 }
+
 //--------------------------------------------------------------
 /**
  * アトリビュートバリュー　チェック　水系アトリビュート
@@ -725,25 +682,6 @@ BOOL MAPATTR_VALUE_CheckWaterType( const MAPATTR_VALUE val )
 {
   if( (val == MATTR_WATER_01) || (val == MATTR_WATER_S01)
       || (val == MATTR_SEA_01) || (val == MATTR_DEEP_MARSH_01) || (val == MATTR_DEEP_SEA_01) ) {
-    return( TRUE );
-  }
-  return( FALSE );
-}
-
-//--------------------------------------------------------------
-/**
- * アトリビュートバリュー　チェック　水系アトリビュート(四季変化考慮)
- * @param val MAPATTR_VALUE
- * @retval BOOL FALSE=違う
- */
-//--------------------------------------------------------------
-BOOL MAPATTR_VALUE_CheckWaterTypeSeason( const MAPATTR_VALUE val, u8 season )
-{
-  if( (val == MATTR_WATER_01) || (val == MATTR_SEA_01)
-      || (val == MATTR_DEEP_MARSH_01) || (val == MATTR_DEEP_SEA_01) ) {
-    return( TRUE );
-  }
-  if( (val == MATTR_WATER_S01) && season != PMSEASON_WINTER ){
     return( TRUE );
   }
   return( FALSE );
@@ -1019,12 +957,44 @@ EFFENC_TYPE_ID MAPATTR_GetEffectEncountType( MAPATTR attr )
     return EFFENC_TYPE_CAVE;
 
   case MATTR_WATER_01:
-  case MATTR_DEEP_MARSH_01:
     return EFFENC_TYPE_WATER;
 
   case MATTR_SEA_01:
+  case MATTR_DEEP_SEA_01:
     return EFFENC_TYPE_SEA;
   }
   return EFFENC_TYPE_MAX;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   BGアトリビュートからバトルBGアトリビュートの指定を返す
+ * @param value   マップアトリビュート
+ * @retval  BtlBgAttr
+ */
+//--------------------------------------------------------------
+BtlBgAttr MAPATTR_GetBattleAttrID( MAPATTR_VALUE value )
+{
+  switch( value ){
+  case MATTR_LAWN_01: //芝生
+    return BATTLE_BG_ATTR_LAWN;
+
+  }
+  if ( MAPATTR_VALUE_CheckLawn(value) ) return BATTLE_BG_ATTR_LAWN; //芝生
+  if ( MAPATTR_VALUE_CheckMonoGround(value) ) return BATTLE_BG_ATTR_NORMAL_GROUND; //通常地面
+  if ( MAPATTR_VALUE_CheckSeasonGround1(value) ) return BATTLE_BG_ATTR_GROUND1; //地面１
+  if ( MAPATTR_VALUE_CheckSeasonGround2(value) ) return BATTLE_BG_ATTR_GROUND2; //地面２
+  if ( MAPATTR_VALUE_CheckEncountGrass(value) ) return BATTLE_BG_ATTR_GRASS;
+  if ( MAPATTR_VALUE_CheckWaterType(value) ) return BATTLE_BG_ATTR_WATER; //みず
+  if ( MAPATTR_VALUE_CheckSnowType(value) ) return BATTLE_BG_ATTR_SNOW;
+  if ( MAPATTR_VALUE_CheckSandType(value) ) return BATTLE_BG_ATTR_SAND;
+  if ( MAPATTR_VALUE_CheckMarsh(value) ) return BATTLE_BG_ATTR_MARSH;
+  if ( MAPATTR_VALUE_CheckEncountGround(value) ) return BATTLE_BG_ATTR_CAVE; //どうくつ
+  if ( MAPATTR_VALUE_CheckPool(value) ) return BATTLE_BG_ATTR_POOL;
+  if ( MAPATTR_VALUE_CheckShoal(value) ) return BATTLE_BG_ATTR_SHOAL;
+  if ( MAPATTR_VALUE_CheckIce(value) ) return BATTLE_BG_ATTR_ICE;
+  if ( MAPATTR_VALUE_CheckEncountIndoor(value) ) return BATTLE_BG_ATTR_INDOOR;
+  OS_Printf("Warning! GetBattleAttrID = 0x%02x\n", value ); //ふつーは定義済みのでいいだろ！
+  return BATTLE_BG_ATTR_LAWN; //標準
 }
 
