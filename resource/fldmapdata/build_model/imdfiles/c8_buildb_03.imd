@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-03-17T21:49:19" source="c8_buildb_03.mb"/>
+	<create user="fuchino" host="W00152" date="2010-03-17T22:16:01" source="c8_buildb_03.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2010-03-17T21:49:19" source="c8_buildb_03.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-03-17T22:16:01" source="c8_buildb_03.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -125,19 +125,19 @@
 			dddd dddd dddd dddd dddd dddd dddd dddd
 			dddd dddd dddd dddd dddd dddd dddd dddd
 			dddd dddd dddd dddd dddd dddd dddd dddd
-			2222 2222 2222 2222 2222 2222 2222 2222
-			2222 2222 2222 2222 2222 2222 2222 2222
-			3333 3333 3333 3333 3333 3333 3333 3333
-			3333 3333 3333 3333 3333 3333 3333 3333
-			5555 5555 5555 5555 5555 5555 5555 5555
-			7777 7777 7777 7777 7777 7777 7777 7777
-			8888 8888 8888 8888 8888 8888 8888 8888
-			4444 4444 4444 4444 4444 4444 4444 4444
-			4444 4444 4444 4444 4444 4444 4444 4444
-			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
-			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
+			2223 2222 2222 2222 2222 2222 2222 3222
+			2223 2222 2222 2222 2222 2222 2222 3222
+			3335 3333 3333 3333 3333 3333 3333 5333
+			3335 3333 3333 3333 3333 3333 3333 5333
+			5557 5555 5555 5555 5555 5555 5555 7555
+			7778 7777 7777 7777 7777 7777 7777 8777
+			8884 8888 8888 8888 8888 8888 8888 4888
+			444a 4444 4444 4444 4444 4444 4444 a444
+			444a 4444 4444 4444 4444 4444 4444 a444
+			aaab aaaa aaaa aaaa aaaa aaaa aaaa baaa
+			aaab aaaa aaaa aaaa aaaa aaaa aaaa baaa
+			dddb dddd dddd dddd dddd dddd dddd bddd
+			dddb dddd dddd dddd dddd dddd dddd bddd
 			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
 			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
 			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
@@ -360,45 +360,45 @@
 					<tex st="32.000000 88.000000"/>
 					<nrm xyz="-0.980469 0.195313 0.000000"/>
 					<pos_s xyz="-1.750000 5.000000 2.000000"/>
-					<tex st="-96.000000 88.000000"/>
+					<tex st="0.000000 88.000000"/>
 					<pos_xz xz="-1.750000 -2.250000"/>
 					<tex st="32.000000 88.000000"/>
 					<pos_s xyz="-2.000000 4.000000 2.250000"/>
-					<tex st="-96.000000 88.000000"/>
+					<tex st="0.000000 88.000000"/>
 					<pos_xz xz="-2.000000 -2.500000"/>
 					<tex st="32.000000 104.000000"/>
 					<pos_s xyz="-2.250000 3.000000 2.500000"/>
-					<tex st="-96.000000 104.000000"/>
+					<tex st="0.000000 104.000000"/>
 					<pos_xz xz="-2.250000 -2.750000"/>
 				</primitive>
 				<primitive index="4" type="quad_strip" vertex_size="6">
 					<tex st="32.000000 88.000000"/>
 					<nrm xyz="0.980469 0.195313 0.000000"/>
 					<pos_s xyz="1.750000 5.000000 -2.250000"/>
-					<tex st="-96.000000 88.000000"/>
+					<tex st="0.000000 88.000000"/>
 					<pos_xz xz="1.750000 2.000000"/>
 					<tex st="32.000000 88.000000"/>
 					<pos_s xyz="2.000000 4.000000 -2.500000"/>
-					<tex st="-96.000000 88.000000"/>
+					<tex st="0.000000 88.000000"/>
 					<pos_xz xz="2.000000 2.250000"/>
 					<tex st="32.000000 104.000000"/>
 					<pos_s xyz="2.250000 3.000000 -2.750000"/>
-					<tex st="-96.000000 104.000000"/>
+					<tex st="0.000000 104.000000"/>
 					<pos_xz xz="2.250000 2.500000"/>
 				</primitive>
 				<primitive index="5" type="quad_strip" vertex_size="6">
 					<tex st="32.000000 88.000000"/>
 					<nrm xyz="0.000000 0.242188 0.970703"/>
 					<pos_s xyz="1.750000 5.000000 2.000000"/>
-					<tex st="-96.000000 88.000000"/>
+					<tex st="0.000000 88.000000"/>
 					<pos_xy xy="-1.750000 5.000000"/>
 					<tex st="32.000000 88.000000"/>
 					<pos_s xyz="2.000000 4.000000 2.250000"/>
-					<tex st="-96.000000 88.000000"/>
+					<tex st="0.000000 88.000000"/>
 					<pos_xy xy="-2.000000 4.000000"/>
 					<tex st="32.000000 104.000000"/>
 					<pos_s xyz="2.250000 3.000000 2.500000"/>
-					<tex st="-96.000000 104.000000"/>
+					<tex st="0.000000 104.000000"/>
 					<pos_xy xy="-2.250000 3.000000"/>
 				</primitive>
 				<primitive index="6" type="quads" vertex_size="112">
