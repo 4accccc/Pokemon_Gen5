@@ -223,6 +223,7 @@ enum{
   WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE4,
   WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE5,
   WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE6,
+  WIFIP2PMATCH_MODE_SELECT_INIT2,
 };
 
 
@@ -414,6 +415,7 @@ struct _WIFIP2PMATCH_WORK{
   GFL_BMPWIN*			SubListWin;									// 募集するタイプなどを描画するリスト
   GFL_BMPWIN*			MyWin;									// 友達の個人情報表示
   PRINT_UTIL            SysMsgPrintUtil;    // システムウインドウPrintUtil
+  PRINT_QUE*            SysMenuQue;
   PRINT_QUE*            SysMsgQue;
   PRINT_STREAM* pStream;
 	GFL_TCBLSYS *pMsgTcblSys;

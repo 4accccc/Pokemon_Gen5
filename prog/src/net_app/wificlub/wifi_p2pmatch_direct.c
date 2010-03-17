@@ -894,7 +894,7 @@ static int _playerDirectBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
   _friendNameExpand(wk,  wk->friendNo - 1);
   WifiP2PMatchMessagePrint(wk, msg_wifilobby_014, FALSE);
 
-  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+//  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
   return seq;
 }
 
@@ -1007,6 +1007,8 @@ static int _playerDirectBattleGO_12( WIFIP2PMATCH_WORK *wk, int seq )
 static int _playerDirectBattleGO_13( WIFIP2PMATCH_WORK *wk, int seq )
 {
   if(GFL_UI_KEY_GetTrg()){
+    _Menu_RegulationDelete(wk);
+ //   _Menu_RegulationDelete(wk->SysMsgWin);
 //    wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO_14);
   }

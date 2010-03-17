@@ -2785,6 +2785,7 @@ static void _gtsFirstMsgState(POKEMON_TRADE_WORK* pWork)
 
     POKETRADE_MESSAGE_WindowClear(pWork);
     POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
+    GFL_NET_SetWifiBothNet(FALSE);
 
    // _CHANGE_STATE(pWork, _touchState_BeforeTimeing1);
     _CHANGE_STATE(pWork,_touchState);
@@ -3155,6 +3156,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     GFL_NET_SetAutoErrorCheck(TRUE);
     GFL_NET_SetNoChildErrorCheck(TRUE);
+    GFL_NET_SetWifiBothNet(TRUE);
   }
   //オーバーレイ読み込み
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));

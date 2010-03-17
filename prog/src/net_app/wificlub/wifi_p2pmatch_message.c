@@ -231,52 +231,19 @@ static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSy
   }
   WORDSET_ExpandStr( wk->WordSet, wk->TalkString, wk->pExpStrBuf );
 
-
-  // 会話ウインドウ枠描画
-  //GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 15 );
-  //    BmpTalkWinWrite(&wk->MsgWin, WINDOW_TRANS_OFF,COMM_TALK_WIN_CGX_NUM, COMM_MESFRAME_PAL );
-  //GFL_BMPWIN_MakeFrameScreen(wk->MsgWin, COMM_TALK_WIN_CGX_NUM, COMM_MESFRAME_PAL);
-
-
-  //------
-
-  //BmpWinFrame_CgxSet(GFL_BG_FRAME2_M,COMM_TALK_WIN_CGX_NUM, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH);
-
-  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
-                                0x20*MCV_SYSFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
-
   // システムウインドウ枠描画
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->MsgWin), WINCLR_COL(FBMP_COL_WHITE) );
   GFL_BMPWIN_MakeScreen(wk->MsgWin);
-//  GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
 
   BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), COMM_MESFRAME_PAL );
 
-  //------
-
-  // 文字列描画開始
-  //  MsgPrintSkipFlagSet( MSG_SKIP_ON );   // メッセージスキップON
-  //  MsgPrintAutoFlagSet( MSG_AUTO_OFF );  // メッセージ自動送りOFF
-  //    wk->MsgIndex = GF_STR_PrintSimple( &wk->MsgWin, FONT_TALK, wk->TalkString,
-  //                                     0, 0, speed, NULL);
 
 
-
-
-#if 0
-  GFL_FONTSYS_SetDefaultColor();
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->MsgWin), 2, 2, wk->TalkString, wk->fontHandle);
-  GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
-#else
   wk->pStream = PRINTSYS_PrintStream(wk->MsgWin ,0,0, wk->TalkString, wk->fontHandle,
-                                        MSGSPEED_GetWait(), wk->pMsgTcblSys, 2,HEAPID_WIFIP2PMATCH, 15);
+                                     MSGSPEED_GetWait(), wk->pMsgTcblSys, 2,HEAPID_WIFIP2PMATCH, 15);
 
   GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
   GFL_BMPWIN_MakeScreen(wk->MsgWin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
-
-#endif
-  //GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
 }
 
 //==============================================================================
@@ -369,9 +336,6 @@ static void _systemMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno )
   wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
   wk->MsgWin = _BmpWinDel(wk->MsgWin);
 
-  //   if(!PRINTSYS_QUE_IsFinished(wk->SysMsgQue)){
-  //     PRINTSYS_QUE_Clear(wk->SysMsgQue);
-  //    }
 
   wk->SysMsgWin= GFL_BMPWIN_Create(
     GFL_BG_FRAME2_M,
@@ -379,7 +343,7 @@ static void _systemMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno )
     COMM_SYS_WIN_SX, COMM_SYS_WIN_SY,
     MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
 
-//  BmpWinFrame_CgxSet(GFL_BG_FRAME2_M,COMM_SYS_WIN_CGX, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH);
+  //  BmpWinFrame_CgxSet(GFL_BG_FRAME2_M,COMM_SYS_WIN_CGX, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH);
 
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
                                 0x20*MCV_SYSFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
@@ -450,7 +414,7 @@ _infoMenu _parentCustomInfoMenuList[] = {
   { msg_wifilobby_060,  (u32)WIFIP2PMATCH_PLAYERDIRECT_BATTLE_RULE },   //ルール
   { msg_wifilobby_062,  (u32)WIFIP2PMATCH_PLAYERDIRECT_BATTLE_SHOOTER },  //シューター
   { msg_wifilobby_096,  (u32)WIFIP2PMATCH_PLAYERDIRECT_BATTLE_DECIDE },  //決定
-  { msg_wifilobby_097,  (u32)WIFIP2PMATCH_PLAYERDIRECT_BATTLE_WATCH },  //ルールを見る 
+  { msg_wifilobby_097,  (u32)WIFIP2PMATCH_PLAYERDIRECT_BATTLE_WATCH },  //ルールを見る
   { msg_wifilobby_032,  (u32)BMPMENULIST_CANCEL },
 };
 
@@ -588,17 +552,18 @@ static void	_print_callback(BMPMENULIST_WORK * wk,u32 param,u8 y)
 {
   WIFIP2PMATCH_WORK *pWork = BmpMenuList_GetWorkPtr(wk);
 
-
   if(WIFI_STATUS_GetVChatStatus( pWork->pMatch )==FALSE){
     switch(param){
     case WIFI_GAME_VCT:
-    case WIFI_GAME_TVT:
       BmpMenuList_ColorControl(wk,FBMP_COL_BLK_SDW,FBMP_COL_WHITE,FBMP_COL_BLK_SDW);
       break;
     default:
       BmpMenuList_ColorControl(wk,FBMP_COL_BLACK,FBMP_COL_WHITE,FBMP_COL_BLK_SDW);
       break;
     }
+  }
+  else{
+    BmpMenuList_ColorControl(wk,FBMP_COL_BLACK,FBMP_COL_WHITE,FBMP_COL_BLK_SDW);
   }
 }
 
@@ -610,13 +575,15 @@ static void _modeSelectMenuBase( WIFIP2PMATCH_WORK *wk,BMPMENULIST_HEADER* plist
   int i;
   //BMPMENULIST_HEADER list_h;
 
- // GFL_STD_MemCopy(plisth,&list_h,sizeof(BMPMENULIST_HEADER));
+  // GFL_STD_MemCopy(plisth,&list_h,sizeof(BMPMENULIST_HEADER));
 
-  PRINTSYS_QUE_Clear(wk->SysMsgQue);
+  PRINTSYS_QUE_Clear(wk->SysMenuQue);
 
+  GFL_FONTSYS_SetDefaultColor();
 
   wk->submenulist = BmpMenuWork_ListCreate( length , HEAPID_WIFIP2PMATCH );
   for(i=0; i< length ; i++){
+    OS_TPrintf("%d \n ",p_menu[i].str_id);
     BmpMenuWork_ListAddArchiveString( wk->submenulist, wk->MsgManager, p_menu[i].str_id, p_menu[i].param, HEAPID_WIFIP2PMATCH );
   }
 
@@ -625,15 +592,16 @@ static void _modeSelectMenuBase( WIFIP2PMATCH_WORK *wk,BMPMENULIST_HEADER* plist
   wk->SubListWin = GFL_BMPWIN_Create(
     GFL_BG_FRAME2_M, 32-width-1, PARENTMENU_Y, width, length * 2, MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
   //    GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  COMM_TALK_WIN_CGX_NUM, MENU_WIN_PAL );
+  GFL_BMPWIN_MakeScreen(wk->SubListWin);
   BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_OFF, GFL_ARCUTIL_TRANSINFO_GetPos(wk->talkwin_m2), COMM_MESFRAME_PAL );
-  GFL_BMPWIN_MakeTransWindow(wk->SubListWin);
+  //  GFL_BMPWIN_MakeTransWindow(wk->SubListWin);
 
 
   plisth->list = wk->submenulist;
   plisth->win = wk->SubListWin;
 
-  plisth->print_que = wk->SysMsgQue;
-  PRINT_UTIL_Setup( &wk->SysMsgPrintUtil , wk->SubListWin );
+  plisth->print_que = wk->SysMenuQue;
+  //  PRINT_UTIL_Setup( &wk->SysMsgPrintUtil , wk->SubListWin );
   plisth->print_util = &wk->SysMsgPrintUtil;
   plisth->font_handle = wk->fontHandle;
   plisth->work = wk;
@@ -641,11 +609,12 @@ static void _modeSelectMenuBase( WIFIP2PMATCH_WORK *wk,BMPMENULIST_HEADER* plist
   //GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->SubListWin), WINCLR_COL(FBMP_COL_WHITE) );
 
   wk->sublw = BmpMenuList_Set(plisth, 0, wk->singleCur[menutype], HEAPID_WIFIP2PMATCH);
-	BmpMenuList_SetCursorBmp( wk->sublw, HEAPID_WIFIP2PMATCH );
-
-//  GFL_BMPWIN_TransVramCharacter(wk->SubListWin);
-//  GFL_BMPWIN_MakeScreen(wk->SubListWin);
-  //GFL_BG_LoadScreenReq(GFL_BG_FRAME2_M);
+  while(!PRINTSYS_QUE_IsFinished(wk->SysMenuQue)){
+    PRINTSYS_QUE_Main(wk->SysMenuQue);
+  }
+  BmpMenuList_SetCursorBmp( wk->sublw, HEAPID_WIFIP2PMATCH );
+ // GFL_BMPWIN_TransVramCharacter(wk->SubListWin);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_M);
 }
 
 
@@ -708,64 +677,58 @@ static const BMPMENULIST_HEADER _childMatchMenuListHeader = {
 
 static void _ChildModeMatchMenuDisp( WIFIP2PMATCH_WORK *wk )
 {
-#if 1
-    int i,length;
-    BMPMENULIST_HEADER list_h;
-    u16 friendNo,status,vchat;
-    WIFI_STATUS* p_status;
+  int i,length;
+  BMPMENULIST_HEADER list_h;
+  u16 friendNo,status,vchat;
+  WIFI_STATUS* p_status;
 
-    length = NELEMS(_childMatchMenuList);
-    list_h = _childMatchMenuListHeader;
-    friendNo = WIFI_MCR_PlayerSelect( &wk->matchroom );
-    p_status = WifiFriendMatchStatusGet( friendNo - 1 );
-    status = _WifiMyStatusGet( wk, p_status );
-    vchat = WIFI_STATUS_GetVChatStatus(p_status);
-
-//  wk->keepVChat = vchat;
+  length = NELEMS(_childMatchMenuList);
+  list_h = _childMatchMenuListHeader;
+  friendNo = WIFI_MCR_PlayerSelect( &wk->matchroom );
+  p_status = WifiFriendMatchStatusGet( friendNo - 1 );
+  status = _WifiMyStatusGet( wk, p_status );
+  vchat = WIFI_STATUS_GetVChatStatus(p_status);
 
 
   vchat += WIFI_STATUS_GetVChatStatus( wk->pMatch );
 
-    // その人の情報を表示
-    //  WifiP2PMatch_UserDispOn_MyAcces( wk, friendNo, HEAPID_WIFIP2PMATCH );
+  wk->submenulist = BmpMenuWork_ListCreate( length , HEAPID_WIFIP2PMATCH );
+  i = 0;
 
-
-    wk->submenulist = BmpMenuWork_ListCreate( length , HEAPID_WIFIP2PMATCH );
-    i = 0;
-
-    for(i = 0; i < NELEMS(_childMatchMenuList);i++){
-      if(i == 0 && (WIFI_STATUS_RECRUIT != status && status != WIFI_STATUS_PLAY_AND_RECRUIT && status != WIFI_STATUS_WAIT)){  // もうしこむを出さない条件
-        list_h.line -= 1;
-        list_h.count -= 1;
-        length -= 1;
-      }
-      else{
-        BmpMenuWork_ListAddArchiveString( wk->submenulist, wk->MsgManager,
-                                          _childMatchMenuList[i].str_id,
-                                          _childMatchMenuList[i].param,HEAPID_WIFIP2PMATCH );
-      }
+  for(i = 0; i < NELEMS(_childMatchMenuList);i++){
+    if(i == 0 && (WIFI_STATUS_RECRUIT != status && status != WIFI_STATUS_PLAY_AND_RECRUIT && status != WIFI_STATUS_WAIT)){  // もうしこむを出さない条件
+      list_h.line -= 1;
+      list_h.count -= 1;
+      length -= 1;
     }
-    //BMPウィンドウ生成
-    wk->SubListWin = GFL_BMPWIN_Create(
-      GFL_BG_FRAME2_M, 16, 11+ ((3-length)*2), 15  , length * 2,
-      MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
-    //    GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  MENU_WIN_CGX_NUM, MENU_WIN_PAL );
-    BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), COMM_MESFRAME_PAL );
-    list_h.list = wk->submenulist;
-    list_h.win = wk->SubListWin;
+    else{
+      BmpMenuWork_ListAddArchiveString( wk->submenulist, wk->MsgManager,
+                                        _childMatchMenuList[i].str_id,
+                                        _childMatchMenuList[i].param,HEAPID_WIFIP2PMATCH );
+    }
+  }
+  //BMPウィンドウ生成
+  wk->SubListWin = GFL_BMPWIN_Create(
+    GFL_BG_FRAME2_M, 16, 11+ ((3-length)*2), 15  , length * 2,
+    MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+  BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_OFF, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), COMM_MESFRAME_PAL );
+  list_h.list = wk->submenulist;
+  list_h.win = wk->SubListWin;
 
-    list_h.print_que = wk->SysMsgQue;
-    PRINT_UTIL_Setup( &wk->SysMsgPrintUtil , wk->SubListWin );
-    list_h.print_util = &wk->SysMsgPrintUtil;
-    list_h.font_handle = wk->fontHandle;
+  list_h.print_que = wk->SysMenuQue;
+  list_h.print_util = &wk->SysMsgPrintUtil;
+  list_h.font_handle = wk->fontHandle;
 
-    //wk->sublw = BmpMenuWork_ListCreate(NELEMS(_childMatchMenuList),HEAPID_WIFIP2PMATCH);
-    wk->sublw = BmpMenuList_Set(&list_h, 0, 0, HEAPID_WIFIP2PMATCH);
-	BmpMenuList_SetCursorBmp( wk->sublw, HEAPID_WIFIP2PMATCH );
-    GFL_BMPWIN_TransVramCharacter(wk->SubListWin);
-    GFL_BMPWIN_MakeScreen(wk->SubListWin);
-    GFL_BG_LoadScreenReq(GFL_BG_FRAME2_M);
-#endif
+  wk->sublw = BmpMenuList_Set(&list_h, 0, 0, HEAPID_WIFIP2PMATCH);
+
+  while(!PRINTSYS_QUE_IsFinished(wk->SysMenuQue)){
+    PRINTSYS_QUE_Main(wk->SysMenuQue);
+  }
+
+  BmpMenuList_SetCursorBmp( wk->sublw, HEAPID_WIFIP2PMATCH );
+//  GFL_BMPWIN_TransVramCharacter(wk->SubListWin);
+  GFL_BMPWIN_MakeScreen(wk->SubListWin);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_M);
 }
 
 //------------------------------------------------------------------
@@ -962,6 +925,7 @@ static void InitMessageWork( WIFIP2PMATCH_WORK *wk )
   wk->pExpStrBuf = GFL_STR_CreateBuffer( TALK_MESSAGE_BUF_NUM, HEAPID_WIFIP2PMATCH );
   wk->TitleString = GFL_STR_CreateBuffer( TITLE_MESSAGE_BUF_NUM, HEAPID_WIFIP2PMATCH );
   wk->SysMsgQue = PRINTSYS_QUE_Create( HEAPID_WIFIP2PMATCH );
+  wk->SysMenuQue = PRINTSYS_QUE_Create( HEAPID_WIFIP2PMATCH );
   wk->pMsgTcblSys = GFL_TCBL_Init( HEAPID_WIFIP2PMATCH , HEAPID_WIFIP2PMATCH , 1 , 0 );
 
 
@@ -996,7 +960,9 @@ static void FreeMessageWork( WIFIP2PMATCH_WORK *wk )
   GFL_STR_DeleteBuffer(wk->pExpStrBuf);
   GFL_TCBL_Exit(wk->pMsgTcblSys);
   PRINTSYS_QUE_Clear(wk->SysMsgQue);
+  PRINTSYS_QUE_Clear(wk->SysMenuQue);
   PRINTSYS_QUE_Delete(wk->SysMsgQue);
+  PRINTSYS_QUE_Delete(wk->SysMenuQue);
   wk->SysMsgQue=NULL;
 }
 
@@ -1019,17 +985,17 @@ static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID )
   sex = WifiList_GetFriendInfo( wk->pList,
                                 wk->view.touch_friendNo - 1, WIFILIST_FRIEND_SEX );
 
-//  if(sex == PM_FEMALE){
-//    pal = MCV_PAL_BTTN+MCV_PAL_BTTNST_GIRL;
-//  }else{
-//    pal = MCV_PAL_BTTN+MCV_PAL_BTTNST_MAN;
-//  }
+  //  if(sex == PM_FEMALE){
+  //    pal = MCV_PAL_BTTN+MCV_PAL_BTTNST_GIRL;
+  //  }else{
+  //    pal = MCV_PAL_BTTN+MCV_PAL_BTTNST_MAN;
+  //  }
   GFL_BG_LoadScreenBufferOfs( GFL_BG_FRAME2_S, wk->view.p_userscrn[0]->rawData,
-                     wk->view.p_userscrn[0]->szByte,0 );
+                              wk->view.p_userscrn[0]->szByte,0 );
   //  GFL_BG_ScreenBufSet( GFL_BG_FRAME2_S, wk->view.p_userscrn[wk->view.user_dispno]->rawData,
   //      wk->view.p_userscrn[wk->view.user_dispno]->szByte );
 
-//  GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, 0, 0,
+  //  GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, 0, 0,
   //                            32, 24, pal );
 
   // BG３面のスクリーンをクリア
@@ -1041,7 +1007,7 @@ static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID )
   // 描画
   MCVSys_UserDispDrawType00( wk, heapID );
 
-//  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+  //  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
   GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_S );
 
   GFL_BMPWIN_TransVramCharacter(wk->view.userWin);
@@ -1063,7 +1029,7 @@ static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID )
 //-----------------------------------------------------------------------------
 
 
-  //トレーナーグラフィック
+//トレーナーグラフィック
 static void _TrainerOAMDraw( WIFIP2PMATCH_WORK *wk, int friendNo, u32 heapID )
 {
   ARCHANDLE * ah;
@@ -1090,7 +1056,7 @@ static void _TrainerOAMDraw( WIFIP2PMATCH_WORK *wk, int friendNo, u32 heapID )
     wk->trRes[1],
     wk->trRes[2],
     &clearadd, CLSYS_DEFREND_SUB, heapID );
-  
+
 }
 
 
@@ -1139,7 +1105,7 @@ static void _TOUCHBAR_Init(WIFIP2PMATCH_WORK *wk,HEAPID heapID)
   touchbar_setup.mapping  = APP_COMMON_MAPPING_128K;  //マッピングモード
 
   wk->pTouchWork = TOUCHBAR_Init(&touchbar_setup, heapID);
-  
+
 }
 
 
@@ -1194,11 +1160,11 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
   sex = WifiList_GetFriendInfo( wk->pList, friendNo, WIFILIST_FRIEND_SEX );
 
   // トレーナー名
- // if( sex == PM_MALE ){
- //   _COL_N_BLUE;
- // }else{
- //   _COL_N_RED;
- // }
+  // if( sex == PM_MALE ){
+  //   _COL_N_BLUE;
+  // }else{
+  //   _COL_N_RED;
+  // }
   _COL_N_WHITE;
   MCVSys_FriendNameSet(wk, friendNo);
   GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_033, wk->pExpStrBuf );
@@ -1296,7 +1262,7 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
   _TOUCHBAR_Init(wk,heapID);
 
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-  
+
 }
 
 
@@ -1325,14 +1291,14 @@ static u32 MCVSys_StatusMsgIdGet( u32 status, u32 gamemode, int* col )
 
   {//WIFI_GAME_e参照
     u32 message[]={msg_wifilobby_046,msg_wifilobby_046,msg_wifilobby_1014,msg_wifilobby_027, msg_wifilobby_076,
-    msg_wifilobby_025, msg_wifilobby_1023,msg_wifilobby_1023,msg_wifilobby_1024,msg_wifilobby_1024,
-    msg_wifilobby_1025,msg_wifilobby_1025,msg_wifilobby_1026,msg_wifilobby_1026,msg_wifilobby_056};
+      msg_wifilobby_025, msg_wifilobby_1023,msg_wifilobby_1023,msg_wifilobby_1024,msg_wifilobby_1024,
+      msg_wifilobby_1025,msg_wifilobby_1025,msg_wifilobby_1026,msg_wifilobby_1026,msg_wifilobby_056};
 
     msg_id = gamemode;
     if(gamemode > WIFI_GAME_UNKNOWN){
       msg_id = WIFI_GAME_UNKNOWN;
     }
-    
+
     msg_id = message[msg_id];
   }
 
@@ -1390,7 +1356,7 @@ static void _battleRuleSelectMenu( WIFIP2PMATCH_WORK *wk )
   _parentInfoBattleMenuListHeader.count = elementof(_parentRuleInfoMenuList);
   _parentInfoBattleMenuListHeader.line = elementof(_parentRuleInfoMenuList);
 
-  
+
   _modeSelectMenuBase(wk, &_parentInfoBattleMenuListHeader, _parentRuleInfoMenuList,
                       elementof(_parentRuleInfoMenuList), _MENUTYPE_BATTLE_RULE,17);
 }
@@ -1409,7 +1375,7 @@ static void _battleShooterSelectMenu( WIFIP2PMATCH_WORK *wk )
   _parentInfoBattleMenuListHeader.count = elementof(_parentShooterInfoMenuList);
   _parentInfoBattleMenuListHeader.line = elementof(_parentShooterInfoMenuList);
 
-  
+
   _modeSelectMenuBase(wk, &_parentInfoBattleMenuListHeader, _parentShooterInfoMenuList,
                       elementof(_parentShooterInfoMenuList), _MENUTYPE_BATTLE_SHOOTER,20);
 }
@@ -1431,7 +1397,7 @@ static void _battlePokePartySelectMenu( WIFIP2PMATCH_WORK *wk )
   _parentInfoBattleMenuListHeader.line = elementof(_parentPokePartyMenuList);
 
   NET_PRINT("elementof(_parentPokePartyMenuList) %d\n",elementof(_parentPokePartyMenuList));
-  
+
   _modeSelectMenuBase(wk, &_parentInfoBattleMenuListHeader, _parentPokePartyMenuList,
                       elementof(_parentPokePartyMenuList), _MENUTYPE_POKEPARTY,18);
 }
@@ -1440,8 +1406,8 @@ static void _battlePokePartySelectMenu( WIFIP2PMATCH_WORK *wk )
 /**
  * レギュレーション：表示
  *
- * @param   unisys		
- * @param   fieldWork		
+ * @param   unisys
+ * @param   fieldWork
  * @param   fail_bit    レギュレーションNGbit
  * @param   shooter_type  TRUE:シューター有　FALSE:シューター無し
  * @param   regwin_type    NGREG_TYPE_???
@@ -1454,7 +1420,7 @@ static void _Menu_RegulationSetup(WIFIP2PMATCH_WORK* wk, u32 fail_bit, BOOL shoo
   int category;
   PRINTSYS_LSB color;
   u16 title_msgid;
-  
+
   if(shooter_type == TRUE){
     shooter_type = REGULATION_SHOOTER_VALID;
   }
@@ -1466,12 +1432,12 @@ static void _Menu_RegulationSetup(WIFIP2PMATCH_WORK* wk, u32 fail_bit, BOOL shoo
   wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
 
   wk->SysMsgWin= GFL_BMPWIN_Create(  GFL_BG_FRAME2_M,
-    REGWINDOW_WIN_PX, REGWINDOW_WIN_PY,
-    REGWINDOW_WIN_SX, REGWINDOW_WIN_SY,
-    MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+                                     REGWINDOW_WIN_PX, REGWINDOW_WIN_PY,
+                                     REGWINDOW_WIN_SX, REGWINDOW_WIN_SY,
+                                     MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
 
-//  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
-   //                             0x20*MCV_SYSFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
+  //  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
+  //                             0x20*MCV_SYSFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
 
   // システムウインドウ枠描画
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->SysMsgWin), WINCLR_COL(FBMP_COL_WHITE) );
@@ -1481,7 +1447,8 @@ static void _Menu_RegulationSetup(WIFIP2PMATCH_WORK* wk, u32 fail_bit, BOOL shoo
                      GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), COMM_MESFONT_PAL );
 
   GFL_FONTSYS_SetDefaultColor();
-  
+
+  GF_ASSERT(!wk->rpm);
   wk->rpm = PokeRegulation_CreatePrintMsg( wk->pRegulation, wk->WordSet, HEAPID_WIFIP2PMATCH, shooter_type);
 
   if(regwin_type == REGWIN_TYPE_RULE){
@@ -1499,7 +1466,7 @@ static void _Menu_RegulationSetup(WIFIP2PMATCH_WORK* wk, u32 fail_bit, BOOL shoo
     GFL_MSG_GetString(  wk->MsgManager, title_msgid, wk->pExpStrBuf );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->SysMsgWin), 0, 0, wk->pExpStrBuf , wk->fontHandle);
   }
-  
+
   for(category = 0; category < REGULATION_CATEGORY_MAX; category++){
     if(fail_bit & (1 << category)){
       color = REG_FAIL_COLOR;
@@ -1513,5 +1480,13 @@ static void _Menu_RegulationSetup(WIFIP2PMATCH_WORK* wk, u32 fail_bit, BOOL shoo
                         wk->rpm->prerequisite[category], wk->fontHandle, color);
   }
   GFL_BMPWIN_TransVramCharacter(wk->SysMsgWin);
+}
+
+
+static void _Menu_RegulationDelete(WIFIP2PMATCH_WORK* wk)
+{
+  PokeRegulation_DeletePrintMsg(wk->rpm);
+  wk->rpm = NULL;
+  wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
 }
 

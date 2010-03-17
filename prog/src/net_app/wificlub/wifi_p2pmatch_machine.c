@@ -24,15 +24,23 @@ static int _playerMachineInit1( WIFIP2PMATCH_WORK *wk, int seq )
   case WIFI_GAME_VCT:
     {
       GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
-      GFL_NET_DWC_StartVChat();
+//      GFL_NET_DWC_StartVChat();
+      _vctcheckCommon( wk );
+
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_1015, FALSE);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT);
       return seq;
     }
     break;
   case WIFI_GAME_TVT:
+    {
+      wk->endSeq = gamemode;
+      return SEQ_OUT;            //終了シーケンスへ
+    }
+    break;
   case WIFI_GAME_TRADE:
     {
+      _vctcheckCommon( wk );
       wk->endSeq = gamemode;
       return SEQ_OUT;            //終了シーケンスへ
     }

@@ -813,6 +813,7 @@ static int _vchatNegoCheck( WIFIP2PMATCH_WORK *wk, int seq );
 static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq );
 static int _playerDirectInit( WIFIP2PMATCH_WORK *wk, int seq );
 static int MessageEndReturnList( WIFIP2PMATCH_WORK *wk, int seq );
+static int _parentModeSelectMenuInit2( WIFIP2PMATCH_WORK *wk, int seq );
 
 
 
@@ -987,6 +988,7 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectVCTChange4,  //WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE4
   _playerDirectVCTChange5,  //WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE5
   _playerDirectVCTChange6,  //WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE6
+  _parentModeSelectMenuInit2, //WIFIP2PMATCH_MODE_SELECT_INIT2
 };
 
 #define _MAXNUM   (2)         // 最大接続人数
@@ -4054,8 +4056,15 @@ static int _parentModeSelectRelWait( WIFIP2PMATCH_WORK* wk, int seq )
 static int _parentModeSelectMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
 {
   _ParentModeSelectMenu(wk);
-  WifiP2PMatchMessagePrint(wk, msg_wifilobby_006, FALSE);
+  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_INIT2);
   WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
+  return seq;
+}
+
+
+static int _parentModeSelectMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  WifiP2PMatchMessagePrint(wk, msg_wifilobby_006, FALSE);
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_WAIT);
   return seq;
 }
@@ -7066,18 +7075,9 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
     GFL_FONTSYS_SetColor( defL, defS, defB );
     PRINTSYS_QUE_Main(wk->SysMsgQue);
   }
-
-#if 0
-
-  if(wk->SysMsgQue){
-    u8 rb,gb,bb;
-    GFL_FONTSYS_GetColor(&rb,&gb,&bb);
-//    GFL_FONTSYS_SetDefaultColor();
-    PRINTSYS_QUE_Main(wk->SysMsgQue);
-    GFL_TCBL_Main( wk->pMsgTcblSys );
-    GFL_FONTSYS_SetColor(rb,gb,bb);
+  if(wk->SysMenuQue){
+    PRINTSYS_QUE_Main(wk->SysMenuQue);
   }
-#endif
   return GFL_PROC_RES_CONTINUE;
 }
 
