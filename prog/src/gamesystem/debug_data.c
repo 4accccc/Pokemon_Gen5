@@ -204,6 +204,13 @@ static void DEBUG_MyPokeAdd_Saito( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SA
 	PokeParty_Add(party, pp);
 	ZUKANSAVE_SetPokeGet( zukan, pp );
 
+  PP_Setup(pp, MONSNO_MERODHIA, 100, MyStatus_GetID( mystatus ));
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
+  PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
+  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+
 }
 
 
