@@ -427,6 +427,7 @@ typedef struct
 {
   GAMESYS_WORK* gsys;
   FIELDMAP_WORK* fieldmap;
+  FIELD_CAMERA* camera;
   ICA_ANIME* liftAnime;  // リフトの移動アニメーション
 
 } LIFTDOWN_EVENTWORK;
@@ -508,21 +509,27 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     // リフトと自機の座標を初期化
     MoveLift( work );
     SetPlayerOnLift( work );
-    ++(*seq);
+    // カメラのトレース処理停止リクエスト発行
+    FIELD_CAMERA_StopTraceRequest( work->camera );
+    (*seq)++;
     OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
-  // フェードイン
   case 1:
+    // カメラのトレース処理終了待ち
+    if( FIELD_CAMERA_CheckTrace( work->camera ) == FALSE ) { (*seq)++; }
+    break;
+  // フェードイン
+  case 2:
     {
       GMEVENT* new_event;
       new_event = EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap, FIELD_FADE_WAIT );
       GMEVENT_CallEvent( event, new_event );
     }
-    ++(*seq);
+    (*seq)++;
     OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
   // アニメ終了待ち
-  case 2:
+  case 3:
     {
       BOOL anime_end;
 
@@ -536,13 +543,13 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       if( anime_end )
       { 
         ICA_ANIME_Delete( work->liftAnime );
-        ++(*seq); 
+        (*seq)++;
         OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
       } 
     }
     break;
   // 終了処理
-  case 3:
+  case 4:
     // 自機を着地させる
     {
       VecFx32 pos;
@@ -556,11 +563,11 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       pos.y = height;
       FIELD_PLAYER_SetPos( player, &pos );
     }
-    ++(*seq); 
+    (*seq)++;
     OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
   // 終了
-  case 4:
+  case 5:
     OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> finish\n" );
     return GMEVENT_RES_FINISH;
   }
@@ -590,6 +597,7 @@ GMEVENT* LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent( GAMESYS_WORK* gsys,
   evwork = GMEVENT_GetEventWork( event );
   evwork->gsys      = gsys;
   evwork->fieldmap  = fieldmap;
+  evwork->camera    = FIELDMAP_GetFieldCamera( fieldmap );
   evwork->liftAnime = NULL;
   return event;
 }
