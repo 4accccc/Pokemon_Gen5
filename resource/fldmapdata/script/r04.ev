@@ -26,6 +26,9 @@ _EVENT_DATA		ev_r04_woman2_01
 _EVENT_DATA		ev_r04_rival_01
 _EVENT_DATA		ev_pos_r04_rival_01
 _EVENT_DATA		ev_bg_r04_sign3_01
+_EVENT_DATA		ev_bg_r04_sign4_01
+_EVENT_DATA		ev_bg_r04_sign1_01
+_EVENT_DATA		ev_r04_mountain_01
 _EVENT_DATA_END
 
 
@@ -439,4 +442,24 @@ _ANIME_LABEL	anm_rival_leave433
 EVENT_START  ev_bg_r04_sign3_01
 	_EASY_BGWIN_MSG(msg_r04_sign3_01 , TYPE_INFO)
 EVENT_END
+
+/**************************************************************/
+/*	R04		é{ê›åfé¶î¬										  */
+/**************************************************************/
+EVENT_START  ev_bg_r04_sign4_01
+	_EASY_BGWIN_MSG(msg_r04_sign4_01 , TYPE_POST)
+EVENT_END
+
+/**************************************************************/
+/*	R04		ìπòHåfé¶î¬										  */
+/**************************************************************/
+EVENT_START  ev_bg_r04_sign1_01
+	_EASY_BGWIN_MSG(msg_r04_sign1_01 , TYPE_ROAD)
+EVENT_END
 	
+/**************************************************************/
+/*	R04		MOUNTAIN										  */
+/**************************************************************/
+EVENT_START		ev_r04_mountain_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04_mountain_01 )
+EVENT_END

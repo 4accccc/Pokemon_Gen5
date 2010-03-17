@@ -44,7 +44,7 @@ EVENT_START		ev_d03r0101_sunglasses_01
 
 	//‚¶‚Ä‚ñ‚µ‚á‚ğ–á‚Á‚Ä‚¢‚È‚¢ê‡
 	IF FLAG_OFF( FE_D03R0101_ITEMGET_01 ) THEN
-		_EASY_TALK_ITEM_EVENT(ITEM_ZITENSYA, 1, FE_D03R0101_ITEMGET_01 , msg_d03r0101_sunglasses_01, msg_d03r0101_sunglasses_02, msg_d03r0101_sunglasses_02 )
+		_EASY_TALK_ITEM_EVENT(ITEM_YAWARAKAISUNA, 1, FE_D03R0101_ITEMGET_01 , msg_d03r0101_sunglasses_01, msg_d03r0101_sunglasses_02, msg_d03r0101_sunglasses_02 )
 	
 	//‚¶‚Ä‚ñ‚µ‚áæ“¾Ï‚İ
 	ELSE

@@ -10,6 +10,7 @@
 #ifndef ZONE_D20R0501_EVC_H
 #define ZONE_D20R0501_EVC_H
 
+#define D20R0501_STOPPER_01                0
 
 #endif //ZONE_D20R0501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d20r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

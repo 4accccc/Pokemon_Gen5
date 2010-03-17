@@ -37,6 +37,7 @@
 #define R04_FLD_ITEM_11                   22
 #define R04_FLD_ITEM_09                   23
 #define R04_FLD_ITEM_10                   24
+#define R04_MOUNTAIN_01                   25
 
 #endif //ZONE_R04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -44,5 +45,7 @@
 #define ZONE_R04_EVB_H
 
 #define BGID_R04_SIGN3_01                 0
+#define BGID_R04_SIGN4_01                 1
+#define BGID_R04_SIGN1_01                 2
 
 #endif //ZONE_R04_EVB_H

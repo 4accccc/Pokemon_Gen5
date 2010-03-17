@@ -10,6 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_seatemple_scr.h"
+  .include	"d20r0601.h"
+  .include	"d20r0701.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -104,6 +106,11 @@ EVENT_START ev_seatemple_skill_use_2f
 	_PLAINWIN_MSG_DOWN( msg_seatemple_skill_01 )
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
+	
+	//ストッパー移動
+	_OBJ_ANIME( D20R0601_STOPPER_01, anm_up_move )
+	_OBJ_ANIME_WAIT()
+	
 EVENT_END
 
 /**************************************************************/
@@ -113,5 +120,16 @@ EVENT_START ev_seatemple_skill_use_3f
 	_PLAINWIN_MSG_DOWN( msg_seatemple_skill_01 )
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
+	
+	//ストッパー移動
+	_OBJ_ANIME( D20R0701_STOPPER_01, anm_up_move )
+	_OBJ_ANIME_WAIT()
+	
 EVENT_END
 
+//--------------------------------------------------------------------
+//		ストッパー移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_up_move
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0

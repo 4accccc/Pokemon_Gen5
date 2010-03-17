@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/16 20:54:56
+#save date:2010/03/17 16:44:42
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d20r0501.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,38 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d20r0501.wms
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#type
+1
+#ID name
+D20R0501_STOPPER_01
+#OBJ CODE Number
+STOPPER
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+3
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1032 48 -984
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -54,9 +85,9 @@ EXIT_TYPE_WARP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1032 48 -888
+1048 48 -936
 #size
-3 3
+1 1
 #event number: 1
 #Door Event Label
 DOOR_ID_D20R0501_D20R0301_EXIT01
