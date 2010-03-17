@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2010-03-17T18:56:52"/>
+	<create user="tamada" host="W00139" date="2010-03-18T00:49:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -428,9 +428,9 @@
 ０：どうぐの名前</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]が　いっぱいで
-わたすことが　できません</language>
+わたすことが　できません▼</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]が　一杯で
-渡すことが　できません</language>
+渡すことが　できません▼</language>
 	</row>
 
 	<row id="msg_pdw_item_01" back-color=",,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">

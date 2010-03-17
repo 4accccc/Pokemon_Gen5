@@ -1,9 +1,9 @@
 //====================================================================
-/**						ふしぎなおくりもの配達員
- * @file	postman_scr.ev
- * @brief	ふしぎなおくりもの/貯金アイテムで受け取った物を受け取るための人物
- * @author	tamada GAME FREAK inc.  --> k.ohno -->
- * @date	2006.05.26
+/**						PWD配達員
+ * @file	pdw_postman_scr.ev
+ * @brief	PokemonDreamWorldからの道具を受け取るための配達員
+ * @author	tamada GAME FREAK inc.
+ * @date	2010.03.18
  */
 //====================================================================
 
@@ -12,86 +12,35 @@
 	.include	"scr_seq_def.h"
 
 	.include	"msg_postman.h"
+  .include  "msg_pdw_postman.h"
 
 
 //--------------------------------------------------------------------
 //		スクリプトテーブル
 //--------------------------------------------------------------------
-_EVENT_DATA		ev_init_postman
-_EVENT_DATA   ev_recover_postman
-_EVENT_DATA		ev_postman
+_EVENT_DATA   ev_zone_pdw_postman
+_EVENT_DATA		ev_pdw_postman
 _EVENT_DATA_END
 
-DEFINE_LOCAL  POSTMAN_OBJID
-DEFINE_LOCAL  PLAYERX
-DEFINE_LOCAL  PLAYERZ
-DEFINE_LOCAL  POSTMANX
-DEFINE_LOCAL  POSTMANZ
 
 /********************************************************************/
-/*						FIELD_INIT_LABEL                                      */
+/*						ZONE_CHANGE_LABEL                                     */
 /********************************************************************/
-INIT_EVENT_START  ev_init_postman
-    _CALL   sub_postman_on_off
-INIT_EVENT_END
-
-/********************************************************************/
-/*						FIELD_RECOVER_LABEL                                   */
-/********************************************************************/
-INIT_EVENT_START  ev_recover_postman
-    _CHECK_CONTINUE_RECOVER( SCWK_ANSWER )
-    IF $SCWK_ANSWER == TRUE THEN
-        _CALL   sub_postman_on_off
+INIT_EVENT_START  ev_zone_pdw_postman
+	  _PDW_POSTMAN_REQUEST(	SCR_PDW_POSTMAN_REQ_EXISTS, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN 
+        _FLAG_RESET( FH_01 )
+    ELSE
+        _FLAG_SET( FH_01 )
     ENDIF
 INIT_EVENT_END
 
-/********************************************************************/
-/*						配達員の出現・引っ込み処理                            */
-/********************************************************************/
-sub_postman_on_off:
-  //贈り物の存在チェック
-	_POSTMAN_REQUEST(	SCR_POSTMAN_REQ_EXISTS, SCWK_ANSWER )
-	IF $SCWK_ANSWER == 0 THEN
-      //贈り物がない場合
-      _FLAG_SET( FV_POSTMAN )
-      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OBJSTAT, SCWK_ANSWER )
-      IF $SCWK_ANSWER == SCR_POSTMAN_OBJ_EXISTS THEN
-          _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OBJID, POSTMAN_OBJID )
-          _OBJ_DEL( POSTMAN_OBJID )
-      ENDIF
-	ELSE
-      //贈り物がある場合
-      _FLAG_RESET( FV_POSTMAN )
-      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OBJSTAT, SCWK_ANSWER )
-      IF $SCWK_ANSWER == SCR_POSTMAN_OBJ_EXISTS THEN
-          _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OBJID, POSTMAN_OBJID )
-          _CALL sub_postman_move
-      ELSE
-          _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OBJID, POSTMAN_OBJID )
-          _OBJ_ADD( POSTMAN_OBJID )
-          _CALL sub_postman_move
-      ENDIF
-	ENDIF
-
-  _RET
-
-
-sub_postman_move:
-  _OBJ_POS_GET( POSTMAN_OBJID, POSTMANX, POSTMANZ )
-  _PLAYER_POS_GET( PLAYERX, PLAYERZ )
-  IF $PLAYERX == $POSTMANX && $PLAYERZ == $POSTMANZ THEN
-      //自機と位置が重なっていたら一つ右にずらす
-      $POSTMANX += 1
-      _OBJ_POS_CHANGE( POSTMAN_OBJID, POSTMANX, 0, POSTMANZ, DIR_DOWN )
-  ENDIF
-
-  _RET
 
 
 /********************************************************************/
-//				ふしぎなおくりもの配達員
+//				PDW配達員
 /********************************************************************/
-EVENT_START   ev_postman
+EVENT_START   ev_pdw_postman
 	_TALK_OBJ_START()
 
   _CALL   sub_postman_main
@@ -99,12 +48,14 @@ EVENT_START   ev_postman
 EVENT_END
 
 
+DEFINE_LOCAL  ng_count
+
 sub_postman_main:
   //存在チェック
-	_POSTMAN_REQUEST(	SCR_POSTMAN_REQ_EXISTS, SCWK_ANSWER )
+	_PDW_POSTMAN_REQUEST(	SCR_PDW_POSTMAN_REQ_EXISTS, SCWK_ANSWER )
   IF $SCWK_ANSWER == 0 THEN
   _DEBUG_PRINT_WK( SCWK_ANSWER )
-      _BALLOONWIN_TALKOBJ_MSG( msg_postman_04 ) //おあずかりしている～もうありません
+      _BALLOONWIN_TALKOBJ_MSG( msg_pdw_postman_02 ) //おあずかりしている～もうありません
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
       _RET
@@ -112,44 +63,42 @@ sub_postman_main:
 
   //あいさつ
   _PLAYER_NAME( 0 )
-	_GET_TIMEZONE( SCWK_ANSWER )
-
-  SWITCH   $SCWK_ANSWER
-  CASE  TIMEZONE_MORNING  THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_postman_01 ) //おはようございます
-  CASE  TIMEZONE_NOON THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_postman_02 ) //こんにちは
-  DEFAULT
-      _BALLOONWIN_TALKOBJ_MSG( msg_postman_03 ) //こんばんは
-  ENDSWITCH
-
+  _BALLOONWIN_TALKOBJ_MSG( msg_pdw_postman_01 ) //こんにちは
   _BALLOONWIN_CLOSE()
 
   //受け取れるか？チェック
-	_POSTMAN_REQUEST(	SCR_POSTMAN_REQ_ENABLE, SCWK_ANSWER )
+  // SCWK_ANSWER == 戻り値BOOL
+	_PDW_POSTMAN_REQUEST(	SCR_PDW_POSTMAN_REQ_ENABLE, SCWK_ANSWER )
 
   IF $SCWK_ANSWER == TRUE THEN
       //「受け取った！」
-      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OK_MSG, SCWK_ANSWER )
-      _SYSWIN_MSG( SCWK_ANSWER , POS_DOWN )
       _ME_PLAY( SEQ_ME_LVUP )
-      _AB_KEYWAIT()
+      _SYSWIN_MSG_ALLPUT( msg_pdw_postman_04, POS_DEFAULT )
+      //受け取ったアイテム内容を表示する
+      _PDW_POSTMAN_REQUEST( SCR_PDW_POSTMAN_REQ_OK_INFO, SCWK_ANSWER )
       _ME_WAIT()
       _SYSWIN_CLOSE()
 
       //受け取り処理を実行
-      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_RECEIVE, SCWK_ANSWER )
+      _PDW_POSTMAN_REQUEST( SCR_PDW_POSTMAN_REQ_RECEIVE, SCWK_ANSWER )
+  ENDIF
 
-      _BALLOONWIN_TALKOBJ_MSG( msg_postman_05 ) //またのごりようをおまちしております
-      _LAST_KEYWAIT()
-      _BALLOONWIN_CLOSE()
-  ELSE
-      //「受け取れなかった！」
-      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_NG_MSG, SCWK_ANSWER )
-      _SYSWIN_MSG( SCWK_ANSWER , POS_DOWN )
-      _LAST_KEYWAIT()
+  _PDW_POSTMAN_REQUEST( SCR_PDW_POSTMAN_REQ_NG_COUNT, ng_count )
+  IF $ng_count > 0 THEN
+      $SCWK_ANSWER = 0
+      WHILE $SCWK_ANSWER < $ng_count
+          //「受け取れなかった！」
+          // SCWK_ANSWER == 引数：NGアイテムのインデックス
+          _PDW_POSTMAN_REQUEST( SCR_PDW_POSTMAN_REQ_NG_ITEM, SCWK_ANSWER )
+          _SYSWIN_MSG( msg_pdw_postman_05 , POS_DEFAULT )
+          $SCWK_ANSWER += 1
+      ENDWHILE
       _SYSWIN_CLOSE()
   ENDIF
+
+  _BALLOONWIN_TALKOBJ_MSG( msg_postman_03 ) //またのごりようをおまちしております
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 
   _RET
 

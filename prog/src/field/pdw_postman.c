@@ -81,7 +81,7 @@ typedef struct
   NNSG2dCharacterData *pChara;
 }KEYWAIT_CURSOR_WORK;
 
-#if 0
+#if 1
 //======================================================================
 //  キー送りカーソル
 //======================================================================
@@ -405,6 +405,10 @@ typedef struct {
   u16 itemPos;
 }ITEM_WINDOW_EVENT_WORK;
 
+/**
+ * @todo  ちゃんと外部参照出来るようにする
+ */
+extern GFL_BMPWIN * FLDMSGWIN_GetBmp( FLDMSGWIN * fldmsgwin );
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static GMEVENT_RESULT itemWindowEvent( GMEVENT * event, int *seq, void * work )
@@ -423,6 +427,7 @@ static GMEVENT_RESULT itemWindowEvent( GMEVENT * event, int *seq, void * work )
         iwew->fieldmap, &iwew->itemData[iwew->itemPos], view_count );
     //表示ウィンドウ：描画
     PDWPOSTMAN_ItemWindow_Draw( iwew->piww );
+    keyWaitCursor_Init( &iwew->piww->cursor_work, FIELDMAP_GetHeapID( iwew->fieldmap ) );
     (*seq) ++;
     break;
 
@@ -435,6 +440,12 @@ static GMEVENT_RESULT itemWindowEvent( GMEVENT * event, int *seq, void * work )
     break;
 
   case 2:
+    {
+      GFL_BMPWIN * bmpwin = FLDMSGWIN_GetBmp( iwew->piww->fldmsgwin );
+      GFL_BMP_DATA * bmp = GFL_BMPWIN_GetBmp( bmpwin );
+      keyWaitCursor_Write( &iwew->piww->cursor_work, bmp, 0x0f );
+      GFL_BMPWIN_TransVramCharacter( bmpwin );
+    }
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
       PMSND_PlaySE( SEQ_SE_MESSAGE );
@@ -444,6 +455,7 @@ static GMEVENT_RESULT itemWindowEvent( GMEVENT * event, int *seq, void * work )
 
   case 3:
     //表示ウィンドウ：消去
+    keyWaitCursor_Delete( &iwew->piww->cursor_work );
     PDWPOSTMAN_ItemWindow_Delete( iwew->piww );
     (*seq) ++;
     break;
@@ -544,6 +556,9 @@ static DREAMWORLD_ITEM_DATA * getRestItems(
 
 
 //--------------------------------------------------------------
+/**
+ * @brief PDW配達員：アイテムを受け取る
+ */
 //--------------------------------------------------------------
 void PDW_POSTMAN_ReceiveItems( GAMEDATA * gamedata, HEAPID heapID, DREAMWORLD_SAVEDATA * dws )
 {
@@ -625,6 +640,11 @@ u16 PDW_POSTMAN_searchNGItem( GAMEDATA * gamedata, HEAPID heapID, DREAMWORLD_SAV
 
 
 //--------------------------------------------------------------
+/**
+ * @brief PDW配達員：受け取れるアイテム表示イベント
+ * @param gsys
+ * @return  GMEVENT 生成したイベント
+ */
 //--------------------------------------------------------------
 GMEVENT * PDW_POSTMAN_CreateInfoEvent( GAMESYS_WORK * gsys )
 {
