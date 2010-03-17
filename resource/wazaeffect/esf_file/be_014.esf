@@ -1,0 +1,13 @@
+EFFSEQ
+$0001
+c:\home\pokemon_wb\resource\particle\wazaeffect\w_002.spa
+#001
+%00
+射影モード	正射影
+制御モード変更	継続
+指定されたワークから値をゲット	TRTYPE_A
+トレーナーセット	BTLEFF_TRTYPE_FROM_WORK	POS_AA	-64:232:0
+トレーナー移動	POS_AA	追従	104	-80	32	0	0
+エフェクト終了待ち	すべて
+エフェクト終了
+&
