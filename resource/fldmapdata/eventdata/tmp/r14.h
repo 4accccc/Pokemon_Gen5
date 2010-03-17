@@ -15,6 +15,7 @@
 #define TR_FISHING_05                      2
 #define TR_ELITEM_16                       3
 #define TR_ELITEW_16                       4
+#define R14_SAGE2_01                       5
 
 #endif //ZONE_R14_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r14.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

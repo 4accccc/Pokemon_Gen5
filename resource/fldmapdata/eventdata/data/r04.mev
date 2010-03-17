@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/17 18:14:13
+#save date:2010/03/17 19:55:36
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r04.wms
 #SECTION START:OBJ_EVENT
@@ -838,7 +838,7 @@ SCRID_BG_R04_SIGN3_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-536 0 -584
+552 0 -584
 #event number: 1
 #Bg Event Label
 BGID_R04_SIGN4_01
