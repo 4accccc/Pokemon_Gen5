@@ -73,10 +73,10 @@ EVENT_START		ev_c03r0901_musician_01
 
       //ウェイト
       _TIME_WAIT( MERODHIA_DANCE_WAIT )
-/**      
+      
       //ダンス開始
-      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia )
-*/  //@todo
+//      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia )//@todo
+      
       //ウェイト
       _TIME_WAIT( MERODHIA_RISE_WAIT ) 
       //上昇
