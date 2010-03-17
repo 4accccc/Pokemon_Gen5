@@ -21,6 +21,9 @@
 #define D07R0401_RIVAL_01                  2
 #define D07R0401_HAKAIM_01                 3
 #define D07R0401_FLD_ITEM_06               4
+#define D06R0401_TR_GROUND_01              5
+#define D06R0401_TR_GROUND_02              6
+#define D06R0401_TR_GROUND_03              7
 
 #endif //ZONE_D07R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

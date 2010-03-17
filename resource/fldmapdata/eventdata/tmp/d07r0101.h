@@ -28,6 +28,7 @@
 #define D07R0101_WORKMAN1_01               0
 #define TR_WORKER2_15                      1
 #define D07R0101_FLD_ITEM_01               2
+#define D07R0101_FLD_ITEM_02               3
 
 #endif //ZONE_D07R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d07r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

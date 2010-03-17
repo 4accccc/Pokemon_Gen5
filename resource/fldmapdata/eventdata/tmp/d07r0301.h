@@ -23,7 +23,12 @@
 #define TR_DOCTOR_02                       2
 #define TR_MOUNT_05                        3
 #define D07R0301_FLD_ITEM_01               4
-#define D07R0301_FLD_ITEM_02               5
+#define D07R0301_TR_GROUND_01              5
+#define D07R0301_TR_GROUND_02              6
+#define D07R0301_TR_GROUND_03              7
+#define D07R0301_TR_GROUND_04              8
+#define D07R0301_TR_GROUND_05              9
+#define D07R0301_TR_GROUND_06             10
 
 #endif //ZONE_D07R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
