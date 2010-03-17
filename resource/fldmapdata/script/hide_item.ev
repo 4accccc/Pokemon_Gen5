@@ -107,7 +107,7 @@ EVENT_START ev_hide_item_008
 EVENT_END
 
 EVENT_START ev_hide_item_009
-//侵入先ライモンシティ ( 405, 468 )
+//侵入先ライモンシティ ( 406, 468 )
 	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_009 )// パレスだま
 EVENT_END
 
@@ -132,7 +132,7 @@ EVENT_START ev_hide_item_013
 EVENT_END
 
 EVENT_START ev_hide_item_014
-//侵入先カゴメタウン ( 657, 185 )
+//侵入先カゴメタウン ( 660, 185 )
 	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_014 )// パレスだま
 EVENT_END
 
@@ -182,7 +182,7 @@ EVENT_START ev_hide_item_023
 EVENT_END
 
 EVENT_START ev_hide_item_024
-//侵入先カゴメタウン ( 648, 175 )
+//侵入先カゴメタウン ( 654, 189 )
 	_ITEM_EVENT_HIDEITEM( 619, 1, FLAG_HIDEITEM_024 )// パレスだま
 EVENT_END
 
