@@ -369,6 +369,9 @@ void MMDL_SetRailLocation( MMDL * fmmdl, const RAIL_LOCATION* location )
 
   FIELD_RAIL_WORK_SetLocation( p_work->rail_wk, location );
 
+  // 保存
+  MMdl_RailCommon_SetSaveLocation( p_work, location );
+
   // 座標の更新
   FIELD_RAIL_WORK_GetPos( p_work->rail_wk, &pos );
 	MMDL_SetVectorPos( fmmdl, &pos );
@@ -1305,6 +1308,12 @@ static void* MMdl_RailDefaultInit( MMDL* fmmdl, u32 work_size )
   {
     MMDL_SetRailLocation( fmmdl, &location );
   }
+  else
+  {
+    //0クリア
+    GFL_STD_MemClear( &location, sizeof(RAIL_LOCATION) );
+    MMDL_SetRailLocation( fmmdl, &location );
+  }
 
   return p_work;
 }
@@ -1520,11 +1529,13 @@ static void MMdl_RailCommon_ReflectSaveLocation( MV_RAIL_COMMON_WORK* p_work, MM
     VecFx32 pos;
     
     FIELD_RAIL_WORK_SetLocation( p_work->rail_wk, &p_work->location );
-    p_work->location.type = FIELD_RAIL_TYPE_MAX;
+    //p_work->location.type = FIELD_RAIL_TYPE_MAX;
 
     // ポジション
     FIELD_RAIL_WORK_GetPos( p_work->rail_wk, &pos );
     MMDL_SetVectorPos( fmmdl, &pos );
+  }else{
+    GF_ASSERT(0);
   }
 }
 

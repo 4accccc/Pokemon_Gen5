@@ -109,13 +109,14 @@ typedef struct
  */
 //------------------------------------------------------------------
 struct _FIELD_RAIL_WORK{  
-  FIELD_RAIL_TYPE type;
+  u16 type;
+  u16  use;
   union { 
     void * dummy;
     const RAIL_POINT * point;
     const RAIL_LINE * line;
   };
-  u16 active;
+  u16  active;
 	u16 rail_index;	
   /// LINEにいる間の、LINE上でのオフセット位置
   s32 line_ofs;
@@ -151,6 +152,7 @@ struct _FIELD_RAIL_WORK{
   RAIL_LOCATION last_location;
 
   const FIELD_RAIL_MAN* cp_man;
+
 };
 
 
@@ -221,6 +223,7 @@ static BOOL IsLineSwitchMoveOk( const RAIL_LINE_SWITCH* work, const RAIL_LINE * 
 //------------------------------------------------------------------
 static void initRail(FIELD_RAIL_WORK * work, const RAIL_SETTING* rail_dat, const FIELD_RAIL_MAN* cp_man );
 static void clearRail( FIELD_RAIL_WORK * work, const RAIL_SETTING* rail_dat );
+static BOOL isUseRail(const FIELD_RAIL_WORK * work);
 static BOOL isValidRail(const FIELD_RAIL_WORK * work);
 static const RAIL_CAMERA_SET * getCameraSet(const FIELD_RAIL_WORK * work);
 static const char * getRailName(const FIELD_RAIL_WORK * work);
@@ -289,7 +292,7 @@ static void RAIL_LOCATION_Dump(const RAIL_LOCATION * railLoc)
 FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID, u32 work_num, FIELD_CAMERA * camera)
 { 
   int i;
-  FIELD_RAIL_MAN * man = GFL_HEAP_AllocMemory(heapID, sizeof(FIELD_RAIL_MAN));
+  FIELD_RAIL_MAN * man = GFL_HEAP_AllocClearMemory(heapID, sizeof(FIELD_RAIL_MAN));
 
   man->heapID = heapID;
   man->active_flag = FALSE;
@@ -308,6 +311,7 @@ FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID, u32 work_num, FIELD_CAMERA
   // 計算用ワークも初期か
   man->calc_work = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_RAIL_WORK) );
   initRail(man->calc_work, &man->rail_dat, man);
+  man->calc_work->use = TRUE;
 
   //TOMOYA_Printf( "rail man %d\n", sizeof(FIELD_RAIL_MAN) );
   //TOMOYA_Printf( "rail work %d\n", sizeof(FIELD_RAIL_WORK)*work_num );
@@ -405,7 +409,7 @@ FIELD_RAIL_WORK* FIELD_RAIL_MAN_CreateWork( FIELD_RAIL_MAN * man )
   work = NULL;
   for( i=0; i<man->work_num; i++ )
   {
-    if( isValidRail( &man->rail_work[i] ) == FALSE )
+    if( isUseRail( &man->rail_work[i] ) == FALSE )
     {
       work = &man->rail_work[i];
       break;
@@ -413,6 +417,8 @@ FIELD_RAIL_WORK* FIELD_RAIL_MAN_CreateWork( FIELD_RAIL_MAN * man )
   }
   // あきなし！
   GF_ASSERT( work );
+
+  work->use = TRUE;
 
   return work;
 }
@@ -428,6 +434,8 @@ FIELD_RAIL_WORK* FIELD_RAIL_MAN_CreateWork( FIELD_RAIL_MAN * man )
 void FIELD_RAIL_MAN_DeleteWork( FIELD_RAIL_MAN * man, FIELD_RAIL_WORK* work )
 {
   initRail( work, &man->rail_dat, man );
+
+  work->use = FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -3096,9 +3104,16 @@ static void clearRail( FIELD_RAIL_WORK * work, const RAIL_SETTING* rail_dat )
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static BOOL isUseRail(const FIELD_RAIL_WORK * work)
+{
+  return work->use; 
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static BOOL isValidRail(const FIELD_RAIL_WORK * work)
 {
-  if (work->type < FIELD_RAIL_TYPE_MAX && work->dummy != NULL)
+  if ( (work->type < FIELD_RAIL_TYPE_MAX) && (work->dummy != NULL) && work->use )
   {
     return TRUE;
   }
