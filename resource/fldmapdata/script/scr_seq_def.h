@@ -4739,9 +4739,13 @@
 //--------------------------------------------------------------
 /**
  * @def _GET_ZUKAN_COMPLETE
- * @brief
+ * @brief ずかん完成チェック
  * @param ret_wk    TRUEのとき、完成
  * @param mode      ずかん評価モード（script_def.hのSCR_ZUKAN_HYOUKA_MODE_～を参照）
+ *
+ * @li  SCR_ZUKAN_HYOUKA_MODE_GLOBAL    全国図鑑でのチェック
+ * @li  SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET ローカル図鑑でのチェック
+ * @li  その他のSCR_ZUKAN_HYOUKA_MODE_～には対応していない
  */
 //--------------------------------------------------------------
 #define _GET_ZUKAN_COMPLETE( ret_wk, mode ) \
