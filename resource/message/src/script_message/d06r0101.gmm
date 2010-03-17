@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-13T21:39:38"/>
+	<create user="matsumiya" host="W00224" date="2010-03-17T18:51:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -371,7 +371,7 @@
 ……　……　来い▼</language>
 	</row>
 
-	<row id="msg_d06r0101_ninja_01a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_d06r0101_ninja_01a" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・主人公に？マーク表示後
 　GRIDX=10、GRIDZ=52まで主人公を連れ歩き
@@ -394,20 +394,20 @@
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ありがとう▼
 いまの　れんちゅうは
 ダークトリニティ▽
-プラズマだんの　メンバーさ▼
+プラズマだんの　メンバーだよ▼
 ちなみに　この　ほらあなの
 いりぐちに　デンチュラの　すを▽
-よういしたのも　かれら　らしいよ▼[BE:09:速度コントロール:0]</language>
+よういしたのも　かれら　らしいね▼[BE:09:速度コントロール:0]</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……ありがとう▼
 今の　連中は
 ダークトリニティ▽
-プラズマ団の　メンバーさ▼
+プラズマ団の　メンバーだよ▼
 ちなみに　この　洞穴の
 入り口に　デンチュラの　巣を▽
-用意したのも　カレら　らしいよ▼[BE:09:速度コントロール:0]</language>
+用意したのも　カレら　らしいね▼[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_10a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d06r0101_boss_10a" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・下を向き
 ・はい/いいえの選択肢表示</comment>
@@ -454,7 +454,7 @@
 おどろくことも　できないか[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_13" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_13" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・表示後、画面上に移動する
 ・画面外に消えると主人公操作可能に</comment>
@@ -471,7 +471,7 @@
 キミは　どっちにも　そまっていない
 いわば　ニュートラルな　そんざい……▽
 それが　いいらしいんだ▼
-このさきには　プラズマだんが
+このさきで　プラズマだんが
 キミを　まっている▼
 ゲーチスは　キミが　どれほどの
 ポケモントレーナーか　ためすそうだ▼
@@ -489,7 +489,7 @@
 キミは　どっちにも　染まっていない
 いわば　ニュートラルな　存在……▽
 それが　いいらしいんだ▼
-この先には　プラズマ団が
+この先で　プラズマ団が
 キミを　待ち構えている▼
 ゲーチスは　キミが　どれほどの
 ポケモントレーナーか　試すそうだ▼
@@ -497,7 +497,7 @@
 キミを　待っているよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d06r0101_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d06r0101_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：シーン1
 ・pos（GRIDX=11、GRIDZ=45~47）で発動
 ・メッセージ表示後、主人公に！マーク</comment>
@@ -506,7 +506,7 @@
 		<language name="JPN_KANJI" width="256">おーい！▼</language>
 	</row>
 
-	<row id="msg_d06r0101_white_01a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d06r0101_white_01a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀：シーン1
 ・ｒ06側から登場
 　所定の位置（GRIDX=9、GRIDZ=46）に
@@ -725,7 +725,7 @@
 だって　旅は　出会い　なんだもん！</language>
 	</row>
 
-	<row id="msg_d06r0101_ninja_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_d06r0101_ninja_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・pos（GRIDX=38、GRIDZ=41~42）を踏むと
 　主人公を囲むようにダークトリニティ3人出現
@@ -738,7 +738,7 @@
 ……　……　来い▼</language>
 	</row>
 
-	<row id="msg_d06r0101_ninja_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_d06r0101_ninja_03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・上記の所定位置につくと
 　メッセージ表示後に3人を削除</comment>
@@ -755,7 +755,7 @@
 おまえを　待ち構えている▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・GRIDX=69、GRIDZ=13、左向きで待機
 ・pos（GRIDX=67、GRIDZ=12~14）を踏むと
@@ -776,7 +776,7 @@
 心は　そう　叫んでいない？[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・はい選択時
 ・メッセージ表示後、戦闘へ</comment>
@@ -793,7 +793,7 @@
 さらに　キミの心を　折る！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・メッセージ表示後、戦闘へ</comment>
@@ -810,7 +810,7 @@
 ボクが　キミの心を　折る！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ
 （頭上に「？マーク」表示？）
