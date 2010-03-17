@@ -1131,10 +1131,10 @@ static u8 calcTailVtx1Vtx2( const TMSGWIN*	win,
 			if(win->tailData.tailPat == TAIL_SETPAT_NONE){
 				if(targetScrx < 128){
 					side = 0;
-					tailPat = TAIL_SETPAT_FIX_UL;
+					tailPat = TAIL_SETPAT_FIX_DL;
 				} else {
 					side = 1;
-					tailPat = TAIL_SETPAT_FIX_UR;
+					tailPat = TAIL_SETPAT_FIX_DR;
 				}
 			} else {
 				if(win->tailData.tailPat == TAIL_SETPAT_FIX_DL){
