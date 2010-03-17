@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_n01r0203.h"
-  //.include  "n01r0203.h"
+  .include  "n01r0203.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,7 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_n01r0203_goddess1_01
-_EVENT_DATA    ev_n01r0203_goddess1_02
+_EVENT_DATA    ev_n01r0203_goddess2_01
 _EVENT_DATA_END
 
 
@@ -55,7 +55,10 @@ EVENT_END
 /************************************************************/
 /*							女神２							*/
 /************************************************************/
-EVENT_START	ev_n01r0203_goddess1_02
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0203_goddess2_01 )
+EVENT_START	ev_n01r0203_goddess2_01
+_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0203_goddess2_01w, msg_n01r0203_goddess2_01b, N01R0203_GODDESS2_01, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 

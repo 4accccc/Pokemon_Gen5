@@ -53,7 +53,8 @@ ev_seatemple:
 /**************************************************************/
 EVENT_START ev_seatemple_step_000
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step00 )
-  _PLAINWIN_CLOSE()
+	_LAST_KEYWAIT()
+	_PLAINWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
@@ -61,7 +62,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_seatemple_step_100
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step01 )
-  _PLAINWIN_CLOSE()
+	_LAST_KEYWAIT()
+	_PLAINWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
@@ -69,7 +71,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_seatemple_step_300
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step02 )
-  _PLAINWIN_CLOSE()
+	_LAST_KEYWAIT()
+	_PLAINWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
@@ -77,7 +80,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_seatemple_step_450
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step03 )
-  _PLAINWIN_CLOSE()
+	_LAST_KEYWAIT()
+	_PLAINWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
@@ -85,9 +89,11 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_seatemple_step_500
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step04 )
-  _PLAINWIN_CLOSE()
+	_LAST_KEYWAIT()
+	_PLAINWIN_CLOSE()
 
-  _DIVING( SCR_EV_DIVING_MAPCHANGE_UP )
+	_DIVING( SCR_EV_DIVING_MAPCHANGE_UP )
+
 EVENT_END
 
 
@@ -96,7 +102,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_seatemple_skill_use_2f
 	_PLAINWIN_MSG_DOWN( msg_seatemple_skill_01 )
-  _PLAINWIN_CLOSE()
+	_LAST_KEYWAIT()
+	_PLAINWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
@@ -104,6 +111,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_seatemple_skill_use_3f
 	_PLAINWIN_MSG_DOWN( msg_seatemple_skill_01 )
-  _PLAINWIN_CLOSE()
+	_LAST_KEYWAIT()
+	_PLAINWIN_CLOSE()
 EVENT_END
 

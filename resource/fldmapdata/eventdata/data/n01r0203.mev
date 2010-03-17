@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/25 12:07:01
+#save date:2010/03/17 13:29:46
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\n01r0203.wms
 #SECTION START:OBJ_EVENT
@@ -45,7 +45,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-N01R0203_GODDESS1_02
+N01R0203_GODDESS2_01
 #OBJ CODE Number
 GODDESS2
 #MOVE CODE Number
@@ -55,7 +55,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_N01R0203_GODDESS1_02
+SCRID_N01R0203_GODDESS2_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
