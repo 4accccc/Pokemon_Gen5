@@ -397,7 +397,7 @@ typedef struct {
   PIWW * piww;
 
   //表示するアイテムデータ配列へのポインタ
-  const DREAMWORLD_ITEM_DATA * itemData;
+  DREAMWORLD_ITEM_DATA * itemData;
   //表示するアイテムデータ配列数
   u32 itemCount;
   
@@ -451,7 +451,7 @@ static GMEVENT_RESULT itemWindowEvent( GMEVENT * event, int *seq, void * work )
   case 4:
     if ( iwew->itemPos + PIWW_MAX >= iwew->itemCount )
     { //表示しきった場合
-      GFL_HEAP_FreeMemory( iwew->itemData );
+      GFL_HEAP_FreeMemory( (void*)iwew->itemData );
       return GMEVENT_RES_FINISH;
     }
     //まだ表示するアイテムが残っているので最初から
@@ -462,6 +462,7 @@ static GMEVENT_RESULT itemWindowEvent( GMEVENT * event, int *seq, void * work )
   return GMEVENT_RES_CONTINUE;
 }
 
+#if 0
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
@@ -501,6 +502,7 @@ GMEVENT * DEBUG_EVENT_PDW_PostmanWindow( GAMESYS_WORK * gsys )
   iwew->itemCount = NELEMS(testData);
   return event;
 }
+#endif
 
 
 //======================================================================
