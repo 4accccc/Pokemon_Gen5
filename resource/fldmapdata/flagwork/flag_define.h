@@ -295,10 +295,10 @@
 #define FE_R13_TREASURE_FIRSTTALK          279 /* 0x0117 R13お宝イベント：初回会話フラグ */
 #define FE_C05R0201_POKETRADE_01           280 /* 0x0118 ホドエモシティポケモン交換イベント */
 #define FE_C03R0901_MELODY                 281 /* 0x0119 配布イベント：酒場のメロディアイベントを終えた */
-		/* not used   282(0x011a) */
-		/* not used   283(0x011b) */
-		/* not used   284(0x011c) */
-		/* not used   285(0x011d) */
+#define FE_D05R0201_PLASMA_01              282 /* 0x011a D05R0201：プラズマ団スクリプト制御戦闘フラグ */
+#define FE_D05R0201_PLASMA_02              283 /* 0x011b D05R0201：プラズマ団スクリプト制御戦闘フラグ */
+#define FE_D05R0201_PLASMA_03              284 /* 0x011c D05R0201：プラズマ団スクリプト制御戦闘フラグ */
+#define FE_D05R0201_PLASMA_04              285 /* 0x011d D05R0201：プラズマ団スクリプト制御戦闘フラグ */
 		/* not used   286(0x011e) */
 		/* not used   287(0x011f) */
 		/* not used   288(0x0120) */
