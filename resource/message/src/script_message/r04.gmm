@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-11T12:41:37"/>
+	<create user="matsumiya" host="W00224" date="2010-03-17T15:28:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -465,6 +465,24 @@ TVトランシーバー</attribute>
 そこはかとなく　ロマンティックね</language>
 	</row>
 
+	<row id="msg_r04_mountain_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・GRIDX=427、GRIDZ=592</comment>
+		<attribute name="キャラ指定">MOUNTAIN</attribute>
+		<language name="JPN" width="256">おっと！　トレーナー
+すなの　いろを　よくみてごらん▼
+いろの　こい　すな
+うすい　すな　があるだろう？▼
+いろの　こい　すなには
+ポケモンが　ひそんでいるんだぞ！</language>
+		<language name="JPN_KANJI" width="256">おっと！　トレーナー
+砂の　色を　よくみてごらん▼
+色味の　濃い　砂
+薄い　砂が　あるだろう？▼
+色味の　濃い　砂には
+ポケモンが　潜んでいるんだぞ！</language>
+	</row>
+
 	<row id="msg_r04_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
@@ -501,6 +519,16 @@ TVトランシーバー</attribute>
 わざが　だせなくなります[BE:01:ページ切り替え（クリア）]
 パワーポイントが　減ったときも
 ポケモンセンターに　行きましょう！</language>
+	</row>
+
+	<row id="msg_r04_sign4_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・GRIDX=398、GRIDZ=557</comment>
+		<attribute name="キャラ指定">看板</attribute>
+		<language name="JPN" width="256">おつかれの　さぎょういんは
+ちかくの　プレハブで　やすもう！</language>
+		<language name="JPN_KANJI" width="256">おつかれの　さぎょういんは
+近くの　プレハブで　休憩しよう！</language>
 	</row>
 
 	<flowchart-group-list>
