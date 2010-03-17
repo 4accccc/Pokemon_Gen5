@@ -3104,10 +3104,6 @@ static void _tsukau_check( FIELD_ITEMMENU_WORK *pWork, void *itemdata, ITEM_ST *
     {
       tbl[BAG_MENU_USE] = BAG_MENU_ORIRU;
     }
-    else if( item->id >= ITEM_HAZIMETEMEERU && item->id <= ITEM_BURIZZIMEERUw )
-    {
-      tbl[BAG_MENU_USE] = BAG_MENU_MIRU;
-    }
     else
     {
       tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU;
