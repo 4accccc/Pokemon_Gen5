@@ -1127,7 +1127,8 @@ SRCS_OVERLAY_VS_MULTI_LIST = battle/app/vs_multi_list.c
 #===> SRCS_OVERLAY_SOGABE_DEBUG
 #===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_PDC = app/pdc/pdc.c \
-                   app/pdc/pdc_main.c
+                   app/pdc/pdc_main.c \
+                   app/pdc/pdc_msg.c
 
 # WIFICLUB
 #===> SRCS_OVERLAY_DEV_WIFI
