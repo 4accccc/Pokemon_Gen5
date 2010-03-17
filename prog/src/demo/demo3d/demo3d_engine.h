@@ -14,23 +14,11 @@ typedef struct _DEMO3D_ENGINE_WORK DEMO3D_ENGINE_WORK;
 
 #ifdef PM_DEBUG
 
+#define DEBUG_USE_KEY // デバッグ用のキー操作を使うフラグ
+
 // @TODO ジェームスの席だけデバッグ処理
 #if DEBUG_ONLY_FOR_james_turner
-
-#define DEBUG_USE_KEY // デバッグ用のキー操作を使うフラグ。基本的に↓の機能を使う場合は必須
-//#define DEBUG_CAMERA_DISP_OFFSET_CONTROL // 2画面のオフセットを操作
-//#define DEBUG_CAMERA_CONTROL // 2画面時のカメラ操作デバッグ
-
 #endif // DEBUG_ONLY_FOR_james_turner
-
-#if DEBUG_ONLY_FOR_iwasawa
-
-#define DEBUG_USE_KEY // デバッグ用のキー操作を使うフラグ。基本的に↓の機能を使う場合は必須
-//#define DEBUG_CAMERA_CONTROL // 2画面時のカメラ操作デバッグ
-
-#endif // DEBUG_ONLY_FOR_iwasawa
-
-#define DEBUG_CAMERA_DISP_OFFSET_CONTROL // 2画面のオフセットを操作
 
 #endif //PM_DEBUG
 

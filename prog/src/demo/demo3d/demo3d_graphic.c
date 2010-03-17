@@ -98,19 +98,6 @@ static const struct
 }	sc_bgsetup[]	=
 {	
 	//MAIN------------------------
-#if 0	//3D設定のためいらない
-	{	
-		GFL_BG_FRAME0_M,	//設定するフレーム
-		{
-			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x128,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
-		},
-		GFL_BG_MODE_TEXT,	//BGの種類
-		TRUE,	//初期表示
-	},
-#endif
 	{	
 		GFL_BG_FRAME1_M,	//設定するフレーム
 		{
@@ -122,30 +109,6 @@ static const struct
 		GFL_BG_MODE_TEXT,//BGの種類
 		TRUE,	//初期表示
 	},
-#if 0
-	{	
-		GFL_BG_FRAME2_M,	//設定するフレーム
-		{
-			0, 0, 0x0800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
-			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
-		},
-		GFL_BG_MODE_TEXT,//BGの種類
-		TRUE,	//初期表示
-	},
-	{	
-		GFL_BG_FRAME3_M,	//設定するフレーム
-		{
-			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x14000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
-			GX_BG_EXTPLTT_01, 3, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
-		},
-		GFL_BG_MODE_TEXT,//BGの種類
-		TRUE,	//初期表示
-	},
-#endif
 	//SUB---------------------------
 	{	
 		GFL_BG_FRAME0_S,	//設定するフレーム
@@ -180,19 +143,6 @@ static const struct
 		GFL_BG_MODE_TEXT,//BGの種類
 		TRUE,	//初期表示
 	},
-#if 0	//使わない場合は、このテーブルから消してください。(#if#endifじゃなくても大丈夫です)
-	{	
-		GFL_BG_FRAME3_S,	//設定するフレーム
-		{
-			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x14000, GFL_BG_CHRSIZ_256x256,
-			GX_BG_EXTPLTT_01, 3, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
-		},
-		GFL_BG_MODE_TEXT,//BGの種類
-		TRUE,	//初期表示
-	},
-#endif
 };
 
 //=============================================================================
@@ -228,7 +178,7 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 //-------------------------------------
 ///	ワーク作成最大数
 //=====================================
-#define GRAPHIC_OBJ_CLWK_CREATE_MAX	(128)
+#define GRAPHIC_OBJ_CLWK_CREATE_MAX	(32)
 
 
 //=============================================================================
@@ -239,8 +189,8 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 //-------------------------------------
 ///	テクスチャ、ﾊﾟﾚｯﾄのVRAMｻｲｽﾞ
 //=====================================
-#define GRAPHIC_G3D_TEXSIZE	(GFL_G3D_TEX128K)	//バンクのテクスチャイメージスロットｻｲｽﾞとあわせてください
-#define GRAPHIC_G3D_PLTSIZE	(GFL_G3D_PLT32K)	//バンクのﾊﾟﾚｯﾄイメージスロットｻｲｽﾞとあわせてください
+#define GRAPHIC_G3D_TEXSIZE	(GFL_G3D_TEX256K)	//バンクのテクスチャイメージスロットｻｲｽﾞとあわせてください
+#define GRAPHIC_G3D_PLTSIZE	(GFL_G3D_PLT64K)	//バンクのﾊﾟﾚｯﾄイメージスロットｻｲｽﾞとあわせてください
 
 //-------------------------------------
 ///	3D設定コールバック関数

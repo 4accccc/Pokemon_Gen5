@@ -579,16 +579,11 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
   }
 #endif
 
-  // 片方の画面の表示位置をずらす
-  if( wk->is_double )
-  {
-#ifdef DEBUG_CAMERA_CONTROL
-    // カメラのPOS/TARGETを上下画面毎に操作/設定
-    debug_camera_control( p_camera );
-#else
+  // 画面の表示位置をずらす
+  if( wk->is_double ){
     set_camera_disp_offset( wk, p_camera );
-#endif
   }
+
   // アニメーション更新
 	{
     int i;
