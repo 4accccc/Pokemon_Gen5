@@ -25,7 +25,7 @@ typedef struct _ITEM_DATA ITEMDATA;   // アイテムデータ
 
 
 // メールアイテムのスタートナンバー
-#define MAIL_START_ITEMNUM  (ITEM_GURASUMEERU)
+#define MAIL_START_ITEMNUM  (ITEM_HAZIMETEMEERU)
 #define MAIL_END_ITEMNUM  (MAIL_START_ITEMNUM+ITEM_MAIL_MAX-1)
 
 //木の実・こやしアイテムのスタートナンバー他
