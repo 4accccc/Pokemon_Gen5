@@ -801,7 +801,7 @@ static void balloonWin_GetOffsetPos(
 
   NNS_G3dWorldPosToScrPos( &target_pos, (int*)&x, (int*)&y );
   
-  KAGAYA_Printf( "BALLOONWIN TARGET pos %xH,%xH,%xH : x=%d,y=%d : ",
+  OS_Printf( "BALLOONWIN TARGET pos %xH,%xH,%xH : x=%d,y=%d : ",
       pos->x, pos->y, pos->z, x, y );
   
   x >>= 3; // chara size
@@ -810,7 +810,7 @@ static void balloonWin_GetOffsetPos(
   y /= 12; // table size
   
   if( x < 4 && y < 2 ){
-    KAGAYA_Printf( "table pos %d,%d\n", x, y );
+    OS_Printf( "table pos %d,%d\n", x, y );
     *offs = data_balloonWinOffsetTbl[y][x];
   }else{
     VecFx32 error = {0,0,0};
@@ -1177,7 +1177,7 @@ VMCMD_RESULT EvCmdBalloonWinWrite( VMHANDLE *core, void *wk )
   u16 pos_type = SCRCMD_GetVMWorkValue( core, work );
   TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
   
-  KAGAYA_Printf( "吹き出しウィンドウ OBJID =%d\n", obj_id );
+  OS_Printf( "吹き出しウィンドウ OBJID =%d\n", obj_id );
   
   if( balloonWin_SetWrite(work,obj_id,arc_id,msg_id,pos_type,type) == TRUE ){
     VMCMD_SetWait( core, BallonWinMsgWait );
