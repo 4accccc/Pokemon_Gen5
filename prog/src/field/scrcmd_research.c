@@ -17,6 +17,7 @@
 #include "field/research_team_def.h"
 #include "savedata/misc.h" 
 #include "savedata/questionnaire_save.h" 
+#include "gamesystem/game_beacon.h"
 
 #include "../../../resource/research_radar/data/question_id.h"            // for QUESTION_ID_xxxx
 #include "../../../resource/research_radar/data/answer_num_question.cdat" // for AnswerNum_question[]
@@ -488,6 +489,7 @@ VMCMD_RESULT EvCmdSetMyAnswer( VMHANDLE *core, void *wk )
 
   // ‰ñ“š‚ðƒZƒbƒg
   QuestionnaireAnswer_WriteBit( myAnswer, qID, aIdx );
+  GAMEBEACON_SendDataUpdate_Questionnaire( myAnswer );
 
   return VMCMD_RESULT_CONTINUE;
 }
