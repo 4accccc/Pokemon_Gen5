@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-12T21:25:00"/>
+	<create user="matsumiya" host="W00224" date="2010-03-17T15:40:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1407" top="228" right="2112" bottom="856" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -401,7 +401,7 @@
 バイバーイ！！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_daruma_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d03r0101_daruma_01">
 		<comment>ポケモン
 ・道具「いかりまんじゅう」を持っていない
 ・GRIDX=58、GRIDZ=33
@@ -413,10 +413,9 @@
 　hakase2_06が表示されない限り、このメッセージ</comment>
 		<attribute name="キャラ指定">ヒヒダルマ
 （瞑想モード）</attribute>
-		<language name="JPN" width="256">ヒヒダルマという
-ポケモンが　ねむっている　すがただ</language>
-		<language name="JPN_KANJI" width="256">ヒヒダルマという
-ポケモンが　眠っている　姿だ</language>
+		<language name="JPN" width="256">こだいの
+ポケモンの　ぞう　らしい……？</language>
+		<language name="JPN_KANJI" width="256">古代の　ポケモン像らしい……？</language>
 	</row>
 
 	<row id="msg_d03r0101_daruma_02">
@@ -427,10 +426,10 @@
 　いいえ→終了</comment>
 		<attribute name="キャラ指定">ヒヒダルマ
 （瞑想モード）</attribute>
-		<language name="JPN" width="256">ねむっている　ヒヒダルマに
-いかりまんじゅうを　あげますか？</language>
-		<language name="JPN_KANJI" width="256">眠っている　ヒヒダルマに
-いかりまんじゅうを　あげますか？</language>
+		<language name="JPN" width="256">いかりまんじゅうを　こだいの
+ポケモンぞうに　おそなえしますか？</language>
+		<language name="JPN_KANJI" width="256">いかりまんじゅうを　古代の
+ポケモン像に　お供えしますか？</language>
 	</row>
 
 	<row id="msg_d03r0101_daruma_03">
@@ -439,13 +438,21 @@
 ・戦闘後、フィールド復帰時に動作モデルを削除</comment>
 		<attribute name="キャラ指定">ヒヒダルマ
 （瞑想モード）</attribute>
-		<language name="JPN" width="256">めざめた　ヒヒダルマが
+		<language name="JPN" width="256">こだいの　ポケモンぞうは
+いかりまんじゅうに　はんのうした！▼
+ポケモンぞうは　ねむっていた
+ポケモンの　ヒヒダルマ　だった！▼　
+めざめた　ヒヒダルマが
 おそいかかってきた！▼</language>
-		<language name="JPN_KANJI" width="256">目覚めた　ヒヒダルマが
+		<language name="JPN_KANJI" width="256">古代の　ポケモン像は
+いかりまんじゅうに　反応した！▼
+ポケモンぞうは　眠っていた
+ポケモンの　ヒヒダルマ　だった！▼　
+目覚めた　ヒヒダルマが
 襲いかかってきた！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_rival_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d03r0101_rival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：d08イベント後
 ・GRIDX=61、GRIDZ=30</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -455,7 +462,7 @@
 古代の城の　入り口[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d03r0101_rival_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d03r0101_rival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：d08イベント後
 ・画面上向きでメッセージ表示
 ・表示後、画面上方向に移動
