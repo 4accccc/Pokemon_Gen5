@@ -135,6 +135,21 @@ typedef enum
   
   MPMS_CONFIRM_POKE_WAIT_MSG,
   MPMS_CONFIRM_POKE_WAIT_YESNO,
+
+  MPMS_CONFIRM_HIDEN_WARN_INIT,
+  MPMS_CONFIRM_HIDEN_WARN_WAIT,
+
+  MPMS_CONFIRM_CHECK_ITEM_INIT,
+  MPMS_CONFIRM_CHECK_ITEM_WAIT,
+  MPMS_CONFIRM_CHECK_ITEM_YESNO,
+
+  MPMS_CONFIRM_CHECK_FULL_WAIT,
+  MPMS_CONFIRM_CHECK_FULL_YESNO,
+
+  MPMS_CONFIRM_CANCEL_INIT,
+  MPMS_CONFIRM_CANCEL_WAIT,
+  MPMS_CONFIRM_CANCEL_YESNO,
+
   MPMS_CONFIRM_POKE_SEND_YESNO,
 
   MPMS_POST_POKE_WAIT,
@@ -1569,17 +1584,20 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
   //共通部分から分岐してくる。
   switch( work->movieState )
   {
+  //子機のポケ集計待ち
   case MPMS_WAIT_COUNT_POKE:
     if( MB_COMM_IsPostMoviePokeNum( work->commWork ) == TRUE )
     {
       const u16 num = MB_COMM_GetMoviePokeNum( work->commWork );
+      const u16 hidenNum = MB_COMM_GetMoviePokeNumHiden( work->commWork );
       if( num > 0 )
       {
         MB_MSG_MessageHide( work->msgWork );
 
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
         MB_MSG_MessageCreateWordset( work->msgWork );
-        MB_MSG_MessageWordsetNumber( work->msgWork , 0 , num , 2 );
+        //ここでの表示は秘伝込み
+        MB_MSG_MessageWordsetNumber( work->msgWork , 0 , num+hidenNum , 2 );
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_03 , MSGSPEED_GetWait() );
         MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
         MB_MSG_MessageDeleteWordset( work->msgWork );
@@ -1595,6 +1613,7 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
     }
     break;
   
+  //連れてきますか？表示待ち
   case MPMS_CONFIRM_POKE_WAIT_MSG:
     if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
     {
@@ -1603,6 +1622,7 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
     }
     break;
   
+  //連れてきますか？はい・いいえ待ち
   case MPMS_CONFIRM_POKE_WAIT_YESNO:
     {
       const MB_MSG_YESNO_RET ret = MB_MSG_UpdateYesNoUpper( work->msgWork );
@@ -1614,20 +1634,159 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
 
         work->yesNoRet = ret;
         MB_MSG_ClearYesNoUpper( work->msgWork );
-        work->movieState = MPMS_CONFIRM_POKE_SEND_YESNO;
         
         if( leastBoxNum < num )
         {
+          //ボックスが足りない！
           work->isBoxNotEnough = TRUE;
+          work->movieState = MPMS_CONFIRM_POKE_SEND_YESNO;
         }
         else
         {
+          //秘伝チェックへ
           work->isBoxNotEnough = FALSE;
+          work->movieState = MPMS_CONFIRM_HIDEN_WARN_INIT;
         }
       }
     }
     break;
     
+  //秘伝チェックへ
+  case MPMS_CONFIRM_HIDEN_WARN_INIT:
+    if( MB_COMM_GetMoviePokeNumHiden( work->commWork ) > 0 )
+    {
+      const u16 num = MB_COMM_GetMoviePokeNum( work->commWork );
+
+      MB_MSG_MessageHide( work->msgWork );
+
+      MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+      MB_MSG_MessageCreateWordset( work->msgWork );
+      //ここでの表示は秘伝込み
+      MB_MSG_MessageWordsetNumber( work->msgWork , 0 , num , 2 );
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_09 , MSGSPEED_GetWait() );
+      MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+      MB_MSG_MessageDeleteWordset( work->msgWork );
+
+      work->movieState = MPMS_CONFIRM_HIDEN_WARN_WAIT;
+    }
+    else
+    {
+      work->movieState = MPMS_CONFIRM_CHECK_ITEM_INIT;
+    }
+    break;
+  
+  //秘伝警告表示待ち
+  case MPMS_CONFIRM_HIDEN_WARN_WAIT:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      MB_MSG_DispYesNoUpper( work->msgWork , MMYT_MID );
+      work->movieState = MPMS_CONFIRM_CHECK_ITEM_INIT;
+    }
+    break;
+  
+  //アイテムの個数チェック
+  case MPMS_CONFIRM_CHECK_ITEM_INIT:
+    if( MB_COMM_GetMoviePokeNumHaveItem( work->commWork ) == TRUE )
+    {
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_10 , MSGSPEED_GetWait() );
+      work->movieState = MPMS_CONFIRM_CHECK_ITEM_WAIT;
+    }
+    else
+    {
+      work->movieState = MPMS_CONFIRM_POKE_SEND_YESNO;
+    }
+    break;
+  
+  //アイテム戻し確認表示待ち
+  case MPMS_CONFIRM_CHECK_ITEM_WAIT:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      MB_MSG_DispYesNoUpper( work->msgWork , MMYT_MID );
+      work->movieState = MPMS_CONFIRM_CHECK_ITEM_YESNO;
+    }
+    break;
+  
+  //アイテム戻しはい・いいえ表示待ち
+  case MPMS_CONFIRM_CHECK_ITEM_YESNO:
+    {
+      const MB_MSG_YESNO_RET ret = MB_MSG_UpdateYesNoUpper( work->msgWork );
+      if( ret == MMYR_RET1 )
+      {
+        if( MB_COMM_GetMoviePokeNumFullItem( work->commWork ) == TRUE )
+        {
+          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_11 , MSGSPEED_GetWait() );
+          work->movieState = MPMS_CONFIRM_CHECK_FULL_WAIT;
+        }
+        else
+        {
+          work->movieState = MPMS_CONFIRM_POKE_SEND_YESNO;
+        }
+      }
+      else
+      if( ret == MMYR_RET2 )
+      {
+        work->movieState = MPMS_CONFIRM_CANCEL_INIT;
+      }
+    }
+    break;
+
+  //アイテム一杯確認表示待ち
+  case MPMS_CONFIRM_CHECK_FULL_WAIT:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      MB_MSG_DispYesNoUpper( work->msgWork , MMYT_MID );
+      work->movieState = MPMS_CONFIRM_CHECK_FULL_YESNO;
+    }
+    break;
+    
+  //アイテム一杯。はい・いいえ待ち
+  case MPMS_CONFIRM_CHECK_FULL_YESNO:
+    {
+      const MB_MSG_YESNO_RET ret = MB_MSG_UpdateYesNoUpper( work->msgWork );
+      if( ret == MMYR_RET1 )
+      {
+        work->movieState = MPMS_CONFIRM_POKE_SEND_YESNO;
+      }
+      else
+      if( ret == MMYR_RET2 )
+      {
+        work->movieState = MPMS_CONFIRM_CANCEL_INIT;
+      }
+    }
+    break;
+    
+  //アイテム系キャンセル確認
+  case MPMS_CONFIRM_CANCEL_INIT:
+    MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_12 , MSGSPEED_GetWait() );
+    work->movieState = MPMS_CONFIRM_CANCEL_WAIT;
+    break;
+
+  //アイテム系キャンセル表示待ち
+  case MPMS_CONFIRM_CANCEL_WAIT:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      MB_MSG_DispYesNoUpper( work->msgWork , MMYT_MID );
+      work->movieState = MPMS_CONFIRM_CANCEL_YESNO;
+    }
+    break;
+
+  //アイテム系キャンセル。はい・いいえ待ち
+  case MPMS_CONFIRM_CANCEL_YESNO:
+    {
+      const MB_MSG_YESNO_RET ret = MB_MSG_UpdateYesNoUpper( work->msgWork );
+      if( ret == MMYR_RET1 )
+      {
+        work->yesNoRet = MMYR_RET2;
+        work->movieState = MPMS_CONFIRM_POKE_SEND_YESNO;
+      }
+      else
+      if( ret == MMYR_RET2 )
+      {
+        work->movieState = MPMS_CONFIRM_CHECK_ITEM_INIT;
+      }
+    }
+    break;
+
   case MPMS_CONFIRM_POKE_SEND_YESNO:
     {
       BOOL ret;

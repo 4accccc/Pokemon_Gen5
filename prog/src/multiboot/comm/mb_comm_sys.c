@@ -118,7 +118,7 @@ struct _MB_COMM_WORK
   u8      saveWaitCnt;
   u16     boxLeast;
   u8      moviePokeConfirm;
-  u16     moviePokeNum;
+  u32     moviePokeNum; //上位2bitはアイテムの状態、上位8bitは秘伝持ちの数
 };
 
 
@@ -507,10 +507,32 @@ const BOOL MB_COMM_IsPostMoviePokeNum( const MB_COMM_WORK* commWork )
 {
   return commWork->isPostMoviePokeNum;
 }
+//上位2bitはアイテムの状態、上位16bitは秘伝持ちの数
 const u16 MB_COMM_GetMoviePokeNum( const MB_COMM_WORK* commWork )
 {
-  return commWork->moviePokeNum;
+  return commWork->moviePokeNum&0x0000FFFF;
 }
+const u16 MB_COMM_GetMoviePokeNumHiden( const MB_COMM_WORK* commWork )
+{
+  return (commWork->moviePokeNum&0x3FFF0000)>>16;
+}
+const BOOL MB_COMM_GetMoviePokeNumHaveItem( const MB_COMM_WORK* commWork )
+{
+  if( commWork->moviePokeNum&0x40000000 )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+const BOOL MB_COMM_GetMoviePokeNumFullItem( const MB_COMM_WORK* commWork )
+{
+  if( commWork->moviePokeNum&0x80000000 )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 const BOOL MB_COMM_IsPostMoviePokeConfirm( const MB_COMM_WORK* commWork )
 {
   return commWork->isPostMoviePokeConfirm;

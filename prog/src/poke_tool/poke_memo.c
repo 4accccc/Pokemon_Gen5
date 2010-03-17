@@ -32,8 +32,8 @@
 #pragma mark [> struct
 typedef enum
 {
-  PMDT_1, //場所１・時間１  生まれた～
-  PMDT_2, //場所２・時間２  捕獲した～
+  PMDT_1, //場所１・時間１  捕獲した～
+  PMDT_2, //場所２・時間２  生まれた～
 }POKE_MEMO_DATA_TYPE;
 
 
@@ -41,7 +41,6 @@ typedef enum
 //	proto
 //======================================================================
 #pragma mark [> proto
-static void POKE_MEMO_SetTrainerMemoPokeShifter( POKEMON_PASO_PARAM *ppp );
 static void POKE_MEMO_ClearPlaceTime( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_DATA_TYPE setType );
 static void POKE_MEMO_SetPlaceTime( POKEMON_PASO_PARAM *ppp , const u32 place , const POKE_MEMO_DATA_TYPE setType );
 static void POKE_MEMO_CopyPlaceTime( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_DATA_TYPE srcSetType );
@@ -68,8 +67,8 @@ void POKE_MEMO_SetTrainerMemoPPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_SET_
   switch( type )
   {
   case POKE_MEMO_SET_CAPTURE:  //捕獲
-    POKE_MEMO_ClearPlaceTime( ppp , PMDT_1 );
-    POKE_MEMO_SetPlaceTime( ppp , place , PMDT_2 );
+    POKE_MEMO_ClearPlaceTime( ppp , PMDT_2 );
+    POKE_MEMO_SetPlaceTime( ppp , place , PMDT_1 );
     POKE_MEMO_SetMyStatus( ppp , my , heapId );
     POKE_MEMO_SetGetLevel( ppp );
     POKE_MEMO_SetRomVersion( ppp );
@@ -123,10 +122,10 @@ void POKE_MEMO_SetTrainerMemoPPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_SET_
   PPP_FastModeOff(ppp,fastFlg);
 }
 
-static void POKE_MEMO_SetTrainerMemoPokeShifter( POKEMON_PASO_PARAM *ppp )
+void POKE_MEMO_SetTrainerMemoPokeShifter( POKEMON_PASO_PARAM *ppp )
 {
   const u32 monsNo = PPP_Get( ppp, ID_PARA_monsno , NULL );
-  const u32 getPlace = PPP_Get( ppp, ID_PARA_get_place , NULL );
+  const u32 birthPlace = PPP_Get( ppp, ID_PARA_birth_place , NULL );
   const u32 isEvent = PPP_Get( ppp, ID_PARA_event_get_flag , NULL );
   const BOOL isRare = PPP_CheckRare( ppp );
   
@@ -135,18 +134,18 @@ static void POKE_MEMO_SetTrainerMemoPokeShifter( POKEMON_PASO_PARAM *ppp )
 
   //2010イベント対応
   if( monsNo == MONSNO_SEREBHI &&
-      getPlace == POKE_MEMO_2010_MOVIE &&
+      birthPlace == POKE_MEMO_2010_MOVIE &&
       isEvent == 1 )
   {
-    PPP_Put( ppp, ID_PARA_get_place, POKE_MEMO_PLACE_SEREBIXI_BEFORE );
+    PPP_Put( ppp, ID_PARA_birth_place, POKE_MEMO_PLACE_SEREBIXI_BEFORE );
   }
   else
   if( ( monsNo == MONSNO_RAIKOU || monsNo == MONSNO_ENTEI || monsNo == MONSNO_SUIKUN ) &&
-      getPlace == POKE_MEMO_2010_MOVIE &&
+      birthPlace == POKE_MEMO_2010_MOVIE &&
       isRare == TRUE &&
       isEvent == 1 )
   {
-    PPP_Put( ppp, ID_PARA_get_place, POKE_MEMO_PLACE_ENRAISUI_BEFORE );
+    PPP_Put( ppp, ID_PARA_birth_place, POKE_MEMO_PLACE_ENRAISUI_BEFORE );
   }
 }
 
@@ -154,17 +153,17 @@ static void POKE_MEMO_ClearPlaceTime( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_
 {
   if( setType == PMDT_1 )
   {
-    PPP_Put( ppp , ID_PARA_birth_place , 0 );
-    PPP_Put( ppp , ID_PARA_birth_year  , 0 );
-    PPP_Put( ppp , ID_PARA_birth_month , 0 );
-    PPP_Put( ppp , ID_PARA_birth_day   , 0 );
-  }
-  else
-  {
     PPP_Put( ppp , ID_PARA_get_place , 0 );
     PPP_Put( ppp , ID_PARA_get_year  , 0 );
     PPP_Put( ppp , ID_PARA_get_month , 0 );
     PPP_Put( ppp , ID_PARA_get_day   , 0 );
+  }
+  else
+  {
+    PPP_Put( ppp , ID_PARA_birth_place , 0 );
+    PPP_Put( ppp , ID_PARA_birth_year  , 0 );
+    PPP_Put( ppp , ID_PARA_birth_month , 0 );
+    PPP_Put( ppp , ID_PARA_birth_day   , 0 );
   }
 }
 
@@ -175,35 +174,23 @@ static void POKE_MEMO_SetPlaceTime( POKEMON_PASO_PARAM *ppp , const u32 place , 
   
   if( setType == PMDT_1 )
   {
-    PPP_Put( ppp , ID_PARA_birth_place , place );
-    PPP_Put( ppp , ID_PARA_birth_year  , date.year );
-    PPP_Put( ppp , ID_PARA_birth_month , date.month );
-    PPP_Put( ppp , ID_PARA_birth_day   , date.day );
-  }
-  else
-  {
     PPP_Put( ppp , ID_PARA_get_place , place );
     PPP_Put( ppp , ID_PARA_get_year  , date.year );
     PPP_Put( ppp , ID_PARA_get_month , date.month );
     PPP_Put( ppp , ID_PARA_get_day   , date.day );
+  }
+  else
+  {
+    PPP_Put( ppp , ID_PARA_birth_place , place );
+    PPP_Put( ppp , ID_PARA_birth_year  , date.year );
+    PPP_Put( ppp , ID_PARA_birth_month , date.month );
+    PPP_Put( ppp , ID_PARA_birth_day   , date.day );
   }
 }
 
 static void POKE_MEMO_CopyPlaceTime( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_DATA_TYPE srcSetType )
 {
   if( srcSetType == PMDT_1 )
-  {
-    const u32 place = PPP_Get( ppp , ID_PARA_birth_place , NULL );
-    const u32 year  = PPP_Get( ppp , ID_PARA_birth_year  , NULL );
-    const u32 month = PPP_Get( ppp , ID_PARA_birth_month , NULL );
-    const u32 day   = PPP_Get( ppp , ID_PARA_birth_day   , NULL );
-
-    PPP_Put( ppp , ID_PARA_get_place , place );
-    PPP_Put( ppp , ID_PARA_get_year  , year );
-    PPP_Put( ppp , ID_PARA_get_month , month );
-    PPP_Put( ppp , ID_PARA_get_day   , day );
-  }
-  else
   {
     const u32 place = PPP_Get( ppp , ID_PARA_get_place , NULL );
     const u32 year  = PPP_Get( ppp , ID_PARA_get_year  , NULL );
@@ -214,6 +201,18 @@ static void POKE_MEMO_CopyPlaceTime( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_D
     PPP_Put( ppp , ID_PARA_birth_year  , year );
     PPP_Put( ppp , ID_PARA_birth_month , month );
     PPP_Put( ppp , ID_PARA_birth_day   , day );
+  }
+  else
+  {
+    const u32 place = PPP_Get( ppp , ID_PARA_birth_place , NULL );
+    const u32 year  = PPP_Get( ppp , ID_PARA_birth_year  , NULL );
+    const u32 month = PPP_Get( ppp , ID_PARA_birth_month , NULL );
+    const u32 day   = PPP_Get( ppp , ID_PARA_birth_day   , NULL );
+
+    PPP_Put( ppp , ID_PARA_get_place , place );
+    PPP_Put( ppp , ID_PARA_get_year  , year );
+    PPP_Put( ppp , ID_PARA_get_month , month );
+    PPP_Put( ppp , ID_PARA_get_day   , day );
   }
 }
 
@@ -250,7 +249,7 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
   const BOOL fastFlg = PPP_FastModeOn(ppp);
 
   const u32 monsNo = PPP_Get( ppp, ID_PARA_monsno , NULL );
-  const u32 getPlace = PPP_Get( ppp, ID_PARA_get_place , NULL );
+  const u32 birthPlace = PPP_Get( ppp, ID_PARA_birth_place , NULL );
   const u32 isEvent = PPP_Get( ppp, ID_PARA_event_get_flag , NULL );
   const BOOL isRare = PPP_CheckRare( ppp );
 
@@ -261,7 +260,7 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
   case POKE_MEMO_EVENT_2010MOVIE_SEREBIXI_BEF:   
     //2010映画セレビィ(イベント前
     if( monsNo == MONSNO_SEREBHI &&
-        getPlace == POKE_MEMO_PLACE_SEREBIXI_BEFORE &&
+        birthPlace == POKE_MEMO_PLACE_SEREBIXI_BEFORE &&
         isEvent == 1 )
     {
       return TRUE;
@@ -271,7 +270,7 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
   case POKE_MEMO_EVENT_2010MOVIE_SEREBIXI_AFT:   
     //2010映画セレビィ(イベント後
     if( monsNo == MONSNO_SEREBHI &&
-        getPlace == POKE_MEMO_PLACE_SEREBIXI_AFTER &&
+        birthPlace == POKE_MEMO_PLACE_SEREBIXI_AFTER &&
         isEvent == 1 )
     {
       return TRUE;
@@ -281,7 +280,7 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
   case POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_BEF:   
     //2010映画エンテイ・ライコウ・スイクン(イベント前
     if( ( monsNo == MONSNO_RAIKOU || monsNo == MONSNO_ENTEI || monsNo == MONSNO_SUIKUN ) &&
-        getPlace == POKE_MEMO_PLACE_ENRAISUI_BEFORE &&
+        birthPlace == POKE_MEMO_PLACE_ENRAISUI_BEFORE &&
         isRare == TRUE &&
         isEvent == 1 )
     {
@@ -291,7 +290,7 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
   case POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_AFT:
     //2010映画エンテイ・ライコウ・スイクン(イベント後
     if( ( monsNo == MONSNO_RAIKOU || monsNo == MONSNO_ENTEI || monsNo == MONSNO_SUIKUN ) &&
-        getPlace == POKE_MEMO_PLACE_ENRAISUI_AFTER &&
+        birthPlace == POKE_MEMO_PLACE_ENRAISUI_AFTER &&
         isRare == TRUE &&
         isEvent == 1 )
     {
@@ -336,11 +335,11 @@ void POKE_MEMO_SetEventPoke_AfterEventPPP( POKEMON_PASO_PARAM *ppp , const POKE_
     {
     case POKE_MEMO_EVENT_2010MOVIE_SEREBIXI_BEF:
       //2010映画セレビィ(イベント前
-      PPP_Put( ppp, ID_PARA_get_place, POKE_MEMO_PLACE_SEREBIXI_AFTER );
+      PPP_Put( ppp, ID_PARA_birth_place, POKE_MEMO_PLACE_SEREBIXI_AFTER );
       break;
     case POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_BEF:
       //2010映画エンテイ・ライコウ・スイクン(イベント前
-      PPP_Put( ppp, ID_PARA_get_place, POKE_MEMO_PLACE_ENRAISUI_AFTER );
+      PPP_Put( ppp, ID_PARA_birth_place, POKE_MEMO_PLACE_ENRAISUI_AFTER );
       break;
     }
   }

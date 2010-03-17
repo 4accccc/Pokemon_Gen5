@@ -134,6 +134,9 @@ extern const u16 MB_COMM_GetBoxLeast( const MB_COMM_WORK* commWork );
 //‰f‰æ“]‘——p
 extern const BOOL MB_COMM_IsPostMoviePokeNum( const MB_COMM_WORK* commWork );
 extern const u16 MB_COMM_GetMoviePokeNum( const MB_COMM_WORK* commWork );
+extern const u16 MB_COMM_GetMoviePokeNumHiden( const MB_COMM_WORK* commWork );
+extern const BOOL MB_COMM_GetMoviePokeNumHaveItem( const MB_COMM_WORK* commWork );
+extern const BOOL MB_COMM_GetMoviePokeNumFullItem( const MB_COMM_WORK* commWork );
 extern const BOOL MB_COMM_IsPostMoviePokeConfirm( const MB_COMM_WORK* commWork );
 extern const u16 MB_COMM_GetMoviePokeConfirm( const MB_COMM_WORK* commWork );
 extern const BOOL MB_COMM_IsPostMoviePokeFinishSend( const MB_COMM_WORK* commWork );

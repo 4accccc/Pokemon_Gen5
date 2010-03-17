@@ -559,19 +559,19 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
   u32 isEgg = PPP_Get( ppp , ID_PARA_tamago_flag , NULL );
   u32 seikaku = PPP_Get( ppp , ID_PARA_seikaku , NULL );
   u32 natuki = PPP_Get( ppp , ID_PARA_friend , NULL );
-  u32 year1   = PPP_Get( ppp , ID_PARA_birth_year , NULL );
-  u32 month1  = PPP_Get( ppp , ID_PARA_birth_month , NULL )+1;
-  u32 day1    = PPP_Get( ppp , ID_PARA_birth_day , NULL )+1;
-  u32 year2   = PPP_Get( ppp , ID_PARA_get_year , NULL );
-  u32 month2  = PPP_Get( ppp , ID_PARA_get_month , NULL )+1;
-  u32 day2    = PPP_Get( ppp , ID_PARA_get_day , NULL )+1;
+  u32 year1   = PPP_Get( ppp , ID_PARA_get_year , NULL );
+  u32 month1  = PPP_Get( ppp , ID_PARA_get_month , NULL )+1;
+  u32 day1    = PPP_Get( ppp , ID_PARA_get_day , NULL )+1;
+  u32 year2   = PPP_Get( ppp , ID_PARA_birth_year , NULL );
+  u32 month2  = PPP_Get( ppp , ID_PARA_birth_month , NULL )+1;
+  u32 day2    = PPP_Get( ppp , ID_PARA_birth_day , NULL )+1;
   u32 level   = PPP_Get( ppp , ID_PARA_get_level , NULL );
   u32 isEvent = PPP_Get( ppp , ID_PARA_event_get_flag , NULL );
   u32 rom = PPP_Get( ppp , ID_PARA_get_cassette , NULL );
   const u32 perRand = PPP_Get( ppp , ID_PARA_personal_rnd , NULL );
   //場所はポケシフター対応で書き換える可能性あり。
-  u32 place1  = PPP_Get( ppp , ID_PARA_birth_place , NULL );
-  u32 place2  = PPP_Get( ppp , ID_PARA_get_place , NULL );
+  u32 place1  = PPP_Get( ppp , ID_PARA_get_place , NULL );
+  u32 place2  = PPP_Get( ppp , ID_PARA_birth_place , NULL );
   //自分のポケかチェック
   {
     MYSTATUS *myStatus = GAMEDATA_GetMyStatus( work->psData->game_data );

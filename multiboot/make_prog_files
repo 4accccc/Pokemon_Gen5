@@ -11,6 +11,7 @@ SRCS	+= \
 		$(PARENT_SRC)/net/wih.c \
 		$(PARENT_SRC)/net/net_whpipe.c \
 		$(PARENT_SRC)/poke_tool/poke_tool.c \
+		$(PARENT_SRC)/poke_tool/poke_memo.c \
 		$(PARENT_SRC)/poke_tool/poke_personal.c \
 		$(PARENT_SRC)/poke_tool/pokepara_conv.c \
 		$(PARENT_SRC)/pokeicon/pokeicon.c \

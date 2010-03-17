@@ -17,6 +17,7 @@
 #include "system/wipe.h"
 #include "system/net_err.h"
 #include "poke_tool/pokepara_conv.h"
+#include "poke_tool/poke_memo.h"
 
 #include "arc_def.h"
 #include "mb_child_gra.naix"
@@ -160,7 +161,7 @@ static void MB_MOVIE_LoadResource( MB_MOVIE_WORK *work );
 
 static void MB_MOVIE_DataConvert( MB_MOVIE_WORK *work );
 static const u16 MB_MOVIE_GetLeastPoke( MB_MOVIE_WORK *work );
-static const u16 MB_MOVIE_GetMoviePokeNum( MB_MOVIE_WORK *work );
+static const u32 MB_MOVIE_GetMoviePokeNum( MB_MOVIE_WORK *work );
 static const BOOL MB_MOVIE_CheckMoviePoke( POKEMON_PASO_PARAM *ppp );
 
 
@@ -856,56 +857,119 @@ static const u16 MB_MOVIE_GetLeastPoke( MB_MOVIE_WORK *work )
   return num;
 }
 //--------------------------------------------------------------
-//  映画ポケの取得
+//  映画ポケの取得(送信用にbitを色々いじってる
 //--------------------------------------------------------------
-static const u16 MB_MOVIE_GetMoviePokeNum( MB_MOVIE_WORK *work )
+static const u32 MB_MOVIE_GetMoviePokeNum( MB_MOVIE_WORK *work )
 {
-  u8 i,j;
+  u32 retVal = 0;
+  u16 i,j;
   u16 num = 0;
+  u16 hidenNum = 0;
+  BOOL isHidenPoke = FALSE;
+  BOOL isItemPoke = FALSE;
+  BOOL isFullItem = FALSE;
+  
+  u16 *itemNoArr = GFL_HEAP_AllocClearMemory( work->heapId , 2*MB_POKE_BOX_TRAY*MB_POKE_BOX_POKE );
   
   for( i=0;i<MB_POKE_BOX_TRAY;i++ )
   {
     for( j=0;j<MB_POKE_BOX_POKE;j++ )
     {
-      if( PPP_Get( work->boxPoke[i][j] , ID_PARA_poke_exist , NULL ) == TRUE )
+      POKEMON_PASO_PARAM *ppp = work->boxPoke[i][j];
+      if( PPP_Get( ppp , ID_PARA_poke_exist , NULL ) == TRUE )
       {
-        if( MB_MOVIE_CheckMoviePoke( work->boxPoke[i][j] ) == TRUE )
+        if( MB_MOVIE_CheckMoviePoke( ppp ) == TRUE )
         {
-          MB_TPrintf("movie poke found!![%d:%d].\n",i,j);
-          num++;
+          MB_UTIL_CHECK_PLAY_RET ret = MB_UTIL_CheckPlay_PalGate( ppp , work->cardType );
+          if( ret == MUCPR_HIDEN )
+          {
+            hidenNum++;
+            MB_TPrintf("movie poke found(Hiden)!![%d:%d].\n",i,j);
+          }
+          else
+          {
+            itemNoArr[i*MB_POKE_BOX_POKE+j] = PPP_Get( ppp , ID_PARA_item , NULL );
+            num++;
+            MB_TPrintf("movie poke found!![%d:%d].\n",i,j);
+          }
+        }
+      }
+    }
+  }
+  //アイテムチェック
+  for( i=0;i<MB_POKE_BOX_TRAY*MB_POKE_BOX_POKE;i++ )
+  {
+    if( itemNoArr[i] != 0 )
+    {
+      u16 sameItem = 1;
+      isItemPoke = TRUE;
+      MB_TPrintf("ChekcItem!![%d].\n",i);
+
+      for( j=i+1;j<MB_POKE_BOX_TRAY*MB_POKE_BOX_POKE;j++ )
+      {
+        if( itemNoArr[i] == itemNoArr[j] )
+        {
+          itemNoArr[j] = 0;
+          sameItem++;
+        }
+      }
+      {
+        u16 haveNum = MB_DATA_GetItemNum( work->dataWork , itemNoArr[i] );
+        MB_TPrintf("Have[%d] Check[%d].\n",haveNum,sameItem);
+        if( haveNum + sameItem > 999 )
+        {
+          isFullItem = TRUE;
         }
       }
     }
   }
   
+  GFL_HEAP_FreeMemory(itemNoArr);
+  
   MB_TPrintf("Child box movie poke [%d].\n",num);
-  return num;
+  
+  retVal = num + (hidenNum<<16);
+  if( isItemPoke == TRUE )
+  {
+    retVal += 0x40000000;
+  }
+  if( isFullItem == TRUE )
+  {
+    retVal += 0x80000000;
+  }
+  
+  return retVal;
 }
 
 static const BOOL MB_MOVIE_CheckMoviePoke( POKEMON_PASO_PARAM *ppp )
 {
   const u32 monsNo = PPP_Get( ppp, ID_PARA_monsno , NULL );
-  const u32 getPlace = PPP_Get( ppp, ID_PARA_get_place , NULL );
+  const u32 birthPlace = PPP_Get( ppp, ID_PARA_birth_place , NULL );
   const u32 isEvent = PPP_Get( ppp, ID_PARA_event_get_flag , NULL );
   const BOOL isRare = PPP_CheckRare( ppp );
   
   //2010イベント対応
   if( monsNo == MONSNO_SEREBHI &&
-      getPlace == 3008 &&
+      birthPlace == POKE_MEMO_PLACE_SEREBIXI_BEFORE &&
       isEvent == 1 )
   {
     return TRUE;
   }
   else
   if( ( monsNo == MONSNO_RAIKOU || monsNo == MONSNO_ENTEI || monsNo == MONSNO_SUIKUN ) &&
-      getPlace == 3008 &&
+      birthPlace == POKE_MEMO_PLACE_ENRAISUI_BEFORE &&
       isRare == TRUE &&
       isEvent == 1 )
   {
     return TRUE;
   }
-  //仮
-  return TRUE;
+
+#if PM_DEBUG
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    return TRUE;
+  }
+#endif //PM_DEBUG
   
   return FALSE;
 }
