@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-17T18:48:00"/>
+	<create user="matsumiya" host="W00224" date="2010-03-17T22:29:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,14 +330,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="111" right="1993" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="532"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="545"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="699"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -366,15 +366,16 @@
 　！マーク表示後、隣接してメッセージ表示
 ・表示後、画面左へ誘導</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……キミは　プラズマだんを
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……プラズマだんを
 さがして　いるんだろう？▼
-この　ゆうえんちの
-おくに　にげていった▽
-さあ　ついてきたまえ[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……キミは　プラズマ団を
+かれらは　ゆうえんちの
+おくに　にげていったよ▽
+ついてきたまえ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……プラズマ団を
 探して　いるんだろう？▼
-この遊園地の　奥に逃げていった
-さあ　ついてきたまえ[BE:09:速度コントロール:0]▼</language>
+彼らは　遊園地の
+奥に　逃げていったよ▽
+ついてきたまえ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c04p01_boss_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -393,12 +394,12 @@
 あの　えんうんどう……　りきがく……
 うつくしい　すうしきの　あつまり……[BE:09:速度コントロール:0]▼
 以下　観覧車デモでのセリフ▼
-さて　おきづき　だろうが
-ボクが　プラズマだんの　おうさま▼
-だから　これいじょう　プラズマだんの
-メンバーを　たおしてほしくない▼
-キミが　がんばれば　がんばるほど
-ポケモンが　くるしむことに　なる！▼</language>
+ヤグルマのもり　での　だっかんげき
+おみごと　だったね▼
+そう……　ボクが
+プラズマだんの　おうさま▼
+ゲーチスに　たのまれ
+いっしょに　ポケモンを　すくうんだよ▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……いないね▼
 観覧車に　乗って
 探すことに　しよう▼
@@ -407,12 +408,12 @@
 あの　円運動……　力学……
 美しい　数式の　集まり……[BE:09:速度コントロール:0]▼
 以下　観覧車デモでのセリフ▼
-さて　お気づき　だろうが
-ボクが　プラズマ団の　王様▼
-だから　これ以上　プラズマ団の
-メンバーを　倒してほしくない▼
-キミが　がんばれば　がんばるほど
-ポケモンが　苦しむことに　なる！▼</language>
+ヤグルマの森での　奪還劇
+お見事　だったね▼
+そう……　ボクが
+プラズマ団の　王様▼
+ゲーチスとやらに　請われ
+一緒に　ポケモンを　救うんだよ▼</language>
 	</row>
 
 	<row id="msg_c04p01_hakaim1_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -434,7 +435,7 @@
 		<language name="JPN_KANJI" width="256">プラズマ団『ご無事ですか！▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・プラズマ団のほうは向かない(気にしていない）
 ・はい/いいえの選択
@@ -458,53 +459,108 @@
 ボクの　考え　理解できるかい？[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_c04p01_boss_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・はい選択時
 ・トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]その　へんじ……　ほんとうか
-どうか　たしかめさせてもらうよ[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]その返事……
-本当かどうか　確かめさせてもらうよ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]その　ことば
+ほんとうだと　うれしいね▼
+さて……
+ボクに　みえた　みらい▼
+ここでは　キミに　かてないが
+にげる　プラズマだんの　ため▽
+あいて　してもらうよ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]その言葉
+真意だと　うれしいね▼
+さて……
+ボクに　みえた　未来▼
+ここでは　キミに　勝てないが
+逃げる　プラズマ団の　ため▽
+相手してもらうよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……だろうね
-まあ　いいさ▼
-ボクと　ボクのトモダチの　きずな
-みせてあげるよ[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……だろうね
-まあ　いいさ▼
-ボクと　ボクのトモダチの　きずな
-みせてあげるよ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]そうかい……
+それは　ざんねんだ▼
+さて……
+ボクに　みえた　みらい▼
+ここでは　キミに　かてないが
+にげる　プラズマだんの　ため▽
+あいて　してもらうよ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]そうかい……
+それは　残念▼
+さて……
+ボクに　みえた　未来▼
+ここでは　キミに　勝てないが
+逃げる　プラズマ団の　ため▽
+相手してもらうよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c04p01_boss_06" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
-・戦闘後
-･メッセージ表示後
-　c04方面に移動
+・戦闘後、フィールドに復帰すると
+　このメッセージ表示
+・メッセージ後、一歩近づく
+・続けてboss_07</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……キミは　つよい▼
+だが　ボクには　かえるべき
+みらいが　ある！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……キミは　強いな▼
+だが　ボクには　変えるべき
+未来が　ある！[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_c04p01_boss_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+		<comment>♂
+・カットイン
+・続けてboss_08</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">ボクは　ポケモンリーグを　めざす！▼
+そこで　あたらしい
+チャンピオンと　なり▼
+イッシュちほう　への
+つよい　えいきょうりょくを　もつ！▼
+そう！　すべての　トレーナーに
+ポケモンを　かいほう　させるよ！▼
+キミが　ポケモンと
+いっしょに　いたい……！▼
+そう　のぞむなら
+かくちの　ジムバッジを　あつめ▽
+ポケモンリーグに　むかえ！▼
+そこで　ボクを　とめてみせるんだ▼</language>
+		<language name="JPN_KANJI" width="256">ボクは　ポケモンリーグを　めざす！▼
+そこで　新しい
+チャンピオンと　なり▼
+イッシュ地方への
+強い　影響力を　手に入れる！▼
+そう！　すべての　トレーナーに
+ポケモンを　解放させるよ！▼
+キミが　ポケモンと
+いつまでも　一緒……！▼
+そう　望むなら
+各地の　ジムバッジを　集め▽
+ポケモンリーグに　向かえ！▼
+そこで　ボクを　とめてみせるんだ▼</language>
+	</row>
+
+	<row id="msg_c04p01_boss_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+		<comment>♂
+・フィールドに戻り、メッセージ表示後
+　画面左に退場していく
 ・画面外に消えると、主人公操作可能に</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]いま　しょうぶの　さなかに
-みえた　みらいの　ビジョン……▼
-そうか……　キミは
-そんな　しめいを　もつのか▼
-なるほど……　それが
-ボクが　とくべき　すうしき……▽
-では　またあおう　[1:00:トレーナー名:0][BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]今　勝負の　さなかに
-見えた　未来のビジョン……▼
-そうか……
-キミは　そんな使命を　持つのか▼
-なるほど……
-それが　ボクが解くべき　数式……▽
-では　また会おう　[1:00:トレーナー名:0][BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]それほどの
+つよい　きもちで　なければ▽
+ボクは　とめられないよ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]それほどの
+強い　気持ちで　なければ▽
+ボクは　とめられないよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c04p01_clown1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
