@@ -19,7 +19,7 @@
 	<tex_image name='pl_swimhiro.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/platinum/pl_data/graphic/field_obj/obj_tga/swimhero/pl_swimhiro.1.tga' palette_name='pl_swimhiro' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			00ff 0000 0000 0000 0000 0fe0 0000 ef00 
-			0eef 0000 0000 0000 d000 0edd 0000 fde0 
+			0eef 0000 0000 0000 d000 0eed 0000 fee0 
 			ede0 0000 0000 d000 eddd ddde 00ed 0ede 
 			de00 0ddd dd00 eddd 0eee e0ed ddde 00ed 
 			e000 deed eedd 0eee e000 00fd de00 000e 
@@ -34,7 +34,7 @@
 			ddef eddd 0d00 eede eded e00d e00d 000d 
 			ede0 ddef dddd dddd 0dee e0ed 000d 00de 
 			de00 ed00 ed0f eded 00df e0ed 000d 00de 
-			d000 d00e 0d0e edee d0de dddd 00ed 0de0 
+			d000 d00e 0d0e edee d0de dddd 00ed 0ed0 
 			d000 d00e d00e dedd feed effd dddd fedd 
 			d000 d00e de0e eede eded d00d effe 0ede 
 			0000 d0ed ed0e dde0 dedd d00e 0000 00df 
@@ -164,8 +164,8 @@
 
 <tex_palette_array size='1'>
 	<tex_palette name='pl_swimhiro' color_size='16' index='0'>
-		14a5 2e97 3ad9 531b 679d 0152 08ca 0887 
-		08ca 0887 0864 0842 0000 0296 016c 0109 
+		14a5 21b2 29f3 2a35 3a96 3dce 2529 0c63 
+		2529 14a5 0c63 0842 0000 0296 016c 0109 
 	</tex_palette>
 </tex_palette_array>
 
