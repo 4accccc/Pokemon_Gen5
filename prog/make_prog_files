@@ -431,7 +431,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/seasonpoke_form.c \
         field/scrcmd_symbol.c \
         field/event_symbol.c \
-        field/scrcmd_research.c
+        field/scrcmd_research.c \
+        field/scrcmd_sppoke.c
 
 # wifiプログラム
 #===> SRCS_OVERLAY_DEV_WIFILIB
@@ -715,9 +716,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_password.c \
         field/field_envse_data.c \
         field/event_seatemple.c \
-        field/scrcmd_quiz.c \
-        field/scrcmd_sppoke.c
-        
+        field/scrcmd_quiz.c
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置
 #===> GROUP_OVERLAY_UNION_INTRUDE
