@@ -1658,14 +1658,28 @@ static void DrawBlActMelodyer_Draw( MMDL *mmdl )
  * @retval  BOOL TRUE=終了
  */
 //--------------------------------------------------------------
-#if 0
 BOOL MMDL_CheckDrawMelodyerAnime( MMDL *mmdl )
 {
-  if( MMDL_GetOBJCode(mmdl) != 
-  actID = MMDL_CallDrawGetProc( work->head.mmdl, 0 );
-extern u32 MMDL_CallDrawGetProc( MMDL *mmdl, u32 state );
+  if( MMDL_GetOBJCode(mmdl) != POKE12 ){
+    GF_ASSERT( 0 );
+    return( TRUE );
+  }else{
+    u16 actID = MMDL_CallDrawGetProc( mmdl, 0 );
+    
+    if( actID != MMDL_BLACTID_NULL ){
+      u16 comm;
+      GFL_BBDACT_SYS *actSys;
+      
+      actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+
+      if( GFL_BBDACT_GetAnimeLastCommand(actSys,actID,&comm) == TRUE ){
+        return( TRUE );
+      }
+    }
+  }
+  
+  return( FALSE );
 }
-#endif
 
 //--------------------------------------------------------------
 /// 描画処理　ビルボード　ポケモン メロディア　描画

@@ -4490,6 +4490,12 @@ static int AC_MelodyerShake( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_Melodyer_1( MMDL * mmdl )
 {
+  if( MMDL_CheckDrawMelodyerAnime(mmdl) == TRUE ){
+	  MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
+	  MMDL_IncAcmdSeq( mmdl );
+    return( TRUE );
+  }
+  
   return( FALSE );
 }
 
