@@ -33,7 +33,6 @@ typedef enum {
   BAG_MODE_UNION,
   BAG_MODE_POKELIST,
   BAG_MODE_COLOSSEUM,
-  BAG_MODE_N_PLANTER,
   BAG_MODE_SELL,       // 「うる」シーケンス
 } BAG_MODE;
 

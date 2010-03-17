@@ -253,6 +253,7 @@ struct _FIELD_ITEMMENU_PARAM {
 	BLINKPALANM_WORK * blwk;
 	u16	tmpSeq;			///< 汎用シーケンス
 	u16	tmpCnt;			///< 汎用カウンタ
+	StateFunc * chgState;
 };
 
 #define _OBJPLT_SUB_POKE_TYPE (4) //サブ画面技タイプアイコンパレット位置
@@ -339,6 +340,8 @@ struct _FIELD_ITEMMENU_PARAM {
 
 #define _WINNUM_SCR_INITX (16)
 #define _WINNUM_SCR_INITY (12)
+#define _WINNUM_SCR_TP_END_X (29)
+#define _WINNUM_SCR_TP_END_Y (22)
 
 #define _BAR_CELL_CURSOR_EXIT (200-8)    //EXIT xボタン
 #define _BAR_CELL_CURSOR_RETURN (232-8) //RETURN Enterボタン

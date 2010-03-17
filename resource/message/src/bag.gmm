@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-05T20:17:50"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-03-16T20:58:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 
 	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="737" top="230" right="1210" bottom="628" visible="no"/>
+		<tag-palette left="737" top="230" right="1210" bottom="628" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -983,18 +983,18 @@ const u8 str_konanoryou[]
 	<row id="mes_shop_095">
 		<comment>売る画面で、売ったときの値段を表示して、
 「はい、いいえ」の確認をするとき。</comment>
-		<language name="JPN" width="216" line="2">それなら　[2:05:６桁:0]円で
+		<language name="JPN" width="216" line="2">それなら　[2:06:７桁:0]円で
 おひきとり　いたしましょう</language>
-		<language name="JPN_KANJI" width="216" line="2">それなら　[2:05:６桁:0]円で
+		<language name="JPN_KANJI" width="216" line="2">それなら　[2:06:７桁:0]円で
 お引き取り　いたしましょう</language>
 	</row>
 
 	<row id="mes_shop_096">
 		<comment>売った道具と、受け取ったお金を表示。</comment>
 		<language name="JPN" width="216" line="2">[1:09:どうぐ名:0]を　わたして
-[2:05:６桁:1]円を　うけとった</language>
+[2:06:７桁:1]円を　うけとった</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:09:どうぐ名:0]を　渡して
-[2:05:６桁:1]円を　受け取った</language>
+[2:06:７桁:1]円を　受け取った</language>
 	</row>
 
 	<row id="mes_shop_097">
@@ -1005,8 +1005,8 @@ const u8 str_konanoryou[]
 
 	<row id="mes_shop_098">
 		<comment>左上のウィンドウに、お小遣いの値を表示。</comment>
-		<language name="JPN" font=" 1:small" width="56">[2:05:６桁:0]円</language>
-		<language name="JPN_KANJI" font=" 1:small" width="56">[2:05:６桁:0]円</language>
+		<language name="JPN" font=" 1:small" width="56">[2:06:７桁:0]円</language>
+		<language name="JPN_KANJI" font=" 1:small" width="56">[2:06:７桁:0]円</language>
 	</row>
 
 	<row id="mes_shop_099">
@@ -1017,8 +1017,8 @@ const u8 str_konanoryou[]
 
 	<row id="mes_shop_100">
 		<comment>売るの値段を画面右に表示。</comment>
-		<language name="JPN" font=" 1:small" width="56">＋[2:05:６桁:0]円</language>
-		<language name="JPN_KANJI" font=" 1:small" width="56">＋[2:05:６桁:0]円</language>
+		<language name="JPN" font=" 1:small" width="56">＋[2:06:７桁:0]円</language>
+		<language name="JPN_KANJI" font=" 1:small" width="56">＋[2:06:７桁:0]円</language>
 	</row>
 
 	<row id="mes_shop_101">

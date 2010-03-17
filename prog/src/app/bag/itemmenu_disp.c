@@ -2102,7 +2102,7 @@ void ITEMDISP_GoldDispWrite( FIELD_ITEMMENU_WORK* pWork )
   //u‰~v
   GFL_MSG_GetString( pWork->MsgManager, mes_shop_098, pWork->pStrBuf );
   WORDSET_RegisterNumber(pWork->WordSet, 0, MISC_GetGold( GAMEDATA_GetMiscWork(pWork->gamedata) ),
-                          6, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
+                          7, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
   PRINTSYS_Print( bmpGold, 0, 4, pWork->pExpStrBuf, pWork->fontHandle );
   GFL_BMPWIN_MakeTransWindow_VBlank( pWork->winGold );
@@ -2285,7 +2285,7 @@ void ITEMDISP_InputNumDisp(FIELD_ITEMMENU_WORK* pWork,int num)
     GFL_MSG_GetString(  pWork->MsgManager, mes_shop_100, pWork->pStrBuf );
 
     WORDSET_RegisterNumber(pWork->WordSet, 0, val,
-                           6, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+                           7, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
 
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
