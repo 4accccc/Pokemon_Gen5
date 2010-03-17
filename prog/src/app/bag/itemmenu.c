@@ -801,7 +801,7 @@ static int BAG_IsInnerItem( u16 item_id )
   if(  _check_spray( item_id ) )
   {
     return INNER_USE_BAG;
-  }
+  } // ダークストーン・ライトストーン処理
   else if( item_id==ITEM_DAAKUSUTOON || item_id==ITEM_RAITOSUTOON){
     return INNER_USE_AFTER_OUTBAG;
   }
@@ -1009,6 +1009,7 @@ static int _check_TomodatiTechou( FIELD_ITEMMENU_WORK *pWork );
 static int _check_TownMap( FIELD_ITEMMENU_WORK *pWork );
 static int _check_Cycle( FIELD_ITEMMENU_WORK *pWork );
 static int _check_DowsingMachine( FIELD_ITEMMENU_WORK *pWork );
+static int _check_AnanukenoHimo( FIELD_ITEMMENU_WORK *pWork );
 
 // アララギ博士のどうぐ使えないよメッセージ
 #define MSGID_ITEMUSE_ERROR_ARARAGI   ( msg_bag_059 )
@@ -1181,19 +1182,21 @@ static int _check_Turizao( FIELD_ITEMMENU_WORK *pWork )
 //----------------------------------------------------------------------------------
 static int _check_MailView( FIELD_ITEMMENU_WORK *pWork )
 {
-  if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_MAIL)){
-      pWork->ret_code = BAG_NEXTPROC_MAILVIEW;  //メール閲覧
-    _CHANGE_STATE(pWork,NULL);
-    return TRUE;
-  }else{
-    // 使えない
-    GFL_MSG_GetString( pWork->MsgManager, MSGID_ITEMUSE_ERROR_ARARAGI, pWork->pStrBuf );
-    WORDSET_RegisterPlayerName( pWork->WordSet, 0, pWork->mystatus );
-    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-    // 文字列のみpExpStrBufに用意しておき遷移先で表示させる
-    _CHANGE_STATE(pWork,_itemInnerUseError);
-    return FALSE;
-  
+  if(pWork->ret_code2==BAG_MENU_MIRU){
+    if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_MAIL)){
+        pWork->ret_code = BAG_NEXTPROC_MAILVIEW;  //メール閲覧
+      _CHANGE_STATE(pWork,NULL);
+      return TRUE;
+    }else{
+      // 使えない
+      GFL_MSG_GetString( pWork->MsgManager, MSGID_ITEMUSE_ERROR_ARARAGI, pWork->pStrBuf );
+      WORDSET_RegisterPlayerName( pWork->WordSet, 0, pWork->mystatus );
+      WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+      // 文字列のみpExpStrBufに用意しておき遷移先で表示させる
+      _CHANGE_STATE(pWork,_itemInnerUseError);
+      return FALSE;
+    
+    }
   }
   return FALSE;
   
@@ -1218,6 +1221,38 @@ static int _check_DowsingMachine( FIELD_ITEMMENU_WORK* pWork )
     else
     {
       // 使えない
+      GFL_MSG_GetString( pWork->MsgManager, MSGID_ITEMUSE_ERROR_ARARAGI, pWork->pStrBuf );
+      WORDSET_RegisterPlayerName( pWork->WordSet, 0, pWork->mystatus );
+      WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+      // 文字列のみpExpStrBufに用意しておき遷移先で表示させる
+      _CHANGE_STATE(pWork,_itemInnerUseError);
+      return FALSE;
+    }
+  }
+  return FALSE;
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief あなぬけのヒモチェック
+ *
+ * @param   pWork   
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int _check_AnanukenoHimo( FIELD_ITEMMENU_WORK *pWork )
+{
+  if(BAG_MENU_TSUKAU == pWork->ret_code2){
+    if( ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_ANANUKENOHIMO ) )
+    {
+      pWork->ret_code = BAG_NEXTPROC_ANANUKENOHIMO;  // バッグもメニューも閉じて、ダウジングマシンを使う
+      _CHANGE_STATE( pWork, NULL );
+      return TRUE;
+    }
+    else
+    { // 使えない
       GFL_MSG_GetString( pWork->MsgManager, MSGID_ITEMUSE_ERROR_ARARAGI, pWork->pStrBuf );
       WORDSET_RegisterPlayerName( pWork->WordSet, 0, pWork->mystatus );
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
@@ -1267,12 +1302,16 @@ static const ITEMUSE_FUNC_DATA ItemUseFuncTable[]={
     _check_BattleRecorder,
   },
   { // メール閲覧
-    ITEM_GURASUMEERU,  11,
+    ITEM_HAZIMETEMEERU,  12,
     _check_MailView,
   },
   { // ダウジングマシン
     ITEM_DAUZINGUMASIN,  1,
     _check_DowsingMachine,
+  },
+  { // あなぬけのヒモ
+    ITEM_ANANUKENOHIMO,  1,
+    _check_AnanukenoHimo,
   },
 };
 
@@ -1291,7 +1330,9 @@ static int _hit_item( u16 item )
 {
   int i;
   for(i=0;i<ITEMUSE_MAX;i++){
-    if(ItemUseFuncTable[i].item==item){
+    const ITEMUSE_FUNC_DATA *dat = &ItemUseFuncTable[i];
+//    OS_Printf("search=%d, num=%d, item=%d\n", dat->item, dat->num, item);
+    if(item>=dat->item && item<(dat->item+dat->num)){
       return i;
     }
   }
@@ -1315,7 +1356,6 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
     pWork->ret_code2 = pWork->submenuList[selectno];
     OS_Printf("ret_code2 %d %d\n", pWork->ret_code2,selectno);
-
     if((BAG_MENU_TSUKAU==pWork->ret_code2)&&(pWork->pocketno==BAG_POKE_WAZA)){ //技マシン
       _CHANGE_STATE(pWork,_itemTecniqueUseInit);
     }
@@ -1346,12 +1386,6 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
 			GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
       _CHANGE_STATE(pWork, _itemKindSelectMenu);
     }
-/*
-    else if(pWork->ret_item == ITEM_PARESUHEGOO){
-      pWork->ret_code = BAG_NEXTPROC_PALACEJUMP;  // パレスへゴー
-      _CHANGE_STATE(pWork,NULL);
-    }
-*/
     else if(_hit_item(pWork->ret_item)>=0){    // どうぐ使用チェックを増やせる構造
       ItemUseFuncTable[_hit_item(pWork->ret_item)].check( pWork );
     }
@@ -3040,9 +3074,9 @@ static void _tsukau_check( FIELD_ITEMMENU_WORK *pWork, void *itemdata, ITEM_ST *
     {
       tbl[BAG_MENU_USE] = BAG_MENU_ORIRU;
     }
-    else if( item->id == ITEM_POFINKEESU )
+    else if( item->id >= ITEM_HAZIMETEMEERU && item->id <= ITEM_BURIZZIMEERUw )
     {
-      tbl[BAG_MENU_USE] = BAG_MENU_HIRAKU;
+      tbl[BAG_MENU_USE] = BAG_MENU_MIRU;
     }
     else
     {
@@ -3142,13 +3176,6 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
       }
     }
   }
-  // 木の実プランター
-  else if( pWork->mode == BAG_MODE_N_PLANTER )
-  {
-    if( BAGMAIN_NPlanterUseCheck( pocket, item->id ) == TRUE ){
-      tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU_NP;
-    }
-  }
 
   // やめる
   tbl[BAG_MENU_CANCEL] = BAG_MENU_YAMERU;
@@ -3192,9 +3219,19 @@ static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)
 
   {
     u8  tbl[BAG_MENUTBL_MAX]={255, 255, 255, 255, 255};
-    int strtbl[]={msg_bag_001,msg_bag_007,msg_bag_017,mes_bag_104,mes_bag_105,
-      msg_bag_002,msg_bag_003,msg_bag_019,msg_bag_004,msg_bag_005,msg_bag_006,
-      msg_bag_009, msg_bag_094, mes_shop_103,msg_bag_001,msg_bag_menu_ex_01};
+    int strtbl[]=
+      {msg_bag_001,   ///< つかう
+       msg_bag_007,   ///< おりる
+       msg_bag_017,   ///< みる
+       msg_bag_002,   ///< すてる
+       msg_bag_003,   ///< とうろく
+       msg_bag_019,   ///< かいじょ
+       msg_bag_004,   ///< もたせる
+       msg_bag_006,   ///< けってい
+       msg_bag_009,   ///< やめる
+       mes_shop_103,  ///< うる
+       msg_bag_001,   ///< つかう
+    };
     int stringbuff[BAG_MENUTBL_MAX];
 
     ItemMenuMake(pWork, tbl);
