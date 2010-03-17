@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-03-16T19:11:35" source="mv_kusa_dummy.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-03-17T12:55:12" source="mv_hide_kusa_bildumy.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-03-16T19:11:35" source="mv_kusa_dummy.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-03-17T12:55:12" source="mv_hide_kusa_bildumy.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,9 +27,9 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="3" xyz="-2.000000 0.000000 -3.250000" whd="4.000000 0.000000 4.000000"/>
+<box_test pos_scale="3" xyz="-2.000000 -0.500000 0.000000" whd="4.000000 4.000000 0.000000"/>
 
-<tex_image_array size="2">
+<tex_image_array size="1">
 	<tex_image index="0" name="mv_kusa2.1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
@@ -59,68 +59,23 @@
 			0000 0000 0000 4400 0044 0000 0000 0000
 			0000 0000 0000 5544 4433 0000 0000 0000
 			0000 0000 1000 5665 4335 0001 0000 0000
-			0000 0000 5100 6666 4355 0014 0000 0000
-			0000 0000 5410 6666 4355 0144 0000 0000
-			0000 0000 5341 5665 4355 1224 0000 0000
-			0000 1000 3344 5555 4335 2244 0001 0000
-			0000 1000 3444 3333 4433 2224 0001 0000
-			0000 1000 4442 3333 4443 2242 0001 0000
-			0000 0000 4421 4444 2444 1224 0000 0000
-			0000 0000 2110 4244 4242 0112 0000 0000
-			0000 0000 1000 2211 1122 0001 0000 0000
+			0000 0000 5100 6666 4335 0014 0000 0000
+			0000 0000 5310 5665 4335 0144 0000 0000
+			0000 0000 3341 5555 4333 1414 0000 0000
+			0000 1000 3444 3333 4433 1144 0001 0000
+			0000 1000 4441 3333 4443 1414 0001 0000
+			0000 1000 4411 4444 4444 1141 0001 0000
+			0000 0000 1111 4444 1144 1114 0000 0000
+			0000 0000 1110 1111 1111 0111 0000 0000
+			0000 0000 1000 1111 1111 0001 0000 0000
 			0000 0000 0000 1110 0111 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="1" name="mv_kusa2.2"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="mv_kusa2.2_pl"
-		path="C:/home/wb_data3d/field/fldobj/mv_kusa2.2.tga"
-	>
-		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="2">
+<tex_palette_array size="1">
 	<tex_palette index="0" name="mv_kusa2.1_pl" color_size="8">
-		7fff 2a47 2e87 272a 2ec7 276d 2fd1 7fff
-	</tex_palette>
-	<tex_palette index="1" name="mv_kusa2.2_pl" color_size="8">
 		7fff 2a47 2e87 272a 2ec7 276d 2fd1 7fff
 	</tex_palette>
 </tex_palette_array>
@@ -160,9 +115,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 0.000000 -6.500000"
-		volume_max="4.000000 0.000000 1.500000"
-		volume_r="7.632080"
+		volume_min="-4.000000 -1.000000 0.000000"
+		volume_max="4.000000 7.000000 0.000000"
+		volume_r="8.062256"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -172,14 +127,14 @@
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
 					<tex st="0.000000 32.000000"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-4.000000 0.000000 1.500000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-4.000000 -1.000000 0.000000"/>
 					<tex st="32.000000 32.000000"/>
-					<pos_xy xy="4.000000 0.000000"/>
+					<pos_xy xy="4.000000 -1.000000"/>
 					<tex st="32.000000 0.000000"/>
-					<pos_xz xz="4.000000 -6.500000"/>
+					<pos_xy xy="4.000000 7.000000"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-4.000000 0.000000"/>
+					<pos_xy xy="-4.000000 7.000000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -187,13 +142,13 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface1" kind="mesh"
+	<node index="0" name="pPlane1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
 		brother_prev="-1"
 		draw_mtx="on"
-		billboard="off"
+		billboard="on"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
@@ -201,9 +156,9 @@
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 0.000000 -6.500000"
-		volume_max="4.000000 0.000000 1.500000"
-		volume_r="7.632080"
+		volume_min="-4.000000 -1.000000 0.000000"
+		volume_max="4.000000 7.000000 0.000000"
+		volume_r="8.062256"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
