@@ -1,20 +1,764 @@
 #event data
-#save date:2009/10/13 21:30:10
+#save date:2010/03/17 21:21:09
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0303.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
 #hold event number:
+24
+#event number: 0
+#type
+1
+#ID name
+C04R0303_RANDOM_01
+#OBJ CODE Number
+WKOBJCODE01
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+FV_STADIUM_RANDOM_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
 0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 -104
+#event number: 1
+#type
+1
+#ID name
+C04R0303_RANDOM_02
+#OBJ CODE Number
+WKOBJCODE02
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+FV_STADIUM_RANDOM_02
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 -104
+#event number: 2
+#type
+1
+#ID name
+C04R0303_RANDOM_03
+#OBJ CODE Number
+WKOBJCODE03
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+FV_STADIUM_RANDOM_03
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 -104
+#event number: 3
+#type
+1
+#ID name
+C04R0303_FANM_01
+#OBJ CODE Number
+MAN1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+FV_STADIUM_FANM_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 -136
+#event number: 4
+#type
+1
+#ID name
+C04R0303_FANW_01
+#OBJ CODE Number
+WOMAN2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+FV_STADIUM_FANW_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 -136
+#event number: 5
+#type
+1
+#ID name
+C04R0303_TRAINER_01
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+FV_STADIUM_TRAINER_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 -168
+#event number: 6
+#type
+1
+#ID name
+C04R0303_TRAINER_02
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+FV_STADIUM_TRAINER_02
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 -168
+#event number: 7
+#type
+1
+#ID name
+C04R0303_TRAINER_03
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+FV_STADIUM_TRAINER_03
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 -168
+#event number: 8
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_15
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+472 0 56
+#event number: 9
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_14
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+424 0 24
+#event number: 10
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_16
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+488 0 -40
+#event number: 11
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_07
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+168 0 24
+#event number: 12
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_06
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+168 0 8
+#event number: 13
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_05
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+168 0 -8
+#event number: 14
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_04
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+168 0 -24
+#event number: 15
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_02
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 0 8
+#event number: 16
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_03
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 0 -8
+#event number: 17
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_08
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+216 0 24
+#event number: 18
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_09
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+216 0 8
+#event number: 19
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_10
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+216 0 -8
+#event number: 20
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_11
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+216 0 -24
+#event number: 21
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_13
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+232 0 -8
+#event number: 22
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_12
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+232 0 8
+#event number: 23
+#type
+1
+#ID name
+C04R0303_FOOTBALLM_01
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+45
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 120
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -24,7 +768,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0303.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -34,7 +778,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0303.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1

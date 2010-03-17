@@ -8,6 +8,18 @@
 #ifndef ZONE_C04R0404_EVC_H
 #define ZONE_C04R0404_EVC_H
 
+#define C04R0404_TRAINER_01                0
+#define C04R0404_TRAINER_02                1
+#define C04R0404_TRAINER_03                2
+#define C04R0404_FANM_01                   3
+#define C04R0404_FANW_01                   4
+#define C04R0404_RANDOM_01                 5
+#define C04R0404_RANDOM_02                 6
+#define C04R0404_RANDOM_03                 7
+#define C04R0404_BASKETM_01                8
+#define C04R0404_BASKETM_02                9
+#define C04R0404_BASKETM_03               10
+#define C04R0404_BOY2_01                  11
 
 #endif //ZONE_C04R0404_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0404.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
