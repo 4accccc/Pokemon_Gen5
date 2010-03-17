@@ -137,7 +137,7 @@ EVENT_START		ev_pos_c03r0601_stop_01
 	
 	//戦闘処理
 	//水タイプを選択している場合
-/*	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_MIZU THEN
+	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_MIZU THEN
 	
 		//戦闘処理
 		_TRAINER_BTL_SET( TRID_SUPPORT_13, 0 )
@@ -175,7 +175,7 @@ EVENT_START		ev_pos_c03r0601_stop_01
 		ENDIF
 	
 	ENDIF
-*/	
+
 	//サポート：自機を見る
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_look )
 	_OBJ_ANIME_WAIT()
