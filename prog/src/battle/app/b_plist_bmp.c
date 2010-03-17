@@ -3165,6 +3165,8 @@ void BattlePokeList_TalkMsgSet( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BattlePokeList_TalkMsgStart( BPLIST_WORK * wk )
 {
+	GFL_FONTSYS_SetColor( 1, 2, 0 );
+
   wk->stream = PRINTSYS_PrintStream(
                   wk->win[WIN_TALK].win,
                   0, 0, wk->msg_buf, wk->dat->font,

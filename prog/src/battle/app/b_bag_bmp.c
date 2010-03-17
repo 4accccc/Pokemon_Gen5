@@ -928,6 +928,8 @@ void BattleBag_TalkMsgSet( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BattleBag_TalkMsgStart( BBAG_WORK * wk )
 {
+	GFL_FONTSYS_SetColor( 1, 2, 0 );
+
 //	MsgPrintSkipFlagSet( MSG_SKIP_ON );
 	wk->stream = PRINTSYS_PrintStream(
 									wk->talk_win,

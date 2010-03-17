@@ -704,13 +704,16 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
   BAPPTOOL_VanishCursor( wk->cpwk, wk->cursor_flg );
 
   // マルチのときの初期位置補正
-  if( wk->page == BPLIST_PAGE_SELECT &&
-    BattlePokeList_MultiPosCheck( wk, BPLISTMAIN_GetListRow(wk,0) ) == TRUE ){
-    wk->dat->sel_poke = 1;
-  }
+  if( wk->page == BPLIST_PAGE_SELECT ){
+		if( BattlePokeList_MultiPosCheck( wk, BPLISTMAIN_GetListRow(wk,0) ) == TRUE ){
+	    wk->dat->sel_poke = 1;
+		}
+	  BPLISTUI_Init( wk, wk->page, wk->dat->sel_poke );
+  }else{
+	  BPLISTUI_Init( wk, wk->page, 0 );
+	}
 
 //  BattlePokeList_CursorMoveSet( wk, wk->page );
-  BPLISTUI_Init( wk, wk->page, 0 );
 
   BPL_ExpGagePut( wk, wk->page );
 
@@ -4233,15 +4236,20 @@ static BOOL CheckNextDeadSel( BPLIST_WORK * wk )
 // 上から検索して瀕死の箇所に強制的にセット
 static void SetDeadChangeData( BPLIST_WORK * wk )
 {
-  u32 i;
+	// マルチの場合は立ち位置が関係するので、確実に０に入れる
+	if( BattlePokeList_MultiCheck( wk ) == TRUE ){
+		wk->dat->sel_pos[0] = wk->dat->sel_poke;
+	}else{
+		u32 i;
 
-  for( i=0; i<BPL_SELNUM_MAX; i++ ){
-    u32 row = BPLISTMAIN_GetListRow( wk, i );
-    if( wk->poke[row].hp == 0 ){
-      wk->dat->sel_pos[i] = wk->dat->sel_poke;
-      break;
-    }
-  }
+	  for( i=0; i<BPL_SELNUM_MAX; i++ ){
+	    u32 row = BPLISTMAIN_GetListRow( wk, i );
+	    if( wk->poke[row].hp == 0 ){
+	      wk->dat->sel_pos[i] = wk->dat->sel_poke;
+	      break;
+	    }
+	  }
+	}
 }
 
 // キャンセル設定
