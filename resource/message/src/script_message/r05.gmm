@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-11T17:56:58"/>
+	<create user="matsumiya" host="W00224" date="2010-03-17T18:54:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -537,7 +537,7 @@
 では　そのまえに……▼</language>
 	</row>
 
-	<row id="msg_r05_black_07_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r05_black_07_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・主人公と向き合って
 ・主人公ポケモン、ＨＰ・ＰＰ全回復の処理
@@ -552,7 +552,7 @@
 回復してくれた！▼</language>
 	</row>
 
-	<row id="msg_r05_black_07_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r05_black_07_02" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・上を向いてメッセージ表示
 ・表示後、イベントバトルへ</comment>
@@ -670,7 +670,7 @@
 それ以外の　答えは　ないよ▼</language>
 	</row>
 
-	<row id="msg_r05_black_10" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・GRIDX=338、GRIDZ=&quot;431~435到達したとき
 　表示後、主人公が所定の位置に移動
