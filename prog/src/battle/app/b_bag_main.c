@@ -244,6 +244,8 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 //  dat->heap = HEAPID_BATTLE_APP_TEST;
   // シューターモードテスト
 //  dat->mode = BBAG_MODE_SHOOTER;
+	// ポケモンドリームキャッチモードテスト
+//	dat->mode = BBAG_MODE_PDC;
 
   wk = GFL_HEAP_AllocClearMemory( dat->heap, sizeof(BBAG_WORK) );
 
@@ -252,12 +254,21 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
   wk->dat = dat;
   wk->pfd = BTLV_EFFECT_GetPfd();
 
+	// シューター
   if( wk->dat->mode == BBAG_MODE_SHOOTER ){
     wk->page = BBAG_PAGE_MAIN;
     wk->seq  = SEQ_BBAG_SHOOTER_INIT;
+		wk->poke_id = 0;
+	// ポケモンドリームキャッチ
+	}else if( wk->dat->mode == BBAG_MODE_PDC ){
+    wk->page = BBAG_PAGE_MAIN;
+    wk->seq  = SEQ_BBAG_INIT;
+		wk->poke_id = BBAG_POKE_BALL;
+	// その他
   }else{
     wk->page = BBAG_PAGE_POCKET;
     wk->seq  = SEQ_BBAG_INIT;
+		wk->poke_id = 0;
   }
 
 //  テスト処理
@@ -368,7 +379,7 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 
 //  wk->poke_id = (u8)MyItem_BattleBagPocketPagePosGet( BattleWorkBagCursorGet(wk->dat->bw) );
 //  wk->poke_id = (u8)MYITEM_BattleBagPocketPagePosGet( wk->cur );
-  wk->poke_id = 0;
+//  wk->poke_id = 0;
 
   if( wk->dat->mode == BBAG_MODE_GETDEMO ){
 		BattleBag_GetDemoPocketInit( wk );
@@ -412,7 +423,10 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 
   if( wk->dat->mode == BBAG_MODE_GETDEMO ){
     return SEQ_BBAG_GETDEMO;
-  }
+  }else if( wk->dat->mode == BBAG_MODE_PDC ){
+		BBAG_PageChgBgScroll( wk, wk->page );
+	  return SEQ_BBAG_ITEM;
+	}
   return SEQ_BBAG_POCKET;
 }
 
@@ -431,7 +445,7 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
   BBAG_MsgManSet( wk );
 
 //  wk->poke_id = (u8)MYITEM_BattleBagPocketPagePosGet( wk->cur );
-  wk->poke_id = 0;
+//	wk->poke_id = 0;
 
   BattleBag_ShooterPocketInit( wk );
 
@@ -592,7 +606,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 */
 		PMSND_PlaySE( SEQ_SE_CANCEL2 );
     BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
-    if( wk->dat->mode == BBAG_MODE_SHOOTER ){
+    if( wk->dat->mode == BBAG_MODE_SHOOTER || wk->dat->mode == BBAG_MODE_PDC ){
       wk->dat->ret_item = ITEM_DUMMY_DATA;
       wk->dat->ret_page = BBAG_POKE_MAX;
       return SEQ_BBAG_ENDSET;
@@ -605,7 +619,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
   case CURSORMOVE_CANCEL:   // キャンセル
 		PMSND_PlaySE( SEQ_SE_CANCEL2 );
     BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
-    if( wk->dat->mode == BBAG_MODE_SHOOTER ){
+    if( wk->dat->mode == BBAG_MODE_SHOOTER || wk->dat->mode == BBAG_MODE_PDC ){
       wk->dat->ret_item = ITEM_DUMMY_DATA;
       wk->dat->ret_page = BBAG_POKE_MAX;
       return SEQ_BBAG_ENDSET;

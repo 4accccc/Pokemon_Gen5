@@ -22,6 +22,7 @@ typedef enum {
   BBAG_MODE_NORMAL = 0, // 通常モード
   BBAG_MODE_SHOOTER,    // サポートシューター
   BBAG_MODE_GETDEMO,    // 捕獲デモモード
+	BBAG_MODE_PDC,				// ポケモンドリームキャッチ
 }BtlBagMode;
 
 // ポケットID
