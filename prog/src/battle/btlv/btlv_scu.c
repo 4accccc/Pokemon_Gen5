@@ -239,6 +239,7 @@ struct _BTLV_SCU {
 /*--------------------------------------------------------------------------*/
 static u32 transWinFrameCgx( BTLV_SCU* wk, u32 arcID, u32 datID, u8 bgFrame );
 static inline void* Scu_GetProcWork( BTLV_SCU* wk, u32 size );
+static BOOL Fade_CheckEnd( BTLV_SCU* wk );
 static void btlin_startFade( int wait );
 static inline void btlinTool_vpos_exchange( BTLV_SCU* wk, BtlvMcssPos vpos, BtlvMcssPos* vposDst, BtlPokePos* posDst, const BTL_POKEPARAM** bppDst );
 static BOOL btlin_skip_core( BTLV_SCU* wk, int* seq, const u8* vposAry, u8 vposCount );
@@ -271,6 +272,7 @@ static BOOL btlinEffSub_MyPokeIn_Solo( BTLV_SCU* wk, int* seq, u8 clientID );
 static BOOL btlinEffSub_MyPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_1, u8 clientID_2 );
 static BOOL btlinEff_MyPokeInTriple( BTLV_SCU* wk, int* seq );
 static u16 btlfinEffsub_getOpponentPokeInStrID( BTLV_SCU* wk, u8 pokeCount );
+static BOOL subproc_WazaEffect( int* seq, void* wk_adrs );
 static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskFakeDisable( GFL_TCBL* tcbl, void* wk_adrs );
@@ -296,7 +298,7 @@ static BOOL tokwin_hide_progress( TOK_WIN* tokwin );
 static void tokwin_renew_start( TOK_WIN* tokwin, BtlPokePos pos );
 static BOOL tokwin_renew_progress( TOK_WIN* tokwin );
 static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID, BTLV_BALL_GAUGE_TYPE type );
-  static BOOL lvupWinProc_Disp( int* seq, void* wk_adrs );
+static BOOL lvupWinProc_Disp( int* seq, void* wk_adrs );
 static BOOL lvupWinProc_Fwd( int* seq, void* wk_adrs );
 static BOOL lvupWinProc_Hide( int* seq, void* wk_adrs );
 
@@ -2497,15 +2499,50 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
 void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlvMcssPos atPos, BtlvMcssPos defPos,
   WazaID waza, BtlvWazaEffect_TurnType turnType, u8 continueCount )
 {
-  BTLV_WAZAEFFECT_PARAM param;
+//  BTLV_WAZAEFFECT_PARAM param;
+  BTLV_WAZAEFFECT_PARAM* param = Scu_GetProcWork( wk, sizeof(BTLV_WAZAEFFECT_PARAM) );
 
-  param.waza = waza;
-  param.from = atPos;
-  param.to = defPos;
-  param.turn_count = turnType;
-  param.continue_count = continueCount;
+  param->waza = waza;
+  param->from = atPos;
+  param->to = defPos;
+  param->turn_count = turnType;
+  param->continue_count = continueCount;
 
-  BTLV_EFFECT_AddWazaEffect( &param );
+  BTL_UTIL_SetupProc( &wk->proc, wk, NULL, subproc_WazaEffect );
+}
+static BOOL subproc_WazaEffect( int* seq, void* wk_adrs )
+{
+  BTLV_SCU* wk = wk_adrs;
+
+  switch( (*seq) ){
+  case 0:
+    msgWinVisible_Hide( &wk->msgwinVisibleWork );
+    (*seq)++;
+    break;
+  case 1:
+    if( msgWinVisible_Update(&wk->msgwinVisibleWork) ){
+      BTLV_WAZAEFFECT_PARAM* param = Scu_GetProcWork( wk, sizeof(BTLV_WAZAEFFECT_PARAM) );
+      BTLV_EFFECT_AddWazaEffect( param );
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      msgWinVisible_Disp( &wk->msgwinVisibleWork, FALSE );
+      (*seq)++;
+    }
+    break;
+  case 3:
+    if( msgWinVisible_Update(&wk->msgwinVisibleWork) ){
+      (*seq)++;
+      return TRUE;
+    }
+    break;
+  default:
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //=============================================================================================
@@ -2519,7 +2556,8 @@ void BTLV_SCU_StartWazaEffect( BTLV_SCU* wk, BtlvMcssPos atPos, BtlvMcssPos defP
 //=============================================================================================
 BOOL BTLV_SCU_WaitWazaEffect( BTLV_SCU* wk )
 {
-  return BTLV_EFFECT_CheckExecute() == FALSE;
+//  return BTLV_EFFECT_CheckExecute() == FALSE;
+  return BTL_UTIL_CallProc( &wk->proc );
 }
 
 //==============================================================================
@@ -3199,6 +3237,8 @@ static BOOL msgWinVisible_Update( MSGWIN_VISIBLE* wk )
                     GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
                     GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
                     eva, evb );
+
+    OS_TPrintf("********* BLDALPHA EVA=%d, EVB=%d\n", eva, evb);
   }
   return FALSE;
 }
