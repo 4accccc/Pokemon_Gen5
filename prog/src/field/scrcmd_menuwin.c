@@ -810,7 +810,7 @@ static void balloonWin_GetOffsetPos(
   y /= 12; // table size
   
   if( x < 4 && y < 2 ){
-    OS_Printf( "table pos %d,%d\n", x, y );
+    OS_Printf( "table pos %d,%d\n", y, x );
     *offs = data_balloonWinOffsetTbl[y][x];
   }else{
     VecFx32 error = {0,0,0};
