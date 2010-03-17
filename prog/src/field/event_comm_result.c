@@ -188,13 +188,13 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
 
       { //ƒpƒŒƒX‹…
         MYITEM_PTR myitem = GAMEDATA_GetMyItem(gdata);
-        u16 now_num = MYITEM_GetItemNum( myitem, ITEM_PARESUDAMA, talk->heapID);
+        u16 now_num = MYITEM_GetItemNum( myitem, ITEM_DERUDAMA, talk->heapID);
         int add_num = talk->point;
         
-        if(MYITEM_GetItemMax( ITEM_PARESUDAMA ) < now_num + add_num){
-          add_num = ITEM_PARESUDAMA - now_num;
+        if(MYITEM_GetItemMax( ITEM_DERUDAMA ) < now_num + add_num){
+          add_num = ITEM_DERUDAMA - now_num;
         }
-        MYITEM_AddItem(myitem, ITEM_PARESUDAMA, add_num, talk->heapID);
+        MYITEM_AddItem(myitem, ITEM_DERUDAMA, add_num, talk->heapID);
       }
 
       WORDSET_RegisterNumber( talk->iem.wordset, 0, talk->point, 
