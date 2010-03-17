@@ -973,7 +973,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
     {
 
       BTL_N_Printf( DBGSTR_SVFL_AfterPokeIn_Alive,
-              action->change.posIdx, action->change.memberIdx );
+              wk->actOrder[i].clientID, action->change.posIdx, action->change.memberIdx );
 
       scproc_MemberChange( wk, wk->actOrder[i].bpp, action->change.memberIdx );
       wk->actOrder[i].fDone = TRUE;

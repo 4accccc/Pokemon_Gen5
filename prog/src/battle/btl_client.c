@@ -574,6 +574,8 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
     SEQ_RETURN_TO_SV,
     SEQ_RETURN_TO_SV_QUIT,
     SEQ_RECPLAY_CTRL,
+    SEQ_BGM_FADEOUT,
+    SEQ_IDLE,
     SEQ_QUIT,
   };
 
@@ -642,7 +644,6 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
     break;
 
   // 録画再生コントロール：ブラックアウト後
-  // @todo ここ、描画と非描画クライアントでズレが１フレーム分生じる -> Reader は共通１コにするか？
   case SEQ_RECPLAY_CTRL:
     if( RecPlayer_GetCtrlCode(&wk->recPlayer) == RECCTRL_QUIT )
     {
@@ -650,12 +651,20 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
     }
     else
     {
+      if( wk->viewCore ){
+        PMSND_FadeOutBGM( 30 );
+      }
+      wk->myState = SEQ_BGM_FADEOUT;
+    }
+    break;
+  case SEQ_BGM_FADEOUT:
+    if( !PMSND_CheckFadeOnBGM() )
+    {
       // nextTurn を引数にして全クライアントの BTL_CLIENT_SetChapterSkip がコールバックされる
       u32 nextTurn = RecPlayer_GetNextTurn( &wk->recPlayer );
       BTL_MAIN_ResetForRecPlay( wk->mainModule, nextTurn );
     }
     break;
-
 
   case SEQ_QUIT:
     return TRUE;
@@ -708,6 +717,7 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
         BTL_N_Printf( DBGSTR_CLIENT_RecPlay_ChapterSkipped, wk->myID, wk->recPlayer.nextTurnCount);
         if( wk->viewCore ){
           BTLV_RecPlayFadeIn_Start( wk->viewCore );
+          PMSND_FadeInBGM( 30 );
         }
         wk->myState = SEQ_RECPLAY_FADEIN;
       }
@@ -732,8 +742,9 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
   case SEQ_RECPLAY_FADEIN:
     if( wk->viewCore != NULL )
     {
-      if( BTLV_RecPlayFadeIn_Wait(wk->viewCore) )
-      {
+      if( BTLV_RecPlayFadeIn_Wait(wk->viewCore)
+      &&  !PMSND_CheckFadeOnBGM()
+      ){
         BTL_MAIN_NotifyChapterSkipEnd( wk->mainModule );
       }
     }

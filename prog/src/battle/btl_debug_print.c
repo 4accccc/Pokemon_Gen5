@@ -217,7 +217,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_CombiWazaFound:      return "  自分より後に、同じ位置(%d）にワザ(%d)を打つ味方（%d）が見つかった\n";
   case DBGSTR_SVFL_CombiDecide:         return "  ポケ(%d）が先発。ポケ(%d)と合体ワザ予約！\n";
   case DBGSTR_SVFL_StartAfterPokeIn:    return "空き位置にポケモン投入後のサーバーコマンド生成を開始する\n";
-  case DBGSTR_SVFL_AfterPokeIn_Alive:   return "生きているポケモンとの入れ替えが発生 Pos %d <-> %d\n";
+  case DBGSTR_SVFL_AfterPokeIn_Alive:   return "生きているポケモンとの入れ替えが発生 Cleint=%d, Pos %d <-> %d\n";
   case DBGSTR_SVFL_AfterPokeIn_Dead:    return "ひんしポケモンの空きを埋める入れ替えが発生 Pos %d <-> %d\n";
   case DBGSTR_SVFL_PokeDead:            return "ポケ(%d) しにます\n";
 

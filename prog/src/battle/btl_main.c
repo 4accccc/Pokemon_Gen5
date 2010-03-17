@@ -312,6 +312,7 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
     Bspstore_RecordData( wk );
     reflectPartyData( wk );
     wk->setupParam->getMoney = wk->bonusMoney;
+    OS_TPrintf("BTL_PROC_MaIN Finish\n");
     return GFL_PROC_RES_FINISH;
   }
 
