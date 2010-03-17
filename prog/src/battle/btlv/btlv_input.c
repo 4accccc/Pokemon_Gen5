@@ -632,6 +632,7 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work );
+static  void  TCB_TransformStandby2PDC( GFL_TCB* tcb, void* work );
 
 static  void  SetupScaleChange( BTLV_INPUT_WORK* biw, fx32 start_scale, fx32 end_scale, fx32 scale_speed, int pos_y );
 static  void  TCB_ScaleChange( GFL_TCB* tcb, void* work );
@@ -1258,6 +1259,16 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       }
     }
     break;
+  case BTLV_INPUT_SCRTYPE_PDC:
+    { 
+      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+      biw->tcb_execute_flag = 1;
+      ttw->biw = biw;
+      GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2PDC, ttw, 1 );
+      biw->button_exist[ 0 ] = TRUE;  //押せるボタンかどうかチェック
+      biw->button_exist[ 1 ] = TRUE;  //押せるボタンかどうかチェック
+    }
+    break;
   default:
     //ありえないSCRTYPEが指定されている
     GF_ASSERT( 0 );
@@ -1292,7 +1303,8 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   }
 
   if( ( biw->camera_work_wait > CAMERA_WORK_WAIT ) &&
-      ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) )
+      ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) &&
+      ( biw->scr_type != BTLV_INPUT_SCRTYPE_PDC ) )
   { 
     if( !BTLV_EFFECT_CheckExecute() ){
       BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
@@ -2022,6 +2034,47 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
       GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
       GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
+      GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+      GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+      GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+      ttw->biw->tcb_execute_flag = 0;
+      GFL_HEAP_FreeMemory( ttw );
+      GFL_TCB_DeleteTask( tcb );
+    }
+    break;
+  }
+}
+
+//============================================================================================
+/**
+ *  @brief  下画面変形タスク（スタンバイ→ポケモンドリームキャッチ）
+ */
+//============================================================================================
+static  void  TCB_TransformStandby2PDC( GFL_TCB* tcb, void* work )
+{ 
+  TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
+
+  switch( ttw->seq_no ){
+  case 0:
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0g_NSCR,
+                                     GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1d_NSCR,
+                                     GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
+    PMSND_PlaySE( SEQ_SE_OPEN2 );
+    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
+    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
+    SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
+    ttw->seq_no++;
+    break;
+  case 1:
+  default:
+    if( ttw->biw->tcb_execute_count == 0 )
+    {
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );

@@ -33,6 +33,8 @@ extern  void              BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw );
 extern  void              BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw );
 extern  void              BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp,
                                           BTLV_GAUGE_TYPE type, BtlvMcssPos pos );
+extern  void              BTLV_GAUGE_AddPP( BTLV_GAUGE_WORK *bgw, const ZUKAN_SAVEDATA* zs, const POKEMON_PARAM* pp,
+                                            BTLV_GAUGE_TYPE type, BtlvMcssPos pos );
 extern  void              BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos );
 extern  void              BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, GFL_CLACTPOS* ofs );
 extern  void              BTLV_GAUGE_CalcHP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int damage );

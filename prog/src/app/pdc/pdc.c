@@ -33,6 +33,8 @@ struct _PDC_SETUP_PARAM
   BTL_FIELD_SITUATION*  bfs;
   MYSTATUS*             my_status;
   MYITEM*               my_item;
+  CONFIG*               config;
+  ZUKAN_SAVEDATA*       zs;
   PDC_RESULT            result;
 };
 
@@ -63,12 +65,14 @@ FS_EXTERN_OVERLAY(battle_view);
  * @param[in] bfs       BTL_FIELD_SITUATION構造体
  * @param[in] my_status プレイヤーデータ
  * @param[in] my_item   持ちアイテムデータ
+ * @param[in] config    コンフィグ
+ * @param[in] zs        図鑑セーブデータ
  * @param[in] heapID    ヒープID
  *
  * @retval  PDC_SETUP_PARAM
  */
 //--------------------------------------------------------------------------
-PDC_SETUP_PARAM*  PDC_MakeSetUpParam( POKEMON_PARAM* pp, BTL_FIELD_SITUATION* bfs, MYSTATUS* my_status, MYITEM* my_item, HEAPID heapID )
+PDC_SETUP_PARAM*  PDC_MakeSetUpParam( POKEMON_PARAM* pp, BTL_FIELD_SITUATION* bfs, MYSTATUS* my_status, MYITEM* my_item, CONFIG* config, ZUKAN_SAVEDATA* zs, HEAPID heapID )
 { 
   PDC_SETUP_PARAM*  psp = GFL_HEAP_AllocMemory( heapID, sizeof( PDC_SETUP_PARAM ) );
 
@@ -76,6 +80,8 @@ PDC_SETUP_PARAM*  PDC_MakeSetUpParam( POKEMON_PARAM* pp, BTL_FIELD_SITUATION* bf
   psp->bfs        = bfs;
   psp->my_status  = my_status;
   psp->my_item    = my_item;
+  psp->config     = config;
+  psp->zs         = zs;
   psp->result     = PDC_RESULT_NONE;
 
   return psp;
@@ -135,6 +141,34 @@ MYSTATUS*  PDC_GetMyStatus( PDC_SETUP_PARAM* psp )
 MYITEM*  PDC_GetMyItem( PDC_SETUP_PARAM* psp )
 { 
   return psp->my_item;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief config取得
+ *
+ * @param[in] psp PDC_SETUP_PARAM
+ *
+ * @retval  config
+ */
+//--------------------------------------------------------------------------
+CONFIG*  PDC_GetConfig( PDC_SETUP_PARAM* psp )
+{ 
+  return psp->config;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief zs取得
+ *
+ * @param[in] psp PDC_SETUP_PARAM
+ *
+ * @retval  zs
+ */
+//--------------------------------------------------------------------------
+ZUKAN_SAVEDATA*  PDC_GetZukanWork( PDC_SETUP_PARAM* psp )
+{ 
+  return psp->zs;
 }
 
 //--------------------------------------------------------------------------

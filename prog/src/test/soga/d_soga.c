@@ -23,6 +23,9 @@
 #include "app/pdc.h"
 #include "field/zonedata.h"
 
+#include "item/itemsym.h"
+#include "gamesystem/game_data.h"
+
 enum{
   BACK_COL = 0,
   SHADOW_COL = 2,
@@ -57,9 +60,11 @@ typedef struct
   GFL_PROCSYS*  local_procsys;
   PDC_SETUP_PARAM*    psp;
   BTL_FIELD_SITUATION bfs;
+  GAMEDATA*   game_data;
 }SOGA_WORK;
 
 static  void  TextPrint( SOGA_WORK *wk );
+static  void  pdc_init( SOGA_WORK* wk );
 
 typedef struct
 {
@@ -207,6 +212,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
   (*seq) = 0;
 
   wk->local_procsys = GFL_PROC_LOCAL_boot( wk->heapID );
+  wk->game_data = pwk;
 
   return GFL_PROC_RES_FINISH;
 }
@@ -255,12 +261,23 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
       BTL_FIELD_SITUATION bfs = { 
         0, 0, 0, 0, 0, 12, 0,
       };
+      MYSTATUS*       myStatus  = GAMEDATA_GetMyStatus( wk->game_data );
+      MYITEM*         myItem    = GAMEDATA_GetMyItem( wk->game_data );
+      CONFIG*         config    = SaveData_GetConfig( GAMEDATA_GetSaveControlWork( wk->game_data ) );
+      ZUKAN_SAVEDATA* zs        = GAMEDATA_GetZukanSave( wk->game_data );
       wk->bfs = bfs;
+      pdc_init( wk );
       GFL_OVERLAY_Load( FS_OVERLAY_ID(pdc) );
-      wk->psp = PDC_MakeSetUpParam( pp, &wk->bfs, NULL, NULL, wk->heapID );
+      wk->psp = PDC_MakeSetUpParam( pp, &wk->bfs, myStatus, myItem, config, zs, wk->heapID );
       ZONEDATA_Open( wk->heapID );
       GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, spt[ wk->pos ].gpd, wk->psp );
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 16, 0 );
+      wk->seq_no = 3;
     }
+    break;
+  case 3:
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(pdc) );
+    wk->seq_no = 0;
     break;
   }
 
@@ -353,5 +370,40 @@ static  void  TextPrint( SOGA_WORK *wk )
   GFL_BMPWIN_TransVramCharacter( wk->bmpwin[ BMPWIN_MENU ] );
   GFL_BMPWIN_MakeScreen( wk->bmpwin[ BMPWIN_MENU ] );
   GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+}
+
+//======================================================================
+//  pdc‰Šú‰»
+//======================================================================
+static  void  pdc_init( SOGA_WORK* wk )
+{ 
+  MYSTATUS* myStatus = GAMEDATA_GetMyStatus( wk->game_data );
+  MYITEM*   myItem   = GAMEDATA_GetMyItem( wk->game_data );
+  CONFIG*   config   = SaveData_GetConfig( GAMEDATA_GetSaveControlWork( wk->game_data ) );
+  ZUKAN_SAVEDATA* zw  = GAMEDATA_GetZukanSave( wk->game_data );
+  static const STRCODE name[] = { 0x30b5, 0x30c8, 0x30b7, 0xffff };
+
+  MyStatus_SetMyName( myStatus, name );
+
+  MYITEM_AddItem( myItem, ITEM_MASUTAABOORU,  99, wk->heapID );
+  MYITEM_AddItem( myItem, ITEM_HAIPAABOORU,   99, wk->heapID );
+  MYITEM_AddItem( myItem, ITEM_SUUPAABOORU,   99, wk->heapID );
+  MYITEM_AddItem( myItem, ITEM_MONSUTAABOORU, 99, wk->heapID );
+  MYITEM_AddItem( myItem, ITEM_SAFARIBOORU,   99, wk->heapID );
+  MYITEM_AddItem( myItem, ITEM_NETTOBOORU,    99, wk->heapID );
+  MYITEM_AddItem( myItem, ITEM_DAIBUBOORU,    99, wk->heapID );
+  MYITEM_AddItem( myItem, ITEM_NESUTOBOORU,   99, wk->heapID );
+  MYITEM_AddItem( myItem, ITEM_RIPIITOBOORU,  99, wk->heapID );
+  MYITEM_AddItem( myItem, ITEM_TAIMAABOORU,   99, wk->heapID );
+  MYITEM_AddItem( myItem, ITEM_GOOZYASUBOORU, 99, wk->heapID );
+  MYITEM_AddItem( myItem, ITEM_PUREMIABOORU,  99, wk->heapID );
+  MYITEM_AddItem( myItem, ITEM_DAAKUBOORU,    99, wk->heapID );
+  MYITEM_AddItem( myItem, ITEM_HIIRUBOORU,    99, wk->heapID );
+  MYITEM_AddItem( myItem, ITEM_KUIKKUBOORU,   99, wk->heapID );
+  MYITEM_AddItem( myItem, ITEM_PURESYASUBOORU,99, wk->heapID );
+
+  CONFIG_SetMsgSpeed( config, 2 );
+
+  ZUKANSAVE_Init( zw );
 }
 

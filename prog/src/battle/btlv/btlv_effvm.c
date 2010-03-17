@@ -2515,7 +2515,7 @@ static VMCMD_RESULT VMEC_OBJ_PAL_FADE( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_OBJ_PAL_FADE\n");
 #endif DEBUG_OS_PRINT
 
-  BTLV_CLACT_SetPaletteFade( BTLV_EFFECT_GetCLWK(), index, start_evy, end_evy, wait, rgb );
+  BTLV_CLACT_SetPaletteFade( BTLV_EFFECT_GetCLWK(), bevw->obj[ index ], start_evy, end_evy, wait, rgb );
 
   return bevw->control_mode;
 }
@@ -5095,13 +5095,13 @@ static  ARCDATID  EFFVM_ConvDatID( BTLV_EFFVM_WORK* bevw, ARCDATID datID )
   }
   else
   {
-    ofs = ITEM_GetBallID( bevw->param.item_no );
+    ofs = ITEM_GetBallID( bevw->param.item_no ) - 1 ;
   }
 
   //不正なボールIDはモンスターボールにする
   if( ( ofs == BALLID_NULL ) || ( ofs > BALLID_MAX ) )
   {
-    ofs = BALLID_MONSUTAABOORU;
+    ofs = BALLID_MONSUTAABOORU - 1;
   }
 
   switch( datID ){

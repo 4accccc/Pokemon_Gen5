@@ -925,7 +925,8 @@ extern const GFL_PROC_DATA DebugSogabeMainProcData;
 FS_EXTERN_OVERLAY(sogabe_debug);
 static BOOL TESTMODE_ITEM_SelectFuncSogabe( TESTMODE_WORK *work , const int idx )
 {
-  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(sogabe_debug), &DebugSogabeMainProcData, NULL);
+  GAMEDATA* gameData = GAMEDATA_Create( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
+  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(sogabe_debug), &DebugSogabeMainProcData, gameData);
   return TRUE;
 }
 

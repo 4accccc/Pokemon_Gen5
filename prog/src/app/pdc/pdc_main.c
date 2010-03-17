@@ -9,14 +9,21 @@
 #include <gflib.h>
 
 #include "pdc_main.h"
+#include "pdc_msg.h"
 #include "arc_def.h"
 
 #include "battle/btlv/btlv_effect.h"
 #include "battle/btlv/btlv_input.h"
+#include "battle/btlv/data/pdc_sel.cdat"
+#include "battle/app/b_bag.h"
 #include "tr_tool/trtype_def.h"
+#include "item/itemsym.h"
+#include "sound/pm_sndsys.h"
 
 #include "font/font.naix"
-#include "message.naix"
+
+FS_EXTERN_OVERLAY(battle_b_app);
+FS_EXTERN_OVERLAY(battle_bag);
 
 //============================================================================================
 /**
@@ -25,6 +32,12 @@
 //============================================================================================
 typedef PDC_RESULT  ( * PDC_FUNC )( PDC_MAIN_WORK* );
 
+enum
+{
+  BTLIN_STD_FADE_WAIT = 2,
+  PDC_KEY_WAIT = 80,
+};
+
 //============================================================================================
 /**
  *  構造体宣言
@@ -32,19 +45,26 @@ typedef PDC_RESULT  ( * PDC_FUNC )( PDC_MAIN_WORK* );
 //============================================================================================
 struct _PDC_MAIN_WORK
 { 
+  PDC_SETUP_PARAM*  psp;
   POKEMON_PARAM*    pp;
   GFL_FONT*         large_font;
   GFL_FONT*         small_font;
-  GFL_MSGDATA*      msg;
 
   BTLV_INPUT_WORK*  biw;
+  PDC_MSG_WORK*     msg;
+
+  GFL_TCBLSYS*      tcbl;
+
+  BBAG_DATA         bagData;
 
   int               seq_no;
+  int               wait;
 
   PDC_FUNC          pFunc;
 
   HEAPID            heapID;
 
+  BAG_CURSOR*       bag_cursor;
   u8                cursor_flag;
 };
 
@@ -56,6 +76,7 @@ struct _PDC_MAIN_WORK
 static  void  screen_init( HEAPID heapID );
 static  void  screen_exit( void );
 static  void  pdc_change_seq( PDC_MAIN_WORK* pmw, PDC_FUNC func );
+static  void  btlin_startFade( int wait );
 
 static  PDC_RESULT  PDC_SEQ_Encount( PDC_MAIN_WORK* pmw );
 static  PDC_RESULT  PDC_SEQ_CheckInput( PDC_MAIN_WORK* pmw );
@@ -70,15 +91,15 @@ static  PDC_RESULT  PDC_SEQ_Escape( PDC_MAIN_WORK* pmw );
 //--------------------------------------------------------------------------
 PDC_MAIN_WORK* PDC_MAIN_Init( PDC_SETUP_PARAM* psp, HEAPID heapID )
 { 
-  PDC_MAIN_WORK* pmw = GFL_HEAP_AllocMemory( heapID, sizeof( PDC_MAIN_WORK ) );
+  PDC_MAIN_WORK* pmw = GFL_HEAP_AllocClearMemory( heapID, sizeof( PDC_MAIN_WORK ) );
 
   pmw->heapID = heapID;
+  pmw->psp    = psp;
 
   screen_init( pmw->heapID );
 
   pmw->large_font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, pmw->heapID );
   pmw->small_font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_batt_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, pmw->heapID );
-  pmw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_soga_dat, pmw->heapID );
 
   pmw->seq_no = 0;
   {
@@ -92,11 +113,12 @@ PDC_MAIN_WORK* PDC_MAIN_Init( PDC_SETUP_PARAM* psp, HEAPID heapID )
   }
 
   pmw->biw = BTLV_INPUT_InitEx( BTLV_INPUT_TYPE_SINGLE, pmw->large_font, &pmw->cursor_flag, pmw->heapID );
+  pmw->tcbl = GFL_TCBL_Init( heapID, heapID, 64, 128 );
 
   pmw->pp = PDC_GetPP( psp );
 
-  //フェードイン
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 2 );
+  pmw->msg = PDC_MSG_Create( pmw->large_font, PDC_GetConfig( psp ), pmw->tcbl, pmw->heapID );
+  pmw->bag_cursor = MYITEM_BagCursorAlloc( pmw->heapID );
 
   pdc_change_seq( pmw, &PDC_SEQ_Encount );
 
@@ -110,6 +132,7 @@ PDC_MAIN_WORK* PDC_MAIN_Init( PDC_SETUP_PARAM* psp, HEAPID heapID )
 //--------------------------------------------------------------------------
 PDC_RESULT  PDC_MAIN_Main( PDC_MAIN_WORK* pmw )
 { 
+  GFL_TCBL_Main( pmw->tcbl );
   BTLV_EFFECT_Main();
   BTLV_INPUT_Main( pmw->biw );
 
@@ -128,11 +151,19 @@ PDC_RESULT  PDC_MAIN_Main( PDC_MAIN_WORK* pmw )
 //--------------------------------------------------------------------------
 void  PDC_MAIN_Exit( PDC_MAIN_WORK* pmw )
 { 
-  screen_exit();
+  GFL_TCBL_Exit( pmw->tcbl );
+
+  PDC_MSG_Delete( pmw->msg );
 
   BTLV_EFFECT_Exit();
   BTLV_INPUT_Exit( pmw->biw );
 
+  GFL_FONT_Delete( pmw->large_font );
+  GFL_FONT_Delete( pmw->small_font );
+
+  screen_exit();
+
+  GFL_HEAP_FreeMemory( pmw->bag_cursor );
   GFL_HEAP_FreeMemory( pmw );
 }
 
@@ -154,36 +185,37 @@ static  void  pdc_change_seq( PDC_MAIN_WORK* pmw, PDC_FUNC func )
 //--------------------------------------------------------------------------
 static  void  screen_init( HEAPID heapID )
 { 
-  static const GFL_DISP_VRAM dispvramBank = {
-    GX_VRAM_BG_128_D,       // メイン2DエンジンのBG
+  static const GFL_DISP_VRAM vramBank = {
+    GX_VRAM_BG_128_D,           // メイン2DエンジンのBG
     GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-    GX_VRAM_SUB_BG_128_C,      // サブ2DエンジンのBG
-    GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
-    GX_VRAM_OBJ_64_E,       // メイン2DエンジンのOBJ
+    GX_VRAM_SUB_BG_128_C,       // サブ2DエンジンのBG
+    GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
+    GX_VRAM_OBJ_64_E,           // メイン2DエンジンのOBJ
     GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
-    GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
-    GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
-    GX_VRAM_TEX_01_AB,        // テクスチャイメージスロット
+    GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
+    GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
+    GX_VRAM_TEX_01_AB,          // テクスチャイメージスロット
     GX_VRAM_TEXPLTT_01_FG,      // テクスチャパレットスロット
-    GX_OBJVRAMMODE_CHAR_1D_64K,   // メインOBJマッピングモード
-    GX_OBJVRAMMODE_CHAR_1D_32K,   // サブOBJマッピングモード
+    GX_OBJVRAMMODE_CHAR_1D_64K, // メインOBJマッピングモード
+    GX_OBJVRAMMODE_CHAR_1D_32K, // サブOBJマッピングモード
   };
 
-  GFL_DISP_SetBank( &dispvramBank );
-
-  //VRAMクリア
-  MI_CpuClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
-  MI_CpuClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
-  MI_CpuClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
-  MI_CpuClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
-  MI_CpuFill16((void*)HW_BG_PLTT, 0x0000, HW_BG_PLTT_SIZE);
-
-  GX_SetBankForLCDC( GX_VRAM_LCDC_D );
-
-  G2_BlendNone();
+  // BGsystem初期化
   GFL_BG_Init( heapID );
   GFL_BMPWIN_Init( heapID );
+  GFL_FONTSYS_Init();
 
+  // VRAMバンク設定
+  GFL_DISP_SetBank( &vramBank );
+
+  // 各種効果レジスタ初期化
+  G2_BlendNone();
+  G2S_BlendNone();
+
+  // 上下画面設定
+  GX_SetDispSelect( GX_DISP_SELECT_MAIN_SUB );
+
+  //ＢＧモード設定
   {
     static const GFL_BG_SYS_HEADER sysHeader = {
       GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_3D,
@@ -191,80 +223,31 @@ static  void  screen_init( HEAPID heapID )
     GFL_BG_SetBGMode( &sysHeader );
   }
 
+  //3D関連初期化 soga
   {
-    ///< main
-    GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
-
-    ///< sub
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S,   VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S,   VISIBLE_ON );
-
-    ///<obj
-    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-  }
-  GX_SetDispSelect( GX_DISP_SELECT_MAIN_SUB );
-
-  //3D関連初期化
-  {
-    int i;
-    u32 fog_table[8];
-
     GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K, 0, heapID, NULL );
-    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
+    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
     G3X_AlphaBlend( TRUE );
     G3X_EdgeMarking( TRUE );
-    G3X_AntiAlias( TRUE );
+    G3X_AntiAlias( FALSE );
     G3X_SetFog( FALSE, 0, 0, 0 );
-    GFL_BG_SetBGControl3D( 1 );
+    G2_SetBG0Priority( 1 );
   }
-
-  //2D画面初期化
-  {
-    GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
-      ///<FRAME1_M
-      {
-        0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
-        GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-      },
-      ///<FRAME2_M
-      {
-        0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
-        GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-      },
-      ///<FRAME3_M
-      {
-        0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
-        GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-      },
-    };
-    GFL_BG_SetBGControl(GFL_BG_FRAME1_M, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
-    GFL_BG_ClearScreen(GFL_BG_FRAME1_M );
-    GFL_BG_SetBGControl(GFL_BG_FRAME2_M, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
-    GFL_BG_ClearScreen(GFL_BG_FRAME2_M );
-    GFL_BG_SetBGControl(GFL_BG_FRAME3_M, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
-    GFL_BG_ClearScreen(GFL_BG_FRAME3_M );
-  }
-
-  //ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）
+  //ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）soga
   {
     G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 |
                  GX_WND_PLANEMASK_BG1 |
                  GX_WND_PLANEMASK_BG2 |
                  GX_WND_PLANEMASK_BG3 |
                  GX_WND_PLANEMASK_OBJ,
-                 FALSE );
-    G2_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
-    G2_SetWnd0Position( 1, 1, 255, 191 );
+                 TRUE );
+    G2_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, TRUE );
+    G2_SetWnd0Position( 1, 0, 255, 192 );
     GX_SetVisibleWnd( GX_WNDMASK_W0 );
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
+                      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
+                      GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+                      31, 3 );
   }
 
   {
@@ -277,10 +260,10 @@ static  void  screen_init( HEAPID heapID )
       56,48,48,48,
       16, 16,
     };
-    GFL_CLACT_SYS_Create( &clsysinit, &dispvramBank, heapID );
+    GFL_CLACT_SYS_Create( &clsysinit, &vramBank, heapID );
   }
-
-  GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
+  GFL_BG_SetBGControl3D( 1 );
+  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
 
 //--------------------------------------------------------------------------
@@ -309,18 +292,45 @@ static  PDC_RESULT  PDC_SEQ_Encount( PDC_MAIN_WORK* pmw )
 { 
   switch( pmw->seq_no ){ 
   case 0:
-    BTLV_EFFECT_SetPokemon( pmw->pp, BTLV_MCSS_POS_BB );
-    BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_1 );
+    PDC_MSG_HideWindow( pmw->msg );
     pmw->seq_no++;
     break;
   case 1:
-    if( !BTLV_EFFECT_CheckExecute() )
+    if( PDC_MSG_WaitHideWindow( pmw->msg ) )
     { 
-      //なんらかのメッセージ
+      BTLV_EFFECT_SetPokemon( pmw->pp, BTLV_MCSS_POS_BB );
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_1 );
+      btlin_startFade( BTLIN_STD_FADE_WAIT );
       pmw->seq_no++;
     }
     break;
   case 2:
+    if( !BTLV_EFFECT_CheckExecute() )
+    { 
+      PDC_MSG_SetEncountMsg( pmw->msg, pmw->psp );
+      pmw->seq_no++;
+    }
+    break;
+  case 3:
+    if( PDC_MSG_Wait( pmw->msg ) )
+    { 
+      BTLV_EFFECT_SetGaugePP( PDC_GetZukanWork( pmw->psp ), PDC_GetPP( pmw->psp ), BTLV_MCSS_POS_BB );
+      PDC_MSG_HideWindow( pmw->msg );
+      pmw->seq_no++;
+    }
+    break;
+  case 4:
+    if( PDC_MSG_WaitHideWindow( pmw->msg ) )
+    { 
+      BTLV_EFFECT_Add( BTLEFF_PDC_ENCOUNT );
+      pmw->seq_no++;
+    }
+    break;
+  case 5:
+    if( !BTLV_EFFECT_CheckExecute() )
+    { 
+      pdc_change_seq( pmw, &PDC_SEQ_CheckInput );
+    }
     break;
   }
   return PDC_RESULT_NONE;
@@ -333,6 +343,36 @@ static  PDC_RESULT  PDC_SEQ_Encount( PDC_MAIN_WORK* pmw )
 //--------------------------------------------------------------------------
 static  PDC_RESULT  PDC_SEQ_CheckInput( PDC_MAIN_WORK* pmw )
 { 
+  switch( pmw->seq_no ){ 
+  case 0:
+    PDC_MSG_SetDousuruMsg( pmw->msg, pmw->psp );
+    pmw->seq_no++;
+    break;
+  case 1:
+    if( PDC_MSG_Wait( pmw->msg ) )
+    { 
+      BTLV_INPUT_CreateScreen( pmw->biw, BTLV_INPUT_SCRTYPE_PDC, NULL );
+      pmw->seq_no++;
+    }
+    break;
+  case 2:
+    { 
+      int tp = BTLV_INPUT_CheckInput( pmw->biw, &PDCTouchData, PDCKeyData );
+
+      if( tp != GFL_UI_TP_HIT_NONE )
+      { 
+        if( tp )
+        { 
+          pdc_change_seq( pmw, &PDC_SEQ_Escape );
+        }
+        else
+        { 
+          pdc_change_seq( pmw, &PDC_SEQ_Capture );
+        }
+      }
+    }
+    break;
+  }
   return PDC_RESULT_NONE;
 }
 
@@ -343,6 +383,116 @@ static  PDC_RESULT  PDC_SEQ_CheckInput( PDC_MAIN_WORK* pmw )
 //--------------------------------------------------------------------------
 static  PDC_RESULT  PDC_SEQ_Capture( PDC_MAIN_WORK* pmw )
 { 
+  switch( pmw->seq_no ){ 
+  case 0:
+    pmw->bagData.myitem = PDC_GetMyItem( pmw->psp );
+    pmw->bagData.bagcursor = pmw->bag_cursor;
+    pmw->bagData.mode = BBAG_MODE_PDC;
+    pmw->bagData.font = pmw->large_font;
+    pmw->bagData.heap = pmw->heapID;
+    pmw->bagData.energy = 0;
+    pmw->bagData.reserved_energy = 0;
+    pmw->bagData.end_flg = FALSE;
+    pmw->bagData.ret_item = ITEM_DUMMY_DATA;
+    pmw->bagData.cursor_flg = &pmw->cursor_flag;
+    pmw->bagData.time_out_flg = FALSE;
+    BTLV_INPUT_SetFadeOut( pmw->biw );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_b_app ) );
+    pmw->seq_no++;
+    break;
+  case 1:
+    if( !BTLV_INPUT_CheckFadeExecute( pmw->biw ) )
+    { 
+      GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_bag ) );
+      BattleBag_TaskAdd( &pmw->bagData );
+      pmw->seq_no++;
+    }
+    break;
+  case 2:
+    if( pmw->bagData.end_flg ){
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_b_app ) );
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_bag ) );
+      BTLV_INPUT_SetFadeIn( pmw->biw );
+      if( pmw->bagData.ret_item == ITEM_DUMMY_DATA )
+      { 
+        pmw->seq_no = 3;
+      }
+      else
+      { 
+        pmw->seq_no = 4;
+      }
+    }
+    break;
+  case 3:
+    if( !BTLV_INPUT_CheckFadeExecute( pmw->biw ) )
+    { 
+      pdc_change_seq( pmw, &PDC_SEQ_CheckInput );
+    }
+    break;
+  case 4:
+    if( !BTLV_INPUT_CheckFadeExecute( pmw->biw ) )
+    { 
+      PDC_MSG_SetThrowMsg( pmw->msg, pmw->psp );
+      pmw->seq_no++;
+    }
+    break;
+  case 5:
+    if( PDC_MSG_Wait( pmw->msg ) )
+    { 
+      BTLV_EFFECT_BallThrow( BTLV_MCSS_POS_BB, pmw->bagData.ret_item, 4, TRUE, FALSE );
+      pmw->seq_no++;
+    }
+    break;
+  case 6:
+    if( !BTLV_EFFECT_CheckExecute() )
+    { 
+      PDC_MSG_SetCaptureMsg( pmw->msg, pmw->psp );
+      pmw->seq_no++;
+    }
+    break;
+  case 7:
+    if( PDC_MSG_IsJustDone( pmw->msg ) )
+    {
+      PMSND_PlayBGM( SEQ_ME_POKEGET );
+    }
+    if( PDC_MSG_Wait( pmw->msg ) )
+    { 
+      pmw->seq_no++;
+    }
+    break;
+  case 8:
+    if( !PMSND_CheckPlayBGM() )
+    { 
+      //戦闘エフェクト一時停止を解除
+      BTLV_EFFECT_Restart();
+      PMSND_PlayBGM( SEQ_BGM_WIN1 );
+      pmw->seq_no++;
+    }
+    break;
+  case 9:
+    if( !BTLV_EFFECT_CheckExecute() )
+    { 
+      pmw->wait = PDC_KEY_WAIT;
+      pmw->seq_no++;
+    }
+    break;
+  case 10:
+    if( ( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) ) ||
+        ( GFL_UI_TP_GetTrg() ) ||
+        ( --pmw->wait == 0 ) )
+    { 
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, BTLIN_STD_FADE_WAIT );
+      PMSND_FadeOutBGM( 8 );
+      pmw->seq_no++;
+    }
+    break;
+  case 11:
+    if( !GFL_FADE_CheckFade() )
+    { 
+      return PDC_RESULT_CAPTURE;
+    }
+    break;
+  }
   return PDC_RESULT_NONE;
 }
 
@@ -353,6 +503,37 @@ static  PDC_RESULT  PDC_SEQ_Capture( PDC_MAIN_WORK* pmw )
 //--------------------------------------------------------------------------
 static  PDC_RESULT  PDC_SEQ_Escape( PDC_MAIN_WORK* pmw )
 { 
+  switch( pmw->seq_no ){ 
+  case 0:
+    PDC_MSG_SetEscapeMsg( pmw->msg, pmw->psp );
+    pmw->seq_no++;
+    break;
+  case 1:
+    if( PDC_MSG_Wait( pmw->msg ) )
+    { 
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, BTLIN_STD_FADE_WAIT );
+      PMSND_FadeOutBGM( 8 );
+      pmw->seq_no++;
+    }
+    break;
+  case 2:
+    if( !GFL_FADE_CheckFade() )
+    { 
+      return PDC_RESULT_ESCAPE;
+    }
+    break;
+  }
   return PDC_RESULT_NONE;
 }
 
+/**
+ *  現状のマスター輝度値を参照してフェードパラメータ呼び分け
+ */
+static void btlin_startFade( int wait )
+{
+  if( GX_GetMasterBrightness() <= 0 ){
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, wait );
+  }else{
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, wait );
+  }
+}

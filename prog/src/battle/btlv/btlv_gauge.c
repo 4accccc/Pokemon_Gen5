@@ -275,7 +275,7 @@ static  void  Gauge_CalcEXP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
 static  s32   GaugeProc( s32 MaxHP, s32 NowHP, s32 beHP, s32 *HP_Work, u8 GaugeMax, u16 add_dec );
 static  u8    PutGaugeProc( s32 MaxHP, s32 NowHP, s32 beHP, s32 *HP_Work, u8 *gauge_chr, u8 GaugeMax );
 static  u32   DottoOffsetCalc( s32 nowHP, s32 beHP, s32 MaxHP, u8 GaugeMax );
-static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const BTL_POKEPARAM* bpp );
+static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const POKEMON_PARAM* pp );
 static  void  PutSexOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
 static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAUGE_REQ req );
 static  void  PutHPNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, s32 nowHP );
@@ -288,6 +288,9 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw );
 
 static  void  TCB_BTLV_GAUGE_Move( GFL_TCB* tcb, void* work );
 static  void  TCB_BTLV_GAUGE_DamageEffect( GFL_TCB* tcb, void* work );
+
+static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos, PokeSick sick );
+static  void  gauge_init_view( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos, const POKEMON_PARAM* pp );
 
 //============================================================================================
 /**
@@ -394,7 +397,6 @@ void  BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw )
   GFL_CLGRP_PLTT_Release( bgw->status_plttID );
   GFL_CLACT_UNIT_Delete( bgw->clunit );
   GFL_HEAP_FreeMemory( bgw->arc_data );
-  GFL_FONT_Delete( bgw->font );
   GFL_ARC_CloseDataHandle( bgw->handle );
   GFL_HEAP_FreeMemory( GFL_TCB_GetWork( bgw->tcb ) );
   GFL_TCB_DeleteTask( bgw->tcb );
@@ -459,11 +461,137 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
 //============================================================================================
 void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp, BTLV_GAUGE_TYPE type, BtlvMcssPos pos )
 {
+  GF_ASSERT( bgw->bgcl[ pos ].base_clwk == NULL );
+
+  { 
+    PokeSick sick;
+    if( ( BPP_SICKCONT_IsMoudokuCont( BPP_GetSickCont( bpp, WAZASICK_DOKU ) ) == TRUE ) &&
+        ( BPP_GetPokeSick( bpp ) == POKESICK_DOKU ) )
+    { 
+      sick = POKESICK_MAX;
+    }
+    else
+    { 
+      sick = BPP_GetPokeSick( bpp );
+    }
+    gauge_load_resource( bgw, type, pos, sick );
+  }
+
+  {
+    bgw->bgcl[ pos ].hp       = BPP_GetValue( bpp, BPP_HP );
+    BTL_Printf("ここでＨＰは%d\n", bgw->bgcl[ pos ].hp);
+    bgw->bgcl[ pos ].hpmax    = BPP_GetValue( bpp, BPP_MAX_HP );
+    bgw->bgcl[ pos ].hp_work  = BTLV_GAUGE_HP_WORK_INIT_VALUE;
+    bgw->bgcl[ pos ].damage   = 0;
+
+    bgw->bgcl[ pos ].level    = BPP_GetValue( bpp, BPP_LEVEL );
+
+    if( bgw->bgcl[ pos ].level < 100 )
+    {
+      int min_exp = POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
+                                        BPP_GetValue( bpp, BPP_FORM ),
+                                        BPP_GetValue( bpp, BPP_LEVEL ) );
+
+      bgw->bgcl[ pos ].exp      = BPP_GetValue( bpp, BPP_EXP ) - min_exp;
+      bgw->bgcl[ pos ].exp_max  = POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
+                                                      BPP_GetValue( bpp, BPP_FORM ),
+                                                      BPP_GetValue( bpp, BPP_LEVEL ) + 1 ) -
+                                  min_exp;
+    }
+    else
+    {
+      bgw->bgcl[ pos ].exp      = 0;
+      bgw->bgcl[ pos ].exp_max  = 0;
+    }
+
+    bgw->bgcl[ pos ].exp_work = BTLV_GAUGE_HP_WORK_INIT_VALUE;
+    bgw->bgcl[ pos ].exp_add  = 0;
+
+    bgw->bgcl[ pos ].status   = 0;
+    bgw->bgcl[ pos ].getball  = BTL_MAIN_IsZukanRegistered( wk, bpp );
+
+    {
+      u16 mons_no = BPP_GetMonsNo( bpp );
+
+      if( ( mons_no != MONSNO_NIDORAN_M ) && ( mons_no != MONSNO_NIDORAN_F ) )
+      {
+        bgw->bgcl[ pos ].sex  = BPP_GetValue( bpp, BPP_SEX );
+      }
+      else
+      {
+        bgw->bgcl[ pos ].sex  = PTL_SEX_UNKNOWN;
+      }
+    }
+  }
+  gauge_init_view( bgw, type, pos, BPP_GetViewSrcData( bpp ) );
+}
+
+//============================================================================================
+/**
+ *  @brief  ゲージ生成（POKEMON_PARAMバージョン）
+ *
+ *  @param[in] bgw  BTLV_GAUGE_WORK管理構造体へのポインタ
+ *  @param[in] type ゲージタイプ
+ *  @param[in] pos  立ち位置
+ */
+//============================================================================================
+void  BTLV_GAUGE_AddPP( BTLV_GAUGE_WORK *bgw, const ZUKAN_SAVEDATA* zs, const POKEMON_PARAM* pp, BTLV_GAUGE_TYPE type, BtlvMcssPos pos )
+{
+  GF_ASSERT( bgw->bgcl[ pos ].base_clwk == NULL );
+
+  gauge_load_resource( bgw, type, pos, PP_GetSick( pp ) );
+
+  {
+    bgw->bgcl[ pos ].hp       = PP_Get( pp, ID_PARA_hp,     NULL );
+    bgw->bgcl[ pos ].hpmax    = PP_Get( pp, ID_PARA_hpmax,  NULL );
+    bgw->bgcl[ pos ].hp_work  = BTLV_GAUGE_HP_WORK_INIT_VALUE;
+    bgw->bgcl[ pos ].damage   = 0;
+
+    bgw->bgcl[ pos ].level    = PP_Get( pp, ID_PARA_level,  NULL );
+
+    if( bgw->bgcl[ pos ].level < 100 )
+    {
+      int mons_no = PP_Get( pp, ID_PARA_monsno,   NULL );
+      int form_no = PP_Get( pp, ID_PARA_form_no,  NULL );
+      int min_exp = POKETOOL_GetMinExp( mons_no, form_no, bgw->bgcl[ pos ].level );
+
+      bgw->bgcl[ pos ].exp      = PP_Get( pp, ID_PARA_exp, NULL ) - min_exp;
+      bgw->bgcl[ pos ].exp_max  = POKETOOL_GetMinExp( mons_no, form_no, bgw->bgcl[ pos ].level + 1 ) - min_exp;
+    }
+    else
+    {
+      bgw->bgcl[ pos ].exp      = 0;
+      bgw->bgcl[ pos ].exp_max  = 0;
+    }
+
+    bgw->bgcl[ pos ].exp_work = BTLV_GAUGE_HP_WORK_INIT_VALUE;
+    bgw->bgcl[ pos ].exp_add  = 0;
+
+    bgw->bgcl[ pos ].status   = 0;
+
+    {
+      u16 mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
+
+      bgw->bgcl[ pos ].getball  = ZUKANSAVE_GetPokeGetFlag( zs, mons_no );
+
+      if( ( mons_no != MONSNO_NIDORAN_M ) && ( mons_no != MONSNO_NIDORAN_F ) )
+      {
+        bgw->bgcl[ pos ].sex  = PP_GetSex( pp );
+      }
+      else
+      {
+        bgw->bgcl[ pos ].sex  = PTL_SEX_UNKNOWN;
+      }
+    }
+  }
+  gauge_init_view( bgw, type, pos, pp );
+}
+
+static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos, PokeSick sick )
+{ 
   u32 arcdatid_char;
   u32 arcdatid_cell;
   u32 arcdatid_anm;
-
-  GF_ASSERT( bgw->bgcl[ pos ].base_clwk == NULL );
 
   bgw->bgcl[ pos ].gauge_type = type;
   bgw->bgcl[ pos ].gauge_dir = pos & 1;
@@ -533,15 +661,9 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL
                                                         bgw->status_cellID,
                                                         &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( bgw->bgcl[ pos ].status_clwk, TRUE );
-    if( ( BPP_SICKCONT_IsMoudokuCont( BPP_GetSickCont( bpp, WAZASICK_DOKU ) ) == TRUE ) &&
-        ( BPP_GetPokeSick( bpp ) == POKESICK_DOKU ) )
-    { 
-      BTLV_GAUGE_SetStatus( bgw, POKESICK_MAX, pos );
-    }
-    else
-    { 
-      BTLV_GAUGE_SetStatus( bgw, BPP_GetPokeSick( bpp ), pos );
-    }
+
+    BTLV_GAUGE_SetStatus( bgw, sick, pos );
+
     if( ( ( pos & 1 ) == 0 ) && ( bgw->bgcl[ pos ].gauge_type != BTLV_GAUGE_TYPE_3vs3 ) )
     {
       bgw->bgcl[ pos ].exp_clwk = GFL_CLACT_WK_Create( bgw->clunit,
@@ -551,69 +673,24 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL
     }
     BTLV_GAUGE_SetPos( bgw, pos, NULL );
   }
+}
 
-  {
-    bgw->bgcl[ pos ].hp       = BPP_GetValue( bpp, BPP_HP );
-    BTL_Printf("ここでＨＰは%d\n", bgw->bgcl[ pos ].hp);
-    bgw->bgcl[ pos ].hpmax    = BPP_GetValue( bpp, BPP_MAX_HP );
-    bgw->bgcl[ pos ].hp_work  = BTLV_GAUGE_HP_WORK_INIT_VALUE;
-    bgw->bgcl[ pos ].damage   = 0;
-
-    bgw->bgcl[ pos ].level    = BPP_GetValue( bpp, BPP_LEVEL );
-
-    if( bgw->bgcl[ pos ].level < 100 )
-    {
-      int min_exp = POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
-                                        BPP_GetValue( bpp, BPP_FORM ),
-                                        BPP_GetValue( bpp, BPP_LEVEL ) );
-
-      bgw->bgcl[ pos ].exp      = BPP_GetValue( bpp, BPP_EXP ) - min_exp;
-      bgw->bgcl[ pos ].exp_max  = POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
-                                                      BPP_GetValue( bpp, BPP_FORM ),
-                                                      BPP_GetValue( bpp, BPP_LEVEL ) + 1 ) -
-                                  min_exp;
-    }
-    else
-    {
-      bgw->bgcl[ pos ].exp      = 0;
-      bgw->bgcl[ pos ].exp_max  = 0;
-    }
-
-    bgw->bgcl[ pos ].exp_work = BTLV_GAUGE_HP_WORK_INIT_VALUE;
-    bgw->bgcl[ pos ].exp_add  = 0;
-
-    bgw->bgcl[ pos ].status   = 0;
-    bgw->bgcl[ pos ].getball  = BTL_MAIN_IsZukanRegistered( wk, bpp );
-
-    {
-      u16 mons_no = BPP_GetMonsNo( bpp );
-
-      if( ( mons_no != MONSNO_NIDORAN_M ) && ( mons_no != MONSNO_NIDORAN_F ) )
-      {
-        bgw->bgcl[ pos ].sex  = BPP_GetValue( bpp, BPP_SEX );
-      }
-      else
-      {
-        bgw->bgcl[ pos ].sex  = PTL_SEX_UNKNOWN;
-      }
-    }
-
-    GaugeProc( bgw->bgcl[ pos ].hpmax, bgw->bgcl[ pos ].hp, 0, &bgw->bgcl[ pos ].hp_work, BTLV_GAUGE_HP_CHARMAX, 1 );
-    PutGaugeOBJ( bgw, &bgw->bgcl[ pos ], BTLV_GAUGE_REQ_HP );
-    if( bgw->bgcl[ pos ].exp_clwk ){
-      GaugeProc( bgw->bgcl[ pos ].exp_max, bgw->bgcl[ pos ].exp, 0, &bgw->bgcl[ pos ].exp_work, BTLV_GAUGE_EXP_CHARMAX, 1 );
-      PutGaugeOBJ( bgw, &bgw->bgcl[ pos ], BTLV_GAUGE_REQ_EXP );
-    }
-    PutNameOBJ( bgw, &bgw->bgcl[ pos ], bpp );
-    PutSexOBJ( bgw, &bgw->bgcl[ pos ] );
-    PutHPNumOBJ( bgw, &bgw->bgcl[ pos ], bgw->bgcl[ pos ].hp );
-    PutLVNumOBJ( bgw, &bgw->bgcl[ pos ] );
-    if( bgw->bgcl[ pos ].gauge_dir )
-    { 
-      PutBallOBJ( bgw, &bgw->bgcl[ pos ] );
-    }
+static  void  gauge_init_view( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos, const POKEMON_PARAM* pp )
+{ 
+  GaugeProc( bgw->bgcl[ pos ].hpmax, bgw->bgcl[ pos ].hp, 0, &bgw->bgcl[ pos ].hp_work, BTLV_GAUGE_HP_CHARMAX, 1 );
+  PutGaugeOBJ( bgw, &bgw->bgcl[ pos ], BTLV_GAUGE_REQ_HP );
+  if( bgw->bgcl[ pos ].exp_clwk ){
+    GaugeProc( bgw->bgcl[ pos ].exp_max, bgw->bgcl[ pos ].exp, 0, &bgw->bgcl[ pos ].exp_work, BTLV_GAUGE_EXP_CHARMAX, 1 );
+    PutGaugeOBJ( bgw, &bgw->bgcl[ pos ], BTLV_GAUGE_REQ_EXP );
   }
-
+  PutNameOBJ( bgw, &bgw->bgcl[ pos ], pp );
+  PutSexOBJ( bgw, &bgw->bgcl[ pos ] );
+  PutHPNumOBJ( bgw, &bgw->bgcl[ pos ], bgw->bgcl[ pos ].hp );
+  PutLVNumOBJ( bgw, &bgw->bgcl[ pos ] );
+  if( bgw->bgcl[ pos ].gauge_dir )
+  { 
+    PutBallOBJ( bgw, &bgw->bgcl[ pos ] );
+  }
   bgw->bgcl[ pos ].gauge_enable = 1;
 
   bgw->bgcl[ pos ].move_cnt = MOVE_COUNT;
@@ -1201,7 +1278,7 @@ static u32 DottoOffsetCalc( s32 nowHP, s32 beHP, s32 MaxHP, u8 GaugeMax )
  * @param pp    POKEMON_PARAM構造体
  */
 //--------------------------------------------------------------
-static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const BTL_POKEPARAM* bpp )
+static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const POKEMON_PARAM* pp )
 {
   STRBUF* monsname = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, bgw->heapID );
   PRINTSYS_LSB  color = PRINTSYS_LSB_Make( 1, 4, 0 );
@@ -1210,11 +1287,7 @@ static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const BTL
 
   GFL_BMP_Clear( bmp, 0 );
 
-  {
-    const POKEMON_PARAM* pp = BPP_GetViewSrcData( bpp );
-    PP_Get( pp, ID_PARA_nickname, monsname );
-  }
-
+  PP_Get( pp, ID_PARA_nickname, monsname );
 
   GFL_FONTSYS_GetColor( &letter, &shadow, &back );
   GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( color ), PRINTSYS_LSB_GetS( color ), PRINTSYS_LSB_GetB( color ) );

@@ -125,7 +125,7 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
 
 //============================================================================================
 /**
- * @brief システム初期化用のセットアップパラメータ生成（バトル用）
+ * @brief システム初期化用のセットアップパラメータ生成
  *
  * @param[in] heapID      ヒープID
  */
@@ -704,6 +704,26 @@ void  BTLV_EFFECT_SetGauge( const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp,
   else
   {
     BTLV_GAUGE_Add( bew->bgw, wk, bpp, BTLV_GAUGE_TYPE_1vs1, position );
+  }
+}
+
+//============================================================================================
+/**
+ * @brief  指定された位置にゲージをセット（POKEMON_PARAMバージョン）
+ *
+ * @param[in] pp        ゲージ表示するポケモンのPOEKMON_PARAM構造体のポインタ
+ * @param[in] position  セットするゲージ位置
+ */
+//============================================================================================
+void  BTLV_EFFECT_SetGaugePP( const ZUKAN_SAVEDATA* zs, const POKEMON_PARAM* pp, int position )
+{
+  if( bew->besp.rule == BTL_RULE_TRIPLE )
+  {
+    BTLV_GAUGE_AddPP( bew->bgw, zs, pp, BTLV_GAUGE_TYPE_3vs3, position );
+  }
+  else
+  {
+    BTLV_GAUGE_AddPP( bew->bgw, zs, pp, BTLV_GAUGE_TYPE_1vs1, position );
   }
 }
 

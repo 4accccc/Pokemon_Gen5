@@ -330,6 +330,7 @@ void BTLV_Delete( BTLV_CORE* core )
   GFL_TCBL_Exit( core->tcbl );
   GFL_STR_DeleteBuffer( core->strBuf );
   GFL_FONT_Delete( core->largeFontHandle );
+  GFL_FONT_Delete( core->smallFontHandle );
   GFL_HEAP_FreeMemory( core );
 }
 
