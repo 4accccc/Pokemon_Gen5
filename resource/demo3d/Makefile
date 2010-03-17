@@ -90,6 +90,7 @@ make_narc:
 	-ls bin/*_camera.bin bin/*.nsb* > $(arc_list)
 	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(arc_list)
 	nnsarc -r -l -n -i $(demo3d_narc) -S $(arc_list) > $(TMPDIR)arc_result.txt
+	@echo naixカット
 	$(NAIXCUT) $(demo3d_naix)
 
 $(demoid_def_h): demo_list.txt $(DEMO_LIST)
@@ -102,7 +103,8 @@ make_demoid:
 	@echo 
 	@echo	デモID/Resourceテーブルコンバート開始
 	ruby conv/make_demoid.rb $(demoid_def_h) $(demo_res_dat) $(DEMO_LIST)
-
+	unix2dos -D $(demoid_def_h)
+	unix2dos -D $(demo_res_dat)
 
 #	ruby make_header.rb
 
@@ -118,6 +120,7 @@ $(TMPDIR)%.txt: %.xls
 
 $(DATDIR)%.cdat: $(TMPDIR)%.txt 
 	ruby conv/make_cdat.rb $< $@
+	unix2dos -D $@
 endif
 
 # narc のコピーだけ実行する
