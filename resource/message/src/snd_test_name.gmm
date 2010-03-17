@@ -4777,6 +4777,10 @@
 		<language name="JPN" width="256">BGM-E-LAST</language>
 		<language name="JPN_KANJI" width="256">BGM-E-LAST</language>
 	</row>
+	<row id="msg_seq_bgm_e_handsome">
+		<language name="JPN" width="256">BGM-E-HANDSOME</language>
+		<language name="JPN_KANJI" width="256">BGM-E-HANDSOME</language>
+	</row>
 	<row id="msg_seq_bgm_e_opening">
 		<language name="JPN" width="256">BGM-E-OPENING</language>
 		<language name="JPN_KANJI" width="256">BGM-E-OPENING</language>
@@ -5017,10 +5021,6 @@
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1160">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1161">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
@@ -8072,6 +8072,10 @@
 	<row id="msg_seq_se_fld_143">
 		<language name="JPN" width="256">FLD-143</language>
 		<language name="JPN_KANJI" width="256">FLD-143</language>
+	</row>
+	<row id="msg_seq_se_fld_144">
+		<language name="JPN" width="256">FLD-144</language>
+		<language name="JPN_KANJI" width="256">FLD-144</language>
 	</row>
 	<row id="msg_seq_se_dmy_256">
 		<language name="JPN" width="256">DMY-256</language>
