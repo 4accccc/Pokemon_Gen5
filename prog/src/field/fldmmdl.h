@@ -314,6 +314,7 @@ typedef enum
   MMDL_BLACT_ANMTBLNO_SHIN_MU, ///<ポケモン シン・ム
   MMDL_BLACT_ANMTBLNO_SPIDER, ///<くもの巣
   MMDL_BLACT_ANMTBLNO_NFLIP_ACT0, ///<人物汎用　フリップ未使用 演技3Pあり
+  MMDL_BLACT_ANMTBLNO_MELODYER, ///<ポケモン メロディア専用
 	MMDL_BLACT_ANMTBLNO_MAX,		///<最大
 }MMDL_BLACT_ANMTBLNO;
 
@@ -342,7 +343,6 @@ typedef enum
   MMDL_DRAWPROCNO_ITEMGET, ///<自機アイテムゲット
   MMDL_DRAWPROCNO_PCAZUKE, ///<自機PC預け
   MMDL_DRAWPROCNO_ONEANMLOOP, ///<１パターンアニメループ
-//  MMDL_DRAWPROCNO_ONEANM, ///<１パターンアニメ
   MMDL_DRAWPROCNO_PCWOMAN, ///<PC姉
   MMDL_DRAWPROCNO_TPOKE, ///<連れ歩きポケモン
   MMDL_DRAWPROCNO_TPOKE_FLY, ///<連れ歩きポケモン(アニメ再生スピード1/2) 
@@ -352,6 +352,7 @@ typedef enum
   MMDL_DRAWPROCNO_BLAACTALWAYSANIME_32, ///<ビルボード汎用 常に32Frameアニメ
   MMDL_DRAWPROCNO_SHIN_MU, ///<ポケモン シン・ム
   MMDL_DRAWPROCNO_SPIDER, ///<くもの巣
+  MMDL_DRAWPROCNO_MELODYER, ///<ポケモン メロディア
 	MMDL_DRAWPROCNO_MAX,		///<最大
 }MMDL_DRAWPROCNO;
 

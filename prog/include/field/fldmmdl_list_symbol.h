@@ -26,6 +26,7 @@
 #define PROC_BLACT_ALANM32 15 //汎用ビルボードアクター常に32フレーム移動アニメ
 #define PROC_SHIN_MU 16 //ポケモン シン・ム
 #define PROC_SPIDER 17 //くもの巣
+#define PROC_MELODYER 18 //ポケモン メロディア
 
 //FOOTMARK 足跡種類で指定するシンボルです。
 #define FOOTMARK_NON 0 //足跡無し
@@ -125,6 +126,7 @@
 #define ANMID_SHIN_MU 18 //ポケモン　シン・ム
 #define ANMID_SPIDER 19 //くもの巣
 #define ANMID_ACT0 20 //人物汎用 反転未使用+演技
+#define ANMID_MELODYER 21 //ポケモン メロディア
 
 //SEX 性別で指定するシンボルです。
 #define SEX_MALE 0

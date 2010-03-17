@@ -4434,6 +4434,66 @@ static int AC_ShinMuTurn( MMDL * mmdl )
 }
 
 //======================================================================
+//	AC_MELODYER系
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * AC_MELODYER_SPIN
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_MelodyerSpin( MMDL * mmdl )
+{
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_MELODYER_SPIN );
+	MMDL_IncAcmdSeq( mmdl );
+	
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_MELODYER_SPIN_POSE
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_MelodyerSpinPose( MMDL * mmdl )
+{
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_MELODYER_SPIN_POSE );
+	MMDL_IncAcmdSeq( mmdl );
+	
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_MELODYER_SHAKE
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_MelodyerShake( MMDL * mmdl )
+{
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_MELODYER_SHAKE );
+	MMDL_IncAcmdSeq( mmdl );
+	
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_MELODYER系共通　アニメ終了待ちして終了
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_Melodyer_1( MMDL * mmdl )
+{
+  return( FALSE );
+}
+
+//======================================================================
 //	data	アニメーションコマンドテーブル
 //======================================================================
 //--------------------------------------------------------------
@@ -6189,6 +6249,36 @@ int (* const DATA_AC_ShinMuGutari_Tbl[])( MMDL * ) =
 int (* const DATA_AC_ShinMuTurn_Tbl[])( MMDL * ) =
 {
   AC_ShinMuTurn,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_MELODYER_SPIN
+//--------------------------------------------------------------
+int (* const DATA_AC_MelodyerSpin_Tbl[])( MMDL * ) =
+{
+  AC_MelodyerSpin,
+  AC_Melodyer_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_MELODYER_SPIN_POSE
+//--------------------------------------------------------------
+int (* const DATA_AC_MelodyerSpinPose_Tbl[])( MMDL * ) =
+{
+  AC_MelodyerSpinPose,
+  AC_Melodyer_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_MELODYER_SHAKE
+//--------------------------------------------------------------
+int (* const DATA_AC_MelodyerShake_Tbl[])( MMDL * ) =
+{
+  AC_MelodyerShake,
+  AC_Melodyer_1,
 	AC_End,
 };
 

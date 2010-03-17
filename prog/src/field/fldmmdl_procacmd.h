@@ -340,4 +340,11 @@ extern int (* const DATA_AC_ShinMuFlyUpper_Tbl[])( MMDL * );
 extern int (* const DATA_AC_ShinMuGutari_Tbl[])( MMDL * );
 extern int (* const DATA_AC_ShinMuTurn_Tbl[])( MMDL * );
 
+//--------------------------------------------------------------
+//  AC_MELODYERŠÖ˜A
+//--------------------------------------------------------------
+extern int (* const DATA_AC_MelodyerSpin_Tbl[])( MMDL * );
+extern int (* const DATA_AC_MelodyerSpinPose_Tbl[])( MMDL * );
+extern int (* const DATA_AC_MelodyerShake_Tbl[])( MMDL * );
+
 #endif //MMDL_PROCACMD_H_FILE

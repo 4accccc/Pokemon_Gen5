@@ -338,7 +338,7 @@
 #define DRAW_STA_PCAZUKE_MAX 0x03 ///<最大
 
 //--------------------------------------------------------------
-///自機レポート用描画ステータス
+/// 自機レポート用描画ステータス
 //--------------------------------------------------------------
 #define DRAW_STA_SAVEHERO 0x00
 #define DRAW_STA_SAVEHERO_MAX 0x01
@@ -405,6 +405,21 @@
 #define DRAW_STA_SPIDER_STOP 0x00
 #define DRAW_STA_SPIDER_REMOVE 0x01
 #define DRAW_STA_SPIDER_MAX 0x02
+
+//--------------------------------------------------------------
+/// フィールド動作モデル メロディア専用描画ステータス
+//--------------------------------------------------------------
+#define DRAW_STA_MELODYER_STOP 0x00
+#define DRAW_STA_MELODYER_SPIN (DRAW_STA_MAX)
+#define DRAW_STA_MELODYER_SPIN_POSE (DRAW_STA_MAX+1)
+#define DRAW_STA_MELODYER_SHAKE (DRAW_STA_MAX+2)
+#define DRAW_STA_MELODYER_MAX (DRAW_STA_MAX+3)
+
+#define DRAW_STA_MELODYER_ANMNO_STOP 0x00
+#define DRAW_STA_MELODYER_ANMNO_SPIN 0x01
+#define DRAW_STA_MELODYER_ANMNO_SPIN_POSE 0x02
+#define DRAW_STA_MELODYER_ANMNO_SHAKE 0x03
+#define DRAW_STA_MELODYER_ANMNO_MAX 0x04
 
 //======================================================================
 //  フィールド動作モデル アニメーションコマンドコード
@@ -574,7 +589,7 @@
 #define AC_MARK_HATENA 0x9f ///<？マークを出す
 #define AC_MARK_ONPU 0xa0 ///<♪マークを出す
 #define AC_MARK_TENTEN 0xa1 ///<…マークを出す
-#define AC_HERO_CUTIN 0xa2 ///<…マークを出す
+#define AC_HERO_CUTIN 0xa2 ///<自機カットインアニメ
 #define AC_DASH_U_6F 0xa3 ///<上方向に移動 6フレーム(自機専用
 #define AC_DASH_D_6F 0xa4 ///<下方向に移動 6フレーム(自機専用
 #define AC_DASH_L_6F 0xa5 ///<左方向に移動 6フレーム(自機専用
@@ -589,7 +604,10 @@
 #define AC_SHIN_MU_FLY_UPPER 0xae ///<シンム　上昇
 #define AC_SHIN_MU_GUTARI 0xaf ///<シンム　ぐったりアニメ
 #define AC_SHIN_MU_TURN 0xb0 ///<シンム　振り向き
-#define ACMD_MAX 0xb1 ///<アニメーションコマンド最大数
+#define AC_MELODYER_SPIN 0xb1 ///<メロディア 回転
+#define AC_MELODYER_SPIN_POSE 0xb2 ///<メロディア 回転+ポーズ
+#define AC_MELODYER_SHAKE 0xb3 ///<メロディア 上下揺れ
+#define ACMD_MAX 0xb4 ///<アニメーションコマンド最大数
 
 #define ACMD_END 0xfe ///<アニメーションコマンド終了
 #define ACMD_NOT 0xff ///<非アニメーションコマンド
@@ -598,85 +616,5 @@
 ///AC_ACT0と名前を変えて置き換える。が、AC_PC_BOWを使用している箇所を考慮し
 ///定義だけは残す。
 #define AC_PC_BOW (AC_ACT0)
-
-//======================================================================
-//  フィールド動作モデル 表示コード
-//======================================================================
-/*
- * //MMDL_PL_NULL
-#define OBJCODEMAX    0xffff    ///<OBJコード最大
-
-//--------------------------------------------------------------
-///  ワーク参照型OBJコード　チェックシンボル
-//--------------------------------------------------------------
-#define WKOBJCODE_ORG  (WKOBJCODE00)
-#define WKOBJCODE_END  (WKOBJCODE15)
-
-//--------------------------------------------------------------
-///  特殊OBJコード
-/// ※マップエディタでの配置は禁止
-//--------------------------------------------------------------
-#define NONDRAW      (0x2000)
-*/  //MMDL_PL_NULL
-
-//======================================================================
-//  フィールド動作モデル モデルID
-//======================================================================
-/* //MMDL_PL_NULL
-//--------------------------------------------------------------
-//  モデルID
-//--------------------------------------------------------------
-#define BLACT_MDLID_32x32    0x0000    ///<32x32
-#define BLACT_MDLID_16x16    0x0001    ///<16x16
-#define BLACT_MDLID_16x16_1    0x0002    ///<16x16
-#define BLACT_MDLID_SEED_ME    0x0003    ///<木の実　芽
-#define BLACT_MDLID_SEED    0x0004    ///<木の実
-#define BLACT_MDLID_64x64    0x0005    ///<64x64
-#define BLACT_MDLID_FISHINGHERO  0x0006    ///<釣り自機
-#define BLACT_MDLID_16x32    0x0007    ///<16x32
-#define BLACT_MDLID_64x32    0x0008    ///<64x32
-#define BLACT_MDLID_32x32FOGOFF  0x0009    ///<32x32 フォグ無効
-#define BLACT_MDLID_32x32BOFF  0x000a    ///<32x32 ビルボードオフ
-#define BLACT_MDLID_GIRATINA  0x000b    ///<128x64 ギラティナ
-#define BLACT_MDLID_GSET    0x000c    ///<128x32 ギンガ団書割
-#define BLACT_MDLID_MONUMENT2A  0x000d    ///<64x32 モニュメント2専用
-#define BLACT_MDLID_MONUMENT2B  0x000e    ///<64x32 モニュメント2専用
-#define BLACT_MDLID_ROTATE32x32  0x000f    ///<32x32 回転アニメ対応
-#define BLACT_MDLID_GSET2    0x0010    ///<128x32 ギンガ団書割2
-#define BLACT_MDLID_32x32BLD  0x0011 ///<32x32 MDLID_32x32と同一 アルファ適用
-
-#define BLACT_MDLID_MAX      0xffff    ///<モデルID最大
-
-//======================================================================
-//  フィールド動作モデル アニメID
-//======================================================================
-//--------------------------------------------------------------
-//  アニメID
-//--------------------------------------------------------------
-#define BLACT_ANMID_NORMAL_0  0x0000    ///<ノーマルアニメ
-#define BLACT_ANMID_HERO_0    0x0001    ///<自機用アニメ
-#define BLACT_ANMID_SEED    0x0002    ///<木の実アニメ
-#define BLACT_ANMID_HEROCYCLE_0  0x0003    ///<自機自転車アニメ
-#define BLACT_ANMID_SPHERO    0x0004
-#define BLACT_ANMID_WATERHERO  0x0005
-#define BLACT_ANMID_SWIMHERO  0x0006
-#define BLACT_ANMID_BIRD    0x0007
-#define BLACT_ANMID_SPPOKE    0x0008
-#define BLACT_ANMID_CONTESTHERO  0x0009
-#define BLACT_ANMID_FISHINGHERO  0x000a
-#define BLACT_ANMID_PCWOMAN    0x000b
-#define BLACT_ANMID_KOIKING    0x000c
-#define BLACT_ANMID_POKEHERO  0x000d
-#define BLACT_ANMID_SAVEHERO  0x000e
-#define BLACT_ANMID_BANZAIHERO  0x000f
-#define BLACT_ANMID_SPPOKE6    0x0010
-#define BLACT_ANMID_SPPOKE7    0x0011
-#define BLACT_ANMID_SPPOKE9    0x0012
-#define BLACT_ANMID_SPPOKE10  0x0013
-#define BLACT_ANMID_SPPOKE11  0x0014
-#define BLACT_ANMID_GIRATINA  0x0015
-#define BLACT_ANMID_BSHERO    0x0016
-#define BLACT_ANMID_MAX      0xffff    ///<アニメID最大
-*/ //MMDL_PL_NULL
 
 #endif //MMDL_CODE_H_FILE

@@ -1594,6 +1594,93 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActSpider =
 };
 
 //======================================================================
+//  ビルボード　ポケモン メロディア
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　ポケモン メロディア　描画
+ * @param  mmdl  MMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DrawBlActMelodyer_Draw( MMDL *mmdl )
+{
+  u16 status;
+  VecFx32 pos;
+  u16 init_flag = FALSE;
+  DRAW_BLACT_WORK *work;
+  GFL_BBDACT_SYS *actSys;
+  
+  work = MMDL_GetDrawProcWork( mmdl );
+
+  if( work->actID == MMDL_BLACTID_NULL ){ //未登録
+    return;
+  }
+  
+  actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+  
+  status = MMDL_GetDrawStatus( mmdl );
+  
+  if( status != work->anmcnt.set_anm_status ){
+    u16 anm_idx;
+    
+    switch( status ){
+    case DRAW_STA_MELODYER_SPIN:
+      anm_idx = DRAW_STA_MELODYER_ANMNO_SPIN;
+      break;
+    case DRAW_STA_MELODYER_SPIN_POSE:
+      anm_idx = DRAW_STA_MELODYER_ANMNO_SPIN_POSE;
+      break;
+    case DRAW_STA_MELODYER_SHAKE:
+      anm_idx = DRAW_STA_MELODYER_ANMNO_SHAKE;
+      break;
+    default:
+      anm_idx = DRAW_STA_MELODYER_ANMNO_STOP;
+    }
+    
+    work->anmcnt.set_anm_status = status;
+    GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
+    init_flag = TRUE;
+  }
+  
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
+  
+  MMDL_GetDrawVectorPos( mmdl, &pos );
+  blact_SetCommonOffsPos( &pos );
+  GFL_BBD_SetObjectTrans(
+    GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+}
+
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　ポケモン メロディア アニメ終了チェック
+ * @param  mmdl  MMDL
+ * @retval  BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+#if 0
+BOOL MMDL_CheckDrawMelodyerAnime( MMDL *mmdl )
+{
+  if( MMDL_GetOBJCode(mmdl) != 
+  actID = MMDL_CallDrawGetProc( work->head.mmdl, 0 );
+extern u32 MMDL_CallDrawGetProc( MMDL *mmdl, u32 state );
+}
+#endif
+
+//--------------------------------------------------------------
+/// 描画処理　ビルボード　ポケモン メロディア　描画
+//--------------------------------------------------------------
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActMelodyer =
+{
+  DrawBlAct_Init,
+  DrawBlActMelodyer_Draw,
+  DrawBlAct_Delete,
+  DrawBlAct_Delete,  //本当は退避
+  DrawBlAct_Init,    //本当は復帰
+  DrawBlAct_GetBlActID,
+};
+
+//======================================================================
 //  人物系共通　ビルボードアクターアニメ処理
 //======================================================================
 //--------------------------------------------------------------
