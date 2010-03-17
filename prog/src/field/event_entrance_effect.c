@@ -112,23 +112,15 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
 
   case SEQ_DOOROUT_FADEIN:
     // 画面フェードイン
-    if( fdaw->season_disp_flag )
-    { // 季節フェード
+    if( fdaw->season_disp_flag ) { 
+      // 季節フェード
       GMEVENT_CallEvent( event, 
           EVENT_FieldFadeIn_Season(gsys, fieldmap, fdaw->start_season, fdaw->end_season) );
     }
-    else
-    { // 基本フェード
+    else { 
+      // 基本フェード
       GMEVENT_CallEvent( event, 
           EVENT_FieldFadeIn(gsys, fieldmap, fdaw->fadeType, FIELD_FADE_WAIT, TRUE, 0, 0) );
-    }
-    *seq = SEQ_DOOROUT_CAMERA_ACT;
-    break;
-
-  case SEQ_DOOROUT_CAMERA_ACT:
-    if( fdaw->cam_anm_flag )
-    {
-      EVENT_CAMERA_ACT_CallDoorOutEvent( event, gsys, fieldmap );
     }
     *seq = SEQ_DOOROUT_OPENANIME_START;
     break;
@@ -157,7 +149,6 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOOROUT_PLAYER_STEP:
-    EVENT_CAMERA_ACT_ResetCameraParameter( fieldmap );  // カメラの設定をデフォルトに戻す
     //自機出現、一歩移動アニメ
     MAPCHANGE_setPlayerVanish( fieldmap, FALSE );
     GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
@@ -166,7 +157,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
 
   case SEQ_DOOROUT_CLOSEANIME_START:
     if (fdaw->ctrl == NULL)
-    { /* エラーよけ、ドアがない場合 */ *seq = SEQ_DOOROUT_END;
+    { /* エラーよけ、ドアがない場合 */ 
+      *seq = SEQ_DOOROUT_CAMERA_ACT;
     }
     else
     { //ドアを閉じるアニメ適用
@@ -184,11 +176,20 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     if ( FIELD_BMODEL_WaitCurrentAnime( fdaw->ctrl ) == TRUE
         && FIELD_BMODEL_CheckCurrentSE( fdaw->ctrl ) == FALSE )
     {
-      *seq = SEQ_DOOROUT_END;
+      *seq = SEQ_DOOROUT_CAMERA_ACT;
     }
     break;
 
+  case SEQ_DOOROUT_CAMERA_ACT:
+    // カメラ演出
+    if( fdaw->cam_anm_flag ) {
+      EVENT_CAMERA_ACT_CallDoorOutEvent( event, gsys, fieldmap );
+    }
+    *seq = SEQ_DOOROUT_END;
+    break;
+
   case SEQ_DOOROUT_END:
+    EVENT_CAMERA_ACT_ResetCameraParameter( fieldmap );  // カメラの設定をデフォルトに戻す
     FIELD_BMODEL_Delete( fdaw->ctrl );
     return GMEVENT_RES_FINISH;
   }
