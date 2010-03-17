@@ -294,7 +294,7 @@
 #define FE_R08R0101_LEG_FIRST              278 /* 0x0116 セッカ湿原：ダルタニスの技習得イベントの初回判定フラグ */
 #define FE_R13_TREASURE_FIRSTTALK          279 /* 0x0117 R13お宝イベント：初回会話フラグ */
 #define FE_C05R0201_POKETRADE_01           280 /* 0x0118 ホドエモシティポケモン交換イベント */
-		/* not used   281(0x0119) */
+#define FE_C03R0901_MELODY                 281 /* 0x0119 配布イベント：酒場のメロディアイベントを終えた */
 		/* not used   282(0x011a) */
 		/* not used   283(0x011b) */
 		/* not used   284(0x011c) */
