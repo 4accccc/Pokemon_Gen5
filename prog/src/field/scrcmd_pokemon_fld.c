@@ -370,6 +370,37 @@ VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief ずかんコンプリート判定
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetZukanComplete( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK*        work = wk;
+  GAMEDATA*       gamedata = SCRCMD_WORK_GetGameData( work );
+  ZUKAN_SAVEDATA*       zw = GAMEDATA_GetZukanSave( gamedata );
+  GAMESYS_WORK *      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  u16     mode = SCRCMD_GetVMWorkValue( core, wk );
+  switch ( mode )
+  {
+  case SCR_ZUKAN_HYOUKA_MODE_GLOBAL:
+    *ret_wk = ZUKANSAVE_CheckZenkokuComp( zw );
+    break;
+  case SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET:
+    *ret_wk = ZUKANSAVE_CheckLocalComp( zw, FIELDMAP_GetHeapID( fieldmap ) );
+    break;
+
+  case SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE:
+  case SCR_ZUKAN_HYOUKA_MODE_AUTO:
+    GF_ASSERT_MSG( 0, "対応していない評価モード\n" );
+    break;
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
 //======================================================================
 //
 //    技覚え関連

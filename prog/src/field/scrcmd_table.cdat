@@ -812,10 +812,11 @@
   //トレインタウン用
   DEF_CMD( EvCmdGetTrainModelID, EV_SEQ_GET_TRAIN_MODEL_ID )
   NO_CMD()
-  NO_CMD()
-  NO_CMD()
 
   //図鑑評価
+  NO_CMD()
+  DEF_CMD( EvCmdGetZukanComplete, EV_SEQ_GET_ZUKAN_COMPLETE )
+
   DEF_CMD( EvCmdGetZukanHyouka, EV_SEQ_GET_ZUKAN_HYOUKA )
   DEF_CMD( EvCmdSetZukanZenkokuFlag, EV_SEQ_SET_ZUKAN_ZENKOKU_FLAG )
   DEF_CMD( EvCmdGetZukanZenkokuFlag, EV_SEQ_GET_ZUKAN_ZENKOKU_FLAG )

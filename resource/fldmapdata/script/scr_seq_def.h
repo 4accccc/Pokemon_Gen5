@@ -4736,6 +4736,23 @@
     .short  \ret_count
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _GET_ZUKAN_COMPLETE
+ * @brief
+ * @param ret_wk    TRUEのとき、完成
+ * @param mode      ずかん評価モード（script_def.hのSCR_ZUKAN_HYOUKA_MODE_～を参照）
+ */
+//--------------------------------------------------------------
+#define _GET_ZUKAN_COMPLETE( ret_wk, mode ) \
+    _ASM_GET_ZUKAN_COMPLETE ret_wk, mode
+
+    .macro  _ASM_GET_ZUKAN_COMPLETE ret_wk, mode
+    .short  EV_SEQ_GET_ZUKAN_COMPLETE
+    .short  \ret_wk
+    .short  \mode
+    .endm
+
 //======================================================================
 //
 //    
