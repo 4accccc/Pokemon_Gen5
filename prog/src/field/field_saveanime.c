@@ -22,7 +22,6 @@
 #include "field_saveanime.h"
 #include "field_camera.h"
 
-
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -37,10 +36,13 @@
 #define FIELD_SAVEANIME_PAL_USE (1)   // 使用本数
 #define FIELD_SAVEANIME_BG_FRAME  ( GFL_BG_FRAME3_M ) // 使用BGフレーム
 
-#define FIELD_SAVEANIME_BG_CHAR_SIZX  ( 4 )
-#define FIELD_SAVEANIME_BG_CHAR_SIZY  ( 4 )
+#define FIELD_SAVEANIME_BG_CHAR_SIZX  ( 5 )
+#define FIELD_SAVEANIME_BG_CHAR_SIZY  ( 5 )
 
-#define FIELD_SAVEANIME_ONE_INDEX_CHAR_SIZ  ( FIELD_SAVEANIME_BG_CHAR_SIZX*FIELD_SAVEANIME_BG_CHAR_SIZY*GFL_BG_1CHRDATASIZ )
+#define FIELD_SAVEANIME_BG_CHAR_LOAD_X (0)
+#define FIELD_SAVEANIME_BG_CHAR_LOAD_Y_OFS (32)
+#define FIELD_SAVEANIME_BG_CHAR_WRITE_SIZX (32)
+#define FIELD_SAVEANIME_BG_CHAR_WRITE_SIZY (32)
 
 // ビットマップ描画位置オフセット
 #define FIELD_SAVEANIME_BMP_POS_X_OFS ( -16 )
@@ -84,12 +86,12 @@ struct _FIELD_SAVEANIME{
   FIELDMAP_WORK* p_fieldmap;
 
   GFL_BMPWIN* p_win;
+  u16 draw_ofs_x;
+  u16 draw_ofs_y;
 
   GFL_TCB* p_tcb;
 
-  void* p_charbuf;
-  NNSG2dCharacterData* p_char;
-
+  GFL_BMP_DATA* p_char;
 
   int frame;
   int anime_index;
@@ -249,8 +251,7 @@ static void SAVEANIME_LoadResource( FIELD_SAVEANIME* p_wk, HEAPID heapID )
   GF_ASSERT( sex < NELEMS(sc_PLTT_INDEX) );
 
   // BGR
-  p_wk->p_charbuf = GFL_ARCHDL_UTIL_LoadBGCharacter( p_handle, NARC_save_icon_report_icon_NCGR, FALSE,
-      &p_wk->p_char, heapID );
+  p_wk->p_char = GFL_BMP_LoadCharacter( ARCID_FIELD_SAVE_ICON, NARC_save_icon_report_icon_NCGR, FALSE, heapID );
 
   // PLTT転送
   GFL_ARCHDL_UTIL_TransVramPaletteEx( p_handle, NARC_save_icon_report_icon_NCLR,
@@ -269,8 +270,8 @@ static void SAVEANIME_LoadResource( FIELD_SAVEANIME* p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void SAVEANIME_ReleaseResource( FIELD_SAVEANIME* p_wk )
 {
-  GFL_HEAP_FreeMemory( p_wk->p_charbuf );
-  p_wk->p_charbuf = NULL;
+  GFL_BMP_Delete( p_wk->p_char );
+  p_wk->p_char = NULL;
 }
 
 
@@ -305,6 +306,7 @@ static void SAVEANIME_CreateBmpWin( FIELD_SAVEANIME* p_wk )
 
 	  GFL_G3D_CAMERA_Switching( cp_g3Dcamera );
 
+
     GFL_G3D_CAMERA_GetTarget( cp_g3Dcamera, &camera_target );
     GFL_G3D_CAMERA_GetPos( cp_g3Dcamera, &camera_pos );
 
@@ -321,11 +323,14 @@ static void SAVEANIME_CreateBmpWin( FIELD_SAVEANIME* p_wk )
     VEC_Normalize( &camera_up, &camera_up );
 
     FIELD_PLAYER_GetPos( p_player, &pos );
+
+    
     // 上方向に移動
     pos.x += FX_Mul( camera_up.x, -FIELD_SAVEANIME_POS_Y_OFS );
     pos.y += FX_Mul( camera_up.y, -FIELD_SAVEANIME_POS_Y_OFS );
     pos.z += FX_Mul( camera_up.z, -FIELD_SAVEANIME_POS_Y_OFS );
     NNS_G3dWorldPosToScrPos( &pos, &pos_x, &pos_y );
+    TOMOYA_Printf( "posx %d posy %d\n", pos_x, pos_y );
     pos_x += FIELD_SAVEANIME_BMP_POS_X_OFS; // Xはスクリーン座標であわせる
     pos_y += FIELD_SAVEANIME_BMP_POS_Y_OFS; // Xはスクリーン座標であわせる
     
@@ -333,6 +338,9 @@ static void SAVEANIME_CreateBmpWin( FIELD_SAVEANIME* p_wk )
 
   // 位置決定
   {
+    p_wk->draw_ofs_x = pos_x % 8;
+    p_wk->draw_ofs_y = pos_y % 8;
+
 
     pos_x /= 8;
     pos_y /= 8;
@@ -360,7 +368,7 @@ static void SAVEANIME_CreateBmpWin( FIELD_SAVEANIME* p_wk )
     FIELD_SAVEANIME_PAL_NO, GFL_BMP_CHRAREA_GET_B );
 
   // 画面反映
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(p_wk->p_win), 15);
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(p_wk->p_win), 0);
   GFL_BMPWIN_TransVramCharacter(p_wk->p_win);
 
   // 1インデックス書き込み
@@ -421,20 +429,25 @@ static void SAVEANIME_OffBmpWin( FIELD_SAVEANIME* p_wk )
 //-----------------------------------------------------------------------------
 static void SAVEANIME_TransIndex( FIELD_SAVEANIME* p_wk, int index )
 {
+  GFL_BMP_DATA* p_bmp;
   u32 char_ofs;
-  u32 res_ofs;
   int i;
-  u8* p_data = (u8*)p_wk->p_char->pRawData;
 
   // 転送先オフセット
   char_ofs = GFL_BMPWIN_GetChrNum( p_wk->p_win );
 
-  // リソースのオフセット
-  res_ofs = FIELD_SAVEANIME_ONE_INDEX_CHAR_SIZ * index;
+  // ビットマップに書き込み転送。
+  p_bmp = GFL_BMPWIN_GetBmp(p_wk->p_win);
+  GFL_BMP_Print( p_wk->p_char, p_bmp,
+      FIELD_SAVEANIME_BG_CHAR_LOAD_X, index*FIELD_SAVEANIME_BG_CHAR_LOAD_Y_OFS,
+      p_wk->draw_ofs_x, p_wk->draw_ofs_y,
+      FIELD_SAVEANIME_BG_CHAR_WRITE_SIZX, FIELD_SAVEANIME_BG_CHAR_WRITE_SIZY, 
+      GF_BMPPRT_NOTNUKI );
 
   // ウィンドウのキャラクタオフセットに転送。
-  GFL_BG_LoadCharacter( FIELD_SAVEANIME_BG_FRAME, &p_data[ res_ofs ],
-      FIELD_SAVEANIME_ONE_INDEX_CHAR_SIZ, char_ofs );
+  GFL_BG_LoadCharacter( FIELD_SAVEANIME_BG_FRAME, 
+      GFL_BMP_GetCharacterAdrs(p_bmp),
+      GFL_BMP_GetBmpDataSize(p_bmp), char_ofs );
 }
 
 
