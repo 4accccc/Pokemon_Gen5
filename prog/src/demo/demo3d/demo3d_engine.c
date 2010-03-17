@@ -63,7 +63,7 @@ struct _DEMO3D_ENGINE_WORK {
   GFL_G3D_UTIL*   g3d_util;
   GFL_G3D_CAMERA* camera;
   fx32 def_top;
-  fx32 def_buttom;
+  fx32 def_bottom;
   DEMO3D_CMD_WORK*  cmd;
 
   u16* unit_idx; // unit_idx保持（ALLOC)
@@ -175,7 +175,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
 
     // デフォルトのtop/buttomを取得
     GFL_G3D_CAMERA_GetTop( wk->camera, &wk->def_top );
-    GFL_G3D_CAMERA_GetBottom( wk->camera, &wk->def_buttom );
+    GFL_G3D_CAMERA_GetBottom( wk->camera, &wk->def_bottom );
 
   }
   set_SceneParam( wk, param, wk->scene, heapID );
@@ -477,41 +477,50 @@ static void debug_camera_control( GFL_G3D_CAMERA* p_camera )
 
 static void set_camera_disp_offset( DEMO3D_ENGINE_WORK* wk, GFL_G3D_CAMERA* p_camera )
 {
-  fx32 top,buttom;
+  s16 top,bottom;
 
   // 上画面
   if( GFL_G3D_DOUBLE3D_GetFlip() == FALSE )
   {
-    top = wk->scene->dview_main_ofs;
-    buttom = wk->scene->dview_main_ofs;
+    top = bottom = wk->scene->dview_main_ofs;
   }
   // 下画面
   else
   {
-    top = wk->scene->dview_sub_ofs;
-    buttom = wk->scene->dview_sub_ofs;
+    top = bottom = wk->scene->dview_sub_ofs;
   }
 #ifdef PM_DEBUG
   {
-    static int ofs_m = 0, ofs_s = 0;
-    int offset;
+    int in = FALSE,key;
+    static s16 ofs_m = 0, ofs_s = 0;
+    fx32 offset;
+
+    key =GFL_UI_KEY_GetCont();
 
     // デバッグ距離操作
-    if( CHECK_KEY_CONT( PAD_KEY_UP ) ){
-      ofs_m += 10;
-      OS_Printf("offset_main view = %d, d = %d\n",top+wk->def_top+ofs_m,ofs_m);
+    if( key & ( PAD_KEY_UP | PAD_BUTTON_R) ){
+      ofs_m += 1;
+      in = TRUE;
     } 
-    else if( CHECK_KEY_CONT( PAD_KEY_DOWN ) ){
-      ofs_m -= 10;
-      OS_Printf("offset_main view = %d, d = %d\n",top+wk->def_top+ofs_m,ofs_m);
+    else if( key & ( PAD_KEY_DOWN | PAD_BUTTON_L) ){
+      ofs_m -= 1;
+      in = TRUE;
     }
-    if( CHECK_KEY_CONT( PAD_KEY_RIGHT ) ){
-      ofs_s += 10;
-      OS_Printf("offset_sub view = %d, d = %d\n",top+wk->def_top+ofs_s,ofs_s);
+    if( key & ( PAD_KEY_RIGHT | PAD_BUTTON_R ) ){
+      ofs_s += 1;
+      in = TRUE;
     } 
-    else if( CHECK_KEY_CONT( PAD_KEY_LEFT ) ){
-      ofs_s -= 10;
-      OS_Printf("offset_sub view = %d, d = %d\n",top+wk->def_top+ofs_s,ofs_s);
+    else if( key & ( PAD_KEY_LEFT | PAD_BUTTON_L ) ){
+      ofs_s -= 1;
+      in = TRUE;
+    }
+    if( in ) {
+      OS_Printf("offset def_top = %f, def_bottom = %f\n",
+          FX_FX32_TO_F32(wk->def_top), FX_FX32_TO_F32(wk->def_bottom));
+      OS_Printf("offset_main view = %f, d = %d o = %d\n",
+          FX_FX32_TO_F32(wk->scene->dview_main_ofs+wk->def_top+ofs_m),(wk->scene->dview_main_ofs+ofs_m),ofs_m );
+      OS_Printf("offset_sub view = %f, d = %d o= %d\n",
+          FX_FX32_TO_F32(wk->scene->dview_sub_ofs+wk->def_top+ofs_s),(wk->scene->dview_sub_ofs+ofs_s),ofs_s );
     }
     if( GFL_G3D_DOUBLE3D_GetFlip() == FALSE ){
       offset = ofs_m;
@@ -520,12 +529,12 @@ static void set_camera_disp_offset( DEMO3D_ENGINE_WORK* wk, GFL_G3D_CAMERA* p_ca
     }
     // クリップ面をずらす
     GFL_G3D_CAMERA_SetTop( p_camera, top+wk->def_top+offset );
-    GFL_G3D_CAMERA_SetBottom( p_camera, buttom+wk->def_buttom+offset );
+    GFL_G3D_CAMERA_SetBottom( p_camera, bottom+wk->def_bottom+offset );
   }
 #else
   // クリップ面をずらす
   GFL_G3D_CAMERA_SetTop( p_camera, top+wk->def_top );
-  GFL_G3D_CAMERA_SetBottom( p_camera, button+wk->def_bottom );
+  GFL_G3D_CAMERA_SetBottom( p_camera, buttom+wk->def_bottom );
 #endif
 }
 
