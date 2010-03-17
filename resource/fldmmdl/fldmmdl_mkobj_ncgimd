@@ -948,6 +948,26 @@
 	@echo convert ncg_imd item_grass
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/item_grass.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
 
+#shin_a.imd
+./mmdl_res/shin_a.imd: ./mmdl_nchara/shin_a.ncg ./mmdl_nchara/shin_a.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
+	@echo convert ncg_imd shin_a
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/shin_a.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
+#shin_b.imd
+./mmdl_res/shin_b.imd: ./mmdl_nchara/shin_b.ncg ./mmdl_nchara/shin_b.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
+	@echo convert ncg_imd shin_b
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/shin_b.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
+#mu_a.imd
+./mmdl_res/mu_a.imd: ./mmdl_nchara/mu_a.ncg ./mmdl_nchara/mu_a.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
+	@echo convert ncg_imd mu_a
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/mu_a.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
+#mu_b.imd
+./mmdl_res/mu_b.imd: ./mmdl_nchara/mu_b.ncg ./mmdl_nchara/mu_b.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
+	@echo convert ncg_imd mu_b
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/mu_b.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
 #tsure_001.imd
 ./mmdl_res/tsure_001.imd: ./mmdl_nchara/pokemon//tsure_001.ncg ./mmdl_nchara/pokemon//tsure_001.ncl ./mmdl_res/ncg4x4pokeflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd tsure_001
