@@ -4046,14 +4046,14 @@ static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RESEARCH_SELECT_WORK* work
 //-----------------------------------------------------------------------------------------
 static u8 GetInvestigatingTopicID( const RESEARCH_SELECT_WORK* work )
 {
-  SAVE_CONTROL_WORK* saveControlWork;
-  QUESTIONNAIRE_SAVE_WORK* questionnaireSave;
+  SAVE_CONTROL_WORK* save;
+  QUESTIONNAIRE_SAVE_WORK* QSave;
 
-  saveControlWork   = GAMEDATA_GetSaveControlWork( work->gameData );
-  questionnaireSave = SaveData_GetQuestionnaire( saveControlWork );
+  save  = GAMEDATA_GetSaveControlWork( work->gameData );
+  QSave = SaveData_GetQuestionnaire( save );
 
   // セーブデータから取得
-  return QuestionnaireWork_GetInvestigatingQuestion( questionnaireSave, 0 );
+  return QuestionnaireWork_GetInvestigatingQuestion( QSave, 0 );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4065,19 +4065,27 @@ static u8 GetInvestigatingTopicID( const RESEARCH_SELECT_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void UpdateInvestigatingTopicID( const RESEARCH_SELECT_WORK* work )
 {
-  SAVE_CONTROL_WORK* saveControlWork;
-  QUESTIONNAIRE_SAVE_WORK* questionnaireSave;
+  SAVE_CONTROL_WORK* save;
+  QUESTIONNAIRE_SAVE_WORK* QSave;
   u8 topicID;
 
   // 項目を選択していない
   GF_ASSERT( IsTopicIDSelected(work) );
 
-  topicID           = GetSelectedTopicID( work ); // 選択した調査項目ID
-  saveControlWork   = GAMEDATA_GetSaveControlWork( work->gameData );
-  questionnaireSave = SaveData_GetQuestionnaire( saveControlWork );
+  topicID = GetSelectedTopicID( work ); // 選択した調査項目ID
+  save    = GAMEDATA_GetSaveControlWork( work->gameData );
+  QSave   = SaveData_GetQuestionnaire( save );
   
+  // @todo: セーブデータの更新に合わせて, 3つの質問IDをセーブするように変更する.
+#if 1
   // セーブデータを更新
-  QuestionnaireWork_SetInvestigatingQuestion( questionnaireSave, topicID, 0 );
+  QuestionnaireWork_SetInvestigatingQuestion( QSave, topicID, 0 );
+#endif
+#if 0
+  QuestionnaireWork_SetInvestigatingQuestion( QSave, Question1_topic[ topicID ], 0 );
+  QuestionnaireWork_SetInvestigatingQuestion( QSave, Question2_topic[ topicID ], 1 );
+  QuestionnaireWork_SetInvestigatingQuestion( QSave, Question3_topic[ topicID ], 2 );
+#endif
 }
 
 
