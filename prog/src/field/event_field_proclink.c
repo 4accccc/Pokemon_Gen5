@@ -511,9 +511,9 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
     break;
 
   case SEQ_EVENT_RETURN:
-		if( wk->result == RETURNFUNC_RESULT_RETURN ){
-			PROCLINK_CALLBACK_Open( &wk->callback );
-		}
+    if( wk->result == RETURNFUNC_RESULT_RETURN ){
+      PROCLINK_CALLBACK_Open( &wk->callback );
+    }
     *seq  = SEQ_JUNCTION;
     break;
 
@@ -1068,8 +1068,8 @@ static void * FMenuCallProc_Zukan(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_C
   prm->gamedata = GAMESYSTEM_GetGameData( wk->param->gsys );
   prm->savedata = GAMEDATA_GetZukanSave( prm->gamedata );
 
-	FSND_HoldBGMVolume_forApp(
-		GAMEDATA_GetFieldSound(prm->gamedata), GAMESYSTEM_GetIssSystem(wk->param->gsys) );
+  FSND_HoldBGMVolume_forApp(
+    GAMEDATA_GetFieldSound(prm->gamedata), GAMESYSTEM_GetIssSystem(wk->param->gsys) );
 
   if( param != EVENT_PROCLINK_DATA_NONE )
   { 
@@ -1102,8 +1102,8 @@ static RETURNFUNC_RESULT FMenuReturnProc_Zukan(PROCLINK_WORK* wk,void* param_adr
 {
   ZUKAN_PARAM * prm = param_adrs;
 
-	FSND_ReleaseBGMVolume_fromApp(
-		GAMEDATA_GetFieldSound(prm->gamedata), GAMESYSTEM_GetIssSystem(wk->param->gsys) );
+  FSND_ReleaseBGMVolume_fromApp(
+    GAMEDATA_GetFieldSound(prm->gamedata), GAMESYSTEM_GetIssSystem(wk->param->gsys) );
 
   if( prm->retMode == ZUKAN_RET_NORMAL ){
     return RETURNFUNC_RESULT_RETURN;
@@ -1650,8 +1650,8 @@ static RETURNFUNC_RESULT FMenuReturnProc_Config(PROCLINK_WORK* wk,void* param_ad
 static void FMenuEvent_Report( PROCLINK_WORK* wk, u32 param )
 { 
   GMEVENT * subevent = createFMenuReportEvent(
-												wk->param->gsys, wk->param->field_wk, wk->heapID,
-									      FIELDMAP_GetFldMsgBG(wk->param->field_wk ), &wk->result );
+                        wk->param->gsys, wk->param->field_wk, wk->heapID,
+                        FIELDMAP_GetFldMsgBG(wk->param->field_wk ), &wk->result );
   GMEVENT_CallEvent(wk->event, subevent);
 
 //  wk->result  = RETURNFUNC_RESULT_RETURN;
@@ -1701,20 +1701,20 @@ static RETURNFUNC_RESULT FMenuReturnProc_WifiNote(PROCLINK_WORK* wk,void* param_
 
   if( wk->param->call == EVENT_PROCLINK_CALL_WIFINOTE )
   { 
-		if( pFriend->retMode == WIFINOTE_RET_MODE_CANCEL ){
-			return RETURNFUNC_RESULT_RETURN;
-		}else{
-			return RETURNFUNC_RESULT_EXIT;
-		}
+    if( pFriend->retMode == WIFINOTE_RET_MODE_CANCEL ){
+      return RETURNFUNC_RESULT_RETURN;
+    }else{
+      return RETURNFUNC_RESULT_EXIT;
+    }
   }
   else
   { 
-		if( pFriend->retMode == WIFINOTE_RET_MODE_CANCEL ){
-	    wk->next_type = EVENT_PROCLINK_CALL_BAG;
-	    return RETURNFUNC_RESULT_NEXT;
-		}else{
-			return RETURNFUNC_RESULT_EXIT;
-		}
+    if( pFriend->retMode == WIFINOTE_RET_MODE_CANCEL ){
+      wk->next_type = EVENT_PROCLINK_CALL_BAG;
+      return RETURNFUNC_RESULT_NEXT;
+    }else{
+      return RETURNFUNC_RESULT_EXIT;
+    }
   }
 }
 //-------------------------------------
@@ -1765,7 +1765,7 @@ static void * FMenuCallProc_Mail(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CAL
   }else{
     wk->mode = PROCLINK_MODE_LIST_TO_MAIL_VIEW;
     OS_TPrintf("メールデザイン見るだけ\n");
-    mailParam = MailSys_GetWorkViewPrev( gmData, wk->item_no-ITEM_GURASUMEERU, HEAPID_PROC );
+    mailParam = MailSys_GetWorkViewPrev( gmData, wk->item_no-ITEM_HAZIMETEMEERU, HEAPID_PROC );
   }
 
   return mailParam;
@@ -2050,7 +2050,7 @@ static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk )
       FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(fieldWork) , type );
     }
 #endif
-		return( GMEVENT_RES_FINISH );
+    return( GMEVENT_RES_FINISH );
   }
 
   return( GMEVENT_RES_CONTINUE );
@@ -2082,7 +2082,7 @@ static GMEVENT * createFMenuReportEvent(
   work->fieldWork = fieldWork;
   work->sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(work->gsys) );
 
-	work->resultAddr = result;
+  work->resultAddr = result;
 
   return msgEvent;
 }
@@ -2095,23 +2095,23 @@ static GMEVENT * createFMenuReportEvent(
 //--------------------------------------------------------------
 static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
 {
-	FMENU_REPORT_EVENT_WORK * evwk = wk;
-	
-	switch( REPORTEVENT_Main( evwk, seq ) ){
-	case REPORTEVENT_RET_SAVE:		// セーブ実行
-		{
-			RETURNFUNC_RESULT * result = evwk->resultAddr;
-			*result = RETURNFUNC_RESULT_EXIT;
-		}
-		return GMEVENT_RES_FINISH;
+  FMENU_REPORT_EVENT_WORK * evwk = wk;
+  
+  switch( REPORTEVENT_Main( evwk, seq ) ){
+  case REPORTEVENT_RET_SAVE:    // セーブ実行
+    {
+      RETURNFUNC_RESULT * result = evwk->resultAddr;
+      *result = RETURNFUNC_RESULT_EXIT;
+    }
+    return GMEVENT_RES_FINISH;
 
-	case REPORTEVENT_RET_CANCEL:	// キャンセル
-		{
-			RETURNFUNC_RESULT * result = evwk->resultAddr;
-			*result = RETURNFUNC_RESULT_RETURN;
-		}
-		return GMEVENT_RES_FINISH;
-	}
+  case REPORTEVENT_RET_CANCEL:  // キャンセル
+    {
+      RETURNFUNC_RESULT * result = evwk->resultAddr;
+      *result = RETURNFUNC_RESULT_RETURN;
+    }
+    return GMEVENT_RES_FINISH;
+  }
 
-	return GMEVENT_RES_CONTINUE;
+  return GMEVENT_RES_CONTINUE;
 }
