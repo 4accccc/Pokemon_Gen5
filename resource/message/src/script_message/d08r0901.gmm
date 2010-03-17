@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-14T14:15:43"/>
+	<create user="matsumiya" host="W00224" date="2010-03-17T22:19:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1379" top="192" right="2084" bottom="820" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -365,7 +365,7 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_01w" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_01w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂：WHITEver
 ・NはGRIDX=16、GRIDZ=12に配置
 ・pos（GRIDX=16、GRIDZ=18）起動
@@ -388,7 +388,7 @@
 ポケモンの　美しい　姿は！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_01b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_01b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
@@ -404,34 +404,38 @@
 ポケモンの　力強い　姿は！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_02w" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_02w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂：WHITEver
 ・画面上（ポケモン）を見ながらメッセージ
 ・続けてboss_03w</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]これから　ボクは
 シンと　ともに▽
+ポケモンリーグに　むかい▽
 さいごの　いってを　うつよ▼
 ポケモンだけの　せかい……
-ようやく　じつげん　する[BE:09:速度コントロール:0]▼</language>
+ようやく　じつげんする[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]これから　ボクは
 シンと　共に▽
+ポケモンリーグに　向かい▽
 最後の　一手を　うつよ▼
 ポケモンだけの　世界……
 ようやく　実現する[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_02b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_02b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]これから　ボクは
 ムと　ともに▽
+ポケモンリーグに　むかい▽
 さいごの　いってを　うつよ▼
 ポケモンだけの　せかい……
-ようやく　じつげん　する[BE:09:速度コントロール:0]▼</language>
+ようやく　じつげんする[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]これから　ボクは
 ムと　共に▽
+ポケモンリーグに　向かい▽
 最後の　一手を　うつよ▼
 ポケモンだけの　世界……
 ようやく　実現する[BE:09:速度コントロール:0]▼</language>
@@ -443,50 +447,46 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_03w" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_03w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂：WHITEver
 ・N、下向きに
 ・このメッセージ表示前に
 　ポケモン羽ばたき画面上に移動
 ・続けてboss_04w</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]ボクたちを　とめられるのは
-しんわに　とうじょうした　えいゆう……▽
-ふたごの　もうひとり　だけ▼
-シンと　ついをなす
-ポケモン　ムに　みとめられた▽
-えいゆう　だけが▽
-ボクたちを　そし　できる！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクたちを　止められるのは
-神話に　登場した　英雄……▽
-双子の　もう一人　だけ▼
-シンと　対をなす
-ポケモン　ムに　認められた▽
-英雄だけが▽
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]ボクたちを　とめるなら
+キミも　えいゆうに　なればいい！▼
+そう！　シンと　ついをなす
+ポケモン　ムに　みとめられてこそ▽
+ようやく　ごかくに　なれる！▽
+ボクたちを　とめられるだろう！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクたちを　止めるなら
+キミも　英雄に　なるんだ！▼
+そう！　シンと　対をなす
+ポケモン　ムに　認められてこそ▽
+ようやく　対等に　なれる！▽
 ボクたちを　阻止できる！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_03b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_03b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]ボクたちを　とめられるのは
-しんわに　とうじょうした　えいゆう……▽
-ふたごの　もうひとり　だけ▼
-ムと　ついをなす
-ポケモン　シンに　みとめられた▽
-えいゆう　だけが▽
-ボクたちを　そし　できる！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクたちを　止められるのは
-神話に　登場した　英雄……▽
-双子の　もう一人　だけ▼
-ムと　対をなす
-ポケモン　シンに　認められた▽
-英雄だけが▽
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]ボクたちを　とめるなら
+キミも　えいゆうに　なればいい！▼
+そう！　ムと　ついをなす
+ポケモン　シンに　みとめられてこそ▽
+ようやく　ごかくに　なれる！▽
+ボクたちを　とめられるだろう！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクたちを　止めるなら
+キミも　英雄に　なるんだ！▼
+そう！　ムと　対をなす
+ポケモン　シンに　認められてこそ▽
+ようやく　対等に　なれる！▽
 ボクたちを　阻止できる！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_04w" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_04w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂：WHITEver
 ・メッセージ表示後、N、3歩上に移動
 ・移動すると画面右から左へシンが横切る
@@ -494,46 +494,46 @@
 ・飛び去る方向を見る主人公
 ・BGM終了で、black_01</comment>
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]さて　どうする？▼
-ボクの　よそく　では
+ボクの　よそく……
+ボクに　みえる　みらいなら▽
 キミなら　ムと　であえるだろう▼
-そうすれば　はじめて
-ボクの　けいさんを　くつがえせる▽
-ちょっと　たのしみだね▼
+せかいを　かえるための　すうしき……
+キミは　それを▽
+ジャマする　そんざいと　なれるか？▼
 ポケモンと　ひとの　きずなを
-まもりたいなら　ボクと　おなじ▽
-えいゆうに　なりなよ[BE:09:速度コントロール:0]▼</language>
+まもりたいなら　ムを　さがすんだ！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]さて　どうする？▼
-ボクの　予測では
+ボクの　予測……
+ボクに　みえる　未来なら▽
 キミなら　ムと　出会えるだろう▼
-そうすれば　はじめて
-ボクの　計算を　覆せる▽
-ちょっと　楽しみだね▼
+世界を　変えるための　数式……
+キミは　その▽
+不確定要素と　なれるか？▼
 ポケモンと　人の　きずなを
-守りたいなら　ボクと　同じ▽
-英雄に　なりなよ[BE:09:速度コントロール:0]▼</language>
+守りたいなら　ムを　探すんだ！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_04b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_04b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]さて　どうする？▼
-ボクの　よそく　では
+ボクの　よそく……
+ボクに　みえる　みらいなら▽
 キミなら　シンと　であえるだろう▼
-そうすれば　はじめて
-ボクの　けいさんを　くつがえせる▽
-ちょっと　たのしみだね▼
+せかいを　かえるための　すうしき……
+キミは　それを▽
+ジャマする　そんざいと　なれるか？▼
 ポケモンと　ひとの　きずなを
-まもりたいなら　ボクと　おなじ▽
-えいゆうに　なりなよ[BE:09:速度コントロール:0]▼</language>
+まもりたいなら　シンを　さがすんだ！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]さて　どうする？▼
-ボクの　予測では
+ボクの　予測……
+ボクに　みえる　未来なら▽
 キミなら　シンと　出会えるだろう▼
-そうすれば　はじめて
-ボクの　計算を　覆せる▽
-ちょっと　楽しみだね▼
+世界を　変えるための　数式……
+キミは　その▽
+不確定要素と　なれるか？▼
 ポケモンと　人の　きずなを
-守りたいなら　ボクと　同じ▽
-英雄に　なりなよ[BE:09:速度コントロール:0]▼</language>
+守りたいなら　シンを　探すんだ！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d08r0901_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
