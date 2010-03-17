@@ -9136,9 +9136,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_WB, // camera_area
 		0, // padding
-		754,
+		801,
 		0,
-		314,
+		289,
 	},
 	{//ZONE_ID_D20R0101 = 277
 		RSC_NOGRID_DEFAULT,
