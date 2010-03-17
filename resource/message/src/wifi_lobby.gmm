@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-03-15T21:00:45"/>
+	<create user="ohno" host="W00141" date="2010-03-17T10:53:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,7 +337,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="994" top="372" right="1699" bottom="1000" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1341,6 +1341,26 @@ TVトランシーバー中です</language>
 	<row id="msg_wifilobby_1033" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">いまはおはなしできないみたい</language>
 		<language name="JPN_KANJI" width="216">いまはおはなしできないみたい</language>
+	</row>
+
+	<row id="msg_wifilobby_1034" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
+		<language name="JPN" width="216">[FF:00:色:2]シングルバトル</language>
+		<language name="JPN_KANJI" width="216">[FF:00:色:2]シングルバトル</language>
+	</row>
+
+	<row id="msg_wifilobby_1035" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
+		<language name="JPN" width="216">[FF:00:色:2]ダブルバトル</language>
+		<language name="JPN_KANJI" width="216">[FF:00:色:2]ダブルバトル</language>
+	</row>
+
+	<row id="msg_wifilobby_1036" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
+		<language name="JPN" width="216">[FF:00:色:2]トリプルバトル</language>
+		<language name="JPN_KANJI" width="216">[FF:00:色:2]トリプルバトル</language>
+	</row>
+
+	<row id="msg_wifilobby_1037" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
+		<language name="JPN" width="216">[FF:00:色:2]ローテーションバトル</language>
+		<language name="JPN_KANJI" width="216">[FF:00:色:2]ローテーションバトル</language>
 	</row>
 
 	<flowchart-group-list>

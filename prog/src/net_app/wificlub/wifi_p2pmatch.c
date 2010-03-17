@@ -2895,7 +2895,7 @@ static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
   MI_CpuClear8(wk->index2NoBackUp, WIFIP2PMATCH_MEMBER_MAX);
 
 
-  GFL_BG_ClearFrame(  GFL_BG_FRAME3_M);
+ // GFL_BG_ClearFrame(  GFL_BG_FRAME3_M);
 
   if(wk->menulist){
     GFL_BMPWIN_Delete(wk->ListWin);
