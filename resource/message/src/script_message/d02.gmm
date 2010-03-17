@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T22:13:00"/>
+	<create user="matsumiya" host="W00224" date="2010-03-17T16:37:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d02_girl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d02_girl1_01">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
@@ -306,7 +306,7 @@
 道か　迷路か　どっちかしら？</language>
 	</row>
 
-	<row id="msg_d02_leader3_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d02_leader3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・盗難イベント中
 　c02でのmsg_c02_leader3_03か
@@ -325,41 +325,41 @@ C03ジムリーダー</attribute>
 やっかい　かもね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d02_fighterw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d02_fighterw_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・GRIDX=601、GRIDZ=583
 ・アイテム入手処理
 　No「いわくだき」</comment>
 		<attribute name="キャラ指定">FIGHTERW</attribute>
 		<language name="JPN" width="256">よう！　たびの　トレーナー！
-ポケモン　そだっているかい？▽
-よければ　これを　つかいなよ！▼</language>
-		<language name="JPN_KANJI" width="256">よう！　たびの　トレーナー！
-ポケモン　そだっているかい？▽
-よければ　これを　つかいなよ！▼</language>
+ポケモン　そだっているの？▽
+よければ　これを　つかってみて！▼</language>
+		<language name="JPN_KANJI" width="256">よう！　旅の　トレーナー！
+ポケモン　育っているの？▽
+よければ　これを　使ってみて！▼</language>
 	</row>
 
-	<row id="msg_d02_fighterw_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d02_fighterw_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">FIGHTERW</attribute>
 		<language name="JPN" width="256">いわくだきは　ときどき
 あいての　ぼうぎょを　さげる　わざ▽
-ちょっと　いりょくが　ないけどね▼
+いりょくは　ちょっと　ないけどね▼
 あと　もりに　はいらないまま
 さきに　すすむとさ▼
 トレーナーが　いっぱい　いるから
-ちょっと　たたかってみたら？</language>
+ちょっと　たたかってみたら　どう？</language>
 		<language name="JPN_KANJI" width="256">いわくだきは　ときどき
-あいての　ぼうぎょを　さげる　わざ▽
-ちょっと　いりょくが　ないけどね▼
-あと　もりに　はいらないまま
-さきに　すすむとさ▼
+相手の　防御を　さげる　技▽
+威力は　ちょっと　ないけどね▼
+あと　森に　入らないまま
+先に　進むとさ▼
 トレーナーが　いっぱい　いるから
-ちょっと　たたかってみたら？</language>
+ちょっと　お相手してみたら　どう？</language>
 	</row>
 
-	<row id="msg_d02_rock_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d02_rock_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・手持ちリストの先頭が格闘ポケモンのとき
 ・はい/いいえの選択肢</comment>
@@ -372,7 +372,7 @@ C03ジムリーダー</attribute>
 こわさせて　みますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d02_rock_02" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d02_rock_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・アイテム入手処理
 　No091「ほしのかけら」
@@ -384,7 +384,7 @@ C03ジムリーダー</attribute>
 ためしのいわを　こわそうとした！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d02_rock_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d02_rock_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・手持ちリストの先頭が格闘ポケモンでないとき
 ・アイテムを入手したあと（日が変わるまで）</comment>
@@ -393,7 +393,7 @@ C03ジムリーダー</attribute>
 		<language name="JPN_KANJI" width="256">ためしのいわが　ある……</language>
 	</row>
 
-	<row id="msg_d02_sign1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d02_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>･仮メッセージ</comment>
 		<attribute name="キャラ指定">道路看板</attribute>
 		<language name="JPN" width="256">このさき　ヤグルマのもり</language>
