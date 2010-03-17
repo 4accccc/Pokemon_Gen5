@@ -73,6 +73,7 @@ enum{
 //  プロトタイプ宣言
 //==============================================================================
 static void _SetPmsAisatsu(GAMEDATA * gamedata, u8 region);
+static void UnionMsg_Menu_WindowDel(UNION_SYSTEM_PTR unisys);
 
 //==============================================================================
 //  プロトタイプ宣言：データ
@@ -1319,8 +1320,10 @@ int UnionMsg_GetMemberMax(UNION_PLAY_CATEGORY menu_index)
 //==================================================================
 void UnionMsg_AllDel(UNION_SYSTEM_PTR unisys)
 {
+  UnionMsg_Menu_RegulationDel(unisys);
+  UnionMsg_Menu_BattleMenuMultiTitleDel(unisys);
   UnionMsg_YesNo_Del(unisys);
-  UnionMsg_Menu_MainMenuDel(unisys);
+  UnionMsg_Menu_WindowDel(unisys);
   UnionMsg_TalkStream_WindowDel(unisys);
 }
 

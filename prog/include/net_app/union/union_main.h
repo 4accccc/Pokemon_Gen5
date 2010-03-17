@@ -54,6 +54,7 @@ extern BOOL UnionComm_ExitWait(int *seq, void *pwk, void *pWork);
 extern void UnionComm_Update(int *seq, void *pwk, void *pWork);
 
 extern void UnionBeacon_ClearAllReceiveData(UNION_SYSTEM_PTR unisys);
+extern void UnionAlloc_AllFree(UNION_SYSTEM_PTR unisys);
 
 extern void UnionMySituation_SetParam(UNION_SYSTEM_PTR unisys, UNION_MYSITU_PARAM_IDX index, void *work);
 extern void UnionMySituation_Clear(UNION_SYSTEM_PTR unisys);

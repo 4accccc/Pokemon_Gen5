@@ -840,16 +840,16 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
     }
   }
 
-  //++++ ここから下は自機が完全に動作フリーな状態でなければチェックしない ++++
-	if(UnionMain_CheckPlayerFreeMode(gsys) == FALSE){
-    return NULL;
-  }
-  
   //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
   if( GAMESYSTEM_GetFieldCommErrorReq(gsys) == TRUE ){
 		if(WIPE_SYS_EndCheck()){
       return EVENT_FieldCommErrorProc(gsys, fieldWork);
     }
+  }
+
+  //++++ ここから下は自機が完全に動作フリーな状態でなければチェックしない ++++
+	if(UnionMain_CheckPlayerFreeMode(gsys) == FALSE){
+    return NULL;
   }
 
 	//メニュー起動チェック

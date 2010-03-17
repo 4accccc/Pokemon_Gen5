@@ -56,9 +56,8 @@ static const GFL_PROC_DATA FieldCommErrorProc = {
 //==================================================================
 GMEVENT * EVENT_FieldCommErrorProc(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
 {
-  GAMESYSTEM_SetFieldCommErrorReq(gsys, FALSE);
   NetErr_App_ReqErrorDisp();
-  return EVENT_FieldSubProc(gsys, fieldmap, FS_OVERLAY_ID(fieldmap), &FieldCommErrorProc, NULL);
+  return EVENT_FieldSubProc(gsys, fieldmap, FS_OVERLAY_ID(fieldmap), &FieldCommErrorProc, gsys);
 }
 
 
@@ -80,5 +79,8 @@ static GFL_PROC_RESULT FieldCommErrorProc_Main(GFL_PROC * proc, int * seq , void
 
 static GFL_PROC_RESULT FieldCommErrorProc_Exit(GFL_PROC * proc, int * seq , void *pwk, void *mywk)
 {
+  GAMESYS_WORK *gsys = pwk;
+  
+  GAMESYSTEM_SetFieldCommErrorReq(gsys, FALSE);
   return GFL_PROC_RES_FINISH;
 }

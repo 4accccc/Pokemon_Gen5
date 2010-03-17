@@ -80,6 +80,10 @@ void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELDMAP_WORK *fieldmap)
   
   unisys = GameCommSys_GetAppWork(game_comm);
   GF_ASSERT(unisys != NULL);
+
+  if(GAMESYSTEM_GetFieldCommErrorReq(FIELDMAP_GetGameSysWork(fieldmap)) == TRUE){
+    return; //フィールドに対して通信エラーリクエストが発生している場合はここで終了
+  }
   
   //PROCがフィールドの時のみ実行する処理
   if(Union_FieldCheck(unisys) == TRUE){

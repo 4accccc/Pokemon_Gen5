@@ -78,6 +78,7 @@ typedef struct{
 //==============================================================================
 static BOOL OneselfSeq_NormalInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_ForceExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_Enter(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_Leave(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
@@ -125,6 +126,11 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
   {//UNION_STATUS_NORMAL
     OneselfSeq_NormalInit,
     OneselfSeq_NormalUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_FORCE_EXIT
+    NULL,
+    OneselfSeq_ForceExit,
     NULL,
   },
   {//UNION_STATUS_ENTER
@@ -683,6 +689,28 @@ static void _PlayerMinePause(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, 
   FIELDMAP_CTRL_GRID_SetPlayerPause( fieldWork, pause_flag );
 }
 
+//--------------------------------------------------------------
+/**
+ * 通信エラー状態かを監視して、エラーならば強制終了にシーケンスを切り替える
+ *
+ * @param   unisys		
+ *
+ * @retval  BOOL		TRUE:強制終了にシーケンスを切り替えた
+ *
+ * ユニオンルーム用。コロシアムには未対応。
+ * 基本的には各シーケンスの頭にこれを仕込んでおく。
+ * それだとワークの解放や状態などで出来ないシーケンスの箇所は
+ * 安全なタイミングでこれを呼ぶ
+ */
+//--------------------------------------------------------------
+static BOOL _UnionCheckError_ForceExit(UNION_SYSTEM_PTR unisys)
+{
+  if(NetErr_App_CheckError() == TRUE){
+    UnionOneself_ReqStatus(unisys, UNION_STATUS_FORCE_EXIT);
+    return TRUE;
+  }
+  return FALSE;
+}
 
 //==============================================================================
 //  
@@ -700,6 +728,7 @@ static void _PlayerMinePause(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, 
 //--------------------------------------------------------------
 static BOOL OneselfSeq_NormalInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  UnionAlloc_AllFree(unisys);
   UnionMyComm_Init(unisys, &situ->mycomm);
   UnionMySituation_SetParam(
     unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, (void*)UNION_PLAY_CATEGORY_UNION);
@@ -731,8 +760,11 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
   s16 check_gx, check_gy, check_gz;
   MMDL *target_pc;
   
-  if(NetErr_App_CheckError() == TRUE){
-    NetErr_App_ReqErrorDisp();
+  if(_UnionCheckError_ForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+
+  if(UnionComm_Check_ShutdownRestarts(unisys) == TRUE){
     return FALSE;
   }
   
@@ -745,13 +777,8 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
   if(GFL_NET_GetConnectNum() > 1){
 //    GF_ASSERT_MSG(0, "Normalなのに接続！！！！\n");
     OS_TPrintf("Normalなのに接続！！！！\n");
-    //※check　暫定で先頭のビーコンデータを接続相手として代入しておく
-    //         本来であればNormalで接続は出来ないようにする
-    UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PARENT);
-    UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, situ->last_calling_pc);
-    UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_TALK_PC, situ->last_calling_pc);
-    _PlayerMinePause(unisys, fieldWork, TRUE);
-    return TRUE;
+    UnionComm_Req_ShutdownRestarts(unisys); //意図しないタイミングの為、切断する
+    return FALSE;
   }
   
   if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
@@ -807,6 +834,63 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
   }
   else{ //一度でも出口座標から移動した
     unisys->wayout_walk = TRUE;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 通信エラーなどによる強制終了：更新
+ *
+ * @param   unisys    
+ * @param   situ      
+ * @param   seq       
+ *
+ * @retval  BOOL    
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_ForceExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
+{
+  switch(*seq){
+  case 0:
+    _PlayerMinePause(unisys, fieldWork, TRUE);
+    (*seq)++;
+    break;
+  case 1:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      UnionMsg_AllDel(unisys);
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if(NetErr_App_CheckError() == TRUE){
+      GAMESYSTEM_SetFieldCommErrorReq(unisys->uniparent->gsys, TRUE);
+      return FALSE;
+    }
+    
+    UnionComm_Req_Shutdown(unisys);
+    (*seq)++;
+    break;
+  case 3:
+    if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE){
+      (*seq)++;
+    }
+    break;
+  case 4:
+    UnionAlloc_AllFree(unisys);
+    UnionMyComm_Init(unisys, &situ->mycomm);
+    UnionComm_Req_Restarts(unisys);
+    (*seq)++;
+    break;
+  case 5:
+    if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE){
+      (*seq)++;
+    }
+    break;
+  default:
+    UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+    return TRUE;
   }
   
   return FALSE;
@@ -966,6 +1050,10 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     LOCALSEQ_WAIT,
     LOCALSEQ_END,
   };
+
+  if(_UnionCheckError_ForceExit(unisys) == TRUE){
+    return TRUE;
+  }
   
   switch(*seq){
   case LOCALSEQ_INIT:
@@ -1064,6 +1152,10 @@ static BOOL OneselfSeq_ConnectAnswerInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  if(_UnionCheckError_ForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+
   switch(*seq){
   case 0:
     OS_TPrintf("親へ接続しにいきます\n");
@@ -1141,6 +1233,10 @@ static BOOL OneselfSeq_ConnectAnswerExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  if(_UnionCheckError_ForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+
   if(situ->before_union_status == UNION_STATUS_TALK_BATTLE_PARENT){
     situ->work = 1; //対戦メニューからの戻りを表す
     return TRUE;  //対戦メニューからの戻りなので初期化はしない
@@ -1157,12 +1253,13 @@ static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     //会話関連のワークの初期化をお互いしてから会話が始まるように同期取り
     GFL_NET_HANDLE_TimeSyncStart(
       GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START, WB_NET_UNION);
+    OS_TPrintf("会話開始前の同期待ち・・・親\n");
     (*seq)++;
     break;
   case 1:
-    OS_TPrintf("会話開始前の同期待ち・・・親\n");
     if(GFL_NET_HANDLE_IsTimeSync(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START, WB_NET_UNION) == TRUE){
+      OS_TPrintf("会話開始前の同期待ち・・・同期完了\n");
       return TRUE;
     }
     break;
@@ -1191,6 +1288,10 @@ static BOOL OneselfSeq_TalkUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     _LOCALSEQ_MAINMENU_MAIN,
     _LOCALSEQ_MAINMENU_FAIL,
   };
+
+  if(_UnionCheckError_ForceExit(unisys) == TRUE){
+    return TRUE;
+  }
 
   switch(*seq){
   case _LOCALSEQ_INIT:
@@ -1314,6 +1415,10 @@ static BOOL OneselfSeq_TalkExit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkListSendUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  if(_UnionCheckError_ForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+
   switch(*seq){
   case 0: //相手に選択したメニューを通知
     if(UnionSend_MainMenuListResult(situ->mycomm.mainmenu_select) == TRUE){
@@ -1371,6 +1476,10 @@ static BOOL OneselfSeq_TalkListSendUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  if(_UnionCheckError_ForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+
   switch(*seq){
   case 0:
     UnionMyComm_InitMenuParam(&situ->mycomm);
@@ -1381,12 +1490,13 @@ static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     //会話関連のワークの初期化をお互いしてから会話が始まるように同期取り
     GFL_NET_HANDLE_TimeSyncStart(
       GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START, WB_NET_UNION);
+    OS_TPrintf("会話開始前の同期待ち・・・子\n");
     (*seq)++;
     break;
   case 1:
-    OS_TPrintf("会話開始前の同期待ち・・・子\n");
     if(GFL_NET_HANDLE_IsTimeSync(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START, WB_NET_UNION) == TRUE){
+      OS_TPrintf("会話開始前の同期待ち・・・同期完了\n");
       return TRUE;
     }
   }
@@ -1426,6 +1536,10 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     _RESULT_NO_EGG_SHORT,           //ぐるぐる交換するにはタマゴが足りていない
     _RESULT_NO_DAMETAMAGO,          //ダメタマゴがいるからぐるぐる交換は出来ない
   };
+
+  if(_UnionCheckError_ForceExit(unisys) == TRUE){
+    return TRUE;
+  }
   
   if(UnionMsg_TalkStream_Check(unisys) == FALSE){
     return FALSE;
@@ -1641,6 +1755,10 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
     _REG_PRINT_BBOX_WAIT,
     _MENU_CONTINUE_MSG,
   };
+
+  if(_UnionCheckError_ForceExit(unisys) == TRUE){
+    return TRUE;
+  }
   
   if(UnionMsg_TalkStream_Check(unisys) == FALSE){
     return FALSE;
@@ -2137,17 +2255,21 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_M
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  if(_UnionCheckError_ForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+
   switch(*seq){
   case 0:   //トレーナーカードの情報を送りあう
     //同期取りの前に送信データと受信バッファを作成
-    GF_ASSERT(situ->mycomm.trcard.my_card == NULL && situ->mycomm.trcard.target_card == NULL);
-    situ->mycomm.trcard.my_card 
+    GF_ASSERT(unisys->alloc.my_card == NULL && unisys->alloc.target_card == NULL);
+    unisys->alloc.my_card 
       = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(TR_CARD_DATA));
-    situ->mycomm.trcard.target_card 
+    unisys->alloc.target_card 
       = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(TR_CARD_DATA));
-    TRAINERCARD_GetSelfData(situ->mycomm.trcard.my_card, unisys->uniparent->game_data, TRUE, FALSE, HEAPID_UNION);
+    TRAINERCARD_GetSelfData(unisys->alloc.my_card, unisys->uniparent->game_data, TRUE, FALSE, HEAPID_UNION);
     GFL_STD_MemCopy(  //一応何かの事故で受け取れなかった時のケアの為、自分のをコピーしておく
-      situ->mycomm.trcard.my_card, situ->mycomm.trcard.target_card, sizeof(TR_CARD_DATA));
+      unisys->alloc.my_card, unisys->alloc.target_card, sizeof(TR_CARD_DATA));
     
     GFL_NET_HANDLE_TimeSyncStart(
       GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PARAM, WB_NET_UNION);
@@ -2174,12 +2296,12 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     }
     break;
   case 3:
-    if(situ->mycomm.trcard.target_card_receive == TRUE
+    if(situ->mycomm.target_card_receive == TRUE
         && UnionMsg_TalkStream_Check(unisys) == TRUE){
       OS_TPrintf("相手のカード受信\n");
-      situ->mycomm.trcard.target_card->SignDisenable = TRUE;
-      situ->mycomm.trcard.card_param = TRAINERCASR_CreateCallParam_CommData(
-        unisys->uniparent->game_data, situ->mycomm.trcard.target_card, HEAPID_UNION);
+      unisys->alloc.target_card->SignDisenable = TRUE;
+      unisys->alloc.card_param = TRAINERCASR_CreateCallParam_CommData(
+        unisys->uniparent->game_data, unisys->alloc.target_card, HEAPID_UNION);
       (*seq)++;
     }
     break;
@@ -2197,7 +2319,7 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     }
     break;
   case 6:
-    UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_TRAINERCARD, situ->mycomm.trcard.card_param);
+    UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_TRAINERCARD, unisys->alloc.card_param);
     (*seq)++;
     break;
   case 7:
@@ -2222,13 +2344,13 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
       OS_TPrintf("トレーナーカード終了後の同期取り成功\n");
     
     #if 0//トレーナーカードのParentWorkはトレーナーカードのProc内で解放されるのでここでは解放しない
-      GFL_HEAP_FreeMemory(situ->mycomm.trcard.card_param);
+      GFL_HEAP_FreeMemory(unisys->alloc.card_param);
     #endif
-      GFL_HEAP_FreeMemory(situ->mycomm.trcard.my_card);
-      GFL_HEAP_FreeMemory(situ->mycomm.trcard.target_card);
-      situ->mycomm.trcard.card_param = NULL;
-      situ->mycomm.trcard.my_card = NULL;
-      situ->mycomm.trcard.target_card = NULL;
+      GFL_HEAP_FreeMemory(unisys->alloc.my_card);
+      GFL_HEAP_FreeMemory(unisys->alloc.target_card);
+      unisys->alloc.card_param = NULL;
+      unisys->alloc.my_card = NULL;
+      unisys->alloc.target_card = NULL;
       
       if(GFL_NET_IsParentMachine() == TRUE){
         UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PARENT);
@@ -2258,24 +2380,41 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  enum{
+    _SEQ_INIT,
+    _SEQ_MYSTATUS_SEND,
+    _SEQ_MYSTATUS_RECV_WAIT,
+    _SEQ_TIMING,
+    _SEQ_TIMING_WAIT,
+    _SEQ_SUBPROC,
+    _SEQ_SUBPROC_WAIT,
+    _SEQ_SUBPROC_END_TIMING,
+    _SEQ_SUBPROC_END_TIMING_WAIT,
+  };
+
+  //SUBPROCで使用したワークの解放がある為、_SEQ_SUBPROC_WAITは外す
+  if((*seq) != _SEQ_SUBPROC_WAIT && _UnionCheckError_ForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+
   switch(*seq){
-  case 0:
+  case _SEQ_INIT:
     //「交換を開始します！」
     UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_04_02);
 
     (*seq)++;
     break;
-  case 1: //MYSTATUS交換
+  case _SEQ_MYSTATUS_SEND: //MYSTATUS交換
     if(UnionSend_Mystatus(unisys) == TRUE){
       (*seq)++;
     }
     break;
-  case 2:
+  case _SEQ_MYSTATUS_RECV_WAIT:
     if(MATH_CountPopulation(((u32)situ->mycomm.mystatus_recv_bit)) > 1){
       (*seq)++;
     }
     break;
-  case 3:
+  case _SEQ_TIMING:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       GFL_NET_HANDLE_TimeSyncStart(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_BEFORE, WB_NET_UNION);
@@ -2283,14 +2422,14 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
       (*seq)++;
     }
     break;
-  case 4:
+  case _SEQ_TIMING_WAIT:
     if(GFL_NET_HANDLE_IsTimeSync(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("ポケモン交換前の同期取り成功\n");
       (*seq)++;
     }
     break;
-  case 5:
+  case _SEQ_SUBPROC:
     {
       POKEMONTRADE_PARAM* eibw;
       eibw = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(POKEMONTRADE_PARAM));
@@ -2305,7 +2444,7 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
       (*seq)++;
     }
     break;
-  case 6:
+  case _SEQ_SUBPROC_WAIT:
     if(UnionSubProc_IsExits(unisys) == FALSE){
       POKEMONTRADE_PARAM* eibw = unisys->parent_work;
       GFL_HEAP_FreeMemory(eibw->pParty);
@@ -2318,14 +2457,14 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
       (*seq)++;
     }
     break;
-  case 7:
+  case _SEQ_SUBPROC_END_TIMING:
     UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_01_02_4);
     GFL_NET_HANDLE_TimeSyncStart(
       GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_AFTER, WB_NET_UNION);
     OS_TPrintf("ポケモン交換画面終了後の同期取り開始\n");
     (*seq)++;
     break;
-  case 8:
+  case _SEQ_SUBPROC_END_TIMING_WAIT:
     if(UnionMsg_TalkStream_Check(unisys) == FALSE){
       break;
     }
@@ -2362,6 +2501,10 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
 static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
   u16 buf_no = UNION_CHARA_GetCharaIndex_to_ParentNo(situ->mycomm.talk_obj_id);
+
+  if(_UnionCheckError_ForceExit(unisys) == TRUE){
+    return TRUE;
+  }
 
   switch(*seq){
   case 0:
@@ -2467,38 +2610,54 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
 static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
   enum{
+    _SEQ_TIMING_START,
+    _SEQ_TIMING_WAIT,
+    _SEQ_SHUTDOWN_START,
+    _SEQ_SHUTDOWN_WAIT,
+    _SEQ_RESTART,
+  };
+  enum{
     _LAST_MSG_WAIT = 30,
   };
+
+  if((*seq) <= _SEQ_TIMING_WAIT && _UnionCheckError_ForceExit(unisys) == TRUE){
+    return TRUE;
+  }
   
   if(UnionMsg_TalkStream_Check(unisys) == TRUE && situ->work < _LAST_MSG_WAIT){
     situ->work++;
   }
   
   switch(*seq){
-  case 0:
+  case _SEQ_TIMING_START:
     situ->work = 0;
     GFL_NET_HANDLE_TimeSyncStart(
       GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_SHUTDOWN, WB_NET_UNION);
     OS_TPrintf("切断前の同期取り：開始\n");
     (*seq)++;
     break;
-  case 1:
+  case _SEQ_TIMING_WAIT:
     if(GFL_NET_HANDLE_IsTimeSync(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_SHUTDOWN, WB_NET_UNION) == TRUE){
       OS_TPrintf("切断前の同期取り：成功\n");
       (*seq)++;
     }
     break;
-  case 2:
+  case _SEQ_SHUTDOWN_START:
+    if(NetErr_App_CheckError() == TRUE){
+      GAMESYSTEM_SetFieldCommErrorReq(unisys->uniparent->gsys, TRUE);
+      return FALSE;
+    }
+
     UnionComm_Req_ShutdownRestarts(unisys);
     (*seq)++;
     break;
-  case 3:
+  case _SEQ_SHUTDOWN_WAIT:
     if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE){
       (*seq)++;
     }
     break;
-  case 4:
+  case _SEQ_RESTART:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE && situ->work >= _LAST_MSG_WAIT){
       UnionMyComm_PartyDel(&situ->mycomm, situ->mycomm.connect_pc);
       UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, NULL);
@@ -2536,6 +2695,12 @@ static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     _SEQ_INTRUDE_NG,
   };
   
+  //SUBPROCのワーク解放がある為、_SEQ_SUBPROC_WAITは除く
+  if((*seq) != _SEQ_SUBPROC_WAIT && (*seq) != _SEQ_BEACON_RESTART && (*seq) != _SEQ_INTRUDE_NG
+      && _UnionCheckError_ForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+
   switch(*seq){
   case _SEQ_INIT:
     if(situ->mycomm.intrude == TRUE){

@@ -256,8 +256,8 @@ static void _UnionRecv_TrainerCardParam(const int netID, const int size, const v
   }
   
   OS_TPrintf("COmmCOmmand カード受信 netID = %d\n", netID);
-  situ->mycomm.trcard.target_card_receive = TRUE;
-  GFL_STD_MemCopy(pData, situ->mycomm.trcard.target_card, size);
+  situ->mycomm.target_card_receive = TRUE;
+  GFL_STD_MemCopy(pData, unisys->alloc.target_card, size);
 }
 
 //==================================================================
@@ -269,12 +269,12 @@ static void _UnionRecv_TrainerCardParam(const int netID, const int size, const v
 //==================================================================
 BOOL UnionSend_TrainerCardParam(UNION_SYSTEM_PTR unisys)
 {
-  GF_ASSERT(unisys->my_situation.mycomm.trcard.my_card != NULL);
+  GF_ASSERT(unisys->alloc.my_card != NULL);
   
   OS_TPrintf("TR_CARD_DATA = %x\n", sizeof(TR_CARD_DATA));
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
     UNION_CMD_TRAINERCARD_PARAM, sizeof(TR_CARD_DATA), 
-    unisys->my_situation.mycomm.trcard.my_card, TRUE, FALSE, TRUE);
+    unisys->alloc.my_card, TRUE, FALSE, TRUE);
 }
 
 //==============================================================================

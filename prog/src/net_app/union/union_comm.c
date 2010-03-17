@@ -23,6 +23,7 @@
 #include "union_subproc.h"
 #include "union_chat.h"
 #include "net/net_whpipe.h"
+#include "net_app/union_app.h"
 
 
 //==============================================================================
@@ -156,6 +157,7 @@ static void Union_ExitSystem(UNION_SYSTEM_PTR unisys)
   if(unisys->alloc.regulation != NULL){
     GFL_HEAP_FreeMemory(unisys->alloc.regulation);
   }
+  UnionAlloc_AllFree(unisys);
   GFL_HEAP_FreeMemory(unisys);
   GFL_HEAP_DeleteHeap(HEAPID_UNION);
   
@@ -242,7 +244,9 @@ BOOL UnionComm_Exit(int *seq, void *pwk, void *pWork)
   }
   
   unisys->comm_status = UNION_COMM_STATUS_EXIT_START;
-	GFL_NET_Exit(UnionComm_ExitCallback);
+	if(GFL_NET_Exit(UnionComm_ExitCallback) == FALSE){
+    UnionComm_ExitCallback(unisys);  //FALSEの場合は通信エラーなどで既に終了している
+  }
 	return TRUE;
 }
 
@@ -402,7 +406,9 @@ static BOOL UnionComm_ShutdownRestarts(UNION_SYSTEM_PTR unisys)
   case LOCALSEQ_SHUTDOWN:
     OS_TPrintf("restart 切断→再接続開始\n");
     unisys->comm_status = UNION_COMM_STATUS_EXIT_START;
-  	GFL_NET_Exit(UnionComm_ExitCallback);
+    if(GFL_NET_Exit(UnionComm_ExitCallback) == FALSE){
+      UnionComm_ExitCallback(unisys); //FALSEの場合は通信エラーなどで既に終了している
+    }
     unisys->restart_seq++;
     break;
   case LOCALSEQ_SHUTDOWN_WAIT:
@@ -744,6 +750,55 @@ void UnionBeacon_ClearAllReceiveData(UNION_SYSTEM_PTR unisys)
 {
   OS_TPrintf("ビーコン受信バッファ全クリア\n");
   GFL_STD_MemClear(unisys->receive_beacon, sizeof(UNION_BEACON_PC) * UNION_RECEIVE_BEACON_MAX);
+}
+
+//==================================================================
+/**
+ * 各シーケンスの途中でAllocされるものを一括解放
+ *
+ * @param   unisys		
+ */
+//==================================================================
+void UnionAlloc_AllFree(UNION_SYSTEM_PTR unisys)
+{
+#if 0//トレーナーカードのParentWorkはトレーナーカードのProc内で解放されるのでNULLでなくても
+     //ここでは解放しない
+  GFL_HEAP_FreeMemory(unisys->alloc.card_param);
+#endif
+  unisys->alloc.card_param = NULL;
+
+  if(unisys->alloc.my_card != NULL){
+    GFL_HEAP_FreeMemory(unisys->alloc.my_card);
+    unisys->alloc.my_card = NULL;
+  }
+  if(unisys->alloc.target_card != NULL){
+    GFL_HEAP_FreeMemory(unisys->alloc.target_card);
+    unisys->alloc.target_card = NULL;
+  }
+
+  if(unisys->alloc.bbox_party != NULL){
+    GFL_HEAP_FreeMemory(unisys->alloc.bbox_party);
+    unisys->alloc.bbox_party = NULL;
+  }
+  
+  if(unisys->alloc.psl != NULL){
+    //これを使用しているシーケンスはアクター生成などもしているので、単純にこれだけFreeは危険。
+    //シーケンス毎、強制終了にはしないようにしているのでここには来ないはず
+    GFL_HEAP_FreeMemory(unisys->alloc.psl);
+    unisys->alloc.psl = NULL;
+  }
+
+  if(unisys->alloc.regulation != NULL){
+    GFL_HEAP_FreeMemory(unisys->alloc.regulation);
+    unisys->alloc.regulation = NULL;
+  }
+
+  if(unisys->alloc.uniapp != NULL){
+    //これを使用しているシーケンスは単純にFreeは危険。
+    //シーケンス毎、強制終了にはしないようにしているのでここには来ないはず
+    UnionAppSystem_FreeAppWork(unisys->alloc.uniapp);
+    unisys->alloc.uniapp = NULL;
+  }
 }
 
 //==============================================================================

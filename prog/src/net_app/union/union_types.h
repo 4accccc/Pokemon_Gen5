@@ -69,6 +69,7 @@ typedef enum{ //¦MenuMemberMax, UNION_STATUS_TRAINERCARDˆÈ~‚Ìƒe[ƒuƒ‹‚Æ•À‚Ñ‚ğ“
 ///ƒ†ƒjƒIƒ“FƒXƒe[ƒ^ƒX
 enum{
   UNION_STATUS_NORMAL,      ///<’Êíó‘Ô(‰½‚à‚µ‚Ä‚¢‚È‚¢)
+  UNION_STATUS_FORCE_EXIT,  ///<’ÊMƒGƒ‰[‚È‚Ç‚É‚æ‚é‹­§I—¹
   UNION_STATUS_ENTER,       ///<ƒ†ƒjƒIƒ“ƒ‹[ƒ€‚Öi“ü
   UNION_STATUS_LEAVE,       ///<ƒ†ƒjƒIƒ“ƒ‹[ƒ€‚©‚ç‘Şo
   
@@ -362,15 +363,6 @@ typedef struct _UNION_BEACON_PC{
 //--------------------------------------------------------------
 //  ©•ªƒf[ƒ^
 //--------------------------------------------------------------
-///ƒgƒŒ[ƒi[ƒJ[ƒhî•ñ
-typedef struct{
-  TRCARD_CALL_PARAM *card_param;  ///<ƒJ[ƒh‰æ–ÊŒÄ‚Ño‚µ‚æ‚¤‚ÌParentWork
-  TR_CARD_DATA *my_card;      ///<©•ª‚ÌƒJ[ƒhî•ñ(‘—Mƒoƒbƒtƒ@)
-  TR_CARD_DATA *target_card;  ///<‘Šè‚ÌƒJ[ƒhî•ñ(óMƒoƒbƒtƒ@)
-  u8 target_card_receive;     ///<TRUE:‘Šè‚ÌƒJ[ƒh‚ğóM‚µ‚½
-  u8 padding[3];
-}UNION_TRCARD;
-
 ///‘—óM‚Å•ÏX‚·‚éƒpƒ‰ƒ[ƒ^—Ş(©‹@‚ªƒtƒŠ[“®ì‚Ìó‘Ô‚É‚È‚é‚½‚Ñ‚É‰Šú‰»‚³‚ê‚é)
 typedef struct{
   UNION_BEACON_PC *talk_pc;    ///<˜b‚µ‚©‚¯‚Ä‚¢‚é(˜b‚µ‚©‚¯‚ç‚ê‚Ä‚¢‚é)l‚Ìreceive_beacon‚Ö‚Ìƒ|ƒCƒ“ƒ^
@@ -381,13 +373,13 @@ typedef struct{
   u8 mainmenu_select;         ///<ƒƒCƒ“ƒƒjƒ…[‚Å‚Ì‘I‘ğŒ‹‰Ê
   u8 mainmenu_yesno_result;   ///<u‚Í‚¢(TRUE)vu‚¢‚¢‚¦(FALSE)v‘I‘ğŒ‹‰Ê
   u8 submenu_select;          ///<ƒƒCƒ“ƒƒjƒ…[Œã‚ÌƒTƒuƒƒjƒ…[‚Ì‘I‘ğŒ‹‰Ê
-  UNION_TRCARD trcard;        ///<ƒgƒŒ[ƒi[ƒJ[ƒhî•ñ
   UNION_PARTY party;          ///<ˆê‚É—V‚ñ‚Å‚¢‚é‘Šè‚Ìƒpƒ‰ƒ[ƒ^
   u16 talk_obj_id;             ///<˜b‚µ‚©‚¯‚½‘Šè‚ÌCharacterIndex
   u8 intrude;                 ///<TRUE:—“üQ‰Á
   u8 mystatus_recv_bit;       ///<MYSTATUSóMŒ‹‰Ê(bitŠÇ—)
   u8 first_talk;              ///<0:‰‰ñ‰ï˜b 1ˆÈãFŒp‘±‰ï˜b
-  u8 padding[3];
+  u8 target_card_receive;     ///<TRUE:‘Šè‚ÌƒJ[ƒh‚ğóM‚µ‚½
+  u8 padding[2];
 }UNION_MY_COMM;
 
 ///ƒƒjƒ…[‚Å‚Ì‘I‘ğƒŒƒMƒ…ƒŒ[ƒVƒ‡ƒ“€–Ú
@@ -449,6 +441,10 @@ typedef struct{
   REGULATION_PRINT_MSG *rpm; ///<ƒŒƒMƒ…ƒŒ[ƒVƒ‡ƒ““à—e‚ğˆê——•\¦
   PARTY_SELECT_LIST_PTR psl;  ///<è‚¿orƒoƒgƒ‹ƒ{ƒbƒNƒX‘I‘ğƒŠƒXƒgƒCƒxƒ“ƒg
   POKEPARTY *bbox_party;      ///<ƒoƒgƒ‹ƒ{ƒbƒNƒX—p‚ÌPOKEPARTY
+
+  TRCARD_CALL_PARAM *card_param;  ///<ƒJ[ƒh‰æ–ÊŒÄ‚Ño‚µ‚æ‚¤‚ÌParentWork
+  TR_CARD_DATA *my_card;      ///<©•ª‚ÌƒJ[ƒhî•ñ(‘—Mƒoƒbƒtƒ@)
+  TR_CARD_DATA *target_card;  ///<‘Šè‚ÌƒJ[ƒhî•ñ(óMƒoƒbƒtƒ@)
 }UNION_ALLOC;
 
 //--------------------------------------------------------------
