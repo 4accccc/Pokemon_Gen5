@@ -3191,8 +3191,8 @@
 	</row>
 
 	<row id="ITEMNAME_612">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+		<language name="JPN" width="256">デルダマ</language>
+		<language name="JPN_KANJI" width="256">デルダマ</language>
 	</row>
 
 	<row id="ITEMNAME_613">
@@ -3261,53 +3261,53 @@
 	</row>
 
 	<row id="ITEMNAME_626">
-		<language name="JPN" width="256">でかいきんおたま</language>
-		<language name="JPN_KANJI" width="256">かおるキノコ</language>
+		<language name="JPN" width="256">でかいきんのたま</language>
+		<language name="JPN_KANJI" width="256">でかいきんのたま</language>
 	</row>
 
 	<row id="ITEMNAME_627">
 		<language name="JPN" width="256">おだんごしんじゅ</language>
-		<language name="JPN_KANJI" width="256">かおるキノコ</language>
+		<language name="JPN_KANJI" width="256">おだんごしんじゅ</language>
 	</row>
 
 	<row id="ITEMNAME_628">
 		<language name="JPN" width="256">すいせいのかけら</language>
-		<language name="JPN_KANJI" width="256">かおるキノコ</language>
+		<language name="JPN_KANJI" width="256">すいせいのかけら</language>
 	</row>
 
 	<row id="ITEMNAME_629">
 		<language name="JPN" width="256">こだいのどうか</language>
-		<language name="JPN_KANJI" width="256">かおるキノコ</language>
+		<language name="JPN_KANJI" width="256">こだいのどうか</language>
 	</row>
 
 	<row id="ITEMNAME_630">
 		<language name="JPN" width="256">こだいのぎんか</language>
-		<language name="JPN_KANJI" width="256">かおるキノコ</language>
+		<language name="JPN_KANJI" width="256">こだいのぎんか</language>
 	</row>
 
 	<row id="ITEMNAME_631">
 		<language name="JPN" width="256">こだいのきんか</language>
-		<language name="JPN_KANJI" width="256">かおるキノコ</language>
+		<language name="JPN_KANJI" width="256">こだいのきんか</language>
 	</row>
 
 	<row id="ITEMNAME_632">
 		<language name="JPN" width="256">こだいのツボ</language>
-		<language name="JPN_KANJI" width="256">かおるキノコ</language>
+		<language name="JPN_KANJI" width="256">こだいのツボ</language>
 	</row>
 
 	<row id="ITEMNAME_633">
 		<language name="JPN" width="256">こだいのうでわ</language>
-		<language name="JPN_KANJI" width="256">かおるキノコ</language>
+		<language name="JPN_KANJI" width="256">こだいのうでわ</language>
 	</row>
 
 	<row id="ITEMNAME_634">
 		<language name="JPN" width="256">こだいのせきぞう</language>
-		<language name="JPN_KANJI" width="256">かおるキノコ</language>
+		<language name="JPN_KANJI" width="256">こだいのせきぞう</language>
 	</row>
 
 	<row id="ITEMNAME_635">
 		<language name="JPN" width="256">こだいのおうかん</language>
-		<language name="JPN_KANJI" width="256">かおるキノコ</language>
+		<language name="JPN_KANJI" width="256">こだいのおうかん</language>
 	</row>
 
 	<row id="ITEMNAME_636">

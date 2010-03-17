@@ -5635,12 +5635,12 @@
 	</row>
 
 	<row id="ITEMINFO_612">
-		<language name="JPN" width="256">ー
-ー
-ー</language>
-		<language name="JPN_KANJI" width="256">ー
-ー
-ー</language>
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
 	</row>
 
 	<row id="ITEMINFO_613">

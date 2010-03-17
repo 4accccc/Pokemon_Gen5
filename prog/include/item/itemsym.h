@@ -613,6 +613,7 @@
 #define ITEM_RAIBUKYASUTAA		( 609 )		// ライブキャスター
 #define ITEM_GODDOSUTOON		( 610 )		// ゴッドストーン
 #define ITEM_RIBATHITIKETTO		( 611 )		// リバティチケット
+#define ITEM_DERUDAMA		( 612 )		// デルダマ
 #define ITEM_PARESUBOORU		( 616 )		// パレスボール
 #define ITEM_KIREINAISI		( 617 )		// きれいないし
 #define ITEM_POKEZYARASI		( 618 )		// ポケじゃらし
@@ -623,7 +624,7 @@
 #define ITEM_HAITATUBUTU3		( 623 )		// はいたつぶつ３
 #define ITEM_DORAGONNOHONE		( 624 )		// ドラゴンのホネ
 #define ITEM_KAORUKINOKO		( 625 )		// かおるキノコ
-#define ITEM_DEKAIKINOTAMA		( 626 )		// でかいきんおたま
+#define ITEM_DEKAIKINNOTAMA		( 626 )		// でかいきんのたま
 #define ITEM_ODANGOSINZYU		( 627 )		// おだんごしんじゅ
 #define ITEM_SUISEINOKAKERA		( 628 )		// すいせいのかけら
 #define ITEM_KODAINODOUKA		( 629 )		// こだいのどうか
