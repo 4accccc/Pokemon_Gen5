@@ -748,7 +748,7 @@
 #define FV_STADIUM_RANDOM_01               724 /* 0x02d4 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
 #define FV_STADIUM_RANDOM_02               725 /* 0x02d5 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
 #define FV_STADIUM_RANDOM_03               726 /* 0x02d6 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
-		/* not used   727(0x02d7) */
+#define FV_PDW_POSTMAN                     727 /* 0x02d7 PDWのアイテム配達員 */
 		/* not used   728(0x02d8) */
 		/* not used   729(0x02d9) */
 		/* not used   730(0x02da) */
