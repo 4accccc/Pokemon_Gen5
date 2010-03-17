@@ -542,8 +542,8 @@ static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk)
   
 	pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_DEMO_PARAM));
 
-  pWork->pMyPoke = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
-  pWork->pNPCPoke = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
+  pWork->pMyPoke = PP_Create(MONSNO_509, 100, 123456, GFL_HEAPID_APP);
+  pWork->pNPCPoke = PP_Create(MONSNO_509, 100, 123456, GFL_HEAPID_APP);
 
 
   pWork->gamedata = GAMEDATA_Create(GFL_HEAPID_APP);

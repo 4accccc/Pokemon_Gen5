@@ -280,8 +280,8 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
         return;
       }
       else{
-        if(MONSNO_SHEIMI == PP_Get( pp , ID_PARA_monsno ,NULL)){
-          if(FORMNO_SHEIMI_SKY == PP_Get( pp , ID_PARA_form_no ,NULL)){
+        if(MONSNO_492 == PP_Get( pp , ID_PARA_monsno ,NULL)){
+          if(FORMNO_492_SKY == PP_Get( pp , ID_PARA_form_no ,NULL)){
             PP_ChangeFormNo(pp,FORMNO_SHEIMI_LAND);
           }
         }

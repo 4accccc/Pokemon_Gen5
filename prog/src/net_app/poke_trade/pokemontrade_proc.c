@@ -1952,7 +1952,7 @@ static BOOL _PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork)
     const STRCODE *name;
     POKEMON_PARAM* pp2;
 
-    pp2 = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
+    pp2 = PP_Create(MONSNO_509, 100, 123456, GFL_HEAPID_APP);
     name = MyStatus_GetMyName( pWork->pMy );
     PP_Put( pp2 , ID_PARA_oyaname_raw , (u32)name );
     PP_Put( pp2 , ID_PARA_oyasex , MyStatus_GetMySex( pWork->pMy ) );
@@ -2948,12 +2948,12 @@ static void DEBUG_MyPokeAdd(POKEPARTY *party,MYSTATUS *myStatus,HEAPID heapID)
 
   PokeParty_Add(party, pp);
 
-  PP_Setup(pp, MONSNO_MUSYAANA, 100, 123456);
+  PP_Setup(pp, MONSNO_510, 100, 123456);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PokeParty_Add(party, pp);
   PokeParty_Add(party, pp);
   PokeParty_Add(party, pp);
-  PP_Setup(pp, MONSNO_MANAFI, 100, 123456);
+  PP_Setup(pp, MONSNO_511, 100, 123456);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PokeParty_Add(party, pp);
   PokeParty_Add(party, pp);
@@ -3001,12 +3001,12 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMEDATA* pGameData,BOOL
       POKEMON_PARAM *pp;
       int i,j;
       BOX_MANAGER* pBox = pWork->pBox;
-      pp = PP_Create(MONSNO_ONOKKUSU, 100, 123456, HEAPID_IRCBATTLE);
+      pp = PP_Create(MONSNO_509, 100, 123456, HEAPID_IRCBATTLE);
 
       for(i=1;i < 2;i++){
         for(j=0;j < 30;j++){
           u16 oyaName[5] = {L'デ',L'バ',L'ッ',L'グ',0xFFFF};
-          POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(MONSNO_MARIRU+i, 0, GFL_HEAPID_APP);
+          POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(MONSNO_364+i, 0, GFL_HEAPID_APP);
           u32 ret = POKE_PERSONAL_GetParam(ppd,POKEPER_ID_sex);
           int monsno = GFUser_GetPublicRand(10)+100;
           PP_SetupEx(pp, monsno, i+j, 123456,PTL_SETUP_POW_AUTO, ret);
