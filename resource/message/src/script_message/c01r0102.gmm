@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-13T16:08:21"/>
+	<create user="matsumiya" host="W00224" date="2010-03-17T13:12:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="237"/>
+		<comment position="4" width="279"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,40 +292,41 @@
 	</lock>
 
 
-	<row id="msg_c01r0102_inventor_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・メッセージ表示後、「！」マーク表示
-・続けてmsg_c01r0102_inventor_02</comment>
+・続けてinventor_03</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
-		<language name="JPN" width="256">あらためて　じこしょうかい　するね[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">あらためて　じこしょうかい　するね▼
 アタシは　マコモ
-いわゆる　はつめいか　です[BE:01:ページ切り替え（クリア）]
+いわゆる　はつめいか　です▼
 アララギはかせ　とは
-だいがくじだい　からの　ともだちでさ[BE:00:ページ切り替え（行送り）]
-アナタたちの　てだすけを　たのまれたの[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">改めて　自己紹介するね[BE:01:ページ切り替え（クリア）]
+だいがくじだい　からの　ともだちでね▽
+アナタたちの　てだすけを　たのまれたの▼</language>
+		<language name="JPN_KANJI" width="256">改めて　自己紹介するね▼
 アタシは　マコモ
-いわゆる　発明家です[BE:01:ページ切り替え（クリア）]
+いわゆる　発明家です▼
 アララギ博士とは
-大学時代からの　友達でさ[BE:00:ページ切り替え（行送り）]
-アナタたちの　手助けを頼まれたの[BE:01:ページ切り替え（クリア）]</language>
+大学時代からの　友達でね▽
+アナタたちの　手助けを頼まれたの▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c01r0102_inventor_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・メッセージ表示後パソコンを触るアニメ
-・アニメ後、元の位置に戻って
-　msg_c01r0102_inventor_03表示</comment>
+・アイテム入手処理
+・No600「いあいぎり」</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
-		<language name="JPN" width="256">あっ！　そのＣギア
-つかえるように　とうろくしてあげる[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">あっ！　そのＣギア
-使えるように　登録してあげる[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ということで！▼
+アタシからの　バックアップよ
+この　わざマシンを　どうぞ！▼</language>
+		<language name="JPN_KANJI" width="256">ということで！▼
+アタシからの　バックアップよ
+この　わざマシンを　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_friend_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_friend_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・No437「ともだちてちょう」入手処理
 ・続けてinventor_friend_02</comment>
@@ -337,7 +338,7 @@
 ともだちてちょうも　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_friend_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_friend_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・はい/いいえの選択肢表示
 ・はい→inventor_friend_03
@@ -360,7 +361,7 @@
 詳しい　説明を　ききたい？</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_friend_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_friend_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・はい/いいえの選択肢表示
 ・はい→inventor_friend_03
@@ -387,108 +388,99 @@
 詳しい　説明を　ききたい？</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_inventor_04">
 		<comment>♀
-・アイテム入手
-・No600「わざマシン９４：いあいぎり」</comment>
-		<attribute name="キャラ指定">ASSISTANTW
-発明家</attribute>
-		<language name="JPN" width="256">で　さらにさらに！！▼
-アタシからの　バックアップよ
-この　わざマシンを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">で　さらにさらに！！▼
-アタシからの　バックアップよ
-この　わざマシンを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c01r0102_inventor_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・</comment>
+・続けてinventor_05</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
 		<language name="JPN" width="256">ポケモンが　おぼえる　わざには
-たたかっていない　ときでも[BE:00:ページ切り替え（行送り）]
-つかえる　わざが　あるの！[BE:01:ページ切り替え（クリア）]
+たたかっていない　ときでも▽
+つかえる　わざが　あるの！▼
 その　わざマシンを　つかうと
-ほそいきを　きることが　できる[BE:00:ページ切り替え（行送り）]
-いあいぎりと　いう　わざが　つかえるわ[BE:01:ページ切り替え（クリア）]</language>
+ほそいきを　きることが　できる▽
+いあいぎりと　いう　わざが　つかえるわ▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンが　覚える　技には
-戦っていない　ときでも[BE:00:ページ切り替え（行送り）]
-使える　技があるの[BE:01:ページ切り替え（クリア）]
+戦っていない　ときでも▽
+使える　技があるの▼
 その　わざマシンを　使うと
-細い木を　切ることが　できる[BE:00:ページ切り替え（行送り）]
-いあいぎりと　いう　技が　使えるわ[BE:01:ページ切り替え（クリア）]</language>
+細い木を　切ることが　できる▽
+いあいぎりと　いう　技が　使えるわ▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_inventor_05">
 		<comment>♀
-・メッセージ後、踊りだすようなアニメ
-・続けてmsg_c01r0102_inventor_06</comment>
+・続けてinventor_06</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
 		<language name="JPN" width="256">……で　てだすけ　じゃなくて
-おねがいしても　いいかな？[BE:01:ページ切り替え（クリア）]
+おねがいしても　いいかな？▼
 あのね　サンヨウシティの　はずれに
-ゆめのあとち　って　いわれてる[BE:00:ページ切り替え（行送り）]
-ばしょが　あるんだけど[BE:01:ページ切り替え（クリア）]
+ゆめのあとち　って　いわれてる▽
+ばしょが　あるんだけど▼
 そこにいる　ポケモン　ムンナの
-「ゆめのけむり」が　ほしいんだ[BE:01:ページ切り替え（クリア）]
+「ゆめのけむり」が　ほしいんだ▼
 それが　あれば！
-アタシの　けんきゅうが　かんせいするの！[BE:01:ページ切り替え（クリア）]</language>
+アタシの　けんきゅうが　かんせいするの！▼</language>
 		<language name="JPN_KANJI" width="256">……で　手助けじゃなくて
-お願いしても　いいかな？[BE:01:ページ切り替え（クリア）]
+お願いしても　いいかな？▼
 あのね　サンヨウシティの　外れに
-夢の跡地って　いわれてる[BE:00:ページ切り替え（行送り）]
-場所が　あるんだけど[BE:01:ページ切り替え（クリア）]
+夢の跡地って　いわれてる▽
+場所が　あるんだけど▼
 そこにいる　ポケモン　ムンナの
-「ゆめのけむり」が　欲しいんだ[BE:01:ページ切り替え（クリア）]
+「ゆめのけむり」が　欲しいんだ▼
 それが　あれば！
-アタシの　研究が　完成するの！[BE:01:ページ切り替え（クリア）]</language>
+アタシの　研究が　完成するの！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_inventor_06">
 		<comment>♀
 ・このメッセージ表示後は
-　msg_c01r0102_inventor_07を
-　繰り返し表示</comment>
+　inventor_07を繰り返し表示</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
-		<language name="JPN" width="256">……ごめんなさい
-つい　はねちゃうのよね[BE:01:ページ切り替え（クリア）]
-いろんな　ポケモンに　であう
-きっかけにもなると　おもって[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">あなた　アララギから
+ポケモンずかんの　かんせいを▽
+たのまれて　いるんでしょ？▼
+……ていきてきに　ずかんを
+こうしん　するのも　たいへんね▼
+でね　わたしの　おねがいは
+いろんな　ポケモンに　であう▽
+きっかけ　にもなると　おもって▼
 ゆめのあとち　にいる　ムンナの
-「ゆめのけむり」を　とってきてください</language>
-		<language name="JPN_KANJI" width="256">……ごめんなさい
-つい　跳ねちゃうのよね[BE:01:ページ切り替え（クリア）]
-いろんな　ポケモンに　出会う
-きっかけにもなると　思って[BE:01:ページ切り替え（クリア）]
+「ゆめのけむり」を　とってきてほしいな</language>
+		<language name="JPN_KANJI" width="256">あなた　アララギから
+ポケモン図鑑の　完成を▽
+頼まれて　いるんでしょ？▼
+……定期的に　図鑑を
+更新するのも　大変ね▼
+でね　わたしの　お願いは
+いろんな　ポケモンに　出会う▽
+きっかけ　にもなると　おもって▼
 夢の跡地にいる　ムンナの
-「ゆめのけむり」を　取ってきてください</language>
+「ゆめのけむり」を　とってきてほしいな</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・msg_c01r0102_inventor_05表示後
-　重要アイテム「？？？」所有するまで
-　繰り返し表示</comment>
+・inventor_06表示後
+　d01r0101イベント終了後まで繰り返し</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
 		<language name="JPN" width="256">マコモ『ゆめのあとちに　いる
-ふしぎなポケモン　ムンナ[BE:01:ページ切り替え（クリア）]
+ふしぎなポケモン　ムンナ▼
 そのポケモンが　みせる　ゆめは
-ときとして　げんじつに　おきるの！[BE:01:ページ切り替え（クリア）]
+ときとして　げんじつに　おきるの！▼
 その　けんきゅうを　かんせい　させるには
 ムンナの　「ゆめのけむり」が　ひつようなの</language>
 		<language name="JPN_KANJI" width="256">マコモ『夢の跡地に　いる
-不思議なポケモン　ムンナ[BE:01:ページ切り替え（クリア）]
+不思議なポケモン　ムンナ▼
 そのポケモンが　見せる　夢は
-時として　現実に　起きるの！[BE:01:ページ切り替え（クリア）]
+時として　現実に　起きるの！▼
 その　研究を　完成させるには
 ムンナの　「ゆめのけむり」が　必要なんだ</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_inventor_08">
 		<comment>♀
 ・d01r0101イベント後
 ・続けてinventor_09</comment>
@@ -508,7 +500,7 @@
 ほんとうに　ありがとうね！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_09" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_09">
 		<comment>♀
 ・一歩横に移動し
 　そちらを向いたままメッセージ表示
@@ -523,10 +515,10 @@
 という　話は　したよね▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_10" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_10" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・再度主人公と隣接、向き合って
-・続けてinventor_11</comment>
+・続けてinventor_02</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
 		<language name="JPN" width="256">アタシは　それを　さいげんし
@@ -543,22 +535,41 @@
 ポケモン　ドリーム　ワールドのことよ▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_11" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・メッセージ表示後パソコンを触るアニメ
+・アニメ後、Cギア起動処理
+　起動後、強制ヘルプ画面に（大野さん作成中）
+・ヘルプ終了後、主人公に近づき
+　inventor_11表示</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">そのまえに　Ｃギアを
+つかえるように　しないとね▼</language>
+		<language name="JPN_KANJI" width="256">その前に　Ｃギアを
+使えるように　しないとね▼</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_11">
 		<comment>♀
 ・続けてinventor_12</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
-		<language name="JPN" width="256">Ｃギアに　[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]という
+		<language name="JPN" width="256">ほら！　Ｃギアが　きどうして
+がめんが　あらわれたでしょ！▼
+その　がめんに　[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]という
 ボタンが　あるでしょ▼
 それを　おせば　ＰＤＷシステムで
 ねかせたい　ポケモンを　えらべるわ！▼</language>
-		<language name="JPN_KANJI" width="256">Ｃギアに　[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]という
+		<language name="JPN_KANJI" width="256">ほら！　Ｃギアが　起動して
+画面が　あらわれたでしょ！▼
+その　画面に　[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]という
 ボタンが　あるでしょ▼
 それを　押せば　ＰＤＷシステムで
 寝かせたい　ポケモンを　選べるわ！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_12" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_12">
 		<comment>♀
 ・続けてinventor_13</comment>
 		<attribute name="キャラ指定">ASSISTANTW
@@ -573,7 +584,7 @@
 現実でも　起きているの！！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_13" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_13">
 		<comment>♀
 ・続けてinventor_14</comment>
 		<attribute name="キャラ指定">ASSISTANTW
@@ -592,7 +603,7 @@
 出現するみたいね▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_14" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_14">
 		<comment>♀
 ・続けてinventor_15</comment>
 		<attribute name="キャラ指定">ASSISTANTW
@@ -609,7 +620,7 @@
 寝かせることが　できるから▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_15" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_15">
 		<comment>♀
 ・イベント終了
 ・再度話しかけるとinventor_16から</comment>
@@ -633,7 +644,7 @@
 マコモさんの　説明でした！</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_16" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_16">
 		<comment>♀
 ・inventor_15表示以降</comment>
 		<attribute name="キャラ指定">ASSISTANTW
@@ -654,79 +665,256 @@
 どんな　夢を　みるのかしらね？</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_girl3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・会話後、パソコンメニューの
 　「だれかのパソコン」が
 　「ショウロのパソコン」に変更
-・続けてgirl3_02</comment>
+・はい/いいえの選択肢
+　はい→girl3_02
+　いいえ→girl3_03</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
 パソコン管理者</attribute>
-		<language name="JPN" width="256">あなた　トレーナー？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">あなた　トレーナー？▼
 じゃあ　ポケモンセンターの
-パソコン　つかっていますか？[BE:01:ページ切り替え（クリア）]
+パソコン　つかっていますか？▼
 あたし　あの　ボックスを
-かんりしています　ショウロです▼</language>
-		<language name="JPN_KANJI" width="256">あなた　トレーナー？[BE:01:ページ切り替え（クリア）]
+かんりしています　ショウロです▼
+あのう……　あなた
+バトルボックス　ごぞんじ　ですか？</language>
+		<language name="JPN_KANJI" width="256">あなた　トレーナー？▼
 じゃあ　ポケモンセンターの
-パソコン　つかっていますか？[BE:01:ページ切り替え（クリア）]
+パソコン　利用していますか？▼
 あたし　あの　ボックスを
-管理しています　ショウロです▼</language>
+管理しています　ショウロです▼
+あのう……　あなた
+バトルボックス　ご存じ　ですか？</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_girl3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
-・msg_c01r0102_girl3_01表示後から
-　PDWのチュートリアル終了まで</comment>
+・はい選択時
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
 パソコン管理者</attribute>
-		<language name="JPN" width="256">ショウロ『パソコンの
-あずかりシステムは　もともと[BE:00:ページ切り替え（行送り）]
-マサキって　いう　ひとが[BE:00:ページ切り替え（行送り）]
-つくりあげた　もの　なんです</language>
-		<language name="JPN_KANJI" width="256">ショウロ『パソコンの
-預かりシステムは　もともと[BE:00:ページ切り替え（行送り）]
-マサキって　いう　人が[BE:00:ページ切り替え（行送り）]
-つくりあげた　もの　なんです</language>
+		<language name="JPN" width="256">ショウロ『さすが！▼
+バトルボックスには
+たいせんで　よく　つかう▽
+ポケモンを　とうろく　しておけるの！</language>
+		<language name="JPN_KANJI" width="256">ショウロ『さすが！▼
+バトルボックスには
+対戦で　よく　使う▽
+ポケモンを　登録しておけるの！</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_girl3_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
-・inventor_08表示後
-　＝ＰＤＷのチュートリアル後
-・イベント追加の可能性あり</comment>
+・いいえ選択時
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
 パソコン管理者</attribute>
-		<language name="JPN" width="256">ねかせたい　ポケモンを
-ボックスに　てんそう　するなら▽
-そこのパソコンを　つかってくださいな</language>
-		<language name="JPN_KANJI" width="256">寝かせたい　ポケモンを
-ボックスに　転送するなら▽
-そこの　パソコンを　使ってくださいな</language>
+		<language name="JPN" width="256">ショウロ『では　かんたんに！▼
+バトルボックスには
+たいせんで　よく　つかう▽
+ポケモンを　とうろく　しておけるの！</language>
+		<language name="JPN_KANJI" width="256">ショウロ『では　簡単に！▼
+バトルボックスには
+対戦で　よく　使う▽
+ポケモンを　登録しておけるの！</language>
 	</row>
 
-	<row id="msg_c01r0101_books_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c01r0102_girl3_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・girl3_01表示後から
+　inventor_15表示まで繰り返し</comment>
+		<attribute name="キャラ指定">ＧＩＲＬ3
+パソコン管理者</attribute>
+		<language name="JPN" width="256">ショウロ『ぜひぜひ
+バトルボックスを　つかってね▼
+そこの　パソコンからでも
+ポケモンを　とうろく　できるから！</language>
+		<language name="JPN_KANJI" width="256">ショウロ『ぜひぜひ
+バトルボックスを　使ってね▼
+そこの　パソコンからでも
+ポケモンを　登録できるから！</language>
+	</row>
+
+	<row id="msg_c01r0102_girl3_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・inventor_15表示後
+　！マーク表示後、主人公に隣接
+・アイテム入手処理
+　No437「ともだちてちょう」</comment>
+		<attribute name="キャラ指定">ＧＩＲＬ3
+パソコン管理者</attribute>
+		<language name="JPN" width="256">ショウロ『あっ　トレーナーさん！▼
+おねえちゃんの　おてつだい
+どうも　ありがとうです！▼
+これは　あたしからです
+えんりょせずに　もらってください▼</language>
+		<language name="JPN_KANJI" width="256">ショウロ『あっ　トレーナーさん！▼
+お姉ちゃんの　お手伝い
+どうも　ありがとうです！▼
+これは　あたしからです
+遠慮せずに　もらってください▼</language>
+	</row>
+
+	<row id="msg_c01r0102_girl3_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・girl3_05表示後</comment>
+		<attribute name="キャラ指定">ＧＩＲＬ3
+パソコン管理者</attribute>
+		<language name="JPN" width="256">その　ともだちてちょう　に
+とうろくした　おともだちと▽
+ＷｉーＦｉコネクションを　つかって▼
+ポケモンたいせん　や
+ポケモンこうかん　を▽
+たのしむことが　できるのよ▼
+もうすこし　くわしく
+せつめい　するとね▼
+ポケモンセンター２Ｆで
+ポケモンを　こうかん　したりすると▼
+そのひとを　ともだちてちょうに
+とうろくすることが　できるの▼
+また　ともだちコードを　おしえあって
+ともだちてちょうに▽
+とうろく　することも　できるの</language>
+		<language name="JPN_KANJI" width="256">その　ともだちてちょう　に
+登録した　おともだちと▽
+ＷｉーＦｉコネクションを　使って▼
+ポケモン対戦や
+ポケモン交換を▽
+たのしむことが　できるのよ▼
+もう少し　詳しく
+説明するとね▼
+ポケモンセンター２Ｆで
+ポケモンを　交換したりすると▼
+その人を　ともだちてちょうに
+登録することが　できるの▼
+また　ともだちコードを　教えあって
+ともだちてちょうに▽
+登録することも　できるの</language>
+	</row>
+
+	<row id="msg_c01r0102_girl3_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・girl3_06表示後以降に話しかけ</comment>
+		<attribute name="キャラ指定">ＧＩＲＬ3
+パソコン管理者</attribute>
+		<language name="JPN" width="256">ショウロ『なにか　ききたいことある？</language>
+		<language name="JPN_KANJI" width="256">ショウロ『なにか　ききたいことある？</language>
+	</row>
+
+	<row id="msg_c01r0102_girl3_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・バトルボックス選択時</comment>
+		<attribute name="キャラ指定">ＧＩＲＬ3
+パソコン管理者</attribute>
+		<language name="JPN" width="256">バトルボックスには
+たいせんで　よくつかう　ポケモンを▽
+１～６ひき　とうろく　しておけます▼
+せきがいせんで　たいせん　するときは
+バトルボックスに　とうろく　した▽
+ポケモンたちで　しょうぶ　するの！▼
+ポケモンを　いれかえなくて　べんりよ</language>
+		<language name="JPN_KANJI" width="256">バトルボックスには
+対戦で　よく使う　ポケモンを▽
+１～６匹　登録　しておけます▼
+赤外線で　対戦するときは
+バトルボックスに　登録した▽
+ポケモンたちで　勝負するの！▼
+ポケモンを　いれかえなくて　便利よ</language>
+	</row>
+
+	<row id="msg_c01r0102_girl3_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・ともだちてちょう選択時</comment>
+		<attribute name="キャラ指定">ＧＩＲＬ3
+パソコン管理者</attribute>
+		<language name="JPN" width="256">ともだちてちょうに
+ともだちを　とうろく　するには▼
+ポケモンセンター２Ｆで
+ポケモンを　こうかん　したりすると▼
+その　ひとを　ともだちてちょうに
+とうろくすることが　できるの▼
+また　ともだちコードを　おしえあって
+ともだちてちょうに▽
+とうろく　することも　できるんだ</language>
+		<language name="JPN_KANJI" width="256">ともだちてちょうに
+ともだちを　登録するには▼
+ポケモンセンター２Ｆで
+ポケモンを　交換したりすると▼
+その人を　ともだちてちょうに
+登録することが　できるの▼
+また　ともだちコードを　教えあって
+ともだちてちょうに▽
+登録することも　できるんだ</language>
+	</row>
+
+	<row id="msg_c01r0102_girl3_10" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・やめる選択時</comment>
+		<attribute name="キャラ指定">ＧＩＲＬ3
+パソコン管理者</attribute>
+		<language name="JPN" width="256">どんどん　ポケモンを　つかまえて
+どんどん　ボックスを　つかってね！</language>
+		<language name="JPN_KANJI" width="256">どんどん　ポケモンを　つかまえて
+どんどん　ボックスを　つかってね！</language>
+	</row>
+
+	<row id="msg_c01r0102_select_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,,">
+		<comment>選択肢
+・選択後→girl3_08</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">バトルボックス</language>
+		<language name="JPN_KANJI" width="256">バトルボックス</language>
+	</row>
+
+	<row id="msg_c01r0102_select_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,,">
+		<comment>選択肢
+・選択後→girl3_09</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ともだちてちょう</language>
+		<language name="JPN_KANJI" width="256">ともだちてちょう</language>
+	</row>
+
+	<row id="msg_c01r0102_select_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,,">
+		<comment>選択肢
+・選択後→girl3_10</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="msg_c01r0101_books_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>本棚その１
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">本棚その１</attribute>
-		<language name="JPN" width="256">Ｃギアの　マニュアル</language>
-		<language name="JPN_KANJI" width="256">Ｃギアの　マニュアル</language>
+		<language name="JPN" width="256">Ｃギア　マニュアル▼
+そうさに　こまったら
+がめんの　？を　おす！</language>
+		<language name="JPN_KANJI" width="256">Ｃギア　マニュアル▼
+そうさに　こまったら
+がめんの　？を　おす！</language>
 	</row>
 
-	<row id="msg_c01r0101_books2_01" back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0101_books2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>本棚その２
-・ともだちてちょうのマニュアル
-・はい/いいえの選択肢
-　はい→books2_02
-　いいえ→終了</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">本棚その２</attribute>
-		<language name="JPN" width="256">ともだちてちょうに　ついて
-……つづきを　よみますか？</language>
-		<language name="JPN_KANJI" width="256">ともだちてちょうに　ついて
-……続きを　読みますか？</language>
+		<language name="JPN" width="256">ポケモン　あずかり　システムとは？▼
+パソコンつうしん　の
+ポケモン　あずかり　システムを▽
+かいはつ　したのは▽
+カントーちほうの　マサキである</language>
+		<language name="JPN_KANJI" width="256">ポケモン預かりシステム　とは？▼
+パソコン通信の
+ポケモン預かりシステムを▽
+開発したのは▽
+カントー地方の　マサキである</language>
 	</row>
 
-	<row id="msg_c01r0101_books2_02" back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0101_books2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>本棚その２</comment>
 		<attribute name="キャラ指定">本棚その２</attribute>
 		<language name="JPN" width="256">ともだちてちょうに
