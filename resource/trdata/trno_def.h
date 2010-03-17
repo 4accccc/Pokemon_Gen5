@@ -517,7 +517,20 @@
 #define	TRID_JUGGLING_09   ( 504 ) 
 #define	TRID_PARASOL_07   ( 505 ) 
 #define	TRID_BADRIDER_03   ( 506 ) 
-#define TRID_MAX  ( 507 )
+#define	TRID_SUPPORT_13   ( 507 ) 
+#define	TRID_SUPPORT_14   ( 508 ) 
+#define	TRID_SUPPORT_15   ( 509 ) 
+#define	TRID_RIVAL_16   ( 510 ) 
+#define	TRID_RIVAL_17   ( 511 ) 
+#define	TRID_RIVAL_18   ( 512 ) 
+#define	TRID_ELITEW_18   ( 513 ) 
+#define	TRID_ELITEM_18   ( 514 ) 
+#define	TRID_TANPAN_15   ( 515 ) 
+#define	TRID_MINI_10   ( 516 ) 
+#define	TRID_MINI_11   ( 517 ) 
+#define	TRID_ELITEW_19   ( 518 ) 
+#define	TRID_ELITEM_19   ( 519 ) 
+#define TRID_MAX  ( 520 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;

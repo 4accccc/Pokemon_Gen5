@@ -2848,8 +2848,8 @@
 	</row>
 
 	<row id="MONSNAME_494">
-		<language name="JPN" width="216">クサヘビ</language>
-		<language name="JPN_KANJI" width="216">クサヘビ</language>
+		<language name="JPN" width="216">ツタージャ</language>
+		<language name="JPN_KANJI" width="216">ツタージャ</language>
 	</row>
 
 	<row id="MONSNAME_495">
@@ -2878,8 +2878,8 @@
 	</row>
 
 	<row id="MONSNAME_500">
-		<language name="JPN" width="216">スイッコ</language>
-		<language name="JPN_KANJI" width="216">スイッコ</language>
+		<language name="JPN" width="216">ミジュマル</language>
+		<language name="JPN_KANJI" width="216">ミジュマル</language>
 	</row>
 
 	<row id="MONSNAME_501">
@@ -3028,8 +3028,8 @@
 	</row>
 
 	<row id="MONSNAME_530">
-		<language name="JPN" width="216">シンピッピ</language>
-		<language name="JPN_KANJI" width="216">シンピッピ</language>
+		<language name="JPN" width="216">タブンネ</language>
+		<language name="JPN_KANJI" width="216">タブンネ</language>
 	</row>
 
 	<row id="MONSNAME_531">
@@ -3088,18 +3088,18 @@
 	</row>
 
 	<row id="MONSNAME_542">
-		<language name="JPN" width="216">ムカッテ</language>
-		<language name="JPN_KANJI" width="216">ムカッテ</language>
+		<language name="JPN" width="216">フシデ</language>
+		<language name="JPN_KANJI" width="216">フシデ</language>
 	</row>
 
 	<row id="MONSNAME_543">
-		<language name="JPN" width="216">ムカンデ</language>
-		<language name="JPN_KANJI" width="216">ムカンデ</language>
+		<language name="JPN" width="216">ホイーガ</language>
+		<language name="JPN_KANJI" width="216">ホイーガ</language>
 	</row>
 
 	<row id="MONSNAME_544">
-		<language name="JPN" width="216">ムカデンテ</language>
-		<language name="JPN_KANJI" width="216">ムカデンテ</language>
+		<language name="JPN" width="216">ペンドラー</language>
+		<language name="JPN_KANJI" width="216">ペンドラー</language>
 	</row>
 
 	<row id="MONSNAME_545">
@@ -3158,13 +3158,13 @@
 	</row>
 
 	<row id="MONSNAME_556">
-		<language name="JPN" width="216">ヤドリ</language>
-		<language name="JPN_KANJI" width="216">ヤドリ</language>
+		<language name="JPN" width="216">イシズマイ</language>
+		<language name="JPN_KANJI" width="216">イシズマイ</language>
 	</row>
 
 	<row id="MONSNAME_557">
-		<language name="JPN" width="216">ヤドカルゴ</language>
-		<language name="JPN_KANJI" width="216">ヤドカルゴ</language>
+		<language name="JPN" width="216">イワパレス</language>
+		<language name="JPN_KANJI" width="216">イワパレス</language>
 	</row>
 
 	<row id="MONSNAME_558">
@@ -3178,8 +3178,8 @@
 	</row>
 
 	<row id="MONSNAME_560">
-		<language name="JPN" width="216">ナスカドリ</language>
-		<language name="JPN_KANJI" width="216">ナスカドリ</language>
+		<language name="JPN" width="216">シンボラー</language>
+		<language name="JPN_KANJI" width="216">シンボラー</language>
 	</row>
 
 	<row id="MONSNAME_561">
@@ -3198,8 +3198,8 @@
 	</row>
 
 	<row id="MONSNAME_564">
-		<language name="JPN" width="216">カセキング</language>
-		<language name="JPN_KANJI" width="216">カセキング</language>
+		<language name="JPN" width="216">アバゴウラ</language>
+		<language name="JPN_KANJI" width="216">アバゴウラ</language>
 	</row>
 
 	<row id="MONSNAME_565">
@@ -3308,8 +3308,8 @@
 	</row>
 
 	<row id="MONSNAME_586">
-		<language name="JPN" width="216">トビッチュ</language>
-		<language name="JPN_KANJI" width="216">トビッチュ</language>
+		<language name="JPN" width="216">エモンガ</language>
+		<language name="JPN_KANJI" width="216">エモンガ</language>
 	</row>
 
 	<row id="MONSNAME_587">
@@ -3418,23 +3418,23 @@
 	</row>
 
 	<row id="MONSNAME_608">
-		<language name="JPN" width="216">シャンドル</language>
-		<language name="JPN_KANJI" width="216">シャンドル</language>
+		<language name="JPN" width="216">シャンデラ</language>
+		<language name="JPN_KANJI" width="216">シャンデラ</language>
 	</row>
 
 	<row id="MONSNAME_609">
-		<language name="JPN" width="216">ハッチェ</language>
-		<language name="JPN_KANJI" width="216">ハッチェ</language>
+		<language name="JPN" width="216">キバゴ</language>
+		<language name="JPN_KANJI" width="216">キバゴ</language>
 	</row>
 
 	<row id="MONSNAME_610">
-		<language name="JPN" width="216">オノドン</language>
-		<language name="JPN_KANJI" width="216">オノドン</language>
+		<language name="JPN" width="216">オノンド</language>
+		<language name="JPN_KANJI" width="216">オノンド</language>
 	</row>
 
 	<row id="MONSNAME_611">
-		<language name="JPN" width="216">オノックス</language>
-		<language name="JPN_KANJI" width="216">オノックス</language>
+		<language name="JPN" width="216">オノノクス</language>
+		<language name="JPN_KANJI" width="216">オノノクス</language>
 	</row>
 
 	<row id="MONSNAME_612">
@@ -3463,8 +3463,8 @@
 	</row>
 
 	<row id="MONSNAME_617">
-		<language name="JPN" width="216">オニソコ</language>
-		<language name="JPN_KANJI" width="216">オニソコ</language>
+		<language name="JPN" width="216">マッギョ</language>
+		<language name="JPN_KANJI" width="216">マッギョ</language>
 	</row>
 
 	<row id="MONSNAME_618">
@@ -3513,8 +3513,8 @@
 	</row>
 
 	<row id="MONSNAME_627">
-		<language name="JPN" width="216">イーグラン</language>
-		<language name="JPN_KANJI" width="216">イーグラン</language>
+		<language name="JPN" width="216">ウォーグル</language>
+		<language name="JPN_KANJI" width="216">ウォーグル</language>
 	</row>
 
 	<row id="MONSNAME_628">
