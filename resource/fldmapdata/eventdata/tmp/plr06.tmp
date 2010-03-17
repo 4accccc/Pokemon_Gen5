@@ -1,5 +1,5 @@
 #../data/plr06.mev
-../tmp/plr06.bin:../data/plr06.mev $(UNIQ_SCRIPTHEADER) ../tmp/plr06.h 
+../tmp/plr06.bin:../data/plr06.mev $(UNIQ_SCRIPTHEADER) ../tmp/plr06.h ../../../../prog/include/field/eventdata_type.h ../../script/PLR06_def.h 
 	@echo ../data/plr06.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plr06.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plr06.h ../../../../prog/include/field/eventdata_type.h ../../script/PLR06_def.h 
 

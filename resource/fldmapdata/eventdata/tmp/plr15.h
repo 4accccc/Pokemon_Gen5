@@ -16,5 +16,7 @@
 #ifndef ZONE_PLR15_EVB_H
 #define ZONE_PLR15_EVB_H
 
+#define PLR15_HIDE_ITEM_01                0
+#define PLR15_HIDE_ITEM_02                1
 
 #endif //ZONE_PLR15_EVB_H

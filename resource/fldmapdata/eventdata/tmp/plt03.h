@@ -18,5 +18,7 @@
 #ifndef ZONE_PLT03_EVB_H
 #define ZONE_PLT03_EVB_H
 
+#define PLT03_HIDE_ITEM_01                0
+#define PLT03_HIDE_ITEM_02                1
 
 #endif //ZONE_PLT03_EVB_H

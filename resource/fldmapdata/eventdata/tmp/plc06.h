@@ -19,5 +19,7 @@
 #ifndef ZONE_PLC06_EVB_H
 #define ZONE_PLC06_EVB_H
 
+#define PLC06_HIDE_ITEM_01                0
+#define PLC06_HIDE_ITEM_02                1
 
 #endif //ZONE_PLC06_EVB_H
