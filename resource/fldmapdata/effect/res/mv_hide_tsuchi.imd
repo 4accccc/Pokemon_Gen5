@@ -3,97 +3,321 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-02-22T14:00:31" source="untitled"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-03-17T12:50:29" source="mv_hide_kusa_bil.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-02-22T14:00:31" source="untitled"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-03-17T12:50:29" source="mv_hide_kusa_bil.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
-	pos_scale="2"
+	pos_scale="3"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="1 1"
-	compress_material="on" material_size="1 1"
+	compress_node="merge" node_size="3 3"
+	compress_material="on" material_size="2 2"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="2" xyz="-2.000000 0.000000 0.000000" whd="4.000000 4.000000 0.000000"/>
+<box_test pos_scale="3" xyz="-2.000000 -0.500000 0.000000" whd="4.000000 4.500000 0.500000"/>
 
-<tex_image_array size="5">
-	<tex_image index="0" name="mv_tsuchi.1"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
+<tex_image_array size="7">
+	<tex_image index="0" name="mv_tsuchi1.1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
 		color0_mode="transparency"
-		palette_name="mv_tsuchi"
-		path="C:/home/wb_data3d/field/mv_tsuchi.1.tga"
+		palette_name="mv_tsuchi1.1_pl"
+		path="C:/home/wb_data3d/field/fldobj/mv_tsuchi1.1.tga"
 	>
-		<bitmap size="32">
+		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 f000 000f d500 00ef
-			75c0 03ab fff0 0eae bbec 3aab aaac 3aaa
-			aab0 0eaa abc0 03ea fc00 003f 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="1" name="mv_tsuchi.2"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
-		color0_mode="transparency"
-		palette_name="mv_tsuchi"
-		path="C:/home/wb_data3d/field/mv_tsuchi.2.tga"
-	>
-		<bitmap size="32">
-			0000 0000 0000 0000 5500 0150 ff40 0595
-			7fc0 1ed5 7fd0 3b55 7d70 3b55 fd70 3bd5
-			efe0 3bff aab0 0eff ba40 02aa fc00 006a
-			c000 000f 0000 0001 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="2" name="mv_tsuchi.3"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
-		color0_mode="transparency"
-		palette_name="mv_tsuchi"
-		path="C:/home/wb_data3d/field/mv_tsuchi.3.tga"
-	>
-		<bitmap size="32">
-			0000 0000 0fd0 0000 1574 0550 555c 1554
-			675c 3d54 e958 3fd4 6aa8 3ae4 1aac 3aac
-			07f0 01c0 4000 0015 5000 005b d000 007a
-			d000 007f 0000 003d 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="3" name="mv_tsuchi.4"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
-		color0_mode="transparency"
-		palette_name="mv_tsuchi"
-		path="C:/home/wb_data3d/field/mv_tsuchi.4.tga"
-	>
-		<bitmap size="32">
-			00f4 0000 0155 0000 05d7 1500 06bf 5540
-			03ab ed40 00f4 ea40 0000 1f00 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0050 0000 00f4 0000 0074 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="mv_tsuchi.5"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
+	<tex_image index="1" name="mv_tsuchi1.2"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
 		color0_mode="transparency"
-		palette_name="mv_tsuchi"
-		path="C:/home/wb_data3d/field/mv_tsuchi.5.tga"
+		palette_name="mv_tsuchi1.2_pl"
+		path="C:/home/wb_data3d/field/fldobj/mv_tsuchi1.2.tga"
 	>
-		<bitmap size="32">
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 4000 0444 0000 0000 0000 0000 0000
+			0000 5400 4455 0000 0000 0000 0000 0000
+			0000 5400 4445 0000 4440 0444 0000 0000
+			0000 5400 4454 4000 5555 4555 0004 0000
+			0000 4400 4444 5400 5555 5555 0045 0000
+			0000 4000 0444 5540 5555 5554 0444 0000
+			0000 0000 0000 5540 5554 4555 6445 0000
+			0000 4000 4444 5544 5555 5455 6444 0000
+			0000 5440 5555 5545 5455 4555 6445 0000
+			0000 5554 5455 5455 5555 5455 6444 0000
+			0000 5554 5555 5555 5555 4545 6644 0000
+			4000 5555 5555 5555 5545 4454 4444 0006
+			4000 5555 5554 5555 4555 4444 5554 0064
+			4000 5454 5545 5545 4454 4444 5554 0065
+			6000 4544 5444 4555 4545 4444 5553 0065
+			6000 4443 4444 5554 4454 3444 5433 0065
+			6000 4433 3444 4444 4444 3344 4333 0006
+			0000 4336 3444 4443 4444 3333 6666 0000
+			0000 3360 3633 3333 3333 6333 0000 0000
+			0000 6600 6666 3333 3333 0633 0000 0000
+			0000 0000 0000 3336 3333 0066 0000 0000
+			0000 0000 0000 6660 6666 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="mv_tsuchi1.3"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mv_tsuchi1.3_pl"
+		path="C:/home/wb_data3d/field/fldobj/mv_tsuchi1.3.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 4000 0044 0000 0000
+			0000 0000 0000 0000 5440 4455 0004 0000
+			0000 0000 0000 4000 5544 5555 0045 0000
+			0000 0000 0000 4600 5554 5555 0445 0000
+			0000 0000 0000 3600 5454 5555 6345 0000
+			0000 4400 0044 3600 4544 4545 6345 0000
+			0000 5544 0455 3600 5443 5454 6344 0000
+			4000 5554 4555 3600 4433 4444 0634 0000
+			4600 5554 5555 6004 3333 4443 0633 0000
+			4360 5545 5555 0004 3666 3333 0633 0000
+			4360 5554 5555 0045 6000 3336 0063 0000
+			4360 5545 5555 0045 0000 6660 0006 0000
+			3360 5454 5455 0644 0000 0000 0000 0000
+			3360 4544 4545 0645 0000 0000 0000 0000
+			3360 5443 5454 0644 0000 0000 4440 0044
+			3600 4433 4444 0064 0000 0000 5554 0455
+			6000 3336 6333 0006 0000 4000 5555 6454
+			0000 6660 0666 0000 0000 4000 4545 6345
+			0000 0000 0000 0000 0000 4000 5454 6344
+			0000 0000 0000 0000 0000 6000 4443 6334
+			0000 0000 0000 0000 0000 6000 3333 0633
+			0000 0000 0000 0000 0000 0000 6666 0066
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="mv_tsuchi1.4"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mv_tsuchi1.4_pl"
+		path="C:/home/wb_data3d/field/fldobj/mv_tsuchi1.4.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 4440 0000
+			0000 0000 0000 0000 0000 0000 5554 0004
+			0000 0000 0000 0000 0000 4000 5554 0064
+			4400 0044 0000 0000 0000 4000 4554 0064
+			5540 0455 0000 0000 0000 4000 4444 0064
+			5546 4555 0000 0000 0000 4000 4444 0064
+			5446 4555 0000 0000 0000 6000 4444 0006
+			4546 4545 0000 0000 0000 0000 6666 0000
+			5446 6454 0000 0000 0000 0000 0000 0000
+			4446 6444 0000 0000 0000 0000 0000 0000
+			4660 0664 0000 0000 0000 0000 0000 0444
+			6000 0006 0000 0000 0000 0000 4000 6555
+			0000 0000 0000 0000 0000 0000 4000 6445
+			0000 0000 0000 0000 0000 0000 4000 6444
+			0000 0000 0000 0000 0000 0000 0000 0666
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="mv_tsuchi1.5"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mv_tsuchi1.5_pl"
+		path="C:/home/wb_data3d/field/fldobj/mv_tsuchi1.5.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="5" name="mv_tsuchi2.1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mv_tsuchi2.1_pl"
+		path="C:/home/wb_data3d/field/fldobj/mv_tsuchi2.1.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 6600 0066 0000 0000 0000
+			0000 0000 0000 5566 6622 0000 0000 0000
+			0000 0000 3000 5442 6225 0003 0000 0000
+			0000 0000 2300 4444 6255 0036 0000 0000
+			0000 0000 5630 4444 6255 0336 0000 0000
+			0000 0000 5233 5445 6255 3363 0000 0000
+			0000 3000 2263 5555 6225 3336 0003 0000
+			0000 3000 2633 2222 6622 3363 0003 0000
+			0000 3000 6363 2222 3662 3336 0003 0000
+			0000 0000 3633 6636 3363 3333 0000 0000
+			0000 0000 3330 3333 3333 0333 0000 0000
+			0000 0000 3000 3333 3333 0003 0000 0000
+			0000 0000 0000 3330 0333 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="6" name="mv_tsuchi2.2"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mv_tsuchi2.2_pl"
+		path="C:/home/wb_data3d/field/fldobj/mv_tsuchi2.2.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -102,14 +326,32 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="1">
-	<tex_palette index="0" name="mv_tsuchi" color_size="4">
-		7fff 4ab8 3613 3e76
+<tex_palette_array size="7">
+	<tex_palette index="0" name="mv_tsuchi1.1_pl" color_size="8">
+		6739 150a 1d6e 25b2 25d4 29f5 2170 7fff
+	</tex_palette>
+	<tex_palette index="1" name="mv_tsuchi1.2_pl" color_size="8">
+		6739 150a 1d6e 25b2 25d4 29f5 2170 7fff
+	</tex_palette>
+	<tex_palette index="2" name="mv_tsuchi1.3_pl" color_size="8">
+		6739 150a 1d6e 25b2 25d4 29f5 2170 7fff
+	</tex_palette>
+	<tex_palette index="3" name="mv_tsuchi1.4_pl" color_size="8">
+		6739 150a 1d6e 25b2 25d4 29f5 2170 7fff
+	</tex_palette>
+	<tex_palette index="4" name="mv_tsuchi1.5_pl" color_size="8">
+		6739 150a 1d6e 25b2 25d4 29f5 2170 7fff
+	</tex_palette>
+	<tex_palette index="5" name="mv_tsuchi2.1_pl" color_size="8">
+		7fff 0ca7 14ee 0caa 1d52 1910 14ed 7fff
+	</tex_palette>
+	<tex_palette index="6" name="mv_tsuchi2.2_pl" color_size="8">
+		7fff 0ca7 14ee 0caa 1d52 1910 14ed 7fff
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="1">
-	<material index="0" name="mv_tsuchi_1"
+<material_array size="2">
+	<material index="0" name="mv_kusa"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -126,7 +368,31 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
+		tex_image_idx="5" tex_palette_idx="5"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="1" name="mv_tsuchi_1"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="1" tex_palette_idx="1"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -135,17 +401,18 @@
 	/>
 </material_array>
 
-<matrix_array size="1">
-	<matrix index="0" mtx_weight="1" node_idx="0"/>
+<matrix_array size="2">
+	<matrix index="0" mtx_weight="1" node_idx="1"/>
+	<matrix index="1" mtx_weight="1" node_idx="2"/>
 </matrix_array>
 
-<polygon_array size="1">
+<polygon_array size="2">
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-2.000000 0.000000 0.000000"
-		volume_max="2.000000 4.000000 0.000000"
-		volume_r="4.472168"
+		volume_min="-2.000000 -0.500000 0.000000"
+		volume_max="2.000000 3.500000 0.000000"
+		volume_r="4.031250"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -154,12 +421,39 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_s xyz="-2.000000 0.000000 0.000000"/>
-					<tex st="16.000000 16.000000"/>
+					<pos_s xyz="-2.000000 -0.500000 0.000000"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_xy xy="2.000000 -0.500000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xy xy="2.000000 3.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-2.000000 3.500000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="1" name="polygon1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.000000 0.500000"
+		volume_max="2.000000 4.000000 0.500000"
+		volume_r="4.500000"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">1</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-2.000000 0.000000 0.500000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="2.000000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xy xy="2.000000 4.000000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-2.000000 4.000000"/>
@@ -169,11 +463,25 @@
 	</polygon>
 </polygon_array>
 
-<node_array size="1">
-	<node index="0" name="pPlane1" kind="mesh"
+<node_array size="3">
+	<node index="0" name="world_root" kind="null"
 		parent="-1"
-		child="-1"
+		child="1"
 		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="off"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="1" name="pPlane1" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="2"
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="on"
@@ -184,16 +492,36 @@
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-2.000000 0.000000 0.000000"
-		volume_max="2.000000 4.000000 0.000000"
-		volume_r="4.472168"
+		volume_min="-2.000000 -0.500000 0.000000"
+		volume_max="2.000000 3.500000 0.000000"
+		volume_r="4.031250"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
+	<node index="2" name="pPlane2" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="-1"
+		brother_prev="1"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.000000 0.500000"
+		volume_max="2.000000 4.000000 0.500000"
+		volume_r="4.500000"
+	>
+		<display index="0" material="1" polygon="1" priority="0"/>
+	</node>
 </node_array>
 
-<output_info vertex_size="4" polygon_size="1"
-	triangle_size="0" quad_size="1"/>
+<output_info vertex_size="8" polygon_size="2"
+	triangle_size="0" quad_size="2"/>
 
 </body>
 
