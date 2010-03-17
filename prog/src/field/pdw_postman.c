@@ -514,28 +514,31 @@ GMEVENT * DEBUG_EVENT_PDW_PostmanWindow( GAMESYS_WORK * gsys )
 //======================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static DREAMWORLD_ITEM_DATA * getRestItems( HEAPID heapID, DREAMWORLD_SAVEDATA * dws, u32 * size )
+static DREAMWORLD_ITEM_DATA * getRestItems(
+    GAMEDATA * gamedata, HEAPID heapID, DREAMWORLD_SAVEDATA * dws, u32 * size )
 {
   int i, num;
   DREAMWORLD_ITEM_DATA * did;
-  *size = DREAMWORLD_SV_GetItemRestNum( dws );
-  if ( *size == 0 )
-  {
-    GF_ASSERT( 0 );
-    return NULL;
-  }
+  MYITEM_PTR myitem = GAMEDATA_GetMyItem( gamedata );
 
-  did = GFL_HEAP_AllocClearMemory( heapID, sizeof(DREAMWORLD_ITEM_DATA) * (*size) );
+  did = GFL_HEAP_AllocClearMemory(
+      heapID, sizeof(DREAMWORLD_ITEM_DATA) * DREAM_WORLD_DATA_MAX_ITEMBOX );
 
-  for ( i = 0, num = 0; i < DREAM_WORLD_DATA_MAX_ITEMBOX && num < *size; i++ )
+  for ( i = 0, num = 0; i < DREAM_WORLD_DATA_MAX_ITEMBOX; i++ )
   {
-    if ( DREAMWORLD_SV_GetItem( dws, i ) != 0 )
+    u16 item_id = DREAMWORLD_SV_GetItem( dws, i );
+    u16 item_num = DREAMWORLD_SV_GetItemNum( dws, i );
+    if ( item_id != 0 )
     {
-      did[num].itemindex = DREAMWORLD_SV_GetItem( dws, i );
-      did[num].itemnum = DREAMWORLD_SV_GetItemNum( dws, i );
-      num ++;
+      if ( MYITEM_AddCheck( myitem, item_id, item_num, heapID ) == TRUE )
+      {
+        did[num].itemindex = item_id;
+        did[num].itemnum = item_num;
+        num ++;
+      }
     }
   }
+  *size = num;
   return did;
 }
 
@@ -635,7 +638,7 @@ GMEVENT * PDW_POSTMAN_CreateInfoEvent( GAMESYS_WORK * gsys )
   iwew->fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   iwew->itemPos = 0;
   iwew->itemData = getRestItems(
-      FIELDMAP_GetHeapID( iwew->fieldmap ), dws, &(iwew->itemCount) );
+      gamedata, FIELDMAP_GetHeapID( iwew->fieldmap ), dws, &(iwew->itemCount) );
   TAMADA_Printf("PDW_POSTMAN: GET ITEM =%d\n", iwew->itemCount );
   return event;
 }

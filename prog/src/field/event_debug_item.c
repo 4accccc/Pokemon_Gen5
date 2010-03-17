@@ -546,6 +546,13 @@ static void _addPDWItem( GAMEDATA * gamedata, u16 item_id, u16 item_num )
   dws = DREAMWORLD_SV_GetDreamWorldSaveData( GAMEDATA_GetSaveControlWork( gamedata ) );
   for ( i = 0; i < DREAM_WORLD_DATA_MAX_ITEMBOX; i++ )
   {
+    if ( DREAMWORLD_SV_GetItem( dws, i ) == item_id )
+    {
+      return;
+    }
+  }
+  for ( i = 0; i < DREAM_WORLD_DATA_MAX_ITEMBOX; i++ )
+  {
     if ( DREAMWORLD_SV_GetItem( dws, i ) == 0 )
     {
       DREAMWORLD_SV_SetItem( dws, i, item_id, item_num );

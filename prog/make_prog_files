@@ -605,6 +605,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_elevator.c \
         field/scrcmd_dreamworld.c \
         field/scrcmd_postman.c \
+        field/pdw_postman.c \
         field/field_mystery_gift.c \
         field/field_rail.c \
         field/field_rail_func.c \
