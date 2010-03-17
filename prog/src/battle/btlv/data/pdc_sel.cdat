@@ -1,0 +1,40 @@
+//============================================================================================
+/**
+ * @file	pdc_sel.cdat
+ * @brief	ポケモンドリームキャッチタッチパネル＆キー操作データテーブル
+ * @author	soga
+ * @date	2009.11.09
+ */
+//============================================================================================
+
+///タッチパネル領域設定
+static const GFL_UI_TP_HITTBL PDCTouchDataHitTbl[] = {
+  //UP      DOWN    LEFT    RIGHT
+  { 0x12*8, 0x18*8, 0x00*8, 0x0a*8},  //バッグ
+  { 0x13*8, 0x18*8, 0x0b*8, 0x15*8},  //にげる
+  { GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+
+static const BOOL PDCTouchDataCancel[] = {
+  FALSE,  //バッグ
+  FALSE,  //にげる
+};
+
+static const int PDCTouchDataPltt[] = {
+   1 << 2,        //バッグ
+   1 << 4,        //にげる
+};
+
+static const BTLV_INPUT_HITTBL PDCTouchData = {
+  PDCTouchDataHitTbl,
+  PDCTouchDataCancel,
+  PDCTouchDataPltt,
+};
+
+static const BTLV_INPUT_KEYTBL  PDCKeyData[] = { 
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L                   R   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  1,  0,  BTLV_INPUT_NOMOVE },//バッグ
+  //  LU  RU  LD  RD  LD2 RD2   U                   D                   L   R                   A   B
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE },//にげる
+};
+
