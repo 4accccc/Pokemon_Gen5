@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-19T15:01:49"/>
+	<create user="tamada" host="W00139" date="2010-03-17T18:56:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -345,7 +345,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1446" top="265" right="2151" bottom="885" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -353,7 +353,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -374,21 +374,7 @@
 	</lock>
 
 
-	<row id="msg_postman_01">
-		<comment>配達員に話しかけたときのメッセージ（朝）
-０：主人公の名前</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">おはよう　ございます
-[1:00:トレーナー名:0]さん　ですね▼
-プレゼントを　おあずかり　しています
-こちらを　どうぞ！▼</language>
-		<language name="JPN_KANJI" width="256">おはよう　ございます
-[1:00:トレーナー名:0]さん　ですね▼
-プレゼントを　お預かりしています
-こちらを　どうぞ！▼</language>
-	</row>
-
-	<row id="msg_postman_02">
+	<row id="msg_pdw_postman_01">
 		<comment>配達員に話しかけたときのメッセージ（昼）
 ０：主人公の名前</comment>
 		<attribute name="キャラ指定">？？？</attribute>
@@ -402,21 +388,7 @@
 こちらを　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_postman_03">
-		<comment>配達員に話しかけたときのメッセージ（夜）
-０：主人公の名前</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">こんばんは
-[1:00:トレーナー名:0]さん　ですね▼
-プレゼントを　おあずかり　しています
-こちらを　どうぞ！▼</language>
-		<language name="JPN_KANJI" width="256">こんばんは
-[1:00:トレーナー名:0]さん　ですね▼
-プレゼントを　お預かりしています
-こちらを　どうぞ！▼</language>
-	</row>
-
-	<row id="msg_postman_04">
+	<row id="msg_pdw_postman_02">
 		<comment>配達員に話しかけたとき、配達員スロットが
 すでに空っぽだったときのメッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
@@ -430,7 +402,7 @@
 お待ちしております</language>
 	</row>
 
-	<row id="msg_postman_05">
+	<row id="msg_pdw_postman_03">
 		<comment>受け取ったあとの挨拶メッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">またの　ごりようを
@@ -439,37 +411,18 @@
 お待ちしております</language>
 	</row>
 
-	<row id="msg_postman_06">
-		<comment>ポケモンや卵を受け取ったとき</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-[1:01:ポケモン種族名:1]を　うけとった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-[1:01:ポケモン種族名:1]を　受け取った！</language>
-	</row>
-
-	<row id="msg_postman_07">
-		<comment>ポケモンやタマゴを受け取ろうとしたときに
-てもちがいっぱいだったときのメッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">てもちポケモンが　いっぱいで
-わたすことが　できません</language>
-		<language name="JPN_KANJI" width="256">手持ちポケモンが　一杯で
-渡すことが　できません</language>
-	</row>
-
-	<row id="msg_postman_08">
+	<row id="msg_pdw_postman_04">
 		<comment>アイテムをうけとったとき
 0＝主人公名
 1＝道具名</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　てにいれた！</language>
+どうぐ　を　うけとった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　手に入れた！</language>
+どうぐを　受け取った！</language>
 	</row>
 
-	<row id="msg_postman_09">
+	<row id="msg_pdw_postman_05">
 		<comment>どうぐを受け取ろうとしたときに
 すでにそのどうぐがいっぱいだったときのメッセージ
 ０：どうぐの名前</comment>
@@ -480,26 +433,10 @@
 渡すことが　できません</language>
 	</row>
 
-	<row id="msg_postman_10">
-		<comment>Gパワーをうけとったとき
-0=主人公名
-1=Gパワーの名前（タグは仮です！！！）</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-[1:10:Gパワー名称:1]を　おぼえた！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-[1:10:Gパワー名称:1]を　覚えた！</language>
-	</row>
-
-	<row id="msg_postman_11" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
-		<comment>Gパワーをうけとれなかったとき
-（ありえないはず）
-</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　すでに
-[1:10:Gパワー名称:1]を　おぼえている！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　すでに
-[1:10:Gパワー名称:1]を　覚えている！</language>
+	<row id="msg_pdw_item_01" back-color=",,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<comment>どうぐリスト表示用</comment>
+		<language name="JPN" width="256"> ×　[2:00:１桁:0]</language>
+		<language name="JPN_KANJI" width="256"> ×　[2:00:１桁:0]</language>
 	</row>
 
 	<flowchart-group-list>

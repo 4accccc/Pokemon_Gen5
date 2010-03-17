@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tomoya_takahashi" host="W00148" date="2010-03-16T11:40:04"/>
+	<create user="tamada" host="W00139" date="2010-03-17T22:59:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -674,6 +674,11 @@
 	<row id="DEBUG_FIELD_STR33">
 		<language name="JPN" width="160">かくされアイテムさくせい</language>
 		<language name="JPN_KANJI" width="160">隠されアイテム作成</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR34">
+		<language name="JPN" width="160">ＰＤＷアイテムさくせい</language>
+		<language name="JPN_KANJI" width="160">ＰＤＷアイテム作成</language>
 	</row>
 
 	<row id="DEBUG_FIELD_ITEM_STR1">
