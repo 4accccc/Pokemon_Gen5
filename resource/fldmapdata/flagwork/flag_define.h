@@ -739,15 +739,15 @@
 #define FV_C03R0101_MEMBER_G               715 /* 0x02cb 調査隊一般隊員G */
 #define FV_D05R0201_SAGE7                  716 /* 0x02cc クリア後七賢人イベント：冷凍コンテナ */
 #define FV_C05R0601_OKOU                   717 /* 0x02cd クリア後：お香売り */
-		/* not used   718(0x02ce) */
-		/* not used   719(0x02cf) */
-		/* not used   720(0x02d0) */
-		/* not used   721(0x02d1) */
-		/* not used   722(0x02d2) */
-		/* not used   723(0x02d3) */
-		/* not used   724(0x02d4) */
-		/* not used   725(0x02d5) */
-		/* not used   726(0x02d6) */
+#define FV_POKE_JUDGE                      718 /* 0x02ce ジャッジ（ポケモンの個体値を調べてくれる人） */
+#define FV_STADIUM_TRAINER_01              719 /* 0x02cf ビッグスタジアム／リトルコートの選手トレーナー１人目 */
+#define FV_STADIUM_TRAINER_02              720 /* 0x02d0 ビッグスタジアム／リトルコートの選手トレーナー２人目 */
+#define FV_STADIUM_TRAINER_03              721 /* 0x02d1 ビッグスタジアム／リトルコートの選手トレーナー３人目 */
+#define FV_STADIUM_FANM_01                 722 /* 0x02d2 ビッグスタジアム／リトルコートのファンクラブトレーナー（男性） */
+#define FV_STADIUM_FANW_01                 723 /* 0x02d3 ビッグスタジアム／リトルコートのファンクラブトレーナー（女性） */
+#define FV_STADIUM_RANDOM_01               724 /* 0x02d4 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
+#define FV_STADIUM_RANDOM_02               725 /* 0x02d5 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
+#define FV_STADIUM_RANDOM_03               726 /* 0x02d6 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
 		/* not used   727(0x02d7) */
 		/* not used   728(0x02d8) */
 		/* not used   729(0x02d9) */
