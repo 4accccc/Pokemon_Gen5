@@ -73,7 +73,17 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_pos_c04p01_boss_01
 	
+	//自転車チェック
+	_PLAYER_FORM_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+	ENDIF
+	
 	_START_EVENT_BGM( SEQ_BGM_E_N )			//イベント曲再生	
+	
+	//Ｎ：主人公に気づく
+	_OBJ_ANIME( C04P01_BOSS_01, anm_n_look_01 )
+	_OBJ_ANIME_WAIT()
 	
 	{
 	DEFINE_LOCAL LWK_POSX
@@ -81,19 +91,24 @@ EVENT_START	ev_pos_c04p01_boss_01
 	
 	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
 	
-	//Ｎ＆主人公：近づく
-	_OBJ_ANIME( C04P01_BOSS_01, anm_n_meet_01 )
+	//Ｎ：近づく
 	//主人公位置で分岐
 	IF $LWK_POSZ == 12 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_meet_01a )
+		_OBJ_ANIME( C04P01_BOSS_01, anm_n_meet_01a )
 	ELSIF $LWK_POSZ == 13 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_meet_01b )
+		_OBJ_ANIME( C04P01_BOSS_01, anm_n_meet_01b )
 	ELSIF $LWK_POSZ == 14 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_meet_01c )
+		_OBJ_ANIME( C04P01_BOSS_01, anm_n_meet_01c )
 	ELSIF $LWK_POSZ == 15 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_meet_01d )
+		_OBJ_ANIME( C04P01_BOSS_01, anm_n_meet_01d )
+		_OBJ_ANIME_WAIT()
+		//主人公：一歩前へ ※フィールドの装飾（旗）が邪魔になるため
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_00 )
 	ELSE
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_meet_01e )
+		_OBJ_ANIME( C04P01_BOSS_01, anm_n_meet_01e )
+		_OBJ_ANIME_WAIT()
+		//主人公：一歩前へ ※フィールドの装飾（旗）が邪魔になるため
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_00 )
 	ENDIF
 	_OBJ_ANIME_WAIT()
 	
@@ -102,71 +117,110 @@ EVENT_START	ev_pos_c04p01_boss_01
 	_MSGWIN_CLOSE()
 	
 	//Ｎ＆主人公：観覧車前へ
-	_OBJ_ANIME( C04P01_BOSS_01, anm_n_move_01 )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01 )
+	IF $LWK_POSZ == 12 THEN
+		_OBJ_ANIME( C04P01_BOSS_01, anm_n_move_01a )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01a )
+	ELSIF $LWK_POSZ == 13 THEN
+		_OBJ_ANIME( C04P01_BOSS_01, anm_n_move_01b )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01b )
+	ELSIF $LWK_POSZ == 14 THEN
+		_OBJ_ANIME( C04P01_BOSS_01, anm_n_move_01c )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01c )
+	ELSIF $LWK_POSZ == 15 THEN
+		_OBJ_ANIME( C04P01_BOSS_01, anm_n_move_01d )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01d )
+	ELSE
+		_OBJ_ANIME( C04P01_BOSS_01, anm_n_move_01e )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01e )
+	ENDIF
 	_OBJ_ANIME_WAIT()
 	
-	//さあ乗りたまえ
+	//Ｎ：キョロキョロ
+	_OBJ_ANIME( C04P01_BOSS_01, anm_n_move_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//…いないね 観覧車に乗って探そう
 	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_02, C04P01_BOSS_01, WIN_NONE )
 	_MSGWIN_CLOSE()
+	
+	//主人公：観覧車へ
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_02 )
+	_OBJ_ANIME_WAIT()
+	
+	
+	//-------------観覧車未実装------------------------
 	
 	//画面暗転【仮】
 	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
+	
+	//暗転中にＮと主人公の位置を変更
+	_OBJ_POS_CHANGE( C04P01_BOSS_01, 53, 1, 15, DIR_RIGHT )
+	_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 54, 1, 15, DIR_LEFT )
+	
 	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 	
-	//さて…
-	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_03, C04P01_BOSS_01, WIN_NONE )
-	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
+	//------------------------------------------------
 	
-	//Ｎ：一歩前へ
-	_OBJ_ANIME( C04P01_BOSS_01, anm_n_move_02 )
+	//したっぱズ表示
+	_FLAG_RESET( FV_C04P01_HAKAI )
+	_OBJ_ADD( C04P01_HAKAIM_01 )
+	_OBJ_ADD( C04P01_HAKAIM_02 )
+	
+	//したっぱズ：登場
+	_OBJ_ANIME( C04P01_HAKAIM_01, anm_hakai_come_01a )
+	_TIME_WAIT( 10 )
+	_OBJ_ANIME( C04P01_HAKAIM_02, anm_hakai_come_01b )
 	_OBJ_ANIME_WAIT()
 	
-	//Ｎバストアップ表示開始---------------------------------------------------
-	_START_FACEUP( FLD_FACEUP_BG_CITY, FLD_FACEUP_CHAR_BOSS )
+	//Ｎさま！
+	_BALLOONWIN_OBJMSG_POS( msg_c04p01_hakaim1_01, C04P01_HAKAIM_01, POS_UL )
+	_MSGWIN_CLOSE()
+	
+	//ごじぶですか！？
+	_BALLOONWIN_OBJMSG_POS( msg_c04p01_hakaim2_01, C04P01_HAKAIM_02, POS_DL )
+	_MSGWIN_CLOSE()
+	
+	//だいじょうぶ…
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_03, C04P01_BOSS_01, POS_UL )
+	_YES_NO_WIN( SCWK_ANSWER )
 	
 	//はい/いいえで分岐
 	IF $SCWK_ANSWER == SCR_YES THEN
-		_PLAINWIN_MSG_DOWN( msg_c04p01_boss_04 )
+		_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_04, C04P01_BOSS_01, POS_UL )
 		_MSGWIN_CLOSE()
 		
+		//「はい」と答えた回数をカウント
+		$WK_OTHER_N_COUNT += 1
+		_DEBUG_PRINT_WK( WK_OTHER_N_COUNT )
+		
 	ELSE
-		_PLAINWIN_MSG_DOWN( msg_c04p01_boss_05 )
+		_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_05, C04P01_BOSS_01, POS_UL )
 		_MSGWIN_CLOSE()
 		
 	ENDIF
-	
-	_END_FACEUP()	//Ｎバストアップ表示終了----------------------------------
 	
 	//Ｎ：戦闘
 	_TRAINER_BTL_SET( TRID_BOSS_03, 0 )
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		//したっぱ消す
+		_OBJ_DEL( C04P01_HAKAIM_01 )
+		_OBJ_DEL( C04P01_HAKAIM_02 )
 		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 	ELSE
+		//したっぱ非表示に
+		_FLAG_SET( FV_C04P01_HAKAI )
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
 	
-	//Ｎ：驚いて後ずさり
-	_OBJ_ANIME( C04P01_BOSS_01, anm_n_move_03 )
-	_OBJ_ANIME_WAIT()
-	
-	_TIME_WAIT( 8 )
-	
-	//Ｎバストアップ表示開始---------------------------------------------------
-	_START_FACEUP( FLD_FACEUP_BG_CITY, FLD_FACEUP_CHAR_BOSS )
-	
 	//いま勝負の最中に
 	_PLAYER_NAME( 0 )
-	_PLAINWIN_MSG_DOWN( msg_c04p01_boss_06 )
+	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_06, C04P01_BOSS_01, POS_UL )
 	_MSGWIN_CLOSE()
-	
-	_END_FACEUP()	//Ｎバストアップ表示終了-----------------------------------
 	
 	//Ｎ：去る
 	_OBJ_ANIME( C04P01_BOSS_01, anm_n_goaway_01 )
@@ -174,9 +228,6 @@ EVENT_START	ev_pos_c04p01_boss_01
 	
 	//Ｎ：削除
 	_OBJ_DEL( C04P01_BOSS_01 )
-	//Ｎ非表示
-	_FLAG_SET( FV_C04P01_BOSS_01 )
-	
 	//BGM戻す
 	_END_EVENT_BGM()
 	
@@ -184,92 +235,168 @@ EVENT_START	ev_pos_c04p01_boss_01
 	//POS無効
 	$WK_SCENE_C04P01 = 1
 	
+	//Ｎ非表示
+	_FLAG_SET( FV_C04P01_BOSS_01 )
+	//したっぱ非表示
+	_FLAG_SET( FV_C04P01_HAKAI )
 	//========================================//
 	
 	}
 EVENT_END
 
 //--------------------------------------------------------------------
-//その場歩き
+//Ｎ：主人公に気づく
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_stay_walk_d
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+_ANIME_LABEL	anm_n_look_01
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//Ｎ＆主人公：近づく
+//主人公：一歩前へ ※旗が邪魔になるためイベント位置をずらす
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_n_meet_01
-	_ANIME_DATA	AC_WALK_L_8F,5
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_player_meet_01a
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,1
+_ANIME_LABEL	anm_player_move_00
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
-_ANIME_LABEL	anm_player_meet_01b
-	_ANIME_DATA	AC_WALK_R_8F,3
-	_ANIME_DATA	ACMD_END,0
-_ANIME_LABEL	anm_player_meet_01c
-	_ANIME_DATA	AC_WALK_R_8F,2
+
+//--------------------------------------------------------------------
+//Ｎ：近づく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_n_meet_01a
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-_ANIME_LABEL	anm_player_meet_01d
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-_ANIME_LABEL	anm_player_meet_01e
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,3
-	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_n_meet_01b
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------------
-//Ｎ＆主人公：観覧車前へ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_n_move_01
-	_ANIME_DATA	AC_WALK_R_8F,20
+_ANIME_LABEL	anm_n_meet_01c
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_n_meet_01d
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,9
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_player_move_01
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_WALK_R_8F,21
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,7
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//Ｎ：一歩前へ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_n_move_02
+_ANIME_LABEL	anm_n_meet_01e
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//Ｎ：驚いて後ずさり
+//Ｎ：観覧車前へ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_n_move_03
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_R_16F,1
-	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+_ANIME_LABEL	anm_n_move_01a
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,17
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,12
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_n_move_01b
+	_ANIME_DATA	AC_WALK_R_8F,20
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,12
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_n_move_01c
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,29
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_n_move_01d
+	_ANIME_DATA	AC_WALK_R_8F,31
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_n_move_01e
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,31
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：観覧車前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_01a
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,17
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01b
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WALK_R_8F,21
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01c
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,27
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01d
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WALK_R_8F,30
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01e
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,29
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：観覧車の中へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_02
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//Ｎ：キョロキョロ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_n_move_02
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//したっぱズ：登場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakai_come_01a
+	_ANIME_DATA	AC_WALK_R_6F,5
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai_come_01b
+	_ANIME_DATA	AC_WALK_R_6F,4
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //Ｎ：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_n_goaway_01
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,4
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	AC_WALK_L_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 

@@ -15,6 +15,8 @@
 #define C04P01_GIRL1_01                    2
 #define C04P01_MIDDLEWOMAN2_01             3
 #define C04P01_BOSS_01                     4
+#define C04P01_HAKAIM_01                   5
+#define C04P01_HAKAIM_02                   6
 
 #endif //ZONE_C04P01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04p01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

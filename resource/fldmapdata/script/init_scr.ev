@@ -253,6 +253,11 @@ INIT_EVENT_END
 //=====================================================================
 INIT_EVENT_START  ev_init_gameclear_script
 {
+  //初回ゲームクリア時の処理を呼び出す
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+    _CALL	ev_first_gameclear  
+  ENDIF
+  
   //ゲームクリアフラグをセット
   _FLAG_SET( SYS_FLAG_GAME_CLEAR )
 
@@ -292,4 +297,13 @@ INIT_EVENT_START  ev_init_gameclear_script
 
 }
 INIT_EVENT_END
+
+
+//初回ゲームクリア時の処理
+ev_first_gameclear:
+  //↓ここにクリア後イベントを起動するためのフラグ/ワーク操作を記述
+
+
+_RET
+
 
