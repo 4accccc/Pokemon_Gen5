@@ -20,8 +20,13 @@
 
 
 #define SPPOKE_GMK_ASSIGN_ID    (1)
-#define SPPOKE_TRIO_UNIT_IDX    (0)   //三銃士イベントユニットインデックス
+#define SPPOKE_UNIT_IDX    (0)                      //特殊ポケイベントユニットインデックス
+#define SPPOKE_TRIO_UNIT_IDX    (SPPOKE_UNIT_IDX)   //三銃士イベントユニットインデックス
+#define SPPOKE_MERO_UNIT_IDX    (SPPOKE_UNIT_IDX)   //メロディアイベントユニットインデックス
 #define BALL_ANM_NUM  (3)
+
+#define BALL_OUT_TIMMING  (5)
+#define BALL_IN_TIMMING (34)
 
 typedef struct SPPOKE_GMK_WK_tag
 {
@@ -34,6 +39,12 @@ typedef struct SPPOKE_GMK_WK_tag
 
   void *Work;
 }SPPOKE_GMK_WK;
+
+//==============================================================================================
+/**
+ @note    ※三銃士とメロディアでボールリソースは共有するので、リソース番号は一致するようにする
+*/
+//==============================================================================================
 
 //リソースの並び順番
 enum {
@@ -55,17 +66,11 @@ enum {
   OBJ_BALL_IN,
 };
 
-static const GFL_G3D_UTIL_RES g3Dutil_resTbl_trio[] = {
-	{ ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールアウト
-  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールイン
-
-  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールアウトアニメ
-  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
-  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
-  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールインアニメ
-  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
-  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
-};
+//==========================================================================
+/**
+ リソース共通部分
+*/
+//==========================================================================
 
 //3Dアニメ　ボールアウト
 static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_ball_out[] = {
@@ -79,6 +84,24 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_ball_in[] = {
   { RES_ID_BALL_IN_ANM1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_BALL_IN_ANM2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_BALL_IN_ANM3,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+//==========================================================================
+/**
+ 三銃士関連リソース
+*/
+//==========================================================================
+
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl_trio[] = {
+	{ ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールアウト
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールイン
+
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールアウトアニメ
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールインアニメ
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
 };
 
 //3Dオブジェクト設定テーブル
@@ -108,10 +131,58 @@ static const GFL_G3D_UTIL_SETUP SetupTrio = {
 	NELEMS(g3Dutil_objTbl_trio),		//オブジェクト数
 };
 
+//==========================================================================
+/**
+ メロディア関連リソース
+*/
+//==========================================================================
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl_mero[] = {
+	{ ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールアウト
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールイン
+
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールアウトアニメ
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールインアニメ
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
+};
+
+//3Dオブジェクト設定テーブル
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl_mero[] = {
+  //出現モンスターボール
+  {
+		RES_ID_BALL_OUT_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_BALL_OUT_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_ball_out,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_ball_out),	//アニメリソース数
+	},
+  //格納モンスターボール
+  {
+		RES_ID_BALL_IN_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_BALL_IN_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_ball_in,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_ball_in),	//アニメリソース数
+	},
+};
+
+static const GFL_G3D_UTIL_SETUP SetupMero = {
+  g3Dutil_resTbl_mero,				//リソーステーブル
+	NELEMS(g3Dutil_resTbl_mero),		//リソース数
+	g3Dutil_objTbl_mero,				//オブジェクト設定テーブル
+	NELEMS(g3Dutil_objTbl_mero),		//オブジェクト数
+};
+
 
 static GMEVENT_RESULT BallMoveEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT WaitPokeAppFrmEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT WaitBallAnmEvt( GMEVENT* event, int* seq, void* work );
+
+//============================================================================================================
+//三銃士関連
+//============================================================================================================
 
 //--------------------------------------------------------------
 /**
@@ -120,7 +191,7 @@ static GMEVENT_RESULT WaitBallAnmEvt( GMEVENT* event, int* seq, void* work );
  * @return      none
  */
 //--------------------------------------------------------------
-void SPPOKE_GMK_Setup(FIELDMAP_WORK *fieldWork)
+void SPPOKE_GMK_SetupTrio(FIELDMAP_WORK *fieldWork)
 {
   int i;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
@@ -163,7 +234,7 @@ void SPPOKE_GMK_Setup(FIELDMAP_WORK *fieldWork)
  * @return    none
  */
 //--------------------------------------------------------------
-void SPPOKE_GMK_End(FIELDMAP_WORK *fieldWork)
+void SPPOKE_GMK_EndTrio(FIELDMAP_WORK *fieldWork)
 {
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
 
@@ -182,12 +253,96 @@ void SPPOKE_GMK_End(FIELDMAP_WORK *fieldWork)
  * @return      none
  */
 //--------------------------------------------------------------
-void SPPOKE_GMK_Move(FIELDMAP_WORK *fieldWork)
+void SPPOKE_GMK_MoveTrio(FIELDMAP_WORK *fieldWork)
 {
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
 }
+
+//============================================================================================================
+//メロディア関連
+//============================================================================================================
+
+//--------------------------------------------------------------
+/**
+ * セットアップ関数
+ * @param	      fieldWork   フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+void SPPOKE_GMK_SetupMerodhia(FIELDMAP_WORK *fieldWork)
+{
+  int i;
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+
+  //汎用ワーク確保
+  GMK_TMP_WK_AllocWork
+      (fieldWork, SPPOKE_GMK_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(SPPOKE_GMK_WK));
+  //メロディアイベント用ワークのアロケーション
+  ;
+  //必要なリソースの用意
+  FLD_EXP_OBJ_AddUnit(ptr, &SetupTrio, SPPOKE_MERO_UNIT_IDX );
+  
+  //ボール初期化
+  //アニメの状態を初期化
+  for (i=0;i<BALL_ANM_NUM;i++)
+  {
+    EXP_OBJ_ANM_CNT_PTR anm;
+    //1回再生設定
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_BALL_OUT, i);
+    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+    //アニメ停止
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+    //無効化
+    FLD_EXP_OBJ_ValidCntAnm(ptr, SPPOKE_MERO_UNIT_IDX, OBJ_BALL_OUT, i, FALSE);
+
+    //1回再生設定
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_BALL_IN, i);
+    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+    //アニメ停止
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+    //無効化
+    FLD_EXP_OBJ_ValidCntAnm(ptr, SPPOKE_MERO_UNIT_IDX, OBJ_BALL_IN, i, FALSE);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 解放関数
+ * @param	    fieldWork   フィールドワークポインタ
+ * @return    none
+ */
+//--------------------------------------------------------------
+void SPPOKE_GMK_EndMerodhia(FIELDMAP_WORK *fieldWork)
+{
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+
+  //メロディアイベント用ワーク解放
+  
+  //汎用ワーク解放
+  GMK_TMP_WK_FreeWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
+  //ＯＢＪ解放
+  FLD_EXP_OBJ_DelUnit( ptr, SPPOKE_MERO_UNIT_IDX );
+}
+
+//--------------------------------------------------------------
+/**
+ * 動作関数
+ * @param	      fieldWork   フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+void SPPOKE_GMK_MoveMerodhia(FIELDMAP_WORK *fieldWork)
+{
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  //アニメーション再生
+  FLD_EXP_OBJ_PlayAnime( ptr );
+}
+
+//============================================================================================================
+//ボール関連　　共通部分
+//============================================================================================================
 
 //--------------------------------------------------------------
 /**
@@ -212,23 +367,23 @@ GMEVENT *SPPOKE_GMK_MoveBall( GAMESYS_WORK *gsys, const BALL_ANM_TYPE inType, co
   //スタート座標に表示状態でボール配置
   {
      GFL_G3D_OBJSTATUS *status;
-     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, SPPOKE_TRIO_UNIT_IDX, obj);
+     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, SPPOKE_UNIT_IDX, obj);
      status->trans = *inStart;
   }
 
   //ボールを表示状態にする
-  FLD_EXP_OBJ_SetVanish(ptr, SPPOKE_TRIO_UNIT_IDX, obj, FALSE);
+  FLD_EXP_OBJ_SetVanish(ptr, SPPOKE_UNIT_IDX, obj, FALSE);
   //アニメの状態を初期化
   for (i=0;i<BALL_ANM_NUM;i++)
   {
     EXP_OBJ_ANM_CNT_PTR anm;
-    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_TRIO_UNIT_IDX, obj, i);
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_UNIT_IDX, obj, i);
     //アニメ停止
     FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
     //無効化
-    FLD_EXP_OBJ_ValidCntAnm(ptr, SPPOKE_TRIO_UNIT_IDX, obj, i, FALSE);
+    FLD_EXP_OBJ_ValidCntAnm(ptr, SPPOKE_UNIT_IDX, obj, i, FALSE);
     //頭だし
-    FLD_EXP_OBJ_SetObjAnmFrm(ptr, SPPOKE_TRIO_UNIT_IDX, obj, i, 0 );
+    FLD_EXP_OBJ_SetObjAnmFrm(ptr, SPPOKE_UNIT_IDX, obj, i, 0 );
   }
 
   //移動に必要なパラメータのセット
@@ -269,23 +424,23 @@ void SPPOKE_GMK_StartBallAnm( GAMESYS_WORK *gsys, const BALL_ANM_TYPE inType, co
   //ボール座標時セット
   {
      GFL_G3D_OBJSTATUS   *status;
-     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, SPPOKE_TRIO_UNIT_IDX, obj);
+     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, SPPOKE_UNIT_IDX, obj);
      status->trans = *inPos;
   }
 
   //ボールを表示状態にする
-  FLD_EXP_OBJ_SetVanish(ptr, SPPOKE_TRIO_UNIT_IDX, obj, FALSE);
+  FLD_EXP_OBJ_SetVanish(ptr, SPPOKE_UNIT_IDX, obj, FALSE);
   //アニメの状態を初期化
   for (i=0;i<BALL_ANM_NUM;i++)
   {
     EXP_OBJ_ANM_CNT_PTR anm;
-    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_TRIO_UNIT_IDX, obj, i);
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_UNIT_IDX, obj, i);
     //アニメ停止解除
     FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
     //無効化解除
-    FLD_EXP_OBJ_ValidCntAnm(ptr, SPPOKE_TRIO_UNIT_IDX, obj, i, TRUE);
+    FLD_EXP_OBJ_ValidCntAnm(ptr, SPPOKE_UNIT_IDX, obj, i, TRUE);
     //頭だし
-    FLD_EXP_OBJ_SetObjAnmFrm(ptr, SPPOKE_TRIO_UNIT_IDX, obj, i, 0 );
+    FLD_EXP_OBJ_SetObjAnmFrm(ptr, SPPOKE_UNIT_IDX, obj, i, 0 );
   }
 }
 
@@ -372,7 +527,7 @@ static GMEVENT_RESULT BallMoveEvt( GMEVENT* event, int* seq, void* work )
 
     {
      GFL_G3D_OBJSTATUS *status;
-     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, SPPOKE_TRIO_UNIT_IDX, obj);
+     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, SPPOKE_UNIT_IDX, obj);
      status->trans = vec;
     }
   }
@@ -382,7 +537,7 @@ static GMEVENT_RESULT BallMoveEvt( GMEVENT* event, int* seq, void* work )
     //戻りの場合はボールを非表示にする
     if ( gmk_wk->AnmType == BALL_ANM_TYPE_IN )
     {
-      FLD_EXP_OBJ_SetVanish(ptr, SPPOKE_TRIO_UNIT_IDX, obj, TRUE);
+      FLD_EXP_OBJ_SetVanish(ptr, SPPOKE_UNIT_IDX, obj, TRUE);
     }
     //イベント終了
     return GMEVENT_RES_FINISH;
@@ -409,18 +564,18 @@ static GMEVENT_RESULT WaitPokeAppFrmEvt( GMEVENT* event, int* seq, void* work )
   int obj;
   if ( gmk_wk->AnmType == BALL_ANM_TYPE_OUT )
   {
-    dst_frm = 5 * FX32_ONE;
+    dst_frm = BALL_OUT_TIMMING * FX32_ONE;
     obj = OBJ_BALL_OUT;
   }
   else
   {
-    dst_frm = 34 * FX32_ONE;
+    dst_frm = BALL_IN_TIMMING * FX32_ONE;
     obj = OBJ_BALL_IN;
   }
 
 
   //ボールアニメの現在フレームを取得
-  frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, SPPOKE_TRIO_UNIT_IDX, obj, 0 );
+  frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, SPPOKE_UNIT_IDX, obj, 0 );
   //ポケモン出していいフレームか？
   if (frm >= dst_frm)
   {
@@ -452,7 +607,7 @@ static GMEVENT_RESULT WaitBallAnmEvt( GMEVENT* event, int* seq, void* work )
   else obj = OBJ_BALL_IN;
 
   //０番目にアニメで終了判定する
-  anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_TRIO_UNIT_IDX, obj, 0);
+  anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_UNIT_IDX, obj, 0);
   if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
   {
     return GMEVENT_RES_FINISH;
@@ -460,3 +615,5 @@ static GMEVENT_RESULT WaitBallAnmEvt( GMEVENT* event, int* seq, void* work )
 
   return GMEVENT_RES_CONTINUE;
 }
+
+

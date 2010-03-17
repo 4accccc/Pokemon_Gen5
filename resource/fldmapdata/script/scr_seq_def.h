@@ -2804,6 +2804,22 @@
 
 //--------------------------------------------------------------
 /**
+ *  _BGM_PLAY_CHECK ＢＧＭなっているかチェック
+ *  @param  music   BGMナンバー
+ *  @param  ret     TRUEなっている
+ */
+//--------------------------------------------------------------
+#define _BGM_PLAY_CHECK(music, ret) _ASM_BGM_PLAY_CHECK music, ret
+
+  .macro  _ASM_BGM_PLAY_CHECK music, ret
+  .short  EV_SEQ_BGM_PLAY_CHECK
+  .short music
+  .short ret
+  .endm
+
+
+//--------------------------------------------------------------
+/**
  *  _BGM_FADEOUT BGMフェードアウト
  *  @param vol    = ボリューム
  *  @param frame  = 何フレームかけてフェードするか
@@ -2862,6 +2878,16 @@
   .short  \no
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  _BGM_WAIT 
+ */
+//--------------------------------------------------------------
+#define _BGM_WAIT() _ASM_BGM_WAIT
+
+  .macro  _ASM_BGM_WAIT
+  .short  EV_SEQ_BGM_WAIT
+  .endm
 
 //--------------------------------------------------------------
 /**
@@ -9468,7 +9494,7 @@
 
 //--------------------------------------------------------------
 /**
- * @brief 手持ちの配布ダルタニスの位置を返す
+ * @brief 手持ちの配布ポケの位置を返す
  *
  * @param monsno    対象モンスターナンバー
  * @param skill_flg 固有技を持っていないことを条件に加える場合はTRUE
@@ -9489,7 +9515,7 @@
 
 //--------------------------------------------------------------
 /**
- * @brief ボール移動
+ * @brief ボール移動（使用場所は特殊ポケイベント限定）
  *
  * @param type      ボールアニメタイプ SCR_BALL_ANM_TYPE_～　script_def.h参照
  * @param tx        目的Ｘ座標
@@ -9514,7 +9540,7 @@
 
 //--------------------------------------------------------------
 /**
- * @brief ボールアニメ開始
+ * @brief ボールアニメ開始（使用場所は特殊ポケイベント限定）
  *
  * @param type      ボールアニメタイプ SCR_BALL_ANM_TYPE_～　script_def.h参照
  * @param tx        Ｘ座標
@@ -9535,7 +9561,7 @@
 
 //--------------------------------------------------------------
 /**
- * @brief ボールアニメ終了待ち
+ * @brief ボールアニメ終了待ち（使用場所は特殊ポケイベント限定）
  *
  * @param type      ボールアニメタイプ SCR_BALL_ANM_TYPE_～　script_def.h参照
  */
@@ -9550,7 +9576,7 @@
 
 //--------------------------------------------------------------
 /**
- * @brief ボールアニメ中、ポケモンを表示、非表示していいタイミングまで待つ
+ * @brief ボールアニメ中、ポケモンを表示、非表示していいタイミングまで待つ（使用場所は特殊ポケイベント限定）
  *
  * @param type      ボールアニメタイプ SCR_BALL_ANM_TYPE_～　script_def.h参照
  */
@@ -9562,3 +9588,37 @@
   .short EV_SEQ_WAIT_BALL_POKE_APP
   .short \type
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 指定ＯＢＪを指定シンクかけて指定値分上昇させる
+ *
+ * @param obj_id      対象ＯＢＪＩＤ
+ * @param height      上昇値  （半グリッド単位）
+ * @param sync        必要シンク数
+ */
+//--------------------------------------------------------------
+#define _EVENT_RISE_OBJ( obj_id, height, sync  ) \
+    _ASM_EVENT_RISE_OBJ obj_id, height, sync
+
+  .macro _ASM_EVENT_RISE_OBJ obj_id, height, sync
+  .short EV_SEQ_EVENT_RISE_OBJ
+  .short \obj_id
+  .short \height
+  .short \sync
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 指定ＯＢＪをイベント回転させる
+ *
+ * @param obj_id      対象ＯＢＪＩＤ
+ */
+//--------------------------------------------------------------
+#define _EVENT_ROTATE_OBJ( obj_id ) \
+    _ASM_EVENT_ROTATE_OBJ obj_id
+
+  .macro _ASM_EVENT_ROTATE_OBJ obj_id
+  .short EV_SEQ_EVENT_ROTATE_OBJ
+  .short \obj_id
+  .endm    

@@ -13,9 +13,13 @@ typedef enum
   BALL_ANM_TYPE_IN
 }BALL_ANM_TYPE;
 
-extern void SPPOKE_GMK_Setup(FIELDMAP_WORK *fieldWork);
-extern void SPPOKE_GMK_End(FIELDMAP_WORK *fieldWork);
-extern void SPPOKE_GMK_Move(FIELDMAP_WORK *fieldWork);
+extern void SPPOKE_GMK_SetupTrio(FIELDMAP_WORK *fieldWork);
+extern void SPPOKE_GMK_EndTrio(FIELDMAP_WORK *fieldWork);
+extern void SPPOKE_GMK_MoveTrio(FIELDMAP_WORK *fieldWork);
+
+extern void SPPOKE_GMK_SetupMerodhia(FIELDMAP_WORK *fieldWork);
+extern void SPPOKE_GMK_EndMerodhia(FIELDMAP_WORK *fieldWork);
+extern void SPPOKE_GMK_MoveMerodhia(FIELDMAP_WORK *fieldWork);
 
 extern GMEVENT *SPPOKE_GMK_MoveBall(
     GAMESYS_WORK *gsys, const BALL_ANM_TYPE inType,

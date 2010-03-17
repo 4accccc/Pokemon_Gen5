@@ -285,7 +285,7 @@
   DEF_CMD( EvCmdBgmNowMapPlay, EV_SEQ_BGM_NOW_MAP_RECOVER )
   DEF_CMD( EvCmdPlayTempEventBGM, EV_SEQ_START_TEMP_EVENT_BGM )
 
-  NO_CMD()
+  DEF_CMD( EvCmdBgmWait, EV_SEQ_BGM_WAIT )
   NO_CMD()
   NO_CMD()
   NO_CMD()
@@ -957,8 +957,8 @@
   DEF_CMD( EvCmdWaitBallAnm, EV_SEQ_WAIT_BALL_ANM )
 
   DEF_CMD( EvCmdWaitBallPokeApp, EV_SEQ_WAIT_BALL_POKE_APP )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdRiseObj, EV_SEQ_EVENT_RISE_OBJ )
+  DEF_CMD( EvCmdEventRotateObj, EV_SEQ_EVENT_ROTATE_OBJ )
   NO_CMD()
 
   NO_CMD()

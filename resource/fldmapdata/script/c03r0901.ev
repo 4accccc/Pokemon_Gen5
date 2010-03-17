@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_c03r0901.h"
   .include  "c03r0901.h"
+  .include  "skill_teach_scr_def.h"     //for SCRID_SKILL_LEARN
+
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -23,6 +25,14 @@ _EVENT_DATA		ev_c03r0901_musician_01
 _EVENT_DATA		ev_c03r0901_waiter_01
 _EVENT_DATA_END
 
+//------------------------------注意--------------------------------//
+//
+//  LOCALWORK14：技を覚えさせる手持ちポケモンの位置
+//	LOCALWORK15：覚えさせる技ナンバー
+//
+//------------------------------------------------------------------//
+
+DEFINE_LOCAL target_poke_pos
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
@@ -34,9 +44,221 @@ _EVENT_DATA_END
 /* 			MUSICIAN	C03R0901							  */
 /**************************************************************/
 EVENT_START		ev_c03r0901_musician_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_musician_01 )
+    _TALK_OBJ_START()
+
+    //条件を満たすメロディアがいるか?
+    _GET_EVT_POKE_POS( MONSNO_655, TRUE, target_poke_pos, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_musician_02 )
+      _BALLOONWIN_CLOSE()
+
+      //自機を定位置に移動
+      _CALL player_move
+
+      //カメラ移動
+      _CAMERA_START()
+      _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	    _CAMERA_MOVE(9688,0,970752,360448,0,425984,30)
+      _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+      //BGMの再生
+      _START_EVENT_BGM( SEQ_BGM_E_INISHIE )
+      //ギターアニメ開始
+      _OBJ_ANIME( SCWK_TARGET_OBJID, anm_guitar_move )
+      
+      //ウェイト
+      _TIME_WAIT( MERODHIA_BALL_OUT_WAIT )
+      //ボール投げるアニメ
+      _CALL ball_out
+
+      //ウェイト
+      _TIME_WAIT( MERODHIA_DANCE_WAIT )
+/**      
+      //ダンス開始
+      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia )
+*/  //@todo
+      //ウェイト
+      _TIME_WAIT( MERODHIA_RISE_WAIT ) 
+      //上昇
+      _EVENT_RISE_OBJ( MMDL_ID_EVENTOBJ_00, 8, 120 )
+
+      //ウェイト
+      _TIME_WAIT( MERODHIA_ROTATE_WAIT )
+      //回転
+      _EVENT_ROTATE_OBJ( MMDL_ID_EVENTOBJ_00 )
+
+      //メロディアアニメ待ち
+      _OBJ_ANIME_WAIT()
+
+      _BGM_WAIT()
+      
+      _END_EVENT_BGM()
+
+      //エフェクト再生
+
+      //対象メロディアのニックネームをタグ０番にセット
+      _TEMOTI_NICK_NAME( 0, target_poke_pos )
+      //「○○は古の歌をおもいだした」
+      _SYSWIN_MSG( msg_c03r0901_narrator_01, POS_DOWN )
+      _SYSWIN_CLOSE()
+
+
+      //メロディア着地
+
+      //カメラもどし
+      _CAMERA_DEF_MOVE( 30 )
+      _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	    _CAMERA_BIND()		//カメラバインド
+	    _CAMERA_END()		//カメラ操作終了
+      
+      //技を覚えさせる処理
+      _CALL learn_skill
+
+      //ボールに戻るアニメ
+      _CALL ball_in
+
+    ELSE
+      _CALL last_message
+    ENDIF
 EVENT_END
 
+last_message:
+  DEFINE_LOCAL last_msg
+
+  IF FLAG_ON( FE_C03R0901_MELODY ) THEN
+    //イベント見たことがある
+    $last_msg = msg_c03r0901_musician_05
+  ELSE
+     //イベント見たことがない
+    $last_msg = msg_c03r0901_musician_01
+  ENDIF
+      
+  _BALLOONWIN_TALKOBJ_MSG( last_msg )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+_RET
+
+//自機の動き
+player_move:
+{
+  DEFINE_LOCAL player_dir
+  //自機の向きを取得
+  _PLAYER_DIR_GET(player_dir)
+  //自機の向きでアニメ分岐
+  SWITCH $player_dir
+  CASE DIR_UP THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_up )
+  CASE DIR_DOWN THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_down )
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_left )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_right )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+}  
+_RET
+
+//技を覚える処理
+learn_skill:
+{
+  //LOCALWORK14：ポケモン位置　LOCALWORK15：覚えさせる技ＩＤ
+  $LOCALWORK14 = $target_poke_pos
+  $LOCALWORK15 = WAZANO_INISIENOUTA
+  //技覚えシーケンス SCWK_ANSWER=TRUEで覚えた
+  _CHG_COMMON_SCR SCRID_SKILL_LEARN
+  //覚えた？
+  IF $SCWK_ANSWER == TRUE THEN
+    //覚えた場合、イベント消化フラグＯＮ
+    _FLAG_SET( FE_C03R0901_MELODY )
+  ENDIF
+}
+_RET
+
+ball_out:
+  _MOVE_BALL( SCR_BALL_ANM_TYPE_OUT, 5, 0, 7, 3, 8 )
+  _START_BALL_ANM( SCR_BALL_ANM_TYPE_OUT, 5, 0, 7 )
+  //ボール出現フレーム待ち
+  _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_OUT )
+  _DISP_FADE_START(DISP_FADE_WHITEOUT,0,16,0)
+  _DISP_FADE_END_CHECK()
+  //ポケを表示
+  _OBJ_ADD_EX( 5, 7, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE12, MV_DMY )
+  _DISP_FADE_START(DISP_FADE_WHITEOUT,16,0,0)
+  _DISP_FADE_END_CHECK()
+  _WAIT_BALL_ANM( SCR_BALL_ANM_TYPE_OUT )
+_RET
+
+ball_in:
+  _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 5, 3, 7 )
+  //ポケ非表示フレーム待ち
+  _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_IN )
+  _DISP_FADE_START(DISP_FADE_WHITEOUT,0,16,0)
+  _DISP_FADE_END_CHECK()
+  //ポケ非表示
+  _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
+  _DISP_FADE_START(DISP_FADE_WHITEOUT,16,0,0)
+  _DISP_FADE_END_CHECK()
+  _WAIT_BALL_ANM( SCR_BALL_ANM_TYPE_IN )
+  _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, 5, 3, 7, 3, 8 )
+_RET
+
+//--------------------------------------------------------------------
+//語り部アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_guitar_move
+  _ANIME_DATA	AC_STAY_WALK_D_8F,140
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//自機定位置へ　上から話しかけたとき
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_down
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,4
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機定位置へ　下から話しかけたとき
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_up
+  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機定位置へ　右から話しかけたとき
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_left
+  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機定位置へ　左から話しかけたとき
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_right
+  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//　メロディアアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_merodhia
+  _ANIME_DATA	AC_MELODYER_SHAKE,7
+  _ANIME_DATA	AC_MELODYER_SPIN,7
+  _ANIME_DATA	AC_MELODYER_SPIN_POSE,1
+	_ANIME_DATA	ACMD_END,0
+  
 /**************************************************************/
 /* 			WAITER（アイテム入手）	C03R0901				  */
 /**************************************************************/

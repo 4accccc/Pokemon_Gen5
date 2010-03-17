@@ -103,7 +103,8 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(field_gimmick_gate),  // R12R0101
   FS_OVERLAY_ID(field_gimmick_r04d03),  // R04 and D03
   FS_OVERLAY_ID(sppoke_gimmick),  // R08R0101
-  FS_OVERLAY_ID(palace_gimmick),  // 
+  FS_OVERLAY_ID(sppoke_gimmick),  // C03R0901
+  FS_OVERLAY_ID(palace_gimmick),  //
 };
 
 const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
@@ -154,7 +155,8 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_Setup,  // R11R0101
   GATE_GIMMICK_Setup,  // R12R0101
   R04D03_GIMMICK_Setup,    //R04 and D03
-  SPPOKE_GMK_Setup,    //R08R0101
+  SPPOKE_GMK_SetupTrio,    //R08R0101
+  SPPOKE_GMK_SetupMerodhia,    //C03R0901
   PALACE_GMK_Setup,    //
 };
 
@@ -206,9 +208,10 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_End,  // R11R0101
   GATE_GIMMICK_End,  // R12R0101
   R04D03_GIMMICK_End,    //R04 and D03
-  SPPOKE_GMK_End,     //R08R0101
+  SPPOKE_GMK_EndTrio,     //R08R0101
+  SPPOKE_GMK_EndMerodhia,    //C03R0901
   PALACE_GMK_End,    //
-};
+  };
 
 const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
 	NULL,					//0:–³‚µ
@@ -258,7 +261,8 @@ const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_Move,  // R11R0101
   GATE_GIMMICK_Move,  // R12R0101
   R04D03_GIMMICK_Move,    //R04 and D03
-  SPPOKE_GMK_Move,    //R08R0101
+  SPPOKE_GMK_MoveTrio,    //R08R0101
+  SPPOKE_GMK_SetupMerodhia,    //C03R0901
   PALACE_GMK_Move,    //
 };
 

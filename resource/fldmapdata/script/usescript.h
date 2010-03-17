@@ -130,6 +130,9 @@
 #include "../../../resource/research_radar/data/question_id.h"
 #include "../../../resource/research_radar/data/answer_id.h"
 
+//メロディア
+#include "../../../resource/fldmapdata/gimmick/merodhia/scr_gmk_timing_def.h"
+
 //======================================================================
 //  共通メッセージ関連
 //======================================================================
