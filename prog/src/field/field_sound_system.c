@@ -619,7 +619,7 @@ void FIELD_SOUND_SetEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol )
   for( i=0; i<FSND_ENVSE_PLAYER_MAX; i++ ){
     if( fieldSound->envse.envse_tbl[ i ] == soundIdx ){
       // ƒ{ƒŠƒ…[ƒ€•ÏX
-      PMSND_PlayerSetInitialVolume( i+SEPLAYER_SE1, vol );
+      PMSND_PlayerSetVolume( i+SEPLAYER_SE1, vol );
       fieldSound->envse.envse_vol_tbl[ i ] = vol;
       break;
     }
