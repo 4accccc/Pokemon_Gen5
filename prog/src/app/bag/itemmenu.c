@@ -568,8 +568,8 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
       return FALSE;
     }
 
-		// タッチ状態
-		KTST_SetDraw( pWork, FALSE );
+    // タッチ状態
+    KTST_SetDraw( pWork, FALSE );
 
     {
       int num = (length * (y-_SCROLL_TOP_Y)) / Y_MAX;
@@ -743,7 +743,7 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
   if((trg == PAD_BUTTON_B) || (trg == PAD_BUTTON_A) || (trg == PAD_BUTTON_SELECT) ){  //戻る
     GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur , 1 );
     pWork->moveMode = FALSE;
-		GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
     return;
   }
@@ -890,7 +890,7 @@ static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork )
     // 再描画
     _windowRewrite(pWork);
 
-		GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
 }
@@ -1304,10 +1304,6 @@ static const ITEMUSE_FUNC_DATA ItemUseFuncTable[]={
     ITEM_BATORUREKOODAA,  1,
     _check_BattleRecorder,
   },
-  { // メール閲覧
-    ITEM_HAZIMETEMEERU,  12,
-    _check_MailView,
-  },
   { // ダウジングマシン
     ITEM_DAUZINGUMASIN,  1,
     _check_DowsingMachine,
@@ -1359,62 +1355,90 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
     pWork->ret_code2 = pWork->submenuList[selectno];
     OS_Printf("ret_code2 %d %d\n", pWork->ret_code2,selectno);
-    if((BAG_MENU_TSUKAU==pWork->ret_code2)&&(pWork->pocketno==BAG_POKE_WAZA)){ //技マシン
-      _CHANGE_STATE(pWork,_itemTecniqueUseInit);
-    }
-    else if((BAG_MENU_TSUKAU==pWork->ret_code2)&&( 1==ITEM_GetParam( pWork->ret_item, ITEM_PRM_EVOLUTION, pWork->heapID )  )){
-      pWork->ret_code = BAG_NEXTPROC_EVOLUTION;  //進化
-      _CHANGE_STATE(pWork,NULL);
-    }
-    else if(BAG_MENU_SUTERU==pWork->ret_code2){  //すてる
+    switch(pWork->ret_code2){
+     // ------------つかう--------------
+    case BAG_MENU_TSUKAU:  
+      if((pWork->pocketno==BAG_POKE_WAZA)){         //技マシン
+       _CHANGE_STATE(pWork,_itemTecniqueUseInit);
+      }else if(1==ITEM_GetParam( pWork->ret_item, ITEM_PRM_EVOLUTION, pWork->heapID )){
+        pWork->ret_code = BAG_NEXTPROC_EVOLUTION;   //進化アイテム
+        _CHANGE_STATE(pWork,NULL);
+      }else if(_hit_item(pWork->ret_item)>=0){    // どうぐ使用チェックを増やせる構造
+        ItemUseFuncTable[_hit_item(pWork->ret_item)].check( pWork );
+      }else {
+        // バッグ内で使うアイテム判定
+        int ret = BAG_IsInnerItem( pWork->ret_item );
+        if( ret==INNER_USE_BAG )
+        {
+          _CHANGE_STATE(pWork,_itemInnerUse); //メッセージウェイトして通常メニューにもどる
+        }
+        else if(ret==INNER_USE_AFTER_OUTBAG)
+        {
+          _CHANGE_STATE(pWork,_itemInnerUseRightStone);
+        }
+        else
+        {
+          // 通常の「つかう」はWBではバッグを抜けた後に使う処理
+          pWork->ret_code = BAG_NEXTPROC_ITEMUSE;
+          _CHANGE_STATE(pWork,NULL);
+        }
+      }
+      break;
+    // ----------おりる---------------
+    case BAG_MENU_ORIRU:
+      OS_Printf("おりるを選択された\n");
+      if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_CYCLE)){
+        pWork->ret_code = BAG_NEXTPROC_DROPCYCLE;  //おりる
+        _CHANGE_STATE(pWork,NULL);
+      }else{
+        // おりれなかった
+        GFL_MSG_GetString( pWork->MsgManager, MSGID_ITEMUSE_CYCLE_NOSTOP, pWork->pStrBuf );
+        WORDSET_RegisterPlayerName( pWork->WordSet, 0, pWork->mystatus );
+        WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+        // 文字列のみpExpStrBufに用意しておき遷移先で表示させる
+        _CHANGE_STATE(pWork,_itemInnerUseError);
+      }
+      break;
+    // ----------すてる---------------
+    case BAG_MENU_SUTERU:   
       _CHANGE_STATE(pWork,_itemTrash);
-    }
-    else if(BAG_MENU_YAMERU==pWork->ret_code2){  //やめる
+      break;
+    // ----------とうろく------------
+    // ----------かいじょ------------
+    case BAG_MENU_TOUROKU:  
+    case BAG_MENU_KAIZYO:   
+      SHORTCUT_SetEventItem( pWork, pWork->curpos );
+      GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+      _CHANGE_STATE(pWork, _itemKindSelectMenu);
+      break;
+    // ----------みる------------
+    case BAG_MENU_MIRU:
+      if(pWork->ret_item>=ITEM_HAZIMETEMEERU && pWork->ret_item<=ITEM_BURIZZIMEERUw){
+        pWork->ret_code = BAG_NEXTPROC_MAILVIEW;  //メール閲覧
+        _CHANGE_STATE(pWork,NULL);
+      }else{
+        GF_ASSERT(0);
+      }
+      
+      break;
+    // ----------やめる------------
+    case BAG_MENU_YAMERU:
       // タッチ状態で抜けたのならクリア
       if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ) {
         ITEMDISP_upMessageClean( pWork ); // クリア
       }
       // タッチ遷移なら非表示に
       KTST_SetDraw( pWork, (GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY) );
-			GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
       _CHANGE_STATE(pWork, _itemKindSelectMenu);
-    }
-    else if( BAG_MENU_TOUROKU==pWork->ret_code2 || BAG_MENU_KAIZYO==pWork->ret_code2 ){  //とうろく
-      SHORTCUT_SetEventItem( pWork, pWork->curpos );
-			GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
-      _CHANGE_STATE(pWork, _itemKindSelectMenu);
-    }
-    else if(BAG_MENU_KAIZYO==pWork->ret_code2){  //解除
-      SHORTCUT_SetEventItem( pWork, pWork->curpos );
-			GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
-      _CHANGE_STATE(pWork, _itemKindSelectMenu);
-    }
-    else if(_hit_item(pWork->ret_item)>=0){    // どうぐ使用チェックを増やせる構造
-      ItemUseFuncTable[_hit_item(pWork->ret_item)].check( pWork );
-    }
-    else if(BAG_MENU_TSUKAU==pWork->ret_code2){ //つかう
-      // バッグ内で使うアイテム判定
-      int ret = BAG_IsInnerItem( pWork->ret_item );
-      if( ret==INNER_USE_BAG )
-      {
-        _CHANGE_STATE(pWork,_itemInnerUse); //メッセージウェイトして通常メニューにもどる
-      }
-      else if(ret==INNER_USE_AFTER_OUTBAG)
-      {
-        _CHANGE_STATE(pWork,_itemInnerUseRightStone);
-      }
-      else
-      {
-        // 通常の「つかう」はWBではバッグを抜けた後に使う処理
-        pWork->ret_code = BAG_NEXTPROC_ITEMUSE;
-        _CHANGE_STATE(pWork,NULL);
-      }
-    }
-    else if(BAG_MENU_URU==pWork->ret_code2){ //うる
+      break;
+    // ----------うる------------
+    case BAG_MENU_URU:
       pWork->ret_code = BAG_NEXTPROC_RETURN;
       _CHANGE_STATE(pWork,NULL);
-    }
-    else if(BAG_MENU_MOTASERU==pWork->ret_code2){ // もたせる
+      break;
+    // ----------もたせる------------
+    case BAG_MENU_MOTASERU:
       //@TODO check!!!!
       // ポケモンリスト アイテムを持たせる処理
       //リストから来たかどうかの分岐を入れました。 Ariizumi 100222
@@ -1427,18 +1451,16 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
         pWork->ret_code = BAG_NEXTPROC_HAVE;
       }
       _CHANGE_STATE(pWork,NULL);
-    }
-    else{
-      //@TODO アサーションかけるべき
-      pWork->ret_code = BAG_NEXTPROC_HAVE;
-      _CHANGE_STATE(pWork,NULL);
+      break;
+    default:
+      GF_ASSERT(0 && "該当する挙動がない");
     }
     bClear = TRUE;
   }
 /*
   else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_B){
     bClear = TRUE;
-		GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
 */
@@ -1495,8 +1517,8 @@ static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork)
     _itemUseWindowRewrite(pWork);
     ITEMDISP_ItemInfoMessageMake( pWork,pWork->ret_item );
     ITEMDISP_ItemInfoWindowDisp( pWork );
-		GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, FALSE );
-		_CHANGE_STATE(pWork,_itemSelectWait);
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, FALSE );
+    _CHANGE_STATE(pWork,_itemSelectWait);
   }
 }
 
@@ -1520,7 +1542,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 
   GFL_BMN_Main( pWork->pButton );
 
-	BLINKPALANM_Main( pWork->blwk );
+  BLINKPALANM_Main( pWork->blwk );
 
   if(pWork->state == _endButtonAnime){
     // 終了時はキー無効
@@ -1532,16 +1554,16 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     pWork->ret_code = BAG_NEXTPROC_RETURN;
     GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 //    _CHANGE_STATE(pWork,NULL);
-		SetEndButtonAnime( pWork, 0, NULL );
-		_CHANGE_STATE( pWork, _endButtonAnime );
+    SetEndButtonAnime( pWork, 0, NULL );
+    _CHANGE_STATE( pWork, _endButtonAnime );
     return;
   // 強制終了
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
     pWork->ret_code = BAG_NEXTPROC_EXIT;
     GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 //    _CHANGE_STATE(pWork,NULL);
-		SetEndButtonAnime( pWork, 1, NULL );
-		_CHANGE_STATE( pWork, _endButtonAnime );
+    SetEndButtonAnime( pWork, 1, NULL );
+    _CHANGE_STATE( pWork, _endButtonAnime );
     return;
   // 登録
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
@@ -1550,11 +1572,11 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     }else{
       SHORTCUT_SetPocket( pWork );
     }
-		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
       ITEMDISP_upMessageRewrite(pWork); // 上画面表示
       KTST_SetDraw( pWork, TRUE );
-		}
-		return;
+    }
+    return;
   }
 
   // カーソルなしの状態から入力があった場合、カーソルを表示して抜ける
@@ -1577,7 +1599,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     {
       // アイテムに対する動作選択画面へ
 //      _CHANGE_STATE(pWork,_itemSelectState);
-			_CHANGE_STATE( pWork, _listSelectAnime );
+      _CHANGE_STATE( pWork, _listSelectAnime );
       return;
     }
   }
@@ -1611,7 +1633,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
       PMSND_PlaySE( SE_BAG_POCKET_MOVE );
       pWork->pocketno++;
     }
-		else if(GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT)
+    else if(GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT)
     {
       PMSND_PlaySE( SE_BAG_POCKET_MOVE );
       pWork->pocketno--;
@@ -1672,7 +1694,7 @@ static void _itemTecniqueUseYesNo(FIELD_ITEMMENU_WORK* pWork)
     else{
       ITEMDISP_ListPlateClear( pWork );
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-			GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
       _CHANGE_STATE(pWork,_itemKindSelectMenu);
     }
     // YESNOの後始末
@@ -1743,7 +1765,7 @@ static void _itemTrashEndWait(FIELD_ITEMMENU_WORK* pWork)
 
     InputNum_ButtonState( pWork, TRUE );
 
-		GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
 }
@@ -1802,7 +1824,7 @@ static void _itemTrashYesNoWait(FIELD_ITEMMENU_WORK* pWork)
     }
     else{
       InputNum_ButtonState( pWork, TRUE );
-			GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
       _CHANGE_STATE(pWork,_itemKindSelectMenu);
     }
   }
@@ -1860,27 +1882,27 @@ static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
 
 static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
 {
-	int	ret;
+  int ret;
 
   if(!ITEMDISP_MessageEndCheck(pWork)){
     return;
   }
 
   // 数値入力主処理
-	if( InputNum_Main( pWork ) == TRUE ){
-		return;
-	}
+  if( InputNum_Main( pWork ) == TRUE ){
+    return;
+  }
 
-	ret = CheckNumSelTouch();
-	if( ret == GFL_UI_TP_HIT_NONE ){
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
-			ret = 0;
-		}else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
-			ret = 1;
-		}
-	}
+  ret = CheckNumSelTouch();
+  if( ret == GFL_UI_TP_HIT_NONE ){
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+      ret = 0;
+    }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+      ret = 1;
+    }
+  }
 
-	// 決定
+  // 決定
   if( ret == 0 ){
     PMSND_PlaySE( SE_BAG_DECIDE );
 
@@ -1894,11 +1916,11 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
     ITEMDISP_ItemInfoWindowDisp( pWork );
 
     _CHANGE_STATE(pWork,_itemTrashYesNo);
-	// キャンセル
+  // キャンセル
   }else if( ret == 1 ){
     PMSND_PlaySE( SE_BAG_CANCEL );
-		SetEndButtonAnime( pWork, 0, _itemTrashCancel );
-		_CHANGE_STATE( pWork, _endButtonAnime );
+    SetEndButtonAnime( pWork, 0, _itemTrashCancel );
+    _CHANGE_STATE( pWork, _endButtonAnime );
   }
 }
 
@@ -1985,28 +2007,28 @@ static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
 {
-	int	ret;
+  int ret;
 
   if(!ITEMDISP_MessageEndCheck(pWork)){
     return;
   }
 
   // 売るシーケンス入力処理
-	if( InputNum_Main( pWork ) == TRUE ){
-		return;
-	}
+  if( InputNum_Main( pWork ) == TRUE ){
+    return;
+  }
 
   // @TODO バーアイコンなどタッチ対応も含めるのでラップする
   // 強制終了
 
-	ret = CheckNumSelTouch();
-	if( ret == GFL_UI_TP_HIT_NONE ){
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
-			ret = 0;
-		}else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
-			ret = 1;
-		}
-	}
+  ret = CheckNumSelTouch();
+  if( ret == GFL_UI_TP_HIT_NONE ){
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+      ret = 0;
+    }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+      ret = 1;
+    }
+  }
 
    // 決定
   if( ret == 0 ){
@@ -2019,8 +2041,8 @@ static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
   // キャンセル
   }else if( ret == 1 ){
     PMSND_PlaySE( SE_BAG_CANCEL );
-		SetEndButtonAnime( pWork, 0, _itemSellInputCancel );
-		_CHANGE_STATE( pWork, _endButtonAnime );
+    SetEndButtonAnime( pWork, 0, _itemSellInputCancel );
+    _CHANGE_STATE( pWork, _endButtonAnime );
   }
 }
 
@@ -2164,7 +2186,7 @@ static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork )
 
   InputNum_ButtonState( pWork, TRUE );
 
-	GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+  GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
   _CHANGE_STATE( pWork, _itemKindSelectMenu );
 }
 
@@ -2260,8 +2282,8 @@ static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork )
 {
   int tp_result;
   int backup = pWork->InputNum;
-	int	anm_type;
-	BOOL	ret = FALSE;
+  int anm_type;
+  BOOL  ret = FALSE;
   ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) ); // 選択中のアイテム
 
   const GFL_UI_TP_HITTBL tp_tbl[] =
@@ -2291,7 +2313,7 @@ static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork )
   if( tp_result != GFL_UI_TP_HIT_NONE )
   {
     pWork->countTouch++;
-		ret = TRUE;
+    ret = TRUE;
   }
   else
   {
@@ -2312,7 +2334,7 @@ static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork )
       {
         pWork->InputNum++;
       }
-			anm_type = 0;
+      anm_type = 0;
       break;
 
     case 1 :
@@ -2324,7 +2346,7 @@ static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork )
       {
         pWork->InputNum--;
       }
-			anm_type = 1;
+      anm_type = 1;
       break;
 
     default : GF_ASSERT(0);
@@ -2337,23 +2359,23 @@ static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork )
   {
     if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
       pWork->InputNum++;
-			anm_type = 0;
-			ret = TRUE;
+      anm_type = 0;
+      ret = TRUE;
     }
     else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
       pWork->InputNum--;
-			anm_type = 1;
-			ret = TRUE;
+      anm_type = 1;
+      ret = TRUE;
     }
     else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
       pWork->InputNum += 10;
-			anm_type = 0;
-			ret = TRUE;
+      anm_type = 0;
+      ret = TRUE;
     }
     else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
       pWork->InputNum -= 10;
-			anm_type = 1;
-			ret = TRUE;
+      anm_type = 1;
+      ret = TRUE;
     }
   }
 
@@ -2374,7 +2396,7 @@ static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork )
     PMSND_PlaySE( SE_BAG_CURSOR_MOVE );
 
     // ボタンアニメ
-		if( anm_type == 0 ){
+    if( anm_type == 0 ){
       GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_INPUT_U ], 11 );
     }else{
       GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_INPUT_D ], 10 );
@@ -2383,7 +2405,7 @@ static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork )
     ITEMDISP_InputNumDisp(pWork,pWork->InputNum);
   }
 
-	return ret;
+  return ret;
 }
 
 //-----------------------------------------------------------------------------
@@ -2777,12 +2799,12 @@ static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 //  GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, on_off );
 
   GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, FALSE );
-	if( on_off == FALSE ){
-		ITEMDISP_ChangeCursorPosPalette( pWork, 0 );
-	}else{
-		ITEMDISP_ChangeCursorPosPalette( pWork, 1 );
-		BLINKPALANM_InitAnimeCount( pWork->blwk );
-	}
+  if( on_off == FALSE ){
+    ITEMDISP_ChangeCursorPosPalette( pWork, 0 );
+  }else{
+    ITEMDISP_ChangeCursorPosPalette( pWork, 1 );
+    BLINKPALANM_InitAnimeCount( pWork->blwk );
+  }
 
   // 上画面を消す
   pWork->bDispUpReq = on_off;
@@ -3096,11 +3118,11 @@ static void _tsukau_check( FIELD_ITEMMENU_WORK *pWork, void *itemdata, ITEM_ST *
 {
   if( ITEM_GetBufParam( itemdata,  ITEM_PRM_FIELD ) != 0 )
   {
-		if( ITEM_CheckMail( item->id ) == TRUE )
-		{
+    if( ITEM_CheckMail( item->id ) == TRUE )
+    {
       tbl[BAG_MENU_USE] = BAG_MENU_MIRU;
-		}
-		else if( item->id == ITEM_ZITENSYA && pWork->cycle_flg == 1 )
+    }
+    else if( item->id == ITEM_ZITENSYA && pWork->cycle_flg == 1 )
     {
       tbl[BAG_MENU_USE] = BAG_MENU_ORIRU;
     }
@@ -3149,7 +3171,7 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
 #endif
 
   // ポケモンリストでは「もたせる」のみ
-	if( pWork->mode == BAG_MODE_POKELIST ){
+  if( pWork->mode == BAG_MODE_POKELIST ){
     // もたせる
     if( ITEM_GetBufParam( itemdata, ITEM_PRM_EVENT ) == 0 ){
       // ↑だいじなものは弾く
@@ -3159,14 +3181,14 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
       }
     }
   }else{
-		//「つかう」など
-		_tsukau_check( pWork, itemdata, item, tbl );
-		// コロシアム・ユニオンルームでは「みる」のみ
-	  if( pWork->mode == BAG_MODE_COLOSSEUM || pWork->mode == BAG_MODE_UNION ){
-			if( tbl[BAG_MENU_USE] != BAG_MENU_MIRU ){
-				tbl[BAG_MENU_USE] = 255;
-			}
-	  }
+    //「つかう」など
+    _tsukau_check( pWork, itemdata, item, tbl );
+    // コロシアム・ユニオンルームでは「みる」のみ
+    if( pWork->mode == BAG_MODE_COLOSSEUM || pWork->mode == BAG_MODE_UNION ){
+      if( tbl[BAG_MENU_USE] != BAG_MENU_MIRU ){
+        tbl[BAG_MENU_USE] = 255;
+      }
+    }
 
     // もたせる
     // すてる
@@ -3365,14 +3387,14 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   else if(BUTTONID_EXIT == bttnid){
     pWork->ret_code = BAG_NEXTPROC_EXIT;
 //    _CHANGE_STATE(pWork, NULL);
-		SetEndButtonAnime( pWork, 1, NULL );
-		_CHANGE_STATE( pWork, _endButtonAnime );
+    SetEndButtonAnime( pWork, 1, NULL );
+    _CHANGE_STATE( pWork, _endButtonAnime );
   }
   else if(BUTTONID_RETURN == bttnid){
     pWork->ret_code = BAG_NEXTPROC_RETURN;
 //    _CHANGE_STATE(pWork, NULL);
-		SetEndButtonAnime( pWork, 0, NULL );
-		_CHANGE_STATE( pWork, _endButtonAnime );
+    SetEndButtonAnime( pWork, 0, NULL );
+    _CHANGE_STATE( pWork, _endButtonAnime );
   }
   else if((bttnid >= BUTTONID_ITEM_AREA) && (bttnid < BUTTONID_CHECK_AREA)){
     // アイテム選択シーケンスでの操作
@@ -3408,7 +3430,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       ITEMDISP_upMessageRewrite(pWork);
 
 //      _CHANGE_STATE(pWork,_itemSelectState);
-			_CHANGE_STATE( pWork, _listSelectAnime );
+      _CHANGE_STATE( pWork, _listSelectAnime );
     }
     return;
   }
@@ -3471,7 +3493,7 @@ static void _VBlank( GFL_TCB *tcb, void *work )
 static void _startState(FIELD_ITEMMENU_WORK* pWork)
 {
   if (GFL_FADE_CheckFade() == FALSE) {
-		GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
     _CHANGE_STATE(pWork, _itemKindSelectMenu);
   }
 }
@@ -3572,7 +3594,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
   pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
 
-	InitBlinkPalAnm( pWork );
+  InitBlinkPalAnm( pWork );
 
   // ワイプ開始
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
@@ -3697,7 +3719,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
   APP_KEYCURSOR_Delete(pWork->MsgCursorWork);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
-	ExitBlinkPalAnm( pWork );
+  ExitBlinkPalAnm( pWork );
   GFL_BMN_Delete(pWork->pButton);
   //  ITEMDISP_ListPlateDelete(pWork);
 
@@ -3734,159 +3756,159 @@ const GFL_PROC_DATA ItemMenuProcData = {
 
 
 //--------------------------------------------------------------------------------------------
-//	↓ここから中村追加分
+//  ↓ここから中村追加分
 //--------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		リストカーソル点滅アニメ
+ * @brief   リストカーソル点滅アニメ
  */
 //--------------------------------------------------------------------------------------------
 static void InitBlinkPalAnm( FIELD_ITEMMENU_WORK * wk )
 {
-	ARCHANDLE * ah;
+  ARCHANDLE * ah;
 
-	wk->blwk = BLINKPALANM_Create( (_PAL_WIN01_CELL+1)*16, 16, BLINKPALANM_MODE_MAIN_OBJ, wk->heapID );
+  wk->blwk = BLINKPALANM_Create( (_PAL_WIN01_CELL+1)*16, 16, BLINKPALANM_MODE_MAIN_OBJ, wk->heapID );
 
-	ah = GFL_ARC_OpenDataHandle( ARCID_BAG, wk->heapID );
-	BLINKPALANM_SetPalBufferArcHDL( wk->blwk, ah, NARC_bag_bag_win01_d_NCLR, 16, 32 );
+  ah = GFL_ARC_OpenDataHandle( ARCID_BAG, wk->heapID );
+  BLINKPALANM_SetPalBufferArcHDL( wk->blwk, ah, NARC_bag_bag_win01_d_NCLR, 16, 32 );
   GFL_ARC_CloseDataHandle( ah );
 }
 
 static void ExitBlinkPalAnm( FIELD_ITEMMENU_WORK * wk )
 {
-	BLINKPALANM_Exit( wk->blwk );
+  BLINKPALANM_Exit( wk->blwk );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		リスト選択アニメ
+ * @brief   リスト選択アニメ
  */
 //--------------------------------------------------------------------------------------------
 static void _listSelectAnime( FIELD_ITEMMENU_WORK * wk )
 {
-	switch( wk->tmpSeq ){
-	case 0:
-		PMSND_PlaySE( SE_BAG_DECIDE );
-	case 3:
-		ITEMDISP_ChangeCursorPosPalette( wk, 0 );
-		wk->tmpSeq++;
-		break;
+  switch( wk->tmpSeq ){
+  case 0:
+    PMSND_PlaySE( SE_BAG_DECIDE );
+  case 3:
+    ITEMDISP_ChangeCursorPosPalette( wk, 0 );
+    wk->tmpSeq++;
+    break;
 
-	case 1:
-	case 4:
-	case 6:
-		wk->tmpCnt++;
-		if( wk->tmpCnt == 4 ){
-			wk->tmpCnt = 0;
-			wk->tmpSeq++;
-		}
-		break;
+  case 1:
+  case 4:
+  case 6:
+    wk->tmpCnt++;
+    if( wk->tmpCnt == 4 ){
+      wk->tmpCnt = 0;
+      wk->tmpSeq++;
+    }
+    break;
 
-	case 2:
-	case 5:
-		ITEMDISP_ChangeCursorPosPalette( wk, 2 );
-		wk->tmpSeq++;
-		break;
+  case 2:
+  case 5:
+    ITEMDISP_ChangeCursorPosPalette( wk, 2 );
+    wk->tmpSeq++;
+    break;
 
-	case 7:
-		wk->tmpSeq = 0;
-		// メニュー終了時を考えて初期化しておく
-		ITEMDISP_ChangeCursorPosPalette( wk, 1 );
-		BLINKPALANM_InitAnimeCount( wk->blwk );
-		BLINKPALANM_Main( wk->blwk );
-		_CHANGE_STATE( wk, _itemSelectState );
-		break;
-	}
+  case 7:
+    wk->tmpSeq = 0;
+    // メニュー終了時を考えて初期化しておく
+    ITEMDISP_ChangeCursorPosPalette( wk, 1 );
+    BLINKPALANM_InitAnimeCount( wk->blwk );
+    BLINKPALANM_Main( wk->blwk );
+    _CHANGE_STATE( wk, _itemSelectState );
+    break;
+  }
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		タッチバーボタンアニメ
+ * @brief   タッチバーボタンアニメ
  */
 //--------------------------------------------------------------------------------------------
 static void SetEndButtonAnime( FIELD_ITEMMENU_WORK * wk, u8 type, StateFunc * next )
 {
-	u32	idx;
-	u32	anm;
+  u32 idx;
+  u32 anm;
 
-	if( type == 0 ){
-		PMSND_PlaySE( SE_BAG_CANCEL );
-		idx = BAR_ICON_RETURN;
-		anm = APP_COMMON_BARICON_RETURN_ON;
-	}else{
-		PMSND_PlaySE( SE_BAG_CLOSE );
-		idx = BAR_ICON_EXIT;
-		anm = APP_COMMON_BARICON_EXIT_ON;
-	}
-	GFL_CLACT_WK_SetAnmFrame( wk->clwkBarIcon[idx], 0 );
-	GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[idx], anm );
-	GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkBarIcon[idx], TRUE );
-	wk->tmpSeq = type;
-	wk->chgState = next;
+  if( type == 0 ){
+    PMSND_PlaySE( SE_BAG_CANCEL );
+    idx = BAR_ICON_RETURN;
+    anm = APP_COMMON_BARICON_RETURN_ON;
+  }else{
+    PMSND_PlaySE( SE_BAG_CLOSE );
+    idx = BAR_ICON_EXIT;
+    anm = APP_COMMON_BARICON_EXIT_ON;
+  }
+  GFL_CLACT_WK_SetAnmFrame( wk->clwkBarIcon[idx], 0 );
+  GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[idx], anm );
+  GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkBarIcon[idx], TRUE );
+  wk->tmpSeq = type;
+  wk->chgState = next;
 }
 
 static void _endButtonAnime( FIELD_ITEMMENU_WORK * wk )
 {
-	u32	idx;
+  u32 idx;
 
-	if( wk->tmpSeq == 0 ){
-		idx = BAR_ICON_RETURN;
-	}else{
-		idx = BAR_ICON_EXIT;
-	}
+  if( wk->tmpSeq == 0 ){
+    idx = BAR_ICON_RETURN;
+  }else{
+    idx = BAR_ICON_EXIT;
+  }
 
-	if( GFL_CLACT_WK_CheckAnmActive( wk->clwkBarIcon[idx] ) == FALSE ){
-		_CHANGE_STATE( wk, wk->chgState );
-	}
+  if( GFL_CLACT_WK_CheckAnmActive( wk->clwkBarIcon[idx] ) == FALSE ){
+    _CHANGE_STATE( wk, wk->chgState );
+  }
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		捨てる・売るのタッチチェック
+ * @brief   捨てる・売るのタッチチェック
  */
 //--------------------------------------------------------------------------------------------
 
 static int CheckNumSelTouch(void)
 {
-	static const GFL_UI_TP_HITTBL tbl[] =
-	{
-		{ _WINNUM_SCR_INITY*8, _WINNUM_SCR_TP_END_Y*8-1, _WINNUM_SCR_INITX*8, _WINNUM_SCR_TP_END_X*8-1 },
-	  { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, _BAR_CELL_CURSOR_RETURN, _BAR_CELL_CURSOR_RETURN+TOUCHBAR_ICON_WIDTH-1 },  //リターン
-		{ GFL_UI_TP_HIT_END, 0, 0, 0 },
-	};
+  static const GFL_UI_TP_HITTBL tbl[] =
+  {
+    { _WINNUM_SCR_INITY*8, _WINNUM_SCR_TP_END_Y*8-1, _WINNUM_SCR_INITX*8, _WINNUM_SCR_TP_END_X*8-1 },
+    { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, _BAR_CELL_CURSOR_RETURN, _BAR_CELL_CURSOR_RETURN+TOUCHBAR_ICON_WIDTH-1 },  //リターン
+    { GFL_UI_TP_HIT_END, 0, 0, 0 },
+  };
 
-	return GFL_UI_TP_HitTrg( tbl );
+  return GFL_UI_TP_HitTrg( tbl );
 }
 
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		捨てるキャンセル処理
+ * @brief   捨てるキャンセル処理
  */
 //--------------------------------------------------------------------------------------------
 
 static void _itemTrashCancel( FIELD_ITEMMENU_WORK * wk )
 {
-	InputNum_Exit( wk );
+  InputNum_Exit( wk );
 
-	InputNum_ButtonState( wk, TRUE );
+  InputNum_ButtonState( wk, TRUE );
 
-	//@TODO ここでパッシブ解除していいのか？
-	G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
+  //@TODO ここでパッシブ解除していいのか？
+  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
 
-	GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkScroll, TRUE );
-	_CHANGE_STATE( wk, _itemKindSelectMenu );
+  GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkScroll, TRUE );
+  _CHANGE_STATE( wk, _itemKindSelectMenu );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		売るるキャンセル処理
+ * @brief   売るるキャンセル処理
  */
 //--------------------------------------------------------------------------------------------
 
 static void _itemSellInputCancel( FIELD_ITEMMENU_WORK * wk )
 {
-	InputNum_Exit( wk );
-	_CHANGE_STATE( wk, _itemSellExit );
+  InputNum_Exit( wk );
+  _CHANGE_STATE( wk, _itemSellExit );
 }
