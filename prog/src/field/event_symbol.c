@@ -51,6 +51,11 @@ typedef struct{
   u16 *result_ptr;
 }EVENT_SYMBOL_BATTLE;
 
+typedef struct{
+  u16 *result_ptr;
+  SYMBOL_ZONE_TYPE zone_type;
+  u8 map_no;
+}EVENT_REQ_SYMBOL_PARAM;
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -157,10 +162,12 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
 	case SEQ_BATTLE:
     { // サブプロセス呼び出しイベント
       GMEVENT* ev_sub;
+      SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
       
       GFL_OVERLAY_Load( FS_OVERLAY_ID(pdc) );
       esb->pdc_setup = PDC_MakeSetUpParam( esb->pp, &esb->bfs, 
-        GAMEDATA_GetMyStatus(gamedata), GAMEDATA_GetMyItem(gamedata), esb->heap_id );
+        GAMEDATA_GetMyStatus(gamedata), GAMEDATA_GetMyItem(gamedata), 
+        SaveData_GetConfig( sv ), ZUKAN_SAVEDATA_GetZukanSave(sv), esb->heap_id );
       GMEVENT_CallProc( event, NO_OVERLAY_ID, &PDC_ProcData, esb->pdc_setup );
     }
 		(*seq) ++;
@@ -201,3 +208,173 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
   }
 	return GMEVENT_RES_CONTINUE;
 }
+
+
+
+#if 0
+//==============================================================================
+//
+//  侵入先のシンボルデータを要求し、受信
+//
+//==============================================================================
+//==================================================================
+/**
+ * 侵入先のシンボルデータを要求し、受信するまでの処理をイベントとして行います
+ *
+ * @param   gsys		
+ * @param   result_ptr		結果代入先(TRUE:正常にデータ受信。　FALSE:受信出来なかった(通信エラー))
+ * @param   zone_type	  	相手へ要求するSYMBOL_ZONE_TYPE
+ * @param   map_no	  	  相手へ要求するマップ番号(キープゾーンの場合は0固定)
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+GMEVENT * EVENT_ReqIntrudeSymbolParam(GAMESYS_WORK *gsys, u16 *result_ptr, SYMBOL_ZONE_TYPE zone_type, u8 map_no)
+{
+	GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+  EVENT_REQ_SYMBOL_PARAM *ersp;
+	GMEVENT *event = NULL;
+	
+ 	event = GMEVENT_Create(
+    		gsys, NULL,	EventReqIntrudeSymbolParam, sizeof(EVENT_REQ_SYMBOL_PARAM) );
+  
+	ersp = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( ersp, sizeof(EVENT_REQ_SYMBOL_PARAM) );
+
+  ersp->result_ptr = result_ptr;
+  ersp->zone_type = zone_type;
+  ersp->map_no = map_no;
+
+	return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * 侵入先のシンボルデータを要求し、受信するまでの処理をイベントとして行います
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT EventReqIntrudeSymbolParam( GMEVENT *event, int *seq, void *wk )
+{
+  EVENT_REQ_SYMBOL_PARAM *ersp = wk;
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	
+	intcomm = Intrude_Check_CommConnect(game_comm);
+	if(intcomm == NULL){
+    if(ersp->result_ptr != NULL){
+      *(ersp->result_ptr) = FALSE;
+    }
+    return GMEVENT_RES_FINISH;
+  }
+
+	switch( *seq ){
+	case 0:
+	  if(IntrudeSymbol_ReqSymbolData(intcomm, ersp->zone_type, ersp->map_no) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if(IntrudeSymbol_CheckRecvSymbolData(intcomm) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if(ersp->result_ptr != NULL){
+      *(ersp->result_ptr) = TRUE;
+    }
+    return GMEVENT_RES_FINISH;
+  }
+  
+	return GMEVENT_RES_CONTINUE;
+}
+
+
+
+
+//==============================================================================
+//
+//  シンボルマップ遷移
+//
+//==============================================================================
+//==================================================================
+/**
+ * シンボルマップ遷移
+ *    シンボルマップのデータ要求 ＞ マップ遷移
+ * までをイベントとして行います
+ *
+ * @param   gsys		
+ * @param   result_ptr		結果代入先  TRUE:正常にデータ受信してマップ遷移した。
+ *                                    FALSE:受信出来なかった為マップ遷移もしていない(通信エラー)
+ * @param   zone_type	  	相手へ要求するSYMBOL_ZONE_TYPE
+ * @param   map_no	  	  相手へ要求するマップ番号(キープゾーンの場合は0固定)
+ *
+ * @retval  GMEVENT *		
+ *
+ * 侵入先のシンボルデータ要求中に通信エラーが起きた場合はマップ遷移をせずにイベント終了します。
+ */
+//==================================================================
+GMEVENT * EVENT_SymbolMapWarp(GAMESYS_WORK *gsys, u16 *result_ptr, SYMBOL_ZONE_TYPE zone_type, u8 map_no)
+{
+	GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+  EVENT_REQ_SYMBOL_PARAM *ersp;
+	GMEVENT *event = NULL;
+	
+ 	event = GMEVENT_Create(
+    		gsys, NULL,	EventReqIntrudeSymbolParam, sizeof(EVENT_REQ_SYMBOL_PARAM) );
+  
+	ersp = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( ersp, sizeof(EVENT_REQ_SYMBOL_PARAM) );
+
+  ersp->result_ptr = result_ptr;
+  ersp->zone_type = zone_type;
+  ersp->map_no = map_no;
+
+	return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * 侵入先のシンボルデータを要求し、受信するまでの処理をイベントとして行います
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT EventReqIntrudeSymbolParam( GMEVENT *event, int *seq, void *wk )
+{
+  EVENT_REQ_SYMBOL_PARAM *ersp = wk;
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	
+	switch( *seq ){
+	case 0:
+	  GMEVENT_CallEvent(event, 
+	    EVENT_ReqIntrudeSymbolParam(gsys, &ersp->data_recv_result, ersp->zone_type, ersp->map_no));
+    (*seq)++;
+    break;
+  case 1:
+    if(ersp->data_recv_result == FALSE){
+      if(ersp->result_ptr != NULL){
+        *(ersp->result_ptr) = FALSE;
+      }
+      return GMEVENT_RES_FINISH;
+    }
+    
+    if(IntrudeSymbol_CheckRecvSymbolData(intcomm) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if(ersp->result_ptr != NULL){
+      *(ersp->result_ptr) = TRUE;
+    }
+    return GMEVENT_RES_FINISH;
+  }
+  
+	return GMEVENT_RES_CONTINUE;
+}
+
+#endif
