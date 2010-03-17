@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/21 12:21:16
+#save date:2010/03/17 15:47:36
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plr08.wms
 #SECTION START:OBJ_EVENT
@@ -19,7 +19,20 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plr08.wms
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Bg Event Label
+PLR08_HIDE_ITEM_01
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_031
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 0 -184
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/13 21:30:10
+#save date:2010/03/17 15:43:06
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plr06.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -14,17 +14,30 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plr06.wms
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Bg Event Label
+PLR06_HIDE_ITEM_01
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_029
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+728 0 -584
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -34,7 +47,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plr06.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
