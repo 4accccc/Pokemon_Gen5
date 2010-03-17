@@ -20,6 +20,8 @@
 #include "multiboot/mb_local_def.h"
 
 #ifndef MULTI_BOOT_MAKE  //通常時処理
+#include "system/bmp_menu.h"
+
   //talkmsgwin用にfieldを読む
   FS_EXTERN_OVERLAY(fieldmap);
 #endif //MULTI_BOOT_MAKE
@@ -61,6 +63,13 @@ struct _MB_MSG_WORK
   APP_TASKMENU_WORK *yesNoWork;
   APP_TASKMENU_RES  *takmenures;
   APP_KEYCURSOR_WORK *cursorWork;
+  
+#ifndef MULTI_BOOT_MAKE  //通常時処理
+  BMPWIN_YESNO_DAT menuWork;
+  BMPMENU_WORK  *yesNoBmpWin;
+#else
+  void *yesNoBmpWin;
+#endif MULTI_BOOT_MAKE  //通常時処理
   
 #ifdef MB_TYPE_POKE_SHIFTER
   TALKMSGWIN_SYS    *talkWinSys;
@@ -116,6 +125,7 @@ MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame ,const u8 selFra
   msgWork->printQue = PRINTSYS_QUE_Create( msgWork->heapId );
   msgWork->takmenures  = APP_TASKMENU_RES_Create( msgWork->selFrame, MB_MSG_PLT_MAIN_TASKMENU, msgWork->fontHandle, msgWork->printQue, msgWork->heapId );
   msgWork->yesNoWork = NULL;
+  msgWork->yesNoBmpWin = NULL;
   
   msgWork->cursorWork = APP_KEYCURSOR_Create( 0x0f , FALSE , TRUE , msgWork->heapId );
   
@@ -355,6 +365,7 @@ void MB_MSG_MessageDisp( MB_MSG_WORK *msgWork , const u16 msgId , const int msgS
   }
   //一応デフォは消しておく
   msgWork->isUseCursor = FALSE;
+  msgWork->reqDispTimerIcon = FALSE;
   
   {
     if( msgWork->msgStr != NULL )
@@ -499,6 +510,10 @@ void MB_MSG_MessageWordsetName( MB_MSG_WORK *msgWork , const u32 bufId , MYSTATU
 {
   WORDSET_RegisterPlayerName( msgWork->wordSet , bufId , myStatus );
 }
+void MB_MSG_MessageWordsetNumber( MB_MSG_WORK *msgWork , const u32 bufId , const u32 num , const u32 keta )
+{
+  WORDSET_RegisterNumber( msgWork->wordSet , bufId , num , keta , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+}
 
 //--------------------------------------------------------------------------
 //  選択肢表示
@@ -563,6 +578,51 @@ const MB_MSG_YESNO_RET MB_MSG_UpdateYesNo( MB_MSG_WORK *msgWork )
   
   return MMYR_NONE;
 }
+
+#ifndef MULTI_BOOT_MAKE  //通常時処理
+//--------------------------------------------------------------------------
+//  選択肢表示(上画面用
+//--------------------------------------------------------------------------
+#define	FLD_YESNO_WIN_PX	( 24 )
+#define	FLD_YESNO_WIN_PY	( 13 )
+void MB_MSG_DispYesNoUpper( MB_MSG_WORK *msgWork , const MB_MSG_YESNO_TYPE type )
+{
+  msgWork->menuWork.frmnum = msgWork->selFrame;
+  msgWork->menuWork.pos_x = 24;
+  msgWork->menuWork.pos_y = 13;
+  msgWork->menuWork.palnum = MB_MSG_PLT_MAIN_FONT;
+  msgWork->menuWork.chrnum = 0;  //未使用(FixPosのみ)
+  msgWork->yesNoBmpWin = BmpMenu_YesNoSelectInit( &msgWork->menuWork , MB_MSG_MSGWIN_CGX , MB_MSG_PLT_MAIN_MSGWIN , 0 , msgWork->heapId );
+}
+//--------------------------------------------------------------------------
+//  YesNo消去
+//--------------------------------------------------------------------------
+void MB_MSG_ClearYesNoUpper( MB_MSG_WORK *msgWork )
+{
+  //下がコメントなのは、BmpMenu_YesNoSelectMainの内部で、決定した瞬間に
+  //EXITされているので
+  //BmpMenu_YesNoMenuExit( msgWork->yesNoBmpWin );
+  msgWork->yesNoBmpWin = NULL;
+}
+
+//--------------------------------------------------------------------------
+//  YesNo更新
+//--------------------------------------------------------------------------
+const MB_MSG_YESNO_RET MB_MSG_UpdateYesNoUpper( MB_MSG_WORK *msgWork )
+{
+  const u32 ret = BmpMenu_YesNoSelectMain( msgWork->yesNoBmpWin );
+  if( ret == 0 )
+  {
+    return MMYR_RET1;
+  }
+  else
+  if( ret == BMPMENU_CANCEL )
+  {
+    return MMYR_RET2;
+  }
+  return MMYR_NONE;
+}
+#endif //MULTI_BOOT_MAKE  //通常時処理
 
 //--------------------------------------------------------------------------
 //  MSGDATA取得

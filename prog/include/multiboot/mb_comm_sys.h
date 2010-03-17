@@ -39,6 +39,13 @@ typedef enum
   MCFT_FINISH_SECOND_SAVE,
   MCFT_FINISH_SAVE,
   
+  //映画用 親→子
+  MCFT_MOVIE_POKE_TRANS_CONFIRM,
+  
+  //映画用 子→親
+  MCFT_MOVIE_POKE_NUM,
+  MCFT_MOVIE_FINISH_SEND_POKE,
+
   MCFT_MAX,
 }MB_COMM_FLG_TYPE;
 
@@ -61,6 +68,13 @@ typedef enum
 
 }MB_COMM_CHILD_STATE;
 
+//親から子へ送る映画転送時数値
+typedef enum
+{
+  MCMV_POKETRANS_YES, //親へポケモン送ってOK
+  MCMV_POKETRANS_NO,  //親へポケモン送らない
+  MCMV_POKETRANS_NG,  //親へポケモン送れない(box不足
+}MB_COMM_MOVIE_VALUE;
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -115,8 +129,14 @@ extern const BOOL MB_COMM_GetIsPermitFirstSave( const MB_COMM_WORK* commWork );
 extern const BOOL MB_COMM_GetIsPermitSecondSave( const MB_COMM_WORK* commWork );
 extern const BOOL MB_COMM_GetIsPermitFinishSave( const MB_COMM_WORK* commWork );
 extern const u8 MB_COMM_GetSaveWaitTime( const MB_COMM_WORK* commWork );
-const BOOL MB_COMM_IsPostBoxLeast( const MB_COMM_WORK* commWork );
-const u16 MB_COMM_GetBoxLeast( const MB_COMM_WORK* commWork );
+extern const BOOL MB_COMM_IsPostBoxLeast( const MB_COMM_WORK* commWork );
+extern const u16 MB_COMM_GetBoxLeast( const MB_COMM_WORK* commWork );
+//映画転送用
+extern const BOOL MB_COMM_IsPostMoviePokeNum( const MB_COMM_WORK* commWork );
+extern const u16 MB_COMM_GetMoviePokeNum( const MB_COMM_WORK* commWork );
+extern const BOOL MB_COMM_IsPostMoviePokeConfirm( const MB_COMM_WORK* commWork );
+extern const u16 MB_COMM_GetMoviePokeConfirm( const MB_COMM_WORK* commWork );
+extern const BOOL MB_COMM_IsPostMoviePokeFinishSend( const MB_COMM_WORK* commWork );
 
 extern void MB_COMM_InitSendGameData( MB_COMM_WORK* commWork , void* gameData , u32 size );
 extern void MB_COMM_ClearSendPokeData( MB_COMM_WORK* commWork );

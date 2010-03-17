@@ -109,11 +109,16 @@ struct _MB_COMM_WORK
   u16    isPermitFinishSave:1;
   u16    isInitLowerData:1;
   u16    isPostBoxLeast:1;    //13
+  //映画配信
+  u16    isPostMoviePokeConfirm:1;
+  u16    isPostMoviePokeNum:1;
+  u16    isPostMoviePokeSendFinish:1;
   
-  u16    pad:3;
   
   u8      saveWaitCnt;
   u16     boxLeast;
+  u8      moviePokeConfirm;
+  u16     moviePokeNum;
 };
 
 
@@ -311,6 +316,14 @@ void MB_COMM_InitComm( MB_COMM_WORK* commWork )
   commWork->isPermitSecondSave = FALSE;
   commWork->isPermitFinishSave = FALSE;
   commWork->isInitLowerData = TRUE;
+  commWork->isPostMoviePokeNum = FALSE;
+  commWork->isPostMoviePokeConfirm = FALSE;
+  commWork->isPostMoviePokeSendFinish = FALSE;
+  
+  commWork->moviePokeConfirm = MCMV_POKETRANS_YES;
+  commWork->moviePokeNum = 0;
+  commWork->boxLeast = 0;
+  commWork->saveWaitCnt = 0;
 
   GFL_NET_LDATA_InitSystem( commWork->heapId , FALSE );
 }
@@ -489,6 +502,26 @@ const BOOL MB_COMM_IsPostBoxLeast( const MB_COMM_WORK* commWork )
 const u16 MB_COMM_GetBoxLeast( const MB_COMM_WORK* commWork )
 {
   return commWork->boxLeast;
+}
+const BOOL MB_COMM_IsPostMoviePokeNum( const MB_COMM_WORK* commWork )
+{
+  return commWork->isPostMoviePokeNum;
+}
+const u16 MB_COMM_GetMoviePokeNum( const MB_COMM_WORK* commWork )
+{
+  return commWork->moviePokeNum;
+}
+const BOOL MB_COMM_IsPostMoviePokeConfirm( const MB_COMM_WORK* commWork )
+{
+  return commWork->isPostMoviePokeConfirm;
+}
+const u16 MB_COMM_GetMoviePokeConfirm( const MB_COMM_WORK* commWork )
+{
+  return commWork->moviePokeConfirm;
+}
+const BOOL MB_COMM_IsPostMoviePokeFinishSend( const MB_COMM_WORK* commWork )
+{
+  return commWork->isPostMoviePokeSendFinish;
 }
 
 #pragma mark [>SendDataFunc
@@ -680,6 +713,23 @@ static void MB_COMM_Post_Flag( const int netID, const int size , const void* pDa
   case MCFT_FINISH_SAVE:
     commWork->isFinishChildSave = TRUE;
     break;
+
+  //映画用 親→子
+  case MCFT_MOVIE_POKE_TRANS_CONFIRM:
+    commWork->isPostMoviePokeConfirm = TRUE;
+    commWork->moviePokeConfirm = pkt->value;
+    break;
+
+  //映画配信 子→親----------------------------------
+  case MCFT_MOVIE_POKE_NUM:
+    commWork->isPostMoviePokeNum = TRUE;
+    commWork->moviePokeNum = pkt->value;
+    break;
+  
+  case MCFT_MOVIE_FINISH_SEND_POKE:
+    commWork->isPostMoviePokeSendFinish = TRUE;
+    break;
+
   }
 
 }

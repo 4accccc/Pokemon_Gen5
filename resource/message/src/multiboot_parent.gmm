@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-25T23:00:25"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-16T21:05:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="84" top="107" right="789" bottom="735" maximized="no" rayout="Vertical2">
+	<dialog left="300" top="173" right="1005" bottom="800" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -450,6 +450,26 @@ DSシステムフォントなので
 ポケシフター プログラム</language>
 	</row>
 
+	<row id="MSG_MB_PAERNT_ROM_TITLE_MOVIE">
+		<comment>DLROMの名前
+48文字185ドット以内
+DSシステムフォントなので
+幅が違います。注意！</comment>
+		<language name="JPN" width="208">てんそうマシン　[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="208">てんそうマシン　[1:00:トレーナー名:0]</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_ROM_INFO_MOVIE">
+		<comment>DLROMの説明
+96文字(２行可)199ドット以内
+DSシステムフォントなので
+幅が違います。注意！</comment>
+		<language name="JPN" width="208">ポケットモンスター シャチ
+てんそうマシン プログラム</language>
+		<language name="JPN_KANJI" width="208">ポケットモンスター シャチ
+てんそうマシン プログラム</language>
+	</row>
+
 	<row id="MSG_MB_PAERNT_SYS_01">
 		<language name="JPN" width="208">はい</language>
 		<language name="JPN_KANJI" width="208">はい</language>
@@ -458,6 +478,83 @@ DSシステムフォントなので
 	<row id="MSG_MB_PAERNT_SYS_02">
 		<language name="JPN" width="208">いいえ</language>
 		<language name="JPN_KANJI" width="208">いいえ</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_01">
+		<comment>映画転送用</comment>
+		<language name="JPN" width="208">もうひとつの　ＤＳに
+ポケットモンスターの
+ダイヤモンド・パール・プラチナ・
+ハートゴールド・ソウルシルバー
+いずれかの　ソフトを　セットし
+『ＤＳダウンロードプレイ』から
+『てんそうマシン　[1:00:トレーナー名:0]』を
+えらんでください</language>
+		<language name="JPN_KANJI" width="208">もうひとつの　ＤＳに
+ポケットモンスターの
+ダイヤモンド・パール・プラチナ・
+ハートゴールド・ソウルシルバー
+いずれかの　ソフトを　セットし
+『ＤＳダウンロードプレイ』から
+『てんそうマシン　[1:00:トレーナー名:0]』を
+えらんでください</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_02">
+		<language name="JPN" width="208">てんそうマシン　きどうちゅう！
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="208">てんそうマシン　きどうちゅう！
+しばらく　おまちください</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_03">
+		<language name="JPN" width="208">えいがのポケモンが　[2:02:３桁:0]ひき　います
+[2:02:３桁:0]ひき　ぜんぶを　シャチに▽
+つれてきますが　よろしいですか？</language>
+		<language name="JPN_KANJI" width="208">えいがのポケモンが　[2:02:３桁:0]ひき　います
+[2:02:３桁:0]ひき　ぜんぶを　シャチに▽
+つれてきますが　よろしいですか？</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_04">
+		<language name="JPN" width="208">ボックスに　あきが　ありません！
+ボックスを　せいりしてください！</language>
+		<language name="JPN_KANJI" width="208">ボックスに　あきが　ありません！
+ボックスを　せいりしてください！</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_05">
+		<language name="JPN" width="208">てんそうマシンで
+ポケモンを　てんそうちゅうです！
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="208">てんそうマシンで
+ポケモンを　てんそうちゅうです！
+しばらく　おまちください</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_06">
+		<language name="JPN" width="208">ロックカプセルが　みつかりました。
+ロックカプセルを　ひきとりますか？</language>
+		<language name="JPN_KANJI" width="208">ロックカプセルが　みつかりました。
+ロックカプセルを　ひきとりますか？</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_07">
+		<language name="JPN" width="208">てんそうマシンで
+ロックカプセルを　てんそうちゅうです！
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="208">てんそうマシンで
+ロックカプセルを　てんそうちゅうです！
+しばらく　おまちください</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_08">
+		<language name="JPN" width="208">てんそうマシンの　さぎょうが　おわりました。
+もう１だいの　ＤＳの　でんげんを
+きってください</language>
+		<language name="JPN_KANJI" width="208">てんそうマシンの　さぎょうが　おわりました。
+もう１だいの　ＤＳの　でんげんを
+きってください</language>
 	</row>
 
 	<flowchart-group-list>

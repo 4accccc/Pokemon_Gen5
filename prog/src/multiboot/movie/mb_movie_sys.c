@@ -61,15 +61,22 @@ typedef enum
   MCS_DATA_CONV,
 
   MCS_LOAD_ERROR,
-  MCS_POKE_LACK,  //初期ポケ不足
   
-  MCS_CHECK_ROM_CRC_LOAD,
-  MCS_CHECK_ROM_CRC,
+  MCS_COUNT_POKE,
+  MCS_SEND_COUNT_POKE,
+  MCS_WAIT_SEND_POKE_SELECT,
 
-  //転送・保存
+  //ポケモン転送
   MCS_TRANS_POKE_INIT,
   MCS_TRANS_POKE_SEND,
   MCS_TRANS_POKE_SEND_WAIT,
+
+  MCS_TRANS_POKE_SEND_FINISH,
+
+  MCS_CHECK_LOCK_CAPSULE,
+  
+  MCS_CHECK_ROM_CRC_LOAD,
+  MCS_CHECK_ROM_CRC,
 
   MCS_SAVE_INIT,
   MCS_SAVE_MAIN,
@@ -116,8 +123,8 @@ typedef struct
   MB_MOVIE_STATE  state;
   MB_MOVIE_SUB_STATE  subState;
   GFL_PROCSYS   *procSys;
-  u8 captureNum;
-  u8 saveWaitCnt;
+  u16 moviePokeNum;
+  u8  saveWaitCnt;
   u16 timeoutCnt;
   
   POKEMON_PASO_PARAM *boxPoke[MB_POKE_BOX_TRAY][MB_POKE_BOX_POKE];
@@ -153,6 +160,10 @@ static void MB_MOVIE_LoadResource( MB_MOVIE_WORK *work );
 
 static void MB_MOVIE_DataConvert( MB_MOVIE_WORK *work );
 static const u16 MB_MOVIE_GetLeastPoke( MB_MOVIE_WORK *work );
+static const u16 MB_MOVIE_GetMoviePokeNum( MB_MOVIE_WORK *work );
+static const BOOL MB_MOVIE_CheckMoviePoke( POKEMON_PASO_PARAM *ppp );
+
+
 static const BOOL MB_MOVIE_ErrCheck( MB_MOVIE_WORK *work , const BOOL noFade );
 
 static void MB_MOVIE_SaveInit( MB_MOVIE_WORK *work );
@@ -201,7 +212,7 @@ static void MB_MOVIE_Init( MB_MOVIE_WORK *work )
   PMSND_InitMultiBoot( work->sndData );
   
   work->procSys = GFL_PROC_LOCAL_boot( work->heapId );
-  work->captureNum = 0;
+  work->moviePokeNum = 0;
   work->timeoutCnt = 0;
   work->initData = NULL;
   
@@ -402,14 +413,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
 
   case MCS_DATA_CONV:
     MB_MOVIE_DataConvert( work );
-    if( MB_MOVIE_GetLeastPoke( work ) < MB_CAP_POKE_NUM )
-    {
-      work->state = MCS_POKE_LACK;
-    }
-    else
-    {
-      //work->state = MCS_SELECT_FADEOUT;
-    }
+    work->state = MCS_COUNT_POKE;
     MB_MOVIE_ErrCheck( work , FALSE );
     break;
     
@@ -421,26 +425,101 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
     break;
     
-  case MCS_POKE_LACK:
-    //初期ポケ不足
-    MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_09 , work->initData->msgSpeed );
-    MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
-    MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
-    work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
+  //--------------------------------------------------------
+  //ポケモンチェック
+  case MCS_COUNT_POKE:
+    work->moviePokeNum = MB_MOVIE_GetMoviePokeNum( work );
+    work->state = MCS_SEND_COUNT_POKE;
     break;
   
+  case MCS_SEND_COUNT_POKE:
+    {
+      const BOOL flg = MB_COMM_Send_Flag( work->commWork , MCFT_MOVIE_POKE_NUM , work->moviePokeNum );
+      if( flg == TRUE )
+      {
+        if( work->moviePokeNum > 0 )
+        {
+          work->state = MCS_WAIT_SEND_POKE_SELECT;
+        }
+        else
+        {
+          work->state = MCS_CHECK_LOCK_CAPSULE;
+        }
+      }
+    }
+    break;
+
+  case MCS_WAIT_SEND_POKE_SELECT:
+    {
+      if( MB_COMM_IsPostMoviePokeConfirm( work->commWork ) == TRUE )
+      {
+        const u8 val = MB_COMM_GetMoviePokeConfirm( work->commWork );
+        if( val == MCMV_POKETRANS_YES )
+        {
+          work->state = MCS_TRANS_POKE_INIT;
+        }
+        else
+        {
+          work->state = MCS_CHECK_LOCK_CAPSULE;
+        }
+      }
+    }
+    break;
 
   //--------------------------------------------------------
   //転送・保存フェイズ
   case MCS_TRANS_POKE_INIT:
     {
-      //TODOおそらく対象数分転送を繰り返す
-      u8 i;
+      u8 i,j;
+      u8 setNum = 0;
       MB_COMM_INIT_DATA *commInit = MB_COMM_GetInitData( work->commWork );
-
       MB_COMM_ClearSendPokeData( work->commWork );
+      for( i=0;i<MB_POKE_BOX_TRAY;i++ )
+      {
+        for( j=0;j<MB_POKE_BOX_POKE;j++ )
+        {
+          if( PPP_Get( work->boxPoke[i][j] , ID_PARA_poke_exist , NULL ) == TRUE )
+          {
+            if( MB_MOVIE_CheckMoviePoke( work->boxPoke[i][j] ) == TRUE )
+            {
+              const u32 itemNo = PPP_Get( work->boxPoke[i][j] , ID_PARA_item , NULL );
+              if( itemNo != 0 )
+              {
+                MB_DATA_AddItem( work->dataWork , itemNo );
+                PPP_Put( work->boxPoke[i][j] , ID_PARA_item , 0 );
+              }
+              MB_COMM_AddSendPokeData( work->commWork , work->boxPoke[i][j] );
+              //元データのpppを消す
+              PPP_Clear( work->boxPoke[i][j] );
+              setNum++;
+              if( setNum >= MB_CAP_POKE_NUM )
+              {
+                break;
+              }
+              MB_TPrintf("Trans![%2d:%2d]\n",i,j);
+            }
+          }
+          if( setNum >= MB_CAP_POKE_NUM )
+          {
+            break;
+          }
+        }
+        if( setNum >= MB_CAP_POKE_NUM )
+        {
+          break;
+        }
+      }
+      if( setNum > 0 )
+      {
+        work->state = MCS_TRANS_POKE_SEND;
+      }
+      else
+      {
+        work->state = MCS_TRANS_POKE_SEND_FINISH;
+        MB_DATA_ResetSaveLoad( work->dataWork );
+      }
     }
-    work->state = MCS_TRANS_POKE_SEND;
+
     break;
     
   case MCS_TRANS_POKE_SEND:
@@ -448,8 +527,25 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     {
       if( MB_COMM_Send_PokeData( work->commWork ) == TRUE )
       {
-        MB_DATA_ResetSaveLoad( work->dataWork );
-        work->state = MCS_CHECK_ROM_CRC_LOAD;
+        work->state = MCS_TRANS_POKE_SEND_WAIT;
+      }
+    }
+    break;
+    
+  case MCS_TRANS_POKE_SEND_WAIT:
+    if( MB_COMM_IsPost_PostPoke( work->commWork ) == TRUE )
+    {
+      work->state = MCS_TRANS_POKE_INIT;
+    }
+    break;
+    
+  case MCS_TRANS_POKE_SEND_FINISH:
+    {
+      const BOOL flg = MB_COMM_Send_Flag( work->commWork , MCFT_MOVIE_FINISH_SEND_POKE , 0 );
+      if( flg == TRUE )
+      {
+        work->state = MCS_CHECK_LOCK_CAPSULE;
+        MB_TPrintf("MB_Parent Finish poke trans\n");
       }
     }
     break;
@@ -732,13 +828,6 @@ static void MB_MOVIE_DataConvert( MB_MOVIE_WORK *work )
       MB_UTIL_ConvertPPP( pppSrc , work->boxPoke[i][j] , work->cardType );
     }
   }
-  //ボックス名
-  for( i=0;i<MB_POKE_BOX_TRAY;i++ )
-  {
-    u16 *strSrc = MB_DATA_GetBoxName( work->dataWork,i );
-    
-    PPCONV_ConvertStr( strSrc , work->boxName[i] , 10 );
-  }
 }
 
 //--------------------------------------------------------------
@@ -765,6 +854,60 @@ static const u16 MB_MOVIE_GetLeastPoke( MB_MOVIE_WORK *work )
   
   MB_TPrintf("Child box least poke [%d].\n",num);
   return num;
+}
+//--------------------------------------------------------------
+//  映画ポケの取得
+//--------------------------------------------------------------
+static const u16 MB_MOVIE_GetMoviePokeNum( MB_MOVIE_WORK *work )
+{
+  u8 i,j;
+  u16 num = 0;
+  
+  for( i=0;i<MB_POKE_BOX_TRAY;i++ )
+  {
+    for( j=0;j<MB_POKE_BOX_POKE;j++ )
+    {
+      if( PPP_Get( work->boxPoke[i][j] , ID_PARA_poke_exist , NULL ) == TRUE )
+      {
+        if( MB_MOVIE_CheckMoviePoke( work->boxPoke[i][j] ) == TRUE )
+        {
+          MB_TPrintf("movie poke found!![%d:%d].\n",i,j);
+          num++;
+        }
+      }
+    }
+  }
+  
+  MB_TPrintf("Child box movie poke [%d].\n",num);
+  return num;
+}
+
+static const BOOL MB_MOVIE_CheckMoviePoke( POKEMON_PASO_PARAM *ppp )
+{
+  const u32 monsNo = PPP_Get( ppp, ID_PARA_monsno , NULL );
+  const u32 getPlace = PPP_Get( ppp, ID_PARA_get_place , NULL );
+  const u32 isEvent = PPP_Get( ppp, ID_PARA_event_get_flag , NULL );
+  const BOOL isRare = PPP_CheckRare( ppp );
+  
+  //2010イベント対応
+  if( monsNo == MONSNO_SEREBHI &&
+      getPlace == 3008 &&
+      isEvent == 1 )
+  {
+    return TRUE;
+  }
+  else
+  if( ( monsNo == MONSNO_RAIKOU || monsNo == MONSNO_ENTEI || monsNo == MONSNO_SUIKUN ) &&
+      getPlace == 3008 &&
+      isRare == TRUE &&
+      isEvent == 1 )
+  {
+    return TRUE;
+  }
+  //仮
+  return TRUE;
+  
+  return FALSE;
 }
 
 //--------------------------------------------------------------

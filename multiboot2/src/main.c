@@ -204,7 +204,7 @@ static  void  GameInit(void)
 
   /* グローバルメッセージデータ＆フォント初期化 */
   // ファイルの展開が違うからサイズでかいので・・・
-  //GLOBALMSG_Init( GFL_HEAPID_APP );
+  GLOBALMSG_Init( GFL_HEAPID_APP );
 
   /* poketoolシステム初期化 */
   POKETOOL_InitSystem( GFL_HEAPID_SYSTEM );

@@ -27,6 +27,8 @@ endif
 
 MULTIBOOT_ARC_DIR = ./multiboot/arc/
 MULTIBOOT_DIR = ./multiboot/
+MULTIBOOT2_ARC_DIR = ./multiboot2/arc/
+MULTIBOOT2_DIR = ./multiboot2/
 RESOURCE_DIR = ./resource/
 PROG_DIR = ./prog/
 ARC_DIR = ./prog/arc
@@ -75,6 +77,17 @@ resource:
 
 arc:
 	$(MAKE) -C $(ARC_DIR)
+
+mb:
+	$(MAKE) -C $(RESOURCE_DIR)
+	$(MAKE) -C $(MULTIBOOT_ARC_DIR)
+	$(MAKE) -C $(MULTIBOOT_DIR)
+#	$(MAKE) -C $(MULTIBOOT_DIR) installsrl
+	$(MAKE) -C $(MULTIBOOT2_ARC_DIR)
+	$(MAKE) -C $(MULTIBOOT2_DIR)
+#	$(MAKE) -C $(MULTIBOOT2_DIR) installsrl
+	$(MAKE) -C $(ARC_DIR)
+	$(MAKE) -C $(PROG_DIR)
 
 test:
 	$(MAKE) CONVERTUSER=true clean

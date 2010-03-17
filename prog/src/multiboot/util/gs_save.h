@@ -109,6 +109,7 @@ typedef struct {
 #define GS_BOX_MAX_TRAY      (18)
 #define GS_BOX_MAX_POS       (5*6)
 #define GS_BOX_TRAYNAME_BUFSIZE  (20)  // 日本語８文字＋EOM。海外版用の余裕も見てこの程度。
+#define GS_BOX_TRAY_ALL_USE_BIT	(0b111111111111111111)
 
 typedef struct
 {

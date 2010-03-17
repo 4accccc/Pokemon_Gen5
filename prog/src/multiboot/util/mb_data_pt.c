@@ -78,8 +78,8 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
     dataWork->lockID_ = OS_GetLockID();
     GF_ASSERT( dataWork->lockID_ != OS_LOCK_ID_ERROR );
     //プラチナは4MBフラッシュ
-    CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS );
     CARD_LockBackup( (u16)dataWork->lockID_ );
+    CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS );
     CARD_ReadFlashAsync( 0x0000 , dataWork->pData , saveSize , NULL , NULL );
     dataWork->subSeq++;
     }

@@ -77,16 +77,24 @@ BOOL  MB_DATA_GS_LoadData( MB_DATA_WORK *dataWork )
     dataWork->lockID_ = OS_GetLockID();
     GF_ASSERT( dataWork->lockID_ != OS_LOCK_ID_ERROR );
     //プラチナは4MBフラッシュ
+    CARD_LockBackup( (u16)dataWork->lockID_ );
+#if PM_DEBUG
     if( dataWork->isDummyCard == TRUE )
     {
-      //CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS );
-      CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS_IRC );
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+      {
+        CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS );
+      }
+      else
+      {
+        CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS_IRC );
+      }
     }
     else
+#endif
     {
       CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS_IRC );
     }
-    CARD_LockBackup( (u16)dataWork->lockID_ );
     CARD_ReadFlashAsync( 0x0000 , dataWork->pData , saveSize , NULL , NULL );
     dataWork->subSeq++;
     }
@@ -284,6 +292,8 @@ BOOL  MB_DATA_GS_SaveData( MB_DATA_WORK *dataWork )
     {
       u8 i,bi;
       GS_BOX_DATA *pBox = (GS_BOX_DATA*)dataWork->pBoxData;
+      //ボックス使用ビットを立てる
+      pBox->UseBoxBits = GS_BOX_TRAY_ALL_USE_BIT;
 #if 0      
       //ポケモンデータの暗号化
       for( bi=0;bi<BOX_MAX_TRAY;bi++)
@@ -646,6 +656,20 @@ static  BOOL MB_DATA_GS_CheckDataCorrect( GS_SAVE_FOOTER **pFooterArr , MB_DATA_
   boxDataNum = MB_DATA_GS_CompareFooterData(  pFooterArr[ GS_BOX_FIRST ] ,isCorrect[ GS_BOX_FIRST ],
                            pFooterArr[ GS_BOX_SECOND ] ,isCorrect[ GS_BOX_SECOND ] ,
                            &dataWork->boxLoadPos );
+#if PM_DEBUG
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  {
+    for( i=0;i<4;i++ )
+    {
+      isCorrect[i] = TRUE;
+    }
+    dataWork->mainLoadPos = DDS_SECOND;
+    dataWork->boxLoadPos = DDS_SECOND;
+    MB_DATA_TPrintf("forceLoad!!\n");
+    return TRUE;
+  }
+#endif //PM_DEBUG
+
   if( mainDataNum == 0 || boxDataNum == 0 )
   {
     return FALSE;

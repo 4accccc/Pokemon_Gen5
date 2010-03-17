@@ -72,8 +72,8 @@ typedef enum
 typedef enum
 {
   MMYR_NONE,
-  MMYR_RET1,  //è„ÇÃÇŸÇ§
-  MMYR_RET2,  //â∫ÇÃÇŸÇ§
+  MMYR_RET1,  //è„ÇÃÇŸÇ§ÅEYes
+  MMYR_RET2,  //â∫ÇÃÇŸÇ§ÅENo
 }MB_MSG_YESNO_RET;
 
 typedef enum
@@ -105,9 +105,17 @@ extern void MB_MSG_MessageHide( MB_MSG_WORK *work );
 extern void MB_MSG_MessageCreateWordset( MB_MSG_WORK *work );
 extern void MB_MSG_MessageDeleteWordset( MB_MSG_WORK *work );
 extern void MB_MSG_MessageWordsetName( MB_MSG_WORK *msgWork , const u32 bufId , MYSTATUS *myStatus);
-extern void MB_MSG_DispYesNo( MB_MSG_WORK *work , const MB_MSG_YESNO_TYPE type );
+extern void MB_MSG_MessageWordsetNumber( MB_MSG_WORK *msgWork , const u32 bufId , const u32 num , const u32 keta );
+
+extern void MB_MSG_DispYesNo( MB_MSG_WORK *msgWork , const MB_MSG_YESNO_TYPE type );
 extern void MB_MSG_ClearYesNo( MB_MSG_WORK *msgWork );
-extern const MB_MSG_YESNO_RET MB_MSG_UpdateYesNo( MB_MSG_WORK *work );
+extern const MB_MSG_YESNO_RET MB_MSG_UpdateYesNo( MB_MSG_WORK *msgWork );
+
+#ifndef MULTI_BOOT_MAKE  //í èÌéûèàóù
+extern void MB_MSG_DispYesNoUpper( MB_MSG_WORK *msgWork , const MB_MSG_YESNO_TYPE type );
+extern void MB_MSG_ClearYesNoUpper( MB_MSG_WORK *msgWork );
+extern const MB_MSG_YESNO_RET MB_MSG_UpdateYesNoUpper( MB_MSG_WORK *msgWork );
+#endif //MULTI_BOOT_MAKE  //í èÌéûèàóù
 
 extern GFL_MSGDATA* MB_MSG_GetMsgHandle( MB_MSG_WORK *msgWork );
 extern WORDSET* MB_MSG_GetWordSet( MB_MSG_WORK *msgWork );

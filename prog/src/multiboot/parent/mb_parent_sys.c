@@ -23,6 +23,7 @@
 
 #include "arc_def.h"
 #include "mb_parent.naix"
+#include "wifi_login.naix"
 
 #include "../../../../resource/fldmapdata/script/palpark_scr_local.h"
 
@@ -47,7 +48,7 @@
 #define MB_PARENT_PLT_SUB_OBJ_APP  (0)
 
 #define MB_PARENT_PLT_SUB_BG  (0)
-#define MB_PARENT_PLT_SUB_BAR (3)
+#define MB_PARENT_PLT_SUB_BAR (8)
 
 #define MB_PARENT_FIRST_TIMEOUT (60*15) //通常5秒以内で接続するのができなかった。
 
@@ -69,6 +70,7 @@ typedef enum
   MPS_SEND_INIT_NET,
   MPS_SEND_INIT_DATA,
 
+  //ポケシフター専用
   MPS_SEND_GAMEDATA_INIT,
   MPS_SEND_GAMEDATA_SEND,
 
@@ -78,6 +80,7 @@ typedef enum
   MPS_WAIT_FINISH_CAPTURE,
   MPS_WAIT_SEND_POKE,
   MPS_WAIT_CRC_CHECK,
+  //ポケシフター専用ここまで
 
   MPS_SAVE_INIT,
   MPS_SAVE_MAIN,
@@ -91,6 +94,9 @@ typedef enum
 
   MPS_FAIL_FIRST_CONNECT,
   MPS_WAIT_FAIL_FIRST_CONNECT,
+  
+  //映画ポケ転送更新
+  MPS_UPDATE_MOVIE_MODE,
 }MB_PARENT_STATE;
 
 typedef enum
@@ -121,6 +127,25 @@ typedef enum
   MPSS_SAVE_WAIT_FINISH_SAVE_SYNC,
   
 }MB_PARENT_SUB_STATE;
+
+//映画転送時のチェック
+typedef enum
+{
+  MPMS_WAIT_COUNT_POKE, //ポケモンチェック中
+  
+  MPMS_CONFIRM_POKE_WAIT_MSG,
+  MPMS_CONFIRM_POKE_WAIT_YESNO,
+  MPMS_CONFIRM_POKE_SEND_YESNO,
+
+  MPMS_POST_POKE_WAIT,
+  MPMS_POST_POKE_RET_POST,
+  
+  MPMS_BOX_NOT_ENOUGH,
+  MPMS_BOX_NOT_ENOUGH_WAIT,
+
+  MPMS_WAIT_CHECK_LOCK_CAPSULE,
+}
+MB_PARENT_MOVIE_STATE;
 
 typedef enum
 {
@@ -155,11 +180,17 @@ typedef struct
   
   MB_PARENT_STATE state;
   u8              subState;
+  u8              movieState;
   u8              confirmState;
   u8              saveWaitCnt;
+  u8              mode;         //ポケシフターか映画配信か？
   u16             timeOutCnt;   //初期のROM接続時にタイムアウトをチェックする
   BOOL            isSendGameData;
   BOOL            isSendRom;
+  MB_MSG_YESNO_RET yesNoRet;
+  
+  //映画用
+  BOOL isBoxNotEnough;
   
   MISC  *miscSave;
   
@@ -178,6 +209,8 @@ typedef struct
   GFL_CLWK    *clwkReturn;
   
   MBGameRegistry gameRegistry;  //MB配信用のデータ
+  
+  
   
 }MB_PARENT_WORK;
 
@@ -220,8 +253,11 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work );
 static BOOL MP_PARENT_WhCallBack( BOOL bResult );
 
 static void MB_PARENT_SaveInit( MB_PARENT_WORK *work );
+static void MB_PARENT_SaveInitPoke( MB_PARENT_WORK *work );
 static void MB_PARENT_SaveTerm( MB_PARENT_WORK *work );
 static void MB_PARENT_SaveMain( MB_PARENT_WORK *work );
+
+static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work );
 
 static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state );
 
@@ -234,10 +270,20 @@ FS_EXTERN_OVERLAY(dev_wireless);
 static void MB_PARENT_Init( MB_PARENT_WORK *work )
 {
   work->state = MPS_FADEIN;
+  work->movieState = MPMS_WAIT_COUNT_POKE;
+  work->mode = work->initWork->mode;
   
   MB_PARENT_InitGraphic( work );
   MB_PARENT_LoadResource( work );
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_PARENT_FRAME_SUB_MSG , MB_PARENT_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
+
+  if( work->mode == MPM_POKE_SHIFTER )
+  {
+    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_PARENT_FRAME_SUB_MSG , MB_PARENT_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
+  }
+  else
+  {
+    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_PARENT_FRAME_MSG , MB_PARENT_FRAME_MSG , FILE_MSGID_MB , FALSE );
+  }
   MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   
   work->commWork = MB_COMM_CreateSystem( work->heapId );
@@ -252,7 +298,10 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   }
   
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_PARENT_VBlankFunc , work , 8 );
-  GFUser_SetVIntrFunc( MB_PARENT_VSync );
+  if( work->mode == MPM_POKE_SHIFTER )
+  {
+    GFUser_SetVIntrFunc( MB_PARENT_VSync );
+  }
 
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
   GFL_NET_ReloadIcon();
@@ -265,7 +314,10 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
 static void MB_PARENT_Term( MB_PARENT_WORK *work )
 {
   GFL_TCB_DeleteTask( work->vBlankTcb );
-  GFUser_ResetVIntrFunc();
+  if( work->mode == MPM_POKE_SHIFTER )
+  {
+    GFUser_ResetVIntrFunc();
+  }
 
   if( work->gameData != NULL )
   {
@@ -376,11 +428,19 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       work->initData.highScore = MISC_GetPalparkHighscore(work->miscSave);
       if( MB_COMM_Send_InitData( work->commWork , &work->initData ) == TRUE )
       {
-        work->state = MPS_SEND_GAMEDATA_INIT;
+        if( work->mode == MPM_POKE_SHIFTER )
+        {
+          work->state = MPS_SEND_GAMEDATA_INIT;
+        }
+        else
+        {
+          work->state = MPS_UPDATE_MOVIE_MODE;
+        }
       }
     }
     break;
     
+    //ポケシフター用処理
   case MPS_SEND_GAMEDATA_INIT:
     {
       FSFile file;
@@ -573,6 +633,13 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       MB_COMM_ExitComm( work->commWork );
       work->state = MPS_WAIT_EXIT_COMM;
     }
+  
+  //----------------------------------------------------------------
+  //  映画転送
+  //----------------------------------------------------------------
+  case MPS_UPDATE_MOVIE_MODE:
+    MB_PARENT_UpdateMovieMode( work );
+    break;
   }
   
   MB_MSG_MessageMain( work->msgWork );
@@ -735,25 +802,52 @@ static void MB_PARENT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlan
 //--------------------------------------------------------------
 static void MB_PARENT_LoadResource( MB_PARENT_WORK *work )
 {
-  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_MB_PARENT , work->heapId );
+  if( work->mode == MPM_POKE_SHIFTER )
+  {
+    //ポケシフター
+    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_MB_PARENT , work->heapId );
 
-  //下画面
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_parent_bg_sub_NCLR , 
-                    PALTYPE_SUB_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_parent_bg_sub_NCGR ,
-                    MB_PARENT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_parent_bg_sub_NSCR , 
-                    MB_PARENT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
-  
-  //上画面
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_parent_bg_main_NCLR , 
-                    PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_parent_bg_main_NCGR ,
-                    MB_PARENT_FRAME_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_parent_bg_main_NSCR , 
-                    MB_PARENT_FRAME_BG ,  0 , 0, FALSE , work->heapId );
-  
-  GFL_ARC_CloseDataHandle( arcHandle );
+    //下画面
+    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_parent_bg_sub_NCLR , 
+                      PALTYPE_SUB_BG , 0 , 0 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_parent_bg_sub_NCGR ,
+                      MB_PARENT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_parent_bg_sub_NSCR , 
+                      MB_PARENT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
+    
+    //上画面
+    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_parent_bg_main_NCLR , 
+                      PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_parent_bg_main_NCGR ,
+                      MB_PARENT_FRAME_BG , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_parent_bg_main_NSCR , 
+                      MB_PARENT_FRAME_BG ,  0 , 0, FALSE , work->heapId );
+    
+    GFL_ARC_CloseDataHandle( arcHandle );
+  }
+  else
+  {
+    //映画転送
+    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_WIFI_LOGIN , work->heapId );
+
+    //下画面
+    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_wifi_login_conect_NCLR , 
+                      PALTYPE_SUB_BG , 0 , 0 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_conect_sub_NCGR ,
+                      MB_PARENT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_conect_sub_NSCR , 
+                      MB_PARENT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
+    
+    //上画面
+    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_wifi_login_conect_NCLR , 
+                      PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_conect_NCGR ,
+                      MB_PARENT_FRAME_BG , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_conect_01_NSCR , 
+                      MB_PARENT_FRAME_BG ,  0 , 0, FALSE , work->heapId );
+    
+    GFL_ARC_CloseDataHandle( arcHandle );
+  }
 
   
   //共通素材
@@ -824,14 +918,29 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
   MB_MSG_MessageCreateWordset( work->msgWork );
   MB_MSG_MessageWordsetName( work->msgWork , 0 , GAMEDATA_GetMyStatus(work->initWork->gameData) );
   {
-    STRBUF *workStr = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_TITLE );
+    STRBUF *workStr;
+    if( work->mode == MPM_POKE_SHIFTER )
+    {
+      workStr = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_TITLE );
+    }
+    else
+    {
+      workStr = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_TITLE_MOVIE );
+    }
     titleStr = GFL_STR_CreateBuffer( 128 , work->heapId );
     WORDSET_ExpandStr( MB_MSG_GetWordSet(work->msgWork) , titleStr , workStr );
     GFL_STR_DeleteBuffer( workStr );
   }
   MB_MSG_MessageDeleteWordset( work->msgWork );
 
-  infoStr  = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_INFO );
+  if( work->mode == MPM_POKE_SHIFTER )
+  {
+    infoStr  = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_INFO );
+  }
+  else
+  {
+    infoStr  = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_INFO_MOVIE );
+  }
   titleLen = GFL_STR_GetBufferLength( titleStr );
   infoLen = GFL_STR_GetBufferLength( infoStr );
   
@@ -906,7 +1015,14 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE );
         MB_MSG_MessageCreateWordset( work->msgWork );
         MB_MSG_MessageWordsetName( work->msgWork , 0 , GAMEDATA_GetMyStatus(work->initWork->gameData) );
-        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 , MSGSPEED_GetWait() );
+        if( work->mode == MPM_POKE_SHIFTER )
+        {
+          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 , MSGSPEED_GetWait() );
+        }
+        else
+        {
+          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_01 , MSGSPEED_GetWait() );
+        }
         MB_MSG_MessageDeleteWordset( work->msgWork );
 
         work->subState = MPSS_SEND_IMAGE_MBSYS_MAIN;
@@ -920,7 +1036,14 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
   case MPSS_SEND_IMAGE_WAIT_BOOT_INIT:
     MB_MSG_MessageHide( work->msgWork );
     MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
-    MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_02 , MSGSPEED_GetWait() );
+    if( work->mode == MPM_POKE_SHIFTER )
+    {
+      MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_PAERNT_02 );
+    }
+    else
+    {
+      MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_PAERNT_MOVIE_02 );
+    }
     MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
     GFL_CLACT_WK_SetAnmSeq( work->clwkReturn , APP_COMMON_BARICON_RETURN_OFF );
     work->subState = MPSS_SEND_IMAGE_WAIT_BOOT;
@@ -980,7 +1103,7 @@ static void MP_PARENT_SendImage_MBPInit( MB_PARENT_WORK *work )
 
   const u16 channel = WH_GetMeasureChannel();
   
-  if( work->initWork->mode == MPM_POKE_SHIFTER )
+  if( work->mode == MPM_POKE_SHIFTER )
   {
     GFL_STD_MemCopy( &mbGameListPokeShifter , &work->gameRegistry , sizeof(MBGameRegistry) );
   }
@@ -1258,34 +1381,12 @@ static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state )
 //--------------------------------------------------------------
 static void MB_PARENT_SaveInit( MB_PARENT_WORK *work )
 {
-  u8 i;
-  SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork(work->initWork->gameData);
-  BOX_MANAGER *boxMng = GAMEDATA_GetBoxManager(work->initWork->gameData);
-  ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( work->initWork->gameData );
   const u8 pokeNum = MB_COMM_GetPostPokeNum( work->commWork );
+
   MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_PAERNT_07 );
   MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
-  for( i=0;i<pokeNum;i++ )
-  {
-    const POKEMON_PASO_PARAM *ppp = MB_COMM_GetPostPokeData( work->commWork , i );
-    const BOOL ret = BOXDAT_PutPokemon( boxMng , ppp );
-    POKEMON_PARAM *pp = PP_CreateByPPP( ppp , work->heapId );
-    ZUKANSAVE_SetPokeGet( zukan_savedata , pp );
-    GFL_HEAP_FreeMemory( pp );
-    
-    GF_ASSERT_MSG( ret == TRUE , "Multiboot parent Box is full!!\n");
-#if DEB_ARI
-    {
-      char name[32];
-      STRBUF *nameStr = GFL_STR_CreateBuffer( 32 , work->heapId );
-      PPP_Get( ppp , ID_PARA_nickname , nameStr );
-      DEB_STR_CONV_StrBufferToSjis( nameStr , name , 32 );
-      MB_TPrintf("[%d][%s]\n",i,name);
-      GFL_STR_DeleteBuffer( nameStr );
-    }
-#endif
-  }
   
+  MB_PARENT_SaveInitPoke( work );
   //スコアチェック
   {
     const u16 nowScore = MISC_GetPalparkHighscore(work->miscSave);
@@ -1310,6 +1411,35 @@ static void MB_PARENT_SaveInit( MB_PARENT_WORK *work )
   }
   
   MB_TPrintf( "MB_Parent Save Init\n" );
+}
+
+//映画のためにポケを分離
+static void MB_PARENT_SaveInitPoke( MB_PARENT_WORK *work )
+{
+  u8 i;
+  BOX_MANAGER *boxMng = GAMEDATA_GetBoxManager(work->initWork->gameData);
+  ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( work->initWork->gameData );
+  const u8 pokeNum = MB_COMM_GetPostPokeNum( work->commWork );
+  for( i=0;i<pokeNum;i++ )
+  {
+    const POKEMON_PASO_PARAM *ppp = MB_COMM_GetPostPokeData( work->commWork , i );
+    const BOOL ret = BOXDAT_PutPokemon( boxMng , ppp );
+    POKEMON_PARAM *pp = PP_CreateByPPP( ppp , work->heapId );
+    ZUKANSAVE_SetPokeGet( zukan_savedata , pp );
+    GFL_HEAP_FreeMemory( pp );
+    
+    GF_ASSERT_MSG( ret == TRUE , "Multiboot parent Box is full!!\n");
+#if DEB_ARI
+    {
+      char name[32];
+      STRBUF *nameStr = GFL_STR_CreateBuffer( 32 , work->heapId );
+      PPP_Get( ppp , ID_PARA_nickname , nameStr );
+      DEB_STR_CONV_StrBufferToSjis( nameStr , name , 32 );
+      MB_TPrintf("[%d][%s]\n",i,name);
+      GFL_STR_DeleteBuffer( nameStr );
+    }
+#endif
+  }
 }
 
 //--------------------------------------------------------------
@@ -1432,6 +1562,137 @@ static void MB_PARENT_SaveMain( MB_PARENT_WORK *work )
     break;
   }
 }
+
+#pragma mark [>proc movie
+static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
+{
+  //共通部分から分岐してくる。
+  switch( work->movieState )
+  {
+  case MPMS_WAIT_COUNT_POKE:
+    if( MB_COMM_IsPostMoviePokeNum( work->commWork ) == TRUE )
+    {
+      const u16 num = MB_COMM_GetMoviePokeNum( work->commWork );
+      if( num > 0 )
+      {
+        MB_MSG_MessageHide( work->msgWork );
+
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
+        MB_MSG_MessageCreateWordset( work->msgWork );
+        MB_MSG_MessageWordsetNumber( work->msgWork , 0 , num , 2 );
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_03 , MSGSPEED_GetWait() );
+        MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+        MB_MSG_MessageDeleteWordset( work->msgWork );
+
+        work->movieState = MPMS_CONFIRM_POKE_WAIT_MSG;
+      }
+      else
+      {
+        work->movieState = MPMS_WAIT_CHECK_LOCK_CAPSULE;
+      }
+
+      MB_TPrintf( "MB_Parent post movie poke[%d]\n",num );
+    }
+    break;
+  
+  case MPMS_CONFIRM_POKE_WAIT_MSG:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      MB_MSG_DispYesNoUpper( work->msgWork , MMYT_MID );
+      work->movieState = MPMS_CONFIRM_POKE_WAIT_YESNO;
+    }
+    break;
+  
+  case MPMS_CONFIRM_POKE_WAIT_YESNO:
+    {
+      const MB_MSG_YESNO_RET ret = MB_MSG_UpdateYesNoUpper( work->msgWork );
+      if( ret == MMYR_RET1 || ret == MMYR_RET2 )
+      {
+        const u16 num = MB_COMM_GetMoviePokeNum( work->commWork );
+        BOX_MANAGER *boxMng = GAMEDATA_GetBoxManager(work->initWork->gameData);
+        const u16 leastBoxNum = BOXDAT_GetEmptySpaceTotal( boxMng );
+
+        work->yesNoRet = ret;
+        MB_MSG_ClearYesNoUpper( work->msgWork );
+        work->movieState = MPMS_CONFIRM_POKE_SEND_YESNO;
+        
+        if( leastBoxNum < num )
+        {
+          work->isBoxNotEnough = TRUE;
+        }
+        else
+        {
+          work->isBoxNotEnough = FALSE;
+        }
+      }
+    }
+    break;
+    
+  case MPMS_CONFIRM_POKE_SEND_YESNO:
+    {
+      BOOL ret;
+      MB_COMM_MOVIE_VALUE sendVal;
+      if( work->yesNoRet == MMYR_RET1 )
+      {
+        if( work->isBoxNotEnough == TRUE )
+        {
+          sendVal = MCMV_POKETRANS_NG;
+        }
+        else
+        {
+          sendVal = MCMV_POKETRANS_YES;
+        }
+      }
+      else
+      {
+        sendVal = MCMV_POKETRANS_NO;
+      }
+      ret = MB_COMM_Send_Flag( work->commWork , MCFT_MOVIE_POKE_TRANS_CONFIRM , sendVal );
+      if( ret == TRUE )
+      {
+        if( sendVal == MCMV_POKETRANS_YES )
+        {
+          work->movieState = MPMS_POST_POKE_WAIT;
+        }
+        else
+        if( sendVal == MCMV_POKETRANS_NG )
+        {
+          work->movieState = MPMS_BOX_NOT_ENOUGH;
+        }
+        else
+        {
+          work->movieState = MPMS_WAIT_CHECK_LOCK_CAPSULE;
+        }
+      }
+    }
+    break;
+    
+  case MPMS_POST_POKE_WAIT:
+    if( MB_COMM_IsPostPoke( work->commWork ) == TRUE )
+    {
+      MB_PARENT_SaveInitPoke( work );
+      work->movieState = MPMS_POST_POKE_RET_POST;
+    }
+    if( MB_COMM_IsPostMoviePokeFinishSend( work->commWork ) == TRUE )
+    {
+      work->movieState = MPMS_WAIT_CHECK_LOCK_CAPSULE;
+      MB_TPrintf( "MB_Parent Finish poke trans\n" );
+    }
+    break;
+    
+  case MPMS_POST_POKE_RET_POST:
+    if( MB_COMM_Send_Flag( work->commWork , MCFT_POST_POKE , 0 ) == TRUE )
+    {
+      MB_COMM_ClearSendPokeData( work->commWork );
+      work->movieState = MPMS_POST_POKE_WAIT;
+    }
+    break;
+
+  case MPMS_WAIT_CHECK_LOCK_CAPSULE:
+    break;
+  }
+}
+
 
 #pragma mark [>proc func
 static GFL_PROC_RESULT MB_PARENT_ProcInit( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
