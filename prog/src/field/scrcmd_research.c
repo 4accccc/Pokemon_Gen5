@@ -286,13 +286,15 @@ VMCMD_RESULT EvCmdStartResearch( VMHANDLE *core, void *wk )
    // ダミーID
    if( qID[i] == QUESTION_ID_DUMMY ) { continue; }
 
-   // 開始時の回答人数をセーブ
+   // 開始時(現時点)の回答人数をセーブ
    {
-     int count = QuestionnaireWork_GetTotalCount( qSave, qID[i] );
-     MISC_SetResearchStartCount( misc, i, count );
+     int totalCount = QuestionnaireWork_GetTotalCount( qSave, qID[i] );
+     int todayCount = QuestionnaireWork_GetTodayCount( qSave, qID[i] );
+     int sumCount = totalCount + sumCount  
+     MISC_SetResearchStartCount( misc, i, sumCount );
 
      // DEBUG:
-     OS_TFPrintf( 3, "_START_RESEARCH: count=%d\n", count );
+     OS_TFPrintf( 3, "_START_RESEARCH: sumCount=%d\n", sumCount );
    }
  }
 
@@ -340,7 +342,7 @@ VMCMD_RESULT EvCmdFinishResearch( VMHANDLE *core, void *wk )
 
 //-----------------------------------------------------------------------------
 /**
- * @brief 質問に対する, いままでの回答人数を取得する
+ * @brief 質問に対する, 現時点の回答人数を取得する
  * @param  core
  * @param  wk
  * @retval VMCMD_RESULT
@@ -357,13 +359,19 @@ VMCMD_RESULT EvCmdGetTotalCountOfQuestion( VMHANDLE *core, void *wk )
   int i;
   u16 qID;
   u16* retWork;
+  int totalCount;
+  int todayCount;
+  int sumCount;
 
   // コマンドの引数を取得
   qID     = SCRCMD_GetVMWorkValue( core, work ); // 第一引数: 質問ID
   retWork = SCRCMD_GetVMWork( core, work );      // 第二引数: 回答人数の格納先
 
   // いままでの回答人数を取得
-  *retWork = QuestionnaireWork_GetTotalCount( qSave, qID );
+  totalCount = QuestionnaireWork_GetTotalCount( qSave, qID );
+  todayCount = QuestionnaireWork_GetTodayCount( qSave, qID );
+  sumCount   = totalCount + todayCount;
+  *retWork   = sumCount;
 
   // DEBUG:
   OS_TFPrintf( 3, "_GET_RESEARCH_TOTAL_COUNT ==> %d\n", *retWork );
@@ -440,18 +448,21 @@ VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
     int ansNum;
     int ansIdx;
     int maxCount;
-    int count;
 
     ansNum = AnswerNum_question[ qID ];
     maxCount = 0;
     for( ansIdx=0; ansIdx < ansNum; ansIdx++ )
     {
-      count = QuestionnaireWork_GetTotalAnswerNum( qSave, qID, ansIdx+1 );
-      if( maxCount <= count ) {
-        maxCount = count;
+      int totalCount = QuestionnaireWork_GetTotalAnswerNum( qSave, qID, ansIdx+1 );
+      int todayCount = QuestionnaireWork_GetTotalAnswerNum( qSave, qID, ansIdx+1 );
+      int sumCount   = totalCount + todayCount;
+      if( maxCount <= sumCount ) {
+        maxCount = sumCount;
         majorityAnswerID = AnswerID_question[ qID ][ ansIdx ];
       }
-      OS_TFPrintf( 3, "questionID=%d, answerIdx=%d, count=%d\n", qID, ansIdx, count );
+      OS_TFPrintf( 3, 
+          "questionID=%d, answerIdx=%d, sumCount=%d(%d+%d)\n", 
+          qID, ansIdx, sumCount, totalCount, todayCiount );
     }
   }
 
