@@ -48,7 +48,8 @@ enum{
 
 // BG指定
 #define BV_BGFRAME_U_MSG    ( GFL_BG_FRAME0_S )
-#define BV_BGFRAME_U_BG     ( GFL_BG_FRAME1_S )
+#define BV_BGFRAME_U_MARK   ( GFL_BG_FRAME1_S )
+#define BV_BGFRAME_U_BG     ( GFL_BG_FRAME2_S )
 #define BV_BGFRAME_D_MSG    ( GFL_BG_FRAME0_M )
 #define BV_BGFRAME_D_BUTTON ( GFL_BG_FRAME1_M )
 #define BV_BGFRAME_D_BG     ( GFL_BG_FRAME2_M )
@@ -84,6 +85,7 @@ typedef struct {
   u16 page,page_max;                // 現在の表示ページ
 
   int trainer_num;                  // バトルサブウェイデータに存在していた人数
+  int scrol_bg;                     // BGスクロール用のワーク
 
 #ifdef PM_DEBUG
   GFL_MSGDATA   *debugname;
@@ -214,6 +216,10 @@ GFL_PROC_RESULT BadgeViewProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *
   
   PrintSystem_Main( wk );         // 文字列描画メイン
   GFL_CLACT_SYS_Main();           // セルアクターメイン
+
+  if(++wk->scrol_bg >= 256){
+    wk->scrol_bg=0;
+  }
   
   return GFL_PROC_RES_CONTINUE;
 }
@@ -274,6 +280,15 @@ GFL_PROC_RESULT BadgeViewProc_End( GFL_PROC * proc, int *seq, void *pwk, void *m
 //----------------------------------------------------------------------------------
 static void VBlankFunc( GFL_TCB *tcb, void * work )
 {
+  BADGEVIEW_WORK * wk = (BADGEVIEW_WORK*)work;
+  int scr;
+  
+  scr = -(wk->scrol_bg/2);
+  GFL_BG_SetScroll( BV_BGFRAME_U_BG, GFL_BG_SCROLL_X_SET, scr );
+  GFL_BG_SetScroll( BV_BGFRAME_U_BG, GFL_BG_SCROLL_Y_SET, scr );
+  GFL_BG_SetScroll( BV_BGFRAME_D_BG, GFL_BG_SCROLL_X_SET, scr);
+  GFL_BG_SetScroll( BV_BGFRAME_D_BG, GFL_BG_SCROLL_Y_SET, scr);
+
   // セルアクター
   GFL_CLACT_SYS_VBlankFunc();
 
@@ -418,6 +433,7 @@ static void VramBankSet(void)
 // 初期化を行うBG面
 static const int bgframe_init_tbl[]={
   BV_BGFRAME_U_MSG,
+  BV_BGFRAME_U_MARK,
   BV_BGFRAME_U_BG,
   BV_BGFRAME_D_MSG,
   BV_BGFRAME_D_BUTTON,
@@ -454,10 +470,15 @@ static void BgInit(BADGEVIEW_WORK *wk)
         GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
         GX_BG_EXTPLTT_01,      0, 0, 0, FALSE
       },
+      { // サブ画面：リーグマーク背景
+        0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+        GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x128,
+        GX_BG_EXTPLTT_01,    1, 0, 0, FALSE
+      },
       { // サブ画面：背景
         0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x128,
-        GX_BG_EXTPLTT_01,    1, 0, 0, FALSE
+        GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x128,
+        GX_BG_EXTPLTT_01,    2, 0, 0, FALSE
       },
       { // メイン画面：文字
         0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -488,10 +509,16 @@ static void BgInit(BADGEVIEW_WORK *wk)
     }
     
     // 残りのBG面をOFFに
-    GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
   }
+  
+  // 半透明設定
+  G2S_SetBlendAlpha(
+    GX_BLEND_PLANEMASK_BG1 ,
+    GX_BLEND_PLANEMASK_BG2,
+    7, 16 );
+
 }
 //----------------------------------------------------------------------------------
 /**
@@ -508,6 +535,7 @@ static void BgExit(BADGEVIEW_WORK *wk)
   }
   GFL_BG_Exit();
 
+  G2S_BlendNone();
 }
 
 //----------------------------------------------------------------------------------
@@ -522,12 +550,18 @@ static void BgGraphicInit(BADGEVIEW_WORK *wk)
   ARCHANDLE * handle = wk->g_handle;
 
   // サブ画面背景転送
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_trainer_case_badge_bg_02_NCGR,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_trainer_case_badge_bg01_NCGR,
                                         BV_BGFRAME_U_BG, 0, 0, FALSE, HEAPID_LEADERBOARD );
-  GFL_ARCHDL_UTIL_TransVramScreen(      handle, NARC_trainer_case_badge_bg03_NSCR,
+  GFL_ARCHDL_UTIL_TransVramScreen(      handle, NARC_trainer_case_badge_bg02_NSCR,
                                         BV_BGFRAME_U_BG, 0, 0, FALSE, HEAPID_LEADERBOARD );
   GFL_ARCHDL_UTIL_TransVramPalette(     handle, NARC_trainer_case_badge_bg02_NCLR, 
                                         PALTYPE_SUB_BG, 0, 0, HEAPID_LEADERBOARD );
+
+  // サブ画面背景(リーグマーク）転送
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_trainer_case_badge_bg_02_NCGR,
+                                        BV_BGFRAME_U_MARK, 0, 0, FALSE, HEAPID_LEADERBOARD );
+  GFL_ARCHDL_UTIL_TransVramScreen(      handle, NARC_trainer_case_badge_bg03_NSCR,
+                                        BV_BGFRAME_U_MARK, 0, 0, FALSE, HEAPID_LEADERBOARD );
 
   // メイン画面背景転送
   GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_trainer_case_badge_bg01_NCGR,
@@ -1322,14 +1356,14 @@ static int _get_print_num( int page, int max, int trainer_num )
 //----------------------------------------------------------------------------------
 static void NamePlatePrint_1Page( BADGEVIEW_WORK *wk )
 {
-  int i,num;
+  int num;
   STRBUF *strbuf = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, HEAPID_LEADERBOARD );
 
   // 表示する総数取得
   num = _get_print_num( wk->page, wk->page_max, wk->trainer_num );
 
   // プレート描画
-  BgFramePrint( wk, i, strbuf, strbuf, strbuf );
+  //BgFramePrint( wk, i, strbuf, strbuf, strbuf );
 
   GFL_STR_DeleteBuffer( strbuf );
 }

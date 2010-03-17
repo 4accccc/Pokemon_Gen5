@@ -619,7 +619,7 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
 
   }
   
-  if(++wk->scrl_ct >= 128){
+  if(++wk->scrl_ct >= 256){
     wk->scrl_ct = 0;
   }
   GFL_CLACT_SYS_Main();
@@ -1922,30 +1922,38 @@ static void normal_sign_func( TR_CARD_WORK *wk )
     { TP_PAINTS_Y, TP_PAINTS_Y+TP_PAINTS_H, TP_PAINTS_X, TP_PAINTS_X+TP_PAINTS_W }, // サイン面
     {GFL_UI_TP_HIT_END,0,0,0}
   };
-    u32 x,y;
-    if(GFL_UI_TP_HitCont( Scrol_TpRect )==0){
-      if(GFL_UI_TP_GetTrg()){
-        GFL_UI_TP_GetPointTrg( &x, &y );
-        wk->touch_sy    = y;
-        wk->scrol_start = wk->scrol_point;
-      }
-      if(GFL_UI_TP_GetCont()){
-        GFL_UI_TP_GetPointCont( &x, &y );
-        wk->scrol_point = wk->scrol_start - (wk->touch_sy-y);
-//        OS_Printf("sy=%d,y=%d,start=%d,point=%d\n",wk->touch_sy,y,wk->scrol_start,wk->scrol_point);
-      }
-      // 範囲外チェック
-      if(wk->scrol_point<-(SCORE_LINE_MAX-4)*16){
-        wk->scrol_point = -(SCORE_LINE_MAX-4)*16;
-      }else if(wk->scrol_point>0){
-        wk->scrol_point = 0;
-      }
-      if(wk->old_scrol_point!=wk->scrol_point){
-        TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 1 );
-      }
-      wk->old_scrol_point=wk->scrol_point;
+  u32 x,y;
+  
+  if(GFL_UI_TP_HitCont( Scrol_TpRect )==0){
+    if(GFL_UI_TP_GetTrg()){
+      GFL_UI_TP_GetPointTrg( &x, &y );
+      wk->touch_sy    = y;
+      wk->scrol_start = wk->scrol_point;
+    }
+    if(GFL_UI_TP_GetCont()){
+      GFL_UI_TP_GetPointCont( &x, &y );
+      wk->scrol_point = wk->scrol_start - (wk->touch_sy-y);
+//      OS_Printf("sy=%d,y=%d,start=%d,point=%d\n",wk->touch_sy,y,wk->scrol_start,wk->scrol_point);
+    }
+    // 範囲外チェック
+    if(wk->scrol_point<-(SCORE_LINE_MAX-4)*16){
+      wk->scrol_point = -(SCORE_LINE_MAX-4)*16;
+    }else if(wk->scrol_point>0){
+      wk->scrol_point = 0;
     }
 
+    // スクロール値の変更がある場合はレコードリスト再描画
+    if(wk->old_scrol_point!=wk->scrol_point){
+      wk->card_list_col = 1;
+      TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 1, 1 );
+    }
+    wk->old_scrol_point=wk->scrol_point;
+  }else{
+    if(wk->card_list_col==1){
+      TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 1, 0 );
+      wk->card_list_col = 0;
+    }  
+  }
 }
 
 //----------------------------------------------------------------------------------
@@ -1975,7 +1983,7 @@ static void large_sign_func( TR_CARD_WORK *wk )
         wk->scrol_point = 0;
       }
       if(wk->old_scrol_point!=wk->scrol_point){
-        TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 1 );
+        TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 1, 1 );
       }
       wk->old_scrol_point=wk->scrol_point;
     }
@@ -2159,14 +2167,12 @@ static void VBlankFunc( GFL_TCB *tcb, void *work )
   TR_CARD_WORK* wk = (TR_CARD_WORK*)work;
   int scr;
 
-#if 0
   //背景スクロール
-  scr = -(wk->scrl_ct);
+  scr = -(wk->scrl_ct/2);
   GFL_BG_SetScroll( TRC_BG_BACK, GFL_BG_SCROLL_X_SET,scr );
   GFL_BG_SetScroll( TRC_BG_BACK, GFL_BG_SCROLL_Y_SET,scr );
   GFL_BG_SetScroll( TRC_BG_BADGE_BACK, GFL_BG_SCROLL_X_SET, scr);
   GFL_BG_SetScroll( TRC_BG_BADGE_BACK, GFL_BG_SCROLL_Y_SET, scr);
-#endif
 
   if(wk->aff_req){
     CardRevAffineSet(wk);

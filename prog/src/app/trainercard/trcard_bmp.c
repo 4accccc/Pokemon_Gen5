@@ -230,7 +230,7 @@ static void WriteNumData( TR_CARD_WORK* wk,
               const u32 inNum,
               const u8 inDigit,
               const StrNumberDispType inDisptype,
-              const u32 wait);
+              const u32 col);
 static void WriteNumDataWithCredit( TR_CARD_WORK* wk,
               GFL_BMPWIN *inWin,
               const u32 inBmpWidth,
@@ -240,14 +240,16 @@ static void WriteNumDataWithCredit( TR_CARD_WORK* wk,
               const u32 inNum,
               const u8 inDigit,
               const StrNumberDispType inDisptype,
-              const u32 credit);
+              const u32 credit,
+              int col);
 static void WriteNumDateYYMMDD( TR_CARD_WORK* wk,
               GFL_BMPWIN *inWin,
               const u32 inBmpWidth,
               const u32 inRightSpace,
               const u32 inStartY,
               STRBUF *buff,
-              const StrNumberDispType inDisptype);
+              const StrNumberDispType inDisptype,
+              int col);
 
 
 static void WriteNumDataFill( TR_CARD_WORK* wk,
@@ -563,7 +565,7 @@ void TRCBmp_WriteTrWinInfoRev(TR_CARD_WORK* wk,GFL_BMPWIN *win[], const TR_CARD_
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(win[i]) , 0, 0, wk->CPrmBuf[i], wk->fontHandle );
   }
   
-  TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 0 );
+  TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 0, 0 );
 
 #if 0
   {
@@ -622,6 +624,27 @@ void TRCBmp_WriteTrWinInfoRev(TR_CARD_WORK* wk,GFL_BMPWIN *win[], const TR_CARD_
 #endif
 }
 
+static const PRINTSYS_LSB col_tbl[]={
+  PRINTSYS_MACRO_LSB(1,2,0),
+  PRINTSYS_MACRO_LSB(4,3,0),
+};
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief カラー対応１行描画関数
+ *
+ * @param   wk    
+ * @param   win   
+ * @param   x   
+ * @param   y   
+ * @param   strbuf    
+ * @param   col   
+ */
+//----------------------------------------------------------------------------------
+static void LinePrint( GFL_BMPWIN *win, TR_CARD_WORK *wk, int x, int y, STRBUF *strbuf, int col )
+{
+  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(win), x, y, strbuf, wk->fontHandle,  col_tbl[col]);
+}
 
 //----------------------------------------------------------------------------------
 /**
@@ -633,29 +656,32 @@ void TRCBmp_WriteTrWinInfoRev(TR_CARD_WORK* wk,GFL_BMPWIN *win[], const TR_CARD_
  * @param   y   
  */
 //----------------------------------------------------------------------------------
-static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, int y )
+static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, int y, int col )
 {
   TR_CARD_DATA *inTrCardData = wk->TrCardData;
   STRBUF *str = wk->DigitBuf;
 
   switch(line){
   case SCORE_LINE_ID: // ID
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06], wk->fontHandle );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06], wk->fontHandle );
+    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_06], col );
     WriteNumData( wk, win, BMP_WIDTH_TYPE0, 0, y, str, inTrCardData->TrainerID, 
-                  TR_ID_DIGIT, STR_NUM_DISP_ZERO,0);
+                  TR_ID_DIGIT, STR_NUM_DISP_ZERO, col);
     break;
   case SCORE_LINE_MONEY:  // おこづかい
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+1], wk->fontHandle );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+1], wk->fontHandle );
+    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_06+1], col );
     WriteNumDataWithCredit( wk, win,
             BMP_WIDTH_TYPE2, YEN_OFS, y, str, inTrCardData->Money, MONEY_DIGIT,
-            STR_NUM_DISP_SPACE,1);
+            STR_NUM_DISP_SPACE,1, col);
 
     break;
   case SCORE_LINE_START_DATE_1: // はじめたひ１行目
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+2], wk->fontHandle );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+2], wk->fontHandle );
+    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_06+2], col );
     break;
   case SCORE_LINE_START_DATE_2: // はじめたひ２行目
-    WriteNumDateYYMMDD( wk, win, BMP_WIDTH_TYPE3, 0, y, str, STR_NUM_DISP_ZERO );
+    WriteNumDateYYMMDD( wk, win, BMP_WIDTH_TYPE3, 0, y, str, STR_NUM_DISP_ZERO, col );
     break;
 
 #if 0
@@ -671,24 +697,29 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
 #endif
     break;
   case SCORE_LINE_FIRST_CHAMPION_1: // はじめてのでんどういり1行目
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+3], wk->fontHandle );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+3], wk->fontHandle );
+    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_06+3], col );
     if (inTrCardData->Clear_m != 0){  //月が0月でなければ、クリアしたとみなす
       WriteNumData( wk, win,
               BMP_WIDTH_TYPE3, 8*1, y, str, inTrCardData->Clear_d, DAY_DIGIT,
-              STR_NUM_DISP_ZERO,0);   //日
+              STR_NUM_DISP_ZERO,col);   //日
       WriteNumData( wk, win,
               BMP_WIDTH_TYPE3, 8*4, y, str, inTrCardData->Clear_m, MONTH_DIGIT,
-              STR_NUM_DISP_ZERO,0);   //月
+              STR_NUM_DISP_ZERO,col);   //月
       WriteNumData( wk, win,
               BMP_WIDTH_TYPE3, 8*7, y, str, inTrCardData->Clear_y, YEAR_DIGIT,
-              STR_NUM_DISP_ZERO,0);   //年
+              STR_NUM_DISP_ZERO,col);   //年
     }else{
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(win) 
-            , BMP_WIDTH_TYPE3-(8*9), y, wk->CPrmBuf[MSG_TCARD_13], wk->fontHandle );
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(win) 
-            , BMP_WIDTH_TYPE3-(8*6), y, wk->CPrmBuf[MSG_TCARD_13], wk->fontHandle );
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(win) 
-            , BMP_WIDTH_TYPE3-(8*3), y, wk->CPrmBuf[MSG_TCARD_13], wk->fontHandle );
+//      PRINTSYS_Print( GFL_BMPWIN_GetBmp(win) 
+//            , BMP_WIDTH_TYPE3-(8*9), y, wk->CPrmBuf[MSG_TCARD_13], wk->fontHandle );
+//      PRINTSYS_Print( GFL_BMPWIN_GetBmp(win) 
+//            , BMP_WIDTH_TYPE3-(8*6), y, wk->CPrmBuf[MSG_TCARD_13], wk->fontHandle );
+//      PRINTSYS_Print( GFL_BMPWIN_GetBmp(win) 
+//            , BMP_WIDTH_TYPE3-(8*3), y, wk->CPrmBuf[MSG_TCARD_13], wk->fontHandle );
+      LinePrint( win, wk, BMP_WIDTH_TYPE3-(8*9), y, wk->CPrmBuf[MSG_TCARD_13], col );
+      LinePrint( win, wk, BMP_WIDTH_TYPE3-(8*6), y, wk->CPrmBuf[MSG_TCARD_13], col );
+      LinePrint( win, wk, BMP_WIDTH_TYPE3-(8*3), y, wk->CPrmBuf[MSG_TCARD_13], col );
+
     }
 
     break;
@@ -696,49 +727,57 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
     if (inTrCardData->Clear_m != 0){  //月が0月でなければ、クリアしたとみなす
       WriteNumData( wk, win,
               BMP_WIDTH_TYPE3, 0, y, str, inTrCardData->ClearTime_m, TIME_M_DIGIT,
-              STR_NUM_DISP_ZERO,0);   //分
+              STR_NUM_DISP_ZERO,col);   //分
       WriteNumData( wk, win,
               BMP_WIDTH_TYPE3, 8*3, y, str, inTrCardData->ClearTime_h, TIME_H_DIGIT,
-              STR_NUM_DISP_SPACE,0);  //時
+              STR_NUM_DISP_SPACE,col);  //時
     }else{
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(win) 
-            , BMP_WIDTH_TYPE3-(8*5), y, wk->CPrmBuf[MSG_TCARD_13], wk->fontHandle );
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(win) 
-            , BMP_WIDTH_TYPE3-(8*2), y, wk->CPrmBuf[MSG_TCARD_13], wk->fontHandle );
+//      PRINTSYS_Print( GFL_BMPWIN_GetBmp(win) 
+//            , BMP_WIDTH_TYPE3-(8*5), y, wk->CPrmBuf[MSG_TCARD_13], wk->fontHandle );
+//      PRINTSYS_Print( GFL_BMPWIN_GetBmp(win) 
+//            , BMP_WIDTH_TYPE3-(8*2), y, wk->CPrmBuf[MSG_TCARD_13], wk->fontHandle );
+      LinePrint( win, wk, BMP_WIDTH_TYPE3-(8*5), y, wk->CPrmBuf[MSG_TCARD_13], col );
+      LinePrint( win, wk, BMP_WIDTH_TYPE3-(8*2), y, wk->CPrmBuf[MSG_TCARD_13], col );
     }
     break;
   case SCORE_LINE_COMM_NUM: // つうしんした回数
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+4], wk->fontHandle );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+4], wk->fontHandle );
+    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_06+4], col );
+
     //通信回数
     WriteNumDataWithCredit( wk, win,
             BMP_WIDTH_TYPE3, 8*2, y, str, inTrCardData->CommNum, COMM_DIGIT,
-            STR_NUM_DISP_SPACE,0);
+            STR_NUM_DISP_SPACE,0,col);
 
     break;
   case SCORE_LINE_COMM_BATTLE_NUM:  // 通信対戦回数
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+5], wk->fontHandle );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+5], wk->fontHandle );
+    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_06+5], col );
     //通信回数
     WriteNumDataWithCredit( wk, win,
             BMP_WIDTH_TYPE3, 8*2, y, str, inTrCardData->CommBattleNum, COMM_DIGIT,
-            STR_NUM_DISP_SPACE,0);
+            STR_NUM_DISP_SPACE,0,col);
     break;
   case SCORE_LINE_COMM_WIN_NUM:
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+6], wk->fontHandle );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+6], wk->fontHandle );
+    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_06+6], col );
     WriteNumDataWithCredit( wk, win,
             BMP_WIDTH_TYPE3, 8*2, y, str, inTrCardData->CommBattleWin, BATTLE_DIGIT,
-            STR_NUM_DISP_SPACE,0);
+            STR_NUM_DISP_SPACE,0,col);
     break;
   case SCORE_LINE_COMM_LOSE_NUM:  // 通信対戦で勝った回数
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+7], wk->fontHandle );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+7], wk->fontHandle );
+    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_06+7], col );
     WriteNumDataWithCredit( wk, win,
             BMP_WIDTH_TYPE3, 8*2, y, str, inTrCardData->CommBattleLose, BATTLE_DIGIT,
-            STR_NUM_DISP_SPACE,0);
+            STR_NUM_DISP_SPACE,0,col);
     break;
   case SCORE_LINE_COMM_TRADE_NUM:  // 通信対戦で負けた回数
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+8], wk->fontHandle );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+8], wk->fontHandle );
+    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_06+8], col );
     WriteNumDataWithCredit( wk, win,
             BMP_WIDTH_TYPE3, 8*2, y, str, inTrCardData->CommTrade, TRADE_DIGIT,
-            STR_NUM_DISP_SPACE,0);
+            STR_NUM_DISP_SPACE,0,col);
     break;
   }
 
@@ -754,9 +793,10 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
  * @param   wk    
  * @param   scrol_point   
  * @param   trans_sw
+ * @param   col
  */
 //=============================================================================================
-void TRCBmp_WriteScoreListWin( TR_CARD_WORK *wk, int scrol_point, int trans_sw )
+void TRCBmp_WriteScoreListWin( TR_CARD_WORK *wk, int scrol_point, int trans_sw, int col )
 {
   GFL_BMPWIN *win = wk->win[TRC_BMPWIN_SCORE_LIST];
   int start,y,i;
@@ -769,7 +809,7 @@ void TRCBmp_WriteScoreListWin( TR_CARD_WORK *wk, int scrol_point, int trans_sw )
   OS_Printf("scrol=%d start=%d y=%d\n",scrol_point, start, y);
 
   for(i=0;i<5;i++){
-    print_score_list_line( wk, win,start+i, y+16*i );
+    print_score_list_line( wk, win,start+i, y+16*i, col );
   }
   
   if(trans_sw){
@@ -800,6 +840,8 @@ void TRCBmp_NonDispWinInfo(GFL_BMPWIN *win[], const u8 start, const u8 end)
 //  GFL_BG_ClearScreen( MSG_BG );
 }
 
+
+
 //--------------------------------------------------------------------------------------------
 /**
  * 数字表示
@@ -825,19 +867,21 @@ static void WriteNumData( TR_CARD_WORK* wk,
               const u32 inNum,
               const u8 inDigit,
               const StrNumberDispType inDisptype,
-              const u32 wait)
+              const u32 col)
 {
   u32 len;
 
   STRTOOL_SetNumber( buff, inNum, inDigit, inDisptype, STR_NUM_CODE_DEFAULT );
   len = PRINTSYS_GetStrWidth(buff,wk->fontHandle,0);
 
-//  GF_STR_PrintColor(  inWin, FONT_SYSTEM, buff,
-//            inBmpWidth-(len+inRightSpace), inStartY,
-//            0, TR_MSGCOLOR, NULL);  
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(inWin) 
-        , inBmpWidth-(len+inRightSpace), inStartY
-        , buff, wk->fontHandle );
+//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(inWin) 
+//        , inBmpWidth-(len+inRightSpace), inStartY
+//        , buff, wk->fontHandle );
+
+  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(inWin), 
+                        inBmpWidth-(len+inRightSpace), inStartY,
+                        buff, wk->fontHandle, col_tbl[col] );
+
 }
 
 
@@ -867,7 +911,8 @@ static void WriteNumDataWithCredit( TR_CARD_WORK* wk,
               const u32 inNum,
               const u8 inDigit,
               const StrNumberDispType inDisptype,
-              const u32 credit)
+              const u32 credit,
+              int col)
 {
   u32 len;
 
@@ -875,9 +920,9 @@ static void WriteNumDataWithCredit( TR_CARD_WORK* wk,
   WORDSET_ExpandStr( wk->wordset, buff, wk->CreditBuf[credit] );
   len = PRINTSYS_GetStrWidth(buff,wk->fontHandle,0);
 
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(inWin) 
+  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(inWin) 
         , inBmpWidth-(len+inRightSpace), inStartY
-        , buff, wk->fontHandle );
+        , buff, wk->fontHandle, col_tbl[col] );
 }
 
 
@@ -903,7 +948,8 @@ static void WriteNumDateYYMMDD( TR_CARD_WORK* wk,
               const u32 inRightSpace,
               const u32 inStartY,
               STRBUF *buff,
-              const StrNumberDispType inDisptype)
+              const StrNumberDispType inDisptype,
+              int col)
 {
   u32 len;
 
@@ -913,9 +959,9 @@ static void WriteNumDateYYMMDD( TR_CARD_WORK* wk,
   WORDSET_ExpandStr( wk->wordset, buff, wk->CreditBuf[TR_CARD_CREDIT_YYMMDD] );
   len = PRINTSYS_GetStrWidth(buff,wk->fontHandle,0);
 
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(inWin) 
+  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(inWin) 
         , inBmpWidth-(len+inRightSpace), inStartY
-        , buff, wk->fontHandle );
+        , buff, wk->fontHandle, col_tbl[col] );
 }
 
 //--------------------------------------------------------------------------------------------

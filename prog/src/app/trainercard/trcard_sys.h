@@ -173,6 +173,8 @@ typedef struct TR_CARD_WORK_tag
   TOUCH_INFO      AllTouchResult; // 通信で取得したサンプリング結果（このデータで描画する
   TOUCH_INFO      OldTouch;       // 前回からのポイント履歴
   u8  pen;                        // サインの色(0:黒 1:白）
+  u8  card_list_col;              // カード裏面のリスト描画色を黄色にする（0:黒 1:黄色）
+
 }TR_CARD_WORK;
 
 extern GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
