@@ -141,6 +141,39 @@ VMCMD_RESULT EvCmdBgmPlayCheck( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * BGM終了待ち ウェイト部分
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL EvWaitBgm( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK*    sc = SCRCMD_WORK_GetScriptWork( work );
+
+  if( PMSND_CheckPlayBGM() == FALSE )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+//--------------------------------------------------------------
+/**
+ * BGM終了待ち
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmWait( VMHANDLE *core, void *wk )
+{
+  VMCMD_SetWait( core, EvWaitBgm );
+  return VMCMD_RESULT_SUSPEND;
+
+}
+
 #if 0 //wb
 //--------------------------------------------------------------
 /**
