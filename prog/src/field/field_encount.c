@@ -411,7 +411,7 @@ void BTL_FIELD_SITUATION_SetFromFieldStatus( BTL_FIELD_SITUATION* sit, GAMEDATA*
   sit->bgType = ZONEDATA_GetBattleBGType(zone_id);
   {
     MAPATTR attr = FIELD_PLAYER_GetMapAttr( fplayer );
-    sit->bgAttr = FIELD_BATTLE_GetBattleAttrID(MAPATTR_GetAttrValue(attr));
+    sit->bgAttr = MAPATTR_GetBattleAttrID(MAPATTR_GetAttrValue(attr));
   }
   //タイムゾーン取得
   sit->zoneID = zone_id;
@@ -477,7 +477,7 @@ static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
     if( enc_type == ENC_TYPE_EFFECT ) return ENC_LOCATION_GROUND_SP;
 
     //地面ハイレベル
-    if( MAPATTR_VALUE_CheckEncountGrassB(attr_value) ){
+    if( MAPATTR_VALUE_CheckEncountGrassHigh(attr_value) ){
       return ENC_LOCATION_GROUND_H;
     }
   }
