@@ -530,7 +530,13 @@
 #define	TRID_MINI_11   ( 517 ) 
 #define	TRID_ELITEW_19   ( 518 ) 
 #define	TRID_ELITEM_19   ( 519 ) 
-#define TRID_MAX  ( 520 )
+#define	TRID_SCHOOLB_09   ( 520 ) 
+#define	TRID_ELITEW_20   ( 521 ) 
+#define	TRID_ELITEM_20   ( 522 ) 
+#define	TRID_VETERANW_07   ( 523 ) 
+#define	TRID_MADAM_05   ( 524 ) 
+#define	TRID_GENTLE_05   ( 525 ) 
+#define TRID_MAX  ( 526 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
