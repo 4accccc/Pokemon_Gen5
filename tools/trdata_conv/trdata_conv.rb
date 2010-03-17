@@ -18,8 +18,9 @@
 
 	u32			aibit;						//AIパターン
 
-  u16     hp_recover_flag :1;
-  u16                     :15;
+  u8      hp_recover_flag :1;
+  u8                      :7;
+  u8      gold;
 
   u16     gift_item;
 
@@ -289,7 +290,7 @@ end
 
     #データタイプ抽出
     if data_type[ split_data[ PARA::DATA_TYPE ] ] == nil
-			printf("TrainerName:%s\n定義されていないデータタイプです：%s\n", split_data[ PARA::TR_NAME ], split_data[ PARA::DATA_TYPE ] )
+			printf("Num:%d\nTrainerName:%s\n定義されていないデータタイプです：%s\n", i, split_data[ PARA::TR_NAME ], split_data[ PARA::DATA_TYPE ] )
       exit( 1 )
     end
 
@@ -477,7 +478,12 @@ end
       hp_recover_flag = 1
     end
 
-    data = [ hp_recover_flag ].pack( "S" )
+    data = [ hp_recover_flag ].pack( "C" )
+	  data.size.times{ |c|
+		  fp_trdata.printf("%c",data[ c ])
+	  }
+
+    data = [ split_data[ PARA::GOLD ].to_i ].pack( "C" )
 	  data.size.times{ |c|
 		  fp_trdata.printf("%c",data[ c ])
 	  }
