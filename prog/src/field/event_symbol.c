@@ -167,7 +167,12 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
 		break;
   case SEQ_RESULT:
     //PDC_RESULT‚ÌŒ‹‰ÊŽæ“¾
-    *(esb->result_ptr) = TRUE;
+    if(PDC_GetResult( esb->pdc_setup ) == PDC_RESULT_CAPTURE){
+      *(esb->result_ptr) = TRUE;
+    }
+    else{
+      *(esb->result_ptr) = FALSE;
+    }
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(pdc) );
     (*seq)++;
     break;
