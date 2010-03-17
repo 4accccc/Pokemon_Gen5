@@ -189,10 +189,10 @@ static inline void DEBUG_Br_MusicalLook_GetPhotData( MUSICAL_SHOT_DATA *shotData
   shotData->title[11] = L'ƒŠ';
   shotData->title[12] = GFL_STR_GetEOMCode();
 
-  shotData->shotPoke[0].monsno = MONSNO_PIKATYUU;
-  shotData->shotPoke[1].monsno = MONSNO_PIKUSII;
-  shotData->shotPoke[2].monsno = MONSNO_PURUNSU;
-  shotData->shotPoke[3].monsno = MONSNO_ONOKKUSU;
+  shotData->shotPoke[0].monsno = 1;
+  shotData->shotPoke[1].monsno = 2;
+  shotData->shotPoke[2].monsno = 3;
+  shotData->shotPoke[3].monsno = 4;
 
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
