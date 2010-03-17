@@ -29,6 +29,8 @@
 #define D07R0301_TR_GROUND_04              8
 #define D07R0301_TR_GROUND_05              9
 #define D07R0301_TR_GROUND_06             10
+#define D07R0301_TR_GROUND_07             11
+#define D07R0301_FLD_ITEM_02              12
 
 #endif //ZONE_D07R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
