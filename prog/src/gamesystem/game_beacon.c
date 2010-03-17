@@ -316,7 +316,6 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
       if(search_question_id != INVESTIGATING_QUESTION_NULL){
         answer = QuestionnaireAnswer_ReadBit(&info->question_answer, search_question_id);
         if(answer != 0){  //0は無回答
-          answer--; //項目Noは無回答の"0"を除いた0始まりの為、-1する
           QuestionnaireWork_AddTodayCount(questsave, search_question_id, 1);
           QuestionnaireWork_AddTodayAnswerNum(questsave, search_question_id, answer, 1);
           bsys->new_entry = TRUE;
@@ -574,8 +573,9 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
 {
   GAMEBEACON_INFO *info = &send->info;
   MYSTATUS *myst = GAMEDATA_GetMyStatus(gamedata);
-  const MISC *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gamedata) );
-  const MYPMS_DATA *mypms = SaveData_GetMyPmsDataConst( GAMEDATA_GetSaveControlWork(gamedata) );
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+  const MISC *misc = SaveData_GetMisc( sv );
+  const MYPMS_DATA *mypms = SaveData_GetMyPmsDataConst( sv );
   OSOwnerInfo owner_info;
   PMS_DATA pms;
   
@@ -602,6 +602,12 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   
   info->thanks_recv_count = MISC_CrossComm_GetThanksRecvCount(misc);
   info->suretigai_count = MISC_CrossComm_GetSuretigaiCount(misc);
+  
+  {
+    QUESTIONNAIRE_SAVE_WORK *qsw = SaveData_GetQuestionnaire(sv);
+    QUESTIONNAIRE_ANSWER_WORK *ans = Questionnaire_GetAnswerWork(qsw);
+    GFL_STD_MemCopy(ans, &info->question_answer, sizeof(QUESTIONNAIRE_ANSWER_WORK));
+  }
   
   MYPMS_GetPms( mypms, MYPMS_PMS_TYPE_INTRODUCTION, &pms );
   GAMEBEACON_Set_Details_IntroductionPms(&pms);
@@ -700,6 +706,22 @@ BOOL GAMEBEACON_Get_NewEntry(void)
 
 //==================================================================
 /**
+ * アンケート用：自分の最新のアンケートデータをビーコン送信バッファに反映する
+ *
+ * @param   my_ans		自分のアンケートデータへのポインタ
+ */
+//==================================================================
+void GAMEBEACON_SendDataUpdate_Questionnaire(QUESTIONNAIRE_ANSWER_WORK *my_ans)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  GAMEBEACON_INFO *info = &send->info;
+
+  GFL_STD_MemCopy(my_ans, &info->question_answer, sizeof(QUESTIONNAIRE_ANSWER_WORK));
+  send->beacon_update = TRUE;
+}
+
+//==================================================================
+/**
  * デバッグ用：強制で新しい人物とすれ違ったフラグを立てる
  */
 //==================================================================
@@ -709,6 +731,7 @@ void DEBUG_GAMEBEACON_Set_NewEntry(void)
   GameBeaconSys->new_entry = TRUE;
 }
 #endif
+
 
 
 //==============================================================================

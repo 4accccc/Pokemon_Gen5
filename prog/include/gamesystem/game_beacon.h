@@ -13,6 +13,7 @@
 #include "print/wordset.h"
 #include "field/gpower_id.h"
 #include "gamesystem/playerwork.h"  //typedef ZONEID
+#include "savedata/questionnaire_save.h"
 
 
 //==============================================================================
@@ -192,6 +193,7 @@ extern void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms);
 //  アンケート
 //--------------------------------------------------------------
 extern BOOL GAMEBEACON_Get_NewEntry(void);
+extern void GAMEBEACON_SendDataUpdate_Questionnaire(QUESTIONNAIRE_ANSWER_WORK *my_ans);
 #ifdef PM_DEBUG
 extern void DEBUG_GAMEBEACON_Set_NewEntry(void);
 #endif

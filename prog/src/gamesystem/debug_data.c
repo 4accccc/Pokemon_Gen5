@@ -385,6 +385,8 @@ static void DEBUG_QuestionnaireParam( GAMEDATA *gamedata )
   for(question_id = 0; question_id < QUESTION_ID_NUM; question_id++){
     QuestionnaireAnswer_WriteBit(answork, question_id, GFUser_GetPublicRand(2) + 1);
   }
+
+  GAMEBEACON_SendDataUpdate_Questionnaire(answork);
 }
 
 //--------------------------------------------------------------
