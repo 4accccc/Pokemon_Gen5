@@ -233,6 +233,9 @@ WF2DMAP_OBJWK* WF2DMAP_OBJWkNew( WF2DMAP_OBJSYS* p_sys, const WF2DMAP_OBJDATA* c
 	p_wk->last_pos.x = cp_data->x;		// 前のx座標
 	p_wk->last_pos.y = cp_data->y;		// 前のy座標
 	p_wk->playid = cp_data->playid;	// プレイヤーID
+
+  OS_TPrintf("---WF2DMAP_OBJWkNew-----\n");
+  
 	p_wk->status = cp_data->status;	// 状態
 	p_wk->way = cp_data->way;		// 方向
 	p_wk->charaid = cp_data->charaid;// キャラクター

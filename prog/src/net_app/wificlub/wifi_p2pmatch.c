@@ -612,7 +612,7 @@ static GFL_DISP_VRAM _defVBTbl = {
 
 static void _debugChangeState(WIFIP2PMATCH_WORK* wk, int state, int line)
 {
-  NET_PRINT("p2p: %d\n",line);
+  OS_TPrintf("p2p: %d\n",line);
   wk->seq = state;
 }
 
@@ -1204,7 +1204,7 @@ static void _commStateChange(WIFIP2PMATCH_WORK * wk,int status,int gamemode)
     GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(),TRUE);  //接続不可
     break;
   }
-  NET_PRINT("status %d gamemode %d\n",status,gamemode);
+  OS_TPrintf("status %d gamemode %d\n",status,gamemode);
 
 
 }
@@ -2328,7 +2328,7 @@ static void _errorDisp(WIFIP2PMATCH_WORK* wk)
       msgno = dwc_error_0012;
     }
   }
-  NET_PRINT("エラーメッセージ %d \n",msgno);
+  OS_TPrintf("エラーメッセージ %d \n",msgno);
   EndMessageWindowOff(wk);
   WORDSET_RegisterNumber(wk->WordSet, 0, no,
                          5, NUMBER_DISPTYPE_ZERO, NUMBER_CODETYPE_DEFAULT);
@@ -2555,7 +2555,7 @@ static int WifiP2PMatch_Connecting( WIFIP2PMATCH_WORK *wk, int seq )
   }
 
   if(GFL_NET_StateIsWifiLoginState()){
-    NET_PRINT("WIFI接続完了\n");
+    OS_TPrintf("WIFI接続完了\n");
     if( wk->bInitMessage ){  // 初回接続時にはセーブシーケンスへ
       //            SaveData_SaveParts(wk->pSaveData, SVBLK_ID_NORMAL);  //セーブ中
       _CHANGESTATE(wk,WIFIP2PMATCH_FIRST_ENDMSG);
@@ -2592,7 +2592,7 @@ static int WifiP2PMatch_FirstSaving( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   }
   if(GFL_NET_StateIsWifiLoginState()){
-    NET_PRINT("WIFI接続完了\n");
+    OS_TPrintf("WIFI接続完了\n");
     if( wk->bInitMessage ){
       _CHANGESTATE(wk,WIFIP2PMATCH_FIRST_ENDMSG);
     }
@@ -2630,7 +2630,7 @@ static int WifiP2PMatch_FirstSaving2( WIFIP2PMATCH_WORK *wk, int seq )
     }
   }
   if(GFL_NET_StateIsWifiLoginState()){
-    NET_PRINT("WIFI接続完了\n");
+    OS_TPrintf("WIFI接続完了\n");
     if( wk->bInitMessage ){
       _CHANGESTATE(wk,WIFIP2PMATCH_FIRST_ENDMSG);
     }
@@ -2665,13 +2665,8 @@ static int WifiP2PMatch_ReConnectingWait( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   }
 
-  NET_PRINT("GFL_NET_StateIsWifiLoginState %d  \n",GFL_NET_StateIsWifiLoginState());
-  NET_PRINT("GFL_NET_StateGetWifiStatus %d  \n",GFL_NET_StateGetWifiStatus());
-  NET_PRINT("GFL_NET_StateIsWifiDisconnect %d  \n",GFL_NET_StateIsWifiDisconnect());
-  NET_PRINT("GFL_NET_IsConnectMember %d  \n",GFL_NET_IsConnectMember(GFL_NET_NETID_SERVER));
-
   if(GFL_NET_StateIsWifiLoginMatchState()){
-    NET_PRINT("WIFI接続完了\n");
+    OS_TPrintf("WIFI接続完了\n");
     if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
       MCRSYS_AllDelMoveObjWork(wk);
     }
@@ -2824,8 +2819,6 @@ static BOOL WIFIP2PModeCheck( int friendIndex ,void* pWork)
   myGamemode = WIFI_STATUS_GetGameMode(pMatch);
   targetGamemode = WIFI_STATUS_GetGameMode(p_status);
 
-  OS_TPrintf("%d %d\n",mySt, targetSt);
-
   if(myGamemode == targetGamemode){
     return TRUE;
   }
@@ -2920,7 +2913,6 @@ static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
     WIFI_MCR_Init( &wk->matchroom, HEAPID_WIFIP2PMATCH, p_handle,
                    obj_code, wk->friend_num, ARCID_WIFIP2PMATCH,wk->clactSet, wk->renddata );
 
-    OS_TPrintf("自分を出す--\n");
     p_moveobj = WIFI_MCR_SetPlayer( &wk->matchroom, obj_code );
 
     MCRSYS_SetMoveObjWork( wk, p_moveobj ); // 登録したワークを保存しておく
@@ -3068,7 +3060,6 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
       // 前はいなかったので追加
       if( (match == FALSE) && (wk->index2No[i] != 0) ){
         p_status = WifiFriendMatchStatusGet( wk->index2No[i]-1 );
-        OS_TPrintf("WifiFriendMatchStatusGet %d %d\n",wk->index2No[i]-1, WIFI_STATUS_GetTrainerView(p_status));
 
         p_obj = WIFI_MCR_SetNpc( &wk->matchroom,
                                  WIFI_STATUS_GetTrainerView(p_status), wk->index2No[i] );
@@ -3285,7 +3276,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
   // 友達からこちらに接続してきたときの処理
   checkMatch = _checkParentConnect(wk);
   if( (0 !=  checkMatch) && (wk->preConnect != -1) ){ // 接続してきた
-    NET_PRINT("接続 %d\n",wk->DirectModeNo);
+    OS_TPrintf("接続 %d\n",wk->DirectModeNo);
     Snd_SePlay(_SE_OFFER);   //@todoユニオンルームでよばれたSE
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_INIT);
     return seq;
@@ -3358,11 +3349,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
 
   case MCR_RET_MYSELECT:   //パソコンに話しかける
-    //        wk->localTime=0;
     Snd_SePlay(_SE_DESIDE);
-
-    NET_PRINT("mYST %d\n",status);
-
     if(_modeWait(status)){
       WIFI_MCR_PCAnmStart( &wk->matchroom );  // pcアニメ開始
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_INIT);
@@ -3379,7 +3366,6 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
 
   case MCR_RET_SELECT:   //相手に話しかける
     Snd_SePlay(_SE_DESIDE);
-    NET_PRINT("mYST2 %d\n",status);
     if(_modeWait(status)){
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_INIT);
       WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
@@ -3512,7 +3498,6 @@ static int WifiP2PMatch_VCTConnectInit2( WIFIP2PMATCH_WORK *wk, int seq )       
 #endif
   // 相手の状態が通常状態でない場合切断
   else if( (status != WIFI_STATUS_WAIT) && (status != WIFI_STATUS_RECRUIT) ){
-    OS_TPrintf("status not loginwait %d\n",status);
     _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_013, FALSE);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
@@ -4293,7 +4278,6 @@ static int _childModeMatchMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
 
   friendNo = WIFI_MCR_PlayerSelect( &wk->matchroom );
   p_npc = MCRSYS_GetMoveObjWork( wk, friendNo );
-  NET_PRINT("_childModeMatchMenuInit %d\n",friendNo);
 
   //NPCを自分の方向に向ける
   p_player = MCRSYS_GetMoveObjWork( wk, 0 );
@@ -4394,6 +4378,9 @@ static int _childModeMatchMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
       break;
     case WIFI_STATUS_PLAYING:
       //メッセージ出して終了
+      
+      WIFI_MCR_NpcPauseOff( &wk->matchroom, p_npc );
+      
       _CHANGESTATE(wk,WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
       break;
     case WIFI_STATUS_WAIT:   //相手指定で呼びかけるモードにいく
@@ -4436,7 +4423,7 @@ static BOOL _playerDirectConnectStart( WIFIP2PMATCH_WORK *wk )
 
 
     {
-      NET_PRINT( "wifi接続先 %d %d\n", friendNo - 1,status );
+      OS_TPrintf( "wifi接続先 %d %d\n", friendNo - 1,status );
       if( WifiP2PMatch_CommWifiBattleStart( wk, - 1 ) ){
         WIFI_STATUS_SetVChatMac(wk->pMatch, WifiFriendMatchStatusGet( friendNo - 1 ));
 
@@ -4787,7 +4774,7 @@ static int _childModeConnect( WIFIP2PMATCH_WORK *wk, int seq )
   fst = WifiDwc_getFriendStatus(friendNo - 1);
 
   {
-    NET_PRINT( "wifi接続先 %d %d\n", friendNo - 1,status );
+    OS_TPrintf( "wifi接続先 %d %d\n", friendNo - 1,status );
     if( WifiP2PMatch_CommWifiBattleStart( wk, friendNo - 1 ) ){
 
       wk->cancelEnableTimer = _CANCELENABLE_TIMER;
@@ -4972,7 +4959,6 @@ static int _parentModeCallMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
 static BOOL _connectingErrFunc(WIFIP2PMATCH_WORK *wk)
 {
   if(GFL_NET_StateGetWifiStatus() >= GFL_NET_STATE_TIMEOUT){
-    NET_PRINT("_connectingErrFunc%d \n",GFL_NET_StateGetWifiStatus());
     _friendNameExpand(wk, wk->preConnect);
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
@@ -4997,7 +4983,6 @@ static BOOL _connectingErrFunc(WIFIP2PMATCH_WORK *wk)
 static int _parentModeCallMenuYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 {
   if((GFL_NET_StateGetWifiStatus() >= GFL_NET_STATE_DISCONNECTING) || GFL_NET_StateIsWifiDisconnect() ){
-    NET_PRINT("DISCONNECT %d %d\n",GFL_NET_StateGetWifiStatus(),GFL_NET_StateIsWifiDisconnect());
 
     if(wk->bRetryBattle){
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_065, FALSE);
@@ -5031,13 +5016,11 @@ static int _parentModeCallMenuYesNo( WIFIP2PMATCH_WORK *wk, int seq )
     else{
       if(wk->timer == 1){
         if(GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())!=0){
-          NET_PRINT("送った %d\n",GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()));
           if( GFL_NET_HANDLE_RequestNegotiation() == TRUE ){
             wk->timer = 0;
           }
         }
         else if(GFL_NET_HANDLE_GetNumNegotiation() != 0){
-          NET_PRINT("送った %d\n",GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()));
           if( GFL_NET_HANDLE_RequestNegotiation() == TRUE ){
             wk->timer = 0;
           }
@@ -5129,7 +5112,6 @@ void WifiP2PMatchRecvDirectMode(const int netID, const int size, const void* pDa
   }
 
   if(wk->seq == WIFIP2PMATCH_PLAYERDIRECT_WAIT){
-    NET_PRINT("%d\n",pChangeStateNo[0]);
     _CHANGESTATE(wk, pChangeStateNo[0]);
   }
   else{
@@ -5177,11 +5159,8 @@ void WifiP2PMatchRecvGameStatus(const int netID, const int size, const void* pDa
   WIFIP2PMATCH_WORK *wk = pWork;
   const u16 *pRecvData = pData;
 
-
   wk->matchGameMode[netID] = pRecvData[0];
   wk->VCTOn[netID] = pRecvData[1];
-  NET_PRINT("WifiP2PMatchRecvGameStatus %d %d %d\n",wk->matchGameMode[netID], netID, wk->VCTOn[netID]);
-
 }
 
 //
@@ -5232,9 +5211,6 @@ static int _parentModeCallMenuCheck( WIFIP2PMATCH_WORK *wk, int seq )
   }
   else if(WIFI_GAME_NONE != wk->matchGameMode[id]){  // 送られてきた
     u16 gamemode = _WifiMyGameModeGet( wk, wk->pMatch );
-
-    NET_PRINT("_parentModeCallMenuCheck %d %d\n",wk->matchGameMode[id], gamemode);
-
     if(wk->matchGameMode[id] == gamemode){
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_START,WB_NET_WIFICLUB);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MYSTATUS_WAIT);
@@ -5485,14 +5461,11 @@ static int _exitExiting( WIFIP2PMATCH_WORK *wk, int seq )
   }
   if(wk->timer == 1){
     wk->timer = 0;
-    //GFL_NET_StateWifiLogout();
-//    DWC_ShutdownFriendsMatch();
     GFL_NET_Exit(NULL);
   }
   if(!GFL_NET_IsInit()){
-    NET_PRINT("切断した時にフレンドコードを詰める\n");
+    OS_TPrintf("切断した時にフレンドコードを詰める\n");
     WifiList_FormUpData(wk->pList);  // 切断した時にフレンドコードを詰める
-    //SaveData_SaveParts(wk->pSaveData, SVBLK_ID_NORMAL);  //セーブ中
     WifiP2PMatchMessagePrint(wk, dwc_message_0012, TRUE);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_EXIT_END);
     wk->timer = 30;
@@ -6598,7 +6571,6 @@ static void MCVSys_BttnDraw( WIFIP2PMATCH_WORK *wk )
       if( bttn_type != MCV_BUTTON_TYPE_NONE ){
 
         // 名前の表示
-        NET_PRINT("friendno %d\n",friend_no);
         MCVSys_BttnWinDraw( wk, wk->view.nameWin[i], friend_no, frame, i );
         GFL_BMPWIN_MakeScreen(wk->view.nameWin[i]);
         GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
@@ -6890,7 +6862,7 @@ static u8 WifiDwc_getFriendStatus( int idx )
 #if PM_DEBUG
   if(friendstateNo[idx] != no){
     friendstateNo[idx] = no;
-    NET_PRINT("FRIEND CHANGE %d => %d\n",idx, no);
+    OS_TPrintf("FRIEND CHANGE %d => %d\n",idx, no);
     //  p_status = WifiFriendMatchStatusGet( i );
   }
 #endif

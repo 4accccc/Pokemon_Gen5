@@ -76,6 +76,8 @@
 #define _DEBUG_ALONETEST (104)
 #endif
 
+#define POKEMONWB_BEACON_PRODUCT_NO (0)   //この番号のビーコンは製品版
+
 /**
  *  @brief _BEACON_SIZE_FIXには 固定でほしいビーコンパラメータの合計を手で書く
  */
@@ -95,7 +97,7 @@ typedef struct{
 	u8        FixHead[_BEACON_FIXHEAD_SIZE];         ///< 固定で決めた６バイト部分
 	u16        GGID;               ///< ゲーム固有のID  一致が必須
 	GameServiceID  		serviceNo; ///< 通信サービス番号
-	u8        debugAloneTest;      ///< デバッグ用 同じゲームでもビーコンを拾わないように
+	u8        ProductOrDevelopment;      ///< 開発と本番とがつながらないようにするため
 	u8  	    connectNum;    	   ///< つながっている台数  --> 本親かどうか識別
 	u8        pause;               ///< 接続を禁止したい時に使用する
 	u8        aBeaconDataBuff[_BEACON_USER_SIZE_MAX];
@@ -360,9 +362,13 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 //	NET_PRINT("debugNo %d %d\n",pGF->debugAloneTest , _DEBUG_ALONETEST);
 
 #ifdef PM_DEBUG  // デバッグの時だけ、上に定義がある人は基本他の人とつながらない
-	if(pGF->debugAloneTest != pNetWL->mineDebugNo){
+	if(pGF->ProductOrDevelopment != pNetWL->mineDebugNo){
 		return FALSE;   //パレスの為
 	}
+#else
+  if(GF->ProductOrDevelopment != POKEMONWB_BEACON_PRODUCT_NO)
+		return FALSE;   //パレスの為
+  }
 #endif
 	GFLR_NET_GetBeaconHeader(sBuff,_BEACON_FIXHEAD_SIZE);
 	if(0 != GFL_STD_MemComp(sBuff, pGF->FixHead , _BEACON_FIXHEAD_SIZE)){
@@ -922,9 +928,9 @@ void NET_WHPIPE_BeaconSetInfo( void )
     pGF->serviceNo = pInit->gsid;    // ゲームの番号
     pGF->GGID = pInit->ggid;
 #ifdef PM_DEBUG
-    pGF->debugAloneTest = _DEBUG_ALONETEST;
+    pGF->ProductOrDevelopment = _DEBUG_ALONETEST;
 #else
-    pGF->debugAloneTest = 0;
+    pGF->ProductOrDevelopment = POKEMONWB_BEACON_PRODUCT_NO;
 #endif
     GFLR_NET_GetBeaconHeader(sBuff,_BEACON_FIXHEAD_SIZE);
     GFL_STD_MemCopy( sBuff, pGF->FixHead, _BEACON_FIXHEAD_SIZE);

@@ -573,9 +573,6 @@ static void	_print_callback(BMPMENULIST_WORK * wk,u32 param,u8 y)
 static void _modeSelectMenuBase( WIFIP2PMATCH_WORK *wk,BMPMENULIST_HEADER* plisth, _infoMenu* p_menu,int length, int menutype, int width )
 {
   int i;
-  //BMPMENULIST_HEADER list_h;
-
-  // GFL_STD_MemCopy(plisth,&list_h,sizeof(BMPMENULIST_HEADER));
 
   PRINTSYS_QUE_Clear(wk->SysMenuQue);
 
@@ -583,7 +580,6 @@ static void _modeSelectMenuBase( WIFIP2PMATCH_WORK *wk,BMPMENULIST_HEADER* plist
 
   wk->submenulist = BmpMenuWork_ListCreate( length , HEAPID_WIFIP2PMATCH );
   for(i=0; i< length ; i++){
-    OS_TPrintf("%d \n ",p_menu[i].str_id);
     BmpMenuWork_ListAddArchiveString( wk->submenulist, wk->MsgManager, p_menu[i].str_id, p_menu[i].param, HEAPID_WIFIP2PMATCH );
   }
 
@@ -591,29 +587,23 @@ static void _modeSelectMenuBase( WIFIP2PMATCH_WORK *wk,BMPMENULIST_HEADER* plist
   //BMPウィンドウ生成
   wk->SubListWin = GFL_BMPWIN_Create(
     GFL_BG_FRAME2_M, 32-width-1, PARENTMENU_Y, width, length * 2, MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
-  //    GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  COMM_TALK_WIN_CGX_NUM, MENU_WIN_PAL );
   GFL_BMPWIN_MakeScreen(wk->SubListWin);
   BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_OFF, GFL_ARCUTIL_TRANSINFO_GetPos(wk->talkwin_m2), COMM_MESFRAME_PAL );
-  //  GFL_BMPWIN_MakeTransWindow(wk->SubListWin);
 
 
   plisth->list = wk->submenulist;
   plisth->win = wk->SubListWin;
 
   plisth->print_que = wk->SysMenuQue;
-  //  PRINT_UTIL_Setup( &wk->SysMsgPrintUtil , wk->SubListWin );
   plisth->print_util = &wk->SysMsgPrintUtil;
   plisth->font_handle = wk->fontHandle;
   plisth->work = wk;
-
-  //GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->SubListWin), WINCLR_COL(FBMP_COL_WHITE) );
 
   wk->sublw = BmpMenuList_Set(plisth, 0, wk->singleCur[menutype], HEAPID_WIFIP2PMATCH);
   while(!PRINTSYS_QUE_IsFinished(wk->SysMenuQue)){
     PRINTSYS_QUE_Main(wk->SysMenuQue);
   }
   BmpMenuList_SetCursorBmp( wk->sublw, HEAPID_WIFIP2PMATCH );
- // GFL_BMPWIN_TransVramCharacter(wk->SubListWin);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_M);
 }
 
@@ -726,7 +716,6 @@ static void _ChildModeMatchMenuDisp( WIFIP2PMATCH_WORK *wk )
   }
 
   BmpMenuList_SetCursorBmp( wk->sublw, HEAPID_WIFIP2PMATCH );
-//  GFL_BMPWIN_TransVramCharacter(wk->SubListWin);
   GFL_BMPWIN_MakeScreen(wk->SubListWin);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_M);
 }

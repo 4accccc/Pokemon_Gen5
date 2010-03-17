@@ -360,6 +360,7 @@ WF2DMAP_OBJDRAWWK* WF2DMAP_OBJDrawWkNew( WF2DMAP_OBJDRAWSYS* p_sys, const WF2DMA
 	p_wk->status = WF2DMAP_OBJWkDataGet( cp_objwk, WF2DMAP_OBJPM_ST );
 	p_wk->way	 = WF2DMAP_OBJWkDataGet( cp_objwk, WF2DMAP_OBJPM_WAY );
 	p_wk->playid = WF2DMAP_OBJWkDataGet( cp_objwk, WF2DMAP_OBJPM_PLID );
+  OS_TPrintf("---WF2DMAP_OBJDrawWkNew    dd-----\n");
 	p_wk->cp_objwk = cp_objwk;	// オブジェクトワーク保存
 	p_wk->hero = hero;
 	p_wk->updata = TRUE;

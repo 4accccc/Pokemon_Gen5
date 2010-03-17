@@ -262,6 +262,7 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
                                 pWork->pMy, 
                                 POKE_MEMO_PLACE_HUMAN_TRADE, pWork->heapID );
 
+    ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave( pWork->pGameData ), pp );
 
     //ŒðŠ·‚·‚é
     // ‘ŠŽè‚Ìƒ|ƒP‚ðŽ©•ª‚Ì‘I‚ñ‚Å‚¢‚½êŠ‚É“ü‚ê‚é
