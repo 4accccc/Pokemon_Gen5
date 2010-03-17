@@ -1,6 +1,7 @@
 EFFSEQ
-$0001
+$0002
 c:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_469.spa
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	8
@@ -11,6 +12,11 @@ SE再生	SEQ_SE_FLD_112	SE1	攻撃側	0:0:127	0:0:0
 SE再生	SEQ_SE_DUMMY5	SE1	攻撃側	70:0:0	0:0:0
 制御モード変更	逐次
 ポケモン移動	攻撃側	往復	3	0	3	0	10
+パーティクルデータロード	w_469
+パーティクル再生	w_469	W_469_469_GUARD_BOARD_R	攻撃側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_469	W_469_469_GUARD_BOARD_L	攻撃側	方向無し	2:0:0	1:1:1	1
+タイマーによるウエイト	80
+パーティクル再生	w_469	W_469_469_GUARD_BOARD_C	攻撃側	方向無し	2:0:0	1:1:1	1
 エフェクト終了待ち	すべて
 ポケモンアニメ	防御側	アニメスタート
 カメラ移動	追従	初期位置	16	0	8
