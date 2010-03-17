@@ -344,15 +344,7 @@ _ANIME_LABEL	anm_common_turn_u
 /**************************************************************/
 EVENT_START   ev_pos_r02_mama_01
 
-	//==============フラグワーク操作==============//
-	
-	//R02のママを表示
-//	_FLAG_RESET  ( FV_R02_MOTHER  )  
-//	_OBJ_ADD(R02_MAMA_01)
-	
-	//============================================//
-	
-	_FLAG_RESET  ( FV_R02_MOTHER  )
+
 	{
     DEFINE_LOCAL  LWK_PLAYER_POSX   
     DEFINE_LOCAL  LWK_PLAYER_POSZ
@@ -367,46 +359,28 @@ EVENT_START   ev_pos_r02_mama_01
 	_SE_PLAY( SEQ_SE_SYS_35 )
 	_SE_WAIT()
 	
-//	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_bikkuri_mark)
-//	_OBJ_ANIME_WAIT()
-	
-//	_SYSWIN_MSG_ALLPUT( , POS_DOWN )
-//	_SYSWIN_CLOSE()
-	
 	//TVトランシーバーをつなげた
-//	_SYSWIN_MSG_DOWN(msg_r02_tvt_01)
 	_SYSWIN_MSG(msg_r02_tvt_01,POS_DOWN)
 	_SYSWIN_CLOSE()
 
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
 	_CALL_TVT_DEMO( 2 )
-  _MAP_FADE_BLACK_IN()
-  _MAP_FADE_END_CHECK()
-	
+
     SWITCH $LWK_PLAYER_POSZ
     CASE 647 THEN
-//		_OBJ_POS_CHANGE( R02_MAMA_01, 756, 0, 647, DIR_LEFT )
 		_OBJ_ADD_EX(756, 647,DIR_LEFT,MMDL_ID_EVENTOBJ_00,MAMA,MV_DMY)
     CASE 648 THEN
-//      _OBJ_POS_CHANGE( R02_MAMA_01, 756, 0, 648, DIR_LEFT )
 		_OBJ_ADD_EX(756, 648,DIR_LEFT,MMDL_ID_EVENTOBJ_00,MAMA,MV_DMY)
     CASE 649 THEN
-//      _OBJ_POS_CHANGE( R02_MAMA_01, 756, 0, 649, DIR_LEFT )
 		_OBJ_ADD_EX(756, 649,DIR_LEFT,MMDL_ID_EVENTOBJ_00,MAMA,MV_DMY)
     CASE 650THEN
-//      _OBJ_POS_CHANGE( R02_MAMA_01, 756, 0, 650, DIR_LEFT )
 		_OBJ_ADD_EX(756, 650,DIR_LEFT,MMDL_ID_EVENTOBJ_00,MAMA,MV_DMY)
     DEFAULT  
     ENDSWITCH
-	
-	//暗転処理
-	_BLACK_IN()
-	_DISP_FADE_END_CHECK()
-	
-    //暗転復帰
-//	_BLACK_IN()
-//	_DISP_FADE_END_CHECK()
+    
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
 	
 	//BGMの再生
 	_START_EVENT_BGM(SEQ_BGM_E_TSURETEKE1 )
@@ -417,24 +391,10 @@ EVENT_START   ev_pos_r02_mama_01
 	_BALLOONWIN_OBJMSG( msg_r02_mama_01, MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
 
-	//主人公、ママの声に気づく
-//	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_bikkuri_mark)
-//	_OBJ_ANIME_WAIT()
-	
 	//主人公、ママの方へ振り向く
 	_OBJ_ANIME(  MMDL_ID_PLAYER,anm_player_migi_muku)
 	_OBJ_ANIME_WAIT()
-/*	
-	//ママが主人公の方へ来る
-    SWITCH $LWK_PLAYER_POSZ
-    CASE 650THEN
-  		_OBJ_ANIME( R02_MAMA_01,anm_mama_kuru_b)
-		_OBJ_ANIME_WAIT()
-    DEFAULT  
- 		_OBJ_ANIME( R02_MAMA_01,anm_mama_kuru_a)
-		_OBJ_ANIME_WAIT()
-    ENDSWITCH
-*/	
+	
 	//プレイヤーの名前の格納
 	_PLAYER_NAME(0)
 	
@@ -477,10 +437,6 @@ EVENT_START   ev_pos_r02_mama_01
 	_END_EVENT_BGM()
 	
 	//==============フラグワーク操作==============//
-	
-	//R02のママを表示されなくする
-//	_FLAG_SET  ( FV_R02_MOTHER  )  
-	
 	//R02のランニングシューズイベントを無効にする
 	$WK_SCENE_R02 = 1
 	
