@@ -589,7 +589,7 @@ static void sub_PlaySE( TASKWORK_ENCOUNT* work, FLDEFF_ENCOUNT* enc )
   if(dis > 3){
     dis = 3;
   }
-  PMSND_PlaySEVolume( enc->data.se_no, volume_tbl[dis]);
+  FSND_PlayEnvSEVol(GAMEDATA_GetFieldSound(work->fld_enc->gdata), enc->data.se_no, volume_tbl[dis]); 
 }
 
 //--------------------------------------------------------------
