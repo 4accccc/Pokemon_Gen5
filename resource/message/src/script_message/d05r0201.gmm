@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-16T22:27:59"/>
+	<create user="matsumiya" host="W00224" date="2010-03-17T14:46:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1406" top="260" right="2111" bottom="888" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -350,7 +350,7 @@
 寒くて　かなわんぞ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0201_black_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d05r0201_black_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてsage2_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -364,7 +364,7 @@
 外まで　案内しますよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0201_sage2_02">
+	<row id="msg_d05r0201_sage2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてhakaim_01</comment>
 		<attribute name="キャラ指定">SAGE１
@@ -481,29 +481,29 @@
 震えていたら　勝てるわけ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
+	<row id="msg_d05r0201_hakaiw1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
 ・メッセージ表示後、トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
-プラズマ団♂</attribute>
-		<language name="JPN" width="256">プラズマだん『オレは　このなかで
+プラズマ団♀</attribute>
+		<language name="JPN" width="256">プラズマだん『アタイ　このなかで
 いちばん　つよい　プラズマだん！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『オレは　このなかで
+		<language name="JPN_KANJI" width="256">プラズマ団『アタイ　このなかで
 一番　強い　プラズマ団！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim4_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
+	<row id="msg_d05r0201_hakaiw1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
 ・戦闘後</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
-プラズマ団♂</attribute>
+プラズマ団♀</attribute>
 		<language name="JPN" width="256">プラズマだん『……こんなに　さむくて
 ふるえていたら　かてるわけ……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『……こんなに　寒くて
 震えていたら　勝てるわけ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim5_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05r0201_hakaim4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・トレーナーじゃないプラズマ団
 ・４人倒すまで繰り返し</comment>
@@ -515,7 +515,7 @@
 オマエの　あいては　むこうだ……</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim6_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_hakaim5_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・トレーナーじゃないプラズマ団
 ・４人倒すまで繰り返し</comment>
@@ -527,7 +527,7 @@
 オマエの　あいては　むこうだ……</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim7_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05r0201_hakaim6_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・トレーナーじゃないプラズマ団
 ・４人倒すまで繰り返し</comment>
@@ -539,19 +539,19 @@
 オマエの　あいては　むこうだ……</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim8_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
+	<row id="msg_d05r0201_hakaiw2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
 ・トレーナーじゃないプラズマ団
 ・４人倒すまで繰り返し</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
-プラズマ団♂</attribute>
-		<language name="JPN" width="256">プラズマだん『ヘクション！
-オマエの　あいては　むこうだ……</language>
-		<language name="JPN_KANJI" width="256">プラズマだん『ヘクション！
-オマエの　あいては　むこうだ……</language>
+プラズマ団♀</attribute>
+		<language name="JPN" width="256">プラズマだん『クシュン！
+じょせいは　さむいところ　ダメなのに</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『クシュン！
+じょせいは　さむいところ　ダメなのに</language>
 	</row>
 
-	<row id="msg_d05r0201_leader5_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d05r0201_leader5_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・プラズマ団したっぱ４人に勝利すると出現
 　所定の位置に移動してメッセージ表示
@@ -566,7 +566,7 @@
 身を潜めて　いたとはな！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_leader5_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d05r0201_leader5_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・作業員のほうを向いてメッセージ表示</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -577,7 +577,7 @@
 ポケモンドロボウを　つれていけ！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_workman_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてworkman_02</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
@@ -585,7 +585,7 @@
 		<language name="JPN_KANJI" width="256">さぎょういん『ラジャー！！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_workman_02" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_workman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,,,,,,,,">
 		<comment>♂
 ・サブウィンで表示
 ・続けてhakaim_02</comment>
@@ -594,7 +594,7 @@
 		<language name="JPN_KANJI" width="256">ホラホラ</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim_02">
+	<row id="msg_d05r0201_hakaim_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・サブウィンで表示
 ・続けてhakaim_03</comment>
@@ -604,7 +604,7 @@
 		<language name="JPN_KANJI" width="256">ひー</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim_03">
+	<row id="msg_d05r0201_hakaim_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・サブウィンで表示
 ・表示後、七賢人、したっぱ、作業員
@@ -616,7 +616,7 @@
 		<language name="JPN_KANJI" width="256">ふえー</language>
 	</row>
 
-	<row id="msg_d05r0201_leader5_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d05r0201_leader5_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・メッセージ後、退場
 ・続けてblack_08</comment>
@@ -632,11 +632,12 @@
 挑戦してこい！　相手してやるぞ▼　</language>
 	</row>
 
-	<row id="msg_d05r0201_black_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d05r0201_black_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・主人公と向き合ってメッセージ表示
 ・表示後、画面外に退場
-　画面外に消えると主人公操作可能に</comment>
+　画面外に消えると主人公操作可能に
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『やれやれ……▼
 [1:00:トレーナー名:0]
