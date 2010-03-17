@@ -336,6 +336,16 @@
 #define SCR_POSTMAN_OBJ_EXISTS  (1) ///<配達員OBJ:存在する
 
 //--------------------------------------------------------------
+//  PDW配達員
+//--------------------------------------------------------------
+#define SCR_PDW_POSTMAN_REQ_EXISTS      (0) ///<存在チェック
+#define SCR_PDW_POSTMAN_REQ_ENABLE      (1) ///<受け取れるか？チェック
+#define SCR_PDW_POSTMAN_REQ_OK_INFO     (2) ///<受け取り情報表示
+#define SCR_PDW_POSTMAN_REQ_RECEIVE     (3) ///<受け取り処理
+#define SCR_PDW_POSTMAN_REQ_NG_COUNT    (4) ///<受け取れないカウント取得
+#define SCR_PDW_POSTMAN_REQ_NG_ITEM     (5) ///<受け取れないどうぐ名セット
+
+//--------------------------------------------------------------
 /// ビーコン送信リクエストID
 //--------------------------------------------------------------
 #define SCR_BEACON_SET_REQ_ITEM_GET (0) //フィールドでアイテムを拾った
