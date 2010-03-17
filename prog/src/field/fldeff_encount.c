@@ -19,6 +19,7 @@
 #include "sound/wb_sound_data.sadl"
 
 #include "fldeff_encount.h"
+#include "field_encount_local.h"
 
 //======================================================================
 //  define
