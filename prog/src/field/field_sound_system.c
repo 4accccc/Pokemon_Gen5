@@ -230,6 +230,8 @@ static void ForcePlayBGM( FIELD_SOUND* fieldSound );
 
 // デバッグ
 static void DebugPrint_RequestQueue( const FIELD_SOUND* fieldSound );
+static void DebugPrint_pushedBGM( const FIELD_SOUND* fieldSound );
+static void DebugPrint_AllInfo( const FIELD_SOUND* fieldSound );
 
 
 //================================================================================= 
@@ -920,6 +922,7 @@ void RegisterNewRequest( FIELD_SOUND* fieldSound, const FSND_REQUEST_DATA* reque
 #ifdef DEBUG_PRINT_ON
     OS_TFPrintf( PRINT_NO, 
                  "FIELD-SOUND-QUEUE: Can't register request(%d)\n", requestData->request );
+    DebugPrint_AllInfo( fieldSound );
 #endif
     GF_ASSERT(0);
     return;
@@ -2319,4 +2322,51 @@ static void DebugPrint_RequestQueue( const FIELD_SOUND* fieldSound )
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_NO, "\n" );
 #endif
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief BGM 退避状況を出力する
+ *
+ * @param fieldSound
+ */
+//---------------------------------------------------------------------------------
+static void DebugPrint_pushedBGM( const FIELD_SOUND* fieldSound )
+{
+  int i;
+  int pushCount;
+
+  pushCount = fieldSound->pushCount;
+
+  // 退避数
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: pushCount = %d\n", pushCount );
+
+  // 退避中のBGM No.
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: pushBGM = " );
+  for( i=0; i < pushCount; i++ )
+  {
+    OS_TFPrintf( PRINT_NO, "%d, ", fieldSound->pushBGM[i] );
+  }
+  OS_TFPrintf( PRINT_NO, "\n" );
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief 全内部情報を出力する
+ *
+ * @param fieldSound
+ */
+//---------------------------------------------------------------------------------
+static void DebugPrint_AllInfo( const FIELD_SOUND* fieldSound )
+{ 
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: state = %d\n", fieldSound->state );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: currentBGM = %d\n", fieldSound->currentBGM );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: requestBGM = %d\n", fieldSound->requestBGM );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: loadBGM = %d\n", fieldSound->loadBGM );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: loadSeq = %d\n", fieldSound->loadSeq );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: fadeInFrame = %d\n", fieldSound->fadeInFrame );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: fadeOutFrame = %d\n", fieldSound->fadeOutFrame );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: request = %d\n", fieldSound->request );
+  DebugPrint_pushedBGM( fieldSound );
+  DebugPrint_RequestQueue( fieldSound );
 }
