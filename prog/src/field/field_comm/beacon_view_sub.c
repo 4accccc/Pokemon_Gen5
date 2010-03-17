@@ -1580,7 +1580,7 @@ static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u32 tr_id,
   //使用ポイント取得
   if( twk->type == GPOWER_USE_MINE ){
     twk->item_use = 1;
-    twk->item_num = MYITEM_GetItemNum(wk->item_sv, ITEM_PARESUDAMA, wk->tmpHeapID);
+    twk->item_num = MYITEM_GetItemNum(wk->item_sv, ITEM_DERUDAMA, wk->tmpHeapID);
     
     WORDSET_RegisterNumber( wk->wordset, 2, twk->item_use, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     WORDSET_RegisterNumber( wk->wordset, 3, twk->item_num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
@@ -1660,7 +1660,7 @@ static void tcb_WinGPower( GFL_TCBL *tcb , void* tcb_wk)
 
       //使うGパワーを覚えておく
       bvp->ctrl.g_power = twk->g_power;
-      MYITEM_SubItem( bvp->item_sv, ITEM_PARESUDAMA, twk->item_use, bvp->tmpHeapID);
+      MYITEM_SubItem( bvp->item_sv, ITEM_DERUDAMA, twk->item_use, bvp->tmpHeapID);
 
       twk->seq++;
     }

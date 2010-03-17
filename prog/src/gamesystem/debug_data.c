@@ -266,7 +266,7 @@ static const ITEM_ST DebugItem[] = {
 	{ ITEM_MOKOSINOMI,	50},	//モコシのみ
 	{ ITEM_GOSUNOMI,	50},	//ゴスのみ
 	{ ITEM_RABUTANOMI,	50},	//ラブタのみ
-  { ITEM_PARESUDAMA, 99}, // パレスだま
+  { ITEM_DERUDAMA, 99}, // デルダマ
 	
   { ITEM_GAKUSYUUSOUTI,  5},  // がくしゅうそうち
   {ITEM_SENSEINOTUME, 5}, // せんせいのツメ
