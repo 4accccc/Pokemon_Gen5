@@ -162,6 +162,7 @@ extern FLDMSGBG * FLDMSGBG_Create( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera );
 extern void FLDMSGBG_SetupResource( FLDMSGBG *fmb );
 extern void FLDMSGBG_Delete( FLDMSGBG *fmb );
 extern void FLDMSGBG_ReleaseBGResouce( FLDMSGBG *fmb );
+extern void FLDMSGBG_ReleaseBG2Resource( FLDMSGBG *fmb );
 extern void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb );
 extern void FLDMSGBG_PrintMain( FLDMSGBG *fmb );
 extern void FLDMSGBG_PrintG3D( FLDMSGBG *fmb );
@@ -172,8 +173,8 @@ extern PRINT_QUE * FLDMSGBG_GetPrintQue( FLDMSGBG *fmb );
 extern GFL_FONT * FLDMSGBG_GetFontHandle( FLDMSGBG *fmb );
 extern GFL_MSGDATA * FLDMSGBG_CreateMSGDATA( FLDMSGBG *fmb, u32 arcDatIDMsg );
 extern void FLDMSGBG_DeleteMSGDATA( GFL_MSGDATA *msgData );
+extern void FLDMSGBG_ReqResetBG2( FLDMSGBG *fmb );
 extern void FLDMSGBG_TransResource( int bgFrame, HEAPID heapID );
-
 
 //メッセージ表示
 extern FLDMSGPRINT * FLDMSGPRINT_SetupPrint(

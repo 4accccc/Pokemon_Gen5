@@ -28,7 +28,6 @@
 
 #include "winframe.naix"
 
-
 //======================================================================
 //  define
 //======================================================================
@@ -79,11 +78,12 @@ enum
 //--------------------------------------------------------------
 enum
 {
-  PANO_BGWIN = 10, //BGウィンドウ
-  PANO_SPWIN = 10, //特殊ウィンドウ
+  PANO_BGWIN = 9, //BGウィンドウ
+  PANO_SPWIN = 9, //特殊ウィンドウ
+  PANO_MENU_W = 10, //メニューパレットNo 背景白
   PANO_FONT_TALKMSGWIN = 11, ///<吹き出しフォントパレットNo
   PANO_TALKMSGWIN = 12, ///<吹き出しウィンドウパレットNo
-  PANO_MENU = 13, ///<メニューパレットNo
+  PANO_MENU_B = 13, ///<メニューパレットNo 背景黒
   PANO_FONT = 14, ///<フォントパレットNo
 };
 
@@ -140,7 +140,7 @@ struct _TAG_FLDMSGBG
   u16 bgFrame;
   
   u16 bgFrameBld;
-  u16 deriveWin_plttNo;
+  u16 deriveFont_plttNo;
   
   GFL_FONT *fontHandle;
   PRINT_QUE *printQue;
@@ -152,6 +152,9 @@ struct _TAG_FLDMSGBG
   
   GFL_TCBLSYS *printTCBLSys;
   GFL_G3D_CAMERA *g3Dcamera;
+  
+  u8 req_reset_bg2_control;
+  u8 padding[3];
   
 #ifdef DEBUG_FLDMSGBG
   int d_printTCBcount;
@@ -311,6 +314,10 @@ static void syswin_ClearBmp( GFL_BMPWIN *bmpwin );
 static void syswin_DeleteBmp( GFL_BMPWIN *bmpwin );
 
 static void setBGResource( FLDMSGBG *fmb );
+static void setBG1Resource( FLDMSGBG *fmb );
+static void resetBG2Control( BOOL cnt_set );
+static void resetBG2ControlProc( FLDMSGBG *fmb );
+static void transBGResource( int bgFrame, HEAPID heapID );
 static void setBlendAlpha( BOOL on );
 
 static GFL_BMPWIN * winframe_InitBmp( u32 bgFrame, HEAPID heapID,
@@ -324,8 +331,6 @@ static FLDSUBMSGWIN * FldMsgBG_DeleteFldSubMsgWin( FLDMSGBG *fmb, int id );
 
 static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo;
 //static const u8 ALIGN4 skip_cursor_Character[128];
-static void transBGResource( int bgFrame, HEAPID heapID );
-
 
 #ifdef DEBUG_FLDMSGBG
 static void DEBUG_AddCountPrintTCB( FLDMSGBG *fmb );
@@ -385,16 +390,20 @@ FLDMSGBG * FLDMSGBG_Create( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
   
   fmb = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDMSGBG) );
   fmb->heapID = heapID;
-  
-//  fmb->bgFrame = BGFRAME_ERROR;
+
+#if 1  
+  fmb->bgFrame = BGFRAME_ERROR;
+  fmb->bgFrameBld = BGFRAME_ERROR;
+#else
   fmb->bgFrame = FLDMSGBG_BGFRAME;
   fmb->bgFrameBld = FLDMSGBG_BGFRAME_BLD;
+#endif
+  
   fmb->g3Dcamera = g3Dcamera;
   
   { //font
     fmb->fontHandle = GFL_FONT_Create(
       ARCID_FONT,
-//    NARC_font_large_nftr, //旧フォントID
       NARC_font_large_gftr, //新フォントID
       GFL_FONT_LOADTYPE_FILE, FALSE, fmb->heapID );
   }
@@ -463,6 +472,10 @@ void FLDMSGBG_Delete( FLDMSGBG *fmb )
     GFL_BG_FreeBGControl( fmb->bgFrame );
   }
   
+  if( fmb->bgFrameBld != BGFRAME_ERROR ){
+    GFL_BG_FreeBGControl( fmb->bgFrameBld );
+  }
+  
   do{
     #if 0
     if( msgPrint->msgData != NULL ){
@@ -483,7 +496,7 @@ void FLDMSGBG_Delete( FLDMSGBG *fmb )
   if( fmb->fontHandle != NULL ){
     GFL_FONT_Delete( fmb->fontHandle );
   }
-
+  
   GFL_HEAP_FreeMemory( fmb );
 }
 
@@ -506,12 +519,28 @@ void FLDMSGBG_ReleaseBGResouce( FLDMSGBG *fmb )
     GFL_BG_FreeBGControl( fmb->bgFrame );
     fmb->bgFrame = BGFRAME_ERROR;
   }
-#if 0  
+
+#if 0
   if( fmb->bgFrameBld != BGFRAME_ERROR ){
     GFL_BG_FreeBGControl( fmb->bgFrameBld );
     fmb->bgFrameBld = BGFRAME_ERROR;
   }
 #endif
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGBG BG2リソースのみ破棄
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void FLDMSGBG_ReleaseBG2Resource( FLDMSGBG *fmb )
+{
+  if( fmb->bgFrameBld != BGFRAME_ERROR ){
+    GFL_BG_FreeBGControl( fmb->bgFrameBld );
+    fmb->bgFrameBld = BGFRAME_ERROR;
+  }
 }
 
 //--------------------------------------------------------------
@@ -527,7 +556,7 @@ void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb )
     TALKMSGWIN_SystemDelete( fmb->talkMsgWinSys );
   }
   
-  setBGResource( fmb );
+  setBG1Resource( fmb );
 }
 
 //--------------------------------------------------------------
@@ -550,7 +579,7 @@ void FLDMSGBG_PrintMain( FLDMSGBG *fmb )
       }
     }
   }
-
+  
   {
     FLDMSGPRINT *msgPrint = fmb->msgPrintTbl;
     for( i = 0; i < FLDMSGBG_PRINT_MAX; i++, msgPrint++ ){
@@ -662,7 +691,7 @@ GFL_MSGDATA * FLDMSGBG_CreateMSGDATA( FLDMSGBG *fmb, u32 arcDatIDMsg )
   return( msgData );
 }
 
-////--------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  * FLDMSGBG MSGDATAの削除。
  * @param msgData GFL_MSGDATA
@@ -674,6 +703,18 @@ GFL_MSGDATA * FLDMSGBG_CreateMSGDATA( FLDMSGBG *fmb, u32 arcDatIDMsg )
 void FLDMSGBG_DeleteMSGDATA( GFL_MSGDATA *msgData )
 {
   GFL_MSG_Delete( msgData );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGBG BG2のリセットを要求
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void FLDMSGBG_ReqResetBG2( FLDMSGBG *fmb )
+{
+  fmb->req_reset_bg2_control = TRUE;
 }
 
 //======================================================================
@@ -868,7 +909,7 @@ void FLDMSGPRINT_ClearBmp( FLDMSGPRINT *msgPrint )
 {
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgPrint->bmpwin );
   GFL_BMP_Clear( bmp, 0xff );
-  GFL_BG_LoadScreenReq( msgPrint->fmb->bgFrame );
+  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(msgPrint->bmpwin) );
 }
 
 //--------------------------------------------------------------
@@ -887,7 +928,7 @@ void FLDMSGPRINT_FillClearBmp(
 {
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgPrint->bmpwin );
   GFL_BMP_Fill( bmp, x, y, size_x, size_y, 0xff );
-  GFL_BG_LoadScreenReq( msgPrint->fmb->bgFrame );
+  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(msgPrint->bmpwin) );
 }
 
 //--------------------------------------------------------------
@@ -970,16 +1011,25 @@ static FLDMSGWIN * fldmsgwin_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
   u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y, u16 pltt_no )
 {
   FLDMSGWIN *msgWin;
+  u8 frame = fmb->bgFrame;
+  
+  resetBG2ControlProc( fmb );
+
+  if( pltt_no == PANO_FONT ){
+    frame = fmb->bgFrameBld;
+  }
   
   msgWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDMSGWIN) );
   msgWin->fmb = fmb;
-  msgWin->bmpwin = winframe_InitBmp( fmb->bgFrame, fmb->heapID,
+  msgWin->bmpwin = winframe_InitBmp( frame, fmb->heapID,
     bmppos_x, bmppos_y, bmpsize_x, bmpsize_y, pltt_no );
   msgWin->msgPrint = FLDMSGPRINT_SetupPrint( fmb, msgData, msgWin->bmpwin );
   
   if( pltt_no == PANO_FONT ){
     winframe_SetPaletteBlack( fmb->heapID );
     setBlendAlpha( TRUE );
+  }else{
+    winframe_SetPaletteWhith( fmb->heapID );
   }
   
   return( msgWin );
@@ -1001,9 +1051,9 @@ FLDMSGWIN * FLDMSGWIN_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
   u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y )
 {
   FLDMSGWIN *msgWin;
-  fmb->deriveWin_plttNo = PANO_FONT;
+  fmb->deriveFont_plttNo = PANO_FONT;
   msgWin = fldmsgwin_Add( fmb, msgData,
-      bmppos_x, bmppos_y, bmpsize_x, bmpsize_y, fmb->deriveWin_plttNo );
+      bmppos_x, bmppos_y, bmpsize_x, bmpsize_y, fmb->deriveFont_plttNo );
   return( msgWin );
 }
 
@@ -1035,7 +1085,7 @@ void FLDMSGWIN_Delete( FLDMSGWIN *msgWin )
 void FLDMSGWIN_Print( FLDMSGWIN *msgWin, u16 x, u16 y, u32 strID )
 {
   FLDMSGPRINT_Print( msgWin->msgPrint, x, y, strID );
-  GFL_BG_LoadScreenReq( FLDMSGBG_BGFRAME );
+  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(msgWin->bmpwin) );
 }
 
 //--------------------------------------------------------------
@@ -1180,7 +1230,7 @@ FLDSYSWIN * FLDSYSWIN_Add(
     FLDMSGBG *fmb, GFL_MSGDATA *msgData, u16 bmppos_y )
 {
   FLDSYSWIN *sysWin;
-  fmb->deriveWin_plttNo = PANO_FONT;
+  fmb->deriveFont_plttNo = PANO_FONT;
   sysWin = syswin_Add( fmb, msgData, bmppos_y );
   return( sysWin );
 }
@@ -1213,7 +1263,7 @@ void FLDSYSWIN_Delete( FLDSYSWIN *sysWin )
 void FLDSYSWIN_Print( FLDSYSWIN *sysWin, u16 x, u16 y, u32 strID )
 {
   FLDMSGPRINT_Print( sysWin->msgPrint, x, y, strID );
-  GFL_BG_LoadScreenReq( FLDMSGBG_BGFRAME );
+  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(sysWin->bmpwin) );
 }
 
 //--------------------------------------------------------------
@@ -1330,6 +1380,13 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
 {
   FLDMENUFUNC *menuFunc;
   BMPMENULIST_HEADER menuH;
+  u8 frame = fmb->bgFrame;
+  
+  resetBG2ControlProc( fmb );
+
+  if( pltt_no == PANO_FONT ){
+    frame = fmb->bgFrameBld;
+  }
   
   menuFunc = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDMENUFUNC) );
   FldMenuFuncH_BmpMenuListH( &menuH, pMenuHead );
@@ -1338,7 +1395,7 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
   menuFunc->pMenuListData = (BMP_MENULIST_DATA *)pMenuListData;
   
   menuFunc->bmpwin = winframe_InitBmp(
-    fmb->bgFrame, fmb->heapID,
+    frame, fmb->heapID,
     pMenuHead->bmppos_x, pMenuHead->bmppos_y,
     pMenuHead->bmpsize_x, pMenuHead->bmpsize_y, pltt_no );
   
@@ -1363,7 +1420,10 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
   if( pltt_no == PANO_FONT ){
     winframe_SetPaletteBlack( fmb->heapID );
     setBlendAlpha( TRUE );
+  }else{
+    winframe_SetPaletteWhith( fmb->heapID );
   }
+  
   return( menuFunc );
 }
 
@@ -1390,9 +1450,9 @@ FLDMENUFUNC * FLDMENUFUNC_AddMenuListEx( FLDMSGBG *fmb,
   void *work )
 {
   FLDMENUFUNC *menuFunc;
-  fmb->deriveWin_plttNo = PANO_FONT;
+  fmb->deriveFont_plttNo = PANO_FONT;
   menuFunc = fldmenufunc_AddMenuList( fmb, pMenuHead, pMenuListData,
-    list_pos, cursor_pos, fmb->deriveWin_plttNo, callback, icon, work );
+    list_pos, cursor_pos, fmb->deriveFont_plttNo, callback, icon, work );
   return( menuFunc );
 }
 
@@ -1457,7 +1517,7 @@ FLDMENUFUNC * FLDMENUFUNC_AddEventMenuList( FLDMSGBG *fmb,
   GF_ASSERT( pMenuListData != NULL );
   
   menuFunc = fldmenufunc_AddMenuList( fmb, pMenuHead, pMenuListData,
-    list_pos, cursor_pos, fmb->deriveWin_plttNo, callback, NULL, cb_work );
+    list_pos, cursor_pos, fmb->deriveFont_plttNo, callback, NULL, cb_work );
   
   if( cancel == FALSE ){
     BmpMenuList_SetCancelMode(
@@ -1797,7 +1857,7 @@ FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(
   
   FLDMENUFUNC_InputHeaderListSize( &menuH, max, 24, 10, 7, 4 );
   menuFunc = fldmenufunc_AddMenuList( fmb, &menuH, listData,
-      0, cursor_pos, fmb->deriveWin_plttNo, NULL, NULL, NULL );
+      0, cursor_pos, fmb->deriveFont_plttNo, NULL, NULL, NULL );
   
 #if 0 //Bキャンセル無効
   BmpMenuList_SetCancelMode(
@@ -1990,14 +2050,16 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
 {
   FLDMSGWIN_STREAM *msgWin;
   
-  fmb->deriveWin_plttNo = PANO_FONT;
+  fmb->deriveFont_plttNo = PANO_FONT;
   
+  resetBG2ControlProc( fmb );
+
   msgWin = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDMSGWIN_STREAM) );
   msgWin->fmb = fmb;
   msgWin->msgData = msgData;
-  msgWin->bmpwin = winframe_InitBmp( fmb->bgFrame, fmb->heapID,
-      bmppos_x, bmppos_y, bmpsize_x, bmpsize_y, fmb->deriveWin_plttNo );
+  msgWin->bmpwin = winframe_InitBmp( fmb->bgFrameBld, fmb->heapID,
+      bmppos_x, bmppos_y, bmpsize_x, bmpsize_y, fmb->deriveFont_plttNo );
   msgWin->strBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN, fmb->heapID );
   
   keyWaitCursor_Init( &msgWin->cursor_work, fmb->heapID );
@@ -2165,7 +2227,7 @@ void FLDMSGWIN_STREAM_ClearWindow( FLDMSGWIN_STREAM *msgWin )
 void FLDMSGWIN_STREAM_WriteWindow( FLDMSGWIN_STREAM *msgWin )
 {
   BmpWinFrame_Write( msgWin->bmpwin,
-      WINDOW_TRANS_ON, 1, PANO_MENU );
+      WINDOW_TRANS_ON, 1, PANO_MENU_B );
   FLDMSGWIN_STREAM_ClearMessage( msgWin );
 }
 
@@ -2221,7 +2283,7 @@ FLDSYSWIN_STREAM * FLDSYSWIN_STREAM_Add(
 {
   FLDSYSWIN_STREAM *sysWin;
   
-  fmb->deriveWin_plttNo = PANO_FONT;
+  fmb->deriveFont_plttNo = PANO_FONT;
   
   sysWin = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDSYSWIN_STREAM) );
@@ -2497,8 +2559,8 @@ static void fldTalkMsgWin_Add(
 {
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
-  fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
-
+  fmb->deriveFont_plttNo = PANO_FONT_TALKMSGWIN;
+  
   tmsg->talkMsgWinSys = fmb->talkMsgWinSys;
   tmsg->talkMsgWinIdx = idx;
   
@@ -2819,7 +2881,7 @@ static void fldPlainMsgWin_Add( FLDMSGBG *fmb,
 {
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
-  fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
+  fmb->deriveFont_plttNo = PANO_FONT_TALKMSGWIN;
   
   plnwin->talkMsgWinSys = fmb->talkMsgWinSys;
 
@@ -3130,7 +3192,7 @@ static void fldSubMsgWin_Add(
 
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
-  fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
+  fmb->deriveFont_plttNo = PANO_FONT_TALKMSGWIN;
   
   subwin->talkMsgWinSys = fmb->talkMsgWinSys;
   subwin->talkMsgWinIdx = idx;
@@ -3365,7 +3427,7 @@ FLDBGWIN * FLDBGWIN_Add( FLDMSGBG *fmb, FLDBGWIN_TYPE type )
   
   keyWaitCursor_Init( &bgWin->cursor_work, bgWin->fmb->heapID );
   
-  fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
+  fmb->deriveFont_plttNo = PANO_FONT_TALKMSGWIN;
   setBlendAlpha( FALSE );
   return( bgWin );
 }
@@ -3925,7 +3987,7 @@ FLDSPWIN * FLDSPWIN_Add( FLDMSGBG *fmb, FLDSPWIN_TYPE type,
   
   keyWaitCursor_Init( &spWin->cursor_work, fmb->heapID );
 
-  fmb->deriveWin_plttNo = PANO_FONT_TALKMSGWIN;
+  fmb->deriveFont_plttNo = PANO_FONT_TALKMSGWIN;
   setBlendAlpha( FALSE );
   return( spWin );
 }
@@ -4268,8 +4330,8 @@ static void syswin_WriteWindow( const GFL_BMPWIN *bmpwin )
   u8 py = GFL_BMPWIN_GetPosY( bmpwin );
   u8 sx = GFL_BMPWIN_GetSizeX( bmpwin );
   u8 sy = GFL_BMPWIN_GetSizeY( bmpwin );
-  u8 pal = PANO_MENU;
-  u8 frm = FLDMSGBG_BGFRAME;
+  u8 pal = PANO_MENU_B;
+  u8 frm = GFL_BMPWIN_GetFrame( bmpwin );
   
   GFL_BG_FillScreen( frm, cgx, px-2, py-1, 1, 1, pal );
   GFL_BG_FillScreen( frm, cgx+1, px-1, py-1, 1, 1, pal );
@@ -4308,7 +4370,7 @@ static GFL_BMPWIN * syswin_InitBmp( u8 pos_y, HEAPID heapID )
   GFL_BMP_DATA *bmp;
   GFL_BMPWIN *bmpwin;
   
-  bmpwin = GFL_BMPWIN_Create( FLDMSGBG_BGFRAME,
+  bmpwin = GFL_BMPWIN_Create( FLDMSGBG_BGFRAME_BLD,
     2, pos_y, 27, 4,
     PANO_FONT, GFL_BMP_CHRAREA_GET_B );
   
@@ -4370,48 +4432,49 @@ static void syswin_DeleteBmp( GFL_BMPWIN *bmpwin )
 static void setBGResource( FLDMSGBG *fmb )
 {
   fmb->bgFrame = FLDMSGBG_BGFRAME; //不透明BG
-
+  
   { //BG初期化
     GFL_BG_BGCNT_HEADER bgcntText = {
       0, 0, FLDBG_MFRM_MSG_SCRSIZE, 0,
       GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_MSG_COLORMODE,
-      FLDBG_MFRM_MSG_SCRBASE, FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
+      FLDBG_MFRM_MSG_SCRBASE,
+      FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
       GX_BG_EXTPLTT_01, FLDBG_MFRM_MSG_PRI, 0, 0, FALSE
     };
     
     GFL_BG_SetBGControl( fmb->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
-    
-    GFL_BG_FillCharacter( fmb->bgFrame, CHARNO_CLEAR, 1, 0 );
-    GFL_BG_FillScreen( fmb->bgFrame,
-      0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-    
-    GFL_BG_LoadScreenReq( fmb->bgFrame );
   }
-
+  
   fmb->bgFrameBld = FLDMSGBG_BGFRAME_BLD; //半透明BG
-
-#if 0  
+  
   { //BG初期化
-    GFL_BG_BGCNT_HEADER bgcntText = {
-      0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
-      GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_MSG_COLORMODE,
-      FLDBG_MFRM_EFF1_SCRBASE, FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
-      GX_BG_EXTPLTT_01, FLDBG_MFRM_MSG_PRI, 0, 0, FALSE
-    };
+		GFL_BG_BGCNT_HEADER bgcntText = {
+			0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
+			GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_EFF1_COLORMODE,
+			FLDBG_MFRM_EFF1_SCRBASE,
+      FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
+      GX_BG_EXTPLTT_01, FLDBG_MFRM_EFF1_PRI, 0, 0, FALSE
+		};
     
     GFL_BG_SetBGControl( fmb->bgFrameBld, &bgcntText, GFL_BG_MODE_TEXT );
+  }
+  
+  { //BGキャラ、スクリーン初期化
+    GFL_BG_FillCharacter( //クリアキャラ
+        fmb->bgFrame, CHARNO_CLEAR, 1, 0 );
     
-    GFL_BG_FillCharacter( fmb->bgFrameBld, CHARNO_CLEAR, 1, 0 );
+    GFL_BG_FillScreen( fmb->bgFrame,
+      0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_FillScreen( fmb->bgFrameBld,
       0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-    
+
+    GFL_BG_LoadScreenReq( fmb->bgFrame );
     GFL_BG_LoadScreenReq( fmb->bgFrameBld );
   }
-#endif
-
+  
   // パレット・システムウインドウ
   transBGResource( fmb->bgFrame, fmb->heapID );
-
+  
   { //TALKMSGWIN
     if( fmb->g3Dcamera != NULL ){
       TALKMSGWIN_SYS_SETUP setup;
@@ -4426,22 +4489,157 @@ static void setBGResource( FLDMSGBG *fmb )
     }
   }
   
-
-  GFL_BG_SetPriority( GFL_BG_FRAME0_M, FLDBG_MFRM_3D_PRI );
-  GFL_BG_SetVisible( fmb->bgFrame, VISIBLE_ON );
+  { //ブレンド
+    int plane1 = GX_BLEND_PLANEMASK_BG2; 
+    int plane2 = GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 |
+      GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ;
+    G2_SetBlendAlpha( plane1, plane2, 31, 8 );
+  }
   
-  fmb->deriveWin_plttNo = PANO_FONT;
+#if 0
+  GFL_BG_SetPriority( fmb->bgFrame, FLDBG_MFRM_MSG_PRI );
+  GFL_BG_SetPriority( fmb->bgFrameBld, FLDBG_MFRM_EFF1_PRI );
+#endif
+  
+  GFL_BG_SetVisible( fmb->bgFrame, VISIBLE_ON );
+  GFL_BG_SetVisible( fmb->bgFrameBld, VISIBLE_ON );
+  
+  fmb->deriveFont_plttNo = PANO_FONT;
 }
 
+//--------------------------------------------------------------
+/**
+ * BGリソース初期化 BG1とキャラ、パレットリソースのみ
+ * @param fmb FLDMSGBG*
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void setBG1Resource( FLDMSGBG *fmb )
+{
+  fmb->bgFrame = FLDMSGBG_BGFRAME; //不透明BG
+  
+  { //BG初期化
+    GFL_BG_BGCNT_HEADER bgcntText = {
+      0, 0, FLDBG_MFRM_MSG_SCRSIZE, 0,
+      GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_MSG_COLORMODE,
+      FLDBG_MFRM_MSG_SCRBASE,
+      FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
+      GX_BG_EXTPLTT_01, FLDBG_MFRM_MSG_PRI, 0, 0, FALSE
+    };
+    
+    GFL_BG_SetBGControl( fmb->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
+  }
+  
+  { //BGキャラ、スクリーン初期化
+    GFL_BG_FillCharacter( //クリアキャラ
+        fmb->bgFrame, CHARNO_CLEAR, 1, 0 );
+    
+    GFL_BG_FillScreen( fmb->bgFrame,
+      0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 
-//----------------------------------------------------------------------------------
+    GFL_BG_LoadScreenReq( fmb->bgFrame );
+  }
+  
+  // パレット・システムウインドウ
+  transBGResource( fmb->bgFrame, fmb->heapID );
+  
+  { //TALKMSGWIN
+    if( fmb->g3Dcamera != NULL ){
+      TALKMSGWIN_SYS_SETUP setup;
+      setup.heapID = fmb->heapID;
+      setup.g3Dcamera = fmb->g3Dcamera;
+      setup.fontHandle = fmb->fontHandle;
+      setup.chrNumOffs = CHARNO_BALLOONWIN;
+      setup.ini.frameID = FLDMSGBG_BGFRAME;
+      setup.ini.winPltID = PANO_TALKMSGWIN;
+      setup.ini.fontPltID = PANO_FONT_TALKMSGWIN;
+      fmb->talkMsgWinSys = TALKMSGWIN_SystemCreate( &setup );
+    }
+  }
+  
+  GFL_BG_SetVisible( fmb->bgFrame, VISIBLE_ON );
+  
+  fmb->deriveFont_plttNo = PANO_FONT;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief BG2コントロールのみ再設定
+ * @param   bgFrame   
+ * @param   heapID
+ */
+//--------------------------------------------------------------
+static void resetBG2Control( BOOL cont_set )
+{
+  u8 frame = FLDMSGBG_BGFRAME_BLD;
+  
+  GFL_BG_SetVisible( frame, VISIBLE_OFF );
+   
+  if( cont_set == TRUE ){ //BG初期化
+		GFL_BG_BGCNT_HEADER bgcntText = {
+			0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
+			GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_EFF1_COLORMODE,
+			FLDBG_MFRM_EFF1_SCRBASE,
+      FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
+      GX_BG_EXTPLTT_01, FLDBG_MFRM_EFF1_PRI, 0, 0, FALSE
+		};
+    
+    GFL_BG_SetBGControl( frame, &bgcntText, GFL_BG_MODE_TEXT );
+  }
+  
+  G2_SetBG2ControlText(
+      GX_BG_SCRSIZE_TEXT_256x256,
+      FLDBG_MFRM_EFF1_COLORMODE,
+      FLDBG_MFRM_EFF1_SCRBASE,
+      FLDBG_MFRM_MSG_CHARBASE );
+  
+  { //BGキャラ、スクリーン初期化
+    GFL_BG_FillScreen( frame,
+      0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  
+  { //ブレンド
+    int plane1 = GX_BLEND_PLANEMASK_BG2; 
+    int plane2 = GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 |
+      GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ;
+    G2_SetBlendAlpha( plane1, plane2, 31, 8 );
+  }
+  
+  GFL_BG_SetPriority( frame, FLDBG_MFRM_EFF1_PRI );
+  GFL_BG_SetVisible( frame, VISIBLE_ON );
+}
+
+//--------------------------------------------------------------
+/**
+ * BG2コントロール再設定
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void resetBG2ControlProc( FLDMSGBG *fmb )
+{
+  if( fmb->req_reset_bg2_control != FALSE ){
+    fmb->req_reset_bg2_control = FALSE;
+    
+    if( fmb->bgFrameBld == BGFRAME_ERROR ){
+      GFL_BG_FreeBGControl( FLDMSGBG_BGFRAME_BLD );
+      resetBG2Control( TRUE );
+      fmb->bgFrameBld = FLDMSGBG_BGFRAME_BLD;
+    }else{
+      resetBG2Control( FALSE );
+    }
+  }
+}
+
+//--------------------------------------------------------------
 /**
  * @brief ウインドウ用リソースのみ転送
  *
  * @param   bgFrame   
  * @param   heapID
  */
-//----------------------------------------------------------------------------------
+//--------------------------------------------------------------
 static void transBGResource( int bgFrame, HEAPID heapID )
 {
   { //フォントパレット
@@ -4455,17 +4653,14 @@ static void transBGResource( int bgFrame, HEAPID heapID )
   
   { //window frame
     BmpWinFrame_GraphicSet( bgFrame, CHARNO_WINFRAME,
-      PANO_MENU, MENU_TYPE_SYSTEM, heapID );
+      PANO_MENU_B, MENU_TYPE_SYSTEM, heapID );
   }
-
+  
   //SYSWIN
   {
     syswin_InitGraphic( heapID );
   }
 }
-
-
-
 
 //--------------------------------------------------------------
 /**
@@ -4476,7 +4671,17 @@ static void transBGResource( int bgFrame, HEAPID heapID )
 //--------------------------------------------------------------
 static void setBlendAlpha( BOOL on )
 {
-#if 1
+  if( on == TRUE ){
+    int plane1 = GX_BLEND_PLANEMASK_BG2; 
+    int plane2 = GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
+      GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ;
+    G2_SetBlendAlpha( plane1, plane2, 31, 8 );
+  }
+}
+
+#if 0 //old
+static void setBlendAlpha( BOOL on )
+{
   if( on == TRUE ){
     int plane1 = GX_BLEND_PLANEMASK_BG1; 
     int plane2 = GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|
@@ -4487,19 +4692,8 @@ static void setBlendAlpha( BOOL on )
     int plane2 = GX_BLEND_PLANEMASK_NONE; 
     G2_SetBlendAlpha( plane1, plane2, 0, 0 );
   }
-#else
-  if( on == TRUE ){
-    int plane1 = GX_BLEND_PLANEMASK_BG2; 
-    int plane2 = GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|
-      GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ;
-    G2_SetBlendAlpha( plane1, plane2, 31, 8 );
-  }else{
-    int plane1 = GX_BLEND_PLANEMASK_NONE; 
-    int plane2 = GX_BLEND_PLANEMASK_NONE; 
-    G2_SetBlendAlpha( plane1, plane2, 0, 0 );
-  }
-#endif
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -4545,8 +4739,15 @@ void FLDMSGBG_RecoveryBG( FLDMSGBG *fmb )
   { //バルーンウィンドウ
     TALKMSGWIN_ReTransWindowBG( fmb->talkMsgWinSys );
   }
-
 }
+
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
 
 //======================================================================
 //  パーツ
@@ -4568,10 +4769,9 @@ static GFL_BMPWIN * winframe_InitBmp( u32 bgFrame, HEAPID heapID,
 {
   GFL_BMP_DATA *bmp;
   GFL_BMPWIN *bmpwin;
-
+  
   bmpwin = GFL_BMPWIN_Create( bgFrame,
     pos_x, pos_y, size_x, size_y,
-//    PANO_FONT, GFL_BMP_CHRAREA_GET_B );
     pltt_no, GFL_BMP_CHRAREA_GET_B );
 
   bmp = GFL_BMPWIN_GetBmp( bmpwin );
@@ -4581,7 +4781,13 @@ static GFL_BMPWIN * winframe_InitBmp( u32 bgFrame, HEAPID heapID,
   GFL_BMPWIN_TransVramCharacter( bmpwin );
   GFL_BG_LoadScreenReq( bgFrame );
   
-  BmpWinFrame_Write( bmpwin, WINDOW_TRANS_ON, 1, PANO_MENU );
+  if( pltt_no == PANO_FONT ){ //半透明
+    pltt_no = PANO_MENU_B;
+  }else{ //不透明
+    pltt_no = PANO_MENU_W;
+  }
+
+  BmpWinFrame_Write( bmpwin, WINDOW_TRANS_ON, 1, pltt_no );
   
   return( bmpwin );
 }
@@ -4608,7 +4814,7 @@ static void winframe_DeleteBmp( GFL_BMPWIN *bmpwin )
 //--------------------------------------------------------------
 static void winframe_SetPaletteBlack( u32 heapID )
 {
-  u32 pal = PANO_MENU;
+  u32 pal = PANO_MENU_B;
   u32 arc = BmpWinFrame_WinPalArcGet();
   GFL_ARC_UTIL_TransVramPaletteEx(
       ARCID_FLDMAP_WINFRAME,
@@ -4624,7 +4830,7 @@ static void winframe_SetPaletteBlack( u32 heapID )
 //--------------------------------------------------------------
 static void winframe_SetPaletteWhith( u32 heapID )
 {
-  u32 pal = PANO_MENU;
+  u32 pal = PANO_MENU_W;
   u32 arc = BmpWinFrame_WinPalArcGet();
   GFL_ARC_UTIL_TransVramPaletteEx(
       ARCID_FLDMAP_WINFRAME,

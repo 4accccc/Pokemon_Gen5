@@ -118,17 +118,47 @@ void FIELD_DEBUG_UpdateProc( FIELD_DEBUG_WORK *work )
 //--------------------------------------------------------------
 void FIELD_DEBUG_RecoverBgCont( FIELD_DEBUG_WORK *work )
 {
+#if 0
   //セットアップしなおし
   G2_SetBG2ControlText(
       GX_BG_SCRSIZE_TEXT_256x256,
       FLDBG_MFRM_EFF1_COLORMODE,
       FLDBG_MFRM_EFF1_SCRBASE,
       FLDBG_MFRM_EFF1_CHARBASE);
+#else
+  {
+    FLDMSGBG *fmb = FIELDMAP_GetFldMsgBG( work->pFieldMainWork );
+    FLDMSGBG_ReqResetBG2( fmb );
+    work->flag_pos_print = FALSE;
+  }
+#endif
 }
 
 //======================================================================
 //	システムフォント表示
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * フィールドデバッグシステム　BG面セットアップしなおし
+ * @param	work	FIELD_DEBUG_WORK
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void resetBgCont( FIELD_DEBUG_WORK *work )
+{
+  G2_SetBG2ControlText(
+      GX_BG_SCRSIZE_TEXT_256x256,
+      FLDBG_MFRM_EFF1_COLORMODE,
+      FLDBG_MFRM_EFF1_SCRBASE,
+      FLDBG_MFRM_EFF1_CHARBASE);
+  
+  {
+    FLDMSGBG *fmb = FIELDMAP_GetFldMsgBG( work->pFieldMainWork );
+    FLDMSGBG_ReqResetBG2( fmb );
+  }
+}
+
+
 #if 0
 //------------------------------------------------------------------
 /**
@@ -279,7 +309,13 @@ static void NTRCHR_BGCharLoad(
 static void DebugFont_Init( FIELD_DEBUG_WORK *work )
 {
 	void *buf;
-#if 1
+  
+  { //BGリソースをクリア
+    FLDMSGBG *fmb = FIELDMAP_GetFldMsgBG( work->pFieldMainWork );
+    FLDMSGBG_ReleaseBG2Resource( fmb );
+    FLDMSGBG_ReqResetBG2( fmb );
+  }
+  
 	{	//BG Frame
 		GFL_BG_BGCNT_HEADER bgcntText = {
 			0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
@@ -295,7 +331,6 @@ static void DebugFont_Init( FIELD_DEBUG_WORK *work )
 			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 		GFL_BG_LoadScreenReq( work->bgFrame );
 	}
-#endif
 	
 	{	//パレット
 		NNSG2dPaletteData *pal;
@@ -307,13 +342,15 @@ static void DebugFont_Init( FIELD_DEBUG_WORK *work )
 			GF_ASSERT( 0 );
 		}
 		
-		GFL_BG_LoadPalette( work->bgFrame, pal->pRawData, 32, DEBUG_PANO_FONT*32 );
+		GFL_BG_LoadPalette(
+        work->bgFrame, pal->pRawData, 32, DEBUG_PANO_FONT*32 );
 		GFL_HEAP_FreeMemory( buf );
 	}
 	
 	{	//キャラ
 		NNSG2dCharacterData *chr;
-		buf = GFL_ARC_LoadDataAlloc( ARCID_OTHERS, NARC_others_nfont_NCGR, work->heapID );
+    
+    buf = GFL_ARC_LoadDataAlloc( ARCID_OTHERS, NARC_others_nfont_NCGR, work->heapID );
 		GF_ASSERT( buf != NULL );
 		
 		if( NNS_G2dGetUnpackedBGCharacterData(buf,&chr) == FALSE ){
@@ -402,13 +439,23 @@ static void DebugFont_ClearLine( FIELD_DEBUG_WORK *work, u16 y )
 //--------------------------------------------------------------
 void FIELD_DEBUG_SetPosPrint( FIELD_DEBUG_WORK *work )
 {
+#if 0
 	if( work->flag_pos_print == FALSE ){
 		work->flag_pos_print = TRUE;
+    
 		GFL_BG_SetVisible( work->bgFrame, VISIBLE_ON );
 	}else{
 		work->flag_pos_print = FALSE;
 		GFL_BG_SetVisible( work->bgFrame, VISIBLE_OFF );
 	}
+#else
+	if( work->flag_pos_print == FALSE ){
+		work->flag_pos_print = TRUE;
+    resetBgCont( work );
+	}else{
+		work->flag_pos_print = FALSE;
+	}
+#endif
 }
 
 //--------------------------------------------------------------
