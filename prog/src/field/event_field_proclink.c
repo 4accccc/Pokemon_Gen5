@@ -1242,6 +1242,26 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeStatus(PROCLINK_WORK* wk,void* para
 //=====================================
 //----------------------------------------------------------------------------
 /**
+ *  @brief  バッグの呼び出しモード取得
+ */
+//----------------------------------------------------------------------------
+static BAG_MODE GetBagMode( GAMESYS_WORK * gsys )
+{
+	u16	zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
+
+	// ユニオンルーム
+	if( ZONEDATA_IsUnionRoom(zone_id) == TRUE ){
+		return BAG_MODE_UNION;
+	}
+	// コロシアム
+	if( ZONEDATA_IsColosseum(zone_id) == TRUE ){
+		return BAG_MODE_COLOSSEUM;
+	}
+	return BAG_MODE_FIELD;
+}
+
+//----------------------------------------------------------------------------
+/**
  *  @brief  CALL関数
  *
  *  @param  wk      メインワーク
@@ -1261,7 +1281,7 @@ static void * FMenuCallProc_Bag(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CAL
   { 
   case EVENT_PROCLINK_CALL_BAG:
     //バッグを最初に呼び出したとき
-    bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_FIELD, HEAPID_PROC );
+    bag = BAG_CreateParam( gmData, &wk->icwk, GetBagMode(wk->param->gsys), HEAPID_PROC );
 //    ITEMUSE_SetItemUseCheck( &wk->icwk, ITEMCHECK_CYCLE_RIDE, 1 );
 
     if( param != EVENT_PROCLINK_DATA_NONE )
@@ -1281,12 +1301,12 @@ static void * FMenuCallProc_Bag(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CAL
       else if( plData->ret_mode == PL_RET_BAG )
       { 
         //アイテムー＞リストー＞アイテム
-        bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_FIELD, HEAPID_PROC );
+        bag = BAG_CreateParam( gmData, &wk->icwk, GetBagMode(wk->param->gsys), HEAPID_PROC );
       }
       else
       { 
         //アイテムー＞リストー＞アイテム
-        bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_FIELD, HEAPID_PROC );
+        bag = BAG_CreateParam( gmData, &wk->icwk, GetBagMode(wk->param->gsys), HEAPID_PROC );
       }
     }
     break;
@@ -1297,7 +1317,7 @@ static void * FMenuCallProc_Bag(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CAL
   case EVENT_PROCLINK_CALL_WIFINOTE:
     /* fallthrough */
   default:
-    bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_FIELD, HEAPID_PROC );
+    bag = BAG_CreateParam( gmData, &wk->icwk, GetBagMode(wk->param->gsys), HEAPID_PROC );
   }
 
   return bag;
