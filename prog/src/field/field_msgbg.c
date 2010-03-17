@@ -1231,6 +1231,7 @@ FLDSYSWIN * FLDSYSWIN_Add(
 {
   FLDSYSWIN *sysWin;
   fmb->deriveFont_plttNo = PANO_FONT;
+  resetBG2ControlProc( fmb );
   sysWin = syswin_Add( fmb, msgData, bmppos_y );
   return( sysWin );
 }
@@ -2284,6 +2285,7 @@ FLDSYSWIN_STREAM * FLDSYSWIN_STREAM_Add(
   FLDSYSWIN_STREAM *sysWin;
   
   fmb->deriveFont_plttNo = PANO_FONT;
+  resetBG2ControlProc( fmb );
   
   sysWin = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDSYSWIN_STREAM) );
@@ -4585,13 +4587,13 @@ static void resetBG2Control( BOOL cont_set )
 		};
     
     GFL_BG_SetBGControl( frame, &bgcntText, GFL_BG_MODE_TEXT );
-  }
-  
-  G2_SetBG2ControlText(
+  }else{
+    G2_SetBG2ControlText(
       GX_BG_SCRSIZE_TEXT_256x256,
       FLDBG_MFRM_EFF1_COLORMODE,
       FLDBG_MFRM_EFF1_SCRBASE,
       FLDBG_MFRM_MSG_CHARBASE );
+  }
   
   { //BGキャラ、スクリーン初期化
     GFL_BG_FillScreen( frame,

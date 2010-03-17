@@ -921,7 +921,7 @@ static void setBalloonWindow( SCRCMD_WORK *work,
  * @retval
  */
 //--------------------------------------------------------------
-static void balloonWin_UpdatePos( SCRCMD_WORK *work )
+static void balloonWin_UpdatePos( SCRCMD_WORK *work, BOOL init_flag )
 {
   u16 dir;
   MMDL *npc;
@@ -941,7 +941,8 @@ static void balloonWin_UpdatePos( SCRCMD_WORK *work )
   dir = MMDL_GetDirDisp( npc );
   MMDL_GetVectorPos( npc, &npc_pos );
   
-  if( npc_pos.x != bwin_work->tail_pos_org.x ||
+  if( init_flag == TRUE ||
+      npc_pos.x != bwin_work->tail_pos_org.x ||
       npc_pos.y != bwin_work->tail_pos_org.y ||
       npc_pos.z != bwin_work->tail_pos_org.z ){
     bwin_work->tail_pos_org = npc_pos;
@@ -1128,7 +1129,7 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
     }
     
     bwin_work->win_idx = idx;
-    balloonWin_UpdatePos( work );
+    balloonWin_UpdatePos( work, TRUE );
       
     setBalloonWindow( work,
         fparam->msgBG, idx, &bwin_work->tail_pos, msgbuf, type, tail );
@@ -1152,7 +1153,7 @@ static BOOL BallonWinMsgWait( VMHANDLE *core, void *wk )
   FLDTALKMSGWIN *tmsg;
   tmsg = (FLDTALKMSGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
   
-  balloonWin_UpdatePos( work );
+  balloonWin_UpdatePos( work, FALSE );
   
   if( FLDTALKMSGWIN_Print(tmsg) == TRUE ){
     return TRUE;
@@ -1389,7 +1390,7 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
       }
       
       bwin_work->win_idx = idx;
-      balloonWin_UpdatePos( work );
+      balloonWin_UpdatePos( work, TRUE );
       
       setBalloonWindow( work, fparam->msgBG,
           idx, &bwin_work->tail_pos, msgbuf,
