@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-16T22:17:30"/>
+	<create user="ohmori" host="W00223" date="2010-03-17T15:16:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -605,37 +605,37 @@
 ふしぎなコインを　ひろった</language>
 	</row>
 
-	<row id="msg_invasion_info_m01" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_info_m01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
 		<language name="JPN" width="256">サポート　ミッション　じっしちゅう</language>
 		<language name="JPN_KANJI" width="256">サポート　ミッション　じっしちゅう</language>
 	</row>
 
-	<row id="msg_invasion_info_m02" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_info_m02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
 		<language name="JPN" width="256">サポート　ミッション　じっしちゅう</language>
 		<language name="JPN_KANJI" width="256">サポート　ミッション　じっしちゅう</language>
 	</row>
 
-	<row id="msg_invasion_info_m03" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_info_m03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
 		<language name="JPN" width="256">バトル　ミッション　じっしちゅう</language>
 		<language name="JPN_KANJI" width="256">バトル　ミッション　じっしちゅう</language>
 	</row>
 
-	<row id="msg_invasion_info_m04" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_info_m04" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
 		<language name="JPN" width="256">サポート　ミッション　じっしちゅう</language>
 		<language name="JPN_KANJI" width="256">サポート　ミッション　じっしちゅう</language>
 	</row>
 
-	<row id="msg_invasion_info_m05" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_info_m05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
 		<language name="JPN" width="256">アイテム　ミッション　じっしちゅう</language>
 		<language name="JPN_KANJI" width="256">アイテム　ミッション　じっしちゅう</language>
 	</row>
 
-	<row id="msg_invasion_info_m06" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_info_m06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
 		<language name="JPN" width="256">アイテム　ミッション　じっしちゅう</language>
 		<language name="JPN_KANJI" width="256">アイテム　ミッション　じっしちゅう</language>
@@ -677,8 +677,8 @@
 
 	<row id="msg_invasion_title_000" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
 		<comment>タイトルメッセージ</comment>
-		<language name="JPN" width="256">タッチで　パレスにいけます</language>
-		<language name="JPN_KANJI" width="256">タッチで　パレスにいけます</language>
+		<language name="JPN" width="256">ちゅうしんを　タッチすると　パレスにいけます</language>
+		<language name="JPN_KANJI" width="256">ちゅうしんを　タッチすると　パレスにいけます</language>
 	</row>
 
 	<row id="msg_invasion_title_001" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
@@ -754,7 +754,7 @@
 つながった！</language>
 	</row>
 
-	<row id="plc_connect_02" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+	<row id="plc_connect_02" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>通信接続メッセージ：自分のパレスにもどる</comment>
 		<language name="JPN" width="256">じぶんの　せかいにもどり
 もとの　すがたに　もどった！</language>
@@ -762,13 +762,13 @@
 もとの　すがたに　もどった！</language>
 	</row>
 
-	<row id="plc_connect_03" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+	<row id="plc_connect_03" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>通信接続メッセージ：自分のパレスにもどる</comment>
 		<language name="JPN" width="256">じぶんの　せかいに　もどった！</language>
 		<language name="JPN_KANJI" width="256">じぶんの　せかいに　もどった！</language>
 	</row>
 
-	<row id="plc_connect_04" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+	<row id="plc_connect_04" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>通信接続メッセージ：侵入成功</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　せかいに
 はいりこんだ！</language>
@@ -776,7 +776,7 @@
 はいりこんだ！</language>
 	</row>
 
-	<row id="plc_connect_05" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+	<row id="plc_connect_05" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>通信接続メッセージ：侵入成功</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　せかいに　はいりこみ
 すがたが　かわった！</language>
@@ -784,10 +784,12 @@
 すがたが　かわった！</language>
 	</row>
 
-	<row id="plc_connect_06" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+	<row id="plc_connect_06" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>通信接続メッセージ：侵入できない</comment>
-		<language name="JPN" width="256">ここからさきは　いけそうにない</language>
-		<language name="JPN_KANJI" width="256">ここからさきは　いけそうにない</language>
+		<language name="JPN" width="256">このはしは　まだ　どのせかいとも
+つながっていない　ようだ</language>
+		<language name="JPN_KANJI" width="256">このはしは　まだ　どのせかいとも
+つながっていない　ようだ</language>
 	</row>
 
 	<row id="plc_connect_07" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
