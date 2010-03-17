@@ -20,8 +20,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_zone_c08r0101     //ゾーンチェンジスクリプト
-_EVENT_DATA    ev_scene_c08r0101   //シーンスクリプト
+_EVENT_DATA    ev_zone_r08r0101     //ゾーンチェンジスクリプト
+_EVENT_DATA    ev_scene_r08r0101   //シーンスクリプト
 _EVENT_DATA_END
 
 
@@ -36,7 +36,7 @@ DEFINE_LOCAL TrgtObj
 /**************************************************************/
 /*            SCENE_SCRIPT                               */
 /**************************************************************/
-EVENT_START ev_scene_c08r0101
+EVENT_START ev_scene_r08r0101
   //自機所定の位置へ移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
   _OBJ_ANIME_WAIT()
@@ -153,7 +153,7 @@ EVENT_END
 /**************************************************************/
 /*            ZONE_CHANGE_SCRIPT                               */
 /**************************************************************/
-INIT_EVENT_START ev_zone_c08r0101
+INIT_EVENT_START ev_zone_r08r0101
   DEFINE_LOCAL pos
   //ＯＢＪのバニッシュフラグをセットする(非表示状態)
   _FLAG_SET( FV_R08R0101_POKE4 )
